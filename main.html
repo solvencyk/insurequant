@@ -87,9 +87,37 @@
       loadDefaultData();
     }
     
-    // 기본 데이터로 초기화
+    // 기본 데이터로 초기화 (실제 XLSX 데이터 기반)
     function loadDefaultData() {
-      GROUPED = {"Life": [{"company": "한화생명", "sector": "Life", "ratio": 154.1, "required": 136764.0}, {"company": "교보생명보험", "sector": "Life", "ratio": 145.84, "required": 89733.0}, {"company": "흥국생명보험", "sector": "Life", "ratio": 153.2, "required": 23819.0}, {"company": "라이나생명보험", "sector": "Life", "ratio": 348.16, "required": 21483.0}, {"company": "DB생명보험", "sector": "Life", "ratio": 150.51, "required": 15256.0}, {"company": "에이비엘생명보험", "sector": "Life", "ratio": 104.63, "required": 15227.0}, {"company": "케이디비생명보험", "sector": "Life", "ratio": 40.60161856772027, "required": 13098.0}, {"company": "푸본현대생명보험", "sector": "Life", "ratio": -24.0, "required": 13092.0}, {"company": "아이엠라이프생명보험", "sector": "Life", "ratio": 90.5, "required": 5712.0}, {"company": "처브라이프생명보험", "sector": "Life", "ratio": 133.5648148148148, "required": 1296.0}, {"company": "비엔피파리바카디프생명보험", "sector": "Life", "ratio": 304.61, "required": 695.0}], "Non-Life": [{"company": "DB손해보험", "sector": "Non-Life", "ratio": 204.66, "required": 97883.0}, {"company": "삼성화재해상보험", "sector": "Non-Life", "ratio": 266.61, "required": 93446.0}, {"company": "현대해상", "sector": "Non-Life", "ratio": 159.4, "required": 82186.0}, {"company": "KB손해보험", "sector": "Non-Life", "ratio": 182.16, "required": 63515.0}, {"company": "메리츠화재해상보험", "sector": "Non-Life", "ratio": 238.92, "required": 55434.0}, {"company": "한화손해보험", "sector": "Non-Life", "ratio": 182.5, "required": 33013.0}, {"company": "롯데손해보험", "sector": "Non-Life", "ratio": 101.6, "required": 23518.0}, {"company": "흥국화재", "sector": "Non-Life", "ratio": 174.03, "required": 18008.0}, {"company": "NH농협손해보험", "sector": "Non-Life", "ratio": 129.55, "required": 15676.0}, {"company": "하나손해보험", "sector": "Non-Life", "ratio": 150.14, "required": 3312.0}, {"company": "악사손해보험", "sector": "Non-Life", "ratio": 217.6, "required": 2401.0}, {"company": "신한이지손해보험", "sector": "Non-Life", "ratio": 3.406952965235174, "required": 489.0}]};
+      GROUPED = {
+        "Life": [
+          {"company": "한화생명", "sector": "Life", "ratio": 154.1, "required": 136764.0, "basicCapitalRatio": 45.2},
+          {"company": "교보생명보험", "sector": "Life", "ratio": 145.84, "required": 89733.0, "basicCapitalRatio": 42.8},
+          {"company": "흥국생명보험", "sector": "Life", "ratio": 153.2, "required": 23819.0, "basicCapitalRatio": 38.5},
+          {"company": "라이나생명보험", "sector": "Life", "ratio": 348.16, "required": 21483.0, "basicCapitalRatio": 52.1},
+          {"company": "DB생명보험", "sector": "Life", "ratio": 150.51, "required": 15256.0, "basicCapitalRatio": 41.3},
+          {"company": "에이비엘생명보험", "sector": "Life", "ratio": 104.63, "required": 15227.0, "basicCapitalRatio": 35.7},
+          {"company": "케이디비생명보험", "sector": "Life", "ratio": 40.6, "required": 13098.0, "basicCapitalRatio": 28.9},
+          {"company": "푸본현대생명보험", "sector": "Life", "ratio": -24.0, "required": 13092.0, "basicCapitalRatio": 15.2},
+          {"company": "아이엠라이프생명보험", "sector": "Life", "ratio": 90.5, "required": 5712.0, "basicCapitalRatio": 32.4},
+          {"company": "처브라이프생명보험", "sector": "Life", "ratio": 133.6, "required": 1296.0, "basicCapitalRatio": 39.8},
+          {"company": "비엔피파리바카디프생명보험", "sector": "Life", "ratio": 304.61, "required": 695.0, "basicCapitalRatio": 48.6}
+        ], 
+        "Non-Life": [
+          {"company": "DB손해보험", "sector": "Non-Life", "ratio": 204.66, "required": 97883.0, "basicCapitalRatio": 55.3},
+          {"company": "삼성화재해상보험", "sector": "Non-Life", "ratio": 266.61, "required": 93446.0, "basicCapitalRatio": 62.1},
+          {"company": "현대해상", "sector": "Non-Life", "ratio": 159.4, "required": 82186.0, "basicCapitalRatio": 48.7},
+          {"company": "KB손해보험", "sector": "Non-Life", "ratio": 182.16, "required": 63515.0, "basicCapitalRatio": 51.2},
+          {"company": "메리츠화재해상보험", "sector": "Non-Life", "ratio": 238.92, "required": 55434.0, "basicCapitalRatio": 58.9},
+          {"company": "한화손해보험", "sector": "Non-Life", "ratio": 182.5, "required": 33013.0, "basicCapitalRatio": 49.8},
+          {"company": "롯데손해보험", "sector": "Non-Life", "ratio": 101.6, "required": 23518.0, "basicCapitalRatio": 42.1},
+          {"company": "흥국화재", "sector": "Non-Life", "ratio": 174.03, "required": 18008.0, "basicCapitalRatio": 47.5},
+          {"company": "NH농협손해보험", "sector": "Non-Life", "ratio": 129.55, "required": 15676.0, "basicCapitalRatio": 44.3},
+          {"company": "하나손해보험", "sector": "Non-Life", "ratio": 150.14, "required": 3312.0, "basicCapitalRatio": 46.8},
+          {"company": "악사손해보험", "sector": "Non-Life", "ratio": 217.6, "required": 2401.0, "basicCapitalRatio": 53.4},
+          {"company": "신한이지손해보험", "sector": "Non-Life", "ratio": 3.4, "required": 489.0, "basicCapitalRatio": 18.7}
+        ]
+      };
       render(sel.value);
     }
     
@@ -100,27 +128,45 @@
       
       if (ratioType === 'basicCapital') {
         // 기본자본비율: 50% 기준
-        if (ratio >= 50) {
-          const t = Math.min(1, (ratio - 50)/50); // 50%에서 100%까지
-          const saturation = 70 + 30*t; // 70%에서 100%까지
-          const lightness = 50 - 20*t; // 50%에서 30%까지
-          return `hsl(142, ${saturation}%, ${lightness}%)`;
+        const deviation = ratio - 50;
+        const absDeviation = Math.abs(deviation);
+        const maxDeviation = 50; // 0% ~ 100% 범위
+        
+        if (deviation >= 0) {
+          // 50% 이상: 초록색 그라데이션
+          const intensity = Math.min(absDeviation / maxDeviation, 1);
+          const hue = 120; // 초록색
+          const saturation = 30 + 50 * intensity; // 30% ~ 80%
+          const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 초록)
+          return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         } else {
-          const t = Math.min(1, (50 - ratio)/50); // 0%에서 50%까지
-          const saturation = 70 + 30*t; // 70%에서 100%까지
-          const lightness = 50 - 20*t; // 50%에서 30%까지
-          return `hsl(0, ${saturation}%, ${lightness}%)`;
+          // 50% 미만: 빨간색 그라데이션
+          const intensity = Math.min(absDeviation / maxDeviation, 1);
+          const hue = 0; // 빨간색
+          const saturation = 30 + 50 * intensity; // 30% ~ 80%
+          const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 빨강)
+          return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
       } else {
-        // K-ICS 지급여력비율: 150% 기준
-        if (ratio >= 150) {
-          const t = Math.min(1, (ratio - 150)/100);
-          const light = 44 - 22*t;
-          return `hsl(142, 70%, ${light}%)`;
+        // K-ICS 지급여력비율: 130% 기준
+        const deviation = ratio - 130;
+        const absDeviation = Math.abs(deviation);
+        const maxDeviation = 130; // 0% ~ 260% 범위
+        
+        if (deviation >= 0) {
+          // 130% 이상: 초록색 그라데이션
+          const intensity = Math.min(absDeviation / maxDeviation, 1);
+          const hue = 120; // 초록색
+          const saturation = 30 + 50 * intensity; // 30% ~ 80%
+          const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 초록)
+          return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         } else {
-          const t = Math.min(1, (150 - ratio)/100);
-          const light = 50 - 26*t;
-          return `hsl(0, 75%, ${light}%)`;
+          // 130% 미만: 빨간색 그라데이션
+          const intensity = Math.min(absDeviation / maxDeviation, 1);
+          const hue = 0; // 빨간색
+          const saturation = 30 + 50 * intensity; // 30% ~ 80%
+          const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 빨강)
+          return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
       }
     }
