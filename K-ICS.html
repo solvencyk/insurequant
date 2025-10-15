@@ -98,41 +98,45 @@
     </div>
   </div>
   <script>
-    const jsonPath = 'kics_disclosure.json';
+    const jsonPath = 'kics_disclosure.json'; // 파일 경로 맞게 조정
     let allData = [];
 
-    // 분기값에서 년도를 추출 (2024.1Q → 2024)
-    function getYear(q) {
-      if (!q) return null;
-      const m = q.match(/^(\d{4})\./);
-      return m ? parseInt(m[1], 10) : null;
-    }
+    const COLUMN_MAP = {
+      '항목명': '항목명',
+      '원수사명': '보험사명',
+      '생손보여부': '업권',
+      '공시분기': '공시분기',
+      '값': '값'
+    };
+    const COLUMNS = Object.keys(COLUMN_MAP);
 
-    // 기간 필터: 최근 N년치만 남김
-    function filterByPeriod(data, nYear) {
-      const years = data.map(row => getYear(row['공시분기'])).filter(Boolean);
-      if (!years.length) return data;
-      const maxYear = Math.max(...years);
-      const minYear = maxYear - nYear + 1;
-      return data.filter(row => {
-        const y = getYear(row['공시분기']);
-        return y && y >= minYear && y <= maxYear;
+    // 최신 분기 N개만 추출하여 필터링
+    function filterByPeriodLatestQuarters(data, nQuarter) {
+      const allQuarters = Array.from(new Set(data.map(row => row['공시분기']))).sort((a, b) => {
+        const parse = s => {
+          const m = s.match(/^(\d{4})\.(\d)Q$/);
+          return m ? [parseInt(m[1]), parseInt(m[2])] : [0,0];
+        };
+        const [ay, aq] = parse(a), [by, bq] = parse(b);
+        if (ay[0] != by[0]) return by[0] - ay[0];
+        return by[1] - aq[1];
       });
+      const recentQuarters = allQuarters.slice(0, nQuarter);
+      return data.filter(row => recentQuarters.includes(row['공시분기']));
     }
 
-    // 테이블 렌더링
+    // 테이블 렌더링 (필요 컬럼만, 헤더명 변경)
     function renderTable(data) {
       if (!Array.isArray(data) || !data.length) {
         document.getElementById('table-container').innerHTML = '<p>데이터가 없습니다.</p>';
         return;
       }
-      const headers = Object.keys(data[0]);
       let table = '<table><thead><tr>';
-      headers.forEach(h => table += `<th>${h}</th>`);
+      COLUMNS.forEach(key => table += `<th>${COLUMN_MAP[key]}</th>`);
       table += '</tr></thead><tbody>';
       data.forEach(row => {
         table += '<tr>';
-        headers.forEach(h => table += `<td>${row[h]}</td>`);
+        COLUMNS.forEach(key => table += `<td>${row[key] ?? ''}</td>`);
         table += '</tr>';
       });
       table += '</tbody></table>';
@@ -145,13 +149,13 @@
       const company = document.getElementById('company').value;
       if (company && company !== 'ALL')
         filtered = filtered.filter(row => row['원수사명'] === company);
-      // 기간 필터
+      // 기간 필터 (최신 N개 분기만 남김)
       const period = document.getElementById('period').value;
-      let nYear = 1;
-      if (period === '2Y') nYear = 2;
-      if (period === '3Y') nYear = 3;
-      if (period === '5Y') nYear = 5;
-      filtered = filterByPeriod(filtered, nYear);
+      let nQuarter = 4;
+      if (period === '2Y') nQuarter = 8;
+      if (period === '3Y') nQuarter = 12;
+      if (period === '5Y') nQuarter = 20;
+      filtered = filterByPeriodLatestQuarters(filtered, nQuarter);
       return filtered;
     }
 
