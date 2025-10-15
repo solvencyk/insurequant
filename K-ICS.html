@@ -49,7 +49,7 @@
         <div>
           <label>보험사 선택: 
             <select id="company" class="select">
-              <option value="ALL">전체</option>
+              <option value="">보험사 선택</option>
               <option value="한화생명">한화생명</option>
               <option value="교보생명보험">교보생명보험</option>
               <option value="흥국생명보험">흥국생명보험</option>
@@ -79,6 +79,7 @@
         <div>
           <label>기간: 
             <select id="period" class="select">
+              <option value="">기간 선택</option>
               <option value="1Y">최근 1년</option>
               <option value="2Y">최근 2년</option>
               <option value="3Y">최근 3년</option>
@@ -98,20 +99,11 @@
     </div>
   </div>
   <script>
-    const jsonPath = 'kics_disclosure.json'; // 파일 경로 맞게 조정
+    const jsonPath = 'kics_disclosure.json';
     let allData = [];
 
-    const COLUMN_MAP = {
-      '항목명': '항목명',
-      '원수사명': '보험사명',
-      '생손보여부': '업권',
-      '공시분기': '공시분기',
-      '값': '값'
-    };
-    const COLUMNS = Object.keys(COLUMN_MAP);
-
-    // 최신 분기 N개만 추출하여 필터링
-    function filterByPeriodLatestQuarters(data, nQuarter) {
+    // 공시분기 최신 N개 추출
+    function getRecentQuarters(data, nQuarter) {
       const allQuarters = Array.from(new Set(data.map(row => row['공시분기']))).sort((a, b) => {
         const parse = s => {
           const m = s.match(/^(\d{4})\.(\d)Q$/);
@@ -121,22 +113,34 @@
         if (ay[0] != by[0]) return by[0] - ay[0];
         return by[1] - aq[1];
       });
-      const recentQuarters = allQuarters.slice(0, nQuarter);
-      return data.filter(row => recentQuarters.includes(row['공시분기']));
+      return allQuarters.slice(0, nQuarter);
     }
 
-    // 테이블 렌더링 (필요 컬럼만, 헤더명 변경)
-    function renderTable(data) {
+    // 보험사/기간 모두 지정되어야만 테이블 출력
+    function canShowTable() {
+      const company = document.getElementById('company').value;
+      const period = document.getElementById('period').value;
+      return company && period;
+    }
+
+    // 피벗 테이블 렌더링 (행: 항목명, 열: 공시분기)
+    function renderPivotTable(data, quarters) {
       if (!Array.isArray(data) || !data.length) {
         document.getElementById('table-container').innerHTML = '<p>데이터가 없습니다.</p>';
         return;
       }
-      let table = '<table><thead><tr>';
-      COLUMNS.forEach(key => table += `<th>${COLUMN_MAP[key]}</th>`);
+      // 항목명 목록 추출 (행)
+      const itemNames = Array.from(new Set(data.map(row => row['항목명'])));
+      // 테이블 헤더: [항목명, ...공시분기(역순)]
+      let table = '<table><thead><tr><th>항목명</th>';
+      quarters.forEach(q => table += `<th>${q}</th>`);
       table += '</tr></thead><tbody>';
-      data.forEach(row => {
-        table += '<tr>';
-        COLUMNS.forEach(key => table += `<td>${row[key] ?? ''}</td>`);
+      itemNames.forEach(item => {
+        table += `<tr><td>${item}</td>`;
+        quarters.forEach(q => {
+          const found = data.find(row => row['항목명'] === item && row['공시분기'] === q);
+          table += `<td>${found ? (found['값'] ?? '') : ''}</td>`;
+        });
         table += '</tr>';
       });
       table += '</tbody></table>';
@@ -147,21 +151,25 @@
       let filtered = allData;
       // 보험사 필터
       const company = document.getElementById('company').value;
-      if (company && company !== 'ALL')
-        filtered = filtered.filter(row => row['원수사명'] === company);
+      if (company) filtered = filtered.filter(row => row['원수사명'] === company);
       // 기간 필터 (최신 N개 분기만 남김)
       const period = document.getElementById('period').value;
       let nQuarter = 4;
       if (period === '2Y') nQuarter = 8;
       if (period === '3Y') nQuarter = 12;
       if (period === '5Y') nQuarter = 20;
-      filtered = filterByPeriodLatestQuarters(filtered, nQuarter);
-      return filtered;
+      const recentQuarters = getRecentQuarters(filtered, nQuarter);
+      filtered = filtered.filter(row => recentQuarters.includes(row['공시분기']));
+      return {filtered, recentQuarters};
     }
 
     function updateTable() {
-      const filtered = getFilteredData();
-      renderTable(filtered);
+      if (!canShowTable()) {
+        document.getElementById('table-container').innerHTML = '';
+        return;
+      }
+      const {filtered, recentQuarters} = getFilteredData();
+      renderPivotTable(filtered, recentQuarters);
     }
 
     fetch(jsonPath)
