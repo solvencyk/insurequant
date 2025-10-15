@@ -1,9 +1,176 @@
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-    <title>K-ICS Disclosure</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>InsureQuant — K-ICS 지급여력비율 변동 추이</title>
+  <style>
+    :root{--bg:#ffffff; --card:#f8f9fa; --border:#e9ecef; --text:#212529; --muted:#6c757d; --primary:#0d6efd; --primary-hover:#0b5ed7;}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR}
+    header{position:sticky;top:0;padding:10px 16px;border-bottom:1px solid var(--border);background:#ffffff;z-index:1000}
+    .brand{font-weight:700;margin-bottom:12px;cursor:pointer;color:var(--primary);text-decoration:none}
+    .brand:hover{color:var(--primary-hover)}
+    .tabs{display:flex;gap:4px;margin-bottom:0}
+    .tab{padding:8px 16px;border:1px solid var(--border);border-radius:8px 8px 0 0;background:var(--card);color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:all 0.2s;}
+    .tab:hover{background:var(--primary);color:white;border-color:var(--primary)}
+    .tab.active{background:var(--primary);color:white;border-color:var(--primary)}
+    .container{max-width:1320px;margin:0 auto;padding:16px}
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
+    .panel h2{margin:0 0 16px 0;color:var(--text);font-size:20px;font-weight:600}
+    .panel p{color:var(--muted);line-height:1.6;margin:0 0 12px 0}
+    .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:16px}
+    .select{padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:#ffffff;color:#212529}
+    .chart-container{position:relative;height:500px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
+    .coming-soon{text-align:center;padding:60px 20px;color:var(--muted)}
+    .coming-soon h3{font-size:24px;margin:0 0 12px 0;color:var(--text)}
+    .coming-soon p{font-size:16px;margin:0}
+    .table-container{margin-top:32px;}
+    table{border-collapse:collapse;width:100%;}
+    th, td{border:1px solid var(--border);padding:6px 8px;text-align:left;}
+    th{background:var(--card);}
+  </style>
 </head>
 <body>
-    <h1>K-ICS Disclosure</h1>
-    <p>This is the updated content for K-ICS.html based on the latest requirements.</p>
+  <header>
+    <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">K-ICS 지급여력비율 변동 추이</span></a>
+    <div class="tabs">
+      <a href="K-ICS.html" class="tab active">K-ICS</a>
+      <a href="IFRS17.html" class="tab">IFRS17</a>
+      <a href="공시보고서.html" class="tab">공시/보고서</a>
+    </div>
+  </header>
+  <div class="container">
+    <div class="panel">
+      <h2>원보험사별 K-ICS 지급여력비율 변동 추이</h2>
+      <p>보험회사들의 K-ICS 지급여력비율 변화를 시계열로 분석하여 안정성 추이를 파악할 수 있습니다.</p>
+    </div>
+    <div class="panel">
+      <div class="controls">
+        <div>
+          <label>보험사 선택: 
+            <select id="company" class="select">
+              <option value="ALL">전체</option>
+              <option value="한화생명">한화생명</option>
+              <option value="교보생명보험">교보생명보험</option>
+              <option value="흥국생명보험">흥국생명보험</option>
+              <option value="라이나생명보험">라이나생명보험</option>
+              <option value="DB생명보험">DB생명보험</option>
+              <option value="에이비엘생명보험">에이비엘생명보험</option>
+              <option value="케이디비생명보험">케이디비생명보험</option>
+              <option value="푸본현대생명보험">푸본현대생명보험</option>
+              <option value="아이엠라이프생명보험">아이엠라이프생명보험</option>
+              <option value="처브라이프생명보험">처브라이프생명보험</option>
+              <option value="비엔피파리바카디프생명보험">비엔피파리바카디프생명보험</option>
+              <option value="DB손해보험">DB손해보험</option>
+              <option value="삼성화재해상보험">삼성화재해상보험</option>
+              <option value="현대해상">현대해상</option>
+              <option value="KB손해보험">KB손해보험</option>
+              <option value="메리츠화재해상보험">메리츠화재해상보험</option>
+              <option value="한화손해보험">한화손해보험</option>
+              <option value="롯데손해보험">롯데손해보험</option>
+              <option value="흥국화재">흥국화재</option>
+              <option value="NH농협손해보험">NH농협손해보험</option>
+              <option value="하나손해보험">하나손해보험</option>
+              <option value="악사손해보험">악사손해보험</option>
+              <option value="신한이지손해보험">신한이지손해보험</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>기간: 
+            <select id="period" class="select">
+              <option value="1Y">최근 1년</option>
+              <option value="2Y">최근 2년</option>
+              <option value="3Y">최근 3년</option>
+              <option value="5Y">최근 5년</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="coming-soon">
+          <h3>📊 차트 준비 중</h3>
+          <p>K-ICS 지급여력비율 변동 추이 차트가 곧 추가될 예정입니다.</p>
+          <p>보험회사별 시계열 데이터를 시각화하여 안정성 추이를 분석할 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="table-container" id="table-container"></div>
+    </div>
+  </div>
+  <script>
+    const jsonPath = 'data/kics_disclosure.json';
+    let allData = [];
+
+    // 분기값에서 년도를 추출 (2024.1Q → 2024)
+    function getYear(q) {
+      if (!q) return null;
+      const m = q.match(/^(\d{4})\./);
+      return m ? parseInt(m[1], 10) : null;
+    }
+
+    // 기간 필터: 최근 N년치만 남김
+    function filterByPeriod(data, nYear) {
+      const years = data.map(row => getYear(row['공시분기'])).filter(Boolean);
+      if (!years.length) return data;
+      const maxYear = Math.max(...years);
+      const minYear = maxYear - nYear + 1;
+      return data.filter(row => {
+        const y = getYear(row['공시분기']);
+        return y && y >= minYear && y <= maxYear;
+      });
+    }
+
+    // 테이블 렌더링
+    function renderTable(data) {
+      if (!Array.isArray(data) || !data.length) {
+        document.getElementById('table-container').innerHTML = '<p>데이터가 없습니다.</p>';
+        return;
+      }
+      const headers = Object.keys(data[0]);
+      let table = '<table><thead><tr>';
+      headers.forEach(h => table += `<th>${h}</th>`);
+      table += '</tr></thead><tbody>';
+      data.forEach(row => {
+        table += '<tr>';
+        headers.forEach(h => table += `<td>${row[h]}</td>`);
+        table += '</tr>';
+      });
+      table += '</tbody></table>';
+      document.getElementById('table-container').innerHTML = table;
+    }
+
+    function getFilteredData() {
+      let filtered = allData;
+      // 보험사 필터
+      const company = document.getElementById('company').value;
+      if (company && company !== 'ALL')
+        filtered = filtered.filter(row => row['원수사명'] === company);
+      // 기간 필터
+      const period = document.getElementById('period').value;
+      let nYear = 1;
+      if (period === '2Y') nYear = 2;
+      if (period === '3Y') nYear = 3;
+      if (period === '5Y') nYear = 5;
+      filtered = filterByPeriod(filtered, nYear);
+      return filtered;
+    }
+
+    function updateTable() {
+      const filtered = getFilteredData();
+      renderTable(filtered);
+    }
+
+    fetch(jsonPath)
+      .then(response => response.json())
+      .then(data => {
+        allData = data;
+        updateTable();
+        document.getElementById('company').addEventListener('change', updateTable);
+        document.getElementById('period').addEventListener('change', updateTable);
+      })
+      .catch(e => {
+        document.getElementById('table-container').innerHTML = `<p>JSON 파일을 불러오는 중 오류 발생: ${e}</p>`;
+      });
+  </script>
 </body>
 </html>
