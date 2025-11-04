@@ -543,13 +543,65 @@
       });
     }
 
+    // URL 파라미터 읽기
+    function getUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        company: params.get('company'),
+        period: params.get('period')
+      };
+    }
+
     fetch(jsonPath)
       .then(response => response.json())
       .then(data => {
         allData = data;
+        
+        // URL 파라미터 확인
+        const urlParams = getUrlParams();
+        const companySelect = document.getElementById('company');
+        const periodSelect = document.getElementById('period');
+        
+        // 회사 선택
+        if (urlParams.company) {
+          const decodedCompany = decodeURIComponent(urlParams.company);
+          // 옵션 목록에서 정확히 일치하는 회사 찾기
+          let found = false;
+          for (let option of companySelect.options) {
+            if (option.value === decodedCompany) {
+              companySelect.value = decodedCompany;
+              found = true;
+              break;
+            }
+          }
+          
+          // 정확히 일치하지 않으면 부분 매칭 시도
+          if (!found) {
+            for (let option of companySelect.options) {
+              if (option.value.includes(decodedCompany) || decodedCompany.includes(option.value)) {
+                companySelect.value = option.value;
+                found = true;
+                break;
+              }
+            }
+          }
+        }
+        
+        // 기간 선택
+        if (urlParams.period) {
+          if (urlParams.period === 'quarter') {
+            periodSelect.value = 'quarter';
+          } else if (urlParams.period === 'year') {
+            periodSelect.value = 'year';
+          }
+        }
+        
+        // 이벤트 리스너 추가
+        companySelect.addEventListener('change', updateTable);
+        periodSelect.addEventListener('change', updateTable);
+        
+        // 초기 업데이트
         updateTable();
-        document.getElementById('company').addEventListener('change', updateTable);
-        document.getElementById('period').addEventListener('change', updateTable);
       })
       .catch(e => {
         document.getElementById('table-container').innerHTML = `<p>JSON 파일을 불러오는 중 오류 발생: ${e}</p>`;
