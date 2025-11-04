@@ -80,45 +80,140 @@
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
+    const jsonPath = 'kics_disclosure.json';
+    let allData = [];
     let GROUPED = {};
     
-    // 기본 데이터 로드
-    function loadData() {
-      loadDefaultData();
+    // 숫자 값 추출 함수 (쉼표 제거)
+    function extractNumericValue(value) {
+      if (value === null || value === undefined || value === '') return null;
+      const strValue = String(value).replace(/,/g, '').trim();
+      const numValue = parseFloat(strValue);
+      return isNaN(numValue) ? null : numValue;
     }
     
-    // 기본 데이터로 초기화 (실제 XLSX 데이터 기반)
-    function loadDefaultData() {
-      GROUPED = {
-        "Life": [
-          {"company": "한화생명", "sector": "Life", "ratio": 154.1, "required": 136764.0, "basicCapitalRatio": 45.2},
-          {"company": "교보생명보험", "sector": "Life", "ratio": 145.84, "required": 89733.0, "basicCapitalRatio": 42.8},
-          {"company": "흥국생명보험", "sector": "Life", "ratio": 153.2, "required": 23819.0, "basicCapitalRatio": 38.5},
-          {"company": "라이나생명보험", "sector": "Life", "ratio": 348.16, "required": 21483.0, "basicCapitalRatio": 52.1},
-          {"company": "DB생명보험", "sector": "Life", "ratio": 150.51, "required": 15256.0, "basicCapitalRatio": 41.3},
-          {"company": "에이비엘생명보험", "sector": "Life", "ratio": 104.63, "required": 15227.0, "basicCapitalRatio": 35.7},
-          {"company": "케이디비생명보험", "sector": "Life", "ratio": 40.6, "required": 13098.0, "basicCapitalRatio": 28.9},
-          {"company": "푸본현대생명보험", "sector": "Life", "ratio": -24.0, "required": 13092.0, "basicCapitalRatio": 15.2},
-          {"company": "아이엠라이프생명보험", "sector": "Life", "ratio": 90.5, "required": 5712.0, "basicCapitalRatio": 32.4},
-          {"company": "처브라이프생명보험", "sector": "Life", "ratio": 133.6, "required": 1296.0, "basicCapitalRatio": 39.8},
-          {"company": "비엔피파리바카디프생명보험", "sector": "Life", "ratio": 304.61, "required": 695.0, "basicCapitalRatio": 48.6}
-        ], 
-        "Non-Life": [
-          {"company": "DB손해보험", "sector": "Non-Life", "ratio": 204.66, "required": 97883.0, "basicCapitalRatio": 55.3},
-          {"company": "삼성화재해상보험", "sector": "Non-Life", "ratio": 266.61, "required": 93446.0, "basicCapitalRatio": 62.1},
-          {"company": "현대해상", "sector": "Non-Life", "ratio": 159.4, "required": 82186.0, "basicCapitalRatio": 48.7},
-          {"company": "KB손해보험", "sector": "Non-Life", "ratio": 182.16, "required": 63515.0, "basicCapitalRatio": 51.2},
-          {"company": "메리츠화재해상보험", "sector": "Non-Life", "ratio": 238.92, "required": 55434.0, "basicCapitalRatio": 58.9},
-          {"company": "한화손해보험", "sector": "Non-Life", "ratio": 182.5, "required": 33013.0, "basicCapitalRatio": 49.8},
-          {"company": "롯데손해보험", "sector": "Non-Life", "ratio": 101.6, "required": 23518.0, "basicCapitalRatio": 42.1},
-          {"company": "흥국화재", "sector": "Non-Life", "ratio": 174.03, "required": 18008.0, "basicCapitalRatio": 47.5},
-          {"company": "NH농협손해보험", "sector": "Non-Life", "ratio": 129.55, "required": 15676.0, "basicCapitalRatio": 44.3},
-          {"company": "하나손해보험", "sector": "Non-Life", "ratio": 150.14, "required": 3312.0, "basicCapitalRatio": 46.8},
-          {"company": "악사손해보험", "sector": "Non-Life", "ratio": 217.6, "required": 2401.0, "basicCapitalRatio": 53.4},
-          {"company": "신한이지손해보험", "sector": "Non-Life", "ratio": 3.4, "required": 489.0, "basicCapitalRatio": 18.7}
-        ]
-      };
-      render(sel.value);
+    // 최신 분기 추출
+    function getLatestQuarter(data) {
+      const allQuarters = Array.from(new Set(data.map(row => row['공시분기']))).sort((a, b) => {
+        const parse = s => {
+          const m = s.match(/^(\d{4})\.(\d)Q$/);
+          return m ? [parseInt(m[1]), parseInt(m[2])] : [0, 0];
+        };
+        const [ay, aq] = parse(a), [by, bq] = parse(b);
+        if (ay !== by) return by - ay;
+        return bq - aq;
+      });
+      return allQuarters.length > 0 ? allQuarters[0] : null;
+    }
+    
+    // JSON 데이터에서 히트맵 데이터 생성
+    function processJsonData(data) {
+      const latestQuarter = getLatestQuarter(data);
+      if (!latestQuarter) {
+        console.warn('최신 분기 데이터를 찾을 수 없습니다.');
+        return { "Life": [], "Non-Life": [] };
+      }
+      
+      console.log(`최신 분기: ${latestQuarter}`);
+      
+      // 최신 분기 데이터만 필터링
+      const latestData = data.filter(row => row['공시분기'] === latestQuarter);
+      
+      // 회사별로 데이터 그룹화
+      const companyMap = {};
+      
+      latestData.forEach(row => {
+        const company = row['원수사명'];
+        const insuranceType = row['생손보여부'];
+        const itemNumber = row['항목번호'];
+        const itemName = row['항목명'];
+        const value = extractNumericValue(row['값']);
+        
+        if (!company || !insuranceType) return;
+        
+        if (!companyMap[company]) {
+          companyMap[company] = {
+            company: company,
+            sector: insuranceType === '생명보험' ? 'Life' : 'Non-Life',
+            ratio: null,
+            required: null,
+            basicCapitalRatio: null,
+            basicCapital: null // 기본자본 값 저장
+          };
+        }
+        
+        // 항목번호로 정확하게 찾기
+        // 항목번호 14: 지급여력기준금액
+        if (itemNumber === 14) {
+          if (value !== null) {
+            companyMap[company].required = value;
+          }
+        }
+        
+        // 항목번호 27: 지급여력비율
+        if (itemNumber === 27) {
+          if (value !== null) {
+            companyMap[company].ratio = value;
+          }
+        }
+        
+        // 항목번호 28: 기본자본비율
+        if (itemNumber === 28) {
+          if (value !== null) {
+            companyMap[company].basicCapitalRatio = value;
+          }
+        }
+        
+        // 항목번호 2: 기본자본 (기본자본비율 계산용)
+        if (itemNumber === 2) {
+          if (value !== null) {
+            companyMap[company].basicCapital = value;
+          }
+        }
+      });
+      
+      // 모든 데이터 수집 후 기본자본비율 계산
+      Object.values(companyMap).forEach(company => {
+        if (!company.basicCapitalRatio && company.basicCapital !== null && company.required !== null && company.required > 0) {
+          company.basicCapitalRatio = (company.basicCapital / company.required) * 100;
+        }
+      });
+      
+      // Life와 Non-Life로 분류
+      const grouped = { "Life": [], "Non-Life": [] };
+      
+      Object.values(companyMap).forEach(company => {
+        // 필수 데이터가 있는 경우만 추가
+        if (company.required !== null && (company.ratio !== null || company.basicCapitalRatio !== null)) {
+          grouped[company.sector].push(company);
+        }
+      });
+      
+      // required 기준으로 정렬 (내림차순)
+      grouped["Life"].sort((a, b) => (b.required || 0) - (a.required || 0));
+      grouped["Non-Life"].sort((a, b) => (b.required || 0) - (a.required || 0));
+      
+      console.log('처리된 데이터:', grouped);
+      return grouped;
+    }
+    
+    // JSON 데이터 로드
+    function loadData() {
+      fetch(jsonPath)
+        .then(response => response.json())
+        .then(data => {
+          allData = data;
+          GROUPED = processJsonData(data);
+          const sectorSel = document.getElementById("sector");
+          render(sectorSel ? sectorSel.value : "ALL");
+        })
+        .catch(e => {
+          console.error('JSON 파일을 불러오는 중 오류 발생:', e);
+          // 오류 발생 시 빈 데이터로 초기화
+          GROUPED = { "Life": [], "Non-Life": [] };
+          const sectorSel = document.getElementById("sector");
+          render(sectorSel ? sectorSel.value : "ALL");
+        });
     }
     
     
