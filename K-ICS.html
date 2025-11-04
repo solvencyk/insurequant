@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>InsureQuant — K-ICS 지급여력비율 변동 추이</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
   <style>
     :root{--bg:#ffffff; --card:#f8f9fa; --border:#e9ecef; --text:#212529; --muted:#6c757d; --primary:#0d6efd; --primary-hover:#0b5ed7;}
     *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR}
@@ -89,6 +90,10 @@
         </div>
       </div>
       <div class="chart-container">
+        <div id="chart-placeholder" class="coming-soon">
+          <h3>📊 보험사와 조회 기간을 선택해 주세요</h3>
+          <p>위의 드롭다운 메뉴에서 보험사와 기간을 선택하면 그래프와 테이블이 표시됩니다.</p>
+        </div>
         <canvas id="chart" style="display:none;"></canvas>
       </div>
       <div class="table-container" id="table-container"></div>
@@ -249,6 +254,7 @@
     function updateTable() {
       if (!canShowTable()) {
         document.getElementById('table-container').innerHTML = '';
+        updateChart([], []); // 안내 문구 표시를 위해 호출
         return;
       }
       const {filtered, recentQuarters} = getFilteredData();
@@ -257,21 +263,31 @@
     }
 
     function updateChart(data, quarters) {
+      const placeholder = document.getElementById('chart-placeholder');
+      const ctx = document.getElementById('chart');
+      
       if (!canShowTable()) {
-        // 보험사와 기간이 선택되지 않았으면 차트 숨김
+        // 보험사와 기간이 선택되지 않았으면 차트 숨김, 안내 문구 표시
         if (chart) {
           chart.destroy();
           chart = null;
         }
-        const ctx = document.getElementById('chart');
         if (ctx) {
           ctx.style.display = 'none';
+        }
+        if (placeholder) {
+          placeholder.style.display = 'block';
         }
         return;
       }
       
-      const ctx = document.getElementById('chart');
-      ctx.style.display = 'block';
+      // 보험사와 기간이 선택되었으면 안내 문구 숨김, 차트 표시
+      if (placeholder) {
+        placeholder.style.display = 'none';
+      }
+      if (ctx) {
+        ctx.style.display = 'block';
+      }
       const chartCtx = ctx.getContext('2d');
       
       // '다. 지급여력비율' 데이터 추출
@@ -318,27 +334,34 @@
         chart.destroy();
       }
 
+      // 가로축을 역순으로 (오른쪽이 최신)
+      const reversedQuarters = [...quarters].reverse();
+      const reversedSolvencyRatioData = [...solvencyRatioData].reverse();
+      const reversedBasicCapitalRatioData = [...basicCapitalRatioData].reverse();
+
       // 차트 생성
       chart = new Chart(chartCtx, {
         type: 'line',
         data: {
-          labels: quarters,
+          labels: reversedQuarters,
           datasets: [
             {
               label: '다. 지급여력비율',
-              data: solvencyRatioData,
+              data: reversedSolvencyRatioData,
               borderColor: 'rgb(75, 192, 192)',
               backgroundColor: 'rgba(75, 192, 192, 0.1)',
               tension: 0.1,
-              fill: true
+              fill: true,
+              yAxisID: 'y'
             },
             {
               label: '기본자본비율',
-              data: basicCapitalRatioData,
+              data: reversedBasicCapitalRatioData,
               borderColor: 'rgb(255, 99, 132)',
               backgroundColor: 'rgba(255, 99, 132, 0.1)',
               tension: 0.1,
-              fill: true
+              fill: true,
+              yAxisID: 'y1'
             }
           ]
         },
@@ -371,19 +394,107 @@
                   return label;
                 }
               }
+            },
+            annotation: {
+              annotations: {
+                // 지급여력비율 130% 기준선
+                solvencyLine: {
+                  type: 'line',
+                  yMin: 130,
+                  yMax: 130,
+                  borderColor: 'rgb(75, 192, 192)',
+                  borderWidth: 2,
+                  borderDash: [5, 5],
+                  label: {
+                    display: true,
+                    content: '지급여력비율 130% 기준선',
+                    position: 'end',
+                    backgroundColor: 'rgb(75, 192, 192)',
+                    color: 'white',
+                    font: {
+                      size: 11
+                    }
+                  },
+                  yAxisID: 'y'
+                },
+                // 지급여력비율 130% 기준선 아래 경고 영역
+                solvencyWarning: {
+                  type: 'box',
+                  yMin: 0,
+                  yMax: 130,
+                  backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                  borderWidth: 0,
+                  yAxisID: 'y'
+                },
+                // 기본자본비율 50% 기준선
+                basicCapitalLine: {
+                  type: 'line',
+                  yMin: 50,
+                  yMax: 50,
+                  borderColor: 'rgb(255, 99, 132)',
+                  borderWidth: 2,
+                  borderDash: [5, 5],
+                  label: {
+                    display: true,
+                    content: '기본자본비율 50% 기준선',
+                    position: 'end',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    color: 'white',
+                    font: {
+                      size: 11
+                    }
+                  },
+                  yAxisID: 'y1'
+                },
+                // 기본자본비율 50% 기준선 아래 경고 영역
+                basicCapitalWarning: {
+                  type: 'box',
+                  yMin: 0,
+                  yMax: 50,
+                  backgroundColor: 'rgba(255, 99, 132, 0.15)',
+                  borderWidth: 0,
+                  yAxisID: 'y1'
+                }
+              }
             }
           },
           scales: {
             y: {
+              type: 'linear',
+              position: 'left',
               beginAtZero: false,
               title: {
                 display: true,
-                text: '비율 (%)'
+                text: '지급여력비율 (%)',
+                color: 'rgb(75, 192, 192)'
               },
               ticks: {
                 callback: function(value) {
                   return value.toFixed(1) + '%';
-                }
+                },
+                color: 'rgb(75, 192, 192)'
+              },
+              grid: {
+                color: 'rgba(75, 192, 192, 0.1)'
+              }
+            },
+            y1: {
+              type: 'linear',
+              position: 'right',
+              beginAtZero: false,
+              title: {
+                display: true,
+                text: '기본자본비율 (%)',
+                color: 'rgb(255, 99, 132)'
+              },
+              ticks: {
+                callback: function(value) {
+                  return value.toFixed(1) + '%';
+                },
+                color: 'rgb(255, 99, 132)'
+              },
+              grid: {
+                drawOnChartArea: false // 보조축 격자는 표시하지 않음
               }
             },
             x: {
