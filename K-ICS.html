@@ -341,6 +341,7 @@
       
       // 보조축 원본 데이터 보관 (tooltip에서 원래 값 표시용)
       const originalBasicCapitalRatioData = [...reversedBasicCapitalRatioData];
+      window.originalBasicCapitalRatioData = originalBasicCapitalRatioData;
 
       // 데이터 범위 계산 (null 제외)
       const validSolvencyData = reversedSolvencyRatioData.filter(v => v !== null && !isNaN(v));
@@ -370,36 +371,39 @@
       // 보조축 최댓값 < 주축 최솟값 보장
       const maxAllowedBasicCapital = solvencyYMin * 0.98; // 주축 최솟값의 98%로 제한
       
-      // 보조축 데이터 스케일링이 필요한지 확인
+      // 보조축이 주축과 겹치면 보조축 범위를 조정
       let needsScaling = false;
-      let scaleFactor = 1;
-      let scaleOffset = 0;
-      
       if (basicCapitalYMax >= solvencyYMin) {
-        // 보조축이 주축과 겹치므로 스케일링 필요
         needsScaling = true;
-        
-        // 보조축을 주축 최솟값보다 작은 범위로 스케일링
-        // 원래 범위: basicCapitalYMin ~ basicCapitalYMax
-        // 새로운 범위: basicCapitalYMin ~ maxAllowedBasicCapital
+        // 보조축 데이터를 스케일링하여 주축 최솟값보다 작게 만듦
         const originalRange = basicCapitalYMax - basicCapitalYMin;
         const newRange = maxAllowedBasicCapital - basicCapitalYMin;
-        scaleFactor = newRange / originalRange;
-        scaleOffset = basicCapitalYMin * (1 - scaleFactor);
         
-        basicCapitalYMax = maxAllowedBasicCapital;
+        if (originalRange > 0) {
+          const scaleFactor = newRange / originalRange;
+          const scaleOffset = basicCapitalYMin * (1 - scaleFactor);
+          
+          // 데이터 스케일링
+          for (let i = 0; i < reversedBasicCapitalRatioData.length; i++) {
+            if (reversedBasicCapitalRatioData[i] !== null && !isNaN(reversedBasicCapitalRatioData[i])) {
+              reversedBasicCapitalRatioData[i] = (reversedBasicCapitalRatioData[i] * scaleFactor) + scaleOffset;
+            }
+          }
+          
+          // 기준선(50%)도 스케일링
+          const scaledBasicCapitalReference = (basicCapitalReference * scaleFactor) + scaleOffset;
+          basicCapitalYMax = maxAllowedBasicCapital;
+          
+          // 스케일링된 기준선을 전역 변수로 저장 (annotation에서 사용)
+          window.scaledBasicCapitalReference = scaledBasicCapitalReference;
+        } else {
+          basicCapitalYMax = maxAllowedBasicCapital;
+          window.scaledBasicCapitalReference = basicCapitalReference;
+        }
+      } else {
+        window.scaledBasicCapitalReference = basicCapitalReference;
       }
-      
-      // 보조축 데이터 스케일링 적용
-      let scaledBasicCapitalReference = basicCapitalReference; // 50% 기준선의 스케일링된 값
-      if (needsScaling) {
-        reversedBasicCapitalRatioData = reversedBasicCapitalRatioData.map(v => {
-          if (v === null || isNaN(v)) return v;
-          return (v * scaleFactor) + scaleOffset;
-        });
-        // 기준선(50%)도 스케일링
-        scaledBasicCapitalReference = (basicCapitalReference * scaleFactor) + scaleOffset;
-      }
+      window.needsScaling = needsScaling;
 
       // 차트 생성
       chart = new Chart(chartCtx, {
@@ -450,8 +454,8 @@
                   }
                   if (context.parsed.y !== null) {
                     // 기본자본비율 데이터셋(인덱스 1)인 경우 원본 값 표시
-                    if (context.datasetIndex === 1 && needsScaling) {
-                      const originalValue = originalBasicCapitalRatioData[context.dataIndex];
+                    if (context.datasetIndex === 1 && window.needsScaling && window.originalBasicCapitalRatioData) {
+                      const originalValue = window.originalBasicCapitalRatioData[context.dataIndex];
                       if (originalValue !== null && !isNaN(originalValue)) {
                         label += originalValue.toFixed(2) + '%';
                       } else {
@@ -501,8 +505,8 @@
                 // 기본자본비율 50% 기준선
                 basicCapitalLine: {
                   type: 'line',
-                  yMin: scaledBasicCapitalReference,
-                  yMax: scaledBasicCapitalReference,
+                  yMin: window.scaledBasicCapitalReference || 50,
+                  yMax: window.scaledBasicCapitalReference || 50,
                   borderColor: 'rgb(255, 99, 132)',
                   borderWidth: 2,
                   borderDash: [5, 5],
@@ -522,7 +526,7 @@
                 basicCapitalWarning: {
                   type: 'box',
                   yMin: basicCapitalYMin,
-                  yMax: scaledBasicCapitalReference,
+                  yMax: window.scaledBasicCapitalReference || 50,
                   backgroundColor: 'rgba(255, 99, 132, 0.15)',
                   borderWidth: 0,
                   yScaleID: 'y1'
