@@ -338,6 +338,9 @@
       const reversedQuarters = [...quarters].reverse();
       const reversedSolvencyRatioData = [...solvencyRatioData].reverse();
       const reversedBasicCapitalRatioData = [...basicCapitalRatioData].reverse();
+      
+      // 보조축 원본 데이터 보관 (tooltip에서 원래 값 표시용)
+      const originalBasicCapitalRatioData = [...reversedBasicCapitalRatioData];
 
       // 데이터 범위 계산 (null 제외)
       const validSolvencyData = reversedSolvencyRatioData.filter(v => v !== null && !isNaN(v));
@@ -348,22 +351,55 @@
       const basicCapitalMin = validBasicCapitalData.length > 0 ? Math.min(...validBasicCapitalData) : 30;
       const basicCapitalMax = validBasicCapitalData.length > 0 ? Math.max(...validBasicCapitalData) : 80;
       
-      // 주축과 보조축 스케일 조정
-      // 주축(지급여력비율) 범위: 최소값에서 여유 공간 추가
-      const solvencyRange = solvencyMax - solvencyMin;
-      const solvencyYMin = Math.max(0, solvencyMin - solvencyRange * 0.15);
-      const solvencyYMax = solvencyMax + solvencyRange * 0.15;
+      // 주축(지급여력비율) 스케일: 최댓값, 최솟값, 130% 모두 포함
+      const solvencyReference = 130; // 기준선
+      const solvencyDataMin = Math.min(solvencyMin, solvencyReference);
+      const solvencyDataMax = Math.max(solvencyMax, solvencyReference);
+      const solvencyRange = solvencyDataMax - solvencyDataMin;
+      const solvencyYMin = Math.max(0, solvencyDataMin - solvencyRange * 0.1);
+      const solvencyYMax = solvencyDataMax + solvencyRange * 0.1;
       
-      // 보조축(기본자본비율) 범위: 주축 최소값보다 확실히 낮게 설정
-      const basicCapitalRange = basicCapitalMax - basicCapitalMin;
-      const basicCapitalYMin = Math.max(0, basicCapitalMin - basicCapitalRange * 0.15);
+      // 보조축(기본자본비율) 스케일: 최댓값, 최솟값, 50% 모두 포함
+      const basicCapitalReference = 50; // 기준선
+      const basicCapitalDataMin = Math.min(basicCapitalMin, basicCapitalReference);
+      const basicCapitalDataMax = Math.max(basicCapitalMax, basicCapitalReference);
+      const basicCapitalRange = basicCapitalDataMax - basicCapitalDataMin;
+      const basicCapitalYMin = Math.max(0, basicCapitalDataMin - basicCapitalRange * 0.1);
+      let basicCapitalYMax = basicCapitalDataMax + basicCapitalRange * 0.1;
       
-      // 보조축 최대값: 주축 최소값의 50-60% 정도로 설정하여 항상 아래에 위치
-      // 기본자본비율의 실제 최대값과 주축 최소값의 60% 중 작은 값을 사용
-      const basicCapitalYMax = Math.min(
-        basicCapitalMax + basicCapitalRange * 0.15,
-        solvencyYMin * 0.6
-      );
+      // 보조축 최댓값 < 주축 최솟값 보장
+      const maxAllowedBasicCapital = solvencyYMin * 0.98; // 주축 최솟값의 98%로 제한
+      
+      // 보조축 데이터 스케일링이 필요한지 확인
+      let needsScaling = false;
+      let scaleFactor = 1;
+      let scaleOffset = 0;
+      
+      if (basicCapitalYMax >= solvencyYMin) {
+        // 보조축이 주축과 겹치므로 스케일링 필요
+        needsScaling = true;
+        
+        // 보조축을 주축 최솟값보다 작은 범위로 스케일링
+        // 원래 범위: basicCapitalYMin ~ basicCapitalYMax
+        // 새로운 범위: basicCapitalYMin ~ maxAllowedBasicCapital
+        const originalRange = basicCapitalYMax - basicCapitalYMin;
+        const newRange = maxAllowedBasicCapital - basicCapitalYMin;
+        scaleFactor = newRange / originalRange;
+        scaleOffset = basicCapitalYMin * (1 - scaleFactor);
+        
+        basicCapitalYMax = maxAllowedBasicCapital;
+      }
+      
+      // 보조축 데이터 스케일링 적용
+      let scaledBasicCapitalReference = basicCapitalReference; // 50% 기준선의 스케일링된 값
+      if (needsScaling) {
+        reversedBasicCapitalRatioData = reversedBasicCapitalRatioData.map(v => {
+          if (v === null || isNaN(v)) return v;
+          return (v * scaleFactor) + scaleOffset;
+        });
+        // 기준선(50%)도 스케일링
+        scaledBasicCapitalReference = (basicCapitalReference * scaleFactor) + scaleOffset;
+      }
 
       // 차트 생성
       chart = new Chart(chartCtx, {
@@ -413,7 +449,17 @@
                     label += ': ';
                   }
                   if (context.parsed.y !== null) {
-                    label += context.parsed.y.toFixed(2) + '%';
+                    // 기본자본비율 데이터셋(인덱스 1)인 경우 원본 값 표시
+                    if (context.datasetIndex === 1 && needsScaling) {
+                      const originalValue = originalBasicCapitalRatioData[context.dataIndex];
+                      if (originalValue !== null && !isNaN(originalValue)) {
+                        label += originalValue.toFixed(2) + '%';
+                      } else {
+                        label += '데이터 없음';
+                      }
+                    } else {
+                      label += context.parsed.y.toFixed(2) + '%';
+                    }
                   } else {
                     label += '데이터 없음';
                   }
@@ -455,8 +501,8 @@
                 // 기본자본비율 50% 기준선
                 basicCapitalLine: {
                   type: 'line',
-                  yMin: 50,
-                  yMax: 50,
+                  yMin: scaledBasicCapitalReference,
+                  yMax: scaledBasicCapitalReference,
                   borderColor: 'rgb(255, 99, 132)',
                   borderWidth: 2,
                   borderDash: [5, 5],
@@ -475,8 +521,8 @@
                 // 기본자본비율 50% 기준선 아래 경고 영역
                 basicCapitalWarning: {
                   type: 'box',
-                  yMin: 0,
-                  yMax: 50,
+                  yMin: basicCapitalYMin,
+                  yMax: scaledBasicCapitalReference,
                   backgroundColor: 'rgba(255, 99, 132, 0.15)',
                   borderWidth: 0,
                   yScaleID: 'y1'
