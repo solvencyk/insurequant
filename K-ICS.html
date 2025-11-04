@@ -82,10 +82,8 @@
           <label>기간: 
             <select id="period" class="select">
               <option value="">기간 선택</option>
-              <option value="1Y">최근 1년</option>
-              <option value="2Y">최근 2년</option>
-              <option value="3Y">최근 3년</option>
-              <option value="5Y">최근 5년</option>
+              <option value="quarter">분기</option>
+              <option value="year">연도</option>
             </select>
           </label>
         </div>
@@ -109,8 +107,8 @@
           return m ? [parseInt(m[1]), parseInt(m[2])] : [0,0];
         };
         const [ay, aq] = parse(a), [by, bq] = parse(b);
-        if (ay[0] != by[0]) return by[0] - ay[0];
-        return by[1] - aq[1];
+        if (ay !== by) return by - ay;
+        return bq - aq;
       });
       return allQuarters.slice(0, nQuarter);
     }
@@ -179,20 +177,73 @@
       document.getElementById('table-container').innerHTML = table;
     }
 
+    // 연말 분기 추출 (최신 분기 + 1년 전 연말 + 2년 전 연말)
+    function getYearEndQuarters(data) {
+      const allQuarters = Array.from(new Set(data.map(row => row['공시분기']))).sort((a, b) => {
+        const parse = s => {
+          const m = s.match(/^(\d{4})\.(\d)Q$/);
+          return m ? [parseInt(m[1]), parseInt(m[2])] : [0,0];
+        };
+        const [ay, aq] = parse(a), [by, bq] = parse(b);
+        if (ay !== by) return by - ay;
+        return bq - aq;
+      });
+      
+      if (allQuarters.length === 0) return [];
+      
+      // 최신 분기
+      const latest = allQuarters[0];
+      const [latestYear, latestQuarter] = (() => {
+        const m = latest.match(/^(\d{4})\.(\d)Q$/);
+        return m ? [parseInt(m[1]), parseInt(m[2])] : [0, 0];
+      })();
+      
+      const selectedQuarters = [latest];
+      
+      // 1년 전 연말 (4Q)
+      const year1Ago = `${latestYear - 1}.4Q`;
+      if (allQuarters.includes(year1Ago)) {
+        selectedQuarters.push(year1Ago);
+      }
+      
+      // 2년 전 연말 (4Q)
+      const year2Ago = `${latestYear - 2}.4Q`;
+      if (allQuarters.includes(year2Ago)) {
+        selectedQuarters.push(year2Ago);
+      }
+      
+      // 최신순으로 정렬 (최신 → 과거)
+      return selectedQuarters.sort((a, b) => {
+        const parse = s => {
+          const m = s.match(/^(\d{4})\.(\d)Q$/);
+          return m ? [parseInt(m[1]), parseInt(m[2])] : [0,0];
+        };
+        const [ay, aq] = parse(a), [by, bq] = parse(b);
+        if (ay !== by) return by - ay;
+        return bq - aq;
+      });
+    }
+
     function getFilteredData() {
       let filtered = allData;
       // 보험사 필터
       const company = document.getElementById('company').value;
       if (company) filtered = filtered.filter(row => row['원수사명'] === company);
-      // 기간 필터 (최신 N개 분기만 남김)
+      
+      // 기간 필터
       const period = document.getElementById('period').value;
-      let nQuarter = 4;
-      if (period === '2Y') nQuarter = 8;
-      if (period === '3Y') nQuarter = 12;
-      if (period === '5Y') nQuarter = 20;
-      const recentQuarters = getRecentQuarters(filtered, nQuarter);
-      filtered = filtered.filter(row => recentQuarters.includes(row['공시분기']));
-      return {filtered, recentQuarters};
+      let selectedQuarters = [];
+      
+      if (period === 'quarter') {
+        // 분기: 직전 4개 분기
+        selectedQuarters = getRecentQuarters(filtered, 4);
+      } else if (period === 'year') {
+        // 연도: 최신 분기 + 1년 전 연말 + 2년 전 연말
+        selectedQuarters = getYearEndQuarters(filtered);
+      }
+      
+      filtered = filtered.filter(row => selectedQuarters.includes(row['공시분기']));
+      return {filtered, recentQuarters: selectedQuarters};
     }
 
     function updateTable() {
