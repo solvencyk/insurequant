@@ -4,6 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>InsureQuant — K-ICS 지급여력비율 변동 추이</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root{--bg:#ffffff; --card:#f8f9fa; --border:#e9ecef; --text:#212529; --muted:#6c757d; --primary:#0d6efd; --primary-hover:#0b5ed7;}
     *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR}
@@ -28,6 +29,7 @@
     table{border-collapse:collapse;width:100%;}
     th, td{border:1px solid var(--border);padding:6px 8px;text-align:left;}
     th{background:var(--card);}
+    th:nth-child(n+2), td:nth-child(n+2){text-align:right;} /* 항목명 제외한 모든 셀 오른쪽 정렬 */
   </style>
 </head>
 <body>
@@ -89,11 +91,7 @@
         </div>
       </div>
       <div class="chart-container">
-        <div class="coming-soon">
-          <h3>📊 차트 준비 중</h3>
-          <p>K-ICS 지급여력비율 변동 추이 차트가 곧 추가될 예정입니다.</p>
-          <p>보험회사별 시계열 데이터를 시각화하여 안정성 추이를 분석할 수 있습니다.</p>
-        </div>
+        <canvas id="chart" style="display:none;"></canvas>
       </div>
       <div class="table-container" id="table-container"></div>
     </div>
@@ -101,6 +99,7 @@
   <script>
     const jsonPath = 'kics_disclosure.json';
     let allData = [];
+    let chart = null;
 
     // 공시분기 최신 N개 추출
     function getRecentQuarters(data, nQuarter) {
@@ -123,6 +122,35 @@
       return company && period;
     }
 
+    // 숫자 포맷팅 함수 (천 단위 쉼표, 소수점 첫째 자리)
+    function formatNumber(value) {
+      if (value === null || value === undefined || value === '') {
+        return '';
+      }
+      
+      // 문자열에서 숫자 추출 (쉼표 제거 후 파싱)
+      const strValue = String(value).replace(/,/g, '').trim();
+      const numValue = parseFloat(strValue);
+      
+      if (isNaN(numValue)) {
+        return value; // 숫자가 아니면 원본 반환
+      }
+      
+      // 소수점이 있는지 확인 (정수인지 확인)
+      const hasDecimal = numValue % 1 !== 0;
+      
+      if (hasDecimal) {
+        // 소수점이 있는 경우 첫째 자리까지만 표시
+        return numValue.toLocaleString('ko-KR', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 1
+        });
+      }
+      
+      // 정수인 경우 천 단위 쉼표만 추가
+      return numValue.toLocaleString('ko-KR');
+    }
+
     // 피벗 테이블 렌더링 (행: 항목명, 열: 공시분기)
     function renderPivotTable(data, quarters) {
       if (!Array.isArray(data) || !data.length) {
@@ -139,7 +167,11 @@
         table += `<tr><td>${item}</td>`;
         quarters.forEach(q => {
           const found = data.find(row => row['항목명'] === item && row['공시분기'] === q);
-          table += `<td>${found ? (found['값'] ?? '') : ''}</td>`;
+          if (found && found['값'] !== null && found['값'] !== undefined && found['값'] !== '') {
+            table += `<td>${formatNumber(found['값'])}</td>`;
+          } else {
+            table += '<td></td>';
+          }
         });
         table += '</tr>';
       });
@@ -170,6 +202,153 @@
       }
       const {filtered, recentQuarters} = getFilteredData();
       renderPivotTable(filtered, recentQuarters);
+      updateChart(filtered, recentQuarters);
+    }
+
+    function updateChart(data, quarters) {
+      if (!canShowTable()) {
+        // 보험사와 기간이 선택되지 않았으면 차트 숨김
+        if (chart) {
+          chart.destroy();
+          chart = null;
+        }
+        const ctx = document.getElementById('chart');
+        if (ctx) {
+          ctx.style.display = 'none';
+        }
+        return;
+      }
+      
+      const ctx = document.getElementById('chart');
+      ctx.style.display = 'block';
+      const chartCtx = ctx.getContext('2d');
+      
+      // '다. 지급여력비율' 데이터 추출
+      const solvencyRatioData = quarters.map(q => {
+        const row = data.find(r => r['항목명'] === '다. 지급여력비율 : 가 ÷ 나 × 100' && r['공시분기'] === q);
+        if (!row) return null;
+        const value = parseFloat(String(row['값']).replace(/,/g, '')) || 0;
+        return value;
+      });
+
+      // '기본자본비율' 데이터 추출
+      const basicCapitalRatioData = quarters.map(q => {
+        // 먼저 '기본자본비율' 항목명으로 직접 검색
+        let row = data.find(r => r['항목명'] === '기본자본비율' && r['공시분기'] === q);
+        
+        if (row) {
+          const value = parseFloat(String(row['값']).replace(/,/g, '')) || 0;
+          return value;
+        }
+        
+        // '기본자본'과 '나. 지급여력기준금액'으로 계산 (기본자본 / 지급여력기준금액 * 100)
+        const basicCapital = data.find(r => 
+          (r['항목명'] === '기본자본' || r['항목명'] === '2. 기본자본') 
+          && r['공시분기'] === q
+        );
+        const requiredCapital = data.find(r => 
+          (r['항목명'] === '나. 지급여력기준금액 (Ⅰ-Ⅱ+Ⅲ)' || 
+           r['항목명'] === '나. 지급여력기준금액' ||
+           r['항목명'] === '지급여력기준금액') 
+          && r['공시분기'] === q
+        );
+        
+        if (basicCapital && requiredCapital) {
+          const capital = parseFloat(String(basicCapital['값']).replace(/,/g, '')) || 0;
+          const required = parseFloat(String(requiredCapital['값']).replace(/,/g, '')) || 0;
+          return required > 0 ? (capital / required * 100) : null;
+        }
+        
+        return null;
+      });
+
+      // 기존 차트가 있으면 제거
+      if (chart) {
+        chart.destroy();
+      }
+
+      // 차트 생성
+      chart = new Chart(chartCtx, {
+        type: 'line',
+        data: {
+          labels: quarters,
+          datasets: [
+            {
+              label: '다. 지급여력비율',
+              data: solvencyRatioData,
+              borderColor: 'rgb(75, 192, 192)',
+              backgroundColor: 'rgba(75, 192, 192, 0.1)',
+              tension: 0.1,
+              fill: true
+            },
+            {
+              label: '기본자본비율',
+              data: basicCapitalRatioData,
+              borderColor: 'rgb(255, 99, 132)',
+              backgroundColor: 'rgba(255, 99, 132, 0.1)',
+              tension: 0.1,
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: '지급여력비율 및 기본자본비율 시계열 추이'
+            },
+            legend: {
+              display: true,
+              position: 'top'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.parsed.y !== null) {
+                    label += context.parsed.y.toFixed(2) + '%';
+                  } else {
+                    label += '데이터 없음';
+                  }
+                  return label;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: false,
+              title: {
+                display: true,
+                text: '비율 (%)'
+              },
+              ticks: {
+                callback: function(value) {
+                  return value.toFixed(1) + '%';
+                }
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: '공시분기'
+              }
+            }
+          },
+          interaction: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false
+          }
+        }
+      });
     }
 
     fetch(jsonPath)
