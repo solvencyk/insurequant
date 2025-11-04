@@ -28,9 +28,9 @@
     .toggle-input:checked + .toggle-label:before{transform:translateX(30px)}
     .toggle-slider{display:none}
     #map{position:relative;height:76vh;min-height:560px;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
-    .group{position:absolute;border:1px solid rgba(0,0,0,.12);border-radius:10px;overflow:hidden;background:rgba(0,0,0,.02)}
+    .group{position:absolute;border:1px solid rgba(0,0,0,.12);border-radius:10px;overflow:hidden;background:rgba(0,0,0,.02);box-sizing:border-box}
     .group-title{position:absolute;left:6px;top:6px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.8);padding:2px 6px;border-radius:6px;z-index:2}
-    .cell{position:absolute;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:all 0.2s}
+    .cell{position:absolute;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:all 0.2s;box-sizing:border-box}
     .cell:hover{transform:scale(1.02);box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:10}
     .name{font-weight:700;font-size:12px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .ratio{font-size:15px;font-weight:700}
@@ -317,14 +317,22 @@
 
       for (const gr of gRects) {
         const gData = gr.item.data;
-        out.push({ type:"group", sector: gData.key, x: gr.x, y: gr.y, w: gr.w, h: gr.h });
+        
+        // 그룹이 전체 컨테이너 경계를 넘지 않도록 제한
+        const groupX = Math.max(0, Math.min(gr.x, rect.w));
+        const groupY = Math.max(0, Math.min(gr.y, rect.h));
+        const groupW = Math.max(0, Math.min(gr.w, rect.w - groupX));
+        const groupH = Math.max(0, Math.min(gr.h, rect.h - groupY));
+        
+        out.push({ type:"group", sector: gData.key, x: groupX, y: groupY, w: groupW, h: groupH });
 
         // Inner recsplit for companies
         const padOuter = 6, titleH = 22, padInner = 6;
-        const gx = gr.x + padOuter;
-        const gy = gr.y + padOuter + titleH;
-        const gw = Math.max(0, gr.w - padOuter*2);
-        const gh = Math.max(0, gr.h - padOuter*2 - titleH);
+        
+        const gx = groupX + padOuter;
+        const gy = groupY + padOuter + titleH;
+        const gw = Math.max(0, groupW - padOuter*2);
+        const gh = Math.max(0, groupH - padOuter*2 - titleH);
 
         const items = gData.rows.map(d => ({ value: d.required, data: d }));
 
@@ -333,30 +341,36 @@
         const cells = recsplit(items, {x:gx+padInner, y:gy+padInner, w:innerW, h:innerH});
 
         const MIN_W = 64, MIN_H = 48;
-        const groupRight = gx + gw;
-        const groupBottom = gy + gh;
+        const groupRight = Math.min(gx + gw, rect.w);
+        const groupBottom = Math.min(gy + gh, rect.h);
         
         for (const c of cells) {
+          // 셀 좌표를 그룹 내부로 제한
+          let cellX = Math.max(gx, c.x);
+          let cellY = Math.max(gy, c.y);
+          
           // 셀 크기 계산 (최소값 보장하되 그룹 경계를 넘지 않도록)
           let w = Math.max(MIN_W, c.w - 2);
           let h = Math.max(MIN_H, c.h - 2);
           
-          // 그룹 영역을 벗어나지 않도록 제한
-          const cellRight = c.x + w;
-          const cellBottom = c.y + h;
+          // 그룹 영역을 벗어나지 않도록 엄격하게 제한
+          const cellRight = cellX + w;
+          const cellBottom = cellY + h;
           
           if (cellRight > groupRight) {
-            w = Math.max(MIN_W, groupRight - c.x);
+            w = Math.max(MIN_W, groupRight - cellX);
           }
           if (cellBottom > groupBottom) {
-            h = Math.max(MIN_H, groupBottom - c.y);
+            h = Math.max(MIN_H, groupBottom - cellY);
           }
           
-          // 셀이 그룹 내부에 있는지 확인
-          if (c.x >= gx && c.y >= gy && c.x + w <= groupRight && c.y + h <= groupBottom) {
+          // 최종 경계 체크: 셀이 그룹 내부에 완전히 포함되는지 확인
+          if (cellX >= gx && cellY >= gy && 
+              cellX + w <= groupRight && cellY + h <= groupBottom &&
+              w >= MIN_W && h >= MIN_H) {
             out.push({
               type:"cell",
-              x: c.x, y: c.y, w: w, h: h,
+              x: cellX, y: cellY, w: w, h: h,
               data: c.item.data
             });
           }
@@ -386,12 +400,21 @@
           const groupW = Math.min(r.w, W - groupX);
           const groupH = Math.min(r.h, H - groupY);
           
+          // 좌표를 정수로 반올림
+          const finalGroupX = Math.floor(groupX);
+          const finalGroupY = Math.floor(groupY);
+          const finalGroupW = Math.floor(groupW);
+          const finalGroupH = Math.floor(groupH);
+          
+          // 최종 경계 체크
+          if (finalGroupX + finalGroupW > W || finalGroupY + finalGroupH > H) continue;
+          
           const g = document.createElement("div");
           g.className = "group";
-          g.style.left = groupX + "px";
-          g.style.top = groupY + "px";
-          g.style.width = groupW + "px";
-          g.style.height = groupH + "px";
+          g.style.left = finalGroupX + "px";
+          g.style.top = finalGroupY + "px";
+          g.style.width = finalGroupW + "px";
+          g.style.height = finalGroupH + "px";
           const title = document.createElement("div");
           title.className = "group-title";
           title.textContent = r.sector === "Life" ? "생명보험" : "손해보험";
@@ -400,21 +423,34 @@
         } else if (r.type === "cell") {
           const d = r.data;
           
-          // 셀이 컨테이너 영역을 넘지 않도록 제한
-          const cellX = Math.max(0, r.x);
-          const cellY = Math.max(0, r.y);
-          const cellW = Math.min(r.w, W - cellX);
-          const cellH = Math.min(r.h, H - cellY);
+          // 셀이 컨테이너 영역을 넘지 않도록 엄격하게 제한
+          const cellX = Math.max(0, Math.min(r.x, W - 64)); // 최소 너비 64 보장
+          const cellY = Math.max(0, Math.min(r.y, H - 48)); // 최소 높이 48 보장
+          const cellRight = Math.min(r.x + r.w, W);
+          const cellBottom = Math.min(r.y + r.h, H);
+          const cellW = Math.max(0, cellRight - cellX);
+          const cellH = Math.max(0, cellBottom - cellY);
           
-          // 최소 크기 보장
+          // 최소 크기 보장 및 경계 체크
           if (cellW < 64 || cellH < 48) return; // 너무 작으면 렌더링하지 않음
+          if (cellX + cellW > W || cellY + cellH > H) return; // 경계를 넘으면 렌더링하지 않음
+          if (cellX < 0 || cellY < 0) return; // 음수 좌표는 렌더링하지 않음
+          
+          // 좌표를 정수로 반올림하여 정확도 향상
+          const finalX = Math.floor(cellX);
+          const finalY = Math.floor(cellY);
+          const finalW = Math.floor(cellW);
+          const finalH = Math.floor(cellH);
+          
+          // 최종 경계 체크
+          if (finalX + finalW > W || finalY + finalH > H) return;
           
           const cell = document.createElement("div");
           cell.className = "cell";
-          cell.style.left = cellX + "px";
-          cell.style.top = cellY + "px";
-          cell.style.width = cellW + "px";
-          cell.style.height = cellH + "px";
+          cell.style.left = finalX + "px";
+          cell.style.top = finalY + "px";
+          cell.style.width = finalW + "px";
+          cell.style.height = finalH + "px";
           
           // 선택된 비율 타입에 따라 색상 계산
           let displayRatio, displayValue;
