@@ -328,17 +328,38 @@
 
         const items = gData.rows.map(d => ({ value: d.required, data: d }));
 
-        const cells = recsplit(items, {x:gx+padInner, y:gy+padInner, w:Math.max(0,gw-2*padInner), h:Math.max(0,gh-2*padInner)});
+        const innerW = Math.max(0, gw - 2 * padInner);
+        const innerH = Math.max(0, gh - 2 * padInner);
+        const cells = recsplit(items, {x:gx+padInner, y:gy+padInner, w:innerW, h:innerH});
 
         const MIN_W = 64, MIN_H = 48;
+        const groupRight = gx + gw;
+        const groupBottom = gy + gh;
+        
         for (const c of cells) {
-          const w = Math.max(MIN_W, c.w-2);
-          const h = Math.max(MIN_H, c.h-2);
-          out.push({
-            type:"cell",
-            x: c.x, y: c.y, w: w, h: h,
-            data: c.item.data
-          });
+          // 셀 크기 계산 (최소값 보장하되 그룹 경계를 넘지 않도록)
+          let w = Math.max(MIN_W, c.w - 2);
+          let h = Math.max(MIN_H, c.h - 2);
+          
+          // 그룹 영역을 벗어나지 않도록 제한
+          const cellRight = c.x + w;
+          const cellBottom = c.y + h;
+          
+          if (cellRight > groupRight) {
+            w = Math.max(MIN_W, groupRight - c.x);
+          }
+          if (cellBottom > groupBottom) {
+            h = Math.max(MIN_H, groupBottom - c.y);
+          }
+          
+          // 셀이 그룹 내부에 있는지 확인
+          if (c.x >= gx && c.y >= gy && c.x + w <= groupRight && c.y + h <= groupBottom) {
+            out.push({
+              type:"cell",
+              x: c.x, y: c.y, w: w, h: h,
+              data: c.item.data
+            });
+          }
         }
       }
       return out;
@@ -359,12 +380,18 @@
 
       for (const r of rects) {
         if (r.type === "group") {
+          // 그룹이 컨테이너 영역을 넘지 않도록 제한
+          const groupX = Math.max(0, r.x);
+          const groupY = Math.max(0, r.y);
+          const groupW = Math.min(r.w, W - groupX);
+          const groupH = Math.min(r.h, H - groupY);
+          
           const g = document.createElement("div");
           g.className = "group";
-          g.style.left = r.x + "px";
-          g.style.top = r.y + "px";
-          g.style.width = r.w + "px";
-          g.style.height = r.h + "px";
+          g.style.left = groupX + "px";
+          g.style.top = groupY + "px";
+          g.style.width = groupW + "px";
+          g.style.height = groupH + "px";
           const title = document.createElement("div");
           title.className = "group-title";
           title.textContent = r.sector === "Life" ? "생명보험" : "손해보험";
@@ -372,12 +399,22 @@
           el.appendChild(g);
         } else if (r.type === "cell") {
           const d = r.data;
+          
+          // 셀이 컨테이너 영역을 넘지 않도록 제한
+          const cellX = Math.max(0, r.x);
+          const cellY = Math.max(0, r.y);
+          const cellW = Math.min(r.w, W - cellX);
+          const cellH = Math.min(r.h, H - cellY);
+          
+          // 최소 크기 보장
+          if (cellW < 64 || cellH < 48) return; // 너무 작으면 렌더링하지 않음
+          
           const cell = document.createElement("div");
           cell.className = "cell";
-          cell.style.left = r.x + "px";
-          cell.style.top = r.y + "px";
-          cell.style.width = r.w + "px";
-          cell.style.height = r.h + "px";
+          cell.style.left = cellX + "px";
+          cell.style.top = cellY + "px";
+          cell.style.width = cellW + "px";
+          cell.style.height = cellH + "px";
           
           // 선택된 비율 타입에 따라 색상 계산
           let displayRatio, displayValue;
@@ -413,10 +450,21 @@
           
           // 셀 클릭 이벤트: K-ICS.html로 이동 (회사명 파라미터 전달)
           cell.style.cursor = 'pointer';
-          cell.addEventListener('click', function() {
+          
+          // 클릭 이벤트 핸들러 (셀과 자식 요소 모두에 적용)
+          const handleCellClick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             const companyParam = encodeURIComponent(d.company);
             window.location.href = `K-ICS.html?company=${companyParam}&period=quarter`;
-          });
+          };
+          
+          cell.addEventListener('click', handleCellClick);
+          
+          // 자식 요소들도 클릭 가능하도록 설정
+          name.style.pointerEvents = 'none';
+          ratio.style.pointerEvents = 'none';
+          meta.style.pointerEvents = 'none';
           
           el.appendChild(cell);
         }
