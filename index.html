@@ -203,14 +203,23 @@
     
     // 기준시점 업데이트
     function updateReferencePeriod() {
-      if (allData.length === 0) return;
+      console.log('updateReferencePeriod 호출됨, allData 길이:', allData.length);
+      if (allData.length === 0) {
+        console.log('allData가 비어있어서 기준시점 업데이트 스킵');
+        return;
+      }
       const latestQuarter = getLatestQuarter(allData);
+      console.log('최신 분기:', latestQuarter);
       const periodElement = document.getElementById("reference-period");
+      console.log('periodElement:', periodElement);
       if (latestQuarter && periodElement) {
         // "2025.3Q" 형식을 "2025.3분기"로 변환
         const formattedQuarter = latestQuarter.replace(/Q$/, '분기');
         periodElement.textContent = `기준시점: ${formattedQuarter}`;
         periodElement.style.display = 'block';
+        console.log('기준시점 업데이트 완료:', formattedQuarter);
+      } else {
+        console.warn('기준시점 업데이트 실패 - latestQuarter:', latestQuarter, 'periodElement:', periodElement);
       }
     }
     
@@ -522,6 +531,17 @@
           el.appendChild(cell);
         }
       }
+      
+      // 기준시점 요소 다시 추가 (innerHTML로 지워졌으므로)
+      const periodElement = document.createElement("div");
+      periodElement.id = "reference-period";
+      periodElement.className = "reference-period";
+      periodElement.style.display = 'none';
+      periodElement.textContent = '기준시점: ';
+      el.appendChild(periodElement);
+      
+      // 기준시점 업데이트
+      updateReferencePeriod();
     }
 
     const sel = document.getElementById("sector");
