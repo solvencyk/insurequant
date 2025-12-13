@@ -35,6 +35,7 @@
     .name{font-weight:700;font-size:12px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .ratio{font-size:15px;font-weight:700}
     .meta{font-size:11px;color:var(--muted)}
+    .reference-period{position:absolute;left:12px;bottom:12px;font-size:11px;color:var(--muted);background:rgba(255,255,255,0.8);padding:4px 8px;border-radius:6px;z-index:100}
   </style>
 </head>
 <body>
@@ -76,7 +77,9 @@
           <div>크기: 지급여력기준금액</div>
         </div>
       </div>
-      <div id="map"></div>
+      <div id="map">
+        <div id="reference-period" class="reference-period" style="display:none;">기준시점: </div>
+      </div>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -198,6 +201,19 @@
       return grouped;
     }
     
+    // 기준시점 업데이트
+    function updateReferencePeriod() {
+      if (allData.length === 0) return;
+      const latestQuarter = getLatestQuarter(allData);
+      const periodElement = document.getElementById("reference-period");
+      if (latestQuarter && periodElement) {
+        // "2025.3Q" 형식을 "2025.3분기"로 변환
+        const formattedQuarter = latestQuarter.replace(/Q$/, '분기');
+        periodElement.textContent = `기준시점: ${formattedQuarter}`;
+        periodElement.style.display = 'block';
+      }
+    }
+    
     // JSON 데이터 로드
     function loadData() {
       fetch(jsonPath)
@@ -205,6 +221,7 @@
         .then(data => {
           allData = data;
           GROUPED = processJsonData(data);
+          updateReferencePeriod(); // 기준시점 업데이트
           const sectorSel = document.getElementById("sector");
           render(sectorSel ? sectorSel.value : "ALL");
         })
