@@ -28,17 +28,20 @@
     .toggle-input:checked + .toggle-label:before{transform:translateX(30px)}
     .toggle-slider{display:none}
     #map{position:relative;height:76vh;min-height:560px;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
-    .group{position:absolute;border:1px solid rgba(0,0,0,.12);border-radius:10px;overflow:hidden;background:rgba(0,0,0,.02)}
+    .group{position:absolute;border:1px solid rgba(0,0,0,.12);border-radius:10px;overflow:hidden;background:rgba(0,0,0,.02);box-sizing:border-box}
     .group-title{position:absolute;left:6px;top:6px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.8);padding:2px 6px;border-radius:6px;z-index:2}
-    .cell{position:absolute;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+    .cell{position:absolute;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:all 0.2s;box-sizing:border-box}
+    /* scale은 타일 경계 밖으로 튀어 나와 인접 칸과 겹쳐 보일 수 있음 — 그림자만 */
+    .cell:hover{box-shadow:0 4px 12px rgba(0,0,0,0.18);z-index:10}
     .name{font-weight:700;font-size:12px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .ratio{font-size:15px;font-weight:700}
     .meta{font-size:11px;color:var(--muted)}
+    .reference-period{position:absolute;left:12px;bottom:12px;font-size:11px;color:var(--muted);background:rgba(255,255,255,0.8);padding:4px 8px;border-radius:6px;z-index:100}
   </style>
 </head>
 <body>
   <header>
-    <a href="main.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">K-ICS Market Map (Balanced Treemap)</span></a>
+    <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">K-ICS Market Map (Balanced Treemap)</span></a>
     <div class="tabs">
       <a href="K-ICS.html" class="tab">K-ICS</a>
       <a href="IFRS17.html" class="tab">IFRS17</a>
@@ -49,11 +52,6 @@
     <div class="panel">
       <div class="controls">
         <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-          <div>
-            <label>CSV 파일: 
-              <input type="file" id="csvFile" accept=".csv" style="margin-left:8px;">
-            </label>
-          </div>
           <div>
             <label>업권: 
               <select id="sector" class="select">
@@ -80,251 +78,218 @@
           <div>크기: 지급여력기준금액</div>
         </div>
       </div>
-      <div id="map"></div>
+      <div id="map">
+        <div id="reference-period" class="reference-period" style="display:none;">기준시점: </div>
+      </div>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
+    const jsonPath = 'kics_disclosure.json';
+    let allData = [];
     let GROUPED = {};
     
-    // CSV 파일에서 데이터 로드 (파일 업로드 방식)
-    function loadDataFromFile(file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const csvText = e.target.result;
-          console.log('CSV 데이터 로드 성공');
-          
-          // CSV를 파싱하여 JSON 배열로 변환
-          const jsonData = parseCSV(csvText);
-          console.log('파싱된 CSV 데이터:', jsonData);
-          console.log('첫 번째 행의 컬럼명들:', Object.keys(jsonData[0] || {}));
-          
-          // 기본자본비율 데이터 추가
-          const updatedData = addBasicCapitalRatio(jsonData);
-          
-          // 데이터를 GROUPED 형식으로 변환
-          GROUPED = processExcelData(updatedData);
-          console.log('처리된 데이터:', GROUPED);
-          
-          // 데이터 로드 후 차트 렌더링
-          render(sel.value);
-        } catch (error) {
-          console.error('CSV 파싱 실패:', error);
-          alert('CSV 파일을 파싱할 수 없습니다. 파일 형식을 확인해주세요.');
-        }
-      };
-      reader.readAsText(file);
+    // 숫자 값 추출 함수 (쉼표 제거)
+    function extractNumericValue(value) {
+      if (value === null || value === undefined || value === '') return null;
+      const strValue = String(value).replace(/,/g, '').trim();
+      const numValue = parseFloat(strValue);
+      return isNaN(numValue) ? null : numValue;
     }
     
-    // 기본 데이터로 초기화
-    function loadDefaultData() {
-      GROUPED = {"Life": [{"company": "한화생명", "sector": "Life", "ratio": 154.1, "required": 136764.0}, {"company": "교보생명보험", "sector": "Life", "ratio": 145.84, "required": 89733.0}, {"company": "흥국생명보험", "sector": "Life", "ratio": 153.2, "required": 23819.0}, {"company": "라이나생명보험", "sector": "Life", "ratio": 348.16, "required": 21483.0}, {"company": "DB생명보험", "sector": "Life", "ratio": 150.51, "required": 15256.0}, {"company": "에이비엘생명보험", "sector": "Life", "ratio": 104.63, "required": 15227.0}, {"company": "케이디비생명보험", "sector": "Life", "ratio": 40.60161856772027, "required": 13098.0}, {"company": "푸본현대생명보험", "sector": "Life", "ratio": -24.0, "required": 13092.0}, {"company": "아이엠라이프생명보험", "sector": "Life", "ratio": 90.5, "required": 5712.0}, {"company": "처브라이프생명보험", "sector": "Life", "ratio": 133.5648148148148, "required": 1296.0}, {"company": "비엔피파리바카디프생명보험", "sector": "Life", "ratio": 304.61, "required": 695.0}], "Non-Life": [{"company": "DB손해보험", "sector": "Non-Life", "ratio": 204.66, "required": 97883.0}, {"company": "삼성화재해상보험", "sector": "Non-Life", "ratio": 266.61, "required": 93446.0}, {"company": "현대해상", "sector": "Non-Life", "ratio": 159.4, "required": 82186.0}, {"company": "KB손해보험", "sector": "Non-Life", "ratio": 182.16, "required": 63515.0}, {"company": "메리츠화재해상보험", "sector": "Non-Life", "ratio": 238.92, "required": 55434.0}, {"company": "한화손해보험", "sector": "Non-Life", "ratio": 182.5, "required": 33013.0}, {"company": "롯데손해보험", "sector": "Non-Life", "ratio": 101.6, "required": 23518.0}, {"company": "흥국화재", "sector": "Non-Life", "ratio": 174.03, "required": 18008.0}, {"company": "NH농협손해보험", "sector": "Non-Life", "ratio": 129.55, "required": 15676.0}, {"company": "하나손해보험", "sector": "Non-Life", "ratio": 150.14, "required": 3312.0}, {"company": "악사손해보험", "sector": "Non-Life", "ratio": 217.6, "required": 2401.0}, {"company": "신한이지손해보험", "sector": "Non-Life", "ratio": 3.406952965235174, "required": 489.0}]};
-      render(sel.value);
+    // 최신 분기 추출
+    function getLatestQuarter(data) {
+      const allQuarters = Array.from(new Set(data.map(row => row['공시분기']))).sort((a, b) => {
+        const parse = s => {
+          const m = s.match(/^(\d{4})\.(\d)Q$/);
+          return m ? [parseInt(m[1]), parseInt(m[2])] : [0, 0];
+        };
+        const [ay, aq] = parse(a), [by, bq] = parse(b);
+        if (ay !== by) return by - ay;
+        return bq - aq;
+      });
+      return allQuarters.length > 0 ? allQuarters[0] : null;
     }
     
-    // CSV 파싱 함수
-    function parseCSV(csvText) {
-      const lines = csvText.split('\n');
-      const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
-      const data = [];
-      
-      for (let i = 1; i < lines.length; i++) {
-        if (lines[i].trim()) {
-          const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
-          const row = {};
-          headers.forEach((header, index) => {
-            row[header] = values[index] || '';
-          });
-          data.push(row);
-        }
+    // JSON 데이터에서 히트맵 데이터 생성
+    function processJsonData(data) {
+      const latestQuarter = getLatestQuarter(data);
+      if (!latestQuarter) {
+        console.warn('최신 분기 데이터를 찾을 수 없습니다.');
+        return { "Life": [], "Non-Life": [] };
       }
       
-      return data;
-    }
-    
-    // 기본자본비율 데이터 추가 함수
-    function addBasicCapitalRatio(data) {
-      // 항목번호 14인 행들 (기본자본)
-      const basicCapitalRows = data.filter(row => row['항목번호'] === 14);
-      console.log(`기본자본 행들 (항목번호 14): ${basicCapitalRows.length}개`);
+      console.log(`최신 분기: ${latestQuarter}`);
       
-      // 항목번호 2인 행들 (지급여력기준금액)
-      const requiredCapitalRows = data.filter(row => row['항목번호'] === 2);
-      console.log(`지급여력기준금액 행들 (항목번호 2): ${requiredCapitalRows.length}개`);
-      
-      const newRows = [];
-      
-      // 기본자본과 지급여력기준금액 매칭
-      basicCapitalRows.forEach(basicRow => {
-        const companyCode = basicRow['원보험사코드'];
-        const quarter = basicRow['공시분기'];
-        const basicCapitalValue = parseFloat(basicRow['값'] || 0);
-        
-        // 같은 회사코드와 공시분기의 지급여력기준금액 찾기
-        const matchingRequired = requiredCapitalRows.find(reqRow => 
-          reqRow['원보험사코드'] === companyCode && reqRow['공시분기'] === quarter
-        );
-        
-        if (matchingRequired) {
-          const requiredCapitalValue = parseFloat(matchingRequired['값'] || 0);
-          
-          // 기본자본비율 계산
-          if (requiredCapitalValue !== 0) {
-            const basicCapitalRatio = (basicCapitalValue / requiredCapitalValue) * 100;
-            
-            // 새로운 행 생성 (기본자본 행을 복사하고 수정)
-            const newRow = { ...basicRow };
-            newRow['항목번호'] = 28;
-            newRow['항목명'] = '기본자본비율';
-            newRow['값'] = basicCapitalRatio;
-            
-            newRows.push(newRow);
-            
-            console.log(`회사코드: ${companyCode}, 공시분기: ${quarter}`);
-            console.log(`  기본자본: ${basicCapitalValue.toLocaleString()}`);
-            console.log(`  지급여력기준금액: ${requiredCapitalValue.toLocaleString()}`);
-            console.log(`  기본자본비율: ${basicCapitalRatio.toFixed(2)}%`);
-          }
-        }
-      });
-      
-      console.log(`총 ${newRows.length}개의 기본자본비율 행이 추가됩니다.`);
-      
-      // 새로운 행들을 원본 데이터에 추가
-      return [...data, ...newRows];
-    }
-    
-    // Excel 데이터를 GROUPED 형식으로 변환
-    function processExcelData(data) {
-      const grouped = { "Life": [], "Non-Life": [] };
-      
-      // 모든 가능한 컬럼명을 확인
-      const allKeys = Object.keys(data[0] || {});
-      console.log('사용 가능한 컬럼들:', allKeys);
-      
-      // 최신 공시분기 찾기
-      const allQuarters = data.map(row => row['공시분기'] || row['quarter'] || row['Quarter'] || '').filter(q => q);
-      const latestQuarter = Math.max(...allQuarters);
-      console.log(`모든 공시분기: ${allQuarters}`);
-      console.log(`최신 공시분기: ${latestQuarter}`);
-      
-      // 항목명이 '기본자본비율'이면서 최신 공시분기인 행들만 필터링
-      const basicCapitalRatioRows = data.filter(row => {
-        const itemName = row['항목명'] || row['itemName'] || row['ItemName'] || '';
-        const quarter = row['공시분기'] || row['quarter'] || row['Quarter'] || '';
-        return itemName === '기본자본비율' && quarter === latestQuarter;
-      });
-      
-      console.log(`항목명 '기본자본비율' + 최신공시분기(${latestQuarter}) 행들: ${basicCapitalRatioRows.length}개`);
-      console.log('항목명 "기본자본비율" + 최신공시분기 데이터:', basicCapitalRatioRows);
+      // 최신 분기 데이터만 필터링
+      const latestData = data.filter(row => row['공시분기'] === latestQuarter);
       
       // 회사별로 데이터 그룹화
-      const companyData = {};
+      const companyMap = {};
       
-      // 항목명 '기본자본비율' 데이터만 처리
-      basicCapitalRatioRows.forEach(row => {
-        const company = row['원보험사'] || row['회사명'] || row['company'] || row['Company'] || '';
-        const value = parseFloat(row['값'] || row['value'] || row['Value'] || row['금액'] || row['amount'] || 0);
-        const sector = row['업권'] || row['sector'] || row['Sector'] || '';
+      latestData.forEach(row => {
+        const company = row['원수사명'];
+        const insuranceType = row['생손보여부'];
+        const itemNumber = row['항목번호'];
+        const itemName = row['항목명'];
+        const value = extractNumericValue(row['값']);
         
-        console.log(`항목명 '기본자본비율' - 회사: ${company}, 값: ${value}, 업권: ${sector}`);
+        if (!company || !insuranceType) return;
         
-        if (company && value > 0) {
-          if (!companyData[company]) {
-            companyData[company] = {
-              company: company,
-              sector: sector,
-              ratio: 0,
-              required: 0,
-              basicCapital: 0,
-              basicCapitalRatio: 0
-            };
-          }
-          
-          companyData[company].basicCapitalRatio = value;
-          console.log(`${company}의 기본자본비율 (항목명 '기본자본비율'): ${value}%`);
+        if (!companyMap[company]) {
+          companyMap[company] = {
+            company: company,
+            sector: insuranceType === '생명보험' ? 'Life' : 'Non-Life',
+            ratio: null,
+            required: null,
+            basicCapitalRatio: null,
+            basicCapital: null // 기본자본 값 저장
+          };
         }
-      });
-      
-      // K-ICS 비율과 지급여력기준금액도 최신 공시분기만 처리
-      data.forEach(row => {
-        const company = row['원보험사'] || row['회사명'] || row['company'] || row['Company'] || '';
-        const itemName = row['항목명'] || row['itemName'] || row['ItemName'] || '';
-        const quarter = row['공시분기'] || row['quarter'] || row['Quarter'] || '';
-        const value = parseFloat(row['값'] || row['value'] || row['Value'] || row['금액'] || row['amount'] || 0);
-        const sector = row['업권'] || row['sector'] || row['Sector'] || '';
         
-        // 최신 공시분기만 처리
-        if (company && itemName && quarter === latestQuarter) {
-          if (!companyData[company]) {
-            companyData[company] = {
-              company: company,
-              sector: sector,
-              ratio: 0,
-              required: 0,
-              basicCapital: 0,
-              basicCapitalRatio: 0
-            };
+        // 항목번호로 정확하게 찾기
+        // 항목번호 14: 지급여력기준금액
+        if (itemNumber === 14) {
+          if (value !== null) {
+            companyMap[company].required = value;
           }
-          
-          if (itemName.includes('지급여력기준금액')) {
-            companyData[company].required = value;
-            console.log(`${company}의 지급여력기준금액 (최신공시분기): ${value}`);
-          } else if (itemName.includes('K-ICS') && itemName.includes('비율')) {
-            companyData[company].ratio = value;
-            console.log(`${company}의 K-ICS비율 (최신공시분기): ${value}`);
+        }
+        
+        // 항목번호 27: 지급여력비율
+        if (itemNumber === 27) {
+          if (value !== null) {
+            companyMap[company].ratio = value;
+          }
+        }
+        
+        // 항목번호 28: 기본자본비율
+        if (itemNumber === 28) {
+          if (value !== null) {
+            companyMap[company].basicCapitalRatio = value;
+          }
+        }
+        
+        // 항목번호 2: 기본자본 (기본자본비율 계산용)
+        if (itemNumber === 2) {
+          if (value !== null) {
+            companyMap[company].basicCapital = value;
           }
         }
       });
       
-      console.log('회사별 데이터:', companyData);
-      
-      // GROUPED 형식으로 변환
-      Object.values(companyData).forEach(company => {
-        if (company.company && company.sector) {
-          const sectorKey = company.sector.includes('생명') || company.sector === 'Life' ? 'Life' : 'Non-Life';
-          grouped[sectorKey].push({
-            company: company.company,
-            sector: sectorKey,
-            ratio: company.ratio,
-            required: company.required,
-            basicCapital: company.basicCapital,
-            basicCapitalRatio: company.basicCapitalRatio
-          });
+      // 모든 데이터 수집 후 기본자본비율 계산
+      Object.values(companyMap).forEach(company => {
+        if (!company.basicCapitalRatio && company.basicCapital !== null && company.required !== null && company.required > 0) {
+          company.basicCapitalRatio = (company.basicCapital / company.required) * 100;
         }
       });
       
-      console.log('최종 GROUPED 데이터:', grouped);
+      // Life와 Non-Life로 분류
+      const grouped = { "Life": [], "Non-Life": [] };
+      
+      Object.values(companyMap).forEach(company => {
+        // 필수 데이터가 있는 경우만 추가
+        if (company.required !== null && (company.ratio !== null || company.basicCapitalRatio !== null)) {
+          grouped[company.sector].push(company);
+        }
+      });
+      
+      // required 기준으로 정렬 (내림차순)
+      grouped["Life"].sort((a, b) => (b.required || 0) - (a.required || 0));
+      grouped["Non-Life"].sort((a, b) => (b.required || 0) - (a.required || 0));
+      
+      console.log('처리된 데이터:', grouped);
       return grouped;
     }
+    
+    // 기준시점 업데이트
+    function updateReferencePeriod() {
+      console.log('updateReferencePeriod 호출됨, allData 길이:', allData.length);
+      if (allData.length === 0) {
+        console.log('allData가 비어있어서 기준시점 업데이트 스킵');
+        return;
+      }
+      const latestQuarter = getLatestQuarter(allData);
+      console.log('최신 분기:', latestQuarter);
+      const periodElement = document.getElementById("reference-period");
+      console.log('periodElement:', periodElement);
+      if (latestQuarter && periodElement) {
+        // "2025.3Q" 형식을 "2025.3분기"로 변환
+        const formattedQuarter = latestQuarter.replace(/Q$/, '분기');
+        periodElement.textContent = `기준시점: ${formattedQuarter}`;
+        periodElement.style.display = 'block';
+        console.log('기준시점 업데이트 완료:', formattedQuarter);
+      } else {
+        console.warn('기준시점 업데이트 실패 - latestQuarter:', latestQuarter, 'periodElement:', periodElement);
+      }
+    }
+    
+    // JSON 데이터 로드
+    function loadData() {
+      fetch(jsonPath)
+        .then(response => response.json())
+        .then(data => {
+          allData = data;
+          GROUPED = processJsonData(data);
+          updateReferencePeriod(); // 기준시점 업데이트
+          const sectorSel = document.getElementById("sector");
+          render(sectorSel ? sectorSel.value : "ALL");
+        })
+        .catch(e => {
+          console.error('JSON 파일을 불러오는 중 오류 발생:', e);
+          // 오류 발생 시 빈 데이터로 초기화
+          GROUPED = { "Life": [], "Non-Life": [] };
+          const sectorSel = document.getElementById("sector");
+          render(sectorSel ? sectorSel.value : "ALL");
+        });
+    }
+    
+    
 
     function colorForRatio(r, ratioType = 'kics'){
       const ratio = Number.isFinite(r) ? r : 0;
       
       if (ratioType === 'basicCapital') {
         // 기본자본비율: 50% 기준
-        if (ratio >= 50) {
-          const t = Math.min(1, (ratio - 50)/50); // 50%에서 100%까지
-          const saturation = 70 + 30*t; // 70%에서 100%까지
-          const lightness = 50 - 20*t; // 50%에서 30%까지
-          return `hsl(142, ${saturation}%, ${lightness}%)`;
+        const deviation = ratio - 50;
+        const absDeviation = Math.abs(deviation);
+        const maxDeviation = 50; // 0% ~ 100% 범위
+        
+        if (deviation >= 0) {
+          // 50% 이상: 초록색 그라데이션
+          const intensity = Math.min(absDeviation / maxDeviation, 1);
+          const hue = 120; // 초록색
+          const saturation = 30 + 50 * intensity; // 30% ~ 80%
+          const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 초록)
+          return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         } else {
-          const t = Math.min(1, (50 - ratio)/50); // 0%에서 50%까지
-          const saturation = 70 + 30*t; // 70%에서 100%까지
-          const lightness = 50 - 20*t; // 50%에서 30%까지
-          return `hsl(0, ${saturation}%, ${lightness}%)`;
+          // 50% 미만: 빨간색 그라데이션
+          const intensity = Math.min(absDeviation / maxDeviation, 1);
+          const hue = 0; // 빨간색
+          const saturation = 30 + 50 * intensity; // 30% ~ 80%
+          const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 빨강)
+          return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
       } else {
-        // K-ICS 지급여력비율: 150% 기준
-        if (ratio >= 150) {
-          const t = Math.min(1, (ratio - 150)/100);
-          const light = 44 - 22*t;
-          return `hsl(142, 70%, ${light}%)`;
+        // K-ICS 지급여력비율: 130% 기준
+        const deviation = ratio - 130;
+        const absDeviation = Math.abs(deviation);
+        const maxDeviation = 130; // 0% ~ 260% 범위
+        
+        if (deviation >= 0) {
+          // 130% 이상: 초록색 그라데이션
+          const intensity = Math.min(absDeviation / maxDeviation, 1);
+          const hue = 120; // 초록색
+          const saturation = 30 + 50 * intensity; // 30% ~ 80%
+          const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 초록)
+          return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         } else {
-          const t = Math.min(1, (150 - ratio)/100);
-          const light = 50 - 26*t;
-          return `hsl(0, 75%, ${light}%)`;
+          // 130% 미만: 빨간색 그라데이션
+          const intensity = Math.min(absDeviation / maxDeviation, 1);
+          const hue = 0; // 빨간색
+          const saturation = 30 + 50 * intensity; // 30% ~ 80%
+          const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 빨강)
+          return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
       }
     }
@@ -379,27 +344,46 @@
 
       for (const gr of gRects) {
         const gData = gr.item.data;
-        out.push({ type:"group", sector: gData.key, x: gr.x, y: gr.y, w: gr.w, h: gr.h });
+        
+        // 그룹이 전체 컨테이너 경계를 넘지 않도록 제한
+        const groupX = Math.max(0, Math.min(gr.x, rect.w));
+        const groupY = Math.max(0, Math.min(gr.y, rect.h));
+        const groupW = Math.max(0, Math.min(gr.w, rect.w - groupX));
+        const groupH = Math.max(0, Math.min(gr.h, rect.h - groupY));
+        
+        out.push({ type:"group", sector: gData.key, x: groupX, y: groupY, w: groupW, h: groupH });
 
         // Inner recsplit for companies
         const padOuter = 6, titleH = 22, padInner = 6;
-        const gx = gr.x + padOuter;
-        const gy = gr.y + padOuter + titleH;
-        const gw = Math.max(0, gr.w - padOuter*2);
-        const gh = Math.max(0, gr.h - padOuter*2 - titleH);
+        
+        const gx = groupX + padOuter;
+        const gy = groupY + padOuter + titleH;
+        const gw = Math.max(0, groupW - padOuter*2);
+        const gh = Math.max(0, groupH - padOuter*2 - titleH);
 
         const items = gData.rows.map(d => ({ value: d.required, data: d }));
 
-        const cells = recsplit(items, {x:gx+padInner, y:gy+padInner, w:Math.max(0,gw-2*padInner), h:Math.max(0,gh-2*padInner)});
+        const innerW = Math.max(0, gw - 2 * padInner);
+        const innerH = Math.max(0, gh - 2 * padInner);
+        const innerLeft = gx + padInner;
+        const innerTop = gy + padInner;
+        const innerRight = innerLeft + innerW;
+        const innerBottom = innerTop + innerH;
+        const cells = recsplit(items, {x:innerLeft, y:innerTop, w:innerW, h:innerH});
 
-        // 타일 좌표는 recsplit 분할 결과를 반드시 따름. 최소 크기를 밖으로 키우면 작은 칸들이 서로 겹침.
+        // recsplit 타일은 분할 영역 안에만 그림. 바깥으로 키우면(MIN 크기 등) 서로 겹침.
         const inset = 1;
         for (const c of cells) {
-          const w = Math.max(1, c.w - inset * 2);
-          const h = Math.max(1, c.h - inset * 2);
+          let w = Math.max(1, c.w - inset * 2);
+          let h = Math.max(1, c.h - inset * 2);
+          let cx = c.x + inset;
+          let cy = c.y + inset;
+          cx = Math.min(Math.max(cx, innerLeft), innerRight - w);
+          cy = Math.min(Math.max(cy, innerTop), innerBottom - h);
+          if (w < 1 || h < 1 || cx + w > innerRight + 0.5 || cy + h > innerBottom + 0.5) continue;
           out.push({
             type:"cell",
-            x: c.x + inset, y: c.y + inset, w, h,
+            x: cx, y: cy, w, h,
             data: c.item.data
           });
         }
@@ -422,12 +406,27 @@
 
       for (const r of rects) {
         if (r.type === "group") {
+          // 그룹이 컨테이너 영역을 넘지 않도록 제한
+          const groupX = Math.max(0, r.x);
+          const groupY = Math.max(0, r.y);
+          const groupW = Math.min(r.w, W - groupX);
+          const groupH = Math.min(r.h, H - groupY);
+          
+          // 좌표를 정수로 반올림
+          const finalGroupX = Math.floor(groupX);
+          const finalGroupY = Math.floor(groupY);
+          const finalGroupW = Math.floor(groupW);
+          const finalGroupH = Math.floor(groupH);
+          
+          // 최종 경계 체크
+          if (finalGroupX + finalGroupW > W || finalGroupY + finalGroupH > H) continue;
+          
           const g = document.createElement("div");
           g.className = "group";
-          g.style.left = r.x + "px";
-          g.style.top = r.y + "px";
-          g.style.width = r.w + "px";
-          g.style.height = r.h + "px";
+          g.style.left = finalGroupX + "px";
+          g.style.top = finalGroupY + "px";
+          g.style.width = finalGroupW + "px";
+          g.style.height = finalGroupH + "px";
           const title = document.createElement("div");
           title.className = "group-title";
           title.textContent = r.sector === "Life" ? "생명보험" : "손해보험";
@@ -435,12 +434,25 @@
           el.appendChild(g);
         } else if (r.type === "cell") {
           const d = r.data;
+          
+          let cellX = Math.max(0, r.x);
+          let cellY = Math.max(0, r.y);
+          let cellW = Math.min(r.w, W - cellX);
+          let cellH = Math.min(r.h, H - cellY);
+          if (cellW < 1 || cellH < 1) continue;
+          
+          const finalX = Math.floor(cellX);
+          const finalY = Math.floor(cellY);
+          const finalW = Math.max(1, Math.floor(cellW));
+          const finalH = Math.max(1, Math.floor(cellH));
+          if (finalX + finalW > W || finalY + finalH > H) continue;
+          
           const cell = document.createElement("div");
           cell.className = "cell";
-          cell.style.left = r.x + "px";
-          cell.style.top = r.y + "px";
-          cell.style.width = r.w + "px";
-          cell.style.height = r.h + "px";
+          cell.style.left = finalX + "px";
+          cell.style.top = finalY + "px";
+          cell.style.width = finalW + "px";
+          cell.style.height = finalH + "px";
           
           // 선택된 비율 타입에 따라 색상 계산
           let displayRatio, displayValue;
@@ -473,9 +485,39 @@
           cell.appendChild(name);
           cell.appendChild(ratio);
           cell.appendChild(meta);
+          
+          // 셀 클릭 이벤트: K-ICS.html로 이동 (회사명 파라미터 전달)
+          cell.style.cursor = 'pointer';
+          
+          // 클릭 이벤트 핸들러 (셀과 자식 요소 모두에 적용)
+          const handleCellClick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const companyParam = encodeURIComponent(d.company);
+            window.location.href = `K-ICS.html?company=${companyParam}&period=quarter`;
+          };
+          
+          cell.addEventListener('click', handleCellClick);
+          
+          // 자식 요소들도 클릭 가능하도록 설정
+          name.style.pointerEvents = 'none';
+          ratio.style.pointerEvents = 'none';
+          meta.style.pointerEvents = 'none';
+          
           el.appendChild(cell);
         }
       }
+      
+      // 기준시점 요소 다시 추가 (innerHTML로 지워졌으므로)
+      const periodElement = document.createElement("div");
+      periodElement.id = "reference-period";
+      periodElement.className = "reference-period";
+      periodElement.style.display = 'none';
+      periodElement.textContent = '기준시점: ';
+      el.appendChild(periodElement);
+      
+      // 기준시점 업데이트
+      updateReferencePeriod();
     }
 
     const sel = document.getElementById("sector");
@@ -486,16 +528,8 @@
     // 토글 스위치 변경 이벤트 추가
     document.getElementById('ratioToggle').addEventListener("change", redraw);
     
-    // 파일 업로드 이벤트
-    document.getElementById('csvFile').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        loadDataFromFile(file);
-      }
-    });
-    
-    // 페이지 로드 시 기본 데이터로 초기화
-    loadDefaultData();
+    // 페이지 로드 시 CSV 데이터 자동 로드
+    loadData();
   </script>
 </body>
 </html>
