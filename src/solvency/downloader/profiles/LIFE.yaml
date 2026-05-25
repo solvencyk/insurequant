@@ -1,0 +1,19 @@
+# Life Insurance Association — bulk ZIP profile.
+# One profile = one (year, quarter) bundle covering all life insurers.
+company_code: "LIFE"
+company_name: "생명보험협회"
+site_type: "life_insurance_association"
+
+base_url: "https://pub.insure.or.kr"
+disclosure_url: "https://pub.insure.or.kr/mngtDis/mngtDis/list.do"
+
+# Year is rewritten into the URL's search_stdYear at runtime; quarter picks
+# the correct td column in the row identified by tr_xpath.
+search_year: "2025"
+fiscal_year: "FY2025"
+quarter: "Q4"
+
+selectors:
+  # Observed: tr[23] is the bulk-download row across years; td[2..5] = Q1..Q4.
+  # If the association reshuffles the table, swap to a text-based locator.
+  download_button_template: '//*[@id="scroll_cont"]/table/tbody/tr[23]/td[{td}]/a'

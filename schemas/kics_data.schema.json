@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://solvency.local/schemas/kics_data.schema.json",
+  "title": "KICS data payload",
+  "type": "object",
+  "required": ["generated_at", "records"],
+  "additionalProperties": true,
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "insert_count": {"type": "integer", "minimum": 0},
+    "update_count": {"type": "integer", "minimum": 0},
+    "records": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/Record"}
+    }
+  },
+  "$defs": {
+    "Record": {
+      "type": "object",
+      "required": [
+        "company_code",
+        "fiscal_year",
+        "quarter",
+        "metric_id",
+        "metric_name_ko",
+        "source_type",
+        "source_file"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "company_code": {"type": "string", "pattern": "^KR\\d{4}$"},
+        "company_name": {"type": "string"},
+        "fiscal_year": {"type": "string"},
+        "quarter": {"type": "string"},
+        "disclosure_date": {"type": "string"},
+        "metric_id": {"type": "string"},
+        "metric_name_ko": {"type": "string"},
+        "value": {"type": ["number", "null"]},
+        "unit": {"type": "string"},
+        "source_type": {"type": "string", "enum": ["docling_markdown", "gemini_markdown", "legacy_csv"]},
+        "source_file": {"type": "string"},
+        "parse_confidence": {"type": ["number", "null"]},
+        "created_at": {"type": "string"}
+      }
+    }
+  }
+}

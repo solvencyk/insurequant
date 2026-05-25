@@ -1,0 +1,74 @@
+# secrets — never commit
+.env
+.env.*
+!.env.example
+secrets/
+*.key
+*.pem
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# IFRS17 raw filings (large, regenerable from OpenDART)
+data/ifrs17/raw/
+data/ifrs17/raw_history/
+# 300+ CSM JSONs (intermediate, regenerable)
+data/ifrs17/extracted_history/
+data/ifrs17/reports/
+
+# FSC bond API raw pulls (regenerable via scripts/ingest_fsc_bonds.py)
+data/bonds/raw/
+# per-stamp raw pulls; keep only data/bonds/normalized/<stamp>
+data/bonds/[0-9]*/
+
+# K-ICS disclosure raw PDF + parsed (HUGE — 1.3GB). Keep regenerable from source.
+# Only the canonical kics_disclosure.json at root is committed.
+data/disclosure/
+
+# Large reference / intermediate dirs (regenerable)
+artifacts/
+md_inbox/
+
+# Forward sim per-stamp outputs are small; keep them (manifests + JSONs)
+# (no exclude — output/kics_forward_capital/ stays)
+
+# Compiled Python
+*.pyo
+.mypy_cache/
+
+# Backup / temp
+*.bak
+*.tmp
+*.log
+*~
+*.swp
+*.swo
+
+# Stray scratch files at repo root (not deployable)
+seibro_smoke_*.txt
+pdf_korea_rating_*.txt
+insurance_data.json
+kics_data.json
+# excel version; canonical is kics_disclosure.json
+kics_disclosure.xlsx
+# reference PDF docs (e.g. 한국기업평가 송미정 리포트)
+*.pdf
+# legacy snapshots
+archive/
+# per-user IDE / agent configs
+.claude/
+.cursor/
+.codex/
+
+# Prototype HTML at root — superseded by templates/* + root deploy mirror
+prototype_*.html

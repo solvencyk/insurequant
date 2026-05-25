@@ -1,0 +1,36 @@
+# B3 liability_rollforward (IFRS17 section 14(3) / K-ICS section 8 style).
+# Optional canonical_key -> list of row label substrings from disclosures.
+# Downstream normalizers can fold any matching label to canonical_key.
+version: 1
+scope: liability_rollforward
+aliases:
+  opening_reserves:
+    - 기초
+    - 기초잔액
+    - 기초 장부금액
+    - 기초순장부금액
+  closing_reserves:
+    - 기말
+    - 기말잔액
+    - 기말 장부금액
+    - 기말순장부금액
+  remaining_coverage:
+    - 잔여보장
+    - 잔여보장요소
+    - 잔여보장부채
+  incurred_claims:
+    - 발생사고
+    - 발생사고부채
+    - 발생사고의 이행현금흐름
+  insurance_service_result:
+    - 보험서비스결과
+    - 보험서비스 손익
+  loss_component:
+    - 손실부담
+    - 손실요소
+  ra_component:
+    - 위험조정
+    - 비금융위험에 대한 위험조정
+  csm_component:
+    - 보험계약마진
+    - CSM
