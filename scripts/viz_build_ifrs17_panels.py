@@ -12,6 +12,13 @@ OUT = ROOT / "data" / "ifrs17" / "viz"
 
 _FILENAME_RE = re.compile(r"^(.+?)_(\d{14})")
 _YEAR_CELL_RE = re.compile(r"^(\d{1,2})\uB144$")
+# Range-bucket cell parsers (header tokens with all spaces removed).
+_RANGE_TILDE_RE = re.compile(r"^(\d{1,2})~(\d{1,2})\uB144$")  # 1~2\uB144, 5~10\uB144
+_RANGE_CHOGWA_IHA_RE = re.compile(
+    r"^(\d{1,2})\uB144\uCD08\uACFC(\d{1,2})\uB144\uC774\uD558$"
+)  # 1\uB144\uCD08\uACFC2\uB144\uC774\uD558
+_AT_OR_UNDER_RE = re.compile(r"^(\d{1,2})\uB144(?:\uC774\uD558|\uBBF8\uB9CC)$")  # 1\uB144\uC774\uD558 / 1\uB144\uBBF8\uB9CC
+_OVER_ONLY_RE = re.compile(r"^(\d{1,2})\uB144(?:\uCD08\uACFC|\uC774\uC0C1|\uC774\uD6C4)$")  # 30\uB144\uCD08\uACFC/\uC774\uC0C1/\uC774\uD6C4
 
 
 def parse_num(value: object, *, dash_means_zero: bool = True) -> float | None:
@@ -54,8 +61,76 @@ def pick_best_block(blocks: list[dict], prefer_kind: str | None = None) -> dict 
 
 def header_has_year_buckets(header: list[list[str]]) -> bool:
     flat = " ".join(c for row in header for c in row if isinstance(c, str))
-    keys = ("\u0031\uB144", "\u0032\uB144", "\u0035\uB144", "\uD569\uACC4")
+    # Year-bucket hints: 1년 2년 5년 합계 총계 이후 이하 미만.
+    keys = (
+        "1년",
+        "2년",
+        "5년",
+        "합계",
+        "총계",
+        "이후",
+        "이하",
+        "미만",
+    )
     return any(k in flat for k in keys)
+
+
+def _classify_bucket_cell(cell: str) -> str | None:
+    """Map a header cell to y1 / y1_y3 / y3_y5 / y5_plus / total or None."""
+    if not isinstance(cell, str):
+        return None
+    plain = cell.strip()
+    if not plain:
+        return None
+
+    no_space = plain.replace(" ", "").replace("\u00a0", "")
+    if no_space in ("합계", "총계", "소계", "계"):
+        return "total"
+
+    m = _AT_OR_UNDER_RE.match(no_space)
+    if m and int(m.group(1)) == 1:
+        return "y1"
+
+    m = _YEAR_CELL_RE.fullmatch(no_space)
+    if m:
+        y = int(m.group(1))
+        if y == 1:
+            return "y1"
+        if y in (2, 3):
+            return "y1_y3"
+        if y in (4, 5):
+            return "y3_y5"
+        return "y5_plus"
+
+    m = _RANGE_TILDE_RE.match(no_space)
+    if m:
+        return _bucket_for_range(int(m.group(1)), int(m.group(2)))
+
+    m = _RANGE_CHOGWA_IHA_RE.match(no_space)
+    if m:
+        return _bucket_for_range(int(m.group(1)), int(m.group(2)))
+
+    if _OVER_ONLY_RE.match(no_space):
+        return "y5_plus"
+
+    return None
+
+
+def _bucket_for_range(lo: int, hi: int) -> str:
+    """Route a numeric range [lo, hi] (years) to a target bucket.
+
+    Buckets are y1 (<=1y), y1_y3 (1-3y), y3_y5 (3-5y), y5_plus (>5y).
+    Uses the upper bound `hi` so 2~3년 → y1_y3, 4~5년 → y3_y5,
+    5~10년 / 10~20년 → y5_plus. When `hi` straddles a boundary, the
+    smaller-bucket side wins (e.g. 1~2년 → y1_y3, not y1).
+    """
+    if hi <= 1:
+        return "y1"
+    if hi <= 3:
+        return "y1_y3"
+    if hi <= 5:
+        return "y3_y5"
+    return "y5_plus"
 
 
 def _flatten_header(header: list[list[str]]) -> list[str]:
@@ -78,69 +153,194 @@ def _align_row_to_flat_header(flat_hdr: list[str], row: list[object]) -> list[st
 
 
 def _bucket_indices(flat_hdr: list[str]) -> dict[str, list[int]]:
-    singles: dict[int, int] = {}
-    range_idxs: list[int] = []
-    total_idx: int | None = None
-    over30_idxs: list[int] = []
+    """Group flat header cell indices into target buckets.
 
-    for i, cell in enumerate(flat_hdr):
-        t = cell.strip().replace(" ", "").replace("\u00a0", "")
-        m = _YEAR_CELL_RE.fullmatch(t)
-        if m:
-            singles[int(m.group(1))] = i
-            continue
-
-        plain = cell.strip()
-        if "\uD569\uACC4" in plain or plain == "\uACC4":
-            total_idx = i
-            continue
-
-        if "~" in plain and "\uB144" in plain:
-            range_idxs.append(i)
-
-        if "\u0033\u0030" in t and "\uB144" in t and "\uCD08\uACFC" in t:
-            over30_idxs.append(i)
-
-    def pick_years(lo: int, hi: int) -> list[int]:
-        out = [singles[y] for y in range(lo, hi + 1) if y in singles]
-        out.sort()
-        return out
-
-    y5_plus: set[int] = set(pick_years(6, 10))
-    y5_plus.update(range_idxs)
-    y5_plus.update(over30_idxs)
-
-    return {
-        "y1": pick_years(1, 1),
-        "y1_y3": pick_years(2, 3),
-        "y3_y5": pick_years(4, 5),
-        "y5_plus": sorted(y5_plus),
-        "total": [total_idx] if total_idx is not None else [],
+    Uses _classify_bucket_cell so heterogeneous headers (1년 / 1년 이하 /
+    1~2년 / 1년 초과 2년 이하 / 30년 이상 / 총계 / 합 계) all route correctly.
+    """
+    buckets: dict[str, list[int]] = {
+        "y1": [],
+        "y1_y3": [],
+        "y3_y5": [],
+        "y5_plus": [],
+        "total": [],
     }
+    for i, cell in enumerate(flat_hdr):
+        bk = _classify_bucket_cell(cell)
+        if bk is None:
+            continue
+        buckets[bk].append(i)
+    # Keep at most one total column (first occurrence).
+    if len(buckets["total"]) > 1:
+        buckets["total"] = buckets["total"][:1]
+    return buckets
+
+
+def _row_has_year_buckets(row, threshold: int = 3) -> bool:
+    """True if a flat row has enough classifiable year-bucket cells."""
+    if not row:
+        return False
+    cnt = sum(
+        1
+        for c in row
+        if isinstance(c, str) and _classify_bucket_cell(c) is not None
+    )
+    return cnt >= threshold
+
+
+def _infer_header_from_rows(rows):
+    """Promote a leading data row to header when THEAD is missing."""
+    for k in range(min(3, len(rows))):
+        row = rows[k]
+        if _row_has_year_buckets(row):
+            hdr = [[('' if v is None else str(v)) for v in row]]
+            return hdr, list(rows[k + 1 :])
+    return [], list(rows)
+
+
+def _amort_caption_score(caption: str) -> int:
+    """Rank competing CSM-amort blocks (higher = prefer).
+
+    Only downranks captions dominantly about reinsurance (no direct side
+    mentioned). Combined captions like "issued contracts AND held
+    reinsurance" stay neutral so row-count / score wins instead.
+    """
+    cap = caption or ""
+    score = 0
+    has_direct = ("발행한 보험계약" in cap) or ("원수" in cap)
+    has_reins = "재보험" in cap
+    if has_direct:
+        score += 4
+    if has_reins and not has_direct:
+        score -= 6
+    stripped = cap.lstrip().lstrip("(").lstrip("\uff08")
+    if stripped.startswith("주") or stripped.startswith("*"):
+        score -= 4
+    return score
+
+
+def _bucket_columns_count(b: dict) -> int:
+    """How many distinct year-bucket header columns the block exposes."""
+    hdr = b.get('header') or []
+    flat = _flatten_header(hdr)
+    return sum(
+        1
+        for c in flat
+        if _classify_bucket_cell(c) not in (None, "total")
+    )
+
+
+def _pick_amort_block(blocks):
+    """Pick best CSM-amort block.
+
+    Caption score is clamped to a non-positive value so reinsurance-only
+    captions are still penalized but a small +4 direct bonus does not
+    outweigh table-shape evidence. Tiebreakers (in order): year-bucket
+    column count (Form A detailed > abbreviated summary), body row count,
+    extractor score, line position.
+    """
+    if not blocks:
+        return None
+
+    def key(b):
+        raw = _amort_caption_score(str(b.get('caption') or ''))
+        cap = min(raw, 0)
+        return (
+            cap,
+            _bucket_columns_count(b),
+            len(b.get('rows') or []),
+            b.get('score', 0),
+            b.get('line_no', 0),
+        )
+
+    return max(blocks, key=key)
+
+
+def _extract_transposed_amort(rows):
+    """Sum buckets when time buckets live in column 0 (row-keyed)."""
+    buckets: dict[str, float] = {}
+    total = 0.0
+    saw_any = False
+    for row in rows:
+        if not row:
+            continue
+        stub = str(row[0]).strip()
+        bk = _classify_bucket_cell(stub)
+        if bk is None:
+            continue
+        nums = [parse_num(c) for c in row[1:]]
+        nums = [n for n in nums if n is not None]
+        if not nums:
+            continue
+        v = nums[-1] if len(nums) >= 2 else nums[0]
+        if bk == 'total':
+            total = v
+            continue
+        buckets[bk] = buckets.get(bk, 0.0) + v
+        saw_any = True
+    if not saw_any:
+        return None
+    if total:
+        buckets['total'] = total
+    elif buckets:
+        buckets['total'] = sum(
+            v for k, v in buckets.items() if k in ('y1', 'y1_y3', 'y3_y5', 'y5_plus')
+        )
+    return buckets
 
 
 def extract_amort_schedule(blocks: list[dict]) -> dict | None:
-    kw = ("\uC0C1\uAC01", "\uC778\uC2DD", "\uC608\uC0C1", "\uAE30\uB300", "CSM")
-    candidates = [
-        b
-        for b in blocks
-        if header_has_year_buckets(b.get("header") or [])
-        and any(k in str(b.get("caption") or "") for k in kw)
-    ]
-    blk = pick_best_block(candidates) or pick_best_block(blocks)
+    kw = ("상각", "인식", "예상", "기대", "CSM")
+
+    def _eligible(b: dict) -> bool:
+        if not any(k in str(b.get('caption') or '') for k in kw):
+            return False
+        if header_has_year_buckets(b.get('header') or []):
+            return True
+        rows = b.get('rows') or []
+        for k in range(min(3, len(rows))):
+            if _row_has_year_buckets(rows[k]):
+                return True
+        stubs = [str(r[0]).strip() for r in rows[:6] if r]
+        if sum(1 for s in stubs if _classify_bucket_cell(s) is not None) >= 3:
+            return True
+        return False
+
+    candidates = [b for b in blocks if _eligible(b)]
+    blk = _pick_amort_block(candidates) or pick_best_block(blocks)
     if not blk:
         return None
 
-    header = blk.get("header") or []
+    header = blk.get('header') or []
+    rows = blk.get('rows') or []
+
+    if not header:
+        inferred, rows = _infer_header_from_rows(rows)
+        header = inferred
+
     flat_hdr = _flatten_header(header)
     buckets_map = _bucket_indices(flat_hdr)
-    rows = blk.get("rows") or []
 
-    total_row: list[str] | None = None
+    header_has_buckets = any(
+        len(idxs) > 0 for k, idxs in buckets_map.items() if k != 'total'
+    )
+
+    if not header_has_buckets:
+        bucket_vals = _extract_transposed_amort(rows) or {}
+        status = 'ok' if bucket_vals else 'partial'
+        return {
+            'status': status,
+            'caption': blk.get('caption'),
+            'buckets': bucket_vals,
+            'header': header,
+            'row_label': "시간버킷(행)",
+        }
+
+    total_row = None
     hit_labels = (
-        "\uB2F9\uAE30\uC190\uC775\uC778\uC2DD",
-        "\uD569\uACC4",
-        "\uC18C\uACC4",
+        "당기손익인식",
+        "합계",
+        "소계",
     )
     for row in rows:
         if not row:
@@ -151,7 +351,7 @@ def extract_amort_schedule(blocks: list[dict]) -> dict | None:
             break
 
     if total_row is None:
-        best: list[str] | None = None
+        best = None
         best_n = 0
         for row in rows:
             if not row:
@@ -164,7 +364,7 @@ def extract_amort_schedule(blocks: list[dict]) -> dict | None:
         total_row = best
 
     if not total_row:
-        return {"status": "no_rows", "caption": blk.get("caption")}
+        return {'status': 'no_rows', 'caption': blk.get('caption')}
 
     aligned = (
         total_row if len(total_row) == len(flat_hdr) else _align_row_to_flat_header(flat_hdr, total_row)
@@ -174,7 +374,7 @@ def extract_amort_schedule(blocks: list[dict]) -> dict | None:
     seen_bucket = False
 
     for bucket, idxs in buckets_map.items():
-        if bucket == "total":
+        if bucket == 'total':
             continue
         usable = [i for i in idxs if 0 <= i < len(aligned)]
         if not usable:
@@ -189,28 +389,36 @@ def extract_amort_schedule(blocks: list[dict]) -> dict | None:
         bucket_vals[bucket] = sum(parts)
         seen_bucket = True
 
-    tidx = (buckets_map.get("total") or [])
+    tidx = (buckets_map.get('total') or [])
     if tidx:
         ti = tidx[0]
         if ti is not None and 0 <= ti < len(aligned):
             tv = parse_num(aligned[ti])
             if tv is not None:
-                bucket_vals["total"] = float(tv)
+                bucket_vals['total'] = float(tv)
 
     if not seen_bucket:
         numeric_tail = [float(v) for v in (parse_num(c) for c in aligned) if v is not None]
         if len(numeric_tail) >= 5:
             tail = numeric_tail[-5:]
-            keys = ["y1", "y1_y3", "y3_y5", "y5_plus", "total"]
+            keys = ['y1', 'y1_y3', 'y3_y5', 'y5_plus', 'total']
             bucket_vals = {k: tail[i] for i, k in enumerate(keys)}
 
-    status = "ok" if bucket_vals else "partial"
+    if 'total' not in bucket_vals and bucket_vals:
+        parts = [
+            v for k, v in bucket_vals.items()
+            if k in ('y1', 'y1_y3', 'y3_y5', 'y5_plus')
+        ]
+        if parts:
+            bucket_vals['total'] = sum(parts)
+
+    status = 'ok' if bucket_vals else 'partial'
     return {
-        "status": status if bucket_vals else "partial",
-        "caption": blk.get("caption"),
-        "buckets": bucket_vals,
-        "header": header,
-        "row_label": aligned[0] if aligned else "",
+        'status': status if bucket_vals else 'partial',
+        'caption': blk.get('caption'),
+        'buckets': bucket_vals,
+        'header': header,
+        'row_label': aligned[0] if aligned else '',
     }
 
 
