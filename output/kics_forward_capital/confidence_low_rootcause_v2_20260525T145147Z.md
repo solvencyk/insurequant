@@ -29,7 +29,7 @@ After excluding Cat E (legitimate stress, KR0003 + KR0072): **20 actionable LOWs
 | KR0069 | 삼성생명보험 | **66,289** | 0 | FSC alias 누락 (Phase 5에서 미해결 outlier). 분석상 진짜 최대 영향 |
 | KR1000 | 코리안리재보험 | 4,431 | 0 | FSC alias 누락 가능 (코리안리재보험 vs 코리안리) |
 | KR0008 | 삼성화재해상보험 | 4,097 | 0 | FSC alias 누락 (sibling KR0069 동일 패턴) |
-| KR0099 | KB라이프생명 | 2,011 | 0 | 신생 통합법인 (KB생명+푸르덴셜 통합), FSC 등재 미완료 가능 |
+| KR0099 | KB라이프생명 | 2,011 | 0 | **KB금융 자회사** (외국계 X, 旧푸르덴셜 인수 후 통합), FSC 등재 미완료 |
 | KR1011 | IBK연금보험 | 1,615 | 0 | 정부계열 특수법인 — FSC 미등재 정상 가능 |
 | KR0097 | 하나생명보험 | 1,553 | 0 | 외국계 → 하나금융 인수, FSC 누락 |
 | KR0050 | 하나손해보험 | 1,020 | 0 | 외국계 → 하나금융 인수, 동일 |
@@ -40,17 +40,19 @@ After excluding Cat E (legitimate stress, KR0003 + KR0072): **20 actionable LOWs
 
 ### 패턴 분류
 
-1. **FSC alias 누락 (해결 가능)**: KR0008 / KR0069 (삼성 화재·생명), KR1000 (코리안리). 총 BS T2 **74,817억** = 한국 보험사 자본성증권 시장의 큰 조각.
-2. **외국계 / 신생 (자체 발행 없음)**: KR0049, KR0075, KR0099, KR0100, KR1011. 총 **4,141억**. 모기업 자본 활용 — 자체 자본성증권 발행 동기 약함. 모회사 지원 가정으로 "정상" 처리 가능.
-3. **외국→국내 인수 후 정리 중**: KR0050 하나손해, KR0097 하나생명. 총 **2,573억**. 인수 후 발행 정보 통합 안 됐을 가능성.
-4. **특수법인 (정부계)**: KR0150 서울보증 46억 — PAA 적용으로 forward sim 자체가 부적합.
+1. **FSC alias 누락 (해결 가능)**: KR0008 / KR0069 (삼성 화재·생명), KR1000 (코리안리). 총 BS T2 **74,817억** — 한국 보험사 자본성증권 시장의 큰 조각.
+2. **국내 그룹 자회사 (모회사 자본 활용)**: KR0099 KB라이프 2,011억 (KB금융 자회사, 旧푸르덴셜 인수 통합), KR1011 IBK연금 1,615억 (정부계). 자체 자본성증권 발행 동기 약함.
+3. **외국계 (자체 발행 없음 가능성)**: KR0049 악사 (AXA), KR0075 BNP, KR0100 Chubb. 총 **515억**. 모기업 자본 활용.
+4. **외국→국내 인수 후 정리 중**: KR0050 하나손해, KR0097 하나생명. 총 **2,573억**.
+5. **특수법인 (정부계)**: KR0150 서울보증 46억 — PAA 적용, forward sim 자체 부적합.
+
+→ **사용자 결론 (2026-05-26): Top 3 alias만 해결되면 나머지는 큰 의미 없음.**
 
 ### Recommended actions
 
-- **HIGH priority**: KR0008 / KR0069 / KR1000 FSC alias 보강 (Phase 5 follow-up). 단순 alias 추가만으로 face_T2 가 채워질 가능성.
-- **MEDIUM**: 외국계 5사 (KR0049/0075/0099/0100/1011) → "no_self_issued, parent_capital" 정상 분류 + confidence "medium" 강제. compute_confidence에 분류 helper 추가 권고.
-- **LOW**: 인수 통합 중 사 (KR0050/0097) → 인수 후 데이터 정리 대기. 일단 그대로.
-- **EXCLUDE**: KR0150 서울보증 — PAA 적용 사는 forward sim 자체에서 제외 권고.
+- **HIGH priority (do)**: KR0008 / KR0069 / KR1000 FSC alias 보강 (Phase 5 follow-up). 단순 alias 추가만으로 face_T2 채워질 가능성.
+- **LOW priority (defer / monitor)**: 나머지 8사 — 자체 발행 없거나 인수 통합 중. 그대로 두기.
+- **EXCLUDE**: KR0150 서울보증 — PAA 적용 사는 forward sim cohort에서 제외 권고.
 
 ## Category C/D — research pending (per user msg)
 

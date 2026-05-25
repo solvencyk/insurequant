@@ -1,13 +1,13 @@
 # Insurequant TODO
 
-Last updated: 2026-05-25 (F1/F3/F5 done; F2 v2 scope 재정의 + F4 v2 cat E/F 재분류 + B drill-down)
+Last updated: 2026-05-26 (F2 v3 segment-match scope; F4 v2 KB라이프 분류 정정; Top-3 alias만 액션, 나머지 8사 defer)
 
 ## 🚧 Follow-ups (next session — 병렬 sub-agent 대상)
 
 | # | Task | Scope | Notes |
 |---|------|-------|-------|
 | ~~F1~~ | ~~index.html → IFRS17 cross-nav~~ | done | `fcdd544`. ECharts on('click') → URL param + auto-select |
-| F2 v2 | **NB CSM 배수 — KIDI crawler + 보장성보험만** | **scope 변경 2026-05-25**: 손보=장기보험 원수보험료 현황표(070b07)에서 **저축보험 제외 보장성보험만** / 생보=수입보험료 명세표 **I (070104, 종목별)** 사용 (II 회사별이 아니라). 발견된 KIDI endpoint = `POST /insMonth/getQueryResult.do queryId=getM{XX}List`. comp_type 매핑: 손보 N01..N41, 생보 L00 (회사별 single call) — but 070104는 새로 schema 확인 필요. | F2 prior report: `output/nb_csm_ratio_coverage_20260525T132702Z.md` (60/299 cells, 196 den gap). 다음 세션 액션: (a) 070104 ML04List API probe (b) ITEM_VAL 컬럼 의미 매핑 (visual cross-check) (c) 손보 보장성보험 row 식별 (N07 LINE=99113 보장성보험 합계?) (d) crawler 작성 → data/kidi/<stamp>/ 저장 (e) nb_premium_overrides.yaml 보강 |
+| F2 v3 | **NB CSM 배수 — segment-match KIDI crawler** | **scope 재정의 2026-05-26**: 신계약CSM 분자가 상품군별로 분리 가능하면 (건강/저축 등) → 같은 segment 월납환산 초회보험료를 분모로. 분리 불가면 **보장성보험 (투자계약 제외) 초회보험료 (월납환산)** 만 사용 (손보·생보 둘 다). IR 자료 있는 6사는 산출값 vs IR값 비교 검증. | KIDI endpoint 확인 완료: `POST /insMonth/getQueryResult.do queryId=getM{XX}List`. 손보 N07 row LINE=99113 = 보장성보험 합계 (개인 + 단체). 생보는 070104 ML04List (종목별 I — 보장 분리됨) 확인 필요. ITEM_VAL 컬럼 의미 매핑은 KIDI 웹 UI 시각 cross-check 필요 (한화 메리츠 작은 N월 값 vs 큰 N월값 패턴 보고). 다음 세션 액션: (a) 070104 schema probe + 보장성 row 식별 (b) 손보 99113 row 사용 검증 (c) 생보 CSM이 segment 분리되는지 확인 — 한화/삼성 IR PDF 참조 (d) crawler 작성 (e) 6 IR-cohort 산출값 vs IR값 cross-check |
 | ~~F3~~ | ~~CSM 상각 schedule 전수 조사~~ | done | `4b06492`. 19/24 → **22/24 ok**. 메리츠화재 4-bucket 정상 렌더. 헤더 패턴 (1년미만/30년이상/이하/초과 등) + transposed table + 합계 derive + reinsurance downrank. 2 source-level 한계 (서울보증 PAA, 한화손해 csm.json만) |
 | F4 v2 | **Forward Outlook confidence — Cat C/D 리서치 + 외국계 분류 helper** | scope 좁힘 (cat E 정상 제외 / cat F 코드 fix 완료) | F4 v2 report: `output/kics_forward_capital/confidence_low_rootcause_v2_20260525T145147Z.md`. **Cat B drill-down 결과**: 11사 (10 아님) — KR0069 삼성생명 BS T2 66,289억 (FSC alias 최대 gap), KR0008 삼성화재 4,097억, KR1000 코리안리 4,431억 = alias 해결 시 75,000억 격차 해소. **Cat C/D 리서치 필요**: BS 자본성증권 carrying value 정의 (FV vs amortized) + Call exercise 시 차감 메커니즘. 답 나오면 over/under_deduct 의미 재정의. **외국계 분류 helper** 코드 추가 권고: `bond_coverage="no_self_issued, parent_capital"` 등 |
 | ~~F5~~ | ~~No-bond insurer forward sim 추가~~ | done | `b02e24d`. 24 → 37 cohort. KR0008 삼성화재 263%→263% flat. 13 no_bond insurer 추가. F4 추가 fix (`<1.0` 임계): KR1010 교보라이프 low→high |
