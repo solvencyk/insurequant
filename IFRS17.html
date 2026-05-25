@@ -110,6 +110,12 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       <div id="senStub" class="stub-msg" style="display:none"></div>
       <div class="table-wrap" id="senTable"></div>
     </div>
+    <div class="panel" data-pane="hist">
+      <h2>8) CSM 시계열 (2023.1Q ~ 2026.1Q)</h2>
+      <div class="small-muted" id="histCap">선택한 보험사의 13분기 CSM 진화. 회색 배경선은 23사 전체 (highlight: 선택사). 'no_csm_block' 분기는 점선 + null로 표시 (사업보고서는 통상 ok, 1Q/3Q 분기보고서는 rollforward 표 미포함 케이스 다수).</div>
+      <div id="histStub" class="stub-msg" style="display:none"></div>
+      <div class="chart-container"><canvas id="canvasHist"></canvas></div>
+    </div>
   </template>
 
 <script>
@@ -130,6 +136,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     bs: dataPaths("../data/ifrs17/viz/bs_snapshot.json", "data/ifrs17/viz/bs_snapshot.json"),
     sen: dataPaths("../data/ifrs17/viz/sensitivity_heatmap.json", "data/ifrs17/viz/sensitivity_heatmap.json"),
     nb: dataPaths("../data/ir/nb_csm_ratio.json", "data/ir/nb_csm_ratio.json"),
+    hist: dataPaths("../data/ifrs17/viz/csm_waterfall_history.json", "data/ifrs17/viz/csm_waterfall_history.json"),
   };
 
   const NB_LOOKUP = {
@@ -141,9 +148,9 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     한화생명: { slug: "hanwha_life", bucket: "life" },
   };
 
-  const charts = { wf: null, amort: null, pl: null, nb: null };
+  const charts = { wf: null, amort: null, pl: null, nb: null, hist: null };
 
-  const payload = { wf:null, amort:null, pl:null, kpi:null, bs:null, sen:null, nb:null };
+  const payload = { wf:null, amort:null, pl:null, kpi:null, bs:null, sen:null, nb:null, hist:null };
   const ix = {
     wf: new Map(),
     amort: new Map(),
@@ -151,6 +158,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     kpi: new Map(),
     bs: new Map(),
     sen: new Map(),
+    hist: new Map(),
   };
 
   function parseKoNum(x){
@@ -196,7 +204,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       try{ charts.wf.dispose(); }catch(e){}
       charts.wf=null;
     }
-    for (const k of ["amort","pl","nb"]){
+    for (const k of ["amort","pl","nb","hist"]){
       try{ charts[k] && charts[k].destroy(); }catch(e){}
       charts[k]=null;
     }
@@ -583,6 +591,140 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       }
       tbl.appendChild(tbody); q(host,"#senTable").appendChild(tbl)
     }
+
+    // ===== Panel 8: CSM 시계열 (13Q) =====
+    const histPay = payload.hist;
+    const histRow = histPay ? ix.hist.get(company) : null;
+    const histStubMsg = (() => {
+      if (!histPay) return "csm_waterfall_history.json 을 불러오지 못했습니다.";
+      if (!histRow) return "선택사의 historical 데이터 없음 (23사 cohort 외).";
+      return null;
+    })();
+    stub(q(host,"#histStub"), !!histStubMsg, histStubMsg);
+    if (histPay && histRow && histRow.periods){
+      const periods = histPay.periods || [];
+      const closingValues = periods.map(p => {
+        const snap = histRow.periods[p];
+        if (!snap || (snap.status !== "ok" && snap.status !== "partial")) return null;
+        const v = snap.stages && snap.stages.closing && snap.stages.closing.value_mn_krw;
+        return (typeof v === "number" && Number.isFinite(v)) ? v / 1e6 : null;  // mn → 조원
+      });
+      const nbValues = periods.map(p => {
+        const snap = histRow.periods[p];
+        if (!snap || (snap.status !== "ok" && snap.status !== "partial")) return null;
+        const v = snap.stages && snap.stages.new_business && snap.stages.new_business.value_mn_krw;
+        return (typeof v === "number" && Number.isFinite(v)) ? v / 1e6 : null;  // mn → 조원
+      });
+      // Background lines: all OTHER 23사 closing CSM (faded)
+      const bgDatasets = [];
+      for (const c of (histPay.companies || [])){
+        if (!c || !c.company || c.company === company) continue;
+        const closing = periods.map(p => {
+          const snap = c.periods && c.periods[p];
+          if (!snap || snap.status !== "ok") return null;
+          const v = snap.stages && snap.stages.closing && snap.stages.closing.value_mn_krw;
+          return (typeof v === "number" && Number.isFinite(v)) ? v / 1e6 : null;
+        });
+        bgDatasets.push({
+          label: c.company,
+          data: closing,
+          borderColor: "rgba(180,180,180,0.35)",
+          borderWidth: 1,
+          backgroundColor: "transparent",
+          pointRadius: 0,
+          tension: 0.1,
+          spanGaps: false,
+          order: 10,
+          hidden: false,
+          _bg: true,
+        });
+      }
+      charts.hist = new Chart(canvasCtx(host, "#canvasHist"), {
+        type: "line",
+        data: {
+          labels: periods,
+          datasets: [
+            ...bgDatasets,
+            {
+              label: company + " · 기말 CSM (조원)",
+              data: closingValues,
+              borderColor: "rgb(13, 110, 253)",
+              backgroundColor: "rgba(13, 110, 253, 0.08)",
+              borderWidth: 3,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+              tension: 0.15,
+              fill: true,
+              spanGaps: false,
+              order: 1,
+              yAxisID: "y",
+            },
+            {
+              label: company + " · 신계약 CSM (조원)",
+              data: nbValues,
+              borderColor: "rgb(255, 99, 132)",
+              backgroundColor: "transparent",
+              borderWidth: 2,
+              borderDash: [6, 4],
+              pointRadius: 3,
+              pointHoverRadius: 5,
+              tension: 0.15,
+              fill: false,
+              spanGaps: false,
+              order: 2,
+              yAxisID: "y1",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: { display: true, text: "CSM 시계열 (배경 회색선 = 23사, 강조 = " + company + ")" },
+            legend: {
+              display: true,
+              position: "top",
+              labels: {
+                filter: (item) => {
+                  // hide the 22 background lines from legend
+                  const ds = item && item.datasetIndex;
+                  if (ds == null) return true;
+                  const dataset = charts.hist && charts.hist.data.datasets[ds];
+                  return dataset && !dataset._bg;
+                },
+              },
+            },
+            tooltip: {
+              mode: "index",
+              intersect: false,
+              filter: (ctx) => {
+                const ds = ctx.dataset;
+                return ds && !ds._bg;  // only show selected company in tooltip
+              },
+              callbacks: {
+                label: (ctx) => `${ctx.dataset.label}: ${fmtNum(ctx.parsed.y, 2)}조`,
+              },
+            },
+          },
+          interaction: { mode: "nearest", axis: "x", intersect: false },
+          scales: {
+            y: {
+              type: "linear", position: "left", beginAtZero: false,
+              title: { display: true, text: "기말 CSM (조원)", color: "rgb(13, 110, 253)" },
+              ticks: { callback: (v) => fmtNum(v, 1) + "조", color: "rgb(13, 110, 253)" },
+              grid: { color: "rgba(13, 110, 253, 0.08)" },
+            },
+            y1: {
+              type: "linear", position: "right", beginAtZero: true,
+              title: { display: true, text: "신계약 CSM (조원)", color: "rgb(255, 99, 132)" },
+              ticks: { callback: (v) => fmtNum(v, 2) + "조", color: "rgb(255, 99, 132)" },
+              grid: { drawOnChartArea: false },
+            },
+            x: { title: { display: true, text: "분기" } },
+          },
+        },
+      });
+    }
   }
 
   function onSelect(){
@@ -606,8 +748,9 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const bsx=await fetchJsonSafe(PATHS.bs);
     const senx=await fetchJsonSafe(PATHS.sen);
     const nbx=await fetchJsonSafe(PATHS.nb);
+    const histx=await fetchJsonSafe(PATHS.hist);
 
-    payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.kpi=kpix; payload.bs=bsx; payload.sen=senx; payload.nb=nbx;
+    payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.kpi=kpix; payload.bs=bsx; payload.sen=senx; payload.nb=nbx; payload.hist=histx;
 
     ix.wf = indexRows(wf && wf.companies);
     ix.amort = indexRows(amort && amort.companies);
@@ -615,6 +758,12 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     ix.kpi = indexRows(kpix && kpix.companies);
     ix.bs = indexRows(bsx && bsx.companies);
     ix.sen = indexRows(senx && senx.companies);
+    // hist has a different shape: companies[].periods{period→snap}; index by name
+    if (histx && Array.isArray(histx.companies)){
+      for (const c of histx.companies){
+        if (c && c.company) ix.hist.set(c.company, c);
+      }
+    }
 
     const per = wf && (wf.period || wf.unit || wf.source) ? String(wf.period || wf.source || ""):"";
     const line = document.getElementById("wfPeriodLine");
