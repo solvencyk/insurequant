@@ -1,0 +1,2554 @@
+{
+  "total_cells": 299,
+  "filled": 60,
+  "num_missing_only": 18,
+  "den_missing_only": 196,
+  "both_missing": 25,
+  "cohort_insurers": [
+    "DB손해보험",
+    "메리츠화재해상보험",
+    "삼성생명",
+    "삼성화재해상보험",
+    "한화생명",
+    "현대해상"
+  ],
+  "non_cohort_insurers": [
+    "DB생명보험",
+    "KB손해보험",
+    "NH농협손해보험",
+    "교보생명보험",
+    "농협생명보험",
+    "동양생명",
+    "롯데손해보험",
+    "미래에셋생명",
+    "신한라이프생명보험",
+    "에이비엘생명보험",
+    "케이디비생명보험",
+    "케이비라이프생명보험",
+    "코리안리",
+    "푸본현대생명보험",
+    "한화손해보험",
+    "흥국생명보험",
+    "흥국화재"
+  ],
+  "top_missing_with_num": [
+    {
+      "company": "교보생명보험",
+      "nb_mn_krw": 831754.0
+    },
+    {
+      "company": "신한라이프생명보험",
+      "nb_mn_krw": 732600.0
+    },
+    {
+      "company": "농협생명보험",
+      "nb_mn_krw": 719504.0
+    },
+    {
+      "company": "KB손해보험",
+      "nb_mn_krw": 421820.0
+    },
+    {
+      "company": "DB생명보험",
+      "nb_mn_krw": 285894.0
+    },
+    {
+      "company": "NH농협손해보험",
+      "nb_mn_krw": 232602.0
+    },
+    {
+      "company": "흥국생명보험",
+      "nb_mn_krw": 159507.0
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "nb_mn_krw": 141528.0
+    },
+    {
+      "company": "에이비엘생명보험",
+      "nb_mn_krw": 117678.0
+    },
+    {
+      "company": "케이디비생명보험",
+      "nb_mn_krw": 57390.0
+    }
+  ],
+  "per_cell": [
+    {
+      "company": "DB생명보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 125381.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 244173.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 408602.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 524734.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 123929.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 244173.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 408602.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 524734.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 142947.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 480472.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 680248.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 469446.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB생명보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 285894.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 685876.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1352937.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2125314.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2826120.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 717523.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1406060.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2181482.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 3078038.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 717523.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 3077180.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "DB손해보험",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 415227.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 873340.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1398721.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1836968.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 448492.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 901520.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1398721.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1932321.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 448492.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 901520.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1380738.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1932179.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "KB손해보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 421820.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 242036.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 457592.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 631932.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 771616.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 211806.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 358618.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 539744.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 710366.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 211806.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 358618.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 458360.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 542720.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "NH농협손해보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 232602.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 366220.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1336240.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2058438.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2745776.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 787804.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1410944.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2108814.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2755710.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 787804.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1410944.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2108814.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 10720.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "교보생명보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 831754.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 395774.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 666360.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 845964.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2023.4Q",
+      "num_status": "status_download_error",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 920974.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1153432.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1445206.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1628554.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 920974.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1153432.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1445206.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1628552.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "농협생명보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 719504.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 352540.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 717564.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2023.3Q",
+      "num_status": "status_download_error",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1520324.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 408696.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 717564.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1134204.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1520324.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 408696.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1463872.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "동양생명",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2023.1Q",
+      "num_status": "status_empty_extract",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 530202.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 818422.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1095780.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 253344.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 506392.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 729098.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 970504.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 219702.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2025.4Q",
+      "num_status": "nb_zero_or_missing",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "롯데손해보험",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 444244.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 856358.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1324145.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1741476.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 417184.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 809694.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1219758.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1600648.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 372266.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 729941.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1153008.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2025.4Q",
+      "num_status": "status_download_error",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 440252.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2023.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 138248.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 214810.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 304974.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 102570.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 168018.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 298614.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 219528.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 230334.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 85526.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "미래에셋생명",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 468223.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1088406.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1586915.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1960198.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 468224.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1088406.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1586915.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1960198.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 487755.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 3286463.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성생명",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2023.1Q",
+      "num_status": "status_partial",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1442600.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2606793.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 3499533.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 885555.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1638266.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2476790.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 3451183.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 701517.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2025.4Q",
+      "num_status": "status_download_error",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 441576.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 875758.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1452132.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1803554.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 753194.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1246218.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1898140.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2531526.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 753194.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1410914.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2404770.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 3289148.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 732600.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 60433.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 165531.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 277848.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 347587.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 86658.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 171309.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 285357.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 347587.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 86658.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 138957.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 230382.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2025.4Q",
+      "num_status": "status_download_error",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "에이비엘생명보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 117678.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2023.1Q",
+      "num_status": "status_partial",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 117395.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 221067.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 302310.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 123809.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 187654.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 253237.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 328222.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 74422.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 125067.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 173109.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 233793.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이디비생명보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 57390.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 122482.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 288884.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 453934.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 634668.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 131359.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 288884.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 453934.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 634668.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 131359.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 233178.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 383197.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 504729.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 141528.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 232737.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 253015.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 260809.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 300315.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 109536.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 116475.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 135442.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 241650.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 104241.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 195506.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "코리안리",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 7445.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 48974.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 84350.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 116509.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 22462.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 48974.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 84350.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 116509.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 22463.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 51233.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 74575.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 99063.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 22807.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화생명",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 704836.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "한화생명",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1652110.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "한화생명",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2337250.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "한화생명",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2541216.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "한화생명",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 715644.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "한화생명",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1457245.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "한화생명",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2337250.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "한화생명",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 3236057.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "한화생명",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 715644.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "한화생명",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "한화생명",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "한화생명",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 3100770.0,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "한화생명",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 266560.076,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 585781.036,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 939003.396,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1356806.746,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 397154.15,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 733610.224,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1094915.628,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1481978.186,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 397154.15,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 740430.906,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "한화손해보험",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "현대해상",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 494665.592,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "현대해상",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 954207.894,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "현대해상",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1322135.58,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "현대해상",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1679236.885,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "현대해상",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 411458.719,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "현대해상",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 846932.266,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "현대해상",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1331855.264,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "현대해상",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 1827879.353,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "현대해상",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 479247.842,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "현대해상",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "현대해상",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "현대해상",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 2036175.606349,
+      "has_denom_cohort": true,
+      "kind": "filled"
+    },
+    {
+      "company": "현대해상",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": true,
+      "kind": "num_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 100630.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 182758.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 282716.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 367212.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 105369.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 193081.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 285091.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 388299.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 112275.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2025.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 230651.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2025.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 387029.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 38474.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국생명보험",
+      "period": "2026.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 159507.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2023.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 67826.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2023.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 137568.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2023.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 209692.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2023.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 281200.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2024.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 69484.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2024.2Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 137568.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2024.3Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 209692.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2024.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 312758.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2025.1Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 84070.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2025.2Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2025.3Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2025.4Q",
+      "num_status": "ok",
+      "num_value_mn_krw": 663520.0,
+      "has_denom_cohort": false,
+      "kind": "den_missing"
+    },
+    {
+      "company": "흥국화재",
+      "period": "2026.1Q",
+      "num_status": "status_no_csm_block",
+      "num_value_mn_krw": null,
+      "has_denom_cohort": false,
+      "kind": "both_missing"
+    }
+  ],
+  "periods": [
+    "2023.1Q",
+    "2023.2Q",
+    "2023.3Q",
+    "2023.4Q",
+    "2024.1Q",
+    "2024.2Q",
+    "2024.3Q",
+    "2024.4Q",
+    "2025.1Q",
+    "2025.2Q",
+    "2025.3Q",
+    "2025.4Q",
+    "2026.1Q"
+  ],
+  "num_status_per_co": {
+    "DB생명보험": 13,
+    "DB손해보험": 10,
+    "KB손해보험": 13,
+    "NH농협손해보험": 13,
+    "교보생명보험": 13,
+    "농협생명보험": 12,
+    "동양생명": 9,
+    "롯데손해보험": 8,
+    "메리츠화재해상보험": 12,
+    "미래에셋생명": 9,
+    "삼성생명": 10,
+    "삼성화재해상보험": 8,
+    "신한라이프생명보험": 13,
+    "에이비엘생명보험": 12,
+    "케이디비생명보험": 12,
+    "케이비라이프생명보험": 13,
+    "코리안리": 10,
+    "푸본현대생명보험": 13,
+    "한화생명": 10,
+    "한화손해보험": 10,
+    "현대해상": 10,
+    "흥국생명보험": 13,
+    "흥국화재": 10
+  },
+  "den_records": [
+    {
+      "company": "DB손해보험",
+      "period": "FY2024",
+      "wolnap_eok_month": 149.0,
+      "source": "ir:db_2025_results.txt",
+      "scope": "total_monthly_avg"
+    },
+    {
+      "company": "삼성화재해상보험",
+      "period": "2025.3Q",
+      "wolnap_eok_month": 164.0,
+      "source": "ir:samsungfire_2025_3q.txt",
+      "scope": "protection_premium_monthly_avg"
+    },
+    {
+      "company": "현대해상",
+      "period": "2025.1H",
+      "wolnap_eok_month": 94.253,
+      "source": "ir:hyundai_mar_2025_1h.txt",
+      "scope": "total_implied_from_ir_csm_and_ratio"
+    },
+    {
+      "company": "한화생명",
+      "period": "FY2025.1Q",
+      "wolnap_eok_month": 101.667,
+      "source": "ir:hanwha_life_2025_1q.txt",
+      "scope": "total_implied_from_ir_csm_and_ratio"
+    },
+    {
+      "company": "삼성생명",
+      "period": "FY2025.1Q",
+      "wolnap_eok_month": 99.796,
+      "source": "ir:samsung_life_2025_1q.txt",
+      "scope": "total_implied_from_ir_csm_and_ratio"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "period": "1Q26",
+      "wolnap_eok_month": 116.38,
+      "source": "ir:meritz/extracted_202603.json",
+      "scope": "total_implied_from_ir_csm_and_ratio"
+    }
+  ]
+}
