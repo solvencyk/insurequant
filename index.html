@@ -756,6 +756,17 @@
           } : undefined
         }]
       }, true);
+
+      // F1: click a bubble → open IFRS17.html filtered to that company.
+      // Detach + reattach to avoid stacking duplicate handlers across re-render.
+      bubbleChart.off('click');
+      bubbleChart.on('click', (params) => {
+        if (params && params.componentType === 'series' && params.data && params.data.name) {
+          const url = 'IFRS17.html?company=' + encodeURIComponent(params.data.name);
+          window.location.href = url;
+        }
+      });
+      el.style.cursor = 'pointer';
     }
 
     function loadBubble() {

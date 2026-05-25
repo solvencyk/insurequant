@@ -780,6 +780,28 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     }
     sel.addEventListener("change", onSelect);
     window.addEventListener("resize", ()=>{ if (charts.wf) charts.wf.resize(); });
+
+    // F1: auto-select company from URL param (?company=...). Used by
+    // index.html bubble click → IFRS17 cross-nav.
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const wantedRaw = params.get("company");
+      if (wantedRaw && names.length){
+        const wanted = decodeURIComponent(wantedRaw);
+        let pick = names.find(n => n === wanted);
+        if (!pick){
+          // partial / contains fallback (e.g. "삼성생명보험" ↔ "삼성생명")
+          pick = names.find(n => n.includes(wanted) || wanted.includes(n));
+        }
+        if (pick){
+          sel.value = pick;
+          onSelect();
+        } else {
+          const hint=document.getElementById("emptyHint");
+          if (hint) hint.textContent = "URL의 회사 '"+wanted+"'를 IFRS17 23-co 코호트에서 찾지 못했어. 위 드롭다운에서 직접 선택해줘.";
+        }
+      }
+    } catch (e) { /* URL parse safe-guard */ }
   }
 
   boot().catch(()=>{
