@@ -1,6 +1,18 @@
 # Insurequant TODO
 
-Last updated: 2026-05-25 (IFRS17 historical 13Q 257 ok + CSM 시계열 panel 8 추가 + push 2회차)
+Last updated: 2026-05-25 (5 follow-ups queued; context cleanup phase)
+
+## 🚧 Follow-ups (next session — 병렬 sub-agent 대상)
+
+| # | Task | Scope | Notes |
+|---|------|-------|-------|
+| F1 | **index.html → IFRS17 cross-nav** | bubble click → IFRS17.html?company=... | URL param + auto-select selector. IFRS17.html already supports company picker, just need to read URL param on boot. |
+| F2 | **NB CSM 배수 누락 troubleshoot** | 보험개발원 월납월초환산보험료 stats → 전사 산출 | 현재 nb_csm_ratio.json 누락 회사·시점 식별 → KIDI/보험개발원 통계 crawl 보강. `data/assoc/nb_premium_*.{json,yaml}` 갱신 |
+| F3 | **CSM 상각 schedule 전수 조사** | csm_amort_schedule.json 회사 status≠ok 케이스 | 메리츠화재 보고 다른 missing 회사들도 함께. 패턴 (헤더 형식 / 표 위치) 분석 후 picker 확장 |
+| F4 | **Forward Outlook confidence low 분석** | forward_simulation_v3.json `confidence.level=low` 15사 | 원인별 분류 (T1 face/BS gap >30% / T2 missing / kics_t1=0 / etc.). 각 회사 root cause 정리 |
+| F5 | **No-bond insurer forward sim 추가** | 삼성화재(KR0008) 등 bond 발행 없는 사 | 현재 "없음" 표시. 가용자본 baseline 유지 + SCR만 경과조치 적용전으로 선형 interp. simulate_one에 bonds=[] 케이스 추가 (이미 sum=0이라 로직상 OK일 텐데 missing_baseline 분기에서 stub로 처리 중일 수도 — 확인) |
+
+
 
 Session start: read TODO.md then docs/claude-changelog.md (top first).
 
