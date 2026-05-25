@@ -1,6 +1,6 @@
 # Insurequant TODO
 
-Last updated: 2026-05-25 (Cursor handoff + IFRS17 historical ingest 23사 × 13Q started in background)
+Last updated: 2026-05-25 (Initial git push to solvencyk/insurequant main + deploy verified. IFRS17 historical batch 32/23 done)
 
 Session start: read TODO.md then docs/claude-changelog.md (top first).
 
