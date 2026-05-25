@@ -303,8 +303,15 @@ def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict,
     }
 
 
-def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
-    """Build 5-year projection for one insurer."""
+def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict],
+                 bs_t1_eok: float | None = None, bs_t2_eok: float | None = None) -> dict:
+    """Build 5-year projection for one insurer.
+
+    Per user directive (2026-05-26 "장부가 기준 땅땅"): bond deductions use
+    book-value scaling, not raw face. For outstanding bonds, scale factor =
+    BS_book / face_total_outstanding (per tier). This makes the sim consistent
+    with K-ICS BS (resolves F4 Cat C/D over/under_deduct gap).
+    """
     items = baseline["items"]
     item1 = items.get(1, {})
     item2 = items.get(2, {})
@@ -343,15 +350,24 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
         })
     bond_events.sort(key=lambda x: x["call_date"])
 
+    # Book-value scale factors (face → BS book value). If face_total=0 or
+    # BS=None, fall back to scale=1.0 (i.e. face = book, no adjustment).
+    face_t1_total = sum(e["amount_eok"] for e in bond_events if e["tier"] == "tier1_hybrid")
+    face_t2_total = sum(e["amount_eok"] for e in bond_events if e["tier"] == "tier2_subordinated")
+    t1_scale = (bs_t1_eok / face_t1_total) if (bs_t1_eok and face_t1_total > 0) else 1.0
+    t2_scale = (bs_t2_eok / face_t2_total) if (bs_t2_eok and face_t2_total > 0) else 1.0
+
     projections = []
     transition_span = float(TRANSITION_END_YEAR - BASELINE_YEAR)  # 7
     for year in SIM_YEARS:
         year_end = f"{year}-12-31"
-        cumulative_dedu = sum(e["amount_eok"] for e in bond_events if e["call_date"] <= year_end)
-        cumulative_dedu_t1 = sum(
-            e["amount_eok"] for e in bond_events
-            if e["call_date"] <= year_end and e["tier"] == "tier1_hybrid"
-        )
+        face_dedu_t1 = sum(e["amount_eok"] for e in bond_events
+                           if e["call_date"] <= year_end and e["tier"] == "tier1_hybrid")
+        face_dedu_t2 = sum(e["amount_eok"] for e in bond_events
+                           if e["call_date"] <= year_end and e["tier"] == "tier2_subordinated")
+        cumulative_dedu_t1 = face_dedu_t1 * t1_scale
+        cumulative_dedu_t2 = face_dedu_t2 * t2_scale
+        cumulative_dedu = cumulative_dedu_t1 + cumulative_dedu_t2
         capital_y = cap_baseline - cumulative_dedu
         basic_y = (basic_baseline or 0) - cumulative_dedu_t1
 
@@ -400,6 +416,8 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
         },
         "outstanding_bonds_total_eok": round(sum(e["amount_eok"] for e in bond_events), 1),
         "outstanding_tier1_eok": round(sum(e["amount_eok"] for e in bond_events if e["tier"] == "tier1_hybrid"), 1),
+        "book_value_scale_t1": round(t1_scale, 3),
+        "book_value_scale_t2": round(t2_scale, 3),
         "projections": projections,
     }
 
@@ -460,7 +478,13 @@ def main() -> int:
                 code, bonds, tier1_by_code, tier2_by_code, bond_coverage=bond_coverage)
             results.append(stub)
             continue
-        row = simulate_one(code, baselines[code], bonds)
+        # Pull BS book values for tier1/tier2 scaling (장부가 기준 deduction)
+        bs_t1 = (tier1_by_code.get(code) or {}).get("tier1_hybrid_issued_eok") or 0.0
+        t2_row = tier2_by_code.get(code) or {}
+        bs_t2 = (t2_row.get("subordinated_eok")
+                 or t2_row.get("numerator_eok") or 0.0)
+        row = simulate_one(code, baselines[code], bonds,
+                           bs_t1_eok=bs_t1, bs_t2_eok=bs_t2)
         row["bond_coverage"] = bond_coverage
         row["confidence"] = compute_confidence(
             code, bonds, tier1_by_code, tier2_by_code, bond_coverage=bond_coverage)
