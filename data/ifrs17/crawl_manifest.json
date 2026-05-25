@@ -1,0 +1,507 @@
+{
+  "generated_utc": "2026-05-25T06:38:30Z",
+  "period": "FY2025_Q4",
+  "operational_insurers": 23,
+  "extracted_dir": "data\\ifrs17\\extracted",
+  "counts_by_artifact": {
+    "measurement": 23,
+    "measurement_mvp": 23,
+    "csm": 23,
+    "sensitivity_dart": 23,
+    "liability": 5,
+    "kics_sensitivity": 23
+  },
+  "batch_kics_run": {
+    "period": "FY2025_Q4",
+    "insurers_requested": 23,
+    "insurers_nonempty": 13,
+    "tables_total": 30,
+    "per_insurer": [
+      {
+        "kics_code": "KR0001",
+        "kics_name": "메리츠화재해상보험",
+        "status": "ok",
+        "tables": 2,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0001_메리츠화재해상보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0001_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0002",
+        "kics_name": "한화손해보험",
+        "status": "ok",
+        "tables": 2,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0002_한화손해보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0002_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0003",
+        "kics_name": "롯데손해보험",
+        "status": "ok",
+        "tables": 2,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0003_롯데손해보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0003_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0005",
+        "kics_name": "흥국화재",
+        "status": "ok",
+        "tables": 2,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0005_흥국화재.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0005_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0008",
+        "kics_name": "삼성화재해상보험",
+        "status": "ok",
+        "tables": 2,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0008_삼성화재해상보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0008_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0009",
+        "kics_name": "현대해상",
+        "status": "ok",
+        "tables": 2,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0009_현대해상.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0009_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0010",
+        "kics_name": "KB손해보험",
+        "status": "empty",
+        "tables": 0,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0010_KB손해보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0010_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0011",
+        "kics_name": "DB손해보험",
+        "status": "ok",
+        "tables": 1,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0011_DB손해보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0011_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0032",
+        "kics_name": "NH농협손해보험",
+        "status": "ok",
+        "tables": 2,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0032_NH농협손해보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0032_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0068",
+        "kics_name": "한화생명",
+        "status": "empty",
+        "tables": 0,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0068_한화생명.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0068_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0069",
+        "kics_name": "삼성생명보험",
+        "status": "ok",
+        "tables": 3,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0069_삼성생명.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0069_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0070",
+        "kics_name": "에이비엘생명보험",
+        "status": "empty",
+        "tables": 0,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0070_에이비엘생명보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0070_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0071",
+        "kics_name": "흥국생명보험",
+        "status": "empty",
+        "tables": 0,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0071_흥국생명보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0071_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0072",
+        "kics_name": "케이디비생명보험",
+        "status": "empty",
+        "tables": 0,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0072_케이디비생명보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0072_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0073",
+        "kics_name": "교보생명보험",
+        "status": "ok",
+        "tables": 4,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0073_교보생명보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0073_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0079",
+        "kics_name": "미래에셋생명보험",
+        "status": "ok",
+        "tables": 4,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0079_미래에셋생명.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0079_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0082",
+        "kics_name": "DB생명보험",
+        "status": "empty",
+        "tables": 0,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0082_DB생명보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0082_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0083",
+        "kics_name": "푸본현대생명보험",
+        "status": "empty",
+        "tables": 0,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0083_푸본현대생명보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0083_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0087",
+        "kics_name": "동양생명",
+        "status": "empty",
+        "tables": 0,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0087_동양생명.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0087_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0094",
+        "kics_name": "신한라이프생명보험",
+        "status": "empty",
+        "tables": 0,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0094_신한라이프생명보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0094_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0099",
+        "kics_name": "KB라이프생명",
+        "status": "empty",
+        "tables": 0,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0099_케이비라이프생명보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0099_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR0104",
+        "kics_name": "농협생명보험",
+        "status": "ok",
+        "tables": 2,
+        "md_path": "md_inbox\\FY2025_Q4\\KR0104_농협생명보험.md",
+        "json_out": "data\\ifrs17\\extracted\\KR0104_FY2025_Q4_kics_sensitivity.json"
+      },
+      {
+        "kics_code": "KR1000",
+        "kics_name": "코리안리재보험",
+        "status": "ok",
+        "tables": 2,
+        "md_path": "md_inbox\\FY2025_Q4\\KR1000_코리안리.md",
+        "json_out": "data\\ifrs17\\extracted\\KR1000_FY2025_Q4_kics_sensitivity.json"
+      }
+    ]
+  },
+  "insurers": [
+    {
+      "kics_code": "KR0001",
+      "kics_name": "메리츠화재해상보험",
+      "dart_stem": "메리츠화재해상보험_20250331003145",
+      "files": {
+        "measurement": "메리츠화재해상보험_20250331003145_measurement.json",
+        "measurement_mvp": "메리츠화재해상보험_20250331003145_measurement_mvp.json",
+        "csm": "메리츠화재해상보험_20250331003145_csm.json",
+        "sensitivity_dart": "메리츠화재해상보험_20250331003145_sensitivity.json",
+        "liability": "메리츠화재해상보험_20250331003145_liability.json",
+        "kics_sensitivity": "KR0001_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0002",
+      "kics_name": "한화손해보험",
+      "dart_stem": "한화손해보험_20250311001216",
+      "files": {
+        "measurement": "한화손해보험_20250311001216_measurement.json",
+        "measurement_mvp": "한화손해보험_20250311001216_measurement_mvp.json",
+        "csm": "한화손해보험_20250311001216_csm.json",
+        "sensitivity_dart": "한화손해보험_20250311001216_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0002_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0003",
+      "kics_name": "롯데손해보험",
+      "dart_stem": "롯데손해보험_20250320001732",
+      "files": {
+        "measurement": "롯데손해보험_20250320001732_measurement.json",
+        "measurement_mvp": "롯데손해보험_20250320001732_measurement_mvp.json",
+        "csm": "롯데손해보험_20250320001732_csm.json",
+        "sensitivity_dart": "롯데손해보험_20250320001732_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0003_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0005",
+      "kics_name": "흥국화재",
+      "dart_stem": "흥국화재_20250320001444",
+      "files": {
+        "measurement": "흥국화재_20250320001444_measurement.json",
+        "measurement_mvp": "흥국화재_20250320001444_measurement_mvp.json",
+        "csm": "흥국화재_20250320001444_csm.json",
+        "sensitivity_dart": "흥국화재_20250320001444_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0005_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0008",
+      "kics_name": "삼성화재해상보험",
+      "dart_stem": "삼성화재해상보험_20250311001055",
+      "files": {
+        "measurement": "삼성화재해상보험_20250311001055_measurement.json",
+        "measurement_mvp": "삼성화재해상보험_20250311001055_measurement_mvp.json",
+        "csm": "삼성화재해상보험_20250311001055_csm.json",
+        "sensitivity_dart": "삼성화재해상보험_20250311001055_sensitivity.json",
+        "liability": "삼성화재해상보험_20250311001055_liability.json",
+        "kics_sensitivity": "KR0008_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0009",
+      "kics_name": "현대해상",
+      "dart_stem": "현대해상_20250313001346",
+      "files": {
+        "measurement": "현대해상_20250313001346_measurement.json",
+        "measurement_mvp": "현대해상_20250313001346_measurement_mvp.json",
+        "csm": "현대해상_20250313001346_csm.json",
+        "sensitivity_dart": "현대해상_20250313001346_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0009_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0010",
+      "kics_name": "KB손해보험",
+      "dart_stem": "KB손해보험_20250314001697",
+      "files": {
+        "measurement": "KB손해보험_20250314001697_measurement.json",
+        "measurement_mvp": "KB손해보험_20250314001697_measurement_mvp.json",
+        "csm": "KB손해보험_20250314001697_csm.json",
+        "sensitivity_dart": "KB손해보험_20250314001697_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0010_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0011",
+      "kics_name": "DB손해보험",
+      "dart_stem": "DB손해보험_20250313001342",
+      "files": {
+        "measurement": "DB손해보험_20250313001342_measurement.json",
+        "measurement_mvp": "DB손해보험_20250313001342_measurement_mvp.json",
+        "csm": "DB손해보험_20250313001342_csm.json",
+        "sensitivity_dart": "DB손해보험_20250313001342_sensitivity.json",
+        "liability": "DB손해보험_20250313001342_liability.json",
+        "kics_sensitivity": "KR0011_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0032",
+      "kics_name": "NH농협손해보험",
+      "dart_stem": "NH농협손해보험_20250331003247",
+      "files": {
+        "measurement": "NH농협손해보험_20250331003247_measurement.json",
+        "measurement_mvp": "NH농협손해보험_20250331003247_measurement_mvp.json",
+        "csm": "NH농협손해보험_20250331003247_csm.json",
+        "sensitivity_dart": "NH농협손해보험_20250331003247_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0032_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0068",
+      "kics_name": "한화생명",
+      "dart_stem": "한화생명_20250312000939",
+      "files": {
+        "measurement": "한화생명_20250312000939_measurement.json",
+        "measurement_mvp": "한화생명_20250312000939_measurement_mvp.json",
+        "csm": "한화생명_20250312000939_csm.json",
+        "sensitivity_dart": "한화생명_20250312000939_sensitivity.json",
+        "liability": "한화생명_20250312000939_liability.json",
+        "kics_sensitivity": "KR0068_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0069",
+      "kics_name": "삼성생명보험",
+      "dart_stem": "삼성생명_20250312001063",
+      "files": {
+        "measurement": "삼성생명_20250312001063_measurement.json",
+        "measurement_mvp": "삼성생명_20250312001063_measurement_mvp.json",
+        "csm": "삼성생명_20250312001063_csm.json",
+        "sensitivity_dart": "삼성생명_20250312001063_sensitivity.json",
+        "liability": "삼성생명_20250312001063_liability.json",
+        "kics_sensitivity": "KR0069_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0070",
+      "kics_name": "에이비엘생명보험",
+      "dart_stem": "에이비엘생명보험_20250331001358",
+      "files": {
+        "measurement": "에이비엘생명보험_20250331001358_measurement.json",
+        "measurement_mvp": "에이비엘생명보험_20250331001358_measurement_mvp.json",
+        "csm": "에이비엘생명보험_20250331001358_csm.json",
+        "sensitivity_dart": "에이비엘생명보험_20250331001358_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0070_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0071",
+      "kics_name": "흥국생명보험",
+      "dart_stem": "흥국생명보험_20250331003642",
+      "files": {
+        "measurement": "흥국생명보험_20250331003642_measurement.json",
+        "measurement_mvp": "흥국생명보험_20250331003642_measurement_mvp.json",
+        "csm": "흥국생명보험_20250331003642_csm.json",
+        "sensitivity_dart": "흥국생명보험_20250331003642_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0071_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0072",
+      "kics_name": "케이디비생명보험",
+      "dart_stem": "케이디비생명보험_20250331002302",
+      "files": {
+        "measurement": "케이디비생명보험_20250331002302_measurement.json",
+        "measurement_mvp": "케이디비생명보험_20250331002302_measurement_mvp.json",
+        "csm": "케이디비생명보험_20250331002302_csm.json",
+        "sensitivity_dart": "케이디비생명보험_20250331002302_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0072_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0073",
+      "kics_name": "교보생명보험",
+      "dart_stem": "교보생명보험_20250331004015",
+      "files": {
+        "measurement": "교보생명보험_20250331004015_measurement.json",
+        "measurement_mvp": "교보생명보험_20250331004015_measurement_mvp.json",
+        "csm": "교보생명보험_20250331004015_csm.json",
+        "sensitivity_dart": "교보생명보험_20250331004015_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0073_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0079",
+      "kics_name": "미래에셋생명보험",
+      "dart_stem": "미래에셋생명_20250318001228",
+      "files": {
+        "measurement": "미래에셋생명_20250318001228_measurement.json",
+        "measurement_mvp": "미래에셋생명_20250318001228_measurement_mvp.json",
+        "csm": "미래에셋생명_20250318001228_csm.json",
+        "sensitivity_dart": "미래에셋생명_20250318001228_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0079_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0082",
+      "kics_name": "DB생명보험",
+      "dart_stem": "DB생명보험_20250328002241",
+      "files": {
+        "measurement": "DB생명보험_20250328002241_measurement.json",
+        "measurement_mvp": "DB생명보험_20250328002241_measurement_mvp.json",
+        "csm": "DB생명보험_20250328002241_csm.json",
+        "sensitivity_dart": "DB생명보험_20250328002241_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0082_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0083",
+      "kics_name": "푸본현대생명보험",
+      "dart_stem": "푸본현대생명보험_20250328000873",
+      "files": {
+        "measurement": "푸본현대생명보험_20250328000873_measurement.json",
+        "measurement_mvp": "푸본현대생명보험_20250328000873_measurement_mvp.json",
+        "csm": "푸본현대생명보험_20250328000873_csm.json",
+        "sensitivity_dart": "푸본현대생명보험_20250328000873_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0083_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0087",
+      "kics_name": "동양생명",
+      "dart_stem": "동양생명_20250319000486",
+      "files": {
+        "measurement": "동양생명_20250319000486_measurement.json",
+        "measurement_mvp": "동양생명_20250319000486_measurement_mvp.json",
+        "csm": "동양생명_20250319000486_csm.json",
+        "sensitivity_dart": "동양생명_20250319000486_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0087_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0094",
+      "kics_name": "신한라이프생명보험",
+      "dart_stem": "신한라이프생명보험_20250318001216",
+      "files": {
+        "measurement": "신한라이프생명보험_20250318001216_measurement.json",
+        "measurement_mvp": "신한라이프생명보험_20250318001216_measurement_mvp.json",
+        "csm": "신한라이프생명보험_20250318001216_csm.json",
+        "sensitivity_dart": "신한라이프생명보험_20250318001216_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0094_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0099",
+      "kics_name": "KB라이프생명",
+      "dart_stem": "케이비라이프생명보험_20250314000905",
+      "files": {
+        "measurement": "케이비라이프생명보험_20250314000905_measurement.json",
+        "measurement_mvp": "케이비라이프생명보험_20250314000905_measurement_mvp.json",
+        "csm": "케이비라이프생명보험_20250314000905_csm.json",
+        "sensitivity_dart": "케이비라이프생명보험_20250314000905_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0099_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR0104",
+      "kics_name": "농협생명보험",
+      "dart_stem": "농협생명보험_20250331003065",
+      "files": {
+        "measurement": "농협생명보험_20250331003065_measurement.json",
+        "measurement_mvp": "농협생명보험_20250331003065_measurement_mvp.json",
+        "csm": "농협생명보험_20250331003065_csm.json",
+        "sensitivity_dart": "농협생명보험_20250331003065_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR0104_FY2025_Q4_kics_sensitivity.json"
+      }
+    },
+    {
+      "kics_code": "KR1000",
+      "kics_name": "코리안리재보험",
+      "dart_stem": "코리안리_20250320001161",
+      "files": {
+        "measurement": "코리안리_20250320001161_measurement.json",
+        "measurement_mvp": "코리안리_20250320001161_measurement_mvp.json",
+        "csm": "코리안리_20250320001161_csm.json",
+        "sensitivity_dart": "코리안리_20250320001161_sensitivity.json",
+        "liability": null,
+        "kics_sensitivity": "KR1000_FY2025_Q4_kics_sensitivity.json"
+      }
+    }
+  ]
+}

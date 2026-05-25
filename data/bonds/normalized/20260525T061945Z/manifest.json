@@ -1,0 +1,15 @@
+{
+  "generated_at": "20260525T061945Z",
+  "as_of": "2026-05-25",
+  "source_dir": "20260525T050327Z",
+  "isins_total": 324,
+  "isins_outstanding": 103,
+  "isins_called": 80,
+  "isins_matured": 141,
+  "insurers_covered": 24,
+  "tier_breakdown": {
+    "tier1_hybrid": 63,
+    "tier2_subordinated": 261
+  },
+  "call_date_rule": "issue_date + 5 years for ALL bonds (Korean market convention). FSC raw kept in fsc_call_dates_raw for audit only. Assumed Called at 5y if past today."
+}

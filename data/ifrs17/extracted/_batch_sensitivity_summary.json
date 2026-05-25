@@ -1,0 +1,451 @@
+[
+  {
+    "kics_name": "DB생명보험",
+    "canonical": "DB생명보험",
+    "rcept_no": "20250328002241",
+    "status": "ok",
+    "tables_total": 88,
+    "tables_mvp": 60,
+    "by_block": {
+      "unknown": 78,
+      "direct": 10
+    },
+    "by_slice": {
+      "whole_company_life": 88
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\DB생명보험_20250328002241_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\DB생명보험_20250328002241_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "DB손해보험",
+    "canonical": "DB손해보험",
+    "rcept_no": "20250313001342",
+    "status": "ok",
+    "tables_total": 53,
+    "tables_mvp": 16,
+    "by_block": {
+      "reinsurance": 4,
+      "unknown": 44,
+      "direct": 3,
+      "mixed": 2
+    },
+    "by_slice": {
+      "long_term": 20,
+      "unknown": 33
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\DB손해보험_20250313001342_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\DB손해보험_20250313001342_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "KB라이프생명",
+    "canonical": "케이비라이프생명보험",
+    "rcept_no": "20250314000905",
+    "status": "ok",
+    "tables_total": 208,
+    "tables_mvp": 110,
+    "by_block": {
+      "reinsurance": 24,
+      "unknown": 156,
+      "direct": 16,
+      "mixed": 12
+    },
+    "by_slice": {
+      "whole_company_life": 208
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\케이비라이프생명보험_20250314000905_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\케이비라이프생명보험_20250314000905_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "KB손해보험",
+    "canonical": "KB손해보험",
+    "rcept_no": "20250314001697",
+    "status": "ok",
+    "tables_total": 116,
+    "tables_mvp": 15,
+    "by_block": {
+      "unknown": 112,
+      "direct": 4
+    },
+    "by_slice": {
+      "long_term": 15,
+      "unknown": 101
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\KB손해보험_20250314001697_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\KB손해보험_20250314001697_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "NH농협손해보험",
+    "canonical": "NH농협손해보험",
+    "rcept_no": "20250331003247",
+    "status": "ok",
+    "tables_total": 105,
+    "tables_mvp": 3,
+    "by_block": {
+      "direct": 12,
+      "unknown": 86,
+      "mixed": 2,
+      "reinsurance": 5
+    },
+    "by_slice": {
+      "unknown": 102,
+      "long_term": 3
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\NH농협손해보험_20250331003247_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\NH농협손해보험_20250331003247_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "교보생명보험",
+    "canonical": "교보생명보험",
+    "rcept_no": "20250331004015",
+    "status": "ok",
+    "tables_total": 45,
+    "tables_mvp": 25,
+    "by_block": {
+      "reinsurance": 4,
+      "unknown": 40,
+      "direct": 1
+    },
+    "by_slice": {
+      "whole_company_life": 45
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\교보생명보험_20250331004015_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\교보생명보험_20250331004015_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "농협생명보험",
+    "canonical": "농협생명보험",
+    "rcept_no": "20250331003065",
+    "status": "ok",
+    "tables_total": 154,
+    "tables_mvp": 122,
+    "by_block": {
+      "unknown": 148,
+      "direct": 2,
+      "mixed": 4
+    },
+    "by_slice": {
+      "whole_company_life": 154
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\농협생명보험_20250331003065_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\농협생명보험_20250331003065_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "동양생명",
+    "canonical": "동양생명",
+    "rcept_no": "20250319000486",
+    "status": "ok",
+    "tables_total": 211,
+    "tables_mvp": 143,
+    "by_block": {
+      "unknown": 179,
+      "direct": 20,
+      "reinsurance": 12
+    },
+    "by_slice": {
+      "whole_company_life": 211
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\동양생명_20250319000486_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\동양생명_20250319000486_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "롯데손해보험",
+    "canonical": "롯데손해보험",
+    "rcept_no": "20250320001732",
+    "status": "ok",
+    "tables_total": 57,
+    "tables_mvp": 10,
+    "by_block": {
+      "unknown": 53,
+      "direct": 2,
+      "mixed": 2
+    },
+    "by_slice": {
+      "long_term": 14,
+      "unknown": 43
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\롯데손해보험_20250320001732_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\롯데손해보험_20250320001732_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "메리츠화재해상보험",
+    "canonical": "메리츠화재해상보험",
+    "rcept_no": "20250331003145",
+    "status": "ok",
+    "tables_total": 155,
+    "tables_mvp": 21,
+    "by_block": {
+      "unknown": 131,
+      "reinsurance": 4,
+      "direct": 20
+    },
+    "by_slice": {
+      "long_term": 21,
+      "unknown": 134
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\메리츠화재해상보험_20250331003145_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\메리츠화재해상보험_20250331003145_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "미래에셋생명보험",
+    "canonical": "미래에셋생명",
+    "rcept_no": "20250318001228",
+    "status": "ok",
+    "tables_total": 142,
+    "tables_mvp": 82,
+    "by_block": {
+      "reinsurance": 4,
+      "unknown": 122,
+      "direct": 16
+    },
+    "by_slice": {
+      "whole_company_life": 142
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\미래에셋생명_20250318001228_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\미래에셋생명_20250318001228_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "삼성생명보험",
+    "canonical": "삼성생명",
+    "rcept_no": "20250312001063",
+    "status": "ok",
+    "tables_total": 178,
+    "tables_mvp": 85,
+    "by_block": {
+      "unknown": 160,
+      "mixed": 4,
+      "direct": 14
+    },
+    "by_slice": {
+      "whole_company_life": 178
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\삼성생명_20250312001063_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\삼성생명_20250312001063_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "삼성화재해상보험",
+    "canonical": "삼성화재해상보험",
+    "rcept_no": "20250311001055",
+    "status": "ok",
+    "tables_total": 71,
+    "tables_mvp": 10,
+    "by_block": {
+      "unknown": 67,
+      "reinsurance": 4
+    },
+    "by_slice": {
+      "long_term": 18,
+      "unknown": 53
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\삼성화재해상보험_20250311001055_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\삼성화재해상보험_20250311001055_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "신한라이프생명보험",
+    "canonical": "신한라이프생명보험",
+    "rcept_no": "20250318001216",
+    "status": "ok",
+    "tables_total": 189,
+    "tables_mvp": 143,
+    "by_block": {
+      "unknown": 169,
+      "direct": 16,
+      "mixed": 4
+    },
+    "by_slice": {
+      "whole_company_life": 189
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\신한라이프생명보험_20250318001216_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\신한라이프생명보험_20250318001216_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "에이비엘생명보험",
+    "canonical": "에이비엘생명보험",
+    "rcept_no": "20250331001358",
+    "status": "ok",
+    "tables_total": 172,
+    "tables_mvp": 144,
+    "by_block": {
+      "unknown": 140,
+      "reinsurance": 8,
+      "direct": 24
+    },
+    "by_slice": {
+      "whole_company_life": 172
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\에이비엘생명보험_20250331001358_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\에이비엘생명보험_20250331001358_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "케이디비생명보험",
+    "canonical": "케이디비생명보험",
+    "rcept_no": "20250331002302",
+    "status": "ok",
+    "tables_total": 82,
+    "tables_mvp": 60,
+    "by_block": {
+      "direct": 8,
+      "unknown": 72,
+      "reinsurance": 2
+    },
+    "by_slice": {
+      "whole_company_life": 82
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\케이디비생명보험_20250331002302_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\케이디비생명보험_20250331002302_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "코리안리재보험",
+    "canonical": "코리안리",
+    "rcept_no": "20250320001161",
+    "status": "ok",
+    "tables_total": 128,
+    "tables_mvp": 18,
+    "by_block": {
+      "unknown": 114,
+      "direct": 14
+    },
+    "by_slice": {
+      "unknown": 110,
+      "long_term": 18
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\코리안리_20250320001161_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\코리안리_20250320001161_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "푸본현대생명보험",
+    "canonical": "푸본현대생명보험",
+    "rcept_no": "20250328000873",
+    "status": "ok",
+    "tables_total": 176,
+    "tables_mvp": 90,
+    "by_block": {
+      "unknown": 153,
+      "direct": 9,
+      "reinsurance": 10,
+      "mixed": 4
+    },
+    "by_slice": {
+      "whole_company_life": 176
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\푸본현대생명보험_20250328000873_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\푸본현대생명보험_20250328000873_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "한화생명",
+    "canonical": "한화생명",
+    "rcept_no": "20250312000939",
+    "status": "ok",
+    "tables_total": 218,
+    "tables_mvp": 160,
+    "by_block": {
+      "unknown": 181,
+      "reinsurance": 8,
+      "mixed": 10,
+      "direct": 19
+    },
+    "by_slice": {
+      "whole_company_life": 218
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\한화생명_20250312000939_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\한화생명_20250312000939_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "한화손해보험",
+    "canonical": "한화손해보험",
+    "rcept_no": "20250311001216",
+    "status": "ok",
+    "tables_total": 212,
+    "tables_mvp": 17,
+    "by_block": {
+      "unknown": 147,
+      "reinsurance": 15,
+      "mixed": 20,
+      "direct": 30
+    },
+    "by_slice": {
+      "long_term": 29,
+      "unknown": 183
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\한화손해보험_20250311001216_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\한화손해보험_20250311001216_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "현대해상",
+    "canonical": "현대해상",
+    "rcept_no": "20250313001346",
+    "status": "ok",
+    "tables_total": 150,
+    "tables_mvp": 28,
+    "by_block": {
+      "unknown": 120,
+      "direct": 20,
+      "mixed": 10
+    },
+    "by_slice": {
+      "long_term": 32,
+      "unknown": 118
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\현대해상_20250313001346_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\현대해상_20250313001346_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "흥국생명보험",
+    "canonical": "흥국생명보험",
+    "rcept_no": "20250331003642",
+    "status": "ok",
+    "tables_total": 123,
+    "tables_mvp": 101,
+    "by_block": {
+      "reinsurance": 8,
+      "direct": 12,
+      "unknown": 103
+    },
+    "by_slice": {
+      "whole_company_life": 123
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\흥국생명보험_20250331003642_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\흥국생명보험_20250331003642_sensitivity_mvp.json"
+  },
+  {
+    "kics_name": "흥국화재",
+    "canonical": "흥국화재",
+    "rcept_no": "20250320001444",
+    "status": "ok",
+    "tables_total": 75,
+    "tables_mvp": 12,
+    "by_block": {
+      "unknown": 58,
+      "reinsurance": 8,
+      "direct": 9
+    },
+    "by_slice": {
+      "long_term": 20,
+      "unknown": 55
+    },
+    "parse_errors": [],
+    "json_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\흥국화재_20250320001444_sensitivity.json",
+    "mvp_out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\흥국화재_20250320001444_sensitivity_mvp.json"
+  }
+]

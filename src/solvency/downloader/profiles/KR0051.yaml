@@ -1,0 +1,16 @@
+# Shinhan EZ General Insurance
+company_code: "KR0051"
+company_name: "신한EZ손해보험"
+site_type: "case_a_direct_pdf"
+base_url: "https://www.shinhanez.co.kr"
+disclosure_url: "https://www.shinhanez.co.kr/static/pub/PUB10000T01.html"
+selectors:
+  table: "table"
+  rows: "tbody tr"
+  pdf_link: "a[href*='.pdf'], a[href*='download']"
+filename_rule: "{company_code}_{fiscal_year}_{quarter}_{disclosure_date}.pdf"
+notes: |
+  Skeleton profile only. The case_a_direct_pdf handler currently logs a
+  warning - port the link-extraction flow from
+  src/solvency/legacy/downloaders/shinhanez_disclosure_downloader.py
+  before relying on this profile in production.

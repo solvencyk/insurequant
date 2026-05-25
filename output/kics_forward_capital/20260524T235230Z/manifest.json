@@ -1,0 +1,23 @@
+{
+  "generated_at": "20260524T235230Z",
+  "baseline_quarter": "2025.4Q",
+  "simulation_years": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030
+  ],
+  "transition_end_year": 2032,
+  "bonds_source": "20260524T233649Z",
+  "kics_source": "kics_disclosure.json",
+  "insurers_total": 19,
+  "ok": 19,
+  "missing_kics_baseline": 0,
+  "missing_baseline": 0,
+  "notes": [
+    "v1: 'called' assumption from bond calendar v3 (issue+5y). May overstate decline if a 'called' bond is actually still outstanding.",
+    "Cross-ref with K-ICS 자본성증권 발행현황 표 is the v2 follow-up.",
+    "SCR baseline = item14 값_적용후 (current effective); endpoint = item14 값 (post-transition by 2032)."
+  ]
+}

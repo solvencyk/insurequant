@@ -1,0 +1,78 @@
+# 손해보험사 식별 사전.
+# 손해보험협회 웹사이트 테이블 행의 회사명을 회사코드로 매핑.
+#
+# 회사코드는 이전 분기 폴더 (data/disclosure/FY*/pdf/)에서 사용된 실제 사코드 기준.
+#
+# 매칭 로직:
+#   1) 페이지의 테이블 첫 셀(<th>) = 회사명, 첫 TD 링크 = 2025년 최신 자료
+#   2) aliases는 정식명과 별칭(축약/이전 사명/영문 표기 등) 포함
+#   3) aliases는 항상 긴 것부터 짧은 것 순서로 정렬
+
+insurers:
+  - code: KR0001
+    dirname: KR0001_메리츠화재해상보험
+    aliases: ["메리츠화재해상보험", "메리츠화재", "메리츠"]
+
+  - code: KR0002
+    dirname: KR0002_한화손해보험
+    aliases: ["한화손해보험", "한화손보"]
+
+  - code: KR0003
+    dirname: KR0003_롯데손해보험
+    aliases: ["롯데손해보험", "롯데손보"]
+
+  - code: KR0005
+    dirname: KR0005_흥국화재
+    aliases: ["흥국화재"]
+
+  - code: KR0008
+    dirname: KR0008_삼성화재해상보험
+    aliases: ["삼성화재해상보험", "삼성화재"]
+
+  - code: KR0009
+    dirname: KR0009_현대해상
+    aliases: ["현대해상"]
+
+  - code: KR0010
+    dirname: KR0010_KB손해보험
+    aliases: ["KB손해보험", "KB손보", "케이비손해보험", "케이비손보"]
+
+  - code: KR0011
+    dirname: KR0011_DB손해보험
+    aliases: ["DB손해보험", "DB손보", "디비손해보험", "디비손보"]
+
+  - code: KR0029
+    dirname: KR0029_AIG손해보험
+    aliases: ["AIG손해보험", "AIG손보", "AIG"]
+
+  - code: KR0032
+    dirname: KR0032_NH농협손해보험
+    aliases: ["NH농협손해보험", "농협손해보험", "농협손보", "NH손보", "농협손해보험주식회사", "NH농협손해보험주식회사"]
+
+  - code: KR0049
+    dirname: KR0049_악사손해보험
+    aliases: ["악사손해보험", "AXA손해보험", "AXA손보", "AXA", "악사"]
+
+  - code: KR0050
+    dirname: KR0050_하나손해보험
+    aliases: ["하나손해보험", "하나손보"]
+
+  - code: KR0051
+    dirname: KR0051_신한이지손해보험
+    aliases: ["신한이지손해보험", "신한EZ손해보험", "신한EZ", "신한이지"]
+
+  - code: KR0150
+    dirname: KR0150_서울보증보험
+    aliases: ["서울보증보험", "서울보증"]
+
+  - code: KR1000
+    dirname: KR1000_코리안리
+    aliases: ["코리안리재보험", "코리안리"]
+
+  - code: KR1059
+    dirname: KR1059_캐롯손해보험
+    aliases: ["캐롯손해보험", "캐롯손보", "캐롯"]
+
+  - code: KR1098
+    dirname: KR1098_카카오페이손해보험
+    aliases: ["카카오페이손해보험", "카카오페이", "카카오"]
