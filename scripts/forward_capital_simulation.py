@@ -192,8 +192,15 @@ def _overall_bucket(t1_bucket: str, t2_bucket: str) -> str:
     return inv[min(r1, r2)]
 
 
-def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict) -> dict:
-    """Score bond-schedule vs K-ICS BS reconciliation for forward sim trust."""
+def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict,
+                       bond_coverage: str = "fsc_listed") -> dict:
+    """Score bond-schedule vs K-ICS BS reconciliation for forward sim trust.
+
+    bond_coverage='no_bonds_in_fsc' → insurer has no FSC capital instruments.
+    If BS also shows no T1/T2 capital, confidence is 'high' (nothing to deduct,
+    nothing to reconcile). If BS shows capital but FSC is empty, normal
+    fsc_missing_* flags fire as usual.
+    """
     bond_t1_out = sum((b.get("issue_amount_won") or 0) / 1e8
                       for b in bonds
                       if b.get("status") == "outstanding" and b.get("tier") == "tier1_hybrid")
@@ -211,6 +218,31 @@ def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict) -> dict
     t1_bucket = _gap_bucket(d_t1, T1_GAP_HIGH_PCT, T1_GAP_MED_PCT)
     t2_bucket = _gap_bucket(d_t2, T2_GAP_HIGH_PCT, T2_GAP_MED_PCT)
     overall = _overall_bucket(t1_bucket, t2_bucket)
+
+    # No-bond insurer with no BS capital either → nothing to project against.
+    # Forward sim is just SCR-interpolation on flat capital, fully deterministic.
+    if (bond_coverage == "no_bonds_in_fsc"
+            and bond_t1_out == 0 and bond_t2_out == 0
+            and kics_t1 == 0 and kics_t2 == 0):
+        return {
+            "level": "high",
+            "tier1_bucket": "no_data",
+            "tier2_bucket": "no_data",
+            "t1_gap_pct": None,
+            "t2_gap_pct": None,
+            "bond_t1_out_eok": 0.0,
+            "bond_t2_out_eok": 0.0,
+            "kics_t1_issued_eok": 0.0,
+            "kics_t1_field": kics_t1_field,
+            "kics_t2_baseline_eok": 0.0,
+            "kics_t2_field": kics_t2_field,
+            "kics_t2_numerator_eok": round(_to_float(t2_row.get("numerator_eok")) or 0, 1),
+            "tier2_data_source": t2_row.get("data_source"),
+            "tier2_quality_flag": t2_row.get("quality_flag"),
+            "issue_flags": [],
+            "sim_bias": "neutral",
+            "reasons": ["no capital instruments in FSC or BS — flat capital, SCR-interp only"],
+        }
 
     issue_flags: list[str] = []
     reasons: list[str] = []
@@ -402,19 +434,29 @@ def _confidence_histogram(results: list[dict]) -> dict[str, int]:
 def main() -> int:
     baselines = load_kics_baselines()
     bonds_per_insurer, bonds_src = load_outstanding_bonds()
-    insurer_codes = sorted(bonds_per_insurer.keys())  # 19 with bond data
+    # Universe = FSC bond cohort ∪ K-ICS baseline cohort. No-bond insurers
+    # (e.g. KR0008 삼성화재) still get a flat-capital + SCR-interp projection.
+    insurer_codes = sorted(set(bonds_per_insurer.keys()) | set(baselines.keys()))
     tier1_by_code, tier2_by_code = load_utilization()
 
     results = []
     for code in insurer_codes:
         bonds = bonds_per_insurer.get(code, [])
+        bond_coverage = "fsc_listed" if code in bonds_per_insurer else "no_bonds_in_fsc"
         if not baselines.get(code):
-            stub = {"insurer_code": code, "status": "missing_kics_baseline"}
-            stub["confidence"] = compute_confidence(code, bonds, tier1_by_code, tier2_by_code)
+            stub = {
+                "insurer_code": code,
+                "status": "missing_kics_baseline",
+                "bond_coverage": bond_coverage,
+            }
+            stub["confidence"] = compute_confidence(
+                code, bonds, tier1_by_code, tier2_by_code, bond_coverage=bond_coverage)
             results.append(stub)
             continue
         row = simulate_one(code, baselines[code], bonds)
-        row["confidence"] = compute_confidence(code, bonds, tier1_by_code, tier2_by_code)
+        row["bond_coverage"] = bond_coverage
+        row["confidence"] = compute_confidence(
+            code, bonds, tier1_by_code, tier2_by_code, bond_coverage=bond_coverage)
         results.append(row)
 
     stamp = _stamp()
@@ -439,8 +481,13 @@ def main() -> int:
         "ok": sum(1 for r in results if r.get("status") == "ok"),
         "missing_kics_baseline": sum(1 for r in results if r.get("status") == "missing_kics_baseline"),
         "missing_baseline": sum(1 for r in results if r.get("status") == "missing_baseline"),
+        "bond_coverage_distribution": {
+            "fsc_listed": sum(1 for r in results if r.get("bond_coverage") == "fsc_listed"),
+            "no_bonds_in_fsc": sum(1 for r in results if r.get("bond_coverage") == "no_bonds_in_fsc"),
+        },
         "confidence_distribution": hist,
         "notes": [
+            "Universe = FSC bond cohort ∪ K-ICS baseline cohort. No-bond insurers (bond_coverage='no_bonds_in_fsc') get flat-capital projection: SCR-interp only, no bond deductions.",
             "v3: confidence compares FSC outstanding face to BS subordinated_eok / tier1_hybrid_issued (not tier2 numerator residual).",
             "v3: issue_flags (fsc_missing_*) + sim_bias (under_deduct/over_deduct) flag forward sim direction risk.",
             "v2: negative interpolated capital ⇒ ratio_pct/basic_ratio_pct shown as 0% (capacity_exhausted) to avoid distorted charts.",
