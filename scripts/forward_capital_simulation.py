@@ -219,11 +219,13 @@ def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict,
     t2_bucket = _gap_bucket(d_t2, T2_GAP_HIGH_PCT, T2_GAP_MED_PCT)
     overall = _overall_bucket(t1_bucket, t2_bucket)
 
-    # No-bond insurer with no BS capital either → nothing to project against.
+    # No-bond insurer with effectively no BS capital → nothing to project against.
     # Forward sim is just SCR-interpolation on flat capital, fully deterministic.
+    # Threshold <1.0 (was ==0) tolerates sub-1억 BS rounding residual (e.g. KR1010
+    # 교보라이프플래닛 has T2 = 0.1억 — moc 자본성증권 미발행 actual case).
     if (bond_coverage == "no_bonds_in_fsc"
-            and bond_t1_out == 0 and bond_t2_out == 0
-            and kics_t1 == 0 and kics_t2 == 0):
+            and bond_t1_out < 1.0 and bond_t2_out < 1.0
+            and kics_t1 < 1.0 and kics_t2 < 1.0):
         return {
             "level": "high",
             "tier1_bucket": "no_data",
