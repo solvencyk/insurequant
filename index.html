@@ -28,6 +28,8 @@
     .toggle-input:checked + .toggle-label:before{transform:translateX(30px)}
     .toggle-slider{display:none}
     #map{position:relative;height:76vh;min-height:560px;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+    .map-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--muted);font-size:14px;line-height:1.5;background:rgba(255,255,255,.92);z-index:5}
+    .map-status.error{color:#842029;background:#f8d7da}
     .group{position:absolute;border:1px solid rgba(0,0,0,.12);border-radius:10px;overflow:hidden;background:rgba(0,0,0,.02);box-sizing:border-box}
     .group-title{position:absolute;left:6px;top:6px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.8);padding:2px 6px;border-radius:6px;z-index:2}
     .cell{position:absolute;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:all 0.2s;box-sizing:border-box}
@@ -37,7 +39,13 @@
     .ratio{font-size:15px;font-weight:700}
     .meta{font-size:11px;color:var(--muted)}
     .reference-period{position:absolute;left:12px;bottom:12px;font-size:11px;color:var(--muted);background:rgba(255,255,255,0.8);padding:4px 8px;border-radius:6px;z-index:100}
+    .section-title{font-size:16px;font-weight:700;margin:0 0 4px}
+    .section-desc{font-size:12px;color:var(--muted);margin:0 0 10px}
+    #csm-bubble-chart{height:520px;border-radius:14px;border:1px solid var(--border);background:#fff}
+    .bubble-legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+    .bubble-swatch{width:120px;height:10px;border-radius:6px;background:linear-gradient(90deg,#7f1d1d,#f59e0b,#84cc16,#14532d)}
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 </head>
 <body>
   <header>
@@ -73,19 +81,50 @@
           </div>
         </div>
         <div class="legend">
-          <div id="legendText">색상: K-ICS 비율</div>
+          <div id="legendText">색상: K-ICS 지급여력비율 (경과조치 적용 후)</div>
           <div class="swatch"></div>
           <div>크기: 지급여력기준금액</div>
         </div>
       </div>
       <div id="map">
+        <div id="map-status" class="map-status">K-ICS 데이터 로딩 중… (약 3MB, 수 초 소요)</div>
         <div id="reference-period" class="reference-period" style="display:none;">기준시점: </div>
       </div>
+    </div>
+    <div class="panel" style="margin-top:16px">
+      <div class="section-title">IFRS17 — CSM Bubble Map</div>
+      <p class="section-desc">크기: CSM 잔액(억) · Y축: NB CSM 배수(IFRS17 신계약 CSM ÷ 월납환산) · 분모=crawl/IR extract</p>
+      <div class="controls" style="margin-bottom:10px">
+        <label>업권:
+          <select id="bubble-sector" class="select">
+            <option value="ALL">전체</option>
+            <option value="Life">생명보험</option>
+            <option value="Non-Life">손해보험</option>
+          </select>
+        </label>
+        <div class="bubble-legend">
+          <span>색상: NB CSM 배수 (×)</span>
+          <div class="bubble-swatch"></div>
+          <span>크기: CSM 잔액</span>
+          <span id="bubble-meta"></span>
+        </div>
+      </div>
+      <div id="csm-bubble-chart"></div>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
-    const jsonPath = 'kics_disclosure.json';
+    function resolveUrl(relativePath) {
+      return new URL(relativePath, window.location.href).href;
+    }
+
+    const jsonPath = resolveUrl('kics_disclosure.json');
+    const bubbleJsonPaths = [
+      resolveUrl('../data/ifrs17/viz/csm_bubble.json'),
+      resolveUrl('data/ifrs17/viz/csm_bubble.json')
+    ];
+    let bubblePayload = null;
+    let bubbleChart = null;
     let allData = [];
     let GROUPED = {};
     
@@ -95,6 +134,15 @@
       const strValue = String(value).replace(/,/g, '').trim();
       const numValue = parseFloat(strValue);
       return isNaN(numValue) ? null : numValue;
+    }
+
+    // Prefer post-transition K-ICS value when present (items 27/28).
+    function effectiveValue(row) {
+      const post = row['값_적용후'];
+      if (post !== null && post !== undefined && post !== '') {
+        return extractNumericValue(post);
+      }
+      return extractNumericValue(row['값']);
     }
     
     // 최신 분기 추출
@@ -131,8 +179,6 @@
         const company = row['원수사명'];
         const insuranceType = row['생손보여부'];
         const itemNumber = row['항목번호'];
-        const itemName = row['항목명'];
-        const value = extractNumericValue(row['값']);
         
         if (!company || !insuranceType) return;
         
@@ -142,45 +188,32 @@
             sector: insuranceType === '생명보험' ? 'Life' : 'Non-Life',
             ratio: null,
             required: null,
-            basicCapitalRatio: null,
-            basicCapital: null // 기본자본 값 저장
+            basicCapitalRatio: null
           };
         }
         
-        // 항목번호로 정확하게 찾기
-        // 항목번호 14: 지급여력기준금액
+        // 항목번호 14: 지급여력기준금액 (treemap 크기)
         if (itemNumber === 14) {
-          if (value !== null) {
-            companyMap[company].required = value;
+          const v = extractNumericValue(row['값']);
+          if (v !== null) {
+            companyMap[company].required = v;
           }
         }
         
-        // 항목번호 27: 지급여력비율
+        // 항목번호 27: 지급여력비율 (경과조치 적용 후 우선)
         if (itemNumber === 27) {
-          if (value !== null) {
-            companyMap[company].ratio = value;
+          const v = effectiveValue(row);
+          if (v !== null) {
+            companyMap[company].ratio = v;
           }
         }
         
-        // 항목번호 28: 기본자본비율
+        // 항목번호 28: 기본자본비율 (경과조치 적용 후 우선, JSON source of truth)
         if (itemNumber === 28) {
-          if (value !== null) {
-            companyMap[company].basicCapitalRatio = value;
+          const v = effectiveValue(row);
+          if (v !== null) {
+            companyMap[company].basicCapitalRatio = v;
           }
-        }
-        
-        // 항목번호 2: 기본자본 (기본자본비율 계산용)
-        if (itemNumber === 2) {
-          if (value !== null) {
-            companyMap[company].basicCapital = value;
-          }
-        }
-      });
-      
-      // 모든 데이터 수집 후 기본자본비율 계산
-      Object.values(companyMap).forEach(company => {
-        if (!company.basicCapitalRatio && company.basicCapital !== null && company.required !== null && company.required > 0) {
-          company.basicCapitalRatio = (company.basicCapital / company.required) * 100;
         }
       });
       
@@ -224,23 +257,75 @@
       }
     }
     
-    // JSON 데이터 로드
+    function setMapStatus(message, isError) {
+      const status = document.getElementById('map-status');
+      if (!status) return;
+      if (!message) {
+        status.style.display = 'none';
+        status.textContent = '';
+        status.classList.remove('error');
+        return;
+      }
+      status.style.display = 'flex';
+      status.textContent = message;
+      status.classList.toggle('error', !!isError);
+    }
+
+    function mapDimensions(el) {
+      const W = el.clientWidth || el.parentElement?.clientWidth || 1200;
+      const H = el.clientHeight || 560;
+      return { W: Math.max(W, 320), H: Math.max(H, 560) };
+    }
+
+    // JSON 데이터 로드 — file:// 또는 잘못된 서버 경로면 fetch 실패
     function loadData() {
+      if (window.location.protocol === 'file:') {
+        GROUPED = { Life: [], 'Non-Life': [] };
+        setMapStatus(
+          'K-ICS JSON을 불러오지 못했습니다 (file:// 차단).\n' +
+          'repo root에서 python -m http.server 8765 실행 후\n' +
+          'http://localhost:8765/templates/index.html 로 여세요.',
+          true
+        );
+        render(document.getElementById('sector')?.value || 'ALL');
+        return;
+      }
+      setMapStatus('K-ICS 데이터 로딩 중… (약 3MB, 수 초 소요)', false);
       fetch(jsonPath)
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status} — ${jsonPath}`);
+          }
+          return response.json();
+        })
         .then(data => {
+          if (!Array.isArray(data)) {
+            throw new Error('kics_disclosure.json must be a JSON array');
+          }
           allData = data;
           GROUPED = processJsonData(data);
-          updateReferencePeriod(); // 기준시점 업데이트
-          const sectorSel = document.getElementById("sector");
-          render(sectorSel ? sectorSel.value : "ALL");
+          const total = (GROUPED.Life?.length || 0) + (GROUPED['Non-Life']?.length || 0);
+          if (total === 0) {
+            setMapStatus('표시할 K-ICS 데이터가 없습니다. kics_disclosure.json 내용을 확인하세요.', true);
+          } else {
+            setMapStatus(null);
+          }
+          updateReferencePeriod();
+          const sectorSel = document.getElementById('sector');
+          render(sectorSel ? sectorSel.value : 'ALL');
+          requestAnimationFrame(() => render(sectorSel ? sectorSel.value : 'ALL'));
         })
         .catch(e => {
           console.error('JSON 파일을 불러오는 중 오류 발생:', e);
-          // 오류 발생 시 빈 데이터로 초기화
-          GROUPED = { "Life": [], "Non-Life": [] };
-          const sectorSel = document.getElementById("sector");
-          render(sectorSel ? sectorSel.value : "ALL");
+          GROUPED = { Life: [], 'Non-Life': [] };
+          setMapStatus(
+            'K-ICS JSON을 불러오지 못했습니다.\n' +
+            'repo root: python -m http.server 8765 → http://localhost:8765/templates/index.html\n' +
+            'templates/: python -m http.server 8766 → http://localhost:8766/index.html',
+            true
+          );
+          const sectorSel = document.getElementById('sector');
+          render(sectorSel ? sectorSel.value : 'ALL');
         });
     }
     
@@ -393,16 +478,35 @@
 
     function render(sector) {
       const el = document.getElementById("map");
-      const W = el.clientWidth, H = el.clientHeight;
-      el.innerHTML = "";
+      const statusEl = document.getElementById('map-status');
+      const periodEl = document.getElementById('reference-period');
+      const statusMsg = statusEl?.style.display !== 'none' ? statusEl?.textContent : '';
+      const statusError = statusEl?.classList.contains('error');
+      const periodVisible = periodEl?.style.display !== 'none';
+      const periodText = periodEl?.textContent || '기준시점: ';
+      const { W, H } = mapDimensions(el);
+      el.innerHTML = '';
+      if (statusMsg) {
+        const s = document.createElement('div');
+        s.id = 'map-status';
+        s.className = 'map-status' + (statusError ? ' error' : '');
+        s.style.display = 'flex';
+        s.textContent = statusMsg;
+        el.appendChild(s);
+      }
       const rects = layoutGroups(GROUPED, {x:0,y:0,w:W,h:H}, sector);
 
       // 현재 토글 스위치 상태 확인
-      const ratioType = document.getElementById('ratioToggle').checked ? 'basicCapital' : 'kics';
+      const ratioToggle = document.getElementById('ratioToggle');
+      const ratioType = ratioToggle?.checked ? 'basicCapital' : 'kics';
       
       // 범례 텍스트 업데이트
       const legendText = document.getElementById("legendText");
-      legendText.textContent = ratioType === 'basicCapital' ? '색상: 기본자본비율' : '색상: K-ICS 비율';
+      if (legendText) {
+        legendText.textContent = ratioType === 'basicCapital'
+          ? '색상: 기본자본비율 (경과조치 적용 후)'
+          : '색상: K-ICS 지급여력비율 (경과조치 적용 후)';
+      }
 
       for (const r of rects) {
         if (r.type === "group") {
@@ -462,12 +566,12 @@
             displayRatio = displayValue;
             console.log(`${d.company} 기본자본비율 (항목번호 28): ${displayValue.toFixed(2)}%`);
             cell.style.background = colorForRatio(displayValue, 'basicCapital');
-            cell.title = `${d.company} — 기본자본비율 ${displayValue.toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
+            cell.title = `${d.company} — 기본자본비율(경과조치 적용 후) ${displayValue.toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
           } else {
             displayValue = d.ratio;
             displayRatio = d.ratio;
             cell.style.background = colorForRatio(d.ratio, 'kics');
-            cell.title = `${d.company} — K-ICS 비율 ${(d.ratio??0).toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
+            cell.title = `${d.company} — K-ICS 지급여력비율(경과조치 적용 후) ${(d.ratio??0).toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
           }
 
           const name = document.createElement("div");
@@ -508,28 +612,195 @@
         }
       }
       
-      // 기준시점 요소 다시 추가 (innerHTML로 지워졌으므로)
-      const periodElement = document.createElement("div");
-      periodElement.id = "reference-period";
-      periodElement.className = "reference-period";
-      periodElement.style.display = 'none';
-      periodElement.textContent = '기준시점: ';
+      const periodElement = document.createElement('div');
+      periodElement.id = 'reference-period';
+      periodElement.className = 'reference-period';
+      periodElement.style.display = periodVisible ? 'block' : 'none';
+      periodElement.textContent = periodText;
       el.appendChild(periodElement);
-      
-      // 기준시점 업데이트
-      updateReferencePeriod();
+      if (!periodVisible) updateReferencePeriod();
     }
 
     const sel = document.getElementById("sector");
-    function redraw() { render(sel.value); }
+    function redraw() { if (sel) render(sel.value); }
     window.addEventListener("resize", redraw);
-    sel.addEventListener("change", redraw);
+    if (sel) sel.addEventListener("change", redraw);
     
-    // 토글 스위치 변경 이벤트 추가
-    document.getElementById('ratioToggle').addEventListener("change", redraw);
+    const ratioToggleEl = document.getElementById('ratioToggle');
+    if (ratioToggleEl) ratioToggleEl.addEventListener("change", redraw);
     
-    // 페이지 로드 시 CSV 데이터 자동 로드
+    function bubbleSize(csmEok, maxCsm) {
+      if (!Number.isFinite(csmEok) || csmEok <= 0 || !Number.isFinite(maxCsm) || maxCsm <= 0) return 8;
+      const t = Math.sqrt(csmEok / maxCsm);
+      return Math.max(10, Math.min(72, 10 + t * 62));
+    }
+
+    function renderBubble(sectorFilter) {
+      const el = document.getElementById('csm-bubble-chart');
+      const metaEl = document.getElementById('bubble-meta');
+      if (!el || !window.echarts || !bubblePayload) return;
+
+      let rows = (bubblePayload.companies || []).filter(c =>
+        (c.csm_closing_eok != null && c.csm_closing_eok > 0)
+      );
+      if (sectorFilter && sectorFilter !== 'ALL') {
+        rows = rows.filter(c => c.sector === sectorFilter);
+      }
+
+      const cov = bubblePayload._meta?.coverage || {};
+      if (metaEl) {
+        const vs = bubblePayload._meta?.validation_summary || {};
+        metaEl.textContent = `표시 ${rows.length}社 · 배수 ${cov.with_computed_multiple ?? '—'}/${cov.total ?? rows.length} · 검증 pass ${vs.cohort_pass ?? cov.validation_pass ?? '—'}/${vs.cohort_tested ?? '—'}`;
+      }
+
+      if (!rows.length) {
+        el.innerHTML = '<div style="padding:24px;color:var(--muted);font-size:13px">CSM bubble 데이터 없음 — scripts/viz_build_csm_bubble.py 실행</div>';
+        return;
+      }
+
+      if (!bubbleChart) bubbleChart = echarts.init(el);
+      const maxCsm = Math.max(...rows.map(r => r.csm_closing_eok || 0));
+
+      const lifeRows = rows.filter(r => r.sector === 'Life');
+      const nonLifeRows = rows.filter(r => r.sector === 'Non-Life');
+      const lifeBase = 0.25;
+      const nonLifeBase = 1.75;
+
+      function layoutRow(list, baseX) {
+        const n = list.length || 1;
+        return list.map((r, i) => ({
+          ...r,
+          _x: baseX + ((i + 1) / (n + 1) - 0.5) * 0.35,
+        }));
+      }
+
+      let laidOut = [];
+      if (sectorFilter === 'Life') laidOut = layoutRow(lifeRows, lifeBase);
+      else if (sectorFilter === 'Non-Life') laidOut = layoutRow(nonLifeRows, nonLifeBase);
+      else laidOut = layoutRow(lifeRows, lifeBase).concat(layoutRow(nonLifeRows, nonLifeBase));
+
+      const yVals = laidOut.map(r => r.nb_csm_multiple).filter(v => Number.isFinite(v));
+      const yMax = yVals.length ? Math.max(...yVals) * 1.15 : 20;
+      const yMin = 0;
+
+      bubbleChart.setOption({
+        grid: { left: 56, right: 24, top: 36, bottom: 56 },
+        tooltip: {
+          trigger: 'item',
+          formatter: p => {
+            const d = p.data;
+            const mult = d.hasMultiple && Number.isFinite(d.mult) ? d.mult.toFixed(2) + '×' : '미공시';
+            const prem = Number.isFinite(d.prem) ? d.prem.toLocaleString() + '억/月' : '—';
+            const nbM = d.nbM != null ? d.nbM.toLocaleString() + '억/月' : '—';
+            return [
+              `<b>${d.name}</b>`,
+              `CSM 잔액: ${(d.csm || 0).toLocaleString()}억`,
+              `신계약 CSM: ${nbM}`,
+              `월납환산: ${prem}`,
+              `NB CSM 배수: ${mult}`,
+              d.vstat ? `IR 검증: ${d.vstat}${d.vrel != null ? ' (Δ' + (d.vrel * 100).toFixed(0) + '%)' : ''}` : '',
+              d.src ? `출처: ${d.src}` : ''
+            ].filter(Boolean).join('<br/>');
+          }
+        },
+        xAxis: {
+          min: 0,
+          max: 2.5,
+          axisLabel: {
+            formatter: v => (Math.abs(v - lifeBase) < 0.2 ? '생명' : Math.abs(v - nonLifeBase) < 0.2 ? '손해' : '')
+          },
+          splitLine: { show: false }
+        },
+        yAxis: {
+          name: 'NB CSM 배수 (×)',
+          nameGap: 36,
+          min: yMin,
+          max: Math.max(yMax, 8),
+          splitLine: { lineStyle: { type: 'dashed', color: '#e9ecef' } }
+        },
+        series: [{
+          type: 'scatter',
+          data: laidOut.map(r => ({
+            name: r.company,
+            value: [r._x, Number.isFinite(r.nb_csm_multiple) ? r.nb_csm_multiple : 0],
+            hasMultiple: Number.isFinite(r.nb_csm_multiple),
+            csm: r.csm_closing_eok,
+            nbM: r.nb_csm_eok_monthly,
+            prem: r.wolnap_premium_eok_month,
+            mult: r.nb_csm_multiple,
+            vstat: r.validation_status,
+            vrel: r.validation_rel_diff,
+            src: r.multiple_source,
+            symbolSize: bubbleSize(r.csm_closing_eok, maxCsm),
+            itemStyle: {
+              color: r.color || '#adb5bd',
+              opacity: Number.isFinite(r.nb_csm_multiple) ? 0.92 : 0.38,
+              borderColor: Number.isFinite(r.nb_csm_multiple) ? 'transparent' : '#868e96',
+              borderWidth: Number.isFinite(r.nb_csm_multiple) ? 0 : 1
+            },
+            label: {
+              show: true,
+              formatter: '{b}',
+              position: 'top',
+              fontSize: 10,
+              color: '#495057'
+            }
+          })),
+          markArea: sectorFilter === 'ALL' ? {
+            silent: true,
+            itemStyle: { color: 'rgba(0,0,0,0.02)' },
+            data: [
+              [{ xAxis: 0, name: '생명보험' }, { xAxis: 1 }],
+              [{ xAxis: 1.5, name: '손해보험' }, { xAxis: 2.5 }]
+            ]
+          } : undefined
+        }]
+      }, true);
+    }
+
+    function loadBubble() {
+      if (window.location.protocol === 'file:') {
+        if (window.CSM_BUBBLE_DATA) {
+          bubblePayload = window.CSM_BUBBLE_DATA;
+          renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
+        } else {
+          const metaEl = document.getElementById('bubble-meta');
+          if (metaEl) metaEl.textContent = 'file:// — embed.js 또는 HTTP 서버 필요';
+        }
+        return;
+      }
+      fetchFirst(bubbleJsonPaths)
+        .then(payload => {
+          bubblePayload = payload;
+          renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
+        })
+        .catch(e => {
+          console.error('csm_bubble.json load failed:', e);
+          const metaEl = document.getElementById('bubble-meta');
+          if (metaEl) metaEl.textContent = 'csm_bubble.json 없음 — viz_build_csm_bubble.py 실행';
+        });
+    }
+
+    function fetchFirst(paths) {
+      if (!paths.length) return Promise.reject(new Error('no paths'));
+      const [head, ...rest] = paths;
+      return fetch(head).then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status} ${head}`);
+        return r.json();
+      }).catch(err => rest.length ? fetchFirst(rest) : Promise.reject(err));
+    }
+
+    window.addEventListener('resize', () => {
+      if (bubbleChart) bubbleChart.resize();
+    });
+
+    const bubbleSectorSel = document.getElementById('bubble-sector');
+    if (bubbleSectorSel) {
+      bubbleSectorSel.addEventListener('change', () => renderBubble(bubbleSectorSel.value));
+    }
+
     loadData();
+    loadBubble();
   </script>
 </body>
 </html>
