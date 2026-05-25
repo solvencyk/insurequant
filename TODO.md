@@ -1,6 +1,6 @@
 # Insurequant TODO
 
-Last updated: 2026-05-25 (Initial git push to solvencyk/insurequant main + deploy verified. IFRS17 historical batch 32/23 done)
+Last updated: 2026-05-25 (IFRS17 historical 13Q 257 ok + CSM 시계열 panel 8 추가 + push 2회차)
 
 Session start: read TODO.md then docs/claude-changelog.md (top first).
 
@@ -36,6 +36,7 @@ Universe: 23 insurers (`src/ifrs17/universe.py`).
 | IFRS-P3 | half/quarter reports | eligible | MVP complete |
 | IFRS17-SEN-TABLE | sensitivity heatmap panel table load | done | sensitivity_heatmap 14/23 ok |
 | IFRS17-HTML-DASH | templates/IFRS17.html 7-panel dashboard | done | ECharts panel 1 + Chart.js 2-4; Samsung Life sensitivity table renders |
+| IFRS-HIST | Historical 13Q ingest 2023.1Q~2026.1Q | done v1 | `scripts/ifrs17_batch_historical.py` + `_promote_history_to_measurement.py` + `viz_build_csm_waterfall_history.py`. 299 targets → 257 ok + 2 partial + 34 no_csm_block (분기보고서 text-only) + 5 errors. 사업보고서 23/23 거의 완벽. Output: `data/ifrs17/viz/csm_waterfall_history.json`. IFRS17.html Panel 8 "CSM 시계열" (dual-axis 기말+신계약, 22사 회색 배경 spaghetti) |
 
 ## index.html (market map)
 

@@ -1,3 +1,39 @@
+## 2026-05-25 -- IFRS17 historical 13Q ingest + CSM 시계열 panel (push #2)
+
+User asked to expand IFRS17 from FY2024 annual only to all quarters 2023.1Q ~ 2026.1Q. Built 3-stage pipeline + new IFRS17.html panel + deployed.
+
+**Stage 1 — Historical fetch (`scripts/ifrs17_batch_historical.py`):**
+- Period targets: 13Q (사업 4 + 반기 3 + 분기 6). pblntf_detail_ty {A001/A002/A003} + report_keyword filter, skip 기재정정.
+- Cache by canonical/period dir. Reuse `resolve_corp` + `OpenDARTClient`.
+- 442 (insurer, period) targets attempted: 226 ok (CSM extracted) + 143 no_filing (비상장 분기 미공시 정상) + 68 no_csm_table_found + 5 errors.
+- raw zip cached under `data/ifrs17/raw_history/<canonical>/<period>/`. extracted_history per-period `_csm.json` (raw csm_extractor output).
+
+**Stage 2 — Promote to measurement (`scripts/ifrs17_promote_history_to_measurement.py`):**
+- Runs `src.ifrs17.measurement_extractor.extract_measurement_tables` per (canonical, period) XML dir.
+- 294 targets → 293 ok (single 1 with no_measurement_tables). Cache when ≥64 bytes.
+- Output `_measurement.json` matches the picker schema in `viz_build_csm_waterfall.py` (block_type/slice_label/mvp_candidate).
+
+**Stage 3 — Historical waterfall builder (`scripts/viz_build_csm_waterfall_history.py`):**
+- Reuses `pick_main_block` + `extract_stages` + `detect_unit_scale` from the existing FY-only viz builder.
+- Aggregates per-(insurer, period) snapshots into time-series payload.
+- Coverage jumped 20 → **257 ok + 2 partial** (out of 299 reachable) after measurement promote step. 사업보고서(FY): near 23/23. 2025.2Q~2026.1Q has 11-13 no_csm_block each (분기보고서 often text-only).
+- Output: `data/ifrs17/viz/csm_waterfall_history.json` (319KB, 23 companies × 13 periods).
+
+**Panel 8 — `templates/IFRS17.html`:**
+- New section "8) CSM 시계열 (2023.1Q ~ 2026.1Q)". Chart.js dual-axis line.
+- Selected company: 기말 CSM (좌 y, solid teal-blue) + 신계약 CSM (우 y, dashed pink). 22 background lines (회색 spaghetti) for cross-comparison.
+- Tooltip + legend filter `_bg: true` datasets so only selected-co lines are interactive.
+- nulls for `no_csm_block` periods (spanGaps: false) — visible as gaps.
+- PATHS.hist added; payload/ix/destroyCharts/boot all extended.
+
+**Known data-quality follow-ups:**
+- 한화 2023.4Q opening ~9.8조 vs Q3 closing 13.7조 → picker selected a different sub-block. Acceptable for v1 viz; mark in changelog.
+- 분기보고서 parser: ~34 cases where text mentions 신계약 CSM but rollforward not in any table. Future: pattern extend.
+
+**Push #2:** commit e846e5a (6 files, 9271 insertions). https://solvencyk.github.io/insurequant/IFRS17.html deployed. data file 200 OK at 319KB.
+
+---
+
 ## 2026-05-25 -- Bond tier `(신종)` fix + Kyobo/Samsung MD reparse + forward sim refresh
 
 **Bond normalize (`scripts/normalize_bond_schedule.py`):**
