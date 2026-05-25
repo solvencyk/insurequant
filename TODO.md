@@ -1,16 +1,16 @@
 # Insurequant TODO
 
-Last updated: 2026-05-25 (F1 done; F2-F5 queued)
+Last updated: 2026-05-25 (F1/F3/F5 done; F2 v2 scope 재정의 + F4 v2 cat E/F 재분류 + B drill-down)
 
 ## 🚧 Follow-ups (next session — 병렬 sub-agent 대상)
 
 | # | Task | Scope | Notes |
 |---|------|-------|-------|
-| ~~F1~~ | ~~index.html → IFRS17 cross-nav~~ | done 2026-05-25 | commit `fcdd544`. ECharts `bubbleChart.on('click')` → `IFRS17.html?company=<enc>`; IFRS17 boot() reads URL param + auto-select (exact then partial-match fallback) |
-| F2 | **NB CSM 배수 누락 troubleshoot** | 보험개발원 월납월초환산보험료 stats → 전사 산출 | 현재 nb_csm_ratio.json 누락 회사·시점 식별 → KIDI/보험개발원 통계 crawl 보강. `data/assoc/nb_premium_*.{json,yaml}` 갱신 |
-| F3 | **CSM 상각 schedule 전수 조사** | csm_amort_schedule.json 회사 status≠ok 케이스 | 메리츠화재 보고 다른 missing 회사들도 함께. 패턴 (헤더 형식 / 표 위치) 분석 후 picker 확장 |
-| F4 | **Forward Outlook confidence low 분석** | forward_simulation_v3.json `confidence.level=low` 15사 | 원인별 분류 (T1 face/BS gap >30% / T2 missing / kics_t1=0 / etc.). 각 회사 root cause 정리 |
-| F5 | **No-bond insurer forward sim 추가** | 삼성화재(KR0008) 등 bond 발행 없는 사 | 현재 "없음" 표시. 가용자본 baseline 유지 + SCR만 경과조치 적용전으로 선형 interp. simulate_one에 bonds=[] 케이스 추가 (이미 sum=0이라 로직상 OK일 텐데 missing_baseline 분기에서 stub로 처리 중일 수도 — 확인) |
+| ~~F1~~ | ~~index.html → IFRS17 cross-nav~~ | done | `fcdd544`. ECharts on('click') → URL param + auto-select |
+| F2 v2 | **NB CSM 배수 — KIDI crawler + 보장성보험만** | **scope 변경 2026-05-25**: 손보=장기보험 원수보험료 현황표(070b07)에서 **저축보험 제외 보장성보험만** / 생보=수입보험료 명세표 **I (070104, 종목별)** 사용 (II 회사별이 아니라). 발견된 KIDI endpoint = `POST /insMonth/getQueryResult.do queryId=getM{XX}List`. comp_type 매핑: 손보 N01..N41, 생보 L00 (회사별 single call) — but 070104는 새로 schema 확인 필요. | F2 prior report: `output/nb_csm_ratio_coverage_20260525T132702Z.md` (60/299 cells, 196 den gap). 다음 세션 액션: (a) 070104 ML04List API probe (b) ITEM_VAL 컬럼 의미 매핑 (visual cross-check) (c) 손보 보장성보험 row 식별 (N07 LINE=99113 보장성보험 합계?) (d) crawler 작성 → data/kidi/<stamp>/ 저장 (e) nb_premium_overrides.yaml 보강 |
+| ~~F3~~ | ~~CSM 상각 schedule 전수 조사~~ | done | `4b06492`. 19/24 → **22/24 ok**. 메리츠화재 4-bucket 정상 렌더. 헤더 패턴 (1년미만/30년이상/이하/초과 등) + transposed table + 합계 derive + reinsurance downrank. 2 source-level 한계 (서울보증 PAA, 한화손해 csm.json만) |
+| F4 v2 | **Forward Outlook confidence — Cat C/D 리서치 + 외국계 분류 helper** | scope 좁힘 (cat E 정상 제외 / cat F 코드 fix 완료) | F4 v2 report: `output/kics_forward_capital/confidence_low_rootcause_v2_20260525T145147Z.md`. **Cat B drill-down 결과**: 11사 (10 아님) — KR0069 삼성생명 BS T2 66,289억 (FSC alias 최대 gap), KR0008 삼성화재 4,097억, KR1000 코리안리 4,431억 = alias 해결 시 75,000억 격차 해소. **Cat C/D 리서치 필요**: BS 자본성증권 carrying value 정의 (FV vs amortized) + Call exercise 시 차감 메커니즘. 답 나오면 over/under_deduct 의미 재정의. **외국계 분류 helper** 코드 추가 권고: `bond_coverage="no_self_issued, parent_capital"` 등 |
+| ~~F5~~ | ~~No-bond insurer forward sim 추가~~ | done | `b02e24d`. 24 → 37 cohort. KR0008 삼성화재 263%→263% flat. 13 no_bond insurer 추가. F4 추가 fix (`<1.0` 임계): KR1010 교보라이프 low→high |
 
 
 
