@@ -438,7 +438,12 @@ def main() -> int:
     bonds_per_insurer, bonds_src = load_outstanding_bonds()
     # Universe = FSC bond cohort ∪ K-ICS baseline cohort. No-bond insurers
     # (e.g. KR0008 삼성화재) still get a flat-capital + SCR-interp projection.
-    insurer_codes = sorted(set(bonds_per_insurer.keys()) | set(baselines.keys()))
+    # Exclude PAA-only insurers (no CSM-driven capital projection makes sense):
+    #   KR0150 서울보증보험 (PAA 적용, per F4 v2 report recommendation)
+    EXCLUDE_PAA = {"KR0150"}
+    insurer_codes = sorted(
+        (set(bonds_per_insurer.keys()) | set(baselines.keys())) - EXCLUDE_PAA
+    )
     tier1_by_code, tier2_by_code = load_utilization()
 
     results = []
