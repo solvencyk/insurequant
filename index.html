@@ -192,9 +192,7 @@
         console.warn('최신 분기 데이터를 찾을 수 없습니다.');
         return { "Life": [], "Non-Life": [] };
       }
-      
-      console.log(`최신 분기: ${latestQuarter}`);
-      
+
       // 최신 분기 데이터만 필터링
       const latestData = data.filter(row => row['공시분기'] === latestQuarter);
       
@@ -256,28 +254,19 @@
       // required 기준으로 정렬 (내림차순)
       grouped["Life"].sort((a, b) => (b.required || 0) - (a.required || 0));
       grouped["Non-Life"].sort((a, b) => (b.required || 0) - (a.required || 0));
-      
-      console.log('처리된 데이터:', grouped);
       return grouped;
     }
     
     // 기준시점 업데이트
     function updateReferencePeriod() {
-      console.log('updateReferencePeriod 호출됨, allData 길이:', allData.length);
-      if (allData.length === 0) {
-        console.log('allData가 비어있어서 기준시점 업데이트 스킵');
-        return;
-      }
+      if (allData.length === 0) return;
       const latestQuarter = getLatestQuarter(allData);
-      console.log('최신 분기:', latestQuarter);
       const periodElement = document.getElementById("reference-period");
-      console.log('periodElement:', periodElement);
       if (latestQuarter && periodElement) {
         // "2025.3Q" 형식을 "2025.3분기"로 변환
         const formattedQuarter = latestQuarter.replace(/Q$/, '분기');
         periodElement.textContent = `기준시점: ${formattedQuarter}`;
         periodElement.style.display = 'block';
-        console.log('기준시점 업데이트 완료:', formattedQuarter);
       } else {
         console.warn('기준시점 업데이트 실패 - latestQuarter:', latestQuarter, 'periodElement:', periodElement);
       }
@@ -590,7 +579,6 @@
             // 항목번호 28번의 기본자본비율만 사용
             displayValue = d.basicCapitalRatio || 0;
             displayRatio = displayValue;
-            console.log(`${d.company} 기본자본비율 (항목번호 28): ${displayValue.toFixed(2)}%`);
             cell.style.background = colorForRatio(displayValue, 'basicCapital');
             cell.title = `${d.company} — 기본자본비율(경과조치 적용 후) ${displayValue.toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
           } else {
