@@ -31,6 +31,17 @@ Last updated: 2026-05-26 (F2 v3 + F6 amort yearly granularity queued; F4 KB라�
 
 
 
+## 🎨 Mobile & visual follow-ups (2026-05-28)
+
+Shipped & deployed: index.html M1 (responsive @media foundation on all 4 pages) + M2 (treemap → vertical list on phones, sorted by 지급여력기준금액 desc) + desktop treemap label cleanup (dropped redundant 기준금액 text, size-aware labels) + debug console.log cleanup.
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| MOB-KICS | K-ICS.html full mobile layout | deferred | M1 foundation only (header/tabs/table scroll, chart heights ↓). Full pass — donuts stacked vertically, forward-chart legend reposition, dense table → card view — **deferred until panel content/scope agreed.** |
+| MOB-IFRS17 | IFRS17.html full mobile layout | deferred | Same — M1 foundation only. Defer full pass until display-metric scope agreed. |
+| VIS-DONUT | K-ICS donut row stacks on phones | todo | `.donut-cell` cramped <400px; stack vertically. |
+| VIS-CHARTLEGEND | chart legend/axis density on mobile | todo | Chart.js legends overflow narrow widths; hide or bottom-position. |
+
 Session start: read TODO.md then docs/claude-changelog.md (top first).
 
 NOTE: English only. Korean encoding is fragile across the toolchain. See CLAUDE.md "Document/TODO Encoding Rule".
@@ -64,7 +75,7 @@ Universe: 23 insurers (`src/ifrs17/universe.py`).
 | IFRS-NORMALIZE | 23-co full normalization | in-progress | ``data/ifrs17/crawl_manifest.json`` lists artifacts per insurer |
 | IFRS-P3 | half/quarter reports | eligible | MVP complete |
 | IFRS17-SEN-TABLE | sensitivity heatmap panel table load | done | sensitivity_heatmap 14/23 ok |
-| IFRS17-HTML-DASH | templates/IFRS17.html 7-panel dashboard | done | ECharts panel 1 + Chart.js 2-4; Samsung Life sensitivity table renders |
+| IFRS17-HTML-DASH | IFRS17.html 7-panel dashboard | done | ECharts panel 1 + Chart.js 2-4; Samsung Life sensitivity table renders. (root single-source since 2026-05-28; was templates/) |
 | IFRS-HIST | Historical 13Q ingest 2023.1Q~2026.1Q | done v1 | `scripts/ifrs17_batch_historical.py` + `_promote_history_to_measurement.py` + `viz_build_csm_waterfall_history.py`. 299 targets → 257 ok + 2 partial + 34 no_csm_block (분기보고서 text-only) + 5 errors. 사업보고서 23/23 거의 완벽. Output: `data/ifrs17/viz/csm_waterfall_history.json`. IFRS17.html Panel 8 "CSM 시계열" (dual-axis 기말+신계약, 22사 회색 배경 spaghetti) |
 
 ## index.html (market map)
@@ -82,7 +93,7 @@ Universe: 23 insurers (`src/ifrs17/universe.py`).
 | KICS-POST | values_post-transition | done | Historical reparse auto-fill |
 | KICS-RATIO28 | item28 basic-capital post-transition | done | 133 rows `값_적용후` |
 | KICS-HIST | historical reparse 9 periods | done | BATCH_END 2026-05-24T11:08:19Z |
-| KICS-HTML-SUB | K-ICS.html sub-items + transition toggle | done | templates/K-ICS.html + JSON sync |
+| KICS-HTML-SUB | K-ICS.html sub-items + transition toggle | done | K-ICS.html + JSON sync (root single-source since 2026-05-28) |
 | KICS-TIER2-UTIL | tier2 utilization 2025.4Q | done | KIRI PDF reconcile; 34/38 in 0-100%; output/tier2_utilization/ |
 | KICS-TIER1-UTIL | tier1 hybrid utilization 2025.4Q | done | SCR×15% strict 10%; 35/38 valid; output/tier1_utilization/ |
 | KICS-RULES-DOC | validation rules authoritative doc | done | docs/kics-json-validation-rules.md |
