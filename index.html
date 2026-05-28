@@ -32,18 +32,44 @@
     .map-status.error{color:#842029;background:#f8d7da}
     .group{position:absolute;border:1px solid rgba(0,0,0,.12);border-radius:10px;overflow:hidden;background:rgba(0,0,0,.02);box-sizing:border-box}
     .group-title{position:absolute;left:6px;top:6px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.8);padding:2px 6px;border-radius:6px;z-index:2}
-    .cell{position:absolute;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:all 0.2s;box-sizing:border-box}
+    .cell{position:absolute;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:6px;display:flex;flex-direction:column;justify-content:flex-start;gap:3px;overflow:hidden;transition:all 0.2s;box-sizing:border-box}
     /* scale은 타일 경계 밖으로 튀어 나와 인접 칸과 겹쳐 보일 수 있음 — 그림자만 */
     .cell:hover{box-shadow:0 4px 12px rgba(0,0,0,0.18);z-index:10}
     .name{font-weight:700;font-size:12px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .ratio{font-size:15px;font-weight:700}
-    .meta{font-size:11px;color:var(--muted)}
     .reference-period{position:absolute;left:12px;bottom:12px;font-size:11px;color:var(--muted);background:rgba(255,255,255,0.8);padding:4px 8px;border-radius:6px;z-index:100}
     .section-title{font-size:16px;font-weight:700;margin:0 0 4px}
     .section-desc{font-size:12px;color:var(--muted);margin:0 0 10px}
     #csm-bubble-chart{height:520px;border-radius:14px;border:1px solid var(--border);background:#fff}
     .bubble-legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
     .bubble-swatch{width:120px;height:10px;border-radius:6px;background:linear-gradient(90deg,#7f1d1d,#f59e0b,#84cc16,#14532d)}
+    /* M2: mobile list view for the treemap (shown only <=640px) */
+    .map-list{display:none}
+    .li-sector{font-size:12px;color:var(--muted);font-weight:700;margin:14px 0 6px;padding-left:2px}
+    .li-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;background:#fff;cursor:pointer}
+    .li-row:active{background:var(--card)}
+    .li-name{flex:0 0 36%;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .li-bar-track{flex:1 1 auto;height:14px;background:#eef0f2;border-radius:7px;overflow:hidden}
+    .li-bar{height:100%;border-radius:7px;min-width:2px}
+    .li-val{flex:0 0 54px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+    .li-empty{padding:24px 12px;text-align:center;color:var(--muted);font-size:13px}
+    /* Mobile responsive (<=640px) - M1 shared foundation */
+    @media (max-width:640px){
+      header{padding:8px 12px}
+      .brand{font-size:15px}
+      .brand .hint{display:none}
+      .container{padding:10px}
+      .tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;gap:6px;padding-bottom:2px}
+      .tab{flex:0 0 auto;padding:8px 12px;font-size:13px}
+      .controls{gap:8px}
+      .select{padding:7px 8px;font-size:13px}
+      .panel{padding:10px}
+      .section-title{font-size:15px}
+      #map{display:none}
+      .map-list{display:block}
+      #csm-bubble-chart{height:360px}
+      .swatch,.bubble-swatch{width:88px}
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 </head>
@@ -90,6 +116,7 @@
         <div id="map-status" class="map-status">K-ICS 데이터 로딩 중… (약 3MB, 수 초 소요)</div>
         <div id="reference-period" class="reference-period" style="display:none;">기준시점: </div>
       </div>
+      <div id="map-list" class="map-list" aria-label="K-ICS ratio list (mobile)"></div>
     </div>
     <div class="panel" style="margin-top:16px">
       <div class="section-title">IFRS17 — CSM Bubble Map</div>
@@ -112,7 +139,6 @@
       <div id="csm-bubble-chart"></div>
     </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
     function resolveUrl(relativePath) {
       return new URL(relativePath, window.location.href).href;
@@ -574,40 +600,34 @@
             cell.title = `${d.company} — K-ICS 지급여력비율(경과조치 적용 후) ${(d.ratio??0).toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
           }
 
-          const name = document.createElement("div");
-          name.className = "name";
-          name.textContent = d.company;
+          // Cell area already encodes 지급여력기준금액 (size ∝ required), so the
+          // "기준 XXX" text is dropped. Name/ratio are shown only when the cell is
+          // big enough — prevents clipped/overlapping text in tiny cells.
+          const showName = finalH >= 46 && finalW >= 60;
+          const showRatio = finalH >= 26 && finalW >= 44;
 
-          const ratio = document.createElement("div");
-          ratio.className = "ratio";
-          ratio.textContent = (Number.isFinite(displayRatio)? displayRatio.toFixed(1):"-") + "%";
+          if (showName) {
+            const name = document.createElement("div");
+            name.className = "name";
+            name.textContent = d.company;
+            name.style.pointerEvents = 'none';
+            cell.appendChild(name);
+          }
+          if (showRatio) {
+            const ratio = document.createElement("div");
+            ratio.className = "ratio";
+            ratio.textContent = (Number.isFinite(displayRatio) ? displayRatio.toFixed(1) : "-") + "%";
+            ratio.style.pointerEvents = 'none';
+            cell.appendChild(ratio);
+          }
 
-          const meta = document.createElement("div");
-          meta.className = "meta";
-          meta.textContent = "기준 " + Math.round(d.required).toLocaleString();
-
-          cell.appendChild(name);
-          cell.appendChild(ratio);
-          cell.appendChild(meta);
-          
-          // 셀 클릭 이벤트: K-ICS.html로 이동 (회사명 파라미터 전달)
           cell.style.cursor = 'pointer';
-          
-          // 클릭 이벤트 핸들러 (셀과 자식 요소 모두에 적용)
-          const handleCellClick = function(e) {
+          cell.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            const companyParam = encodeURIComponent(d.company);
-            window.location.href = `K-ICS.html?company=${companyParam}&period=quarter`;
-          };
-          
-          cell.addEventListener('click', handleCellClick);
-          
-          // 자식 요소들도 클릭 가능하도록 설정
-          name.style.pointerEvents = 'none';
-          ratio.style.pointerEvents = 'none';
-          meta.style.pointerEvents = 'none';
-          
+            window.location.href = `K-ICS.html?company=${encodeURIComponent(d.company)}&period=quarter`;
+          });
+
           el.appendChild(cell);
         }
       }
@@ -619,6 +639,68 @@
       periodElement.textContent = periodText;
       el.appendChild(periodElement);
       if (!periodVisible) updateReferencePeriod();
+      renderList(sector);
+    }
+
+    // M2: mobile list mirror of the treemap — same data, color scale, and click-nav.
+    // Shown instead of the treemap on narrow screens (CSS @media <=640px).
+    function renderList(sector){
+      const host = document.getElementById('map-list');
+      if (!host) return;
+      const ratioType = document.getElementById('ratioToggle')?.checked ? 'basicCapital' : 'kics';
+      const sectors = Object.keys(GROUPED || {}).filter(s => s && s !== 'Unknown');
+      host.innerHTML = '';
+      let total = 0;
+      for (const s of sectors){
+        if (sector !== 'ALL' && s !== sector) continue;
+        const rows = (GROUPED[s] || []);
+        if (!rows.length) continue;
+        // Order by 지급여력기준금액 (required) desc — mirrors the treemap, where
+        // tile size = required, so the biggest insurers sit on top.
+        const items = rows.map(d => {
+          const v = ratioType === 'basicCapital'
+            ? (d.basicCapitalRatio || 0)
+            : (Number.isFinite(d.ratio) ? d.ratio : 0);
+          return { d, v };
+        }).sort((a, b) => (b.d.required || 0) - (a.d.required || 0));
+        const maxV = Math.max(1, ...items.map(it => it.v));
+        const head = document.createElement('div');
+        head.className = 'li-sector';
+        head.textContent = s === 'Life' ? '생명보험' : '손해보험';
+        host.appendChild(head);
+        for (const { d, v } of items){
+          total++;
+          const row = document.createElement('div');
+          row.className = 'li-row';
+          row.title = `${d.company} — ${v.toFixed(1)}%, 기준금액 ${Math.round(d.required || 0).toLocaleString()}`;
+          const name = document.createElement('div');
+          name.className = 'li-name';
+          name.textContent = d.company;
+          const track = document.createElement('div');
+          track.className = 'li-bar-track';
+          const bar = document.createElement('div');
+          bar.className = 'li-bar';
+          bar.style.width = Math.max(2, (v / maxV) * 100) + '%';
+          bar.style.background = colorForRatio(v, ratioType);
+          track.appendChild(bar);
+          const val = document.createElement('div');
+          val.className = 'li-val';
+          val.textContent = (Number.isFinite(v) ? v.toFixed(1) : '-') + '%';
+          row.appendChild(name);
+          row.appendChild(track);
+          row.appendChild(val);
+          row.addEventListener('click', () => {
+            window.location.href = `K-ICS.html?company=${encodeURIComponent(d.company)}&period=quarter`;
+          });
+          host.appendChild(row);
+        }
+      }
+      if (!total){
+        const empty = document.createElement('div');
+        empty.className = 'li-empty';
+        empty.textContent = 'K-ICS 데이터를 불러오는 중이거나 표시할 항목이 없습니다.';
+        host.appendChild(empty);
+      }
     }
 
     const sel = document.getElementById("sector");

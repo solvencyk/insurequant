@@ -125,8 +125,14 @@ Universe: 23 insurers (`src/ifrs17/universe.py`).
 - Encoding rule: CLAUDE.md "Document/TODO Encoding Rule" added 2026-05-24
 - .gitignore: data/ifrs17/raw/, data/ifrs17/reports/ excluded
 - 2026-05-25 doc trim: changelog 124KB→11KB (latest 5 entries detailed + historical archive 1-liners). TODO.md done-task Notes compressed
-- git: **initialized + pushed** to github.com/solvencyk/insurequant (main). GitHub Pages → solvencyk.github.io/insurequant. Root HTML = deploy mirror of templates/*.
+- git: **initialized + pushed** to github.com/solvencyk/insurequant (main). GitHub Pages → solvencyk.github.io/insurequant.
 - 2026-05-26: docs/roadmap.md 신설 (중장기 제품·수익화·글로벌 피벗 전략)
+- 2026-05-28 **HTML single-source refactor (P1+P4)**: templates/*.html 4개 삭제, 루트가 유일 원본. forward_capital_simulation.py → 루트 K-ICS.html 갱신. index.html 미사용 xlsx CDN 제거. 로컬 미리보기는 루트에서 `python -m http.server 8000`.
+  - ⚠️ 남은 중복(다음 단계 후보): 데이터 JSON이 root↔templates 양쪽 존재 — templates/{kics_disclosure,tier1_utilization_latest,tier2_utilization_latest,forward_capital_latest}.json. recalc_*.py / crawl_assoc_nb_premium.py / extract_ir_wolnap_benchmarks.py 가 templates/로도 write. (P2 데이터 단일화 시 정리)
+  - 남은 HTML 구조 todo: P3 공통 CSS/네비 → assets/common.css 추출 / P5 K-ICS 인라인 데이터 외부 JSON+fetch 통일
+- 2026-05-28 **모바일 반응형 M1 (공통 토대)**: 4개 페이지에 `@media (max-width:640px)` 추가 — 헤더/탭 가로스크롤, 여백·글자·차트높이 축소, 표 가로스크롤. 데스크톱 무영향(640px 이하만). Claude Preview로 375px/1280px 검증 완료.
+- 2026-05-28 **모바일 반응형 M2 (히트맵→리스트)**: index.html ≤640px에서 트리맵 숨기고 세로 리스트(회사명+색상막대+비율%, 비율 내림차순, 업권 그룹)로 자동전환. renderList()가 render()와 동일 데이터·색상·토글·클릭이동 공유. Preview 375px/1280px 검증, 콘솔 에러 0.
+  - 모바일 남은 단계(선택): **M3** 차트 미세조정(K-ICS 도넛 2개 세로배치, Forward 라인 범례 위치 등)
 
 ## MVP checklist (IFRS17)
 
