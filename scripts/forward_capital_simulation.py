@@ -411,8 +411,12 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
 
 
 def _sync_forward_data_into_kics_html(results: list[dict]) -> None:
-    """Replace ``window.FORWARD_DATA`` line in templates/K-ICS.html (avoids file:// fetch)."""
-    html_path = REPO / "templates" / "K-ICS.html"
+    """Replace ``window.FORWARD_DATA`` line in K-ICS.html (avoids file:// fetch).
+
+    Single source of truth: root K-ICS.html is the deployed file (GitHub Pages).
+    templates/*.html copies were removed 2026-05-28 (P1 single-source refactor).
+    """
+    html_path = REPO / "K-ICS.html"
     html = html_path.read_text(encoding="utf-8")
     blob = json.dumps(results, ensure_ascii=False, separators=(",", ":"))
     replacement = "window.FORWARD_DATA = " + blob + ";"
@@ -424,7 +428,7 @@ def _sync_forward_data_into_kics_html(results: list[dict]) -> None:
         flags=re.MULTILINE,
     )
     if count != 1:
-        print(f"WARN: templates/K-ICS.html FORWARD_DATA sync skipped (replace count={count})", file=sys.stderr)
+        print(f"WARN: K-ICS.html FORWARD_DATA sync skipped (replace count={count})", file=sys.stderr)
         return
     html_path.write_text(new_html, encoding="utf-8")
     print(f"  K-ICS inline: window.FORWARD_DATA updated ({len(blob)} chars)")

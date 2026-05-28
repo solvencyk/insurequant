@@ -43,6 +43,25 @@
 .stub-msg{color:var(--muted);font-size:14px;padding:12px;border:1px dashed var(--border);border-radius:8px;background:#ffffff}
 .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:8px;background:#ffffff;font-size:13px}
 th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
+    /* Mobile responsive (<=640px) - M1 shared foundation */
+    @media (max-width:640px){
+      header{padding:8px 12px}
+      .brand{font-size:15px}
+      .brand .hint{display:none}
+      .container{padding:10px}
+      .tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;gap:6px;padding-bottom:2px}
+      .tab{flex:0 0 auto;padding:8px 12px;font-size:13px}
+      .controls{gap:8px}
+      .select{padding:7px 8px;font-size:13px}
+      .panel{padding:14px}
+      .panel h2{font-size:17px}
+      .chart-container{height:360px;padding:8px}
+      .chart-sm{height:300px}
+      .table-container{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      .table-wrap{max-height:60vh}
+      table{font-size:12px}
+      th,td{padding:4px 6px}
+    }
 </style>
 </head>
 <body>

@@ -1,3 +1,55 @@
+## 2026-05-28 -- index treemap text cleanup + mobile list sort
+
+User feedback: desktop treemap company labels overlapped/clipped in small tiles; 지급여력기준금액 text is redundant (tile size already encodes it).
+- Dropped the "기준 XXX" meta line from every cell (removed `.meta` CSS + JS).
+- Size-aware labels: name shown only if cell ≥46×60px, ratio only if ≥26×44px; tiny cells show color only (no clipped text). `.cell` now `justify-content:flex-start;gap:3px` (clusters name+ratio top-left).
+- Mobile list `renderList`: sort changed from ratio desc → **지급여력기준금액(required) desc**, so big insurers (삼성생명…) top, matching the treemap; bar/color still encode ratio. (User: 라이나 343% sitting on top felt off.)
+- Verified via Preview: desktop labels clean & non-overlapping; mobile 삼성생명 top / 라이나 9th; zero console errors.
+
+## 2026-05-28 -- Mobile responsive M2 (treemap -> list on phones)
+
+The treemap can't fit 30+ insurers legibly on a 375px screen (small tiles clipped). Per research, the fix is a *different* presentation on mobile, not shrinking. index.html now swaps the treemap for a vertical list below 640px.
+
+- New `#map-list` container + `.li-*` styles (name + colored magnitude bar + ratio%).
+- New `renderList(sector)` JS: mirrors `render()` inputs — same `GROUPED` data, `colorForRatio()` scale, ratio toggle (kics/basicCapital), and click→`K-ICS.html?company=...`. Rows grouped by 생명보험/손해보험, sorted by ratio desc, bar width = ratio/maxRatio.
+- Called at the end of `render()`, so every redraw (resize / sector change / toggle) updates both views; CSS @media decides which is visible.
+- `@media (max-width:640px)`: `#map{display:none}` + `.map-list{display:block}` (replaced M1's map height tweak).
+
+**Verified via Claude Preview:** mobile 375px shows clean sorted list (라이나 343% … 한화 157%), all insurers legible; desktop 1280px treemap unchanged; zero console errors. M3 (chart fine-tuning, e.g. donuts stacked) still optional.
+
+## 2026-05-28 -- Mobile responsive M1 (shared foundation)
+
+User asked to make the site look good on phones (index treemap "와장창 찌그러짐"). Audit found **zero `@media` queries** across all 4 pages — viewport tag present but no responsive breakpoints, so desktop layout was forced onto phones.
+
+**M1 (this round):** added identical `@media (max-width:640px)` block to index/K-ICS/IFRS17/공시보고서.html:
+- header padding↓, brand subtitle (`.hint`) hidden, container padding 16→10px
+- `.tabs` horizontal-scroll (nowrap + overflow-x:auto) so tabs never wrap/overflow
+- `.panel` padding↓, `.panel h2` 20→17px, `.select` smaller
+- chart containers height↓ (chart-container 500→360, forward-chart 420→340, chart-sm 380→300); donut-wrap 240→200
+- tables: `.table-container` overflow-x:auto, font 12px, th/td padding↓
+- index map: height 76vh→58vh, min-height 560→420; bubble 360
+- All scoped under ≤640px → desktop mathematically unaffected.
+
+**Verified via Claude Preview** (python http.server :8765): mobile 375px — tabs fit one row, big insurer tiles legible; desktop 1280px — unchanged. Data loads fine over http (12,795 rows, no console errors).
+
+**Confirmed M2 still needed:** small-insurer treemap tiles still squish on 375px (text clipped). Real fix = switch treemap→vertical list/bar below ~700px (deferred, user's choice).
+
+## 2026-05-28 -- HTML single-source refactor (P1 + P4)
+
+Frontend-fundamentals audit (per user's "비개발자 바이브코더" video). Diagnosed 5 정합성 issues; fixed P1 (HTML duplication) + P4 (dead dependency) this round.
+
+**Root cause found:** `K-ICS.html` existed in both root and `templates/` and had **drifted** — only line 171 (`window.FORWARD_DATA` inline blob) differed. `forward_capital_simulation.py` wrote only to `templates/K-ICS.html` (mtime 3h newer), so the deployed root copy served **stale forward-capital numbers** (pre-face-value-fix). index/IFRS17/공시보고서 copies were still identical.
+
+**P1 — single source = root:**
+- `cp templates/K-ICS.html → K-ICS.html` (root now carries the fresh 액면가 data — fixes the stale deploy).
+- `git rm templates/{index,K-ICS,IFRS17,공시보고서}.html` (4 HTML mirrors removed). templates/ now holds only data JSONs.
+- `forward_capital_simulation.py`: `_sync_forward_data_into_kics_html` path `templates/K-ICS.html` → root `K-ICS.html` + docstring/WARN text. py_compile OK.
+- Local preview now: `python -m http.server 8000` from repo root (was `-d templates`).
+
+**P4 — dead dependency:** index.html dropped unused `xlsx.full.min.js` CDN (~900KB, never called; only the `<script>` tag existed, zero `XLSX.` usage). 817→816 lines.
+
+**Deferred (noted in TODO Meta):** data-JSON duplication (templates/{kics_disclosure,tier1/tier2_utilization_latest,forward_capital_latest}.json still written by recalc_*/crawl_assoc_nb_premium/extract_ir_wolnap_benchmarks) = future P2. Remaining HTML structure todos: P3 shared CSS/nav → assets/common.css; P5 K-ICS inline data → external JSON+fetch.
+
 ## 2026-05-25 -- IFRS17 historical 13Q ingest + CSM 시계열 panel (push #2)
 
 User asked to expand IFRS17 from FY2024 annual only to all quarters 2023.1Q ~ 2026.1Q. Built 3-stage pipeline + new IFRS17.html panel + deployed.
