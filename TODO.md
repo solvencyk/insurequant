@@ -111,6 +111,9 @@ Universe: 23 insurers (`src/ifrs17/universe.py`).
 
 ## Long-term projects
 
+> 📈 **중장기 제품·수익화·전략 로드맵 → `docs/roadmap.md`** (2026-05-26 신설)
+> VC 사업성 밸리데이션 종합. Phase 0 (이해상충 선결) → Phase 1 (한국 데이터 심화: 추가 공시지표·정합성 보정·projection 엔진·재보험 스크리너) → Phase 2 (3-tier 수익화) → Phase 3 (Build-in-Public 마케팅) → Phase 4 (EU Solvency II / 일본 IFRS17 글로벌 피벗). 레이팅: 솔로 캐시카우 ★★★★☆ / 기술해자 ★★★★★.
+
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
 | IFRS17-CSM-BUBBLE | index.html IFRS17 bubble (CSM size × NB multiple color) | in-progress | Pipeline: crawl → `validate_csm_waterfall.py` → `validate_nb_csm_multiple.py` → `viz_build_csm_bubble.py`. **Waterfall validation 23/23.** Samsung/Meritz/Samsung Life NB CSM fixed (당기 block + non-zero sub-rows). |
@@ -122,7 +125,8 @@ Universe: 23 insurers (`src/ifrs17/universe.py`).
 - Encoding rule: CLAUDE.md "Document/TODO Encoding Rule" added 2026-05-24
 - .gitignore: data/ifrs17/raw/, data/ifrs17/reports/ excluded
 - 2026-05-25 doc trim: changelog 124KB→11KB (latest 5 entries detailed + historical archive 1-liners). TODO.md done-task Notes compressed
-- git: **not initialized** — `git init + commit + push` pending in Next priorities #5
+- git: **initialized + pushed** to github.com/solvencyk/insurequant (main). GitHub Pages → solvencyk.github.io/insurequant. Root HTML = deploy mirror of templates/*.
+- 2026-05-26: docs/roadmap.md 신설 (중장기 제품·수익화·글로벌 피벗 전략)
 
 ## MVP checklist (IFRS17)
 
