@@ -1,3 +1,17 @@
+## 2026-05-28 -- IFRS17 yearly CSM amort (F6) + KPI/BS panel pruning
+
+**F6 — yearly CSM amort schedule (panel 2):**
+- `viz_build_ifrs17_panels.py`: `extract_amort_schedule` now emits `yearly` (y1..y10 + y10plus + total) and `granularity` alongside the existing 4-bucket `buckets` (kept — `viz_build_ifrs17_kpis.py` + bubble still read buckets). New helpers `_year_bucket_cell` / `_year_bucket_indices` / `_yearly_from_aligned` / `_extract_transposed_yearly`. `granularity='yearly'` only when >=7 of y1..y10 present, so coarse-range tables (1년 이하/1~3년/...) stay `coarse`.
+- Split: **16 yearly / 6 coarse / 2 no-data** (of 24); 22/24 ok unchanged.
+- `IFRS17.html` panel 2: yearly bar chart, **desktop 10y / mobile 5y** (`matchMedia(max-width:640px)`); coarse companies fall back to the 4-bucket view; re-render on breakpoint change.
+- Verified via `Chart.getChart`: DB생명 desktop=10 bars [268,197,…,32], mobile-load=5 bars; 삼성생명 (coarse)=4-bucket fallback. No console errors.
+
+**Panel pruning (user review: derived proxies are non-official; raw > proxy for B2B; BS duplicates DART):**
+- Removed panel "5) Downstream KPI 카드" (4 proxy KPIs) + "6) BS 스냅샷 표" from `IFRS17.html` (template + renderCompany blocks + PATHS/payload/ix/boot wiring + `.kpi-*` CSS + now-orphan `renderMatrixTable`). Generators kept (`downstream_kpis.json` still feeds the bubble's closing CSM). Definitions preserved in **`docs/archived_metrics.md`**.
+- Panels renumbered 1–6 (wf / amort / pl / nb / sens / hist); intro "7패널" copy fixed.
+
+**Roadmap:** `docs/roadmap.md` §1A-2 added — 재보험 영업 관점 6 우선 추가지표 (요구자본 위험액 세부분해, RA 규모·신뢰수준, P&L 보험/투자 분해, 출재율, 유지율, 운용자산이익률) + 🟡 후순위/제거 목록.
+
 ## 2026-05-28 -- index treemap text cleanup + mobile list sort
 
 User feedback: desktop treemap company labels overlapped/clipped in small tiles; 지급여력기준금액 text is redundant (tile size already encodes it).

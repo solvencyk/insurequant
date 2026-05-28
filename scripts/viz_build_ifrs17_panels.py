@@ -133,6 +133,121 @@ def _bucket_for_range(lo: int, hi: int) -> str:
     return "y5_plus"
 
 
+# ── Yearly granularity (F6) — single-year buckets y1..y10 + y10plus tail ──
+_YEAR_KEYS = tuple(f"y{i}" for i in range(1, 11)) + ("y10plus",)
+
+
+def _year_bucket_cell(cell: str) -> str | None:
+    """Map a header cell to a single-year bucket y1..y10 / y10plus / total.
+
+    Single '5년' -> y5; a range like '1년 초과 2년 이하' / '1~2년' routes to its
+    upper year (y2); the 5-year tail groups ('11~15년', '30년 이상', ...) all
+    collapse into y10plus. Companies whose tables only carry coarse ranges
+    (e.g. 1년 이하 / 1년 초과 3년 이하) will populate a sparse subset.
+    """
+    if not isinstance(cell, str):
+        return None
+    no_space = cell.strip().replace(" ", "").replace(" ", "")
+    if not no_space:
+        return None
+    if no_space in ("합계", "총계", "소계", "계"):
+        return "total"
+    m = _YEAR_CELL_RE.fullmatch(no_space)
+    if m:
+        y = int(m.group(1))
+        return f"y{y}" if 1 <= y <= 10 else "y10plus"
+    m = _AT_OR_UNDER_RE.match(no_space)  # 'N년 이하/미만'
+    if m:
+        y = int(m.group(1))
+        return f"y{y}" if 1 <= y <= 10 else "y10plus"
+    m = _RANGE_CHOGWA_IHA_RE.match(no_space)  # 'N년 초과 M년 이하' -> year M
+    if m:
+        hi = int(m.group(2))
+        return f"y{hi}" if 1 <= hi <= 10 else "y10plus"
+    m = _RANGE_TILDE_RE.match(no_space)  # 'N~M년' -> year M
+    if m:
+        hi = int(m.group(2))
+        return f"y{hi}" if 1 <= hi <= 10 else "y10plus"
+    if _OVER_ONLY_RE.match(no_space):  # 'N년 초과/이상/이후' tail
+        return "y10plus"
+    return None
+
+
+def _year_bucket_indices(flat_hdr: list[str]) -> dict[str, list[int]]:
+    buckets: dict[str, list[int]] = {k: [] for k in _YEAR_KEYS}
+    buckets["total"] = []
+    for i, cell in enumerate(flat_hdr):
+        bk = _year_bucket_cell(cell)
+        if bk is not None:
+            buckets[bk].append(i)
+    if len(buckets["total"]) > 1:
+        buckets["total"] = buckets["total"][:1]
+    return buckets
+
+
+def _yearly_from_aligned(aligned: list, ybuckets: dict[str, list[int]]) -> dict[str, float]:
+    out: dict[str, float] = {}
+    for bk, idxs in ybuckets.items():
+        if bk == "total":
+            continue
+        parts = []
+        for i in idxs:
+            if 0 <= i < len(aligned):
+                v = parse_num(aligned[i])
+                if v is not None:
+                    parts.append(float(v))
+        if parts:
+            out[bk] = sum(parts)
+    tidx = ybuckets.get("total") or []
+    if tidx and 0 <= tidx[0] < len(aligned):
+        tv = parse_num(aligned[tidx[0]])
+        if tv is not None:
+            out["total"] = float(tv)
+    return out
+
+
+def _extract_transposed_yearly(rows) -> dict[str, float] | None:
+    """Yearly buckets when time buckets live in column 0 (row-keyed)."""
+    out: dict[str, float] = {}
+    total = 0.0
+    saw = False
+    for row in rows:
+        if not row:
+            continue
+        bk = _year_bucket_cell(str(row[0]).strip())
+        if bk is None:
+            continue
+        nums = [n for n in (parse_num(c) for c in row[1:]) if n is not None]
+        if not nums:
+            continue
+        v = nums[-1] if len(nums) >= 2 else nums[0]
+        if bk == "total":
+            total = v
+            continue
+        out[bk] = out.get(bk, 0.0) + v
+        saw = True
+    if not saw:
+        return None
+    if total:
+        out["total"] = total
+    return out
+
+
+def _yearly_granularity(yearly: dict) -> str:
+    """'yearly' only when most single-year columns are present (true per-year table).
+
+    Coarse-range tables (1년 이하 / 1년 초과 3년 이하 / ...) map to a sparse
+    y1/y3/y5 subset, so requiring >=7 of y1..y10 keeps them classified 'coarse'
+    (the panel then falls back to the 4-bucket view instead of a gappy chart).
+    """
+    if not yearly:
+        return "none"
+    present = sum(1 for i in range(1, 11) if f"y{i}" in yearly)
+    if present >= 7:
+        return "yearly"
+    return "coarse"
+
+
 def _flatten_header(header: list[list[str]]) -> list[str]:
     out: list[str] = []
     for row in header:
@@ -327,11 +442,14 @@ def extract_amort_schedule(blocks: list[dict]) -> dict | None:
 
     if not header_has_buckets:
         bucket_vals = _extract_transposed_amort(rows) or {}
+        yearly = _extract_transposed_yearly(rows) or {}
         status = 'ok' if bucket_vals else 'partial'
         return {
             'status': status,
             'caption': blk.get('caption'),
             'buckets': bucket_vals,
+            'yearly': yearly,
+            'granularity': _yearly_granularity(yearly),
             'header': header,
             'row_label': "시간버킷(행)",
         }
@@ -412,11 +530,16 @@ def extract_amort_schedule(blocks: list[dict]) -> dict | None:
         if parts:
             bucket_vals['total'] = sum(parts)
 
+    ybuckets = _year_bucket_indices(flat_hdr)
+    yearly = _yearly_from_aligned(aligned, ybuckets)
+
     status = 'ok' if bucket_vals else 'partial'
     return {
         'status': status if bucket_vals else 'partial',
         'caption': blk.get('caption'),
         'buckets': bucket_vals,
+        'yearly': yearly,
+        'granularity': _yearly_granularity(yearly),
         'header': header,
         'row_label': aligned[0] if aligned else '',
     }
