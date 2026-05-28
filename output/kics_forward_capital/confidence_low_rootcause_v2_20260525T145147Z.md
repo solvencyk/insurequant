@@ -54,7 +54,20 @@ After excluding Cat E (legitimate stress, KR0003 + KR0072): **20 actionable LOWs
 - **LOW priority (defer / monitor)**: 나머지 8사 — 자체 발행 없거나 인수 통합 중. 그대로 두기.
 - **EXCLUDE**: KR0150 서울보증 — PAA 적용 사는 forward sim cohort에서 제외 권고.
 
-## Category C/D — research pending (per user msg)
+## Category C/D — resolved 2026-05-26 (액면가 기준)
+
+**Final user decision (Gemini consult)**: "상환 시 전체 가용자본에서 실질적으로 빠지는 총금액은 액면가(실제 투자자에게 지급하는 상환금액) 기준이야."
+
+→ Forward sim의 face-value deduction이 올바른 semantics. BS 장부가와의 차이 (over/under_deduct)는 회계 artifact (발행비용 분할상각 등) 일 뿐, 실제 자본 흡수력과 무관. **추가 모델 변경 없음.**
+
+C/D 분류는 더 이상 "noise"가 아니라 BS-vs-face accounting gap의 정상 표현으로 재해석:
+- C (face >> BS): 발행 후 시간이 지나 BS에 평가차감 반영된 케이스 (정상)
+- D (face << BS): BS에 평가차익 반영 또는 face 누락 (FSC alias gap 가능성, B와 겹침)
+
+(historic context, original research questions kept below for posterity)
+---
+
+## Category C/D — original research questions (pre-resolution)
 
 User callout: "over 또는 under 라고 하는건 BS에 그 bond의 시장가치 (FV 말고) 가 있었다는거야? 상환할 때 둘중 뭐가 차감되는지까지는 나도 잘 모르겠는데, 이건 리서치를 좀 해봐야할듯."
 
