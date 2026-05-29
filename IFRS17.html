@@ -116,7 +116,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     </div>
     <div class="panel" data-pane="hist">
       <h2>6) CSM 시계열 (2023.1Q ~ 2026.1Q)</h2>
-      <div class="small-muted" id="histCap">선택한 보험사의 13분기 CSM 진화. 회색 배경선은 23사 전체 (highlight: 선택사). 'no_csm_block' 분기는 점선 + null로 표시 (사업보고서는 통상 ok, 1Q/3Q 분기보고서는 rollforward 표 미포함 케이스 다수).</div>
+      <div class="small-muted" id="histCap">선택한 보험사의 13분기 CSM 진화. 파란선 = 기말 CSM 잔액(stock), 분홍선 = 신계약 CSM **당기 증분**(공시는 회계연도 누적이라 당분기 흐름으로 변환; 중간 분기 미공시 시 합산 span은 툴팁 표시). 회색 배경선 = 23사 전체. 반기/분기보고서에 rollforward 표가 없으면 'no_csm_block' → 라인 끊김(null).</div>
       <div id="histStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container"><canvas id="canvasHist"></canvas></div>
     </div>
@@ -559,10 +559,20 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
         const v = snap.stages && snap.stages.closing && snap.stages.closing.value_mn_krw;
         return (typeof v === "number" && Number.isFinite(v)) ? v / 1e6 : null;  // mn → 조원
       });
+      // New-business CSM is disclosed as fiscal-YTD cumulative (Q1/H1/9M/FY),
+      // so plot the per-quarter increment (built in viz_build_csm_waterfall_history)
+      // to avoid the within-year sawtooth. Falls back to cumulative if absent.
+      const nbSpans = periods.map(p => {
+        const snap = histRow.periods[p];
+        return snap ? (snap.new_business_increment_span_q || null) : null;
+      });
       const nbValues = periods.map(p => {
         const snap = histRow.periods[p];
         if (!snap || (snap.status !== "ok" && snap.status !== "partial")) return null;
-        const v = snap.stages && snap.stages.new_business && snap.stages.new_business.value_mn_krw;
+        let v = snap.new_business_increment_mn_krw;
+        if (typeof v !== "number") {
+          v = snap.stages && snap.stages.new_business && snap.stages.new_business.value_mn_krw;
+        }
         return (typeof v === "number" && Number.isFinite(v)) ? v / 1e6 : null;  // mn → 조원
       });
       // Background lines: all OTHER 23사 closing CSM (faded)
@@ -610,8 +620,9 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
               yAxisID: "y",
             },
             {
-              label: company + " · 신계약 CSM (조원)",
+              label: company + " · 신계약 CSM (당기 증분, 조원)",
               data: nbValues,
+              _spans: nbSpans,
               borderColor: "rgb(255, 99, 132)",
               backgroundColor: "transparent",
               borderWidth: 2,
@@ -653,6 +664,10 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
               },
               callbacks: {
                 label: (ctx) => `${ctx.dataset.label}: ${fmtNum(ctx.parsed.y, 2)}조`,
+                afterLabel: (ctx) => {
+                  const sp = ctx.dataset._spans && ctx.dataset._spans[ctx.dataIndex];
+                  return (sp && sp > 1) ? `  (${sp}개 분기 합산 — 중간 분기 미공시)` : undefined;
+                },
               },
             },
           },
@@ -666,7 +681,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
             },
             y1: {
               type: "linear", position: "right", beginAtZero: true,
-              title: { display: true, text: "신계약 CSM (조원)", color: "rgb(255, 99, 132)" },
+              title: { display: true, text: "신계약 CSM (당기 증분, 조원)", color: "rgb(255, 99, 132)" },
               ticks: { callback: (v) => fmtNum(v, 2) + "조", color: "rgb(255, 99, 132)" },
               grid: { drawOnChartArea: false },
             },

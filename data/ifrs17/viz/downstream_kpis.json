@@ -23,7 +23,7 @@
           "y1": 268.0,
           "y1_y3": 346.0,
           "y3_y5": 219.0,
-          "y5_plus": 379.0,
+          "y5_plus": 272.0,
           "total": 1213.0
         }
       }
@@ -33,7 +33,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.43,
-      "schedule_run_rate": 0.002,
+      "schedule_run_rate": 0.165,
       "nb_replacement": 2.37,
       "inputs": {
         "closing_csm_mn_krw": 12231759.0,
@@ -41,11 +41,11 @@
         "new_business_mn_krw": 3078038.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 28626.0,
-          "y1_y3": 451.0,
-          "y3_y5": 2144.0,
-          "y5_plus": 12446.0,
-          "total": 775719.0
+          "y1": 775719.0,
+          "y1_y3": 1240612.0,
+          "y3_y5": 963024.0,
+          "y5_plus": 4639152.0,
+          "total": 12231759.0
         }
       }
     },
@@ -65,7 +65,7 @@
           "y1": 484975.0,
           "y1_y3": 814664.0,
           "y3_y5": 649376.0,
-          "y5_plus": 4516087.0,
+          "y5_plus": 3629422.0,
           "total": 8820482.0
         }
       }
@@ -75,7 +75,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 8.59,
-      "schedule_run_rate": 0.16,
+      "schedule_run_rate": 0.146,
       "nb_replacement": 1.48,
       "inputs": {
         "closing_csm_mn_krw": 4110310.0,
@@ -83,10 +83,10 @@
         "new_business_mn_krw": 710366.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 372707.0,
-          "y1_y3": 286995.0,
-          "y3_y5": 458945.0,
-          "y5_plus": 710303.0,
+          "y1": 226205.0,
+          "y1_y3": 372707.0,
+          "y3_y5": 286995.0,
+          "y5_plus": 1169248.0,
           "total": 2055155.0
         }
       }
@@ -107,7 +107,7 @@
           "y1": 6003.4,
           "y1_y3": 8683.1,
           "y3_y5": 5984.9,
-          "y5_plus": 23668.4,
+          "y5_plus": 29072.0,
           "total": 64380.5
         }
       }
@@ -128,7 +128,8 @@
           "y1": 2267.0,
           "y1_y3": 4201.0,
           "y3_y5": 3853.0,
-          "y5_plus": 27422.0
+          "y5_plus": 14122.0,
+          "total": 43606.0
         }
       }
     },
@@ -137,19 +138,40 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.86,
-      "schedule_run_rate": 0.07,
+      "schedule_run_rate": 0.14,
       "nb_replacement": 2.95,
       "inputs": {
-        "closing_csm_mn_krw": 5083602.0,
-        "csm_amort_mn_krw": -515430.0,
-        "new_business_mn_krw": 1520324.0,
+        "closing_csm_mn_krw": 2541801.0,
+        "csm_amort_mn_krw": -257715.0,
+        "new_business_mn_krw": 760162.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
           "y1": 132882.0,
           "y1_y3": 223891.0,
           "y3_y5": 178147.0,
-          "y5_plus": 1280764.0,
+          "y5_plus": 1071062.0,
           "total": 2541802.0
+        }
+      }
+    },
+    {
+      "company": "라이나생명보험",
+      "status": "ok",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "schedule_run_rate": 0.0,
+      "nb_replacement": null,
+      "inputs": {
+        "closing_csm_mn_krw": 3230161.575,
+        "csm_amort_mn_krw": null,
+        "new_business_mn_krw": 573265.585,
+        "service_margin_proxy_mn_krw": null,
+        "amort_buckets": {
+          "y1": 286647781.0,
+          "y1_y3": 480567666.0,
+          "y3_y5": 386421378.0,
+          "y5_plus": 445115784.0,
+          "total": 1598752609.0
         }
       }
     },
@@ -169,7 +191,7 @@
           "y1": 50821.0,
           "y1_y3": 97940.0,
           "y3_y5": 84162.0,
-          "y5_plus": 663665.0,
+          "y5_plus": 423053.0,
           "total": 1147076.0
         }
       }
@@ -179,7 +201,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.79,
-      "schedule_run_rate": null,
+      "schedule_run_rate": 0.272,
       "nb_replacement": 1.5,
       "inputs": {
         "closing_csm_mn_krw": 10468726.0,
@@ -187,7 +209,32 @@
         "new_business_mn_krw": 1600648.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y5_plus": 9369907.0
+          "y1": 1078110.0,
+          "y1_y3": 1772316.0,
+          "y3_y5": 1404678.0,
+          "y5_plus": 6932786.0,
+          "total": 11187890.0
+        }
+      }
+    },
+    {
+      "company": "메트라이프생명보험",
+      "status": "ok",
+      "csm_dependency": 1.0,
+      "csm_runway_years": 10.32,
+      "schedule_run_rate": 0.164,
+      "nb_replacement": 2.42,
+      "inputs": {
+        "closing_csm_mn_krw": 2152105.61,
+        "csm_amort_mn_krw": -208561.289,
+        "new_business_mn_krw": 504448.14,
+        "service_margin_proxy_mn_krw": null,
+        "amort_buckets": {
+          "y1": 124820.0,
+          "y1_y3": 227454.0,
+          "y3_y5": 199255.0,
+          "y5_plus": 252499.0,
+          "total": 804028.0
         }
       }
     },
@@ -195,28 +242,31 @@
       "company": "미래에셋생명",
       "status": "ok",
       "csm_dependency": 1.0,
-      "csm_runway_years": 10.61,
+      "csm_runway_years": 10.51,
       "schedule_run_rate": null,
-      "nb_replacement": 1.48,
+      "nb_replacement": 2.0,
       "inputs": {
-        "closing_csm_mn_krw": 1571881.0,
-        "csm_amort_mn_krw": -148173.0,
-        "new_business_mn_krw": 219528.0,
+        "closing_csm_mn_krw": 2078210.0,
+        "csm_amort_mn_krw": -197690.0,
+        "new_business_mn_krw": 394605.0,
         "service_margin_proxy_mn_krw": null,
-        "amort_buckets": {}
+        "amort_buckets": {
+          "y5_plus": 1352940.0,
+          "total": 2078205.0
+        }
       }
     },
     {
       "company": "삼성생명",
       "status": "ok",
       "csm_dependency": 1.0,
-      "csm_runway_years": 9.03,
-      "schedule_run_rate": 0.54,
-      "nb_replacement": 3.61,
+      "csm_runway_years": 9.39,
+      "schedule_run_rate": 0.203,
+      "nb_replacement": 2.37,
       "inputs": {
-        "closing_csm_mn_krw": 4905935.0,
-        "csm_amort_mn_krw": -543087.0,
-        "new_business_mn_krw": 1960198.0,
+        "closing_csm_mn_krw": 13080691.0,
+        "csm_amort_mn_krw": -1393378.0,
+        "new_business_mn_krw": 3298494.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
           "y1": 1030710.0,
@@ -243,7 +293,7 @@
           "y1": 1058610.0,
           "y1_y3": 1681189.0,
           "y3_y5": 1288901.0,
-          "y5_plus": 7508870.0,
+          "y5_plus": 4927321.0,
           "total": 14073909.0
         }
       }
@@ -264,7 +314,8 @@
           "y1": 1394.0,
           "y1_y3": 2724.0,
           "y3_y5": 2654.0,
-          "y5_plus": 25166.0
+          "y5_plus": 12210.0,
+          "total": 37819.0
         }
       }
     },
@@ -284,8 +335,50 @@
           "y1": 57415.0,
           "y1_y3": 98057.0,
           "y3_y5": 78967.0,
-          "y5_plus": 477024.0,
+          "y5_plus": 309242.0,
           "total": 869543.0
+        }
+      }
+    },
+    {
+      "company": "에이아이에이생명보험",
+      "status": "ok",
+      "csm_dependency": 1.0,
+      "csm_runway_years": 9.67,
+      "schedule_run_rate": 0.168,
+      "nb_replacement": 2.28,
+      "inputs": {
+        "closing_csm_mn_krw": 1509649.0,
+        "csm_amort_mn_krw": -156162.0,
+        "new_business_mn_krw": 355720.0,
+        "service_margin_proxy_mn_krw": null,
+        "amort_buckets": {
+          "y1": 88446.0,
+          "y1_y3": 165081.0,
+          "y3_y5": 147860.0,
+          "y5_plus": 198112.0,
+          "total": 599499.0
+        }
+      }
+    },
+    {
+      "company": "처브라이프생명보험",
+      "status": "ok",
+      "csm_dependency": 1.0,
+      "csm_runway_years": 11.25,
+      "schedule_run_rate": 0.092,
+      "nb_replacement": 0.98,
+      "inputs": {
+        "closing_csm_mn_krw": 112382.0,
+        "csm_amort_mn_krw": -9987.0,
+        "new_business_mn_krw": 9806.0,
+        "service_margin_proxy_mn_krw": null,
+        "amort_buckets": {
+          "y1": 3718.0,
+          "y1_y3": 6648.0,
+          "y3_y5": 5892.0,
+          "y5_plus": 8003.0,
+          "total": 24261.0
         }
       }
     },
@@ -305,7 +398,7 @@
           "y1": 52914.0,
           "y1_y3": 90284.0,
           "y3_y5": 73864.0,
-          "y5_plus": 137193.0,
+          "y5_plus": 165194.0,
           "total": 583047.0
         }
       }
@@ -315,7 +408,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.59,
-      "schedule_run_rate": 0.024,
+      "schedule_run_rate": 0.133,
       "nb_replacement": 2.11,
       "inputs": {
         "closing_csm_mn_krw": 3179825.0,
@@ -323,10 +416,10 @@
         "new_business_mn_krw": 634668.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 73097.0,
-          "y1_y3": 2209.0,
-          "y3_y5": 316971.0,
-          "y5_plus": 90438.0,
+          "y1": 152557.0,
+          "y1_y3": 271554.0,
+          "y3_y5": 239005.0,
+          "y5_plus": 1057669.0,
           "total": 3010510.0
         }
       }
@@ -347,7 +440,7 @@
           "y1": 12781.0,
           "y1_y3": 22640.0,
           "y3_y5": 21668.0,
-          "y5_plus": 271789.0,
+          "y5_plus": 340553.0,
           "total": 617720.0
         }
       }
@@ -357,7 +450,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 8.34,
-      "schedule_run_rate": null,
+      "schedule_run_rate": 0.325,
       "nb_replacement": 3.1,
       "inputs": {
         "closing_csm_mn_krw": 142349.0,
@@ -365,7 +458,32 @@
         "new_business_mn_krw": 52876.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y5_plus": 14824.0
+          "y1": 17739.0,
+          "y1_y3": 28494.0,
+          "y3_y5": 22005.0,
+          "y5_plus": 97587.0,
+          "total": 165825.0
+        }
+      }
+    },
+    {
+      "company": "하나생명보험",
+      "status": "ok",
+      "csm_dependency": 1.0,
+      "csm_runway_years": 11.01,
+      "schedule_run_rate": 0.028,
+      "nb_replacement": 8.13,
+      "inputs": {
+        "closing_csm_mn_krw": 438955.662,
+        "csm_amort_mn_krw": -39857.491,
+        "new_business_mn_krw": 324034.743,
+        "service_margin_proxy_mn_krw": null,
+        "amort_buckets": {
+          "y1": 4475220.0,
+          "y1_y3": 7893735.0,
+          "y3_y5": 7783427.0,
+          "y5_plus": 89877451.0,
+          "total": 180842350.0
         }
       }
     },
@@ -374,7 +492,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.42,
-      "schedule_run_rate": null,
+      "schedule_run_rate": 0.103,
       "nb_replacement": 2.53,
       "inputs": {
         "closing_csm_mn_krw": 13296823.0,
@@ -382,7 +500,11 @@
         "new_business_mn_krw": 3236057.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y5_plus": 25393.0
+          "y1": 516503.0,
+          "y1_y3": 852598.0,
+          "y3_y5": 720044.0,
+          "y5_plus": 7173422.0,
+          "total": 9262567.0
         }
       }
     },
@@ -391,20 +513,14 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.28,
-      "schedule_run_rate": -4.383,
+      "schedule_run_rate": null,
       "nb_replacement": 1.81,
       "inputs": {
         "closing_csm_mn_krw": 7606441.592,
         "csm_amort_mn_krw": -819474.242,
         "new_business_mn_krw": 1481978.186,
         "service_margin_proxy_mn_krw": null,
-        "amort_buckets": {
-          "y1": -7602401.0,
-          "y1_y3": -25739606.0,
-          "y3_y5": -16827363.0,
-          "y5_plus": -50169370.0,
-          "total": 19195630.0
-        }
+        "amort_buckets": {}
       }
     },
     {
@@ -412,7 +528,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 8.73,
-      "schedule_run_rate": 0.086,
+      "schedule_run_rate": 0.0,
       "nb_replacement": 1.92,
       "inputs": {
         "closing_csm_mn_krw": 8305487.262,
@@ -420,10 +536,10 @@
         "new_business_mn_krw": 1827879.353,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 375362314.0,
-          "y1_y3": 341619499.0,
-          "y3_y5": 1398487706.0,
-          "y5_plus": 4721371548.0,
+          "y1": 560401752.0,
+          "y1_y3": 908244443.0,
+          "y3_y5": 716981813.0,
+          "y5_plus": 6119859254.0,
           "total": 8305487262.0
         }
       }
@@ -454,14 +570,20 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 11.23,
-      "schedule_run_rate": null,
+      "schedule_run_rate": 0.138,
       "nb_replacement": 1.42,
       "inputs": {
         "closing_csm_mn_krw": 2470794.0,
         "csm_amort_mn_krw": -220001.0,
         "new_business_mn_krw": 312758.0,
         "service_margin_proxy_mn_krw": null,
-        "amort_buckets": {}
+        "amort_buckets": {
+          "y1": 117471.0,
+          "y1_y3": 224121.0,
+          "y3_y5": 209028.0,
+          "y5_plus": 892935.0,
+          "total": 2470792.0
+        }
       }
     }
   ]

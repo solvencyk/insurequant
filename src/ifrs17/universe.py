@@ -37,9 +37,27 @@ EXCLUDED_SKIP: frozenset[str] = frozenset({
     "\uC11C\uC6B8\uBCF4\uC99D\uBCF4\uD5D8",
 })
 
+# Foreign-affiliate life insurers (\uD55C\uAD6D\uBC95\uC778 \uC8FC\uC2DD\uD68C\uC0AC). They file no pblntf_ty=A
+# periodic disclosure, but the \uC678\uBD80\uAC10\uC0AC\uBC95 audit report (pblntf_ty="F" \uAC10\uC0AC\uBCF4\uACE0\uC11C)
+# carries the same IFRS17 \uBCF4\uD5D8\uACC4\uC57D \uC8FC\uC11D, including the CSM amort schedule.
+# Annual only. Names use the K-ICS \uC6D0\uC218\uC0AC\uBA85 full form; \uC5D0\uC774\uC544\uC774\uC5D0\uC774\uC0DD\uBA85\uBCF4\uD5D8 is NOT
+# in kics_disclosure.json (no public K-ICS row) and is carried here only.
+# (Feasibility verified 2026-05-29: existing csm_extractor parses all 5.)
+AUDIT_REPORT_ANNUAL: frozenset[str] = frozenset({
+    "\uB77C\uC774\uB098\uC0DD\uBA85\uBCF4\uD5D8",
+    "\uBA54\uD2B8\uB77C\uC774\uD504\uC0DD\uBA85\uBCF4\uD5D8",
+    "\uC5D0\uC774\uC544\uC774\uC5D0\uC774\uC0DD\uBA85\uBCF4\uD5D8",
+    "\uD558\uB098\uC0DD\uBA85\uBCF4\uD5D8",
+    "\uCC98\uBE0C\uB77C\uC774\uD504\uC0DD\uBA85\uBCF4\uD5D8",
+})
+
 ALL_EXCLUDED: frozenset[str] = NON_LISTED_SKIP | EXCLUDED_SKIP
 LISTED_UNIVERSE_SIZE = 37 - len(NON_LISTED_SKIP)
 OPERATIONAL_CSM_COUNT = 23
+
+
+def is_audit_report_annual(name: str) -> bool:
+    return name in AUDIT_REPORT_ANNUAL
 
 _SLICE_LONGTERM = (
     "\uC7A5\uAE30",

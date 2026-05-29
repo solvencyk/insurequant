@@ -169,7 +169,11 @@ def _iter_tables_with_context(xml_path: Path) -> Iterable[ExtractedTable]:
                     cells = []
                     for c in sub:
                         ctag = (c.tag or "").lower()
-                        if ctag in ("th", "td"):
+                        # DART's newer filings (2025+) use <TE> "table entry"
+                        # tags for data cells instead of <TD>; older ones use
+                        # <TD>. Without <te> the body rows parse empty (the
+                        # quarterly CSM rollforward 미파싱 bug).
+                        if ctag in ("th", "td", "te"):
                             cells.append(_text(c))
                     if not cells:
                         continue

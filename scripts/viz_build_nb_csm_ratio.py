@@ -21,6 +21,12 @@ TEMPLATES_EMBED_OUT = ROOT / "templates" / "data" / "ir" / "nb_csm_ratio.embed.j
 
 FY24_QS = ["FY24.1Q", "FY24.2Q", "FY24.3Q", "FY24.4Q", "FY25.1Q"]
 
+# Data-integrity gate. A real NB CSM multiple (신계약 CSM ÷ 월납환산 초회보험료)
+# tops out around 30-50x in practice; anything above this (or non-positive) is a
+# parse error — typically an absolute CSM amount (십억원) misread as a ratio.
+# (Caught the Samsung Life 사망 series reading 459/471/520 instead of ~5-10.)
+MAX_PLAUSIBLE_MULTIPLE = 60.0
+
 # Chronological buckets used across non-life IR extracts (Samsung Fire + Hyundai M&F).
 _NONLIFE_AXIS_ORDER = [
     "2024.1H",
@@ -89,13 +95,27 @@ def extract_samsung_life(text: str) -> dict:
         raise ValueError("Samsung Life: health ratio row not found")
     health_vals = [float(health_m.group(i)) for i in range(1, 6)]
 
-    death_m = re.search(
-        r"([\d\.]+)\s+([\d\.]+)\s+([\d\.]+)\s+([\d\.]+)\s+([\d\.]+)\s*사망",
-        chunk,
-    )
-    if not death_m:
-        raise ValueError("Samsung Life: death ratio row not found")
-    death_vals = [float(death_m.group(i)) for i in range(1, 6)]
+    # Death (사망/종신) multiples. The PDF extract interleaves the death
+    # multiples (single digits) with absolute CSM amounts (십억원, hundreds) on
+    # adjacent lines, so a positional 5-number regex grabbed the amounts
+    # (459/435/520/471/488) — the 400x+ parse bug. Instead scan the region
+    # between the health row (건강) and the 사망 label and keep only the
+    # plausible-multiple values (< cap); the amounts are filtered out.
+    # rfind: the first 사망 is the column header (건강 사망 금융); we want the
+    # data-row 사망 at the bottom of the chart block.
+    death_anchor = chunk.rfind("사망")
+    if death_anchor < 0:
+        raise ValueError("Samsung Life: 사망 label not found")
+    region = chunk[:death_anchor]
+    h_pos = region.rfind("건강")
+    death_region = region[h_pos:] if h_pos >= 0 else region
+    death_floats = [float(x) for x in re.findall(r"\d+\.\d+", death_region)]
+    death_vals = [v for v in death_floats if 0 < v < MAX_PLAUSIBLE_MULTIPLE]
+    if len(death_vals) != 5:
+        raise ValueError(
+            f"Samsung Life: expected 5 plausible death multiples, got {death_vals} "
+            f"(region floats: {death_floats})"
+        )
 
     # Financial ratios are often wrapped across lines (3.4 / 3.0 / … / 금융 / trailing 3.0).
     fin_main = re.search(
@@ -394,6 +414,32 @@ def _augment_coverage_meta(payload: dict) -> None:
     m["partial_disclosure"] = partial_rows
 
 
+def validate_plausible(payload: dict) -> None:
+    """Build-time data-integrity gate on NB CSM multiples.
+
+    Every chart series point must satisfy 0 < value <= MAX_PLAUSIBLE_MULTIPLE.
+    A violation means an absolute CSM amount was misread as a ratio (or a sign
+    error), so we fail the build loudly rather than ship a bogus 400x line.
+    """
+    bad: list[str] = []
+    for section in ("life", "non_life"):
+        for key, entry in (payload.get(section) or {}).items():
+            if not isinstance(entry, dict):
+                continue
+            for sname, series in (entry.get("series") or {}).items():
+                for pt in series.get("points") or []:
+                    v = pt.get("value")
+                    if v is None:
+                        continue
+                    if not (0 < float(v) <= MAX_PLAUSIBLE_MULTIPLE):
+                        bad.append(f"{section}.{key}.{sname}.{pt.get('period')}={v}")
+    if bad:
+        raise ValueError(
+            f"implausible NB CSM multiple(s) (expect 0 < x <= {MAX_PLAUSIBLE_MULTIPLE}); "
+            "likely an absolute CSM amount misread as a ratio: " + "; ".join(bad)
+        )
+
+
 def build_payload() -> dict:
     payload: dict = {
         "_meta": {
@@ -420,6 +466,7 @@ def build_payload() -> dict:
         },
     }
     _augment_coverage_meta(payload)
+    validate_plausible(payload)
     return payload
 
 

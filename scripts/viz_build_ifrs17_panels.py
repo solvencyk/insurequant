@@ -651,7 +651,106 @@ def _is_shock_label(text: str) -> bool:
     t = text.strip()
     if not t:
         return False
-    return "%" in t or "\uC99D\uAC00" in t or "\uAC10\uC18C" in t or t.startswith("(-)")
+    # %, \uC99D\uAC00, \uAC10\uC18C, \uC0C1\uC2B9, \uD558\uB77D, or a (-) prefix all denote a shock magnitude.
+    return (
+        "%" in t
+        or "\uC99D\uAC00" in t  # \uC99D\uAC00
+        or "\uAC10\uC18C" in t  # \uAC10\uC18C
+        or "\uC0C1\uC2B9" in t  # \uC0C1\uC2B9
+        or "\uD558\uB77D" in t  # \uD558\uB77D
+        or t.startswith("(-)")
+    )
+
+
+def _band_sensitivity_columns(header: list[list[str]]) -> tuple[int, int | None] | None:
+    """Locate \u0394CSM and \uB2F9\uAE30\uC190\uC775 value-column indices for the \uC6D0\uC218/\uCD9C\uC7AC band layout.
+
+    These tables (\uD55C\uD654/\uCF00\uC774\uB514\uBE44/\uD765\uAD6D \uC0DD\uBCF4) use a 3-row header:
+        \uAD6C\uBD84 | \uBBFC\uAC10\uB3C4 | \uBCC0\uB3D9\uAE08\uC561 | \uC774\uC775 \uBC0F \uC790\uBCF8 \uC601\uD5A5
+                     \uC774\uD589\uD604\uAE08\uD750\uB984 \uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4 | \uB2F9\uAE30\uC190\uC775 \uAE30\uD0C0\uD3EC\uAD04\uC190\uC775
+                     \uC6D0\uC218 \uCD9C\uC7AC    \uC6D0\uC218 \uCD9C\uC7AC      \uC6D0\uC218 \uCD9C\uC7AC  \uC6D0\uC218 \uCD9C\uC7AC
+    Returns (csm_value_idx, pl_value_idx) indexing into the per-row value
+    cells (after the label cells), preferring the \uC6D0\uC218 (direct) sub-column.
+    ``None`` when this layout is not present (caller falls back).
+    """
+    csm_tokens = ("\uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4", "\uBCF4\uD5D8\uC11C\uBE44\uC2A4\uB9C8\uC9C4")  # DART note / K-ICS term
+    # Label cells that may sit in the same header row as the value-group names
+    # (e.g. \uCF00\uC774\uB514\uBE44: ['\uC704\uD5D8\uBCC0\uC218','\uBCC0\uB3D9','\uBCF4\uD5D8\uC11C\uBE44\uC2A4\uB9C8\uC9C4','\uB2F9\uAE30\uC190\uC775',...]); drop them
+    # so group indices align with the value columns.
+    label_exact = {"\uAD6C\uBD84", "\uBBFC\uAC10\uB3C4", "\uC704\uD5D8\uBCC0\uC218", "\uC704\uD5D8\uC694\uC778", "\uC704\uD5D8\uC885\uB958", "\uBCC0\uB3D9", "\uBCC0\uB3D9\uB960", "\uC0C1\uD488\uB77C\uC778"}
+
+    def _is_csm(c: str) -> bool:
+        return any(t in c for t in csm_tokens)
+
+    def _is_label(c: str) -> bool:
+        s = c.strip()
+        return s in label_exact or s.startswith("\uCDA9\uACA9")
+
+    group_row = None
+    for hr in header:
+        cells = [c for c in hr if isinstance(c, str) and not _is_label(c)]
+        if any(_is_csm(c) for c in cells) and any(
+            ("\uB2F9\uAE30\uC190\uC775" in c or "\uC190\uC775" in c) for c in cells  # \uB2F9\uAE30\uC190\uC775 / \uC190\uC775
+        ):
+            group_row = cells
+            break
+    if not group_row:
+        return None
+    # LAST CSM column: when a table shows \uAE30\uC900\uAE08\uC561 then \uBCC0\uB3D9\uAE08\uC561 each with a
+    # \uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4 sub-column (e.g. \uAD50\uBCF4), the \u0394CSM we want is the \uBCC0\uB3D9\uAE08\uC561 one.
+    csm_g = max((i for i, c in enumerate(group_row) if _is_csm(c)), default=None)
+    if csm_g is None:
+        return None
+    pl_g = next((i for i, c in enumerate(group_row) if "\uB2F9\uAE30\uC190\uC775" in c), None)
+    n_groups = len(group_row)
+    n_bottom = max(
+        (len([c for c in hr if isinstance(c, str)]) for hr in header), default=n_groups
+    )
+    cpg = max(1, round(n_bottom / n_groups)) if n_groups else 1
+    pl_idx = pl_g * cpg if pl_g is not None else None
+    return (csm_g * cpg, pl_idx)
+
+
+def _extract_sensitivity_band(
+    blk: dict, csm_idx: int, pl_idx: int | None, skip_stub: tuple[str, ...]
+) -> list[dict[str, object]]:
+    """Parse a \uC6D0\uC218/\uCD9C\uC7AC band-layout sensitivity table, rowspan-aware.
+
+    Risk name spans the \uC99D\uAC00/\uAC10\uC18C row pair via rowspan, so the 2nd (\uAC10\uC18C) row
+    has one fewer leading cell. We detect such continuation rows (leading cell
+    is a shock) and inherit the current risk, aligning the value cells.
+    """
+    scenarios: list[dict[str, object]] = []
+    current_risk = ""
+    for row in blk.get("rows") or []:
+        if not row or not isinstance(row[0], str):
+            continue
+        label = row[0].strip()
+        if not label or label in skip_stub or label.startswith("\uAE30\uC900\uAE08\uC561"):
+            continue
+        if _is_shock_label(label) and not _is_risk_label(label, skip_stub):
+            # rowspan-elided continuation row: risk inherited, no \uAD6C\uBD84 cell.
+            risk, shock, vals = current_risk, label, row[1:]
+        else:
+            current_risk = label
+            risk = label
+            shock = row[1].strip() if len(row) > 1 and isinstance(row[1], str) else ""
+            vals = row[2:]
+        cells = [("" if v is None else str(v)).strip() for v in vals]
+        if len(cells) <= csm_idx:
+            continue
+        csm = parse_num(cells[csm_idx], dash_means_zero=False)
+        pl = (
+            parse_num(cells[pl_idx], dash_means_zero=False)
+            if pl_idx is not None and pl_idx < len(cells)
+            else None
+        )
+        if csm is None and pl is None:
+            continue
+        scenarios.append({"risk": risk, "shock": shock, "csm_delta": csm, "pl_impact": pl})
+        if len(scenarios) >= 12:
+            break
+    return scenarios
 
 
 def _is_risk_label(text: str, skip_stub: tuple[str, ...]) -> bool:
@@ -711,6 +810,23 @@ def extract_sensitivity(blocks: list[dict]) -> dict | None:
         "\uCD9C\uC7AC \uBCF4\uD5D8",
     )
     product_line_layout = _header_has_product_lines(blk.get("header") or [])
+
+    # 원수/출재 band layout (한화/케이디비/흥국): header-aware + rowspan-aware.
+    # Routed only when that header shape is present, so the product-line path
+    # (삼성) and the generic path (other insurers) are untouched.
+    if not product_line_layout:
+        band = _band_sensitivity_columns(blk.get("header") or [])
+        if band is not None:
+            csm_idx, pl_idx = band
+            band_scenarios = _extract_sensitivity_band(blk, csm_idx, pl_idx, skip_stub)
+            if band_scenarios:
+                return {
+                    "status": "ok",
+                    "caption": blk.get("caption"),
+                    "table_kind": sa_kind,
+                    "header": blk.get("header") or [],
+                    "scenarios": band_scenarios,
+                }
 
     scenarios: list[dict[str, object]] = []
     current_risk = ""

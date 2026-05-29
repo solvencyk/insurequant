@@ -109,6 +109,9 @@ STAGE_PATTERNS: dict[str, list[str]] = {
         "보험계약 순부채(자산)(기말)",
         "기말잔액",
         "기말",
+        # Some filings label the closing balance 보고기간말 (end of reporting
+        # period) instead of 기말 (e.g. 하나생명 13-4 rollforward).
+        "보고기간말",
     ],
 }
 
@@ -134,6 +137,103 @@ def parse_num(s) -> float | None:
         return -v if neg else v
     except ValueError:
         return None
+
+
+# Product-line tokens used to detect product-SEGMENTED measurement tables, where
+# several product columns (사망/건강/연금…) sit side by side, each carrying its
+# own [미래CF, 위험조정, CSM(×전환방법), (합계)] block. 삼성생명·미래에셋 disclose
+# the quarterly rollforward this way (one wide table) and the annual one as
+# per-product separate tables — see find_product_segmented_csm_cols / sum logic.
+_PRODUCT_TOKENS = (
+    "사망보험", "건강보험", "연금보험", "저축보험", "기타보험", "연금저축보험",
+    "보장성보험", "저축성보험", "변액보험",
+)
+
+
+def _is_subtotal_label(label) -> bool:
+    """True for a 소계/합계/총계/계 column header (a per-group CSM subtotal that
+    must NOT be summed alongside its component method columns)."""
+    if not isinstance(label, str):
+        return False
+    s = label.strip().replace(" ", "")
+    return s in ("소계", "합계", "총계", "계", "소 계", "합 계")
+
+
+def _count_product_columns(header_rows: list[list[str]]) -> int:
+    """Number of product-name cells in the richest product header row (>=2),
+    else 0. Excludes the long 전환일 transition-method labels."""
+    best = 0
+    for hr in header_rows or []:
+        names = [
+            c for c in hr
+            if isinstance(c, str) and c.strip()
+            and any(t in c for t in _PRODUCT_TOKENS)
+            and "전환" not in c
+        ]
+        if len(names) >= 2:
+            best = max(best, len(names))
+    return best
+
+
+def _richest_value_slice(rows: list[list[str]], key: str) -> list | None:
+    """Among rows whose label contains ``key`` (e.g. '기초'/'기말'), return the
+    value slice (row[value_start:]) of the one with the most non-zero numeric
+    cells. Picks the 부채 balance row over the all-dash 자산 row."""
+    best = None
+    best_nz = -1
+    for r in rows:
+        if not (r and isinstance(r[0], str) and key in r[0]):
+            continue
+        vs = row_value_start(r)
+        data = r[vs:]
+        nz = sum(1 for x in data if (parse_num(x) or 0) != 0)
+        if nz > best_nz:
+            best_nz = nz
+            best = data
+    return best
+
+
+def find_product_segmented_csm_cols(
+    header_rows: list[list[str]], rows: list[list[str]]
+) -> list[int]:
+    """CSM data-column indices for a product-SEGMENTED wide table.
+
+    Layout: P products side by side, each a fixed-width group
+    ``[미래CF, 위험조정, CSM_method1.., (합계)]``. Returns the CSM-method column
+    indices across ALL products (0-based among ``row[value_start:]``), excluding
+    each group's trailing 합계 column. Returns [] when the table isn't
+    product-segmented or the width doesn't resolve cleanly — so single-aggregate
+    companies are never affected.
+    """
+    P = _count_product_columns(header_rows)
+    if P < 2:
+        return []
+    ref = _richest_value_slice(rows, "기초") or _richest_value_slice(rows, "기말")
+    if not ref:
+        return []
+    N = len(ref)
+    if N % P != 0:
+        return []
+    W = N // P
+    if W < 3:  # need at least CF, RA, one CSM column
+        return []
+    # Detect a per-product 합계 column: group's last cell == sum of the others.
+    has_sum = True
+    for p in range(P):
+        grp = [parse_num(x) or 0 for x in ref[p * W:(p + 1) * W]]
+        if len(grp) < W:
+            has_sum = False
+            break
+        body = grp[0] + grp[1] + sum(grp[2:W - 1])
+        if abs(grp[-1] - body) > max(1.0, abs(grp[-1]) * 0.002):
+            has_sum = False
+            break
+    cols: list[int] = []
+    for p in range(P):
+        base = p * W
+        end = base + W - 1 if has_sum else base + W
+        cols.extend(range(base + 2, end))  # skip CF(0), RA(1); CSM methods follow
+    return cols
 
 
 def header_has_detail_column(header_rows: list[list[str]]) -> bool:
@@ -187,14 +287,26 @@ def deduplicate(blocks: list[dict]) -> list[dict]:
     return out
 
 
-def find_csm_leaf_cols(header_rows: list[list[str]]) -> list[int]:
+def find_csm_leaf_cols(
+    header_rows: list[list[str]], rows: list[list[str]] | None = None
+) -> list[int]:
     """Return CSM leaf-column indices (0-based among measurement cells).
 
     Indices index into ``row[value_start:]`` where ``value_start`` comes from
-    :func:`row_value_start`.
+    :func:`row_value_start`. When ``rows`` is supplied a product-segmented wide
+    layout (삼성생명/미래에셋 quarterly: several product lines side by side) is
+    detected first.
     """
     if not header_rows:
         return []
+
+    # Product-segmented wide table (highest priority — its ragged multi-level
+    # header confuses every positional branch below, leaving these companies'
+    # quarterly rollforwards unparsed). Needs the data rows for the 합계 test.
+    if rows:
+        seg = find_product_segmented_csm_cols(header_rows, rows)
+        if seg:
+            return seg
 
     # Strip the optional "(단위 : 백만원)" leading row.
     hrows = [
@@ -211,17 +323,20 @@ def find_csm_leaf_cols(header_rows: list[list[str]]) -> list[int]:
     detail_col = header_has_detail_column(header_rows)
     extra_label_cols = 1 if detail_col else 0
 
-    # Compressed layout seen in Dongyang Life & Mirae: trailing 7 cols
-    # (implicit BEL, RA, CSM × 4 방법, 합계) under a triplet sub-header + 4 방법.
+    # Compressed layout seen in Dongyang Life & 미래에셋 (single-product annual):
+    # trailing cols [BEL, RA, CSM_method1.., 소계] under a triplet sub-header +
+    # method sub2. The 소계 is a per-product CSM subtotal — include the method
+    # columns but DROP the 소계 so CSM isn't double-counted (was [2,3,4,5]).
     if (
         sub
         and sub2
         and len(sub) == 3
-        and len(sub2) == 4
+        and len(sub2) >= 3
         and isinstance(sub[2], str)
         and "보험계약마진" in sub[2]
     ):
-        return [2, 3, 4, 5]
+        method_cols = [2 + i for i in range(len(sub2)) if not _is_subtotal_label(sub2[i])]
+        return method_cols or [2, 3, 4]
 
     # Case 1: CSM keyword in top row → one or more leaf columns (Meritz: 3 methods).
     csm_top: list[int] = []
@@ -280,6 +395,22 @@ def find_csm_leaf_cols(header_rows: list[list[str]]) -> list[int]:
         )
         if kw_hits >= 2:
             return list(range(len(sub)))
+
+    # Fallback: deep multi-row headers (2025+ quarterly te-tables) where the
+    # leaf column labels (미래현금흐름의현재가치 | 위험조정 | 보험계약마진 | 합계) sit in
+    # a lower header row, not in top/sub/sub2. Map 보험계약마진 to a value-column
+    # index = how many measurement value-labels precede it (independent of the
+    # 구분/empty label column). Scan from the bottom so the leaf row wins.
+    _val_kw = ("미래현금흐름", "현재가치", "위험조정", "이행현금흐름", "보험계약마진")
+    for hr in reversed(hrows):
+        cells = [c if isinstance(c, str) else "" for c in hr]
+        csm_pos = next((i for i, c in enumerate(cells) if "보험계약마진" in c), None)
+        if csm_pos is None:
+            continue
+        val_before = sum(
+            1 for c in cells[:csm_pos] if any(k in c for k in _val_kw)
+        )
+        return [val_before]
 
     return []
 
@@ -386,6 +517,15 @@ def _period_affinity(caption: str) -> int:
         score += 20
     if "당기와 전기" in cap and (cap.endswith("당기") or "<당기>" in cap):
         score += 15
+    # 분기/반기 reports label the comparative columns 당분기/당반기 (current) vs
+    # 전분기/전반기 (prior). The 전기-only rules above miss these, so the picker
+    # was choosing the prior-period block (e.g. 한화 2025.1Q == 2024.1Q values).
+    has_cur_q = "당분기" in cap or "당반기" in cap
+    has_prior_q = "전분기" in cap or "전반기" in cap
+    if has_prior_q and not has_cur_q:
+        score -= 22
+    if has_cur_q:
+        score += 22
     if "수재(원수 포함)" in cap or "1) 수재" in cap:
         score += 18
     if cap.startswith("2) 출재") or cap.startswith("2)출재"):
@@ -429,12 +569,23 @@ def _new_business_abs(blk: dict) -> float:
         return 0.0
 
 
-def pick_main_block(blocks: list[dict]) -> dict | None:
-    """Pick the most informative CSM-bearing direct-business block."""
+def rank_main_blocks(blocks: list[dict]) -> list[dict]:
+    """Return CSM-bearing direct-business blocks, best candidate first.
+
+    Same scoring pick_main_block used to do inline; exposed so callers with
+    cross-period context (history builder) can apply a continuity tiebreak.
+    """
     candidates: list[tuple[int, float, dict]] = []
     for blk in blocks:
         header = blk.get("header") or []
         rows = blk.get("rows") or []
+        # Consolidated filings carry tables about associates/subsidiaries that
+        # mention 보험계약마진 in passing (관계기업 지분의 장부금액 조정, 종속기업
+        # 요약재무정보) but are NOT the insurer's own CSM rollforward. Exclude
+        # them so they can't be mis-picked (e.g. 미래에셋 2025.4Q equity table).
+        cap = blk.get("caption") or ""
+        if any(k in cap for k in ("관계기업", "종속기업", "요약재무정보", "지분의 장부금액")):
+            continue
         has_csm_label = any(
             isinstance(r[i], str) and "보험계약마진" in r[i]
             for r in rows
@@ -450,7 +601,7 @@ def pick_main_block(blocks: list[dict]) -> dict | None:
         if not (has_csm_label and has_csm_col):
             continue
         # prefer the block with the most matched stages
-        csm_cols = find_csm_leaf_cols(header)
+        csm_cols = find_csm_leaf_cols(header, rows)
         if not csm_cols:
             continue
         score = sum_stage_hits(rows)
@@ -462,11 +613,19 @@ def pick_main_block(blocks: list[dict]) -> dict | None:
             score -= 10
         period = _period_affinity(blk.get("caption") or "")
         completeness = _stage_completeness(blk) + _caption_penalty(blk.get("caption") or "")
-        candidates.append((period, completeness, score, _new_business_abs(blk), blk))
-    if not candidates:
-        return None
-    candidates.sort(key=lambda t: (t[0], t[1], t[2], t[3]), reverse=True)
-    return candidates[0][4]
+        # The waterfall must show direct (원수) business. A direct block always
+        # ranks above a ceded one, so a <당기>-tagged ceded table can't win
+        # over a direct table (e.g. 처브라이프 §(3) 보험계약부채 vs 재보험계약부채).
+        is_direct = 0 if _is_ceded_block(blk) else 1
+        candidates.append((is_direct, period, completeness, score, _new_business_abs(blk), blk))
+    candidates.sort(key=lambda t: (t[0], t[1], t[2], t[3], t[4]), reverse=True)
+    return [c[5] for c in candidates]
+
+
+def pick_main_block(blocks: list[dict]) -> dict | None:
+    """Pick the most informative CSM-bearing direct-business block."""
+    ranked = rank_main_blocks(blocks)
+    return ranked[0] if ranked else None
 
 
 def sum_stage_hits(rows: list[list[str]]) -> int:
@@ -503,7 +662,7 @@ def filter_current_period_rows(rows: list[list[str]]) -> list[list[str]]:
 def extract_stages(blk: dict) -> dict:
     header = blk.get("header") or []
     rows = filter_current_period_rows(blk.get("rows") or [])
-    csm_cols = find_csm_leaf_cols(header)
+    csm_cols = find_csm_leaf_cols(header, rows)
     out: dict[str, dict] = {}
 
     for stage, patterns in STAGE_PATTERNS.items():
@@ -581,6 +740,31 @@ def extract_stages(blk: dict) -> dict:
         )
         _, _, label, signed_total = candidates[0]
         out[stage] = {"label": label, "value_mn_krw": signed_total}
+
+    # Rowspan-split balance blocks (e.g. 하나생명 13-4): the 기초/당기말 marker
+    # only tags the 자산 sub-row (all zeros); the net CSM lives in the next
+    # 보험계약순부채 row. Only patch a stage that resolved to ~0 so companies
+    # with normal (non-zero) opening/closing balances are never affected.
+    for stage, region in (("opening", rows[:6]), ("closing", rows[-6:])):
+        cur = out.get(stage)
+        if cur is not None and abs(cur.get("value_mn_krw", 0.0)) > 1e-6:
+            continue
+        for row in region:
+            if not row or not isinstance(row[0], str):
+                continue
+            if "순부채" not in row[0] and "순자산" not in row[0]:
+                continue
+            vs = row_value_start(row)
+            data_cells = row[vs:]
+            vals = [
+                parse_num(data_cells[i])
+                for i in csm_cols
+                if 0 <= i < len(data_cells)
+            ]
+            vals = [v for v in vals if v is not None]
+            if vals and abs(sum(vals)) > 1e-6:
+                out[stage] = {"label": row[0].strip(), "value_mn_krw": sum(vals)}
+                break
     return out
 
 
@@ -607,6 +791,133 @@ def detect_unit_scale(blocks: list[dict]) -> float:
     return 1.0  # default assume already million KRW
 
 
+def _block_open_close_csm(blk: dict) -> tuple[float | None, float | None]:
+    st = extract_stages(blk)
+    return (
+        (st.get("opening") or {}).get("value_mn_krw"),
+        (st.get("closing") or {}).get("value_mn_krw"),
+    )
+
+
+def collect_current_product_blocks(blocks: list[dict]) -> list[dict]:
+    """Current-period direct product blocks to SUM, for per-product-split annual
+    disclosures (삼성생명·미래에셋 file one rollforward table *per product line*).
+
+    Returns [] for ordinary single-aggregate filings so their behaviour is
+    untouched. Walks distinct direct CSM blocks in document order and keeps a
+    'cycle', stopping BEFORE a block whose closing CSM ≈ the first block's
+    opening CSM (the prior-period version of product #1). Gated hard:
+    every collected block must be a NARROW single-product table (no side-by-side
+    product columns) sharing the same CSM-column layout, and no block may equal
+    the sum of the others (that would mean a real total already exists).
+    """
+    direct: list[tuple[dict, float | None, float | None, tuple]] = []
+    seen: set = set()
+    for blk in blocks:
+        rows = blk.get("rows") or []
+        header = blk.get("header") or []
+        if _is_ceded_block(blk):
+            continue
+        cap = blk.get("caption") or ""
+        if any(k in cap for k in ("관계기업", "종속기업", "요약재무정보", "지분의 장부금액")):
+            continue
+        # Skip prior-period (전분기/전반기/전기) sub-tables — they are the SAME
+        # aggregate one period back, not a distinct product line, and would inflate
+        # the sum. Match only the period MARKER (sub-caption "2) 전…" or a caption
+        # ending in the prior-period word), not the descriptive "당분기와 전분기 중…"
+        # that headlines a both-periods section (삼성생명's per-product caption).
+        cap_s = cap.strip()
+        if (
+            cap_s.startswith(("2) 전", "2)전", "(전"))
+            or cap_s.endswith(("전분기", "전반기", "전기", "전기>"))
+            or "<전기>" in cap_s
+        ):
+            continue
+        if _count_product_columns(header) >= 2:
+            return []  # already a wide multi-product table — single pick sums it
+        leaf = find_csm_leaf_cols(header, rows)
+        if not leaf:
+            continue
+        op, cl = _block_open_close_csm(blk)
+        if op is None and cl is None:
+            continue
+        key = tuple(tuple(r) for r in rows)
+        if key in seen:
+            continue
+        seen.add(key)
+        direct.append((blk, op, cl, tuple(leaf)))
+    if len(direct) < 2:
+        return []
+    # A per-product split shows up as the dominant CSM-column layout among the
+    # narrow blocks. Group by layout and keep the most common (≥2); blocks with a
+    # stray layout (a misparsed neighbouring table) are skipped, not fatal.
+    from collections import Counter
+    layout_counts = Counter(d[3] for d in direct)
+    layout0, n0 = layout_counts.most_common(1)[0]
+    if n0 < 2:
+        return []
+    group = [d for d in direct if d[3] == layout0]  # preserves document order
+    first_open, first_close = group[0][1], group[0][2]
+    collected = [group[0]]
+
+    def _near(a: float | None, b: float | None, tol: float = 0.05) -> bool:
+        return (
+            a is not None and b is not None and abs(a) > 1.0
+            and abs(a - b) <= max(1.0, abs(a) * tol)
+        )
+
+    for blk, op, cl, _leaf in group[1:]:
+        # Stop at the next *cycle*, i.e. when this block is product #1 again:
+        #  - 전기 version: its closing == product #1's opening (balance carried fwd);
+        #  - 연결→별도 duplicate: it matches product #1 in BOTH opening and closing.
+        # Matching only the closing is too weak — a distinct sibling product can
+        # share a similar closing (미래에셋 사망 979,617 vs 건강 951,273, 2.9%) while
+        # differing in opening (969,133 vs 883,687, 8.8%); requiring BOTH avoids
+        # collapsing real products, yet still catches 별도 restarts (삼성 ~2% on both).
+        if _near(cl, first_open, tol=0.01):
+            break  # prior-period (전기) version of product #1 (exact balance carry)
+        if _near(op, first_open) and _near(cl, first_close):
+            break  # 별도 duplicate set restarting at product #1 (~2% on both)
+        collected.append((blk, op, cl, _leaf))
+    # A genuine per-product split has ≥3 product lines (사망/건강/연금/…). A pair
+    # of blocks is almost always 당기+전기 or 원수+출재 of ONE series, which must
+    # not be summed — so require at least three.
+    if len(collected) < 3:
+        return []
+    opens = [o for _b, o, _c, _l in collected if o is not None]
+    closes = [c for _b, _o, c, _l in collected if c is not None]
+    # Genuine product lines differ markedly in size (e.g. 사망 5조 vs 연금 1조);
+    # near-equal closings mean these are 연결/별도/period variants of ONE aggregate
+    # (e.g. 교보 5.1/5.0/4.9조), which must not be summed.
+    mags = sorted(abs(c) for c in closes)
+    if mags and mags[-1] > 0 and (mags[-1] - mags[0]) / mags[-1] < 0.5:
+        return []
+    # Period-continuity guard: if any block's opening exactly matches another's
+    # closing, they are consecutive periods of one series (전기→당기), not
+    # distinct products — reject (e.g. a 당기+전기+전전기 triple).
+    for o in opens:
+        for c in closes:
+            if abs(o) > 1.0 and abs(o - c) <= max(1.0, abs(o) * 0.001):
+                return []
+    abs_closes = [abs(c) for c in closes]
+    for i, c in enumerate(abs_closes):
+        others = sum(abs_closes[:i] + abs_closes[i + 1:])
+        if others > 0 and abs(c - others) / others <= 0.05:
+            return []  # one block is the total of the rest — not a product split
+    return [b for b, _o, _c, _l in collected]
+
+
+def extract_stages_summed(blocks: list[dict]) -> dict:
+    """Sum each CSM stage across per-product blocks (label kept from the first)."""
+    out: dict[str, dict] = {}
+    for blk in blocks:
+        for stage, v in extract_stages(blk).items():
+            if stage not in out:
+                out[stage] = {"label": v.get("label"), "value_mn_krw": 0.0}
+            out[stage]["value_mn_krw"] += v.get("value_mn_krw", 0.0)
+    return out
+
+
 def build_for_file(path: Path) -> dict:
     raw = json.loads(path.read_text(encoding="utf-8"))
     blocks = [normalize_block_header(b) for b in deduplicate(raw)]
@@ -618,19 +929,24 @@ def build_for_file(path: Path) -> dict:
     company = parts[0]
     rcept = parts[1] if len(parts) >= 2 else ""
 
-    main = pick_main_block(blocks)
-    if main is None:
-        return {
-            "company": company,
-            "rcept_no": rcept,
-            "status": "no_csm_columns",
-            "stages": {},
-            "header": blocks[0].get("header") if blocks else None,
-            "caption": blocks[0].get("caption") if blocks else None,
-        }
-
-    stages = extract_stages(main)
-    csm_cols = find_csm_leaf_cols(main.get("header", []))
+    product_blocks = collect_current_product_blocks(blocks)
+    if product_blocks:
+        # Per-product-split filing: sum CSM stages across product lines.
+        main = product_blocks[0]
+        stages = extract_stages_summed(product_blocks)
+    else:
+        main = pick_main_block(blocks)
+        if main is None:
+            return {
+                "company": company,
+                "rcept_no": rcept,
+                "status": "no_csm_columns",
+                "stages": {},
+                "header": blocks[0].get("header") if blocks else None,
+                "caption": blocks[0].get("caption") if blocks else None,
+            }
+        stages = extract_stages(main)
+    csm_cols = find_csm_leaf_cols(main.get("header", []), main.get("rows", []))
     unit_div = detect_unit_scale(blocks)
     # Heuristic fallback: when caption/header has no unit annotation we infer
     # from magnitude. A Korean insurer's CSM realistically sits between ~0.05
@@ -638,11 +954,14 @@ def build_for_file(path: Path) -> dict:
     #   million KRW: 5e4   .. 3e7
     #   thousand   : 5e7   .. 3e10
     #   raw KRW    : 5e10  .. 3e13
-    if unit_div == 1.0 and stages.get("opening"):
-        opv = abs(stages["opening"]["value_mn_krw"])
-        if opv > 1e10:  # raw KRW
+    if unit_div == 1.0 and stages:
+        # Use the largest-magnitude stage, not opening: some filings split the
+        # 기초 row into 자산/부채 sub-rows (rowspan), so opening can match a
+        # zero placeholder and miss the thousand-KRW scale (e.g. 하나생명).
+        mag = max((abs(s.get("value_mn_krw", 0.0)) for s in stages.values()), default=0.0)
+        if mag > 1e10:  # raw KRW
             unit_div = 1_000_000.0
-        elif opv > 1e8:  # thousand KRW
+        elif mag > 1e8:  # thousand KRW
             unit_div = 1_000.0
     if unit_div != 1.0:
         for s in stages.values():

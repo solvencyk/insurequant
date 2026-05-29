@@ -41,12 +41,15 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 # Reuse existing picker logic — no per-company hardcoded mapping
 from scripts.viz_build_csm_waterfall import (  # noqa: E402
+    collect_current_product_blocks,
     deduplicate,
     detect_unit_scale,
     extract_stages,
+    extract_stages_summed,
     find_csm_leaf_cols,
     normalize_block_header,
     pick_main_block,
+    rank_main_blocks,
 )
 
 SRC_DIR = ROOT / "data" / "ifrs17" / "extracted_history"
@@ -71,8 +74,34 @@ STAGE_LABELS_KO = {
 }
 
 
-def build_one_period(path: Path) -> dict:
+def _scaled_open_close(blk: dict, blocks: list[dict]) -> tuple[float | None, float | None]:
+    """Opening/closing CSM of a candidate block in million KRW (same unit logic
+    build_one_period applies), for cross-period continuity comparison."""
+    st = extract_stages(blk)
+    op = (st.get("opening") or {}).get("value_mn_krw")
+    cl = (st.get("closing") or {}).get("value_mn_krw")
+    ud = detect_unit_scale(blocks)
+    if ud == 1.0:
+        mag = max((abs(v) for v in (op, cl) if v is not None), default=0.0)
+        if mag > 1e10:
+            ud = 1_000_000.0
+        elif mag > 1e8:
+            ud = 1_000.0
+    return (None if op is None else op / ud, None if cl is None else cl / ud)
+
+
+def build_one_period(
+    path: Path,
+    prior_closing_mn: float | None = None,
+    anchor_mn: float | None = None,
+) -> dict:
     """Build per-period waterfall snapshot for one (company, period) file.
+
+    ``prior_closing_mn`` (the previous period's closing CSM in mn) enables a
+    continuity tiebreak: if the default block pick opens far from the prior
+    close but a candidate opens much closer, prefer it. Fixes cases where two
+    near-identically-captioned rollforwards exist (한화 FY2023: a 13조 total vs a
+    9조 subset) and the period-affinity scorer picked the smaller one.
 
     Returns: {"status": "ok"|"partial"|"no_csm_table_found"|"empty_extract",
               "stages": {...}, "completeness": float, "caption": str, ...}
@@ -85,40 +114,191 @@ def build_one_period(path: Path) -> dict:
         return {"status": "empty_extract"}
 
     blocks = [normalize_block_header(b) for b in deduplicate(raw)]
-    main = pick_main_block(blocks)
-    if main is None:
+
+    def _scale_stages(stages: dict) -> float:
+        unit_div = detect_unit_scale(blocks)
+        if unit_div == 1.0 and stages.get("opening"):
+            opv = abs(stages["opening"]["value_mn_krw"])
+            if opv > 1e10:
+                unit_div = 1_000_000.0
+            elif opv > 1e8:
+                unit_div = 1_000.0
+        if unit_div != 1.0:
+            for s in stages.values():
+                s["value_mn_krw"] = s["value_mn_krw"] / unit_div
+        return unit_div
+
+    def _finalize(stages: dict, caption, unit_div, extra: dict | None = None) -> dict:
+        completeness = round(len(stages) / 6.0, 2)
+        out = {
+            "status": "ok" if completeness >= 5 / 6 else "partial",
+            "completeness": completeness,
+            "caption": caption,
+            "unit_divisor_to_mn": unit_div,
+            "stages": stages,
+        }
+        if extra:
+            out.update(extra)
+        return out
+
+    # Per-product-split candidate (삼성생명·미래에셋 pre-2025 quarterly: one narrow
+    # rollforward table per product line) — sum CSM stages across products. Built
+    # as a CANDIDATE only and used downstream solely as an anchor-gated fallback:
+    # many insurers split the quarterly rollforward into per-segment narrow tables
+    # whose single-block total is already correct, so summing them unconditionally
+    # over-counts (한화·KB·신한 etc.). The 2025+ wide single-table quarter returns []
+    # here (the collector bails on side-by-side product columns) and is parsed by
+    # the product-segmented find_csm_leaf_cols branch on the single-block path.
+    summed: dict | None = None
+    product_blocks = collect_current_product_blocks(blocks)
+    if product_blocks:
+        s_stages = extract_stages_summed(product_blocks)
+        s_div = _scale_stages(s_stages)
+        summed = {
+            "stages": s_stages,
+            "close": (s_stages.get("closing") or {}).get("value_mn_krw"),
+            "caption": product_blocks[0].get("caption"),
+            "unit_div": s_div,
+            "n": len(product_blocks),
+        }
+
+    def _use_summed() -> dict:
+        return _finalize(
+            summed["stages"], summed["caption"], summed["unit_div"],
+            {"summed_product_lines": summed["n"]},
+        )
+
+    def _summed_in_regime() -> bool:
+        return bool(
+            summed and anchor_mn and anchor_mn > 0 and summed["close"] is not None
+            and abs(summed["close"] - anchor_mn) / anchor_mn <= 0.35
+        )
+
+    ranked = rank_main_blocks(blocks)
+    if not ranked:
+        if _summed_in_regime():
+            return _use_summed()
         return {
             "status": "no_csm_block",
             "n_blocks_in_extract": len(blocks),
             "first_caption": blocks[0].get("caption") if blocks else None,
         }
+    main = ranked[0]
+
+    def _close_of(b: dict) -> float | None:
+        return _scaled_open_close(b, blocks)[1]
+
+    def _open_of(b: dict) -> float | None:
+        return _scaled_open_close(b, blocks)[0]
+
+    # 1) Prior-period continuity (consecutive, tight): the current opening should
+    #    match the prior closing. Search ALL candidates — filings split the
+    #    rollforward into segment sub-tables + the total, and the total often
+    #    ranks below the segments (e.g. 한화 2025.2Q total 13.07조 vs segment 4.16조).
+    if prior_closing_mn and prior_closing_mn > 0 and len(ranked) > 1:
+        def _open_dev(b: dict) -> float:
+            op = _open_of(b)
+            return 9e18 if op is None else abs(op - prior_closing_mn) / prior_closing_mn
+        if _open_dev(main) > 0.25:
+            best = min(ranked, key=_open_dev)
+            if _open_dev(best) <= 0.05:
+                main = best
+
+    # 2) FY-anchor regime correction: the pick's closing must sit near the
+    #    company's FY total. If not, take the nearest anchor-consistent candidate
+    #    (the picker otherwise grabs a segment sub-table or wrong column — e.g.
+    #    교보 picked a ~5조 segment vs the 11.75조 total). If no candidate is in
+    #    regime, emit an honest gap rather than a misleading number.
+    if anchor_mn and anchor_mn > 0:
+        cl = _close_of(main)
+        # Only correct CLEAR regime mismatches (>45% off the FY total), so a
+        # company whose CSM legitimately drifted from its FY level isn't disturbed.
+        if cl is None or abs(cl - anchor_mn) / anchor_mn > 0.45:
+            in_regime = [
+                b for b in ranked
+                if _close_of(b) is not None
+                and abs(_close_of(b) - anchor_mn) / anchor_mn <= 0.35
+            ]
+            if in_regime:
+                if prior_closing_mn and prior_closing_mn > 0:
+                    main = min(in_regime, key=lambda b: abs((_open_of(b) or -9e18) - prior_closing_mn))
+                else:
+                    main = min(in_regime, key=lambda b: abs(_close_of(b) - anchor_mn))
+            elif _summed_in_regime():
+                # No single block matches the FY total, but the per-product sum
+                # does (삼성생명·미래에셋 per-product quarterly).
+                return _use_summed()
+            else:
+                return {
+                    "status": "no_csm_block",
+                    "reason": "no FY-regime-consistent rollforward",
+                    "n_blocks_in_extract": len(blocks),
+                }
+    elif prior_closing_mn and prior_closing_mn > 0:
+        # No FY anchor: fall back to a prior-based reject for spurious picks.
+        op = _open_of(main)
+        if op is not None and abs(op - prior_closing_mn) / prior_closing_mn > 0.40:
+            return {
+                "status": "no_csm_block",
+                "reason": "opening inconsistent with series",
+                "n_blocks_in_extract": len(blocks),
+            }
 
     stages = extract_stages(main)
     if not stages:
+        if _summed_in_regime():
+            return _use_summed()
         return {
             "status": "no_stage_match",
             "caption": main.get("caption"),
         }
 
-    unit_div = detect_unit_scale(blocks)
-    if unit_div == 1.0 and stages.get("opening"):
-        opv = abs(stages["opening"]["value_mn_krw"])
-        if opv > 1e10:
-            unit_div = 1_000_000.0
-        elif opv > 1e8:
-            unit_div = 1_000.0
-    if unit_div != 1.0:
-        for s in stages.values():
-            s["value_mn_krw"] = s["value_mn_krw"] / unit_div
+    unit_div = _scale_stages(stages)
 
-    completeness = round(len(stages) / 6.0, 2)
-    return {
-        "status": "ok" if completeness >= 5 / 6 else "partial",
-        "completeness": completeness,
-        "caption": main.get("caption"),
-        "unit_divisor_to_mn": unit_div,
-        "stages": stages,
-    }
+    # Final anchor-gated fallback: if the chosen single block is still clearly
+    # off the FY total but the per-product sum lands in regime, prefer the sum.
+    if anchor_mn and anchor_mn > 0 and _summed_in_regime():
+        single_close = (stages.get("closing") or {}).get("value_mn_krw")
+        if single_close is None or abs(single_close - anchor_mn) / anchor_mn > 0.45:
+            return _use_summed()
+
+    return _finalize(stages, main.get("caption"), unit_div)
+
+
+def add_nb_increments(per_period: dict[str, dict]) -> None:
+    """Annotate each snapshot with per-quarter incremental new-business CSM.
+
+    Filings report new-business CSM as fiscal-YTD cumulative (Q1 / H1 / 9M / FY),
+    which makes the raw line sawtooth (climbs within a year, resets each Q1). The
+    increment is the new business added since the previous *available* quarter in
+    the same fiscal year (the first available quarter keeps its YTD value). The
+    YTD chain persists across an unobserved quarter, so e.g. an annual point with
+    a missing 9M reports the Q2-Q4 flow (span_q = 3) rather than a bogus reset.
+    Stored as ``new_business_increment_mn_krw`` (+ ``..._span_q``).
+    """
+    by_fy: dict[int, list[str]] = {}
+    for p in per_period:
+        try:
+            by_fy.setdefault(int(p[:4]), []).append(p)
+        except ValueError:
+            continue
+    for plist in by_fy.values():
+        plist.sort(key=lambda p: int(p[5]))
+        prev_val: float | None = None
+        prev_qi: int | None = None
+        for p in plist:
+            snap = per_period.get(p) or {}
+            nb = ((snap.get("stages") or {}).get("new_business") or {}).get("value_mn_krw")
+            if nb is None:
+                continue  # keep prev_* — YTD is still cumulative across the gap
+            qi = int(p[5])
+            if prev_val is None:
+                snap["new_business_increment_mn_krw"] = nb
+                snap["new_business_increment_span_q"] = qi
+            else:
+                snap["new_business_increment_mn_krw"] = nb - prev_val
+                snap["new_business_increment_span_q"] = qi - prev_qi
+            prev_val, prev_qi = nb, qi
 
 
 def main() -> int:
@@ -128,10 +308,11 @@ def main() -> int:
         print(f"no historical extract files under {SRC_DIR}")
         return 1
 
-    # Aggregate per company
-    by_company: dict[str, dict[str, dict]] = {}
+    # Group files per company first, then build each company's periods in
+    # chronological order so build_one_period can use the prior period's closing
+    # CSM as a continuity hint.
+    files_by_company: dict[str, dict[str, Path]] = {}
     periods_seen: set[str] = set()
-
     for f in files:
         m = PERIOD_RE.match(f.stem)
         if not m:
@@ -140,10 +321,34 @@ def main() -> int:
         company = m.group("company")
         period = m.group("period")
         periods_seen.add(period)
-        snap = build_one_period(f)
-        by_company.setdefault(company, {})[period] = snap
+        files_by_company.setdefault(company, {})[period] = f
 
-    periods_sorted = sorted(periods_seen, key=lambda p: (int(p[:4]), int(p[5])))
+    def _pkey(p: str) -> tuple[int, int]:
+        return (int(p[:4]), int(p[5]))
+
+    # FY-total anchors: the current-panel waterfall (csm_waterfall.json) reliably
+    # identifies each company's total CSM. Use it as the regime reference so the
+    # history picks the total rollforward, not a segment sub-table.
+    fy_anchor: dict[str, float] = {}
+    fy_path = OUT_DIR / "csm_waterfall.json"
+    if fy_path.exists():
+        for c in json.loads(fy_path.read_text(encoding="utf-8")).get("companies", []):
+            v = ((c.get("stages") or {}).get("closing") or {}).get("value_mn_krw")
+            if c.get("company") and v:
+                fy_anchor[c["company"]] = abs(float(v))
+
+    by_company: dict[str, dict[str, dict]] = {}
+    for company, pmap in files_by_company.items():
+        prior_closing: float | None = None
+        anchor = fy_anchor.get(company)
+        for period in sorted(pmap, key=_pkey):
+            snap = build_one_period(pmap[period], prior_closing_mn=prior_closing, anchor_mn=anchor)
+            by_company.setdefault(company, {})[period] = snap
+            cl = ((snap.get("stages") or {}).get("closing") or {}).get("value_mn_krw")
+            if snap.get("status") in ("ok", "partial") and cl is not None:
+                prior_closing = abs(float(cl))
+
+    periods_sorted = sorted(periods_seen, key=_pkey)
 
     # Fill missing periods (no extract file at all — happens if no_filing in
     # historical batch). Also merge in no_filing status from _historical_summary.json.
@@ -169,6 +374,7 @@ def main() -> int:
                 per_period[p] = {"status": no_filing_map[(company, p)]}
             else:
                 per_period[p] = {"status": "no_extract"}
+        add_nb_increments(per_period)
         companies_out.append({
             "company": company,
             "periods": per_period,
