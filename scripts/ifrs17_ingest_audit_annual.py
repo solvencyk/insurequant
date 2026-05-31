@@ -11,13 +11,13 @@ Also runs the measurement / insurance-P&L / sensitivity extractors on the
 same XMLs so the glob-driven viz builders (waterfall, panels, bubble) pick
 the 5 up automatically — same artifact names the per-tier batch scripts emit.
 
-Artifacts (mirror the per-tier batch layout):
-  data/ifrs17/raw/<canonical>_<rcept_no>/...
-  data/ifrs17/extracted/<canonical>_<rcept_no>_csm.json
-  data/ifrs17/extracted/<canonical>_<rcept_no>_measurement(.|_mvp.)json
-  data/ifrs17/extracted/<canonical>_<rcept_no>_insurance_pl(.|_mvp.)json
-  data/ifrs17/extracted/<canonical>_<rcept_no>_sensitivity(.|_mvp.)json
-  data/ifrs17/extracted/_audit_annual_summary.json
+Artifacts (canonical layout, Reorg #2):
+  data/dart/FY<year>_Q4/raw/<KR####>_<canonical>_<rcept_no>/...
+  data/dart/extracted/<canonical>_<rcept_no>_csm.json
+  data/dart/extracted/<canonical>_<rcept_no>_measurement(.|_mvp.)json
+  data/dart/extracted/<canonical>_<rcept_no>_insurance_pl(.|_mvp.)json
+  data/dart/extracted/<canonical>_<rcept_no>_sensitivity(.|_mvp.)json
+  data/dart/extracted/_audit_annual_summary.json
 
 Usage:
   python scripts/ifrs17_ingest_audit_annual.py            # latest audit report
@@ -52,6 +52,9 @@ from src.ifrs17.sensitivity_extractor import (  # noqa: E402
     to_jsonable as sens_to_jsonable,
 )
 from src.ifrs17.universe import AUDIT_REPORT_ANNUAL  # noqa: E402
+
+# Canonical raw-path helper (post-Reorg #2): FY<y>_Q4/raw/<KR>_<name>_<rcept>/.
+from scripts._dart_path_helpers import annual_raw_dir  # noqa: E402
 
 # Tier extractors that mirror the per-tier batch scripts. Each emits a full
 # artifact (<canonical>_<rcept>_<suffix>.json) plus an _mvp.json subset.
@@ -94,7 +97,12 @@ def run_one(client: OpenDARTClient, name: str, year: int) -> dict:
                 "corp_code": corp_code, "status": "no_audit_report"}
     rcept_no = target["rcept_no"]
 
-    out_dir = settings.raw_dir / f"{canonical}_{rcept_no}"
+    out_dir = annual_raw_dir(
+        canonical_name=canonical,
+        rcept_no=rcept_no,
+        kics_name=name,
+        corp_code=corp_code,
+    )
     out_dir.mkdir(parents=True, exist_ok=True)
     zip_path = out_dir / "document.zip"
     if not zip_path.is_file():

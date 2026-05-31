@@ -1,7 +1,7 @@
 """Run measurement_extractor on historical raw XMLs.
 
-Inputs:  data/ifrs17/raw_history/<canonical>/<period>/xml/<rcept_no>.xml
-Outputs: data/ifrs17/extracted_history/<canonical>__<period>_measurement.json
+Inputs:  data/dart/raw_history/<canonical>/<period>/xml/<rcept_no>.xml
+Outputs: data/dart/extracted_history/<canonical>__<period>_measurement.json
 
 This is the historical analog of scripts/ifrs17_batch_measurement.py (which
 only handles the single FY2024 annual cohort). The viz builder
@@ -25,8 +25,8 @@ from src.ifrs17.measurement_extractor import (  # noqa: E402
     to_jsonable,
 )
 
-HIST_RAW = REPO / "data" / "ifrs17" / "raw_history"
-HIST_EXTRACTED = REPO / "data" / "ifrs17" / "extracted_history"
+HIST_RAW = REPO / "data" / "dart" / "raw_history"
+HIST_EXTRACTED = REPO / "data" / "dart" / "extracted_history"
 
 
 def _stamp() -> str:

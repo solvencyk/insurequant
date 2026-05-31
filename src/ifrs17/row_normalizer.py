@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Map raw IFRS17 liability-rollforward row labels to canonical_keys.
 
-Loads ``data/ifrs17/normalization/row_aliases.yaml`` (substring matching).
+Loads ``data/dart/normalization/row_aliases.yaml`` (substring matching).
 Conflict resolution: longest matched alias wins; ties break by YAML document order.
 
 See ``scripts/ifrs17_normalize_liability.py`` for batch tagging of extracted JSON.

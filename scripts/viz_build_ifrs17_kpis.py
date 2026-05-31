@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-VIZ = ROOT / "data" / "ifrs17" / "viz"
+VIZ = ROOT / "data" / "dart" / "viz"
 OUT = VIZ / "downstream_kpis.json"
 
 SERVICE_MARGIN_PATTERNS = (

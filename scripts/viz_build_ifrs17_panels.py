@@ -7,8 +7,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "data" / "ifrs17" / "extracted"
-OUT = ROOT / "data" / "ifrs17" / "viz"
+SRC = ROOT / "data" / "dart" / "extracted"
+OUT = ROOT / "data" / "dart" / "viz"
 
 _FILENAME_RE = re.compile(r"^(.+?)_(\d{14})")
 _YEAR_CELL_RE = re.compile(r"^(\d{1,2})\uB144$")

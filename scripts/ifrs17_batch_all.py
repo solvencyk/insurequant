@@ -6,12 +6,12 @@ Company list source: unique 원수사명 in ``kics_disclosure.json`` (per the
 user's instruction: no permanent KR<->corp_code map, just search by name
 on the fly).
 
-Per-company artefacts:
-  data/ifrs17/raw/<canonical_corp_name>_<rcept_no>/...
-  data/ifrs17/extracted/<canonical_corp_name>_<rcept_no>_csm.json
+Per-company artefacts (canonical layout, Reorg #2):
+  data/dart/FY<year>_Q4/raw/<KR####>_<canonical>_<rcept_no>/...
+  data/dart/extracted/<canonical_corp_name>_<rcept_no>_csm.json
 
 Final summary:
-  data/ifrs17/extracted/_batch_all_summary.json
+  data/dart/extracted/_batch_all_summary.json
 """
 
 from __future__ import annotations
@@ -28,6 +28,9 @@ sys.stdout.reconfigure(encoding="utf-8")
 from src.ifrs17.config import settings  # noqa: E402
 from src.ifrs17.opendart_client import OpenDARTClient, OpenDARTError  # noqa: E402
 from src.ifrs17.csm_extractor import extract_csm_tables, to_jsonable  # noqa: E402
+
+# Canonical raw-path helper (post-Reorg #2). Path = data/dart/FY<y>_Q4/raw/...
+from scripts._dart_path_helpers import annual_raw_dir  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -116,7 +119,12 @@ def run_one(client, kics_name: str, year: int = 2024) -> dict:
             "corp_code": corp_code, "status": "no_annual_filing",
         }
 
-    out_dir = settings.raw_dir / f"{canonical}_{rcept_no}"
+    out_dir = annual_raw_dir(
+        canonical_name=canonical,
+        rcept_no=rcept_no,
+        kics_name=kics_name,
+        corp_code=corp_code,
+    )
     zip_path = out_dir / "document.zip"
     out_dir.mkdir(parents=True, exist_ok=True)
     if not zip_path.is_file():

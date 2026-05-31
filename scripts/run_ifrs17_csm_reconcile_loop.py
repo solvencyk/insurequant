@@ -31,8 +31,8 @@ PY = sys.executable
 ARTIFACTS = ROOT / "artifacts"
 ARTIFACTS.mkdir(parents=True, exist_ok=True)
 LOG_PATH = ARTIFACTS / "ifrs17_csm_reconcile_loop.log"
-WF_VAL_PATH = ROOT / "data" / "ifrs17" / "viz" / "csm_waterfall_validation.json"
-NB_VAL_PATH = ROOT / "data" / "assoc" / "nb_csm_validation.json"
+WF_VAL_PATH = ROOT / "data" / "dart" / "viz" / "csm_waterfall_validation.json"
+NB_VAL_PATH = ROOT / "data" / "_derived" / "nb_csm_validation.json"
 
 SCRIPTS = {
     "measurement": ROOT / "scripts" / "ifrs17_batch_measurement.py",
@@ -96,7 +96,7 @@ def validation_state() -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="IFRS17 CSM waterfall + NB CSM reconcile loop")
-    parser.add_argument("--max-iter", type=int, default=8, help="max iterations (default 8)")
+    parser.add_argument("--max-iter", type=int, default=5, help="max iterations (default 5; docs/agents/claude-agent-validation.md §3)")
     parser.add_argument(
         "--skip-measurement",
         action="store_true",

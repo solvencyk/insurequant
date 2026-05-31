@@ -1,7 +1,7 @@
 """Build CSM Movement Waterfall data for the HTML prototype.
 
-Reads data/ifrs17/extracted/*_measurement.json and emits
-data/ifrs17/viz/csm_waterfall.json — a single JSON file with the
+Reads data/dart/extracted/*_measurement.json and emits
+data/dart/viz/csm_waterfall.json — a single JSON file with the
 6-stage waterfall (opening / new business / interest / assumption /
 amortization / closing) per company, using the CURRENT-period block.
 
@@ -19,8 +19,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC_DIR = ROOT / "data" / "ifrs17" / "extracted"
-OUT_DIR = ROOT / "data" / "ifrs17" / "viz"
+SRC_DIR = ROOT / "data" / "dart" / "extracted"
+OUT_DIR = ROOT / "data" / "dart" / "viz"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Rows that indicate split assumption disclosure (sum CSM across siblings).

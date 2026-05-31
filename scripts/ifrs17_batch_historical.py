@@ -7,11 +7,11 @@ Per-quarter targeting (DART pblntf_detail_ty):
   3Q (Sep end)   -> 분기보고서 (A002), filing window: Nov ~ mid-Dec of same year
   FY (Dec end)   -> 사업보고서 (A001), filing window: Mar ~ May of next year
 
-Output layout (preserves existing FY2024 raw dir):
-  data/ifrs17/raw/<canonical>_<rcept_no>/...                       (annual, existing)
-  data/ifrs17/raw_history/<canonical>/<YYYY_Q>/zip + extracted/    (new history)
-  data/ifrs17/extracted_history/<canonical>__<YYYY_Q>_csm.json     (per period)
-  data/ifrs17/extracted_history/_historical_summary.json
+Output layout (canonical, post Reorg #2):
+  data/dart/FY<year>_Q<q>/raw/<KR####>_<canonical>/...           (분기/반기)
+  data/dart/FY<year>_Q4/raw/<KR####>_<canonical>_<rcept>/...     (사업보고서)
+  data/dart/extracted_history/<canonical>__<YYYY.QQ>_csm.json    (per period)
+  data/dart/extracted_history/_historical_summary.json
 
 Usage:
   python scripts/ifrs17_batch_historical.py --pilot KR0068    # one insurer
@@ -42,6 +42,12 @@ from src.ifrs17.opendart_client import OpenDARTClient, OpenDARTError  # noqa: E4
 from src.ifrs17.csm_extractor import extract_csm_tables, to_jsonable  # noqa: E402
 
 from scripts.ifrs17_batch_all import resolve_corp, load_company_names  # noqa: E402
+
+# Canonical raw-path helpers (post-Reorg #2). Per-period FY<y>_Q<q>/raw/.
+from scripts._dart_path_helpers import (  # noqa: E402
+    annual_raw_dir,
+    quarterly_raw_dir,
+)
 
 # ---------------------------------------------------------------------------
 # Period targets
@@ -102,8 +108,9 @@ TARGETS_BY_LABEL = {t.label: t for t in ALL_TARGETS}
 # Per-period pipeline
 # ---------------------------------------------------------------------------
 
-HIST_RAW = settings.repo_root / "data" / "ifrs17" / "raw_history"
-HIST_EXTRACTED = settings.repo_root / "data" / "ifrs17" / "extracted_history"
+# Canonical layout uses per-period dirs (Reorg #2). HIST_RAW is gone — paths
+# now resolved via scripts._dart_path_helpers.{quarterly,annual}_raw_dir.
+HIST_EXTRACTED = settings.repo_root / "data" / "dart" / "extracted_history"
 
 
 def _stamp() -> str:
@@ -146,20 +153,14 @@ def process_one_period(
     *,
     skip_extract: bool = False,
 ) -> dict:
-    out_dir = HIST_RAW / canonical / target.label
-    out_dir.mkdir(parents=True, exist_ok=True)
-    meta_path = out_dir / "meta.json"
+    # Annual (사업보고서) goes into FY{Y}_Q4/raw/<KR>_<name>_<rcept>/, so we
+    # need rcept_no *before* the out_dir exists. Quarterly path is
+    # rcept-independent → cache meta.json in dir.
+    is_annual = target.pblntf_detail_ty == "A001"
+    kr_code = insurer_code if (insurer_code and insurer_code.startswith("KR")) else None
 
-    # Cache rcept_no in meta if already known
-    cached: dict = {}
-    if meta_path.exists():
-        try:
-            cached = json.loads(meta_path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            cached = {}
-
-    rcept_no = cached.get("rcept_no")
-    if not rcept_no:
+    rcept_no: str | None = None
+    if is_annual:
         try:
             rcept_no = fetch_rcept_no(client, corp_code, target)
         except OpenDARTError as exc:
@@ -168,14 +169,48 @@ def process_one_period(
                 "period": target.label, "status": f"list_error: {exc}",
             }
         if not rcept_no:
-            (out_dir / "meta.json").write_text(
-                json.dumps({"period": target.label, "no_filing": True}, ensure_ascii=False, indent=2),
-                encoding="utf-8",
-            )
             return {
                 "insurer_code": insurer_code, "canonical": canonical,
                 "period": target.label, "status": "no_filing",
             }
+        out_dir = annual_raw_dir(
+            canonical_name=canonical, rcept_no=rcept_no,
+            kr_code=kr_code, corp_code=corp_code,
+        )
+        out_dir.mkdir(parents=True, exist_ok=True)
+    else:
+        out_dir = quarterly_raw_dir(
+            canonical_name=canonical, period_label=target.label,
+            kr_code=kr_code, corp_code=corp_code,
+        )
+        out_dir.mkdir(parents=True, exist_ok=True)
+        meta_path_q = out_dir / "meta.json"
+        cached: dict = {}
+        if meta_path_q.exists():
+            try:
+                cached = json.loads(meta_path_q.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+                cached = {}
+        rcept_no = cached.get("rcept_no")
+        if not rcept_no:
+            try:
+                rcept_no = fetch_rcept_no(client, corp_code, target)
+            except OpenDARTError as exc:
+                return {
+                    "insurer_code": insurer_code, "canonical": canonical,
+                    "period": target.label, "status": f"list_error: {exc}",
+                }
+            if not rcept_no:
+                meta_path_q.write_text(
+                    json.dumps({"period": target.label, "no_filing": True}, ensure_ascii=False, indent=2),
+                    encoding="utf-8",
+                )
+                return {
+                    "insurer_code": insurer_code, "canonical": canonical,
+                    "period": target.label, "status": "no_filing",
+                }
+
+    meta_path = out_dir / "meta.json"
 
     zip_path = out_dir / "document.zip"
     if not zip_path.is_file():

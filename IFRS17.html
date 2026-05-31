@@ -98,7 +98,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       <div class="chart-container chart-sm"><canvas id="canvasAmort"></canvas></div>
     </div>
     <div class="panel" data-pane="pl">
-      <h2>3) 보험 손익(IM) 분해</h2>
+      <h2>3) 당기순이익 분해 (보험손익·투자손익)</h2>
       <div class="small-muted" id="plCap"></div>
       <div id="plStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container"><canvas id="canvasPl"></canvas></div>
@@ -133,12 +133,13 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
   }
 
   const PATHS = {
-    wf: dataPaths("../data/ifrs17/viz/csm_waterfall.json", "data/ifrs17/viz/csm_waterfall.json"),
-    amort: dataPaths("../data/ifrs17/viz/csm_amort_schedule.json", "data/ifrs17/viz/csm_amort_schedule.json"),
-    pl: dataPaths("../data/ifrs17/viz/insurance_pl_breakdown.json", "data/ifrs17/viz/insurance_pl_breakdown.json"),
-    sen: dataPaths("../data/ifrs17/viz/sensitivity_heatmap.json", "data/ifrs17/viz/sensitivity_heatmap.json"),
+    wf: dataPaths("../data/dart/viz/csm_waterfall.json", "data/dart/viz/csm_waterfall.json"),
+    amort: dataPaths("../data/dart/viz/csm_amort_schedule.json", "data/dart/viz/csm_amort_schedule.json"),
+    pl: dataPaths("../data/dart/viz/insurance_pl_breakdown.json", "data/dart/viz/insurance_pl_breakdown.json"),
+    sen: dataPaths("../data/dart/viz/sensitivity_heatmap.json", "data/dart/viz/sensitivity_heatmap.json"),
     nb: dataPaths("../data/ir/nb_csm_ratio.json", "data/ir/nb_csm_ratio.json"),
-    hist: dataPaths("../data/ifrs17/viz/csm_waterfall_history.json", "data/ifrs17/viz/csm_waterfall_history.json"),
+    hist: dataPaths("../data/dart/viz/csm_waterfall_history.json", "data/dart/viz/csm_waterfall_history.json"),
+    ni: dataPaths("../data/dart/viz/net_income_breakdown.json", "data/dart/viz/net_income_breakdown.json"),
   };
 
   const NB_LOOKUP = {
@@ -152,13 +153,14 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
 
   const charts = { wf: null, amort: null, pl: null, nb: null, hist: null };
 
-  const payload = { wf:null, amort:null, pl:null, sen:null, nb:null, hist:null };
+  const payload = { wf:null, amort:null, pl:null, sen:null, nb:null, hist:null, ni:null };
   const ix = {
     wf: new Map(),
     amort: new Map(),
     pl: new Map(),
     sen: new Map(),
     hist: new Map(),
+    ni: new Map(),
   };
 
   function parseKoNum(x){
@@ -459,26 +461,34 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       })
     }
 
-    const plPay=payload.pl;
-    const plRow= plPay? firstRow(ix.pl,company):null;
-    const plOk = !!(plRow && plRow.status==="ok" && Array.isArray(plRow.table))
-    stub(q(host,"#plStub"), !plOk, plRow?("status="+String(plRow.status)):"PL 분해 테이블 없음")
-    q(host,"#plCap").textContent = plOk && plRow.caption ? String(plRow.caption):""
-
-    if (plOk){
-      const lbls=[]; const vals=[];
-      for (const rr of plRow.table||[]){
-        if(!Array.isArray(rr) || rr.length<2) continue;
-        lbls.push(String(rr[0]||"").trim()||"(기타)")
-        const lastCell = rr[rr.length-1];
-        const lastV = parseKoNum(lastCell);
-        vals.push(lastV == null ? 0 : lastV);
+    // Panel 3 — clean 당기순이익 분해 (보험손익 / 투자손익 / 영업외 -> 당기순이익), 손보 only.
+    const niRow = payload.ni ? firstRow(ix.ni, company) : null;
+    const niT1 = niRow && niRow.tier1 ? niRow.tier1 : null;
+    const niOk = !!niT1;
+    stub(q(host,"#plStub"), !niOk, niRow ? "당기순이익 분해 없음" : "손보 전용 패널 (생보 미지원)")
+    if (niOk){
+      const t = niT1;
+      const cats=["보험손익","투자손익"]; const vals=[t["보험손익"], t["투자손익"]];
+      if (t["영업외"] != null){ cats.push("영업외손익"); vals.push(t["영업외"]); }
+      cats.push("당기순이익"); vals.push(t["당기순이익"]);
+      const colors = cats.map(c => c==="당기순이익" ? "rgba(16,185,129,0.85)" : "rgba(14,165,233,0.65)");
+      let cap = (niRow.fy||"") + " · 단위 억원";
+      if (t["보험금융수익"]!=null || t["보험금융비용"]!=null)
+        cap += " · 보험금융 수익 "+fmtNum(t["보험금융수익"])+" / 비용 "+fmtNum(t["보험금융비용"]);
+      if (niRow.lob_status==="ok" && niRow.tier2_lob){
+        const parts=Object.entries(niRow.tier2_lob)
+          .filter(([k,v])=> v && v["보험손익"]!=null)
+          .map(([k,v])=> k+" "+fmtNum(v["보험손익"]));
+        if (parts.length) cap += " · 보종별 보험손익: "+parts.join(", ");
       }
+      q(host,"#plCap").textContent = cap;
       charts.pl=new Chart(canvasCtx(host,"#canvasPl"),{
         type:"bar",
-        data:{ labels: lbls, datasets:[{label:"합계열(표의 마지막 열)", data: vals, backgroundColor:"rgba(14,165,233,0.65)"}] },
-        options:{ indexAxis:"y", responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, title:{display:true, text:"PL 항목(현재표 합계열)" }}, scales:{x:{ticks:{ callback:(vv)=> vv.toLocaleString("ko-KR") }}}}
+        data:{ labels: cats, datasets:[{label:"억원", data: vals, backgroundColor: colors}] },
+        options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, title:{display:true, text:"당기순이익 분해 (억원, "+(niRow.fy||"")+")" }}, scales:{y:{ticks:{ callback:(vv)=> vv.toLocaleString("ko-KR") }}}}
       })
+    } else {
+      q(host,"#plCap").textContent = "";
     }
 
     const nbSpec = NB_LOOKUP[company] || null;
@@ -712,13 +722,15 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const senx=await fetchJsonSafe(PATHS.sen);
     const nbx=await fetchJsonSafe(PATHS.nb);
     const histx=await fetchJsonSafe(PATHS.hist);
+    const nix=await fetchJsonSafe(PATHS.ni);
 
-    payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.sen=senx; payload.nb=nbx; payload.hist=histx;
+    payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.sen=senx; payload.nb=nbx; payload.hist=histx; payload.ni=nix;
 
     ix.wf = indexRows(wf && wf.companies);
     ix.amort = indexRows(amort && amort.companies);
     ix.pl = indexRows(plx && plx.companies);
     ix.sen = indexRows(senx && senx.companies);
+    ix.ni = indexRows(nix && nix.companies);
     // hist has a different shape: companies[].periods{period→snap}; index by name
     if (histx && Array.isArray(histx.companies)){
       for (const c of histx.companies){

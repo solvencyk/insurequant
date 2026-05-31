@@ -5,10 +5,10 @@ Bubble encoding:
   - symbolSize ∝ closing CSM (억원)
   - color ∝ NB CSM multiple = IFRS17 new_business CSM ÷ crawled 월납환산 premium
 
-Denominator: data/assoc/nb_premium_wolnap.json (KIDI + IR extract + overrides).
-NO IR ratio back-solve. See data/assoc/nb_csm_validation.json for IR cross-check.
+Denominator: data/_derived/nb_premium_wolnap.json (KIDI + IR extract + overrides).
+NO IR ratio back-solve. See data/_derived/nb_csm_validation.json for IR cross-check.
 
-Output: data/ifrs17/viz/csm_bubble.json (+ templates copy + embed.js)
+Output: data/dart/viz/csm_bubble.json (+ templates copy + embed.js)
 """
 
 from __future__ import annotations
@@ -19,12 +19,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-VIZ = ROOT / "data" / "ifrs17" / "viz"
-ASSOC = ROOT / "data" / "assoc"
+VIZ = ROOT / "data" / "dart" / "viz"
+ASSOC = ROOT / "data" / "_derived"
 OUT_PATH = VIZ / "csm_bubble.json"
 OUT_EMBED = VIZ / "csm_bubble.embed.js"
-TEMPLATES_OUT = ROOT / "templates" / "data" / "ifrs17" / "viz" / "csm_bubble.json"
-TEMPLATES_EMBED = ROOT / "templates" / "data" / "ifrs17" / "viz" / "csm_bubble.embed.js"
+TEMPLATES_OUT = ROOT / "templates" / "data" / "dart" / "viz" / "csm_bubble.json"
+TEMPLATES_EMBED = ROOT / "templates" / "data" / "dart" / "viz" / "csm_bubble.embed.js"
 PREMIUM_PATH = ASSOC / "nb_premium_wolnap.json"
 VALIDATION_PATH = ASSOC / "nb_csm_validation.json"
 

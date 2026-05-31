@@ -17,8 +17,8 @@ from viz_build_csm_waterfall import (
     pick_main_block,
 )
 
-SRC_DIR = ROOT / "data" / "ifrs17" / "extracted"
-OUT_DIR = ROOT / "data" / "ifrs17" / "viz"
+SRC_DIR = ROOT / "data" / "dart" / "extracted"
+OUT_DIR = ROOT / "data" / "dart" / "viz"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 ISR_LABELS = (

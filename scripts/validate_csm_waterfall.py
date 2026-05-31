@@ -6,7 +6,7 @@ Rules (all companies with IFRS17 disclosure must pass):
   2. opening + new_business + interest + assumption + amortization ≈ closing
   3. minimum stage coverage (opening, closing, new_business)
 
-Output: data/ifrs17/viz/csm_waterfall_validation.json
+Output: data/dart/viz/csm_waterfall_validation.json
 Exit code 1 when any company fails.
 """
 
@@ -19,8 +19,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-WATERFALL_PATH = ROOT / "data" / "ifrs17" / "viz" / "csm_waterfall.json"
-OUT_PATH = ROOT / "data" / "ifrs17" / "viz" / "csm_waterfall_validation.json"
+WATERFALL_PATH = ROOT / "data" / "dart" / "viz" / "csm_waterfall.json"
+OUT_PATH = ROOT / "data" / "dart" / "viz" / "csm_waterfall_validation.json"
 
 STAGE_KEYS = ("opening", "new_business", "interest", "assumption", "amortization", "closing")
 REQUIRED_STAGES = ("opening", "new_business", "closing")

@@ -39,10 +39,10 @@ def _read_dotenv_var(dotenv_path: Path, key: str) -> str | None:
 @dataclass(frozen=True)
 class Settings:
     repo_root: Path
-    data_dir: Path           # data/ifrs17/
-    raw_dir: Path            # data/ifrs17/raw/        (XBRL, attachments)
-    reports_dir: Path        # data/ifrs17/reports/    (rcept_no -> attachment PDFs)
-    extracted_dir: Path      # data/ifrs17/extracted/  (normalised JSON)
+    data_dir: Path           # data/dart/
+    raw_dir: Path            # data/dart/raw/        (XBRL, attachments)
+    reports_dir: Path        # data/dart/reports/    (rcept_no -> attachment PDFs)
+    extracted_dir: Path      # data/dart/extracted/  (normalised JSON)
 
     def resolve_api_key(self) -> str:
         """Return the OpenDART API key. Raise if not found.
@@ -63,7 +63,7 @@ class Settings:
     @classmethod
     def load(cls) -> "Settings":
         root = _repo_root()
-        data_dir = root / "data" / "ifrs17"
+        data_dir = root / "data" / "dart"
         return cls(
             repo_root=root,
             data_dir=data_dir,

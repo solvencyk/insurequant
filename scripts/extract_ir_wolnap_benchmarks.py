@@ -2,7 +2,7 @@
 """Extract 월납환산 / 월납월초 premium benchmarks from IR text artifacts.
 
 These are independent denominators (NOT back-solved from disclosed ratios).
-Output: data/assoc/ir_wolnap_benchmarks.json
+Output: data/_derived/ir_wolnap_benchmarks.json
 """
 
 from __future__ import annotations
@@ -20,8 +20,8 @@ if str(ROOT / "src") not in sys.path:
 from assoc.nb_premium_common import sibeok_month_to_eok_month  # noqa: E402
 
 ARTIFACTS = ROOT / "artifacts" / "ir_research"
-OUT = ROOT / "data" / "assoc" / "ir_wolnap_benchmarks.json"
-TEMPLATES_OUT = ROOT / "templates" / "data" / "assoc" / "ir_wolnap_benchmarks.json"
+OUT = ROOT / "data" / "_derived" / "ir_wolnap_benchmarks.json"
+TEMPLATES_OUT = ROOT / "templates" / "data" / "_derived" / "ir_wolnap_benchmarks.json"
 
 
 def _read(name: str) -> str:

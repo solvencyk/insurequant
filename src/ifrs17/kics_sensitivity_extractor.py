@@ -81,7 +81,7 @@ def operational_insurer_pairs(repo_root: Path) -> list[tuple[str, str]]:
 def ifrs17_measurement_ok_insurers(repo_root: Path) -> list[tuple[str, str]]:
 
     path = (
-        repo_root / "data" / "ifrs17" / "extracted" / "_batch_measurement_summary.json"
+        repo_root / "data" / "dart" / "extracted" / "_batch_measurement_summary.json"
     )
 
     rows = json.loads(path.read_text(encoding="utf-8"))

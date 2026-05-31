@@ -8,8 +8,8 @@ extracts.
 
 | Path | Role |
 |---|---|
-| `scripts/viz_build_csm_waterfall.py` | Reads `data/ifrs17/extracted/*_measurement.json`, picks the §14(4) measurement-rollforward block, sums CSM-only leaf columns per stage, writes the JSON below. |
-| `data/ifrs17/viz/csm_waterfall.json` | Per-company waterfall data (23 entries). |
+| `scripts/viz_build_csm_waterfall.py` | Reads `data/dart/extracted/*_measurement.json`, picks the §14(4) measurement-rollforward block, sums CSM-only leaf columns per stage, writes the JSON below. |
+| `data/dart/viz/csm_waterfall.json` | Per-company waterfall data (23 entries). |
 | `prototype_csm_waterfall.html` | Single-file ECharts page. Fetches the JSON, draws the 6-stage waterfall, shows per-stage source labels and the original block header. |
 | `.claude/launch.json` | Adds the `Viz prototype (static)` server (Python http on :8765). |
 

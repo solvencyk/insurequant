@@ -14,7 +14,7 @@ more trustworthy. The BS snapshot duplicated what DART shows directly.
 Previously panel "5) Downstream KPI 카드" in `IFRS17.html`. The display (panel +
 `renderCompany` block + `.kpi-*` CSS + PATHS/payload/ix wiring) was removed.
 
-**Still generated** by `scripts/viz_build_ifrs17_kpis.py` → `data/ifrs17/viz/downstream_kpis.json`
+**Still generated** by `scripts/viz_build_ifrs17_kpis.py` → `data/dart/viz/downstream_kpis.json`
 (kept because `scripts/viz_build_csm_bubble.py` reads `inputs.closing_csm_mn_krw` from it).
 
 Definitions (from the generator):
@@ -44,7 +44,7 @@ directly; consumed layout space (low 시안성). Display + `renderMatrixTable` h
 removed.
 
 **Still generated** by `extract_bs_snapshot` in `scripts/viz_build_ifrs17_panels.py`
-→ `data/ifrs17/viz/bs_snapshot.json`.
+→ `data/dart/viz/bs_snapshot.json`.
 
 **To revive:** re-add the `<div data-pane="bs">` template, the `renderMatrixTable`
 function + the BS render block, and `PATHS.bs` / `payload.bs` / `ix.bs` + boot wiring.

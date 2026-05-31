@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Apply B3 row alias map to extracted liability skim JSON.
 
-Reads:  ``data/ifrs17/extracted/*_liability.json``
-Writes: ``data/ifrs17/normalized/*_liability_normalized.json``
+Reads:  ``data/dart/extracted/*_liability.json``
+Writes: ``data/dart/normalized/*_liability_normalized.json``
 
 Each ``rows[*]`` becomes ``{\"cells\": [...], \"canonical_key\": str | null}``.
 """
@@ -85,13 +85,13 @@ def main() -> int:
         "--extracted-dir",
         type=Path,
         default=None,
-        help="Override extracted directory (default: data/ifrs17/extracted)",
+        help="Override extracted directory (default: data/dart/extracted)",
     )
     ap.add_argument(
         "--out-dir",
         type=Path,
         default=None,
-        help="Override output directory (default: data/ifrs17/normalized)",
+        help="Override output directory (default: data/dart/normalized)",
     )
     ap.add_argument(
         "--dry-run",
@@ -111,8 +111,8 @@ def main() -> int:
     aliases_scope = nz.scope
 
     repo = REPO
-    extracted_dir = ns.extracted_dir or (repo / "data" / "ifrs17" / "extracted")
-    out_dir = ns.out_dir or (repo / "data" / "ifrs17" / "normalized")
+    extracted_dir = ns.extracted_dir or (repo / "data" / "dart" / "extracted")
+    out_dir = ns.out_dir or (repo / "data" / "dart" / "normalized")
     if not ns.dry_run:
         out_dir.mkdir(parents=True, exist_ok=True)
 

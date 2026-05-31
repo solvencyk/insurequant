@@ -1,6 +1,6 @@
 # F3 audit — CSM amortization schedule coverage
 
-Stamp: 2026-05-25T14:46Z. Scope: `data/ifrs17/viz/csm_amort_schedule.json`
+Stamp: 2026-05-25T14:46Z. Scope: `data/dart/viz/csm_amort_schedule.json`
 (annual 2024 filings, 23 listed insurers + 서울보증 = 24 rows).
 
 ## Coverage
@@ -48,7 +48,7 @@ Remaining residual gaps (acceptable):
   - L151–173: `_bucket_indices` rewritten to delegate to `_classify_bucket_cell`.
   - L181–248: `_row_has_year_buckets`, `_infer_header_from_rows`, `_amort_caption_score`, `_bucket_columns_count`, `_pick_amort_block`, `_extract_transposed_amort`.
   - L267–386: `extract_amort_schedule` rewritten — eligibility now accepts THEAD-less and transposed tables; transposed branch handles row-keyed layouts (KB라이프); derives `total` when no 합계 column exists.
-- `data/ifrs17/viz/csm_amort_schedule.json` — regenerated.
+- `data/dart/viz/csm_amort_schedule.json` — regenerated.
 
 ## Verification
 
@@ -58,5 +58,5 @@ Spot-check 메리츠 against source row `발행한 보험계약 → 장기손해
 ## Constraints honored
 
 - Did not touch `scripts/forward_capital_simulation.py`, `viz_build_nb_csm_ratio.py`, `viz_build_csm_waterfall*.py`, K-ICS code, `templates/`, or git.
-- No new DART filings pulled; reused on-disk `data/ifrs17/extracted/*_csm.json`.
+- No new DART filings pulled; reused on-disk `data/dart/extracted/*_csm.json`.
 - File saved UTF-8 (no BOM).

@@ -1,3 +1,14 @@
+"""DEPRECATED 2026-05-30: legacy CSV -> insurance_data.json converter.
+
+This is the original early-pipeline path (kics_disclosure.csv ->
+insurance_data.json). The active K-ICS master is kics_disclosure.json
+(populated by the Docling -> MD -> JSON merge pipeline, read directly by
+K-ICS.html). The ``insurance_data.json`` output is no longer consumed
+anywhere. File was removed from repo root on 2026-05-30 (cleanup pass).
+Module kept under ``src/solvency/legacy/`` for historical reference;
+do not call from new code.
+"""
+
 import pandas as pd
 import json
 import os

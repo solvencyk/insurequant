@@ -1,173 +1,105 @@
 # Insurequant TODO
 
-Last updated: 2026-05-29 (**삼성생명·미래에셋 상품군 분리공시 합산 + 소계 이중계상 수정**: FY anchor 정정 삼성 13.08조/미래 2.08조/동양 2.54조, history 삼성 12/13·미래 10/13·동양 8/13 복구, 비대상 28사 회귀 0건. 직전: CSM 결측 진짜 원인 = `<TE>` 셀 미파싱; Panel 5 rowspan; 한화 2023.4Q dip; F11 23→28; Panel 4 plausibility gate)
+Last updated: 2026-05-31 (5-stage workflow split fully populated: publishing + designer split out today).
 
-## 🚧 Follow-ups (next session — 병렬 sub-agent 대상)
+Pipeline organized as **downloader / parser / validation / publishing / designer** — each stage has its own prompt (`docs/agents/claude-agent-<stage>.md`), TODO (`TODO_<stage>.md`), and changelog (`docs/changelog_<stage>.md`). See `CLAUDE.md` for the full index. This root file carries cross-stage items + project-wide policy only.
 
-| # | Task | Scope | Notes |
-|---|------|-------|-------|
-| ~~F1~~ | ~~index.html → IFRS17 cross-nav~~ | done | `fcdd544`. ECharts on('click') → URL param + auto-select |
-| F2 v3 | **NB CSM 배수 — segment-match KIDI crawler** | ⚠️ **2026-05-29 확인: 이게 "덜 된 절반"** — `data/assoc/nb_premium_wolnap.json` `kidi_ml02_row_count: 0` (KIDI 크롤 0건), 분모(월납환산 초회보험료)는 IR 6사 single-period만 존재. 그래서 computed NB CSM 배수가 2025.4Q까지 못 감(분자 CSM은 2025.4Q까지 준비됨). **Panel 4(NB·CSM 비율)는 별개**: computed 아니고 IR PDF 텍스트 직접 스크랩(삼성생명=FY25.1Q 덱 하드코딩 `FY24_QS`)이라 그 자체로 FY25.1Q까지만. 확장하려면 (A) 이 F2 v3 KIDI 크롤러 완성 또는 (B) 신규 IR 덱(25.2~4Q) ingest. **scope 재정의 2026-05-26**: 신계약CSM 분자가 상품군별로 분리 가능하면 (건강/저축 등) → 같은 segment 월납환산 초회보험료를 분모로. 분리 불가면 **보장성보험 (투자계약 제외) 초회보험료 (월납환산)** 만 사용 (손보·생보 둘 다). IR 자료 있는 6사는 산출값 vs IR값 비교 검증. | KIDI endpoint 확인 완료: `POST /insMonth/getQueryResult.do queryId=getM{XX}List`. 손보 N07 row LINE=99113 = 보장성보험 합계 (개인 + 단체). 생보는 070104 ML04List (종목별 I — 보장 분리됨) 확인 필요. ITEM_VAL 컬럼 의미 매핑은 KIDI 웹 UI 시각 cross-check 필요 (한화 메리츠 작은 N월 값 vs 큰 N월값 패턴 보고). 다음 세션 액션: (a) 070104 schema probe + 보장성 row 식별 (b) 손보 99113 row 사용 검증 (c) 생보 CSM이 segment 분리되는지 확인 — 한화/삼성 IR PDF 참조 (d) crawler 작성 (e) 6 IR-cohort 산출값 vs IR값 cross-check |
-| ~~F3~~ | ~~CSM 상각 schedule 전수 조사~~ | done | `4b06492`. 19/24 → **22/24 ok**. 메리츠화재 4-bucket 정상 렌더. 헤더 패턴 (1년미만/30년이상/이하/초과 등) + transposed table + 합계 derive + reinsurance downrank. 2 source-level 한계 (서울보증 PAA, 한화손해 csm.json만) |
-| F4 v2 | **Forward Outlook confidence — Cat C/D 리서치 + 외국계 분류 helper** | scope 좁힘 (cat E 정상 제외 / cat F 코드 fix 완료) | F4 v2 report: `output/kics_forward_capital/confidence_low_rootcause_v2_20260525T145147Z.md`. **Cat B drill-down 결과**: 11사 (10 아님) — KR0069 삼성생명 BS T2 66,289억 (FSC alias 최대 gap), KR0008 삼성화재 4,097억, KR1000 코리안리 4,431억 = alias 해결 시 75,000억 격차 해소. **Cat C/D 리서치 필요**: BS 자본성증권 carrying value 정의 (FV vs amortized) + Call exercise 시 차감 메커니즘. 답 나오면 over/under_deduct 의미 재정의. **외국계 분류 helper** 코드 추가 권고: `bond_coverage="no_self_issued, parent_capital"` 등 |
-| ~~F5~~ | ~~No-bond insurer forward sim 추가~~ | done | `b02e24d`. 24 → 37 cohort. KR0008 삼성화재 263%→263% flat. 13 no_bond insurer 추가. F4 추가 fix (`<1.0` 임계): KR1010 교보라이프 low→high |
-| ~~F6~~ | ~~CSM 상각 schedule yearly granularity~~ | **done 2026-05-28** | `extract_amort_schedule`에 `yearly`(y1..y10+y10plus+total)+`granularity` 추가, 기존 4-bucket `buckets`는 유지(keep-both — kpis/bubble 호환). granularity>=7yr=yearly. **16 yearly / 6 coarse / 2 no-data**. IFRS17.html panel 2 = 데스크톱 10년/모바일 5년 막대(matchMedia 640px), coarse사는 4-bucket 폴백. Chart.getChart 검증 OK. |
+**Stage files:**
 
-## 🆕 신규 공공데이터 소스 follow-ups (2026-05-26 Gemini 컨설팅)
+- **Downloader** (Stage 1): `TODO_downloader.md` + `docs/changelog_downloader.md` + `docs/agents/claude-agent-downloader.md`
+- **Parser** (Stage 2): `TODO_parser.md` + `docs/changelog_parser.md` + `docs/agents/claude-agent-parser.md`
+- **Validation** (Stage 3): `TODO_validation.md` + `docs/changelog_validation.md` + `docs/agents/claude-agent-validation.md`
+- **Publishing** (Stage 4, **merged gathering + pushing**): `TODO_publishing.md` + `docs/changelog_publishing.md` + `docs/agents/claude-agent-publishing.md` (skeleton — created 2026-05-31)
+- **Designer** (Stage 5, **new — HTML/CSS/responsive**): `TODO_designer.md` + `docs/changelog_designer.md` + `docs/agents/claude-agent-designer.md` (skeleton — created 2026-05-31)
 
-자본성증권 ingest (FSC) 패턴이 효과적이었음 → 동일 방식으로 추가 공공데이터 소스 발굴.
+Items previously here that have moved out:
 
-| # | Task | Priority | Notes |
-|---|------|----------|-------|
-| F7 | **KOSIS 손보사별 손해율 시계열 ingest** | 🔴 P1 | 출처: 국가통계포털 KOSIS `orgId=382, tblId=TX_38202_A1561`. JSON API 공개 → 자동화 쉬움. 손해보험사별 원수보험료/보유보험료/경과손해율 (개별사 × 분기/연간). 현재 손해율은 PDF/HTML 파싱 기반 → KOSIS 교차검증으로 품질 보완. 손해율 트렌드 경쟁사 비교 차트 가능. **액션**: `scripts/ingest_kosis_loss_ratio.py` 신규 + `data/kosis/<stamp>/` |
-| F8 | **손보협회 비교공시 (consumer.knia.or.kr) — GA 인사이트** | 🔴 P1 | 핵심 항목: (a) **채널별 불완전판매비율** (GA/직판/방카 구분) — GA 역선택 리스크 대리지표 (b) **설계사정착률** — 판매채널 품질 선행지표 (c) **민원발생현황** — 미래 해지/청구 선행지표 (d) **보험금 부지급률** — 언더라이팅 공격성 지표 (e) **보험금 지급지연율** — 보조지표. 삼성화재 리포트 "GA 채널 비중이 역선택 선행지표" → GA 불완전판매비율은 그 다음 단계 확인 지표. **액션**: 사이트 구조 probe (JS-rendered 가능성 점검) → API 또는 scrape 결정 → `data/knia_consumer/` |
-| F9 | **data.go.kr 금융통계 API 추가 연동** | 🟠 P2 | 이미 자본성증권 (15059611) 연동 패턴 있음. 추가: (a) `15061307` 금융통계손해보험정보 — 손보사 주요 경영지표 (손해율·사업비율·합산비율, 영업활동) (b) `15061306` 금융통계생명보험정보 — 동일 구조 생보판 (c) `15094797` 실손보험정보 — 유형별/성별 보험료 추이. 경영공시 스크래핑 대신 공식 API → 데이터 품질·업데이트 주기 안정. **액션**: `src/bonds/fsc_client.py` 패턴 재활용해서 `src/finstat/` 신규 모듈 작성 |
-| F10 | **GA 통합공시 (gapub.insure.or.kr)** | 🟠 P3 | GA별 불완전판매비율/계약건수/모집실적. 특정 보험사의 GA 의존도를 GA 측 데이터로 역산 가능. 삼성화재 26.1Q GA 비중 48.9%를 cross-check. **액션**: 사이트 구조 probe → scrape 가능성 확인 |
+- Downloader (F2 done, F7–F10, F14, MISC-BOND-*, MISC-IR-MERITZ, MISC-SEIBRO, decisions #5/#6) → `TODO_downloader.md`
+- Parser (KICS-PARSER-SPLIT/REPARSE-Q4/KR0069/KR0097/RED-FIX2/RED-FIX3/SUB/POST/RATIO28/HIST/IMG + IFRS-A1~B5-KICS/B3-UNIFY/NORMALIZE/HIST/SEN-TABLE) → `TODO_parser.md`
+- Validation (KICS-VALIDATE, IFRS17-NB-RECONCILE) → `TODO_validation.md`
+- Publishing (F4 v2, F13, INDEX-IFRS17-BUBBLE, INDEX-BUBBLE-V2, MISC-IR-PROTOTYPE, MISC-IR-NB-DENOM, IFRS17-CSM-BUBBLE, KICS-TIER1/2-UTIL, KICS-FORWARD-CAPITAL, KICS-HTML-SUB, IFRS17-HTML-DASH, F5/F6 data) → `TODO_publishing.md`
+- Designer (MOB-KICS, MOB-IFRS17, VIS-DONUT, VIS-CHARTLEGEND, INDEX-C12, F1-HTML, F6-HTML, F17-PANEL3 HTML, M1/M2) → `TODO_designer.md`
 
-**전략적 시너지 (코리안리 리포트 인과 체인 재현):**
-- F8 (설계사정착률) + F8 (채널별 불완전판매비율) + 37회차 해지율 (별도 source)
-- = "GA 채널 → 해지율 → 손해율" 인과 체인을 공시 데이터만으로 재현
-- → insurequant 프리미엄 기능 후보
+**Reorg #2 (2026-05-30j)** — `data/assoc/` → `data/_derived/`; KIDI/DART → `FY####_Q#` 컨벤션 통일. **DART batch script refactor 잔여** → `TODO_downloader.md` REORG2-DART.
 
-## 🆕 2026-05-28(b) 사용자 확정 신규 작업
+Session start: read this root file first, then the relevant stage's `TODO_<stage>.md`.
 
-| # | Task | Notes |
-|---|------|-------|
-| ~~F11~~ | ~~외국계 생보 5사 IFRS17 추가~~ | **DONE 2026-05-29**. 5 foreign-affiliate life insurers fully in IFRS17 dashboard (23→28; 생보 13→18). corp_codes: 라이나생명보험 00504232 / 메트라이프생명보험 00171104 / 에이아이에이생명보험 01295517 / 하나생명보험 00187123 / 처브라이프생명보험 00203102. **universe.py** `AUDIT_REPORT_ANNUAL` + `is_audit_report_annual()`. **`scripts/ifrs17_ingest_audit_annual.py`** fetches each standalone 감사보고서 (pblntf_ty=F, 2024.12) and runs csm/measurement/insurance_pl/sensitivity extractors → standard `data/ifrs17/extracted/<canonical>_<rcept>_*.json` artifacts. Viz integration was **glob-driven** (panels/waterfall/bubble enumerate `extracted/*.json` + `wf.companies`) so HTML needed **no structural change** — selector + bubble auto-grew to 28; nb/hist panels stub gracefully (annual-only, no IR premium / no 13Q series). **3 safe waterfall-builder fixes** (zero regression to 23): max-magnitude unit fallback (천원), direct-block-beats-ceded top sort key (fixed 처브 picking 재보험 block), `보고기간말` closing label + guarded 순부채 net-row fix for rowspan-split 기초/기말 (fixed 하나 open/close=0). Final waterfall: 메트/AIA/처브/하나 ok, 라이나 partial (amort row absent in rollforward; Panel 2 amort schedule clean). NOTE: AIA not in kics_disclosure.json — universe-only. |
-| F12 | **K-ICS 시장위험 하위위험액 전체 파싱 + 분산효과 validation** | 금리·주식·부동산·외환·자산집중 등 전부 파싱(**화면 노출 X**, 데이터·검증용). 생명·장기 보험위험 분산효과 sqrt validation과 동형 정합성 룰 신설. 금리위험액(+5쇼크 순자산 민감도=듀레이션갭)만 추후 display 후보 |
-| F13 | **재보험 영업 지표 세트** | GA 채널비중(F8) / 위험손해율(⚠️ 공시-실무 왜곡 명시) / **재보험 현황**(출재보험료 비중·출재 CSM 규모·원수vs출재 마진갭) / 해지율 13·25·37회차(F2/F8). → 역선택 조기경보 스코어 + 이중관점(원수사 vs 재보험사) 카드 (HTML 도시어 채택) |
-| F14 | **규제 뉴스 피드** (roadmap §1E) | 최근 1주 규제뉴스 스크래핑 + 키워드 피드백 학습 랭킹. 큐레이션 피드(자동발행 X) |
-| ~~F15~~ | **CSM 시계열 분기 결측 — 대부분 복구됨** (2026-05-29 **정정: 파서 버그였음**) | ⚠️ 이전 "원본에 표 없음" 진단은 **틀림**(2025.2Q 하나만 보고 넘겨짚음). 진짜 원인=DART 2025+ 공시가 데이터셀을 `<TE>`로 작성하는데 추출기가 `<th>/<td>`만 수집 → 본문 행 빈 채로 반환. **수정 후 대부분 복구**(한화 2025.3Q 13.47조/NB 2,228,273, 삼성화재 2025.2Q/3Q, 현대해상 등). 진짜 요약본은 한화 2025.2Q 1건뿐. **2026-05-29 추가 수정**: 삼성생명·미래에셋 **상품군 분리공시 합산** + **소계 이중계상** 제거로 FY anchor(삼성 13.08조/미래 2.08조/동양 2.54조) 및 분기 대부분 복구(삼성 12/13, 미래 10/13, 동양 8/13). **남은 갭(정직)**: (a) 삼성 2023.1Q, 미래 2023.1·3Q/2026.1Q — early-2023 다른 레이아웃([0,1,2]) / 연결-별도 dedup quirk; (b) **동양 2025.2Q~2026.1Q — 컬럼식별 아님: 추출단계에서 wide `<TE>` 표의 잔액(기초/기말)행이 전부 0으로 들어옴** → csm_extractor 재추출/재다운로드 필요(별개 이슈); (c) 일부 손보 전사-vs-세그먼트 판별(예 삼성화재 2025.4Q)은 reject guard로 갭 처리. |
-| F16 | **Panel 5 흥국생명 민감도 파서** (2026-05-29) | 흥국생명은 다른 양식(상품(사망/건강/연금)=행 × 당기말/전기말 × CSM/손익효과/자본효과; 헤더가 '보험계약마진' 아닌 영문 'CSM' + '손익 효과'). band 파서 미적용 → old path에서 행 어긋남. 제품-행 레이아웃 전용 4번째 path 필요. (한화/교보/케이디비/DB band 양식은 2026-05-29 해결.) |
+NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
 
-RA 규모 = **SKIP 확정** (K-IFRS17 신뢰수준 75% 고정 → 결정론적, 재보험 트리거 아님, 파생 proxy 동류).
+---
 
+## 🔀 Cross-stage follow-ups (multi-stage; detail in stage files)
 
+| # | Task | Stages involved | Detail location |
+|---|------|-----------------|-----------------|
+| F12 | K-ICS 시장위험 하위위험액 전체 파싱 + 분산효과 validation | parser + validation | `TODO_parser.md` F12 + `TODO_validation.md` V3 |
+| F17 | 당기순이익 분해 (Tier1 전사 + Tier2 손보 LOB) | parser + publishing (+ designer for Tier2 panel) | `TODO_parser.md` F17 (body) + `TODO_publishing.md` F17 viz + `TODO_designer.md` F17 Tier2 |
+| F18 | IR factsheet 정형화 + DART↔IR cross-validation | parser + validation + publishing | `TODO_parser.md` F18 + `TODO_validation.md` V1 + `TODO_publishing.md` F18 viz |
+| F13 | 재보험 영업 지표 세트 | downloader (F8) + parser + publishing | `TODO_downloader.md` F8 + `TODO_publishing.md` F13 |
 
-## 🎨 Mobile & visual follow-ups (2026-05-28)
+## 📋 Policy / User decisions (cross-stage)
 
-Shipped & deployed: index.html M1 (responsive @media foundation on all 4 pages) + M2 (treemap → vertical list on phones, sorted by 지급여력기준금액 desc) + desktop treemap label cleanup (dropped redundant 기준금액 text, size-aware labels) + debug console.log cleanup.
+| # | Decision | Date |
+|---|----------|------|
+| 1 | K-ICS skip cohort: KR0029 AIG, KR0150 SGI permanent skip. KR0051 / KR0074 partial-coverage by design | 2026-05-24 |
+| 2 | Meritz IR source: Meritz Financial Group factsheet xlsx (replaces Meritz Hwajae standalone). AIG IR: skip low-priority | 2026-05-24 |
+| 3 | NB CSM ratio denominator: **월납환산 신계약보험료**. IR PDF for 6 cos; assoc crawl (KIDI/KLIA/KNIA) for 23-co computed multiple | 2026-05-24 |
+| 4 | First HTML viz: CSM Movement Waterfall (IFRS17 A1 23-co) | 2026-05-24 |
+| 5 | API keys: repo root `.env` only (gitignored). Never commit/log key values | 2026-05-24 → `TODO_downloader.md` D5 |
+| 6 | Bond Call rule: issue + 5y for ALL bonds. Past 5y = assume `called` | 2026-05-24 → `TODO_downloader.md` D6 |
+| 7 | Pushing: subagent **reports + recommends only**. Human runs `git push` | 2026-05-30 |
+| 8 | DART attachments (별첨/감사보고서 zip): **don't fetch**. Body XML has all IFRS17 disclosures | 2026-05-30 → `TODO_downloader.md` DL-NOATTACH |
 
-| ID | Task | Status | Notes |
-|----|------|--------|-------|
-| MOB-KICS | K-ICS.html full mobile layout | deferred | M1 foundation only (header/tabs/table scroll, chart heights ↓). Full pass — donuts stacked vertically, forward-chart legend reposition, dense table → card view — **deferred until panel content/scope agreed.** |
-| MOB-IFRS17 | IFRS17.html full mobile layout | deferred | Same — M1 foundation only. Defer full pass until display-metric scope agreed. |
-| VIS-DONUT | K-ICS donut row stacks on phones | todo | `.donut-cell` cramped <400px; stack vertically. |
-| VIS-CHARTLEGEND | chart legend/axis density on mobile | todo | Chart.js legends overflow narrow widths; hide or bottom-position. |
+## 🌐 Universe (cross-stage)
 
-Session start: read TODO.md then docs/claude-changelog.md (top first).
+- **K-ICS**: 38 insurers (`kics_disclosure.json` `원수사명`); skip cohort KR0029/KR0150
+- **IFRS17**: 28 insurers (`src/ifrs17/universe.py`) — 23 listed + 5 foreign-affiliate life via audit reports (F11, `AUDIT_REPORT_ANNUAL`, annual-only). Historical 13Q cohort = 23 listed.
+- **K-ICS↔IFRS17 mismatch**: AIA (에이아이에이생명보험) is in IFRS17 universe but NOT in `kics_disclosure.json`. Cohort joins must handle this.
 
-NOTE: English only. Korean encoding is fragile across the toolchain. See CLAUDE.md "Document/TODO Encoding Rule".
+## ✅ Done — cross-stage anchors
 
-## User decisions (2026-05-24)
+| ID | Task | Notes |
+|----|------|-------|
+| ~~F1~~ | index.html → IFRS17 cross-nav | `fcdd544`. ECharts on('click') → URL param + auto-select. Data hook = publishing; HTML = designer |
+| ~~F3~~ | CSM 상각 schedule 전수 조사 | `4b06492`. 19/24 → 22/24 ok |
+| ~~F5~~ | No-bond insurer forward sim 추가 | `b02e24d`. 24 → 37 cohort |
+| ~~F6~~ | CSM 상각 schedule yearly granularity | 2026-05-28. 16 yearly / 6 coarse / 2 no-data |
+| ~~F11~~ | 외국계 생보 5사 IFRS17 추가 | DONE 2026-05-29. 23→28 (생보 13→18). corp_codes: 라이나 00504232 / 메트라이프 00171104 / AIA 01295517 / 하나생명 00187123 / 처브 00203102. universe.py `AUDIT_REPORT_ANNUAL`. NOTE: AIA not in kics_disclosure.json |
+| ~~IFRS-Q~~ | Open Q1-Q9 | done. All 9 confirmed |
 
-| # | Decision |
-|---|---|
-| 1 | K-ICS skip cohort: KR0029 AIG, KR0150 SGI permanent skip. KR0051 / KR0074 partial-coverage by design. |
-| 2 | Meritz IR source: Meritz Financial Group factsheet xlsx at https://m.meritzgroup.com/mo/ko/ir/ir1.do (replaces Meritz Hwajae standalone). AIG IR: skip low-priority |
-| 3 | NB CSM ratio denominator: **월납환산 신계약보험료** (IR calls it 월납월초). IR PDF for 6 cos; **assoc crawl** (KIDI/KLIA/KNIA) for 23-co computed multiple — see IFRS17-CSM-BUBBLE |
-| 4 | First HTML viz: CSM Movement Waterfall (IFRS17 A1 23-co) |
-| 5 | API keys: repo root `.env` only (gitignored). OpenDART=OPENDART_API_KEY; FSC bonds=DATA_GO_KR_BOND_ISSUANCE_KEY + DATA_GO_KR_BOND_REDE_KEY. Never commit/log key values |
-| 6 | Bond Call rule: issue + 5y for ALL bonds (Korean market convention; ignore "콜" keyword gate). Past 5y = assume `called` (de facto mandatory per thebell/흥국 cases) |
-
-## IFRS17
-
-Universe: 28 insurers (`src/ifrs17/universe.py`) — 23 listed + 5 foreign-affiliate life via audit reports (F11, `AUDIT_REPORT_ANNUAL`, annual-only). Historical 13Q cohort remains the 23 listed.
-
-| ID | Task | Status | Notes |
-|----|------|--------|-------|
-| IFRS-Q | Open Q1-Q9 | done | All 9 confirmed |
-| IFRS-A1 | measurement rollforward | done | 23/23 MVP |
-| IFRS-A2 | CSM amort | done | 23/23 |
-| IFRS-A3 | insurance P&L | done | 23/23 MVP |
-| IFRS-A4 | reinsurance rollforward | done | 23/23 MVP |
-| IFRS-B1 | BS snapshot | done | 23/23 MVP |
-| IFRS-B5 | sensitivity DART skim | done | 23/23 MVP. PoC only per Q8 |
-| IFRS-B5-KICS | B5 K-ICS primary ingest | done | FY2025_Q4 **13/23** nonempty, **30** tables. KR0073 **4** + KR0069 **3** after IFRS keyword MD reparse (2026-05-25). |
-| IFRS-B3-UNIFY | B3 = section8 long-format | done | ``src/ifrs17/row_normalizer.py`` + ``scripts/ifrs17_normalize_liability.py``; PoC **5** ``*_liability.json`` → ``data/ifrs17/normalized/*_liability_normalized.json``; **2956** rows scanned, **930** ``canonical_key`` hits (**1** empty source file: 삼성화재) |
-| IFRS-NORMALIZE | 23-co full normalization | in-progress | ``data/ifrs17/crawl_manifest.json`` lists artifacts per insurer |
-| IFRS-P3 | half/quarter reports | eligible | MVP complete |
-| IFRS17-SEN-TABLE | sensitivity heatmap panel table load | done | sensitivity_heatmap 14/23 ok |
-| IFRS17-HTML-DASH | IFRS17.html 7-panel dashboard | done | ECharts panel 1 + Chart.js 2-4; Samsung Life sensitivity table renders. (root single-source since 2026-05-28; was templates/) |
-| IFRS-HIST | Historical 13Q ingest 2023.1Q~2026.1Q | done v2 | `scripts/ifrs17_batch_historical.py` + `_promote_history_to_measurement.py` + `viz_build_csm_waterfall_history.py`. 299 targets → 257 ok + 2 partial + 34 no_csm_block (분기보고서 text-only) + 5 errors. 사업보고서 23/23 거의 완벽. Output: `data/ifrs17/viz/csm_waterfall_history.json`. IFRS17.html Panel 6 "CSM 시계열" (dual-axis 기말+신계약, 23사 회색 배경). **2026-05-29 v2**: fixed prior-period 전분기/전반기 contamination (picker `_period_affinity`; 한화 2025.1Q was 2024.1Q dup) → 0 contamination; new-business now **per-quarter increment** (`add_nb_increments`, no YTD sawtooth). Remaining quarterly gaps = F15. |
-
-## index.html (market map)
-
-| ID | Task | Status | Notes |
-|----|------|--------|-------|
-| INDEX-C12 | treemap + IFRS17 quadrant | done | Post-transition default for items 27/28; IFRS17 quadrant below treemap |
-| INDEX-IFRS17-BUBBLE | CSM bubble below K-ICS treemap | in-progress | size=CSM, color=NB CSM mult; `csm_bubble.json` + `viz_build_csm_bubble.py`; K-ICS treemap unchanged |
-
-## K-ICS
-
-| ID | Task | Status | Notes |
-|----|------|--------|-------|
-| KICS-SUB | sub-items 29-35 | done | Permanent skip KR0029/KR0150; image-only KR0010/KR0079 manual OCR |
-| KICS-POST | values_post-transition | done | Historical reparse auto-fill |
-| KICS-RATIO28 | item28 basic-capital post-transition | done | 133 rows `값_적용후` |
-| KICS-HIST | historical reparse 9 periods | done | BATCH_END 2026-05-24T11:08:19Z |
-| KICS-HTML-SUB | K-ICS.html sub-items + transition toggle | done | K-ICS.html + JSON sync (root single-source since 2026-05-28) |
-| KICS-TIER2-UTIL | tier2 utilization 2025.4Q | done | KIRI PDF reconcile; 34/38 in 0-100%; output/tier2_utilization/ |
-| KICS-TIER1-UTIL | tier1 hybrid utilization 2025.4Q | done | SCR×15% strict 10%; 35/38 valid; output/tier1_utilization/ |
-| KICS-RULES-DOC | validation rules authoritative doc | done | docs/kics-json-validation-rules.md |
-| KICS-PARSER-SPLIT | parser split-table + row scope fix | done | KR0005 FY2025_Q4 golden test |
-| KICS-REPARSE-Q4 | FY2025_Q4 parse refresh | done | parse 30/38 ok; JSON 10028→10454 |
-| KICS-KR0069 | Samsung Life all-quarters validation | done | Parser bullet-section fix; 0 RED all 12 quarters |
-| KICS-KR0097 | Hana Life parse fix | done | RED 18→2 |
-| KICS-RED-FIX2 | user-verified RED pass 1 | done | RED 419→311 |
-| KICS-RED-FIX3 | missing RED reparse + item27/28 | done | RED 311→217 |
-| KICS-RED-SAMPLES | per-rule RED export | done | scripts/summarize_red_findings.py |
-| KICS-VALIDATE | rules 1-10 harness | done (ex OCR) | **RED=2** (KR0010 OCR only). report_20260525T000831Z. Rules 9 (item2 post≥pre) + 10 (item14 pre≥post) added 2026-05-25. fill_post_transition auto-detects unit hint mismatches via JSON 값 cross-check (×100 or ÷100 correction); 23 insurer-quarter combos fixed (3 ×100 + 20 ÷100). Rule 8_post latent bug (pre14 in denominator) also fixed → uses post14 consistently |
-| KICS-IMG | image-only PDF manual OCR | todo | KR0010 KB Sonhae, KR0079 Mirae Asset, KR0080. Validator tol=10 for IMAGE_OCR_COMPANIES; manual OCR still needed for rule2 large diffs |
-
-## Misc (IR and bonds)
-
-| ID | Task | Status | Notes |
-|----|------|--------|-------|
-| MISC-IR-CATALOG | IR visual-aid catalog 6 cos | done | docs/ir_visual_aids_research.md |
-| MISC-IR-NB-DENOM | NB CSM ratio denominator + validation | in-progress | Crawl/extract → compute → validate vs IR. **Waterfall:** `validate_csm_waterfall.py` **23/23 pass** (NB required + rollforward identity). **NB mult:** 5/6 IR cohort pass (한화 period mismatch FY24 vs 1Q25). Loop: `run_ifrs17_csm_reconcile_loop.py` |
-| MISC-IR-PROTOTYPE | viz prototype | in-progress | CSM Waterfall **23/23 ok** + validation. **NB CSM ratio:** IR 6-co. **index.html bubble:** `viz_build_csm_bubble.py` |
-| MISC-IR-MERITZ | Meritz Financial Group factsheet xlsx ingest | done | 2026-05-25 — `data/ir/meritz/` (xlsx + extracted JSON + README). 1Q26: K-ICS 240.74%, CSM 112,917억, NB CSM mult 12.61x, Net income 4,661억 (Hwajae standalone). Group RoE 25.37%. Page: plain HTTP+AJAX, no JS required |
-| MISC-BOND-KEYS | FSC API keys in .env | done | DATA_GO_KR_BOND_ISSUANCE_KEY + REDE_KEY |
-| MISC-BOND-INGEST | FSC bond issuance + Call schedule ingest | done | 2026-05-25 v2 alias-loop fix. Latest pull 24 insurers. **15 missing accepted**: 외국계/디지털/특수법인 + KR0008/KR0069 likely no capital-instrument issuance (user 2026-05-25) |
-| MISC-BOND-NORMALIZE | Bond schedule → per-ISIN calendar | done | Latest `data/bonds/normalized/20260525T061945Z/`. tier1 **63** + tier2 261 (was 48+276). `_classify_tier` recognizes `(신종)` / 신종자본증권 / 하이브리드 — fixes KR0032/KR0104 T1 mis-tag. |
-| MISC-SEIBRO | Seibro HTML fallback | todo (low) | m.seibro.or.kr smoke ok; lower priority since FSC works |
-
-## Long-term projects
+## 📚 Long-term / roadmap
 
 > 📈 **중장기 제품·수익화·전략 로드맵 → `docs/roadmap.md`** (2026-05-26 신설)
-> VC 사업성 밸리데이션 종합. Phase 0 (이해상충 선결) → Phase 1 (한국 데이터 심화: 추가 공시지표·정합성 보정·projection 엔진·재보험 스크리너) → Phase 2 (3-tier 수익화) → Phase 3 (Build-in-Public 마케팅) → Phase 4 (EU Solvency II / 일본 IFRS17 글로벌 피벗). 레이팅: 솔로 캐시카우 ★★★★☆ / 기술해자 ★★★★★.
 
-| ID | Task | Status | Notes |
-|----|------|--------|-------|
-| IFRS17-CSM-BUBBLE | index.html IFRS17 bubble (CSM size × NB multiple color) | in-progress | Pipeline: crawl → `validate_csm_waterfall.py` → `validate_nb_csm_multiple.py` → `viz_build_csm_bubble.py`. **Waterfall validation 23/23.** Samsung/Meritz/Samsung Life NB CSM fixed (당기 block + non-zero sub-rows). |
-| IFRS17-NB-RECONCILE | NB CSM multiple validation reconcile loop | in-progress | `run_ifrs17_csm_reconcile_loop.py` orchestrates measurement re-extract → waterfall → both validators → bubble. **Remaining:** 한화생명 FY24 numerator vs IR 1Q25 denominator — align quarter or override in `nb_premium_overrides.yaml` |
-| KICS-FORWARD-CAPITAL | Forward solvency simulation chart in K-ICS.html | done v3 | v3 confidence uses `subordinated_eok` not numerator residual. Post tier-fix: KR0032 T1 bond=4500=BS; KR0104 **high**; KR0072 T1 still `fsc_missing_t1` (all FSC 신종 **called**, BS 2403). KR0003/KR0071 weak capital documented (no data fix). Latest `20260525T061947Z/forward_simulation_v3.json`. |
+Active long-term tracks now live in their respective stage TODOs:
 
-## Meta
+- **IFRS17 bubble + market map evolution** → `TODO_publishing.md` (data) + `TODO_designer.md` (HTML)
+- **Forward solvency simulation** → `TODO_publishing.md` (KICS-FORWARD-CAPITAL done v3 archive)
+- **Roadmap §1A-2 priority 6 추가지표** (요구자본 위험액 분해 / RA / P&L 보험·투자 분해 / 출재율 / 유지율 / 운용자산이익률) → distributed across parser + publishing
+- **Roadmap §1E 규제 뉴스 피드** → `TODO_downloader.md` F14
 
-- Encoding rule: CLAUDE.md "Document/TODO Encoding Rule" added 2026-05-24
-- .gitignore: data/ifrs17/raw/, data/ifrs17/reports/ excluded
-- 2026-05-25 doc trim: changelog 124KB→11KB (latest 5 entries detailed + historical archive 1-liners). TODO.md done-task Notes compressed
-- git: **initialized + pushed** to github.com/solvencyk/insurequant (main). GitHub Pages → solvencyk.github.io/insurequant.
-- 2026-05-26: docs/roadmap.md 신설 (중장기 제품·수익화·글로벌 피벗 전략)
-- 2026-05-28 **HTML single-source refactor (P1+P4)**: templates/*.html 4개 삭제, 루트가 유일 원본. forward_capital_simulation.py → 루트 K-ICS.html 갱신. index.html 미사용 xlsx CDN 제거. 로컬 미리보기는 루트에서 `python -m http.server 8000`.
-  - ⚠️ 남은 중복(다음 단계 후보): 데이터 JSON이 root↔templates 양쪽 존재 — templates/{kics_disclosure,tier1_utilization_latest,tier2_utilization_latest,forward_capital_latest}.json. recalc_*.py / crawl_assoc_nb_premium.py / extract_ir_wolnap_benchmarks.py 가 templates/로도 write. (P2 데이터 단일화 시 정리)
-  - 남은 HTML 구조 todo: P3 공통 CSS/네비 → assets/common.css 추출 / P5 K-ICS 인라인 데이터 외부 JSON+fetch 통일
-- 2026-05-28 **모바일 반응형 M1 (공통 토대)**: 4개 페이지에 `@media (max-width:640px)` 추가 — 헤더/탭 가로스크롤, 여백·글자·차트높이 축소, 표 가로스크롤. 데스크톱 무영향(640px 이하만). Claude Preview로 375px/1280px 검증 완료.
-- 2026-05-28 **모바일 반응형 M2 (히트맵→리스트)**: index.html ≤640px에서 트리맵 숨기고 세로 리스트(회사명+색상막대+비율%, 비율 내림차순, 업권 그룹)로 자동전환. renderList()가 render()와 동일 데이터·색상·토글·클릭이동 공유. Preview 375px/1280px 검증, 콘솔 에러 0.
-  - 모바일 남은 단계(선택): **M3** 차트 미세조정(K-ICS 도넛 2개 세로배치, Forward 라인 범례 위치 등)
-- 2026-05-28 **IFRS17 패널 정리 + F6**: 연도별 CSM 상각(panel 2, 데스크톱 10년/모바일 5년) 신설. 파생 KPI 카드 4개 + BS 스냅샷 패널 **제거** → `docs/archived_metrics.md` 아카이빙(생성 스크립트는 유지). 패널 1~6 재번호. 재보험 영업관점 우선 추가지표 6종(요구자본 위험액 분해·RA·P&L 보험/투자 분해·출재율·유지율·운용자산이익률) → `docs/roadmap.md §1A-2`.
-  - 후속 과제: **원천지표 카드 신설**(CSM 잔액·상각액·NB CSM 직접 노출, 제거한 파생 KPI 대체)
+## 🧾 Meta
 
-## MVP checklist (IFRS17)
+- Encoding rule: `CLAUDE.md` "Document/TODO Encoding Rule" added 2026-05-24
+- .gitignore: `data/dart/raw/`, `data/dart/reports/` excluded
+- 2026-05-25 doc trim: changelog 124KB→11KB (latest 5 entries detailed + historical archive 1-liners)
+- git: initialized + pushed to github.com/solvencyk/insurequant (main). GitHub Pages → solvencyk.github.io/insurequant
+- 2026-05-26: `docs/roadmap.md` 신설
+- 2026-05-28 HTML single-source refactor (P1+P4): templates/*.html 4개 삭제. ⚠️ 데이터 JSON 중복 남음 (P2)
+- 2026-05-28 모바일 반응형 M1/M2 적용
+- 2026-05-28 IFRS17 패널 정리: 파생 KPI 카드 + BS 스냅샷 제거 → `docs/archived_metrics.md`
+- 2026-05-30j Reorg #2: `data/assoc` → `data/_derived`, KIDI/DART → `FY####_Q#`. DART batch script refactor 잔여 → `TODO_downloader.md`
+- 2026-05-30k 5-stage workflow split (downloader/parser/validation/gathering/pushing 초안)
+- 2026-05-31 Stage 2/3/4/5 split fully populated: parser/validation TODO+changelog (오전), publishing(=gathering+pushing 머지)+designer(MOB/VIS HTML 별도 stage) TODO+changelog (오후). Root TODO is now genuinely cross-stage only
+
+## ✓ MVP checklist (IFRS17)
 
 - [x] A1 A2 A3 A4 B1 B5 all 23/23 MVP (B5 K-ICS primary ingest done FY2025_Q4)
 
-## Next priorities
+## 🎯 Next priorities (cross-stage)
 
-1. **KICS-IMG manual OCR** (user-owned): KR0010 KB Sonhae rule2 x2 — only remaining RED
-2. **IFRS-B3-UNIFY coverage**: extend `row_aliases.yaml` for higher hit rate (current PoC **930**/2956 tagged)
-3. **IFRS-NORMALIZE**: extend K-ICS sensitivity to remaining empty FY2025_Q4 life insurers (Hanwha/Heungkuk/KDB etc.)
-4. **IFRS17-NB-RECONCILE**: fix validation fails (period/scope/unit); extend KIDI/KLIA FY24 crawl; re-run validate until IR cohort pass
-5. **git init + commit + push** (.git not yet initialized)
+1. **KICS-IMG manual OCR** (user-owned): KR0010 KB Sonhae rule 2 ×2 — only remaining RED. Parser policy → `TODO_parser.md`; validation gate exception → `TODO_validation.md` V6
+2. **F17 decision**: 9/11 손보 Tier2 LOB commit vs debug 삼성·DB vs IR-clean only. Parser detail → `TODO_parser.md`. Tier2 panel rendering → `TODO_designer.md` after decision
+3. **F18 activation**: parser delivers IR JSON → V1 validation rules activate → publishing assembles cross-source viz
+4. **REORG2-DART**: 3 batch scripts canonical-layout refactor → `TODO_downloader.md`
+5. **Stage prompts 마무리**: parser / publishing / designer prompts still skeleton (TBD bodies); validation + downloader prompts are owner-authored complete

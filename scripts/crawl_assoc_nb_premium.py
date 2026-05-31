@@ -2,11 +2,11 @@
 """Crawl + merge 월납환산 신계약 premium sources.
 
 Sources (priority when merging per company/period):
-  1. data/assoc/nb_premium_overrides.yaml
+  1. data/_derived/nb_premium_overrides.yaml
   2. KIDI INCOS insLong/selectStattblAjax (when numeric rows exist)
-  3. data/assoc/ir_wolnap_benchmarks.json (IR text extract)
+  3. data/_derived/ir_wolnap_benchmarks.json (IR text extract)
 
-Output: data/assoc/nb_premium_wolnap.json
+Output: data/_derived/nb_premium_wolnap.json
 Run: scripts/extract_ir_wolnap_benchmarks.py first for IR benchmarks.
 """
 
@@ -27,10 +27,47 @@ if str(ROOT / "src") not in sys.path:
 
 from assoc.nb_premium_common import load_alias_map, resolve_company, sibeok_month_to_eok_month  # noqa: E402
 
-OUT_PATH = ROOT / "data" / "assoc" / "nb_premium_wolnap.json"
-IR_BENCH_PATH = ROOT / "data" / "assoc" / "ir_wolnap_benchmarks.json"
-OVERRIDES_PATH = ROOT / "data" / "assoc" / "nb_premium_overrides.yaml"
-TEMPLATES_OUT = ROOT / "templates" / "data" / "assoc" / "nb_premium_wolnap.json"
+OUT_PATH = ROOT / "data" / "_derived" / "nb_premium_wolnap.json"
+IR_BENCH_PATH = ROOT / "data" / "_derived" / "ir_wolnap_benchmarks.json"
+OVERRIDES_PATH = ROOT / "data" / "_derived" / "nb_premium_overrides.yaml"
+TEMPLATES_OUT = ROOT / "templates" / "data" / "_derived" / "nb_premium_wolnap.json"
+KIDI_SUMMARY_PATH = ROOT / "data" / "kidi" / "premium_summary.json"
+
+# KR (kics) code -> waterfall company name. Auditable hardcode -- waterfall names
+# diverge slightly from K-ICS 원수사명 (삼성생명 vs 삼성생명보험, 코리안리 vs
+# 코리안리재보험, 케이비라이프생명보험 vs KB라이프생명).
+KR_TO_WATERFALL: dict[str, str] = {
+    "KR0001": "메리츠화재해상보험",
+    "KR0002": "한화손해보험",
+    "KR0003": "롯데손해보험",
+    "KR0005": "흥국화재",
+    "KR0008": "삼성화재해상보험",
+    "KR0009": "현대해상",
+    "KR0010": "KB손해보험",
+    "KR0011": "DB손해보험",
+    "KR0032": "NH농협손해보험",
+    "KR0068": "한화생명",
+    "KR0069": "삼성생명",
+    "KR0070": "에이비엘생명보험",
+    "KR0071": "흥국생명보험",
+    "KR0072": "케이디비생명보험",
+    "KR0073": "교보생명보험",
+    "KR0074": "라이나생명보험",
+    "KR0079": "미래에셋생명",
+    "KR0082": "DB생명보험",
+    "KR0083": "푸본현대생명보험",
+    "KR0087": "동양생명",
+    "KR0094": "신한라이프생명보험",
+    "KR0095": "메트라이프생명보험",
+    "KR0097": "하나생명보험",
+    "KR0099": "케이비라이프생명보험",
+    "KR0100": "처브라이프생명보험",
+    "KR0104": "농협생명보험",
+    "KR1000": "코리안리",
+    "AIA": "에이아이에이생명보험",
+}
+
+_PERIOD_BY_MONTHS = {3: "1Q", 6: "2Q", 9: "3Q", 12: "FY"}
 
 BASE = "https://incos.kidi.or.kr:5443"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
@@ -178,6 +215,51 @@ def _parse_kidi_long_rows(rows: list[dict], alias_map: dict[str, str], target_ye
     return out
 
 
+def _parse_kidi_summary(summary_path: Path) -> dict[str, dict]:
+    """Map data/kidi/premium_summary.json entries to nb_premium_wolnap records.
+
+    Period label: YYYYMM -> "YYYY.1Q|2Q|3Q" or "FYYYYY". Monthly avg = YTD/months.
+    Skips zero-denominator and KR codes outside KR_TO_WATERFALL (legacy/non-active).
+    """
+    out: dict[str, dict] = {}
+    if not summary_path.exists():
+        return out
+    payload = json.loads(summary_path.read_text(encoding="utf-8"))
+    for entry in (payload.get("entries") or {}).values():
+        eok = entry.get("denominator_eok") or 0
+        if not eok:
+            continue
+        kr = entry.get("kr_code")
+        name = KR_TO_WATERFALL.get(kr)
+        if not name:
+            continue
+        ym = entry.get("period_yyyymm") or ""
+        if len(ym) != 6:
+            continue
+        try:
+            months = int(ym[4:])
+        except ValueError:
+            continue
+        suffix = _PERIOD_BY_MONTHS.get(months)
+        if not suffix:
+            continue
+        year = ym[:4]
+        period = f"FY{year}" if suffix == "FY" else f"{year}.{suffix}"
+        key = f"{name}|{period}"
+        out[key] = {
+            "company": name,
+            "period": period,
+            "wolnap_premium_eok_month": round(float(eok) / months, 4),
+            "source": "kidi:ml01_mn07_aggregate",
+            "scope": "monthly_avg_from_ytd",
+            "kidi_data_year": ym,
+            "denominator_eok_ytd": eok,
+            "kidi_code": entry.get("kidi_code"),
+            "kidi_table": entry.get("table"),
+        }
+    return out
+
+
 def _merge_ir_benchmarks(benchmarks: list[dict]) -> dict[str, dict]:
     out: dict[str, dict] = {}
     for b in benchmarks:
@@ -232,6 +314,15 @@ def build_payload() -> dict:
             if key not in companies:
                 companies[key] = row
 
+    # KIDI ML01/MN07 monthly premium summary (scripts/ingest_kidi_monthly_premium.py)
+    # is the primary KIDI source. Adds per-quarter entries for 28-co universe.
+    kidi_summary_rows = _parse_kidi_summary(KIDI_SUMMARY_PATH)
+    kidi_summary_added = 0
+    for key, row in kidi_summary_rows.items():
+        if key not in companies:
+            companies[key] = row
+            kidi_summary_added += 1
+
     kidi_numeric = any(
         r.get("wolnap_premium_eok_month") for r in companies.values() if r.get("source", "").startswith("kidi:")
     )
@@ -245,6 +336,8 @@ def build_payload() -> dict:
             "ir_benchmarks_path": str(IR_BENCH_PATH.relative_to(ROOT)).replace("\\", "/"),
             "kidi_ml02_row_count": kidi_ml02.get("row_count"),
             "kidi_long_years": kidi_long.get("years_available"),
+            "kidi_summary_path": str(KIDI_SUMMARY_PATH.relative_to(ROOT)).replace("\\", "/"),
+            "kidi_summary_added": kidi_summary_added,
             "kidi_numeric_companies": kidi_numeric,
             "company_record_count": len(companies),
         },

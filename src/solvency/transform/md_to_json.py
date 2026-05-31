@@ -1,5 +1,15 @@
 """Markdown -> ``kics_data.json`` builder.
 
+DEPRECATED 2026-05-30: this module's output (``kics_data.json``) is no
+longer the active K-ICS master. The live master is
+``kics_disclosure.json`` (root, populated by ``scripts/fill_*`` mergers,
+read directly by K-ICS.html). This builder is preserved for the legacy
+Stage 6-3 harness path but should not be invoked by new code. Both
+output files (``kics_data.json`` and ``insurance_data.json``) were
+removed from the repo root on 2026-05-30; re-running ``write()`` will
+recreate the file at ``settings.kics_json_path`` if you actually need
+the legacy artifact.
+
 Contract enforced by this module (referenced by Stage 6-3 of the harness):
 
 - Output filename is fixed: ``kics_data.json``. ``insurance_data.json``

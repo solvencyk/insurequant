@@ -2,8 +2,8 @@
 """Batch: K-ICS quarterly MD -> IFRS17 contract sensitivity JSON (B5).
 
 Outputs:
-  data/ifrs17/extracted/KRxxxx_{period}_kics_sensitivity.json
-  data/ifrs17/crawl_manifest.json (for --manifest-period or single --period run)
+  data/dart/extracted/KRxxxx_{period}_kics_sensitivity.json
+  data/dart/crawl_manifest.json (for --manifest-period or single --period run)
 """
 
 from __future__ import annotations
@@ -35,7 +35,7 @@ def discover_md_inbox_periods(repo_root: Path) -> list[str]:
 
 
 def build_manifest(repo_root: Path, period: str, run_summary: dict) -> dict:
-    extracted_dir = repo_root / "data" / "ifrs17" / "extracted"
+    extracted_dir = repo_root / "data" / "dart" / "extracted"
     measurement_rows = json.loads(
         (extracted_dir / "_batch_measurement_summary.json").read_text(encoding="utf-8")
     )
@@ -124,7 +124,7 @@ def run_one_period(repo_root: Path, period: str, *, mvp_only: bool) -> dict:
         run_summary["tables_total"] += ntab
         if ntab:
             nonempty += 1
-        out_path = repo_root / "data" / "ifrs17" / "extracted" / f"{code}_{period}_kics_sensitivity.json"
+        out_path = repo_root / "data" / "dart" / "extracted" / f"{code}_{period}_kics_sensitivity.json"
         meta = {
             "kics_company_code": code,
             "kics_name": name,
@@ -160,7 +160,7 @@ def main() -> int:
     ap.add_argument("--mvp-only", action="store_true")
     args = ap.parse_args()
 
-    man_path = REPO / "data" / "ifrs17" / "crawl_manifest.json"
+    man_path = REPO / "data" / "dart" / "crawl_manifest.json"
     man_path.parent.mkdir(parents=True, exist_ok=True)
 
     if args.all_periods:

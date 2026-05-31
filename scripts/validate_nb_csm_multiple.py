@@ -6,7 +6,7 @@ Pipeline:
   → compare to nb_csm_ratio.json / meritz IR disclosed multiple
 
 On large mismatch, tries reconcile transforms (unit scale, annual/monthly).
-Output: data/assoc/nb_csm_validation.json
+Output: data/_derived/nb_csm_validation.json
 
 Exit code 1 if any validation cohort member fails after reconcile.
 """
@@ -25,11 +25,11 @@ if str(ROOT / "src") not in sys.path:
 
 from assoc.nb_premium_common import mn_krw_to_eok  # noqa: E402
 
-VIZ = ROOT / "data" / "ifrs17" / "viz"
+VIZ = ROOT / "data" / "dart" / "viz"
 IR = ROOT / "data" / "ir"
-PREMIUM_PATH = ROOT / "data" / "assoc" / "nb_premium_wolnap.json"
-OUT_PATH = ROOT / "data" / "assoc" / "nb_csm_validation.json"
-TEMPLATES_OUT = ROOT / "templates" / "data" / "assoc" / "nb_csm_validation.json"
+PREMIUM_PATH = ROOT / "data" / "_derived" / "nb_premium_wolnap.json"
+OUT_PATH = ROOT / "data" / "_derived" / "nb_csm_validation.json"
+TEMPLATES_OUT = ROOT / "templates" / "data" / "_derived" / "nb_csm_validation.json"
 
 # "얼추 비슷" tolerance
 REL_TOL = 0.25

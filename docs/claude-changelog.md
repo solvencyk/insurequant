@@ -1,88 +1,66 @@
-## 2026-05-29 -- 삼성생명·미래에셋 합계-vs-CSM 컬럼 식별 + 상품군 분리공시 합산 (FY anchor 정정)
+## 2026-05-31 — Parser stage split out
 
-User: "삼성생명/미래에셋 합계-vs-보험계약마진 컬럼 식별을 더 파고든 다음 커밋." 이전 세션의 `<TE>` 복구 후에도 삼성/미래 다수 분기가 no_csm_block으로 남았던 진짜 원인 두 가지를 규명·수정.
+Parser 전용 신규/이력 항목은 [`docs/changelog_parser.md`](changelog_parser.md) 로 분리됨. 이 root changelog는 cross-stage 항목만 (gathering / pushing / refactor / cross-stage viz / 폴더 정리). 이번 split 으로 옮긴 entry:
 
-**근본 원인 1 — 상품군 분리공시(per-product split).** 삼성생명·미래에셋은 측정요소 변동표를 **상품군별 별도 표**(사망/건강/연금/저축/기타)로 쪼개 공시. 기존 picker는 그중 **한 상품(사망)** 만 집어 회사 전체로 착각 → 삼성 FY 마감 CSM이 **4.9조(사망 1개 상품, 게다가 전기값)** 로 나옴. 진짜 전체 = 3개 상품 합 **13.08조**(공개치와 일치).
+- **2026-05-31** F17 Tier2 LOB 9/11 사 확장 + IR cross-check (3사: 메리츠 ok / 삼성 일반 +246% / DB 자동차 sign flip) — 결정 대기
+- **2026-05-30 (b)** F17 Tier2 LOB 방법론 수정 (position-based 컬럼 식별, rollforward 표 제외, Tier1 연결 우선)
+- **2026-05-30** F17 손보 당기순이익 분해 Tier1 10사 / Tier2 1사 (현대 검증)
+- **2026-05-30** IR factsheet + 손보 disclosed/derived NB CSM 배수 (삼성화재 / DB / 한화손보 / 현대)
+- **2026-05-29** 삼성생명·미래에셋 상품군 분리공시 합산 + 소계 이중계상 제거 (FY anchor 정정)
+- **2026-05-29** `<TE>` data-cell 미파싱 root cause (이전 "원본에 없음" 진단 철회)
+- **2026-05-29** Panel 5 sensitivity rowspan + 한화 2023.4Q dip (continuity tiebreak)
+- **2026-05-29** NB CSM Samsung 사망 misparse fix (parser side; validation gate는 changelog_validation 2026-05-29)
+- **2026-05-29** CSM 시계열 prior-period decontamination + per-quarter new-business
+- **2026-05-25** IFRS17 B5 K-ICS sensitivity appendix + multi-period batch
+- **2026-05-25** IFRS17 historical 13Q ingest (parser promote step)
+- Historical archive 2026-05-25 / 05-24 parser items (RED reduction, KICS parser progression, IFRS17 bootstrap)
 
-**근본 원인 2 — 합계(소계) 컬럼 이중계상.** `find_csm_leaf_cols`의 압축 헤더 분기가 `[2,3,4,5]`(전환방법 3개 + **소계**)를 모두 더해 CSM을 **2배** 계상. 미래에셋 사망 0.79조가 1.57조로, 동양생명 2.54조가 5.08조로 뻥튀기돼 있었음.
+## 2026-05-31 — Validation stage split out
 
-**수정 (`viz_build_csm_waterfall.py`):**
-- `find_product_segmented_csm_cols`: 상품 P개가 옆으로 나열된 **wide 표**(2025+ 분기 `<TE>` 표: 삼성 3×6, 미래 5×5)에서 상품별 CSM 컬럼 전부 식별, 그룹별 합계열은 per-product 합계 불변식으로 탐지·제외. → 2025+ 분기 복구.
-- 압축 분기: sub2의 `소계`/`합계` 라벨 컬럼 제외로 이중계상 제거(`[2,3,4,5]`→`[2,3,4]`). → 동양·미래 단일상품 정정.
-- `collect_current_product_blocks` + `extract_stages_summed`: 상품군 분리공시를 **합산**. 안전 게이트 — (a) 좁은 단일상품 블록만, (b) 동일 leaf 레이아웃 최빈군, (c) **전기** 캡션(`2) 전…`/말미 전분기) 제외, (d) ≥3개 상품, (e) 마감액이 서로 **near-uniform이면 거부**(연결/별도/기간 변형), (f) **product#1 재시작** 감지로 cycle 종료(전기=마감≈product#1 기초, 1% / 별도=기초·마감 둘다 ≈ product#1, 5%), (g) 한 블록이 나머지 합이면(=이미 total 존재) 거부.
-- `build_for_file`(FY): 분리공시면 합산. `build_one_period`(history): 합산은 **FY anchor 정합 fallback**으로만(단일픽이 anchor에서 >45% 벗어나고 합산이 ≤35%일 때만) → 한화·KB·신한 등 segment 분리 회사 오합산 방지.
+Validation 전용 신규/이력 항목은 [`docs/changelog_validation.md`](changelog_validation.md)로 분리됨. 같은 날 추가된 **DART↔IR cross-source 3개 룰**(`CSM_WATERFALL_DART_VS_IR` / `SEGMENT_INSURANCE_INCOME_DART_VS_IR` / `CSM_BREAKDOWN_DART_VS_IR`)도 그쪽 참고. Cross-stage 의존: F18 (parser/gathering이 `data/ir/<period>/parsed/<KR>.json` 정형 JSON delivery 시 룰 자동 활성화).
 
-**결과:** FY anchor 정정 — **삼성 13.08조 / 미래 2.08조 / 동양 2.54조**(모두 공개치·인접분기와 정합). History: 삼성 **12/13**, 미래 10/13(8 ok+2 partial), 동양 8/13 복구, 전부 정상 규모(삼성 11.9→13.9조). **비대상 28사 FY·history 회귀 0건**, ok 셀 258(기준선과 동일하나 값 정정). 잔여 갭(삼성 2023.1Q, 미래 2023.1·3Q/2026.1Q, 동양 2025.2Q~)은 정직한 갭 — 동양 2025.2Q+는 컬럼식별이 아니라 **추출단계 잔액행이 0**으로 들어온 별개 이슈(F15, 재추출 대상). 다운스트림 csm_bubble/kpis 재빌드.
+## Stage entries moved out
 
-## 2026-05-29 -- CSM 시계열 결측 진짜 원인: `<TE>` 데이터셀 미파싱 (이전 "원본에 없음" 진단 철회)
+- **Downloader**: (j) Reorg #2 ~ (c) F2 v3 KIDI crawler — all 2026-05-30 downloader work → [`docs/changelog_downloader.md`](changelog_downloader.md) under the same headings.
+- **Parser**: 2026-05-31 F17 9/11 / 2026-05-30 (b) Tier2 방법론 / 2026-05-30 Tier1+Tier2 PoC / 2026-05-30 IR disclosed/derived / 2026-05-29 product-segmented + `<TE>` + rowspan + de-contam / 2026-05-25 B5 appendix + historical promote → [`docs/changelog_parser.md`](changelog_parser.md).
+- **Validation**: 2026-05-31 cross-source rules, 2026-05-30 validation prompt 초안, 2026-05-29 Plausibility gate, 2026-05-25 rules 9+10 / RED reduction 99→2 / Tier-2 reconcile, 2026-05-24 KICS-VALIDATE harness initial → [`docs/changelog_validation.md`](changelog_validation.md).
 
-User pushed back with a concrete counter-example: 한화생명 2025.3Q DART 공시에 '(3) 최초 인식한 계약의 효과' 보험계약마진 **2,228,273**이 분명히 있다 → "source import 문제"일 것. **User was right; my earlier "source-limited" conclusion was wrong** (I'd checked only 2025.2Q and extrapolated).
+This root changelog retains cross-stage entries only (gathering / pushing / refactor / viz / cross-stage validation+parser pointers).
 
-**Root cause = `<TE>` cells.** DART's 2025+ filings render table data cells as `<TE>` (table entry), not `<TD>`. `csm_extractor._iter_tables_with_context` only collected `<th>`/`<td>`, so every body row parsed **empty** (header captured, rows blank) → no_csm_block. The batch HAD fetched the right document (한화 2025.3Q rcept 20251113000814, 19MB; the user's 20251128001821 is a later 기재정정 — same `<te>` content). Fix: recognize `<te>` as a data cell (one line).
+See `CLAUDE.md` for the 5-stage workflow split index.
 
-**Audit of all non-ok periods** (raw-XML signature scan): **HAS_DATA (parser missed real rollforward) 34**, NO_FILE (비상장 미공시) 5, genuinely-condensed (요약 반기) **only 1** (한화 2025.2Q). So nearly all gaps were parser failures, not missing data.
+## 2026-05-30 -- data/ifrs17 -> data/dart 폴더 리네임 + Panel 3 viz 교체 (F17 gathering 절반)
 
-**Second bug surfaced by the recovery: `find_csm_leaf_cols`.** These tables use a **6-row multi-level header** with the leaf column labels (미래현금흐름/위험조정/보험계약마진/합계) in the *last* header row; the function only inspected rows 0-2 → returned `[]` → block still rejected. Added a fallback that scans all header rows and maps 보험계약마진 to its value-column index. After both fixes the rollforward parses (기초 CSM 13,065,788; 최초인식 보험계약마진 **2,228,273**).
+**폴더 리네임 data/ifrs17 -> data/dart (완료·검증).** 사용자 지시대로 현행 dup `data/dart`(FY_Q 복사본) 삭제 후 `data/ifrs17` -> `data/dart` 실제 리네임. 코드 repoint: `data/ifrs17` 및 `"data" / "ifrs17"` 경로형만 치환(35개 파일) — `src/ifrs17` 모듈/`IFRS17.html` 파일명/`from src.ifrs17`는 불변. `config.py` 중앙경로 `root/"data"/"dart"`, `templates/data/ifrs17`->`templates/data/dart`, 정규화 JSON self-ref 포함. 잔여 `data/ifrs17` 참조 0개. viz 빌드(panels/waterfall) 재실행 정상(28사, 회귀 0). **폴더구조 개편(공시분기>회사) 차후** 보류.
 
-**Picker hardening on the now-richer consolidated filings:**
-- Exclude consolidation tables (관계기업/종속기업/요약재무정보/지분의 장부금액) — they mention 보험계약마진 but aren't the insurer's CSM rollforward (was mis-picking 미래에셋 2025.4Q 5.43조 equity table).
-- History builder: reject a pick whose opening is still >40% off the prior close → emit an honest gap instead of a misleading number (한화 2025.2Q condensed, 롯데 2025.4Q tiny, 미래에셋 spurious).
+**Panel 3 viz 교체 (F17 gathering 절반).** IFRS17.html Panel 3을 기존 '원시표 마지막열 12행 horizontal bar 덤프' 에서 **클린 4-bar 당기순이익 분해** (보험손익 / 투자손익 / 영업외 → 당기순이익, 당기순이익 강조색) + 보험금융·보종별 caption 으로 교체. h2 '3) 당기순이익 분해 (보험손익·투자손익)'. 브라우저 검증: 삼성화재 / 현대 / 한화 렌더 정상, 생보 graceful stub, 콘솔 에러 0.
 
-**Diversified label patterns (user's 2nd counter-example).** 한화 2025.2Q ALSO had NB CSM — '해당 기간에 처음 인식한 계약의 영향에 따른 증가분(감소분)' = **1,378,511** — which I'd missed because my audit signature used '최초 인식' not '처음 인식'. The extractor's STAGE_PATTERNS already handle '처음 인식'; the real miss was the **picker** not selecting the total block among the segment sub-tables (전환일에 존재했던 계약 등) when the continuity search only scanned the top-5 candidates.
+(F17 parser 절반 — Tier1 10사 OK / Tier2 1사 → 4사 → 9/11 사 확장, 2026-05-30·30b·31 — 은 [`docs/changelog_parser.md`](changelog_parser.md) 로 이동. 같은 날 IR factsheet 전사 수집 + 손보 disclosed/derived NB CSM 배수 파싱 [삼성화재 / DB / 한화손보 / 현대] 도 동일 changelog 로 이동.)
 
-**Two more picker fixes:**
-- Continuity searches **ALL** candidates (not top-5): the total often ranks below segments but its opening matches the prior close (한화 2025.2Q total 13.07조 vs segment 4.16조). Recovered 한화 2025.2Q (NB 1,378,511).
-- **FY-anchor regime correction** (history builder): the pick's closing must sit within 45% of the company's FY total (`csm_waterfall.json`); if it's off, take the nearest anchor-consistent (≤35%) candidate, else emit an honest gap. Fixes systematic segment-vs-total mis-picks (교보생명 was ~5조 segment vs 11.75조 total → now ~11-13조 across all quarters). main() builds each company chronologically, threading prior-close + FY anchor.
+[parser orphan block removed — see changelog_parser.md "2026-05-30 — IR factsheet 전사 수집".]
 
-**Result (re-promote from cached raw, no re-fetch):** ok 258 / no_csm 29 / partial 6 (was 257/34 with *wrong* "ok" values); **outlier scan = 0**; **FY 28-co waterfall 0 regressions**. Recovered with correct values: 한화 all 13Q (NB 2025.2Q 1,378,511 / 2025.3Q 2,228,273), 교보 all quarters, 삼성화재 2025.2Q/3Q, 현대해상, 케이디비, 코리안리. Recent-period coverage 2025.2Q 17/23, 2025.3Q 14/23, 2025.4Q 20/23, 2026.1Q 13/23 — all anchor-consistent. Pipeline: csm_extractor `<te>` + find_csm_leaf_cols deep-header fallback + rank_main_blocks consolidation filter + history continuity(all)/FY-anchor/reject.
+[parser orphan block removed — see changelog_parser.md "2026-05-29 — 삼성생명·미래에셋 합계-vs-CSM 컬럼 식별".]
 
-**Remaining (F15):** ~24 period-cells still gap — 5 NO_FILE (비상장 미공시, genuine), plus periods where the total rollforward isn't anchor-consistent (삼성생명/미래에셋 some quarters: the leaf-col fallback picks a 합계/wrong column giving 30-37조 vs FY 4.9조; 동양생명 zeros). These need per-company column disambiguation — a deeper follow-up, not claimed fixed.
+[parser orphan block removed — see changelog_parser.md "2026-05-29 — CSM 시계열 결측 진짜 원인: `<TE>` 데이터셀 미파싱".]
 
-## 2026-05-29 -- Panel 5 sensitivity rowspan fix + 한화 2023.4Q dip + 2025.2Q/3Q diagnosis
+[parser orphan block removed — see changelog_parser.md "2026-05-29 — Panel 5 sensitivity rowspan fix + 한화 2023.4Q dip".]
 
-User flagged (from 한화생명 Panel 5/6): the ΔCSM sensitivity table mis-aligned ("3.27% 감소" in the 위험요인 column), the 2023.4Q CSM dip, and the 2025.2Q/3Q gaps.
+[parser orphan block removed — see changelog_parser.md "2026-05-29 — NB CSM multiple Samsung 사망 misparse fix". Validation 측 plausibility gate 는 changelog_validation.md 동일 날짜 entry.]
 
-**Panel 5 sensitivity — rowspan + header-aware parse (`viz_build_ifrs17_panels.py`).** The risk name spans the 증가/감소 row pair via HTML rowspan, so the 감소 row has one fewer leading cell → every column shifted left (the user's exact symptom). Added `_band_sensitivity_columns` (header-aware: finds the 변동금액 보험계약마진 / 당기손익 value columns, preferring 원수; uses the LAST CSM column so 교보's 기준금액+변동금액 layout maps to 변동; strips label cells like 케이디비's 위험변수/변동; accepts 보험서비스마진 K-ICS term) + `_extract_sensitivity_band` (detects rowspan-elided continuation rows and inherits the risk). Routed only when that band header is present, so the product-line path (삼성, unchanged) and generic path are untouched. **Fixed: 한화 (사망률 증가 ΔCSM −256,319 / 손익 +80,535; 감소 +262,227 / −84,260), 교보, 케이디비 (−57,369 / −308,997), DB생명.** 삼성생명 verified unchanged. **Remaining: 흥국생명** — different layout (products-as-rows × 당기말/전기말 with 'CSM'/'손익 효과' headers); needs its own path → follow-up.
-
-**한화 2023.4Q dip (9.24조 → 13.30조).** The FY2023 report has two near-identical "(5) 측정 요소별 변동" rollforwards: a 13.30조 total and a 9.24조 subset; `pick_main_block` chose the subset because its caption kept the 당기 marker (period_affinity 35 vs 0). Fix: exposed `rank_main_blocks` and added a **guarded continuity tiebreak** in the history builder — when the default pick's opening deviates >25% from the prior period's closing AND another top candidate opens within **5%**, prefer continuity. `main()` now builds each company's periods chronologically, threading the prior closing. The 5% guard fixes 한화 + several clearly-broken tiny values (롯데 2025.4Q 0.03→4.92조, 메리츠 2026.1Q 0.05→11.1조, 신한 14.7조, 케비 3.4조, 미래에셋) **without** touching ambiguous mid-range picks (삼성생명 stays 4.906 = consistent with the FY Panel-1 waterfall). FY waterfall **0 regressions**; outlier scan (closing < 40% of company median) now **0**.
-
-**2025.2Q/3Q/2026.1Q gaps — confirmed source-limited (NOT a parser bug).** Verified 한화's 2025.2Q is a **요약(condensed) 반기연결재무제표**: the 21MB filing has **zero** rollforward-table signatures (`최초 인식한 계약`, `신계약효과`, `측정요소별 변동` all 0); the CSM figures appear only in narrative prose ("보험계약마진 13조"). The "141 blocks" the measurement extractor emitted are narrative/layout tables with empty rows (dedup → 1). 12/23 insurers whose 반기 reports DO carry the table already render; the other 11 (incl 한화) genuinely omit it in condensed quarterlies (2026.1Q reports defer to the audit report). → TODO **F15** (narrative/IR-supplement, or accept the gap).
-
-## 2026-05-29 -- NB CSM multiple (Panel 4): plausibility gate + Samsung Life 사망 misparse fix
-
-User flagged 삼성생명's 종신/사망 NB CSM multiple showing >400x (impossible; realistic max ~30-50x) and that the panel stops at FY25.1Q.
-
-**400x = regex misparse [fixed].** `viz_build_nb_csm_ratio.extract_samsung_life` read the death row with a positional 5-number regex; the IR PDF text interleaves the death *multiples* (single digits) with absolute CSM amounts (십억원: 459/435/520/471/488) on adjacent lines, so it grabbed 520/471/488 for FY24.1-3Q. **Fix:** scan the region between the 건강 row and the (last) 사망 label, keep only `\d+\.\d+` values < cap → death now [7.6, 10.0, 7.6, 7.2, 5.1]. (`rfind("사망")` — the first 사망 is the column header 건강 사망 금융.)
-
-**Plausibility gate [new validation rule].** `MAX_PLAUSIBLE_MULTIPLE = 60.0` + `validate_plausible(payload)` called in `build_payload` — fails the build if any chart series multiple is `<=0` or `> 60` (an absolute amount misread as a ratio). Negative-tested: catches 520x, passes 7.6x. Browser-verified on a fresh origin: Panel 4 death line ~5-10x, y-axis 0-18x, zero console errors. `validate_nb_csm_multiple` (computed-vs-IR) still 5/6 pass (한화 period-mismatch, pre-existing).
-
-**Why Panel 4 stops at FY25.1Q [diagnosis, not staleness].** Panel 4 is **not** the computed CSM÷premium pipeline — it scrapes ratios directly from 6 IR PDF text extracts (`artifacts/ir_research/`), and Samsung Life's is hardcoded to the **FY25.1Q IR deck** (`FY24_QS` = 5 quarters). The *computed* multiple (what would extend to 2025.4Q) needs the 월납환산 초회보험료 denominator, but **`nb_premium_wolnap.json` has `kidi_ml02_row_count: 0`** — the 보험개발원(KIDI) crawl returns zero rows; only 6 single-period IR premiums exist. So the **premium (denominator) side is the unfinished half** = open **TODO F2 v3** (KIDI segment-match crawler). The CSM numerator is parsed through 2025.4Q. Extending the panel requires either F2 v3 (KIDI) or ingesting newer IR decks.
-
-## 2026-05-29 -- CSM 시계열 (Panel 6) fixes: prior-period de-contamination + per-quarter new-business
-
-User asked why 한화생명's CSM time series stops at 2025.1Q and flagged the new-business sawtooth. Investigation found it was **not** staleness — three separate issues:
-
-1. **Prior-period contamination [real bug].** `pick_main_block._period_affinity` penalized `전기` but **not `전분기`/`전반기`**, so 분기/반기 reports' prior-period column was chosen. 한화 "2025.1Q" closing was literally 2024.1Q's value (13,362,336). Across 23 insurers, 13-17 quarterly points per period were prior-period dupes. **Fix:** added `전분기`/`전반기` penalty (−22) + `당분기`/`당반기` bonus (+22), guarded so a combined "당분기 및 전분기" caption stays current. Re-ran `viz_build_csm_waterfall_history.py` (reuses the picker on cached extracts — **no re-fetch**). Result: **prior-period contamination 0 across all periods**; 한화 2025.1Q now 12,994,325 (caption "1) 당분기"). FY28 current-panel waterfall verified **zero regression**.
-2. **FY2025 (2025.4Q) was always present** (20/23 ok) — it just rendered as an isolated dot because 2025.2Q/3Q are null (line break). Not a data gap.
-3. **2025.2Q/3Q/2026.1Q gaps** (~11/23 no_csm_block): genuine — 반기/분기보고서 often lack a parseable rollforward (2026.1Q reports defer to the audit report). **Deferred** (a parser-improvement task, user's choice).
-
-**New-business → per-quarter increment.** New-business CSM is disclosed fiscal-YTD cumulative (Q1/H1/9M/FY) → within-year sawtooth. `viz_build_csm_waterfall_history.add_nb_increments` now emits `new_business_increment_mn_krw` (+ `_span_q`): flow since the previous available quarter in the same FY, chain persisting across an unobserved quarter (so an annual point with missing 9M reports the Q2-Q4 flow, span_q=3, rather than a reset). IFRS17.html Panel 6 plots the increment for the pink line (기말 balance/blue line unchanged — it's a stock), axis/label/caption updated, tooltip flags multi-quarter spans. Verified for 한화: new-business now ~0.7-1.1조/quarter (no sawtooth); 2025.4Q dot = 2.42조 (span 3Q, flagged). Zero console errors.
+[parser orphan block removed — see changelog_parser.md "2026-05-29 — CSM 시계열 (Panel 6) prior-period de-contamination + per-quarter new-business".]
 
 ## 2026-05-29 -- F11 DONE: foreign-affiliate life insurers fully in IFRS17 dashboard
 
 User pushed to start F11 (add 5 foreign-affiliate life insurers to IFRS17), then approved full viz integration. Result: IFRS17 cohort 23→28 (생보 13→18), all 5 rendering in the dashboard + index bubble. Browser-verified, zero console errors, zero regression to the existing 23.
 
-**Viz integration was glob-driven — almost no HTML change.** The builders enumerate `data/ifrs17/extracted/*.json` (panels: `*_csm.json` / `*_insurance_pl_mvp.json` / `*_sensitivity_mvp.json`; waterfall: `*_measurement.json`) and IFRS17.html builds its company selector from `wf.companies`, index.html bubble from `csm_bubble.json`. So producing the standard artifacts auto-grew the selector (28 options) and the bubble (28 points). nb + hist panels stub gracefully for the 5 (no IR premium mapping; not in the 23-co 13Q history cohort).
+**Viz integration was glob-driven — almost no HTML change.** The builders enumerate `data/dart/extracted/*.json` (panels: `*_csm.json` / `*_insurance_pl_mvp.json` / `*_sensitivity_mvp.json`; waterfall: `*_measurement.json`) and IFRS17.html builds its company selector from `wf.companies`, index.html bubble from `csm_bubble.json`. So producing the standard artifacts auto-grew the selector (28 options) and the bubble (28 points). nb + hist panels stub gracefully for the 5 (no IR premium mapping; not in the 23-co 13Q history cohort).
 
 - `scripts/ifrs17_ingest_audit_annual.py`: extended to also run measurement / insurance_pl / sensitivity extractors on the already-fetched audit-report XMLs (same artifact names the per-tier batch scripts emit). Re-run: 5/5 ok (meas 8-25, pl_mvp 1-10, sens_mvp 16-41 tables).
 - Re-ran `viz_build_csm_waterfall.py` (28 co), `viz_build_ifrs17_panels.py` (pl 28/28, sens 18/28), `viz_build_csm_bubble.py` (csm 28, the 5 grey = no NB multiple).
 
-**3 safe waterfall-builder fixes** (`viz_build_csm_waterfall.py`), each verified zero-regression against a snapshot of the 23:
-1. Magnitude unit fallback now keyed on the **largest-magnitude stage**, not opening — these insurers report in **천원** and some split the 기초 row so opening matched a zero placeholder (메트/AIA/하나 scale).
-2. `pick_main_block`: **direct block always outranks ceded** (new top sort key). 처브라이프's `<당기>`-tagged 재보험계약부채 block had been beating its direct 보험계약부채 block → fixed (closing 1,124억, was negative/wrong).
-3. Closing label `보고기간말` added + a **guarded** net-row patch: when opening/closing resolves to ~0 (rowspan-split 자산/부채/순부채 balance, e.g. 하나생명), pull the 보험계약순부채 net row's CSM. Guard (only fires on ~0) keeps the 23 untouched. 하나 fixed: open 3,016억 / close 4,390억.
+**3 safe waterfall-builder fixes** (`viz_build_csm_waterfall.py`) verified zero-regression vs 23-co snapshot — detail in [`docs/changelog_parser.md`](changelog_parser.md) "2026-05-29 — F11 waterfall-builder 3 safe fixes".
 
-Final waterfall status for the 5: 메트라이프 / AIA / 처브라이프 / 하나생명 **ok**; 라이나생명 **partial** (its rollforward has no matched amort row; Panel 2 amort schedule is clean from csm.json).
+Final waterfall status for the 5: 메트라이프 / AIA / 처브라이프 / 하나생명 **ok**; 라이나생명 **partial** (rollforward has no matched amort row; Panel 2 amort schedule is clean from csm.json).
 
 **Feasibility (data half, earlier this session):** all 5 file no pblntf_ty=A periodic report, but their standalone DART **감사보고서** (2024.12, pblntf_ty="F") carries the same IFRS17 보험계약 주석 with a CSM amort schedule. The **existing `csm_extractor` parses all 5 unchanged** (form A, score 5-6; year-bucket portfolio tables, Non-Par 유배당/무배당, 천원).
 
@@ -96,7 +74,7 @@ Final waterfall status for the 5: 메트라이프 / AIA / 처브라이프 / 하�
 
 **Changes:**
 - `src/ifrs17/universe.py`: new `AUDIT_REPORT_ANNUAL` frozenset (5 full K-ICS names) + `is_audit_report_annual()`. `list_filings` already accepted `pblntf_ty` so no client change was needed.
-- `scripts/ifrs17_ingest_audit_annual.py` (new): resolves corp by exact name, picks latest standalone 감사보고서 (excludes 연결), fetch → extract → `extract_csm_tables`. Writes `data/ifrs17/extracted/<canonical>_<rcept>_csm.json` (mirrors `ifrs17_batch_all` shape) + `_audit_annual_summary.json`. Run: **5/5 ok**.
+- `scripts/ifrs17_ingest_audit_annual.py` (new): resolves corp by exact name, picks latest standalone 감사보고서 (excludes 연결), fetch → extract → `extract_csm_tables`. Writes `data/dart/extracted/<canonical>_<rcept>_csm.json` (mirrors `ifrs17_batch_all` shape) + `_audit_annual_summary.json`. Run: **5/5 ok**.
 
 **Notes / gotchas found:**
 - NON_LISTED_SKIP held *short* names (라이나생명) while K-ICS 원수사명 are *full* (라이나생명보험), so the exact-match exclusion never actually gated these 4 — they just fell out as `no_annual_filing`. Left NON_LISTED_SKIP untouched (surgical); the new set is what F11 consults.
@@ -178,7 +156,7 @@ User asked to expand IFRS17 from FY2024 annual only to all quarters 2023.1Q ~ 20
 - Period targets: 13Q (사업 4 + 반기 3 + 분기 6). pblntf_detail_ty {A001/A002/A003} + report_keyword filter, skip 기재정정.
 - Cache by canonical/period dir. Reuse `resolve_corp` + `OpenDARTClient`.
 - 442 (insurer, period) targets attempted: 226 ok (CSM extracted) + 143 no_filing (비상장 분기 미공시 정상) + 68 no_csm_table_found + 5 errors.
-- raw zip cached under `data/ifrs17/raw_history/<canonical>/<period>/`. extracted_history per-period `_csm.json` (raw csm_extractor output).
+- raw zip cached under `data/dart/raw_history/<canonical>/<period>/`. extracted_history per-period `_csm.json` (raw csm_extractor output).
 
 **Stage 2 — Promote to measurement (`scripts/ifrs17_promote_history_to_measurement.py`):**
 - Runs `src.ifrs17.measurement_extractor.extract_measurement_tables` per (canonical, period) XML dir.
@@ -189,7 +167,7 @@ User asked to expand IFRS17 from FY2024 annual only to all quarters 2023.1Q ~ 20
 - Reuses `pick_main_block` + `extract_stages` + `detect_unit_scale` from the existing FY-only viz builder.
 - Aggregates per-(insurer, period) snapshots into time-series payload.
 - Coverage jumped 20 → **257 ok + 2 partial** (out of 299 reachable) after measurement promote step. 사업보고서(FY): near 23/23. 2025.2Q~2026.1Q has 11-13 no_csm_block each (분기보고서 often text-only).
-- Output: `data/ifrs17/viz/csm_waterfall_history.json` (319KB, 23 companies × 13 periods).
+- Output: `data/dart/viz/csm_waterfall_history.json` (319KB, 23 companies × 13 periods).
 
 **Panel 8 — `templates/IFRS17.html`:**
 - New section "8) CSM 시계열 (2023.1Q ~ 2026.1Q)". Chart.js dual-axis line.
@@ -221,11 +199,9 @@ User asked to expand IFRS17 from FY2024 annual only to all quarters 2023.1Q ~ 20
 
 ---
 
-## 2026-05-25 -- IFRS17 B5 K-ICS sensitivity: appendix headings + multi-period batch
+## 2026-05-25 -- IFRS17 B5 K-ICS sensitivity: appendix headings + multi-period batch (parser)
 
-- `src/ifrs17/kics_sensitivity_extractor.py`: section starts also recognize markdown titles that contain both ``보험위험`` and ``민감도`` (appendix wording without the contiguous ``가정민감도`` token); compact-line match for spaced ``가정``/``민감도``; bullet ``- (5)`` only when assumption-sensitivity wording matches. Default ``min_score`` lowered to **3** so IFRS LIC/CSM grids that land at score 3 after the +2 K-ICS bump are emitted (fixes e.g. 미래에셋 변형 표 헤더 cases). Solvency-only ``6-8`` blocks unchanged.
-- `scripts/ifrs17_batch_kics_sensitivity.py`: `--all-periods` runs every ``md_inbox/FYyyyy_Qn`` directory; ``--manifest-period`` selects the ``crawl_manifest.json`` period (default last sorted). JSON output includes ``tables_grand_total_across_periods``.
-- Latest full run (12 quarter folders on disk): **49** tables extracted across all periods; FY2025_Q4 **11** insurers with >=1 table (**23** tables) vs legacy headings + ``min_score=4`` baseline **10** / **19**. KR0073/KR0069 still empty: FY2025_Q4 MD lacks IFRS 가정 민감도 grid in the keyword parse window (upstream MD scope), not fixable by regex alone.
+Moved to [`docs/changelog_parser.md`](changelog_parser.md) "2026-05-25 — IFRS17 B5 K-ICS sensitivity".
 
 ---
 

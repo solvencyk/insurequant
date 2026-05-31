@@ -1,8 +1,8 @@
 """Build CSM Movement Waterfall HISTORICAL (per-period) data.
 
-Reads data/ifrs17/extracted_history/<canonical>__<period>_csm.json (output of
+Reads data/dart/extracted_history/<canonical>__<period>_csm.json (output of
 scripts/ifrs17_batch_historical.py) and emits
-data/ifrs17/viz/csm_waterfall_history.json — a time-series of waterfalls
+data/dart/viz/csm_waterfall_history.json — a time-series of waterfalls
 across 13 quarters (2023.1Q ~ 2026.1Q) for the IFRS17 universe.
 
 Reuses pick_main_block / extract_stages from viz_build_csm_waterfall.py,
@@ -52,8 +52,8 @@ from scripts.viz_build_csm_waterfall import (  # noqa: E402
     rank_main_blocks,
 )
 
-SRC_DIR = ROOT / "data" / "ifrs17" / "extracted_history"
-OUT_DIR = ROOT / "data" / "ifrs17" / "viz"
+SRC_DIR = ROOT / "data" / "dart" / "extracted_history"
+OUT_DIR = ROOT / "data" / "dart" / "viz"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 HIST_SUMMARY = SRC_DIR / "_historical_summary.json"
 

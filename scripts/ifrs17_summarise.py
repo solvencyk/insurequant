@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.stdout.reconfigure(encoding="utf-8")
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SUMMARY = REPO_ROOT / "data" / "ifrs17" / "extracted" / "_batch_all_summary.json"
+SUMMARY = REPO_ROOT / "data" / "dart" / "extracted" / "_batch_all_summary.json"
 
 
 def main():

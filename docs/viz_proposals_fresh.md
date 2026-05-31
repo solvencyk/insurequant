@@ -248,9 +248,9 @@
 
 - **K-ICS:** `kics_disclosure.json` — 23社 × 9분기 × 항목 (`값` 적용 후 ratio
   포함), 5대 위험액 + 보조 KPI.
-- **IFRS17 A1 (measurement rollforward):** `data/ifrs17/extracted/*_measurement.json`
+- **IFRS17 A1 (measurement rollforward):** `data/dart/extracted/*_measurement.json`
   + `*_measurement_mvp.json` — 23/23 사업보고서 추출. 분기별은 P3 (MVP 이후).
-- **IFRS17 A2 (CSM amort schedule):** `data/ifrs17/extracted/*_csm.json` — 23/23.
+- **IFRS17 A2 (CSM amort schedule):** `data/dart/extracted/*_csm.json` — 23/23.
 - **IFRS17 A3/A4/B1/B5:** 23/23 MVP (사용자 보고 기준). 정규화 단계 상이.
 - **IR PDF 6社:** `artifacts/ir_research/` (5社 PDF + Text).
 
