@@ -1,0 +1,130 @@
+{
+  "company": "DB손해보험",
+  "kr": "KR0011",
+  "sector": "Non-Life",
+  "metric": "IR-derived NB CSM multiple (배) = 누계 신계약 CSM 유입 ÷ 누계(월납초회+기타초회). DB IR factsheet 'BEL,CSM변동'(신계약 유입) + '신규월납'(월납신규+비월납).",
+  "units": {
+    "nb_csm_eok": "억원 (YTD)",
+    "premium_eok": "억원 (YTD)",
+    "multiple_derived": "배"
+  },
+  "source_files": [
+    "2023.09_FactSheet_DB Insurance_Kor.xlsx",
+    "2023.12_FactSheet_DB Insurance_Kor(2).xlsx",
+    "2024.03_FactSheet_DB Insurance_Kor.xlsx",
+    "2024.06_FactSheet_DB Insurance_Kor.xlsx",
+    "2024.09_FactSheet_DB Insurance_Kor.xlsx",
+    "2024.12_FactSheet_DB Insurance_Kor_.xlsx",
+    "2025.03_FactSheet_DB Insurance_Kor.xlsx",
+    "2025.06_FactSheet_DB Insurance_Kor.xlsx",
+    "2025.09_FactSheet_DB Insurance_Kor_.xlsx",
+    "2025.12_FactSheet_DB Insurance_Kor.xlsx",
+    "2026.03_FactSheet_DB Insurance_Kor.xlsx"
+  ],
+  "series": {
+    "2023.1Q": {
+      "multiple_derived": 16.32,
+      "nb_csm_eok": 6766.2,
+      "premium_eok": 414.7,
+      "premium_wolnap_eok": 401.4,
+      "premium_etc_eok": 13.2,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2023.2Q": {
+      "multiple_derived": 15.93,
+      "nb_csm_eok": 13250.2,
+      "premium_eok": 832.0,
+      "premium_wolnap_eok": 391.8,
+      "premium_etc_eok": 25.5,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2023.3Q": {
+      "multiple_derived": 16.39,
+      "nb_csm_eok": 21060.1,
+      "premium_eok": 1284.6,
+      "premium_wolnap_eok": 435.1,
+      "premium_etc_eok": 17.5,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2023.4Q": {
+      "multiple_derived": 16.46,
+      "nb_csm_eok": 28261.2,
+      "premium_eok": 1717.0,
+      "premium_wolnap_eok": 416.1,
+      "premium_etc_eok": 16.3,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2024.1Q": {
+      "multiple_derived": 15.27,
+      "nb_csm_eok": 7175.2,
+      "premium_eok": 469.9,
+      "premium_wolnap_eok": 454.1,
+      "premium_etc_eok": 15.8,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2024.2Q": {
+      "multiple_derived": 15.86,
+      "nb_csm_eok": 14060.6,
+      "premium_eok": 886.6,
+      "premium_wolnap_eok": 408.1,
+      "premium_etc_eok": 8.5,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2024.3Q": {
+      "multiple_derived": 16.23,
+      "nb_csm_eok": 21814.8,
+      "premium_eok": 1344.0,
+      "premium_wolnap_eok": 443.5,
+      "premium_etc_eok": 13.9,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2024.4Q": {
+      "multiple_derived": 16.77,
+      "nb_csm_eok": 30780.4,
+      "premium_eok": 1835.5,
+      "premium_wolnap_eok": 487.4,
+      "premium_etc_eok": 4.1,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2025.1Q": {
+      "multiple_derived": 14.11,
+      "nb_csm_eok": 7070.2,
+      "premium_eok": 500.9,
+      "premium_wolnap_eok": 474.1,
+      "premium_etc_eok": 26.8,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2025.2Q": {
+      "multiple_derived": 15.3,
+      "nb_csm_eok": 14998.7,
+      "premium_eok": 980.2,
+      "premium_wolnap_eok": 446.9,
+      "premium_etc_eok": 32.3,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2025.3Q": {
+      "multiple_derived": 15.54,
+      "nb_csm_eok": 22236.3,
+      "premium_eok": 1431.3,
+      "premium_wolnap_eok": 424.9,
+      "premium_etc_eok": 26.2,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2025.4Q": {
+      "multiple_derived": 15.47,
+      "nb_csm_eok": 29326.9,
+      "premium_eok": 1895.2,
+      "premium_wolnap_eok": 445.1,
+      "premium_etc_eok": 18.9,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    },
+    "2026.1Q": {
+      "multiple_derived": 14.9,
+      "nb_csm_eok": 6245.9,
+      "premium_eok": 419.2,
+      "premium_wolnap_eok": 381.4,
+      "premium_etc_eok": 37.7,
+      "basis": "derived: cumYTD(신계약CSM 유입) ÷ cumYTD(월납신규+비월납)"
+    }
+  }
+}

@@ -1,0 +1,1680 @@
+{
+  "total": 209,
+  "ok": 209,
+  "broken_count": 0,
+  "broken": [],
+  "all": [
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 996700,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q1/raw/_groups/hana_financial/HFG_IR_Databook_1Q23.xlsx",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2003162,
+      "magic": "255044462d312e34",
+      "path": "FY2023_Q1/raw/_groups/kb_financial/kbfg_2023_1Q.pdf",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 3368618,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q1/raw/_groups/shinhan_financial/shinhan_factbook_2023_1Q.xlsx",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 376882,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q1/raw/KR0001_메리츠화재해상보험/MFG_202303.xlsx",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 85326,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q1/raw/KR0003_롯데손해보험/lotte_2023_1Q.pdf",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 10003813,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q1/raw/KR0008_삼성화재해상보험/(KOR) 23.1Q 삼성화재.xlsx",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 191584,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q1/raw/KR0009_현대해상/hyundai_FY2023_Q1_Factsheet.xlsx",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 694124,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q1/raw/KR0009_현대해상/hyundai_FY2023_Q1_presentation.pdf",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 484352,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2023_Q1/raw/KR0011_DB손해보험/2023.03_FactSheet_DB Insurance_Kor.xls",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 775401,
+      "magic": "255044462d312e37",
+      "path": "FY2023_Q1/raw/KR0011_DB손해보험/2023.1Q_IR Report_Kor(3).pdf",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 5669888,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2023_Q1/raw/KR0068_한화생명/1Q23 HLI FactSheet(KOR) (1)_1.xls",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1066972,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q1/raw/KR0068_한화생명/1Q23_HLI_Earnings(KOR).pdf",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 382194,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q1/raw/KR0079_미래에셋생명/2023 Q1 FactSheet Kr.xlsx",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1940604,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q1/raw/KR0079_미래에셋생명/2023 Q1 Results Kr.pdf",
+      "period": "FY2023_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1346432,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q2/raw/_groups/hana_financial/HFG_IR_Databook_2Q23.xlsx",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 913310,
+      "magic": "255044462d312e36",
+      "path": "FY2023_Q2/raw/_groups/kb_financial/kbfg_2023_2Q.pdf",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2883608,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q2/raw/_groups/shinhan_financial/shinhan_factbook_2023_2Q.xlsx",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 652004,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q2/raw/KR0001_메리츠화재해상보험/MFG_202306.xlsx",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 187774,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q2/raw/KR0003_롯데손해보험/lotte_2023_2Q_factsheet.xlsx",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1035036,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q2/raw/KR0008_삼성화재해상보험/(KOR) 23.2Q 삼성화재.xlsx",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 198978,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q2/raw/KR0009_현대해상/hyundai_FY2023_Q2_Factsheet.xlsx",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 747903,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q2/raw/KR0009_현대해상/hyundai_FY2023_Q2_presentation.pdf",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 453120,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2023_Q2/raw/KR0011_DB손해보험/2023.06_FactSheet_DB Insurance_Kor.xls",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 865701,
+      "magic": "255044462d312e37",
+      "path": "FY2023_Q2/raw/KR0011_DB손해보험/2023.2Q_IR Report_Kor(2).pdf",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 7007744,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2023_Q2/raw/KR0068_한화생명/1H23 HLI FactSheet(KOR).xls",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1357401,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q2/raw/KR0068_한화생명/1H23_HLI_Earnings(KOR).pdf",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 452669,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q2/raw/KR0079_미래에셋생명/2023 Q2 FactSheet Kr.xlsx",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2154980,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q2/raw/KR0079_미래에셋생명/2023 Q2 Results Kr.pdf",
+      "period": "FY2023_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 994716,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q3/raw/_groups/hana_financial/HFG_IR_Databook_3Q23.xlsx",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1013686,
+      "magic": "255044462d312e36",
+      "path": "FY2023_Q3/raw/_groups/kb_financial/kbfg_2023_3Q.pdf",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2949950,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q3/raw/_groups/shinhan_financial/shinhan_factbook_2023_3Q.xlsx",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 700152,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q3/raw/KR0001_메리츠화재해상보험/MFG_202309.xlsx",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 187463,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q3/raw/KR0003_롯데손해보험/lotte_2023_3Q_factsheet.xlsx",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1042772,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q3/raw/KR0008_삼성화재해상보험/(KOR) 23.3Q 삼성화재.xlsx",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 198130,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q3/raw/KR0009_현대해상/hyundai_FY2023_Q3_Factsheet.xlsx",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 735344,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q3/raw/KR0009_현대해상/hyundai_FY2023_Q3_presentation.pdf",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 243217,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q3/raw/KR0011_DB손해보험/2023.09_FactSheet_DB Insurance_Kor.xlsx",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 876722,
+      "magic": "255044462d312e37",
+      "path": "FY2023_Q3/raw/KR0011_DB손해보험/2023.3Q_IR Report_Kor.pdf",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1110644,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q3/raw/KR0068_한화생명/3Q23_HLI_Earnings(KOR) (1).pdf",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 506384,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q3/raw/KR0079_미래에셋생명/2023 Q3 FactSheet_kr.xlsx",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1965217,
+      "magic": "255044462d312e37",
+      "path": "FY2023_Q3/raw/KR0079_미래에셋생명/2023 Q3 Results Kr.pdf",
+      "period": "FY2023_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1360144,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q4/raw/_groups/hana_financial/HFG_IR_Databook_4Q23.xlsx",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1699977,
+      "magic": "255044462d312e36",
+      "path": "FY2023_Q4/raw/_groups/kb_financial/kbfg_2023_4Q.pdf",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 3478825,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q4/raw/_groups/shinhan_financial/shinhan_factbook_2023_4Q.xlsx",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 731924,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q4/raw/KR0001_메리츠화재해상보험/MFG_202312.xlsx",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 77330,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q4/raw/KR0003_롯데손해보험/lotte_2023_4Q_factsheet.xlsx",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1044214,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q4/raw/KR0008_삼성화재해상보험/(KOR) 23.4Q 삼성화재.xlsx",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 203402,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q4/raw/KR0009_현대해상/hyundai_FY2023_Q4_Factsheet.xlsx",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 846267,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q4/raw/KR0009_현대해상/hyundai_FY2023_Q4_presentation.pdf",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 667960,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q4/raw/KR0011_DB손해보험/2023.12_FactSheet_DB Insurance_Kor(2).xlsx",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 595456,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2023_Q4/raw/KR0068_한화생명/FY23 HLI FactSheet(KOR)_2.xls",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 864977,
+      "magic": "255044462d312e37",
+      "path": "FY2023_Q4/raw/KR0068_한화생명/FY23_HLI_Earnings(KOR).pdf",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 887092,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q4/raw/KR0069_삼성생명/★ 4QFY23FactsheetKOR.xlsx",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 491563,
+      "magic": "504b030414000600",
+      "path": "FY2023_Q4/raw/KR0079_미래에셋생명/2023 Q4 FactSheet_Kr.xlsx",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2056179,
+      "magic": "255044462d312e35",
+      "path": "FY2023_Q4/raw/KR0079_미래에셋생명/2023 Q4 Results_Kr.pdf",
+      "period": "FY2023_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1340006,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q1/raw/_groups/hana_financial/HFG_IR_Databook_1Q24.xlsx",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2103862,
+      "magic": "255044462d312e36",
+      "path": "FY2024_Q1/raw/_groups/kb_financial/kbfg_2024_1Q.pdf",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1049274,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q1/raw/_groups/nh_financial/nhfg_2024_1Q.pdf",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2756516,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q1/raw/_groups/shinhan_financial/shinhan_factbook_2024_1Q.xlsx",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 741041,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q1/raw/KR0001_메리츠화재해상보험/MFG_202403.xlsx",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 762771,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q1/raw/KR0003_롯데손해보험/lotte_2024_1Q_factsheet.xlsx",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1683787,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q1/raw/KR0008_삼성화재해상보험/(KOR) 24.1Q 삼성화재.xlsx",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 206516,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q1/raw/KR0009_현대해상/hyundai_FY2024_Q1_Factsheet.xlsx",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 633372,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q1/raw/KR0009_현대해상/hyundai_FY2024_Q1_presentation.pdf",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 593433,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q1/raw/KR0011_DB손해보험/2024.03_FactSheet_DB Insurance_Kor.xlsx",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 645800,
+      "magic": "255044462d312e37",
+      "path": "FY2024_Q1/raw/KR0011_DB손해보험/2024.1Q_DB손해보험.pdf",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 777216,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2024_Q1/raw/KR0068_한화생명/1Q24 HLI FactSheet(KOR).xls",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 840827,
+      "magic": "255044462d312e37",
+      "path": "FY2024_Q1/raw/KR0068_한화생명/1Q24_HLI_Earnings(KOR).pdf",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 836623,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q1/raw/KR0069_삼성생명/1QFY24FactsheetKOR_240516.xlsx",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 465411,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q1/raw/KR0079_미래에셋생명/2024 Q1 FactSheet_Kr.xlsx",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1771885,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q1/raw/KR0079_미래에셋생명/2024 Q1 Results_Kr.pdf",
+      "period": "FY2024_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1350211,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q2/raw/_groups/hana_financial/HFG_IR_Databook_2Q24.xlsx",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1502696,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q2/raw/_groups/kb_financial/kbfg_2024_2Q.pdf",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1126547,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q2/raw/_groups/nh_financial/nhfg_2024_2Q.pdf",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 3237172,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q2/raw/_groups/shinhan_financial/shinhan_factbook_2024_2Q.xlsx",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 775785,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q2/raw/KR0001_메리츠화재해상보험/MFG_202406.xlsx",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1552896,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2024_Q2/raw/KR0003_롯데손해보험/lotte_2024_2Q_factsheet.xls",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 974799,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q2/raw/KR0008_삼성화재해상보험/(KOR) 24.2Q 삼성화재.xlsx",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 210527,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q2/raw/KR0009_현대해상/hyundai_FY2024_Q2_Factsheet.xlsx",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 690097,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q2/raw/KR0009_현대해상/hyundai_FY2024_Q2_presentation.pdf",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 606020,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q2/raw/KR0011_DB손해보험/2024.06_FactSheet_DB Insurance_Kor.xlsx",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 767827,
+      "magic": "255044462d312e37",
+      "path": "FY2024_Q2/raw/KR0011_DB손해보험/2024.2Q_DB손해보험.pdf",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 957414,
+      "magic": "255044462d312e37",
+      "path": "FY2024_Q2/raw/KR0068_한화생명/1H24 HLI Earnings(KOR).pdf",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1131008,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2024_Q2/raw/KR0068_한화생명/1H24 HLI FactSheet(KOR)_4.xls",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 843060,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q2/raw/KR0069_삼성생명/1HFY24FactsheetKOR.xlsx",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 485463,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q2/raw/KR0079_미래에셋생명/2024 Q2 FactSheet_Kr.xlsx",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1872065,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q2/raw/KR0079_미래에셋생명/2024 Q2 Results_Kr.pdf",
+      "period": "FY2024_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1383030,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q3/raw/_groups/hana_financial/HFG_IR_Databook_3Q24.xlsx",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1521757,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q3/raw/_groups/kb_financial/kbfg_2024_3Q.pdf",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1056700,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q3/raw/_groups/nh_financial/nhfg_2024_3Q.pdf",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 3352462,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q3/raw/_groups/shinhan_financial/shinhan_factbook_2024_3Q.xlsx",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 768560,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q3/raw/KR0001_메리츠화재해상보험/MFG_202409.xlsx",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1558528,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2024_Q3/raw/KR0003_롯데손해보험/lotte_2024_3Q_factsheet.xls",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1711344,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q3/raw/KR0008_삼성화재해상보험/(KOR) 24.3Q 삼성화재.xlsx",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 221129,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q3/raw/KR0009_현대해상/hyundai_FY2024_Q3_Factsheet.xlsx",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 691085,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q3/raw/KR0009_현대해상/hyundai_FY2024_Q3_presentation.pdf",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 640935,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q3/raw/KR0011_DB손해보험/2024.09_FactSheet_DB Insurance_Kor.xlsx",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 800135,
+      "magic": "255044462d312e37",
+      "path": "FY2024_Q3/raw/KR0011_DB손해보험/2024.3Q_DB손해보험(1).pdf",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 894317,
+      "magic": "255044462d312e34",
+      "path": "FY2024_Q3/raw/KR0068_한화생명/3Q24 HLI Earnings(KOR).pptx.pdf",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 923648,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2024_Q3/raw/KR0068_한화생명/3Q24 HLI FactSheet(KOR).xls",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 790422,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q3/raw/KR0069_삼성생명/SLI 3QFY24Factsheet_KOR.xlsx",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 513970,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q3/raw/KR0079_미래에셋생명/2024 Q3 FactSheet_Kr.xlsx",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2581437,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q3/raw/KR0079_미래에셋생명/2024 Q3 Results_Kr_최종(경상이익 수정).pdf",
+      "period": "FY2024_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1419196,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q4/raw/_groups/hana_financial/HFG_IR_Databook_4Q24.xlsx",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1883463,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q4/raw/_groups/kb_financial/kbfg_2024_4Q.pdf",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1050944,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q4/raw/_groups/nh_financial/nhfg_2024_4Q.pdf",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 3308309,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q4/raw/_groups/shinhan_financial/shinhan_factbook_2024_4Q.xlsx",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 792677,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q4/raw/KR0001_메리츠화재해상보험/MFG_202412.xlsx",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1551872,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2024_Q4/raw/KR0003_롯데손해보험/lotte_2024_4Q_factsheet.xls",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1712179,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q4/raw/KR0008_삼성화재해상보험/(KOR) SFMI_24.4Q.xlsx",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 220967,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q4/raw/KR0009_현대해상/hyundai_FY2024_Q4_Factsheet.xlsx",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1076031,
+      "magic": "255044462d312e35",
+      "path": "FY2024_Q4/raw/KR0009_현대해상/hyundai_FY2024_Q4_presentation.pdf",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 646636,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q4/raw/KR0011_DB손해보험/2024.12_FactSheet_DB Insurance_Kor_.xlsx",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1654117,
+      "magic": "255044462d312e37",
+      "path": "FY2024_Q4/raw/KR0068_한화생명/FY24 HLI Earnings(KOR).pdf",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 937984,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2024_Q4/raw/KR0068_한화생명/FY24 HLI FactSheet(KOR).xls",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 806960,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q4/raw/KR0069_삼성생명/SLI 4QFY24Factsheet_KOR.xlsx",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 530030,
+      "magic": "504b030414000600",
+      "path": "FY2024_Q4/raw/KR0079_미래에셋생명/2024 Q4 FactSheet_Kr_rr.xlsx",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 10875675,
+      "magic": "255044462d312e37",
+      "path": "FY2024_Q4/raw/KR0079_미래에셋생명/2024 Q4 Results_Kr.pdf",
+      "period": "FY2024_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1442241,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q1/raw/_groups/hana_financial/HFG_IR_Databook_1Q25.xlsx",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2097025,
+      "magic": "255044462d312e35",
+      "path": "FY2025_Q1/raw/_groups/kb_financial/kbfg_2025_1Q.pdf",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1313268,
+      "magic": "255044462d312e35",
+      "path": "FY2025_Q1/raw/_groups/nh_financial/nhfg_2025_1Q.pdf",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2181709,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q1/raw/_groups/shinhan_financial/shinhan_factbook_2025_1Q.xlsx",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 542165,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q1/raw/KR0001_메리츠화재해상보험/MFG_202503.xlsx",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1523200,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2025_Q1/raw/KR0003_롯데손해보험/lotte_2025_1Q_factsheet.xls",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1702983,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q1/raw/KR0008_삼성화재해상보험/(KOR) SFMI 25.1Q.xlsx",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 239109,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q1/raw/KR0009_현대해상/hyundai_FY2025_Q1_Factsheet.xlsx",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 663431,
+      "magic": "255044462d312e35",
+      "path": "FY2025_Q1/raw/KR0009_현대해상/hyundai_FY2025_Q1_presentation.pdf",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 653452,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q1/raw/KR0011_DB손해보험/2025.03_FactSheet_DB Insurance_Kor.xlsx",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 739473,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q1/raw/KR0011_DB손해보험/2025.1Q_DB손해보험.pdf",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1583627,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q1/raw/KR0068_한화생명/1Q25 HLI Earnings(KOR).pdf",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 930816,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2025_Q1/raw/KR0068_한화생명/1Q25 HLI FactSheet(KOR).xls",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 790351,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q1/raw/KR0069_삼성생명/SLI 1QFY25Factsheet_KOR.xlsx",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 549348,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q1/raw/KR0079_미래에셋생명/2025 Q1 FactSheet_Kr.xlsx",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1994985,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q1/raw/KR0079_미래에셋생명/2025 Q1 Results_Kr_r.pdf",
+      "period": "FY2025_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1474055,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q2/raw/_groups/hana_financial/HFG_IR_Databook_2Q25.xlsx",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2196821,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q2/raw/_groups/kb_financial/kbfg_2025_2Q.pdf",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1168498,
+      "magic": "255044462d312e35",
+      "path": "FY2025_Q2/raw/_groups/nh_financial/nhfg_2025_2Q.pdf",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2177421,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q2/raw/_groups/shinhan_financial/shinhan_factbook_2025_2Q.xlsx",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 554813,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q2/raw/KR0001_메리츠화재해상보험/MFG_202506.xlsx",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1529344,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2025_Q2/raw/KR0003_롯데손해보험/lotte_2025_2Q_factsheet.xls",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1706471,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q2/raw/KR0008_삼성화재해상보험/(KOR) 삼성화재 25.2Q.xlsx",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 235248,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q2/raw/KR0009_현대해상/hyundai_FY2025_Q2_Factsheet.xlsx",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 735132,
+      "magic": "255044462d312e35",
+      "path": "FY2025_Q2/raw/KR0009_현대해상/hyundai_FY2025_Q2_presentation.pdf",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 667515,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q2/raw/KR0011_DB손해보험/2025.06_FactSheet_DB Insurance_Kor.xlsx",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 759591,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q2/raw/KR0011_DB손해보험/2025.2Q_DB손해보험.pdf",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1005311,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q2/raw/KR0068_한화생명/1H25 HLI Earnings(KOR).pdf",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2672640,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2025_Q2/raw/KR0068_한화생명/1H25 HLI FactSheet(KOR).xls",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 802538,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q2/raw/KR0069_삼성생명/SLI 1HFY25Factsheet_KOR.xlsx",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 572701,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q2/raw/KR0079_미래에셋생명/2025 Q2 FactSheet_Kr.xlsx",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2940826,
+      "magic": "255044462d312e35",
+      "path": "FY2025_Q2/raw/KR0079_미래에셋생명/2025 Q2 Results_Kr.pdf",
+      "period": "FY2025_Q2"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1448521,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q3/raw/_groups/hana_financial/HFG_IR_Databook_3Q25.xlsx",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2226753,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q3/raw/_groups/kb_financial/kbfg_2025_3Q.pdf",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1436446,
+      "magic": "255044462d312e35",
+      "path": "FY2025_Q3/raw/_groups/nh_financial/nhfg_2025_3Q.pdf",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2220247,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q3/raw/_groups/shinhan_financial/shinhan_factbook_2025_3Q.xlsx",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 856813,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q3/raw/KR0001_메리츠화재해상보험/MFG_202509.xlsx",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1530880,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2025_Q3/raw/KR0003_롯데손해보험/lotte_2025_3Q_factsheet.xls",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 992907,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q3/raw/KR0008_삼성화재해상보험/(KOR) 삼성화재 25.3Q.xlsx",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 214806,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q3/raw/KR0009_현대해상/hyundai_FY2025_Q3_Factsheet.xlsx",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 858700,
+      "magic": "255044462d312e35",
+      "path": "FY2025_Q3/raw/KR0009_현대해상/hyundai_FY2025_Q3_presentation.pdf",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 677396,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q3/raw/KR0011_DB손해보험/2025.09_FactSheet_DB Insurance_Kor_.xlsx",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 813526,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q3/raw/KR0011_DB손해보험/2025.3Q_DB손해보험.pdf",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1184444,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q3/raw/KR0068_한화생명/3Q25 HLI Earnings(KOR).pdf",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2211328,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2025_Q3/raw/KR0068_한화생명/3Q25 HLI FactSheet(KOR).xls",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 743634,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q3/raw/KR0069_삼성생명/SLI 3QFY25Factsheet_KOR.xlsx",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 600778,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q3/raw/KR0079_미래에셋생명/2025 Q3 FactSheet_Kr.xlsx",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 10306951,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q3/raw/KR0079_미래에셋생명/2025 Q3 Results_Kr.pdf",
+      "period": "FY2025_Q3"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1606894,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/_groups/hana_financial/4Q25_HFG_IR_Databook.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 3248412,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q4/raw/_groups/kb_financial/kbfg_2025_4Q.pdf",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1423574,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q4/raw/_groups/nh_financial/nhfg_2025_4Q.pdf",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2240048,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/_groups/shinhan_financial/shinhan_factbook_2025_4Q.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 885333,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/KR0001_메리츠화재해상보험/MFG_202512.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1534976,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2025_Q4/raw/KR0003_롯데손해보험/lotte_2025_4Q_factsheet.xls",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 992496,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/KR0008_삼성화재해상보험/(KOR) 삼성화재 25.4Q.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 225430,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/KR0009_현대해상/hyundai_FY2025_Q4_Factsheet.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "skipped (.bad)",
+      "size": 2746899,
+      "magic": "4372323403000000",
+      "path": "FY2025_Q4/raw/KR0009_현대해상/hyundai_FY2025_Q4_Factsheet.xlsx.bad",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 747505,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q4/raw/KR0009_현대해상/hyundai_FY2025_Q4_presentation.pdf",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1351341,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/KR0010_KB금융그룹/KR0010_KB금융그룹.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1095027,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q4/raw/KR0011_DB손해보험/2025 경영실적 및 2026 경영전략.pdf",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 684986,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/KR0011_DB손해보험/2025.12_FactSheet_DB Insurance_Kor.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2347243,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/KR0032_농협금융지주/4Q25 NHFG FACTBOOK.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2240048,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/KR0051_신한금융그룹/KR0051_신한금융그룹.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1590148,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q4/raw/KR0068_한화생명/FY25 HLI Earnings(KOR).pdf",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1547236,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/KR0068_한화생명/FY25 HLI FactSheet(KOR).xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1210502,
+      "magic": "255044462d312e35",
+      "path": "FY2025_Q4/raw/KR0069_삼성생명/2025_4Q_earnings_kor.pdf",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "skipped (.txt)",
+      "size": 19071,
+      "magic": "465920323032350d",
+      "path": "FY2025_Q4/raw/KR0069_삼성생명/2025_4Q_earnings_kor.txt",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 697638,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/KR0069_삼성생명/SLI FY25Factsheet_KOR.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 622411,
+      "magic": "504b030414000600",
+      "path": "FY2025_Q4/raw/KR0079_미래에셋생명/2025 Q4 FactSheet_vF.xlsx",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2195635,
+      "magic": "255044462d312e37",
+      "path": "FY2025_Q4/raw/KR0079_미래에셋생명/2025 Q4 Results_Kr.pdf",
+      "period": "FY2025_Q4"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1601040,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/_groups/hana_financial/1Q26_HFG_IR_Databook.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2130149,
+      "magic": "255044462d312e37",
+      "path": "FY2026_Q1/raw/_groups/kb_financial/kbfg_2026_1Q.pdf",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1037602,
+      "magic": "255044462d312e37",
+      "path": "FY2026_Q1/raw/_groups/nh_financial/nhfg_2026_1Q.pdf",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2313753,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/_groups/shinhan_financial/shinhan_factbook_2026_1Q.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 884985,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0001_메리츠화재해상보험/MFG_202603(k).xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1543168,
+      "magic": "d0cf11e0a1b11ae1",
+      "path": "FY2026_Q1/raw/KR0003_롯데손해보험/2026_1Q_factsheet.xls",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1702980,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0008_삼성화재해상보험/(KOR) SFMI 26.1Q_f.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 218931,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0009_현대해상/hyundai_FY2026_Q1_Factsheet.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1251912,
+      "magic": "255044462d312e35",
+      "path": "FY2026_Q1/raw/KR0009_현대해상/hyundai_FY2026_Q1_presentation.pdf",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1422094,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0010_KB금융그룹/KR0010_KB금융그룹.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 665476,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0011_DB손해보험/2026.03_FactSheet_DB Insurance_Kor.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1141021,
+      "magic": "255044462d312e37",
+      "path": "FY2026_Q1/raw/KR0011_DB손해보험/2026.1Q_DB Insurance_KOR_.pdf",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2480326,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0032_농협금융지주/1Q26 NHFG FACTBOOK.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 2313753,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0051_신한금융그룹/KR0051_신한금융그룹.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1227126,
+      "magic": "255044462d312e37",
+      "path": "FY2026_Q1/raw/KR0068_한화생명/1Q26 HLI Earnings(KOR)_1.pdf",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1554714,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0068_한화생명/1Q26 HLI FactSheet(KOR)_3.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 670417,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0069_삼성생명/SLI 1QFY26 Factsheet_KOR.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 644460,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0079_미래에셋생명/2026 Q1 FactSheet_Kr.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 1968413,
+      "magic": "255044462d312e37",
+      "path": "FY2026_Q1/raw/KR0079_미래에셋생명/2026 Q1 Results_Kr_vFF.pdf",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 233935,
+      "magic": "504b030414000600",
+      "path": "FY2026_Q1/raw/KR0087_동양생명/(TYL)+FY2026.1Q+Factsheet.xlsx",
+      "period": "FY2026_Q1"
+    },
+    {
+      "ok": true,
+      "reason": "ok",
+      "size": 852647,
+      "magic": "255044462d312e35",
+      "path": "FY2026_Q1/raw/KR1000_코리안리재보험/KR1000_코리안리재보험.pdf",
+      "period": "FY2026_Q1"
+    }
+  ]
+}

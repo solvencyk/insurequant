@@ -1,0 +1,776 @@
+{
+  "_meta": {
+    "purpose": "IR-disclosed NB CSM multiple per company/quarter (normalized).",
+    "built_at": "2026-05-29T23:42:59Z",
+    "build_script": "scripts/build_ir_disclosed_multiples.py",
+    "company_count": 9
+  },
+  "companies": [
+    {
+      "kr": "KR0001",
+      "company": "메리츠화재해상보험",
+      "sector": "Non-life",
+      "n_disclosed": 13,
+      "n_derived": 0,
+      "n_periods": 13,
+      "series": {
+        "2023.1Q": {
+          "multiple": 14.355,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 4171.84,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2023.2Q": {
+          "multiple": 14.232,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 3925.1,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2023.3Q": {
+          "multiple": 14.958,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 4100.64,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2023.4Q": {
+          "multiple": 14.445,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 3808.91,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2024.1Q": {
+          "multiple": 12.078,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 3722.66,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2024.2Q": {
+          "multiple": 11.761,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 3419.25,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2024.3Q": {
+          "multiple": 11.67,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 3411.91,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2024.4Q": {
+          "multiple": 9.393,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 3241.89,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2025.1Q": {
+          "multiple": 12.241,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 3567.91,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2025.2Q": {
+          "multiple": 12.268,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 3731.5,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2025.3Q": {
+          "multiple": 12.478,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 4230.67,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2025.4Q": {
+          "multiple": 11.651,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 4351.64,
+          "source": "MFG_202603(k).xlsx"
+        },
+        "2026.1Q": {
+          "multiple": 12.61,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 4402.52,
+          "source": "MFG_202603(k).xlsx"
+        }
+      }
+    },
+    {
+      "kr": "KR0002",
+      "company": "한화손해보험",
+      "sector": "Non-Life",
+      "n_disclosed": 0,
+      "n_derived": 0,
+      "n_periods": 4,
+      "series": {
+        "2024.4Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": null,
+          "source": null
+        },
+        "2025.1Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": null,
+          "source": null
+        },
+        "2025.2Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": null,
+          "source": null
+        },
+        "2025.3Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": null,
+          "source": null
+        }
+      }
+    },
+    {
+      "kr": "KR0003",
+      "company": "롯데손해보험",
+      "sector": "Non-life",
+      "n_disclosed": 0,
+      "n_derived": 9,
+      "n_periods": 13,
+      "series": {
+        "2023.1Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": null,
+          "source": "lotte_2023_1Q.pdf"
+        },
+        "2023.2Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": null,
+          "source": "lotte_2023_2Q_factsheet.xlsx"
+        },
+        "2023.3Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": null,
+          "source": "lotte_2023_3Q_factsheet.xlsx"
+        },
+        "2023.4Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": null,
+          "source": "lotte_2023_4Q_factsheet.xlsx"
+        },
+        "2024.1Q": {
+          "multiple": 13.5,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 720.1,
+          "source": "lotte_2024_1Q_factsheet.xlsx"
+        },
+        "2024.2Q": {
+          "multiple": 12.82,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 788.8,
+          "source": "lotte_2024_2Q_factsheet.xls"
+        },
+        "2024.3Q": {
+          "multiple": 14.1,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 1153.8,
+          "source": "lotte_2024_3Q_factsheet.xls"
+        },
+        "2024.4Q": {
+          "multiple": 14.38,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 1273.4,
+          "source": "lotte_2024_4Q_factsheet.xls"
+        },
+        "2025.1Q": {
+          "multiple": 11.92,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 1098.5,
+          "source": "lotte_2025_1Q_factsheet.xls"
+        },
+        "2025.2Q": {
+          "multiple": 14.37,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 1036.9,
+          "source": "lotte_2025_2Q_factsheet.xls"
+        },
+        "2025.3Q": {
+          "multiple": 12.58,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 1011.9,
+          "source": "lotte_2025_3Q_factsheet.xls"
+        },
+        "2025.4Q": {
+          "multiple": 11.51,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 974.4,
+          "source": "lotte_2025_4Q_factsheet.xls"
+        },
+        "2026.1Q": {
+          "multiple": 14.64,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 794.8,
+          "source": "lotte_2026_1Q_factsheet.xls"
+        }
+      }
+    },
+    {
+      "kr": "KR0008",
+      "company": "삼성화재해상보험",
+      "sector": "Non-Life",
+      "n_disclosed": 13,
+      "n_derived": 0,
+      "n_periods": 13,
+      "series": {
+        "2023.1Q": {
+          "multiple": 15.2,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 6782.7,
+          "source": null,
+          "premium_eok": 446.3
+        },
+        "2023.2Q": {
+          "multiple": 17.16,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 14426.0,
+          "source": null,
+          "multiple_derived_ytd": 16.18,
+          "premium_eok": 891.7
+        },
+        "2023.3Q": {
+          "multiple": 22.17,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 26067.9,
+          "source": null,
+          "multiple_derived_ytd": 18.4,
+          "premium_eok": 1416.9
+        },
+        "2023.4Q": {
+          "multiple": 19.29,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 34995.3,
+          "source": null,
+          "multiple_derived_ytd": 18.62,
+          "premium_eok": 1879.6
+        },
+        "2024.1Q": {
+          "multiple": 15.18,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 8855.5,
+          "source": null,
+          "premium_eok": 583.2
+        },
+        "2024.2Q": {
+          "multiple": 14.45,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 16382.7,
+          "source": null,
+          "multiple_derived_ytd": 14.84,
+          "premium_eok": 1104.1
+        },
+        "2024.3Q": {
+          "multiple": 15.5,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 24767.9,
+          "source": null,
+          "multiple_derived_ytd": 15.06,
+          "premium_eok": 1645.1
+        },
+        "2024.4Q": {
+          "multiple": 15.43,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 34511.8,
+          "source": null,
+          "multiple_derived_ytd": 15.16,
+          "premium_eok": 2276.6
+        },
+        "2025.1Q": {
+          "multiple": 11.85,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 7015.2,
+          "source": null,
+          "premium_eok": 592.1
+        },
+        "2025.2Q": {
+          "multiple": 13.73,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 14212.5,
+          "source": null,
+          "multiple_derived_ytd": 12.73,
+          "premium_eok": 1116.4
+        },
+        "2025.3Q": {
+          "multiple": 14.89,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 21881.7,
+          "source": null,
+          "multiple_derived_ytd": 13.41,
+          "premium_eok": 1631.6
+        },
+        "2025.4Q": {
+          "multiple": 13.95,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 28983.7,
+          "source": null,
+          "multiple_derived_ytd": 13.54,
+          "premium_eok": 2140.7
+        },
+        "2026.1Q": {
+          "multiple": 14.08,
+          "basis": "disclosed:multiple_disclosed",
+          "nb_csm_eok": 6267.3,
+          "source": null,
+          "premium_eok": 445.1
+        }
+      }
+    },
+    {
+      "kr": "KR0011",
+      "company": "DB손해보험",
+      "sector": "Non-Life",
+      "n_disclosed": 0,
+      "n_derived": 13,
+      "n_periods": 13,
+      "series": {
+        "2023.1Q": {
+          "multiple": 16.32,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 6766.2,
+          "source": null,
+          "premium_eok": 414.7
+        },
+        "2023.2Q": {
+          "multiple": 15.93,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 13250.2,
+          "source": null,
+          "premium_eok": 832.0
+        },
+        "2023.3Q": {
+          "multiple": 16.39,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 21060.1,
+          "source": null,
+          "premium_eok": 1284.6
+        },
+        "2023.4Q": {
+          "multiple": 16.46,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 28261.2,
+          "source": null,
+          "premium_eok": 1717.0
+        },
+        "2024.1Q": {
+          "multiple": 15.27,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 7175.2,
+          "source": null,
+          "premium_eok": 469.9
+        },
+        "2024.2Q": {
+          "multiple": 15.86,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 14060.6,
+          "source": null,
+          "premium_eok": 886.6
+        },
+        "2024.3Q": {
+          "multiple": 16.23,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 21814.8,
+          "source": null,
+          "premium_eok": 1344.0
+        },
+        "2024.4Q": {
+          "multiple": 16.77,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 30780.4,
+          "source": null,
+          "premium_eok": 1835.5
+        },
+        "2025.1Q": {
+          "multiple": 14.11,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 7070.2,
+          "source": null,
+          "premium_eok": 500.9
+        },
+        "2025.2Q": {
+          "multiple": 15.3,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 14998.7,
+          "source": null,
+          "premium_eok": 980.2
+        },
+        "2025.3Q": {
+          "multiple": 15.54,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 22236.3,
+          "source": null,
+          "premium_eok": 1431.3
+        },
+        "2025.4Q": {
+          "multiple": 15.47,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 29326.9,
+          "source": null,
+          "premium_eok": 1895.2
+        },
+        "2026.1Q": {
+          "multiple": 14.9,
+          "basis": "derived:multiple_derived",
+          "nb_csm_eok": 6245.9,
+          "source": null,
+          "premium_eok": 419.2
+        }
+      }
+    },
+    {
+      "kr": "KR0068",
+      "company": "한화생명",
+      "sector": "Life",
+      "n_disclosed": 13,
+      "n_derived": 0,
+      "n_periods": 13,
+      "series": {
+        "2023.1Q": {
+          "multiple": 6.143,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 5444.29,
+          "source": "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+          "by_product": {
+            "보장성": 13.125,
+            "종신": 9.462,
+            "건강": 18.984,
+            "연금저축": 2.365
+          }
+        },
+        "2023.2Q": {
+          "multiple": 10.42,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 6198.84,
+          "source": "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+          "by_product": {
+            "보장성": 10.742,
+            "종신": 7.872,
+            "건강": 21.086,
+            "연금저축": 1.604
+          }
+        },
+        "2023.3Q": {
+          "multiple": 12.386,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 6916.34,
+          "source": "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+          "by_product": {
+            "보장성": 13.035,
+            "종신": 8.924,
+            "건강": 22.365,
+            "연금저축": 1.388
+          }
+        },
+        "2023.4Q": {
+          "multiple": 12.811,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 6852.7,
+          "source": "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+          "by_product": {
+            "보장성": 13.574,
+            "종신": 9.685,
+            "건강": 20.381,
+            "연금저축": 1.968
+          }
+        },
+        "2024.1Q": {
+          "multiple": 6.18,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 5154.02,
+          "source": "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+          "by_product": {
+            "보장성": 7.39,
+            "종신": 3.326,
+            "건강": 15.024,
+            "연금저축": 0.262
+          }
+        },
+        "2024.2Q": {
+          "multiple": 8.673,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 4810.87,
+          "source": "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+          "by_product": {
+            "보장성": 8.375,
+            "종신": 3.344,
+            "건강": 13.734,
+            "연금저축": 1.314
+          }
+        },
+        "2024.3Q": {
+          "multiple": 7.848,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 5420.44,
+          "source": "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+          "by_product": {
+            "보장성": 7.586,
+            "종신": 2.824,
+            "건강": 16.131,
+            "연금저축": 1.211
+          }
+        },
+        "2024.4Q": {
+          "multiple": 8.225,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 5845.52,
+          "source": "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+          "by_product": {
+            "보장성": 8.128,
+            "종신": 2.122,
+            "건강": 16.022,
+            "연금저축": 1.088
+          }
+        },
+        "2025.1Q": {
+          "multiple": 7.753,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 4881.94,
+          "source": "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx",
+          "by_product": {
+            "보장성": 7.962,
+            "종신": 3.478,
+            "건강": 15.957,
+            "연금저축": 1.31
+          }
+        },
+        "2025.2Q": {
+          "multiple": 6.69,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 4373.24,
+          "source": "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx",
+          "by_product": {
+            "보장성": 6.695,
+            "종신": 3.328,
+            "건강": 14.643,
+            "연금저축": 1.468
+          }
+        },
+        "2025.3Q": {
+          "multiple": 7.217,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 5642.96,
+          "source": "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx",
+          "by_product": {
+            "보장성": 7.378,
+            "종신": 3.965,
+            "건강": 16.361,
+            "연금저축": 1.311
+          }
+        },
+        "2025.4Q": {
+          "multiple": 8.326,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 5764.44,
+          "source": "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx",
+          "by_product": {
+            "보장성": 8.482,
+            "종신": 4.974,
+            "건강": 18.48,
+            "연금저축": 1.622
+          }
+        },
+        "2026.1Q": {
+          "multiple": 9.84,
+          "basis": "disclosed:multiple_total",
+          "nb_csm_eok": 6109.34,
+          "source": "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx",
+          "by_product": {
+            "보장성": 9.58,
+            "종신": 7.097,
+            "건강": 14.622,
+            "연금저축": 2.35
+          }
+        }
+      }
+    },
+    {
+      "kr": "KR0069",
+      "company": "삼성생명",
+      "sector": "Life",
+      "n_disclosed": 12,
+      "n_derived": 0,
+      "n_periods": 12,
+      "series": {
+        "2023.1Q": {
+          "multiple": 14.92,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 8460.4,
+          "source": "1HFY24FactsheetKOR.xlsx"
+        },
+        "2023.2Q": {
+          "multiple": 12.45,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 9699.0,
+          "source": "1HFY24FactsheetKOR.xlsx"
+        },
+        "2023.3Q": {
+          "multiple": 14.96,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 9564.4,
+          "source": "1HFY24FactsheetKOR.xlsx"
+        },
+        "2023.4Q": {
+          "multiple": 15.39,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 8557.7,
+          "source": "1HFY24FactsheetKOR.xlsx"
+        },
+        "2024.1Q": {
+          "multiple": 10.46,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 8576.0,
+          "source": "1HFY24FactsheetKOR.xlsx"
+        },
+        "2024.2Q": {
+          "multiple": 11.86,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 7884.6,
+          "source": "1HFY24FactsheetKOR.xlsx"
+        },
+        "2024.3Q": {
+          "multiple": 10.16,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 8346.1,
+          "source": "SLI 1HFY25Factsheet_KOR.xlsx"
+        },
+        "2024.4Q": {
+          "multiple": 9.8,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 7799.4,
+          "source": "SLI 1HFY25Factsheet_KOR.xlsx"
+        },
+        "2025.1Q": {
+          "multiple": 10.2,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 6577.7,
+          "source": "SLI 1HFY25Factsheet_KOR.xlsx"
+        },
+        "2025.2Q": {
+          "multiple": 12.21,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 7685.6,
+          "source": "SLI 1HFY25Factsheet_KOR.xlsx"
+        },
+        "2025.3Q": {
+          "multiple": 11.96,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 8714.1,
+          "source": "SLI 3QFY25Factsheet_KOR.xlsx"
+        },
+        "2025.4Q": {
+          "multiple": 10.7,
+          "basis": "disclosed:multiple_wolcho",
+          "nb_csm_eok": 7617.2,
+          "source": "SLI FY25Factsheet_KOR.xlsx"
+        }
+      }
+    },
+    {
+      "kr": "KR0079",
+      "company": "미래에셋생명",
+      "sector": "Life",
+      "n_disclosed": 0,
+      "n_derived": 0,
+      "n_periods": 13,
+      "series": {
+        "2023.1Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 572.5,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2023.2Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 688.9,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2023.3Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 854.1,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2023.4Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 802.9,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2024.1Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 962.0,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2024.2Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 761.9,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2024.3Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 1018.7,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2024.4Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 1203.5,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2025.1Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 1410.4,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2025.2Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 1041.6,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2025.3Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 1510.9,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2025.4Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 1435.9,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        },
+        "2026.1Q": {
+          "multiple": null,
+          "basis": null,
+          "nb_csm_eok": 1506.6,
+          "source": "2026 Q1 FactSheet_Kr.xlsx"
+        }
+      }
+    },
+    {
+      "kr": "KR1000",
+      "company": "코리안리",
+      "sector": "Reinsurance",
+      "n_disclosed": 0,
+      "n_derived": 0,
+      "n_periods": 0,
+      "series": {}
+    }
+  ]
+}

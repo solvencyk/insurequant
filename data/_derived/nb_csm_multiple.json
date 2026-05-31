@@ -1,0 +1,1604 @@
+{
+  "_meta": {
+    "definition": "NB CSM multiple = 신계약 CSM ÷ (월납초회 + 기타초회), YTD-matched, 일시납 제외",
+    "numerator": "csm_waterfall(_history) new_business CSM (억원)",
+    "denominator_sonbo": "KIDI 장기보험 원수보험료 N07 월납+기타초회",
+    "denominator_life": "KIDI 수입보험료 명세표 ML01 월납+기타초회 (일시납 제외)",
+    "validation": "삼성생명 FY2024=9.80 vs IR Total 9.8 (exact); 손보 삼성화재/메리츠/DB ±5%",
+    "built_at": "2026-05-29T13:48:30Z",
+    "build_script": "scripts/build_nb_csm_multiple.py",
+    "company_count": 27
+  },
+  "companies": [
+    {
+      "company": "DB생명보험",
+      "kidi_name": "DB",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 5247.3,
+        "wolnap_chowoe_eok": 420.8,
+        "multiple": 12.47,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 1253.8,
+          "wolnap_chowoe_eok": 87.5,
+          "multiple": 14.33
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 2441.7,
+          "wolnap_chowoe_eok": 177.3,
+          "multiple": 13.77
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 4086.0,
+          "wolnap_chowoe_eok": 296.7,
+          "multiple": 13.77
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 5247.3,
+          "wolnap_chowoe_eok": 369.8,
+          "multiple": 14.19
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 1239.3,
+          "wolnap_chowoe_eok": 123.5,
+          "multiple": 10.04
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 2441.7,
+          "wolnap_chowoe_eok": 197.8,
+          "multiple": 12.34
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 4086.0,
+          "wolnap_chowoe_eok": 304.1,
+          "multiple": 13.44
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 5247.3,
+          "wolnap_chowoe_eok": 420.8,
+          "multiple": 12.47
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 1429.5,
+          "wolnap_chowoe_eok": 107.0,
+          "multiple": 13.35
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 4694.5,
+          "wolnap_chowoe_eok": 338.8,
+          "multiple": 13.86
+        }
+      }
+    },
+    {
+      "company": "교보생명보험",
+      "kidi_name": "교보",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 27557.1,
+        "wolnap_chowoe_eok": 1452.8,
+        "multiple": 18.97,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.2Q": {
+          "nb_csm_eok": 13362.4,
+          "wolnap_chowoe_eok": 598.9,
+          "multiple": 22.31
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 20584.4,
+          "wolnap_chowoe_eok": 936.2,
+          "multiple": 21.99
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 27457.8,
+          "wolnap_chowoe_eok": 1183.1,
+          "multiple": 23.21
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 7878.0,
+          "wolnap_chowoe_eok": 558.1,
+          "multiple": 14.12
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 14109.4,
+          "wolnap_chowoe_eok": 828.4,
+          "multiple": 17.03
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 21088.1,
+          "wolnap_chowoe_eok": 1128.8,
+          "multiple": 18.68
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 27557.1,
+          "wolnap_chowoe_eok": 1452.8,
+          "multiple": 18.97
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 5151.4,
+          "wolnap_chowoe_eok": 332.2,
+          "multiple": 15.51
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 10654.5,
+          "wolnap_chowoe_eok": 671.6,
+          "multiple": 15.86
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 18633.2,
+          "wolnap_chowoe_eok": 1126.4,
+          "multiple": 16.54
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 27408.1,
+          "wolnap_chowoe_eok": 1550.9,
+          "multiple": 17.67
+        }
+      }
+    },
+    {
+      "company": "농협생명보험",
+      "kidi_name": "농협",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 16285.5,
+        "wolnap_chowoe_eok": 847.1,
+        "multiple": 19.22,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 3957.7,
+          "wolnap_chowoe_eok": 142.6,
+          "multiple": 27.75
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 6663.6,
+          "wolnap_chowoe_eok": 246.2,
+          "multiple": 27.06
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 8459.6,
+          "wolnap_chowoe_eok": 331.6,
+          "multiple": 25.52
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 9209.7,
+          "wolnap_chowoe_eok": 521.5,
+          "multiple": 17.66
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 11534.3,
+          "wolnap_chowoe_eok": 619.7,
+          "multiple": 18.61
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 14452.1,
+          "wolnap_chowoe_eok": 730.6,
+          "multiple": 19.78
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 16285.5,
+          "wolnap_chowoe_eok": 847.1,
+          "multiple": 19.22
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 9209.7,
+          "wolnap_chowoe_eok": 595.1,
+          "multiple": 15.48
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 11534.3,
+          "wolnap_chowoe_eok": 818.0,
+          "multiple": 14.1
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 14452.1,
+          "wolnap_chowoe_eok": 907.4,
+          "multiple": 15.93
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 16285.5,
+          "wolnap_chowoe_eok": 958.5,
+          "multiple": 16.99
+        }
+      }
+    },
+    {
+      "company": "동양생명",
+      "kidi_name": "동양",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 7601.6,
+        "wolnap_chowoe_eok": 696.8,
+        "multiple": 10.91,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 1762.7,
+          "wolnap_chowoe_eok": 135.9,
+          "multiple": 12.97
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 3587.8,
+          "wolnap_chowoe_eok": 287.4,
+          "multiple": 12.49
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 7601.6,
+          "wolnap_chowoe_eok": 570.1,
+          "multiple": 13.33
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 2043.5,
+          "wolnap_chowoe_eok": 192.4,
+          "multiple": 10.62
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 3587.8,
+          "wolnap_chowoe_eok": 319.0,
+          "multiple": 11.25
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 5671.0,
+          "wolnap_chowoe_eok": 522.9,
+          "multiple": 10.85
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 7601.6,
+          "wolnap_chowoe_eok": 696.8,
+          "multiple": 10.91
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 2043.5,
+          "wolnap_chowoe_eok": 147.3,
+          "multiple": 13.87
+        }
+      }
+    },
+    {
+      "company": "라이나생명보험",
+      "kidi_name": "라이나",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 5732.7,
+        "wolnap_chowoe_eok": 452.2,
+        "multiple": 12.68,
+        "ir_total_multiple": null
+      },
+      "series": {}
+    },
+    {
+      "company": "메트라이프생명보험",
+      "kidi_name": "메트라이프",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 5044.5,
+        "wolnap_chowoe_eok": 395.2,
+        "multiple": 12.76,
+        "ir_total_multiple": null
+      },
+      "series": {}
+    },
+    {
+      "company": "미래에셋생명",
+      "kidi_name": "미래에셋",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 3946.1,
+        "wolnap_chowoe_eok": 395.5,
+        "multiple": 9.98,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.2Q": {
+          "nb_csm_eok": 1537.3,
+          "wolnap_chowoe_eok": 97.4,
+          "multiple": 15.79
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 2920.5,
+          "wolnap_chowoe_eok": 229.3,
+          "multiple": 12.74
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 962.0,
+          "wolnap_chowoe_eok": 100.2,
+          "multiple": 9.6
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 1723.9,
+          "wolnap_chowoe_eok": 199.1,
+          "multiple": 8.66
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 2933.6,
+          "wolnap_chowoe_eok": 295.3,
+          "multiple": 9.93
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 3946.1,
+          "wolnap_chowoe_eok": 395.5,
+          "multiple": 9.98
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 1637.2,
+          "wolnap_chowoe_eok": 120.7,
+          "multiple": 13.57
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 2451.9,
+          "wolnap_chowoe_eok": 214.9,
+          "multiple": 11.41
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 3962.9,
+          "wolnap_chowoe_eok": 356.1,
+          "multiple": 11.13
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 5398.8,
+          "wolnap_chowoe_eok": 476.6,
+          "multiple": 11.33
+        }
+      }
+    },
+    {
+      "company": "삼성생명",
+      "kidi_name": "삼성",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 32984.9,
+        "wolnap_chowoe_eok": 3026.5,
+        "multiple": 10.9,
+        "ir_total_multiple": 9.8
+      },
+      "series": {
+        "2023.2Q": {
+          "nb_csm_eok": 18159.3,
+          "wolnap_chowoe_eok": 1250.9,
+          "multiple": 14.52
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 27723.7,
+          "wolnap_chowoe_eok": 1840.7,
+          "multiple": 15.06
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 36281.5,
+          "wolnap_chowoe_eok": 2330.0,
+          "multiple": 15.57
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 8658.0,
+          "wolnap_chowoe_eok": 790.2,
+          "multiple": 10.96,
+          "ir_total_multiple": 10.5
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 16628.5,
+          "wolnap_chowoe_eok": 1413.7,
+          "multiple": 11.76,
+          "ir_total_multiple": 11.9
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 25068.1,
+          "wolnap_chowoe_eok": 2225.1,
+          "multiple": 11.27,
+          "ir_total_multiple": 10.2
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 32984.9,
+          "wolnap_chowoe_eok": 3026.5,
+          "multiple": 10.9,
+          "ir_total_multiple": 9.8
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 6745.0,
+          "wolnap_chowoe_eok": 708.1,
+          "multiple": 9.53,
+          "ir_total_multiple": 10.2
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 16628.5,
+          "wolnap_chowoe_eok": 1359.6,
+          "multiple": 12.23
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 25068.1,
+          "wolnap_chowoe_eok": 2098.9,
+          "multiple": 11.94
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 32984.9,
+          "wolnap_chowoe_eok": 2789.1,
+          "multiple": 11.83
+        }
+      }
+    },
+    {
+      "company": "신한라이프생명보험",
+      "kidi_name": "신한라이프",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 25315.3,
+        "wolnap_chowoe_eok": 1279.4,
+        "multiple": 19.79,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 4415.8,
+          "wolnap_chowoe_eok": 186.2,
+          "multiple": 23.72
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 8757.6,
+          "wolnap_chowoe_eok": 362.7,
+          "multiple": 24.15
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 14521.3,
+          "wolnap_chowoe_eok": 618.6,
+          "multiple": 23.47
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 18035.5,
+          "wolnap_chowoe_eok": 755.9,
+          "multiple": 23.86
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 7531.9,
+          "wolnap_chowoe_eok": 413.5,
+          "multiple": 18.21
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 12462.2,
+          "wolnap_chowoe_eok": 650.5,
+          "multiple": 19.16
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 18981.4,
+          "wolnap_chowoe_eok": 982.3,
+          "multiple": 19.32
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 25315.3,
+          "wolnap_chowoe_eok": 1279.4,
+          "multiple": 19.79
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 7531.9,
+          "wolnap_chowoe_eok": 294.9,
+          "multiple": 25.54
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 14109.1,
+          "wolnap_chowoe_eok": 555.4,
+          "multiple": 25.4
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 24047.7,
+          "wolnap_chowoe_eok": 998.8,
+          "multiple": 24.08
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 32891.5,
+          "wolnap_chowoe_eok": 1356.7,
+          "multiple": 24.24
+        }
+      }
+    },
+    {
+      "company": "에이비엘생명보험",
+      "kidi_name": "ABL",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 3475.9,
+        "wolnap_chowoe_eok": 380.2,
+        "multiple": 9.14,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 604.3,
+          "wolnap_chowoe_eok": 48.4,
+          "multiple": 12.48
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 1655.3,
+          "wolnap_chowoe_eok": 137.3,
+          "multiple": 12.05
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 2778.5,
+          "wolnap_chowoe_eok": 246.1,
+          "multiple": 11.29
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 3475.9,
+          "wolnap_chowoe_eok": 313.9,
+          "multiple": 11.07
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 866.6,
+          "wolnap_chowoe_eok": 99.1,
+          "multiple": 8.74
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 1389.6,
+          "wolnap_chowoe_eok": 181.4,
+          "multiple": 7.66
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 1937.6,
+          "wolnap_chowoe_eok": 269.9,
+          "multiple": 7.18
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 3475.9,
+          "wolnap_chowoe_eok": 380.2,
+          "multiple": 9.14
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 552.9,
+          "wolnap_chowoe_eok": 86.6,
+          "multiple": 6.39
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 1182.2,
+          "wolnap_chowoe_eok": 191.1,
+          "multiple": 6.19
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 2303.8,
+          "wolnap_chowoe_eok": 309.3,
+          "multiple": 7.45
+        }
+      }
+    },
+    {
+      "company": "에이아이에이생명보험",
+      "kidi_name": "AIA",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 3557.2,
+        "wolnap_chowoe_eok": 164.9,
+        "multiple": 21.57,
+        "ir_total_multiple": null
+      },
+      "series": {}
+    },
+    {
+      "company": "처브라이프생명보험",
+      "kidi_name": "ACE",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 98.1,
+        "wolnap_chowoe_eok": 15.1,
+        "multiple": 6.49,
+        "ir_total_multiple": null
+      },
+      "series": {}
+    },
+    {
+      "company": "케이디비생명보험",
+      "kidi_name": "KDB",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 3282.2,
+        "wolnap_chowoe_eok": 379.8,
+        "multiple": 8.64,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.2Q": {
+          "nb_csm_eok": 1174.0,
+          "wolnap_chowoe_eok": 101.4,
+          "multiple": 11.58
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 2210.7,
+          "wolnap_chowoe_eok": 181.7,
+          "multiple": 12.17
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 3023.1,
+          "wolnap_chowoe_eok": 239.5,
+          "multiple": 12.62
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 1238.1,
+          "wolnap_chowoe_eok": 141.3,
+          "multiple": 8.76
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 1876.5,
+          "wolnap_chowoe_eok": 206.4,
+          "multiple": 9.09
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 2532.4,
+          "wolnap_chowoe_eok": 287.0,
+          "multiple": 8.82
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 3282.2,
+          "wolnap_chowoe_eok": 379.8,
+          "multiple": 8.64
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 744.2,
+          "wolnap_chowoe_eok": 85.4,
+          "multiple": 8.71
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 1250.7,
+          "wolnap_chowoe_eok": 148.1,
+          "multiple": 8.45
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 1731.1,
+          "wolnap_chowoe_eok": 193.1,
+          "multiple": 8.96
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 2337.9,
+          "wolnap_chowoe_eok": 238.2,
+          "multiple": 9.81
+        }
+      }
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "kidi_name": "KB라이프",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 6346.7,
+        "wolnap_chowoe_eok": 629.0,
+        "multiple": 10.09,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 1224.8,
+          "wolnap_chowoe_eok": 110.3,
+          "multiple": 11.11
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 2888.8,
+          "wolnap_chowoe_eok": 298.2,
+          "multiple": 9.69
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 4539.3,
+          "wolnap_chowoe_eok": 463.4,
+          "multiple": 9.8
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 6346.7,
+          "wolnap_chowoe_eok": 571.6,
+          "multiple": 11.1
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 1313.6,
+          "wolnap_chowoe_eok": 131.6,
+          "multiple": 9.98
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 2888.8,
+          "wolnap_chowoe_eok": 249.0,
+          "multiple": 11.6
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 4539.3,
+          "wolnap_chowoe_eok": 443.8,
+          "multiple": 10.23
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 6346.7,
+          "wolnap_chowoe_eok": 629.0,
+          "multiple": 10.09
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 1313.6,
+          "wolnap_chowoe_eok": 188.3,
+          "multiple": 6.98
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 2331.8,
+          "wolnap_chowoe_eok": 391.9,
+          "multiple": 5.95
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 3832.0,
+          "wolnap_chowoe_eok": 623.2,
+          "multiple": 6.15
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 5047.3,
+          "wolnap_chowoe_eok": 744.4,
+          "multiple": 6.78
+        }
+      }
+    },
+    {
+      "company": "푸본현대생명보험",
+      "kidi_name": "푸본현대",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 528.8,
+        "wolnap_chowoe_eok": 182.9,
+        "multiple": 2.89,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 74.5,
+          "wolnap_chowoe_eok": 12.8,
+          "multiple": 5.8
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 489.7,
+          "wolnap_chowoe_eok": 41.8,
+          "multiple": 11.72
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 843.5,
+          "wolnap_chowoe_eok": 97.5,
+          "multiple": 8.65
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 1165.1,
+          "wolnap_chowoe_eok": 131.7,
+          "multiple": 8.85
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 224.6,
+          "wolnap_chowoe_eok": 32.5,
+          "multiple": 6.92
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 314.6,
+          "wolnap_chowoe_eok": 77.4,
+          "multiple": 4.06
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 412.7,
+          "wolnap_chowoe_eok": 131.7,
+          "multiple": 3.13
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 1165.1,
+          "wolnap_chowoe_eok": 182.9,
+          "multiple": 6.37
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 132.8,
+          "wolnap_chowoe_eok": 30.0,
+          "multiple": 4.43
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 512.3,
+          "wolnap_chowoe_eok": 66.9,
+          "multiple": 7.65
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 745.8,
+          "wolnap_chowoe_eok": 114.6,
+          "multiple": 6.51
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 990.6,
+          "wolnap_chowoe_eok": 161.7,
+          "multiple": 6.13
+        }
+      }
+    },
+    {
+      "company": "하나생명보험",
+      "kidi_name": "하나",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 3240.3,
+        "wolnap_chowoe_eok": 350.6,
+        "multiple": 9.24,
+        "ir_total_multiple": null
+      },
+      "series": {}
+    },
+    {
+      "company": "한화생명",
+      "kidi_name": "한화",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 32360.6,
+        "wolnap_chowoe_eok": 2697.9,
+        "multiple": 11.99,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 7048.4,
+          "wolnap_chowoe_eok": 804.8,
+          "multiple": 8.76
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 16521.1,
+          "wolnap_chowoe_eok": 1374.0,
+          "multiple": 12.02
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 23372.5,
+          "wolnap_chowoe_eok": 1924.1,
+          "multiple": 12.15
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 32360.6,
+          "wolnap_chowoe_eok": 2452.5,
+          "multiple": 13.2
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 7156.4,
+          "wolnap_chowoe_eok": 823.3,
+          "multiple": 8.69,
+          "ir_total_multiple": 6.0
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 13665.7,
+          "wolnap_chowoe_eok": 1367.8,
+          "multiple": 9.99
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 20912.5,
+          "wolnap_chowoe_eok": 2021.6,
+          "multiple": 10.34
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 32360.6,
+          "wolnap_chowoe_eok": 2697.9,
+          "multiple": 11.99
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 6784.0,
+          "wolnap_chowoe_eok": 616.5,
+          "multiple": 11.0,
+          "ir_total_multiple": 8.0
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 13785.1,
+          "wolnap_chowoe_eok": 1251.4,
+          "multiple": 11.02
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 22282.7,
+          "wolnap_chowoe_eok": 2017.7,
+          "multiple": 11.04
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 31007.7,
+          "wolnap_chowoe_eok": 2691.2,
+          "multiple": 11.52
+        }
+      }
+    },
+    {
+      "company": "흥국생명보험",
+      "kidi_name": "흥국",
+      "sector": "Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 3883.0,
+        "wolnap_chowoe_eok": 199.7,
+        "multiple": 19.45,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 1006.3,
+          "wolnap_chowoe_eok": 33.0,
+          "multiple": 30.52
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 1827.6,
+          "wolnap_chowoe_eok": 70.9,
+          "multiple": 25.77
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 2827.2,
+          "wolnap_chowoe_eok": 114.0,
+          "multiple": 24.79
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 3672.1,
+          "wolnap_chowoe_eok": 160.7,
+          "multiple": 22.85
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 1053.7,
+          "wolnap_chowoe_eok": 50.9,
+          "multiple": 20.69
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 1930.8,
+          "wolnap_chowoe_eok": 93.7,
+          "multiple": 20.6
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 2850.9,
+          "wolnap_chowoe_eok": 142.7,
+          "multiple": 19.97
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 3883.0,
+          "wolnap_chowoe_eok": 199.7,
+          "multiple": 19.45
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 1122.8,
+          "wolnap_chowoe_eok": 71.6,
+          "multiple": 15.69
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 2306.5,
+          "wolnap_chowoe_eok": 143.6,
+          "multiple": 16.06
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 3870.3,
+          "wolnap_chowoe_eok": 234.4,
+          "multiple": 16.51
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 5328.1,
+          "wolnap_chowoe_eok": 332.4,
+          "multiple": 16.03
+        }
+      }
+    },
+    {
+      "company": "DB손해보험",
+      "kidi_name": "DB",
+      "sector": "Non-Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 30780.4,
+        "wolnap_chowoe_eok": 1829.0,
+        "multiple": 16.83,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 6858.8,
+          "wolnap_chowoe_eok": 412.3,
+          "multiple": 16.63
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 13529.4,
+          "wolnap_chowoe_eok": 828.1,
+          "multiple": 16.34
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 21253.1,
+          "wolnap_chowoe_eok": 1279.3,
+          "multiple": 16.61
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 28261.2,
+          "wolnap_chowoe_eok": 1709.8,
+          "multiple": 16.53
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 7175.2,
+          "wolnap_chowoe_eok": 467.6,
+          "multiple": 15.34
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 14060.6,
+          "wolnap_chowoe_eok": 882.6,
+          "multiple": 15.93
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 21814.8,
+          "wolnap_chowoe_eok": 1338.8,
+          "multiple": 16.29
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 30780.4,
+          "wolnap_chowoe_eok": 1829.0,
+          "multiple": 16.83
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 7175.2,
+          "wolnap_chowoe_eok": 498.9,
+          "multiple": 14.38
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 16414.3,
+          "wolnap_chowoe_eok": 976.7,
+          "multiple": 16.81
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 24390.5,
+          "wolnap_chowoe_eok": 1426.8,
+          "multiple": 17.09
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 30771.8,
+          "wolnap_chowoe_eok": 1889.4,
+          "multiple": 16.29
+        }
+      }
+    },
+    {
+      "company": "KB손해보험",
+      "kidi_name": "KB",
+      "sector": "Non-Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 19323.2,
+        "wolnap_chowoe_eok": 1500.4,
+        "multiple": 12.88,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 4152.3,
+          "wolnap_chowoe_eok": 299.8,
+          "multiple": 13.85
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 8733.4,
+          "wolnap_chowoe_eok": 619.6,
+          "multiple": 14.1
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 13987.2,
+          "wolnap_chowoe_eok": 987.1,
+          "multiple": 14.17
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 18369.7,
+          "wolnap_chowoe_eok": 1322.4,
+          "multiple": 13.89
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 4484.9,
+          "wolnap_chowoe_eok": 380.5,
+          "multiple": 11.79
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 9015.2,
+          "wolnap_chowoe_eok": 735.2,
+          "multiple": 12.26
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 13987.2,
+          "wolnap_chowoe_eok": 1098.3,
+          "multiple": 12.73
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 19323.2,
+          "wolnap_chowoe_eok": 1500.4,
+          "multiple": 12.88
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 4484.9,
+          "wolnap_chowoe_eok": 396.2,
+          "multiple": 11.32
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 9015.2,
+          "wolnap_chowoe_eok": 762.8,
+          "multiple": 11.82
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 13807.4,
+          "wolnap_chowoe_eok": 1129.8,
+          "multiple": 12.22
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 19321.8,
+          "wolnap_chowoe_eok": 1509.0,
+          "multiple": 12.8
+        }
+      }
+    },
+    {
+      "company": "NH농협손해보험",
+      "kidi_name": "농협",
+      "sector": "Non-Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 7103.7,
+        "wolnap_chowoe_eok": 909.3,
+        "multiple": 7.81,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 2420.4,
+          "wolnap_chowoe_eok": 195.7,
+          "multiple": 12.37
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 4575.9,
+          "wolnap_chowoe_eok": 407.9,
+          "multiple": 11.22
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 6319.3,
+          "wolnap_chowoe_eok": 585.9,
+          "multiple": 10.79
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 7716.2,
+          "wolnap_chowoe_eok": 711.4,
+          "multiple": 10.85
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 2118.1,
+          "wolnap_chowoe_eok": 564.1,
+          "multiple": 3.75
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 3586.2,
+          "wolnap_chowoe_eok": 715.6,
+          "multiple": 5.01
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 5397.4,
+          "wolnap_chowoe_eok": 820.5,
+          "multiple": 6.58
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 7103.7,
+          "wolnap_chowoe_eok": 909.3,
+          "multiple": 7.81
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 2118.1,
+          "wolnap_chowoe_eok": 409.8,
+          "multiple": 5.17
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 3586.2,
+          "wolnap_chowoe_eok": 682.6,
+          "multiple": 5.25
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 4583.6,
+          "wolnap_chowoe_eok": 925.7,
+          "multiple": 4.95
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 5427.2,
+          "wolnap_chowoe_eok": 1130.4,
+          "multiple": 4.8
+        }
+      }
+    },
+    {
+      "company": "롯데손해보험",
+      "kidi_name": "롯데",
+      "sector": "Non-Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 9705.0,
+        "wolnap_chowoe_eok": 392.1,
+        "multiple": 24.75,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.2Q": {
+          "nb_csm_eok": 5302.0,
+          "wolnap_chowoe_eok": 193.7,
+          "multiple": 27.37
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 8184.2,
+          "wolnap_chowoe_eok": 301.1,
+          "multiple": 27.18
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 10957.8,
+          "wolnap_chowoe_eok": 404.6,
+          "multiple": 27.08
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 2533.4,
+          "wolnap_chowoe_eok": 102.0,
+          "multiple": 24.84
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 5063.9,
+          "wolnap_chowoe_eok": 202.1,
+          "multiple": 25.06
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 7291.0,
+          "wolnap_chowoe_eok": 295.1,
+          "multiple": 24.71
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 9705.0,
+          "wolnap_chowoe_eok": 392.1,
+          "multiple": 24.75
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 2197.0,
+          "wolnap_chowoe_eok": 91.8,
+          "multiple": 23.93
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 8243.4,
+          "wolnap_chowoe_eok": 328.7,
+          "multiple": 25.08
+        }
+      }
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "kidi_name": "메리츠",
+      "sector": "Non-Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 16006.5,
+        "wolnap_chowoe_eok": 1233.8,
+        "multiple": 12.97,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 4442.4,
+          "wolnap_chowoe_eok": 289.9,
+          "multiple": 15.33
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 8563.6,
+          "wolnap_chowoe_eok": 565.0,
+          "multiple": 15.16
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 13241.5,
+          "wolnap_chowoe_eok": 838.3,
+          "multiple": 15.8
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 17414.8,
+          "wolnap_chowoe_eok": 1102.4,
+          "multiple": 15.8
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 4171.8,
+          "wolnap_chowoe_eok": 307.5,
+          "multiple": 13.57
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 8096.9,
+          "wolnap_chowoe_eok": 597.5,
+          "multiple": 13.55
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 12197.6,
+          "wolnap_chowoe_eok": 889.2,
+          "multiple": 13.72
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 16006.5,
+          "wolnap_chowoe_eok": 1233.8,
+          "multiple": 12.97
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 3722.7,
+          "wolnap_chowoe_eok": 290.4,
+          "multiple": 12.82
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 7299.4,
+          "wolnap_chowoe_eok": 593.6,
+          "multiple": 12.3
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 11530.1,
+          "wolnap_chowoe_eok": 932.0,
+          "multiple": 12.37
+        }
+      }
+    },
+    {
+      "company": "삼성화재해상보험",
+      "kidi_name": "삼성",
+      "sector": "Non-Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 34511.8,
+        "wolnap_chowoe_eok": 2337.8,
+        "multiple": 14.76,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 6782.7,
+          "wolnap_chowoe_eok": 461.4,
+          "multiple": 14.7
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 14426.0,
+          "wolnap_chowoe_eok": 923.7,
+          "multiple": 15.62
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 26067.9,
+          "wolnap_chowoe_eok": 1462.0,
+          "multiple": 17.83
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 34995.3,
+          "wolnap_chowoe_eok": 1939.4,
+          "multiple": 18.04
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 8855.5,
+          "wolnap_chowoe_eok": 597.2,
+          "multiple": 14.83
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 16382.7,
+          "wolnap_chowoe_eok": 1133.2,
+          "multiple": 14.46
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 24767.9,
+          "wolnap_chowoe_eok": 1689.5,
+          "multiple": 14.66
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 34511.8,
+          "wolnap_chowoe_eok": 2337.8,
+          "multiple": 14.76
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 7015.2,
+          "wolnap_chowoe_eok": 607.7,
+          "multiple": 11.54
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 16382.7,
+          "wolnap_chowoe_eok": 1146.2,
+          "multiple": 14.29
+        },
+        "2025.3Q": {
+          "nb_csm_eok": 24767.9,
+          "wolnap_chowoe_eok": 1678.5,
+          "multiple": 14.76
+        }
+      }
+    },
+    {
+      "company": "한화손해보험",
+      "kidi_name": "한화",
+      "sector": "Non-Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 14819.8,
+        "wolnap_chowoe_eok": 715.3,
+        "multiple": 20.72,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 2665.6,
+          "wolnap_chowoe_eok": 120.7,
+          "multiple": 22.08
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 5857.8,
+          "wolnap_chowoe_eok": 294.7,
+          "multiple": 19.88
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 9390.0,
+          "wolnap_chowoe_eok": 471.9,
+          "multiple": 19.9
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 13568.1,
+          "wolnap_chowoe_eok": 629.2,
+          "multiple": 21.56
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 3971.5,
+          "wolnap_chowoe_eok": 180.2,
+          "multiple": 22.05
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 7336.1,
+          "wolnap_chowoe_eok": 348.4,
+          "multiple": 21.05
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 10949.2,
+          "wolnap_chowoe_eok": 521.3,
+          "multiple": 21.0
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 14819.8,
+          "wolnap_chowoe_eok": 715.3,
+          "multiple": 20.72
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 3971.5,
+          "wolnap_chowoe_eok": 190.9,
+          "multiple": 20.8
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 5119.1,
+          "wolnap_chowoe_eok": 410.2,
+          "multiple": 12.48
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 11641.5,
+          "wolnap_chowoe_eok": 880.5,
+          "multiple": 13.22
+        }
+      }
+    },
+    {
+      "company": "현대해상",
+      "kidi_name": "현대",
+      "sector": "Non-Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 18278.8,
+        "wolnap_chowoe_eok": 1482.3,
+        "multiple": 12.33,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 4946.7,
+          "wolnap_chowoe_eok": 400.5,
+          "multiple": 12.35
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 9542.1,
+          "wolnap_chowoe_eok": 826.9,
+          "multiple": 11.54
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 13221.4,
+          "wolnap_chowoe_eok": 1252.8,
+          "multiple": 10.55
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 16792.4,
+          "wolnap_chowoe_eok": 1612.9,
+          "multiple": 10.41
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 4114.6,
+          "wolnap_chowoe_eok": 412.6,
+          "multiple": 9.97
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 8469.3,
+          "wolnap_chowoe_eok": 758.2,
+          "multiple": 11.17
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 13318.6,
+          "wolnap_chowoe_eok": 1120.7,
+          "multiple": 11.88
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 18278.8,
+          "wolnap_chowoe_eok": 1482.3,
+          "multiple": 12.33
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 4792.5,
+          "wolnap_chowoe_eok": 351.7,
+          "multiple": 13.63
+        },
+        "2025.2Q": {
+          "nb_csm_eok": 8469.3,
+          "wolnap_chowoe_eok": 665.1,
+          "multiple": 12.73
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 20361.8,
+          "wolnap_chowoe_eok": 1325.2,
+          "multiple": 15.37
+        }
+      }
+    },
+    {
+      "company": "흥국화재",
+      "kidi_name": "흥국",
+      "sector": "Non-Life",
+      "fy2024": {
+        "period": "FY2024",
+        "nb_csm_eok": 3127.6,
+        "wolnap_chowoe_eok": 246.9,
+        "multiple": 12.67,
+        "ir_total_multiple": null
+      },
+      "series": {
+        "2023.1Q": {
+          "nb_csm_eok": 678.3,
+          "wolnap_chowoe_eok": 38.8,
+          "multiple": 17.49
+        },
+        "2023.2Q": {
+          "nb_csm_eok": 1375.7,
+          "wolnap_chowoe_eok": 83.7,
+          "multiple": 16.44
+        },
+        "2023.3Q": {
+          "nb_csm_eok": 2096.9,
+          "wolnap_chowoe_eok": 129.0,
+          "multiple": 16.26
+        },
+        "2023.4Q": {
+          "nb_csm_eok": 2812.0,
+          "wolnap_chowoe_eok": 178.1,
+          "multiple": 15.79
+        },
+        "2024.1Q": {
+          "nb_csm_eok": 694.8,
+          "wolnap_chowoe_eok": 51.4,
+          "multiple": 13.52
+        },
+        "2024.2Q": {
+          "nb_csm_eok": 1375.7,
+          "wolnap_chowoe_eok": 91.1,
+          "multiple": 15.11
+        },
+        "2024.3Q": {
+          "nb_csm_eok": 2096.9,
+          "wolnap_chowoe_eok": 145.7,
+          "multiple": 14.39
+        },
+        "2024.4Q": {
+          "nb_csm_eok": 3127.6,
+          "wolnap_chowoe_eok": 246.9,
+          "multiple": 12.67
+        },
+        "2025.1Q": {
+          "nb_csm_eok": 840.7,
+          "wolnap_chowoe_eok": 74.9,
+          "multiple": 11.22
+        },
+        "2025.4Q": {
+          "nb_csm_eok": 6635.2,
+          "wolnap_chowoe_eok": 410.2,
+          "multiple": 16.18
+        }
+      }
+    }
+  ]
+}

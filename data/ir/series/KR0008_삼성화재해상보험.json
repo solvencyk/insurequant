@@ -1,0 +1,144 @@
+{
+  "company": "삼성화재해상보험",
+  "kr": "KR0008",
+  "sector": "Non-Life",
+  "metric": "Samsung Fire DISCLOSED NB CSM multiple (배). multiple_disclosed = single-quarter 신계약 CSM 배수 합계 (factsheet). multiple_derived_ytd = YTD cumulative for KIDI comparison.",
+  "units": {
+    "nb_csm_eok": "억원 (YTD)",
+    "premium_eok": "억원 (YTD, 월납환산×3)",
+    "multiple": "배"
+  },
+  "source_files": [
+    "(KOR) 23.2Q 삼성화재.xlsx",
+    "(KOR) 23.3Q 삼성화재.xlsx",
+    "(KOR) 23.4Q 삼성화재.xlsx",
+    "(KOR) 24.1Q 삼성화재.xlsx",
+    "(KOR) 24.2Q 삼성화재.xlsx",
+    "(KOR) 24.3Q 삼성화재.xlsx",
+    "(KOR) SFMI_24.4Q.xlsx",
+    "(KOR) SFMI 25.1Q.xlsx",
+    "(KOR) 삼성화재 25.2Q.xlsx",
+    "(KOR) 삼성화재 25.3Q.xlsx",
+    "(KOR) 삼성화재 25.4Q.xlsx",
+    "(KOR) SFMI 26.1Q_f.xlsx"
+  ],
+  "series": {
+    "2023.1Q": {
+      "multiple_disclosed": 15.2,
+      "multiple_derived_ytd": 15.2,
+      "nb_csm_eok": 6782.7,
+      "nb_csm_singleQ_eok": 6782.7,
+      "premium_eok": 446.3,
+      "premium_wolhwansan_monthly_eok": 148.8,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2023.2Q": {
+      "multiple_disclosed": 17.16,
+      "multiple_derived_ytd": 16.18,
+      "nb_csm_eok": 14426.0,
+      "nb_csm_singleQ_eok": 7643.3,
+      "premium_eok": 891.7,
+      "premium_wolhwansan_monthly_eok": 148.5,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2023.3Q": {
+      "multiple_disclosed": 22.17,
+      "multiple_derived_ytd": 18.4,
+      "nb_csm_eok": 26067.9,
+      "nb_csm_singleQ_eok": 11641.9,
+      "premium_eok": 1416.9,
+      "premium_wolhwansan_monthly_eok": 175.0,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2023.4Q": {
+      "multiple_disclosed": 19.29,
+      "multiple_derived_ytd": 18.62,
+      "nb_csm_eok": 34995.3,
+      "nb_csm_singleQ_eok": 8927.4,
+      "premium_eok": 1879.6,
+      "premium_wolhwansan_monthly_eok": 154.2,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2024.1Q": {
+      "multiple_disclosed": 15.18,
+      "multiple_derived_ytd": 15.18,
+      "nb_csm_eok": 8855.5,
+      "nb_csm_singleQ_eok": 8855.5,
+      "premium_eok": 583.2,
+      "premium_wolhwansan_monthly_eok": 194.4,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2024.2Q": {
+      "multiple_disclosed": 14.45,
+      "multiple_derived_ytd": 14.84,
+      "nb_csm_eok": 16382.7,
+      "nb_csm_singleQ_eok": 7527.1,
+      "premium_eok": 1104.1,
+      "premium_wolhwansan_monthly_eok": 173.6,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2024.3Q": {
+      "multiple_disclosed": 15.5,
+      "multiple_derived_ytd": 15.06,
+      "nb_csm_eok": 24767.9,
+      "nb_csm_singleQ_eok": 8385.2,
+      "premium_eok": 1645.1,
+      "premium_wolhwansan_monthly_eok": 180.3,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2024.4Q": {
+      "multiple_disclosed": 15.43,
+      "multiple_derived_ytd": 15.16,
+      "nb_csm_eok": 34511.8,
+      "nb_csm_singleQ_eok": 9743.9,
+      "premium_eok": 2276.6,
+      "premium_wolhwansan_monthly_eok": 210.5,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2025.1Q": {
+      "multiple_disclosed": 11.85,
+      "multiple_derived_ytd": 11.85,
+      "nb_csm_eok": 7015.2,
+      "nb_csm_singleQ_eok": 7015.2,
+      "premium_eok": 592.1,
+      "premium_wolhwansan_monthly_eok": 197.4,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2025.2Q": {
+      "multiple_disclosed": 13.73,
+      "multiple_derived_ytd": 12.73,
+      "nb_csm_eok": 14212.5,
+      "nb_csm_singleQ_eok": 7197.3,
+      "premium_eok": 1116.4,
+      "premium_wolhwansan_monthly_eok": 174.8,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2025.3Q": {
+      "multiple_disclosed": 14.89,
+      "multiple_derived_ytd": 13.41,
+      "nb_csm_eok": 21881.7,
+      "nb_csm_singleQ_eok": 7669.2,
+      "premium_eok": 1631.6,
+      "premium_wolhwansan_monthly_eok": 171.7,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2025.4Q": {
+      "multiple_disclosed": 13.95,
+      "multiple_derived_ytd": 13.54,
+      "nb_csm_eok": 28983.7,
+      "nb_csm_singleQ_eok": 7102.0,
+      "premium_eok": 2140.7,
+      "premium_wolhwansan_monthly_eok": 169.7,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    },
+    "2026.1Q": {
+      "multiple_disclosed": 14.08,
+      "multiple_derived_ytd": 14.08,
+      "nb_csm_eok": 6267.3,
+      "nb_csm_singleQ_eok": 6267.3,
+      "premium_eok": 445.1,
+      "premium_wolhwansan_monthly_eok": 148.4,
+      "basis": "disclosed: single-Q 신계약CSM배수 (삼성화재 factsheet 'CSM'!신계약 CSM 배수 합계); derived_ytd: cumYTD(신계약CSM) ÷ cumYTD(월납환산 월평균 ×3)"
+    }
+  }
+}

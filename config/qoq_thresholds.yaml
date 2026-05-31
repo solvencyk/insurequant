@@ -1,0 +1,75 @@
+# QoQ Delta Threshold Registry (Validation Stage 3, rule QOQ_DELTA_WARN)
+#
+# Authority: docs/agents/claude-agent-validation.md §2
+# Severity:  YELLOW (anomaly detection only; never blocks downstream)
+#
+# Lookup precedence:
+#   1. Exact match on (domain, item)
+#   2. Domain default
+#   3. Global default
+#
+# Threshold = max relative |ΔQoQ| before flagging YELLOW.
+# Floor    = absolute |prev| below which the row SKIPs (rounding noise).
+#
+# For *cumulative* items (FY-累積 → reset at next FY 1Q), the validator MUST
+# compare net-quarterly increments, not raw values. Items flagged with
+# `cumulative: true` opt into that mode (§2.3).
+
+defaults:
+  global:
+    threshold: 0.15        # 15% — fallback when neither item nor domain matches
+  kics:
+    threshold: 0.15
+    floor_eok: 1.0         # |prev| < 1억 → SKIP
+  ifrs17:
+    threshold: 0.15
+    floor_mn_krw: 100.0    # |prev| < 100mn → SKIP
+  misc:
+    threshold: 0.15
+    floor_eok: 1.0
+
+# Per-item overrides. Add new entries here as anomaly patterns are observed.
+items:
+  ifrs17:
+    new_business_csm:
+      threshold: 0.30      # 신계약 CSM — 분기 변동성 高 (캠페인·신상품 출시 영향)
+      cumulative: true
+    csm_amortization:
+      threshold: 0.10      # 상각은 안정적
+      cumulative: true
+    insurance_revenue:
+      threshold: 0.20      # 보험수익 — 계절성 있음
+      cumulative: true
+    csm_closing:
+      threshold: 0.10      # CSM 기말 잔액 (stock, 평탄)
+    csm_interest_accretion:
+      threshold: 0.20      # 이자부리 — 금리·할인율 변경에 민감
+
+  kics:
+    # 모두 시점값. 시장위험·신용위험 등 자산 가격 sensitive 항목은 후보:
+    item27_ratio:
+      threshold: 0.10      # 지급여력비율 (퍼센트 포인트가 아닌 비율 기준 변동)
+    item28_ratio:
+      threshold: 0.10      # 기본자본비율
+    # market_risk_total / credit_risk_total: V3 (시장위험 분산효과 validation) 진행 후 등록
+
+  misc:
+    # 정기경영공시 metric 등록 시 추가
+
+# Cumulative items registry (mirrors §2.3 of the validation prompt).
+# The validator must switch to net-quarterly comparison for these.
+cumulative_items:
+  ifrs17:
+    - new_business_csm
+    - csm_amortization
+    - insurance_revenue
+  kics: []               # 모두 시점값
+  misc: []
+
+# ----------------------------------------------------------------------------
+# IMPLEMENTATION STATUS (2026-05-31):
+#   Consumer code for QOQ_DELTA_WARN rule is NOT yet implemented in
+#   src/solvency/validation/ or scripts/validate_*.py. This file documents
+#   the canonical spec so wiring (parser/loader + diff calculator) can land
+#   without re-debating thresholds. See TODO_validation.md V4 sub-task.
+# ----------------------------------------------------------------------------

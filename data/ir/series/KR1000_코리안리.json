@@ -1,0 +1,24 @@
+{
+  "company": "코리안리",
+  "kr_dir": "KR1000_코리안리",
+  "sector": "Reinsurance",
+  "metric_disclosed": "신계약 CSM 배수: NA (재보험사 — 코리안리는 신계약 CSM 배수를 공시하지 않음)",
+  "status": "NOT DOWNLOADED — source site unreachable from this environment",
+  "source": "koreanre.co.kr IR 자료실 (ir/ir_03_5.asp; sub.asp board)",
+  "block_diagnosis": "koreanre.co.kr accepts TCP:443 + completes the TLS handshake but returns 0 bytes / ERR_EMPTY_RESPONSE for every HTTP request, on every path and both www/non-www hosts. Reproduced via headless Chrome, headed Chrome (genuine fingerprint), raw socket+TLS, curl, urllib, and the WebFetch tool. This is a server-side IP/geo block against this network's egress, not a client fingerprint issue. No client-side workaround exists. IRGO (image-only) is explicitly disallowed, so no IR decks could be downloaded.",
+  "files_downloaded": [],
+  "missing": [
+    "FY2023_Q1","FY2023_Q2","FY2023_Q3","FY2023_Q4",
+    "FY2024_Q1","FY2024_Q2","FY2024_Q3","FY2024_Q4",
+    "FY2025_Q1","FY2025_Q2","FY2025_Q3","FY2025_Q4",
+    "FY2026_Q1"
+  ],
+  "external_reference_not_from_file": {
+    "note": "Found via public web search only (edaily/marketin), NOT from a downloaded IR file. Korean Re discloses a 신계약 CSM AMOUNT (not a 배수).",
+    "2025.1Q": {
+      "nb_csm_eok": 661,
+      "comment": "2025년 1분기 신계약 CSM 661억원 발생; CSM 잔액 전분기 대비 +8%, 1조원 상회. (원수사 공동개발 장기상품 수재 + 공동재보험 신규 인수)"
+    }
+  },
+  "series": {}
+}

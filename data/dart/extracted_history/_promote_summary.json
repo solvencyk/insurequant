@@ -1,0 +1,2063 @@
+{
+  "generated_at": "20260528T225949Z",
+  "results": [
+    {
+      "canonical": "DB생명보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 64,
+      "error": null
+    },
+    {
+      "canonical": "DB생명보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 34,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 50,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 42,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 90,
+      "error": null
+    },
+    {
+      "canonical": "DB손해보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 42,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 28,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 56,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 26,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 56,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 26,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 72,
+      "error": null
+    },
+    {
+      "canonical": "KB손해보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 34,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 20,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 20,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 20,
+      "error": null
+    },
+    {
+      "canonical": "NH농협손해보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 34,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 34,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 34,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 76,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 35,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 35,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 35,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 126,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 34,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 38,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 38,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 142,
+      "error": null
+    },
+    {
+      "canonical": "교보생명보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 44,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 28,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 28,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 14,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 14,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 30,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 42,
+      "error": null
+    },
+    {
+      "canonical": "농협생명보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 34,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 34,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 80,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 56,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 58,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 60,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 112,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 53,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 62,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 92,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 269,
+      "error": null
+    },
+    {
+      "canonical": "동양생명",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 130,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2023.1Q",
+      "status": "no_measurement_tables",
+      "n_tables": 0,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 6,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 5,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 5,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 5,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 5,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 5,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 19,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 15,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 33,
+      "error": null
+    },
+    {
+      "canonical": "롯데손해보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 72,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 72,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "메리츠화재해상보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 20,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 29,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 30,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 64,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 25,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 77,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 25,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 53,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 53,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 153,
+      "error": null
+    },
+    {
+      "canonical": "미래에셋생명",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 57,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 56,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 20,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 64,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 124,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 124,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 246,
+      "error": null
+    },
+    {
+      "canonical": "삼성생명",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 132,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 18,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 15,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 47,
+      "error": null
+    },
+    {
+      "canonical": "삼성화재해상보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 47,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 44,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 52,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 26,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 26,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 28,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 68,
+      "error": null
+    },
+    {
+      "canonical": "신한라이프생명보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 34,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 80,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 88,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "에이비엘생명보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 28,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 40,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 40,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 88,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 56,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 56,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 28,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 60,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 29,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 29,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 29,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 74,
+      "error": null
+    },
+    {
+      "canonical": "케이디비생명보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 26,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 26,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 84,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 22,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 26,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 26,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 80,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 28,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 96,
+      "error": null
+    },
+    {
+      "canonical": "케이비라이프생명보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 10,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 20,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 14,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 14,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 14,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 28,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 14,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 50,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 152,
+      "error": null
+    },
+    {
+      "canonical": "코리안리",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 50,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 42,
+      "error": null
+    },
+    {
+      "canonical": "푸본현대생명보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 20,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 23,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 28,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 57,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 23,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 26,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 19,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 52,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 26,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 151,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 171,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 314,
+      "error": null
+    },
+    {
+      "canonical": "한화생명",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 168,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 36,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 68,
+      "error": null
+    },
+    {
+      "canonical": "한화손해보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 40,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 6,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 6,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 6,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 8,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 8,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 8,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 14,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 8,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 42,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 64,
+      "error": null
+    },
+    {
+      "canonical": "현대해상",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 28,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 21,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 38,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 32,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 88,
+      "error": null
+    },
+    {
+      "canonical": "흥국생명보험",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 38,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2023.1Q",
+      "status": "ok",
+      "n_tables": 6,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2023.2Q",
+      "status": "ok",
+      "n_tables": 6,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2023.3Q",
+      "status": "ok",
+      "n_tables": 6,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2023.4Q",
+      "status": "ok",
+      "n_tables": 11,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2024.1Q",
+      "status": "ok",
+      "n_tables": 4,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2024.2Q",
+      "status": "ok",
+      "n_tables": 4,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2024.3Q",
+      "status": "ok",
+      "n_tables": 4,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2024.4Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2025.1Q",
+      "status": "ok",
+      "n_tables": 4,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2025.2Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2025.3Q",
+      "status": "ok",
+      "n_tables": 16,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2025.4Q",
+      "status": "ok",
+      "n_tables": 24,
+      "error": null
+    },
+    {
+      "canonical": "흥국화재",
+      "period": "2026.1Q",
+      "status": "ok",
+      "n_tables": 12,
+      "error": null
+    }
+  ]
+}

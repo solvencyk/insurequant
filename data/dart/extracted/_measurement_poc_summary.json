@@ -1,0 +1,256 @@
+[
+  {
+    "dir": "메리츠화재해상보험_20250331003145",
+    "company_name": "메리츠화재",
+    "tables": 72,
+    "by_block": {
+      "direct": 32,
+      "mixed": 32,
+      "unknown": 8
+    },
+    "by_slice": {
+      "unknown": 56,
+      "long_term": 16
+    },
+    "by_xml": [
+      {
+        "xml": "20250331003145.xml",
+        "tables": 36,
+        "by_block": {
+          "direct": 16,
+          "mixed": 16,
+          "unknown": 4
+        },
+        "by_slice": {
+          "unknown": 28,
+          "long_term": 8
+        }
+      },
+      {
+        "xml": "20250331003145_00760.xml",
+        "tables": 18,
+        "by_block": {
+          "direct": 8,
+          "mixed": 8,
+          "unknown": 2
+        },
+        "by_slice": {
+          "unknown": 14,
+          "long_term": 4
+        }
+      },
+      {
+        "xml": "20250331003145_00761.xml",
+        "tables": 18,
+        "by_block": {
+          "direct": 8,
+          "mixed": 8,
+          "unknown": 2
+        },
+        "by_slice": {
+          "unknown": 14,
+          "long_term": 4
+        }
+      }
+    ],
+    "out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\메리츠화재해상보험_20250331003145_measurement.json"
+  },
+  {
+    "dir": "삼성화재해상보험_20250311001055",
+    "company_name": "삼성화재",
+    "tables": 32,
+    "by_block": {
+      "unknown": 12,
+      "direct": 20
+    },
+    "by_slice": {
+      "long_term": 16,
+      "unknown": 16
+    },
+    "by_xml": [
+      {
+        "xml": "20250311001055.xml",
+        "tables": 16,
+        "by_block": {
+          "unknown": 6,
+          "direct": 10
+        },
+        "by_slice": {
+          "long_term": 8,
+          "unknown": 8
+        }
+      },
+      {
+        "xml": "20250311001055_00760.xml",
+        "tables": 8,
+        "by_block": {
+          "unknown": 4,
+          "direct": 4
+        },
+        "by_slice": {
+          "long_term": 4,
+          "unknown": 4
+        }
+      },
+      {
+        "xml": "20250311001055_00761.xml",
+        "tables": 8,
+        "by_block": {
+          "unknown": 2,
+          "direct": 6
+        },
+        "by_slice": {
+          "long_term": 4,
+          "unknown": 4
+        }
+      }
+    ],
+    "out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\삼성화재해상보험_20250311001055_measurement.json"
+  },
+  {
+    "dir": "DB손해보험_20250313001342",
+    "company_name": "DB손해보험",
+    "tables": 36,
+    "by_block": {
+      "mixed": 12,
+      "direct": 20,
+      "reinsurance": 4
+    },
+    "by_slice": {
+      "long_term": 36
+    },
+    "by_xml": [
+      {
+        "xml": "20250313001342.xml",
+        "tables": 18,
+        "by_block": {
+          "mixed": 6,
+          "direct": 10,
+          "reinsurance": 2
+        },
+        "by_slice": {
+          "long_term": 18
+        }
+      },
+      {
+        "xml": "20250313001342_00760.xml",
+        "tables": 10,
+        "by_block": {
+          "mixed": 6,
+          "direct": 4
+        },
+        "by_slice": {
+          "long_term": 10
+        }
+      },
+      {
+        "xml": "20250313001342_00761.xml",
+        "tables": 8,
+        "by_block": {
+          "direct": 6,
+          "reinsurance": 2
+        },
+        "by_slice": {
+          "long_term": 8
+        }
+      }
+    ],
+    "out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\DB손해보험_20250313001342_measurement.json"
+  },
+  {
+    "dir": "한화생명_20250312000939",
+    "company_name": "한화생명",
+    "tables": 52,
+    "by_block": {
+      "direct": 24,
+      "unknown": 28
+    },
+    "by_slice": {
+      "whole_company_life": 52
+    },
+    "by_xml": [
+      {
+        "xml": "20250312000939.xml",
+        "tables": 27,
+        "by_block": {
+          "direct": 12,
+          "unknown": 15
+        },
+        "by_slice": {
+          "whole_company_life": 27
+        }
+      },
+      {
+        "xml": "20250312000939_00760.xml",
+        "tables": 12,
+        "by_block": {
+          "direct": 6,
+          "unknown": 6
+        },
+        "by_slice": {
+          "whole_company_life": 12
+        }
+      },
+      {
+        "xml": "20250312000939_00761.xml",
+        "tables": 13,
+        "by_block": {
+          "direct": 6,
+          "unknown": 7
+        },
+        "by_slice": {
+          "whole_company_life": 13
+        }
+      }
+    ],
+    "out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\한화생명_20250312000939_measurement.json"
+  },
+  {
+    "dir": "삼성생명_20250312001063",
+    "company_name": "삼성생명",
+    "tables": 64,
+    "by_block": {
+      "direct": 48,
+      "unknown": 16
+    },
+    "by_slice": {
+      "whole_company_life": 64
+    },
+    "by_xml": [
+      {
+        "xml": "20250312001063.xml",
+        "tables": 32,
+        "by_block": {
+          "direct": 24,
+          "unknown": 8
+        },
+        "by_slice": {
+          "whole_company_life": 32
+        }
+      },
+      {
+        "xml": "20250312001063_00760.xml",
+        "tables": 18,
+        "by_block": {
+          "direct": 14,
+          "unknown": 4
+        },
+        "by_slice": {
+          "whole_company_life": 18
+        }
+      },
+      {
+        "xml": "20250312001063_00761.xml",
+        "tables": 14,
+        "by_block": {
+          "direct": 10,
+          "unknown": 4
+        },
+        "by_slice": {
+          "whole_company_life": 14
+        }
+      }
+    ],
+    "out": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\ifrs17\\extracted\\삼성생명_20250312001063_measurement.json"
+  }
+]

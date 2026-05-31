@@ -1,0 +1,1685 @@
+{
+  "_meta": {
+    "source": "KIDI INCOS 장기보험 원수보험료 현황표 (손해보험, N07/070b07)",
+    "metric": "월납 초회보험료 금액 (보험계약), whole-company 합계 row (LINE 99111)",
+    "unit_raw": "천원 (cheonwon)",
+    "data_year_semantics": "cumulative YTD (MM=03/06/09/12)",
+    "crawled_at": "2026-05-29T13:05:16Z",
+    "build_script": "scripts/crawl_kidi_longterm_premium.py",
+    "periods": [
+      "202303",
+      "202306",
+      "202309",
+      "202312",
+      "202403",
+      "202406",
+      "202409",
+      "202412",
+      "202503",
+      "202506",
+      "202509",
+      "202512",
+      "202603"
+    ],
+    "company_count": 41,
+    "record_count": 184
+  },
+  "records": {
+    "메리츠|202303": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202303",
+      "first_premium_cheonwon": 28988356,
+      "first_premium_eok": 289.88,
+      "wolnap_only_cheonwon": 28890728,
+      "etc_cheonwon": 97628
+    },
+    "메리츠|202306": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202306",
+      "first_premium_cheonwon": 56496094,
+      "first_premium_eok": 564.96,
+      "wolnap_only_cheonwon": 56357771,
+      "etc_cheonwon": 138323
+    },
+    "메리츠|202309": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202309",
+      "first_premium_cheonwon": 83828341,
+      "first_premium_eok": 838.28,
+      "wolnap_only_cheonwon": 83674596,
+      "etc_cheonwon": 153745
+    },
+    "메리츠|202312": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202312",
+      "first_premium_cheonwon": 110236089,
+      "first_premium_eok": 1102.36,
+      "wolnap_only_cheonwon": 109940802,
+      "etc_cheonwon": 295287
+    },
+    "메리츠|202403": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202403",
+      "first_premium_cheonwon": 30753415,
+      "first_premium_eok": 307.53,
+      "wolnap_only_cheonwon": 30668330,
+      "etc_cheonwon": 85085
+    },
+    "메리츠|202406": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202406",
+      "first_premium_cheonwon": 59753066,
+      "first_premium_eok": 597.53,
+      "wolnap_only_cheonwon": 59636232,
+      "etc_cheonwon": 116834
+    },
+    "메리츠|202409": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202409",
+      "first_premium_cheonwon": 88915745,
+      "first_premium_eok": 889.16,
+      "wolnap_only_cheonwon": 88790282,
+      "etc_cheonwon": 125463
+    },
+    "메리츠|202412": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202412",
+      "first_premium_cheonwon": 123379874,
+      "first_premium_eok": 1233.8,
+      "wolnap_only_cheonwon": 123233043,
+      "etc_cheonwon": 146831
+    },
+    "메리츠|202503": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202503",
+      "first_premium_cheonwon": 29042818,
+      "first_premium_eok": 290.43,
+      "wolnap_only_cheonwon": 29011838,
+      "etc_cheonwon": 30980
+    },
+    "메리츠|202506": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202506",
+      "first_premium_cheonwon": 59363817,
+      "first_premium_eok": 593.64,
+      "wolnap_only_cheonwon": 59327914,
+      "etc_cheonwon": 35903
+    },
+    "메리츠|202509": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202509",
+      "first_premium_cheonwon": 93201597,
+      "first_premium_eok": 932.02,
+      "wolnap_only_cheonwon": 93147653,
+      "etc_cheonwon": 53944
+    },
+    "메리츠|202512": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202512",
+      "first_premium_cheonwon": 130496525,
+      "first_premium_eok": 1304.97,
+      "wolnap_only_cheonwon": 130423049,
+      "etc_cheonwon": 73476
+    },
+    "한화|202303": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202303",
+      "first_premium_cheonwon": 12071648,
+      "first_premium_eok": 120.72,
+      "wolnap_only_cheonwon": 12011267,
+      "etc_cheonwon": 60381
+    },
+    "한화|202306": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202306",
+      "first_premium_cheonwon": 29466207,
+      "first_premium_eok": 294.66,
+      "wolnap_only_cheonwon": 29353641,
+      "etc_cheonwon": 112566
+    },
+    "한화|202309": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202309",
+      "first_premium_cheonwon": 47187552,
+      "first_premium_eok": 471.88,
+      "wolnap_only_cheonwon": 47024721,
+      "etc_cheonwon": 162831
+    },
+    "한화|202312": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202312",
+      "first_premium_cheonwon": 62918381,
+      "first_premium_eok": 629.18,
+      "wolnap_only_cheonwon": 62706120,
+      "etc_cheonwon": 212261
+    },
+    "한화|202403": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202403",
+      "first_premium_cheonwon": 18015105,
+      "first_premium_eok": 180.15,
+      "wolnap_only_cheonwon": 17837222,
+      "etc_cheonwon": 177883
+    },
+    "한화|202406": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202406",
+      "first_premium_cheonwon": 34843029,
+      "first_premium_eok": 348.43,
+      "wolnap_only_cheonwon": 34517000,
+      "etc_cheonwon": 326029
+    },
+    "한화|202409": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202409",
+      "first_premium_cheonwon": 52133974,
+      "first_premium_eok": 521.34,
+      "wolnap_only_cheonwon": 51744203,
+      "etc_cheonwon": 389771
+    },
+    "한화|202412": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202412",
+      "first_premium_cheonwon": 71533115,
+      "first_premium_eok": 715.33,
+      "wolnap_only_cheonwon": 71090563,
+      "etc_cheonwon": 442552
+    },
+    "한화|202503": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202503",
+      "first_premium_cheonwon": 19093871,
+      "first_premium_eok": 190.94,
+      "wolnap_only_cheonwon": 19030767,
+      "etc_cheonwon": 63104
+    },
+    "한화|202506": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202506",
+      "first_premium_cheonwon": 41020924,
+      "first_premium_eok": 410.21,
+      "wolnap_only_cheonwon": 40892341,
+      "etc_cheonwon": 128583
+    },
+    "한화|202509": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202509",
+      "first_premium_cheonwon": 63493784,
+      "first_premium_eok": 634.94,
+      "wolnap_only_cheonwon": 63215796,
+      "etc_cheonwon": 277988
+    },
+    "한화|202512": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202512",
+      "first_premium_cheonwon": 88044531,
+      "first_premium_eok": 880.45,
+      "wolnap_only_cheonwon": 87716600,
+      "etc_cheonwon": 327931
+    },
+    "롯데|202303": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202303",
+      "first_premium_cheonwon": 10872089,
+      "first_premium_eok": 108.72,
+      "wolnap_only_cheonwon": 10934191,
+      "etc_cheonwon": -62102
+    },
+    "롯데|202306": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202306",
+      "first_premium_cheonwon": 19373622,
+      "first_premium_eok": 193.74,
+      "wolnap_only_cheonwon": 19432588,
+      "etc_cheonwon": -58966
+    },
+    "롯데|202309": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202309",
+      "first_premium_cheonwon": 30112313,
+      "first_premium_eok": 301.12,
+      "wolnap_only_cheonwon": 30169293,
+      "etc_cheonwon": -56980
+    },
+    "롯데|202312": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202312",
+      "first_premium_cheonwon": 40461563,
+      "first_premium_eok": 404.62,
+      "wolnap_only_cheonwon": 40516537,
+      "etc_cheonwon": -54974
+    },
+    "롯데|202403": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202403",
+      "first_premium_cheonwon": 10197599,
+      "first_premium_eok": 101.98,
+      "wolnap_only_cheonwon": 10193116,
+      "etc_cheonwon": 4483
+    },
+    "롯데|202406": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202406",
+      "first_premium_cheonwon": 20209390,
+      "first_premium_eok": 202.09,
+      "wolnap_only_cheonwon": 20203915,
+      "etc_cheonwon": 5475
+    },
+    "롯데|202409": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202409",
+      "first_premium_cheonwon": 29506714,
+      "first_premium_eok": 295.07,
+      "wolnap_only_cheonwon": 29494112,
+      "etc_cheonwon": 12602
+    },
+    "롯데|202412": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202412",
+      "first_premium_cheonwon": 39215220,
+      "first_premium_eok": 392.15,
+      "wolnap_only_cheonwon": 39201662,
+      "etc_cheonwon": 13558
+    },
+    "롯데|202503": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202503",
+      "first_premium_cheonwon": 9181270,
+      "first_premium_eok": 91.81,
+      "wolnap_only_cheonwon": 9179898,
+      "etc_cheonwon": 1372
+    },
+    "롯데|202506": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202506",
+      "first_premium_cheonwon": 16386413,
+      "first_premium_eok": 163.86,
+      "wolnap_only_cheonwon": 16384082,
+      "etc_cheonwon": 2331
+    },
+    "롯데|202509": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202509",
+      "first_premium_cheonwon": 24411264,
+      "first_premium_eok": 244.11,
+      "wolnap_only_cheonwon": 24406864,
+      "etc_cheonwon": 4400
+    },
+    "롯데|202512": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202512",
+      "first_premium_cheonwon": 32871891,
+      "first_premium_eok": 328.72,
+      "wolnap_only_cheonwon": 32864571,
+      "etc_cheonwon": 7320
+    },
+    "MG|202303": {
+      "company_kidi": "MG",
+      "comp_code": "N04",
+      "data_year": "202303",
+      "first_premium_cheonwon": 1241623,
+      "first_premium_eok": 12.42,
+      "wolnap_only_cheonwon": 1080176,
+      "etc_cheonwon": 161447
+    },
+    "MG|202306": {
+      "company_kidi": "MG",
+      "comp_code": "N04",
+      "data_year": "202306",
+      "first_premium_cheonwon": 2515042,
+      "first_premium_eok": 25.15,
+      "wolnap_only_cheonwon": 2224983,
+      "etc_cheonwon": 290059
+    },
+    "MG|202309": {
+      "company_kidi": "MG",
+      "comp_code": "N04",
+      "data_year": "202309",
+      "first_premium_cheonwon": 3789257,
+      "first_premium_eok": 37.89,
+      "wolnap_only_cheonwon": 3473770,
+      "etc_cheonwon": 315487
+    },
+    "MG|202312": {
+      "company_kidi": "MG",
+      "comp_code": "N04",
+      "data_year": "202312",
+      "first_premium_cheonwon": 5144625,
+      "first_premium_eok": 51.45,
+      "wolnap_only_cheonwon": 4803989,
+      "etc_cheonwon": 340636
+    },
+    "MG|202403": {
+      "company_kidi": "MG",
+      "comp_code": "N04",
+      "data_year": "202403",
+      "first_premium_cheonwon": 1355618,
+      "first_premium_eok": 13.56,
+      "wolnap_only_cheonwon": 1261040,
+      "etc_cheonwon": 94578
+    },
+    "MG|202406": {
+      "company_kidi": "MG",
+      "comp_code": "N04",
+      "data_year": "202406",
+      "first_premium_cheonwon": 2481138,
+      "first_premium_eok": 24.81,
+      "wolnap_only_cheonwon": 2274341,
+      "etc_cheonwon": 206797
+    },
+    "MG|202409": {
+      "company_kidi": "MG",
+      "comp_code": "N04",
+      "data_year": "202409",
+      "first_premium_cheonwon": 3443126,
+      "first_premium_eok": 34.43,
+      "wolnap_only_cheonwon": 3181124,
+      "etc_cheonwon": 262002
+    },
+    "MG|202503": {
+      "company_kidi": "MG",
+      "comp_code": "N04",
+      "data_year": "202503",
+      "first_premium_cheonwon": 568985,
+      "first_premium_eok": 5.69,
+      "wolnap_only_cheonwon": 475218,
+      "etc_cheonwon": 93767
+    },
+    "MG|202506": {
+      "company_kidi": "MG",
+      "comp_code": "N04",
+      "data_year": "202506",
+      "first_premium_cheonwon": 693781,
+      "first_premium_eok": 6.94,
+      "wolnap_only_cheonwon": 573884,
+      "etc_cheonwon": 119897
+    },
+    "흥국|202303": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202303",
+      "first_premium_cheonwon": 3878463,
+      "first_premium_eok": 38.78,
+      "wolnap_only_cheonwon": 3850492,
+      "etc_cheonwon": 27971
+    },
+    "흥국|202306": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202306",
+      "first_premium_cheonwon": 8367408,
+      "first_premium_eok": 83.67,
+      "wolnap_only_cheonwon": 8328420,
+      "etc_cheonwon": 38988
+    },
+    "흥국|202309": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202309",
+      "first_premium_cheonwon": 12898035,
+      "first_premium_eok": 128.98,
+      "wolnap_only_cheonwon": 12839370,
+      "etc_cheonwon": 58665
+    },
+    "흥국|202312": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202312",
+      "first_premium_cheonwon": 17807223,
+      "first_premium_eok": 178.07,
+      "wolnap_only_cheonwon": 17735004,
+      "etc_cheonwon": 72219
+    },
+    "흥국|202403": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202403",
+      "first_premium_cheonwon": 5138230,
+      "first_premium_eok": 51.38,
+      "wolnap_only_cheonwon": 5109727,
+      "etc_cheonwon": 28503
+    },
+    "흥국|202406": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202406",
+      "first_premium_cheonwon": 9106441,
+      "first_premium_eok": 91.06,
+      "wolnap_only_cheonwon": 9063922,
+      "etc_cheonwon": 42519
+    },
+    "흥국|202409": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202409",
+      "first_premium_cheonwon": 14574039,
+      "first_premium_eok": 145.74,
+      "wolnap_only_cheonwon": 14526377,
+      "etc_cheonwon": 47662
+    },
+    "흥국|202412": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202412",
+      "first_premium_cheonwon": 24691162,
+      "first_premium_eok": 246.91,
+      "wolnap_only_cheonwon": 24632543,
+      "etc_cheonwon": 58619
+    },
+    "흥국|202503": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202503",
+      "first_premium_cheonwon": 7490024,
+      "first_premium_eok": 74.9,
+      "wolnap_only_cheonwon": 7481975,
+      "etc_cheonwon": 8049
+    },
+    "흥국|202506": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202506",
+      "first_premium_cheonwon": 16595003,
+      "first_premium_eok": 165.95,
+      "wolnap_only_cheonwon": 16584478,
+      "etc_cheonwon": 10525
+    },
+    "흥국|202509": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202509",
+      "first_premium_cheonwon": 28197641,
+      "first_premium_eok": 281.98,
+      "wolnap_only_cheonwon": 28184806,
+      "etc_cheonwon": 12835
+    },
+    "흥국|202512": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202512",
+      "first_premium_cheonwon": 41020813,
+      "first_premium_eok": 410.21,
+      "wolnap_only_cheonwon": 41005497,
+      "etc_cheonwon": 15316
+    },
+    "삼성|202303": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202303",
+      "first_premium_cheonwon": 46137140,
+      "first_premium_eok": 461.37,
+      "wolnap_only_cheonwon": 44398989,
+      "etc_cheonwon": 1738151
+    },
+    "삼성|202306": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202306",
+      "first_premium_cheonwon": 92373746,
+      "first_premium_eok": 923.74,
+      "wolnap_only_cheonwon": 89016812,
+      "etc_cheonwon": 3356934
+    },
+    "삼성|202309": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202309",
+      "first_premium_cheonwon": 146202721,
+      "first_premium_eok": 1462.03,
+      "wolnap_only_cheonwon": 141743417,
+      "etc_cheonwon": 4459304
+    },
+    "삼성|202312": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202312",
+      "first_premium_cheonwon": 193938006,
+      "first_premium_eok": 1939.38,
+      "wolnap_only_cheonwon": 188264086,
+      "etc_cheonwon": 5673920
+    },
+    "삼성|202403": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202403",
+      "first_premium_cheonwon": 59723071,
+      "first_premium_eok": 597.23,
+      "wolnap_only_cheonwon": 58523303,
+      "etc_cheonwon": 1199768
+    },
+    "삼성|202406": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202406",
+      "first_premium_cheonwon": 113320932,
+      "first_premium_eok": 1133.21,
+      "wolnap_only_cheonwon": 111062400,
+      "etc_cheonwon": 2258532
+    },
+    "삼성|202409": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202409",
+      "first_premium_cheonwon": 168954035,
+      "first_premium_eok": 1689.54,
+      "wolnap_only_cheonwon": 165599376,
+      "etc_cheonwon": 3354659
+    },
+    "삼성|202412": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202412",
+      "first_premium_cheonwon": 233778890,
+      "first_premium_eok": 2337.79,
+      "wolnap_only_cheonwon": 229202416,
+      "etc_cheonwon": 4576474
+    },
+    "삼성|202503": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202503",
+      "first_premium_cheonwon": 60768102,
+      "first_premium_eok": 607.68,
+      "wolnap_only_cheonwon": 59586676,
+      "etc_cheonwon": 1181426
+    },
+    "삼성|202506": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202506",
+      "first_premium_cheonwon": 114622152,
+      "first_premium_eok": 1146.22,
+      "wolnap_only_cheonwon": 112550985,
+      "etc_cheonwon": 2071167
+    },
+    "삼성|202509": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202509",
+      "first_premium_cheonwon": 167846315,
+      "first_premium_eok": 1678.46,
+      "wolnap_only_cheonwon": 164529830,
+      "etc_cheonwon": 3316485
+    },
+    "삼성|202512": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202512",
+      "first_premium_cheonwon": 220085751,
+      "first_premium_eok": 2200.86,
+      "wolnap_only_cheonwon": 215799013,
+      "etc_cheonwon": 4286738
+    },
+    "현대|202303": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202303",
+      "first_premium_cheonwon": 40048836,
+      "first_premium_eok": 400.49,
+      "wolnap_only_cheonwon": 37015202,
+      "etc_cheonwon": 3033634
+    },
+    "현대|202306": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202306",
+      "first_premium_cheonwon": 82685548,
+      "first_premium_eok": 826.86,
+      "wolnap_only_cheonwon": 76192803,
+      "etc_cheonwon": 6492745
+    },
+    "현대|202309": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202309",
+      "first_premium_cheonwon": 125283820,
+      "first_premium_eok": 1252.84,
+      "wolnap_only_cheonwon": 115629153,
+      "etc_cheonwon": 9654667
+    },
+    "현대|202312": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202312",
+      "first_premium_cheonwon": 161292030,
+      "first_premium_eok": 1612.92,
+      "wolnap_only_cheonwon": 150110671,
+      "etc_cheonwon": 11181359
+    },
+    "현대|202403": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202403",
+      "first_premium_cheonwon": 41254945,
+      "first_premium_eok": 412.55,
+      "wolnap_only_cheonwon": 39481253,
+      "etc_cheonwon": 1773692
+    },
+    "현대|202406": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202406",
+      "first_premium_cheonwon": 75822352,
+      "first_premium_eok": 758.22,
+      "wolnap_only_cheonwon": 71857368,
+      "etc_cheonwon": 3964984
+    },
+    "현대|202409": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202409",
+      "first_premium_cheonwon": 112073253,
+      "first_premium_eok": 1120.73,
+      "wolnap_only_cheonwon": 106525975,
+      "etc_cheonwon": 5547278
+    },
+    "현대|202412": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202412",
+      "first_premium_cheonwon": 148229803,
+      "first_premium_eok": 1482.3,
+      "wolnap_only_cheonwon": 141588534,
+      "etc_cheonwon": 6641269
+    },
+    "현대|202503": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202503",
+      "first_premium_cheonwon": 35171992,
+      "first_premium_eok": 351.72,
+      "wolnap_only_cheonwon": 33770196,
+      "etc_cheonwon": 1401796
+    },
+    "현대|202506": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202506",
+      "first_premium_cheonwon": 66514834,
+      "first_premium_eok": 665.15,
+      "wolnap_only_cheonwon": 63892881,
+      "etc_cheonwon": 2621953
+    },
+    "현대|202509": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202509",
+      "first_premium_cheonwon": 98703696,
+      "first_premium_eok": 987.04,
+      "wolnap_only_cheonwon": 94992226,
+      "etc_cheonwon": 3711470
+    },
+    "현대|202512": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202512",
+      "first_premium_cheonwon": 132515305,
+      "first_premium_eok": 1325.15,
+      "wolnap_only_cheonwon": 127839674,
+      "etc_cheonwon": 4675631
+    },
+    "KB|202303": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202303",
+      "first_premium_cheonwon": 29983919,
+      "first_premium_eok": 299.84,
+      "wolnap_only_cheonwon": 29949955,
+      "etc_cheonwon": 33964
+    },
+    "KB|202306": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202306",
+      "first_premium_cheonwon": 61956436,
+      "first_premium_eok": 619.56,
+      "wolnap_only_cheonwon": 61868471,
+      "etc_cheonwon": 87965
+    },
+    "KB|202309": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202309",
+      "first_premium_cheonwon": 98706432,
+      "first_premium_eok": 987.06,
+      "wolnap_only_cheonwon": 98466431,
+      "etc_cheonwon": 240001
+    },
+    "KB|202312": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202312",
+      "first_premium_cheonwon": 132239769,
+      "first_premium_eok": 1322.4,
+      "wolnap_only_cheonwon": 131722106,
+      "etc_cheonwon": 517663
+    },
+    "KB|202403": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202403",
+      "first_premium_cheonwon": 38051867,
+      "first_premium_eok": 380.52,
+      "wolnap_only_cheonwon": 38048296,
+      "etc_cheonwon": 3571
+    },
+    "KB|202406": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202406",
+      "first_premium_cheonwon": 73518498,
+      "first_premium_eok": 735.18,
+      "wolnap_only_cheonwon": 73501913,
+      "etc_cheonwon": 16585
+    },
+    "KB|202409": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202409",
+      "first_premium_cheonwon": 109835376,
+      "first_premium_eok": 1098.35,
+      "wolnap_only_cheonwon": 109692823,
+      "etc_cheonwon": 142553
+    },
+    "KB|202412": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202412",
+      "first_premium_cheonwon": 150042598,
+      "first_premium_eok": 1500.43,
+      "wolnap_only_cheonwon": 149740461,
+      "etc_cheonwon": 302137
+    },
+    "KB|202503": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202503",
+      "first_premium_cheonwon": 39620943,
+      "first_premium_eok": 396.21,
+      "wolnap_only_cheonwon": 39556696,
+      "etc_cheonwon": 64247
+    },
+    "KB|202506": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202506",
+      "first_premium_cheonwon": 76283549,
+      "first_premium_eok": 762.84,
+      "wolnap_only_cheonwon": 76192419,
+      "etc_cheonwon": 91130
+    },
+    "KB|202509": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202509",
+      "first_premium_cheonwon": 112984578,
+      "first_premium_eok": 1129.85,
+      "wolnap_only_cheonwon": 112834793,
+      "etc_cheonwon": 149785
+    },
+    "KB|202512": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202512",
+      "first_premium_cheonwon": 150904142,
+      "first_premium_eok": 1509.04,
+      "wolnap_only_cheonwon": 150689108,
+      "etc_cheonwon": 215034
+    },
+    "DB|202303": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202303",
+      "first_premium_cheonwon": 41230545,
+      "first_premium_eok": 412.31,
+      "wolnap_only_cheonwon": 39913845,
+      "etc_cheonwon": 1316700
+    },
+    "DB|202306": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202306",
+      "first_premium_cheonwon": 82807357,
+      "first_premium_eok": 828.07,
+      "wolnap_only_cheonwon": 78946417,
+      "etc_cheonwon": 3860940
+    },
+    "DB|202309": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202309",
+      "first_premium_cheonwon": 127930044,
+      "first_premium_eok": 1279.3,
+      "wolnap_only_cheonwon": 122329979,
+      "etc_cheonwon": 5600065
+    },
+    "DB|202312": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202312",
+      "first_premium_cheonwon": 170979751,
+      "first_premium_eok": 1709.8,
+      "wolnap_only_cheonwon": 163828925,
+      "etc_cheonwon": 7150826
+    },
+    "DB|202403": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202403",
+      "first_premium_cheonwon": 46761003,
+      "first_premium_eok": 467.61,
+      "wolnap_only_cheonwon": 45180630,
+      "etc_cheonwon": 1580373
+    },
+    "DB|202406": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202406",
+      "first_premium_cheonwon": 88256883,
+      "first_premium_eok": 882.57,
+      "wolnap_only_cheonwon": 85862118,
+      "etc_cheonwon": 2394765
+    },
+    "DB|202409": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202409",
+      "first_premium_cheonwon": 133881731,
+      "first_premium_eok": 1338.82,
+      "wolnap_only_cheonwon": 130115535,
+      "etc_cheonwon": 3766196
+    },
+    "DB|202412": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202412",
+      "first_premium_cheonwon": 182901933,
+      "first_premium_eok": 1829.02,
+      "wolnap_only_cheonwon": 178762553,
+      "etc_cheonwon": 4139380
+    },
+    "DB|202503": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202503",
+      "first_premium_cheonwon": 49893056,
+      "first_premium_eok": 498.93,
+      "wolnap_only_cheonwon": 47226130,
+      "etc_cheonwon": 2666926
+    },
+    "DB|202506": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202506",
+      "first_premium_cheonwon": 97671924,
+      "first_premium_eok": 976.72,
+      "wolnap_only_cheonwon": 91800810,
+      "etc_cheonwon": 5871114
+    },
+    "DB|202509": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202509",
+      "first_premium_cheonwon": 142678197,
+      "first_premium_eok": 1426.78,
+      "wolnap_only_cheonwon": 134203019,
+      "etc_cheonwon": 8475178
+    },
+    "DB|202512": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202512",
+      "first_premium_cheonwon": 188938100,
+      "first_premium_eok": 1889.38,
+      "wolnap_only_cheonwon": 178611595,
+      "etc_cheonwon": 10326505
+    },
+    "AXA|202303": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202303",
+      "first_premium_cheonwon": 1431100,
+      "first_premium_eok": 14.31,
+      "wolnap_only_cheonwon": 1400328,
+      "etc_cheonwon": 30772
+    },
+    "AXA|202306": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202306",
+      "first_premium_cheonwon": 2856305,
+      "first_premium_eok": 28.56,
+      "wolnap_only_cheonwon": 2802652,
+      "etc_cheonwon": 53653
+    },
+    "AXA|202309": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202309",
+      "first_premium_cheonwon": 4207500,
+      "first_premium_eok": 42.08,
+      "wolnap_only_cheonwon": 4128736,
+      "etc_cheonwon": 78764
+    },
+    "AXA|202312": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202312",
+      "first_premium_cheonwon": 5681225,
+      "first_premium_eok": 56.81,
+      "wolnap_only_cheonwon": 5569933,
+      "etc_cheonwon": 111292
+    },
+    "AXA|202403": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202403",
+      "first_premium_cheonwon": 1559586,
+      "first_premium_eok": 15.6,
+      "wolnap_only_cheonwon": 1467421,
+      "etc_cheonwon": 92165
+    },
+    "AXA|202406": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202406",
+      "first_premium_cheonwon": 2890117,
+      "first_premium_eok": 28.9,
+      "wolnap_only_cheonwon": 2765522,
+      "etc_cheonwon": 124595
+    },
+    "AXA|202409": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202409",
+      "first_premium_cheonwon": 4151070,
+      "first_premium_eok": 41.51,
+      "wolnap_only_cheonwon": 4004339,
+      "etc_cheonwon": 146731
+    },
+    "AXA|202412": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202412",
+      "first_premium_cheonwon": 5451740,
+      "first_premium_eok": 54.52,
+      "wolnap_only_cheonwon": 5280154,
+      "etc_cheonwon": 171586
+    },
+    "AXA|202503": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202503",
+      "first_premium_cheonwon": 1221116,
+      "first_premium_eok": 12.21,
+      "wolnap_only_cheonwon": 1196177,
+      "etc_cheonwon": 24939
+    },
+    "AXA|202506": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202506",
+      "first_premium_cheonwon": 2362560,
+      "first_premium_eok": 23.63,
+      "wolnap_only_cheonwon": 2313758,
+      "etc_cheonwon": 48802
+    },
+    "AXA|202509": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202509",
+      "first_premium_cheonwon": 3483394,
+      "first_premium_eok": 34.83,
+      "wolnap_only_cheonwon": 3412853,
+      "etc_cheonwon": 70541
+    },
+    "AXA|202512": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202512",
+      "first_premium_cheonwon": 4614769,
+      "first_premium_eok": 46.15,
+      "wolnap_only_cheonwon": 4512215,
+      "etc_cheonwon": 102554
+    },
+    "하나|202303": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202303",
+      "first_premium_cheonwon": 916378,
+      "first_premium_eok": 9.16,
+      "wolnap_only_cheonwon": 907720,
+      "etc_cheonwon": 8658
+    },
+    "하나|202306": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202306",
+      "first_premium_cheonwon": 1977327,
+      "first_premium_eok": 19.77,
+      "wolnap_only_cheonwon": 1957438,
+      "etc_cheonwon": 19889
+    },
+    "하나|202309": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202309",
+      "first_premium_cheonwon": 3160410,
+      "first_premium_eok": 31.6,
+      "wolnap_only_cheonwon": 3133809,
+      "etc_cheonwon": 26601
+    },
+    "하나|202312": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202312",
+      "first_premium_cheonwon": 4907501,
+      "first_premium_eok": 49.08,
+      "wolnap_only_cheonwon": 4873364,
+      "etc_cheonwon": 34137
+    },
+    "하나|202403": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202403",
+      "first_premium_cheonwon": 1613911,
+      "first_premium_eok": 16.14,
+      "wolnap_only_cheonwon": 1609490,
+      "etc_cheonwon": 4421
+    },
+    "하나|202406": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202406",
+      "first_premium_cheonwon": 3255927,
+      "first_premium_eok": 32.56,
+      "wolnap_only_cheonwon": 3245898,
+      "etc_cheonwon": 10029
+    },
+    "하나|202409": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202409",
+      "first_premium_cheonwon": 4773558,
+      "first_premium_eok": 47.74,
+      "wolnap_only_cheonwon": 4761561,
+      "etc_cheonwon": 11997
+    },
+    "하나|202412": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202412",
+      "first_premium_cheonwon": 6838965,
+      "first_premium_eok": 68.39,
+      "wolnap_only_cheonwon": 6825039,
+      "etc_cheonwon": 13926
+    },
+    "하나|202503": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202503",
+      "first_premium_cheonwon": 2042377,
+      "first_premium_eok": 20.42,
+      "wolnap_only_cheonwon": 2039634,
+      "etc_cheonwon": 2743
+    },
+    "하나|202506": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202506",
+      "first_premium_cheonwon": 4254637,
+      "first_premium_eok": 42.55,
+      "wolnap_only_cheonwon": 4250324,
+      "etc_cheonwon": 4313
+    },
+    "하나|202509": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202509",
+      "first_premium_cheonwon": 6791939,
+      "first_premium_eok": 67.92,
+      "wolnap_only_cheonwon": 6783602,
+      "etc_cheonwon": 8337
+    },
+    "하나|202512": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202512",
+      "first_premium_cheonwon": 10757304,
+      "first_premium_eok": 107.57,
+      "wolnap_only_cheonwon": 10696193,
+      "etc_cheonwon": 61111
+    },
+    "신한EZ|202303": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202303",
+      "first_premium_cheonwon": 3093,
+      "first_premium_eok": 0.03,
+      "wolnap_only_cheonwon": 3093,
+      "etc_cheonwon": 0
+    },
+    "신한EZ|202306": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202306",
+      "first_premium_cheonwon": 2127,
+      "first_premium_eok": 0.02,
+      "wolnap_only_cheonwon": 2127,
+      "etc_cheonwon": 0
+    },
+    "신한EZ|202309": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202309",
+      "first_premium_cheonwon": 3420,
+      "first_premium_eok": 0.03,
+      "wolnap_only_cheonwon": 3420,
+      "etc_cheonwon": 0
+    },
+    "신한EZ|202312": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202312",
+      "first_premium_cheonwon": 8708,
+      "first_premium_eok": 0.09,
+      "wolnap_only_cheonwon": 8708,
+      "etc_cheonwon": 0
+    },
+    "신한EZ|202403": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202403",
+      "first_premium_cheonwon": 16646,
+      "first_premium_eok": 0.17,
+      "wolnap_only_cheonwon": 16646,
+      "etc_cheonwon": 0
+    },
+    "신한EZ|202406": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202406",
+      "first_premium_cheonwon": 58294,
+      "first_premium_eok": 0.58,
+      "wolnap_only_cheonwon": 58294,
+      "etc_cheonwon": 0
+    },
+    "신한EZ|202409": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202409",
+      "first_premium_cheonwon": 50695,
+      "first_premium_eok": 0.51,
+      "wolnap_only_cheonwon": 50695,
+      "etc_cheonwon": 0
+    },
+    "신한EZ|202412": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202412",
+      "first_premium_cheonwon": 100783,
+      "first_premium_eok": 1.01,
+      "wolnap_only_cheonwon": 99732,
+      "etc_cheonwon": 1051
+    },
+    "신한EZ|202503": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202503",
+      "first_premium_cheonwon": 46534,
+      "first_premium_eok": 0.47,
+      "wolnap_only_cheonwon": 43323,
+      "etc_cheonwon": 3211
+    },
+    "신한EZ|202506": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202506",
+      "first_premium_cheonwon": 76060,
+      "first_premium_eok": 0.76,
+      "wolnap_only_cheonwon": 72849,
+      "etc_cheonwon": 3211
+    },
+    "신한EZ|202509": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202509",
+      "first_premium_cheonwon": 128833,
+      "first_premium_eok": 1.29,
+      "wolnap_only_cheonwon": 125622,
+      "etc_cheonwon": 3211
+    },
+    "신한EZ|202512": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202512",
+      "first_premium_cheonwon": 219413,
+      "first_premium_eok": 2.19,
+      "wolnap_only_cheonwon": 216202,
+      "etc_cheonwon": 3211
+    },
+    "AIG|202303": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202303",
+      "first_premium_cheonwon": 1578670,
+      "first_premium_eok": 15.79,
+      "wolnap_only_cheonwon": 1578670,
+      "etc_cheonwon": 0
+    },
+    "AIG|202306": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202306",
+      "first_premium_cheonwon": 3240440,
+      "first_premium_eok": 32.4,
+      "wolnap_only_cheonwon": 3240440,
+      "etc_cheonwon": 0
+    },
+    "AIG|202309": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202309",
+      "first_premium_cheonwon": 4996645,
+      "first_premium_eok": 49.97,
+      "wolnap_only_cheonwon": 4996645,
+      "etc_cheonwon": 0
+    },
+    "AIG|202312": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202312",
+      "first_premium_cheonwon": 6819518,
+      "first_premium_eok": 68.2,
+      "wolnap_only_cheonwon": 6819518,
+      "etc_cheonwon": 0
+    },
+    "AIG|202403": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202403",
+      "first_premium_cheonwon": 1509039,
+      "first_premium_eok": 15.09,
+      "wolnap_only_cheonwon": 1509039,
+      "etc_cheonwon": 0
+    },
+    "AIG|202406": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202406",
+      "first_premium_cheonwon": 2771584,
+      "first_premium_eok": 27.72,
+      "wolnap_only_cheonwon": 2771584,
+      "etc_cheonwon": 0
+    },
+    "AIG|202409": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202409",
+      "first_premium_cheonwon": 3928575,
+      "first_premium_eok": 39.29,
+      "wolnap_only_cheonwon": 3928575,
+      "etc_cheonwon": 0
+    },
+    "AIG|202412": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202412",
+      "first_premium_cheonwon": 5076522,
+      "first_premium_eok": 50.77,
+      "wolnap_only_cheonwon": 5076522,
+      "etc_cheonwon": 0
+    },
+    "AIG|202503": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202503",
+      "first_premium_cheonwon": 1249512,
+      "first_premium_eok": 12.5,
+      "wolnap_only_cheonwon": 1249512,
+      "etc_cheonwon": 0
+    },
+    "AIG|202506": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202506",
+      "first_premium_cheonwon": 3087228,
+      "first_premium_eok": 30.87,
+      "wolnap_only_cheonwon": 3087228,
+      "etc_cheonwon": 0
+    },
+    "AIG|202509": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202509",
+      "first_premium_cheonwon": 5163190,
+      "first_premium_eok": 51.63,
+      "wolnap_only_cheonwon": 5163190,
+      "etc_cheonwon": 0
+    },
+    "AIG|202512": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202512",
+      "first_premium_cheonwon": 7447637,
+      "first_premium_eok": 74.48,
+      "wolnap_only_cheonwon": 7447637,
+      "etc_cheonwon": 0
+    },
+    "ACE|202303": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202303",
+      "first_premium_cheonwon": 2436577,
+      "first_premium_eok": 24.37,
+      "wolnap_only_cheonwon": 1916505,
+      "etc_cheonwon": 520072
+    },
+    "ACE|202306": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202306",
+      "first_premium_cheonwon": 4950643,
+      "first_premium_eok": 49.51,
+      "wolnap_only_cheonwon": 3940742,
+      "etc_cheonwon": 1009901
+    },
+    "ACE|202309": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202309",
+      "first_premium_cheonwon": 6845506,
+      "first_premium_eok": 68.46,
+      "wolnap_only_cheonwon": 5776264,
+      "etc_cheonwon": 1069242
+    },
+    "ACE|202312": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202312",
+      "first_premium_cheonwon": 8752407,
+      "first_premium_eok": 87.52,
+      "wolnap_only_cheonwon": 7676926,
+      "etc_cheonwon": 1075481
+    },
+    "ACE|202403": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202403",
+      "first_premium_cheonwon": 1798272,
+      "first_premium_eok": 17.98,
+      "wolnap_only_cheonwon": 1795237,
+      "etc_cheonwon": 3035
+    },
+    "ACE|202406": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202406",
+      "first_premium_cheonwon": 3902019,
+      "first_premium_eok": 39.02,
+      "wolnap_only_cheonwon": 3895529,
+      "etc_cheonwon": 6490
+    },
+    "ACE|202409": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202409",
+      "first_premium_cheonwon": 6544407,
+      "first_premium_eok": 65.44,
+      "wolnap_only_cheonwon": 6533291,
+      "etc_cheonwon": 11116
+    },
+    "ACE|202412": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202412",
+      "first_premium_cheonwon": 9573190,
+      "first_premium_eok": 95.73,
+      "wolnap_only_cheonwon": 9554623,
+      "etc_cheonwon": 18567
+    },
+    "ACE|202503": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202503",
+      "first_premium_cheonwon": 2582775,
+      "first_premium_eok": 25.83,
+      "wolnap_only_cheonwon": 2580076,
+      "etc_cheonwon": 2699
+    },
+    "ACE|202506": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202506",
+      "first_premium_cheonwon": 5119797,
+      "first_premium_eok": 51.2,
+      "wolnap_only_cheonwon": 5115744,
+      "etc_cheonwon": 4053
+    },
+    "ACE|202509": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202509",
+      "first_premium_cheonwon": 7527046,
+      "first_premium_eok": 75.27,
+      "wolnap_only_cheonwon": 7519991,
+      "etc_cheonwon": 7055
+    },
+    "ACE|202512": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202512",
+      "first_premium_cheonwon": 9831504,
+      "first_premium_eok": 98.32,
+      "wolnap_only_cheonwon": 9823229,
+      "etc_cheonwon": 8275
+    },
+    "농협|202303": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202303",
+      "first_premium_cheonwon": 19571311,
+      "first_premium_eok": 195.71,
+      "wolnap_only_cheonwon": 7167507,
+      "etc_cheonwon": 12403804
+    },
+    "농협|202306": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202306",
+      "first_premium_cheonwon": 40786795,
+      "first_premium_eok": 407.87,
+      "wolnap_only_cheonwon": 14510435,
+      "etc_cheonwon": 26276360
+    },
+    "농협|202309": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202309",
+      "first_premium_cheonwon": 58585964,
+      "first_premium_eok": 585.86,
+      "wolnap_only_cheonwon": 21045032,
+      "etc_cheonwon": 37540932
+    },
+    "농협|202312": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202312",
+      "first_premium_cheonwon": 71138322,
+      "first_premium_eok": 711.38,
+      "wolnap_only_cheonwon": 27015036,
+      "etc_cheonwon": 44123286
+    },
+    "농협|202403": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202403",
+      "first_premium_cheonwon": 56411421,
+      "first_premium_eok": 564.11,
+      "wolnap_only_cheonwon": 9934008,
+      "etc_cheonwon": 46477413
+    },
+    "농협|202406": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202406",
+      "first_premium_cheonwon": 71562196,
+      "first_premium_eok": 715.62,
+      "wolnap_only_cheonwon": 16242609,
+      "etc_cheonwon": 55319587
+    },
+    "농협|202409": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202409",
+      "first_premium_cheonwon": 82050467,
+      "first_premium_eok": 820.5,
+      "wolnap_only_cheonwon": 21795360,
+      "etc_cheonwon": 60255107
+    },
+    "농협|202412": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202412",
+      "first_premium_cheonwon": 90934387,
+      "first_premium_eok": 909.34,
+      "wolnap_only_cheonwon": 26238775,
+      "etc_cheonwon": 64695612
+    },
+    "농협|202503": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202503",
+      "first_premium_cheonwon": 40976684,
+      "first_premium_eok": 409.77,
+      "wolnap_only_cheonwon": 8380018,
+      "etc_cheonwon": 32596666
+    },
+    "농협|202506": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202506",
+      "first_premium_cheonwon": 68256475,
+      "first_premium_eok": 682.56,
+      "wolnap_only_cheonwon": 15326090,
+      "etc_cheonwon": 52930385
+    },
+    "농협|202509": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202509",
+      "first_premium_cheonwon": 92566967,
+      "first_premium_eok": 925.67,
+      "wolnap_only_cheonwon": 21773669,
+      "etc_cheonwon": 70793298
+    },
+    "농협|202512": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202512",
+      "first_premium_cheonwon": 113039728,
+      "first_premium_eok": 1130.4,
+      "wolnap_only_cheonwon": 26996544,
+      "etc_cheonwon": 86043184
+    },
+    "카카오페이|202406": {
+      "company_kidi": "카카오페이",
+      "comp_code": "N80",
+      "data_year": "202406",
+      "first_premium_cheonwon": 10551,
+      "first_premium_eok": 0.11,
+      "wolnap_only_cheonwon": 10551,
+      "etc_cheonwon": 0
+    },
+    "카카오페이|202409": {
+      "company_kidi": "카카오페이",
+      "comp_code": "N80",
+      "data_year": "202409",
+      "first_premium_cheonwon": 48924,
+      "first_premium_eok": 0.49,
+      "wolnap_only_cheonwon": 48924,
+      "etc_cheonwon": 0
+    },
+    "카카오페이|202412": {
+      "company_kidi": "카카오페이",
+      "comp_code": "N80",
+      "data_year": "202412",
+      "first_premium_cheonwon": 141215,
+      "first_premium_eok": 1.41,
+      "wolnap_only_cheonwon": 141215,
+      "etc_cheonwon": 0
+    },
+    "카카오페이|202503": {
+      "company_kidi": "카카오페이",
+      "comp_code": "N80",
+      "data_year": "202503",
+      "first_premium_cheonwon": 251265,
+      "first_premium_eok": 2.51,
+      "wolnap_only_cheonwon": 251265,
+      "etc_cheonwon": 0
+    },
+    "카카오페이|202506": {
+      "company_kidi": "카카오페이",
+      "comp_code": "N80",
+      "data_year": "202506",
+      "first_premium_cheonwon": 223322,
+      "first_premium_eok": 2.23,
+      "wolnap_only_cheonwon": 223322,
+      "etc_cheonwon": 0
+    },
+    "카카오페이|202509": {
+      "company_kidi": "카카오페이",
+      "comp_code": "N80",
+      "data_year": "202509",
+      "first_premium_cheonwon": 325547,
+      "first_premium_eok": 3.26,
+      "wolnap_only_cheonwon": 325547,
+      "etc_cheonwon": 0
+    },
+    "카카오페이|202512": {
+      "company_kidi": "카카오페이",
+      "comp_code": "N80",
+      "data_year": "202512",
+      "first_premium_cheonwon": 679470,
+      "first_premium_eok": 6.79,
+      "wolnap_only_cheonwon": 679470,
+      "etc_cheonwon": 0
+    }
+  }
+}

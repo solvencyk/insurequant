@@ -1,0 +1,243 @@
+{
+  "company": "한화생명",
+  "kr": "KR0068",
+  "sector": "Life",
+  "metric": "월평균 월초 대비 신계약 CSM 배수 (배) = 신계약 CSM ÷ 월평균 월초 — Hanwha Life IR factsheet sheet '신계약 CSM 및 수익성' (별도)",
+  "units": {
+    "nb_csm_eok": "KRW 100M (억원)",
+    "multiple": "배 (x), 월초 기준"
+  },
+  "product_note": "multiple_by_product: 보장성(=종신+건강), 종신, 건강(=옛 일반보장), 연금저축",
+  "series": {
+    "2023.1Q": {
+      "multiple_total": 6.143,
+      "multiple_by_product": {
+        "보장성": 13.125,
+        "종신": 9.462,
+        "건강": 18.984,
+        "연금저축": 2.365
+      },
+      "nb_csm_eok": 5444.29,
+      "source_file": "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+      "source_files": [
+        "FY2023_Q4_factsheet_FY23 HLI FactSheet(KOR)_2.xls",
+        "FY2024_Q1_factsheet_1Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q2_factsheet_1H24 HLI FactSheet(KOR)_4.xls",
+        "FY2024_Q3_factsheet_3Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls"
+      ]
+    },
+    "2023.2Q": {
+      "multiple_total": 10.42,
+      "multiple_by_product": {
+        "보장성": 10.742,
+        "종신": 7.872,
+        "건강": 21.086,
+        "연금저축": 1.604
+      },
+      "nb_csm_eok": 6198.84,
+      "source_file": "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+      "source_files": [
+        "FY2023_Q4_factsheet_FY23 HLI FactSheet(KOR)_2.xls",
+        "FY2024_Q1_factsheet_1Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q2_factsheet_1H24 HLI FactSheet(KOR)_4.xls",
+        "FY2024_Q3_factsheet_3Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls"
+      ]
+    },
+    "2023.3Q": {
+      "multiple_total": 12.386,
+      "multiple_by_product": {
+        "보장성": 13.035,
+        "종신": 8.924,
+        "건강": 22.365,
+        "연금저축": 1.388
+      },
+      "nb_csm_eok": 6916.34,
+      "source_file": "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+      "source_files": [
+        "FY2023_Q4_factsheet_FY23 HLI FactSheet(KOR)_2.xls",
+        "FY2024_Q1_factsheet_1Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q2_factsheet_1H24 HLI FactSheet(KOR)_4.xls",
+        "FY2024_Q3_factsheet_3Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls"
+      ]
+    },
+    "2023.4Q": {
+      "multiple_total": 12.811,
+      "multiple_by_product": {
+        "보장성": 13.574,
+        "종신": 9.685,
+        "건강": 20.381,
+        "연금저축": 1.968
+      },
+      "nb_csm_eok": 6852.7,
+      "source_file": "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+      "source_files": [
+        "FY2023_Q4_factsheet_FY23 HLI FactSheet(KOR)_2.xls",
+        "FY2024_Q1_factsheet_1Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q2_factsheet_1H24 HLI FactSheet(KOR)_4.xls",
+        "FY2024_Q3_factsheet_3Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls"
+      ]
+    },
+    "2024.1Q": {
+      "multiple_total": 6.18,
+      "multiple_by_product": {
+        "보장성": 7.39,
+        "종신": 3.326,
+        "건강": 15.024,
+        "연금저축": 0.262
+      },
+      "nb_csm_eok": 5154.02,
+      "source_file": "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+      "source_files": [
+        "FY2024_Q1_factsheet_1Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q2_factsheet_1H24 HLI FactSheet(KOR)_4.xls",
+        "FY2024_Q3_factsheet_3Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+        "FY2025_Q1_factsheet_1Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q2_factsheet_1H25 HLI FactSheet(KOR).xls",
+        "FY2025_Q3_factsheet_3Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx"
+      ]
+    },
+    "2024.2Q": {
+      "multiple_total": 8.673,
+      "multiple_by_product": {
+        "보장성": 8.375,
+        "종신": 3.344,
+        "건강": 13.734,
+        "연금저축": 1.314
+      },
+      "nb_csm_eok": 4810.87,
+      "source_file": "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+      "source_files": [
+        "FY2024_Q2_factsheet_1H24 HLI FactSheet(KOR)_4.xls",
+        "FY2024_Q3_factsheet_3Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+        "FY2025_Q1_factsheet_1Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q2_factsheet_1H25 HLI FactSheet(KOR).xls",
+        "FY2025_Q3_factsheet_3Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx"
+      ]
+    },
+    "2024.3Q": {
+      "multiple_total": 7.848,
+      "multiple_by_product": {
+        "보장성": 7.586,
+        "종신": 2.824,
+        "건강": 16.131,
+        "연금저축": 1.211
+      },
+      "nb_csm_eok": 5420.44,
+      "source_file": "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+      "source_files": [
+        "FY2024_Q3_factsheet_3Q24 HLI FactSheet(KOR).xls",
+        "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+        "FY2025_Q1_factsheet_1Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q2_factsheet_1H25 HLI FactSheet(KOR).xls",
+        "FY2025_Q3_factsheet_3Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx"
+      ]
+    },
+    "2024.4Q": {
+      "multiple_total": 8.225,
+      "multiple_by_product": {
+        "보장성": 8.128,
+        "종신": 2.122,
+        "건강": 16.022,
+        "연금저축": 1.088
+      },
+      "nb_csm_eok": 5845.52,
+      "source_file": "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+      "source_files": [
+        "FY2024_Q4_factsheet_FY24 HLI FactSheet(KOR).xls",
+        "FY2025_Q1_factsheet_1Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q2_factsheet_1H25 HLI FactSheet(KOR).xls",
+        "FY2025_Q3_factsheet_3Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx"
+      ]
+    },
+    "2025.1Q": {
+      "multiple_total": 7.753,
+      "multiple_by_product": {
+        "보장성": 7.962,
+        "종신": 3.478,
+        "건강": 15.957,
+        "연금저축": 1.31
+      },
+      "nb_csm_eok": 4881.94,
+      "source_file": "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx",
+      "source_files": [
+        "FY2025_Q1_factsheet_1Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q2_factsheet_1H25 HLI FactSheet(KOR).xls",
+        "FY2025_Q3_factsheet_3Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+        "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx"
+      ]
+    },
+    "2025.2Q": {
+      "multiple_total": 6.69,
+      "multiple_by_product": {
+        "보장성": 6.695,
+        "종신": 3.328,
+        "건강": 14.643,
+        "연금저축": 1.468
+      },
+      "nb_csm_eok": 4373.24,
+      "source_file": "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx",
+      "source_files": [
+        "FY2025_Q2_factsheet_1H25 HLI FactSheet(KOR).xls",
+        "FY2025_Q3_factsheet_3Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+        "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx"
+      ]
+    },
+    "2025.3Q": {
+      "multiple_total": 7.217,
+      "multiple_by_product": {
+        "보장성": 7.378,
+        "종신": 3.965,
+        "건강": 16.361,
+        "연금저축": 1.311
+      },
+      "nb_csm_eok": 5642.96,
+      "source_file": "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx",
+      "source_files": [
+        "FY2025_Q3_factsheet_3Q25 HLI FactSheet(KOR).xls",
+        "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+        "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx"
+      ]
+    },
+    "2025.4Q": {
+      "multiple_total": 8.326,
+      "multiple_by_product": {
+        "보장성": 8.482,
+        "종신": 4.974,
+        "건강": 18.48,
+        "연금저축": 1.622
+      },
+      "nb_csm_eok": 5764.44,
+      "source_file": "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx",
+      "source_files": [
+        "FY2025_Q4_factsheet_FY25 HLI FactSheet(KOR).xlsx",
+        "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx"
+      ]
+    },
+    "2026.1Q": {
+      "multiple_total": 9.84,
+      "multiple_by_product": {
+        "보장성": 9.58,
+        "종신": 7.097,
+        "건강": 14.622,
+        "연금저축": 2.35
+      },
+      "nb_csm_eok": 6109.34,
+      "source_file": "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx",
+      "source_files": [
+        "FY2026_Q1_factsheet_1Q26 HLI FactSheet(KOR)_3.xlsx"
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "company": "한화손해보험",
+  "kr": "KR0002",
+  "sector": "Non-Life",
+  "metric": "IR-disclosed 신계약 CSM (YTD) from 한화손보 실적발표 PDF narrative (CSM roll-forward 변동원인). No 월납환산 disclosed in IR -> no derived multiple here. Recorded to FLAG a DART-numerator discrepancy.",
+  "units": {
+    "nb_csm_eok_ir": "억원 (YTD, IR narrative)",
+    "nb_csm_eok_dart": "억원 (YTD, my DART/KIDI extraction)"
+  },
+  "data_quality_flag": "DART/KIDI numerator for 한화손보 is ~2x the IR-stated value in 2023-2024 (FY2024: DART 14,820 vs IR 7,410), and 2025.1Q DART value (3,971.5) is a stale carryover identical to 2024.1Q. This inflates the KIDI NB CSM multiple to an implausible ~20-22x (user expects whole-portfolio <20, ~10-15). 2025.2Q DART (5,119) ~matches IR 1H (4,510). NEEDS focused review of the 한화손보 DART measurement (신계약 CSM) extraction. See spawned task.",
+  "series": {
+    "2024.4Q": {
+      "nb_csm_eok_ir": 7410,
+      "nb_csm_eok_dart": 14819.8,
+      "note": "IR = FY2024 annual new-business CSM (변동원인 narrative)",
+      "multiple": null
+    },
+    "2025.1Q": {
+      "nb_csm_eok_ir": 1891,
+      "nb_csm_eok_dart": 3971.5,
+      "note": "DART value is a stale carryover (==2024.1Q)",
+      "multiple": null
+    },
+    "2025.2Q": {
+      "nb_csm_eok_ir": 4510,
+      "nb_csm_eok_dart": 5119.1,
+      "note": "IR=1H YTD; DART ~matches here",
+      "multiple": null
+    },
+    "2025.3Q": {
+      "nb_csm_eok_ir": 7351,
+      "nb_csm_eok_dart": null,
+      "note": "IR=9M YTD",
+      "multiple": null
+    }
+  }
+}

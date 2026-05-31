@@ -1,0 +1,425 @@
+meta:
+  version: 1
+  last_updated: '2026-05-30'
+  scope: 5 data sources for ~28 Korean insurers
+  notes:
+    - All file I/O must use UTF-8 (no BOM).
+    - Korean filenames in zipfile: cp437 -> decode('cp437').encode('cp437').decode('cp949') if garbled.
+    - Archive obsolete items under data/_archive/<UTC-stamp>/<original-relative-path>; never delete.
+
+sources:
+  - id: disclosure_nonlife
+    name: 정기경영공시 손보
+    script: scripts/download_disclosure_2026q1_nonlife.py
+    output: data/disclosure/<period>/raw/
+    entries:
+      - kr: KR0001
+        name: 메리츠화재해상보험
+        url: https://www.meritzfire.com/disclosure/managerial-announcement/periodic.do#!/
+        xpath: '(//a[contains(@class,"btn_file") and contains(@class,"i_pdf") and @download])[1]'
+        mode: click_dl
+        wait_selector: a.btn_file.i_pdf
+        wait_ms: 5000
+        notes: AngularJS
+      - kr: KR0002
+        name: 한화손해보험
+        url: https://www.hwgeneralins.com/notice/ir/biz01.do
+        xpath: '//a[contains(@title, "fy2026 1/4분기") or contains(@href, "FY2026-1_4.pdf")]'
+        mode: direct_href
+        notes: URL path says /ir/ but content is 경영공시. Title/href contains FY2026-N_M.pdf — increment per quarter.
+      - kr: KR0003
+        name: 롯데손해보험
+        url: https://www.lotteins.co.kr/web/C/D/H/cdh_ir_board03_list.jsp
+        xpath_step1: '//a[@title="2026년 1분기 경영공시"]'
+        xpath_step2: '//a[contains(@href, "downLoadFile")]'
+        mode: two_step + click_dl
+        notes: step1 navigates via JS goViewPage; step2 javascript:downLoadFile(...) returns ZIP
+      - kr: KR0004_MG
+        name: MG손해보험 (구 예별)
+        url: https://yebyeol.co.kr/PB021010DM.scp?menuId=MN0802001
+        xpath: '//*[@id="quarter1_2026"]'
+        mode: click_dl
+        notes: 예별 -> MG 사명변경. Id 'quarter1_2026' increments per period.
+      - kr: KR0005
+        name: 흥국화재
+        url: https://www.heungkukfire.co.kr/FRW/announce/manageRegular.do
+        xpath: '//*[@id="tab01_01"]/dt/button/span'
+        mode: click_dl
+        notes: latest period in tab01_01
+      - kr: KR0008
+        name: 삼성화재해상보험
+        url: https://www.samsungfire.com/v2/html/publication/02/J_020_010_001.html
+        xpath: '//*[@id="baseMain"]/div[2]/section[2]/div/div/table/tbody/tr[1]/td[1]/div/div/button'
+        mode: click_dl
+        notes: ZIP (분기자료 묶음); tr[1] auto-latest
+      - kr: KR0009
+        name: 현대해상
+        url: https://www.hi.co.kr/serviceAction.do
+        js_eval_first: 'goMenu("100911")'
+        xpath_step1: '//a[contains(text(), "2026년 1분기 경영공시")]'
+        xpath_step2: '//*[@id="fileList"]/li[3]/a'
+        mode: two_step + click_dl
+        notes: li[3]=경영공시 최종 (li[1,2]=재무제표 skip)
+      - kr: KR0010
+        name: KB손해보험
+        url: https://www.kbinsure.co.kr/CG801010001.ec
+        xpath: '//*[@id="contents"]/div[3]/table/tbody/tr[3]/td[3]/a'
+        mode: direct_href
+      - kr: KR0011
+        name: DB손해보험
+        url1: https://www.idbins.com/pc/bizxpress/contentTemplet/pb/mp/rg/list.jsp
+        url2: https://www.idbins.com/pc/bizxpress/contentTemplet/pb/mp/rg/view.jsp?i=4c3187cc8627450a93bc&tp=T&tx=&ct=1
+        xpath: '//*[@id="content"]/div[2]/div/div/div[1]/div[2]/dl/dd/ul/li[1]/a'
+        mode: two_step_direct_url + direct_href
+        notes: view.jsp 'i=' detail-id varies per quarter
+      - kr: KR0029
+        name: AIG손해보험
+        url1: https://m.aig.co.kr/wo/dpwom012.html?menuId=MS709
+        url2: https://m.aig.co.kr/wo/dpwom021.html?menuId=MS709&pancId=15467&searchWord=&curPage=1
+        xpath: '//*[@id="aigContent"]/div[1]/div[1]/span/a/em'
+        mode: two_step_direct_url + click_dl
+        notes: pancId varies per quarter
+      - kr: KR0032
+        name: NH농협손해보험
+        url: https://www.nhfire.co.kr/announce/managementAnnounce/retrievePeriodicManagementAnnounce.nhfire
+        xpath: '//a[@title="2026년 1/4분기 PDF다운로드"]'
+        mode: click_dl
+        notes: devtools 막힘 but HTML grep finds the anchor cleanly
+      - kr: KR0049
+        name: 악사손해보험
+        url: https://www.axa.co.kr/cms/AsianPlatformInternet/html/axacms/common/intro/disclosure/regular/index.html
+        xpath: '//*[@id="content"]/div[2]/div[2]/div[1]/table/tbody/tr[1]/td[2]/a'
+        mode: direct_href
+      - kr: KR0050
+        name: 하나손해보험
+        url: https://m.hanainsure.co.kr/w/disclosure/manage/regularMngDisclosure
+        xpath: '//*[@id="targetRegularList"]/tr[1]/td[1]/a[1]'
+        mode: direct_href
+        notes: mobile site
+      - kr: KR0051
+        name: 신한이지손해보험
+        url: https://www.shinhanez.co.kr/static/pub/PUB10000T01.html
+        xpath: '//*[@id="tabFPanel1"]/div/div/div[1]/ul[2]/li[1]/div[3]'
+        mode: click_dl
+      - kr: KR0150
+        name: 서울보증보험
+        url: https://www.sgic.co.kr/biz/ccg/index.html?p=CCGIRI010101F01
+        xpath: '//*[@id="test1"]'
+        mode: click_dl
+        wait_networkidle: true
+        wait_ms: 5000
+        notes: SPA
+      - kr: KR1000
+        name: 코리안리재보험
+        url: https://www.koreanre.co.kr/ir/ir_03_1.asp
+        xpath: '//*[@id="pageCont"]/div/div[3]/table/tbody/tr[2]/td[2]/a'
+        mode: direct_href
+      - kr: KR1098
+        name: 카카오페이손해보험
+        url: https://kakaopayinscorp.co.kr/disclosure/management
+        xpath: '//*[@id="mainContent"]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[3]/div/a'
+        mode: direct_href
+    skipped:
+      - kr: KR1059
+        name: 캐롯손해보험
+        reason: 한화손보로 합병됨, 별도 사이트 없음
+
+  - id: disclosure_life_bulk
+    name: 정기경영공시 생보 일괄
+    script: scripts/download_disclosure_2026q1_life.py
+    url: https://pub.insure.or.kr/mngtDis/mngtDis/list.do
+    xpath_template: '//*[@id="scroll_cont"]/table/tbody/tr[{row_index}]/td[2]/a'
+    period_to_row_index:
+      FY2026_Q1: 23
+    output: data/disclosure/<period>/raw/
+    notes:
+      - 22 생보 PDFs in single zip (22.4MB).
+      - tr[N] increments per quarter; bump as new periods are filed.
+      - Verify period via td[1] date column.
+      - 신한라이프 generic filename '2026년 1분기 정기경영공시.pdf' -> use pdfminer first-page extraction to identify.
+    included_krs:
+      - KR0068 한화
+      - KR0069 삼성
+      - KR0070 ABL
+      - KR0071 흥국
+      - KR0072 KDB
+      - KR0073 교보
+      - KR0074 라이나
+      - KR0075 BNP
+      - KR0076 iM라이프
+      - KR0079 미래에셋
+      - KR0082 DB생명
+      - KR0083 푸본현대
+      - KR0087 동양
+      - KR0094 신한라이프
+      - KR0095 메트라이프
+      - KR0097 하나생명
+      - KR0099 KB라이프
+      - KR0100 처브
+      - KR0104 농협생명
+      - KR1010 교보라이프플래닛
+      - KR1011 IBK연금
+      - non-KR AIA
+
+  - id: bonds
+    name: 채권발행현황 FSC data.go.kr
+    pattern: src/bonds/fsc_client.py
+    api_ids:
+      capital_securities: 15059611
+      nonlife_metrics: 15061307
+      life_metrics: 15061306
+      private_health: 15094797
+    env_keys:
+      - DATA_GO_KR_BOND_ISSUANCE_KEY
+      - DATA_GO_KR_BOND_REDE_KEY
+    output:
+      - data/bonds/raw/<stamp>/
+      - data/bonds/normalized/<stamp>/
+    convention: issue+5y for all bonds (Korean market, ignore '콜' keyword); past 5y = assume called
+
+  - id: dart
+    name: DART 공시 OpenDART
+    base: https://opendart.fss.or.kr
+    env_key: OPENDART_API_KEY
+    endpoints:
+      list: /api/list.json
+      document: /api/document.xml
+    pblntf_ty:
+      A: 정기공시 (사업/반기/분기)
+      F: 감사보고서
+    scripts:
+      historical: scripts/ifrs17_batch_historical.py
+      annual: scripts/ifrs17_batch_all.py
+      audit_only: scripts/ifrs17_ingest_audit_annual.py
+    output:
+      annual: data/dart/<period>/raw/KR####_<canonical>[__cons]_<rcept>/document.zip + *.xml
+      historical: data/dart/<period>/raw/KR####_<canonical>/document.zip  (period = FYYYYY_Q#)
+    inventory_manifest: data/dart/_inventory_manifest.json
+    body_xml_keywords:
+      - 보험계약마진
+      - 보험료배분접근법
+      - 보험손익의 상세내역
+      - 신계약
+    coverage_snapshot_2026_05_30:
+      annual_rcepts: 76
+      period_zips: 303
+    universe_file: src/ifrs17/universe.py
+    universe_summary:
+      listed_13Q: 23
+      audit_only_5:
+        - 라이나생명보험
+        - 메트라이프생명보험
+        - 에이아이에이생명보험
+        - 하나생명보험
+        - 처브라이프생명보험
+      non_listed_skip_8_audit_ok:
+        - IBK연금보험
+        - 교보라이프플래닛
+        - 비엔피파리바카디프
+        - 신한이지손해
+        - 아이엠라이프
+        - 악사손해
+        - 카카오페이손해
+        - 하나손해
+      excluded_skip_2:
+        - AIG손해보험 (corp_name 검색은 '에이아이지손해보험')
+        - 서울보증보험
+    known_bugs:
+      - id: amend_rcept_014
+        description: batch_historical sometimes picks 정정 [기재정정]/[첨부정정] rcept which returns status=014 'file not found' on document.xml
+        fix: filter out report_nm starting with '['; use 최신 원본 사업/분기/반기보고서; or direct rcept_no fetch via list.json search
+    do_not:
+      - Fetch attachment (별첨) zip — body XML already has 연결재무제표 주석.
+      - Trust XBRL for IFRS17 deep notes — only useful for Tier1 P&L.
+      - (removed — DART now uses canonical <period>/raw layout same as other sources)
+
+  - id: kidi
+    name: 보험개발원 INCOS
+    detail_pages:
+      life: https://incos.kidi.or.kr:5443/insMonth/detail/ML01.do?stattbl_id=ML01
+      nonlife_long: https://incos.kidi.or.kr:5443/insMonth/detail/MN07.do?stattbl_id=MN07
+    endpoint: POST https://incos.kidi.or.kr:5443/insMonth/getQueryResult.do
+    form:
+      queryId: getML01List | getMN07List
+      comp_type: 'L## | N##'
+      data_year: YYYYMM
+    session_flow:
+      - GET / once to mint JSESSIONID
+      - POST with X-Requested-With XMLHttpRequest and Referer set to detail page URL
+    response_row_anchor:
+      ML01: LINE=47 LVL=1 합계
+      MN07: LINE=99111 LVL=2 원리금보장형장기손해보험 합계
+    columns:
+      ITEM_VAL2: 일시납 초회 (천원) — EXCLUDED
+      ITEM_VAL4: 월납 초회 (천원) — included
+      ITEM_VAL8: 기타 초회 (천원) — included
+    denominator_formula: (ITEM_VAL4 + ITEM_VAL8) / 1e5  # 억원
+    cbcmp_to_kr_mapping_source: scripts/ingest_kidi_monthly_premium.py MAPPING dict (38사)
+    comp_type_ranges:
+      life: L01 ~ L86
+      nonlife: N01 ~ N80
+    script: scripts/ingest_kidi_monthly_premium.py
+    output:
+      raw: data/kidi/<period>/raw/<KR>_<YYYYMM>.json
+      summary: data/kidi/premium_summary.json
+    latest_period_endpoint:
+      life: getML01LastYM
+      nonlife: getMN07LastYM
+    quarter_lag_months: 1.5  # e.g. 2026.1Q data available mid-May 2026
+    verification_reference:
+      - kr: KR0008
+        comp_type: N08
+        period: '2025-12'
+        ITEM_VAL4: 215799013
+        ITEM_VAL8: 4286738
+      - kr: KR0069
+        comp_type: L03
+        period: '2025-12'
+        ITEM_VAL4: 278913166
+        ITEM_VAL8: 33858094
+    future_tables:
+      - 손해율 (사용자 sample 필요; F7 KOSIS cross-check)
+      - 재보험 출재율
+      - 해지율
+
+  - id: ir
+    name: IR 공시
+    script: scripts/download_ir_2026q1.py
+    output: data/ir/<period>/raw/<KR>_<name>/<filename>
+    entries:
+      - kr: KR0001
+        covers: [KR0001]
+        name: 메리츠금융그룹 (메리츠화재)
+        url: https://m.meritzgroup.com/mo/ko/ir/ir1.do
+        xpath: '//*[@id="firstInfo"]/ul/li[3]/a'
+        mode: click_dl
+        notes: mobile site
+      - kr: KR0003
+        covers: [KR0003]
+        name: 롯데손해보험
+        url: https://www.lotteins.co.kr/web/C/D/H/cdh_ir_board04_list_6.jsp
+        xpath: '//*[@id="tab-2"]/div/table/tbody/tr[1]/td[2]/a'
+        mode: click_dl
+        notes: OLE .xls (xls 매직바이트 detection)
+      - kr: KR0008
+        covers: [KR0008]
+        name: 삼성화재
+        url: https://www.samsungfire.com/vh/page/VH.HPMK0201.do
+        xpath: '//*[@id="baseMain"]/div[2]/section[1]/div[2]/ul/li[1]/div/div[2]/div/button[3]'
+        mode: click_dl
+        wait_ms: 3000
+      - kr: KR0009
+        covers: [KR0009]
+        name: 현대해상
+        url: https://www.hi.co.kr/serviceAction.do?view=bin/KC/IR/HHKCIR090M
+        xpath: '//*[@id="rstbzList"]/div[1]/div[2]/div[2]/a[2]/span'
+        mode: click_dl
+        wait_ms: 3000
+      - kr: KR0010
+        covers: [KR0010, KR0099]
+        name: KB금융그룹 (KB손해+KB라이프)
+        url: https://www.kbfg.com/kor/ir/report/factbook/list.jsp
+        xpath: '//*[@id="list_form"]/div/div[1]/div[2]/ul[2]/li[1]/div[3]/div/a[2]'
+        mode: direct_href
+        notes: group factbook
+      - kr: KR0011
+        covers: [KR0011, KR0082]
+        name: DB손해보험
+        url: https://www.idbins.com/pc/bizxpress/cmy/inv/ir/FWCOMV1705_260514(1).shtm?tp=T&tx=&ct=2
+        xpath: '//*[@id="content"]/div/div/div[1]/div[2]/dl/dd/ul/li[1]/a'
+        mode: direct_href
+        notes: factsheet xlsx; DB생명도 합산일 수 있음
+      - kr: KR0051
+        covers: [KR0051, KR0094]
+        name: 신한금융그룹 (신한EZ+신한라이프)
+        url: https://shinhangroup.com/kr/ir/finance/factBook
+        xpath: '//*[@id="listBody"]/li[1]/div[3]/div/span/a'
+        mode: direct_href
+        wait_ms: 3000
+      - kr: KR1000
+        covers: [KR1000]
+        name: 코리안리재보험
+        url1: https://koreanre.co.kr/sub.asp?maincode=503&sub_sequence=551&sub_sub_sequence=552&exec=list&strBoardID=kui_552
+        url2: 'https://koreanre.co.kr/sub.asp?maincode=503&sub_sequence=551&sub_sub_sequence=552&mskin=&exec=view&strBoardID=kui_552&intPage=1&intCategory=0&strSearchCategory=|s_name|s_subject|&strSearchWord=&intSeq=1539'
+        xpath: '//*[@id="pageCont"]/div/table/tbody/tr/td/div[3]/table/tbody/tr[2]/td[2]/table/tbody/tr/td/a'
+        mode: two_step_direct_url + direct_href
+        notes: intSeq=1539 varies per quarter
+      - kr: KR0032
+        covers: [KR0032, KR0104]
+        name: 농협금융지주 (NH손보+농협생명)
+        url: https://nhfngroup.com/user/indexSub.do?codyMenuSeq=1219941109&siteId=nhfngroup
+        xpath: '//*[@id="siteFunction_menu_3_11_5_1713486737124102"]/div/div[1]/ul/li/a[2]/span'
+        mode: click_dl
+      - kr: KR0068
+        covers: [KR0068]
+        name: 한화생명
+        url: https://company.hanwhalife.com/ko/investment/investor/earnings-release
+        xpath: '//*[@id="company-contents"]/div/div[2]/div[2]/div[2]/ul/li[2]/ul/li[2]/button[2]/span'
+        mode: click_dl
+        wait_ms: 3000
+      - kr: KR0069
+        covers: [KR0069]
+        name: 삼성생명
+        url: https://www.samsunglife.com/individual/display/invest/PDK-IRIVI015220M
+        xpath: '//*[@id="samsungLifeWideMain"]/section/div[2]/div[2]/div/table/tbody/tr[1]/td[4]/button'
+        mode: click_dl
+        wait_ms: 3000
+      - kr: KR0079
+        covers: [KR0079]
+        name: 미래에셋생명
+        url: https://life.miraeasset.com/micro/company/PC-HO-060401-000000.do
+        xpath: '//*[@id="mainCont"]/div[3]/div/ul[3]/li/a'
+        mode: click_dl
+        notes: onclick="fileDownload(...)" no href — use click_dl
+      - kr: KR0087
+        covers: [KR0087]
+        name: 동양생명
+        url: https://www.myangel.co.kr/Company/Ir/CoIrData
+        xpath: '//*[@id="mainContent"]/div[2]/div/div/div[2]/div[1]/div/button[2]'
+        mode: click_dl
+        wait_ms: 3000
+    known_gaps:
+      - 하나금융지주: CSM 배수 등 우리가 원하는 지표 미공개 -> skip
+      - DB금융네트워크: 별도 IR 없음 (DB생명은 DB손보 IR에 포함 가능성)
+      - 교보생명: IR 자료 없음
+      - 외국계/소형 (ABL, 흥국, KDB, 라이나, BNP, iM라이프, 메트라이프, 처브, AIA): 거의 없음 (skip)
+      - 카카오페이손해: 모회사 카카오페이 IR에 보험 분해 거의 없음
+
+validation:
+  magic_bytes:
+    pdf: '%PDF'
+    zip_xlsx_pptx: 'PK\x03\x04'
+    ole_compound: '\xd0\xcf\x11\xe0'
+    hwp_cfb: '\xd0\xcf\x11\xe0 + "HWP Document" in head 4KB'
+  encoding: UTF-8 (no BOM)
+  zip_korean_filenames: cp437 -> decode('cp437').encode('cp437').decode('cp949') if garbled
+
+future_sources_planned:
+  - id: F7
+    name: KOSIS 손보사별 손해율
+    orgId: 382
+    tblId: TX_38202_A1561
+  - id: F8
+    name: 손보협회 비교공시
+    url: https://consumer.knia.or.kr
+    metrics: [채널별 불완전판매비율, 설계사정착률, 민원, 부지급률]
+  - id: F9
+    name: data.go.kr 추가
+    api_ids: [15061306, 15061307, 15094797]
+  - id: F10
+    name: GA통합공시
+    url: https://gapub.insure.or.kr
+  - id: F14
+    name: 규제 뉴스 피드
+    ref: docs/roadmap.md §1E
+
+dart_core4_metrics:
+  - CSM Waterfall
+  - 종목별 신계약 CSM
+  - 당기순이익 분해 (보험손익/투자손익 high-level)
+  - 재보험 관련 손익 (lower priority)
+
+label_variations_per_company:
+  현대: 계약의 유형
+  KB: 보험료배분접근법
+  삼성화재: [보장성, 물보험, 저축성]

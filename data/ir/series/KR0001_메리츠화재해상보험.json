@@ -1,0 +1,108 @@
+{
+  "company": "메리츠화재해상보험",
+  "kr_code": "KR0001",
+  "sector": "Non-life",
+  "publisher": "메리츠금융지주 (Meritz Financial Group) — quarterly fact sheet (Excel)",
+  "metric": "월납월초 대비 신계약 CSM 배수 (배) — Meritz Hwajae 화재 standalone, factsheet sheet 'CSM' row 합계(r36)",
+  "denominator_note": "월납월초 (initial monthly premium) per Meritz IR convention",
+  "ir_page": "https://m.meritzgroup.com/mo/ko/ir/ir1.do",
+  "source_note": "Latest factsheet (MFG_202603) carries every quarter 2022.1Q~2026.1Q as comparative columns; values are the latest (possibly restated) view. Earlier per-FY factsheets archived under data/ir/FY*/KR0001_메리츠화재해상보험/. CSM sheet first appears in the 202312 (FY23Q4) factsheet; 202303/202306/202309 factsheets predate the dedicated CSM sheet.",
+  "ground_truth_check": "FY2026.1Q total = 12.61 ~ 12.6 (matches brief)",
+  "units": {
+    "nb_csm_eok": "KRW 100M (억원)",
+    "multiple": "배 (x), 월납월초 기준"
+  },
+  "series": {
+    "2023.1Q": {
+      "nb_csm_eok": 4171.84,
+      "multiple_total": 14.355,
+      "multiple_protection": 14.53,
+      "multiple_savings": 1.095,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2023.2Q": {
+      "nb_csm_eok": 3925.1,
+      "multiple_total": 14.232,
+      "multiple_protection": 14.361,
+      "multiple_savings": 0.891,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2023.3Q": {
+      "nb_csm_eok": 4100.64,
+      "multiple_total": 14.958,
+      "multiple_protection": 15.088,
+      "multiple_savings": 0.791,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2023.4Q": {
+      "nb_csm_eok": 3808.91,
+      "multiple_total": 14.445,
+      "multiple_protection": 14.574,
+      "multiple_savings": 0.689,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2024.1Q": {
+      "nb_csm_eok": 3722.66,
+      "multiple_total": 12.078,
+      "multiple_protection": 12.205,
+      "multiple_savings": 0.195,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2024.2Q": {
+      "nb_csm_eok": 3419.25,
+      "multiple_total": 11.761,
+      "multiple_protection": 11.873,
+      "multiple_savings": 0.31,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2024.3Q": {
+      "nb_csm_eok": 3411.91,
+      "multiple_total": 11.67,
+      "multiple_protection": 11.757,
+      "multiple_savings": 0.303,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2024.4Q": {
+      "nb_csm_eok": 3241.89,
+      "multiple_total": 9.393,
+      "multiple_protection": 9.448,
+      "multiple_savings": 0.433,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2025.1Q": {
+      "nb_csm_eok": 3567.91,
+      "multiple_total": 12.241,
+      "multiple_protection": 12.382,
+      "multiple_savings": 0.388,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2025.2Q": {
+      "nb_csm_eok": 3731.5,
+      "multiple_total": 12.268,
+      "multiple_protection": 12.372,
+      "multiple_savings": 0.32,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2025.3Q": {
+      "nb_csm_eok": 4230.67,
+      "multiple_total": 12.478,
+      "multiple_protection": 12.57,
+      "multiple_savings": 0.489,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2025.4Q": {
+      "nb_csm_eok": 4351.64,
+      "multiple_total": 11.651,
+      "multiple_protection": 11.725,
+      "multiple_savings": 0.38,
+      "source_file": "MFG_202603(k).xlsx"
+    },
+    "2026.1Q": {
+      "nb_csm_eok": 4402.52,
+      "multiple_total": 12.61,
+      "multiple_protection": 12.684,
+      "multiple_savings": 0.504,
+      "source_file": "MFG_202603(k).xlsx"
+    }
+  }
+}

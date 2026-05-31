@@ -1,0 +1,139 @@
+{
+  "company": "삼성생명",
+  "sector": "Life",
+  "metric": "월초대비 신계약CSM 배수 (배) — 삼성생명 IR factsheet sheet Ⅰ-5 (별도)",
+  "source": "samsunglife.com IR factsheet XLS",
+  "series": {
+    "2023.1Q": {
+      "nb_csm_eok": 8460.4,
+      "multiple_wolcho": 14.92,
+      "multiple_ape_pct": 110.6,
+      "source_files": [
+        "1HFY24FactsheetKOR.xlsx",
+        "SLI 3QFY24Factsheet_KOR.xlsx",
+        "SLI 4QFY24Factsheet_KOR.xlsx"
+      ]
+    },
+    "2023.2Q": {
+      "nb_csm_eok": 9699.0,
+      "multiple_wolcho": 12.45,
+      "multiple_ape_pct": 105.2,
+      "source_files": [
+        "1HFY24FactsheetKOR.xlsx",
+        "SLI 3QFY24Factsheet_KOR.xlsx",
+        "SLI 4QFY24Factsheet_KOR.xlsx"
+      ]
+    },
+    "2023.3Q": {
+      "nb_csm_eok": 9564.4,
+      "multiple_wolcho": 14.96,
+      "multiple_ape_pct": 126.1,
+      "source_files": [
+        "1HFY24FactsheetKOR.xlsx",
+        "SLI 3QFY24Factsheet_KOR.xlsx",
+        "SLI 4QFY24Factsheet_KOR.xlsx"
+      ]
+    },
+    "2023.4Q": {
+      "nb_csm_eok": 8557.7,
+      "multiple_wolcho": 15.39,
+      "multiple_ape_pct": 130.1,
+      "source_files": [
+        "1HFY24FactsheetKOR.xlsx",
+        "SLI 3QFY24Factsheet_KOR.xlsx",
+        "SLI 4QFY24Factsheet_KOR.xlsx"
+      ]
+    },
+    "2024.1Q": {
+      "nb_csm_eok": 8576.0,
+      "multiple_wolcho": 10.46,
+      "multiple_ape_pct": 84.6,
+      "source_files": [
+        "1HFY24FactsheetKOR.xlsx",
+        "SLI 1HFY25Factsheet_KOR.xlsx",
+        "SLI 1QFY25Factsheet_KOR.xlsx",
+        "SLI 3QFY24Factsheet_KOR.xlsx",
+        "SLI 3QFY25Factsheet_KOR.xlsx",
+        "SLI 4QFY24Factsheet_KOR.xlsx",
+        "SLI FY25Factsheet_KOR.xlsx"
+      ]
+    },
+    "2024.2Q": {
+      "nb_csm_eok": 7884.6,
+      "multiple_wolcho": 11.86,
+      "multiple_ape_pct": 97.3,
+      "source_files": [
+        "1HFY24FactsheetKOR.xlsx",
+        "SLI 1HFY25Factsheet_KOR.xlsx",
+        "SLI 1QFY25Factsheet_KOR.xlsx",
+        "SLI 3QFY24Factsheet_KOR.xlsx",
+        "SLI 3QFY25Factsheet_KOR.xlsx",
+        "SLI 4QFY24Factsheet_KOR.xlsx",
+        "SLI FY25Factsheet_KOR.xlsx"
+      ]
+    },
+    "2024.3Q": {
+      "nb_csm_eok": 8346.1,
+      "multiple_wolcho": 10.16,
+      "multiple_ape_pct": 80.7,
+      "source_files": [
+        "SLI 1HFY25Factsheet_KOR.xlsx",
+        "SLI 1QFY25Factsheet_KOR.xlsx",
+        "SLI 3QFY24Factsheet_KOR.xlsx",
+        "SLI 3QFY25Factsheet_KOR.xlsx",
+        "SLI 4QFY24Factsheet_KOR.xlsx",
+        "SLI FY25Factsheet_KOR.xlsx"
+      ]
+    },
+    "2024.4Q": {
+      "nb_csm_eok": 7799.4,
+      "multiple_wolcho": 9.8,
+      "multiple_ape_pct": 78.0,
+      "source_files": [
+        "SLI 1HFY25Factsheet_KOR.xlsx",
+        "SLI 1QFY25Factsheet_KOR.xlsx",
+        "SLI 3QFY25Factsheet_KOR.xlsx",
+        "SLI 4QFY24Factsheet_KOR.xlsx",
+        "SLI FY25Factsheet_KOR.xlsx"
+      ]
+    },
+    "2025.1Q": {
+      "nb_csm_eok": 6577.7,
+      "multiple_wolcho": 10.2,
+      "multiple_ape_pct": 75.4,
+      "source_files": [
+        "SLI 1HFY25Factsheet_KOR.xlsx",
+        "SLI 1QFY25Factsheet_KOR.xlsx",
+        "SLI 3QFY25Factsheet_KOR.xlsx",
+        "SLI FY25Factsheet_KOR.xlsx"
+      ]
+    },
+    "2025.2Q": {
+      "nb_csm_eok": 7685.6,
+      "multiple_wolcho": 12.21,
+      "multiple_ape_pct": 92.5,
+      "source_files": [
+        "SLI 1HFY25Factsheet_KOR.xlsx",
+        "SLI 3QFY25Factsheet_KOR.xlsx",
+        "SLI FY25Factsheet_KOR.xlsx"
+      ]
+    },
+    "2025.3Q": {
+      "nb_csm_eok": 8714.1,
+      "multiple_wolcho": 11.96,
+      "multiple_ape_pct": 87.0,
+      "source_files": [
+        "SLI 3QFY25Factsheet_KOR.xlsx",
+        "SLI FY25Factsheet_KOR.xlsx"
+      ]
+    },
+    "2025.4Q": {
+      "nb_csm_eok": 7617.2,
+      "multiple_wolcho": 10.7,
+      "multiple_ape_pct": 83.5,
+      "source_files": [
+        "SLI FY25Factsheet_KOR.xlsx"
+      ]
+    }
+  }
+}

@@ -1,0 +1,1213 @@
+American Academy of Actuaries 
+Long-Term Care Credibility Monograph Work Group
+of the Health Practice Council
+LONG-TERM CARE CREDIBILITY MONOGRAPH
+AUGUST 2016
+ACTUARY.ORG
+
+LONG-TERM CARE CREDIBILITY
+MONOGRAPH
+
+A
+AA
+
+AMERICAN ACADEMY of ACTUARIES
+
+Objective. Independent. Effective.¢â
+
+August 2016
+
+LONG-TERM CARE CREDIBILITY MONOGRAPH | i
+
+ii LONG-TERM CARE CREDIBILITY MONOGRAPH
+Long-Term Care Credibility Monograph Work Group
+Karl Volkmar, Chairperson
+P.J. Beltramini
+Carolyn Bittner
+Vincent Bodnar 
+David Hippen 
+Allen Schmitz 
+Steven Schoonveld 
+Tomasz Serbinowski 
+Bruce Stahl 
+The American Academy of Actuaries is an 18,500+ member professional association whose 
+mission is to serve the public and the U.S. actuarial profession. For more than 50 years, the 
+Academy has assisted public policymakers on all levels by providing leadership, objective 
+expertise, and actuarial advice on risk and financial security issues. The Academy also sets 
+qualification, practice, and professionalism standards for actuaries in the United States.
+LONG-TERM CARE CREDIBILITY MONOGRAPH iii
+Table of Contents
+Executive Summary 1
+SECTION I?Background 3
+Relevant Actuarial Standards of Practice (ASOPs) 
+for LTCI Credibility
+Relevant Stakeholder Perspectives
+SECTION II?Understanding LTCI Insurance 
+Misestimation and Volatility Risks 7
+Description
+Discussion of Application and Impacts
+Summary
+SECTION III?Credibility Theory 12
+A Summary of the History of Credibility Theory 
+Credibility Methods?Limited Fluctuation, 
+Greatest Accuracy, and Nonlinear
+Challenges & Limitations
+Why Credibility Procedures Are Useful
+SECTION IV?Considerations in the Selection of 
+Credibility Procedures for LTCI 25
+SECTION V?Impact of Credibility Procedures Used and 
+Resulting Attributed Credibility on the Presentation of Results 31
+SECTION VI?Next Steps 33
+Appendix 34
+Relevant Documentation
+Relevant ASOPs
+iv | LONG-TERM CARE CREDIBILITY MONOGRAPH
+
+LONG-TERM CARE CREDIBILITY MONOGRAPH 1
+Executive Summary
+When compared to other lines of insurance business, long-term care insurance (LTCI) is 
+a relatively young and emerging product line. While the earliest policies were issued over 
+40 years ago, few insurers were offering products at that time. The products have changed 
+dramatically over the decades from nursing home-only policies to comprehensive LTCI
+policies to combination life/annuity-LTCI policies?and, more recently, to a greater 
+emergence of accelerated benefit riders that address LTCI expenses. Administrative, 
+claims, and underwriting practices have also changed significantly over that time period. 
+Different approaches have been taken in group and individual products and markets, and 
+insurers have taken significantly different approaches to selling policies as well.
+Indeed, the market has matured within the past decade to offer a variety of options to 
+meet various consumer needs. However, with the recent low interest rate environment
+and the resulting pressures on insurers, many insurers are left with small blocks of 
+policies with too little experience data to reliably explain emerging experience or predict 
+future experience.
+Pricing and repricing assumptions for LTCI products generally are developed using the 
+past experience of the insurer and/or from industry studies. These assumptions include 
+lapse, mortality, claim incidence, claim continuance, claim utilization (i.e., salvage), and 
+investment returns. In developing assumptions, actuaries might want to consider the 
+volume, accuracy, and relevance of any data utilized. 
+The application of credibility procedures can assist actuaries in determining whether 
+emerging experience associated with a given assumption could be due to volatility and/or 
+the misestimation of the underlying assumption. In addition, credibility techniques can 
+be used to help inform the level of conservatism an actuary might want to use in setting a 
+given assumption.
+The purpose of this monograph is as follows:
+? To increase the awareness of the applicability of credibility procedures to LTCIrelated work and the importance of applying them to that work;
+? To provide information on current practices, relevant publications, and 
+underlying theory that an actuary could reference to inform the application of 
+credibility procedures to LTCI-related work;
+2
+L
+LONG-TERM CARE CREDIBILITY MONOGRAPH
+? To outline considerations for deciding on and applying credibility procedures to 
+LTCI actuarial work, as well as presenting results; and
+? To suggest next steps for advancing actuarial practice in this regard.
+The various topics presented in this monograph are:
+Section I provides background on the issue of credibility in LTCI, includes a list of 
+applicable actuarial standards of practice (ASOPs), and highlights the various 
+stakeholders that would be affected by the application of credibility procedures to LTCI as 
+well as how they might be affected.
+Section II discusses misestimation and volatility risks. Understanding whether actual 
+experience diverging from a given assumption is a temporary random fluctuation or a 
+permanent misestimation is an important part of assessing the financial performance of,
+and determining how to manage, a block of business.
+Section III summarizes the history of credibility theory, including the ¡°greatest accuracy¡±
+and ¡°limited fluctuation¡± approaches. The concepts and formulas discussed in this 
+section could be used to inform the development of credibility procedures for LTCIrelated actuarial work.
+Section IV outlines key considerations that an actuary might want to focus on when 
+selecting credibility procedures for LTCI-related work.
+Section V explores the potential impact(s) of using credibility procedures and the 
+resulting attributed credibility on the presentation of results. One impact of applying 
+credibility procedures to LTCI-related work is that the actuary gains a sense of the 
+magnitude of the uncertainty associated with a given assumption and/or result. It is 
+important to present results in such a manner that they communicate the level of 
+uncertainty associated with those results.
+Section VI proposes next steps with respect to this subject matter from an actuarial 
+perspective, including potential sample research topics and suggested areas for
+development of more substantive professional guidance.
+The Appendix highlights existing information related to actuarial practice and guidance 
+related to LTCI credibility.
+LONG-TERM CARE CREDIBILITY MONOGRAPH 3
+SECTION I
+Background
+Actuarial work on long-term care insurance (LTCI) depends on multiple assumptions.
+Some of the key assumptions underlying LTCI are morbidity, mortality, persistency (i.e., 
+voluntary lapse), investment returns, and expenses. Estimating the credibility attributable 
+to any experience underlying a given assumption would be helpful in both determining 
+the reasonableness of the assumption and informing the corresponding sensitivity testing. 
+In general, the less credible the data underlying a given assumption, the more sensitivity 
+testing an actuary might do to frame and communicate results.
+Assumptions are often based on experience, which could be credible. The basis for 
+judging credibility should be mathematically defensible. Statistical methods have been 
+developed and presented and certain regulatory methods have been adopted for judging 
+credibility of LTCI data, but neither has been consistently utilized.
+Some current regulations relating to credibility set a fixed minimum amount of 
+experience for non-zero credibility. Likewise, some set a maximum volume of data 
+beyond which credibility is assumed to be 100 percent, with the credibility of data 
+volumes between 0 percent and 100 percent set by linear interpolaton between the two 
+endpoints. In this situation, neither the endpoints nor the linear interpolation is 
+consistent with statistical bases for credibility.
+The use of more appropriate credibility procedures in estimating credibility generally 
+could lead to better results for consumers and regulators as well as insurers.
+4
+L
+LONG-TERM CARE CREDIBILITY MONOGRAPH
+Relevant Actuarial Standards of Practice (ASOPs) 
+for LTCI Credibility
+The following are ASOPs that could be considered relevant to LTCI-related actuarial 
+work that reference credibililty or related concepts. This list is not exhaustive, but rather 
+identifies those ASOPs that indicate the importance of considering credibility. More 
+information on specific language in these relevant ASOPs can be found in the Appendix.
+ASOP No. 3: Continuing Care Retirement Communities
+ASOP No. 5: Incurred Health and Disability Claims
+ASOP No. 7: Analysis of Life, Health, or Property/Casualty Insurer Cash Flows
+ASOP No. 8: Regulatory Filings for Health Benefits, Accident and Health Insurance, and 
+Entities Providing Health Benefits
+ASOP No. 10: Methods and Assumptions for Use in Life Insurance Company Financial 
+Statements Prepared in Accordance with U.S. GAAP
+ASOP No. 12: Risk Classification (for All Practice Areas)
+ASOP No. 15: Dividends for Individual Participating Life Insurance, Annuities, and 
+Disability Insurance
+ASOP No. 17: Expert Testimony by Actuaries
+ASOP No. 18: Long-Term Care Insurance
+ASOP No. 19: Appraisals of Casualty, Health, and Life Insurance Businesses
+ASOP No. 25: Credibility Procedures
+LONG-TERM CARE CREDIBILITY MONOGRAPH 5
+Relevant Stakeholder Perspectives
+The following subsections highlight the various stakeholders that would be affected by the 
+application of credibility procedures to LTCI as well as how they might be affected.
+Regulators?Federal, State
+While LTCI is subject to certain federal laws, it is generally regulated by the individual 
+states in which the policies are issued. Policy forms, premium rates, and the business of 
+LTCI are subject to requirements that differ among these states. When an insurer gains 
+state approval of a new product, for example, the insurer will issue policies that start 
+adding experience to the state-level block of policies. Actuaries monitor both state-level 
+experience and the aggregated experience of policies issued in all states combined.
+Reviewing experience at the federal and state levels may be difficult. Monitoring 
+aggregated experience may be difficult because of different state-level requirements and 
+because the most accurate assumptions may differ by geographic region. Monitoring 
+state-level experience requires accumulating experience for a significant number of 
+policies over a significant length of time (i.e., policy duration) under state-specific 
+conditions.
+Identifying and considering credible data will tend to lead to more accurate results, both 
+in the short term as well as the long term. Therefore, credibility-adjusted data should be 
+used wherever possible.
+If an actuary cannot demonstrate the credibility of data within a particular state, it could 
+be difficult to justify the use of data from outside the state. The credibility of outside data 
+(e.g., regional or national data) combined with demonstrations that the outside data 
+correlates at some confidence level with the data from within the state could help justify 
+the use of the assumptions based on that outside data.
+Company Management
+Having a credible basis for rates or reserves not only leads to the development of more
+appropriate rates or reserves, but it can present a powerful argument for using those rates 
+or reserves instead of revising them due to competition or marketing preferences.
+6
+L
+LONG-TERM CARE CREDIBILITY MONOGRAPH
+Rating Agencies
+When LTCI-related actuarial work is based on credible data, rating agencies can be more 
+confident that the work is sound, which could result in a more favorable rating. A more 
+favorable rating could improve access to capital, consumer confidence, better persistency,
+and increased sales activity.
+Auditors
+External auditors, insurer internal auditors, and state market conduct examiners would 
+benefit from the application of credibility standards. It could increase the probability an 
+insurer would implement sound actions and adjustments that could affect audit results, 
+reports, and recommendations.
+Sales/Marketing
+Captive agents, independent agents, and brokers can have goals that differ from those of 
+insurers and consumers. The use of credible data can be a powerful, persuasive
+foundation for actuarial reports and recommendations that realign sales professionals
+with these other stakeholders.
+Consumers and Consumer Groups
+Consumers and consumer groups want ¡°reliable¡± rates and reserves, and the use of 
+credible data to develop them would facilitate that. This means that actuaries would 
+perform services with the objective of providing some assurance that premium rates 
+charged and reserves calculated and held are sufficient both now and into the future. If 
+the actuary has based assumptions and corresponding results on credible experience, 
+consumers and consumer groups could be more likely to support any rate changes that 
+might be necessary.
+LONG-TERM CARE CREDIBILITY MONOGRAPH 7
+SECTION II
+Understanding LTCI
+Insurance Misestimation and 
+Volatility Risks
+Deviations of actual experience from expected experience for a given assumption may be 
+due to volatility inherent in that assumption or to the misestimation of that assumption.
+Volatility and misestimation risks within the LTCI framework, as well as how they impact 
+functions that depend upon LTCI projections, are discussed below.
+Description
+Volatility recognizes that a particular variable has a specific mean and a variance. While 
+the entire population over time is expected to be at the mean, a subset of the entire 
+population, or the entire population for a shorter period of time, may be subject to 
+random fluctuations. The random fluctuations represent the volatility risk. The volatility 
+risk is measured by the variance.
+Credibility procedures relate to the measurement and management of volatility risk.
+In contrast, misestimation recognizes that the true mean is not represented correctly by 
+the estimate. The estimate itself could have been derived from a subset of the total 
+population, or perhaps the mean of the population is subject to change.1
+Identifying whether a divergence from a particular mean is the result of expected 
+volatility or misestimation is a critical task, because the reason for the divergence may 
+affect management action. Although the task is critical, the identification of the reason 
+may be challenging until the experience associated with the block of business is credible.
+ 1 For example, a binomial distribution will have a mean of ¡°p¡± and a variance of p(1-p). The ¡°p¡± value could have been assumed based on the
+ maximum likelihood estimate of actual historic experience. The actual historic data may be limited or represent a sample that is not
+ representative of the population to which it is being applied. The population parameter may also be subject to change over time. Therefore, the
+ ¡°p¡± value may be misestimated, and consequently the estimated value of the volatility risk as well as the average future outcomes may be wrong.
+8
+L
+LONG-TERM CARE CREDIBILITY MONOGRAPH
+Projection assumptions for LTCI are complex. Morbidity is normally distinguished by 
+marital status, age, gender, underwriting risk assessment, policy duration, and other 
+demographics. It consists of three distinct components: incidence of claim, continuance
+on claim, and utilization while on claim. These components could be segmented further, 
+breaking them out distinctly for nursing home, assisted living facility, and home health 
+care, and/or for ranges of lifetime maximum benefits (e.g., unlimited or limited).
+Similarly, mortality needs to be addressed separately for healthy (active) lives and 
+disabled lives. In addition, the actuary considers such policyholder characteristics as 
+gender, marital status, underwriting risk class, and issue age. Some will segment the 
+disabled lives mortality further into nursing home, assisted living facility, and home 
+health care. And some will segment it further into ranges of benefit options.
+Lapses may even be addressed differently by segmenting the populations for policies with 
+and without automatic benefit increases, and certainly with and without limited payment 
+options.
+Investment yields may appear straightforward to consider, but the anticipated and 
+implemented investment strategies render them very complex. Furthermore, the LTC
+inflation explicitly or implicitly assumed in the utilization component of morbidity is 
+likely correlated with investment yields.
+The notion of correlation is not isolated to investment yields and inflation rates. If lapses 
+are high, morbidity rates may be higher than expected because of adverse selection. And,
+if morbidity is higher than expected, mortality may be as well.
+Each of these assumptions is an integral part of (a) pricing a policy; (b) assessing the value 
+of an in-force policy, whether for reserving, cash flow testing, or valuing a block of 
+business; and (c) determining whether a rate increase for a block of policies is warranted 
+and, if so, the amount of the increase. Furthermore, the potential for volatility and 
+misestimation associated with each of the assumptions requires additional capital to 
+support any deviations that actually occur.
+LONG-TERM CARE CREDIBILITY MONOGRAPH 9
+Discussion of Application and Impacts
+Determination of Original Pricing
+Assumptions generally are set using past experience and an actuary¡¯s assessment about 
+whether historical factors may change in the future. Using historical data for the pricing 
+of new policies will require a review of differences in policy features and triggers, 
+underwriting, and potentially target customer or sales approaches. 
+Assuming that a mean is accurately estimated, volatility around the mean (as defined 
+above) generally should not have an effect on the ultimate pricing of a block of business.
+For example, some years may have worse experience than the mean and some have better 
+experience than the mean, but mean experience should be expected over time.
+Misestimation is a bigger issue for pricing a block of business. If the morbidity rates are 
+underestimated (by whichever dimension(s) of the morbidity factors listed above), the 
+block is likely underpriced, which may result in a rate increase being needed for the block.
+If, on the other hand, mortality or lapse rates are underestimated, this will result in fewer 
+individuals persisting and potentially fewer claims on a block of business than expected, 
+assuming that (1) improved mortality is not accompanied by fully offsetting improved 
+morbidity, and (2) lapses are not antiselective to the degree that they fully offset gains 
+anticipated due to lapse.
+Depending on how assumptions are set, there may be offsetting results. If an actuary
+underestimates morbidity incidence but overestimates morbidity continuance and 
+salvage, the actuary may determine that the block is priced sufficiently even though the 
+individual parameters may not be accurate. While this may not result in corrective action 
+being needed for an existing block, a company may consider updating its pricing on new 
+blocks assuming it expects this relationship to persist into the future. There are other 
+combinations of misestimations of liability assumptions that may result in the business as 
+a whole being priced in a reasonably accurate manner in the aggregate. 
+Investment yield overestimation may result in the reduced financial performance of a 
+block of business. If the inflation of LTC services is highly correlated to general inflation 
+and the policy benefits are based on actual incurred LTC expenses, the reduced 
+investment income may be offset by smaller benefit dollars being paid. However, even if 
+inflation is highly correlated to investment yields, the investment strategy may not 
+10 LONG-TERM CARE CREDIBILITY MONOGRAPH
+address the correlation adequately and a mismatch of investment yields and inflation may 
+mean reduced financial performance. Also, if the applicable accounting requires that the 
+reserve basis remains static over time, reserves that assume a higher-than-actual 
+investment yield will require an infusion of assets that were not earned by the actual 
+investment income. 
+Determination of Rate Increases
+Maintaining an accurate and comprehensive record of assumptions, expectations, and 
+projections will help management understand how to react to actual experience 
+throughout the life of the policy.
+Pursuing rate increases is a potential management response to the recognition of an 
+actual misestimation. Future assumptions may be reset because revised future experience 
+is expected to be materially adverse relative to original expectations. The future 
+assumptions may be revised because historic deviations are determined to be due to 
+misestimation of assumptions rather than volatility?for example, lower-than-expected 
+mortality and/or voluntary lapse rates that are reasonably expected to continue into the 
+future (though the adverse effect of a smaller lapse rate may be tempered by a 
+corresponding influence of lower lapses on adverse selection assumptions in morbidity).
+Future assumptions also may be revised if new information suggests a modification is 
+necessary. For example, if a shortage of nursing students lasts for a prolonged period of 
+time, it may be appropriate to assume that the cost of nursing care in the future will 
+increase more quickly than previously recognized.
+Valuation Projections
+Best estimate assumptions are necessary for projecting the future experience of existing 
+LTCI business for asset adequacy testing and for deferred acquisition costs recoverability 
+testing. These projections rely on the same types of assumption analyses as used for 
+pricing, but valuation projections also recognize that different and additional information 
+may be available. Proactive management may be able to assess whether any deviations 
+from expected should be attributed to volatility or misestimation. If they are attributed to 
+misestimation, the deviations will warrant a change in the best estimate assumptions used 
+in the projections. 
+LONG-TERM CARE CREDIBILITY MONOGRAPH 11
+Appraisal of a Business
+Similar to pricing and valuing LTCI business, the assumptions applied in appraising a 
+business are critical to assessing the value of the business. Given that a business that
+undergoes an appraisal generally will have been in force for some period of time, the 
+original expectations for each assumption may be compared to new sources of 
+information, for example:
+? Any actual emerging experience from the block being appraised and/or from 
+similar blocks of business (with due consideration to differences in underwriting 
+methodology, distribution approach, claims adjudication practices, and history of 
+rate increases on either block); and 
+? Revised expected trends for the business in the future (with due consideration to 
+correlation of each set of assumptions).
+An accurate assessment of whether volatility or misestimation is driving deviations in the 
+historical experience will be integral in appraising the business.
+Surplus Capital
+Insurers may use assumption distributions to identify capital requirements. For example, 
+if the insurer wants to be confident that in the next 12 months it can withstand adverse 
+events with a probability of 99.5 percent, it can stochastically or statistically identify the 
+capital required to withstand both adverse volatility and adverse misestimation risks.
+Sometimes the underlying distributions are not known. In such cases, an insurance 
+company can use statistical methods that work with unknown distributions to arrive at a 
+reasonable capital requirement.
+Summary
+There are many impacts of assumptions in the LTCI business. Any of these assumptions 
+separately or in combination may experience volatility or may be misestimated.
+Understanding whether the assumption divergence is a temporary random fluctuation or 
+a permanent misestimation will be an important part of assessing the financial 
+performance of a block of business and determining the approach to the management of 
+a block of business. Credibility procedures relate to the measurement and management of 
+volatility risk.
+12 LONG-TERM CARE CREDIBILITY MONOGRAPH
+SECTION III
+Credibility Theory
+The focus of this section is on rate-setting given the research summarized; however, the 
+concepts apply to all key LTCI-related assumptions and associated actuarial work.
+A Summary of the History of Credibility Theory
+Credibility theory was developed initially by property and casualty actuaries in the 
+context of experience rating. The issue was the proper weight, if any, that should be given 
+to a risk¡¯s prior loss experience. For risks large enough, with a wealth of prior experience 
+data, it would make sense to base rates on that risk¡¯s experience. On the other hand, for 
+small risks, prior experience may be a poor predictor of future losses, and hence may not 
+be a suitable basis for setting rates.
+Two questions arise?the first of which is: What amount of prior experience is sufficient 
+to determine the individual risk¡¯s rate? In other words, what amount of data is sufficient 
+to make dependable estimates and predictions? Such data is termed to be ¡°fully credible.¡± 
+The word ¡°dependable¡± is imprecise and is meant to indicate that this concept relies on
+individual circumstances and the actuary¡¯s judgment.
+An early treatment of that question appeared in a 1914 paper by Mowbray.
+2 Mowbray 
+used the normal approximation to the binomial distribution to provide an estimate of the 
+number of exposures (or equivalent number of claims) needed to reliably predict 
+accidental deaths with a desired accuracy. (He was interested in industrial accidents in the 
+context of workers¡¯ compensation insurance.)
+While Mowbray¡¯s paper provided a way to calculate a number of claims needed for full 
+credibility, it did not address the case of data that falls short of that number. That created 
+a dilemma?if no credibility were to be given to the risk whose experience is just shy of 
+the selected full credibility threshold, two similar risks may end up paying very different 
+premiums.
+ 2
+ Mowbray, A.H. ¡°How Extensive a Payroll Exposure is Necessary to Give a Dependable Pure Premium?¡± Proceedings of the Casualty Actuarial
+ Society 1 (1914): 24-30
+LONG-TERM CARE CREDIBILITY MONOGRAPH 13
+This led to the second question: What to do if experience falls short of being fully 
+credible? The answer to this question is a subject of ¡°partial credibility.¡±
+In 1918, Whitney3 proposed a solution to the partial credibility problem. He sought a 
+compromise estimate between the portfolio experience and the individual risk¡¯s 
+experience. Interestingly, his solution did not employ the concept of full credibility at all.
+Rather he arrived at a linear combination of the form C = ZS +(1-Z)M, where S was the 
+loss frequency determined based on the risk¡¯s own experience, M was overall portfolio 
+loss frequency, and Z was a credibility factor of the form n/(n+K), where n was number 
+of prior claims for the rated risk and K was a constant.
+Whitney used confusing notation, and his paper is difficult to read. Remarkably, though, 
+he made some observations relevant to ¡°greatest accuracy¡± credibility theory that will be 
+discussed later. For one, a credibility factor of Z can never be 1. That is, no amount of data 
+is deemed fully credible. Second, he noted that experience rating (and the concept of 
+partial credibility) requires heterogeneity in the portfolio.
+The concept of the credibility-weighted premium being a linear function
+C = ZS + (1-Z)M with some weight Z (referred to as credibility factor) was widely 
+adopted by the actuarial community, but there was no universally accepted formula for Z.
+Perryman4 provided some heuristic argument for the credibility factor = /!, 
+where n is the number of prior claims for the rated risk and ! is the number of claims 
+deemed fully credible. Longley-Cook5 gave some rationale for using = 3/(2 + !); 
+others suggested = (/!)!/!. 
+There is little or no theoretical support for most of these credibility factors. In fact, in 
+order to provide theoretical support, one needs some measure of ¡°goodness.¡± That is, 
+given two choices for credibility factors, one needs a metric to decide which one is better.
+In statistics, it is common to seek an estimator that is ¡°best¡± in a particular class. The early 
+development of a credibility factor did not provide a framework for comparing different 
+approaches.
+ 3 Whitney, A.W. ¡°The Theory of Experience Rating.¡± Proceedings of the Casualty Actuarial Society 4 (1918): 274-292 4 Perryman, F.S. ¡°Some Notes on Credibility.¡± Proceedings of the Casualty Actuarial Society 19 (1931): 65-84 5 Longley-Cook, L.H. ¡°An Introduction to Credibility Theory.¡± Proceedings of the Casualty Actuarial Society 49 (1962): 194-221
+14 LONG-TERM CARE CREDIBILITY MONOGRAPH
+Bailey6 generally is credited with proposing a Bayesian approach to the credibility theory.
+He showed that for several classes of loss distributions (or, more exactly, combinations of 
+a loss distribution and the distributions of its parameters), the Bayesian estimator that 
+minimizes the mean square error is a linear function C = ZS + (1-Z)M, where Z is of the 
+form n/(n+K).
+Bailey¡¯s approach?seeking a credibility premium that minimizes the mean square 
+error?is a foundation of the ¡°greatest accuracy¡± credibility. Buhlmann7 considered the 
+case in which subsequent observations from a risk to be rated are conditionally 
+independent and identically distributed. He showed that in this case the best linear 
+approximation to the Bayesian estimator is of the form C = ZS + (1-Z)M with 
+Z =n/(n+K), where K reflects the measure of heterogeneity of the pool from which the 
+risk is selected.
+Subsequently, Buhlmann-Straub8 generalized Buhlmann¡¯s approach to the case in which
+subsequent observations are not identically distributed but have equal means and have 
+variances inversely proportional to exposures. (If you think of observations being claim 
+ratios, the second assumption reflects the fact that variance of a ratio is inversely 
+proportional to the exposure.)
+Although the application of Bayesian techniques generally requires some knowledge of 
+the prior distribution, the parameters of the prior distribution can be estimated from the 
+data.
+There have been additional developments of the credibility theory (in the Bayesian 
+setting), but they are beyond the scope of this monograph.
+ 6 Bailey, A.L. ¡°Credibility Procedures, Laplace¡¯s Generalization of Bayes¡¯ Rule and the Combination of Collateral Knowledge with Observed Data.¡±
+ Proceedings of the Casualty Actuarial Society 37 (1950): 7-23 7 B?hlman, H. ¡°Experience Rating and Credibility.¡± ASTIN Bulletin 4 (1967): 199-207 8 B?hlman, H., and Straub, E. ¡°Glaubw?rdigkeit f?r Schadens?tze.¡± Mitteilungen der Vereinigung Schweizer Versicherungsmathematiker 70
+ (1970): 111-133. Reprinted as ¡°Credibility for Loss Ratios¡± (Brooks, C.E., trans.), Actuarial Research Clearing House (1972.2)
+LONG-TERM CARE CREDIBILITY MONOGRAPH 15
+Credibility Methods?Limited Fluctuation, 
+Greatest Accuracy, and Nonlinear
+Full Credibility
+The amount of data deemed sufficient for reliable estimates is termed ¡°fully credible.¡±
+The concept of full credibility is closely related to the well-established statistical concepts 
+of confidence intervals and hypothesis testing. Judgment is required in the choice of the 
+desired accuracy (i.e., the departure of the estimate from the true value of the underlying 
+parameter) and confidence level (i.e., likelihood of the estimate being within the selected 
+accuracy of the true parameter value). Once these two are selected, standard statistical 
+theory can be applied to determine the amount of data needed for full credibility.
+Many actuaries practicing in the United States will be familiar with some ¡°rules of 
+thumb¡± like 1,082 claims being fully credible. These ¡°rules of thumb¡± were developed 
+under special assumptions regarding distribution of claims and may not be applicable in 
+all circumstances. For example, the number of claims needed for full credibility will vary 
+depending on the distribution of the sizes of claims.
+Let S be a random variable representing the total claim amount for a particular risk.
+ = ! + ? + ! where N is a random variable representing the number of claims in an 
+observation period and ! represents an individual claim. Individual claim amounts !
+are assumed to be independent and identically distributed with some (possibly unknown) 
+mean ¥ì and standard deviation ¥ò.
+We want to find an expected number of claims, ! that would guarantee that S is within ¥å
+percent of its true mean with the probability of 1-¥á, that is
+ (1 ? < < 1 + ) ¡Ã 1 ? 
+Assuming that EN is large enough, S is approximately normally distributed, and therefore
+
+()
+= !/!
+
+where !/! denotes a quantile of the standard normal distribution.
+16 LONG-TERM CARE CREDIBILITY MONOGRAPH
+As
+ = ? = , and = ()! ? + ? = ! +
+! = ()! ? + ? = ! + !
+we get
+! = = !/!
+
+! ()
+ +
+
+!
+Assuming that N has a Poisson distribution EN = Var(N), and
+! = !/!
+
+!
+1 +
+
+!
+(Details of the derivation above can be found in Herzog.
+9
+)
+If claim amounts do not vary (as is the case when one estimates mortality rate by count),
+ = 0, and the above formula reduces to
+! = !/!
+
+!
+The table below shows the expected number of claims required for full credibility for 
+selected levels of confidence and accuracy according to the above formula.
+If claim amounts vary, the ratio ¥ò/¥ì can be estimated from the prior experience and be 
+used with the formula above to produce an expected number of claims needed for full 
+credibility.
+ 9 Herzog, T.N. Introduction to Credibility Theory. Winsted, CT: ACTEX
+LONG-TERM CARE CREDIBILITY MONOGRAPH 17
+We have assumed above that the number of claims has Poisson distribution. Mowbray 
+assumed binomial distribution of the number of claims, in which case it is fairly easy to 
+see that the formula changes slightly to
+! = !/!
+
+!
+1 ? +
+
+!
+where q represents the probability of a claim in a binomial trial. As long as q is small, 
+there¡¯s little difference between the resulting full credibility thresholds.
+The two major shortcomings of this ¡°full credibility¡± are that it is based on an arbitrary
+choice of desired accuracy and confidence and it offers no guidance if the data are not 
+fully credible. It may be worth noting that when data are not deemed fully credible, a 
+confidence interval for the parameter in question can still be constructed based on the 
+desired level of confidence (although, as the amount of data decreases, it may not be 
+appropriate to assume that the estimate is approximately normally distributed). If this 
+interval is too wide, point estimate from the range may need to be selected.
+Finally, we should note that no amount of data is absolutely fully credible?it is always 
+possible to set accuracy and confidence so high that the data will fall short of being fully 
+credible; however, this is purely theoretical. In practice, it would be unreasonable to 
+demand an accuracy of being within 0.01 percent of true value with probability of 99.99
+percent.
+Partial Credibility
+Imagine a large insurance portfolio comprised of many individual risks. Assume that the 
+risks, while independent, are not homogenous. For an individual risk, there are two 
+natural choices for estimates of future claims?an estimate based solely on the past 
+observed experience of the risk and an estimate based solely on the past observed 
+experience of the entire portfolio. When the risk¡¯s experience is fully credible, an actuary 
+may wish to use the estimate based on that risk¡¯s experience. If the risk has no prior 
+experience or if that experience is deemed not credible at all, the actuary may want to 
+assume that the risk is ¡°average¡± and use the portfolio¡¯s experience. What if the risk¡¯s 
+experience is substantial but short of being deemed fully credible?
+Partial credibility attempts to answer this question by using a linear combination of the 
+two estimates. The method assigns a weighting (called credibility factor and usually 
+denoted by Z) to the risk¡¯s own experience and gives the complement of this weight to the 
+portfolio¡¯s overall experience. It is important to note that regardless of the method used to 
+18 LONG-TERM CARE CREDIBILITY MONOGRAPH
+calculate the credibility factor, the resulting weighted estimate is biased unless the risk 
+happens to be truly ¡°average.¡±
+There are two widely accepted methods used to determine the appropriate credibility 
+factor: limited fluctuation credibility and greatest accuracy credibility.
+The limited fluctuation approach does not have as robust a theoretical backing as the 
+greatest accuracy approach; however, it is often used by U.S. actuaries because of its 
+simplicity and practicality. It produces fairly stable estimates from one experience period 
+to the next, an important consideration when credibility is employed to determine an 
+individual risk¡¯s premiums.
+Using the same notation as above, if the credibility-weighted estimate is to be 
+C = ZS + (1-Z)M, where Z is the credibility factor, S is the estimate based on risk¡¯s own 
+experience and M is the estimate based on the overall portfolio experience, the limited 
+fluctuation approach attempts to set Z so that the part of the estimate based on the risk¡¯s 
+own experience, namely Z , is within of its true mean ZES with high probability.
+Symbolically, we require that
+(? < ( ? ) < ) ¡Ã 1 ? 
+Similarly as before, assuming that S is approximately normal and N has Poisson 
+distribution leads to
+ = = ! !/!
+
+!
+1 +
+
+!
+= !!
+Solving for Z leads to a familiar square root formula, = /!. 
+By design, one would not expect the ZS component to change much from one rating 
+period to the next. Hence, the entire credibility-weighted estimate C will tend to be very 
+stable.
+Note that the limited fluctuation theory heavily relies on judgment in selecting the 
+parameters. Also, the credibility factor is developed with a goal of placing as much weight 
+on the risk¡¯s own experience as possible while assuring stability of the resulting credibility 
+premium. The credibility premium is not meant to be optimal or a best estimate of the 
+risk¡¯s true premium.
+LONG-TERM CARE CREDIBILITY MONOGRAPH 19
+Greatest accuracy credibility is essentially a Bayesian technique. Assume that !, ¡¦ , !
+represent claim amounts experienced by the risk being rated in prior n periods. Assume 
+further that all !¡¯s have the same (possibly unknown) distribution that depends on a 
+parameter ¥è. Finally assume that given ¥è, !¡¯s are independent.
+One can think of ¥è as defining the risk profile of the individual whose claims are being 
+observed. It is assumed that this profile remains the same from one observation period to 
+the next, and that each period¡¯s observation is independent of other periods¡¯ observations.
+Different risks within the portfolio have different risk profiles. 
+For each risk in the portfolio, let = , and ! = !. (Random 
+variable X represents one period claim amounts for this risk.) ¥è represents the risk¡¯s 
+average claim amount which is assumed to stay the same from one observation period to 
+the next. ! represents variance of claims amount for the risk from one period to the 
+next.
+Assuming we know the distribution of the parameter ¥è for the entire portfolio of risks, we 
+can use Bayesian analysis to calculate posterior distribution of ¥è given observed claims 
+!, ¡¦ , !. Similarly, we can calculate expected value of !!! given !, ¡¦ , !. Generally, 
+expected value of !!! is not going to be a linear function of prior observations 
+!, ¡¦ , !; however, we can look for the best linear approximation to the Bayesian 
+predictive mean. It turns out that it has the form postulated by Whitney
+ = ? + 1 ? 
+where = (! + ? + !)/ is the mean of prior observations, = [ ] is the 
+expected claim across all risk profiles (unconditional mean), and Z = n/(n+K) with the 
+constant K given by
+ = ! 
+ 
+The numerator in the expression for K is typically referred to as the expected value of the 
+process variance (EPV). For each risk in the portfolio, claim volatility across time may be 
+different. EPV represents the mean of these volatilities. A small value of EPV means that 
+for most risks, claim amounts do not vary much from one period to the next.
+Subsequently, few observations should be sufficient to get a confident estimate of the 
+average claim. And indeed, small values of K correspond to a high credibility factor. 
+The denominator in the expression for K is typically referred to as the variance of 
+hypothetical means (VHM). It is a measure of heterogeneity of the portfolio. If all risks 
+have similar expected claims, prior experience gives us little information. And indeed, 
+20 LONG-TERM CARE CREDIBILITY MONOGRAPH
+large values of K correspond to low credibility. Note that if all risks in the portfolio have 
+identical expected claims (same expected mean ¥ì(¥è)), the denominator in the expression 
+for K becomes 0 and K itself becomes infinity. That is, no matter what the size of the 
+prior experience, it has zero credibility. This is because, if all risks have the same expected 
+claims, individual risk¡¯s experience does not contribute any information as to its expected 
+mean (beyond what is known for the entire portfolio).
+Application to LTCI
+The limited fluctuation approach usually can be carried out. It requires a full credibility 
+threshold and a complement of credibility. The first usually can be determined based on 
+the selected parameters of accuracy and certainty and the coefficient of variation of the 
+underlying distribution. Industry studies, consultant data, or original pricing assumptions 
+can serve as a source of information for a selection of the complement of the credibility.
+Suppose that an actuary calculates the claim ratio (the ratio of actual claims to expected 
+claims) for a block of LTCI policies. A ratio in excess of 1 may be a result of statistical 
+variation, incorrect pricing assumptions, or both.
+An Academy report10 suggests that the following approach may be reasonable for 
+determining a credibility-weighted estimate for the claim ratio for a block of LTCI
+policies.
+Assuming that claim incidence has a Poisson distribution, the expected number of claims 
+required for full credibility is
+! = !/!
+
+!
+1 +
+
+!
+Accuracy and confidence levels of 5 percent and 90 percent, respectively, result in the first 
+factor in the formula above being 1,082. The second factor could be estimated from the 
+data or based on professional judgment. If the second factor equals 3, then that will yield 
+a full credibility standard of 3,246.
+Now, the credibility-weighted estimate of the actual claim cost becomes 
+C = ZA + (1-Z)E, where A equals the actual observed claim cost, E is the expected 
+claims cost and = /3,246 is the credibility factor (n is the number of actual 
+claims in the data).
+ 10 Long-Term Care Reserving Work Group?Credibility Subgroup, Progress Report, American Academy of Actuaries, 2003
+LONG-TERM CARE CREDIBILITY MONOGRAPH 21
+Finally, the credibility-weighted estimate of the claim ratio becomes R = Z(A/E) + (1-Z).
+The choice of the complement of credibility E plays an important role here. Limited 
+fluctuation credibility provides some heuristic explanation for the credibility factor, but 
+gives no guidance on the choice of the complement. Depending on the circumstances, in 
+the example above, it may be appropriate to use the claim cost expected in pricing, one 
+based on the overall experience of the company (across many blocks of LTCI business), 
+or one based on external inputs (e.g., industry studies or consultant data).
+The greatest accuracy approach presents more challenges. There will often not be 
+sufficient information to fully execute the approach. One of the approaches proposed in 
+Hardy and Panjer11 is to calculate annual actual-to-expected ratios for which the expected 
+is some standard basis. This may work well for mortality in cases in which there is 
+generally a standard reference table. It also may work reasonably well for lapses and 
+incidence rates. The goal would be to calculate a credibility estimate of the ratio of 
+company experience to the standard table.
+Typically, an insurer will be able to observe the volatility of this ratio from one year to the 
+next, but it may lack the data to know the variability among companies. To calculate the 
+credibility factor, one would need the industry mean actual-to-expected ratio (that would 
+also serve as a complement of credibility), the variance of ratios among companies (or 
+block of business), and mean annual volatility of the ratio. 
+As noted above, many challenges disappear when credibility is applied to make 
+adjustments to the segments of the portfolio. In that case, the actuary will have available 
+information on the volatility of annual loss ratios for the segments, variance of ratios 
+between the segments, and overall ratio for the portfolio.
+Here is an example of the application of the Buhlmann-Straub model to the mortality 
+data (from Hardy and Panjer).
+An intercompany mortality study collects mortality data from a number of insurance 
+companies. Let !" represent number of deaths for company in year , 
+ = 1, ¡¦ , ; = 1, ¡¦ , . (The study encompasses years of experience from n
+companies.) 
+Let !" denote the expected number of deaths based on the th company exposure in year j
+and a standard mortality table. Finally, let !" = !"/!" denote actual-to-expected ratio 
+of actual deaths to tabular deaths.
+ 11 Hardy, M.R., and Panjer, H.H. ¡°A Credibility Approach to Mortality Risk.¡± ASTIN Bulletin 28(2): 269-283
+22 LONG-TERM CARE CREDIBILITY MONOGRAPH
+Our goal is to find the credibility estimate of expected value of ! !!! given the observed 
+values !!, ¡¦ , !". That is, we want to predict the level of th company mortality (as a 
+multiple of the standard table) for the next year.
+Consistent with Buhlmann-Straub model it is assumed that 
+ !" ! = ! [!"|!] = !(!)
+!"
+Recall that the first of these two conditions means that the expected value of the mortality 
+ratio !" for a given company does not change from one year to the next. The second 
+condition states that the variance of the ratio changes only due to differences in 
+exposures.
+(Hardy and Panjer make an additional assumption about the fourth central moment that 
+we will omit, as it does not appear in the credibility formula.)
+Let ! = !"
+!
+!!! denote the total expected (tabular) claims for the company . If we were 
+to predict ! !!! solely on the basis of the past observed experience of the th company, we 
+would calculate overall experience ratio 
+! = 1
+!
+!"!"
+!
+!!!
+It turns out that the credibility estimate (the best linear approximation to the Bayesian 
+estimator) is 
+! = !! + 1 ? ! [(!)]
+where
+! = !
+! + 
+and = [! ! ]
+[ ! ]
+Even though in practice, exact distributions of (!) and (!) are unlikely to be known, 
+they can be estimated from the data (see Hardy and Panjer [11] for details).
+Other examples of application of the credibility theory to the estimation of the mortality 
+and lapse rates can be found in Credibility Theory Practices.
+12
+ 12 Klugman, S., Rhodes, T., Purushotham, M., and Gill, S. Credibility Theory Practices. Society of Actuaries/MIB Solutions
+LONG-TERM CARE CREDIBILITY MONOGRAPH 23
+Challenges & Limitations
+It should be noted that, under both approaches (i.e., limited fluctuation and greatest 
+accuracy), there is a concern about whether past experience is a good predictor of the 
+future.
+Unlike the property and casualty practice area in which credibility theory had its 
+beginnings, LTCI typically requires a long time to develop meaningful experience.
+Therefore, in many cases, estimates derived from one group of policyholders may need to 
+be applied to predict experiences of another group of policyholders. Due to changes in 
+benefit designs, care delivery systems, historical pricing, and other factors, the experience 
+of individuals that bought the policies in the 1990s may be significantly different from the 
+experience of those who are buying it today.
+Similarly, many assumptions vary not only by issue age, but by policy duration, benefit 
+design, and potentially other factors. What is deemed to be a fully credible experience 
+may cover only some durations or attained ages. It is unclear whether credibility theory 
+can be used to formulate accurate predictions about future experience that involves later 
+durations and higher attained ages.
+In the case of the limited fluctuation approach, assumptions may need to be made 
+regarding the complement of credible experience (i.e., the subject experience). It is 
+possible for a block of business to be sufficiently different from the industry average that a 
+credibility-weighted estimate is implausible. That is, standard hypothesis testing would 
+return a very small p-value. Even if that is not the case, there may be several competing 
+complements of credibility, and it may not be clear which of them is most suitable.
+Note that this problem does not exist in the situation in which credibility theory is used to 
+adjust rates between segments of the portfolio. In that case, the overall portfolio provides 
+a natural source for the complement of credibility. An example of that could be a 
+situation in which an actuary decides to use credibility theory to adjust rates by state.
+24 LONG-TERM CARE CREDIBILITY MONOGRAPH
+Why Credibility Procedures Are Useful
+While the two most common credibility approaches have been outlined above, we have 
+only touched on the reasons why credibility procedures are useful tools for an actuary.
+That said, a number of reasons have been outlined in other sections of this monograph.
+Whitney¡¯s [2] early work on credibility cited ¡°the necessity, from the standpoint of equity 
+to the individual risk, of striking a balance between class-experience on the one hand and 
+risk-experience on the other.¡± Is this ¡°equity¡± issue relevant in the context of LTCI?
+In his overview of the credibility theory, Goulet13 gives the following guidance regarding 
+the choice between the two methods:
+? ¡°The goal of partial limited fluctuation credibility ¡¦ is to incorporate into the 
+premium as much individual experience as possible while still keeping the 
+premium sufficiently stable.¡±
+? The goal of the greatest accuracy approach ¡°is to find the best premium to charge 
+an insured, where the best is in the sense the premium estimator is the closest 
+estimator to the true premium.¡±
+Goulet goes on to state, with respect to the greatest accuracy approach, that the credibility 
+factor, ¡°will henceforth mostly reflect the degree of heterogeneity of the portfolio, rather 
+than the degree of stability of an individual risk¡¯s experience.¡± This is a crucial point. For 
+a homogenous portfolio, credibility has little to offer. All risks are similar, so the overall 
+portfolio experience can be used to determine premiums that are commensurate with 
+risk, and individual risk experience adds no information. For a portfolio composed of 
+large but identical risks, limited fluctuation theory may assign full credibility to each risk¡¯s 
+experience, but greatest accuracy credibility may assign them no credibility at all.
+ 13 Goulet, V. ¡°Principles and Applications of Credibility Theory.¡± Journal of Actuarial Practice Vol. 6 (1998): 5-62
+LONG-TERM CARE CREDIBILITY MONOGRAPH 25
+SECTION IV
+Considerations in the 
+Selection of Credibility 
+Procedures for LTCI
+The following is a summary of the items that might be considered when selecting 
+credibility procedures for LTCI-related actuarial work.
+Professional and Regulatory Sources
+Applicable state and federal laws, regulations, and rules should be considered when 
+selecting credibility procedures for LTCI-related actuarial work. An actuary, in particular,
+may consider any relevant ASOPs, other professional guidance, and other relevant 
+resources as well. High-level summaries of this information are included in the Appendix.
+Purpose and Application
+Actuaries may want to consider the purpose and the application of the LTCI-related 
+actuarial work when determining what credibility procedure(s) might be used. A number 
+of questions could be asked in this regard: What is the context? Should the impact of the 
+credibility procedure tend to be conservative or aggressive, and what would that mean 
+practically? Should the procedure be more responsive to emerging experience or lead to 
+more stable results?
+26 LONG-TERM CARE CREDIBILITY MONOGRAPH
+Subject Experience
+When reviewing subject experience for the purpose of applying credibility procedures, it 
+would be useful to consider all underlying characteristics or variables that could lead to 
+material differences in results, including (for example):
+? Underwriting;
+? Benefit qualifications/triggers;
+? Administration, and especially claim adjudication;
+? Distribution;
+? Product features (e.g., benefit period, elimination period, expense reimbursement 
+vs. indemnity, restoration of benefits, etc.); and
+? Anything else experience indicates.
+While many variables would need to be considered for nearly all blocks of business and 
+applications, experience analyses might lead an actuary to consider other variables as well.
+In situations where limited data are available for one or more variables, data across those 
+variables potentially could be combined to improve the credibility of the subject data (i.e., 
+when the current dataset is expected to resemble the future dataset with respect to the 
+underlying distributions of business).
+Related Experience
+When considering related experience for the purpose of applying credibility procedures, 
+the following factors might be considered regarding the potential data sources:
+? Accessibility;
+? Quality;
+? Types and amounts of information for each covered person; and
+? Experience period (i.e., relative to the target experience period).
+LONG-TERM CARE CREDIBILITY MONOGRAPH 27
+In addition to considering the source(s) of the related experience (e.g., insured vs. 
+population data), the homogeneity/heterogeneity of the amounts and underlying 
+characteristics of that data compared to subject data might be considered, including:
+? Underwriting;
+? Benefit qualifications/triggers;
+? Administration, and especially claim adjudication;
+? Distribution;
+? Product features (e.g., benefit period, elimination period, expense reimbursement 
+vs. indemnity, restoration of benefits, etc.); and
+? Anything else the experience indicates.
+The goal would be to identify a source of related experience that is as similar to the 
+subject experience as possible, but that includes more data (i.e., as much as possible) than 
+the subject experience does at the applicable level(s).
+Full and Partial Credibility
+After applying the selected credibility procedure to the subject experience and 
+determining the credibility attributable to that experience for a given assumption to be 
+utilized in a given context, and then identifying a corresponding body of related 
+experience, the following concepts could apply:
+? Full credibility: The subject experience could be deemed fully credible and the 
+optimal source of data for the assumption and context at hand. No related 
+experience would be required in this scenario.
+? Partial credibility: The subject experience could be deemed to have some level of 
+credibility attributable to it, but not so much that it could not be informed by 
+related experience. In this scenario, the subject experience and the related 
+experience would be combined as referenced below.
+In the latter scenario, when the subject experience is deemed to have some level of 
+credibility attributable to it, the subject experience and the related experience could be 
+combined in some manner in the development of a best-estimate result.
+28 LONG-TERM CARE CREDIBILITY MONOGRAPH
+The Application of Credibility Theory to LTCI
+The previous section of this monograph summarized relevant credibility theory for 
+review and consideration when selecting credibility procedure(s) for LTCI-related 
+applications. While the principles and formulae presented in that section may inform the 
+selection of such procedures, it will also be helpful to discuss the practical application(s) 
+further in this section as well.
+Much of this monograph has focused on the concept of and proposed formulae that relate
+to limited fluctuation credibility theory and its application to developing projected claim 
+costs. To summarize, this area of credibility theory addresses the question of whether a 
+company has enough experience to (for example) develop projected claim costs or even a 
+specific assumption based on its own data, or whether external (i.e., industry) data should 
+be used to do so. When a given company¡¯s data are deemed to not be fully credible, as 
+defined in limited fluctuation credibility theory given the parameters selected, formulae 
+for weighting its data with industry average data are applied.
+As most actuaries practicing in the area of LTCI are aware, the practical application of 
+limited fluctuation credibility theory is challenging for this product. LTCI data is 
+heterogeneous and continues to evolve with time, which limits the ability to develop large 
+homogeneous datasets that can be used to represent industry averages. LTCI has been 
+available in the market in various forms since the 1980s. Over the past 30 years, the 
+business has evolved considerably. Benefits, coverages, underwriting, claims management 
+practices, and care delivery have evolved over time and vary greatly from insurer to 
+insurer. With this much historical and ongoing variation, it would be difficult to collect a 
+sufficiently large homogeneous dataset to achieve full credibility as defined by limited
+fluctuation credibility theory, depending on the parameters selected.
+Limited fluctuation credibility theory is also difficult to apply in the area of experience 
+monitoring. Given the issue-age premium rating structure and steep morbidity curve that 
+are characteristic of LTCI products, it might be impractical for an insurer to wait for fully 
+credible experience, as defined in limited fluctuation credibility theory given the 
+parameters selected, to emerge before reacting to observed experience deviations. Delays 
+in reaction increase the severity of any required corrective actions, which might
+jeopardize the financial status of the insurer and might have adverse effects on 
+policyholders. On the other hand, insurers should not be too quick to react to experience 
+fluctuations that occur naturally as a result of the volatility that is inherent in a lowincidence product.
+LONG-TERM CARE CREDIBILITY MONOGRAPH 29
+When applying credibility theory to the practice of experience monitoring, it might be 
+important to consider going beyond determining whether or not observed experience for 
+a given assumption is fully credible. It might also be important to ask the questions, ¡°How 
+credible is the observed experience?¡± and ¡°Is the observed experience credible enough to 
+demonstrate that a given assumption is incorrect?¡±
+The first question could be answered by applying classic statistical credibility theory to 
+the observed data. For example, if one assumes that claim incidence rates are binomial in 
+nature (i.e., a person not already on claim either incurs a claim during an observation 
+period or does not), then the standard deviation for an observed claim incidence rate 
+would be
+(1 ? )
+
+where n equals exposures (e.g., life years) and q equals the observed incidence rate.
+This formula allows the actuary to provide a sense of the credibility attributable to the 
+observed data. The table below illustrates the statistical credibility of observed incidence 
+rates for various exposures in life years:
+30 LONG-TERM CARE CREDIBILITY MONOGRAPH
+A graphical view of the convergence of the confidence interval for a 3 percent observed 
+incidence rate is provided below. In addition to the standard deviation, the 95 percent
+Bayesian confidence interval is also displayed. 
+This sense of the credibility of observed data can be useful in making informed judgments 
+about how to both interpret and present emerging experience results to management.
+In order to answer the second question (¡°Is the observed experience credible enough to 
+demonstrate that a given assumption is incorrect?¡±), comparing the observed experience 
+to what was expected using the corresponding assumption, along with exposure counts, 
+may be useful. For example, if the expected incidence rate for an observation period is 2
+percent and the observed incidence rate is 3 percent, one could be 95 percent confident 
+that the expected incidence rate is incorrect, even with as little as 1,000 life year 
+exposures. Other examples in which the expected and observed rates are closer and 
+exposures are greater could be reviewed and presented in the context of how likely it 
+might be that the expected assumption would remain appropriate.
+LONG-TERM CARE CREDIBILITY MONOGRAPH 31
+SECTION V
+Impact of Credibility 
+Procedures Used 
+and Resulting Attributed Credibility on the 
+Presentation of Results
+One impact of applying credibility procedures to LTCI-related work is that the actuary 
+gains a sense of the magnitude of the lack of certainty associated with a given assumption 
+and/or a result. Given that, it is important to present results in such a manner that they 
+communicate the appropriate level of uncertainty.
+While many actuarial projects require a single answer to a given question (e.g., a single 
+best-estimate gross premium reserve value), presenting assumptions and/or results in 
+continuums or ranges would provide the appropriate context for reviewing and 
+interpreting those assumptions and/or results. For example, the answer to a question 
+might be a single average number, but that number could be presented in the context of a 
+range of values within which X percent of actual results would be expected to fall. This 
+could be communicated via table, graphically, or both.
+The ranges or continuums of results referenced above could be developed via the 
+following means:
+? Sensitivity testing: Running a small number of tests reflecting fixed deviations 
+from starting-point assumptions either individually or in combination. The 
+deviations would generally be determined using actuarial judgment (i.e., are not 
+statistically based) and would be symmetrical in nature.
+? Multi-scenario deterministic testing: Running a much larger number of tests 
+reflecting fixed deviations from starting-point assumptions either individually or 
+in combination. The deviations would generally be determined using actuarial 
+judgment (i.e., are not statistically based), but the ranges would be much larger 
+and symmetrical in nature.
+32 LONG-TERM CARE CREDIBILITY MONOGRAPH
+? Stochastic testing: Running a much larger number of tests reflecting deviations 
+from starting-point assumptions, either individually or in combination,
+developed based on statistical distributions usually based on actual historical 
+experience. The deviations would be determined using statistical distributions 
+and simulation tactics, and the ranges would also be determined utilizing those 
+distributions and tactics.
+LONG-TERM CARE CREDIBILITY MONOGRAPH 33
+SECTION VI
+Next Steps
+The purpose of this monograph is as follows:
+? To increase the awareness of the applicability of credibility procedures to LTCIrelated work and the importance of applying them to that work;
+? To provide information regarding the current practice, relevant publications, and 
+underlying theory that an actuary could reference to inform the application of 
+credibility procedures to LTCI-related work;
+? To outline considerations for deciding on and applying credibility procedures to 
+LTCI actuarial work, as well as presenting results; and
+? To suggest next steps for advancing actuarial practice in this regard.
+This monograph is a first step toward developing professional actuarial guidance relating 
+to this topic. The consensus of the group is that more specific guidance would be helpful 
+once the body of research regarding this topic is more developed and there are clear best
+practices regarding some LTCI-related topics.
+The following are two potential research ideas:
+? Developing a comprehensive summary of credibility theory with direct 
+applicability to LTCI-related actuarial work; and
+? Performing research in which differing credibility procedures, methods, and 
+assumptions are tested on actual blocks of historical data with the goal of 
+developing recommended approaches to applying credibility procedures to 
+various LTCI-related work and in various contexts.
+34 LONG-TERM CARE CREDIBILITY MONOGRAPH
+Appendix
+Members of this work group have significant experience in all areas of LTCI-related 
+actuarial practice, including product development and pricing, experience analysis, 
+valuation and financial reporting, projections, etc., in insurance company, consulting, 
+and regulatory contexts. Based on the experience of those on the work group and their 
+knowledge of actuarial practice, there do not appear to be any common practice patterns 
+relating to the application of credibility theory or procedures to LTCI-related actuarial 
+work. In fact, our experience would indicate that there are differing approaches to
+applying credibility theory and/or procedures to LTCI-related work, and even 
+understanding whether the application of credibility theory and/or procedures is 
+required in LTCI-related work.
+Relevant Documentation
+In order to facilitate LTCI actuaries¡¯ review of this subject matter, we have assembled a 
+list of potentially relevant documentation related to the application of credibility theory 
+and/or procedures to LTCI-related actuarial work. The following list was compiled in a 
+document titled Consolidated Notes Pertaining to Credibility developed by the SOA/AAA 
+LTC Pricing Work Group - Subgroup B:
+? American Academy of Actuaries¡¯ Life Valuation Subcommittee,
+ Credibility Practice Note, July 2008;
+? Mahler, H.C.; and Dean, C.G., ¡°Credibility,¡± Chapter 8, 2001;
+? Hassett and Januzik, Credibility: Theory Meets Regulatory Practice;
+? Stuart Klugman, Society of Actuaries, Session slides for ¡°Credibility
+ Theory,¡± 2007 Valuation Actuary Symposium, September 18, 2007; and
+? Longley-Cook, ¡°Credibility and Event Counts¡± Table, 1962.
+The following additional documents were identified by members of the work group as 
+worthy of consideration as well:
+? Society of Actuaries Health Section, Issues in Applying Credibility to
+ Group Long-Term Disability Insurance, SOA, 2013;
+? Robinson, SOA Health Section news article, ¡°Credibility Theory for the
+ Health Actuary: The Need for an Inter-Company Experience Study¡± (Pages
+ 6-9), 2000;
+LONG-TERM CARE CREDIBILITY MONOGRAPH 35
+? The Committee on Life Insurance Research, The Financial Reporting Section the
+ Product Development Section of the Society of Actuaries, Credibility Theory
+ Practices, SOA, 2009;
+? Long-Term Care Reserving Work Group?Credibility Subgroup, Progress
+ Report, American Academy of Actuaries, 2003;
+? Society of Actuaries¡¯ Long-Term Care Insurance Section, Understanding the
+ Volatility of Experience and Pricing Assumptions in Long-Term Care Insurance,
+ SOA, 2014; and,
+? Society of Actuaries¡¯ Long-Term Care Insurance Section, The Volatility in Long
+ Term Care Insurance Report, SOA, 2014.
+While the 2003 summary from Academy LTC Reserving Work Group ? Credibility 
+Subgroup is the only document we have identified for which the purpose was to develop 
+and present an approach to applying credibility theory and procedures to LTCI-related 
+actuarial work (and, in this case, specifically in the development of morbidity 
+assumptions), and while it has been used in practice by some, it should not be considered 
+a comprehensive or authoritative document on the subject.
+As referenced previously, state laws and regulations sometimes prescribe credibility 
+standards to be applied to LTCI-related actuarial work. While knowledge of and 
+compliance with any applicable state laws and regulations are required in LTCI-related 
+actuarial work, a specific discussion of those standards is outside the scope of this 
+monograph. There is a brief summary of state credibility standards included in the
+Consolidated Notes Pertaining to Credibility discussed earlier in this section.
+Relevant ASOPs
+The following is a list of the references to credibility in current ASOPs with annotations 
+as necessary:.
+ASOP No. 3: Continuing Care Retirement Communities 
+(http://www.actuarialstandardsboard.org/pdf/asops/asop003_124.pdf)
+This standard includes the following language:
+¡°3.8.6 Reasonableness of Assumptions?The actuary should review the 
+assumptions for reasonableness. The assumptions should be reasonable, 
+in the actuary¡¯s professional judgment, in the aggregate and for each 
+assumption individually, using relevant information available to the 
+actuary.
+36 LONG-TERM CARE CREDIBILITY MONOGRAPH
+In reviewing the assumptions for reasonableness, the actuary may consider such factors as 
+the following:
+a. the purpose of the measurement;
+b. the frequency with which the projections are expected to be updated;
+c. the length of the projection period;
+d. the sensitivity of the projections to the effect of variations in key 
+actuarial assumptions;
+e. the potential variability of the assumption;
+f. the size of the CCRC¡¯s resident population;
+g. the ability to increase fees or decrease expenses in future periods;
+h. the level of surplus available to provide for adverse fluctuation; and
+i. any significant margins for uncertainty which have been included in 
+the actuarial assumptions.¡±
+(Authors¡¯ comment: Most Continuing Care Retirement Communities (CCRCs) do not 
+have very credible data due to low incidence levels. Blending the data of a partially 
+credible CCRC with other data requires particular care in assuring adequate 
+homogeneity. The credibility measure for both the CCRC and any source of 
+complementary data could be critical to the appropriate valuation and rate setting for the 
+CCRC.)
+ASOP No. 5: Incurred Health and Disability Claims 
+(http://www.actuarialstandardsboard.org/pdf/asops/asop005_126.pdf)
+This standard includes the following language:
+¡°3.4 Data Requirements and Assumptions? ¡¦ Consistent with ASOP No. 
+23, Data Quality, the actuary should make appropriate efforts to obtain 
+accurate data from claim processing reports, accounting systems, and 
+other relevant internal organization sources in order to determine 
+incurred claims. External sources may be needed to provide 
+reasonableness checks on limited data.¡±
+ASOP No. 7: Analysis of Life, Health, or Property/Casualty Insurer Cash Flows
+(http://www.actuarialstandardsboard.org/pdf/asops/asop007_128.pdf)
+This standard includes the following language:
+¡°3.10.6 Limitations of Models, Assumptions, and Data?Cash flow estimates can 
+vary considerably as a result of the model used, the assumptions selected, 
+and the data. When results are highly volatile, additional analysis may be 
+appropriate.¡±
+LONG-TERM CARE CREDIBILITY MONOGRAPH 37
+ASOP No. 8: Regulatory Filings for Health Benefits, Accident and Health Insurance, 
+and Entities Providing Health Benefits
+(http://www.actuarialstandardsboard.org/pdf/asops/asop008_176.pdf)
+This standard includes the following language:
+¡°3.4.6 Health Cost Trends?The actuary should consider historical experience 
+trendswhen estimating future trends. Projected trends may be based on 
+insured or population data. When medical expense trends are projected, 
+the actuary should consider detail by service category (for example, 
+inpatient, outpatient, professional, and drug) or service setting (for 
+example, nursing home, home care, or assisted living facility), separated 
+by cost and utilization, if relevant, reasonably available, and credible.¡±
+¡°3.7 Use of Past Experience to Project Future Results
+In making these determinations, the actuary should consider the 
+applicability and credibility of the data. These considerations may differ 
+for the total claims in a period, the claims for a particular service 
+category, and the experience trends. To the extent that the filing actuary 
+concludes that the experience data is not applicable or credible for a 
+particular use, the filing actuary should identify additional sources that 
+are appropriate (see ASOP No. 25, Credibility Procedures).
+ASOP No. 10: Methods and Assumptions for Use in Life Insurance Company Financial 
+Statements Prepared in Accordance with U.S. GAAP
+(http://www.actuarialstandardsboard.org/pdf/asops/asop010_130.pdf)
+This standard includes the following language:
+¡°3.3 Best-Estimate Assumptions?In instances where GAAP requires bestestimate assumptions, the actuary should use assumptions that reflect 
+management¡¯s assessment of emerging experience without provisions for 
+risk or uncertainty. ¡¦The actuary should use actuarial judgment to 
+determine which interpretation of best-estimate is appropriate for the 
+situation at hand with reference to the applicable authoritative GAAP 
+guidance. ¡¦The actuary¡¯s advice should consider the company¡¯s actual 
+recent experience data, if, in the actuary¡¯s judgment, it is relevant and 
+credible.
+38 LONG-TERM CARE CREDIBILITY MONOGRAPH
+The actuary should also consider relevant industry data or data from 
+other similarly situated companies to supplement available company 
+specific data. ASOP No. 23, Data Quality, gives further guidance to the 
+actuary on issues related to the selection of data, use of imperfect data, 
+and reliance on data supplied by others.¡±
+ASOP No. 12: Risk Classification (for All Practice Areas)
+(http://www.actuarialstandardsboard.org/pdf/asops/asop012_132.pdf)
+This standard includes the following language:
+¡°2.3 Credibility?A measure of the predictive value in a given application that 
+the actuary attaches to a particular body of data (predictive is used here 
+in the statistical sense and not in the sense of predicting the future).¡±
+ASOP No. 15: Dividends for Individual Participating Life Insurance, Annuities, and 
+Disability Insurance
+(http://www.actuarialstandardsboard.org/pdf/asops/asop015_134.pdf)
+This standard includes the following language:
+¡°3.3 Dividend Factors?The actuary should develop dividend factors based on 
+an analysis of policy factors and actual experience of the participating 
+block for which dividends are being determined. However, when actual 
+experience is not determinable, available, or credible, the actuary should 
+consider the experience and trends in experience of similar classes of 
+business either from the same insurer, from industry sources, or from 
+other non-industry sources, in that order of preference.¡±
+(Authors¡¯ comment: In developing an appropriate dividend scale, credible experience 
+should be used to the extent available. To the extent that experience is not credible, an 
+appropriate complementary set of data may be required. If credibility is lacking, dividend 
+development may need to be deferred. Knowing whether the experience is sufficiently 
+credible could be critical to creating an appropriate dividend scale.)
+ASOP No. 17: Expert Testimony by Actuaries
+(http://www.actuarialstandardsboard.org/pdf/asops/asop017_135.pdf)
+(Authors¡¯ comment: As referenced in section 1.2 of ASOP No. 17, while this standard is 
+intended to provide specific guidance with respect to expert testimony, reference should 
+also be made to other actuarial standards of practice concerned with the actuarial 
+substance of the assignment. Applicable credibility-related provisions from other relevant 
+standards would impact work performed under this standard as well.)
+LONG-TERM CARE CREDIBILITY MONOGRAPH 39
+ASOP No. 18: Long-Term Care Insurance
+(http://www.actuarialstandardsboard.org/pdf/asops/asop018_136.pdf)
+This standard includes the following language:
+¡°3.5 Sensitivity Testing?The actuary should perform sensitivity testing of 
+reasonable variations in assumptions prior to finalization of assumptions. 
+Where the data used for establishing actuarial assumptions have limited 
+statistical credibility, the range of sensitivity testing should be expanded.¡±
+ASOP No. 19: Appraisals of Casualty, Health, and Life Insurance Businesses
+(http://www.actuarialstandardsboard.org/pdf/asops/asop019_137.pdf)
+This standard includes the following language:
+¡°3.3 Setting Assumptions?When setting assumptions for use in an appraisal, 
+the actuary should consider the historical experience of the insurance 
+business, adjusted to reflect known material changes in the environment 
+and identifiable trends to the extent such information is available. When 
+experience of the business is unavailable or insufficient to provide a 
+credible basis on which to develop assumptions, the actuary should 
+consider other information sources in setting assumptions.¡±
+ASOP No. 25: Credibility Procedures Applicable to Accident and Health, Group Term 
+Life, and Property/Casualty Coverages
+(http://www.actuarialstandardsboard.org/pdf/asops/asop025_174.pdf)
+This standard includes the following language:
+¡°3.1 Purpose and Use of Credibility Procedures?Credibility procedures 
+covered by this standard are used for two purposes: 1) to evaluate subject 
+experience for potential use in setting assumptions without reference to 
+other data; and 2) to improve the estimate of the parameter under study. 
+Credibility procedures may be used for tasks such as pricing, ratemaking, 
+prospective experience rating, and reserving..¡±
+40 LONG-TERM CARE CREDIBILITY MONOGRAPH
+¡°3.2 Selection or Development of Credibility Procedure?The actuary should 
+use an appropriate credibility procedure when determining if the subject 
+experience has full credibility or when blending the subject experience 
+with the relevant experience. The procedure selected or developed may 
+be different for different practice areas and applications. Additional 
+review may be necessary to satisfy applicable law. In selecting or 
+developing a credibility procedure, the actuary should consider the
+following criteria:
+a. whether the procedure is expected to produce reasonable 
+results;
+b. whether the procedure is appropriate for the intended use 
+and purpose; and
+c. whether the procedure is practical to implement when taking 
+into consideration both the cost and benefit of employing a 
+procedure.
+The actuary should apply credibility procedures that appropriately 
+consider the characteristics of both the subject experience and the 
+relevant experience. The actuary should consider the predictive value of 
+more recent experience as compared to experience from earlier time 
+periods.¡±
+
+?2016 American Academy of Actuaries. All rights reserved.
+1850 M Street NW, Suite 300
+Washington, DC 20036
+202-223-8196 (tel) | 202-872-1948 (fax)
+www.actuary.org

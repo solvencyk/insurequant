@@ -1,0 +1,23 @@
+{
+  "generated_at": "20260530T083732Z",
+  "insurers": 2,
+  "periods": [
+    "2025.4Q"
+  ],
+  "results": [
+    {
+      "insurer_code": "KR0001",
+      "canonical": "메리츠화재해상보험",
+      "period": "2025.4Q",
+      "rcept_no": "20260401000273",
+      "status": "download_error: document.xml returned non-zip payload: b'<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><result><status>014</status><message>\\xed\\x8c\\x8c\\xec\\x9d\\xbc\\xec\\x9d\\xb4 \\xec\\xa1\\xb4\\xec\\x9e\\xac\\xed\\x95\\x98\\xec\\xa7\\x80 \\xec\\x95\\x8a\\xec\\x8a\\xb5\\xeb\\x8b\\x88\\xeb\\x8b\\xa4.</message></result>'"
+    },
+    {
+      "insurer_code": "KR0008",
+      "canonical": "삼성화재해상보험",
+      "period": "2025.4Q",
+      "rcept_no": "20260313001226",
+      "status": "download_error: document.xml returned non-zip payload: b'<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><result><status>014</status><message>\\xed\\x8c\\x8c\\xec\\x9d\\xbc\\xec\\x9d\\xb4 \\xec\\xa1\\xb4\\xec\\x9e\\xac\\xed\\x95\\x98\\xec\\xa7\\x80 \\xec\\x95\\x8a\\xec\\x8a\\xb5\\xeb\\x8b\\x88\\xeb\\x8b\\xa4.</message></result>'"
+    }
+  ]
+}

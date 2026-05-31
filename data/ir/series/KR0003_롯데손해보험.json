@@ -1,0 +1,106 @@
+{
+  "company": "롯데손해보험",
+  "kr_dir": "KR0003_롯데손해보험",
+  "sector": "Non-life",
+  "metric_disclosed": "없음 — 롯데손해보험 IR factsheet는 신계약 CSM 배수를 공시하지 않음",
+  "metric_available": "신계약 CSM (억원), 신계약 월납환산 APE (억원); 배수는 파생계산(derived)",
+  "source": "lotteins.co.kr 실적발표자료 factsheet (FY=calendar year)",
+  "note": "Lotte factsheets disclose 신계약 CSM amount and 신계약(월납환산) but NOT a 신계약 CSM 배수. multiple_derived = 신계약CSM / 월납환산APE (both in 억원, computed here, not an official disclosure). 신계약 CSM per-quarter values are as printed in each quarter's own factsheet (current-FY column); they are cumulative YTD figures.",
+  "series": {
+    "2023.1Q": {
+      "nb_csm_eok": null,
+      "ape_eok": null,
+      "multiple_disclosed": null,
+      "multiple_derived": null,
+      "source_file": "lotte_2023_1Q.pdf",
+      "note": "PDF 실적자료 only (no Excel factsheet); CSM table not machine-parsed"
+    },
+    "2023.2Q": {
+      "nb_csm_eok": null,
+      "ape_eok": null,
+      "multiple_disclosed": null,
+      "multiple_derived": null,
+      "source_file": "lotte_2023_2Q_factsheet.xlsx",
+      "note": "2023 factsheet uses 월별/Highlight layout; no per-quarter 신계약CSM amount table"
+    },
+    "2023.3Q": {
+      "nb_csm_eok": null,
+      "ape_eok": null,
+      "multiple_disclosed": null,
+      "multiple_derived": null,
+      "source_file": "lotte_2023_3Q_factsheet.xlsx",
+      "note": "2023 factsheet uses 월별/Highlight layout; no per-quarter 신계약CSM amount table"
+    },
+    "2023.4Q": {
+      "nb_csm_eok": null,
+      "ape_eok": null,
+      "multiple_disclosed": null,
+      "multiple_derived": null,
+      "source_file": "lotte_2023_4Q_factsheet.xlsx",
+      "note": "2023 factsheet uses 월별/Highlight layout; no per-quarter 신계약CSM amount table"
+    },
+    "2024.1Q": {
+      "nb_csm_eok": 720.1,
+      "ape_eok": 53.3,
+      "multiple_disclosed": null,
+      "multiple_derived": 13.5,
+      "source_file": "lotte_2024_1Q_factsheet.xlsx"
+    },
+    "2024.2Q": {
+      "nb_csm_eok": 788.8,
+      "ape_eok": 61.5,
+      "multiple_disclosed": null,
+      "multiple_derived": 12.82,
+      "source_file": "lotte_2024_2Q_factsheet.xls"
+    },
+    "2024.3Q": {
+      "nb_csm_eok": 1153.8,
+      "ape_eok": 81.8,
+      "multiple_disclosed": null,
+      "multiple_derived": 14.1,
+      "source_file": "lotte_2024_3Q_factsheet.xls"
+    },
+    "2024.4Q": {
+      "nb_csm_eok": 1273.4,
+      "ape_eok": 88.6,
+      "multiple_disclosed": null,
+      "multiple_derived": 14.38,
+      "source_file": "lotte_2024_4Q_factsheet.xls"
+    },
+    "2025.1Q": {
+      "nb_csm_eok": 1098.5,
+      "ape_eok": 92.1,
+      "multiple_disclosed": null,
+      "multiple_derived": 11.92,
+      "source_file": "lotte_2025_1Q_factsheet.xls"
+    },
+    "2025.2Q": {
+      "nb_csm_eok": 1036.9,
+      "ape_eok": 72.2,
+      "multiple_disclosed": null,
+      "multiple_derived": 14.37,
+      "source_file": "lotte_2025_2Q_factsheet.xls"
+    },
+    "2025.3Q": {
+      "nb_csm_eok": 1011.9,
+      "ape_eok": 80.4,
+      "multiple_disclosed": null,
+      "multiple_derived": 12.58,
+      "source_file": "lotte_2025_3Q_factsheet.xls"
+    },
+    "2025.4Q": {
+      "nb_csm_eok": 974.4,
+      "ape_eok": 84.7,
+      "multiple_disclosed": null,
+      "multiple_derived": 11.51,
+      "source_file": "lotte_2025_4Q_factsheet.xls"
+    },
+    "2026.1Q": {
+      "nb_csm_eok": 794.8,
+      "ape_eok": 54.3,
+      "multiple_disclosed": null,
+      "multiple_derived": 14.64,
+      "source_file": "lotte_2026_1Q_factsheet.xls"
+    }
+  }
+}

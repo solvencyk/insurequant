@@ -1,0 +1,11 @@
+# Manual 월납환산 신계약보험료 overrides (억원 / month).
+# Used when KIDI/KNIA/KLIA crawl returns no numeric rows.
+#
+# Example:
+# companies:
+#   삼성생명:
+#     wolnap_premium_eok: 1234.5
+#     period: "FY2024 annual avg"
+#     source: "IR FY25 1Q slide footnote"
+#
+companies: {}

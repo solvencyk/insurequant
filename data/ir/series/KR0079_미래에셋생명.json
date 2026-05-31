@@ -1,0 +1,133 @@
+{
+  "company": "미래에셋생명",
+  "kr_code": "KR0079",
+  "sector": "Life",
+  "publisher": "미래에셋생명 IR 자료실 (life.miraeasset.com) — quarterly Fact Sheet (Excel)",
+  "metric": "신계약 CSM (억원) — 미래에셋생명 Fact Sheet 'CSM' sheet row '신계약CSM' (별도 추정; 십억원 단위 x10)",
+  "multiple_disclosed": false,
+  "multiple_note": "미래에셋생명 Fact Sheet does NOT disclose a 신계약 CSM 배수 (월납월초/APE multiple). Only 신계약 CSM amount (total + by-product: 보장성/일반저축/변액저축) and 신계약 APE / 초회보험료 are disclosed. Captured 신계약 CSM amount per brief.",
+  "ir_page": "https://life.miraeasset.com/micro/company/PC-HO-060401-000000.do",
+  "source_note": "Latest fact sheet (2026 Q1) carries 2022~2026 quarters as comparative columns; per-quarter source_file recorded. Life insurer => FY == calendar year.",
+  "units": {
+    "nb_csm_eok": "KRW 100M (억원)"
+  },
+  "series": {
+    "2023.1Q": {
+      "nb_csm_eok": 572.5,
+      "nb_csm_by_product_eok": {
+        "보장성": 552.4,
+        "일반저축": 0.2,
+        "변액저축": 19.8
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2023.2Q": {
+      "nb_csm_eok": 688.9,
+      "nb_csm_by_product_eok": {
+        "보장성": 664.7,
+        "일반저축": 1.0,
+        "변액저축": 23.2
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2023.3Q": {
+      "nb_csm_eok": 854.1,
+      "nb_csm_by_product_eok": {
+        "보장성": 812.9,
+        "일반저축": 0.8,
+        "변액저축": 40.4
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2023.4Q": {
+      "nb_csm_eok": 802.9,
+      "nb_csm_by_product_eok": {
+        "보장성": 767.1,
+        "일반저축": 0.0,
+        "변액저축": 35.8
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2024.1Q": {
+      "nb_csm_eok": 962.0,
+      "nb_csm_by_product_eok": {
+        "보장성": 842.4,
+        "일반저축": 1.7,
+        "변액저축": 117.9
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2024.2Q": {
+      "nb_csm_eok": 761.9,
+      "nb_csm_by_product_eok": {
+        "보장성": 637.4,
+        "일반저축": 1.9,
+        "변액저축": 122.6
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2024.3Q": {
+      "nb_csm_eok": 1018.7,
+      "nb_csm_by_product_eok": {
+        "보장성": 896.3,
+        "일반저축": 2.3,
+        "변액저축": 120.1
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2024.4Q": {
+      "nb_csm_eok": 1203.5,
+      "nb_csm_by_product_eok": {
+        "보장성": 1038.9,
+        "일반저축": 0.5,
+        "변액저축": 164.1
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2025.1Q": {
+      "nb_csm_eok": 1410.4,
+      "nb_csm_by_product_eok": {
+        "보장성": 1254.4,
+        "일반저축": 0.6,
+        "변액저축": 155.4
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2025.2Q": {
+      "nb_csm_eok": 1041.6,
+      "nb_csm_by_product_eok": {
+        "보장성": 913.5,
+        "일반저축": 1.0,
+        "변액저축": 112.7
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2025.3Q": {
+      "nb_csm_eok": 1510.9,
+      "nb_csm_by_product_eok": {
+        "보장성": 1290.4,
+        "일반저축": 0.3,
+        "변액저축": 204.9
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2025.4Q": {
+      "nb_csm_eok": 1435.9,
+      "nb_csm_by_product_eok": {
+        "보장성": 1256.8,
+        "일반저축": 0.4,
+        "변액저축": 170.3
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    },
+    "2026.1Q": {
+      "nb_csm_eok": 1506.6,
+      "nb_csm_by_product_eok": {
+        "보장성": 1375.9,
+        "일반저축": 0.0,
+        "변액저축": 103.1
+      },
+      "source_file": "2026 Q1 FactSheet_Kr.xlsx"
+    }
+  }
+}
