@@ -356,6 +356,17 @@ def _double_total_sum(cur):
     Requires ≥3 picks (a 2-element set is a 별도/연결 near-pair, never a decomposition).
     Returns the summed stages, or None (no confirmed decomposition)."""
     picks = _opening_clusters(cur)
+    # Case A — the grand total is itself one of the rollforward blocks (케이디비생명 2025.4Q:
+    # '(6) 당기와 전기 중 보험계약부채' = 무배당 + 변액 + 배당여부). _strip_aggregate finds the
+    # cluster whose opening ≈ Σ(others) and drops it; the remaining components sum to it. Return
+    # the component sum (the dropped total CONFIRMS the decomposition is complete) — WITHOUT this,
+    # psum below double-counts the total and the confirm test fails → _comparable_min wrongly
+    # picks the largest segment (무배당) as if it were the 별도 book.
+    comps = _strip_aggregate(picks)
+    if len(comps) < len(picks) and len(comps) >= 2:
+        return {no: sum((p.get(no) or 0) for p in comps) for no in STAGE_KEYS}
+    # Case B (original) — the grand total is an EXTERNAL reference (DB생명 14.5 통합), not among
+    # the segment blocks → need ≥3 picks and a candidate whose opening ≈ Σ(picks).
     if len(picks) < 3:
         return None
     psum = sum(p.get(1) or 0 for p in picks)
