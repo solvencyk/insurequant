@@ -109,6 +109,13 @@ STAGE_PATTERNS: dict[str, list[str]] = {
         "기말 보험계약 순부채",
         "보험계약 순부채(자산)(기말)",
         "기말잔액",
+        # 롯데손보 분기/반기 차이조정표 labels the closing balance 분기말/반기말
+        # (분기말순보험계약부채 …) — must precede the bare "기말" so the net (순부채)
+        # row is matched; the 자산인/부채인 sub-rows are already excluded by the caller.
+        "당분기말",
+        "당반기말",
+        "분기말",
+        "반기말",
         "기말",
         # Some filings label the closing balance 보고기간말 (end of reporting
         # period) instead of 기말 (e.g. 하나생명 13-4 rollforward).

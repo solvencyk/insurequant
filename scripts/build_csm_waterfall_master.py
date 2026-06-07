@@ -687,6 +687,64 @@ def pick_segment_760(blocks):
     return {no: sum((p.get(no) or 0) for p in picks) for no in STAGE_KEYS}
 
 
+def _pick_per_cluster_to_anchor(cands, anchor):
+    """Quarterly 배당-group CER tables list 당기 AND 전기 per group, and the quarterly 전기 is
+    last-year's same quarter (its closing ≠ this year's opening, so value-continuity misses it).
+    Cluster the cands by opening proximity, then choose ≤1 cand per cluster so the chosen openings
+    (normalized to 억) SUM closest to the FY anchor (= this year's opening). Returns the chosen
+    current-period cands (one per genuinely-distinct 배당 group)."""
+    from itertools import product
+    allv = [v for s in cands for v in s.values() if v is not None]
+    mag = max((abs(v) for v in allv), default=0.0)
+    udiv = 1e6 if mag > 1e10 else (1e3 if mag > 1e8 else 1.0)
+    norm = lambda o: (o or 0) / udiv / 100.0
+    order = sorted(range(len(cands)), key=lambda i: abs(cands[i].get(1) or 0), reverse=True)
+    used, clusters = [False] * len(cands), []
+    for i in order:
+        if used[i]:
+            continue
+        oi = abs(cands[i].get(1) or 0)
+        grp = [cands[i]]
+        used[i] = True
+        for j in order:
+            if not used[j] and oi > 0 and abs(oi - abs(cands[j].get(1) or 0)) / oi <= 0.10:
+                grp.append(cands[j])
+                used[j] = True
+        clusters.append(grp)
+    best, bestdiff = None, None
+    for combo in product(*[[None] + grp for grp in clusters]):
+        chosen = [c for c in combo if c is not None]
+        if not chosen:
+            continue
+        d = abs(sum(norm(c.get(1)) for c in chosen) - anchor)
+        if bestdiff is None or d < bestdiff:
+            bestdiff, best = d, chosen
+    return best or list(cands)
+
+
+def _pattern2_segsum(blocks, anchor):
+    """롯데손보: the 원수 발행 CSM is split into SEPARATE 배당있는 / 배당없는 차이조정(CER) tables
+    (unlike 삼성화재·현대·한화손보, whose single table column-groups the 배당 — those yield ONE cand
+    and fall through). Sum the CURRENT-period 배당-group cands:
+      • annual (no anchor): drop 전기 by value-continuity (전기.기말 = 당기.기초);
+      • quarterly (anchor): pick, per opening-cluster, the cand whose chosen openings sum ≈ anchor.
+    Only SUM when there are ≥2 GENUINELY DISJOINT groups (the 2nd-largest opening < 40% of the
+    largest — 롯데 배당있는 ≈ 0.5% of 배당없는). A 별도/연결 pair (comparable magnitudes) is NOT
+    summed → returns None so the single-pick _select path handles it (no regression)."""
+    cands = [st for b in blocks if not _reins_header(b) and (st := pattern2_stages(b)) is not None]
+    if len(cands) < 2:
+        return None
+    cur = _pick_per_cluster_to_anchor(cands, anchor) if (anchor and abs(anchor) > 1) \
+        else _drop_prior(cands)
+    picks = _opening_clusters(cur)
+    if len(picks) < 2:
+        return None
+    op = sorted((abs(p.get(1) or 0) for p in picks), reverse=True)
+    if not (op[0] > 0 and op[1] < 0.40 * op[0]):
+        return None
+    return {no: sum((p.get(no) or 0) for p in picks) for no in STAGE_KEYS}
+
+
 def waterfall(blocks, anchor=None, code=None):
     dang = pick_group(blocks, "배당요소가있는")
     mu = pick_group(blocks, "배당요소가없는")
@@ -704,6 +762,9 @@ def waterfall(blocks, anchor=None, code=None):
         s760 = pick_segment_760(blocks)
         if s760:
             return s760, "별도세그합산"
+    seg2 = _pattern2_segsum(blocks, anchor)   # 롯데손보: 배당있는/없는 = SEPARATE CER tables → sum 당기
+    if seg2:
+        return seg2, "배당세그합산"
     p2 = pick_pattern2(blocks, anchor)   # 삼성·현대·한화·삼성생명 차이조정표
     if p2:
         return p2, "배당칼럼합산"
