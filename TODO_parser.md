@@ -15,6 +15,34 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ---
 
+## ✅ DONE (2026-06-07 야간 자율 #2) — CSM leg-selection 5종 + MLG feasibility
+
+상세 → `docs/changelog_parser.md` **2026-06-07 (j)**. validator의 `CSM_PLAUSIBILITY` 연속성/복붙 룰이
+잡은 절댓값 오류 5건 전부 수정·커밋 (closing identity가 산술만 봐서 못 잡던 것):
+- 흥국화재(불완전 무배당블록→복붙 연쇄, `pick_group` complete 필터, commit 2edfa2e)
+- 케이디비 분기(`제N(전)기` 가/나 prefix 미검출, `_is_prior_caption` re.search, 2edfa2e)
+- 메트라이프(합계+세부 이중합산, `_strip_aggregate`, 2edfa2e)
+- 케이디비 2025.4Q 연차(`_double_total_sum` grand-total 제외, a924202)
+- 롯데손보(배당있는/없는 별도 CER 표 합산 + 분기말 라벨, `_pattern2_segsum`, e5bb9c9) → 2026.1Q·2025.3Q 부활
+
+**검증 게이트:** closing **302P/0F/6S** · crosscheck **69P/1M/0F**(롯데·케이디비 2F→0F) ·
+plausibility **0dup/1spike/12cont**(복붙 6→0). **CSM 도메인 정합(0F/0F).** root 마스터 재빌드+커밋(2f05308).
+
+**잔여(저우선/gray):** 롯데 2023.1Q(early-2023 layout) · 롯데 2025.2Q/3Q 배당있는 ~0.5%(반기 미분리) ·
+케이디비 2024.1Q spike(+58%, warn) · closing 6 SKIP(amort 라벨변형, edge분기, CSM gold gate 비활성이라
+회귀위험으로 defer) · cont 12 = IFRS17 기초재작성 gray-zone(검증자 가이드상 YELLOW).
+
+**중장기(MLG) — 둘 다 owner 결정/다세션 필요로 판명, 정밀 기록 후 defer:**
+- **MLG-1 듀레이션갭:** DART 본문에 갭 서술+만기사다리+100bp 민감도는 있으나 듀레이션 숫자·갭 자체 없음
+  (만기+할인곡선 유도 필요). → 100bp 민감도 추출이 첫 단계, 유도식 owner 결정.
+- **MLG-2 시장위험 분해:** 통합표 부재 + 하위(금리/주식/부동산/외환/자산집중) 사별·위험별 이질표(금리=충격
+  shock표라 유도 필요). PL-Tier2급 사별 핸들러 + 금리 유도규칙 owner 결정 필요. R11은 금리 확정 후.
+
+**진행 중(이 세션 미완):** PL Tier-2 follow-up(아래 "NEXT 2026-06-06 (b)" 1~5) — worktree 에이전트가
+세션 한도로 미완(probing만, 추출기 미수정). 메인이 직접 이어서 진행.
+
+---
+
 ## ▶ IN PROGRESS (2026-06-07 야간 자율) — CSM_waterfall closing 수정 + 누락사 점검
 
 owner 취침 중 자율 진행. 발견:
