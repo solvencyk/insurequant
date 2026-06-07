@@ -7,12 +7,12 @@
       "rel": 0.25,
       "abs": 3.0
     },
-    "built_at": "2026-05-31T14:20:58Z",
+    "built_at": "2026-06-07T13:39:31Z",
     "build_script": "scripts/validate_nb_csm_multiple.py",
     "cohort_tested": 5,
     "cohort_pass": 5,
     "cohort_fail": 0,
-    "cohort_fallback_pass": 3,
+    "cohort_fallback_pass": 2,
     "needs_reconcile_loop": false
   },
   "results": [
@@ -163,50 +163,50 @@
     {
       "company": "한화생명",
       "ifrs17_period": "annual (fiscal 2024 reporting) (csm_waterfall)",
-      "premium_period": "2023.1Q",
+      "premium_period": "FY2024",
       "premium_scope": "monthly_avg_from_ytd",
       "premium_source": "kidi:ml01_mn07_aggregate",
-      "nb_csm_eok_annual": 32360.57,
-      "nb_csm_eok_monthly": 2696.7142,
-      "wolnap_premium_eok_month": 284.4713,
-      "computed_multiple": 9.4797,
+      "nb_csm_eok_annual": 21230.86,
+      "nb_csm_eok_monthly": 1769.2383,
+      "wolnap_premium_eok_month": 235.3313,
+      "computed_multiple": 7.5181,
       "computed_transform": "monthly_nb / monthly_prem",
       "reconcile_pass_transform": "monthly_nb / monthly_prem",
-      "reconcile_pass_multiple": 9.4797,
+      "reconcile_pass_multiple": 7.5181,
       "ir_disclosed_multiple": 7.609,
       "ir_source": "single_point.2024_total",
-      "abs_diff": 1.8707,
-      "rel_diff": 0.2459,
+      "abs_diff": 0.0909,
+      "rel_diff": 0.0119,
       "status": "pass",
-      "period_aligned": false,
-      "fallback_used": true,
+      "period_aligned": true,
+      "fallback_used": false,
       "reconcile_candidates": [
         {
           "transform": "monthly_nb / monthly_prem",
-          "multiple": 9.4797
+          "multiple": 7.5181
         },
         {
           "transform": "monthly_nb / (prem*12)",
-          "multiple": 0.79
+          "multiple": 0.6265
         },
         {
           "transform": "annual_nb / (prem*12)",
-          "multiple": 9.4797
+          "multiple": 7.5181
         },
         {
           "transform": "annual_nb / prem",
-          "multiple": 113.7569
+          "multiple": 90.2169
         },
         {
           "transform": "monthly_nb / (prem/10)",
-          "multiple": 94.7974
+          "multiple": 75.1807
         },
         {
           "transform": "monthly_nb / (prem*10)",
-          "multiple": 0.948
+          "multiple": 0.7518
         }
       ],
-      "notes": "PASS via period-mismatched fallback — denominator period=2023.1Q does not match numerator annual (fiscal 2024 reporting) (csm_waterfall) (prefer_period=FY2024). Aligned-period row(s) failed; suspect numerator/denominator data integrity. Tolerance loophole may mask upstream bug."
+      "notes": null
     },
     {
       "company": "현대해상",
@@ -306,54 +306,6 @@
         }
       ],
       "notes": "PASS via period-mismatched fallback — denominator period=2025.3Q does not match numerator annual (fiscal 2024 reporting) (csm_waterfall) (prefer_period=FY2024). Aligned-period row(s) failed; suspect numerator/denominator data integrity. Tolerance loophole may mask upstream bug."
-    },
-    {
-      "company": "한화생명",
-      "ifrs17_period": "annual (fiscal 2024 reporting) (csm_waterfall)",
-      "premium_period": "2023.1Q",
-      "premium_scope": "monthly_avg_from_ytd",
-      "premium_source": "kidi:ml01_mn07_aggregate",
-      "nb_csm_eok_annual": 32360.57,
-      "nb_csm_eok_monthly": 2696.7142,
-      "wolnap_premium_eok_month": 284.4713,
-      "computed_multiple": 9.4797,
-      "computed_transform": "monthly_nb / monthly_prem",
-      "reconcile_pass_transform": "monthly_nb / monthly_prem",
-      "reconcile_pass_multiple": 9.4797,
-      "ir_disclosed_multiple": 7.609,
-      "ir_source": "single_point.2024_total",
-      "abs_diff": 1.8707,
-      "rel_diff": 0.2459,
-      "status": "pass",
-      "period_aligned": false,
-      "fallback_used": true,
-      "reconcile_candidates": [
-        {
-          "transform": "monthly_nb / monthly_prem",
-          "multiple": 9.4797
-        },
-        {
-          "transform": "monthly_nb / (prem*12)",
-          "multiple": 0.79
-        },
-        {
-          "transform": "annual_nb / (prem*12)",
-          "multiple": 9.4797
-        },
-        {
-          "transform": "annual_nb / prem",
-          "multiple": 113.7569
-        },
-        {
-          "transform": "monthly_nb / (prem/10)",
-          "multiple": 94.7974
-        },
-        {
-          "transform": "monthly_nb / (prem*10)",
-          "multiple": 0.948
-        }
-      ],
-      "notes": "PASS via period-mismatched fallback — denominator period=2023.1Q does not match numerator annual (fiscal 2024 reporting) (csm_waterfall) (prefer_period=FY2024). Aligned-period row(s) failed; suspect numerator/denominator data integrity. Tolerance loophole may mask upstream bug."
     },
     {
       "company": "현대해상",

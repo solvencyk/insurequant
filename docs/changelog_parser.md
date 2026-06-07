@@ -8,6 +8,43 @@ Convention: latest few entries detailed; older ones compressed to 1-liners (git 
 
 ---
 
+## 2026-06-07 (j) — CSM 당기/전기 leg-selection 버그 5종 (야간 자율) + 중장기(MLG) feasibility
+
+validator의 `CSM_PLAUSIBILITY` 연속성/복붙 룰이 closing-identity(산술만 검사)가 놓친 **절댓값 오류**
+5종을 표면화 → 전부 당기/전기(혹은 합계/세부) 블록 오선택이 근본 원인. 5건 수정 + 커밋:
+
+- **흥국화재 (commit 2edfa2e):** `배당합산`이 **기말=None인 불완전 무배당 블록**을 골라 closing이 유배당
+  소계(34억)로 붕괴 → 망가진 4Q 기초가 anchor로 연쇄 오염돼 2025 전분기가 2024 복붙. `pick_group`에
+  **기말 있는 완전 블록 우선**(`complete` 필터). 2025.4Q 34→28,047, 복붙·폭락 0. anchor 연쇄로 전분기 해결.
+- **케이디비생명 분기 (commit 2edfa2e):** 전기 라벨 `제N(전)기`가 가/나 product enumerator(`나. 제37(전)기`)
+  를 달고 나와 `_is_prior_caption` startswith 검사를 통과 → 전기 opening이 anchor 오염 → 2025.Q=2024.Q 복붙.
+  `_is_prior_caption`에 `re.search(제\d+\(전\)기)` 추가. 2025.1~3Q 5,854/9,237/9,137 → 9,047/9,154/9,331.
+- **메트라이프생명 (commit 2edfa2e):** `별도세그합산`이 **측정요소별 grand-total 블록 + 유/무/변액 세부**를
+  같이 합산 → 기초=2×전년말. `_strip_aggregate`(opening≈Σ나머지인 cluster 제거). 2025.4Q 기초 48,134→24,067.
+- **케이디비생명 2025.4Q 연차 (commit a924202):** `_double_total_sum`이 grand-total 블록을 picks에 포함해
+  psum 2배 → confirm 실패 → `_comparable_min`이 무배당 세그(5,338)를 별도로 오인. `_double_total_sum`에
+  `_strip_aggregate` 선적용(grand-total 제외 후 컴포넌트 합). 2025.4Q 5,338→**7,730**. DB생명/미래에셋/한화생명 무회귀.
+- **롯데손보 quarterly/annual (commit e5bb9c9):** 롯데는 배당있는/없는이 **별도 CER 표**(삼성화재 등은 한 표
+  컬럼그룹) → single-pick이 tiny 배당있는(128억)만 잡거나 `분기말` 마감라벨 미스로 누락. (1) closing
+  STAGE_PATTERNS += 당분기말/당반기말/분기말/반기말, (2) 신규 `_pattern2_segsum`+`_pick_per_cluster_to_anchor`:
+  당기 배당군 합산(annual=전기 value-continuity drop, quarterly=opening합이 anchor 최근접). disjoint 가드
+  (2nd cluster <40% top)로 별도/연결쌍은 미합산 → 무회귀. 2025.4Q 12,828→**24,748.6**(crosscheck amort
+  −213,943 = pl 원수CSM상각 +213,943 상쇄), 2026.1Q·2025.3Q 부활. 잔여: 롯데 2023.1Q(early-2023 layout)
+  + 2025.2Q/3Q 배당있는(~0.5%, 반기보고서 미분리).
+
+**검증(validate_master_tables):** closing **302P/0F/6S**, crosscheck **69P/1M/0F**(롯데·케이디비 2F→0F),
+plausibility **0dup/1spike/12cont**(복붙 6→0; 잔여 spike=케이디비 2024.1Q, cont 12=전부 IFRS17 기초재작성
+gray-zone). **CSM 도메인 closing 0F + crosscheck 0F 정합 달성.**
+
+**중장기 목표 feasibility(둘 다 owner 결정/다세션 필요로 판명):**
+- **MLG-1 듀레이션갭:** DART 본문(한화생명/삼성생명 주석 50)에 듀레이션갭 *서술* + 만기사다리(16버킷) +
+  100bp 금리민감도(손익/OCI)는 있으나 **자산/부채 듀레이션 숫자·갭 자체는 없음**(만기+할인곡선 유도 필요).
+  손보(삼성화재/DB)는 sparse. → 100bp 민감도 추출이 구체적 첫 단계, 갭 유도식은 owner 결정.
+- **MLG-2 K-ICS 시장위험 분해:** 통합 시장위험액 현황 표 부재. 하위(금리/주식/부동산/외환/자산집중)가 사별·
+  위험별 이질 표(금리=충격전후 shock표 → 위험액 유도 필요, 주식=헤더 embed, 부동산=합계행). clean disclosed
+  총액 사별 불일치(삼성화재 금리·주식만, 삼성생명 금리만, DB손해 전무). → PL-Tier2급 사별 핸들러 다수 +
+  금리위험액 유도규칙 owner 결정 필요. R11(Σ하위=시장위험액)은 금리 확정 후 가능. 정밀 기록 후 defer.
+
 ## 2026-06-07 (i) — 한화손해 2025.4Q CSM 신계약 음수 수정 + NB CSM 신선 KIDI 재빌드
 
 NB CSM 배수 빌드 중 사용자가 한화손해 2025.4Q 신계약CSM 음수(−710억)를 지적. 원인 추적:
