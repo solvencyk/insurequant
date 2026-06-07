@@ -280,7 +280,7 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
     }
 
     // 숫자 포맷팅 함수 (천 단위 쉼표, 소수점 첫째 자리)
-    function formatNumber(value) {
+    function formatNumber(value, isRatio) {
       if (value === null || value === undefined || value === '') {
         return '';
       }
@@ -293,19 +293,19 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         return value; // 숫자가 아니면 원본 반환
       }
       
-      // 소수점이 있는지 확인 (정수인지 확인)
-      const hasDecimal = numValue % 1 !== 0;
-      
-      if (hasDecimal) {
-        // 소수점이 있는 경우 첫째 자리까지만 표시
-        return numValue.toLocaleString('ko-KR', {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 1
-        });
-      }
-      
-      // 정수인 경우 천 단위 쉼표만 추가
-      return numValue.toLocaleString('ko-KR');
+      // 음수는 △(세모). 비율(%)은 소수 첫째 자리 유지, 금액은 정수 반올림. 둘 다 천단위 콤마.
+      const neg = numValue < 0;
+      const absVal = Math.abs(numValue);
+      const out = isRatio
+        ? absVal.toLocaleString('ko-KR', { minimumFractionDigits: 0, maximumFractionDigits: 1 })
+        : Math.round(absVal).toLocaleString('ko-KR');
+      return neg ? '△' + out : out;
+    }
+
+    // 억원 정수(반올림+콤마+음수△) — Tier/Forward 주석용
+    function fmtEokInt(v){
+      if (v == null) return '-';
+      return v < 0 ? '△' + Math.round(-v).toLocaleString('ko-KR') : Math.round(v).toLocaleString('ko-KR');
     }
 
     // 피벗 테이블 렌더링 (행: 항목번호 순, 29-35는 17번 직후)
@@ -320,12 +320,13 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
       table += '</tr></thead><tbody>';
       displayOrder.forEach(item => {
         const nameClass = item.sub ? ' class="subitem"' : '';
+        const isRatio = /비율/.test(item.name);
         table += `<tr><td${nameClass}>${item.name}</td>`;
         quarters.forEach(q => {
           const found = data.find(row => row['항목번호'] === item.num && row['공시분기'] === q);
           const value = found ? getRowValue(found) : null;
           if (value !== null && value !== undefined && value !== '') {
-            table += `<td>${formatNumber(value)}</td>`;
+            table += `<td>${formatNumber(value, isRatio)}</td>`;
           } else {
             table += '<td></td>';
           }
@@ -848,12 +849,12 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
       donutTier2Chart = renderDonut('donut-tier2', donutTier2Chart, t2Pct);
       const notes = [];
       if (t1) {
-        notes.push(`기본자본: 발행 ${t1.tier1_hybrid_issued_eok ? t1.tier1_hybrid_issued_eok.toLocaleString() : '-'}억원 / 한도 ${t1.tier1_hybrid_limit_eok ? t1.tier1_hybrid_limit_eok.toLocaleString() : '-'}억원 (SCR×15%)`);
+        notes.push(`기본자본: 발행 ${fmtEokInt(t1.tier1_hybrid_issued_eok)}억원 / 한도 ${fmtEokInt(t1.tier1_hybrid_limit_eok)}억원 (SCR×15%)`);
       } else {
         notes.push('기본자본: 데이터 없음');
       }
       if (t2) {
-        notes.push(`보완자본: 인정 ${t2.numerator_eok ? t2.numerator_eok.toLocaleString() : '-'}억원 / 한도 ${t2.tier2_limit_eok ? t2.tier2_limit_eok.toLocaleString() : '-'}억원`);
+        notes.push(`보완자본: 인정 ${fmtEokInt(t2.numerator_eok)}억원 / 한도 ${fmtEokInt(t2.tier2_limit_eok)}억원`);
       } else {
         notes.push('보완자본: 데이터 없음');
       }
@@ -1069,7 +1070,7 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         ? (lastProj.ratio_pct - baseline.ratio_post_pct).toFixed(1) : '-';
       const dropBasic = (baseline.basic_ratio_post_pct != null && lastProj.basic_ratio_pct != null)
         ? (lastProj.basic_ratio_pct - baseline.basic_ratio_post_pct).toFixed(1) : '-';
-      note.innerHTML = `Baseline (2025.4Q 적용후): 지급여력 <b>${baseline.ratio_post_pct != null ? baseline.ratio_post_pct.toFixed(1) : '-'}%</b>, 기본자본 <b>${baseline.basic_ratio_post_pct != null ? baseline.basic_ratio_post_pct.toFixed(1) : '-'}%</b> &nbsp;|&nbsp; 2030 변화: 지급여력 ${dropRatio}%p, 기본자본 ${dropBasic}%p &nbsp;|&nbsp; 잔액(콜 차감 대상): ${row.outstanding_bonds_total_eok ? row.outstanding_bonds_total_eok.toLocaleString() : '-'}억원`;
+      note.innerHTML = `Baseline (2025.4Q 적용후): 지급여력 <b>${baseline.ratio_post_pct != null ? baseline.ratio_post_pct.toFixed(1) : '-'}%</b>, 기본자본 <b>${baseline.basic_ratio_post_pct != null ? baseline.basic_ratio_post_pct.toFixed(1) : '-'}%</b> &nbsp;|&nbsp; 2030 변화: 지급여력 ${dropRatio}%p, 기본자본 ${dropBasic}%p &nbsp;|&nbsp; 잔액(콜 차감 대상): ${fmtEokInt(row.outstanding_bonds_total_eok)}억원`;
     }
 
     // URL 파라미터 읽기

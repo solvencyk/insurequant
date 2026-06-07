@@ -267,15 +267,15 @@
           "points": [
             {
               "period": "FY24.1Q",
-              "value": 520.0
+              "value": 7.6
             },
             {
               "period": "FY24.2Q",
-              "value": 471.0
+              "value": 10.0
             },
             {
               "period": "FY24.3Q",
-              "value": 488.0
+              "value": 7.6
             },
             {
               "period": "FY24.4Q",
@@ -318,6 +318,10 @@
       "label": "Hanwha Life",
       "source_pdf": "hanwha_life_2025_1q.pdf",
       "source_citation": "1Q25 IR slide 4, footnote 1) 신계약 CSM 수익성 = 신계약 CSM ÷ 월초",
+      "single_point": {
+        "2024_total": 7.609,
+        "2024_total_source": "derived from data/ir/series/KR0068_한화생명.json 4Q weighted avg — ΣNB_CSM(21,230.85억) / Σwolnap_implied(2,790.06억). Added 2026-05-31 for FY24 annual numerator alignment (validate_nb_csm_multiple.py)."
+      },
       "series": {
         "total": {
           "label": "Total",
@@ -346,7 +350,7 @@
           ]
         }
       },
-      "notes": "Only YoY comparison disclosed in 1Q25 deck; FY24.1Q/FY25.1Q aligns with Samsung Life axis.",
+      "notes": "Only YoY comparison disclosed in 1Q25 deck; FY24.1Q/FY25.1Q aligns with Samsung Life axis. single_point.2024_total added 2026-05-31 to match FY24 annual numerator from csm_waterfall.json.",
       "presentation": {
         "deck_period_labels": [
           "1Q24",
