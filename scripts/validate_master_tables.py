@@ -10,10 +10,15 @@ Both masters long-format. PL master is **백만원**, CSM waterfall is **억원*
 cross-check aligns by ×100 (억→백만). Item names space-normalized.
 Tolerance per equation: max(0.1%·|expected|, floor). floor = 2억 (waterfall) / 200백만 (PL).
 An equation is SKIPPED if its LHS or any RHS term is missing (None) — 0.0 is a valid value.
+
+Runs `build_root_masters.py` first (idempotent) so root masters reflect the latest
+diag/viz source — parser fixes to the source aren't visible in root masters until rebuilt.
+Pass --no-build to skip the rebuild and validate the existing root masters as-is.
 """
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -70,7 +75,28 @@ EQ_FLOOR = {"영업이익 = 보험손익+투자손익": 600.0}
 DEFAULT_FLOOR = 200.0
 
 
+def rebuild_root_masters() -> None:
+    """Run build_root_masters.py so root masters reflect the latest diag/viz source.
+    parser가 소스(csm_waterfall_master_diag / pl_breakdown_master)를 고쳐도 이 빌드를
+    안 돌리면 루트 CSM_waterfall.json / PL_breakdown.json(검증 대상)에 반영 안 됨.
+    idempotent라 항상 선행 호출 (끄려면 --no-build)."""
+    script = ROOT / "scripts" / "build_root_masters.py"
+    print("[build] build_root_masters.py 실행 (루트 마스터 최신화) ...")
+    r = subprocess.run([sys.executable, str(script)], capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
+    if r.returncode != 0:
+        print(f"[build] ⚠️ 빌드 실패 (rc={r.returncode}) — 기존 마스터로 검증 진행.")
+        if r.stderr:
+            print("[build] " + r.stderr.strip().splitlines()[-1][:160])
+    else:
+        for ln in [l for l in (r.stdout or "").splitlines() if l.strip()][-2:]:
+            print(f"[build] {ln[:120]}")
+    print()
+
+
 def main() -> int:
+    if "--no-build" not in sys.argv:
+        rebuild_root_masters()
     pl = load_long(PL_PATH)
     wf = load_long(WF_PATH)
 
