@@ -120,7 +120,7 @@
     </div>
     <div class="panel" style="margin-top:16px">
       <div class="section-title">IFRS17 — CSM Bubble Map</div>
-      <p class="section-desc">크기: CSM 잔액(억) · Y축: NB CSM 배수(IFRS17 신계약 CSM ÷ 월납환산) · 분모=crawl/IR extract</p>
+      <p class="section-desc">X: 신계약 CSM 규모 · Y: NB CSM 배수 (X·Y = 2026.1Q 연누계 기준) · 크기: 기말 CSM 잔액 (최신 분기, 현재 총 재원)</p>
       <div class="controls" style="margin-bottom:10px">
         <label>업권:
           <select id="bubble-sector" class="select">
@@ -130,9 +130,9 @@
           </select>
         </label>
         <div class="bubble-legend">
-          <span>색상: NB CSM 배수 (×)</span>
-          <div class="bubble-swatch"></div>
-          <span>크기: CSM 잔액</span>
+          <span style="color:#0d6efd;font-weight:700">● 생명</span>
+          <span style="color:#16a34a;font-weight:700">● 손해</span>
+          <span>크기: 기말 CSM</span>
           <span id="bubble-meta"></span>
         </div>
       </div>
@@ -145,11 +145,7 @@
     }
 
     const jsonPath = resolveUrl('kics_disclosure.json');
-    const bubbleJsonPaths = [
-      resolveUrl('../data/ifrs17/viz/csm_bubble.json'),
-      resolveUrl('data/ifrs17/viz/csm_bubble.json')
-    ];
-    let bubblePayload = null;
+    let bubbleRows = null;
     let bubbleChart = null;
     let allData = [];
     let GROUPED = {};
@@ -708,123 +704,61 @@
     function renderBubble(sectorFilter) {
       const el = document.getElementById('csm-bubble-chart');
       const metaEl = document.getElementById('bubble-meta');
-      if (!el || !window.echarts || !bubblePayload) return;
+      if (!el || !window.echarts || !bubbleRows) return;
 
-      let rows = (bubblePayload.companies || []).filter(c =>
-        (c.csm_closing_eok != null && c.csm_closing_eok > 0)
-      );
-      if (sectorFilter && sectorFilter !== 'ALL') {
-        rows = rows.filter(c => c.sector === sectorFilter);
-      }
+      let rows = bubbleRows.filter(r => Number.isFinite(r.nbCsm) && Number.isFinite(r.multiple));
+      if (sectorFilter && sectorFilter !== 'ALL') rows = rows.filter(r => r.sector === sectorFilter);
 
-      const cov = bubblePayload._meta?.coverage || {};
-      if (metaEl) {
-        const vs = bubblePayload._meta?.validation_summary || {};
-        metaEl.textContent = `표시 ${rows.length}社 · 배수 ${cov.with_computed_multiple ?? '—'}/${cov.total ?? rows.length} · 검증 pass ${vs.cohort_pass ?? cov.validation_pass ?? '—'}/${vs.cohort_tested ?? '—'}`;
-      }
-
+      if (metaEl) metaEl.textContent = `표시 ${rows.length}社 · 기준 2026.1Q · 크기=최신 기말 잔액`;
       if (!rows.length) {
-        el.innerHTML = '<div style="padding:24px;color:var(--muted);font-size:13px">CSM bubble 데이터 없음 — scripts/viz_build_csm_bubble.py 실행</div>';
+        el.innerHTML = '<div style="padding:24px;color:var(--muted);font-size:13px">NB 배수 데이터 없음 — data/_derived/nb_csm_multiple.json 확인</div>';
         return;
       }
 
       if (!bubbleChart) bubbleChart = echarts.init(el);
-      const maxCsm = Math.max(...rows.map(r => r.csm_closing_eok || 0));
-
-      const lifeRows = rows.filter(r => r.sector === 'Life');
-      const nonLifeRows = rows.filter(r => r.sector === 'Non-Life');
-      const lifeBase = 0.25;
-      const nonLifeBase = 1.75;
-
-      function layoutRow(list, baseX) {
-        const n = list.length || 1;
-        return list.map((r, i) => ({
-          ...r,
-          _x: baseX + ((i + 1) / (n + 1) - 0.5) * 0.35,
-        }));
-      }
-
-      let laidOut = [];
-      if (sectorFilter === 'Life') laidOut = layoutRow(lifeRows, lifeBase);
-      else if (sectorFilter === 'Non-Life') laidOut = layoutRow(nonLifeRows, nonLifeBase);
-      else laidOut = layoutRow(lifeRows, lifeBase).concat(layoutRow(nonLifeRows, nonLifeBase));
-
-      const yVals = laidOut.map(r => r.nb_csm_multiple).filter(v => Number.isFinite(v));
-      const yMax = yVals.length ? Math.max(...yVals) * 1.15 : 20;
-      const yMin = 0;
+      const maxClosing = Math.max(...rows.map(r => r.closing || 0), 1);
+      const SECTOR_COLOR = { 'Life': '#0d6efd', 'Non-Life': '#16a34a' };
+      const sectors = ['Life', 'Non-Life'].filter(s => sectorFilter === 'ALL' || sectorFilter === s);
 
       bubbleChart.setOption({
-        grid: { left: 56, right: 24, top: 36, bottom: 56 },
+        grid: { left: 70, right: 28, top: 40, bottom: 58 },
+        legend: sectorFilter === 'ALL' ? { top: 8, data: ['생명보험', '손해보험'] } : undefined,
         tooltip: {
           trigger: 'item',
           formatter: p => {
-            const d = p.data;
-            const mult = d.hasMultiple && Number.isFinite(d.mult) ? d.mult.toFixed(2) + '×' : '미공시';
-            const prem = Number.isFinite(d.prem) ? d.prem.toLocaleString() + '억/月' : '—';
-            const nbM = d.nbM != null ? d.nbM.toLocaleString() + '억/月' : '—';
+            const d = p.data.d;
+            const cq = d.closingK ? (Math.floor(d.closingK/10)+'.'+(d.closingK%10)+'Q') : '—';
             return [
-              `<b>${d.name}</b>`,
-              `CSM 잔액: ${(d.csm || 0).toLocaleString()}억`,
-              `신계약 CSM: ${nbM}`,
-              `월납환산: ${prem}`,
-              `NB CSM 배수: ${mult}`,
-              d.vstat ? `IR 검증: ${d.vstat}${d.vrel != null ? ' (Δ' + (d.vrel * 100).toFixed(0) + '%)' : ''}` : '',
-              d.src ? `출처: ${d.src}` : ''
-            ].filter(Boolean).join('<br/>');
+              `<b>${d.name}</b> · ${d.sector === 'Life' ? '생명' : '손해'}`,
+              `신계약 CSM 규모: ${Math.round(d.nbCsm).toLocaleString()}억 (${d.period})`,
+              `NB CSM 배수: ${d.multiple.toFixed(2)}× (${d.period})`,
+              `기말 CSM: ${d.closing != null ? Math.round(d.closing).toLocaleString() + '억' : '—'} (${cq})`
+            ].join('<br/>');
           }
         },
         xAxis: {
-          min: 0,
-          max: 2.5,
-          axisLabel: {
-            formatter: v => (Math.abs(v - lifeBase) < 0.2 ? '생명' : Math.abs(v - nonLifeBase) < 0.2 ? '손해' : '')
-          },
-          splitLine: { show: false }
+          type: 'value', name: '신계약 CSM 규모 (억)', nameLocation: 'middle', nameGap: 34,
+          axisLabel: { formatter: v => (v / 10000).toFixed(1) + '조' },
+          splitLine: { lineStyle: { type: 'dashed', color: '#eef0f2' } }
         },
         yAxis: {
-          name: 'NB CSM 배수 (×)',
-          nameGap: 36,
-          min: yMin,
-          max: Math.max(yMax, 8),
-          splitLine: { lineStyle: { type: 'dashed', color: '#e9ecef' } }
+          type: 'value', name: 'NB CSM 배수 (×)', nameGap: 44, min: 0,
+          splitLine: { lineStyle: { type: 'dashed', color: '#eef0f2' } }
         },
-        series: [{
+        series: sectors.map(sec => ({
+          name: sec === 'Life' ? '생명보험' : '손해보험',
           type: 'scatter',
-          data: laidOut.map(r => ({
-            name: r.company,
-            value: [r._x, Number.isFinite(r.nb_csm_multiple) ? r.nb_csm_multiple : 0],
-            hasMultiple: Number.isFinite(r.nb_csm_multiple),
-            csm: r.csm_closing_eok,
-            nbM: r.nb_csm_eok_monthly,
-            prem: r.wolnap_premium_eok_month,
-            mult: r.nb_csm_multiple,
-            vstat: r.validation_status,
-            vrel: r.validation_rel_diff,
-            src: r.multiple_source,
-            symbolSize: bubbleSize(r.csm_closing_eok, maxCsm),
-            itemStyle: {
-              color: r.color || '#adb5bd',
-              opacity: Number.isFinite(r.nb_csm_multiple) ? 0.92 : 0.38,
-              borderColor: Number.isFinite(r.nb_csm_multiple) ? 'transparent' : '#868e96',
-              borderWidth: Number.isFinite(r.nb_csm_multiple) ? 0 : 1
-            },
-            label: {
-              show: true,
-              formatter: '{b}',
-              position: 'top',
-              fontSize: 10,
-              color: '#495057'
-            }
-          })),
-          markArea: sectorFilter === 'ALL' ? {
-            silent: true,
-            itemStyle: { color: 'rgba(0,0,0,0.02)' },
-            data: [
-              [{ xAxis: 0, name: '생명보험' }, { xAxis: 1 }],
-              [{ xAxis: 1.5, name: '손해보험' }, { xAxis: 2.5 }]
-            ]
-          } : undefined
-        }]
+          labelLayout: { hideOverlap: true },
+          data: rows.filter(r => r.sector === sec).map(r => ({
+            name: r.name,
+            value: [r.nbCsm, r.multiple],
+            d: r,
+            symbolSize: bubbleSize(r.closing, maxClosing),
+            itemStyle: { color: SECTOR_COLOR[sec], opacity: 0.6, borderColor: '#fff', borderWidth: 1 },
+            label: { show: true, formatter: '{b}', position: 'top', fontSize: 10, color: '#495057' },
+            emphasis: { focus: 'self', label: { show: true, fontWeight: 'bold' }, itemStyle: { opacity: 0.95 } }
+          }))
+        }))
       }, true);
 
       // F1: click a bubble → open IFRS17.html filtered to that company.
@@ -839,27 +773,54 @@
       el.style.cursor = 'pointer';
     }
 
-    function loadBubble() {
-      if (window.location.protocol === 'file:') {
-        if (window.CSM_BUBBLE_DATA) {
-          bubblePayload = window.CSM_BUBBLE_DATA;
-          renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
-        } else {
-          const metaEl = document.getElementById('bubble-meta');
-          if (metaEl) metaEl.textContent = 'file:// — embed.js 또는 HTTP 서버 필요';
-        }
-        return;
+    function qkey(q){ const m=/^(\d{4})\.(\d)Q$/.exec(String(q)); return m ? (+m[1])*10 + (+m[2]) : 0; }
+
+    // 진짜 마스터: 루트 NB_CSM_multiple.json (코드·분기·신계약CSM_연누계·배수_연누계). CSM워터폴(기말)과 코드로 조인.
+    function buildBubbleData(nbRows, wfRows) {
+      const wfClosing = {};                                // code -> {qkey -> 기말(6)}
+      for (const r of (wfRows || [])) {
+        if (r['항목번호'] !== 6) continue;
+        const code = r['원보험사코드']; const v = Number(r['값']);
+        if (!code || !Number.isFinite(v)) continue;
+        (wfClosing[code] || (wfClosing[code] = {}))[qkey(r['공시분기'])] = v;
       }
-      fetchFirst(bubbleJsonPaths)
-        .then(payload => {
-          bubblePayload = payload;
-          renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
-        })
-        .catch(e => {
-          console.error('csm_bubble.json load failed:', e);
-          const metaEl = document.getElementById('bubble-meta');
-          if (metaEl) metaEl.textContent = 'csm_bubble.json 없음 — viz_build_csm_bubble.py 실행';
+      const nbByCode = {};                                 // code -> {qkey -> row}
+      for (const r of (nbRows || [])) {
+        const code = r['원보험사코드']; if (!code) continue;
+        (nbByCode[code] || (nbByCode[code] = {}))[qkey(r['공시분기'])] = r;
+      }
+      const out = [];
+      const TARGET = qkey('2026.1Q');                      // 2026.1Q(최신) 고정
+      for (const code in nbByCode) {
+        const r = nbByCode[code][TARGET];
+        if (!r || r['신계약CSM배수_연누계'] == null || r['신계약CSM_연누계'] == null) continue;
+        let closing = null, closingK = null;               // 기말은 stock → 최신 분기 잔액
+        const wc = wfClosing[code];
+        if (wc) { const ks = Object.keys(wc).map(Number).sort((a, b) => b - a); if (ks.length) { closingK = ks[0]; closing = wc[closingK]; } }
+        out.push({
+          name: r['원수사명'], code,
+          sector: r['생손보여부'] === '생명보험' ? 'Life' : 'Non-Life',
+          period: '2026.1Q',
+          nbCsm: r['신계약CSM_연누계'],
+          multiple: r['신계약CSM배수_연누계'],
+          closing, closingK
         });
+      }
+      return out;
+    }
+
+    function loadBubble() {
+      Promise.all([
+        fetchFirst([resolveUrl('../NB_CSM_multiple.json'), resolveUrl('NB_CSM_multiple.json')]),
+        fetchFirst([resolveUrl('../CSM_waterfall.json'), resolveUrl('CSM_waterfall.json')]),
+      ]).then(([nbRows, wfRows]) => {
+        bubbleRows = buildBubbleData(nbRows, wfRows);
+        renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
+      }).catch(e => {
+        console.error('bubble masters load failed:', e);
+        const metaEl = document.getElementById('bubble-meta');
+        if (metaEl) metaEl.textContent = 'NB_CSM_multiple.json / CSM_waterfall.json 로드 실패';
+      });
     }
 
     function fetchFirst(paths) {

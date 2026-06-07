@@ -77,7 +77,13 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     </div>
     <div class="panel">
       <div class="controls">
-        <label>보험사: <select id="company" class="select"><option value="">보험사 선택</option></select></label>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <label>보험사: <select id="company" class="select"><option value="">보험사 선택</option></select></label>
+          <label>기준: <select id="wfPeriod" class="select">
+            <option value="year" selected>연도</option>
+            <option value="quarter">분기</option>
+          </select></label>
+        </div>
       </div>
       <div id="emptyHint" class="placeholder-empty">보험사를 선택해 주세요</div>
       <div id="dashHost" style="display:none"></div>
@@ -90,35 +96,37 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       <div class="small-muted" style="margin-bottom:10px" id="wfMeta"></div>
       <div id="wfStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container chart-sm"><div id="chartWf" style="width:100%;height:100%"></div></div>
+      <div class="table-wrap" id="wfTable" style="margin-top:12px"></div>
+    </div>
+    <div class="panel" data-pane="hist">
+      <h2>2) CSM 시계열 (2023.1Q ~ 2026.1Q)</h2>
+      <div class="small-muted" id="histCap">선택 보험사의 분기별 CSM 진화. 파란선 = 기말 CSM 잔액(stock), 분홍선 = 신계약 CSM **당기 증분**(공시 YTD를 분기 흐름으로 환산; 중간 분기 결측 시 합산 span은 툴팁 표시). y축은 조회 회사 기준 동적 스케일. 1)·2)는 동일 소스(CSM_waterfall.json)라 수치 일치.</div>
+      <div id="histStub" class="stub-msg" style="display:none"></div>
+      <div class="chart-container"><canvas id="canvasHist"></canvas></div>
     </div>
     <div class="panel" data-pane="amort">
-      <h2>2) CSM 상각 스케줄 (연도별)</h2>
+      <h2>3) CSM 상각 스케줄 (연도별)</h2>
       <div class="small-muted" id="amortCap"></div>
       <div id="amortStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container chart-sm"><canvas id="canvasAmort"></canvas></div>
     </div>
     <div class="panel" data-pane="pl">
-      <h2>3) 보험 손익(IM) 분해</h2>
+      <h2>4) 당기순이익 워터폴 (장기원수 세부 분해)</h2>
       <div class="small-muted" id="plCap"></div>
       <div id="plStub" class="stub-msg" style="display:none"></div>
-      <div class="chart-container"><canvas id="canvasPl"></canvas></div>
+      <div class="chart-container chart-sm"><div id="chartPl" style="width:100%;height:100%"></div></div>
+      <div class="table-wrap" id="plTable" style="margin-top:12px"></div>
     </div>
     <div class="panel" data-pane="nb">
-      <h2>4) NB · CSM 비율(IR 공시 매핑)</h2>
+      <h2>5) NB · CSM 비율(IR 공시 매핑)</h2>
       <div id="nbStub" class="stub-msg"></div>
       <div id="nbWrap" style="display:none"><div class="chart-container chart-sm"><canvas id="canvasNb"></canvas></div></div>
     </div>
     <div class="panel" data-pane="sens">
-      <h2>5) 민감도(ΔCSM)</h2>
+      <h2>6) 민감도(ΔCSM)</h2>
       <div class="small-muted" id="senCap"></div>
       <div id="senStub" class="stub-msg" style="display:none"></div>
       <div class="table-wrap" id="senTable"></div>
-    </div>
-    <div class="panel" data-pane="hist">
-      <h2>6) CSM 시계열 (2023.1Q ~ 2026.1Q)</h2>
-      <div class="small-muted" id="histCap">선택한 보험사의 13분기 CSM 진화. 회색 배경선은 23사 전체 (highlight: 선택사). 'no_csm_block' 분기는 점선 + null로 표시 (사업보고서는 통상 ok, 1Q/3Q 분기보고서는 rollforward 표 미포함 케이스 다수).</div>
-      <div id="histStub" class="stub-msg" style="display:none"></div>
-      <div class="chart-container"><canvas id="canvasHist"></canvas></div>
     </div>
   </template>
 
@@ -133,12 +141,14 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
   }
 
   const PATHS = {
-    wf: dataPaths("../data/ifrs17/viz/csm_waterfall.json", "data/ifrs17/viz/csm_waterfall.json"),
-    amort: dataPaths("../data/ifrs17/viz/csm_amort_schedule.json", "data/ifrs17/viz/csm_amort_schedule.json"),
-    pl: dataPaths("../data/ifrs17/viz/insurance_pl_breakdown.json", "data/ifrs17/viz/insurance_pl_breakdown.json"),
-    sen: dataPaths("../data/ifrs17/viz/sensitivity_heatmap.json", "data/ifrs17/viz/sensitivity_heatmap.json"),
+    wf: dataPaths("../data/dart/viz/csm_waterfall.json", "data/dart/viz/csm_waterfall.json"),
+    wfx: dataPaths("CSM_waterfall.json", "data/dart/viz/CSM_waterfall.json"),
+    amort: dataPaths("../data/dart/viz/csm_amort_schedule.json", "data/dart/viz/csm_amort_schedule.json"),
+    pl: dataPaths("../data/dart/viz/insurance_pl_breakdown.json", "data/dart/viz/insurance_pl_breakdown.json"),
+    sen: dataPaths("../data/dart/viz/sensitivity_heatmap.json", "data/dart/viz/sensitivity_heatmap.json"),
     nb: dataPaths("../data/ir/nb_csm_ratio.json", "data/ir/nb_csm_ratio.json"),
-    hist: dataPaths("../data/ifrs17/viz/csm_waterfall_history.json", "data/ifrs17/viz/csm_waterfall_history.json"),
+    hist: dataPaths("../data/dart/viz/csm_waterfall_history.json", "data/dart/viz/csm_waterfall_history.json"),
+    plx: dataPaths("PL_breakdown.json", "data/dart/viz/PL_breakdown.json"),
   };
 
   const NB_LOOKUP = {
@@ -152,14 +162,18 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
 
   const charts = { wf: null, amort: null, pl: null, nb: null, hist: null };
 
-  const payload = { wf:null, amort:null, pl:null, sen:null, nb:null, hist:null };
+  const payload = { wf:null, amort:null, pl:null, sen:null, nb:null, hist:null, ni:null };
   const ix = {
-    wf: new Map(),
+    wfx: new Map(),
     amort: new Map(),
     pl: new Map(),
     sen: new Map(),
     hist: new Map(),
+    plx: new Map(),
   };
+  // 회사코드(KR0001…) 기반 매칭. 새 마스터(CSM_waterfall.json)가 코드↔이름 등록부.
+  const codeToName = {};   // 'KR0001' → '메리츠화재해상보험'
+  const nbByCode = {};     // 'KR0008' → NB spec (boot에서 NB_LOOKUP를 코드로 재키잉)
 
   function parseKoNum(x){
     if (x == null) return null;
@@ -200,11 +214,10 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
   }
 
   function destroyCharts(){
-    if (charts.wf){
-      try{ charts.wf.dispose(); }catch(e){}
-      charts.wf=null;
+    for (const k of ["wf","pl"]){ // ECharts
+      if (charts[k]){ try{ charts[k].dispose(); }catch(e){} charts[k]=null; }
     }
-    for (const k of ["amort","pl","nb","hist"]){
+    for (const k of ["amort","nb","hist"]){ // Chart.js
       try{ charts[k] && charts[k].destroy(); }catch(e){}
       charts[k]=null;
     }
@@ -229,92 +242,439 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     }
   }
 
-  function renderWfEcharts(host, wfPay, wfRow){
+  // ===== Panel 1: windowed CSM waterfall (company × period[year/quarter]) =====
+  // Source = long-format CSM_waterfall.json: rows of {원수사명, 공시분기, 항목번호, 값}.
+  // 항목번호 1=기초 2=신계약 3=이자 4=가정·경험 5=상각 6=기말. 값 단위 = 억원.
+  // Quarter mode needs per-quarter (당분기) movements; current file is YTD(연 누계),
+  // so quarter mode is stubbed until the 당분기 table lands. Flip WF_QUARTER_READY when ready.
+  const WF_QUARTER_READY = false;
+  const WF_WINDOW = 4; // trailing 4 buckets
+  const WF_COMPS = [
+    { num: 2, ko: "신계약",    full: "신계약 CSM" },
+    { num: 3, ko: "이자",      full: "이자 부리" },
+    { num: 4, ko: "가정·경험", full: "가정 및 경험 조정" },
+    { num: 5, ko: "상각",      full: "CSM 상각" },
+  ];
+
+  function wfParseQ(s){ const m=String(s).match(/^(\d{4})\.(\d)Q$/); return m?[+m[1],+m[2]]:[0,0]; }
+  function wfCmpDesc(a,b){ const [ay,aq]=wfParseQ(a),[by,bq]=wfParseQ(b); return ay!==by?by-ay:bq-aq; }
+  function wfQuartersOf(company){
+    const m = ix.wfx.get(company);
+    return m ? Array.from(m.keys()).sort(wfCmpDesc) : [];
+  }
+  function wfVal(company,qtr,num){
+    const m=ix.wfx.get(company); const qm=m&&m.get(qtr); const v=qm&&qm.get(num);
+    return (typeof v==="number" && Number.isFinite(v)) ? v : null;
+  }
+  // 모든 회사 통합 분기축(오름차순) — Panel 6 시계열 x축.
+  function wfAllPeriodsAsc(){
+    const set = new Set();
+    for (const m of ix.wfx.values()) for (const k of m.keys()) set.add(k);
+    return Array.from(set).sort((a,b)=> wfCmpDesc(b,a));
+  }
+  // 신계약 CSM(2)은 YTD(연누계) → 당기 증분(같은 FY 직전 분기 YTD 차감). 직전 결측 시 span(합산 분기 수).
+  function wfNbIncrement(company, period){
+    const [y, qn] = wfParseQ(period);
+    const cur = wfVal(company, period, 2);
+    if (cur == null) return { value:null, span:1 };
+    for (let pq = qn-1; pq >= 1; pq--){
+      const prev = wfVal(company, y+"."+pq+"Q", 2);
+      if (prev != null) return { value: cur - prev, span: qn - pq };
+    }
+    return { value: cur, span: qn };
+  }
+  // 드롭다운 이름(옛 파일)과 새 마스터 이름이 다른 5사 대응 (삼성생명 vs 삼성생명보험, 케이비 vs KB 등).
+  function wfNorm(s){ return String(s).replace(/\s/g,"").replace(/케이비/g,"KB"); }
+  function wfResolve(display){
+    if (ix.wfx.has(display)) return display;
+    const d = wfNorm(display);
+    for (const k of ix.wfx.keys()){ if (wfNorm(k)===d) return k; }
+    for (const k of ix.wfx.keys()){ const nk=wfNorm(k); if (nk.includes(d) || d.includes(nk)) return k; }
+    return null;
+  }
+  // 이름 → 코드. 코드 없는 옛 viz/NB는 boot에서 1회만 정규화 매칭 → 이후 전 패널 코드로 동작.
+  function codeForName(name){
+    if (codeToName[name]) return name; // 이미 코드
+    const nn = wfNorm(name);
+    for (const code in codeToName){ if (codeToName[code]===name) return code; }
+    for (const code in codeToName){ const rn=wfNorm(codeToName[code]); if (rn===nn || rn.includes(nn) || nn.includes(rn)) return code; }
+    return null;
+  }
+
+  // YEAR window: latest period + prior year-ends (4Q), trailing WF_WINDOW buckets, chrono asc.
+  function wfYearBuckets(company){
+    const qs = wfQuartersOf(company); if(!qs.length) return [];
+    const set = new Set(qs);
+    const [ly,lq] = wfParseQ(qs[0]);
+    const buckets = [{ year: ly, q: qs[0], label: lq===4 ? String(ly) : qs[0] }];
+    for(let k=1;k<WF_WINDOW;k++){
+      const y=ly-k, yq=`${y}.4Q`;
+      if(set.has(yq)) buckets.push({ year:y, q:yq, label:String(y) });
+    }
+    return buckets.sort((a,b)=>a.year-b.year);
+  }
+
+  function wfBuildBars(company, buckets){
+    const bars=[];
+    const first=buckets[0], last=buckets[buckets.length-1];
+    bars.push({ kind:"open", period:first.label, q:first.q, value: wfVal(company,first.q,1) });
+    for(const b of buckets){
+      for(const c of WF_COMPS){
+        bars.push({ kind:"comp", period:b.label, q:b.q, comp:c, value: wfVal(company,b.q,c.num) });
+      }
+    }
+    bars.push({ kind:"close", period:last.label, q:last.q, value: wfVal(company,last.q,6) });
+    return bars;
+  }
+
+  function wfFmtJo(v, dp){ return (v/10000).toLocaleString("ko-KR",{minimumFractionDigits:dp,maximumFractionDigits:dp}); }
+
+  function renderWfWaterfall(host, company){
     const el = q(host, "#chartWf");
     if (!el || typeof echarts === "undefined") return;
-    if (charts.wf){
-      try{ charts.wf.dispose(); }catch(e){}
-    }
+    if (charts.wf){ try{ charts.wf.dispose(); }catch(e){} }
     charts.wf = echarts.init(el, null, { renderer: "canvas" });
 
-    const stageOrder = wfPay.stage_order || ["opening","new_business","interest","assumption","amortization","closing"];
-    const labelsKo = wfPay.stage_labels_ko || {};
-    const labelsEn = wfPay.stage_labels_en || {};
-    const xs = stageOrder.map(k=>{
-      const a = labelsKo[k] ? String(labelsKo[k]) : String(k);
-      const b = labelsEn[k] ? String(labelsEn[k]) : "";
-      return b ? (a+"\n"+b) : a;
-    });
-    const stages = wfRow.stages || {};
+    const buckets = wfYearBuckets(company);
+    const bars = wfBuildBars(company, buckets);
 
-    let running = 0;
-    const placeholder = [], positive = [], negative = [], totals = [], missing = [];
-    stageOrder.forEach((k, idx)=>{
-      const stage = stages[k];
-      const v = stage && stage.value_mn_krw != null ? Number(stage.value_mn_krw) : null;
-      if (idx === 0 || idx === stageOrder.length - 1){
+    const xs=[], placeholder=[], positive=[], negative=[], totals=[], missing=[];
+    let running=0;
+    bars.forEach((bar)=>{
+      if(bar.kind==="open") xs.push(bar.period+"\n기초");
+      else if(bar.kind==="close") xs.push(bar.period+"\n기말");
+      else xs.push((bar.comp.num===2 ? bar.period : "")+"\n"+bar.comp.ko);
+
+      if(bar.kind==="open" || bar.kind==="close"){
         placeholder.push("-"); positive.push("-"); negative.push("-"); missing.push("-");
-        totals.push(v != null && !Number.isNaN(v) ? v : "-");
-        if (v != null && !Number.isNaN(v)) running = v;
+        const v=bar.value; totals.push(v!=null?v:"-");
+        if(bar.kind==="open" && v!=null) running=v;
         return;
       }
-      if (v == null || Number.isNaN(v)){
-        const hint = Math.max(Math.abs(running) * 0.02, 80000);
-        placeholder.push(running);
-        positive.push("-"); negative.push("-"); totals.push("-");
-        missing.push(hint);
+      const v=bar.value;
+      if(v==null){
+        const hint=Math.max(Math.abs(running)*0.02, 30);
+        placeholder.push(running); positive.push("-"); negative.push("-"); totals.push("-"); missing.push(hint);
         return;
       }
       missing.push("-");
-      if (v >= 0){
-        placeholder.push(running); positive.push(v); negative.push("-"); totals.push("-");
-        running += v;
-      }else{
-        placeholder.push(running + v); positive.push("-"); negative.push(-v); totals.push("-");
-        running += v;
-      }
+      if(v>=0){ placeholder.push(running); positive.push(v); negative.push("-"); totals.push("-"); running+=v; }
+      else    { placeholder.push(running+v); positive.push("-"); negative.push(-v); totals.push("-"); running+=v; }
     });
 
+    const isMobile = window.matchMedia("(max-width:640px)").matches;
+    let dataZoom;
+    if (isMobile && bars.length > 9){
+      const start = Math.max(0, bars.length - 9);
+      dataZoom = [{ type:"inside", startValue:start, endValue:bars.length-1 },
+                  { type:"slider", height:14, bottom:2, startValue:start, endValue:bars.length-1 }];
+    }
+
     charts.wf.setOption({
-      backgroundColor: "transparent",
-      tooltip: {
-        trigger: "axis",
-        axisPointer: { type: "shadow" },
+      backgroundColor:"transparent",
+      tooltip:{
+        trigger:"axis", axisPointer:{ type:"shadow" },
         formatter(items){
-          const i = items[0].dataIndex;
-          const k = stageOrder[i];
-          const s = stages[k];
-          if (!s || s.value_mn_krw == null) return `<b>${labelsKo[k]||k}</b> · ${labelsEn[k]||""}<br/>data missing`;
-          const sign = s.value_mn_krw >= 0 ? "+" : "−";
-          const abs = Math.abs(s.value_mn_krw).toLocaleString("ko-KR", { maximumFractionDigits: 0 });
-          return `<b>${labelsKo[k]||k}</b> · ${labelsEn[k]||""}<br/>${sign}${abs} 백만원<br/><span style="color:#6c757d">${s.label||""}</span>`;
+          const i=items[0].dataIndex; const bar=bars[i];
+          const head = bar.kind==="comp"
+            ? `${bar.comp.full} · ${bar.period}`
+            : `${bar.kind==="open"?"기초":"기말"} CSM · ${bar.period}`;
+          if(bar.value==null) return `<b>${head}</b><br/>데이터 없음`;
+          const jo=bar.value/10000;
+          if(bar.kind==="comp"){
+            const sign=bar.value>=0?"+":"△";
+            return `<b>${head}</b><br/>${sign}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${sign}${Math.abs(bar.value).toLocaleString("ko-KR")}억)`;
+          }
+          return `<b>${head}</b><br/>${jo.toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${bar.value.toLocaleString("ko-KR")}억)`;
         },
       },
-      grid: { left: 56, right: 20, top: 28, bottom: 72 },
-      xAxis: {
-        type: "category",
-        data: xs,
-        axisLabel: { color: "#495057", fontSize: 10, lineHeight: 13 },
-        axisLine: { lineStyle: { color: "#dee2e6" } },
+      grid: dataZoom ? { left:52, right:18, top:24, bottom:40 } : { left:52, right:18, top:24, bottom:54 },
+      xAxis:{
+        type:"category", data:xs,
+        axisLabel:{ color:"#495057", fontSize:isMobile?8:10, lineHeight:12, interval:0 },
+        axisLine:{ lineStyle:{ color:"#dee2e6" } },
+        axisTick:{ show:false },
       },
-      yAxis: {
-        type: "value",
-        name: "백만원 (mn KRW)",
-        nameTextStyle: { color: "#6c757d", fontSize: 11 },
-        axisLabel: { color: "#6c757d", formatter: v => (v/1000).toLocaleString("ko-KR")+"k" },
-        splitLine: { lineStyle: { color: "#e9ecef" } },
+      yAxis:{
+        type:"value", name:"조원",
+        nameTextStyle:{ color:"#6c757d", fontSize:11 },
+        axisLabel:{ color:"#6c757d", formatter:v=> (v/10000).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
+        splitLine:{ lineStyle:{ color:"#e9ecef" } },
       },
-      series: [
-        { name: "placeholder", type: "bar", stack: "wf", itemStyle: { color: "transparent" }, emphasis: { disabled: true }, data: placeholder },
-        { name: "missing", type: "bar", stack: "wf", itemStyle: { color: "rgba(173,181,189,0.55)" }, data: missing },
-        { name: "+", type: "bar", stack: "wf", itemStyle: { color: "#22c55e" }, data: positive,
-          label: { show: true, position: "top", color: "#212529", fontSize: 10, formatter: p => p.value === "-" ? "" : Math.round(p.value/1000)+"k" } },
-        { name: "−", type: "bar", stack: "wf", itemStyle: { color: "#ef4444" }, data: negative,
-          label: { show: true, position: "top", color: "#212529", fontSize: 10, formatter: p => p.value === "-" ? "" : "−"+Math.round(p.value/1000)+"k" } },
-        { name: "total", type: "bar", stack: "wf", itemStyle: { color: "#0d6efd" }, data: totals,
-          label: { show: true, position: "top", color: "#212529", fontSize: 10, formatter: p => p.value === "-" ? "" : Math.round(p.value/1000).toLocaleString("ko-KR")+"k" } },
+      dataZoom,
+      series:[
+        { name:"placeholder", type:"bar", stack:"wf", itemStyle:{ color:"transparent" }, emphasis:{ disabled:true }, data:placeholder },
+        { name:"missing", type:"bar", stack:"wf", itemStyle:{ color:"rgba(173,181,189,0.55)" }, data:missing },
+        { name:"+", type:"bar", stack:"wf", itemStyle:{ color:"#22c55e" }, data:positive,
+          label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"+"+wfFmtJo(p.value,2) } },
+        { name:"−", type:"bar", stack:"wf", itemStyle:{ color:"#ef4444" }, data:negative,
+          label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"△"+wfFmtJo(p.value,2) } },
+        { name:"total", type:"bar", stack:"wf", itemStyle:{ color:"#0d6efd" }, data:totals,
+          label:{ show:true, position:"top", color:"#212529", fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":wfFmtJo(p.value,1)+"조" } },
       ],
     }, true);
+  }
+
+  // ===== Panel 3: 당기순이익 detailed bridge waterfall (PL_breakdown.json) =====
+  // Source rows: {원수사명, 공시분기, 항목번호, 항목명, 값(YTD), 값_당분기}. 단위 = 백만원.
+  // 손보/생보 공통 상세 분해 — 장기원수는 세부(4·5·6·7), 장기재보험(8)·자동차+일반(13+14)은 묶음:
+  //   4 CSM상각 +5 위험조정 +6 예실차 +7 기타 +8 재보험 +(13+14) +(15−16 기타) = 보험손익(1)
+  //   → 17 투자손익 → 21 영업외 → (−)23 법인세 → 24 당기순이익  (검산 OK 손보+생보)
+  // NOTE: PL company names differ from CSM/dropdown (삼성생명보험 vs 삼성생명) → plResolve() fuzzy-matches.
+  const PL_NUM = {
+    원수CSM상각:4, 원수RA:5, 원수예실차:6, 기타원수:7, 재보험:8,
+    자동차:13, 일반:14, 기타수익:15, 기타비용:16,
+    보험손익:1, 투자손익:17, 영업외:21, 법인세:23, 당기순이익:24,
+  };
+
+  function plQuartersOf(name){
+    const m = ix.plx.get(name);
+    return m ? Array.from(m.keys()).sort(wfCmpDesc) : [];
+  }
+  function plResolve(display){
+    if (ix.plx.has(display)) return display;
+    const norm = s => String(s).replace(/\s/g,"");
+    const d = norm(display);
+    for (const k of ix.plx.keys()){
+      const nk = norm(k);
+      if (nk===d || nk.includes(d) || d.includes(nk)) return k;
+    }
+    return null;
+  }
+  function plVal(name, qtr, num, field){
+    const m=ix.plx.get(name); const qm=m&&m.get(qtr); const rec=qm&&qm.get(String(num));
+    if(!rec) return null;
+    const v=rec[field];
+    return (typeof v==="number" && Number.isFinite(v)) ? v : null;
+  }
+  function plPeriod(name, mode){
+    const qs = plQuartersOf(name); if(!qs.length) return null;
+    if(mode==="quarter") return { q:qs[0], field:"q", label:qs[0]+" 당분기" };
+    const fy = qs.find(x=>/\.4Q$/.test(x));
+    const qsel = fy || qs[0];
+    return { q:qsel, field:"y", label: fy ? ("FY"+wfParseQ(fy)[0]+" (연 누계)") : (qsel+" 누계") };
+  }
+  function plFmtJo(v, dp){ return (v/1e6).toLocaleString("ko-KR",{minimumFractionDigits:dp,maximumFractionDigits:dp}); }
+
+  // Step definitions — each has a getter so chart (1 period) + table (N periods) share one source.
+  // g = (항목번호) => 값 for the period. optional:true rows are dropped when null/0 (e.g. 생보 자동차+일반).
+  const PL_STEP_DEFS = [
+    { ko:"원수 CSM상각", role:"flow", get:g=> g(PL_NUM.원수CSM상각) },
+    { ko:"원수 위험조정", role:"flow", get:g=> g(PL_NUM.원수RA) },
+    { ko:"원수 예실차",  role:"flow", get:g=> g(PL_NUM.원수예실차) },
+    { ko:"기타 원수손익", role:"flow", get:g=> g(PL_NUM.기타원수) },
+    { ko:"장기 재보험",  role:"flow", get:g=> g(PL_NUM.재보험) },
+    { ko:"자동차+일반",  role:"flow", optional:true, get:g=>{ const a=g(PL_NUM.자동차),b=g(PL_NUM.일반); return (a==null&&b==null)?null:(a||0)+(b||0); } },
+    { ko:"기타(사업비용)", role:"flow", optional:true, get:g=>{ const oi=g(PL_NUM.기타수익),oe=g(PL_NUM.기타비용); return (oi==null&&oe==null)?null:(oi||0)-(oe||0); } },
+    { ko:"보험손익", role:"anchor", get:g=> g(PL_NUM.보험손익) },
+    { ko:"투자손익", role:"flow", get:g=> g(PL_NUM.투자손익) },
+    { ko:"영업외손익", role:"flow", get:g=> g(PL_NUM.영업외) },
+    { ko:"법인세", role:"flow", get:g=>{ const t=g(PL_NUM.법인세); return t==null?null:-t; } },
+    { ko:"당기순이익", role:"end", get:g=> g(PL_NUM.당기순이익) },
+  ];
+  function plMakeGetter(name, per){ return num => plVal(name, per.q, num, per.field); }
+
+  // Build ordered waterfall steps for one period (손보/생보 공통). Drops optional rows that are null/0.
+  function plBuildSteps(name, per){
+    const g = plMakeGetter(name, per);
+    const steps = [];
+    for (const d of PL_STEP_DEFS){
+      const v = d.get(g);
+      if (d.optional && (v==null || v===0)) continue;
+      steps.push({ ko:d.ko, role:d.role, value:v });
+    }
+    return steps;
+  }
+
+  // x-axis label wrapping (full name kept in tooltip + table).
+  const PL_WRAP = {
+    "원수 CSM상각":"원수\nCSM상각", "원수 위험조정":"원수\n위험조정", "원수 예실차":"원수\n예실차",
+    "기타 원수손익":"기타\n원수", "장기 재보험":"장기\n재보험", "자동차+일반":"자동차\n+일반",
+    "기타(사업비용)":"기타\n사업비", "보험손익":"보험손익", "투자손익":"투자손익",
+    "영업외손익":"영업외", "법인세":"법인세", "당기순이익":"당기\n순이익",
+  };
+
+  function renderPlWaterfall(host, name, per){
+    const el = q(host, "#chartPl");
+    if (!el || typeof echarts === "undefined") return [];
+    if (charts.pl){ try{ charts.pl.dispose(); }catch(e){} }
+    charts.pl = echarts.init(el, null, { renderer:"canvas" });
+
+    const bars = plBuildSteps(name, per);
+    const xs=[], placeholder=[], positive=[], negative=[], totals=[], missing=[];
+    let running=0;
+    bars.forEach(bar=>{
+      xs.push(PL_WRAP[bar.ko] || bar.ko);
+      if(bar.role==="anchor" || bar.role==="end"){
+        placeholder.push("-"); positive.push("-"); negative.push("-"); missing.push("-");
+        totals.push(bar.value!=null?bar.value:"-");
+        if(bar.value!=null) running=bar.value;
+        return;
+      }
+      const v=bar.value;
+      if(v==null){
+        const hint=Math.max(Math.abs(running)*0.02, 1000);
+        placeholder.push(running); positive.push("-"); negative.push("-"); totals.push("-"); missing.push(hint);
+        return;
+      }
+      missing.push("-");
+      if(v>=0){ placeholder.push(running); positive.push(v); negative.push("-"); totals.push("-"); running+=v; }
+      else    { placeholder.push(running+v); positive.push("-"); negative.push(-v); totals.push("-"); running+=v; }
+    });
+
+    const isMobile = window.matchMedia("(max-width:640px)").matches;
+    const dataZoom = (isMobile && bars.length > 8)
+      ? [{ type:"inside" }, { type:"slider", height:14, bottom:2 }] : undefined;
+
+    charts.pl.setOption({
+      backgroundColor:"transparent",
+      tooltip:{
+        trigger:"axis", axisPointer:{ type:"shadow" },
+        formatter(items){
+          const i=items[0].dataIndex; const bar=bars[i];
+          if(bar.value==null) return `<b>${bar.ko}</b><br/>데이터 없음`;
+          const jo=bar.value/1e6, eok=bar.value/100;
+          const sign = (bar.role==="flow" && bar.value<0) ? "△" : (bar.role==="flow" ? "+" : "");
+          return `<b>${bar.ko}</b><br/>${sign}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${sign}${Math.abs(eok).toLocaleString("ko-KR",{maximumFractionDigits:0})}억)`;
+        },
+      },
+      grid:{ left:56, right:18, top:24, bottom: dataZoom?38:46 },
+      xAxis:{
+        type:"category", data:xs,
+        axisLabel:{ color:"#495057", fontSize:isMobile?8:10, lineHeight:12, interval:0 },
+        axisLine:{ lineStyle:{ color:"#dee2e6" } },
+        axisTick:{ show:false },
+      },
+      yAxis:{
+        type:"value", name:"조원",
+        nameTextStyle:{ color:"#6c757d", fontSize:11 },
+        axisLabel:{ color:"#6c757d", formatter:v=> (v/1e6).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
+        splitLine:{ lineStyle:{ color:"#e9ecef" } },
+      },
+      dataZoom,
+      series:[
+        { name:"placeholder", type:"bar", stack:"pl", itemStyle:{ color:"transparent" }, emphasis:{ disabled:true }, data:placeholder },
+        { name:"missing", type:"bar", stack:"pl", itemStyle:{ color:"rgba(173,181,189,0.55)" }, data:missing },
+        { name:"+", type:"bar", stack:"pl", itemStyle:{ color:"#22c55e" }, data:positive,
+          label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"+"+plFmtJo(p.value,2) } },
+        { name:"−", type:"bar", stack:"pl", itemStyle:{ color:"#ef4444" }, data:negative,
+          label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"△"+plFmtJo(p.value,2) } },
+        { name:"total", type:"bar", stack:"pl", itemStyle:{ color:"#0d6efd" }, data:totals,
+          label:{ show:true, position:"top", color:"#212529", fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":plFmtJo(p.value,2)+"조" } },
+      ],
+    }, true);
+    return bars;
+  }
+
+  // ---- shared table builder (matches Panel 5 style) ----
+  function buildMiniTable(headers, rows){
+    const tbl=document.createElement("table");
+    const thead=document.createElement("thead"); const htr=document.createElement("tr");
+    headers.forEach((h,i)=>{ const th=document.createElement("th"); th.textContent=h; if(i>0) th.className="num"; htr.appendChild(th); });
+    thead.appendChild(htr); tbl.appendChild(thead);
+    const tbody=document.createElement("tbody");
+    for(const r of rows){
+      const tr=document.createElement("tr");
+      if(r.cls) tr.className=r.cls;
+      if(r.hide) tr.style.display="none";
+      r.cells.forEach((c,i)=>{
+        const td=document.createElement("td");
+        if(c instanceof Node) td.appendChild(c); else td.textContent=c;
+        if(i>0) td.className="num";
+        if(r.bold) td.style.fontWeight="700";
+        if(r.muted) td.style.color="#6c757d";
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    }
+    tbl.appendChild(tbody);
+    return tbl;
+  }
+  // 한국 회계 표기: 정수 반올림 + 천단위 콤마 + 음수는 △(세모).
+  function samo(n){
+    if(n==null || !Number.isFinite(n)) return "—";
+    const r = Math.round(n);
+    return r<0 ? "△"+Math.abs(r).toLocaleString("ko-KR") : r.toLocaleString("ko-KR");
+  }
+  function fmtEok(vMn){ return vMn==null ? "—" : samo(vMn/100); }
+
+  // Trailing periods for the PL table: year → latest 3 FY(4Q); quarter → latest 4 quarters (chrono asc).
+  function plTablePeriods(name, mode){
+    const qs = plQuartersOf(name); // desc
+    if(!qs.length) return [];
+    if(mode==="quarter"){
+      return qs.slice(0,4).reverse().map(qq=>({ q:qq, field:"q", label:qq }));
+    }
+    const fys = qs.filter(x=>/\.4Q$/.test(x)).slice(0,3);
+    const sel = (fys.length ? fys : qs.slice(0,3)).slice().reverse();
+    return sel.map(qq=>({ q:qq, field: /\.4Q$/.test(qq)?"y":"q", label: /\.4Q$/.test(qq) ? ("FY"+wfParseQ(qq)[0]) : qq }));
+  }
+
+  // 장기 재보험(8) 세부 = 9 CSM상각 +10 위험조정 +11 예실차 +12 기타 (합 = 8).
+  const PL_RE_SUB = [
+    { ko:"재보험 CSM상각", num:9 }, { ko:"재보험 위험조정", num:10 },
+    { ko:"재보험 예실차", num:11 }, { ko:"기타 재보험손익", num:12 },
+  ];
+
+  function renderPlTable(host, name, mode){
+    const box=q(host,"#plTable"); if(!box) return; box.innerHTML="";
+    const periods = plTablePeriods(name, mode);
+    if(!periods.length) return;
+    const getters = periods.map(p=> plMakeGetter(name,p));
+    const latest = periods[periods.length-1];
+    const present = new Set(plBuildSteps(name, latest).map(s=>s.ko));
+    const defs = PL_STEP_DEFS.filter(d=> present.has(d.ko));
+    const gLast = getters[getters.length-1];
+    const reHasSub = PL_RE_SUB.some(s=> gLast(s.num)!=null);
+
+    const headers = ["항목", ...periods.map(p=>p.label)];
+    const rows = [];
+    let togNode = null;
+    for(const d of defs){
+      if(d.ko==="장기 재보험" && reHasSub){
+        const lab=document.createElement("span");
+        const tog=document.createElement("span");
+        tog.textContent="＋"; tog.title="재보험 세부 펼치기";
+        tog.style.cssText="cursor:pointer;color:#0d6efd;font-weight:700;margin-right:6px;user-select:none";
+        lab.appendChild(tog); lab.appendChild(document.createTextNode("장기 재보험"));
+        rows.push({ cells:[ lab, ...getters.map(g=> fmtEok(d.get(g))) ] });
+        togNode = tog;
+        for(const s of PL_RE_SUB){
+          rows.push({ cls:"pl-resub", hide:true, muted:true, cells:[ "　└ "+s.ko, ...getters.map(g=> fmtEok(g(s.num))) ] });
+        }
+      } else {
+        rows.push({ cells:[ d.ko, ...getters.map(g=> fmtEok(d.get(g))) ], bold:(d.role==="anchor"||d.role==="end") });
+      }
+    }
+    const tbl = buildMiniTable(headers, rows);
+    box.appendChild(tbl);
+    if(togNode){
+      const subTrs = Array.from(tbl.querySelectorAll("tr.pl-resub"));
+      togNode.addEventListener("click", ()=>{
+        const showing = subTrs.length && subTrs[0].style.display!=="none";
+        subTrs.forEach(tr=> tr.style.display = showing ? "none" : "");
+        togNode.textContent = showing ? "＋" : "－";
+        togNode.title = showing ? "재보험 세부 펼치기" : "재보험 세부 접기";
+      });
+    }
+    const note=document.createElement("div"); note.className="small-muted"; note.style.marginTop="6px";
+    note.textContent = "단위 억원(소수 반올림) · " + (mode==="quarter" ? "직전 4분기(당분기)" : "직전 3개년(연 누계)") + " · 음수 △ · 장기 재보험 ＋ 클릭 시 세부";
+    box.appendChild(note);
+  }
+
+  function renderWfTable(host, company, buckets){
+    const box=q(host,"#wfTable"); if(!box) return; box.innerHTML="";
+    if(!buckets || !buckets.length) return;
+    const stageRows = [[1,"기초 CSM"],[2,"신계약"],[3,"이자 부리"],[4,"가정·경험"],[5,"상각"],[6,"기말 CSM"]];
+    const headers = ["구분", ...buckets.map(b=>b.label)];
+    const rows = stageRows.map(([num,ko])=>({
+      cells:[ ko, ...buckets.map(b=> samo(wfVal(company,b.q,num))) ],
+      bold:(num===1||num===6),
+    }));
+    box.appendChild(buildMiniTable(headers, rows));
+    const note=document.createElement("div"); note.className="small-muted"; note.style.marginTop="6px";
+    note.textContent = "단위 억원 · 연(YTD) 기준 · 기초+신계약+이자+가정·경험+상각 = 기말";
+    box.appendChild(note);
   }
 
   function heatCss(v, absMax){
@@ -400,28 +760,30 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     if (show && msg!=null) el.textContent = msg;
   }
 
-  function renderCompany(company){
+  function renderCompany(company){   // company = 회사코드(KR0001…)
+    const coName = codeToName[company] || company;  // 표시용 이름
     destroyCharts();
     const host=mountDash();
 
-    const wfPay=payload.wf;
-    const wfRow= wfPay ? firstRow(ix.wf, company): null;
-
-    const stageCount = wfRow && wfRow.stages ? Object.keys(wfRow.stages).length : 0;
-    const hasWfStages = stageCount > 0;
-    const isNoCsm = !!(wfRow && (wfRow.status === "no_csm_columns" || (!hasWfStages && wfRow.status !== "partial" && wfRow.status !== "ok")));
+    const wfName = ix.wfx.has(company) ? company : null;
+    const wfHas = !!wfName;
+    const wfMode = (document.getElementById("wfPeriod")||{}).value || "year";
     let wfStubMsg = null;
-    if (!wfRow) wfStubMsg = "워터폴 데이터 없음";
-    else if (isNoCsm) wfStubMsg = "§14(4) CSM 측정요소 표 없음 — 보험계약마진 열이 추출되지 않았습니다.";
-    else if (wfRow.status === "partial") wfStubMsg = "부분 데이터 ("+Math.round((wfRow.completeness||0)*6)+"/6 stages) — 누락 단계는 회색";
+    if (!wfHas) wfStubMsg = "신규 CSM waterfall 데이터 미수록 보험사입니다.";
+    else if (wfMode === "quarter" && !WF_QUARTER_READY) wfStubMsg = "분기(당분기) 기준 데이터 준비 중 — 현재 파일은 YTD(연 누계)라 분기별 정확 분해가 불가합니다. 당분기 테이블 반영 시 자동 활성화됩니다.";
     stub(q(host,"#wfStub"), !!wfStubMsg, wfStubMsg);
-    q(host,"#wfMeta").textContent = wfRow? ("공시번호 "+String(wfRow.rcept_no||"-")+", 완결도 "+((wfRow.completeness==null)?"-":String(wfRow.completeness))+", 상태 "+String(wfRow.status)) : "";
 
-    if (wfPay && wfRow && hasWfStages){
-      renderWfEcharts(host, wfPay, wfRow);
-    }else{
-      const box = q(host,"#chartWf");
-      if (box) box.innerHTML = hasWfStages ? "" : '<div class="placeholder-empty" style="padding:80px 16px">표시할 CSM waterfall 데이터가 없습니다</div>';
+    if (wfHas && !(wfMode === "quarter" && !WF_QUARTER_READY)){
+      renderWfWaterfall(host, wfName);
+      const bk = wfYearBuckets(wfName);
+      const range = bk.length ? (bk[0].label + " ~ " + bk[bk.length-1].q) : "";
+      q(host,"#wfMeta").textContent = "연(YTD) 기준 · " + range + " · 단위 억원(축은 조원) · 기초 CSM → 연도별 변동(신계약·이자·가정/경험·상각) → 기말 CSM";
+      renderWfTable(host, wfName, bk);
+    } else {
+      if (charts.wf){ try{ charts.wf.dispose(); }catch(e){} charts.wf=null; }
+      const box = q(host,"#chartWf"); if (box) box.innerHTML="";
+      q(host,"#wfMeta").textContent = "";
+      const wt=q(host,"#wfTable"); if(wt) wt.innerHTML="";
     }
 
     const amortPay=payload.amort;
@@ -459,29 +821,28 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       })
     }
 
-    const plPay=payload.pl;
-    const plRow= plPay? firstRow(ix.pl,company):null;
-    const plOk = !!(plRow && plRow.status==="ok" && Array.isArray(plRow.table))
-    stub(q(host,"#plStub"), !plOk, plRow?("status="+String(plRow.status)):"PL 분해 테이블 없음")
-    q(host,"#plCap").textContent = plOk && plRow.caption ? String(plRow.caption):""
+    // Panel 3 — 당기순이익 bridge waterfall (PL_breakdown.json), 생보+손보.
+    const plName = ix.plx.has(company) ? company : null;
+    const plMode = (document.getElementById("wfPeriod")||{}).value || "year";
+    const plPer = plName ? plPeriod(plName, plMode) : null;
+    let plStubMsg = null;
+    if (!plName) plStubMsg = "PL 분해 데이터 미수록 보험사입니다.";
+    else if (!plPer) plStubMsg = "표시할 기간이 없습니다.";
+    else if (plVal(plName, plPer.q, 24, plPer.field) == null) plStubMsg = "해당 기간 당기순이익 데이터가 없습니다.";
+    stub(q(host,"#plStub"), !!plStubMsg, plStubMsg);
 
-    if (plOk){
-      const lbls=[]; const vals=[];
-      for (const rr of plRow.table||[]){
-        if(!Array.isArray(rr) || rr.length<2) continue;
-        lbls.push(String(rr[0]||"").trim()||"(기타)")
-        const lastCell = rr[rr.length-1];
-        const lastV = parseKoNum(lastCell);
-        vals.push(lastV == null ? 0 : lastV);
-      }
-      charts.pl=new Chart(canvasCtx(host,"#canvasPl"),{
-        type:"bar",
-        data:{ labels: lbls, datasets:[{label:"합계열(표의 마지막 열)", data: vals, backgroundColor:"rgba(14,165,233,0.65)"}] },
-        options:{ indexAxis:"y", responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, title:{display:true, text:"PL 항목(현재표 합계열)" }}, scales:{x:{ticks:{ callback:(vv)=> vv.toLocaleString("ko-KR") }}}}
-      })
+    if (!plStubMsg){
+      renderPlWaterfall(host, plName, plPer);
+      renderPlTable(host, plName, plMode);
+      q(host,"#plCap").textContent = "당기순이익 워터폴 · " + plPer.label + " · 단위 백만원(축은 조원) · 장기원수[CSM상각·위험조정·예실차·기타] → 장기재보험 → 자동차+일반 → 기타 → 보험손익 → 투자손익 → 영업외 → (−)법인세 → 당기순이익";
+    } else {
+      if (charts.pl){ try{ charts.pl.dispose(); }catch(e){} charts.pl=null; }
+      const box=q(host,"#chartPl"); if(box) box.innerHTML="";
+      q(host,"#plCap").textContent = "";
+      const pt=q(host,"#plTable"); if(pt) pt.innerHTML="";
     }
 
-    const nbSpec = NB_LOOKUP[company] || null;
+    const nbSpec = nbByCode[company] || null;
     const nbJs = payload.nb;
     q(host,"#nbStub").style.display="none"; q(host,"#nbWrap").style.display="none"; q(host,"#nbStub").textContent="";
 
@@ -542,61 +903,33 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       tbl.appendChild(tbody); q(host,"#senTable").appendChild(tbl)
     }
 
-    // ===== Panel 6: CSM 시계열 (13Q) =====
-    const histPay = payload.hist;
-    const histRow = histPay ? ix.hist.get(company) : null;
-    const histStubMsg = (() => {
-      if (!histPay) return "csm_waterfall_history.json 을 불러오지 못했습니다.";
-      if (!histRow) return "선택사의 historical 데이터 없음 (23사 cohort 외).";
-      return null;
-    })();
-    stub(q(host,"#histStub"), !!histStubMsg, histStubMsg);
-    if (histPay && histRow && histRow.periods){
-      const periods = histPay.periods || [];
-      const closingValues = periods.map(p => {
-        const snap = histRow.periods[p];
-        if (!snap || (snap.status !== "ok" && snap.status !== "partial")) return null;
-        const v = snap.stages && snap.stages.closing && snap.stages.closing.value_mn_krw;
-        return (typeof v === "number" && Number.isFinite(v)) ? v / 1e6 : null;  // mn → 조원
-      });
-      const nbValues = periods.map(p => {
-        const snap = histRow.periods[p];
-        if (!snap || (snap.status !== "ok" && snap.status !== "partial")) return null;
-        const v = snap.stages && snap.stages.new_business && snap.stages.new_business.value_mn_krw;
-        return (typeof v === "number" && Number.isFinite(v)) ? v / 1e6 : null;  // mn → 조원
-      });
-      // Background lines: all OTHER 23사 closing CSM (faded)
-      const bgDatasets = [];
-      for (const c of (histPay.companies || [])){
-        if (!c || !c.company || c.company === company) continue;
-        const closing = periods.map(p => {
-          const snap = c.periods && c.periods[p];
-          if (!snap || snap.status !== "ok") return null;
-          const v = snap.stages && snap.stages.closing && snap.stages.closing.value_mn_krw;
-          return (typeof v === "number" && Number.isFinite(v)) ? v / 1e6 : null;
-        });
-        bgDatasets.push({
-          label: c.company,
-          data: closing,
-          borderColor: "rgba(180,180,180,0.35)",
-          borderWidth: 1,
-          backgroundColor: "transparent",
-          pointRadius: 0,
-          tension: 0.1,
-          spanGaps: false,
-          order: 10,
-          hidden: false,
-          _bg: true,
-        });
+    // ===== Panel 6: CSM 시계열 — Panel 1과 동일 소스(CSM_waterfall.json / ix.wfx) =====
+    // 기존 csm_waterfall_history.json은 stale(2025.3Q·2026.1Q 결측, 초기 2023 미교정)이라 폐기.
+    const wfHistName = ix.wfx.has(company) ? company : null;
+    stub(q(host,"#histStub"), !wfHistName, "신규 CSM waterfall 데이터 미수록 보험사입니다.");
+    if (wfHistName){
+      const periods = wfAllPeriodsAsc();
+      const closingValues = periods.map(p => { const v = wfVal(wfHistName, p, 6); return v==null ? null : v/10000; }); // 억 → 조
+      // 신계약 CSM(2)은 YTD(연누계) → 같은 FY 직전 분기 차감해 당기 증분(중간 결측은 span 합산).
+      const nbInc = periods.map(p => wfNbIncrement(wfHistName, p));
+      const nbValues = nbInc.map(o => o.value==null ? null : o.value/10000); // 억 → 조
+      const nbSpans  = nbInc.map(o => o.span);
+      // 전체회사 비교 불필요 — 배경선 제거. y축은 조회 회사 기말 CSM 범위에만 동적 스케일.
+      const _selVals = closingValues.filter(v => typeof v === "number" && Number.isFinite(v));
+      let histYMin, histYMax;
+      if (_selVals.length){
+        const lo = Math.min(..._selVals), hi = Math.max(..._selVals);
+        const pad = Math.max((hi - lo) * 0.20, hi * 0.06, 0.2);
+        histYMin = Math.max(0, lo - pad);
+        histYMax = hi + pad;
       }
       charts.hist = new Chart(canvasCtx(host, "#canvasHist"), {
         type: "line",
         data: {
           labels: periods,
           datasets: [
-            ...bgDatasets,
             {
-              label: company + " · 기말 CSM (조원)",
+              label: coName + " · 기말 CSM (조원)",
               data: closingValues,
               borderColor: "rgb(13, 110, 253)",
               backgroundColor: "rgba(13, 110, 253, 0.08)",
@@ -610,8 +943,9 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
               yAxisID: "y",
             },
             {
-              label: company + " · 신계약 CSM (조원)",
+              label: coName + " · 신계약 CSM (당기 증분, 조원)",
               data: nbValues,
+              _spans: nbSpans,
               borderColor: "rgb(255, 99, 132)",
               backgroundColor: "transparent",
               borderWidth: 2,
@@ -630,7 +964,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            title: { display: true, text: "CSM 시계열 (배경 회색선 = 23사, 강조 = " + company + ")" },
+            title: { display: true, text: "CSM 시계열 · " + coName },
             legend: {
               display: true,
               position: "top",
@@ -653,6 +987,10 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
               },
               callbacks: {
                 label: (ctx) => `${ctx.dataset.label}: ${fmtNum(ctx.parsed.y, 2)}조`,
+                afterLabel: (ctx) => {
+                  const sp = ctx.dataset._spans && ctx.dataset._spans[ctx.dataIndex];
+                  return (sp && sp > 1) ? `  (${sp}개 분기 합산 — 중간 분기 미공시)` : undefined;
+                },
               },
             },
           },
@@ -660,13 +998,14 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
           scales: {
             y: {
               type: "linear", position: "left", beginAtZero: false,
+              min: histYMin, max: histYMax,
               title: { display: true, text: "기말 CSM (조원)", color: "rgb(13, 110, 253)" },
               ticks: { callback: (v) => fmtNum(v, 1) + "조", color: "rgb(13, 110, 253)" },
               grid: { color: "rgba(13, 110, 253, 0.08)" },
             },
             y1: {
               type: "linear", position: "right", beginAtZero: true,
-              title: { display: true, text: "신계약 CSM (조원)", color: "rgb(255, 99, 132)" },
+              title: { display: true, text: "신계약 CSM (당기 증분, 조원)", color: "rgb(255, 99, 132)" },
               ticks: { callback: (v) => fmtNum(v, 2) + "조", color: "rgb(255, 99, 132)" },
               grid: { drawOnChartArea: false },
             },
@@ -697,35 +1036,61 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const senx=await fetchJsonSafe(PATHS.sen);
     const nbx=await fetchJsonSafe(PATHS.nb);
     const histx=await fetchJsonSafe(PATHS.hist);
+    const wfxRaw=await fetchJsonSafe(PATHS.wfx);
+    const plxRaw=await fetchJsonSafe(PATHS.plx);
 
     payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.sen=senx; payload.nb=nbx; payload.hist=histx;
 
-    ix.wf = indexRows(wf && wf.companies);
-    ix.amort = indexRows(amort && amort.companies);
-    ix.pl = indexRows(plx && plx.companies);
-    ix.sen = indexRows(senx && senx.companies);
-    // hist has a different shape: companies[].periods{period→snap}; index by name
-    if (histx && Array.isArray(histx.companies)){
-      for (const c of histx.companies){
-        if (c && c.company) ix.hist.set(c.company, c);
+    // Panel 1/2 long-format index: CODE -> quarter -> 항목번호 -> 값  (+ 코드↔이름 등록부)
+    if (Array.isArray(wfxRaw)){
+      for (const r of wfxRaw){
+        const code=r&&r["원보험사코드"], qq=r&&r["공시분기"], num=r&&r["항목번호"];
+        if(!code||!qq||num==null) continue;
+        if(r["원수사명"]) codeToName[code]=r["원수사명"];
+        let byQ=ix.wfx.get(code); if(!byQ){ byQ=new Map(); ix.wfx.set(code,byQ); }
+        let byN=byQ.get(qq); if(!byN){ byN=new Map(); byQ.set(qq,byN); }
+        const v=Number(r["값"]); byN.set(num, Number.isFinite(v)?v:null);
       }
     }
 
-    const per = wf && (wf.period || wf.unit || wf.source) ? String(wf.period || wf.source || ""):"";
+    // Panel 3 long-format index: CODE -> quarter -> 항목번호(string) -> {y:값, q:값_당분기}
+    if (Array.isArray(plxRaw)){
+      for (const r of plxRaw){
+        const code=r&&r["원보험사코드"], qq=r&&r["공시분기"], num=r&&r["항목번호"];
+        if(!code||!qq||num==null) continue;
+        if(!codeToName[code] && r["원수사명"]) codeToName[code]=r["원수사명"];
+        let byQ=ix.plx.get(code); if(!byQ){ byQ=new Map(); ix.plx.set(code,byQ); }
+        const y=Number(r["값"]); const dq=Number(r["값_당분기"]);
+        byQ.get(qq) || byQ.set(qq, new Map());
+        byQ.get(qq).set(String(num), { y: Number.isFinite(y)?y:null, q: Number.isFinite(dq)?dq:null });
+      }
+    }
+
+    // 코드 없는 옛 viz(amort/sen)·NB는 boot에서 code로 재키잉(이름 정규화 1회 → 이후 전부 코드).
+    const reindexByCode = (companies) => {
+      const m = new Map();
+      for (const c of (companies||[])){ if(!c||!c.company) continue; const code=codeForName(c.company); if(code && !m.has(code)) m.set(code, [c]); }
+      return m;
+    };
+    ix.amort = reindexByCode(amort && amort.companies);
+    ix.sen   = reindexByCode(senx && senx.companies);
+    ix.pl    = indexRows(plx && plx.companies); // legacy(미사용)
+    for (const nm in NB_LOOKUP){ const code=codeForName(nm); if(code) nbByCode[code]=NB_LOOKUP[nm]; }
+
     const line = document.getElementById("wfPeriodLine");
-    if (line) line.textContent = per ? ("워터폴 패킷 컨텍스트: "+per) : ""
+    if (line) line.textContent = ix.wfx.size ? ("CSM 워터폴 커버리지: "+ix.wfx.size+"개사 · 2023.1Q~2026.1Q · 연 누계(YTD) 기준") : "";
 
-    const names = wf && Array.isArray(wf.companies)
-      ? Array.from(new Set(wf.companies.map(c=>c.company).filter(Boolean))).sort((a,b)=>a.localeCompare(b,"ko"))
-      : [];
-
+    // 드롭다운: 회사코드(KR0001…) 순 정렬, value=코드, 표시=이름
+    const codes = Object.keys(codeToName).sort();
     const sel=document.getElementById("company");
     for (let i=sel.options.length-1;i>=1;i--) sel.remove(i);
-    for (const nm of names){
-      const opt=document.createElement("option"); opt.value=nm; opt.textContent=nm; sel.appendChild(opt)
+    for (const code of codes){
+      const opt=document.createElement("option"); opt.value=code; opt.textContent=codeToName[code]; sel.appendChild(opt)
     }
     sel.addEventListener("change", onSelect);
-    window.addEventListener("resize", ()=>{ if (charts.wf) charts.wf.resize(); });
+    const perSel=document.getElementById("wfPeriod");
+    if (perSel) perSel.addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
+    window.addEventListener("resize", ()=>{ if (charts.wf) charts.wf.resize(); if (charts.pl) charts.pl.resize(); });
     // Re-render on mobile/desktop breakpoint cross so the amort chart switches 5y <-> 10y.
     window.matchMedia("(max-width:640px)").addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
 
@@ -734,19 +1099,15 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     try {
       const params = new URLSearchParams(window.location.search);
       const wantedRaw = params.get("company");
-      if (wantedRaw && names.length){
+      if (wantedRaw){
         const wanted = decodeURIComponent(wantedRaw);
-        let pick = names.find(n => n === wanted);
-        if (!pick){
-          // partial / contains fallback (e.g. "삼성생명보험" ↔ "삼성생명")
-          pick = names.find(n => n.includes(wanted) || wanted.includes(n));
-        }
-        if (pick){
-          sel.value = pick;
+        const pickCode = codeToName[wanted] ? wanted : codeForName(wanted); // 코드 또는 이름 허용
+        if (pickCode){
+          sel.value = pickCode;
           onSelect();
         } else {
           const hint=document.getElementById("emptyHint");
-          if (hint) hint.textContent = "URL의 회사 '"+wanted+"'를 IFRS17 23-co 코호트에서 찾지 못했어. 위 드롭다운에서 직접 선택해줘.";
+          if (hint) hint.textContent = "URL의 회사 '"+wanted+"'를 코호트에서 찾지 못했어. 위 드롭다운에서 직접 선택해줘.";
         }
       }
     } catch (e) { /* URL parse safe-guard */ }
