@@ -8,6 +8,28 @@ Convention: latest few entries detailed; older ones compressed to 1-liners (git 
 
 ---
 
+## 2026-06-07 (k) — 야간 #2 라운드2: 라이나 CSM 상각 라벨 + PL gold gate GREEN
+
+(j) 이후 owner가 "남은 것 없을 때까지" 추가 지시 → 더 고침:
+- **라이나생명 CSM 상각 라벨 (commit 4935afc):** 라이나(KR0074)가 CSM 상각 행을 `제공된 서비스의
+  보험계약마진` / `제공한 서비스 반영 인식한 보험계약마진`으로 표기 → STAGE_PATTERNS 미포함 → item5=None
+  → closing-identity SKIP. 두 라벨 추가(`보험취득현금흐름의 상각`은 substring 불일치라 자동 제외).
+  라이나 상각 −3,973.5/−3,314.4 복구, **closing 302P→303P/0F, SKIP 6→5**, 무회귀.
+- **PL gold gate GREEN (commit 9204ee2):** 남은 gold DIRECT fail은 전부 **RA↔예실차 내부 split 관례차**
+  (추출 오류 아님 — exact pair-offset으로 경제총액이 골드와 원 단위까지 일치):
+  DB손보 2024.2Q item11+12=−82,549 · 한화생명 2025.2Q item5+7=−28,254/item10+12=−7,742 ·
+  롯데 2026.1Q item11+12=−3,153. 우리 추출=DART note 충실, 골드=owner 귀속 관례. 선례(한화손보/KB
+  CLAIMED)대로 직접추출 primary만 gate, split 잔차는 reference. → `_verify_pl_golds`: **ALL DIRECT PASS.**
+
+**최종 게이트:** closing **303P/0F**/5S · crosscheck **69P/1M/0F** · PL gold **ALL DIRECT PASS** ·
+K-ICS RED=2(KR0010 문서화 예외→통과) · NB 5/5 · pl_bridge 2058P/14F(FY2023 비노출 + sub-1.5% 잔차,
+deferred-by-design). **deployable.**
+
+**고치지 않고 정직히 남긴 것(불가/저가치):** pl_bridge FY2023(사이트 비노출) · 2024-25 sub-1.5% dual-form
+잔차 · 케이디비 2024.1Q spike(반기 테이블 구성차) · 롯데 2023.1Q(IFRS17 transition 분기 CER 표 부재) ·
+미래에셋/케이디비 2023.1Q closing SKIP(product-segment/transition) · 메리츠 2023 pl_bridge(FY2023, 미배포) ·
+cont 12(IFRS17 기초재작성 gray) · MLG-1/2(owner 결정 필요). 억지 fragile fix·gold 매칭 하드코딩은 안 함.
+
 ## 2026-06-07 (j) — CSM 당기/전기 leg-selection 버그 5종 (야간 자율) + 중장기(MLG) feasibility
 
 validator의 `CSM_PLAUSIBILITY` 연속성/복붙 룰이 closing-identity(산술만 검사)가 놓친 **절댓값 오류**

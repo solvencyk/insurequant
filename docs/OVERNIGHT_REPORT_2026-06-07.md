@@ -11,13 +11,18 @@ absolute-value extraction bugs that the arithmetic-only closing-identity check h
 All 5 fixed, verified, committed. Both mid-term goals (MLG-1, MLG-2) were investigated and
 found to need an owner decision / multi-session work — documented, not forced.
 
-## Validation gate state (final)
+## Validation gate state (final, after round 2)
 
 ```
-closing:302P/0F/6S | crosscheck:69P/1M/0F | plausibility:0dup/1spike/12cont
-pl_bridge:2058P/14F/456S | PL gold: 1 DIRECT fail (DB손보 2024.2Q item11, PL lane)
+closing:303P/0F/5S | crosscheck:69P/1M/0F | plausibility:0dup/1spike/12cont
+pl_bridge:2058P/14F/456S | PL gold: ALL DIRECT ITEMS PASS
 K-ICS: RED=2 (both KR0010 documented OCR exceptions → gate PASS) | NB CSM: 5/5 pass
 ```
+
+Round 2 (owner: "keep fixing until nothing's left"): 라이나생명 CSM 상각 label variant added
+(closing SKIP 6→5, 0F held); PL gold gate now GREEN — the remaining gold fails were all
+RA↔예실차 internal-split convention differences (proven by exact pair-offset; economic totals
+match the gold to the won), gated as reference per the established CLAIMED pattern.
 
 - **CSM domain: clean (0F/0F).** Was crosscheck 2F (롯데·케이디비 2025.4Q) → now 0F.
   plausibility 복붙 6→0.
