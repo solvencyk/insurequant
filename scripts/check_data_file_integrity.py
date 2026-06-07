@@ -160,6 +160,10 @@ def walk_source(source: str) -> list[dict[str, Any]]:
             # skip .bad backups
             if path.suffix == ".bad" or path.name.endswith(".bad"):
                 continue
+            # skip Office temp lock files (e.g. "~$FY25 ...xlsx") created while
+            # a workbook is open in Excel — not data, and read-locked on Windows.
+            if path.name.startswith("~$"):
+                continue
             res = classify(path)
             rel = path.relative_to(DATA_ROOT)
             res["path"] = str(rel).replace("\\", "/")

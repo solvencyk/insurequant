@@ -30,7 +30,6 @@ from assoc.nb_premium_common import load_alias_map, resolve_company, sibeok_mont
 OUT_PATH = ROOT / "data" / "_derived" / "nb_premium_wolnap.json"
 IR_BENCH_PATH = ROOT / "data" / "_derived" / "ir_wolnap_benchmarks.json"
 OVERRIDES_PATH = ROOT / "data" / "_derived" / "nb_premium_overrides.yaml"
-TEMPLATES_OUT = ROOT / "templates" / "data" / "_derived" / "nb_premium_wolnap.json"
 KIDI_SUMMARY_PATH = ROOT / "data" / "kidi" / "premium_summary.json"
 
 # KR (kics) code -> waterfall company name. Auditable hardcode -- waterfall names
@@ -350,8 +349,6 @@ def main() -> int:
     payload = build_payload()
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    TEMPLATES_OUT.parent.mkdir(parents=True, exist_ok=True)
-    TEMPLATES_OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
     meta = payload["_meta"]
     print(f"Wrote {OUT_PATH}")

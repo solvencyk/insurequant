@@ -1,0 +1,368 @@
+{
+  "_meta": {
+    "checked": 7,
+    "ok": 7,
+    "minor_off": 0,
+    "over_inflated": 0,
+    "under_deflated": 0,
+    "no_ir_series": 16,
+    "no_parser_data": 0,
+    "tolerance": {
+      "ok_pct": 5,
+      "minor_pct": 10
+    }
+  },
+  "rows": [
+    {
+      "company": "DB생명보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 4441.89,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260327000191",
+      "ir_quarters": 0
+    },
+    {
+      "company": "DB손해보험",
+      "ir_kr": "KR0011",
+      "ir_sector": "Non-Life",
+      "parser_fy24_eok": 30771.8,
+      "ir_fy24_eok": 29326.9,
+      "ir_convention": "ytd_q4",
+      "diff_eok": 1444.9,
+      "ratio": 1.0493,
+      "flag": "OK",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260312001222",
+      "ir_quarters": 1
+    },
+    {
+      "company": "KB손해보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 17418.56,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2
+      ],
+      "rcept_no": "20260313001064",
+      "ir_quarters": 0
+    },
+    {
+      "company": "NH농협손해보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 2713.6,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260331004099",
+      "ir_quarters": 0
+    },
+    {
+      "company": "교보생명보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 12781.34,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260331004015",
+      "ir_quarters": 0
+    },
+    {
+      "company": "농협생명보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 0.0,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260331002277",
+      "ir_quarters": 0
+    },
+    {
+      "company": "동양생명",
+      "ir_kr": null,
+      "parser_fy24_eok": 7319.36,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260313001227",
+      "ir_quarters": 0
+    },
+    {
+      "company": "롯데손해보험",
+      "ir_kr": null,
+      "ir_sector": "Non-life",
+      "parser_fy24_eok": 4121.68,
+      "ir_fy24_eok": 4121.7,
+      "ir_convention": "sum_quarters",
+      "diff_eok": -0.02,
+      "ratio": 1.0,
+      "flag": "OK",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260319001293",
+      "ir_quarters": 4
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "ir_kr": null,
+      "ir_sector": "Non-life",
+      "parser_fy24_eok": 16006.48,
+      "ir_fy24_eok": 15881.72,
+      "ir_convention": "sum_quarters",
+      "diff_eok": 124.76,
+      "ratio": 1.0079,
+      "flag": "OK",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260331003916",
+      "ir_quarters": 4
+    },
+    {
+      "company": "미래에셋생명",
+      "ir_kr": null,
+      "ir_sector": "Life",
+      "parser_fy24_eok": 5398.78,
+      "ir_fy24_eok": 5398.8,
+      "ir_convention": "sum_quarters",
+      "diff_eok": -0.02,
+      "ratio": 1.0,
+      "flag": "OK",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260318001664",
+      "ir_quarters": 4
+    },
+    {
+      "company": "삼성생명",
+      "ir_kr": null,
+      "ir_sector": "Life",
+      "parser_fy24_eok": 30594.72,
+      "ir_fy24_eok": 30594.6,
+      "ir_convention": "sum_quarters",
+      "diff_eok": 0.12,
+      "ratio": 1.0,
+      "flag": "OK",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260311004614",
+      "ir_quarters": 4
+    },
+    {
+      "company": "삼성화재해상보험",
+      "ir_kr": "KR0008",
+      "ir_sector": "Non-Life",
+      "parser_fy24_eok": 28983.67,
+      "ir_fy24_eok": 28983.7,
+      "ir_convention": "sum_singleQ",
+      "diff_eok": -0.03,
+      "ratio": 1.0,
+      "flag": "OK",
+      "csm_leaf_cols": [
+        2
+      ],
+      "rcept_no": "20260312001399",
+      "ir_quarters": 4
+    },
+    {
+      "company": "신한라이프생명보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 16417.86,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260318001034",
+      "ir_quarters": 0
+    },
+    {
+      "company": "케이디비생명보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 2337.93,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2
+      ],
+      "rcept_no": "20260331004180",
+      "ir_quarters": 0
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 5047.29,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2
+      ],
+      "rcept_no": "20260313001119",
+      "ir_quarters": 0
+    },
+    {
+      "company": "코리안리",
+      "ir_kr": null,
+      "parser_fy24_eok": 1955.06,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2
+      ],
+      "rcept_no": "20260319001095",
+      "ir_quarters": 0
+    },
+    {
+      "company": "푸본현대생명보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 996.78,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        4,
+        5
+      ],
+      "rcept_no": "20260331002089",
+      "ir_quarters": 0
+    },
+    {
+      "company": "하나손해보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 1506.20868,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260325000538",
+      "ir_quarters": 0
+    },
+    {
+      "company": "한화생명",
+      "ir_kr": "KR0068",
+      "ir_sector": "Life",
+      "parser_fy24_eok": 20662.58,
+      "ir_fy24_eok": 20662.58,
+      "ir_convention": "sum_quarters",
+      "diff_eok": 0.0,
+      "ratio": 1.0,
+      "flag": "OK",
+      "csm_leaf_cols": [
+        2
+      ],
+      "rcept_no": "20260316001304",
+      "ir_quarters": 4
+    },
+    {
+      "company": "한화손해보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 7404.30906,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260310003000",
+      "ir_quarters": 0
+    },
+    {
+      "company": "현대해상",
+      "ir_kr": null,
+      "parser_fy24_eok": 20361.75606349,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2
+      ],
+      "rcept_no": "20260312001448",
+      "ir_quarters": 0
+    },
+    {
+      "company": "흥국생명보험",
+      "ir_kr": null,
+      "parser_fy24_eok": 5328.09,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260331004251",
+      "ir_quarters": 0
+    },
+    {
+      "company": "흥국화재",
+      "ir_kr": null,
+      "parser_fy24_eok": 6635.2,
+      "ir_fy24_eok": null,
+      "ratio": null,
+      "flag": "NO_IR",
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "rcept_no": "20260319001047",
+      "ir_quarters": 0
+    }
+  ]
+}

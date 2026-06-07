@@ -1,0 +1,1224 @@
+{
+  "unit": "million KRW",
+  "period": "annual (fiscal 2025 reporting)",
+  "source": "DART business reports FY2025_Q4 (_00760 별도 주석)",
+  "stage_order": [
+    "opening",
+    "new_business",
+    "interest",
+    "assumption",
+    "amortization",
+    "closing"
+  ],
+  "companies": [
+    {
+      "company": "메리츠화재해상보험",
+      "rcept_no": "20260331003916",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "(4) 원수 및 출재 측정요소별 변동내역1) 당기와 전기 중 원수 일반모형 보험부채 상세변동내역은 다음과 같습니다.<당기>",
+      "header": [
+        [
+          "구 분",
+          "미래 현금흐름의현재가치 추정치",
+          "비금융위험에 대한위험조정",
+          "보험계약마진(수정소급법)",
+          "보험계약마진(공정가치법)",
+          "보험계약마진(그 외 보험계약)",
+          "합 계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 순장부금액",
+          "value_mn_krw": 9637639.0
+        },
+        "new_business": {
+          "label": "신계약효과",
+          "value_mn_krw": 1600648.0
+        },
+        "interest": {
+          "label": "순보험금융손익",
+          "value_mn_krw": 298035.0
+        },
+        "assumption": {
+          "label": "보험계약마진을 조정하는 추정치 변동",
+          "value_mn_krw": 2164.0
+        },
+        "amortization": {
+          "label": "당기손익으로 인식한 보험계약마진 금액",
+          "value_mn_krw": -1069760.0
+        },
+        "closing": {
+          "label": "기말 순장부금액",
+          "value_mn_krw": 10468726.0
+        }
+      }
+    },
+    {
+      "company": "한화손해보험",
+      "rcept_no": "20260310003000",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "(4) 배당요소가 없는 보험계약부채 중 당기와 전기에 인식된 보험료배분접근법을 적용한 보험계약 이외의 보험계약에 대한 미래현금흐름의 현재가치 추정치, 비금융위험에 대한 위험조정, 보험계약마진의 변동내역은 다음과 같습니다.",
+      "header": [
+        [
+          "구 분",
+          "미래현금흐름의현재가치추정치",
+          "비금융위험에 대한위험조정",
+          "보험계약마진",
+          "합 계"
+        ],
+        [
+          "공정가치법",
+          "수정소급법",
+          "이외"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1000.0,
+      "stages": {
+        "opening": {
+          "label": "기초 보험계약 순부채",
+          "value_mn_krw": 3911894.34
+        },
+        "new_business": {
+          "label": "최초 인식한 계약의 효과",
+          "value_mn_krw": 740430.906
+        },
+        "interest": {
+          "label": "보험금융손익_이자손익",
+          "value_mn_krw": 149447.686
+        },
+        "assumption": {
+          "label": "보험계약마진을 조정하는 추정치의 변동분",
+          "value_mn_krw": -607748.173
+        },
+        "amortization": {
+          "label": "보험계약마진 상각",
+          "value_mn_krw": -408181.046
+        },
+        "closing": {
+          "label": "기말 보험계약 순부채",
+          "value_mn_krw": 3785843.712
+        }
+      }
+    },
+    {
+      "company": "롯데손해보험",
+      "rcept_no": "20260319001293",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "(3) 순보험계약부채 변동: BEL/RA/CSM당기와 전기 중 순보험계약부채의 측정 요소별 변동내역은 다음과 같습니다. 보험료배분접근법을 적용한 계약은 제외되었습니다.① 배당요소가 있는 보험계약 - 장기손해<제81(당)기>",
+      "header": [
+        [
+          "(단위: 백만원)"
+        ],
+        [
+          "구 분",
+          "미래현금흐름의현재가치 추정치(BEL)",
+          "비금융위험에대한위험조정(RA)",
+          "보험계약마진(CSM)",
+          "합 계"
+        ],
+        [
+          "수정소급법",
+          "공정가치법",
+          "이 외",
+          "소 계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초순보험계약부채",
+          "value_mn_krw": 6047.0
+        },
+        "new_business": {
+          "label": "신계약",
+          "value_mn_krw": 412168.0,
+          "source": "reconciliation_lrc"
+        },
+        "interest": {
+          "label": "보험금융손익",
+          "value_mn_krw": 226.0
+        },
+        "assumption": {
+          "label": "보험계약마진을 조정하는 추정치의 변동",
+          "value_mn_krw": 7535.0
+        },
+        "amortization": {
+          "label": "보험계약마진 상각액",
+          "value_mn_krw": -980.0
+        },
+        "closing": {
+          "label": "기말순보험계약부채",
+          "value_mn_krw": 12828.0
+        }
+      }
+    },
+    {
+      "company": "흥국화재",
+      "rcept_no": "20260319001047",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "- 배당요소가 없는 보험계약: 장기",
+      "header": [
+        [
+          "(단위: 백만원)"
+        ],
+        [
+          "구분",
+          "미래현금흐름의 현재가치추정치",
+          "비금융위험에 대한 위험조정",
+          "보험계약마진",
+          "합계"
+        ],
+        [
+          "공정가치법",
+          "수정소급법",
+          "이외"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 보험계약부채",
+          "value_mn_krw": 2467402.0
+        },
+        "new_business": {
+          "label": "신계약 인식효과",
+          "value_mn_krw": 663520.0
+        },
+        "interest": {
+          "label": "보험금융손익 소계",
+          "value_mn_krw": 105711.0
+        },
+        "assumption": {
+          "label": "보험계약마진을 조정하는 추정치의 변동분",
+          "value_mn_krw": -200552.0
+        },
+        "amortization": {
+          "label": "보험계약마진 상각액",
+          "value_mn_krw": -234759.0
+        },
+        "closing": {
+          "label": "당기말 보험계약부채",
+          "value_mn_krw": 2801322.0
+        }
+      }
+    },
+    {
+      "company": "삼성화재해상보험",
+      "rcept_no": "20260312001399",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "1) 제76(당)기",
+      "header": [
+        [
+          "구분",
+          "미래현금흐름현재가치 추정치",
+          "비금융위험에대한 위험조정",
+          "보험계약마진",
+          "합계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초순보험계약부채(자산)",
+          "value_mn_krw": 13396631.0
+        },
+        "new_business": {
+          "label": "신계약효과",
+          "value_mn_krw": 2898367.0
+        },
+        "interest": {
+          "label": "보험금융손익",
+          "value_mn_krw": 483569.0
+        },
+        "assumption": {
+          "label": "보험계약마진금액을 조정하는 변동",
+          "value_mn_krw": -1567342.0
+        },
+        "amortization": {
+          "label": "보험계약마진 상각",
+          "value_mn_krw": -1568787.0
+        },
+        "closing": {
+          "label": "기말순보험계약부채(자산)",
+          "value_mn_krw": 13642438.0
+        }
+      }
+    },
+    {
+      "company": "현대해상",
+      "rcept_no": "20260312001448",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "2) 장기원수 (무배당)가. 당기",
+      "header": [
+        [
+          "구분",
+          "미래현금흐름 현재가치 추정치",
+          "비금융위험에 대한 위험조정",
+          "보험계약마진",
+          "합계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2
+      ],
+      "unit_divisor_to_mn": 1000000.0,
+      "stages": {
+        "opening": {
+          "label": "기초보험계약부채",
+          "value_mn_krw": 8164516.781888
+        },
+        "new_business": {
+          "label": "신계약효과",
+          "value_mn_krw": 2036175.606349
+        },
+        "interest": {
+          "label": "보험금융손익",
+          "value_mn_krw": 313719.971613
+        },
+        "assumption": {
+          "label": "보험계약마진을 조정하는 변동",
+          "value_mn_krw": -692995.01317
+        },
+        "amortization": {
+          "label": "보험계약마진상각",
+          "value_mn_krw": -952506.267793
+        },
+        "closing": {
+          "label": "기말순보험계약부채",
+          "value_mn_krw": 8868911.078887
+        }
+      }
+    },
+    {
+      "company": "KB손해보험",
+      "rcept_no": "20260313001064",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "1-2) 당기와 전기의 보험료배분접근법을 적용하지 않는 배당요소가 없는 순보험계약부채의 구성요소별 변동내역은 다음과 같습니다(단위:백만원).<당기>",
+      "header": [
+        [
+          "구분",
+          "미래 현금흐름의 현재가치 추정치",
+          "비금융위험에 대한위험조정",
+          "보험계약마진",
+          "합계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 순장부금액",
+          "value_mn_krw": 8509711.0
+        },
+        "new_business": {
+          "label": "신계약 인식효과",
+          "value_mn_krw": 1741856.0,
+          "source": "transition_table"
+        },
+        "interest": {
+          "label": "보험금융손익",
+          "value_mn_krw": 329779.0
+        },
+        "assumption": {
+          "label": "보험계약마진을 조정하는 추정치 변동",
+          "value_mn_krw": -1121573.0
+        },
+        "amortization": {
+          "label": "보험계약마진 상각",
+          "value_mn_krw": -837154.0
+        },
+        "closing": {
+          "label": "기말 순장부금액",
+          "value_mn_krw": 8812942.0
+        }
+      }
+    },
+    {
+      "company": "DB손해보험",
+      "rcept_no": "20260312001222",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "27-3-2 장기무배당",
+      "header": [
+        [
+          "구 분",
+          "최선추정",
+          "위험조정",
+          "보험계약마진",
+          "합 계"
+        ],
+        [
+          "수정소급법적용계약",
+          "공정가치법적용계약",
+          "이외 계약"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초순보험계약부채",
+          "value_mn_krw": 12126700.0
+        },
+        "new_business": {
+          "label": "최초인식계약",
+          "value_mn_krw": 3077180.0
+        },
+        "interest": {
+          "label": "보험금융비용",
+          "value_mn_krw": 439819.0
+        },
+        "assumption": {
+          "label": "보험계약마진에 반영된 추정치 변동",
+          "value_mn_krw": -2140897.0
+        },
+        "amortization": {
+          "label": "보험계약마진상각",
+          "value_mn_krw": -1296406.0
+        },
+        "closing": {
+          "label": "기말순보험계약부채",
+          "value_mn_krw": 12206396.0
+        }
+      }
+    },
+    {
+      "company": "NH농협손해보험",
+      "rcept_no": "20260331004099",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "나. 측정요소별 변동내역",
+      "header": [
+        [
+          "구분",
+          "미래현금흐름의 현재가치 추정치",
+          "비금융위험에 대한 위험조정",
+          "보험계약마진",
+          "합계"
+        ],
+        [
+          "전환 시점 수정소급법적용 보험계약",
+          "전환 시점 공정가치법적용 보험계약",
+          "그 밖의 모든 계약",
+          "소계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 보험계약순부채(자산)",
+          "value_mn_krw": 2055155.0
+        },
+        "new_business": {
+          "label": "최초인식계약",
+          "value_mn_krw": 271360.0
+        },
+        "interest": {
+          "label": "보험금융손익",
+          "value_mn_krw": 88002.0
+        },
+        "assumption": {
+          "label": "보험계약마진을 조정하는 변동",
+          "value_mn_krw": -659385.0
+        },
+        "amortization": {
+          "label": "보험계약마진 상각",
+          "value_mn_krw": -241906.0
+        },
+        "closing": {
+          "label": "기말 보험계약순부채(자산)",
+          "value_mn_krw": 1513226.0
+        }
+      }
+    },
+    {
+      "company": "하나손해보험",
+      "rcept_no": "20260325000538",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "- 당기",
+      "header": [
+        [
+          "구 분",
+          "미래현금흐름의현재가치 추정치",
+          "비금융위험에대한 위험조정",
+          "보험계약마진",
+          "보험계약부채(자산)"
+        ],
+        [
+          "수정소급법적용 계약",
+          "공정가치법적용 계약",
+          "그 밖의모든 계약"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1000.0,
+      "stages": {
+        "opening": {
+          "label": "1. 기초 보험계약자산 및 부채",
+          "value_mn_krw": 180987.257
+        },
+        "new_business": {
+          "label": "(3) 최초 인식한 계약의 효과",
+          "value_mn_krw": 150620.868
+        },
+        "interest": {
+          "label": "6. 보험금융손익",
+          "value_mn_krw": 0.0
+        },
+        "assumption": {
+          "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+          "value_mn_krw": -42475.903
+        },
+        "amortization": {
+          "label": "(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계약마진",
+          "value_mn_krw": -21672.82
+        },
+        "closing": {
+          "label": "8. 기말 보험계약자산 및 부채",
+          "value_mn_krw": 277367.756
+        }
+      }
+    },
+    {
+      "company": "한화생명",
+      "rcept_no": "20260316001304",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "2) 무배당 보험계약① 당기",
+      "header": [
+        [
+          "구 분",
+          "미래현금흐름의 현재가치 추정치",
+          "비금융위험에대한 위험조정",
+          "보험계약마진",
+          "합계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "1. 기초 보험계약자산 및 부채",
+          "value_mn_krw": 8680705.0
+        },
+        "new_business": {
+          "label": "2) 신계약 인식효과",
+          "value_mn_krw": 2066258.0,
+          "source": "transition_table"
+        },
+        "interest": {
+          "label": "6. 보험금융손익",
+          "value_mn_krw": 344241.0
+        },
+        "assumption": {
+          "label": "(1) 보험계약마진을 조정하는 추정치 변동",
+          "value_mn_krw": -2104134.0
+        },
+        "amortization": {
+          "label": "(1) 제공한 서비스에 대해 인식한 보험계약마진",
+          "value_mn_krw": -726999.0
+        },
+        "closing": {
+          "label": "8. 기말 보험계약자산 및 부채",
+          "value_mn_krw": 8249919.0
+        }
+      }
+    },
+    {
+      "company": "삼성생명",
+      "rcept_no": "20260311004614",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "(5) 당기 및 전기 중 보험계약 상품라인의 측정요소별 변동내역은 다음과 같습니다.",
+      "header": [
+        [
+          "구 분",
+          "미래현금흐름의현재가치 추정치",
+          "비금융위험에대한 위험조정",
+          "보험계약마진",
+          "합 계"
+        ],
+        [
+          "수정소급법 하계약",
+          "공정가치법 하계약",
+          "완전소급법 및전환이후 계약"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "보험계약부채(기초)",
+          "value_mn_krw": 12902023.0
+        },
+        "new_business": {
+          "label": "당기 최초 인식 계약",
+          "value_mn_krw": 3059472.0
+        },
+        "interest": {
+          "label": "보험계약의 순 금융손익",
+          "value_mn_krw": 495165.0
+        },
+        "assumption": {
+          "label": "보험계약마진 추정의 변경",
+          "value_mn_krw": -1757775.0
+        },
+        "amortization": {
+          "label": "제공한 서비스에 대해 인식한 보험계약마진",
+          "value_mn_krw": -1479599.0
+        },
+        "closing": {
+          "label": "보험계약 순부채(자산)(기말)",
+          "value_mn_krw": 13217874.0
+        }
+      }
+    },
+    {
+      "company": "흥국생명보험",
+      "rcept_no": "20260331004251",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "(5) 당기와 전기 중 배당여부에 따른 보험계약부채의 측정요소별 변동내역은 다음과 같습니다(단위:백만원).1) 당기① 유배당보험",
+      "header": [
+        [
+          "구분",
+          "미래 현금흐름의현재가치 추정치",
+          "비금융위험에 대한위험조정",
+          "보험계약마진",
+          "합계"
+        ],
+        [
+          "수정소급법 하계약",
+          "공정가치법 하계약",
+          "완전소급법 및전환이후 계약"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 보험계약부채",
+          "value_mn_krw": 2215205.0
+        },
+        "new_business": {
+          "label": "신계약 인식효과",
+          "value_mn_krw": 532809.0
+        },
+        "interest": {
+          "label": "보험금융손익",
+          "value_mn_krw": 95146.0
+        },
+        "assumption": {
+          "label": "보험계약마진을 조정하는 추정치 변동",
+          "value_mn_krw": -172158.0
+        },
+        "amortization": {
+          "label": "서비스를 제공한 보험계약마진",
+          "value_mn_krw": -221517.0
+        },
+        "closing": {
+          "label": "기말 보험계약부채",
+          "value_mn_krw": 2449485.0
+        }
+      }
+    },
+    {
+      "company": "케이디비생명보험",
+      "rcept_no": "20260331004180",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "2) 무배당보험 가. 제38(당)기",
+      "header": [
+        [
+          "(단위:백만원)"
+        ],
+        [
+          "구분",
+          "미래현금흐름의현재가치 추정치",
+          "비금융위험에대한 위험조정",
+          "보험계약마진",
+          "보험계약부채(자산)"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "1. 기초 보험계약자산 및 부채",
+          "value_mn_krw": 754071.0
+        },
+        "new_business": {
+          "label": "(2) 신계약 인식효과",
+          "value_mn_krw": 233793.0,
+          "source": "transition_table"
+        },
+        "interest": {
+          "label": "6. 보험금융손익",
+          "value_mn_krw": 27756.0
+        },
+        "assumption": {
+          "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+          "value_mn_krw": -365375.0
+        },
+        "amortization": {
+          "label": "(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계약마진",
+          "value_mn_krw": -59993.0
+        },
+        "closing": {
+          "label": "8. 당기말 보험계약자산 및 부채(1+5+6+7)",
+          "value_mn_krw": 533884.0
+        }
+      }
+    },
+    {
+      "company": "교보생명보험",
+      "rcept_no": "20260331004015",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "1) 당기<유배당계약>",
+      "header": [
+        [
+          "(단위 : 백만원)"
+        ],
+        [
+          "구 분",
+          "미래현금흐름의 현재가치 추정치",
+          "비금융위험에 대한 위험조정",
+          "보험계약마진",
+          "보험계약부채(자산)"
+        ],
+        [
+          "완전소급법을 적용한 보험계약",
+          "공정가치법을 적용한 보험계약",
+          "그 밖의 모든 보험계약",
+          "소계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "1. 기초 보험계약자산 및 부채",
+          "value_mn_krw": 6438058.0
+        },
+        "new_business": {
+          "label": "(3) 최초 인식한 계약의 효과",
+          "value_mn_krw": 1278134.0
+        },
+        "interest": {
+          "label": "6. 보험금융손익",
+          "value_mn_krw": 186548.0
+        },
+        "assumption": {
+          "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+          "value_mn_krw": -803784.0
+        },
+        "amortization": {
+          "label": "(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계약마진",
+          "value_mn_krw": -587995.0
+        },
+        "closing": {
+          "label": "8. 기말 보험계약자산 및 부채",
+          "value_mn_krw": 6510959.0
+        }
+      }
+    },
+    {
+      "company": "미래에셋생명",
+      "rcept_no": "20260318001664",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "i) 유배당",
+      "header": [
+        [
+          "(단위: 백만원)"
+        ],
+        [
+          "구분",
+          "보험료배분접근법 외 보험계약",
+          "합계"
+        ],
+        [
+          "미래현금흐름의현재가치 추정치",
+          "비금융위험에 대한 위험조정",
+          "보험계약마진"
+        ],
+        [
+          "전환 시점에 존재했던 보험계약 중 수정소급법을 적용한 보험계약",
+          "전환 시점에 존재했던 보험계약 중 공정가치법을 적용한 보험계약",
+          "그 밖의 모든보험계약",
+          "소계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 잔액",
+          "value_mn_krw": 2160811.0
+        },
+        "new_business": {
+          "label": "처음 인식한 계약의 효과",
+          "value_mn_krw": 539878.0
+        },
+        "interest": {
+          "label": "보험금융손익 / 당기손익인식 보험금융손익",
+          "value_mn_krw": 63080.0
+        },
+        "assumption": {
+          "label": "미래서비스와관련된 변동분 / 보험계약마진을 조정하는 변동",
+          "value_mn_krw": -401476.0
+        },
+        "amortization": {
+          "label": "현행서비스와 관련된 변동분 / 보험계약마진의 당기인식분",
+          "value_mn_krw": -217599.0
+        },
+        "closing": {
+          "label": "기말 잔액",
+          "value_mn_krw": 2144697.0
+        }
+      }
+    },
+    {
+      "company": "DB생명보험",
+      "rcept_no": "20260327000191",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "(2) 무배당① 당기",
+      "header": [
+        [
+          "구 분",
+          "미래현금흐름현재가치추정치",
+          "비금융위험에대한위험조정",
+          "보험계약마진",
+          "합 계"
+        ],
+        [
+          "완전소급법적용계약",
+          "공정가치법적용계약",
+          "이외 계약"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초보험계약부채",
+          "value_mn_krw": 1701002.0
+        },
+        "new_business": {
+          "label": "최초인식계약",
+          "value_mn_krw": 444189.0
+        },
+        "interest": {
+          "label": "보험금융비용",
+          "value_mn_krw": 68552.0
+        },
+        "assumption": {
+          "label": "보험계약마진에 반영된 추정치 변동",
+          "value_mn_krw": -204004.0
+        },
+        "amortization": {
+          "label": "보험계약마진상각",
+          "value_mn_krw": -131695.0
+        },
+        "closing": {
+          "label": "기말보험계약부채",
+          "value_mn_krw": 1878044.0
+        }
+      }
+    },
+    {
+      "company": "푸본현대생명보험",
+      "rcept_no": "20260331002089",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "1) 당기말① 유배당보험",
+      "header": [
+        [
+          "구 분",
+          "미래현금흐름의현재가치 추정치",
+          "비금융위험에 대한위험조정",
+          "보험계약마진",
+          "합 계"
+        ],
+        [
+          "잔여보장요소",
+          "발생사고요소",
+          "잔여보장요소",
+          "발생사고요소",
+          "공정가치법 적용 대상 계약",
+          "그 외 계약"
+        ]
+      ],
+      "csm_leaf_cols": [
+        4,
+        5
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 보험계약부채(자산)",
+          "value_mn_krw": 142349.0
+        },
+        "new_business": {
+          "label": "신계약 인식",
+          "value_mn_krw": 99678.0
+        },
+        "interest": {
+          "label": "당기손익 인식분",
+          "value_mn_krw": 7548.0
+        },
+        "assumption": {
+          "label": "해지율 가정 변경 + 위험률 가정 변경 + 사업비율 가정 변경 …",
+          "value_mn_krw": -40276.0
+        },
+        "amortization": {
+          "label": "보험계약마진 상각",
+          "value_mn_krw": -18644.0
+        },
+        "closing": {
+          "label": "기말 보험계약부채(자산)",
+          "value_mn_krw": 190655.0
+        }
+      }
+    },
+    {
+      "company": "동양생명",
+      "rcept_no": "20260313001227",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "(4) 당기와 전기 중 보험계약의 측정요소별 변동내역은 다음과 같습니다.",
+      "header": [
+        [
+          "(단위: 백만원)"
+        ],
+        [
+          "구분",
+          "상세",
+          "미래현금흐름의현재가치추정치",
+          "비금융위험위험조정",
+          "보험계약마진",
+          "합계"
+        ],
+        [
+          "수정소급법적용계약",
+          "공정가치법적용계약",
+          "완전소급법 및전환이후계약",
+          "소계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "보험계약 순부채(자산)",
+          "value_mn_krw": 2407825.0
+        },
+        "new_business": {
+          "label": "당기 최초 인식 효과",
+          "value_mn_krw": 731936.0
+        },
+        "interest": {
+          "label": "보험서비스결과 및 및 보험금융손익의당기손익 및 기타포괄손익의 총 변동",
+          "value_mn_krw": 206465.0
+        },
+        "assumption": {
+          "label": "미래서비스관련 변동 / 보험계약마진 추정의 변경",
+          "value_mn_krw": -384596.0
+        },
+        "amortization": {
+          "label": "현행서비스관련 변동 / 보험계약마진 상각",
+          "value_mn_krw": -252346.0
+        },
+        "closing": {
+          "label": "보험계약 순부채(자산)",
+          "value_mn_krw": 2614290.0
+        }
+      }
+    },
+    {
+      "company": "신한라이프생명보험",
+      "rcept_no": "20260318001034",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "2) 무배당보험① 제37(당)기",
+      "header": [
+        [
+          "(단위 : 백만원)"
+        ],
+        [
+          "구 분",
+          "미래 현금흐름의 현재가치 추정치",
+          "비금융위험에대한 위험조정",
+          "보험계약마진",
+          "합 계"
+        ],
+        [
+          "수정소급법적용 보험계약",
+          "공정가치법적용 보험계약",
+          "전환이후보험계약",
+          "소계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 / 보험계약부채",
+          "value_mn_krw": 6969672.0
+        },
+        "new_business": {
+          "label": "당기 신계약의 최초인식효과",
+          "value_mn_krw": 1641786.0
+        },
+        "interest": {
+          "label": "보험금융손익 / 당기손익",
+          "value_mn_krw": 259247.0
+        },
+        "assumption": {
+          "label": "미래 서비스와관련된 변동분 / 보험계약마진 조정 추정치 변동분",
+          "value_mn_krw": -967991.0
+        },
+        "amortization": {
+          "label": "현행 서비스와관련된 변동분 / 보험계약마진 상각",
+          "value_mn_krw": -703064.0
+        },
+        "closing": {
+          "label": "기말 / 보험계약부채",
+          "value_mn_krw": 7199650.0
+        }
+      }
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "rcept_no": "20260313001119",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "2) 유배당 외 보험",
+      "header": [
+        [
+          "구분",
+          "당기"
+        ],
+        [
+          "미래 현금흐름의 현재가치 추정치",
+          "비금융위험에 대한 위험조정",
+          "보험계약마진",
+          "합계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 순장부금액",
+          "value_mn_krw": 2968518.0
+        },
+        "new_business": {
+          "label": "신계약 인식효과",
+          "value_mn_krw": 504729.0,
+          "source": "transition_table"
+        },
+        "interest": {
+          "label": "보험금융손익(PL)",
+          "value_mn_krw": 96342.0
+        },
+        "assumption": {
+          "label": "보험계약마진을 조정하는 추정치 변동",
+          "value_mn_krw": -48619.0
+        },
+        "amortization": {
+          "label": "서비스 제공에 따른 보험계약마진 변동",
+          "value_mn_krw": -292100.0
+        },
+        "closing": {
+          "label": "기말 순장부금액",
+          "value_mn_krw": 3228870.0
+        }
+      }
+    },
+    {
+      "company": "농협생명보험",
+      "rcept_no": "20260331002277",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "(9-1-2) 측정요소별 변동내역",
+      "header": [
+        [
+          "구분",
+          "미래현금흐름의 현재가치 추정치",
+          "비금융위험에 대한 위험조정",
+          "보험계약마진",
+          "합계"
+        ],
+        [
+          "전환 시점 수정소급법 적용 보험계약",
+          "전환 시점 공정가치법 적용 보험계약",
+          "그 밖의 모든 계약",
+          "소계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2,
+        3,
+        4
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 보험계약순부채(자산) / 기초 보험계약부채",
+          "value_mn_krw": 1240119.0
+        },
+        "new_business": {
+          "label": "최초인식계약",
+          "value_mn_krw": 0.0
+        },
+        "interest": {
+          "label": "보험금융손익 / 당기손익인식",
+          "value_mn_krw": 38017.0
+        },
+        "assumption": {
+          "label": "미래서비스와 관련된 변동 / 보험계약마진을 조정하는 변동",
+          "value_mn_krw": 3799.0
+        },
+        "amortization": {
+          "label": "현행서비스와 관련된 변동 / 보험계약마진 상각",
+          "value_mn_krw": -120179.0
+        },
+        "closing": {
+          "label": "기말 보험계약순부채(자산) / 기말 보험계약부채",
+          "value_mn_krw": 1161756.0
+        }
+      }
+    },
+    {
+      "company": "코리안리",
+      "rcept_no": "20260319001095",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "(3) 당기와 전기 중 수재(원수 포함) 일반모형 변동내역은 다음과 같습니다.<당기>",
+      "header": [
+        [
+          "구분",
+          "미래 현금흐름의현재가치 추정치",
+          "비금융위험에 대한위험조정",
+          "보험계약마진",
+          "합계"
+        ]
+      ],
+      "csm_leaf_cols": [
+        2
+      ],
+      "unit_divisor_to_mn": 1.0,
+      "stages": {
+        "opening": {
+          "label": "기초 순장부금액",
+          "value_mn_krw": 803146.0
+        },
+        "new_business": {
+          "label": "신계약 인식효과",
+          "value_mn_krw": 195506.0
+        },
+        "interest": {
+          "label": "순보험금융비용",
+          "value_mn_krw": 62654.0
+        },
+        "assumption": {
+          "label": "보험계약마진을 조정하는 추정치 변동",
+          "value_mn_krw": -84790.0
+        },
+        "amortization": {
+          "label": "서비스를 제공한 보험계약마진",
+          "value_mn_krw": -71842.0
+        },
+        "closing": {
+          "label": "기말 순장부금액",
+          "value_mn_krw": 904674.0
+        }
+      }
+    }
+  ]
+}

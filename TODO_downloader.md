@@ -6,19 +6,11 @@ Stage 1 of 5 in the workflow split. See `CLAUDE.md` for the full 5-stage index.
 **Cross-stage TODO:** `TODO.md` (root)
 **This file:** active + done items scoped to data collection only.
 
-Last updated: 2026-05-30O (**흥국 amended PDF 사용자 수동 교체로 file-integrity 100%**. 사용자가 Fasoo DRM 우회해서 직접 받아 교체 → 정상 %PDF-1.4. 재검증 1,965/1,965 OK. 직전 2026-05-30N (**DART batch script canonical-path refactor 완료**. `scripts/_dart_path_helpers.py` 신규: kics 원수사명→KR 코드 lookup + `quarterly_raw_dir`/`annual_raw_dir` (Reorg #2 layout 산출). 3개 batch script 갱신: `ifrs17_batch_all.py`, `ifrs17_batch_historical.py`, `ifrs17_ingest_audit_annual.py`. 변경은 path 결정 부분만 (extract/parse 로직 무변경). historical은 annual(A001) 분기와 quarterly(A002/A003)를 갈라 처리(annual은 rcept_no가 dir 이름에 들어가니 fetch_rcept를 out_dir 결정 전에 호출). _KICS_NAME_OVERRIDES에 AUDIT_REPORT_ANNUAL 5사 + 한화생명 표기변형 등록(kics 누락 케이스 보완). `scripts/_dart_path_helpers_smoke.py`로 9/9 케이스 검증(메리츠/삼성생명/IBK/KB라이프/코리안리/AIA + quarterly + group holding).)
+**Status (2026-06-01)**: 5-source 전수 수집 완료. 무결성 **2,041/2,041 OK**. **전 source 실질 gap 0** (NONLIFE-Q123 26셀 자체사이트 backfill + 서울보증 분기/DART는 미상장·롤오프 구조적 drop). 상세 history는 `docs/changelog_downloader.md`.
 
-Latest downloader work = **Reorg #2 (2026-05-30j)**: 사용자 지적 "DART랑 KIDI 폴더는 정리가 하나도 안돼있어, assoc 폴더는 정체가 뭐냐" 받아 1차 reorg에서 남겨둔 DART/KIDI/assoc 마저 정리. 변경:
+**Parser 핸드오프 주의 (Q2=반기):** AIG손해(KR0029)는 별도 2분기 공시가 없고 **상반기(반기) 누적** 공시로 FY{Y}_Q2를 채움(1.1~6.30 누적, 독립 분기 아님). 신한EZ(KR0051)·카카오페이(KR1098)의 Q2도 "상반기" 라벨. parser/validation에서 이들 Q2를 standalone-quarter가 아닌 cumulative-반기로 해석할 것.
 
-1. `data/assoc/` → `data/_derived/` rename (8 script path constant 갱신; assoc는 gathering output이라 underscore 접두로 명시화. templates/data/assoc archive)
-2. KIDI `raw/<stamp>/` 494 files → `data/kidi/FY####_Q#/raw/<KR>_<YYYYMM>.json` (yyyymm 03/06/09/12 → Q1-Q4 매핑), 38사×13Q 분기별 균등 배치
-3. DART `raw/<name>_<rcept>/` (77 annual) → `data/dart/FY<year>_Q4/raw/KR####_<name>[__cons]_<rcept>/` (year = rcept_year - 1, `__cons` 접미는 연결재무 표시)
-4. DART `raw_history/<name>/<YYYY.QQ>/` → `data/dart/FY<year>_Q<q>/raw/KR####_<name>/` (period reverse: 회사>분기 → 분기>회사 트리)
-5. dedup: rcept-suffixed vs simple 중복 55개 archive
-
-영향 script 8개 path constant 갱신. **KIDI ingest script도 신규 다운로드를 canonical layout으로 write하도록 refactor 완료.** DART batch scripts(`ifrs17_batch_historical` / `ifrs17_batch_all` / `ifrs17_ingest_audit_annual`)는 OLD path로 write할 위험 — **다음 세션 refactor 필요** (아래 REORG2-DART task). 총 archive 788MB (445MB reorg#1 + 343MB reorg#2).
-
-직전 작업 (Reorg #1, 2026-05-30i) = Downloader workflow 정리 완료 (5 source audit + canonical 폴더 reorg + master prompt). Workflow `wf_f8b5a806-a78` (7 agents, 427k tokens): Phase 1 = 5 source inventory 병렬; Phase 2 = 159 moves 0 errors → `<source>/<period>/raw/KR####_<name>` 적용; Phase 3 = `docs/agents/claude-agent-downloader.md` + `docs/agents/source-catalog.yaml`.
+검증 도구: `scripts/audit_all_periods.py`(전수 gap audit) + `scripts/check_data_file_integrity.py`(파일 무결성). 신규 다운로드 후 이 둘을 게이트로 실행.
 
 ---
 
@@ -36,6 +28,10 @@ Latest downloader work = **Reorg #2 (2026-05-30j)**: 사용자 지적 "DART랑 K
 | BATCH-HISTORICAL-FIX | `ifrs17_batch_historical.py` 정정 rcept picking 버그 | 🟠 P2 | DART는 정정([기재정정], [첨부정정]) 공시가 원본보다 먼저 나올 수 있음 → 잘못된 rcept picking → status=014 'file not found' 에러. **고침 방향**: 정정 prefix 제외하고 가장 늦은 rcept (또는 원본 사업/반기/분기보고서)를 picking. REORG2-DART와 같은 PR에서 같이 처리 권장 |
 | F15-DL | 동양생명 2025.2Q~2026.1Q 재다운로드 검토 | 🟠 P2 | (F15 본체는 parser 버그 — `TODO.md`) 추출단계에서 wide `<TE>` 표의 잔액(기초/기말)행이 전부 0으로 들어옴 → 원본 다시 받아야 할 수도 있음. 재다운로드 후 재파싱이 효과적인지 먼저 확인 |
 | FUTURE-DL | DART 별첨 fetch endpoint 조사 (KB/메리츠/NH FY2025 LOB) | 🟠 P2 | KB/메리츠/NH FY2025 사업보고서는 LOB 표를 별첨 감사보고서로 분리. 결정 2026-05-30: **fetch 안 함** (본문에 다 있음, 회사별 라벨 변형 처리로 해결). 단 별첨 endpoint 위치는 future reference로 기록 — 새 이슈에 필요 시 조사 |
+| IR-SAMSUNGLIFE-23 | 삼성생명 IR FY2023 Q1/Q2/Q3 standalone factsheet 부재 | 🟢 low | samsunglife.com IR은 ~2년치만 보존 → FY23 Q1-Q3 standalone factsheet 롤오프됨 (2026-05-30P 확인). **단 데이터는 살아있음**: 보유 중인 `★ 4QFY23FactsheetKOR.xlsx`에 1Q~4Q 분기 컬럼 물리적 존재 → parser stage에서 구판 시트 레이아웃(`parse_factsheet`가 "월초대비 신계약CSM 배수" 라벨 못 찾음) 핸들링하면 복구 가능. **다운로더 액션 없음** — parser stage 이슈로 이관 |
+| ~~NONLIFE-Q123~~ | ~~손보 6사 분기(Q1-Q3) 경영공시 — 회사 자체사이트 스크래퍼~~ | ✅ **2026-06-01 완료** | 34셀 중 **26셀 backfill 수집**(AIG 9 / 악사 4 / 신한EZ 4 / 코리안리 6 / 카카오 3), **8셀(서울보증)은 구조적 미발행** 판정. 사별 스크립트 `scripts/backfill_q123_<token>.py` (aig/axa/shinhanez/sgi/koreanre/kakaopay). 검증: 무결성 2,041/2,041 OK + audit disclosure REAL GAPS 0. ⚠️ AIG/신한EZ/카카오 Q2 = 반기 누적(위 핸드오프 주의 참조). 서울보증 = 자체사이트 연간+최신분기만 보존(audit `SGI_QUARTERLY_STRUCTURAL` 예외 등록) |
+| ~~SEOULBO-DART~~ | ~~서울보증 DART 8셀~~ | ✅ **2026-06-01 drop (won't-fix)** | 사용자 결정("서울보증 걍 버려"). 미상장(IPO 철회) → DART 분기/반기/사업보고서 미공시 = 구조적. audit `DART_DROP`에 등록 → 전 source REAL GAPS 0 |
+| ~~IR-DONGYANG-401~~ | 동양생명 IR factbook (myangel) 401 — disclosure로 부분 해결 | 🟢 low | **2026-05-30R: 사용자 지적으로 생보협회 경영공시(pub.insure.or.kr)로 대체 → disclosure 13/13 완성** (`download_dongyang_disclosure_q4.py`로 FY2023_Q4·FY2024_Q4 결산 2개 받아 채움). 동양생명 검증 데이터는 disclosure(IFRS17 주석 포함)로 확보됨. IR factbook(myangel) 자체는 여전히 401 차단 — **IR factbook 전용 지표(CSM배수 등)가 disclosure에 없어 별도로 필요할 때만** 재시도: (a) non-headless+다른IP로 raon ozvid auth header 캡처 (b) DART 본문 fallback. 현재는 low priority |
 
 **전략적 시너지 (코리안리 리포트 인과 체인 재현):**
 - F8 (설계사정착률) + F8 (채널별 불완전판매비율) + 37회차 해지율 (별도 source)
@@ -53,21 +49,22 @@ Latest downloader work = **Reorg #2 (2026-05-30j)**: 사용자 지적 "DART랑 K
 | DL-FYR | **Next quarter onwards (2026.2Q+)**: find URLs / XPaths yourself. 2026.1Q only was user-provided. Reuse existing configs, swap only period-specific labels. Escalate to user only if site structure fully changed | 2026-05-30 |
 | DL-NOATTACH | **Don't fetch DART attachments (별첨/감사보고서 zip).** Body XML has all IFRS17 disclosures. Verified 2026-05-30 (한화 647 / KB 259 / 농협생명 176 / 라이나 audit 55 / AIG audit 55 occurrences of `보험계약마진` in body) | 2026-05-30 |
 | DL-NOTSKIP | KR0029 AIG + KR0150 SGI **K-ICS skip** (no PDF on their own sites), BUT **DART**에서는 받을 수 있는 만큼 받음 (AIG = "에이아이지손해보험" corp_code 00983606 / SGI = 2024.4Q 이후 분기보고서 시작) | 2026-05-30 |
+| DL-DART-C-FY23 | bucket C 빈 dir 121건 분류: 110 = 비상장 11사 Q1-3 (DART 분기보고서 구조적 미제출, gap 아님) + 11 = 비상장 11사 **FY2023_Q4 감사보고서 = 받지 않음** (사용자 결정 2026-06-03, "비상장사 감사보고서 불필요" 유지). → 비상장사 DART PL/CSM 시계열 = **FY2024_Q4 + FY2025_Q4 2포인트로 확정** (extract_dart_zips로 추출 완료). 다음 세션 재제기 금지 | 2026-06-03 |
 
 ---
 
-## Done — recent (downloader-scoped)
+## Done — recent (one-liners; detail in changelog / data manifests)
 
-| ID | Task | Done | Notes |
-|----|------|------|-------|
-| ~~F2~~ | NB CSM 배수 — KIDI ML01/MN07 crawler | 2026-05-30c | endpoint `POST /insMonth/getQueryResult.do`, `queryId=getML01List|getMN07List`, `comp_type=L01~L86|N01~N80`, `data_year=YYYYMM`. 38사×13Q=494 fetch, 0 errors. `data/kidi/raw/<stamp>/<KR>_<YYYYMM>.json` + `data/kidi/premium_summary.json`. `crawl_assoc_nb_premium.py`에 `_parse_kidi_summary` + `KR_TO_WATERFALL` 추가 → `nb_premium_wolnap.json` 6→328 entries |
-| ~~DL-FY26Q1~~ | FY2026.1Q full ingest (손보 17 + 생보 22 + IR 13 + DART) | 2026-05-30 | 손보 22.5MB / 생보 29MB / IR 20.8MB; 신한라이프 generic filename pdfminer 첫 페이지로 식별 |
-| ~~DL-DART-AUDIT~~ | DART raw 100% audit + gap fill | 2026-05-30h | LISTED 23×13Q=299/299 + NON_LISTED 8사 + AIG + audit-only 5사 + 서울보증. `data/dart/_inventory_manifest.json`: 76 annual rcept + 303 period zip |
-| ~~MISC-BOND-KEYS~~ | FSC API keys in .env | done | DATA_GO_KR_BOND_ISSUANCE_KEY + REDE_KEY |
-| ~~MISC-BOND-INGEST~~ | FSC bond issuance + Call schedule ingest | done | 2026-05-25 v2 alias-loop fix. Latest pull 24 insurers. 15 missing accepted (외국계/디지털/특수법인 + KR0008/KR0069 likely no capital-instrument issuance) |
-| ~~MISC-BOND-NORMALIZE~~ | Bond schedule → per-ISIN calendar | done | Latest `data/bonds/normalized/20260525T061945Z/`. tier1 **63** + tier2 261. `_classify_tier` recognizes `(신종)` / 신종자본증권 / 하이브리드 |
-| ~~MISC-IR-MERITZ~~ | Meritz Financial Group factsheet xlsx ingest | done | 2026-05-25 — `data/ir/meritz/` (xlsx + extracted JSON + README). 1Q26: K-ICS 240.74%, CSM 112,917억, NB CSM mult 12.61x |
-| ~~IFRS-HIST~~ | Historical 13Q ingest 2023.1Q ~ 2026.1Q | done v2 | `scripts/ifrs17_batch_historical.py` + `_promote_history_to_measurement.py`. 299 targets → 257 ok + 2 partial + 34 no_csm_block + 5 errors. 사업보고서 23/23 거의 완벽 |
+| ID | Task | Done |
+|----|------|------|
+| F2 | KIDI ML01/MN07 NB CSM crawler (38사×13Q=494, premium_summary.json) | 2026-05-30 |
+| DL-FY26Q1 | FY2026.1Q full ingest (손보17+생보22+IR13+DART) | 2026-05-30 |
+| DL-DART-AUDIT | DART raw 100% audit + gap fill (`_inventory_manifest.json`) | 2026-05-30 |
+| MISC-BOND | FSC bond issuance+Call ingest → per-ISIN calendar (tier1 63 + tier2 261) | 2026-05-25 |
+| IFRS-HIST | Historical 13Q ingest 2023.1Q~2026.1Q (`ifrs17_batch_historical.py`) | done |
+| DL-COMPLETE | 5-source 완결: 전수 audit + disclosure 28셀 backfill (gap 73→34) | 2026-05-31 |
+| DL-ARCHIVE-PROBES | Archived 45 early IR auto-discovery probes (`scripts/_probes/`) → `data/_archive/20260602T150745Z_downloader_ir_probes/` (git rename, kept for foreign-insurer ref). Canonical `crawl_ir_*.py` untouched | 2026-06-02 |
+| DL-DART-EXTRACT | Fixed parser `raw_not_extracted`: 42 insurer DART dirs had `document.zip` but no body XML (fetch-only + foreign filings have only `_00760`/`_00761` members, no main xml). New idempotent `scripts/extract_dart_zips.py` extracted them in-place; bucket A 40→0. Parser auto-picks via `*.xml` glob | 2026-06-03 |
 
 ---
 

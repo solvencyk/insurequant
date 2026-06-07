@@ -6,18 +6,18 @@
       "broken": 0
     },
     "disclosure": {
-      "total": 448,
-      "ok": 448,
+      "total": 505,
+      "ok": 505,
       "broken": 0
     },
     "dart": {
-      "total": 815,
-      "ok": 815,
+      "total": 821,
+      "ok": 821,
       "broken": 0
     },
     "kidi": {
-      "total": 494,
-      "ok": 494,
+      "total": 507,
+      "ok": 507,
       "broken": 0
     }
   },

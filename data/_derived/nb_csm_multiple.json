@@ -5,7 +5,7 @@
     "denominator_sonbo": "KIDI 장기보험 원수보험료 N07 월납+기타초회",
     "denominator_life": "KIDI 수입보험료 명세표 ML01 월납+기타초회 (일시납 제외)",
     "validation": "삼성생명 FY2024=9.80 vs IR Total 9.8 (exact); 손보 삼성화재/메리츠/DB ±5%",
-    "built_at": "2026-05-29T13:48:30Z",
+    "built_at": "2026-05-31T15:04:21Z",
     "build_script": "scripts/build_nb_csm_multiple.py",
     "company_count": 27
   },
@@ -285,9 +285,9 @@
       "sector": "Life",
       "fy2024": {
         "period": "FY2024",
-        "nb_csm_eok": 5044.5,
+        "nb_csm_eok": 3742.1,
         "wolnap_chowoe_eok": 395.2,
-        "multiple": 12.76,
+        "multiple": 9.47,
         "ir_total_multiple": null
       },
       "series": {}
@@ -510,9 +510,9 @@
       "sector": "Life",
       "fy2024": {
         "period": "FY2024",
-        "nb_csm_eok": 3475.9,
+        "nb_csm_eok": 2458.4,
         "wolnap_chowoe_eok": 380.2,
-        "multiple": 9.14,
+        "multiple": 6.47,
         "ir_total_multiple": null
       },
       "series": {
@@ -552,9 +552,9 @@
           "multiple": 7.18
         },
         "2024.4Q": {
-          "nb_csm_eok": 3475.9,
+          "nb_csm_eok": 2458.4,
           "wolnap_chowoe_eok": 380.2,
-          "multiple": 9.14
+          "multiple": 6.47
         },
         "2025.1Q": {
           "nb_csm_eok": 552.9,
@@ -674,26 +674,26 @@
       "sector": "Life",
       "fy2024": {
         "period": "FY2024",
-        "nb_csm_eok": 6346.7,
+        "nb_csm_eok": 5013.0,
         "wolnap_chowoe_eok": 629.0,
-        "multiple": 10.09,
+        "multiple": 7.97,
         "ir_total_multiple": null
       },
       "series": {
         "2023.1Q": {
-          "nb_csm_eok": 1224.8,
+          "nb_csm_eok": 1106.9,
           "wolnap_chowoe_eok": 110.3,
-          "multiple": 11.11
+          "multiple": 10.04
         },
         "2023.2Q": {
-          "nb_csm_eok": 2888.8,
+          "nb_csm_eok": 1905.6,
           "wolnap_chowoe_eok": 298.2,
-          "multiple": 9.69
+          "multiple": 6.39
         },
         "2023.3Q": {
-          "nb_csm_eok": 4539.3,
+          "nb_csm_eok": 2600.7,
           "wolnap_chowoe_eok": 463.4,
-          "multiple": 9.8
+          "multiple": 5.61
         },
         "2023.4Q": {
           "nb_csm_eok": 6346.7,
@@ -701,9 +701,9 @@
           "multiple": 11.1
         },
         "2024.1Q": {
-          "nb_csm_eok": 1313.6,
+          "nb_csm_eok": 1224.8,
           "wolnap_chowoe_eok": 131.6,
-          "multiple": 9.98
+          "multiple": 9.31
         },
         "2024.2Q": {
           "nb_csm_eok": 2888.8,
@@ -716,14 +716,14 @@
           "multiple": 10.23
         },
         "2024.4Q": {
-          "nb_csm_eok": 6346.7,
+          "nb_csm_eok": 5013.0,
           "wolnap_chowoe_eok": 629.0,
-          "multiple": 10.09
+          "multiple": 7.97
         },
         "2025.1Q": {
-          "nb_csm_eok": 1313.6,
+          "nb_csm_eok": 1256.9,
           "wolnap_chowoe_eok": 188.3,
-          "multiple": 6.98
+          "multiple": 6.68
         },
         "2025.2Q": {
           "nb_csm_eok": 2331.8,
@@ -835,57 +835,57 @@
       "sector": "Life",
       "fy2024": {
         "period": "FY2024",
-        "nb_csm_eok": 32360.6,
+        "nb_csm_eok": 21230.9,
         "wolnap_chowoe_eok": 2697.9,
-        "multiple": 11.99,
+        "multiple": 7.87,
         "ir_total_multiple": null
       },
       "series": {
         "2023.1Q": {
-          "nb_csm_eok": 7048.4,
+          "nb_csm_eok": 5715.6,
           "wolnap_chowoe_eok": 804.8,
-          "multiple": 8.76
+          "multiple": 7.1
         },
         "2023.2Q": {
-          "nb_csm_eok": 16521.1,
+          "nb_csm_eok": 13592.2,
           "wolnap_chowoe_eok": 1374.0,
-          "multiple": 12.02
+          "multiple": 9.89
         },
         "2023.3Q": {
-          "nb_csm_eok": 23372.5,
+          "nb_csm_eok": 18559.5,
           "wolnap_chowoe_eok": 1924.1,
-          "multiple": 12.15
+          "multiple": 9.65
         },
         "2023.4Q": {
-          "nb_csm_eok": 32360.6,
+          "nb_csm_eok": 25412.2,
           "wolnap_chowoe_eok": 2452.5,
-          "multiple": 13.2
+          "multiple": 10.36
         },
         "2024.1Q": {
-          "nb_csm_eok": 7156.4,
+          "nb_csm_eok": 5154.0,
           "wolnap_chowoe_eok": 823.3,
-          "multiple": 8.69,
+          "multiple": 6.26,
           "ir_total_multiple": 6.0
         },
         "2024.2Q": {
-          "nb_csm_eok": 13665.7,
+          "nb_csm_eok": 9964.9,
           "wolnap_chowoe_eok": 1367.8,
-          "multiple": 9.99
+          "multiple": 7.29
         },
         "2024.3Q": {
-          "nb_csm_eok": 20912.5,
+          "nb_csm_eok": 15385.3,
           "wolnap_chowoe_eok": 2021.6,
-          "multiple": 10.34
+          "multiple": 7.61
         },
         "2024.4Q": {
-          "nb_csm_eok": 32360.6,
+          "nb_csm_eok": 21230.9,
           "wolnap_chowoe_eok": 2697.9,
-          "multiple": 11.99
+          "multiple": 7.87
         },
         "2025.1Q": {
-          "nb_csm_eok": 6784.0,
+          "nb_csm_eok": 4881.9,
           "wolnap_chowoe_eok": 616.5,
-          "multiple": 11.0,
+          "multiple": 7.92,
           "ir_total_multiple": 8.0
         },
         "2025.2Q": {
@@ -899,9 +899,9 @@
           "multiple": 11.04
         },
         "2025.4Q": {
-          "nb_csm_eok": 31007.7,
+          "nb_csm_eok": 20662.6,
           "wolnap_chowoe_eok": 2691.2,
-          "multiple": 11.52
+          "multiple": 7.68
         }
       }
     },
@@ -1066,19 +1066,19 @@
       },
       "series": {
         "2023.1Q": {
-          "nb_csm_eok": 4152.3,
+          "nb_csm_eok": 4113.5,
           "wolnap_chowoe_eok": 299.8,
-          "multiple": 13.85
+          "multiple": 13.72
         },
         "2023.2Q": {
-          "nb_csm_eok": 8733.4,
+          "nb_csm_eok": 7782.7,
           "wolnap_chowoe_eok": 619.6,
-          "multiple": 14.1
+          "multiple": 12.56
         },
         "2023.3Q": {
-          "nb_csm_eok": 13987.2,
+          "nb_csm_eok": 11892.1,
           "wolnap_chowoe_eok": 987.1,
-          "multiple": 14.17
+          "multiple": 12.05
         },
         "2023.4Q": {
           "nb_csm_eok": 18369.7,
@@ -1086,14 +1086,14 @@
           "multiple": 13.89
         },
         "2024.1Q": {
-          "nb_csm_eok": 4484.9,
+          "nb_csm_eok": 4152.3,
           "wolnap_chowoe_eok": 380.5,
-          "multiple": 11.79
+          "multiple": 10.91
         },
         "2024.2Q": {
-          "nb_csm_eok": 9015.2,
+          "nb_csm_eok": 8733.4,
           "wolnap_chowoe_eok": 735.2,
-          "multiple": 12.26
+          "multiple": 11.88
         },
         "2024.3Q": {
           "nb_csm_eok": 13987.2,
@@ -1121,9 +1121,9 @@
           "multiple": 12.22
         },
         "2025.4Q": {
-          "nb_csm_eok": 19321.8,
+          "nb_csm_eok": 17418.6,
           "wolnap_chowoe_eok": 1509.0,
-          "multiple": 12.8
+          "multiple": 11.54
         }
       }
     },

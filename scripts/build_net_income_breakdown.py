@@ -126,13 +126,22 @@ def extract_tier1(tables):
         inv, _ = line_eok(t, f, "투자손익")
         fin_inc, _ = line_eok(t, f, "보험금융수익", exclude=("재보험",))
         fin_exp, _ = line_eok(t, f, "보험금융비용", exclude=("재보험",))
+        refin_inc, _ = line_eok(t, f, "재보험금융수익")
+        refin_exp, _ = line_eok(t, f, "재보험금융비용")
+        oth_inc, _ = line_eok(t, f, "기타영업수익")
+        oth_exp, _ = line_eok(t, f, "기타사업비용")
         op, _ = line_eok(t, f, "영업이익", exclude=("영업외",))
         oi, _ = line_eok(t, f, "영업외수익")
         oe, _ = line_eok(t, f, "영업외비용")
+        pretax, _ = line_eok(t, f, "법인세비용차감전순이익", "법인세차감전", "세전순이익", "세전이익")
+        tax, _ = line_eok(t, f, "법인세비용", "법인세", exclude=("차감전",))
         rec = {
             "보험손익": ins, "투자손익": inv,
             "보험금융수익": fin_inc, "보험금융비용": fin_exp,
+            "재보험금융수익": refin_inc, "재보험금융비용": refin_exp,
+            "기타영업수익": oth_inc, "기타사업비용": oth_exp,
             "영업이익": op, "영업외": (((oi or 0) - (oe or 0)) if (oi is not None or oe is not None) else None),
+            "세전이익": pretax, "법인세": tax,
             "당기순이익": ni, "_ni_label": ni_lab, "_unit": f, "_caption": t.caption[:40],
         }
         # primary: internal consistency (보험손익+투자손익 ≈ 영업이익). Then the LARGEST
@@ -306,6 +315,7 @@ def extract_tier2_lob(tables, t1_ins=None):
         p = LOB_POS[lob]
         rv, cv = raw[lob]
         csm = _row_with(rev_t, p, "서비스의 이전으로") if rev_t else None
+        ra = _row_with(rev_t, p, "비금융위험에 대한 위험조정의 변동분") if rev_t else None
         rev = rv * f / EOK if rv is not None else None
         cost = cv * f / EOK if cv is not None else None
         if rev is None and cost is None:
@@ -315,6 +325,7 @@ def extract_tier2_lob(tables, t1_ins=None):
             "보험서비스비용": round(cost, 1) if cost is not None else None,
             "보험손익": round(rev - cost, 1) if (rev is not None and cost is not None) else None,
             "csm_상각": round(csm * f / EOK, 1) if csm is not None else None,
+            "ra_변동": round(ra * f / EOK, 1) if ra is not None else None,
         }
     return out or None
 

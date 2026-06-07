@@ -29,7 +29,6 @@ VIZ = ROOT / "data" / "dart" / "viz"
 IR = ROOT / "data" / "ir"
 PREMIUM_PATH = ROOT / "data" / "_derived" / "nb_premium_wolnap.json"
 OUT_PATH = ROOT / "data" / "_derived" / "nb_csm_validation.json"
-TEMPLATES_OUT = ROOT / "templates" / "data" / "_derived" / "nb_csm_validation.json"
 
 # "얼추 비슷" tolerance
 REL_TOL = 0.25
@@ -49,8 +48,26 @@ PREFERRED_SCOPE = {
     "DB손해보험": ["total_monthly_avg", "protection_monthly_avg"],
     "삼성화재해상보험": ["protection_premium_monthly_avg", "protection_implied_from_ir_csm_and_ratio"],
     "현대해상": ["total_implied_from_ir_csm_and_ratio", "personal_premium_monthly_avg"],
-    "한화생명": ["total_implied_from_ir_csm_and_ratio"],
+    # 한화생명: KIDI FY-aggregated monthly avg가 numerator(FY24 annual)와 시점 align.
+    # 기존 total_implied_from_ir_csm_and_ratio는 FY2025.1Q single point만 있어 시점 mismatch 유발.
+    # 2026-05-31: monthly_avg_from_ytd로 변경, FY25.1Q fallback 유지.
+    "한화생명": ["monthly_avg_from_ytd", "total_implied_from_ir_csm_and_ratio"],
 }
+
+
+def waterfall_period_to_premium_period(wf_period: str | None) -> str | None:
+    """csm_waterfall global period 문자열 → nb_premium_wolnap period 키 매핑.
+    예: 'annual (fiscal 2024 reporting)' → 'FY2024'."""
+    if not wf_period:
+        return None
+    s = wf_period.lower()
+    if "fiscal 2024" in s or "fy2024" in s:
+        return "FY2024"
+    if "fiscal 2025" in s or "fy2025" in s:
+        return "FY2025"
+    if "fiscal 2023" in s or "fy2023" in s:
+        return "FY2023"
+    return None
 
 
 def load_json(path: Path) -> dict:
@@ -120,15 +137,26 @@ def index_nb_csm(waterfall: dict) -> dict[str, float]:
     return out
 
 
-def pick_premium_records(companies: dict[str, dict], company: str) -> list[dict]:
+def pick_premium_records(
+    companies: dict[str, dict],
+    company: str,
+    prefer_period: str | None = None,
+) -> list[dict]:
+    """Scope 우선순위 + (선택) numerator period 매칭으로 denominator row 정렬.
+
+    sort key = (scope_rank, period_match_rank, alphabetical_period).
+    scope이 같은 row끼리는 prefer_period와 일치하는 것이 먼저. scope 우선순위는
+    유지되므로 기존 통과 회사(DB·삼성화재·현대)에는 회귀 없음.
+    """
     rows = [v for k, v in companies.items() if v.get("company") == company]
     scopes = PREFERRED_SCOPE.get(company, [])
-    rows.sort(
-        key=lambda r: (
-            scopes.index(r["scope"]) if r.get("scope") in scopes else 99,
-            r.get("period") or "",
-        )
-    )
+
+    def sort_key(r: dict) -> tuple:
+        scope_rank = scopes.index(r["scope"]) if r.get("scope") in scopes else 99
+        period_match_rank = 0 if (prefer_period and r.get("period") == prefer_period) else 1
+        return (scope_rank, period_match_rank, r.get("period") or "")
+
+    rows.sort(key=sort_key)
     return rows
 
 
@@ -167,8 +195,11 @@ def validate_row(
     prem: dict,
     ir_ratio: float,
     ir_src: str,
+    numerator_period_label: str = "FY2024 annual (csm_waterfall)",
+    prefer_period: str | None = None,
 ) -> dict:
     prem_month = float(prem["wolnap_premium_eok_month"])
+    period_aligned = (prefer_period is None) or (prem.get("period") == prefer_period)
     primary_computed = (
         round((nb_eok_annual / 12.0) / prem_month, 4) if prem_month > 0 else None
     )
@@ -191,9 +222,20 @@ def validate_row(
         else None
     )
 
+    notes = None
+    if not passed:
+        notes = f"Period/scope mismatch likely (numerator {numerator_period_label} vs IR {ir_src})"
+    elif not period_aligned:
+        notes = (
+            f"PASS via period-mismatched fallback — denominator period={prem.get('period')} "
+            f"does not match numerator {numerator_period_label} (prefer_period={prefer_period}). "
+            "Aligned-period row(s) failed; suspect numerator/denominator data integrity. "
+            "Tolerance loophole may mask upstream bug."
+        )
+
     return {
         "company": company,
-        "ifrs17_period": "FY2024 annual (csm_waterfall)",
+        "ifrs17_period": numerator_period_label,
         "premium_period": prem.get("period"),
         "premium_scope": prem.get("scope"),
         "premium_source": prem.get("source"),
@@ -209,12 +251,10 @@ def validate_row(
         "abs_diff": round(abs(computed - ir_ratio), 4) if computed is not None else None,
         "rel_diff": round(rel_err, 4) if rel_err is not None else None,
         "status": "pass" if passed else "fail",
+        "period_aligned": period_aligned,
+        "fallback_used": passed and (not period_aligned),
         "reconcile_candidates": cands[:6],
-        "notes": (
-            "Period/scope mismatch likely (IFRS FY2024 vs IR 2025 snapshot)"
-            if not passed
-            else None
-        ),
+        "notes": notes,
     }
 
 
@@ -224,6 +264,9 @@ def build_report() -> dict:
     companies = premium_payload.get("companies") or {}
     nb_map = index_nb_csm(wf)
     ir_map = load_ir_benchmarks()
+    wf_period = wf.get("period")
+    prefer_period = waterfall_period_to_premium_period(wf_period)
+    numerator_label = f"{wf_period} (csm_waterfall)" if wf_period else "csm_waterfall"
 
     nb_ratio_data = load_json(IR / "nb_csm_ratio.json") if (IR / "nb_csm_ratio.json").exists() else {}
 
@@ -249,7 +292,7 @@ def build_report() -> dict:
                 }
             )
             continue
-        prem_rows = pick_premium_records(companies, company)
+        prem_rows = pick_premium_records(companies, company, prefer_period=prefer_period)
         if not prem_rows:
             results.append(
                 {
@@ -280,7 +323,7 @@ def build_report() -> dict:
         row: dict | None = None
         for prem in prem_rows:
             for ir_v, ir_s in ir_alts:
-                candidate = validate_row(company, nb_annual, prem, ir_v, ir_s)
+                candidate = validate_row(company, nb_annual, prem, ir_v, ir_s, numerator_label, prefer_period)
                 if row is None or candidate["status"] == "pass" or (
                     candidate.get("rel_diff") is not None
                     and (row.get("rel_diff") is None or candidate["rel_diff"] < row["rel_diff"])
@@ -290,26 +333,30 @@ def build_report() -> dict:
                     break
             if row and row["status"] == "pass":
                 break
-        results.append(row or validate_row(company, nb_annual, prem_rows[0], ir_ratio, ir_src))
+        results.append(row or validate_row(company, nb_annual, prem_rows[0], ir_ratio, ir_src, numerator_label, prefer_period))
 
     tested = [r for r in results if r.get("status") in ("pass", "fail")]
     passed = sum(1 for r in tested if r["status"] == "pass")
     failed = [r for r in tested if r["status"] == "fail"]
+    fallback_passes = [r for r in tested if r.get("fallback_used")]
 
     return {
         "_meta": {
             "definition": "computed NB CSM mult = IFRS17 new_business CSM ÷ 월납환산 premium",
             "ifrs17_numerator_period": wf.get("period"),
+            "prefer_period_for_denominator": prefer_period,
             "tolerance": {"rel": REL_TOL, "abs": ABS_TOL},
             "built_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "build_script": "scripts/validate_nb_csm_multiple.py",
             "cohort_tested": len(tested),
             "cohort_pass": passed,
             "cohort_fail": len(failed),
+            "cohort_fallback_pass": len(fallback_passes),
             "needs_reconcile_loop": len(failed) > 0,
         },
         "results": results,
         "failed": failed,
+        "fallback_passes": fallback_passes,
     }
 
 
@@ -317,16 +364,23 @@ def main() -> int:
     report = build_report()
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    TEMPLATES_OUT.parent.mkdir(parents=True, exist_ok=True)
-    TEMPLATES_OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
     meta = report["_meta"]
     print(f"Wrote {OUT_PATH}")
-    print(f"  tested={meta['cohort_tested']} pass={meta['cohort_pass']} fail={meta['cohort_fail']}")
+    print(
+        f"  tested={meta['cohort_tested']} pass={meta['cohort_pass']} "
+        f"fail={meta['cohort_fail']} fallback_pass={meta['cohort_fallback_pass']}"
+    )
     for f in report.get("failed") or []:
         print(
             f"  FAIL {f['company']}: computed={f.get('computed_multiple')} "
             f"ir={f.get('ir_disclosed_multiple')} rel={f.get('rel_diff')}"
+        )
+    for fb in report.get("fallback_passes") or []:
+        print(
+            f"  FALLBACK {fb['company']}: prem={fb.get('premium_period')} "
+            f"(prefer={meta['prefer_period_for_denominator']}) - aligned-period row(s) failed, "
+            f"suspect upstream data integrity"
         )
     return 1 if meta["cohort_fail"] > 0 else 0
 

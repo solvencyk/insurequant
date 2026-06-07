@@ -4,7 +4,7 @@
     "metric": "월납 초회보험료 금액 (보험계약), whole-company 합계 row (LINE 99111)",
     "unit_raw": "천원 (cheonwon)",
     "data_year_semantics": "cumulative YTD (MM=03/06/09/12)",
-    "crawled_at": "2026-05-29T13:05:16Z",
+    "crawled_at": "2026-06-06T14:45:04Z",
     "build_script": "scripts/crawl_kidi_longterm_premium.py",
     "periods": [
       "202303",
@@ -22,7 +22,7 @@
       "202603"
     ],
     "company_count": 41,
-    "record_count": 184
+    "record_count": 200
   },
   "records": {
     "메리츠|202303": {
@@ -133,6 +133,15 @@
       "wolnap_only_cheonwon": 130423049,
       "etc_cheonwon": 73476
     },
+    "메리츠|202603": {
+      "company_kidi": "메리츠",
+      "comp_code": "N01",
+      "data_year": "202603",
+      "first_premium_cheonwon": 34833248,
+      "first_premium_eok": 348.33,
+      "wolnap_only_cheonwon": 34816092,
+      "etc_cheonwon": 17156
+    },
     "한화|202303": {
       "company_kidi": "한화",
       "comp_code": "N02",
@@ -240,6 +249,15 @@
       "first_premium_eok": 880.45,
       "wolnap_only_cheonwon": 87716600,
       "etc_cheonwon": 327931
+    },
+    "한화|202603": {
+      "company_kidi": "한화",
+      "comp_code": "N02",
+      "data_year": "202603",
+      "first_premium_cheonwon": 23582091,
+      "first_premium_eok": 235.82,
+      "wolnap_only_cheonwon": 23520731,
+      "etc_cheonwon": 61360
     },
     "롯데|202303": {
       "company_kidi": "롯데",
@@ -349,6 +367,15 @@
       "wolnap_only_cheonwon": 32864571,
       "etc_cheonwon": 7320
     },
+    "롯데|202603": {
+      "company_kidi": "롯데",
+      "comp_code": "N03",
+      "data_year": "202603",
+      "first_premium_cheonwon": 5395958,
+      "first_premium_eok": 53.96,
+      "wolnap_only_cheonwon": 5395426,
+      "etc_cheonwon": 532
+    },
     "MG|202303": {
       "company_kidi": "MG",
       "comp_code": "N04",
@@ -429,6 +456,15 @@
       "first_premium_eok": 6.94,
       "wolnap_only_cheonwon": 573884,
       "etc_cheonwon": 119897
+    },
+    "MG|202603": {
+      "company_kidi": "MG",
+      "comp_code": "N04",
+      "data_year": "202603",
+      "first_premium_cheonwon": 24230,
+      "first_premium_eok": 0.24,
+      "wolnap_only_cheonwon": 24230,
+      "etc_cheonwon": 0
     },
     "흥국|202303": {
       "company_kidi": "흥국",
@@ -538,6 +574,15 @@
       "wolnap_only_cheonwon": 41005497,
       "etc_cheonwon": 15316
     },
+    "흥국|202603": {
+      "company_kidi": "흥국",
+      "comp_code": "N05",
+      "data_year": "202603",
+      "first_premium_cheonwon": 11687411,
+      "first_premium_eok": 116.87,
+      "wolnap_only_cheonwon": 11684599,
+      "etc_cheonwon": 2812
+    },
     "삼성|202303": {
       "company_kidi": "삼성",
       "comp_code": "N08",
@@ -645,6 +690,15 @@
       "first_premium_eok": 2200.86,
       "wolnap_only_cheonwon": 215799013,
       "etc_cheonwon": 4286738
+    },
+    "삼성|202603": {
+      "company_kidi": "삼성",
+      "comp_code": "N08",
+      "data_year": "202603",
+      "first_premium_cheonwon": 45589445,
+      "first_premium_eok": 455.89,
+      "wolnap_only_cheonwon": 44680695,
+      "etc_cheonwon": 908750
     },
     "현대|202303": {
       "company_kidi": "현대",
@@ -754,6 +808,15 @@
       "wolnap_only_cheonwon": 127839674,
       "etc_cheonwon": 4675631
     },
+    "현대|202603": {
+      "company_kidi": "현대",
+      "comp_code": "N09",
+      "data_year": "202603",
+      "first_premium_cheonwon": 29874573,
+      "first_premium_eok": 298.75,
+      "wolnap_only_cheonwon": 28105895,
+      "etc_cheonwon": 1768678
+    },
     "KB|202303": {
       "company_kidi": "KB",
       "comp_code": "N10",
@@ -861,6 +924,15 @@
       "first_premium_eok": 1509.04,
       "wolnap_only_cheonwon": 150689108,
       "etc_cheonwon": 215034
+    },
+    "KB|202603": {
+      "company_kidi": "KB",
+      "comp_code": "N10",
+      "data_year": "202603",
+      "first_premium_cheonwon": 31055442,
+      "first_premium_eok": 310.55,
+      "wolnap_only_cheonwon": 30953594,
+      "etc_cheonwon": 101848
     },
     "DB|202303": {
       "company_kidi": "DB",
@@ -970,6 +1042,15 @@
       "wolnap_only_cheonwon": 178611595,
       "etc_cheonwon": 10326505
     },
+    "DB|202603": {
+      "company_kidi": "DB",
+      "comp_code": "N11",
+      "data_year": "202603",
+      "first_premium_cheonwon": 41766044,
+      "first_premium_eok": 417.66,
+      "wolnap_only_cheonwon": 38013316,
+      "etc_cheonwon": 3752728
+    },
     "AXA|202303": {
       "company_kidi": "AXA",
       "comp_code": "N16",
@@ -1077,6 +1158,15 @@
       "first_premium_eok": 46.15,
       "wolnap_only_cheonwon": 4512215,
       "etc_cheonwon": 102554
+    },
+    "AXA|202603": {
+      "company_kidi": "AXA",
+      "comp_code": "N16",
+      "data_year": "202603",
+      "first_premium_cheonwon": 1029782,
+      "first_premium_eok": 10.3,
+      "wolnap_only_cheonwon": 999453,
+      "etc_cheonwon": 30329
     },
     "하나|202303": {
       "company_kidi": "하나",
@@ -1186,6 +1276,15 @@
       "wolnap_only_cheonwon": 10696193,
       "etc_cheonwon": 61111
     },
+    "하나|202603": {
+      "company_kidi": "하나",
+      "comp_code": "N42",
+      "data_year": "202603",
+      "first_premium_cheonwon": 2603006,
+      "first_premium_eok": 26.03,
+      "wolnap_only_cheonwon": 2551605,
+      "etc_cheonwon": 51401
+    },
     "신한EZ|202303": {
       "company_kidi": "신한EZ",
       "comp_code": "N43",
@@ -1294,6 +1393,15 @@
       "wolnap_only_cheonwon": 216202,
       "etc_cheonwon": 3211
     },
+    "신한EZ|202603": {
+      "company_kidi": "신한EZ",
+      "comp_code": "N43",
+      "data_year": "202603",
+      "first_premium_cheonwon": 64190,
+      "first_premium_eok": 0.64,
+      "wolnap_only_cheonwon": 64190,
+      "etc_cheonwon": 0
+    },
     "AIG|202303": {
       "company_kidi": "AIG",
       "comp_code": "N51",
@@ -1400,6 +1508,15 @@
       "first_premium_cheonwon": 7447637,
       "first_premium_eok": 74.48,
       "wolnap_only_cheonwon": 7447637,
+      "etc_cheonwon": 0
+    },
+    "AIG|202603": {
+      "company_kidi": "AIG",
+      "comp_code": "N51",
+      "data_year": "202603",
+      "first_premium_cheonwon": 2247132,
+      "first_premium_eok": 22.47,
+      "wolnap_only_cheonwon": 2247132,
       "etc_cheonwon": 0
     },
     "ACE|202303": {
@@ -1510,6 +1627,15 @@
       "wolnap_only_cheonwon": 9823229,
       "etc_cheonwon": 8275
     },
+    "ACE|202603": {
+      "company_kidi": "ACE",
+      "comp_code": "N52",
+      "data_year": "202603",
+      "first_premium_cheonwon": 2288594,
+      "first_premium_eok": 22.89,
+      "wolnap_only_cheonwon": 2232014,
+      "etc_cheonwon": 56580
+    },
     "농협|202303": {
       "company_kidi": "농협",
       "comp_code": "N71",
@@ -1618,6 +1744,15 @@
       "wolnap_only_cheonwon": 26996544,
       "etc_cheonwon": 86043184
     },
+    "농협|202603": {
+      "company_kidi": "농협",
+      "comp_code": "N71",
+      "data_year": "202603",
+      "first_premium_cheonwon": 67028852,
+      "first_premium_eok": 670.29,
+      "wolnap_only_cheonwon": 10215418,
+      "etc_cheonwon": 56813434
+    },
     "카카오페이|202406": {
       "company_kidi": "카카오페이",
       "comp_code": "N80",
@@ -1679,6 +1814,15 @@
       "first_premium_cheonwon": 679470,
       "first_premium_eok": 6.79,
       "wolnap_only_cheonwon": 679470,
+      "etc_cheonwon": 0
+    },
+    "카카오페이|202603": {
+      "company_kidi": "카카오페이",
+      "comp_code": "N80",
+      "data_year": "202603",
+      "first_premium_cheonwon": 98134,
+      "first_premium_eok": 0.98,
+      "wolnap_only_cheonwon": 98134,
       "etc_cheonwon": 0
     }
   }

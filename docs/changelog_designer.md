@@ -9,6 +9,56 @@ Stage 5 of 5 in the workflow split. See `CLAUDE.md` for the full 5-stage index.
 
 ---
 
+## 2026-06-07 -- Panel 3 당기순이익 bridge waterfall (PL_breakdown.json)
+
+Replaced Panel 3 (old Chart.js 손보-only 당기순이익 분해 from `net_income_breakdown.json`)
+with a CSM-style **bridge waterfall** from new root `PL_breakdown.json`, reusing Panel 1's
+보험사 + 기준(연도/분기) controls. First cut — owner to refine details.
+
+- 5-bar bridge (exact reconciliation verified, 손보+생보): **보험손익(1) → 투자손익(17) →
+  영업외손익(21) → (−)법인세(23) → 당기순이익(24)**. 단위 백만원, 축 조원, ECharts (Panel 1 technique).
+- Source has **both YTD(`값`) and 당분기(`값_당분기`)** → 분기 mode works now (unlike CSM):
+  연도=latest `*.4Q` via `값`; 분기=latest Q via `값_당분기`. Shared #wfPeriod drives both panels
+  (분기 → CSM stubs, PL shows quarterly).
+- `PATHS.plx` (root + data/ fallback), `ix.plx` = company→quarter→항목번호→{y,q}.
+  Template canvas→div `#chartPl`; `destroyCharts` wf+pl now ECharts(dispose), amort/nb/hist Chart.js.
+- **Company-name mismatch flagged:** PL uses 삼성생명보험/미래에셋생명보험/코리안리재보험/KB라이프생명
+  (vs dropdown 삼성생명/…/코리안리/케이비라이프생명보험). `plResolve()` fuzzy-matches (substring);
+  케이비라이프↔KB라이프 still gaps → stub. Publishing to canonicalize names.
+- Removed orphaned `ni`(net_income_breakdown) wiring (my-change orphan). Pre-existing dead
+  `payload.pl`/`ix.pl` (insurance_pl_breakdown) left untouched.
+- Verified via ECharts getOption + canvas dims (screenshot tool hung renderer-side):
+  현대해상 FY2025 (396,111→…→561,106 reconciles), 현대해상 2026.1Q 당분기, 삼성생명→삼성생명보험
+  resolve, 삼성화재 mobile, 처브라이프 stub. **0 console errors** both breakpoints.
+- Report: `artifacts/designer/panel3_pl_bridge_waterfall_20260607.md`.
+
+---
+
+## 2026-06-07 -- Panel 1 windowed CSM waterfall (company × 연도/분기)
+
+Replaced Panel 1's single fixed 2024 year-end waterfall with a **company × period
+windowed** waterfall, mirroring `K-ICS.html` selector methodology.
+
+- New source: root `CSM_waterfall.json` (long-format: 원수사명/항목번호/항목명/공시분기/값,
+  23사 × 2023.1Q~2026.1Q, **단위 억원**, YTD/연 누계). Wired as `PATHS.wfx` (root primary
+  + `data/dart/viz/` fallback), indexed `ix.wfx` = company→quarter→항목번호→값.
+- **연도 mode (shipped):** trailing 4 buckets (latest period + prior year-ends), expanded
+  to 18 bars — 기초 CSM → 연도별 신계약·이자·가정/경험·상각 → 기말 CSM. Axis in 조원,
+  tooltips in 조+억. Component reconciliation + year-end chain verified against data.
+- **분기 mode (stubbed):** UI present; `WF_QUARTER_READY=false` shows "당분기 데이터 준비 중"
+  because the file is YTD and can't be decomposed per-quarter. Flip flag when 당분기 table lands.
+- Old stages-based `renderWfEcharts` removed (my-change orphan). Company dropdown = union of
+  legacy 28사 + new 23사, so legacy-only insurers still list and Panel 1 stubs gracefully.
+- Mobile: ECharts `dataZoom` (inside+slider) on the 18-bar chart, defaults to latest ~2 groups;
+  `@media (max-width:640px)` convention unchanged, desktop math untouched.
+- Verified via Claude Preview at 1280px + 375px (삼성생명 10.7조→13.6조, 현대해상, DB생명,
+  분기 stub, 라이나 missing-data stub): **0 console errors**.
+- Report: `artifacts/designer/panel1_windowed_csm_waterfall_20260607.md`.
+- Hand-off to publishing: relocate `CSM_waterfall.json` → `data/dart/viz/`; flip
+  `WF_QUARTER_READY` when per-quarter table ships.
+
+---
+
 ## 2026-05-31 -- Designer stage created (split from publishing)
 
 User observation: HTML structure/styling is a different kind of work from data assembly. Split out as its own stage. Publishing now strictly owns master JSONs; designer strictly owns HTML.

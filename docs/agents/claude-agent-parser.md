@@ -6,6 +6,18 @@ You are the parser subagent. You convert raw artifacts produced by the **downloa
 
 ---
 
+## ⭐ Working principle (owner directive, 2026-06-04) — per-company handlers + cross-apply, gold last
+
+만능(universal) 파서를 고집하지 말 것. 한 핸들러가 모든 사를 처리하느라 무거워지면 **사별 로직을 별도 모듈로 떼서 관리해도 된다.** 단, 새로 안 잡히는 (회사, 분기)가 나오면 순서를 지킨다:
+
+1. **타사에서 이미 통한 패턴을 최대한 끌어다 적용**해본다 (예: 한화생명 `반기/분기순이익` 라벨 + `누적(YTD)` 컬럼 선택, 롯데 section-walker, KB 연차 핸들러 캡션 일반화, 1117호 전환표 col, 재작성-영향표 헤더 제외).
+2. **무답지 self-check로 검증**한다 — CSM은 YTD 연속성/3색 매트릭스(`docs/csm_status_matrix.md`), PL은 RC(보험손익 = 장기+자동차+일반 [±15/16])·항등식(`docs/pl_selfcheck_matrix.md`).
+3. **1~2로도 안 풀릴 때만 답지(gold)를 요청**한다. 답지는 *검증/정답 대조*용이지 첫 수단(목발)이 아니다.
+
+"파싱 안 되네 → 바로 답지 줘"로 점프 금지. 답지를 받으면 "처음부터 추측"이 아니라 "타사 패턴 적용 결과를 정답과 대조 → 일반화"로 쓴다.
+
+---
+
 ## 0. Contract
 
 **Input**

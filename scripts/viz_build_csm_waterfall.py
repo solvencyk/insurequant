@@ -59,6 +59,7 @@ STAGE_PATTERNS: dict[str, list[str]] = {
     "interest": [
         "순보험금융손익",
         "보험계약의 순 금융손익",
+        "보험금융수익(비용)",  # 현대/한화: 보험금융수익(비용)에 따른 ... / 당기손익으로 인식한 ... 보험금융수익(비용)
         "보험금융손익",
         "당기손익 인식분",
         "이자비용",
@@ -358,7 +359,16 @@ def find_csm_leaf_cols(
             non_label_top_count = len(top) - 1  # excluding 구분
             if len(sub) <= non_label_top_count + 1:
                 start = csm_top[0]
-                return list(range(start, start + len(sub)))
+                # Drop a 소계/합계 sub-column (롯데손해: 수정소급/공정가치/이 외/
+                # 소 계) so the per-method CSM isn't double-counted with its own
+                # subtotal (was [2,3,4,5] → 2× the CSM). Filings whose sub has no
+                # subtotal column are returned unchanged.
+                method_cols = [
+                    start + i
+                    for i, lbl in enumerate(sub)
+                    if not _is_subtotal_label(lbl)
+                ]
+                return method_cols or list(range(start, start + len(sub)))
         if sub:
             method_cols = [
                 i
@@ -569,6 +579,58 @@ def _new_business_abs(blk: dict) -> float:
         return 0.0
 
 
+def _disambiguate_basis_period(ranked: list[dict]) -> list[dict]:
+    """Promote the current-period separate-basis (별도 당기) block when a filing
+    discloses several near-identical 측정요소별 tables.
+
+    생보사 file the measurement rollforward up to four times — 연결/별도 ×
+    당기/전기 — under an identical caption ("(5) 당기와 전기 중 … 측정 요소별
+    변동내역 … 1) 당기"), so the caption-based period scorer can't separate them
+    and may land on the consolidated PRIOR-period copy (한화생명 observed: 연결
+    전기 기초 13.59조 instead of 별도 당기 기초 9.24조 — the waterfall then misses
+    ~1.1조 because opening/closing are 연결·전기 while the IR-aligned NB override
+    is 별도·당기).
+
+    Two signals, both already proven in ``transition_new_business``:
+      * prior-period copy → its closing CSM ≈ another candidate's opening CSM;
+      * 별도 (separate) basis → smaller opening CSM than 연결.
+    Among the non-prior candidates whose opening CSM sits in the main magnitude
+    band (≥20% of the largest, which drops small PAA/재보험 side tables), prefer
+    the smallest opening. Returns ``ranked`` unchanged when no such duplicate set
+    exists, so single-table filings are untouched.
+    """
+    if len(ranked) < 2:
+        return ranked
+    info = []
+    for b in ranked:
+        op, cl = _block_open_close_csm(b)
+        info.append((b, op, cl))
+
+    def _is_prior(i: int) -> bool:
+        cl = info[i][2]
+        if cl is None:
+            return False
+        for j, (_b, o, _c) in enumerate(info):
+            if j == i or o is None:
+                continue
+            if abs(o) > 1.0 and abs(cl - o) <= max(1.0, abs(o) * 0.001):
+                return True
+        return False
+
+    current = [t for i, t in enumerate(info) if not _is_prior(i)]
+    open_mags = [abs(o) for _b, o, _c in current if o is not None]
+    if not open_mags:
+        return ranked
+    max_open = max(open_mags)
+    full = [t for t in current if t[1] is not None and abs(t[1]) >= max_open * 0.20]
+    if len(full) < 2:
+        return ranked  # no 연결/별도 duplicate pair — leave score order intact
+    best = min(full, key=lambda t: abs(t[1]))[0]
+    if best is ranked[0]:
+        return ranked
+    return [best] + [b for b in ranked if b is not best]
+
+
 def rank_main_blocks(blocks: list[dict]) -> list[dict]:
     """Return CSM-bearing direct-business blocks, best candidate first.
 
@@ -619,7 +681,7 @@ def rank_main_blocks(blocks: list[dict]) -> list[dict]:
         is_direct = 0 if _is_ceded_block(blk) else 1
         candidates.append((is_direct, period, completeness, score, _new_business_abs(blk), blk))
     candidates.sort(key=lambda t: (t[0], t[1], t[2], t[3], t[4]), reverse=True)
-    return [c[5] for c in candidates]
+    return _disambiguate_basis_period([c[5] for c in candidates])
 
 
 def pick_main_block(blocks: list[dict]) -> dict | None:
@@ -899,6 +961,18 @@ def collect_current_product_blocks(blocks: list[dict]) -> list[dict]:
         for c in closes:
             if abs(o) > 1.0 and abs(o - c) <= max(1.0, abs(o) * 0.001):
                 return []
+    # Drop an aggregate 총계 block presented ALONGSIDE its own product breakdown:
+    # if one collected block's |NB| ≈ the sum of all OTHER blocks' |NB| (tight 2%),
+    # it is the company total and summing it with the components double-counts
+    # (미래에셋 FY2025 _00760: a coarse 사망/기타 split whose 기타 == the fine 상품별
+    # total → 2× NB). Drop the aggregate; keep the components.
+    nbs = [_new_business_abs(b) for b, _o, _c, _l in collected]
+    for i, nbi in enumerate(nbs):
+        others_nb = sum(nbs[:i] + nbs[i + 1:])
+        if nbi > 1.0 and others_nb > 1.0 and abs(nbi - others_nb) / others_nb <= 0.02:
+            collected = collected[:i] + collected[i + 1:]
+            closes = [c for _b, _o, c, _l in collected if c is not None]
+            break
     abs_closes = [abs(c) for c in closes]
     for i, c in enumerate(abs_closes):
         others = sum(abs_closes[:i] + abs_closes[i + 1:])
@@ -916,6 +990,201 @@ def extract_stages_summed(blocks: list[dict]) -> dict:
                 out[stage] = {"label": v.get("label"), "value_mn_krw": 0.0}
             out[stage]["value_mn_krw"] += v.get("value_mn_krw", 0.0)
     return out
+
+
+# --- Priority NB CSM path: 전환방법별 보험계약마진 변동 single-cell ----------
+# Some life insurers (한화생명) additionally disclose a "(10) 보험수익 및
+# 전환방법별 보험계약마진 변동 내역" table whose "신계약 인식효과 / 합계" cell
+# is the cleanest source for new-business CSM — it matches the company's own IR
+# (한화 FY24 합계 = 21,231억) whereas the 측정요소별 변동 table's
+# "최초 인식한 계약의 효과" CSM column reports a different (larger) figure.
+# This path takes priority over the csm_leaf_cols-based new_business when such a
+# table exists; otherwise the regular extraction is kept (Meritz/Lotte 손보 do
+# NOT file this table form — they fall back to the leaf-col path).
+_TRANSITION_CAPTION_TOKENS = ("전환방법별", "전환 방법별")
+_TRANSITION_NB_ROW_TOKENS = (
+    "신계약 인식효과",
+    "신계약인식효과",
+    "처음 인식한 계약",
+    "당기 처음 인식",
+    "당기 최초 인식",
+)
+
+
+def _transition_table_blocks(blocks: list[dict]) -> list[dict]:
+    """Blocks whose caption marks a *direct-business* 전환방법별 보험계약마진
+    변동 table and which carry a 신계약/처음 인식 row plus a 합계 column.
+
+    Excludes the sibling 전환방법별 재보험계약마진 (ceded reinsurance) table that
+    quarterly filings disclose right after the direct one — its 신계약 효과 is the
+    much smaller ceded figure, not the new-business CSM the waterfall needs."""
+    out: list[dict] = []
+    for blk in blocks:
+        cap = blk.get("caption") or ""
+        if "재보험" in cap:  # ceded reinsurance transition table — skip
+            continue
+        if not (any(t in cap for t in _TRANSITION_CAPTION_TOKENS)
+                and "보험계약마진" in cap):
+            continue
+        rows = blk.get("rows") or []
+        if any(
+            r and isinstance(r[0], str)
+            and any(t in r[0] for t in _TRANSITION_NB_ROW_TOKENS)
+            for r in rows
+        ):
+            out.append(blk)
+    return out
+
+
+def _transition_row_value(rows: list[list[str]], tokens) -> float | None:
+    """Sum the trailing 합계 column of the row(s) matching ``tokens``.
+
+    The 전환방법별 table lays out transition-method columns
+    (수정소급법/공정가치법/이외 모든계약) followed by a 합계 column. The
+    company files the 신계약 효과 only under one method, so summing the method
+    columns or reading the 합계 column gives the same total — we read 합계
+    (the last cell) directly, which is the IR-reconciling figure."""
+    for r in rows:
+        if not (r and isinstance(r[0], str)
+                and any(t in r[0] for t in tokens)):
+            continue
+        v = parse_num(r[-1])
+        if v is not None:
+            return v
+    return None
+
+
+def transition_new_business(blocks: list[dict]) -> dict | None:
+    """Return {'label','value_mn_krw'} for new-business CSM from the
+    전환방법별 보험계약마진 변동 table, or None when absent.
+
+    When both 연결 and 별도 (plus their 전기 copies) tables are present, prefer
+    the *current-period separate-basis* table: a 전기 copy carries its closing
+    into another block's opening, and 별도 balances are smaller than 연결 — the
+    IR series is disclosed on the 별도 basis. We therefore drop 전기 copies
+    (closing ≈ some block's opening) and pick the survivor with the smallest
+    기초 보험계약마진."""
+    cands = _transition_table_blocks(blocks)
+    if not cands:
+        return None
+
+    def _opening(blk) -> float | None:
+        for r in blk.get("rows") or []:
+            if r and isinstance(r[0], str) and "기초 보험계약마진" in r[0]:
+                return parse_num(r[-1])
+        return None
+
+    def _closing(blk) -> float | None:
+        for r in blk.get("rows") or []:
+            if r and isinstance(r[0], str) and "기말 보험계약마진" in r[0]:
+                return parse_num(r[-1])
+        return None
+
+    enriched = []
+    for blk in cands:
+        nb = _transition_row_value(blk.get("rows") or [], _TRANSITION_NB_ROW_TOKENS)
+        if nb is None:
+            continue
+        enriched.append((blk, _opening(blk), _closing(blk), nb))
+    if not enriched:
+        return None
+
+    def _is_prior_period(idx) -> bool:
+        # A 전기 copy's closing balance carries forward into the *current*-period
+        # opening of ANOTHER block in the same table-pair. Compare against other
+        # blocks' openings only — never the block's own opening, which would
+        # falsely flag a single quarterly table whose closing ≈ its opening.
+        closing = enriched[idx][2]
+        if closing is None:
+            return False
+        for j, (_b, o, _c, _n) in enumerate(enriched):
+            if j == idx or o is None:
+                continue
+            if abs(o) > 1.0 and abs(closing - o) <= max(1.0, abs(o) * 0.001):
+                return True
+        return False
+
+    current = [
+        e for i, e in enumerate(enriched) if not _is_prior_period(i)
+    ] or enriched
+
+    # Drop tiny product-SEGMENT tables: some insurers file a 전환방법별 table per
+    # product line plus a company-total one (e.g. KB라이프 — total 기초 ~3.1조 vs a
+    # 348억 segment). A segment whose 기초 보험계약마진 is < 20% of the largest is
+    # not the company total and must not win the smallest-opening pick below.
+    open_mags = [abs(e[1]) for e in current if e[1] is not None]
+    if open_mags:
+        max_open = max(open_mags)
+        full = [
+            e for e in current
+            if e[1] is None or abs(e[1]) >= max_open * 0.20
+        ]
+        if full:
+            current = full
+
+    # Among the full-company current-period tables, the 별도 (separate-basis) copy
+    # has the smaller 기초 보험계약마진 and reconciles with the IR series (한화: 별도
+    # 9.2조 vs 연결 13.3조). Pick the smallest remaining 기초.
+    current.sort(key=lambda e: (e[1] if e[1] is not None else float("inf")))
+    blk, _op, _cl, nb = current[0]
+    label = next(
+        (r[0].strip() for r in (blk.get("rows") or [])
+         if r and isinstance(r[0], str)
+         and any(t in r[0] for t in _TRANSITION_NB_ROW_TOKENS)),
+        "신계약 인식효과",
+    )
+    return {"label": label, "value_mn_krw": nb, "source": "transition_table"}
+
+
+# --- NB CSM path 2: 잔여보장(LRC) 구성요소별 변동 신계약 single-cell -----------
+# Some 손보 filings (롯데손해 FY2025) over-state new-business CSM in the
+# 측정요소별 변동 table (485,252); their IR-aligned figure sits in the
+# *current-period direct-business* 잔여보장 구성요소별 변동내역 (LRC component
+# rollforward) — the 신계약/최초인식계약 row's 보험계약마진 cell (롯데 FY25 =
+# 412,168 = IR). Lower priority than transition_new_business so 전환방법별 filings
+# (생보) are untouched; only used when no 전환방법별 table exists.
+_RECON_NB_ROW_TOKENS = ("신계약", "최초인식계약", "최초 인식 계약")
+
+
+def reconciliation_new_business(blocks: list[dict]) -> dict | None:
+    """NB CSM from the current-period direct 잔여보장 구성요소별 변동 table.
+
+    Gated tight: caption must carry both 잔여보장 and 구성요소, be 원수 (direct,
+    not 재보험/출재/수재), and not be an explicit 전기 copy. Among matches, the
+    whole-LOB total is the largest |CSM| (drops tiny per-segment tables)."""
+    cands: list[tuple[str, float]] = []
+    for blk in blocks:
+        capf = (blk.get("caption") or "").replace(" ", "")
+        if "잔여보장" not in capf or "구성요소" not in capf:
+            continue
+        if any(t in capf for t in ("재보험", "출재", "수재")):
+            continue
+        if "원수" not in capf:
+            continue
+        if "(전)" in capf or "전기>" in capf:  # explicit prior-period copy
+            continue
+        header = blk.get("header") or []
+        rows = filter_current_period_rows(blk.get("rows") or [])
+        csm_cols = find_csm_leaf_cols(header, rows)
+        if not csm_cols:
+            continue
+        for r in rows:
+            if not (r and isinstance(r[0], str)):
+                continue
+            rl = r[0].replace(" ", "")
+            if not any(t.replace(" ", "") in rl for t in _RECON_NB_ROW_TOKENS):
+                continue
+            vs = row_value_start(r)
+            data = r[vs:]
+            vals = [parse_num(data[i]) for i in csm_cols if 0 <= i < len(data)]
+            vals = [v for v in vals if v is not None]
+            if vals:
+                cands.append((r[0].strip(), sum(vals)))
+                break
+    if not cands:
+        return None
+    label, val = max(cands, key=lambda t: abs(t[1]))
+    return {"label": label, "value_mn_krw": val, "source": "reconciliation_lrc"}
 
 
 def build_for_file(path: Path) -> dict:
@@ -946,6 +1215,13 @@ def build_for_file(path: Path) -> dict:
                 "caption": blocks[0].get("caption") if blocks else None,
             }
         stages = extract_stages(main)
+    # Priority new-business path: the 전환방법별 보험계약마진 변동 single-cell
+    # (신계약 인식효과 / 합계) overrides the leaf-col new_business when present.
+    nb_override = transition_new_business(blocks)
+    if nb_override is None:
+        nb_override = reconciliation_new_business(blocks)
+    if nb_override is not None:
+        stages["new_business"] = nb_override
     csm_cols = find_csm_leaf_cols(main.get("header", []), main.get("rows", []))
     unit_div = detect_unit_scale(blocks)
     # Heuristic fallback: when caption/header has no unit annotation we infer

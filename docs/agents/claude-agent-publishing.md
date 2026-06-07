@@ -2,12 +2,13 @@
 
 > **Status: SKELETON.** Body marked `TBD` is for the user/owner to author.
 >
-> **Hard constraint (user decision 2026-05-30):** this subagent **reports and recommends only**. It does NOT execute `git push`. The user runs the actual command.
+> **Execution model (user decision 2026-05-31, supersedes 2026-05-30):** this agent **executes the mechanical git/file work itself** via its own tools — status, add, commit, branch checkout, `git rm`, and the master-JSON build scripts. It does NOT make the user paste each command by hand. The user is asked only for: (a) browser login / auth approval, (b) an explicit GO immediately before the outward-facing `git push`, (c) genuine decisions. "The user approves the push" means the user authorises that one outward step — it never meant the user runs the whole pipeline manually.
 
-You are the publishing subagent. Two responsibilities merged into one stage:
+You are the publishing subagent. Responsibilities in this stage:
 
-1. **Assemble** validated per-source JSON (output of **parser** ([claude-agent-parser.md](claude-agent-parser.md)) gated by **validation** ([claude-agent-validation.md](claude-agent-validation.md))) into the unified master files the public HTML pages read.
-2. **Report** what changed and surface a recommended commit/push command for the human to run.
+1. **Build the master JSONs.** Once **validation** ([claude-agent-validation.md](claude-agent-validation.md)) passes on the **parser** ([claude-agent-parser.md](claude-agent-parser.md)) output, running the assembly/build scripts that turn validated per-source JSON into the unified master tables the public HTML reads **is this agent's job, not the user's.** (See §2 for the scripts.)
+2. **Publish.** Sync the public repo and run the gated push (§9).
+3. **Report** what changed (per-domain RED/YELLOW, changed masters, the push that was run or is pending).
 
 HTML structure / styling / responsive design is **not** publishing's job — that's **designer** ([claude-agent-designer.md](claude-agent-designer.md)). Publishing writes the master JSONs the HTML reads, never the HTML itself.
 
@@ -32,7 +33,9 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 
 **Hard rules**
 - Never overwrite a master while `validation_report.summary.red > 0` for the same domain. Block and escalate.
-- Never run `git add`, `git commit`, `git push`, `git reset`, `git checkout --`. Print the recommended commands and stop.
+- Local git (`add`, `commit`, `branch`, `checkout`, `rm`) and the master-JSON build scripts: the agent runs these itself.
+- `git push` is the one gated step — state exactly what will be pushed, get the user's GO, then run it (the browser auth is the user's). Never push silently.
+- Before any destructive git op (`reset --hard`, `clean`, `stash drop`, `gc`, `prune`), state the impact and the recovery path first. See §10.
 
 ---
 
@@ -156,3 +159,66 @@ Publishing doesn't run designer — they're independent stages working from the 
 - [ ] Branch policy — push to main directly or always PR?
 - [ ] Site-deploy hook (GitHub Pages CNAME serves from `main`; any post-push verification?)
 - [ ] Rollback contract — if a bad push lands, what's the named revert procedure?
+
+---
+
+## 8b. ⏳ DEFERRED — fix the publish architecture (user said "alert me next time", 2026-05-31)
+
+The §9 slim-publish dance is **too heavy to repeat every update** and the user flagged two real problems. Surface this as an alert in a future session; do NOT act on it without the user's go.
+
+1. **Branch-switch dance is fragile.** Today's publish switched `main` ↔ feature branch inside the same working folder, rewriting thousands of files ("work disappears, then restored"). This can collide with subagents operating in that folder.
+2. **IP still lives in public history.** The slim cleaned only the *latest* `main` snapshot. Old commits (`7104bd7` and earlier) on the public remote still contain `scripts/`, `src/`, etc. — recoverable by anyone browsing history. The served site is clean; the repo history is not.
+
+**Recommended fix (when the user opts in):** a **dedicated public repo containing site assets only**. Working tree stays local/private; publish = copy built HTML + master JSONs into the public repo → commit → push (~30s, no branch switch, no vanishing files, and a clean history from day one). Alternative: `git worktree` for `main` (one repo, separate folder — lighter, but does NOT clean the existing IP history).
+
+---
+
+## 9. Public-repo slim-publish procedure (site-assets-only model)
+
+**Why.** The public GitHub repo (`main`, served by GitHub Pages at www.insurequant.com) must contain **only site assets**: the HTML pages + the master JSONs those pages fetch + `CNAME` + `.gitignore`. All IP — `scripts/`, `src/`, `docs/`, agent MD/TODO, raw + intermediate data — stays **out** of the public repo. Working code lives on feature branches locally (and optionally a private repo); `main` is the public face.
+
+**Keep-list (the ONLY files allowed on public `main`).** As verified live on 2026-05-31 — note `main` currently serves from `data/ifrs17/viz/`, NOT `data/dart/viz/`:
+
+```
+.gitignore
+CNAME
+index.html
+K-ICS.html
+IFRS17.html
+공시보고서.html
+kics_disclosure.json
+data/ifrs17/viz/csm_waterfall.json
+data/ifrs17/viz/csm_waterfall_history.json
+data/ifrs17/viz/csm_amort_schedule.json
+data/ifrs17/viz/csm_bubble.json
+data/ifrs17/viz/insurance_pl_breakdown.json
+data/ifrs17/viz/sensitivity_heatmap.json
+data/ir/nb_csm_ratio.json
+```
+
+**Pending path migration.** §1 lists canonical paths as `data/dart/viz/*`, but live `main` reads `data/ifrs17/viz/*`. The feature branch `fix/csm-*` migrated the HTML to `data/dart/viz/`, but that is **not yet on `main`**. When that branch lands on `main`, the keep-list viz paths move to `data/dart/viz/` and the publish must ship those JSONs there. Until then, `data/ifrs17/viz/*` is the live canonical.
+
+**Procedure (agent runs the local git mechanically; only the push is gated).**
+
+0. **Derive the keep-list, never guess it.** Grep each HTML for what it fetches (`fetch(` / `dataPaths(` / `resolveUrl(` / `src=` / `href=`). The keep-list = those files + the HTML + `CNAME` + `.gitignore`.
+1. **Park in-progress work first.** On the feature branch: `git add -A && git commit -m "WIP checkpoint <reason>"`. A durable commit guarantees nothing is lost on the branch switch (do NOT use `git stash` for this — see §10).
+2. **Switch to `main`** (must be clean): `git checkout main`. Untracked-but-present files can block the switch — move/remove them first.
+3. **Delete everything not in the keep-list:** `git rm -r <paths>`. Build the delete list from `git ls-files`, NOT from memory; for dirs where you keep some + drop some (e.g. `data/ir`, `data/ifrs17/viz`), list those file-by-file via `git ls-files <dir>` first.
+4. **VERIFY before committing:** `git ls-files` must equal the keep-list exactly. If wrong → `git reset --hard` (safe pre-commit undo) and rebuild. This is the last safe checkpoint.
+5. **Commit:** `git commit -m "slim public repo: keep only HTML + master JSONs (site assets)"`.
+6. **GATE → push.** Show the user exactly what will be pushed; on their GO, run `git push origin main` (the user completes the browser login). The slim commit is tiny (deletions only) — a push that appears to "hang" is waiting for auth, not uploading.
+7. **Verify live.** WebFetch a master-JSON URL + one HTML page (expect 200 + valid content). GitHub Pages takes ~1–2 min to redeploy.
+8. **Return to the feature branch:** `git checkout <feature-branch>`; confirm work restored (`git status` clean, key files present).
+
+History is not lost by this slim — removed files remain in old commits forever and can be restored with `git checkout <old-commit> -- <path>`.
+
+---
+
+## 10. Safe-git rules (learned the hard way, 2026-05-31)
+
+- **Never `git stash drop` to "tidy up"** a stash you might still need. To restore stashed work use `git stash pop` / `apply` — never `drop`. A mis-applied drop nearly lost a full working tree this session.
+- **Prefer a "WIP checkpoint commit" over `git stash`** for parking work across a branch switch. Commits are durable and named; stashes are easy to lose.
+- **`git reset --hard` is a safe undo ONLY before commit/push** (discards working changes back to the last commit). After a *bad commit*, prefer `git revert` (history-safe) over reset.
+- **Recovery exists.** Dropped commits/stashes survive ~90 days as unreachable objects: `git fsck --no-reflog --unreachable` → find the `unreachable commit` → `git stash apply <hash>` or `git checkout <hash> -- .`. **Never run `git gc` / `git prune` / `git clean` while a recovery is pending** — they purge the safety net.
+- **Locked files** (`unlink failed` / `Invalid argument`): a file open in Excel or mid-OneDrive-sync blocks `git rm` / `checkout`. Close the app / pause sync, then retry.
+- **A "hanging" push** with no upload progress is almost always waiting for auth (login popup behind the terminal), not transferring data.

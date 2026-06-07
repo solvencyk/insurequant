@@ -1,0 +1,953 @@
+{
+  "_meta": {
+    "cohort_size": 7,
+    "skipped": {
+      "코리안리": "empty IR series",
+      "한화손해보험": "no nb_csm_eok values (incompatible schema?)"
+    },
+    "periods": [
+      "2023.1Q",
+      "2023.2Q",
+      "2023.3Q",
+      "2023.4Q",
+      "2024.1Q",
+      "2024.2Q",
+      "2024.3Q",
+      "2024.4Q",
+      "2025.1Q",
+      "2025.2Q",
+      "2025.3Q",
+      "2025.4Q",
+      "2026.1Q"
+    ],
+    "tolerance": {
+      "rel_ok_pct": 5.0,
+      "rel_minor_pct": 10.0,
+      "abs_tol_eok": 100.0
+    },
+    "per_quarter_flag_counts": {
+      "2023.1Q": {
+        "OK": 2,
+        "MINOR": 1,
+        "OVER": 0,
+        "UNDER": 1,
+        "MISSING": 3
+      },
+      "2023.2Q": {
+        "OK": 2,
+        "MINOR": 0,
+        "OVER": 1,
+        "UNDER": 1,
+        "MISSING": 3
+      },
+      "2023.3Q": {
+        "OK": 2,
+        "MINOR": 0,
+        "OVER": 1,
+        "UNDER": 2,
+        "MISSING": 2
+      },
+      "2023.4Q": {
+        "OK": 3,
+        "MINOR": 1,
+        "OVER": 1,
+        "UNDER": 0,
+        "MISSING": 2
+      },
+      "2024.1Q": {
+        "OK": 4,
+        "MINOR": 1,
+        "OVER": 1,
+        "UNDER": 1,
+        "MISSING": 0
+      },
+      "2024.2Q": {
+        "OK": 4,
+        "MINOR": 1,
+        "OVER": 2,
+        "UNDER": 0,
+        "MISSING": 0
+      },
+      "2024.3Q": {
+        "OK": 4,
+        "MINOR": 0,
+        "OVER": 3,
+        "UNDER": 0,
+        "MISSING": 0
+      },
+      "2024.4Q": {
+        "OK": 3,
+        "MINOR": 1,
+        "OVER": 0,
+        "UNDER": 3,
+        "MISSING": 0
+      },
+      "2025.1Q": {
+        "OK": 5,
+        "MINOR": 0,
+        "OVER": 2,
+        "UNDER": 0,
+        "MISSING": 0
+      },
+      "2025.2Q": {
+        "OK": 1,
+        "MINOR": 1,
+        "OVER": 1,
+        "UNDER": 3,
+        "MISSING": 1
+      },
+      "2025.3Q": {
+        "OK": 2,
+        "MINOR": 0,
+        "OVER": 0,
+        "UNDER": 2,
+        "MISSING": 3
+      },
+      "2025.4Q": {
+        "OK": 0,
+        "MINOR": 0,
+        "OVER": 1,
+        "UNDER": 1,
+        "MISSING": 5
+      },
+      "2026.1Q": {
+        "OK": 1,
+        "MINOR": 0,
+        "OVER": 0,
+        "UNDER": 0,
+        "MISSING": 6
+      }
+    },
+    "per_company_flag_counts": {
+      "DB손해보험": {
+        "OK": 6,
+        "MINOR": 3,
+        "OVER": 0,
+        "UNDER": 0,
+        "MISSING": 4
+      },
+      "롯데손해보험": {
+        "OK": 3,
+        "MINOR": 0,
+        "OVER": 2,
+        "UNDER": 1,
+        "MISSING": 7
+      },
+      "메리츠화재해상보험": {
+        "OK": 4,
+        "MINOR": 3,
+        "OVER": 3,
+        "UNDER": 2,
+        "MISSING": 1
+      },
+      "미래에셋생명": {
+        "OK": 2,
+        "MINOR": 0,
+        "OVER": 3,
+        "UNDER": 3,
+        "MISSING": 5
+      },
+      "삼성생명": {
+        "OK": 8,
+        "MINOR": 0,
+        "OVER": 1,
+        "UNDER": 1,
+        "MISSING": 3
+      },
+      "삼성화재해상보험": {
+        "OK": 2,
+        "MINOR": 0,
+        "OVER": 3,
+        "UNDER": 6,
+        "MISSING": 2
+      },
+      "한화생명": {
+        "OK": 8,
+        "MINOR": 0,
+        "OVER": 1,
+        "UNDER": 1,
+        "MISSING": 3
+      }
+    },
+    "notes": "DART side: csm_waterfall_history.json NB stage converted YTD->per-Q delta. IR side: convention-aware (singleQ field / YTD marker / per-Q default). Q1 of each year uses raw value (no prior YTD to subtract)."
+  },
+  "matrix": {
+    "DB손해보험": {
+      "kr": "KR0011",
+      "sector": "Non-Life",
+      "ir_convention": "ytd_delta",
+      "rows": [
+        {
+          "period": "2023.1Q",
+          "dart_eok": 6775.19,
+          "ir_eok": 6766.2,
+          "abs_diff_eok": 8.99,
+          "rel_diff": 0.0013,
+          "flag": "OK"
+        },
+        {
+          "period": "2023.2Q",
+          "dart_eok": 6324.82,
+          "ir_eok": 6484.0,
+          "abs_diff_eok": -159.18,
+          "rel_diff": -0.0245,
+          "flag": "OK"
+        },
+        {
+          "period": "2023.3Q",
+          "dart_eok": 7902.27,
+          "ir_eok": 7809.9,
+          "abs_diff_eok": 92.37,
+          "rel_diff": 0.0118,
+          "flag": "OK"
+        },
+        {
+          "period": "2023.4Q",
+          "dart_eok": 7258.92,
+          "ir_eok": 7201.1,
+          "abs_diff_eok": 57.82,
+          "rel_diff": 0.008,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.1Q",
+          "dart_eok": 6766.18,
+          "ir_eok": 7175.2,
+          "abs_diff_eok": -409.02,
+          "rel_diff": -0.057,
+          "flag": "MINOR"
+        },
+        {
+          "period": "2024.2Q",
+          "dart_eok": 6484.03,
+          "ir_eok": 6885.4,
+          "abs_diff_eok": -401.37,
+          "rel_diff": -0.0583,
+          "flag": "MINOR"
+        },
+        {
+          "period": "2024.3Q",
+          "dart_eok": 7809.9,
+          "ir_eok": 7754.2,
+          "abs_diff_eok": 55.7,
+          "rel_diff": 0.0072,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.4Q",
+          "dart_eok": 9720.27,
+          "ir_eok": 8965.6,
+          "abs_diff_eok": 754.67,
+          "rel_diff": 0.0842,
+          "flag": "MINOR"
+        },
+        {
+          "period": "2025.1Q",
+          "dart_eok": 7175.23,
+          "ir_eok": 7070.2,
+          "abs_diff_eok": 105.03,
+          "rel_diff": 0.0149,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.2Q",
+          "dart_eok": null,
+          "ir_eok": 7928.5,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2025.3Q",
+          "dart_eok": null,
+          "ir_eok": 7237.6,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2025.4Q",
+          "dart_eok": null,
+          "ir_eok": 7090.6,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2026.1Q",
+          "dart_eok": null,
+          "ir_eok": 6245.9,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        }
+      ]
+    },
+    "롯데손해보험": {
+      "kr": null,
+      "sector": "Non-life",
+      "ir_convention": "per_q_delta",
+      "rows": [
+        {
+          "period": "2023.1Q",
+          "dart_eok": null,
+          "ir_eok": null,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2023.2Q",
+          "dart_eok": null,
+          "ir_eok": null,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2023.3Q",
+          "dart_eok": 1151.85,
+          "ir_eok": null,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2023.4Q",
+          "dart_eok": 2816.26,
+          "ir_eok": null,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2024.1Q",
+          "dart_eok": 1266.72,
+          "ir_eok": 720.1,
+          "abs_diff_eok": 546.62,
+          "rel_diff": 0.7591,
+          "flag": "OVER"
+        },
+        {
+          "period": "2024.2Q",
+          "dart_eok": 1265.24,
+          "ir_eok": 788.8,
+          "abs_diff_eok": 476.44,
+          "rel_diff": 0.604,
+          "flag": "OVER"
+        },
+        {
+          "period": "2024.3Q",
+          "dart_eok": 1113.53,
+          "ir_eok": 1153.8,
+          "abs_diff_eok": -40.27,
+          "rel_diff": -0.0349,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.4Q",
+          "dart_eok": 1207.03,
+          "ir_eok": 1273.4,
+          "abs_diff_eok": -66.37,
+          "rel_diff": -0.0521,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.1Q",
+          "dart_eok": 1098.51,
+          "ir_eok": 1098.5,
+          "abs_diff_eok": 0.01,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.2Q",
+          "dart_eok": -1098.51,
+          "ir_eok": 1036.9,
+          "abs_diff_eok": -2135.41,
+          "rel_diff": -2.0594,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2025.3Q",
+          "dart_eok": null,
+          "ir_eok": 1011.9,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2025.4Q",
+          "dart_eok": null,
+          "ir_eok": 974.4,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2026.1Q",
+          "dart_eok": null,
+          "ir_eok": 794.8,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        }
+      ]
+    },
+    "메리츠화재해상보험": {
+      "kr": null,
+      "sector": "Non-life",
+      "ir_convention": "per_q_delta",
+      "rows": [
+        {
+          "period": "2023.1Q",
+          "dart_eok": 4442.44,
+          "ir_eok": 4171.84,
+          "abs_diff_eok": 270.6,
+          "rel_diff": 0.0649,
+          "flag": "MINOR"
+        },
+        {
+          "period": "2023.2Q",
+          "dart_eok": 4121.14,
+          "ir_eok": 3925.1,
+          "abs_diff_eok": 196.04,
+          "rel_diff": 0.0499,
+          "flag": "OK"
+        },
+        {
+          "period": "2023.3Q",
+          "dart_eok": 4677.87,
+          "ir_eok": 4100.64,
+          "abs_diff_eok": 577.23,
+          "rel_diff": 0.1408,
+          "flag": "OVER"
+        },
+        {
+          "period": "2023.4Q",
+          "dart_eok": 4173.31,
+          "ir_eok": 3808.91,
+          "abs_diff_eok": 364.4,
+          "rel_diff": 0.0957,
+          "flag": "MINOR"
+        },
+        {
+          "period": "2024.1Q",
+          "dart_eok": 3722.66,
+          "ir_eok": 3722.66,
+          "abs_diff_eok": 0.0,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.2Q",
+          "dart_eok": 4374.28,
+          "ir_eok": 3419.25,
+          "abs_diff_eok": 955.03,
+          "rel_diff": 0.2793,
+          "flag": "OVER"
+        },
+        {
+          "period": "2024.3Q",
+          "dart_eok": 4100.64,
+          "ir_eok": 3411.91,
+          "abs_diff_eok": 688.73,
+          "rel_diff": 0.2019,
+          "flag": "OVER"
+        },
+        {
+          "period": "2024.4Q",
+          "dart_eok": 1598.13,
+          "ir_eok": 3241.89,
+          "abs_diff_eok": -1643.76,
+          "rel_diff": -0.507,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2025.1Q",
+          "dart_eok": 3722.66,
+          "ir_eok": 3567.91,
+          "abs_diff_eok": 154.75,
+          "rel_diff": 0.0434,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.2Q",
+          "dart_eok": 3419.26,
+          "ir_eok": 3731.5,
+          "abs_diff_eok": -312.24,
+          "rel_diff": -0.0837,
+          "flag": "MINOR"
+        },
+        {
+          "period": "2025.3Q",
+          "dart_eok": 3411.9,
+          "ir_eok": 4230.67,
+          "abs_diff_eok": -818.77,
+          "rel_diff": -0.1935,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2025.4Q",
+          "dart_eok": null,
+          "ir_eok": 4351.64,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2026.1Q",
+          "dart_eok": 4402.52,
+          "ir_eok": 4402.52,
+          "abs_diff_eok": 0.0,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        }
+      ]
+    },
+    "미래에셋생명": {
+      "kr": null,
+      "sector": "Life",
+      "ir_convention": "per_q_delta",
+      "rows": [
+        {
+          "period": "2023.1Q",
+          "dart_eok": null,
+          "ir_eok": 572.5,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2023.2Q",
+          "dart_eok": null,
+          "ir_eok": 688.9,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2023.3Q",
+          "dart_eok": null,
+          "ir_eok": 854.1,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2023.4Q",
+          "dart_eok": null,
+          "ir_eok": 802.9,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2024.1Q",
+          "dart_eok": 961.95,
+          "ir_eok": 962.0,
+          "abs_diff_eok": -0.05,
+          "rel_diff": -0.0001,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.2Q",
+          "dart_eok": 761.93,
+          "ir_eok": 761.9,
+          "abs_diff_eok": 0.03,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.3Q",
+          "dart_eok": 1209.72,
+          "ir_eok": 1018.7,
+          "abs_diff_eok": 191.02,
+          "rel_diff": 0.1875,
+          "flag": "OVER"
+        },
+        {
+          "period": "2024.4Q",
+          "dart_eok": 1012.45,
+          "ir_eok": 1203.5,
+          "abs_diff_eok": -191.05,
+          "rel_diff": -0.1587,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2025.1Q",
+          "dart_eok": 1637.2,
+          "ir_eok": 1410.4,
+          "abs_diff_eok": 226.8,
+          "rel_diff": 0.1608,
+          "flag": "OVER"
+        },
+        {
+          "period": "2025.2Q",
+          "dart_eok": 86.69,
+          "ir_eok": 1041.6,
+          "abs_diff_eok": -954.91,
+          "rel_diff": -0.9168,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2025.3Q",
+          "dart_eok": 1018.67,
+          "ir_eok": 1510.9,
+          "abs_diff_eok": -492.23,
+          "rel_diff": -0.3258,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2025.4Q",
+          "dart_eok": 2656.22,
+          "ir_eok": 1435.9,
+          "abs_diff_eok": 1220.32,
+          "rel_diff": 0.8499,
+          "flag": "OVER"
+        },
+        {
+          "period": "2026.1Q",
+          "dart_eok": null,
+          "ir_eok": 1506.6,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        }
+      ]
+    },
+    "삼성생명": {
+      "kr": null,
+      "sector": "Life",
+      "ir_convention": "per_q_delta",
+      "rows": [
+        {
+          "period": "2023.1Q",
+          "dart_eok": null,
+          "ir_eok": 8460.4,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2023.2Q",
+          "dart_eok": null,
+          "ir_eok": 9699.0,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2023.3Q",
+          "dart_eok": 9564.35,
+          "ir_eok": 9564.4,
+          "abs_diff_eok": -0.05,
+          "rel_diff": -0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2023.4Q",
+          "dart_eok": 8557.84,
+          "ir_eok": 8557.7,
+          "abs_diff_eok": 0.14,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.1Q",
+          "dart_eok": 8658.05,
+          "ir_eok": 8576.0,
+          "abs_diff_eok": 82.05,
+          "rel_diff": 0.0096,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.2Q",
+          "dart_eok": 7970.43,
+          "ir_eok": 7884.6,
+          "abs_diff_eok": 85.83,
+          "rel_diff": 0.0109,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.3Q",
+          "dart_eok": 8439.61,
+          "ir_eok": 8346.1,
+          "abs_diff_eok": 93.51,
+          "rel_diff": 0.0112,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.4Q",
+          "dart_eok": 7916.85,
+          "ir_eok": 7799.4,
+          "abs_diff_eok": 117.45,
+          "rel_diff": 0.0151,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.1Q",
+          "dart_eok": 6745.04,
+          "ir_eok": 6577.7,
+          "abs_diff_eok": 167.34,
+          "rel_diff": 0.0254,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.2Q",
+          "dart_eok": 9715.56,
+          "ir_eok": 7685.6,
+          "abs_diff_eok": 2029.96,
+          "rel_diff": 0.2641,
+          "flag": "OVER"
+        },
+        {
+          "period": "2025.3Q",
+          "dart_eok": 8346.08,
+          "ir_eok": 8714.1,
+          "abs_diff_eok": -368.02,
+          "rel_diff": -0.0422,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.4Q",
+          "dart_eok": 5788.04,
+          "ir_eok": 7617.2,
+          "abs_diff_eok": -1829.16,
+          "rel_diff": -0.2401,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2026.1Q",
+          "dart_eok": 8485.66,
+          "ir_eok": null,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        }
+      ]
+    },
+    "삼성화재해상보험": {
+      "kr": "KR0008",
+      "sector": "Non-Life",
+      "ir_convention": "singleQ",
+      "rows": [
+        {
+          "period": "2023.1Q",
+          "dart_eok": 5005.09,
+          "ir_eok": 6782.7,
+          "abs_diff_eok": -1777.61,
+          "rel_diff": -0.2621,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2023.2Q",
+          "dart_eok": 5464.01,
+          "ir_eok": 7643.3,
+          "abs_diff_eok": -2179.29,
+          "rel_diff": -0.2851,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2023.3Q",
+          "dart_eok": 5581.16,
+          "ir_eok": 11641.9,
+          "abs_diff_eok": -6060.74,
+          "rel_diff": -0.5206,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2023.4Q",
+          "dart_eok": 18945.07,
+          "ir_eok": 8927.4,
+          "abs_diff_eok": 10017.67,
+          "rel_diff": 1.1221,
+          "flag": "OVER"
+        },
+        {
+          "period": "2024.1Q",
+          "dart_eok": 6782.69,
+          "ir_eok": 8855.5,
+          "abs_diff_eok": -2072.81,
+          "rel_diff": -0.2341,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2024.2Q",
+          "dart_eok": 7643.31,
+          "ir_eok": 7527.1,
+          "abs_diff_eok": 116.21,
+          "rel_diff": 0.0154,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.3Q",
+          "dart_eok": 11641.94,
+          "ir_eok": 8385.2,
+          "abs_diff_eok": 3256.74,
+          "rel_diff": 0.3884,
+          "flag": "OVER"
+        },
+        {
+          "period": "2024.4Q",
+          "dart_eok": 8443.89,
+          "ir_eok": 9743.9,
+          "abs_diff_eok": -1300.01,
+          "rel_diff": -0.1334,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2025.1Q",
+          "dart_eok": 8855.55,
+          "ir_eok": 7015.2,
+          "abs_diff_eok": 1840.35,
+          "rel_diff": 0.2623,
+          "flag": "OVER"
+        },
+        {
+          "period": "2025.2Q",
+          "dart_eok": 5356.95,
+          "ir_eok": 7197.3,
+          "abs_diff_eok": -1840.35,
+          "rel_diff": -0.2557,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2025.3Q",
+          "dart_eok": 7669.16,
+          "ir_eok": 7669.2,
+          "abs_diff_eok": -0.04,
+          "rel_diff": -0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.4Q",
+          "dart_eok": null,
+          "ir_eok": 7102.0,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2026.1Q",
+          "dart_eok": null,
+          "ir_eok": 6267.3,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        }
+      ]
+    },
+    "한화생명": {
+      "kr": "KR0068",
+      "sector": "Life",
+      "ir_convention": "per_q_delta",
+      "rows": [
+        {
+          "period": "2023.1Q",
+          "dart_eok": 5715.56,
+          "ir_eok": 5444.29,
+          "abs_diff_eok": 271.27,
+          "rel_diff": 0.0498,
+          "flag": "OK"
+        },
+        {
+          "period": "2023.2Q",
+          "dart_eok": 7876.63,
+          "ir_eok": 6198.84,
+          "abs_diff_eok": 1677.79,
+          "rel_diff": 0.2707,
+          "flag": "OVER"
+        },
+        {
+          "period": "2023.3Q",
+          "dart_eok": 4967.28,
+          "ir_eok": 6916.34,
+          "abs_diff_eok": -1949.06,
+          "rel_diff": -0.2818,
+          "flag": "UNDER"
+        },
+        {
+          "period": "2023.4Q",
+          "dart_eok": 6852.69,
+          "ir_eok": 6852.7,
+          "abs_diff_eok": -0.01,
+          "rel_diff": -0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.1Q",
+          "dart_eok": 5154.02,
+          "ir_eok": 5154.02,
+          "abs_diff_eok": 0.0,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.2Q",
+          "dart_eok": 4810.87,
+          "ir_eok": 4810.87,
+          "abs_diff_eok": 0.0,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.3Q",
+          "dart_eok": 5420.45,
+          "ir_eok": 5420.44,
+          "abs_diff_eok": 0.01,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2024.4Q",
+          "dart_eok": 5845.52,
+          "ir_eok": 5845.52,
+          "abs_diff_eok": 0.0,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.1Q",
+          "dart_eok": 4881.94,
+          "ir_eok": 4881.94,
+          "abs_diff_eok": 0.0,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.2Q",
+          "dart_eok": 4373.25,
+          "ir_eok": 4373.24,
+          "abs_diff_eok": 0.01,
+          "rel_diff": 0.0,
+          "flag": "OK"
+        },
+        {
+          "period": "2025.3Q",
+          "dart_eok": null,
+          "ir_eok": 5642.96,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2025.4Q",
+          "dart_eok": null,
+          "ir_eok": 5764.44,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        },
+        {
+          "period": "2026.1Q",
+          "dart_eok": null,
+          "ir_eok": 6109.34,
+          "abs_diff_eok": null,
+          "rel_diff": null,
+          "flag": "MISSING"
+        }
+      ]
+    }
+  }
+}

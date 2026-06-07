@@ -134,7 +134,7 @@ def main():
             pdf_id = files[0].get("fileIndvcsId") if files else None
             pdf_name = files[0].get("savViewImgNm") if files else None
             xls_id = it.get("irDataFileIndvcsId")
-            dest_dir = ROOT / "data" / "ir" / f"FY{y}_{q}" / KR_DIR
+            dest_dir = ROOT / "data" / "ir" / f"FY{y}_{q}" / "raw" / KR_DIR
             dest_dir.mkdir(parents=True, exist_ok=True)
 
             for kind, fid, default_name in (

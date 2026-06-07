@@ -10,7 +10,7 @@
     "note": "일시납 초회 includes large 저축성 lump-sum; wolnap_etc_sum excludes it (보장성 중심 NB CSM 분모 후보). 투자계약 컬럼 제외.",
     "unit_raw": "천원 (cheonwon)",
     "data_year_semantics": "cumulative YTD (MM=03/06/09/12)",
-    "crawled_at": "2026-05-29T13:22:00Z",
+    "crawled_at": "2026-06-06T14:44:28Z",
     "build_script": "scripts/crawl_kidi_life_premium.py",
     "periods": [
       "202303",
@@ -28,7 +28,7 @@
       "202603"
     ],
     "company_count": 24,
-    "record_count": 264
+    "record_count": 286
   },
   "records": {
     "한화|202303": {
@@ -567,6 +567,51 @@
         "siljeok": {
           "ilsinap": 78000,
           "wolnap": 293603,
+          "etc": 0
+        }
+      }
+    },
+    "한화|202603": {
+      "company_kidi": "한화",
+      "comp_code": "L01",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 1001391380,
+      "wolnap_chowoe_cheonwon": 62117566,
+      "etc_chowoe_cheonwon": 3416945,
+      "wolnap_etc_sum_cheonwon": 65534511,
+      "ilsinap_chowoe_eok": 10013.91,
+      "wolnap_chowoe_eok": 621.18,
+      "etc_chowoe_eok": 34.17,
+      "wolnap_etc_sum_eok": 655.35,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 1001391429,
+          "wolnap": 61165071,
+          "etc": 3416945
+        },
+        "gaein": {
+          "ilsinap": 1001391429,
+          "wolnap": 60329070,
+          "etc": 328938
+        },
+        "bojangseong": {
+          "ilsinap": 40177,
+          "wolnap": 58544827,
+          "etc": 328938
+        },
+        "jeochuk": {
+          "ilsinap": 1001351252,
+          "wolnap": 1784243,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 881187,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": -49,
+          "wolnap": 71308,
           "etc": 0
         }
       }
@@ -1111,6 +1156,51 @@
         }
       }
     },
+    "ABL|202603": {
+      "company_kidi": "ABL",
+      "comp_code": "L02",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 399797935,
+      "wolnap_chowoe_cheonwon": 11528764,
+      "etc_chowoe_cheonwon": -60482,
+      "wolnap_etc_sum_cheonwon": 11468282,
+      "ilsinap_chowoe_eok": 3997.98,
+      "wolnap_chowoe_eok": 115.29,
+      "etc_chowoe_eok": -0.6,
+      "wolnap_etc_sum_eok": 114.68,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 395357284,
+          "wolnap": 11514881,
+          "etc": -60482
+        },
+        "gaein": {
+          "ilsinap": 395357284,
+          "wolnap": 11514881,
+          "etc": -60482
+        },
+        "bojangseong": {
+          "ilsinap": 74,
+          "wolnap": 9816891,
+          "etc": -60482
+        },
+        "jeochuk": {
+          "ilsinap": 395357210,
+          "wolnap": 1697990,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 4440651,
+          "wolnap": 15413,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 0,
+          "wolnap": -1530,
+          "etc": 0
+        }
+      }
+    },
     "삼성|202303": {
       "company_kidi": "삼성",
       "comp_code": "L03",
@@ -1647,6 +1737,51 @@
         "siljeok": {
           "ilsinap": 49711627,
           "wolnap": 1056545,
+          "etc": 0
+        }
+      }
+    },
+    "삼성|202603": {
+      "company_kidi": "삼성",
+      "comp_code": "L03",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 554226852,
+      "wolnap_chowoe_cheonwon": 73962771,
+      "etc_chowoe_cheonwon": 9980854,
+      "wolnap_etc_sum_cheonwon": 83943625,
+      "ilsinap_chowoe_eok": 5542.27,
+      "wolnap_chowoe_eok": 739.63,
+      "etc_chowoe_eok": 99.81,
+      "wolnap_etc_sum_eok": 839.44,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 545353554,
+          "wolnap": 70799298,
+          "etc": 9980854
+        },
+        "gaein": {
+          "ilsinap": 545317013,
+          "wolnap": 68852510,
+          "etc": 3568
+        },
+        "bojangseong": {
+          "ilsinap": 126841,
+          "wolnap": 64981739,
+          "etc": 3568
+        },
+        "jeochuk": {
+          "ilsinap": 545190172,
+          "wolnap": 3870772,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 65490,
+          "wolnap": 2954885,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 8807808,
+          "wolnap": 208588,
           "etc": 0
         }
       }
@@ -2191,6 +2326,51 @@
         }
       }
     },
+    "흥국|202603": {
+      "company_kidi": "흥국",
+      "comp_code": "L04",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 142918458,
+      "wolnap_chowoe_cheonwon": 11336247,
+      "etc_chowoe_cheonwon": 232942,
+      "wolnap_etc_sum_cheonwon": 11569189,
+      "ilsinap_chowoe_eok": 1429.18,
+      "wolnap_chowoe_eok": 113.36,
+      "etc_chowoe_eok": 2.33,
+      "wolnap_etc_sum_eok": 115.69,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 143918458,
+          "wolnap": 11336407,
+          "etc": 232942
+        },
+        "gaein": {
+          "ilsinap": 143918458,
+          "wolnap": 11332291,
+          "etc": 232942
+        },
+        "bojangseong": {
+          "ilsinap": 17,
+          "wolnap": 11303391,
+          "etc": 232942
+        },
+        "jeochuk": {
+          "ilsinap": 143918441,
+          "wolnap": 28900,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": -160,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": -1000000,
+          "wolnap": 0,
+          "etc": 0
+        }
+      }
+    },
     "교보|202303": {
       "company_kidi": "교보",
       "comp_code": "L05",
@@ -2727,6 +2907,51 @@
         "siljeok": {
           "ilsinap": 1483064,
           "wolnap": 422516,
+          "etc": 0
+        }
+      }
+    },
+    "교보|202603": {
+      "company_kidi": "교보",
+      "comp_code": "L05",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 942562811,
+      "wolnap_chowoe_cheonwon": 39069883,
+      "etc_chowoe_cheonwon": 5556919,
+      "wolnap_etc_sum_cheonwon": 44626802,
+      "ilsinap_chowoe_eok": 9425.63,
+      "wolnap_chowoe_eok": 390.7,
+      "etc_chowoe_eok": 55.57,
+      "wolnap_etc_sum_eok": 446.27,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 942172998,
+          "wolnap": 38662737,
+          "etc": 5556919
+        },
+        "gaein": {
+          "ilsinap": 942164205,
+          "wolnap": 37926902,
+          "etc": 2514
+        },
+        "bojangseong": {
+          "ilsinap": 61246,
+          "wolnap": 33343179,
+          "etc": 2514
+        },
+        "jeochuk": {
+          "ilsinap": 942102958,
+          "wolnap": 4583723,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 73814,
+          "wolnap": 253601,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 316000,
+          "wolnap": 153545,
           "etc": 0
         }
       }
@@ -3271,6 +3496,51 @@
         }
       }
     },
+    "신한라이프|202603": {
+      "company_kidi": "신한라이프",
+      "comp_code": "L11",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 333044953,
+      "wolnap_chowoe_cheonwon": 26955241,
+      "etc_chowoe_cheonwon": 381936,
+      "wolnap_etc_sum_cheonwon": 27337177,
+      "ilsinap_chowoe_eok": 3330.45,
+      "wolnap_chowoe_eok": 269.55,
+      "etc_chowoe_eok": 3.82,
+      "wolnap_etc_sum_eok": 273.37,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 257333178,
+          "wolnap": 25672287,
+          "etc": 381936
+        },
+        "gaein": {
+          "ilsinap": 257333178,
+          "wolnap": 25672287,
+          "etc": 0
+        },
+        "bojangseong": {
+          "ilsinap": 52946,
+          "wolnap": 24760204,
+          "etc": 0
+        },
+        "jeochuk": {
+          "ilsinap": 257280232,
+          "wolnap": 912083,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 53266440,
+          "wolnap": 103971,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 22445335,
+          "wolnap": 1178982,
+          "etc": 0
+        }
+      }
+    },
     "푸본현대|202303": {
       "company_kidi": "푸본현대",
       "comp_code": "L12",
@@ -3802,6 +4072,51 @@
         "wonrigeum": {
           "ilsinap": 0,
           "wolnap": 70943,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        }
+      }
+    },
+    "푸본현대|202603": {
+      "company_kidi": "푸본현대",
+      "comp_code": "L12",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 909444,
+      "wolnap_chowoe_cheonwon": 3717951,
+      "etc_chowoe_cheonwon": 3286978,
+      "wolnap_etc_sum_cheonwon": 7004929,
+      "ilsinap_chowoe_eok": 9.09,
+      "wolnap_chowoe_eok": 37.18,
+      "etc_chowoe_eok": 32.87,
+      "wolnap_etc_sum_eok": 70.05,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 909444,
+          "wolnap": 3695778,
+          "etc": 3286978
+        },
+        "gaein": {
+          "ilsinap": 909444,
+          "wolnap": 3695778,
+          "etc": 95000
+        },
+        "bojangseong": {
+          "ilsinap": 446038,
+          "wolnap": 2828261,
+          "etc": 95000
+        },
+        "jeochuk": {
+          "ilsinap": 463406,
+          "wolnap": 867517,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 22173,
           "etc": 0
         },
         "siljeok": {
@@ -4351,6 +4666,51 @@
         }
       }
     },
+    "DGB|202603": {
+      "company_kidi": "DGB",
+      "comp_code": "L31",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 122744782,
+      "wolnap_chowoe_cheonwon": 3378950,
+      "etc_chowoe_cheonwon": 101073,
+      "wolnap_etc_sum_cheonwon": 3480023,
+      "ilsinap_chowoe_eok": 1227.45,
+      "wolnap_chowoe_eok": 33.79,
+      "etc_chowoe_eok": 1.01,
+      "wolnap_etc_sum_eok": 34.8,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 77983782,
+          "wolnap": 2222536,
+          "etc": 101073
+        },
+        "gaein": {
+          "ilsinap": 77983782,
+          "wolnap": 2217720,
+          "etc": 3600
+        },
+        "bojangseong": {
+          "ilsinap": 0,
+          "wolnap": 2146541,
+          "etc": 3600
+        },
+        "jeochuk": {
+          "ilsinap": 77983782,
+          "wolnap": 71179,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 44761000,
+          "wolnap": 1156414,
+          "etc": 0
+        }
+      }
+    },
     "KDB|202303": {
       "company_kidi": "KDB",
       "comp_code": "L33",
@@ -4887,6 +5247,51 @@
         "siljeok": {
           "ilsinap": 0,
           "wolnap": 7790874,
+          "etc": 0
+        }
+      }
+    },
+    "KDB|202603": {
+      "company_kidi": "KDB",
+      "comp_code": "L33",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 481914,
+      "wolnap_chowoe_cheonwon": 4318768,
+      "etc_chowoe_cheonwon": 138973,
+      "wolnap_etc_sum_cheonwon": 4457741,
+      "ilsinap_chowoe_eok": 4.82,
+      "wolnap_chowoe_eok": 43.19,
+      "etc_chowoe_eok": 1.39,
+      "wolnap_etc_sum_eok": 44.58,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 481914,
+          "wolnap": 3315361,
+          "etc": 138973
+        },
+        "gaein": {
+          "ilsinap": 481914,
+          "wolnap": 3275771,
+          "etc": 136882
+        },
+        "bojangseong": {
+          "ilsinap": 457914,
+          "wolnap": 1512201,
+          "etc": 136882
+        },
+        "jeochuk": {
+          "ilsinap": 24000,
+          "wolnap": 1763570,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 96590,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 0,
+          "wolnap": 906817,
           "etc": 0
         }
       }
@@ -5431,6 +5836,51 @@
         }
       }
     },
+    "미래에셋|202603": {
+      "company_kidi": "미래에셋",
+      "comp_code": "L34",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 141532101,
+      "wolnap_chowoe_cheonwon": 13667161,
+      "etc_chowoe_cheonwon": 241,
+      "wolnap_etc_sum_cheonwon": 13667402,
+      "ilsinap_chowoe_eok": 1415.32,
+      "wolnap_chowoe_eok": 136.67,
+      "etc_chowoe_eok": 0.0,
+      "wolnap_etc_sum_eok": 136.67,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 1014,
+          "wolnap": 7395076,
+          "etc": 241
+        },
+        "gaein": {
+          "ilsinap": 1014,
+          "wolnap": 7392604,
+          "etc": 241
+        },
+        "bojangseong": {
+          "ilsinap": 1014,
+          "wolnap": 7392604,
+          "etc": 241
+        },
+        "jeochuk": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 141531087,
+          "wolnap": 6272085,
+          "etc": 0
+        }
+      }
+    },
     "KB라이프|202303": {
       "company_kidi": "KB라이프",
       "comp_code": "L39",
@@ -5971,6 +6421,51 @@
         }
       }
     },
+    "KB라이프|202603": {
+      "company_kidi": "KB라이프",
+      "comp_code": "L39",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 475715879,
+      "wolnap_chowoe_cheonwon": 13508703,
+      "etc_chowoe_cheonwon": 2051696,
+      "wolnap_etc_sum_cheonwon": 15560399,
+      "ilsinap_chowoe_eok": 4757.16,
+      "wolnap_chowoe_eok": 135.09,
+      "etc_chowoe_eok": 20.52,
+      "wolnap_etc_sum_eok": 155.6,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 465248069,
+          "wolnap": 13285116,
+          "etc": 2051696
+        },
+        "gaein": {
+          "ilsinap": 465248069,
+          "wolnap": 13284688,
+          "etc": 107536
+        },
+        "bojangseong": {
+          "ilsinap": 5419889,
+          "wolnap": 7910518,
+          "etc": 107536
+        },
+        "jeochuk": {
+          "ilsinap": 459828180,
+          "wolnap": 5374170,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 23000,
+          "wolnap": 10008,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 10444810,
+          "wolnap": 213580,
+          "etc": 0
+        }
+      }
+    },
     "라이나|202303": {
       "company_kidi": "라이나",
       "comp_code": "L51",
@@ -6493,6 +6988,51 @@
           "ilsinap": 185011,
           "wolnap": 40005197,
           "etc": 451
+        },
+        "jeochuk": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        }
+      }
+    },
+    "라이나|202603": {
+      "company_kidi": "라이나",
+      "comp_code": "L51",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 23864,
+      "wolnap_chowoe_cheonwon": 10683010,
+      "etc_chowoe_cheonwon": 229,
+      "wolnap_etc_sum_cheonwon": 10683239,
+      "ilsinap_chowoe_eok": 0.24,
+      "wolnap_chowoe_eok": 106.83,
+      "etc_chowoe_eok": 0.0,
+      "wolnap_etc_sum_eok": 106.83,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 23864,
+          "wolnap": 10683010,
+          "etc": 229
+        },
+        "gaein": {
+          "ilsinap": 23864,
+          "wolnap": 10683010,
+          "etc": 229
+        },
+        "bojangseong": {
+          "ilsinap": 23864,
+          "wolnap": 10683010,
+          "etc": 229
         },
         "jeochuk": {
           "ilsinap": 0,
@@ -7051,6 +7591,51 @@
         }
       }
     },
+    "AIA|202603": {
+      "company_kidi": "AIA",
+      "comp_code": "L52",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 365073727,
+      "wolnap_chowoe_cheonwon": 4374588,
+      "etc_chowoe_cheonwon": 1351124,
+      "wolnap_etc_sum_cheonwon": 5725712,
+      "ilsinap_chowoe_eok": 3650.74,
+      "wolnap_chowoe_eok": 43.75,
+      "etc_chowoe_eok": 13.51,
+      "wolnap_etc_sum_eok": 57.26,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 0,
+          "wolnap": 2962627,
+          "etc": 1351124
+        },
+        "gaein": {
+          "ilsinap": 0,
+          "wolnap": 2962066,
+          "etc": 7372
+        },
+        "bojangseong": {
+          "ilsinap": 0,
+          "wolnap": 2962067,
+          "etc": 7372
+        },
+        "jeochuk": {
+          "ilsinap": 0,
+          "wolnap": -1,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 362750827,
+          "wolnap": 1386441,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 2322900,
+          "wolnap": 25520,
+          "etc": 0
+        }
+      }
+    },
     "하나|202303": {
       "company_kidi": "하나",
       "comp_code": "L63",
@@ -7591,6 +8176,51 @@
         }
       }
     },
+    "하나|202603": {
+      "company_kidi": "하나",
+      "comp_code": "L63",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 36769233,
+      "wolnap_chowoe_cheonwon": 10233042,
+      "etc_chowoe_cheonwon": 6500844,
+      "wolnap_etc_sum_cheonwon": 16733886,
+      "ilsinap_chowoe_eok": 367.69,
+      "wolnap_chowoe_eok": 102.33,
+      "etc_chowoe_eok": 65.01,
+      "wolnap_etc_sum_eok": 167.34,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 117940,
+          "wolnap": 9434143,
+          "etc": 6500844
+        },
+        "gaein": {
+          "ilsinap": 117940,
+          "wolnap": 9434143,
+          "etc": 6500844
+        },
+        "bojangseong": {
+          "ilsinap": 33193,
+          "wolnap": 9266443,
+          "etc": 6500844
+        },
+        "jeochuk": {
+          "ilsinap": 84747,
+          "wolnap": 167700,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 6680,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 36651293,
+          "wolnap": 792219,
+          "etc": 0
+        }
+      }
+    },
     "DB|202303": {
       "company_kidi": "DB",
       "comp_code": "L71",
@@ -8117,6 +8747,51 @@
         "jeochuk": {
           "ilsinap": 2414973,
           "wolnap": 13900,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        }
+      }
+    },
+    "DB|202603": {
+      "company_kidi": "DB",
+      "comp_code": "L71",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 1468267,
+      "wolnap_chowoe_cheonwon": 8275539,
+      "etc_chowoe_cheonwon": 0,
+      "wolnap_etc_sum_cheonwon": 8275539,
+      "ilsinap_chowoe_eok": 14.68,
+      "wolnap_chowoe_eok": 82.76,
+      "etc_chowoe_eok": 0.0,
+      "wolnap_etc_sum_eok": 82.76,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 1468267,
+          "wolnap": 8275539,
+          "etc": 0
+        },
+        "gaein": {
+          "ilsinap": 1468117,
+          "wolnap": 8275539,
+          "etc": 0
+        },
+        "bojangseong": {
+          "ilsinap": 168355,
+          "wolnap": 8270380,
+          "etc": 0
+        },
+        "jeochuk": {
+          "ilsinap": 1299762,
+          "wolnap": 5159,
           "etc": 0
         },
         "wonrigeum": {
@@ -8671,6 +9346,51 @@
         }
       }
     },
+    "메트라이프|202603": {
+      "company_kidi": "메트라이프",
+      "comp_code": "L72",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 437762452,
+      "wolnap_chowoe_cheonwon": 21633075,
+      "etc_chowoe_cheonwon": 0,
+      "wolnap_etc_sum_cheonwon": 21633075,
+      "ilsinap_chowoe_eok": 4377.62,
+      "wolnap_chowoe_eok": 216.33,
+      "etc_chowoe_eok": 0.0,
+      "wolnap_etc_sum_eok": 216.33,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 31062,
+          "wolnap": 859336,
+          "etc": 0
+        },
+        "gaein": {
+          "ilsinap": 31062,
+          "wolnap": 859336,
+          "etc": 0
+        },
+        "bojangseong": {
+          "ilsinap": 31062,
+          "wolnap": 860536,
+          "etc": 0
+        },
+        "jeochuk": {
+          "ilsinap": 0,
+          "wolnap": -1200,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 187875930,
+          "wolnap": 11860679,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 249855460,
+          "wolnap": 8913060,
+          "etc": 0
+        }
+      }
+    },
     "동양|202303": {
       "company_kidi": "동양",
       "comp_code": "L74",
@@ -9207,6 +9927,51 @@
         "siljeok": {
           "ilsinap": 0,
           "wolnap": -2060,
+          "etc": 0
+        }
+      }
+    },
+    "동양|202603": {
+      "company_kidi": "동양",
+      "comp_code": "L74",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 198327559,
+      "wolnap_chowoe_cheonwon": 9982068,
+      "etc_chowoe_cheonwon": 7062,
+      "wolnap_etc_sum_cheonwon": 9989130,
+      "ilsinap_chowoe_eok": 1983.28,
+      "wolnap_chowoe_eok": 99.82,
+      "etc_chowoe_eok": 0.07,
+      "wolnap_etc_sum_eok": 99.89,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 198327559,
+          "wolnap": 9982068,
+          "etc": 7062
+        },
+        "gaein": {
+          "ilsinap": 198327559,
+          "wolnap": 9982068,
+          "etc": 7062
+        },
+        "bojangseong": {
+          "ilsinap": 15148,
+          "wolnap": 9898861,
+          "etc": 7062
+        },
+        "jeochuk": {
+          "ilsinap": 198312411,
+          "wolnap": 83207,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 0,
+          "wolnap": 0,
           "etc": 0
         }
       }
@@ -9751,6 +10516,51 @@
         }
       }
     },
+    "ACE|202603": {
+      "company_kidi": "ACE",
+      "comp_code": "L77",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 6520930,
+      "wolnap_chowoe_cheonwon": 252180,
+      "etc_chowoe_cheonwon": 0,
+      "wolnap_etc_sum_cheonwon": 252180,
+      "ilsinap_chowoe_eok": 65.21,
+      "wolnap_chowoe_eok": 2.52,
+      "etc_chowoe_eok": 0.0,
+      "wolnap_etc_sum_eok": 2.52,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 6520930,
+          "wolnap": 249292,
+          "etc": 0
+        },
+        "gaein": {
+          "ilsinap": 6520930,
+          "wolnap": 249292,
+          "etc": 0
+        },
+        "bojangseong": {
+          "ilsinap": 0,
+          "wolnap": 249292,
+          "etc": 0
+        },
+        "jeochuk": {
+          "ilsinap": 6520930,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 0,
+          "wolnap": 2888,
+          "etc": 0
+        }
+      }
+    },
     "BNP파리바카디프|202303": {
       "company_kidi": "BNP파리바카디프",
       "comp_code": "L78",
@@ -10287,6 +11097,51 @@
         "siljeok": {
           "ilsinap": 131077300,
           "wolnap": 14742630,
+          "etc": 0
+        }
+      }
+    },
+    "BNP파리바카디프|202603": {
+      "company_kidi": "BNP파리바카디프",
+      "comp_code": "L78",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 151992800,
+      "wolnap_chowoe_cheonwon": 4389504,
+      "etc_chowoe_cheonwon": 0,
+      "wolnap_etc_sum_cheonwon": 4389504,
+      "ilsinap_chowoe_eok": 1519.93,
+      "wolnap_chowoe_eok": 43.9,
+      "etc_chowoe_eok": 0.0,
+      "wolnap_etc_sum_eok": 43.9,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 0,
+          "wolnap": 23394,
+          "etc": 0
+        },
+        "gaein": {
+          "ilsinap": 0,
+          "wolnap": 17426,
+          "etc": 0
+        },
+        "bojangseong": {
+          "ilsinap": 0,
+          "wolnap": 17426,
+          "etc": 0
+        },
+        "jeochuk": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 119856800,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 32136000,
+          "wolnap": 4366110,
           "etc": 0
         }
       }
@@ -10831,6 +11686,51 @@
         }
       }
     },
+    "IBK연금보험|202603": {
+      "company_kidi": "IBK연금보험",
+      "comp_code": "L79",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 0,
+      "wolnap_chowoe_cheonwon": 2856920,
+      "etc_chowoe_cheonwon": 0,
+      "wolnap_etc_sum_cheonwon": 2856920,
+      "ilsinap_chowoe_eok": 0.0,
+      "wolnap_chowoe_eok": 28.57,
+      "etc_chowoe_eok": 0.0,
+      "wolnap_etc_sum_eok": 28.57,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 0,
+          "wolnap": 114589,
+          "etc": 0
+        },
+        "gaein": {
+          "ilsinap": 0,
+          "wolnap": 114589,
+          "etc": 0
+        },
+        "bojangseong": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        },
+        "jeochuk": {
+          "ilsinap": 0,
+          "wolnap": 114589,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 682660,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 0,
+          "wolnap": 2059671,
+          "etc": 0
+        }
+      }
+    },
     "농협|202303": {
       "company_kidi": "농협",
       "comp_code": "L80",
@@ -11371,6 +12271,51 @@
         }
       }
     },
+    "농협|202603": {
+      "company_kidi": "농협",
+      "comp_code": "L80",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 496247429,
+      "wolnap_chowoe_cheonwon": 32111164,
+      "etc_chowoe_cheonwon": 64975380,
+      "wolnap_etc_sum_cheonwon": 97086544,
+      "ilsinap_chowoe_eok": 4962.47,
+      "wolnap_chowoe_eok": 321.11,
+      "etc_chowoe_eok": 649.75,
+      "wolnap_etc_sum_eok": 970.87,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 496247429,
+          "wolnap": 31432918,
+          "etc": 64975380
+        },
+        "gaein": {
+          "ilsinap": 496247429,
+          "wolnap": 31432918,
+          "etc": 64975380
+        },
+        "bojangseong": {
+          "ilsinap": 766459,
+          "wolnap": 31079962,
+          "etc": 64975380
+        },
+        "jeochuk": {
+          "ilsinap": 495480970,
+          "wolnap": 352956,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 0,
+          "wolnap": 678246,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        }
+      }
+    },
     "교보라이프플래닛|202303": {
       "company_kidi": "교보라이프플래닛",
       "comp_code": "L86",
@@ -11902,6 +12847,51 @@
         "wonrigeum": {
           "ilsinap": 19809,
           "wolnap": 56740,
+          "etc": 0
+        },
+        "siljeok": {
+          "ilsinap": 0,
+          "wolnap": 0,
+          "etc": 0
+        }
+      }
+    },
+    "교보라이프플래닛|202603": {
+      "company_kidi": "교보라이프플래닛",
+      "comp_code": "L86",
+      "data_year": "202603",
+      "ilsinap_chowoe_cheonwon": 232327,
+      "wolnap_chowoe_cheonwon": 146493,
+      "etc_chowoe_cheonwon": 0,
+      "wolnap_etc_sum_cheonwon": 146493,
+      "ilsinap_chowoe_eok": 2.32,
+      "wolnap_chowoe_eok": 1.46,
+      "etc_chowoe_eok": 0.0,
+      "wolnap_etc_sum_eok": 1.46,
+      "breakdown_cheonwon": {
+        "ilban_total": {
+          "ilsinap": 142330,
+          "wolnap": 129517,
+          "etc": 0
+        },
+        "gaein": {
+          "ilsinap": 49860,
+          "wolnap": 129517,
+          "etc": 0
+        },
+        "bojangseong": {
+          "ilsinap": 49860,
+          "wolnap": 121297,
+          "etc": 0
+        },
+        "jeochuk": {
+          "ilsinap": 0,
+          "wolnap": 8220,
+          "etc": 0
+        },
+        "wonrigeum": {
+          "ilsinap": 89997,
+          "wolnap": 16976,
           "etc": 0
         },
         "siljeok": {

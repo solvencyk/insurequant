@@ -106,6 +106,8 @@ Publishing currently has Tier1 4-bar in production. Tier2 (LOB 장기/자동차/
 
 | ID | Task | Done | Notes |
 |----|------|------|-------|
+| ~~F-PL-WF~~ | Panel 3 당기순이익 bridge waterfall (PL_breakdown.json) | 2026-06-07 | First cut. 5-bar bridge 보험손익→투자손익→영업외→(−)법인세→당기순 (exact reconcile, 손보+생보). 단위 백만원. 연도=`값`(YTD, latest 4Q) / 분기=`값_당분기` (both work). Reuses #wfPeriod. ECharts `#chartPl`. **TODO(owner): company-name canonicalization** (PL 삼성생명보험 vs dropdown 삼성생명; plResolve fuzzy stopgap, 케이비라이프↔KB라이프 gaps). Removed orphan ni wiring. Preview-verified (getOption), console 0. Report `artifacts/designer/panel3_pl_bridge_waterfall_20260607.md` |
+| ~~F-WF-WINDOW~~ | Panel 1 windowed CSM waterfall (company × 연도/분기) | 2026-06-07 | New long-format `CSM_waterfall.json` (23사, 억원, YTD). 연도 mode = trailing 4 buckets, 18-bar expanded (기초 → 연도별 신계약·이자·가정/경험·상각 → 기말). 분기 mode stubbed (`WF_QUARTER_READY=false`) until 당분기 table. Mobile dataZoom. K-ICS selector methodology reused. Preview 375/1280 verified, console 0. Report `artifacts/designer/panel1_windowed_csm_waterfall_20260607.md` |
 | ~~M1~~ | Mobile responsive foundation (4 pages) | 2026-05-28 | `@media (max-width:640px)` on all 4. Header/tabs/table scroll, chart heights ↓. Desktop math unaffected (≤640px scoped). Claude Preview 375px/1280px verified |
 | ~~M2~~ | index.html treemap → vertical list on phones | 2026-05-28 | `renderList()` mirrors `render()` (same data, color, toggle, click-through). Rows grouped 생명/손해, sorted ratio desc, bar/color = ratio |
 | ~~INDEX-TREEMAP-CLEAN~~ | Desktop treemap label cleanup (size-aware) | 2026-05-28 | Dropped 기준 XXX meta line + .meta CSS. Name shown if cell ≥46×60px, ratio if ≥26×44px. `.cell justify-content:flex-start;gap:3px` |

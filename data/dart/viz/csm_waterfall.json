@@ -56,27 +56,27 @@
       "stages": {
         "opening": {
           "label": "기초보험계약부채",
-          "value_mn_krw": 1552357.0
+          "value_mn_krw": 1654891.0
         },
         "new_business": {
           "label": "최초인식계약",
-          "value_mn_krw": 524734.0
+          "value_mn_krw": 469446.0
         },
         "interest": {
           "label": "보험금융비용",
-          "value_mn_krw": 56290.0
+          "value_mn_krw": 64607.0
         },
         "assumption": {
           "label": "보험계약마진에 반영된 추정치 변동",
-          "value_mn_krw": -344151.0
+          "value_mn_krw": -289248.0
         },
         "amortization": {
           "label": "보험계약마진상각",
-          "value_mn_krw": -134338.0
+          "value_mn_krw": -129211.0
         },
         "closing": {
           "label": "기말보험계약부채",
-          "value_mn_krw": 1654892.0
+          "value_mn_krw": 1770485.0
         }
       }
     },
@@ -159,7 +159,8 @@
         },
         "new_business": {
           "label": "신계약 인식효과",
-          "value_mn_krw": 1932321.0
+          "value_mn_krw": 1932321.0,
+          "source": "transition_table"
         },
         "interest": {
           "label": "보험금융손익",
@@ -203,34 +204,33 @@
       "csm_leaf_cols": [
         2,
         3,
-        4,
-        5
+        4
       ],
       "unit_divisor_to_mn": 1.0,
       "stages": {
         "opening": {
           "label": "기초 보험계약순부채(자산)",
-          "value_mn_krw": 4212016.0
+          "value_mn_krw": 2106008.0
         },
         "new_business": {
           "label": "최초인식계약",
-          "value_mn_krw": 710366.0
+          "value_mn_krw": 355183.0
         },
         "interest": {
           "label": "보험금융손익",
-          "value_mn_krw": 171634.0
+          "value_mn_krw": 85817.0
         },
         "assumption": {
           "label": "보험계약마진을 조정하는 변동",
-          "value_mn_krw": -505046.0
+          "value_mn_krw": -252523.0
         },
         "amortization": {
           "label": "보험계약마진 상각",
-          "value_mn_krw": -478660.0
+          "value_mn_krw": -239330.0
         },
         "closing": {
           "label": "기말 보험계약순부채(자산)",
-          "value_mn_krw": 4110310.0
+          "value_mn_krw": 2055155.0
         }
       }
     },
@@ -239,7 +239,7 @@
       "rcept_no": "20250331004015",
       "status": "ok",
       "completeness": 1.0,
-      "caption": "17-4) 당기와 전기 중 보험료배분접근법을 적용한 보험계약 이외의 보험계약부채(자산)의 요소별 변동내역은 다음과 같습니다.1) 당기",
+      "caption": "17-4) 당기와 전기 중 보험료배분접근법을 적용한 보험계약 이외의 보험계약부채(자산)의 요소별 변동내역은 다음과 같습니다. 1) 당기",
       "header": [
         [
           "(단위 : 백만원)"
@@ -261,34 +261,33 @@
       "csm_leaf_cols": [
         2,
         3,
-        4,
-        5
+        4
       ],
       "unit_divisor_to_mn": 1.0,
       "stages": {
         "opening": {
           "label": "1. 기초 보험계약자산 및 부채",
-          "value_mn_krw": 10993354.0
+          "value_mn_krw": 5824924.0
         },
         "new_business": {
           "label": "(3) 최초 인식한 계약의 효과",
-          "value_mn_krw": 2755710.0
+          "value_mn_krw": 1371568.0
         },
         "interest": {
           "label": "6. 보험금융손익",
-          "value_mn_krw": 2910181.0
+          "value_mn_krw": 103371.0
         },
         "assumption": {
           "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
-          "value_mn_krw": -3646522.0
+          "value_mn_krw": -260821.0
         },
         "amortization": {
           "label": "(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계약마진",
-          "value_mn_krw": -1264213.0
+          "value_mn_krw": -600984.0
         },
         "closing": {
           "label": "8. 기말 보험계약자산 및 부채",
-          "value_mn_krw": 11748510.0
+          "value_mn_krw": 6438058.0
         }
       }
     },
@@ -316,34 +315,33 @@
       "csm_leaf_cols": [
         2,
         3,
-        4,
-        5
+        4
       ],
       "unit_divisor_to_mn": 1.0,
       "stages": {
         "opening": {
           "label": "기초 보험계약순부채(자산) / 기초 보험계약부채",
-          "value_mn_krw": 8954786.0
+          "value_mn_krw": 4477393.0
         },
         "new_business": {
           "label": "최초인식계약",
-          "value_mn_krw": 1628554.0
+          "value_mn_krw": 814277.0
         },
         "interest": {
           "label": "보험금융손익 / 당기손익인식",
-          "value_mn_krw": 350474.0
+          "value_mn_krw": 175237.0
         },
         "assumption": {
           "label": "미래서비스와 관련된 변동 / 보험계약마진을 조정하는 변동",
-          "value_mn_krw": -910388.0
+          "value_mn_krw": -455194.0
         },
         "amortization": {
           "label": "현행서비스와 관련된 변동 / 보험계약마진 상각",
-          "value_mn_krw": -840354.0
+          "value_mn_krw": -420177.0
         },
         "closing": {
           "label": "기말 보험계약순부채(자산) / 기말 보험계약부채",
-          "value_mn_krw": 9183072.0
+          "value_mn_krw": 4591536.0
         }
       }
     },
@@ -480,34 +478,34 @@
       "csm_leaf_cols": [
         2,
         3,
-        4,
-        5
+        4
       ],
       "unit_divisor_to_mn": 1.0,
       "stages": {
         "opening": {
           "label": "기초순보험계약부채",
-          "value_mn_krw": 4772162.0
+          "value_mn_krw": 2386081.0
         },
         "new_business": {
-          "label": "최초 인식 계약",
-          "value_mn_krw": 970504.0
+          "label": "신계약",
+          "value_mn_krw": 485252.0,
+          "source": "reconciliation_lrc"
         },
         "interest": {
           "label": "보험금융손익",
-          "value_mn_krw": 196486.0
+          "value_mn_krw": 98243.0
         },
         "assumption": {
           "label": "보험계약마진을 조정하는 추정치의 변동",
-          "value_mn_krw": -847942.0
+          "value_mn_krw": -423971.0
         },
         "amortization": {
           "label": "보험계약마진 상각액",
-          "value_mn_krw": -450896.0
+          "value_mn_krw": -225448.0
         },
         "closing": {
           "label": "기말순보험계약부채",
-          "value_mn_krw": 4640314.0
+          "value_mn_krw": 2320157.0
         }
       }
     },
@@ -537,27 +535,27 @@
       "stages": {
         "opening": {
           "label": "기초 순장부금액",
-          "value_mn_krw": 9637639.0
+          "value_mn_krw": 10468726.0
         },
         "new_business": {
           "label": "신계약효과",
-          "value_mn_krw": 1600648.0
+          "value_mn_krw": 1379571.0
         },
         "interest": {
           "label": "순보험금융손익",
-          "value_mn_krw": 298035.0
+          "value_mn_krw": 337839.0
         },
         "assumption": {
           "label": "보험계약마진을 조정하는 추정치 변동",
-          "value_mn_krw": 2164.0
+          "value_mn_krw": 151921.0
         },
         "amortization": {
           "label": "당기손익으로 인식한 보험계약마진 금액",
-          "value_mn_krw": -1069760.0
+          "value_mn_krw": -1150168.0
         },
         "closing": {
           "label": "기말 순장부금액",
-          "value_mn_krw": 10468726.0
+          "value_mn_krw": 11187889.0
         }
       }
     },
@@ -586,8 +584,9 @@
           "value_mn_krw": 1924620.067
         },
         "new_business": {
-          "label": "(1) 당기 최초 인식 계약",
-          "value_mn_krw": 504448.14
+          "label": "(1) 신계약 인식효과",
+          "value_mn_krw": 374208.778,
+          "source": "transition_table"
         },
         "interest": {
           "label": "6. 보험계약의 순 금융손익(주1)",
@@ -793,34 +792,33 @@
       "csm_leaf_cols": [
         2,
         3,
-        4,
-        5
+        4
       ],
       "unit_divisor_to_mn": 1.0,
       "stages": {
         "opening": {
           "label": "기초 / 보험계약부채",
-          "value_mn_krw": 14337450.0
+          "value_mn_krw": 7168725.0
         },
         "new_business": {
           "label": "당기 신계약의 최초인식효과",
-          "value_mn_krw": 2531526.0
+          "value_mn_krw": 1265763.0
         },
         "interest": {
           "label": "보험금융손익 / 당기손익",
-          "value_mn_krw": 511702.0
+          "value_mn_krw": 255851.0
         },
         "assumption": {
           "label": "미래 서비스와관련된 변동분 / 보험계약마진 조정 추정치 변동분",
-          "value_mn_krw": -1462250.0
+          "value_mn_krw": -731125.0
         },
         "amortization": {
           "label": "현행 서비스와관련된 변동분 / 보험계약마진 상각",
-          "value_mn_krw": -1465762.0
+          "value_mn_krw": -732881.0
         },
         "closing": {
           "label": "기말 / 보험계약부채",
-          "value_mn_krw": 14453586.0
+          "value_mn_krw": 7226793.0
         }
       }
     },
@@ -846,27 +844,28 @@
       "stages": {
         "opening": {
           "label": "I. 기초 보험계약순부채",
-          "value_mn_krw": 758530.0
+          "value_mn_krw": 869543.0
         },
         "new_business": {
-          "label": "(3) 해당 기간에 처음 인식한 계약의 효과",
-          "value_mn_krw": 347587.0
+          "label": "신계약 인식효과",
+          "value_mn_krw": 245843.0,
+          "source": "transition_table"
         },
         "interest": {
           "label": "VI. 보험금융비용",
-          "value_mn_krw": 28025.0
+          "value_mn_krw": 34144.0
         },
         "assumption": {
           "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
-          "value_mn_krw": -171628.0
+          "value_mn_krw": -123142.0
         },
         "amortization": {
           "label": "(1) 서비스 제공으로 당기손익으로 인식된 보험계약마진",
-          "value_mn_krw": -92971.0
+          "value_mn_krw": -88926.0
         },
         "closing": {
           "label": "X. 기말 보험계약순부채(I+VII+VIII+IX)",
-          "value_mn_krw": 869543.0
+          "value_mn_krw": 937462.0
         }
       }
     },
@@ -996,8 +995,9 @@
           "value_mn_krw": 583047.0
         },
         "new_business": {
-          "label": "(3) 최초 인식한 계약의 효과",
-          "value_mn_krw": 328222.0
+          "label": "(2) 신계약 인식효과",
+          "value_mn_krw": 328222.0,
+          "source": "transition_table"
         },
         "interest": {
           "label": "6. 보험금융손익",
@@ -1026,7 +1026,7 @@
       "header": [
         [
           "구분",
-          "전기"
+          "당기"
         ],
         [
           "미래 현금흐름의 현재가치 추정치",
@@ -1042,27 +1042,28 @@
       "stages": {
         "opening": {
           "label": "기초 순장부금액",
-          "value_mn_krw": 3359570.0
+          "value_mn_krw": 3179826.0
         },
         "new_business": {
-          "label": "신계약효과",
-          "value_mn_krw": 634668.0
+          "label": "신계약 인식효과",
+          "value_mn_krw": 501304.0,
+          "source": "transition_table"
         },
         "interest": {
           "label": "보험금융손익(PL)",
-          "value_mn_krw": 107180.0
+          "value_mn_krw": 123071.0
         },
         "assumption": {
           "label": "보험계약마진을 조정하는 추정치 변동",
-          "value_mn_krw": -621380.0
+          "value_mn_krw": -500612.0
         },
         "amortization": {
           "label": "서비스 제공에 따른 보험계약마진 변동",
-          "value_mn_krw": -300213.0
+          "value_mn_krw": -293080.0
         },
         "closing": {
           "label": "기말 순장부금액",
-          "value_mn_krw": 3179825.0
+          "value_mn_krw": 3010509.0
         }
       }
     },
@@ -1225,14 +1226,14 @@
       "rcept_no": "20250312000939",
       "status": "ok",
       "completeness": 1.0,
-      "caption": "(5) 당기와 전기 중 보험료배분접근법을 적용하지 않은 보험계약의 보험계약부채(자산)의 측정 요소별 변동내역은 다음과 같습니다 (단위: 백만원).1) 당기",
+      "caption": "(5) 당기와 전기 중 보험료배분접근법을 적용하지 않은 보험계약부채(자산)의 측정 요소별 변동내역은 다음과 같습니다 (단위:백만원).1) 당기",
       "header": [
         [
           "구 분",
-          "미래현금흐름의현재가치 추정치",
+          "미래현금흐름의 현재가치 추정치",
           "비금융위험에대한 위험조정",
           "보험계약마진",
-          "합 계"
+          "합계"
         ]
       ],
       "csm_leaf_cols": [
@@ -1242,27 +1243,28 @@
       "stages": {
         "opening": {
           "label": "1. 기초 보험계약자산 및 부채",
-          "value_mn_krw": 13591377.0
+          "value_mn_krw": 9238488.0
         },
         "new_business": {
-          "label": "(3) 최초 인식한 계약의 효과",
-          "value_mn_krw": 3236057.0
+          "label": "2) 신계약 인식효과",
+          "value_mn_krw": 2123086.0,
+          "source": "transition_table"
         },
         "interest": {
           "label": "6. 보험금융손익",
-          "value_mn_krw": 504675.0
+          "value_mn_krw": 350085.0
         },
         "assumption": {
-          "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
-          "value_mn_krw": -2757012.0
+          "label": "가. 해지율 가정 변경 효과 + 나. 위험률 가정 변경 효과 + 다. 사업비율 가정 변경 효과 …",
+          "value_mn_krw": -1750600.0
         },
         "amortization": {
           "label": "(1) 제공한 서비스에 대해 인식한 보험계약마진",
-          "value_mn_krw": -1276577.0
+          "value_mn_krw": -851918.0
         },
         "closing": {
-          "label": "9. 기말 보험계약자산 및 부채",
-          "value_mn_krw": 13296823.0
+          "label": "8. 기말 보험계약자산 및 부채",
+          "value_mn_krw": 9109141.0
         }
       }
     },
@@ -1290,34 +1292,33 @@
       "csm_leaf_cols": [
         2,
         3,
-        4,
-        5
+        4
       ],
       "unit_divisor_to_mn": 1000.0,
       "stages": {
         "opening": {
           "label": "기초 보험계약 순부채(자산)",
-          "value_mn_krw": 7853721.926
+          "value_mn_krw": 3926860.963
         },
         "new_business": {
           "label": "최초 인식한 계약의 효과",
-          "value_mn_krw": 1481978.186
+          "value_mn_krw": 740989.093
         },
         "interest": {
           "label": "보험금융손익_이자손익",
-          "value_mn_krw": 299936.362
+          "value_mn_krw": 149968.181
         },
         "assumption": {
           "label": "보험계약마진을 조정하는 추정치의 변동분",
-          "value_mn_krw": -1209720.64
+          "value_mn_krw": -604860.32
         },
         "amortization": {
           "label": "보험계약마진 상각",
-          "value_mn_krw": -819474.242
+          "value_mn_krw": -409737.121
         },
         "closing": {
           "label": "기말 보험계약 순부채(자산)",
-          "value_mn_krw": 7606441.592
+          "value_mn_krw": 3803220.796
         }
       }
     },
