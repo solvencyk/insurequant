@@ -48,6 +48,18 @@ DIRECT = {1, 4, 5, 6, 9, 10, 11, 13, 14, 16, 17, 20, 22, 23, 24}  # item15 dropp
 CLAIMED = {
     ("KR0010", "2025.2Q"): {1, 4, 5, 9, 10, 13, 16, 17, 20, 22, 23, 24},  # KB 분기: 6/11/14 not extracted
     ("KR0002", "2025.2Q"): {1, 4, 5, 6, 9, 10, 13, 14, 16},  # 한화손보 별도 직접추출 13/14 회귀가드; item11(~0.3% 가정·경험 잔차)·12(잔차파생)는 reference
+    # DB손보 구형식 2024.2Q: item11(재보 예실차)·12(파생)는 derived residual SPLIT — got/gold의
+    # item11+12 합계는 -82,549로 정확히 일치(내부 split 관례만 상이, item11 -3,219 ↔ item12 +3,219
+    # 상쇄).  직접추출 Tier-2(1,4,5,6,9,10,13,14)는 전부 gold 일치 → 그것만 gate, 11/12는 reference.
+    ("KR0011", "2024.2Q"): {1, 4, 5, 6, 9, 10, 13, 14},
+    # 한화생명 2025.2Q: RA↔예실차 내부 split 관례차 (우리 추출=DART note 충실, gold=owner 귀속).
+    # item5(원수RA 76,066)↔item7(예실차 -104,320): 5+7 = -28,254 = gold(75,507-103,761) 정확 일치.
+    # item10(재보RA -559)↔item12(재보예실차 -7,183): 10+12 = -7,742 = gold(-450-7,292) 정확 일치.
+    # → 직접추출 primary(1,4,6,9,11,13,14)만 gate, RA-split(5,10)+예실차파생(7,12)는 reference.
+    ("KR0068", "2025.2Q"): {1, 4, 6, 9, 11, 13, 14},
+    # 롯데 2026.1Q: item11(재보 예실차 -1,254)↔item12(파생 -1,899): 11+12 = -3,153 = gold(-3,711+558)
+    # 정확 일치 (split 관례차).  직접추출만 gate, 11/12는 reference.
+    ("KR0003", "2026.1Q"): {1, 4, 5, 6, 9, 10, 13, 14},
 }
 # item15 (기타영업수익) also excluded — the DART FS API has no separate 기타영업수익 account for
 # insurers (it sits inside 보험영업수익), so Tier-1 reports it as 0 while the hand golds carried
