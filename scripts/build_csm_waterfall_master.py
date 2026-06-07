@@ -299,13 +299,14 @@ def _is_prior_caption(cap):
     s = re.sub(r"^[\s(]*\d+[\).]\s*", "", (cap or "").strip())
     if s.startswith(("전분기", "전반기", "전기")):
         return True
-    # 케이디비생명-style: the prior period is labeled '제37(전)기반기' / '제36(전)기' — the
-    # '(전)기' marker sits AFTER the 기수 (제N), so the startswith test above misses it and
-    # the prior block survives as a candidate (its opening = prior-year start, which then
-    # poisons the FY anchor → every 2025 quarter copies 2024).  The current block uses a
-    # '당기/당반기' or descriptive '당반기와전반기중…' title (no standalone '(전)기' token),
-    # so anchoring on the 제N(전)기 form is specific to the prior copy.
-    return bool(re.match(r"제?\s*\d+\s*\(\s*전\s*\)\s*기", s))
+    # 케이디비생명-style: the prior period is labeled '제37(전)기' — the '(전)기' marker sits
+    # AFTER the 기수 (제N) and the block often carries a product enumerator ('나. 제37(전)기',
+    # '가. 제38(당)기'), so a leading-anchored test misses it and the prior block survives as a
+    # candidate (its opening = prior-year start → poisons the FY anchor → every 2025 quarter
+    # copies 2024).  SEARCH the raw caption for the literal '제N(전)기' form anywhere: it is
+    # specific to the prior copy — the combined title '당기와 전기 중…' has no parens, and the
+    # current segments use '(당)기'.
+    return bool(re.search(r"제\s*\d+\s*\(\s*전\s*\)\s*기", cap or ""))
 
 
 _CUR_HDR = ("당기", "당반기", "당분기", "당기말", "당반기말")
@@ -633,6 +634,23 @@ def _seg_cands(blocks):
     return cands, seg
 
 
+def _strip_aggregate(picks):
+    """When the 별도 segment note lists a GRAND-TOTAL block alongside its components
+    (메트라이프생명 2025.4Q: a 측정요소별 변동 total + 유/무배당 + 변액 sub-blocks), the
+    total's opening ≈ the sum of the component openings.  Naively summing every cluster then
+    double-counts (기초 = 2×전년말).  If exactly one pick's opening matches the sum of the
+    others (within 2%), it is that aggregate → drop it so the components are counted once.
+    No-ops for genuinely disjoint segments (DB손보·롯데: no grand-total block listed)."""
+    if len(picks) < 2:
+        return picks
+    for i, p in enumerate(picks):
+        oi = abs(p.get(1) or 0)
+        rest = sum(abs(q.get(1) or 0) for j, q in enumerate(picks) if j != i)
+        if oi > 0 and rest > 0 and abs(oi - rest) <= 0.02 * oi:
+            return [q for j, q in enumerate(picks) if j != i]
+    return picks
+
+
 def pick_segment_760(blocks):
     """Annual 별도 주석 (_00760) that splits the 원수 발행 CSM rollforward into 2+
     disjoint product/dividend segments as separate (current, prior) block pairs —
@@ -652,7 +670,7 @@ def pick_segment_760(blocks):
     sub = [c for c in cands if c[1].endswith("_00760.xml")]
     if not sub:
         return None
-    picks = _opening_clusters(_drop_prior([c[0] for c in sub]))
+    picks = _strip_aggregate(_opening_clusters(_drop_prior([c[0] for c in sub])))
     if len(picks) < 2:
         return None
     return {no: sum((p.get(no) or 0) for p in picks) for no in STAGE_KEYS}
