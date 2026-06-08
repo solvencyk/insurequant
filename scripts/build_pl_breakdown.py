@@ -806,6 +806,57 @@ def extract_tier2_life(tables):
     return out
 
 
+def extract_tier2_abl(tables):
+    """에이비엘생명 (KR0070).  Its IFRS17 보험수익/재보험비용 reconciliation note uses a
+    [구분 | 당기 | 전기] TWO-PERIOD header, not a 계약유형별 합계 layout.  The generic
+    extract_tier2_life reads each leg via _life_note_total = max(nums, key=abs), which picks
+    the LARGER cell — and here 전기 > 당기 (2025.4Q CSM 88,926 > 82,804; RA 12,282 > 8,346),
+    so the master published the PRIOR-period column (a 당기/전기 leg bug, audit 2026-06-08).
+    Fix: read the 당기 column EXPLICITLY (= first data cell).  item6/11(예실차) is only a
+    partial premium-side 경험조정 here → left to the generic closure (residual→기타)."""
+    out = {}
+
+    def find(cap_needs, cap_excl=()):
+        needs = [c.replace(" ", "") for c in cap_needs]
+        excl = [e.replace(" ", "") for e in cap_excl]
+        for t in tables:
+            if _is_rollforward(t):
+                continue
+            capf = _norm(t.caption or "").replace(" ", "")
+            if all(n in capf for n in needs) and not any(e in capf for e in excl):
+                return t
+        return None
+
+    def dangi(t, *labels):
+        """First numeric (= 당기 column) of the first row whose col0 label matches any label."""
+        if t is None:
+            return None
+        keys = [l.replace(" ", "") for l in labels]
+        for r in t.rows:
+            lab = _label(r).replace(" ", "")
+            if any(k in lab for k in keys):
+                nums = _row_nums(r)
+                if nums:
+                    return nums[0]
+        return None
+
+    rev_t = find(["잔여보장", "회수", "보험수익"], cap_excl=("재보험",))
+    re_t = find(["잔여보장", "회수", "재보험"])
+    csm = dangi(rev_t, "서비스의이전으로", "인식한 보험계약마진")
+    ra = dangi(rev_t, "비금융위험에 대한 위험조정")
+    if csm is not None:
+        out[4] = abs(csm)
+    if ra is not None:
+        out[5] = abs(ra)
+    re_csm = dangi(re_t, "서비스의이전으로", "인식한 보험계약마진")
+    re_ra = dangi(re_t, "비금융위험에 대한 위험조정")
+    if re_csm is not None:
+        out[9] = -abs(re_csm)
+    if re_ra is not None:
+        out[10] = -abs(re_ra)
+    return out
+
+
 # =========================================================================== #
 # Per-company Tier-2 handlers (FY2025+ annual notes).
 # Each returns {item_no: 백만원} + hidden 장기-block totals.  Where only a single
@@ -4037,6 +4088,7 @@ SONBO_HANDLERS = {
     "KR1000": extract_tier2_coreanre,          # 코리안리 재보험 (gold-validated 2025.2Q; 생명/장기/일반)
 }
 LIFE_HANDLERS = {
+    "KR0070": extract_tier2_abl,               # 에이비엘 ([구분|당기|전기] 2-period note → pick 당기)
     "KR0073": extract_tier2_kyobo,
     "KR0082": extract_tier2_dblife,
     "KR0087": extract_tier2_dongyang,
