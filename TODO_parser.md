@@ -15,6 +15,21 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ---
 
+## 🔧 OPEN — PL Tier-2 residual gaps (after 2026-06-08 census)
+
+Track with `python scripts/check_pl_reconcile.py`. Current **WRONG=14 (all documented), HOLE=43**.
+Big systematic gaps closed (예실차-미공시 generic closure + 에이비엘 leg + 하나 장기 — changelog (m)).
+Remaining actionable (non-legit, 2024.2Q+):
+- [ ] **동양(2024.x) / 케이디비(2025.x) 재보 CSM상각(item9) / RA(item10)** — buried in the 출재 section,
+  note structure varies by quarter. Small (재보 sub-slice). Needs per-company/quarter handler work;
+  no fragile fix forced.
+- [ ] **하나생명 투자손익(item17)** 2024.4Q/2025.4Q — Tier-1/FS-API lane (may be out of parser scope).
+- [ ] **교보라이프플래닛 Tier-2 absent** — digital insurer, minimal disclosure (likely legit-absent; confirm).
+- legit (not bugs): 코리안리 자동차(item13) — reinsurer writes no auto (11 c-q). FY2023 holes/WRONG =
+  site non-exposed.
+
+---
+
 ## ✅ DONE (2026-06-07 야간 자율 #2) — CSM leg-selection 5종 + MLG feasibility
 
 상세 → `docs/changelog_parser.md` **2026-06-07 (j)**. validator의 `CSM_PLAUSIBILITY` 연속성/복붙 룰이

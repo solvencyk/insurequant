@@ -30,6 +30,21 @@ owner: "농협만 그럴까? 그래프 안 닫히는 애들 많았어. 전수검
   전체 누락 + 투자손익(17), 교보라이프플래닛 Tier-2 부재(디지털, 공시 최소). 코리안리 자동차(13)
   누락 11개는 재보험사라 **정상(legit)**. FY2023 홀은 사이트 비노출.
 
+**후속 수정 (same day):**
+- **에이비엘 당기/전기 leg 버그 (commit 5a7b548):** 15-agent leg 감사(adversarial 검증) 결과 생보
+  14곳 중 **에이비엘 1곳만** 진짜 버그. LIFE_HANDLERS 미등록 → generic `extract_tier2_life`의
+  `_life_note_total=max(abs)`가 `[구분|당기|전기]` 2기간 노트에서 전기>당기라 **전기(작년치)** 선택.
+  전용 `extract_tier2_abl`로 **당기 명시 선택**(원수 4/5 + 재보 9/10). item4 88,926→82,804,
+  item5 12,282→8,346. **crosscheck 1M→0M**(그 minor가 이 버그였음). 나머지 13곳 clean.
+- **하나생명 장기손익 (commit 255f8f2):** item4/5/6 추출되는데 item2/3 None. assemble가 item3=
+  보험수익−보험서비스비용 유도 시 IS `_is_cost`가 보험수익의 ~9%(mis-pick)라 materiality guard가
+  reject → item3 None. `extract_tier2_hana`가 **발행 노트 합계를 `_jang_rev/_jang_cost`로 설정**
+  → item3(53,256/28,358)·item2 닫힘. **census HOLE 45→43.**
+- **정직히 남긴 잔여 갭:** 동양(2024.x)/케이디비(2025.x) 재보 CSM상각(9)/RA(10) — 출재 섹션 깊이
+  박힘 + 분기별 노트 구조 상이(fragile, 재보 sub-slice). 하나 투자손익(17) — Tier-1/FS-API lane.
+  교보라이프플래닛 Tier-2 부재 — 디지털 생보 공시 최소(legit 가능). WRONG 14 = FY2023 비노출 +
+  KB라이프/악사 sub-1.5% 잔차(문서화됨).
+
 ## 2026-06-08 (l) — 농협손해 PL Tier-2 예실차 IFRS17 항등식 유도 (보험손익≈0 재현) [→ (m)에서 기타로 재분류]
 
 owner: "농협손보 보험손익 0원으로 나온다 / PL breakdown 똑바로 안 한 건 니 잘못". FS-API로 보험손익
