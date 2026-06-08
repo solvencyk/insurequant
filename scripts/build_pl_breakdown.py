@@ -2667,16 +2667,10 @@ def extract_tier2_nh(tables):
     out["_jang_cost"] = subtotal("보험서비스비용")
     out["_jang_rerev"] = subtotal("재보험수익")
     out["_jang_recost"] = subtotal("재보험비용")
-    # 예실차(item6/11): NH discloses the 보험수익/보험서비스비용 SUBTOTALS but not the
-    # 예상-vs-발생 claim split, so derive the experience residual from the IFRS17 identity:
-    #   원수 예실차 = (보험수익 − 보험서비스비용) − 원수CSM상각 − 원수RA ;  재보 동형.
-    # WITHOUT this, item6/11 are 0 and the Tier-2 waterfall does not reconcile to the whole-
-    # company 보험손익 — the large NEGATIVE 원수 예실차 (actual claims exceeding the expected
-    # built into CSM/premium) is exactly what makes 농협손해's 보험손익 ≈ 0 despite +CSM상각.
-    if out.get("_jang_rev") is not None and out.get("_jang_cost") is not None:
-        out[6] = (abs(out["_jang_rev"]) - abs(out["_jang_cost"])) - (out.get(4) or 0) - (out.get(5) or 0)
-    if out.get("_jang_rerev") is not None and out.get("_jang_recost") is not None:
-        out[11] = (abs(out["_jang_rerev"]) - abs(out["_jang_recost"])) - (out.get(9) or 0) - (out.get(10) or 0)
+    # NH discloses the 보험수익/보험서비스비용 SUBTOTALS (→ item3 = rev − cost in assemble) but
+    # NOT the 예상-vs-발생 claim split, so 예실차(item6/11) is NOT separable.  The combined
+    # residual (원수손익 − CSM상각 − RA) is pushed into 기타(item7/12) by the generic closure in
+    # assemble() — owner decision 2026-06-08 (do NOT fabricate a 예실차 split).
     return out  # 백만원 already
 
 
@@ -4139,9 +4133,19 @@ def assemble(t1, t2, is_life):
     # item 7 (residual) = 3 − (4+5+6)
     if v[3] is not None and None not in (v[4], v[5], v[6]):
         v[7] = v[3] - (v[4] + v[5] + v[6])
+    # 예실차(item6) NOT separately disclosed (no 예상-vs-실제 청구 split in the note — e.g.
+    # 농협·미래에셋·교보·동양): the 원수손익 subtotal & CSM상각/RA ARE disclosed, so the combined
+    # residual (item3 − 4 − 5) is the unsplittable 예실차+기타.  Owner decision 2026-06-08: push
+    # it into 기타(item7) and show 예실차 as 0 — do NOT fabricate a 예실차 number.
+    elif v[3] is not None and v[4] is not None and v[5] is not None and v[6] is None:
+        v[6] = 0.0
+        v[7] = v[3] - v[4] - v[5]
     # item 12 (residual) = 8 − (9+10+11)
     if v[8] is not None and None not in (v[9], v[10], v[11]):
         v[12] = v[8] - (v[9] + v[10] + v[11])
+    elif v[8] is not None and v[9] is not None and v[10] is not None and v[11] is None:
+        v[11] = 0.0
+        v[12] = v[8] - v[9] - v[10]
     # item 2 (생명장기 손익) = 3 + 8
     if v[2] is None:
         v[2] = s(3, 8)
