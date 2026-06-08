@@ -6049,13 +6049,10 @@
   "quarter": "2024.4Q",
   "status": "partial",
   "missing": [
-   2,
-   3,
-   7,
    17,
    18
   ],
-  "tier2": "partial"
+  "tier2": "ok"
  },
  {
   "code": "KR0097",
@@ -6162,13 +6159,10 @@
   "quarter": "2025.4Q",
   "status": "partial",
   "missing": [
-   2,
-   3,
-   7,
    17,
    18
   ],
-  "tier2": "partial"
+  "tier2": "ok"
  },
  {
   "code": "KR0097",

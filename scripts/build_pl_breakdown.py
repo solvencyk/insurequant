@@ -4043,6 +4043,13 @@ def extract_tier2_hana(tables):
     rerev = pick("재보험계약", "보험수익")
     recost = pick("재보험계약", "보험서비스비용")
     out = {}
+    # 발행(원수) 합계 → item3 = 보험수익 − 보험서비스비용 (assemble).  Without these, item3 would
+    # fall back to the income-statement _is_rev/_is_cost, but 하나's _is_cost is a mis-pick
+    # (≈9% of 보험수익) that the materiality guard rejects → item3/item2 went None.
+    if rev:
+        out["_jang_rev"] = _life_first_num(rev, ["합 계", "합계"])
+    if cost:
+        out["_jang_cost"] = _life_first_num(cost, ["합 계", "합계"])
     if rev:
         csm = _life_first_num(rev, ["보험계약마진상각"])
         ra = _life_first_num(rev, ["비금융위험에 대한 위험조정 변동"])
