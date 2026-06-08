@@ -118,7 +118,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       <div class="table-wrap" id="plTable" style="margin-top:12px"></div>
     </div>
     <div class="panel" data-pane="nb">
-      <h2>5) NB · CSM 비율(IR 공시 매핑)</h2>
+      <h2>5) NB · CSM 배수 시계열 (신계약 CSM ÷ 월납월초)</h2>
       <div id="nbStub" class="stub-msg"></div>
       <div id="nbWrap" style="display:none"><div class="chart-container chart-sm"><canvas id="canvasNb"></canvas></div></div>
     </div>
@@ -149,6 +149,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     nb: dataPaths("../data/ir/nb_csm_ratio.json", "data/ir/nb_csm_ratio.json"),
     hist: dataPaths("../data/dart/viz/csm_waterfall_history.json", "data/dart/viz/csm_waterfall_history.json"),
     plx: dataPaths("PL_breakdown.json", "data/dart/viz/PL_breakdown.json"),
+    nbm: dataPaths("NB_CSM_multiple.json", "NB_CSM_multiple.json"),
   };
 
   const NB_LOOKUP = {
@@ -170,6 +171,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     sen: new Map(),
     hist: new Map(),
     plx: new Map(),
+    nbm: new Map(),
   };
   // 회사코드(KR0001…) 기반 매칭. 새 마스터(CSM_waterfall.json)가 코드↔이름 등록부.
   const codeToName = {};   // 'KR0001' → '메리츠화재해상보험'
@@ -247,8 +249,9 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
   // 항목번호 1=기초 2=신계약 3=이자 4=가정·경험 5=상각 6=기말. 값 단위 = 억원.
   // Quarter mode needs per-quarter (당분기) movements; current file is YTD(연 누계),
   // so quarter mode is stubbed until the 당분기 table lands. Flip WF_QUARTER_READY when ready.
-  const WF_QUARTER_READY = false;
-  const WF_WINDOW = 4; // trailing 4 buckets
+  const WF_QUARTER_READY = true;   // 마스터에 값_당분기 → 분기 모드 활성화
+  const WF_WINDOW = 4;   // trailing 4 buckets (연도)
+  const WF_Q_WINDOW = 6; // trailing 6 buckets (분기)
   const WF_COMPS = [
     { num: 2, ko: "신계약",    full: "신계약 CSM" },
     { num: 3, ko: "이자",      full: "이자 부리" },
@@ -262,8 +265,9 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const m = ix.wfx.get(company);
     return m ? Array.from(m.keys()).sort(wfCmpDesc) : [];
   }
-  function wfVal(company,qtr,num){
-    const m=ix.wfx.get(company); const qm=m&&m.get(qtr); const v=qm&&qm.get(num);
+  function wfVal(company,qtr,num,field){
+    const m=ix.wfx.get(company); const qm=m&&m.get(qtr); const rec=qm&&qm.get(num);
+    const v=rec ? rec[field||"y"] : null;   // y=연누계(기본), q=당분기
     return (typeof v==="number" && Number.isFinite(v)) ? v : null;
   }
   // 모든 회사 통합 분기축(오름차순) — Panel 6 시계열 x축.
@@ -314,29 +318,36 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     return buckets.sort((a,b)=>a.year-b.year);
   }
 
-  function wfBuildBars(company, buckets){
+  // QUARTER window: 최근 WF_Q_WINDOW개 분기 (오름차순). 값_당분기로 분기별 이동.
+  function wfQuarterBuckets(company){
+    const qs = wfQuartersOf(company); if(!qs.length) return [];   // qs = desc
+    return qs.slice(0, WF_Q_WINDOW).reverse().map(q => ({ q, label: q }));
+  }
+
+  function wfBuildBars(company, buckets, mode){
+    const f = mode==="quarter" ? "q" : "y";   // 분기=당분기, 연도=연누계
     const bars=[];
     const first=buckets[0], last=buckets[buckets.length-1];
-    bars.push({ kind:"open", period:first.label, q:first.q, value: wfVal(company,first.q,1) });
+    bars.push({ kind:"open", period:first.label, q:first.q, value: wfVal(company,first.q,1,f) });
     for(const b of buckets){
       for(const c of WF_COMPS){
-        bars.push({ kind:"comp", period:b.label, q:b.q, comp:c, value: wfVal(company,b.q,c.num) });
+        bars.push({ kind:"comp", period:b.label, q:b.q, comp:c, value: wfVal(company,b.q,c.num,f) });
       }
     }
-    bars.push({ kind:"close", period:last.label, q:last.q, value: wfVal(company,last.q,6) });
+    bars.push({ kind:"close", period:last.label, q:last.q, value: wfVal(company,last.q,6,f) });
     return bars;
   }
 
   function wfFmtJo(v, dp){ return (v/10000).toLocaleString("ko-KR",{minimumFractionDigits:dp,maximumFractionDigits:dp}); }
 
-  function renderWfWaterfall(host, company){
+  function renderWfWaterfall(host, company, mode){
     const el = q(host, "#chartWf");
     if (!el || typeof echarts === "undefined") return;
     if (charts.wf){ try{ charts.wf.dispose(); }catch(e){} }
     charts.wf = echarts.init(el, null, { renderer: "canvas" });
 
-    const buckets = wfYearBuckets(company);
-    const bars = wfBuildBars(company, buckets);
+    const buckets = mode==="quarter" ? wfQuarterBuckets(company) : wfYearBuckets(company);
+    const bars = wfBuildBars(company, buckets, mode);
 
     const xs=[], placeholder=[], positive=[], negative=[], totals=[], missing=[];
     let running=0;
@@ -662,18 +673,19 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     box.appendChild(note);
   }
 
-  function renderWfTable(host, company, buckets){
+  function renderWfTable(host, company, buckets, mode){
     const box=q(host,"#wfTable"); if(!box) return; box.innerHTML="";
     if(!buckets || !buckets.length) return;
+    const f = mode==="quarter" ? "q" : "y";
     const stageRows = [[1,"기초 CSM"],[2,"신계약"],[3,"이자 부리"],[4,"가정·경험"],[5,"상각"],[6,"기말 CSM"]];
     const headers = ["구분", ...buckets.map(b=>b.label)];
     const rows = stageRows.map(([num,ko])=>({
-      cells:[ ko, ...buckets.map(b=> samo(wfVal(company,b.q,num))) ],
+      cells:[ ko, ...buckets.map(b=> samo(wfVal(company,b.q,num,f))) ],
       bold:(num===1||num===6),
     }));
     box.appendChild(buildMiniTable(headers, rows));
     const note=document.createElement("div"); note.className="small-muted"; note.style.marginTop="6px";
-    note.textContent = "단위 억원 · 연(YTD) 기준 · 기초+신계약+이자+가정·경험+상각 = 기말";
+    note.textContent = "단위 억원 · " + (mode==="quarter"?"분기(당분기) 기준":"연(YTD) 기준") + " · 기초+신계약+이자+가정·경험+상각 = 기말";
     box.appendChild(note);
   }
 
@@ -768,17 +780,14 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const wfName = ix.wfx.has(company) ? company : null;
     const wfHas = !!wfName;
     const wfMode = (document.getElementById("wfPeriod")||{}).value || "year";
-    let wfStubMsg = null;
-    if (!wfHas) wfStubMsg = "신규 CSM waterfall 데이터 미수록 보험사입니다.";
-    else if (wfMode === "quarter" && !WF_QUARTER_READY) wfStubMsg = "분기(당분기) 기준 데이터 준비 중 — 현재 파일은 YTD(연 누계)라 분기별 정확 분해가 불가합니다. 당분기 테이블 반영 시 자동 활성화됩니다.";
-    stub(q(host,"#wfStub"), !!wfStubMsg, wfStubMsg);
+    stub(q(host,"#wfStub"), !wfHas, wfHas ? null : "신규 CSM waterfall 데이터 미수록 보험사입니다.");
 
-    if (wfHas && !(wfMode === "quarter" && !WF_QUARTER_READY)){
-      renderWfWaterfall(host, wfName);
-      const bk = wfYearBuckets(wfName);
-      const range = bk.length ? (bk[0].label + " ~ " + bk[bk.length-1].q) : "";
-      q(host,"#wfMeta").textContent = "연(YTD) 기준 · " + range + " · 단위 억원(축은 조원) · 기초 CSM → 연도별 변동(신계약·이자·가정/경험·상각) → 기말 CSM";
-      renderWfTable(host, wfName, bk);
+    if (wfHas){
+      renderWfWaterfall(host, wfName, wfMode);
+      const bk = (wfMode==="quarter") ? wfQuarterBuckets(wfName) : wfYearBuckets(wfName);
+      const range = bk.length ? (bk[0].label + " ~ " + bk[bk.length-1].label) : "";
+      q(host,"#wfMeta").textContent = (wfMode==="quarter"?"분기(당분기) 기준 · ":"연(YTD) 기준 · ") + range + " · 단위 억원(축은 조원) · 기초 → 변동(신계약·이자·가정/경험·상각) → 기말";
+      renderWfTable(host, wfName, bk, wfMode);
     } else {
       if (charts.wf){ try{ charts.wf.dispose(); }catch(e){} charts.wf=null; }
       const box = q(host,"#chartWf"); if (box) box.innerHTML="";
@@ -842,40 +851,38 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       const pt=q(host,"#plTable"); if(pt) pt.innerHTML="";
     }
 
-    const nbSpec = nbByCode[company] || null;
-    const nbJs = payload.nb;
+    // Panel 5 — NB CSM 배수 시계열 (NB_CSM_multiple.json 마스터, 코드 매칭, 2026.1Q까지 35사).
     q(host,"#nbStub").style.display="none"; q(host,"#nbWrap").style.display="none"; q(host,"#nbStub").textContent="";
-
-    if(!nbSpec){
+    const nbPts = (ix.nbm.get(company) || []).filter(r => r["신계약CSM배수_연누계"] != null);
+    if(!nbPts.length){
       q(host,"#nbStub").style.display="block";
-      q(host,"#nbStub").textContent = "해당 라인 차트 매핑이 없습니다.(삼성화재해상보험, 현대해상, DB손해보험, KB손해보험, 삼성생명, 한화생명)";
-    } else if(!nbJs){
-      q(host,"#nbStub").style.display="block";
-      q(host,"#nbStub").textContent = "nb_csm_ratio.json 을 불러오지 못했습니다.";
+      q(host,"#nbStub").textContent = "신계약 CSM 배수 데이터 미수록 보험사입니다. (재보험사·외국계 등 월납월초 분모 없음)";
     } else {
-      const nbChart = nbChartData(nbJs, nbSpec.slug, nbSpec.bucket);
-      if(!nbChart.periods.length || !nbChart.datasets.length){
-        q(host,"#nbStub").style.display="block";
-        q(host,"#nbStub").textContent = "시계열 포인트가 비어있습니다.";
-      } else {
-        q(host,"#nbWrap").style.display="block";
-        charts.nb=new Chart(canvasCtx(host,"#canvasNb"),{
-          type:"line",
-          data:{
-            labels: nbChart.periods,
-            datasets: nbChart.datasets,
+      q(host,"#nbWrap").style.display="block";
+      const labels = nbPts.map(r => r["공시분기"]);
+      const ytd = nbPts.map(r => r["신계약CSM배수_연누계"]);
+      const qtr = nbPts.map(r => r["신계약CSM배수_당분기"]);
+      const ds = [{
+        label:"연누계 배수", data: ytd, borderColor:"rgb(13,110,253)", backgroundColor:"rgba(13,110,253,0.08)",
+        borderWidth:2.5, pointRadius:4, pointHoverRadius:6, tension:0.2, spanGaps:true, fill:true,
+      }];
+      if (qtr.some(v => v != null)) ds.push({
+        label:"당분기 배수", data: qtr, borderColor:"rgb(255,99,132)", backgroundColor:"transparent",
+        borderWidth:1.5, borderDash:[6,4], pointRadius:3, tension:0.2, spanGaps:true, fill:false,
+      });
+      charts.nb=new Chart(canvasCtx(host,"#canvasNb"),{
+        type:"line",
+        data:{ labels, datasets: ds },
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          plugins:{
+            legend:{ display: ds.length > 1, position:"top" },
+            title:{display:true,text:"NB CSM 배수 (신계약 CSM ÷ 월납월초, "+coName+")" },
+            tooltip:{ callbacks:{ label:(ctx)=> `${ctx.dataset.label}: ${ctx.parsed.y==null?"—":fmtNum(Number(ctx.parsed.y),2)+"×"}` } },
           },
-          options:{
-            responsive:true, maintainAspectRatio:false,
-            plugins:{
-              legend:{ display: nbChart.datasets.length > 1, position:"top" },
-              title:{display:true,text:"NB CSM 비율 (신계약 CSM ÷ 월납월초, IR 공시)" },
-              tooltip:{ callbacks:{ label:(ctx)=> `${ctx.dataset.label}: ${fmtNum(Number(ctx.parsed.y),1)}x` } },
-            },
-            scales:{ y:{ ticks:{ callback:(vv)=> fmtNum(Number(vv),1) + "x" } } }
-          },
-        })
-      }
+          scales:{ y:{ ticks:{ callback:(vv)=> fmtNum(Number(vv),1) + "×" } } }
+        },
+      })
     }
 
     const sPick=firstRow(ix.sen,company);
@@ -1038,6 +1045,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const histx=await fetchJsonSafe(PATHS.hist);
     const wfxRaw=await fetchJsonSafe(PATHS.wfx);
     const plxRaw=await fetchJsonSafe(PATHS.plx);
+    const nbmRaw=await fetchJsonSafe(PATHS.nbm);
 
     payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.sen=senx; payload.nb=nbx; payload.hist=histx;
 
@@ -1049,7 +1057,8 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
         if(r["원수사명"]) codeToName[code]=r["원수사명"];
         let byQ=ix.wfx.get(code); if(!byQ){ byQ=new Map(); ix.wfx.set(code,byQ); }
         let byN=byQ.get(qq); if(!byN){ byN=new Map(); byQ.set(qq,byN); }
-        const v=Number(r["값"]); byN.set(num, Number.isFinite(v)?v:null);
+        const y=Number(r["값"]); const dq=Number(r["값_당분기"]);
+        byN.set(num, { y: Number.isFinite(y)?y:null, q: Number.isFinite(dq)?dq:null });
       }
     }
 
@@ -1064,6 +1073,17 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
         byQ.get(qq) || byQ.set(qq, new Map());
         byQ.get(qq).set(String(num), { y: Number.isFinite(y)?y:null, q: Number.isFinite(dq)?dq:null });
       }
+    }
+
+    // NB CSM 배수 마스터: code -> [rows] (공시분기 오름차순). Panel 5 시계열 (2026.1Q까지, 35사).
+    if (Array.isArray(nbmRaw)){
+      for (const r of nbmRaw){
+        const code=r&&r["원보험사코드"]; if(!code) continue;
+        if(!codeToName[code] && r["원수사명"]) codeToName[code]=r["원수사명"];
+        let a=ix.nbm.get(code); if(!a){ a=[]; ix.nbm.set(code,a); }
+        a.push(r);
+      }
+      for (const a of ix.nbm.values()) a.sort((x,y)=>{ const px=wfParseQ(x["공시분기"]), py=wfParseQ(y["공시분기"]); return px[0]!==py[0]?px[0]-py[0]:px[1]-py[1]; });
     }
 
     // 코드 없는 옛 viz(amort/sen)·NB는 boot에서 code로 재키잉(이름 정규화 1회 → 이후 전부 코드).
