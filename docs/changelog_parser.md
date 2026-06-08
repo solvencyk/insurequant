@@ -8,7 +8,29 @@ Convention: latest few entries detailed; older ones compressed to 1-liners (git 
 
 ---
 
-## 2026-06-08 (l) — 농협손해 PL Tier-2 예실차 IFRS17 항등식 유도 (보험손익≈0 재현)
+## 2026-06-08 (m) — PL Tier-2 분해 전수검증(census) + 예실차-미공시 generic closure
+
+owner: "농협만 그럴까? 그래프 안 닫히는 애들 많았어. 전수검증해라." → `check_pl_reconcile.py`
+신설(commit, 프로젝트 pl_bridge 식 그대로: 기타원수/기타재보 + dual-form 보험손익 포함).
+전사×전분기 분해를 WRONG(present인데 안 맞음=버그)·HOLE(스택 슬라이스 빔)으로 분류.
+
+- **census 초기치:** WRONG=18(대부분 문서화된 FY2023 + KB라이프/악사 잔차), **HOLE=96**.
+- **근본원인(조사 에이전트 검증):** 다수 생보사가 원수손익/재보손익 subtotal + CSM상각 + RA는
+  공시하나 **예상-vs-실제 청구(예실차) split은 공시 안 함** → item6/7(및 11/12) None → 원수/재보
+  막대 안 닫힘. 미래에셋은 공시된 "경험조정" 행이 premium-side뿐이라 부호·크기가 진짜 잔차와
+  불일치(쪼개면 조작). 에이비엘은 추가로 당기/전기 leg 버그(별도 처리).
+- **owner 결정(2026-06-08): 분리불가 잔차를 예실차로 쪼개지 말고 기타(item7/12)로.**
+  `assemble()` generic closure 추가 (commit 7ae7e26): item3 present·item4/5 present·item6 None →
+  item6=0, item7=item3−4−5; 재보 동형. **전사 자동** 적용(농협·미래에셋·에이비엘·교보·동양·흥국생명).
+- **농협 되돌림:** (l)의 `extract_tier2_nh` item6/11 유도 제거 → 같은 generic 경로로 잔차가
+  예실차(item6)→기타(item7) 이동(item7=−266,177, 금액 불변).
+- **결과:** census **HOLE 96→45, WRONG 18→14**(새 버그 0). 무회귀: PL gold ALL DIRECT PASS,
+  closing 315P/0F, **pl_bridge 14F 불변**(+51 pass/−51 skip), crosscheck 0F(1 minor=에이비엘 leg).
+- **남은 actionable(2024.2Q+, 비-legit) 14개:** 동양/케이디비 재보 9·10 누락, 하나생명 원수 side
+  전체 누락 + 투자손익(17), 교보라이프플래닛 Tier-2 부재(디지털, 공시 최소). 코리안리 자동차(13)
+  누락 11개는 재보험사라 **정상(legit)**. FY2023 홀은 사이트 비노출.
+
+## 2026-06-08 (l) — 농협손해 PL Tier-2 예실차 IFRS17 항등식 유도 (보험손익≈0 재현) [→ (m)에서 기타로 재분류]
 
 owner: "농협손보 보험손익 0원으로 나온다 / PL breakdown 똑바로 안 한 건 니 잘못". FS-API로 보험손익
 **-22억(-2,234백만)** 이 회사 실값임 확인(보험영업수익 4,634,635.5 − 비용 4,636,869.7). 문제는 **분해가
