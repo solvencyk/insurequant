@@ -2667,6 +2667,16 @@ def extract_tier2_nh(tables):
     out["_jang_cost"] = subtotal("보험서비스비용")
     out["_jang_rerev"] = subtotal("재보험수익")
     out["_jang_recost"] = subtotal("재보험비용")
+    # 예실차(item6/11): NH discloses the 보험수익/보험서비스비용 SUBTOTALS but not the
+    # 예상-vs-발생 claim split, so derive the experience residual from the IFRS17 identity:
+    #   원수 예실차 = (보험수익 − 보험서비스비용) − 원수CSM상각 − 원수RA ;  재보 동형.
+    # WITHOUT this, item6/11 are 0 and the Tier-2 waterfall does not reconcile to the whole-
+    # company 보험손익 — the large NEGATIVE 원수 예실차 (actual claims exceeding the expected
+    # built into CSM/premium) is exactly what makes 농협손해's 보험손익 ≈ 0 despite +CSM상각.
+    if out.get("_jang_rev") is not None and out.get("_jang_cost") is not None:
+        out[6] = (abs(out["_jang_rev"]) - abs(out["_jang_cost"])) - (out.get(4) or 0) - (out.get(5) or 0)
+    if out.get("_jang_rerev") is not None and out.get("_jang_recost") is not None:
+        out[11] = (abs(out["_jang_rerev"]) - abs(out["_jang_recost"])) - (out.get(9) or 0) - (out.get(10) or 0)
     return out  # 백만원 already
 
 
