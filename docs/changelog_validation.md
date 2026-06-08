@@ -38,6 +38,14 @@ parser가 CSM_waterfall 측정요소 변동표 재추출 → 재검증 (`scripts
 
 → **parser 전달 대상**: 케이디비생명·흥국화재 2025 분기 CSM_waterfall 재추출 (복붙·이상치) + **메트라이프 2025.4Q 기초 2배(이중계상)**. closing identity 0F였어도 절댓값이 틀린 케이스.
 
+## 2026-06-07 (h) — 흥국 해소 (빌드 누락이 원인) + 빌드 체인 교훈
+
+흥국화재 "고쳤다"는데 3번 재검증해도 루트 `CSM_waterfall.json`에 변화 0 → 추적 결과 **빌드 한 단계 누락**. 체인: `csm_waterfall_master_diag.json`(소스) → `build_root_masters.py` → 루트 `CSM_waterfall.json`. parser가 **diag는 22:13에 제대로 고쳤는데**(흥국 폭락·복붙 다 사라짐) **루트는 21:31 옛것** — `build_root_masters.py`를 안 돌려 미반영. validation이 `python scripts/build_root_masters.py` 실행 → 루트 갱신 → **흥국 완전 해소** (복붙 6→0 / spike 4→1 / cont 21→14).
+
+**⚠️ 운영 교훈 (핸드오프 필수)**: parser가 소스(diag/viz)를 고쳐도 **`build_root_masters.py` 재실행 전엔 루트 마스터(검증 대상)에 반영 안 됨**. parser fix 후 빌드까지 확인할 것. mtime 비교(소스 > 루트)로 빌드 누락 탐지 가능.
+
+**빌드가 드러낸 새 건**: 롯데손해 2025.4Q wf CSM상각 −980(거의 0, 이상치 — 빌드 로그 `1 unit-error c-q nulled`) → crosscheck +99.5% RED. 롯데 FY25 양식 이슈(V7)와 연관 의심 → parser. (케이디비 2025.4Q +12.8%는 기존.)
+
 ## 2026-06-07 (f) — DB손해·KB손해 별도/연결 fix → PL_BRIDGE 31F→16F
 
 parser가 별도/연결 LOB 레그 fix를 DB손해·KB손해로 확장 → **2024+ 보험손익 fail 10건 완전 해소** (DB손해 5 + KB손해 5). 진단(DB=ΣLOB 결손 +7k~+47k / KB=ΣLOB 과대 −9k~−59k, LOB 내부는 정합)이 정확히 별도/연결 레그 오선택이었음.

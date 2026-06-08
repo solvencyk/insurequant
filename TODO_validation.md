@@ -49,6 +49,10 @@ cross-source 억지 매칭 대신 **DART 단일 소스 내부 정합성**으로 
 - [x] **CSM_PLAUSIBILITY 룰 신설** (2026-06-07g) — closing identity 사각지대(산술만 봄) 보강 3종: 복붙(기말 동일) + 기말 QoQ |Δ|>50% 폭변 + **연속성(기초=전년말, 사용자 지적)**. 검출 6 dup / 4 spike / 21 cont.
 - [→] **CSM 재추출 (parser)**: 케이디비 2025·흥국 2025 복붙 / 흥국 2025.4Q 기말 34억 폭락 / **메트라이프 2025.4Q 기초 2배(이중계상, KB라이프형 — 연속성만 검출)**. closing 0F였어도 절댓값 틀림.
 - [참고] 연속성 21건 중 회색지대(삼성생명 −1,452 등 작은 Δ)는 IFRS17 기초 재작성 가능 → 무조건 오류 아님. 배수/큰Δ만 RED, 작은Δ는 YELLOW(재작성 검토). 교보·KB라이프는 좀 커서 parser 확인.
+- [x] **흥국화재 해소** (2026-06-07h) — parser는 diag 소스를 제대로 고쳤으나 `build_root_masters.py` 누락으로 루트 마스터 미반영이었음.
+- [x] **빌드→검증 통합** (2026-06-08) — `validate_master_tables.py`가 검증 전 `build_root_masters.py`를 자동 선행(idempotent). 빌드 누락으로 "고쳤는데 검증에 안 보임" 문제 구조적 차단. `--no-build`로 끌 수 있음. **회귀 명령: `python scripts/validate_master_tables.py` (빌드+검증 한 방)**.
+- [x] **메트라이프 2배·케이디비 복붙·흥국·롯데 해소** (2026-06-08) — parser fix + 빌드 반영. 진짜 데이터 오류(이중계상/복붙/폭락/롯데 crosscheck) 전부 소진. 현재 dup:0 spike:1 cont:12 crosscheck:0F closing:0F.
+- [→] **잔여 확인 대상 (소수)**: 교보생명 cont(2024.3Q/4Q −2,905·2026.1Q +5,659), 케이디비 spike(2024.1Q→2Q +58%). 그 외 cont 회색지대(삼성생명 −1,452 등 작은 Δ)는 IFRS17 기초 재작성 가능 → 무조건 오류 아님, YELLOW로 둠.
 - [x] **CSM_CROSSCHECK tol 3단계** (2026-06-07c) — cross-table 표간 편차 구조적 → OK≤max(5%,300mn) / MINOR≤10%(경고) / RED>10%. 결과 66P/2M/2F. 경계 7건 흡수.
 - [x] **CSM_CROSSCHECK 진짜 2F 해소** (2026-06-07d) → **0F**. KB라이프 2023.4Q: wf 당기+전기 이중합산(사업결합 기초 2줄) → parser `_is_prior_header()` fix. 코리안리 2025.4Q: validation 룰 스코프 버그(재보험사 발행계약=원수+수재인데 수재 누락) → crosscheck `p=원수+수재CSM상각`으로 수정. **CSM_waterfall 도메인 완전 정합** (closing 0F + crosscheck 0F).
 - [참고] crosscheck MINOR 2건 (에이비엘 6.9%·흥국화재 6.4%) — 경고만, pass.
