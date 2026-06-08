@@ -82,18 +82,17 @@ def pick_group(blocks, marker):
     for b in blocks:
         capf = _ns(b.get("caption") or "")
         if marker == "원수일반모형":
-            # 메리츠 2025.3Q titles the 원수 발행 table '원수및출재일반모형적용계약' (one section
-            # header spanning 원수+출재), so the literal '원수일반모형' marker misses it and the
-            # blanket '출재일반모형' exclusion wrongly drops it. Match on 원수 AND 일반모형 both
-            # present; skip only a PURE 재보험 table (재보험자산, or 출재 with NO 원수). The 원수
-            # 발행 sub-table's rows lead with 기초/최초인식 (NB_PATS gate below), the 출재 sub-tables
-            # carry '재보험자산' captions and are excluded here.
-            if not ("원수" in capf and "일반모형" in capf):
+            # combined 원수 발행 CSM rollforward whose section header spans 원수+출재, so the
+            # literal '원수일반모형' marker misses it and the blanket '출재' exclusion wrongly drops
+            # it. Caption varies by company: '원수및출재일반모형적용계약' (메리츠 2025.3Q),
+            # '원수및출재잔여보장부채변동내역' (KB손해 2023.3Q — non-PAA LRC carrying the 측정요소별
+            # 보험계약마진 column). Match 원수 + (일반모형 | 잔여보장부채); the 출재 sub-tables lack
+            # '원수' in their caption (they say '재보험계약자산') and are excluded. block_stages +
+            # NB_PATS row gate below still require a real rollforward.
+            if "원수" not in capf or not ("일반모형" in capf or "잔여보장부채" in capf):
                 continue
-            if "재보험자산" in capf:
+            if "재보험자산" in capf or "배당요소가있는" in capf or "배당요소가없는" in capf:
                 continue
-            if "배당요소가있는" in capf or "배당요소가없는" in capf:
-                continue  # combined-only: skip the 배당 splits (handled separately)
         elif marker not in capf or "출재일반모형" in capf or "재보험자산" in capf:
             continue
         if not any(rr and isinstance(rr[0], str)
