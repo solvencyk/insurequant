@@ -21,8 +21,8 @@ sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "scripts"))
 sys.stdout.reconfigure(encoding="utf-8")
 from src.ifrs17.measurement_extractor import extract_measurement_tables, to_jsonable
 from viz_build_csm_waterfall import (normalize_block_header, deduplicate,
-    find_csm_leaf_cols, row_value_start, parse_num, filter_current_period_rows,
-    extract_stages, STAGE_PATTERNS)
+    find_csm_leaf_cols, find_product_segmented_csm_cols, row_value_start, parse_num,
+    filter_current_period_rows, extract_stages, STAGE_PATTERNS)
 
 def _ns(s):  # normalize: drop ALL whitespace incl. \xa0 (KB rows lead with \xa0)
     return re.sub(r"\s", "", s) if isinstance(s, str) else ""
@@ -755,6 +755,67 @@ def _pattern2_segsum(blocks, anchor):
     return {no: sum((p.get(no) or 0) for p in picks) for no in STAGE_KEYS}
 
 
+def _wide_product_stages(b):
+    """Sum the per-product 보험계약마진 columns of a WIDE product-segmented CER table
+    (미래에셋 2026.1Q: 사망/건강/연금/저축/기타 as COLUMN GROUPS in ONE table, vs the per-product
+    SEPARATE blocks earlier quarters used).  find_product_segmented_csm_cols returns [] for
+    non-product tables → safe no-op.  opening/closing on the 부채(순부채) balance row (the 자산인
+    row is 0/None).  Returns RAW values {1,2,3,5,6} (waterfall_for_dir applies the unit divisor)."""
+    hdr, rows = b.get("header") or [], filter_current_period_rows(b.get("rows") or [])
+    cols = find_product_segmented_csm_cols(hdr, rows)
+    if not cols:
+        return None
+
+    def csum(r):
+        data = r[row_value_start(r):]
+        xs = [parse_num(data[i]) for i in cols if 0 <= i < len(data)]
+        xs = [x for x in xs if x is not None]
+        return sum(xs) if xs and any(x != 0 for x in xs) else None
+
+    def find(pats, exclude=()):
+        for r in rows:
+            lab = _ns("".join(str(c) for c in r[: row_value_start(r)] if isinstance(c, str)))
+            if not lab or any(_ns(x) in lab for x in exclude):
+                continue
+            if any(_ns(p) in lab for p in pats):
+                v = csum(r)
+                if v is not None:
+                    return v
+        return None
+
+    out = {1: find(("기초",), exclude=("자산인",)),
+           2: find(STAGE_PATTERNS["new_business"]),
+           3: find(STAGE_PATTERNS["interest"]),
+           5: find(STAGE_PATTERNS["amortization"]),
+           6: find(("당분기말", "당반기말", "분기말", "반기말", "기말"), exclude=("자산인",))}
+    ok = out.get(1) is not None and out.get(6) is not None and (
+        out.get(2) is not None or out.get(5) is not None)
+    return out if ok else None
+
+
+def _pick_wide_product(blocks, anchor=None):
+    """LAST-resort path: a WIDE product-column CER whose caption is mis-attributed to a 관계기업/
+    투자주식 note (미래에셋 2026.1Q), so every caption/segment path above missed it.  Run ONLY here
+    (after all else returns None) so quarters with proper per-product blocks (e.g. 미래에셋 2025.4Q,
+    units 백만) never reach this and can't be unit-mixed with the wide table (units 원).  Among the
+    원수 wide blocks (재보험 has a negative opening) pick the one whose opening best matches the FY
+    anchor (= prior 기말); without an anchor take the largest opening."""
+    cands = []
+    for b in blocks:
+        if _is_prior_caption(b.get("caption") or "") or _is_prior_header(b):
+            continue
+        st = _wide_product_stages(b)
+        if st and (st.get(1) or 0) > 0:
+            cands.append(st)
+    if not cands:
+        return None
+    if anchor and abs(anchor) > 1:
+        mag = max(abs(v) for s in cands for v in s.values() if v is not None)
+        udiv = 1e6 if mag > 1e10 else (1e3 if mag > 1e8 else 1.0)
+        return min(cands, key=lambda s: abs((s.get(1) or 0) / udiv / 100.0 - anchor))
+    return max(cands, key=lambda s: abs(s.get(1) or 0))
+
+
 def waterfall(blocks, anchor=None, code=None):
     dang = pick_group(blocks, "배당요소가있는")
     mu = pick_group(blocks, "배당요소가없는")
@@ -784,6 +845,9 @@ def waterfall(blocks, anchor=None, code=None):
     agn = pick_combined_agnostic(blocks, anchor, code)  # caption-agnostic (농협·DB·코리안리·분기 단순표)
     if agn:
         return agn, "combined-agn"
+    wp = _pick_wide_product(blocks, anchor)   # 미래에셋 2026.1Q WIDE product-column CER (mis-attributed caption)
+    if wp:
+        return wp, "wide-product"
     return None, None
 
 
