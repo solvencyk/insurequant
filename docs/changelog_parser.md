@@ -8,6 +8,20 @@ Convention: latest few entries detailed; older ones compressed to 1-liners (git 
 
 ---
 
+## 2026-06-08 (l) — 농협손해 PL Tier-2 예실차 IFRS17 항등식 유도 (보험손익≈0 재현)
+
+owner: "농협손보 보험손익 0원으로 나온다 / PL breakdown 똑바로 안 한 건 니 잘못". FS-API로 보험손익
+**-22억(-2,234백만)** 이 회사 실값임 확인(보험영업수익 4,634,635.5 − 비용 4,636,869.7). 문제는 **분해가
+닫히지 않음** — item6/11 예실차가 0이라 item4+5+6+9+10+11 ≠ item2(장기손익). 근본: NH는 예상-vs-발생
+claim split을 공시하지 않고 **보험수익/보험서비스비용 소계만** 공시.
+
+- **수정 (commit 32c7613):** `extract_tier2_nh`에 IFRS17 항등식으로 experience residual 유도:
+  `원수 예실차(6) = (보험수익−보험서비스비용) − 원수CSM상각(4) − 원수RA(5)`, 재보(11) 동형.
+  큰 **음(-)의 원수 예실차**(실제 손해가 CSM/보험료에 내재된 예상 초과)가 +CSM상각에도 보험손익≈0을
+  만드는 정체. 2024.4Q·2025.4Q 모두 **분해합=장기손익 닫힘 OK**(87,482=87,482 / 175,332=175,332).
+- **무회귀:** PL gold **ALL DIRECT PASS**, closing 315P/0F, pl_bridge 2082P/**14F**(불변), crosscheck 0F.
+- **정직히 남긴 것:** item13/14(자동차/일반) None 유지 — NH는 종목별이 아니라 **전사 단일 보험손익만** 공시.
+
 ## 2026-06-07 (k) — 야간 #2 라운드2: 라이나 CSM 상각 라벨 + PL gold gate GREEN
 
 (j) 이후 owner가 "남은 것 없을 때까지" 추가 지시 → 더 고침:
