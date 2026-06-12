@@ -3,10 +3,16 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>InsureQuant — K-ICS Market Map (Balanced Treemap)</title>
+  <title>InsureQuant — 보험사 마켓맵</title>
+  <meta name="description" content="국내 보험사 K-ICS·IFRS17 현황 한눈에 — 지급여력 마켓맵, CSM 버블맵, 신계약 배수 (분기 공시 기반)"/>
+  <meta property="og:title" content="InsureQuant — 보험사 마켓맵"/>
+  <meta property="og:description" content="국내 보험사 K-ICS·IFRS17 현황 한눈에 — 지급여력 마켓맵, CSM 버블맵, 신계약 배수"/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"/>
   <style>
     :root{--bg:#ffffff; --card:#f8f9fa; --border:#e9ecef; --text:#212529; --muted:#6c757d; --primary:#0d6efd; --primary-hover:#0b5ed7;}
-    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-variant-numeric:tabular-nums}
     header{position:sticky;top:0;padding:10px 16px;border-bottom:1px solid var(--border);background:#ffffff;z-index:1000}
     .brand{font-weight:700;margin-bottom:12px;cursor:pointer;color:var(--primary);text-decoration:none}
     .brand:hover{color:var(--primary-hover)}
@@ -41,6 +47,7 @@
     .section-title{font-size:16px;font-weight:700;margin:0 0 4px}
     .section-desc{font-size:12px;color:var(--muted);margin:0 0 10px}
     #csm-bubble-chart{height:520px;border-radius:14px;border:1px solid var(--border);background:#fff}
+    #bubble-list{display:none}
     .bubble-legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
     .bubble-swatch{width:120px;height:10px;border-radius:6px;background:linear-gradient(90deg,#7f1d1d,#f59e0b,#84cc16,#14532d)}
     /* M2: mobile list view for the treemap (shown only <=640px) */
@@ -53,6 +60,9 @@
     .li-bar{height:100%;border-radius:7px;min-width:2px}
     .li-val{flex:0 0 54px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
     .li-empty{padding:24px 12px;text-align:center;color:var(--muted);font-size:13px}
+    .li-chip{font-size:10px;font-weight:400;color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:0 4px;margin-left:6px;white-space:nowrap;flex:0 0 auto}
+    #bubble-list .li-name{display:flex;align-items:center;min-width:0;flex-basis:44%}
+    #bubble-list .li-nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
     /* Mobile responsive (<=640px) - M1 shared foundation */
     @media (max-width:640px){
       header{padding:8px 12px}
@@ -67,7 +77,8 @@
       .section-title{font-size:15px}
       #map{display:none}
       .map-list{display:block}
-      #csm-bubble-chart{height:360px}
+      #csm-bubble-chart{display:none}
+      #bubble-list{display:block}
       .swatch,.bubble-swatch{width:88px}
     }
   </style>
@@ -75,7 +86,7 @@
 </head>
 <body>
   <header>
-    <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">K-ICS Market Map (Balanced Treemap)</span></a>
+    <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">보험사 공시 대시보드</span></a>
     <div class="tabs">
       <a href="K-ICS.html" class="tab">K-ICS</a>
       <a href="IFRS17.html" class="tab">IFRS17</a>
@@ -84,6 +95,7 @@
   </header>
   <div class="container">
     <div class="panel">
+      <div class="section-title">K-ICS — 지급여력 마켓맵</div>
       <div class="controls">
         <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
           <div>
@@ -137,6 +149,7 @@
         </div>
       </div>
       <div id="csm-bubble-chart"></div>
+      <div id="bubble-list" aria-label="CSM bubble list (mobile)"></div>
     </div>
   </div>
   <script>
@@ -147,6 +160,7 @@
     const jsonPath = resolveUrl('kics_disclosure.json');
     let bubbleRows = null;
     let bubbleChart = null;
+    let nbRowsRaw = null, wfRowsRaw = null; // M3: 모바일 버블 리스트용 원본 마스터 행
     let allData = [];
     let GROUPED = {};
     
@@ -390,6 +404,27 @@
       }
     }
 
+    // 표시용 회사 약칭 — 셀/라벨/리스트에만 적용. 툴팁·클릭 내비게이션은 원래 이름 유지(조회 키).
+    const NAME_ABBR = {
+      '케이비손해보험':'KB손보', '케이비라이프생명보험':'KB라이프', '신한이지손해보험':'신한EZ손해',
+      '에이비엘생명보험':'ABL생명', '케이디비생명보험':'KDB생명', '아이엠라이프생명보험':'iM라이프',
+      '디지비생명보험':'DGB생명', '엠지손해보험':'MG손보', '에이아이지손해보험':'AIG손보',
+      '비엔피파리바카디프생명보험':'BNP카디프', '교보라이프플래닛생명보험':'교보라이프플래닛',
+      '처브라이프생명보험':'처브라이프', '메트라이프생명보험':'메트라이프', '악사손해보험':'악사손보',
+      '신한라이프생명보험':'신한라이프', '푸본현대생명보험':'푸본현대',
+    };
+    function shortName(n){
+      if (!n) return n;
+      if (NAME_ABBR[n]) return NAME_ABBR[n];
+      return String(n)
+        .replace(/화재해상보험$/, '화재')   // 메리츠화재해상보험 → 메리츠화재
+        .replace(/해상화재보험$/, '해상')   // 현대해상화재보험 → 현대해상
+        .replace(/손해보험$/, '손보')
+        .replace(/생명보험$/, '생명')
+        .replace(/재보험$/, '')             // 코리안리재보험 → 코리안리
+        .replace(/보증보험$/, '보증');
+    }
+
     // Balanced binary partition (RecSplit) treemap
     function recsplit(items, rect) {
       // items: array of {value, data} (values unscaled; we'll scale by area)
@@ -465,7 +500,24 @@
         const innerTop = gy + padInner;
         const innerRight = innerLeft + innerW;
         const innerBottom = innerTop + innerH;
-        const cells = recsplit(items, {x:innerLeft, y:innerTop, w:innerW, h:innerH});
+
+        // 꼬리 슬리버 방지: 예상 면적이 임계 미만인 소형사는 '기타' 한 칸으로 묶음
+        // (호버 툴팁에 목록 표시. 모바일 리스트는 전체 로스터 유지라 정보 손실 없음.)
+        const MIN_CELL_AREA = 2400; // ≈ 60×40px
+        const innerArea = innerW * innerH;
+        const groupSum = items.reduce((a, b) => a + b.value, 0) || 1;
+        const majors = [], minors = [];
+        for (const it of items) {
+          ((it.value / groupSum) * innerArea >= MIN_CELL_AREA ? majors : minors).push(it);
+        }
+        let tiled = items;
+        if (minors.length >= 2 && majors.length) {
+          tiled = majors.concat([{
+            value: minors.reduce((a, b) => a + b.value, 0),
+            data: { isOther: true, count: minors.length, list: minors.map(m => m.data) }
+          }]);
+        }
+        const cells = recsplit(tiled, {x:innerLeft, y:innerTop, w:innerW, h:innerH});
 
         // recsplit 타일은 분할 영역 안에만 그림. 바깥으로 키우면(MIN 크기 등) 서로 겹침.
         const inset = 1;
@@ -568,7 +620,24 @@
           cell.style.top = finalY + "px";
           cell.style.width = finalW + "px";
           cell.style.height = finalH + "px";
-          
+
+          // '기타' 묶음 칸: 중립색 + 호버 목록, 클릭 내비 없음
+          if (d.isOther) {
+            cell.style.background = '#dde2e7';
+            cell.title = `기타 ${d.count}사 (기준금액 소형) — ` + d.list.map(m =>
+              `${m.company} ${(ratioType === 'basicCapital' ? (m.basicCapitalRatio || 0) : (m.ratio || 0)).toFixed(0)}%`
+            ).join(' · ');
+            if (finalH >= 24 && finalW >= 40) {
+              const nm = document.createElement('div');
+              nm.className = 'name';
+              nm.style.cssText = 'font-weight:500;color:#6c757d;pointer-events:none';
+              nm.textContent = `기타 ${d.count}사`;
+              cell.appendChild(nm);
+            }
+            el.appendChild(cell);
+            continue;
+          }
+
           // 선택된 비율 타입에 따라 색상 계산
           let displayRatio, displayValue;
           if (ratioType === 'basicCapital') {
@@ -593,7 +662,7 @@
           if (showName) {
             const name = document.createElement("div");
             name.className = "name";
-            name.textContent = d.company;
+            name.textContent = shortName(d.company);
             name.style.pointerEvents = 'none';
             cell.appendChild(name);
           }
@@ -659,7 +728,7 @@
           row.title = `${d.company} — ${v.toFixed(1)}%, 기준금액 ${Math.round(d.required || 0).toLocaleString()}`;
           const name = document.createElement('div');
           name.className = 'li-name';
-          name.textContent = d.company;
+          name.textContent = shortName(d.company);
           const track = document.createElement('div');
           track.className = 'li-bar-track';
           const bar = document.createElement('div');
@@ -705,8 +774,9 @@
       const el = document.getElementById('csm-bubble-chart');
       const metaEl = document.getElementById('bubble-meta');
       if (!el || !window.echarts || !bubbleRows) return;
+      if (window.matchMedia('(max-width:640px)').matches) return; // M3: 모바일은 #bubble-list가 대체 — 숨김(0×0) 컨테이너 init 방지
 
-      let rows = bubbleRows.filter(r => Number.isFinite(r.nbCsm) && Number.isFinite(r.multiple));
+      let rows = bubbleRows.filter(r => Number.isFinite(r.nbCsm) && r.nbCsm > 0 && Number.isFinite(r.multiple)); // log축: nbCsm>0 필수
       if (sectorFilter && sectorFilter !== 'ALL') rows = rows.filter(r => r.sector === sectorFilter);
 
       if (metaEl) metaEl.textContent = `표시 ${rows.length}社 · 기준 2026.1Q · 크기=최신 기말 잔액`;
@@ -737,8 +807,8 @@
           }
         },
         xAxis: {
-          type: 'value', name: '신계약 CSM 규모 (억)', nameLocation: 'middle', nameGap: 34,
-          axisLabel: { formatter: v => (v / 10000).toFixed(1) + '조' },
+          type: 'log', logBase: 10, name: '신계약 CSM 규모 (억 · 로그축)', nameLocation: 'middle', nameGap: 34,
+          axisLabel: { formatter: v => v >= 10000 ? (v / 10000).toLocaleString('ko-KR') + '조' : Math.round(v).toLocaleString('ko-KR') + '억' },
           splitLine: { lineStyle: { type: 'dashed', color: '#eef0f2' } }
         },
         yAxis: {
@@ -748,14 +818,15 @@
         series: sectors.map(sec => ({
           name: sec === 'Life' ? '생명보험' : '손해보험',
           type: 'scatter',
-          labelLayout: { hideOverlap: true },
+          labelLayout: { hideOverlap: true, moveOverlap: 'shiftY' },
+          labelLine: { show: true, length2: 4, lineStyle: { color: '#ced4da', width: 1 } },
           data: rows.filter(r => r.sector === sec).map(r => ({
             name: r.name,
             value: [r.nbCsm, r.multiple],
             d: r,
             symbolSize: bubbleSize(r.closing, maxClosing),
             itemStyle: { color: SECTOR_COLOR[sec], opacity: 0.6, borderColor: '#fff', borderWidth: 1 },
-            label: { show: true, formatter: '{b}', position: 'top', fontSize: 10, color: '#495057' },
+            label: { show: true, formatter: shortName(r.name), position: 'top', fontSize: 10, color: '#495057', textBorderColor: '#fff', textBorderWidth: 2 },
             emphasis: { focus: 'self', label: { show: true, fontWeight: 'bold' }, itemStyle: { opacity: 0.95 } }
           }))
         }))
@@ -809,13 +880,112 @@
       return out;
     }
 
+    // M3: mobile list mirror of the bubble map (CSS @media <=640px에서만 표시).
+    // 데스크톱과 달리 2026.1Q 고정 아님 — 배수가 있는 회사별 최신 분기 사용, 기준분기 미충족이면 칩 표기.
+    // 정렬: 그룹(생보→손보) 내 기말 CSM 잔액 desc · 막대 ∝ 기말 잔액 · 값 = NB 배수.
+    function renderBubbleList() {
+      const host = document.getElementById('bubble-list');
+      if (!host) return;
+      host.innerHTML = '';
+      const sectorFilter = document.getElementById('bubble-sector')?.value || 'ALL';
+      const SECTOR_COLOR = { 'Life': '#0d6efd', 'Non-Life': '#16a34a' };
+
+      const nbLatest = {};                               // code -> 배수 있는 최신 NB 행
+      for (const r of (nbRowsRaw || [])) {
+        const code = r['원보험사코드'];
+        if (!code || !Number.isFinite(r['신계약CSM배수_연누계'])) continue;
+        if (!nbLatest[code] || qkey(r['공시분기']) > qkey(nbLatest[code]['공시분기'])) nbLatest[code] = r;
+      }
+      const wfLatest = {};                               // code -> {k,q,v} 기말(6) 최신 잔액
+      for (const r of (wfRowsRaw || [])) {
+        if (r['항목번호'] !== 6 || r['값'] == null) continue;
+        const code = r['원보험사코드']; const v = Number(r['값']);
+        if (!code || !Number.isFinite(v)) continue;
+        const k = qkey(r['공시분기']);
+        if (!wfLatest[code] || k > wfLatest[code].k) wfLatest[code] = { k, q: r['공시분기'], v };
+      }
+      const items = [];
+      for (const code in nbLatest) {
+        const r = nbLatest[code];
+        const sec = r['생손보여부'] === '생명보험' ? 'Life' : 'Non-Life';
+        if (sectorFilter !== 'ALL' && sec !== sectorFilter) continue;
+        const wc = wfLatest[code];
+        items.push({
+          name: r['원수사명'], sector: sec,
+          multiple: r['신계약CSM배수_연누계'], nbQ: r['공시분기'],
+          closing: wc ? wc.v : null, closingQ: wc ? wc.q : null
+        });
+      }
+
+      let total = 0;
+      const maxClosing = Math.max(1, ...items.map(it => it.closing || 0));
+      for (const sec of ['Life', 'Non-Life']) {
+        const rows = items.filter(it => it.sector === sec).sort((a, b) => (b.closing || 0) - (a.closing || 0));
+        if (!rows.length) continue;
+        const head = document.createElement('div');
+        head.className = 'li-sector';
+        head.textContent = sec === 'Life' ? '생명보험' : '손해보험';
+        host.appendChild(head);
+        for (const it of rows) {
+          total++;
+          const row = document.createElement('div');
+          row.className = 'li-row';
+          const closingTxt = it.closing != null ? Math.round(it.closing).toLocaleString() + '억' : '—';
+          row.title = `${it.name} — 기말 CSM ${closingTxt} (${it.closingQ || '—'}), NB배수 ${it.multiple.toFixed(2)}× (${it.nbQ})`;
+          const name = document.createElement('div');
+          name.className = 'li-name';
+          const nm = document.createElement('span');   // 이름만 말줄임, 칩은 항상 노출
+          nm.className = 'li-nm';
+          nm.textContent = shortName(it.name);
+          name.appendChild(nm);
+          if (it.nbQ !== '2026.1Q') {                  // 기준분기 미공시 → 사용 분기 칩
+            const chip = document.createElement('span');
+            chip.className = 'li-chip';
+            chip.textContent = String(it.nbQ).slice(2); // '2025.4Q' → '25.4Q'
+            name.appendChild(chip);
+          }
+          const track = document.createElement('div');
+          track.className = 'li-bar-track';
+          const bar = document.createElement('div');
+          bar.className = 'li-bar';
+          bar.style.width = Math.max(2, ((it.closing || 0) / maxClosing) * 100) + '%';
+          bar.style.background = SECTOR_COLOR[sec];
+          track.appendChild(bar);
+          const val = document.createElement('div');
+          val.className = 'li-val';
+          val.textContent = it.multiple.toFixed(2) + '×';
+          row.appendChild(name);
+          row.appendChild(track);
+          row.appendChild(val);
+          row.addEventListener('click', () => {
+            window.location.href = 'IFRS17.html?company=' + encodeURIComponent(it.name);
+          });
+          host.appendChild(row);
+        }
+      }
+      if (!total) {
+        const empty = document.createElement('div');
+        empty.className = 'li-empty';
+        empty.textContent = 'NB 배수 데이터를 불러오는 중이거나 표시할 항목이 없습니다.';
+        host.appendChild(empty);
+      }
+      // 모바일에선 메타 라인을 리스트 기준으로 표기 (renderBubble은 모바일에서 조기 반환)
+      const metaEl = document.getElementById('bubble-meta');
+      if (metaEl && window.matchMedia('(max-width:640px)').matches) {
+        metaEl.textContent = `표시 ${total}社 · 회사별 최신 공시 분기 · 막대=기말 CSM`;
+      }
+    }
+
     function loadBubble() {
       Promise.all([
         fetchFirst([resolveUrl('../NB_CSM_multiple.json'), resolveUrl('NB_CSM_multiple.json')]),
         fetchFirst([resolveUrl('../CSM_waterfall.json'), resolveUrl('CSM_waterfall.json')]),
       ]).then(([nbRows, wfRows]) => {
+        nbRowsRaw = nbRows;
+        wfRowsRaw = wfRows;
         bubbleRows = buildBubbleData(nbRows, wfRows);
         renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
+        renderBubbleList();
       }).catch(e => {
         console.error('bubble masters load failed:', e);
         const metaEl = document.getElementById('bubble-meta');
@@ -836,13 +1006,25 @@
       if (bubbleChart) bubbleChart.resize();
     });
 
+    // M3: 모바일 폭에서 로드되면 차트 init이 미뤄짐(renderBubble 가드) → 데스크톱 복귀 시 재렌더 + 리사이즈
+    const bubbleMobileMq = window.matchMedia('(max-width:640px)');
+    bubbleMobileMq.addEventListener('change', (e) => {
+      if (e.matches) { renderBubbleList(); return; }   // 모바일 진입: 리스트·메타 갱신
+      renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
+      if (bubbleChart) bubbleChart.resize();
+    });
+
     const bubbleSectorSel = document.getElementById('bubble-sector');
     if (bubbleSectorSel) {
-      bubbleSectorSel.addEventListener('change', () => renderBubble(bubbleSectorSel.value));
+      bubbleSectorSel.addEventListener('change', () => { renderBubble(bubbleSectorSel.value); renderBubbleList(); });
     }
 
     loadData();
     loadBubble();
   </script>
+  <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
+    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (2026.1Q)<br/>
+    본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
+  </footer>
 </body>
 </html>
