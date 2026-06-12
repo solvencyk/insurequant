@@ -4,11 +4,17 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>InsureQuant — K-ICS 지급여력비율 변동 추이</title>
+  <meta name="description" content="보험사별 K-ICS 지급여력비율 추이·세부항목·금리 민감도·5년 전망 — 분기 공시 기반 대시보드"/>
+  <meta property="og:title" content="InsureQuant — K-ICS 지급여력비율"/>
+  <meta property="og:description" content="보험사별 K-ICS 지급여력비율 추이·세부항목·금리 민감도·5년 전망"/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
   <style>
     :root{--bg:#ffffff; --card:#f8f9fa; --border:#e9ecef; --text:#212529; --muted:#6c757d; --primary:#0d6efd; --primary-hover:#0b5ed7;}
-    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-variant-numeric:tabular-nums}
     header{position:sticky;top:0;padding:10px 16px;border-bottom:1px solid var(--border);background:#ffffff;z-index:1000}
     .brand{font-weight:700;margin-bottom:12px;cursor:pointer;color:var(--primary);text-decoration:none}
     .brand:hover{color:var(--primary-hover)}
@@ -32,6 +38,8 @@
     th{background:var(--card);}
     th:nth-child(n+2), td:nth-child(n+2){text-align:right;} /* 항목명 제외한 모든 셀 오른쪽 정렬 */
     td.subitem{padding-left:24px;color:var(--muted);font-size:12px;}
+    .subtoggle{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin-left:6px;padding:0;border:1px solid var(--border);border-radius:4px;background:#fff;color:var(--muted);font-size:13px;line-height:1;cursor:pointer;vertical-align:middle}
+    .subtoggle:hover{border-color:var(--primary);color:var(--primary)}
     .panel .subtitle{color:var(--muted);font-size:13px;line-height:1.5;margin:-8px 0 16px 0}
     .panel .subtitle li{margin-bottom:2px}
     .donut-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;padding:8px 0}
@@ -48,6 +56,14 @@
     .forward-confidence-badge.medium{background:rgba(255,159,64,0.95);color:#222}
     .forward-confidence-badge.low{background:rgba(220,53,69,0.9)}
     .forward-confidence-badge.no_data{background:rgba(108,117,125,0.85)}
+    .sens-chart{position:relative;height:340px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
+    .sens-kpis{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+    .sens-kpi{display:inline-block;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:8px 14px;font-size:13px}
+    .sens-kpi-delta{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;margin-left:4px}
+    .sens-kpi .sub{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:2px}
+    th.sens-name, td.sens-name{text-align:left}
+    td.sens-num{text-align:right;font-variant-numeric:tabular-nums}
+    #sens-table th, #sens-table td{white-space:nowrap} /* 좁은 화면: 셀 줄바꿈 대신 가로 스크롤 */
     /* Mobile responsive (<=640px) - M1 shared foundation */
     @media (max-width:640px){
       header{padding:8px 12px}
@@ -62,6 +78,7 @@
       .panel h2{font-size:17px}
       .chart-container{height:360px;padding:8px}
       .forward-chart{height:340px;padding:8px}
+      .sens-chart{height:260px}
       .table-container{overflow-x:auto;-webkit-overflow-scrolling:touch}
       table{font-size:12px}
       th,td{padding:4px 6px}
@@ -142,7 +159,7 @@
       </div>
       <div class="chart-container">
         <div id="chart-placeholder" class="coming-soon">
-          <h3>📊 보험사와 조회 기간을 선택해 주세요</h3>
+          <h3>보험사와 조회 기간을 선택해 주세요</h3>
           <p>위의 드롭다운 메뉴에서 보험사와 기간을 선택하면 그래프와 테이블이 표시됩니다.</p>
         </div>
         <canvas id="chart" style="display:none;"></canvas>
@@ -168,6 +185,18 @@
         </div>
       </div>
       <div class="donut-note" id="donut-note"></div>
+    </div>
+
+    <div class="panel">
+      <h2>금리 민감도 <span style="color:var(--muted);font-size:13px;font-weight:400">(시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향)</span></h2>
+      <div class="controls" style="justify-content:flex-start">
+        <label id="sens-quarter-label" style="display:none">기준 분기: <select id="sens-quarter" class="select"></select></label>
+      </div>
+      <div id="sens-placeholder" class="no-data">상단의 보험사를 선택하면 금리 민감도 분석이 표시됩니다.</div>
+      <div class="sens-chart" id="sens-chart-wrap" style="display:none"><canvas id="sens-chart"></canvas></div>
+      <div id="sens-kpis" class="sens-kpis" style="display:none"></div>
+      <div class="table-container" id="sens-table" style="display:none"></div>
+      <div class="donut-note" id="sens-note"></div>
     </div>
 
     <div class="panel">
@@ -197,10 +226,14 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
     let donutTier1Chart = null;
     let donutTier2Chart = null;
     let forwardChart = null;
+    let sensChart = null;
     let tier1UtilData = [];
     let tier2UtilData = [];
     let forwardSimData = [];
-    const SUB_ITEM_NUMS = [29, 30, 31, 32, 33, 34, 35];
+    let sensData = []; // 금리 민감도 (kics_rate_sensitivity.json)
+    // 위험액 하위항목: 17(생명장기) → 29~35(1-1~1-7), 19(시장) → 36~40(3-1~3-5). 기본 접힘, +버튼 토글.
+    const RISK_SUB_GROUPS = { 17: { key: 'life', nums: [29, 30, 31, 32, 33, 34, 35] }, 19: { key: 'mkt', nums: [36, 37, 38, 39, 40] } };
+    const subOpen = { life: false, mkt: false };
 
     function getTransitionMode() {
       return document.getElementById('transition-mode').value || '적용전';
@@ -238,22 +271,12 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
     function buildDisplayOrder(data, quarters) {
       const catalog = getItemCatalog(data);
       const order = [];
-      for (let n = 1; n <= 17; n++) {
-        if (catalog.has(n)) {
-          order.push({ num: n, name: catalog.get(n), sub: false });
-        }
-        if (n === 17) {
-          SUB_ITEM_NUMS.forEach(sn => {
-            if (catalog.has(sn) && hasSubItemData(data, sn, quarters)) {
-              order.push({ num: sn, name: catalog.get(sn), sub: true });
-            }
-          });
-        }
-      }
-      for (let n = 18; n <= 28; n++) {
-        if (catalog.has(n)) {
-          order.push({ num: n, name: catalog.get(n), sub: false });
-        }
+      for (let n = 1; n <= 28; n++) {
+        if (!catalog.has(n)) continue;
+        const grp = RISK_SUB_GROUPS[n];
+        const subs = grp ? grp.nums.filter(sn => catalog.has(sn) && hasSubItemData(data, sn, quarters)) : [];
+        order.push({ num: n, name: catalog.get(n), sub: false, toggle: subs.length ? grp.key : null });
+        subs.forEach(sn => order.push({ num: sn, name: catalog.get(sn), sub: true, group: grp.key }));
       }
       return order;
     }
@@ -319,9 +342,15 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
       quarters.forEach(q => table += `<th>${q}</th>`);
       table += '</tr></thead><tbody>';
       displayOrder.forEach(item => {
-        const nameClass = item.sub ? ' class="subitem"' : '';
         const isRatio = /비율/.test(item.name);
-        table += `<tr><td${nameClass}>${item.name}</td>`;
+        if (item.sub) {
+          table += `<tr class="subrow-${item.group}"${subOpen[item.group] ? '' : ' style="display:none"'}><td class="subitem">${item.name}</td>`;
+        } else if (item.toggle) {
+          const open = subOpen[item.toggle];
+          table += `<tr><td>${item.name} <button type="button" class="subtoggle" data-group="${item.toggle}" aria-expanded="${open}" title="하위 위험액 ${open ? '접기' : '펼치기'}">${open ? '−' : '+'}</button></td>`;
+        } else {
+          table += `<tr><td>${item.name}</td>`;
+        }
         quarters.forEach(q => {
           const found = data.find(row => row['항목번호'] === item.num && row['공시분기'] === q);
           const value = found ? getRowValue(found) : null;
@@ -334,7 +363,19 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         table += '</tr>';
       });
       table += '</tbody></table>';
-      document.getElementById('table-container').innerHTML = table;
+      const tc = document.getElementById('table-container');
+      tc.innerHTML = table;
+      // 하위 위험액 +/− 토글 — innerHTML 재생성마다 재바인딩, 펼침 상태는 subOpen에 유지
+      tc.querySelectorAll('.subtoggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const g = btn.dataset.group;
+          subOpen[g] = !subOpen[g];
+          btn.textContent = subOpen[g] ? '−' : '+';
+          btn.setAttribute('aria-expanded', String(subOpen[g]));
+          btn.title = '하위 위험액 ' + (subOpen[g] ? '접기' : '펼치기');
+          tc.querySelectorAll('tr.subrow-' + g).forEach(tr => { tr.style.display = subOpen[g] ? '' : 'none'; });
+        });
+      });
     }
 
     // 연말 분기 추출 (최신 분기 + 1년 전 연말 + 2년 전 연말)
@@ -1066,11 +1107,248 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
 
       const baseline = row.baseline_2025_4Q || {};
       const lastProj = row.projections[row.projections.length - 1];
+      const fmtDrop = d => (d < 0 ? '△' : '+') + Math.abs(d).toFixed(1);
       const dropRatio = (baseline.ratio_post_pct != null && lastProj.ratio_pct != null)
-        ? (lastProj.ratio_pct - baseline.ratio_post_pct).toFixed(1) : '-';
+        ? fmtDrop(lastProj.ratio_pct - baseline.ratio_post_pct) : '-';
       const dropBasic = (baseline.basic_ratio_post_pct != null && lastProj.basic_ratio_pct != null)
-        ? (lastProj.basic_ratio_pct - baseline.basic_ratio_post_pct).toFixed(1) : '-';
+        ? fmtDrop(lastProj.basic_ratio_pct - baseline.basic_ratio_post_pct) : '-';
       note.innerHTML = `Baseline (2025.4Q 적용후): 지급여력 <b>${baseline.ratio_post_pct != null ? baseline.ratio_post_pct.toFixed(1) : '-'}%</b>, 기본자본 <b>${baseline.basic_ratio_post_pct != null ? baseline.basic_ratio_post_pct.toFixed(1) : '-'}%</b> &nbsp;|&nbsp; 2030 변화: 지급여력 ${dropRatio}%p, 기본자본 ${dropBasic}%p &nbsp;|&nbsp; 잔액(콜 차감 대상): ${fmtEokInt(row.outstanding_bonds_total_eok)}억원`;
+    }
+
+    // ===== 금리 민감도 패널 (시장금리 평행이동 충격) =====
+
+    const SENS_SHOCK_KEYS = ['-100bp', '-50bp', 'base', '+50bp', '+100bp'];
+    const SENS_SHOCK_LABELS = ['-100bp', '-50bp', '기준', '+50bp', '+100bp'];
+    const SENS_MEASURES = ['지급여력금액', '지급여력기준금액', '지급여력비율'];
+
+    function sensRowsForCompany(companyName) {
+      if (!companyName || !Array.isArray(sensData)) return [];
+      let rows = sensData.filter(r => r['원수사명'] === companyName);
+      if (!rows.length) {
+        // 공백 제거 동등 비교 fallback
+        const key = companyName.replace(/\s+/g, '');
+        rows = sensData.filter(r => String(r['원수사명'] || '').replace(/\s+/g, '') === key);
+      }
+      return rows;
+    }
+
+    function sensQuartersDesc(rows) {
+      return Array.from(new Set(rows.map(r => r['공시분기']))).sort((a, b) => {
+        const parse = s => {
+          const m = String(s).match(/^(\d{4})\.(\d)Q$/);
+          return m ? [parseInt(m[1]), parseInt(m[2])] : [0, 0];
+        };
+        const [ay, aq] = parse(a), [by, bq] = parse(b);
+        if (ay !== by) return by - ay;
+        return bq - aq;
+      });
+    }
+
+    function sensShockValues(row) {
+      if (!row) return null;
+      return SENS_SHOCK_KEYS.map(k => {
+        const v = row[k];
+        return (v == null || v === '' || isNaN(Number(v))) ? null : Number(v);
+      });
+    }
+
+    // Δ 표기(회계 세모): △10.01%p / +3.82%p
+    function sensFmtDelta(d) {
+      const sign = d < 0 ? '△' : (d > 0 ? '+' : '');
+      return sign + Math.abs(d).toFixed(2) + '%p';
+    }
+
+    function sensHideAll(msg) {
+      const placeholder = document.getElementById('sens-placeholder');
+      placeholder.style.display = 'block';
+      placeholder.textContent = msg;
+      document.getElementById('sens-quarter-label').style.display = 'none';
+      document.getElementById('sens-chart-wrap').style.display = 'none';
+      const kpis = document.getElementById('sens-kpis');
+      kpis.style.display = 'none';
+      kpis.innerHTML = '';
+      const tbl = document.getElementById('sens-table');
+      tbl.style.display = 'none';
+      tbl.innerHTML = '';
+      document.getElementById('sens-note').innerHTML = '';
+      if (sensChart) { sensChart.destroy(); sensChart = null; }
+    }
+
+    // 회사 변경/초기 로드: 분기 select 재구성(최신 분기 기본) 후 본문 렌더
+    function renderRateSensitivity() {
+      const company = document.getElementById('company').value;
+      if (!company) {
+        sensHideAll('상단의 보험사를 선택하면 금리 민감도 분석이 표시됩니다.');
+        return;
+      }
+      const quarters = sensQuartersDesc(sensRowsForCompany(company));
+      if (!quarters.length) {
+        sensHideAll('해당 보험사는 금리 민감도 공시 항목(2024.4Q 도입, 반기)이 아직 없습니다.');
+        return;
+      }
+      const qSelect = document.getElementById('sens-quarter');
+      qSelect.innerHTML = '';
+      quarters.forEach(q => {
+        const opt = document.createElement('option');
+        opt.value = q;
+        opt.textContent = q;
+        qSelect.appendChild(opt);
+      });
+      qSelect.value = quarters[0];
+      document.getElementById('sens-quarter-label').style.display = '';
+      renderSensDetail();
+    }
+
+    // 분기 변경: 차트/KPI/테이블/주석만 재렌더
+    function renderSensDetail() {
+      const company = document.getElementById('company').value;
+      const quarter = document.getElementById('sens-quarter').value;
+      const rows = sensRowsForCompany(company).filter(r => r['공시분기'] === quarter);
+      const byMode = {};
+      ['적용후', '적용전'].forEach(mode => {
+        const modeRows = rows.filter(r => r['경과조치여부'] === mode);
+        if (modeRows.length) {
+          byMode[mode] = {};
+          SENS_MEASURES.forEach(m => {
+            byMode[mode][m] = sensShockValues(modeRows.find(r => r['measure구분'] === m));
+          });
+        }
+      });
+      const postRatio = byMode['적용후'] ? byMode['적용후']['지급여력비율'] : null;
+      const preRatio = byMode['적용전'] ? byMode['적용전']['지급여력비율'] : null;
+
+      const datasets = [];
+      if (postRatio) {
+        datasets.push({
+          label: '경과조치 적용후',
+          data: postRatio,
+          borderColor: '#0d6efd',
+          backgroundColor: '#0d6efd',
+          pointRadius: 4,
+          tension: 0,
+          fill: false
+        });
+      }
+      if (preRatio) {
+        datasets.push({
+          label: '경과조치 적용전',
+          data: preRatio,
+          borderColor: '#6c757d',
+          backgroundColor: '#6c757d',
+          borderDash: [6, 4],
+          pointRadius: 3,
+          tension: 0,
+          fill: false
+        });
+      }
+      const allVals = [];
+      datasets.forEach(ds => ds.data.forEach(v => { if (v != null && !isNaN(v)) allVals.push(v); }));
+      if (!allVals.length) {
+        sensHideAll('해당 보험사는 금리 민감도 공시 항목(2024.4Q 도입, 반기)이 아직 없습니다.');
+        return;
+      }
+      document.getElementById('sens-placeholder').style.display = 'none';
+
+      // 차트 (y축: 데이터 ±15%p 범위, 150% 권고선은 범위 안일 때만 노출)
+      const dataMin = Math.min(...allVals);
+      const dataMax = Math.max(...allVals);
+      document.getElementById('sens-chart-wrap').style.display = 'block';
+      if (sensChart) { sensChart.destroy(); sensChart = null; }
+      sensChart = new Chart(document.getElementById('sens-chart').getContext('2d'), {
+        type: 'line',
+        data: {labels: SENS_SHOCK_LABELS, datasets: datasets},
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {position: 'top', labels: {usePointStyle: true, pointStyle: 'line'}},
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label) label += ': ';
+                  const v = context.parsed.y;
+                  if (v == null) { label += '데이터 없음'; return label; }
+                  label += v.toFixed(2) + '%';
+                  const base = context.dataset.data[2];
+                  if (context.dataIndex !== 2 && base != null) {
+                    label += ' (기준 대비 ' + sensFmtDelta(v - base) + ')';
+                  }
+                  return label;
+                }
+              }
+            },
+            annotation: {
+              annotations: {
+                // 감독당국 권고 150% 기준선 (상단 차트 기준선 스타일 재사용)
+                recommendLine: {
+                  type: 'line', yMin: 150, yMax: 150,
+                  borderColor: 'rgb(75, 192, 192)', borderWidth: 2, borderDash: [5, 5],
+                  label: {display: true, content: '감독당국 권고 150%', position: 'start',
+                    backgroundColor: 'rgb(75, 192, 192)', color: 'white', font: {size: 11}},
+                  yScaleID: 'y'
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              suggestedMin: Math.max(0, dataMin - 15),
+              suggestedMax: dataMax + 15,
+              title: {display: true, text: '지급여력비율 (%)'},
+              ticks: {callback: v => v + '%'}
+            },
+            x: {title: {display: true, text: '금리 충격'}}
+          },
+          interaction: {mode: 'nearest', axis: 'x', intersect: false}
+        }
+      });
+
+      // KPI 칩: 적용후 우선, 없으면 적용전
+      const kpiVals = postRatio || preRatio;
+      const kpiMode = postRatio ? '적용후' : '적용전';
+      const chips = [];
+      if (kpiVals && kpiVals[2] != null) {
+        [[0, '−100bp'], [4, '+100bp']].forEach(([idx, bp]) => {
+          if (kpiVals[idx] == null) return;
+          const d = kpiVals[idx] - kpiVals[2];
+          const color = d < 0 ? '#dc3545' : (d > 0 ? '#0d6efd' : 'var(--muted)');
+          chips.push('<span class="sens-kpi">금리 ' + bp + ' 시 비율 <span class="sens-kpi-delta" style="color:' + color + '">' + sensFmtDelta(d) + '</span><span class="sub">' + kpiMode + ' 기준</span></span>');
+        });
+      }
+      const kpis = document.getElementById('sens-kpis');
+      kpis.innerHTML = chips.join('');
+      kpis.style.display = chips.length ? 'flex' : 'none';
+
+      // 테이블: 적용후 → 적용전 그룹, 각 그룹 금액/기준금액/비율
+      const fmtAmt = v => v == null ? '-' : (Number(v) < 0 ? '△' : '') + Math.abs(Number(v)).toLocaleString('ko-KR');
+      const fmtPct = v => v == null ? '-' : (Number(v) < 0 ? '△' : '') + Math.abs(Number(v)).toFixed(2) + '%';
+      let html = '<table><thead><tr><th>구분</th><th class="sens-name">항목</th><th>−100bp</th><th>−50bp</th><th>기준</th><th>+50bp</th><th>+100bp</th></tr></thead><tbody>';
+      ['적용후', '적용전'].forEach(mode => {
+        if (!byMode[mode]) return;
+        const groupRows = SENS_MEASURES
+          .map(m => ({name: m, vals: byMode[mode][m]}))
+          .filter(r => r.vals);
+        groupRows.forEach((r, i) => {
+          const isRatio = r.name === '지급여력비율';
+          html += '<tr>';
+          if (i === 0) html += '<td rowspan="' + groupRows.length + '">' + mode + '</td>';
+          html += '<td class="sens-name">' + r.name + '</td>';
+          r.vals.forEach(v => {
+            html += '<td class="sens-num">' + (isRatio ? fmtPct(v) : fmtAmt(v)) + '</td>';
+          });
+          html += '</tr>';
+        });
+      });
+      html += '</tbody></table>';
+      const tbl = document.getElementById('sens-table');
+      tbl.innerHTML = html;
+      tbl.style.display = 'block';
+
+      document.getElementById('sens-note').innerHTML = '자료: 정기경영공시 「6-8. 위험 민감도」 · ' + quarter + ' 기준 · 금리 평행이동 즉시충격 · 단위: 억원, % · 반기 공시 항목(2024.4Q~)';
     }
 
     // URL 파라미터 읽기
@@ -1087,6 +1365,16 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
     tier1UtilData = (window.TIER1_DATA && Array.isArray(window.TIER1_DATA.results)) ? window.TIER1_DATA.results : [];
     tier2UtilData = (window.TIER2_DATA && Array.isArray(window.TIER2_DATA.results)) ? window.TIER2_DATA.results : [];
     forwardSimData = Array.isArray(window.FORWARD_DATA) ? window.FORWARD_DATA : [];
+
+    // 금리 민감도 JSON 로드 (실패 시 빈 배열 유지 → 패널은 placeholder 표시, 콘솔 출력 없음)
+    fetch('kics_rate_sensitivity.json')
+      .then(r => r.json())
+      .then(d => {
+        sensData = Array.isArray(d) ? d : [];
+        renderRateSensitivity(); // 회사 선택 이후 도착한 경우 1회 재렌더
+      })
+      .catch(() => {});
+    document.getElementById('sens-quarter').addEventListener('change', renderSensDetail);
 
     fetch(jsonPath)
       .then(response => response.json())
@@ -1133,7 +1421,7 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         }
         
         // 이벤트 리스너 추가
-        const refreshBottomPanels = () => { updateDonutPanel(); updateForwardPanel(); };
+        const refreshBottomPanels = () => { updateDonutPanel(); updateForwardPanel(); renderRateSensitivity(); };
         companySelect.addEventListener('change', () => { updateTable(); refreshBottomPanels(); });
         periodSelect.addEventListener('change', updateTable);
         document.getElementById('transition-mode').addEventListener('change', updateTable);
@@ -1146,5 +1434,9 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         document.getElementById('table-container').innerHTML = `<p>JSON 파일을 불러오는 중 오류 발생: ${e}</p>`;
       });
   </script>
+  <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
+    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (2026.1Q)<br/>
+    본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
+  </footer>
 </body>
 </html>

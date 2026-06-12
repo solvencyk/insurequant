@@ -4,11 +4,17 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>InsureQuant — IFRS17</title>
+  <meta name="description" content="보험사별 CSM 워터폴·상각 전망·신계약 CSM 배수·당기순이익 분해 — 분기 공시 기반 대시보드"/>
+  <meta property="og:title" content="InsureQuant — IFRS17 CSM 대시보드"/>
+  <meta property="og:description" content="보험사별 CSM 워터폴·상각 전망·신계약 CSM 배수·당기순이익 분해"/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
   <style>
 :root{--bg:#ffffff; --card:#f8f9fa; --border:#e9ecef; --text:#212529; --muted:#6c757d; --primary:#0d6efd; --primary-hover:#0b5ed7;}
-    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-variant-numeric:tabular-nums}
     header{position:sticky;top:0;padding:10px 16px;border-bottom:1px solid var(--border);background:#ffffff;z-index:1000}
     .brand{font-weight:700;margin-bottom:12px;cursor:pointer;color:var(--primary);text-decoration:none}
     .brand:hover{color:var(--primary-hover)}
@@ -193,8 +199,10 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     if (v == null || v === "") return "-";
     if (typeof v === "number"){
       if (!Number.isFinite(v)) return "-";
-      const hasFrac = Math.abs(v % 1) > 1e-9;
-      return v.toLocaleString("ko-KR", hasFrac ? { minimumFractionDigits:0, maximumFractionDigits:maxFrac||2 } : {});
+      const neg = v < 0, a = Math.abs(v);
+      const hasFrac = Math.abs(a % 1) > 1e-9;
+      const out = a.toLocaleString("ko-KR", hasFrac ? { minimumFractionDigits:0, maximumFractionDigits:maxFrac||2 } : {});
+      return neg ? "△" + out : out; // 회계 세모 표기
     }
     const n = parseKoNum(v);
     return n == null ? String(v) : fmtNum(n, maxFrac);
@@ -396,7 +404,8 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
             const sign=bar.value>=0?"+":"△";
             return `<b>${head}</b><br/>${sign}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${sign}${Math.abs(bar.value).toLocaleString("ko-KR")}억)`;
           }
-          return `<b>${head}</b><br/>${jo.toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${bar.value.toLocaleString("ko-KR")}억)`;
+          const s0 = bar.value < 0 ? "△" : "";
+          return `<b>${head}</b><br/>${s0}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${s0}${Math.abs(bar.value).toLocaleString("ko-KR")}억)`;
         },
       },
       grid: dataZoom ? { left:52, right:18, top:24, bottom:40 } : { left:52, right:18, top:24, bottom:54 },
@@ -409,7 +418,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       yAxis:{
         type:"value", name:"조원",
         nameTextStyle:{ color:"#6c757d", fontSize:11 },
-        axisLabel:{ color:"#6c757d", formatter:v=> (v/10000).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
+        axisLabel:{ color:"#6c757d", formatter:v=> (v<0?"△":"")+Math.abs(v/10000).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
         splitLine:{ lineStyle:{ color:"#e9ecef" } },
       },
       dataZoom,
@@ -421,7 +430,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
         { name:"−", type:"bar", stack:"wf", itemStyle:{ color:"#ef4444" }, data:negative,
           label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"△"+wfFmtJo(p.value,2) } },
         { name:"total", type:"bar", stack:"wf", itemStyle:{ color:"#0d6efd" }, data:totals,
-          label:{ show:true, position:"top", color:"#212529", fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":wfFmtJo(p.value,1)+"조" } },
+          label:{ show:true, position:"top", color:"#212529", fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":(p.value<0?"△":"")+wfFmtJo(Math.abs(p.value),1)+"조" } },
       ],
     }, true);
   }
@@ -437,6 +446,10 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     자동차:13, 일반:14, 기타수익:15, 기타비용:16,
     보험손익:1, 투자손익:17, 영업외:21, 법인세:23, 당기순이익:24,
   };
+
+  // CSM 분리공시 미제공사 (owner 결정 2026-06-11): 목록 제외 대신 사유 표기 (PL 분해는 공시되므로 노출 유지)
+  const PAA_ONLY = new Set(["KR0051", "신한이지손해보험"]); // 회사코드 + 표시명 둘 다
+  const PAA_NOTE = "CSM 분리공시 미제공 보험사입니다 (PAA·단기계약 중심 — 당기순이익 분해 패널 참조).";
 
   function plQuartersOf(name){
     const m = ix.plx.get(name);
@@ -545,7 +558,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
           const i=items[0].dataIndex; const bar=bars[i];
           if(bar.value==null) return `<b>${bar.ko}</b><br/>데이터 없음`;
           const jo=bar.value/1e6, eok=bar.value/100;
-          const sign = (bar.role==="flow" && bar.value<0) ? "△" : (bar.role==="flow" ? "+" : "");
+          const sign = bar.value<0 ? "△" : (bar.role==="flow" ? "+" : "");
           return `<b>${bar.ko}</b><br/>${sign}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${sign}${Math.abs(eok).toLocaleString("ko-KR",{maximumFractionDigits:0})}억)`;
         },
       },
@@ -559,7 +572,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       yAxis:{
         type:"value", name:"조원",
         nameTextStyle:{ color:"#6c757d", fontSize:11 },
-        axisLabel:{ color:"#6c757d", formatter:v=> (v/1e6).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
+        axisLabel:{ color:"#6c757d", formatter:v=> (v<0?"△":"")+Math.abs(v/1e6).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
         splitLine:{ lineStyle:{ color:"#e9ecef" } },
       },
       dataZoom,
@@ -571,7 +584,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
         { name:"−", type:"bar", stack:"pl", itemStyle:{ color:"#ef4444" }, data:negative,
           label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"△"+plFmtJo(p.value,2) } },
         { name:"total", type:"bar", stack:"pl", itemStyle:{ color:"#0d6efd" }, data:totals,
-          label:{ show:true, position:"top", color:"#212529", fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":plFmtJo(p.value,2)+"조" } },
+          label:{ show:true, position:"top", color:"#212529", fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":(p.value<0?"△":"")+plFmtJo(Math.abs(p.value),2)+"조" } },
       ],
     }, true);
     return bars;
@@ -780,7 +793,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const wfName = ix.wfx.has(company) ? company : null;
     const wfHas = !!wfName;
     const wfMode = (document.getElementById("wfPeriod")||{}).value || "year";
-    stub(q(host,"#wfStub"), !wfHas, wfHas ? null : "신규 CSM waterfall 데이터 미수록 보험사입니다.");
+    stub(q(host,"#wfStub"), !wfHas, wfHas ? null : ((PAA_ONLY.has(company) || PAA_ONLY.has(coName)) ? PAA_NOTE : "신규 CSM waterfall 데이터 미수록 보험사입니다."));
 
     if (wfHas){
       renderWfWaterfall(host, wfName, wfMode);
@@ -856,7 +869,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const nbPts = (ix.nbm.get(company) || []).filter(r => r["신계약CSM배수_연누계"] != null);
     if(!nbPts.length){
       q(host,"#nbStub").style.display="block";
-      q(host,"#nbStub").textContent = "신계약 CSM 배수 데이터 미수록 보험사입니다. (재보험사·외국계 등 월납월초 분모 없음)";
+      q(host,"#nbStub").textContent = (PAA_ONLY.has(company) || PAA_ONLY.has(coName)) ? PAA_NOTE : "신계약 CSM 배수 데이터 미수록 보험사입니다. (재보험사·외국계 등 월납월초 분모 없음)";
     } else {
       q(host,"#nbWrap").style.display="block";
       const labels = nbPts.map(r => r["공시분기"]);
@@ -913,7 +926,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     // ===== Panel 6: CSM 시계열 — Panel 1과 동일 소스(CSM_waterfall.json / ix.wfx) =====
     // 기존 csm_waterfall_history.json은 stale(2025.3Q·2026.1Q 결측, 초기 2023 미교정)이라 폐기.
     const wfHistName = ix.wfx.has(company) ? company : null;
-    stub(q(host,"#histStub"), !wfHistName, "신규 CSM waterfall 데이터 미수록 보험사입니다.");
+    stub(q(host,"#histStub"), !wfHistName, (PAA_ONLY.has(company) || PAA_ONLY.has(coName)) ? PAA_NOTE : "신규 CSM waterfall 데이터 미수록 보험사입니다.");
     if (wfHistName){
       const periods = wfAllPeriodsAsc();
       const closingValues = periods.map(p => { const v = wfVal(wfHistName, p, 6); return v==null ? null : v/10000; }); // 억 → 조
@@ -1140,5 +1153,9 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
 })();
 
 </script>
+  <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
+    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (2026.1Q)<br/>
+    본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
+  </footer>
 </body>
 </html>
