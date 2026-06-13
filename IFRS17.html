@@ -84,7 +84,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     <div class="panel">
       <div class="controls">
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <label>보험사: <select id="company" class="select"><option value="">보험사 선택</option></select></label>
+          <label>보험사: <span id="coSwatch" title="회사 키컬러" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:transparent;margin-right:3px;vertical-align:middle"></span><select id="company" class="select"><option value="">보험사 선택</option></select></label>
           <label>기준: <select id="wfPeriod" class="select">
             <option value="year" selected>연도</option>
             <option value="quarter">분기</option>
@@ -348,6 +348,38 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
 
   function wfFmtJo(v, dp){ return (v/10000).toLocaleString("ko-KR",{minimumFractionDigits:dp,maximumFractionDigits:dp}); }
 
+  // ===== 회사 키컬러 (KEYCOLOR-V1, owner 확정 2026-06-12) =====
+  // 차트 데이터잉크(워터폴 total 막대·라인 주선)와 select 액티브에만 적용. 배경·패널보더는 무채색 유지.
+  // 키 미등록사는 현행 기본 블루 fallback. 표시명 기준 매칭(코드→coName).
+  const KEY_COLORS = {
+    "삼성생명":"#1428A0", "삼성생명보험":"#1428A0", "삼성화재":"#1428A0", "삼성화재해상보험":"#1428A0",
+    "한화생명":"#F37321", "한화생명보험":"#F37321", "한화손해보험":"#F37321",
+    "신한라이프":"#0046FF", "신한라이프생명보험":"#0046FF", "신한이지손해보험":"#0046FF",
+    "KB손해보험":"#FFBC00", "케이비손해보험":"#FFBC00", "KB라이프생명":"#FFBC00", "케이비라이프생명보험":"#FFBC00",
+    "NH농협생명":"#00A05E", "엔에이치농협생명":"#00A05E", "NH농협손해보험":"#00A05E", "엔에이치농협손해보험":"#00A05E",
+    "미래에셋생명":"#F58220", "미래에셋생명보험":"#F58220",
+    "DB손해보험":"#0E8C3A", "디비손해보험":"#0E8C3A", "DB생명":"#0E8C3A", "디비생명보험":"#0E8C3A",
+    "현대해상":"#008A3E", "현대해상화재보험":"#008A3E",
+    "교보생명":"#0B5D52", "교보생명보험":"#0B5D52",
+    "메리츠화재":"#E60012", "메리츠화재해상보험":"#E60012",
+    "롯데손해보험":"#DA291C",
+  };
+  const DEFAULT_PRIMARY = "#0d6efd";
+  function _hexRgb(h){ const m=/^#?([0-9a-f]{6})$/i.exec(h||""); if(!m) return null; const n=parseInt(m[1],16); return {r:(n>>16)&255,g:(n>>8)&255,b:n&255}; }
+  function _relLum(c){ const f=v=>{v/=255; return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);}; return 0.2126*f(c.r)+0.7152*f(c.g)+0.0722*f(c.b); }
+  function _darken(c, amt){ const d=v=>Math.round(v*(1-amt)); return `rgb(${d(c.r)},${d(c.g)},${d(c.b)})`; }
+  function keyColorOf(name){
+    const hex = KEY_COLORS[name];
+    if(!hex){ return { primary:DEFAULT_PRIMARY, line:DEFAULT_PRIMARY, soft:"rgba(13,110,253,0.10)", fill:"rgba(13,110,253,0.60)", isKey:false }; }
+    const c=_hexRgb(hex);
+    // 밝은 색(KB 옐로우 등)은 흰 배경에서 선/축이 안 보이므로 라인용으로 어둡게 보정 (WCAG 가독성). 막대 면적엔 원색.
+    const line = (c && _relLum(c) > 0.45) ? _darken(c, 0.32) : hex;
+    const soft = c ? `rgba(${c.r},${c.g},${c.b},0.12)` : "rgba(13,110,253,0.10)";
+    const fill = c ? `rgba(${c.r},${c.g},${c.b},0.60)` : "rgba(13,110,253,0.60)";
+    return { primary:hex, line, soft, fill, isKey:true };
+  }
+  let currentKey = keyColorOf(null); // renderCompany에서 회사별로 설정
+
   function renderWfWaterfall(host, company, mode){
     const el = q(host, "#chartWf");
     if (!el || typeof echarts === "undefined") return;
@@ -429,7 +461,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
           label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"+"+wfFmtJo(p.value,2) } },
         { name:"−", type:"bar", stack:"wf", itemStyle:{ color:"#ef4444" }, data:negative,
           label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"△"+wfFmtJo(p.value,2) } },
-        { name:"total", type:"bar", stack:"wf", itemStyle:{ color:"#0d6efd" }, data:totals,
+        { name:"total", type:"bar", stack:"wf", itemStyle:{ color:currentKey.primary }, data:totals,
           label:{ show:true, position:"top", color:"#212529", fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":(p.value<0?"△":"")+wfFmtJo(Math.abs(p.value),1)+"조" } },
       ],
     }, true);
@@ -583,7 +615,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
           label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"+"+plFmtJo(p.value,2) } },
         { name:"−", type:"bar", stack:"pl", itemStyle:{ color:"#ef4444" }, data:negative,
           label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"△"+plFmtJo(p.value,2) } },
-        { name:"total", type:"bar", stack:"pl", itemStyle:{ color:"#0d6efd" }, data:totals,
+        { name:"total", type:"bar", stack:"pl", itemStyle:{ color:currentKey.primary }, data:totals,
           label:{ show:true, position:"top", color:"#212529", fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":(p.value<0?"△":"")+plFmtJo(Math.abs(p.value),2)+"조" } },
       ],
     }, true);
@@ -787,6 +819,11 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
 
   function renderCompany(company){   // company = 회사코드(KR0001…)
     const coName = codeToName[company] || company;  // 표시용 이름
+    currentKey = keyColorOf(coName);
+    const _sw=document.getElementById("coSwatch");
+    if(_sw) _sw.style.background = currentKey.isKey ? currentKey.primary : "transparent";
+    const _cs=document.getElementById("company");
+    if(_cs){ _cs.style.borderColor = currentKey.isKey ? currentKey.primary : ""; _cs.style.boxShadow = currentKey.isKey ? ("0 0 0 2px "+currentKey.soft) : ""; }
     destroyCharts();
     const host=mountDash();
 
@@ -838,7 +875,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       }
       charts.amort=new Chart(canvasCtx(host,"#canvasAmort"),{
         type:"bar",
-        data:{ labels, datasets:[{ label:String(amRow.row_label||"CSM amort"), backgroundColor:"rgba(99,102,241,0.65)", data }]},
+        data:{ labels, datasets:[{ label:String(amRow.row_label||"CSM amort"), backgroundColor:currentKey.fill, data }]},
         options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{display:false}, title:{display:true,text:titleText}}, scales:{y:{beginAtZero:true, ticks:{ callback:(vv)=> vv.toLocaleString("ko-KR") }}}}
       })
     }
@@ -876,7 +913,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       const ytd = nbPts.map(r => r["신계약CSM배수_연누계"]);
       const qtr = nbPts.map(r => r["신계약CSM배수_당분기"]);
       const ds = [{
-        label:"연누계 배수", data: ytd, borderColor:"rgb(13,110,253)", backgroundColor:"rgba(13,110,253,0.08)",
+        label:"연누계 배수", data: ytd, borderColor:currentKey.line, backgroundColor:currentKey.soft,
         borderWidth:2.5, pointRadius:4, pointHoverRadius:6, tension:0.2, spanGaps:true, fill:true,
       }];
       if (qtr.some(v => v != null)) ds.push({
@@ -951,8 +988,8 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
             {
               label: coName + " · 기말 CSM (조원)",
               data: closingValues,
-              borderColor: "rgb(13, 110, 253)",
-              backgroundColor: "rgba(13, 110, 253, 0.08)",
+              borderColor: currentKey.line,
+              backgroundColor: currentKey.soft,
               borderWidth: 3,
               pointRadius: 4,
               pointHoverRadius: 6,
@@ -1019,9 +1056,9 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
             y: {
               type: "linear", position: "left", beginAtZero: false,
               min: histYMin, max: histYMax,
-              title: { display: true, text: "기말 CSM (조원)", color: "rgb(13, 110, 253)" },
-              ticks: { callback: (v) => fmtNum(v, 1) + "조", color: "rgb(13, 110, 253)" },
-              grid: { color: "rgba(13, 110, 253, 0.08)" },
+              title: { display: true, text: "기말 CSM (조원)", color: currentKey.line },
+              ticks: { callback: (v) => fmtNum(v, 1) + "조", color: currentKey.line },
+              grid: { color: currentKey.soft },
             },
             y1: {
               type: "linear", position: "right", beginAtZero: true,
@@ -1043,6 +1080,8 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const hint=document.getElementById("emptyHint");
     if(!v){
       destroyCharts();
+      const _sw=document.getElementById("coSwatch"); if(_sw) _sw.style.background="transparent";
+      const _cs=document.getElementById("company"); if(_cs){ _cs.style.borderColor=""; _cs.style.boxShadow=""; }
       dash.style.display="none"; hint.style.display="block"; dash.innerHTML=""; return;
     }
     dash.style.display="block"; hint.style.display="none";
