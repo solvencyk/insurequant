@@ -121,6 +121,7 @@
         <div class="legend">
           <div id="legendText">색상: K-ICS 지급여력비율 (경과조치 적용 후)</div>
           <div class="swatch"></div>
+          <span id="legendThresh" style="font-size:11px"></span>
           <div>크기: 지급여력기준금액</div>
         </div>
       </div>
@@ -381,24 +382,20 @@
           return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
       } else {
-        // K-ICS 지급여력비율: 130% 기준
-        const deviation = ratio - 130;
-        const absDeviation = Math.abs(deviation);
-        const maxDeviation = 130; // 0% ~ 260% 범위
-        
-        if (deviation >= 0) {
-          // 130% 이상: 초록색 그라데이션
-          const intensity = Math.min(absDeviation / maxDeviation, 1);
-          const hue = 120; // 초록색
-          const saturation = 30 + 50 * intensity; // 30% ~ 80%
-          const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 초록)
+        // K-ICS 지급여력비율: 권고선 130% 기준(사이트 전반 130% 기준선과 일치). 기본자본비율은 50%(위 분기).
+        // 권고 미달(<130%)=빨강, 충족(≥130%)=초록. 200%+는 충분 영역(더 진한 초록, 시각용 앵커).
+        const REC = 130, STRONG = 200;
+        if (ratio >= REC) {
+          const intensity = Math.min((ratio - REC) / (STRONG - REC), 1) * 0.7 + 0.15; // 130%→0.15, 200%+→0.85
+          const hue = 130;
+          const saturation = 30 + 50 * intensity;
+          const lightness = 42 - 15 * intensity;
           return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         } else {
-          // 130% 미만: 빨간색 그라데이션
-          const intensity = Math.min(absDeviation / maxDeviation, 1);
-          const hue = 0; // 빨간색
-          const saturation = 30 + 50 * intensity; // 30% ~ 80%
-          const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 빨강)
+          const intensity = Math.min((REC - ratio) / 60, 1); // 130%→0, 70%↓→1
+          const hue = 0;
+          const saturation = 35 + 45 * intensity;
+          const lightness = 42 - 15 * intensity;
           return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
       }
@@ -569,6 +566,12 @@
         legendText.textContent = ratioType === 'basicCapital'
           ? '색상: 기본자본비율 (경과조치 적용 후)'
           : '색상: K-ICS 지급여력비율 (경과조치 적용 후)';
+      }
+      const legendThresh = document.getElementById("legendThresh");
+      if (legendThresh) {
+        legendThresh.textContent = ratioType === 'basicCapital'
+          ? '(빨강 <50% · 초록 ≥50%)'
+          : '(빨강 <130% 권고미달 · 초록 ≥130%, 200%+ 진함)';
       }
 
       for (const r of rects) {
