@@ -1,0 +1,46 @@
+<!-- E2E fixture for GOLDEN-E2E (owner parser_refactor expansion, mirrors csm_e2e).
+     Real 삼성화재해상보험 (rcept 20250311001055) FY2024 DART note values, trimmed
+     to a small hermetic multi-table document: two DECOY tables (a 재무상태표 and a
+     ceded 재보험비용 detail — both must be rejected) followed by the genuine direct
+     보험손익 detail (insurance P&L A3) table whose columns are slices 장기/자동차/일반.
+     Proves extract_insurance_pl_tables() SELECTS the right table out of a
+     multi-table filing. DART filings use an uppercase HTML-ish dialect parsed
+     permissively with etree.HTMLParser — lowercase here is equivalent. Real cell
+     values verbatim from the extracted JSON. -->
+<html><body>
+
+<p>1. 연결재무상태표</p>
+<table>
+  <thead><tr><th>과 목</th><th>당기</th><th>전기</th></tr></thead>
+  <tbody>
+    <tr><td>현금및현금성자산</td><td>1,234,567</td><td>1,111,000</td></tr>
+    <tr><td>보험계약자산</td><td>987,654</td><td>900,000</td></tr>
+    <tr><td>자산총계</td><td>80,000,000</td><td>78,000,000</td></tr>
+  </tbody>
+</table>
+
+<p>14. 보험계약 (5) 출재 재보험비용 상세내역</p>
+<table>
+  <thead><tr><th>구분</th><th>장기</th><th>자동차</th><th>일반</th><th>합계</th></tr></thead>
+  <tbody>
+    <tr><td>예상출재보험금 및 수입손해조사비</td><td>191,290</td><td>-</td><td>-</td><td>191,290</td></tr>
+    <tr><td>출재보험료 경험조정</td><td>(39,650)</td><td>-</td><td>-</td><td>(39,650)</td></tr>
+    <tr><td>재보험비용 합계</td><td>202,134</td><td>-</td><td>1,064,598</td><td>1,266,732</td></tr>
+  </tbody>
+</table>
+
+<p>14. 보험계약 (5) 보험손익 상세내역 1) 제75(당)기</p>
+<table>
+  <thead><tr><th>구분</th><th>장기</th><th>자동차</th><th>일반</th><th>합계</th></tr></thead>
+  <tbody>
+    <tr><td>보험수익</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>예상보험금 및 보험서비스비용</td><td>5,765,649</td><td>-</td><td>-</td><td>5,765,649</td></tr>
+    <tr><td>비금융위험에 대한 위험조정의 변동</td><td>165,096</td><td>-</td><td>-</td><td>165,096</td></tr>
+    <tr><td>보험계약마진 상각</td><td>1,612,298</td><td>-</td><td>-</td><td>1,612,298</td></tr>
+    <tr><td>보험취득현금흐름상각</td><td>1,280,750</td><td>-</td><td>-</td><td>1,280,750</td></tr>
+    <tr><td>보험료배분접근법 적용수익</td><td>-</td><td>5,619,497</td><td>2,823,810</td><td>8,443,307</td></tr>
+    <tr><td>합계</td><td>8,833,157</td><td>5,619,497</td><td>2,823,810</td><td>17,276,464</td></tr>
+  </tbody>
+</table>
+
+</body></html>

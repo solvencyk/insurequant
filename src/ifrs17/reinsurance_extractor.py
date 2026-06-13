@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .csm_extractor import _iter_tables_with_context, _looks_like_text_label
+from .scoring import load_scoring
 from .universe import (
     expected_slice_policy,
     has_short_term_markers,
@@ -14,64 +15,18 @@ from .universe import (
     table_has_long_term_label,
 )
 
-_CAPTION_PRIMARY = (
-    "\uCD9C\uC7AC",
-    "\uC7AC\uBCF4\uD5D8",
-    "\uC21C\uC7AC\uBCF4\uD5D8",
-    "\uCD9C\uC7AC\uBCF4\uD5D8",
-)
-_CAPTION_SECONDARY = (
-    "\uBCC0\uB3D9\uB0B4\uC5ED",
-    "\uCE21\uC815\uC694\uC18C",
-    "\uC0C1\uC138\uBCC0\uB3D9",
-    "(3)",
-    "(4)",
-)
-
-_HEADER_MEASUREMENT = (
-    "\uBBF8\uB798 \uD604\uAE08\uD750\uB984",
-    "\uD604\uC7AC\uAC00\uCE58 \uCD94\uC815\uCE58",
-    "\uBBF8\uB798\uD604\uAE08\uD750\uB984",
-    "\uC704\uD5C8\uC870\uC815",
-    "\uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4",
-    "\uC218\uC815\uC18C\uAE09",
-    "\uACF5\uC815\uAC00\uCE58",
-    "\uADF8 \uC678 \uBCF4\uD5D8\uACC4\uC57D",
-    "\uD569\uACC4",
-)
-
-_ROW_STUBS_STRONG = (
-    "\uAE30\uCD08 \uC7AC\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0",
-    "\uAE30\uCD08 \uC7AC\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44",
-    "\uAE30\uB9D0 \uC7AC\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0",
-    "\uC7AC\uBCF4\uD5D8\uB8CC\uC758 \uBC30\uBD84",
-    "\uC7AC\uBCF4\uD5D8 \uC21C\uC6D0\uAC00",
-    "\uC21C\uC7AC\uBCF4\uD5D8\uAE08\uC735\uC190\uC775",
-    "\uC7AC\uBCF4\uD5D8\uC790 \uBD88\uC774\uD589\uC704\uD5C8",
-    "\uB2F9\uAE30\uC190\uC775\uC73C\uB85C \uC778\uC2DD\uD55C \uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4",
-)
-_ROW_STUBS_WEAK = ("\uAE30\uCD08", "\uAE30\uB9D0", "\uACBD\uD5D8\uC870\uC815", "\uC704\uD5C8\uD574\uC81C")
-
-_SHORT_TERM_MARKERS = (
-    "일반",
-    "자동차",
-    "보험료배분접근법을 적용하는",
-    "보험료배분접근법을 적용하는",
-)
-
-_DIRECT_BLOCK_MARKERS = (
-    "\uC6D0\uC218",
-    "\uC218\uC7AC(\uC6D0\uC218",
-    "\uC21C\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44",
-    "\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44",
-    "\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0",
-)
-_RI_BLOCK_MARKERS = (
-    "\uCD9C\uC7AC",
-    "\uC7AC\uBCF4\uD5D8",
-    "\uC21C\uC7AC\uBCF4\uD5D8",
-    "\uCD9C\uC7AC\uBCF4\uD5D8",
-)
+# Scoring KEYWORDS load from data/ifrs17/table_scoring_keywords.yaml (REFACTOR-2,
+# 2026-06-13). Block markers (direct/ri/short-term) ride in .extra; structural
+# logic unchanged. OCR-typo spellings preserved byte-identical in the YAML.
+_SC = load_scoring("reinsurance")
+_CAPTION_PRIMARY = _SC.caption_primary
+_CAPTION_SECONDARY = _SC.caption_secondary
+_HEADER_MEASUREMENT = _SC.header
+_ROW_STUBS_STRONG = _SC.row_stubs_strong
+_ROW_STUBS_WEAK = _SC.row_stubs_weak
+_SHORT_TERM_MARKERS = _SC.extra["short_term_markers"]
+_DIRECT_BLOCK_MARKERS = _SC.extra["direct_block_markers"]
+_RI_BLOCK_MARKERS = _SC.extra["ri_block_markers"]
 
 
 @dataclass

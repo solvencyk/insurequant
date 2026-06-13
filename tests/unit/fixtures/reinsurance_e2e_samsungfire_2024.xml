@@ -1,0 +1,43 @@
+<!-- E2E fixture for GOLDEN-E2E (owner parser_refactor expansion, mirrors csm_e2e).
+     Real 삼성화재해상보험 (rcept 20250311001055) FY2024 DART note values, trimmed
+     to a small hermetic multi-table document: two DECOY tables (a 재무상태표 and a
+     direct 보험손익 detail — both must be rejected) followed by the genuine ceded
+     출재보험계약 신용위험 익스포져 (reinsurance A4) table — the extractor's actual
+     top pick for this filing. Proves extract_reinsurance_tables() SELECTS the
+     right table out of a multi-table filing. DART filings use an uppercase
+     HTML-ish dialect parsed permissively with etree.HTMLParser — lowercase here
+     is equivalent. Real cell values verbatim from the extracted JSON. -->
+<html><body>
+
+<p>1. 연결재무상태표</p>
+<table>
+  <thead><tr><th>과 목</th><th>당기</th><th>전기</th></tr></thead>
+  <tbody>
+    <tr><td>현금및현금성자산</td><td>1,234,567</td><td>1,111,000</td></tr>
+    <tr><td>보험계약자산</td><td>987,654</td><td>900,000</td></tr>
+    <tr><td>자산총계</td><td>80,000,000</td><td>78,000,000</td></tr>
+  </tbody>
+</table>
+
+<p>14. 보험계약 (5) 보험손익 상세내역 1) 제75(당)기</p>
+<table>
+  <thead><tr><th>구분</th><th>장기</th><th>자동차</th><th>일반</th><th>합계</th></tr></thead>
+  <tbody>
+    <tr><td>예상보험금 및 보험서비스비용</td><td>5,765,649</td><td>-</td><td>-</td><td>5,765,649</td></tr>
+    <tr><td>보험계약마진 상각</td><td>1,612,298</td><td>-</td><td>-</td><td>1,612,298</td></tr>
+    <tr><td>합계</td><td>8,833,157</td><td>5,619,497</td><td>2,823,810</td><td>17,276,464</td></tr>
+  </tbody>
+</table>
+
+<p>당기말 및 전기말 현재 연결실체의 출재보험계약으로 인한 신용위험 익스포져는 다음과 같습니다.</p>
+<table>
+  <thead><tr><th>구 분</th><th>제75(당)기 기말</th><th>제74(전)기 기말</th></tr></thead>
+  <tbody>
+    <tr><td>장기보험(*)</td><td>232,578</td><td>379,793</td></tr>
+    <tr><td>자동차보험</td><td>3,085</td><td>5,054</td></tr>
+    <tr><td>일반보험</td><td>1,147,291</td><td>1,031,910</td></tr>
+    <tr><td>합계</td><td>1,382,954</td><td>1,416,757</td></tr>
+  </tbody>
+</table>
+
+</body></html>

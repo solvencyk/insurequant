@@ -1,0 +1,42 @@
+<!-- E2E fixture for GOLDEN-E2E (owner parser_refactor review, 2026-06-13).
+     Real 메리츠화재 KR0001 2025.4Q (FY2025_Q4) DART note values, trimmed to a
+     small hermetic multi-table document: two DECOY tables (a balance sheet and a
+     위험조정 변동 note — both must be rejected) followed by the genuine CSM
+     향후 상각금액 (residual-maturity) table. Proves extract_csm_tables() picks the
+     RIGHT table out of a multi-table filing, not just that scoring works on a
+     synthetic table in isolation. DART filings use an uppercase, HTML-ish dialect
+     parsed permissively with etree.HTMLParser — lowercase here is equivalent. -->
+<html><body>
+
+<p>1. 연결재무상태표</p>
+<table>
+  <thead><tr><th>과 목</th><th>당기</th><th>전기</th></tr></thead>
+  <tbody>
+    <tr><td>현금및현금성자산</td><td>1,234,567</td><td>1,111,000</td></tr>
+    <tr><td>보험계약자산</td><td>987,654</td><td>900,000</td></tr>
+    <tr><td>자산총계</td><td>50,000,000</td><td>48,000,000</td></tr>
+  </tbody>
+</table>
+
+<p>(6) 당기말 현재 보험계약부채의 위험조정 변동내역은 다음과 같습니다.</p>
+<table>
+  <thead><tr><th>구 분</th><th>당기</th><th>전기</th></tr></thead>
+  <tbody>
+    <tr><td>기초 위험조정</td><td>500,000</td><td>480,000</td></tr>
+    <tr><td>위험조정 변동</td><td>20,000</td><td>15,000</td></tr>
+    <tr><td>기말 위험조정</td><td>520,000</td><td>500,000</td></tr>
+  </tbody>
+</table>
+
+<p>(7) 당기말과 전기말 현재 남아있는 보험계약마진의 향후 상각금액은 다음과 같습니다.&lt;당기말&gt;</p>
+<table>
+  <thead><tr><th>구 분</th><th>1년 미만</th><th>1~2년</th><th>2~3년</th><th>3~4년</th><th>4~5년</th><th>5~10년</th><th>10~20년</th><th>20~30년</th><th>30년 이상</th><th>합 계</th></tr></thead>
+  <tbody>
+    <tr><td>발행한 보험계약</td><td>1,103,298</td><td>958,552</td><td>842,231</td><td>744,107</td><td>661,757</td><td>2,455,820</td><td>2,605,911</td><td>1,080,897</td><td>651,124</td><td>11,103,697</td></tr>
+    <tr><td>배당요소가 있는 장기손해보험</td><td>6,555</td><td>5,903</td><td>5,270</td><td>4,673</td><td>4,087</td><td>13,503</td><td>7,613</td><td>962</td><td>87</td><td>48,653</td></tr>
+    <tr><td>배당요소가 없는 장기손해보험</td><td>1,096,743</td><td>952,649</td><td>836,961</td><td>739,434</td><td>657,670</td><td>2,442,317</td><td>2,598,298</td><td>1,079,935</td><td>651,037</td><td>11,055,044</td></tr>
+    <tr><td>보유한 재보험계약</td><td>(46,844)</td><td>(37,367)</td><td>(28,717)</td><td>(17,372)</td><td>(11,354)</td><td>(9,416)</td><td>29,322</td><td>30,713</td><td>19,779</td><td>(71,256)</td></tr>
+  </tbody>
+</table>
+
+</body></html>

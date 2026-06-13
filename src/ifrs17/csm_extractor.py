@@ -39,16 +39,21 @@ from typing import Iterable
 
 from lxml import etree
 
+from .scoring import load_scoring
+
 
 # ---------------------------------------------------------------------------
 # Scoring keywords (intentionally surface a few clear signals, not a giant
 # regex - keep it transparent for the user to tune.)
 # ---------------------------------------------------------------------------
 
-_CAPTION_PRIMARY = "보험계약마진"
-_CAPTION_VERBS = ("상각", "예상", "인식", "향후", "인식시기", "기대상각")
-_NEGATIVE_TOPIC_WORDS = ("부채변동", "공정가치", "위험조정",
-                         "할인율", "현금흐름")
+# Scoring KEYWORDS now load from data/ifrs17/table_scoring_keywords.yaml via the
+# shared ScoringConfig loader (owner REFACTOR-1, 2026-06-13) — a new label variant
+# lands in config, not here. Structural regexes below stay in code (not tunable).
+_SC = load_scoring("csm")
+_CAPTION_PRIMARY = _SC.caption_primary[0]
+_CAPTION_VERBS = _SC.caption_verbs
+_NEGATIVE_TOPIC_WORDS = _SC.negative_topic_words
 _YEAR_BUCKET_PATTERNS = (
     re.compile(r"^\s*\d+\s*년\s*$"),                # "1년", "10년"
     re.compile(r"\d+\s*년\s*[~∼\-]\s*\d+\s*년"),     # "1~2년"
@@ -58,7 +63,7 @@ _YEAR_BUCKET_PATTERNS = (
     re.compile(r"\d+\s*년\s*미만"),                 # "1년 미만"
     re.compile(r"\d+\s*년\s*초과\s*\d+\s*년\s*이하"),  # "1년 초과 3년 이하"
 )
-_TOTAL_WORDS = ("계", "합계", "총계", "합 계", "총 계")
+_TOTAL_WORDS = _SC.total_words
 
 
 @dataclass

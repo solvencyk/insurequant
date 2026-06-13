@@ -17,59 +17,21 @@ from .insurance_pl_extractor import (
     _first_col_labels,
     _flat_header,
 )
+from .scoring import load_scoring
 from .universe import expected_slice_policy, has_short_term_markers, table_has_long_term_label
 
-_CAPTION_ASSUMPTION = (
-    "\uD604\uD589 \uCD94\uC815 \uAC00\uC815",
-    "\uACC4\uB9AC\uC801 \uAC00\uC815",
-    "\uAC00\uC815\uAC12",
-    "(2)",
-)
-_CAPTION_SENSITIVITY = (
-    "\uAC00\uC815\uBBFC\uAC10\uB3C4",
-    "\uBBFC\uAC10\uB3C4 \uBD84\uC11D",
-    "\uBBFC\uAC10\uB3C4\uBD84\uC11D",
-    "\uBCF4\uD5D8\uC704\uD5C8",
-)
-_NEGATIVE = ("\uAE08\uC735\uC0C1\uD488", "\uC218\uC9003", "\uACF5\uC815\uAC00\uCE58")
-
-_ROW_ASSUMPTION = (
-    "\uC704\uD5C8\uB960",
-    "\uD574\uC57D\uB960",
-    "\uC0AC\uC5C5\uBE44",
-    "\uD560\uC778\uC728",
-    "\uC2E0\uB8B0\uC218\uC900",
-)
-_ROW_SENSITIVITY = (
-    "\uC704\uD5C8\uB960",
-    "\uD574\uC57D\uB960",
-    "\uC0AC\uC5C5\uBE44",
-    "\uC0AC\uC5C5\uBE44\uC728",
-    "\uC190\uD574\uC728",
-    "\uB2F9\uAE30\uC190\uC775 \uC601\uD5A5",
-    "\uC794\uC5EC\uBCF4\uC791",
-    "\uC704\uD5C8\uB960 \uAC00\uC815 \uBCC0\uACBD",
-    "\uD574\uC57D\uB960 \uAC00\uC815 \uBCC0\uACBD",
-)
-_CAPTION_ROLLFORWARD = (
-    "\uCE21\uC815\uC694\uC18C",
-    "\uBCC0\uB3D9 \uC138\uBD80",
-    "\uBCC0\uB3D9\uB0B4\uC5ED",
-    "\uBBF8\uB798\uC11C\uBE44\uC2A4 \uAD00\uB828",
-    "\uC0C1\uC138\uBCC0\uB3D9",
-)
-_ROW_ROLLFORWARD = (
-    "\uB2F9\uAE30 \uCD5C\uCD08 \uC778\uC2DD",
-    "\uAC00\uC815\uBCC0\uACBD\uD6A8\uACFC",
-    "\uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4 \uCD94\uC815\uC758 \uBCC0\uACBD",
-    "\uBB3C\uB7C9\uCC28\uC774",
-    "\uAE30\uCD08 \uC21C\uC7A5\uBD80\uAE08\uC561",
-    "\uAE30\uB9D0 \uC21C\uC7A5\uBD80\uAE08\uC561",
-)
-_HEADER_ROLLFORWARD = (
-    "\uBBF8\uB798\uD604\uAE08\uD750\uB984\uC758 \uD604\uC7AC\uAC00\uCE58 \uCD94\uC815\uCE58",
-    "\uBE44\uAE08\uC735\uC704\uD5C8\uC5D0\uB300\uD55C \uC704\uD5C8\uC870\uC815",
-)
+# Scoring KEYWORDS load from data/ifrs17/table_scoring_keywords.yaml (REFACTOR-2,
+# 2026-06-14). All sets are bespoke (no cross-extractor copy-paste) and ride in
+# .extra. Structural logic in this module is unchanged.
+_SC = load_scoring("sensitivity")
+_CAPTION_ASSUMPTION = _SC.extra["caption_assumption"]
+_CAPTION_SENSITIVITY = _SC.extra["caption_sensitivity"]
+_NEGATIVE = _SC.extra["negative"]
+_ROW_ASSUMPTION = _SC.extra["row_assumption"]
+_ROW_SENSITIVITY = _SC.extra["row_sensitivity"]
+_CAPTION_ROLLFORWARD = _SC.extra["caption_rollforward"]
+_ROW_ROLLFORWARD = _SC.extra["row_rollforward"]
+_HEADER_ROLLFORWARD = _SC.extra["header_rollforward"]
 
 
 @dataclass

@@ -13,54 +13,20 @@ from .insurance_pl_extractor import (
     _first_col_labels,
     _flat_header,
 )
+from .scoring import load_scoring
 from .universe import expected_slice_policy, has_short_term_markers, table_has_long_term_label
 
-_CAPTION_KEYWORDS = (
-    "\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44",
-    "\uC790\uC0B0\uBD80\uCC44",
-    "\uD604\uD669",
-    "(1)",
-    # 2026-05-24 (B1 gap fix): DB Sonhae \u00A730-1 / Heungkuk Fire \u00A718(1) caption variants
-    "\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0\uBC0F\uBD80\uCC44",
-    "\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0\uBD80\uCC44",
-    "\uC7AC\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0\uBC0F\uBD80\uCC44",
-    "\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44(\uC790\uC0B0)",
-    "\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0(\uBD80\uCC44)",
-    "\uC7AC\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0(\uBD80\uCC44)",
-    "\uBC1C\uD589\uD55C \uBCF4\uD5D8\uACC4\uC57D",
-    "\uC138\uBD80\uB0B4\uC5ED",
-    "\uBCF4\uACE0\uAE30\uAC04\uC885\uB8CC\uC77C",
-    "\uAE08\uC561\uC740 \uB2E4\uC74C",
-    "\uB2F9\uAE30\uB9D0\uACFC \uC804\uAE30\uB9D0",
-)
-_HEADER_BS = (
-    "\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44",
-    "\uC21C\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44",
-    "\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0",
-    "\uC7AC\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0",
-    "\uC7AC\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44",
-    "\uC21C\uC7AC\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0",
-)
-# 2026-05-24 (B1 gap fix): Heungkuk Fire \u00A718(1) header has \uC790\uC0B0/\uBD80\uCC44/\uD569\uACC4 (column trio);
-# DB Sonhae \u00A730-1 header has \uC7A5\uAE30/\uC77C\uBC18/\uC790\uB3D9\uCC28/\uC0DD\uBA85/\uD569\uACC4 (slices on columns).
-_HEADER_BS_TRIPLE = ("\uC790\uC0B0", "\uBD80\uCC44", "\uD569\uACC4", "\uD569 \uACC4")
-_HEADER_BS_SLICES = ("\uC7A5\uAE30", "\uC77C\uBC18", "\uC790\uB3D9\uCC28", "\uC0DD\uBA85")
-_ROW_STUBS = (
-    "\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44",
-    "\uC21C\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44",
-    "\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0",
-    "\uC7AC\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0",
-    "\uC7AC\uBCF4\uD5D8\uACC4\uC57D\uBD80\uCC44",
-    "\uC21C\uC7AC\uBCF4\uD5D8\uACC4\uC57D\uC790\uC0B0",
-)
-# 2026-05-24 (B1 gap fix): when slices are on rows (Heungkuk Fire), first column carries \uC77C\uBC18/\uC790\uB3D9\uCC28/\uC7A5\uAE30.
-_ROW_SLICES = ("\uC7A5\uAE30", "\uC77C\uBC18", "\uC790\uB3D9\uCC28", "\uC0DD\uBA85")
-_ROLLFORWARD_MARKERS = (
-    "\uBCC0\uB3D9\uB0B4\uC5ED",
-    "\uCE21\uC815\uC694\uC18C",
-    "\uC794\uC5EC\uBCF4\uC7A5",
-    "\uBC1C\uC0DD\uC0AC\uACE0",
-)
+# Scoring KEYWORDS load from data/ifrs17/table_scoring_keywords.yaml (REFACTOR-2,
+# 2026-06-14). All sets are bespoke (no cross-extractor copy-paste) and ride in
+# .extra. Structural logic in this module is unchanged.
+_SC = load_scoring("bs_snapshot")
+_CAPTION_KEYWORDS = _SC.extra["caption_keywords"]
+_HEADER_BS = _SC.extra["header_bs"]
+_HEADER_BS_TRIPLE = _SC.extra["header_bs_triple"]
+_HEADER_BS_SLICES = _SC.extra["header_bs_slices"]
+_ROW_STUBS = _SC.extra["row_stubs"]
+_ROW_SLICES = _SC.extra["row_slices"]
+_ROLLFORWARD_MARKERS = _SC.extra["rollforward_markers"]
 
 
 @dataclass
