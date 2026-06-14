@@ -7,6 +7,9 @@
       "status": "ok",
       "caption": "4) 당사는 보험계약에서 발생하는 미래현금흐름의 금액, 시기에 대한 불확실성에 중요한 영향을 미친다고 판단되는 할인율, 손해율 및 사업비율 등을 기초로 하여 현행추정의 민감도분석을 실시하고, 이를 통해 보험위험을 관리하고 있습니다.",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "xref",
       "header": [
         [
           "구분",
@@ -38,52 +41,180 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -27767.0,
-          "pl_impact": -8778.0
+          "csm_delta": -277.67,
+          "pl_impact": -87.78
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": -3031.0,
-          "pl_impact": 155064.0
+          "csm_delta": -30.31,
+          "pl_impact": 1550.64
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": -2617.0,
-          "pl_impact": 193117.0
+          "csm_delta": -26.17,
+          "pl_impact": 1931.17
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": -550.0,
-          "pl_impact": -207920.0
+          "csm_delta": -5.5,
+          "pl_impact": -2079.2
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": -2347.0,
-          "pl_impact": 56934.0
+          "csm_delta": -23.47,
+          "pl_impact": 569.34
         }
       ]
     },
     {
       "company": "DB손해보험",
       "rcept_no": "20250313001342",
-      "status": "unavailable",
-      "note": "No sensitivity_analysis block in MVP extract"
+      "status": "ok",
+      "caption": "(5) 보험부채 측정에 영향을 미친 가정당사는 책임준비금 산출시 보험업법 및 보험업감독규정이 정하는 바에 따라 한국채택국제회계기준 제1117호를 준용하여 최적가정을 적용한 현행추정부채를 매 결산기에 산출하고 있습니다.당사는 보험계약에서 발생하는 미래현금흐름의 금액, 시기에 대한 불확실성에 중요한 영향을 미친다고 판단되는 할인율, 손해율 및 사업비율 등을 기초로 하여 현행추정의 민감도분석을 실시하고, 이를 통해 보험위험을 관리하고 있습니다.1) 재보험 경감 전",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "xref",
+      "header": [
+        [
+          "구 분",
+          "충격수준",
+          "기준금액",
+          "변동금액",
+          "이익 및 자본영향"
+        ],
+        [
+          "이행현금흐름",
+          "보험계약마진",
+          "이행현금흐름",
+          "보험계약마진",
+          "당기손익",
+          "기타포괄손익"
+        ]
+      ],
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -890.63,
+          "pl_impact": -285.33
+        },
+        {
+          "risk": "장해질병(정액보상)",
+          "shock": "3.40% 증가",
+          "csm_delta": -10793.58,
+          "pl_impact": -2214.24
+        },
+        {
+          "risk": "장기재물기타",
+          "shock": "4.19% 증가",
+          "csm_delta": -470.64,
+          "pl_impact": -97.44
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": -5002.0,
+          "pl_impact": -669.65
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": 5522.86,
+          "pl_impact": 716.26
+        },
+        {
+          "risk": "사업비(수준)",
+          "shock": "2.62% 증가",
+          "csm_delta": -1258.0,
+          "pl_impact": -309.95
+        }
+      ]
     },
     {
       "company": "KB손해보험",
       "rcept_no": "20250314001697",
-      "status": "unavailable",
-      "note": "No sensitivity_analysis block in MVP extract"
+      "status": "partial",
+      "caption": "(14) 가정변경에 따른 순보험계약부채 잔여보장요소의 변동 내역은 다음과 같습니다.(단위:백만원)<당기>",
+      "table_kind": "sensitivity_analysis",
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
     },
     {
       "company": "NH농협손해보험",
       "rcept_no": "20250331003247",
-      "status": "unavailable",
-      "note": "No sensitivity_analysis block in MVP extract"
+      "status": "ok",
+      "caption": "보험계약부채의 계리적가정 변동에 대한 민감도 분석은 다음과 같습니다.",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "default",
+      "header": [
+        [
+          "구분",
+          "출재보험계약에 의한 위험 경감전",
+          "출재보험계약에 의한 위험 경감후"
+        ],
+        [
+          "당기손익 변동",
+          "자본 변동",
+          "당기손익 변동",
+          "자본 변동"
+        ]
+      ],
+      "scenarios": [
+        {
+          "risk": "손해율",
+          "shock": "10% 상승",
+          "csm_delta": null,
+          "pl_impact": -1393.84
+        },
+        {
+          "risk": "손해율",
+          "shock": "10% 하락",
+          "csm_delta": null,
+          "pl_impact": 594.93
+        },
+        {
+          "risk": "해지율",
+          "shock": "10% 상승",
+          "csm_delta": null,
+          "pl_impact": -22.92
+        },
+        {
+          "risk": "해지율",
+          "shock": "10% 하락",
+          "csm_delta": null,
+          "pl_impact": 14.92
+        },
+        {
+          "risk": "사업비",
+          "shock": "10% 상승",
+          "csm_delta": null,
+          "pl_impact": -421.42
+        },
+        {
+          "risk": "사업비",
+          "shock": "10% 하락",
+          "csm_delta": null,
+          "pl_impact": 350.36
+        },
+        {
+          "risk": "계약자행동 가정",
+          "shock": "10% 상승",
+          "csm_delta": null,
+          "pl_impact": 39.76
+        },
+        {
+          "risk": "계약자행동 가정",
+          "shock": "10% 하락",
+          "csm_delta": null,
+          "pl_impact": 91.43
+        }
+      ]
     },
     {
       "company": "교보생명보험",
@@ -91,6 +222,9 @@
       "status": "ok",
       "caption": "당사는 보험계약에서 발생하는 미래현금흐름의 금액, 시기에 대한 불확실성에 중요한 영향을 미친다고 판단되는 손해율(사망률, 장해질병률), 해지율, 사업비율 등을 기초로 하여 현행추정의 민감도분석을 실시하고, 이를 통해 보험위험을 관리하고 있습니다.",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "억원",
+      "unit_source": "cue",
       "header": [
         [
           "(단위: 억원)"
@@ -121,30 +255,87 @@
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": 53.0,
-          "pl_impact": null
+          "csm_delta": -7426.0,
+          "pl_impact": -136.0
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": 541.0,
-          "pl_impact": null
+          "csm_delta": -7690.0,
+          "pl_impact": 136.0
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": -580.0,
-          "pl_impact": null
+          "csm_delta": 8280.0,
+          "pl_impact": -129.0
+        },
+        {
+          "risk": "사업비(수준)",
+          "shock": "2.62% 증가",
+          "csm_delta": -2196.0,
+          "pl_impact": -195.0
         }
       ]
     },
     {
       "company": "농협생명보험",
       "rcept_no": "20250331003065",
-      "status": "partial",
-      "caption": "(4-1-4) 보고기간종료일 현재 보험부채(자산)의 민감도 분석을 위해 사용한 가정 및 산출근거는 다음과 같습니다.",
+      "status": "ok",
+      "caption": "(4-1-3) 보고기간종료일 현재 당사가 보유한 보험부채(자산)에 대해 손해율, 해지율, 사업비율의 일정변동을 적용하여 이행현금흐름의 변동을 당기손익과 자본으로 구분하여 파악한 영향은 다음과 같습니다.",
       "table_kind": "sensitivity_analysis",
-      "note": "sensitivity_analysis found but scenarios not parsed"
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "xref",
+      "header": [
+        [
+          "구분",
+          "충격 수준",
+          "기준금액",
+          "변동금액",
+          "이익 및 자본 영향(세전)"
+        ],
+        [
+          "이행현금흐름",
+          "보험계약마진",
+          "이행현금흐름",
+          "보험계약마진",
+          "당기손익",
+          "기타포괄손익"
+        ]
+      ],
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -696.57,
+          "pl_impact": -27.51
+        },
+        {
+          "risk": "장해질병(정액보상)",
+          "shock": "3.40% 증가",
+          "csm_delta": -2317.84,
+          "pl_impact": -563.21
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": -2880.61,
+          "pl_impact": -88.41
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": 3121.44,
+          "pl_impact": 93.52
+        },
+        {
+          "risk": "사업비(수준)",
+          "shock": "2.62% 증가",
+          "csm_delta": -790.79,
+          "pl_impact": -42.81
+        }
+      ]
     },
     {
       "company": "동양생명",
@@ -152,6 +343,9 @@
       "status": "ok",
       "caption": "2) 보험위험의 민감도 분석회사가 관리하는 계리적가정 및 금융시장 지표와 관련된 보험위험의 재무적 영향도는 다음과 같습니다.① 계리적가정 변동에 따른 재무적 영향도당기말과 전기말 현재 보험계약이 각 계리적가정 변동에 따른 재무적 영향도는 다음과 같습니다.",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "cue",
       "header": [
         [
           "(단위: 백만원)"
@@ -173,20 +367,38 @@
         {
           "risk": "위험률",
           "shock": "10% 상승",
-          "csm_delta": -364519.0,
-          "pl_impact": -436706.0
+          "csm_delta": null,
+          "pl_impact": -4019.27
+        },
+        {
+          "risk": "위험률",
+          "shock": "10% 하락",
+          "csm_delta": null,
+          "pl_impact": 181.19
         },
         {
           "risk": "해지율",
           "shock": "10% 상승",
-          "csm_delta": -45737.0,
-          "pl_impact": -62299.0
+          "csm_delta": null,
+          "pl_impact": -497.53
+        },
+        {
+          "risk": "해지율",
+          "shock": "10% 하락",
+          "csm_delta": null,
+          "pl_impact": 172.56
         },
         {
           "risk": "사업비율",
           "shock": "10% 상승",
-          "csm_delta": -45054.0,
-          "pl_impact": -50305.0
+          "csm_delta": null,
+          "pl_impact": -490.49
+        },
+        {
+          "risk": "사업비율",
+          "shock": "10% 하락",
+          "csm_delta": null,
+          "pl_impact": 332.74
         }
       ]
     },
@@ -196,6 +408,9 @@
       "status": "ok",
       "caption": "보고기간말 현재 가정민감도별 보험위험 변동금액은 다음과 같습니다 (단위:천원).",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "천원",
+      "unit_source": "cue",
       "header": [
         [
           "구분",
@@ -217,38 +432,38 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -33758046.0,
-          "pl_impact": -14718724.0
+          "csm_delta": -337.5805,
+          "pl_impact": -147.1872
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": -216105985.0,
-          "pl_impact": -32647060.0
+          "csm_delta": -2161.0599,
+          "pl_impact": -326.4706
         },
         {
           "risk": "장해질병(실손보상)",
           "shock": "2.62% 증가",
-          "csm_delta": -309687.0,
-          "pl_impact": -10504.0
+          "csm_delta": -3.0969,
+          "pl_impact": -0.105
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": -451969050.0,
-          "pl_impact": -44506284.0
+          "csm_delta": -4519.6905,
+          "pl_impact": -445.0628
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": 509354419.0,
-          "pl_impact": 46901135.0
+          "csm_delta": 5093.5442,
+          "pl_impact": 469.0114
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": -57415215.0,
-          "pl_impact": -13196829.0
+          "csm_delta": -574.1522,
+          "pl_impact": -131.9683
         }
       ]
     },
@@ -258,6 +473,9 @@
       "status": "ok",
       "caption": "(5) 당기말 현재 보유계약에 대해 적용한 주요 가정의 민감도 분석내역은 다음과 같습니다.1) 보험위험<제80(당)기>",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "cue",
       "header": [
         [
           "(단위: 백만원)"
@@ -282,48 +500,105 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -21240.0,
-          "pl_impact": -5052.0
+          "csm_delta": -212.4,
+          "pl_impact": -50.52
         },
         {
           "risk": "장해질병(정액보상) 장해질병(실손보상)",
           "shock": "3.40% 증가 2.62% 증가",
-          "csm_delta": 29672.0,
-          "pl_impact": null
+          "csm_delta": -3039.84,
+          "pl_impact": -827.89
         },
         {
           "risk": "장기재물기타",
           "shock": "4.19% 증가",
-          "csm_delta": 148.0,
-          "pl_impact": null
+          "csm_delta": -59.84,
+          "pl_impact": -34.91
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": -4868.0,
-          "pl_impact": null
+          "csm_delta": -852.53,
+          "pl_impact": 32.01
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": 5098.0,
-          "pl_impact": null
+          "csm_delta": 1021.63,
+          "pl_impact": -100.82
         },
         {
           "risk": "사업비(수준) 사업비(인플레이션)",
           "shock": "2.62% 증가 0.26%p",
-          "csm_delta": 5274.0,
-          "pl_impact": null
+          "csm_delta": -613.52,
+          "pl_impact": -213.55
         }
       ]
     },
     {
       "company": "메리츠화재해상보험",
       "rcept_no": "20250331003145",
-      "status": "partial",
-      "caption": "(5) 보험부채 측정에 영향을 미친 가정당사는 책임준비금 산출 시 보험업법 및 보험업감독규정이 정하는 바에 따라 한국채택국제회계기준 제1117호를 준용하여 최적가정을 적용한 미래현금흐름의 현재가치를 매 결산기에 산출하고 있습니다.(6) 보험위험의 민감도 분석당사는 보험계약에서 발생하는 미래현금흐름의 금액, 시기에 대한 불확실성에 중요한 영향을 미친다고 판단되는 손해율, 해지율 및 사업비율 등을 기초로 하여 현행추정의 민감도분석을 실시하고 이를 통해 보험위험을 관리하고 있습니다.<당기말>",
+      "status": "ok",
+      "caption": "(5) 가정민감도<당기말>1) 보험위험",
       "table_kind": "sensitivity_analysis",
-      "note": "sensitivity_analysis found but scenarios not parsed"
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "xref",
+      "header": [
+        [
+          "구분",
+          "민감도",
+          "기준금액",
+          "변동금액",
+          "이익 및 자본 영향 (세전)"
+        ],
+        [
+          "이행현금흐름(*3)",
+          "보험계약마진",
+          "이행현금흐름(*3)",
+          "보험계약마진",
+          "당기손익(*2)",
+          "기타포괄손익"
+        ]
+      ],
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -717.76,
+          "pl_impact": -15.43
+        },
+        {
+          "risk": "장해질병",
+          "shock": "정액보상 3.40% 증가 및 실손보상 2.62% 증가",
+          "csm_delta": -10511.85,
+          "pl_impact": -902.46
+        },
+        {
+          "risk": "장기재물기타",
+          "shock": "4.19% 증가",
+          "csm_delta": -347.46,
+          "pl_impact": -17.73
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": -6027.8,
+          "pl_impact": -81.38
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": 6630.38,
+          "pl_impact": 96.62
+        },
+        {
+          "risk": "사업비",
+          "shock": "사업비 수준 2.62% 증가 및 인플레이션 0.26%p",
+          "csm_delta": -1578.53,
+          "pl_impact": -100.94
+        }
+      ]
     },
     {
       "company": "메트라이프생명보험",
@@ -331,6 +606,9 @@
       "status": "ok",
       "caption": "당기말 및 전기말 현재 보험계약과 관련된 보험위험의 변수가 변동될 때 당기손익 및자본에 미치는 영향 민감도 분석의 내용은 다음과 같습니다(당기말)",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "suspect",
       "header": [
         [
           "구분",
@@ -366,10 +644,11 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -59732774.0,
-          "pl_impact": -4210743.0
+          "csm_delta": null,
+          "pl_impact": null
         }
-      ]
+      ],
+      "unit_warning": "max|ΔCSM|=597328억 >> total CSM=26082억 — unit unresolved"
     },
     {
       "company": "미래에셋생명",
@@ -383,6 +662,9 @@
       "status": "ok",
       "caption": "당사는 보험계약에서 발생하는 미래현금흐름의 금액, 시기에 대한 불확실성에 중요한 영향을 미친다고 판단되는 위험률, 해지율 및 사업비율 등을 기초로 하여 이행현금흐름의 민감도분석을 실시하고, 이를 통해 보험위험을 관리하고 있습니다.",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "default",
       "header": [
         [
           "위험종류",
@@ -407,50 +689,50 @@
         {
           "risk": "사망위험",
           "shock": "3.27%",
-          "csm_delta": -376460.0,
-          "pl_impact": 329821.0
+          "csm_delta": -3764.6,
+          "pl_impact": 3298.21
         },
         {
           "risk": "사망위험",
           "shock": "(-)3.27%",
-          "csm_delta": 444933.0,
-          "pl_impact": -409584.0
+          "csm_delta": 4449.33,
+          "pl_impact": -4095.84
         },
         {
           "risk": "사망 외위험률",
           "shock": "3.40%(실손보상 2.62%)",
-          "csm_delta": -1068438.0,
-          "pl_impact": -17203.0
+          "csm_delta": -10684.38,
+          "pl_impact": -172.03
         },
         {
           "risk": "사망 외위험률",
           "shock": "(-)3.40%(실손보상 (-)2.62%)",
-          "csm_delta": 1069838.0,
-          "pl_impact": 17200.0
+          "csm_delta": 10698.38,
+          "pl_impact": 172.0
         },
         {
           "risk": "해지율",
           "shock": "9.16%",
-          "csm_delta": -1610964.0,
-          "pl_impact": 26751.0
+          "csm_delta": -16109.64,
+          "pl_impact": 267.51
         },
         {
           "risk": "해지율",
           "shock": "(-)9.16%",
-          "csm_delta": 1862597.0,
-          "pl_impact": -118930.0
+          "csm_delta": 18625.97,
+          "pl_impact": -1189.3
         },
         {
           "risk": "사업비율",
           "shock": "2.62%",
-          "csm_delta": -448810.0,
-          "pl_impact": -53371.0
+          "csm_delta": -4488.1,
+          "pl_impact": -533.71
         },
         {
           "risk": "사업비율",
           "shock": "(-)2.62%",
-          "csm_delta": 433053.0,
-          "pl_impact": 51618.0
+          "csm_delta": 4330.53,
+          "pl_impact": 516.18
         }
       ]
     },
@@ -460,6 +742,9 @@
       "status": "ok",
       "caption": "2) 당기말 현재 장기손해보험의 가정민감도는 다음과 같습니다.",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "xref",
       "header": [
         [
           "구분",
@@ -481,38 +766,38 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -133356.0,
-          "pl_impact": -2521.0
+          "csm_delta": -1333.56,
+          "pl_impact": -25.21
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": -23000.0,
-          "pl_impact": null
+          "csm_delta": -10393.25,
+          "pl_impact": -731.65
         },
         {
           "risk": "장기재물기타",
           "shock": "4.19% 증가",
-          "csm_delta": -731.0,
-          "pl_impact": null
+          "csm_delta": -610.09,
+          "pl_impact": -59.72
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": 105627.0,
-          "pl_impact": null
+          "csm_delta": -9441.82,
+          "pl_impact": -73.82
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": -115005.0,
-          "pl_impact": null
+          "csm_delta": 10346.92,
+          "pl_impact": 68.14
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": 2992.0,
-          "pl_impact": null
+          "csm_delta": -3449.16,
+          "pl_impact": -146.17
         }
       ]
     },
@@ -522,7 +807,7 @@
       "status": "partial",
       "caption": "(9) 보험계약부채의 미래서비스 변동분에 대한 가정변경효과 단계별, 물량차이 및 투자요소예실차 등으로 인한 상세 변동금액은 다음과 같습니다.① 제36(당)기",
       "table_kind": "sensitivity_analysis",
-      "note": "sensitivity_analysis found but scenarios not parsed"
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
     },
     {
       "company": "에이비엘생명보험",
@@ -530,6 +815,9 @@
       "status": "ok",
       "caption": "(8) 당기말 및 전기말 현재 보험수리적 가정에 대한 보험계약부채 기준/변동/이익 및 자본영향에 대한 민감도 결과는 다음과 같습니다.",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "default",
       "header": [
         [
           "구분",
@@ -565,31 +853,31 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -5842.0,
+          "csm_delta": -58.42,
           "pl_impact": null
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": 6210.0,
+          "csm_delta": 62.1,
           "pl_impact": null
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": -8251.0,
+          "csm_delta": -82.51,
           "pl_impact": null
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": 9445.0,
+          "csm_delta": 94.45,
           "pl_impact": null
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": 1136.0,
+          "csm_delta": 11.36,
           "pl_impact": null
         }
       ]
@@ -597,10 +885,46 @@
     {
       "company": "에이아이에이생명보험",
       "rcept_no": "20250401000094",
-      "status": "partial",
+      "status": "ok",
       "caption": "(10) 보험위험 민감도분석당사는 미래현금흐름의 현재가치 추정치에 중요한 영향을 미치는 변수인 사업비율, 지급률, 해약률을 기초로 민감도분석을 실시하여 보험위험을 관리하고 있습니다.보고기간종료일 현재 보험계약에 대한 사업비, 지급률, 해약률 가정 변동에 따른 민감도 분석을 실시한 결과 당사의 세전손익과 자본에 미치는 영향은 다음과 같습니다.<당기말>",
       "table_kind": "sensitivity_analysis",
-      "note": "sensitivity_analysis found but scenarios not parsed"
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "default",
+      "header": [
+        [
+          "구분",
+          "당기손익에 미치는 영향 (세전)",
+          "자본에 미치는 영향 (세전)",
+          "보험계약마진에미치는 영향"
+        ]
+      ],
+      "scenarios": [
+        {
+          "risk": "사업비 10% 하락",
+          "shock": "지급률 10% 상승",
+          "csm_delta": -1166.37,
+          "pl_impact": -162.99
+        },
+        {
+          "risk": "사업비 10% 하락",
+          "shock": "지급률 10% 하락",
+          "csm_delta": 1306.14,
+          "pl_impact": 159.11
+        },
+        {
+          "risk": "사업비 10% 하락",
+          "shock": "지급률 10% 상승",
+          "csm_delta": -1119.78,
+          "pl_impact": -154.43
+        },
+        {
+          "risk": "사업비 10% 하락",
+          "shock": "지급률 10% 하락",
+          "csm_delta": 1260.01,
+          "pl_impact": 150.62
+        }
+      ]
     },
     {
       "company": "처브라이프생명보험",
@@ -608,6 +932,9 @@
       "status": "ok",
       "caption": "4.9 민감도분석(1) 당사가 발행한 보험계약과 관련된 보험위험의 변수가 변동될 때 당기손익 및 자본에 미치는 영향 민감도 분석의 내용은 다음과 같습니다.<당기>",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "xref",
       "header": [
         [
           "구분(*1)",
@@ -634,32 +961,32 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": 98021.0,
-          "pl_impact": -766.0
+          "csm_delta": 980.21,
+          "pl_impact": -7.66
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": -8261.0,
-          "pl_impact": -2546.0
+          "csm_delta": -82.61,
+          "pl_impact": -25.46
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": -9281.0,
-          "pl_impact": -2353.0
+          "csm_delta": -92.81,
+          "pl_impact": -23.53
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": 10436.0,
-          "pl_impact": 2377.0
+          "csm_delta": 104.36,
+          "pl_impact": 23.77
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": -4261.0,
-          "pl_impact": -1471.0
+          "csm_delta": -42.61,
+          "pl_impact": -14.71
         }
       ]
     },
@@ -669,6 +996,9 @@
       "status": "ok",
       "caption": "(4) 보험위험의 민감도 분석당사는 보험계약에서 발생하는 미래현금흐름의 금액, 시기에 대한 불확실성에 중요한 영향을 미친다고 판단되는 위험률, 해지율 및 사업비율 등을 기초로 하여 이행현금흐름의 민감도분석을 실시하고, 이를 통해 보험위험을 관리하고 있습니다. 당기말 및 전기말 현재 원수보험계약의 민감도 분석 결과는 다음과 같습니다. ① 제37(당)기",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "cue",
       "header": [
         [
           "(단위:백만원)"
@@ -696,46 +1026,83 @@
         {
           "risk": "손해율",
           "shock": "10% 상승",
-          "csm_delta": -57369.0,
-          "pl_impact": -308997.0
+          "csm_delta": -573.69,
+          "pl_impact": -3089.97
         },
         {
           "risk": "손해율",
           "shock": "10% 하락",
-          "csm_delta": 352948.0,
-          "pl_impact": 23926.0
+          "csm_delta": 3529.48,
+          "pl_impact": 239.26
         },
         {
           "risk": "해지율",
           "shock": "10% 상승",
-          "csm_delta": -29732.0,
-          "pl_impact": -41813.0
+          "csm_delta": -297.32,
+          "pl_impact": -418.13
         },
         {
           "risk": "해지율",
           "shock": "10% 하락",
-          "csm_delta": 59760.0,
-          "pl_impact": 22166.0
+          "csm_delta": 597.6,
+          "pl_impact": 221.66
         },
         {
           "risk": "사업비",
           "shock": "10% 상승",
-          "csm_delta": -48526.0,
-          "pl_impact": -13492.0
+          "csm_delta": -485.26,
+          "pl_impact": -134.92
         },
         {
           "risk": "사업비",
           "shock": "10% 하락",
-          "csm_delta": 49048.0,
-          "pl_impact": 13476.0
+          "csm_delta": 490.48,
+          "pl_impact": 134.76
         }
       ]
     },
     {
       "company": "케이비라이프생명보험",
       "rcept_no": "20250314000905",
-      "status": "unavailable",
-      "note": "No sensitivity_analysis block in MVP extract"
+      "status": "ok",
+      "caption": "5)보험위험의 민감도 분석회사는 미래현금흐름의 금액, 시기 및 불확실성에 중요한 영향을 미친다고 판단하는 해약률, 지급률 및 사업비율 등을 기초하여 민감도분석을 통해 보험위험을 관리하고 있습니다.당기 및 전기의 민감도 분석 결과는 다음과 같습니다(단위: 백만원).① 당기말재보험 경감전",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "cue",
+      "header": [],
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": 1069.84,
+          "pl_impact": -998.62
+        },
+        {
+          "risk": "장해질병(정액보상)",
+          "shock": "3.40% 증가",
+          "csm_delta": -10.93,
+          "pl_impact": 0.92
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": -197.29,
+          "pl_impact": -354.94
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": 170.79,
+          "pl_impact": 400.69
+        },
+        {
+          "risk": "사업비(수준)",
+          "shock": "2.62% 증가",
+          "csm_delta": -46.66,
+          "pl_impact": 10.79
+        }
+      ]
     },
     {
       "company": "코리안리",
@@ -743,6 +1110,9 @@
       "status": "ok",
       "caption": "(5) 가정민감도1) 보험위험<당기말>",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "default",
       "header": [
         [
           "구분",
@@ -764,138 +1134,48 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -21641.0,
-          "pl_impact": -87064.0
+          "csm_delta": -216.41,
+          "pl_impact": -870.64
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": 384.0,
-          "pl_impact": null
+          "csm_delta": -1793.31,
+          "pl_impact": -84.59
         },
         {
           "risk": "장기재물기타",
           "shock": "4.19% 증가",
-          "csm_delta": -52.0,
-          "pl_impact": null
+          "csm_delta": -25.21,
+          "pl_impact": -41.58
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": 3365.0,
-          "pl_impact": null
+          "csm_delta": -305.05,
+          "pl_impact": -11.39
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": -3152.0,
-          "pl_impact": null
+          "csm_delta": 450.53,
+          "pl_impact": -95.27
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": 1209.0,
-          "pl_impact": null
+          "csm_delta": -219.76,
+          "pl_impact": -44.71
         }
       ]
     },
     {
       "company": "푸본현대생명보험",
       "rcept_no": "20250328000873",
-      "status": "ok",
+      "status": "partial",
       "caption": "기말 보험계약부채(자산)",
       "table_kind": "sensitivity_analysis",
-      "header": [
-        [
-          "구 분",
-          "미래현금흐름의현재가치 추정치",
-          "비금융위험에 대한위험조정",
-          "보험계약마진",
-          "합 계"
-        ],
-        [
-          "잔여보장요소",
-          "발생사고요소",
-          "잔여보장요소",
-          "발생사고요소",
-          "공정가치법 적용 대상 계약",
-          "그 외 계약"
-        ]
-      ],
-      "scenarios": [
-        {
-          "risk": "보험계약부채",
-          "shock": "7,095,833",
-          "csm_delta": 986.0,
-          "pl_impact": 116485.0
-        },
-        {
-          "risk": "기초 보험계약부채(자산)",
-          "shock": "7,095,833",
-          "csm_delta": 986.0,
-          "pl_impact": 116485.0
-        },
-        {
-          "risk": "해지율 가정 변경",
-          "shock": "15,689",
-          "csm_delta": null,
-          "pl_impact": -14591.0
-        },
-        {
-          "risk": "위험률 가정 변경",
-          "shock": "23,444",
-          "csm_delta": null,
-          "pl_impact": -24255.0
-        },
-        {
-          "risk": "사업비율 가정 변경",
-          "shock": "15,518",
-          "csm_delta": null,
-          "pl_impact": -13980.0
-        },
-        {
-          "risk": "기타 가정 변경",
-          "shock": "30,630",
-          "csm_delta": null,
-          "pl_impact": -16504.0
-        },
-        {
-          "risk": "물량차이 및 투자요소 예실차 등",
-          "shock": "(1,402,064)",
-          "csm_delta": null,
-          "pl_impact": -20607.0
-        },
-        {
-          "risk": "손실요소",
-          "shock": "-",
-          "csm_delta": null,
-          "pl_impact": 20535.0
-        },
-        {
-          "risk": "소 계",
-          "shock": "(1,420,748)",
-          "csm_delta": null,
-          "pl_impact": -69402.0
-        },
-        {
-          "risk": "보험계약마진 상각",
-          "shock": "-",
-          "csm_delta": null,
-          "pl_impact": -4491.0
-        },
-        {
-          "risk": "소 계",
-          "shock": "(171,946)",
-          "csm_delta": null,
-          "pl_impact": -4491.0
-        },
-        {
-          "risk": "발생사고부채 변동",
-          "shock": "-",
-          "csm_delta": 145.0,
-          "pl_impact": null
-        }
-      ]
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
     },
     {
       "company": "하나생명보험",
@@ -903,6 +1183,9 @@
       "status": "ok",
       "caption": "35-7-6 보험위험 민감도 분석",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "천원",
+      "unit_source": "xref",
       "header": [
         [
           "보험위험",
@@ -931,38 +1214,38 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -4203170.0,
-          "pl_impact": 103334.0
+          "csm_delta": 0.3037,
+          "pl_impact": -6.8885
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": -619377.0,
-          "pl_impact": -245773.0
+          "csm_delta": -6.1938,
+          "pl_impact": -2.4577
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": -3680346.0,
-          "pl_impact": 7162307.0
+          "csm_delta": -36.8035,
+          "pl_impact": 71.6231
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": 3739990.0,
-          "pl_impact": -7136858.0
+          "csm_delta": 37.3999,
+          "pl_impact": -71.3686
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": -1381946.0,
-          "pl_impact": -672682.0
+          "csm_delta": -13.8195,
+          "pl_impact": -6.7268
         },
         {
           "risk": "사업비(인플레이션)",
           "shock": "0.26%p",
-          "csm_delta": -1015803.0,
-          "pl_impact": -785615.0
+          "csm_delta": -10.158,
+          "pl_impact": -7.8562
         }
       ]
     },
@@ -972,6 +1255,9 @@
       "status": "ok",
       "caption": "4) 보험위험의 민감도 분석연결실체가 관리하는 계리적가정 및 금융시장 지표와 관련된 보험위험의 재무적 영향도는 다음과 같습니다. ① 가정 변동에 따른 재무적 영향도당기말 및 전기말 현재 지배기업 및 주요 종속기업의 기준금액 대비 민감도에 따른 영향도는 다음과 같습니다 (단위: 백만원).1) 당기말가. 생명보험",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "cue",
       "header": [
         [
           "구분",
@@ -1000,62 +1286,62 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -256319.0,
-          "pl_impact": 80535.0
+          "csm_delta": -2563.19,
+          "pl_impact": 805.35
         },
         {
           "risk": "사망률",
           "shock": "3.27% 감소",
-          "csm_delta": 262227.0,
-          "pl_impact": -84260.0
+          "csm_delta": 2622.27,
+          "pl_impact": -842.6
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": -787868.0,
-          "pl_impact": -10903.0
+          "csm_delta": -7878.68,
+          "pl_impact": -109.03
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 감소",
-          "csm_delta": 790376.0,
-          "pl_impact": 10888.0
+          "csm_delta": 7903.76,
+          "pl_impact": 108.88
         },
         {
           "risk": "장해질병(실손보상)",
           "shock": "2.62% 증가",
-          "csm_delta": 22011.0,
-          "pl_impact": -525.0
+          "csm_delta": 220.11,
+          "pl_impact": -5.25
         },
         {
           "risk": "장해질병(실손보상)",
           "shock": "2.62% 감소",
-          "csm_delta": -23071.0,
-          "pl_impact": 489.0
+          "csm_delta": -230.71,
+          "pl_impact": 4.89
         },
         {
           "risk": "해지율",
           "shock": "9.16% 증가",
-          "csm_delta": -1187265.0,
-          "pl_impact": 5304.0
+          "csm_delta": -11872.65,
+          "pl_impact": 53.04
         },
         {
           "risk": "해지율",
           "shock": "9.16% 감소",
-          "csm_delta": 1320145.0,
-          "pl_impact": -29085.0
+          "csm_delta": 13201.45,
+          "pl_impact": -290.85
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": -273101.0,
-          "pl_impact": -16206.0
+          "csm_delta": -2731.01,
+          "pl_impact": -162.06
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 감소",
-          "csm_delta": 262316.0,
-          "pl_impact": 15768.0
+          "csm_delta": 2623.16,
+          "pl_impact": 157.68
         }
       ]
     },
@@ -1063,9 +1349,9 @@
       "company": "한화손해보험",
       "rcept_no": "20250311001216",
       "status": "partial",
-      "caption": "(단위 : 백만원, %)",
+      "caption": "주1) 제79기부터는 별도재무제표(K-IFRS 1117호) 실적 기준, 이전은 별도재무제표(K-IFRS 1104호) 실적 기준 (지급여력비율은 연결재무제표 실적 기준) 1. 손해율 : (발생보험금+손해조사비+손실부담계약관련비용+발생사고변동비용-출재수익)/보유보험수익 2. 사업비율 : (신계약비+유지비+투자관리비+기타비용)/보유보험수익주2) 제78기 및 그 이전 1. 손해율 : 발생손해액 / 경과보험료 2. 사업비율 : 순사업비 / 보유보험료주3). ROA : 당기순이익/{(전회계연도말 총자산+당회계연도말 총자산)/2}주4) ROE : 당기순이익/{(전회계연도말 자기자본+당회계연도말 자기자본)/2}주5)운용자산이익률:투자영업이익/{(전회계연도말 운용자산+당회계연도말운용자산-투자영업이익)/2}주6) 지급여력비율 : 지급여력금액 / 지급여력기준금액 제80기 수치는 산출 전이므로 3월말 이내 확정치로 정정공시 예정 [캐롯손해보험(주)]",
       "table_kind": "sensitivity_analysis",
-      "note": "sensitivity_analysis found but scenarios not parsed"
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
     },
     {
       "company": "현대해상",
@@ -1073,6 +1359,9 @@
       "status": "ok",
       "caption": "회사는 미래현금흐름의 금액, 시기 및 불확실성에 중요한 영향을 미친다고 판단되는 할인율, 손해율 및 사업비율 등을 기초하여 민감도분석을 실시하고, 이를 통해 보험위험을 관리하고 있습니다. 2024년 12월 31일과 2023년 12월 31일 현재 당사가 발생한 보험계약과 관련된 시장위험의 유형별 변수가 변동될 때 보험계약별 당기손익 및 자본에 미치는 영향 민감도분석의 내용은 다음과 같습니다.",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "천원",
+      "unit_source": "xref",
       "header": [
         [
           "구분",
@@ -1097,38 +1386,38 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -85343139.0,
-          "pl_impact": -47677.0
+          "csm_delta": -853.4314,
+          "pl_impact": -0.4768
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": -8511705.0,
-          "pl_impact": null
+          "csm_delta": -14163.1294,
+          "pl_impact": -1857.831
         },
         {
           "risk": "장기재물기타",
           "shock": "4.19% 증가",
-          "csm_delta": 305575.0,
-          "pl_impact": null
+          "csm_delta": -746.1198,
+          "pl_impact": -32.7241
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": 60737121.0,
-          "pl_impact": null
+          "csm_delta": -5484.5268,
+          "pl_impact": 229.4279
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": -66125678.0,
-          "pl_impact": null
+          "csm_delta": 5979.1215,
+          "pl_impact": -234.2059
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": -3108485.0,
-          "pl_impact": null
+          "csm_delta": -2782.6142,
+          "pl_impact": -195.9164
         }
       ]
     },
@@ -1138,6 +1427,9 @@
       "status": "ok",
       "caption": "3) 보험위험의 민감도 분석당사는 보험계약에서 발생하는 미래현금흐름의 금액, 시기에 대한 불확실성에 중요한 영향을 미친다고 판단되는 사망위험, 해지율 및 사업비 및 인플레이션율 등을 기초로 하여 현행추정의 민감도분석을 실시하고, 이를 통해 보험위험을 관리하고 있습니다.민감도분석은 보고기간말에 합리적으로 가능한 위험노출이 발생한 경우의 손익과 자본의 증감금액을 나타냅니다.① 당기말 및 전기말 현재 원수보험계약의 민감도 분석결과는 다음과 같습니다(단위 : 백만원).",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "cue",
       "header": [
         [
           "구 분",
@@ -1157,74 +1449,38 @@
         {
           "risk": "사망률",
           "shock": "3.27% 상승",
-          "csm_delta": -6932.0,
-          "pl_impact": -7367.0
+          "csm_delta": -35.94,
+          "pl_impact": -29.27
         },
         {
-          "risk": "건강보험",
-          "shock": "5,852",
-          "csm_delta": 1768.0,
-          "pl_impact": 738.0
-        },
-        {
-          "risk": "연금과 저축보험",
-          "shock": "10,056",
-          "csm_delta": 10778.0,
-          "pl_impact": 2640.0
-        },
-        {
-          "risk": "합계",
-          "shock": "(3,594)",
-          "csm_delta": -9577.0,
-          "pl_impact": -3452.0
-        },
-        {
-          "risk": "3.27% 하락",
-          "shock": "사망보험",
-          "csm_delta": 7523.0,
-          "pl_impact": 22398.0
-        },
-        {
-          "risk": "건강보험",
-          "shock": "(6,452)",
-          "csm_delta": -2724.0,
-          "pl_impact": -807.0
-        },
-        {
-          "risk": "연금과 저축보험",
-          "shock": "(10,382)",
-          "csm_delta": -11105.0,
-          "pl_impact": -2727.0
-        },
-        {
-          "risk": "합계",
-          "shock": "2,992",
-          "csm_delta": 8569.0,
-          "pl_impact": 3432.0
+          "risk": "사망률",
+          "shock": "3.27% 하락",
+          "csm_delta": 29.92,
+          "pl_impact": 28.94
         },
         {
           "risk": "해지율",
           "shock": "9.16% 상승",
-          "csm_delta": -6672.0,
-          "pl_impact": -21569.0
+          "csm_delta": -1445.2,
+          "pl_impact": 61.12
         },
         {
-          "risk": "건강보험",
-          "shock": "(112,242)",
-          "csm_delta": -109212.0,
-          "pl_impact": 1536.0
+          "risk": "해지율",
+          "shock": "9.16% 하락",
+          "csm_delta": 1570.87,
+          "pl_impact": -54.83
         },
         {
-          "risk": "연금과 저축보험",
-          "shock": "6,210",
-          "csm_delta": 21215.0,
-          "pl_impact": 13104.0
+          "risk": "사업비 및인플레이션율",
+          "shock": "2.62% 상승 /0.26% 상승",
+          "csm_delta": -372.13,
+          "pl_impact": -26.28
         },
         {
-          "risk": "합계",
-          "shock": "(144,520)",
-          "csm_delta": -120149.0,
-          "pl_impact": 8879.0
+          "risk": "사업비 및인플레이션율",
+          "shock": "2.62% 하락 /0.26% 하락",
+          "csm_delta": 354.05,
+          "pl_impact": 25.28
         }
       ]
     },
@@ -1234,49 +1490,52 @@
       "status": "ok",
       "caption": "(5) 보험위험 민감도 분석1) 보험위험",
       "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "unit_detected": "백만원",
+      "unit_source": "default",
       "header": [],
       "scenarios": [
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": 28027.0,
-          "pl_impact": -31546.0
+          "csm_delta": 280.27,
+          "pl_impact": -315.46
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": -38796.0,
-          "pl_impact": -7859.0
+          "csm_delta": -387.96,
+          "pl_impact": -78.59
         },
         {
           "risk": "장해질병(실손보상)",
           "shock": "2.62% 증가",
-          "csm_delta": -2877.0,
-          "pl_impact": 6745.0
+          "csm_delta": -28.77,
+          "pl_impact": 67.45
         },
         {
           "risk": "장기재물기타",
           "shock": "4.19% 증가",
-          "csm_delta": -184.0,
-          "pl_impact": 7296.0
+          "csm_delta": -1.84,
+          "pl_impact": 72.96
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": 6315.0,
-          "pl_impact": -12489.0
+          "csm_delta": 63.15,
+          "pl_impact": -124.89
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": -6422.0,
-          "pl_impact": 28723.0
+          "csm_delta": -64.22,
+          "pl_impact": 287.23
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": -7455.0,
-          "pl_impact": 4787.0
+          "csm_delta": -74.55,
+          "pl_impact": 47.87
         }
       ]
     }
