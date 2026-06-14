@@ -1,17 +1,17 @@
 # Insurequant Publishing TODO (Stage 4)
 
-Last updated: 2026-05-31 (split out of root `TODO.md`; merged former gathering + pushing stages).
+> Last updated: 2026-05-31 · Stage 4/5 — publishing
+> Prompt: docs/agents/claude-agent-publishing.md (skeleton) · Changelog: docs/changelog_publishing.md
 
-Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters.
-
-**Stage files**
-- Prompt: [`docs/agents/claude-agent-publishing.md`](docs/agents/claude-agent-publishing.md) (skeleton)
-- Changelog: [`docs/changelog_publishing.md`](docs/changelog_publishing.md)
-- This file: open publishing work + done archive
+Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
 
 Session start: read this file + `claude-agent-publishing.md` + relevant validation report.
 
 NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
+
+## Status
+
+Open viz-assembly work, all gated on upstream stages: F4 v2 (forward-outlook confidence research), F13 (재보험 지표, waits on downloader F8), F17/F18 viz (waits on parser Tier2/IR JSON), and the CSM bubble chart redesigns (INDEX-IFRS17-BUBBLE / INDEX-BUBBLE-V2). No master JSON push pending here standalone.
 
 ---
 

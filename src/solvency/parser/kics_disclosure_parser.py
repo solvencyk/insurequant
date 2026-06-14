@@ -5,79 +5,22 @@ from __future__ import annotations
 import re
 from typing import Callable
 
+from solvency.parser.company_handlers import (
+    AUDIT_LABEL_ALIASES,
+    apply_label_fixes,
+    build_section_end_patterns,
+    build_section_start_patterns,
+)
+
 TABLE_ROW_RE = re.compile(r"^\|(.+)\|\s*$")
 
-SECTION_START_PATTERNS = (
-    re.compile(
-        r"#{1,3}\s*\[?"
-        r"\uacbd\uacfc\uc870\uce58\s*\uc801\uc6a9\s*\uc804.{0,40}"
-        r"\uc9c0\uae09\uc5ec\ub825\ube44\uc728\s*\uc138\ubd80",
-        re.I,
-    ),
-    re.compile(
-        r"#{1,3}\s*\[?"
-        r"\uacbd\uacfc\uc870\uce58\s*\uc801\uc6a9\s*\uc804.{0,40}\uc138\ubd80",
-        re.I,
-    ),
-    re.compile(
-        r"#{1,3}\s*\[?\uacbd\uacfc\uc870\uce58\s*\uc801\uc6a9\s*\uc804.{0,30}\]?",
-        re.I,
-    ),
-    # e.g. ## 4-2-2. 지급여력비율의 경과조치 적용에 관한 세부사항 [경과조치 적용 전 ...]
-    re.compile(
-        r"#{1,3}\s*4-2-2\.?\s*\uc9c0\uae09\uc5ec\ub825\ube44\uc728[^\n]*\uc138\ubd80",
-        re.I,
-    ),
-    re.compile(
-        r"#{1,3}\s*[^\n]*\[\s*\uacbd\uacfc\uc870\uce58\s*\uc801\uc6a9\s*\uc804\s*"
-        r"\uc9c0\uae09\uc5ec\ub825\ube44\uc728\s*\uc138\ubd80\s*\]",
-        re.I,
-    ),
-    # e.g. [경과조치  적용  전  지급여력비율 세부] (no markdown heading)
-    re.compile(
-        r"\[\s*\uacbd\uacfc\uc870\uce58\s*\uc801\uc6a9\s*\uc804[^\]]*"
-        r"\uc9c0\uae09\uc5ec\ub825\ube44\uc728\s*\uc138\ubd80\s*\]",
-        re.I,
-    ),
-    # e.g. ## ※ 경과조치적용전지급여력비율세부 (Samsung 2023.2Q style, no brackets)
-    re.compile(
-        r"#{1,3}\s*[\u203b\*\uFEFF]?\s*\uacbd\uacfc\uc870\uce58\s*\uc801\uc6a9\s*\uc804"
-        r"[^\n]*\uc9c0\uae09\uc5ec\ub825\ube44\uc728\s*\uc138\ubd80",
-        re.I,
-    ),
-    # e.g. - ※ 경과조치적용전지급여력비율세부 (Samsung 2023.1Q bullet, no heading/brackets)
-    re.compile(
-        r"^[\-\*]\s*[\u203b\*\uFEFF]?\s*\uacbd\uacfc\uc870\uce58\s*\uc801\uc6a9\s*\uc804"
-        r"[^\n]*\uc9c0\uae09\uc5ec\ub825\ube44\uc728\s*\uc138\ubd80",
-        re.I | re.M,
-    ),
-    re.compile(
-        r"^[\u203b\*\uFEFF]?\s*\uacbd\uacfc\uc870\uce58\s*\uc801\uc6a9\s*\uc804"
-        r"[^\n]*\uc9c0\uae09\uc5ec\ub825\ube44\uc728\s*\uc138\ubd80",
-        re.I | re.M,
-    ),
-)
+SECTION_START_PATTERNS = build_section_start_patterns()
 
-SECTION_END_PATTERNS = (
-    re.compile(
-        r"#{1,3}\s*\[?\uc9c0\uae09\uc5ec\ub825\ube44\uc728\uc758\s*\uacbd\uacfc\uc870\uce58",
-        re.I,
-    ),
-    re.compile(
-        r"#{1,3}\s*\(?1\)?\s*\uacf5\ud1b5\uc801\uc6a9\s*\uacbd\uacfc\uc870\uce58",
-        re.I,
-    ),
-)
+SECTION_END_PATTERNS = build_section_end_patterns()
 
 
 def _strip_label_punct(s: str) -> str:
-    for ch in ("\u00b7", "\u318d", "\u2219", "\u2022"):
-        s = s.replace(ch, "")
-    # OCR typo in some Shinhan MD: 보(U+D5D8)위 -> 보험위
-    s = s.replace("\ubcf4\ud5d8\uc704", "\ubcf4\ud5e8\uc704")
-    # OCR: 장기손액보험 -> 장기손해보험
-    s = s.replace("\uc7a5\uae30\uc190\uc561\ubcf4\ud5e8", "\uc7a5\uae30\uc190\ud574\ubcf4\ud5e8")
-    return s
+    return apply_label_fixes(s)
 
 
 def normalise_label(s: str) -> str:
@@ -148,6 +91,9 @@ def make_quarter_column_picker(quarter: str) -> Callable[[list[str]], int | None
         def _exact_quarter_match(c: str) -> bool:
             if fy_short in c or fy_full in c:
                 return True
+            # '2023 년 1Q' (동양 2023.1Q) — compact form '2023년1Q'
+            if f"{y_full}년{q_num}Q" in c:
+                return True
             if "4/4\ubd84\uae30" in c and q_num == "4":
                 return True
             if f"{y_full}\ub144{q_num}\ubd84\uae30" in c or f"{period_year_for_q4}.12" in c:
@@ -156,11 +102,13 @@ def make_quarter_column_picker(quarter: str) -> Callable[[list[str]], int | None
                 return True
             if f"{q_num}/4\ubd84\uae30" in c and y_full in c:
                 return True
-            if c.startswith("\ub144\ubd84\uae302025" + q_num) or c == f"2025{q_num}":
+            # OCR-scrambled headers ("2026\ub144 1\ubd84\uae30" -> "\ub144 \ubd84\uae30 2026 1"): generalize to the
+            # target year instead of the 2025 literals these patterns were first seen on.
+            if c.startswith("\ub144\ubd84\uae30" + y_full + q_num) or c == f"{y_full}{q_num}":
                 return True
-            if "4\ubd84\uae302025" in c and q_num == "4":
+            if f"4\ubd84\uae30{y_full}" in c and q_num == "4":
                 return True
-            if c in ("FY2025\uacb0\uc0b0", "FY2025", "2025\uacb0\uc0b0", "\ub2f9\uae30\uacb0\uc0b0") and q_num == "4":
+            if c in (f"FY{y_full}\uacb0\uc0b0", f"FY{y_full}", f"{y_full}\uacb0\uc0b0", "\ub2f9\uae30\uacb0\uc0b0") and q_num == "4":
                 return True
             if "\ub2f9\uae30\ub9d0" in c or f"\ub2f9\uae30({y_short}" in c:
                 return True
@@ -409,19 +357,7 @@ def _audit_value_from_row(cells: list[str], pre_col: int | None) -> str | None:
     return None
 
 
-_AUDIT_LABEL_ALIASES: dict[str, str] = {
-    "\u2160.\uc21c\uc790\uc0b0": "\u2160. \uac74\uc804\uc131\uac10\ub3c5\uae30\uc900 \uc7ac\ubb34\uc0c1\ud0dc\ud45c \uc0c1\uc758 \uc21c\uc790\uc0b0",
-    "\u2167. \uc9c0\uae09\uc5ec\ub825\uae08\uc561": "\uac00. \uc9c0\uae09\uc5ec\ub825\uae08\uc561",
-    "\u2164.\uae30\ubcf8\uc790\ubcf8": "\uae30\ubcf8\uc790\ubcf8",
-    "\u2165.\ubcf4\uc644\uc790\ubcf8": "\ubcf4\uc644\uc790\ubcf8",
-    "(\ubd84\uc0b0\ud6a8\uacfc)": "- \ubd84\uc0b0\ud6a8\uacfc : (1+2+3+4+5) - \u2160",
-    "\u2164. \uc9c0\uae09\uc5ec\ub825\uae30\uc900\uae08\uc561": "\ub098. \uc9c0\uae09\uc5ec\ub825\uae30\uc900\uae08\uc561 (\u2160-\u2161+\u2162)",
-    # Some P&C tables skip item 10 (non-controlling interest) and number reserve as 6.
-    "6. \uc870\uc815\uc900\ube44\uae08": "7. \uc870\uc815\uc900\ube44\uae08",
-    "6.\uc870\uc815\uc900\ube44\uae08": "7. \uc870\uc815\uc900\ube44\uae08",
-    # MetLife: roman numeral after "상의"
-    "\uac74\uc804\uc131\uac10\ub3c5\uae30\uc900 \uc7ac\ubb34\uc0c1\ud0dc\ud45c \uc0c1\uc758 \u2160. \uc21c\uc790\uc0b0": _ITEM4_CANONICAL,
-}
+_AUDIT_LABEL_ALIASES = AUDIT_LABEL_ALIASES
 
 
 def _audit_label_aliases(label: str) -> list[str]:
@@ -638,7 +574,139 @@ def extract_kics_detail_rows(md: str, quarter: str) -> list[tuple[str, str]]:
 
     if pairs:
         return pairs
+    anywhere = _kics_detail_table_anywhere_rows(md, quarter)
+    if anywhere:
+        return anywhere
+    pp = _kics_pre_post_table_rows(md)
+    if pp:
+        return pp
     return extract_kics_audit_fallback_rows(md)
+
+
+def _tables_with_positions(lines: list[str]) -> list[tuple[int, list[list[str]]]]:
+    tables: list[tuple[int, list[list[str]]]] = []
+    current: list[list[str]] = []
+    start = 0
+    for i, line in enumerate(lines):
+        if TABLE_ROW_RE.match(line):
+            cells = split_row(line)
+            if _is_separator_row(cells):
+                continue
+            if not current:
+                start = i
+            current.append(cells)
+        else:
+            if current:
+                tables.append((start, current))
+                current = []
+    if current:
+        tables.append((start, current))
+    return tables
+
+
+def _nearest_preceding_unit_scale(lines: list[str], idx: int) -> float:
+    """Nearest '(단위: …)' marker ABOVE line idx (within 80 lines). Unlike
+    _unit_scale_from_context this scans backwards, so an earlier unrelated
+    table's unit can't shadow the one attached to this table."""
+    for j in range(idx - 1, max(0, idx - 80) - 1, -1):
+        line = lines[j]
+        if "(단위" not in line and "단위 :" not in line and "단위:" not in line:
+            continue
+        if "천원" in line:
+            return 100_000.0
+        if "백만원" in line:
+            return 100.0
+        return 1.0
+    return 1.0
+
+
+def _kics_detail_table_anywhere_rows(md: str, quarter: str) -> list[tuple[str, str]]:
+    """Fallback for the standard multi-quarter K-ICS detail table when the
+    '[…지급여력비율 세부]' section heading is lost in conversion (e.g. 한화손해
+    2026.1Q — heading rendered as an image). Scans ALL tables: header must match
+    the target quarter column AND row labels must contain both 지급여력금액 and
+    지급여력기준금액 (excludes pre/post summary tables whose col-0 is 전/후)."""
+    pairs: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    lines = md.splitlines()
+    pick_col = make_quarter_column_picker(quarter)
+    for start_idx, tbl in _tables_with_positions(lines):
+        if len(tbl) < 6:
+            continue
+        col = pick_col(tbl[0])
+        if col is None:
+            continue
+        body = tbl[1:]
+        labels = "".join(r[0] for r in body if r).replace(" ", "")
+        if "지급여력기준금액" not in labels or "지급여력금액" not in labels:
+            continue
+        scale = _nearest_preceding_unit_scale(lines, start_idx)
+        for row in body:
+            if col >= len(row):
+                continue
+            label, raw = row[0], row[col]
+            if not label or not raw or label in seen:
+                continue
+            if not _looks_like_kics_row(label):
+                continue
+            value = raw
+            if "비율" not in label.replace(" ", "") and scale != 1.0:
+                val = parse_value(raw)
+                if val is None:
+                    continue
+                value = _format_scaled_value(raw, val, scale)
+            _register_label_pairs(label, value, seen, pairs)
+        if pairs:
+            break
+    return pairs
+
+
+_PRE_POST_CORE_LABELS = ("지급여력비율", "지급여력금액", "지급여력기준금액")
+
+
+def _kics_pre_post_table_rows(md: str) -> list[tuple[str, str]]:
+    """Fallback for the single-period [경과조치 적용 전 | 후] detail table when the
+    '[…지급여력비율 세부]' heading is lost in conversion (e.g. 하나손해 2026.1Q — the
+    heading rendered as an image, leaving the table under an unrelated ③ heading).
+    Identified by the header cell '경과조치 적용 전' + K-ICS row labels; value = the
+    적용 전 column (first numeric column). Core summary labels (지급여력비율/금액/
+    기준금액) bypass _looks_like_kics_row; amounts are rescaled to 억원 from the
+    table's '(단위: …)' context (ratio rows kept as-is)."""
+    pairs: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    lines = md.splitlines()
+    for start_idx, tbl in _tables_with_positions(lines):
+        if len(tbl) < 3:
+            continue
+        header = "".join(tbl[0]).replace(" ", "")
+        if "경과조치적용전" not in header:
+            continue
+        body = tbl[1:]
+        labels = "".join(r[0] for r in body if r).replace(" ", "")
+        if "지급여력기준금액" not in labels or "지급여력금액" not in labels:
+            continue
+        scale = _nearest_preceding_unit_scale(lines, start_idx)
+        for row in body:
+            if len(row) < 2:
+                continue
+            label = row[0]
+            raw = next((c for c in row[1:] if c and c.strip() not in ("-", "")), None)
+            if not label or raw is None or label in seen:
+                continue
+            compact = label.replace(" ", "")
+            is_core = any(compact.startswith(c) for c in _PRE_POST_CORE_LABELS)
+            if not is_core and not _looks_like_kics_row(label):
+                continue
+            value = raw
+            if "비율" not in compact and scale != 1.0:
+                val = parse_value(raw)
+                if val is None:
+                    continue
+                value = _format_scaled_value(raw, val, scale)
+            _register_label_pairs(label, value, seen, pairs)
+        if pairs:
+            break
+    return pairs
 
 
 def normalise_item_value(item_no: int, item_name: str, value: str) -> str:

@@ -1,6 +1,7 @@
 # Insurequant Changelog — Publishing Stage
 
-Stage 4 of 5 in the workflow split. See `CLAUDE.md` for the full 5-stage index.
+> Last updated: 2026-05-31 · Stage 4/5 — publishing
+> Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
 

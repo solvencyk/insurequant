@@ -51,7 +51,10 @@ _NUMERIC_RE = re.compile(r"\d")
 # Bump when page-selection or docling options change so idempotency re-runs.
 # v3: added sub-item keywords (사망/장수/장해/장기재물/해지/사업비/대재해 위험)
 # so the sub-item detail tables for 생명장기손해보험위험액 are not skipped.
-_PARSE_PROFILE_VERSION = "docling_partial_v3"
+# v4: added 위험/금리/환율 민감도 keywords + hit-page cap 16→20 — the 6-8 위험민감도
+# page only scores ~3 on ratio keywords and fell outside the top-16 cap
+# (KR0075 FY2025_Q4: rank 18), dropping the 금리민감도 table from the MD.
+_PARSE_PROFILE_VERSION = "docling_partial_v4"
 
 DEFAULT_RATIO_KEYWORDS: tuple[str, ...] = (
     "지급여력비율",
@@ -78,6 +81,11 @@ DEFAULT_RATIO_KEYWORDS: tuple[str, ...] = (
     "보험계약마진",
     "이행현금흐름",
     "잔여보장요소",
+    # K-ICS 6-8 위험민감도 (지급여력 금리/환율 민감도 표) — whitespace-normalized
+    # matching, so these also hit "위험 민감도" / "금리 민감도 분석" headings.
+    "위험민감도",
+    "금리민감도",
+    "환율민감도",
 )
 
 
@@ -112,8 +120,9 @@ class PdfInput:
     fallback_scan_pages: int = 20
     # Increased from 8→16 in v3 so the page picker keeps room for the
     # sub-item detail table (사망/장수/...) when it lives a few pages away
-    # from the primary K-ICS detail table.
-    max_keyword_hit_pages: int = 16
+    # from the primary K-ICS detail table. 16→20 in v4 so adding the 민감도
+    # page never evicts a page that the v3 top-16 would have kept.
+    max_keyword_hit_pages: int = 20
     keyword_terms: tuple[str, ...] = DEFAULT_RATIO_KEYWORDS
 
 

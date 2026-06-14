@@ -458,8 +458,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--max-hit-pages",
         type=int,
-        default=16,
-        help="for --stage parse: cap keyword-hit pages before +-window expansion (default: 16)",
+        default=20,
+        help="for --stage parse: cap keyword-hit pages before +-window expansion (default: 20)",
     )
     parser.add_argument(
         "--keywords",

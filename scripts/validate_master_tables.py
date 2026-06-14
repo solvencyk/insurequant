@@ -23,6 +23,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -74,6 +76,97 @@ PL_EQS = [
 EQ_FLOOR = {"영업이익 = 보험손익+투자손익": 600.0}
 DEFAULT_FLOOR = 200.0
 
+QS = ["2023.1Q", "2023.2Q", "2023.3Q", "2023.4Q", "2024.1Q", "2024.2Q",
+      "2024.3Q", "2024.4Q", "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q"]
+
+
+def load_qoq_cfg():
+    return yaml.safe_load((ROOT / "config" / "qoq_thresholds.yaml").read_text(encoding="utf-8"))
+
+
+def qoq_threshold(cfg, yaml_key, domain="ifrs17"):
+    items = (cfg.get("items", {}).get(domain, {}) or {})
+    if yaml_key and yaml_key in items and "threshold" in items[yaml_key]:
+        return items[yaml_key]["threshold"]
+    dd = (cfg.get("defaults", {}).get(domain, {}) or {})
+    return dd.get("threshold") or cfg["defaults"]["global"]["threshold"]
+
+
+def prev_quarter(q):
+    i = QS.index(q) if q in QS else -1
+    return QS[i - 1] if i > 0 else None
+
+
+def net_quarterly(idx, co, item, q):
+    """YTD 누적값 → net 분기 증분. 같은 FY 내 cur-prev, FY 1Q는 cur 자체."""
+    y, qq = q.split(".")
+    qn = int(qq[0])
+    cur = idx.get((co, q), {}).get(item)
+    if cur is None:
+        return None
+    if qn == 1:
+        return cur
+    pv = idx.get((co, f"{y}.{qn - 1}Q"), {}).get(item)
+    return None if pv is None else cur - pv
+
+
+def qoq_scan(idx, items, floor, cfg):
+    """items: [(항목명, yaml_key, cumulative)]. 2024+ 분기만 평가. YELLOW(anomaly).
+    - cumulative(flow: 신계약/이자/상각/손익) → **YoY**: 같은 분기 전년 YTD 대비.
+      net-quarterly QoQ는 분기 계절성(1Q net vs 4Q net)으로 노이즈가 커 부적합.
+      YoY는 같은 누적 시점 비교라 계절성이 상쇄돼 추세 이상만 잡힘.
+    - non-cumulative(stock: 기말 CSM) → QoQ: 잔액이라 직전 분기 대비 안정적."""
+    rows = []
+    eval_q = [q for q in QS if not q.startswith("2023.")]
+    for (co, q) in idx:
+        if q not in eval_q:
+            continue
+        for item, yk, cum in items:
+            thr = qoq_threshold(cfg, yk)
+            if cum:  # flow → YoY
+                y, qq = q.split(".")
+                ref = f"{int(y) - 1}.{qq}"
+                basis = "yoy"
+            else:    # stock → QoQ
+                ref = prev_quarter(q)
+                basis = "qoq"
+            if ref is None:
+                continue
+            a, b = idx.get((co, q), {}).get(item), idx.get((co, ref), {}).get(item)
+            if a is None or b is None or abs(b) < floor:
+                continue
+            delta = (a - b) / abs(b)
+            if abs(delta) > thr:
+                rows.append((co, q, item, delta, thr, a, b, basis))
+    return rows
+
+
+def coverage_holes(idx, key_items, active_min=7):
+    """데이터 누락(hole) census. SKIP으로 숨기지 말고 명시.
+    active 회사(핵심항목 보유 분기 >= active_min)의 빈 분기 = hole.
+    그 미만(외국계·소형 = 애초에 미공시)은 structural로 분리(검증 제외).
+    2023 분기는 사이트 비노출(사용자 결정)이라 known으로 분리 — real hole은 2024+."""
+    cos = sorted({co for (co, _) in idx})
+    real, known, struct = [], [], []
+    for co in cos:
+        present = [q for q in QS if any(idx.get((co, q), {}).get(k) is not None for k in key_items)]
+        if not present:
+            continue
+        if len(present) < active_min:
+            struct.append((co, len(present)))
+            continue
+        for q in QS:
+            m = idx.get((co, q), {})
+            vals = [m.get(k) for k in key_items]
+            if all(v is None for v in vals):
+                kind = "통째"
+            elif any(v is None for v in vals):
+                kind = "부분"
+            else:
+                continue
+            (known if q.startswith("2023.") else real).append((co, q, kind))
+    return real, known, struct
+
 
 def rebuild_root_masters() -> None:
     """Run build_root_masters.py so root masters reflect the latest diag/viz source.
@@ -122,11 +215,22 @@ def main() -> int:
     for co, q, rhs, diff in ci_fail:
         print(f"  FAIL {co:14s} {q}  기말={rhs:>11.1f}  diff={diff:>+10.1f}  ({diff/rhs*100:+.1f}%)")
 
+    # ===== 0. COVERAGE (데이터 누락 hole — SKIP으로 숨기지 않음) =====
+    wf_holes, wf_known, wf_struct = coverage_holes(wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"])
+    pl_holes, pl_known, pl_struct = coverage_holes(pl, ["보험손익", "생명장기손익", "당기순이익"])
+    print("=" * 78)
+    print(f"0. COVERAGE real hole(2024+)  CSM={len(wf_holes)} PL={len(pl_holes)}  | "
+          f"2023 known(비노출)={len(wf_known)+len(pl_known)} | struct(미공시)제외={len(wf_struct)+len(pl_struct)}")
+    print("=" * 78)
+    for co, q, kind in wf_holes:
+        print(f"  HOLE-CSM {co:14s} {q} ({kind})")
+    for co, q, kind in pl_holes:
+        print(f"  HOLE-PL  {co:14s} {q} ({kind})")
+    print()
+
     # ===== 1b. CSM_PLAUSIBILITY (절댓값 sanity — closing identity가 못 잡는 것) =====
     # closing identity는 내부 산술 합산만 봐서 (a)분기 복붙 (b)기말 QoQ 폭락 같은
     # 절댓값 이상을 통과시킴. 별도 plausibility 체크로 보강.
-    QS = ["2023.1Q", "2023.2Q", "2023.3Q", "2023.4Q", "2024.1Q", "2024.2Q",
-          "2024.3Q", "2024.4Q", "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q"]
     wf_co: dict = defaultdict(dict)
     for (co, q), m in wf.items():
         wf_co[co][q] = m
@@ -170,9 +274,47 @@ def main() -> int:
                 if abs(o - pc) > max(0.005 * abs(pc), 2.0):
                     cont_rows.append((co, q, o, pc, PREV_CLOSE[fy]))
 
+    # FY내 기초 일관성: YTD 컨벤션상 같은 FY 모든 분기의 기초 CSM은 동일(=전년말)해야 함.
+    # 사용자 적발(2026-06-10): 롯데 2023.2Q 기초가 3Q/4Q와 다름 — FY경계 연속성만 보고
+    # FY내 동일성을 안 봐서 미스. 2023도 검사 가능(전년 기말 없이 FY내 상호비교라).
+    # Documented exceptions (parser 판별 2026-06-11, inbox user_xlsx_audit_followup 답변):
+    # 전부 legit_restatement — 원천 공시가 FY 중 정정/소급재작성(교보는 3Q24 공식 소급재작성 주석).
+    # 데이터 수정 대상 아님 → EXC 표시만, 게이트 제외.
+    WFY_EXCEPTIONS = {
+        ("교보생명보험", "2023"), ("교보생명보험", "2024"), ("KB라이프생명", "2024"),
+        ("한화생명", "2023"), ("현대해상", "2023"), ("케이디비생명보험", "2023"),
+        ("메리츠화재해상보험", "2023"), ("에이비엘생명보험", "2023"), ("농협생명보험", "2023"),
+    }
+    wfy_rows = []   # (co, fy, {q: 기초})
+    wfy_exc = []
+    for co, qmap in sorted(wf_co.items()):
+        for fy in ("2023", "2024", "2025", "2026"):
+            opens = [(q, qmap[q].get("기초CSM")) for q in QS
+                     if q.startswith(fy + ".") and q in qmap and qmap[q].get("기초CSM") is not None]
+            if len(opens) < 2:
+                continue
+            vals = [v for _, v in opens]
+            if max(vals) - min(vals) > max(0.005 * abs(max(vals)), 2.0):
+                rec = (co, fy, {q: round(v, 1) for q, v in opens})
+                (wfy_exc if (co, fy) in WFY_EXCEPTIONS else wfy_rows).append(rec)
+
+    # 불가능한 0: CSM상각 == 정확히 0 (경제적으로 불가능 — 보유계약 있으면 상각 발생).
+    # 사용자 룰 지시(2026-06-10): 미래에셋 2025.2Q+ 상각 0 적발. None은 coverage가 잡지만
+    # 0.0은 "present"로 통과하던 맹점.
+    # parser AMORT_ZERO 스펙(2026-06-10): 상각 0인데 기초/기말이 양수면 RED.
+    # 기초=기말=0(미보유) 정상사는 가드로 제외. None 0값은 coverage/ZLEG 담당.
+    zamort_rows = []  # (co, q)
+    for (co, q), m in sorted(wf.items()):
+        a = m.get("CSM상각")
+        o, c = m.get("기초CSM"), m.get("기말CSM")
+        endpoints_pos = (o is not None and o > 0) or (c is not None and c > 0)
+        if a is not None and a == 0 and endpoints_pos:
+            zamort_rows.append((co, q))
+
     print()
     print("=" * 78)
-    print(f"1b. CSM_PLAUSIBILITY  복붙(dup)={len(dup_rows)} 기말QoQ폭변(spike)={len(spike_rows)} 연속성위반(cont)={len(cont_rows)}")
+    print(f"1b. CSM_PLAUSIBILITY  복붙(dup)={len(dup_rows)} 기말QoQ폭변(spike)={len(spike_rows)} "
+          f"연속성위반(cont)={len(cont_rows)} FY내기초불일치(wfy)={len(wfy_rows)} 상각0(zamort)={len(zamort_rows)}")
     print("=" * 78)
     for co, qq in dup_rows:
         print(f"  DUP   {co:14s} 기말 CSM 동일(복붙 의심): {qq}")
@@ -180,6 +322,12 @@ def main() -> int:
         print(f"  SPIKE {co:14s} {qp}->{q}: 기말 {p:.0f} -> {c:.0f} ({dq*100:+.0f}%)")
     for co, q, o, pc, pcq in cont_rows:
         print(f"  CONT  {co:14s} {q} 기초={o:.0f} ≠ {pcq} 기말={pc:.0f}  (Δ{o-pc:+.0f})")
+    for co, fy, opens in wfy_rows:
+        print(f"  WFY   {co:14s} FY{fy} 기초 불일치: {opens}")
+    for co, fy, opens in wfy_exc:
+        print(f"  WFYEX {co:14s} FY{fy} (documented: legit restatement) {opens}")
+    for co, q in zamort_rows:
+        print(f"  ZAMRT {co:14s} {q} CSM상각=0 (불가능 — 추출오류)")
 
     # ===== 2. PL_BRIDGE (pl_breakdown_master, 백만원) =====
     pb_pass = pb_skip = 0
@@ -217,9 +365,62 @@ def main() -> int:
             else:
                 pb_pass += 1
 
+    # ===== 2b. PL_ZERO_LEGS (생명장기 sub-item 0/None 무더기 = 추출실패) =====
+    # 사용자 적발(2026-06-10): 현대해상 등 생명장기 sub-item이 xlsx에서 전부 0으로 보임.
+    # JSON 확인 결과 정확히-0이 아니라 **None**(추출 누락)이고 xlsx가 None→0 렌더링.
+    # 기존 coverage는 헤드라인 3개(보험손익/생명장기손익/당기순이익)만 봐서 sub-item hole 사각.
+    # 룰: 보험손익이 있는 active 행에서 sub-item 10종 중 (None 또는 정확히 0.0)이 ≥4 → flag.
+    # (0.0도 함께 — 0=0+0+0 자명통과 맹점. 2023 분기는 사이트 비노출이라 제외.)
+    PL_LEG_ITEMS = ["생명장기원수손익", "원수CSM상각", "원수위험조정변동", "원수예실차",
+                    "기타생명장기원수손익", "생명장기재보험손익", "재보험CSM상각",
+                    "재보험위험조정변동", "재보험예실차", "기타생명장기재보험손익"]
+    # 불가능-0 leg (owner 확정 2026-06-11): 장기보험 영위사면 아래 4종은 0원일 수 없다.
+    # 0.0이면 추출오류 — None(coverage가 잡음)과 별개로 명시 RED.
+    IMPOSSIBLE_ZERO_LEGS = ["생명장기원수손익", "기타생명장기원수손익",
+                            "생명장기재보험손익", "기타생명장기재보험손익"]
+    zerolegs_rows = []   # (co, q, item)
+    for (co, q), m in sorted(pl.items()):
+        if q.startswith("2023."):
+            continue
+        for k in IMPOSSIBLE_ZERO_LEGS:
+            if m.get(k) == 0:
+                zerolegs_rows.append((co, q, k))
+
+    # Legit-absent (parser 판별 2026-06-11): None이 추출실패가 아니라 원천 비공시인 케이스.
+    # "ALL" = 생명장기 분해 자체 미공시(감사보고서-only 소형사/보증보험). 항목 set = 해당 항목만 분리 미공시.
+    # 단 (co, q) 튜플은 *특정 분기만* 예외(진짜 미공시 confirmed) — 회사 전체 면죄 금지.
+    ZLEG_LEGIT = {
+        # 현대해상은 legit_absent 오판이었음(owner 답지로 2026.1Q 분리손익 실재 확인) → 회사 면제 제거.
+        "에이비엘생명보험": {"생명장기재보험손익", "재보험CSM상각", "재보험위험조정변동", "기타생명장기재보험손익"},
+        "서울보증보험": "ALL",          # 보증보험 — 생명장기 leg 자체 없음
+        "AIG손해보험": "ALL",           # 감사보고서-only, 분해 미공시
+        "교보라이프플래닛생명보험": "ALL",  # 디지털 최소공시 (TODO_parser L51 legit)
+        "신한이지손해보험": "ALL",        # CSM 제외사(단위오류), PL 분해도 미공시
+    }
+    # 분기 단위 legit (진짜 미공시 confirmed). 현대 2025.2Q: 보험서비스비용·재보험수익 자체 미공시(owner 확인).
+    ZLEG_LEGIT_CQ = {("현대해상", "2025.2Q")}
+    zleg_rows = []  # (co, q, n_zero, n_none, 생명장기손익)
+    zleg_exc = 0
+    for (co, q), m in sorted(pl.items()):
+        if q.startswith("2023."):
+            continue
+        if m.get("보험손익") is None:
+            continue
+        legit = ZLEG_LEGIT.get(co)
+        if legit == "ALL" or (co, q) in ZLEG_LEGIT_CQ:
+            zleg_exc += 1
+            continue
+        items = [k for k in PL_LEG_ITEMS if not (legit and k in legit)]
+        vals = [m.get(k) for k in items]
+        n_none = sum(1 for v in vals if v is None)
+        n_zero = sum(1 for v in vals if v is not None and v == 0)
+        if n_none + n_zero >= 4:
+            zleg_rows.append((co, q, n_zero, n_none, m.get("생명장기손익")))
+
     print()
     print("=" * 78)
-    print(f"2. PL_BRIDGE (pl_breakdown_master, 백만원)  pass={pb_pass} fail={len(pb_fail)} skip={pb_skip}")
+    print(f"2. PL_BRIDGE (pl_breakdown_master, 백만원)  pass={pb_pass} fail={len(pb_fail)} skip={pb_skip}  "
+          f"| 2b. ZERO_LEGS flag={len(zleg_rows)} | 2c. IMPOSSIBLE-0 leg={len(zerolegs_rows)}")
     print("=" * 78)
     print("  -- fail count by equation --")
     for label, n in sorted(eq_fail_count.items(), key=lambda x: -x[1]):
@@ -227,6 +428,13 @@ def main() -> int:
     print("  -- fail detail (first 35) --")
     for co, q, label, lhs, diff in pb_fail[:35]:
         print(f"  FAIL {co:14s} {q}  [{label.split('=')[0].strip()}]  lhs={lhs:.1f} diff={diff:+.1f}")
+    print("  -- zero-legs (생명장기 sub-item 0/None 무더기, 2024+, first 40) --")
+    for co, q, zs, nnone, lt in zleg_rows[:40]:
+        lt_s = f"{lt:.0f}" if lt is not None else "None"
+        print(f"  ZLEG {co:14s} {q}  zero={zs} none={nnone}  생명장기손익={lt_s}")
+    print("  -- IMPOSSIBLE-0: 생명장기 분해손익 0원 불가 (owner 확정) --")
+    for co, q, item in zerolegs_rows[:40]:
+        print(f"  ZERO0 {co:14s} {q}  {item}=0 (불가능 — 추출오류)")
 
     # ===== 3. CSM_CROSSCHECK (pl.원수CSM상각 + wf.CSM상각*100 ≈ 0, 백만원) =====
     # 4Q-only: pl 원수CSM상각/wf CSM상각 모두 YTD 누적이라 1~3Q는 분기배분 차이로 틀어짐.
@@ -275,14 +483,47 @@ def main() -> int:
     for co, q, p, w, s, rel in cc_minor_rows[:35]:
         print(f"  MINOR {co:14s} {q}  pl={p:>+12.1f}  wf={w:>+12.1f}  sum={s:>+10.1f}  ({rel*100:+.1f}%)")
 
+    # ===== 4. QOQ_DELTA_WARN (시계열 anomaly, YELLOW — 다운스트림 차단 안 함) =====
+    # 누적항목(신계약/이자/상각, PL 손익)은 net-quarterly 증분 비교, 시점값(기말 CSM)은 raw QoQ.
+    # 2024+ 분기만 평가. threshold는 config/qoq_thresholds.yaml.
+    qcfg = load_qoq_cfg()
+    # spec(qoq_thresholds.yaml items.ifrs17) 대상 = CSM 항목만. PL 손익(보험손익/투자손익/당기순이익)은
+    # 시장·금리 민감으로 본질적 고변동 + spec 미등록이라 anomaly 룰 부적합 → 제외.
+    CSM_QOQ = [("신계약CSM", "new_business_csm", True), ("이자부리", "csm_interest_accretion", True),
+               ("CSM상각", "csm_amortization", True), ("기말CSM", "csm_closing", False)]
+    qoq_rows = qoq_scan(wf, CSM_QOQ, 50.0, qcfg)  # floor 50억 (작은 분모 폭발 제거)
+    qoq_rows.sort(key=lambda r: -abs(r[3]))
+    print()
+    print("=" * 78)
+    print(f"4. QOQ_DELTA_WARN (시계열 급변, YELLOW)  flagged={len(qoq_rows)} (2024+, net-quarterly)")
+    print("=" * 78)
+    for co, q, item, delta, thr, a, b, basis in qoq_rows[:30]:
+        print(f"  YEL {co:14s} {q} {item:10s} ΔQoQ={delta*100:>+8.1f}% (>{thr*100:.0f}%, {basis}) {b:.0f}→{a:.0f}")
+    if len(qoq_rows) > 30:
+        print(f"  ... +{len(qoq_rows)-30} more")
+    qout = ROOT / "data" / "_derived" / "qoq_warn.json"
+    qout.parent.mkdir(parents=True, exist_ok=True)
+    qout.write_text(json.dumps(
+        [{"company": c, "quarter": q, "item": it, "delta_pct": round(d * 100, 1),
+          "threshold_pct": round(t * 100, 0), "cur": round(a, 1), "ref": round(b, 1),
+          "basis": bs, "sign_flip": (a < 0) != (b < 0)} for c, q, it, d, t, a, b, bs in qoq_rows],
+        ensure_ascii=False, indent=2), encoding="utf-8")
+
     print()
     print("#" * 78)
-    print(f"SUMMARY  closing:{ci_pass}P/{len(ci_fail)}F/{ci_skip}S | "
-          f"plausibility:{len(dup_rows)}dup/{len(spike_rows)}spike/{len(cont_rows)}cont | "
-          f"pl_bridge:{pb_pass}P/{len(pb_fail)}F/{pb_skip}S | "
-          f"crosscheck:{cc_pass}P/{cc_minor}M/{len(cc_fail)}F/{cc_skip}S")
+    print(f"SUMMARY  coverage_hole:{len(wf_holes)}CSM/{len(pl_holes)}PL | "
+          f"closing:{ci_pass}P/{len(ci_fail)}F/{ci_skip}S | "
+          f"plausibility:{len(dup_rows)}dup/{len(spike_rows)}spike/{len(cont_rows)}cont/"
+          f"{len(wfy_rows)}wfy/{len(zamort_rows)}zamort | "
+          f"pl_bridge:{pb_pass}P/{len(pb_fail)}F/{pb_skip}S | zero_legs:{len(zleg_rows)} | "
+          f"impossible0:{len(zerolegs_rows)} | "
+          f"crosscheck:{cc_pass}P/{cc_minor}M/{len(cc_fail)}F/{cc_skip}S | "
+          f"qoq_warn:{len(qoq_rows)}Y")
     print("#" * 78)
-    return 0 if not (ci_fail or pb_fail or cc_fail or dup_rows or spike_rows or cont_rows) else 2
+    # QOQ는 YELLOW(anomaly)라 exit code에 반영 안 함. wfy/zamort/zleg/impossible0은 데이터 오류라 반영.
+    return 0 if not (ci_fail or pb_fail or cc_fail or dup_rows or spike_rows or cont_rows
+                     or wf_holes or pl_holes or wfy_rows or zamort_rows or zleg_rows
+                     or zerolegs_rows) else 2
 
 
 if __name__ == "__main__":

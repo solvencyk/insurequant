@@ -364,9 +364,13 @@ def _is_breakdown_section(headings: list[str]) -> bool:
 
 
 def _is_market_or_rate_section(headings: list[str]) -> bool:
-    """Skip 주식위험/금리위험 경과조치 section even if heading also mentions 경과조치."""
-    ctx = _heading_context(headings)
-    return "주식위험" in ctx or "금리위험" in ctx
+    """Skip the '③ 주식위험 경과조치 또는 금리위험 경과조치' section even if the
+    heading also mentions 경과조치. Match the risk keyword ADJACENT to 경과조치
+    (the section title), NOT a bare '금리위험' mention — otherwise a 주요변동요인
+    narrative paragraph ('…금리위험액이 소폭 증가…') captured as a heading falsely
+    excludes the real 공통적용 capital table (처브 KR0100 2024.3Q)."""
+    ctx = _heading_context(headings).replace(" ", "")
+    return "주식위험경과조치" in ctx or "금리위험경과조치" in ctx
 
 
 def _pick_pre_post_columns(header: list[str]) -> tuple[int | None, int | None]:
@@ -620,6 +624,15 @@ def _process_period(
         # ≈0.01, derive a global correction factor and rescale post_v_md.
         company_updates = 0
         company_equal = 0
+        # 경과조치 적용사(공통적용 표에서 전≠후가 하나라도 있는 회사)는 코어 항목
+        # (지급여력금액1·기본자본2·보완자본3·지급여력기준금액14·비율27)을 전=후여도 적재한다.
+        # 이유: 지급여력기준금액 적용후(14후)가 전과 같아도(요구자본 base 불변, 가용자본만 경과조치)
+        # 명시 적재돼야 검증식 (2후+3후)/14후×100≈27후 가 닫힌다. 14후를 15후-22후+23후로 유도하면
+        # ②표의 경과조치-감소된 15후 때문에 틀린 값이 나옴 (validation 20260612 신규-2).
+        CORE_ALWAYS = {1, 2, 3, 14, 27}
+        is_transition = any(
+            not _values_equal(pre_v, post_v) for pre_v, post_v in post_map.values()
+        )
         # First pass: detect per-company unit-mismatch factor from items
         # where existing JSON 값 is reliable (items 1, 2, 3, 14 in 억원).
         scale_correction = 1.0
@@ -652,7 +665,9 @@ def _process_period(
                 # fill_subitems_to_disclosure.py. This script only annotates
                 # existing rows.
                 continue
-            if _values_equal(pre_v_md, post_v_md):
+            if _values_equal(pre_v_md, post_v_md) and not (
+                is_transition and item_no in CORE_ALWAYS
+            ):
                 company_equal += 1
                 continue
             # Apply scale correction (e.g., ×100 when MD said 백만원 but values were 억원).

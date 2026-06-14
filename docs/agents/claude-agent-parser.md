@@ -85,6 +85,16 @@ After parser completes, the **validation** subagent is invoked with:
 
 See [claude-agent-validation.md §3 Loopback workflow](claude-agent-validation.md) for the retry semantics.
 
+### Inbox handoff protocol
+
+계약 정본: [`inbox/README.md`](../../inbox/README.md). validation↔parser, downloader→parser 왕복은 사람 복붙이 아니라 inbox md로 한다.
+
+- **내 inbox**: `inbox/parser/` — validation이 `route: reparse`(시그니처성 오류: closing-identity/continuity break, ×2, 부호반전, 단위), downloader가 raw-ready 통지를 떨굼.
+- **시작 시 첫 동작**: `inbox/parser/`의 `status: open` 드레인 → raw 재독 + 재추출 → 같은 파일에 `## 답변` + `status: answered` (검증이 재확인하도록).
+- **내가 쓰는 곳**: raw 누락/깨짐 발견 시 `inbox/downloader/`에 `route: refetch` 메시지. **빈 JSON 조용히 생성 금지** — 못 받았으면 메시지로 알린다.
+- iter==5 초과 메시지는 직접 처리하지 말고 escalate(사람 큐) — validation이 라우팅.
+- 에이전트는 inbox를 자동 감시하지 않음 — 드라이버(Workflow/사람)가 호출 시 드레인.
+
 ---
 
 ## 4. TBD (owner to author)

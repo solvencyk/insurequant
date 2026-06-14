@@ -55,8 +55,8 @@ INSURERS = {
         "step2_xpath": '//a[contains(@href, "downLoadFile")]',
         "step2_mode": "click_dl",
     },
-    "KR0004_MG": {  # MG손보(구 예별)
-        "name": "MG손해보험", "mode": "click_dl",
+    "KR0004_MG": {  # 예별손해보험 (구 MG손해보험) — 사명 yebyeol.co.kr 확인
+        "name": "예별손해보험", "mode": "click_dl",
         "url": "https://yebyeol.co.kr/PB021010DM.scp?menuId=MN0802001",
         "xpath": '//*[@id="quarter1_2026"]',
     },

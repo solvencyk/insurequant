@@ -1,8 +1,13 @@
 # Insurequant TODO
 
-Last updated: 2026-05-31 (5-stage workflow split fully populated: publishing + designer split out today).
+> Last updated: 2026-06-12 · Stage: cross-stage
+> Index: CLAUDE.md (5-stage) · Stage TODOs: TODO_<stage>.md
 
 Pipeline organized as **downloader / parser / validation / publishing / designer** — each stage has its own prompt (`docs/agents/claude-agent-<stage>.md`), TODO (`TODO_<stage>.md`), and changelog (`docs/changelog_<stage>.md`). See `CLAUDE.md` for the full index. This root file carries cross-stage items + project-wide policy only.
+
+## Status
+
+Cross-stage focus (2026-06-12): K-ICS gate RED=227 all documented exceptions (19_market 223 + KR0049 4) pending validation registration; cross-stage CSM-waterfall 신한EZ 제외 + K-ICS 금리민감도 feature have only publishing/designer tails left; owner backlog digest dispatched to all 5 stage inboxes. Mid-long-term: duration-gap (MLG-1) and K-ICS 시장위험 분해 (MLG-2) blocked on owner decisions.
 
 **Stage files:**
 
@@ -25,6 +30,55 @@ Items previously here that have moved out:
 Session start: read this root file first, then the relevant stage's `TODO_<stage>.md`.
 
 NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
+
+---
+
+## 🔴 K-ICS gate documented exceptions (2026-06-12, parser)
+
+Gate run 2026-06-12: RED=227 = **19_market 223 + KR0049 2026.1Q 4** (rules 2/4/5/6). All documented:
+
+- **rule 19_market × 223 (28 companies)** — item19(시장위험액) disclosed but 36-40 breakdown absent
+  **in the source PDFs themselves** (structural non-disclosure). Parser exhausted recovery:
+  `fill_market_subs_from_pdf.py` (fitz + M-matrix reconcile<2%) full re-run = no-pdf 0, new rows 0.
+  Full (company,quarter) list: `artifacts/kics_validation/market_breakdown_red_census_20260612.md`.
+  → **validation**: register in `MARKET_BREAKDOWN_EXEMPT` (kics_json_rules.py) after cross-check —
+  inbox `20260612T1100Z__parser__MULTI_ALL__2026q1_loaded_and_19market_exempt_request.md`.
+  3 reconcile-fail cells kept OUT of exempt (table exists, gate rejected): KR0002 2024.2Q,
+  KR0009 2023.3Q, KR0051 2023.1Q.
+- **KR0049 악사손해 2026.1Q rules 2/4/5/6 (4)** — K-ICS detail page (p16) is a full-page image in
+  the PDF; only core 5 items recoverable from text (총괄 + 공통적용 tables). Needs owner gold or OCR.
+- **Scan-only PDFs (coverage census MISSING, not rule REDs)**: KR0079 미래에셋 (all quarters),
+  KR0080 AIA (2024.4Q-2026.1Q; 2023.1Q-2024.3Q loaded), KR0087 동양 (2026.1Q). Both own-site and
+  협회 copies are the same scans. → owner xlsx gold path (KB KR0010 precedent).
+
+---
+
+## 🚧 CROSS-STAGE — CSM waterfall 신한EZ 제외 후속 (owner xlsx 검토 2026-06-10, 보정 06-11)
+
+~~3사 제외~~ → **하나손해(KR0050)·하나생명(KR0097)은 복원**(자사 감사보고서 별도 변동표 실재 — 경영서술 수치와
+정확 일치 검증, owner 재지시 2026-06-11). **신한이지(KR0051)만 제외 유지**: 감사보고서 변동표가 천원 단위인데
+백만원 오인(×1000 인플레) + PAA 중심사로 일반모형 CSM ~2억 = 워터폴 무의미. override `data/dart/viz/csm_manual_overrides.json`.
+
+- [ ] **designer**: CSM 워터폴/배수 HTML에서 **신한EZ손해**를 'CSM 분리공시 미제공(PAA 중심)' 표기 또는 목록 제외.
+- [ ] **publishing**: override 적용은 build_root_masters.py 훅 자동 — 인지만.
+
+---
+
+## 🚧 CROSS-STAGE — K-ICS 금리민감도 신규 feature (2026-06-10 발주 → 06-12 publishing만 잔여)
+
+경영공시 `6-8. 위험 민감도` → 금리민감도 표(경과조치 × measure × ±50/±100bp)를 신규 루트 마스터 `kics_rate_sensitivity.json`으로. 38사 서베이 완료, 스펙 정본 `docs/agents/kics-rate-sensitivity-spec.md`.
+
+- [x] parser: 추출 스크립트 + 마스터(435행)/diag — RS1·RS2 자기검증 통과 (2026-06-10)
+- [x] validation: RS1–RS4 룰 구현, 게이트 RED=0 (consolidate_inbox 핸들러 배선만 후속 잔여) (2026-06-10)
+- [ ] **publishing: 커밋 번들 추천 + master xlsx 재생성** — inbox `20260612T0900Z__owner__ALL__backlog_digest.md` #1
+- [x] designer: K-ICS.html 민감도 패널 (F-SENS-PANEL, 커버리지 29/30) (2026-06-11)
+
+---
+
+## 📬 2026-06-12 — 전 스테이지 backlog digest 발송 (owner 전수 점검)
+
+5개 스테이지 inbox에 `20260612T0900Z__owner__ALL__backlog_digest.md` 발송 (publishing/designer inbox 신설,
+`inbox/README.md` layout + route `backlog` 추가). 각 스테이지는 다음 호출 시 자기 다이제스트 드레인.
 
 ---
 

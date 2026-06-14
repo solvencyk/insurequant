@@ -1,5 +1,8 @@
 # Cross-stage Changelog
 
+> Last updated: 2026-05-31 · Stage: cross-stage
+> Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
+
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
 
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).

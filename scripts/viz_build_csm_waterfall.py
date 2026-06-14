@@ -132,6 +132,16 @@ STAGE_PATTERNS: dict[str, list[str]] = {
 # Other stages live in the CSM column of a non-CSM-labelled row.
 CSM_LABEL_REQUIRED = {"amortization", "assumption"}
 
+# Aggregate / grand-total stub markers that must NOT be accepted as the INTEREST
+# (이자 부리) line. In the 2025 label form the 측정요소별 변동내역 note carries a
+# grand-total row ("보험서비스결과 및 보험금융손익의 … 총 변동") whose stub merely
+# CONTAINS the bare "보험금융손익" substring — its CSM-column value is the whole-note
+# net (e.g. 동양생명 2025.4Q −228,193 백만), not the finance line (+108,715 백만). The
+# genuine finance line says "보험금융손익 / 당기손익" and never mentions 보험서비스결과
+# or a 총 변동 / 총 포괄손익 aggregate. (2024 filings used a lettered A/B/C layout whose
+# total rows don't contain 보험금융손익, so this collision only fires in the 2025 form.)
+INTEREST_AGG_MARKERS = ("보험서비스결과", "총변동", "총포괄손익")
+
 
 # --- helpers -------------------------------------------------------------
 def parse_num(s) -> float | None:
@@ -785,6 +795,13 @@ def extract_stages(blk: dict) -> dict:
             if not any(p in stub_roll for p in patterns):
                 continue
             if stage in CSM_LABEL_REQUIRED and "보험계약마진" not in stub_roll:
+                continue
+            # Skip a grand-total / aggregate row that only CONTAINS "보험금융손익"
+            # as part of a whole-note total (2025 label form) — prefer the genuine
+            # finance line over the aggregate (동양생명 2025.4Q +108,715 not −228,193).
+            if stage == "interest" and any(
+                m in stub_roll.replace(" ", "") for m in INTEREST_AGG_MARKERS
+            ):
                 continue
             vs = row_value_start(row)
             data_cells = row[vs:]

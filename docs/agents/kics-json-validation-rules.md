@@ -324,8 +324,21 @@ Canonical labels from `templates/kics_disclosure.json` / K-ICS disclosure tables
 | 33 | 1-5. 해지위험액 |
 | 34 | 1-6. 사업비위험액 |
 | 35 | 1-7. 대재해위험액 |
+| 36 | 3-1. 금리위험액 (시장위험 하위) |
+| 37 | 3-2. 주식위험액 |
+| 38 | 3-3. 부동산위험액 |
+| 39 | 3-4. 외환위험액 |
+| 40 | 3-5. 자산집중위험액 |
+| 41 | 3-1-0. 금리위험 순자산가치(충격전) |
+| 42 | 3-1-1. 금리위험 순자산가치(평균회귀) |
+| 43 | 3-1-2. 금리위험 순자산가치(금리상승) |
+| 44 | 3-1-3. 금리위험 순자산가치(금리하락) |
+| 45 | 3-1-4. 금리위험 순자산가치(금리평탄) |
+| 46 | 3-1-5. 금리위험 순자산가치(금리경사) |
 
 Items 12, 13, 24-26 are not cross-checked by rules 1-8_life but appear in disclosure JSON.
+
+**Items 36–46 (proposed, pending implementation):** market-risk sub-decomposition. Rule `19_market` (item19 = sqrt(V'·M·V), V=[36,37,38,39,40]) and Rule `36_irr` (item36 = √[max(R상승,R하락)²+max(R평탄,R경사)²]+R평균회귀, scenario 위험액 derived from net-asset items 41–46). Full spec: `docs/agents/kics-market-risk-decomposition.md` §6–§8.
 
 ---
 
@@ -349,6 +362,13 @@ Report fields per finding: `rule`, `원보험사코드`, `원수사명`, `공시
 | Rule | SKIP when | Blocks gate? |
 |------|-----------|--------------|
 | 8_life | item 17 or any item 29-35 missing | No |
+| 19_market | item19 missing or all of items 36-40 missing (부분결측 허용: 없는 하위=0) | No |
+| 36_irr | item36 or any of items 41-46 missing | No |
 | All others | Never SKIP — missing inputs -> RED | Yes (RED) |
 
 Permanent skip cohorts for sub-items (parsing, not validation): see TODO.md KICS-SUB (KR0029, KR0150, KR1098, etc.).
+
+**Rule `19_market` / `36_irr` (시장위험액 분해, 2026-06-09 신설)** — 정본 스펙: [`kics-market-risk-decomposition.md`](kics-market-risk-decomposition.md) §6/§7-7. 구현: `kics_json_rules.py` (8_life 복제, dynamic tol `max(eff_tol, 0.05·expected)`).
+- `19_market`: `item19 = sqrt(V'·M·V)`, V=[36–40](금리·주식·부동산·외환·자산집중), M=`MARKET_M` 5×5(대각1/외환-주식 −0.25/자산집중 0/그외 0.25).
+- `36_irr`: `item36 = √[max(R상승,R하락)² + max(R평탄,R경사)²] + R평균회귀`, R=base(41)−시나리오순자산(43–46), 평균회귀=41−42(signed).
+- 골든 3/3 일치: 흥국 8,132억·157,128 / 현대 322,767. item36–46 적재(parser 진행 중)까지 전사 SKIP, RED=2 불변.

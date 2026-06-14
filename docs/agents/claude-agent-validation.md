@@ -51,6 +51,17 @@
 | R8_life | 생보 R7 7×7 (item29..35) | `max(2.0, 0.05·|expected|)` |
 | R9 | `item2_post ≥ item2_pre - tol` (grandfather) | 2.0 |
 | R10 | `item14_pre ≥ item14_post - tol` (SCR phase-in) | 2.0 |
+| 19_market | `item19 = sqrt(V'·M·V)`, V=[36–40] 시장위험 5종 (부분결측 허용) | `max(2.0, 0.05·\|expected\|)` |
+| 36_irr | `item36 = √[max(R상승,R하락)² + max(R평탄,R경사)²] + R평균회귀` (시나리오순자산 41–46) | `max(2.0, 0.05·\|expected\|)` |
+
+**K-ICS 금리민감도** (별도 마스터 `kics_rate_sensitivity.json`, 러너 `scripts/validate_kics_rate_sensitivity.py`. 정본: [`kics-rate-sensitivity-spec.md`](kics-rate-sensitivity-spec.md) §5):
+
+| Rule | 검증 내용 | Tolerance / Severity |
+|---|---|---|
+| RS1_RATIO_IDENTITY | 각 (사,분기,경과조치)·각 충격컬럼: `비율 ≈ 지급여력금액/지급여력기준금액×100` | `max(0.5%p, 0.5%·\|비율\|)` / **RED→reparse** |
+| RS2_BASE_ANCHOR | 적용전 base vs `kics_disclosure` item1(금액)/item14(기준금액)/item27(비율) | 금액 2억 / 비율 0.5%p / **RED→reparse**. 예외: KR0011 2025.2Q(별도/연결 basis) |
+| RS3_DIRECTION_SANITY | 생보 금리하락→비율하락 통상, 역방향 flag | — / YELLOW |
+| RS4_COVERAGE_CENSUS | 회사 cadence(반기/분기) 인식 후 regime 내 hole | — / YELLOW |
 
 ### 1.2 IFRS17
 - 러너: [validate_csm_waterfall.py](../../scripts/validate_csm_waterfall.py), [validate_nb_csm_multiple.py](../../scripts/validate_nb_csm_multiple.py)
@@ -60,6 +71,7 @@
 |---|---|---|
 | CSM_WATERFALL_NEW_BUSINESS | new_business CSM 존재 + non-zero (IFRS17 §92) | — / RED |
 | CSM_WATERFALL_CLOSING_IDENTITY | `opening + new_business + interest + assumption + amortization ≈ closing` | `max(500mn, 0.5%·|closing|)` / RED |
+| **MASTER_COVERAGE** | (데이터 누락 hole — **SKIP으로 숨기지 않음**). closing/pl_bridge/crosscheck는 항목이 None이면 그 검사를 SKIP하므로, 거대한 skip 숫자 뒤에 "있어야 하는데 없는" 데이터가 숨음. 별도 census: **active 회사**(핵심항목 ≥7분기 보유)의 빈 분기 = hole. **2024+ = real hole(채워야)**, 2023 = known(사이트 비노출), <7분기 = structural(외국계·소형 미공시, 제외). 도구 `validate_master_tables.py` 0번. | real hole → **RED(데이터 채움 요청)** |
 | **CSM_WATERFALL_PLAUSIBILITY** | (절댓값 sanity — closing identity 사각지대 보강). closing은 **내부 산술 합산만** 봐서 (a)분기 복붙 (b)기말 폭락 (c)기초≠전년말을 통과시킴(가정조정이 잔차 흡수). 3종 검사: **복붙(dup)** = 같은 회사 다른 분기 기말 CSM 동일, **폭변(spike)** = 기말 `\|ΔQoQ\|>50%`, **연속성(cont)** = `FY[t] 각 분기 기초 = FY[t-1].4Q 기말`(작년 기말=올해 기시; tol max(0.5%, 2억); 2023 SKIP). 도구 `scripts/validate_master_tables.py` 1b. 2026-06-07 검출: 케이디비·흥국 복붙, 흥국 2025.4Q 기말 34억 폭락, **메트라이프 2025.4Q 기초 2배(이중계상 — 연속성만 검출)**. | dup/배수·큰Δ → **RED(재추출)**, spike·작은Δ → YELLOW(재작성 검토) |
 | MINIMUM_STAGE_COVERAGE | opening/new_business/closing 셋 다 non-null | — / RED |
 | NB_CSM_MULTIPLE_RECONCILIATION | IFRS17 NB CSM ÷ KIDI 월납환산 vs IR 공시 multiple (6가지 변환 중 1개 통과면 PASS). 2026-05-31: period-aware denominator + `fallback_used` 플래그(meta `cohort_fallback_pass`)로 정직성 보강 — aligned-period 시도 실패 후 tolerance 우연 통과 case 표면화 | rel=0.25 OR abs=3.0 / **YELLOW** (loopback 없음) |
@@ -174,6 +186,8 @@
 
 **🔬 진단 가이드 — 보험손익 등식 잔차의 진짜 원인 (2026-06-07 parser 제보)**: 보험손익 dual-form이 작은 잔차로 안 닫힐 때 **"기타영업수익 누락"으로 오진하지 말 것** (한화손보·삼성화재 2건 연속 오진). **별도(OFS) 기준 회사는 FS-API상 기타영업수익이 구조적으로 0** (`보험영업수익 = 보험수익 + 재보험수익`, 기타영업수익 별도 라인 없음). 따라서 보험손익 잔차의 진짜 원인은 대개 **ΣLOB의 별도/연결 레그 오선택**: parser의 component 노트 `pmin`("최소합계=별도") 휴리스틱이 **재보험 레그에서 뒤집힘**(연결이 그룹내부 재보험을 상계해 별도 재보험 > 연결). 그 결과 보험수익은 별도, 재보험회수는 연결로 **기준 불일치** → ΣLOB 결손/과대. **분기마다 별도/연결 대소가 달라 같은 회사도 일부 분기만 fail**(우연히 맞는 분기는 닫힘). → 보험손익 잔차는 **LOB 별도/연결 기준 일관성부터 의심**하고 parser에 LOB 레그 재확인 요청. 수정 패턴: 별도 보험수익(min 합계) anchor + cost/재보험 레그를 같은 문서 블록에서 `first_from`으로 선택(4레그 동일 기준).
 
+**🚫 dual-form 정당성 — 과잉 진단 금지 (2026-06-07 철회, 다시 시도 말 것)**: 보험손익은 회사·분기에 따라 `ΣLOB`(**bare**) 또는 `ΣLOB + 기타영업수익 − 기타사업비용`(**adj**) 중 하나로 닫힌다 — 일부 회사·분기는 종목별 합산에 기타사업비가 이미 녹아 있어 bare로 닫힌다. **둘 중 하나만 닫혀도 PASS.** 특히 **bare-close는 정상이지 "숨은 LOB 결손/dual-form 허점"이 아니다 — flag 금지** (흥국 2024.4Q를 그렇게 오진했다 철회). **"회사별 form 고정 flag" 제안도 철회** (분기마다 form이 갈리므로 고정 불가). dual-form은 이 케이스를 통과시키려는 **의도된 설계**.
+
 ### 1.5.1 마스터테이블 입력 계약 (`PL_breakdown` / `CSM_waterfall` / `CSM_amortization`)
 
 사용자가 회사별 수기 모델을 **long-format JSON 마스터테이블** 3종으로 정형화하여 관리. `PL_BRIDGE_DART_INTERNAL`·`CSM_CROSSCHECK_WATERFALL_VS_PL`·`CSM_WATERFALL_CLOSING_IDENTITY`의 입력.
@@ -238,6 +252,22 @@ item={X} company={Y} quarter={Q} QoQ_delta={D%} exceeds 15% threshold (basis={ra
 ## 3. Loopback workflow (실패 시)
 
 **원칙:** RED가 생기면 **직전 단계 parser 서브에이전트**에게 재확인을 요청한다. **최대 5회.**
+
+### 3.0 전달 메커니즘 = inbox (사람 복붙 아님)
+
+계약 정본: [`inbox/README.md`](../../inbox/README.md). §3의 parser loopback은 **inbox md로** 전달한다 — 사람이 세션 간 복붙하지 않는다.
+
+- **내 inbox**: `inbox/validation/` — parser가 재작업 결과를 `status: answered`로 떨굼.
+- **시작 시 첫 동작**: 내가 보냈던 `answered` 메시지 재확인 → 재검증 통과면 `status: resolved` + `_resolved/` 이동, 실패면 같은 스레드에 `iter++` 새 노트 (`iter==5`면 `route: escalate`로 바꿔 사람 큐).
+- **route 분류 (mechanical=script, judgment=agent)**:
+  - **기계적 raise**: validator JSON → `route: reparse` 메시지(`inbox/parser/`)는 스크립트 [`scripts/consolidate_inbox.py`](../../scripts/consolidate_inbox.py)가 한다. idempotent(기존/`_resolved/` 중복 skip). 손으로 쓰지 말 것. 루프: validator 실행 → `consolidate_inbox.py` → "inbox 확인해라".
+  - **판단 라우팅(에이전트 몫)**: parser 진단 회신 후 reparse를 재분류 — 원천 애매(별도-연결 무앵커)/앙상블 불일치/iter 5회 초과 → `route: escalate`(사람 큐); 룰로 못 잡는 비-IR 균일오류 → `route: blind_spot`(사람·2nd소스); raw 의심(파싱불가 시그니처) → `route: refetch`(`inbox/downloader/`).
+- 흩어진 검증 JSON(`csm_continuity_validation` / `nb_csm_validation` / `csm_waterfall_validation` 등)은 **근거**로 그대로 둔다. 신규 validator를 inbox에 흘리려면 `consolidate_inbox.py`의 `VALIDATORS`에 핸들러 추가 (waterfall must_reparse는 버킷 비면 미적용 — 항목 생기면 추가).
+- **참고 검증기**: closing-identity가 못 보는 off-year/basis-swap은 [`scripts/validate_csm_continuity.py`](../../scripts/validate_csm_continuity.py) (within-FY 기초 일정 + FY경계 기말→기초 연속성, RED) — mutation-test(`scripts/_probes/_mutation_test_csm.py`)가 사각지대로 식별해 추가됨.
+- 에이전트는 inbox를 자동 감시하지 않음 — 드라이버(Workflow/사람)가 호출 시 드레인.
+- **⚠️ 빌드 체인 gotcha (재검증 전 필수 확인)**: parser가 소스(`csm_waterfall_master_diag.json` / viz JSON)를 고쳐도 **`python scripts/build_root_masters.py` 재실행 전엔 검증 대상 루트 마스터(`CSM_waterfall.json` 등)에 반영 안 됨.** parser `answered` 재확인 시 **소스 mtime > 루트 mtime이면 빌드 누락** — "고쳤는데 검증값 그대로"의 정체. 빌드 돌리고(또는 parser/publishing에 요청) 재검증. (2026-06-07 흥국 3회 재검증 헛돈 원인.)
+
+아래 §3.1은 위 메커니즘 위에서 도는 검증 retry 루프의 의미.
 
 ```
 LOOP (max 5 iterations):

@@ -4,7 +4,7 @@
     "numerator": "csm_waterfall(_history) new_business CSM (억원)",
     "denominator_sonbo": "KIDI 장기보험 원수보험료 N07 월납+기타초회",
     "denominator_life": "KIDI 수입보험료 명세표 ML01 월납+기타초회 (일시납 제외)",
-    "validation": "삼성생명 FY2024=9.80 vs IR Total 9.8 (exact); 손보 삼성화재/메리츠/DB ±5%",
+    "validation": "[2026-06-11 정정] 분모=월납초회(VAL4)만 사용(기타 VAL8 제외). 삼성생명 EX-기타 배수 vs IR factsheet MAE 0.40(기타포함 1.15에서 개선), 한화 26.1Q 9.84=factsheet 일치. 구 \"삼성 9.80=IR 9.8 exact\"는 YTD-기타포함 vs IR분기-월납의 우연 일치로 폐기.",
     "built_at": "2026-05-31T15:04:21Z",
     "build_script": "scripts/build_nb_csm_multiple.py",
     "company_count": 27
@@ -575,7 +575,7 @@
     },
     {
       "company": "에이아이에이생명보험",
-      "kidi_name": "AIA",
+      "kidi_name": "KR0080",
       "sector": "Life",
       "fy2024": {
         "period": "FY2024",

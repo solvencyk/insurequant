@@ -31,6 +31,9 @@ PL_OUT = ROOT / "PL_breakdown.json"
 # construction; 35 companies, all coded).  Supersedes the old history-chain root file.
 CSM_SRC = ROOT / "data" / "dart" / "viz" / "csm_waterfall_master_diag.json"
 CSM_OUT = ROOT / "CSM_waterfall.json"
+# Owner manual corrections (xlsx review, 2026-06-10) — survive diag rebuilds. Upserts 값
+# by (code, item, quarter) and drops excluded companies BEFORE 당분기 recompute.
+CSM_OVR = ROOT / "data" / "dart" / "viz" / "csm_manual_overrides.json"
 CSM_ABS_CAP = 5e5    # 억: real insurer CSM max (삼성생명) ≈ 3e5; >5e5 = unit error (AIG 2025.4Q ~1000×)
 
 CSM_OPEN, CSM_CLOSE = 1, 6          # 저량 (stock) 항목번호: 기초 CSM / 기말 CSM
@@ -80,8 +83,36 @@ def build_pl():
     return len(out)
 
 
+def _apply_csm_overrides(rows):
+    """Owner manual corrections: exclude companies + upsert 값. Returns new row list."""
+    if not CSM_OVR.exists():
+        return rows
+    ovr = json.loads(CSM_OVR.read_text(encoding="utf-8"))
+    excl = set(ovr.get("exclude_companies", {}))
+    rows = [r for r in rows if r["원보험사코드"] not in excl]
+    idx = {(r["원보험사코드"], r["항목번호"], r["공시분기"]): r for r in rows}
+    meta = {}
+    for r in rows:
+        meta.setdefault(r["원보험사코드"],
+                        {k: r[k] for k in ("원수사명", "티커", "생손보여부")})
+    n_set = n_add = 0
+    for s in ovr.get("set", []):
+        key = (s["원보험사코드"], s["항목번호"], s["공시분기"])
+        if key in idx:
+            idx[key]["값"] = s["값"]; n_set += 1
+        elif s["원보험사코드"] in meta:
+            rows.append({"원보험사코드": s["원보험사코드"], **meta[s["원보험사코드"]],
+                         "항목번호": s["항목번호"],
+                         "항목명": CSM_ITEM_NM.get(s["항목번호"], ""),
+                         "공시분기": s["공시분기"], "값": s["값"]})
+            n_add += 1
+    print(f"  csm overrides: {n_set} set, {n_add} added, {len(excl)} companies excluded")
+    return rows
+
+
 def build_csm():
     rows = json.loads(CSM_SRC.read_text(encoding="utf-8"))
+    rows = _apply_csm_overrides(rows)
     # Unit-error guard: drop a (company, quarter) whose ANY stage exceeds the absolute cap
     # (e.g. AIG손해 2025.4Q is ~1000× — a filing-unit misread).  Null its stages, don't ship.
     bad_cq = set()

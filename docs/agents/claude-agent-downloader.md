@@ -310,6 +310,15 @@ After this prompt completes, parser subagent receives:
 
 Parser subagent's separate prompt: `docs/agents/claude-agent-parser.md` (currently a skeleton — owner fills in label variation matrix for 현대 vs KB vs 삼성화재 LOB and downstream viz hooks).
 
+## Inbox handoff protocol
+
+계약 정본: [`inbox/README.md`](../../inbox/README.md). 사람 복붙 대신 inbox md로 주고받는다.
+
+- **내 inbox**: `inbox/downloader/` — parser/validation이 `route: refetch` 메시지를 떨굼 (raw 누락/깨짐: 파싱가능 시그니처 실패, `raw_not_extracted`, `.xlsx.bad`/DRM PDF 류).
+- **시작 시 첫 동작**: `inbox/downloader/`의 `status: open` 전부 드레인 → 해당 `(company, period)` 재수집 시도 → 같은 파일에 `## 답변` 작성 후 성공이면 `status: resolved` + `_resolved/`로 이동, 실패면 사유 적고 외부소스에 진짜 없으면 honest gap으로 `route: escalate`.
+- **내가 쓰는 곳**: 없음(최상류). raw가 외부에 진짜 부재면 답변에 honest gap 명시.
+- 에이전트는 inbox를 자동 감시하지 않음 — 드라이버(Workflow/사람)가 호출하면 드레인. bounded max 5회.
+
 ## Reference: Phase 2 Reorg Outcome (2026-05-30)
 
 The canonical layout above was applied via a non-destructive reorg on 2026-05-30:

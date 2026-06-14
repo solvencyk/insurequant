@@ -28,7 +28,7 @@ LOSS = [
     ("KR0001", "메리츠화재"),
     ("KR0002", "한화손보"),
     ("KR0003", "롯데손보"),
-    ("KR0004_MG", "MG손해 (구 예별)"),
+    ("KR0004_MG", "예별손해 (구 MG손해)"),
     ("KR0005", "흥국화재"),
     ("KR0008", "삼성화재"),
     ("KR0009", "현대해상"),
@@ -65,7 +65,7 @@ LIFE = [
     ("KR0104", "농협생명"),
     ("KR1010", "교보라이프플래닛"),
     ("KR1011", "IBK연금보험"),
-    ("AIA",    "에이아이에이생명"),
+    ("KR0080",    "에이아이에이생명"),
 ]
 
 # IR group coverage (group IR covers multiple KRs).
@@ -120,7 +120,7 @@ IR_NOT_AVAILABLE: set[str] = {
     "KR0104",  # 농협생명 (농협금융지주 IR 부적합)
     "KR1010",  # 교보라이프플래닛
     "KR1011",  # IBK연금
-    "AIA",     # 외국계
+    "KR0080",     # 외국계
     # NOTE: KR0082 DB생명은 DB손보 IR에 합산될 수 있어 그룹 cover 유지 (IR_GROUP_COVERS).
 }
 
@@ -139,7 +139,7 @@ DART_NONLISTED = {
     "KR0004_MG",  # 비상장
     "KR0029",     # AIG (annual audit only)
     "KR0049","KR0050","KR0051","KR1098",  # 손보 NON_LISTED
-    "KR0074","KR0075","KR0076","KR0095","KR0097","KR0100","KR1010","KR1011","AIA",  # 생보 NON_LISTED + foreign
+    "KR0074","KR0075","KR0076","KR0095","KR0097","KR0100","KR1010","KR1011","KR0080",  # 생보 NON_LISTED + foreign
 }
 
 # KIDI MAPPING (cbCmp ↔ KR)

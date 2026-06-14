@@ -1,335 +1,301 @@
 # Validation Changelog (Stage 3)
 
-Validation 전용 이력. Cross-stage 변경은 [`docs/claude-changelog.md`](claude-changelog.md)에도 1줄 cross-reference 유지.
+> Last updated: 2026-06-12 · Stage 3/5 — validation
+> Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
-Stage prompt: [`docs/agents/claude-agent-validation.md`](agents/claude-agent-validation.md). 권위 룰셋: [`docs/agents/kics-json-validation-rules.md`](agents/kics-json-validation-rules.md).
+Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
 ---
 
-## 2026-06-07 (b) — CSM_waterfall closing 완전 해소 (parser 재추출 후 재검증)
+## 2026-06-14 — 파서 회신 2건 처리: 시장위험 146 회수 재검증 + item14후(8_post) 검증
 
-parser가 CSM_waterfall 측정요소 변동표 재추출 → 재검증 (`scripts/validate_master_tables.py`):
+새 parser inbox 2건 드레인(둘 다 resolved → _resolved):
 
-- **CLOSING_IDENTITY: 40F → 0F** (299P / 0F / 6S). 23사 × 13분기 전부 `기초+신계약+이자+가정+상각 = 기말` 정합. 🎯
-- **CSM_CROSSCHECK: 20F → 9F** (61P / 9F / 224S, common 243→294로 데이터 더 채워짐).
+- **`market_subrisk_recovered_146` 재검증 ✅**: 파서가 LLM추출+sqrt reconcile<2% 게이트로 36-40을 103→**146 all-five** 회수(41-46 144→**177**), gold 1325셀 영속화. master 반영 확인(all-five=146/41-46=177 실측). 게이트 19_market RED **148→21**(파서 회수 + 내 source-grounded cadence 합산). 파서가 이전 SKIP 요청 철회("200+ RED은 룰 아티팩트 아니라 underparse, owner·validation 옳았다") — 내 cadence 진단(홀수=간이공시) 독립 확인.
+  - **핵심 회신**: 파서의 "odd-Q 103 EXEMPT 등록" 요청 **불필요** 통보 — source-grounded 룰이 disclosure MD 직접 읽어 홀수 간이공시를 자동 SKIP(수동 명단관리 불요, 분기 자동갱신). MARKET_BREAKDOWN_EXEMPT는 "짝수인데 원천도 부재" 예외만.
+  - 잔여 19_market 21 = scan/OCR(AIA·카카오) + 짝수 full-form 결측(한화생명·흥국·DB·NH·KB손해·신한이지·처브) + 삼성생명 odd 3(텍스트표 존재·누락). `19market_real_gaps_21` inbox와 일치.
+- **`post_transition14_done` (owner #4 / xlsx #3 blocker) 검증 ✅**: 파서가 생보 경과조치 적용후 item14후 적재(전=후 스킵버그 + _is_market_section 오분류 수정). 게이트 **rule 8_post = GREEN 442 / RED 0**(hollow SKIP 아님). 검증식 (2후+3후)/14후×100≈item27후 25/25 일치.
+  - 파서의 룰 SKIP 요청 2건(36_irr/19_market 부분데이터 SKIP) **승인 안 함**: 0600Z에서 파서 철회. 올바른 해결은 SKIP rubber-stamp 아니라 데이터 회수 + source-grounded cadence(이미 적용). PDF census AGGREGATE 244 blanket 등록도 안 함(잠정후보).
 
-**CSM_CROSSCHECK 잔여 9건** → tol 3단계 정책 적용으로 정리 (아래 (c)):
-- 진짜 의심 2건 (wf >> pl, 재보험분 혼입 의심): KB라이프 2023.4Q −51.7% (pl 283,905 / wf 430,670), 코리안리재보험 2025.4Q −78.3% (pl 41,154 / wf 73,360) → parser 전달됨.
-- tol 경계 (사실상 pass): 미래에셋 2025.4Q +0.1%(211백만, floor 초과), 삼성생명 2024.4Q +1.7% / 2025.4Q +2.1%, 케이디비 −3.3%.
-- 중간 4~7%: 에이비엘 +4.3%/+6.9%, 흥국화재 +6.4%.
+게이트 현재: K-ICS RED 58(19_market 21 + 36_irr 16 + census 21), RS RED 0, IFRS17 closing/crosscheck 0F. owner #4 done.
 
-## 2026-06-07 (g) — CSM_PLAUSIBILITY 룰 신설 (closing identity 사각지대)
+## 2026-06-13 (c) — 19_market 과잉 RED 적발·수정 (source-grounded cadence; 148→21)
 
-사용자가 흥국화재 2025.4Q 기말 CSM이 **34.1억**(직전 26,693억)으로 비정상 폭락한 걸 지적. closing identity는 **내부 산술 합산만** 검증 → 가정조정(−28,929.9억, 다른 분기의 7배)이 폭락을 산술적으로 흡수해 closing이 우연히 닫혀 통과(0F). **절댓값 plausibility 검증 부재가 validation 갭**.
+owner "19_market 148 진짜 어려운 거냐" 질문 → raw 추적으로 **내 2026-06-12 19_market RED 승격이 cadence 미처리로 과잉 flag**임을 적발(36_irr엔 넣은 cadence를 19_market엔 안 넣음 = 내 버그, owner 격노건과 반대방향).
 
-신규 룰 `CSM_PLAUSIBILITY` (`scripts/validate_master_tables.py` 1b):
-- **복붙(dup)**: 같은 회사 내 서로 다른 분기의 기말 CSM이 소수점까지 동일 → 분기 데이터 복붙 의심 (CSM 잔액은 매분기 변하므로).
-- **기말 QoQ 폭변(spike)**: 기말 CSM `|ΔQoQ| > 50%`.
-- **연속성(cont)**: `FY[t] 각 분기 기초 CSM = FY[t-1].4Q 기말` (작년 기말=올해 기시; YTD 연초값 고정). tol max(0.5%·|전년말|, 2억). 2023은 2022 데이터 없어 SKIP. — 사용자 지적으로 추가, 가장 근본적인 sanity.
+- **진단(raw 확증)**: 148 RED을 MD 직접 확인 — 삼성화재 2025.1Q(홀수) MD엔 item19=60,822만 있고 36–40 세부표 없음(주식/금리위험액은 경과조치 문맥뿐). 생보 9사+삼성화재 등 **1Q/3Q는 간이공시라 세부표 원천부재**(69/72 raw 확증). 현대해상도 2023.3Q엔 표 있었으나 2025.3Q엔 없음 = 시기별 cadence 변화.
+- **수정 (source-grounded + parity)**: `validate_kics_disclosure.py._scan_breakdown_presence()` — item19 공시·36–40 결측 후보셀의 disclosure MD를 직접 읽어 세부표 5종 라벨 distinct≥3이면 표 존재로 판정. `run_validation(source_has_breakdown=...)` 파라미터로 전달. `kics_json_rules.py` 19_market: **짝수분기(2Q/4Q full form)는 결측이면 무조건 RED**(텍스트스캔이 이미지/스캔표를 못 보므로 짝수는 숨기지 않음), **홀수분기는 MD에 표 있으면 RED·없으면 SKIP**(간이공시 cadence). `IRR_SCENARIO_EXEMPT`처럼 MARKET_BREAKDOWN_EXEMPT는 override 유지.
+- **결과 19_market: RED 148→21** (EVEN 18 full-form 갭 + ODD 3 삼성생명 텍스트갭 = 진짜 추출가능 갭) / **cadence-SKIP 127 전부 ODD**(간이공시 원천부재, 짝수 숨김 0). GREEN 289 불변. 하나손해·삼성생명 2025.4Q는 파서가 이미 추출(GREEN).
+- **자기정정**: 직전에 "148 전부 파서갭"이라 한 진술 철회 — raw 보니 ~127은 cadence-legit(내 룰 과잉), 진짜 갭은 21. 게이트 RED 264→**58**(19_market 21 + 36_irr 16 + census 21).
 
-**연속성 검출 21건** (closing 0F·crosscheck pass였어도 잡힘):
-- 🔴 진짜 오류: **메트라이프 2025.4Q 기초 48,134 = 2024말 24,067 ×2 (이중계상, KB라이프형 — 연속성만 검출)**, 케이디비생명 2025.1~4Q 기초 복붙(≠2024말), 흥국화재 2025.2Q·3Q 기초 복붙.
-- 🟡 회색지대 (IFRS17 기초 재작성 가능, 무조건 오류 아님): 삼성생명 2024 Δ−1,452(일관, restatement 전형)·신한라이프·메리츠·에이비엘·푸본 작은 Δ; 교보(±2,905/+5,659)·KB라이프(+1,622)는 좀 커서 parser 확인.
-- severity 권고: 배수/큰 Δ = RED, 작은 Δ = YELLOW(재작성 검토).
+## 2026-06-13 (b) — 36_irr SKIP맹점 폐쇄(cadence-aware RED) + report_latest fresh-write
 
-**검출 결과 (전 회사 스캔)**: 6 dup + 4 spike, 두 회사 집중:
-- **케이디비생명**: 2025.1Q=2024.1Q / 2025.2Q=2024.2Q / 2025.3Q=2024.3Q (2025 1~3Q가 2024 복붙)
-- **흥국화재**: 2025.2Q=2024.2Q / 2025.3Q=2024.3Q / 2025.1Q=2026.1Q 복붙 + **2025.4Q 기말 34.1억 폭락**(가정조정 −28,930 이상치)
+owner "TODO에서 확실히 고쳐야 하는 것만 골라 즉시 수정" 지시 → validation 단독 must-fix 2건(파서 무의존, 결정적):
 
-→ **parser 전달 대상**: 케이디비생명·흥국화재 2025 분기 CSM_waterfall 재추출 (복붙·이상치) + **메트라이프 2025.4Q 기초 2배(이중계상)**. closing identity 0F였어도 절댓값이 틀린 케이스.
+- **36_irr SKIP→RED (cadence-aware)** (`kics_json_rules.py`): 19_market과 동일 맹점(부모 present·자식 결측인데 SKIP=통과). 단 41–46(금리위험 순자산가치 6시나리오)은 **짝수분기(2Q/4Q) 서식에만 존재**(실증: 41–46 보유분기 = 2023.2Q~2025.4Q 짝수 6개뿐, 홀수 0). 규칙: item36 공시·41–46 결측이 **짝수분기면 RED**(parser gap), **홀수분기면 SKIP**(원천부재 정당). `IRR_SCENARIO_EXEMPT`(빈값) 문서화 면제. 결과 **RED 23 (전부 EVEN, ODD false 0)** — 기존 SKIP에 은폐됐던 짝수분기 갭. 23건: 2023.2Q(BNP파리바·흥국화재) / 2023.4Q(KB손해·신한이지·에이비엘·하나생명·하나손해·흥국화재) / 2024.2Q(KB손해·교보플래닛·BNP·신한이지·흥국화재) / 2024.4Q(교보플래닛·신한이지) / 2025.2Q(교보플래닛·교보생명·하나생명) / 2025.4Q(IBK연금·KB손해·교보플래닛·케이디비·하나생명). → parser 41–46 재추출(market_subrisk inbox 후속).
+- **report_latest.json fresh-write** (`validate_kics_disclosure.py`): 게이트가 매실행 `artifacts/kics_validation/report_latest.json`을 fresh로 덮어씀. 기존엔 orphan stale(5/25본)이 glob 정렬에서 timestamped 최신보다 뒤로 정렬돼 mis-read 유발(소비자 코드 0). 함정 제거.
+- **게이트**: RED=268(19_market 220 + 36_irr 23 + census 21 + 등식 ~). 19_market 여전히 작동, compile OK.
+
+## 2026-06-13 — owner 직접지시 kics_disclosure 데이터 정정 (dedup + 스케일 + AIA 적용후) + 19_market 면제 거부
+
+owner가 kics_disclosure.json 다수 데이터 버그 지적. validation이 직접 정정(파서 무의존, 결정적):
+
+- **중복행 dedup** (`scripts/dedup_kics_disclosure.py`, backup .bak): 16,160→15,665(−495). key+값 동일 34키 축약 / 값상이는 항등식 채택(비영단일 56, 23=24+25+26 closure 12 code·q, 27·28 정의식 13, 최빈 9; **FLAG 0**). garbage 기각(item12 68431·71335, item26 8313). 리포트 `artifacts/kics_validation/dedup_report_*.md`. 파서엔 "파이프라인 끝에 dedup 상설" + first/last/any 질문 답(="항등식으로 1행").
+- **하나손해 2026.1Q 기본자본비율 2861%→28.62%** (`scripts/fix_kics_targeted.py`): 근본원인 item2(기본자본)=132375 ×100 스케일오류(item2>item1 불가 식으로 적발 — blanket threshold 아님; 카카오페이 6310%는 item2≤item1이라 정상 보존). item2→1323.75, item3 plug(−125617=item1−item2_old)→5434.25 복구, item28(적용전+적용후)→28.62. rule 1·8_post RED 해소.
+- **AIA(KR0080) 적용전=적용후 강제** (owner: 경과조치 미적용사): 값_적용후 16행 copy-leak(item2=39162·item3=75984 frozen) 일소 + item27 8분기 도출(item1/14×100). rule 7 RED 해소. 적용전(값)은 파서 재적재로 이미 클린.
+- **코리안리 자동차손익 null→0** 권고(owner: 자동차=일반 sub항목, 별도 미분리 = 정상). 파서 빌드 반영 요청.
+- **19_market 면제 요청 거부**: 파서가 "fitz no-pdf 0건 = 223건 구조적 미공시"로 MARKET_BREAKDOWN_EXEMPT 등록 요청 → **blanket REJECT**. 근거: 하나손해(image-split)·삼성생명(라벨변형) 실공시 입증(2026-06-12a) = 추출기 한계지 부재 아님. reconcile-fail 3건은 표 존재. 조건부만 허용(image-split 스티칭+라벨변형 재추출 후, 그래도 없으면 raw 페이지 근거 첨부분만 셀단위 등록). MARKET_BREAKDOWN_EXEMPT 여전히 비어있음.
+- **게이트**: dedup+정정 후 RED 293(19_market 229 + census 22 + 등식 ~42). 내가 유발한 RED(rule1 KR0050, 8_post KR0050) 전부 해소, 신규 0. 잔여 등식 RED(rule5/8 메리츠 등)는 기존 파서 추출 이슈.
+- **진행 중(서브에이전트)**: 금리민감도 11사 2025.4Q 추출시도 + 현대 PL 2023–24 IR대조. 결과 도착 시 파서 라우팅. inbox 회신: `20260612T1100Z__parser__...2026q1_loaded_and_19market_exempt_request.md` ## 답변.
+
+## 2026-06-12 (b) — consolidate_inbox 선배선(RS/waterfall) + V2 fallback 재검증 + market 스레드 정정종결
+
+owner 백로그 다이제스트(#2/#6/#10) 즉시가능분 처리.
+
+- **#2 consolidate_inbox VALIDATORS 배선**: `_rate_sensitivity_findings`(RS1/RS2_base RED) + `_waterfall_findings`(must_reparse) 추가, `VALIDATORS=[continuity,rate_sensitivity,waterfall]`. TEMPLATE을 `{section}`/`{request}`로 일반화(continuity 보존). 세 RED 버킷 0건 = **선배선**(owner "RED 발생 전 배선"). 06-09(a) "waterfall 항목 생기면 추가/untested 안 씀" 방침 → 스키마 확정(RS=runner dict키, waterfall=`failed` 버킷 동형)되어 pre-wire. 검증 3중(idempotent run findings=9 skip / 계약 플레이스홀더 테스트 / 합성 RED e2e: name→code·period유도 정상).
+- **#6 V2 fallback**: `validate_nb_csm_multiple.py` 재실행 — **한화생명 fallback_used=False = retire 확정.** 삼성화재(2025.3Q 17.54 vs IR 14.1, rel 0.244=tol 0.25 턱밑)·현대해상(2025.1H)은 aligned FY2024 행 실패→fallback 통과(validator tolerance-loophole 경고). 삼성화재 IR annual benchmark 보강 미결(FY2024 IR 분모 소싱 필요).
+- **#10 housekeeping**: inbox/validation 5건 `_resolved/` 이관(RS 2 clean + market 3 정정후). market_coverage_phase2_loaded의 "잔여 SKIP 정당(삼성화재·삼성생명·현대·한화 PDF 비공시)" 결론 **OVERTURN** 기록(=2026-06-12(a) 적발과 연결). "clean 종결" 아닌 "정정 종결"로 판단.
+
+## 2026-06-12 — KICS 게이트 2대 사각 적발: coverage census 부재 + 19_market SKIP맹점
+
+owner 격노 적발: (1) `kics_disclosure.json` 2026.1Q가 한때 KB손해 1개사(26셀)만 적재됐는데 게이트가 RED=0 통과 (2) 시장위험 세부 5종(item 36–40)이 거의 미적재인데 19_market이 SKIP으로 통과. 다른 세션은 즉시 적발. **근본원인 = 게이트가 "있는 셀이 맞나"만 보고 "있어야 할 셀이 있나"를 안 봄.**
+
+**근본원인 (코드 레벨):**
+- `validate_kics_disclosure.py`는 `run_validation(records)` — 데이터에 **존재하는 (회사×분기) bucket만** 순회. 분기/회사가 통째로 빠지면 finding 0개 → RED=0. 기대 universe 개념 부재.
+- `kics_json_rules.py` `19_market`: 부모 item19 공시 + 자식 36–40 **전부 결측이면 RED이 아니라 SKIP**. 게이트가 RED만 세니 SKIP=사실상 통과. (`36_irr`도 동형 — 추후 검토.)
+
+**수정 2건:**
+- **`19_market` SKIP→RED 승격**: 부모 item19 공시인데 36–40 전무 → RED(parser gap 추정). 부분결측은 0 처리 허용 유지. 진짜 미공시는 `MARKET_BREAKDOWN_EXEMPT`(회사,분기) 문서화 면제(현재 비어있음).
+- **coverage census 신설** (`validate_kics_disclosure.py` `_coverage_census`): regular-filer(≥분기절반 출현) × 분기 기대그리드 → 빠진 (회사,분기) RED + exit code 반영. 리포트에 `coverage_census` 블록·콘솔 분기별 미싱 출력.
+
+**재실행 결과**: RED=292 (수정 전 사실상 은폐). 내역: 19_market 224건(36개사·13분기 전부 — 삼성생명/삼성화재/현대/DB/메리츠 포함) + census 미싱셀 28 + 등식 RED 40. **224건은 수정 전 전부 SKIP**이었음.
+
+**raw 교차검증 (미공시 반증)**: 하나손해 2025.4Q는 5종 실재(금리30,358/주식62,491/부동산2,643/외환12,483/자산집중5,251)이나 표가 `<!-- image -->`로 분절 → 파서 미봉합. 삼성생명 2025.4Q는 "1.금리위험액"+충격시나리오방식 중간열 라벨변형. 둘 다 미공시 아님 = 전사 파서 갭. 2026.1Q는 항목 1–28에서 추출 절단(29–46 전무).
+
+inbox: `20260611T2200Z__validation__MULTI_ALL__kics_market_subrisk_systemic_underparse.md` (route reparse — 36–40 전사 재추출 + 분절표 봉합·라벨변형 가이드 + 2026.1Q 29–46 backfill + census 28셀). 메모리: `coverage-census-mandatory` 신설.
+
+## 2026-06-11 (c) — 현대해상 PL legit_absent 오판 적발 + AIA 사코드 + 불가능-0 leg 룰
+
+owner가 현대해상 2026.1Q PL 답지(`gold/보험손익 breakdown_현대해상_2026.1Q.xlsx`)로 parser의 legit_absent 판정 반박.
+
+- **AIA 사코드** (owner 재지시): `CSM_amortization.json` 10행 사코드 공란 → KR0080 채움. 원인: `build_tidy_exports.py meta()`가 kics_disclosure 원수사명만 봐서 kics 미수록 AIA는 None. `NAME_CODE_FALLBACK`(에이아이에이생명보험→KR0080) 추가(영속) + json 즉시 패치.
+- **불가능-0 leg 룰** (`IMPOSSIBLE_ZERO_LEGS`): 생명장기 원수손익·기타원수·재보험손익·기타재보 4종은 장기보험사면 0원 불가 → 0.0이면 RED. 현재 0건(전부 None)이나 미래 가드. 메모리 `validation-blind-spots` 보강.
+- **현대해상 legit_absent 오판 정정**: parser가 4종을 도출불가로 판정했으나 답지로 실재 확인(생명장기원수 279,302=241,253+37,322−126,865+127,592 검산 일치). raw에 보험수익 분석공시 멀쩡. ZLEG_LEGIT에서 **현대 회사면제 제거 → 8분기 재노출**. 단 **2025.2Q만** 진짜 미공시(보험서비스비용·재보험수익 자체 부재, owner 확인) → `ZLEG_LEGIT_CQ` 분기단위 면제.
+- 교훈: legit_absent 주장은 **raw 표 존재로 교차검증** 필수 — 회사 전체 면제는 분기단위 진짜 미공시를 가린다.
+
+inbox: `20260611T1000Z__validation__KR0009__hyundai_pl_legit_misjudge.md` (경고, route reparse, 8분기 재추출 + 2025.2Q 패스).
+
+## 2026-06-11 (b) — parser 회신 재검증 통과: overrides 영속성·NB EX-기타·아이엠 정정 확인 + exception 등록
+
+parser가 V9 inbox에 회신: ⓪ `csm_manual_overrides.json` + `_apply_csm_overrides()` 훅 구축(빌드 생존) ③ NB EX-기타 + `_MULT_FLOOR=1.0` 적용 ④ 아이엠 분자 CSM열로 정정(0.02→8.36/8.82) ① WFY 10/10 판별(DB손해 re-anchor 18셀 / 9건 legit restatement) ② PL None 분류 + gold-cell +170셀, 신한이지 CSM 제외(×1000 단위오류).
+
+**재검증 (기본 빌드 포함)**: 정정 전부 빌드 생존 ✅ (롯데 16,774.38 / 아이엠 1,599.8 / DB re-anchor / 신한이지 제외). `--no-build` 모드 해제.
+
+**exception 등록**: `WFY_EXCEPTIONS` 9건(legit restatement — 교보 3Q24 공식 소급재작성 등) + `ZLEG_LEGIT` (현대 분리미공시 4종 / ABL 재보 4종 / 서울보증·AIG·교보플래닛·신한이지 ALL). 결과: **wfy 9→0, zleg 23→1**(동양 2025.3Q 잔여).
+
+**신규 발견 → parser 회신**: 메트라이프 영업이익 등식 2분기 FAIL(+12,086/+12,897, gold-cell 후 표면화) + 코리안리 crosscheck 2F 재출현(wf 2024.4Q 상각 ≈ pl 2023.4Q → 1년 lag 의심, KR1000 basis 연관).
+
+SUMMARY: coverage 0/0 | closing 0F | dup0/spike1/cont16/wfy0/zamort0 | pl_bridge 2209P/16F(2023 12+메트라이프2+KB라이프·흥국 소액2) | zleg 1 | crosscheck 2F(코리안리) | qoq 195Y.
+
+## 2026-06-11 — 사용자 xlsx 수기검수 적발 → 검증 사각 4종 보강 + 4갈래 조사
+
+사용자가 마스터 xlsx 수기검수로 validation 미스 적발 (롯데 2023.2Q 기초, KDB 2023 상반기 상각 공란, 미래에셋 상각 누락, 현대해상 PL leg "0", 아이엠라이프 배수 0.02). **검증 사각 4종을 메모리+룰로 영구 반영**:
+
+**신규 룰 3종** (`validate_master_tables.py`):
+- **WFY**: FY내 기초 CSM 동일성 (YTD 컨벤션). 기존 연속성은 FY 경계만 봄. → 즉시 10건 적발 (DB손해 FY2023 4분기 전부 상이 등 — 롯데 동형 정정공시 의심, parser 재확인).
+- **ZAMORT**: CSM상각 == 정확히 0 불가능 (사용자 룰 지시).
+- **ZLEG**: PL 생명장기 sub-item 10종 중 0/None ≥4 무더기 flag → 28건 (현대해상 13분기 — **None이 bridge SKIP으로 은폐되던 패턴**; "0"으로 보인 건 xlsx의 None 렌더링).
+
+**4갈래 병렬 조사 결과**:
+- **xlsx diff**: 사용자 수정 24셀+신규 12행 식별 (롯데 2023.1Q신설+2Q전항목 / 케이디비 2023상반기 / 미래에셋 2023.1Q신설+2025.2Q~26.1Q 상각신설·가정재분해). → parser가 root JSON·xlsx까지 ingest 확인(19:12). ⚠️ diag stale — 다음 빌드 시 소실 위험, inbox CRITICAL로 전달. validation은 당분간 `--no-build`.
+- **NB 분모**: 기타(비월납, 대부분 단체) 초회보험료 혼입 확정. EX-기타 시 농협생명 3.71→11.20, NH손해 1.74→11.38, KB라이프→10.48, 삼성생명→11.47 (10~17 정상권 진입). **삼성생명 EX-기타가 IR에 5분기 전부 근접**(MAE 0.43 vs 1.10; IR 정의=월납월초) → builder EX-기타 전환 권고. 교보·한화는 기타로 설명 안 됨(별도 원인). 568억은 NH손해 기타(농협생명은 649.8억).
+- **PL zeros**: 정확히-0 무더기 0건 — 실체는 None. 예실차=0 45셀은 미공시→identity 유도(정상).
+- **소스 추적**: DART 미공시 11사 전부 **연간 감사보고서(00760 별도, pblntf_ty=F)** 소스 — 검증된 공시지만 4Q만. **하나손해/하나생명/신한이지는 지주 분리가 아니라 자체 별도 감사보고서 파싱** (지주 보고서 미사용 — 분리 시도 자체가 없었음). 아이엠라이프 DART 분기 부재 = 비상장 지주 자회사(사업보고서 의무 없음). **아이엠라이프 0.02 = 분자 오염**(BEL+RA+CSM 행합 4.4억; 실제 CSM 1,599.8억) → parser 수정 대상.
+
+inbox: `20260611T0900Z__validation__MULTI_ALL__user_xlsx_audit_followup.md` (diag 영속성 CRITICAL + WFY 10건 + ZLEG 28건 + NB EX-기타 + 아이엠라이프). 메모리: `feedback_validation_blind_spots` + `project_master_xlsx_review_loop`.
+
+## 2026-06-10 — K-ICS 금리민감도 RS1–RS4 룰 구현 + 검증 통과 (RESOLVED)
+
+owner 발주(RS1–RS4) + parser 마스터 적재(`kics_rate_sensitivity.json` 423행, 74 사·분기) → `scripts/validate_kics_rate_sensitivity.py` 신규 구현. 정본 `docs/agents/kics-rate-sensitivity-spec.md` §5.
+
+- **RS1_RATIO_IDENTITY** (RED): (사,분기,경과조치)·충격컬럼별 `비율≈금액/기준금액×100`, tol max(0.5%p, 0.5%·비율). → **0 RED** (705 컬럼 전수 통과).
+- **RS2_BASE_ANCHOR** (RED): 적용전 base vs kics_disclosure item1/14/27, tol 금액 2억/비율 0.5%p. → **0 RED** + KR0011 DB손해 2025.2Q 3 measure documented exception(별도/연결 basis, `RS2_EXCEPTIONS`).
+- **RS3_DIRECTION_SANITY** (YELLOW): 생보 −100bp 비율 상승(역방향) 28건 — ALM상 정상 가능, 플래그만.
+- **RS4_COVERAGE_CENSUS** (YELLOW): **회사 cadence 인식**(1Q/3Q 보유 이력 없으면 반기공시 → 1Q/3Q 부재 정상) → 손보 1Q/3Q 과탐 40→**1**(코리안리 2025.2Q hole).
+
+**gate RED=0.** 룰표 `claude-agent-validation.md` §1.1 등재. 결과 `data/_derived/kics_rate_sensitivity_validation.json`. inbox owner/parser 2건 resolved. (consolidate_inbox 핸들러 배선은 RED 발생 시 후속 — 06-12(b)에서 선배선.)
+
+## 2026-06-09 (d) — 시장위험 Phase-2 적재 재검증 통과 (RESOLVED)
+
+parser Phase-2(PDF 직접추출, +150행 → 14,394) 재검증. `run_validation`:
+- **게이트 RED=2**(KB손해 KR0010 rule2 OCR, KICS-IMG; **신규 RED 0**). 통과.
+- `19_market` GREEN 163→**185** / SKIP 221→199. `36_irr` GREEN 42→**47** / YELLOW 17→23 / SKIP 314.
+- 교보(KR0073) 전치표 5분기 스폿: derived vs item36 diff 0.1~2.8%(tol 5% 이내, YELLOW=정당).
+- 잔여 SKIP 정당: 19_market 구조적 ~100(삼성화재·삼성생명·현대·한화생명 PDF 비공시) / 36_irr Q1·Q3 ~85(시나리오표 원천부재) / IRR 직접형 15(별도 schema 보류). ⚠️ 이 "정당" 결론은 2026-06-12(a)에서 OVERTURN(분절표·라벨변형 = 파서 갭).
+
+inbox `phase2_loaded` **resolved**. **V3 시장위험 검증 한 사이클 완결**: 룰 구현 → 골든 → 1차적재 → 결손census → Phase-2 PDF추출 → 재검증 RED 0. 추가 적재 시 동일 게이트 재실행.
+
+## 2026-06-09 (c) — 시장위험 item36–46 1차 적재 검증 통과 (RED 0)
+
+parser가 item36–46 1차 적재 → `validate_kics_disclosure.py` (19_market/36_irr 활성) 재실행:
+- **19_market: 163 GREEN / 221 SKIP / 0 RED**
+- **36_irr: 42 GREEN / 17 YELLOW / 325 SKIP / 0 RED**
+- 게이트 RED=2 불변(기존 KR0010 OCR).
+
+**단위 정합 확인** (앞 (b)의 회신 요청 해결): item36–40을 억원(세부표 백만원 ÷100) 적재한 게 맞음 — 19_market GREEN 163건이 item19(억원)와 일치. YELLOW 17(36_irr)은 0.0~3.4% 미세편차(`classify_diff`). 게이트 무관. SKIP은 미적재 분기 — parser 적재 계속 시 자동 GREEN. parser inbox 회신: `inbox/parser/20260609T0300Z__validation__MULTI_ALL__market_risk_loaded_pass.md`.
+
+## 2026-06-09 (b) — V3 시장위험 룰 19_market + 36_irr 구현 (8_life 복제)
+
+parser inbox(`market_risk_rule`, `market_irr_rules_19_36`) 요청 → `src/solvency/validation/kics_json_rules.py`에 2룰 구현. 정본: `docs/agents/kics-market-risk-decomposition.md`.
+
+- **`19_market`**: `item19 = sqrt(V'·M·V)`, V=[36–40](금리·주식·부동산·외환·자산집중). `MARKET_M` 5×5(대각1.0/외환-주식 −0.25/자산집중 행열 0/그외 0.25). `_diversified_sqrt` 재사용. **부분결측 허용**(없는 하위=0; item19 또는 36–40 전부 결측 → SKIP). dynamic tol `max(eff_tol, 5%·expected)`, IMAGE_OCR 10.0 승계.
+- **`36_irr`**: `item36 = √[max(R상승,R하락)² + max(R평탄,R경사)²] + R평균회귀`. R=base(41)−시나리오순자산(43/44/45/46), 평균회귀=41−42(signed). 41–46 중 결측 → SKIP.
+
+**골든 3/3 정확 일치**: 19_market 흥국 FY2023_Q1 sqrt(V'MV)=813,201백만=8,132억(=item19) / 36_irr 흥국 157,128(공시 157,127) / 현대 322,767(공시 일치).
+
+**상태**: item36–46 적재가 parser 진행 중 → 신규 2룰 **전사 SKIP**(게이트 미반영). RED=2 불변(회귀 없음). 적재 후 자동 활성. 단위: 룰은 item36–40을 억원(=item19 동일단위) 가정 — parser 적재 단위 회신 대기. inbox 2건 answered.
+
+## 2026-06-09 (a) — consolidator 스크립트화 (mechanical=script, judgment=agent)
+
+운영 개선 #2: validator JSON → inbox 메시지 변환을 에이전트/수동 → **스크립트** [`scripts/consolidate_inbox.py`](../scripts/consolidate_inbox.py)로.
+
+- **왜**: smoke-test에서 emit(consolidator)·eval을 에이전트로 돌리니 1 finding에 208k 토큰. 변환은 기계적이라 에이전트 낭비. 원칙 **에이전트=판단·신규성, 스크립트=기계** 적용.
+- **consolidate_inbox.py**: continuity validator(`csm_continuity_validation.json`) findings → `inbox/parser/` reparse 메시지(값 시계열 + 내부 closing-identity precompute 포함). **idempotent** — `parser/`·`_resolved/`에 같은 (회사·기간·토픽) 있으면 skip. 신규 validator는 `VALIDATORS` 리스트에 핸들러 추가. waterfall must_reparse 버킷은 당시 비어 미적용(항목 생기면 추가 — untested 코드 안 씀). → 06-12(b)에서 RS/waterfall 핸들러 선배선.
+- **루프**: validator 실행 → `python scripts/consolidate_inbox.py` → 사람이 "inbox 확인해라". (driver 상설화는 안 함 — 사람 킥으로 충분, owner 결정.)
+- **배선**: `inbox/README.md` "consolidator 향후 작업" → 스크립트 명시; validation 프롬프트 §3.0 route 분류를 mechanical(script)/judgment(agent)로 분리.
+- **inbox 정리**: parser fix로 해결된 3건(흥국 FY2023·코리안 FY2024·코리안 2024.1Q) + 스모크 데모 1건 → `_resolved/`. `parser/`에 live finding 9개만 남김. 폐기된 probe `_seed_continuity_inbox.py` 제거.
+
+## 2026-06-09 — V4 QOQ_DELTA_WARN 구현 (시계열 anomaly) + parser inbox
+
+V4 `QOQ_DELTA_WARN` 소비자 코드 구현 (`validate_master_tables.py` 4번). spec(`config/qoq_thresholds.yaml`)의 CSM 항목 대상:
+- 누적 항목(신계약/이자부리/상각) → **YoY**(전년 동기 YTD 대비). net-quarterly QoQ는 분기 계절성으로 노이즈 폭발(645건) → YoY로 계절성 상쇄.
+- 시점 항목(기말 CSM) → QoQ. floor 50억(작은 분모 % 폭발 제거).
+- **PL 손익(보험손익/투자손익/당기순이익) 제외**: 시장·금리 민감 본질적 고변동 + spec items 미등록. (임의 추가했다가 590건 노이즈 → 철회.)
+- YELLOW(다운스트림 차단 안 함). 전체 → `data/_derived/qoq_warn.json` (sign_flip 플래그 포함).
+
+**결과**: 193건 YELLOW (신계약 69 / 이자부리 59 / 상각 51 / 기말 14). 대부분 사업변동. **진짜 데이터 의심 = 이자부리 부호반전 3건** (양수→음수): 동양 2025.4Q(1,134→−2,140)·교보 2025.3Q(3,242→−5,290)·코리안리 2025.2Q(318→−116).
+
+→ parser inbox: `inbox/parser/20260609T0200Z__validation__MULTI_2025__qoq_interest_signflip.md` (route: blind_spot, 이자부리 부호 raw 확인 요청).
+
+**교훈**: QoQ anomaly는 임계·기준(net/YoY/raw) 선택이 신호품질을 좌우. flow는 YoY, stock은 QoQ, 고변동 손익은 제외. 부호반전이 단순 %급변보다 강한 데이터-오류 신호.
+
+## 2026-06-08 — MASTER_COVERAGE 룰 신설 (hole을 SKIP으로 숨기던 사각지대 보강)
+
+**검증 결함 인정**: closing/pl_bridge/crosscheck가 항목 None을 전부 SKIP 처리 → 거대한 skip(pl_bridge 456 / crosscheck 227) 뒤에 "있어야 하는데 없는" 데이터(hole)가 숨어 있었음. parser census(WRONG vs HOLE 분리)가 먼저 짚음 — validation이 했어야 할 일.
+
+신규 룰 `MASTER_COVERAGE` (`validate_master_tables.py` 0번): active 회사(핵심항목 ≥7분기)의 빈 분기 = hole. **2024+ = real hole**, 2023 = known(사이트 비노출), <7분기 = structural(외국계·소형 미공시, 제외).
+
+**검출**: real hole(2024+) **4건** / 2023 known 40 / struct 18.
+- **미래에셋생명 CSM 2025.2Q·3Q·2026.1Q** — `CSM상각` None (2025.1Q는 −483.6 있음). closing identity가 skip하던 것.
+- **롯데손해 PL 2025.2Q** — `생명장기손익` None (1Q·3Q는 있음). pl_bridge가 skip하던 것.
+→ **parser 데이터 채움 대상**. 둘 다 절댓값 검증을 통과한 게 아니라 *검증 자체를 skip*당한 케이스.
+
+검증 철학 갱신: "값이 틀린 것(WRONG)"뿐 아니라 **"값이 없는 것(HOLE/coverage gap)"**도 1급 검증 대상. skip은 침묵이 아니라 분류돼야 함.
+
+## 2026-06-08 — 빌드→검증 통합 (build_root_masters 자동 선행)
+
+`validate_master_tables.py`가 검증 전 `build_root_masters.py`를 자동 선행(idempotent). 빌드 누락으로 "고쳤는데 검증에 안 보임" 문제 구조적 차단(아래 06-07(h) 교훈). `--no-build`로 끔. 회귀 명령: `python scripts/validate_master_tables.py` (빌드+검증 한 방).
 
 ## 2026-06-07 (h) — 흥국 해소 (빌드 누락이 원인) + 빌드 체인 교훈
 
-흥국화재 "고쳤다"는데 3번 재검증해도 루트 `CSM_waterfall.json`에 변화 0 → 추적 결과 **빌드 한 단계 누락**. 체인: `csm_waterfall_master_diag.json`(소스) → `build_root_masters.py` → 루트 `CSM_waterfall.json`. parser가 **diag는 22:13에 제대로 고쳤는데**(흥국 폭락·복붙 다 사라짐) **루트는 21:31 옛것** — `build_root_masters.py`를 안 돌려 미반영. validation이 `python scripts/build_root_masters.py` 실행 → 루트 갱신 → **흥국 완전 해소** (복붙 6→0 / spike 4→1 / cont 21→14).
+흥국화재 "고쳤다"는데 3번 재검증해도 루트 `CSM_waterfall.json`에 변화 0 → **빌드 한 단계 누락**. 체인: `csm_waterfall_master_diag.json`(소스) → `build_root_masters.py` → 루트 `CSM_waterfall.json`. parser가 **diag는 22:13에 제대로 고쳤는데** **루트는 21:31 옛것** — `build_root_masters.py`를 안 돌려 미반영. validation이 빌드 실행 → 루트 갱신 → **흥국 완전 해소** (복붙 6→0 / spike 4→1 / cont 21→14).
 
-**⚠️ 운영 교훈 (핸드오프 필수)**: parser가 소스(diag/viz)를 고쳐도 **`build_root_masters.py` 재실행 전엔 루트 마스터(검증 대상)에 반영 안 됨**. parser fix 후 빌드까지 확인할 것. mtime 비교(소스 > 루트)로 빌드 누락 탐지 가능.
+**⚠️ 운영 교훈 (핸드오프 필수)**: parser가 소스(diag/viz)를 고쳐도 **`build_root_masters.py` 재실행 전엔 루트 마스터에 반영 안 됨**. mtime 비교(소스 > 루트)로 빌드 누락 탐지 가능.
 
-**빌드가 드러낸 새 건**: 롯데손해 2025.4Q wf CSM상각 −980(거의 0, 이상치 — 빌드 로그 `1 unit-error c-q nulled`) → crosscheck +99.5% RED. 롯데 FY25 양식 이슈(V7)와 연관 의심 → parser. (케이디비 2025.4Q +12.8%는 기존.)
+**빌드가 드러낸 새 건**: 롯데손해 2025.4Q wf CSM상각 −980(거의 0, 이상치) → crosscheck +99.5% RED. 롯데 FY25 양식 이슈(V7)와 연관 의심 → parser.
+
+## 2026-06-07 (g) — CSM_PLAUSIBILITY 룰 신설 (closing identity 사각지대)
+
+사용자가 흥국화재 2025.4Q 기말 CSM이 **34.1억**(직전 26,693억)으로 비정상 폭락한 걸 지적. closing identity는 **내부 산술 합산만** 검증 → 가정조정(−28,929.9억)이 폭락을 흡수해 closing이 우연히 닫혀 통과(0F). **절댓값 plausibility 검증 부재가 validation 갭**.
+
+신규 룰 `CSM_PLAUSIBILITY` (`scripts/validate_master_tables.py` 1b):
+- **복붙(dup)**: 같은 회사 내 서로 다른 분기의 기말 CSM이 소수점까지 동일 → 복붙 의심.
+- **기말 QoQ 폭변(spike)**: 기말 CSM `|ΔQoQ| > 50%`.
+- **연속성(cont)**: `FY[t] 각 분기 기초 CSM = FY[t-1].4Q 기말`. tol max(0.5%·|전년말|, 2억). 2023은 SKIP. — 사용자 지적으로 추가, 가장 근본적인 sanity.
+
+**연속성 검출 21건**:
+- 🔴 진짜 오류: **메트라이프 2025.4Q 기초 48,134 = 2024말 24,067 ×2 (이중계상, KB라이프형)**, 케이디비생명 2025.1~4Q 기초 복붙, 흥국화재 2025.2Q·3Q 기초 복붙.
+- 🟡 회색지대 (IFRS17 기초 재작성 가능): 삼성생명 2024 Δ−1,452·신한라이프·메리츠·에이비엘·푸본 작은 Δ; 교보(±2,905/+5,659)·KB라이프(+1,622)는 parser 확인.
+- severity 권고: 배수/큰 Δ = RED, 작은 Δ = YELLOW.
+
+**dup/spike 검출**: 6 dup + 4 spike, 케이디비생명·흥국화재 집중.
+→ **parser 전달 대상**: 케이디비생명·흥국화재 2025 CSM_waterfall 재추출 + 메트라이프 2025.4Q 기초 2배. closing 0F였어도 절댓값이 틀린 케이스.
 
 ## 2026-06-07 (f) — DB손해·KB손해 별도/연결 fix → PL_BRIDGE 31F→16F
 
-parser가 별도/연결 LOB 레그 fix를 DB손해·KB손해로 확장 → **2024+ 보험손익 fail 10건 완전 해소** (DB손해 5 + KB손해 5). 진단(DB=ΣLOB 결손 +7k~+47k / KB=ΣLOB 과대 −9k~−59k, LOB 내부는 정합)이 정확히 별도/연결 레그 오선택이었음.
+parser가 별도/연결 LOB 레그 fix를 DB손해·KB손해로 확장 → **2024+ 보험손익 fail 10건 완전 해소** (DB손해 5 + KB손해 5). 진단(DB=ΣLOB 결손 / KB=ΣLOB 과대, LOB 내부는 정합)이 정확히 별도/연결 레그 오선택이었음.
 
-**PL_BRIDGE 31F → 16F**. 잔여:
-- **2023 분기 11건** — 사이트 비노출 → 넘어감 (DB생명 2·DB손해 3·메리츠 3·한화생명·한화손해·흥국화재).
-- **2024+ 5건** — KB라이프 2024.1Q +1,136 / 악사손해 2024.4Q +3,483 / **흥국화재 2025.1Q −714·2025.4Q +1,684·2026.1Q +968** (소액이나 흥국화재 2026.1Q는 보험손익 대비 −4.9%로 비율은 작지 않음).
+**PL_BRIDGE 31F → 16F**. 잔여: 2023 분기 11건(사이트 비노출) + 2024+ 5건(KB라이프 2024.1Q +1,136 / 악사손해 2024.4Q +3,483 / 흥국화재 2025.1Q −714·2025.4Q +1,684·2026.1Q +968).
 
-전체: closing 0F + crosscheck 0F(+2M) + pl_bridge 16F(2023 11 + 2024+ 5).
-
-**dual-form의 정당성 (사용자 확인 2026-06-07)**: 보험손익은 통상 `종목별 보험손익 합 − 기타사업비`(adj)지만, **일부 회사·분기(흥국 2024.4Q, KB 등)는 종목별 합산에 기타사업비가 이미 녹아있어** bare(`= ΣLOB`)로 닫힘. dual-form은 **바로 이 케이스를 통과시키려는 의도된 설계**. → bare로만 통과하는 분기는 **정상이며 flag하지 않는다**. (앞서 흥국 2024.4Q를 "숨은 275억 LOB 결손/dual-form 허점"으로 본 진단은 오버 — 철회. "회사별 form 고정 flag" 제안도 철회.)
-- **진단자(validation) 오진 경향 명시**: 한화손보→삼성화재는 보험손익 잔차를 "기타영업수익/기타사업비용"으로 오진했다가 실제 LOB 별도/연결이었음 — 이 교훈은 유효(§1.5). 단 흥국 2024.4Q처럼 bare로 닫히는 건 진짜 정상이니 과잉 진단 금지.
+**dual-form의 정당성 (사용자 확인 2026-06-07)**: 보험손익은 통상 `종목별 합 − 기타사업비`(adj)지만 일부 회사·분기(흥국 2024.4Q, KB 등)는 종목별 합산에 기타사업비가 이미 녹아있어 bare(`= ΣLOB`)로 닫힘. dual-form은 이 케이스를 통과시키려는 의도된 설계 → bare로만 통과하는 분기는 정상, flag 안 함. (앞서 "숨은 275억 LOB 결손/dual-form 허점" 진단·"회사별 form 고정 flag" 제안 철회.) 단 한화손보→삼성화재 LOB 별도/연결 교훈(§1.5)은 유효 — 과잉진단 금지.
 
 ## 2026-06-07 (e) — 보험손익 잔차 = LOB 별도/연결 레그 오선택 (진단 가이드 정정)
 
 삼성화재 2026.1Q +2,067, 한화손보 2025.2~4Q를 "기타영업수익 누락"으로 진단했으나 **2건 연속 오진**. parser FS-API 검증 결과 진짜 원인 = **ΣLOB 별도/연결 레그 오선택**:
-- 별도(OFS) 기준 회사는 FS-API상 **기타영업수익 구조적 0** (`보험영업수익 = 보험수익 + 재보험수익`).
-- parser component 노트 `pmin`(최소합계=별도) 휴리스틱이 **재보험 레그에서 뒤집힘**(연결이 그룹내부 재보험 상계 → 별도 재보험 > 연결) → 보험수익은 별도, 재보험회수는 연결로 기준 불일치 → ΣLOB 결손. 삼성화재 2026.1Q 일반손익 109,190 → 111,256(+2,066)로 닫힘.
-- 분기마다 별도/연결 대소가 달라 같은 회사도 일부 분기만 fail (2025.4Q는 우연히 맞아 닫혔던 것).
+- 별도(OFS) 기준 회사는 FS-API상 **기타영업수익 구조적 0**.
+- parser `pmin`(최소합계=별도) 휴리스틱이 **재보험 레그에서 뒤집힘**(연결이 그룹내부 재보험 상계) → 기준 불일치 → ΣLOB 결손.
+- 분기마다 별도/연결 대소가 달라 같은 회사도 일부 분기만 fail.
 
-parser fix(별도 보험수익 anchor + cost/재보험 레그 same-block `first_from`) → **삼성화재 2026.1Q + 한화손보 2025 둘 다 해소**. pl_bridge **36F → 31F**.
-
-**진단 가이드 §1.5에 박음**: 보험손익 잔차는 "기타영업수익 누락"이 아니라 **LOB 별도/연결 기준 일관성부터 의심**.
-
-**잔여 2024+ 보험손익 fail = 같은 패턴 강력 의심 → parser**: DB손해 5건(−25k~+39k 부호 섞임) + KB손해 5건(+9.5k~+59.6k). 분기별 부호 혼재가 별도/연결 휴리스틱 들쭉날쭉의 전형. + 소액(흥국화재 3·악사·KB라이프).
+parser fix(별도 보험수익 anchor + cost/재보험 레그 same-block `first_from`) → **삼성화재 2026.1Q + 한화손보 2025 둘 다 해소**. pl_bridge **36F → 31F**. 진단 가이드 §1.5에 박음: 보험손익 잔차는 "기타영업수익 누락"이 아니라 **LOB 별도/연결 기준 일관성부터 의심**.
 
 ## 2026-06-07 (d) — CSM_CROSSCHECK 진짜 2건 해소 → 0F
 
 진짜 의심 2건이 서로 다른 원인이었음 ("재보험 혼입" 가설은 둘 다 빗나감):
-
-- **KB라이프 2023.4Q — wf 버그 (parser fix)**: 사업결합(KB생명+푸르덴셜) 으로 기초가 2줄(사업결합 전 2,373,817 / 복원 3,132,762). 전기 블록의 기말(2,373,818)이 사업결합 전 기초와 같아 값연속성 검사를 통과 → wf가 당기 블록(상각 −283,905=pl 일치)에 전기 블록(−146,769)을 합산해 **정확히 2배**(−430,674). closing identity는 전 stage 비례 2배라 **우연히 통과**, crosscheck(vs PL)만 잡아냄. parser가 period 구분을 caption이 아닌 header(`['구분','전기']`)에서 인식하도록 `_is_prior_header()` 추가 → KB라이프 13분기 closing OK, 상각 −2,839.1억(=pl 283,905 ✓).
-- **코리안리 2025.4Q — validation 룰 스코프 버그 (validation fix)**: 파서 정확. 재보험사 PL은 발행계약을 `원수CSM상각(4) + 수재CSM상각(4-1)`로 분리(41,154 + 32,210 = 73,364 = wf 상각 일치). wf "발행한 보험계약" = 원수(direct)+수재(assumed)라 둘을 합쳐 잡는 게 맞는데, crosscheck 룰이 PL 쪽 수재(4-1)를 빼먹어 false-positive. → `scripts/validate_master_tables.py` crosscheck를 `p = 원수CSM상각 + (수재CSM상각 or 0)`로 수정 (출재 9-1은 보유자산이라 제외). §1.2 반영.
+- **KB라이프 2023.4Q — wf 버그 (parser fix)**: 사업결합(KB생명+푸르덴셜)으로 기초가 2줄. 전기 블록 기말이 사업결합 전 기초와 같아 값연속성 검사 통과 → wf가 당기 블록(−283,905)에 전기 블록(−146,769)을 합산해 **정확히 2배**(−430,674). closing identity는 비례 2배라 우연 통과, crosscheck만 잡음. parser `_is_prior_header()`(`['구분','전기']`) 추가 → KB라이프 13분기 OK, 상각 −2,839.1억(=pl ✓).
+- **코리안리 2025.4Q — validation 룰 스코프 버그 (validation fix)**: 파서 정확. 재보험사 PL은 발행계약을 `원수CSM상각(4) + 수재CSM상각(4-1)`로 분리(41,154+32,210=73,364=wf 상각). crosscheck 룰이 PL 수재(4-1)를 빼먹어 false-positive → `p = 원수CSM상각 + (수재CSM상각 or 0)`로 수정(출재 9-1 제외). §1.2 반영.
 
 **결과**: CSM_CROSSCHECK **66P/2M/2F → 68P/2M/0F**. CSM_waterfall 도메인(closing 0F + crosscheck 0F) 완전 정합. 잔여 MINOR 2건(에이비엘 6.9%·흥국화재 6.4%)은 경고만.
 
 ## 2026-06-07 (c) — CSM_CROSSCHECK tol 3단계 정책
 
-`CSM_CROSSCHECK`는 **서로 다른 DART 표**(PL 보험수익 구성 vs CSM 변동표) cross 비교라 표간 반올림·집계 차이로 수% 편차가 구조적. 단일표 검증(0.1%)보다 느슨한 **3단계 tol** 도입 ([§1.2](agents/claude-agent-validation.md)):
-- **OK**: `|s| ≤ max(5%·|pl|, 300백만)`
-- **MINOR** (경고, pass): `5% < |s| ≤ 10%`
-- **RED**: `|s| > 10%` → parser loopback
+`CSM_CROSSCHECK`는 **서로 다른 DART 표**(PL 보험수익 구성 vs CSM 변동표) cross 비교라 표간 반올림·집계 차이로 수% 편차가 구조적. **3단계 tol** 도입 (§1.2):
+- **OK**: `|s| ≤ max(5%·|pl|, 300백만)` · **MINOR** (경고, pass): `5% < |s| ≤ 10%` · **RED**: `|s| > 10%` → parser loopback.
 
-결과: crosscheck **9F → 66P / 2M / 2F**. 진짜 불일치(KB라이프 51.7%·코리안리 78.3%)만 RED, 경계 7건은 OK 5(미래에셋·삼성생명·케이디비·에이비엘 4.3%) + MINOR 2(에이비엘 6.9%·흥국화재 6.4%)로 흡수. 진짜 2건과 경계(최대 6.9%) 사이 갭이 51%+로 매우 커서 10% 임계가 안전.
+결과: crosscheck **9F → 66P / 2M / 2F**. 진짜 불일치(KB라이프 51.7%·코리안리 78.3%)만 RED, 경계 7건 흡수. 진짜 2건과 경계(최대 6.9%) 갭이 51%+로 커서 10% 임계 안전.
 
-**PL_BRIDGE: 36F 변동 없음** (이번 parser 작업은 CSM_waterfall 한정). 잔여 = FY2023 상반기 HTML fallback + 한화손해 2025 보험손익 dual 미닫힘.
+## 2026-06-07 (b) — CSM_waterfall closing 완전 해소 (parser 재추출 후 재검증)
+
+parser가 CSM_waterfall 측정요소 변동표 재추출 → 재검증 (`scripts/validate_master_tables.py`):
+- **CLOSING_IDENTITY: 40F → 0F** (299P / 0F / 6S). 23사 × 13분기 전부 `기초+신계약+이자+가정+상각 = 기말` 정합. 🎯
+- **CSM_CROSSCHECK: 20F → 9F** (61P / 9F / 224S). 잔여 9건은 (c) tol 3단계로 정리(진짜 의심 2건 KB라이프·코리안리 + 경계 7건).
 
 ## 2026-06-07 — V8 마스터테이블 검증 소비자 코드 첫 실행 + 룰 정식화
 
-사용자가 (거의) 전사·전분기 마스터테이블 구축 완료 → V8 소비자 코드 `scripts/validate_master_tables.py` 작성·실행. 입력: `data/dart/viz/pl_breakdown_master.json` (백만원, 32사×13분기) + `CSM_waterfall.json` (억원, 23사×13분기).
+사용자가 (거의) 전사·전분기 마스터테이블 구축 완료 → V8 소비자 코드 `scripts/validate_master_tables.py` 작성·실행. 입력: `pl_breakdown_master.json` (백만원, 32사×13분기) + `CSM_waterfall.json` (억원, 23사×13분기).
 
-**3개 룰 실행 결과** (parser 1차 수정 + validation 룰 조정 후):
-- CLOSING_IDENTITY: 218P / 40F / 41S (가정조정 독립추출이라 잔차 검증됨)
-- PL_BRIDGE (8단 등식): 2023P / 36F / 469S
-- CSM_CROSSCHECK: 33P / 20F / 190S
+**3개 룰 첫 실행**: CLOSING_IDENTITY 218P/40F/41S · PL_BRIDGE(8단) 2023P/36F/469S · CSM_CROSSCHECK 33P/20F/190S.
 
 **룰 정식화 (오탐 제거)**:
-- **보험손익 dual-form**: 회사마다 `보험손익 = ΣLOB`(손보 DB/현대/흥국/메리츠 — 기타영업수익·기타사업비용은 보험손익 라인 밖) 또는 `ΣLOB + 기타영업수익 − 기타사업비용`(삼성화재 등). 둘 중 하나 닫히면 PASS → 손보 bare-close 오탐 ~19건 해소.
-- **영업이익 abs floor 200→600백만**: 영업이익 0근처 회사(KDB 등) 과민 방지. KDB 4건 해소.
-- **CSM_CROSSCHECK 4Q-only**: pl 원수CSM상각·wf CSM상각 모두 YTD 누적 → 1~3Q는 분기배분 차이로 노이즈. 연말(4Q=연간 누계)에서만 비교. 136F→20F.
+- **보험손익 dual-form**: `보험손익 = ΣLOB`(손보) 또는 `ΣLOB + 기타영업수익 − 기타사업비용`(삼성화재 등). 둘 중 하나 닫히면 PASS → 손보 bare-close 오탐 ~19건 해소.
+- **영업이익 abs floor 200→600백만**: 0근처 회사(KDB 등) 과민 방지.
+- **CSM_CROSSCHECK 4Q-only**: pl·wf 모두 YTD 누적 → 1~3Q 분기배분 노이즈 제거. 136F→20F.
 
-**parser 1차 수정 반영**: item16(기타사업비용) 음수 7건 abs 정규화(한화손해/농협생명/삼성생명), item19(보험금융손익) account_nm fallback로 277셀 포착(KB라이프 등 표준코드 미사용 회사), item17(투자손익) net 통일(gross-type 자동감지) → pl_bridge 영업이익 fail 일부 해소.
+**parser 1차 수정 반영**: item16 음수 7건 abs 정규화, item19 account_nm fallback 277셀 포착, item17 net 통일.
 
-**남은 fail**:
-- **CSM_waterfall 도메인 60건 (진짜 일)**: closing 40F (step 누락/오추출) + crosscheck 20F (두 마스터가 원수CSM상각 다르게 추출). parser 재추출 — `parser_handoff_master_validation.md` 그룹 C/D + `data/_derived/master_validation_fails.json`.
-- **PL 잔여 36F (대부분 known)**: FY2023 상반기 HTML fallback (Tier-1 채우기 에이전트 대기) + 소수 진짜(한화손해 2025 보험손익 dual 미닫힘).
+**남은 fail**: CSM_waterfall 도메인 60건(closing 40F + crosscheck 20F) = parser 재추출 · PL 잔여 36F(대부분 known FY2023 HTML fallback + 한화손해 dual 미닫힘).
 
 회귀 명령: `python scripts/validate_master_tables.py`.
 
-## 2026-06-01 (밤 c) — 통합 마스터테이블 입력 계약 + CSM_CROSSCHECK 확장
-
-사용자가 회사별 수기 모델을 **long-format JSON 마스터테이블 3종**으로 정형화 중: `PL_breakdown` (P&L 17항목) / `CSM_waterfall` (6-step) / `CSM_amortization` (경과연차별 상각 스케줄, 별도). §1.5.1에 입력 계약 codify (공통 스키마 `{원보험사코드, 원수사명, 티커, 생손보여부, 항목번호, 항목명, 공시분기, 값}`, 백만원).
-
-- **`CSM_AMORT_WATERFALL_VS_PL` → `CSM_CROSSCHECK_WATERFALL_VS_PL` 확장** ([§1.2](agents/claude-agent-validation.md)): `(원보험사코드, 공시분기)` 매칭 + **항목명 공백 정규화**(`"CSM상각"`=`"CSM 상각"`) 후 — (1) **CSM상각**: PL(양수) + waterfall(음수) ≈ 0 (부호반대 동규모), (2) **신계약 CSM**: 두 마스터 동값 일치. 한쪽 부재 시 항목별 graceful SKIP. tol `max(0.1%·|expected|, 200mn)`.
-- **데이터 확인** (마스터 항목 추출): 신계약 CSM은 `CSM_waterfall`에만 존재, `PL_breakdown`엔 **구조상 없음**(미래서비스 → 당기손익 무관). → 신계약 CSM cross 짝 없음 → 현재 SKIP, V7 `NB_CSM_DART_VS_IR`(IR 비교) + waterfall closing identity가 신계약 CSM 검증 담당. CSM상각만 양쪽 존재 → 즉시 cross-check 가능.
-- **현재 상태**: `PL_breakdown` 삼성화재 2025.4Q만 값, `CSM_waterfall`/`CSM_amortization`은 분기 템플릿(값 None) → 채워지면 자동 활성. 회사별 파일: CSM waterfall {KB/메리츠/삼성/삼성생명/한화생명/한화손보}, 보험손익 breakdown {삼성화재/메리츠/삼성생명/한화생명}.
-
-## 2026-06-01 (밤 b) — 메리츠 CSM waterfall: breakdown 영구 SKIP + CSM_AMORT cross-table 신설
-
-사용자가 `CSM waterfall_메리츠.xlsx` 공유. 메리츠 CSM waterfall 출처 = DART **"(4) 측정요소별 변동내역"** 표 (배당있는 행9–39 + 배당없는 행46–76 두 블록 합). step별: 기초/신계약/이자/상각/기말은 직접 추출, **가정·경험조정은 잔차**(closing identity로 닫음). CSM = **D/E/F 3칼럼**(수정소급/공정가치/그 외 = 전환방법), B(미래CF현가)/C(RA) 제외 — V7 `csm_leaf_cols=[2,3,4]`와 동일.
-
-- **보종 breakdown 불가 확정**: D/E/F는 **전환방법별**이지 보종(보장성/물보험/저축성)이 아님. 신계약 CSM 1,588,172는 전부 F칼럼(그 외)에 있고 D=E=0. 메리츠 측정요소별 표엔 보종 축 자체가 없음 → `CSM_BREAKDOWN_DART_VS_IR` 메리츠 보종 비교 **영구 SKIP** (total만).
-- **`CSM_AMORT_WATERFALL_VS_PL` 신설** ([§1.2](agents/claude-agent-validation.md)): DART 자기완결 cross-table. waterfall CSM상각(음수) + P&L 보험수익 CSM상각(양수) ≈ 0 (동규모·부호반대, 발행계약 기준, 재보험 제외). tol `max(0.1%·|amort|, 200mn)`, RED → parser loopback. 선행: waterfall + P&L(보험손익 주석) 둘 다 추출.
-- closing identity 확인: `11,187,889(기초) + 1,588,172(신계약) + 361,544(이자) − 866,645(가정) − 1,167,264(상각) = 11,103,696(기말)` ✓.
-
-## 2026-06-01 (밤) — SEGMENT cross-source 폐기 + PL_BRIDGE_DART_INTERNAL 신설
-
-사용자가 삼성화재 2025.4Q `보험손익 breakdown.xlsx` 수기 모델 공유 → **부문별 보험손익 DART↔IR 비교는 원천 불가** 확정. 근거: IR 부문 손익 = `DART 부문 서비스손익` + `기타영업수익/기타사업비용을 IR 고유 키로 부문 배분`. DART는 기타항목을 **전사 단일값**으로만 공시 → 배분 역산 불가.
-
-- **`SEGMENT_INSURANCE_INCOME_DART_VS_IR` 폐기** ([§1.2](agents/claude-agent-validation.md)). §1.4 `segment_insurance_income` 입력 DEPRECATED.
-- **`PL_BRIDGE_DART_INTERNAL` 신설** ([§1.5](agents/claude-agent-validation.md)) — DART 자기완결 정합성 (cross-source 아님, IR 불필요). 부문 IFRS17 주석 → 연결 포괄손익계산서 당기순이익까지 10개 등식(B1–B10). 엑셀 검증 셀 5개를 그대로 codify. tol `max(0.1%·|expected|, 200mn)`, RED → parser loopback (B1–B4 부문추출=`DART`, B5–B10 P&L매핑=`internal`).
-- 삼성화재 2025.4Q 검증례: 보험손익 `1,672,913(부문합)+16,728−206,607=1,483,034` ✓ → 영업이익 → 세전 → 당기순이익 2,020,287 ✓ 전부 PASS.
-- **선행조건**: parser가 부문별 보험손익 주석 + 연결 포괄손익계산서를 정형 추출해야 활성화 (현재 미추출 → SKIP). 행 순서 회사별 상이 → 항목명 기반 매핑 필수.
-
-## 2026-06-01 (저녁) — 🚨 history 재빌드 off-by-one-year 회귀 발견 + check 도구 cohort 가드
-
-**parser가 19:33에 `csm_waterfall_history.json` 재빌드 (P2 진행)** → 검증 결과 분기↔연도 정렬이 1년 어긋남. 삼성화재 IR singleQ(ground truth)로 완벽 증명:
-
-| period | IR singleQ (정답) | 재빌드 hist delta | hist[+1년 시프트] |
-|---|---|---|---|
-| 2023.1Q | 6782.7 | 5005.1 ❌ | **6782.7** ✓ |
-| 2024.1Q | 8855.5 | 6782.7 ❌ | **8855.5** ✓ |
-| 2024.3Q | 8385.2 | 11641.9 ❌ | 7669.2 |
-
-즉 재빌드 history에서 "2024.1Q"로 라벨된 값이 실제로는 2023.1Q 데이터. 재빌드 전 baseline(삼성화재 9/12 OK)은 정렬이 맞았으므로 **재빌드가 회귀를 도입**. → parser P2 재빌드 로직에 off-by-one-year 버그, 수정 후 재빌드 필요. (systemic 이슈 3건 재확인은 회귀 수정 후로 보류 — 현재 데이터로는 의미 없음.)
-
-**check 도구 cohort 가드** (`scripts/check_nb_csm_history.py`): IR 측 유효 NB CSM 값이 0인 회사를 cohort에서 제외 + skip 사유 로깅. 제외 2사:
-- 코리안리 — IR series 빈 스텁 (series 0개)
-- 한화손해 — 특수 스키마 (`nb_csm_eok_ir`/`nb_csm_eok_dart`, multiple-flag 용도, `nb_csm_eok` 부재)
-
-**부수 검증**: 한화손해 KR0002 파일에 기록된 IR 7,410 vs DART 14,819.8 (2024.4Q) — 정확히 2배. parser 소계 이중계상 ÷2 fix 후 DART=7,409.9 ≈ IR 7,410 → **한화손해도 ÷2 fix 정확히 먹혔다는 독립 검증**. (단 한화손해 2025.1Q DART는 2024.1Q stale carryover — parser staleness 별도 버그, 한화손해 IR note에 기록됨.)
-
-## 2026-06-01 — V7 history-wide check 도구 + systemic 이슈 3건 발견 (baseline)
-
-기존 `scripts/check_nb_csm_widespread.py`는 FY2024 단일 스냅샷(`csm_waterfall.json`) 기준이라 사용자 의도("전 분기 × 전 회사")와 맞지 않음 — parser 세션이 지적. 신규 도구 `scripts/check_nb_csm_history.py` 도입.
-
-- **입력**: `csm_waterfall_history.json` (13Q × 23사) + `data/ir/series/*.json`
-- **DART 변환**: 분기별 NB 값이 YTD cumulative라 가정 (sample 3사 확인) → per-Q delta로 변환 (`NB[Y.nQ] − NB[Y.(n-1)Q]`, Q1은 raw)
-- **IR 변환**: convention-aware 일반화 — singleQ field 완비 시 그대로, YTD marker(`YTD/누계/cumulative`) 시 동일 변환, 그 외 raw per-Q
-- **Tolerance**: rel ≤ 5% **또는** abs ≤ 100억 → OK; rel ≤ 10% → MINOR; else OVER/UNDER
-- **Output**: 분기 × 회사 ratio matrix + per-quarter cohort summary + per-company flag count → `data/_derived/nb_csm_history_check.json`
-
-**Baseline 결과 (parser fix 미반영 상태, 9사 cohort × 13Q)**:
-
-Per-company sanity rank — 삼성화재(9 OK / 1 MINOR, IR singleQ anchor) · 삼성생명(9 OK / 1 OVER) · DB손해(9 OK / 1 OVER / 2 UNDER, 단 폭주값) · 한화생명(7 OK / 4 OVER / 2 UNDER) · 메리츠(4 OK + 2 MINOR / 5 OVER / 1 UNDER) · 미래에셋(4 OK / 2 OVER / 2 UNDER) · 롯데(0 OK / 5 OVER, 8 MISSING).
-
-**Systemic 이슈 3건** (parser 두 fix와 직교):
-
-1. **2025.2Q cohort-wide 이상치 분기** — 9사 중 OK 1 / OVER 3 / UNDER 2. 삼성화재 +30% · 삼성생명 +29% · 한화생명 +104% 동시 발생 → 그 분기 history 빌더가 블록 선택 룰을 다르게 적용한 패턴.
-2. **DB손해 2025.2-4Q 부호 반전 + 폭주** — −23,589억 / −7,976억 / +55,162억. 분기 간 블록 비일관 (전기/당기/연결/별도 + 누적/당기 mix). closing→opening continuity 깨졌을 가능성.
-3. **미래에셋 2024.3Q-2025.2Q ↑↓ 교대** — +19% / −16% / +16% / −22%. 두 다른 블록 alternating, continuity tiebreak가 분기마다 다른 블록 선택.
-
-**별도 발견 (별개 작업)**: 한화손해(KR0002) / 코리안리 IR series ↔ history 회사명 매칭 누락 (load 시 `kr=None`) — alias mapping 점검 필요 (parser 또는 publishing owner).
-
-**Parser fix(P2) 이후 회귀 명령**: `python scripts/check_nb_csm_history.py` → per-quarter cohort summary에서 OVER/UNDER 0 수렴 확인 + per-company OK 비율 향상.
-
-## 2026-06-01 — V7 6/7 OK 회복 (parser 별도·당기 disambiguation + 소계 이중계상 fix)
-
-Parser 세션이 `viz_build_csm_waterfall.py`에 두 가지 fix 반영:
-
-1. **별도·당기 block disambiguation** — 생보 측정요소별 4표(연결/별도 × 당기/전기) 동일 캡션. 기존 picker가 마지막 tiebreak에서 NB 절대값 큰 쪽(전기·연결, 기초 13.59조)을 골랐던 것 → 전기 copy 제거 + 기초 작은 쪽(별도) 우선. 한화·메리츠·에이비엘·케이비라이프·DB생명·교보 6사 교정.
-2. **소계 칼럼 이중계상 fix** — `find_csm_leaf_cols`가 `[수정소급, 공정가치, 이외, 소계]` 헤더에서 소계까지 leaf에 포함해 ×2 inflate. 소계 칼럼 drop → `[2,3,4]`. 롯데·한화손보·교보·NH 등 7사 일괄 ÷2.
-
-**검증 결과** (`python scripts/check_nb_csm_widespread.py`): **ok=6/7**, 잔여 1건 롯데(+23%):
-
-| Company | Before | After | Δ |
-|---|---|---|---|
-| 한화생명 | ×1.524 (32,346억) | **×1.000 (21,230.9억)** | IR 21,230.8억과 0.0억 차이 |
-| 메리츠화재 | ×1.160 (16,006억) | **×1.000 (13,795.7억)** | IR 13,795.7억과 0.0억 차이 |
-| 롯데손해 | ×2.466 (9,705억) | ×1.233 (4,852.5억) | 이중계상은 풀림; FY24 측정요소별 양식 자체 +23% gap |
-
-**롯데 잔여 1건 — FY25 추출 의존**: 롯데는 FY25부터 공시 양식을 "구성요소별 차이조정"으로 바꿈. 사용자 확인 raw 위치: `data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/_00760.xml:27375` "보험계약 구성요소별 변동분에 대한 차이조정 / 배당요소가 없는 보험계약, 소계 / 미래서비스 관련 변동 / 최초인식계약" = **412,168 (= IR FY25 일치)**. 현재 measurement extractor는 측정요소별만 잡음 → FY2025 추출 시 구성요소별 차이조정 표 capture + 롯데 NB override가 parser 측 다음 작업.
-
-**Downstream 재빌드 대기** (publishing/parser owner): `csm_bubble.json`, `nb_csm_multiple.json`, 13Q `csm_waterfall_history.json` 셋 다 한화 별도 shift + 7사 ÷2 영향 — history builder continuity tiebreak 13Q×23사 별도 검증 필요.
-
-**V2 부수 효과**: `validate_nb_csm_multiple.py` 한화 분자가 32,346억 → 21,230억으로 정정됐으므로 `fallback_used=true` 플래그 retire 가능 (이제 aligned-period FY24 annual benchmark 21,230.85억과 직접 매치). 별도 작업으로 진행.
-
-## 2026-05-31 — V7 NB CSM cross-source 룰 + convention-aware check 도구
-
-신규 룰 `NB_CSM_DART_VS_IR_ANNUAL_SUM` ([§1.2](agents/claude-agent-validation.md)): DART `csm_waterfall.json` `new_business` vs IR series FY total. Cohort 7사 (메리츠/롯데/삼성화재/DB/한화생명/삼성생명/미래에셋), severity RED, tol `max(5%·|IR|, 100억)`, DART parser loopback.
-
-신규 도구 `scripts/check_nb_csm_widespread.py`. IR FY derivation은 **convention-aware**: (1) 모든 분기에 `nb_csm_singleQ_eok` 있으면 sum singleQ, (2) metric에 `YTD`/`누계`/`cumulative` marker 있으면 Q4 값(YTD 누적), (3) 그 외 sum quarters (per-Q delta 가정). 초기 단순 sum convention이 cumulative series(삼성화재 singleQ field 별도 / DB metric "누계")를 ~3x 부풀려 fake UNDER를 만들던 도구 버그 patch — parser 세션 피드백으로 발견.
-
-**검증 결과**: 4/7 OK (삼성화재 / DB / 삼성생명 / 미래에셋) + 3/7 OVER (한화 +52% / 메리츠 +16% / 롯데 +147%) — parser layout 인식 결함 (`csm_leaf_cols=[2]` BEL 오인 / `[2,3,4]` BEL+RA+CSM 합산). Parser 세션이 3사 한정 fix 진행 중.
-
-사용자 결정: 정식 게이트 룰로 박음, gate enforcement는 publishing stage 측 (publisher에 사용자가 직접 전달). Cohort 확장 없음 (21사 IR factsheet 부재).
-
-## 2026-05-31 — NB CSM multiple validator: period-aware + fallback flagging (V2)
-
-`scripts/validate_nb_csm_multiple.py` 정합성 정정. 기존 "한화 period mismatch" 진단 철회 — 실제로는 parser 분자(V7) + denominator scope + IR benchmark 시점, 3개 버그 stacked. Validation 측 2개 fix:
-
-- `PREFERRED_SCOPE["한화생명"]` → `monthly_avg_from_ytd` 우선 (FY2024 KIDI row 매칭) + `pick_premium_records`에 `prefer_period` 파라미터 (scope 우선순위 유지하면서 같은 scope 내에서 period 매칭 row 먼저 시도). `waterfall_period_to_premium_period()` helper로 csm_waterfall global period → wolnap period 매핑.
-- `nb_csm_ratio.json` hanwha_life에 `single_point.2024_total=7.609` (IR series 분기 weighted avg — ΣNB_CSM 21,230.85억 / Σwolnap_implied 2,790.06억). `latest_ir_ratio()`가 4번째 우선순위로 자동 채택.
-- `period_aligned` / `fallback_used` / `cohort_fallback_pass` 정직성 플래그 — aligned-period 실패 후 tolerance 우연 통과 case 표면화.
-- `run_ifrs17_csm_reconcile_loop.py` `--max-iter` 8→5 (prompt §3 동기화).
-
-**결과** (`data/_derived/nb_csm_validation.json`): tested 5 / pass 5 / fallback_pass 3 — ALIGNED: DB(rel 5.6%) / 삼성생명(3.9%); FALLBACK: 한화 / 삼성화재 / 현대. Parser V7 fix + 삼성화재·현대 IR annual benchmark 보강 시 fallback 점진 해소.
-
-## 2026-05-31 — QoQ threshold registry v1 (V4 spec)
-
-`config/qoq_thresholds.yaml` v1 spec 생성. global default 15% + item-level override (`new_business_csm` 30% / `csm_amortization` 10% / `insurance_revenue` 20% / `csm_closing` 10% / `csm_interest_accretion` 20% / KICS `item27/28_ratio` 10%) + `cumulative_items` registry (mirrors §2.3). Lookup precedence: item → domain → global. Cumulative 항목은 net 분기 increment 자동 전환.
-
-**소비자 코드 미구현** — yaml은 canonical spec, validator loader/diff calculator 부재. wiring → TODO_validation V4 sub.
-
-## 2026-05-31 — DART ↔ IR cross-source 3개 룰 추가 (V1 spec)
-
-[`docs/agents/claude-agent-validation.md`](agents/claude-agent-validation.md) §1.2에 IFRS17 cross-source 룰 3개 — 전부 RED → DART parser loopback:
-
-- `CSM_WATERFALL_DART_VS_IR` — step별 (opening / new_business / interest / assumption / amortization / closing), tol `max(5%·|IR|, 100억)` per step
-- `SEGMENT_INSURANCE_INCOME_DART_VS_IR` — 손보 장기/자동차/일반, tol `max(10%·|IR|, 50억)` per segment; 생보 SKIP (스키마 확정 전)
-- `CSM_BREAKDOWN_DART_VS_IR` — 손보 보장성/물보험/저축성 or total, tol `max(5%·|IR|, 100억)` per item
-
-§1.4 신설: IR-side input 계약 `data/ir/<period>/parsed/<KR>.json` (모든 값 억원, 누락 시 graceful SKIP). RED packaging에 `suspected_source: "DART" | "IR" | "internal"` 필드. IR 정형 JSON delivery 대기 중 (root F18) — 도착 시 자동 ON. 알려진 IR 미공시 회사(교보·KDB·외국계·카카오페이손해 등) 자동 SKIP.
-
-RED packaging에 `suspected_source: "DART" | "IR" | "internal"` 필드 추가 — cross-source 룰은 항상 `"DART"` 의심.
-
-**Cross-stage 의존**: parser/gathering 단계가 분기별 IR factsheet에서 위 schema를 추출해야 룰 활성화. 현재 `data/ir/series/<KR>.json`은 NB CSM multiple 전용. **Parser stage TODO 발생** — root [`TODO.md`](../TODO.md) `F18` 참조.
-
 ---
 
-## 2026-05-30 — Validation prompt 초안 작성
+## Archive (pre-2026-06)
 
-[`docs/agents/claude-agent-validation.md`](agents/claude-agent-validation.md) 신설. 작업 계약(input/output/exit code), 도메인별 룰, retry loop, exception 처리, 게이트 동작, 호출 예시 codify.
+> 1줄 요약. 전문은 git log/blame. dead-end/폐기 근거는 프롬프트에 보존(SEGMENT cross-source 폐기·PL_BRIDGE §1.5 / 메리츠 보종 영구SKIP §1.2 / off-year→continuity §3.0 / dual-form 과잉진단 금지 §1.5 / 빌드체인 gotcha §3.0). K-ICS RED 진행 + 분기별 batch 원문은 `docs/claude-changelog.md` Historical archive(2026-05-24/25, 2026-04-26~28).
 
-- **K-ICS** R1–R10 codify (기존 [kics-json-validation-rules.md](agents/kics-json-validation-rules.md) + [kics_json_rules.py](../src/solvency/validation/kics_json_rules.py))
-- **IFRS17 CSM 룰셋**: `CSM_WATERFALL_NEW_BUSINESS` / `CSM_WATERFALL_CLOSING_IDENTITY` (tol `max(500mn, 0.5%·|closing|)`) / `MINIMUM_STAGE_COVERAGE` / `NB_CSM_MULTIPLE_RECONCILIATION` (YELLOW, loopback 없음)
-- **Misc IR / 정기경영공시**: K-ICS R1–R10 재사용 + quality_check score < 0.7 → YELLOW
-- **공통 `QOQ_DELTA_WARN`**: threshold 15% 기본, 누적 항목(`new_business_csm`, `csm_amortization`, `insurance_revenue`)은 net 분기 기준 비교. floor below 1억원 → SKIP (rounding noise). 항상 YELLOW (loop 안 돔)
-- **Retry loop max=5** (IFRS17 reconcile 8→5 코드 갱신 별도 PR로 발행 예정). 5회 초과 시 escalate_to_human → root TODO에 1줄 기록
-- **게이트**: K-ICS RED → 전 다운스트림 차단; IFRS17 RED → templates/data/assoc/ sync만 차단 (HTML deploy 자체는 panel-level stub 허용); Misc는 K-ICS와 동일
+- 2026-06-01 (밤) — SEGMENT cross-source 폐기 + PL_BRIDGE_DART_INTERNAL 신설(§1.5, DART 자기완결 10등식, 삼성화재 2025.4Q PASS) → V8
+- 2026-06-01 (밤 b) — 메리츠 CSM waterfall: breakdown 영구 SKIP + CSM_AMORT cross-table 신설
+- 2026-06-01 (밤 c) — 통합 마스터테이블 입력 계약 + CSM_CROSSCHECK 확장
+- 2026-06-01 (저녁) — 🚨 history 재빌드 off-by-one-year 회귀 발견 + check 도구 cohort 가드
+- 2026-06-01 — V7 history-wide check 도구(`check_nb_csm_history.py`, 13Q×9사) + systemic 이슈 3건 발견(2025.2Q cohort-wide / DB 2025.2-4Q 부호 반전 / 미래에셋 ↑↓ 교대); FY24 widespread 6/7 OK(롯데 FY25 의존); 한화 V2 fallback retire 가능
+- 2026-06-01 — V7 6/7 OK 회복 (parser 별도·당기 disambiguation + 소계 이중계상 fix)
+- 2026-05-31 — V7 `NB_CSM_DART_VS_IR_ANNUAL_SUM` 룰 + convention-aware check 도구
+- 2026-05-31 — NB CSM multiple validator: period-aware + fallback flagging (V2), retry max 8→5
+- 2026-05-31 — QoQ threshold registry v1 (`config/qoq_thresholds.yaml`, V4 spec)
+- 2026-05-31 — DART ↔ IR cross-source 3개 룰 추가 + IR-side input 계약 §1.4 (V1 spec)
+- 2026-05-30 — Validation prompt 초안 (R1–R10, IFRS17 CSM 룰셋, `QOQ_DELTA_WARN`, retry loop max=5)
+- 2026-05-29 — Plausibility gate (`MAX_PLAUSIBLE_MULTIPLE=60`) + Samsung Life 사망 misparse fix
+- 2026-05-25 — K-ICS rules 9 + 10 추가 + RED reduction 419→2 (KR0010 OCR 잔여) + unit-hint mismatch auto-detect + Tier-2 utilization reconcile
+- 2026-05-24 — K-ICS JSON validation rules doc + pipeline gate; KICS-VALIDATE harness; R7 matrix fix
+- 2026-04-26 → 2026-04-28 — Foundational validation
 
----
-
-## 2026-05-29 — Plausibility gate + Samsung Life 사망 misparse fix
-
-User flagged 삼성생명 종신/사망 NB CSM multiple >400x (impossible; realistic max ~30-50x).
-
-**400x = regex misparse [fixed].** `viz_build_nb_csm_ratio.extract_samsung_life`가 death row를 positional 5-number regex로 읽어 IR PDF의 사망 배수(single digits)와 절대 CSM 금액(십억원: 459/435/520/471/488)을 혼동. **Fix**: 건강 row와 마지막 사망 라벨 사이를 스캔, `\d+\.\d+` cap 이하만 채택. 결과: [7.6, 10.0, 7.6, 7.2, 5.1].
-
-**Plausibility gate [신규 validation rule].** `MAX_PLAUSIBLE_MULTIPLE = 60.0` + `validate_plausible(payload)`를 `build_payload`에서 호출. chart series 중 `<=0` 또는 `> 60`이면 build fail (절대금액을 ratio로 오독). Negative test: 520x catch, 7.6x pass. Browser-verified: Panel 4 death line ~5–10x, y-axis 0–18x, 콘솔 에러 0. `validate_nb_csm_multiple` (computed vs IR) 5/6 pass (한화 period-mismatch 잔존).
-
----
-
-## 2026-05-25 — Validation rules 9 + 10 추가
-
-K-ICS transitional consistency 룰 신설:
-- **R9**: `item2_post ≥ item2_pre - tol` (grandfather)
-- **R10**: `item14_pre ≥ item14_post - tol` (SCR phase-in)
-
-Tolerance: 2.0 (R1/R2 동일).
-
----
-
-## 2026-05-25 — Unit-hint mismatch auto-detect
-
-23 insurer-quarter latent bugs (3× ×100, 20× ÷100), 56 post values corrected. Rule 8_post pre/post bug fixed → RED=2 (KR0010 OCR only).
-
----
-
-## 2026-05-25 — K-ICS RED reduction (cumulative session)
-
-KICS-VALIDATE harness re-runs: **RED 99 → 77 → 48 → 10 → 2** (KR0010 OCR 1건만 잔여).
-
-- **Rule 2** (KR1098/KR0051/KR1010/KR0095): KakaoPay/MetLife reversed capital labels, item4 reconcile, item10 baseline; `_canonicalize_table_label`, MetLife alias, `labels_compatible` guard
-- **8_life item35** parser fix (KR0009/KR0095/KR1098/KR0051/KR0049): multi-line unit hint, life-only 총계, default 백만원 for life catastrophe tables
-- **Shinhan Life (KR0094) 2024.4Q rule 6 fix**: drop bare `분산효과` alias; only top-level item16 labels
-- **Rule 5 missing item22** (KR1010/KR1098/KR0051): recalc infers item22=0; OCR-spaced label match; rule5 RED 19→0
-- **Samsung Life (KR0069)** 2023.1Q/3Q parse: bullet section start patterns; 0 RED all 12 quarters
-- **DB손해 (KR0011) 8_life**: keep first 위험액 block (sub-item overwrite fix); 8_life RED 4 (was 33)
-- **Rule 3 always SKIP** (item1 authority is rule 1); 384 buckets
-
----
-
-## 2026-05-25 — Tier-2 utilization reconcile
-
-Tier-2 utilization numerator fix (KIRI PDF reconcile, no double-subtract): in-range 9 → 34, outliers 29 → 4. Outlier report `output/tier2_utilization/outlier_report_20254Q.md`.
-
-**8_life dynamic tolerance** 적용 (RED 177→99). Cat (a)+(b)+(d) `max(2.0, 5%·|expected|)`.
-
----
-
-## 2026-05-24 — KICS-VALIDATE harness initial + RED reduction pass
-
-Session handoff Cursor → Claude. K-ICS validation 본격 시작.
-
-- K-ICS RED per-rule samples @177
-- KR0097 Hana Life parse fix (RED 18→2)
-- K-ICS missing-data reparse + item27/28 recalc fix (RED 311→217)
-- K-ICS validation RED fix pass 2 (user ground truth, RED 419→311)
-- KICS-REPARSE-Q4 FY2025_Q4 refresh: parse 30/38 ok, fill_period upd=30
-- K-ICS JSON validation rules doc [`docs/agents/kics-json-validation-rules.md`](agents/kics-json-validation-rules.md) + pipeline gate
-- K-ICS validation re-run (R7 matrix fix)
-- KICS-VALIDATE JSON rules harness (rules 1–8) initial
-- K-ICS full reparse, validate, JSON swap (all periods)
-- K-ICS parser: split-table continuation + row scope (KR0005 FY2025_Q4 golden test)
-
----
-
-## 2026-04-26 → 2026-04-28 — Foundational validation
-
-- PDF 검증 / ACL 정상화 모듈 (2026-04-26)
-- 과거 분기 PDF 배치 검증 + 누락 비율(27/28) 자동 산출 (2026-04-28)
-
----
-
-## 참조
-
-세부 K-ICS RED 진행 + 분기별 batch 작업의 원문은 [`docs/claude-changelog.md`](claude-changelog.md) Historical archive 2026-05-24/25 / 2026-04-26~28 섹션에 압축 보존. 본 파일은 validation-relevant 분리본.
+세부 K-ICS RED 진행 + 분기별 batch 원문은 [`docs/claude-changelog.md`](claude-changelog.md) Historical archive에 압축 보존. 본 파일은 validation-relevant 분리본.

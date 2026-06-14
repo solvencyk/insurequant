@@ -1,12 +1,13 @@
 # Insurequant TODO — Downloader Stage
 
-Stage 1 of 5 in the workflow split. See `CLAUDE.md` for the full 5-stage index.
+> Last updated: 2026-06-03 · Stage 1/5 — downloader
+> Prompt: docs/agents/claude-agent-downloader.md (+ docs/agents/source-catalog.yaml) · Changelog: docs/changelog_downloader.md
 
-**Prompt:** `docs/agents/claude-agent-downloader.md` + `docs/agents/source-catalog.yaml`
-**Cross-stage TODO:** `TODO.md` (root)
-**This file:** active + done items scoped to data collection only.
+**Cross-stage TODO:** `TODO.md` (root). **This file:** active + done items scoped to data collection only.
 
-**Status (2026-06-01)**: 5-source 전수 수집 완료. 무결성 **2,041/2,041 OK**. **전 source 실질 gap 0** (NONLIFE-Q123 26셀 자체사이트 backfill + 서울보증 분기/DART는 미상장·롤오프 구조적 drop). 상세 history는 `docs/changelog_downloader.md`.
+## Status
+
+5-source 전수 수집 완료 (as of 2026-06-01). 무결성 **2,041/2,041 OK**. **전 source 실질 gap 0** (NONLIFE-Q123 26셀 자체사이트 backfill + 서울보증 분기/DART는 미상장·롤오프 구조적 drop). 상세 history는 `docs/changelog_downloader.md`.
 
 **Parser 핸드오프 주의 (Q2=반기):** AIG손해(KR0029)는 별도 2분기 공시가 없고 **상반기(반기) 누적** 공시로 FY{Y}_Q2를 채움(1.1~6.30 누적, 독립 분기 아님). 신한EZ(KR0051)·카카오페이(KR1098)의 Q2도 "상반기" 라벨. parser/validation에서 이들 Q2를 standalone-quarter가 아닌 cumulative-반기로 해석할 것.
 

@@ -51,13 +51,20 @@ def load_csm():
 
 def load_wolnap():
     d = json.loads(KIDI.read_text(encoding="utf-8"))
-    out = {}   # KR code -> {quarter: denominator_eok(YTD 억)}
+    out = {}   # KR code -> {quarter: 월납 초회(YTD 억)}
     for key, v in d["entries"].items():
         kr, ym = key.split("|")
         q = _QMAP.get(ym[4:6])
         if q is None:
             continue
-        out.setdefault(kr, {})[f"{ym[:4]}.{q}Q"] = v.get("denominator_eok")
+        # Denominator = 월납 초회(VAL4) ONLY. 기타 초회(VAL8, mostly 단체물량) excluded —
+        # owner review 2026-06-10: including 기타 deflates 농협생명 3.71→/NH손해 1.74→ etc.;
+        # 삼성생명 EX-기타 tracks the IR-disclosed multiple closer (MAE 0.43x vs 1.10x),
+        # and IR's own definition is 신계약CSM ÷ 월납월초.
+        wol = v.get("month_premium_cheonwon")
+        out.setdefault(kr, {})[f"{ym[:4]}.{q}Q"] = (
+            round(wol / 100_000.0, 4) if wol is not None else v.get("denominator_eok")
+        )
     return out
 
 
@@ -72,7 +79,8 @@ def _dangi(ytd_by_q, q):
     return None if prev is None else round(cur - prev, 4)
 
 
-_MULT_CAP = 40.0   # real NB CSM multiples ≈ 5-22; >40 (or <0) = divide-by-tiny / bad input → null
+_MULT_CAP = 40.0    # real NB CSM multiples ≈ 5-22; >40 (or <0) = divide-by-tiny / bad input → null
+_MULT_FLOOR = 1.0   # <1.0 = numerator way too small (e.g. 아이엠 분자오염 0.02) — keep value, flag it
 
 
 def _ratio(num, den):
@@ -101,6 +109,8 @@ def main():
             if csm_ytd is not None and wol_ytd not in (None, 0) and mult_ytd is None:
                 raw = round(csm_ytd / wol_ytd, 2)
                 flags.append(f"{d['name']} {q}: 배수_연누계 null (CSM={csm_ytd} 월납={wol_ytd} → {raw} 비현실)")
+            elif mult_ytd is not None and mult_ytd < _MULT_FLOOR:
+                flags.append(f"{d['name']} {q}: 배수_연누계 {mult_ytd} < {_MULT_FLOOR} (분자 과소 의심 — 신계약CSM 추출 확인)")
             rows.append({
                 "원보험사코드": code, "원수사명": d["name"], "티커": d["ticker"],
                 "생손보여부": d["sb"], "공시분기": q,

@@ -1084,21 +1084,40 @@ def extract_tier2_kb(tables, item1=None):
 
 
 # ---------------------------- 현대 손보 (KR0009) --------------------------- #
+def _hyundai_period_marker(tables, ti):
+    """당기/전기 marker for the NEW-form note: each leg table is preceded by a 1-2 row
+    header table whose last row is exactly '당기'/'당분기' (annual/quarterly) or
+    '전기'/'전분기'.  Scan the 2 preceding tables; None when no marker found."""
+    for j in range(ti - 1, max(ti - 3, -1), -1):
+        for r in tables[j].rows:
+            lab = _lab0(r)
+            if lab in ("당기", "당분기", "당반기"):
+                return "cur"
+            if lab in ("전기", "전분기", "전반기"):
+                return "prev"
+    return None
+
+
 def _hyundai_section(tables, first_label_starts):
     cands = []
-    for t in tables:
+    for ti, t in enumerate(tables):
         if not t.rows:
             continue
         if _lab0(t.rows[0]).startswith(first_label_starts.replace(" ", "")):
-            cands.append(t)
+            cands.append((ti, t))
     if not cands:
         return None
+    # 당기/당분기 leg only — the 전기/전분기 twin has IDENTICAL row labels, and its row0
+    # magnitude can exceed the current period's (mag-sort alone is not safe).
+    cur = [c for c in cands if _hyundai_period_marker(tables, c[0]) == "cur"]
+    if cur:
+        cands = cur
 
-    def mag(t):
-        n = _row_nums(t.rows[0])
+    def mag(c):
+        n = _row_nums(c[1].rows[0])
         return abs(n[0]) if n else 0
     cands.sort(key=mag, reverse=True)
-    return cands[0]
+    return cands[0][1]
 
 
 def _hyundai_lob_summary(tables):
@@ -1157,19 +1176,19 @@ def _hyundai_old_components(tables):
 
 
 def _hyundai_old_split(tables):
-    """현대해상 OLDER split layout (2023.3Q): 원수/재보 CSM·RA in ONE table captioned '(1) 당분기',
-    header [구분 | 보험계약부채(3개월,누적) | 재보험계약자산(3개월,누적)]; each component row's
-    numerics = [원수3M, 원수누적, 재보3M, 재보누적] → read 누적 ([1] 원수, [3] 재보).  천원→/1e3.
-    Returns {4,5,9,10}; item6/11 not separable.  {} unless the table matches."""
+    """현대해상 OLDER split layout (2023.1Q–2023.3Q): 원수/재보 CSM·RA in ONE table captioned
+    '(1) 당분기' (반기보고서: '(1) 당반기'), header [구분 | 보험계약부채 | 재보험(계약)자산].
+      - 2023.2Q/3Q: each leg split into (3개월, 누적) → numerics [원수3M, 원수누적, 재보3M,
+        재보누적] → read 누적 ([1] 원수, [3] 재보).
+      - 2023.1Q: single column per leg (header '재보험자산', no 3개월/누적) → [원수, 재보].
+    천원→/1e3.  Returns {4,5,9,10}; item6/11 not separable.  {} unless the table matches."""
     comp = None
     for t in tables:
         cap = (t.caption or "").replace(" ", "")
-        if not cap.startswith("(1)당분기"):
+        if not (cap.startswith("(1)당분기") or cap.startswith("(1)당반기")):
             continue
         hb = _header_blob(t)
-        if "보험계약부채" not in hb or "재보험계약자산" not in hb:
-            continue
-        if "3개월" not in hb or "누적" not in hb:
+        if "보험계약부채" not in hb or "재보험" not in hb:
             continue
         labs = [_lab0(r) for r in t.rows]
         if any(l.startswith("보험계약마진상각") for l in labs) \
@@ -1178,13 +1197,20 @@ def _hyundai_old_split(tables):
             break
     if comp is None:
         return {}
+    hb = _header_blob(comp)
+    paired = "3개월" in hb and "누적" in hb
     out = {}
     for r in comp.rows:
         lab = _lab0(r)
         n = _row_nums(r)
-        if len(n) < 4:
-            continue
-        dir_cum, re_cum = n[1], n[3]      # 원수 누적, 재보 누적
+        if paired:
+            if len(n) < 4:
+                continue
+            dir_cum, re_cum = n[1], n[3]  # 원수 누적, 재보 누적
+        else:
+            if len(n) < 2:
+                continue
+            dir_cum, re_cum = n[0], n[1]  # 원수, 재보 (single-column 1Q)
         if lab.startswith("보험계약마진상각"):
             out.setdefault(4, dir_cum)
             out.setdefault(9, -re_cum)
@@ -1201,6 +1227,14 @@ def extract_tier2_hyundai(tables):
     cost_t = _hyundai_section(tables, "보험서비스비용,")
     rerev_t = _hyundai_section(tables, "재보험수익,")
     recost_t = _hyundai_section(tables, "재보험비용,")
+    # 분기보고서 NEW form (2025.2Q/3Q·2026.1Q): the cost / 재보험수익 legs DROP the
+    # '보험서비스비용,'/'재보험수익,' row0 prefix — row0 reads '발생한 보험금 및 그 밖의 발생한
+    # 보험서비스비용(/재보험수익)에 따른 증가분…'.  The annual (감사보고서) keeps the prefixed
+    # form, so these are pure fallbacks (item6/11 were silently None on quarters without them).
+    if cost_t is None:
+        cost_t = _hyundai_section(tables, "발생한 보험금 및 그 밖의 발생한 보험서비스비용")
+    if rerev_t is None:
+        rerev_t = _hyundai_section(tables, "발생한 보험금 및 그 밖의 발생한 재보험수익")
 
     def jang(t, *subs):
         if t is None:
@@ -1209,7 +1243,14 @@ def extract_tier2_hyundai(tables):
         if r is None:
             return None
         n = _row_nums(r)
-        return n[0] if n else None
+        if not n:
+            return None
+        # 분기보고서 NEW form: each LOB splits into (3개월, 누적) column pairs → 장기 누적
+        # = n[1].  (연차/1Q: one column per LOB → 장기 = n[0].)  Without this, 반기/3Q
+        # quarters picked the 3-month leg (e.g. 2025.3Q item4 248,784 vs YTD 730,615).
+        if len(n) >= 2 and "3개월" in _header_blob(t) and "누적" in _header_blob(t):
+            return n[1]
+        return n[0]
 
     csm = jang(rev_t, "서비스의 이전으로 당기손익에 인식한 보험계약마진")
     ra = jang(rev_t, "비금융위험에 대한 위험조정의 변동분")
@@ -1217,7 +1258,8 @@ def extract_tier2_hyundai(tables):
     cost_act = jang(cost_t, "발생한 보험금 및 그 밖의 발생한 보험서비스비용")
     re_csm = jang(recost_t, "서비스의 이전으로 당기손익에 인식한 보험계약마진")
     re_ra = jang(recost_t, "비금융위험에 대한 위험조정의 변동분")
-    re_rev = jang(rerev_t, "발생한 보험금 및 그 밖의 발생한 보험서비스비용")
+    re_rev = jang(rerev_t, "발생한 보험금 및 그 밖의 발생한 보험서비스비용",
+                  "발생한 보험금 및 그 밖의 발생한 재보험수익")
     re_cost_exp = jang(recost_t, "보고기간에 발생한 보험서비스비용")
 
     if csm is not None:
@@ -1232,8 +1274,62 @@ def extract_tier2_hyundai(tables):
         out[10] = -abs(re_ra)
     if re_rev is not None and re_cost_exp is not None:
         out[11] = abs(re_rev) - abs(re_cost_exp)
+
+    # LOB totals [장기, 자동차, 일반] from the 분석공시 (gold-anchored, 2026.1Q):
+    #   rev    = single-row 합계-variant '보험수익' table (PAA twin has 장기=0 → max-|장기| pick)
+    #   cost   = total row '보험서비스 비용에 따른 총 증가분…' inside cost_t
+    #   rerev  = total row '재보험수익에 따른 총 증가분…' inside rerev_t
+    #   recost = single-row '재보험서비스비용' 합계 variant (PAA twin smaller → max-|장기|)
+    # assemble derives 3 = rev−cost, 8 = rerev−recost, 7/12 residuals, 2 = 3+8
+    # (gold: 3=279,302 / 8=−5,993 / 7=127,592 / 12=−4,504).  13/14 = full gross LOB P&L
+    # incl. reinsurance (gold 자동차 935,162−944,833−20−1,200 = −10,891 exact) — replaces the
+    # LOB-summary netted legs (those allocate 기타사업비용 into each LOB; schema keeps item16).
+    def _ytd_triple(t, row):
+        n = _row_nums(row)
+        if not n:
+            return None
+        hb = _header_blob(t)
+        trip = n[1::2][:3] if ("3개월" in hb and "누적" in hb and len(n) >= 6) else n[:3]
+        return trip if len(trip) == 3 else None
+
+    def total_row_triple(t, *labels):
+        if t is None:
+            return None
+        r = _row_by_label(t, *labels)
+        return _ytd_triple(t, r) if r is not None else None
+
+    def single_row_triple(label):
+        best = None
+        for ti2, st in enumerate(tables):
+            if not st.rows or len(st.rows) > 2 or _lab0(st.rows[0]) != label:
+                continue
+            if _hyundai_period_marker(tables, ti2) != "cur":
+                continue
+            trip = _ytd_triple(st, st.rows[0])
+            # >= : on 장기-ties (연결/별도 duplicates share the 장기 column) keep the LATER
+            # table — DART body order is 연결주석 → 별도주석, and KR0009 basis is 별도
+            # (자동차/일반 columns differ between the two).
+            if trip and (best is None or abs(trip[0]) >= abs(best[0])):
+                best = trip               # 합계 variant: 장기 ≠ 0 / PAA: 장기 = 0(or small)
+        return best
+
+    rev3 = single_row_triple("보험수익")
+    cost3 = total_row_triple(cost_t, "보험서비스 비용에 따른 총 증가분", "보험서비스비용에 따른 총 증가분",
+                             "발행한 보험계약에서 생기는 보험서비스비용")   # annual form
+    rerev3 = total_row_triple(rerev_t, "재보험수익에 따른 총 증가분",
+                              "재보험자에게서 회수한 금액에서 생기는 수익")  # annual form
+    recost3 = single_row_triple("재보험서비스비용")
+    if rev3 and cost3:
+        out["_jang_rev"], out["_jang_cost"] = rev3[0], abs(cost3[0])
+    if rerev3 and recost3:
+        out["_jang_rerev"], out["_jang_recost"] = rerev3[0], abs(recost3[0])
+    if rev3 and cost3 and rerev3 and recost3:
+        out["_lob_gross_13"] = rev3[1] - abs(cost3[1]) + rerev3[1] - abs(recost3[1])
+        out["_lob_gross_14"] = rev3[2] - abs(cost3[2]) + rerev3[2] - abs(recost3[2])
     # note items are in 원 -> 백만원
-    _scale(out, 1e-6, (4, 5, 6, 9, 10, 11))
+    _scale(out, 1e-6, (4, 5, 6, 9, 10, 11,
+                       "_jang_rev", "_jang_cost", "_jang_rerev", "_jang_recost",
+                       "_lob_gross_13", "_lob_gross_14"))
 
     # 13/14 + 장기 net from the LOB summary table (already 백만원!)
     _, sumrow = _hyundai_lob_summary(tables)
@@ -1254,6 +1350,48 @@ def extract_tier2_hyundai(tables):
         for k, val in _hyundai_old_split(tables).items():
             if out.get(k) is None:
                 out[k] = val
+    # OLD form (≤2025.1Q) LOB totals fallback: combined [구분|장기|자동차|일반|합계] notes
+    # (단위 천원) — sections 보험수익/재보험서비스비용 in one table, 보험서비스비용/재보험수익 in
+    # the sibling.  Per-section 합계 row carries the LOB triple.
+    if out.get("_jang_rev") is None:
+        secs = {}
+        for st in tables:
+            if not st.rows:
+                continue
+            hb2 = _header_blob(st)
+            if not ("장기" in hb2 and "자동차" in hb2 and "일반" in hb2):
+                continue
+            cap = str(getattr(st, "caption", "") or "")
+            if "전" in cap.replace(" ", "")[:5]:        # (2) 전분기 / 전기 twin
+                continue
+            cur_sec, found = None, {}
+            for r in st.rows:
+                lab2 = _lab0(r)
+                n3 = _row_nums(r)
+                if lab2 in ("보험수익", "보험서비스비용", "재보험수익", "재보험서비스비용") and not n3:
+                    cur_sec = lab2
+                elif lab2 in ("합계", "합 계") and cur_sec and len(n3) >= 4:
+                    found[cur_sec] = n3[:3]
+                    cur_sec = None
+            for k2, v3 in found.items():
+                if k2 not in secs or abs(v3[0]) > abs(secs[k2][0]):   # 누적 > 3개월
+                    secs[k2] = v3
+        K = 1e-3                                        # 천원 → 백만원
+        rv, cv = secs.get("보험수익"), secs.get("보험서비스비용")
+        rrv, rcv = secs.get("재보험수익"), secs.get("재보험서비스비용")
+        if rv and cv:
+            out["_jang_rev"], out["_jang_cost"] = rv[0] * K, abs(cv[0]) * K
+        if rrv and rcv:
+            out["_jang_rerev"], out["_jang_recost"] = rrv[0] * K, abs(rcv[0]) * K
+        if rv and cv and rrv and rcv:
+            out["_lob_gross_13"] = (rv[1] - abs(cv[1]) + rrv[1] - abs(rcv[1])) * K
+            out["_lob_gross_14"] = (rv[2] - abs(cv[2]) + rrv[2] - abs(rcv[2])) * K
+    # gross LOB legs (incl. reinsurance, 사업비 미차감) replace the LOB-summary netted 13/14 —
+    # keeps the bridge item1 = 2+13+14−16 closed once item2 moves to the gross basis (3+8).
+    if out.get("_lob_gross_13") is not None:
+        out[13] = out.pop("_lob_gross_13")
+    if out.get("_lob_gross_14") is not None:
+        out[14] = out.pop("_lob_gross_14")
     return out
 
 
@@ -2876,14 +3014,18 @@ def _lotte_from_sections(sect):
         return None
 
     out = {}
-    csm = comp("rev", "보험계약마진 상각")
-    ra = comp("rev", "위험조정 변동")
-    rev_exp = comp("rev", "예상보험금 및 예상기타보험서비스비용")
-    cost_act = comp("cost", "발생보험금 및 기타서비스비용")
-    re_csm = comp("re_cost", "보험계약마진 상각")
-    re_ra = comp("re_cost", "위험조정 변동")
+    # First needle of each pair = 롯데 고유 label (2025.3Q+ split / legacy combined);
+    # second = DART 표준양식 label (2025.2Q standardized component note).
+    csm = comp("rev", "보험계약마진 상각", "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    ra = comp("rev", "위험조정 변동", "비금융위험에 대한 위험조정의 변동분")
+    rev_exp = comp("rev", "예상보험금 및 예상기타보험서비스비용", "보고기간에 발생한 보험서비스비용")
+    cost_act = comp("cost", "발생보험금 및 기타서비스비용",
+                    "발생한 보험금 및 그 밖의 발생한 보험서비스비용")
+    re_csm = comp("re_cost", "보험계약마진 상각", "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    re_ra = comp("re_cost", "위험조정 변동", "비금융위험에 대한 위험조정의 변동분")
     re_rev_act = comp("re_rev", "발생보험금 및 기타재보험수익")
-    re_cost_exp = comp("re_cost", "회수예상 보험금 및 기타보험서비스비용")
+    re_cost_exp = comp("re_cost", "회수예상 보험금 및 기타보험서비스비용",
+                       "보고기간에 발생한 보험서비스비용")
     if csm is not None:
         out[4] = abs(csm)
     if ra is not None:
@@ -2902,6 +3044,15 @@ def _lotte_from_sections(sect):
             for r in rows:
                 if _norm(r[0]).replace(" ", "").startswith("총"):
                     return _row_nums(r), pos
+        # 표준양식 (2025.2Q): no '총…' rows — the section's LAST table is the '…합계' /
+        # all-LOB leg and its LAST numeric row is the section total.
+        entries = sect.get(sec) or []
+        if entries:
+            rows, pos = entries[-1]
+            for r in reversed(rows):
+                n = _row_nums(r)
+                if n:
+                    return n, pos
         return None, None
 
     rev_n, rev_p = grand("rev")
@@ -2967,6 +3118,10 @@ def _extract_tier2_lotte_split(tables):
     keep only 당분기/당반기 tables."""
     def subhead_leg(s):
         s = s.replace(" ", "")
+        if "재보험비용의보험서비스비용분석공시" in s:
+            # 표준양식 (2025.2Q): heading of the 재보험 회수수익 leg ('재보험자에게서 회수한
+            # 금액에서 생기는 수익' tables) — despite the '재보험비용의…' wording.
+            return "re_rev"
         if "재보험비용분석공시" in s:
             return "re_cost"
         if "재보험수익분석공시" in s:
@@ -3016,6 +3171,122 @@ def extract_tier2_lotte(tables):
         alt = fn(tables)
         if alt and any(alt.get(i) is not None for i in (4, 5, 6)):
             return alt
+    return out
+
+
+# ----------------------------- 악사손해 (KR0049) ---------------------------- #
+_AXA_SEC = {"보험수익": "rev", "보험서비스비용": "cost",
+            "출재보험수익": "re_rev", "출재보험비용": "re_cost"}
+
+
+def extract_tier2_axa(tables):
+    """악사손해 연차 감사보고서 '(6) 보험손익 상세내역' note (2024.4Q/2025.4Q identical form).
+
+    Columns [자동차|일반|장기|합계] (header-mapped — NOT 장기-first; the generic Format-A
+    fallback collapsed '-' cells via _row_nums and mis-assigned the columns), unit 천원.
+    Four no-value section-header rows (보험수익/보험서비스비용/출재보험수익/출재보험비용),
+    '총 …' total rows, final '총 보험서비스결과' row.  Within a section a label can repeat
+    (비PAA vs PAA sub-blocks) — take the first row whose target-LOB cell is numeric (the PAA
+    twin prints '-' in 장기 and vice versa).  FIRST captioned table = 당기 (IS-verified for
+    both years; the twin is 전기).
+
+    악사's income statement nests 기타사업비용 INSIDE Ⅰ.보험손익 ('3) 기타사업비용' row, 원
+    unit), and Tier-1 mis-reads it as ~0 (the '16,25' footnote-ref cell → 1625원).  Emit
+    item16 from that IS row so the RC gate's adjusted bridge item1 = ΣLOB + 15 − 16 closes
+    (2024.4Q: −7,078.456 − 10,561.922 = −17,640.378 = item1 exactly)."""
+    note = None
+    for t in tables:
+        cap = (t.caption or "").replace(" ", "")
+        if "보험손익상세내역" in cap and t.rows:
+            note = t
+            break
+    if note is None:
+        return {}
+    f = 1e-3 if "천원" in (note.caption or "") else 1.0
+
+    col = None
+    for hr in note.header:
+        cells = [_norm(c).replace(" ", "") for c in hr if _norm(c)]
+        joined = "".join(cells)
+        if "장기" not in joined or "자동차" not in joined:
+            continue
+        col, k = {}, 0
+        for c in cells:
+            if c.startswith("구분"):
+                continue
+            if c.startswith("자동차"):
+                col["auto"] = k
+            elif c.startswith("일반"):
+                col["ilban"] = k
+            elif c.startswith("장기"):
+                col["jang"] = k
+            elif "합계" in c:
+                col["tot"] = k
+            k += 1
+        break
+    if not col or "jang" not in col:
+        return {}
+
+    def pick(sec_want, needle, lob="jang"):
+        sec, nd = None, needle.replace(" ", "")
+        for r in note.rows:
+            lab = _norm(r[0]).replace(" ", "")
+            vals = [to_num(_norm(c)) for c in r[1:]]
+            if lab in _AXA_SEC and not any(v is not None for v in vals):
+                sec = _AXA_SEC[lab]
+                continue
+            if sec != sec_want or nd not in lab:
+                continue
+            i = col.get(lob)
+            if i is not None and len(vals) > i and vals[i] is not None:
+                return vals[i] * f
+        return None
+
+    out = {}
+    csm = pick("rev", "당기손익으로 인식한 보험계약마진")
+    ra = pick("rev", "위험해제에 따른 위험조정 변동")
+    rev_exp = pick("rev", "예상보험금 및 보험서비스비용")
+    cost_act = pick("cost", "보험금 및 보험서비스비용")
+    re_csm = pick("re_cost", "당기손익으로 인식한 보험계약마진")
+    re_ra = pick("re_cost", "위험해제에 따른 위험조정 변동")
+    re_rev_act = pick("re_rev", "회수가능 보험금 및 보험서비스비용")
+    re_cost_exp = pick("re_cost", "회수예상 보험금 및 보험서비스비용")
+    if csm is not None:
+        out[4] = abs(csm)
+    if ra is not None:
+        out[5] = abs(ra)
+    if rev_exp is not None and cost_act is not None:
+        out[6] = rev_exp - cost_act
+    if re_csm is not None:
+        out[9] = -abs(re_csm)
+    if re_ra is not None:
+        out[10] = -abs(re_ra)
+    if re_rev_act is not None and re_cost_exp is not None:
+        out[11] = re_rev_act - re_cost_exp
+
+    out["_jang_rev"] = pick("rev", "총 보험수익")
+    out["_jang_cost"] = pick("cost", "총 보험서비스비용")
+    out["_jang_rerev"] = pick("re_rev", "총 재보험수익")
+    out["_jang_recost"] = pick("re_cost", "총 재보험비용")
+    for lob, item in (("auto", 13), ("ilban", 14)):
+        v = pick("re_cost", "총 보험서비스결과", lob=lob)   # final row sits after 출재보험비용
+        if v is not None:
+            out[item] = v
+
+    # item16 (기타사업비용) from the income statement (원 단위; cell r[1] is the 주석 ref)
+    for t in tables:
+        labs = [_norm(r[0]).replace(" ", "") for r in t.rows]
+        if not any(l.startswith(("Ⅰ.보험손익", "I.보험손익")) for l in labs):
+            continue
+        for r in t.rows:
+            if re.sub(r"^\d+\)\s*", "", _norm(r[0])).replace(" ", "") == "기타사업비용":
+                vals = [to_num(_norm(c)) for c in r[2:]]
+                cur = next((v for v in vals if v is not None), None)
+                if cur is not None:
+                    out[16] = cur / 1e6
+                break
+        if 16 in out:
+            break
     return out
 
 
@@ -4092,6 +4363,7 @@ SONBO_HANDLERS = {
     "KR0011": extract_tier2_db,
     "KR0032": extract_tier2_nh,
     "KR0003": extract_tier2_lotte,
+    "KR0049": extract_tier2_axa,               # 악사손해 연차 '보험손익 상세내역' (자동차|일반|장기 columns)
     "KR1000": extract_tier2_coreanre,          # 코리안리 재보험 (gold-validated 2025.2Q; 생명/장기/일반)
 }
 LIFE_HANDLERS = {
@@ -4430,11 +4702,79 @@ def _fs_tier1(name, quarter, code):
 # taken verbatim from the owner's hand-built gold (Tier-1 포괄손익계산서 + note 분해).  Documented
 # exception — NOT a learned rule.  9/10/11/12 omitted = 재보 components not disclosed.
 _GOLD_CELL_OVERRIDE = {
+    # 현대해상 KR0009 2023.3Q/4Q: 생명장기 손익(item2, parent total)이 OLD form에서
+    # null이던 것을 IR factsheet 교차검증값으로 채움 (validation 06-13 extraction_audit:
+    # IR↔DART CSM·RA 0.0까지 정확 일치). 원수/재보 split(3/8)은 NEEDS_DART 재파싱(별건).
+    ("KR0009", "2023.3Q"): {2: 476139.3},
+    ("KR0009", "2023.4Q"): {2: 248827.5},
     ("KR0087", "2023.2Q"): {
         1: 116208.0, 2: 128768.0, 3: 130035.0, 4: 127412.0, 5: 22438.0, 6: 5817.0,
         7: -25632.0, 8: -1267.0, 13: 0.0, 14: 0.0, 15: 0.0, 16: 12560.0,
         17: 133169.0, 18: 699587.0, 19: -566418.0, 20: 249377.0, 21: 3072.0,
         22: 252449.0, 23: 52199.0, 24: 200250.0,
+    },
+    # ---- 2026-06-11 audit-verified cells (raw 직접판독; per-cell 근거 changelog (o)) ----
+    # KDB 2023.2Q: FY2023 반기 OLD 영업수익/비용 양식 — FS-API status-013 + HTML 라벨 미매칭.
+    # 15/17/18은 OLD 양식 스키마 매핑 모호(audit 경고) → 보류, owner gold 확인 후 추가.
+    ("KR0072", "2023.2Q"): {
+        1: 22665.0, 2: 22665.0, 3: 13292.0, 7: -7865.0, 8: 9373.0, 12: 3984.0,
+        16: 5349.0, 19: -303458.0, 20: 68658.0, 21: -10908.0, 22: 57750.0,
+        23: -0.2, 24: 57750.0,
+    },
+    # KDB 2025.2Q+: life_old 선점이 NEW 주석32-(2)를 가려 9/10 미산출; item11은 레그혼합
+    # 오류값(25.4Q 공표 39,470 vs 노트 실제 42,611−예상 35,399=7,212 — raw 재검증 완료).
+    ("KR0072", "2025.2Q"): {9: -579.0, 10: -561.0, 11: 5305.0, 12: -11443.0},
+    ("KR0072", "2025.3Q"): {9: -498.0, 10: -615.0, 11: 5925.0, 12: -30942.0},
+    ("KR0072", "2025.4Q"): {9: -19.0, 10: -531.0, 11: 7212.0, 12: -22559.0},
+    ("KR0072", "2026.1Q"): {9: -477.0, 10: -131.0, 11: -132.0, 12: -1345.0},
+    # 라이나 (비상장·감사보고서만): 'Ⅰ−Ⅱ' 도출형 IS 미인식 + 주석23 천원단위 1e7 가드
+    # suppression. 7/12는 잔차(3−4−5−6 / 8−9−10−11).
+    ("KR0074", "2024.4Q"): {
+        1: 310451.0, 2: 328886.0, 3: 259410.0, 4: 397347.0, 5: 67191.0, 6: 4785.0,
+        7: -209913.0, 8: 69476.0, 9: -11684.0, 10: -6524.0, 11: 18162.0, 12: 69522.0,
+        15: 0.0, 16: 18435.0, 17: 296868.0, 18: 243138.0, 19: 53730.0,
+        20: 607319.0, 21: -10687.0, 22: 596632.0, 23: 132348.0, 24: 464284.0,
+    },
+    ("KR0074", "2025.4Q"): {
+        1: 179565.0, 2: 198093.0, 3: 166731.0, 4: 331435.0, 5: 53666.0, 6: -31834.0,
+        7: -186536.0, 8: 31363.0, 9: -29268.0, 10: -656.0, 11: 29053.0, 12: 32234.0,
+        15: 0.0, 16: 18529.0, 17: 270640.0, 18: 208578.0, 19: 62062.0,
+        20: 450205.0, 21: -52.0, 22: 450153.0, 23: 93711.0, 24: 356442.0,
+    },
+    # 미래에셋 2023.1Q/2Q: 공표 2023.3Q+ 시리즈와 동일 별도기준(연속성 검증: item4
+    # 52,014→102,398→148,365; item24 134,764→159,231). 2Q의 4/5/9/10은 기존 추출 정상 → 미포함.
+    ("KR0079", "2023.1Q"): {
+        1: 43699.0, 2: 61472.0, 3: 60942.0, 4: 52014.0, 5: 12029.0, 6: 0.0,
+        7: -3101.0, 8: 531.0, 9: -249.0, 10: -55.0, 11: 0.0, 12: 835.0,
+        15: 0.0, 16: 17774.0, 17: 93769.0, 18: 911261.0, 19: -817492.0,
+        20: 137468.0, 21: -1673.0, 22: 135794.0, 23: 35059.0, 24: 100735.0,
+    },
+    ("KR0079", "2023.2Q"): {
+        1: 84266.0, 2: 117084.0, 3: 119649.0, 6: 0.0, 7: -6357.0, 8: -2565.0,
+        11: 0.0, 12: -1373.0, 15: 0.0, 16: 32818.0, 17: 97519.0, 18: 1566094.0,
+        19: -1468575.0, 20: 181785.0, 21: -2682.0, 22: 179103.0, 23: 44339.0,
+        24: 134764.0,
+    },
+    # 동양 부분보정: 2024.4Q item6은 기존 17,476이 기타보험서비스비용 leg 누락 → 20,691.
+    ("KR0087", "2023.1Q"): {2: 67396.0, 3: 67661.0, 7: -6699.0},
+    ("KR0087", "2024.4Q"): {5: 47227.0, 6: 20691.0, 7: -25222.0},
+    ("KR0087", "2025.2Q"): {5: 22144.0, 6: -10877.0, 7: -60077.0, 11: 7026.0, 12: 4182.0},
+    ("KR0087", "2025.3Q"): {6: -31913.0, 7: -84162.0},
+    # 메트라이프 (비상장·감사보고서만): Q4 전항목 null — audit 전셀 재구성(17=18+19 항등식,
+    # 18=주석 투자손익 소계 대사).
+    # item1 = item2 − item16 (보험영업손익 컨벤션 — 동양/라이나/미래에셋과 동일; validator
+    # 영업이익 eq FAIL +12,086/+12,897 해소. 재무제표 Ⅰ.보험영업손익 143,894와 일치).
+    ("KR0095", "2024.4Q"): {
+        1: 143894.0, 2: 155980.0, 3: 164512.0, 4: 191235.0, 5: 26752.0, 6: 4797.0,
+        7: -58272.0, 8: -8532.0, 9: -6159.0, 10: -278.0, 11: -2610.0, 12: 515.0,
+        15: 0.0, 16: 12086.0, 17: 3044.0, 18: 1861907.0, 19: -1858863.0,
+        20: 146938.0, 21: 181.0, 22: 147119.0, 23: 17287.0, 24: 129832.0,
+    },
+    ("KR0095", "2025.4Q"): {
+        1: 214992.0, 2: 227890.0, 3: 236247.0, 4: 210554.0, 5: 33229.0, 6: 6744.0,
+        7: -14280.0, 8: -8357.0, 9: -6668.0, 10: -546.0, 11: -1152.0, 12: 9.0,
+        15: 0.0, 16: 12898.0, 17: -23310.0, 18: 3134978.0, 19: -3158288.0,
+        20: 191683.0, 21: -98.0, 22: 191584.0, 23: 56455.0, 24: 135129.0,
     },
 }
 

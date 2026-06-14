@@ -210,6 +210,9 @@ def _process(rows, periods, refresh, F, target_quarter=None):
                         upd += 1
                 else:
                     nr = dict(base)
+                    # baseline row may carry prior-quarter 값_적용후 — must not
+                    # leak into the new quarter (메리츠 2026.1Q rule-9 RED)
+                    nr.pop("값_적용후", None)
                     if anchor is not None:
                         for field in ("code", "cname", "ticker", "kind"):
                             nr[F[field]] = anchor[F[field]]

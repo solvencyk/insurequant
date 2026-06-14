@@ -77,8 +77,8 @@ def block_stages(b):
     return out if (out.get(1) is not None or out.get(2) is not None) else None
 
 
-def pick_group(blocks, marker):
-    cands = []
+def pick_group(blocks, marker, anchor=None):
+    cands, mvp_opens = [], []
     for b in blocks:
         capf = _ns(b.get("caption") or "")
         if marker == "원수일반모형":
@@ -102,12 +102,21 @@ def pick_group(blocks, marker):
         st = block_stages(b)
         if st and st.get(1) is not None:
             cands.append(st)
+            if b.get("mvp_candidate"):
+                mvp_opens.append(st[1])
     if not cands:
         return None
     opens = [c[1] for c in cands if c.get(1) is not None]
+    # is_prior reference openings: prefer the CANONICAL (mvp_candidate) blocks. A non-mvp
+    # slice block's opening can coincide with the real current block's CLOSING (코리안리 Q4:
+    # canonical 당기 1,071,519→1,064,090 alongside a non-mvp slice 1,064,090→803,146), and the
+    # all-openings reference would then use the slice's opening to wrongly drop the canonical
+    # block. Restrict the prior-reference to mvp openings so only a true prior copy (canonical,
+    # prior period) flags the current block. Falls back to all openings when no mvp flag exists.
+    ref = [o for o in mvp_opens if o is not None] or opens
     def is_prior(c):
         cl = c.get(6)
-        return cl is not None and any(abs(cl - o) <= max(1.0, abs(o) * 0.001) for o in opens if abs(o) > 1)
+        return cl is not None and any(abs(cl - o) <= max(1.0, abs(o) * 0.001) for o in ref if abs(o) > 1)
     cur = [c for c in cands if not is_prior(c)] or cands
     # A rollforward block missing its CLOSING (기말) is an incomplete/mis-split fragment
     # (흥국화재 2025.4Q 무배당: a duplicate block with 기말=None sits alongside the real
@@ -115,6 +124,21 @@ def pick_group(blocks, marker):
     # the fragment → closing collapsed to the 유배당 sub-total only = 34억).  Prefer
     # candidates that expose a closing; fall back to all only if none do.
     complete = [c for c in cur if c.get(6) is not None] or cur
+    if anchor and abs(anchor) > 1:
+        # Anchored (Q1-3): YTD opening = FY year-start (별도, 억). Pick the candidate whose
+        # opening is closest to it, and DEFER (None) to the anchor-aware agnostic path when
+        # even the closest is far from the anchor. The '일반모형' caption gate can match the
+        # WRONG segment: 흥국생명 1Q has only the 손해 일반모형 block carrying '일반모형'
+        # (opening 22326) while the 생명 book — the series basis (19137) — does not, so the
+        # naive max-opening grabbed 손해. Anchor-defer hands it back to pick_combined_agnostic.
+        allv = [v for c in complete for v in c.values() if v is not None]
+        mag = max((abs(v) for v in allv), default=0.0)
+        udiv = 1e6 if mag > 1e10 else (1e3 if mag > 1e8 else 1.0)
+        norm = lambda c: (c.get(1) or 0) / udiv / 100.0
+        best = min(complete, key=lambda c: abs(norm(c) - anchor))
+        if abs(norm(best) - anchor) > max(1.0, abs(anchor) * 0.10):
+            return None
+        return best
     return max(complete, key=lambda c: abs(c.get(1) or 0))
 
 
@@ -839,7 +863,7 @@ def waterfall(blocks, anchor=None, code=None):
     p2 = pick_pattern2(blocks, anchor)   # 삼성·현대·한화·삼성생명 차이조정표
     if p2:
         return p2, "배당칼럼합산"
-    comb = pick_group(blocks, "원수일반모형")  # combined 원수 block (caption marker)
+    comb = pick_group(blocks, "원수일반모형", anchor)  # combined 원수 block (caption marker)
     if comb:
         return comb, "combined"
     agn = pick_combined_agnostic(blocks, anchor, code)  # caption-agnostic (농협·DB·코리안리·분기 단순표)

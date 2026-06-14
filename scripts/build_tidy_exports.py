@@ -57,11 +57,21 @@ DART_NAME_TO_KICS = {
     "케이비라이프생명보험": "KB라이프생명",
 }
 
+# kics_disclosure.json에 없는 회사(감사보고서-only 등)의 (코드, 티커, 생손보) fallback.
+# 정본 코드 매핑: scripts/_dart_path_helpers.py. AIA는 kics 미수록 → 코드 공란이던 것 보강(owner 지시 2026-06-11).
+NAME_CODE_FALLBACK = {
+    "에이아이에이생명보험": ("KR0080", None, "생명보험"),
+}
+
 
 def meta(name: str) -> tuple:
     canon = DART_NAME_TO_KICS.get(name, name)
     if canon in META:
         return META[canon]
+    if name in NAME_CODE_FALLBACK:
+        return NAME_CODE_FALLBACK[name]
+    if canon in NAME_CODE_FALLBACK:
+        return NAME_CODE_FALLBACK[canon]
     sb = "생명보험" if any(k in name for k in ("생명", "라이프")) else (
         "손해보험" if any(k in name for k in ("손해", "화재", "해상", "코리안리")) else None)
     return (None, None, sb)

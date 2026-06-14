@@ -269,10 +269,15 @@ def recalc(rows: list[dict]) -> dict[str, int]:
 
         if post2 is None:
             post2 = i2
+        # denominator: post-transition 기준금액 when disclosed (선택 경과조치 적용사 —
+        # 농협생명/처브/교보플래닛 등), else pre. Mirrors kics_json_rules rule 8_post
+        # (bucket.get(14, post=True) falls back to pre) — using i14 here while the
+        # validator uses post14 manufactured RED for every post14-disclosing company.
+        den14 = post14 if post14 not in (None, 0) else i14
 
-        if post2 is not None and i14 and i14 != 0 and 28 in items:
+        if post2 is not None and den14 and den14 != 0 and 28 in items:
             row28 = items[28]
-            expected_post = post2 / i14 * 100.0
+            expected_post = post2 / den14 * 100.0
             cur_post = _to_float(row28.get(KEY_POST))
             new_post = _fmt_ratio(expected_post)
             if not _is_plausible_ratio(cur_post) or cur_post is None or row28.get(KEY_POST) != new_post:

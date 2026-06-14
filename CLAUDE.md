@@ -10,12 +10,14 @@ The pipeline is organized as **5 stages**, each owned by a subagent with its own
 | Stage | Prompt (instructions) | Active TODO | History |
 |---|---|---|---|
 | 1 — **downloader** | `docs/agents/claude-agent-downloader.md` (+ `docs/agents/source-catalog.yaml`) | `TODO_downloader.md` | `docs/changelog_downloader.md` |
-| 2 — **parser** | `docs/agents/claude-agent-parser.md` (skeleton) | `TODO_parser.md` | `docs/changelog_parser.md` |
+| 2 — **parser** (2 lanes ∥) | `docs/agents/claude-agent-parser.md` (shared) + domain `docs/domains/claude-agent-{kics,ifrs17}.md` | `TODO_parser_kics.md` · `TODO_parser_ifrs17.md` | `docs/changelog_parser_{kics,ifrs17}.md` (pre-split frozen: `changelog_parser.md`) |
 | 3 — **validation** | `docs/agents/claude-agent-validation.md` | `TODO_validation.md` | `docs/changelog_validation.md` |
 | 4 — **publishing** (merged former gathering + pushing, 2026-05-31) | `docs/agents/claude-agent-publishing.md` (skeleton — reports + recommends, never executes `git push`) | `TODO_publishing.md` | `docs/changelog_publishing.md` |
 | 5 — **designer** (HTML / CSS / responsive / chart layout, new 2026-05-31) | `docs/agents/claude-agent-designer.md` (skeleton) | `TODO_designer.md` | `docs/changelog_designer.md` |
 
 **Stage 4 ↔ Stage 5 hard split:** publishing owns master JSONs (assembly + push recommendation). Designer owns HTML structure/styling. Master JSONs are read-only to designer; HTML files are off-limits to publishing (publishing reports `manual_html_edit` warn and stops). The two stages are otherwise independent (can run in parallel).
+
+**Parser 2-lane split (2026-06-13):** parser runs as two parallel lanes — **kics** (`src/solvency/parser/`, Docling MD → `kics_disclosure.json`; market-risk subs; rate-sensitivity) and **ifrs17** (`src/ifrs17/`, DART XML → `CSM_waterfall` / `PL_breakdown` masters). Disjoint code/sources/outputs/validators → **run in separate sessions in parallel**. Each lane has its own `TODO_parser_<lane>.md` + `docs/changelog_parser_<lane>.md`, shares the stage prompt `claude-agent-parser.md` + its domain prompt `docs/domains/claude-agent-<lane>.md`. Shared inbox `inbox/parser/` with frontmatter `lane: kics|ifrs17`. **Join point:** `build_root_masters` runs once after both lanes have loaded.
 
 Cross-stage items (large refactors, mobile/HTML work, multi-stage features) live in the **root** `TODO.md` and `docs/claude-changelog.md`.
 
@@ -29,6 +31,7 @@ Domain reference docs (K-ICS / IFRS17 / Misc IR) sit under `docs/domains/` and p
 1. 이 `CLAUDE.md` (정책 + 5-stage 인덱스)
 2. 루트 `TODO.md` (cross-stage 현황) + `docs/claude-changelog.md` (cross-stage 이력)
 3. 작업하려는 stage의 `TODO_<stage>.md` + `docs/changelog_<stage>.md` + `docs/agents/claude-agent-<stage>.md`
+   - **parser는 레인별**: `TODO_parser_<lane>.md` + `docs/changelog_parser_<lane>.md` + 공유 `claude-agent-parser.md` + `docs/domains/claude-agent-<lane>.md` (`<lane>` = `kics` 또는 `ifrs17`)
 
 변경·실행이 있을 때마다 **해당 stage**의 TODO/changelog 맨 위를 갱신. cross-stage 변경이면 root 두 파일 갱신.
 
@@ -53,14 +56,23 @@ See `docs/agents/kics-json-validation-rules.md` for formulas, R4/R7 matrices, to
 - 작성 후 첫 줄을 즉시 read-back으로 확인. 깨졌으면 영어로 재작성.
 - 이 룰은 사용자가 2026-05-24 세션에서 명시적으로 약속을 요구함.
 
+## 📬 스테이지 간 handoff = inbox (사람 복붙 대체)
+
+스테이지(다운로더↔파서↔검증)가 서로 검증·재작업을 요청할 때는 **`inbox/` 폴더에 md 메시지를 떨궈** 비동기로 주고받는다 (사람이 세션 간 복붙하지 않음). 계약 정본: [`inbox/README.md`](inbox/README.md). 각 스테이지 프롬프트 "Inbox handoff protocol" 섹션 참조.
+
+- filesystem-mediated **evaluator-optimizer** (실시간 agent-team 아님). inbox=메시지, **dynamic Workflow=드라이버**.
+- 에이전트는 inbox를 자동 감시하지 않음 — 드라이버(Workflow/사람)가 호출 시 첫 동작으로 자기 inbox를 드레인. 루프 bounded max 5회, 초과 → escalate(사람 큐).
+
 ## 🧵 멀티에이전트 병렬처리 규칙 (필수)
 
 작업 영역이 서로 독립이면 **반드시 별도 서브에이전트(Agent tool)를 띄워 병렬로 처리한다.** 단일 세션에서 순차로 처리하지 말 것.
 
-**병렬 단위 — 둘 다 유효:**
+**병렬 축 — stage는 파이프라인, 병렬은 그 안/사이에서:**
 
-1. **Stage 단위** (5-stage workflow): downloader → parser → validation → gathering → pushing이 명확하게 분리된 작업이면 stage별로 fan out. 각 에이전트에 해당 `docs/agents/claude-agent-<stage>.md` + 해당 `TODO_<stage>.md` + `docs/changelog_<stage>.md` 경로를 컨텍스트로 명시.
-2. **Domain 단위** (K-ICS / IFRS17 / Misc IR): 한 stage 안에서 여러 도메인에 걸친 작업이면 도메인별로 fan out. 각 에이전트에 해당 `docs/domains/claude-agent-<domain>.md` + 관련 `docs/flows/*.md` 경로를 컨텍스트로 명시.
+> ⚠️ 5-stage(downloader→parser→validation→publishing→designer)는 **순차 파이프라인**이다. 같은 데이터에 stage들을 동시에 못 돌린다(파싱 전 검증 불가). **"stage별로 병렬"은 틀린 프레임** — 병렬은 아래 두 축으로만:
+
+1. **Stage 내부 fan-out (주력)**: 한 stage 안에서 **(회사 × 분기 × 도메인/데이터소스)** 단위로 독립이면 그 단위로 서브에이전트 fan out. 예: 회사별 PDF 파싱, 회사-분기별 추출 진단(2026-06-09 continuity 11건 = 11 에이전트 병렬), 도메인(K-ICS/IFRS17/Misc)별 작업. 각 에이전트에 해당 `docs/agents/claude-agent-<stage>.md`(+ `TODO_<stage>.md`·`docs/changelog_<stage>.md`), 도메인 작업이면 `docs/domains/claude-agent-<domain>.md` + 관련 `docs/flows/*.md`를 컨텍스트로 명시.
+2. **Item별 파이프라인 중첩**: 서로 다른 (회사,분기) item을 각자 download→parse→validate로 **독립적으로 흘린다** (item A가 validate 중일 때 item B는 parse 중 — barrier 없음). "stage들을 병렬화"하려면 이 방식 = dynamic Workflow의 `pipeline()` 프리미티브.
 
 **공통:**
 
