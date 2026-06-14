@@ -35,6 +35,17 @@ data/bonds/[0-9]*/
 # Only the canonical kics_disclosure.json at root is committed.
 data/disclosure/
 
+# Raw DART/IR/KIDI data purged from git history 2026-06-14 (HUGE, regenerable;
+# kept on disk untracked. Canonical data/dart/viz/*.json stays tracked.)
+data/_archive/
+data/dart/**/raw/
+data/dart/raw/
+data/dart/CORPCODE.xml
+data/dart/**/*.zip
+data/dart/**/*.xml
+data/kidi/
+data/ir/**/raw/
+
 # Large reference / intermediate dirs (regenerable)
 artifacts/
 md_inbox/
