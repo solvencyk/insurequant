@@ -33,7 +33,43 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ---
 
-## 🔴 K-ICS gate documented exceptions (2026-06-12, parser)
+## 🔴 K-ICS gate documented exceptions — CURRENT (2026-06-14, parser)
+
+> Supersedes the 2026-06-12 snapshot below. Since then: RED 227→**21** (대량 fitz 회수 + 코어/rule5
+> 백필), AND validation **expanded the validator** (new `36_irr` IRR 41-46 rule + `19_market` cadence fix +
+> `_market_tooling_fail`). The 2026-06-12 "19_market 223" list is mostly registered/recovered. Current gate
+> state = **21 RED, ALL verified non-regression** (raw 페이지까지 검증). Characterization:
+
+**✅ Structural non-disclosure — documented exceptions (parser-confirmed; image/scan/micro, 추출 불가):**
+- **36_irr × 6** (item36 공시인데 순자산가치 6시나리오표 추출불가):
+  - KR0010 KB손해 2023.4Q·2024.2Q·2025.4Q — 금리위험액 현황표가 **full-page 이미지**(p75-76 imgs=1,text=0; "금리는 내부모형" 주석). owner OCR.
+  - KR0051 신한이지 2023.4Q·2024.2Q·2024.4Q — micro-insurer, 순자산가치 **억원-coarse 정수**라 derive ±99% 불안정(원천 한계).
+- **19_market × 7** (item19 공시인데 36-40 분해 추출불가):
+  - KR0005 흥국화재 2024.4Q·KR0071 흥국생명 2024.4Q — raw에 시장위험 분해표 NO-HEADER(이미지/미공시).
+  - KR0010 KB손해 2024.4Q·2025.2Q — 금리위험액 이미지(주식/부동산/외환만 텍스트, 5종 reconcile 불가).
+  - KR0068 한화생명 2023.4Q·2025.2Q — 금리위험액 현황 표 본문 이미지(헤더만 텍스트; 2025.2Q diff=60,815 = 금리 결측 탓).
+  - KR0080 AIA 2025.4Q — scan-only(아래 documented).
+- **rule 2 × 1**: KR0080 AIA 2025.1Q (diff=−789) — scan-only(아래 documented).
+- **rule 8_life × 1**: KR0079 미래에셋 2023.2Q — scan-only. **8_life는 SKIP=게이트 비차단**.
+
+**⏸ PENDING OWNER DECISION — 게이트 여전히 차단 (parser/validation이 결정 못 함):**
+- **36_irr × 5 = INTERNAL_MODEL_36IRR_EXEMPT 후보** (validation이 owner 상신, `inbox/validation/20260614T0930Z`):
+  KR0073 교보생명 2025.2Q · KR0094 신한라이프 2024.2Q·2024.4Q·2025.2Q·2025.4Q. **내부모형사** — 순자산가치는 정확
+  추출되나 표준 derive식(R=충격전−시나리오)이 공시 금리위험액과 안 맞음. 회사가 **시나리오별 금리위험액을 직접
+  공시**하고 그 값을 같은 식에 넣으면 공시총액과 **정확히 일치**(KR0094 2025.4Q=578,999 검증). 한화생명 내부모형
+  선례 동형 = 데이터·식 정확, 룰이 표준모형 전제라 안 맞는 것. **owner가 "내부모형은 36_irr 면제" 정책 확정해야
+  해소.** → 이 5건이 현재 push gate의 **유일한 owner-blocker**.
+
+**🟡 VALIDATION CADENCE FIX (parser 아님, exception 아님):**
+- KR1098 카카오 2023.3Q 19_market — **odd-Q인데** raw에 분해표 NO-HEADER. 짝수 full-form 전제 룰이 오flag(detail이
+  "even-qtr full"이라 표시되나 실제 2023.3Q는 홀수). validation cadence SKIP 처리하면 RED→SKIP(삼성생명 odd-Q와 동류).
+
+**요약**: 21 RED = 구조적 17(documented, 게이트 통과 가능) + 내부모형 5(owner 결정 대기) + 카카오 cadence 1(validation).
+**push는 owner 권한** — parser는 self-approve 안 함. 내부모형 5건 + 카카오 1건 처리되면 게이트 satisfiable.
+
+---
+
+## 🔴 K-ICS gate documented exceptions (2026-06-12, parser) — SUPERSEDED, 이력용
 
 Gate run 2026-06-12: RED=227 = **19_market 223 + KR0049 2026.1Q 4** (rules 2/4/5/6). All documented:
 

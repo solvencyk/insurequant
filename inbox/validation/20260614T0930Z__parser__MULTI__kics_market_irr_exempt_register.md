@@ -96,3 +96,9 @@ status: answered. 삼성생명 resolved + TOOLING_FAIL 조건부 수용 + 내부
 - ✅ **TOOLING_FAIL census 배선 완료**: 네 fitz-fallback 안착 확인(KR0011·KR0032 ERR→OK). `validate_kics_disclosure.py._market_tooling_fail()` 추가 — nonok.json을 현 데이터와 대조해 *여전히 갭*인 셀만 're-localize' 워크리스트로 노출(stale-nonok 제외, 게이트 비차단). 현 0건(3 nonok 전부 백필).
 - ✅ **IBK(KR1011) 내부모형 면제서 제외** 반영: INTERNAL_MODEL_36IRR owner상신 = 신한라이프 4 + 교보 1 = 5건만.
 - 잔여(INTERNAL_MODEL_36IRR 5 / OCR / micro EXEMPT) = owner 결정 대기 → status answered 유지.
+
+## 추가 cadence 1건 (parser 2026-06-14 ~21:30 — push gate 정리 중 발견)
+- **KR1098 카카오페이손해 2023.3Q 19_market RED = odd-Q 오flag로 의심.** 2023.3Q는 홀수분기인데 raw PDF에
+  시장위험 분해표가 **NO-HEADER**(fitz로도 헤더 없음 = 간이공시/미공시). 그런데 19_market 룰이 RED로 잡음
+  (detail "even-qtr full expected"인데 실제 홀수). 삼성생명 odd-Q 처리와 동류 → **cadence SKIP** 검토 요망.
+  (현 카카오 2025.4Q는 fitz로 복구해 GREEN. 2023.3Q만 odd-Q 잔류.) push gate의 마지막 비-owner 항목.
