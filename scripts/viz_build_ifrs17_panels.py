@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+import math
 import re
+from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -639,6 +641,10 @@ def _sensitivity_caption_score(caption: str) -> int:
         score += 1
     if _is_rollforward_sensitivity_caption(cap):
         score -= 20
+    # Methodology tables ("\u2026\uBCC0\uC218\uBCC4 \uC0B0\uCD9C \uBC29\uBC95 \uBC0F \uAC00\uC815") are mis-tagged sensitivity_analysis
+    # but carry no shock values \u2014 deprioritise so the real \uBBFC\uAC10\uB3C4 \uBD84\uC11D table wins (NH\uB18D\uD611\uC190\uD574).
+    if any(k in cap for k in ("\uC0B0\uCD9C \uBC29\uBC95", "\uC0B0\uCD9C\uBC29\uBC95", "\uC0B0\uCD9C \uADFC\uAC70", "\uBCC0\uC218\uBCC4 \uC0B0\uCD9C")):
+        score -= 20
     return score
 
 
@@ -707,6 +713,19 @@ def _band_sensitivity_columns(header: list[list[str]]) -> tuple[int, int | None]
         (len([c for c in hr if isinstance(c, str)]) for hr in header), default=n_groups
     )
     cpg = max(1, round(n_bottom / n_groups)) if n_groups else 1
+    # G4b fix (2026-06-14): standard \uC190\uBCF4/\uC0DD\uBCF4 layout (\uAD50\uBCF4/\uC0BC\uC131\uD654\uC7AC/\uD604\uB300/\uB77C\uC774\uB098) has one value
+    # column per group and trailing groups [\u2026 \uBCC0\uB3D9.\uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4(\u0394CSM), \uB2F9\uAE30\uC190\uC775, \uAE30\uD0C0\uD3EC\uAD04\uC190\uC775].
+    # The \uAE30\uC900\uAE08\uC561 leading columns are rowspan-elided on 2nd+ risk rows, so those rows carry
+    # fewer cells and a LEFT-anchored index lands on the wrong column (\u0394CSM\u2192\uAE30\uD0C0\uD3EC, PL\u2192None).
+    # Anchor from the RIGHT (negative idx) for this shape so full and collapsed rows align.
+    if (
+        cpg == 1
+        and pl_g is not None
+        and "\uAE30\uD0C0\uD3EC\uAD04\uC190\uC775" in group_row[-1]
+        and pl_g == n_groups - 2
+        and csm_g == n_groups - 3
+    ):
+        return (-3, -2)
     pl_idx = pl_g * cpg if pl_g is not None else None
     return (csm_g * cpg, pl_idx)
 
@@ -737,14 +756,17 @@ def _extract_sensitivity_band(
             shock = row[1].strip() if len(row) > 1 and isinstance(row[1], str) else ""
             vals = row[2:]
         cells = [("" if v is None else str(v)).strip() for v in vals]
-        if len(cells) <= csm_idx:
+        # csm_idx/pl_idx may be negative (right-anchored standard layout) or
+        # positive (group*cpg). Need enough cells either way.
+        need = abs(csm_idx) if csm_idx < 0 else csm_idx + 1
+        if len(cells) < need:
             continue
         csm = parse_num(cells[csm_idx], dash_means_zero=False)
-        pl = (
-            parse_num(cells[pl_idx], dash_means_zero=False)
-            if pl_idx is not None and pl_idx < len(cells)
-            else None
-        )
+        pl = None
+        if pl_idx is not None:
+            pl_need = abs(pl_idx) if pl_idx < 0 else pl_idx + 1
+            if len(cells) >= pl_need:
+                pl = parse_num(cells[pl_idx], dash_means_zero=False)
         if csm is None and pl is None:
             continue
         scenarios.append({"risk": risk, "shock": shock, "csm_delta": csm, "pl_impact": pl})
@@ -780,12 +802,22 @@ def _parse_sensitivity_deltas(row: list[object], *, product_line_layout: bool) -
     return None, None
 
 
+def _has_csm_column(block: dict) -> bool:
+    """True if the table exposes a 보험계약마진/CSM value column. The CSM panel
+    must prefer these over same-topic tables that only carry 당기손익/기타포괄 (PL)
+    or 이행현금흐름/세전손익/자본 (CF/equity) — those have no ΔCSM to read and,
+    if picked, mislabel a CF/PL column as CSM (full-source picker regression)."""
+    cells = [str(c) for hr in (block.get("header") or []) for c in hr]
+    return any(("보험계약마진" in c or "보험서비스마진" in c) for c in cells)
+
+
 def _pick_sensitivity_block(sens_blocks: list[dict]) -> dict | None:
     eligible = [b for b in sens_blocks if not _is_rollforward_sensitivity_caption(str(b.get("caption") or ""))]
     pool = eligible or sens_blocks
     return max(
         pool,
         key=lambda b: (
+            _has_csm_column(b),  # CSM-bearing tables win over PL/CF-only ones
             _sensitivity_caption_score(str(b.get("caption") or "")),
             b.get("score", 0),
             len(b.get("rows") or []),
@@ -794,7 +826,157 @@ def _pick_sensitivity_block(sens_blocks: list[dict]) -> dict | None:
     )
 
 
-def extract_sensitivity(blocks: list[dict]) -> dict | None:
+# --- unit normalization to 억원 (G6, owner inbox 20260614T0712Z) -------------
+# Sensitivity tables report in heterogeneous units (억원/백만원/천원/원) and many
+# carry NO unit cue in the block. Normalize every scenario value to 억원 by:
+#   1) an explicit caption/footnote/header cue (백만원/억원/천원/만원), else
+#   2) data cross-check: the table base CSM (기준.보험계약마진) vs the company's
+#      closing CSM in CSM_waterfall.json (값 is 억원) → factor → snap to power of 10.
+# (Owner-asserted 삼성=만원/현대=원 were both wrong vs the data; user chose 'data 판정'.)
+_UNIT_TO_EOKWON = {"억원": 1.0, "백만원": 1e-2, "만원": 1e-4, "천원": 1e-5, "원": 1e-8}
+
+
+@lru_cache(maxsize=1)
+def _csm_totals_eokwon() -> dict:
+    """{원수사명: latest 기말 CSM in 억원} from CSM_waterfall.json."""
+    try:
+        rows = json.loads((ROOT / "CSM_waterfall.json").read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return {}
+    out: dict = {}
+    seen: dict = {}
+    for e in rows:
+        if "기말" not in str(e.get("항목명")):
+            continue
+        name, q, v = str(e.get("원수사명") or ""), str(e.get("공시분기") or ""), e.get("값")
+        if name and isinstance(v, (int, float)) and q >= seen.get(name, ""):
+            seen[name], out[name] = q, float(v)
+    return out
+
+
+def _unit_cue(blk: dict) -> str | None:
+    hay = [str(blk.get("caption") or "")]
+    hay += [str(x) for x in (blk.get("footnotes") or [])]
+    hay += [str(c) for hr in (blk.get("header") or []) for c in hr]
+    text = " ".join(hay)
+    for u in ("백만원", "억원", "천원", "만원"):  # explicit, unambiguous (bare 원 excluded)
+        if u in text:
+            return u
+    return None
+
+
+def _first_base_csm(blk: dict) -> float | None:
+    """Base CSM (기준.보험계약마진) = 2nd value cell of the first risk row in the
+    standard 기준금액|변동금액|이익영향 layout. None when not that shape."""
+    if not _has_csm_column(blk):  # PL/CF-only table — 2nd cell isn't a CSM base
+        return None
+    for row in blk.get("rows") or []:
+        if not row or not isinstance(row[0], str):
+            continue
+        label = row[0].strip()
+        if not label or label.startswith("기준금액") or label in ("소계", "순위"):
+            continue
+        if _is_shock_label(label) and not _is_risk_label(label, ()):
+            continue
+        nums = [parse_num(str(c), dash_means_zero=False) for c in row[2:]]
+        nums = [n for n in nums if n is not None]
+        return abs(nums[1]) if len(nums) >= 2 else None
+    return None
+
+
+def _detect_unit(blk: dict, company: str) -> tuple[float, str, str]:
+    """(factor_to_억원, unit_label, source) where source = cue|xref|default."""
+    cue = _unit_cue(blk)
+    if cue:
+        return _UNIT_TO_EOKWON[cue], cue, "cue"
+    base = _first_base_csm(blk)
+    master = _csm_totals_eokwon().get(company)
+    if base and master and base > 0:
+        ratio = master / base
+        unit, factor = min(
+            _UNIT_TO_EOKWON.items(),
+            key=lambda kv: abs(math.log10(ratio) - math.log10(kv[1])),
+        )
+        if abs(math.log10(ratio) - math.log10(factor)) < 0.3:  # clean snap only
+            return factor, unit, "xref"
+    return _UNIT_TO_EOKWON["백만원"], "백만원", "default"  # sane IFRS17 fallback
+
+
+def _normalize_unit(scenarios: list[dict], factor: float) -> None:
+    if factor == 1.0:
+        return
+    for s in scenarios:
+        for k in ("csm_delta", "pl_impact"):
+            if s.get(k) is not None:
+                s[k] = round(s[k] * factor, 4)
+
+
+def _extract_pl_only(blk: dict) -> list[dict]:
+    """For sensitivity tables that carry 당기손익(PL)/자본 impact but NO 보험계약마진
+    (CSM) column — e.g. NH농협손해 (위험변수 × 상승/하락 × [당기손익 변동, 자본 변동],
+    출재경감 전/후). Emit pl_impact only (csm_delta=None), taking the FIRST 당기손익
+    value column (출재경감 전 ≈ 원수). Risk name rowspans the 상승/하락 pair."""
+    flat = [str(c) for hr in (blk.get("header") or []) for c in hr]
+    if not any("당기손익" in c for c in flat):
+        return []
+    skip = ("기준금액", "소계", "순위")
+    scenarios: list[dict] = []
+    current_risk = ""
+    for row in blk.get("rows") or []:
+        if not row or not isinstance(row[0], str):
+            continue
+        label = row[0].strip()
+        if not label or label.startswith("기준금액") or label in skip:
+            continue
+        if _is_shock_label(label) and not _is_risk_label(label, skip):
+            risk, shock, vals = current_risk, label, row[1:]
+        else:
+            current_risk = risk = label
+            shock = row[1].strip() if len(row) > 1 and isinstance(row[1], str) else ""
+            vals = row[2:]
+        nums = [parse_num(str(v), dash_means_zero=False) for v in vals]
+        pl = next((n for n in nums if n is not None), None)
+        if pl is None:
+            continue
+        scenarios.append({"risk": risk, "shock": shock, "csm_delta": None, "pl_impact": pl})
+        if len(scenarios) >= 12:
+            break
+    return scenarios
+
+
+def _finalize_sensitivity(blk: dict, scenarios: list[dict], company: str, sa_kind: str) -> dict:
+    factor, unit, source = _detect_unit(blk, company)
+    _normalize_unit(scenarios, factor)
+    # Sanity guard (owner-requested 단위 sanity rule): a single shock can't move CSM
+    # by more than the whole balance. If max|ΔCSM| > 3× the company's total CSM, the
+    # unit is almost certainly wrong (e.g. 메트라이프 default 백만원 → -59조) — flag
+    # suspect and null the values rather than ship a garbage magnitude.
+    warning = None
+    master = _csm_totals_eokwon().get(company)
+    if master:
+        csms = [abs(s["csm_delta"]) for s in scenarios if s.get("csm_delta") is not None]
+        if csms and max(csms) > 3 * master:
+            warning = f"max|ΔCSM|={max(csms):.0f}억 >> total CSM={master:.0f}억 — unit unresolved"
+            source = "suspect"
+            for s in scenarios:
+                s["csm_delta"] = None
+                s["pl_impact"] = None
+    out = {
+        "status": "ok",
+        "caption": blk.get("caption"),
+        "table_kind": sa_kind,
+        "unit": "억원",
+        "unit_detected": unit,
+        "unit_source": source,
+        "header": blk.get("header") or [],
+        "scenarios": scenarios,
+    }
+    if warning:
+        out["unit_warning"] = warning
+    return out
+
+
+def extract_sensitivity(blocks: list[dict], company: str = "") -> dict | None:
     sa_kind = "sensitivity_analysis"
     sens_blocks = [b for b in blocks if str(b.get("table_kind")) == sa_kind]
     if not sens_blocks:
@@ -820,13 +1002,14 @@ def extract_sensitivity(blocks: list[dict]) -> dict | None:
             csm_idx, pl_idx = band
             band_scenarios = _extract_sensitivity_band(blk, csm_idx, pl_idx, skip_stub)
             if band_scenarios:
-                return {
-                    "status": "ok",
-                    "caption": blk.get("caption"),
-                    "table_kind": sa_kind,
-                    "header": blk.get("header") or [],
-                    "scenarios": band_scenarios,
-                }
+                return _finalize_sensitivity(blk, band_scenarios, company, sa_kind)
+
+    # PL-only fallback: the picked table has no 보험계약마진 column (NH농협손해 etc.).
+    # Emit 당기손익 impact with csm_delta=None rather than mis-reading a fixed column.
+    if not _has_csm_column(blk):
+        pl_only = _extract_pl_only(blk)
+        if pl_only:
+            return _finalize_sensitivity(blk, pl_only, company, sa_kind)
 
     scenarios: list[dict[str, object]] = []
     current_risk = ""
@@ -896,26 +1079,27 @@ def extract_sensitivity(blocks: list[dict]) -> dict | None:
             "note": "sensitivity_analysis found but scenarios not parsed",
         }
 
-    return {
-        "status": "ok",
-        "caption": blk.get("caption"),
-        "table_kind": sa_kind,
-        "header": blk.get("header") or [],
-        "scenarios": scenarios,
-    }
+    return _finalize_sensitivity(blk, scenarios, company, sa_kind)
 
 
 def build_panel(glob_pat: str, extractor) -> dict:
     companies: list[dict[str, object]] = []
     for path in sorted(SRC.glob(glob_pat)):
         m = _FILENAME_RE.match(path.stem)
-        company = m.group(1) if m else path.stem
-        rcept = m.group(2) if m else ""
+        if m is None:
+            # No 14-digit DART rcept → not an ifrs17 extract (e.g. the K-ICS
+            # '*_kics_sensitivity.json' files the broadened sensitivity glob also
+            # matches). Skip so they never enter an ifrs17 panel.
+            continue
+        company = m.group(1)
+        rcept = m.group(2)
 
         try:
             blocks_raw = json.loads(path.read_text(encoding="utf-8"))
             blocks: list = blocks_raw if isinstance(blocks_raw, list) else [blocks_raw]
-            panel = extractor(blocks)
+            code = extractor.__code__
+            pass_company = "company" in code.co_varnames[: code.co_argcount]
+            panel = extractor(blocks, company) if pass_company else extractor(blocks)
             if isinstance(panel, dict):
                 companies.append({"company": company, "rcept_no": rcept, **panel})
             else:
@@ -934,7 +1118,11 @@ def main() -> None:
         "csm_amort_schedule.json": ("*_csm.json", extract_amort_schedule),
         "insurance_pl_breakdown.json": ("*_insurance_pl_mvp.json", extract_pl_breakdown),
         "bs_snapshot.json": ("*_bs_snapshot_mvp.json", extract_bs_snapshot),
-        "sensitivity_heatmap.json": ("*_sensitivity_mvp.json", extract_sensitivity),
+        # full _sensitivity.json (not _mvp): the MVP filter dropped valid CSM
+        # sensitivity tables for several 손보 (is_mvp reinsurance/slice gating);
+        # reading the full extract + the CSM-column-preferring picker recovers them
+        # (G7). build_panel skips the non-rcept K-ICS '*_kics_sensitivity.json'.
+        "sensitivity_heatmap.json": ("*_sensitivity.json", extract_sensitivity),
     }
 
     for fname, (pat, fn) in outputs.items():

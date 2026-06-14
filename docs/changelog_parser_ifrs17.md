@@ -12,6 +12,26 @@ Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
 ---
 
+## 2026-06-14 — CSM sensitivity panel: column-map / unit / 손보-recovery (inbox 20260614T0712Z)
+
+Owner live-site QA on the CSM sensitivity pipeline — fixed 3 glitches in
+`scripts/viz_build_ifrs17_panels.py` (panel parser only; no extractor change):
+- **G4b (column mapping)**: `_extract_sensitivity_band` used a fixed LEFT-anchored csm_idx, so
+  rowspan-elided 2nd+ risk rows (기준금액 columns dropped) shifted → wrong ΔCSM + null PL. Now RIGHT-anchors
+  (negative idx) for the standard 기타포괄손익-trailing layout; other layouts (위험경감/product-row) guarded, no regression.
+- **G6 (units → 억원, data-determined)**: cue (억원/백만원/천원/만원) else cross-check table base CSM vs
+  `CSM_waterfall.json` total CSM (억원) → power-of-10 snap. Owner's notes were BOTH wrong: 삼성=백만원 (not 만원),
+  현대=천원 (not 원). 현대 사망률 ΔCSM −853억 ≈ 삼성 −1,334억 (640× anomaly gone). Output carries
+  `unit/unit_detected/unit_source`. Sanity guard: max|ΔCSM| > 3× total CSM → `unit_source=suspect` + null + warning
+  (메트라이프 default-백만원 −59조 blocked).
+- **G7 (missing 손보)**: panel read only `_sensitivity_mvp.json` (is_mvp dropped valid tables) + the picker
+  preferred CSM-less tables. Now reads full `_sensitivity.json` (build_panel skips non-rcept K-ICS files), picker
+  prefers a 보험계약마진 column, methodology-table penalty, + a PL-only handler (NH 출재경감 당기손익). Recovered
+  메리츠/DB손해/KB/NH (한화 = 별첨, legit partial) + bonus AIA/케이비라이프. **0 regressions, 25/28 ok.**
+- Verify: production build touched only `sensitivity_heatmap.json` (other panels byte-identical); pytest 110;
+  whole-cohort mvp-vs-full diff CHANGED 0. Remaining (separate): 흥국생명 product-as-rows shock col (TODO F16,
+  designer-linked); validation 단위/비율 게이트 rule (parser-side guard done).
+
 ## 2026-06-14 — REFACTOR 6/6 (bs_snapshot/sensitivity externalization) + GOLDEN-E2E expansion
 
 Finished the owner `parser_refactor` backlog (inbox `20260613T0200Z`) for the ifrs17 lane:
