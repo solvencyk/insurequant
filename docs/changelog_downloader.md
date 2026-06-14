@@ -1,6 +1,6 @@
 # Insurequant Changelog — Downloader Stage
 
-> Last updated: 2026-06-09 · Stage 1/5 — downloader
+> Last updated: 2026-06-14 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
 
 **Scope:** data collection only — raw fetch from external sources (정기경영공시 / DART / FSC bonds / KIDI / IR factbooks).
@@ -8,6 +8,35 @@
 **This file:** entries scoped to downloader work only, extracted from the root changelog 2026-05-30.
 
 Cross-stage entries that touch downloader as one phase but are primarily parser/gathering/viz (e.g. F11 foreign-affiliate viz integration, IR factsheet 전사 수집 + 손보 NB CSM 배수 파싱, F17 LOB parsing) remain in `docs/claude-changelog.md`. The compressed historical archive (pre-2026-05-25) also remains there.
+
+## 2026-06-14 -- G8: NB CSM배수 25.4Q 누락 3사 — FY2025 감사보고서 raw 복원 (추출은 parser로 라우팅)
+
+owner QA(G8, `inbox/downloader/20260614T0712Z`): index.html CSM배수가 AIG(KR0029)·카카오페이손해
+(KR1098)·하나생명(KR0097)에서 2025.4Q 누락 → 24.4Q fallback. inbox 프레이밍은 "DART refetch 3건"이었으나
+**진단 결과 단순 refetch 건이 아니었음.**
+
+- **원인 분리**: NB CSM배수 분자(신계약 CSM)는 `CSM_waterfall.json` 항목2(=파서 마스터) → 다운로더 산출물
+  아님. 3사 FY2025 감사보고서 raw가 working tree에서 사라져 있었음(추출 후 정리/purge 추정; data/dart raw는
+  gitignored). 인벤토리 `_inventory_manifest.json`(raw_annual)이 rcept를 기록 중이라 라이브 DART 재취득 가능.
+- **복원(downloader 액션)**: 라이브 `/api/list.json`(회사명 검색, 영구매핑 없음) → FY2025 감사/연결보고서
+  rcept 확정 → `/api/document.xml` fetch + extract, canonical `data/dart/FY2025_Q4/raw/<KR>_<name>_<rcept>/`:
+  - KR0029 AIG: `20260407002104`(별도) + `20260407002109`(연결). annual_raw_dir가 kics명 "AIG손해보험" ↔
+    DART명 "에이아이지손해보험" 불일치로 corp_code prefix(`00983606_`)로 떨궈서 → **빌더 글롭 `KR0029_*`에
+    걸리도록 `KR0029_` prefix로 리네임 정정.**
+  - KR1098 카카오페이: `20260323001537`(별도). KR0097 하나생명: `20260325000201`(별도)+`000202`(연결).
+  - 검증: 보험계약마진 26~55회/신계약 3~12회 (IFRS17 본문 OK).
+- **추출 스모크(read-only, 마스터 미변경)로 진짜 원인 확정** → 파서 이슈:
+  - AIG: 신계약CSM=986,825.6억(≈2000배 과대, 롤포워드는 닫힘) magnitude/table misparse. (과거 FY2024=443.8)
+  - 카카오페이: 신계약CSM=20,187.6억(현 마스터 stale값과 동일 → 이전 빌드도 같은 표를 같은 방식으로 읽음).
+    배수는 build_nb_csm_multiple `_MULT_CAP=40`이 정상 null 처리 중.
+  - 하나생명: build-waterfall 경로 no blocks → AUDIT_REPORT_ANNUAL이라 `ifrs17_ingest_audit_annual.py`
+    (extract_csm_tables) 경로 필요(2024.4Q=3240.3이 그 산물).
+- **핸드오프**: parser/ifrs17 inbox에 route:reparse 작성
+  (`inbox/parser/20260614T1330Z__downloader__MULTI_2025.4Q__nb_csm_fy2025_raw_ready.md`).
+  파서가 magnitude 교정 + 하나생명 audit-annual ingest → CSM_waterfall 재빌드 → build_nb_csm_multiple 재실행.
+- G8 원 스레드 → `_resolved/` 이동(status: resolved). downloader 잔여 액션 없음.
+- **미결(별개)**: `20260614T1232Z` qa_residual item(2) — KB/한화손해 2023.4Q 금리위험·카카오 2025.4Q
+  시장위험 스캔-only(텍스트레이어 없음) OCR. downloader OCR 경로 부재 → owner 결정 대기, 메시지 open 유지.
 
 ## 2026-06-09 -- AIA 식별자 마이그레이션: 리터럴 "AIA" → KR0080 (코드+데이터 코디네이션)
 

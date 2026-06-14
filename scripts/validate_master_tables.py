@@ -187,6 +187,39 @@ def rebuild_root_masters() -> None:
     print()
 
 
+SENS_PATH = "data/dart/viz/sensitivity_heatmap.json"
+
+
+def sensitivity_unit_sanity():
+    """Owner 2026-06-14 claim 2: CSM 민감도 단위 미정규화(원/만원/억원 혼재) sanity.
+    회사별 max|csm_delta| vs 또래 median 규모비. 정규화 후엔 동일단위(억원) 가정이므로 또래 대비
+    거대 outlier = 미정규화 시그니처(현대해상=원 단위라 삼성화재의 ~640배였던 케이스의 회귀가드).
+      RED   : ratio>1000x or <1/1000x (clean 단위오류 — gate 차단)
+      YELLOW: ratio>100x or <1/100x  (의심 — 보고만, 또래보다 100배+ 작은 미정규화 ÷ 누락 등)."""
+    sp = ROOT / SENS_PATH
+    sens_red, sens_yellow = [], []
+    if not sp.exists():
+        return sens_red, sens_yellow
+    sdoc = json.loads(sp.read_text(encoding="utf-8"))
+    scales = []
+    for c in sdoc.get("companies", []) or []:
+        ds = [abs(s["csm_delta"]) for s in (c.get("scenarios") or [])
+              if isinstance(s.get("csm_delta"), (int, float))]
+        if ds:
+            scales.append((c.get("company"), max(ds), c.get("unit"), c.get("unit_detected")))
+    if len(scales) < 5:
+        return sens_red, sens_yellow
+    vals = sorted(v for _, v, _, _ in scales)
+    med = vals[len(vals) // 2] or 1.0
+    for name, mx, unit, ud in scales:
+        ratio = mx / med
+        if ratio > 1000 or ratio < 1e-3:
+            sens_red.append((name, mx, ratio, unit, ud))
+        elif ratio > 100 or ratio < 1e-2:
+            sens_yellow.append((name, mx, ratio, unit, ud))
+    return sens_red, sens_yellow
+
+
 def main() -> int:
     if "--no-build" not in sys.argv:
         rebuild_root_masters()
@@ -397,8 +430,11 @@ def main() -> int:
         "교보라이프플래닛생명보험": "ALL",  # 디지털 최소공시 (TODO_parser L51 legit)
         "신한이지손해보험": "ALL",        # CSM 제외사(단위오류), PL 분해도 미공시
     }
-    # 분기 단위 legit (진짜 미공시 confirmed). 현대 2025.2Q: 보험서비스비용·재보험수익 자체 미공시(owner 확인).
-    ZLEG_LEGIT_CQ = {("현대해상", "2025.2Q")}
+    # 분기 단위 legit (진짜 미공시 confirmed). 현대 2024.1Q~2025.2Q: OLD form 주석에 보험서비스비용·재보험수익
+    # LOB 미분리(parser 표단위 raw확인 2026-06-14: LOB-헤더 표=수지현황 netted·보험수익+재보험서비스비용·금융손익
+    # 3종뿐 → 비용 leg 부재로 도출불가). 2025.3Q+는 NEW form(분석공시)부터 분리공시 → 추출됨(예외 불요).
+    ZLEG_LEGIT_CQ = {("현대해상", q) for q in
+                     ("2024.1Q", "2024.2Q", "2024.3Q", "2024.4Q", "2025.1Q", "2025.2Q")}
     zleg_rows = []  # (co, q, n_zero, n_none, 생명장기손익)
     zleg_exc = 0
     for (co, q), m in sorted(pl.items()):
@@ -509,6 +545,18 @@ def main() -> int:
           "basis": bs, "sign_flip": (a < 0) != (b < 0)} for c, q, it, d, t, a, b, bs in qoq_rows],
         ensure_ascii=False, indent=2), encoding="utf-8")
 
+    sens_red, sens_yellow = sensitivity_unit_sanity()
+    print()
+    print("=" * 78)
+    print(f"5. SENSITIVITY_UNIT_SANITY (csm_delta 또래-median 규모비, 억원)  "
+          f"RED={len(sens_red)} YELLOW={len(sens_yellow)}")
+    print("   RED: ratio>1000x or <1/1000x (단위 미정규화) / YELLOW: >100x or <1/100x")
+    print("=" * 78)
+    for name, mx, ratio, unit, ud in sens_red:
+        print(f"  RED  {str(name):18s} max|Δ|={mx:>12.2f} ×med={ratio:>8.3g}  unit={unit}/det={ud}")
+    for name, mx, ratio, unit, ud in sens_yellow:
+        print(f"  YEL  {str(name):18s} max|Δ|={mx:>12.2f} ×med={ratio:>8.3g}  unit={unit}/det={ud}")
+
     print()
     print("#" * 78)
     print(f"SUMMARY  coverage_hole:{len(wf_holes)}CSM/{len(pl_holes)}PL | "
@@ -518,12 +566,12 @@ def main() -> int:
           f"pl_bridge:{pb_pass}P/{len(pb_fail)}F/{pb_skip}S | zero_legs:{len(zleg_rows)} | "
           f"impossible0:{len(zerolegs_rows)} | "
           f"crosscheck:{cc_pass}P/{cc_minor}M/{len(cc_fail)}F/{cc_skip}S | "
-          f"qoq_warn:{len(qoq_rows)}Y")
+          f"qoq_warn:{len(qoq_rows)}Y | sens:{len(sens_red)}R/{len(sens_yellow)}Y")
     print("#" * 78)
-    # QOQ는 YELLOW(anomaly)라 exit code에 반영 안 함. wfy/zamort/zleg/impossible0은 데이터 오류라 반영.
+    # QOQ/sens_yellow는 YELLOW(anomaly)라 exit code에 반영 안 함. wfy/zamort/zleg/impossible0/sens_red은 데이터 오류라 반영.
     return 0 if not (ci_fail or pb_fail or cc_fail or dup_rows or spike_rows or cont_rows
                      or wf_holes or pl_holes or wfy_rows or zamort_rows or zleg_rows
-                     or zerolegs_rows) else 2
+                     or zerolegs_rows or sens_red) else 2
 
 
 if __name__ == "__main__":

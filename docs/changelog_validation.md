@@ -1,11 +1,54 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-06-12 · Stage 3/5 — validation
+> Last updated: 2026-06-14 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
 ---
+
+## 2026-06-14 (b) — 정합성 전수검증: scan false-positive fix + sensitivity 단위룰 신설 + inbox 드레인 + 동시변경 적발
+
+owner "docs 둘러보고 inbox·마스터 JSON 정합성 검증" 지시 → 3대 게이트 실측 + inbox 드레인.
+
+**게이트 실측 (게이트 RED은 외부 동시쓰기로 변동, 아래 스냅샷 ~20:00 KST):**
+- K-ICS `validate_kics_disclosure.py`: RED **42** (등식 21 + 시장 21) + census hole 21, exit 2. 등식 21 = 메리츠 rule5 ×12(systematic +45억) + 코리안리 2025.2Q core None ×7 + AIA rule2 ×1 + 미래에셋 8_life ×1.
+- 금리민감도 `validate_kics_rate_sensitivity.py`: **RED 0** (RS3 32Y, DB손해 basis 예외 3). PASS.
+- IFRS17 `validate_master_tables.py`: closing 0F·crosscheck 0F·pl_bridge 14F(2023 known + 메리츠 2023 + 한화생명 2023.2Q −90,613 이상치)·cont 15·wfy 2. + **신규 sensitivity RED 0/YELLOW 1**.
+
+**🔧 fix 1 — `_scan_breakdown_presence` false-positive (삼성생명 odd-Q)**: distinct≥3 **substring** 매칭이 경과조치표 compound('주식위험액증가분점진적인식')·산문('자산집중위험등')을 라벨로 세어 odd-Q false RED. parser D 분쟁 raw 판정(KR0069 FY2023_Q3 MD L184/185/174/230 전부 비-표) → parser 정답, 06-13c "삼성생명 odd 3=진짜 갭" 자기정정. fix: 번호접두어 제거 후 **clean-cell 매칭**(셀==라벨/어간 또는 라벨 직후 숫자). 19_market RED 15→10(KR0069 odd 3 SKIP, 짝수·GREEN 불변).
+
+**🔧 fix 2 — SENSITIVITY_UNIT_SANITY 룰 신설 (owner 0712Z claim2)**: `validate_master_tables.py`에 회사별 max|csm_delta| vs 또래 median 규모비. RED>1000x/<1/1000x(단위 미정규화, gate 차단)·YELLOW>100x/<1/100x. 현대해상=원단위→삼성화재 640배 케이스 회귀가드. 실측 RED 0(heatmap 19:58 재정규화로 640배 해소)·YELLOW 1(푸본현대 9.86억=median 1/308, ÷100 미적용 의심). 미래에셋·롯데·한화손해 3사 scenarios 0건(coverage 갭).
+
+**🚨 동시변경 적발**: `kics_disclosure.json` mtime 17:16→**19:59:46**, `sensitivity_heatmap.json` 17:19→19:58 — **다른 parser 세션이 실시간 백필 중**(멀티세션 설계). 세션 중 게이트 RED 52→42, 시장 RED 31→21. 단일 스냅샷은 잠정값. 시장 RED은 parser 활성 도메인이라 라우팅 제외(중복 회피).
+
+**📬 inbox 드레인 (validation/ open 3 → 처리)**:
+- owner `census_gaps_sensitivity_sanity` → **resolved**. claim1(2025.4Q 36-40 전사누락)=라이브 staleness(데이터 38/38 적재·게이트 RED로 차단 중, 라이브만 미재배포=publishing/designer). claim2=sensitivity 룰 신설.
+- parser `irr_exempt_register` **v2/iter2** → **answered**. 삼성생명 odd-Q resolved(라인번호 공유). TOOLING_FAIL census 요청=원칙수용·wire-up 보류(nonok.json이 데이터보다 lag, KR0011/KR0032 이미 빠짐, 진짜갭은 19_market이 이미 RED). INTERNAL_MODEL_36IRR/OCR/micro EXEMPT=owner 결정 상신(§4, 자체 waiver 금지).
+- owner `backlog_digest`(0612Z) → #3/#4(시장36-40·item14후) 완료 종결, 잔여 open.
+
+**근본원인 검증 Workflow(8 에이전트, raw 대조 진단→적대검증) → 라우팅**:
+- **메리츠 rule5 ×12 → reparse**: parser가 item23(기타요구자본)+sub item25(비례성원칙)를 12 과거버킷 0 과소추출. 공시값(38~54억)=diff 정확일치, item14/15/22 정확. **라이브 2026.1Q는 이미 item23=57 PASS** = 구경로 버그. inbox/parser `KR0001_MULTI__rule5_item23_underextract` 발주.
+- **코리안리 2025.2Q ×7 → reparse**: redocling이 MD 재생성 완료(코어 지급여력표 실재)인데 후속 파서가 금리민감도 스코프만 돌고 코어 1-28 추출기 미실행. item28 파생도출 필요. inbox/parser `KR1000_2025.2Q__core_items_not_extracted` 발주.
+- **AIA KR0080 2025.1Q rule2(−789) → documented_exception(owner §4)**: image-only scan, item8/item9 둘 다 819(중복 OCR키잉), 텍스트 reparse 불가. 정확 allocation 미확정(item9≈30 추정). owner 등록 권고.
+- **미래에셋 KR0079 8_life(2023.2Q +1367) → documented_exception(owner §4)**: image-only(파싱 MD조차 부재, pypdf 숫자레이어 0), subs 29-35 OCR노이즈 ~8.5% spread, 단일 culprit 없음. **기존 KR0079 rule2 예외를 8_life로 확장 권고.**
+
+**재드레인(owner 지적 "안던진 inbox 없냐") — 동시변경 반영 재검증 + IFRS17 미발신 적발**:
+- 데이터 재변경 확인: `kics_rate_sensitivity.json`(20:14)·`sensitivity_heatmap.json`(19:58, parser G7 재빌드) → **전 게이트 재검증**: K-ICS RED 42 · RS RED 0(20:14 변경 후도 안정) · master closing/crosscheck 0F · sens 0R/1Y. 내 답변 메시지 3건 무결(v3 clobber 없음).
+- owner IFRS17 sensitivity 메시지(`ifrs17_csm_sensitivity_extraction`)는 **parser/ifrs17로 갔고 answered**(A G4b·C G6 삼성=백만원/현대=천원·B G7 5손보 복구). 그 답변 line 76 "validation 단위/비율 sanity 게이트 룰 권장"을 내 SENSITIVITY_UNIT_SANITY가 **충족**.
+- **미발신 적발 → ifrs17 parser 발주**(`20260614T1135Z__validation__MULTI_2025__sensitivity_unit_ratio_sanity`): **푸본현대 csm_delta=9.86 vs pl=1164.85(비율 1/118, median 1/308) = under-scale** — 파서 OVER-scale 가드(>총CSM×3)의 사각(작은 쪽 미탐), 내 룰이 YELLOW로 포착. + 미래에셋(unavailable)·신한라이프(partial) CSM 민감도 coverage 재확인.
+- parser 3건 회신(메리츠·코리안리·sensitivity) **전부 answered → 재검증 통과**: 메리츠 item23/25 12분기 적재(rule5 12 RED→0), 코리안리 코어 1-28+item28 파생+시장37-40(7 RED+19_market 해소), 푸본현대 = under-scale가 아니라 **mis-tagged 롤포워드**(shock행 0, parser `_has_shock_rows` 가드로 KB·푸본현대 ok→partial). 게이트 **RED 42→23**, sensitivity YELLOW→0. 3건 `_resolved/` 이동.
+
+**inbox 백로그 triage (owner "1번 ㄱㄱ")** — validation-sent answered **16건 종결→`_resolved/`**:
+- 06-09 continuity 8(KR0003/0011/KR1000 해소 + KR0009/0070/0072/0073/0099 = legit_restatement documented, WFY_EXCEPTIONS) / 시장 6(룰 라이브·146회수·fitz백필로 superseded) / qoq_signflip(동양 FIXED·교보 real·코리안리 escalate 3 verdict) / user_xlsx(06-11 재검증 통과·spawned 2건 clean).
+- **유지(잔여)**: `hyundai_pl_legit_misjudge`(현대 2024.1Q~2025.2Q ZLEG_LEGIT_CQ 등록 잔여 — zero_legs 6 중 현대 5) + KR0083 2026.1Q continuity(현 RED Δ12.4%·sensitivity flagged = 실데이터 의심).
+- **신규 in-inbox(parser irr_exempt 재확인)**: ① localizer **fitz-fallback LANDED**(KR0011·KR0032 ERR→OK, pytest 110) → **TOOLING_FAIL census 선결조건 충족, wire-up 가능**. ② **IBK(KR1011) 내부모형 면제서 제외**(fitz로 41-46 적재·derive rel 0.0% GREEN) → INTERNAL_MODEL_36IRR owner상신 = 신한라이프 4 + 교보 1 = **5건만**. ③ 현 RED 23 = 전부 OCR/내부모형/micro/scan = owner.
+
+**A·B 실행 (owner "AB go")**:
+- **(A) TOOLING_FAIL census 배선** — `validate_kics_disclosure.py._market_tooling_fail()`: nonok.json(localizer ERR/NO_SIGNAL/TIMEOUT/SCAN)을 현재 데이터와 대조해 *여전히 갭*(item19 공시·36-40 결측)인 셀만 're-localize' 워크리스트로 노출. stale-nonok 제외(데이터 lag 방지), 게이트 비차단(짝수 진짜갭은 19_market이 이미 RED — 원인 귀속용). 현 **TOOLING_FAIL=0**(3 nonok 전부 백필). parser fitz-fallback 안착 약속분 이행.
+- **(B) 현대해상 2024.1Q~2025.2Q ZLEG_LEGIT_CQ 등록** — parser 표단위 raw확인(OLD form 비용측 LOB 부재) → `zero_legs 6→1`(동양 2025.3Q 잔여, 별건). `hyundai_pl_legit_misjudge` thread 종결.
+
+**수렴 (parser 3 메시지 실시간 처리 → 내 재검증 PASS → resolved)**: parser가 KR0001(item23/25 항등도출=공시값 일치 적재)·KR1000(코어 1-28 + item28 파생 156.19 + 시장37-40 fitz보너스)·sensitivity(근본원인=mis-tag 롤포워드 shock행0, `_has_shock_rows` 가드 차단; 내 under-scale 가설보다 정확) 전부 answered. **재검증: 게이트 RED 42→23**(비-시장 21→**2**), **sens YELLOW 1→0**. 3 스레드 `_resolved/` 이관. **잔여 RED 23 = 전부 owner 결정 또는 parser 활성도메인**: AIA rule2 + 미래에셋 8_life = documented_exception 대기(2) / 시장 21 = localizer fitz-fallback 진행 + INTERNAL_MODEL/OCR/micro EXEMPT(owner). **validation-actionable reparse = 0.**
 
 ## 2026-06-14 — 파서 회신 2건 처리: 시장위험 146 회수 재검증 + item14후(8_post) 검증
 

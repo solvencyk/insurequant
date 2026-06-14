@@ -7,6 +7,27 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-06-14 — owner 라이브 QA 글리치 4건 (inbox 20260614T0712Z)
+
+디자이너-단독 4건 처리, 상류대기 3건 ack. (전체 내역 = inbox 답변 섹션.)
+
+- **(1) K-ICS 드롭다운 누락사** [G3 코리안리/G9 예별]: `K-ICS.html` 데이터로드 `.then`에 `fillMissingCompanies()` — 하드코딩 옵션에 없는 `kics_disclosure.json` 원수사명 전부 append(가나다순). JS 선택로직이 `select.options` 검색이라 옵션 추가만으로 선택됨. 옵션 30→48. 코리안리·예별·AIG손해보험·카카오페이손해·서울보증·교보라이프플래닛 선택 가능 확인. (완전 데이터화는 curated 순서 보존 위해 P2 보류.)
+- **(2) 현대해상 키컬러** [G5]: `IFRS17.html` KEY_COLORS `#008A3E`(초록)→**`#FFB81C`**(노란주황, owner값). 밝은색이라 line 32% 보정 자동. 스와치 rgb(255,184,28) 검증.
+- **(3a) ΔCSM 헤더** [G4a]: IFRS17 sens 테이블 "ΔCSM(백만)"→**"ΔCSM(억원)"** (라벨만).
+- **(3d) 모바일 테이블**: IFRS17 `@media≤640` th/td `4px 6px`→`6px 8px` + `.num{white-space:nowrap;word-break:keep-all}`.
+- **상류대기 ack**: (3b) shock 표기 통일·(3c) 흥국 행분리 → parser/ifrs17 `sensitivity_heatmap.json` 단계. (4) 기본자본 소진율 100%+ → publishing tier1 overflow→tier2 데이터 대기(donut >100% 표현 위해).
+- 검증: Edge headless dump, JS에러 0.
+
+### 2026-06-14 (후속) — sensitivity 3b/3c 매듭 + 푸본현대 parser handoff
+- **(3c) 흥국 행분리 = parser 완료 확인**: `sensitivity_heatmap.json` 흥국생명 6행 정리됨(product line 혼입 제거). designer 표 정상.
+- **(3b) shock 표기 = designer display 파싱으로 완료**: parser가 자유텍스트 유지 → IFRS17 `fmtShock()` 추가(top-level helper, sens 렌더 line ~955 적용). `{n}% 증가/상승`→`{n}%↑`, `{n}% 감소/하락`·`(-){n}%`→`{n}%↓`. 복합/비정형 원문보존. 검증: 흥국 3.27%↑/↓·9.16%↑/↓·2.62%↑ /0.26%↑.
+- **푸본현대생명보험(KR0083) 오파싱 발견 → parser reparse 요청**: sensitivity_heatmap 엔트리가 "기말 보험계약부채" 잔액표 오추출(shock=금액). inbox `20260614T1140Z__designer__KR0083_FY2024__sensitivity_misparse.md`. (display 레이어로 불가 = 추출단계 정정 필요.)
+
+### 2026-06-14 (후속2) — 민감도 stub 마감 + (4) 도넛 보류 확정
+- **parser 푸본현대 수정 확인(resolved)**: `_has_shock_rows` 가드로 푸본현대·KB손해·미래에셋·신한을 `status="partial"`(scenarios=[]) 재분류 — ±shock 행 없는 롤포워드 오태깅. KR0083 thread resolved→`_resolved/` 이동.
+- **민감도 stub 사용자친화화**: IFRS17 Panel 6 stub "status=partial / 시나리오 없음"(개발자스러움) → "% 충격 기준 보험위험 민감도표가 없는 보험사입니다."(없는 회사) / "민감도 데이터 미수록 보험사입니다."(엔트리 자체 없음). 검증(Edge dump): 푸본현대·KB손해 깔끔한 stub, "7,095,833" 금액 노출 사라짐.
+- **(4) 기본자본 소진율 100%+ 도넛 = 구현 취소(보류 아님)**: publishing 조사 결론(`20260614T1141Z__publishing__...`) — tier1 100%+는 Ⅴ.1 excess 파싱누락 artifact, 파서가 excess 추출하면 정의상 ≤100% → `K-ICS.html` `Math.min(...,100)` 캡이 정답. "XXX%+ 도넛+overflow 툴팁" 미구현. designer 액션아이템에서 제거(publishing 재통지 시 재개). 메시지 answered.
+
 ## 2026-06-13 — 트리맵 색 임계 앵커 130/200% + 민감도 권고선 정합 (TREEMAP-SCALE, inbox 🟠4)
 
 권고선 = **130%** (owner 확정 2026-06-13; 기본자본비율은 50%). 사이트 메인 K-ICS 차트들은 모두 "지급여력비율 130% 기준선"을 씀.

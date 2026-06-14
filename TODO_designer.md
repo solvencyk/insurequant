@@ -74,6 +74,7 @@ Publishing currently has Tier1 4-bar in production. Tier2 (LOB 장기/자동차/
 - [ ] Caption variant per-company taxonomy (장기/자동차/일반 vs 보장성/물보험/저축성)
 
 ## ✅ Done (archive)
+- QA-GLITCH-0614 owner 라이브QA: K-ICS 드롭다운 누락사 보강(30→48, fillMissingCompanies) + 현대해상 키컬러 #FFB81C + ΔCSM 헤더 억원 + 모바일 표 패딩/nowrap — 2026-06-14 (changelog 06-14). 상류대기: shock표기통일·흥국행분리(parser), 소진율 100%+캡(publishing)
 - TREEMAP-SCALE 트리맵 색 임계 앵커 130/200% + 범례 임계표기 (권고선=130%, 민감도 패널 150%→130% 정합) — 2026-06-13 (changelog 06-13)
 - KEYCOLOR-V1 IFRS17 적용(워터폴 total + Panel2/5 라인 + Panel3 상각막대 + select 링 + 스와치, WCAG 보정) — 2026-06-13 (changelog 06-13)
 - NAME-ABBR index 회사 약칭 + 트리맵 '기타' 묶음 — 2026-06-12 (changelog 06-12)

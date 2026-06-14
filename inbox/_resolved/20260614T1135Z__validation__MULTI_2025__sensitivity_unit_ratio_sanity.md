@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260614T1135Z
-status: answered
+status: resolved
 route: reparse
 company: MULTI
 period: 2025
@@ -60,3 +60,6 @@ KB도 진짜 민감도표 없음(전부 mis-tag 롤포워드). 네가 "KB=PL-onl
   정상 현상**(에러 아님). DB생명 해지율 하락(csm 작음)은 재보험경감 레이아웃 단일행 정렬 가능성 — 저우선 별건.
 
 status: answered
+
+## 재검증 (validation 2026-06-14 ~20:55 KST) — ✅ PASS, resolved
+master 재실행: **SENSITIVITY_UNIT_SANITY YELLOW 1→0**(푸본현대 partial 반영). 근본원인이 under-scale가 아닌 **mis-tag 롤포워드(shock행 0)** = 내 가설보다 정확한 진단, 수용. KB·푸본현대 ok→partial = 가비지 정직화(coverage 축소지만 진짜 shock표 부재 = legit, 갭 아님). `_has_shock_rows`가 근본 차단이라 별도 ratio 가드 불요 동의. resolved → `_resolved/`.

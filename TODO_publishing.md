@@ -11,7 +11,7 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ## Status
 
-Open viz-assembly work, all gated on upstream stages: F4 v2 (forward-outlook confidence research), F13 (재보험 지표, waits on downloader F8), F17/F18 viz (waits on parser Tier2/IR JSON), and the CSM bubble chart redesigns (INDEX-IFRS17-BUBBLE / INDEX-BUBBLE-V2). No master JSON push pending here standalone.
+Open viz-assembly work, all gated on upstream stages: F4 v2 (forward-outlook confidence research), F13 (재보험 지표, waits on downloader F8), F17/F18 viz (waits on parser Tier2/IR JSON). CSM bubble map **완결됨** (라이브, 2026-06-14 — 4축 V2 폐기). No master JSON push pending here standalone.
 
 ---
 
@@ -47,27 +47,9 @@ Parser는 데이터 추출 + reconciliation gate. Publishing은 그 결과를 pa
 - [ ] `data/ir/<period>/parsed/<KR>.json` 도착 후 disclosed_csm_multiple.json + nb_premium_wolnap.json + segment_insurance_income 통합
 - [ ] DART↔IR cross-source 룰 validation pass 확인 → 통합 어셈블 진행
 
-### INDEX-IFRS17-BUBBLE — CSM bubble below K-ICS treemap
+### ~~INDEX-IFRS17-BUBBLE / INDEX-BUBBLE-V2~~ — 완결됨 (2026-06-14)
 
-In-progress. size=CSM, color=NB CSM mult; `csm_bubble.json` + `viz_build_csm_bubble.py`; K-ICS treemap unchanged.
-
-- [ ] data pipeline 완성도 확인 (현재 27/28, 코리안리 N/A)
-- [ ] index.html embed → designer 핸드오프 (구조 변경 시)
-
-### INDEX-BUBBLE-V2 — Bubble chart 4축 재설계 (2026-05-30, 사용자 요청)
-
-현 size·color 2축 → 4축 재구성:
-- **X축 = 당기순이익** (단기 수익: 최근 얼마 벌었나)
-- **Y축 = CSM 잔액** (미래 이익 재원: 앞으로 얼마 남았나)
-- **bubble 크기 = 신계약 CSM** (재원 성장: 매해 얼마나 키우나)
-- **bubble 색 = 신계약 CSM 배수** (sales 수익성 건강도)
-
-Data:
-- 당기순이익 = F17 `net_income_breakdown.json` (Tier1, 28사)
-- CSM 잔액 / 신계약 CSM / 배수 = 기존 `csm_bubble.json`
-
-- [ ] `viz_build_csm_bubble.py` 확장 또는 신규 빌더 (join 로직)
-- [ ] 4축 chart spec (ECharts) → designer 핸드오프
+CSM bubble map은 main에 라이브로 **완결**. 실제 축 매핑(index.html ECharts): **X=신계약 CSM 규모(로그), Y=NB CSM 배수, 크기=기말 CSM 잔액**. 4축 V2 재설계는 **폐기(불필요)** — 3개 인코딩이 최종 디자인. (빌더 주석은 JSON 필드 설명일 뿐 축≠필드.) Done 표 참조.
 
 ### MISC-IR-NB-DENOM — NB CSM ratio assembly (validation V2는 separate)
 
@@ -81,11 +63,9 @@ In-progress. CSM Waterfall 23/23 ok. NB CSM ratio IR 6-co. index.html bubble: `v
 
 - [ ] 6-co IR cohort 외 cohort 확장 (`build_ir_disclosed_multiples.py` 9사 도착)
 
-### IFRS17-CSM-BUBBLE — long-term roadmap
+### ~~IFRS17-CSM-BUBBLE~~ — 완결됨 (2026-06-14)
 
-In-progress. Pipeline: crawl (downloader) → validators → `viz_build_csm_bubble.py`. Waterfall validation 23/23.
-
-- INDEX-IFRS17-BUBBLE 과 같은 pipeline 일부. INDEX-BUBBLE-V2 완성 시 자연 흡수.
+INDEX-IFRS17-BUBBLE 과 동일 pipeline. Waterfall validation 23/23. 버블맵 라이브 완결로 흡수됨. Done 표 참조.
 
 ---
 
@@ -101,6 +81,7 @@ In-progress. Pipeline: crawl (downloader) → validators → `viz_build_csm_bubb
 | ~~F5~~ | No-bond insurer forward sim 추가 | done | 24 → 37 cohort. KR0008 삼성화재 263%→263% flat. 13 no_bond insurer 추가 |
 | ~~F6~~ | CSM 상각 schedule yearly granularity (data side) | 2026-05-28 | `extract_amort_schedule` emits yearly y1..y10 + y10plus + granularity. 16 yearly / 6 coarse / 2 no-data |
 | ~~F1~~ | index.html → IFRS17 cross-nav data hook | done | `fcdd544`. ECharts on('click') → URL param |
+| ~~INDEX-BUBBLE~~ | index.html CSM bubble map | 2026-06-14 | Live on main. 축: X=신계약CSM(로그)·Y=NB배수·크기=기말CSM. `viz_build_csm_bubble.py`+`csm_bubble.json`. 코리안리 배수 N/A=회색. 4축 V2 재설계 폐기(불필요) |
 
 ---
 

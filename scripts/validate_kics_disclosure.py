@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from collections import Counter
 from datetime import datetime, timezone
@@ -81,10 +82,35 @@ def _top_offenders(findings: list[dict], status: str, limit: int = 10) -> list[d
     ]
 
 
-# 19_market source-grounded cadence: 시장위험 세부표(36-40) 5종 라벨. >=3 distinct = 표 존재.
-# (경과조치 문맥의 '금리위험액'/'주식위험액' 단발 언급과 구분 위해 distinct>=3; 자산집중/부동산/외환은
-#  세부표에만 등장. 검증: 삼성화재 홀수분기 <=2 / 짝수분기 5-10 / 삼성생명 홀수 표있는분기 >=3.)
-_SUBRISK_KW = ["금리위험액", "주식위험액", "부동산위험액", "외환위험액", "자산집중위험"]
+# 19_market source-grounded cadence: 시장위험 세부표(36-40) 5종 라벨이 **분해표 행으로 실재**하는지.
+# 2026-06-14 fix: 종전 substring 카운트는 경과조치표의 '주식위험액증가분점진적인식'·산문의 '자산집중위험등'
+#  같은 compound/서술 부분문자열을 라벨로 세어 distinct>=3을 거짓충족 → 삼성생명 odd-Q(2023.3Q 등)
+#  false RED (parser D 분쟁, raw 확인 결과 분해표 부재 = SKIP 정당). → 번호접두어를 떼어낸 **셀 전체가
+#  라벨과 일치**하거나 라벨 직후 숫자가 오는 행만 카운트.
+_SUBRISK_LABELS = ["금리위험액", "주식위험액", "부동산위험액", "외환위험액", "자산집중위험액"]
+_NUM_PREFIX = re.compile(r"^[\s0-9.\-()ⅠⅡⅢⅣⅤ]*")
+
+
+def _count_subrisk_rows(text: str) -> int:
+    """Distinct 시장위험 5종 라벨이 분해표 '행'으로 실재하는 수.
+    경과조치 compound('주식위험액증가분점진적인식')·산문('자산집중위험등')은 제외:
+    번호접두어 제거 후 셀==라벨(또는 어간) 또는 라벨 직후 숫자(plain-text 표)만 인정."""
+    found: set[str] = set()
+    for line in text.splitlines():
+        cells = line.split("|") if "|" in line else [line]
+        for cell in cells:
+            cleaned = _NUM_PREFIX.sub("", cell.strip()).strip()
+            for lab in _SUBRISK_LABELS:
+                stem = lab[:-1]  # '금리위험액' -> '금리위험'
+                if cleaned == lab or cleaned == stem:
+                    found.add(lab)
+                    break
+                if cleaned.startswith(lab) or cleaned.startswith(stem):
+                    rest = cleaned[len(lab) if cleaned.startswith(lab) else len(stem):].lstrip()
+                    if rest[:1].isdigit():
+                        found.add(lab)
+                        break
+    return len(found)
 
 
 def _scan_breakdown_presence(records: list[dict]) -> frozenset:
@@ -112,9 +138,41 @@ def _scan_breakdown_presence(records: list[dict]) -> frozenset:
                 cache[p] = p.read_text(encoding="utf-8", errors="ignore")
             except Exception:
                 cache[p] = ""
-        if sum(1 for k in _SUBRISK_KW if k in cache[p]) >= 3:
+        if _count_subrisk_rows(cache[p]) >= 3:
             present.add((c, q))
     return frozenset(present)
+
+
+def _market_tooling_fail(records: list[dict]) -> list[tuple]:
+    """시장위험 페이지 localizer 실패(`market_pages_nonok.json`의 ERR/NO_SIGNAL/TIMEOUT/SCAN) (회사,분기) 중
+    *현재도* 분해 갭(item19 공시·36-40 결측)인 셀 = re-localize 후보(TOOLING_FAIL).
+    이미 백필된 stale-nonok은 제외(데이터 lag 방지). 추출도구가 죽었는데 게이트가 '미공시(SKIP)'로
+    오인하는 SKIP-on-missing 위반을 가시화. 2026-06-14 배선(parser fitz-fallback 안착 → nonok 시맨틱
+    안정 후). 게이트 차단은 안 함 — 짝수분기 진짜 갭은 19_market이 이미 RED, 이 목록은 원인 귀속·재로컬 워크리스트."""
+    p = ROOT / "artifacts" / "kics_validation" / "market_pages_nonok.json"
+    if not p.exists():
+        return []
+    try:
+        nonok = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    by_cq: dict[tuple, set] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get("원보험사코드"), r.get("공시분기"), r.get("항목번호")
+        name[c] = r.get("원수사명")
+        if c and q and it is not None and r.get("값") is not None:
+            by_cq.setdefault((c, q), set()).add(it)
+    out = []
+    for status, cells in (nonok.items() if isinstance(nonok, dict) else []):
+        for cell in cells or []:
+            if not (isinstance(cell, (list, tuple)) and len(cell) >= 2):
+                continue
+            c, q = cell[0], cell[1]
+            items = by_cq.get((c, q), set())
+            if 19 in items and not (set(range(36, 41)) & items):  # 여전히 갭(백필 안 됨)
+                out.append((c, q, status, name.get(c, c)))
+    return out
 
 
 def main() -> int:
@@ -155,6 +213,10 @@ def main() -> int:
         ],
         "collapsed_quarters": census["collapsed_quarters"],
     }
+    tooling_fail = _market_tooling_fail(records)
+    report["market_tooling_fail"] = [
+        {"code": c, "quarter": q, "status": s, "name": n} for c, q, s, n in tooling_fail
+    ]
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     # stable-name 최신 포인터: glob 정렬 함정(stale report_latest.json) 방지 — 매 실행 fresh 덮어쓰기.
     (out_dir / "report_latest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -186,6 +248,12 @@ def main() -> int:
                 n for qq, _, n in census["missing_rows"] if qq == q
             )
             print(f"    {q}: {cnt} missing — {sample[:160]}")
+    if tooling_fail:
+        print(f"Market localizer TOOLING_FAIL (re-localize, still-gap): {len(tooling_fail)}")
+        for c, q, s, n in tooling_fail:
+            print(f"    {q} {c} {n} [{s}] — item19 공시·36-40 결측, localizer 실패 → re-localize")
+    else:
+        print("Market localizer TOOLING_FAIL: 0 (nonok 셀 전부 백필됨 또는 비-갭)")
     print("RED failures by rule:")
     for rule_id, cnt in sorted(fail_by_rule.items(), key=lambda x: (-x[1], x[0])):
         print(f"  rule {rule_id}: {cnt}")

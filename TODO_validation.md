@@ -7,7 +7,9 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 
 ## Status
 
-Stage 3 = numerical consistency + QoQ anomaly + cross-domain checks on parsed numbers. **K-ICS gate currently RED=292** (19_market 224 + census 28 + 등식 40) after the 2026-06-12 coverage-census fix exposed two blind spots (gate counted only present cells + treated SKIP as pass). Most open work is **waiting on parser re-extraction** (market sub-risk 36–40 전사, 2026.1Q 29–46 backfill, census missing cells, CSM/PL legs). IFRS17 master-table rules (closing/crosscheck/plausibility) are essentially clean; residual items are small gray-zone checks + parser data fill.
+Stage 3 = numerical consistency + QoQ anomaly + cross-domain checks on parsed numbers. **K-ICS gate RED=23** (2026-06-14 (b) 수렴 후, ~20:55 KST; parser 실시간 reparse 반영으로 RED 52→42→23) + census hole 21. 잔여 23 = **전부 owner 결정 또는 parser 활성도메인**: 등식 2(AIA rule2 + 미래에셋 8_life = documented_exception 대기) + 시장 21(19_market 10 + 36_irr 11 = localizer fitz-fallback 진행 + INTERNAL_MODEL/OCR/micro EXEMPT owner 결정). **validation-actionable reparse = 0.** **금리민감도 RED 0** / **IFRS17 closing·crosscheck 0F · sens 0R/0Y**(pl_bridge 14F = 2023 known + 한화생명 2023.2Q 이상치, 비차단).
+> ⚠️ 마스터가 **동시변경 중**(다른 parser 세션 실시간 백필 — kics_disclosure mtime 19:59, sens 19:58). 세션 중 RED 52→42, 시장 31→21. 단일 스냅샷=잠정. 시장 RED은 parser 활성 도메인(localizer fitz-fallback 진행 중)이라 라우팅 제외.
+> 비-시장 등식 RED 4종은 근본원인 검증 Workflow로 raw 확정 → 메리츠/코리안리 reparse 발주 + AIA/미래에셋 documented_exception **owner 결정 권고**(아래 P1).
 
 ## 🔴 Open — P1
 
@@ -20,6 +22,20 @@ Root cause: gate didn't census "cells that should exist" + treated SKIP as pass.
 - [x] **`36_irr` SKIP맹점 폐쇄** (2026-06-13): cadence-aware RED 승격 — item36 공시·41–46 결측이 **짝수분기(2Q/4Q)면 RED**(시나리오표는 2Q/4Q 서식에만 존재, 실증: 41–46 전 분기 짝수에만 적재), **홀수분기는 SKIP**(원천부재 정당). `IRR_SCENARIO_EXEMPT` 면제셋(빈값). 결과: RED 23(전부 짝수, 홀수 false 0). 19_market 동형. → parser 41–46 재추출(아래 23건, market_subrisk inbox 후속).
 - [x] **`report_latest.json` fresh-write** (2026-06-13): 게이트가 매실행 `artifacts/kics_validation/report_latest.json` 덮어쓰게 함 → stale glob 함정 제거(소비자 코드 0, orphan 5/25본이 문제였음).
 - inbox: `20260611T2200Z__validation__MULTI_ALL__kics_market_subrisk_systemic_underparse.md`. 메모리: `coverage-census-mandatory`.
+
+### V11 — 2026-06-14 (b) 정합성 전수검증 후속 (라우팅 발주 + owner 예외 결정 대기)
+근본원인 검증 Workflow(8 에이전트 raw 대조) 후 비-시장 등식 RED 4종 disposition:
+- [x] **메리츠 KR0001 rule5 reparse → ✅ RESOLVED**: parser가 item23+item25 12분기 적재(항등도출=공시값 일치). 재검증 **rule5 12 RED→0**. `_resolved/` 이관.
+- [x] **코리안리 KR1000 2025.2Q reparse → ✅ RESOLVED**: parser가 코어 1-28 + item28 파생(156.19) + 시장37-40 fitz 적재. 재검증 **7 RED + 19_market→0**. `_resolved/` 이관.
+- [x] **푸본현대 sensitivity (ifrs17 발주) → ✅ RESOLVED**: parser 근본원인=mis-tag 롤포워드(shock행0), `_has_shock_rows` 가드로 KB·푸본현대 ok→partial 정직화. 재검증 **SENSITIVITY YELLOW 1→0**. `_resolved/` 이관.
+- [ ] **(owner 결정) AIA KR0080 2025.1Q rule2 documented_exception**: image-only scan, item8/item9 819 중복 OCR키잉, 텍스트 reparse 불가. owner TODO.md 예외 등록 시 해소.
+- [ ] **(owner 결정) 미래에셋 KR0079 8_life documented_exception**: image-only(파싱 MD조차 부재), subs 29-35 OCR ~8.5% spread, 단일 culprit 없음. **기존 KR0079 rule2 예외를 8_life로 확장** 권고.
+- [ ] **(owner 결정) parser irr_exempt v2 잔여**: INTERNAL_MODEL_36IRR = **신한라이프 KR0094×4 + 교보 KR0073 2025.2Q = 5건만**(IBK KR1011은 parser fitz로 41-46 적재·derive rel 0.0% GREEN → 면제 불요, 2026-06-14 정정) + OCR(KB/한화생명/흥국×2) + micro(신한이지 KR0051×3) EXEMPT — 전부 owner 권한. inbox/validation answered 참조.
+- [x] **scan false-positive fix**: `_scan_breakdown_presence` clean-cell화 → 삼성생명 odd-Q 3 false RED 제거(19_market 15→10). parser D 종결.
+- [x] **SENSITIVITY_UNIT_SANITY 룰 신설**(owner 0712Z claim2): `validate_master_tables.py` RED>1000x/YEL>100x. 640배 회귀가드. 푸본현대 YEL 1(÷100 미정규화 의심) + 미래에셋·롯데·한화손해 sensitivity 0건 → parser/ifrs17.
+- [x] **TOOLING_FAIL census 배선 완료**(2026-06-14, owner "AB go"): `validate_kics_disclosure.py._market_tooling_fail()` — nonok.json을 현 데이터와 대조해 여전히-갭 셀만 're-localize' 노출(stale 제외, 비차단). 현 0건. parser fitz-fallback 안착분 이행.
+- [x] **hyundai_pl ZLEG 등록 완료**(KR0009): 현대 2024.1Q~2025.2Q `ZLEG_LEGIT_CQ` 등록 → zero_legs 6→1. thread 종결.
+- [→] **KR0083 푸본현대 2026.1Q continuity**: FY_BOUNDARY 2025.4Q기말 1906≠2026.1Q기초 1669(Δ12.4%) 현 RED + sensitivity flagged = 실데이터 의심, 잔여 유지.
 
 ### V7 — NB CSM cross-source + 시계열 전수 (parser P1/P2 회귀 잔여)
 Rule `NB_CSM_DART_VS_IR_ANNUAL_SUM` codified (§1.2, RED, tol max(5%·|IR|, 100억)). Tools: `check_nb_csm_widespread.py` (FY24 snapshot, 6/7 OK) + `check_nb_csm_history.py` (13Q×9사 baseline). FY24 widespread: 롯데 1.233 (+23%, FY25 의존), 나머지 ~1.00 OK.
