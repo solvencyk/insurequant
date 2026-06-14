@@ -78,3 +78,38 @@ RED 52→52 무변동. inbox 라우팅 완료(owner 2025.4Q thread resolved, val
 downloader+validation 신규 발주). 상세: changelog_parser_kics 2026-06-14 top.
 
 status: open 유지 (digest — 신규-1 종결, 신규-2 완료(2026-06-13), V9/V7/PL-T2 등 잔여).
+
+## 답변 추가 (parser 2026-06-14 — IFRS17 잔여 V9/V7/PL-T2 disposition pass, committed 마스터 read-only 5-agent)
+
+raw purge로 *재추출 수정*은 막혔지만 committed PL/CSM/NB 마스터로 **각 항목이 진짜 갭인지 disposition** 확정
+(파괴적 재빌드 없음, 마스터 무변경 확인). 14건 판정 → **legit 10 / real_gap 2(raw-blocked) / designer 1 /
+out_of_scope 1 / fixable-now bug 0.**
+
+### ✅ legit (종결 — 의심이 근거 없음으로 판명)
+- **코리안리 CSM 상각 1y lag**: 오해였음. 부호규약(상각 음수) 적용 시 YTD 워터폴이 **전 분기 closing**(max resid 0.10).
+  상각은 동시기 ramp(분기누적), off-by-4Q 없음. Q4 불연속은 사업보고서 연간 재작성(분기보고서→연차)일 뿐. 1y lag 아님.
+- **history 빌더 off-by-one-year**: 삼성생명/삼성화재/메리츠/한화생명 모두 Q4말=익년 Q1초 **정확 일치**, 분기 워터폴
+  closing. 연-shift 없음 → 재현 불가, 종결.
+- **메트라이프 영업이익 등식**: 안 깨짐(item20=item1+item17, item22=item20+item21 ±1억 반올림). 연간전용 filer. 종결.
+- **한화손해 2025.1Q NB stale carryover**: copy 아님. 1891.2(연누계=당분기, Q1 정상), 배수 9.94가 월납월초와 정합,
+  인접분기 전부 distinct. 종결.
+- **동양 재보 CSM상각/RA 2024**: legit-absent — 동양은 재보를 net/예실차(item11)로만 공시, 서브슬라이스 미분해.
+  phantom item9/10 백필 금지.
+- **케이디비 재보 2025 / 롯데 2025.2Q Tier-2 / 롯데 FY2025 NB**: 전부 이미 적재·정상. 갭 아님.
+- **교보라이프플래닛 PL Tier-2**: legit-absent(디지털 생보 최소공시; top-line PL 자기정합, Tier-2 서브라인 미공시).
+
+### 🔴 real_gap (2건 — fix는 raw 복원 대기, blocked)
+- **현대해상 예실차(item6/item11)**: 2023.1Q~2025.2Q 전 분기 None, 2025.3Q부터 적재. FY2024 연간 raw엔 경험조정
+  실재 → pre-2025.3Q 분기 셀은 **진짜 결측**(PAA 미공시 아님). 재계산엔 purge된 분기 raw 필요 → blocked.
+- **악사손해 interim 분기**: 마스터에 2024.4Q·2025.4Q(연간)만, Q1~Q3 전무. 현재 연차셀은 완전. interim 추가엔
+  분기 raw 필요 → blocked.
+
+### 🎨 designer handoff (1) → `inbox/designer/20260614T1300Z__…sensitivity_csm_null_render.md`
+- PL-only 공시사(동양생명·NH농협손해) `csm_delta=null(미공시)`가 화면에 **0으로 렌더** → `—`(미공시)로 표시 요청.
+  데이터 정확(원천에 CSM 컬럼 없음), 표시 레이어만.
+
+### ↪ out_of_scope (1) → FS-API 레인
+- **하나생명 item17 투자손익**(2024.4Q/2025.4Q null): footnote 파서 항목 아님 = Tier-1 FS-API 라인
+  (`dart_InvestmentIncomeExpenses`, `fetch_dart_fs.py`). IFRS17 footnote 파서 scope 밖 → FS-API 레인으로 라우팅.
+
+status: open 유지 (digest — disposition pass 완료; legit 종결분 반영, real_gap 2건 raw-blocked, 하나 item17 FS-API 레인).

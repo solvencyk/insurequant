@@ -11,6 +11,8 @@ Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/dom
 
 IFRS17 lane is **mature**: CSM waterfall + PL breakdown masters all built (root JSONs assembled, xlsx regenerated). 2026.1Q loaded (changelog (s)). CSM golds 8/8 and PL golds pass; `check_pl_reconcile.py` closed the large systematic gaps (예실차-미공시 generic closure + 에이비엘 leg + 하나 장기). Remaining work is residual Tier-2 coverage backfill + a few escalated owner decisions (코리안리 FY2025 basis), not core extractor rewrites.
 
+> **Disposition pass 2026-06-14** (committed-master read-only, 5-agent; inbox `20260612T0900Z` 답변): V9/V7/PL-T2 잔여 14건 판정 → **legit 10 종결** (코리안리 상각 "1y lag" = 부호규약 artifact·워터폴 close / history off-by-one = year-shift 없음 / 메트라이프 영업이익 등식 OK / 한화손해 NB non-stale / 동양 재보 = net-only legit-absent, phantom item9/10 백필 금지 / 케이디비·롯데·교보플래닛 정상 또는 legit-absent), **real_gap 2 (raw-blocked)**: 현대해상 예실차(item6/11) pre-2025.3Q 결측 + 악사 interim 분기 부재 — fix는 purge된 분기 raw 필요, **designer handoff 1**: csm_delta=null→0 렌더(동양/NH, `inbox/designer/20260614T1300Z`), **out_of_scope 1**: 하나생명 item17 투자손익=FS-API 레인. fixable-now bug 0.
+
 ---
 
 ## 🔴 Open — P1
