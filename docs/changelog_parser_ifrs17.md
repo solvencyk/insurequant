@@ -40,6 +40,15 @@ Owner live-site QA on the CSM sensitivity pipeline — fixed 3 glitches in
   XML was history-purged → can't reproduce or verify; owner must restore raw (backup `insurequant_git_backup_20260614`)
   or run on a branch that still has it. NOTE: gold gate also non-runnable here (`_verify_csm_golds.py` globs repo-root
   `CSM waterfall_*.xlsx` → 0/0; `build_csm_waterfall_master.py` collapses the committed diag to 1 company).
+- **Follow-up (validation reparse 20260614T1135Z):** 푸본현대 csm_delta under-scale (csm 9.86억 vs pl 1164.85억)
+  root cause was NOT a unit/ratio bug — all 4 of its SA-tagged blocks are the SAME measurement rollforward
+  ("기말 보험계약부채(자산)", no ± shock rows); the panel read its rollforward columns as csm/pl = garbage. Fix:
+  `_has_shock_rows` (a real sensitivity table has X% 증가/감소/상승/하락 rows) → added as the top picker signal
+  AND a guard in extract_sensitivity that returns `partial` when the picked block has no shock rows. Also caught
+  KB손해 (5 mis-tagged '(14) 가정변경…변동 내역' rollforwards, no real shock table). 푸본현대 + KB ok→partial
+  (garbage→honest); 미래에셋/신한/한화 unchanged; **0 regression on the 23 real ok companies**; pytest 110. This
+  removes the peer-scale outlier so validation's SENSITIVITY_UNIT_SANITY should clear. (NB: high within-row
+  |csm/pl| for 현대/삼성/한화생명 is legit — CSM absorbs the shock, not an error.)
 
 ## 2026-06-14 — REFACTOR 6/6 (bs_snapshot/sensitivity externalization) + GOLDEN-E2E expansion
 

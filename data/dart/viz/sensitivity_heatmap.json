@@ -138,31 +138,10 @@
     {
       "company": "KB손해보험",
       "rcept_no": "20250314001697",
-      "status": "ok",
+      "status": "partial",
       "caption": "(14) 가정변경에 따른 순보험계약부채 잔여보장요소의 변동 내역은 다음과 같습니다.(단위:백만원)<당기>",
       "table_kind": "sensitivity_analysis",
-      "unit": "억원",
-      "unit_detected": "백만원",
-      "unit_source": "cue",
-      "header": [
-        [
-          "구분",
-          "회사계"
-        ],
-        [
-          "최선추정부채",
-          "위험조정",
-          "보험계약마진"
-        ]
-      ],
-      "scenarios": [
-        {
-          "risk": "신계약외 변동",
-          "shock": "가정변경효과",
-          "csm_delta": null,
-          "pl_impact": -12244.7
-        }
-      ]
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
     },
     {
       "company": "NH농협손해보험",
@@ -828,7 +807,7 @@
       "status": "partial",
       "caption": "(9) 보험계약부채의 미래서비스 변동분에 대한 가정변경효과 단계별, 물량차이 및 투자요소예실차 등으로 인한 상세 변동금액은 다음과 같습니다.① 제36(당)기",
       "table_kind": "sensitivity_analysis",
-      "note": "sensitivity_analysis found but scenarios not parsed"
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
     },
     {
       "company": "에이비엘생명보험",
@@ -1193,103 +1172,10 @@
     {
       "company": "푸본현대생명보험",
       "rcept_no": "20250328000873",
-      "status": "ok",
+      "status": "partial",
       "caption": "기말 보험계약부채(자산)",
       "table_kind": "sensitivity_analysis",
-      "unit": "억원",
-      "unit_detected": "백만원",
-      "unit_source": "default",
-      "header": [
-        [
-          "구 분",
-          "미래현금흐름의현재가치 추정치",
-          "비금융위험에 대한위험조정",
-          "보험계약마진",
-          "합 계"
-        ],
-        [
-          "잔여보장요소",
-          "발생사고요소",
-          "잔여보장요소",
-          "발생사고요소",
-          "공정가치법 적용 대상 계약",
-          "그 외 계약"
-        ]
-      ],
-      "scenarios": [
-        {
-          "risk": "보험계약부채",
-          "shock": "7,095,833",
-          "csm_delta": 9.86,
-          "pl_impact": 1164.85
-        },
-        {
-          "risk": "기초 보험계약부채(자산)",
-          "shock": "7,095,833",
-          "csm_delta": 9.86,
-          "pl_impact": 1164.85
-        },
-        {
-          "risk": "해지율 가정 변경",
-          "shock": "15,689",
-          "csm_delta": null,
-          "pl_impact": -145.91
-        },
-        {
-          "risk": "위험률 가정 변경",
-          "shock": "23,444",
-          "csm_delta": null,
-          "pl_impact": -242.55
-        },
-        {
-          "risk": "사업비율 가정 변경",
-          "shock": "15,518",
-          "csm_delta": null,
-          "pl_impact": -139.8
-        },
-        {
-          "risk": "기타 가정 변경",
-          "shock": "30,630",
-          "csm_delta": null,
-          "pl_impact": -165.04
-        },
-        {
-          "risk": "물량차이 및 투자요소 예실차 등",
-          "shock": "(1,402,064)",
-          "csm_delta": null,
-          "pl_impact": -206.07
-        },
-        {
-          "risk": "손실요소",
-          "shock": "-",
-          "csm_delta": null,
-          "pl_impact": 205.35
-        },
-        {
-          "risk": "소 계",
-          "shock": "(1,420,748)",
-          "csm_delta": null,
-          "pl_impact": -694.02
-        },
-        {
-          "risk": "보험계약마진 상각",
-          "shock": "-",
-          "csm_delta": null,
-          "pl_impact": -44.91
-        },
-        {
-          "risk": "소 계",
-          "shock": "(171,946)",
-          "csm_delta": null,
-          "pl_impact": -44.91
-        },
-        {
-          "risk": "발생사고부채 변동",
-          "shock": "-",
-          "csm_delta": 1.45,
-          "pl_impact": null
-        }
-      ]
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
     },
     {
       "company": "하나생명보험",
@@ -1465,7 +1351,7 @@
       "status": "partial",
       "caption": "주1) 제79기부터는 별도재무제표(K-IFRS 1117호) 실적 기준, 이전은 별도재무제표(K-IFRS 1104호) 실적 기준 (지급여력비율은 연결재무제표 실적 기준) 1. 손해율 : (발생보험금+손해조사비+손실부담계약관련비용+발생사고변동비용-출재수익)/보유보험수익 2. 사업비율 : (신계약비+유지비+투자관리비+기타비용)/보유보험수익주2) 제78기 및 그 이전 1. 손해율 : 발생손해액 / 경과보험료 2. 사업비율 : 순사업비 / 보유보험료주3). ROA : 당기순이익/{(전회계연도말 총자산+당회계연도말 총자산)/2}주4) ROE : 당기순이익/{(전회계연도말 자기자본+당회계연도말 자기자본)/2}주5)운용자산이익률:투자영업이익/{(전회계연도말 운용자산+당회계연도말운용자산-투자영업이익)/2}주6) 지급여력비율 : 지급여력금액 / 지급여력기준금액 제80기 수치는 산출 전이므로 3월말 이내 확정치로 정정공시 예정 [캐롯손해보험(주)]",
       "table_kind": "sensitivity_analysis",
-      "note": "sensitivity_analysis found but scenarios not parsed"
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
     },
     {
       "company": "현대해상",

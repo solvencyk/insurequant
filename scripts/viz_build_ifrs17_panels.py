@@ -811,13 +811,27 @@ def _has_csm_column(block: dict) -> bool:
     return any(("보험계약마진" in c or "보험서비스마진" in c) for c in cells)
 
 
+def _has_shock_rows(block: dict) -> bool:
+    """True if any row carries a shock-magnitude label (X% 증가/감소/상승/하락) in its
+    first two cells — the defining mark of a real sensitivity table. Measurement
+    rollforwards mis-tagged sensitivity_analysis (e.g. 푸본현대 '기말 보험계약부채(자산)':
+    기초금액/보험계약부채/미래서비스 변동 rows, NO shocks) have none, so they must NOT
+    win the picker over a real shock table and must not emit garbage scenarios."""
+    for r in block.get("rows") or []:
+        for c in (r or [])[:2]:
+            if isinstance(c, str) and _is_shock_label(c):
+                return True
+    return False
+
+
 def _pick_sensitivity_block(sens_blocks: list[dict]) -> dict | None:
     eligible = [b for b in sens_blocks if not _is_rollforward_sensitivity_caption(str(b.get("caption") or ""))]
     pool = eligible or sens_blocks
     return max(
         pool,
         key=lambda b: (
-            _has_csm_column(b),  # CSM-bearing tables win over PL/CF-only ones
+            _has_shock_rows(b),  # a real sensitivity table has ± shock rows (top signal)
+            _has_csm_column(b),  # then CSM-bearing tables win over PL/CF-only ones
             _sensitivity_caption_score(str(b.get("caption") or "")),
             b.get("score", 0),
             len(b.get("rows") or []),
@@ -1052,6 +1066,17 @@ def extract_sensitivity(blocks: list[dict], company: str = "") -> dict | None:
         return {"status": "unavailable", "note": "No sensitivity_analysis block in MVP extract"}
 
     blk = _pick_sensitivity_block(sens_blocks)
+
+    # Reject a mis-tagged rollforward/balance table (no ± shock rows) — emitting its
+    # rollforward columns as csm/pl produces garbage (푸본현대 csm 9.86 vs pl 1164.85,
+    # validation 20260614T1135Z). No real sensitivity table → partial, like a legit absence.
+    if not _has_shock_rows(blk):
+        return {
+            "status": "partial",
+            "caption": blk.get("caption"),
+            "table_kind": sa_kind,
+            "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table",
+        }
 
     skip_stub = (
         "\uAE30\uC900\uAE08\uC561",
