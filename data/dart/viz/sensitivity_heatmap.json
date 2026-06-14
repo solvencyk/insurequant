@@ -1563,74 +1563,38 @@
         {
           "risk": "사망률",
           "shock": "3.27% 상승",
-          "csm_delta": -69.32,
-          "pl_impact": -73.67
+          "csm_delta": -35.94,
+          "pl_impact": -29.27
         },
         {
-          "risk": "건강보험",
-          "shock": "5,852",
-          "csm_delta": 17.68,
-          "pl_impact": 7.38
-        },
-        {
-          "risk": "연금과 저축보험",
-          "shock": "10,056",
-          "csm_delta": 107.78,
-          "pl_impact": 26.4
-        },
-        {
-          "risk": "합계",
-          "shock": "(3,594)",
-          "csm_delta": -95.77,
-          "pl_impact": -34.52
-        },
-        {
-          "risk": "3.27% 하락",
-          "shock": "사망보험",
-          "csm_delta": 75.23,
-          "pl_impact": 223.98
-        },
-        {
-          "risk": "건강보험",
-          "shock": "(6,452)",
-          "csm_delta": -27.24,
-          "pl_impact": -8.07
-        },
-        {
-          "risk": "연금과 저축보험",
-          "shock": "(10,382)",
-          "csm_delta": -111.05,
-          "pl_impact": -27.27
-        },
-        {
-          "risk": "합계",
-          "shock": "2,992",
-          "csm_delta": 85.69,
-          "pl_impact": 34.32
+          "risk": "사망률",
+          "shock": "3.27% 하락",
+          "csm_delta": 29.92,
+          "pl_impact": 28.94
         },
         {
           "risk": "해지율",
           "shock": "9.16% 상승",
-          "csm_delta": -66.72,
-          "pl_impact": -215.69
+          "csm_delta": -1445.2,
+          "pl_impact": 61.12
         },
         {
-          "risk": "건강보험",
-          "shock": "(112,242)",
-          "csm_delta": -1092.12,
-          "pl_impact": 15.36
+          "risk": "해지율",
+          "shock": "9.16% 하락",
+          "csm_delta": 1570.87,
+          "pl_impact": -54.83
         },
         {
-          "risk": "연금과 저축보험",
-          "shock": "6,210",
-          "csm_delta": 212.15,
-          "pl_impact": 131.04
+          "risk": "사업비 및인플레이션율",
+          "shock": "2.62% 상승 /0.26% 상승",
+          "csm_delta": -372.13,
+          "pl_impact": -26.28
         },
         {
-          "risk": "합계",
-          "shock": "(144,520)",
-          "csm_delta": -1201.49,
-          "pl_impact": 88.79
+          "risk": "사업비 및인플레이션율",
+          "shock": "2.62% 하락 /0.26% 하락",
+          "csm_delta": 354.05,
+          "pl_impact": 25.28
         }
       ]
     },

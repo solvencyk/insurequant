@@ -944,6 +944,75 @@ def _extract_pl_only(blk: dict) -> list[dict]:
     return scenarios
 
 
+def _is_heungkuk_csm_pl_capital_layout(header: list[list[str]]) -> bool:
+    """True for 흥국생명's product-as-rows sensitivity layout, where the header is
+        구 분 | 당기말 | 전기말
+              CSM | 손익 효과 | 자본 효과 | CSM | 손익 효과 | 자본 효과
+    i.e. the (CSM, 손익 효과, 자본 효과) trio repeats once per period band. The bare
+    'CSM' label + repeated '손익 효과'/'자본 효과' is unique to this layout, so other
+    companies (보험계약마진/당기손익 headers) never route here."""
+    for hr in header:
+        cells = [c.strip() for c in hr if isinstance(c, str)]
+        n_csm = sum(1 for c in cells if c == "CSM" or c.startswith("CSM"))
+        has_pl = any("손익 효과" in c or "손익효과" in c for c in cells)
+        has_cap = any("자본 효과" in c or "자본효과" in c for c in cells)
+        if n_csm >= 2 and has_pl and has_cap:
+            return True
+    return False
+
+
+def _extract_heungkuk_product_rows(blk: dict) -> list[dict]:
+    """Parse 흥국생명's product-row × period-band-column sensitivity table.
+
+    Layout (rowspan-collapsed): 위험(사망률/해지율/사업비…) spans a shock pair,
+    each shock(±%) spans the product rows (사망보험/건강보험/연금과 저축보험/합계),
+    and the 6 trailing value cells are
+        [당기말 CSM, 당기말 손익, 당기말 자본, 전기말 CSM, 전기말 손익, 전기말 자본].
+    Emit one scenario per (위험, shock) from the 합계 product row so risks carry
+    proper names (NOT product names) with csm_delta=당기말 CSM, pl_impact=당기말 손익."""
+    scenarios: list[dict] = []
+    current_risk = ""
+    current_shock = ""
+    products = ("사망보험", "건강보험", "연금과 저축보험", "연금과저축보험", "저축보험")
+    for row in blk.get("rows") or []:
+        if not row or not isinstance(row[0], str):
+            continue
+        cells = [("" if v is None else str(v)).strip() for v in row]
+        # The 6 value cells are right-anchored; leading cells = risk/shock/product
+        # depending on how many rowspan labels are elided on this row.
+        offset = len(cells) - 6
+        if offset < 1:
+            continue
+        leads = cells[:offset]
+        vals = cells[offset:]
+        product = leads[-1] if leads else ""
+        if offset >= 3:  # risk + shock + product present
+            current_risk = leads[0]
+            current_shock = leads[1]
+        elif offset == 2:  # shock + product (risk inherited)
+            current_shock = leads[0]
+        # offset == 1: product only (risk & shock inherited)
+        if product != "합계":
+            continue
+        if not current_risk:
+            continue
+        csm = parse_num(vals[0], dash_means_zero=False)
+        pl = parse_num(vals[1], dash_means_zero=False)
+        if csm is None and pl is None:
+            continue
+        scenarios.append(
+            {
+                "risk": current_risk,
+                "shock": current_shock,
+                "csm_delta": csm,
+                "pl_impact": pl,
+            },
+        )
+        if len(scenarios) >= 12:
+            break
+    return scenarios
+
+
 def _finalize_sensitivity(blk: dict, scenarios: list[dict], company: str, sa_kind: str) -> dict:
     factor, unit, source = _detect_unit(blk, company)
     _normalize_unit(scenarios, factor)
@@ -992,6 +1061,14 @@ def extract_sensitivity(blocks: list[dict], company: str = "") -> dict | None:
         "\uCD9C\uC7AC \uBCF4\uD5D8",
     )
     product_line_layout = _header_has_product_lines(blk.get("header") or [])
+
+    # 흥국생명 product-row × period-band-column layout (F16): 상품=행, 당기말/전기말 ×
+    # (CSM | 손익 효과 | 자본 효과)=열. Routed only on that distinct header so other
+    # companies are untouched. Take the 합계 product row's 당기말 CSM / 손익 효과.
+    if _is_heungkuk_csm_pl_capital_layout(blk.get("header") or []):
+        hk = _extract_heungkuk_product_rows(blk)
+        if hk:
+            return _finalize_sensitivity(blk, hk, company, sa_kind)
 
     # 원수/출재 band layout (한화/케이디비/흥국): header-aware + rowspan-aware.
     # Routed only when that header shape is present, so the product-line path
