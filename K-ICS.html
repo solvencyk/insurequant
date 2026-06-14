@@ -1381,6 +1381,28 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
       .then(data => {
         allData = data;
 
+        // 드롭다운 누락사 보강: 하드코딩 옵션에 없는 json 원수사명 추가(코리안리·예별손보·AIG·카카오페이손해 등).
+        // JS 선택 로직이 select.options를 검색하므로 옵션 추가만으로 URL/수동 선택 가능. (전면 데이터화는 후속 P2.)
+        (function fillMissingCompanies(){
+          const sel = document.getElementById('company');
+          if (!sel) return;
+          const have = new Set(Array.from(sel.options).map(o => o.value));
+          const seen = new Set();
+          const missing = [];
+          for (const row of data){
+            const nm = row['원수사명'];
+            if (!nm || seen.has(nm)) continue;
+            seen.add(nm);
+            if (!have.has(nm)) missing.push(nm);
+          }
+          missing.sort((a, b) => a.localeCompare(b, 'ko'));
+          for (const nm of missing){
+            const o = document.createElement('option');
+            o.value = nm; o.textContent = nm;
+            sel.appendChild(o);
+          }
+        })();
+
         // URL 파라미터 확인
         const urlParams = getUrlParams();
         const companySelect = document.getElementById('company');

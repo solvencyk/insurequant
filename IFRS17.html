@@ -62,7 +62,8 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       .table-container{overflow-x:auto;-webkit-overflow-scrolling:touch}
       .table-wrap{max-height:60vh}
       table{font-size:12px}
-      th,td{padding:4px 6px}
+      th,td{padding:6px 8px}
+      td.num,th.num{white-space:nowrap;word-break:keep-all}
     }
 </style>
 </head>
@@ -359,7 +360,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     "NH농협생명":"#00A05E", "엔에이치농협생명":"#00A05E", "NH농협손해보험":"#00A05E", "엔에이치농협손해보험":"#00A05E",
     "미래에셋생명":"#F58220", "미래에셋생명보험":"#F58220",
     "DB손해보험":"#0E8C3A", "디비손해보험":"#0E8C3A", "DB생명":"#0E8C3A", "디비생명보험":"#0E8C3A",
-    "현대해상":"#008A3E", "현대해상화재보험":"#008A3E",
+    "현대해상":"#FFB81C", "현대해상화재보험":"#FFB81C",
     "교보생명":"#0B5D52", "교보생명보험":"#0B5D52",
     "메리츠화재":"#E60012", "메리츠화재해상보험":"#E60012",
     "롯데손해보험":"#DA291C",
@@ -654,6 +655,18 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
   }
   function fmtEok(vMn){ return vMn==null ? "—" : samo(vMn/100); }
 
+  // shock 표기 통일(inbox 3b): "3.27% 증가/상승"→"3.27%↑", "9.16% 감소/하락"·"(-)9.16%"→"9.16%↓".
+  // 복합·비정형(가정변경효과·괄호병기·금액덩어리 등)은 부분치환 후 원문 보존(파싱 실패해도 안전).
+  function fmtShock(raw){
+    if (raw == null) return "-";
+    let s = String(raw).trim();
+    if (!s || s === "-") return s || "-";
+    s = s.replace(/\(-\)\s*(\d[\d,]*(?:\.\d+)?)\s*%(p?)/g, "$1%$2↓");      // (-)9.16% → 9.16%↓
+    s = s.replace(/(\d[\d,]*(?:\.\d+)?)\s*%(p?)\s*(증가|상승)/g, "$1%$2↑"); // 3.27% 증가 → 3.27%↑
+    s = s.replace(/(\d[\d,]*(?:\.\d+)?)\s*%(p?)\s*(감소|하락)/g, "$1%$2↓"); // 9.16% 감소 → 9.16%↓
+    return s.replace(/\s{2,}/g, " ").trim();
+  }
+
   // Trailing periods for the PL table: year → latest 3 FY(4Q); quarter → latest 4 quarters (chrono asc).
   function plTablePeriods(name, mode){
     const qs = plQuartersOf(name); // desc
@@ -938,7 +951,8 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const sPick=firstRow(ix.sen,company);
     const scen = (sPick && Array.isArray(sPick.scenarios)) ? sPick.scenarios : [];
     const sOk = !!(sPick && sPick.status==="ok" && scen.length);
-    stub(q(host,"#senStub"), !sOk, sPick?("status="+String(sPick.status)+" / 시나리오 없음"):"민감도 데이터 없음");
+    const senMsg = !sPick ? "민감도 데이터 미수록 보험사입니다." : "% 충격 기준 보험위험 민감도표가 없는 보험사입니다.";
+    stub(q(host,"#senStub"), !sOk, senMsg);
     q(host,"#senCap").textContent = sPick && sPick.caption ? String(sPick.caption):""
     q(host,"#senTable").innerHTML="";
     if (sOk){
@@ -946,12 +960,12 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       const absMax = deltas.length? Math.max(...deltas.map(Math.abs)) : 1
 
       const tbl=document.createElement("table"); const thead=document.createElement("thead"); const tr=document.createElement("tr");
-      for(const h of ["위험요인","충격","ΔCSM(백만)","손익영향"]) { const th=document.createElement("th"); th.textContent=h; tr.appendChild(th)}
+      for(const h of ["위험요인","충격","ΔCSM(억원)","손익영향"]) { const th=document.createElement("th"); th.textContent=h; tr.appendChild(th)}
       thead.appendChild(tr); tbl.appendChild(thead); const tbody=document.createElement("tbody")
       for (const row of scen){
         const rr=document.createElement("tr")
         const t1=document.createElement("td"); t1.textContent= row.risk!=null?String(row.risk):"-"
-        const t2=document.createElement("td"); t2.textContent= row.shock!=null?String(row.shock):"-"
+        const t2=document.createElement("td"); t2.textContent= fmtShock(row.shock)
         const t3=document.createElement("td"); t3.className="num"; const cd = Number(row.csm_delta); t3.textContent=fmtNum(cd,0); t3.style.background=heatCss(cd, absMax)
         const t4=document.createElement("td"); t4.className="num"; t4.textContent=fmtNum(Number(row.pl_impact),0)
         rr.appendChild(t1); rr.appendChild(t2); rr.appendChild(t3); rr.appendChild(t4)
