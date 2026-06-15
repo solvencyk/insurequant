@@ -812,14 +812,15 @@ def _has_csm_column(block: dict) -> bool:
 
 
 def _has_shock_rows(block: dict) -> bool:
-    """True if any row carries a shock-magnitude label (X% 증가/감소/상승/하락) in its
-    first two cells — the defining mark of a real sensitivity table. Measurement
-    rollforwards mis-tagged sensitivity_analysis (e.g. 푸본현대 '기말 보험계약부채(자산)':
-    기초금액/보험계약부채/미래서비스 변동 rows, NO shocks) have none, so they must NOT
-    win the picker over a real shock table and must not emit garbage scenarios."""
+    """True if any row carries a shock-MAGNITUDE label (a '%' with a 증가/감소/상승/하락
+    direction) in its first two cells — the defining mark of a real sensitivity table.
+    The '%' is required: measurement rollforwards mis-tagged sensitivity_analysis carry
+    long descriptive labels like '…변동분에 따른 증가분(감소분)…' (삼성화재/흥국화재 FY2025)
+    or balance rows (푸본현대 '기말 보험계약부채(자산)') that match 증가/감소 as substrings
+    but have NO '%' — those must NOT win the picker nor emit garbage scenarios."""
     for r in block.get("rows") or []:
         for c in (r or [])[:2]:
-            if isinstance(c, str) and _is_shock_label(c):
+            if isinstance(c, str) and "%" in c and _is_shock_label(c):
                 return True
     return False
 
@@ -976,53 +977,58 @@ def _is_heungkuk_csm_pl_capital_layout(header: list[list[str]]) -> bool:
 
 
 def _extract_heungkuk_product_rows(blk: dict) -> list[dict]:
-    """Parse 흥국생명's product-row × period-band-column sensitivity table.
+    """Parse 흥국생명-style product-row × period-band-column sensitivity tables.
 
-    Layout (rowspan-collapsed): 위험(사망률/해지율/사업비…) spans a shock pair,
-    each shock(±%) spans the product rows (사망보험/건강보험/연금과 저축보험/합계),
-    and the 6 trailing value cells are
-        [당기말 CSM, 당기말 손익, 당기말 자본, 전기말 CSM, 전기말 손익, 전기말 자본].
-    Emit one scenario per (위험, shock) from the 합계 product row so risks carry
-    proper names (NOT product names) with csm_delta=당기말 CSM, pl_impact=당기말 손익."""
+    Layout (rowspan-collapsed): 위험(사망률/해지율/장해질병/사업비…) spans a shock pair,
+    each shock(±%) spans the product rows (유배당/무배당/변액 or 사망보험/건강보험/…) then
+    a 합계 row. The value columns repeat per period band; the per-period trio drifts:
+      FY2024  →  (CSM, 손익 효과, 자본 효과) ×2          [당기말 CSM at value-idx 0]
+      FY2025  →  (이행현금흐름, CSM, 손익 효과, 자본 효과) ×2  [당기말 CSM at value-idx 1]
+    So the 당기말 CSM / 손익 column INDEX is derived from the header (first 'CSM' / first
+    '손익 효과'), NOT hardcoded — robust to the FY2025 column drift. Values are read ONLY
+    from the 합계 row (full, un-elided); risk/shock are tracked from the group-start row
+    (cells[1] is a shock) and shock-change rows (cells[0] is a shock), so a product name
+    that contains a risk cue (e.g. '사망보험') is never mistaken for a 위험. Emit one
+    scenario per (위험, shock) with csm_delta=당기말 CSM, pl_impact=당기말 손익."""
+    val_hdr: list[str] = []
+    for hr in blk.get("header") or []:
+        cells = [str(c).strip() for c in hr if isinstance(c, str)]
+        if sum(1 for c in cells if c == "CSM" or c.startswith("CSM")) >= 2:
+            val_hdr = cells
+            break
+    if not val_hdr:
+        return []
+    csm_idx = next((i for i, c in enumerate(val_hdr) if c == "CSM" or c.startswith("CSM")), None)
+    pl_idx = next((i for i, c in enumerate(val_hdr) if "손익 효과" in c or "손익효과" in c), None)
+    if csm_idx is None or pl_idx is None:
+        return []
+
     scenarios: list[dict] = []
     current_risk = ""
     current_shock = ""
-    products = ("사망보험", "건강보험", "연금과 저축보험", "연금과저축보험", "저축보험")
     for row in blk.get("rows") or []:
         if not row or not isinstance(row[0], str):
             continue
         cells = [("" if v is None else str(v)).strip() for v in row]
-        # The 6 value cells are right-anchored; leading cells = risk/shock/product
-        # depending on how many rowspan labels are elided on this row.
-        offset = len(cells) - 6
-        if offset < 1:
+        label = cells[0]
+        nxt = cells[1] if len(cells) > 1 else ""
+        if label != "합계":
+            # track risk/shock context; skip product rows
+            if _is_shock_label(label) and not _is_risk_label(label, ()):
+                current_shock = label                # shock-change row (risk inherited)
+            elif nxt and _is_shock_label(nxt):
+                current_risk, current_shock = label, nxt  # group start: risk + shock
             continue
-        leads = cells[:offset]
-        vals = cells[offset:]
-        product = leads[-1] if leads else ""
-        if offset >= 3:  # risk + shock + product present
-            current_risk = leads[0]
-            current_shock = leads[1]
-        elif offset == 2:  # shock + product (risk inherited)
-            current_shock = leads[0]
-        # offset == 1: product only (risk & shock inherited)
-        if product != "합계":
+        vals = cells[1:]                              # 합계 row carries the full value set
+        if csm_idx >= len(vals) or not current_risk:
             continue
-        if not current_risk:
-            continue
-        csm = parse_num(vals[0], dash_means_zero=False)
-        pl = parse_num(vals[1], dash_means_zero=False)
+        csm = parse_num(vals[csm_idx], dash_means_zero=False)
+        pl = parse_num(vals[pl_idx], dash_means_zero=False) if pl_idx < len(vals) else None
         if csm is None and pl is None:
             continue
-        scenarios.append(
-            {
-                "risk": current_risk,
-                "shock": current_shock,
-                "csm_delta": csm,
-                "pl_impact": pl,
-            },
-        )
-        if len(scenarios) >= 12:
+        scenarios.append({"risk": current_risk, "shock": current_shock,
+                          "csm_delta": csm, "pl_impact": pl})
+        if len(scenarios) >= 24:
             break
     return scenarios
 
@@ -1184,32 +1190,46 @@ def extract_sensitivity(blocks: list[dict], company: str = "") -> dict | None:
     return _finalize_sensitivity(blk, scenarios, company, sa_kind)
 
 
+_STATUS_RANK = {"ok": 3, "partial": 2, "empty": 1}  # unavailable/error/None → 0
+
+
+def _run_extractor(path: Path, company: str, extractor):
+    try:
+        blocks_raw = json.loads(path.read_text(encoding="utf-8"))
+        blocks: list = blocks_raw if isinstance(blocks_raw, list) else [blocks_raw]
+        code = extractor.__code__
+        pass_company = "company" in code.co_varnames[: code.co_argcount]
+        panel = extractor(blocks, company) if pass_company else extractor(blocks)
+        return panel if isinstance(panel, dict) else {"status": "empty"}
+    except Exception as exc:  # noqa: BLE001
+        return {"status": "error", "error": str(exc)}
+
+
 def build_panel(glob_pat: str, extractor) -> dict:
-    companies: list[dict[str, object]] = []
-    for path in sorted(SRC.glob(glob_pat)):
+    # Per company, pick the BEST filing — a refreshed FY2025 extract (rcept 2026…)
+    # supersedes the prior FY2024 one (rcept 2025…), BUT only when it actually yields
+    # data: rank by (status: ok>partial>empty, then latest rcept), so an empty FY2025
+    # re-extract does NOT clobber a good FY2024 (owner: FY2025-missing → keep FY2024).
+    # Files without a 14-digit DART rcept (K-ICS '*_kics_sensitivity.json' the broad
+    # glob also matches) are skipped so they never enter an ifrs17 panel.
+    by_company: dict[str, list[tuple[str, Path]]] = {}
+    for path in SRC.glob(glob_pat):
         m = _FILENAME_RE.match(path.stem)
         if m is None:
-            # No 14-digit DART rcept → not an ifrs17 extract (e.g. the K-ICS
-            # '*_kics_sensitivity.json' files the broadened sensitivity glob also
-            # matches). Skip so they never enter an ifrs17 panel.
             continue
-        company = m.group(1)
-        rcept = m.group(2)
+        by_company.setdefault(m.group(1), []).append((m.group(2), path))
 
-        try:
-            blocks_raw = json.loads(path.read_text(encoding="utf-8"))
-            blocks: list = blocks_raw if isinstance(blocks_raw, list) else [blocks_raw]
-            code = extractor.__code__
-            pass_company = "company" in code.co_varnames[: code.co_argcount]
-            panel = extractor(blocks, company) if pass_company else extractor(blocks)
-            if isinstance(panel, dict):
-                companies.append({"company": company, "rcept_no": rcept, **panel})
-            else:
-                companies.append({"company": company, "rcept_no": rcept, "status": "empty"})
-        except Exception as exc:  # noqa: BLE001
-            companies.append(
-                {"company": company, "rcept_no": rcept, "status": "error", "error": str(exc)},
-            )
+    companies: list[dict[str, object]] = []
+    for company, files in sorted(by_company.items()):
+        best_key = None
+        best_entry = None
+        for rcept, path in files:
+            panel = _run_extractor(path, company, extractor)
+            key = (_STATUS_RANK.get(panel.get("status"), 0), rcept)
+            if best_key is None or key > best_key:
+                best_key, best_entry = key, {"company": company, "rcept_no": rcept, **panel}
+        if best_entry is not None:
+            companies.append(best_entry)
 
     return {"period": "annual (filings skim)", "companies": companies}
 
