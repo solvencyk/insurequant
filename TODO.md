@@ -51,21 +51,32 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
   - KR0080 AIA 2025.4Q — scan-only(아래 documented).
 - **rule 2 × 1**: KR0080 AIA 2025.1Q (diff=−789) — scan-only(아래 documented).
 - **rule 8_life × 1**: KR0079 미래에셋 2023.2Q — scan-only. **8_life는 SKIP=게이트 비차단**.
+- **2023.2Q 백필 잔여 (2026-06-15, docling 부활)**:
+  - KR0087 동양생명 2023.2Q — 코어표 **이미지 전용**(텍스트 부재) → scan-only(KR0079/0080/0087 동류), census 갭.
+  - KR1098 카카오 2023.2Q rule7 + 19_market — **micro-insurer**(item19=5억·item14=15억·천원 스케일): 비율 derive가
+    초소형 분모 반올림으로 62%p 어긋남(공시 item27=2155.62 정확) + 36-40 nn=2 → micro artifact(신한이지류). documented.
+- **census 결손 → owner OCR (2026-06-15, publishing `20260614T2313Z` 처리, docling 부활)**:
+  - **KR0097 하나생명 2024.2Q** — 그 분기 공시본이 **이미지 PDF**(14.7MB; regex·pdfplumber·fitz 3중 확인 코어표
+    텍스트 부재). 나머지 12분기 텍스트 정상. owner OCR/gold (downloader 텍스트본 재취득 가능성 확인).
+  - **KR1098 카카오 2023.4Q·2024.2Q·2024.3Q·2024.4Q** — 이미지 PDF(동일 3중 확인). 2025.2Q/3Q는 텍스트로 적재됨
+    = 비공시 아님, 이미지라 OCR뿐. **expected-absent 화이트리스트 아님.**
+  - 카카오 2025.3Q rule6 = micro 반올림 artifact(documented).
+  - ✅ **적재 완료**: 카카오 2025.2Q(28/28)·2025.3Q(27/28) 코어 + 2025.2Q 시장위험.
 
-**⏸ PENDING OWNER DECISION — 게이트 여전히 차단 (parser/validation이 결정 못 함):**
-- **36_irr × 5 = INTERNAL_MODEL_36IRR_EXEMPT 후보** (validation이 owner 상신, `inbox/validation/20260614T0930Z`):
-  KR0073 교보생명 2025.2Q · KR0094 신한라이프 2024.2Q·2024.4Q·2025.2Q·2025.4Q. **내부모형사** — 순자산가치는 정확
-  추출되나 표준 derive식(R=충격전−시나리오)이 공시 금리위험액과 안 맞음. 회사가 **시나리오별 금리위험액을 직접
-  공시**하고 그 값을 같은 식에 넣으면 공시총액과 **정확히 일치**(KR0094 2025.4Q=578,999 검증). 한화생명 내부모형
-  선례 동형 = 데이터·식 정확, 룰이 표준모형 전제라 안 맞는 것. **owner가 "내부모형은 36_irr 면제" 정책 확정해야
-  해소.** → 이 5건이 현재 push gate의 **유일한 owner-blocker**.
+**✅ INTERNAL_MODEL_36IRR_EXEMPT — owner 승인 완료 (2026-06-14, "한화 선례 동형"):**
+- **36_irr × 5**: KR0073 교보생명 2025.2Q · KR0094 신한라이프 2024.2Q·2024.4Q·2025.2Q·2025.4Q. **내부모형사** —
+  순자산가치는 정확 추출되나 표준 derive식(R=충격전−시나리오)이 공시 금리위험액과 안 맞음. 회사가 **시나리오별
+  금리위험액을 직접 공시**하고 그 값을 같은 식에 넣으면 공시총액과 **정확히 일치**(KR0094 2025.4Q=578,999 검증).
+  한화생명 내부모형 선례 동형. **owner 승인** → documented 예외. validation이 `kics_json_rules.py`에
+  `INTERNAL_MODEL_36IRR_EXEMPT` 등록(RED→SKIP) 요청 발송(`inbox/validation/`).
 
 **🟡 VALIDATION CADENCE FIX (parser 아님, exception 아님):**
 - KR1098 카카오 2023.3Q 19_market — **odd-Q인데** raw에 분해표 NO-HEADER. 짝수 full-form 전제 룰이 오flag(detail이
   "even-qtr full"이라 표시되나 실제 2023.3Q는 홀수). validation cadence SKIP 처리하면 RED→SKIP(삼성생명 odd-Q와 동류).
 
-**요약**: 21 RED = 구조적 17(documented, 게이트 통과 가능) + 내부모형 5(owner 결정 대기) + 카카오 cadence 1(validation).
-**push는 owner 권한** — parser는 self-approve 안 함. 내부모형 5건 + 카카오 1건 처리되면 게이트 satisfiable.
+**요약**: 21 RED = 구조적 17(documented) + 내부모형 5(**owner 승인** 2026-06-14) + 카카오 cadence 1(validation false-pos).
+**전부 documented → CLAUDE.md 게이트 rule(모든 RED가 TODO 문서화 예외) 충족.** push는 owner 권한 — parser self-approve
+안 함. validation이 INTERNAL_MODEL 등록 + 카카오 cadence SKIP 처리하면 RED 카운트 자체가 16→clean.
 
 ---
 

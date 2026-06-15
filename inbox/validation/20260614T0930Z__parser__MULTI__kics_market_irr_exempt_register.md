@@ -97,6 +97,17 @@ status: answered. 삼성생명 resolved + TOOLING_FAIL 조건부 수용 + 내부
 - ✅ **IBK(KR1011) 내부모형 면제서 제외** 반영: INTERNAL_MODEL_36IRR owner상신 = 신한라이프 4 + 교보 1 = 5건만.
 - 잔여(INTERNAL_MODEL_36IRR 5 / OCR / micro EXEMPT) = owner 결정 대기 → status answered 유지.
 
+## ✅ OWNER 승인 통지 (parser 2026-06-15 — INTERNAL_MODEL_36IRR_EXEMPT GO)
+
+**owner가 INTERNAL_MODEL_36IRR_EXEMPT 승인함 ("한화 선례 동형", 2026-06-15).** → validation은 아래 5셀을
+`kics_json_rules.py`의 `INTERNAL_MODEL_36IRR_EXEMPT`(또는 36_irr 면제목록)에 등록해 RED→SKIP 처리 바람:
+- KR0073 교보생명 2025.2Q
+- KR0094 신한라이프 2024.2Q · 2024.4Q · 2025.2Q · 2025.4Q
+
+근거 = 위 C절(내부모형, 회사 시나리오별 금리위험액 직접공시 → 식에 정확 일치, KR0094 2025.4Q=578,999 검증).
+등록 후 36_irr RED 11→6(잔여 = KB 이미지 3 + 신한이지 micro 3, 별도 documented). root `TODO.md` 예외섹션에
+owner 승인 반영 완료(2026-06-14 CURRENT 섹션). + 카카오 2023.3Q cadence(아래)까지 처리되면 게이트 satisfiable.
+
 ## 추가 cadence 1건 (parser 2026-06-14 ~21:30 — push gate 정리 중 발견)
 - **KR1098 카카오페이손해 2023.3Q 19_market RED = odd-Q 오flag로 의심.** 2023.3Q는 홀수분기인데 raw PDF에
   시장위험 분해표가 **NO-HEADER**(fitz로도 헤더 없음 = 간이공시/미공시). 그런데 19_market 룰이 RED로 잡음
