@@ -47,6 +47,9 @@ BASELINE_QUARTER = "2025.4Q"
 SIM_YEARS = [2026, 2027, 2028, 2029, 2030]
 TRANSITION_END_YEAR = 2032
 BASELINE_YEAR = 2025  # baseline taken as 2025-12-31
+# 신종자본증권(hybrid) 기본자본 인정한도 비율 = SCR × 15% (「보험업법」 조건부자본증권;
+# 규정 [별표22] Ⅲ.2.다.(1)). compute_tier1_utilization.py LIMIT_RATIO_PRIMARY와 동일.
+HYBRID_LIMIT_RATIO = 0.15
 
 # v3: compare FSC outstanding face to BS table rows (subordinated_eok / tier1 issued),
 # NOT tier2 numerator_eok (limit residual after lapse — caused false +15,000% gaps).
@@ -348,23 +351,37 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
             "name": b.get("name"),
         })
     bond_events.sort(key=lambda x: x["call_date"])
+    total_hybrid = sum(e["amount_eok"] for e in bond_events if e["tier"] == "tier1_hybrid")
 
     projections = []
     transition_span = float(TRANSITION_END_YEAR - BASELINE_YEAR)  # 7
     for year in SIM_YEARS:
         year_end = f"{year}-12-31"
         cumulative_dedu = sum(e["amount_eok"] for e in bond_events if e["call_date"] <= year_end)
-        cumulative_dedu_t1 = sum(
+        cumulative_hybrid_called = sum(
             e["amount_eok"] for e in bond_events
             if e["call_date"] <= year_end and e["tier"] == "tier1_hybrid"
         )
-        capital_y = cap_baseline - cumulative_dedu
-        basic_y = (basic_baseline or 0) - cumulative_dedu_t1
 
         # SCR linear interp 2025→2032 (post→pre)
         progress = (year - BASELINE_YEAR) / transition_span
         progress = min(max(progress, 0.0), 1.0)
         scr_y = scr_post + (scr_pre - scr_post) * progress
+
+        # Tier-priority deduction (owner 2026-06-15): 신종자본증권 call 차감은 보완자본(Tier-2
+        # overflow) → 기본자본(Tier-1) 순서. 별도 분기 없이 매 시점 신종 잔액 H_y와 한도
+        # L_y=SCR_y×15%로 min/max 재계산 → 그 순서가 자동으로 나옴 (규정 [별표22] Ⅲ.2.다.(1):
+        # 신종 한도초과분=보완자본 재분류). 기본자본 hybrid 기여 = min(H,L)이므로, call로 H가
+        # 줄어도 H≥L인 동안은 기본자본 불변(초과분=Tier-2에서만 빠짐), H<L로 떨어지면 기본자본 감소.
+        # 후순위채(tier2_subordinated)는 순수 Tier-2 → 총자본에서만 빠지고 기본자본 불변(아래 미반영).
+        limit_y = scr_y * HYBRID_LIMIT_RATIO
+        hybrid_remaining = total_hybrid - cumulative_hybrid_called
+        hybrid_t1_y = min(hybrid_remaining, limit_y)
+        hybrid_t1_baseline = min(total_hybrid, scr_post * HYBRID_LIMIT_RATIO)
+        hybrid_t2_overflow = max(hybrid_remaining - limit_y, 0.0)
+
+        capital_y = cap_baseline - cumulative_dedu
+        basic_y = (basic_baseline or 0) + (hybrid_t1_y - hybrid_t1_baseline)
 
         ratio = (capital_y / scr_y * 100.0) if scr_y else None
         basic_ratio = (basic_y / scr_y * 100.0) if scr_y else None
@@ -386,7 +403,11 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
             "ratio_pct": round(ratio, 2) if ratio is not None else None,
             "basic_ratio_pct": round(basic_ratio, 2) if basic_ratio is not None else None,
             "cumulative_bond_dedu_eok": round(cumulative_dedu, 1),
-            "cumulative_tier1_dedu_eok": round(cumulative_dedu_t1, 1),
+            "cumulative_tier1_dedu_eok": round(cumulative_hybrid_called, 1),  # gross 신종 call 누계
+            "hybrid_remaining_eok": round(hybrid_remaining, 1),
+            "hybrid_tier1_eok": round(hybrid_t1_y, 1),          # 기본자본 인정분 min(H,L)
+            "hybrid_tier2_overflow_eok": round(hybrid_t2_overflow, 1),  # 보완자본 재분류분 max(H-L,0)
+            "hybrid_limit_eok": round(limit_y, 1),              # L = SCR_y×15%
             "scr_interp_progress": round(progress, 4),
             "capacity_exhausted": capacity_exhausted,
             "basic_capacity_exhausted": basic_capacity_exhausted,

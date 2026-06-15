@@ -220,6 +220,28 @@ def sensitivity_unit_sanity():
     return sens_red, sens_yellow
 
 
+def sensitivity_direction_sanity():
+    """User 2026-06-14 rule-of-thumb: CSM이 증가하는 시나리오면 당기손익도 증가해야 한다(반대도 동일).
+    100% 법칙은 아니나(onerous-block에선 실제 역행 가능) 의심 신호 → sign(csm_delta)≠sign(pl_impact)이면
+    YELLOW flag. 파싱오류(손익/자본 컬럼 오선택·부호) 또는 실효과(흥국생명 해지율=source-faithful 역행)를
+    한 망으로 triage. 0근방 노이즈는 floor로 제외. 게이트 비차단(보고만)."""
+    sp = ROOT / SENS_PATH
+    flags = []
+    if not sp.exists():
+        return flags
+    sdoc = json.loads(sp.read_text(encoding="utf-8"))
+    for c in sdoc.get("companies", []) or []:
+        name = c.get("company")
+        for s in (c.get("scenarios") or []):
+            cd, pl = s.get("csm_delta"), s.get("pl_impact")
+            if not (isinstance(cd, (int, float)) and isinstance(pl, (int, float))):
+                continue
+            if abs(cd) >= 1.0 and abs(pl) >= 1.0 and (cd > 0) != (pl > 0):
+                ratio = abs(cd) / abs(pl) if pl else float("inf")
+                flags.append((name, s.get("risk"), s.get("shock"), cd, pl, ratio))
+    return flags
+
+
 def main() -> int:
     if "--no-build" not in sys.argv:
         rebuild_root_masters()
@@ -546,6 +568,7 @@ def main() -> int:
         ensure_ascii=False, indent=2), encoding="utf-8")
 
     sens_red, sens_yellow = sensitivity_unit_sanity()
+    sens_dir = sensitivity_direction_sanity()
     print()
     print("=" * 78)
     print(f"5. SENSITIVITY_UNIT_SANITY (csm_delta 또래-median 규모비, 억원)  "
@@ -558,6 +581,14 @@ def main() -> int:
         print(f"  YEL  {str(name):18s} max|Δ|={mx:>12.2f} ×med={ratio:>8.3g}  unit={unit}/det={ud}")
 
     print()
+    print("=" * 78)
+    print(f"5b. SENSITIVITY_DIRECTION_SANITY (CSM↔손익 부호 역행 = 파싱오류/onerous 의심, YELLOW)  flag={len(sens_dir)}")
+    print("    rule(user): CSM↑면 손익도↑ 통상 — sign 불일치 시 flag. |CSM|·|손익|≥1억 floor.")
+    print("=" * 78)
+    for name, risk, shock, cd, pl, ratio in sens_dir:
+        print(f"  SDIR {str(name):16s} {str(risk):14s} {str(shock):20s} CSM={cd:>+10.1f} 손익={pl:>+9.1f} (|CSM|/|손익|={ratio:.0f}x)")
+
+    print()
     print("#" * 78)
     print(f"SUMMARY  coverage_hole:{len(wf_holes)}CSM/{len(pl_holes)}PL | "
           f"closing:{ci_pass}P/{len(ci_fail)}F/{ci_skip}S | "
@@ -566,7 +597,7 @@ def main() -> int:
           f"pl_bridge:{pb_pass}P/{len(pb_fail)}F/{pb_skip}S | zero_legs:{len(zleg_rows)} | "
           f"impossible0:{len(zerolegs_rows)} | "
           f"crosscheck:{cc_pass}P/{cc_minor}M/{len(cc_fail)}F/{cc_skip}S | "
-          f"qoq_warn:{len(qoq_rows)}Y | sens:{len(sens_red)}R/{len(sens_yellow)}Y")
+          f"qoq_warn:{len(qoq_rows)}Y | sens:{len(sens_red)}R/{len(sens_yellow)}Y/{len(sens_dir)}dir")
     print("#" * 78)
     # QOQ/sens_yellow는 YELLOW(anomaly)라 exit code에 반영 안 함. wfy/zamort/zleg/impossible0/sens_red은 데이터 오류라 반영.
     return 0 if not (ci_fail or pb_fail or cc_fail or dup_rows or spike_rows or cont_rows

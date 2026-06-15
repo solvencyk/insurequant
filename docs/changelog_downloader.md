@@ -9,6 +9,34 @@
 
 Cross-stage entries that touch downloader as one phase but are primarily parser/gathering/viz (e.g. F11 foreign-affiliate viz integration, IR factsheet 전사 수집 + 손보 NB CSM 배수 파싱, F17 LOB parsing) remain in `docs/claude-changelog.md`. The compressed historical archive (pre-2026-05-25) also remains there.
 
+## 2026-06-15 -- IFRS17 CSM 민감도 FY2025 raw 28사 전수 적재 (sensitivity FY2024→FY2025 갱신용)
+
+owner 요청(`inbox/downloader/20260615T0435Z`): 사이트 CSM 민감도가 FY2024(24.4Q)에 고정 → 전 IFRS17
+대상사 FY2025 사업/감사보고서 raw 다운로드(파서가 sensitivity 재추출). universe = DART sensitivity JSON
+보유 28사(`data/dart/extracted/<canonical>_<rcept>_sensitivity.json`; `KR####_FY..._kics`=별개 K-ICS 분기 민감도라 제외).
+
+- **fetch**: 회사명 검색(영구매핑 금지) → `/api/list.json` FY2025(2026-03~04 제출) 사업보고서(23 listed) +
+  감사보고서(5 audit-only: 라이나·메트라이프·AIA·하나생명·처브) → `/api/document.xml` fetch+extract →
+  canonical `data/dart/FY2025_Q4/raw/<KR>_<name>_<rcept>/`. **32 filings, 28/28 공시, 실패 0, 미공시 0.**
+  raw-only(추출은 파서). data/dart raw는 gitignore → git 재팽창 무관(신규 HTTP fetch).
+- **네이밍**: 전부 `KR####_` prefix 통일. KB라이프·코리안리는 kics명↔DART명 불일치로 annual_raw_dir가
+  corp_code prefix(`00160393_`/`00113191_`)로 떨궈서 → `KR0099_`/`KR1000_`로 정정(G8 AIG와 동일 패턴).
+  하나생명·AIA는 G8에서 받은 것 idempotent 재확인.
+- **파일럿 흥국생명**(KR0071_흥국생명보험_20260331004251) raw sanity: 민감도 25·사망률 8·보험계약마진 114.
+  리터럴 "장해질병"/"실손"=0이나 장해6·질병6·정액19 존재 → 라벨 변형(파서 추출에서 확인, 다운로드 갭 아님).
+- **핸드오프**: parser/ifrs17 raw-ready(`inbox/parser/20260615T0520Z`). 파서가 sensitivity 재추출 +
+  흥국생명 부호/행 파일럿 검증 → heatmap 재빌드. status: resolved, `_resolved/` 이동.
+
+## 2026-06-15 -- 서울보증(KR0150) 8분기 raw 부재 재바운스 — 구조적 honest gap 재확인 (refetch 불가)
+
+parser(kics lane, docling census) → downloader: 서울보증 8분기 disclosure raw 부재로 refetch 요청
+(`inbox/downloader/20260615T0100Z`). **신규 누락 아님** — 요청 8분기(2023.Q1-3·2024.Q1-3·2025.Q2-3)가
+`audit_all_periods.py:39-43` `SGI_QUARTERLY_STRUCTURAL` 집합과 정확히 일치. 2026-06-01 NONLIFE-Q123에서
+이미 probe·판정·등록 완료. 사유: SGI 공시실(sgic.co.kr SPA)은 연간+최신분기만 보존(과거 롤오프) +
+DART 미상장(IPO 철회) → 양쪽 미취득, 사용자 결정("걍 버려")=won't-fix. → census expected-absent로 처리하라
+회신(파서 census가 `SGI_QUARTERLY_STRUCTURAL`+`DART_DROP` 예외표 참조 권장). status: resolved, `_resolved/` 이동.
+다운로더 액션 없음(물리적으로 받을 원천 부재). present raw = 2023.4Q·2024.4Q·2025.1Q·2025.4Q·2026.1Q.
+
 ## 2026-06-14 -- G8: NB CSM배수 25.4Q 누락 3사 — FY2025 감사보고서 raw 복원 (추출은 parser로 라우팅)
 
 owner QA(G8, `inbox/downloader/20260614T0712Z`): index.html CSM배수가 AIG(KR0029)·카카오페이손해

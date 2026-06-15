@@ -966,8 +966,12 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
         const rr=document.createElement("tr")
         const t1=document.createElement("td"); t1.textContent= row.risk!=null?String(row.risk):"-"
         const t2=document.createElement("td"); t2.textContent= fmtShock(row.shock)
-        const t3=document.createElement("td"); t3.className="num"; const cd = Number(row.csm_delta); t3.textContent=fmtNum(cd,0); t3.style.background=heatCss(cd, absMax)
-        const t4=document.createElement("td"); t4.className="num"; t4.textContent=fmtNum(Number(row.pl_impact),0)
+        const t3=document.createElement("td"); t3.className="num";
+        if (row.csm_delta == null) { t3.textContent="—"; t3.style.color="#adb5bd"; t3.title="미공시 (해당 보험사 민감도표에 CSM 컬럼 없음)"; }
+        else { const cd = Number(row.csm_delta); t3.textContent=fmtNum(cd,0); t3.style.background=heatCss(cd, absMax); }
+        const t4=document.createElement("td"); t4.className="num";
+        if (row.pl_impact == null) { t4.textContent="—"; t4.style.color="#adb5bd"; t4.title="미공시"; }
+        else { t4.textContent=fmtNum(Number(row.pl_impact),0); }
         rr.appendChild(t1); rr.appendChild(t2); rr.appendChild(t3); rr.appendChild(t4)
         tbody.appendChild(rr)
       }

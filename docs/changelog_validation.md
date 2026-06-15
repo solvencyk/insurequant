@@ -1,11 +1,19 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-06-14 · Stage 3/5 — validation
+> Last updated: 2026-06-15 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
 ---
+
+## 2026-06-15 — CSM 민감도 전수 재추출 발주(25.4Q 경영공시 기준) + DIRECTION_SANITY 룰 + 흥국생명 진단
+
+owner: IFRS17.html CSM 민감도 흥국생명 이상(사망률↑ CSM−36 vs 25.4Q 경영공시 +28 / 해지율 역행 / 장해질병 누락) 지적.
+
+- **진단(raw 검증)**: 현 heatmap 소스 = **FY2024 DART 사업보고서**(흥국 rcept 20250331003642, 2024.12.31) = **1년 stale + 비전수**(비상장사 DART 미제출). parser는 합계 행 충실 추출(해지율↑ 합계 CSM−1445.2/손익+61.12 = heatmap 일치 = **파싱오류 아님**). 장해질병 = FY2024 사업보고서 부재(경영공시엔 존재). 해지율 역행(CSM↓손익↑) = **source-faithful**(건강보험 product CSM−112,242/손익+564 견인).
+- **소스 결정**: **25.4Q 경영공시**(`data/disclosure/FY2025_Q4`) — 전 보험사 의무·분기별·장해질병 granular. DART 사업보고서는 상장/대형사·연1회. 둘 다 2025.12.31·~2026.3 제출로 recency 동급, **커버리지·세분이 경영공시 우위** → 전수 fill 정답. inbox/parser(ifrs17) `20260615T0415Z__...csm_sensitivity_refill_disclosure_basis` 발주(파싱은 parser, validation 직접 안 함).
+- **신규 룰 SENSITIVITY_DIRECTION_SANITY**(`validate_master_tables.py` 5b, owner rule-of-thumb): `sign(csm_delta)≠sign(pl_impact)`면 YELLOW(|CSM|·|손익|≥1억 floor). 손익/자본 컬럼 오선택·부호오류 전수 triage. 흥국 해지율형 source-faithful 역행도 flag되므로 fill 후 real(onerous) vs 파싱오류 판별. compile OK, stale FY2024 데이터엔 미실행(fill 후 작동).
 
 ## 2026-06-14 (b) — 정합성 전수검증: scan false-positive fix + sensitivity 단위룰 신설 + inbox 드레인 + 동시변경 적발
 

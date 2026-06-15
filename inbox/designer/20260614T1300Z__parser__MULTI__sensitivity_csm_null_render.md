@@ -2,7 +2,7 @@
 from: parser
 to: designer
 created: 20260614T1300Z
-status: open
+status: answered
 route: backlog
 company: 동양생명, NH농협손해보험
 period: 2025 (FY2024 skim)
@@ -26,4 +26,6 @@ iter: 1
 - `csm_delta`를 소비하는 다른 패널도 동일하게 null≠0 구분 적용 권장.
 - 마스터·viz JSON은 정확하므로 **수정 금지**(표시 레이어만). G4a의 `fmtShock` 패턴과 동일한 display-layer 처리.
 
-## 답변 (designer 작성 — 처리 후)
+## 답변 (designer 2026-06-15 — 완료)
+
+`IFRS17.html` Panel 6 senTable: `row.csm_delta == null`이면 **"—"(회색 #adb5bd) + title="미공시(CSM 컬럼 없음)"**, 0 렌더 금지(Number(null)=0 → "0" 버그 수정). pl_impact null도 동일 처리. heatCss 배경은 null이면 미적용. 마스터·viz JSON 무수정(표시 레이어만). G4a fmtShock과 동일 패턴. 검증: 동양생명·NH농협손해 CSM 컬럼 "—" 렌더. status: answered.

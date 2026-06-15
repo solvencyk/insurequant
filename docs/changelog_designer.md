@@ -23,6 +23,18 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 - **(3b) shock 표기 = designer display 파싱으로 완료**: parser가 자유텍스트 유지 → IFRS17 `fmtShock()` 추가(top-level helper, sens 렌더 line ~955 적용). `{n}% 증가/상승`→`{n}%↑`, `{n}% 감소/하락`·`(-){n}%`→`{n}%↓`. 복합/비정형 원문보존. 검증: 흥국 3.27%↑/↓·9.16%↑/↓·2.62%↑ /0.26%↑.
 - **푸본현대생명보험(KR0083) 오파싱 발견 → parser reparse 요청**: sensitivity_heatmap 엔트리가 "기말 보험계약부채" 잔액표 오추출(shock=금액). inbox `20260614T1140Z__designer__KR0083_FY2024__sensitivity_misparse.md`. (display 레이어로 불가 = 추출단계 정정 필요.)
 
+### 2026-06-15 — inbox 2건: 도넛 실값 병기 + CSM null="—"
+- **owner 0435Z(도넛 100%+)**: 정식 발주 = 직전 구현분과 동일. 추가로 owner "실값 병기 권장" 반영 → 툴팁 "100%+ (실제 242.5% · 발행액이 인정한도 초과)". status answered.
+- **parser 1300Z(CSM null 렌더)**: 동양생명·NH농협손해 `csm_delta=null`(미공시)이 senTable에 "0"으로 렌더(Number(null)=0 버그) → **null이면 "—"(회색)+title** 처리, pl_impact도 동일. 마스터 무수정(표시레이어). 검증: 동양생명 CSM 전부 "—". status answered.
+
+### 2026-06-14 (후속3) — 기본자본 소진율 "100%+" 표기 (owner 결정 복원)
+
+owner가 **(4) 도넛 100%+ 표기를 복원** 지시. 직전 "구현 취소"(publishing artifact 논거 수용)는 **번복**.
+- owner 논거: 분자(신종자본증권 발행액)=KOFIA, 분모(인정한도)=공시 → 독립 소스라 사전 100% cap은 애초 불가능. 계산값 >100%면 그냥 "100%+"로 표기하는 게 정당(현재 raw "242%"가 더 오도, `Math.min`은 원호만 캡할 뿐 중앙 숫자는 raw 노출 중이었음).
+- 수정(`K-ICS.html` renderDonut): 중앙 텍스트 `pct>100 ? '100%+' : pct.toFixed(0)+'%'`, 툴팁 사용 `'100%+ (인정한도 초과)'`. 원호 `Math.min(...,100)` 캡은 도넛 360° 한계라 유지. 색(>=100 빨강) 유지.
+- publishing artifact 주장과 무충돌: "100%+"는 정확값(242.5%)을 안 박아 artifact 오도도 회피. 파서가 excess 추출해 ≤100% 되면 자동으로 정상 %로 표시됨(분기 없음).
+- 검증: canvas 중앙 텍스트는 DOM 미노출 → 코리안리 도넛 렌더+인정>한도(>100% 경로) 확인, 실제 "100%+" 글자는 배포 후 육안.
+
 ### 2026-06-14 (후속2) — 민감도 stub 마감 + (4) 도넛 보류 확정
 - **parser 푸본현대 수정 확인(resolved)**: `_has_shock_rows` 가드로 푸본현대·KB손해·미래에셋·신한을 `status="partial"`(scenarios=[]) 재분류 — ±shock 행 없는 롤포워드 오태깅. KR0083 thread resolved→`_resolved/` 이동.
 - **민감도 stub 사용자친화화**: IFRS17 Panel 6 stub "status=partial / 시나리오 없음"(개발자스러움) → "% 충격 기준 보험위험 민감도표가 없는 보험사입니다."(없는 회사) / "민감도 데이터 미수록 보험사입니다."(엔트리 자체 없음). 검증(Edge dump): 푸본현대·KB손해 깔끔한 stub, "7,095,833" 금액 노출 사라짐.

@@ -62,6 +62,11 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
     = 비공시 아님, 이미지라 OCR뿐. **expected-absent 화이트리스트 아님.**
   - 카카오 2025.3Q rule6 = micro 반올림 artifact(documented).
   - ✅ **적재 완료**: 카카오 2025.2Q(28/28)·2025.3Q(27/28) 코어 + 2025.2Q 시장위험.
+- **서울보증(KR0150) 과거 interim = expected-absent (census 화이트리스트, 2026-06-15)**:
+  2023.1Q/2Q/3Q · 2024.1Q/2Q/3Q · 2025.2Q/3Q **= refetch 불가 구조적 gap**. 서울보증 자체 공시실(sgic.co.kr)은
+  **연간(Q4)+최근분기만** 노출, 과거 Q1-3 PDF 롤오프(서버 부재). 미상장이라 DART도 없음. downloader가
+  2026-06-01 `SGI_QUARTERLY_STRUCTURAL`로 등록(audit_all_periods.py:39-43) + 2026-06-15 재확인 resolved.
+  present = 2023.4Q·2024.4Q·2025.1Q·2025.4Q·2026.1Q(연간+최근) 정확. **K-ICS census도 이 8분기 결손은 무시.**
 
 **✅ INTERNAL_MODEL_36IRR_EXEMPT — owner 승인 완료 (2026-06-14, "한화 선례 동형"):**
 - **36_irr × 5**: KR0073 교보생명 2025.2Q · KR0094 신한라이프 2024.2Q·2024.4Q·2025.2Q·2025.4Q. **내부모형사** —

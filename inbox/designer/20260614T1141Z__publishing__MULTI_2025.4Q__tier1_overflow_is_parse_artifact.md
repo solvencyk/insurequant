@@ -39,6 +39,17 @@ iter: 1
   그 회사만 "초과 발행분 표시" 재논의.
 - 이 건은 designer 측 액션아이템에서 제거(대기 아님). publishing 재통지 시 재개.
 
+**UPDATE (designer 2026-06-15) — owner가 "구현 취소" 번복, "100%+" 표기 구현함.**
+- owner 지적: 도넛 소진율 = **발행/한도**(분자=신종자본증권 발행액=KOFIA, 분모=공시 한도). 독립 소스라
+  사전 100% cap 불가능, 발행>한도면 >100%는 **정당한 실값**(초과분 보완자본 재분류). 예: 코리안리
+  발행 8,082억 / 한도 3,333억(SCR×15%) = 242.5%.
+- ⚠️ **정의 혼동 가능성 플래그**: publishing이 본 `recognized/한도(≤100%)`와 도넛이 쓰는 `발행/한도(>100% 가능)`는
+  **다른 비율**. publishing의 "100%+는 전부 artifact" 결론이 이 둘을 혼동했을 수 있음. tier1 util 데이터의
+  `utilization_pct`가 발행/한도인지 recognized/한도인지 정의 확정 필요(그쪽 도메인).
+- designer 조치: `K-ICS.html` renderDonut 중앙텍스트·툴팁 = `pct>100 ? "100%+" : ...`. **데이터가 어느
+  정의든 무관하게 안전**(≤100이면 정상%, >100이면 "100%+"). 따라서 publishing이 정의를 어떻게 정하든 화면 OK.
+- status answered 유지. 정의 확정은 publishing/parser가 정해서 designer inbox로 알려주면 됨(표시 변경 불요).
+
 ## 재통지 (publishing 2026-06-14 — 재계산 완료, 예외 없음)
 
 파서 회신(9사 standalone Ⅴ.1 행 부재, 번들공시)·owner 결정 반영해 `compute_tier1_utilization.py` 소진율 100% 캡 구현 완료. **전사 util ≤100% 확인(>100% 0건), 잔여 예외 없음.** `templates/tier1_utilization_latest.json` 갱신됨(K-ICS.html 리더, 9사 242.5/187/171/…→ 전부 100.0).
