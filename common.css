@@ -1,0 +1,149 @@
+/* ============================================================================
+   InsureQuant — common.css  (shared design system + chrome)
+   Stage 5 / designer.  Single source of truth for design tokens and the shared
+   page chrome (header / tabs / brand / container / select / table base / text
+   utilities) across K-ICS.html, IFRS17.html, index.html.
+
+   USAGE: link this file in <head> *before* each page's inline <style> so any
+   page-specific rule overrides the shared base via normal cascade order.
+
+   NON-BREAKING CONTRACT: every value here equals the value the three pages
+   already rendered on 2026-06-16 — this is an extraction, not a redesign.
+   Page-specific spacing that differs between pages (.panel padding, .controls
+   margin) and K-ICS's global *{box-sizing} reset are intentionally NOT hoisted;
+   they stay inline per page.
+
+   PRESERVED owner decisions (never refactor away — these live in page JS/HTML):
+     - negative numbers shown with △ (Korean accounting "samo")
+     - tier1 capital donut shows "100%+" when issuance exceeds the recognised cap
+     - 현대해상 key color = orange #F47920
+     - mobile (<=640px) shows current-period only
+   Palette swap (de-AI DESIGN-V2 P1) is owner-gated — do NOT change token VALUES
+   here without sign-off; only the token VOCABULARY is being formalised now.
+   ========================================================================== */
+
+:root{
+  /* — Surfaces / ink ——————————————————————————————————————————— */
+  --bg:#ffffff;             /* page + card-inner background          */
+  --card:#f8f9fa;           /* panel / table-header / inactive-tab   */
+  --border:#e9ecef;         /* hairline borders                      */
+  --text:#212529;           /* primary ink                           */
+  --muted:#6c757d;          /* secondary ink, captions, placeholders */
+  --ink-strong:#495057;     /* axis labels / strong secondary        */
+
+  /* — Brand / action ———————————————————————————————————————————— */
+  --primary:#0d6efd;        /* active tab, links, default series      */
+  --primary-hover:#0b5ed7;
+
+  /* — Semantic status (financial) ——————————————————————————————
+     Canonical positive/negative/caution. Existing charts still use their own
+     literals; adopt these progressively. △-negatives keep --neg.            */
+  --pos:#16a34a;            /* 양(+) increase / healthy               */
+  --pos-soft:#22c55e;
+  --neg:#ef4444;            /* 음(△) decrease / breach                */
+  --neg-strong:#dc3545;
+  --warn:#f59e0b;           /* caution / medium-confidence            */
+
+  /* — Typography ———————————————————————————————————————————————— */
+  --font-sans:'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,'Segoe UI',Roboto,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+
+  /* — Spacing scale (4px base) —————————————————————————————————— */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px;
+
+  /* — Radius ——————————————————————————————————————————————————— */
+  --r-sm:4px; --r-md:8px; --r-lg:12px; --r-pill:999px;
+
+  /* — Misc ————————————————————————————————————————————————————— */
+  --bd:1px solid var(--border);
+  --t-fast:0.2s;            /* default transition                     */
+  --maxw:1320px;            /* content container max-width             */
+  /* --bp-mobile is 640px — documented here; @media cannot read a var. */
+}
+
+/* — Base ——————————————————————————————————————————————————————————
+   NOTE: no global *{box-sizing} reset here on purpose — index.html and
+   IFRS17.html lay out with content-box; K-ICS keeps its own *{} inline.       */
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-sans);
+  font-variant-numeric:tabular-nums;   /* mono digits site-wide              */
+}
+
+/* — Sticky header + brand —————————————————————————————————————————— */
+header{
+  position:sticky; top:0;
+  padding:10px 16px;
+  border-bottom:1px solid var(--border);
+  background:#ffffff;
+  z-index:1000;
+}
+.brand{
+  font-weight:700; margin-bottom:12px;
+  cursor:pointer; color:var(--primary); text-decoration:none;
+}
+.brand:hover{ color:var(--primary-hover); }
+
+/* — Tabs ——————————————————————————————————————————————————————————— */
+.tabs{ display:flex; gap:4px; margin-bottom:0; }
+.tab{
+  padding:8px 16px;
+  border:1px solid var(--border);
+  border-radius:8px 8px 0 0;
+  background:var(--card);
+  color:var(--muted);
+  text-decoration:none;
+  font-size:14px; font-weight:500;
+  cursor:pointer;
+  transition:all var(--t-fast);
+}
+.tab:hover,
+.tab.active{ background:var(--primary); color:#fff; border-color:var(--primary); }
+
+/* — Layout container ——————————————————————————————————————————————— */
+.container{ max-width:var(--maxw); margin:0 auto; padding:16px; }
+
+/* — Form select ———————————————————————————————————————————————————— */
+.select{
+  padding:8px 10px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#ffffff;
+  color:#212529;
+}
+
+/* — Panel headings (the .panel box itself stays page-specific) ——————————— */
+.panel h2{ margin:0 0 16px 0; color:var(--text); font-size:20px; font-weight:600; }
+.panel p{ color:var(--muted); line-height:1.6; margin:0 0 12px 0; }
+
+/* — Table base ————————————————————————————————————————————————————— */
+table{ border-collapse:collapse; width:100%; }
+th, td{ border:1px solid var(--border); padding:6px 8px; text-align:left; }
+th{ background:var(--card); }
+th:nth-child(n+2), td:nth-child(n+2){ text-align:right; }   /* numeric cols right */
+td.subitem{ padding-left:24px; color:var(--muted); font-size:12px; }
+
+/* — Numeric / text utilities ——————————————————————————————————————— */
+th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
+.small-muted{ font-size:12px; color:var(--muted); }
+.muted{ color:var(--muted); }
+
+/* — Expand/collapse toggle button (+/−) — shared by K-ICS sub-risks & IFRS17 재보험 — */
+.subtoggle{ display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; margin-left:6px; padding:0; border:1px solid var(--border); border-radius:4px; background:#fff; color:var(--muted); font-size:13px; line-height:1; cursor:pointer; vertical-align:middle; }
+.subtoggle:hover{ border-color:var(--primary); color:var(--primary); }
+
+/* ============================================================================
+   A11y baseline (additive — affects only keyboard focus / reduced-motion
+   users; no change for default mouse rendering).
+   ========================================================================== */
+:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; border-radius:2px; }
+
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{
+    transition-duration:0.01ms !important;
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+  }
+}
