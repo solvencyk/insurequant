@@ -1,0 +1,11 @@
+{
+  "_meta": {
+    "validator": "csm_continuity",
+    "rule": "within-FY opening constant + FY-boundary 기말→기초 continuity",
+    "purpose": "catch off-year / basis-swap / mis-pick invisible to closing-identity",
+    "companies_total": 34,
+    "companies_flagged": 0,
+    "red_findings": 0
+  },
+  "flagged": {}
+}

@@ -12,6 +12,23 @@ Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
 ---
 
+## 2026-06-16 — CSM 워터폴 continuity 전사 RED 8→0 (2026.1Q 기시 misparse + within-FY drift)
+
+owner 직접 검증 + validation `20260616T0605Z`/downloader `20260616T0640Z`. `validate_csm_continuity.py` **RED 8(7사)→0**.
+
+**근본원인** = `build_csm_waterfall_master`의 product-set 합산 버그(missing raw 아님 — 재추출이 committed 동일 misparse
+재현). 당기 발행(원수) 유배당+무배당+변액 sub-table을 부분만 집거나 전분기 copy 혼입:
+- **2026.1Q 5사** 기시(검증 워크플로우 9사 병렬, raw 후보블록 재구성): 푸본 1669.3→**1906.5**(유212.1+무1669.3+변25.1),
+  메리츠 111893.5→**111037.0**(전분기 copy 제거), 신한 74422.9→**75537.3**, 에이비엘 9229.7→**9702.5**, 교보 70768.8→
+  **65109.6**. 전부 = 직전 2025.4Q 기말(owner 검증).
+- **within-FY drift**: FY2023(현대 88281.1·에이비엘 7017.8·KDB 5239.4·교보 46967.3)·FY2024(KB라이프 30176.4·코리안리
+  8031.5) 기초 상수화. drift 원인 = 소급재작성(연중 기초 재공시) 또는 전기 copy.
+
+**수정(비파괴)**: `build_csm_waterfall_master.py` 미실행(파괴적). 검증값을 `data/dart/viz/csm_manual_overrides.json`
+'set'(+62) 인코딩 → `build_root_masters.build_csm()`(diag+override 공식 재조립, 값_당분기 정식 재계산). **durable**.
+감사기록 `data/_derived/csm_continuity_corrections.json`. identity 무파손(15셀), within-FY 상수·FY경계 연속 검증, pytest 110.
+⚠️ 다운스트림 viz(csm_bubble/NB_CSM_multiple/history/diag)·근본 파서 수정은 raw 복원 세션(별track).
+
 ## 2026-06-16 — designer/validation 후속: sensitivity period/as_of + NB-CSM partial sweep
 
 **A. sensitivity period/as_of** (designer `20260616T0030Z`): `sensitivity_heatmap.json` entry가 rcept_no만 있고

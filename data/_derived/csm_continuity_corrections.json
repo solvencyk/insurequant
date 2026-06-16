@@ -1,0 +1,17 @@
+[
+  {"kr":"KR0083","period":"2026.1Q","mode":"full","open":1906.5,"newbiz":231.5,"interest":17.4,"amort":-57.2,"close":2045.4,"why":"product-sum 유+무+변; parser took only 무배당. open=2025.4Q close (owner 1907.45)"},
+  {"kr":"KR0001","period":"2026.1Q","mode":"full","open":111037.0,"newbiz":4402.5,"interest":887.6,"amort":-3041.2,"close":112917.3,"why":"유+무 당분기; parser blended 전분기 copy. open=2025.4Q close (owner)"},
+  {"kr":"KR0094","period":"2026.1Q","mode":"full","open":75537.3,"newbiz":3628.6,"interest":685.6,"amort":-1875,"close":77224,"why":"유+무+변 current set; parser blended 전기 copies. open=2025.4Q close (owner)"},
+  {"kr":"KR0070","period":"2026.1Q","mode":"full","open":9702.5,"newbiz":1177.2,"interest":99,"amort":-236.8,"close":10309.7,"why":"4 product slices; open=2025.4Q close (owner 9702)"},
+  {"kr":"KR0073","period":"2026.1Q","mode":"full","open":65109.6,"newbiz":4171.6,"interest":489.9,"amort":-1541.7,"close":67123.9,"why":"유+무+변 triplet; open pinned to 2025.4Q close 65109.6 (owner 65110), agent flows kept"},
+  {"kr":"KR1000","period":"2024.1Q","mode":"full","open":8031.5,"newbiz":1042.4,"interest":182.5,"amort":-163.1,"close":8712.0,"why":"수재 일반모형 당기 block; parser used 전기 copy (10640.9). open=2023.4Q close (owner 8031.46)"},
+  {"kr":"KR1000","period":"2024.2Q","mode":"full","open":8031.5,"newbiz":1113.7,"interest":331.8,"amort":-338.5,"close":8871.6,"why":"수재 일반모형; constant year-start 8031.5"},
+  {"kr":"KR1000","period":"2024.3Q","mode":"full","open":8031.5,"newbiz":1194.9,"interest":302.4,"amort":-511.8,"close":8739.0,"why":"수재 일반모형; constant year-start 8031.5"},
+  {"kr":"KR0009","period":"2023.3Q","mode":"open","open":88281.1,"why":"FY2023 year-start (Q1-disclosed); Q3 source-restated to 83515.4. keep close 89036.6; agent Q1 interest is 1000x artifact so open-only"},
+  {"kr":"KR0009","period":"2023.4Q","mode":"open","open":88281.1,"why":"FY2023 year-start; Q4 source-restated to 83515.4. keep close 91423.7"},
+  {"kr":"KR0070","period":"2023.4Q","mode":"open","open":7017.8,"why":"FY2023 year-start (Q1-Q3 agree 7017.8); Q4 annual restated to 7585.3. keep close 8695.4"},
+  {"kr":"KR0072","period":"2023.4Q","mode":"open","open":5239.4,"why":"FY2023 year-start (Q1-Q3 agree 5239.4); Q4 annual restated FY2022 close to 5695.9. keep close 5830.5"},
+  {"kr":"KR0073","period":"2023.3Q","mode":"open","open":46967.3,"why":"FY2023 year-start (Q1/Q2 = 46967.3); Q3 source-restated to 54216.7. keep close 64694.3 (agent: genuine)"},
+  {"kr":"KR0073","period":"2023.4Q","mode":"open","open":46967.3,"why":"FY2023 year-start; Q4 source-restated to 55337.7. keep close 61153.8 (= owner anchor 61153.81)"},
+  {"kr":"KR0099","period":"2024.4Q","mode":"open","open":30176.4,"why":"FY2024 year-start (= 2023.4Q close, owner 30176.42; Q1-Q3 agree); Q4 carried 31798.3 boundary-opening. keep close 30105.1"}
+]
