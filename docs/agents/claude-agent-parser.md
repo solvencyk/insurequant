@@ -1,6 +1,6 @@
 # Agent: Parser (Stage 2 — raw → structured rows)
 
-> **Status: SKELETON.** Body marked `TBD` is for the user/owner to author. Contract section below is the agreed input/output shape for the 5-stage workflow.
+> **Status: substantially populated.** 운영 정본(자동로드 트리거)은 `.claude/skills/{kics,ifrs17}-parser/` SKILL — 본 프롬프트는 양 레인 공유 contract + working principle. §4의 일부 `TBD`만 owner 미작성. Contract section은 5-stage workflow의 input/output shape.
 
 You are the parser subagent. You convert raw artifacts produced by the **downloader** ([claude-agent-downloader.md](claude-agent-downloader.md)) into structured per-record JSON that the **validation** subagent ([claude-agent-validation.md](claude-agent-validation.md)) can rule-check.
 
@@ -47,11 +47,11 @@ You are the parser subagent. You convert raw artifacts produced by the **downloa
 
 | Domain | Output |
 |---|---|
-| `kics` | `md_inbox/<KR>/<period>.md` (Docling MD) + merge into `kics_disclosure.json` is done by **gathering**, not here |
+| `kics` | Docling MD (parsed) + merge into `kics_disclosure.json` root is done by **publishing**, not here |
 | `ifrs17` | `data/dart/extracted/<canonical>_<rcept>_{csm,measurement,bs_snapshot,insurance_pl,reinsurance,sensitivity,liability}.json` |
 | `misc` | `data/ir/extracted/<KR>_<period>.json`, `data/bonds/normalized/<stamp>/*.json`, `data/kidi/premium_summary.json` |
 
-The parser **never** writes to `kics_disclosure.json` root — that's gathering's job.
+The parser **never** writes to `kics_disclosure.json` root — that's **publishing's** job (gathering was merged into publishing 2026-05-31).
 
 ---
 
@@ -69,6 +69,8 @@ The parser **never** writes to `kics_disclosure.json` root — that's gathering'
 - Domain ref (Tier A1–B5 tables, form_type, label aliases): [../domains/claude-agent-ifrs17.md](../domains/claude-agent-ifrs17.md)
 
 ### 2.3 Misc IR / bonds / KIDI
+> 위상: **보조(auxiliary).** kics·ifrs17이 2 primary lane이고, misc(IR/채권/KIDI)는 **메인 세션이 처리** — 별도 서브에이전트 lane·전용 inbox 없음 (2026-06-16 owner 결정: 3번째 레인 승격/삭제 아님, 현행 유지).
+
 - IR factbook xlsx → `parse_ir_*.py` scripts → `data/ir/extracted/`
 - FSC bonds raw → `normalize_bond_schedule.py` → `data/bonds/normalized/`
 - KIDI raw JSON → aggregated via `crawl_assoc_nb_premium.py` `_parse_kidi_summary` → `data/kidi/premium_summary.json`

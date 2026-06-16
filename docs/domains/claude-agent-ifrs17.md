@@ -297,6 +297,12 @@ nb_replacement     = nb_effect_csm / csm_amort_pl              # §2; >1 이면 
 
 ### 7.3 파서 접근 (2026-05-24 Q8 확정)
 
+> ⚠️ **SUPERSEDED (2026-06-16).** 아래 "민감도 primary = K-ICS 분기공시 / DART 주석 = skim PoC·primary 아님
+> (`sensitivity_extractor.py` misaligned)"은 **현행 코드와 정면 충돌** — DART CSM/PL 민감도는 지금 **owner-directed
+> 실파이프라인**(`src/ifrs17/sensitivity_extractor.py` → `scripts/viz_build_ifrs17_panels.py` →
+> `data/dart/viz/sensitivity_heatmap.json` → `IFRS17.html` 렌더)이다. **운영 정본 = 코드 + `.claude/skills/ifrs17-parser/`
+> SKILL(traps).** 본 §7.3·§9 Q8·§10 Q8의 "K-ICS-primary / DART=skim PoC" 표기는 폐기.
+
 - **Primary source: K-ICS 분기 공시** (`kics_disclosure` / md_inbox). DART 주석(§14 (2) + 리스크 민감도)은 **secondary / 추후**.
 - `sensitivity_extractor.py` DART batch는 skim PoC일 뿐 — B5 정규화 파이프라인의 primary가 **아님** (방향 오류; K-ICS ingest 우선).
 - 표 형태: `가정 | 민감도 | LIC 영향 | 당기손익 영향` (회사별 변형). source 필드로 `kics_disclosure` vs `dart_note14` 구분 저장.
