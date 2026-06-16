@@ -12,34 +12,19 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+  <link rel="stylesheet" href="common.css"/>
   <style>
-    :root{--bg:#ffffff; --card:#f8f9fa; --border:#e9ecef; --text:#212529; --muted:#6c757d; --primary:#0d6efd; --primary-hover:#0b5ed7;}
-    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-variant-numeric:tabular-nums}
-    header{position:sticky;top:0;padding:10px 16px;border-bottom:1px solid var(--border);background:#ffffff;z-index:1000}
-    .brand{font-weight:700;margin-bottom:12px;cursor:pointer;color:var(--primary);text-decoration:none}
-    .brand:hover{color:var(--primary-hover)}
-    .tabs{display:flex;gap:4px;margin-bottom:0}
-    .tab{padding:8px 16px;border:1px solid var(--border);border-radius:8px 8px 0 0;background:var(--card);color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:all 0.2s;}
-    .tab:hover{background:var(--primary);color:white;border-color:var(--primary)}
-    .tab.active{background:var(--primary);color:white;border-color:var(--primary)}
-    .container{max-width:1320px;margin:0 auto;padding:16px}
+    /* Shared tokens + chrome (header/tabs/brand/container/select/table/utils)
+       now live in common.css. Below: K-ICS-specific only. */
+    *{box-sizing:border-box}
     .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
-    .panel h2{margin:0 0 16px 0;color:var(--text);font-size:20px;font-weight:600}
-    .panel p{color:var(--muted);line-height:1.6;margin:0 0 12px 0}
     .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:16px}
-    .select{padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:#ffffff;color:#212529}
     .chart-container{position:relative;height:500px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
     .coming-soon{text-align:center;padding:60px 20px;color:var(--muted)}
     .coming-soon h3{font-size:24px;margin:0 0 12px 0;color:var(--text)}
     .coming-soon p{font-size:16px;margin:0}
     .table-container{margin-top:32px;}
-    table{border-collapse:collapse;width:100%;}
-    th, td{border:1px solid var(--border);padding:6px 8px;text-align:left;}
-    th{background:var(--card);}
-    th:nth-child(n+2), td:nth-child(n+2){text-align:right;} /* 항목명 제외한 모든 셀 오른쪽 정렬 */
-    td.subitem{padding-left:24px;color:var(--muted);font-size:12px;}
-    .subtoggle{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin-left:6px;padding:0;border:1px solid var(--border);border-radius:4px;background:#fff;color:var(--muted);font-size:13px;line-height:1;cursor:pointer;vertical-align:middle}
-    .subtoggle:hover{border-color:var(--primary);color:var(--primary)}
+    /* .subtoggle + :hover → common.css (shared with IFRS17 재보험 토글) */
     .panel .subtitle{color:var(--muted);font-size:13px;line-height:1.5;margin:-8px 0 16px 0}
     .panel .subtitle li{margin-bottom:2px}
     .donut-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;padding:8px 0}
@@ -486,9 +471,11 @@ window.FORWARD_DATA = [{"insurer_code":"KR0001","insurer_name":"메리츠화재�
       }
       const chartCtx = ctx.getContext('2d');
       
-      // '다. 지급여력비율' 데이터 추출
+      // '다. 지급여력비율' 데이터 추출 (항목명 변형 2종: 긴 형/짧은 형 — 2026.1Q 등에서 짧은 형 사용 → KB 등 누락 버그 수정)
       const solvencyRatioData = quarters.map(q => {
-        const row = data.find(r => r['항목명'] === '다. 지급여력비율 : 가 ÷ 나 × 100' && r['공시분기'] === q);
+        const row = data.find(r =>
+          (r['항목명'] === '다. 지급여력비율 : 가 ÷ 나 × 100' || r['항목명'] === '지급여력비율')
+          && r['공시분기'] === q);
         if (!row) return null;
         const value = parseFloat(String(getRowValue(row)).replace(/,/g, '')) || 0;
         return value;
