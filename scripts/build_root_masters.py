@@ -85,7 +85,9 @@ def _zero_other_expense(rows):
         if i1 is None or not i16:
             continue
         comp = sum(((items.get(k) or {}).get("값") or 0) for k in _PL_COMP)
-        if abs(i1 - comp) <= max(100, abs(i1) * 0.01):
+        # tol tuned to catch genuine closures (흥국화재 resid ≤278, KB/KDB exact) while
+        # excluding partial mis-extracts (DB손해 2023.2Q resid 6869 = separate PL-bridge issue).
+        if abs(i1 - comp) <= max(300, abs(i1) * 0.001):
             r16["값"] = 0.0
             n += 1
     print(f"  pl 기타사업비(item16)->0: {n} cells (보험손익 closes without -16)")
