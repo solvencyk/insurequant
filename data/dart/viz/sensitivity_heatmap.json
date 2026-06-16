@@ -68,7 +68,9 @@
           "csm_delta": -23.47,
           "pl_impact": 569.34
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "DB손해보험",
@@ -133,7 +135,9 @@
           "csm_delta": -1258.0,
           "pl_impact": -309.95
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "KB손해보험",
@@ -141,7 +145,9 @@
       "status": "partial",
       "caption": "(14) 가정변경에 따른 순보험계약부채 잔여보장요소의 변동 내역은 다음과 같습니다.(단위:백만원)<당기>",
       "table_kind": "sensitivity_analysis",
-      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table",
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "NH농협손해보험",
@@ -214,7 +220,9 @@
           "csm_delta": null,
           "pl_impact": 91.43
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "교보생명보험",
@@ -276,7 +284,9 @@
           "csm_delta": -2196.0,
           "pl_impact": -195.0
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "농협생명보험",
@@ -335,7 +345,9 @@
           "csm_delta": -790.79,
           "pl_impact": -42.81
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "동양생명",
@@ -400,7 +412,9 @@
           "csm_delta": null,
           "pl_impact": 332.74
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "라이나생명보험",
@@ -465,7 +479,9 @@
           "csm_delta": -574.1522,
           "pl_impact": -131.9683
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "롯데손해보험",
@@ -533,7 +549,9 @@
           "csm_delta": -613.52,
           "pl_impact": -213.55
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "메리츠화재해상보험",
@@ -598,7 +616,9 @@
           "csm_delta": -1578.53,
           "pl_impact": -100.94
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "메트라이프생명보험",
@@ -648,13 +668,17 @@
           "pl_impact": null
         }
       ],
-      "unit_warning": "max|ΔCSM|=597328억 >> total CSM=26082억 — unit unresolved"
+      "unit_warning": "max|ΔCSM|=597328억 >> total CSM=26082억 — unit unresolved",
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "미래에셋생명",
       "rcept_no": "20250318001228",
       "status": "unavailable",
-      "note": "No sensitivity_analysis block in MVP extract"
+      "note": "No sensitivity_analysis block in MVP extract",
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "삼성생명",
@@ -734,7 +758,9 @@
           "csm_delta": 4330.53,
           "pl_impact": 516.18
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "삼성화재해상보험",
@@ -799,7 +825,9 @@
           "csm_delta": -3449.16,
           "pl_impact": -146.17
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "신한라이프생명보험",
@@ -807,7 +835,9 @@
       "status": "partial",
       "caption": "(9) 보험계약부채의 미래서비스 변동분에 대한 가정변경효과 단계별, 물량차이 및 투자요소예실차 등으로 인한 상세 변동금액은 다음과 같습니다.① 제36(당)기",
       "table_kind": "sensitivity_analysis",
-      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table",
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "에이비엘생명보험",
@@ -880,7 +910,9 @@
           "csm_delta": 11.36,
           "pl_impact": null
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "에이아이에이생명보험",
@@ -924,7 +956,9 @@
           "csm_delta": 1260.01,
           "pl_impact": 150.62
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "처브라이프생명보험",
@@ -988,7 +1022,9 @@
           "csm_delta": -42.61,
           "pl_impact": -14.71
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "케이디비생명보험",
@@ -1059,7 +1095,9 @@
           "csm_delta": 490.48,
           "pl_impact": 134.76
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "케이비라이프생명보험",
@@ -1102,7 +1140,9 @@
           "csm_delta": -46.66,
           "pl_impact": 10.79
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "코리안리",
@@ -1167,7 +1207,9 @@
           "csm_delta": -219.76,
           "pl_impact": -44.71
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "푸본현대생명보험",
@@ -1175,7 +1217,9 @@
       "status": "partial",
       "caption": "기말 보험계약부채(자산)",
       "table_kind": "sensitivity_analysis",
-      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table",
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "하나생명보험",
@@ -1247,7 +1291,9 @@
           "csm_delta": -10.158,
           "pl_impact": -7.8562
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "한화생명",
@@ -1343,7 +1389,9 @@
           "csm_delta": 2623.16,
           "pl_impact": 157.68
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "한화손해보험",
@@ -1351,7 +1399,9 @@
       "status": "partial",
       "caption": "주1) 제79기부터는 별도재무제표(K-IFRS 1117호) 실적 기준, 이전은 별도재무제표(K-IFRS 1104호) 실적 기준 (지급여력비율은 연결재무제표 실적 기준) 1. 손해율 : (발생보험금+손해조사비+손실부담계약관련비용+발생사고변동비용-출재수익)/보유보험수익 2. 사업비율 : (신계약비+유지비+투자관리비+기타비용)/보유보험수익주2) 제78기 및 그 이전 1. 손해율 : 발생손해액 / 경과보험료 2. 사업비율 : 순사업비 / 보유보험료주3). ROA : 당기순이익/{(전회계연도말 총자산+당회계연도말 총자산)/2}주4) ROE : 당기순이익/{(전회계연도말 자기자본+당회계연도말 자기자본)/2}주5)운용자산이익률:투자영업이익/{(전회계연도말 운용자산+당회계연도말운용자산-투자영업이익)/2}주6) 지급여력비율 : 지급여력금액 / 지급여력기준금액 제80기 수치는 산출 전이므로 3월말 이내 확정치로 정정공시 예정 [캐롯손해보험(주)]",
       "table_kind": "sensitivity_analysis",
-      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table"
+      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table",
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "현대해상",
@@ -1419,7 +1469,9 @@
           "csm_delta": -2782.6142,
           "pl_impact": -195.9164
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     },
     {
       "company": "흥국생명보험",
@@ -1484,7 +1536,9 @@
           "csm_delta": 464.96,
           "pl_impact": 38.77
         }
-      ]
+      ],
+      "period": "FY2025",
+      "as_of": "2025-12-31"
     },
     {
       "company": "흥국화재",
@@ -1539,7 +1593,9 @@
           "csm_delta": -74.55,
           "pl_impact": 47.87
         }
-      ]
+      ],
+      "period": "FY2024",
+      "as_of": "2024-12-31"
     }
   ]
 }

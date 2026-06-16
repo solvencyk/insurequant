@@ -12,6 +12,19 @@ Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
 ---
 
+## 2026-06-16 — designer/validation 후속: sensitivity period/as_of + NB-CSM partial sweep
+
+**A. sensitivity period/as_of** (designer `20260616T0030Z`): `sensitivity_heatmap.json` entry가 rcept_no만 있고
+`period`/`as_of`=null이던 것 → `viz_build_ifrs17_panels.py` `build_panel`에 `_period_asof_from_rcept` 추가
+(`add_as_of` 플래그로 **sensitivity 패널만**) → 27社 FY2024/2024-12-31, 흥국 FY2025/2025-12-31. scenario 무변경,
+타 패널 3종 byte-identical, pytest 110. designer `asOfFromRcept` fallback과 동일 규약(rcept 제출월).
+
+**B. NB-CSM partial 오염 sweep** (validation `20260616T0230Z`): `csm_waterfall_history.json` non-ok **41 cells**
+census(no_csm_block 29·partial 6·no_extract/empty/download_error 6). **partial 6건**(롯데 2025.2Q NB=0·미래에셋
+2025.2Q/3Q·한화생명/현대해상 2025.2Q·삼성화재 2023.1Q)이 NB YTD 적극 오염. 재추출은 **반기/3분기 raw 부재로
+raw-blocked** → downloader 발주(`inbox/downloader/20260616T0400Z__…nb_csm_interim_raw_fetch`). 삼성생명 2025.2Q
+OVER(+26%)는 partial 아닌 **scope diff(별도/연결)**로 별건 disposition.
+
 ## 2026-06-16 — round3 IFRS17 QA (P1/P2/P3) + IFRS17 도메인 SKILL 결정화
 
 **round3 데이터 글리치** (inbox `20260616T0007Z__…ifrs17_pl_sensitivity_round3`) → **commit 5b9b0eb**:

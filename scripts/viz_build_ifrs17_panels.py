@@ -1205,7 +1205,25 @@ def _run_extractor(path: Path, company: str, extractor):
         return {"status": "error", "error": str(exc)}
 
 
-def build_panel(glob_pat: str, extractor) -> dict:
+def _period_asof_from_rcept(rcept: str) -> tuple[str | None, str | None]:
+    """Derive (period, as_of) from a 14-digit DART rcept_no — its first 8 chars are the
+    submission date YYYYMMDD. Sensitivity entries are annual 사업보고서 (filed Jan–Apr of the
+    following year), so months 1–4 → FY(y-1) / (y-1)-12-31. The 5-6/7-9/10-12 branches map a
+    half/quarter filing to its as-of (mirrors the designer's asOfFromRcept fallback so master
+    and display agree). Authoritative report-type, if later wired in, can override this."""
+    if not (isinstance(rcept, str) and len(rcept) >= 6 and rcept[:6].isdigit()):
+        return None, None
+    y, m = int(rcept[:4]), int(rcept[4:6])
+    if 1 <= m <= 4:
+        return f"FY{y - 1}", f"{y - 1}-12-31"
+    if 5 <= m <= 6:
+        return f"{y}.1Q", f"{y}-03-31"
+    if 7 <= m <= 9:
+        return f"{y}.2Q", f"{y}-06-30"
+    return f"{y}.3Q", f"{y}-09-30"
+
+
+def build_panel(glob_pat: str, extractor, add_as_of: bool = False) -> dict:
     # Per company, pick the BEST filing — a refreshed FY2025 extract (rcept 2026…)
     # supersedes the prior FY2024 one (rcept 2025…), BUT only when it actually yields
     # data: rank by (status: ok>partial>empty, then latest rcept), so an empty FY2025
@@ -1229,6 +1247,10 @@ def build_panel(glob_pat: str, extractor) -> dict:
             if best_key is None or key > best_key:
                 best_key, best_entry = key, {"company": company, "rcept_no": rcept, **panel}
         if best_entry is not None:
+            if add_as_of:
+                per, asof = _period_asof_from_rcept(str(best_entry.get("rcept_no", "")))
+                best_entry["period"] = per
+                best_entry["as_of"] = asof
             companies.append(best_entry)
 
     return {"period": "annual (filings skim)", "companies": companies}
@@ -1248,7 +1270,9 @@ def main() -> None:
     }
 
     for fname, (pat, fn) in outputs.items():
-        payload = build_panel(pat, fn)
+        # period/as_of enrichment is for the sensitivity heatmap (designer 20260616T0030Z);
+        # the other panels keep their existing shape.
+        payload = build_panel(pat, fn, add_as_of=(fname == "sensitivity_heatmap.json"))
         out_path = OUT / fname
         out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
