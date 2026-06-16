@@ -70,3 +70,27 @@ digest는 위 미처리분 남아 **open 유지**.
 - **🟠 #3/#4 = ✅ 완료**: parser가 시장하위 36-40 회수(146 all-five 영속) + 생보 item14후 적재 완료(changelog 06-14). 재검증: `19_market` 게이트 정상작동(짝수 결측만 RED), **rule 8_post = GREEN 442/RED 0**((2후+3후)/14후≈item27후 25/25 일치). 둘 다 종결.
 - **🟢 신규**: `_scan_breakdown_presence` clean-cell 수정(삼성생명 odd-Q false RED 제거) + SENSITIVITY_UNIT_SANITY 룰 신설(owner 0712Z claim2). 별도 owner 메시지 답변 참조.
 - **잔여 open**: #5 V7 history off-by-one 회귀 / #6잔여 삼성화재 FY2024 IR annual benchmark / #7 V9 저배수 4사·교보 cont / #8 verify_parser_change 하네스 / #9 V4 QoQ yaml loader. (파서/다단계 의존 — 다음 우선순위.)
+
+### 2026-06-16 진행 — #5 V7 history off-by-one 재확인 완료 (systemic-3 근본원인 확정)
+
+**#5 = ✅ 재확인 완료**(off-by-one 해소 확인 + systemic-3 = 실재·아티팩트 아님).
+- **off-by-one-year 회귀 = FIXED**: 현 IR series(`data/ir/series/`)는 Q1 YTD-reset 정합(삼성화재 6782.7→14426→26068→34995, 2024.1Q 8855.5로 리셋 = 1년 시프트면 불가능). 06-08 stale check(10:35)와 재실행 ir_eok·flag 완전 동일 = 시프트 흔적 0.
+- **복원 `scripts/check_nb_csm_history.py`**: 사라진 ad-hoc 도구를 self-contained로 복원(컨벤션을 series 메타에서 도출: singleQ field / units "YTD" / per-Q default). DART per-Q delta가 stale matrix와 정확 일치(faithful). `data/_derived/nb_csm_history_check.json` 현행 갱신. exit 2 if OVER/UNDER.
+- **systemic-3 근본원인 = DART CSM_waterfall partial/no_csm_block 추출**(정렬 아님): 롯데 2025.2Q status=partial→NB_YTD=0→delta −1098.5(음수 NB 불가능); 미래에셋 2025.2Q/3Q partial→collapse-then-catchup spike(=‟↑↓ 교대"); 2025.2Q cohort-wide=동일. DB 2025.2-4Q 부호반전은 현재 DB DART 부재로 재현 안 됨(현상 롯데로 이동). 삼성생명 2025.2Q OVER(+26%)는 status=ok=진짜 DART↔IR 차이(별건).
+- **라우팅**: parser/ifrs17 `inbox/parser/20260616T0230Z__validation__MULTI__nb_csm_partial_extract_corrupts_history.md`(partial 재추출 + 전사 sweep + 삼성생명 별건).
+- **잔여 open**: #6잔여 삼성화재 FY2024 IR benchmark / #7 V9 / #8 하네스 / #9 QoQ yaml. (#5는 검증측 완료, parser 재추출 트리거 대기.)
+
+### 2026-06-16 진행 — #6/#7/#8/#9 (4-에이전트 Workflow 병렬 + 통합)
+
+**#6 = ✅ 삼성화재 RESOLVED / 🔴 현대해상 owner·downloader.** `validate_nb_csm_multiple.py`에 FY2024 aligned anchor 로더 추가(`load_fy2024_ir_anchors` — IR series 2024.4Q.multiple_derived_ytd) + 삼성화재 PREFERRED_SCOPE에 monthly_avg_from_ytd. **삼성화재 fallback retired**: computed 14.76 vs IR 15.16 rel 0.026, period_aligned=True, fallback_used=False(경고 해소). **fallback_pass 2→1**. 현대해상은 **in-repo에 FY2024 ANNUAL IR multiple 부재**(현대 IR=1H/2H cadence, FY-annual 미공시 가능) → fallback(2025.2Q=18.9) 잔존, owner 결정(영구 fallback or downloader가 현대 IR FY2024 배수 fetch). pytest 110.
+
+**#7 = ✅ 조사완료 (parser-fix 0건; 전부 source-faithful/documented/frozen) + 🔧 validator 이중계상 수정.** raw 대조로 closing identity 전부 EXACT → 산술오류 없음, break는 boundary-level:
+  - 교보 2024.3Q/4Q Δ−2905 = **WFY-documented 재작성을 CONT가 이중계상**(WFY엔 면제, CONT엔 면제 split 부재) → **수정**: `validate_master_tables.py`에 CONT도 RESTATEMENT_EXCEPTIONS(=기존 WFY set) 공유, documented는 CONTEX(보고만·게이트 제외). **cont 15→12(+3EXC: 교보 2024×2 + KB라이프 2024.4Q)**. 미등록 boundary(교보 2026.1Q +5659 등)는 RED 유지 = 새 신호 가시.
+  - **[정정 2026-06-16 — 오진 시인]** 교보 2026.1Q +5659 등 **5사 2026.1Q boundary = REAL 재작성 아님 = 파싱오류**. owner가 DART 원본 직접검증: 2026.1Q 기시 CSM = 직전 2025.4Q 기말과 동일(교보 65,110·메리츠 111,037·신한라이프 75,537·에이비엘 9,702·푸본현대 1,907.45). master에 엉뚱한 opening이 박힘. 내가 "self-closing identity 닫힘→source 충실"이라 한 건 오진(항등식은 opening 검증 불가). → downloader FY2026_Q1 raw 복원(`…restore_fy2026q1_dart_raw`) + parser/ifrs17 재추출(`…csm_2026q1_opening_misparse`) 발주. CONT RED 유지=정당. (케이디비 2024.2Q +58%는 별건=within-period 가정·경험조정 +2897 실적변동, 유지.)
+  - 저배수 4사 = **scope 오류 아님**(backlog framing 정정): 교보 6.61/한화 9.84는 2026.1Q **Q1 계절적 저점 YTD**(한화 9.84는 오히려 IR-validated FY 7.6보다 높음=‟low" 오독), 교보플래닛 2.0·처브 2.4는 micro/digital 실제 저배수. 분자 전부 waterfall item2와 정확 일치.
+
+**#8 = ✅ DONE.** `scripts/verify_parser_change.py` 신설(stdlib, UTF-8): snapshot/diff(blast-radius, kics는 (code,quarter,item) cell-diff)/validate(6검증기 일괄 exit+summary 표)/all. 자가검증 snapshot+diff clean, full `validate` 통합실행 확인(6검증기 정상 표출). 추출기 변경 전후 1커맨드 회귀.
+
+**#9 = ✅ 이미 배선됨(no-op).** `config/qoq_thresholds.yaml`은 `validate_master_tables.py:84 yaml.safe_load`로 이미 로드 중 = backlog 항목이 stale. 변경 불요.
+
+**남은 owner 결정**: (a) 현대해상 FY2024 IR benchmark 영구fallback vs fetch, (b) 교보 2026.1Q 등 2026.1Q boundary 점프(frozen raw) 문서화 예외 등록 여부 + FY2026_Q1 재취득. **#8/#9 종결, #6 삼성화재·#7 validator-fix 완료.**

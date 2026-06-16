@@ -1,6 +1,6 @@
 # Insurequant Changelog — Downloader Stage
 
-> Last updated: 2026-06-14 · Stage 1/5 — downloader
+> Last updated: 2026-06-16 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
 
 **Scope:** data collection only — raw fetch from external sources (정기경영공시 / DART / FSC bonds / KIDI / IR factbooks).
@@ -8,6 +8,106 @@
 **This file:** entries scoped to downloader work only, extracted from the root changelog 2026-05-30.
 
 Cross-stage entries that touch downloader as one phase but are primarily parser/gathering/viz (e.g. F11 foreign-affiliate viz integration, IR factsheet 전사 수집 + 손보 NB CSM 배수 파싱, F17 LOB parsing) remain in `docs/claude-changelog.md`. The compressed historical archive (pre-2026-05-25) also remains there.
+
+## 2026-06-16 -- CSM 워터폴 연속성(전기 기말≠당기 기시) 복구용 DART raw 재취득 (33셀)
+
+validation `inbox/downloader/20260616T0600Z`(owner: 2026.1Q 기시 CSM 전사 misparse, 정답=직전 2025.4Q 기말)
++ 사용자 지시("26.1Q 전부 말고 5사 먼저, 24.4Q/25.1Q는 continuity break만"). `data/dart/FY2026_Q1/`는
+git-purge로 통째 부재(0 dirs) → 재추출 불가 → DART 재취득. `ifrs17_batch_historical.py --skip-extract`(fetch-only).
+
+- **우선 5사 2026.1Q**: 교보(KR0073)·메리츠화재(KR0001)·신한라이프(KR0094)·에이비엘(KR0070)·푸본현대(KR0083) = 5/5.
+- **continuity 전수 점검**(`validate_csm_continuity.py`): break는 **24.4Q/25.1Q 경계 아님** — 실제 = 코리안리
+  2023.4Q기말 8032≠2024.1Q기초 10641(Δ32.5%) FY경계 + FY2023 기초드리프트(현대·에이비엘·KDB·교보) +
+  FY2024 드리프트(KB라이프·코리안리). → **FY2023 Q1-Q4**(현대·에이비엘·KDB·교보·코리안리, 20셀) +
+  **FY2024 Q1-Q4**(KB라이프·코리안리, 8셀) 동반 재취득.
+- **합계 33/33 fetched, CSM 블록 결손 0**(보험계약마진 48~382 전수 존재). 회사명 검색(영구매핑 없음).
+  Q4=사업보고서(A001)·Q1-3=분기/반기. raw gitignore(origin/data 재팽창 아님 — 원천 DART 신규 fetch).
+- **핸드오프**: parser/ifrs17 raw-ready(`inbox/parser/20260616T0640Z`, continuity 진단표+owner 정답값 포함).
+  파서 재추출 → 2026.1Q 기시=2025.4Q 기말 정상화 + 드리프트/경계 수렴 → `validate_csm_continuity.py` RED 수렴.
+  ⚠️ 마스터 rebuild은 복원분+기존 raw 범위 내(전체 부재 시 파괴적). status: resolved, `_resolved/` 이동.
+
+## 2026-06-16 -- 자본성증권 발행현황 검증·수정 (owner 0506Z #2 선제) — registry bare-stem 오수집 fix
+
+owner `inbox/parser/20260616T0506Z` #2(K-ICS tier 패널 신뢰도 점검 — 발행현황 크롤링 검증, data.go.kr
+`15059611`)를 downloader가 선제 수행(조건부 바운스 대기 대신). **live 데이터 대체로 정확하나 실오수집 1·누락 1 발견·수정.**
+
+- **근본원인**: `src/solvency/downloader/{nonlife,life}_insurer_registry.yaml`의 **짧은 그룹 약칭**이 FSC bond
+  API substring 쿼리로 나가 계열사 채권을 보험사로 오태깅. `--max-pages` 키우자 메리츠 1.77조→**19.6조**,
+  iM라이프 0.27→10조, 미래에셋 0.3→9.2조 폭증(메리츠캐피탈/증권/지주, 아이엠뱅크, 미래에셋증권 등).
+- **수정**: bare-stem alias **4개 제거** — `"메리츠"`(KR0001)·`"아이엠"`(KR0076)·`"미래에셋"`(KR0079)·
+  `"카카오"`(KR1098). specific 약칭은 유지. IBK/AIG/AXA/처브/푸본은 영문스템/고유명이라 무오염 확인(미수정).
+- **재크롤+정규화**(clean: raw `20260616T060238Z` / normalized `20260616T060817Z`, as_of 2026-06-16):
+  - **24사 중 22사 live 5/25와 동일** → big-3 Face는 live가 정확했음(page-cap이 deep 오염 우연 차단).
+  - 🔴 **KR1098 카카오페이 3,202억→0**(live가 카카오 그룹 채권을 가짜로 적재; 카카오페이손보 자본성증권 미발행).
+  - 🟢 **KR0099 KB라이프 0→1,200억**(live가 놓친 진짜 신종자본/후순위; 사명 전수 검증).
+  - 🟡 KR0011 DB손해 −890억(3주 정상 call/만기 delta).
+- **함의**: big-3 Face 정확 → owner T2 BS −11.6%는 **Face(downloader) 아님 → BS시가(parser #1)** 주원인 추정.
+  단 KR1098 tier 패널은 0 반영 필요. clean normalized = `_latest_bonds_dir` auto-pick, 오염 intermediate 제거.
+- **핸드오프**: parser-kics `inbox/parser/20260616T0615Z`(검증결과+수정+#1 BS시가 포인터). 재빌드는 publishing/parser gate.
+
+## 2026-06-16 -- NB CSM 시계열 오염 복구용 interim DART raw 재fetch (10사 × 3분기, fetch-only)
+
+parser/ifrs17 발주(`inbox/downloader/20260616T0400Z`; validation `20260616T0230Z`가 DART CSM_waterfall
+partial 추출이 NB CSM YTD 시계열 오염 확정 — 롯데 2025.2Q YTD→0 등). git-purge로 해당 분기 raw 부재 →
+파서 재추출 불가 → downloader가 반기/분기보고서 본문 raw 재취득.
+
+- `scripts/ifrs17_batch_historical.py --skip-extract`(**fetch-only**; 파괴적 `build_csm_waterfall_master.py`
+  미실행 — 발주 경고 준수) → **10사 × {2025.2Q 반기·2025.3Q 분기·2023.1Q 분기} = 30셀, 30/30 fetched.**
+  대상: 롯데(KR0003)·미래에셋(KR0079)·한화생명(KR0068)·현대해상(KR0009)·삼성화재(KR0008)·DB손해(KR0011)·
+  동양(KR0087)·코리안리(KR1000)·한화손해(KR0002)·흥국화재(KR0005). 회사명 검색(영구매핑 없음).
+- canonical `data/dart/FY{Y}_Q{n}/raw/KR####_<canonical>/document.zip(+meta.json)`. raw gitignore.
+- **CSM 블록 검증(zip 본문 보험계약마진 count): 29/30 존재** → 재추출 가능. 우선 7셀 전부 OK
+  (롯데 2025.2Q NB=0.0 최악건 포함). **🔴 honest gap 1**: 롯데 2023.1Q(20230515002687) 보험계약마진 0
+  (도입초 분기보고서 §14 축약 추정, 소스 부재; 우선셀 아님) → census whitelist 권장.
+- **핸드오프**: parser/ifrs17 raw-ready(`inbox/parser/20260616T0420Z`, rcept·키워드 표 포함). 파서가
+  `ifrs17_batch_historical.py` extract 모드로 재추출 → validation `check_nb_csm_history.py` 수렴 확인.
+  마스터 rebuild은 raw 전체 복원 세션에서(이번 interim은 부분 rebuild 금지). status: resolved, `_resolved/` 이동.
+
+## 2026-06-16 -- 예별손해(KR0004, 구 MG=엠지손해) DART 연간 감사보고서(별도) FY2023~FY2025 적재
+
+위 K-ICS 11분기 건의 후속(owner): "예별/MG DART 공시도 전기간 받았나? 비상장이라 없으면 회기말 감사보고서라도."
+조사 결과 **KR0004는 DART 데이터 통째로 0** — 비상장 손보사라 정기보고서(A) 미제출 → IFRS17 DART
+universe(`src/ifrs17/universe.py`) 어느 리스트에도 부재. 단 외부감사법 주식회사라 **연간 감사보고서(F)** 제출.
+
+- **DART entity = '엠지손해보험'**(corp_code `00962861`; 신규 '예별손해보험' `01974696`은 filing 0건).
+  회사명 검색으로 감사보고서 8건 발견(별도/연결 × 2022~2025).
+- **owner 스코프**: **별도만·FY2023~** (IFRS17 effective 2023; FY2022=IFRS4 제외, 연결 제외 —
+  `build_csm_waterfall_master`는 별도 00760 사용). 8건 중 **3건 보존**, 5건(FY2022 별도/연결, 각 연결) 제거.
+- 적재(5 audit-only 외국계 생보사와 동일 경로·레이아웃): `data/dart/FY<year>_Q4/raw/KR0004_엠지손해보험_<rcept>/`
+  = `document.zip` + `<rcept>_00760.xml`(별도). FY2023=20240408000665 · FY2024=20250408000587 · FY2025=20260406003175.
+- **IFRS17 주석 확인**(별도 키워드 카운트): 보험계약마진 36~59 · 보험료배분접근법 31~37 · 신계약 6~9 →
+  CSM waterfall 추출 가능. 소형 PAA-heavy 손보사라 신계약 CSM 얇음(예상).
+- 재현 스크립트 `scripts/fetch_kr0004_mg_dart_audit.py`(FILINGS=3 별도) + probe `scripts/_probes/_kr0004_dart_probe.py`.
+- **핸드오프**: parser/ifrs17 raw-ready(`inbox/parser/20260616T0210Z`). 파서가 CSM/PL 추출 → 마스터 KR0004 라인 병합.
+  raw는 gitignore(git 재팽창 무관).
+
+## 2026-06-16 -- 예별손해(KR0004, 구 MG) 과거 11분기 K-ICS 정기경영공시 raw 전수 적재
+
+parser(kics lane) → downloader bounce(`inbox/downloader/20260616T0055Z`, owner round3 K2):
+예별 K-ICS가 26.1Q 1분기만 적재 → 그 이전 = 구 MG손해 명의. 사명변경 매핑해 과거 분기 시계열 병합.
+파서 조사: kics_disclosure.json KR0004=2026.1Q 단건, 디스크 raw=FY2025_Q4+FY2026_Q1만 →
+**2023.1Q~2025.3Q 11분기 raw 자체 부재** → downloader fetch.
+
+- **소스 = 회사 자체 정기경영공시 페이지** `yebyeol.co.kr/PB021010DM.scp?menuId=MN0802001`
+  (예별=구 MG 동일 법인). 이 페이지에 **2013~2026 전 분기 아카이브**가 한 화면에
+  `<a id="quarter{N}_{YYYY}" href="javascript:fn_download(ID)">`로 노출. 매핑: quarter1→Q1 ·
+  quarter2(상반기/반기보고서)→Q2 · quarter3→Q3 · quarter4(결산/연간)→Q4.
+- **kpub.knia.or.kr(손보협회 통합공시)는 무용**: 결산(Q4)만 carry + MG/예별 row 자체 부재
+  (`backfill_nonlife_disclosure_kpub.py` NAME_TO_KR에 KR0004 없음) → 회사 사이트가 유일 소스.
+- **11/11 OK, 결손 0** (서울보증식 honest gap 없음). 회기말 Q4 2개(2023·2024 결산) 포함 전수.
+- **구 MG 명의 확정**: 결산 ZIP 내부 본문 파일명 = "[엠지손해보험] 2023년 결산 경영공시 최종.pdf" /
+  "2024년 엠지손해보험 현황_F.pdf" → 동일 법인 과거 공시. ZIP은 감사/재무제표 동봉 → 룰대로
+  **경영공시 본문 PDF만** 추출(`extract_disclosure_pdf` kpub 로직 재사용).
+- **text-layer 전수 OK**(6p 텍스트 1.9k~3.3k자, 지급여력·경과조치·K-ICS 키워드 존재) →
+  **OCR 불필요**, docling 바로 가능. scan-only 아님(OCR-MARKETRISK 류 함정 회피).
+- 파일명 `KR0004_예별손해보험.pdf`(기존 stem 컨벤션, parser glob `KR0004_*` 매칭).
+  기존 FY2025_Q4·FY2026_Q1 미변경 → KR0004 = **2023.1Q~2026.1Q 13분기 연속** 확보.
+  raw는 gitignore → git 재팽창 무관.
+- 신규 스크립트 `scripts/backfill_kr0004_mg_quarters.py`(재사용; TARGETS만 수정해 타 분기 추가) +
+  probe `scripts/_probes/_yebyeol_disclosure_probe.py`(2013~ 전 분기 fn_download ID 매핑).
+- **핸드오프**: parser/kics raw-ready(`inbox/parser/20260616T0145Z`). 파서가 docling MD →
+  core items 1-28 추출 → kics_disclosure.json 예별 시계열 병합 + 게이트 census 확장.
+  status: resolved, `_resolved/` 이동.
 
 ## 2026-06-15 -- IFRS17 CSM 민감도 FY2025 raw 28사 전수 적재 (sensitivity FY2024→FY2025 갱신용)
 

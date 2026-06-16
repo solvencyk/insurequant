@@ -1,6 +1,6 @@
 # Agent: Designer (Stage 5 — HTML structure, styling, responsive, A11y)
 
-> **Status: SKELETON.** Body marked `TBD` is for the user/owner to author.
+> **Status: §5 Design system formalized 2026-06-16** (was skeleton; tokens/common.css/A11y/chart conventions are now authoritative). Other sections remain owner-extensible.
 
 You are the designer subagent. You own the HTML/CSS/client-JS layer that renders the master JSONs that **publishing** ([claude-agent-publishing.md](claude-agent-publishing.md)) produces. Your job is **how it looks**, not what's in it.
 
@@ -28,7 +28,7 @@ If a master JSON adds a new field, publishing tells designer (`manual_html_edit`
 
 **Output**
 - Edited HTML (one or more of the 4 root files)
-- Optionally extracted `assets/common.css` if cross-page rules are duplicated
+- Shared rules go in root [`common.css`](../../common.css) (design system — see §5), not per-page
 - `artifacts/designer/<task>_<ts>.md` — change report: pages touched, breakpoints affected, screenshots (Claude Preview), regression check notes
 - exit code: `0` on success.
 
@@ -92,14 +92,57 @@ Don't introduce a new chart lib without owner approval.
 
 ---
 
-## 5. TBD (owner to author)
+## 5. Design system (formalized 2026-06-16 via `frontend-design` skill)
 
-- [ ] Design system: tokenize colors / spacing / typography into CSS custom props
-- [ ] Extract shared header / nav / footer to `assets/common.css` + `assets/common.html` partial (currently P3 in 2026-05-28 refactor notes)
-- [ ] A11y baseline: focus rings, ARIA labels on charts, keyboard nav on treemap/list
-- [ ] Chart legend density on mobile (VIS-CHARTLEGEND)
-- [ ] Donut vertical stack at <400px (VIS-DONUT)
-- [ ] Full mobile pass scope decision (MOB-KICS / MOB-IFRS17 — table card view, donut stack, legend reposition)
+> Was skeleton/TBD; now the authoritative spec. Tokens + shared chrome live in root
+> [`common.css`](../../common.css), linked by all three dashboards.
+
+### 5.1 Design tokens — single source of truth = `common.css :root`
+
+The three dashboards already shared an identical de-facto system; it is now centralized.
+**Do not redefine these in page `<style>` blocks** — reference the vars.
+
+| Group | Tokens | Notes |
+|---|---|---|
+| Surface/ink | `--bg #ffffff` · `--card #f8f9fa` · `--border #e9ecef` · `--text #212529` · `--muted #6c757d` · `--ink-strong #495057` | `--ink-strong` = axis labels |
+| Brand/action | `--primary #0d6efd` · `--primary-hover #0b5ed7` | ⚠ `#0d6efd` is the bootstrap-blue the owner flagged as "AI-looking". Value swap is **owner-gated** (DESIGN-V2 P1) — change the token in one place when approved, never per-page. |
+| Status (financial) | `--pos #16a34a` · `--pos-soft #22c55e` · `--neg #ef4444` · `--neg-strong #dc3545` · `--warn #f59e0b` | Canonical +/△/caution. Charts still carry legacy literals; adopt progressively. |
+| Type | `--font-sans` (Pretendard Variable + Korean-aware fallbacks) | `font-variant-numeric:tabular-nums` site-wide on `body`. |
+| Spacing | `--sp-1 4` … `--sp-6 32` (4px base) | |
+| Radius | `--r-sm 4` · `--r-md 8` · `--r-lg 12` · `--r-pill 999` | |
+| Misc | `--bd` (1px border) · `--t-fast .2s` · `--maxw 1320` | mobile breakpoint = 640px (literal; `@media` can't read a var) |
+
+**Adoption rule:** new CSS uses tokens. Existing hardcoded literals are migrated opportunistically, never in a way that changes a rendered value without owner sign-off.
+
+### 5.2 `common.css` extraction contract
+
+- **Linked in `<head>` BEFORE each page's inline `<style>`** → page rules win by cascade order. This makes extraction non-breaking and lets a page override any shared rule inline.
+- **In common.css:** `:root` tokens, `body`, `header`, `.brand(:hover)`, `.tabs`, `.tab(:hover/.active)`, `.container`, `.select`, `.panel h2`, `.panel p`, table base (`table`,`th,td`,`th`,`th:nth-child(n+2)`,`td.subitem`), num/text utils (`.num`,`.small-muted`,`.muted`), A11y baseline.
+- **Stays page-specific (do NOT hoist):** `.panel`/`.controls` (spacing differs per page), `*{box-sizing}` (present per page — index/IFRS17 lay out content-box-sensitively; a global hoist is a layout risk), every chart/component class (`.chart-container`,`.donut-*`,`.forward-*`,`.sens-*`,`#map`,`.cell`,`.li-*`,`.toggle-*`,`.swatch`,`.stub-msg`, etc.), and all `@media` blocks.
+- **Non-breaking test:** every value in common.css equals the value the pages rendered on 2026-06-16. Verify after any change: `commonCssLoaded` true (no 404), 0 console errors, computed styles unchanged on all three pages at desktop + 640px.
+- **Deploy note (publishing/owner):** `common.css` is a new root asset — it must ship alongside the HTML wherever they deploy (root + any templates/data mirror). Flag in the publishing handoff.
+
+### 5.3 A11y baseline (in common.css — additive, no default-mouse visual change)
+
+- `:focus-visible{ outline:2px solid var(--primary); outline-offset:2px }` — keyboard focus ring site-wide (shows only on keyboard nav).
+- `@media (prefers-reduced-motion:reduce)` — neutralizes transitions/animations for motion-sensitive users.
+- **Known gaps to extend (next A11y pass, non-blocking):** active-tab uses color only (add a non-color cue — weight/underline — once owner OKs the subtle visual change); custom toggle in index hides its `<input>` (style `.toggle-input:focus-visible + .toggle-label`); chart `<canvas>`/`#map` need `aria-label`/`role="img"` + a text summary; medium-confidence badge (`#ff9f40` on white ≈3.25:1) is sub-AA for small text.
+
+### 5.4 Chart & responsive conventions (committed)
+
+- **Legend density:** ≤2 series → legend top, inline. ≥3 series (NB multi-line, forward bands) → top legend desktop; on mobile prefer hiding the legend and labeling series via tooltip/axis-title to avoid overflow. Datapoint value labels: desktop on, mobile off (tooltip only) — see IFRS17 waterfall `label:{show:!isMobile}`.
+- **Donut stack breakpoint:** `.donut-row` is `flex-wrap` desktop; at ≤640px donuts stack (`.donut-wrap` 240→200). The `<400px` single-column tightening is tracked as VIS-DONUT.
+- **Mobile pass scope (locked by owner round3 D9):** mobile (≤640px) shows **current period only** — time-series → latest 1 point, waterfall → latest 1 bucket. Desktop windows: quarter = last 5 quarters, year = year-ends + latest partial (`selectPeriods` in IFRS17).
+- **Period axis must be data-driven, label-variant-tolerant.** K-ICS solvency lookup matches both `'다. 지급여력비율 : 가 ÷ 나 × 100'` and short `'지급여력비율'` (2026.1Q uses the short form → KB etc. were dropping; fixed 2026-06-16). Never exact-match a single label string for a series that spans quarters.
+
+### 5.5 Preserved owner decisions (LOCKED — never refactor away)
+
+1. **Negative numbers → △ (samo)** — Korean accounting; top-priority owner directive. Lives in JS formatters (`fmtNum`/`samo`/`fmtEok`), every new table/chart must apply it.
+2. **Tier1 capital donut "100%+"** — issuance ÷ recognised-cap can legitimately exceed 100%; show "100%+" with real value in tooltip.
+3. **현대해상 key color = orange `#F47920`** (KEY_COLORS map).
+4. **Mobile = current-period only** (see 5.4).
+
+The `frontend-design` skill (or any redesign) must treat these four as fixed constraints.
 
 ---
 

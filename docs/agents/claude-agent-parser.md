@@ -58,7 +58,7 @@ The parser **never** writes to `kics_disclosure.json` root — that's **publishi
 ## 2. Per-domain extraction rules
 
 ### 2.1 K-ICS
-- Pipeline: PDF → Docling MD → `md_inbox/<KR>/<period>.md` → label matcher → row dict
+- Pipeline: PDF → Docling MD (`run_harness.py --stage parse` → `data/disclosure/FY*/parsed/*.md` + `md_inbox/FY*_Q?/<KR>_<name>.md`) → label matcher (`fill_period`/`fill_subitems`/`fill_market_subitems`) → row dict
 - Code: `src/solvency/parser/{docling_parser,kics_disclosure_parser,kics_baseline_match,quality_check}.py`
 - Domain ref (label variants, split-table cases, etc.): [../domains/claude-agent-kics.md](../domains/claude-agent-kics.md)
 - Image-only PDF rule: escalate to human, do NOT improvise OCR. See [../flows/claude-gemini-flow.md](../flows/claude-gemini-flow.md).

@@ -12,39 +12,22 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+  <link rel="stylesheet" href="common.css"/>
   <style>
-:root{--bg:#ffffff; --card:#f8f9fa; --border:#e9ecef; --text:#212529; --muted:#6c757d; --primary:#0d6efd; --primary-hover:#0b5ed7;}
-    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-variant-numeric:tabular-nums}
-    header{position:sticky;top:0;padding:10px 16px;border-bottom:1px solid var(--border);background:#ffffff;z-index:1000}
-    .brand{font-weight:700;margin-bottom:12px;cursor:pointer;color:var(--primary);text-decoration:none}
-    .brand:hover{color:var(--primary-hover)}
-    .tabs{display:flex;gap:4px;margin-bottom:0}
-    .tab{padding:8px 16px;border:1px solid var(--border);border-radius:8px 8px 0 0;background:var(--card);color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:all 0.2s;}
-    .tab:hover{background:var(--primary);color:white;border-color:var(--primary)}
-    .tab.active{background:var(--primary);color:white;border-color:var(--primary)}
-    .container{max-width:1320px;margin:0 auto;padding:16px}
+    /* Shared tokens + chrome (header/tabs/brand/container/select/table/utils)
+       now live in common.css. Below: IFRS17-specific only. */
+    *{box-sizing:border-box}
     .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
-    .panel h2{margin:0 0 16px 0;color:var(--text);font-size:20px;font-weight:600}
-    .panel p{color:var(--muted);line-height:1.6;margin:0 0 12px 0}
     .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:16px}
-    .select{padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:#ffffff;color:#212529}
     .chart-container{position:relative;height:500px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
     .coming-soon{text-align:center;padding:60px 20px;color:var(--muted)}
     .coming-soon h3{font-size:24px;margin:0 0 12px 0;color:var(--text)}
     .coming-soon p{font-size:16px;margin:0}
     .table-container{margin-top:32px;}
-    table{border-collapse:collapse;width:100%;}
-    th, td{border:1px solid var(--border);padding:6px 8px;text-align:left;}
-    th{background:var(--card);}
-    th:nth-child(n+2), td:nth-child(n+2){text-align:right;} /* 항목명 제외한 모든 셀 오른쪽 정렬 */
-    td.subitem{padding-left:24px;color:var(--muted);font-size:12px;}
-.small-muted{font-size:12px;color:var(--muted)}
-.muted{color:var(--muted)}
-.chart-sm{height:380px}
-.placeholder-empty{text-align:center;padding:44px 16px;color:var(--muted);font-size:16px}
-.stub-msg{color:var(--muted);font-size:14px;padding:12px;border:1px dashed var(--border);border-radius:8px;background:#ffffff}
-.table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:8px;background:#ffffff;font-size:13px}
-th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
+    .chart-sm{height:380px}
+    .placeholder-empty{text-align:center;padding:44px 16px;color:var(--muted);font-size:16px}
+    .stub-msg{color:var(--muted);font-size:14px;padding:12px;border:1px dashed var(--border);border-radius:8px;background:#ffffff}
+    .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:8px;background:#ffffff;font-size:13px}
     /* Mobile responsive (<=640px) - M1 shared foundation */
     @media (max-width:640px){
       header{padding:8px 12px}
@@ -259,8 +242,8 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
   // Quarter mode needs per-quarter (당분기) movements; current file is YTD(연 누계),
   // so quarter mode is stubbed until the 당분기 table lands. Flip WF_QUARTER_READY when ready.
   const WF_QUARTER_READY = true;   // 마스터에 값_당분기 → 분기 모드 활성화
-  const WF_WINDOW = 4;   // trailing 4 buckets (연도)
-  const WF_Q_WINDOW = 6; // trailing 6 buckets (분기)
+  const WF_WINDOW = 4;   // 연도: 최신 + 직전 3개년말 = [2023,2024,2025,2026.1Q]
+  const WF_Q_WINDOW = 5; // 분기: 최신 포함 직전 5개분기 (owner 2026-06-16)
   const WF_COMPS = [
     { num: 2, ko: "신계약",    full: "신계약 CSM" },
     { num: 3, ko: "이자",      full: "이자 부리" },
@@ -284,6 +267,21 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const set = new Set();
     for (const m of ix.wfx.values()) for (const k of m.keys()) set.add(k);
     return Array.from(set).sort((a,b)=> wfCmpDesc(b,a));
+  }
+  // D5/D6: 분기 공시 여부 — 4Q 외 분기가 하나라도 있으면 분기 공시사. 데이터 기반(이름 하드코딩 금지).
+  function wfHasQuarterly(company){
+    return wfQuartersOf(company).some(p => { const [,qn]=wfParseQ(p); return qn!==4; });
+  }
+  // D7/D9: 시계열 축 윈도잉. periodsAsc=해당 회사 분기 오름차순.
+  //  모바일=최신 1시점 / 분기모드(분기공시사)=직전 5분기 / 그 외(연도모드·분기미제공사)=연말(4Q)+최신 부분분기.
+  function selectPeriods(periodsAsc, mode, hasQ, isMobile){
+    if(!periodsAsc.length) return [];
+    if(isMobile) return periodsAsc.slice(-1);
+    if(mode==="quarter" && hasQ) return periodsAsc.slice(-5);
+    const keep = new Set(periodsAsc.filter(p=>{ const [,qn]=wfParseQ(p); return qn===4; }));
+    const last = periodsAsc[periodsAsc.length-1];
+    if(last){ const [,lq]=wfParseQ(last); if(lq!==4) keep.add(last); }
+    return periodsAsc.filter(p=>keep.has(p));
   }
   // 신계약 CSM(2)은 YTD(연누계) → 당기 증분(같은 FY 직전 분기 YTD 차감). 직전 결측 시 span(합산 분기 수).
   function wfNbIncrement(company, period){
@@ -360,7 +358,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     "NH농협생명":"#00A05E", "엔에이치농협생명":"#00A05E", "NH농협손해보험":"#00A05E", "엔에이치농협손해보험":"#00A05E",
     "미래에셋생명":"#F58220", "미래에셋생명보험":"#F58220",
     "DB손해보험":"#0E8C3A", "디비손해보험":"#0E8C3A", "DB생명":"#0E8C3A", "디비생명보험":"#0E8C3A",
-    "현대해상":"#FFB81C", "현대해상화재보험":"#FFB81C",
+    "현대해상":"#F47920", "현대해상화재보험":"#F47920",
     "교보생명":"#0B5D52", "교보생명보험":"#0B5D52",
     "메리츠화재":"#E60012", "메리츠화재해상보험":"#E60012",
     "롯데손해보험":"#DA291C",
@@ -387,7 +385,8 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     if (charts.wf){ try{ charts.wf.dispose(); }catch(e){} }
     charts.wf = echarts.init(el, null, { renderer: "canvas" });
 
-    const buckets = mode==="quarter" ? wfQuarterBuckets(company) : wfYearBuckets(company);
+    let buckets = mode==="quarter" ? wfQuarterBuckets(company) : wfYearBuckets(company);
+    if (window.matchMedia("(max-width:640px)").matches) buckets = buckets.slice(-1);  // D9: 모바일 최신 1버킷
     const bars = wfBuildBars(company, buckets, mode);
 
     const xs=[], placeholder=[], positive=[], negative=[], totals=[], missing=[];
@@ -558,28 +557,23 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     charts.pl = echarts.init(el, null, { renderer:"canvas" });
 
     const bars = plBuildSteps(name, per);
-    const xs=[], placeholder=[], positive=[], negative=[], totals=[], missing=[];
-    let running=0;
+    const isMobile = window.matchMedia("(max-width:640px)").matches;
+
+    // 각 막대의 [시작,끝] 값좌표. flow=running에서 step, anchor/end=0 기준.
+    // 스택+투명 placeholder 방식은 0선을 넘는 step에서 막대가 0 위로 떠버림(롯데 투자손익: 보험손익 +0.03 → 투자손익이
+    // 0 아래로 통과) → custom renderItem으로 [min,max] 사각형을 직접 그려 zero-crossing 정상 처리(부호=아래로).
+    const xs=[]; const geo=[]; let running=0;
     bars.forEach(bar=>{
       xs.push(PL_WRAP[bar.ko] || bar.ko);
+      if(bar.value==null){ geo.push(null); return; }
       if(bar.role==="anchor" || bar.role==="end"){
-        placeholder.push("-"); positive.push("-"); negative.push("-"); missing.push("-");
-        totals.push(bar.value!=null?bar.value:"-");
-        if(bar.value!=null) running=bar.value;
-        return;
+        geo.push({ y0:0, y1:bar.value, color:currentKey.primary }); running=bar.value;
+      } else {
+        const end=running+bar.value;
+        geo.push({ y0:running, y1:end, color: bar.value>=0 ? "#22c55e" : "#ef4444" }); running=end;
       }
-      const v=bar.value;
-      if(v==null){
-        const hint=Math.max(Math.abs(running)*0.02, 1000);
-        placeholder.push(running); positive.push("-"); negative.push("-"); totals.push("-"); missing.push(hint);
-        return;
-      }
-      missing.push("-");
-      if(v>=0){ placeholder.push(running); positive.push(v); negative.push("-"); totals.push("-"); running+=v; }
-      else    { placeholder.push(running+v); positive.push("-"); negative.push(-v); totals.push("-"); running+=v; }
     });
 
-    const isMobile = window.matchMedia("(max-width:640px)").matches;
     const dataZoom = (isMobile && bars.length > 8)
       ? [{ type:"inside" }, { type:"slider", height:14, bottom:2 }] : undefined;
 
@@ -588,7 +582,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       tooltip:{
         trigger:"axis", axisPointer:{ type:"shadow" },
         formatter(items){
-          const i=items[0].dataIndex; const bar=bars[i];
+          const i=items[0].dataIndex; const bar=bars[i]; if(!bar) return "";
           if(bar.value==null) return `<b>${bar.ko}</b><br/>데이터 없음`;
           const jo=bar.value/1e6, eok=bar.value/100;
           const sign = bar.value<0 ? "△" : (bar.role==="flow" ? "+" : "");
@@ -609,16 +603,31 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
         splitLine:{ lineStyle:{ color:"#e9ecef" } },
       },
       dataZoom,
-      series:[
-        { name:"placeholder", type:"bar", stack:"pl", itemStyle:{ color:"transparent" }, emphasis:{ disabled:true }, data:placeholder },
-        { name:"missing", type:"bar", stack:"pl", itemStyle:{ color:"rgba(173,181,189,0.55)" }, data:missing },
-        { name:"+", type:"bar", stack:"pl", itemStyle:{ color:"#22c55e" }, data:positive,
-          label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"+"+plFmtJo(p.value,2) } },
-        { name:"−", type:"bar", stack:"pl", itemStyle:{ color:"#ef4444" }, data:negative,
-          label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"△"+plFmtJo(p.value,2) } },
-        { name:"total", type:"bar", stack:"pl", itemStyle:{ color:currentKey.primary }, data:totals,
-          label:{ show:true, position:"top", color:"#212529", fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":(p.value<0?"△":"")+plFmtJo(Math.abs(p.value),2)+"조" } },
-      ],
+      series:[{
+        type:"custom",
+        encode:{ y:[0,1] },                 // y축 자동 스케일을 [y0,y1] 범위에서
+        renderItem:(params, api)=>{
+          const idx=params.dataIndex; const g=geo[idx]; const bar=bars[idx];
+          if(!g) return;
+          const xPix=api.coord([idx,0])[0];
+          const yHi=api.coord([idx, Math.max(g.y0,g.y1)])[1];
+          const yLo=api.coord([idx, Math.min(g.y0,g.y1)])[1];
+          const bw=Math.max(6, api.size([1,0])[0]*0.55);
+          const children=[{
+            type:"rect",
+            shape:{ x:xPix-bw/2, y:yHi, width:bw, height:Math.max(1, yLo-yHi) },
+            style:{ fill:g.color },
+          }];
+          if(!isMobile){
+            const isTot = bar.role!=="flow";
+            const txt = (bar.value<0?"△":(bar.role==="flow"?"+":""))+plFmtJo(Math.abs(bar.value),2)+(isTot?"조":"");
+            children.push({ type:"text", style:{ text:txt, x:xPix, y:yHi-4, textAlign:"center", textVerticalAlign:"bottom", fill:"#212529", fontSize:isTot?10:9, fontWeight:isTot?"bold":"normal" } });
+          }
+          return { type:"group", children };
+        },
+        data: geo.map(g=> g ? [g.y0, g.y1] : [0,0]),
+        z:2,
+      }],
     }, true);
     return bars;
   }
@@ -664,19 +673,44 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     s = s.replace(/\(-\)\s*(\d[\d,]*(?:\.\d+)?)\s*%(p?)/g, "$1%$2↓");      // (-)9.16% → 9.16%↓
     s = s.replace(/(\d[\d,]*(?:\.\d+)?)\s*%(p?)\s*(증가|상승)/g, "$1%$2↑"); // 3.27% 증가 → 3.27%↑
     s = s.replace(/(\d[\d,]*(?:\.\d+)?)\s*%(p?)\s*(감소|하락)/g, "$1%$2↓"); // 9.16% 감소 → 9.16%↓
+    s = s.replace(/(\d[\d,]*(?:\.\d+)?)\s*%(p?)\s*[\^▲]/g, "$1%$2↑");      // 3.27%^ / 3.27%▲ → 3.27%↑
+    s = s.replace(/(\d[\d,]*(?:\.\d+)?)\s*%(p?)\s*▼/g, "$1%$2↓");          // 3.27%▼ → 3.27%↓
+    // 삼성생명류: 부호·방향어 없는 선두 "3.27%"는 상향 충격 → ↑ (하향은 위 (-)룰로 처리). 이미 ↑/↓면 보존.
+    s = s.replace(/^(\s*)(\d[\d,]*(?:\.\d+)?)\s*%(p?)(?!\s*[↑↓])/, "$1$2%$3↑");
     return s.replace(/\s{2,}/g, " ").trim();
+  }
+
+  // D1: 민감도 표 기준시점(as-of). 데이터에 period/as_of가 비어 rcept_no(접수번호 앞 8자리=제출일)에서 파생.
+  // DART 정기보고서 제출월 → 보고 기준일: 1~4월=직전 사업연도(12-31), 5~6=1Q(03-31), 7~9=반기(06-30), 그 외=3Q(09-30).
+  function asOfFromRcept(rcept){
+    const s = String(rcept||"").replace(/\D/g, "");
+    if (s.length < 8) return null;
+    const y = +s.slice(0,4), m = +s.slice(4,6);
+    if (m <= 4) return { label:"FY"+(y-1)+" 사업보고서", date:(y-1)+"-12-31" };
+    if (m <= 6) return { label:"FY"+y+" 1분기보고서", date:y+"-03-31" };
+    if (m <= 9) return { label:"FY"+y+" 반기보고서",   date:y+"-06-30" };
+    return            { label:"FY"+y+" 3분기보고서", date:y+"-09-30" };
+  }
+  function senAsOf(sPick){
+    if(!sPick) return null;
+    if(sPick.as_of) return { label:(sPick.period_label||sPick.period||"공시"), date:String(sPick.as_of) };
+    return asOfFromRcept(sPick.rcept_no);
   }
 
   // Trailing periods for the PL table: year → latest 3 FY(4Q); quarter → latest 4 quarters (chrono asc).
   function plTablePeriods(name, mode){
     const qs = plQuartersOf(name); // desc
     if(!qs.length) return [];
-    if(mode==="quarter"){
-      return qs.slice(0,4).reverse().map(qq=>({ q:qq, field:"q", label:qq }));
-    }
-    const fys = qs.filter(x=>/\.4Q$/.test(x)).slice(0,3);
-    const sel = (fys.length ? fys : qs.slice(0,3)).slice().reverse();
-    return sel.map(qq=>({ q:qq, field: /\.4Q$/.test(qq)?"y":"q", label: /\.4Q$/.test(qq) ? ("FY"+wfParseQ(qq)[0]) : qq }));
+    // CSM시계열·CSM waterfall과 동일 윈도잉(selectPeriods): 분기=최신 포함 직전5분기 / 연도=연말(4Q)+최신부분.
+    const asc = qs.slice().reverse();
+    const hasQ = asc.some(p=>{ const [,qn]=wfParseQ(p); return qn!==4; });
+    const sel = selectPeriods(asc, mode, hasQ, false);   // 표는 가로 스크롤 → 모바일도 풀 윈도우
+    return sel.map(qq=>{
+      const is4Q = /\.4Q$/.test(qq);
+      return { q:qq,
+               field: (mode==="quarter") ? "q" : "y",
+               label: (mode==="quarter") ? qq : (is4Q ? String(wfParseQ(qq)[0]) : qq) };
+    });
   }
 
   // 장기 재보험(8) 세부 = 9 CSM상각 +10 위험조정 +11 예실차 +12 기타 (합 = 8).
@@ -702,10 +736,10 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     for(const d of defs){
       if(d.ko==="장기 재보험" && reHasSub){
         const lab=document.createElement("span");
-        const tog=document.createElement("span");
-        tog.textContent="＋"; tog.title="재보험 세부 펼치기";
-        tog.style.cssText="cursor:pointer;color:#0d6efd;font-weight:700;margin-right:6px;user-select:none";
-        lab.appendChild(tog); lab.appendChild(document.createTextNode("장기 재보험"));
+        const tog=document.createElement("button");  // G1: K-ICS .subtoggle 양식 미러(common.css)
+        tog.type="button"; tog.className="subtoggle";
+        tog.textContent="+"; tog.title="재보험 세부 펼치기"; tog.setAttribute("aria-expanded","false");
+        lab.appendChild(document.createTextNode("장기 재보험")); lab.appendChild(tog);
         rows.push({ cells:[ lab, ...getters.map(g=> fmtEok(d.get(g))) ] });
         togNode = tog;
         for(const s of PL_RE_SUB){
@@ -722,8 +756,9 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       togNode.addEventListener("click", ()=>{
         const showing = subTrs.length && subTrs[0].style.display!=="none";
         subTrs.forEach(tr=> tr.style.display = showing ? "none" : "");
-        togNode.textContent = showing ? "＋" : "－";
+        togNode.textContent = showing ? "+" : "−";
         togNode.title = showing ? "재보험 세부 펼치기" : "재보험 세부 접기";
+        togNode.setAttribute("aria-expanded", showing ? "false" : "true");
       });
     }
     const note=document.createElement("div"); note.className="small-muted"; note.style.marginTop="6px";
@@ -845,9 +880,18 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const wfMode = (document.getElementById("wfPeriod")||{}).value || "year";
     stub(q(host,"#wfStub"), !wfHas, wfHas ? null : ((PAA_ONLY.has(company) || PAA_ONLY.has(coName)) ? PAA_NOTE : "신규 CSM waterfall 데이터 미수록 보험사입니다."));
 
-    if (wfHas){
+    const _mob = window.matchMedia("(max-width:640px)").matches;
+    if (wfHas && wfMode==="quarter" && !wfHasQuarterly(wfName)){
+      // D5: 분기 미제공사 → 분기 모드에서 그래프 생략, 메시지만 (연도 모드면 연 그래프).
+      stub(q(host,"#wfStub"), true, "분기 공시 미제공 보험사입니다. 상단 ‘기준’을 ‘연도’로 바꾸면 연 단위 그래프가 표시됩니다.");
+      if (charts.wf){ try{ charts.wf.dispose(); }catch(e){} charts.wf=null; }
+      const _b=q(host,"#chartWf"); if(_b) _b.innerHTML="";
+      q(host,"#wfMeta").textContent="";
+      const _wt=q(host,"#wfTable"); if(_wt) _wt.innerHTML="";
+    } else if (wfHas){
       renderWfWaterfall(host, wfName, wfMode);
-      const bk = (wfMode==="quarter") ? wfQuarterBuckets(wfName) : wfYearBuckets(wfName);
+      let bk = (wfMode==="quarter") ? wfQuarterBuckets(wfName) : wfYearBuckets(wfName);
+      if (_mob) bk = bk.slice(-1);   // D9: 모바일 표도 최신 1버킷(차트와 일치)
       const range = bk.length ? (bk[0].label + " ~ " + bk[bk.length-1].label) : "";
       q(host,"#wfMeta").textContent = (wfMode==="quarter"?"분기(당분기) 기준 · ":"연(YTD) 기준 · ") + range + " · 단위 억원(축은 조원) · 기초 → 변동(신계약·이자·가정/경험·상각) → 기말";
       renderWfTable(host, wfName, bk, wfMode);
@@ -871,7 +915,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       const hasYearly = amRow.granularity === "yearly";
       let labels, data, titleText;
       if (hasYearly){
-        const maxY = window.matchMedia("(max-width:640px)").matches ? 5 : 10;
+        const maxY = 5;   // D8: 5년 초과 미표시(큰 값 단독 우뚝 방지)
         labels = []; data = [];
         for (let y=1; y<=maxY; y++){
           labels.push(y + "년차");
@@ -881,7 +925,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
         }
         titleText = "장래 " + maxY + "년 CSM 상각 예정액 (연도별, 백만원)";
       } else {
-        const ord=[["y1","1년이내"],["y1_y3","1–3년"],["y3_y5","3–5년"],["y5_plus","5년 초과"]];
+        const ord=[["y1","1년이내"],["y1_y3","1–3년"],["y3_y5","3–5년"]];   // D8: '5년 초과' 버킷 숨김
         labels = ord.map(x=>x[1]);
         data = ord.map(([k])=>{const v=(amRow.buckets||{})[k]; const n=v==null?NaN:Number(v); return Number.isFinite(n)?n:null});
         titleText = "버킷별 상각 규모 (연도별 데이터 없음 — 구간)";
@@ -922,9 +966,14 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       q(host,"#nbStub").textContent = (PAA_ONLY.has(company) || PAA_ONLY.has(coName)) ? PAA_NOTE : "신계약 CSM 배수 데이터 미수록 보험사입니다. (재보험사·외국계 등 월납월초 분모 없음)";
     } else {
       q(host,"#nbWrap").style.display="block";
-      const labels = nbPts.map(r => r["공시분기"]);
-      const ytd = nbPts.map(r => r["신계약CSM배수_연누계"]);
-      const qtr = nbPts.map(r => r["신계약CSM배수_당분기"]);
+      // D7/D9: nbPts는 boot에서 분기 오름차순. 동일 윈도잉 적용(분기→5분기, 연도→연말+최신, 모바일→1시점).
+      const nbAsc = nbPts.map(r => r["공시분기"]);
+      const nbHasQ = nbAsc.some(p=>{ const [,qn]=wfParseQ(p); return qn!==4; });
+      const nbKeep = new Set(selectPeriods(nbAsc, wfMode, nbHasQ, _mob));
+      const nbView = nbPts.filter(r => nbKeep.has(r["공시분기"]));
+      const labels = nbView.map(r => { const p=r["공시분기"]; const [yy,qn]=wfParseQ(p); return (wfMode!=="quarter" && qn===4) ? String(yy) : p; });
+      const ytd = nbView.map(r => r["신계약CSM배수_연누계"]);
+      const qtr = nbView.map(r => r["신계약CSM배수_당분기"]);
       const ds = [{
         label:"연누계 배수", data: ytd, borderColor:currentKey.line, backgroundColor:currentKey.soft,
         borderWidth:2.5, pointRadius:4, pointHoverRadius:6, tension:0.2, spanGaps:true, fill:true,
@@ -953,7 +1002,9 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const sOk = !!(sPick && sPick.status==="ok" && scen.length);
     const senMsg = !sPick ? "민감도 데이터 미수록 보험사입니다." : "% 충격 기준 보험위험 민감도표가 없는 보험사입니다.";
     stub(q(host,"#senStub"), !sOk, senMsg);
-    q(host,"#senCap").textContent = sPick && sPick.caption ? String(sPick.caption):""
+    const senAo = senAsOf(sPick);   // D1: 기준시점(as-of) 헤더
+    q(host,"#senCap").textContent = senAo ? ("기준: " + senAo.label + " (" + senAo.date + ")")
+                                          : (sPick && sPick.caption ? String(sPick.caption) : "");
     q(host,"#senTable").innerHTML="";
     if (sOk){
       const deltas = scen.map(z=> Number(z.csm_delta)).filter(Number.isFinite)
@@ -968,14 +1019,18 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
         const t2=document.createElement("td"); t2.textContent= fmtShock(row.shock)
         const t3=document.createElement("td"); t3.className="num";
         if (row.csm_delta == null) { t3.textContent="—"; t3.style.color="#adb5bd"; t3.title="미공시 (해당 보험사 민감도표에 CSM 컬럼 없음)"; }
-        else { const cd = Number(row.csm_delta); t3.textContent=fmtNum(cd,0); t3.style.background=heatCss(cd, absMax); }
+        else { const cd = Number(row.csm_delta); t3.textContent=samo(cd); t3.style.background=heatCss(cd, absMax); }  // D3: 억 정수 반올림
         const t4=document.createElement("td"); t4.className="num";
         if (row.pl_impact == null) { t4.textContent="—"; t4.style.color="#adb5bd"; t4.title="미공시"; }
-        else { t4.textContent=fmtNum(Number(row.pl_impact),0); }
+        else { t4.textContent=samo(Number(row.pl_impact)); }  // D3: 억 정수 반올림
         rr.appendChild(t1); rr.appendChild(t2); rr.appendChild(t3); rr.appendChild(t4)
         tbody.appendChild(rr)
       }
       tbl.appendChild(tbody); q(host,"#senTable").appendChild(tbl)
+      if (sPick && sPick.caption){   // D1: 공시 각주는 표 아래 muted로 보존(헤더는 as-of)
+        const cnote=document.createElement("div"); cnote.className="small-muted"; cnote.style.marginTop="6px";
+        cnote.textContent=String(sPick.caption); q(host,"#senTable").appendChild(cnote);
+      }
     }
 
     // ===== Panel 6: CSM 시계열 — Panel 1과 동일 소스(CSM_waterfall.json / ix.wfx) =====
@@ -983,7 +1038,10 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
     const wfHistName = ix.wfx.has(company) ? company : null;
     stub(q(host,"#histStub"), !wfHistName, (PAA_ONLY.has(company) || PAA_ONLY.has(coName)) ? PAA_NOTE : "신규 CSM waterfall 데이터 미수록 보험사입니다.");
     if (wfHistName){
-      const periods = wfAllPeriodsAsc();
+      // D6/D7/D9: 축 윈도잉 — 분기→직전5분기, 연도→연말+최신부분, 모바일→최신1시점. (분기 미제공사는 연 fallback)
+      const compAsc = wfQuartersOf(wfHistName).slice().reverse();   // wfQuartersOf=desc → asc
+      const periods = selectPeriods(compAsc, wfMode, wfHasQuarterly(wfHistName), _mob);
+      const histLabels = periods.map(p => { const [yy,qn]=wfParseQ(p); return (wfMode!=="quarter" && qn===4) ? String(yy) : p; });
       const closingValues = periods.map(p => { const v = wfVal(wfHistName, p, 6); return v==null ? null : v/10000; }); // 억 → 조
       // 신계약 CSM(2)은 YTD(연누계) → 같은 FY 직전 분기 차감해 당기 증분(중간 결측은 span 합산).
       const nbInc = periods.map(p => wfNbIncrement(wfHistName, p));
@@ -1001,10 +1059,10 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
       charts.hist = new Chart(canvasCtx(host, "#canvasHist"), {
         type: "line",
         data: {
-          labels: periods,
+          labels: histLabels,
           datasets: [
             {
-              label: coName + " · 기말 CSM (조원)",
+              label: "기말 CSM 잔액 (실선)",
               data: closingValues,
               borderColor: currentKey.line,
               backgroundColor: currentKey.soft,
@@ -1018,7 +1076,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
               yAxisID: "y",
             },
             {
-              label: coName + " · 신계약 CSM (당기 증분, 조원)",
+              label: "신계약 CSM 시계열 (점선)",
               data: nbValues,
               _spans: nbSpans,
               borderColor: "rgb(255, 99, 132)",
@@ -1084,7 +1142,7 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
               ticks: { callback: (v) => fmtNum(v, 2) + "조", color: "rgb(255, 99, 132)" },
               grid: { drawOnChartArea: false },
             },
-            x: { title: { display: true, text: "분기" } },
+            x: { title: { display: true, text: wfMode==="quarter" ? "분기" : "연도" } },
           },
         },
       });
@@ -1107,15 +1165,15 @@ th.num, td.num{text-align:right;font-variant-numeric:tabular-nums}
   }
 
   async function boot(){
-    const wf=await fetchJsonSafe(PATHS.wf);
-    const amort=await fetchJsonSafe(PATHS.amort);
-    const plx=await fetchJsonSafe(PATHS.pl);
-    const senx=await fetchJsonSafe(PATHS.sen);
-    const nbx=await fetchJsonSafe(PATHS.nb);
-    const histx=await fetchJsonSafe(PATHS.hist);
-    const wfxRaw=await fetchJsonSafe(PATHS.wfx);
-    const plxRaw=await fetchJsonSafe(PATHS.plx);
-    const nbmRaw=await fetchJsonSafe(PATHS.nbm);
+    // D10: 9개 JSON을 직렬 await → Promise.all 병렬(진입 로딩 지연 경감). 로딩 힌트 표시.
+    const _eh=document.getElementById("emptyHint");
+    if (_eh) _eh.textContent="데이터 불러오는 중…";
+    const [wf, amort, plx, senx, nbx, histx, wfxRaw, plxRaw, nbmRaw] = await Promise.all([
+      fetchJsonSafe(PATHS.wf), fetchJsonSafe(PATHS.amort), fetchJsonSafe(PATHS.pl),
+      fetchJsonSafe(PATHS.sen), fetchJsonSafe(PATHS.nb), fetchJsonSafe(PATHS.hist),
+      fetchJsonSafe(PATHS.wfx), fetchJsonSafe(PATHS.plx), fetchJsonSafe(PATHS.nbm),
+    ]);
+    if (_eh) _eh.textContent="보험사를 선택해 주세요";
 
     payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.sen=senx; payload.nb=nbx; payload.hist=histx;
 

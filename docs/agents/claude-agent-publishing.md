@@ -55,6 +55,8 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 
 The HTML pages fetch these directly. **No staging templates between publishing and the HTML** (root single-source since 2026-05-28).
 
+> **Path note:** the table lists the post-migration canonical (`data/dart/viz/*`). Live `main` still reads `data/ifrs17/viz/*` — see §9 "Pending path migration" for detail and the cutover trigger (when `fix/csm-*` lands on `main`).
+
 ---
 
 ## 2. Per-domain assembly scripts
@@ -87,7 +89,7 @@ The HTML pages fetch these directly. **No staging templates between publishing a
 ## 3. Gate checks (run in order before recommending push)
 
 1. **Validation gate** — every domain's most recent validation report has `summary.red == 0` (or every RED has a TODO.md documented-exception entry).
-2. **Assembly gate** — gathering scripts exit code 0; masters byte-changed (no spurious diffs).
+2. **Assembly gate** — assembly/build scripts exit code 0; masters byte-changed (no spurious diffs).
 3. **HTML gate** — for K-ICS.html / IFRS17.html / index.html: changed only if the underlying master changed. If HTML is dirty but masters are clean, surface as `manual_html_edit` for designer review (likely a designer commit).
 4. **Encoding gate** — newly-touched .md/TODO files are UTF-8 no BOM, no garbled Korean (CLAUDE.md "문서·TODO 인코딩 룰").
 5. **Untracked files gate** — list new untracked files; flag any that look like secrets (`.env*`, `*.key`, `*credential*`).
@@ -123,7 +125,7 @@ git commit -m "<see §4>"
 git push origin <branch>
 ```
 
-Subagent prints these for the user to run. Subagent does **not** execute them.
+The agent runs the local-git commands itself (`add` / `commit` / `branch` / `checkout` / `rm`); **only the outward `git push` is gated** — show the user exactly what will be pushed, get their GO, then run it (see the header execution-model · §1 hard rules · §9 procedure).
 
 ---
 
@@ -177,26 +179,30 @@ The §9 slim-publish dance is **too heavy to repeat every update** and the user 
 
 **Why.** The public GitHub repo (`main`, served by GitHub Pages at www.insurequant.com) must contain **only site assets**: the HTML pages + the master JSONs those pages fetch + `CNAME` + `.gitignore`. All IP — `scripts/`, `src/`, `docs/`, agent MD/TODO, raw + intermediate data — stays **out** of the public repo. Working code lives on feature branches locally (and optionally a private repo); `main` is the public face.
 
-**Keep-list (the ONLY files allowed on public `main`).** As verified live on 2026-05-31 — note `main` currently serves from `data/ifrs17/viz/`, NOT `data/dart/viz/`:
+**Keep-list (the ONLY files allowed on public `main`).** Authoritative = `git ls-tree -r --name-only main`; re-derive per §9.0 (grep the HTML) whenever an HTML's fetches change. Snapshot **verified live 2026-06-16** (commit `dbbb096`):
 
 ```
 .gitignore
 CNAME
+common.css                                 # shared design system — referenced by all 3 HTML (<link>); MUST ship with them
 index.html
 K-ICS.html
 IFRS17.html
 공시보고서.html
+CSM_waterfall.json
+NB_CSM_multiple.json
+PL_breakdown.json
 kics_disclosure.json
-data/ifrs17/viz/csm_waterfall.json
-data/ifrs17/viz/csm_waterfall_history.json
-data/ifrs17/viz/csm_amort_schedule.json
-data/ifrs17/viz/csm_bubble.json
-data/ifrs17/viz/insurance_pl_breakdown.json
-data/ifrs17/viz/sensitivity_heatmap.json
+kics_rate_sensitivity.json
+data/dart/viz/csm_amort_schedule.json
+data/dart/viz/csm_waterfall.json
+data/dart/viz/csm_waterfall_history.json
+data/dart/viz/insurance_pl_breakdown.json
+data/dart/viz/sensitivity_heatmap.json
 data/ir/nb_csm_ratio.json
 ```
 
-**Pending path migration.** §1 lists canonical paths as `data/dart/viz/*`, but live `main` reads `data/ifrs17/viz/*`. The feature branch `fix/csm-*` migrated the HTML to `data/dart/viz/`, but that is **not yet on `main`**. When that branch lands on `main`, the keep-list viz paths move to `data/dart/viz/` and the publish must ship those JSONs there. Until then, `data/ifrs17/viz/*` is the live canonical.
+**Path migration LANDED (2026-06-16).** Live `main` now serves viz from `data/dart/viz/*` (matches §1 canonical); the old `data/ifrs17/viz/*` note is retired. `common.css` is a **new deploy asset** (designer frontend-design skill) — the 3 HTML pages `<link>` it, so it is now part of the keep-list and **must be pushed alongside any HTML change** (omitting it breaks all styling). No `csm_bubble.json` on main (index.html embeds the bubble inline).
 
 **Procedure (agent runs the local git mechanically; only the push is gated).**
 

@@ -64,8 +64,37 @@ def _flow_dangi(ytd_by_q, q):
     return None if prev is None else round(cur - prev, 6)
 
 
+_PL_COMP = (4, 5, 6, 7, 8, 13, 14, 15)   # 보험손익(1) components excluding 16
+
+
+def _zero_other_expense(rows):
+    """item16(기타사업비) -> 0 where 보험손익(1) already closes WITHOUT it (item16 is
+    below-the-line opex there, not a 보험손익 component — owner/validation 20260616T1210Z;
+    IFRS17.html:470 waterfall subtracts -16). General, raw-independent closure test:
+    |item1 - Σ(4,5,6,7,8,13,14,15)| <= max(100, 1%·|item1|). Naturally keeps cells that only
+    close WITH -16 (KEEP) and excludes partial mis-extracts (DB손해 2023.2Q resid 6869 > tol)."""
+    by_cq = defaultdict(dict)
+    for r in rows:
+        by_cq[(r["원보험사코드"], r["공시분기"])][r["항목번호"]] = r
+    n = 0
+    for items in by_cq.values():
+        r1, r16 = items.get(1), items.get(16)
+        if r1 is None or r16 is None:
+            continue
+        i1, i16 = r1.get("값"), r16.get("값")
+        if i1 is None or not i16:
+            continue
+        comp = sum(((items.get(k) or {}).get("값") or 0) for k in _PL_COMP)
+        if abs(i1 - comp) <= max(100, abs(i1) * 0.01):
+            r16["값"] = 0.0
+            n += 1
+    print(f"  pl 기타사업비(item16)->0: {n} cells (보험손익 closes without -16)")
+    return rows
+
+
 def build_pl():
     rows = json.loads(PL_SRC.read_text(encoding="utf-8"))
+    rows = _zero_other_expense(rows)
     # YTD by (code, item) -> {quarter: 값}
     ytd = defaultdict(dict)
     for r in rows:

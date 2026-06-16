@@ -175,6 +175,50 @@ def _market_tooling_fail(records: list[dict]) -> list[tuple]:
     return out
 
 
+# 부모 위험액 항목 → 그 하위 세부항목 번호. 항목번호는 flat index라 계층은 라벨접두어가 아니라
+# 명시 매핑으로 잡는다(라벨 '1.'은 자본tiering·종속회사 네임스페이스에도 출현 → 접두어 매칭 불가).
+#   item 17 (1. 생명장기손해보험위험액) -> 29-35 (1-1..1-7)
+#   item 19 (3. 시장위험액)            -> 36-40 (3-1..3-5)
+_PARENT_CHILD_ITEMS = {17: (29, 30, 31, 32, 33, 34, 35), 19: (36, 37, 38, 39, 40)}
+
+
+def _parent_zero_child_nonzero(records: list[dict]) -> list[tuple]:
+    """부모 위험액 항목이 표에 0으로 존재하는데 하위 세부항목이 비0 = 행 오정렬/셀 밀림.
+    구조상 불가능(K-ICS 상관행렬 집계상 분산총액 ≥ 최대 단일세부 → 세부 비0이면 부모도 비0).
+    서울보증 25.4Q 생명장기(item17=0) 아래 대재해위험액(item35=5212) 파싱오류를 게이트가 못 잡던
+    사각(owner 라이브 QA 3차). 부모 '결측'은 census 소관 → 여기선 부모 present&≈0만 RED."""
+    def _num(v):
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return None
+
+    by_cq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get("원보험사코드"), r.get("공시분기"), r.get("항목번호")
+        name[c] = r.get("원수사명", c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            by_cq.setdefault((c, q), {})[it] = _num(r.get("값"))
+    out = []
+    for (c, q), items in sorted(by_cq.items()):
+        for parent, kids in _PARENT_CHILD_ITEMS.items():
+            if parent not in items:
+                continue  # 부모 결측 = census 소관, 이 룰 아님
+            pv = items[parent]
+            if pv is None or abs(pv) >= 1.0:
+                continue  # 부모가 present & ≈0 인 경우만
+            nz = [(k, items[k]) for k in kids
+                  if items.get(k) is not None and abs(items[k]) >= 1.0]
+            if nz:
+                out.append((c, q, parent, name.get(c, c), nz))
+    return out
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8")  # Windows console defaults to cp949
@@ -217,6 +261,14 @@ def main() -> int:
     report["market_tooling_fail"] = [
         {"code": c, "quarter": q, "status": s, "name": n} for c, q, s, n in tooling_fail
     ]
+    parent_child = _parent_zero_child_nonzero(records)
+    report["parent_zero_child_nonzero"] = [
+        {
+            "code": c, "quarter": q, "parent_item": p, "name": n,
+            "nonzero_children": [{"item": k, "value": v} for k, v in nz],
+        }
+        for c, q, p, n, nz in parent_child
+    ]
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     # stable-name 최신 포인터: glob 정렬 함정(stale report_latest.json) 방지 — 매 실행 fresh 덮어쓰기.
     (out_dir / "report_latest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -254,6 +306,13 @@ def main() -> int:
             print(f"    {q} {c} {n} [{s}] — item19 공시·36-40 결측, localizer 실패 → re-localize")
     else:
         print("Market localizer TOOLING_FAIL: 0 (nonok 셀 전부 백필됨 또는 비-갭)")
+    if parent_child:
+        print(f"Parent-zero / nonzero-child (structural misparse, RED): {len(parent_child)}")
+        for c, q, p, n, nz in parent_child:
+            kids = ", ".join(f"item{k}={v}" for k, v in nz)
+            print(f"    {q} {c} {n}: 부모 item{p}=0 인데 자식 {kids} → 행 오정렬/셀 밀림")
+    else:
+        print("Parent-zero / nonzero-child: 0")
     print("RED failures by rule:")
     for rule_id, cnt in sorted(fail_by_rule.items(), key=lambda x: (-x[1], x[0])):
         print(f"  rule {rule_id}: {cnt}")
@@ -274,7 +333,7 @@ def main() -> int:
                 f"actual={f.get('actual')} diff={f.get('diff')}"
             )
 
-    return 2 if (red > 0 or census_red > 0) else 0
+    return 2 if (red > 0 or census_red > 0 or parent_child) else 0
 
 
 if __name__ == "__main__":

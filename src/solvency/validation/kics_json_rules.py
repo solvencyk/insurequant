@@ -80,6 +80,16 @@ MARKET_BREAKDOWN_EXEMPT: frozenset[tuple[str, str]] = frozenset()
 # raw에 짝수분기에도 시나리오표 없음을 교차검증한 케이스만 등록(문서화 면제). 기본 비어있음.
 IRR_SCENARIO_EXEMPT: frozenset[tuple[str, str]] = frozenset()
 
+# 36_irr 내부모형 면제: 내부모형사 — 41-46 순자산가치는 정확 추출되나 표준 derive식(R=충격전−시나리오)이
+# 공시 금리위험액과 불일치. 회사가 시나리오별 금리위험액을 **직접 공시**하고 그 값을 같은 식에 넣으면
+# 공시총액과 정확 일치(KR0094 2025.4Q=578,999 검증) = 내부모형. owner 승인(2026-06-14, "한화 선례 동형").
+# 41-46이 present라 위 if 분기로 들어가 _check_numeric RED가 나므로 블록 최상단에서 SKIP 단락.
+INTERNAL_MODEL_36IRR_EXEMPT: frozenset[tuple[str, str]] = frozenset({
+    ("KR0073", "2025.2Q"),
+    ("KR0094", "2024.2Q"), ("KR0094", "2024.4Q"),
+    ("KR0094", "2025.2Q"), ("KR0094", "2025.4Q"),
+})
+
 
 def parse_numeric(raw: Any) -> Optional[float]:
     if raw is None:
@@ -489,7 +499,15 @@ def run_validation(
         #   IRR_SCENARIO_EXEMPT 문서화 면제. 검증 empirics: 41-46은 전 분기 짝수에만 적재됨.
         irr_items = [36, 41, 42, 43, 44, 45, 46]
         is_even_q = bucket.quarter.endswith(("2Q", "4Q"))
-        if all(bucket.get(i) is not None for i in irr_items):
+        if (bucket.code, bucket.quarter) in INTERNAL_MODEL_36IRR_EXEMPT:
+            findings.append(
+                _finding(
+                    bucket, "36_irr", status=STATUS_SKIP, expected=None,
+                    actual=bucket.get(36), diff=None,
+                    detail="internal-model insurer: 표준 derive식 불適用 (회사 시나리오별 금리위험액 직접공시) — owner-approved exempt (2026-06-14)",
+                )
+            )
+        elif all(bucket.get(i) is not None for i in irr_items):
             base = float(bucket.get(41))
             r_up = max(base - float(bucket.get(43)), 0.0)
             r_dn = max(base - float(bucket.get(44)), 0.0)

@@ -7,12 +7,12 @@
       "rel": 0.25,
       "abs": 3.0
     },
-    "built_at": "2026-06-11T23:34:17Z",
+    "built_at": "2026-06-16T05:51:04Z",
     "build_script": "scripts/validate_nb_csm_multiple.py",
     "cohort_tested": 5,
     "cohort_pass": 5,
     "cohort_fail": 0,
-    "cohort_fallback_pass": 2,
+    "cohort_fallback_pass": 1,
     "needs_reconcile_loop": false
   },
   "results": [
@@ -115,50 +115,50 @@
     {
       "company": "삼성화재해상보험",
       "ifrs17_period": "annual (fiscal 2024 reporting) (csm_waterfall)",
-      "premium_period": "2025.3Q",
-      "premium_scope": "protection_premium_monthly_avg",
-      "premium_source": "ir:samsungfire_2025_3q.txt",
+      "premium_period": "FY2024",
+      "premium_scope": "monthly_avg_from_ytd",
+      "premium_source": "kidi:ml01_mn07_aggregate",
       "nb_csm_eok_annual": 34511.83,
       "nb_csm_eok_monthly": 2875.9858,
-      "wolnap_premium_eok_month": 164.0,
-      "computed_multiple": 17.5365,
+      "wolnap_premium_eok_month": 194.8157,
+      "computed_multiple": 14.7626,
       "computed_transform": "monthly_nb / monthly_prem",
       "reconcile_pass_transform": "monthly_nb / monthly_prem",
-      "reconcile_pass_multiple": 17.5365,
-      "ir_disclosed_multiple": 14.1,
-      "ir_source": "single_point.ytd_2025_1_3Q_total",
-      "abs_diff": 3.4365,
-      "rel_diff": 0.2437,
+      "reconcile_pass_multiple": 14.7626,
+      "ir_disclosed_multiple": 15.16,
+      "ir_source": "ir_series.KR0008_삼성화재해상보험.json.2024.4Q.multiple_derived_ytd",
+      "abs_diff": 0.3974,
+      "rel_diff": 0.0262,
       "status": "pass",
-      "period_aligned": false,
-      "fallback_used": true,
+      "period_aligned": true,
+      "fallback_used": false,
       "reconcile_candidates": [
         {
           "transform": "monthly_nb / monthly_prem",
-          "multiple": 17.5365
+          "multiple": 14.7626
         },
         {
           "transform": "monthly_nb / (prem*12)",
-          "multiple": 1.4614
+          "multiple": 1.2302
         },
         {
           "transform": "annual_nb / (prem*12)",
-          "multiple": 17.5365
+          "multiple": 14.7626
         },
         {
           "transform": "annual_nb / prem",
-          "multiple": 210.438
+          "multiple": 177.1512
         },
         {
           "transform": "monthly_nb / (prem/10)",
-          "multiple": 175.365
+          "multiple": 147.626
         },
         {
           "transform": "monthly_nb / (prem*10)",
-          "multiple": 1.7536
+          "multiple": 1.4763
         }
       ],
-      "notes": "PASS via period-mismatched fallback — denominator period=2025.3Q does not match numerator annual (fiscal 2024 reporting) (csm_waterfall) (prefer_period=FY2024). Aligned-period row(s) failed; suspect numerator/denominator data integrity. Tolerance loophole may mask upstream bug."
+      "notes": null
     },
     {
       "company": "한화생명",
@@ -259,54 +259,6 @@
   ],
   "failed": [],
   "fallback_passes": [
-    {
-      "company": "삼성화재해상보험",
-      "ifrs17_period": "annual (fiscal 2024 reporting) (csm_waterfall)",
-      "premium_period": "2025.3Q",
-      "premium_scope": "protection_premium_monthly_avg",
-      "premium_source": "ir:samsungfire_2025_3q.txt",
-      "nb_csm_eok_annual": 34511.83,
-      "nb_csm_eok_monthly": 2875.9858,
-      "wolnap_premium_eok_month": 164.0,
-      "computed_multiple": 17.5365,
-      "computed_transform": "monthly_nb / monthly_prem",
-      "reconcile_pass_transform": "monthly_nb / monthly_prem",
-      "reconcile_pass_multiple": 17.5365,
-      "ir_disclosed_multiple": 14.1,
-      "ir_source": "single_point.ytd_2025_1_3Q_total",
-      "abs_diff": 3.4365,
-      "rel_diff": 0.2437,
-      "status": "pass",
-      "period_aligned": false,
-      "fallback_used": true,
-      "reconcile_candidates": [
-        {
-          "transform": "monthly_nb / monthly_prem",
-          "multiple": 17.5365
-        },
-        {
-          "transform": "monthly_nb / (prem*12)",
-          "multiple": 1.4614
-        },
-        {
-          "transform": "annual_nb / (prem*12)",
-          "multiple": 17.5365
-        },
-        {
-          "transform": "annual_nb / prem",
-          "multiple": 210.438
-        },
-        {
-          "transform": "monthly_nb / (prem/10)",
-          "multiple": 175.365
-        },
-        {
-          "transform": "monthly_nb / (prem*10)",
-          "multiple": 1.7536
-        }
-      ],
-      "notes": "PASS via period-mismatched fallback — denominator period=2025.3Q does not match numerator annual (fiscal 2024 reporting) (csm_waterfall) (prefer_period=FY2024). Aligned-period row(s) failed; suspect numerator/denominator data integrity. Tolerance loophole may mask upstream bug."
-    },
     {
       "company": "현대해상",
       "ifrs17_period": "annual (fiscal 2024 reporting) (csm_waterfall)",

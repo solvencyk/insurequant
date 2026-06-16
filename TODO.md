@@ -1,7 +1,7 @@
 # Insurequant TODO
 
-> Last updated: 2026-06-12 · Stage: cross-stage
-> Index: CLAUDE.md (5-stage) · Stage TODOs: TODO_<stage>.md
+> Last updated: 2026-06-16 · Stage: cross-stage
+> Index: CLAUDE.md (5-stage; parser 2-lane since 2026-06-13) · Stage TODOs: TODO_<stage>.md
 
 Pipeline organized as **downloader / parser / validation / publishing / designer** — each stage has its own prompt (`docs/agents/claude-agent-<stage>.md`), TODO (`TODO_<stage>.md`), and changelog (`docs/changelog_<stage>.md`). See `CLAUDE.md` for the full index. This root file carries cross-stage items + project-wide policy only.
 
@@ -12,7 +12,7 @@ Cross-stage focus (2026-06-12): K-ICS gate RED=227 all documented exceptions (19
 **Stage files:**
 
 - **Downloader** (Stage 1): `TODO_downloader.md` + `docs/changelog_downloader.md` + `docs/agents/claude-agent-downloader.md`
-- **Parser** (Stage 2): `TODO_parser.md` + `docs/changelog_parser.md` + `docs/agents/claude-agent-parser.md`
+- **Parser** (Stage 2, **2-lane since 2026-06-13**): `TODO_parser_kics.md` · `TODO_parser_ifrs17.md` + `docs/changelog_parser_{kics,ifrs17}.md` (pre-split frozen: `docs/changelog_parser.md`) + shared `docs/agents/claude-agent-parser.md` + domain `docs/domains/claude-agent-{kics,ifrs17}.md`
 - **Validation** (Stage 3): `TODO_validation.md` + `docs/changelog_validation.md` + `docs/agents/claude-agent-validation.md`
 - **Publishing** (Stage 4, **merged gathering + pushing**): `TODO_publishing.md` + `docs/changelog_publishing.md` + `docs/agents/claude-agent-publishing.md` (skeleton — created 2026-05-31)
 - **Designer** (Stage 5, **new — HTML/CSS/responsive**): `TODO_designer.md` + `docs/changelog_designer.md` + `docs/agents/claude-agent-designer.md` (skeleton — created 2026-05-31)
@@ -20,7 +20,7 @@ Cross-stage focus (2026-06-12): K-ICS gate RED=227 all documented exceptions (19
 Items previously here that have moved out:
 
 - Downloader (F2 done, F7–F10, F14, MISC-BOND-*, MISC-IR-MERITZ, MISC-SEIBRO, decisions #5/#6) → `TODO_downloader.md`
-- Parser (KICS-PARSER-SPLIT/REPARSE-Q4/KR0069/KR0097/RED-FIX2/RED-FIX3/SUB/POST/RATIO28/HIST/IMG + IFRS-A1~B5-KICS/B3-UNIFY/NORMALIZE/HIST/SEN-TABLE) → `TODO_parser.md`
+- Parser (KICS-PARSER-SPLIT/REPARSE-Q4/KR0069/KR0097/RED-FIX2/RED-FIX3/SUB/POST/RATIO28/HIST/IMG + IFRS-A1~B5-KICS/B3-UNIFY/NORMALIZE/HIST/SEN-TABLE) → `TODO_parser_{kics,ifrs17}.md`
 - Validation (KICS-VALIDATE, IFRS17-NB-RECONCILE) → `TODO_validation.md`
 - Publishing (F4 v2, F13, INDEX-IFRS17-BUBBLE, INDEX-BUBBLE-V2, MISC-IR-PROTOTYPE, MISC-IR-NB-DENOM, IFRS17-CSM-BUBBLE, KICS-TIER1/2-UTIL, KICS-FORWARD-CAPITAL, KICS-HTML-SUB, IFRS17-HTML-DASH, F5/F6 data) → `TODO_publishing.md`
 - Designer (MOB-KICS, MOB-IFRS17, VIS-DONUT, VIS-CHARTLEGEND, INDEX-C12, F1-HTML, F6-HTML, F17-PANEL3 HTML, M1/M2) → `TODO_designer.md`
@@ -35,21 +35,30 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ## 🔴 K-ICS gate documented exceptions — CURRENT (2026-06-14, parser)
 
-> Supersedes the 2026-06-12 snapshot below. Since then: RED 227→**21** (대량 fitz 회수 + 코어/rule5
-> 백필), AND validation **expanded the validator** (new `36_irr` IRR 41-46 rule + `19_market` cadence fix +
-> `_market_tooling_fail`). The 2026-06-12 "19_market 223" list is mostly registered/recovered. Current gate
-> state = **21 RED, ALL verified non-regression** (raw 페이지까지 검증). Characterization:
+> Supersedes the 2026-06-12 snapshot below. Since then: RED 227→**19** (대량 fitz 회수 + 코어/rule5
+> 백필 + round3 K2/K3), AND validation **expanded the validator** (new `36_irr` IRR 41-46 rule + `19_market`
+> cadence fix + `_market_tooling_fail` + `_parent_zero_child_nonzero`). The 2026-06-12 "19_market 223" list is
+> mostly registered/recovered. Current gate state = **19 RED, ALL verified non-regression** (raw 페이지까지 검증). Characterization:
+
+> **Update 2026-06-16 (round3 K1–K4, parser):** RED 21→**19**. K3 = 서울보증/카카오 orphan item35
+> 제거(parent17=0인데 자식 비0 = 일반손해 대재해 오매핑, 3셀) + fill_subitems parent-gate 가드 추가 +
+> validation 신설 `_parent_zero_child_nonzero` 게이트(parent-zero=0 확인). K2 = 예별손해(KR0004,
+> 구MG) 2025.4Q docling+추출(코어28·하위29-35·시장36-40 적재; **자본잠식 -8.24%** 실값). 카카오
+> 2023.3Q 19_market = 소스표 실재 → 36/38 적재로 **GREEN 해소**(cadence-SKIP 불필요, 아래 정정).
+> K4(sensitivity 적용후)·K1(designer)은 게이트 무관.
 
 **✅ Structural non-disclosure — documented exceptions (parser-confirmed; image/scan/micro, 추출 불가):**
-- **36_irr × 6** (item36 공시인데 순자산가치 6시나리오표 추출불가):
+- **36_irr × 12** (item36 공시인데 순자산가치 6시나리오표 추출불가):
   - KR0010 KB손해 2023.4Q·2024.2Q·2025.4Q — 금리위험액 현황표가 **full-page 이미지**(p75-76 imgs=1,text=0; "금리는 내부모형" 주석). owner OCR.
   - KR0051 신한이지 2023.4Q·2024.2Q·2024.4Q — micro-insurer, 순자산가치 **억원-coarse 정수**라 derive ±99% 불안정(원천 한계).
+  - **KR0004 예별손해(구MG) 2023.2Q·2023.4Q·2024.2Q·2024.4Q·2025.2Q·2025.4Q (짝수 6분기)** — item36(금리위험액) 공시이나 **충격시나리오별 순자산가치(41-46) 표 미공시**(소형 부실사; MD 전체에 평균회귀/금리상승 라벨 부재, fill_market_irr 회수 0). IRR detail 결측 = legit-absent.
 - **19_market × 7** (item19 공시인데 36-40 분해 추출불가):
   - KR0005 흥국화재 2024.4Q·KR0071 흥국생명 2024.4Q — raw에 시장위험 분해표 NO-HEADER(이미지/미공시).
   - KR0010 KB손해 2024.4Q·2025.2Q — 금리위험액 이미지(주식/부동산/외환만 텍스트, 5종 reconcile 불가).
   - KR0068 한화생명 2023.4Q·2025.2Q — 금리위험액 현황 표 본문 이미지(헤더만 텍스트; 2025.2Q diff=60,815 = 금리 결측 탓).
   - KR0080 AIA 2025.4Q — scan-only(아래 documented).
 - **rule 2 × 1**: KR0080 AIA 2025.1Q (diff=−789) — scan-only(아래 documented).
+- **rule 1 × 1**: KR0004 예별손해 2024.2Q (item1 3,572 ≠ item2 498 + item3 3,085 = 3,583, diff 11) — **소스 충실**(MD L268-270 그대로). 부실사 보완자본 한도초과/억원 반올림으로 지급여력금액이 단순합과 불일치 = 공시 자체 특성, 파싱오류 아님. 인접 분기는 diff<tol이라 미발화.
 - **rule 8_life × 1**: KR0079 미래에셋 2023.2Q — scan-only. **8_life는 SKIP=게이트 비차단**.
 - **2023.2Q 백필 잔여 (2026-06-15, docling 부활)**:
   - KR0087 동양생명 2023.2Q — 코어표 **이미지 전용**(텍스트 부재) → scan-only(KR0079/0080/0087 동류), census 갭.
@@ -75,13 +84,17 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
   한화생명 내부모형 선례 동형. **owner 승인** → documented 예외. validation이 `kics_json_rules.py`에
   `INTERNAL_MODEL_36IRR_EXEMPT` 등록(RED→SKIP) 요청 발송(`inbox/validation/`).
 
-**🟡 VALIDATION CADENCE FIX (parser 아님, exception 아님):**
-- KR1098 카카오 2023.3Q 19_market — **odd-Q인데** raw에 분해표 NO-HEADER. 짝수 full-form 전제 룰이 오flag(detail이
-  "even-qtr full"이라 표시되나 실제 2023.3Q는 홀수). validation cadence SKIP 처리하면 RED→SKIP(삼성생명 odd-Q와 동류).
+**✅ RESOLVED 2026-06-16 (카카오 2023.3Q 19_market — cadence-SKIP 아니었음):**
+- 이전엔 "odd-Q NO-HEADER → validation cadence SKIP"으로 분류했으나 **틀렸다**(validation 0130Z 정정).
+  `data/disclosure/FY2023_Q3/parsed/KR1098_…amended.md` L177-186에 시장위험 분해표 **실재**(시장 248/금리 15/
+  부동산 244, 백만원). 파서가 item36(0.15)·item38(2.44) 적재 → 19_market **GREEN**. cadence-SKIP 불필요.
+  (단 36_irr은 41-46 미공시라 별도 — 카카오 2023.3Q는 36_irr RED 아님: item36 near-0라 미발화.)
 
-**요약**: 21 RED = 구조적 17(documented) + 내부모형 5(**owner 승인** 2026-06-14) + 카카오 cadence 1(validation false-pos).
-**전부 documented → CLAUDE.md 게이트 rule(모든 RED가 TODO 문서화 예외) 충족.** push는 owner 권한 — parser self-approve
-안 함. validation이 INTERNAL_MODEL 등록 + 카카오 cadence SKIP 처리하면 RED 카운트 자체가 16→clean.
+**요약 (2026-06-16, 예별 13분기 백필 후)**: **24 RED** = 구조적(documented: 36_irr 12·19_market 7·rule1 1·
+rule2 1·8_life 1·rule6 1·rule7 1). +5 net = 예별 KR0004 36_irr×5(IRR 미공시) + rule1×1(예별 2024.2Q 한도/반올림),
+−1 카카오 2023.3Q→2Q 19_market GREEN. 내부모형 0(KR0073·KR0094×4 = validation INTERNAL_MODEL_36IRR_EXEMPT
+SKIP 등록). census MISSING 6(동양/하나/카카오 image cells, documented). **전부 documented → CLAUDE.md 게이트 rule
+충족.** push는 owner 권한 — parser self-approve 안 함.
 
 ---
 

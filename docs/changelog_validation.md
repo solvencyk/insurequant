@@ -1,9 +1,60 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-06-15 · Stage 3/5 — validation
+> Last updated: 2026-06-16 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+---
+
+## 2026-06-16 — 부모-자식 정합 룰 신설(SGI 게이트 사각) + INTERNAL_MODEL_36IRR 등록 + 카카오 cadence 정정
+
+owner 라이브 QA 3차 inbox 드레인(`…SGI…catastrophe_misparse_blindspot`, `…kics_market_irr_exempt_register`).
+
+**🔧 신규 룰 — `_parent_zero_child_nonzero` (`validate_kics_disclosure.py`)**: 부모 위험액 항목이 표에
+present & ≈0인데 하위 세부 비0 = 구조상 불가능(K-ICS 상관행렬 집계상 분산총액 ≥ 최대 단일세부) → RED(게이트
+차단 exit 2). 부모 매핑은 명시 item번호(항목번호 flat index·라벨접두어 '1.'은 자본tiering에도 출현 → 접두어
+매칭 불가): item17(생명장기)→29-35, item19(시장)→36-40. 부모 결측은 census 소관이라 제외. owner SGI 25.4Q
+대재해(item35=5212/생명장기 0) 사각 폐쇄. **전수 스캔 3셀**(owner 1 + 적발 2): 서울보증 2025.4Q·2023.4Q,
+카카오 2023.3Q — 전부 대재해(item35) 오정렬. 파서 발주(`…parentzero_catastrophe_plus_kakao_19market`).
+
+**✅ INTERNAL_MODEL_36IRR_EXEMPT 등록(owner 승인 2026-06-15)**: `kics_json_rules.py` frozenset + 36_irr 블록
+최상단 SKIP 단락. 5셀(KR0073 2025.2Q · KR0094 2024.2Q/2024.4Q/2025.2Q/2025.4Q) RED→SKIP. **36_irr RED 11→6**
+(잔여=KB 이미지 3 + 신한이지 micro 3). 내부모형사 — 41-46 순자산가치 present라 표준식이 _check_numeric RED를
+내므로 최상단 SKIP. 근거 = 회사 시나리오별 금리위험액 직접공시 → 식 정확일치(KR0094 25.4Q=578,999).
+
+**🔴 카카오 2023.3Q 19_market = cadence-SKIP 부적절(TODO line 79-80 정정)**: parser 제안("NO-HEADER cadence")을
+검증하니 docling MD L177-186에 분해표 실재(시장위험액 248/금리 15/부동산 244). 19_market RED는 참(JSON 36-40
+미적재) → cadence-SKIP 안 함(실재 표 은폐+회귀 위험). 단 micro 억원-coarse(item19=2=248백만/100)라 적재해도
+near-0·reconcile 불안정 = 카카오 2023.2Q 동류 micro artifact. 처분=파서 적재 후 micro documented or owner
+micro exception(cadence 아님). 회귀: pytest tests/unit 110 passed.
+
+## 2026-06-16 (b) — V7 NB CSM 시계열 off-by-one 재확인 + check_nb_csm_history.py 복원 (backlog #5)
+
+owner "바로 진행" → backlog_digest #5(history 빌더 off-by-one 회귀 → check 재실행, systemic-3 재확인) 처리.
+
+- **off-by-one-year 회귀 = FIXED 확정**: 현 `data/ir/series/`는 Q1 YTD-reset 정합(삼성화재 nb_csm_eok 6782.7→14426→26068→34995, 2024.1Q 8855.5 리셋 = 1년 시프트면 불가능). series mtime 10:40 > stale check 10:35이나 ir_eok·flag 완전 동일 = 시프트 흔적 0.
+- **`scripts/check_nb_csm_history.py` 복원**: 사라진 ad-hoc 도구를 self-contained 재작성. 컨벤션을 series 메타에서 도출(nb_csm_singleQ_eok field=singleQ / units "YTD"=ytd_delta / else per_q_delta), DART new_business YTD→per-Q delta(Q1 raw, mn→억). DART per-Q가 stale matrix와 정확 일치(faithful 검증). `data/_derived/nb_csm_history_check.json` 현행 갱신, exit 2 if OVER/UNDER. 소비자 0(standalone 리포트).
+- **systemic-3 = 실재(정렬 아티팩트 아님), 근본원인 = DART partial 추출**: 롯데 2025.2Q status=partial→NB_YTD=0→delta −1098.5(음수 NB 불가) / 미래에셋 2025.2Q·3Q partial→YTD collapse→2025.4Q ok에서 catchup spike(=‟↑↓ 교대") / 2025.2Q cohort-wide=동일 partial(반기·3분기 CSM 블록). DB 부호반전은 DB DART 2025.2Q+ 부재로 재현 안 됨(현상 롯데로 이동). 삼성생명 2025.2Q OVER(+26%)=status=ok=진짜 DART↔IR scope 차이(별건).
+- **라우팅**: parser/ifrs17 `20260616T0230Z__validation__MULTI__nb_csm_partial_extract_corrupts_history`(partial 재추출 + status∈{partial,no_csm_block} 전사 sweep + 삼성생명 별건). 검증측 #5 완료, parser 재추출 트리거 대기.
+
+## 2026-06-16 (c) — backlog #6/#7/#8/#9 (4-에이전트 Workflow 병렬 + 통합)
+
+owner "전부다 진행" → backlog_digest 잔여 4건을 Workflow(4 에이전트 병렬)로 처리 후 메인 통합·검증·라우팅.
+
+- **#6 삼성화재 FY2024 IR benchmark = RESOLVED / 현대해상 = owner·downloader**: `validate_nb_csm_multiple.py`에 `load_fy2024_ir_anchors`(IR series 2024.4Q.multiple_derived_ytd를 aligned FY2024 anchor로) + 삼성화재 PREFERRED_SCOPE에 monthly_avg_from_ytd. 삼성화재 computed 14.76 vs IR 15.16 rel 0.026 period_aligned=True fallback_used=False, **fallback_pass 2→1**. 현대해상은 in-repo FY2024 annual IR multiple 부재(1H/2H cadence) → fallback 잔존, owner 결정.
+- **#7 V9 잔여 = 조사완료(parser-fix 0)**: closing identity 전부 EXACT(산술오류 0). (※ 한때 CONT 이중계상 면제를 넣었으나 **owner 지시로 즉시 revert: continuity break = 무조건 RED, "소급재작성" 면제 금지** — cont=15 유지, 면제 0. WFY 면제만 존치. 메모리 [[continuity-break-is-red]].) **[정정 2026-06-16: 오진 시인]** 교보 2026.1Q 등 5사 2026.1Q boundary = REAL 재작성 **아님 = 파싱오류**(owner 원본검증: 2026.1Q 기시=직전 2025.4Q 기말; 교보 65,110/메리츠 111,037/신한라이프 75,537/에이비엘 9,702/푸본현대 1,907.45). self-closing identity는 opening 검증 불가 = 내 오진. → downloader FY2026_Q1 raw 복원 + parser 재추출 발주(`…restore_fy2026q1_dart_raw`, `…csm_2026q1_opening_misparse`). 케이디비 2024.2Q +58%만 별건 within-period 변동. 저배수 4사 = scope 오류 아님(Q1 계절저점/micro, 분자 waterfall item2 일치; 한화 9.84는 IR FY 7.6 초과=‟low" 오독) → backlog framing 정정.
+- **#8 verify_parser_change.py = DONE**: snapshot/diff(blast-radius; kics는 (code,quarter,item) cell-diff)/validate(6검증기 일괄 exit+summary 표)/all. 통합 `validate` 실행 확인(6검증기 정상). 추출기 변경 회귀 1커맨드.
+- **#9 QoQ yaml loader = 이미 배선(no-op)**: `validate_master_tables.py:84`가 이미 `yaml.safe_load(config/qoq_thresholds.yaml)`. backlog 항목 stale.
+- 회귀: pytest tests/unit 110 passed. verify_parser_change validate = 6검증기 정상(비-0은 전부 documented/routed: kics RED 동시변경, master cont/pl_bridge known, nb_csm_history parser 라우팅).
+
+## 2026-06-16 (d) — KB PL 기타사업비 전수검증 + decision-free inbox 드레인 + data-contract 게이트 착수
+
+owner: (1) decision-free inbox A-to-Z, (2) KB PL 기타사업비(item16) 전수검증.
+
+- **PL 기타사업비(item16) 0처리 전수검증** (owner: IFRS17.html KB 보험손익 0.63조는 −16 없이 나옴, item16=0.39 차감이 워터폴 깨뜨림). 등식 `item1=4+5+6+7+8+13+14+(15−16)`(IFRS17.html:472). `scripts/check_pl_other_expense_closure.py` 신설 — pl_breakdown_master 244셀 분류: **ZERO 21**(보험손익이 −16 없이 닫힘 → item16 spurious) / KEEP 223 / NEITHER 31. ZERO = **KB손해 13분기 전부 resid=0 정확**(owner 케이스) + 케이디비생명 2023.2Q(0) + 흥국화재 6 early분기(2025.2Q부터는 −16으로 닫힘=비일관) + DB손해 2023.2Q는 resid −6,869=별건 제외. item20 영업이익=item1+item17이라 item16은 영업이익에도 안 들어감(=워터폴 전용 오류). → parser/ifrs17 발주 `…pl_other_expense_zero_where_closes`(build_pl_breakdown 일반규칙: 닫히면 item16=0, raw 비의존 transform). PL 마스터는 parser 리빌드 소유라 직접 편집 안 함(소실).
+- **decision-free inbox 드레인**: (a) `doc_hygiene_prompt`→resolved (validation 프롬프트 3정정: gathering→parser·§3.1 inbox정본 재서술·misc 보조도메인 명확화). (b) `v7_gate_enforcement`(publishing)→resolved (check_nb_csm_history 복원 확인·V7는 data-contract ③ same-concept로 흡수+V1 retire 경로, 별도 publishing 블록 불요).
+- **data-contract 사전-push 게이트 Phase 1 = DONE·검증** (owner `…data_contract_prepush_gate`, 최우선 인프라): `scripts/validate_data_contract.py`(+selftest) — 기존 validator import·호출(삭제 없음). 메인세션 검증: `--selftest` **7/7 PASS**(회귀 5건+변형) / 라이브 **exit 2 RED=52**(census 30=K-ICS 게이트 흡수+MISSING_FILER 6 · **as_of 22=신규 provenance 축이 V12 sensitivity_heatmap FY2024 staleness 적발** · cross-source 0) / build 미트리거. owner 결정 3: 22 STALE_AS_OF 처분(§4 면제 owner권한)·와이어링(§6)·exception 포맷. Phase 2 provenance 계약 정의 완료(parser/downloader 바운스 대기).
 
 ---
 

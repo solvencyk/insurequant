@@ -46,7 +46,15 @@ IR_COMPANY_MAP = {
 # Preferred premium scope per company for validation
 PREFERRED_SCOPE = {
     "DB손해보험": ["total_monthly_avg", "protection_monthly_avg"],
-    "삼성화재해상보험": ["protection_premium_monthly_avg", "protection_implied_from_ir_csm_and_ratio"],
+    # 삼성화재: aligned FY2024 anchor (numerator = csm_waterfall FY2024 annual NB CSM)
+    # → KIDI N07 FY2024 monthly_avg_from_ytd 분모 + IR series FY2024 disclosed multiple.
+    # 기존 IR 2025.3Q (protection_premium_monthly_avg) 행은 period-mismatch fallback이라
+    # 후순위로 내림 (2026-06-16 V2 anchor 보강, fallback retire).
+    "삼성화재해상보험": [
+        "monthly_avg_from_ytd",
+        "protection_premium_monthly_avg",
+        "protection_implied_from_ir_csm_and_ratio",
+    ],
     "현대해상": ["total_implied_from_ir_csm_and_ratio", "personal_premium_monthly_avg"],
     # 한화생명: KIDI FY-aggregated monthly avg가 numerator(FY24 annual)와 시점 align.
     # 기존 total_implied_from_ir_csm_and_ratio는 FY2025.1Q single point만 있어 시점 mismatch 유발.
@@ -124,6 +132,36 @@ def load_ir_benchmarks() -> dict[str, tuple[float, str]]:
         )
         if mult is not None:
             out["메리츠화재해상보험"] = (float(mult), "meritz_factsheet.1Q26")
+    return out
+
+
+# Aligned FY2024 ANNUAL IR benchmark, sourced from in-repo IR series files
+# (data/ir/series/<KR>_<name>.json). numerator = csm_waterfall FY2024 annual NB CSM,
+# so the conceptually-matched IR figure is the FY2024 cumulative-YTD disclosed multiple
+# (multiple_derived_ytd of the 4Q row = cumYTD CSM ÷ cumYTD 월납환산 premium).
+# Lets the validator anchor on a real aligned FY2024 row instead of a 2025-period fallback.
+FY2024_IR_ANNUAL_ANCHOR_SOURCES = {
+    "삼성화재해상보험": "KR0008_삼성화재해상보험.json",
+}
+
+
+def load_fy2024_ir_anchors() -> dict[str, tuple[float, str]]:
+    """company → (FY2024 aligned IR multiple, source label). Missing file/row → skip."""
+    out: dict[str, tuple[float, str]] = {}
+    for company, fname in FY2024_IR_ANNUAL_ANCHOR_SOURCES.items():
+        path = IR / "series" / fname
+        if not path.exists():
+            continue
+        data = load_json(path)
+        q4 = (data.get("series") or {}).get("2024.4Q") or {}
+        val = q4.get("multiple_derived_ytd")
+        if val is None:
+            val = q4.get("multiple_disclosed")
+            label = f"ir_series.{fname}.2024.4Q.multiple_disclosed"
+        else:
+            label = f"ir_series.{fname}.2024.4Q.multiple_derived_ytd"
+        if val is not None:
+            out[company] = (float(val), label)
     return out
 
 
@@ -264,6 +302,7 @@ def build_report() -> dict:
     companies = premium_payload.get("companies") or {}
     nb_map = index_nb_csm(wf)
     ir_map = load_ir_benchmarks()
+    fy2024_anchors = load_fy2024_ir_anchors()
     wf_period = wf.get("period")
     prefer_period = waterfall_period_to_premium_period(wf_period)
     numerator_label = f"{wf_period} (csm_waterfall)" if wf_period else "csm_waterfall"
@@ -311,7 +350,14 @@ def build_report() -> dict:
                     entry = ent
                     break
 
-        ir_alts: list[tuple[float, str]] = [(ir_ratio, ir_src)]
+        ir_alts: list[tuple[float, str]] = []
+        # Aligned FY2024 ANNUAL anchor first (period-matched to the FY2024 numerator),
+        # so it is preferred over 2025-period IR fallback benchmarks.
+        anchor = fy2024_anchors.get(company)
+        if anchor is not None:
+            ir_alts.append(anchor)
+        if (ir_ratio, ir_src) not in ir_alts:
+            ir_alts.append((ir_ratio, ir_src))
         if entry:
             for sname, series in (entry.get("series") or {}).items():
                 pts = series.get("points") or []

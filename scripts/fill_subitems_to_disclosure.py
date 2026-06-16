@@ -570,6 +570,12 @@ def _process_period(
             continue
         text = md_path.read_text(encoding="utf-8")
         found = _scan_subitem_rows(text, quarter)
+        # Parent gate: 생명장기손해보험위험액(item17)=0 ⇒ company has no
+        # life/long-term business, so sub-risks 29-35 cannot exist. Drop any
+        # match (e.g. a 일반손해 대재해 row leaking into the life slot).
+        parent17 = _parent_value(rows, code, quarter)
+        if parent17 is not None and parent17 <= 0:
+            found = {}
         matched = sum(1 for n in (29, 30, 31, 32, 33, 34) if n in found)
         missed = 6 - matched
 

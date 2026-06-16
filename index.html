@@ -10,22 +10,27 @@
   <meta property="og:type" content="website"/>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"/>
+  <link rel="stylesheet" href="common.css"/>
   <style>
-    :root{--bg:#ffffff; --card:#f8f9fa; --border:#e9ecef; --text:#212529; --muted:#6c757d; --primary:#0d6efd; --primary-hover:#0b5ed7;}
-    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-variant-numeric:tabular-nums}
-    header{position:sticky;top:0;padding:10px 16px;border-bottom:1px solid var(--border);background:#ffffff;z-index:1000}
-    .brand{font-weight:700;margin-bottom:12px;cursor:pointer;color:var(--primary);text-decoration:none}
-    .brand:hover{color:var(--primary-hover)}
-    .tabs{display:flex;gap:4px;margin-bottom:0}
-    .tab{padding:8px 16px;border:1px solid var(--border);border-radius:8px 8px 0 0;background:var(--card);color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:all 0.2s;cursor:pointer}
-    .tab:hover{background:var(--primary);color:white;border-color:var(--primary)}
-    .tab.active{background:var(--primary);color:white;border-color:var(--primary)}
-    .container{max-width:1320px;margin:0 auto;padding:16px}
+    /* Shared tokens + chrome (header/tabs/brand/container/select/utils) now live
+       in common.css. Below: index-specific only. */
+    *{box-sizing:border-box}
     .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
     .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:8px}
     .legend{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
     .swatch{width:110px;height:10px;background:linear-gradient(90deg,#7f1d1d,#ef4444,#fca5a5,#34d399,#16a34a,#14532d);border-radius:6px}
-    .select{padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:#ffffff;color:#212529}
+    /* Hero KPI strip + 회사 typeahead (DESIGN-V2 P2, 2026-06-16) — 토큰 사용, 무채색 절제 */
+    .hero{margin-bottom:16px}
+    .kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .kpi{background:var(--card);border:var(--bd);border-radius:var(--r-lg);padding:16px 18px}
+    .kpi-val{font-size:26px;font-weight:800;color:var(--text);line-height:1.1;letter-spacing:-.01em}
+    .kpi-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:2px}
+    .kpi-lab{margin-top:6px;font-size:12px;color:var(--muted);font-weight:600}
+    .hero-jump{margin-top:12px}
+    .hero-jump .select{width:100%;max-width:360px}
+    @keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+    .rise{animation:riseIn .5s ease both}
+    @media (max-width:640px){ .kpi-strip{grid-template-columns:repeat(2,1fr);gap:8px} .kpi{padding:12px 14px} .kpi-val{font-size:20px} .hero-jump .select{max-width:none} }
     .toggle-switch{position:relative;display:inline-block;width:60px;height:30px}
     .toggle-input{opacity:0;width:0;height:0}
     .toggle-label{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.4s;border-radius:30px}
@@ -94,6 +99,18 @@
     </div>
   </header>
   <div class="container">
+    <div class="hero">
+      <div class="kpi-strip">
+        <div class="kpi rise" style="animation-delay:.02s"><div class="kpi-val" id="kpiCsm">—</div><div class="kpi-lab">업계 총 기말 CSM</div></div>
+        <div class="kpi rise" style="animation-delay:.08s"><div class="kpi-val" id="kpiRatio">—</div><div class="kpi-lab">K-ICS 지급여력비율 중위값</div></div>
+        <div class="kpi rise" style="animation-delay:.14s"><div class="kpi-val" id="kpiCount">—</div><div class="kpi-lab">수록 보험사</div></div>
+        <div class="kpi rise" style="animation-delay:.20s"><div class="kpi-val" id="kpiPeriod">—</div><div class="kpi-lab">기준 분기</div></div>
+      </div>
+      <div class="hero-jump">
+        <input id="coJump" class="select" list="coJumpList" placeholder="보험사 검색 → IFRS17 바로가기" autocomplete="off" aria-label="보험사 검색 후 IFRS17 페이지로 이동"/>
+        <datalist id="coJumpList"></datalist>
+      </div>
+    </div>
     <div class="panel">
       <div class="section-title">K-ICS — 지급여력 마켓맵</div>
       <div class="controls">
@@ -283,6 +300,57 @@
       }
     }
     
+    // ── Hero KPI strip + 회사 typeahead (DESIGN-V2 P2) ─────────────────────
+    function _median(nums){
+      const a = nums.filter(n=>Number.isFinite(n)).slice().sort((x,y)=>x-y);
+      if(!a.length) return null;
+      const m = Math.floor(a.length/2);
+      return a.length%2 ? a[m] : (a[m-1]+a[m])/2;
+    }
+    function totalClosingCsmEok(){            // 회사별 최신 기말(항목6) 합, 단위 억
+      if(!Array.isArray(wfRowsRaw)) return null;
+      const latest = {};                      // code -> {k,v}
+      for(const r of wfRowsRaw){
+        if(r['항목번호']!==6 || r['값']==null) continue;
+        const code=r['원보험사코드']; const v=Number(r['값']); if(!code||!Number.isFinite(v)) continue;
+        const k=qkey(r['공시분기']);
+        if(!latest[code] || k>latest[code].k) latest[code]={k,v};
+      }
+      const codes=Object.keys(latest); if(!codes.length) return null;
+      return codes.reduce((s,c)=>s+latest[c].v,0);
+    }
+    function samoNum(n,digits){               // 정수/소수 + 음수 △ (한국 회계)
+      if(n==null||!Number.isFinite(n)) return '—';
+      const r = digits ? n : Math.round(n);
+      const txt = Math.abs(r).toLocaleString('ko-KR', digits?{minimumFractionDigits:digits,maximumFractionDigits:digits}:{});
+      return (r<0?'△':'')+txt;
+    }
+    function updateKpis(){
+      const setT=(id,html)=>{ const el=document.getElementById(id); if(el) el.innerHTML=html; };
+      const comps = [...(GROUPED.Life||[]), ...(GROUPED['Non-Life']||[])];
+      const med = _median(comps.map(c=>c.ratio));
+      if(med!=null) setT('kpiRatio', samoNum(med,0)+'<span class="u">%</span>');
+      if(comps.length) setT('kpiCount', comps.length+'<span class="u">社</span>');
+      const per = (allData&&allData.length) ? getLatestQuarter(allData) : null;
+      if(per) setT('kpiPeriod', per);
+      const eok = totalClosingCsmEok();        // 조 단위
+      if(eok!=null) setT('kpiCsm', samoNum(eok/10000,0)+'<span class="u">조</span>');
+    }
+    function buildJumpList(){
+      const dl=document.getElementById('coJumpList'); if(!dl) return;
+      const names=new Set();
+      for(const c of [...(GROUPED.Life||[]),...(GROUPED['Non-Life']||[])]) if(c.company) names.add(c.company);
+      for(const r of (wfRowsRaw||[])) if(r['원수사명']) names.add(r['원수사명']);
+      dl.innerHTML=''; [...names].sort((a,b)=>a.localeCompare(b,'ko')).forEach(n=>{ const o=document.createElement('option'); o.value=n; dl.appendChild(o); });
+    }
+    function wireJump(){
+      const inp=document.getElementById('coJump'); if(!inp || inp._wired) return; inp._wired=true;
+      const go=()=>{ const v=inp.value.trim(); if(v) window.location.href='IFRS17.html?company='+encodeURIComponent(v); };
+      inp.addEventListener('change', go);
+      inp.addEventListener('keydown', e=>{ if(e.key==='Enter') go(); });
+    }
+    if(document.readyState!=='loading') wireJump(); else document.addEventListener('DOMContentLoaded', wireJump);
+
     function setMapStatus(message, isError) {
       const status = document.getElementById('map-status');
       if (!status) return;
@@ -337,6 +405,7 @@
             setMapStatus(null);
           }
           updateReferencePeriod();
+          updateKpis(); buildJumpList();
           const sectorSel = document.getElementById('sector');
           render(sectorSel ? sectorSel.value : 'ALL');
           requestAnimationFrame(() => render(sectorSel ? sectorSel.value : 'ALL'));
@@ -989,6 +1058,7 @@
         bubbleRows = buildBubbleData(nbRows, wfRows);
         renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
         renderBubbleList();
+        updateKpis(); buildJumpList();
       }).catch(e => {
         console.error('bubble masters load failed:', e);
         const metaEl = document.getElementById('bubble-meta');

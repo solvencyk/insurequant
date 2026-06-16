@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-06-13 · Stage 5/5 — designer
+> Last updated: 2026-06-16 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (skeleton) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,16 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; current focus is the **de-AI design overhaul (DESIGN-V2)** awaiting owner sign-off and the **company key-color accent system (KEYCOLOR-V1)** — IFRS17 applied 2026-06-13, K-ICS still to do. Mobile scope was just confirmed by owner (full-panel + alternative render); the full mobile pass is now Open (was deferred) with two open render recommendations.
+
+**Recent (2026-06-16):**
+- **DS1 (frontend-design skill)**: 디자인 시스템 정식화 — 신규 루트 `common.css`(토큰 + 공통 chrome + A11y baseline), 3 HTML 점진 배선(무회귀, 확정결정 4개 유지), 프롬프트 §5 skeleton→정식. **common.css는 신규 배포 에셋**(publishing handoff 필요).
+- **DS1b (DESIGN-V2 P2 슬라이스)**: index 히어로 KPI 스트립(총 CSM·중위값·수록사·기준분기) + 회사 typeahead 점프. 진입 애니(degrade-safe). 토큰/팔레트/△ 유지.
+- **DS2 (webapp-testing/Playwright)**: 회귀 하니스 `tests/regression_dashboards.py`(+README) — **24 assert GREEN**. venv playwright+chromium 설치(번들 Chromium 구동 = Edge dump 0바이트 우회). owner QA 글리치 자동화. 향후 분기·회귀 검증은 이 하니스로.
+- **G1/G2 (inbox 0506Z)**: IFRS17 재보험 +버튼을 K-ICS `.subtoggle` 양식으로 통일(.subtoggle→common.css 승격) · Panel2 점선 시리즈 legend "신계약 CSM 시계열 (점선)" 명시. ⚠️ **배포 cache-bust 필요**(common.css 갱신 시 재방문자 캐시).
+- **W1 (owner 직접)**: ① answered designer inbox 9건 → `_resolved` 이관(open 0). ② CSM waterfall(P1)+PL table(P4) 기간 윈도잉 통일 = 분기 직전5분기/연도 [2023,2024,2025,2026.1Q] (시계열과 동일 `selectPeriods` 규약). ③ 롯데 PL waterfall 투자손익 zero-crossing 부호버그 → ECharts custom renderItem. Playwright 29 GREEN.
+- **KB 2026.1Q 렌더 버그** 수정(parser inbox 0050Z): 항목명 라벨변형(짧은 형) 정확매칭 → OR 매칭. 데이터 정상.
+- owner 라이브 QA 3차 10건(D1~D10, IFRS17.html) 전부 처리·검증 완료 — 민감도 as-of/shock↑↓/억 정수, 현대해상 주황(#F47920), 분기 미제공사, 시계열 윈도잉, 상각 5년캡, 모바일 1시점, boot 병렬화.
+- **상류 의존**: sensitivity_heatmap의 `period`/`as_of` null → parser inbox `20260616T0030Z`(채우면 designer 파생이 자동 fallback).
 
 ## 🔴 Open — P1
 
@@ -19,7 +29,7 @@ Decision: 베이스는 현행 화이트 유지 + 회사 선택 시 키컬러를 
 ### DESIGN-V2 — de-AI 디자인 오버홀 (proposal delivered 2026-06-11, awaiting owner sign-off)
 Owner complaint: site looks AI-generated. Audit done (4 pages + barabom.me reference — actual findings: Spoqa Han Sans Neo webfont + restrained neutrals + 0.1-0.2s micro transitions, NOT heavy animation). Phases:
 - [ ] **P1 quick wins (~half day)**: Pretendard Variable + `font-variant-numeric:tabular-nums` 전역 / 탈부트스트랩 팔레트(#0d6efd·#f8f9fa 교체, 잉크+페이퍼+딥블루 1액센트) / favicon(IQ 모노그램)+OG+meta description / footer(출처·기준분기·면책) / 이모지 placeholder 제거 / radius 12→6px / Chart.js·ECharts 색 CSS 변수화 (기본 teal/pink 퇴출). [부분 착수: P1-QUICKWIN 일부 done 2026-06-12, 팔레트 교체는 보류]
-- [ ] **P2 structural (1~2d)**: common.css 추출 / index 히어로 KPI 스트립(총 CSM·K-ICS 중위값·기준분기) + 회사 typeahead 점프 / scroll-reveal(IntersectionObserver 12px/200ms 1회) + KPI 카운트업 / 차트 공통 테마(폰트·그리드·툴팁)
+- [~] **P2 structural (1~2d)**: ✅ common.css 추출(토큰+chrome+A11y) · ✅ index 히어로 KPI 스트립 + 회사 typeahead 점프 (2026-06-16) — 남음: KPI 카운트업 애니 / scroll-reveal(IntersectionObserver 12px/200ms 1회, 차트 패널 사이징 회피) / 차트 공통 테마(폰트·그리드·툴팁)
 - [ ] **P3**: M3 잔여(도넛 stack·범례) 흡수, 다크모드(선택)
 - [x] **TREEMAP-SCALE**: 트리맵 색 임계 앵커 130/200% + 범례 임계 표기 — done 2026-06-13 (권고선=130%, 민감도 패널 150%→130% 정합)
 - [ ] **COMPANY-ACCENT**: 회사 키컬러는 배경 틴트 대신 "액센트 1곳" 원칙(패널 제목 2px 룰 + 회사명 칩 + 차트 주 시리즈, 저채도 변형 23사 맵) — 시안 owner 승인 후

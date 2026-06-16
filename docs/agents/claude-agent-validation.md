@@ -83,6 +83,7 @@
 | **CSM_CROSSCHECK_WATERFALL_VS_PL** | (DART 자기완결 cross-table) 같은 (회사코드, 분기)의 두 마스터 long-format(`PL_breakdown` ↔ `CSM_waterfall`)에서 **항목명 정규화**(공백 무시: `"CSM상각"`=`"CSM 상각"`) 후 공통 CSM 항목 일치 검증. **(1) CSM상각**: `PL.(원수+수재)CSM상각`(보험수익 구성 → **양수**, 백만원) + `waterfall.CSM상각`(CSM 변동 → **음수**, 억원 ×100) ≈ 0. wf "발행한 보험계약" = 원수(direct) + 수재(assumed)라, **재보험사(코리안리)는 PL 쪽도 `원수CSM상각 + 수재CSM상각` 합산해야 매칭**. 출재(held reinsurance, 9-1 출재CSM상각)는 보유자산이라 **제외**(더하지 않음). 일반 회사는 수재=0/None이라 무영향. **4Q-only** (둘 다 YTD 누적 → 1~3Q는 분기배분 차이로 SKIP, 연말=연간 누계에서만 비교). **(2) 신계약 CSM**: 두 마스터에 다 있으면 동값 일치. **`PL_breakdown`엔 신계약 CSM이 구조상 없음**(미래서비스 → 당기손익 무관) → SKIP (대신 V7 `NB_CSM_DART_VS_IR`로 IR 검증 + waterfall closing identity로 내부 검증). 한쪽 항목 부재 시 graceful SKIP. 입력 계약 §1.5. | **3단계** (cross-table 표간 편차 구조적): OK ≤ `max(5%·\|pl\|, 300mn)` / MINOR ≤ 10% (경고, pass) / **RED > 10% → parser loopback** |
 
 ### 1.3 Misc IR / 정기경영공시
+- **misc는 별도 lane이 아니라 보조 도메인**(K-ICS 룰 R1–R10을 재사용하는 부수 항목; 병렬 레인은 kics·ifrs17 둘뿐).
 - 정형 validator 없음. **K-ICS 룰 R1–R10을 그대로 재사용**.
 - 추가: [quality_check.py](../../src/solvency/parser/quality_check.py) `score() < 0.7` 또는 critical row 누락 → YELLOW + review_queue CSV 생성.
 
@@ -92,7 +93,7 @@
 
 **IR-side input path:** `data/ir/<period>/parsed/<KR>.json`
 
-(현재 `data/ir/series/<KR>_<name>.json`은 NB CSM multiple 전용이므로 위 룰에 사용하지 않음. parser/gathering 단계가 분기별 IR factsheet에서 아래 schema로 추출해 채워야 활성화됨.)
+(현재 `data/ir/series/<KR>_<name>.json`은 NB CSM multiple 전용이므로 위 룰에 사용하지 않음. **parser 레인**(IR 정형 추출 활성화 시)이 분기별 IR factsheet에서 아래 schema로 추출해 채워야 활성화됨. ※ 옛 "gathering" 단계는 2026-05-31 publishing으로 머지된 죽은 stage 이므로 IR factsheet 정형 추출 주체 = parser.)
 
 **Expected schema** (모든 값 **억원** 단위, missing 항목은 `null`):
 ```json
@@ -278,12 +279,13 @@ LOOP (max 5 iterations):
          suspected_source: "DART" | "IR" | "internal" }
      - §1.2의 DART↔IR 교차검증 3개 룰은 항상 `suspected_source: "DART"` (IR을 ground truth로 가정).
        만약 운영자가 IR이 의심된다고 사전 표기한 케이스라면 escalate_to_human으로 분기.
-  3. Invoke parser subagent (Agent tool, subagent_type=general-purpose):
-       - 호출자 doc: parser_agent_doc 경로 (e.g. docs/agents/claude-agent-parser.md, 도메인 ref는 docs/domains/claude-agent-kics.md)
+  3. parser에 reparse 발주 — **전달은 §3.0 inbox md(`inbox/parser/` 메시지)가 정본.**
+     (Agent tool로 parser subagent를 직접 invoke하던 옛 모델은 gathering-era 잔재 = 폐기. 아래는 *메시지 내용*의 의미일 뿐, 실제 전달 채널은 inbox.)
+       - 대상 lane/도메인 명시: `lane: kics|ifrs17` + 도메인 ref(docs/domains/claude-agent-{kics,ifrs17}.md)
        - 메시지: "재파싱 요청 — 다음 항목의 raw source(suspected_source 기준)를
                   다시 확인하고 대상 JSON의 해당 row를 갱신해달라.
                   변경사항을 1줄 요약으로 회신."
-       - packaging된 RED 묶음(suspected_source 포함)을 그대로 전달
+       - packaging된 RED 묶음(suspected_source 포함)을 그대로 inbox 메시지 본문에 전달
        - DART↔IR 교차검증 RED는 DART 본문 XML/주석 재스킴이 default action
   4. Parser 반환 후 갱신된 JSON으로 재검증 → loop_iteration++
   5. RED=0 또는 loop_iteration==5 도달 시 종료

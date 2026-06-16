@@ -46,11 +46,11 @@ insurers:
 
   - code: KR0076
     dirname: KR0076_아이엠라이프생명보험
-    aliases: ["아이엠라이프", "IM라이프", "아이엠"]
+    aliases: ["아이엠라이프", "IM라이프"]  # bare "아이엠" 제거: 아이엠뱅크/캐피탈 등 그룹사 채권을 KR0076으로 오수집
 
   - code: KR0079
     dirname: KR0079_미래에셋생명
-    aliases: ["미래에셋생명", "미래에셋"]
+    aliases: ["미래에셋생명"]  # bare "미래에셋" 제거: 미래에셋증권/캐피탈 등 그룹사 채권을 KR0079로 오수집
 
   - code: KR0080
     dirname: KR0080_에이아이에이생명보험

@@ -316,6 +316,9 @@ def main() -> int:
         "2026": ["2026.1Q"],
     }
     PREV_CLOSE = {"2024": "2023.4Q", "2025": "2024.4Q", "2026": "2025.4Q"}
+    # 연속성(continuity) break = 무조건 RED. 원천 "소급재작성"으로 보이는 케이스라도 raw 대조로
+    # 확정되기 전에는 면제하지 않는다 (owner 2026-06-16: self-closing identity는 opening을 검증 못 함 —
+    # 2026.1Q 5사 기시 misparse를 '재작성'으로 오판한 사건. 기시≠직전기말이면 그냥 RED). 메모리: continuity-break-is-red.
     cont_rows = []   # (co, q, 기초, 전년말기말, 전년말분기)
     for co, qmap in sorted(wf_co.items()):
         for fy, qq in FY_Q.items():
@@ -334,7 +337,8 @@ def main() -> int:
     # FY내 동일성을 안 봐서 미스. 2023도 검사 가능(전년 기말 없이 FY내 상호비교라).
     # Documented exceptions (parser 판별 2026-06-11, inbox user_xlsx_audit_followup 답변):
     # 전부 legit_restatement — 원천 공시가 FY 중 정정/소급재작성(교보는 3Q24 공식 소급재작성 주석).
-    # 데이터 수정 대상 아님 → EXC 표시만, 게이트 제외.
+    # 데이터 수정 대상 아님 → EXC 표시만, 게이트 제외. (CONT/연속성에는 적용 안 함 — owner 2026-06-16:
+    # continuity break는 무조건 RED. WFY[FY내 동일성]만 이 면제 유지.)
     WFY_EXCEPTIONS = {
         ("교보생명보험", "2023"), ("교보생명보험", "2024"), ("KB라이프생명", "2024"),
         ("한화생명", "2023"), ("현대해상", "2023"), ("케이디비생명보험", "2023"),

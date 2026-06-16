@@ -1,11 +1,61 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-06-13 · Stage 5/5 — designer
+> Last updated: 2026-06-16 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-06-16 (W1) — 워터폴/PL 기간 윈도잉 통일 + 롯데 PL 부호버그 + inbox 정리 (owner 직접)
+
+- **inbox 정리**: answered designer 9건 전부 `inbox/_resolved/`로 이관(designer inbox open 0).
+- **기간 윈도잉 통일**(owner): CSM waterfall(P1) + PL table(P4)을 시계열과 동일 규약으로 — **분기=최신 포함 직전 5분기**(WF_Q_WINDOW 6→5), **연도=연말+최신부분 [2023,2024,2025,2026.1Q]**. PL table은 `selectPeriods` 재사용(plTablePeriods 재작성, 연도 라벨 FY2025→2025로 시계열과 정합).
+- **롯데손보 PL waterfall 투자손익 부호버그**: 데이터는 정상(투자손익 -55,656백만=△557억, 보험손익 +27,200). 원인=**zero-crossing 렌더버그** — 스택+투명 placeholder 방식이 0선 넘는 step에서 placeholder(음수)/colored(양수)를 양·음 따로 쌓아 빨강 막대가 0 위로 뜸. **fix=ECharts custom renderItem**으로 막대를 [min,max] 직접 그림(`encode:{y:[0,1]}` 자동 스케일). 보험손익(+0.03) → 투자손익이 0선 아래로 뻗어 끝점 △0.03. (CSM waterfall은 CSM이 stock이라 0선 안 넘어 무영향.)
+- **검증**: Playwright 하니스 +5 assert → **29 GREEN**(롯데 geo y0>0>y1, 윈도잉 분기5/연도4, 콘솔0).
+
+## 2026-06-16 (G1/G2) — IFRS17 +버튼 SOT 통일 + 점선 시리즈 legend 명시 (inbox 20260616T0506Z)
+
+owner 라이브 QA. master 무수정, 확정결정 4개 유지.
+
+- **G1 재보험 +버튼 → K-ICS `.subtoggle` 미러**: `.subtoggle`(+:hover)를 **common.css로 승격**(§5 공유 컴포넌트), K-ICS inline 제거. IFRS17 장기재보험 토글을 inline-styled `<span>＋`→**`<button class="subtoggle">`**(동일 마크업·`+`/`−`·`aria-expanded`·이름 뒤). 양 페이지 단일 SOT.
+- **G2 점선 시리즈 식별**: Panel 2 dataset 라벨을 코드주석→legend로. 실선="기말 CSM 잔액 (실선)", 점선="**신계약 CSM 시계열 (점선)**". legend·tooltip 동일, 스와치 색만으론 못 가리던 점 해소.
+- **검증**: Playwright 하니스에 G1/G2 assert 추가 → **24 GREEN**(fresh 브라우저). ※preview는 구 common.css 캐시로 +버튼이 처음 UA버튼처럼 보였으나 fresh 로드 정상.
+- **배포 주의**: common.css 갱신 시 재방문자 캐시로 신규 공유 규칙이 안 먹을 수 있음 → 배포 `common.css?v=<hash>`/캐시헤더 무효화 필요(publishing/owner).
+
+## 2026-06-16 (DS1b + DS2) — index 히어로 KPI/typeahead + Playwright 회귀 하니스
+
+owner "둘 다 진행" 지시로 DESIGN-V2 P2 슬라이스 + DS2를 함께 착수.
+
+- **DS1b — index 히어로 KPI 스트립 + 회사 typeahead** (DESIGN-V2 P2): `index.html` 상단에 KPI 4카드(**업계 총 기말 CSM 163조 · K-ICS 지급여력비율 중위값 193% · 수록 39社 · 기준 2026.1Q**) — 로드된 데이터에서 산출(`updateKpis`/`totalClosingCsmEok`=wfRowsRaw 항목6 최신 합, `_median`=GROUPED ratio). degrade-safe 진입 애니(`@keyframes riseIn` + reduced-motion 무력화). 회사 typeahead(input+datalist 39사 → IFRS17.html?company= 점프). 토큰 사용, 팔레트/△ 유지, 모바일 2열. 검증: KPI 채움·datalist 39·콘솔0.
+- **DS2 — Playwright 회귀 하니스**(`webapp-testing` skill): venv에 playwright+chromium 설치(번들 Chromium 이 머신 구동 OK = Edge/Chrome `--dump-dom` 0바이트 우회). `tests/regression_dashboards.py`(+README) — `with_server.py` 서버 자동관리(좀비0), 데스크탑 뷰포트로 윈도잉까지 assert. **22 assert GREEN**: index(KPI·typeahead·트리맵) / K-ICS(드롭다운≥40·**KB 2026.1Q=185.87**) / IFRS17(as-of·shock↑↓·△·연도[2023,2024,2025,2026.1Q]·분기 last5·미제공사·각 페이지 콘솔0). 캔버스 텍스트(도넛 100%+)는 visual-only 갭으로 문서화.
+
+## 2026-06-16 (DS1) — frontend-design skill 도입: 디자인 시스템 + common.css 추출 (inbox 20260616T0036Z) + KB 렌더 버그
+
+**frontend-design 스킬**로 designer 프롬프트 TBD(디자인 시스템/common.css/A11y/차트 규약)를 정식화. 무파괴(extraction, not redesign) — common.css 값 = 기존 렌더값 1:1. 정찰 Workflow(4 병렬 read-only)로 3파일 토큰 인벤토리 + KB 버그 위치 선행 파악.
+
+- **신규 [`common.css`](../../common.css)**: `:root` 토큰(surface/ink·brand·금융 status·type·spacing 4px·radius·misc) + 공통 chrome(body/header/.brand/.tabs/.tab/.container/.select/.panel h2·p/table base/.num·.small-muted·.muted) + A11y(`:focus-visible`·`prefers-reduced-motion`). 22 규칙.
+- **3 HTML 배선**: `<link href="common.css">`를 inline `<style>` **앞**에 추가 + 각 inline에서 중복 chrome/토큰 제거. 페이지 고유(.panel/.controls 여백·`*{box-sizing}`·차트/컴포넌트 클래스·@media)는 유지. index `.tab` cursor:pointer는 common으로 흡수.
+- **`*{box-sizing}` 미추출**: 3파일 모두 보유하나 hoist 시 레이아웃 시프트 위험 → 페이지 inline 유지(보수적).
+- **프롬프트 §5 정식화**: `docs/agents/claude-agent-designer.md` skeleton→정식(토큰표·extraction contract·A11y 갭·차트 규약 legend밀도/donut stack/모바일 scope·확정결정 4개 잠금). status 라인·assets/ 경로 참조 정정.
+- **KB 2026.1Q 렌더 버그 수정** (parser inbox 20260616T0050Z): 원인=분기축 아님, **항목명 라벨 변형 정확매칭**. `K-ICS.html` line 491이 긴 형 `'다. 지급여력비율 : 가 ÷ 나 × 100'`만 매칭 → 2026.1Q 짧은 형 `'지급여력비율'` 쓰는 ~15사 누락(undefined→null). 두 변형 OR 매칭으로 수정. 데이터 정상(파서 책임 아님).
+- **검증(무회귀, preview 라이브)**: 3페이지 reload — common.css 200·콘솔 0·computed style 일치(데스크탑 베이스=common, 모바일 @media override 동작)·index treemap 39행. 확정결정 4개 유지(삼성생명 senTable △/↑/정수). KB 분기차트 2026.1Q=185.87% 표시 확인.
+- **DS2(webapp-testing/Playwright)**: 미구현, 가부 회신 — flaky한 건 Edge headless(0바이트)지 preview 아님(이번 세션 정상). Playwright는 28건 회귀 자동화·서버 라이프사이클로 가치 有 → 스모크 spike 후 전용 세션 권장.
+- **배포 주의**: common.css는 신규 루트 에셋 → HTML과 함께 배포 필요(publishing handoff).
+
+## 2026-06-16 — owner 라이브 QA 3차 10건 (inbox 20260616T0007Z) — IFRS17.html
+
+전부 표시 레이어만(master·viz JSON 무수정). 검증: node --check + 헬퍼 단위테스트(fmtShock·asOfFromRcept·samo·selectPeriods) + preview 라이브(삼성생명·현대해상·아이엠라이프, 콘솔에러 0).
+
+- **D1 민감도 as-of**: `asOfFromRcept(rcept_no)` 추가(제출월→기준일: 1~4월=직전FY 12-31 등). senCap "기준: FY2024 사업보고서 (2024-12-31)". 긴 공시각주는 표 아래 muted 보존. 데이터 `period`/`as_of` null → parser inbox `20260616T0030Z`로 정식 채움 요청(`senAsOf()`가 as_of 채워지면 우선 사용).
+- **D2 fmtShock 보강**: 부호·방향어 없는 선두 "3.27%"(상향충격)→**3.27%↑**, ^▲→↑ ▼→↓. 삼성생명 케이스(bare %) 해결. 검증 "3.27%↑/↓"·"3.40%↑(실손보상 2.62%)".
+- **D3 억 정수 반올림**: senTable `fmtNum(,0)`(0||2=2자리 버그) → **`samo()`**(정수+△). △3,765 / 3,298.
+- **D4 현대해상 키컬러**: `#FFB81C`(노랑) → **`#F47920`**(주황). 스와치 rgb(244,121,32).
+- **D5/D6 분기 미제공사**: `wfHasQuarterly()`(4Q-only=데이터기반 11사: AIG·아이엠라이프·하나생명 등). 분기 모드 → Panel1 waterfall 생략+"분기 공시 미제공" 메시지(D5), Panel2 시계열은 연 fallback(D6).
+- **D7 축 윈도잉**: `selectPeriods()` — 시계열(hist)·NB배수(nb): 분기→직전 5분기, 연도→연말(4Q→연표기)+최신부분(2026.1Q). 검증 연도=[2023,2024,2025,2026.1Q], 분기=[2025.1Q..2026.1Q].
+- **D8 상각 5년캡**: bucket 'y5_plus(5년 초과)' 제거 + yearly maxY 10→5. amort=[1년이내,1–3년,3–5년].
+- **D9 모바일 1시점**: ≤640px → waterfall 최신 1버킷, 시계열 최신 1시점. 0폭 preview에서 hist 1시점 확인.
+- **D10 로딩 경감**: boot 9 JSON 직렬 await → **Promise.all 병렬** + "데이터 불러오는 중…" 힌트. (지연 원인=직렬 9 round-trip.)
 
 ## 2026-06-14 — owner 라이브 QA 글리치 4건 (inbox 20260614T0712Z)
 

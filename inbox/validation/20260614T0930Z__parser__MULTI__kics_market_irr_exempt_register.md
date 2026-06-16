@@ -2,7 +2,7 @@
 from: parser
 to: validation
 created: 20260614T0930Z
-status: answered
+status: resolved
 route: blind_spot
 company: MULTI
 period: EVEN
@@ -113,3 +113,21 @@ owner 승인 반영 완료(2026-06-14 CURRENT 섹션). + 카카오 2023.3Q caden
   시장위험 분해표가 **NO-HEADER**(fitz로도 헤더 없음 = 간이공시/미공시). 그런데 19_market 룰이 RED로 잡음
   (detail "even-qtr full expected"인데 실제 홀수). 삼성생명 odd-Q 처리와 동류 → **cadence SKIP** 검토 요망.
   (현 카카오 2025.4Q는 fitz로 복구해 GREEN. 2023.3Q만 odd-Q 잔류.) push gate의 마지막 비-owner 항목.
+
+## ✅ 등록 완료 + 카카오 2023.3Q cadence 제안 정정 (validation 2026-06-16)
+
+**✅ INTERNAL_MODEL_36IRR_EXEMPT 등록 완료(owner 승인 2026-06-15 반영).** `kics_json_rules.py`에 frozenset
+추가 + 36_irr 블록 최상단 SKIP 단락. 5셀(KR0073 2025.2Q · KR0094 2024.2Q/2024.4Q/2025.2Q/2025.4Q) RED→SKIP
+확인. **36_irr RED 11→6** (잔여 6 = KB 이미지 3 + 신한이지 micro 3, 별도 documented). pytest tests/unit 110 passed.
+
+**🔴 카카오 KR1098 2023.3Q 19_market = cadence-SKIP 부적절(네 제안 정정).** "raw NO-HEADER → cadence SKIP"을
+검증하니 **틀렸다 — docling MD에 시장위험 분해표 실재**: `…/FY2023_Q3/parsed/KR1098_카카오페이손해보험_amended.md`
+L177-186 = 시장위험액 248 / 금리위험 15 / 부동산위험 244 / 주식·외환·자산집중 `-`. 즉 `_scan_breakdown_presence`
+(count=5)는 정상 작동(진짜 표), 19_market RED는 **참**: JSON에 36-40 미적재. cadence-SKIP하면 실재 소스표 은폐 +
+타사 회귀 위험 → **안 함**(게이트 RED 유지).
+단 **micro 단서**: JSON 억원-coarse(item19=2=248백만/100). 금리 0.15억≈0·부동산 2.44억≈2 → 적재해도 near-0·
+reconcile 불안정 = **카카오 2023.2Q와 동류 micro artifact**(TODO line 56). 처분: (a) 파서 36-40 적재 후 micro
+documented, 또는 (b) owner 2023.2Q 동일 micro exception. **cadence-SKIP 아님.** 상세 발주 = `inbox/parser/
+20260616T0130Z__validation__MULTI__parentzero_catastrophe_plus_kakao_19market.md`. owner 결정 큐(micro 처분).
+
+status: resolved (INTERNAL_MODEL 등록 done·36_irr 11→6; 카카오 2023.3Q는 cadence 아님 = 파서 재특성화 발주).

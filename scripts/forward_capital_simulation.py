@@ -40,13 +40,15 @@ sys.stdout.reconfigure(encoding="utf-8")
 KICS_JSON = REPO / "kics_disclosure.json"
 BONDS_DIR = REPO / "data" / "bonds" / "normalized"
 OUT_DIR = REPO / "output" / "kics_forward_capital"
-TIER1_JSON = REPO / "output" / "tier1_utilization" / "tier1_utilization_20254Q.json"
-TIER2_JSON = REPO / "output" / "tier2_utilization" / "tier2_utilization_20254Q.json"
+TIER1_JSON = REPO / "output" / "tier1_utilization" / "tier1_utilization_20261Q.json"
+TIER2_JSON = REPO / "output" / "tier2_utilization" / "tier2_utilization_20261Q.json"
 
-BASELINE_QUARTER = "2025.4Q"
+BASELINE_QUARTER = "2026.1Q"
 SIM_YEARS = [2026, 2027, 2028, 2029, 2030]
 TRANSITION_END_YEAR = 2032
-BASELINE_YEAR = 2025  # baseline taken as 2025-12-31
+BASELINE_YEAR = 2026  # baseline taken as 2026-03-31 (2026.1Q). Anchors the 경과조치
+# phase-out ramp (post→pre over BASELINE_YEAR→2032) at the as-of date, so the ~1yr of
+# transitional run-off already baked into the 2026.1Q post values is not double-counted.
 # 신종자본증권(hybrid) 기본자본 인정한도 비율 = SCR × 15% (「보험업법」 조건부자본증권;
 # 규정 [별표22] Ⅲ.2.다.(1)). compute_tier1_utilization.py LIMIT_RATIO_PRIMARY와 동일.
 HYBRID_LIMIT_RATIO = 0.15
@@ -182,17 +184,23 @@ def _pct_gap(bond: float, kics: float) -> float | None:
     return None
 
 
-def _overall_bucket(t1_bucket: str, t2_bucket: str) -> str:
-    rank = {"high": 3, "medium": 2, "low": 1, "no_data": 0}
-    inv = {3: "high", 2: "medium", 1: "low", 0: "no_data"}
-    r1, r2 = rank.get(t1_bucket, 0), rank.get(t2_bucket, 0)
-    if r1 == 0 and r2 == 0:
-        return "no_data"
-    if r1 == 0:
-        return inv[r2]
-    if r2 == 0:
-        return inv[r1]
-    return inv[min(r1, r2)]
+def _overall_bucket(t1_bucket: str, t1_real_error: bool, t2_hard_error: bool) -> str:
+    """(a) T2-decoupled overall confidence (owner 2026-06-16).
+
+    Overall trust tracks the **T1 reconciliation** (FSC outstanding face ≈ BS issued —
+    the two sources nearly agree for 신종, so this is a valid comparison). The T2
+    Face-vs-BS gap is a **structural concept difference** (FSC outstanding vs BS K-ICS
+    grandfathered-issued 보완자본), NOT a data-quality signal, so it is advisory only and
+    never drags overall down. A **genuine** error still forces low: a T1 source mismatch
+    (``t1_real_error`` — fsc_missing_t1 / kics_missing_t1) or a real T2 error
+    (``t2_hard_error`` — one source missing, or T2 util>100%). This distinguishes real
+    data gaps from concept-gap noise (parser dx `inbox/publishing/20260616T0600Z`).
+    """
+    if t1_real_error or t2_hard_error:
+        return "low"
+    if t1_bucket == "no_data":
+        return "high"          # genuinely no T1 instruments to reconcile → nothing to distrust
+    return t1_bucket
 
 
 def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict,
@@ -219,8 +227,8 @@ def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict,
     d_t1 = _pct_gap(bond_t1_out, kics_t1)
     d_t2 = _pct_gap(bond_t2_out, kics_t2)
     t1_bucket = _gap_bucket(d_t1, T1_GAP_HIGH_PCT, T1_GAP_MED_PCT)
-    t2_bucket = _gap_bucket(d_t2, T2_GAP_HIGH_PCT, T2_GAP_MED_PCT)
-    overall = _overall_bucket(t1_bucket, t2_bucket)
+    t2_bucket = _gap_bucket(d_t2, T2_GAP_HIGH_PCT, T2_GAP_MED_PCT)  # advisory only (a, 2026-06-16)
+    # overall computed below after issue_flags — T2 concept-gap decoupled (see _overall_bucket)
 
     # No-bond insurer with effectively no BS capital → nothing to project against.
     # Forward sim is just SCR-interpolation on flat capital, fully deterministic.
@@ -266,7 +274,22 @@ def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict,
     if d_t1 is not None and abs(d_t1) > T1_GAP_MED_PCT:
         reasons.append(f"T1 face/BS gap {d_t1:+.0f}% ({kics_t1_field})")
     if d_t2 is not None and abs(d_t2) > T2_GAP_MED_PCT:
-        reasons.append(f"T2 face/BS gap {d_t2:+.0f}% ({kics_t2_field})")
+        reasons.append(f"T2 face/BS gap {d_t2:+.0f}% ({kics_t2_field}) — advisory, not in overall")
+
+    # (a) T2 decoupling (owner 2026-06-16): overall = T1 reconciliation. A genuine T2
+    # error (one source missing, or T2 util>100%) still forces low; the T2 face/BS
+    # concept gap (FSC outstanding vs BS grandfathered-issued) does not.
+    t2_util_over = (t2_row.get("quality_flag") == "util_over_100"
+                    or (_to_float(t2_row.get("utilization_pct")) or 0.0) > 100.0)
+    if t2_util_over:
+        issue_flags.append("t2_util_over_100")
+        reasons.append(f"T2 util {_to_float(t2_row.get('utilization_pct')) or 0:.0f}% > 100 (limit breach)")
+    t1_real_error = ("fsc_missing_t1" in issue_flags
+                     or "kics_missing_t1" in issue_flags)
+    t2_hard_error = ("fsc_missing_t2" in issue_flags
+                     or "kics_missing_t2" in issue_flags
+                     or t2_util_over)
+    overall = _overall_bucket(t1_bucket, t1_real_error, t2_hard_error)
 
     # Forward sim direction when bond schedule diverges from BS
     sim_bias = "neutral"
@@ -531,13 +554,21 @@ def main() -> int:
             "v2: negative interpolated capital ⇒ ratio_pct/basic_ratio_pct shown as 0% (capacity_exhausted) to avoid distorted charts.",
             "Projection still excludes 'called' bonds from deductions (bond calendar issue+5y); reconcile with 공시표 if needed.",
             "SCR baseline = item14 값_적용후; endpoint by 2032 = item14 값 (linear interp).",
+            "2026-06-16 rebaseline: BASELINE_QUARTER=2026.1Q, tier{1,2}_utilization_20261Q; BASELINE_YEAR=2026 anchors 경과조치 phase-out ramp at the as-of date (avoids double-counting ~1yr run-off already in 2026.1Q post values).",
+            "2026-06-16 (a) T2-decoupled confidence: overall = T1 reconciliation only (FSC face≈BS valid). T2 Face(FSC outstanding)-vs-BS(grandfathered issued) gap is a structural concept difference → advisory, NOT in overall. Genuine T2 errors (fsc_missing_t2 / kics_missing_t2 / t2_util_over_100) still force low.",
         ],
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
 
     templates_latest = REPO / "templates" / "forward_capital_latest.json"
     templates_latest.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
-    _sync_forward_data_into_kics_html(results)
+    # publishing/designer hard split: publishing produces the JSON only; the K-ICS.html
+    # window.FORWARD_DATA re-embed is designer's (HTML is off-limits to publishing). Run
+    # with --no-html in the publishing lane; designer re-embeds from templates copy.
+    if "--no-html" in sys.argv:
+        print("  K-ICS.html FORWARD_DATA sync SKIPPED (--no-html; designer owns HTML embed)")
+    else:
+        _sync_forward_data_into_kics_html(results)
 
     print("=== Forward simulation v3 summary ===")
     for k, v in manifest.items():
