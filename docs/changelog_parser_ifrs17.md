@@ -12,6 +12,28 @@ Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
 ---
 
+## 2026-06-16 — round3 IFRS17 QA (P1/P2/P3) + IFRS17 도메인 SKILL 결정화
+
+**round3 데이터 글리치** (inbox `20260616T0007Z__…ifrs17_pl_sensitivity_round3`) → **commit 5b9b0eb**:
+- **P1 흥국 해지율 방향** = staleness(부호버그 아님). heatmap 흥국이 FY2024(rcept 2025…)였음 → FY2025 재추출
+  (rcept 20260331004251) 반영. 해지율↑ csm/pl **둘 다 −**(FY2024는 csm−/pl+ 반대), 사망률↑ +27.95/+5.78 =
+  owner 기대 일치. `viz_build_ifrs17_panels.py` best-status dedup으로 **흥국 1社만 교체**, 27社+패널3종
+  byte-identical, pytest 110. (가비지사 농협/케이디비 미혼입 — phase-2 잔존.)
+- **P2 푸본현대 투자손익 −1,487.7억** = **REAL**. FY2025 별도 포괄손익계산서 line-by-line + 요약 교차검증,
+  24항목 전부 백만단위 일치, 당기순이익 −1,187억 = FY2025 연간순손실 실재. no-op.
+- **P3 하나생명 투자손익 None** = **parse_miss**(실제 0 아님). II.투자수익/III.투자비용 2-line 공시 →
+  build_pl_breakdown L275 단일 `L("투자손익")` 미스. 정확값 item18=317,891.06·item17=**+821.41백만**
+  (영업이익=item1+item17 gap0; owner flag 예측 +15,037은 기타사업비용 이중차감 오폐합). `_GOLD_CELL_OVERRIDE
+  [(KR0097,2025.4Q)]` 추가(메트라이프 audit-only 패턴). ⚠️ 라이브 master 반영 = raw-enabled rebuild 필요
+  (이 브랜치 파괴적, [[project-git-purge]]). → TODO out_of_scope "하나 item17=FS-API" 항목 **해소**(파서측 정정).
+
+**IFRS17 도메인 SKILL 결정화** (inbox `20260616T0043Z__…skill_creator_domain_skills`):
+- Anthropic `skill-creator`로 `.claude/skills/ifrs17-parser/` 작성 — `SKILL.md`(트리거 description + 운영 코어) +
+  `references/pipeline-map.md`(배선·파일맵·스키마·run/verify) + `references/quirks-and-traps.md`(단위/부호/사별
+  quirk/destructive-rebuild/항등식). **SOT = `docs/domains/claude-agent-ifrs17.md` 유지**, SKILL은 그 위
+  운영 트리거 레이어(요약+참조, 복붙 없음); SOT의 2026-05 PoC-status가 코드와 충돌 시 코드+SKILL 우선 명시.
+  `.claude/` gitignore → 머신-로컬(미push). **K-ICS SKILL은 K-ICS 세션 별도**(2-lane split).
+
 ## 2026-06-14 — CSM sensitivity panel: column-map / unit / 손보-recovery (inbox 20260614T0712Z)
 
 Owner live-site QA on the CSM sensitivity pipeline — fixed 3 glitches in

@@ -13,6 +13,17 @@ IFRS17 lane is **mature**: CSM waterfall + PL breakdown masters all built (root 
 
 > **Disposition pass 2026-06-14** (committed-master read-only, 5-agent; inbox `20260612T0900Z` 답변): V9/V7/PL-T2 잔여 14건 판정 → **legit 10 종결** (코리안리 상각 "1y lag" = 부호규약 artifact·워터폴 close / history off-by-one = year-shift 없음 / 메트라이프 영업이익 등식 OK / 한화손해 NB non-stale / 동양 재보 = net-only legit-absent, phantom item9/10 백필 금지 / 케이디비·롯데·교보플래닛 정상 또는 legit-absent), **real_gap 2 (raw-blocked)**: 현대해상 예실차(item6/11) pre-2025.3Q 결측 + 악사 interim 분기 부재 — fix는 purge된 분기 raw 필요, **designer handoff 1**: csm_delta=null→0 렌더(동양/NH, `inbox/designer/20260614T1300Z`), **out_of_scope 1**: 하나생명 item17 투자손익=FS-API 레인. fixable-now bug 0.
 
+> **round3 IFRS17 QA 2026-06-16** (inbox `20260616T0007Z__…ifrs17_pl_sensitivity_round3` → commit 5b9b0eb):
+> **P1 흥국 해지율** = staleness fix(heatmap FY2024→FY2025 흥국 1社 교체, 부호버그 아님). **P2 푸본현대 투자손익
+> −1,487.7억 = REAL**(별도 소스 24항목 대사, 연간순손실 실재). **P3 하나생명 item17 = parse_miss**(2-line
+> II.투자수익/III.투자비용 공시 → 단일 룩업 미스; 정확값 item18=317,891.06·item17=+821.41백만; `_GOLD_CELL_OVERRIDE
+> [(KR0097,2025.4Q)]` 추가) — ↑ disposition-pass의 "하나 item17=FS-API out_of_scope" **해소(파서측 정정)**. 단 라이브
+> master 반영=raw-enabled rebuild 필요(이 브랜치 파괴적). · **IFRS17 도메인 SKILL** `.claude/skills/ifrs17-parser/`
+> 결정화(skill-creator, machine-local; inbox `20260616T0043Z`).
+>
+> **phase-2 잔존** (FY2025 sensitivity 전사 refresh): band/generic 경로 product/sub-row 일반화(농협/케이디비
+> 가비지) + 동양/메트라이프/에이비엘/처브 SA=0 분류 — 다세션. 현 heatmap은 흥국만 FY2025, 나머지 FY2024 유지.
+
 ---
 
 ## 🔴 Open — P1
