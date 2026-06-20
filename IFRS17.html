@@ -916,7 +916,7 @@
   }
 
   function renderKpi7(host, company, latestQ) {
-    const cu=(id,val,fmt)=>{ const el=q(host,'#'+id); if(!el) return; val!=null ? countUp(el,val,fmt) : (el.textContent='—'); };
+    const cu=(id,val,fmt)=>{ const el=document.getElementById(id); if(!el) return; val!=null ? countUp(el,val,fmt) : (el.textContent='—'); };
     const closing = wfVal(company, latestQ, 6, 'y');
     const amort   = wfVal(company, latestQ, 5, 'y');
     const nbCSM   = wfVal(company, latestQ, 2, 'y');
