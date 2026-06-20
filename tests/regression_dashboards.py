@@ -111,6 +111,11 @@ def test_ifrs17(page, base):
     check("ifrs: 음수 △(세모)", any("△" in c for c in flat), str(sen["rows"][:2]))
     # axis windowing (desktop viewport): year = [2023,2024,2025,2026.1Q]
     page.select_option("#company", "KR0069")  # 삼성생명
+    page.wait_for_timeout(500)
+    # KPI7 strip: 숫자 채워짐 + "X조 X,XXX억원" 템플릿 (작대기 회귀 방지 — mountDash(company) 스코프 버그)
+    kpi = page.evaluate("() => ['kpi7Closing','kpi7Amort','kpi7NbCsm'].map(id=>(document.getElementById(id)||{}).textContent||'')")
+    check("ifrs: KPI 숫자 채워짐(작대기 아님)", all(k and k != "—" for k in kpi), str(kpi))
+    check("ifrs: KPI 억원 템플릿(0.xx조 금지)", all(k.endswith("억원") for k in kpi) and not any("." in k and "조" in k for k in kpi), str(kpi))
     page.select_option("#wfPeriod", "year")
     page.wait_for_timeout(500)
     yl = page.evaluate("() => { const c=document.getElementById('canvasHist'); const ch=c&&Chart.getChart(c); return ch?ch.data.labels:null; }")

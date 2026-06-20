@@ -68,6 +68,11 @@ def main():
         pg3.wait_for_timeout(200)
         after = pg3.evaluate("() => document.querySelectorAll('#map-list .li-row').length")
         chk("idx모바일: 높이-only resize 후 펼침 유지", after == before and after > 10, f"before={before} after={after}")
+        # '접기' 버튼(reroll) → 다시 5개로 접힘
+        pg3.evaluate("() => { const b=[...document.querySelectorAll('#map-list .li-more-btn')].find(x=>x.textContent.trim()==='접기'); if(b) b.click(); }")
+        pg3.wait_for_timeout(150)
+        fold = pg3.evaluate("() => { const k=[...document.getElementById('map-list').children]; let c=0; for(const x of k){ if(x.classList.contains('li-row')) c++; if(x.classList.contains('li-more-btn')) break;} return c; }")
+        chk("idx모바일: '접기' 클릭 → 5개로 접힘", fold <= 5, f"firstblock={fold}")
         # 폭 변화(회전)는 정상적으로 접힘 리셋
         pg3.set_viewport_size({"width": 380, "height": 720})
         pg3.wait_for_timeout(200)
