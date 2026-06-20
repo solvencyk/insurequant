@@ -1,11 +1,19 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-06-16 · Stage 5/5 — designer
+> Last updated: 2026-06-20 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-06-20
+
+- **도넛 섹션 잠정 숨김** (inbox 20260620T0238Z): K-ICS.html `#donut-section-panel`(`<div class="panel">` L156)에 `style="display:none"` 추가 — 자본성증권 소진율 도넛 2개(tier1·tier2) 분자 오류로 잠정 비표시. 마크업/JS/데이터 보존, 복구는 `style` 제거만으로 가능. inbox resolved.
+- **차트 공통 테마** (DESIGN-V2 P2): Chart.js `Chart.defaults` 전역 설정 — Pretendard 폰트·그리드 `#e9ecef`·틱 `#6c757d`·tooltip dark(rgba 33,37,41,0.9). IFRS17.html ECharts에 'iq' 테마 등록(`echarts.registerTheme`) + `echarts.init(el,'iq',...)` 적용. K-ICS.html Chart.js 동일 defaults 적용.
+- **MOB-KICS 카드뷰** (MOB-KICS): K-ICS.html 피벗 테이블 → 모바일(≤640px)에서 분기별 카드 렌더. `renderMobileCards(data,quarters,displayOrder)` 신설 — 분기=카드헤더, 항목=행(`kics-mob-row`), 서브아이템 들여쓰기(`sub`). `renderPivotTable`에서 `window.innerWidth<640` 분기 후 early-return. 기존 데스크톱 테이블·subtoggle 로직 무변경.
+- **KPI 카운트업 애니** (DESIGN-V2 P2 완결): `countUp(el,target,fmt,dur)` — ease-out cubic, 600ms, `prefers-reduced-motion` 즉시세팅. index.html 히어로 KPI 3개(총CSM·지급여력비율·수록사), IFRS17.html Panel 7 KPI 4개(기말CSM·상각·신계약CSM·NB배수) 적용. text-only KPI(기준분기)는 미적용.
+- **검증**: Playwright 29/29 GREEN.
 
 ## 2026-06-16 (W1) — 워터폴/PL 기간 윈도잉 통일 + 롯데 PL 부호버그 + inbox 정리 (owner 직접)
 

@@ -7,6 +7,36 @@ Validation-only history. Cross-stage changes also keep a 1-line cross-reference 
 
 ---
 
+## 2026-06-20 (b) — owner xlsx/JSON 직접수정 후 게이트 3종 전수 재검증 (push-gate 무결성, 재적재 0)
+
+owner가 `sync_owner_fills_to_json.py`(135셀)+`insert_kakao_missing_quarters.py`(89행)+MOLE 손정정(교보 원수예실차·BNP 단위·코리안리 중복)으로 **root JSON 직접수정**. validation은 owner 지시("덮어쓰지 마라")대로 **재적재 금지, read-only 검증만**(`validate_master_tables.py --no-build`로 owner값 보존 — 빌드 선행 시 diag 미반영분 소실 위험).
+
+- **data-contract 게이트(`prepush_check.py` = push #0): RED=4, 전부 tier2(CHECK 4 domain identity).** 동양·KB·미래에셋 2026.1Q `T2_UTIL_OVER_100_NO_EXEMPTION`(proxy-gross artifact) + 신한이지 `T2_DENOM_NOT_SCR_HALF`(1/100 스케일). 하나손·악사=YELLOW(면제표 파싱 legit "100%+"). **전부 owner `TODO.md`(2026-06-20) + inbox 라우팅 완료**(UTIL×3=downloader OCR 0617Z, DENOM×1=parser ifrs17 0238Z). push는 4건 해소 후 = 현 BLOCKED 정상. **validation 신규발주 0.**
+- **owner CHECK 4 리뷰(재구현 0)**: 면제표 파싱사=YELLOW / proxy 미파싱=RED / RBC 분모=RED 분기 전부 의도대로. 회귀 "KB류 미추출>100%=RED" 하드강제 충족. tier_limit inbox(1529Z) resolved.
+- **K-ICS 게이트: RED=1**(KR0079 미래에셋 8_life 2023.2Q, scan-only SKIP 비차단) + census missing 4(동양/하나생명/카카오 이미지 PDF) — 전부 `TODO.md` documented.
+- **IFRS17 master 게이트: closing 321P/0F · crosscheck 0F** 유지 = **owner PL 121셀+CSM 10셀 수정이 정합성 무손상**. plausibility **cont 12→6 감소**(owner 손정정이 오히려 개선). 잔여 sens 1R(라이나 천원 미정규화=기존 0712Z/V12 audit-only 밴드레이아웃 추적), pl_bridge 14F(2023 known + 한화생명 이상치, 비차단), zero_legs 1(동양 2025.3Q known).
+- **owner 룰7/8 dynamic tolerance 독립검증 PASS**: `max(eff_tol, |exp|×0.5/d14 + 50/d14)` dynamic항이 분모 d14(item14)에 반비례 → 정상분모 tol=2.0 불변, 카카오 20억만 tol≈124%p. 진짜오류 마스킹 0(게이트 실측 K-ICS RED=1만=타사 미마스킹 확인) → owner 감사주장("카카오 2023.4Q 2건만") 정합.
+
+- **cont 6건 처분(owner 결정 2026-06-20, "마저" 후속) = 둘 다 데이터 정정(면제 아님)**: 교보생명 2024 = legit 소급정정 → **후속 공시 '전기' rollforward로 과거 cell 정정**(owner 제안). 처음엔 `CONT_RESTATEMENT_CONFIRMED` 면제 등록했다가 owner가 "면제 말고 전기표에서 재작성값 가져와 정정" 제안 → **면제 코드 원복, parser 0600Z 정정 발주로 전환**(시계열 통일이 면제보다 정확). 삼성생명 2024 = misparse(owner: 2023.4Q 기말 122474 정답) → parser 0545Z. **raw XML은 purge지만 extracted(`data/dart/extracted/<회사>_<rcept>_measurement.json`)는 살아있어 실행가능** — raw 없을 때 후속 공시 비교열 추출이 우회로. 정정 후 cont 6→0. 라이나 sens RED → V12 0435Z phase2 추적 핀. pl_bridge 14F = 전부 known(2023 비노출 12 + 소액잔차 2).
+
+**종합: push 차단 = ① data-contract tier2 4건(parser 0238Z/downloader OCR) + ② IFRS17 삼성 cont(parser 0545Z 정정 대기). 둘 다 데이터작업 = validation 소관 밖.** 그 외 신규 글리치 0, 잔여 전부 owner 인지/라우팅/documented.
+
+---
+
+## 2026-06-20 — 룰7/8(지급여력·기본자본비율) 초소형 분모 동적 tolerance (orchestrator FYI)
+
+owner가 카카오페이손해(KR1098) 2023.4Q·2024.4Q 통째결손을 xlsx로 채워 JSON 직접삽입(89행) → 2023.4Q에서 **KICS_7·8 RED**. 원인=기본요구자본(item14) **20억** 초소형 분모의 정수반올림: 재계산 974/20×100=4870 vs 공시 item27/28=4777.18(정확). 분모 ±0.5 반올림이 비율 ~120%p 흔듦. **`kics_json_rules.py` 룰7·8에 동적 tolerance** `max(eff_tol, exp×0.5/|item14| + 50/|item14|)` 추가(기존 **8_life 선례 동형**, line 429~432). 감사: OLD-fail→NEW-pass 셀=**카카오 2023.4Q 2건뿐, 타사 0건**(단조 widening, 진짜오류 마스킹 없음 검증). 게이트 RED 13→11. parser 0811Z 후속2 참조.
+
+---
+
+## 2026-06-17 — data-contract 게이트 마무리(서브에이전트 한도중단 복구) + consolidate 자동아카이브 + inbox 드레인
+
+- **data-contract 게이트 완성**: 면제 메커니즘 제거(zero-RED 정책) + Phase 2 사이드카 reader 추가를 시킨 서브에이전트가 **세션 한도로 중단**(reader+helper는 작성, `Env._load_provenance_sidecars` 로더만 누락 → AttributeError 크래시 0/7). 메인이 누락 로더 추가로 복구: `--selftest` **7/7**, 라이브 **exit2 RED=52**(sensitivity 22 STALE_AS_OF 유지). reader=사이드카 있으면 strict/없으면 Phase-1 fallback.
+- **`consolidate_inbox.py` 자동 아카이브**(owner): `_archive_resolved()` 매 실행 시 stage 폴더 `status: resolved`→`inbox/_resolved/`(answered 제외, idempotent, 동명 중복제거) + `_data_contract_findings` 핸들러 pre-wired. 일회 sweep 포함 resolved 19건+ 정리.
+- **validation inbox 0 open 드레인**.
+
+---
+
 ## 2026-06-16 — 부모-자식 정합 룰 신설(SGI 게이트 사각) + INTERNAL_MODEL_36IRR 등록 + 카카오 cadence 정정
 
 owner 라이브 QA 3차 inbox 드레인(`…SGI…catastrophe_misparse_blindspot`, `…kics_market_irr_exempt_register`).

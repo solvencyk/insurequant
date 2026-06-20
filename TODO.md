@@ -33,6 +33,19 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ---
 
+## 🟠 data-contract gate (`validate_data_contract.py`) pending exceptions — 2026-06-20 (owner)
+
+게이트 `python scripts/validate_data_contract.py` 라이브: **RED=4, 전부 tier2(보완자본 소진율) 동일 근본원인.** census 0(7분기 scope 적용)·as_of 0·cross_source 0·anomaly 0-RED. selftest 7/7.
+
+**남은 4 RED = 단일 이슈("tier2 소진율 분자 정의 오류")가 4셀에 발현 — fix 불가, 발주됨:**
+- `T2_UTIL_OVER_100_NO_EXEMPTION` × 3: 동양생명·KB손해·미래에셋생명 2026.1Q. proxy 경로가 item3(보완자본 총액)을 분자로 써서 **한도-제외 항목(다.(3) 해약환급금준비금 초과분/조정준비금)까지 포함** → >100% artifact (해설서 p102 마. 확인). 손fix 불가(한도-적용-전 보완자본이 표준 지급여력표에 없음).
+- `T2_DENOM_NOT_SCR_HALF` × 1: 신한이지손해 2026.1Q. 분모 2.68억 = 정답 268억(SCR 536×50%)의 1/100 스케일 오파싱.
+- **조치**: 분자를 DART "증권의 발행을 통한 자금조달"의 후순위채 발행 잔액으로 교체 → `inbox/parser/20260620T0238Z` (ifrs17 lane). 도넛 잠정 숨김 → `inbox/designer/20260620T0238Z`. ifrs17 데이터+wiring 완료 시 4건 일괄 해소 + CHECK4 전제 재검토. **push는 이 4건 해소 후.**
+- 근거: 메모리 `reference_tier2_utilization_provenance`. 신규 글리치 아님 — 알려진 metric 결함의 정식 라우팅.
+- 참고(eyeball 2026-06-20): tier2 외 신규 오류 없음. 저우선 확인거리 — 악사손해 2024.4Q 법인세 −1101(흑자인데 환입, 산수정합) 부호 소스확인 / forward_capital 2025.4Q 1분기 stale.
+
+---
+
 ## 🔴 K-ICS gate documented exceptions — CURRENT (2026-06-14, parser)
 
 > Supersedes the 2026-06-12 snapshot below. Since then: RED 227→**19** (대량 fitz 회수 + 코어/rule5

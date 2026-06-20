@@ -10,6 +10,13 @@ Code: `src/ifrs17/` (csm / measurement / insurance_pl / reinsurance / bs_snapsho
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
+## 2026-06-20 — owner-fill durability · capital securities · CSM continuity (교보/삼성) · provenance
+- **Owner xlsx fill durability (0811Z):** owner가 root에 sync한 fill을 빌드 소실서 보호. PL은 override 레이어가 없어 신규 **`data/dart/viz/pl_manual_overrides.json`** + `build_root_masters._apply_pl_overrides`(_zero_other_expense 後) 도입(121셀). CSM 10셀(AIG손해 2025.4Q 6·하나손해 이자부리/조정 4)→`csm_manual_overrides.json`. 재빌드=owner root 값 정확 재현(값 변경 0 검증). 현대해상 26셀 estimate 플래그.
+- **자본증권 발행잔액→한도소진율 (0238Z, owner):** 24사 DART 사업보고서 자금조달/사채/신종 주석 per-bond 추출(발행일·법만기·**콜(=실효만기 5y)**·금액·잔액) → `data/bonds/capital_securities_fy2025.json` + 정식 `data/dart/capital_securities_issuance.json`(신종→Tier1·후순위→Tier2·provenance). `wire_capital_securities_to_utilization.py`로 tier1/tier2_utilization 분자 라이브 교체(**경과조치 pre-2023 별도제외**=owner 결정) + 신한이지 분모 SCR×50% 교정 → **data-contract gate RED 4→0**(동양240%/KB218%/미래126% proxy + denom). forward outlook=콜 roll-off(`capital_securities_forward_outlook.json`), 흥국식 콜경과 예외 플래그. census: 보유25/무발행11(삼성화재·삼성생명·외국계). NB: as_of 2025.4Q(2026.1Q raw 5사만→콜 reconcile), 푸본 후순위 발행일 estimate.
+- **CSM continuity 정정 (0600Z 교보 / 0545Z 삼성):** 교보 2023.4Q 기말+2024.1Q/2Q 기초→58,249.2(재작성 통일, FY2024 rollforward 확인), 삼성 2023.4Q 기말 123,926→122,474(owner gold). item4(가정조정) 흡수로 identity 유지. csm_manual_overrides. **validate_master_tables cont 6→0**, 8셀만 변경·무클로버.
+- **Provenance 사이드카 (1242Z-B/1252Z):** `emit_ifrs17_provenance.py` → `CSM_waterfall_provenance.json`(321)·`PL_breakdown_provenance.json`(632), source_id=DART+item_block, owner_override/estimate 플래그.
+- **진단(미해소, open):** nb_csm 0420Z=8/30 회수·22 interim §14 추출기갭. sensitivity 3 partial(미래에셋 OCR·신한라이프 prose·한화손해 시장위험형)=자동복구불가. 한화 CSM 상각스케줄 1029Z=form_type unknown 추출갭. 삼성화재 자동차손익 2026.1Q=-40=owner 확인 정답(pass).
+
 ---
 
 ## 2026-06-16 — CSM 워터폴 continuity 전사 RED 8→0 (2026.1Q 기시 misparse + within-FY drift)

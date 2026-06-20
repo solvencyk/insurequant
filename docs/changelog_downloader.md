@@ -9,6 +9,50 @@
 
 Cross-stage entries that touch downloader as one phase but are primarily parser/gathering/viz (e.g. F11 foreign-affiliate viz integration, IR factsheet 전사 수집 + 손보 NB CSM 배수 파싱, F17 LOB parsing) remain in `docs/claude-changelog.md`. The compressed historical archive (pre-2026-05-25) also remains there.
 
+## 2026-06-17 -- 전체 보험사 2026.1Q DART 분기보고서 + 교보 3개 분기 전기 추출용 raw
+
+**전사 2026.1Q DART fetch** (`ifrs17_batch_historical --all --periods 2026.1Q`):
+- 36사 전수 처리: ok 13사 / no_filing 13사(외국계·소형, 구조적) / no_csm_table_found 10사
+- 모든 파일 `data/dart/FY2026_Q1/raw/<KR>_<회사명>/document.zip` + `xml/` 저장
+- no_csm_table_found: 롯데·미래에셋·삼성생명·삼성화재·에이비엘·코리안리·한화생명·한화손해·현대해상·흥국화재
+
+**교보생명(KR0073) 전기 추출용 3개 분기 raw** (`--pilot KR0073 --periods 2024.4Q,2025.1Q,2025.2Q`):
+- 목적: 2023.4Q(←2024.4Q 전기), 2024.1Q(←2025.1Q 전기), 2024.2Q(←2025.2Q 전기) 복구
+- 2024.4Q XML 구조 확인: 주석 17-4 등이 "1) 당기" / "2) 전기" 페어 테이블 구조, 전기 333회 출현
+- 현재 `csm_extractor.py` period_type 필드 없음 → parser(ifrs17) 발주 `inbox/parser/20260617T1130Z`
+- 주의: 2024.4Q에 소급재작성(retrospective restatement) 언급 있음 → 전기 테이블 해석 시 기록 필요
+
+## 2026-06-17 -- 흥국화재 신종자본증권1 콜 미행사 fix + normalize 재실행
+
+`normalize_bond_schedule.py` bug: "5y call assumed exercised" 규칙이 콜 미행사 채권을 잘못 분류.
+- **흥국화재 신종자본증권1** (KR60005416C3, 920억, 2016-12-29 발행, call 2021-12-29) — FSC API에 정상 존재, normalize가 `effective_call_date(2021-12-29) <= today` 조건으로 `status=called` 오분류
+- 2026.1Q FS appendix(parser `2026q1_per_bond.json`) 에서 920억 잔존 확인 → 실제 콜 미행사
+- Fix: `scripts/normalize_bond_schedule.py` 에 `_CALL_NOT_EXERCISED = {"KR60005416C3"}` override 추가 (line 59-64)
+- 재실행: `20260616T153258Z` stamp 생성 → KR0005 tier1_hybrid 3,200억 → **4,120억** (FS appendix 일치)
+- `emit_bonds_provenance.py` 재실행 → `20260616T153258Z/bonds_provenance.json` 갱신
+- `forward_capital_simulation.py` `_latest_bonds_dir()` auto-pick → 재실행 시 자동 반영
+
+## 2026-06-16 -- 자본성증권 in-force per-bond DART fetch + provenance 사이드카 emission
+
+publishing `inbox/downloader/20260616T1200Z`(in-force 자본성증권 FSC vs BS 괴리 해결) 처리.
+
+**FSC API 조사 결과**: 6개 누락사(삼성생명·악사손해·KDB생명·하나손해·AIA·삼성화재) → FSC `GetBondTradInfoService_V2` 전수 0건. 사모발행(프라이빗플레이스먼트) 또는 외국계 모회사 자본 구조 → 공개 등록 없음.
+**DART 주요사항보고서** B-type 조사: "자본으로인정되는채무증권발행결정" 공시 = KDB생명 3건·농협생명 4건·교보생명 2건(단 교보 전건 미발행 확인).
+**현대해상 재진단**: FSC 4건(26,000억) 모두 2024~2025 신규발행 stale 아님 → FSC 정확, parser `subordinated_eok` 오파싱이 원인.
+
+- **KDB생명 (KR0072)**: 신종자본증권 2건 — 2,160억(2023.05.19 issue, call 2028.05.19) + 250억(2024.12.26 issue, call 2029.12.26) = 2,410억. BS 신종 2,403억과 일치.
+- **농협생명 (KR0104)**: 신종자본증권 2건 — 2,500억(2022.09.28, call 2027.09.28) + 2,500억(2022.12.26, call 2027.12.26) = 5,000억. FSC Face 5,000억과 일치.
+- **교보생명 (KR0073)**: DART 2023 미발행(시장 불확실성). 별도 데이터 없음.
+- **산출물**: `data/bonds/disclosure/2026q1_capital_securities.json` + `disclosure_bonds_provenance.json`
+- **스크립트**: `scripts/fetch_capital_securities_dart.py`
+- **publishing 핸드오프**: `inbox/publishing/20260616T1300Z` (FSC/DART per-bond 데이터 ready + 현대해상/농협생명 후순위 오파싱 parser 발주 권고)
+
+**Phase 2 provenance 사이드카 emission** (owner `0616T1242Z` + validation `0616T1250Z`):
+- `data/bonds/normalized/20260616T060817Z/bonds_provenance.json` (24개사, source_id=FSC_BONDS, as_of=2026-03-31, effective_filtered=true)
+- `data/bonds/disclosure/disclosure_bonds_provenance.json` (2개사 DART supplement)
+- 스크립트: `scripts/emit_bonds_provenance.py`
+- 잔여: DART raw provenance(23사×13분기 source_file+as_of) = 다음 세션
+
 ## 2026-06-16 -- CSM 워터폴 연속성(전기 기말≠당기 기시) 복구용 DART raw 재취득 (33셀)
 
 validation `inbox/downloader/20260616T0600Z`(owner: 2026.1Q 기시 CSM 전사 misparse, 정답=직전 2025.4Q 기말)

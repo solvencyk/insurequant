@@ -1,35 +1,48 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-06-16 · Stage 5/5 — designer
+> Last updated: 2026-06-20 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (skeleton) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
 
-Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; current focus is the **de-AI design overhaul (DESIGN-V2)** awaiting owner sign-off and the **company key-color accent system (KEYCOLOR-V1)** — IFRS17 applied 2026-06-13, K-ICS still to do. Mobile scope was just confirmed by owner (full-panel + alternative render); the full mobile pass is now Open (was deferred) with two open render recommendations.
+Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-06-20):**
+- **도넛 섹션 잠정 숨김**: K-ICS.html 자본성증권 소진율 패널 `display:none` — 분자 오류(tier1 excess누락·tier2 proxy과대). 마크업/JS 보존. 복구: ifrs17 capital_securities_issuance JSON 완성 후 owner 신호.
+- **차트 공통 테마**: Chart.js defaults (Pretendard 폰트, 그리드 #e9ecef, tooltip dark) IFRS17+K-ICS 양 페이지 적용. ECharts 'iq' 테마 IFRS17 waterfall/PL 적용.
+- **MOB-KICS 카드뷰**: ≤640px 피벗 테이블 → 분기별 카드(`renderMobileCards`). 서브아이템 들여쓰기. 데스크톱 무변경.
+- **KPI 카운트업 애니**: `countUp(el,target,fmt,dur)` ease-out cubic 600ms. index.html 히어로 3개 + IFRS17 Panel 7 KPI 4개. `prefers-reduced-motion` 즉시세팅. **DESIGN-V2 P2 완결.**
+
+**Recent (2026-06-17):**
+- **FORWARD_DATA 재임베드**: K-ICS.html L205 `window.FORWARD_DATA` → `templates/forward_capital_latest.json` (37→38사, 2026.1Q 재베이스라인). L1104 Baseline 라벨 2025.4Q→2026.1Q. publishing 트리거 신호 발송.
+- **모바일 timeframe 수정 (D9 override)**: `selectPeriods` `isMobile→slice(-1)` 제거 + waterfall 테이블 `_mob` 1버킷 제한 제거. 모바일도 연도/분기 동일 windowing. Playwright 29 GREEN.
+- **상각스케줄 Y축 auto-scale**: `toLocaleString` → 데이터 최댓값 기준 조/억/백만 자동 선택 + 타이틀 단위 동기화.
+- **예별손해보험 드롭다운 4번째 삽입**: K-ICS.html 하드코딩 옵션에 롯데손해보험 바로 다음 추가.
+- **VIS-DONUT 완료 확인**: `.donut-cell{flex:1 1 280px}` + `flex-wrap:wrap` → 375px 화면에서 자동 1열 스택(명시적 flex-direction:column 불필요). 이미 구현돼있었음.
+- **KEYCOLOR-V1 K-ICS 취소**: owner 지시. IFRS17 구현도 불만족(구리다) — K-ICS 미적용.
 
 **Recent (2026-06-16):**
 - **DS1 (frontend-design skill)**: 디자인 시스템 정식화 — 신규 루트 `common.css`(토큰 + 공통 chrome + A11y baseline), 3 HTML 점진 배선(무회귀, 확정결정 4개 유지), 프롬프트 §5 skeleton→정식. **common.css는 신규 배포 에셋**(publishing handoff 필요).
 - **DS1b (DESIGN-V2 P2 슬라이스)**: index 히어로 KPI 스트립(총 CSM·중위값·수록사·기준분기) + 회사 typeahead 점프. 진입 애니(degrade-safe). 토큰/팔레트/△ 유지.
-- **DS2 (webapp-testing/Playwright)**: 회귀 하니스 `tests/regression_dashboards.py`(+README) — **24 assert GREEN**. venv playwright+chromium 설치(번들 Chromium 구동 = Edge dump 0바이트 우회). owner QA 글리치 자동화. 향후 분기·회귀 검증은 이 하니스로.
-- **G1/G2 (inbox 0506Z)**: IFRS17 재보험 +버튼을 K-ICS `.subtoggle` 양식으로 통일(.subtoggle→common.css 승격) · Panel2 점선 시리즈 legend "신계약 CSM 시계열 (점선)" 명시. ⚠️ **배포 cache-bust 필요**(common.css 갱신 시 재방문자 캐시).
-- **W1 (owner 직접)**: ① answered designer inbox 9건 → `_resolved` 이관(open 0). ② CSM waterfall(P1)+PL table(P4) 기간 윈도잉 통일 = 분기 직전5분기/연도 [2023,2024,2025,2026.1Q] (시계열과 동일 `selectPeriods` 규약). ③ 롯데 PL waterfall 투자손익 zero-crossing 부호버그 → ECharts custom renderItem. Playwright 29 GREEN.
-- **KB 2026.1Q 렌더 버그** 수정(parser inbox 0050Z): 항목명 라벨변형(짧은 형) 정확매칭 → OR 매칭. 데이터 정상.
-- owner 라이브 QA 3차 10건(D1~D10, IFRS17.html) 전부 처리·검증 완료 — 민감도 as-of/shock↑↓/억 정수, 현대해상 주황(#F47920), 분기 미제공사, 시계열 윈도잉, 상각 5년캡, 모바일 1시점, boot 병렬화.
-- **상류 의존**: sensitivity_heatmap의 `period`/`as_of` null → parser inbox `20260616T0030Z`(채우면 designer 파생이 자동 fallback).
+- **DS2 (webapp-testing/Playwright)**: 회귀 하니스 `tests/regression_dashboards.py`(+README) — **29 assert GREEN**. venv playwright+chromium 설치(번들 Chromium 구동 = Edge dump 0바이트 우회). owner QA 글리치 자동화.
+- **G1/G2 (inbox 0506Z)**: IFRS17 재보험 +버튼 → K-ICS `.subtoggle` 양식 통일(.subtoggle→common.css 승격) · Panel2 점선 시리즈 legend "신계약 CSM 시계열 (점선)" 명시.
+- **W1**: CSM waterfall(P1)+PL table(P4) 기간 윈도잉 통일 / 롯데 PL waterfall 투자손익 zero-crossing → ECharts custom renderItem.
+- **상류 의존**: sensitivity_heatmap의 `period`/`as_of` null → parser inbox `20260616T0030Z`.
 
 ## 🔴 Open — P1
 
-### KEYCOLOR-V1 — 회사 키컬러 액센트 시스템 (사용자 결정 2026-06-12)
-Decision: 베이스는 현행 화이트 유지 + 회사 선택 시 키컬러를 **차트 주색 + 탭/active 버튼에만** (배경 틴트·헤더라인·패널보더는 안 함 — 절제 적용). "남색 일괄 교체" P1 안은 폐기(AI톤 피드백). hex owner 확정 2026-06-12. IFRS17 적용 완료 2026-06-13.
-- [ ] **K-ICS 적용 남음**: 메인 추이 라인 + 민감도 실선(적용후) + company select active. → KEY_COLORS 맵 공통 js로 추출(P2 common.css/js)하면서 함께.
-- [ ] (보류) DB·현대해상·교보 외 추가 브랜드색(흥국·동양 등) — 필요 시 owner 질의 후 맵 확장.
+### KEYCOLOR-V1 — 회사 키컬러 액센트 시스템 ~~(K-ICS 취소, IFRS17 재검토 대기)~~
+IFRS17 적용 완료 2026-06-13. K-ICS 적용은 **owner가 2026-06-17 취소** (IFRS17 구현 불만족). IFRS17 키컬러도 재검토 필요 — owner 피드백 대기.
+- [x] IFRS17 적용 완료 (2026-06-13)
+- [~] K-ICS 적용: **owner 취소 (2026-06-17)**
+- [ ] (보류) 전체 키컬러 방향 재검토 — owner 피드백 후
 
 ### DESIGN-V2 — de-AI 디자인 오버홀 (proposal delivered 2026-06-11, awaiting owner sign-off)
 Owner complaint: site looks AI-generated. Audit done (4 pages + barabom.me reference — actual findings: Spoqa Han Sans Neo webfont + restrained neutrals + 0.1-0.2s micro transitions, NOT heavy animation). Phases:
 - [ ] **P1 quick wins (~half day)**: Pretendard Variable + `font-variant-numeric:tabular-nums` 전역 / 탈부트스트랩 팔레트(#0d6efd·#f8f9fa 교체, 잉크+페이퍼+딥블루 1액센트) / favicon(IQ 모노그램)+OG+meta description / footer(출처·기준분기·면책) / 이모지 placeholder 제거 / radius 12→6px / Chart.js·ECharts 색 CSS 변수화 (기본 teal/pink 퇴출). [부분 착수: P1-QUICKWIN 일부 done 2026-06-12, 팔레트 교체는 보류]
-- [~] **P2 structural (1~2d)**: ✅ common.css 추출(토큰+chrome+A11y) · ✅ index 히어로 KPI 스트립 + 회사 typeahead 점프 (2026-06-16) — 남음: KPI 카운트업 애니 / scroll-reveal(IntersectionObserver 12px/200ms 1회, 차트 패널 사이징 회피) / 차트 공통 테마(폰트·그리드·툴팁)
+- [x] **P2 structural (1~2d)**: ✅ common.css · ✅ index 히어로 KPI 스트립+typeahead · ✅ scroll-reveal · ✅ 차트 공통 테마 · ✅ KPI 카운트업 애니(index 3개+IFRS17 Panel7 4개, ease-out 600ms, 2026-06-20) — **완료**
 - [ ] **P3**: M3 잔여(도넛 stack·범례) 흡수, 다크모드(선택)
 - [x] **TREEMAP-SCALE**: 트리맵 색 임계 앵커 130/200% + 범례 임계 표기 — done 2026-06-13 (권고선=130%, 민감도 패널 150%→130% 정합)
 - [ ] **COMPANY-ACCENT**: 회사 키컬러는 배경 틴트 대신 "액센트 1곳" 원칙(패널 제목 2px 룰 + 회사명 칩 + 차트 주 시리즈, 저채도 변형 23사 맵) — 시안 owner 승인 후
@@ -38,9 +51,9 @@ Owner complaint: site looks AI-generated. Audit done (4 pages + barabom.me refer
 
 ### MOB-KICS — K-ICS.html full mobile layout (scope confirmed by owner 2026-06-12)
 Owner confirmed scope: **full-panel mobile pass + alternative render** (not foundation-only). M1 foundation already in place (header/tabs/table scroll, chart heights ↓).
-- [ ] Donuts stacked vertically (currently row, cramped <400px)
-- [ ] Forward-chart legend reposition (overflows on mobile)
-- [ ] Dense table → card view (가/나/다 sub-items)
+- [x] Donuts stacked vertically — `.donut-cell{flex:1 1 280px}` + `flex-wrap:wrap`으로 375px에서 자동 1열 스택. 이미 구현됨 (2026-06-17 확인).
+- [x] Forward-chart legend reposition — `position: window.innerWidth < 640 ? "bottom" : "top"` (2026-06-17)
+- [x] Dense table → card view (가/나/다 sub-items) — `renderMobileCards` ≤640px (2026-06-20)
 - [ ] **(owner open rec 1)** horizontal-scroll range for dense panels — decide which panels scroll vs reflow
 - [ ] **(owner open rec 2)** breakpoint set — confirm thresholds beyond the single 640px (e.g. <400px sub-query)
 
@@ -51,25 +64,21 @@ Owner confirmed scope: **full-panel mobile pass + alternative render**. M1 found
 - [ ] **(owner open rec 2)** breakpoint set confirmation
 - (shares the two owner open recs with MOB-KICS — resolve once for both pages.)
 
-### VIS-DONUT — K-ICS donut row stacks on phones
-- [ ] `.donut-cell` cramped <400px → stack vertically (`flex-direction: column` at narrow breakpoint, or sub-media query `<400px`)
-- [ ] Verify ratio labels still legible after stack
+### VIS-DONUT — K-ICS donut row stacks on phones ✅ 완료
+- [x] `.donut-cell{flex:1 1 280px}` + `flex-wrap:wrap` → 375px 화면에서 자동 1열 스택. 명시적 flex-direction:column 불필요. 이미 구현됨 (2026-06-17 확인).
+- [x] Labels legible: 각 도넛이 전체 너비 차지, 레이블 공간 충분.
 
 ### VIS-CHARTLEGEND — chart legend/axis density on mobile
-- [ ] Chart.js legends overflow narrow widths
-- [ ] Options: (a) hide legend on mobile + force tooltip, (b) reposition bottom, (c) abbreviate labels
-- [ ] Affects: K-ICS forward outlook line, IFRS17 Panel 2/3/4/6, index bubble
+- [x] K-ICS forward + IFRS17 hist/NB legend → bottom on mobile (`window.innerWidth < 640`) (2026-06-17)
+- [ ] IFRS17 amort + index bubble legend (amort display:false OK, bubble ECharts top=8 review later)
 
 ### M3 — chart fine-tuning (roll-up of VIS-DONUT + VIS-CHARTLEGEND + misc)
-- [ ] K-ICS 도넛 2개 세로배치 (= VIS-DONUT)
-- [ ] Forward 라인 범례 위치 (= VIS-CHARTLEGEND subset)
+- [x] K-ICS 도넛 2개 세로배치 (= VIS-DONUT) — 이미 구현됨
+- [x] Forward 라인 범례 위치 (= VIS-CHARTLEGEND) — done 2026-06-17
 - [ ] 차트 미세조정 across pages
 
-### Panel 7 — 원천지표 카드 (CSM 잔액·상각액·NB CSM 직접 노출)
-Follow-up from 2026-05-28 panel cleanup. Replaces removed 파생 KPI 카드 4개 + BS 스냅샷 패널 with raw-metric cards.
-- [ ] Card design (one row of 4: CSM 잔액 / CSM 상각액 / NB CSM / NB CSM 배수)
-- [ ] Per-company selector reuse
-- [ ] Data source: existing `csm_waterfall.json` + `csm_bubble.json`
+### Panel 7 — 원천지표 카드 ✅ 완료 (2026-06-17)
+IFRS17.html 대시보드 최상단에 4-card KPI strip 추가(기말 CSM 잔액·CSM 상각·신계약 CSM·NB CSM 배수). `wfVal(company,latestQ,6/5/2)` + `ix.nbm` 기반. 2열 모바일 그리드.
 
 ### INDEX-BUBBLE-V2 HTML side — 4축 bubble rendering
 Publishing ships the data (`TODO_publishing.md` INDEX-BUBBLE-V2). Designer ships the ECharts spec:

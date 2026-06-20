@@ -88,7 +88,15 @@ The HTML pages fetch these directly. **No staging templates between publishing a
 
 ## 3. Gate checks (run in order before recommending push)
 
-1. **Validation gate** — every domain's most recent validation report has `summary.red == 0` (or every RED has a TODO.md documented-exception entry).
+**#0 must pass first. Any RED = BLOCKED. No documented-exception bypass.**
+
+0. **Data-contract + anomaly gate** — run `python scripts/prepush_check.py` (supersedes standalone `validate_data_contract.py`). Runs: ① data-contract hard gate (census + as-of staleness + domain-identity CHECK4) + ② generic-anomaly triage chain. **exit 2 (RED ≥ 1) = push BLOCKED, no exception, no documented-exception bypass.** Outputs: `data/_derived/anomaly_triage.json` (review queue) + `data/_derived/anomaly_skeptic_input.json` (REAL+UNCERTAIN candidates).
+
+   **LLM-skeptic step (mandatory — publishing agent performs before recommending push):** Read `anomaly_skeptic_input.json` REAL+UNCERTAIN items and classify each adversarially as **EXTRACTION_ERROR / UNIT_ERROR / REAL_EVENT / NOISE**. Route EXTRACTION_ERROR/UNIT_ERROR to the appropriate parser inbox (lane: ifrs17 for CSM_waterfall/PL, lane: kics for K-ICS). REAL_EVENT/NOISE pass through. Prior verdict at `data/_derived/anomaly_skeptic_verdict.json` (orchestrator-generated) may be used as reference but must be re-verified if data changed. **Push recommendation forbidden without completing skeptic step.** Owner policy 2026-06-19.
+
+   Current live (2026-06-20): RED=4 (all CHECK4 domain-identity: T2_UTIL_OVER_100_NO_EXEMPTION×3 [동양·KB·미래에셋, proxy-gross artifact] + T2_DENOM_NOT_SCR_HALF×1 [신한이지, 분모 1/100 스케일]). Routes pending: UTIL×3 → downloader OCR (`20260617T0000Z`) + kics parser; DENOM×1 → ifrs17 parser (`20260620T0238Z`); designer donut 잠정 숨김 완료.
+
+1. **Validation gate** — every domain's most recent validation report has `summary.red == 0` (or every RED has a TODO.md documented-exception entry). K-ICS: see TODO.md §K-ICS gate for current documented exceptions.
 2. **Assembly gate** — assembly/build scripts exit code 0; masters byte-changed (no spurious diffs).
 3. **HTML gate** — for K-ICS.html / IFRS17.html / index.html: changed only if the underlying master changed. If HTML is dirty but masters are clean, surface as `manual_html_edit` for designer review (likely a designer commit).
 4. **Encoding gate** — newly-touched .md/TODO files are UTF-8 no BOM, no garbled Korean (CLAUDE.md "문서·TODO 인코딩 룰").
