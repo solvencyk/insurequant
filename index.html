@@ -856,7 +856,15 @@
 
     const sel = document.getElementById("sector");
     function redraw() { lifeExpanded = false; nonlifeExpanded = false; if (sel) render(sel.value); }
-    window.addEventListener("resize", redraw);
+    // 모바일 스크롤 시 URL바 노출/숨김 → 높이만 바뀌는 resize가 발생. 그때 redraw하면 '더보기'가 다시 접힘.
+    // 폭이 실제로 바뀐 경우(회전·창 크기 변경)에만 재그림. 모바일 높이-only resize는 무시.
+    let _lastW = window.innerWidth;
+    window.addEventListener("resize", () => {
+      const w = window.innerWidth;
+      if (w < 640 && w === _lastW) return;   // 모바일 높이-only(스크롤) → 펼침 유지
+      _lastW = w;
+      redraw();
+    });
     if (sel) sel.addEventListener("change", redraw);
     
     const ratioToggleEl = document.getElementById('ratioToggle');

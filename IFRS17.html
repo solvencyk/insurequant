@@ -1041,21 +1041,21 @@
       const labels = nbView.map(r => { const p=r["공시분기"]; const [yy,qn]=wfParseQ(p); return (wfMode!=="quarter" && qn===4) ? String(yy) : p; });
       const ytd = nbView.map(r => r["신계약CSM배수_연누계"]);
       const qtr = nbView.map(r => r["신계약CSM배수_당분기"]);
+      // 기준(period)에 맞춰 한 계열만: 연도→연누계 배수, 분기→당분기 배수 (반대 기준은 무의미).
+      const useQ = wfMode === "quarter";
       const ds = [{
-        label:"연누계 배수", data: ytd, borderColor:currentKey.line, backgroundColor:currentKey.soft,
+        label: useQ ? "당분기 배수" : "연누계 배수",
+        data: useQ ? qtr : ytd,
+        borderColor:currentKey.line, backgroundColor:currentKey.soft,
         borderWidth:2.5, pointRadius:4, pointHoverRadius:6, tension:0.2, spanGaps:true, fill:true,
       }];
-      if (qtr.some(v => v != null)) ds.push({
-        label:"당분기 배수", data: qtr, borderColor:"rgb(255,99,132)", backgroundColor:"transparent",
-        borderWidth:1.5, borderDash:[6,4], pointRadius:3, tension:0.2, spanGaps:true, fill:false,
-      });
       charts.nb=new Chart(canvasCtx(host,"#canvasNb"),{
         type:"line",
         data:{ labels, datasets: ds },
         options:{
           responsive:true, maintainAspectRatio:false,
           plugins:{
-            legend:{ display: ds.length > 1, position: window.innerWidth < 640 ? "bottom" : "top" },
+            legend:{ display: true, position: window.innerWidth < 640 ? "bottom" : "top" },
             title:{display:true,text:"NB CSM 배수 (신계약 CSM ÷ 월납월초, "+coName+")" },
             tooltip:{ callbacks:{ label:(ctx)=> `${ctx.dataset.label}: ${ctx.parsed.y==null?"—":fmtNum(Number(ctx.parsed.y),2)+"×"}` } },
           },
