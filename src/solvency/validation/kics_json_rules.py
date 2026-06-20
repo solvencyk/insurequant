@@ -359,7 +359,14 @@ def run_validation(
 
         if all(bucket.get(i) is not None for i in (1, 14, 27)) and bucket.get(14) != 0:
             expected = (bucket.get(1) or 0) / (bucket.get(14) or 1) * 100.0
-            findings.append(_check_numeric(bucket, "7", expected, bucket.get(27), eff_tol))
+            # ratio rule: integer-rounding of a tiny denominator (item14) swings the
+            # recomputed ratio hugely (카카오페이손해 2023.4Q item14=20억 → ±~120%p),
+            # while the disclosed item27 is exact. dynamic tol mirrors 8_life: propagate
+            # ±0.5 rounding on denom (expected×0.5/|denom|) + num (50/|denom|). Negligible
+            # for normal denominators; only loosens for sub-scale ones.
+            d14 = abs(bucket.get(14))
+            ratio_tol = max(eff_tol, abs(expected) * 0.5 / d14 + 50.0 / d14)
+            findings.append(_check_numeric(bucket, "7", expected, bucket.get(27), ratio_tol))
         else:
             findings.append(
                 _finding(
@@ -375,7 +382,10 @@ def run_validation(
 
         if all(bucket.get(i) is not None for i in (2, 14, 28)) and bucket.get(14) != 0:
             expected = (bucket.get(2) or 0) / (bucket.get(14) or 1) * 100.0
-            findings.append(_check_numeric(bucket, "8", expected, bucket.get(28), eff_tol))
+            # same sub-scale denominator rounding as rule 7 (see note above).
+            d14 = abs(bucket.get(14))
+            ratio_tol = max(eff_tol, abs(expected) * 0.5 / d14 + 50.0 / d14)
+            findings.append(_check_numeric(bucket, "8", expected, bucket.get(28), ratio_tol))
         else:
             findings.append(
                 _finding(

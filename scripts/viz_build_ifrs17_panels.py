@@ -1223,6 +1223,19 @@ def _period_asof_from_rcept(rcept: str) -> tuple[str | None, str | None]:
     return f"{y}.3Q", f"{y}-09-30"
 
 
+@lru_cache(maxsize=1)
+def _sensitivity_overrides() -> dict:
+    """FY2025 보험위험 민감도 verified-scenario overrides (data/dart/viz/sensitivity_overrides.json,
+    owner push-blocker 1242Z). The extractor mis-handles several FY2025 layouts (product-row 소계 /
+    transposed-matrix / 원수·출재·순액 sub-row / level→delta / unknown-tagged), so build_panel injects
+    these workflow-verified scenarios for the sensitivity heatmap. Extractor generalization = follow-up."""
+    try:
+        d = json.loads((OUT / "sensitivity_overrides.json").read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return {}
+    return {k: v for k, v in d.items() if isinstance(v, dict) and not k.startswith("_")}
+
+
 def build_panel(glob_pat: str, extractor, add_as_of: bool = False) -> dict:
     # Per company, pick the BEST filing — a refreshed FY2025 extract (rcept 2026…)
     # supersedes the prior FY2024 one (rcept 2025…), BUT only when it actually yields
@@ -1248,9 +1261,19 @@ def build_panel(glob_pat: str, extractor, add_as_of: bool = False) -> dict:
                 best_key, best_entry = key, {"company": company, "rcept_no": rcept, **panel}
         if best_entry is not None:
             if add_as_of:
-                per, asof = _period_asof_from_rcept(str(best_entry.get("rcept_no", "")))
-                best_entry["period"] = per
-                best_entry["as_of"] = asof
+                ov = _sensitivity_overrides().get(company)
+                if ov:
+                    best_entry = {
+                        "company": company, "rcept_no": ov.get("rcept_no"),
+                        "status": "ok", "period": ov.get("period"), "as_of": ov.get("as_of"),
+                        "table_kind": "sensitivity_analysis", "unit": "억원",
+                        "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+                        "scenarios": ov.get("scenarios", []), "_source": "override",
+                    }
+                else:
+                    per, asof = _period_asof_from_rcept(str(best_entry.get("rcept_no", "")))
+                    best_entry["period"] = per
+                    best_entry["as_of"] = asof
             companies.append(best_entry)
 
     return {"period": "annual (filings skim)", "companies": companies}

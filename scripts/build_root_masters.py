@@ -27,6 +27,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PL_SRC = ROOT / "data" / "dart" / "viz" / "pl_breakdown_master.json"
 PL_OUT = ROOT / "PL_breakdown.json"
+# Owner manual corrections for PL (xlsx review-loop) — survive master rebuilds. Upserts 값
+# by (code, item, quarter) AFTER _zero_other_expense, BEFORE 당분기 recompute. Mirrors CSM_OVR.
+PL_OVR = ROOT / "data" / "dart" / "viz" / "pl_manual_overrides.json"
 # CSM source = the build_csm_waterfall_master.py output (item4=residual → closing closes by
 # construction; 35 companies, all coded).  Supersedes the old history-chain root file.
 CSM_SRC = ROOT / "data" / "dart" / "viz" / "csm_waterfall_master_diag.json"
@@ -94,9 +97,29 @@ def _zero_other_expense(rows):
     return rows
 
 
+def _apply_pl_overrides(rows):
+    """Owner manual corrections: upsert 값 by (code, item, quarter). Applied AFTER
+    _zero_other_expense so owner values are authoritative (never re-zeroed). All owner
+    cells already exist as rows in the PL master (값=None or mis-extracted), so upsert only."""
+    if not PL_OVR.exists():
+        return rows
+    ovr = json.loads(PL_OVR.read_text(encoding="utf-8"))
+    idx = {(r["원보험사코드"], r["항목번호"], r["공시분기"]): r for r in rows}
+    n = miss = 0
+    for s in ovr.get("set", []):
+        key = (s["원보험사코드"], s["항목번호"], s["공시분기"])
+        if key in idx:
+            idx[key]["값"] = s["값"]; n += 1
+        else:
+            miss += 1
+    print(f"  pl overrides: {n} set" + (f", {miss} MISSING(row absent)" if miss else ""))
+    return rows
+
+
 def build_pl():
     rows = json.loads(PL_SRC.read_text(encoding="utf-8"))
     rows = _zero_other_expense(rows)
+    rows = _apply_pl_overrides(rows)
     # YTD by (code, item) -> {quarter: 값}
     ytd = defaultdict(dict)
     for r in rows:

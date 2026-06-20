@@ -1124,9 +1124,9 @@
       "원보험사코드": "KR0073",
       "항목번호": 4,
       "공시분기": "2023.4Q",
-      "값": -9746.3,
+      "값": -12650.9,
       "was": -18116.7,
-      "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start; Q4 source-restated to 55337.7. keep close 61153.8 (= owner anchor 61153.81)"
+      "why": "CSM continuity 정정 2026-06-20 (validation 0600Z): 교보 재작성 기준 통일 58,249.2 (FY2024 rollforward 확인). item4=가정조정 흡수로 identity 유지."
     },
     {
       "원보험사코드": "KR0099",
@@ -1143,6 +1143,135 @@
       "값": -3384.2,
       "was": -5006.1,
       "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2024 year-start (= 2023.4Q close, owner 30176.42; Q1-Q3 agree); Q4 carried 31798.3 boundary-opening. keep close 30105.1"
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 1,
+      "공시분기": "2025.4Q",
+      "값": 922.67849,
+      "was": "ROW_NULLED",
+      "note": "owner xlsx fill 0811Z-A (AIG손해 2025.4Q / 하나손해 이자부리)"
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 2,
+      "공시분기": "2025.4Q",
+      "값": 986.82564,
+      "was": "ROW_NULLED",
+      "note": "owner xlsx fill 0811Z-A (AIG손해 2025.4Q / 하나손해 이자부리)"
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 3,
+      "공시분기": "2025.4Q",
+      "값": 45.81277,
+      "was": "ROW_NULLED",
+      "note": "owner xlsx fill 0811Z-A (AIG손해 2025.4Q / 하나손해 이자부리)"
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 4,
+      "공시분기": "2025.4Q",
+      "값": -904.20562,
+      "was": "ROW_NULLED",
+      "note": "owner xlsx fill 0811Z-A (AIG손해 2025.4Q / 하나손해 이자부리)"
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 5,
+      "공시분기": "2025.4Q",
+      "값": -123.03631,
+      "was": "ROW_NULLED",
+      "note": "owner xlsx fill 0811Z-A (AIG손해 2025.4Q / 하나손해 이자부리)"
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 6,
+      "공시분기": "2025.4Q",
+      "값": 928.07497,
+      "was": "ROW_NULLED",
+      "note": "owner xlsx fill 0811Z-A (AIG손해 2025.4Q / 하나손해 이자부리)"
+    },
+    {
+      "원보험사코드": "KR0050",
+      "항목번호": 3,
+      "공시분기": "2024.4Q",
+      "값": 85.30805,
+      "was": "ROW_NULLED",
+      "note": "owner xlsx fill 0811Z-A (AIG손해 2025.4Q / 하나손해 이자부리)"
+    },
+    {
+      "원보험사코드": "KR0050",
+      "항목번호": 4,
+      "공시분기": "2024.4Q",
+      "값": -640.0080500000001,
+      "was": -554.7,
+      "note": "owner xlsx fill 0811Z-A (AIG손해 2025.4Q / 하나손해 이자부리)"
+    },
+    {
+      "원보험사코드": "KR0050",
+      "항목번호": 3,
+      "공시분기": "2025.4Q",
+      "값": 99.08353,
+      "was": 0.0,
+      "note": "owner xlsx fill 0811Z-A (AIG손해 2025.4Q / 하나손해 이자부리)"
+    },
+    {
+      "원보험사코드": "KR0050",
+      "항목번호": 4,
+      "공시분기": "2025.4Q",
+      "값": -419.4377400000001,
+      "was": -320.4,
+      "note": "owner xlsx fill 0811Z-A (AIG손해 2025.4Q / 하나손해 이자부리)"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 6,
+      "공시분기": "2023.4Q",
+      "값": 58249.2,
+      "why": "CSM continuity 정정 2026-06-20 (validation 0600Z): 교보 재작성 기준 통일 58,249.2 (FY2024 rollforward 확인). item4=가정조정 흡수로 identity 유지."
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 1,
+      "공시분기": "2024.1Q",
+      "값": 58249.2,
+      "why": "CSM continuity 정정 2026-06-20 (validation 0600Z): 교보 재작성 기준 통일 58,249.2 (FY2024 rollforward 확인). item4=가정조정 흡수로 identity 유지."
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 4,
+      "공시분기": "2024.1Q",
+      "값": 301.4,
+      "why": "CSM continuity 정정 2026-06-20 (validation 0600Z): 교보 재작성 기준 통일 58,249.2 (FY2024 rollforward 확인). item4=가정조정 흡수로 identity 유지."
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 1,
+      "공시분기": "2024.2Q",
+      "값": 58249.2,
+      "why": "CSM continuity 정정 2026-06-20 (validation 0600Z): 교보 재작성 기준 통일 58,249.2 (FY2024 rollforward 확인). item4=가정조정 흡수로 identity 유지."
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 4,
+      "공시분기": "2024.2Q",
+      "값": -5613.5,
+      "why": "CSM continuity 정정 2026-06-20 (validation 0600Z): 교보 재작성 기준 통일 58,249.2 (FY2024 rollforward 확인). item4=가정조정 흡수로 identity 유지."
+    },
+    {
+      "원보험사코드": "KR0069",
+      "항목번호": 6,
+      "공시분기": "2023.4Q",
+      "값": 122474.0,
+      "why": "CSM continuity 정정 2026-06-20 (validation 0545Z): 삼성 2023.4Q 기말 122,474 (owner gold, 공시값). 현 123,926=misparse. item4 흡수."
+    },
+    {
+      "원보험사코드": "KR0069",
+      "항목번호": 4,
+      "공시분기": "2023.4Q",
+      "값": -11454.0,
+      "why": "CSM continuity 정정 2026-06-20 (validation 0545Z): 삼성 2023.4Q 기말 122,474 (owner gold, 공시값). 현 123,926=misparse. item4 흡수."
     }
   ]
 }

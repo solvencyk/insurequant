@@ -14,11 +14,11 @@
     },
     "source": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\dart\\viz\\csm_waterfall.json",
     "period": "annual (fiscal 2024 reporting)",
-    "built_at": "2026-05-31T15:05:03Z",
+    "built_at": "2026-06-17T00:07:15Z",
     "build_script": "scripts/validate_csm_waterfall.py",
     "companies_total": 28,
-    "companies_pass": 22,
-    "companies_fail": 6,
+    "companies_pass": 25,
+    "companies_fail": 3,
     "new_business_fail": 0,
     "must_reparse_count": 0,
     "needs_reparse_loop": true,
@@ -74,29 +74,6 @@
       "status": "fail"
     },
     {
-      "company": "에이비엘생명보험",
-      "rcept_no": "20250331001358",
-      "waterfall_status": "ok",
-      "caption": "(2) 당기와 전기 현재 최선추정치, 위험조정, 보험계약마진 기초잔액에서 기말잔액으로의 상호대사 내역은 다음과 같습니다.",
-      "period_hint": null,
-      "new_business_mn_krw": 245843.0,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "opening_mn_krw": 758530.0,
-        "computed_closing_mn_krw": 767799.0,
-        "reported_closing_mn_krw": 869543.0,
-        "residual_mn_krw": -101744.0,
-        "tolerance_mn_krw": 4347.72,
-        "missing_stages": []
-      },
-      "issues": [
-        "balance_fail:residual=-101744.0 tol=4347.72"
-      ],
-      "status": "fail"
-    },
-    {
       "company": "처브라이프생명보험",
       "rcept_no": "20250407003402",
       "waterfall_status": "ok",
@@ -117,52 +94,6 @@
         "balance_incomplete:assumption"
       ],
       "status": "fail"
-    },
-    {
-      "company": "케이비라이프생명보험",
-      "rcept_no": "20250314000905",
-      "waterfall_status": "ok",
-      "caption": "(2) 당기 및 전기의 보험료배분접근법을 적용하지 않은 보험계약자산(부채)의 측정요소 별 변동내역은 다음과 같습니다(단위: 백만원).",
-      "period_hint": null,
-      "new_business_mn_krw": 501304.0,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "opening_mn_krw": 3359570.0,
-        "computed_closing_mn_krw": 3046461.0,
-        "reported_closing_mn_krw": 3179825.0,
-        "residual_mn_krw": -133364.0,
-        "tolerance_mn_krw": 15899.12,
-        "missing_stages": []
-      },
-      "issues": [
-        "balance_fail:residual=-133364.0 tol=15899.12"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "한화생명",
-      "rcept_no": "20250312000939",
-      "waterfall_status": "ok",
-      "caption": "(5) 당기와 전기 중 보험료배분접근법을 적용하지 않은 보험계약의 보험계약부채(자산)의 측정 요소별 변동내역은 다음과 같습니다 (단위: 백만원).1) 당기",
-      "period_hint": null,
-      "new_business_mn_krw": 2123086.0,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "opening_mn_krw": 13591377.0,
-        "computed_closing_mn_krw": 12185549.0,
-        "reported_closing_mn_krw": 13296823.0,
-        "residual_mn_krw": -1111274.0,
-        "tolerance_mn_krw": 66484.12,
-        "missing_stages": []
-      },
-      "issues": [
-        "balance_fail:residual=-1111274.0 tol=66484.12"
-      ],
-      "status": "fail"
     }
   ],
   "results": [
@@ -172,16 +103,16 @@
       "waterfall_status": "ok",
       "caption": "14.4 당기 및 전기 중 보험료배분접근법을 적용하지 않는 원수 보험계약부채 구성요소별 변동내역은 다음과 같습니다.① 당기",
       "period_hint": null,
-      "new_business_mn_krw": 524734.0,
+      "new_business_mn_krw": 469446.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 1552357.0,
-        "computed_closing_mn_krw": 1654892.0,
-        "reported_closing_mn_krw": 1654892.0,
+        "opening_mn_krw": 1654891.0,
+        "computed_closing_mn_krw": 1770485.0,
+        "reported_closing_mn_krw": 1770485.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 8274.46,
+        "tolerance_mn_krw": 8852.43,
         "missing_stages": []
       },
       "issues": [],
@@ -235,16 +166,16 @@
       "waterfall_status": "ok",
       "caption": "나. 측정요소별 변동내역",
       "period_hint": null,
-      "new_business_mn_krw": 710366.0,
+      "new_business_mn_krw": 355183.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 4212016.0,
-        "computed_closing_mn_krw": 4110310.0,
-        "reported_closing_mn_krw": 4110310.0,
+        "opening_mn_krw": 2106008.0,
+        "computed_closing_mn_krw": 2055155.0,
+        "reported_closing_mn_krw": 2055155.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 20551.55,
+        "tolerance_mn_krw": 10275.77,
         "missing_stages": []
       },
       "issues": [],
@@ -254,18 +185,18 @@
       "company": "교보생명보험",
       "rcept_no": "20250331004015",
       "waterfall_status": "ok",
-      "caption": "17-4) 당기와 전기 중 보험료배분접근법을 적용한 보험계약 이외의 보험계약부채(자산)의 요소별 변동내역은 다음과 같습니다.1) 당기",
+      "caption": "17-4) 당기와 전기 중 보험료배분접근법을 적용한 보험계약 이외의 보험계약부채(자산)의 요소별 변동내역은 다음과 같습니다. 1) 당기",
       "period_hint": null,
-      "new_business_mn_krw": 2755710.0,
+      "new_business_mn_krw": 1371568.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 10993354.0,
-        "computed_closing_mn_krw": 11748510.0,
-        "reported_closing_mn_krw": 11748510.0,
+        "opening_mn_krw": 5824924.0,
+        "computed_closing_mn_krw": 6438058.0,
+        "reported_closing_mn_krw": 6438058.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 58742.55,
+        "tolerance_mn_krw": 32190.29,
         "missing_stages": []
       },
       "issues": [],
@@ -277,16 +208,16 @@
       "waterfall_status": "ok",
       "caption": "(9-1-2) 측정요소별 변동내역",
       "period_hint": null,
-      "new_business_mn_krw": 1628554.0,
+      "new_business_mn_krw": 814277.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 8954786.0,
-        "computed_closing_mn_krw": 9183072.0,
-        "reported_closing_mn_krw": 9183072.0,
+        "opening_mn_krw": 4477393.0,
+        "computed_closing_mn_krw": 4591536.0,
+        "reported_closing_mn_krw": 4591536.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 45915.36,
+        "tolerance_mn_krw": 22957.68,
         "missing_stages": []
       },
       "issues": [],
@@ -342,16 +273,16 @@
       "waterfall_status": "ok",
       "caption": "<제80(당)기>",
       "period_hint": null,
-      "new_business_mn_krw": 970504.0,
+      "new_business_mn_krw": 485252.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 4772162.0,
-        "computed_closing_mn_krw": 4640314.0,
-        "reported_closing_mn_krw": 4640314.0,
+        "opening_mn_krw": 2386081.0,
+        "computed_closing_mn_krw": 2320157.0,
+        "reported_closing_mn_krw": 2320157.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 23201.57,
+        "tolerance_mn_krw": 11600.78,
         "missing_stages": []
       },
       "issues": [],
@@ -363,16 +294,16 @@
       "waterfall_status": "ok",
       "caption": "(4) 원수 및 출재 측정요소별 변동내역 1) 당기와 전기 중 원수 일반모형 보험부채 상세변동내역은 다음과 같습니다. <당기>",
       "period_hint": null,
-      "new_business_mn_krw": 1600648.0,
+      "new_business_mn_krw": 1379571.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 9637639.0,
-        "computed_closing_mn_krw": 10468726.0,
-        "reported_closing_mn_krw": 10468726.0,
+        "opening_mn_krw": 10468726.0,
+        "computed_closing_mn_krw": 11187889.0,
+        "reported_closing_mn_krw": 11187889.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 52343.63,
+        "tolerance_mn_krw": 55939.44,
         "missing_stages": []
       },
       "issues": [],
@@ -470,16 +401,16 @@
       "waterfall_status": "ok",
       "caption": "(8) 당기와 전기 중 보험료배분접근법을 적용하지 않은 보험계약부채의 측정요소별 변동내역은 다음과 같습니다.① 제36(당)기",
       "period_hint": null,
-      "new_business_mn_krw": 2531526.0,
+      "new_business_mn_krw": 1265763.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 14337450.0,
-        "computed_closing_mn_krw": 14452666.0,
-        "reported_closing_mn_krw": 14453586.0,
-        "residual_mn_krw": -920.0,
-        "tolerance_mn_krw": 72267.93,
+        "opening_mn_krw": 7168725.0,
+        "computed_closing_mn_krw": 7226333.0,
+        "reported_closing_mn_krw": 7226793.0,
+        "residual_mn_krw": -460.0,
+        "tolerance_mn_krw": 36133.97,
         "missing_stages": []
       },
       "issues": [],
@@ -495,18 +426,16 @@
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "opening_mn_krw": 758530.0,
-        "computed_closing_mn_krw": 767799.0,
-        "reported_closing_mn_krw": 869543.0,
-        "residual_mn_krw": -101744.0,
-        "tolerance_mn_krw": 4347.72,
+        "ok": true,
+        "opening_mn_krw": 869543.0,
+        "computed_closing_mn_krw": 937462.0,
+        "reported_closing_mn_krw": 937462.0,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 4687.31,
         "missing_stages": []
       },
-      "issues": [
-        "balance_fail:residual=-101744.0 tol=4347.72"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "에이아이에이생명보험",
@@ -582,18 +511,16 @@
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "opening_mn_krw": 3359570.0,
-        "computed_closing_mn_krw": 3046461.0,
-        "reported_closing_mn_krw": 3179825.0,
-        "residual_mn_krw": -133364.0,
-        "tolerance_mn_krw": 15899.12,
+        "ok": true,
+        "opening_mn_krw": 3179826.0,
+        "computed_closing_mn_krw": 3010509.0,
+        "reported_closing_mn_krw": 3010509.0,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 15052.55,
         "missing_stages": []
       },
-      "issues": [
-        "balance_fail:residual=-133364.0 tol=15899.12"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "코리안리",
@@ -662,24 +589,22 @@
       "company": "한화생명",
       "rcept_no": "20250312000939",
       "waterfall_status": "ok",
-      "caption": "(5) 당기와 전기 중 보험료배분접근법을 적용하지 않은 보험계약의 보험계약부채(자산)의 측정 요소별 변동내역은 다음과 같습니다 (단위: 백만원).1) 당기",
+      "caption": "(5) 당기와 전기 중 보험료배분접근법을 적용하지 않은 보험계약부채(자산)의 측정 요소별 변동내역은 다음과 같습니다 (단위:백만원).1) 당기",
       "period_hint": null,
       "new_business_mn_krw": 2123086.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "opening_mn_krw": 13591377.0,
-        "computed_closing_mn_krw": 12185549.0,
-        "reported_closing_mn_krw": 13296823.0,
-        "residual_mn_krw": -1111274.0,
-        "tolerance_mn_krw": 66484.12,
+        "ok": true,
+        "opening_mn_krw": 9238488.0,
+        "computed_closing_mn_krw": 9109141.0,
+        "reported_closing_mn_krw": 9109141.0,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 45545.71,
         "missing_stages": []
       },
-      "issues": [
-        "balance_fail:residual=-1111274.0 tol=66484.12"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "한화손해보험",
@@ -687,16 +612,16 @@
       "waterfall_status": "ok",
       "caption": "(5) 당기와 전기 중 인식된 보험료배분접근법을 적용한 보험계약 이외의 보험계약에 대한 미래현금흐름의 현재가치 추정치, 비금융위험에 대한 위험조정, 보험계약마진의 변동내역은 다음과 같습니다.",
       "period_hint": null,
-      "new_business_mn_krw": 1481978.186,
+      "new_business_mn_krw": 740989.093,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 7853721.926,
-        "computed_closing_mn_krw": 7606441.59,
-        "reported_closing_mn_krw": 7606441.592,
+        "opening_mn_krw": 3926860.963,
+        "computed_closing_mn_krw": 3803220.8,
+        "reported_closing_mn_krw": 3803220.796,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 38032.21,
+        "tolerance_mn_krw": 19016.1,
         "missing_stages": []
       },
       "issues": [],

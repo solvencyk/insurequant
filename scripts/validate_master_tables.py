@@ -319,6 +319,8 @@ def main() -> int:
     # 연속성(continuity) break = 무조건 RED. 원천 "소급재작성"으로 보이는 케이스라도 raw 대조로
     # 확정되기 전에는 면제하지 않는다 (owner 2026-06-16: self-closing identity는 opening을 검증 못 함 —
     # 2026.1Q 5사 기시 misparse를 '재작성'으로 오판한 사건. 기시≠직전기말이면 그냥 RED). 메모리: continuity-break-is-red.
+    # owner는 면제(self-closing) 대신 **데이터 정정** 방식 채택(2026-06-20): 재작성/misparse 과거 cell은 후속 분기
+    # 공시의 '전기(비교)' 테이블에서 재작성값을 추출해 마스터를 통일 → cont 자연 해소(parser 발주). 면제셋 미사용.
     cont_rows = []   # (co, q, 기초, 전년말기말, 전년말분기)
     for co, qmap in sorted(wf_co.items()):
         for fy, qq in FY_Q.items():

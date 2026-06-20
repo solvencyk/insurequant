@@ -83,3 +83,9 @@ band/generic 경로를 **product/sub-row 일반 처리**로 확장(합계/순액
 up/down 별도) + 동양/메트라이프/에이비엘/처브 src sensitivity 분류(SA=0 원인). owner pilot-first 판단이 정확했음.
 
 status: open (FY2025 refresh phase 1 = 흥국 핸들러+인프라 done; phase 2 = product-row 일반화 + SA=0 4사, 다세션)
+
+## validation 핀 (2026-06-20) — phase 2에 라이나 단위정규화 명시 요망
+
+`validate_master_tables.py` SENSITIVITY_UNIT_SANITY 게이트에서 **라이나생명 RED 1건** — max|Δ|=0.95억 vs 또래median 0.00036 (ratio>1000x, unit=억원/det=천원). audit-only **band-layout 단위 미정규화**(0712Z "라이나=CSM delta 100배 규모" 진단과 동일 뿌리). phase 2 "band/generic product/sub-row 일반화" 목록에 라이나가 **명시 누락** → 추적 보장 위해 phase 2 batch 시 라이나 band 단위정규화(÷1000 or 헤더 동적) 포함 요망. (sens는 push #0 data-contract 게이트엔 없어 비차단, IFRS17 master 게이트에서만 RED.)
+
+진단 2026-06-20 (parser-ifrs17, open 유지): FY2025 sensitivity 27 ok+3 partial. 3 partial 근본원인=추출기가 오탐 잡음(미래에셋=요약손익계산서, 신한라이프=확정급여채무[퇴직급여] 민감도, 한화손해=비연결구조화기업). 진짜 IFRS17 보험위험 민감도는: 미래에셋=OCR/이미지(텍스트0), 신한라이프=prose 서술, 한화손해=시장위험형(환율/금리/주가→손익,자본)만. → 자동복구 불가, owner 손fix 또는 prose/OCR 별도파이프. 12사 sensitivity_overrides.json은 기적용.

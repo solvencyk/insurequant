@@ -56,6 +56,12 @@ sys.stdout.reconfigure(encoding="utf-8")
 DATA_DIR = REPO / "data" / "bonds"
 OUT_DIR = DATA_DIR / "normalized"
 
+# ISINs confirmed NOT to have exercised Call at 5y (documented exceptions to the 5y convention).
+# "treat as known overrides in Phase 3 cross-ref with K-ICS disclosure" (see module docstring).
+_CALL_NOT_EXERCISED: frozenset[str] = frozenset({
+    "KR60005416C3",  # 흥국화재 신종자본증권1 (2016-12-29, 920억) — 콜 미행사, 2026.1Q FS appendix 기재
+})
+
 
 def _stamp_utc() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -162,10 +168,11 @@ def normalize(schedule_rows: list[dict], as_of: date) -> list[dict]:
 
         # 3-status taxonomy: outstanding / called / matured.
         # Assume Call IS exercised at 5y (Korean market norm — see module docstring).
+        # Exception: ISINs in _CALL_NOT_EXERCISED (confirmed by FS notes cross-ref).
         today = as_of.isoformat()
         if maturity_date and maturity_date < today:
             status = "matured"
-        elif effective_call and effective_call <= today:
+        elif effective_call and effective_call <= today and isin not in _CALL_NOT_EXERCISED:
             status = "called"            # assumed Called at 5y (de facto mandatory)
         else:
             status = "outstanding"
