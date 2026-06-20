@@ -65,6 +65,8 @@
     .li-bar{height:100%;border-radius:7px;min-width:2px}
     .li-val{flex:0 0 54px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
     .li-empty{padding:24px 12px;text-align:center;color:var(--muted);font-size:13px}
+    .li-more-btn{display:block;width:100%;margin-top:4px;padding:10px;background:var(--card);border:var(--bd);border-radius:var(--r-md);color:var(--text);font-size:13px;font-family:var(--font-sans);cursor:pointer;text-align:center;font-weight:500;transition:background .15s}
+    .li-more-btn:hover{background:var(--border)}
     .li-chip{font-size:10px;font-weight:400;color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:0 4px;margin-left:6px;white-space:nowrap;flex:0 0 auto}
     #bubble-list .li-name{display:flex;align-items:center;min-width:0;flex-basis:44%}
     #bubble-list .li-nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
@@ -325,16 +327,22 @@
       const txt = Math.abs(r).toLocaleString('ko-KR', digits?{minimumFractionDigits:digits,maximumFractionDigits:digits}:{});
       return (r<0?'△':'')+txt;
     }
+    function countUp(el, target, fmt, dur){
+      if(!el || !Number.isFinite(target)) return;
+      if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){ el.innerHTML=fmt(target); return; }
+      const d=dur||600, t0=performance.now();
+      (function step(t){ const p=Math.min((t-t0)/d,1), e=1-Math.pow(1-p,3); el.innerHTML=fmt(target*e); if(p<1) requestAnimationFrame(step); })(t0);
+    }
     function updateKpis(){
       const setT=(id,html)=>{ const el=document.getElementById(id); if(el) el.innerHTML=html; };
       const comps = [...(GROUPED.Life||[]), ...(GROUPED['Non-Life']||[])];
       const med = _median(comps.map(c=>c.ratio));
-      if(med!=null) setT('kpiRatio', samoNum(med,0)+'<span class="u">%</span>');
-      if(comps.length) setT('kpiCount', comps.length+'<span class="u">社</span>');
+      if(med!=null) countUp(document.getElementById('kpiRatio'), med, v=>samoNum(v,0)+'<span class="u">%</span>');
+      if(comps.length) countUp(document.getElementById('kpiCount'), comps.length, v=>Math.round(v)+'<span class="u">社</span>');
       const per = (allData&&allData.length) ? getLatestQuarter(allData) : null;
       if(per) setT('kpiPeriod', per);
-      const eok = totalClosingCsmEok();        // 조 단위
-      if(eok!=null) setT('kpiCsm', samoNum(eok/10000,0)+'<span class="u">조</span>');
+      const eok = totalClosingCsmEok();
+      if(eok!=null) countUp(document.getElementById('kpiCsm'), eok/10000, v=>samoNum(v,0)+'<span class="u">조</span>');
     }
     function buildJumpList(){
       const dl=document.getElementById('coJumpList'); if(!dl) return;
@@ -769,57 +777,77 @@
 
     // M2: mobile list mirror of the treemap — same data, color scale, and click-nav.
     // Shown instead of the treemap on narrow screens (CSS @media <=640px).
+    // MOB-INDEX-FOLD: top 10 on mobile, "더보기" reveals rest + rescales bars.
+    let listExpanded = false;
     function renderList(sector){
       const host = document.getElementById('map-list');
       if (!host) return;
       const ratioType = document.getElementById('ratioToggle')?.checked ? 'basicCapital' : 'kics';
-      const sectors = Object.keys(GROUPED || {}).filter(s => s && s !== 'Unknown');
+      const sKeys = Object.keys(GROUPED || {}).filter(s => s && s !== 'Unknown');
       host.innerHTML = '';
-      let total = 0;
-      for (const s of sectors){
+      const isMob = window.innerWidth < 640;
+      const FOLD = 10;
+
+      // Build combined list sorted by required (기준금액) desc
+      const combined = [];
+      for (const s of sKeys){
         if (sector !== 'ALL' && s !== sector) continue;
-        const rows = (GROUPED[s] || []);
-        if (!rows.length) continue;
-        // Order by 지급여력기준금액 (required) desc — mirrors the treemap, where
-        // tile size = required, so the biggest insurers sit on top.
-        const items = rows.map(d => {
+        for (const d of (GROUPED[s] || [])){
           const v = ratioType === 'basicCapital'
             ? (d.basicCapitalRatio || 0)
             : (Number.isFinite(d.ratio) ? d.ratio : 0);
-          return { d, v };
-        }).sort((a, b) => (b.d.required || 0) - (a.d.required || 0));
-        const maxV = Math.max(1, ...items.map(it => it.v));
-        const head = document.createElement('div');
-        head.className = 'li-sector';
-        head.textContent = s === 'Life' ? '생명보험' : '손해보험';
-        host.appendChild(head);
-        for (const { d, v } of items){
-          total++;
-          const row = document.createElement('div');
-          row.className = 'li-row';
-          row.title = `${d.company} — ${v.toFixed(1)}%, 기준금액 ${Math.round(d.required || 0).toLocaleString()}`;
-          const name = document.createElement('div');
-          name.className = 'li-name';
-          name.textContent = shortName(d.company);
-          const track = document.createElement('div');
-          track.className = 'li-bar-track';
-          const bar = document.createElement('div');
-          bar.className = 'li-bar';
-          bar.style.width = Math.max(2, (v / maxV) * 100) + '%';
-          bar.style.background = colorForRatio(v, ratioType);
-          track.appendChild(bar);
-          const val = document.createElement('div');
-          val.className = 'li-val';
-          val.textContent = (Number.isFinite(v) ? v.toFixed(1) : '-') + '%';
-          row.appendChild(name);
-          row.appendChild(track);
-          row.appendChild(val);
-          row.addEventListener('click', () => {
-            window.location.href = `K-ICS.html?company=${encodeURIComponent(d.company)}&period=quarter`;
-          });
-          host.appendChild(row);
+          combined.push({ d, v, s });
         }
       }
+      combined.sort((a, b) => (b.d.required || 0) - (a.d.required || 0));
+
+      const visible = (isMob && !listExpanded) ? combined.slice(0, FOLD) : combined;
+      const hasMore = isMob && !listExpanded && combined.length > FOLD;
+
+      // Scale from visible companies only — outliers outside top-10 don't squish bars
+      const maxV = Math.max(1, ...visible.map(it => it.v));
+
+      let lastSector = null, total = 0;
+      for (const { d, v, s } of visible){
+        total++;
+        if (s !== lastSector){
+          lastSector = s;
+          const head = document.createElement('div');
+          head.className = 'li-sector';
+          head.textContent = s === 'Life' ? '생명보험' : '손해보험';
+          host.appendChild(head);
+        }
+        const row = document.createElement('div');
+        row.className = 'li-row';
+        row.title = `${d.company} — ${v.toFixed(1)}%, 기준금액 ${Math.round(d.required || 0).toLocaleString()}`;
+        const name = document.createElement('div');
+        name.className = 'li-name';
+        name.textContent = shortName(d.company);
+        const track = document.createElement('div');
+        track.className = 'li-bar-track';
+        const bar = document.createElement('div');
+        bar.className = 'li-bar';
+        bar.style.width = Math.max(2, (v / maxV) * 100) + '%';
+        bar.style.background = colorForRatio(v, ratioType);
+        track.appendChild(bar);
+        const val = document.createElement('div');
+        val.className = 'li-val';
+        val.textContent = (Number.isFinite(v) ? v.toFixed(1) : '-') + '%';
+        row.appendChild(name); row.appendChild(track); row.appendChild(val);
+        row.addEventListener('click', () => {
+          window.location.href = `K-ICS.html?company=${encodeURIComponent(d.company)}&period=quarter`;
+        });
+        host.appendChild(row);
+      }
+
+      if (hasMore){
+        const btn = document.createElement('button');
+        btn.className = 'li-more-btn';
+        btn.textContent = `더보기 (${combined.length - FOLD}개사)`;
+        btn.addEventListener('click', () => { listExpanded = true; renderList(sector); });
+        host.appendChild(btn);
+      }
+
       if (!total){
         const empty = document.createElement('div');
         empty.className = 'li-empty';
@@ -829,7 +857,7 @@
     }
 
     const sel = document.getElementById("sector");
-    function redraw() { if (sel) render(sel.value); }
+    function redraw() { listExpanded = false; if (sel) render(sel.value); }
     window.addEventListener("resize", redraw);
     if (sel) sel.addEventListener("change", redraw);
     
@@ -1099,5 +1127,15 @@
     자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (2026.1Q)<br/>
     본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
   </footer>
+<script>
+(function(){
+  if(!window.IntersectionObserver) return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const obs=new IntersectionObserver((ens,o)=>{ens.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -12px 0px'});
+  function observe(root){(root||document).querySelectorAll('.panel:not(.will-reveal)').forEach(p=>{p.classList.add('will-reveal');obs.observe(p);});}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>observe());
+  else observe();
+})();
+</script>
 </body>
 </html>

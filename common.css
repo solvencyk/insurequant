@@ -147,3 +147,8 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
     scroll-behavior:auto !important;
   }
 }
+
+/* Scroll-reveal (DESIGN-V2 P2) */
+.panel.will-reveal { opacity:0; transform:translateY(12px); }
+.panel.revealed { animation:panelReveal .2s ease forwards; }
+@keyframes panelReveal { to { opacity:1; transform:none; } }
