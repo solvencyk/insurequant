@@ -777,8 +777,9 @@
 
     // M2: mobile list mirror of the treemap — same data, color scale, and click-nav.
     // Shown instead of the treemap on narrow screens (CSS @media <=640px).
-    // MOB-INDEX-FOLD: top 10 on mobile, "더보기" reveals rest + rescales bars.
-    let listExpanded = false;
+    // MOB-INDEX-FOLD: 생보/손보 각각 top 5 + 더보기, maxV 섹터 독립.
+    const FOLD = 5;
+    let lifeExpanded = false, nonlifeExpanded = false;
     function renderList(sector){
       const host = document.getElementById('map-list');
       if (!host) return;
@@ -786,66 +787,63 @@
       const sKeys = Object.keys(GROUPED || {}).filter(s => s && s !== 'Unknown');
       host.innerHTML = '';
       const isMob = window.innerWidth < 640;
-      const FOLD = 10;
+      let total = 0;
 
-      // Build combined list sorted by required (기준금액) desc
-      const combined = [];
       for (const s of sKeys){
         if (sector !== 'ALL' && s !== sector) continue;
-        for (const d of (GROUPED[s] || [])){
+        const expanded = s === 'Life' ? lifeExpanded : nonlifeExpanded;
+
+        const items = (GROUPED[s] || []).map(d => {
           const v = ratioType === 'basicCapital'
             ? (d.basicCapitalRatio || 0)
             : (Number.isFinite(d.ratio) ? d.ratio : 0);
-          combined.push({ d, v, s });
+          return { d, v };
+        }).sort((a, b) => (b.d.required || 0) - (a.d.required || 0));
+
+        const visible = (isMob && !expanded) ? items.slice(0, FOLD) : items;
+        const hasMore = isMob && !expanded && items.length > FOLD;
+        const maxV = Math.max(1, ...visible.map(it => it.v));
+
+        const head = document.createElement('div');
+        head.className = 'li-sector';
+        head.textContent = s === 'Life' ? '생명보험' : '손해보험';
+        host.appendChild(head);
+
+        for (const { d, v } of visible){
+          total++;
+          const row = document.createElement('div');
+          row.className = 'li-row';
+          row.title = `${d.company} — ${v.toFixed(1)}%, 기준금액 ${Math.round(d.required || 0).toLocaleString()}`;
+          const name = document.createElement('div');
+          name.className = 'li-name';
+          name.textContent = shortName(d.company);
+          const track = document.createElement('div');
+          track.className = 'li-bar-track';
+          const bar = document.createElement('div');
+          bar.className = 'li-bar';
+          bar.style.width = Math.max(2, (v / maxV) * 100) + '%';
+          bar.style.background = colorForRatio(v, ratioType);
+          track.appendChild(bar);
+          const val = document.createElement('div');
+          val.className = 'li-val';
+          val.textContent = (Number.isFinite(v) ? v.toFixed(1) : '-') + '%';
+          row.appendChild(name); row.appendChild(track); row.appendChild(val);
+          row.addEventListener('click', () => {
+            window.location.href = `K-ICS.html?company=${encodeURIComponent(d.company)}&period=quarter`;
+          });
+          host.appendChild(row);
         }
-      }
-      combined.sort((a, b) => (b.d.required || 0) - (a.d.required || 0));
 
-      const visible = (isMob && !listExpanded) ? combined.slice(0, FOLD) : combined;
-      const hasMore = isMob && !listExpanded && combined.length > FOLD;
-
-      // Scale from visible companies only — outliers outside top-10 don't squish bars
-      const maxV = Math.max(1, ...visible.map(it => it.v));
-
-      let lastSector = null, total = 0;
-      for (const { d, v, s } of visible){
-        total++;
-        if (s !== lastSector){
-          lastSector = s;
-          const head = document.createElement('div');
-          head.className = 'li-sector';
-          head.textContent = s === 'Life' ? '생명보험' : '손해보험';
-          host.appendChild(head);
+        if (hasMore){
+          const btn = document.createElement('button');
+          btn.className = 'li-more-btn';
+          btn.textContent = `더보기 (${items.length - FOLD}개사)`;
+          btn.addEventListener('click', () => {
+            if (s === 'Life') lifeExpanded = true; else nonlifeExpanded = true;
+            renderList(sector);
+          });
+          host.appendChild(btn);
         }
-        const row = document.createElement('div');
-        row.className = 'li-row';
-        row.title = `${d.company} — ${v.toFixed(1)}%, 기준금액 ${Math.round(d.required || 0).toLocaleString()}`;
-        const name = document.createElement('div');
-        name.className = 'li-name';
-        name.textContent = shortName(d.company);
-        const track = document.createElement('div');
-        track.className = 'li-bar-track';
-        const bar = document.createElement('div');
-        bar.className = 'li-bar';
-        bar.style.width = Math.max(2, (v / maxV) * 100) + '%';
-        bar.style.background = colorForRatio(v, ratioType);
-        track.appendChild(bar);
-        const val = document.createElement('div');
-        val.className = 'li-val';
-        val.textContent = (Number.isFinite(v) ? v.toFixed(1) : '-') + '%';
-        row.appendChild(name); row.appendChild(track); row.appendChild(val);
-        row.addEventListener('click', () => {
-          window.location.href = `K-ICS.html?company=${encodeURIComponent(d.company)}&period=quarter`;
-        });
-        host.appendChild(row);
-      }
-
-      if (hasMore){
-        const btn = document.createElement('button');
-        btn.className = 'li-more-btn';
-        btn.textContent = `더보기 (${combined.length - FOLD}개사)`;
-        btn.addEventListener('click', () => { listExpanded = true; renderList(sector); });
-        host.appendChild(btn);
       }
 
       if (!total){
@@ -857,8 +855,16 @@
     }
 
     const sel = document.getElementById("sector");
-    function redraw() { listExpanded = false; if (sel) render(sel.value); }
-    window.addEventListener("resize", redraw);
+    function redraw() { lifeExpanded = false; nonlifeExpanded = false; if (sel) render(sel.value); }
+    // 모바일 스크롤 시 URL바 노출/숨김 → 높이만 바뀌는 resize가 발생. 그때 redraw하면 '더보기'가 다시 접힘.
+    // 폭이 실제로 바뀐 경우(회전·창 크기 변경)에만 재그림. 모바일 높이-only resize는 무시.
+    let _lastW = window.innerWidth;
+    window.addEventListener("resize", () => {
+      const w = window.innerWidth;
+      if (w < 640 && w === _lastW) return;   // 모바일 높이-only(스크롤) → 펼침 유지
+      _lastW = w;
+      redraw();
+    });
     if (sel) sel.addEventListener("change", redraw);
     
     const ratioToggleEl = document.getElementById('ratioToggle');
@@ -983,6 +989,8 @@
     // M3: mobile list mirror of the bubble map (CSS @media <=640px에서만 표시).
     // 데스크톱과 달리 2026.1Q 고정 아님 — 배수가 있는 회사별 최신 분기 사용, 기준분기 미충족이면 칩 표기.
     // 정렬: 그룹(생보→손보) 내 기말 CSM 잔액 desc · 막대 ∝ 기말 잔액 · 값 = NB 배수.
+    // MOB: 생보 top5 + 더보기, 손보 top5 + 더보기 (FOLD=5, K-ICS 리스트와 동일).
+    let bubbleLifeExpanded = false, bubbleNonlifeExpanded = false;
     function renderBubbleList() {
       const host = document.getElementById('bubble-list');
       if (!host) return;
@@ -1017,11 +1025,16 @@
         });
       }
 
+      const isMob = window.innerWidth < 640;
       let total = 0;
-      const maxClosing = Math.max(1, ...items.map(it => it.closing || 0));
       for (const sec of ['Life', 'Non-Life']) {
-        const rows = items.filter(it => it.sector === sec).sort((a, b) => (b.closing || 0) - (a.closing || 0));
-        if (!rows.length) continue;
+        const allRows = items.filter(it => it.sector === sec).sort((a, b) => (b.closing || 0) - (a.closing || 0));
+        if (!allRows.length) continue;
+        const expanded = sec === 'Life' ? bubbleLifeExpanded : bubbleNonlifeExpanded;
+        const rows = (isMob && !expanded) ? allRows.slice(0, FOLD) : allRows;
+        const hasMore = isMob && !expanded && allRows.length > FOLD;
+        // 막대 스케일: 표시 그룹 내 최대 기말 잔액 기준 (섹터·fold 독립 → outlier 무압축)
+        const maxClosing = Math.max(1, ...rows.map(it => it.closing || 0));
         const head = document.createElement('div');
         head.className = 'li-sector';
         head.textContent = sec === 'Life' ? '생명보험' : '손해보험';
@@ -1061,6 +1074,16 @@
             window.location.href = 'IFRS17.html?company=' + encodeURIComponent(it.name);
           });
           host.appendChild(row);
+        }
+        if (hasMore) {
+          const btn = document.createElement('button');
+          btn.className = 'li-more-btn';
+          btn.textContent = `더보기 (${allRows.length - FOLD}개사)`;
+          btn.addEventListener('click', () => {
+            if (sec === 'Life') bubbleLifeExpanded = true; else bubbleNonlifeExpanded = true;
+            renderBubbleList();
+          });
+          host.appendChild(btn);
         }
       }
       if (!total) {
@@ -1110,14 +1133,14 @@
     // M3: 모바일 폭에서 로드되면 차트 init이 미뤄짐(renderBubble 가드) → 데스크톱 복귀 시 재렌더 + 리사이즈
     const bubbleMobileMq = window.matchMedia('(max-width:640px)');
     bubbleMobileMq.addEventListener('change', (e) => {
-      if (e.matches) { renderBubbleList(); return; }   // 모바일 진입: 리스트·메타 갱신
+      if (e.matches) { bubbleLifeExpanded = false; bubbleNonlifeExpanded = false; renderBubbleList(); return; }   // 모바일 진입: 리스트·메타 갱신
       renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
       if (bubbleChart) bubbleChart.resize();
     });
 
     const bubbleSectorSel = document.getElementById('bubble-sector');
     if (bubbleSectorSel) {
-      bubbleSectorSel.addEventListener('change', () => { renderBubble(bubbleSectorSel.value); renderBubbleList(); });
+      bubbleSectorSel.addEventListener('change', () => { bubbleLifeExpanded = false; bubbleNonlifeExpanded = false; renderBubble(bubbleSectorSel.value); renderBubbleList(); });
     }
 
     loadData();
