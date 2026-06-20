@@ -802,7 +802,6 @@
         }).sort((a, b) => (b.d.required || 0) - (a.d.required || 0));
 
         const visible = (isMob && !expanded) ? items.slice(0, FOLD) : items;
-        const hasMore = isMob && !expanded && items.length > FOLD;
         const maxV = Math.max(1, ...visible.map(it => it.v));
 
         const head = document.createElement('div');
@@ -835,12 +834,13 @@
           host.appendChild(row);
         }
 
-        if (hasMore){
+        if (isMob && items.length > FOLD){
           const btn = document.createElement('button');
           btn.className = 'li-more-btn';
-          btn.textContent = `더보기 (${items.length - FOLD}개사)`;
+          btn.textContent = expanded ? '접기' : `더보기 (${items.length - FOLD}개사)`;
           btn.addEventListener('click', () => {
-            if (s === 'Life') lifeExpanded = true; else nonlifeExpanded = true;
+            const next = !expanded;
+            if (s === 'Life') lifeExpanded = next; else nonlifeExpanded = next;
             renderList(sector);
           });
           host.appendChild(btn);
@@ -1033,7 +1033,6 @@
         if (!allRows.length) continue;
         const expanded = sec === 'Life' ? bubbleLifeExpanded : bubbleNonlifeExpanded;
         const rows = (isMob && !expanded) ? allRows.slice(0, FOLD) : allRows;
-        const hasMore = isMob && !expanded && allRows.length > FOLD;
         // 막대 스케일: 표시 그룹 내 최대 기말 잔액 기준 (섹터·fold 독립 → outlier 무압축)
         const maxClosing = Math.max(1, ...rows.map(it => it.closing || 0));
         const head = document.createElement('div');
@@ -1076,12 +1075,13 @@
           });
           host.appendChild(row);
         }
-        if (hasMore) {
+        if (isMob && allRows.length > FOLD) {
           const btn = document.createElement('button');
           btn.className = 'li-more-btn';
-          btn.textContent = `더보기 (${allRows.length - FOLD}개사)`;
+          btn.textContent = expanded ? '접기' : `더보기 (${allRows.length - FOLD}개사)`;
           btn.addEventListener('click', () => {
-            if (sec === 'Life') bubbleLifeExpanded = true; else bubbleNonlifeExpanded = true;
+            const next = !expanded;
+            if (sec === 'Life') bubbleLifeExpanded = next; else bubbleNonlifeExpanded = next;
             renderBubbleList();
           });
           host.appendChild(btn);
