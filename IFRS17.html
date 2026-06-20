@@ -103,7 +103,7 @@
     </div>
     <div class="panel" data-pane="hist">
       <h2>2) CSM 시계열 (2023.1Q ~ 2026.1Q)</h2>
-      <div class="small-muted" id="histCap">선택 보험사의 분기별 CSM 진화. 파란선 = 기말 CSM 잔액(stock), 분홍선 = 신계약 CSM **당기 증분**(공시 YTD를 분기 흐름으로 환산; 중간 분기 결측 시 합산 span은 툴팁 표시). y축은 조회 회사 기준 동적 스케일. 1)·2)는 동일 소스(CSM_waterfall.json)라 수치 일치.</div>
+      <div class="small-muted" id="histCap">분기별 CSM 추이 · 단위 조원 · 신계약 CSM은 당기 증분(YTD를 분기로 환산)</div>
       <div id="histStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container"><canvas id="canvasHist"></canvas></div>
     </div>
@@ -880,7 +880,7 @@
     return { periods, datasets };
   }
 
-  function mountDash(){
+  function mountDash(company){
     const host=document.getElementById("dashHost");
     host.innerHTML="";
     const tpl=document.getElementById("dashTpl");
@@ -915,6 +915,15 @@
     (function step(t){const p=Math.min((t-t0)/d,1),e=1-Math.pow(1-p,3);el.textContent=fmt(target*e);if(p<1)requestAnimationFrame(step);})(t0);
   }
 
+  // 억원 → "X조 Y,YYY억원" (1조 미만은 "Y,YYY억원"). 억 정수 반올림, 음수 △.
+  function fmtEokKR(eok){
+    if(eok==null || !Number.isFinite(eok)) return '—';
+    const neg = eok < 0;
+    const v = Math.round(Math.abs(eok));
+    const jo = Math.floor(v/10000), rem = v%10000;
+    const s = jo>0 ? (jo.toLocaleString()+'조'+(rem>0 ? (' '+rem.toLocaleString()+'억원') : '')) : (v.toLocaleString()+'억원');
+    return (neg?'△':'')+s;
+  }
   function renderKpi7(host, company, latestQ) {
     const cu=(id,val,fmt)=>{ const el=document.getElementById(id); if(!el) return; val!=null ? countUp(el,val,fmt) : (el.textContent='—'); };
     const closing = wfVal(company, latestQ, 6, 'y');
@@ -922,9 +931,9 @@
     const nbCSM   = wfVal(company, latestQ, 2, 'y');
     const nbPts   = (ix.nbm.get(company)||[]).filter(r=>r["신계약CSM배수_연누계"]!=null);
     const nbMult  = nbPts.length ? nbPts[nbPts.length-1]["신계약CSM배수_연누계"] : null;
-    cu('kpi7Closing', closing,              v=>fmtNum(v,1)+'조');
-    cu('kpi7Amort',   amort!=null?Math.abs(amort):null, v=>fmtNum(v,2)+'조');
-    cu('kpi7NbCsm',   nbCSM,                v=>fmtNum(v,1)+'조');
+    cu('kpi7Closing', closing,                          fmtEokKR);
+    cu('kpi7Amort',   amort!=null?Math.abs(amort):null, fmtEokKR);
+    cu('kpi7NbCsm',   nbCSM,                            fmtEokKR);
     cu('kpi7NbMult',  nbMult!=null?Number(nbMult):null, v=>fmtNum(v,2)+'×');
   }
 
@@ -936,7 +945,7 @@
     const _cs=document.getElementById("company");
     if(_cs){ _cs.style.borderColor = currentKey.isKey ? currentKey.primary : ""; _cs.style.boxShadow = currentKey.isKey ? ("0 0 0 2px "+currentKey.soft) : ""; }
     destroyCharts();
-    const host=mountDash();
+    const host=mountDash(company);
 
     const wfName = ix.wfx.has(company) ? company : null;
     const wfHas = !!wfName;
