@@ -236,6 +236,8 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
       23: { key: 'othercap', nums: [24, 25, 26] },
     };
     const subOpen = { netasset: false, life: false, mkt: false, othercap: false };
+    // 표시용 회사명 정리 — 드롭다운 라벨에만 적용. value(조회 키)는 원수사명 유지.
+    const COMPANY_DISPLAY = { '에이아이에이생명보험': 'AIA생명' };
 
     function getTransitionMode() {
       return document.getElementById('transition-mode').value || '적용전';
@@ -1367,7 +1369,7 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
           missing.sort((a, b) => a.localeCompare(b, 'ko'));
           for (const nm of missing){
             const o = document.createElement('option');
-            o.value = nm; o.textContent = nm;
+            o.value = nm; o.textContent = COMPANY_DISPLAY[nm] || nm;
             sel.appendChild(o);
           }
         })();
