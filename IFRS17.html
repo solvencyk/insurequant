@@ -2,6 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8"/>
+  <!-- CSP: defense-in-depth, meta-delivered (GitHub Pages static — no HTTP headers). Must stay first in <head>, before CDN tags. frame-ancestors/report-uri are ignored in meta CSP. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>InsureQuant — IFRS17</title>
   <meta name="description" content="보험사별 CSM 워터폴·상각 전망·신계약 CSM 배수·당기순이익 분해 — 분기 공시 기반 대시보드"/>
