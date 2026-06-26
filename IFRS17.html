@@ -429,7 +429,7 @@
     if (window.matchMedia("(max-width:640px)").matches) buckets = buckets.slice(-1);  // D9: 모바일 최신 1버킷
     const bars = wfBuildBars(company, buckets, mode);
 
-    const xs=[], placeholder=[], positive=[], negative=[], totals=[], missing=[];
+    const xs=[], placeholder=[], positive=[], negative=[], totals=[], missing=[], levels=[];
     let running=0;
     bars.forEach((bar)=>{
       if(bar.kind==="open") xs.push(bar.period+"\n기초");
@@ -439,6 +439,7 @@
       if(bar.kind==="open" || bar.kind==="close"){
         placeholder.push("-"); positive.push("-"); negative.push("-"); missing.push("-");
         const v=bar.value; totals.push(v!=null?v:"-");
+        if(v!=null) levels.push(v);
         if(bar.kind==="open" && v!=null) running=v;
         return;
       }
@@ -446,12 +447,24 @@
       if(v==null){
         const hint=Math.max(Math.abs(running)*0.02, 30);
         placeholder.push(running); positive.push("-"); negative.push("-"); totals.push("-"); missing.push(hint);
+        levels.push(running);
         return;
       }
       missing.push("-");
+      levels.push(running, running+v);
       if(v>=0){ placeholder.push(running); positive.push(v); negative.push("-"); totals.push("-"); running+=v; }
       else    { placeholder.push(running+v); positive.push("-"); negative.push(-v); totals.push("-"); running+=v; }
     });
+    // y축 줌: 기초/기말 CSM 잔액이 커서 0부터면 변동 항목이 눌림 → 데이터가 점유하는 밴드로 범위 축소(변동 가시성↑).
+    // 작은 CSM 회사는 max(0,…)로 자연스레 0-base 유지. 기초/기말 막대 바닥은 의도적 clip(broken-axis 줌).
+    const _lv = levels.filter(x => typeof x === "number" && isFinite(x));
+    let wfYMin, wfYMax;
+    if (_lv.length){
+      const lo = Math.min(..._lv), hi = Math.max(..._lv), span = hi - lo;
+      const pad = span > 0 ? span * 0.12 : Math.max(Math.abs(hi) * 0.05, 100);
+      wfYMin = Math.max(0, lo - pad);
+      wfYMax = hi + pad;
+    }
 
     const isMobile = window.matchMedia("(max-width:640px)").matches;
     let dataZoom;
@@ -489,6 +502,7 @@
       },
       yAxis:{
         type:"value", name:"조원",
+        min: wfYMin, max: wfYMax,
         nameTextStyle:{ color:"#6c757d", fontSize:11 },
         axisLabel:{ color:"#6c757d", formatter:v=> (v<0?"△":"")+Math.abs(v/10000).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
         splitLine:{ lineStyle:{ color:"#e9ecef" } },
