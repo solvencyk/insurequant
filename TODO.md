@@ -60,6 +60,17 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 > 2023.3Q 19_market = 소스표 실재 → 36/38 적재로 **GREEN 해소**(cadence-SKIP 불필요, 아래 정정).
 > K4(sensitivity 적용후)·K1(designer)은 게이트 무관.
 
+> **Update 2026-07-03 (owner 워크스루 3건, parser/kics):** owner가 사이트에서 눈으로 발견한 kics 3건 처리.
+> (1) **KR0083 푸본현대 2025.2Q** — FY2025_Q2 슬롯에 **엉뚱한 회사(KR0075 비엔피파리바카디프) PDF**가 적재돼
+>   있었음(자기정합 데이터라 산술 게이트 GREEN 통과 = false-green). items 1-28을 진짜 푸본현대 값(25.3Q MD의
+>   25.2Q 컬럼)으로 교정(지급여력비율 318.25%→**−10.13%**, 자본잠식 실값). sub-risk 29-46은 정본 PDF 부재로
+>   삭제 → **downloader refetch 발주**(`inbox/downloader/20260703T1250Z...`). **잔여 RED = KR0083 2025.2Q
+>   `19_market` 1건**(item19=8559 공시·36-40 결측, 정본 PDF 재취득 대기) = **documented exception, downloader
+>   완료 시 해소**. (2) **KR0050 하나손보** 25.3Q #34 사업비 405.11·#35 대재해 44.81 backfill(docling 표뭉갬
+>   복구) + 2024.2Q #35 대재해 0.04→40.86(콤마→마침표 오독). (3) **KR0076 아이엠라이프 26.1Q** sub 적용후
+>   4개 채움(장수 68.37·해지 1249.87·사업비 433.16·대재해 36.95; 사망/장해질병=비대상, 장기재물=원천 N/A).
+>   → 게이트 사각 2건(cross-quarter plausibility·parent-present-child-absent census) validation 발주.
+
 **✅ Structural non-disclosure — documented exceptions (parser-confirmed; image/scan/micro, 추출 불가):**
 - **36_irr × 12** (item36 공시인데 순자산가치 6시나리오표 추출불가):
   - KR0010 KB손해 2023.4Q·2024.2Q·2025.4Q — 금리위험액 현황표가 **full-page 이미지**(p75-76 imgs=1,text=0; "금리는 내부모형" 주석). owner OCR.
@@ -70,6 +81,7 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
   - KR0010 KB손해 2024.4Q·2025.2Q — 금리위험액 이미지(주식/부동산/외환만 텍스트, 5종 reconcile 불가).
   - KR0068 한화생명 2023.4Q·2025.2Q — 금리위험액 현황 표 본문 이미지(헤더만 텍스트; 2025.2Q diff=60,815 = 금리 결측 탓).
   - KR0080 AIA 2025.4Q — scan-only(아래 documented).
+  - **KR0083 푸본현대 2025.2Q (TEMPORARY, wrong-PDF)** — FY2025_Q2 PDF가 KR0075(BNP파리바카디프)와 sha256 동일(오파일). 코어 1-28은 25.3Q MD 직전분기컬럼서 교정(318%→−10.13), subs 36-40은 정본 PDF 대기 → downloader `20260703T1250Z`. **정본 재파싱 시 해소(구조적 미공시 아님).** 상세=위 2026-07-03 owner 워크스루 (1).
 - **rule 2 × 1**: KR0080 AIA 2025.1Q (diff=−789) — scan-only(아래 documented).
 - **rule 1 × 1**: KR0004 예별손해 2024.2Q (item1 3,572 ≠ item2 498 + item3 3,085 = 3,583, diff 11) — **소스 충실**(MD L268-270 그대로). 부실사 보완자본 한도초과/억원 반올림으로 지급여력금액이 단순합과 불일치 = 공시 자체 특성, 파싱오류 아님. 인접 분기는 diff<tol이라 미발화.
 - **rule 8_life × 1**: KR0079 미래에셋 2023.2Q — scan-only. **8_life는 SKIP=게이트 비차단**.

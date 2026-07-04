@@ -206,14 +206,14 @@ sources:
     universe_file: src/ifrs17/universe.py
     universe_summary:
       listed_13Q: 23
-      audit_only_5:
+      audit_only_6:
+        - IBK연금보험  # 격상 2026-07-03: 감사보고서 F형만 (FY2023~FY2025 수집 완료). 연금전업사. DART alias=아이비케이연금보험
         - 라이나생명보험
         - 메트라이프생명보험
         - 에이아이에이생명보험
         - 하나생명보험
         - 처브라이프생명보험
-      non_listed_skip_8_audit_ok:
-        - IBK연금보험
+      non_listed_skip_7_audit_ok:
         - 교보라이프플래닛
         - 비엔피파리바카디프
         - 신한이지손해

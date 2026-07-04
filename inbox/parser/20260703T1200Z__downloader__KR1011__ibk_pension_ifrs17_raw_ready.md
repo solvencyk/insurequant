@@ -2,7 +2,7 @@
 from: downloader
 to: parser
 created: 20260703T1200Z
-status: open
+status: done
 route: extract
 company: KR1011 IBK연금보험
 period: FY2023~FY2025
@@ -73,11 +73,29 @@ IBK measurement 표가 빌더 STAGE_ROWS와 라벨이 달라(`waterfall_for_dir`
 - 3중검증: closure(①+②+③+④+⑤=⑥) 매년 정확 · continuity(기초=직전 기말) Δ=0 · 배당별 cross-check.
 - 레코드형식: 원수사명=`IBK연금보험`(kics명), 티커=`X`(비상장·메트라이프 관례), 생손보=`생명보험`, 값_당분기=①~⑤ null·⑥=값(라이나/메트라이프 연간사 관례). **텍스트 splice로 append(CRLF+indent2 보존, +198/−0 순수추가)**.
 
-### ⏳ 후속(focused, 미완) — 라우팅
-1. **PL_breakdown (24항목×3개년) = audit-only 완전 gold 빌드.** IBK는 **FS-API가 3개년 전부 empty**(비상장 감사보고서사 = 라이나 KR0074·메트라이프 패턴) + generic tier2 핸들러가 IBK 구조 미처리. → 감사보고서 포괄손익계산서(tier1) raw 직접판독 + 보험서비스결과 분해(tier2: 원수/재보험×CSM상각·위험조정·예실차) hand-build → `_GOLD_CELL_OVERRIDE` 등록, item1=2−16·17=18+19·20=1+17 closure 검증. **이번 세션 최대 단일작업 → 별도 focused 세션.**
-2. **sensitivity(민감도)** — `아이비케이연금보험_*_sensitivity.json` 추출 확인 후 sensitivity_heatmap 반영(별도).
+### ✅ 완료(2차) — PL_breakdown.json 적재 (72레코드 = 24항목×3개년)
+IBK는 **FS-API 3개년 전부 status=013(empty)** (비상장 감사보고서사 = 라이나·메트라이프 패턴) + generic tier2 핸들러 전부 IBK 구조 미처리 → **hand-assemble**:
+- **tier1(손익계산서)**: `extract_tier1(raw tables)`로 포괄손익계산서 직접추출 (items 1·16·17·19·20·21·23·24). item18=17−19, item22=20+21 파생.
+- **tier2(보험손익 분해)**: measurement block0(당기 whole-book) **합계열 부호반전 ÷1000(천원→백만)**. item3=−(보험서비스결과), item4=−(제공된서비스 보험계약마진)=CSM상각, item5=−(비금융위험조정변동), item6=−(경험조정), item7=residual. item2=item3(item8~12 재보험=0, item2==item1+item16 정합확인), 13·14·15=0.
+- **closure 5종 전부 Δ=0.000**: 1=2+15−16 · 17=18+19 · 20=1+17 · 3=4+5+6+7 · 24=22−23. 매년(2023·2024·2025) 통과.
+- **교차검증**: ⓐ **동시 세션이 viz pl_breakdown_master.json에 독립 산출한 IBK 값이 6자리까지 완전일치** ⓑ PL item4(원수 CSM상각 440.28억) = CSM waterfall item5(△440.3억) 일치.
+- 값(백만원): 보험손익 2023 23,527 / 2024 23,647 / 2025 44,953 · 당기순이익 2023 △25,980(전환+금리 loss) / 2024 28,892 / 2025 11,194.
+- 형식: 티커=null·값_당분기=null(라이나 관례), 텍스트 splice append(CRLF·indent2, +792/−0 순수추가, 7727→7799).
+
+### ⏳ 후속 — 라우팅
+1. **sensitivity(민감도)** — `아이비케이연금보험_*_sensitivity.json` 추출 확인 후 sensitivity_heatmap 반영(별도).
 3. **downstream(publishing/미실행)**: ⓐ master xlsx 재생성(formula-cache 위험 + owner 지시 = 공식 xlsx skill로, 내가 openpyxl 재저장 금지). ⓑ CSM 마스터→viz 전파(viz_build_csm_waterfall·csm_bubble·NB_CSM_multiple) 후에야 사이트 표시. **파괴적 빌더(build_csm_waterfall_master) 실행 금지** — 나는 master JSON append만.
 
-**현재 상태**: CSM 마스터엔 IBK 존재(사이트 CSM 패널은 viz 전파 후 표시), PL 마스터엔 IBK 아직 없음(부분 온보딩, 의도된 상태).
+**현재 상태**: CSM_waterfall.json + PL_breakdown.json 두 마스터 모두 IBK 적재 완료(24항목×3개년 PL closure 검증). 사이트 표시는 viz 전파(publishing) 후. 민감도만 remaining.
 
-status → open 유지 (PL·민감도·viz 전파 remaining).
+### ✅ 완료(3차) — viz 전파 완료 (2026-07-04)
+
+- sensitivity_heatmap.json: IBK(아이비케이연금보험) 포함 (27/32 ok)
+- csm_amort_schedule.json: IBK 포함 (28/30 ok)
+- insurance_pl_breakdown.json: IBK 포함 (29/29 ok)
+- csm_waterfall.json: IBK FY23-25 partial (opening/interest/assumption/closing, newbiz 별도 parser 이슈)
+- csm_bubble.json, downstream_kpis.json, earnings_quadrant.json: 재빌드 완료
+
+**remaining**: master xlsx 재생성 (xlsx skill — openpyxl 재저장 금지).
+
+status → done.

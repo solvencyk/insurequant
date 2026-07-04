@@ -144,7 +144,7 @@ def _ytd_col(t):
 
 
 # net-income line labels: annual statements say 당기순이익; 반기/분기보고서 say 반기순이익/분기순이익.
-NI_LABELS = ("당기순이익", "반기순이익", "분기순이익", "계속영업")
+NI_LABELS = ("당기순이익", "반기순이익", "분기순이익", "계속영업", "당기순손익")
 
 
 def _is_income_statement(t):
@@ -160,7 +160,7 @@ def _is_income_statement(t):
         return False
     labs = " ".join(_label(r) for r in t.rows)
     has_top = any(k in labs for k in INCOME_PROFIT_LABELS)
-    has_op = "영업이익" in labs
+    has_op = "영업이익" in labs or "영업손익" in labs
     has_tax = "법인세" in labs
     has_ni = any(k in labs for k in NI_LABELS)
     return has_top and has_op and has_tax and has_ni
@@ -258,7 +258,7 @@ def extract_tier1(tables, code=None):
         #  • otherwise → col 0 (leading current-period column)
         tcol = 1 if _is_transition_table(t) else _ytd_col(t)
         ni_raw = _pick_priority(t, ("연결당기순이익", "당기순이익(손실)", "당기순이익",
-                                    "반기순이익", "분기순이익",
+                                    "반기순이익", "분기순이익", "당기순손익",
                                     "계속영업당기순이익", "계속영업이익(손실)"), col=tcol)
         if ni_raw is None or ni_raw == 0:
             continue
@@ -279,7 +279,7 @@ def extract_tier1(tables, code=None):
         oth_exp = L("기타사업비용")
         if oth_exp is None:
             oth_exp = L("기타보험비용")          # 하나생명 income-statement label variant
-        op = L("영업이익", exclude=("영업외",))
+        op = L("영업이익", "영업손익", exclude=("영업외",))
         oi = L("영업외수익")
         oe = L("영업외비용")
         oth_op = L("영업외손익")
@@ -4783,6 +4783,22 @@ _GOLD_CELL_OVERRIDE = {
     # item17 = 18 + 19(순보험금융손익 −317,069.65) = 821.41; 영업이익 = item1(33,699.87) +
     # item17 = 34,521.27 = 재무제표 Ⅴ.영업이익 일치(gap 0). (owner P3 disposition = parse_miss)
     ("KR0097", "2025.4Q"): {18: 317891.058866, 17: 821.407415},
+    # IBK연금보험 KR1011 (비상장·감사보고서만, 단위 천원): tier2 주석 [166][167]에서 직접 계산.
+    # item3 = 보험수익합계 − 보험서비스비용합계; item4=CSM상각, item5=RA변동,
+    # item6=예상발생 − 실제발생(예실차), item7=잔차(손실부담계약 등).
+    # item8-12=0(재보험없음), item13-14=0(자동차/일반없음). closure OK all 3Y.
+    ("KR1011", "2023.4Q"): {
+        2: 24523.813, 3: 24523.813, 4: 26151.758, 5: 3078.527, 6: -6745.186, 7: 2038.714,
+        8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0,
+    },
+    ("KR1011", "2024.4Q"): {
+        2: 27402.597, 3: 27402.597, 4: 35111.633, 5: 2162.61, 6: -5855.725, 7: -4015.921,
+        8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0,
+    },
+    ("KR1011", "2025.4Q"): {
+        2: 50472.844, 3: 50472.844, 4: 44027.788, 5: 2878.019, 6: 2508.072, 7: 1058.965,
+        8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0,
+    },
 }
 
 

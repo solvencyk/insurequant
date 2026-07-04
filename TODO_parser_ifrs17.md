@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-06-13 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-07-04 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser.md
 
 Stage 2 — **parser, IFRS17 lane**: CSM/PL extraction. Source = DART body XML; output = `CSM_waterfall` / `PL_breakdown` masters; validators = CSM golds / PL golds / `csm_waterfall` / `pl_bridge`. The K-ICS lane (solvency disclosure off Docling MD) lives in `TODO_parser_kics.md` and runs as a separate session.
@@ -23,6 +23,17 @@ IFRS17 lane is **mature**: CSM waterfall + PL breakdown masters all built (root 
 >
 > **phase-2 잔존** (FY2025 sensitivity 전사 refresh): band/generic 경로 product/sub-row 일반화(농협/케이디비
 > 가비지) + 동양/메트라이프/에이비엘/처브 SA=0 분류 — 다세션. 현 heatmap은 흥국만 FY2025, 나머지 FY2024 유지.
+
+---
+
+## 🟡 Completed (2026-07-04) — IBK연금보험 KR1011 온보딩
+
+- [x] CSM_waterfall.json IBK 3개년 적재 (closure/continuity 검증 완료)
+- [x] PL_breakdown.json IBK 72레코드 적재 (tier1+tier2 gold override, closure 5종 Δ=0)
+- [x] viz 전파 (sensitivity_heatmap/csm_amort/insurance_pl/csm_waterfall/csm_bubble/kpis/quadrant)
+- [x] publishing inbox 발송
+- [ ] **IBK CSM waterfall newbiz 스테이지 누락** — `viz_build_csm_waterfall.py` partial 상태. measurement 라벨 `당기에 최초로 인식한 계약`이 STAGE_ROWS에 매핑 안 됨 → parser 추가 대응 필요 (P2).
+- [ ] **master xlsx 재생성** — xlsx skill 사용 (publishing 세션).
 
 ---
 

@@ -52,6 +52,7 @@ from src.ifrs17.sensitivity_extractor import (  # noqa: E402
     to_jsonable as sens_to_jsonable,
 )
 from src.ifrs17.universe import AUDIT_REPORT_ANNUAL  # noqa: E402
+from scripts.ifrs17_batch_all import NAME_ALIASES  # noqa: E402
 
 # Canonical raw-path helper (post-Reorg #2): FY<y>_Q4/raw/<KR>_<name>_<rcept>/.
 from scripts._dart_path_helpers import annual_raw_dir  # noqa: E402
@@ -66,8 +67,9 @@ TIER_EXTRACTORS = [
 
 
 def pick_corp(client: OpenDARTClient, name: str) -> dict | None:
-    ms = client.find_corp_codes_by_name(name)
-    exact = [m for m in ms if m["corp_name"] == name]
+    query = NAME_ALIASES.get(name, name)
+    ms = client.find_corp_codes_by_name(query)
+    exact = [m for m in ms if m["corp_name"] == query]
     return exact[0] if exact else (ms[0] if ms else None)
 
 

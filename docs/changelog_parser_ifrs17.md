@@ -1,6 +1,6 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-06-13 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-07-04 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
 IFRS17 extraction history: DART body XML → CSM_waterfall / PL_breakdown / NB-CSM-multiple masters.
@@ -9,6 +9,18 @@ Code: `src/ifrs17/` (csm / measurement / insurance_pl / reinsurance / bs_snapsho
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+## 2026-07-04 — IBK연금보험 KR1011 신규 온보딩 (CSM + PL + viz 전파)
+
+- **universe.py**: IBK연금보험을 `NON_LISTED_SKIP`에서 제거 → `AUDIT_REPORT_ANNUAL`에 추가. DART 감사보고서 F형 라우트.
+- **ifrs17_ingest_audit_annual.py**: `NAME_ALIASES` 적용 (IBK연금보험 → 아이비케이연금보험 DART 검색).
+- **CSM_waterfall.json**: 3개년 18레코드 hand-assemble (measurement block0 당기 whole-book, 천원→억원). closure/continuity 3중 검증 통과. waterfall viz partial (newbiz 스테이지 누락 — parser 추가 대응 필요).
+- **build_pl_breakdown.py 4패치**: IBK 라벨 변형 처리 — `NI_LABELS`+당기순손익, `_is_income_statement`+영업손익, `extract_tier1` ni_raw+op 확장.
+- **_GOLD_CELL_OVERRIDE KR1011 3개년**: notes [166][167] (보험수익/보험서비스비용 내역) 직접 계산. item3=보험수익합계−서비스비용합계, item4=CSM상각, item5=RA변동, item6=예실차(예상−실제), item7=잔차(손실부담계약). closure 5종 Δ=0 전부. item8-12=0(재보없음), 13-14=0(자동차/일반없음).
+- **viz 전파 재빌드**: sensitivity_heatmap(27/32), csm_amort_schedule(28/30), insurance_pl_breakdown(29/29), csm_waterfall(47 total), csm_bubble, downstream_kpis, earnings_quadrant.
+- **publishing inbox**: `20260704T0600Z__parser_ifrs17__KR1011__ibk_masters_ready.md` 발송.
+
+---
 
 ## 2026-06-20 — owner-fill durability · capital securities · CSM continuity (교보/삼성) · provenance
 - **Owner xlsx fill durability (0811Z):** owner가 root에 sync한 fill을 빌드 소실서 보호. PL은 override 레이어가 없어 신규 **`data/dart/viz/pl_manual_overrides.json`** + `build_root_masters._apply_pl_overrides`(_zero_other_expense 後) 도입(121셀). CSM 10셀(AIG손해 2025.4Q 6·하나손해 이자부리/조정 4)→`csm_manual_overrides.json`. 재빌드=owner root 값 정확 재현(값 변경 0 검증). 현대해상 26셀 estimate 플래그.

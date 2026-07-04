@@ -1,0 +1,325 @@
+{
+  "_meta": {
+    "chart": "INDEX-BUBBLE-V2: 4-axis IFRS17 bubble (index.html)",
+    "axes": {
+      "x": "당기순이익 (억원) — net_income_breakdown.json tier1.당기순이익",
+      "y": "CSM 잔액 (억원) — csm_bubble.json csm_closing_eok",
+      "size": "신계약 CSM (억원) — csm_bubble.json nb_csm_eok_annual",
+      "color": "신계약 CSM 배수 — csm_bubble.json nb_csm_multiple"
+    },
+    "unit": "억원",
+    "sources": [
+      "data/dart/viz/csm_bubble.json",
+      "data/dart/viz/net_income_breakdown.json"
+    ],
+    "generated_utc": "2026-06-14T08:16:49Z"
+  },
+  "census": {
+    "bubble_total": 28,
+    "with_net_income": 10,
+    "with_all_axes": 10,
+    "missing_net_income": [
+      "DB생명보험",
+      "교보생명보험",
+      "농협생명보험",
+      "동양생명",
+      "라이나생명보험",
+      "메트라이프생명보험",
+      "미래에셋생명",
+      "삼성생명",
+      "신한라이프생명보험",
+      "에이비엘생명보험",
+      "에이아이에이생명보험",
+      "처브라이프생명보험",
+      "케이디비생명보험",
+      "케이비라이프생명보험",
+      "푸본현대생명보험",
+      "하나생명보험",
+      "한화생명",
+      "흥국생명보험"
+    ],
+    "note": "net_income_breakdown is 손보-only; 18 life insurers lack 당기순이익 source. Full 28-co coverage needs a life-insurer net-income extraction (parser)."
+  },
+  "companies": [
+    {
+      "company": "삼성화재해상보험",
+      "sector": "Non-Life",
+      "net_income_eok": 20202.87,
+      "csm_closing_eok": 140739.08,
+      "nb_csm_eok_annual": 34511.83,
+      "nb_csm_multiple": 15.68,
+      "color": "hsl(120, 58.4%, 32.32%)",
+      "has_all_axes": true
+    },
+    {
+      "company": "DB손해보험",
+      "sector": "Non-Life",
+      "net_income_eok": 17905.81,
+      "csm_closing_eok": 122317.59,
+      "nb_csm_eok_annual": 30780.38,
+      "nb_csm_multiple": 16.29,
+      "color": "hsl(120, 61.449999999999996%, 31.71%)",
+      "has_all_axes": true
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "sector": "Non-Life",
+      "net_income_eok": 16928.67,
+      "csm_closing_eok": 104687.26,
+      "nb_csm_eok_annual": 16006.48,
+      "nb_csm_multiple": 11.46,
+      "color": "hsl(90, 45%, 35%)",
+      "has_all_axes": true
+    },
+    {
+      "company": "현대해상",
+      "sector": "Non-Life",
+      "net_income_eok": 10432.96,
+      "csm_closing_eok": 83054.87,
+      "nb_csm_eok_annual": 18278.79,
+      "nb_csm_multiple": 16.16,
+      "color": "hsl(120, 60.8%, 31.84%)",
+      "has_all_axes": true
+    },
+    {
+      "company": "KB손해보험",
+      "sector": "Non-Life",
+      "net_income_eok": 7810.77,
+      "csm_closing_eok": 88204.82,
+      "nb_csm_eok_annual": 19323.21,
+      "nb_csm_multiple": 12.8,
+      "color": "hsl(120, 44.0%, 35.2%)",
+      "has_all_axes": true
+    },
+    {
+      "company": "한화손해보험",
+      "sector": "Non-Life",
+      "net_income_eok": 3610.59,
+      "csm_closing_eok": 76064.42,
+      "nb_csm_eok_annual": 14819.78,
+      "nb_csm_multiple": 16.83,
+      "color": "hsl(120, 64.14999999999999%, 31.17%)",
+      "has_all_axes": true
+    },
+    {
+      "company": "코리안리",
+      "sector": "Non-Life",
+      "net_income_eok": 3220.41,
+      "csm_closing_eok": 8031.46,
+      "nb_csm_eok_annual": 2416.5,
+      "nb_csm_multiple": null,
+      "color": "#adb5bd",
+      "has_all_axes": true
+    },
+    {
+      "company": "흥국화재",
+      "sector": "Non-Life",
+      "net_income_eok": 1516.89,
+      "csm_closing_eok": 24707.94,
+      "nb_csm_eok_annual": 3127.58,
+      "nb_csm_multiple": 7.62,
+      "color": "hsl(45, 55%, 42%)",
+      "has_all_axes": true
+    },
+    {
+      "company": "NH농협손해보험",
+      "sector": "Non-Life",
+      "net_income_eok": 823.95,
+      "csm_closing_eok": 41103.1,
+      "nb_csm_eok_annual": 7103.66,
+      "nb_csm_multiple": 6.28,
+      "color": "hsl(45, 55%, 42%)",
+      "has_all_axes": true
+    },
+    {
+      "company": "롯데손해보험",
+      "sector": "Non-Life",
+      "net_income_eok": 513.31,
+      "csm_closing_eok": 46403.14,
+      "nb_csm_eok_annual": 9705.04,
+      "nb_csm_multiple": 29.52,
+      "color": "hsl(120, 80.0%, 28.0%)",
+      "has_all_axes": true
+    },
+    {
+      "company": "신한라이프생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 144535.86,
+      "nb_csm_eok_annual": 25315.26,
+      "nb_csm_multiple": 18.61,
+      "color": "hsl(120, 73.05%, 29.39%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "한화생명",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 132968.23,
+      "nb_csm_eok_annual": 21230.86,
+      "nb_csm_multiple": 17.4,
+      "color": "hsl(120, 67.0%, 30.6%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "삼성생명",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 130806.91,
+      "nb_csm_eok_annual": 32984.94,
+      "nb_csm_multiple": 27.54,
+      "color": "hsl(120, 80.0%, 28.0%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "교보생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 117485.1,
+      "nb_csm_eok_annual": 27557.1,
+      "nb_csm_multiple": 15.4,
+      "color": "hsl(120, 57.0%, 32.6%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "농협생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 91830.72,
+      "nb_csm_eok_annual": 16285.54,
+      "nb_csm_multiple": 7.56,
+      "color": "hsl(45, 55%, 42%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "라이나생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 32301.62,
+      "nb_csm_eok_annual": 5732.66,
+      "nb_csm_multiple": 14.33,
+      "color": "hsl(120, 51.65%, 33.67%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "케이비라이프생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 31798.25,
+      "nb_csm_eok_annual": 5013.04,
+      "nb_csm_multiple": 6.45,
+      "color": "hsl(45, 55%, 42%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "동양생명",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 25418.01,
+      "nb_csm_eok_annual": 7601.62,
+      "nb_csm_multiple": 10.48,
+      "color": "hsl(90, 45%, 35%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "흥국생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 22152.05,
+      "nb_csm_eok_annual": 3882.99,
+      "nb_csm_multiple": 7.55,
+      "color": "hsl(45, 55%, 42%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "메트라이프생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 21521.06,
+      "nb_csm_eok_annual": 3742.09,
+      "nb_csm_multiple": 6.34,
+      "color": "hsl(45, 55%, 42%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "미래에셋생명",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 20782.1,
+      "nb_csm_eok_annual": 3946.05,
+      "nb_csm_multiple": 8.28,
+      "color": "hsl(90, 45%, 35%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "DB생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 16548.92,
+      "nb_csm_eok_annual": 5247.34,
+      "nb_csm_multiple": 15.49,
+      "color": "hsl(120, 57.45%, 32.51%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "에이아이에이생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 15096.49,
+      "nb_csm_eok_annual": 3557.2,
+      "nb_csm_multiple": 17.73,
+      "color": "hsl(120, 68.65%, 30.27%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "에이비엘생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 8695.43,
+      "nb_csm_eok_annual": 2458.43,
+      "nb_csm_multiple": 2.67,
+      "color": "hsl(0, 55.97%, 35.204%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "케이디비생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 8650.45,
+      "nb_csm_eok_annual": 3282.22,
+      "nb_csm_multiple": 13.02,
+      "color": "hsl(120, 45.099999999999994%, 34.980000000000004%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "하나생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 4389.56,
+      "nb_csm_eok_annual": 3240.35,
+      "nb_csm_multiple": 3.91,
+      "color": "hsl(0, 44.81%, 36.692%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "푸본현대생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 1423.49,
+      "nb_csm_eok_annual": 528.76,
+      "nb_csm_multiple": 0.24,
+      "color": "hsl(0, 77.84%, 32.288%)",
+      "has_all_axes": false
+    },
+    {
+      "company": "처브라이프생명보험",
+      "sector": "Life",
+      "net_income_eok": null,
+      "csm_closing_eok": 1123.82,
+      "nb_csm_eok_annual": 98.06,
+      "nb_csm_multiple": 3.86,
+      "color": "hsl(0, 45.260000000000005%, 36.632%)",
+      "has_all_axes": false
+    }
+  ]
+}

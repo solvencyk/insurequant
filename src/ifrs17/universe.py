@@ -18,7 +18,6 @@ User decisions (2026-05-24 Open Q1-Q9):
 from __future__ import annotations
 
 NON_LISTED_SKIP: frozenset[str] = frozenset({
-    "IBK\uC5F0\uAE08\uBCF4\uD5D8",
     "\uAD50\uBCF4\uB77C\uC774\uD504\uD50C\uB7AB",
     "\uB77C\uC774\uB098\uC0DD\uBA85",
     "\uBA54\uD2B8\uB77C\uC774\uD504\uC0DD\uBA85",
@@ -44,6 +43,7 @@ EXCLUDED_SKIP: frozenset[str] = frozenset({
 # in kics_disclosure.json (no public K-ICS row) and is carried here only.
 # (Feasibility verified 2026-05-29: existing csm_extractor parses all 5.)
 AUDIT_REPORT_ANNUAL: frozenset[str] = frozenset({
+    "IBK\uC5F0\uAE08\uBCF4\uD5D8",
     "\uB77C\uC774\uB098\uC0DD\uBA85\uBCF4\uD5D8",
     "\uBA54\uD2B8\uB77C\uC774\uD504\uC0DD\uBA85\uBCF4\uD5D8",
     "\uC5D0\uC774\uC544\uC774\uC5D0\uC774\uC0DD\uBA85\uBCF4\uD5D8",

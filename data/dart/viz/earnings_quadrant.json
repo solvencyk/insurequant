@@ -7,9 +7,9 @@
     "csm_runway_years": "closing_total_csm / abs(csm_amort_pl)"
   },
   "coverage": {
-    "total": 23,
-    "both_kpis": 7,
-    "partial_or_missing": 16
+    "total": 47,
+    "both_kpis": 14,
+    "partial_or_missing": 33
   },
   "companies": [
     {
@@ -85,11 +85,11 @@
       "company": "교보생명보험",
       "rcept_no": "20250331004015",
       "status": "ok",
-      "csm_dependency": 0.1429,
+      "csm_dependency": 0.0712,
       "csm_runway_years": 10.71,
       "components": {
-        "csm_amort_pl_mn": 1206281.0,
-        "closing_total_csm_mn": 12916514.0,
+        "csm_amort_pl_mn": 600984.0,
+        "closing_total_csm_mn": 6438058.0,
         "insurance_service_result_mn": null,
         "ifie_pl_mn": 8441513.0,
         "investment_income_mn": null,
@@ -100,41 +100,110 @@
     {
       "company": "농협생명보험",
       "rcept_no": "20250331003065",
-      "status": "missing",
+      "status": "partial",
       "csm_dependency": null,
-      "csm_runway_years": null,
+      "csm_runway_years": 10.93,
       "components": {
-        "csm_amort_pl_mn": null,
-        "closing_total_csm_mn": 5054172.0,
+        "csm_amort_pl_mn": 420177.0,
+        "closing_total_csm_mn": 4591536.0,
         "insurance_service_result_mn": null,
         "ifie_pl_mn": 0.0,
         "investment_income_mn": null,
         "earnings_base_mn": 0.0
       },
       "missing": [
-        "csm_amort_pl",
-        "earnings_base",
-        "csm_amort_pl"
+        "earnings_base"
       ]
     },
     {
       "company": "동양생명",
       "rcept_no": "20250319000486",
-      "status": "missing",
-      "csm_dependency": null,
-      "csm_runway_years": null,
+      "status": "ok",
+      "csm_dependency": 0.8514,
+      "csm_runway_years": 9.86,
       "components": {
-        "csm_amort_pl_mn": null,
-        "closing_total_csm_mn": 0.0,
+        "csm_amort_pl_mn": 257715.0,
+        "closing_total_csm_mn": 2541801.0,
         "insurance_service_result_mn": 302683.0,
         "ifie_pl_mn": null,
         "investment_income_mn": null,
         "earnings_base_mn": 302683.0
       },
+      "missing": []
+    },
+    {
+      "company": "라이나생명보험",
+      "rcept_no": "20230414000060",
+      "status": "missing",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "components": {
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": null,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
       "missing": [
         "csm_amort_pl",
+        "earnings_base",
         "closing_total_csm",
         "csm_amort_pl"
+      ]
+    },
+    {
+      "company": "라이나생명보험",
+      "rcept_no": "20240409003674",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 10.66,
+      "components": {
+        "csm_amort_pl_mn": 517623084.0,
+        "closing_total_csm_mn": 5515548316.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "라이나생명보험",
+      "rcept_no": "20250409002702",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 7.29,
+      "components": {
+        "csm_amort_pl_mn": 443127761.0,
+        "closing_total_csm_mn": 3230161575.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "라이나생명보험",
+      "rcept_no": "20260406004538",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 6.96,
+      "components": {
+        "csm_amort_pl_mn": 397170648.0,
+        "closing_total_csm_mn": 2763826124.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
       ]
     },
     {
@@ -178,33 +247,105 @@
       ]
     },
     {
-      "company": "미래에셋생명",
-      "rcept_no": "20250318001228",
+      "company": "메트라이프생명보험",
+      "rcept_no": "20230407003159",
       "status": "missing",
       "csm_dependency": null,
       "csm_runway_years": null,
       "components": {
         "csm_amort_pl_mn": null,
-        "closing_total_csm_mn": 466938.0,
+        "closing_total_csm_mn": null,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "csm_amort_pl",
+        "earnings_base",
+        "closing_total_csm",
+        "csm_amort_pl"
+      ]
+    },
+    {
+      "company": "메트라이프생명보험",
+      "rcept_no": "20240405002628",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 10.32,
+      "components": {
+        "csm_amort_pl_mn": 208561289.0,
+        "closing_total_csm_mn": 2152105610.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "메트라이프생명보험",
+      "rcept_no": "20250402000865",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 10.32,
+      "components": {
+        "csm_amort_pl_mn": 208561289.0,
+        "closing_total_csm_mn": 2152105610.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "메트라이프생명보험",
+      "rcept_no": "20260403003824",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 11.34,
+      "components": {
+        "csm_amort_pl_mn": 66642696.0,
+        "closing_total_csm_mn": 755779349.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "미래에셋생명",
+      "rcept_no": "20250318001228",
+      "status": "ok",
+      "csm_dependency": 0.1084,
+      "csm_runway_years": 6.69,
+      "components": {
+        "csm_amort_pl_mn": 35799.0,
+        "closing_total_csm_mn": 239327.0,
         "insurance_service_result_mn": null,
         "ifie_pl_mn": 330325.0,
         "investment_income_mn": null,
         "earnings_base_mn": 330325.0
       },
-      "missing": [
-        "csm_amort_pl",
-        "csm_amort_pl"
-      ]
+      "missing": []
     },
     {
       "company": "삼성생명",
       "rcept_no": "20250312001063",
       "status": "ok",
-      "csm_dependency": 21.277,
-      "csm_runway_years": 8.67,
+      "csm_dependency": 4.8605,
+      "csm_runway_years": 8.11,
       "components": {
-        "csm_amort_pl_mn": 563990.0,
-        "closing_total_csm_mn": 4889660.0,
+        "csm_amort_pl_mn": 128837.0,
+        "closing_total_csm_mn": 1044599.0,
         "insurance_service_result_mn": -26507.0,
         "ifie_pl_mn": null,
         "investment_income_mn": null,
@@ -235,39 +376,266 @@
     {
       "company": "신한라이프생명보험",
       "rcept_no": "20250318001216",
-      "status": "missing",
-      "csm_dependency": null,
-      "csm_runway_years": null,
+      "status": "ok",
+      "csm_dependency": 122146.8333,
+      "csm_runway_years": 9.86,
       "components": {
-        "csm_amort_pl_mn": null,
-        "closing_total_csm_mn": 8573512.0,
+        "csm_amort_pl_mn": 732881.0,
+        "closing_total_csm_mn": 7226793.0,
         "insurance_service_result_mn": null,
         "ifie_pl_mn": 6.0,
         "investment_income_mn": null,
         "earnings_base_mn": 6.0
       },
+      "missing": []
+    },
+    {
+      "company": "아이비케이연금보험",
+      "rcept_no": "20230407000580",
+      "status": "missing",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "components": {
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": null,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
       "missing": [
         "csm_amort_pl",
+        "earnings_base",
+        "closing_total_csm",
+        "csm_amort_pl"
+      ]
+    },
+    {
+      "company": "아이비케이연금보험",
+      "rcept_no": "20240328000905",
+      "status": "missing",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "components": {
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": 455839623.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "csm_amort_pl",
+        "earnings_base",
+        "csm_amort_pl"
+      ]
+    },
+    {
+      "company": "아이비케이연금보험",
+      "rcept_no": "20250328000503",
+      "status": "missing",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "components": {
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": 450111915.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "csm_amort_pl",
+        "earnings_base",
+        "csm_amort_pl"
+      ]
+    },
+    {
+      "company": "아이비케이연금보험",
+      "rcept_no": "20260331004893",
+      "status": "missing",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "components": {
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": 498792698.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "csm_amort_pl",
+        "earnings_base",
         "csm_amort_pl"
       ]
     },
     {
       "company": "에이비엘생명보험",
       "rcept_no": "20250331001358",
-      "status": "missing",
-      "csm_dependency": null,
-      "csm_runway_years": null,
+      "status": "ok",
+      "csm_dependency": 5.2408,
+      "csm_runway_years": 10.54,
       "components": {
-        "csm_amort_pl_mn": null,
-        "closing_total_csm_mn": 109747.0,
+        "csm_amort_pl_mn": 88926.0,
+        "closing_total_csm_mn": 937462.0,
         "insurance_service_result_mn": 13823.0,
         "ifie_pl_mn": 2682.0,
         "investment_income_mn": 463.0,
         "earnings_base_mn": 16968.0
       },
+      "missing": []
+    },
+    {
+      "company": "에이아이에이생명보험",
+      "rcept_no": "20230410002773",
+      "status": "missing",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "components": {
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": null,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
       "missing": [
         "csm_amort_pl",
+        "earnings_base",
+        "closing_total_csm",
         "csm_amort_pl"
+      ]
+    },
+    {
+      "company": "에이아이에이생명보험",
+      "rcept_no": "20240409002583",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 11.17,
+      "components": {
+        "csm_amort_pl_mn": 138084.0,
+        "closing_total_csm_mn": 1541758.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "에이아이에이생명보험",
+      "rcept_no": "20250401000094",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 9.67,
+      "components": {
+        "csm_amort_pl_mn": 156162.0,
+        "closing_total_csm_mn": 1509649.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "에이아이에이생명보험",
+      "rcept_no": "20260407002100",
+      "status": "missing",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "components": {
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": 495942.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "csm_amort_pl",
+        "earnings_base",
+        "csm_amort_pl"
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "rcept_no": "20230412002541",
+      "status": "missing",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "components": {
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": null,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "csm_amort_pl",
+        "earnings_base",
+        "closing_total_csm",
+        "csm_amort_pl"
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "rcept_no": "20240408003868",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 11.91,
+      "components": {
+        "csm_amort_pl_mn": 13588.0,
+        "closing_total_csm_mn": 161828.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "rcept_no": "20250407003402",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 11.25,
+      "components": {
+        "csm_amort_pl_mn": 9987.0,
+        "closing_total_csm_mn": 112382.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "rcept_no": "20260408003172",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 14.31,
+      "components": {
+        "csm_amort_pl_mn": 6067.0,
+        "closing_total_csm_mn": 86809.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
       ]
     },
     {
@@ -291,50 +659,62 @@
     {
       "company": "케이비라이프생명보험",
       "rcept_no": "20250314000905",
-      "status": "missing",
-      "csm_dependency": null,
-      "csm_runway_years": null,
+      "status": "ok",
+      "csm_dependency": 0.9236,
+      "csm_runway_years": 10.27,
       "components": {
-        "csm_amort_pl_mn": null,
+        "csm_amort_pl_mn": 293080.0,
         "closing_total_csm_mn": 3010509.0,
         "insurance_service_result_mn": 281836.0,
         "ifie_pl_mn": 35476.0,
         "investment_income_mn": null,
         "earnings_base_mn": 317312.0
       },
-      "missing": [
-        "csm_amort_pl",
-        "csm_amort_pl"
-      ]
+      "missing": []
     },
     {
       "company": "코리안리",
       "rcept_no": "20250320001161",
-      "status": "missing",
-      "csm_dependency": null,
-      "csm_runway_years": null,
+      "status": "ok",
+      "csm_dependency": 0.6452,
+      "csm_runway_years": 7.42,
       "components": {
-        "csm_amort_pl_mn": null,
+        "csm_amort_pl_mn": 108252.0,
         "closing_total_csm_mn": 803146.0,
         "insurance_service_result_mn": -167785.0,
         "ifie_pl_mn": null,
         "investment_income_mn": null,
         "earnings_base_mn": 167785.0
       },
-      "missing": [
-        "csm_amort_pl",
-        "csm_amort_pl"
-      ]
+      "missing": []
     },
     {
       "company": "푸본현대생명보험",
       "rcept_no": "20250328000873",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 8.34,
+      "components": {
+        "csm_amort_pl_mn": 17060.0,
+        "closing_total_csm_mn": 142349.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "하나생명보험",
+      "rcept_no": "20230331001232",
       "status": "missing",
       "csm_dependency": null,
       "csm_runway_years": null,
       "components": {
-        "csm_amort_pl_mn": 0.0,
-        "closing_total_csm_mn": 77266.0,
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": null,
         "insurance_service_result_mn": null,
         "ifie_pl_mn": null,
         "investment_income_mn": null,
@@ -343,6 +723,67 @@
       "missing": [
         "csm_amort_pl",
         "earnings_base",
+        "closing_total_csm",
+        "csm_amort_pl"
+      ]
+    },
+    {
+      "company": "하나생명보험",
+      "rcept_no": "20240329000112",
+      "status": "missing",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "components": {
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": null,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "csm_amort_pl",
+        "earnings_base",
+        "closing_total_csm",
+        "csm_amort_pl"
+      ]
+    },
+    {
+      "company": "하나생명보험",
+      "rcept_no": "20250331000222",
+      "status": "partial",
+      "csm_dependency": null,
+      "csm_runway_years": 11.01,
+      "components": {
+        "csm_amort_pl_mn": 39857491.0,
+        "closing_total_csm_mn": 438955662.0,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "earnings_base"
+      ]
+    },
+    {
+      "company": "하나생명보험",
+      "rcept_no": "20260325000201",
+      "status": "missing",
+      "csm_dependency": null,
+      "csm_runway_years": null,
+      "components": {
+        "csm_amort_pl_mn": null,
+        "closing_total_csm_mn": null,
+        "insurance_service_result_mn": null,
+        "ifie_pl_mn": null,
+        "investment_income_mn": null,
+        "earnings_base_mn": null
+      },
+      "missing": [
+        "csm_amort_pl",
+        "earnings_base",
+        "closing_total_csm",
         "csm_amort_pl"
       ]
     },
@@ -350,11 +791,11 @@
       "company": "한화생명",
       "rcept_no": "20250312000939",
       "status": "ok",
-      "csm_dependency": 1.6428,
-      "csm_runway_years": 10.19,
+      "csm_dependency": 1.0911,
+      "csm_runway_years": 10.69,
       "components": {
-        "csm_amort_pl_mn": 1282657.0,
-        "closing_total_csm_mn": 13065788.0,
+        "csm_amort_pl_mn": 851918.0,
+        "closing_total_csm_mn": 9109141.0,
         "insurance_service_result_mn": -272408.0,
         "ifie_pl_mn": 508385.0,
         "investment_income_mn": null,
@@ -366,11 +807,11 @@
       "company": "한화손해보험",
       "rcept_no": "20250311001216",
       "status": "ok",
-      "csm_dependency": 4.3283,
+      "csm_dependency": 2.1641,
       "csm_runway_years": 9.28,
       "components": {
-        "csm_amort_pl_mn": 819474242.0,
-        "closing_total_csm_mn": 7606441592.0,
+        "csm_amort_pl_mn": 409737121.0,
+        "closing_total_csm_mn": 3803220796.0,
         "insurance_service_result_mn": -148166515.0,
         "ifie_pl_mn": 41163434.0,
         "investment_income_mn": null,
@@ -399,21 +840,18 @@
     {
       "company": "흥국생명보험",
       "rcept_no": "20250331003642",
-      "status": "missing",
-      "csm_dependency": null,
-      "csm_runway_years": null,
+      "status": "ok",
+      "csm_dependency": 1.7772,
+      "csm_runway_years": 10.38,
       "components": {
-        "csm_amort_pl_mn": null,
+        "csm_amort_pl_mn": 213455.0,
         "closing_total_csm_mn": 2215205.0,
         "insurance_service_result_mn": 104980.0,
         "ifie_pl_mn": 15130.0,
         "investment_income_mn": null,
         "earnings_base_mn": 120110.0
       },
-      "missing": [
-        "csm_amort_pl",
-        "csm_amort_pl"
-      ]
+      "missing": []
     },
     {
       "company": "흥국화재",

@@ -808,6 +808,14 @@
       "as_of": "2025-12-31"
     },
     {
+      "company": "아이비케이연금보험",
+      "rcept_no": "20260331004893",
+      "status": "unavailable",
+      "note": "No sensitivity_analysis block in MVP extract",
+      "period": "FY2025",
+      "as_of": "2025-12-31"
+    },
+    {
       "company": "에이비엘생명보험",
       "rcept_no": "20260331003080",
       "status": "ok",
