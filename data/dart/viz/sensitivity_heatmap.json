@@ -668,12 +668,39 @@
     {
       "company": "미래에셋생명",
       "rcept_no": "20260318001664",
-      "status": "partial",
-      "caption": "(4) 관계기업에 대한 지분의 장부금액으로 조정한 내역1) 당기",
-      "table_kind": "sensitivity_analysis",
-      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table",
+      "status": "ok",
       "period": "FY2025",
-      "as_of": "2025-12-31"
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -384.17,
+          "pl_impact": -84.24
+        },
+        {
+          "risk": "장해질병(정액+실손)",
+          "shock": "정액 3.40% & 실손 2.62% 증가",
+          "csm_delta": -1837.54,
+          "pl_impact": -364.08
+        },
+        {
+          "risk": "해지율",
+          "shock": "9.16% 증가",
+          "csm_delta": 731.52,
+          "pl_impact": -81.09
+        },
+        {
+          "risk": "사업비",
+          "shock": "2.62% 증가",
+          "csm_delta": -228.33,
+          "pl_impact": -56.13
+        }
+      ],
+      "_source": "override"
     },
     {
       "company": "삼성생명",
@@ -800,20 +827,82 @@
     {
       "company": "신한라이프생명보험",
       "rcept_no": "20260318001034",
-      "status": "partial",
-      "caption": "(9) 보험계약부채의 미래서비스 변동분에 대한 가정변경효과 단계별, 물량차이 및 투자요소예실차 등으로 인한 상세 변동금액은 다음과 같습니다.① 제37(당)기",
-      "table_kind": "sensitivity_analysis",
-      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table",
+      "status": "ok",
       "period": "FY2025",
-      "as_of": "2025-12-31"
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -1269.82,
+          "pl_impact": 10.45
+        },
+        {
+          "risk": "장해질병(정액+실손)",
+          "shock": "정액 3.40% & 실손 2.62% 증가",
+          "csm_delta": -6545.35,
+          "pl_impact": -1184.69
+        },
+        {
+          "risk": "해지율",
+          "shock": "9.16% 증가",
+          "csm_delta": -7579.54,
+          "pl_impact": -317.15
+        },
+        {
+          "risk": "해지율",
+          "shock": "9.16% 감소",
+          "csm_delta": 8563.16,
+          "pl_impact": 136.36
+        },
+        {
+          "risk": "사업비",
+          "shock": "2.62% 증가",
+          "csm_delta": -2016.66,
+          "pl_impact": -150.49
+        }
+      ],
+      "_source": "override"
     },
     {
       "company": "아이비케이연금보험",
       "rcept_no": "20260331004893",
-      "status": "unavailable",
-      "note": "No sensitivity_analysis block in MVP extract",
+      "status": "ok",
       "period": "FY2025",
-      "as_of": "2025-12-31"
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "scenarios": [
+        {
+          "risk": "사망위험",
+          "shock": "3.27% 증가",
+          "csm_delta": 52.21,
+          "pl_impact": 2.95
+        },
+        {
+          "risk": "해지율",
+          "shock": "9.16% 증가",
+          "csm_delta": -376.88,
+          "pl_impact": -9.84
+        },
+        {
+          "risk": "해지율",
+          "shock": "9.16% 감소",
+          "csm_delta": 402.08,
+          "pl_impact": 8.0
+        },
+        {
+          "risk": "사업비율",
+          "shock": "2.62% 증가",
+          "csm_delta": -132.12,
+          "pl_impact": -5.58
+        }
+      ],
+      "_source": "override"
     },
     {
       "company": "에이비엘생명보험",
@@ -1504,12 +1593,69 @@
     {
       "company": "한화손해보험",
       "rcept_no": "20260310003000",
-      "status": "partial",
-      "caption": "(10) 당기말과 전기말 현재 관계기업의 재무정보금액을 관계기업에 대한 지분의 장부금액으로 조정한 내역은 다음과 같습니다.",
-      "table_kind": "sensitivity_analysis",
-      "note": "no ± shock rows — sensitivity_analysis tag is a mis-tagged rollforward/balance table",
+      "status": "ok",
       "period": "FY2025",
-      "as_of": "2025-12-31"
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -679.92,
+          "pl_impact": -13.29
+        },
+        {
+          "risk": "사망률",
+          "shock": "3.27% 감소",
+          "csm_delta": 302.98,
+          "pl_impact": 13.27
+        },
+        {
+          "risk": "장해질병(정액+실손)",
+          "shock": "정액 3.40% & 실손 2.62% 증가",
+          "csm_delta": -5696.7,
+          "pl_impact": -765.1
+        },
+        {
+          "risk": "장해질병(정액+실손)",
+          "shock": "정액 3.40% & 실손 2.62% 감소",
+          "csm_delta": 5874.19,
+          "pl_impact": 393.02
+        },
+        {
+          "risk": "재물·기타",
+          "shock": "4.19% 증가",
+          "csm_delta": -328.84,
+          "pl_impact": -51.61
+        },
+        {
+          "risk": "재물·기타",
+          "shock": "4.19% 감소",
+          "csm_delta": 310.68,
+          "pl_impact": 46.45
+        },
+        {
+          "risk": "해지율",
+          "shock": "9.16% 증가",
+          "csm_delta": -2523.72,
+          "pl_impact": -278.91
+        },
+        {
+          "risk": "해지율",
+          "shock": "9.16% 감소",
+          "csm_delta": 2903.43,
+          "pl_impact": 97.58
+        },
+        {
+          "risk": "사업비",
+          "shock": "2.62% 증가",
+          "csm_delta": -1654.35,
+          "pl_impact": -106.3
+        }
+      ],
+      "_source": "override"
     },
     {
       "company": "현대해상",

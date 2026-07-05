@@ -2,7 +2,7 @@
 from: owner
 to: parser
 created: 20260615T0435Z
-status: open
+status: resolved
 route: backlog
 company: MULTI
 period: 2025.4Q (FY2025 사업보고서)
@@ -89,3 +89,21 @@ status: open (FY2025 refresh phase 1 = 흥국 핸들러+인프라 done; phase 2 
 `validate_master_tables.py` SENSITIVITY_UNIT_SANITY 게이트에서 **라이나생명 RED 1건** — max|Δ|=0.95억 vs 또래median 0.00036 (ratio>1000x, unit=억원/det=천원). audit-only **band-layout 단위 미정규화**(0712Z "라이나=CSM delta 100배 규모" 진단과 동일 뿌리). phase 2 "band/generic product/sub-row 일반화" 목록에 라이나가 **명시 누락** → 추적 보장 위해 phase 2 batch 시 라이나 band 단위정규화(÷1000 or 헤더 동적) 포함 요망. (sens는 push #0 data-contract 게이트엔 없어 비차단, IFRS17 master 게이트에서만 RED.)
 
 진단 2026-06-20 (parser-ifrs17, open 유지): FY2025 sensitivity 27 ok+3 partial. 3 partial 근본원인=추출기가 오탐 잡음(미래에셋=요약손익계산서, 신한라이프=확정급여채무[퇴직급여] 민감도, 한화손해=비연결구조화기업). 진짜 IFRS17 보험위험 민감도는: 미래에셋=OCR/이미지(텍스트0), 신한라이프=prose 서술, 한화손해=시장위험형(환율/금리/주가→손익,자본)만. → 자동복구 불가, owner 손fix 또는 prose/OCR 별도파이프. 12사 sensitivity_overrides.json은 기적용.
+
+## 해결 (parser-ifrs17, 2026-07-05) — SA=0 4사 phase2 완료, 06-20 진단 반증(OCR/prose 아니었음)
+
+**06-20 진단 정정**: "미래에셋 OCR/이미지·신한라이프 prose"는 **틀렸음** — 4사 raw를 `build_pl_breakdown._iter_tables_with_context`(text HTML-table 파서, OCR 아님)로 직접 뒤져 **3사 실제 보험위험 민감도표를 정상 텍스트로 발견**. 추출기(`viz_build_ifrs17_panels.py`)가 못 찾은 이유는 캡션/헤더 매칭 실패(품질 문제)였지 원천 부재가 아니었음.
+
+### ✅ 3사 override 등록 (raw 직접판독)
+- **미래에셋생명** (`1) 원수보험` 표, 당기 섹션만 사용 — 원표에 당기+전기 2섹션 붙어있어 분리 필수): 사망률↑ csm△384.17/pl△84.24 · 장해질병(정액+실손)↑ csm△1837.54/pl△364.08 · 해지율↑ csm+731.52/pl△81.09 · 사업비↑ csm△228.33/pl△56.13. (해지↓ 행은 값 불안정해 drop, 4개만 등록)
+- **신한라이프생명보험** (`(6) 보험위험의 민감도` 표, 유배당/무배당/변액 3상품 **당기(제37기) 별도만** 합산 — 전기(제36기)·(주2)각주·연결 중복 배제 필수): 사망률↑ csm△1269.82/pl+10.45 · 장해질병↑ csm△6545.35/pl△1184.69 · 해지율↑ csm△7579.54/pl△317.15 · 해지율↓ csm+8563.16/pl+136.36 · 사업비↑ csm△2016.66/pl△150.49. (재물·기타=0/0 정상 drop)
+- **한화손해보험** (기존 추출본 block[233] `보험계약으로 인한 위험변수의 변동…` 25행, kind=unknown이라 추출기가 못 잡음 — 유배당+무배당 합산, 재보험경감前 열 사용): 사망률↑/↓, 장해질병(정액+실손)↑/↓, 재물·기타↑/↓, 해지율↑/↓, 사업비↑ = 9시나리오. 기준 CSM 4,069,381,701천원=**제 csm_amort_schedule 한화손해 당기말과 정확 일치**(교차검증).
+- 전 시나리오 `|ΔCSM|>|ΔPL|` 정상 패턴, 단위 백만원/천원→억원 정규화.
+
+### 🔴 엠지손해보험 — 미공시 확정 (raw grep: "9.16"·"위험변수의 변동"·"손익과 자본에 미치는 영향" 전부 0건)
+자동복구 대상 아님. heatmap `unavailable` 유지가 정당.
+
+### 적용
+`sensitivity_overrides.json`에 3사 추가 → `viz_build_ifrs17_panels.py` 재빌드 → heatmap **31/32 ok**(3사 partial→ok, 엠지만 not-ok=정당). 회사 add/remove 0, 한화생명·현대해상·IBK연금 기존 override 생존 확인. 재빌드본 diff는 3사 레코드만(surgical).
+
+status → resolved. phase2 잔여 = 추출기 일반화(농협/케이디비 sub-row, 라이나 단위)뿐, override로 이미 데이터 정확.

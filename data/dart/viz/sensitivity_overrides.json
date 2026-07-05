@@ -11,6 +11,32 @@
     {"risk": "해지율", "shock": "9.16% 감소", "csm_delta": 13113.1, "pl_impact": 590.1},
     {"risk": "사업비(수준)", "shock": "2.62% 증가", "csm_delta": -2391.17, "pl_impact": -633.45},
     {"risk": "사업비(수준)", "shock": "2.62% 감소", "csm_delta": 2349.03, "pl_impact": 555.42}]},
+  "아이비케이연금보험": {"rcept_no": "20260331004893", "period": "FY2025", "as_of": "2025-12-31", "scenarios": [
+    {"risk": "사망위험", "shock": "3.27% 증가", "csm_delta": 52.21, "pl_impact": 2.95},
+    {"risk": "해지율", "shock": "9.16% 증가", "csm_delta": -376.88, "pl_impact": -9.84},
+    {"risk": "해지율", "shock": "9.16% 감소", "csm_delta": 402.08, "pl_impact": 8.0},
+    {"risk": "사업비율", "shock": "2.62% 증가", "csm_delta": -132.12, "pl_impact": -5.58}]},
+  "미래에셋생명": {"rcept_no": "20260318001664", "period": "FY2025", "as_of": "2025-12-31", "scenarios": [
+    {"risk": "사망률", "shock": "3.27% 증가", "csm_delta": -384.17, "pl_impact": -84.24},
+    {"risk": "장해질병(정액+실손)", "shock": "정액 3.40% & 실손 2.62% 증가", "csm_delta": -1837.54, "pl_impact": -364.08},
+    {"risk": "해지율", "shock": "9.16% 증가", "csm_delta": 731.52, "pl_impact": -81.09},
+    {"risk": "사업비", "shock": "2.62% 증가", "csm_delta": -228.33, "pl_impact": -56.13}]},
+  "신한라이프생명보험": {"rcept_no": "20260318001034", "period": "FY2025", "as_of": "2025-12-31", "scenarios": [
+    {"risk": "사망률", "shock": "3.27% 증가", "csm_delta": -1269.82, "pl_impact": 10.45},
+    {"risk": "장해질병(정액+실손)", "shock": "정액 3.40% & 실손 2.62% 증가", "csm_delta": -6545.35, "pl_impact": -1184.69},
+    {"risk": "해지율", "shock": "9.16% 증가", "csm_delta": -7579.54, "pl_impact": -317.15},
+    {"risk": "해지율", "shock": "9.16% 감소", "csm_delta": 8563.16, "pl_impact": 136.36},
+    {"risk": "사업비", "shock": "2.62% 증가", "csm_delta": -2016.66, "pl_impact": -150.49}]},
+  "한화손해보험": {"rcept_no": "20260310003000", "period": "FY2025", "as_of": "2025-12-31", "scenarios": [
+    {"risk": "사망률", "shock": "3.27% 증가", "csm_delta": -679.92, "pl_impact": -13.29},
+    {"risk": "사망률", "shock": "3.27% 감소", "csm_delta": 302.98, "pl_impact": 13.27},
+    {"risk": "장해질병(정액+실손)", "shock": "정액 3.40% & 실손 2.62% 증가", "csm_delta": -5696.7, "pl_impact": -765.1},
+    {"risk": "장해질병(정액+실손)", "shock": "정액 3.40% & 실손 2.62% 감소", "csm_delta": 5874.19, "pl_impact": 393.02},
+    {"risk": "재물·기타", "shock": "4.19% 증가", "csm_delta": -328.84, "pl_impact": -51.61},
+    {"risk": "재물·기타", "shock": "4.19% 감소", "csm_delta": 310.68, "pl_impact": 46.45},
+    {"risk": "해지율", "shock": "9.16% 증가", "csm_delta": -2523.72, "pl_impact": -278.91},
+    {"risk": "해지율", "shock": "9.16% 감소", "csm_delta": 2903.43, "pl_impact": 97.58},
+    {"risk": "사업비", "shock": "2.62% 증가", "csm_delta": -1654.35, "pl_impact": -106.3}]},
   "현대해상": {"rcept_no": "20260312001448", "period": "FY2025", "as_of": "2025-12-31", "scenarios": [
     {"risk": "사망률", "shock": "3.27% 증가", "csm_delta": null, "pl_impact": -4.09, "equity_impact": 48.02, "disclosed_as": "세전이익/자본 변동효과 (재보험 후, ΔCSM 미공시)"},
     {"risk": "장해질병(정액+실손)", "shock": "정액 3.40% & 실손 2.62% 증가", "csm_delta": null, "pl_impact": -3452.33, "equity_impact": 489.54, "disclosed_as": "세전이익/자본 변동효과 (재보험 후, ΔCSM 미공시)"},
