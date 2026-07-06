@@ -379,12 +379,17 @@ _TRANS_RATIOS = {27: (1, 14), 28: (2, 14)}
 
 
 def _transition_ratio_after_capture(records: list[dict]) -> list[tuple]:
-    """선택 경과조치 적용사 16사(user 확정 2026-07-06)의 item27(지급여력비율)·item28(기본자본비율)
+    """선택 경과조치 적용사 18사(owner FSS 정본 확정 2026-07-06)의 item27(지급여력비율)·item28(기본자본비율)
     '적용후' 무결성. 도메인 불변식: 선택 경과조치 적용 시 두 비율 적용후 > 적용전(가용자본↑/요구자본↓
-    → 비율↑). 적용사인데 특정 분기·항목의 적용후가:
-      MISSING = None(결측) / COPY = 전과 |diff|<margin(적용전 복사·반올림 위장) / LOWER = 전보다 낮음
-      / AMT_MISMATCH = 후는 margin 넘겼으나 분자후/분모후×100(항등식)과 불일치(비율만 패치·금액후 미수정)
-    → RED. 공통 경과조치사(16사 외)는 후=전이어도 정상이라 검사 안 함.
+    → 비율↑) — 단 **분자(item1/item2)가 음수인 회사는 예외**: 자본잠식/기본자본결손이 지속되는 채로
+    분모(item14)만 줄면 비율은 오히려 더 음수가 커짐(0에서 멀어짐)이 수학적으로 정상(예: 롯데손해·
+    케이디비생명·푸본현대·IBK연금 — 2026-07-07 raw 재검증으로 확인, 데이터는 맞는데 "후>전" 가정이
+    반대 부호에서 깨지는 걸 잡아냄). 그래서 방향성(LOWER) 체크는 분자가 비음수일 때만 적용한다.
+    적용사인데 특정 분기·항목의 적용후가:
+      MISSING = None(결측) / COPY = 전과 |diff|<margin(적용전 복사·반올림 위장) /
+      LOWER = 분자≥0인데 전보다 낮음(방향위반) /
+      AMT_MISMATCH = 후는 margin 넘겼으나 분자후/분모후×100(항등식)과 불일치(비율만 패치·금액후 미수정)
+    → RED. 공통 경과조치사(18사 외)는 후=전이어도 정상이라 검사 안 함.
     반환 튜플: (code, quarter, name, item, before, after, kind)."""
     idx: dict[tuple, dict] = defaultdict(dict)  # (code, item) -> {q: (before, after)}
     name: dict[str, str] = {}
@@ -407,17 +412,20 @@ def _transition_ratio_after_capture(records: list[dict]) -> list[tuple]:
                     continue
                 if a is None:
                     out.append((c, q, name.get(c, c), ratio_it, b, None, "MISSING"))
-                elif (a - b) < _TRANS_EFFECT_MARGIN:
-                    out.append((c, q, name.get(c, c), ratio_it, b, a,
-                                "LOWER" if a < b - 1e-9 else "COPY"))
-                else:
-                    an = qvn.get(q, (None, None))[1]
-                    ad = qvd.get(q, (None, None))[1]
-                    if an is not None and ad not in (None, 0):
-                        derived = an / ad * 100.0
-                        if abs(derived - a) > 2.0:
-                            out.append((c, q, name.get(c, c), ratio_it, round(derived, 2), a,
-                                        "AMT_MISMATCH"))
+                    continue
+                if abs(a - b) < _TRANS_EFFECT_MARGIN:
+                    out.append((c, q, name.get(c, c), ratio_it, b, a, "COPY"))
+                    continue
+                if b >= 0 and a < b:
+                    out.append((c, q, name.get(c, c), ratio_it, b, a, "LOWER"))
+                    continue
+                an = qvn.get(q, (None, None))[1]
+                ad = qvd.get(q, (None, None))[1]
+                if an is not None and ad not in (None, 0):
+                    derived = an / ad * 100.0
+                    if abs(derived - a) > 2.0:
+                        out.append((c, q, name.get(c, c), ratio_it, round(derived, 2), a,
+                                    "AMT_MISMATCH"))
     return out
 
 
