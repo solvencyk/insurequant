@@ -5,14 +5,23 @@ from __future__ import annotations
 import json
 import re
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+from statistics import median
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from solvency.validation.kics_json_rules import KEY_CODE, KEY_QUARTER, run_validation
+from solvency.validation.kics_json_rules import (
+    KEY_CODE,
+    KEY_ITEM,
+    KEY_NAME,
+    KEY_QUARTER,
+    KEY_VALUE,
+    KEY_VALUE_POST,
+    run_validation,
+)
 
 SPOT_CODE = "KR0005"
 SPOT_QUARTER = "2025.4Q"
@@ -219,6 +228,199 @@ def _parent_zero_child_nonzero(records: list[dict]) -> list[tuple]:
     return out
 
 
+# 유의미성 하한(억원). 회사유형(생/손보)으로 단정하지 않고 '그 회사'의 실보고값으로만 판단:
+# 어떤 자식이 그 회사에서 평소(중앙값) 이 값 미만이면 사실상 0-행으로 보고 특정 분기 결측을
+# 실질 갭으로 치지 않는다. 예) 장수위험액(item30)은 손보사라도 실재하면 중앙값이 커져 기대
+# 대상이 되고(빠지면 RED), 그 회사가 0으로 보고할 때만 무시된다. 장기간병(item32) 등도 동일.
+# 5억: 신한이지 LTC(중앙값 ~1억, 값 0~2억)처럼 상시 미소한 sub-risk의 결측을 RED로 오탐하지
+# 않도록(2026-07-05). 실제 misparse 갭들은 median 24억+ 이라 이 하한에 안 걸린다.
+_CHILD_MATERIAL_FLOOR = 5.0
+
+
+def _num_cell(v):
+    try:
+        return float(str(v).replace(",", ""))
+    except (TypeError, ValueError):
+        return None
+
+
+def _parent_present_child_incomplete(records: list[dict]) -> tuple[list, list]:
+    """부모 위험액이 present&비0인데, 그 회사가 '평소 유의미하게 보고하던' 하위 세부항목이
+    특정 분기만 결측 = 파싱 시 행 누락(docling 표뭉갬). `_parent_zero_child_nonzero`의 역방향
+    사각(부모>0·자식결측)을 닫는다(하나손해 KR0050 25.3Q owner 적발, parser blind_spot 20260703).
+
+    자식 '기대'는 회사별 self-census: 그 회사의 부모-present 분기 과반에서 present 이고 중앙값
+    ≥ floor(억원)인 자식만 기대 대상 → 구조적 N/A·상시0인 자식은 자동 제외(회사유형이 아니라
+    그 회사 실보고값 기준 — 손보사도 장수리스크를 실재로 보고하면 당연히 기대·검출 대상).
+    반환: (partial_red, full_absent_even_review)
+      - PARTIAL: 같은 부모 밑 자식 일부는 present인데 기대 자식 결측 = 표 실재+행누락 고신뢰 misparse → RED.
+      - FULL_ABSENT_EVENQ: 짝수분기에 자식 전부 결측 = cadence/도입초 간이공시 애매 → 원천확인 review(비차단).
+    See memory: coverage-census-mandatory."""
+    by_cq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            by_cq.setdefault((c, q), {})[it] = _num_cell(r.get(KEY_VALUE))
+    # 회사별 부모-present 분기 목록 + 자식 present 값들 → material_expected 산출용
+    pq: dict[tuple, list] = {}
+    child_vals: dict[tuple, list] = {}
+    for (c, q), items in by_cq.items():
+        for p, kids in _PARENT_CHILD_ITEMS.items():
+            pv = items.get(p)
+            if pv is None or abs(pv) < 1.0:
+                continue
+            pq.setdefault((c, p), []).append(q)
+            for k in kids:
+                if items.get(k) is not None:
+                    child_vals.setdefault((c, p, k), []).append(items[k])
+
+    def material_expected(c: str, p: int) -> set:
+        n = len(pq.get((c, p), []))
+        if n < 3:
+            return set()  # 이력 부족 → 판단 보류
+        thr = max(2, (n + 1) // 2)  # 과반
+        out = set()
+        for k in _PARENT_CHILD_ITEMS[p]:
+            vals = child_vals.get((c, p, k), [])
+            if len(vals) >= thr and median(abs(v) for v in vals) >= _CHILD_MATERIAL_FLOOR:
+                out.add(k)
+        return out
+
+    partial, full_absent_even = [], []
+    for (c, q), items in sorted(by_cq.items()):
+        even_q = len(q) > 5 and q[5] in ("2", "4")
+        for p, kids in _PARENT_CHILD_ITEMS.items():
+            pv = items.get(p)
+            if pv is None or abs(pv) < 1.0:
+                continue
+            exp = material_expected(c, p)
+            if not exp:
+                continue
+            missing = sorted(k for k in exp if items.get(k) is None)
+            if not missing:
+                continue
+            present_any = any(items.get(k) is not None for k in kids)
+            if present_any:
+                partial.append((c, q, p, name.get(c, c), tuple(missing)))
+            elif even_q:
+                full_absent_even.append((c, q, p, name.get(c, c), tuple(missing)))
+    return partial, full_absent_even
+
+
+# 지급여력비율(item27) 시계열 2변 스파이크 파라미터.
+_RATIO_SPIKE_ITEM = 27
+_RATIO_SPIKE_K = 3.0
+_RATIO_SPIKE_FLOOR = 30.0  # %p
+
+
+def _ratio_series_spikes(records: list[dict]) -> list[tuple]:
+    """item27(지급여력비율) 회사별 시계열에서 인접 두 분기 '양쪽 모두'와 크게 벌어진 단일 분기.
+    엉뚱한 회사 PDF가 슬롯에 적재돼도 자기정합적이면 산술룰 전부 GREEN 통과하는 사각을 잡는다
+    (KR0083 2025.2Q에 KR0075 데이터 → +318%; parser 수정 후 현재 발화 0). 부호역전 자체는
+    자본잠식사 정상 0선통과라 flag 안 함 — resid=|x-(prev+next)/2| > max(FLOOR, K·(|prev|+|next|))
+    이고 양옆 각각과도 FLOOR 이상 벌어질 때만. YELLOW(비차단, parser 재확인 워크리스트).
+    See memory: validation-blind-spots (하한 plausibility)."""
+    # 분기별 dedup(last-wins): 삼성생명·메트라이프 등은 item27을 전정밀도+반올림 두 행으로 이중
+    # 기재 → 같은 분기가 시계열에 두 번 들어가 이웃 계산이 왜곡되는 것을 막는다(by_cq 관례와 동일).
+    series: dict[str, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q and it == _RATIO_SPIKE_ITEM:
+            v = _num_cell(r.get(KEY_VALUE))
+            if v is not None:
+                series.setdefault(c, {})[q] = v
+    out = []
+    for c, qv in series.items():
+        pts = sorted(qv.items())
+        for i in range(1, len(pts) - 1):
+            qa, a = pts[i - 1]
+            qx, x = pts[i]
+            qb, b = pts[i + 1]
+            resid = abs(x - (a + b) / 2.0)
+            thr = max(_RATIO_SPIKE_FLOOR, _RATIO_SPIKE_K * (abs(a) + abs(b)))
+            if resid > thr and abs(x - a) > _RATIO_SPIKE_FLOOR and abs(x - b) > _RATIO_SPIKE_FLOOR:
+                out.append((c, qx, name.get(c, c), round(x, 2),
+                            qa, round(a, 2), qb, round(b, 2)))
+    return out
+
+
+# 경과조치 실효 마진(%p). 적용사 판정 + 적용후 유실 판정 공통. 실제 정상셀은 수십~백%p 차이라
+# 이 값은 넉넉하다(복사/반올림 위장은 |diff|<0.1). item27만 방향 불변식이 깨끗(후>전 항상).
+_TRANS_EFFECT_MARGIN = 1.0
+
+# 선택(elective) 경과조치 적용사 18사 — 정본: FSS 2023-03-20 보도자료 붙임-1(원수사별 K-ICS 경과조치
+# 신청현황, `trend20230320_3.pdf` p6). 신규보험위험액(TIR: 장수·해지·사업비·대재해)·시가평가 자본감소분
+# (TAC) 등 '선택적' 경과조치 신청 19사 중 insurequant 데이터 존재 18사(SCOR재보험은 데이터 부재).
+# 나머지는 전부 공통(TFI 등) 경과조치사 = 후=전이어도 정상(flag 안 함).
+# 이 18사는 item27(지급여력비율)·item28(기본자본비율) 적용후 > 적용전이어야(선택경과조치 효과).
+#   ※ 매핑 주의: 아이엠라이프(KR0076)=구 DGB생명 / 예별손해(KR0004)=구 MG손보 (붙임-1의 사명).
+_TRANSITION_APPLIERS = frozenset({
+    # 생보 12: 에이비엘·흥국생명·케이디비·교보생명·아이엠라이프(DGB)·DB생명·푸본현대·하나생명·처브·교보라플·IBK연금·농협생명
+    "KR0070", "KR0071", "KR0072", "KR0073", "KR0076", "KR0082",
+    "KR0083", "KR0097", "KR0100", "KR1010", "KR1011", "KR0104",
+    # 손보 6: AXA손해·한화손해·롯데손해·예별손해(MG)·흥국화재·NH농협손해
+    "KR0049", "KR0002", "KR0003", "KR0004", "KR0005", "KR0032",
+})
+# 비율항목 → (분자item, 분모item): 적용후 정합(항등식) 검사용. 27=지급여력비율(item1/item14)·
+# 28=기본자본비율(item2/item14). item27/28만 패치하고 금액후(1/2/14) 미수정하는 게임을 AMT_MISMATCH로 차단.
+_TRANS_RATIOS = {27: (1, 14), 28: (2, 14)}
+
+
+def _transition_ratio_after_capture(records: list[dict]) -> list[tuple]:
+    """선택 경과조치 적용사 16사(user 확정 2026-07-06)의 item27(지급여력비율)·item28(기본자본비율)
+    '적용후' 무결성. 도메인 불변식: 선택 경과조치 적용 시 두 비율 적용후 > 적용전(가용자본↑/요구자본↓
+    → 비율↑). 적용사인데 특정 분기·항목의 적용후가:
+      MISSING = None(결측) / COPY = 전과 |diff|<margin(적용전 복사·반올림 위장) / LOWER = 전보다 낮음
+      / AMT_MISMATCH = 후는 margin 넘겼으나 분자후/분모후×100(항등식)과 불일치(비율만 패치·금액후 미수정)
+    → RED. 공통 경과조치사(16사 외)는 후=전이어도 정상이라 검사 안 함.
+    반환 튜플: (code, quarter, name, item, before, after, kind)."""
+    idx: dict[tuple, dict] = defaultdict(dict)  # (code, item) -> {q: (before, after)}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q and it in (1, 2, 14, 27, 28):  # 27/28=비율, 1/2/14=금액(항등식 정합용)
+            idx[(c, it)][q] = (_num_cell(r.get(KEY_VALUE)), _num_cell(r.get(KEY_VALUE_POST)))
+    out = []
+    for c in sorted(_TRANSITION_APPLIERS):
+        for ratio_it, (num_it, den_it) in _TRANS_RATIOS.items():
+            qv = idx.get((c, ratio_it), {})
+            qvn, qvd = idx.get((c, num_it), {}), idx.get((c, den_it), {})
+            for q, (b, a) in sorted(qv.items()):
+                if b is None:
+                    continue
+                if a is None:
+                    out.append((c, q, name.get(c, c), ratio_it, b, None, "MISSING"))
+                elif (a - b) < _TRANS_EFFECT_MARGIN:
+                    out.append((c, q, name.get(c, c), ratio_it, b, a,
+                                "LOWER" if a < b - 1e-9 else "COPY"))
+                else:
+                    an = qvn.get(q, (None, None))[1]
+                    ad = qvd.get(q, (None, None))[1]
+                    if an is not None and ad not in (None, 0):
+                        derived = an / ad * 100.0
+                        if abs(derived - a) > 2.0:
+                            out.append((c, q, name.get(c, c), ratio_it, round(derived, 2), a,
+                                        "AMT_MISMATCH"))
+    return out
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8")  # Windows console defaults to cp949
@@ -269,6 +471,30 @@ def main() -> int:
         }
         for c, q, p, n, nz in parent_child
     ]
+    partial_child, full_absent_child = _parent_present_child_incomplete(records)
+    report["parent_present_child_incomplete"] = {
+        "partial_red": [
+            {"code": c, "quarter": q, "parent_item": p, "name": n,
+             "missing_children": list(miss)}
+            for c, q, p, n, miss in partial_child
+        ],
+        "full_absent_even_review": [
+            {"code": c, "quarter": q, "parent_item": p, "name": n,
+             "missing_children": list(miss)}
+            for c, q, p, n, miss in full_absent_child
+        ],
+    }
+    ratio_spikes = _ratio_series_spikes(records)
+    report["ratio_series_spikes"] = [
+        {"code": c, "quarter": q, "name": n, "value": x,
+         "prev_quarter": qa, "prev": a, "next_quarter": qb, "next": b}
+        for c, q, n, x, qa, a, qb, b in ratio_spikes
+    ]
+    trans_after = _transition_ratio_after_capture(records)
+    report["transition_ratio_after_capture"] = [
+        {"code": c, "quarter": q, "name": n, "item": it, "before": b, "after": a, "kind": k}
+        for c, q, n, it, b, a, k in trans_after
+    ]
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     # stable-name 최신 포인터: glob 정렬 함정(stale report_latest.json) 방지 — 매 실행 fresh 덮어쓰기.
     (out_dir / "report_latest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -313,6 +539,39 @@ def main() -> int:
             print(f"    {q} {c} {n}: 부모 item{p}=0 인데 자식 {kids} → 행 오정렬/셀 밀림")
     else:
         print("Parent-zero / nonzero-child: 0")
+    if partial_child:
+        print(f"Parent-present / child-incomplete PARTIAL (material misparse, RED): {len(partial_child)}")
+        for c, q, p, n, miss in partial_child:
+            kids = ", ".join(f"item{k}" for k in miss)
+            print(f"    {q} {c} {n}: 부모 item{p}>0 인데 평소보고 자식 {kids} 결측 → 행 누락")
+    else:
+        print("Parent-present / child-incomplete PARTIAL: 0")
+    if full_absent_child:
+        print(f"Parent-present / child FULL-ABSENT even-Q (source-check review, non-blocking): {len(full_absent_child)}")
+        for c, q, p, n, miss in full_absent_child:
+            print(f"    {q} {c} {n}: 부모 item{p}>0·자식 전부결측 → 원천표 확인 필요")
+    if ratio_spikes:
+        print(f"지급여력비율(item27) series spikes (YELLOW, non-blocking): {len(ratio_spikes)}")
+        for c, q, n, x, qa, a, qb, b in ratio_spikes:
+            print(f"    {q} {c} {n}: {x} (인접 {qa}={a}, {qb}={b}) → 소스오염 의심")
+    else:
+        print("지급여력비율(item27) series spikes: 0")
+    if trans_after:
+        kc = Counter(k for *_, k in trans_after)
+        ic = Counter(it for _, _, _, it, *_ in trans_after)
+        print(f"선택경과조치 적용후 유실/부정합 ({len(_TRANSITION_APPLIERS)}적용사 item27·28, RED): {len(trans_after)} "
+              f"[COPY={kc.get('COPY',0)} MISSING={kc.get('MISSING',0)} "
+              f"LOWER={kc.get('LOWER',0)} AMT_MISMATCH={kc.get('AMT_MISMATCH',0)}] "
+              f"(item27={ic.get(27,0)} item28={ic.get(28,0)})")
+        for c, q, n, it, b, a, k in trans_after[:25]:
+            if k == "AMT_MISMATCH":
+                print(f"    {q} {c} {n} item{it}후={a} ≠ 금액후도출 {b} [AMT_MISMATCH] → 비율만 패치·금액후 미수정")
+            else:
+                print(f"    {q} {c} {n} item{it}: 전={b} 후={a} [{k}] → 적용후 유실/복사 (선택경과조치사는 후>전)")
+        if len(trans_after) > 25:
+            print(f"    ... +{len(trans_after) - 25} more")
+    else:
+        print("선택경과조치 적용후 유실/부정합 (item27·28): 0")
     print("RED failures by rule:")
     for rule_id, cnt in sorted(fail_by_rule.items(), key=lambda x: (-x[1], x[0])):
         print(f"  rule {rule_id}: {cnt}")
@@ -333,7 +592,7 @@ def main() -> int:
                 f"actual={f.get('actual')} diff={f.get('diff')}"
             )
 
-    return 2 if (red > 0 or census_red > 0 or parent_child) else 0
+    return 2 if (red > 0 or census_red > 0 or parent_child or partial_child or trans_after) else 0
 
 
 if __name__ == "__main__":
