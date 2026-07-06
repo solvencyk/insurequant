@@ -359,6 +359,15 @@ def _ratio_series_spikes(records: list[dict]) -> list[tuple]:
 # 경과조치 실효 마진(%p). 적용사 판정 + 적용후 유실 판정 공통. 실제 정상셀은 수십~백%p 차이라
 # 이 값은 넉넉하다(복사/반올림 위장은 |diff|<0.1). item27만 방향 불변식이 깨끗(후>전 항상).
 _TRANS_EFFECT_MARGIN = 1.0
+# 소액/자본잠식 회사(|적용전|이 작음, 예: 예별손해·롯데손해 item28·IBK연금)는 절대마진 1.0pp가
+# 상대적으로 과해서 진짜 개선폭(예: 2.09→3.08)까지 COPY로 오탐(2026-07-07, raw 3중검증 후 확정 —
+# rule 8_life의 "5% of expected" 동적허용오차와 동일한 발상). |b|가 작을수록 마진도 비례해 줄인다.
+_TRANS_EFFECT_MARGIN_PCT = 0.15
+_TRANS_EFFECT_MARGIN_FLOOR = 0.1
+
+
+def _trans_margin(b: float) -> float:
+    return max(_TRANS_EFFECT_MARGIN_FLOOR, min(_TRANS_EFFECT_MARGIN, _TRANS_EFFECT_MARGIN_PCT * abs(b)))
 
 # 선택(elective) 경과조치 적용사 18사 — 정본: FSS 2023-03-20 보도자료 붙임-1(원수사별 K-ICS 경과조치
 # 신청현황, `trend20230320_3.pdf` p6). 신규보험위험액(TIR: 장수·해지·사업비·대재해)·시가평가 자본감소분
@@ -413,7 +422,7 @@ def _transition_ratio_after_capture(records: list[dict]) -> list[tuple]:
                 if a is None:
                     out.append((c, q, name.get(c, c), ratio_it, b, None, "MISSING"))
                     continue
-                if abs(a - b) < _TRANS_EFFECT_MARGIN:
+                if abs(a - b) < _trans_margin(b):
                     out.append((c, q, name.get(c, c), ratio_it, b, a, "COPY"))
                     continue
                 if b >= 0 and a < b:
