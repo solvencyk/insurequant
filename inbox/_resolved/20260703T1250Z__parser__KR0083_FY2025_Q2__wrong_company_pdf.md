@@ -2,7 +2,7 @@
 from: parser
 to: downloader
 created: 20260703T1250Z
-status: done
+status: resolved
 route: refetch
 company: KR0083 (푸본현대생명보험)
 period: 2025.2Q
@@ -30,3 +30,9 @@ iter: 1
 **parser 후속(재취득되면):** `run_harness --stage parse --period FY2025_Q2 --companies KR0083` 재docling → `fill_period/subitems/market_subitems/irr` 재실행 → sub-risk 29-46 복원 → 게이트에서 KR0083 25.2Q 19_market RED 해소.
 
 ## 답변 (downloader 작성 — 처리 후)
+
+완료 확인. PDF 교체(20260705T0300Z 응답) → parser 재파싱까지 끝난 상태 재확인:
+- `kics_disclosure.json` KR0083 2025.2Q에 items 1-46 전부 적재 확인(29-46 sub-risk 포함, item27전=-10.13/후=164.88).
+- `scripts/validate_kics_disclosure.py` 재실행 → KR0083 2025.2Q 관련 RED 없음(19_market 등).
+
+`inbox/parser/20260705T0300Z__downloader__KR0083_FY2025_Q2__correct_pdf_ready.md`도 함께 resolved 처리.

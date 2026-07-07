@@ -1,13 +1,82 @@
 # Insurequant Changelog — Downloader Stage
 
-> Last updated: 2026-06-16 · Stage 1/5 — downloader
+> Last updated: 2026-07-07 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
+
+## 2026-07-07 -- KR0005·KR0071 FY2024_Q4 "원본 결측" 판정 정정 — 실제로는 raw가 처음부터 맞았음
+
+같은 날 앞선 inbox 드레인 항목(바로 아래)에서 "원천에서부터 감사보고서가 잘못 올라간 진짜 결측"이라 결론
+냈던 것을 뒤집음. owner가 "다른 세션에서 OCR로 수치 불러오던 작업 있을 거다, 마저 해봐"라고 지적해 재조사.
+
+**원인**: fitz `get_text()` 전체검색으로만 "경과조치" 키워드 유무를 판단했는데,
+- **흥국생명(KR0071)**: raw 538p 중 0-111p가 **스캔 이미지**(텍스트레이어 없음) — 112p부터 감사보고서
+  텍스트가 잡히니 "감사보고서만 있다"로 오판. 실제로 0-111p를 렌더링(`fitz.Pixmap`)해 비전으로 읽으면
+  정상 "2024년 흥국생명보험회사의 현황" 정기경영공시 전체(총괄표 p.44, 세부표 p.47-50, 시장위험 p.64-70)가
+  들어있음.
+- **흥국화재(KR0005)**: 스캔이 아니라 **폰트 인코딩 문제로 fitz 텍스트추출 자체가 실패**(이미지 0개인데도
+  거의 빈 문자열). 렌더링하면 정상 "2024년 결산 흥국화재해상보험 현황"(총괄표 p.37, 세부표 p.40-44).
+- owner가 오전에 자사 홈페이지에서 수동 다운로드해 SHA256이 기존 raw와 동일함을 확인한 것도 "내용이
+  틀렸다"가 아니라 "그 파일이 원래부터 맞는 파일이었다"는 뜻이었음 — WAF도 애초에 우회할 필요가 없었음.
+
+**반영**: `kics_disclosure.json`에 양사 24.4Q item1-28(전/후)·item36 등을 raw 이미지 직접 판독으로 채움/정정
+(KR0071 item14_후·27_후·28_후는 4개 경과조치 중 하나만 반영한 격리표에서 잘못 소싱된 버그도 같이 잡음;
+KR0005는 item8/10/12/13/23-26 등 타사엔 있던 표준 그리드 항목 자체가 비어있던 걸 채움). 게이트 재실행 →
+두 회사 관련 RED 0. `TODO_parser_kics.md` 8차 항목에 상세 기록, parser inbox 정정판(`20260707T0230Z`) 발송.
+
+**교훈**: 대용량(수십MB) raw에서 "경과조치"/특정 키워드가 fitz 텍스트검색으로 0회 나온다고 바로 "다른 문서"로
+단정하지 말 것. 스캔(이미지 페이지) 또는 폰트 인코딩 문제로 텍스트추출 자체가 실패하는 경우가 있음 —
+페이지를 렌더링해서 비전으로 직접 확인하는 게 먼저.
+
+## 2026-07-07 -- inbox 드레인: KR0005·KR0071 FY2024_Q4 wrong-document-type + KR0083 스레드 정리
+
+`inbox/downloader/` open 2건 처리.
+
+- **KR0083 2025.2Q wrong_company_pdf (2026-07-03 발) — 재확인·resolved.** PDF 교체(07-05 응답) 이후 parser 재파싱이 실제 완료됐는지 이번에 확인: `kics_disclosure.json` items 1-46 전부 적재, 게이트 KR0083 2025.2Q RED 없음. 원 스레드 + downloader 응답 스레드 둘 다 `_resolved/`로 이동.
+- **KR0005(흥국화재)·KR0071(흥국생명) FY2024_Q4 wrong_document_type (2026-07-07 발) — 부분 처리.**
+  - **KR0071**: 현재 raw / 생보협회 2024결산 일괄zip(`quarterfileDown.do`) / 흥국생명 자사 홈페이지(`manageList.do`→`DownLoadEnc.do`) **3채널 SHA256 완전 동일**(감사보고서 538p, 경과조치 키워드 0회) → **원천 데이터 오류 확정, refetch 불가**.
+  - **KR0005**: 흥국화재 자사 아카이브(`manageRegular.do` "지난경영공시" 표)에서 정확한 항목(번호112, `[흥국화재] 2024년 결산 경영공시(최종).pdf`, saveName `1743410024285414.pdf`) 특정했으나 다운로드가 nProtect WAF에 막힘(curl 각종 헤더 조합 실패) + Chrome 확장 미연결로 브라우저 자동화도 불가 → **미해결 잔여, 재시도 필요**.
+  - **대안 경로**: 두 회사 다 기존 수집된 `FY2025_Q1/raw/`의 `[지급여력비율 총괄]` 비교표(직전분기=24.4Q 컬럼)로 items 1-28 복원 가능 확인(KR0005 154.01%/199.56% 등 parser anchor와 일치). `inbox/parser/20260707T0230Z`로 안내. items 29-46은 이 경로로도 복원 불가.
 
 **Scope:** data collection only — raw fetch from external sources (정기경영공시 / DART / FSC bonds / KIDI / IR factbooks).
 **Cross-stage history:** `docs/claude-changelog.md` (parser/validation/gathering/pushing/refactor entries).
 **This file:** entries scoped to downloader work only, extracted from the root changelog 2026-05-30.
 
 Cross-stage entries that touch downloader as one phase but are primarily parser/gathering/viz (e.g. F11 foreign-affiliate viz integration, IR factsheet 전사 수집 + 손보 NB CSM 배수 파싱, F17 LOB parsing) remain in `docs/claude-changelog.md`. The compressed historical archive (pre-2026-05-25) also remains there.
+
+## 2026-06-24 -- J-ESR 파이프라인 인프라 구축 (10월 EDINET 全수 대비)
+
+Owner `inbox/downloader/20260624T0337Z` 처리. 인프라 목표(데이터 채우기 X).
+
+- **`J-ESR/jp_insurers.csv`**: 생보 41 + 손보 31 + 재보험 2 = 74사 마스터리스트
+  - 확인된 EDINET 코드 13사(HD 7 + 자회사 6) · 상호사 5사 EDINET 비대상 명시
+- **`J-ESR/jesr_edinet_fetch.py`**: XBRL fetcher scaffold
+  - `--smoke` (키 확인) · `--all --year 2026` (13사 전수 有報 검색) · math validator 내장
+  - ESR XBRL 태그: FSA J-ICS 택소노미 미공개 → STUB, 10월 공개 시 채울 것
+- **`J-ESR/jesr_mutual_irpdf.py`**: 상호사 5사 IR-PDF 루트
+  - `--check` / `--download` / `--extract` 플래그 · seed ESR 값 내장(직전분기)
+  - pdf_url_pattern = TBD (연도별 결산프레스 URL 업데이트 필요)
+- **`J-ESR/jesr_pipeline_status.md`**: 10월 체크리스트 + 커버리지 추정(~44/74사)
+
+잔여: owner가 EDINET Subscription-Key 등록(무료) → `--smoke` 확인 → TBD 코드 bulk lookup
+
+## 2026-06-24 -- J-ESR 트랙 신규 착수: 일본 ESR(J-ICS) 2026.3末 headline 수집
+
+Owner `inbox/downloader/20260624T0113Z` 처리. J-ICS 첫 의무 사이클(2026-03-31) 대상.
+
+**확정 2026.3末 J-ICS ESR 4사:**
+- 東京海上HD 238% · MS&AD HD 214% · Sompo HD 270% · ソニーFG 177%
+
+**직전분기 proxy 5사** (2026.3末 미확인; as_of 컬럼 명시):
+- 第一生命HD 213%(2025.12末) · 日本生命 224%(2025.3末) · 住友生命 184%(2025.9末)
+- 明治安田生命 216%(2025.3末) · 富国生命 260.9%(2025.9末)
+
+**미수집 2사:** T&D HD · かんぽ生命 (IR PDF 바이너리)
+
+**EDINET API v2 실측:** Subscription-Key 필요(무료등록, https://disclosure2.edinet-fsa.go.jp/).
+비상장 4사(日本生命·住友生命·明治安田·富国生命) EDINET 비대상 확인.
+
+산출물: `J-ESR/jesr_sources_2026Q1.csv` (utf-8-sig, 11사) + `J-ESR/raw/` + `J-ESR/probe_edinet.py`
+Parser handoff: `inbox/parser/20260624T0200Z__downloader__JP_MULTI__jesr_2026Q1_collected.md`
 
 ## 2026-06-17 -- 전체 보험사 2026.1Q DART 분기보고서 + 교보 3개 분기 전기 추출용 raw
 

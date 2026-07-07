@@ -2,7 +2,7 @@
 from: downloader
 to: parser
 created: 20260707T0230Z
-status: answered
+status: resolved
 route: reparse
 company: KR0005 (흥국화재), KR0071 (흥국생명보험)
 period: 2024.4Q
@@ -54,3 +54,45 @@ iter: 1
 
 게이트: `transition_ratio_after_capture` 잔여 6셀(흥국화재 item28 1 + 악사손해 2(원천미공시 확정) +
 에이비엘 1 + 흥국생명 item28 1 + 푸본현대 1 — 전부 TODO_parser_kics.md TRANS-18에 최종 정리).
+
+## 답변 (downloader, 2026-07-07 추가) — KR0005 사용자 수동 다운로드도 동일 오류 파일 확정
+
+owner가 흥국화재 자사 홈페이지 "지난경영공시" 아카이브에서 "[흥국화재] 2024년 결산 경영공시(최종).pdf"를
+직접 받아 전달(WAF 우회 성공, 브라우저 세션으로 다운로드). 검증 결과:
+
+- **크기 28,358,329B, 367페이지, SHA256 `4c0fd741...25e11`** — 기존 `data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf`와 **바이트 단위로 완전 동일**.
+- "경과조치" 키워드 0회, "감사보고서" 키워드 25회 — 감사보고서 확정(경영공시 아님).
+
+**KR0005도 흥국생명(KR0071)과 동일한 근본원인 확정**: 흥국화재 자사 홈페이지 게시판 자체가 원천에서부터
+"2024 사업연도 경영통일공시"라는 제목 아래 감사보고서를 잘못 등록해둔 상태. 다른 채널(협회 zip 등) 시도할
+여지가 이론상 남아있으나, 동일 그룹사 패턴(흥국생명도 협회+자사 2채널 모두 오염)을 고려하면 추가 시도의
+기대값은 낮음.
+
+**최종 결론: KR0005 item28 → 흥국생명과 동일하게 documented exception(원본 영구 결측) 확정.**
+`transition_ratio_after_capture` 잔여 2건(흥국화재·흥국생명 item28)은 재취득 시도 완전 소진 — 더 이상
+downloader 액션 없음. TODO_parser_kics.md TRANS-18 최종 갱신 필요.
+
+status: done (재취득 시도 완료, 양사 모두 genuine gap 확정)
+
+## 정정 (downloader, 같은 날 후속 세션) — "genuine gap" 결론 전체 철회, item2/3/14/27/28 전부 복원 완료
+
+owner가 "다른 세션이 이 PDF를 OCR로 읽고 있었을 것"이라고 지적해 재조사 — **위의 모든 "원본 결측/SHA256
+동일=오염 확정" 판단이 틀렸음.** 텍스트 검색(fitz `get_text()`)이 실패한 이유가 "문서가 다르다"가 아니라
+①KR0071=스캔이미지(0-111p, `get_images()`로 확인) ②KR0005=폰트인코딩 깨짐(이미지 0개인데 텍스트도 거의
+안 나옴) 이었을 뿐, **두 raw 다 렌더링해서 비전으로 읽으면 처음부터 정상 정기경영공시**였음.
+
+**반영 완료 (kics_disclosure.json)**:
+- KR0071: item2_후 19510.19 / item3_후 15647.88 / item14_후 16987(★기존 17812.68은 TIR 단독효과
+  격리표 값이 잘못 들어간 버그 — page.44 `[지급여력비율총괄]` 최종결합표로 교체) / item27_후 206.97003591 /
+  item28_후 114.85365279 / item24 값 0(★기존 7256은 item26 값이 잘못 들어간 것) / item26 신규 추가(7256).
+- KR0005: item2_후 7421.83 / item3_후 20471.82 / item28_후 53.0965088(신규) / item36_후 399.35
+  (★기존 2035.08=TIRR 격리효과 누락 버그) / item8·10·12·13·23·24·25·26 신규 추가(타사엔 이미 있던
+  표준 1-26 그리드 항목 자체가 비어있었음).
+- `validate_kics_disclosure.py` 재실행 → 양사 관련 RED 0.
+
+**출처 페이지**: KR0071 `data/disclosure/FY2024_Q4/raw/KR0071_흥국생명보험.pdf` p.44(총괄)/47(전세부)/
+48-50(TFI·TIR·TER 격리표)/64-70(시장위험). KR0005 `data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf`
+p.37(총괄)/39-40(전세부)/41-43(TFI·TIR·TER·TIRR 격리표).
+
+`TODO_parser_kics.md` 8차 항목·`docs/changelog_downloader.md` 2026-07-07 항목에 상세 기록.
+status: resolved

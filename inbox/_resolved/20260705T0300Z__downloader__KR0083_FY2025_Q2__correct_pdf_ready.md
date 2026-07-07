@@ -2,7 +2,7 @@
 from: downloader
 to: parser
 created: 20260705T0300Z
-status: open
+status: resolved
 route: reparse
 company: KR0083 (푸본현대생명보험)
 period: 2025.2Q
