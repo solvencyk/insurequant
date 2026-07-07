@@ -90,6 +90,10 @@ def _md_period_to_quarter(period_label: str) -> str:
 # where this is used — the ②breakdown table wins over 공통적용 for these.
 _RATIO_TRIAD_ITEMS = {1, 14, 27}
 
+# 생명·장기손해보험위험액(item17)의 세부위험 7종 — see the merged-label guard
+# in the breakdown-application loop below.
+_LIFE_SUB_ITEMS = {29, 30, 31, 32, 33, 34, 35}
+
 # Row label keywords → item_no. Match against normalised label.
 # Order matters: more specific keywords first.
 COMMON_ROW_MAP: list[tuple[str, int]] = [
@@ -423,6 +427,100 @@ def _is_market_or_rate_section(headings: list[str]) -> bool:
     return "주식위험경과조치" in ctx or "금리위험경과조치" in ctx
 
 
+def _extract_tac_amount(tables: list[dict]) -> str | None:
+    """'자본감소분 경과조치'(TAC) amount. Its own table's 기본자본/보완자본
+    rows show unchanged 전=후 (TAC doesn't touch the tier split), but this
+    row carries the amount that gets added to item1 without specifying
+    which tier — validation confirmed via raw (KDB KR0072 2023.1Q) that
+    this amount must be layered onto item2(기본자본) on top of whatever
+    ①TFI reclassification already gave it, otherwise item1=item2+item3
+    (R1) never closes for TAC-electing companies. Only the sum matters for
+    R1, so any consistent convention (added to item2) works."""
+    for t in tables:
+        for row in t["table"]:
+            if "자본감소분" not in row[0].replace(" ", ""):
+                # label varies ("...적용금액" vs bare "...경과조치" — KDB
+                # KR0072 2023.1Q vs 2023.2Q) but "자본감소분" alone is unique
+                # to this one row across the entire K-ICS schema.
+                continue
+            # Don't rely on a header row to locate 적용후's column — 하나생명
+            # KR0097 carries this row inside a full 별첨 지급여력금액
+            # statement with no "자본감소분 경과조치" heading at all, and a
+            # stray blank-line table-boundary split lands a *data* row
+            # ("Ⅳ.기본자본...") as this fragment's tbl[0] instead of the
+            # real 적용전/적용후 header, so no header is even recoverable.
+            # In every observed shape (KDB KR0072, 하나생명 KR0097) the
+            # 적용후 amount is simply the row's last non-blank, parseable
+            # cell (적용전 is always blank — TAC has no "before").
+            for cell in reversed(row[1:]):
+                amount = _parse_value(cell)
+                if amount is not None:
+                    return _normalise_unit(amount, t["unit"])
+    return None
+
+
+_AUDIT_STATEMENT_ROW_MAP: tuple[tuple[str, int], ...] = (
+    ("지급여력기준금액", 14),  # before 지급여력금액
+    ("지급여력금액", 1),
+    ("기본자본", 2),
+    ("보완자본", 3),
+)
+
+
+def _extract_audit_statement_values(tables: list[dict]) -> dict[int, tuple[str, str]]:
+    """Last-resort fallback for the 감사보고서 별첨 '지급여력금액'/'지급여력
+    기준금액' statements (하나생명 KR0097 2024.4Q FY-end filings): a fully
+    audited, Roman-numeral-itemised restatement with no '공통적용'/'경과조치
+    적용 전 세부' heading at all, so none of the normal table detectors
+    above ever match it. Every top-level row (Ⅳ.기본자본, Ⅶ.지급여력금액,
+    etc.) has exactly one non-blank cell per column-pair (전, 후) — same
+    "last non-blank cell" shape as _extract_tac_amount — with pre in the
+    row's first half and post in the second. Only used when nothing else
+    resolved the item, so it can't clobber a real, table-classified match.
+
+    Two anchors, since bare "기본자본"/"보완자본"/"지급여력금액" exact-label
+    rows recur all over a filing (총괄 comparison tables, 요약재무상태표,
+    etc.) and can coincidentally satisfy the "exactly 2 non-blank cells"
+    shape from a totally unrelated table with a different unit (KR0082
+    2023.1Q matched this way and got item2_후 scaled 100x wrong before
+    these anchors were added): (a) the whole document must mention
+    "자본감소분" somewhere — the 지급여력기준금액 companion statement (item14)
+    is a table of its own with no 자본감소분 row, so this can't be a
+    per-table check — and (b) each individual table must carry at least 2
+    other Roman-numeral-prefixed rows, confirming it's genuinely a full
+    Ⅰ..Ⅶ-itemised statement and not some unrelated 2-column footnote.
+    """
+    if not any("자본감소분" in row[0].replace(" ", "") for t in tables for row in t["table"]):
+        return {}
+    roman = tuple("Ⅰ Ⅱ Ⅲ Ⅳ Ⅴ Ⅵ Ⅶ Ⅷ Ⅸ Ⅹ".split())
+    out: dict[int, tuple[str, str]] = {}
+    for t in tables:
+        roman_rows = sum(1 for row in t["table"] if row[0].strip().startswith(roman))
+        if roman_rows < 2:
+            continue
+        for row in t["table"]:
+            label = _normalise(row[0])
+            item_no = None
+            for kw, no in _AUDIT_STATEMENT_ROW_MAP:
+                # Exact match only — "지급여력금액" as a bare *substring*
+                # would also hit "Ⅱ.지급여력금액으로 불인정하는 항목", a
+                # completely different item.
+                if _normalise(kw) == label:
+                    item_no = no
+                    break
+            if item_no is None or item_no in out:
+                continue
+            non_blank = [c for c in row[1:] if _parse_value(c) is not None]
+            if len(non_blank) != 2:
+                # Not this statement's shape (e.g. a sub-item row using the
+                # other column pair, or a row with only one populated cell).
+                continue
+            pre_v = _normalise_unit(_parse_value(non_blank[0]), t["unit"])
+            post_v = _normalise_unit(_parse_value(non_blank[1]), t["unit"])
+            out[item_no] = (pre_v, post_v)
+    return out
+
+
 def _is_headline_summary_section(headings: list[str]) -> bool:
     """The '[지급여력비율 총괄]' table — always the true cumulative 전/후
     figure regardless of how many separate provisions (①TFI/②장수등/③주식·
@@ -677,6 +775,17 @@ def _extract_post_values(
             item_no = _match_row_label(label, BREAKDOWN_ROW_MAP)
             if item_no is None:
                 continue
+            if item_no in _LIFE_SUB_ITEMS and "위험액" in _normalise(label):
+                # docling sometimes merges the parent header text into a
+                # sub-item's own label cell ("생명·장기손해보험위험액사망위험"
+                # — KR0070 2024.1Q), and when it does, the row's *value*
+                # cells are the merged-away PARENT's (item17), not the
+                # sub-item's own — silently assigning item17's number to
+                # item29 breaks the mmult identity. A clean sub-item label
+                # (사망위험/장수위험/etc.) never itself contains "위험액", so
+                # its presence here is the merge signal; skip rather than
+                # apply a value we know is wrong.
+                continue
             if item_no in out and item_no not in _RATIO_TRIAD_ITEMS:
                 # The 공통적용 table already gave us this row — keep its
                 # value (more authoritative for 기본자본/보완자본 etc., which
@@ -769,6 +878,20 @@ def _extract_post_values(
     # (820,516) while ②'s own row alone only captures its own slice
     # (907,125) — the *opposite* of KR0076's pattern. No fixed table
     # priority is right for every company; only the headline rollup is.
+    if not out:
+        # Nothing at all matched (no 공통적용/②breakdown table) — try the
+        # 감사보고서 별첨 '지급여력금액'/'지급여력기준금액' Roman-numeral
+        # statement shape before giving up (하나생명 KR0097 FY-end filings).
+        # Require ALL FOUR items at once — a partial hit means the exact-
+        # label match landed on some unrelated 2-cell row by coincidence,
+        # not this specific statement shape (KR0082 2023.1Q: bare "기본자본"
+        # matched a footnote table, giving item2_후 a tiny bogus value).
+        audit_vals = _extract_audit_statement_values(tables)
+        if set(audit_vals) == {1, 2, 3, 14}:
+            for item_no, pair in audit_vals.items():
+                out[item_no] = pair
+                provenance[item_no] = "audit_statement"
+
     headline_vals, headline_dbg = _extract_headline_summary(tables, company_code)
     log.append(headline_dbg)
     if headline_vals:
@@ -781,7 +904,10 @@ def _extract_post_values(
         # instead of trusting whichever raw row got matched, so R1/R7 hold
         # by construction even though item14 itself may still be an
         # incomplete (single-provision) view in this fallback path.
-        if 2 in out and 3 in out:
+        if 2 in out and 3 in out and provenance.get(1) != "audit_statement":
+            # Don't clobber a directly-read audit-statement item1 (already
+            # includes TAC natively, e.g. 하나생명 KR0097) with a from-parts
+            # sum of item2+item3 that predates the TAC addition below.
             try:
                 pre1 = float(out[2][0]) + float(out[3][0])
                 post1 = float(out[2][1]) + float(out[3][1])
@@ -800,6 +926,35 @@ def _extract_post_values(
                     provenance[27] = "derived"
             except (TypeError, ValueError, ZeroDivisionError):
                 pass
+
+    # TAC(자본감소분경과조치) companies: item2/item3 above only reflect the
+    # ①TFI reclassification (validation confirmed via raw, KDB KR0072
+    # 2023.1Q: 기본자본 84,474→300,474·보완자본 644,136→428,136, netting to
+    # zero) — TAC's own amount (342,955) is a *separate* addition to item1
+    # that this company's disclosure never attributes to either tier. Add
+    # it onto item2 so R1(item1=item2+item3) closes with a real, derived
+    # value instead of leaving item2/3 post as if TAC didn't exist.
+    tac_amount = _extract_tac_amount(tables)
+    if tac_amount is not None and 2 in out:
+        try:
+            pre2, post2 = out[2]
+            out[2] = (pre2, _fmt_amount(float(post2) + float(tac_amount)))
+            if provenance.get(1) != "headline" and 3 in out:
+                pre3, post3 = out[3]
+                pre1 = out.get(1, (None, None))[0]
+                out[1] = (pre1, _fmt_amount(float(out[2][1]) + float(post3)))
+                provenance[1] = "derived"
+                if 14 in out:
+                    try:
+                        post14 = float(out[14][1])
+                        if post14 != 0:
+                            pre27 = out.get(27, (None, None))[0]
+                            out[27] = (pre27, _fmt_ratio(float(out[1][1]) / post14 * 100.0))
+                            provenance[27] = "derived"
+                    except (TypeError, ValueError, ZeroDivisionError):
+                        pass
+        except (TypeError, ValueError):
+            pass
 
     return out, provenance, log
 
