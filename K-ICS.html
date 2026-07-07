@@ -301,7 +301,8 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         if (ay !== by) return by - ay;
         return bq - aq;
       });
-      return allQuarters.slice(0, nQuarter);
+      // 과거순으로 정렬 (과거 → 최신): 최신 분기 포함 직전 N개 분기
+      return allQuarters.slice(0, nQuarter).reverse();
     }
 
     // 보험사/기간 모두 지정되어야만 테이블 출력
@@ -441,8 +442,8 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
       let selectedQuarters = [];
       
       if (period === 'quarter') {
-        // 분기: 직전 4개 분기
-        selectedQuarters = getRecentQuarters(filtered, 4);
+        // 분기: 최신 분기 포함 직전 5개 분기 (과거 → 최신)
+        selectedQuarters = getRecentQuarters(filtered, 5);
       } else if (period === 'year') {
         // 연도: 최신 분기 + 직전 3개년 연말(1·2·3년 전 4Q)
         selectedQuarters = getYearEndQuarters(filtered);
@@ -537,10 +538,10 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         chart.destroy();
       }
 
-      // 가로축을 역순으로 (오른쪽이 최신)
-      const reversedQuarters = [...quarters].reverse();
-      const reversedSolvencyRatioData = [...solvencyRatioData].reverse();
-      const reversedBasicCapitalRatioData = [...basicCapitalRatioData].reverse();
+      // quarters는 이미 과거→최신 순 (오른쪽이 최신)
+      const reversedQuarters = [...quarters];
+      const reversedSolvencyRatioData = [...solvencyRatioData];
+      const reversedBasicCapitalRatioData = [...basicCapitalRatioData];
       
       // 보조축 원본 데이터 보관 (tooltip에서 원래 값 표시용)
       const originalBasicCapitalRatioData = [...reversedBasicCapitalRatioData];
