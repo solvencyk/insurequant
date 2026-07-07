@@ -9,6 +9,14 @@ Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/dom
 
 ## Status
 
+**2026-07-07 7차(owner 수동 다운로드로 KR0005 확보 시도, 최종 결착) — 잔여 2셀 전부 documented exception 확정, 더 이상 재취득 액션 없음.**
+owner가 흥국화재 자사 홈페이지 "지난경영공시" 아카이브의 "[흥국화재] 2024년 결산 경영공시(최종).pdf"를
+브라우저로 직접 다운로드해 전달(WAF 우회 성공) → 검증 결과 **기존 오류 파일과 SHA256 완전 동일**
+(`4c0fd741...25e11`, 28,358,329B, 367p, "경과조치" 0회/"감사보고서" 25회) — **흥국화재도 흥국생명과 동일하게
+원천(자사 홈페이지 게시판) 자체가 감사보고서를 경영공시로 잘못 등록해둔 진짜 원본 결측 확정.**
+`transition_ratio_after_capture` 잔여 2셀(흥국화재 item28·흥국생명 item28) = **양사 모두 재취득 시도 완전
+소진, downloader 액션 종결.** RED 2건은 push 게이트에서 documented exception 유지.
+
 **2026-07-07 6차(inbox 재확인, `20260707T0050Z`) — 악사손해 2024.3Q item27/28, 4→2셀.** validation이
 "'공시예정' 지문은 24.3Q 시점 한정, 이미 24.4Q에 공시됨"을 지적 — raw
 `data/disclosure/FY2024_Q4/raw/KR0049_악사손해보험.pdf` page 36(총괄표 당분기-1분기)+page 39(세부표
