@@ -418,15 +418,15 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         }
       });
       
-      // 최신순으로 정렬 (최신 → 과거)
+      // 과거순으로 정렬 (과거 → 최신): 23.4Q → 24.4Q → 25.4Q → 최신 분기
       return selectedQuarters.sort((a, b) => {
         const parse = s => {
           const m = s.match(/^(\d{4})\.(\d)Q$/);
           return m ? [parseInt(m[1]), parseInt(m[2])] : [0,0];
         };
         const [ay, aq] = parse(a), [by, bq] = parse(b);
-        if (ay !== by) return by - ay;
-        return bq - aq;
+        if (ay !== by) return ay - by;
+        return aq - bq;
       });
     }
 
