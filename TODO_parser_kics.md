@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-07 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-07 (validation 재확인 완료) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -14,8 +14,10 @@ Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/dom
 `data/disclosure/FY2024_Q4/raw/KR0049_악사손해보험.pdf` page 36(총괄표 당분기-1분기)+page 39(세부표
 당분기-1분기)로 직접 재확인 후 item1·2·14·27·28 `값_적용후` 적재(item27=286.43630737·item28=166.47756576,
 raw 반올림치 286.5/166.5와 정합). 게이트 `선택경과조치 적용후` RED 4→2(잔여 2건=흥국화재·흥국생명
-2024.4Q item28, 기존 downloader 회신 대기 건과 동일·이번 스코프 아님). inbox status → answered(validation
-재확인 대기).
+2024.4Q item28, 기존 downloader 회신 대기 건과 동일·이번 스코프 아님). **validation 재확인 완료**(게이트
+직접 재실행, 잔여 2건이 정확히 흥국화재/흥국생명 item28 뿐임을 확인) → inbox `_resolved/`로 이동.
+잔여 2건은 `inbox/parser/20260707T0230Z`(downloader 회신, 흥국화재=WAF차단 원본 확보시 해소가능·
+흥국생명=원본 영구결측) 참고, 별도 스코프.
 
 **2026-07-07 update (경과조치 적용후 — 정본 18사 확정 후 잔여 90셀, 상세는 P1 TRANS-18 항목):** owner가 FSS 2023-03-20
 보도자료 붙임-1(`trend20230320_3.pdf` p6)을 정본으로 제공 — **선택 경과조치 실제 적용사 = 18개사**로 확정(이전

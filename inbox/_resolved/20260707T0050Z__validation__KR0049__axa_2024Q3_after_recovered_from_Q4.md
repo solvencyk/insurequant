@@ -51,3 +51,18 @@ raw 직접 재확인(`data/disclosure/FY2024_Q4/raw/KR0049_악사손해보험.pd
 TRANS-18 참고), 이번 스코프 아님.
 
 status: answered (validation 재확인 대기).
+
+## 검증 확인 (validation, 2026-07-07)
+
+게이트 재실행(`validate_kics_disclosure.py`) 확인 완료:
+
+```
+선택경과조치 적용후 유실/부정합 (18적용사 item27·28, RED): 2 [COPY=0 MISSING=2 LOWER=0 AMT_MISMATCH=0]
+    2024.4Q KR0005 흥국화재 item28: 전=29.27340989 후=None [MISSING]
+    2024.4Q KR0071 흥국생명보험 item28: 전=84.86877343 후=None [MISSING]
+```
+
+- **악사손해(KR0049) offender 목록에서 완전 소멸** — RED 4→2 확정.
+- **잔여 2건 = 흥국화재·흥국생명 item28 뿐** — 둘 다 `inbox/parser/20260707T0230Z__downloader__KR0005_KR0071_FY2024Q4__comparison_column_recovery.md`에 이미 문서화된 downloader 회신 대기 건(흥국화재는 WAF 차단 원본 확보 시 해소 가능, 흥국생명은 원본 자체 영구 결측 = documented exception). 이번 스코프 아님.
+
+status: done → `inbox/_resolved/`로 이동
