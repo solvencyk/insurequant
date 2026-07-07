@@ -12,6 +12,37 @@ Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
 ---
 
+## 2026-07-08 — ROUND2 반려 대응: ③표(주식·금리위험 경과조치) 미반영 근본수정, R5/R6 45+6→0·mmult 4→1·COPY 7→2
+
+9차(아래)가 R1만 고치고 "다 했다"고 보고했다가 validation에 반려됨(`inbox/parser/20260707T0930Z`): item15
+(기본요구자본)·item17-21·세부(29-46)의 적용후가 ②표의 **isolated 중간값**에 방치돼 있었는데, 원인은
+③(주식위험·금리위험 경과조치)를 이 스크립트가 **한 번도 읽은 적이 없었던 것**(`_is_market_or_rate_section`을
+배제필터로만 써왔음). raw(IBK연금 2023.1Q)로 확인: ②표만 지급여력기준금액=6,741.36 / ③표만=5,960.09 /
+총괄표(②+③최종)=5,141 — K-ICS 기준금액은 상관행렬 분산화라 두 isolated 표를 더하거나 평균내도 총괄과 안
+맞음. `scripts/fill_post_transition_to_disclosure.py` 수정:
+
+1. **③표 추출 신규 구현** — items 19/36-40, 헤딩+행-diff 게이팅은 ②와 동형(`MARKET_RATE_ROW_MAP`,
+   `_MARKET_RATE_EFFECT_ITEMS`).
+2. **item15/16을 표에서 읽지 않고 항등식에서 역산** — item15 = item14(headline, 이미 정확) + item22 − item23
+   (R5 정의를 거꾸로 풂, 근사 아니라 정확). item16 = Σ(17..21후) − item15후(raw 어디에도 적용후 분산효과
+   행 자체가 없음 — IBK ①/②/③표 전부 확인, 파생 외엔 방법 없음).
+3. **한화손해보험 3분기(2025.1Q/3Q·2026.1Q) COPY 오탐 → 진짜 갭**: docling이 "② 장수위험..." **헤딩 자체를
+   누락**시켜(①표 바로 뒤 헤딩 없이 표만 이어짐) heading-기반 탐지가 표를 통째로 못 찾음 — raw엔 진짜 값 있었음
+   (2025.1Q 지급여력비율 182.5→**215.8**, 기존엔 182.5→182.48로 "복사"). **행-내용 시그니처 폴백 추가**(헤딩
+   매칭 실패 시 사망/장수/해지/사업비/대재해위험 라벨 ≥3개면 표 채택) — 일반화된 root-cause fix.
+4. **롯데손해보험 2023.1Q item27**: 같은 계열인데 행까지 셀밀림(해지·사업비·대재해위험 행의 적용후 값이
+   컬럼에서 한 칸 밀려 빈칸으로 읽힘, 폴백도 diff=0으로 거부) — raw 확정값(지급여력비율후=178.33 등)을
+   스크립트에 명시 override(향후 재실행에도 유지, 예전처럼 JSON 직접패치 아님).
+5. **회귀 자체수정**: `--all-periods` 재실행이 스크립트 밖 수기패치 셀 2종을 씻어버릴 뻔함 — 푸본현대(KR0083)
+   2023.1Q TAC표 라벨·값 컬럼 뒤바뀜(재override) / AIA·카카오페이 일부 분기 표 자체 pre값이 JSON 기존값과
+   미세히(0.3~5%) 어긋나는 케이스("무변동시 표값 대신 JSON 기존값 미러링"으로 일반 수정, 향후 재발 방지).
+
+**결과**: R5 45건·R6 6건 → **0**. mmult 4→**1**(흥국화재 2024.4Q는 TRANS-18 기존 문서화된 downloader-blocked
+건, 회귀 아님). COPY 7→**2**(롯데손해 item28, raw로 이미 정합 확인된 소액 진짜변화 — 예별손해와 동일 패턴,
+validation 마진질의로 남김). core RED는 baseline과 동일 **+1**(한화손해 2024.2Q rule9, item2후 −0.015%,
+이번에 처음 읽힌 raw 그대로 — 조작 아님, 투명 보고). `kics_disclosure.json`/`templates/kics_disclosure.json`
+동기화 + `recalc_basic_capital_ratio_post.py`로 item28 106셀 재계산 포함. 상세: `inbox/parser/20260707T0930Z` 답변.
+
 ## 2026-07-07 (9차) — 적용후 전체 룰 검증 대응: fill_post_transition_to_disclosure.py 4개 근본버그 수정
 
 validation이 `inbox/parser/20260707T0600Z`로 R1-R8·8_life·19_market 전체 룰을 **값_적용후에도** 처음 돌려서

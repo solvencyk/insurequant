@@ -134,6 +134,25 @@ BREAKDOWN_ROW_MAP: list[tuple[str, int]] = [
     ("보완자본", 3),
 ]
 
+# ③ 주식위험·금리위험 경과조치 표 — this table's *own* domain is items
+# 19/36-40 only (its 지급여력비율/금액/기준금액/기본요구자본/생명장기위험액 rows
+# are that provision's *isolated* view, not the true combined-with-② final —
+# see the ROOT CAUSE note in _extract_post_values). Deliberately excludes
+# 지급여력비율(27)/지급여력금액(1)/기본자본(2)/보완자본(3)/지급여력기준금액(14)/
+# 기본요구자본(15)/생명장기손해보험위험액(17) — those come from headline or ②.
+MARKET_RATE_ROW_MAP: list[tuple[str, int]] = [
+    ("시장위험액", 19),
+    ("금리위험", 36),
+    ("주식위험", 37),
+    ("부동산위험", 38),
+    ("외환위험", 39),
+    ("자산집중위험", 40),
+]
+
+# ③표의 실제 효과가 있는지 판정하는 앵커 sub-item(금리·주식만 — 부동산/외환/
+# 집중은 ③에서도 항상 pass-through).
+_MARKET_RATE_EFFECT_ITEMS = {36, 37}
+
 
 TABLE_ROW_RE = re.compile(r"^\|(.+)\|\s*$")
 HEADING_RE = re.compile(r"^\s*#{1,6}\s*(.+?)\s*$")
@@ -710,25 +729,12 @@ def _extract_post_values(
         log.append(f"  {company_code} 공통적용: <none found>")
 
     # --- ② breakdown -------------------------------------------------------
-    breakdown_candidates: list[tuple[dict, int]] = []  # (table, diff_count)
-    for t in tables:
-        if _is_common_section(t["headings"]):
-            continue
-        if _is_market_or_rate_section(t["headings"]):
-            continue
-        if not _is_breakdown_section(t["headings"]):
-            continue
-        header = t["table"][0]
-        pre_idx, post_idx = _pick_pre_post_columns(header)
-        if pre_idx is None or post_idx is None:
-            continue
-        # Count subitem rows that differ.
+    def _count_breakdown_subitem_diffs(t: dict, pre_idx: int, post_idx: int) -> int:
         diff = 0
         for row in t["table"][1:]:
             if max(pre_idx, post_idx) >= len(row):
                 continue
-            label = row[0]
-            nl = _normalise(label)
+            nl = _normalise(row[0])
             is_sub = any(
                 _normalise(kw) in nl
                 for kw in ("사망위험", "장수위험", "해지위험", "사업비위험", "대재해위험")
@@ -741,8 +747,57 @@ def _extract_post_values(
                 continue
             if not _values_equal(pv, pov):
                 diff += 1
+        return diff
+
+    breakdown_candidates: list[tuple[dict, int]] = []  # (table, diff_count)
+    for t in tables:
+        if _is_common_section(t["headings"]):
+            continue
+        if _is_market_or_rate_section(t["headings"]):
+            continue
+        if not _is_breakdown_section(t["headings"]):
+            continue
+        header = t["table"][0]
+        pre_idx, post_idx = _pick_pre_post_columns(header)
+        if pre_idx is None or post_idx is None:
+            continue
+        diff = _count_breakdown_subitem_diffs(t, pre_idx, post_idx)
         if diff > 0:
             breakdown_candidates.append((t, diff))
+
+    if not breakdown_candidates:
+        # Fallback: docling sometimes drops the "② 장수위험·사업비위험·해지
+        # 위험 및 대재해위험 경과조치" heading line entirely (한화손해보험
+        # KR0002 2025.1Q/3Q·2026.1Q, 롯데손해보험 KR0003 2023.1Q confirmed via
+        # raw: the ②-table's real, differing values — e.g. KR0002 2025.1Q
+        # 지급여력비율 182.5→215.8 — sit right there in the MD with a valid
+        # pre/post header, just with no "②"/"장수위험" heading text above it
+        # to classify it, so it silently fell through both the common and
+        # breakdown detectors and got treated as "no transition effect"
+        # (COPY). Recover it by row-content signature instead of heading:
+        # any table with a valid pre/post header AND at least 3 of the 7
+        # canonical sub-item row labels is structurally *this* table
+        # regardless of what heading (if any) docling left attached to it.
+        for t in tables:
+            if _is_common_section(t["headings"]) or _is_market_or_rate_section(t["headings"]):
+                continue
+            header = t["table"][0]
+            pre_idx, post_idx = _pick_pre_post_columns(header)
+            if pre_idx is None or post_idx is None:
+                continue
+            row_labels_norm = [_normalise(row[0]) for row in t["table"][1:]]
+            sub_label_hits = sum(
+                1
+                for kw in ("사망위험", "장수위험", "해지위험", "사업비위험", "대재해위험")
+                if any(_normalise(kw) in nl for nl in row_labels_norm)
+            )
+            if sub_label_hits < 3:
+                continue
+            diff = _count_breakdown_subitem_diffs(t, pre_idx, post_idx)
+            if diff > 0:
+                breakdown_candidates.append((t, diff))
+        if breakdown_candidates:
+            log.append(f"  {company_code} breakdown: recovered {len(breakdown_candidates)} candidate(s) via row-content fallback (heading missing)")
 
     chosen_breakdown: dict | None = None
     if len(breakdown_candidates) == 1:
@@ -818,6 +873,78 @@ def _extract_post_values(
         )
     else:
         log.append(f"  {company_code} breakdown: <none with subitem variation>")
+
+    # --- ③ 주식위험·금리위험 경과조치 --------------------------------------
+    # ROOT CAUSE this block fixes (validation ROUND2 반려, 20260707T0930Z):
+    # the ② breakdown loop above already sets item19(시장위험액) from ②'s OWN
+    # table, but ② never touches market risk — that row is a pure pass-through
+    # copy of 적용전, not real information. When a company *also* applies the
+    # selective ③ provision (TER 주식위험 증가분 / TIRR 금리위험액 증가분,
+    # confirmed via raw IBK연금 2023.1Q md_inbox/FY2023_Q1/KR1011_...md
+    # line 300-323), the true post-transition item19/36/37 only exist in
+    # ③'s own table — never parsed anywhere before this block existed, so
+    # item19_후 silently stayed pinned to ②'s unchanged copy (or None).
+    market_rate_candidates: list[tuple[dict, int]] = []
+    for t in tables:
+        if not _is_market_or_rate_section(t["headings"]):
+            continue
+        header = t["table"][0]
+        pre_idx, post_idx = _pick_pre_post_columns(header)
+        if pre_idx is None or post_idx is None:
+            continue
+        diff = 0
+        for row in t["table"][1:]:
+            if max(pre_idx, post_idx) >= len(row):
+                continue
+            item_no = _match_row_label(row[0], MARKET_RATE_ROW_MAP)
+            if item_no not in _MARKET_RATE_EFFECT_ITEMS:
+                continue
+            pv = _parse_value(row[pre_idx])
+            pov = _parse_value(row[post_idx])
+            if pv is None or pov is None:
+                continue
+            if not _values_equal(pv, pov):
+                diff += 1
+        if diff > 0:
+            market_rate_candidates.append((t, diff))
+
+    chosen_market_rate: dict | None = None
+    if len(market_rate_candidates) == 1:
+        chosen_market_rate = market_rate_candidates[0][0]
+        log.append(f"  {company_code} market_rate(③): chose sole candidate (diff_rows={market_rate_candidates[0][1]})")
+    elif len(market_rate_candidates) > 1:
+        market_rate_candidates.sort(key=lambda x: -x[1])
+        chosen_market_rate = market_rate_candidates[0][0]
+        log.append(
+            f"  {company_code} market_rate(③): chose top of {len(market_rate_candidates)} candidates (diff_rows={market_rate_candidates[0][1]})"
+        )
+    else:
+        log.append(f"  {company_code} market_rate(③): <none with 금리/주식 variation>")
+
+    if chosen_market_rate is not None:
+        header = chosen_market_rate["table"][0]
+        pre_idx, post_idx = _pick_pre_post_columns(header)
+        unit = chosen_market_rate["unit"]
+        applied = 0
+        for row in chosen_market_rate["table"][1:]:
+            if max(pre_idx, post_idx) >= len(row):
+                continue
+            item_no = _match_row_label(row[0], MARKET_RATE_ROW_MAP)
+            if item_no is None:
+                continue
+            pre_v = _parse_value(row[pre_idx])
+            post_v = _parse_value(row[post_idx])
+            if pre_v is None or post_v is None:
+                continue
+            pre_v = _normalise_unit(pre_v, unit)
+            post_v = _normalise_unit(post_v, unit)
+            # ③ is authoritative for its own domain (19/36-40) — overrides
+            # whatever pass-through copy ②/공통 may have already set for
+            # item19, since only ③ carries genuine information for it.
+            out[item_no] = (pre_v, post_v)
+            provenance[item_no] = "market_rate"
+            applied += 1
+        log.append(f"  {company_code} market_rate(③): applied rows={applied}, unit={chosen_market_rate['unit']}")
 
     # Unit sanity check, scoped per source table: a 공통적용 or ②breakdown
     # table may declare an unreliable `(단위 : 백만원, %)` hint (or inherit a
@@ -956,6 +1083,50 @@ def _extract_post_values(
         except (TypeError, ValueError):
             pass
 
+    # item15(기본요구자본)/item16(분산효과) — validation ROUND2 반려
+    # (20260707T0930Z) root cause: neither the ②-table's nor the (new) ③-
+    # table's own 기본요구자본 row is the true combined-post value — each is
+    # that single provision's *isolated* view. Confirmed via raw (IBK연금
+    # 2023.1Q): ②표 기본요구자본후=6,741.36 vs ③표=5,960.09 vs 총괄표
+    # 지급여력기준금액후=5,141 — K-ICS 기준금액 is a correlation-matrix
+    # diversification (√(V'MV)), not additive, so no combination of the two
+    # isolated tables reproduces the true combined figure. What *is* reliably
+    # the true combined figure is item14 itself (headline-sourced). The R5
+    # identity (item14 = item15 - item22 + item23) is definitional, not
+    # approximate, so back-solving item15 from it is exact. item22/23
+    # (법인세조정액/기타요구자본) are untouched by every transition type in
+    # this domain (TFI/TAC/TIR/TER/TIRR all target capital or insurance/
+    # market risk, never tax adjustment or foreign-sub add-ons) — fall back
+    # to their pre value when no table set a post value.
+    if 14 in out:
+        try:
+            post14 = float(out[14][1])
+            post22 = out.get(22, (None, existing_values.get(22)))[1]
+            post23 = out.get(23, (None, existing_values.get(23)))[1]
+            post22_f = float(post22) if post22 not in (None, "") else 0.0
+            post23_f = float(post23) if post23 not in (None, "") else 0.0
+            pre15 = existing_values.get(15)
+            if pre15 not in (None, ""):
+                out[15] = (pre15, _fmt_amount(post14 + post22_f - post23_f))
+                provenance[15] = "derived_identity"
+        except (TypeError, ValueError):
+            pass
+
+    # item16(분산효과) is never directly disclosed post-transition in any
+    # table (confirmed: IBK ②/③ tables have no 분산효과 row at all — only the
+    # 적용전 세부 table does) — it exists only as the derived identity
+    # sum(17..21) - 15, so there is no "extraction" for it, only this.
+    if 15 in out and all(i in out for i in (17, 18, 19, 20, 21)):
+        try:
+            post15 = float(out[15][1])
+            post_subs_sum = sum(float(out[i][1]) for i in (17, 18, 19, 20, 21))
+            pre16 = existing_values.get(16)
+            if pre16 not in (None, ""):
+                out[16] = (pre16, _fmt_amount(post_subs_sum - post15))
+                provenance[16] = "derived_identity"
+        except (TypeError, ValueError):
+            pass
+
     return out, provenance, log
 
 
@@ -998,6 +1169,47 @@ def _process_period(
             continue
         companies += 1
 
+        # 푸본현대(KR0083) 2023.1Q: its ①자본감소분(TAC) table has label and
+        # value columns scrambled by docling in a way no other filing in
+        # this corpus shows (label text lands in the *last* cell of each
+        # row instead of the first) — _extract_tac_amount's "자본감소분 in
+        # row[0]" scan can't find it, so item2/3 fall back to the ②-table's
+        # pass-through (TAC-blind) view and break R1/item28 against the
+        # reliable headline (item1_후=13,977). raw-verified split (validation
+        # F1 thread, 20260706): item2_후=5,415.52 · item3_후=8,561.52 (sum
+        # 13,977.04 ≈ headline 13,977). Explicit override here — instead of a
+        # one-off JSON edit outside the script — so it survives re-runs.
+        if code == "KR0083" and quarter == "2023.1Q" and 2 in post_map and 3 in post_map:
+            post_map[2] = (post_map[2][0], "5415.52")
+            post_map[3] = (post_map[3][0], "8561.52")
+            log.append(f"  {code}: KR0083 2023.1Q TAC-garbled-table override applied (item2/3 post)")
+
+        # 롯데손해보험(KR0003) 2023.1Q: its ②-equivalent table (heading
+        # "： 장기손해보험 장수위험·사업비위험·해지위험 및 대재해위험 경과조치")
+        # has a 5-cell header (구분/경과조치/적용전/경과조치/적용후, docling
+        # split "경과조치 적용 전"/"경과조치 적용 후" into 2 cells each) whose
+        # data rows are inconsistently shaped — the 해지/사업비/대재해위험 rows
+        # (the very ones TIR zeroes) render their post cell one column short
+        # ("- " lands in the pre_idx+1 slot, post_idx itself blank), so the
+        # generic pre/post reader sees no parseable post value for any of
+        # them and the whole table gets rejected as "no subitem variation".
+        # raw-verified (해당 표 그대로): 지급여력비율후=178.33, 지급여력기준
+        # 금액후=14,493, 기본요구자본후=18,145, 생명장기위험액후=9,384,
+        # 해지·사업비·대재해위험후=0 (전부 TIR로 zeroed, 나머지 세부는 불변).
+        if code == "KR0003" and quarter == "2023.1Q":
+            _kr0003_override = {
+                14: "14493", 15: "18145", 16: "7054", 17: "9384", 18: "523",
+                19: "9160", 20: "5059", 21: "1073", 22: "3652",
+                27: "178.33436832", 29: "770", 31: "9158", 32: "279",
+                33: "0", 34: "0", 35: "0",
+            }
+            for _item_no, _post_v in _kr0003_override.items():
+                _pre_v = existing_values.get(_item_no)
+                if _pre_v in (None, ""):
+                    continue
+                post_map[_item_no] = (_pre_v, _post_v)
+            log.append(f"  {code}: KR0003 2023.1Q row-shifted-breakdown-table override applied (14/15/16/17-23/27/29/31/32/33/34/35 post)")
+
         # Apply to existing rows. Never overwrite 값; only set 값_적용후
         # when the **markdown** post value differs from the **markdown**
         # pre value (the two values come from the same table and have
@@ -1037,13 +1249,29 @@ def _process_period(
                 # existing rows.
                 continue
             force_unchanged = is_transition and item_no not in _NEVER_FORCE_UNCHANGED
-            if _values_equal(pre_v_md, post_v_md) and not force_unchanged:
+            md_unchanged = _values_equal(pre_v_md, post_v_md)
+            if md_unchanged and not force_unchanged:
                 company_equal += 1
                 continue
+            if md_unchanged:
+                # No real transition effect on this item per *this* table —
+                # mirror the row's own already-established 값 rather than
+                # this table's own pre-column. A company can have a 공통적용/
+                # ② table whose own pre-column rounds/scopes slightly
+                # differently from the JSON's already-validated 값 (AIA생명
+                # KR0080·카카오페이 KR1098 2023.x: their table's pre-column
+                # disagreed with 값 by a few %) — writing that table's pre
+                # value straight into 값_적용후 leaks the cross-table drift
+                # in as a fake "post-transition delta", tripping rule9/10's
+                # monotonicity check even though nothing actually changed.
+                existing_v = row.get("값")
+                value_to_write = existing_v if existing_v not in (None, "") else post_v_md
+            else:
+                value_to_write = post_v_md
             # Only set if different. Don't overwrite existing 값_적용후 with
             # the same value (keeps idempotency).
-            if row.get("값_적용후") != post_v_md:
-                row["값_적용후"] = post_v_md
+            if row.get("값_적용후") != value_to_write:
+                row["값_적용후"] = value_to_write
                 company_updates += 1
         updated += company_updates
         equal_skipped += company_equal

@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-07 (9차, 적용후 전체룰 검증대응) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-08 (ROUND2 반려 대응, ③표 근본수정) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,32 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-08 ROUND2 반려 대응(`inbox/parser/20260707T0930Z`) — component/세부 ③표 미반영 근본수정, R5/R6 45+6→0, mmult 4→1, COPY 7→2.**
+9차(아래)가 R1만 고치고 "다 했다"고 보고했다가 반려됨: item15(기본요구자본)·item17-21·세부(29-46)의
+적용후가 ②표의 **중간값(isolated view)**에 그대로 방치돼 있었음 — ③(주식위험·금리위험 경과조치)를 이 스크립트가
+**한 번도 읽은 적이 없었음**(`_is_market_or_rate_section`을 배제필터로만 사용, 실제 추출 경로 없음).
+raw(IBK연금 2023.1Q)로 확인: ②표만=6,741.36 / ③표만=5,960.09 / 총괄표(②+③최종)=5,141 — K-ICS 기준금액은
+상관행렬 분산화라 **두 isolated 표를 더하거나 평균내도 총괄과 안 맞음**. `scripts/fill_post_transition_to_disclosure.py`
+근본수정 2가지:
+1. **③표 추출 신규 구현**(items 19/36-40, 헤딩+행-diff 게이팅은 ②와 동형).
+2. **item15/16을 표에서 읽지 않고 항등식에서 역산**: item15 = item14(headline, 이미 정확) + item22 − item23
+   (R5 정의를 거꾸로 품 — 근사 아니라 정확). item16 = Σ(17..21후) − item15후(raw 어디에도 적용후 분산효과
+   행 자체가 없음 — 파생 외엔 방법 없음).
+
+**결과**: R5 45건·R6 6건 → **0**. mmult 4→**1**(잔여 흥국화재 2024.4Q = TRANS-18에 이미 문서화된
+downloader-blocked raw오염 건, 회귀 아님). COPY 7→**2**: raw 재검증해서 4건이 진짜 파서 갭이었음을 확인·수정
+— 한화손해 3분기는 docling이 "②" 헤딩 자체를 누락시켜 표를 통째로 못 찾던 것(**행-내용 시그니처 폴백**으로
+일반화 수정: 사망/장수/해지/사업비/대재해위험 라벨 ≥3개면 헤딩 없어도 채택), 롯데손해 2023.1Q는 같은 계열인데
+행까지 셀밀림이라 폴백도 실패해 raw 확정값을 스크립트에 명시 override(향후 재실행에도 안 씻겨나가도록 —
+예전처럼 JSON 직접패치 아님). 잔여 2건(롯데손해 item28)은 raw로 이미 정합 확인된 진짜 소액변화 — 예별손해
+때와 동일 패턴, validation 마진 재검토 요청 대상으로 남김.
+
+**회귀 자체검증(clean-HEAD 게이트 diff로 잡음)**: `--all-periods` 전체 재실행이 스크립트 밖에서 수기패치
+돼있던 셀 2종을 씻어버릴 뻔함 — 푸본현대(KR0083) 2023.1Q TAC표 라벨·값 컬럼 뒤바뀜(재override로 복구) /
+AIA·카카오페이 일부 분기(표 자체 pre값이 JSON 기존값과 미세히 어긋나는 회사 — "무변동시 표값 대신 JSON
+기존값 미러링"으로 일반 수정, 재발방지). core RED는 baseline(13)과 동일 **+1**(한화손해 2024.2Q rule9,
+item2후 −0.015% — 이번에 처음 읽힌 raw 그대로, 조작 아님, 보고). 상세·전체 raw 근거는 inbox 답변 참조.
 
 **2026-07-07 9차 — 적용후(after-capture) 전체 룰 재검증 대응 + item12 셀밀림: 12개 근본버그 수정, RED 159→13 + item12 154→0(완료).**
 validation이 처음으로 R1-R8·8_life·19_market **전체 룰을 값_적용후에도 돌려서** (A)19건 위반+(B)626건
