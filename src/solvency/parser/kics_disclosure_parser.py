@@ -726,6 +726,18 @@ def labels_compatible(baseline_name: str, table_label: str) -> bool:
         return False
     if "\uc21c\uc790\uc0b0" in baseline_name and "\uc9c0\uae09\uc5ec\ub825\uae08\uc561" in table_label:
         return False
+    # item12(\uc9c0\uae09\uc5ec\ub825\uae08\uc561\uc73c\ub85c "\ubd88\uc778\uc815"\ud558\ub294 \ud56d\ubaa9) starts with item1's bare label
+    # "\uc9c0\uae09\uc5ec\ub825\uae08\uc561", so when item12's own row is unmatched/dropped (e.g. a
+    # "-" value gets filtered out of `lookup` before this ever runs), the
+    # startswith() fallback in match_baseline_value() below silently
+    # substitutes item1's value for item12 (found live in ~154 rows across
+    # ~15 companies, e.g. KR0004 2023.1Q, KR0005 2023.3Q). Likewise item13
+    # (\ubcf4\uc644\uc790\ubcf8\uc73c\ub85c "\uc7ac\ubd84\ub958"\ud558\ub294 \ud56d\ubaa9) starts with item3's bare "\ubcf4\uc644\uc790\ubcf8" \u2014
+    # same latent defect, not yet observed to fire but closed here too.
+    if "\ubd88\uc778\uc815" in baseline_name and "\ubd88\uc778\uc815" not in table_label:
+        return False
+    if "\uc7ac\ubd84\ub958" in baseline_name and "\uc7ac\ubd84\ub958" not in table_label:
+        return False
     return True
 
 

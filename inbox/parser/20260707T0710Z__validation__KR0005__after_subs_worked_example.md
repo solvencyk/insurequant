@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260707T0710Z
-status: open
+status: answered
 route: reextract
 company: KR0005 흥국화재 (예시) + 경과조치 적용사 18사 전반
 period: 2026.1Q (예시), ALL

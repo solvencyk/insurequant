@@ -86,6 +86,10 @@ def _md_period_to_quarter(period_label: str) -> str:
     return f"{m.group(1)}.{m.group(2)}Q"
 
 
+# 지급여력비율/금액/기준금액: see the override note in _extract_post_values
+# where this is used — the ②breakdown table wins over 공통적용 for these.
+_RATIO_TRIAD_ITEMS = {1, 14, 27}
+
 # Row label keywords → item_no. Match against normalised label.
 # Order matters: more specific keywords first.
 COMMON_ROW_MAP: list[tuple[str, int]] = [
@@ -187,6 +191,18 @@ def _normalise_unit(value: str, unit: str) -> str:
     if abs(scaled - round(scaled)) < 1e-6:
         return str(int(round(scaled)))
     return f"{scaled:.2f}".rstrip("0").rstrip(".")
+
+
+def _fmt_amount(x: float) -> str:
+    """Format a derived amount (item1) matching _normalise_unit's convention."""
+    if abs(x - round(x)) < 1e-6:
+        return str(int(round(x)))
+    return f"{x:.2f}".rstrip("0").rstrip(".")
+
+
+def _fmt_ratio(x: float) -> str:
+    """Format a derived ratio (item27), matching recalc_basic_capital_ratio_post.py."""
+    return f"{x:.8f}".rstrip("0").rstrip(".") or "0"
 
 
 def _is_percent_row(item_no: int) -> bool:
@@ -302,6 +318,15 @@ def _scan_tables_with_context(md_text: str) -> list[dict]:
 
 _NEGATION_TOKENS = ("적용하지않아", "미적용", "동일함", "동일하므로", "동일한")
 
+# ①②③ each cover a disjoint selective-provision type. A negation line only
+# invalidates the heading it's actually talking about — matched by shared
+# risk-keyword group, not "any heading within 2 lines".
+_RISK_KEYWORD_GROUPS = (
+    ("장수위험", "해지위험", "사업비위험", "대재해위험"),  # ②
+    ("주식위험", "금리위험"),  # ③
+    ("자본감소분",),  # ①
+)
+
 
 def _filter_active_headings(headings: list[str], n: int = 12) -> list[str]:
     """Return the last ``n`` headings, *excluding* any that are followed
@@ -319,6 +344,15 @@ def _filter_active_headings(headings: list[str], n: int = 12) -> list[str]:
     marker, or (b) one of the next 2 headings contains a negation marker
     AND H contains a section-type marker like '경과조치' / '위험'. Headings
     farther away that just describe (1) 공통적용 etc. survive.
+
+    Caveat this guards against (한화손해보험 KR0002 2023.1Q): when a company
+    discloses ②'s real heading+table immediately followed by ③'s heading+
+    negation (③ genuinely not applicable), the naive "any of next 2" rule
+    drops ② too — even though ③'s negation has nothing to do with ②'s own,
+    applicable, real-data table. Require the negation follower to share a
+    risk-keyword *group* with H (both ② or both ③) before treating it as
+    that heading's own split-off negation; a negation about a *different*
+    group never invalidates H.
     """
     window = headings[-n:]
     out: list[str] = []
@@ -333,11 +367,27 @@ def _filter_active_headings(headings: list[str], n: int = 12) -> list[str]:
             for kw in ("위험", "경과조치")
         )
         if marker:
+            h_groups = {
+                grp for grp in _RISK_KEYWORD_GROUPS if any(kw in nh for kw in grp)
+            }
             followers = window[i + 1 : i + 3]
-            if any(
-                any(tok in _normalise(f) for tok in _NEGATION_TOKENS)
-                for f in followers
-            ):
+            drop = False
+            for f in followers:
+                nf = _normalise(f)
+                if not any(tok in nf for tok in _NEGATION_TOKENS):
+                    continue
+                if not h_groups:
+                    # H has no specific risk-keyword group (generic '경과조치'
+                    # mention) — fall back to the old any-negation-nearby rule.
+                    drop = True
+                    break
+                f_groups = {
+                    grp for grp in _RISK_KEYWORD_GROUPS if any(kw in nf for kw in grp)
+                }
+                if not f_groups or f_groups & h_groups:
+                    drop = True
+                    break
+            if drop:
                 continue
         out.append(h)
     return out
@@ -371,6 +421,67 @@ def _is_market_or_rate_section(headings: list[str]) -> bool:
     excludes the real 공통적용 capital table (처브 KR0100 2024.3Q)."""
     ctx = _heading_context(headings).replace(" ", "")
     return "주식위험경과조치" in ctx or "금리위험경과조치" in ctx
+
+
+def _is_headline_summary_section(headings: list[str]) -> bool:
+    """The '[지급여력비율 총괄]' table — always the true cumulative 전/후
+    figure regardless of how many separate provisions (①TFI/②장수등/③주식·
+    금리) are stacked, since it's the company's own headline rollup rather
+    than a single provision's isolated before/after view."""
+    return "지급여력비율총괄" in _heading_context(headings).replace(" ", "")
+
+
+def _extract_headline_summary(
+    tables: list[dict], company_code: str
+) -> tuple[dict[int, tuple[str, str]], str]:
+    """Parse '[지급여력비율 총괄]' if present: returns {item_no: (pre, post)}
+    for items 1/14/27 plus a debug string.
+
+    Table shape (docling mangles the '경과조치 전'/'경과조치 후' label into a
+    vertical-text split across 3 rows each, e.g. col0 sequence "경","과 조",
+    "치 전" then "경 과","조 치","후" — the split pattern itself varies by
+    company/quarter, so col0 can't be trusted). What's stable: the row order
+    is always 지급여력비율,지급여력금액,지급여력기준금액 for the 전 group,
+    then the same 3 labels again for the 후 group, with the clean label
+    always present *somewhere* in the row and the "당분기" (this quarter,
+    right-most-recent) value in the next cell after wherever the label
+    landed.
+    """
+    labels = (("지급여력비율", 27), ("지급여력금액", 1), ("지급여력기준금액", 14))
+    for t in tables:
+        if not _is_headline_summary_section(t["headings"]):
+            continue
+        rows = t["table"][1:] if len(t["table"]) > 1 else []
+        matched: list[tuple[int, str]] = []  # (item_no, value) in row order
+        for row in rows:
+            label_cell_idx = None
+            item_no = None
+            for i, cell in enumerate(row[:-1]):  # never the last cell — need a value after it
+                nl = _normalise(cell)
+                for kw, no in labels:
+                    if _normalise(kw) in nl:
+                        label_cell_idx = i
+                        item_no = no
+                        break
+                if item_no is not None:
+                    break
+            if item_no is None or label_cell_idx is None:
+                continue
+            value = _parse_value(row[label_cell_idx + 1])
+            if value is None:
+                continue
+            matched.append((item_no, value))
+        if len(matched) < 6:
+            return {}, f"  {company_code} 총괄: found but only {len(matched)}/6 rows matched, skip"
+        # First occurrence of each label = 전; second = 후.
+        seen: dict[int, list[str]] = defaultdict(list)
+        for item_no, value in matched:
+            seen[item_no].append(value)
+        if not all(len(seen.get(no, [])) >= 2 for _, no in labels):
+            return {}, f"  {company_code} 총괄: incomplete pairs {dict((no, len(v)) for no, v in seen.items())}, skip"
+        out = {no: (seen[no][0], seen[no][1]) for _, no in labels}
+        return out, f"  {company_code} 총괄: rows={len(rows)} matched=6 -> {out}"
+    return {}, f"  {company_code} 총괄: <none found>"
 
 
 def _pick_pre_post_columns(header: list[str]) -> tuple[int | None, int | None]:
@@ -435,18 +546,28 @@ def _match_row_label(label: str, mapping: list[tuple[str, int]]) -> int | None:
 
 
 def _extract_post_values(
-    tables: list[dict], company_code: str
-) -> tuple[dict[int, tuple[str, str]], list[str]]:
-    """Return ({item_no: (pre_value, post_value)}, debug_log_lines).
+    tables: list[dict], company_code: str, existing_values: dict[int, str]
+) -> tuple[dict[int, tuple[str, str]], dict[int, str], list[str]]:
+    """Return ({item_no: (pre_value, post_value)}, {item_no: source_table}, debug_log_lines).
 
     Walks the company's tables. Picks at most one common-section table and at
     most one breakdown-section table. For KR0073 (multiple breakdown tables
     in the same MD) the breakdown table is selected as the one whose
     sub-item rows (사망/장수/해지/사업비/대재해) show a 전≠후 difference and
     is not a 시장위험/주식위험/금리위험 시나리오 table.
+
+    ``source_table`` ("common" or "breakdown") records which table each
+    item_no's value actually came from — needed because a single company's
+    MD can have ONE table mistagged with the wrong 억원/백만원 unit while
+    the OTHER is tagged correctly (예별손해보험 KR0004 2023.1Q: 공통적용
+    table has no unit hint of its own and inherits a stale "억원" tag from
+    an unrelated earlier table, while its ②breakdown table correctly
+    declares "백만원"). The scale-mismatch self-correction below must be
+    computed and applied per source table, not blended across both.
     """
     log: list[str] = []
     out: dict[int, tuple[str, str]] = {}
+    provenance: dict[int, str] = {}
 
     # --- 공통적용 ----------------------------------------------------------
     chosen_common: dict | None = None
@@ -483,6 +604,7 @@ def _extract_post_values(
                 pre_v = _normalise_unit(pre_v, unit)
                 post_v = _normalise_unit(post_v, unit)
             out[item_no] = (pre_v, post_v)
+            provenance[item_no] = "common"
         log.append(
             f"  {company_code} 공통적용: rows={len(chosen_common['table'])-1}, unit={chosen_common['unit']}"
         )
@@ -555,9 +677,12 @@ def _extract_post_values(
             item_no = _match_row_label(label, BREAKDOWN_ROW_MAP)
             if item_no is None:
                 continue
-            if item_no in out:
+            if item_no in out and item_no not in _RATIO_TRIAD_ITEMS:
                 # The 공통적용 table already gave us this row — keep its
-                # value (more authoritative for 공통적용 items).
+                # value (more authoritative for 기본자본/보완자본 etc., which
+                # reflect the TFI reclassification that this breakdown table
+                # doesn't fold in — it only varies the sub-items it's named
+                # for, e.g. 사업비/해지위험).
                 continue
             pre_v = _parse_value(row[pre_idx])
             post_v = _parse_value(row[post_idx])
@@ -566,14 +691,117 @@ def _extract_post_values(
             if not _is_percent_row(item_no):
                 pre_v = _normalise_unit(pre_v, unit)
                 post_v = _normalise_unit(post_v, unit)
+            # For 지급여력비율/금액/기준금액(27/1/14): when a company has BOTH
+            # the common TFI provision AND a selective breakdown-type one
+            # (사업비/해지/대재해 등), the 공통적용 table's 후 column only
+            # reflects TFI in isolation — 기준금액 is untouched by TFI so it
+            # shows 후=전 there, while the ②breakdown table shows the true
+            # cumulative 후 (reflecting the selective provision too).
+            # Confirmed via raw: 한화손해보험 KR0002 2023.3Q 공통적용
+            # 지급여력기준금액 후=전=3,179,538(백만) vs ②breakdown
+            # 후=2,138,338 — only the breakdown value satisfies
+            # item1/item14×100=item27(283.1). So breakdown always wins for
+            # these three when a breakdown table was chosen at all.
             out[item_no] = (pre_v, post_v)
+            provenance[item_no] = "breakdown"
         log.append(
             f"  {company_code} breakdown: applied rows={len(chosen_breakdown['table'])-1}, unit={chosen_breakdown['unit']}"
         )
     else:
         log.append(f"  {company_code} breakdown: <none with subitem variation>")
 
-    return out, log
+    # Unit sanity check, scoped per source table: a 공통적용 or ②breakdown
+    # table may declare an unreliable `(단위 : 백만원, %)` hint (or inherit a
+    # stale one from an earlier, unrelated table — 예별손해보험 KR0004
+    # 2023.1Q's 공통적용 table has no unit line of its own and inherits
+    # "억원" when its numbers are actually 백만원). Compare each item's MD
+    # pre-value against the JSON 값 (authoritative). This MUST run before
+    # the item1/27 derivation below — deriving item27 from a still-
+    # unit-wrong item1 bakes the error into a ratio row, which is then
+    # exempt from correction (a % can't reveal an amount-unit mismatch, so
+    # it would never get fixed after the fact).
+    votes_by_source: dict[str, list[float]] = defaultdict(list)
+    for item_no, (pre_v_md, _post_v_md) in out.items():
+        if _is_percent_row(item_no):
+            continue
+        existing_s = existing_values.get(item_no)
+        if existing_s in (None, ""):
+            continue
+        try:
+            existing = float(str(existing_s).replace(",", ""))
+            md_pre = float(pre_v_md)
+        except (TypeError, ValueError):
+            continue
+        if md_pre == 0 or existing == 0:
+            continue
+        ratio = existing / md_pre
+        src = provenance.get(item_no, "common")
+        if 95 < ratio < 105:
+            votes_by_source[src].append(100.0)
+        elif 0.0095 < ratio < 0.0105:
+            votes_by_source[src].append(0.01)
+    for src, votes in votes_by_source.items():
+        if not (votes and all(abs(v - votes[0]) < 1e-6 for v in votes)):
+            continue
+        factor = votes[0]
+        log.append(f"  {company_code} UNIT-FIX[{src}]: applied ×{factor} to post values (MD hint mismatch vs JSON 값, votes={len(votes)})")
+        for item_no in list(out.keys()):
+            if provenance.get(item_no, "common") != src or _is_percent_row(item_no):
+                continue
+            try:
+                pre_v, post_v = out[item_no]
+                out[item_no] = (_fmt_amount(float(pre_v) * factor), _fmt_amount(float(post_v) * factor))
+            except (TypeError, ValueError):
+                pass
+
+    # [지급여력비율 총괄] is the company's own headline rollup — always the
+    # true cumulative 전/후 regardless of how many separate provisions
+    # (①TFI/②장수등/③주식·금리) are stacked. It wins over both common and
+    # breakdown for items 1/14/27 when parseable, because neither single
+    # provision table alone is reliable once more than one is active:
+    # 아이엠라이프생명 KR0076 has BOTH ①TFI (changes the 기본/보완 split
+    # *and* the total, item1 629,527→736,195) AND ②장수/사업비/해지 (changes
+    # item14 only, 582,352→446,029) — ①'s own item1 row is right but its
+    # item14 row is blind to ②'s effect, and vice versa for ②. Conversely
+    # 예별손해보험 KR0004 2023.1Q has BOTH ② AND ③(주식·금리, not parsed by
+    # this script at all) active, and there it's the ①공통 table whose
+    # item14 row happens to already reflect the full cumulative reduction
+    # (820,516) while ②'s own row alone only captures its own slice
+    # (907,125) — the *opposite* of KR0076's pattern. No fixed table
+    # priority is right for every company; only the headline rollup is.
+    headline_vals, headline_dbg = _extract_headline_summary(tables, company_code)
+    log.append(headline_dbg)
+    if headline_vals:
+        for item_no, pair in headline_vals.items():
+            out[item_no] = pair
+            provenance[item_no] = "headline"
+    else:
+        # Fallback when the headline rollup isn't present/parseable: derive
+        # item1(=기본+보완) and item27(=1/14×100) from their resolved parts
+        # instead of trusting whichever raw row got matched, so R1/R7 hold
+        # by construction even though item14 itself may still be an
+        # incomplete (single-provision) view in this fallback path.
+        if 2 in out and 3 in out:
+            try:
+                pre1 = float(out[2][0]) + float(out[3][0])
+                post1 = float(out[2][1]) + float(out[3][1])
+                out[1] = (_fmt_amount(pre1), _fmt_amount(post1))
+                provenance[1] = "derived"
+            except (TypeError, ValueError):
+                pass
+        if 1 in out and 14 in out:
+            try:
+                pre14 = float(out[14][0])
+                post14 = float(out[14][1])
+                if pre14 != 0 and post14 != 0:
+                    pre27 = float(out[1][0]) / pre14 * 100.0
+                    post27 = float(out[1][1]) / post14 * 100.0
+                    out[27] = (_fmt_ratio(pre27), _fmt_ratio(post27))
+                    provenance[27] = "derived"
+            except (TypeError, ValueError, ZeroDivisionError):
+                pass
+
+    return out, provenance, log
 
 
 # ---------------------------------------------------------------------------
@@ -604,7 +832,12 @@ def _process_period(
         code = md_path.stem.split("_", 1)[0]
         text = md_path.read_text(encoding="utf-8")
         tables = _scan_tables_with_context(text)
-        post_map, dbg = _extract_post_values(tables, code)
+        existing_values = {
+            item_no: row.get("값")
+            for (c, q, item_no), row in index.items()
+            if c == code and q == quarter
+        }
+        post_map, provenance, dbg = _extract_post_values(tables, code, existing_values)
         log.extend(dbg)
         if not post_map:
             continue
@@ -615,49 +848,32 @@ def _process_period(
         # pre value (the two values come from the same table and have
         # identical rounding/unit). We do NOT compare to the JSON 값
         # because the JSON value can differ by rounding (e.g. 1229 vs
-        # 1228.9) — that would falsely look like a 변동.
-        #
-        # Unit sanity check: a 공통적용 table may declare an unreliable
-        # `(단위 : 백만원, %)` hint when the actual numbers are 억원 (KR0001
-        # FY2023_Q1). Compare each item's MD pre-value against the JSON 값
-        # (authoritative from main 4-2-1 table). If the ratio is ≈100 or
-        # ≈0.01, derive a global correction factor and rescale post_v_md.
+        # 1228.9) — that would falsely look like a 변동. (Unit-mismatch
+        # self-correction already happened inside _extract_post_values,
+        # before the item1/27 derivation there — see its docstring.)
         company_updates = 0
         company_equal = 0
-        # 경과조치 적용사(공통적용 표에서 전≠후가 하나라도 있는 회사)는 코어 항목
-        # (지급여력금액1·기본자본2·보완자본3·지급여력기준금액14·비율27)을 전=후여도 적재한다.
-        # 이유: 지급여력기준금액 적용후(14후)가 전과 같아도(요구자본 base 불변, 가용자본만 경과조치)
-        # 명시 적재돼야 검증식 (2후+3후)/14후×100≈27후 가 닫힌다. 14후를 15후-22후+23후로 유도하면
-        # ②표의 경과조치-감소된 15후 때문에 틀린 값이 나옴 (validation 20260612 신규-2).
-        CORE_ALWAYS = {1, 2, 3, 14, 27}
+        # 경과조치 적용사(공통적용 표에서 전≠후가 하나라도 있는 회사)는 **모든**
+        # 항목을 전=후여도 명시 적재한다 — 지급여력금액1·기본자본2·보완자본3·
+        # 지급여력기준금액14·비율27뿐 아니라 세부위험 29-35 등도 마찬가지
+        # (owner 2026-07-07, `inbox/parser/20260707T0710Z`: "미공시라 비웠으면
+        # 화면에서 숨기든가, mmult 닫히는 숫자를 뽑든가 — 부모후만 채우고 자식후는
+        # 비워두면 화면에 안 맞는 숫자가 뜬다"). 이유는 두 갈래: (a) 지급여력
+        # 기준금액 적용후(14후)가 전과 같아도(요구자본 base 불변, 가용자본만
+        # 경과조치) 명시 적재돼야 검증식 (2후+3후)/14후×100≈27후 가 닫힌다
+        # (validation 20260612 신규-2). (b) 세부위험(예: 사망위험) 후=전인데
+        # None으로 비워두면 디자이너가 null→적용전 폴백으로 base와 섞어 mmult가
+        # 깨진 숫자를 화면에 낸다 — null은 "진짜 미공시"에만 남겨야 한다.
+        #
+        # 예외 = item19(시장위험액): 자식(36-40후)은 이 스크립트가 아예 안 건드림
+        # (스코프 밖) — item19후만 "불변"으로 명시 적재하면 부모는 확정인데
+        # 자식은 여전히 미검증인 채로 남아 정확히 같은 반쪽채움 문제를 반대
+        # 방향으로 재현한다(mmult 게이트가 자식결측을 못 보고 부모값만으로
+        # 잘못 통과/실패 판정). item19는 실제로 값이 달라질 때만 적재.
+        _NEVER_FORCE_UNCHANGED = {19}
         is_transition = any(
             not _values_equal(pre_v, post_v) for pre_v, post_v in post_map.values()
         )
-        # First pass: detect per-company unit-mismatch factor from items
-        # where existing JSON 값 is reliable (items 1, 2, 3, 14 in 억원).
-        scale_correction = 1.0
-        votes: list[float] = []
-        for item_no, (pre_v_md, _post_v_md) in post_map.items():
-            if item_no not in (1, 2, 3, 14):
-                continue
-            row = index.get((code, quarter, item_no))
-            if row is None or row.get("값") in (None, ""):
-                continue
-            try:
-                existing = float(str(row["값"]).replace(",", ""))
-                md_pre = float(pre_v_md)
-            except (TypeError, ValueError):
-                continue
-            if md_pre == 0 or existing == 0:
-                continue
-            ratio = existing / md_pre
-            if 95 < ratio < 105:
-                votes.append(100.0)
-            elif 0.0095 < ratio < 0.0105:
-                votes.append(0.01)
-        if votes and all(abs(v - votes[0]) < 1e-6 for v in votes):
-            scale_correction = votes[0]
-            log.append(f"  {code} {quarter} UNIT-FIX: applied ×{scale_correction} to post values (MD hint mismatch vs JSON 값, votes={len(votes)})")
         for item_no, (pre_v_md, post_v_md) in post_map.items():
             row = index.get((code, quarter, item_no))
             if row is None:
@@ -665,21 +881,10 @@ def _process_period(
                 # fill_subitems_to_disclosure.py. This script only annotates
                 # existing rows.
                 continue
-            if _values_equal(pre_v_md, post_v_md) and not (
-                is_transition and item_no in CORE_ALWAYS
-            ):
+            force_unchanged = is_transition and item_no not in _NEVER_FORCE_UNCHANGED
+            if _values_equal(pre_v_md, post_v_md) and not force_unchanged:
                 company_equal += 1
                 continue
-            # Apply scale correction (e.g., ×100 when MD said 백만원 but values were 억원).
-            # Skip correction for ratios (item 27 = 지급여력비율, item 28 if present
-            # in post_map — though item 28 not in COMMON_ROW_MAP).
-            if scale_correction != 1.0 and not _is_percent_row(item_no):
-                try:
-                    post_v_md = str(float(post_v_md) * scale_correction)
-                    if post_v_md.endswith(".0"):
-                        post_v_md = post_v_md[:-2]
-                except (TypeError, ValueError):
-                    pass
             # Only set if different. Don't overwrite existing 값_적용후 with
             # the same value (keeps idempotency).
             if row.get("값_적용후") != post_v_md:
