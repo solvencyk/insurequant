@@ -247,8 +247,9 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
 
     function getRowValue(row) {
       const mode = getTransitionMode();
-      if (mode === '적용후' && row['값_적용후'] != null) {
-        return row['값_적용후'];
+      // 적용후 모드: 값_적용후 결측 시 적용전으로 폴백 금지(부모후+자식전 base 혼합 방지) — 결측은 null로 노출
+      if (mode === '적용후') {
+        return row['값_적용후'] != null ? row['값_적용후'] : null;
       }
       return row['값'];
     }
@@ -498,8 +499,9 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
           (r['항목명'] === '다. 지급여력비율 : 가 ÷ 나 × 100' || r['항목명'] === '지급여력비율')
           && r['공시분기'] === q);
         if (!row) return null;
-        const value = parseFloat(String(getRowValue(row)).replace(/,/g, '')) || 0;
-        return value;
+        const raw = getRowValue(row);
+        if (raw == null) return null; // 적용후 결측 = 폴백 금지, 그래프 공백
+        return parseFloat(String(raw).replace(/,/g, '')) || 0;
       });
 
       // '기본자본비율' 데이터 추출
@@ -508,8 +510,9 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         let row = data.find(r => r['항목명'] === '기본자본비율' && r['공시분기'] === q);
         
         if (row) {
-          const value = parseFloat(String(getRowValue(row)).replace(/,/g, '')) || 0;
-          return value;
+          const raw = getRowValue(row);
+          if (raw == null) return null; // 적용후 결측 = 폴백 금지, 그래프 공백
+          return parseFloat(String(raw).replace(/,/g, '')) || 0;
         }
         
         // '기본자본'과 '나. 지급여력기준금액'으로 계산 (기본자본 / 지급여력기준금액 * 100)
@@ -525,8 +528,11 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         );
         
         if (basicCapital && requiredCapital) {
-          const capital = parseFloat(String(getRowValue(basicCapital)).replace(/,/g, '')) || 0;
-          const required = parseFloat(String(getRowValue(requiredCapital)).replace(/,/g, '')) || 0;
+          const rawCapital = getRowValue(basicCapital);
+          const rawRequired = getRowValue(requiredCapital);
+          if (rawCapital == null || rawRequired == null) return null; // 적용후 결측 = 폴백 금지
+          const capital = parseFloat(String(rawCapital).replace(/,/g, '')) || 0;
+          const required = parseFloat(String(rawRequired).replace(/,/g, '')) || 0;
           return required > 0 ? (capital / required * 100) : null;
         }
         
