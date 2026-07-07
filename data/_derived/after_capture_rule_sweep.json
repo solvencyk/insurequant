@@ -191,60 +191,6 @@
       "diff": -897.82
     },
     {
-      "code": "KR0070",
-      "name": "에이비엘생명보험",
-      "quarter": "2024.1Q",
-      "rule": "8_life_생명장기",
-      "expected_after": 7774.44,
-      "disclosed_after": 5066.29,
-      "diff": -2708.15
-    },
-    {
-      "code": "KR0070",
-      "name": "에이비엘생명보험",
-      "quarter": "2025.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 16360.2,
-      "disclosed_after": 19461.0,
-      "diff": 3100.8
-    },
-    {
-      "code": "KR0070",
-      "name": "에이비엘생명보험",
-      "quarter": "2025.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 16468.33,
-      "disclosed_after": 19569.0,
-      "diff": 3100.67
-    },
-    {
-      "code": "KR0070",
-      "name": "에이비엘생명보험",
-      "quarter": "2025.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 17489.09,
-      "disclosed_after": 20590.0,
-      "diff": 3100.91
-    },
-    {
-      "code": "KR0070",
-      "name": "에이비엘생명보험",
-      "quarter": "2025.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 17044.52,
-      "disclosed_after": 20146.0,
-      "diff": 3101.48
-    },
-    {
-      "code": "KR0070",
-      "name": "에이비엘생명보험",
-      "quarter": "2026.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 18510.12,
-      "disclosed_after": 21224.0,
-      "diff": 2713.88
-    },
-    {
       "code": "KR0071",
       "name": "흥국생명보험",
       "quarter": "2023.2Q",
@@ -279,123 +225,6 @@
       "expected_after": 17943.99,
       "disclosed_after": 16982.0,
       "diff": -961.99
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2023.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7286.1,
-      "disclosed_after": 10716.0,
-      "diff": 3429.9
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2023.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 10774.51,
-      "disclosed_after": 14204.0,
-      "diff": 3429.49
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2023.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 9677.32,
-      "disclosed_after": 13107.0,
-      "diff": 3429.68
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2023.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7968.17,
-      "disclosed_after": 11398.0,
-      "diff": 3429.83
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2024.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 6552.47,
-      "disclosed_after": 12840.0,
-      "diff": 6287.53
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2024.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 8255.37,
-      "disclosed_after": 14543.0,
-      "diff": 6287.63
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2024.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 9996.54,
-      "disclosed_after": 16284.0,
-      "diff": 6287.46
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2024.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7148.91,
-      "disclosed_after": 13437.0,
-      "diff": 6288.09
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2025.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 5318.47,
-      "disclosed_after": 14090.0,
-      "diff": 8771.53
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2025.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 5578.54,
-      "disclosed_after": 14350.0,
-      "diff": 8771.46
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2025.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 5696.81,
-      "disclosed_after": 14468.0,
-      "diff": 8771.19
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2025.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 9640.82,
-      "disclosed_after": 18412.0,
-      "diff": 8771.18
-    },
-    {
-      "code": "KR0072",
-      "name": "케이디비생명보험",
-      "quarter": "2026.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 10558.34,
-      "disclosed_after": 18233.0,
-      "diff": 7674.66
     },
     {
       "code": "KR0073",
@@ -482,28 +311,10 @@
       "code": "KR0083",
       "name": "푸본현대생명보험",
       "quarter": "2023.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": -85.41,
-      "disclosed_after": 13977.0,
-      "diff": 14062.41
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2023.1Q",
       "rule": "R5_기준금액",
       "expected_after": 14563.54,
       "disclosed_after": 10891.0,
       "diff": -3672.54
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2023.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 3483.29,
-      "disclosed_after": 16185.0,
-      "diff": 12701.71
     },
     {
       "code": "KR0083",
@@ -518,28 +329,10 @@
       "code": "KR0083",
       "name": "푸본현대생명보험",
       "quarter": "2023.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 3881.0,
-      "disclosed_after": 16582.0,
-      "diff": 12701.0
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2023.3Q",
       "rule": "R5_기준금액",
       "expected_after": 13657.59,
       "disclosed_after": 10127.0,
       "diff": -3530.59
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2023.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7502.76,
-      "disclosed_after": 20204.0,
-      "diff": 12701.24
     },
     {
       "code": "KR0083",
@@ -554,28 +347,10 @@
       "code": "KR0083",
       "name": "푸본현대생명보험",
       "quarter": "2024.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7163.1,
-      "disclosed_after": 19300.0,
-      "diff": 12136.9
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2024.1Q",
       "rule": "R5_기준금액",
       "expected_after": 13726.1,
       "disclosed_after": 10556.0,
       "diff": -3170.1
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2024.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7028.25,
-      "disclosed_after": 19165.0,
-      "diff": 12136.75
     },
     {
       "code": "KR0083",
@@ -590,82 +365,10 @@
       "code": "KR0083",
       "name": "푸본현대생명보험",
       "quarter": "2024.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7840.03,
-      "disclosed_after": 19977.0,
-      "diff": 12136.97
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2024.3Q",
       "rule": "R5_기준금액",
       "expected_after": 13154.96,
       "disclosed_after": 9945.0,
       "diff": -3209.96
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2024.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 2582.39,
-      "disclosed_after": 14720.0,
-      "diff": 12137.61
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2025.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 1346.68,
-      "disclosed_after": 14173.0,
-      "diff": 12826.32
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2025.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 3063.99,
-      "disclosed_after": 15891.0,
-      "diff": 12827.01
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2025.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 4172.64,
-      "disclosed_after": 16999.0,
-      "diff": 12826.36
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2025.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 11118.75,
-      "disclosed_after": 23945.0,
-      "diff": 12826.25
-    },
-    {
-      "code": "KR0083",
-      "name": "푸본현대생명보험",
-      "quarter": "2026.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 10519.18,
-      "disclosed_after": 21742.0,
-      "diff": 11222.82
-    },
-    {
-      "code": "KR0097",
-      "name": "하나생명보험",
-      "quarter": "2023.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 4990.47,
-      "disclosed_after": 5374.0,
-      "diff": 383.53
     },
     {
       "code": "KR0097",
@@ -680,91 +383,10 @@
       "code": "KR0097",
       "name": "하나생명보험",
       "quarter": "2023.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 5799.09,
-      "disclosed_after": 6183.0,
-      "diff": 383.91
-    },
-    {
-      "code": "KR0097",
-      "name": "하나생명보험",
-      "quarter": "2023.3Q",
       "rule": "R5_기준금액",
       "expected_after": 3803.8,
       "disclosed_after": 3348.0,
       "diff": -455.8
-    },
-    {
-      "code": "KR0097",
-      "name": "하나생명보험",
-      "quarter": "2023.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 5038.92,
-      "disclosed_after": 5423.0,
-      "diff": 384.08
-    },
-    {
-      "code": "KR0097",
-      "name": "하나생명보험",
-      "quarter": "2024.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 4968.58,
-      "disclosed_after": 5774.0,
-      "diff": 805.42
-    },
-    {
-      "code": "KR0097",
-      "name": "하나생명보험",
-      "quarter": "2024.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7731.49,
-      "disclosed_after": 8537.0,
-      "diff": 805.51
-    },
-    {
-      "code": "KR0097",
-      "name": "하나생명보험",
-      "quarter": "2024.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 6978.81,
-      "disclosed_after": 7784.54,
-      "diff": 805.73
-    },
-    {
-      "code": "KR0097",
-      "name": "하나생명보험",
-      "quarter": "2025.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7426.6,
-      "disclosed_after": 8143.0,
-      "diff": 716.4
-    },
-    {
-      "code": "KR0097",
-      "name": "하나생명보험",
-      "quarter": "2025.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7378.4,
-      "disclosed_after": 8095.0,
-      "diff": 716.6
-    },
-    {
-      "code": "KR0097",
-      "name": "하나생명보험",
-      "quarter": "2025.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7871.3,
-      "disclosed_after": 8587.0,
-      "diff": 715.7
-    },
-    {
-      "code": "KR0097",
-      "name": "하나생명보험",
-      "quarter": "2025.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7953.18,
-      "disclosed_after": 8669.0,
-      "diff": 715.82
     },
     {
       "code": "KR1010",
@@ -779,28 +401,10 @@
       "code": "KR1011",
       "name": "IBK연금보험",
       "quarter": "2023.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 6340.44,
-      "disclosed_after": 8531.0,
-      "diff": 2190.56
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2023.1Q",
       "rule": "R5_기준금액",
       "expected_after": 6741.36,
       "disclosed_after": 5141.0,
       "diff": -1600.36
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2023.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 5624.29,
-      "disclosed_after": 7815.0,
-      "diff": 2190.71
     },
     {
       "code": "KR1011",
@@ -815,28 +419,10 @@
       "code": "KR1011",
       "name": "IBK연금보험",
       "quarter": "2023.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 6676.07,
-      "disclosed_after": 8867.0,
-      "diff": 2190.93
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2023.4Q",
       "rule": "R5_기준금액",
       "expected_after": 6040.47,
       "disclosed_after": 4382.0,
       "diff": -1658.47
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2024.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7574.71,
-      "disclosed_after": 9523.0,
-      "diff": 1948.29
     },
     {
       "code": "KR1011",
@@ -851,28 +437,10 @@
       "code": "KR1011",
       "name": "IBK연금보험",
       "quarter": "2024.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 7458.34,
-      "disclosed_after": 9407.0,
-      "diff": 1948.66
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2024.2Q",
       "rule": "R5_기준금액",
       "expected_after": 6065.12,
       "disclosed_after": 4573.0,
       "diff": -1492.12
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2024.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 8990.58,
-      "disclosed_after": 10939.0,
-      "diff": 1948.42
     },
     {
       "code": "KR1011",
@@ -887,28 +455,10 @@
       "code": "KR1011",
       "name": "IBK연금보험",
       "quarter": "2024.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 8861.95,
-      "disclosed_after": 10811.0,
-      "diff": 1949.05
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2024.4Q",
       "rule": "R5_기준금액",
       "expected_after": 6091.08,
       "disclosed_after": 4613.0,
       "diff": -1478.08
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2025.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 9597.43,
-      "disclosed_after": 11330.0,
-      "diff": 1732.57
     },
     {
       "code": "KR1011",
@@ -923,28 +473,10 @@
       "code": "KR1011",
       "name": "IBK연금보험",
       "quarter": "2025.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 10428.33,
-      "disclosed_after": 12161.0,
-      "diff": 1732.67
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2025.2Q",
       "rule": "R5_기준금액",
       "expected_after": 6440.56,
       "disclosed_after": 5144.0,
       "diff": -1296.56
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2025.3Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 10633.25,
-      "disclosed_after": 12365.0,
-      "diff": 1731.75
     },
     {
       "code": "KR1011",
@@ -959,28 +491,10 @@
       "code": "KR1011",
       "name": "IBK연금보험",
       "quarter": "2025.4Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 10121.32,
-      "disclosed_after": 11854.0,
-      "diff": 1732.68
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2025.4Q",
       "rule": "R5_기준금액",
       "expected_after": 6204.1,
       "disclosed_after": 4973.0,
       "diff": -1231.1
-    },
-    {
-      "code": "KR1011",
-      "name": "IBK연금보험",
-      "quarter": "2026.1Q",
-      "rule": "R1_가용자본=기본+보완",
-      "expected_after": 9387.4,
-      "disclosed_after": 10526.0,
-      "diff": 1138.6
     }
   ],
   "detail_gaps": [
@@ -1060,6 +574,13 @@
       "quarter": "2024.1Q",
       "rule": "R5_기준금액",
       "detail": "target후=9489.0 present, 입력후 결측=[23]"
+    },
+    {
+      "code": "KR0070",
+      "name": "에이비엘생명보험",
+      "quarter": "2024.1Q",
+      "rule": "8_life_생명장기",
+      "detail": "부모후=5066.29 (후≠전), 세부후 결측=[29]"
     },
     {
       "code": "KR0070",
@@ -4306,22 +3827,8 @@
       "code": "KR0002",
       "name": "한화손해보험",
       "quarter": "2024.2Q",
-      "rule": "R1_가용자본=기본+보완",
-      "detail": "target후=53541.0 present, 입력후 결측=[2, 3]"
-    },
-    {
-      "code": "KR0002",
-      "name": "한화손해보험",
-      "quarter": "2024.2Q",
       "rule": "R5_기준금액",
       "detail": "target후=25581.0 present, 입력후 결측=[15, 22, 23]"
-    },
-    {
-      "code": "KR0002",
-      "name": "한화손해보험",
-      "quarter": "2024.2Q",
-      "rule": "R8_기본자본비율",
-      "detail": "target후=103.13123021 present, 입력후 결측=[2]"
     },
     {
       "code": "KR0002",
@@ -5060,39 +4567,34 @@
     }
   ],
   "summary": {
-    "rule_fails": 109,
-    "detail_gaps": 582,
+    "rule_fails": 55,
+    "detail_gaps": 581,
     "fails_by_rule": {
-      "8_life_생명장기": 1,
-      "R1_가용자본=기본+보완": 53,
       "R5_기준금액": 45,
       "R6_item16": 6,
       "19_market_시장위험": 4
     },
     "fails_by_company": {
-      "KR0070": 6,
       "KR0071": 4,
-      "KR0072": 13,
       "KR0073": 2,
       "KR0076": 7,
-      "KR0083": 20,
-      "KR0097": 12,
+      "KR0083": 7,
+      "KR0097": 2,
       "KR1010": 1,
-      "KR1011": 23,
+      "KR1011": 11,
       "KR0004": 17,
       "KR0005": 4
     },
     "gaps_by_rule": {
       "R5_기준금액": 164,
       "R4_기본요구자본": 105,
-      "8_life_생명장기": 129,
+      "8_life_생명장기": 130,
       "19_market_시장위험": 179,
       "R7_지급여력비율": 2,
-      "R1_가용자본=기본+보완": 2,
-      "R8_기본자본비율": 1
+      "R1_가용자본=기본+보완": 1
     },
     "gaps_by_company": {
-      "KR0070": 32,
+      "KR0070": 33,
       "KR0071": 32,
       "KR0072": 45,
       "KR0073": 23,
@@ -5105,7 +4607,7 @@
       "KR1011": 27,
       "KR0104": 44,
       "KR0049": 28,
-      "KR0002": 26,
+      "KR0002": 24,
       "KR0003": 24,
       "KR0004": 12,
       "KR0005": 26,
