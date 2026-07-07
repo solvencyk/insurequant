@@ -56,6 +56,7 @@ def parse_value(raw: str) -> str | None:
     cleaned = raw.strip().replace(",", "")
     if cleaned in ("", "-", "\u2500", "\u2013"):
         return None
+    cleaned = cleaned.rstrip("%").strip()
     trailing_minus = re.fullmatch(r"(\d[\d.]*)\s+-", cleaned)
     if trailing_minus:
         cleaned = "-" + trailing_minus.group(1)
@@ -113,6 +114,16 @@ def make_quarter_column_picker(quarter: str) -> Callable[[list[str]], int | None
             if "\ub2f9\uae30\ub9d0" in c or f"\ub2f9\uae30({y_short}" in c:
                 return True
             if period_month_short in c and y_full in c:
+                return True
+            # '2023년 (2023년 3월)' (예별손해보험 style: calendar quarter-end
+            # month spelled out twice instead of '23.1Q'/'당분기') — item12
+            # cellshift root-cause investigation (2026-07-07) found this
+            # header shape falls through every check above, so
+            # extract_kics_detail_rows never finds this quarter's column,
+            # the whole core detail table extraction bails, and a narrower
+            # fallback table (missing item12 entirely) is used instead.
+            _cal_q_end_month = {"1": "3", "2": "6", "3": "9", "4": "12"}[q_num]
+            if f"{y_full}년({y_full}년{_cal_q_end_month}월)" in c:
                 return True
             return False
 
@@ -737,6 +748,17 @@ def labels_compatible(baseline_name: str, table_label: str) -> bool:
     if "\ubd88\uc778\uc815" in baseline_name and "\ubd88\uc778\uc815" not in table_label:
         return False
     if "\uc7ac\ubd84\ub958" in baseline_name and "\uc7ac\ubd84\ub958" not in table_label:
+        return False
+    # Reverse direction, mirroring the \uc21c\uc790\uc0b0/\ube44\uc728 guards above: some companies'
+    # OWN stored baseline name for item1 is a bare "\uc9c0\uae09\uc5ec\ub825\uae08\uc561" (missing the "\uac00."
+    # prefix + suffix a healthy baseline has) \u2014 e.g. KR0004(\uc608\ubcc4\uc190\ud574\ubcf4\ud5d8) 2023.2Q's own
+    # item1 \ud56d\ubaa9\uba85 field is literally '\uc9c0\uae09\uc5ec\ub825\uae08\uc561'. Without this check, that bare
+    # baseline_name.startswith() the item12 table row ("\uc9c0\uae09\uc5ec\ub825\uae08\uc561\uc73c\ub85c \ubd88\uc778\uc815\ud558\ub294 ...")
+    # and wrongly returns item12's value (usually 0) AS item1's \u2014 the same
+    # collision as above but triggered from the opposite side.
+    if "\ubd88\uc778\uc815" in table_label and "\ubd88\uc778\uc815" not in baseline_name:
+        return False
+    if "\uc7ac\ubd84\ub958" in table_label and "\uc7ac\ubd84\ub958" not in baseline_name:
         return False
     return True
 
