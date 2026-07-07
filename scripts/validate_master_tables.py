@@ -439,12 +439,17 @@ def main() -> int:
     # 0.0이면 추출오류 — None(coverage가 잡음)과 별개로 명시 RED.
     IMPOSSIBLE_ZERO_LEGS = ["생명장기원수손익", "기타생명장기원수손익",
                             "생명장기재보험손익", "기타생명장기재보험손익"]
+    # 무재보험사 legit-zero 재보험 leg (owner 확정, data/_gold/user_pl_confirmed_cells.json):
+    # 재보험 미영위사(예: 순수 연금사 IBK연금보험 — 재보험 5개 leg 전부 0 + 원수분해 정확히 닫힘)는
+    # 재보험 leg이 정당하게 0.0 → 추출오류 아님. (에이비엘은 leg이 None이라 애초에 미해당.)
+    IMPOSSIBLE_ZERO_EXEMPT = {"IBK연금보험": {"생명장기재보험손익", "기타생명장기재보험손익"}}
     zerolegs_rows = []   # (co, q, item)
     for (co, q), m in sorted(pl.items()):
         if q.startswith("2023."):
             continue
+        exempt = IMPOSSIBLE_ZERO_EXEMPT.get(co, set())
         for k in IMPOSSIBLE_ZERO_LEGS:
-            if m.get(k) == 0:
+            if m.get(k) == 0 and k not in exempt:
                 zerolegs_rows.append((co, q, k))
 
     # Legit-absent (parser 판별 2026-06-11): None이 추출실패가 아니라 원천 비공시인 케이스.
@@ -453,6 +458,8 @@ def main() -> int:
     ZLEG_LEGIT = {
         # 현대해상은 legit_absent 오판이었음(owner 답지로 2026.1Q 분리손익 실재 확인) → 회사 면제 제거.
         "에이비엘생명보험": {"생명장기재보험손익", "재보험CSM상각", "재보험위험조정변동", "기타생명장기재보험손익"},
+        # IBK연금보험 = 순수 연금사 무재보험 (owner 확정, user_pl_confirmed_cells.json). 재보험 leg 전부 0.
+        "IBK연금보험": {"생명장기재보험손익", "재보험CSM상각", "재보험위험조정변동", "재보험예실차", "기타생명장기재보험손익"},
         "서울보증보험": "ALL",          # 보증보험 — 생명장기 leg 자체 없음
         "AIG손해보험": "ALL",           # 감사보고서-only, 분해 미공시
         "교보라이프플래닛생명보험": "ALL",  # 디지털 최소공시 (TODO_parser L51 legit)

@@ -413,7 +413,13 @@ def run_validation(
             or 14 in bucket.values_post
             or 28 in bucket.values_post
         )
-        if has_any_post and post2 is not None and post14 is not None and post14 != 0:
+        # 분자(item2)와 분모(item14)가 반드시 같은 기준(둘 다 genuine post, 또는 둘 다
+        # pre 폴백)이어야 한다. 한쪽만 post이면(예: item14후는 채워졌는데 item2후는 결측 →
+        # pre로 폴백) expected = pre2/post14 라는 무의미값이 나와 spurious RED가 뜬다
+        # (흥국생명 2024.4Q·에이비엘 2025.3Q·푸본 2023.1Q, 2026-07-07 validation 적발).
+        # 기준이 어긋나면 SKIP — 진짜 결측은 transition-after-capture MISSING 체크가 별도로 잡음.
+        same_basis = (2 in bucket.values_post) == (14 in bucket.values_post)
+        if has_any_post and same_basis and post2 is not None and post14 is not None and post14 != 0:
             expected = post2 / post14 * 100.0
             actual = bucket.get(28, post=True)
             if actual is None:
@@ -428,7 +434,7 @@ def run_validation(
                     expected=None,
                     actual=bucket.get(28, post=True),
                     diff=None,
-                    detail="no post-transition data for item2/14/28",
+                    detail="no post data or mixed pre/post basis for item2/14 (skip; MISSING caught by transition check)",
                 )
             )
 
