@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-08 (ROUND2 반려 대응, ③표 근본수정) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-08 (R1 가용자본 항등식 3건, inbox 재확인) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,18 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-08(2차, inbox 재확인) — 적용후 R1 가용자본(item1=item2+item3) 항등식 3건 해소.**
+validation이 tolerance 5%→0.5% 교정 후 재검출(`inbox/parser/20260707T2223Z`): 농협생명(KR0104)
+2023.2Q·롯데손해(KR0003) 2026.1Q·하나생명(KR0097) 2023.2Q. fitz로 raw PDF 직접 재대조, 3건 원인 전부
+다름 — **농협생명**: md_inbox 변환에서 "경과조치 적용에 관한 사항" 섹션 페이지가 통째로 누락(raw PDF엔
+있음, downloader/docling 재처리 필요 별건) + item3후가 [적용전] 표의 **직전분기(1Q) 값**이 잘못 흘러든
+것(41,871→39,178.68로 정정). **하나생명**: TAC(38,380백만) 미가산(item2 3,155.82→3,539.62) + item3의
+출처불명값(2,541→2,428.32 원복). **롯데손해**: 이 분기 raw에 tier-split 표 자체가 없어(공통표 헤딩만,
+②표도 부재) 유일 신뢰신호=헤드라인(item1후=item1전)에 맞춰 item2/3후=전(불변)으로 정정. 3건 전부
+`scripts/fill_post_transition_to_disclosure.py`에 override 반영(스크립트 영구, JSON 직접패치 아님) +
+`recalc_basic_capital_ratio_post.py`로 item28 재계산. 게이트 재확인: **적용후 항등식 위반 0**, core RED
+불변(회귀 없음). 상세: `inbox/parser/20260707T2223Z` 답변.
 
 **2026-07-08 ROUND2 반려 대응(`inbox/parser/20260707T0930Z`) — component/세부 ③표 미반영 근본수정, R5/R6 45+6→0, mmult 4→1, COPY 7→2.**
 9차(아래)가 R1만 고치고 "다 했다"고 보고했다가 반려됨: item15(기본요구자본)·item17-21·세부(29-46)의

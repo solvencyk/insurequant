@@ -1165,6 +1165,39 @@ def _process_period(
         }
         post_map, provenance, dbg = _extract_post_values(tables, code, existing_values)
         log.extend(dbg)
+
+        # 농협생명(KR0104) 2023.2Q · 하나생명(KR0097) 2023.2Q (amended 재제출본):
+        # 두 회사 다 raw PDF의 "[지급여력비율의 경과조치 적용에 관한 사항]"
+        # 페이지들이 docling 변환에서 md_inbox로 아예 안 넘어옴(0 occurrence —
+        # 재변환/재docling 필요, downloader/parser-docling 단계 갭이지 이
+        # 스크립트 로직 문제가 아님) — `post_map`이 통째로 비어 위 continue에
+        # 걸려 아무 것도 못 적재했음. item1/14/27후는 이미 JSON에 올바르게
+        # 들어있음(다른 경로로 헤드라인 확보) — 깨진 건 item2/3후뿐이라
+        # validation이 R1(item1=item2+item3) 위반으로 적발
+        # (`inbox/parser/20260707T2223Z`). fitz로 raw PDF 직접 재확인:
+        #   KR0104: ①TFI표(p11) 기본자본 3,019,101→3,269,101백만·보완자본
+        #     4,167,868→3,917,868백만 = 32,691.01/39,178.68억(현재 JSON의
+        #     41,871은 [경과조치 적용 전] 표의 *직전분기(1Q)* 보완자본값이
+        #     잘못 흘러든 것 — 82페이지 헤드라인 item1후=71,870과 지금
+        #     32,691.01+39,178.68=71,869.69로 정합).
+        #   KR0097: ①TAC표(p12) 자본감소분 38,380백만(383.80억)이 item2에
+        #     아예 반영 안 됨(315,582→315,582 그대로 저장돼 있었음) — 관례대로
+        #     item2에 가산: 3,155.82+383.80=3,539.62억, item3은 TAC 비대상이라
+        #     불변(2,428.32억, 현재 2,541은 출처 불명 — 폐기). 합 5,967.94 ≈
+        #     헤드라인 item1후 5,968.
+        if code == "KR0104" and quarter == "2023.2Q":
+            if existing_values.get(2) not in (None, ""):
+                post_map[2] = (existing_values[2], "32691.01")
+            if existing_values.get(3) not in (None, ""):
+                post_map[3] = (existing_values[3], "39178.68")
+            log.append(f"  {code}: KR0104 2023.2Q missing-docling-pages override applied (item2/3 post)")
+        if code == "KR0097" and quarter == "2023.2Q":
+            if existing_values.get(2) not in (None, ""):
+                post_map[2] = (existing_values[2], "3539.62")
+            if existing_values.get(3) not in (None, ""):
+                post_map[3] = (existing_values[3], "2428.32")
+            log.append(f"  {code}: KR0097 2023.2Q missing-docling-pages override applied (item2/3 post)")
+
         if not post_map:
             continue
         companies += 1
@@ -1209,6 +1242,20 @@ def _process_period(
                     continue
                 post_map[_item_no] = (_pre_v, _post_v)
             log.append(f"  {code}: KR0003 2023.1Q row-shifted-breakdown-table override applied (14/15/16/17-23/27/29/31/32/33/34/35 post)")
+
+        # 롯데손해보험(KR0003) 2026.1Q: raw엔 "(1) 공통적용 경과조치 관련"
+        # 헤딩만 있고 표가 아예 없음(바로 "(2) 선택적용..."으로 넘어감) + ①TAC는
+        # 명시 미적용(전부 "-") + ②표도 원문에 없음(수익성 섹션으로 바로 점프) —
+        # 이 분기는 raw에 tier-split 표 자체가 없음. 유일하게 신뢰 가능한 신호는
+        # 헤드라인(item1후=26,955=item1전 — TAC/TFI 둘 다 무효과 확정)이므로
+        # item2/3후 = item2/3전(불변)이 유일하게 일관된 값 — 기존에 박혀있던
+        # -3,421.44/29,479.93(출처 불명, 항등식 위반)을 대체.
+        if code == "KR0003" and quarter == "2026.1Q":
+            if existing_values.get(2) not in (None, ""):
+                post_map[2] = (existing_values[2], existing_values[2])
+            if existing_values.get(3) not in (None, ""):
+                post_map[3] = (existing_values[3], existing_values[3])
+            log.append(f"  {code}: KR0003 2026.1Q no-tier-split-table override applied (item2/3 post = pre)")
 
         # Apply to existing rows. Never overwrite 값; only set 값_적용후
         # when the **markdown** post value differs from the **markdown**
