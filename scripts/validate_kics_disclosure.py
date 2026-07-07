@@ -10,6 +10,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from statistics import median
 
+import numpy as np
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
@@ -20,6 +22,9 @@ from solvency.validation.kics_json_rules import (
     KEY_QUARTER,
     KEY_VALUE,
     KEY_VALUE_POST,
+    MARKET_M,
+    R7,
+    _diversified_sqrt,
     run_validation,
 )
 
@@ -438,6 +443,125 @@ def _transition_ratio_after_capture(records: list[dict]) -> list[tuple]:
     return out
 
 
+def _item12_equals_item1(records: list[dict]) -> list[tuple]:
+    """item12(Ⅱ.지급여력금액으로 불인정하는 항목)에 item1(가.지급여력금액)이 그대로 복사된 셀밀림
+    파싱오류 = RED. 불인정항목(지급예정 배당 등 소액)이 지급여력금액 전체와 동일할 수 없음(구조상
+    불가). 산술룰은 못 잡음 — item1은 별도 공시값이라 정합 유지, item12만 orphan 오염.
+    전수검증 2026-07-07 적발(KB손해·하나손해·신한라이프·DB생명·교보라플·DB손해·흥국생명·AIA 16셀)."""
+    by_cq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q and it in (1, 12):
+            by_cq.setdefault((c, q), {})[it] = _num_cell(r.get(KEY_VALUE))
+    out = []
+    for (c, q), m in sorted(by_cq.items()):
+        v1, v12 = m.get(1), m.get(12)
+        if v1 is not None and v12 is not None and abs(v1) > 1.0 and abs(v12 - v1) < 1e-6:
+            out.append((c, q, name.get(c, c), v12))
+    return out
+
+
+# 적용후 mmult: 부모위험액 → (세부항목, 상관행렬). item17=sqrt(29-35·R7)·item19=sqrt(36-40·MARKET_M).
+_TRANS_PARENT_SUBS = {17: (list(range(29, 36)), R7), 19: (list(range(36, 41)), MARKET_M)}
+
+
+def _transition_mmult_after(records: list[dict]) -> tuple[list, list]:
+    """선택경과조치 적용사의 '적용후' 세부위험 mmult 정합 (owner 2026-07-07 지적 blind spot).
+    기존 8_life/19_market 룰은 적용전(값)만 검사 → 적용후(값_적용후) mmult 미검증.
+    반환 (mismatch, sub_missing):
+      mismatch = 적용후 세부 완비인데 부모후 ≠ sqrt(세부후·행렬) (닫히지 않음) = RED.
+      sub_missing = 부모후 있고 경과조치 효과 有(후≠전)인데 세부후 결측 = 적용후 세부 추출갭(review)."""
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
+    mismatch, sub_missing = [], []
+    for (c, q), m in sorted(byq.items()):
+        if c not in _TRANSITION_APPLIERS:
+            continue
+        for parent, (subs, mat) in _TRANS_PARENT_SUBS.items():
+            pre_p, post_p = m.get(parent, (None, None))
+            if post_p is None:
+                continue  # 부모후 없음 = 별개 갭(transition MISSING 소관)
+            post_subs = [m.get(i, (None, None))[1] for i in subs]
+            if all(v is not None for v in post_subs):
+                exp = _diversified_sqrt(np.array(post_subs, dtype=float), mat)
+                if abs(post_p - exp) > max(2.0, 0.05 * abs(exp)):
+                    mismatch.append((c, q, name.get(c, c), parent, round(post_p, 1), round(exp, 1)))
+            elif pre_p is not None and abs(post_p - pre_p) > 1.0:
+                sub_missing.append((c, q, name.get(c, c), parent))
+    return mismatch, sub_missing
+
+
+# 적용후 항등식 배터리 (owner 2026-07-07: "모든 룰은 적용전·적용후 동일 적용"). 적용사, genuine 적용후
+# 입력(값_적용후)이 완비된 셀만 검산 — 안 닫히면 RED. R1=가용자본(item1)=기본자본(item2)+보완자본(item3).
+_TRANS_AFTER_IDENT = [
+    ("R1_가용자본=기본+보완", 1, (2, 3), lambda v: v[2] + v[3], False),
+    ("R2_순자산합", 4, (5, 6, 7, 8, 9, 10, 11), lambda v: sum(v[i] for i in (5, 6, 7, 8, 9, 10, 11)), False),
+    ("R5_기준금액", 14, (15, 22, 23), lambda v: v[15] - v[22] + v[23], False),
+    ("R6_item16", 16, (17, 18, 19, 20, 21, 15), lambda v: sum(v[i] for i in (17, 18, 19, 20, 21)) - v[15], False),
+    ("R7_지급여력비율", 27, (1, 14), lambda v: (v[1] / v[14] * 100) if v[14] else None, True),
+    ("R8_기본자본비율", 28, (2, 14), lambda v: (v[2] / v[14] * 100) if v[14] else None, True),
+]
+
+
+def _transition_identities_after(records: list[dict]) -> list[tuple]:
+    """선택경과조치 적용사의 '적용후' 항등식 정합 (owner 2026-07-07 blind spot). 기존 R1~R8은 적용전만
+    검사 → 적용후(값_적용후)는 미검증이었음. genuine 적용후 입력 완비 셀만: 안 닫히면 RED.
+    반환: (code, quarter, name, rule, expected_after, disclosed_after, diff)."""
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = _num(r.get(KEY_VALUE_POST))
+    fails = []
+    for (c, q), m in sorted(byq.items()):
+        if c not in _TRANSITION_APPLIERS:
+            continue
+        for rule, tgt, ins, fn, is_ratio in _TRANS_AFTER_IDENT:
+            tv = m.get(tgt)
+            if tv is None or any(m.get(i) is None for i in ins):
+                continue  # genuine 적용후 입력 완비 셀만 (결측은 추출갭 = 별도 리포트)
+            exp = fn(m)
+            if exp is None:
+                continue
+            tol = 2.0 if is_ratio else max(2.0, 0.05 * abs(exp))
+            if abs(exp - tv) > tol:
+                fails.append((c, q, name.get(c, c), rule, round(exp, 2), round(tv, 2), round(tv - exp, 2)))
+    return fails
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8")  # Windows console defaults to cp949
@@ -511,6 +635,27 @@ def main() -> int:
     report["transition_ratio_after_capture"] = [
         {"code": c, "quarter": q, "name": n, "item": it, "before": b, "after": a, "kind": k}
         for c, q, n, it, b, a, k in trans_after
+    ]
+    item12_copy = _item12_equals_item1(records)
+    report["item12_equals_item1"] = [
+        {"code": c, "quarter": q, "name": n, "value": v} for c, q, n, v in item12_copy
+    ]
+    mmult_mismatch, mmult_submissing = _transition_mmult_after(records)
+    report["transition_mmult_after"] = {
+        "mismatch_red": [
+            {"code": c, "quarter": q, "name": n, "parent_item": p, "after": pv, "computed": ev}
+            for c, q, n, p, pv, ev in mmult_mismatch
+        ],
+        "sub_missing_review": [
+            {"code": c, "quarter": q, "name": n, "parent_item": p}
+            for c, q, n, p in mmult_submissing
+        ],
+    }
+    after_ident_fails = _transition_identities_after(records)
+    report["transition_identities_after"] = [
+        {"code": c, "quarter": q, "name": n, "rule": rule,
+         "expected_after": e, "disclosed_after": a, "diff": diff}
+        for c, q, n, rule, e, a, diff in after_ident_fails
     ]
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     # stable-name 최신 포인터: glob 정렬 함정(stale report_latest.json) 방지 — 매 실행 fresh 덮어쓰기.
@@ -589,6 +734,29 @@ def main() -> int:
             print(f"    ... +{len(trans_after) - 25} more")
     else:
         print("선택경과조치 적용후 유실/부정합 (item27·28): 0")
+    if item12_copy:
+        print(f"item12=item1 셀밀림 (불인정항목에 지급여력금액 복사, RED): {len(item12_copy)}")
+        for c, q, n, v in item12_copy[:20]:
+            print(f"    {q} {c} {n}: item12={v} = item1 → 셀밀림/미스매핑")
+    else:
+        print("item12=item1 셀밀림: 0")
+    if mmult_mismatch:
+        print(f"적용후 mmult 불일치 (item17/19후 ≠ sqrt(세부후), RED): {len(mmult_mismatch)}")
+        for c, q, n, p, pv, ev in mmult_mismatch[:20]:
+            print(f"    {q} {c} {n} item{p}후: 공시={pv} 계산={ev} → 적용후 세부 미정합")
+    else:
+        print("적용후 mmult 불일치: 0")
+    if mmult_submissing:
+        print(f"적용후 세부위험 추출갭 (부모후≠전인데 세부후 결측, review): {len(mmult_submissing)}")
+    if after_ident_fails:
+        ic = Counter(rule for _, _, _, rule, *_ in after_ident_fails)
+        print(f"적용후 항등식 위반 (적용사 R1/R2/R5/R6/R7/R8후 안 닫힘, RED): {len(after_ident_fails)} {dict(ic)}")
+        for c, q, n, rule, e, a, diff in after_ident_fails[:25]:
+            print(f"    {q} {c} {n} [{rule}] 공시후={a} 계산후={e} diff={diff}")
+        if len(after_ident_fails) > 25:
+            print(f"    ... +{len(after_ident_fails) - 25} more")
+    else:
+        print("적용후 항등식 위반: 0")
     print("RED failures by rule:")
     for rule_id, cnt in sorted(fail_by_rule.items(), key=lambda x: (-x[1], x[0])):
         print(f"  rule {rule_id}: {cnt}")
@@ -609,7 +777,8 @@ def main() -> int:
                 f"actual={f.get('actual')} diff={f.get('diff')}"
             )
 
-    return 2 if (red > 0 or census_red > 0 or parent_child or partial_child or trans_after) else 0
+    return 2 if (red > 0 or census_red > 0 or parent_child or partial_child
+                 or trans_after or item12_copy or mmult_mismatch or after_ident_fails) else 0
 
 
 if __name__ == "__main__":
