@@ -409,18 +409,14 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
       })();
       
       const selectedQuarters = [latest];
-      
-      // 1년 전 연말 (4Q)
-      const year1Ago = `${latestYear - 1}.4Q`;
-      if (allQuarters.includes(year1Ago)) {
-        selectedQuarters.push(year1Ago);
-      }
-      
-      // 2년 전 연말 (4Q)
-      const year2Ago = `${latestYear - 2}.4Q`;
-      if (allQuarters.includes(year2Ago)) {
-        selectedQuarters.push(year2Ago);
-      }
+
+      // 직전 3개년 연말 (4Q): 1·2·3년 전 (최신 분기가 이미 4Q면 중복 제외)
+      [1, 2, 3].forEach(n => {
+        const yearEnd = `${latestYear - n}.4Q`;
+        if (allQuarters.includes(yearEnd) && !selectedQuarters.includes(yearEnd)) {
+          selectedQuarters.push(yearEnd);
+        }
+      });
       
       // 최신순으로 정렬 (최신 → 과거)
       return selectedQuarters.sort((a, b) => {
@@ -448,7 +444,7 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
         // 분기: 직전 4개 분기
         selectedQuarters = getRecentQuarters(filtered, 4);
       } else if (period === 'year') {
-        // 연도: 최신 분기 + 1년 전 연말 + 2년 전 연말
+        // 연도: 최신 분기 + 직전 3개년 연말(1·2·3년 전 4Q)
         selectedQuarters = getYearEndQuarters(filtered);
       }
       
