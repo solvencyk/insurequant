@@ -9,6 +9,14 @@ Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/dom
 
 ## Status
 
+**2026-07-07 6차(inbox 재확인, `20260707T0050Z`) — 악사손해 2024.3Q item27/28, 4→2셀.** validation이
+"'공시예정' 지문은 24.3Q 시점 한정, 이미 24.4Q에 공시됨"을 지적 — raw
+`data/disclosure/FY2024_Q4/raw/KR0049_악사손해보험.pdf` page 36(총괄표 당분기-1분기)+page 39(세부표
+당분기-1분기)로 직접 재확인 후 item1·2·14·27·28 `값_적용후` 적재(item27=286.43630737·item28=166.47756576,
+raw 반올림치 286.5/166.5와 정합). 게이트 `선택경과조치 적용후` RED 4→2(잔여 2건=흥국화재·흥국생명
+2024.4Q item28, 기존 downloader 회신 대기 건과 동일·이번 스코프 아님). inbox status → answered(validation
+재확인 대기).
+
 **2026-07-07 update (경과조치 적용후 — 정본 18사 확정 후 잔여 90셀, 상세는 P1 TRANS-18 항목):** owner가 FSS 2023-03-20
 보도자료 붙임-1(`trend20230320_3.pdf` p6)을 정본으로 제공 — **선택 경과조치 실제 적용사 = 18개사**로 확정(이전
 owner 22-seed와 이번 세션의 "코리안리·메리츠·한화생명·신한라이프 = 정당동일" 추정이 결과적으로 모두 옳았음, 정본과

@@ -12,6 +12,15 @@ Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
 ---
 
+## 2026-07-07 (6차, inbox 재확인) — 악사손해 2024.3Q item27/28 복구, 4→2셀
+
+validation이 inbox(`20260707T0050Z`)로 "'공시예정' 지문은 24.3Q 시점 한정, 이미 24.4Q에 공시됨" 지적 —
+`data/disclosure/FY2024_Q4/raw/KR0049_악사손해보험.pdf` page 36(총괄표)+page 39(세부표) 당분기-1분기 컬럼을
+직접 재확인해 item1(5554)·item2(3228, TAC 미적용 전=후)·item14(1939)·item27(286.43630737, 파생)·
+item28(166.47756576, 파생) `값_적용후`를 `kics_disclosure.json`+`templates/kics_disclosure.json` 양쪽에
+적재. 게이트 `선택경과조치 적용후` RED 4→2. 잔여 2건(흥국화재·흥국생명 2024.4Q item28)은 기존 downloader
+회신 대기 건과 동일, 이번 스코프 밖. inbox status → answered.
+
 ## 2026-07-07 (2차) — TRANS-18 마무리: 90→12셀, 검증기 부호버그 발견·수정
 
 같은 날 이어서 owner "RED 뜨는 애들은 parsing 다시 실시해" 지시로 잔여 90셀 마저 처리.
