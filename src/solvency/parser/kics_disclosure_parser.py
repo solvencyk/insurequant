@@ -265,6 +265,18 @@ def _looks_like_kics_row(label: str) -> bool:
             and any(h in stripped for h in _CAPITAL_LABEL_HINTS)
         )
         or ("\uc21c\uc790\uc0b0" in stripped and "\uac74\uc804\uc131" in stripped)
+        # item12/13's \u2161./\u2162. marker sometimes docling-garbles into plain
+        # Latin "II"/"III" or gets shuffled mid-label (KR0073, KR0068 \u2014
+        # neither starts with \uac00/\ub098/\ub2e4 or a Unicode Roman numeral, so every
+        # check above misses them) \u2014 their wording elsewhere is unique
+        # enough to stand alone as a row-shape signal. Space-stripped since
+        # docling sometimes inserts a stray space mid-word ("\ubd88 \uc778\uc815" \u2014
+        # KR1098). Single keyword only (not requiring the suffix too) since
+        # docling sometimes truncates before reaching it (KR0099 2023.3Q+:
+        # "\u2161.\uc9c0\ubd84\uc5ec\ub825\uae08\uc561\uc73c\ub85c \ubd88\uc778\uc815\ud558\ub294 \ud56d \ubaa9" with no suffix at all) \u2014 each
+        # keyword is unique to exactly one item in the whole 1-28 schema.
+        or "\ubd88\uc778\uc815" in stripped.replace(" ", "")
+        or "\uc7ac\ubd84\ub958" in stripped.replace(" ", "")
     )
 
 
@@ -567,6 +579,15 @@ def extract_kics_detail_rows(md: str, quarter: str) -> list[tuple[str, str]]:
             if header_idx is not None:
                 active_col_idx = header_idx
                 data_rows = tbl[1:]
+            elif len(tbl) > 1 and pick_col(tbl[1]) is not None:
+                # tbl[0] is a stray unit-annotation row docling folded into
+                # the table itself (e.g. "| | | | (단위: 억원, %) |") instead
+                # of leaving it as preceding text — the real header is row
+                # 1. Without this, tbl[0] never matches a quarter, the whole
+                # table is silently dropped (KR0011, KR0087 2023.3Q), and
+                # item12 (among everything else in it) is never extracted.
+                active_col_idx = pick_col(tbl[1])
+                data_rows = tbl[2:]
             elif active_col_idx is not None and _looks_like_kics_row(tbl[0][0]):
                 data_rows = tbl
             else:
