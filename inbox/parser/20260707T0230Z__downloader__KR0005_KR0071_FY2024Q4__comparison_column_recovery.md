@@ -2,7 +2,7 @@
 from: downloader
 to: parser
 created: 20260707T0230Z
-status: open
+status: answered
 route: reparse
 company: KR0005 (흥국화재), KR0071 (흥국생명보험)
 period: 2024.4Q

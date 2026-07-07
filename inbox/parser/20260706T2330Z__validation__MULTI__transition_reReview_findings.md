@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260706T2330Z
-status: open
+status: answered
 route: reextract
 company: MULTI (KR0070 에이비엘 · KR0083 푸본현대 · KR0071 흥국생명)
 period: 2023.1Q · 2024.4Q · 2025.3Q
