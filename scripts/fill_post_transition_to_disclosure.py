@@ -153,6 +153,9 @@ MARKET_RATE_ROW_MAP: list[tuple[str, int]] = [
 # 집중은 ③에서도 항상 pass-through).
 _MARKET_RATE_EFFECT_ITEMS = {36, 37}
 
+# Leaf sub-items in ③ (dash-as-zero applies here, not to the 시장위험액 total).
+_MARKET_SUB_LEAF_ITEMS = {36, 37, 38, 39, 40}
+
 
 TABLE_ROW_RE = re.compile(r"^\|(.+)\|\s*$")
 HEADING_RE = re.compile(r"^\s*#{1,6}\s*(.+?)\s*$")
@@ -191,6 +194,26 @@ def _parse_value(raw: str) -> str | None:
     if cleaned.endswith(".0"):
         cleaned = cleaned[:-2]
     return cleaned
+
+
+_DASH_TOKENS = ("-", "─", "–", "—")
+
+
+def _parse_leaf_subrisk_value(raw: str) -> str | None:
+    """Like _parse_value, but a bare dash in a sub-risk LEAF cell (29-35/36-40)
+    means the company discloses zero exposure to that specific risk — not
+    "absent" (same convention already applied to items 36-40 in
+    fill_market_subitems_to_disclosure.py). A genuinely blank cell ("") is
+    still treated as absent/skip, only an explicit dash glyph means zero.
+    Confirmed via raw (KR0072 케이디비생명 2023.2Q ②표): 장수위험 46,364→'-'·
+    사업비위험 142,176→'-'·대재해위험 38,906→'-' sit in the same row as
+    해지위험 682,308→151,038 (a real, non-dash reduction) — the dashed rows
+    are the same selective-provision effect taken to its zero extreme, not
+    missing data, and plain _parse_value's None was silently dropping them
+    from the JSON entirely (the owner Tier-B "적용후 추출갭" report)."""
+    if raw is not None and raw.strip().replace(",", "") in _DASH_TOKENS:
+        return "0"
+    return _parse_value(raw)
 
 
 def _normalise_unit(value: str, unit: str) -> str:
@@ -741,6 +764,17 @@ def _extract_post_values(
             )
             if not is_sub:
                 continue
+            # STRICT parsing here (not the dash-as-zero leaf helper): this
+            # count exists to prove the table is "live" (a real transition
+            # effect happened), and a company that simply doesn't elect this
+            # provision renders its WHOLE 적용후 column as dashes (NH농협손해
+            # KR0032 2023.2Q ③표: every row incl. 지급여력비율/금액 totals is
+            # dash) — treating pre=real/post=dash as a manufactured "diff"
+            # would wrongly certify that placeholder table as live and then
+            # zero out every leaf item under it. Only a genuine non-dash
+            # pre≠post pair (e.g. KR0072 케이디비생명 해지위험 682,308→151,038)
+            # should certify the table; dash-as-zero is applied afterwards,
+            # in the application loop below, once liveness is already proven.
             pv = _parse_value(row[pre_idx])
             pov = _parse_value(row[post_idx])
             if pv is None or pov is None:
@@ -848,8 +882,12 @@ def _extract_post_values(
                 # doesn't fold in — it only varies the sub-items it's named
                 # for, e.g. 사업비/해지위험).
                 continue
-            pre_v = _parse_value(row[pre_idx])
-            post_v = _parse_value(row[post_idx])
+            if item_no in _LIFE_SUB_ITEMS:
+                pre_v = _parse_leaf_subrisk_value(row[pre_idx])
+                post_v = _parse_leaf_subrisk_value(row[post_idx])
+            else:
+                pre_v = _parse_value(row[pre_idx])
+                post_v = _parse_value(row[post_idx])
             if pre_v is None or post_v is None:
                 continue
             if not _is_percent_row(item_no):
@@ -899,6 +937,12 @@ def _extract_post_values(
             item_no = _match_row_label(row[0], MARKET_RATE_ROW_MAP)
             if item_no not in _MARKET_RATE_EFFECT_ITEMS:
                 continue
+            # STRICT parsing (see the identical note in
+            # _count_breakdown_subitem_diffs above): a company that doesn't
+            # elect ③ renders its ENTIRE 적용후 column as dashes, including
+            # the totals — dash-as-zero here would manufacture a fake
+            # "real->0" diff purely from that placeholder and wrongly
+            # certify the whole table as live.
             pv = _parse_value(row[pre_idx])
             pov = _parse_value(row[post_idx])
             if pv is None or pov is None:
@@ -932,8 +976,12 @@ def _extract_post_values(
             item_no = _match_row_label(row[0], MARKET_RATE_ROW_MAP)
             if item_no is None:
                 continue
-            pre_v = _parse_value(row[pre_idx])
-            post_v = _parse_value(row[post_idx])
+            if item_no in _MARKET_SUB_LEAF_ITEMS:
+                pre_v = _parse_leaf_subrisk_value(row[pre_idx])
+                post_v = _parse_leaf_subrisk_value(row[post_idx])
+            else:
+                pre_v = _parse_value(row[pre_idx])
+                post_v = _parse_value(row[post_idx])
             if pre_v is None or post_v is None:
                 continue
             pre_v = _normalise_unit(pre_v, unit)
