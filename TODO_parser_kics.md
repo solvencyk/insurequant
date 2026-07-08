@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-08 (R1 가용자본 항등식 3건, inbox 재확인) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-08 (3차, KR0051 19_market 단위힌트 버그) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,26 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-08(3차, 세션 재개 — 라이브 게이트 전수 트리아지) — KR0051 2024.1Q `19_market` 단위힌트 버그 수정, RED 14→13.**
+이전 세션(2차)이 끝난 뒤 게이트를 재실행해 잔여 RED 14건 전부를 원인별로 재확인: 13건은 이미 `TODO.md`
+문서화된 예외(KR0087/KR0079 image-scan·KR0097 OCR 백필 대기·KR0002 rule9 실측치)였고, `KR0051(신한이지손해보험)
+2024.1Q rule 19_market` 1건만 미문서 상태의 진짜 파서 갭이었음. 원인: `fill_market_subitems_to_disclosure.py`가
+36-40 세부표를 항상 백만원으로 가정하고 ÷100 고정 — 이 회사 이 분기는 세부표가 "(단위: 억원, %)" ③경과조치
+표 안에 있어 이미 억원인 값을 다시 ÷100 하는 바람에 19_market 행렬재구성이 99% 어긋나 기존 <2% 안전게이트가
+(정당하게) 저장을 거부했지만, 대체 시도 없이 item36/40이 그냥 결측으로 남던 것. 스캔 중 최근 `(단위: ...)`
+힌트를 라인 단위로 추적해(기존 `fill_subitems_to_disclosure.py`/`fill_post_transition_to_disclosure.py`와
+동일 정규식) 표별 실제 단위로 변환하도록 수정 — `--dry-run --all-periods`로 전사 재확인해 순영향이 정확히
+이 2행(item36=21·item40=64, 재구성 0.9%)뿐이고 다른 회사·분기에 회귀 없음을 검증 후 라이브 반영.
+`templates/kics_disclosure.json` 동기화 + `insurequant_master_tables.xlsx` 재생성 + `pytest tests/unit/` 110 passed.
+
+**⚠️ 별건 발견(이번 세션 스코프 밖, owner 확인 필요) — `scripts/` 48개 파일 + `insurequant_master_tables.xlsx`가
+git에 전혀 커밋된 적 없음.** `git log --all`/`git ls-files` 확인 결과 changelog에 수개월째 정본으로 인용돼
+온 스크립트(`fill_market_subitems_to_disclosure.py`(이번에 수정한 파일 자체도 원래 미추적이었음)·
+`build_master_xlsx.py`·`apply_user_kics_gold.py`·`validate_data_contract.py` 등 다수, kics/ifrs17/validation
+전 레인 걸침)가 워킹트리에만 존재 — `.gitignore` 매치 없음, 의도적 제외 아님. `git clean -fd`나 새 클론 시
+전부 소실 위험. 이번 세션은 실제로 수정한 파일(`fill_market_subitems_to_disclosure.py` 1건)만 함께 커밋했고
+나머지 47개+xlsx는 범위 밖이라 손대지 않음 — owner 일괄 `git add` 여부 결정 필요.
 
 **2026-07-08(2차, inbox 재확인) — 적용후 R1 가용자본(item1=item2+item3) 항등식 3건 해소.**
 validation이 tolerance 5%→0.5% 교정 후 재검출(`inbox/parser/20260707T2223Z`): 농협생명(KR0104)

@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-07 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-08 (3차) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -11,6 +11,52 @@ market census.
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
 ---
+
+## 2026-07-08 (3차) — KR0051 `19_market` 단위힌트 버그, RED 14→13 (세션 재개, 라이브 게이트 전수 트리아지)
+
+이전 세션(2차, R1 가용자본 항등식 3건)이 끝난 지점에서 재개. inbox `20260707T2223Z`는 이미 `status: answered`로
+답변까지 작성돼 있어 재작업 불필요(원 sender인 validation의 재확인 대기 상태, 프로토콜상 정상) — 대신 라이브
+게이트(`validate_kics_disclosure.py`)를 처음부터 재실행해 잔여 RED 14건을 하나씩 원인 추적했다.
+
+**13건은 이미 `TODO.md` "K-ICS gate documented exceptions"에 문서화된 기존 예외**로 확인(KR0087 동양생명
+2023.2Q image-scan 7개 rule·KR0079 미래에셋 2023.2Q rule8_life·KR0097 하나생명 2024.2Q OCR 백필 대기 4개
+rule·KR0002 한화손해 2024.2Q rule9 실측치) — 재작업 불필요, 새 회귀 아님.
+
+**1건(`KR0051 신한이지손해보험 2024.1Q rule 19_market`)은 미문서 상태의 진짜 파서 갭**이었음. `detail` 필드가
+"parser gap"이라 명시했고 실제로 raw MD(`data/disclosure/FY2024_Q1/parsed/KR0051_...md`)에 시장위험 세부
+5종(금리21·주식-·부동산-·외환-·자산집중64, 백만원 아니라 억원)이 멀쩡히 존재 — 원천 미공시가 아니라
+추출 실패였다.
+
+**원인**: `scripts/fill_market_subitems_to_disclosure.py::extract_mkt_subs()`가 36-40 세부표를 항상 백만원
+단위로 가정하고 `_to_eok(v, "백만원")`으로 고정 ÷100 변환. 그런데 KR0051 이 분기는 세부표가 별도 백만원
+표가 아니라 "(단위: 억원, %)"로 태그된 "③ 주식위험 경과조치 또는 금리위험 경과조치" 표 안에 통짜로 들어있어,
+이미 억원 단위인 21/64를 다시 ÷100 하면 0.21/0.64가 되어 19_market 행렬재구성(M-matrix)이 item19=68 대비
+99% 어긋남 → 기존 <2% 안전게이트가 (설계대로) 저장을 거부. 문제는 게이트가 막은 뒤 대체 해석(단위가 이미
+억원일 가능성)을 시도하는 경로가 아예 없어 item36/40이 조용히 결측으로 남았던 것.
+
+**수정**: `fill_subitems_to_disclosure.py`/`fill_post_transition_to_disclosure.py`가 이미 쓰던 것과 동일한
+`(단위: ...)` 정규식(`_UNIT_HINT_RE`)을 이식 — MD를 줄 단위로 스캔하며 테이블-외 라인에서 가장 최근
+단위 힌트를 추적하고, 세부값을 발견한 시점의 추적 단위로 변환(기본값은 기존과 동일하게 백만원, 힌트가
+있을 때만 override). `extract_mkt_subs()` 반환 타입을 `{item_no: value}`에서 `{item_no: (value, unit)}`로
+변경, 호출부(`main()`) 1곳만 맞춰 수정 — 이 함수의 유일한 호출부라 다른 부작용 없음(확인).
+
+**검증**: `--dry-run --period FY2024_Q1` → KR0051 MKT-SKIP 사라지고 golden 19_market bad 0으로 정상 적재
+확인(재구성 0.9%). `--dry-run --all-periods` 전사 재확인 → `TOTAL new rows: 2`(정확히 이 셀뿐, 다른
+회사·분기 MKT-SKIP/IRR-SKIP 목록 불변 — 회귀 없음). 라이브 반영(`--all-periods`, 18658→18660행) +
+`templates/kics_disclosure.json` 동기화(`shutil.copy2`, 기존 recalc 스크립트들과 동일 관례) +
+`insurequant_master_tables.xlsx` 재생성(`build_master_xlsx.py`) + `pytest tests/unit/` 110 passed(회귀 없음).
+게이트 재확인: RED 14→**13**(`19_market` 카테고리 완전 해소), 잔여 13건은 위 기존 문서화 예외와 100% 일치.
+
+**⚠️ 부수 발견(이번 세션 스코프 밖) — `scripts/` 다수 파일 + `insurequant_master_tables.xlsx`가 git에
+전혀 커밋된 적 없음.** 커밋 전 `git status`로 스테이징 범위를 확인하다가 `git log --all -- scripts/fill_market_
+subitems_to_disclosure.py`가 완전히 비어있음을 발견(수정하려던 파일 자체가 untracked) — 범위를 넓혀
+확인해보니 `scripts/` 안에 changelog가 수개월째 정본으로 인용해 온 스크립트 48개(`build_master_xlsx.py`·
+`apply_user_kics_gold.py`·`validate_data_contract.py`·`dedup_kics_disclosure.py` 등, kics/ifrs17/validation
+전 레인 걸침) + `insurequant_master_tables.xlsx`가 전부 미추적 상태(`.gitignore` 매치 없음 — 의도적 제외
+아니라 순수 누락으로 보임). `git clean -fd`나 새 클론 시 파이프라인 핵심 스크립트가 통째로 사라질 위험.
+이번 세션은 실제로 수정한 `fill_market_subitems_to_disclosure.py` 1건만 `git add`로 함께 커밋했고, 나머지
+47개+xlsx는 이번 작업 범위 밖이라 손대지 않음 — owner에게 일괄 커밋 여부 확인 요청(TODO_parser_kics.md
+Status 상단에 동일 내용 기록).
 
 ## 2026-07-08 (2차) — R1 가용자본(item1=item2+item3) 적용후 항등식 3건 (inbox 재확인)
 
