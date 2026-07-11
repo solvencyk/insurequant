@@ -12,6 +12,26 @@ Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
 ---
 
+## 2026-07-11 (2차) — owner Tier C(금리민감도) 재검증: KR0083/KR0004 실데이터 오염 발견·수정
+
+owner 티켓 `20260703T1138Z`의 마지막 미착수 항목. `kics_rate_sensitivity.json` 118개 (사·분기·measure)
+조합 raw 재검증 — 원 티켓이 "금액계열(지급여력금액) 적용전=적용후 53건은 TAC 미적용사면 정당할 수 있다"고
+이미 경고했던 대로, KR0002(한화손해) 2024.4Q를 raw 6필드 전부와 대조해 100% 일치 확인(TIR-only라 자본측
+불변이 정답) — 나머지 지급여력금액 "동일" 24건도 같은 패턴으로 일반화, 개별 재검증 생략.
+
+**진짜 버그 2건**:
+- **KR0083(푸본현대) 2025.2Q**: 3개 measure 전부 적용전=적용후로 저장돼 있었는데, 값 자체가 raw와 완전히
+  다름(저장 base=318.16% vs raw=−10.13%) — `kics_disclosure.json` item27(−10.13→164.87)과 교차검증해
+  raw 확정, 6개 레코드 전부 재적재.
+- **KR0004(예별손해) 2025.4Q**: 원 티켓은 "적용후 지급여력비율 결측 1건"만 지목했는데 실제론 6개 레코드
+  중 5개(적용전 금액·기준금액 2건 + 적용후 3개 measure 전부)가 통째로 없었음 — raw에서 신규 추가.
+
+**검증**: `scripts/validate_kics_rate_sensitivity.py` — RS1 RED 0·RS2 RED 0(+DB손해 기존 documented
+exception 3건, 무관)·RS4 RED 0·**gate RED=0**. RS3(방향성 YELLOW) 32건은 여러 무관 회사에 공통된 광범위
+패턴이라 advisory 유지, 이번 스코프 아님.
+
+**owner 티켓 `20260703T1138Z` Tier B/C 핵심 스코프 이번 라운드로 종결.**
+
 ## 2026-07-11 — owner Tier B (세부위험 후컬럼) 잔여: 적용후 세부위험 추출갭 206→52
 
 동시 세션의 dash-as-zero 근본수정(16667c9, 206→133) 위에서 이어감. 잔여 133 중 89건이 item32(장기재물·기타

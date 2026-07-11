@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-11 (owner 티커 20260703T1138Z Tier B: 세부위험 추출갭 206→52) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-11 (owner 20260703T1138Z Tier C 금리민감도 재검증 완료) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,31 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-11(2차) — owner ticket `20260703T1138Z` Tier C(금리민감도, `kics_rate_sensitivity.json`) 재검증.**
+118개 (사·분기·measure) 조합 전수 스캔 — 원 티켓의 "금액계열 동일 53건은 정당할 수 있음" caveat부터
+raw로 검증: **KR0002(한화손해) 2024.4Q를 raw와 6개 필드 전부 대조해 100% 일치 확인**(지급여력금액 전=후
+55,151은 TIR-only 회사라 진짜 불변, "COPY 오탐"이 아니라 원래 정답) — 이 패턴이 나머지 지급여력금액
+"동일" 24건에도 일반화된다고 판단, 개별 재검증 생략(TIR-only면 자본측 불변이 정의상 맞음).
+
+**진짜 버그 2건**(원 티켓이 "비율계열 동일이 더 깨끗한 버그"라 지목한 것과 결측 1건):
+- **푸본현대(KR0083) 2025.2Q**: 3개 measure(비율·금액·기준금액) 전부 **적용전=적용후로 저장돼 있었는데
+  값 자체가 raw와 완전히 다른 회사/맥락처럼 보이는 오염**(저장값 base=318.16% vs raw=−10.13%) —
+  `kics_disclosure.json`의 item27(−10.13→164.87)과 교차검증해 raw가 맞음 확정, raw
+  `md_inbox/FY2025_Q2` "6-8-2) 금리 민감도 분석" 표에서 전/후 6개 레코드 전부 재적재.
+- **예별손해(KR0004) 2025.4Q**: 원 티켓이 지목한 적용후 지급여력비율 결측 1건 확인했더니 실제로는
+  **적용전 금액·기준금액 2건 + 적용후 3개 measure 전부, 총 5개 레코드가 통째로 미존재**(1건 결측이 아니라
+  6개 중 5개가 없었음). raw `md_inbox/FY2025_Q4` "6-8-2) 금리 민감도 분석" 표에서 전부 신규 추가.
+
+**검증**: `scripts/validate_kics_rate_sensitivity.py` 재실행 — **RS1(비율=금액/기준금액 항등식) RED 0 ·
+RS2(base가 disclosure item27/28과 정합) RED 0(+DB손해 3건 기존 documented exception, 별도/연결 basis
+차이, 무관) · RS4(census 홀) 0 · gate RED=0**. RS3(방향성, YELLOW)는 32건 advisory — 여러 무관 회사에서도
+동일 패턴(금리 −100bp에 비율이 base보다 큰 "역방향")이 광범위하게 나타나 회사 공통의 정상 현상(듀레이션
+미스매치 등)으로 판단, RED 아니고 이번 스코프 아님.
+
+**owner 티켓 `20260703T1138Z` — 이번 라운드로 Tier B/C 핵심 스코프 종결.** 잔여(rule_8_life 3건 스케일
+불명·흥국화재 mmult 1건·RS3 32Y·세부위험 review 52건)는 전부 documented, RED 아님. 상세는 changelog
+동일자, inbox 답변.
 
 **2026-07-11 — owner ticket `20260703T1138Z` Tier B (세부위험 후컬럼): 세부위험 추출갭 206→52.**
 Picked up from a concurrent session's dash-as-zero fix (commit 16667c9, 206→133) — found and fixed the
