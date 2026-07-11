@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-11 (owner 20260703T1138Z Tier C 금리민감도 재검증 완료) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-11(3차) (owner 재확인 요청 — fill_subitems 4개 실버그 발견·수정, 추출갭 52->40) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,31 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-11(3차) — owner "진짜 다 끝났냐" 재확인 요청, 재검증 중 `fill_subitems_to_disclosure.py` 실버그 4개
+추가 발견·수정.** 티켓 resolved 처리 후 owner가 신뢰 못 하고 재확인 지시 → 이전 라운드에서 SKIP으로
+"안전 회피"했던 3건(KR0087 2025.4Q·KR0099 2024.2Q·KR0051 2025.1Q rule_8_life)을 raw 재조사하다 근본원인
+발견, 실제 코드 수정으로 3건 전부 GREEN 전환(더 이상 SKIP 아님):
+1. `_row_is_target_period`: 병합셀 연속행(row0 blank)이 직전 태그 없이 항상 accept — 당기/직전반기
+   블록이 섞인 표(KR0087/KR0099)에서 직전반기 값이 당기로 오추출.
+2. `_row_label_text`: row0가 "(2025.4Q)" 같은 기간태그를 반복(blank 아님)하면 label-walk 안 타서
+   해당 행 자체가 미추출(label="(2025.4Q)"로 SUBITEMS 매칭 실패).
+3. `_row_is_target_period`: "직전반기"/"전기" 등 괄호 없는 bare 기간어가 accept-default로 새서
+   KR0094처럼 위 두 수정을 조합하면 오히려 직전반기가 새로 뚫리는 회귀 유발 — 명시 reject 추가.
+4. `_row_label_text`: `"위험액" in row[1]` 느슨한 substring 매치가 "2.장수위험액"처럼 행 라벨이
+   row[1]에 반복되는 표에서 값-셀을 라벨로 오인(KR0094 item30/33/34 3건 소실) — 정확매치로 교정.
++ `_is_general_insurance_catastrophe_label`/`is_life_catastrophe` 테이블-레벨 게이트가 생명+일반손해
+혼합표(KR0051/KR1011/KR0050 등, 대재해위험 라벨 중복) 전체를 스킵하던 것을 행-레벨 섹션추적
+(`in_general_section`)으로 교체 — item35 신규 13행(KR1011 12분기 전체 + KR0051 1건) 생성,
+`fill_post_transition_to_disclosure.py` 재실행으로 값_적용후까지 연쇄 채움 → **적용후 세부위험
+추출갭 52->40**(KR1011 그룹 전량 해소). KR0050 2023.3Q item35도 부수적으로 재추출값이 일반손해
+쪽(77.35, 오답)에서 생명 쪽(26.9, 정답)으로 교정됨(회귀 아님, raw 대조 확인).
+`--refresh --all-periods` 전수 재실행 2회(dry-run 선행) + 매 라운드 전후 diff 21~40건 raw 재대조 후
+반영. 알려진 소스결함 2건은 수동 override 유지(KR0082 2023.1Q 단위오표기 ×100, KR0050 2024.2Q item35
+1셀 = 원본 docling 표 붕괴로 한 셀에 6개 숫자 뭉침, 재raw전까지 기존값 40.86 보존).
+재검증: core RED 14 불변(회귀 0), GREEN 4680->4698, rule_8_life SKIP 289->154(교체 아님, 실제 데이터
+채움). RS1/RS2/RS4 rate-sensitivity 게이트 재확인 RED=0 불변. 잔여 40셀은 `fill_post_transition_to_
+disclosure.py`(별도 스크립트, breakdown 후보선택 로직)의 다른 gap로 확인 — 오늘 스코프 밖, 후속 라운드.
 
 **2026-07-11(2차) — owner ticket `20260703T1138Z` Tier C(금리민감도, `kics_rate_sensitivity.json`) 재검증.**
 118개 (사·분기·measure) 조합 전수 스캔 — 원 티켓의 "금액계열 동일 53건은 정당할 수 있음" caveat부터

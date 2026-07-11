@@ -304,6 +304,21 @@ def _normalise_unit(value: str, unit: str) -> str:
     return f"{scaled:.2f}".rstrip("0").rstrip(".")
 
 
+def _looks_like_period_cell(s: str) -> bool:
+    """True if a cell holds a period tag ('당기', '(2025.4Q)', ...) rather than
+    a real row label — used to see past merged-cell continuation artifacts
+    where a period tag repeats down every row of its block (KR0087/KR0099
+    생명·장기손해보험위험액 현황 tables)."""
+    if s is None:
+        return True
+    t = s.strip()
+    if t == "":
+        return True
+    if re.search(r"\(\d{4}\.\dQ\)", t):
+        return True
+    return t in ("당기", "직전반기", "직전 반기", "직전분기", "직전 분기", "전기", "전분기")
+
+
 def _row_is_target_period(row0: str, quarter: str) -> bool:
     """Skip prior-period rows like '(2025.2Q)' when filling the current quarter.
 
@@ -331,6 +346,8 @@ def _row_is_target_period(row0: str, quarter: str) -> bool:
         return False
     if "당기" in norm:
         return target in norm or f"{y_full[-2:]}.{q_num}Q" in norm
+    if any(kw in norm for kw in ("직전반기", "직전분기", "전기말", "전분기", "전기")):
+        return False
     return True
 
 
@@ -344,7 +361,14 @@ def _is_merged_life_parent_death_label(norm_label: str) -> bool:
 
 
 def _is_general_insurance_catastrophe_label(label: str) -> bool:
-    """일반손해 '대재해 위험' row — not life item 35."""
+    """일반손해 '대재해 위험' row — not life item 35.
+
+    Some disclosures render this with a space ('대재해 위험') to distinguish it
+    from life item 35's '대재해위험' (no space) — the only textual signal
+    available when both rows share one merged-cell table (KR1011). When a
+    company renders both identically (KR0051), this can't disambiguate by
+    label text alone and needs a per-cell data override instead.
+    """
     stripped = label.strip()
     return bool(re.fullmatch(r"대재해\s+위험\s*", stripped))
 
@@ -371,6 +395,23 @@ def _is_life_catastrophe_table(table_text: str) -> bool:
     return any(x in t for x in ("전염병", "생명보험", "생명장기", "경과조치"))
 
 
+def _has_life_catastrophe_markers(table_text: str) -> bool:
+    """Positive-only version of _is_life_catastrophe_table's check, without the
+    general-insurance exclusion — for tables that legitimately merge both
+    sections under one 경과조치 breakdown (KR1011/KR1010: '생명·장기손해보험
+    위험액' block immediately followed by '일반손해보험 위험액' block in the
+    same table). Pair with a row-position check (has the '일반손해보험' section
+    marker been seen yet?) rather than throwing out the whole table."""
+    t = table_text.replace(" ", "")
+    if "대재해" not in t:
+        return False
+    return any(x in t for x in ("전염병", "생명보험", "생명장기", "경과조치"))
+
+
+def _is_general_insurance_section_marker(norm_label: str) -> bool:
+    return "일반손해보험" in norm_label and "위험액" in norm_label
+
+
 def _item35_row_priority(norm_label: str) -> int:
     """Lower is better. Prefer life catastrophe total (총계) rows."""
     if "총계" in norm_label:
@@ -389,10 +430,12 @@ def _row_label_text(row: list[str]) -> str:
       KR1000 breakdown   : ['', '사망위험', '392363', '8126', '400490']         → col 1
       Standard           : ['사망위험', ...]                                       → col 0
     """
-    if len(row) >= 3 and "위험액" in _normalise(row[1]):
+    if len(row) >= 3 and _normalise(row[1]) == "위험액":
         return row[2]
-    # Walk leading empty cells to find the first non-empty label cell.
-    if row and row[0].strip() == "":
+    # Walk leading empty/period-tag cells to find the first non-empty label
+    # cell (period tag may repeat down every row of its block instead of
+    # being blank, e.g. '당기 (2024.2Q)' on every 당기 row — KR0087/KR0099).
+    if row and _looks_like_period_cell(row[0]):
         for i in range(1, min(3, len(row))):
             if row[i].strip():
                 return row[i]
@@ -473,10 +516,23 @@ def _scan_subitem_rows(md_text: str, quarter: str) -> dict[int, str]:
         table_text = " ".join(" ".join(r) for r in tbl[:3])
         is_daejaehae_table = "\ub300\uc7ac\ud574\uc704\ud5d8" in table_text.replace(" ", "")
         pending_death_continuation = False
+        current_period_tag = None
+        in_general_section = False
         for row in tbl[1:]:
             if col_idx >= len(row):
                 continue
-            if not _row_is_target_period(row[0], quarter):
+            row0 = row[0] if row else ""
+            if row0 is not None and row0.strip() != "":
+                current_period_tag = row0
+            # A blank row0 that follows a tagged block is a merged-cell
+            # continuation of that block's period, not "period unknown"
+            # (KR0087/KR0099: 당기 block repeats its tag on every row, but
+            # 직전반기 block only tags its first row, leaving later rows
+            # blank — without inheriting, those blank rows fall through
+            # _row_is_target_period's "unknown → accept" default and get
+            # silently mixed into the current quarter's values).
+            effective_row0 = current_period_tag if current_period_tag is not None else row0
+            if not _row_is_target_period(effective_row0, quarter):
                 continue
             label = _row_label_text(row)
             value_cell = row[col_idx]
@@ -489,6 +545,8 @@ def _scan_subitem_rows(md_text: str, quarter: str) -> dict[int, str]:
             if not label or not value_cell:
                 continue
             norm_label = _normalise(label)
+            if _is_general_insurance_section_marker(norm_label):
+                in_general_section = True
             if _is_merged_life_parent_death_label(norm_label):
                 pending_death_continuation = True
                 continue
@@ -504,7 +562,15 @@ def _scan_subitem_rows(md_text: str, quarter: str) -> dict[int, str]:
                 if v is None:
                     continue
                 if item_no == 35:
-                    if not is_life_catastrophe:
+                    # A merged table can legitimately hold both the life and
+                    # general-insurance \ub300\uc7ac\ud574\uc704\ud5d8 rows (KR1011/KR1010); only
+                    # reject rows we've walked past the '\uc77c\ubc18\uc190\ud574\ubcf4\ud5d8' section
+                    # marker for, not the whole table (regression: KR0051/
+                    # KR1011 both mix sections in one table and were losing
+                    # the whole table, including the correct life row).
+                    if not is_life_catastrophe and not _has_life_catastrophe_markers(full_table_text):
+                        continue
+                    if in_general_section:
                         continue
                     if _is_general_insurance_catastrophe_label(label):
                         continue

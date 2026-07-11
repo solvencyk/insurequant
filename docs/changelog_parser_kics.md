@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-08 (3차) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-11 (3차) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,50 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-11 (3차) — owner 재확인 요청: fill_subitems_to_disclosure.py 실버그 4개 발견·수정, 추출갭 52->40
+
+Owner가 이전 라운드 "resolved" 처리를 신뢰하지 않고 재확인 지시. inbox 재확인 결과 헤드라인/Tier B/Tier C
+자체는 실제로 완료 상태였으나, 재검증 과정에서 Tier B가 "안전하게 SKIP 처리"하고 넘어갔던 3건
+(KR0087 2025.4Q · KR0099 2024.2Q · KR0051 2025.1Q, rule_8_life 스케일 불명으로 신규행만 제거해 원복)을
+다시 파고들어 진짜 근본원인을 찾아 코드로 수정.
+
+**발견 버그 4개 (`fill_subitems_to_disclosure.py`, PRE-transition 값 필드 추출)**:
+1. `_row_is_target_period`: 병합셀 연속행이 직전 태그 없이(row0 blank) 항상 accept — 당기/직전반기 블록이
+   한 표 안에 섞여 있을 때(KR0087/KR0099 생명·장기손해보험위험액 현황 표) 직전반기 값이 당기로 오추출.
+2. `_row_label_text`: row0가 "(2025.4Q)" 같은 기간태그를 매 행 반복하면(blank 아님) label-walk 폴백이
+   안 타서 해당 행 자체가 SUBITEMS 매칭 실패로 누락.
+3. `_row_is_target_period`: "직전반기"/"전기" 등 괄호 없는 bare 기간어가 여전히 accept-default로 새서,
+   위 두 수정을 조합하면 KR0094처럼 오히려 직전반기 값이 새로 뚫리는 회귀 발생 — 명시적 reject 추가로 봉합.
+4. `_row_label_text`: `"위험액" in row[1]` 느슨한 substring 매치가 "2.장수위험액"처럼 행 라벨 자체가
+   row[1]에 반복되는 표에서 값-셀을 라벨로 오인해 매칭 실패(KR0094 item30/33/34 소실) — 정확매치로 교정.
+
+**부수 발견**: `_is_general_insurance_catastrophe_label`/`is_life_catastrophe`의 테이블-레벨 게이트가
+생명·장기손해보험과 일반손해보험 위험액이 한 표에 섞여 있을 때(대재해위험 라벨이 양쪽에 중복 등장,
+KR0051/KR1011/KR0050 등) 표 전체를 스킵 — 행-레벨 섹션 추적(`in_general_section`, "일반손해보험" 마커
+이후 행만 제외)으로 교체. item35(대재해위험액) 신규 13행 생성(KR1011 12개 분기 전체 + KR0051 1건),
+연쇄로 `fill_post_transition_to_disclosure.py` 재실행해 값_적용후까지 채움 →
+**적용후 세부위험 추출갭(review) 52 -> 40**(KR1011 그룹 전량 해소). KR0050 2023.3Q item35도 부수 교정
+(일반손해 쪽 77.35 오답 → 생명 쪽 26.9 정답, raw 재대조로 회귀 아님 확인).
+
+**검증 방법**: `--dry-run --refresh --all-periods` 선행 → 매 라운드 전(pre-fix baseline snapshot) 대비
+diff 21~40건을 개별 raw(md_inbox) 대조 → KR0087/KR0094/KR0099/KR0050/KR1011/KR0051 등 6개사 이상
+교차검증(같은 항목이 서로 다른 2개 raw 표에서 일치하는지까지 확인한 것도 있음, 예: KR0094 item30).
+알려진 소스결함 2건은 raw 자체가 애매/오염돼 코드로 해결 불가 → 수동 override 유지: KR0082 2023.1Q
+(표 자체가 "백만원" 선언했지만 실제 억원 스케일, 기존 확립된 ×100 보정 값 재적용), KR0050 2024.2Q item35
+(docling 표 붕괴로 한 셀에 숫자 6개 뭉침, 재raw 없이는 판독 불가 → 기존 40.86 보존).
+
+**결과**: core RED **14 불변**(회귀 0 — Jul8 클린 베이스라인 13건 + KR1098 동시세션 WIP 1건, 전부
+사전확인·문서화된 건). GREEN 4680->4698(+18). rule_8_life SKIP 289->154·GREEN 187->317(신규 데이터
+채움, 대체 아님). rule_8_life 목표 3건(KR0087/KR0099/KR0051) **전부 GREEN**(diff 0.1~0.33, 반올림
+수준). RS1/RS2/RS4 rate-sensitivity 게이트 재확인 RED=0 불변. 잔여 40셀은 `fill_post_transition_to_
+disclosure.py`(별도 스크립트, ② breakdown 표 후보선택 로직)의 다른 gap로 확인 — 오늘 스코프 밖,
+후속 라운드로 이월(사례: KR1010/KR0005/KR0070 등 breakdown 후보가 diff_rows=0로 오판정되는 패턴 관찰,
+근본원인 미착수).
+
+`kics_disclosure.json`/`templates/kics_disclosure.json` 동기화 완료.
 
 ---
 
