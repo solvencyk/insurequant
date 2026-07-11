@@ -110,6 +110,26 @@ def _parse_value(raw: str) -> str | None:
     return cleaned
 
 
+_DASH_TOKENS = ("-", "─", "–", "—")
+
+
+def _parse_leaf_subrisk_value(raw: str) -> str | None:
+    """Like _parse_value, but a bare dash in a leaf sub-risk cell (29-35)
+    means the company discloses zero exposure to that specific risk, not
+    "no data" — same convention as _parse_leaf_subrisk_value in
+    fill_post_transition_to_disclosure.py (KR0072 케이디비생명 2023.2Q ②표:
+    장수위험 46,364→'-' sits beside a real, non-dash 해지위험 change, dashed
+    is the same disclosure taken to its zero extreme). Without this, a row
+    whose ONLY value is a dash never gets created at all here (this script's
+    strict _parse_value returns None -> row skipped), which then makes the
+    *post*-transition mmult check permanently unable to certify item17
+    (89 of 135 residual Tier-B gaps traced to exactly this — item32
+    장기재물·기타위험 row missing entirely, not just its 적용후 field)."""
+    if raw is not None and raw.strip().replace(",", "") in _DASH_TOKENS:
+        return "0"
+    return _parse_value(raw)
+
+
 def _make_quarter_column_picker(quarter: str):
     """Return a function(header_cells) -> idx for this period's value column.
 
@@ -461,7 +481,7 @@ def _scan_subitem_rows(md_text: str, quarter: str) -> dict[int, str]:
             label = _row_label_text(row)
             value_cell = row[col_idx]
             if pending_death_continuation and 29 not in out and value_cell:
-                v = _parse_value(value_cell)
+                v = _parse_leaf_subrisk_value(value_cell)
                 if v is not None:
                     out[29] = _normalise_unit(v, eff_unit)
                 pending_death_continuation = False
@@ -480,7 +500,7 @@ def _scan_subitem_rows(md_text: str, quarter: str) -> dict[int, str]:
                     continue
                 if item_no == 35 and _is_general_insurance_catastrophe_label(label):
                     continue
-                v = _parse_value(value_cell)
+                v = _parse_leaf_subrisk_value(value_cell)
                 if v is None:
                     continue
                 if item_no == 35:

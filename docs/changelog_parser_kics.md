@@ -12,6 +12,32 @@ Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
 ---
 
+## 2026-07-11 — owner Tier B (세부위험 후컬럼) 잔여: 적용후 세부위험 추출갭 206→52
+
+동시 세션의 dash-as-zero 근본수정(16667c9, 206→133) 위에서 이어감. 잔여 133 중 89건이 item32(장기재물·기타
+위험) 행 자체 미생성이었음 — 원인은 PRE쪽(`fill_subitems_to_disclosure.py`)에도 POST쪽과 동일한 dash-as-
+zero 결함이 독립적으로 있었던 것. 같은 헬퍼(`_parse_leaf_subrisk_value`)를 이식해 156개 신규 행 생성.
+
+부수 발견·수정 2건:
+- **헤드라인-기반 표 생존판정** (`fill_post_transition_to_disclosure.py`): DB생명보험(KR0082)·처브라이프
+  (KR0100)처럼 진짜 경과조치 효과가 leaf 세부항목에서 전부 dash로 떨어지는 회사는 strict diff-count가
+  0이라 dash-as-zero 수정이 있어도 "표 생존" 판정 자체를 못 받음 — 표 자체의 지급여력비율/금액/기준금액
+  행이 non-dash로 genuinely 다르면 그것만으로 생존 인정하는 `_table_has_live_headline_diff` 추가(NH농협
+  KR0032의 전체-dash 위장표는 헤드라인도 dash라 여전히 정상 거부).
+- **unit-fix 값 신뢰 회귀**: 지난 라운드의 "표 무변동시 기존 값 미러링"(AIA/카카오페이 표준화) 로직이
+  DB생명보험 item29-35의 방금 UNIT-FIX로 고쳐진 신선한 값을 무시하고 한번도 보정 안 된 stale 기존값으로
+  덮어써버림(DB생명 ②표는 "백만원" 라벨이 거짓, 실제 이미 억원 — item2+item3=item1 교차검증으로 확인).
+  `_extract_post_values`가 unit-fix 적용된 item_no 집합을 반환하도록 해서 미러링 폴백이 그 항목들은
+  건드리지 않게 수정.
+
+신규 rule_8_life RED 3건(KR0087·KR0099·KR0051, item32 완비로 평가 가능해지며 노출된 기존 불일치, 스케일
+패턴 불명확)은 안전하게 신규생성 item32=0 행만 제거해 SKIP 상태로 원복(153개 다른 신규행은 유지). AXA손해
+KR0049 2025.1Q item35는 raw 직접 확인 후 추가.
+
+**결과**: 세부위험 추출갭(review) 206→**52**. core RED 불변(13, baseline). mmult 4→**1**(누적). 항등식
+위반 0 유지. owner 티켓 `20260703T1138Z` 부분 진행 — Tier C(금리민감도) 미착수, 잔여 3건+흥국화재
+mmult는 documented exception으로 남김.
+
 ## 2026-07-08 (3차) — KR0051 `19_market` 단위힌트 버그, RED 14→13 (세션 재개, 라이브 게이트 전수 트리아지)
 
 이전 세션(2차, R1 가용자본 항등식 3건)이 끝난 지점에서 재개. inbox `20260707T2223Z`는 이미 `status: answered`로

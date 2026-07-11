@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-08 (3차, KR0051 19_market 단위힌트 버그) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-11 (owner 티커 20260703T1138Z Tier B: 세부위험 추출갭 206→52) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,43 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-11 — owner ticket `20260703T1138Z` Tier B (세부위험 후컬럼): 세부위험 추출갭 206→52.**
+Picked up from a concurrent session's dash-as-zero fix (commit 16667c9, 206→133) — found and fixed the
+residual root cause plus 3 follow-on regressions it exposed:
+
+1. **headline-liveness certification** (`fill_post_transition_to_disclosure.py`): a table whose real
+   transition effect is 100% concentrated in dash-valued leaf sub-items (DB생명보험 KR0082, 처브라이프
+   KR0100 — every quarter's ② effect zeroes 장수/해지/사업비/대재해위험 all the way to '-') never registered
+   *any* strictly-parseable leaf diff, so the "is this table live" gate rejected it outright regardless of
+   the dash-as-zero fix already in place. Added `_table_has_live_headline_diff`: a genuine (non-dash)
+   pre≠post on the table's own 지급여력비율/금액/기준금액 row also certifies it as live — same NH농협손해
+   KR0032 all-dashed-placeholder case from 16667c9 still correctly rejected (its headline row is dashed too).
+2. **pre-transition dash-as-zero** (`fill_subitems_to_disclosure.py`): the *same* dash-means-zero bug existed
+   independently on the PRE side — 89 of 133 residual gaps traced to item32(장기재물·기타위험) rows that
+   never got created at all because their only source cell was a dash. Added the identical
+   `_parse_leaf_subrisk_value` helper there; 156 new rows created across all periods.
+3. **unit-fixed-value trust regression** (`fill_post_transition_to_disclosure.py`): the earlier round's
+   "mirror existing 값 when a table shows no real change" fix (AIA생명/카카오페이 cross-table-rounding-drift
+   guard) blindly re-substituted a *stale, never-corrected* existing 값 for KR0082's items 29-35, silently
+   undoing the UNIT-FIX vote-correction that had just fixed them in the same call (DB생명보험's ②표 declares
+   "백만원" but is actually already in 억원 — confirmed via item2+item3=item1 cross-check — every item from
+   that table needs the vote-driven ×100 restoration). `_extract_post_values` now returns which item_nos
+   were unit-fixed so the mirror-fallback skips them and trusts the fresh, cross-validated reading instead.
+4. **conservative fallback for 3 unresolved cases**: KR0087(동양생명) 2025.4Q, KR0099(신한라이프) 2024.2Q,
+   KR0051(신한이지) 2025.1Q newly hit rule_8_life RED once their 7th sub-item (item32) completed the
+   evaluable set — but their sum-vs-parent ratios don't fit any clean scale-correction pattern (1.6x, 1.6x,
+   5.6x — not a 100x mismatch like KR0082's), meaning the inconsistency predates this session and lives in
+   items that already existed. Rather than guess, removed just the 3 newly-created item32=0 rows, reverting
+   those 3 cells to their pre-session SKIP state — preserves the other ~153 good new rows without asserting
+   unvalidated data into a hard RED gate.
+5. **AXA손해보험 KR0049 2025.1Q item35**: raw-verified add (대재해위험 7,975→6,173백만, `md_inbox/FY2025_Q1`)
+   — closed a `_parent_present_child_incomplete` PARTIAL RED that the item32 backfill exposed for this cell.
+
+**Result**: 적용후 세부위험 추출갭(review) 206→**52**. Core RED unchanged at baseline (13). 적용후 mmult
+4→**1** cumulative (only 흥국화재 2024.4Q, pre-existing downloader-blocked). 적용후 항등식 위반: 0 throughout.
+Owner ticket `20260703T1138Z` still open — Tier C(금리민감도 적용후, `kics_rate_sensitivity.json`) untouched,
+and the 3 unresolved rule_8_life cases + 흥국화재 mmult remain as documented exceptions for a future round.
 
 **2026-07-08(3차, 세션 재개 — 라이브 게이트 전수 트리아지) — KR0051 2024.1Q `19_market` 단위힌트 버그 수정, RED 14→13.**
 이전 세션(2차)이 끝난 뒤 게이트를 재실행해 잔여 RED 14건 전부를 원인별로 재확인: 13건은 이미 `TODO.md`

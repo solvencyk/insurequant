@@ -687,8 +687,18 @@ def _match_row_label(label: str, mapping: list[tuple[str, int]]) -> int | None:
 
 def _extract_post_values(
     tables: list[dict], company_code: str, existing_values: dict[int, str]
-) -> tuple[dict[int, tuple[str, str]], dict[int, str], list[str]]:
-    """Return ({item_no: (pre_value, post_value)}, {item_no: source_table}, debug_log_lines).
+) -> tuple[dict[int, tuple[str, str]], dict[int, str], list[str], set[int]]:
+    """Return ({item_no: (pre_value, post_value)}, {item_no: source_table}, debug_log_lines,
+    unit_fixed_items — item_nos whose (pre,post) pair was rescaled by the
+    UNIT-FIX vote below; the caller should trust their *pre_value* over a
+    stale existing JSON 값 when mirroring an unchanged cell, since a
+    unit-fixed pre_value has already been reconciled against other items in
+    the same source table (KR0082 DB생명보험: the ②표's own '백만원' unit
+    hint is simply wrong for this filing — every item in it needs ×100 to
+    match reality — but item17 personally votes 1:1 so its otherwise-correct
+    pre/post still get swept into the group's ×100 correction; the mirror-
+    existing-값 fallback then blindly re-substituted the *stale, never-
+    corrected* existing 값 for items 29-35 and silently undid the fix).
 
     Walks the company's tables. Picks at most one common-section table and at
     most one breakdown-section table. For KR0073 (multiple breakdown tables
@@ -708,6 +718,7 @@ def _extract_post_values(
     log: list[str] = []
     out: dict[int, tuple[str, str]] = {}
     provenance: dict[int, str] = {}
+    unit_fixed_items: set[int] = set()
 
     # --- 공통적용 ----------------------------------------------------------
     chosen_common: dict | None = None
@@ -783,6 +794,37 @@ def _extract_post_values(
                 diff += 1
         return diff
 
+    def _table_has_live_headline_diff(t: dict, pre_idx: int, post_idx: int) -> bool:
+        """A table's own 지급여력비율/지급여력금액/지급여력기준금액 row showing a
+        genuine (strictly-parsed, non-dash) pre!=post pair proves the table is
+        live, even when EVERY leaf sub-item happens to land on a dash
+        (DB생명보험 KR0082, 처브라이프생명 KR0100: every quarter's real ②
+        effect zeroes 장수/해지/사업비/대재해위험 all the way to '-', leaving
+        zero strictly-parseable leaf diffs for _count_breakdown_subitem_diffs
+        even though 지급여력비율 202.37→361.04 in the same table proves it's
+        real — these two companies' entire history was silently dropped by
+        the leaf-only liveness check). Deliberately still strict (not the
+        dash-as-zero leaf helper): a dash in a headline %/amount row means
+        "not meaningful here", not zero, so NH농협손해 KR0032's genuinely-
+        inapplicable ③ table (every row incl. 지급여력비율/금액 totals dashed)
+        correctly still fails this check too."""
+        for row in t["table"][1:]:
+            if max(pre_idx, post_idx) >= len(row):
+                continue
+            nl = _normalise(row[0])
+            if not any(
+                _normalise(kw) in nl
+                for kw in ("지급여력비율", "지급여력금액", "지급여력기준금액")
+            ):
+                continue
+            pv = _parse_value(row[pre_idx])
+            pov = _parse_value(row[post_idx])
+            if pv is None or pov is None:
+                continue
+            if not _values_equal(pv, pov):
+                return True
+        return False
+
     breakdown_candidates: list[tuple[dict, int]] = []  # (table, diff_count)
     for t in tables:
         if _is_common_section(t["headings"]):
@@ -796,7 +838,7 @@ def _extract_post_values(
         if pre_idx is None or post_idx is None:
             continue
         diff = _count_breakdown_subitem_diffs(t, pre_idx, post_idx)
-        if diff > 0:
+        if diff > 0 or _table_has_live_headline_diff(t, pre_idx, post_idx):
             breakdown_candidates.append((t, diff))
 
     if not breakdown_candidates:
@@ -828,7 +870,7 @@ def _extract_post_values(
             if sub_label_hits < 3:
                 continue
             diff = _count_breakdown_subitem_diffs(t, pre_idx, post_idx)
-            if diff > 0:
+            if diff > 0 or _table_has_live_headline_diff(t, pre_idx, post_idx):
                 breakdown_candidates.append((t, diff))
         if breakdown_candidates:
             log.append(f"  {company_code} breakdown: recovered {len(breakdown_candidates)} candidate(s) via row-content fallback (heading missing)")
@@ -1035,6 +1077,7 @@ def _extract_post_values(
             try:
                 pre_v, post_v = out[item_no]
                 out[item_no] = (_fmt_amount(float(pre_v) * factor), _fmt_amount(float(post_v) * factor))
+                unit_fixed_items.add(item_no)
             except (TypeError, ValueError):
                 pass
 
@@ -1175,7 +1218,7 @@ def _extract_post_values(
         except (TypeError, ValueError):
             pass
 
-    return out, provenance, log
+    return out, provenance, log, unit_fixed_items
 
 
 # ---------------------------------------------------------------------------
@@ -1211,7 +1254,7 @@ def _process_period(
             for (c, q, item_no), row in index.items()
             if c == code and q == quarter
         }
-        post_map, provenance, dbg = _extract_post_values(tables, code, existing_values)
+        post_map, provenance, dbg, unit_fixed_items = _extract_post_values(tables, code, existing_values)
         log.extend(dbg)
 
         # 농협생명(KR0104) 2023.2Q · 하나생명(KR0097) 2023.2Q (amended 재제출본):
@@ -1348,7 +1391,7 @@ def _process_period(
             if md_unchanged and not force_unchanged:
                 company_equal += 1
                 continue
-            if md_unchanged:
+            if md_unchanged and item_no not in unit_fixed_items:
                 # No real transition effect on this item per *this* table —
                 # mirror the row's own already-established 값 rather than
                 # this table's own pre-column. A company can have a 공통적용/
@@ -1359,6 +1402,17 @@ def _process_period(
                 # value straight into 값_적용후 leaks the cross-table drift
                 # in as a fake "post-transition delta", tripping rule9/10's
                 # monotonicity check even though nothing actually changed.
+                #
+                # EXCEPT when this item was already UNIT-FIXed (rescaled by
+                # the vote mechanism above): a unit-fixed pre_v_md has
+                # already been reconciled against sibling items in the same
+                # table via a *different* signal (mutual consistency, e.g.
+                # item2+item3==item1) and is more trustworthy than a stale
+                # existing 값 that itself was never through that check
+                # (KR0082 DB생명보험: the ②표's '백만원' label is simply
+                # wrong for the whole table; items 29-35's existing 값 came
+                # from a *different* script/table and was never corrected,
+                # so mirroring it here silently undid the ×100 fix).
                 existing_v = row.get("값")
                 value_to_write = existing_v if existing_v not in (None, "") else post_v_md
             else:
