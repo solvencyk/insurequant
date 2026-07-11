@@ -583,27 +583,30 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
       
       // 보조축이 주축과 겹치면 보조축 범위를 조정
       let needsScaling = false;
+      let axisScaleFactor = 1, axisScaleOffset = 0; // 축 눈금을 원래 %로 역변환하기 위해 보관
       if (basicCapitalYMax >= solvencyYMin) {
         needsScaling = true;
         // 보조축 데이터를 스케일링하여 주축 최솟값보다 작게 만듦
         const originalRange = basicCapitalYMax - basicCapitalYMin;
         const newRange = maxAllowedBasicCapital - basicCapitalYMin;
-        
+
         if (originalRange > 0) {
           const scaleFactor = newRange / originalRange;
           const scaleOffset = basicCapitalYMin * (1 - scaleFactor);
-          
+          axisScaleFactor = scaleFactor;
+          axisScaleOffset = scaleOffset;
+
           // 데이터 스케일링
           for (let i = 0; i < reversedBasicCapitalRatioData.length; i++) {
             if (reversedBasicCapitalRatioData[i] !== null && !isNaN(reversedBasicCapitalRatioData[i])) {
               reversedBasicCapitalRatioData[i] = (reversedBasicCapitalRatioData[i] * scaleFactor) + scaleOffset;
             }
           }
-          
+
           // 기준선(50%)도 스케일링
           const scaledBasicCapitalReference = (basicCapitalReference * scaleFactor) + scaleOffset;
           basicCapitalYMax = maxAllowedBasicCapital;
-          
+
           // 스케일링된 기준선을 전역 변수로 저장 (annotation에서 사용)
           window.scaledBasicCapitalReference = scaledBasicCapitalReference;
         } else {
@@ -779,7 +782,7 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
               },
               ticks: {
                 callback: function(value) {
-                  return value.toFixed(1) + '%';
+                  return (((value - axisScaleOffset) / axisScaleFactor)).toFixed(1) + '%';
                 },
                 color: 'rgb(255, 99, 132)'
               },
@@ -965,6 +968,7 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
       // 보조축이 주축과 겹치면 축소 (윗 차트와 동일 패턴)
       let scaledBasicRef = basicReference;
       let scaledBasicData = [...basicRatioData];
+      let basicScaleFactor = 1, basicScaleOffset = 0; // 축 눈금을 원래 %로 역변환하기 위해 보관
       const maxAllowedB = sYMin * 0.98;
       if (bYMax >= sYMin) {
         const origRange = bYMax - bYMin;
@@ -975,6 +979,8 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
           scaledBasicData = basicRatioData.map(v => v == null ? null : v * sf + so);
           scaledBasicRef = basicReference * sf + so;
           bYMax = maxAllowedB;
+          basicScaleFactor = sf;
+          basicScaleOffset = so;
         }
       }
 
@@ -1072,7 +1078,7 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
               type: 'linear', position: 'right', beginAtZero: false,
               min: bYMin, max: bYMax,
               title: {display: true, text: '기본자본비율 (%)', color: 'rgb(255, 99, 132)'},
-              ticks: {callback: v => v.toFixed(0) + '%', color: 'rgb(255, 99, 132)'},
+              ticks: {callback: v => (((v - basicScaleOffset) / basicScaleFactor)).toFixed(0) + '%', color: 'rgb(255, 99, 132)'},
               grid: {drawOnChartArea: false}
             },
             x: {title: {display: true, text: '연도'}}
