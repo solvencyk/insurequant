@@ -85,10 +85,15 @@ def _split_row(line: str) -> list[str]:
 
 
 def _normalise(s: str) -> str:
-    """Strip whitespace/punctuation/Roman numerals for fuzzy label matching."""
+    """Strip whitespace/punctuation/Roman numerals for fuzzy label matching.
+
+    Includes both middle-dot variants: '·' (U+00B7 MIDDLE DOT) and '∙'
+    (U+2219 BULLET OPERATOR) — docling renders some companies' "장해∙질병
+    위험"/"장기재물∙기타위험" labels with the latter (KR0049 악사손해보험),
+    which silently failed every keyword match when only U+00B7 was stripped."""
     if s is None:
         return ""
-    return re.sub(r"[\s\(\)\[\]\.\,\:·\-\+\*Ⅰ-Ⅹⅰ-ⅸ㈜]+", "", s)
+    return re.sub(r"[\s\(\)\[\]\.\,\:·∙\-\+\*Ⅰ-Ⅹⅰ-ⅸ㈜]+", "", s)
 
 
 def _parse_value(raw: str) -> str | None:

@@ -50,7 +50,9 @@ def _md_period_to_quarter(p):
 
 
 def _norm(s):
-    return re.sub(r"[\s\(\)\[\]\.\,\:·\-\+\*Ⅰ-Ⅹⅰ-ⅸ㈜]+", "", s or "")
+    # Includes both middle-dot variants: '·' (U+00B7) and '∙' (U+2219
+    # BULLET OPERATOR, KR0049 악사손해보험 label rendering).
+    return re.sub(r"[\s\(\)\[\]\.\,\:·∙\-\+\*Ⅰ-Ⅹⅰ-ⅸ㈜]+", "", s or "")
 
 
 def _parse_value(raw):
@@ -142,6 +144,20 @@ def extract_mkt_subs(md_text):
             if v is not None:
                 out[item_no] = (v, unit)
                 break
+        else:
+            # Every value cell was a bare dash, not just unparseable —
+            # same convention as items 29-35's leaf sub-risks: a dash in a
+            # leaf market sub-risk row means the company discloses zero
+            # exposure to that specific risk, not "no data" (e.g. KR0004/
+            # KR0072 자산집중위험 '-'/'-' — genuinely zero concentration
+            # risk, not a missing table). Without this, item40's row never
+            # gets created at all and the parent(item19)-has-children-
+            # missing review flag never clears.
+            value_cells = cells[1:]
+            if value_cells and all(
+                c.strip().replace(",", "") in ("-", "─", "–", "—") for c in value_cells
+            ):
+                out[item_no] = ("0", unit)
     return out  # values are (raw_string, unit) pairs; caller converts to 억원
 
 

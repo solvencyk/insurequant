@@ -173,10 +173,15 @@ def _split_row(line: str) -> list[str]:
 
 
 def _normalise(s: str) -> str:
-    """Strip whitespace/punctuation/Roman numerals for fuzzy label matching."""
+    """Strip whitespace/punctuation/Roman numerals for fuzzy label matching.
+
+    Includes both middle-dot variants: '·' (U+00B7 MIDDLE DOT) and '∙'
+    (U+2219 BULLET OPERATOR) — docling renders some companies' "장해∙질병
+    위험"/"장기재물∙기타위험" labels with the latter (KR0049 악사손해보험),
+    which silently failed every keyword match when only U+00B7 was stripped."""
     if s is None:
         return ""
-    return re.sub(r"[\s\(\)\[\]\.\,\:·\-\+\*Ⅰ-Ⅹⅰ-ⅸ㈜]+", "", s)
+    return re.sub(r"[\s\(\)\[\]\.\,\:·∙\-\+\*Ⅰ-Ⅹⅰ-ⅸ㈜]+", "", s)
 
 
 def _parse_value(raw: str) -> str | None:
@@ -359,7 +364,51 @@ def _scan_tables_with_context(md_text: str) -> list[dict]:
                 if body:
                     headings_since_last_table.append(body)
     _flush()
-    return tables
+    return _merge_split_breakdown_tables(tables)
+
+
+def _merge_split_breakdown_tables(tables: list[dict]) -> list[dict]:
+    """Docling sometimes splits one logical ②breakdown table into two
+    consecutive markdown tables at a blank line (KR0005 흥국화재/KR1010/
+    KR0049 등): the first keeps the header + headline rows (지급여력비율
+    ... 생명·장기손해보험위험액), the second starts straight into sub-item
+    data rows (사망위험, 장수위험, ...) with no heading and no header row of
+    its own — its own ``headings`` list comes back empty (the blank line
+    resets ``headings_since_last_table`` same as always; only a table
+    immediately preceded by another table, with nothing of its own to
+    claim, is a split-continuation candidate). Merge any such table into
+    the immediately preceding one so pre_idx/post_idx (derivable only from
+    the first table's real header) apply across the combined row set —
+    otherwise the continuation is invisible to _is_breakdown_section's
+    candidate search, which requires non-empty headings to match at all.
+
+    Deliberately requires the CONTINUATION's own headings to be empty
+    (not just non-empty-but-different) — this is what distinguishes "no
+    heading of its own, docling split artifact" from a genuine next
+    section that happens to follow immediately (e.g. ③ 주식위험 경과조치,
+    which always carries its own heading and must NOT merge into ②'s
+    table)."""
+    merged: list[dict] = []
+    for t in tables:
+        if (
+            merged
+            and not t["headings"]
+            and merged[-1]["headings"]
+            and merged[-1]["table"]
+            and t["table"]
+        ):
+            first_cell = t["table"][0][0] if t["table"][0] else ""
+            looks_like_header = any(
+                kw in first_cell.replace(" ", "") for kw in ("구분", "적용")
+            )
+            if not looks_like_header:
+                merged[-1] = {
+                    **merged[-1],
+                    "table": merged[-1]["table"] + t["table"],
+                }
+                continue
+        merged.append(t)
+    return merged
 
 
 _NEGATION_TOKENS = ("적용하지않아", "미적용", "동일함", "동일하므로", "동일한")
@@ -642,6 +691,18 @@ def _pick_pre_post_columns(header: list[str]) -> tuple[int | None, int | None]:
             post_idx = i
         elif "적용전" in c or "적용 전" in cell:
             pre_idx = i
+    if post_idx is None and pre_idx is not None:
+        # Fallback 0: docling truncated the trailing '후' off the post
+        # header (KR0070 에이비엘생명 2023.4Q ②표: '경과조치 적용 전' /
+        # '경과조치 적용' — the second cell should read '...적용 후' but
+        # lost the last character). Any remaining cell to the right of
+        # pre_idx that still mentions 적용/경과조치 but not 전 is the
+        # truncated post column.
+        for i in range(pre_idx + 1, len(header)):
+            c = header[i].replace(" ", "")
+            if c and "전" not in c and ("적용" in c or "경과조치" in c):
+                post_idx = i
+                break
     if post_idx is None:
         return None, None
     if pre_idx is None:
@@ -827,7 +888,18 @@ def _extract_post_values(
 
     breakdown_candidates: list[tuple[dict, int]] = []  # (table, diff_count)
     for t in tables:
-        if _is_common_section(t["headings"]):
+        if _is_common_section(t["headings"]) and not _is_breakdown_section(t["headings"]):
+            # Headings accumulate across every '(1) 공통적용'/'(2) 선택적용'/
+            # '① 자본감소분'/'② 장수위험...' marker seen since the last table
+            # boundary (KR1010 교보라이프플래닛 2023.2Q: all four land on the
+            # SAME physical table when nothing but blank lines separates
+            # them from it), so a table can legitimately satisfy both
+            # _is_common_section and _is_breakdown_section at once. Only
+            # exclude here when it's common-only — a table that also
+            # carries the more specific ②-style markers IS the breakdown
+            # table (its content confirms this: 지급여력비율 175.40->260.01
+            # sub-item rows sit right there), and dropping it left every
+            # 29-35 child None despite a live headline diff.
             continue
         if _is_market_or_rate_section(t["headings"]):
             continue
@@ -899,10 +971,32 @@ def _extract_post_values(
         header = chosen_breakdown["table"][0]
         pre_idx, post_idx = _pick_pre_post_columns(header)
         unit = chosen_breakdown["unit"]
+        pending_merged_item: int | None = None
         for row in chosen_breakdown["table"][1:]:
             if max(pre_idx, post_idx) >= len(row):
                 continue
             label = row[0]
+            if pending_merged_item is not None:
+                # The merged-label row below skipped its own value cells
+                # (they belong to the parent, item17); docling pushed the
+                # sub-item's real value down into the NEXT row instead,
+                # which renders with a blank label (KR0070 2023.4Q: row
+                # '생명·장기손해보험 위험액 사망위험 | 798,006 | 486,104' is
+                # item17's pair, the following blank-label row
+                # '| 92,888 | 92,888' is item29's true pair).
+                item_no, pending_merged_item = pending_merged_item, None
+                if not label.strip():
+                    pre_v = _parse_leaf_subrisk_value(row[pre_idx])
+                    post_v = _parse_leaf_subrisk_value(row[post_idx])
+                    if pre_v is not None and post_v is not None and item_no not in out:
+                        out[item_no] = (
+                            _normalise_unit(pre_v, unit),
+                            _normalise_unit(post_v, unit),
+                        )
+                        provenance[item_no] = "breakdown"
+                    continue
+                # Not blank after all — fall through and process this row
+                # normally below (don't lose it).
             item_no = _match_row_label(label, BREAKDOWN_ROW_MAP)
             if item_no is None:
                 continue
@@ -915,7 +1009,9 @@ def _extract_post_values(
                 # item29 breaks the mmult identity. A clean sub-item label
                 # (사망위험/장수위험/etc.) never itself contains "위험액", so
                 # its presence here is the merge signal; skip rather than
-                # apply a value we know is wrong.
+                # apply a value we know is wrong (unless recovered from the
+                # next blank-label row above).
+                pending_merged_item = item_no
                 continue
             if item_no in out and item_no not in _RATIO_TRIAD_ITEMS:
                 # The 공통적용 table already gave us this row — keep its

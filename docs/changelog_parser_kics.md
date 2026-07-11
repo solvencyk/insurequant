@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-11 (3차) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-11 (4차) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,58 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-11 (4차) — owner "다시 잡으라" 재지시: post_transition/market 스크립트 실버그 6개 발견·수정, 추출갭 52->10
+
+3차에서 남겨둔 40셀을 "다음 라운드"로 미루려 했으나 owner가 즉시 재지시("세부위험 결측 건을 다시 잡으라고
+몇번째 얘기하는거냐") — 멈추지 않고 계속 파고들어 `fill_post_transition_to_disclosure.py`(②breakdown
+표에서 값_적용후 추출)와 `fill_market_subitems_to_disclosure.py`(items 36-40)에서 총 6개 실버그 추가 발견·수정.
+
+**`fill_post_transition_to_disclosure.py` (4개)**:
+1. `_pick_pre_post_columns`: 헤더 "경과조치 적용 후"의 "후"가 docling에서 잘려 "경과조치 적용"만 남으면
+   post_idx를 못 찾아 표 전체가 breakdown 후보에서 통째로 탈락(KR0070 에이비엘생명 2023.4Q) — pre_idx
+   바로 옆 잔여 컬럼을 post_idx로 잡는 폴백 추가.
+2. `_scan_tables_with_context`: docling이 하나의 논리적 ②표를 헤드라인행(표1)+세부항목행(표2) 두 개의
+   markdown 표로 쪼개면, 표2는 자기 헤딩이 없어 `_is_breakdown_section`이 영구적으로 매칭 못함(KR0005
+   흥국화재 2023.3Q: item17후는 채워지는데 29-35후는 전부 None). `_merge_split_breakdown_tables` 신설 —
+   헤딩 없는 표를 직전 표에 흡수해 pre_idx/post_idx가 합쳐진 행셋 전체에 적용되도록.
+3. 위 병합 직후 발견한 파생 케이스: KR0070의 "생명·장기손해보험위험액 사망위험"처럼 부모+item29 라벨이
+   한 셀에 병합되면 그 행의 값은 실제로 부모(item17) 것이고 item29 진짜 값은 다음 blank-label 행에
+   있는데, 기존 안전장치(`위험액 in label`이면 skip)가 정직하게 버리기만 하고 복구는 안 했음 —
+   `fill_subitems_to_disclosure.py`의 `pending_death_continuation`과 동일한 사상으로 다음 행 복구 추가.
+4. `_is_common_section`과 `_is_breakdown_section`가 동시에 True인 표(헤딩이 "(1)공통적용"·"(2)선택적용"·
+   "①자본감소분"·"②장수위험..." 넷 다 누적된 경우, KR1010 교보라이프플래닛 2023.2Q — 사이에 빈 줄만
+   있고 다른 헤딩이 안 끼어들면 계속 누적됨)가 "common이면 무조건 배제" 로직에 걸려 breakdown 후보에서
+   탈락 — "common이면서 breakdown이 아닐 때만" 배제로 좁힘.
+
+**공통 버그 (3개 스크립트 전부, `fill_subitems_to_disclosure.py`/`fill_post_transition_to_disclosure.py`/
+`fill_market_subitems_to_disclosure.py`)**:
+5. `_normalise`/`_norm`이 "·"(U+00B7 MIDDLE DOT)만 스트립하고 "∙"(U+2219 BULLET OPERATOR)는 문자 클래스에
+   없어서, 이 문자로 라벨을 렌더링하는 회사(KR0049 악사손해보험: "장해∙질병위험"·"장기재물∙기타위험")는
+   전 항목 키워드 매칭이 통째로 실패 — 세 스크립트 전부 정규식에 "∙" 추가.
+
+**`fill_market_subitems_to_disclosure.py` (1개)**:
+6. items 36-40(시장위험 하위)에는 `fill_subitems_to_disclosure.py`가 이미 갖고 있던 dash-as-zero
+   컨벤션이 아예 이식돼 있지 않았음(별도 스크립트라 각자 진화) — 값 셀 전부가 bare dash면 0으로 행 생성
+   하도록 추가(KR0004/KR0072 등 자산집중위험액="-" 다수 케이스).
+
+**검증**: 각 수정 직후 `--dry-run` 선행 → 실적용 → `fill_subitems_to_disclosure.py --refresh` →
+`fill_market_subitems_to_disclosure.py` → `fill_post_transition_to_disclosure.py` 순으로 3-스크립트
+파이프라인 전체 재실행(항목 하나 고치면 하위 스크립트가 그 위에서 다시 돌아야 연쇄 반영되는 구조) —
+KR0005/KR0070/KR1010/KR0049/KR0094/KR0087/KR0099/KR0051 8개사 이상 raw로 개별 교차검증. KR0097
+2024.1Q item32(장기재물·기타위험액) 1셀은 스크립트로도 못 잡는 잔차로 확인(다른 항목들은 이미 별도
+OCR/gold 경로로 채워져 있는데 이 항목만 누락된 것으로 추정) — raw에서 dash 직접 확인 후 값 0/후 0으로
+수동 삽입.
+
+**결과**: **적용후 세부위험 추출갭 52 -> 10**(81% 해소, 4차 시작 시점 40 대비도 75% 추가 해소).
+core RED **14 불변**(회귀 0, 오늘 시작 시점과 동일 pre-existing 13건 + KR1098 동시세션 WIP 1건).
+GREEN 4680(오늘 시작)->4697. rate-sensitivity 게이트 재확인 RED=0 불변.
+**잔여 10셀**(KR0104 2023.1Q 부모 있는데 자식 7개 전부 결측 등)은 원인이 매 라운드 달랐던 것처럼
+개별 raw 조사가 필요한 소규모 잔차 — 다음 라운드 대상.
+
+`kics_disclosure.json`/`templates/kics_disclosure.json` 동기화 완료.
 
 ---
 

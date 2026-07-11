@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-11(3차) (owner 재확인 요청 — fill_subitems 4개 실버그 발견·수정, 추출갭 52->40) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-11(4차) (owner "세부위험 결측 다시 잡아" 재지시 — fill_post_transition/fill_market 6개 실버그 발견·수정, 추출갭 52->10) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,38 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-11(4차) — owner "세부위험 결측 건을 다시 잡으라고 몇번째 얘기하는거냐" 재지시, 잔여 40셀 계속
+착수 → `fill_post_transition_to_disclosure.py`/`fill_market_subitems_to_disclosure.py` 실버그 6개
+추가 발견·수정, 추출갭 52->10(81% 해소).** 3차에서 "다음 라운드"로 미뤘던 40셀을 owner가 즉시 재지시,
+멈추지 않고 계속 파고들어 발견:
+4. `_pick_pre_post_columns`: 헤더 "경과조치 적용 후"의 "후"가 docling에서 잘려 "경과조치 적용"만 남으면
+   post_idx를 못 찾아 표 전체가 후보에서 탈락(KR0070 2023.4Q) — pre_idx 옆 잔여컬럼 폴백 추가.
+5. `_scan_tables_with_context`: docling이 ②표를 헤드라인행(표1)+세부항목행(표2) 두 markdown 표로
+   쪼개면 표2는 헤딩이 없어 `_is_breakdown_section`이 영구 매칭 불가(KR0005 흥국화재) — 후속 병합
+   함수(`_merge_split_breakdown_tables`) 신설: 헤딩 없는 표를 직전 표에 흡수.
+6. 위 병합만으로 KR0070의 "생명·장기손해보험위험액 사망위험" 병합라벨(항목17+29가 한 셀에 뭉침, 값은
+   항목17 것) 케이스에서 항목29 실값이 다음 blank-label 행에 있는데 스킵되던 것 발견 → death-continuation
+   패턴(fill_subitems_to_disclosure의 pending_death_continuation과 동일 사상)을 이식.
+7. `_is_common_section`/`_is_breakdown_section` 둘 다 True인 표(헤딩이 "①공통적용"+"②장수위험..." 둘 다
+   누적된 경우, KR1010)가 공통섹션 배제 로직에 걸려 breakdown 후보에서 탈락 — "common인데 breakdown도
+   아니면" 배제로 좁힘.
+8. 3개 스크립트(`fill_subitems_to_disclosure.py`/`fill_post_transition_to_disclosure.py`/
+   `fill_market_subitems_to_disclosure.py`) 전부 `_normalise`가 "·"(U+00B7)만 스트립하고 "∙"(U+2219
+   BULLET OPERATOR)는 놓쳐 "장해∙질병위험"/"장기재물∙기타위험"(KR0049 악사손해, 이 문자로 렌더링) 라벨
+   매칭 전체 실패 — 둘 다 스트립하도록 정규식 확장.
+9. `fill_market_subitems_to_disclosure.py`: items 36-40에는 `fill_subitems_to_disclosure.py`의
+   dash-as-zero 컨벤션이 아예 없었음(별도 스크립트라 이식이 안 되어 있었음) — 추가.
+
+4~9번 수정 후 `fill_subitems_to_disclosure.py --refresh --all-periods` →
+`fill_market_subitems_to_disclosure.py --all-periods` → `fill_post_transition_to_disclosure.py
+--all-periods` 순 재실행(각 라운드 diff를 KR0005/KR0070/KR1010/KR0049/KR0097 등 6개사 이상 raw로
+교차검증). **적용후 세부위험 추출갭 52 -> 10**(81% 해소). KR0097 2024.1Q item32는 스크립트로도 못 잡는
+1셀(별도 OCR/gold 경로로 채워졌던 행에서 이 항목만 누락된 걸로 추정, raw dash 확인 후 수동 삽입).
+core RED **14 불변**(회귀 0). GREEN 4680(오늘 시작 시점)->4697. rate-sensitivity 게이트 재확인 RED=0.
+**잔여 10셀**: KR0104 2023.1Q(부모 있는데 자식 7개 전부 결측, 이미 기록된 소스 자체 이미지스캔/원천
+미공시 의심) 등 라운드마다 원인이 달랐던 것처럼 나머지도 개별 raw 조사 필요한 소규모 잔차로 확인 —
+이번 라운드도 continue, stop 아님(owner 지시 준수).
 
 **2026-07-11(3차) — owner "진짜 다 끝났냐" 재확인 요청, 재검증 중 `fill_subitems_to_disclosure.py` 실버그 4개
 추가 발견·수정.** 티켓 resolved 처리 후 owner가 신뢰 못 하고 재확인 지시 → 이전 라운드에서 SKIP으로
