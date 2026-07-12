@@ -587,6 +587,59 @@ def _transition_identities_after(records: list[dict]) -> list[tuple]:
     return fails
 
 
+# 적용후 부모→자식 완전성 census 맵. 적용전 _PARENT_CHILD_ITEMS(하위위험 17·19만)에 더해
+# 요구자본 구성(15→16~21)까지 포함 — 적용후 요구자본 부분충전(분산효과16·신용20·운영21후 결측)이
+# 적용전 census(하위위험만)와 적용후 identity(결측셀 skip) 양쪽으로 새던 사각을 닫는다.
+_PARENT_CHILD_AFTER = {
+    15: (16, 17, 18, 19, 20, 21),      # 기본요구자본 → 분산효과 + 5대 위험액
+    17: (29, 30, 31, 32, 33, 34, 35),  # 생명장기 → 7 하위위험(사망~대재해)
+    19: (36, 37, 38, 39, 40),          # 시장 → 5 하위위험(금리~자산집중)
+}
+
+
+def _parent_present_child_incomplete_after(records: list[dict]) -> list[tuple]:
+    """적용후(값_적용후) 부모 present인데 하위 결측 = 적용후 census (적용전 _parent_present_child_incomplete
+    미러, owner 2026-07-12 '적용후도 적용전 검증로직 동일 적용'). 기대 자식 = 같은 셀에서 '적용전이
+    present & material(≥floor)'인 항목 (적용전이 공시하는 항목은 적용후 표도 동일 구조로 공시해야 함).
+    결측 = 파싱갭: 분산효과후 파생누락 / 신용·운영후 carry-forward누락 / 시장·생명장기후 재추출필요.
+    raw 도출불가 documented exception(_AFTER_SUBRISK_NOT_DISCLOSED)만 제외. RED(blocking).
+    반환: (code, quarter, parent, name, missing_children)."""
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
+    out = []
+    for (c, q), m in sorted(byq.items()):
+        if c not in _TRANSITION_APPLIERS:
+            continue
+        if (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
+            continue  # raw 도출불가 documented exception
+        for p, kids in _PARENT_CHILD_AFTER.items():
+            post_p = m.get(p, (None, None))[1]
+            if post_p is None or abs(post_p) < 1.0:
+                continue  # 부모후 없음/0 → 적용후 표 부재(별개 갭, transition MISSING 소관)
+            expected = [k for k in kids
+                        if (m.get(k, (None, None))[0] is not None
+                            and abs(m.get(k, (None, None))[0]) >= _CHILD_MATERIAL_FLOOR)]
+            missing = [k for k in expected if m.get(k, (None, None))[1] is None]
+            if missing:
+                out.append((c, q, p, name.get(c, c), tuple(missing)))
+    return out
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8")  # Windows console defaults to cp949
@@ -681,6 +734,11 @@ def main() -> int:
         {"code": c, "quarter": q, "name": n, "rule": rule,
          "expected_after": e, "disclosed_after": a, "diff": diff}
         for c, q, n, rule, e, a, diff in after_ident_fails
+    ]
+    after_incomplete = _parent_present_child_incomplete_after(records)
+    report["parent_present_child_incomplete_after"] = [
+        {"code": c, "quarter": q, "parent_item": p, "name": n, "missing_children": list(miss)}
+        for c, q, p, n, miss in after_incomplete
     ]
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     # stable-name 최신 포인터: glob 정렬 함정(stale report_latest.json) 방지 — 매 실행 fresh 덮어쓰기.
@@ -782,6 +840,18 @@ def main() -> int:
             print(f"    ... +{len(after_ident_fails) - 25} more")
     else:
         print("적용후 항등식 위반: 0")
+    if after_incomplete:
+        pc = Counter(p for _, _, p, _, _ in after_incomplete)
+        PLBL = {15: "요구자본(16~21)", 17: "생명장기(29~35)", 19: "시장(36~40)"}
+        print(f"적용후 하위 census 결측 (부모후 present·기대자식후 결측, RED): {len(after_incomplete)} "
+              f"{{{', '.join(f'{PLBL.get(p,p)}:{n}' for p, n in sorted(pc.items()))}}}")
+        for c, q, p, n, miss in after_incomplete[:30]:
+            kids = ", ".join(f"item{k}" for k in miss)
+            print(f"    {q} {c} {n}: 부모item{p}후 present인데 {kids}후 결측 → 적용후 부분충전")
+        if len(after_incomplete) > 30:
+            print(f"    ... +{len(after_incomplete) - 30} more")
+    else:
+        print("적용후 하위 census 결측: 0")
     print("RED failures by rule:")
     for rule_id, cnt in sorted(fail_by_rule.items(), key=lambda x: (-x[1], x[0])):
         print(f"  rule {rule_id}: {cnt}")
@@ -803,7 +873,8 @@ def main() -> int:
             )
 
     return 2 if (red > 0 or census_red > 0 or parent_child or partial_child
-                 or trans_after or item12_copy or mmult_mismatch or after_ident_fails) else 0
+                 or trans_after or item12_copy or mmult_mismatch or after_ident_fails
+                 or after_incomplete) else 0
 
 
 if __name__ == "__main__":

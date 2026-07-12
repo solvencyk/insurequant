@@ -7,7 +7,22 @@ Validation-only history. Cross-stage changes also keep a 1-line cross-reference 
 
 ---
 
-## 2026-07-12 — 적용후 전수검증 완결 + publish gate-clear
+## 2026-07-12 (2) — 적용후 요구자본 census 신설 (blind spot 정정)
+
+**앞 항목의 "gate-clear"는 조기판정이었음.** owner가 아이엠라이프 2025.4Q 적용후 신용·분산효과 결측을
+지적 → 적용후 게이트가 mmult(item17/19 leaf)만 보고 **요구자본 구성(15→16~21) census가 없었음**을
+확인. 적용후 항등식(R6)은 결측셀을 skip → 부분충전이 양쪽으로 샘.
+
+- **신설 `_parent_present_child_incomplete_after`**(적용전 census 미러): 부모후 present인데 '적용전
+  present&material' 자식후 결측=RED(blocking). 부모맵 `{15:(16~21),17:(29~35),19:(36~40)}`. 게이트
+  exit-code·print 배선.
+- **적발 322 항목셀**(149 부모·분기): DERIVE 96(분산효과 파생)·CARRY 206(신용/운영/시장하위 후=전
+  carry-forward)·EXTRACT 20(raw 재추출, 14 회사·분기). 분류·근거 `data/_derived/after_census_gaps.json`.
+- parser 발주 `inbox/parser/20260712T0230Z__...__after_requirement_census_322cells.md`.
+- **현 게이트: 적용후 census 149 RED로 정상 차단**(exit 2). parser fill 후 0 확인 → 재publish.
+- carry-forward 안전성 검증: 신용 후=전 217/218·운영 213/213·분산효과 항등식 119/119 성립.
+
+## 2026-07-12 (1) — 적용후 전수검증 완결 + publish gate-clear [정정됨 → (2) 참조]
 
 owner 지시 "모든 검증룰은 적용전후 동일 적용" 대응. prepush RED=0 달성(publish 가능).
 

@@ -1,0 +1,2909 @@
+{
+  "generated": "20260712T113922Z",
+  "total_cells": 322,
+  "by_fix_class": {
+    "CARRY": 206,
+    "EXTRACT": 20,
+    "DERIVE": 96
+  },
+  "records": [
+    {
+      "code": "KR0002",
+      "quarter": "2023.2Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9837.51) → 하위후=전(2007.35)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.2Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9837.51) → 하위후=전(8933.68)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.2Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9837.51) → 하위후=전(857.95)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.2Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9837.51) → 하위후=전(2434.8)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.3Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10388.97) → 하위후=전(2648.91)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.3Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10388.97) → 하위후=전(9176.16)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.3Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10388.97) → 하위후=전(921.59)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.3Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10388.97) → 하위후=전(1874.99)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10507.38) → 하위후=전(2444.73)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10507.38) → 하위후=전(9461.33)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10507.38) → 하위후=전(793.94)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2023.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10507.38) → 하위후=전(2195.8)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.1Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(11685.51) → 하위후=전(3630.57)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.1Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(11685.51) → 하위후=전(10033.2)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.1Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(11685.51) → 하위후=전(793.81)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.1Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(11685.51) → 하위후=전(2038.22)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.2Q",
+      "name": "한화손해보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=10912.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.3Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10688.76) → 하위후=전(2786.41)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.3Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10688.76) → 하위후=전(9303.3)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.3Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10688.76) → 하위후=전(1179.75)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.3Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(10688.76) → 하위후=전(1813.51)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(11208.22) → 하위후=전(1613.62)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(11208.22) → 하위후=전(10032.33)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(11208.22) → 하위후=전(2100.55)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2024.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(11208.22) → 하위후=전(1219.36)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2025.1Q",
+      "name": "한화손해보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=12430.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2025.2Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(12425.17) → 하위후=전(2436.66)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2025.2Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(12425.17) → 하위후=전(10897.05)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2025.2Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(12425.17) → 하위후=전(2146.38)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2025.2Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(12425.17) → 하위후=전(1555.58)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2025.3Q",
+      "name": "한화손해보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=11815.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2025.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(12078.76) → 하위후=전(1237.76)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2025.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(12078.76) → 하위후=전(11225.87)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2025.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(12078.76) → 하위후=전(1894.89)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2025.4Q",
+      "name": "한화손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(12078.76) → 하위후=전(1721.25)"
+    },
+    {
+      "code": "KR0002",
+      "quarter": "2026.1Q",
+      "name": "한화손해보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=13320.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.1Q",
+      "name": "롯데손해보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=9160.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8914.12) → 하위후=전(2083.53)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8914.12) → 하위후=전(8151.53)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8914.12) → 하위후=전(353.91)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8914.12) → 하위후=전(905.91)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8914.12) → 하위후=전(110.37)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.3Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8022.16) → 하위후=전(1854.03)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.3Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8022.16) → 하위후=전(7339.84)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.3Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8022.16) → 하위후=전(353.96)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.3Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8022.16) → 하위후=전(993.55)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.3Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8022.16) → 하위후=전(223.34)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8627.03) → 하위후=전(2332.74)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8627.03) → 하위후=전(7640.14)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8627.03) → 하위후=전(425.94)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8627.03) → 하위후=전(2155.85)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2023.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8627.03) → 하위후=전(98.6)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.1Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9728.94) → 하위후=전(2228.9)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.1Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9728.94) → 하위후=전(8915.84)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.1Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9728.94) → 하위후=전(426.44)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.1Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9728.94) → 하위후=전(1917.93)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.1Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9728.94) → 하위후=전(150.58)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9533.06) → 하위후=전(2476.68)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9533.06) → 하위후=전(8440.31)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9533.06) → 하위후=전(752.23)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9533.06) → 하위후=전(1024.37)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(9533.06) → 하위후=전(48.68)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.3Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8462.01) → 하위후=전(2470.21)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.3Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8462.01) → 하위후=전(7288.51)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.3Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8462.01) → 하위후=전(777.14)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.3Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8462.01) → 하위후=전(964.08)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.3Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8462.01) → 하위후=전(44.15)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8081.18) → 하위후=전(2230.79)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8081.18) → 하위후=전(6961.0)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8081.18) → 하위후=전(429.98)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2024.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8081.18) → 하위후=전(2836.86)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.1Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8089.22) → 하위후=전(2645.1)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.1Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8089.22) → 하위후=전(6702.75)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.1Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8089.22) → 하위후=전(430.82)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.1Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8089.22) → 하위후=전(2715.08)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7357.66) → 하위후=전(1996.8)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7357.66) → 하위후=전(6432.33)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7357.66) → 하위후=전(423.14)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.2Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7357.66) → 하위후=전(2184.12)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.3Q",
+      "name": "롯데손해보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=6822.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(6456.25) → 하위후=전(1187.87)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(6456.25) → 하위후=전(6023.75)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(6456.25) → 하위후=전(349.64)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2025.4Q",
+      "name": "롯데손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(6456.25) → 하위후=전(1654.22)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2026.1Q",
+      "name": "롯데손해보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2026.1Q",
+      "name": "롯데손해보험",
+      "parent": 15,
+      "child": 17,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=15752.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2026.1Q",
+      "name": "롯데손해보험",
+      "parent": 15,
+      "child": 18,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=622.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2026.1Q",
+      "name": "롯데손해보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=6708.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2026.1Q",
+      "name": "롯데손해보험",
+      "parent": 15,
+      "child": 20,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(2962.0)"
+    },
+    {
+      "code": "KR0003",
+      "quarter": "2026.1Q",
+      "name": "롯데손해보험",
+      "parent": 15,
+      "child": 21,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(3572.0)"
+    },
+    {
+      "code": "KR0004",
+      "quarter": "2023.1Q",
+      "name": "예별손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3701.04) → 하위후=전(2698.84)"
+    },
+    {
+      "code": "KR0004",
+      "quarter": "2023.1Q",
+      "name": "예별손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3701.04) → 하위후=전(1892.03)"
+    },
+    {
+      "code": "KR0004",
+      "quarter": "2023.1Q",
+      "name": "예별손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3701.04) → 하위후=전(111.12)"
+    },
+    {
+      "code": "KR0004",
+      "quarter": "2023.1Q",
+      "name": "예별손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3701.04) → 하위후=전(27.92)"
+    },
+    {
+      "code": "KR0004",
+      "quarter": "2023.3Q",
+      "name": "예별손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3270.57) → 하위후=전(1937.85)"
+    },
+    {
+      "code": "KR0004",
+      "quarter": "2023.3Q",
+      "name": "예별손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3270.57) → 하위후=전(2168.89)"
+    },
+    {
+      "code": "KR0004",
+      "quarter": "2023.3Q",
+      "name": "예별손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3270.57) → 하위후=전(39.45)"
+    },
+    {
+      "code": "KR0004",
+      "quarter": "2023.3Q",
+      "name": "예별손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3270.57) → 하위후=전(283.46)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3414.97) → 하위후=전(1020.57)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3414.97) → 하위후=전(2573.42)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3414.97) → 하위후=전(974.52)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3414.97) → 하위후=전(213.93)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.3Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3646.68) → 하위후=전(1525.43)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.3Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3646.68) → 하위후=전(2480.05)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.3Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3646.68) → 하위후=전(970.62)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.3Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3646.68) → 하위후=전(203.58)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.4Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4298.53) → 하위후=전(2359.06)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.4Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4298.53) → 하위후=전(2508.26)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.4Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4298.53) → 하위후=전(993.72)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2023.4Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4298.53) → 하위후=전(337.47)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2024.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4275.21) → 하위후=전(2191.54)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2024.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4275.21) → 하위후=전(2611.86)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2024.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4275.21) → 하위후=전(1027.76)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2024.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4275.21) → 하위후=전(385.81)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2024.4Q",
+      "name": "NH농협손해보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=5046.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2025.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4602.05) → 하위후=전(2635.85)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2025.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4602.05) → 하위후=전(2810.52)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2025.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4602.05) → 하위후=전(716.29)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2025.2Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4602.05) → 하위후=전(292.16)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2025.4Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3273.63) → 하위후=전(502.38)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2025.4Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3273.63) → 하위후=전(2844.47)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2025.4Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3273.63) → 하위후=전(749.28)"
+    },
+    {
+      "code": "KR0032",
+      "quarter": "2025.4Q",
+      "name": "NH농협손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(3273.63) → 하위후=전(443.93)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(395.91) → 하위후=전(129.42)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(395.91) → 하위후=전(16.68)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(395.91) → 하위후=전(174.03)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(395.91) → 하위후=전(212.78)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(395.91) → 하위후=전(140.87)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.3Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(389.29) → 하위후=전(128.74)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.3Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(389.29) → 하위후=전(11.71)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.3Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(389.29) → 하위후=전(164.34)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.3Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(389.29) → 하위후=전(210.76)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.3Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(389.29) → 하위후=전(146.5)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(377.89) → 하위후=전(122.12)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(377.89) → 하위후=전(11.71)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(377.89) → 하위후=전(162.65)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(377.89) → 하위후=전(204.38)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2023.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(377.89) → 하위후=전(141.51)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(355.04) → 하위후=전(132.24)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(355.04) → 하위후=전(8.87)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(355.04) → 하위후=전(155.82)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(355.04) → 하위후=전(186.68)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(355.04) → 하위후=전(108.14)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(486.31) → 하위후=전(307.0)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(486.31) → 하위후=전(8.87)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(486.31) → 하위후=전(151.18)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(486.31) → 하위후=전(203.88)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(486.31) → 하위후=전(81.9)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2025.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(524.43) → 하위후=전(347.59)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2025.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(524.43) → 하위후=전(8.87)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2025.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(524.43) → 하위후=전(153.47)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2025.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(524.43) → 하위후=전(212.24)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2025.2Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(524.43) → 하위후=전(66.39)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2025.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(603.86) → 하위후=전(408.74)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2025.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(603.86) → 하위후=전(112.54)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2025.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(603.86) → 하위후=전(167.91)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2025.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(603.86) → 하위후=전(197.35)"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2025.4Q",
+      "name": "악사손해보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(603.86) → 하위후=전(72.2)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2023.1Q",
+      "name": "에이비엘생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2023.4Q",
+      "name": "에이비엘생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2024.1Q",
+      "name": "에이비엘생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.1Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5651.17) → 하위후=전(660.71)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.1Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5651.17) → 하위후=전(4859.7)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.1Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5651.17) → 하위후=전(1426.85)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.1Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5651.17) → 하위후=전(1577.94)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.2Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5412.42) → 하위후=전(245.45)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.2Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5412.42) → 하위후=전(4800.1)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.2Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5412.42) → 하위후=전(1401.84)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.2Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5412.42) → 하위후=전(1638.85)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.3Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5828.24) → 하위후=전(293.81)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.3Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5828.24) → 하위후=전(5224.45)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.3Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5828.24) → 하위후=전(1407.67)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.3Q",
+      "name": "에이비엘생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(5828.24) → 하위후=전(1735.11)"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2025.4Q",
+      "name": "에이비엘생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0070",
+      "quarter": "2026.1Q",
+      "name": "에이비엘생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2023.2Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2023.3Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2023.4Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2024.2Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2024.3Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2024.3Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 21,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(824.0)"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2025.1Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2025.2Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2025.3Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2025.4Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2026.1Q",
+      "name": "흥국생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2023.1Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2023.2Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2023.3Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2023.4Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2024.1Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2024.2Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2024.3Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2024.4Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2025.1Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2025.2Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2025.3Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2025.4Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2026.1Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2026.1Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 20,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(2697.0)"
+    },
+    {
+      "code": "KR0072",
+      "quarter": "2026.1Q",
+      "name": "케이디비생명보험",
+      "parent": 15,
+      "child": 21,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(627.0)"
+    },
+    {
+      "code": "KR0073",
+      "quarter": "2026.1Q",
+      "name": "교보생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0073",
+      "quarter": "2026.1Q",
+      "name": "교보생명보험",
+      "parent": 15,
+      "child": 17,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=57752.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0073",
+      "quarter": "2026.1Q",
+      "name": "교보생명보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=54674.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0073",
+      "quarter": "2026.1Q",
+      "name": "교보생명보험",
+      "parent": 15,
+      "child": 20,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(25686.0)"
+    },
+    {
+      "code": "KR0073",
+      "quarter": "2026.1Q",
+      "name": "교보생명보험",
+      "parent": 15,
+      "child": 21,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(5136.0)"
+    },
+    {
+      "code": "KR0076",
+      "quarter": "2023.1Q",
+      "name": "아이엠라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0076",
+      "quarter": "2025.1Q",
+      "name": "아이엠라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0076",
+      "quarter": "2025.2Q",
+      "name": "아이엠라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0076",
+      "quarter": "2025.3Q",
+      "name": "아이엠라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0076",
+      "quarter": "2025.4Q",
+      "name": "아이엠라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0076",
+      "quarter": "2025.4Q",
+      "name": "아이엠라이프생명보험",
+      "parent": 15,
+      "child": 20,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(906.0)"
+    },
+    {
+      "code": "KR0076",
+      "quarter": "2025.4Q",
+      "name": "아이엠라이프생명보험",
+      "parent": 15,
+      "child": 21,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(290.0)"
+    },
+    {
+      "code": "KR0076",
+      "quarter": "2026.1Q",
+      "name": "아이엠라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.1Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.1Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=4579.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.2Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4453.19) → 하위후=전(2859.89)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4453.19) → 하위후=전(2427.5)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4453.19) → 하위후=전(598.6)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(4453.19) → 하위후=전(385.28)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.3Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.3Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 21,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(589.0)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.4Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(6067.77) → 하위후=전(4402.39)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(6067.77) → 하위후=전(2575.68)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(6067.77) → 하위후=전(836.18)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2023.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(6067.77) → 하위후=전(734.13)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.1Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.2Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7756.02) → 하위후=전(6227.9)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7756.02) → 하위후=전(2646.78)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7756.02) → 하위후=전(839.34)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7756.02) → 하위후=전(601.98)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.3Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.4Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7497.28) → 하위후=전(5765.86)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7497.28) → 하위후=전(2549.87)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7497.28) → 하위후=전(906.43)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2024.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(7497.28) → 하위후=전(1332.2)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.1Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.2Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8377.22) → 하위후=전(6224.38)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8377.22) → 하위후=전(3270.14)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8377.22) → 하위후=전(906.49)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.2Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(8377.22) → 하위후=전(1558.77)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.3Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.4Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "EXTRACT",
+      "detail": "item19후≠전 → raw 재추출(전=4030.1)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "EXTRACT",
+      "detail": "item19후≠전 → raw 재추출(전=2712.51)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 38,
+      "fix_class": "EXTRACT",
+      "detail": "item19후≠전 → raw 재추출(전=908.96)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2025.4Q",
+      "name": "DB생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "EXTRACT",
+      "detail": "item19후≠전 → raw 재추출(전=2345.59)"
+    },
+    {
+      "code": "KR0082",
+      "quarter": "2026.1Q",
+      "name": "DB생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0083",
+      "quarter": "2024.1Q",
+      "name": "푸본현대생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0083",
+      "quarter": "2024.2Q",
+      "name": "푸본현대생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0083",
+      "quarter": "2024.3Q",
+      "name": "푸본현대생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0083",
+      "quarter": "2024.4Q",
+      "name": "푸본현대생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0083",
+      "quarter": "2025.1Q",
+      "name": "푸본현대생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0083",
+      "quarter": "2025.2Q",
+      "name": "푸본현대생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0083",
+      "quarter": "2025.3Q",
+      "name": "푸본현대생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0083",
+      "quarter": "2025.4Q",
+      "name": "푸본현대생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0083",
+      "quarter": "2026.1Q",
+      "name": "푸본현대생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2023.4Q",
+      "name": "하나생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2024.1Q",
+      "name": "하나생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2024.3Q",
+      "name": "하나생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2024.3Q",
+      "name": "하나생명보험",
+      "parent": 15,
+      "child": 21,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(324.0)"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2025.1Q",
+      "name": "하나생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2025.2Q",
+      "name": "하나생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2025.3Q",
+      "name": "하나생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2025.4Q",
+      "name": "하나생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.1Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.1Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=359.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(369.29) → 하위후=전(279.22)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(369.29) → 하위후=전(66.41)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(369.29) → 하위후=전(164.45)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(369.29) → 하위후=전(13.71)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.3Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(483.7) → 하위후=전(392.62)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(483.7) → 하위후=전(77.47)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(483.7) → 하위후=전(175.54)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2023.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(483.7) → 하위후=전(11.44)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2024.1Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2024.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2024.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(594.05) → 하위후=전(473.59)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2024.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(594.05) → 하위후=전(93.23)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2024.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(594.05) → 하위후=전(231.59)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2024.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 40,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(594.05) → 하위후=전(13.09)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2024.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2024.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=637.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2024.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 20,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(335.0)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2024.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 21,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(55.0)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2025.1Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2025.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2025.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 36,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(545.56) → 하위후=전(460.89)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2025.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 37,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(545.56) → 하위후=전(95.47)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2025.2Q",
+      "name": "처브라이프생명보험",
+      "parent": 19,
+      "child": 39,
+      "fix_class": "CARRY",
+      "detail": "item19후=전(545.56) → 하위후=전(158.53)"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2025.3Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2025.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2025.4Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 19,
+      "fix_class": "EXTRACT",
+      "detail": "위험액 본체후 결측(전=385.0) → raw 재추출/부재확인"
+    },
+    {
+      "code": "KR0100",
+      "quarter": "2026.1Q",
+      "name": "처브라이프생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2023.3Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2023.4Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2024.1Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2024.2Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2024.3Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2024.4Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2025.1Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2025.2Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2025.3Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2025.3Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 21,
+      "fix_class": "CARRY",
+      "detail": "경과조치무관 후=전(2809.0)"
+    },
+    {
+      "code": "KR0104",
+      "quarter": "2025.4Q",
+      "name": "농협생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.1Q",
+      "name": "교보라이프플래닛생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.2Q",
+      "name": "교보라이프플래닛생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.3Q",
+      "name": "교보라이프플래닛생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.4Q",
+      "name": "교보라이프플래닛생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.1Q",
+      "name": "교보라이프플래닛생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.2Q",
+      "name": "교보라이프플래닛생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.3Q",
+      "name": "교보라이프플래닛생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.4Q",
+      "name": "교보라이프플래닛생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2026.1Q",
+      "name": "교보라이프플래닛생명보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    },
+    {
+      "code": "KR1011",
+      "quarter": "2026.1Q",
+      "name": "IBK연금보험",
+      "parent": 15,
+      "child": 16,
+      "fix_class": "DERIVE",
+      "detail": "분산효과 = Σ(17~21후) - 15후"
+    }
+  ]
+}
