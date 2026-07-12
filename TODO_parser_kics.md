@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12(4차) (validation 322셀 census 티켓 — 적용후 요구자본/시장하위 census 결측 322->2) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12(5차) (validation 적대검증 신규 — KR1011 2023.2Q ②③ 다중경과조치 값혼합(분산효과 음수) 정정) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,29 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-12(5차) — validation 신설 게이트(`_diversification_negative`, 분산효과<0 RED)가 KR1011(IBK연금)
+2023.2Q 적발: 서로 다른 개별 경과조치 시나리오표(②·③)에서 온 값을 섞어써서 물리적으로 불가능한 상태
+(분산효과=-246.66)였음 — raw 재확인 후 정정.** `inbox/parser/20260712T0430Z`.
+- **근본원인**: 이 회사는 ①TAC+②(장수등)+③(주식금리) **3개를 동시 적용**하는데, raw엔 각각을 **단독
+  적용했을 때의** 효과만 보여주는 개별표 3개뿐이고 결합(전부 동시적용) breakdown표가 없음(농협생명
+  2023.1Q와 동일 구조적 한계). 이전 라운드에서 item15후는 ②표에서, item19후는 ③표에서 각각 가져와
+  섞어썼는데, 서로 다른(양립 불가능한) 시나리오의 헤드라인을 조합한 것이라 Σ(구성요소)<기준금액이 되는
+  게 당연한 결과였음.
+- **정정**: item1후=8241.63(TAC표 자체값 — TAC는 가용자본만 건드리고 ②③ 둘 다 가용자본 불변이라 TAC
+  단독표가 곧 결합 정답), item2후=294.9(3개 표 전부 일치), item3후=item1-item2 identity 역산,
+  item14후=item1÷1.7695(헤드라인 비율 anchor, 요약표 line53 "지급여력비율(경과조치후)=176.95"),
+  item15후=item14(법인세조정·기타요구자본 3개 표 전부 0 일치), item27후=176.95(기존 135.19 혼합값에서
+  정정), item28후=item2÷item14×100 재계산. **item16(분산효과)·17(생명장기)·19(시장위험액)후는 None
+  처리**(결합 배분비 raw로 도출 불가, 오염값 방치 대신 정직하게 미공시 처리) — `_AFTER_SUBRISK_NOT_
+  DISCLOSED` 등재 요청.
+- items 29-40(②③ 각자 내부 세부항목)은 안 건드림 — 각 표 자기 시나리오 안에서는 정확, item17/19가
+  None이라 이걸 부모로 삼는 활성 게이트도 없음.
+재검증: 분산효과 음수 0. mmult 0. 항등식 위반 0(R7 포함, item27 정정으로 해소). 하위 census 결측은
+KR1011 1건만 잔존(의도된 exemption 대상) — 직전 티켓(322셀)의 KR0003·KR0073 2026.1Q는 이미 등재
+확인되어 더 이상 안 뜸. core RED 13 불변(회귀 0). rate-sensitivity 게이트 RED=0 유지. inbox에 상세
+회신(`status: answered`) — 같은 유형 재발 방지용 체크리스트("부모 항목들이 같은 표/identity에서
+왔는지")도 참고로 남김.
 
 **2026-07-12(4차) — owner 재지시("적용후도 적용전과 완전 동일 검증 배선") 후 validation이 신설한 요구자본
 census(`_parent_present_child_incomplete_after`, `{15:(16~21),17:(29~35),19:(36~40)}`)가 322셀 결측
