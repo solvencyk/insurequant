@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12 (5차) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12 (6차) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,28 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-12 (6차) — IBK fix 반려 재정정(공통 TFI 누락) + 예별손해 3건 동형 발견, 전수스윕 시도 후 반환
+
+Validation이 5차의 IBK(KR1011) fix를 반려: item1후를 "①TAC 단독표 값"으로만 도출했는데, 이 회사는
+**공통(TFI)도 별도로 가용자본에 +92,276(백만원) 기여**해서 TAC와 합산해야 했음(605,115+92,276+219,048=
+916,439=9164.38, 원래 있던 값이 실은 맞았음) — 직접 raw 재대조로 확인 후 정정, item3/14/15/28후 연쇄
+재계산. 같은 owner 지시("헤드라인 대조 전수 검증")로 예별손해(KR0004) 2023.1Q·2Q·3Q도 동일 증상(다른
+메커니즘)으로 신규 발견: item27후가 ②표(장수등) 단독 비율로 저장돼 있었는데, 이 회사는 공통(TFI)
+단독표 자체가 헤드라인과 소수점까지 일치하는 패턴(①TAC=적용금액0, 무효과)이라 TFI표 값이 결합 정답 —
+3개 분기 전부 item14/15/27/28후 정정.
+
+전수 재조정(119건, validation이 자동파싱 실패로 넘긴 잔여) 자체 시도 — 22개사 전분기 284건 헤드라인
+자동대조 스크립트를 급조해 돌렸으나, raw 표 포맷이 회사·분기마다 크게 달라(라벨 셀 순서 역전·병합깨짐·
+해당분기/전년동기/증감 3컬럼 혼동 등) 단순 정규식으론 오탐 다수 발생 확인 — 신뢰 불가 판정, 스크립트·
+결과 둘 다 폐기(커밋 안 함). validation의 기존 스크립트(전-일치 anchor 방식, 오탐0)가 더 안전해 보여
+그쪽 결과 요청으로 회신.
+
+**결과**: 분산효과 음수 0 유지. mmult 0. 항등식 위반 0(R7 포함). core RED 13 불변(회귀 0).
+rate-sensitivity 게이트 RED=0 유지. inbox `20260712T0700Z`에 상세 회신(`status: answered`).
+`kics_disclosure.json`/`templates` 동기화 완료.
 
 ---
 

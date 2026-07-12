@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12(5차) (validation 적대검증 신규 — KR1011 2023.2Q ②③ 다중경과조치 값혼합(분산효과 음수) 정정) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12(6차) (validation 반려 — IBK 공통(TFI) 누락 재정정 + 예별손해 3건 동형 발견·정정) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,25 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-12(6차) — validation이 5차 IBK fix를 반려(공통(TFI) 경과조치 누락) + 예별손해(KR0004) 3개
+분기 동형 사례 신규 발견 → 둘 다 정정, 전수 재조정(119건)은 시도했으나 한계로 반환.**
+`inbox/parser/20260712T0700Z`(owner "같은 혼합 다른 회사도 헤드라인 대조로 전수 검증" 지시).
+- **IBK 재정정**: 5차에서 item1후를 "①TAC 단독표 값"으로만 도출했는데, 이 회사는 **공통(TFI)도 별도로
+  가용자본에 +92,276(백만원) 기여**해서 TAC와 **합산(additive)**해야 했음(605,115+92,276+219,048=
+  916,439=9164.38 — 애초 원래 있던 값이 맞았음, 5차에서 내가 잘못 "고쳐서" 틀리게 만듦). item3/14/15/28
+  후 연쇄 재계산.
+- **예별손해(KR0004) 2023.1Q·2Q·3Q**: IBK와 다른 메커니즘이지만 같은 증상 — item27후가 raw ②표(장수등)
+  **단독** 비율(74.67/72.21/58.33%)로 저장돼 있었는데, 이 회사는 **공통(TFI) 단독표 자체가 헤드라인과
+  소수점까지 일치**(①TAC는 적용금액0=무효과)하는 패턴이라 TFI표 값이 곧 결합 정답. item14/15/27/28후
+  정정(82.56/79.96/64.50%로), item1/2/3후는 원래도 불변이라 안 건드림.
+- **전수 재조정(119건) 시도**: 22개사 전분기 헤드라인 vs item27후 자동대조 스크립트를 급조해 284건
+  돌렸으나, raw 표 포맷이 회사·분기마다 크게 달라(라벨 셀 순서 역전·병합깨짐·해당분기/전년동기/증감
+  3컬럼 혼동 등) 단순 정규식으론 오탐이 많아 신뢰 불가 판정 — **스크립트·결과 폐기, 커밋 안 함**.
+  validation이 언급한 `scratchpad/headline_crosscheck2.py`(전-일치 anchor 방식)가 이미 더 안전하게
+  풀고 있는 것으로 보여 그쪽 결과를 요청, 확정 후보 받으면 개별 raw 대조는 즉시 처리하겠다고 회신.
+재검증: 분산효과 음수 0 유지. mmult 0. 항등식 위반 0(R7 포함). core RED 13 불변(회귀 0). rate-sensitivity
+게이트 RED=0 유지. inbox `20260712T0700Z`에 상세 회신(`status: answered`).
 
 **2026-07-12(5차) — validation 신설 게이트(`_diversification_negative`, 분산효과<0 RED)가 KR1011(IBK연금)
 2023.2Q 적발: 서로 다른 개별 경과조치 시나리오표(②·③)에서 온 값을 섞어써서 물리적으로 불가능한 상태
