@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-11(4차) (owner "세부위험 결측 다시 잡아" 재지시 — fill_post_transition/fill_market 6개 실버그 발견·수정, 추출갭 52->10) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12 (validation inbox 20260712T0109Z 회신 — 잔여 10건 중 9셀 raw 재대조로 해소, 추출갭 10->3) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,20 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-12 — validation inbox `20260712T0109Z` 회신, 잔여 10셀 중 9셀 raw 재대조로 해소(추출갭 10->3).**
+validation이 4차 라운드 직후 전수검증(item17 215/224·item19 141/142 mmult 닫힘)해 정확히 같은 잔여
+10셀을 발견·통보(내가 자체 파악한 것과 동일 카운트, 항목까지 명시). 회사·분기별 개별 raw 재대조:
+- **해소 7건**(값 9셀): KR0003 2023.1Q·KR0005 2023.3Q(장수위험 dash가 엉뚱한 컬럼에 랜딩해 신규행),
+  DB생명 KR0082 2023.3Q(부모+item29+item30 3중 병합라벨, 병합값 역산), 처브라이프 KR0100 2023.1Q
+  (대재해 병합행, 형제패턴으로 후=0 확정)·2024.4Q(docling 3분할 세부표 중 세번째가 완전히 깨끗해 7항목
+  전부), 흥국화재 KR0005 2025.4Q(자산집중 후셀에 다음행 값 leak, 형제표로 교차확인), 하나생명 KR0097
+  2024.4Q 3/5(29·31·32 — phase-in 표에 언급 없는 항목=해당 경과조치 비대상 확정, 후=전).
+- **미해소 3건**: 하나생명 KR0097 2024.4Q(30·35, phase-in 10%→실제 차감액 변환공식 규정조회 필요)·
+  2026.1Q(35, 4중 병합행이라 dash 소속 자체 불명)·처브라이프 KR0100 2024.3Q(29·31·33, 행마다 다른
+  컬럼으로 shift하는 불규칙 표 — 일반화 규칙 없음). 상세 근거는 inbox 스레드 자체(`status: answered`)에
+  전부 기록, 여기 중복 안 함.
+- 재검증: 세부위험 추출갭 **10 -> 3**. core RED 14 불변(회귀 0). rate-sensitivity 게이트 RED=0 불변.
 
 **2026-07-11(4차) — owner "세부위험 결측 건을 다시 잡으라고 몇번째 얘기하는거냐" 재지시, 잔여 40셀 계속
 착수 → `fill_post_transition_to_disclosure.py`/`fill_market_subitems_to_disclosure.py` 실버그 6개

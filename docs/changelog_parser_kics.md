@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-11 (4차) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12 · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,23 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-12 — validation inbox 20260712T0109Z 회신: 잔여 10셀 중 9셀 raw 재대조, 추출갭 10->3
+
+validation이 4차 라운드 직후 전수 mmult 재검증에서 정확히 같은 잔여 10셀을 발견해 항목 단위로 통보
+(`inbox/parser/20260712T0109Z`). 회사·분기별 raw 재대조로 9셀(값 기준) 해소 — 병합 라벨/병합 값 셀 역산
+(DB생명 KR0082), dash가 엉뚱한 컬럼에 랜딩(KR0003·KR0005), docling 3분할 표의 세번째가 완전히 깨끗했던
+케이스(처브라이프 KR0100 2024.4Q), 선택경과조치 비대상 항목은 후=전 확정(하나생명 KR0097 2024.4Q 3/5).
+전 과정과 근거는 inbox 스레드 자체(`status: answered`)에 상세 기록.
+
+**미해소 3건**은 raw가 코드로 안전하게 못 채울 만큼 애매(하나생명 KR0097의 phase-in 10%→차감액 변환
+공식은 규정 조회 필요, 2026.1Q는 4중 병합행이라 dash 소속 불명; 처브라이프 KR0100 2024.3Q는 행마다
+다른 컬럼으로 shift하는 불규칙 표) — 가짜 채움 대신 open 유지, inbox에 사유 기록.
+
+**결과**: 세부위험 추출갭 **10 -> 3**. core RED 14 불변(회귀 0). rate-sensitivity 게이트 RED=0 불변.
+`kics_disclosure.json`/`templates/kics_disclosure.json` 동기화 완료.
 
 ---
 
