@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12(2차) (validation 재검에서 KR0104 fill 오류 지적 — 원복 후 owner 규정확인 대기로 재분류) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12(3차) (designer 티켓 — items 4/12/13 적용후 구조적 미공시 확인, 파서버그 아님) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,25 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-12(3차) — designer 티켓(`20260712T0704Z`): items 4/12/13(Ⅰ.건전성감독기준순자산/Ⅱ.불인정항목/
+Ⅲ.보완자본재분류) 적용후 결측 39개사 중 21개사 — 파서 버그 아니라 구조적 미공시로 확인, 재플래그 방지
+문서화.** designer가 39개사 중 21개사 0/3·18개사 3/3으로 딱 갈리는 분포를 보고 파싱갭 의심 → raw 4개사
+(KR0083 푸본현대·KR0068 한화생명·KR0029 AIG·KR0087 동양생명) 전문 grep으로 확인:
+- 항목4/12/13이 등장하는 표는 문서 전체에서 `[경과조치 적용 전 지급여력비율 세부]` **딱 하나뿐**이고
+  이름 그대로 적용전 전용(3분기 비교, 적용후 페어 아님) — 적용후 있는 `(1)공통적용경과조치` 표에는
+  4/12/13 행 자체가 존재하지 않음(4개사 전부 동일 구조). **추출할 raw 자체가 없음.**
+- "3/3 있음" 18사는 진짜 공시가 아니라 **파생값**: 동양생명 2026.1Q 확인 결과 raw엔 이 항목들 자체가
+  0건인데 JSON엔 값(전)과 정확히 일치하는 값_적용후가 있음 — 회사 헤드라인(item1/14/27) 전체가 그
+  분기 전=후로 일치할 때 미러링하는 별도 백필(`backfill_post_transition_when_not_applied.py`류, 2026-07-11
+  세션)이 4/12/13까지 같이 채운 파생값으로 추정. 한화생명이 "0/3"인 이유도 설명됨(헤드라인 162.12→162.1,
+  반올림 수준 0.02 차이가 그 백필의 tolerance=0.01을 근소하게 넘겨 미러링 제외 — 보수적 안전장치 정상
+  작동, 파싱 실패 아님).
+- **조치**: 셀-레벨 gold 레지스트리 신설 안 함(회사·분기 이상치가 아니라 **항목 자체의 K-ICS 정기경영
+  공시 양식 특성**이라 판단) — 이 TODO에 문서화해 재질문 방지. designer에 회신: getRowValue() 폴백금지
+  원칙은 유지하되(경과조치사 후=전 오염 방지 원목적은 유효), 이 2개 항목만 "폴백없음=결측"이 아니라
+  "폴백없음=원래 미공시"라 표시 방식 재고 권장(빈칸 대신 "미공시"/각주 등, designer 판단).
+inbox `20260712T0704Z`에 상세 회신(`status: answered`).
 
 **2026-07-12(2차) — validation 재검에서 KR0104 fill 오류 발견, 원복 + 근본원인 확인.** validation이 내
 7건 fill을 mmult로 재검산해 6건은 통과, **KR0104(농협생명) 2023.1Q 1건만 오류** 지적(해지·사업비·대재해

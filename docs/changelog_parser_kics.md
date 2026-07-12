@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12 (2차) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12 (3차) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,30 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-12 (3차) — designer 티켓: items 4/12/13 적용후 결측은 파서 버그 아니라 구조적 미공시
+
+designer가 KICS.html "경과조치 적용후" 모드에서 39개사 중 21개사가 항목4(Ⅰ.건전성감독기준순자산)/12
+(Ⅱ.불인정항목)/13(Ⅲ.보완자본재분류) 값_적용후 3개 전부 빈칸(0/3), 18개사는 전부 있음(3/3)으로 딱
+갈리는 걸 발견해 파싱갭 의심 요청. raw 4개사(KR0083 푸본현대·KR0068 한화생명·KR0029 AIG·KR0087
+동양생명) md_inbox 전문 grep으로 확인한 결과 **파서 버그 아님**:
+
+- 항목4/12/13이 등장하는 표는 문서 전체에서 `[경과조치 적용 전 지급여력비율 세부]`(이름 그대로
+  적용전 전용, 3분기 비교 컬럼) **하나뿐** — 적용후 컬럼이 있는 `(1)공통적용경과조치` 표에는 애초에
+  이 3개 항목 행이 없음. 4개사 전부 동일 구조. 추출할 raw 자체가 존재하지 않음.
+- "3/3 있음" 18사는 실제로는 별도 백필 로직(회사 헤드라인 item1/14/27이 그 분기 전체 전=후로 일치할
+  때 안전하게 미러링, `backfill_post_transition_when_not_applied.py`류)이 4/12/13까지 같이 채운
+  **파생값**임을 동양생명 사례로 확인(raw엔 항목 자체가 0건인데 JSON 값_적용후=값(전) 정확히 일치).
+  한화생명이 "0/3"인 이유도 설명(헤드라인 162.12→162.1 반올림 수준 차이가 그 백필의 tolerance=0.01을
+  근소 초과해 제외 — 보수적 안전장치 정상 작동).
+
+**조치**: 셀 단위 gold 레지스트리 신설 안 함(회사·분기 이상치가 아니라 이 2개 항목 자체의 K-ICS
+정기경영공시 양식 특성) — 이 changelog/TODO에 문서화해 재조사 방지. designer에 회신: 폴백 금지 원칙
+자체는 유지하되(원 목적인 경과조치사 후=전 오염 방지는 유효), 이 2개 항목은 "폴백없음=결측"이 아니라
+"폴백없음=원래 미공시"라 표시 방식 재고 권장. inbox `20260712T0704Z`에 상세 회신(`status: answered`).
+데이터 변경 없음(문서/조사 티켓).
 
 ---
 
