@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12(3차) (designer 티켓 — items 4/12/13 적용후 구조적 미공시 확인, 파서버그 아님) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12(4차) (validation 322셀 census 티켓 — 적용후 요구자본/시장하위 census 결측 322->2) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,30 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-12(4차) — owner 재지시("적용후도 적용전과 완전 동일 검증 배선") 후 validation이 신설한 요구자본
+census(`_parent_present_child_incomplete_after`, `{15:(16~21),17:(29~35),19:(36~40)}`)가 322셀 결측
+적발 → 전량 처리, 322->2(0.6%만 raw부재로 잔존).** `inbox/parser/20260712T0230Z` — validation이 fix-class
+사전분류(CARRY 206/DERIVE 96/EXTRACT 20)해서 넘김, `data/_derived/after_census_gaps.json`.
+- **CARRY 206셀**: 신규 영구 스크립트 `scripts/fill_after_requirement_census.py`(idempotent, UPSERT).
+  item20/21후=전(경과조치 무관 항상), item36-40후=전(item19후=전인 분기만, validation이 이미 필터링해서
+  넘긴 리스트 그대로 신뢰). 전량 기계적 성공.
+- **부수 확장 — item18후 93셀**: DERIVE(item16) 계산이 item17~21후 전부 필요한데 생명전업사 다수가
+  item18(일반손해보험위험액)후만 없어 막혀있었음. item18값(전)이 이 회사들 전부 0(생명전업사라 원래
+  없음)이라 item20/21과 동일 논리로 스크립트에 추가 — ticket이 명시적으로 지정 안 했지만 낮은 리스크
+  판단하에 처리.
+- **DERIVE 96셀**: item16후=Σ(17~21후)-15후, `recalc_basic_capital_ratio_post.py`의 item27/28과 동일
+  방식. CARRY+EXTRACT 완료 후 재실행 필요(17~21 의존) — 90개 즉시 성립, EXTRACT 완료 후 재실행으로
+  잔여 4개 추가 성립(94/96). 최종 2개(KR0003·KR0073 2026.1Q)는 raw 자체 부재로 영구 미해결.
+- **EXTRACT 20셀/14 사분기**: raw md_inbox 직접 재대조, **12/14 성공**(단위 오류 1건 자체 발견·정정:
+  롯데손해 2023.1Q 억원표를 91.60으로 잘못 넣었다가 raw 재확인 후 9160 정정). 한화손해 4개 분기는
+  ③표 POST 컬럼 전체가 docling 렌더링 실패(dash 아니라 진짜 blank)로 확인 — ①TAC표(시장위험 안 건드림)
+  의 item19 전=후 값으로 대체. 나머지는 "③ 미적용" 명시문 있는 회사들의 item19/36-39 전=후 미러링.
+  **미해소 2셀**(롯데손해 KR0003·교보생명 KR0073 둘 다 2026.1Q): raw에 `②` 세부표 자체가 없음 확인
+  완료(교보생명은 표준 ①②③ 표 형식 자체가 아예 없는 문서구조) — `_AFTER_SUBRISK_NOT_DISCLOSED` 등재
+  요청.
+재검증: 적용후 하위 census 결측 322->2. mmult/항등식 0 유지. core RED 13 불변(회귀 0). rate-sensitivity
+게이트 RED=0 유지. inbox `20260712T0230Z`에 상세 회신(`status: answered`).
 
 **2026-07-12(3차) — designer 티켓(`20260712T0704Z`): items 4/12/13(Ⅰ.건전성감독기준순자산/Ⅱ.불인정항목/
 Ⅲ.보완자본재분류) 적용후 결측 39개사 중 21개사 — 파서 버그 아니라 구조적 미공시로 확인, 재플래그 방지

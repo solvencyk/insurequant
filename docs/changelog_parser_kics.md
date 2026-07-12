@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12 (3차) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12 (4차) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,30 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-12 (4차) — 요구자본 census 322셀 결측 처리, 322->2 (owner "적용전과 동일검증" 지시)
+
+Owner가 검증 배선을 적용전=적용후 완전 동일하게 요구 → validation이 신설한 요구자본 구성요소 census
+(`{15:16~21, 17:29~35, 19:36~40}` 부모-자식 완전성 체크)가 기존 mmult-only 게이트가 놓치던 322셀
+(요구자본 205+시장하위 96+EXTRACT급 21류) 결측을 적발, fix-class 사전분류(CARRY 206/DERIVE 96/EXTRACT
+20)와 함께 인계(`inbox/parser/20260712T0230Z`, `data/_derived/after_census_gaps.json`).
+
+신규 영구 스크립트 `scripts/fill_after_requirement_census.py`(idempotent UPSERT): CARRY 206셀(item20/21
+후=전 항상, item36-40후=전 item19무변동분기만) 전량 기계처리 + 부수 확장으로 item18후 93셀(생명전업사
+일반손해보험위험액=0 항상, item20/21과 동일 논리, ticket 미지정이나 낮은리스크 판단 처리) + DERIVE
+item16후=Σ(17~21후)-15후 계산(CARRY/EXTRACT 의존, 두 차례 재실행으로 94/96 성립).
+
+EXTRACT 20셀/14사분기는 raw md_inbox 개별 재대조 — 12/14 성공(18/20셀). 단위 오류 1건 자체 발견·정정
+(롯데손해 2023.1Q 억원표를 최초 ×100 오적용했다가 raw 재확인 후 정정). 한화손해 4개 분기는 ③표 POST
+컬럼 전체가 docling 렌더링 실패(dash 아닌 진짜 blank) — ①TAC표(시장위험 비대상)의 item19 값으로 대체.
+나머지는 "③ 미적용" 명시문 확인 후 item19/36-39 전=후 미러링. **미해소 2셀**(롯데손해 KR0003·교보생명
+KR0073 둘 다 2026.1Q)은 raw에 세부표 자체 없음 확인 완료 — `_AFTER_SUBRISK_NOT_DISCLOSED` 등재 요청.
+
+**결과**: 적용후 하위 census 결측 **322 -> 2**(99.4% 해소). mmult 불일치 0·항등식 위반 0 유지. core
+RED 13 불변(회귀 0). rate-sensitivity 게이트 RED=0 유지. inbox `20260712T0230Z`에 상세 회신
+(`status: answered`). `kics_disclosure.json`/`templates` 동기화 완료.
 
 ---
 
