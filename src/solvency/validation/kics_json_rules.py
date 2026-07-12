@@ -424,7 +424,11 @@ def run_validation(
             actual = bucket.get(28, post=True)
             if actual is None:
                 actual = bucket.get(28)
-            findings.append(_check_numeric(bucket, "8_post", expected, actual, eff_tol))
+            # rule 8(적용전)과 동일한 dynamic tol: micro사(작은 item14후)는 억원-coarse 반올림으로
+            # 산출비율이 공시비율과 어긋남(카카오 2023.4Q item14후=20 → 974/20=4870 vs 공시4777).
+            # 8_post만 eff_tol 쓰던 불일치 교정(2026-07-12).
+            ratio_tol = max(eff_tol, abs(expected) * 0.5 / abs(post14) + 50.0 / abs(post14))
+            findings.append(_check_numeric(bucket, "8_post", expected, actual, ratio_tol))
         else:
             findings.append(
                 _finding(

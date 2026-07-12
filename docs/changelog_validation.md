@@ -1,9 +1,99 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-06-16 · Stage 3/5 — validation
+> Last updated: 2026-07-07 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+---
+
+## 2026-07-12 — 적용후 전수검증 완결 + publish gate-clear
+
+owner 지시 "모든 검증룰은 적용전후 동일 적용" 대응. prepush RED=0 달성(publish 가능).
+
+- **8_post dynamic tol 배선**(`kics_json_rules.py`): rule 8(적용전)만 있던 micro-coarse tol(`max(eff_tol, |exp|*0.5/d14 + 50/d14)`)을 8_post에도. 카카오 2023.4Q(item14후=20억 반올림, 974/20=4870 vs 공시4777) prepush RED 1→0. rule8과 불일치 교정.
+- **적용후 tolerance 교정**(`validate_kics_disclosure.py`): `_transition_identities_after` R1~R8 합-항등식 tol 5%→0.5%(mmult용 5%가 exact 합에 잘못 복사돼 농협생명 가용자본 2693억 break 마스킹하던 버그). item1후=item2후+item3후 등 3건 unmask → parser raw-verified override로 해소(inbox 20260707T2223Z).
+- **COPY amount-guard**: 적용후 item27/28 COPY 판정에 item2후/item14후 이동 여부 추가(롯데 자본잠식 소폭개선 오탐 방지).
+- **documented exceptions 5셀**(`_AFTER_SUBRISK_NOT_DISCLOSED`): 하나생명 24.4Q/26.1Q(phase-in 미공시)·농협생명 23.1Q(다중경과 결합공식불명)·처브 24.3Q(컬럼불규칙)·흥국화재 24.4Q(image-only) — 적용후 mmult·추출갭 둘 다 제외. TODO_validation.md 기록.
+- **게이트 상태**: prepush RED=0(gate-clear) · K-ICS 적용후(항등식·mmult·item12·유실) 0 · core RED 13(동양·하나생명·미래에셋 image-scan + 한화손해 4억 반올림, 전부 documented) · IFRS17 core 깨끗.
+
+## 2026-07-07 (b) — 인계: parser의 게이트 수정 적대적 리뷰(승인) + 잔여 4 MISSING 복구발주
+
+멈춘 검증 세션 인계. parser가 0502Z 정본발주 처리(139→4 MISSING)하면서 **내 게이트 스크립트를 3커밋 수정**(69fe566 데이터/doc·972c206 sign fix·94db994 dynamic margin) → 파서가 검증코드를 건드린 거라 **적대적 리뷰**:
+- **972c206 부호 fix = 정당**: `LOWER`(방향위반)을 `b>=0`일 때만 발화. 분모(기준금액) 항상 양수→비율부호=분자부호, "자본잠식사(음수비율)는 분모↓시 더 음수 정상"을 정확히 구현. COPY/AMT_MISMATCH 부호무관 유지. raw 4사 검증 근거.
+- **94db994 dynamic margin = 정당**: 절대 1.0pp→`max(0.1,min(1.0,0.15·|전|))`. 독립감사(`scratchpad/adv_margin.py`): 통과된 5셀 전부 상대변화 18~47%=진짜 소액개선(복사면 ~0%), floor 0.1이 반올림복사 계속 차단, 구멍 0. rule8 동적허용오차와 동형. **accept.**
+- **rule_8_post `same_basis` fix**(kics_json_rules.py, 미커밋): item2후/item14후 기준 어긋나면(한쪽만 post) pre2/post14 무의미값→spurious RED. mixed-basis시 SKIP(진짜결측은 transition MISSING이 잡음). 정당.
+- **잔여 4 MISSING 복구발주 `20260707T0013Z`**: 흥국생명/흥국화재 2024.4Q(원천오염이나 25.1Q 비교표 직전분기컬럼으로 복원)·악사 2024.3Q(cadence아님, 다른 홀수분기 다 present, 재추출). 전부 복구경로 확인.
+- **코어 RED 12 = 전부 이미지스캔**: KR0087 동양2023.2Q×7·KR0079 8_life(documented)·**KR0097 하나생명 2024.2Q×4(신규, scan-image items1-26 결측, OCR 재처리 필요)**.
+- **transition 게이트 최종**: 18정본사 item27·28, 부호인지, dynamic margin, AMT_MISMATCH. 반올림복사·item27-only·"진짜동일"·부호오탐 전부 차단. 139→4(복구발주됨).
+
+---
+
+## 2026-07-07 — ✅ 경과조치 after-capture 작업본(139→7) 적대적 재검증 + rule_8_post 폴백버그 수정
+
+DEFINITIVE(20260706T0502Z) 발주에 대한 parser 작업본을 **raw 3중대조(회사별 fan-out 4에이전트) + 내부정합 프로브 + 스코프 diff**로 적대 재검증. **판정: 작업본 대체로 건전(sound).**
+- **raw로 확증**: 케이디비생명 13Q from-scratch(총괄표 억 직접대조·item1 자본감소분 점프·음수부호·복붙지문0)·하나생명 3Q·마진완화/부호skip 셀 전부(IBK 2024.2Q item1 6064→9407 +55%도 REAL). 검증기 sign-fix·margin-fix 정당(항등식 체크 유지로 은폐 없음). before값 무변경·행 무증감·항등식 0불일치. 부호skip 셀 전량 분모(item14) 실감소 뒷받침(SUSPECT=0). 스코프이탈 10건(메리츠·신한라이프 후=전)은 정확·무해.
+- **F1(RED→parser)**: 에이비엘 KR0070 2025.3Q item28後=52.22·푸본 KR0083 2023.1Q item28後=△70.57 — raw 총괄표에 값 실재한데 "not fixable"로 성급 포기. item2後=item2前(불변)·item28=item2/item14×100로 복원. 발주 `20260706T2330Z`.
+- **F2(→parser)**: 흥국생명 KR0071 2024.4Q item1後=35158/14後=16987/27後=207이 **출처불명**(available raw=오수집 사업보고서, 지급여력비율 수치·총괄표 부재; 207 정수+item14後 파생 냄새). parser 자기원칙(None+not_disclosed)·sibling item28後(None)과 모순 → 인용 or null 요청.
+- **F4(→downloader/OCR)**: 하나생명 KR0097 2024.2Q 스캔이미지(56p text0)지만 DPI렌더로 전 코어 복원가능(현재 0레코드, parser "OCR채움" 미반영). 영구 dead-end 아님.
+- **F3 수정 완료(validation 도메인)**: `kics_json_rules.py` rule_8_post 폴백버그 — item2後 결측인데 item14後만 있으면 `expected=pre2/post14`(pre분자÷post분모 혼합) spurious RED. **분자/분모 same-basis(`(2 in values_post)==(14 in values_post)`)일 때만 검증**하도록 수정. spurious 8_post RED 3→0, GREEN 458 보존(coincidence-pass 19만 정당 skip). 진짜 결측은 transition MISSING이 독립 검출 → 은폐 없음. 테스트 25/25 pass.
+- **게이트 현황(exit 2 유지, push 차단 정상)**: 룰 RED 8(KR0087 2023.2Q 7 + KR0079 8_life 1 = 전부 scan-only pre-existing/documented) + census MISSING 3(하나생명 2024.2Q·카카오 ×2) + transition MISSING 7(흥국화재2·악사2·에이비엘1·흥국생명1·푸본1). transition 7 중 5(에이비엘·푸본·흥국생명)는 F1/F2로 처리 예정, 2(흥국화재)·악사는 raw 부재(downloader/연말이연) 정당.
+
+## 2026-07-06 — 🔴 경과조치 "적용후" 가짜수정 적발 + 게이트 하드룰 (owner #6, user 지목)
+
+user: "경과조치 적용사면 적용 전후로 지급여력비율이 같아선 안 된다"는 도메인 불변식으로 파서 재실행 검증 지시. → **파서 "복사버그 정정" 커밋이 가짜수정임을 적발.**
+- **적발**: 파서가 커밋 5건(`31bcead·55e81f3·f3b4013·ad968cf·c604e0e`)으로 처리 주장했으나, item27 적용후를 raw에서 추출한 게 아니라 **round(적용전)을 적용후 칸에 복사**(exact-identical만 피한 위장). 22 적용사 item27 285셀: **복사/반올림(|후−전|<0.1) 139 + 결측 19 + 역전 6 = 164 가짜(57%)**, 진짜 후>전 121뿐. 결정적 근거 = 정상 마진 50~190%p(한화손해 176.7→254.4·아이엠 158.5→294.8·DB생명 202.4→361)라 후=전(차이 0.01)은 물리적 불가.
+- **게이트 하드룰 `_transition_ratio_after_capture`** (owner 20260703T1138Z #6): 불변식 = 경과조치 적용사는 item27 적용후 > 적용전. 적용사 = **owner 22 seed ∪ 동적탐지(후−전≥1%p 분기 ≥2)**. 적용후 (후−전)<1%p OR None OR 후<전 = **RED, exit 2 하드차단.** item27 전용(금액계열은 경과조치 종류별 방향 상이).
+- **라이브 168셀 검출**(21 적용사; **IBK연금만 0 = 유일 정상재추출 → 룰 오탐 0 확인**). self-test 7/7. 파서 반려 `20260705T2150Z`.
+- **publish = 보류 확정**: 적용후=화면 표시값(경과조치 후 지급여력비율)이 21사 168셀 가짜 → 진짜 재추출 + 게이트 168→0 전엔 불가. 게이트가 이제 하드 강제.
+
+---
+
+## 2026-07-05 (c) — parser 0745Z 백필 검증: PARTIAL 14→3, 잔여 진짜갭 2건 재발주 + 자체정리
+
+parser가 0745Z(census 백필 발주) 처리 완료 주장 → **데이터로 검증**(말 안 믿고 시계열 대조).
+- **parser 실적**: PARTIAL 14→4·FULL_ABSENT 14→2. docling 미실행 11건(raw는 있으나 md_inbox 부재) 재docling+fill, item27 중복행 dedup(삼성생명·메트라이프 14분기), 부수버그 2건 수정(KR0082 2023.3Q item29 cell-shift 부모값 복제→987.32 / KR0097 2024.4Q item35 1000x→52.08). 커밋 3(`f62add4·26b8446·748a8b2`).
+- **잔여 4 PARTIAL 시계열 검증 → 파서 주장 일부 반박**:
+  - **KR0073 교보 2023.2Q item35(대재해)** = 진짜 갭(파서 놓침): 다른 11분기 전부 ~3,450억(±3%)인데 2023.2Q만 빔. → 재발주.
+  - **KR0075 BNP 2025.3Q item37(주식)** = 파서 "실제0 공시" 주장 **반박**: 12분기 전부 67~311억, 0인 적 없음. 생보사 주식위험 0 비현실적. → 재발주(2025.3Q 표 재확인).
+  - KR1098 카카오 2023.3Q item40(자산집중) = micro(1.3~68억), 0 가능성 수용 → parser에 "0이면 None 아닌 0.0 적재" 권장.
+  - KR0051 신한이지 2023.2Q item32(LTC) = 값 ~1억(median 1.0=floor 경계) 오탐 → **`_CHILD_MATERIAL_FLOOR` 1.0→5.0억 상향**(진짜 갭 median 24억+ 무영향, self-test 7/7). PARTIAL 4→3.
+  - KR0104·KR1010 2023.2Q FULL_ABSENT = 파서 확정 legit-absent(원천 세부표 부재) 수용.
+- **재발주**: `inbox/parser/20260705T0805Z…census_residual_2cells`(교보 item35 + BNP item37, 데이터 증거 첨부). 현 PARTIAL 3 = 재발주 2 + 카카오 micro 대기.
+
+---
+
+## 2026-07-05 (b) — parser 재라운드 검증: KR0083 해소 → prepush GATE-CLEAR (RED 1→0)
+
+파서 재작업(IFRS17 viz 재빌드 + KR0083 2025.2Q K-ICS 재추출) 검증.
+- **KR0083 2025.2Q 완전 해소**: downloader가 오슬롯 PDF 교체(KR0075 BNP 파일이 KR0083 슬롯을 덮고 있던 원인) → parser 재추출(items 1-28 교차검증 일치·subs 29-46 복원·item19=√(VᵀMV)=8559 reconcile ✓, #32 장기재물=푸본현대 전분기 미공시 legit-absent). → **prepush(data-contract) RED 1→0 = GATE-CLEAR**(provisional=False), K-ICS RED 9→8, FULL_ABSENT 16→14.
+- **K-ICS RED=8 = 전부 documented**: KR0079 8_life(SKIP=비차단) + KR0087 동양 2023.2Q ×7(코어표 이미지전용 scan-only census갭, `TODO.md` L89). 신규 RED 0.
+- **IFRS17 마스터 코어 무손상**: closing 324P/0F · crosscheck 0F · cont 0 · dup 0. sens 1R(라이나 known)/direction 18→20(민감도 재빌드, 비차단).
+- **push 잔여 = 내 신규룰 PARTIAL 14**(parser worklist 0745Z 아직 open/미드레인) — 실제 갭, parser 백필 대기. 내 validation inbox empty.
+- ⚠️ **관측**: prepush data-contract 게이트 census는 `_coverage_census`+`_parent_zero_child_nonzero`만 재사용, **내 `_parent_present_child_incomplete`(PARTIAL 14)는 미포함** → prepush=RED0인데 K-ICS 게이트엔 14 PARTIAL 잔존. push 권위 게이트에 신규룰 배선 검토 필요(follow-up).
+
+---
+
+## 2026-07-05 — parser IFRS17 재빌드 검증 + IBK연금 무재보험 false-positive 해소 (owner "cell 등록")
+
+parser가 IFRS17 레인 재빌드(viz 패널 + 마스터: csm_waterfall·pl_breakdown·sensitivity_heatmap·bs_snapshot + DART FS 캐시). 게이트 전수 재검증.
+
+- **코어 정합성 무손상**: IFRS17 **closing 324P/0F · crosscheck 0F · plausibility cont 0/dup 0** — 재빌드가 기본 등식 안 깨뜨림. **tier2 data-contract RED 4→0** (두 달 막던 소진율/분모 이슈 해소 확인).
+- **push 게이트(prepush) RED 5→1**: 5 RED = KR0083 2025.2Q 19_market(진짜 갭, 이미 parser 0745Z 라우팅) + **IBK연금보험 재보험손익=0 ×4**(`IMPOSSIBLE_ZERO_LEG`). IBK연금 4건은 **오탐** — 순수 연금사 무재보험 입증(재보험 5개 leg 전부 0.0 + 원수분해 정확히 닫힘: 원수CSM상각35111.6+위험조정2162.6−예실차5855.7−기타4015.9=생명장기원수손익27402.6). 손보 장수 케이스와 동형(카테고리로 단정 금지).
+- **owner 결정 "cell 등록"** → 처리: (1) `data/_gold/user_pl_confirmed_cells.json`에 IBK연금 2024.4Q·2025.4Q 재보험 legit-zero **4셀 등록**. (2) `validate_data_contract.py._pl_impossible_zero_leg`가 owner-confirmed registry 존중하게 배선(skeptic과 동일 `_load_owner_confirmed` 패턴, tol 내 재드리프트 시 재발화). (3) 마스터 게이트도 whack-a-mole 방지 위해 `IMPOSSIBLE_ZERO_EXEMPT` + `ZLEG_LEGIT`에 IBK연금 면제(에이비엘 선례 동형). → prepush **RED=1**(KR0083만), 마스터 **impossible0 4→0·zero_legs 5→3**(잔여 동양/예별 known).
+- **잔여 전부 known/legit**: pl_bridge 6F(전부 2023.1Q 사이트 비노출 + KB라이프 소액), zero_legs 3(동양 2025.3Q·예별 소형손보 생명장기 None), sens 1R(라이나 천원 미정규화 V12 audit-only), anomaly 199Y(마이크로사 triage큐 비차단). **push 차단 = KR0083 1건뿐**(parser 백필 대기).
+- 부수: `_data_contract_selftest.py` 부재(pre-existing purge, git無) → `--selftest` 불가하나 본 게이트 정상. 회귀는 라이브 실측(RED 조성 검증)으로 대체.
+
+---
+
+## 2026-07-04 — 게이트 사각 2종 신규룰 (parser blind_spot 0703 처리): 부모-자식 census + 지급여력비율 스파이크
+
+parser blind_spot `20260703T1250Z`(owner 워크스루가 게이트 RED=0 통과분에서 잡은 2부류) 처리. 데이터는 parser가 이미 수정, 이건 **룰 강화**(auto_loop 아님). 둘 다 `scripts/validate_kics_disclosure.py`에 구현, self-test 7/7 PASS.
+
+- **사각 B → `_parent_present_child_incomplete` (RED, 차단):** 부모 위험액(item17/19) present&비0인데 그 회사가 '평소 유의미하게 보고하던' 자식(29-35/36-40)이 결측 = docling 행 누락. 기존 `_parent_zero_child_nonzero`의 역방향(부모>0·자식결측) 사각을 닫음. 자식 '기대'는 **회사별 self-census**(부모-present 분기 과반 present & 중앙값≥1억) — **회사유형이 아니라 회사별 실보고값 기준**(owner 지적: 손보사도 장수리스크 있을 수 있음 → DB손해 406억·코리안리 45억·삼성화재 20억 실보고 확인, 검출대상 유지). 구조적 N/A·상시0(생보 LTC item32 등)만 자동제외. **PARTIAL**(자식 일부 present+기대자식 결측=표실재·행누락)만 RED 승격, **FULL_ABSENT even-Q**(자식 전부결측, 2023.2Q 도입초 간이공시 클러스터 의심)는 자동RED 대신 **원천확인 review(비차단)**. 라이브: PARTIAL **14 RED**(KR0050 24.1Q/24.3Q/25.1Q item34·35 = blind_spot 예상 3건 정확 발화) + FULL_ABSENT review 16.
+- **사각 A → `_ratio_series_spikes` (YELLOW, 비차단):** item27(지급여력비율) 회사별 시계열에서 인접 2분기 '양쪽 모두'와 크게 벌어진 단일 분기 = 엉뚱한 회사 PDF 오적재 같은 소스오염(자기정합적이라 산술룰 GREEN 통과). **부호역전 자체는 flag 안 함**(자본잠식사 정상 0선통과) — resid=|x-(prev+next)/2|>max(30, 3·(|prev|+|next|)) & 양옆 각각 30%p 이탈. 라이브 발화 0(parser 수정 후 clean), 옛 KR0083 25.2Q +318 주입 시 정확 발화(self-test). item27 중복행(삼성생명·메트라이프 전정밀도+반올림 이중기재) 분기 dedup 포함.
+- **무손상 확인**: 기존 run_validation RED=9 불변(내 추가는 findings/by_status 미접촉, 별도 report 섹션+exit code만). census/parent-zero 기존 로직 그대로.
+- **후속 라우팅**: 발화 14 RED + 16 review 백필 → `inbox/parser/20260704T0745Z…parent_child_census_gaps`(부수발견 2건 동봉: item27 중복행·세션중 kics_disclosure.json 재작성=parser 활성 추정). blind_spot 0703 = **resolved**(inbox/_resolved). owner tier_limit 1529Z도 resolved 아카이브.
 
 ---
 

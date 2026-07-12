@@ -427,14 +427,21 @@ def _transition_ratio_after_capture(records: list[dict]) -> list[tuple]:
                 if a is None:
                     out.append((c, q, name.get(c, c), ratio_it, b, None, "MISSING"))
                     continue
-                if abs(a - b) < _trans_margin(b):
+                # 금액(분자후/분모후)이 실제로 바뀌었으면 비율변화폭이 작아도 복사가 아니라 진짜 소액개선.
+                # 자본잠식사(item28 음수)는 분자·분모가 같이 줄어 비율변화가 작아 margin에 걸리던 오탐 방지
+                # (롯데손해 item28 2025.1Q/2Q — item2/14후가 전과 명백히 다름, 2026-07-08).
+                nb, na = qvn.get(q, (None, None))
+                db, da = qvd.get(q, (None, None))
+                amounts_moved = ((nb is not None and na is not None and abs(na - nb) > 1.0)
+                                 or (db is not None and da is not None and abs(da - db) > 1.0))
+                if abs(a - b) < _trans_margin(b) and not amounts_moved:
                     out.append((c, q, name.get(c, c), ratio_it, b, a, "COPY"))
                     continue
                 if b >= 0 and a < b:
                     out.append((c, q, name.get(c, c), ratio_it, b, a, "LOWER"))
                     continue
-                an = qvn.get(q, (None, None))[1]
-                ad = qvd.get(q, (None, None))[1]
+                an = na
+                ad = da
                 if an is not None and ad not in (None, 0):
                     derived = an / ad * 100.0
                     if abs(derived - a) > 2.0:
@@ -471,6 +478,17 @@ def _item12_equals_item1(records: list[dict]) -> list[tuple]:
 _TRANS_PARENT_SUBS = {17: (list(range(29, 36)), R7), 19: (list(range(36, 41)), MARKET_M)}
 
 
+# 적용후 세부위험 documented exception (owner 확정 2026-07-12): raw로 적용후 세부를 안전하게
+# 도출 불가 → 추출갭·mmult 둘 다에서 제외(재플래그 방지). TODO.md에도 기록. parser 재파싱해도 안 바뀜.
+_AFTER_SUBRISK_NOT_DISCLOSED = {
+    ("KR0097", "2024.4Q"),  # 하나생명 — 감사보고서주석 스타일, 적용후 세부 미공시(phase-in 10%만)
+    ("KR0097", "2026.1Q"),  # 하나생명 대재해 동일
+    ("KR0104", "2023.1Q"),  # 농협생명 — ①②③ 다중경과조치 결합공식 불명(개별표 어느것도 헤드라인과 불일치)
+    ("KR0100", "2024.3Q"),  # 처브 — ②표 값이 행별로 다른 컬럼 착지, 일반화 규칙 없음
+    ("KR0005", "2024.4Q"),  # 흥국화재 — image-only PDF(텍스트레이어0), owner GOLD-SCAN 대기
+}
+
+
 def _transition_mmult_after(records: list[dict]) -> tuple[list, list]:
     """선택경과조치 적용사의 '적용후' 세부위험 mmult 정합 (owner 2026-07-07 지적 blind spot).
     기존 8_life/19_market 룰은 적용전(값)만 검사 → 적용후(값_적용후) mmult 미검증.
@@ -498,6 +516,8 @@ def _transition_mmult_after(records: list[dict]) -> tuple[list, list]:
     for (c, q), m in sorted(byq.items()):
         if c not in _TRANSITION_APPLIERS:
             continue
+        if (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
+            continue  # owner 확정 documented exception (미공시/오염/공식불명) — mmult·추출갭 둘 다 제외
         for parent, (subs, mat) in _TRANS_PARENT_SUBS.items():
             pre_p, post_p = m.get(parent, (None, None))
             if post_p is None:
@@ -508,6 +528,8 @@ def _transition_mmult_after(records: list[dict]) -> tuple[list, list]:
                 if abs(post_p - exp) > max(2.0, 0.05 * abs(exp)):
                     mismatch.append((c, q, name.get(c, c), parent, round(post_p, 1), round(exp, 1)))
             elif pre_p is not None and abs(post_p - pre_p) > 1.0:
+                if (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
+                    continue  # owner 확정 미공시(적용후 세부 raw 부재, phase-in 비율만)
                 sub_missing.append((c, q, name.get(c, c), parent))
     return mismatch, sub_missing
 
@@ -556,7 +578,10 @@ def _transition_identities_after(records: list[dict]) -> list[tuple]:
             exp = fn(m)
             if exp is None:
                 continue
-            tol = 2.0 if is_ratio else max(2.0, 0.05 * abs(exp))
+            # exact 합-항등식(R1가용자본·R2순자산·R5기준금액 등)은 반올림오차만 허용 → tight.
+            # 5%는 mmult(sqrt 반올림누적)용을 잘못 복사한 것: 농협생명 가용자본 2693억 break를
+            # 마스킹함(5%of74562=3728). 0.5%+2억floor로 교정(2026-07-08 owner 재적발).
+            tol = 2.0 if is_ratio else max(2.0, 0.005 * abs(exp))
             if abs(exp - tv) > tol:
                 fails.append((c, q, name.get(c, c), rule, round(exp, 2), round(tv, 2), round(tv - exp, 2)))
     return fails
