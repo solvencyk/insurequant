@@ -486,6 +486,8 @@ _AFTER_SUBRISK_NOT_DISCLOSED = {
     ("KR0104", "2023.1Q"),  # 농협생명 — ①②③ 다중경과조치 결합공식 불명(개별표 어느것도 헤드라인과 불일치)
     ("KR0100", "2024.3Q"),  # 처브 — ②표 값이 행별로 다른 컬럼 착지, 일반화 규칙 없음
     ("KR0005", "2024.4Q"),  # 흥국화재 — image-only PDF(텍스트레이어0), owner GOLD-SCAN 대기
+    ("KR0003", "2026.1Q"),  # 롯데손해 — raw ①표(적용후 blank) 다음 바로 Ⅴ.수익성 점프, ②③표 부재(raw 정독 확인)
+    ("KR0073", "2026.1Q"),  # 교보생명 — 경과조치 섹션 자체 없음, 헤드라인 지급여력비율후 214.23만(raw 확인)
 }
 
 
@@ -640,6 +642,47 @@ def _parent_present_child_incomplete_after(records: list[dict]) -> list[tuple]:
     return out
 
 
+def _diversification_negative(records: list[dict]) -> list[tuple]:
+    """분산효과(item16)는 정의상 항상 ≥0 (상관계수≤1 → subadditivity). 저장값 음수 또는
+    Σ(item17~21) < item15(기준금액) = 구성요소 과소/기준금액 과대 misparse. R6 항등식은 산술만
+    봐서 '음수 분산효과'도 통과(item16 == Σ-15 이면 부호 무관) → 부호 sanity 별도 필수.
+    IBK연금 2023.2Q ②③ 다중경과조치 표 혼합(item15후=②값·item19후=③값) 적발(2026-07-12).
+    전·후 both, 전체 회사(적용사 한정 아님). 적용후는 documented exemption만 제외. RED(blocking).
+    반환: (code, quarter, name, mode, value, kind)."""
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
+    out = []
+    for (c, q), m in sorted(byq.items()):
+        for mode, idx in (("전", 0), ("후", 1)):
+            if mode == "후" and (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
+                continue
+            v16 = m.get(16, (None, None))[idx]
+            i15 = m.get(15, (None, None))[idx]
+            subs = [m.get(i, (None, None))[idx] for i in (17, 18, 19, 20, 21)]
+            if v16 is not None and v16 < -1.0:
+                out.append((c, q, name.get(c, c), mode, round(v16, 1), "저장음수"))
+            elif i15 is not None and all(s is not None for s in subs):
+                der = sum(subs) - i15
+                if der < -1.0:
+                    out.append((c, q, name.get(c, c), mode, round(der, 1), "Σ(17~21)<기준금액"))
+    return out
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8")  # Windows console defaults to cp949
@@ -739,6 +782,11 @@ def main() -> int:
     report["parent_present_child_incomplete_after"] = [
         {"code": c, "quarter": q, "parent_item": p, "name": n, "missing_children": list(miss)}
         for c, q, p, n, miss in after_incomplete
+    ]
+    div_negative = _diversification_negative(records)
+    report["diversification_negative"] = [
+        {"code": c, "quarter": q, "name": n, "mode": mode, "value": v, "kind": k}
+        for c, q, n, mode, v, k in div_negative
     ]
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     # stable-name 최신 포인터: glob 정렬 함정(stale report_latest.json) 방지 — 매 실행 fresh 덮어쓰기.
@@ -852,6 +900,12 @@ def main() -> int:
             print(f"    ... +{len(after_incomplete) - 30} more")
     else:
         print("적용후 하위 census 결측: 0")
+    if div_negative:
+        print(f"분산효과(item16) 음수 (물리적 불가능, 구성요소 과소/기준금액 과대 misparse, RED): {len(div_negative)}")
+        for c, q, n, mode, v, k in div_negative:
+            print(f"    {q} {c} {n} [{mode}]: {v} [{k}] → 분산효과<0")
+    else:
+        print("분산효과(item16) 음수: 0")
     print("RED failures by rule:")
     for rule_id, cnt in sorted(fail_by_rule.items(), key=lambda x: (-x[1], x[0])):
         print(f"  rule {rule_id}: {cnt}")
@@ -874,7 +928,7 @@ def main() -> int:
 
     return 2 if (red > 0 or census_red > 0 or parent_child or partial_child
                  or trans_after or item12_copy or mmult_mismatch or after_ident_fails
-                 or after_incomplete) else 0
+                 or after_incomplete or div_negative) else 0
 
 
 if __name__ == "__main__":

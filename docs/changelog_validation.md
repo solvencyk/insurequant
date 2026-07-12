@@ -7,6 +7,20 @@ Validation-only history. Cross-stage changes also keep a 1-line cross-reference 
 
 ---
 
+## 2026-07-12 (3) — 파서 census-fill 적대검증 + 분산효과 부호 sanity 신설
+
+parser가 322→2 fill(commit a797681) 완료 주장 → owner "존나 적대적으로 검증". 독립 재검증:
+- **파서 fill 견고 확인**: item18=0이월 0오류·시장하위 carry 0불일치·신용/운영 carry✓·mmult 정합·
+  한화손해 item19후=전(raw ②표 "시장 461,015→461,015 불변" 확인, 준비금경과라 시장무관, 13분기 일관).
+  2 exemption(롯데·교보 2026.1Q)도 raw 정독→②③표 진짜 부재 확인, `_AFTER_SUBRISK_NOT_DISCLOSED` 등재.
+- **적대 스윕이 파서 무관 기존 오류 1건 적발 — IBK연금 2023.2Q**: 적용후가 ②표(기본요구자본 677,870,
+  시장 불변)와 ③표(시장 281,235)를 **혼합** → Σ(위험액)<기준금액 → **분산효과 -246.66(음수)**. item27후
+  135.19도 헤드라인 요약표 176.95와 불일치. R6 항등식·item27체크·mmult가 산술만 봐서 전부 통과시킴.
+- **신설 `_diversification_negative`**(전·후, 전체회사, RED blocking): item16<0 또는 Σ(17~21)<item15.
+  전 회사 스캔 결과 음수 1건(IBK)뿐 = 고립. 게이트 배선(exit-code) 완료.
+- parser 발주 `20260712T0430Z__…__ibk_multitransition_mixed.md`(②③ 결합 재도출 or item27후 정정+세부 None).
+- **현 게이트: census 0·mmult 0·항등식 0·분산효과음수 1(IBK) 정상차단**. core RED 13 불변.
+
 ## 2026-07-12 (2) — 적용후 요구자본 census 신설 (blind spot 정정)
 
 **앞 항목의 "gate-clear"는 조기판정이었음.** owner가 아이엠라이프 2025.4Q 적용후 신용·분산효과 결측을
