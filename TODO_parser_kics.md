@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12 (validation inbox 20260712T0109Z 회신 — 잔여 10건 중 9셀 raw 재대조로 해소, 추출갭 10->3) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12(2차) (validation 재검에서 KR0104 fill 오류 지적 — 원복 후 owner 규정확인 대기로 재분류) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,20 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-12(2차) — validation 재검에서 KR0104 fill 오류 발견, 원복 + 근본원인 확인.** validation이 내
+7건 fill을 mmult로 재검산해 6건은 통과, **KR0104(농협생명) 2023.1Q 1건만 오류** 지적(해지·사업비·대재해
+후=0으로 채웠는데 sqrt(29-35후)=8,979.7이 헤드라인 신뢰값 item17후=10,899.56과 안 닫힘). raw PDF 직접
+fitz 재확인 결과 **근본원인 파악**: 이 회사는 ①공통적용(TFI)·②장수등·③주식금리 3개 경과조치 표를
+동시 적용하는데, item14후=22,802(page2 지급여력비율후 325.5%에서 역산 가능, 신뢰값)가 ①②③ 어느 표
+단독 값과도 안 맞음 — 즉 3개 표가 겹쳐 적용된 뒤의 진짜 세부후는 raw 어디에도 직접 안 나옴(②표
+단독으로 봐서 0 채운 게 오류 원인). 결합공식 불명 → **해지·사업비·대재해후 3셀 None으로 원복**(가짜
+채움 방지), owner 규정확인 대기로 재분류(KR0097 phase-in과 동일 범주 — "다중 경과조치 결합공식 불명").
+같은 재검에서 흥국화재(KR0005) 2024.4Q도 raw PDF 직접 확인 — 첫 15페이지 텍스트 5~18자뿐인 진짜
+image-only PDF 확인(downloader 재수집 무의미, validation 지적 확인). **vision-OCR 즉흥 시도는 안 함**
+(`claude-agent-parser.md` §2.1 정책 + KR0079/KR0087 선례 따라 owner GOLD-SCAN 큐 요청, escalate만).
+재검증: core RED 14 불변(mmult 불일치 2→1 복귀, 회귀 0). inbox `20260712T0109Z`에 상세 회신(`status:
+answered`).
 
 **2026-07-12 — validation inbox `20260712T0109Z` 회신, 잔여 10셀 중 9셀 raw 재대조로 해소(추출갭 10->3).**
 validation이 4차 라운드 직후 전수검증(item17 215/224·item19 141/142 mmult 닫힘)해 정확히 같은 잔여

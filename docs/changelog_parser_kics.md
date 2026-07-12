@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-12 (2차) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,32 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-12 (2차) — validation 재검에서 KR0104 fill 오류 발견·원복, 다중경과조치 결합공식 불명 확인
+
+validation이 전 라운드의 7건 fill을 mmult로 재검산해 6건 통과·**KR0104 농협생명 2023.1Q 1건 오류** 지적
+(해지·사업비·대재해후=0 fill이 sqrt(29-35후)=8,979.7 vs 헤드라인 신뢰값 item17후=10,899.56로 mmult
+불일치). raw PDF 직접 fitz 재확인(`data/disclosure/FY2023_Q1/raw/KR0104_농협생명보험.pdf`)으로 근본원인
+확인: 이 회사는 ①공통적용(TFI)·②장수/해지/사업비/대재해·③주식금리 **3개 경과조치를 동시 적용**하는데,
+헤드라인 item14후=22,802(page2 요약 지급여력비율후 325.5%에서 역산 가능, 신뢰값)가 ①②③ 어느 표
+단독 값과도 안 맞음(①=42,290 불변·②=32,557.6·③=33,945.19) — 즉 다중 경과조치가 겹친 뒤의 진짜
+세부항목후 조합공식이 raw 어디에도 직접 안 나타남. ②표 하나만 보고 dash=0으로 채운 게 오류 원인 —
+해지·사업비·대재해후 3셀을 None으로 원복(가짜 채움 방지), owner 규정확인 대기 범주로 재분류
+(하나생명 KR0097의 phase-in 미해결 이슈와 동일 성격: "다중/단계적 경과조치 결합공식 불명").
+
+같은 재검에서 흥국화재(KR0005) 2024.4Q의 downloader 분류도 정정 요청받음 — raw PDF 직접 확인
+(`data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf`, fitz 텍스트 추출: 첫 15페이지 전부 5~18자만
+나옴)으로 **진짜 image-only PDF**(텍스트 레이어 없음, 재수집해도 동일) 확인 — downloader 소관 아님
+맞음. 단 parser도 이 자리에서 vision-OCR 즉흥 시도는 안 함: `claude-agent-parser.md` §2.1 정책(image-only
+만나면 escalate, OCR 즉흥 금지) + 기존 KR0079/KR0087 2023.2Q 선례(owner GOLD-SCAN 전담) 따라 owner
+GOLD-SCAN 큐 추가 요청만 하고 documented exception 유지.
+
+**결과**: core RED **14 불변**(mmult 불일치 2→1로 정정, 회귀 0 — KR0104 오류 fill을 정직하게 되돌린 덕에
+오히려 게이트가 더 정확해짐). 추출갭 실질 미해소 4건(하나생명 2건 phase-in·처브라이프 1건 불규칙표·
+농협생명 1건 다중결합) 전부 owner 규정확인 또는 GOLD-SCAN 대상으로 성격 정리 완료, 임의 추정치로
+안 닫음. inbox `20260712T0109Z`에 상세 회신(`status: answered`).
 
 ---
 
