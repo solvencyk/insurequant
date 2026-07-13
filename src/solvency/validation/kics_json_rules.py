@@ -562,7 +562,11 @@ def run_validation(
         item2_post = bucket.get(2, post=True)
         if item2_pre is not None and item2_post is not None and item2_post != item2_pre:
             diff = item2_post - item2_pre  # should be >= -tol
-            if diff >= -eff_tol:
+            # 대형사 grandfather 미세감소 허용: 절대 2.0은 수조원대 기본자본에 과도하게 엄격.
+            # 경과조치 2차효과(보완자본 한도 재계산 등)로 극소량 감소는 정상(한화손해 2024.2Q raw
+            # 확인: 기본자본 2,638,159→2,637,797 백만 = −0.015%). rule 8_life 동적허용오차와 동일 발상.
+            gf_tol = max(eff_tol, 0.0005 * abs(item2_pre))
+            if diff >= -gf_tol:
                 status = STATUS_GREEN
             else:
                 status = STATUS_RED
@@ -570,7 +574,7 @@ def run_validation(
                 bucket, "9",
                 status=status,
                 expected=item2_pre, actual=item2_post, diff=diff,
-                detail="item2(기본자본) 적용후 >= 적용전 expected (transitional grandfather)",
+                detail="item2(기본자본) 적용후 >= 적용전 expected (transitional grandfather, dynamic tol)",
             ))
         else:
             findings.append(_finding(
