@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-15 (owner ticket — 2026.1Q 요구자본 적용후 세부 5개사 파싱갭 + 하나생명 기존값 오류 정정) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-15(2차) (owner ticket 2차 — 과거분기 유사갭 한화생명 3분기·농협생명 2분기 + 이전 라운드 오판정 정정) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,23 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-15(2차) — owner 지시로 "2차(과거분기 유사갭)" 이어서 처리, 완료 + 2026-07-12(2차) 오판정
+정정.** 한화생명(KR0068) 2024.3Q·2025.2Q·2025.3Q, 농협생명(KR0104) 2023.1Q·2023.2Q raw 재대조:
+- 한화생명 3개 분기: 전부 선택경과조치 완전 미적용(raw 명시, 1차와 동일 패턴) → 15-23후=전 미러링.
+- 농협생명 2개 분기: ②+③ 동시적용, 1차와 동일 비중첩 구조로 item17/19 개별신뢰 + R4 역산 검증. 부수로
+  농협 2023.2Q 시장하위(36-40후)도 해소(1차 패턴과 동일).
+- **⚠️ 오판정 정정**: 농협생명 2023.1Q item17후가 `10,899.56`("다중 경과조치 결합공식 불명", 2026-07-12
+  2차)으로 저장돼 있었는데, raw `[지급여력비율총괄]`(지급여력기준금액후=22,802 직접공시) 앵커 + R4
+  역산이 `8,979.7`로 수렴(원 ②표 값과 일치) — 10,899.56은 어떤 raw 표·항등식도 만족 못 함을 확인,
+  **오류로 정정**. 함께 None 처리됐던 33/34/35(해지·사업비·대재해)도 raw dash(=0)로 복원.
+  (`scripts/_probes/verify_r4_kr0104_2023q1.py`)
+
+50셀 추가+정정. 재검증 RED 12(무관 기존건, 회귀 0), census 결측 4(회귀 0, 신규노출분도 해소).
+`pytest` 110 passed. inbox `20260715T0801Z`에 2차 회신 추가. **owner가 언급한 과거분기 갭은 이 5건이
+전부, 2차도 종결.**
+
+---
 
 **2026-07-15 — owner ticket `20260715T0801Z`: 2026.1Q 요구자본(15-23) 적용후 5개사 결측 → raw 재대조로
 46셀 채움, 하나생명 기존 오류 4셀 정정.** 신규 로드된 FY2026_Q1에 대해 `fill_post_transition_to_
@@ -26,8 +43,8 @@ raw PDF 직접 재대조:
 
 재검증: RED 12(전부 무관 기존 건, 회귀 0), 적용후 census 결측 5→4(농협 해소, 잔여 4=예별손해
 2023.1-3Q·IBK 2023.2Q 기존 documented). `pytest tests/unit/` 110 passed. xlsx 재생성 완료. inbox
-`20260715T0801Z`에 상세 회신(`status: answered`). **2차(과거분기 유사갭: 한화 2024.3Q·2025.2Q·
-2025.3Q, 농협 2023.1Q~2Q)는 owner 요청대로 미착수, 다음 라운드.**
+`20260715T0801Z`에 상세 회신(`status: answered`). **2차(과거분기 유사갭)는 위 2026-07-15(2차) 항목에서
+완료.**
 
 ---
 

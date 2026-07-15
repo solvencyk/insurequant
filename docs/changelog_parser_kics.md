@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-15 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-15 (2차) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,55 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-15 (2차) — 과거분기 유사갭(한화생명 3분기·농협생명 2분기) + 2026-07-12(2차) 오판정 정정
+
+Owner 지시로 round-1 inbox 회신에 남긴 "2차(우선순위 낮음)" 항목을 이어서 처리: 한화생명(KR0068)
+2024.3Q·2025.2Q·2025.3Q, 농협생명(KR0104) 2023.1Q·2023.2Q — round-1과 동일한 "적용후 요구자본
+15-23 결측" 패턴이 실제로 존재하는지 raw 재대조.
+
+- **한화생명 3개 분기**: raw에 "당사는 [자본감소분/장수위험 등/주식위험] 경과조치를 적용하지 않아
+  경과조치 전후 금액 및 비율이 동일함" 명시(round-1 2026.1Q와 동일 패턴) — 3개 분기 전부 선택경과조치
+  완전 미적용. 15-23후를 전 그대로 미러링. 2025.2Q는 TFI(공통) 효과로 item1/2/3후가 소폭 다르지만
+  (이미 JSON에 정확히 적재돼 있었음), raw의 "1)공통적용" 표가 요구자본(지급여력기준금액)은 별도로
+  불변임을 명시적으로 확인해줘서 15-23 미러링에는 지장 없음.
+- **농협생명 2개 분기**: ②(장수 등, disjoint→item17)+③(주식/금리, disjoint→item19) 동시적용, round-1의
+  교보생명·농협생명-2026.1Q와 동일한 비중첩 구조(각 표가 상대방 항목 불변을 자체 확인) — item17=②표,
+  item19=③표 개별신뢰. R4 공식 역산이 두 분기 모두 이미 신뢰중인 item14/15와 ±0.5억 이내로 재현
+  (`scripts/_probes/verify_r2_all.py`). 부수로 농협 2023.2Q에서 item19를 채우자 census가 시장하위
+  (item36-40후) 결측도 지적 — round-1 농협 2026.1Q와 동일 후속 패턴이라 같은 raw(③표)로 즉시 해소
+  (`scripts/_probes/verify_market_m_kr0104_2023q2.py`로 item19=16191.70 소수점까지 재현 확인,
+  `scripts/fix_20260715_kr0104_market_subs_2023q2.py`).
+
+**⚠️ 이전 세션 판정 정정 (2026-07-12 2차, 위 항목 참조)**: 그 세션은 농협생명 2023.1Q item17후를
+`10,899.56`으로 두고 "sqrt(29-35후)=8,979.7과 안 닫힘 → 다중 경과조치 결합공식 불명"이라 결론,
+해지·사업비·대재해(33/34/35)를 None으로 되돌렸음. 이번 세션에서 raw를 처음부터 다시 짚어보니:
+1. `[지급여력비율총괄]`(p.9)이 지급여력기준금액(경과조치후)=**22,802**를 **직접 공시** — item14가
+   역산치가 아니라 원문 그대로임을 확인(item1=74,210도 raw 공통표에서 불변 확인).
+2. item15=item14+22-23=28,917(항등식, 이미 신뢰 중이던 값)을 R4 공식으로 역산하면 item17은
+   **8,980.53**(이차식의 유일한 양의 실근)로 나옴 — `10,899.56`이 아니라 원 ②표 값(`8,979.70`)과
+   거의 정확히 일치. `10,899.56`은 어떤 raw 표에도, R4 항등식에도 부합하지 않음 — **오류로 판단**.
+   (`scripts/_probes/verify_r4_kr0104_2023q1.py`)
+3. item17을 8,979.70으로 정정(OVERWRITE), 해지·사업비·대재해(33/34/35)는 raw가 명시적으로 "-"(=0)이라
+   0으로 복원(RESTORE) — 두 번(직접 표 읽기 + R4 역산)의 독립 확인이 일치.
+4. 농협 2023.2Q는 items 29-35 행 자체가 (값 쪽도) 아예 존재하지 않아 이번 스코프 제외 —
+   값_적용후만의 결측이 아니라 더 근본적인/별개의 갭.
+
+**결과**: 45(round2 본체)+5(농협 2023.2Q 시장하위)=50셀 추가/정정. `validate_kics_disclosure.py`
+재검증: core RED 12(전부 무관 기존 건, round-1 이후 회귀 0). 적용후 census 결측 5(일시)→**4**(신규
+노출된 농협 2023.2Q 시장하위 갭도 즉시 해소, 잔여 4는 round-1과 동일한 예별손해 3분기·IBK 1분기
+기존 documented). `pytest tests/unit/` 110 passed. xlsx 재생성 완료. inbox `20260715T0801Z`에 2차
+회신 추가(`status: answered`).
+
+**스크립트**: `scripts/fix_20260715_round2_post_scr_breakdown.py`(주 수정 — UPSERT 41 + item17
+OVERWRITE 1 + 33/34/35 RESTORE 3 + DERIVE) + `scripts/fix_20260715_kr0104_market_subs_2023q2.py`.
+검증: `scripts/_probes/{verify_r2_all,verify_r4_kr0104_2023q1,verify_market_m_kr0104_2023q2,
+probe_round2_gap_20260715,find_post_pages_multi,probe_kr0104_subrisk_2023}.py`.
+
+**owner가 언급한 과거분기 유사갭은 이 5건(한화 3분기+농협 2분기)이 전부 — 2차 종결. 더 이상 알려진
+잔여 없음.**
 
 ---
 
