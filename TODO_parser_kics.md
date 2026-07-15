@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12(6차) (validation 반려 — IBK 공통(TFI) 누락 재정정 + 예별손해 3건 동형 발견·정정) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-15 (owner ticket — 2026.1Q 요구자본 적용후 세부 5개사 파싱갭 + 하나생명 기존값 오류 정정) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,28 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-15 — owner ticket `20260715T0801Z`: 2026.1Q 요구자본(15-23) 적용후 5개사 결측 → raw 재대조로
+46셀 채움, 하나생명 기존 오류 4셀 정정.** 신규 로드된 FY2026_Q1에 대해 `fill_post_transition_to_
+disclosure.py`/`backfill_post_transition_when_not_applied.py`가 아직 재실행 안 된 것이 근본원인
+(과거 분기는 이미 처리됨, 2026.1Q는 처음). 5개사(한화생명·교보생명·하나생명·롯데손해·농협생명)
+raw PDF 직접 재대조:
+- 한화생명: 선택경과조치 완전 미적용(raw 명시 확인) → 15-23후=전 미러링.
+- 교보·농협: ②(장수)+③(주식/금리) 동시적용이지만 두 표가 서로 다른 항목만 건드리는 비중첩 구조 확인
+  (상대방 항목 불변을 각 표가 자체 교차확인) → item17=②표/item19=③표 개별신뢰, item16=derive.
+  R4 공식으로 역산해 각사 헤드라인 item14와 ±0.5억 이내 재현 확인(우연 아님).
+- **하나생명: 기존 item14/15/27/28후가 ②표 단독(isolated) 값으로 잘못 저장돼 있던 것 발견·정정**
+  (진짜 헤드라인=`[지급여력비율총괄]` 5,558억인데 저장값은 5,769.44억=②만 적용했을 때 값이었음).
+- 롯데손해: ②만 단독 적용(raw 명시) → ②표가 곧 결합 정답, 경합 없음.
+- 부수: 농협생명 item19 채우자 census가 시장하위(36-40후) 결측도 지적 → 같은 raw(③표)로 마저 해소,
+  MARKET_M 공식 역산이 item19=10865.69 소수점까지 정확 재현.
+
+재검증: RED 12(전부 무관 기존 건, 회귀 0), 적용후 census 결측 5→4(농협 해소, 잔여 4=예별손해
+2023.1-3Q·IBK 2023.2Q 기존 documented). `pytest tests/unit/` 110 passed. xlsx 재생성 완료. inbox
+`20260715T0801Z`에 상세 회신(`status: answered`). **2차(과거분기 유사갭: 한화 2024.3Q·2025.2Q·
+2025.3Q, 농협 2023.1Q~2Q)는 owner 요청대로 미착수, 다음 라운드.**
+
+---
 
 **2026-07-12(6차) — validation이 5차 IBK fix를 반려(공통(TFI) 경과조치 누락) + 예별손해(KR0004) 3개
 분기 동형 사례 신규 발견 → 둘 다 정정, 전수 재조정(119건)은 시도했으나 한계로 반환.**

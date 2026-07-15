@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-12 (6차) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-15 · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,66 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-15 — 2026.1Q 요구자본(15-23) 적용후 5개사 결측 채움 + 하나생명 기존값 오류 정정
+
+Owner ticket (`inbox/parser/20260715T0801Z`): K-ICS.html 경과조치 적용후 모드에서 2026.1Q 요구자본
+부모 항목(17/18/19)이 5개사(한화생명·교보생명·하나생명·롯데손해·농협생명) 전부 공란. 근본원인은
+버그가 아니라 **누락된 파이프라인 단계** — `fill_post_transition_to_disclosure.py`와
+`backfill_post_transition_when_not_applied.py`가 새로 로드된 FY2026_Q1에 대해 아직 재실행된 적이
+없었음(과거 분기는 이전 라운드들에서 이미 처리됨, 이 두 스크립트는 `--all-periods` 자동 파이프라인에
+안 걸려있고 티켓 단위 수동 실행임).
+
+5개사 raw PDF 직접 재대조(`data/disclosure/FY2026_Q1/raw/`, `scripts/_probes/dump_pdf_pages.py`):
+
+- **한화생명(KR0068)**: raw에 "당사는 [자본감소분/장수위험 등/주식위험] 경과조치를 적용하지 않아
+  경과조치 전후 금액 및 비율이 동일함" 명시 3곳(선택경과조치 완전 미적용). item15-23후를 전 그대로
+  미러링(owner 2026-07-07 "후=전도 None 대신 명시저장" 원칙을 15-23까지 확장 적용한 것과 동일).
+- **교보생명(KR0073)**: ②(장수·해지·사업비·대재해)+③(주식위험, 금리위험은 미적용) 동시 적용. 두 표가
+  서로 **비중첩(disjoint)** 항목만 건드림을 각 표가 자체 교차확인(②표는 시장위험 불변, ③표는
+  생명장기위험 불변으로 명시) → item17=②표 단독값/item19=③표 단독값을 그대로 신뢰 가능(결합 공식
+  불필요, 상관관계는 두 항목의 *존재값*이 아니라 그걸 합산하는 item15 계산에서만 문제됨). item16=
+  Σ(17-21)-15 derive. item14/15/1/2/3후는 기존값이 이미 정확(헤드라인 앵커, 안 건드림). item22/23후는
+  두 표가 동일하게 불변 확인해 carry.
+- **하나생명(KR0097) — 기존 데이터 오류 발견·정정**: item14/15/27/28후가 실제로는 ①TAC+②+③ **결합**
+  헤드라인이 아니라 **②표 단독(isolated)** 값(576,944백만=5,769.44억)으로 저장돼 있었음. 진짜 결합
+  헤드라인은 `[지급여력비율총괄]`(p.7) 표의 5,558억(경과조치후, 해당분기) — item14 5769.44→**5558**,
+  item15 5769.7→**5558**, item27 149.45315317→**155.14**, item28 20.12275021→**20.89**로 정정
+  (OVERWRITE, 4셀만 명시 대상). item17(4055.79)은 ②가 유일하게 생명장기를 건드리는 표라 우연히
+  이미 정답이었음(안 건드림). item18/19/20/21/23/16 신규 채움.
+- **롯데손해(KR0003)**: raw에 "장기손해보험 장수위험·사업비위험·해지위험 및 대재해위험 경과조치를
+  신청하여 적용" 명시(②만 단독 적용, ①③은 명시적으로 미적용) — 유일한 활성 경과조치라 ②표가 곧
+  결합 정답, 다른 회사들 같은 결합-불명 문제 자체가 없음. item16-23 채움, 기존 item14/15/27/28
+  이미 정확 재확인.
+- **농협생명(KR0104)**: 가장 심함(item1/3/15-23 전부 결측, item2/14/27/28만 기존값 존재). ②+③
+  동시적용, 교보와 동일 비중첩 구조로 item17/19 개별신뢰. item1=raw 공통적용표에서 불변 확인(69292),
+  item3=item1-item2 역산(44414). item15=item14(기존 18500)+22-23 identity(24422.68). **부수 발견**:
+  item19를 채우자 검증 census가 시장하위(item36-40후)도 결측이라고 새로 지적 — 같은 raw ③표
+  (page21)에서 마저 채움(`scripts/fix_20260715_kr0104_market_subs.py`, 5셀).
+
+**수학적 검증**: R4 분산공식(`item15=√(V'·R4·V)+item21`, V=[17,18,19,20])으로 disjoint-derive된 값을
+역산하면 교보/하나/농협 3사 전부 각사 헤드라인 item14와 ±0.5억 이내로 재현됨(`scripts/_probes/
+verify_r4_combo_20260715.py`, `verify_r4_hana_20260715.py`) — 우연이 아니라 추출값이 내적으로
+일관됨을 의미. 농협 item36-40도 MARKET_M 공식 역산이 item19=10865.69을 소수점까지 정확히 재현
+(`verify_market_m_kr0104.py`).
+
+**결과**: 41+5=46셀 채움/정정(UPSERT 41 + 정정 4 + 시장하위 5, 일부 중복집계 없음). `validate_kics_
+disclosure.py` 재검증: core RED 12(전부 무관 기존 건 — KR0087·KR0079 2023.2Q, KR0097 **2024.2Q**
+[오늘 손대지 않은 분기] — 회귀 0). 적용후 하위 census 결측 RED 5→**4**(농협 2026.1Q 해소분 반영,
+잔여 4건은 예별손해 2023.1-3Q·IBK 2023.2Q — 전부 기존 documented, 이번 세션 무관). 적용후 세부위험
+추출갭(review) 2→1. `pytest tests/unit/` 110 passed. `kics_disclosure.json`/`templates` 동기화 +
+`insurequant_master_tables.xlsx` 재생성 완료. inbox `20260715T0801Z`에 상세 회신(`status: answered`).
+
+**스크립트**: `scripts/fix_20260715_post_scr_breakdown_gap.py`(주 수정 — 41 UPSERT + 하나생명 4셀
+OVERWRITE, 근거 docstring 포함) + `scripts/fix_20260715_kr0104_market_subs.py`(후속). 두 스크립트 다
+UPSERT 우선/idempotent, 재실행 안전. 진단 근거는 `scripts/_probes/{dump_pdf_pages,
+find_post_breakdown_pages,verify_r4_combo_20260715,verify_r4_hana_20260715,
+verify_market_m_kr0104}.py`.
+
+**미착수(owner 요청대로 2026.1Q 우선, 2차는 다음 라운드)**: 한화 2024.3Q·2025.2Q·2025.3Q, 농협
+2023.1Q~2Q의 유사 적용후 요구자본 갭.
 
 ---
 
