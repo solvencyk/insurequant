@@ -1,9 +1,56 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-07-07 · Stage 3/5 — validation
+> Last updated: 2026-07-15 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+---
+
+## 2026-07-16 — 부모 census parser fill 적대검증 (worklist `20260715T0835Z` resolved)
+
+parser가 continuity 워크리스트 답변(fill: 삼성생명 2025.1Q·동양생명 4분기·한화생명 2025.2Q/3Q·흥국생명
+17~21·하나생명 18~23). validation 재검증:
+- **미러fill(후=전) 정당성 PASS** (V17 가짜복사 재발 아님): 삼성생명(KR0069)·동양생명(KR0087)·한화생명
+  (KR0068)은 `_TRANSITION_APPLIERS` 18사(elective)에 없는 **공통(TFI)경과조치사** → 요구자본(item15~21)
+  후=전이 도메인상 정답(TFI는 가용자본만 영향). 적대검증: item1(가용자본)후는 2025.2Q에 실효과(Δ+825~1188)
+  로 ≠전인데 item15~21후=전(±1억 반올림뿐) = 공통경과조치 정합 확인. mirror=정답.
+- **무회귀**: `_transition_ratio_after_capture`(COPY/LOWER/AMT_MISMATCH)·mmult·항등식·분산효과음수 전부
+  0 유지. continuity break **117→62셀**, **push 게이트 census RED 47→4**.
+- **잔여 2건 owner escalate**(raw 도출불가, `_POST_PARENT_NOT_DISCLOSED` 결정 대기):
+  흥국생명 2024.4Q [15,16,22](image PDF+TIR/TER 다중경과 R4 재현불가) · 하나생명 2024.4Q [16](비표준
+  감사보고서 공시, item17후=1757.32가 raw page 2001.90 불일치=partial-mmult 아티팩트 의심 → item16 파생값
+  불신). validation 자체 waiver 안 함 = owner 택일(exemption 등재 vs 재추출).
+- non-display 비차단 워크리스트: 코리안리 3분기·악사·처브·IBK 2023.2Q 등(git-purge raw, 저우선).
+
+---
+
+## 2026-07-15 — 적용후 요구자본 **부모** census blind spot (owner `20260715T0801Z`)
+
+owner: 2026.1Q push 게이트가 통과했으나 5적용사(한화생명·교보·하나·롯데손해·농협) 요구자본 부모 항목
+`값_적용후`가 결측인 채 통과(false-green). 근본원인: 07-12 census(`_parent_present_child_incomplete_after`)는
+**부모후 present일 때만** 자식 결측을 봐서 **부모(15~21) 통째 결측이면 census/identity/mmult 전부 skip**.
+
+- **신설 `_post_transition_parent_census`** (scripts/validate_kics_disclosure.py): 적용후를 공시하는 회사의
+  요구자본 부모 continuity census. (회사,항목) 값_적용후가 **직전 공시분기 present인데 당 분기 결측**이고
+  이후 재출현(SANDWICHED)/최신분기(TRAILING)이면 = 추출갭 → RED. 도입초 onset·항구적 중단은 flag 안 함.
+  - 대상: 15기본요구자본·16분산효과·17생명장기·18일반손해·19시장·20신용·21운영 = **코어(RED)**; 22법인세조정·
+    23기타요구자본 = 조정(코어 break 동반 시만 RED, 단독은 review — 종속회사/법인세 legit-absent 흔함).
+  - **적용사 판정 = continuity 자체**(별도 seed 없음) → `_TRANSITION_APPLIERS` 18사(elective)에 없던 공통
+    경과조치사 **한화생명(KR0068)·삼성생명(KR0069)·코리안리(KR1000)**도 포착. 한화생명이 기존 검사에서
+    빠지던(18사 하드코딩) 근본원인 해소.
+  - 항목 4/12/13(구조적 적용후 미공시=NO_POST_TRANSITION_DISCLOSURE)은 census 대상 원천제외 → 구조적은
+    flag 안 됨(요청3). 면제 registry `_POST_PARENT_NOT_DISCLOSED`=비어있음(owner "오면제 금지", waiver=owner 권한).
+- **양쪽 배선**: (1) `validate_kics_disclosure.py` 전분기 리포트+exit2 (parser 워크리스트),
+  (2) `validate_data_contract.py` `check_census` 1b(iii) **display 분기만 차단**(다른 census와 동일 scope)
+  = "push 게이트가 통과"의 정정 지점. 두 스크립트 compile OK, 기존검사(mmult/항등식/하위census/core RED) 무회귀.
+- **검증**: 병행 parser 세션이 2026.1Q 5사 15~23 값_적용후 전량 UPSERT(mtime 17:32) → 2026.1Q census RED=0 +
+  산술 후검사 0 통과 = **게이트가 갭→RED, fill→통과** 설계대로 작동 확인.
+- **잔존 push 차단 census RED=47 (8 회사·분기, historical display)** → parser 발주 `20260715T0835Z`:
+  🆕 삼성생명 2025.1Q·흥국생명 2024.4Q(진짜 추출갭, 매분기 공시 중 1분기 유실) · owner 2차 한화생명 2025.2Q/3Q ·
+  raw확인 동양생명 3분기·하나생명 2024.4Q(구조적이면 owner exemption).
+- **건2 `8_post` dynamic tol (publishing `20260712T0219Z`)**: 이미 07-12 코드반영 확인(KR1098 2023.4Q 8_post
+  =YELLOW diff -92.82 tol내), `7_post` 룰 부재 → 추가 조치 불요. resolved.
 
 ---
 

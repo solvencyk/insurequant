@@ -683,6 +683,92 @@ def _diversification_negative(records: list[dict]) -> list[tuple]:
     return out
 
 
+# 요구자본 '부모' 항목 (경과조치 적용후 continuity census 대상). item14(지급여력기준금액=Ⅰ-Ⅱ+Ⅲ)의 구성:
+#   15=Ⅰ.기본요구자본, 16=분산효과, 17=생명장기·18=일반손해·19=시장·20=신용·21=운영(5대 위험액),
+#   22=Ⅱ.법인세조정액, 23=Ⅲ.기타요구자본(종속회사). 하위위험(29~40)의 한 단계 상위 부모(=화면 요구자본 세부행).
+# 15~21=코어(경과조치 적용후에도 반드시 공시), 22/23=간헐(종속회사·법인세 유무로 legit-absent 가능).
+_POST_PARENT_CORE = (15, 16, 17, 18, 19, 20, 21)
+_POST_PARENT_ADJUST = (22, 23)
+
+# 적용후 부모 census documented exception — 요구자본 '적용후' 컬럼이 구조적으로 미공시/재현불가 확정된
+# (회사,분기)만. NO_POST_TRANSITION_DISCLOSURE(항목 4/12/13류)의 요구자본-부모 버전. exemption 추가는
+# **owner 권한**(서브에이전트 자체판단 waiver 금지, memory: user-approves-not-executes). 등재분:
+#   ("KR0071","2024.4Q") 흥국생명 — image-only PDF + TIR/TER 다중경과조치, R4 재현불가(역산 item15
+#     14,747 vs 헤드라인 16,987, Δ2,240 비반올림). parser 비전판독으로 17~21은 채웠으나 15/16/22 결합불명.
+#     owner 승인 2026-07-16.
+#   ("KR0097","2024.4Q") 하나생명 — 비표준(감사보고서 재무상태표) 공시. 이미 _AFTER_SUBRISK_NOT_DISCLOSED
+#     등재분. item16후 산술파생 가능하나 입력 item17후=1757.32가 raw page(2001.90) 불일치=partial-mmult
+#     아티팩트 의심 → 파생값 불신. owner 승인 2026-07-16.
+_POST_PARENT_NOT_DISCLOSED: frozenset = frozenset({
+    ("KR0071", "2024.4Q"),
+    ("KR0097", "2024.4Q"),
+})
+
+
+def _post_transition_parent_census(records):
+    """경과조치 '적용후' 요구자본 부모 항목(15~21 코어, 22/23 조정) 값_적용후 continuity census
+    (owner 2026-07-15 blind spot). 기존 적용후 census/identity/mmult는 부모후가 present일 때만 동작 →
+    부모후 자체가 통째 결측이면 전부 skip = false-green (2026.1Q 한화·교보·하나·롯데·농협 통과사고).
+
+    continuity-break-is-RED 준용: (회사,항목) 값_적용후 시계열에서 **직전 공시분기에 적용후가 있었는데
+    당 분기 결측**이고 (그 뒤 분기에도 적용후가 다시 있음=sandwiched, 또는 당 분기가 최신=trailing)이면
+    = 추출갭 시그니처 → RED. 인접분기에 적용후가 있었다는 건 그 회사가 그 항목의 적용후를 공시한다는
+    증거라, 당 분기 결측은 구조적 미공시가 아니라 파싱 유실. (직전 적용후 없는 도입초 onset·항구적
+    중단은 flag 안 함 — 오탐 억제.)
+
+    - 코어(15~21): continuity break = RED(blocking).
+    - 조정(22/23=법인세조정·기타요구자본): 같은 (회사,분기)에 코어 break가 있을 때만 RED(표 전체 유실의
+      일부) — 단독 22/23 break는 종속회사/법인세 legit-absence일 수 있어 review(비차단).
+    - _POST_PARENT_NOT_DISCLOSED 등재 (회사,분기)만 면제.
+
+    반환 (red, review): 각 (code, quarter, name, item, neighbor_q, kind[SANDWICHED|TRAILING])."""
+    # (code, item) -> {quarter: (pre_present, post_present)}
+    idx: dict[tuple, dict] = defaultdict(dict)
+    name: dict[str, str] = {}
+    items_of_interest = set(_POST_PARENT_CORE) | set(_POST_PARENT_ADJUST)
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if not (c and q) or it not in items_of_interest:
+            continue
+        pre_ok = _num_cell(r.get(KEY_VALUE)) is not None
+        post_ok = (KEY_VALUE_POST in r) and (_num_cell(r.get(KEY_VALUE_POST)) is not None)
+        idx[(c, it)][q] = (pre_ok, post_ok)
+
+    def _breaks(items):
+        out = []
+        for (c, it), qv in idx.items():
+            if it not in items:
+                continue
+            dq = sorted(q for q, (pre, _po) in qv.items() if pre)  # 적용전 present(=행 실재) 분기만
+            for i, q in enumerate(dq):
+                if qv[q][1]:
+                    continue  # 적용후 present → OK
+                prev_post = i > 0 and qv[dq[i - 1]][1]
+                if not prev_post:
+                    continue  # 직전 분기에 적용후 없음(도입초 onset / 직전도 결측) → break 아님
+                is_latest = (i == len(dq) - 1)
+                later_post = any(qv[dq[j]][1] for j in range(i + 1, len(dq)))
+                if not (later_post or is_latest):
+                    continue  # 직전만 있고 이후 계속 없음(항구적 중단) → 구조변화 가능, flag 안 함
+                if (c, q) in _POST_PARENT_NOT_DISCLOSED:
+                    continue  # owner 확정 구조적 미공시
+                kind = "TRAILING" if is_latest else "SANDWICHED"
+                out.append((c, q, name.get(c, c), it, dq[i - 1], kind))
+        return out
+
+    core = _breaks(_POST_PARENT_CORE)
+    adjust = _breaks(_POST_PARENT_ADJUST)
+    core_cells = {(c, q) for c, q, *_ in core}
+    red = sorted(core + [b for b in adjust if (b[0], b[1]) in core_cells])
+    review = sorted(b for b in adjust if (b[0], b[1]) not in core_cells)
+    return red, review
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8")  # Windows console defaults to cp949
@@ -788,6 +874,13 @@ def main() -> int:
         {"code": c, "quarter": q, "name": n, "mode": mode, "value": v, "kind": k}
         for c, q, n, mode, v, k in div_negative
     ]
+    post_parent_red, post_parent_review = _post_transition_parent_census(records)
+    report["post_transition_parent_census"] = {
+        "red": [{"code": c, "quarter": q, "name": n, "item": it,
+                 "neighbor_q": nb, "kind": k} for c, q, n, it, nb, k in post_parent_red],
+        "review_22_23": [{"code": c, "quarter": q, "name": n, "item": it,
+                          "neighbor_q": nb, "kind": k} for c, q, n, it, nb, k in post_parent_review],
+    }
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     # stable-name 최신 포인터: glob 정렬 함정(stale report_latest.json) 방지 — 매 실행 fresh 덮어쓰기.
     (out_dir / "report_latest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -906,6 +999,25 @@ def main() -> int:
             print(f"    {q} {c} {n} [{mode}]: {v} [{k}] → 분산효과<0")
     else:
         print("분산효과(item16) 음수: 0")
+    if post_parent_red:
+        pc = Counter((c, q) for c, q, *_ in post_parent_red)
+        kc = Counter(k for *_, k in post_parent_red)
+        print(f"적용후 요구자본 부모 continuity break (적용후 공시하다 갑자기 결측=추출갭, RED): "
+              f"{len(post_parent_red)}셀 / {len(pc)}(회사,분기) "
+              f"[TRAILING={kc.get('TRAILING',0)} SANDWICHED={kc.get('SANDWICHED',0)}]")
+        bycq = defaultdict(lambda: ["", []])
+        for c, q, n, it, nb, k in post_parent_red:
+            bycq[(q, c, n)][0] = k
+            bycq[(q, c, n)][1].append(it)
+        for (q, c, n), (k, its) in sorted(bycq.items()):
+            print(f"    {q} {c} {n} [{k}]: item{sorted(its)}후 결측 (인접분기 적용후 present → 표 유실)")
+    else:
+        print("적용후 요구자본 부모 continuity break: 0")
+    if post_parent_review:
+        print(f"적용후 조정항목(22법인세·23기타요구자본) 단독 continuity break (종속회사/법인세 legit-absent "
+              f"가능, 비차단 review): {len(post_parent_review)}")
+        for c, q, n, it, nb, k in post_parent_review:
+            print(f"    {q} {c} {n} item{it}후 결측 [{k}] → 원천확인(단독=코어 break 없음)")
     print("RED failures by rule:")
     for rule_id, cnt in sorted(fail_by_rule.items(), key=lambda x: (-x[1], x[0])):
         print(f"  rule {rule_id}: {cnt}")
@@ -928,7 +1040,7 @@ def main() -> int:
 
     return 2 if (red > 0 or census_red > 0 or parent_child or partial_child
                  or trans_after or item12_copy or mmult_mismatch or after_ident_fails
-                 or after_incomplete or div_negative) else 0
+                 or after_incomplete or div_negative or post_parent_red) else 0
 
 
 if __name__ == "__main__":
