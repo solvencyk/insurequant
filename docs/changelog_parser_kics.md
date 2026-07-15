@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-15 (2차) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-15 (3차) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,57 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-15 (3차) — validation 신설 continuity-break 게이트 대응, 96셀/14쌍 → 62셀/10쌍
+
+Validation이 신설한 `_post_transition_parent_census` 게이트(inbox `20260715T0835Z`)가 "적용후가 인접
+분기엔 있는데 당 분기만 결측"인 continuity-break 14(회사,분기)쌍/96셀을 적발. 우선순위 지정분(신규
+발견 최우선: 삼성생명·흥국생명 / raw확인필요: 동양생명·하나생명) 처리:
+
+**완전 해소** — 삼성생명(KR0069) 2025.1Q, 동양생명(KR0087) 2024.2Q·2024.4Q·2025.1Q: raw 전부 "당사는
+공통적용(TFI) 경과조치만 적용, 선택적용 ①②③은 전부 미적용" 확인(2026-07-15 1차/2차와 동일 패턴) —
+16-23후=전 미러링. 동양생명은 2025.1Q를 채우자 검증이 2025.2Q를 새로 sandwiched로 지적(같은 "양파
+껍질" 현상, 1차 농협생명 시장하위와 동일 성격) — 즉시 같은 raw로 해소(`fix_20260715_round3b_
+dongyang_2025q2.py`). 이 회사 체인은 이제 완전.
+
+**부분 해소, 원인이 서로 다른 2건**:
+- **하나생명(KR0097) 2024.4Q**: 이 회사 이 분기 raw는 표준 "정기경영공시" 형식이 아니라 **"지급여력
+  및 건전성감독기준 재무상태표"(외부감사인 첨부 감사보고서 스타일, 단위 천원)** —
+  `data/disclosure/FY2024_Q4/raw/KR0097_하나생명보험.pdf` p.279-281. item14/15후는 이미 이 페이지
+  값과 정확히 일치하게 채워져 있었음(과거 세션이 이미 이 소스를 찾아냈던 것으로 보임) — item18/19/
+  20/21/22/23을 같은 페이지에서 채움(18/20/21/22/23은 전후 동일 확인, 19만 실변화). **item17후=
+  1757.32(기존값)는 이 페이지의 값(2001.90)과 일치하지 않고, "B.1.1 생명·장기손해보험리스크"
+  섹션(p.296, 당기말/전기말 비교표라 경과조치와 무관)에서도 유래를 못 찾음** — item29-35의 부분채움
+  (해지 942.86·사업비 896.15는 있는데 장수·대재해는 아직 None)에서 온 것으로 추정되나 raw로 확증
+  못해 item17/item16(그 파생) 둘 다 안 건드림.
+- **흥국생명(KR0071) 2024.4Q**: **image-only PDF**(0-111p 스캔, 2026-07-07(8차) changelog가 이미
+  문서화한 바로 그 파일) — fitz 텍스트 추출 불가, `scripts/_probes/render_hkl_pages.py`로 페이지를
+  PNG 렌더링해 **비전으로 직접 판독**(p.44 총괄, p.47 적용여부, p.50 ②표, p.51 ③표). TIR(신규보험
+  위험)+TER(주식위험) 동시 적용, 두 표가 서로 다른 위험버킷(생명/시장)만 건드림을 자체 확인 —
+  item17(②표)·item19(③표)·18/20/21(양표 일치)은 disjoint-derive로 안전 채움. **item22(법인세조정)·
+  23(기타요구자본)는 ②표(348,792/599,206백만)와 ③표(429,635/703,625백만)가 서로 다른 값을 보여줌**
+  — 두 경과조치가 이 두 항목엔 동시에 영향을 미쳐 단순 분리가 안 됨. R4로 disjoint 17/18/19/20/21에서
+  item15를 역산하면 14,747(억)인데, 이미 신뢰 중인 헤드라인(p.44 [지급여력비율총괄] 경과조치후
+  지급여력기준금액=16,987, 8차에서 이미 검증된 값)과 ~2,240억 차이 — 단순 반올림 아닌 진짜 다중결합
+  불명(`scripts/_probes/verify_r4_hkl_2024q4.py`). item15/16/22/23은 그대로 둠, `_POST_PARENT_NOT_
+  DISCLOSED`류 owner exemption 검토를 inbox에서 요청.
+
+**손 안 댐**: ticket이 명시적으로 "non-display/비차단"이라 지정한 코리안리(KR1000) 3분기·처브라이프
+(KR0100) 2024.3Q + 기존 documented exception인 IBK연금(KR1011) 2023.2Q(5차 라운드에서 이미
+`_AFTER_SUBRISK_NOT_DISCLOSED`로 확정, 이 신설 게이트가 재적발한 것뿐 — 게이트에 예외 등록 권장).
+**미확인**(ticket 표에 없던 잔여, 다음 라운드): 하나손해(KR0050) 2023.2Q, 하나생명(KR0097) 2023.2Q
+(2024.4Q와 별개 분기), 악사손해(KR0049) 2024.3Q.
+
+**결과**: 44+8=52셀 추가. continuity break 96셀/14쌍 → **62셀/10쌍**(위 미확인 3쌍 + 손안댐 4쌍 +
+부분잔존 2쌍의 잔여[15,16,22]/[16] = 정확히 10쌍 일치). core RED 12(무관 기존건, 회귀 0). `pytest
+tests/unit/` 110 passed. xlsx 재생성 완료. inbox `20260715T0835Z`에 상세 회신(`status: answered`).
+
+**스크립트**: `scripts/fix_20260715_round3_continuity_gaps.py`(주 수정, docstring에 회사별 근거 전부
+기록) + `scripts/fix_20260715_round3b_dongyang_2025q2.py`. 진단: `scripts/_probes/{find_post_pages_
+round3,probe_round3_state,render_hkl_pages,verify_r4_hkl_2024q4,verify_r4_hana_2024q4,probe_hana_2024q4_
+subrisk,probe_hkl_2024q4}.py`.
 
 ---
 

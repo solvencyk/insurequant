@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-15(2차) (owner ticket 2차 — 과거분기 유사갭 한화생명 3분기·농협생명 2분기 + 이전 라운드 오판정 정정) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-15(3차) (validation 신설 게이트 `_post_transition_parent_census` continuity break 96→62셀 — 삼성생명·동양생명 완전해소, 흥국생명(비전 판독)·하나생명 부분해소) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,26 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-15(3차) — validation이 신설 게이트(`_post_transition_parent_census`, inbox `20260715T0835Z`)로
+적발한 continuity-break(적용후 공시하다 특정 분기만 결측) 14쌍/96셀 처리, 62셀/10쌍 잔존.**
+- **완전 해소(raw 재대조, 전부 선택경과조치 완전 미적용)**: 삼성생명(KR0069) 2025.1Q, 동양생명(KR0087)
+  2024.2Q·2024.4Q·2025.1Q·2025.2Q(연쇄 노출분 포함) — 16-23후=전 미러링.
+- **부분 해소**: 하나생명(KR0097) 2024.4Q — raw가 표준양식 아닌 "지급여력 및 건전성감독기준
+  재무상태표"(감사보고서 첨부, 단위 천원) 스타일임을 확인, 18-23 채움. **item17후=1757.32(기존값)가
+  이 페이지 값(2001.90)과 불일치·출처 불명** — item16과 함께 보류(validation에 원 출처 문의).
+  흥국생명(KR0071) 2024.4Q — **image-only PDF, 비전으로 스캔페이지 직접 판독**(8차 changelog 선례
+  재현). item17/18/19/20/21 disjoint-derive로 채움, **item22/23가 두 경과조치 표에서 서로 달라
+  R4 역산도 헤드라인과 ~2,240 차이로 재현 안 됨** — 진짜 다중결합 불명, item15/16/22/23 보류.
+- **손 안 댐**: ticket이 명시한 "non-display/비차단"(코리안리 3분기·처브 2024.3Q) + 기존
+  documented exception(IBK연금 2023.2Q, 5차 라운드 `_AFTER_SUBRISK_NOT_DISCLOSED`).
+- **미확인 잔여**: 하나손해 2023.2Q·하나생명 2023.2Q(별개 분기)·악사손해 2024.3Q — 다음 라운드.
+
+재검증: RED 12(무관 기존건, 회귀 0), `pytest` 110 passed. inbox `20260715T0835Z`에 상세 회신
+(`status: answered`). 스크립트: `scripts/fix_20260715_round3_continuity_gaps.py` +
+`fix_20260715_round3b_dongyang_2025q2.py`.
+
+---
 
 **2026-07-15(2차) — owner 지시로 "2차(과거분기 유사갭)" 이어서 처리, 완료 + 2026-07-12(2차) 오판정
 정정.** 한화생명(KR0068) 2024.3Q·2025.2Q·2025.3Q, 농협생명(KR0104) 2023.1Q·2023.2Q raw 재대조:
