@@ -10,6 +10,18 @@
 
 ---
 
+## 2026-07-22 — main 배포: K-ICS 패널 데이터 인라인 → 외부 JSON (`a5d0ffa..8372b53`)
+
+**올린 것 (4개)**: `K-ICS.html`(208,957→62,081자) + 신규 keep-list 3개 `kics_tier1_utilization.json`(39행)·`kics_tier2_utilization.json`(39행)·`kics_forward_capital.json`(38행). 배경·근거는 cross-stage changelog 2026-07-21 리팩토링 2차 B 항목.
+
+**절차(runbook 준수)**: ① pre-flight `validate_data_contract.py` **SUMMARY RED=0** ② keep-list를 HTML의 `fetch(`/`src=`/`href=`에서 재파생(기억 아님) ③ **main과 내 브랜치의 K-ICS.html 차이가 내 변경뿐임을 확인** — designer a5d0ffa a11y 작업을 되돌리지 않음을 push 전에 검증 ④ 격리 워크트리(`git worktree add --detach origin/main`), 같은 폴더 checkout 바꿔치기 안 함 ⑤ 워크트리 staged가 정확히 4개 파일인지 확인 ⑥ **배포될 그 워크트리를 직접 서빙해서** 헤드리스 검증(ALL PASS) ⑦ owner GO 후 push.
+
+**배포 후 검증**: 3개 JSON 200(26,265 / 25,080 / 131,747 bytes), 라이브 `K-ICS.html` 69,045 bytes·인라인 블롭 0, 라이브 브라우저에서 패널 39/39/38 적재·자본도넛 실수치·forward 렌더·**콘솔 에러 0**.
+
+⚠️ **이후 K-ICS.html을 배포할 때 이 3개 JSON은 항상 동반**해야 한다. HTML만 올리면 자본도넛·forward가 **에러 없이 빈칸**이 된다. `tests/test_deploy_assets.py`가 4개 페이지의 로컬 fetch/link 참조 존재를 강제하므로, 배포 전 `pytest tests/test_deploy_assets.py`를 keep-list 파생의 기계적 확인으로 쓸 것.
+
+---
+
 ## 2026-07-22 -- designer A11y color fixes + treemap revert, deployed to main via launch runbook
 
 Feature branch (`fix/csm-product-segmented-columns`) had two uncommitted-then-committed designer
