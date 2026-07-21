@@ -46,6 +46,24 @@ Before proceeding to the next K-ICS pipeline stage (JSON swap, template sync, HT
 
 See `docs/agents/kics-json-validation-rules.md` for formulas, R4/R7 matrices, tolerance, and item-label mapping. The validation subagent ([`docs/agents/claude-agent-validation.md`](docs/agents/claude-agent-validation.md)) automates the loop (max 5 retries → parser callback → escalate to human).
 
+## 🔧 2026-07-22 리팩토링 — 바뀐 계약 (모든 stage 확인 필수)
+
+세션 시작 시 **자기 stage 행을 반드시 읽을 것.** 상세는 각 프롬프트/SKILL의 해당 절, 전체 이력은 `docs/claude-changelog.md` 2026-07-21~22 항목.
+
+| stage | 알아야 할 변경 | 상세 |
+|---|---|---|
+| **공통** | `run_harness.py`는 `--stage` **필수**, 선택지 `quality\|pdf\|parse`. `--stage all/data/perf` 삭제(폐기된 `kics_data.json`을 루트에 재생성하던 함정). `src/solvency/{legacy,transform}` + `validation/{rules,schema}.py` 삭제 — 룰 엔진은 `kics_json_rules.py` 하나. | `docs/agents/claude-agent-parser.md` §1.1 |
+| **downloader** | 회사별 legacy 다운로더 4종 삭제(단일 엔진만). `--stage pdf`는 그대로. IR 크롤러 등 미참조 스크립트 아카이브. | `claude-agent-downloader.md` "What NOT to Do" |
+| **parser / kics** | MD 품질게이트가 `--stage quality`로 독립 + 임계값 버그 수정(488중 485 review → 306). `export_red_all_cases.py`가 UTF-16이라 실행 불가였는데 복구됨. | `claude-agent-parser.md` §1.1 |
+| **parser / ifrs17** | **`build_pl_breakdown.py` 4,885줄 → `scripts/pl_breakdown/` 패키지.** 회사 핸들러를 어디에 추가하고 어떻게 등록하는지, 골든 게이트(`RUN_PL_GOLDEN=1`) 사용·재생성법. | `.claude/skills/ifrs17-parser/SKILL.md` "PL breakdown is a package now" |
+| **validation** | 데이터계약 게이트가 **배포본이 아닌 죽은 사본**(2025.4Q templates)을 보고 있었음 → 루트 배포 아티팩트로 재조준. 신규 RED `ARTIFACT_UNREADABLE`(깨진 파일 ≠ 없는 파일). `templates/kics_disclosure.json` 삭제 — **동기화 중단**. | `claude-agent-validation.md` §5.2 |
+| **publishing** | keep-list에 **루트 JSON 3개 추가**(`kics_{tier1,tier2}_utilization.json`·`kics_forward_capital.json`) — 빠지면 패널이 조용히 빈칸. `forward_capital_simulation.py`의 `--no-html` 소멸. `pytest tests/test_deploy_assets.py`가 keep-list를 기계 검사. | `claude-agent-publishing.md` §1 |
+| **designer** | **데이터를 HTML에 인라인 금지**(K-ICS.html 147KB=70% 제거). 폴백 경로는 대소문자까지 실서버 확인(라이브 404 전례). | `claude-agent-designer.md` §4 |
+
+**불변식 2개 (새로 명문화):**
+1. **게이트가 검사하는 파일 = 사용자가 보는 파일.** 다르면 산수가 맞아도 소스가 틀린 통과가 된다.
+2. **모든 `.py`는 BOM 없는 UTF-8.** UTF-16은 실행 자체가 불가하고, UTF-8 BOM은 실행은 되지만 `ast.parse`를 깨뜨려 **정적 검사 도구에서 그 파일이 투명인간**이 된다. `pytest tests/test_deploy_assets.py`가 강제.
+
 ## 🈲 문서·TODO 인코딩 룰 (필수)
 
 **TODO.md, docs/*.md, README 등 모든 문서 파일은 반드시 UTF-8 (BOM 없음)으로 저장한다.**

@@ -47,13 +47,37 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 | IFRS17 CSM waterfall | `data/dart/viz/csm_waterfall.json` (+ `csm_waterfall_history.json`) | IFRS17.html |
 | IFRS17 NB CSM bubble | `data/dart/viz/csm_bubble.json` | IFRS17.html + index.html |
 | IFRS17 panels | `data/dart/viz/ifrs17_panels.json` (sensitivity, P&L, amort) | IFRS17.html |
-| Forward capital | `templates/forward_capital_latest.json` | K-ICS.html (forward panel) |
-| Tier 1/2 utilization | `templates/tier{1,2}_utilization_latest.json` | K-ICS.html |
+| Forward capital | `kics_forward_capital.json` (repo root) | K-ICS.html (forward panel) |
+| Tier 1/2 utilization | `kics_tier{1,2}_utilization.json` (repo root) | K-ICS.html (자본 도넛) |
 | NB premium (월납월초) | `data/_derived/nb_premium_wolnap.json` | IFRS17.html |
 | Net income breakdown | `data/dart/viz/net_income_breakdown.json` (F17) | IFRS17.html Panel 3 |
 | Disclosed CSM multiples | `data/ir/disclosed_csm_multiple.json` | IFRS17.html |
 
 The HTML pages fetch these directly. **No staging templates between publishing and the HTML** (root single-source since 2026-05-28).
+
+> ### ⚠️ 2026-07-22 변경 — K-ICS 하단 3패널이 인라인에서 fetch로 바뀜
+>
+> 그전까지 tier1/tier2/forward 데이터는 `K-ICS.html` 안에 `window.TIER1_DATA` /
+> `TIER2_DATA` / `FORWARD_DATA`로 **붙여넣어져** 있었다(147KB = 파일의 70%). 이제
+> 위 표의 루트 JSON 3개를 `fetch`한다.
+>
+> **배포에 미치는 영향 — 반드시 지킬 것:**
+> 1. 이 3개 JSON은 **keep-list 신규 항목**이다. `K-ICS.html`만 올리고 이걸 빼면
+>    자본도넛·forward 패널이 **에러도 콘솔 메시지도 없이 빈칸**이 된다.
+> 2. keep-list는 여전히 §0 원칙대로 **HTML에서 재도출**한다(추측 금지). 이제
+>    `python -m pytest tests/test_deploy_assets.py`가 4개 페이지의 fetch/link 로컬
+>    참조를 전부 뽑아 저장소 존재를 강제하므로, **push 전 이 테스트를 돌리면
+>    keep-list 누락이 기계적으로 잡힌다.**
+> 3. `forward_capital_simulation.py`의 **`--no-html` 플래그는 사라졌다.** 그 플래그는
+>    스크립트가 K-ICS.html 라인을 직접 치환했기 때문에(=publishing이 designer 영역을
+>    침범) 존재했던 것이다. 이제 데이터 JSON만 쓰므로 스테이지 경계 문제가 없다.
+>    그냥 인자 없이 실행하면 된다.
+> 4. `templates/tier{1,2}_utilization_latest.json`은 **삭제됐다**(쓰는 스크립트가
+>    하나도 없이 2025.4Q에 얼어붙어 있었고, 데이터계약 게이트만 그걸 보고 있었다).
+>    `templates/forward_capital_latest.json`은 스크립트가 계속 쓰지만 **배포본은
+>    루트 쪽**이다.
+> 5. `templates/kics_disclosure.json`(5.9MB)도 **삭제됐다.** 루트 마스터와 바이트
+>    동일한데 읽는 코드가 0이었다. **더 이상 동기화하지 말 것.**
 
 > **Path note:** the table lists the post-migration canonical (`data/dart/viz/*`). Live `main` still reads `data/ifrs17/viz/*` — see §9 "Pending path migration" for detail and the cutover trigger (when `fix/csm-*` lands on `main`).
 

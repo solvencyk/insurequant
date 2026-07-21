@@ -53,6 +53,40 @@ You are the parser subagent. You convert raw artifacts produced by the **downloa
 
 The parser **never** writes to `kics_disclosure.json` root — that's **publishing's** job (gathering was merged into publishing 2026-05-31).
 
+### 1.1 하네스 스테이지 변경 (2026-07-22)
+
+`scripts/run_harness.py`는 이제 `--stage`가 **필수**이고 선택지는 `quality | pdf | parse`뿐이다.
+
+| 예전 | 지금 |
+|---|---|
+| `--stage parse` (Docling PDF→MD) | **그대로** |
+| `--stage pdf` (PDF 접근성 게이트) | **그대로** |
+| `--stage data` | **삭제** — 폐기된 `kics_data.json`을 빌드·검증하던 경로 |
+| `--stage perf` | **삭제** — 같은 경로를 두 번 돌려 체크섬 비교 |
+| `--stage all` (기본값!) | **삭제** |
+
+> ⚠️ 기본값이 `all`이었기 때문에 **인자 없이 `python scripts/run_harness.py`를 실행하면
+> 2026-05-30에 폐기된 `kics_data.json`을 저장소 루트에 다시 만들어냈다.** 이제 인자를 빼면
+> 에러가 난다.
+
+`--stage data`의 **부수효과로만** 돌던 MD 품질게이트(점수 산출 + `artifacts/review_queue/`
+CSV)는 `--stage quality`로 독립했다. 동시에 **임계값 버그를 고쳤다**: 점수에 곱하던
+`numeric_normalisation_rate`가 각 행 첫 셀(한글 항목명 — 숫자일 수 없음)까지 세는 바람에
+라벨 있는 표는 rate 상한이 0.6 근처였고, 0.7을 요구하니 **완벽한 파일도 통과 불가**였다
+(488개 중 485개 review). 라벨 컬럼 제외 후 review 485→306.
+
+**사라진 모듈** (2026-07-21, 임포터 0 확인 후 삭제): `src/solvency/validation/rules.py`
+(xlsx 대상 a~g 룰) · `validation/schema.py` + `schemas/kics_data.schema.json` ·
+`transform/md_to_json.py` · `src/solvency/legacy/` 전체(camelot 파서·회사별 다운로더 4종·
+merge_xlsx·csv_to_json). **K-ICS 룰 엔진은 `src/solvency/validation/kics_json_rules.py`
+하나뿐이다.**
+
+**아카이브** (2026-07-22): 저장소 어디서도 참조되지 않던 스크립트 60개가
+`archive/2026-07_unreferenced_scripts/`로 이동했다 — `backfill_q123_*` 6종,
+`run_kics_historical_reparse.py`, `verify_pdf_periods.py`, `crawl_ir_*`/`parse_ir_*` 16종 등.
+삭제가 아니라 이동이고 README에 복원법이 있다. **되살릴 때는 그 스크립트가 import하던 모듈이
+위 삭제 목록에 있는지 먼저 확인하라.**
+
 ---
 
 ## 2. Per-domain extraction rules

@@ -342,6 +342,38 @@ YELLOW(QoQ warn 포함)는 어떤 다운스트림도 차단하지 않는다. 보
 기록만 하고 룰로 안 굳으면 같은 부류가 재발한다는 게 이 저장소의 실측 이력이다(사고 4건 소급 결과
 3건의 대응 룰이 push 차단 경로 밖 = `README.md`의 UH-1).
 
+### 5.2 데이터계약 게이트 변경 (2026-07-22) — 검사 대상과 새 RED
+
+**(1) 게이트가 배포본이 아니라 죽은 사본을 보고 있었다.** `validate_data_contract.py`의
+`MASTER_FILES`가 `templates/tier{1,2}_utilization_latest.json`을 가리켰는데, **그 파일들을 쓰는
+스크립트가 하나도 없었고** 2025.4Q(38사)에 얼어붙어 있었다(사이트는 2026.1Q·39사). 값 검사는
+`_load_tier`가 `output/` 빌더 산출물을 읽어 우연히 무사했으나, **mtime 감시와 provenance
+사이드카 조회**가 그 사본에 걸려 있었다 — 사이드카는 2026.1Q를 기술하면서 2025.4Q 파일 옆에
+놓여 있었다.
+
+→ 이제 **배포 아티팩트**를 본다: `kics_tier{1,2}_utilization.json`, `kics_forward_capital.json`
+(전부 저장소 루트, K-ICS.html이 실제로 fetch하는 그 파일). 사이드카 3개도 그 옆으로 옮겼다.
+`templates/tier{1,2}_utilization_latest.json`과 `templates/kics_disclosure.json`은 삭제됐다.
+
+> **불변식으로 삼을 것: 게이트가 검사하는 파일 = 사용자가 보는 파일.** 새 아티팩트를
+> `MASTER_FILES`에 등록할 때, 그 경로가 **HTML이 fetch하는 경로와 같은지** 확인하라. 다르면
+> 산수가 맞아도 소스가 틀린 통과(= 이 저장소가 두 달 데인 유형)가 된다.
+
+**(2) 신규 RED `ARTIFACT_UNREADABLE` — 깨진 파일 ≠ 없는 파일.** optional 로더
+(`_load_json_opt` / `_load_forward_manifest` / `_load_tier`)가 모든 예외를 삼키고 `None`을
+반환해서, **잘린·깨진 마스터가 "애초에 발행 안 된 아티팩트"와 구분되지 않았다.** as-of·
+provenance 검사가 조용히 추론 fallback으로 내려가고 GREEN을 유지했다.
+
+이제 "존재하지만 파싱 불가"는 `env.unreadable`에 기록되고 `check_artifact_readable`이
+**RED**로 올린다. 이 체크는 `run_gate`에서 **가장 먼저** 돈다 — 입력이 깨졌으면 이후 검사가
+무의미하기 때문. (검증: `sensitivity_heatmap.json`을 일부러 잘라 실행 → RED=2·exit 2, 이전엔
+통과.) **다른 로더를 추가할 때 같은 패턴을 지켜라: 없으면 `None`, 깨졌으면 `unreadable`에 append.**
+
+**(3) 사라진 것.** `src/solvency/validation/rules.py`(xlsx 대상 a~g 룰, 967줄)와
+`schema.py`+`schemas/kics_data.schema.json`은 2026-07-21에 삭제됐다(임포터 0). **룰 엔진은
+`src/solvency/validation/kics_json_rules.py` 하나뿐이다.** `scripts/export_red_all_cases.py`는
+UTF-16으로 저장돼 있어 실행 자체가 불가능했는데 복구됐다 — 이제 실제로 돌아간다.
+
 ---
 
 ## 6. 호출 예시 (메인 세션 → validation 서브에이전트)

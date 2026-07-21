@@ -2,6 +2,27 @@
 
 **목표:** 금감원 DART 분기/반기/사업보고서에서 IFRS17 관련 주요 재무 테이블 파싱.
 
+> **⚠️ 2026-07-22 — PL 빌더가 패키지로 분할됐다. 핸들러 수정 전 필독.**
+>
+> `scripts/build_pl_breakdown.py`(4,885줄) → 엔트리 567줄 + `scripts/pl_breakdown/`
+> (`common` 34 · `tier1` 355 · `tier2` 475 · `companies` 3,438).
+>
+> - **회사별 주석 대응 = `pl_breakdown/companies.py`** 에 함수 추가 후 파일 끝
+>   `SONBO_HANDLERS` / `LIFE_HANDLERS`에 **등록**. 등록 안 하면 죽은 코드가 된다
+>   (실제로 `extract_tier2_koreanre`가 그 상태였다 — 디스패치는 철자가 다른
+>   `extract_tier2_coreanre`를 쓰고 있었고, 2026-07-22 제거).
+> - **24-항목 조립·항등식·gold override는 엔트리 스크립트**(`assemble`,
+>   `_GOLD_CELL_OVERRIDE`)에 남아 있다.
+> - **의존은 단방향**: `companies → tier1/tier2/common`, `tier1 ↔ tier2` 간선 0.
+>   companies가 바깥에서 쓰는 이름 11개는 파일 상단에 명시적 import로 적혀 있다.
+> - **고쳤으면 골든 게이트 필수**: `RUN_PL_GOLDEN=1 python -m pytest
+>   tests/test_pl_breakdown_golden.py` (~95초, 결정론적·오프라인). 값이 의도적으로
+>   바뀐 경우에만 `python tests/test_pl_breakdown_golden.py --update`로 재생성하고
+>   **왜 움직였는지 커밋에 적을 것.**
+>
+> 운영 상세(회사별 함정 포함) = `.claude/skills/ifrs17-parser/SKILL.md`
+> "PL breakdown is a package now".
+
 ## 0. 운영 환경 & 회사 매핑 규칙
 
 - **OpenDART API key**는 `.env`의 `OPENDART_API_KEY`에서 읽음 (코드에 박지 말 것, 로그에도 찍지 말 것).

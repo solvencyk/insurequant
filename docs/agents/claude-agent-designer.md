@@ -86,9 +86,24 @@ Don't introduce a new chart lib without owner approval.
 
 - **Mobile media query is `(max-width:640px)` repo-wide.** Don't introduce sibling breakpoints (`768px`, `1024px`) without owner OK — fragments the convention.
 - **`@media` blocks must be self-contained.** Desktop math must not change when wrapped in mobile scope.
-- **HTML single-source = root.** Don't write `templates/*.html` (those were deleted 2026-05-28). `forward_capital_simulation.py` etc. now sync to root `K-ICS.html` directly — designer must keep root-only.
+- **HTML single-source = root.** Don't write `templates/*.html` (those were deleted 2026-05-28).
 - **Console error budget = 0.** Run Claude Preview after every edit, fix any error before declaring done.
 - **Data JSON duplicate trap:** some scripts still write to both `data/...` and `templates/data/...`. P2 (data single-source) is on the roadmap but unfinished. If you see HTML fetching from `templates/data/`, it's an old path — change it to the single-source root location.
+- **데이터를 HTML에 인라인하지 말 것 (2026-07-22).** `K-ICS.html`은 tier1/tier2/forward 패널
+  데이터를 `window.TIER1_DATA` / `TIER2_DATA` / `FORWARD_DATA`로 **붙여넣어** 갖고 있었다 —
+  147KB, 파일의 70%. 근거는 "file:// fetch 회피"였지만 그 페이지는 이미
+  `kics_disclosure.json`을 fetch하므로 **애초에 file://로는 동작하지 않았다.** 대가는 컸다:
+  HTML diff마다 147KB가 딸려오고, 데이터가 마크업과 따로 캐시되지 않고, 셋 중 둘은 생성기가
+  없어 손으로 붙인 값이라 **빌더 산출물과 조용히 어긋날 수 있었다.**
+  지금은 루트 JSON 3개(`kics_{tier1,tier2}_utilization.json`, `kics_forward_capital.json`)를
+  민감도 패널과 같은 fetch-후-재렌더 패턴으로 읽는다. `python -m pytest
+  tests/test_deploy_assets.py`가 재인라인을 막는다. **큰 데이터가 필요하면 JSON으로 빼고
+  fetch하라 — 그리고 publishing에 keep-list 추가를 알려라.**
+- **폴백 경로는 대소문자까지 맞춰라.** `IFRS17.html`이 `data/dart/viz/CSM_waterfall.json`을
+  폴백으로 갖고 있었는데 저장소엔 소문자 `csm_waterfall.json`(내용이 다른 별개 파일)만 있고
+  배포 서버는 case-sensitive라 **라이브에서 404**였다. 주 경로가 살아 있어 발화한 적이 없어
+  아무도 몰랐다(2026-07-22 제거). 새 경로를 넣으면
+  `curl -o /dev/null -w '%{http_code}' https://www.insurequant.com/<path>`로 확인하라.
 
 ---
 

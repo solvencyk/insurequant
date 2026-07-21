@@ -216,6 +216,20 @@ If a site returns 0 visible elements for the expected XPath:
 - Don't fabricate data for missing rcepts. Honest gap > fake number.
 - Don't include 재무제표/연결재무제표/감사보고서 as 경영공시 raw (sites confuse the two — 한화손보 IR was previously mis-classified because URL path was /notice/ir/ but content was 경영공시).
 - Don't ingest 캐롯손해보험 (KR1059) — merged into 한화손보, no separate site.
+- **Don't look for the per-company legacy downloaders — they're gone (2026-07-21).**
+  `src/solvency/legacy/downloaders/{disclosure,hw,samsung,shinhanez}_disclosure_downloader.py`
+  (~2.2k lines) were kept as "fallback for regression" but had zero importers. The single
+  engine (`src/solvency/downloader/base.py` + `runner.py` + `handlers/`) is the only path.
+  If a site breaks, self-heal the handler per §"When URLs/XPaths Change" — don't resurrect
+  a per-company script.
+- **`run_harness.py` now requires `--stage`, and only `quality|pdf|parse` exist.** Your PDF
+  accessibility gate is unchanged: `python scripts/run_harness.py --stage pdf --period FY2026_Q1`.
+  `--stage all` / `data` / `perf` were removed (they built the retired `kics_data.json`), so a
+  bare `python scripts/run_harness.py` no longer silently does something — it errors.
+- **Archived, not deleted (2026-07-22):** `redownload_hyundai_ir_2025q4.py`,
+  `redownload_shinhanez_disclosure.py`, `check_ir_file_integrity.py`, `crawl_ir_*` (14),
+  `ifrs17_download_fy2025_nonlife.py` → `archive/2026-07_unreferenced_scripts/`. Nothing in
+  the repo referenced them. Restore with `git mv` if a source needs one again.
 
 ## DART Core 4 Metrics (사용자 명시)
 
