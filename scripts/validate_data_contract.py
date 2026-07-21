@@ -805,9 +805,16 @@ class Env:
         # silently never finds an emitted sidecar (UH-3 follow-up bug, found 2026-07-21 while wiring
         # the 3 sidecars validation requested: "forward_capital_latest" never matched "forward_capital",
         # and tier1/tier2_utilization had no entry at all).
-        "forward_capital": "templates/forward_capital_latest.json",
-        "tier1_utilization": "templates/tier1_utilization_latest.json",
-        "tier2_utilization": "templates/tier2_utilization_latest.json",
+        # 2026-07-22: 배포되는 아티팩트를 가리키도록 교정. 이전 경로
+        # templates/tier{1,2}_utilization_latest.json은 **쓰는 스크립트가 하나도 없는**
+        # 수기 사본이었고 2025.4Q(38사)에 얼어붙어 있었다 — 사이트는 2026.1Q(39사)를
+        # 서빙 중. 값 검사는 _load_tier가 output/ 빌더 산출물을 읽어 무사했지만,
+        # mtime 감시와 provenance 사이드카 조회가 그 죽은 사본에 걸려 있었다
+        # (사이드카는 2026.1Q를 기술하는데 2025.4Q 파일 옆에 놓여 있었음).
+        # 게이트가 검사하는 대상 = 사용자가 보는 파일, 이 규칙을 여기서 강제한다.
+        "forward_capital": "kics_forward_capital.json",
+        "tier1_utilization": "kics_tier1_utilization.json",
+        "tier2_utilization": "kics_tier2_utilization.json",
     }
 
     def __init__(self, inject: dict | None = None):
@@ -824,7 +831,7 @@ class Env:
                                              lambda: self._load_json_opt("data/dart/viz/sensitivity_heatmap.json"))
         self.forward_manifest = self._get("forward_manifest", self._load_forward_manifest)
         self.forward_rows = self._get("forward_rows",
-                                      lambda: self._load_json_opt("templates/forward_capital_latest.json") or [])
+                                      lambda: self._load_json_opt("kics_forward_capital.json") or [])
         self.tier1_latest = self._get("tier1_latest", lambda: self._load_tier("tier1_utilization"))
         self.tier2_latest = self._get("tier2_latest", lambda: self._load_tier("tier2_utilization"))
         self.bond_effective_evidence = self._get("bond_effective_evidence", self._load_bond_evidence)
