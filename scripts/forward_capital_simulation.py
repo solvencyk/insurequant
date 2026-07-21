@@ -454,28 +454,20 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
     }
 
 
-def _sync_forward_data_into_kics_html(results: list[dict]) -> None:
-    """Replace ``window.FORWARD_DATA`` line in K-ICS.html (avoids file:// fetch).
+def _write_forward_deploy_asset(results: list[dict]) -> None:
+    """Write the root deploy asset K-ICS.html fetches for the forward panel.
 
-    Single source of truth: root K-ICS.html is the deployed file (GitHub Pages).
-    templates/*.html copies were removed 2026-05-28 (P1 single-source refactor).
+    Until 2026-07-21 this rewrote the ``window.FORWARD_DATA`` line inside
+    K-ICS.html, which is why publishing needed ``--no-html`` (HTML is
+    designer-owned). The panel data now lives in its own JSON, so this is a
+    plain data artefact and the stage boundary is no longer in the way.
+
+    Keep-list: this file must ship with K-ICS.html or the forward panel
+    renders its placeholder.
     """
-    html_path = REPO / "K-ICS.html"
-    html = html_path.read_text(encoding="utf-8")
-    blob = json.dumps(results, ensure_ascii=False, separators=(",", ":"))
-    replacement = "window.FORWARD_DATA = " + blob + ";"
-    new_html, count = re.subn(
-        r"^window\.FORWARD_DATA = .+;$",
-        replacement,
-        html,
-        count=1,
-        flags=re.MULTILINE,
-    )
-    if count != 1:
-        print(f"WARN: K-ICS.html FORWARD_DATA sync skipped (replace count={count})", file=sys.stderr)
-        return
-    html_path.write_text(new_html, encoding="utf-8")
-    print(f"  K-ICS inline: window.FORWARD_DATA updated ({len(blob)} chars)")
+    out = REPO / "kics_forward_capital.json"
+    out.write_text(json.dumps(results, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    print(f"  deploy asset: {out.name} ({out.stat().st_size:,} bytes, {len(results)} rows)")
 
 
 def _confidence_histogram(results: list[dict]) -> dict[str, int]:
@@ -562,13 +554,9 @@ def main() -> int:
 
     templates_latest = REPO / "templates" / "forward_capital_latest.json"
     templates_latest.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
-    # publishing/designer hard split: publishing produces the JSON only; the K-ICS.html
-    # window.FORWARD_DATA re-embed is designer's (HTML is off-limits to publishing). Run
-    # with --no-html in the publishing lane; designer re-embeds from templates copy.
-    if "--no-html" in sys.argv:
-        print("  K-ICS.html FORWARD_DATA sync SKIPPED (--no-html; designer owns HTML embed)")
-    else:
-        _sync_forward_data_into_kics_html(results)
+    # No HTML is touched any more (2026-07-21): the panel reads its own JSON, so
+    # publishing can produce it without crossing into designer's territory.
+    _write_forward_deploy_asset(results)
 
     print("=== Forward simulation v3 summary ===")
     for k, v in manifest.items():
