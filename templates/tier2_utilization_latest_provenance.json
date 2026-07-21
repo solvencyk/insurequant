@@ -1,0 +1,14 @@
+{
+  "master": "tier2_utilization",
+  "generated_at": "20260721T115831Z",
+  "cells": [
+    {
+      "quarter": "2026.1Q",
+      "item_block": "tier2_utilization",
+      "source_id": "FSC_BONDS",
+      "as_of_date": "2026-03-31",
+      "source_file": "data/bonds/capital_securities_fy2025.json",
+      "effective_filtered": true
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "master": "forward_capital",
+  "generated_at": "20260721T115831Z",
+  "cells": [
+    {
+      "quarter": "2026.1Q",
+      "item_block": "forward_capital",
+      "source_id": "FSC_BONDS",
+      "as_of_date": "2026-03-31",
+      "source_file": "data/bonds/normalized/20260616T060817Z/bonds_by_insurer.json",
+      "effective_filtered": true
+    }
+  ]
+}

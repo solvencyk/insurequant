@@ -800,7 +800,14 @@ class Env:
         "PL_breakdown": "PL_breakdown.json",
         "kics_rate_sensitivity": "kics_rate_sensitivity.json",
         "sensitivity_heatmap": "data/dart/viz/sensitivity_heatmap.json",
-        "forward_capital_latest": "templates/forward_capital_latest.json",
+        # key MUST match the lookup names used in check_as_of (sidecars.get("forward_capital") /
+        # "tier1_utilization" / "tier2_utilization") — a mismatch here means _load_provenance_sidecars
+        # silently never finds an emitted sidecar (UH-3 follow-up bug, found 2026-07-21 while wiring
+        # the 3 sidecars validation requested: "forward_capital_latest" never matched "forward_capital",
+        # and tier1/tier2_utilization had no entry at all).
+        "forward_capital": "templates/forward_capital_latest.json",
+        "tier1_utilization": "templates/tier1_utilization_latest.json",
+        "tier2_utilization": "templates/tier2_utilization_latest.json",
     }
 
     def __init__(self, inject: dict | None = None):
