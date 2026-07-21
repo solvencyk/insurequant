@@ -173,13 +173,17 @@
 
   const PATHS = {
     wf: dataPaths("../data/dart/viz/csm_waterfall.json", "data/dart/viz/csm_waterfall.json"),
-    wfx: dataPaths("CSM_waterfall.json", "data/dart/viz/CSM_waterfall.json"),
+    // wfx/plx: 루트 마스터가 유일 경로(fetchJsonSafe는 단일 경로도 받는다). 과거 폴백이던
+    // data/dart/viz/{CSM_waterfall,PL_breakdown}.json은 어디에도 없다 — 저장소엔 소문자
+    // csm_waterfall.json(내용이 다른 별개 파일)만 있고, 배포 서버는 case-sensitive라 대문자 경로는 404.
+    // 주 경로가 살아 있어 한 번도 발화하지 않던 죽은 폴백이라 제거(2026-07-22).
+    wfx: [resolveUrl("CSM_waterfall.json")],
     amort: dataPaths("../data/dart/viz/csm_amort_schedule.json", "data/dart/viz/csm_amort_schedule.json"),
     pl: dataPaths("../data/dart/viz/insurance_pl_breakdown.json", "data/dart/viz/insurance_pl_breakdown.json"),
     sen: dataPaths("../data/dart/viz/sensitivity_heatmap.json", "data/dart/viz/sensitivity_heatmap.json"),
     nb: dataPaths("../data/ir/nb_csm_ratio.json", "data/ir/nb_csm_ratio.json"),
     hist: dataPaths("../data/dart/viz/csm_waterfall_history.json", "data/dart/viz/csm_waterfall_history.json"),
-    plx: dataPaths("PL_breakdown.json", "data/dart/viz/PL_breakdown.json"),
+    plx: [resolveUrl("PL_breakdown.json")],
     nbm: dataPaths("NB_CSM_multiple.json", "NB_CSM_multiple.json"),
   };
 
