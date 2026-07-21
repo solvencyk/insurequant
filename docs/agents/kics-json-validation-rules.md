@@ -18,7 +18,7 @@ Before advancing to the next K-ICS pipeline stage (JSON swap, template sync, HTM
 4. YELLOW findings are warnings (|diff| >= 0.5 eok-won, <= tolerance); they do not block the gate but should be triaged.
 5. SKIP on rule `8_life` is expected when sub-items 29-35 are not all present (non-life insurers, partial tables). SKIP on rule `3` is expected (bridge formula deferred; Rule 1 is authoritative for item1).
 
-See also: `CLAUDE.md`, `docs/claude-validation-harness.md`, `docs/claude-agent-kics.md`, `docs/claude-json-build.md`.
+See also: `CLAUDE.md`, `docs/flows/claude-validation-harness.md`, `docs/domains/claude-agent-kics.md`, `.claude/skills/kics-parser/`.
 
 ---
 

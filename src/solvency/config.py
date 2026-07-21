@@ -42,10 +42,6 @@ class Settings:
     md_inbox_dir: Path
     artifacts_dir: Path
     review_queue_dir: Path
-    schemas_dir: Path
-    legacy_csv_path: Path
-    kics_json_path: Path
-    legacy_json_alias_path: Path
 
     def disclosure_pdf_path(
         self, period: str, company_dirname: str, ext: str = ".pdf"
@@ -77,25 +73,6 @@ class Settings:
             artifacts_dir=artifacts_dir,
             review_queue_dir=_env_path(
                 "SOLVENCY_REVIEW_QUEUE_DIR", artifacts_dir / "review_queue"
-            ),
-            schemas_dir=_env_path("SOLVENCY_SCHEMAS_DIR", root / "schemas"),
-            legacy_csv_path=_env_path(
-                "SOLVENCY_LEGACY_CSV", root / "kics_disclosure.csv"
-            ),
-            # DEPRECATED 2026-05-30: kics_data.json + insurance_data.json are
-            # legacy outputs of the early MD->JSON / CSV->JSON pipelines.
-            # The active K-ICS master is kics_disclosure.json (3.7MB, root,
-            # read directly by K-ICS.html). The two paths below remain as
-            # defaults so any caller still passing settings.kics_json_path
-            # doesn't break, but the corresponding files were removed from
-            # repo root on 2026-05-30 (cleanup pass). New code should not
-            # depend on these. Remove this section once no caller references
-            # settings.kics_json_path / settings.legacy_json_alias_path.
-            kics_json_path=_env_path(
-                "SOLVENCY_KICS_JSON", root / "kics_data.json"
-            ),
-            legacy_json_alias_path=_env_path(
-                "SOLVENCY_LEGACY_JSON_ALIAS", root / "insurance_data.json"
             ),
         )
 

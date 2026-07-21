@@ -76,7 +76,11 @@ def test_second_run_skips_already_downloaded(isolated_disclosure_dir, tmp_path):
     profile = {"company_code": "LIFE_TEST", "site_type": "stub"}
     engine = DownloaderEngine(profile, {"stub": handler_run1})
     [result1] = engine.run()
-    assert result1.status == "downloaded", f"first run unexpected: {result1}"
+    # The engine encodes the verify_pdf level in the status: a fully parseable
+    # PDF is "downloaded", anything that only clears the basic checks (this
+    # fixture is a synthetic byte string, so pypdf can't read it) is
+    # "downloaded_basic". Idempotency is what this test gates, not the level.
+    assert result1.status.startswith("downloaded"), f"first run unexpected: {result1}"
     assert result1.local_path is not None and result1.local_path.exists()
     sha_after_run1 = result1.sha256
 
@@ -133,7 +137,10 @@ def test_manifest_records_skip_on_second_run(isolated_disclosure_dir, tmp_path):
         rows = list(csv.DictReader(fp))
 
     statuses = [r["status"] for r in rows if r["source_url"] == url]
-    assert statuses == ["downloaded", "skipped"], f"unexpected statuses: {statuses}"
+    assert len(statuses) == 2 and statuses[1] == "skipped", (
+        f"unexpected statuses: {statuses}"
+    )
+    assert statuses[0].startswith("downloaded"), f"unexpected statuses: {statuses}"
 
 
 def test_failed_status_when_prefetched_file_missing(isolated_disclosure_dir, tmp_path):

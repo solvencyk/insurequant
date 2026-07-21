@@ -75,6 +75,6 @@ Front Matter 필수 키:
 
 ## 레거시 대체 관계
 
-- 기존 Camelot 기반 `legacy/camelot_parser.py`가 하던 PDF 표 추출 역할을 Docling이 담당
+- 과거 Camelot 기반 파서가 하던 PDF 표 추출 역할을 Docling이 담당 (camelot 경로는 2026-07-21 삭제)
 - Camelot 경로는 사이트 구조 급변 또는 Docling 사용 제한 시의 fallback으로만 유지
 - Selenium 기반 Gemini 자동화는 채택하지 않음(UI 변경 취약, 멱등성 보장 어려움)

@@ -2,15 +2,14 @@
 
 ## 목표
 
-`kics_data.json` 생성 파이프라인의 코드 품질과 데이터 정합성을 자동으로 검증해, 회귀를 조기에 차단합니다.
+`kics_disclosure.json` 생성 파이프라인의 코드 품질과 데이터 정합성을 자동으로 검증해, 회귀를 조기에 차단합니다.
 
 ## 하네스 구성
 
 단일 진입 명령:
 
-- `python scripts/run_harness.py --stage all`
-- `python scripts/run_harness.py --stage perf`  : 코드 효율성 게이트
-- `python scripts/run_harness.py --stage data`  : 결과물 정합성 게이트
+- `python scripts/run_harness.py --stage quality` : MD 품질 게이트 + 리뷰 큐
+- `python scripts/validate_kics_disclosure.py`   : K-ICS 결과물 정합성 게이트 (RED=0)
 - `python scripts/run_harness.py --stage pdf`   : 다운로드된 PDF 접근성 게이트
 
 세부 스테이지:
@@ -67,18 +66,11 @@
 - 정렬 후 deep equality 비교
 - 허용 오차가 필요한 숫자는 필드별 tolerance 테이블 적용
 
-## Stage 4: Schema 검증
+## Stage 4: Schema 검증 — 폐지 (2026-07-21)
 
-스키마 파일:
-
-- `schemas/kics_data.schema.json`
-
-검증 항목:
-
-- 필수 필드 존재
-- 타입/범위/enum 일치
-- 날짜 포맷(`YYYY-MM-DD`) 준수
-- 키 중복 금지
+`schemas/kics_data.schema.json` + `src/solvency/validation/schema.py`는 초기 `kics_data.json`
+경로의 산출물이었고, 그 경로와 함께 삭제됨. 현재 스키마 성격의 검사는 Stage 5 게이트
+(`validate_kics_disclosure.py`)와 `validate_data_contract.py`의 census/provenance 룰이 대신한다.
 
 ## Stage 5: 정합성 검증(도메인 룰)
 
@@ -86,9 +78,8 @@
 
 **Pipeline gate:** `python scripts/validate_kics_disclosure.py` must report **RED=0** (or only documented exceptions in `TODO.md`) before JSON swap, template sync, or deploy. Unexpected RED → parsing-error review required.
 
-기존 코드 재사용:
+구현:
 
-- `disclosure_validation.py`의 규칙 a~g
 - `scripts/validate_kics_disclosure.py` — rules 1, 2, 4-8, 8_post, 8_life on root `kics_disclosure.json`; reports under `artifacts/kics_validation/`
 
 확장 권장:
@@ -98,79 +89,12 @@
 - 회사별 누락 항목 검증
 - 음수/비정상값(단위 불일치 포함) 탐지
 
-## Stage 6: 실행 안정성 제약(Memory/I-O/멱등성)
+## Stage 6: 실행 안정성 제약 — 축소 (2026-07-21)
 
-이번 PDF 추출/공시 작업에서는 아래 3가지를 하네스의 필수 게이트로 둡니다.
-
-### 6-1) Memory Leak 게이트
-
-하네스 질문:
-
-- "대형 데이터프레임을 변수에 계속 들고 있나? `del`과 `gc.collect()`가 필요한가?"
-
-자동 점검 항목:
-
-- 배치 처리 중 RSS/Peak 메모리 추적(`start`, `every_n_files`, `end`)
-- 파일 N개 연속 처리 후 메모리 증가율 측정
-- 루프 종료 시 대형 객체 해제 여부 점검(`del df`, `del tables` 등)
-- 주기적 GC 실행 여부 점검(`gc.collect()` 호출 카운트)
-
-통과 기준(초기안):
-
-- `peak_memory_mb <= baseline_mb + 1024`
-- `end_memory_mb <= baseline_mb + 512`
-- OOM/메모리 예외 0건
-
-### 6-2) I/O Bottleneck 게이트
-
-하네스 질문:
-
-- "PDF를 한 장씩 읽고 있나? 비동기(Async) 혹은 병렬로 처리할 수 없나?"
-
-자동 점검 항목:
-
-- `serial` vs `parallel` 처리량 비교(`pdf_per_min`, 평균 처리시간)
-- 다운로드/파싱/저장 단계별 시간 분해 측정
-- 병렬 처리 시 중복 다운로드/중복 저장 race condition 점검
-- 느린 구간(top N slow files) 리포트
-
-통과 기준(초기안):
-
-- 병렬 모드 처리량이 직렬 대비 `>= 1.5x` 또는 동등한 안정성 근거 확보
-- 단계별 타임아웃 초과 건수 0건(또는 허용치 이내)
-
-### 6-3) 멱등성(Idempotency) 게이트
-
-하네스 질문:
-
-- "동일한 코드를 두 번 실행했을 때, 결과가 중복되거나 망가지지 않는가?"
-
-자동 점검 항목:
-
-- 동일 입력으로 파이프라인 2회 실행
-- 1회차/2회차 산출물(`kics_data.json`) 해시 및 레코드 수 비교
-- PDF 단계 skip 정책 검증(이미 처리된 파일은 skip)
-- DB 저장 로직 검증(UPSERT: 없으면 insert, 있으면 update)
-- 2회차 실행에서 불필요한 insert 발생 여부 점검
-
-통과 기준(초기안):
-
-- `kics_data.json` checksum 동일
-- 고유키 기준 중복 레코드 0건
-- 2회차 `insert_count == 0` (변경 입력이 없을 때)
-- 2회차 `skip_pdf_count`가 기대치와 일치
-
-### 6-4) 권장 테스트 파일
-
-- `tests/perf/test_memory_stability.py`
-- `tests/perf/test_io_throughput.py`
-- `tests/e2e/test_idempotent_pipeline.py`
-
-### 6-5) 실행 예시
-
-- `python scripts/run_harness.py --stage perf`
-- `python scripts/run_harness.py --stage data`
-- `python scripts/run_harness.py --stage all`
+Memory/I-O/멱등성 게이트는 `run_harness.py --stage perf`가 `kics_data.json`을 두 번 빌드해
+체크섬을 비교하는 구조였다. 그 빌드 경로가 사라져 perf 스테이지도 함께 제거됨.
+남아 있는 멱등성 커버리지는 `tests/e2e/test_idempotent_pipeline.py`(다운로더 엔진 재실행 시
+status=skipped + sha256 불변)이며, 이것이 현재 유일한 멱등성 게이트다.
 
 ## Stage 7: 결과물 품질 게이트(Docling + 리뷰 큐)
 
@@ -198,8 +122,7 @@
 
 - **K-ICS disclosure JSON:** [`kics-json-validation-rules.md`](kics-json-validation-rules.md) — run `python scripts/validate_kics_disclosure.py`; gate RED=0
 - 비율 재계산: `solvency_amount / required_capital * 100 ≈ solvency_ratio` (허용 오차 1.0)
-- 스키마 검증: `schemas/kics_data.schema.json`
-- 룰 a~g: `src/solvency/validation/rules.py`
+- 룰 R1~R8 · 8_life · 19_market: `src/solvency/validation/kics_json_rules.py`
 
 ### 7-4) 통과 기준
 
@@ -289,7 +212,7 @@ GitHub Actions 도입:
 - Job:
   - setup python
   - install deps (`pip install -r requirements.txt`)
-  - run `python scripts/run_harness.py --stage all`
+  - run `python scripts/run_harness.py --stage quality`
   - artifacts 업로드: `artifacts/reports/`, `artifacts/review_queue/`
 
 ### 3단계(중기)
@@ -302,4 +225,4 @@ GitHub Actions 도입:
 
 - 새 회사코드 추가 시 샘플/스키마/룰 테스트 함께 추가
 - Gemini 출력 포맷 변경 시 계약 테스트 먼저 업데이트
-- `kics_data.json` 배포 전 하네스 결과 보고서 보관
+- `kics_disclosure.json` 배포 전 게이트 결과 보고서 보관
