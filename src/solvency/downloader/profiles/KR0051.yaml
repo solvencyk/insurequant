@@ -10,7 +10,9 @@ selectors:
   pdf_link: "a[href*='.pdf'], a[href*='download']"
 filename_rule: "{company_code}_{fiscal_year}_{quarter}_{disclosure_date}.pdf"
 notes: |
-  Skeleton profile only. The case_a_direct_pdf handler currently logs a
-  warning - port the link-extraction flow from
-  src/solvency/legacy/downloaders/shinhanez_disclosure_downloader.py
-  before relying on this profile in production.
+  Skeleton profile only - not usable in production yet.
+  The link-extraction flow to port from lived in
+  src/solvency/legacy/downloaders/shinhanez_disclosure_downloader.py, deleted 2026-07-21
+  (zero importers). Retrieve it with:
+    git show 2e4f114190992472c81ac89ca432b3e27a339d46:src/solvency/legacy/downloaders/shinhanez_disclosure_downloader.py
+  `filename_rule` below is likewise aspirational - no code reads it today.

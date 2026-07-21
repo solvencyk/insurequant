@@ -56,13 +56,26 @@ items:
   misc:
     # 정기경영공시 metric 등록 시 추가
 
-# Cumulative items registry (mirrors §2.3 of the validation prompt).
-# The validator must switch to net-quarterly comparison for these.
+# Cumulative items registry — DOCUMENTATION ONLY (verified 2026-07-22).
+#
+# ⚠️ Nothing reads this key. The operative list is hardcoded in
+# scripts/validate_master_tables.py as `CSM_QOQ`, where each entry carries its
+# own cumulative flag. Editing the list below changes nothing; edit CSM_QOQ.
+#
+# It also did not match the code: `insurance_revenue` is listed here but is
+# deliberately absent from CSM_QOQ — the validator excludes PL 손익 items
+# because they are inherently high-variance (시장·금리 민감) and not registered
+# in `items.ifrs17` above, so the anomaly rule does not fit them. Aligned below
+# to what the validator actually evaluates.
+#
+# Kept rather than deleted because §2.3 of the validation prompt refers to it;
+# collapsing the two into one source of truth is a validation-stage decision.
 cumulative_items:
   ifrs17:
-    - new_business_csm
-    - csm_amortization
-    - insurance_revenue
+    - new_business_csm         # CSM_QOQ: ("신계약CSM", cumulative=True)
+    - csm_interest_accretion   # CSM_QOQ: ("이자부리",  cumulative=True)
+    - csm_amortization         # CSM_QOQ: ("CSM상각",   cumulative=True)
+    # csm_closing is a stock, compared raw QoQ (cumulative=False)
   kics: []               # 모두 시점값
   misc: []
 

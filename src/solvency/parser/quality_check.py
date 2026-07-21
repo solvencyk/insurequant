@@ -120,7 +120,6 @@ def score(md_path: Path) -> QualityReport:
     meta, body = _read_md(md_path)
     missing_core = _missing_rows(body, _RE_REQUIRED_CORE)
     missing_extended = _missing_rows(body, _RE_REQUIRED_EXTENDED)
-    missing = list(missing_core)
     has_unit = _has_unit(body)
     has_date = bool(meta.get("disclosure_date", "").strip())
     rate = _numeric_normalisation_rate(body)

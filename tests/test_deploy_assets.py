@@ -82,6 +82,50 @@ def test_referenced_files_exist(page_name):
     )
 
 
+def test_no_reference_to_deleted_source_paths():
+    """Nothing may point at a repo path that no longer exists.
+
+    The 2026-07-21 refactor deleted src/solvency/{legacy,transform} and
+    validation/{rules,schema}.py. The markdown-link audit could not see the
+    four downloader profiles that told a future session to "port the
+    click-driven flow from src/solvency/legacy/downloaders/..." — that
+    instruction lived inside a YAML `notes:` block, not a link. Those now say
+    where to retrieve the file from git, which is why a `git show <sha>:path`
+    line is allowed.
+    """
+    gone = [
+        "src/solvency/legacy/",
+        "src/solvency/transform/",
+        "src/solvency/validation/rules.py",
+        "src/solvency/validation/schema.py",
+        "schemas/kics_data.schema.json",
+    ]
+    skip_dirs = {".git", "__pycache__", "node_modules", "archive", "data",
+                 "output", "md_inbox", "research", ".venv", ".pytest_cache", "_resolved"}
+    exts = {".py", ".yaml", ".yml", ".json", ".js", ".cfg", ".toml", ".txt"}
+    hits = []
+    for dirpath, dirnames, filenames in os.walk(REPO):
+        dirnames[:] = [d for d in dirnames if d not in skip_dirs]
+        for fn in filenames:
+            p = Path(dirpath) / fn
+            if p.suffix.lower() not in exts or p.name == Path(__file__).name:
+                continue
+            try:
+                text = p.read_text(encoding="utf-8", errors="ignore")
+            except Exception:
+                continue
+            for g in gone:
+                if g not in text:
+                    continue
+                # a file that also shows how to retrieve it from git is documenting
+                # the deletion, not still depending on the path
+                if re.search(rf"git show [0-9a-f]{{7,40}}:{re.escape(g)}", text):
+                    continue
+                line_no = text[:text.index(g)].count("\n") + 1
+                hits.append(f"{p.relative_to(REPO)}:{line_no} -> {g}")
+    assert not hits, "references to deleted paths:\n  " + "\n  ".join(hits)
+
+
 def _fetched_json(page: Path) -> set[str]:
     """Every .json URL the page actually requests, including fetch(<var>)."""
     t = page.read_text(encoding="utf-8")

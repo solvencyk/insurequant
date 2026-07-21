@@ -842,9 +842,10 @@ class Env:
         # derived
         self.code_name = {r["원보험사코드"]: r["원수사명"] for r in self.kics_records
                           if r.get("원보험사코드")}
+        # wf is keyed by (원수사명, 공시분기); the code lookup is built from the K-ICS
+        # records instead. (Until 2026-07-22 an empty `for ... : pass` loop walked the
+        # whole waterfall here doing nothing — leftover scaffolding, removed.)
         self.wf_by_code = {}
-        for (name, q), m in self.wf.items():
-            pass  # wf keyed by (원수사명, 공시분기) — build code lookup from records
         self._build_wf_by_code()
         self.latest_kics_quarter = self._latest_quarter(self.kics_records)
         # sensitivity heatmap target = the disclosure quarter the heatmap SHOULD be on.
