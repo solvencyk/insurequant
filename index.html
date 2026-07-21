@@ -146,7 +146,7 @@
           <div>크기: 지급여력기준금액</div>
         </div>
       </div>
-      <div id="map">
+      <div id="map" role="group" aria-label="K-ICS 지급여력비율 트리맵 — 회사별 칸을 선택하면 상세 페이지로 이동">
         <div id="map-status" class="map-status">K-ICS 데이터 로딩 중… (약 3MB, 수 초 소요)</div>
         <div id="reference-period" class="reference-period" style="display:none;">기준시점: </div>
       </div>
@@ -170,7 +170,7 @@
           <span id="bubble-meta"></span>
         </div>
       </div>
-      <div id="csm-bubble-chart"></div>
+      <div id="csm-bubble-chart" role="img" aria-label="IFRS17 CSM 버블맵 — X: 신계약 CSM, Y: NB CSM 배수, 크기: 기말 CSM 잔액"></div>
       <div id="bubble-list" aria-label="CSM bubble list (mobile)"></div>
     </div>
   </div>
@@ -758,10 +758,17 @@
           }
 
           cell.style.cursor = 'pointer';
+          cell.tabIndex = 0;
+          cell.setAttribute('role', 'link');
+          cell.setAttribute('aria-label', cell.title);
+          const goToDetail = () => { window.location.href = `K-ICS.html?company=${encodeURIComponent(d.company)}&period=quarter`; };
           cell.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            window.location.href = `K-ICS.html?company=${encodeURIComponent(d.company)}&period=quarter`;
+            goToDetail();
+          });
+          cell.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToDetail(); }
           });
 
           el.appendChild(cell);
@@ -830,8 +837,13 @@
           val.className = 'li-val';
           val.textContent = (Number.isFinite(v) ? v.toFixed(1) : '-') + '%';
           row.appendChild(name); row.appendChild(track); row.appendChild(val);
-          row.addEventListener('click', () => {
-            window.location.href = `K-ICS.html?company=${encodeURIComponent(d.company)}&period=quarter`;
+          row.tabIndex = 0;
+          row.setAttribute('role', 'link');
+          row.setAttribute('aria-label', row.title);
+          const goToDetailRow = () => { window.location.href = `K-ICS.html?company=${encodeURIComponent(d.company)}&period=quarter`; };
+          row.addEventListener('click', goToDetailRow);
+          row.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToDetailRow(); }
           });
           host.appendChild(row);
         }

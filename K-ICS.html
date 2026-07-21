@@ -73,7 +73,7 @@
   <header>
     <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">K-ICS 지급여력비율 변동 추이</span></a>
     <div class="tabs">
-      <a href="K-ICS.html" class="tab active">K-ICS</a>
+      <a href="K-ICS.html" class="tab active" aria-current="page">K-ICS</a>
       <a href="IFRS17.html" class="tab">IFRS17</a>
       <a href="공시보고서.html" class="tab">공시/보고서</a>
     </div>
@@ -145,7 +145,7 @@
           <h3>보험사와 조회 기간을 선택해 주세요</h3>
           <p>위의 드롭다운 메뉴에서 보험사와 기간을 선택하면 그래프와 테이블이 표시됩니다.</p>
         </div>
-        <canvas id="chart" style="display:none;"></canvas>
+        <canvas id="chart" style="display:none;" role="img" aria-label="지급여력비율 및 기본자본비율 변동 추이 차트"></canvas>
       </div>
       <div class="table-container" id="table-container"></div>
     </div>
@@ -159,11 +159,11 @@
       <div id="donut-placeholder" class="no-data">상단의 보험사를 선택하면 해당 보험사의 소진율이 표시됩니다.</div>
       <div id="donut-row" class="donut-row" style="display:none">
         <div class="donut-cell">
-          <div class="donut-wrap"><canvas id="donut-tier1"></canvas></div>
+          <div class="donut-wrap"><canvas id="donut-tier1" role="img" aria-label="기본자본(신종자본증권) 인정 한도 소진율 도넛 차트"></canvas></div>
           <div class="donut-caption">기본자본<span class="sub">(신종자본증권)</span></div>
         </div>
         <div class="donut-cell">
-          <div class="donut-wrap"><canvas id="donut-tier2"></canvas></div>
+          <div class="donut-wrap"><canvas id="donut-tier2" role="img" aria-label="보완자본(후순위채) 인정 한도 소진율 도넛 차트"></canvas></div>
           <div class="donut-caption">보완자본<span class="sub">(후순위채)</span></div>
         </div>
       </div>
@@ -176,7 +176,7 @@
         <label id="sens-quarter-label" style="display:none">기준 분기: <select id="sens-quarter" class="select"></select></label>
       </div>
       <div id="sens-placeholder" class="no-data">상단의 보험사를 선택하면 금리 민감도 분석이 표시됩니다.</div>
-      <div class="sens-chart" id="sens-chart-wrap" style="display:none"><canvas id="sens-chart"></canvas></div>
+      <div class="sens-chart" id="sens-chart-wrap" style="display:none"><canvas id="sens-chart" role="img" aria-label="시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향 차트"></canvas></div>
       <div id="sens-kpis" class="sens-kpis" style="display:none"></div>
       <div class="table-container" id="sens-table" style="display:none"></div>
       <div class="donut-note" id="sens-note"></div>
@@ -190,7 +190,7 @@
       </ul>
       <div id="forward-placeholder" class="no-data">상단의 보험사를 선택하면 5년 자본비율 전망이 표시됩니다.</div>
       <div class="forward-chart" id="forward-chart-wrap" style="display:none">
-        <canvas id="forward-chart"></canvas>
+        <canvas id="forward-chart" role="img" aria-label="자본비율 5년 전망(Forward Outlook) 차트"></canvas>
       </div>
       <div class="donut-note" id="forward-note"></div>
     </div>

@@ -138,6 +138,9 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
    users; no change for default mouse rendering).
    ========================================================================== */
 :focus-visible{ outline:2px solid var(--primary); outline-offset:2px; border-radius:2px; }
+/* Hidden native checkbox behind a toggle-switch (index.html #ratioToggle) has 0×0
+   size, so its own :focus-visible ring is invisible — draw it on the visible label instead. */
+.toggle-input:focus-visible + .toggle-label{ outline:2px solid var(--primary); outline-offset:2px; }
 
 @media (prefers-reduced-motion:reduce){
   *, *::before, *::after{
