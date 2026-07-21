@@ -82,6 +82,53 @@ def test_referenced_files_exist(page_name):
     )
 
 
+def _fetched_json(page: Path) -> set[str]:
+    """Every .json URL the page actually requests, including fetch(<var>)."""
+    t = page.read_text(encoding="utf-8")
+    u = set(_FETCH.findall(t))
+    u |= set(re.findall(r"""resolveUrl\(\s*['"]([^'"]+)['"]""", t))
+    for a, b in re.findall(r"""dataPaths\(\s*['"]([^'"]+)['"]\s*,\s*['"]([^'"]+)['"]""", t):
+        u |= {a, b}
+    for var in re.findall(r"fetch\(\s*([A-Za-z_$][\w$]*)\s*\)", t):
+        m = re.search(rf"""{re.escape(var)}\s*=\s*['"]([^'"]+\.json)['"]""", t)
+        if m:
+            u.add(m.group(1))
+    return {x.lstrip("./") for x in u if x.endswith(".json")}
+
+
+def test_docs_agree_with_what_pages_fetch():
+    """The two docs that drive the deploy keep-list must match reality.
+
+    claude-agent-publishing.md §1 and claude-agent-designer.md §1 both tabulate
+    "which page reads which JSON". On 2026-07-22 both were wrong in BOTH
+    directions — they listed five files no page fetches (csm_bubble.json,
+    ifrs17_panels.json, net_income_breakdown.json, disclosed_csm_multiple.json,
+    nb_premium_wolnap.json) and omitted eight that are fetched. The keep-list is
+    derived from those tables, so a wrong table means a silently broken deploy.
+
+    Assert the weaker, stable direction: every JSON a page fetches must be named
+    in both docs. (The reverse — a doc naming an unfetched file — is intentional
+    in the "이전 표에 있었으나 읽지 않는 것" note, so it is not asserted.)
+    """
+    docs = {
+        "claude-agent-publishing.md": (REPO / "docs/agents/claude-agent-publishing.md"),
+        "claude-agent-designer.md": (REPO / "docs/agents/claude-agent-designer.md"),
+    }
+    missing = []
+    for page_name in PAGES:
+        page = REPO / page_name
+        if not page.exists():
+            continue
+        for url in sorted(_fetched_json(page)):
+            base = Path(url).name
+            for doc_name, doc in docs.items():
+                if doc.exists() and base not in doc.read_text(encoding="utf-8"):
+                    missing.append(f"{doc_name} never mentions {base} (fetched by {page_name})")
+    assert not missing, (
+        "deploy keep-list docs are out of date with the pages:\n  " + "\n  ".join(missing)
+    )
+
+
 def test_kics_panel_data_is_external():
     """K-ICS.html must not carry its panel data inline again.
 

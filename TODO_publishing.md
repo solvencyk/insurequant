@@ -80,6 +80,12 @@ INDEX-IFRS17-BUBBLE 과 동일 pipeline. Waterfall validation 23/23. 버블맵 �
 | ~~KICS-TIER1-UTIL~~ | tier1 hybrid utilization 2025.4Q assembly | done | SCR×15% strict 10%; 35/38 valid; `output/tier1_utilization/`; `templates/tier1_utilization_latest.json` |
 | ~~KICS-TIER2-UTIL~~ | tier2 utilization 2025.4Q assembly | done | KIRI PDF reconcile; 34/38 in 0-100%; `output/tier2_utilization/`; `templates/tier2_utilization_latest.json` |
 | ~~KICS-FORWARD-CAPITAL~~ | Forward solvency simulation in K-ICS.html | done v3 | v3 confidence uses `subordinated_eok`. Latest `20260525T061947Z/forward_simulation_v3.json` + inline `window.FORWARD_DATA` |
+
+> ⚠️ **위 3행의 경로 표기는 2026-07-22 이후 옛것이다** (완료 기록이라 행 자체는 보존).
+> 현재 배포본은 루트 `kics_tier1_utilization.json` · `kics_tier2_utilization.json` ·
+> `kics_forward_capital.json`이고, K-ICS.html은 이걸 **fetch**한다 — `window.FORWARD_DATA`
+> 인라인도, `templates/*_latest.json`도 더는 배포 경로가 아니다(후자 2개는 삭제됨).
+> 정본 표 = `docs/agents/claude-agent-publishing.md` §1(재도출 명령 포함).
 | ~~IFRS17-HTML-DASH~~ | IFRS17.html 6-panel dashboard data wiring | done | Per-panel JSON contract finalized; designer owns HTML structure |
 | ~~F17-T1-PANEL3~~ | Panel 3 클린 4-bar 당기순이익 분해 (data side) | 2026-05-30 | `data/dart/viz/net_income_breakdown.json`; designer swapped Panel 3 layout |
 | ~~F5~~ | No-bond insurer forward sim 추가 | done | 24 → 37 cohort. KR0008 삼성화재 263%→263% flat. 13 no_bond insurer 추가 |

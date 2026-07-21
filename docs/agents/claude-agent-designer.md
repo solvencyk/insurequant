@@ -43,10 +43,17 @@ If a master JSON adds a new field, publishing tells designer (`manual_html_edit`
 
 | Page | Purpose | Main data |
 |---|---|---|
-| `index.html` | Market map (treemap on desktop, vertical list on mobile) + IFRS17 quadrant + bubble | `kics_disclosure.json`, `csm_bubble.json` |
-| `K-ICS.html` | Per-insurer K-ICS detail + sub-items + forward outlook | `kics_disclosure.json`, `forward_capital_latest.json`, `tier{1,2}_utilization_latest.json` |
-| `IFRS17.html` | 6-panel IFRS17 dashboard (CSM waterfall / amort / P&L / NB / sensitivity / history) | `csm_waterfall*.json`, `ifrs17_panels.json`, `csm_bubble.json`, `nb_csm_ratio.embed.js`, `net_income_breakdown.json`, `disclosed_csm_multiple.json` |
-| `공시보고서.html` | Static info page | (mostly text) |
+| `index.html` | Market map (treemap on desktop, vertical list on mobile) + IFRS17 quadrant + bubble | `kics_disclosure.json`, `CSM_waterfall.json`, `NB_CSM_multiple.json` — **버블 데이터는 이 페이지에 인라인**돼 있다(별도 `csm_bubble.json`을 fetch하지 않음) |
+| `K-ICS.html` | Per-insurer K-ICS detail + sub-items + 자본 도넛 + forward outlook | `kics_disclosure.json`, `kics_rate_sensitivity.json`, `kics_tier1_utilization.json`, `kics_tier2_utilization.json`, `kics_forward_capital.json` |
+| `IFRS17.html` | 6-panel IFRS17 dashboard (CSM waterfall / amort / P&L / NB / sensitivity / history) | `CSM_waterfall.json`, `PL_breakdown.json`, `NB_CSM_multiple.json`, `data/dart/viz/csm_waterfall.json`, `csm_waterfall_history.json`, `csm_amort_schedule.json`, `insurance_pl_breakdown.json`, `sensitivity_heatmap.json`, `data/ir/nb_csm_ratio.json` |
+| `공시보고서.html` | Static info page | (fetch 없음) |
+
+> 이 열은 2026-07-22에 HTML에서 **기계 도출**해 교정했다. 그전에는 아무 페이지도 읽지 않는
+> `ifrs17_panels.json` / `csm_bubble.json` / `net_income_breakdown.json` /
+> `disclosed_csm_multiple.json` / `nb_csm_ratio.embed.js`와, 이미 이름이 바뀐
+> `forward_capital_latest.json` / `tier{1,2}_utilization_latest.json`이 실려 있었다.
+> 페이지의 fetch를 바꾸면 **이 표와 `claude-agent-publishing.md` §1을 같이 고쳐라**
+> (거기에 재도출 명령이 있다). 둘 다 keep-list의 근거다.
 
 Local preview: `python -m http.server 8000` from repo root, browse `http://localhost:8000/`.
 

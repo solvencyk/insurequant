@@ -41,17 +41,42 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 
 ## 1. Canonical master locations (read by HTML)
 
-| Master | Path | Reader |
-|---|---|---|
-| K-ICS master | `kics_disclosure.json` (repo root) | K-ICS.html |
-| IFRS17 CSM waterfall | `data/dart/viz/csm_waterfall.json` (+ `csm_waterfall_history.json`) | IFRS17.html |
-| IFRS17 NB CSM bubble | `data/dart/viz/csm_bubble.json` | IFRS17.html + index.html |
-| IFRS17 panels | `data/dart/viz/ifrs17_panels.json` (sensitivity, P&L, amort) | IFRS17.html |
-| Forward capital | `kics_forward_capital.json` (repo root) | K-ICS.html (forward panel) |
-| Tier 1/2 utilization | `kics_tier{1,2}_utilization.json` (repo root) | K-ICS.html (자본 도넛) |
-| NB premium (월납월초) | `data/_derived/nb_premium_wolnap.json` | IFRS17.html |
-| Net income breakdown | `data/dart/viz/net_income_breakdown.json` (F17) | IFRS17.html Panel 3 |
-| Disclosed CSM multiples | `data/ir/disclosed_csm_multiple.json` | IFRS17.html |
+> **이 표는 손으로 유지하지 말고 아래 명령으로 재도출하라** (2026-07-22 전수검증 결과 이전
+> 표는 **양방향으로 틀려 있었다** — 아무 페이지도 안 읽는 5개를 올리고, 실제로 fetch하는 8개를
+> 빠뜨림). keep-list의 근거 문서가 틀리면 배포가 조용히 깨진다.
+>
+> ```bash
+> python - <<'EOF'
+> import re, pathlib
+> for f in ['index.html','K-ICS.html','IFRS17.html','공시보고서.html']:
+>     t = pathlib.Path(f).read_text(encoding='utf-8'); u=set()
+>     u |= set(re.findall(r"fetch\(\s*['\"]([^'\"]+)['\"]", t))
+>     u |= set(re.findall(r"resolveUrl\(\s*['\"]([^'\"]+)['\"]", t))
+>     for a,b in re.findall(r"dataPaths\(\s*['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]+)['\"]", t): u|={a,b}
+>     for v in re.findall(r"fetch\(\s*([A-Za-z_$][\w$]*)\s*\)", t):      # fetch(jsonPath)
+>         m = re.search(rf"{re.escape(v)}\s*=\s*['\"]([^'\"]+\.json)['\"]", t)
+>         if m: u.add(m.group(1))
+>     print(f, '->', sorted({x.lstrip('./') for x in u if x.endswith('.json')}))
+> EOF
+> ```
+
+**2026-07-22 도출 결과 (검증됨):**
+
+| Page | Fetches |
+|---|---|
+| `index.html` | `kics_disclosure.json` · `CSM_waterfall.json` · `NB_CSM_multiple.json` |
+| `K-ICS.html` | `kics_disclosure.json` · `kics_rate_sensitivity.json` · `kics_tier1_utilization.json` · `kics_tier2_utilization.json` · `kics_forward_capital.json` |
+| `IFRS17.html` | `CSM_waterfall.json` · `PL_breakdown.json` · `NB_CSM_multiple.json` · `data/dart/viz/csm_waterfall.json` · `csm_waterfall_history.json` · `csm_amort_schedule.json` · `insurance_pl_breakdown.json` · `sensitivity_heatmap.json` · `data/ir/nb_csm_ratio.json` |
+| `공시보고서.html` | (없음 — 정적 페이지) |
+
+여기에 `common.css` + `CNAME` + `.gitignore` + 4개 HTML을 더한 것이 keep-list다.
+
+**이전 표에 있었으나 어떤 페이지도 읽지 않는 것** (배포 대상 아님):
+`data/dart/viz/csm_bubble.json`(index.html은 버블을 **인라인**으로 갖고 있다 — 메모리
+`project_csm_bubble_complete`) · `data/dart/viz/ifrs17_panels.json`(실제로는 amort /
+insurance_pl / sensitivity 3개 파일로 분리돼 있다) · `data/_derived/nb_premium_wolnap.json` ·
+`data/dart/viz/net_income_breakdown.json` · `data/ir/disclosed_csm_multiple.json`.
+빌더가 이 파일들을 만들더라도 **사이트가 읽지 않으므로 push하지 않는다.**
 
 The HTML pages fetch these directly. **No staging templates between publishing and the HTML** (root single-source since 2026-05-28).
 

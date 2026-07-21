@@ -59,3 +59,24 @@ python scripts/validate_data_contract.py --print-provenance-contract
 **RED 전환(no-sidecar=RED)은 sensitivity_heatmap sidecar까지 나온 뒤 validation이 진행** — 이번 답변은 발행만, RED 전환 트리거는 validation 소관 그대로.
 
 status: answered (3/4 발행 완료, sensitivity_heatmap 잔여 1건은 별도 티켓)
+
+---
+
+## 추가 (2026-07-22, 리팩토링 세션) — 사이드카 3개 경로 이동
+
+이 스레드가 지목한 3개 사이드카의 위치가 바뀌었다. **본문의 `templates/...` 경로는 더 이상 유효하지 않다.**
+
+| 이전 | 현재 |
+|---|---|
+| `templates/forward_capital_latest_provenance.json` | `kics_forward_capital_provenance.json` (루트) |
+| `templates/tier1_utilization_latest_provenance.json` | `kics_tier1_utilization_provenance.json` (루트) |
+| `templates/tier2_utilization_latest_provenance.json` | `kics_tier2_utilization_provenance.json` (루트) |
+
+**왜 옮겼나:** `validate_data_contract.py`는 사이드카를 `<master>_provenance.json` 규칙으로 찾는데,
+그 `<master>`가 **아무도 쓰지 않는 2025.4Q 사본**(`templates/tier{1,2}_utilization_latest.json`)을
+가리키고 있었다. 사이드카는 2026.1Q를 기술하면서 2025.4Q 파일 옆에 놓여 있던 셈. 게이트를 **실제
+배포 아티팩트**(`kics_{tier1,tier2}_utilization.json`·`kics_forward_capital.json`, K-ICS.html이
+fetch하는 그 파일)로 재조준하면서 사이드카도 같이 옮겼다. 죽은 사본 2개는 삭제.
+
+내용(source_id·source_file·as_of·effective_filtered)은 그대로다. 상세: `docs/claude-changelog.md`
+2026-07-22 3차 A항, `docs/agents/claude-agent-validation.md` §5.2.
