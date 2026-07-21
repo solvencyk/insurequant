@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <!-- CSP: defense-in-depth, meta-delivered (GitHub Pages static — no HTTP headers). Must stay first in <head>, before CDN tags. frame-ancestors/report-uri are ignored in meta CSP. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>InsureQuant — 日本 ESR 現況</title>
+  <meta name="description" content="일본 주요 보험그룹 경제가치 솔벤시비율(ESR) 현황 — 그룹 연결 기준"/>
+  <meta property="og:title" content="InsureQuant — 日本 ESR 現況"/>
+  <meta property="og:description" content="일본 주요 보험그룹 ESR 현황 — 그룹 연결 기준"/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="../common.css"/>
+  <style>
+    *{box-sizing:border-box}
+    .container{max-width:1100px}
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;margin-bottom:16px}
+    .section-title{font-size:15px;font-weight:600;color:var(--text);margin:0 0 4px 0}
+    .section-note{font-size:12px;color:var(--muted);margin:0 0 14px 0}
+    .jp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+    .jp-card{border:1px solid var(--border);border-radius:var(--r-md);background:#fff;padding:14px}
+    .jp-card.dim{background:var(--card);opacity:0.82}
+    .jp-card.pending{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:110px;color:var(--muted)}
+    .jp-name{font-weight:700;font-size:14px;color:var(--text)}
+    .jp-name-en{font-size:11px;color:var(--muted);margin-top:1px}
+    .jp-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 6px;border-radius:var(--r-pill);background:var(--border);color:var(--ink-strong);margin-top:6px}
+    .jp-esr{font-size:28px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;margin:10px 0 2px}
+    .jp-bar-track{height:6px;border-radius:3px;background:var(--border);overflow:hidden;margin-bottom:8px}
+    .jp-bar-fill{height:100%;background:var(--pos);border-radius:3px}
+    .jp-meta{font-size:11px;color:var(--muted);line-height:1.6}
+    .jp-meta a{color:var(--muted);text-decoration:underline}
+    .jp-meta a:hover{color:var(--primary)}
+    .jp-delta-neg{color:var(--neg-strong)}
+    .jp-delta-pos{color:var(--ink-strong)}
+    header .tabs a.jp-back{margin-left:auto}
+    @media (max-width:640px){
+      header{padding:8px 12px}
+      .brand{font-size:15px}
+      .brand .hint{display:none}
+      .container{padding:10px}
+      .panel{padding:14px}
+      .jp-grid{grid-template-columns:1fr 1fr;gap:10px}
+      .jp-esr{font-size:22px}
+    }
+    @media (max-width:420px){
+      .jp-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="../index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">Japan ESR</span></a>
+    <div class="tabs">
+      <a href="../index.html" class="tab">🇰🇷 한국 대시보드</a>
+      <a href="index.html" class="tab active" aria-current="page">🇯🇵 日本 ESR</a>
+    </div>
+  </header>
+  <div class="container">
+    <div class="panel">
+      <h2>일본 주요 보험그룹 ESR 현황</h2>
+      <p>경제가치 기준 솔벤시비율(Economic Solvency Ratio, ESR) — <strong>그룹 연결 기준</strong>. 개별사 전수는 2026년 10월 EDINET 有価証券報告書 공표 이후 반영됩니다.</p>
+      <p id="coverageNote" class="small-muted">데이터 불러오는 중…</p>
+    </div>
+
+    <div class="panel">
+      <div class="section-title">2026.3末 확정 (동일 기준일)</div>
+      <div class="section-note">4개사 모두 2026-03-31 기준 — 안전하게 서로 비교 가능한 유일한 구간</div>
+      <div id="grpConsistent" class="jp-grid"></div>
+    </div>
+
+    <div class="panel">
+      <div class="section-title">직전분기 참고치 (기준일 상이)</div>
+      <div class="section-note">각 사 최신 공표치가 2026.3末 이전 시점 — 서로 다른 시점이라 위 구간과 직접 비교하지 마십시오</div>
+      <div id="grpPrior" class="jp-grid"></div>
+    </div>
+
+    <div class="panel">
+      <div class="section-title">공표 대기</div>
+      <div class="section-note">2026.3末 실적 미공표 (감사 완료 후 공표 예정)</div>
+      <div id="grpPending" class="jp-grid"></div>
+    </div>
+  </div>
+  <footer style="max-width:1100px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
+    자료: 각사 決算短信·決算説明資料·IR자료 (그룹 연결 공표치) — 개별사 전수는 EDINET 有報(2026-10-31 최종기한) 반영 예정<br/>
+    본 페이지의 수치는 공표자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수 변화는 △로 표기합니다(한국 회계 관행과 통일). basis 표기는 각사 공표 원문 기준. © 2026 InsureQuant
+  </footer>
+
+  <script>
+    // Oct 2026 hook: once individual-company coverage widens the as_of_consistent
+    // subset to most of the roster, replace this card-grid renderer with a
+    // RecSplit treemap (size=所要資本, color=esr_pct) mirroring index.html's
+    // Korea treemap — data shape (records[]) is already treemap-ready.
+    function samo(n){
+      if(n==null || !Number.isFinite(n)) return "—";
+      const r = Math.round(n);
+      return r<0 ? "△"+Math.abs(r).toLocaleString("ko-KR") : "+"+r.toLocaleString("ko-KR");
+    }
+    const ENTITY_LABEL = {group:"그룹(연결)", mutual:"상호회사"};
+
+    function card(rec, opts){
+      opts = opts || {};
+      const div = document.createElement("div");
+      div.className = "jp-card" + (opts.dim ? " dim" : "");
+
+      const name = document.createElement("div");
+      name.innerHTML = `<div class="jp-name">${rec.company_jp}</div><div class="jp-name-en">${rec.company_en}${rec.ticker ? " · " + rec.ticker : ""}</div>`;
+      div.appendChild(name);
+
+      const badge = document.createElement("span");
+      badge.className = "jp-badge";
+      badge.textContent = ENTITY_LABEL[rec.entity_type] || rec.entity_type;
+      div.appendChild(badge);
+
+      const esr = document.createElement("div");
+      esr.className = "jp-esr";
+      esr.textContent = rec.esr_pct != null ? rec.esr_pct + "%" : "—";
+      div.appendChild(esr);
+
+      if (rec.esr_pct != null){
+        const track = document.createElement("div");
+        track.className = "jp-bar-track";
+        const fill = document.createElement("div");
+        fill.className = "jp-bar-fill";
+        fill.style.width = Math.min(100, (rec.esr_pct / 300) * 100) + "%";
+        track.appendChild(fill);
+        div.appendChild(track);
+      }
+
+      const metaLines = [];
+      metaLines.push(`기준: ${rec.as_of || "—"} · ${rec.esr_basis}${rec.esr_basis_raw && rec.esr_basis_raw !== rec.esr_basis && rec.esr_basis_raw.includes("preliminary") ? " (예비치)" : ""}`);
+      if (rec.target_pct) metaLines.push(`목표수준 ${rec.target_pct}`);
+      if (rec.yoy_change_pp != null) metaLines.push(`전년比 <span class="${rec.yoy_change_pp<0?'jp-delta-neg':'jp-delta-pos'}">${samo(rec.yoy_change_pp)}pp</span>`);
+      if (rec.총자산_억엔 != null) metaLines.push(`총자산 ${Number(rec.총자산_억엔).toLocaleString("ko-KR")}억엔`);
+      if (rec.provenance && rec.provenance.source_url){
+        metaLines.push(`<a href="${rec.provenance.source_url}" target="_blank" rel="noopener noreferrer">출처: ${rec.provenance.doc || "IR"}${rec.provenance.doc_date ? " (" + rec.provenance.doc_date + ")" : ""} ↗</a>`);
+      }
+      const meta = document.createElement("div");
+      meta.className = "jp-meta";
+      meta.innerHTML = metaLines.join("<br/>");
+      div.appendChild(meta);
+
+      return div;
+    }
+
+    function pendingCard(rec){
+      const div = document.createElement("div");
+      div.className = "jp-card pending";
+      div.innerHTML = `<div class="jp-name">${rec.company_jp}</div><div class="jp-name-en">${rec.company_en}</div><div style="margin-top:8px;font-size:12px">공표 대기</div>`;
+      return div;
+    }
+
+    fetch("jesr_master.json")
+      .then(r => r.json())
+      .then(data => {
+        const records = data.records || [];
+        const consistent = records.filter(r => r.as_of_consistent === true && r.status !== "not_yet_disclosed");
+        const prior = records.filter(r => r.as_of_consistent === false && r.status !== "not_yet_disclosed");
+        const pending = records.filter(r => r.status === "not_yet_disclosed");
+
+        consistent.sort((a,b) => (b.esr_pct||0) - (a.esr_pct||0));
+        prior.sort((a,b) => (b.esr_pct||0) - (a.esr_pct||0));
+
+        const cConsistent = document.getElementById("grpConsistent");
+        const cPrior = document.getElementById("grpPrior");
+        const cPending = document.getElementById("grpPending");
+        consistent.forEach(r => cConsistent.appendChild(card(r)));
+        prior.forEach(r => cPrior.appendChild(card(r, {dim:true})));
+        pending.forEach(r => cPending.appendChild(pendingCard(r)));
+
+        document.getElementById("coverageNote").textContent =
+          `수록 ${records.length}社 (2026.3末 확정 ${consistent.length} · 직전분기 참고 ${prior.length} · 공표대기 ${pending.length}) · 기준: ${data._meta && data._meta.as_of_target || "2026-03-31"}`;
+      })
+      .catch(err => {
+        document.getElementById("coverageNote").textContent = "데이터를 불러오지 못했습니다.";
+        console.error("jesr_master.json load failed", err);
+      });
+  </script>
+</body>
+</html>

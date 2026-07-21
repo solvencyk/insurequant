@@ -1,11 +1,26 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-07-21 · Stage 5/5 — designer
+> Last updated: 2026-07-21b · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-07-21b — J-ESR MVP: 일본 보험그룹 ESR 현황 페이지 (inbox `20260624T0337Z`, resolved after ~1 month stale)
+
+3건의 designer inbox 스레드(0113Z 트리맵 발주→0337Z로 superseded, 0337Z 재발주, 0600Z parser 데이터 핸드오프)가 2026-06-24부터 미착수 상태로 남아있던 것을 발견 및 처리.
+
+- **신규 `J-ESR/index.html`**: Korea 4-페이지와 분리된 독립 화면(owner 하드 제약 — index.html/K-ICS.html/IFRS17.html 무변경). `../common.css` 링크로 토큰/브랜드만 재사용, 자체 헤더(한국 대시보드로 돌아가는 링크 1개)만 추가.
+- **트리맵 아닌 카드+랭킹바**: 최초 발주(0113Z)는 Korea index.html 마켓맵과 동형 트리맵이었으나, owner가 데이터의 as-of 혼재(2025.3~2026.3 짬뽕)를 이유로 재발주(0337Z)하며 트리맵을 취소하고 카드/랭킹바로 변경 지시. `jesr_master.json`(parser 0600Z 산출, 11개사 records)을 fetch해 `as_of_consistent` 플래그로 3구간 분리 렌더:
+  - **2026.3末 확정 (4사)**: 東京海上238%·MS&AD214%·Sompo270%·ソニーFG177% — 서로 비교 가능 명시.
+  - **직전분기 참고 (5사, dim 처리)**: 第一生命213%(25.12)·日本生命224%(25.3)·住友生命184%(25.9)·明治安田216%(25.3)·富国260.9%(25.9) — "위 구간과 직접 비교하지 마십시오" 문구로 오해 차단.
+  - **공표대기 (2사)**: T&D·かんぽ生命 — 감사 미완료, placeholder 카드.
+- **카드 구성**: ESR% 큰 숫자 + 미니 바(구간 내부만 시각 랭킹, 구간 간 비교 유도 안 함) + basis 라벨(新J-ICS, mutual 5사는 `_preliminary` 시 "(예비치)" 표기) + entity_type 배지(그룹(연결)/상호회사) + `yoy_change_pp`(음수 △, 양수 +, samo 관례 재사용) + provenance 출처 링크(각사 決算短信/決算説明資料 원문 URL).
+- **데이터 정직**: 상단 캡션 "그룹 연결 기준 · 개별사 전수는 2026.10 EDINET 有報 후" + fetch 후 실시간 커버리지 카운트("수록 11社 (확정4·참고5·대기2)"). `所要資本`/`적격자본` 전항목 null(parser 핸드오프 명시 한계)이라 도넛/컴포넌트 분해는 시도하지 않음 — ESR% 단일값만.
+- **10월 확장 훅(미구현, 주석만)**: JS에 "as_of_consistent 커버리지가 넓어지면 이 카드그리드를 index.html 패턴의 RecSplit 트리맵으로 교체" 코멘트. 렌더 로직이 이미 fetch→filter→section 구조라 개별사 전수 추가는 HTML 무변경으로 흡수 가능(append-friendly).
+- **검증**: 로컬 static 서버(`python -m http.server`)로 `J-ESR/index.html` 프리뷰. 콘솔 에러 0. `get_page_text`로 11개사 전부 올바른 구간(4/5/2)·라벨·출처링크 확인. 375px 모바일: `grid-template-columns` 1열로 축소, `scrollWidth===clientWidth`(가로 스크롤 없음) 확인.
+- **inbox 정리**: 3건 전부 `## 답변` 작성 후 `_resolved/`로 이동(0113Z superseded-note, 0337Z 구현상세+페이지경로+11社 카운트, 0600Z 데이터 소비 확인). 세 파일 모두 애초 git 미추적 상태(커밋된 적 없음)였음 — 단순 파일 이동으로 처리, TODO_designer.md 업데이트만 커밋 대상.
 
 ## 2026-07-21 — A11y baseline + audit (inbox `20260721T0233Z`)
 

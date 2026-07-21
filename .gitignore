@@ -46,6 +46,10 @@ data/dart/**/*.xml
 data/kidi/
 data/ir/**/raw/
 
+# J-ESR (Japan ESR) pipeline — EDINET subscription key + raw XBRL pulls (HUGE, regenerable)
+J-ESR/edinet_key.txt
+J-ESR/raw/
+
 # Large reference / intermediate dirs (regenerable)
 artifacts/
 md_inbox/
