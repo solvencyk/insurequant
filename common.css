@@ -28,7 +28,7 @@
   --card:#f8f9fa;           /* panel / table-header / inactive-tab   */
   --border:#e9ecef;         /* hairline borders                      */
   --text:#212529;           /* primary ink                           */
-  --muted:#6c757d;          /* secondary ink, captions, placeholders */
+  --muted:#6a737a;          /* secondary ink, captions, placeholders — A11y 2026-07-21: darkened from #6c757d (4.45:1 on --card, sub-AA) to clear 4.5:1 on both --bg and --card */
   --ink-strong:#495057;     /* axis labels / strong secondary        */
 
   /* — Brand / action ———————————————————————————————————————————— */
@@ -100,6 +100,9 @@ header{
 }
 .tab:hover,
 .tab.active{ background:var(--primary); color:#fff; border-color:var(--primary); }
+/* A11y 2026-07-21: active tab was color-only (WCAG 1.4.1) — add a non-color cue
+   (underline) so it doesn't rely solely on the background-color change. */
+.tab.active{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:3px; }
 
 /* — Layout container ——————————————————————————————————————————————— */
 .container{ max-width:var(--maxw); margin:0 auto; padding:16px; }
