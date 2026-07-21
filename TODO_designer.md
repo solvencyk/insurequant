@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-07-21b · Stage 5/5 — designer
+> Last updated: 2026-07-21c · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (skeleton) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -9,8 +9,11 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
-**Recent (2026-07-21b):**
-- **J-ESR MVP shipped** (inbox `20260624T0337Z`, open since 06-24, resolved): new standalone `J-ESR/index.html` — 일본 주요 보험그룹 ESR 현황, card+ranking-bar (not treemap — owner re-order after as-of mixed across companies). Fetches `J-ESR/jesr_master.json`, splits by `as_of_consistent` into 3 sections: 2026.3末 확정(4사, mutually comparable) / 직전분기 참고(5사, dimmed + "don't compare across sections" note) / 공표대기(2사: T&D·かんぽ生命). Per-card: ESR% + mini bar (intra-section only) + basis label + entity badge(그룹/상호) + yoy_change_pp (△/+ samo) + provenance link. Links `../common.css` for brand consistency; Korea pages untouched per owner's hard constraint. Oct-2026 promotion-to-treemap noted as a code comment hook only (not built — data shape is already treemap-ready). Verified: local server preview, 0 console errors, 11/11 companies in correct section, 375px mobile collapses to 1-col grid, no horizontal overflow. Closed all 3 stale designer inbox threads (0113Z superseded, 0337Z order, 0600Z parser handoff) → `_resolved/`.
+**Recent (2026-07-21c):**
+- **J-ESR MVP reverted — owner hold confirmed**: built `J-ESR/index.html` (card+ranking-bar, see 07-21b below), then owner corrected: J-ESR work (including the display MVP, not just full-coverage/treemap) is **on hold until 2026-09/10** — meaningful individual-company data doesn't exist before the EDINET 有報 window. This decision predates 07-21b but wasn't recorded anywhere retrievable (not in inbox, TODO, or memory) — owner recalled it from a session that never got written down. Page removed. **Do not resume J-ESR designer work before checking with owner, even though the 06-24 inbox thread (superseded now) reads as an active order.**
+
+**Recent (2026-07-21b, reverted — see above):**
+- ~~J-ESR MVP shipped~~ (inbox `20260624T0337Z`): new standalone `J-ESR/index.html` — 일본 주요 보험그룹 ESR 현황, card+ranking-bar (not treemap — owner re-order after as-of mixed across companies). Fetches `J-ESR/jesr_master.json`, splits by `as_of_consistent` into 3 sections: 2026.3末 확정(4사, mutually comparable) / 직전분기 참고(5사, dimmed + "don't compare across sections" note) / 공표대기(2사: T&D·かんぽ生命). Per-card: ESR% + mini bar (intra-section only) + basis label + entity badge(그룹/상호) + yoy_change_pp (△/+ samo) + provenance link. Links `../common.css` for brand consistency; Korea pages untouched per owner's hard constraint. Oct-2026 promotion-to-treemap noted as a code comment hook only (not built — data shape is already treemap-ready). Verified: local server preview, 0 console errors, 11/11 companies in correct section, 375px mobile collapses to 1-col grid, no horizontal overflow.
 
 **Recent (2026-07-21):**
 - **A11y baseline + audit** (inbox `20260721T0233Z`, resolved): formalized WCAG 2.1 AA baseline + method in `docs/a11y_baseline.md`, local skill `.claude/skills/a11y-audit/` (chose local over external `ui-ux-pro-max`), contrast/colorblind tool `scripts/a11y_contrast_check.py`. Fixed low-risk/purely-additive gaps: index.html treemap cells + mobile list rows were **click-only** (no keyboard path at all — the site's primary nav interaction, WCAG 2.1.1 fail) → added tabindex/role/aria-label/keydown; custom toggle's focus ring was landing on a 0×0 hidden checkbox → retargeted to the visible label; `공시보고서.html` wasn't linking `common.css` at all (no focus-visible ring, no reduced-motion) → added the link; 10 chart canvases/ECharts containers across 3 pages got `role`/`aria-label`; active-tab links (K-ICS/IFRS17/공시보고서) got `aria-current="page"` (mitigates the color-only active-tab gap for screen readers; visual-only gap for sighted users still owner-gated, unchanged). Owner-review queue (rendered-value changes, not auto-fixed): `--muted`-on-`--card` contrast 4.45:1, bubble-legend green text 3.30:1, `#adb5bd` placeholders 2.07:1, IFRS17 `NB_LINE_COLORS` 2 confusable pairs under deuteranopia sim, index.html treemap/bubble red↔green diverging scale loses contrast under sim. `docs/agents/claude-agent-designer.md` §5.3 updated, stale `#ff9f40` note removed.
@@ -99,7 +102,6 @@ Publishing currently has Tier1 4-bar in production. Tier2 (LOB 장기/자동차/
 - [ ] Caption variant per-company taxonomy (장기/자동차/일반 vs 보장성/물보험/저축성)
 
 ## ✅ Done (archive)
-- J-ESR-MVP 일본 ESR 카드+랭킹바 독립 페이지(`J-ESR/index.html`) — 2026-07-21b (changelog 07-21b). Oct 2026 확장(개별사 전수→트리맵 승격)은 parser 데이터 대기, 코드 훅만.
 - QA-GLITCH-0614 owner 라이브QA: K-ICS 드롭다운 누락사 보강(30→48, fillMissingCompanies) + 현대해상 키컬러 #FFB81C + ΔCSM 헤더 억원 + 모바일 표 패딩/nowrap — 2026-06-14 (changelog 06-14). 상류대기: shock표기통일·흥국행분리(parser), 소진율 100%+캡(publishing)
 - TREEMAP-SCALE 트리맵 색 임계 앵커 130/200% + 범례 임계표기 (권고선=130%, 민감도 패널 150%→130% 정합) — 2026-06-13 (changelog 06-13)
 - KEYCOLOR-V1 IFRS17 적용(워터폴 total + Panel2/5 라인 + Panel3 상각막대 + select 링 + 스와치, WCAG 보정) — 2026-06-13 (changelog 06-13)
@@ -143,7 +145,6 @@ Publishing currently has Tier1 4-bar in production. Tier2 (LOB 장기/자동차/
 - `K-ICS.html` — per-insurer detail + sub-items + forward outlook
 - `IFRS17.html` — 6-panel dashboard
 - `공시보고서.html` — static info
-- `J-ESR/index.html` — Japan ESR standalone page (separate track, added 2026-07-21b; not part of the Korea 4-page roster's cross-nav)
 
 **Local preview:** `python -m http.server 8000` from repo root. (preview_eval 반복 행 시 Edge headless `--dump-dom` 대체; 좀비 포트 회피로 현재 8889.)
 

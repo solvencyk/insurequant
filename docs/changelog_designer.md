@@ -1,13 +1,17 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-07-21b · Stage 5/5 — designer
+> Last updated: 2026-07-21c · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
 
-## 2026-07-21b — J-ESR MVP: 일본 보험그룹 ESR 현황 페이지 (inbox `20260624T0337Z`, resolved after ~1 month stale)
+## 2026-07-21c — J-ESR MVP reverted, hold confirmed until 2026-09/10
+
+Built the 07-21b page below (verified working, 0 console errors), then owner corrected: J-ESR had been put on hold entirely (not just the full-coverage/treemap upgrade — the display MVP too) pending the EDINET 有報 window (~2026-09/10), when individual-company data actually becomes meaningful. That hold decision predates this session but wasn't findable anywhere in the repo (inbox, TODO, memory) when checked — it was made in a session that never persisted it. Removed `J-ESR/index.html`. Kept the `.gitignore` addition (`J-ESR/edinet_key.txt`, `J-ESR/raw/`) since it's an unrelated secret/bloat safeguard, not part of the reverted display work. Saved `project_jesr_scope_timing` memory so this doesn't repeat. **Next J-ESR designer work should not start without an explicit fresh go-ahead, regardless of what any existing inbox thread says** — the 06-24 order reads as still-active but is superseded by this hold.
+
+## 2026-07-21b — J-ESR MVP: 일본 보험그룹 ESR 현황 페이지 (inbox `20260624T0337Z`, resolved after ~1 month stale) — reverted same day, see 07-21c above
 
 3건의 designer inbox 스레드(0113Z 트리맵 발주→0337Z로 superseded, 0337Z 재발주, 0600Z parser 데이터 핸드오프)가 2026-06-24부터 미착수 상태로 남아있던 것을 발견 및 처리.
 
