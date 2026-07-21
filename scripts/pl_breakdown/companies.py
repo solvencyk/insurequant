@@ -11,15 +11,7 @@ from scripts.build_net_income_breakdown import to_num
 
 from .common import _norm, _row_nums
 from .tier1 import _header_blob, _ytd_col
-from .tier2 import (
-    _firstlab,
-    _is_rollforward,
-    _lab0,
-    _row_by_label,
-    _scale,
-    _sum_split,
-    extract_tier2_abl,
-)
+from .tier2 import _is_rollforward, _lab0, _row_by_label, _scale, extract_tier2_abl
 
 
 # ----------------------------- KB 손보 (KR0010) ---------------------------- #

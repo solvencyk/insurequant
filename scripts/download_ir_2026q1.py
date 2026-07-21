@@ -18,9 +18,9 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urljoin, urlparse, unquote
+from urllib.parse import urljoin, urlparse
 
-from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
+from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_BASE = ROOT / "data" / "ir" / "FY2026_Q1"

@@ -38,9 +38,7 @@ logging.disable(logging.CRITICAL)
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 sys.stdout.reconfigure(encoding="utf-8")
-from fill_market_subitems_to_disclosure import (  # noqa: E402
-    _bare_subrisk_item, _parse_value, _to_eok, mkt_est, _meta_for, MKT_SUBS,
-)
+from fill_market_subitems_to_disclosure import _bare_subrisk_item, _parse_value, _to_eok, mkt_est, _meta_for
 
 JSON_PATH = REPO / "kics_disclosure.json"
 DISCLOSURE = REPO / "data" / "disclosure"

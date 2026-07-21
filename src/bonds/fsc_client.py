@@ -1,4 +1,4 @@
-﻿"""FSC data.go.kr bond API client (issuance, early exercise, rights schedule)."""
+"""FSC data.go.kr bond API client (issuance, early exercise, rights schedule)."""
 from __future__ import annotations
 
 import json

@@ -14,7 +14,7 @@ import re
 import sys
 import time
 from pathlib import Path
-from urllib.parse import urljoin, unquote
+from urllib.parse import unquote
 
 import requests
 from selenium import webdriver

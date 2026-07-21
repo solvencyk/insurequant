@@ -14,6 +14,8 @@ deterministic: no browser, no server.
 
 from __future__ import annotations
 
+import ast
+import os
 import re
 from pathlib import Path
 
@@ -35,6 +37,37 @@ def _local(url: str) -> bool:
 def _referenced(page: Path) -> set[str]:
     html = page.read_text(encoding="utf-8")
     return {u for u in (_FETCH.findall(html) + _ASSET.findall(html)) if _local(u)}
+
+
+def test_every_python_file_parses():
+    """No BOM / UTF-16 sources.
+
+    CLAUDE.md mandates UTF-8 without BOM, and the failure is nasty: a UTF-16
+    file cannot be executed at all ("source code string cannot contain null
+    bytes" — scripts/export_red_all_cases.py sat broken while the publishing
+    prompt listed it as a tool), and a UTF-8 BOM runs fine but breaks every
+    AST-based check, so such files are invisible to exactly the tooling that
+    would find problems in them. Both classes were found by hand twice
+    (2026-07-21 in scripts/, 2026-07-22 in src/bonds/); assert it instead.
+    """
+    skip = {".git", "__pycache__", "node_modules", "archive", "data", "output",
+            "md_inbox", "research", ".venv"}
+    bad = []
+    for dirpath, dirnames, filenames in os.walk(REPO):
+        dirnames[:] = [d for d in dirnames if d not in skip]
+        for fn in filenames:
+            if not fn.endswith(".py"):
+                continue
+            p = Path(dirpath) / fn
+            raw = p.read_bytes()
+            if raw.startswith((b"\xef\xbb\xbf", b"\xff\xfe", b"\xfe\xff")):
+                bad.append(f"{p.relative_to(REPO)}: BOM")
+                continue
+            try:
+                ast.parse(raw.decode("utf-8"))
+            except Exception as e:
+                bad.append(f"{p.relative_to(REPO)}: {type(e).__name__} {e}")
+    assert not bad, "files that are not clean UTF-8 Python:\n  " + "\n  ".join(bad)
 
 
 @pytest.mark.parametrize("page_name", PAGES)

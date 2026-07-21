@@ -6,7 +6,7 @@ Row->quarter map is taken directly from the rendered board (verified by probe).
 Direct /upload/ links download via urllib (CERT_NONE for redirect/cert quirks).
 Annual->Q4, 반기->Q2, 3분기->Q3, 1분기->Q1.
 """
-import os, ssl, sys, urllib.request
+import ssl, sys, urllib.request
 from pathlib import Path
 sys.stdout.reconfigure(encoding='utf-8')
 

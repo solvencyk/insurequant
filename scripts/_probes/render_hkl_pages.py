@@ -1,7 +1,6 @@
 """Render candidate pages of the scanned-image 흥국생명 FY2024_Q4 PDF to PNG
 for vision reading (internal page numbers ~44-50 per the 2026-07-07(8차)
 changelog precedent that recovered items 1-3/14/27/28 from this same doc)."""
-import sys
 from pathlib import Path
 
 import fitz

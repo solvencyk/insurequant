@@ -16,13 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.stdout.reconfigure(encoding="utf-8")
 
-from scripts.report_collection_status import (  # noqa: E402
-    LOSS, LIFE,
-    DART_LISTED_SET, DART_NONLISTED, DART_GROUP_COVERS,
-    IR_NOT_AVAILABLE, IR_GROUP_COVERS,
-    KIDI_MAPPING, PERIOD_TO_YYYYMM,
-    check_disclosure, check_dart, check_kidi, check_ir,
-)
+from scripts.report_collection_status import LOSS, LIFE, DART_NONLISTED, IR_NOT_AVAILABLE, KIDI_MAPPING, PERIOD_TO_YYYYMM, check_dart, check_kidi, check_ir
 
 ALL = LOSS + LIFE
 PERIODS = list(PERIOD_TO_YYYYMM.keys())  # FY2023_Q1 .. FY2026_Q1 (13)

@@ -1,4 +1,4 @@
-﻿"""Paths and credentials for FSC bond APIs."""
+"""Paths and credentials for FSC bond APIs."""
 from __future__ import annotations
 
 import os

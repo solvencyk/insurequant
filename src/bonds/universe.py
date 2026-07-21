@@ -1,4 +1,4 @@
-﻿"""Insurer search names for FSC bond API bondIsurNm filter."""
+"""Insurer search names for FSC bond API bondIsurNm filter."""
 from __future__ import annotations
 
 from dataclasses import dataclass

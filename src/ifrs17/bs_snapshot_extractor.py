@@ -3,9 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from pathlib import Path
 
-from .csm_extractor import _iter_tables_with_context
 from .insurance_pl_extractor import (
     _all_row_cells,
     _classify_block,

@@ -822,6 +822,8 @@ class Env:
         # delegate K-ICS market/life parent-child completeness to the cadence-aware K-ICS gate.
         # selftest injects minimal synthetic records (only item1) → passes delegate_kics=False.
         self.delegate_kics = self.inject.get("delegate_kics", True)
+        # artifacts that exist but could not be parsed (see _load_json_opt)
+        self.unreadable: list[tuple[str, str]] = []
         self.mtimes_before = self._snapshot_mtimes()
 
         self.kics_records = self._get("kics_records", lambda: self._load_json("kics_disclosure.json"))
@@ -858,12 +860,18 @@ class Env:
         return json.loads((ROOT / rel).read_text(encoding="utf-8"))
 
     def _load_json_opt(self, rel):
+        """Optional artifact. Absent -> None. Present-but-unparseable -> None AND
+        recorded, because the two must not look alike: a truncated or
+        mis-encoded master would otherwise be read as "this artifact was never
+        emitted", which silently downgrades the as-of/provenance checks to their
+        inference fallback and lets a corrupt file through GREEN."""
         p = ROOT / rel
         if not p.exists():
             return None
         try:
             return json.loads(p.read_text(encoding="utf-8"))
-        except Exception:
+        except Exception as e:
+            self.unreadable.append((rel, f"{type(e).__name__}: {e}"))
             return None
 
     def _load_provenance_sidecars(self):
@@ -888,7 +896,8 @@ class Env:
             if man.exists():
                 try:
                     return json.loads(man.read_text(encoding="utf-8"))
-                except Exception:
+                except Exception as e:
+                    self.unreadable.append((str(man.relative_to(ROOT)), f"{type(e).__name__}: {e}"))
                     return None
         return None
 
@@ -902,7 +911,8 @@ class Env:
         # latest by embedded quarter token (…_20261Q.json sorts after …_20254Q.json)
         try:
             return json.loads(files[-1].read_text(encoding="utf-8"))
-        except Exception:
+        except Exception as e:
+            self.unreadable.append((str(files[-1].relative_to(ROOT)), f"{type(e).__name__}: {e}"))
             return None
 
     def _load_bond_evidence(self):
@@ -987,8 +997,18 @@ class Env:
 # ===========================================================================
 # Runner
 # ===========================================================================
+def check_artifact_readable(res: GateResult, env: "Env") -> None:
+    """An artifact that exists but will not parse is RED, never a silent skip."""
+    for rel, err in getattr(env, "unreadable", []):
+        res.add(check="census", severity="RED", master=rel, company=None, quarter=None,
+                rule="ARTIFACT_UNREADABLE",
+                message=f"file exists but could not be parsed ({err}) — "
+                        f"downstream checks would have treated it as absent")
+
+
 def run_gate(env: Env) -> GateResult:
     res = GateResult()
+    check_artifact_readable(res, env)
     check_census(res, env)
     check_as_of(res, env)
     check_cross_source(res, env)

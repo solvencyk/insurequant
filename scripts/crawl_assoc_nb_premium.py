@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
-from assoc.nb_premium_common import load_alias_map, resolve_company, sibeok_month_to_eok_month  # noqa: E402
+from assoc.nb_premium_common import load_alias_map, resolve_company
 
 OUT_PATH = ROOT / "data" / "_derived" / "nb_premium_wolnap.json"
 IR_BENCH_PATH = ROOT / "data" / "_derived" / "ir_wolnap_benchmarks.json"

@@ -68,7 +68,6 @@ def make_driver():
 
 # ---------------------------------------------------------------- Lotte ----
 def crawl_lotte():
-    from selenium.webdriver.common.by import By
     base = "https://www.lotteins.co.kr"
     list_url = base + "/web/C/D/H/cdh_ir_board04_list_6.jsp"
     drv = make_driver()

@@ -20,9 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "scripts"))
 sys.stdout.reconfigure(encoding="utf-8")
 from src.ifrs17.measurement_extractor import extract_measurement_tables, to_jsonable
-from viz_build_csm_waterfall import (normalize_block_header, deduplicate,
-    find_csm_leaf_cols, find_product_segmented_csm_cols, row_value_start, parse_num,
-    filter_current_period_rows, extract_stages, STAGE_PATTERNS)
+from viz_build_csm_waterfall import normalize_block_header, deduplicate, find_product_segmented_csm_cols, row_value_start, parse_num, filter_current_period_rows, extract_stages, STAGE_PATTERNS
 
 def _ns(s):  # normalize: drop ALL whitespace incl. \xa0 (KB rows lead with \xa0)
     return re.sub(r"\s", "", s) if isinstance(s, str) else ""

@@ -14,7 +14,6 @@ idempotent. Run: python scripts/fix_kics_targeted.py
 """
 from __future__ import annotations
 import json, sys
-from collections import defaultdict
 from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")

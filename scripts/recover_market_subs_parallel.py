@@ -35,9 +35,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 from market_subrisk_pdf_recover import (  # noqa: E402
     extract_from_pdf, quarter_to_period, NAMES,
 )
-from fill_market_subitems_to_disclosure import (  # noqa: E402
-    _parse_value, _to_eok, mkt_est, _meta_for, MKT_SUBS,  # noqa: F401
-)
+from fill_market_subitems_to_disclosure import _parse_value, _to_eok, mkt_est
 
 JSON_PATH = REPO / "kics_disclosure.json"
 DISCLOSURE = REPO / "data" / "disclosure"

@@ -6,7 +6,7 @@ self-check (reconstructed item1 = item2 + item15 - item16 ~ item1, or the 손보
 identity) that needs NO gold.  Keeper script (analog of scripts/_csm_goldmap.py)."""
 from __future__ import annotations
 import json
-from collections import Counter, defaultdict
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -19,7 +19,6 @@ import logging
 import re
 import shutil
 import tempfile
-import time
 import zipfile
 from pathlib import Path
 from typing import Iterable
