@@ -42,20 +42,32 @@
 
 ## 색인
 
-| ID | 사고 | 룰 배선 | 미배선 잔여 |
+| ID | 사고 | 룰 배선 | 상태 |
 |---|---|---|---|
-| [PM-2026-06-16](PM-2026-06-16_two_month_glitch.md) | 두 달 글리치 — 맞는 산수·틀린 소스 false-green | ✅ push 게이트(data-contract 5 CHECK) | UH-3 provenance end-state · UH-4 selftest 부재 |
-| [PM-2026-07-07](PM-2026-07-07_after_capture_blindspot.md) | 경과조치 **적용후** 전면 미검증 | ⚠️ K-ICS 게이트만 | **UH-1** push 게이트 미배선 |
-| [PM-2026-07-08](PM-2026-07-08_v17_mirror_fill.md) | V17 가짜복사(적용후=round(적용전)) | ⚠️ K-ICS 게이트만 | **UH-1** + 요구자본 항목 COPY 검사 부재 |
-| [PM-2026-07-15](PM-2026-07-15_post_parent_census.md) | 적용후 요구자본 **부모** 결측 → 라이브 공란 | ✅ 양쪽(K-ICS + push) | UH-2 게이트 파일 untracked |
+| [PM-2026-06-16](PM-2026-06-16_two_month_glitch.md) | 두 달 글리치 — 맞는 산수·틀린 소스 false-green | ✅ push 게이트(data-contract 5 CHECK) | `closed` (잔여 UH-3·UH-4) |
+| [PM-2026-07-07](PM-2026-07-07_after_capture_blindspot.md) | 경과조치 **적용후** 전면 미검증 | ✅ 양쪽 (2026-07-21 lift) | `closed` |
+| [PM-2026-07-08](PM-2026-07-08_v17_mirror_fill.md) | V17 가짜복사(적용후=round(적용전)) | ✅ 양쪽 (2026-07-21 lift) | `closed` (잔여 UH-5) |
+| [PM-2026-07-15](PM-2026-07-15_post_parent_census.md) | 적용후 요구자본 **부모** 결측 → 라이브 공란 | ✅ 양쪽(K-ICS + push) | `closed` |
 
-## 🔴 소급 기록의 실질 산출물 — 아직 룰로 안 굳은 것 (다음 게이트 후보)
+## ✅ 2026-07-21 해소 (owner 승인)
+
+| ID | 조치 |
+|---|---|
+| **UH-1** | 적용후 검증 7종을 `validate_data_contract.py` `check_census` **1b(iv)** 로 lift (display 7분기 scope). 6종 RED + `_ratio_series_spikes`만 YELLOW(휴리스틱이라 단독 차단 금지). **주입 테스트로 방출 경로 검증**: display-scope를 2023.1~3Q로 임시 확장 시 baseline RED 0 → lifted RED 4건 |
+| **UH-2** | push 게이트 체인 3종(`validate_data_contract.py`·`prepush_check.py`·`triage_anomaly_candidates.py`) **git 등재**. gitignore가 아니라 단순 미추가였음(scripts/ 163개는 이미 tracked) |
+
+## 🔴 아직 룰로 안 굳은 것 (다음 게이트 후보)
 
 | ID | 내용 | 왜 위험한가 | 우선순위 |
 |---|---|---|---|
-| **UH-1** | 적용후 검증 7종(`_transition_ratio_after_capture` / `_transition_mmult_after` / `_transition_identities_after` / `_parent_present_child_incomplete_after` / `_diversification_negative` / `_item12_equals_item1` / `_ratio_series_spikes`)이 **push 게이트에 미배선**. `prepush_check.py`가 `validate_kics_disclosure.py`를 호출조차 안 함 | 07-07·V17 사고 대응 룰 전부가 **push를 못 막는다.** 같은 부류 재발 시 또 통과 | **P1** |
-| **UH-2** | `scripts/validate_data_contract.py`가 **git untracked**(머신-로컬) | push 게이트 배선(PM-2026-07-15 포함)이 git에 없음 → 다른 환경/재생성 시 소실 | **P1** |
 | **UH-3** | provenance Phase-2 end-state 미강제. sidecar 있는 3종(kics_disclosure·CSM_waterfall·PL_breakdown)만 strict, 없는 마스터는 Phase-1 추론 fallback + note | 소스 신선도 미검증 마스터가 조용히 통과(= 두 달 글리치 원형) | P2 |
-| **UH-4** | `validate_data_contract.py --selftest`가 `_data_contract_selftest` 모듈 부재로 실행 불가 | 게이트 자체의 회귀를 못 잡음 | P2 |
+| **UH-4** | `validate_data_contract.py --selftest`가 `_data_contract_selftest` 모듈 부재로 실행 불가 | 게이트 자체의 회귀를 못 잡음. **1b(iv) lift 신설로 게이트 로직이 커진 만큼 중요도 상승** | P2 |
+| **UH-5** | 요구자본 항목(15~21) **COPY 검사 부재** — COPY 판정이 비율 item27/28에만 존재 | elective 적용사의 요구자본 후를 적용전 복사로 채워도 미탐지 | P2 (설계상 `_TRANSITION_APPLIERS` 18사 한정 필수) |
 
-**UH-1이 이번 소급의 최대 발견이다.** 사고 4건 중 3건의 대응 룰이 push 차단 경로 밖에 있다.
+## ⚠️ 도메인 경계 — 경과조치는 K-ICS 전용 (owner 2026-07-21)
+
+경과조치(적용전/적용후 이중공시)는 **K-ICS 고유**다. **IFRS17에는 대응 개념이 없다** — 전환방법
+(수정소급/공정가치/그 외)은 도입시점 측정방법이지 이중컬럼이 아니므로 **복사할 짝 자체가 없다.**
+따라서 `TRANSITION_AFTER_*` 룰군의 IFRS17 유사룰을 만들지 말 것.
+(상위 패턴 *"presence만 검사하면 세탁된다"* 는 도메인 무관이며, IFRS17에서는 분기 복붙·impossible-0
+형태로 나타나 `CSM_WATERFALL_PLAUSIBILITY` / `IMPOSSIBLE_ZERO_*` 가 이미 담당.)

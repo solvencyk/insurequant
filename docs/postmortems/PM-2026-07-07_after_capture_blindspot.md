@@ -1,6 +1,6 @@
 # PM-2026-07-07 — 경과조치 "적용후"가 전면 미검증(모든 룰이 적용전만 봄)
 
-> 상태: `open` (3번 칸 절반만 충족 — push 게이트 미배선 = UH-1)
+> 상태: `closed` (2026-07-21 UH-1 배선 완료 — push 게이트 lift)
 > 발견 경로: owner 지적 (2026-07-07) — "모든 룰은 적용전·적용후 동일 적용"
 > 관련: `TODO_validation.md` V17 · 게이트 배선 커밋 `70df46f`
 
@@ -39,11 +39,19 @@ K-ICS 공시는 각 항목에 **적용전(`값`)** 과 **경과조치 적용후(
 | | 함수/규칙 | 파일 | scope | exit-code |
 |---|---|---|---|---|
 | K-ICS 게이트 | `_transition_identities_after` · `_transition_mmult_after` · `_transition_ratio_after_capture` | `scripts/validate_kics_disclosure.py` | 전분기 | ✅ |
-| **push 게이트** | ❌ **미배선** | `scripts/validate_data_contract.py` | — | ❌ |
+| **push 게이트** | `check_census` 1b(iv) → `TRANSITION_AFTER_IDENTITY` · `TRANSITION_AFTER_MMULT_MISMATCH` · `TRANSITION_AFTER_{COPY\|MISSING\|LOWER\|AMT_MISMATCH}` | `scripts/validate_data_contract.py` | display 7분기 | ✅ (2026-07-21) |
 
-🔴 **절반만 굳었다.** `validate_data_contract.py`의 `check_census`는 `kics_json_rules.run_validation`의
-**rule-based 결과만** lift한다. 위 3개 함수는 `validate_kics_disclosure.py`의 `main()`에서만 호출되고,
-**`prepush_check.py`는 그 스크립트를 아예 실행하지 않는다** → **push를 못 막는다.**
+✅ **2026-07-21 UH-1 해소.** 최초 대응(2026-07-07)은 K-ICS 게이트에만 배선돼 **push를 못 막는 절반 상태**로
+석 달 가까이 남아 있었다 — `validate_data_contract.py`의 `check_census`가 `kics_json_rules.run_validation`의
+rule-based 결과만 lift했고, **`prepush_check.py`는 `validate_kics_disclosure.py`를 실행조차 하지 않기 때문.**
+이 포스트모템 소급 작업이 그 사실을 적발했고, `check_census` 1b(iv)에 lift해 push 차단 경로로 굳혔다.
+
+**배선 실효 검증(주입 테스트)**: display-scope를 2023.1~3Q까지 임시 확장하면 baseline RED 0 → lifted-rule
+RED 4건(예별손해 3분기·IBK연금) 방출 확인 = 함수→`_emit`→`res.add`→RED 경로 end-to-end 작동.
+
+⚠️ **K-ICS 전용 (owner 2026-07-21)**: 경과조치는 K-ICS 고유의 적용전/적용후 이중공시다. IFRS17에는
+대응 개념이 없으므로(전환방법=수정소급/공정가치는 도입시점 측정방법이지 이중컬럼이 아님) 이 룰군의
+IFRS17 유사룰을 만들지 말 것.
 
 ## 4. documented exception
 
@@ -56,7 +64,8 @@ K-ICS 공시는 각 항목에 **적용전(`값`)** 과 **경과조치 적용후(
 
 | 잔여 | 왜 위험 | 후속 / 우선순위 |
 |---|---|---|
-| **UH-1** 적용후 검증 3종이 **push 게이트 미배선** | 이 사고의 대응 룰이 **push를 못 막는다.** 같은 부류가 다시 push를 통과할 수 있음 = 정확히 재발 경로 | 신규 티켓 필요 / **P1** |
+| ~~UH-1 적용후 검증 3종 push 게이트 미배선~~ | — | ✅ **2026-07-21 해소** (owner 승인, `check_census` 1b(iv)) |
+| **없음** (이 사고 한정) | — | — |
 
 ---
 
@@ -64,8 +73,8 @@ K-ICS 공시는 각 항목에 **적용전(`값`)** 과 **경과조치 적용후(
 
 - [x] 1 무엇이 통과했나
 - [x] 2 구체 룰 정의
-- [ ] 3 배선 — K-ICS 게이트만 ✅ / **push 게이트 ❌ (UH-1)**
+- [x] 3 배선 — **K-ICS ✅ + push ✅ 양쪽** (2026-07-21)
 - [x] 4 exception 등재 위치 명시
-- [x] 5 잔여 UH-1 명시
+- [x] 5 잔여 없음(UH-1 해소)
 
-**→ 3번 미충족으로 `open` 유지.** UH-1 해소 시 closed.
+**→ closed (2026-07-21).**

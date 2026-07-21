@@ -73,7 +73,7 @@
 
 | 잔여 | 왜 위험 | 후속 / 우선순위 |
 |---|---|---|
-| **UH-2** `scripts/validate_data_contract.py`가 **git untracked**(머신-로컬) | 이 사고의 push 게이트 배선이 **git에 없다.** 파일 재생성·다른 환경에서 소실되면 사각이 그대로 부활 | 신규 티켓 / **P1** |
+| ~~UH-2 `validate_data_contract.py` git untracked~~ | — | ✅ **2026-07-21 해소** — push 게이트 체인 3종(`validate_data_contract.py`·`prepush_check.py`·`triage_anomaly_candidates.py`) git 등재. gitignore 아니라 단순 미추가였고, 나머지 의존성(`validate_kics_disclosure.py`·`validate_master_tables.py`·`kics_json_rules.py`)은 이미 tracked였음 |
 | non-display 잔여 58셀(코리안리·악사·처브·IBK 2023.2Q·하나손/하나생 2023.2Q 등) | push 비차단(과거분기 비노출). 워크리스트로만 관리 | 저우선 |
 
 ---

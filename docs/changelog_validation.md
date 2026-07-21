@@ -35,7 +35,24 @@ blameless 포스트모템 관행 신설.
   PL_breakdown)만 strict, 없는 마스터는 Phase-1 추론 fallback으로 통과.
 - **UH-4 (P2)**: `validate_data_contract.py --selftest`가 `_data_contract_selftest` 부재로 실행 불가.
 
-UH-1/UH-2 배선 발주는 **owner 판단 대기**(발주서 "스코프 밖" 지시대로 census 잔여건과 미혼합).
+### ✅ 같은 날 UH-1·UH-2 배선 완료 (owner 승인 "나머지는 추천대로 배선 고고")
+
+- **UH-1**: 적용후 검증 7종을 `validate_data_contract.py` `check_census` **1b(iv)** 로 lift
+  (display 7분기 scope). 6종 RED(`TRANSITION_AFTER_{COPY|MISSING|LOWER|AMT_MISMATCH}` ·
+  `TRANSITION_AFTER_MMULT_MISMATCH` · `TRANSITION_AFTER_IDENTITY` · `POST_TRANSITION_CHILD_MISSING` ·
+  `DIVERSIFICATION_NEGATIVE` · `ITEM12_EQUALS_ITEM1`) + `RATIO_SERIES_SPIKE`만 YELLOW(휴리스틱이라
+  단독 push 차단 금지 — 원 룰 정의 준수). **주입 테스트로 방출 경로 검증**: display-scope를 2023.1~3Q로
+  임시 확장 시 baseline RED 0 → lifted RED 4건(예별손해 3분기·IBK연금) 방출 확인. 배선 후 실 게이트는
+  **RED=0 유지**(현 findings 전부 non-display 2023.x).
+- **UH-2**: push 게이트 체인 3종(`validate_data_contract.py`·`prepush_check.py`·
+  `triage_anomaly_candidates.py`) **git 등재**. gitignore가 아니라 단순 미추가였음(scripts/ 163개 이미
+  tracked, 나머지 의존성도 전부 tracked였음).
+- **도메인 경계 명문화(owner 지적)**: 경과조치는 **K-ICS 전용**(적용전/적용후 이중공시). IFRS17엔
+  대응 개념 없음 — 전환방법(수정소급/공정가치)은 도입시점 측정방법이지 이중컬럼이 아니라 **복사할 짝
+  자체가 없음** → `TRANSITION_AFTER_*` IFRS17 유사룰 금지. 상위 패턴("presence만 검사→세탁")만 도메인
+  무관이며 IFRS17은 기존 `CSM_WATERFALL_PLAUSIBILITY`/`IMPOSSIBLE_ZERO_*`가 담당. README·SKILL 기록.
+- **PM-2026-07-07·PM-2026-07-08 → `closed`** (3번 칸 충족). 잔여 P2: UH-3·UH-4·UH-5(신규, 요구자본
+  COPY 검사 부재).
 
 ---
 

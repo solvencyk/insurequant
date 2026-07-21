@@ -23,17 +23,23 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 - [x] 정본 `docs/postmortems/README.md` + `_TEMPLATE.md`, 스테이지 프롬프트 §5.1에서 링크.
 - [x] **소급 4건 기록**: PM-2026-06-16(두 달 글리치, closed) · PM-2026-07-07(적용후 사각, **open**) ·
   PM-2026-07-08(V17 가짜복사, **open**) · PM-2026-07-15(부모 census, closed).
-- [🔴] **소급의 실질 산출물 = 미배선(UH) 4건 — 다음 게이트 후보**:
-  - **UH-1 (P1)**: 적용후 검증 7종(`_transition_ratio_after_capture`/`_transition_mmult_after`/
+- [x] **소급의 실질 산출물 = 미배선(UH) 적발 → P1 2건 즉시 배선(owner 승인 2026-07-21)**:
+  - [x] **UH-1 해소**: 적용후 검증 7종(`_transition_ratio_after_capture`/`_transition_mmult_after`/
     `_transition_identities_after`/`_parent_present_child_incomplete_after`/`_diversification_negative`/
-    `_item12_equals_item1`/`_ratio_series_spikes`)이 **push 게이트 미배선**. `prepush_check.py`가
-    `validate_kics_disclosure.py`를 **호출조차 안 함** → 07-07·V17 대응 룰이 push를 못 막음.
-    사고 4건 중 3건이 여기 걸림 = **이번 소급의 최대 발견**.
-  - **UH-2 (P1)**: `scripts/validate_data_contract.py`가 **git untracked**(머신-로컬) → push 게이트
-    배선(V18 부모 census 포함)이 git에 없음. 재생성·타 환경에서 사각 부활.
-  - **UH-3 (P2)**: provenance Phase-2 end-state 미강제(sidecar 없는 마스터는 추론 fallback 통과).
-  - **UH-4 (P2)**: `validate_data_contract.py --selftest` 모듈(`_data_contract_selftest`) 부재.
-  - → UH-1/UH-2 배선 발주 여부는 **owner 판단 대기**(스코프 밖 지시 준수, census 잔여건과 미혼합).
+    `_item12_equals_item1`/`_ratio_series_spikes`)을 `validate_data_contract.py` `check_census`
+    **1b(iv)** 로 lift(display 7분기 scope). 6종 RED + spikes만 YELLOW(휴리스틱 단독차단 금지).
+    **주입 테스트 검증**: scope를 2023.1~3Q 임시확장 시 baseline RED 0 → lifted RED 4건 방출 =
+    함수→`_emit`→`res.add` 경로 작동. 배선 후 실 push 게이트 **RED=0 유지**(현 findings 전부 non-display).
+  - [x] **UH-2 해소**: push 게이트 체인 3종(`validate_data_contract.py`·`prepush_check.py`·
+    `triage_anomaly_candidates.py`) **git 등재**. gitignore가 아니라 단순 미추가였고 나머지 의존성
+    (`validate_kics_disclosure.py`·`validate_master_tables.py`·`kics_json_rules.py`)은 이미 tracked.
+  - [x] **도메인 경계 명문화(owner)**: 경과조치=K-ICS 전용(적용전/후 이중공시). **IFRS17엔 대응 개념
+    없음**(전환방법=도입시점 측정방법, 이중컬럼 아님) → 복사할 짝 자체가 없으므로 `TRANSITION_AFTER_*`
+    IFRS17 유사룰 금지. 상위 패턴("presence만 검사→세탁")만 도메인 무관(IFRS17은 기존 plausibility/
+    impossible-0가 담당). postmortems README·SKILL에 기록.
+  - [🔴] **잔여 P2 3건**: UH-3(provenance end-state 미강제) · UH-4(data-contract selftest 모듈 부재 —
+    1b(iv) 신설로 게이트 로직이 커져 중요도 상승) · UH-5(요구자본 15~21 COPY 검사 부재, elective 18사
+    한정 설계 필수). owner 판단 대기.
 
 ### V18 — 적용후 요구자본 **부모** census blind spot 정정 (owner `20260715T0801Z`, 2026-07-15)
 07-12 V17 census(`_parent_present_child_incomplete_after`)는 **부모후가 present일 때** 자식후 결측만 봄 →
