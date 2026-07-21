@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-07-21c · Stage 5/5 — designer
+> Last updated: 2026-07-21d · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (skeleton) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,9 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-07-21d):**
+- **A11y owner-review queue — sign-off received, all fixed**: the 5 color/contrast items left open from the 07-21 audit (`--muted` 4.45:1, bubble-legend green 3.30:1, `#adb5bd` placeholder 2.07:1, `NB_LINE_COLORS` 2 confusable pairs, treemap/bubble red-green diverging scale) + the active-tab color-only gap — all fixed and verified with `scripts/a11y_contrast_check.py` (not eyeballed) before editing. `NB_LINE_COLORS` needed a full-palette redesign, not a 2-color swap — a minimal fix kept re-introducing new clashes elsewhere in the 6-set; final palette's worst pair is ΔRGB 82 (was 39). Treemap's live `colorForRatio()` below-threshold red→blue (not just the CSS swatch) — mobile list bars inherit for free (same function). Full detail: `docs/a11y_baseline.md` §2b.
 
 **Recent (2026-07-21c):**
 - **J-ESR MVP reverted — owner hold confirmed**: built `J-ESR/index.html` (card+ranking-bar, see 07-21b below), then owner corrected: J-ESR work (including the display MVP, not just full-coverage/treemap) is **on hold until 2026-09/10** — meaningful individual-company data doesn't exist before the EDINET 有報 window. This decision predates 07-21b but wasn't recorded anywhere retrievable (not in inbox, TODO, or memory) — owner recalled it from a session that never got written down. Page removed. **Do not resume J-ESR designer work before checking with owner, even though the 06-24 inbox thread (superseded now) reads as an active order.**

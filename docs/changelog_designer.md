@@ -1,11 +1,24 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-07-21c · Stage 5/5 — designer
+> Last updated: 2026-07-21d · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-07-21d — A11y owner-review queue resolved (owner: "do it now")
+
+Owner gave explicit sign-off to finish the 5 color/contrast items the 07-21 audit had left in the owner-review queue (deferred per `common.css`'s own "don't change token values without sign-off" rule), plus the related active-tab color-only gap. All verified with `scripts/a11y_contrast_check.py` before touching any file — no eyeballed colors.
+
+- **`--muted` (#7)**: already sitting uncommitted in the tree from before this session (`#6c757d`→`#6a737a`, 4.83:1 white / 4.58:1 `--card`) — kept, now committed together with the rest instead of left in limbo.
+- **Bubble-legend green (#8)**: `index.html` `● 손해` label `#16a34a`(3.30:1)→`#15803d`(5.02:1). Left `SECTOR_COLOR['Non-Life']` (the actual dot fill) untouched — that's a graphic at the 3:1 threshold, already fine; only the text label needed it.
+- **Missing-data placeholder (#9)**: `#adb5bd`(2.07:1)→`#6a737a` in `K-ICS.html` (donut center) and `IFRS17.html` (senTable ×2) — same value as the fixed `--muted`, for consistency rather than inventing a third gray.
+- **`NB_LINE_COLORS` (#11)**: tried a minimal 2-color swap first (only replacing the two flagged clashing colors) — kept re-introducing new clashes elsewhere in the 6-set every time, because colorblind confusability isn't pairwise-decomposable for 6 hues. Ran a proper search instead: varied hue AND lightness, used one near-neutral gray slot (grays are trivially distinguishable from any hue regardless of colorblindness type). Final: `["#0d6efd","#009E73","#D55E00","#343a40","#CC79A7","#7c5c00"]` — global worst pair ΔRGB 82 across both protanopia/deuteranopia (was 39), all 6 colors ≥3:1 on white.
+- **Treemap/bubble diverging scale (#12)**: the real fix target was the *live* `colorForRatio()` function (both `kics` and `basicCapital` branches), not just the CSS `.swatch` legend gradient — the function drives the actual per-cell HSL color. Below-threshold `hue=0`(red)→`hue=215`(blue); above-threshold green unchanged. Mobile list bars reuse the same function so they inherit the fix with no separate edit. Updated the `.swatch` gradient stops and the `#legendThresh` caption text ("빨강"→"파랑") to match. Verified blue↔green endpoints at ΔRGB 63–122 under simulation (was ~1.1–1.3:1 *contrast ratio*, i.e. nearly invisible, for the old red↔green). **Found in passing**: `.bubble-swatch` CSS class is dead code — defined, never referenced in any page's markup (the bubble chart colors dots by sector via `SECTOR_COLOR`, unrelated to this gradient) — left alone, noted so it isn't mistaken for a live issue later.
+- **Active-tab color-only (#13)**: `common.css` `.tab.active{text-decoration:underline;...}` — additive, no color touched.
+- **Verified**: local static-server preview, all 3 pages (index/K-ICS/IFRS17), 0 console errors. Confirmed computed values directly: legend text color, swatch gradient stops, `legendThresh` caption wording, `colorForRatio(90,'kics')` returns `hsl(215,...)` (blue) at the browser console, active-tab `text-decoration-line:underline` on K-ICS.html.
+- **Not touched**: item #10 (teal/pink pair) needed no change — already compliant. Item #14 (static aria-labels) stays open — it's a content-authoring task (live-region/per-render text summary), different category from a color fix.
 
 ## 2026-07-21c — J-ESR MVP reverted, hold confirmed until 2026-09/10
 
