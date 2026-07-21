@@ -1,0 +1,170 @@
+# -*- coding: utf-8 -*-
+"""LIVE wire: replace the broken tier1/tier2_utilization numerator (proxy/item3) with the real
+DART 신종자본증권/후순위채 발행현황, K-ICS 경과조치 면제 적용 (owner 2026-06-20).
+
+경과조치(transitional grandfathering): 자본증권 issued BEFORE 2023-01-01 (K-ICS 시행 전) is
+recognized regardless of the new limit → EXCLUDED from 한도소진 numerator, tracked separately.
+한도소진율 분자 = post-2023 신규 발행 인정액 (this is what consumes the new SCR-based limit).
+
+  Tier1(신종) 소진 = new_hybrid_issued / (SCR×15%);  overflow(new_hybrid − limit) → Tier2.
+  Tier2(보완) 소진 = (new_sub 인정금액[잔존만기 to CALL straight-line] + new_hybrid overflow) / (SCR×50%).
+  경과조치 면제분 = pre-2023 hybrid + pre-2023 sub (shown separately, NOT in 소진 numerator).
+
+Also fixes denom bug (신한이지 tier2_limit 2.68 → SCR×50%). Backs up the live JSONs to .bak.
+Updates existing records' fields in place (preserves schema for HTML/gate); companies w/o bonds → 0.
+"""
+import io
+import json
+import shutil
+import sys
+from datetime import date
+from pathlib import Path
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+ROOT = Path(__file__).resolve().parents[1]
+AS_OF = date(2026, 3, 31)
+KICS_START = date(2023, 1, 1)
+
+BONDS = {c["code"]: c for c in json.loads((ROOT / "data" / "bonds" / "capital_securities_fy2025.json").read_text("utf-8"))["companies"]}
+T1F = ROOT / "output" / "tier1_utilization" / "tier1_utilization_20261Q.json"
+T2F = ROOT / "output" / "tier2_utilization" / "tier2_utilization_20261Q.json"
+t1doc = json.loads(T1F.read_text("utf-8"))
+t2doc = json.loads(T2F.read_text("utf-8"))
+SCR = {r["code"]: r.get("scr_eok") for r in t1doc["results"]}
+
+
+def pdate(s):
+    if not s:
+        return None
+    try:
+        return date(*(int(x) for x in s.replace(".", "-").replace("/", "-").split("-")[:3]))
+    except Exception:
+        return None
+
+
+def eff_mat(b):
+    return pdate(b.get("call_date")) or pdate(b.get("legal_maturity"))
+
+
+def issue_est(b):
+    d = pdate(b.get("issue_date"))
+    if d:
+        return d
+    lm = pdate(b.get("legal_maturity"))            # infer: 신종~30y, 후순위~10y term
+    if lm:
+        yrs = 30 if b.get("tier") == "hybrid" else 10
+        try:
+            return lm.replace(year=lm.year - yrs)
+        except Exception:
+            return date(lm.year - yrs, 1, 1)
+    return None
+
+
+def is_grandfathered(b):
+    iss = issue_est(b)
+    return (iss is not None) and (iss < KICS_START)
+
+
+def amort(b):  # K-ICS 후순위 보완자본 인정 (straight-line over final 5y to CALL)
+    m = eff_mat(b)
+    if m is None:
+        return 1.0
+    t = (m - AS_OF).days / 365.25
+    return max(0.0, min(1.0, t / 5.0))
+
+
+def comp(code):
+    c = BONDS.get(code)
+    scr = SCR.get(code)
+    t1lim = round(scr * 0.15, 2) if scr is not None else None
+    t1lim_strict = round(scr * 0.10, 2) if scr is not None else None
+    t2lim = round(scr * 0.50, 2) if scr is not None else None
+    if not c or not (c.get("bonds")):
+        return dict(scr=scr, t1lim=t1lim, t1lim_strict=t1lim_strict, t2lim=t2lim,
+                    new_hyb=0.0, gf_hyb=0.0, new_sub_recog=0.0, new_sub_gross=0.0, gf_sub=0.0,
+                    overflow=0.0, t1_util=0.0, t2_num=0.0, t2_util=0.0, n=0)
+    new_hyb = gf_hyb = new_sub_recog = new_sub_gross = gf_sub = 0.0
+    for b in c["bonds"]:
+        out = (b.get("outstanding_mn") or 0) / 100.0
+        gf = is_grandfathered(b)
+        if b.get("tier") == "hybrid":
+            if gf:
+                gf_hyb += out
+            else:
+                new_hyb += out
+        else:
+            if gf:
+                gf_sub += out
+            else:
+                new_sub_gross += out
+                new_sub_recog += out * amort(b)
+    overflow = max(0.0, new_hyb - t1lim) if t1lim is not None else 0.0
+    t1_util = round(new_hyb / t1lim * 100, 1) if t1lim else None
+    t2_num = new_sub_recog + overflow
+    t2_util = round(t2_num / t2lim * 100, 1) if t2lim else None
+    return dict(scr=scr, t1lim=t1lim, t1lim_strict=t1lim_strict, t2lim=t2lim,
+                new_hyb=round(new_hyb, 1), gf_hyb=round(gf_hyb, 1),
+                new_sub_recog=round(new_sub_recog, 1), new_sub_gross=round(new_sub_gross, 1),
+                gf_sub=round(gf_sub, 1), overflow=round(overflow, 1),
+                t1_util=t1_util, t2_num=round(t2_num, 1), t2_util=t2_util, n=len(c["bonds"]))
+
+
+# ---- update tier1 ----
+shutil.copy2(T1F, str(T1F) + ".bak")
+for r in t1doc["results"]:
+    x = comp(r["code"])
+    r["tier1_hybrid_limit_eok"] = x["t1lim"]
+    r["tier1_hybrid_limit_strict_eok"] = x["t1lim_strict"]
+    r["tier1_hybrid_issued_eok"] = x["new_hyb"]
+    r["tier1_hybrid_recognized_eok"] = x["new_hyb"]
+    r["tier1_hybrid_overflow_eok"] = x["overflow"]
+    r["tier1_grandfathered_hybrid_eok"] = x["gf_hyb"]
+    r["utilization_pct"] = min(x["t1_util"], 100.0) if x["t1_util"] is not None else None
+    r["utilization_pct_raw"] = x["t1_util"]
+    r["utilization_pct_strict"] = round(x["new_hyb"] / x["t1lim_strict"] * 100, 1) if x["t1lim_strict"] else None
+    r["data_source"] = "dart_bonds_fy2025_경과조치"
+    r["quality_flag"] = "ok"
+t1doc["definition"] = {
+    "limit_primary": "SCR×15% (KIRI 2024-14 common-transition)", "limit_strict": "SCR×10%",
+    "numerator": "신종자본증권 신규(2023~) 발행 인정액; 경과조치(pre-2023)는 별도 제외",
+    "source": "DART FY2025 annual per-bond (data/bonds/capital_securities_fy2025.json)",
+    "as_of": AS_OF.isoformat()}
+T1F.write_text(json.dumps(t1doc, ensure_ascii=False, indent=2), "utf-8")
+
+# ---- update tier2 ----
+shutil.copy2(T2F, str(T2F) + ".bak")
+for r in t2doc["results"]:
+    x = comp(r["code"])
+    r["tier2_limit_eok"] = x["t2lim"]
+    r["numerator_eok"] = x["t2_num"]
+    r["utilization_pct"] = x["t2_util"]
+    r["data_source"] = "dart_bonds_fy2025_경과조치"
+    r["new_subordinated_recognized_eok"] = x["new_sub_recog"]
+    r["new_subordinated_gross_eok"] = x["new_sub_gross"]
+    r["tier1_overflow_into_tier2_eok"] = x["overflow"]
+    r["grandfathered_hybrid_eok"] = x["gf_hyb"]
+    r["grandfathered_subordinated_eok"] = x["gf_sub"]
+    r["hybrid_eok"] = x["gf_hyb"]            # 면제분 (for legacy field)
+    r["subordinated_eok"] = x["gf_sub"]
+    r["quality_flag"] = "ok" if (x["t2_util"] is None or x["t2_util"] <= 100) else "util_over_100_legit"
+t2doc["definition"] = {
+    "limit": "SCR×50% (K-ICS 해설서 Ⅲ.2.마)",
+    "numerator": "후순위 신규(2023~) 인정금액(잔존만기 to CALL straight-line) + 신종 한도초과분; 경과조치(pre-2023)는 별도 제외",
+    "source": "DART FY2025 annual per-bond (data/bonds/capital_securities_fy2025.json)",
+    "replaces": "broken proxy(item3 보완자본 − 면제) — 총보완자본 혼동(삼성생명 자본증권0인데 7.76조), 동양240%/KB218% artifact",
+    "as_of": AS_OF.isoformat()}
+T2F.write_text(json.dumps(t2doc, ensure_ascii=False, indent=2), "utf-8")
+
+# ---- report ----
+print(f"{'code':7}{'company':15}{'SCR':>8}{'신종new':>8}{'신종면제':>8}{'후순new인정':>11}{'후순면제':>8}{'T1초과':>7}{'T2분자':>8}{'T1소진':>7}{'T2소진':>7}")
+for r in sorted(t2doc["results"], key=lambda r: -(comp(r['code'])['t2_num'] or 0)):
+    x = comp(r["code"])
+    if not x["n"]:
+        continue
+    print(f"{r['code']:7}{str(r['company'])[:14]:15}{(x['scr'] or 0):>8.0f}"
+          f"{x['new_hyb']:>8.0f}{x['gf_hyb']:>8.0f}{x['new_sub_recog']:>11.0f}{x['gf_sub']:>8.0f}"
+          f"{x['overflow']:>7.0f}{x['t2_num']:>8.0f}"
+          f"{(str(x['t1_util'])+'%'):>7}{(str(x['t2_util'])+'%'):>7}")
+overs = [r['company'] for r in t2doc['results'] if (comp(r['code'])['t2_util'] or 0) > 100]
+print(f"\nTier2 소진율 >100% (YELLOW legit, not RED): {overs}")
+print(f"[wrote] {T1F.relative_to(ROOT)} (.bak) + {T2F.relative_to(ROOT)} (.bak)")
