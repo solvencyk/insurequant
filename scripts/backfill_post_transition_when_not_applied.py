@@ -31,6 +31,23 @@ Phase 1 — classify:
 
 Phase 2 — fill: for rows still missing 값_적용후, fill from 값 only if their
 (company, quarter) was classified safe in phase 1.
+
+⚠️ 2026-07-16 KNOWN BUG, DO NOT RE-RUN AS-IS: this blindly mirrors items
+1-13 too (capital side), but item2/3(기본자본/보완자본) — and by extension
+item12/13(불인정항목/보완자본재분류) — can shift from the mandatory *common*
+TFI provision reallocating the capital TIER split even when item1(total)/
+14(SCR)/27(ratio) all look unchanged (confirmed via dozens of raw PDF reads
+2026-07-15/16 — item28(기본자본비율) alone can move 5-15%p for a "safe"-
+looking company/quarter). Caught 2 real corruptions this way (KB라이프생명
+2024.2Q, 동양생명 2024.1Q item12/13 — reverted in
+fix_20260716_revert_wrong_item1213_mirror.py). For items 15-46 (요구자본
+and its sub-risk breakdowns — the side this bug does NOT affect, since TFI
+structurally never touches the requirement side), use
+`fix_20260716_nonapplier_requirement_mirror.py` instead — it is scoped to
+only 15-46, gated per-tier on the correct parent (14/17/19), and is safe to
+re-run every quarter. If this script is ever revived for items 1-13, gate
+those specifically on item2 (or item12+item13 combined) being unchanged
+too, not just item1/14/27.
 """
 
 import json

@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-15 (3차) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-16 · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,68 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-16 — 비적용사 전사 미러링 스윕(241셀) + backfill 스크립트 데이터오염 버그 발견·정정
+
+Owner live-QA: "K-ICS.html 경과조치 적용후 숫자가 대부분 공란으로 나온다." 지시: 경과조치 **미적용이
+확실한** 회사(owner가 예전에 확정한 신청사 목록 밖) & **지급여력비율·기본자본비율이 조치 전후 동일한**
+회사/분기라면, 하위항목 전부를 전(前) 값으로 밀어넣으라 — 단, 비적용사도 공통(TFI)조치로 비율이 살짝
+바뀌는 경우엔 공란 유지.
+
+**적용사 목록**: `scripts/validate_kics_disclosure.py`의 `_TRANSITION_APPLIERS`(FSS 2023-03-20 보도자료
+정본, owner가 2026-07-06에 이미 확정한 18사) — 이 목록 밖 전 회사가 대상.
+
+**안전기준을 owner 제안에서 한 단계 정교화**: owner는 item27(지급여력비율)·item28(기본자본비율) 둘 다
+전후 동일한지 보자고 했는데, **실측해보니 item27은 그대로인데 item28만 5~15%p씩 벌어지는 케이스가
+매우 흔함**(한화생명·동양생명·코리안리·신한라이프·현대해상·메리츠화재·KB라이프·DB손해보험 등,
+`scripts/_probes/survey_item28_gap.py`) — 원인은 **TFI(공통조치, 비적용사도 전부 적용)가 기본자본↔
+보완자본 티어 배분만 바꾸는 것**(총액 item1은 그대로, 요구자본 item14도 그대로, 티어 분배만 이동) —
+선택경과조치와 무관한 정상 현상. item27+item28을 둘 다 요구하면 이런 회사·분기가 전부 배제돼 미러링
+대상이 크게 줄어듦. **item14(지급여력기준금액) 전후 동일 하나만 게이트로 쓰는 게 더 정확** — TFI는
+구조적으로 요구자본측(14 이하)을 아예 안 건드리므로(이번 세션 raw로 수십 번 확인된 사실), item14
+동일성만으로 15-46 미러링 안전성이 완전히 증명됨. `scripts/_probes/survey_item14_gap.py`로 tolerance
+검증: 비적용사 252쌍 중 247쌍 정확히 0, 나머지 4쌍은 0.11~0.45(반올림 잡음), 진짜 이상치 **1건만**
+발견(하나손해보험 2023.2Q, diff=45 — 3차에서 이미 "미확인 잔여"로 분류해뒀던 바로 그 건, 정확히
+걸러짐 확인) — 잡음과 진짜효과 사이에 명확한 gap(0.45 vs 45)이 있어 tolerance=1.0으로 안전하게 분리.
+
+**⚠️ 조사 중 발견 — 기존 스크립트의 실제 데이터 오염 버그**: `backfill_post_transition_when_not_
+applied.py`(2026-07-15 1차 라운드 초반 실행, item1/14/27 셋만 보고 "안전" 판정)가 KB라이프생명
+2024.2Q·동양생명 2024.1Q에서 **item12(불인정항목)·13(보완자본재분류)을 잘못 미러링**했던 것 발견.
+증거: 두 회사 모두 item2(기본자본)_적용후가 이미 (다른 경로로) 정확한 값으로 채워져 있었는데, 항등식
+`item2 = item4 - item12 - item13`(raw 각주 공식, 이번 세션 raw로 수십 번 확인)에 미러링된 item12/13을
+대입하면 item2_적용후가 아니라 item2_적용전이 나옴 — 즉 미러링이 title2/3와 모순되는 값을 넣은 것.
+KB라이프: `61158-300-16677=44181`(=item2_전, item2_후=44678.96과 497.96 차이 — 정확히 item28 diff와
+일치). 동양생명: `40214-0-19645=20569`(≈item2_전 20570, item2_후=23969.34와 3399 차이). 두 셀
+되돌림(`fix_20260716_revert_wrong_item1213_mirror.py`, None으로 원복 — raw에 TFI-only 회사는
+"1)공통적용" 축약표(27/1/2/3/14 5행)만 있고 items 1-26 전체 적용후 세부표가 없어 진짜 item12/13
+값은 독립적으로 도출 불가). 해당 스크립트에 경고 docstring 추가, **items 1-13(자본측)은 앞으로 이런
+방식(item1/14/27만 보고 판정)으로 다시 건드리지 않음** — item2/3가 총액 불변인데도 티어만 재배분될 수
+있다는 걸 이제 알기 때문.
+
+**신규 영구 스크립트**(idempotent, 매 분기 자동 재실행 안전 — 날짜 붙은 1회성 fix_스크립트들과 다름):
+`fix_20260716_nonapplier_requirement_mirror.py` — items 15-26(item14 게이트) / 29-35(item17 게이트,
+2Q·4Q만) / 36-40(item19 게이트, 2Q·4Q만) 3단 독립 게이팅. **items 1-13은 스코프 밖**(위 버그 재발
+방지 — 자본측은 이 방식으로 안전하지 않음이 확인됨).
+
+**결과**: 241셀 / 20(회사,분기) 신규 채움:
+- 코리안리재보험(KR1000) 6개분기 — 3차에서 owner 지정대로 "non-display/비차단"이라 미룬 건인데, 실은
+  완전히 안전한 TFI-only 케이스였음이 밝혀져 이번에 해소.
+- 동양생명(KR0087) 7개분기(2023 전체+2024.2Q/4Q+2025.1Q/2Q) — 3차의 부분작업 잔여 전부 마무리.
+- DB손해보험(KR0011) 2개분기 — 이번 세션 처음 손댐, 신규 커버리지.
+- 한화생명·삼성생명 등 — 1~2차에서 이미 item15-23은 채웠었는데 **item24-26(종속/관계회사 요구자본
+  세부)은 그때 스코프에서 빠져있었던 잔여**를 이번에 마저 채움.
+
+`validate_kics_disclosure.py` 재검증: continuity break 62→**34셀(10→5쌍)** — 잔여 5쌍은 전부 18사
+적용사 관련(하나생명·악사손해·처브라이프·IBK연금, `_TRANSITION_APPLIERS` 안이라 이번 스윕 스코프
+밖) + 하나손해(진짜 raw 이상치, 확인됨). core RED 12(무관 기존건, 회귀 0). `pytest tests/unit/` 110
+passed. xlsx 재생성 완료.
+
+**스크립트**: `scripts/fix_20260716_nonapplier_requirement_mirror.py`(주 수정, 영구/재사용) +
+`scripts/fix_20260716_revert_wrong_item1213_mirror.py`(버그 정정). 진단: `scripts/_probes/{survey_
+nonapplier_gap,survey_item28_gap,survey_item14_gap,survey_phase1_scope,audit_backfill_round1_
+correctness,probe_kb_dy_item4}.py`.
 
 ---
 

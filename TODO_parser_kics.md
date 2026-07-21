@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-15(3차) (validation 신설 게이트 `_post_transition_parent_census` continuity break 96→62셀 — 삼성생명·동양생명 완전해소, 흥국생명(비전 판독)·하나생명 부분해소) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-16 (owner "K-ICS.html 대부분 공란" 지시 — 비적용사 전사 미러링 스윕 241셀 + backfill 스크립트 데이터오염 버그 발견·정정) · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_kics.md (pre-split: docs/changelog_parser.md)
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -8,6 +8,34 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-07-16 — owner 지시("경과조치 미적용 확실 + 비율 동일하면 하위항목 미러링") 대응, 전사 스윕
+241셀 + 기존 스크립트의 데이터오염 버그 발견·정정.**
+- **비적용사 정의**: `validate_kics_disclosure.py`의 `_TRANSITION_APPLIERS`(owner FSS 정본 18사) 밖
+  전 회사. **미러링 안전기준을 owner 제안(item27·28 둘 다 동일)에서 item14(지급여력기준금액) 단독
+  동일로 정교화** — item27/28 둘 다 확인하면 실제로는 놓치는 셀이 많았음: TFI(공통조치, 비적용사도
+  다 적용)가 자본 티어(기본자본↔보완자본)만 재배분해도 item28(기본자본비율)이 5~15%p씩 움직이는
+  사례가 수두룩(item27은 그대로인데) — 이건 요구자본(15-46) 안전성과 무관한 자본측 재분류일 뿐이라
+  item14만 보는 게 더 정확(raw로 다수 확인된 K-ICS 구조: TFI는 요구자본측을 아예 안 건드림).
+  `scripts/_probes/survey_item14_gap.py`로 tolerance 보정(247/252 exact-0, 노이즈 상한 0.45, 진짜
+  이상치 1건(하나손해 2023.2Q, diff=45)만 정확히 걸러짐 확인).
+- **⚠️ 부수 발견 — 기존 스크립트 데이터오염 버그**: 1차 라운드 초반 실행했던
+  `backfill_post_transition_when_not_applied.py`(item1/14/27만 보고 판정)가 KB라이프생명 2024.2Q·
+  동양생명 2024.1Q에서 item12/13(불인정항목/보완자본재분류)을 잘못 미러링했던 것 발견 — 이미 정확히
+  채워져 있던 item2(기본자본)값과 항등식(item2=item4-item12-item13)이 안 맞음. 되돌림
+  (`fix_20260716_revert_wrong_item1213_mirror.py`). 해당 스크립트에 경고 docstring 추가, items 1-13은
+  더 이상 이 방식으로 안 건드림.
+- **신규 영구 스크립트** `fix_20260716_nonapplier_requirement_mirror.py`(idempotent, 매 분기 재실행
+  안전) — items 15-26(item14 게이트)·29-35(item17 게이트, 2Q/4Q만)·36-40(item19 게이트, 2Q/4Q만)
+  3단 게이팅, items 1-13은 아예 스코프 밖(위 버그 재발 방지).
+
+**결과**: 241셀/20(회사,분기) 신규 채움 — 코리안리(6분기, 3차에서 미룬 "non-display" 건도 이걸로
+해소)·동양생명(7분기, 3차 잔여분 포함)·DB손해보험(2분기, 신규)·한화생명/삼성생명(item24-26, 15-23은
+1-2차에서 이미 완료였는데 24-26은 놓쳤던 잔여). continuity break 62→**34셀/10→5쌍**(잔여 5쌍은 전부
+18사 적용사 관련 raw확인필요·documented exception, 이 스윕 스코프 밖). core RED 12(무관 기존건, 회귀
+0). `pytest` 110 passed. xlsx 재생성 완료.
+
+---
 
 **2026-07-15(3차) — validation이 신설 게이트(`_post_transition_parent_census`, inbox `20260715T0835Z`)로
 적발한 continuity-break(적용후 공시하다 특정 분기만 결측) 14쌍/96셀 처리, 62셀/10쌍 잔존.**
