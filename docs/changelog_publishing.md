@@ -1,6 +1,6 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-05-31 · Stage 4/5 — publishing
+> Last updated: 2026-07-22 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
@@ -9,6 +9,41 @@
 **This file:** entries scoped to publishing work only.
 
 ---
+
+## 2026-07-22 -- designer A11y color fixes + treemap revert, deployed to main via launch runbook
+
+Feature branch (`fix/csm-product-segmented-columns`) had two uncommitted-then-committed designer
+changes sitting ahead of `main`: the A11y owner-review-queue color/contrast fixes
+(`docs/changelog_designer.md` 2026-07-21d, commit `2e4f114`) and a same-day-plus-one revert of the
+treemap red→blue swap after owner flagged it broke an intentional finviz.com-style market-map
+identity (commit `6fc34c1`). Ran the newly-adopted `docs/launch_runbook.md` procedure end to end for
+the first time on designer-only output (no master JSON changes involved).
+
+- **Pre-flight**: `python scripts/validate_data_contract.py` → `SUMMARY RED=0` (YELLOW=200, existing
+  triage queue, non-blocking).
+- **Shared-tree check**: `git branch --show-current` + `git status` before touching anything — found
+  an unrelated concurrent session's staged changes (`schemas/kics_data.schema.json` deletion,
+  `src/solvency/legacy/*` removal, `scripts/run_harness.py`/`src/solvency/config.py` edits). Did
+  **not** stage or commit any of it — `git reset` (index-only, no working-tree impact) to unstage,
+  then re-staged only the designer files. That session went on to commit its own work cleanly
+  (`0543414` etc.) with no interference either direction.
+- **Isolated worktree cherry-push**: `git worktree add ../insurequant-main-deploy main` (after
+  fast-forwarding local `main` to `origin/main`, which already had an earlier a11y sync `8e8c01d` —
+  the keyboard-access/aria-label batch, not the color batch) → `git checkout
+  fix/csm-product-segmented-columns -- index.html K-ICS.html IFRS17.html common.css` → verified
+  `git status`/`git diff --cached` showed exactly those 4 files and nothing else → committed
+  (`a5d0ffa`).
+- **Owner GO**: presented the 4-file list + 1-line reason each + gate result in chat; owner confirmed
+  ("push 고고") before `git push origin main`.
+- **Live verification**: polled `common.css` for the active-tab underline (propagated ~15-30s after
+  push, GitHub Pages), then confirmed all 4 files' specific changed values live via curl —
+  `K-ICS.html` placeholder gray, `IFRS17.html` `NB_LINE_COLORS`, `index.html` bubble-legend green,
+  and confirmed `index.html`'s treemap `hue` is `0` (red) in both branches, not `215` — the revert
+  is correctly live, not just on the feature branch.
+- **Cleanup**: `git worktree remove ../insurequant-main-deploy`, confirmed clean return to the
+  feature branch (`git status` clean of tracked changes).
+- **Not deployed** (intentionally out of scope): the concurrent session's `src/solvency/legacy`
+  removal / `schemas/` change — backend-only, not a site asset, not touched by this deploy.
 
 ## 2026-07-21 -- provenance sidecar 3종 발행 + 게이트 로더 버그 수정 + launch runbook 신설
 
