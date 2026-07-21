@@ -10,6 +10,60 @@
 
 ---
 
+## 2026-07-21 -- provenance sidecar 3종 발행 + 게이트 로더 버그 수정 + launch runbook 신설
+
+Inbox 드레인 (`inbox/publishing/`): validation의 UH-3 후속(`20260721T0530Z`) + owner의 런북 발주
+(`20260721T0233Z`), 둘 다 `status: answered`/`resolved`. 겸사겸사 오래 미커밋 상태였던 IBK(KR1011)
+스레드(`20260704T0600Z`, 실제 배포는 `7bf0d60`으로 이미 완료돼 있었음)도 xlsx 재생성 확인 후 종결.
+
+### Provenance sidecar 발행 (forward_capital · tier1/tier2_utilization)
+
+`templates/{forward_capital_latest,tier1_utilization_latest,tier2_utilization_latest}_provenance.json`
+3종 신설 — `--print-provenance-contract` 스키마 그대로: `source_id=FSC_BONDS`, `effective_filtered=true`,
+`as_of_date=2026-03-31`(=2026.1Q). source_file은 각 마스터가 **실제로** 읽는 파일로 정확히 매핑:
+- forward_capital → `data/bonds/normalized/20260616T060817Z/bonds_by_insurer.json` (forward manifest의
+  `bonds_source`와 동일 스냅샷).
+- tier1/tier2_utilization → `data/bonds/capital_securities_fy2025.json` (DART per-bond 발행현황;
+  `wire_capital_securities_to_utilization.py`가 이 파일의 `call_date`/`legal_maturity` 기준
+  `is_grandfathered`/`amort` 효력필터를 실제로 적용함을 코드 리딩으로 확인한 뒤 `effective_filtered=true`
+  기재 — 상위 `compute_tier{1,2}_utilization.py`는 이 필터를 안 하는 구버전이라 혼동 주의, 2026.1Q
+  산출물은 `wire_*` 스크립트가 in-place 갱신한 버전).
+
+**버그 발견 + 수정 (발행만으론 안 잡혔을 뻔)**: `Env.MASTER_FILES`(`validate_data_contract.py`)에
+`forward_capital`이 `forward_capital_latest`라는 다른 키로 등록돼 있어 `check_as_of`의
+`sidecars.get("forward_capital")`과 영원히 매칭이 안 됐고, `tier1_utilization`/`tier2_utilization`은
+그 dict에 항목 자체가 없어 사이드카 로드 경로가 없었음 — 3종 다 발행해도 게이트가 못 찾는 상태.
+`MASTER_FILES` 3개 키를 lookup 이름과 맞춰 수정/추가.
+
+**검증**: `--selftest` 14/14 유지(회귀 0). 게이트 `MISSING_PROVENANCE_SIDECAR` YELLOW 4→**1**
+(잔여 sensitivity_heatmap = parser ifrs17 별도 소관, 원 티켓 스코프 밖). RED=0 불변.
+
+### Launch runbook 신설 (owner 발주 `20260721T0233Z`)
+
+`docs/launch_runbook.md`(정본 절차서) + `.claude/skills/launch-runbook/SKILL.md`(로컬 skill) 신설.
+Pre-flight 게이트 → keep-list 재파생 → 격리 워크트리 cherry-push → owner 승인 지점 → 배포 후 검증 →
+**§6 rollback(신규 — 이전 TBD)**: HTML/JSON은 격리 워크트리에서 `git revert`(force-push 금지), 마스터
+xlsx 손상은 `.bak` 복원 → Excel 재오픈 → `build_master_xlsx.py` 최후수단 순. `claude-agent-publishing.md`
+§8 TBD 3건(branch policy·site-deploy hook·rollback contract) 체크 완료 + 링크. **로컬 skill 채택**
+(외부 미도입) — 이 저장소에 이미 로컬 skill 패턴(a11y-audit·incident-postmortem) 존재 + 절차가 이
+저장소의 공유 워킹트리·slim keep-list·K-ICS 별도게이트 함정에 강결합돼 범용 외부 스킬로는 못 담음.
+**이번 발주로 실제 배포는 실행 안 함**(지시대로 문서화만).
+
+### 보류 (owner 결정 대기)
+
+`inbox/publishing/20260716T0330Z`(validation) — 2026.1Q 5개사(한화생명·교보·하나·롯데손해·농협)
+적용후 요구자본 fill을 main에 반영할지. 게이트는 이미 clear(RED=0); 배포 여부만 owner 판단 남음.
+이번 세션에서 답변하지 않고 owner에게 직접 질문으로 전달(§ "publishing never decides live-deploy scope
+unilaterally").
+
+### 미착수 (다음 세션 트리아지 필요)
+
+`inbox/publishing/`에 `status: open`으로 남아 있는 2026-06-16~20 backlog 5건 — 이번 세션에서 손대지
+않음(스코프 밖, 오래된 항목이라 이미 다른 경로로 해소됐을 가능성도 있어 트리아지 우선): reembed-done
+트리거·prepush 체인 문서화·owner-confirmed registry 분쟁 3건·gold-overlay 통일·skeptic 하드닝.
+
+---
+
 ## 2026-06-17 -- push BLOCKED (data-contract RED=52) + 게이트 #0 와이어링
 
 ### 게이트 #0 data-contract 신설 (owner 정책 2026-06-16 12:44)

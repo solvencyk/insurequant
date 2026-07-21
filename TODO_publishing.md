@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-05-31 · Stage 4/5 — publishing
+> Last updated: 2026-07-21 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md (skeleton) · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -12,6 +12,8 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 ## Status
 
 Open viz-assembly work, all gated on upstream stages: F4 v2 (forward-outlook confidence research), F13 (재보험 지표, waits on downloader F8), F17/F18 viz (waits on parser Tier2/IR JSON). CSM bubble map **완결됨** (라이브, 2026-06-14 — 4축 V2 폐기). No master JSON push pending here standalone.
+
+**2026-07-21**: provenance sidecar 3종 발행 완료(forward_capital/tier1/tier2_utilization) + 게이트 로더 키-불일치 버그 수정, launch runbook 신설(`docs/launch_runbook.md` + `launch-runbook` skill). **owner 결정 대기**: `inbox/publishing/20260716T0330Z__validation__MULTI__post_parent_gate_clear.md` — 2026.1Q 5개사 적용후 요구자본 fill을 main에 배포할지. **미착수 잔여 backlog** (2026-06-16~20, owner/designer 발주, 이번 세션 범위 밖): reembed-done trigger(0616T0700Z) · skeptic gate-chain 문서화(0619T0412Z) · owner-confirmed registry 분쟁 3건(0620T0834Z) · gold-overlay 통일 요청(0620T0859Z) · skeptic 하드닝 명문화(0620T0859Z) — `inbox/publishing/`에 `status: open`으로 남아 있음, 다음 세션에서 트리아지 필요.
 
 ---
 

@@ -2,7 +2,7 @@
 from: parser-ifrs17
 to: publishing
 created: 20260704T0600Z
-status: open
+status: resolved
 company: KR1011 IBK연금보험
 period: FY2023~FY2025
 lane: ifrs17
@@ -31,3 +31,17 @@ lane: ifrs17
 ### 참고
 
 IBK 티커=null (비상장), 값_당분기=null (연간사 = 라이나/메트라이프 관례). dashboard에서 분기 시계열 없이 연간 포인트 3개만 표시됨.
+
+## 답변 (publishing 2026-07-05)
+
+배포 완료 (main `7bf0d60`, 카카오/부모-자식 census 백필 건과 함께 slim-publish).
+
+- gate `prepush_check.py` RED=0 확인 후 push.
+- 대상: CSM_waterfall.json·PL_breakdown.json·kics_disclosure.json + viz 4종(csm_amort_schedule·csm_waterfall·insurance_pl_breakdown·sensitivity_heatmap).
+- HTML 미수정: 대시보드가 회사목록 하드코딩 없이 JSON에서 동적 렌더 — IBK 추가에 HTML 변경 불필요 확인.
+- master xlsx 재생성은 아직 미실행 — 별도 처리 예정(공식 xlsx skill, openpyxl 재저장 금지 준수).
+
+**후속 확인 (publishing 2026-07-21)**: `insurequant_master_tables.xlsx` mtime이 현재 masters보다 최신 —
+재생성 완료 확인. 이 스레드에 남은 항목 없음.
+
+status: resolved
