@@ -1,9 +1,42 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-07-15 · Stage 3/5 — validation
+> Last updated: 2026-07-21 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+---
+
+## 2026-07-21 (3차) — UH-5 종결 (요구자본 부모 COPY 룰) + UH-3/UH-4 배선
+
+owner 승인. V19 미배선(UH) 잔여 정리 라운드.
+
+### UH-4 해소 + UH-3 부분강화 (commit `647c65c`)
+- **UH-4**: `scripts/_data_contract_selftest.py` 신설 — `Env(inject=)` 합성 mutation suite **14/14 PASS**
+  (기존 spec §5 회귀 + 1b(iv) lift 5종 F1~F5 회귀 보호). `--selftest` ModuleNotFoundError 해소
+  (end-to-end 14/14). **이빨 검증**: 룰 monkeypatch로 죽이면 해당 케이스 미검출→FAIL 확인.
+- **UH-3**: sidecar 부재가 `notes`(비집계)로 조용히 통과하던 것을 집계되는 YELLOW
+  `MISSING_PROVENANCE_SIDECAR`(현 4건: sensitivity_heatmap·forward_capital·tier1/tier2)로 승격.
+  RED 전환은 상류 발행 후(지금 RED면 미발행 마스터 red-out으로 push 영구차단). 발행 발주 완료.
+
+### UH-5 종결 = premise-refined (owner Socratic 지적으로 확정)
+owner: "subrisk만 달라야 하는 게 맞긴 한데, subrisk가 다르면 상위 risk도 당연히 달라야 하지 않나?"
+→ **맞고, 기존 `_transition_mmult_after`(부모후=sqrt(subrisks후·상관행렬))가 이미 강제.**
+
+- **선행조건 확인**: FSS 2023-03-20 붙임-1(`trend20230320_3.pdf` p6, 회사별 경과조치 종류)을 좌표추출
+  전수 복원(총계 검증 **4/19/12/8** 일치) → `_TRANSITION_KIND` registry 등재
+  (`validate_kics_disclosure.py`, 소비 룰 없는 문서 registry).
+- **전제 falsify**: "TAC형(가용자본만·요구자본 무영향) 회사" = **0사**. 가용자본(AC) 경과조치 신청은
+  4사(케이디비·IBK연금·하나생명·푸본현대)뿐이고 이 4사 전부 요구자본 보험리스크(IR)도 신청.
+  elective 18사 전원이 요구자본 경과조치사.
+- **실측 78 "부모후=전" 셀 분류**: **A(subrisk후≠전인데 부모후=전=모순) 0** [mmult가 이미 강제] ·
+  **C(item14후 다름·부모후=전) 52 전부 item19(시장위험)** [한화손·롯데손·악사·처브=주식/금리 미신청사
+  정당 / 농협손·DB생명·에이비엘=신청사이나 금리·주식 경과조치 조건부(K-ICS리스크 60%>RBC일 때만
+  발동)라 실효과 0 가능+내부정합 통과] · **D(subrisk후 부재) 26** [census 소관]. **진짜 미검출 0.**
+- **결론**: 부모 COPY 룰은 item17=mmult 중복·item19=오탐 52·진짜미검출 0 → **신설 불요.**
+  headline(item27/28)은 `_transition_ratio_after_capture`가 18사 전원 검증 중. postmortem README 3차
+  종결 기록. 게이트 무회귀: push 게이트 **RED=0** 유지, K-ICS RED=12 전부 documented(KR0079 8_life·
+  KR0087 동양 2023.2Q·KR0097 하나생명 2024.2Q 이미지전용).
 
 ---
 

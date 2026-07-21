@@ -46,12 +46,16 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
     승격. **RED 전환은 발행 후** — 지금 RED면 미발행 마스터 전부 red-out으로 push 영구차단.
     발행 발주: publishing `20260721T0530Z__…provenance_sidecar_emission` ·
     parser(ifrs17) `20260721T0530Z__…sensitivity_heatmap_provenance`.
-  - [🔴] **UH-5 = 선행조건 미충족으로 미구현 (owner 확인 필요)**: 실측상 elective 18사의 요구자본
-    item17/19 후=전 셀이 **78개**, 그중 한화손해·롯데손해·DB생명·NH농협손해·악사·처브는 **전 분기
-    (12~13셀) 전부** → 이들 경과조치는 요구자본 무영향(TAC형). naive COPY 룰이면 78셀 전량 오탐.
-    **선행 필요: 회사별 경과조치 종류 레지스트리(TIR=요구자본 영향 / TAC=가용자본만)** — 정본 후보는
-    18사 목록을 준 FSS 2023-03-20 붙임-1(`trend20230320_3.pdf` p6)에 종류 구분이 있는지 owner 확인.
-    설계는 확정(elective 18사 ∩ TIR 적용사 한정), 레지스트리 생기면 즉시 구현 가능.
+  - [x] **UH-5 종결 (owner 승인 2026-07-21, premise-refined)**: 선행조건이던 FSS 2023-03-20 붙임-1
+    (`trend20230320_3.pdf` p6, 회사별 경과조치 종류)을 좌표추출 전수 복원(총계 검증 4/19/12/8 일치)
+    → `_TRANSITION_KIND` registry(`scripts/validate_kics_disclosure.py`) 등재. **전제 falsify**:
+    "TAC형(가용자본만)" 회사 = **0사**(가용자본 신청 4사 전부 요구자본 보험리스크도 신청, elective
+    18사 전원 요구자본 경과조치사). **실측 78 "부모후=전" 셀** = A(subrisk후≠전·부모후=전 모순) **0**
+    [기존 `_transition_mmult_after`가 이미 강제] + C(item14후 다름·부모후=전) 52 **전부 item19(시장위험)**
+    [주식/금리 미신청사 정당 + 신청 3사도 조건부 미발동 가능·내부정합] + D(subrisk후 부재) 26 [census
+    소관]. **진짜 미검출 0** → 부모 COPY 룰은 item17=mmult 중복·item19=오탐 52 → **신설 불요.**
+    owner Socratic 지적("subrisk 다르면 상위도 달라야")이 결론 핵심 — 참이며 이미 mmult가 강제(A=0).
+    postmortem README 3차 종결 기록.
 
 ### V18 — 적용후 요구자본 **부모** census blind spot 정정 (owner `20260715T0801Z`, 2026-07-15)
 07-12 V17 census(`_parent_present_child_incomplete_after`)는 **부모후가 present일 때** 자식후 결측만 봄 →
