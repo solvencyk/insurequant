@@ -1,11 +1,28 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-06-20 · Stage 5/5 — designer
+> Last updated: 2026-07-21 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-07-21 — A11y baseline + audit (inbox `20260721T0233Z`)
+
+Owner backlog item: adopt an A11y audit baseline (owner had reviewed 42 external skills, flagged `ui-ux-pro-max` as a fit for the designer stage's long-open A11y TBD). Went local instead — see rationale in `docs/a11y_baseline.md` §4.
+
+- **Baseline formalized**: WCAG 2.1 AA, table + method in `docs/a11y_baseline.md`. New tool `scripts/a11y_contrast_check.py` (WCAG contrast ratio + protanopia/deuteranopia colorblind simulation via linear-RGB matrix transform — replaces hand-computed contrast checks). New local skill `.claude/skills/a11y-audit/SKILL.md` for repeat audits.
+- **Audited all 4 deployed pages** (index/K-ICS/IFRS17/공시보고서): color contrast (every `common.css` token + page-local literal used as text), chart-palette colorblind confusability (K-ICS teal/pink pair, IFRS17 `NB_LINE_COLORS` 6-color palette, index treemap/bubble diverging gradients), keyboard access (every `addEventListener('click')` on a non-native element), focus visibility, form-label association.
+- **Fixed (purely additive, no rendered-value change)**:
+  - `index.html` treemap cells (`.cell`) and mobile list rows (`.li-row`) were click-only — the page's primary company→detail navigation had **no keyboard path** (WCAG 2.1.1 fail). Added `tabindex="0"`, `role="link"`, `aria-label` (reused the existing `title` text), and a `keydown` handler (Enter/Space → same nav as click).
+  - `index.html` custom toggle switch hides its real `<input>` at 0×0/opacity:0, so the sitewide `:focus-visible` ring landed on an invisible element (WCAG 2.4.7 fail). Added `.toggle-input:focus-visible + .toggle-label{outline:...}` targeting the visible label.
+  - `공시보고서.html` was the one page **not** linking `common.css` — meaning it had no focus-visible ring and no `prefers-reduced-motion` handling at all. Added the `<link>` in the same position as the other 3 pages.
+  - 10 chart `<canvas>`/ECharts `<div>` containers (K-ICS ×5, IFRS17 ×5, index ×2) had no `role`/`aria-label` for screen readers. Added `role="img"` (`role="group"` for the treemap, since its cells are now focusable link children) + concise Korean labels.
+  - Active-tab links (`K-ICS.html`, `IFRS17.html`, `공시보고서.html`) had no `aria-current` — screen readers couldn't tell which page is current beyond the color-only highlight. Added `aria-current="page"` alongside the existing `active` class (`index.html` has no self-referencing tab, no change needed there).
+- **Owner-review queue** (touches an existing rendered value — owner-gated per `common.css`'s own token-value rule, not auto-fixed): `--muted` on `--card` = 4.45:1 (just under AA); index.html bubble-legend bold-green text = 3.30:1; `#adb5bd` "no data" placeholders = 2.07:1; IFRS17 `NB_LINE_COLORS` has 2 pairs (orange/red, purple/teal) that get close under deuteranopia/protanopia simulation; index.html treemap/bubble red↔green diverging scales lose contrast under the same simulation (partially mitigated — every cell already has a tooltip + on-cell numeric label). Full detail + severities in `docs/a11y_baseline.md` §2b.
+- **Corrected a stale doc note**: the previous `#ff9f40` medium-confidence-badge gap in `claude-agent-designer.md` §5.3 no longer applies (literal isn't in any of the 4 pages anymore) — removed.
+- **Verification**: Claude Browser preview, all 4 pages, 1280px + 375px — 0 console errors. Dispatched `Enter` keydown on a treemap cell → navigated to `K-ICS.html?company=...` exactly like a click. `공시보고서.html` confirmed loading `common.css` with `:focus-visible` rule present.
+- **Docs**: `docs/agents/claude-agent-designer.md` §5.3 rewritten to point at the new baseline doc + skill instead of the old ad-hoc gap list.
 
 ## 2026-06-20
 

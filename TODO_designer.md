@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-06-20 · Stage 5/5 — designer
+> Last updated: 2026-07-21 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (skeleton) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,9 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-07-21):**
+- **A11y baseline + audit** (inbox `20260721T0233Z`, resolved): formalized WCAG 2.1 AA baseline + method in `docs/a11y_baseline.md`, local skill `.claude/skills/a11y-audit/` (chose local over external `ui-ux-pro-max`), contrast/colorblind tool `scripts/a11y_contrast_check.py`. Fixed low-risk/purely-additive gaps: index.html treemap cells + mobile list rows were **click-only** (no keyboard path at all — the site's primary nav interaction, WCAG 2.1.1 fail) → added tabindex/role/aria-label/keydown; custom toggle's focus ring was landing on a 0×0 hidden checkbox → retargeted to the visible label; `공시보고서.html` wasn't linking `common.css` at all (no focus-visible ring, no reduced-motion) → added the link; 10 chart canvases/ECharts containers across 3 pages got `role`/`aria-label`; active-tab links (K-ICS/IFRS17/공시보고서) got `aria-current="page"` (mitigates the color-only active-tab gap for screen readers; visual-only gap for sighted users still owner-gated, unchanged). Owner-review queue (rendered-value changes, not auto-fixed): `--muted`-on-`--card` contrast 4.45:1, bubble-legend green text 3.30:1, `#adb5bd` placeholders 2.07:1, IFRS17 `NB_LINE_COLORS` 2 confusable pairs under deuteranopia sim, index.html treemap/bubble red↔green diverging scale loses contrast under sim. `docs/agents/claude-agent-designer.md` §5.3 updated, stale `#ff9f40` note removed.
 
 **Recent (2026-06-20):**
 - **도넛 섹션 잠정 숨김**: K-ICS.html 자본성증권 소진율 패널 `display:none` — 분자 오류(tier1 excess누락·tier2 proxy과대). 마크업/JS 보존. 복구: ifrs17 capital_securities_issuance JSON 완성 후 owner 신호.

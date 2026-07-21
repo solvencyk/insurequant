@@ -122,11 +122,19 @@ The three dashboards already shared an identical de-facto system; it is now cent
 - **Non-breaking test:** every value in common.css equals the value the pages rendered on 2026-06-16. Verify after any change: `commonCssLoaded` true (no 404), 0 console errors, computed styles unchanged on all three pages at desktop + 640px.
 - **Deploy note (publishing/owner):** `common.css` is a new root asset — it must ship alongside the HTML wherever they deploy (root + any templates/data mirror). Flag in the publishing handoff.
 
-### 5.3 A11y baseline (in common.css — additive, no default-mouse visual change)
+### 5.3 A11y baseline — target WCAG 2.1 AA (formalized 2026-07-21, inbox 20260721T0233Z)
 
-- `:focus-visible{ outline:2px solid var(--primary); outline-offset:2px }` — keyboard focus ring site-wide (shows only on keyboard nav).
+Full baseline table + audit methodology + results: **[`docs/a11y_baseline.md`](../a11y_baseline.md)**. Repeatable procedure as a local skill: `.claude/skills/a11y-audit/SKILL.md` (run it whenever adding a new page/chart/component, per the order's "로컬 권장" decision over adopting the external `ui-ux-pro-max` skill). Contrast/colorblind math: `scripts/a11y_contrast_check.py` — don't hand-compute WCAG contrast ratios.
+
+In `common.css`:
+- `:focus-visible{ outline:2px solid var(--primary); outline-offset:2px }` — keyboard focus ring site-wide (shows only on keyboard nav). Linked on all 4 pages now (공시보고서.html was missing the `<link>` entirely until the 2026-07-21 pass).
 - `@media (prefers-reduced-motion:reduce)` — neutralizes transitions/animations for motion-sensitive users.
-- **Known gaps to extend (next A11y pass, non-blocking):** active-tab uses color only (add a non-color cue — weight/underline — once owner OKs the subtle visual change); custom toggle in index hides its `<input>` (style `.toggle-input:focus-visible + .toggle-label`); chart `<canvas>`/`#map` need `aria-label`/`role="img"` + a text summary; medium-confidence badge (`#ff9f40` on white ≈3.25:1) is sub-AA for small text.
+
+**Fixed 2026-07-21** (purely additive, no rendered-value change — see baseline doc §2a for the full list): index.html treemap cells + mobile list rows now keyboard-operable (`tabindex`/`role="link"`/`aria-label`/Enter-Space handler — previously click-only, the site's primary navigation was unreachable by keyboard); custom toggle's `:focus-visible` ring now targets the visible label instead of landing on the 0×0 hidden checkbox; `공시보고서.html` now links `common.css`; all 10 chart `<canvas>`/ECharts containers across the 3 interactive pages got `role="img"`/`role="group"` + `aria-label`; active-tab links got `aria-current="page"`.
+
+**Owner-review queue** (touches an existing rendered value — owner-gated per this file's token-value rule, not auto-fixed; full detail in `docs/a11y_baseline.md` §2b): active-tab color-only cue for **sighted** users (screen-reader side now covered by `aria-current`, the visual-only gap is still open, unchanged); `--muted` on `--card` background = 4.45:1 (just under AA); index.html bubble-legend `● 손해` bold-green text = 3.30:1; `#adb5bd` "no data" placeholders = 2.07:1; IFRS17 `NB_LINE_COLORS` 6-color palette has 2 pairs (orange/red, purple/teal) that get close under deuteranopia/protanopia simulation; index.html treemap/bubble red↔green diverging gradient scales lose contrast under the same simulation (mitigated by tooltip + on-cell numeric label, not eliminated).
+
+The `#ff9f40` medium-confidence-badge note from the previous version of this section was **stale** (no longer in any of the 4 HTML files) — removed.
 
 ### 5.4 Chart & responsive conventions (committed)
 
