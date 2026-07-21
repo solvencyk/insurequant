@@ -166,9 +166,9 @@ Publishing doesn't run designer — they're independent stages working from the 
 - [ ] HTML-input schema versioning — when a master adds a new field, version bump rules.
 - [ ] Derived metrics catalog — which `recalc_*` and `compute_*` produce which fields, ordered DAG.
 - [ ] Viz JSON contract per panel (currently scattered across viz_build_*.py docstrings).
-- [ ] Branch policy — push to main directly or always PR?
-- [ ] Site-deploy hook (GitHub Pages CNAME serves from `main`; any post-push verification?)
-- [ ] Rollback contract — if a bad push lands, what's the named revert procedure?
+- [x] Branch policy — push to `main` directly (no PR), always via isolated `git worktree` cherry-push of the keep-list, never a same-folder branch switch. See **§9 + the new `launch-runbook` skill** (`docs/launch_runbook.md`, 2026-07-21).
+- [x] Site-deploy hook — GitHub Pages serves `main` via `CNAME`; post-push verification = curl/WebFetch one master JSON + one HTML page (200 + expected content), ~1-2min propagation. `docs/launch_runbook.md` §5.
+- [x] Rollback contract — `docs/launch_runbook.md` §6 (new, 2026-07-21): bad HTML/JSON on `main` → `git revert` (never force-push) from an isolated worktree, re-verify live; corrupted master xlsx → restore `.bak` or reopen in Excel (rebuild via `build_master_xlsx.py` is last resort, needs owner heads-up). Adopted as a **local skill** (`launch-runbook`) per owner request (`inbox/publishing/20260721T0233Z`) — this repo already has a local-skill pattern (a11y-audit, incident-postmortem), no external skill needed.
 
 ---
 
