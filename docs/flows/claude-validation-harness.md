@@ -74,7 +74,7 @@
 
 ## Stage 5: 정합성 검증(도메인 룰)
 
-**Authoritative K-ICS JSON rules:** [`kics-json-validation-rules.md`](kics-json-validation-rules.md) (synced with `src/solvency/validation/kics_json_rules.py`).
+**Authoritative K-ICS JSON rules:** [`kics-json-validation-rules.md`](../agents/kics-json-validation-rules.md) (synced with `src/solvency/validation/kics_json_rules.py`).
 
 **Pipeline gate:** `python scripts/validate_kics_disclosure.py` must report **RED=0** (or only documented exceptions in `TODO.md`) before JSON swap, template sync, or deploy. Unexpected RED → parsing-error review required.
 
@@ -120,7 +120,7 @@ status=skipped + sha256 불변)이며, 이것이 현재 유일한 멱등성 게�
 
 ### 7-3) 정합성 검증(Stage 5와 연계)
 
-- **K-ICS disclosure JSON:** [`kics-json-validation-rules.md`](kics-json-validation-rules.md) — run `python scripts/validate_kics_disclosure.py`; gate RED=0
+- **K-ICS disclosure JSON:** [`kics-json-validation-rules.md`](../agents/kics-json-validation-rules.md) — run `python scripts/validate_kics_disclosure.py`; gate RED=0
 - 비율 재계산: `solvency_amount / required_capital * 100 ≈ solvency_ratio` (허용 오차 1.0)
 - 룰 R1~R8 · 8_life · 19_market: `src/solvency/validation/kics_json_rules.py`
 

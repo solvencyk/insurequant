@@ -178,37 +178,6 @@ def _score_table(t, company_name: str) -> tuple[int, str, str, str, list[str]]:
     return score, block_type, slice_label, slice_policy, reasons
 
 
-def extract_bs_snapshot_tables(
-    xml_path: Path,
-    company_name: str = "",
-    min_score: int = 5,
-    mvp_only: bool = False,
-) -> list[ExtractedBsSnapshotTable]:
-    out: list[ExtractedBsSnapshotTable] = []
-    for t in _iter_tables_with_context(xml_path):
-        score, block_type, slice_label, slice_policy, reasons = _score_table(t, company_name)
-        if score < min_score:
-            continue
-        row = ExtractedBsSnapshotTable(
-            caption=t.caption,
-            header=t.header,
-            rows=t.rows,
-            footnotes=t.footnotes,
-            line_no=t.line_no,
-            score=score,
-            reasons=reasons,
-            block_type=block_type,
-            slice_label=slice_label,
-            slice_policy=slice_policy,
-        )
-        row.mvp_candidate = is_mvp_table(row)
-        if mvp_only and not row.mvp_candidate:
-            continue
-        out.append(row)
-    out.sort(key=lambda x: (-x.score, x.line_no))
-    return out
-
-
 def to_jsonable(t: ExtractedBsSnapshotTable) -> dict:
     return {
         "caption": t.caption,

@@ -56,9 +56,6 @@ LISTED_UNIVERSE_SIZE = 37 - len(NON_LISTED_SKIP)
 OPERATIONAL_CSM_COUNT = 23
 
 
-def is_audit_report_annual(name: str) -> bool:
-    return name in AUDIT_REPORT_ANNUAL
-
 _SLICE_LONGTERM = (
     "\uC7A5\uAE30",
     "\uC0DD\uBA85\uC7A5\uAE30",
@@ -91,11 +88,6 @@ def is_excluded(kics_name: str) -> bool:
 
 def is_life_insurer(name: str) -> bool:
     markers = ("\uC0DD\uBA85", "\uC5F0\uAE08", "\uB77C\uC774\uD504", "Life")
-    return any(m in name for m in markers)
-
-
-def is_reinsurer(name: str) -> bool:
-    markers = ("\uC7AC\uBCF4\uD5D8", "Reinsurance", "Re ")
     return any(m in name for m in markers)
 
 

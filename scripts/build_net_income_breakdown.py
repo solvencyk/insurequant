@@ -160,17 +160,6 @@ def extract_tier1(tables):
 LOB_ORDER = ["장기보험", "자동차보험", "일반보험"]
 
 
-def _lob_col_index(header):
-    """Map LOB name -> column index using the header rows."""
-    idx = {}
-    for hr in header:
-        for ci, cell in enumerate(hr):
-            for lob in LOB_ORDER:
-                if cell.strip() == lob and lob not in idx:
-                    idx[lob] = ci
-    return idx
-
-
 def _lob_header(t):
     hb = " ".join(" ".join(r) for r in t.header)
     return all(k in hb for k in LOB_ORDER)
@@ -347,25 +336,6 @@ def _row_label2(r):
 def _all_nums(r):
     """All numeric cells of a row, in order."""
     return [to_num(c) for c in r if to_num(c) is not None]
-
-
-def _all_cells_numeric(r):
-    """Numeric or '-' placeholders in order; '-' → 0.0 (table convention)."""
-    out = []
-    for c in r:
-        s = (c or "").strip()
-        if s in ("", "-", "–", "—"):
-            out.append(0.0)
-            continue
-        v = to_num(c)
-        if v is not None:
-            out.append(v)
-    return out
-
-
-def _table_has_caption(t, *needles):
-    cap = (t.caption or "")
-    return all(n in cap for n in needles)
 
 
 def _kb_lob(tables, t1_ins):

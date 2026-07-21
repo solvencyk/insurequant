@@ -57,19 +57,6 @@ def _val_at(r, pos):
     return nums[pos] if len(nums) > pos else None
 
 
-def _find_in_tables(tables, variants, pos, pred):
-    """First (table satisfying pred) row matching `variants`, value at `pos`."""
-    for t in tables:
-        if not pred(t):
-            continue
-        for r in t.rows:
-            if _row_matches(r, variants):
-                v = _val_at(r, pos)
-                if v is not None:
-                    return v
-    return None
-
-
 def _sonbo_lob_tables(tables):
     """Return the four 손보 LOB analysis tables (보험수익/보험서비스비용/재보험수익/재보험비용)
     for the CURRENT period.  Each table type appears twice (당기 then 전기) — we keep the

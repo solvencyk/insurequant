@@ -14,7 +14,7 @@
 
 ## 2. 파싱 및 무결성 검증 (Parsing & Validation)
 - **플로우 참고:** `docs/flows/json-build.md`, `docs/flows/gemini-flow.md`, `docs/flows/validation-harness.md` 기반.
-- **검증 규칙 (공식):** [`kics-json-validation-rules.md`](kics-json-validation-rules.md) — rules 1-8 + R4/R7; code in `src/solvency/validation/kics_json_rules.py`.
+- **검증 규칙 (공식):** [`kics-json-validation-rules.md`](../agents/kics-json-validation-rules.md) — rules 1-8 + R4/R7; code in `src/solvency/validation/kics_json_rules.py`.
 - **[필수 게이트]:** `python scripts/validate_kics_disclosure.py` 실행 후 **RED=0** (또는 `TODO.md`에 문서화된 예외만) 확인 전 다음 단계(JSON swap, template sync, deploy) 진행 금지. 예상치 못한 RED는 파싱 오류 검토 필수.
 - **추출 대상 항목:** 가(지급여력금액), 나(지급여력기준금액), 다(지급여력비율) 및 하위 항목 전체.
 - **[신규 필수 사항]:** `생명장기손해보험위험액`의 하위 항목 (사망/장수/장해질병/장기재물기타/해지/사업비위험) 파싱 로직을 추가할 것 (분기/반기 공시에 따라 변동 가능성 유의).

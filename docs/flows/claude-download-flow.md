@@ -91,5 +91,5 @@ Drive (코드 외부, 수동/MCP):
 
 - 매칭 성공: 550개 → `FY2023_Q1` ... `FY2025_Q4`
 - 미매칭: 154개 → `data/disclosure/_unsorted/<companyDirname>/` (대부분 분기 정보가 없는 회사 루트 통합 파일)
-- 사용한 1회성 스크립트는 [archive/migrations/](../archive/migrations/)에 보존되어 있음
+- 사용한 1회성 스크립트는 `archive/` 아래 날짜 버킷에 보존 (2026-07-22 기준 `archive/2026-07_unreferenced_scripts/`, `archive/2026-06_csm_nb_reverse_engineering/`, `archive/scratch_scripts/`)
 - 새 다운로드는 `src/solvency/downloader/`가 처음부터 새 레이아웃으로 떨어트림

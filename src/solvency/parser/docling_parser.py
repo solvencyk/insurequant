@@ -616,14 +616,6 @@ def _make_run_id() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
-def parse_serial(items: Iterable[PdfInput]) -> Iterator[ParseResult]:
-    """Run docling sequentially. Used by the perf harness as baseline."""
-    run_id = _make_run_id()
-    for item in items:
-        yield _convert_one(item, run_id)
-        gc.collect()
-
-
 def parse_parallel(
     items: Iterable[PdfInput], workers: int = 4
 ) -> Iterator[ParseResult]:
@@ -650,21 +642,3 @@ def parse_parallel(
         for future in as_completed(futures):
             yield future.result()
 
-
-def write_metrics(results: Iterable[ParseResult], path: Path) -> None:
-    """Persist per-file timing/memory metrics for the perf harness."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    payload = [
-        {
-            "company_code": r.company_code,
-            "pdf_path": str(r.pdf_path),
-            "md_path": str(r.md_path) if r.md_path else "",
-            "status": r.status,
-            "parse_confidence": r.parse_confidence,
-            "elapsed_seconds": r.elapsed_seconds,
-            "peak_rss_mb": r.peak_rss_mb,
-            "error_message": r.error_message,
-        }
-        for r in results
-    ]
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

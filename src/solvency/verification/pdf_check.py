@@ -199,21 +199,3 @@ def verify_directory(
         results.append(verify_pdf(path))
     return results
 
-
-def to_table_rows(
-    results: Iterable[VerificationResult],
-) -> list[dict[str, object]]:
-    """Render results into a JSON-friendly list of dicts."""
-    return [
-        {
-            "path": str(r.path),
-            "level": r.level.value,
-            "size_bytes": r.size_bytes,
-            "has_magic": r.has_magic,
-            "user_can_read": r.user_can_read,
-            "has_keyword": r.has_keyword,
-            "pypdf_ok": r.pypdf_ok,
-            "reasons": r.reasons,
-        }
-        for r in results
-    ]

@@ -2400,59 +2400,6 @@ def extract_tier2_axa(tables):
     return out
 
 
-# -------------------------- 코리안리 (KR1000, 수재) ------------------------- #
-def extract_tier2_koreanre(tables):
-    def labs(t):
-        return " ".join(_norm(r[0]) + (_norm(r[1]) if len(r) > 1 else "") for r in t.rows)
-
-    def collect(fl_start, must_all):
-        return [t for t in tables
-                if _fl(t).startswith(fl_start) and all(m in labs(t) for m in must_all)]
-
-    rev_all = collect("보험수익", ["서비스의 이전으로 당기손익에 인식한 보험계약마진",
-                                  "예상 손해조사비 (기초 예상 측정치)"])
-    cost_all = collect("보험비용", ["발생한 보험금", "발생한 손해조사비"])
-    rerev_all = collect("재보험자에게서 회수한 금액에서 생기는 수익", ["재보험수익, 발생한 보험금"])
-    recost_all = collect("재보험자에게 지급된 보험료 배분액에서 생기는 비용",
-                         ["서비스의 이전으로 당기손익에 인식한 보험계약마진"])
-    if not (rev_all and cost_all and rerev_all and recost_all):
-        return {}
-
-    def standalone_current(lst):
-        if len(lst) >= 4:
-            return lst[len(lst) // 2]
-        return lst[-1] if len(lst) >= 2 else lst[0]
-
-    rev_t = standalone_current(rev_all)
-    cost_t = standalone_current(cost_all)
-    rerev_t = standalone_current(rerev_all)
-    recost_t = standalone_current(recost_all)
-
-    def grand(t):
-        ns = _row_nums(t.rows[0])
-        if len(ns) >= 7:
-            return ns[3] + ns[6]
-        return ns[-1] if ns else 0
-
-    out = {}
-    out[4] = abs(_firstlab(rev_t, *_S2_CSM))
-    out[5] = abs(_firstlab(rev_t, *_S2_RA))
-    out[6] = _sum_split(rev_t, _EXP_SPLIT) - _sum_split(cost_t, _ACT_SPLIT)
-    out[9] = -abs(_firstlab(recost_t, *_S2_CSM))
-    out[10] = -abs(_firstlab(recost_t, *_S2_RA))
-    re_rev_act = _firstlab(rerev_t, "재보험수익, 발생한 보험금")
-    re_cost_exp = _firstlab(recost_t, "재보험비용, 예상 보험금")
-    if re_cost_exp is None:
-        re_cost_exp = _firstlab(recost_t, "보고기간에 발생한 보험서비스비용 (기초 예상 측정치)")
-    out[11] = abs(re_rev_act) - abs(re_cost_exp or 0)
-    # reinsurer: no 자동차/일반 GMM LOB; 13/14 N/A. 장기 block = whole standalone uw.
-    out["_jang_rev"] = grand(rev_t)
-    out["_jang_cost"] = grand(cost_t)
-    out["_jang_rerev"] = grand(rerev_t)
-    out["_jang_recost"] = grand(recost_t)
-    return out  # 백만원 already
-
-
 # ===== 생보: component-decomposition notes (교보/DB생명/동양, single column) ===== #
 def _life_flat(t):
     return "".join(_norm(c) for r in t.rows for c in r[:2]).replace(" ", "")

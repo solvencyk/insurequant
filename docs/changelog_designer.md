@@ -100,7 +100,7 @@ owner "둘 다 진행" 지시로 DESIGN-V2 P2 슬라이스 + DS2를 함께 착�
 
 **frontend-design 스킬**로 designer 프롬프트 TBD(디자인 시스템/common.css/A11y/차트 규약)를 정식화. 무파괴(extraction, not redesign) — common.css 값 = 기존 렌더값 1:1. 정찰 Workflow(4 병렬 read-only)로 3파일 토큰 인벤토리 + KB 버그 위치 선행 파악.
 
-- **신규 [`common.css`](../../common.css)**: `:root` 토큰(surface/ink·brand·금융 status·type·spacing 4px·radius·misc) + 공통 chrome(body/header/.brand/.tabs/.tab/.container/.select/.panel h2·p/table base/.num·.small-muted·.muted) + A11y(`:focus-visible`·`prefers-reduced-motion`). 22 규칙.
+- **신규 [`common.css`](../common.css)**: `:root` 토큰(surface/ink·brand·금융 status·type·spacing 4px·radius·misc) + 공통 chrome(body/header/.brand/.tabs/.tab/.container/.select/.panel h2·p/table base/.num·.small-muted·.muted) + A11y(`:focus-visible`·`prefers-reduced-motion`). 22 규칙.
 - **3 HTML 배선**: `<link href="common.css">`를 inline `<style>` **앞**에 추가 + 각 inline에서 중복 chrome/토큰 제거. 페이지 고유(.panel/.controls 여백·`*{box-sizing}`·차트/컴포넌트 클래스·@media)는 유지. index `.tab` cursor:pointer는 common으로 흡수.
 - **`*{box-sizing}` 미추출**: 3파일 모두 보유하나 hoist 시 레이아웃 시프트 위험 → 페이지 inline 유지(보수적).
 - **프롬프트 §5 정식화**: `docs/agents/claude-agent-designer.md` skeleton→정식(토큰표·extraction contract·A11y 갭·차트 규약 legend밀도/donut stack/모바일 scope·확정결정 4개 잠금). status 라인·assets/ 경로 참조 정정.
