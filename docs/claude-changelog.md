@@ -1,11 +1,25 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-05-31 · Stage: cross-stage
+> Last updated: 2026-07-21 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
 
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
+
+---
+
+## 2026-07-21 — 리팩토링 1차: 죽은 kics_data.json 경로 제거 + 실행 불가 스크립트 복구
+
+**삭제 (임포터 0 확인 후, `0543414`)** — `src/solvency/validation/rules.py`(967줄, xlsx 대상 a~g 룰; `kics_json_rules.py`가 대체) · `src/solvency/legacy/` 전체(~2.6k줄: camelot_parser·merge_xlsx·csv_to_json·회사별 다운로더 4종; 단일 다운로더 엔진 + docling_parser가 대체) · `transform/md_to_json.py` + `validation/schema.py` + `schemas/kics_data.schema.json`. 합계 **-4,150줄**.
+
+**`run_harness.py` 함정 제거** — `--stage perf|data|all` 삭제. 기본값이 `all`이라 인자 없이 실행하면 2026-05-30 폐기된 `kics_data.json`을 루트에 다시 만들어냈다. 이제 `--stage` 필수, 선택지 `quality|pdf|parse`. `--stage data`의 부수효과로만 돌던 MD 품질게이트+리뷰큐는 `--stage quality`로 독립.
+
+**실행 불가 스크립트 복구 (`4bcb188`)** — `scripts/export_red_all_cases.py`가 **UTF-16 LE**로 저장돼 있어 "source code string cannot contain null bytes"로 매 실행 즉사. publishing 프롬프트가 post-validation 리포팅 도구로 지목한 스크립트였다. UTF-8 재인코딩 후 정상 동작 확인. BOM 2건(`ingest_fsc_bonds.py`·`recalc_basic_capital_ratio_post.py`)도 정리 → scripts 212개 전부 파싱 가능(이전 3개 실패).
+
+**컨텍스트 트리밍** — TODO.md Status가 RED=227(2026-06-12) 주장(실제 12), 같은 파일 안에 24라는 세 번째 숫자까지 공존 → 검증된 현재값으로 교체 + SUPERSEDED 이력 블록 제거. 종결(resolved/done/superseded) 상태로 open 레인에 남아있던 inbox 12건 `_resolved/` 이관. 죽은 모듈을 가리키던 flow 문서 정정, `claude-json-build.md` 폐기.
+
+**검증** — pytest 113 passed(이전 111 passed/2 failed; e2e 2건은 엔진이 status를 downloaded/downloaded_basic으로 쪼갠 뒤 방치된 stale assert였음). `validate_kics_disclosure.py` RED=12 YELLOW=561 GREEN=4701 SKIP=1530 — 리팩토링 전과 완전 동일.
 
 ---
 
