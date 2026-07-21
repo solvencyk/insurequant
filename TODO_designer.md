@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-07-21d · Stage 5/5 — designer
+> Last updated: 2026-07-22 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (skeleton) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,9 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-07-22):**
+- **Treemap red→blue reverted — owner: finviz identity**: the 07-21d commit's `colorForRatio()` blue swap (below) got reverted same-day-plus-one — owner flagged that the treemap's red/green is an intentional finviz.com market-map reference, not an oversight, and that outweighs the colorblind gap here. Back to red/green; documented as an accepted exception (every cell already shows the ratio as on-cell text too, so it was never color-only). Other 4 items from 07-21d (muted gray, bubble-legend green, placeholder gray, NB_LINE_COLORS, active-tab underline) unaffected. Detail: `docs/changelog_designer.md` 2026-07-22, `docs/a11y_baseline.md` §2b row 12.
 
 **Recent (2026-07-21d):**
 - **A11y owner-review queue — sign-off received, all fixed**: the 5 color/contrast items left open from the 07-21 audit (`--muted` 4.45:1, bubble-legend green 3.30:1, `#adb5bd` placeholder 2.07:1, `NB_LINE_COLORS` 2 confusable pairs, treemap/bubble red-green diverging scale) + the active-tab color-only gap — all fixed and verified with `scripts/a11y_contrast_check.py` (not eyeballed) before editing. `NB_LINE_COLORS` needed a full-palette redesign, not a 2-color swap — a minimal fix kept re-introducing new clashes elsewhere in the 6-set; final palette's worst pair is ΔRGB 82 (was 39). Treemap's live `colorForRatio()` below-threshold red→blue (not just the CSS swatch) — mobile list bars inherit for free (same function). Full detail: `docs/a11y_baseline.md` §2b.

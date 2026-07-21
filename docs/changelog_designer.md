@@ -1,11 +1,20 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-07-21d · Stage 5/5 — designer
+> Last updated: 2026-07-22 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-07-22 — Treemap red→blue reverted (owner: finviz identity outweighs this gap)
+
+The 07-21d commit (`2e4f114`) changed `index.html`'s `colorForRatio()` below-threshold color from red (`hue=0`) to blue (`hue=215`) for colorblind distinguishability, plus the `.swatch` legend gradient and `legendThresh` caption text. Owner objected on sight: the site's treemap ("K-ICS Market Map") deliberately mirrors finviz.com's red/green market-map convention — that's an intentional brand/identity reference, not an unexamined default, and changing it wasn't worth the tradeoff.
+
+- Reverted `colorForRatio()` (both `kics` and `basicCapital` branches) to `hue=0` red, `.swatch` gradient back to the red stops, `legendThresh` caption back to "빨강 <...". Left a one-line code comment pointing at this decision + `docs/a11y_baseline.md` #12 for a future reader.
+- **Not reverted** (owner had no objection to these): `--muted`, bubble-legend green, missing-data placeholder gray, IFRS17 `NB_LINE_COLORS` palette, active-tab underline — all 4 other 07-21d items stay as committed.
+- `docs/a11y_baseline.md` §2b row #12 updated to record the revert + the reasoning: this was never a hard WCAG 1.4.1 fail to begin with, since every treemap/list cell already renders its ratio as on-cell numeric text in addition to color (not color-only) — so colorblind users aren't blocked, just without the color as a redundant fast-scan cue. Documented as an accepted exception rather than a fix.
+- Verified: `git diff` scoped to exactly the 4 reverted lines/comment (no other lines touched), Playwright regression harness re-run clean.
 
 ## 2026-07-21d — A11y owner-review queue resolved (owner: "do it now")
 
