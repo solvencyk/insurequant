@@ -56,13 +56,22 @@
 | **UH-1** | 적용후 검증 7종을 `validate_data_contract.py` `check_census` **1b(iv)** 로 lift (display 7분기 scope). 6종 RED + `_ratio_series_spikes`만 YELLOW(휴리스틱이라 단독 차단 금지). **주입 테스트로 방출 경로 검증**: display-scope를 2023.1~3Q로 임시 확장 시 baseline RED 0 → lifted RED 4건 |
 | **UH-2** | push 게이트 체인 3종(`validate_data_contract.py`·`prepush_check.py`·`triage_anomaly_candidates.py`) **git 등재**. gitignore가 아니라 단순 미추가였음(scripts/ 163개는 이미 tracked) |
 
-## 🔴 아직 룰로 안 굳은 것 (다음 게이트 후보)
+## 2026-07-21 (2차) — UH-4 해소 · UH-3 부분강화 · UH-5 선행조건 확정
 
-| ID | 내용 | 왜 위험한가 | 우선순위 |
-|---|---|---|---|
-| **UH-3** | provenance Phase-2 end-state 미강제. sidecar 있는 3종(kics_disclosure·CSM_waterfall·PL_breakdown)만 strict, 없는 마스터는 Phase-1 추론 fallback + note | 소스 신선도 미검증 마스터가 조용히 통과(= 두 달 글리치 원형) | P2 |
-| **UH-4** | `validate_data_contract.py --selftest`가 `_data_contract_selftest` 모듈 부재로 실행 불가 | 게이트 자체의 회귀를 못 잡음. **1b(iv) lift 신설로 게이트 로직이 커진 만큼 중요도 상승** | P2 |
-| **UH-5** | 요구자본 항목(15~21) **COPY 검사 부재** — COPY 판정이 비율 item27/28에만 존재 | elective 적용사의 요구자본 후를 적용전 복사로 채워도 미탐지 | P2 (설계상 `_TRANSITION_APPLIERS` 18사 한정 필수) |
+| ID | 조치 |
+|---|---|
+| **UH-4 ✅ 해소** | `scripts/_data_contract_selftest.py` 신설 — `Env(inject=…)` 합성데이터 mutation suite **14/14 PASS**. 기존 spec §5 회귀(census·impossible-0·stale as-of·donut·concept-guard·tier2 identity) + **1b(iv) lift 5종(F1~F5) 회귀 보호**. **이빨 검증**: 룰을 죽이면(`_item12_equals_item1`·`_post_transition_parent_census` monkeypatch) 해당 케이스가 미검출→FAIL 처리됨을 확인 |
+| **UH-3 ⚠️ 부분강화** | 종전 `notes`에만 적혀 **집계도 안 되고 조용히 통과**하던 sidecar 부재를 집계되는 **YELLOW `MISSING_PROVENANCE_SIDECAR`** 로 승격(현 4건: sensitivity_heatmap·forward_capital·tier1/tier2_utilization). **RED 전환은 발행 후** — 지금 RED로 두면 미발행 마스터가 전부 red-out돼 push가 영구 차단. 발행 발주: publishing `20260721T0530Z…provenance_sidecar_emission` · parser(ifrs17) `20260721T0530Z…sensitivity_heatmap_provenance` |
+
+## 🔴 아직 룰로 안 굳은 것
+
+| ID | 내용 | 상태 |
+|---|---|---|
+| **UH-3** | provenance end-state(no-sidecar=RED) 미전환 | 가시화 완료(YELLOW 4). **상류 sidecar 발행 대기** → 발행 후 RED 전환 |
+| **UH-5** | 요구자본(15~21) COPY 검사 부재 | 🚫 **선행조건 미충족 — 지금 구현하면 못 쓴다.** 실측: elective 18사 중 요구자본 item17/19 후=전인 셀이 **78개**이고 한화손해·롯데손해·DB생명·NH농협손해·악사·처브는 **전 분기(12~13셀) 전부** 후=전 = 이들의 선택경과조치는 요구자본에 효과가 없음(TAC형). naive COPY 룰이면 78셀 전부 오탐. **선행 필요: 회사별 경과조치 *종류* 레지스트리(TIR=신규보험위험액→요구자본 영향 / TAC=시가평가 자본감소분→가용자본만)** — 정본 후보는 18사 목록을 준 FSS 2023-03-20 붙임-1(`trend20230320_3.pdf` p6). owner 확인 필요 |
+
+> UH-5는 "룰을 안 만든 것"이 아니라 **"오탐억제 없는 룰은 배선해도 곧 꺼진다"는 원칙을 지킨 것**이다.
+> 선행 레지스트리가 생기면 즉시 구현 가능(설계는 확정: elective 18사 ∩ TIR 적용사 한정).
 
 ## ⚠️ 도메인 경계 — 경과조치는 K-ICS 전용 (owner 2026-07-21)
 

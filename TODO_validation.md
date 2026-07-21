@@ -37,9 +37,21 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
     없음**(전환방법=도입시점 측정방법, 이중컬럼 아님) → 복사할 짝 자체가 없으므로 `TRANSITION_AFTER_*`
     IFRS17 유사룰 금지. 상위 패턴("presence만 검사→세탁")만 도메인 무관(IFRS17은 기존 plausibility/
     impossible-0가 담당). postmortems README·SKILL에 기록.
-  - [🔴] **잔여 P2 3건**: UH-3(provenance end-state 미강제) · UH-4(data-contract selftest 모듈 부재 —
-    1b(iv) 신설로 게이트 로직이 커져 중요도 상승) · UH-5(요구자본 15~21 COPY 검사 부재, elective 18사
-    한정 설계 필수). owner 판단 대기.
+  - [x] **UH-4 해소 (2026-07-21)**: `scripts/_data_contract_selftest.py` 신설 — `Env(inject=)` 합성
+    mutation suite **14/14 PASS**. 기존 spec §5 회귀 + **1b(iv) lift 5종(F1~F5) 회귀 보호**.
+    **이빨 검증**: `_item12_equals_item1`·`_post_transition_parent_census`를 monkeypatch로 죽이면
+    해당 케이스 미검출→FAIL 확인. 이후 신규 룰은 여기 케이스 추가 필수.
+  - [x] **UH-3 부분강화 (2026-07-21)**: sidecar 부재가 `notes`(비집계)로 조용히 통과하던 것을 집계되는
+    **YELLOW `MISSING_PROVENANCE_SIDECAR`**(현 4건: sensitivity_heatmap·forward_capital·tier1/tier2)로
+    승격. **RED 전환은 발행 후** — 지금 RED면 미발행 마스터 전부 red-out으로 push 영구차단.
+    발행 발주: publishing `20260721T0530Z__…provenance_sidecar_emission` ·
+    parser(ifrs17) `20260721T0530Z__…sensitivity_heatmap_provenance`.
+  - [🔴] **UH-5 = 선행조건 미충족으로 미구현 (owner 확인 필요)**: 실측상 elective 18사의 요구자본
+    item17/19 후=전 셀이 **78개**, 그중 한화손해·롯데손해·DB생명·NH농협손해·악사·처브는 **전 분기
+    (12~13셀) 전부** → 이들 경과조치는 요구자본 무영향(TAC형). naive COPY 룰이면 78셀 전량 오탐.
+    **선행 필요: 회사별 경과조치 종류 레지스트리(TIR=요구자본 영향 / TAC=가용자본만)** — 정본 후보는
+    18사 목록을 준 FSS 2023-03-20 붙임-1(`trend20230320_3.pdf` p6)에 종류 구분이 있는지 owner 확인.
+    설계는 확정(elective 18사 ∩ TIR 적용사 한정), 레지스트리 생기면 즉시 구현 가능.
 
 ### V18 — 적용후 요구자본 **부모** census blind spot 정정 (owner `20260715T0801Z`, 2026-07-15)
 07-12 V17 census(`_parent_present_child_incomplete_after`)는 **부모후가 present일 때** 자식후 결측만 봄 →

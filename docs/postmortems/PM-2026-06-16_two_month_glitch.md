@@ -57,8 +57,8 @@
 
 | 잔여 | 왜 위험 | 후속 / 우선순위 |
 |---|---|---|
-| **UH-3** provenance **Phase-2 end-state 미강제**. sidecar 존재 마스터(kics_disclosure·CSM_waterfall·PL_breakdown)만 strict 검증, **없는 마스터는 Phase-1 추론 fallback + note**로 통과 | 소스 신선도 미검증 마스터가 조용히 통과 = **이 사고의 원형이 부분적으로 살아 있음** | 신규 티켓 필요 / **P2** |
-| **UH-4** `--selftest`가 `_data_contract_selftest` 모듈 부재로 `ModuleNotFoundError` | 게이트 자체의 회귀를 못 잡음(게이트를 지키는 게이트 부재) | 신규 티켓 필요 / P2 |
+| **UH-3** provenance Phase-2 end-state 미강제 | 소스 신선도 미검증 마스터가 조용히 통과 = 이 사고의 원형이 부분적으로 생존 | ⚠️ **2026-07-21 부분강화**: notes(비집계) → **YELLOW `MISSING_PROVENANCE_SIDECAR`**(집계, 현 4건)로 승격해 가시화. RED 전환은 **발행 후**(지금 RED면 미발행 마스터 전부 red-out → push 영구차단). 발행 발주: publishing `20260721T0530Z` · parser `20260721T0530Z` |
+| ~~**UH-4** `--selftest` 모듈 부재~~ | — | ✅ **2026-07-21 해소**: `scripts/_data_contract_selftest.py` 신설, mutation suite **14/14 PASS**(이빨 검증 포함 — 룰 죽이면 FAIL 확인) |
 
 ---
 

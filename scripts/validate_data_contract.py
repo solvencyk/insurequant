@@ -456,6 +456,16 @@ def check_as_of(res: GateResult, env: "Env") -> None:
     sidecars = env.provenance_sidecars
 
     def _fallback_note(master):
+        # UH-3 (2026-07-21): 종전에는 notes에만 적어 **조용히 통과**했다 — 두 달 글리치(PM-2026-06-16)의
+        # 원형이 부분적으로 살아 있는 상태. notes는 집계도 안 되고 눈에 안 띈다.
+        # → 집계되는 YELLOW finding으로 승격(비차단). RED 전환은 상류가 sidecar를 발행한 뒤
+        #   (그 전에 RED로 두면 미발행 마스터가 전부 red-out돼 push가 영구히 막힌다).
+        res.add(check="as_of", severity="YELLOW", master=master, company=None, quarter=None,
+                rule="MISSING_PROVENANCE_SIDECAR",
+                message=f"{master}: provenance sidecar 부재 → Phase-1 추론 fallback으로 통과 중 "
+                        f"(소스 신선도 미검증). 상류(parser/downloader)가 "
+                        f"`<master>_provenance.json` 발행 후 no-sidecar=RED로 전환 예정 "
+                        f"— `--print-provenance-contract` 참조")
         res.notes.append(
             f"provenance sidecar absent for {master} → Phase-1 inference fallback (strict "
             f"no-sidecar=RED activates after Phase 2 emission, owner principle 0)")
