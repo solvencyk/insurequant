@@ -165,7 +165,7 @@
         </label>
         <div class="bubble-legend">
           <span style="color:#0d6efd;font-weight:700">● 생명</span>
-          <span style="color:#16a34a;font-weight:700">● 손해</span>
+          <span style="color:#15803d;font-weight:700">● 손해</span>
           <span>크기: 기말 CSM</span>
           <span id="bubble-meta"></span>
         </div>
@@ -453,7 +453,7 @@
           const lightness = 25 + 15 * (1 - intensity); // 40% ~ 25% (어두운 초록)
           return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         } else {
-          // 50% 미만: 빨간색 그라데이션
+          // 50% 미만: 빨간색 그라데이션 (2026-07-22: A11y 파랑안 owner 반려 — finviz 스타일 빨강/초록 정체성 유지, 색맹은 셀 숫자 라벨로 커버. docs/a11y_baseline.md #12)
           const intensity = Math.min(absDeviation / maxDeviation, 1);
           const hue = 0; // 빨간색
           const saturation = 30 + 50 * intensity; // 30% ~ 80%

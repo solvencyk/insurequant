@@ -846,7 +846,7 @@ window.FORWARD_DATA = [{"insurer_code":"KR****","insurer_name":"메리츠화재�
       // 인정한도 초과(분자=KOFIA 발행액, 분모=공시 한도, 독립 소스라 >100% 발생 가능)는 "100%+"로 표기.
       // (정확값 대신 "초과" 신호만 — 원호는 도넛 360° 한계로 100% 캡 유지.)
       const centerText = pct == null ? '데이터 없음' : (pct > 100 ? '100%+' : pct.toFixed(0) + '%');
-      const centerColor = pct == null ? '#adb5bd' : (pct >= 100 ? '#dc3545' : '#212529');
+      const centerColor = pct == null ? '#6a737a' : (pct >= 100 ? '#dc3545' : '#212529');
       const centerPlugin = {
         id: 'centerText_' + canvasId,
         afterDraw(chart) {
