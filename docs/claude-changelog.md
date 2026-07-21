@@ -11,7 +11,7 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 ## 2026-07-21 — 리팩토링 1차: 죽은 kics_data.json 경로 제거 + 실행 불가 스크립트 복구
 
-**삭제 (임포터 0 확인 후, `0543414`)** — `src/solvency/validation/rules.py`(967줄, xlsx 대상 a~g 룰; `kics_json_rules.py`가 대체) · `src/solvency/legacy/` 전체(~2.6k줄: camelot_parser·merge_xlsx·csv_to_json·회사별 다운로더 4종; 단일 다운로더 엔진 + docling_parser가 대체) · `transform/md_to_json.py` + `validation/schema.py` + `schemas/kics_data.schema.json`. 합계 **-4,150줄**.
+**삭제 (임포터 0 확인 후, `0543414`)** — `src/solvency/validation/rules.py`(967줄, xlsx 대상 a~g 룰; `kics_json_rules.py`가 대체) · `src/solvency/legacy/` 전체(~2.6k줄: camelot_parser·merge_xlsx·csv_to_json·회사별 다운로더 4종; 단일 다운로더 엔진 + docling_parser가 대체) · `transform/md_to_json.py` + `validation/schema.py` + `schemas/kics_data.schema.json`. `src/` 12,547 → **7,500줄 (-5,047)**, `run_harness.py` 517 → 296줄.
 
 **`run_harness.py` 함정 제거** — `--stage perf|data|all` 삭제. 기본값이 `all`이라 인자 없이 실행하면 2026-05-30 폐기된 `kics_data.json`을 루트에 다시 만들어냈다. 이제 `--stage` 필수, 선택지 `quality|pdf|parse`. `--stage data`의 부수효과로만 돌던 MD 품질게이트+리뷰큐는 `--stage quality`로 독립.
 
