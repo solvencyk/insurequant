@@ -80,18 +80,27 @@ def _has_unit(body: str) -> bool:
 
 
 def _numeric_normalisation_rate(body: str) -> float:
-    """Estimate how many table cells were parseable as numbers.
+    """Estimate how many table *value* cells were parseable as numbers.
 
     Docling outputs cells separated by ``|`` in markdown tables. We sample
     cells, ignore blank/dash placeholders, and compute the fraction that
     matches a numeric pattern.
+
+    The leading cell of each row is the Korean item label ("가. 지급여력금액"),
+    never a number, so counting it measured table shape rather than parse
+    quality and capped the rate near 0.5-0.6 even on a perfectly parsed file.
+    Since ``score()`` multiplies the score by this rate and then requires
+    >= 0.7, that made the gate unsatisfiable: 485 of 488 md_inbox files were
+    routed to review, including files with every required row present.
+    Skipping the label column moves the median rate 0.595 -> 0.699 and the
+    accept count 3 -> 182 (measured 2026-07-21 over md_inbox, 488 files).
     """
     cells: list[str] = []
     for line in body.splitlines():
         stripped = line.strip()
         if not stripped.startswith("|"):
             continue
-        cells.extend(c.strip() for c in stripped.strip("|").split("|"))
+        cells.extend(c.strip() for c in stripped.strip("|").split("|")[1:])
     if not cells:
         return 0.0
     numeric = 0
