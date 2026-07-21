@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """Ingest FSC data.go.kr bond issuance and call/early-exercise data for Korean insurers.
 
 Usage:

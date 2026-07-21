@@ -1,4 +1,4 @@
-﻿"""Recalculate item 28 basic-capital ratio post-transition values."""
+"""Recalculate item 28 basic-capital ratio post-transition values."""
 from __future__ import annotations
 import argparse, io, json, shutil, sys
 from collections import defaultdict

@@ -1,13 +1,15 @@
 # Insurequant TODO
 
-> Last updated: 2026-06-16 · Stage: cross-stage
+> Last updated: 2026-07-21 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage; parser 2-lane since 2026-06-13) · Stage TODOs: TODO_<stage>.md
 
 Pipeline organized as **downloader / parser / validation / publishing / designer** — each stage has its own prompt (`docs/agents/claude-agent-<stage>.md`), TODO (`TODO_<stage>.md`), and changelog (`docs/changelog_<stage>.md`). See `CLAUDE.md` for the full index. This root file carries cross-stage items + project-wide policy only.
 
 ## Status
 
-Cross-stage focus (2026-06-12): K-ICS gate RED=227 all documented exceptions (19_market 223 + KR0049 4) pending validation registration; cross-stage CSM-waterfall 신한EZ 제외 + K-ICS 금리민감도 feature have only publishing/designer tails left; owner backlog digest dispatched to all 5 stage inboxes. Mid-long-term: duration-gap (MLG-1) and K-ICS 시장위험 분해 (MLG-2) blocked on owner decisions.
+Cross-stage focus (2026-07-21): K-ICS gate **RED=12**, all three offenders already documented below as image/scan-only source (KR0087 동양 2023.2Q ×7 · KR0097 하나생명 2024.2Q ×4 · KR0079 미래에셋 2023.2Q 8_life ×1) → gate contract satisfied. Open cross-stage tails: 적용후 하위 census 결측 4 + 적용후 요구자본 continuity break 34셀/5(회사,분기) (validation), tier2 소진율 분자 정의 (아래 🟠), 항목4/12/13 값_적용후 18사 미러링 오염 후속 감사. Mid-long-term: duration-gap (MLG-1), K-ICS 시장위험 분해 (MLG-2) blocked on owner decisions.
+
+**J-ESR (일본 ESR) — 2026-09/10까지 보류 (owner 확정).** 개별사 ESR은 EDINET 有価証券報告書 제출기한 2026-10-31 전에는 미공개라 지금 수집·화면 모두 불가. MVP는 2026-07-21 revert(`167cba1`). 재개 시점에 downloader/parser inbox로 신규 발주 — 과거 스레드는 `inbox/_resolved/*jesr*` 4건 참조.
 
 **Stage files:**
 
@@ -130,23 +132,8 @@ SKIP 등록). census MISSING 6(동양/하나/카카오 image cells, documented).
 
 ---
 
-## 🔴 K-ICS gate documented exceptions (2026-06-12, parser) — SUPERSEDED, 이력용
-
-Gate run 2026-06-12: RED=227 = **19_market 223 + KR0049 2026.1Q 4** (rules 2/4/5/6). All documented:
-
-- **rule 19_market × 223 (28 companies)** — item19(시장위험액) disclosed but 36-40 breakdown absent
-  **in the source PDFs themselves** (structural non-disclosure). Parser exhausted recovery:
-  `fill_market_subs_from_pdf.py` (fitz + M-matrix reconcile<2%) full re-run = no-pdf 0, new rows 0.
-  Full (company,quarter) list: `artifacts/kics_validation/market_breakdown_red_census_20260612.md`.
-  → **validation**: register in `MARKET_BREAKDOWN_EXEMPT` (kics_json_rules.py) after cross-check —
-  inbox `20260612T1100Z__parser__MULTI_ALL__2026q1_loaded_and_19market_exempt_request.md`.
-  3 reconcile-fail cells kept OUT of exempt (table exists, gate rejected): KR0002 2024.2Q,
-  KR0009 2023.3Q, KR0051 2023.1Q.
-- **KR0049 악사손해 2026.1Q rules 2/4/5/6 (4)** — K-ICS detail page (p16) is a full-page image in
-  the PDF; only core 5 items recoverable from text (총괄 + 공통적용 tables). Needs owner gold or OCR.
-- **Scan-only PDFs (coverage census MISSING, not rule REDs)**: KR0079 미래에셋 (all quarters),
-  KR0080 AIA (2024.4Q-2026.1Q; 2023.1Q-2024.3Q loaded), KR0087 동양 (2026.1Q). Both own-site and
-  협회 copies are the same scans. → owner xlsx gold path (KB KR0010 precedent).
+> 2026-06-12 스냅샷(RED=227 = 19_market 223 + KR0049 4)은 위 CURRENT 블록이 대체함. 이력은
+> `docs/changelog_validation.md` / `docs/changelog_parser_kics.md` 참조. (2026-07-21 TODO에서 제거 — 항상 로드되는 파일에 이력 중복 보관 안 함.)
 
 ---
 
