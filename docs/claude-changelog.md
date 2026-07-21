@@ -9,6 +9,19 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 ---
 
+## 2026-07-21 — 리팩토링 2차: PL 빌더 분할 · K-ICS.html 인라인 JSON 외부화 · 품질게이트 복구
+
+**A. `build_pl_breakdown.py` 4,885줄 → 패키지 분할 (`8ef3136`+`7b21bfb`)** — 먼저 **골든 게이트**(`tests/test_pl_breakdown_golden.py`, `RUN_PL_GOLDEN=1`)를 깔아 빌더가 결정론적·오프라인임을 확인(연속 2회 실행이 커밋된 마스터와 바이트 동일). 그다음 AST로 내부 참조 그래프를 떠서 이음매를 **측정**하고 그 선을 따라 잘랐다: tier1↔tier2 간선 0, companies는 바깥에서 11개 이름만 참조, companies를 참조하는 상류 0(단방향). 결과 `pl_breakdown/{common 34, tier1 355, tier2 488, companies 3493}` + 엔트리 567줄. **회사별 핸들러 구조는 우발적 복잡도가 아니라 회사마다 다른 DART 주석 레이아웃**이므로 그대로 보존했다. 산출물 바이트 동일(2,940행/117 company-quarter).
+
+**B. K-ICS.html 인라인 JSON 147KB 외부화 (`a629e34`)** — `window.TIER1_DATA/TIER2_DATA/FORWARD_DATA`가 페이지의 **70%**(147,199/208,957자)를 차지했고 main도 동일. 근거였던 "file:// fetch 회피"는 이미 무효 — 페이지가 `kics_disclosure.json`·`kics_rate_sensitivity.json`을 fetch하므로 원래부터 file://로는 안 돌아갔다. 게다가 **FORWARD_DATA만 생성기가 있고 TIER1/TIER2는 손으로 붙인 값**이라 빌더 산출물과 조용히 어긋날 수 있었다. → 루트 JSON 3개로 분리(39/39/38행), 민감도 패널과 동일한 fetch-후-재렌더 패턴. `K-ICS.html 208,957 → 62,081자(-70.3%)`. `forward_capital_simulation.py`는 HTML 라인 치환 대신 JSON을 쓰므로 **`--no-html` 플래그 소멸**(publishing/designer 하드분리가 걸림돌이던 이유가 사라짐).
+> ⚠️ **배포**: 3개 JSON은 신규 keep-list 항목. K-ICS.html만 올리면 자본도넛·forward 패널이 **에러 없이 빈칸**이 된다. `tests/test_deploy_assets.py`가 4개 페이지의 fetch/link 로컬 참조를 전부 뽑아 존재를 강제한다.
+
+**C. MD 품질게이트가 아무것도 통과 못 시키던 버그 (`69e9648`)** — `score()`가 점수에 `numeric_normalisation_rate`를 곱한 뒤 0.7을 요구하는데, 그 rate가 **각 행 첫 셀(한글 항목명, 숫자일 수 없음)** 까지 세고 있었다. 라벨 있는 표는 rate가 0.6 근처가 상한이라 **완벽한 파일도 통과 불가** → 488개 중 485개 review. 라벨 컬럼 제외로 중앙값 0.595→0.699, review 485→306.
+
+**D. 안 한 것 — `_num` 계열 30개 중복 (측정 후 기각)** — 30개 사이트에 **24개 서로 다른 구현**이었다. 복붙 부패가 아니라 두 계열(원시텍스트 파싱 vs 이미 정규화된 마스터 셀 읽기)이고, `"-"`를 `None`으로 볼지 `0.0`으로 볼지가 갈린다 — 후자를 통합하면 owner가 기록한 "0값 맹점"을 정면으로 건드린다(`dash_means_zero`는 호출부마다 명시적으로 끄고 있어 의도된 설계였음). 통합 가능한 군(3변형/약 10사이트)은 마스터 16.8만 값 + 엣지케이스로 **동치 증명(불일치 0)** 까지 했으나, 플랫한 scripts/ 구조에서는 공유 모듈 import 배관이 5줄 함수보다 비싸서 하지 않았다.
+
+---
+
 ## 2026-07-21 — 리팩토링 1차: 죽은 kics_data.json 경로 제거 + 실행 불가 스크립트 복구
 
 **삭제 (임포터 0 확인 후, `0543414`)** — `src/solvency/validation/rules.py`(967줄, xlsx 대상 a~g 룰; `kics_json_rules.py`가 대체) · `src/solvency/legacy/` 전체(~2.6k줄: camelot_parser·merge_xlsx·csv_to_json·회사별 다운로더 4종; 단일 다운로더 엔진 + docling_parser가 대체) · `transform/md_to_json.py` + `validation/schema.py` + `schemas/kics_data.schema.json`. `src/` 12,547 → **7,500줄 (-5,047)**, `run_harness.py` 517 → 296줄.
