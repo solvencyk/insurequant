@@ -49,12 +49,13 @@ xlsx 손상은 `.bak` 복원 → Excel 재오픈 → `build_master_xlsx.py` 최�
 저장소의 공유 워킹트리·slim keep-list·K-ICS 별도게이트 함정에 강결합돼 범용 외부 스킬로는 못 담음.
 **이번 발주로 실제 배포는 실행 안 함**(지시대로 문서화만).
 
-### 보류 (owner 결정 대기)
+### 2026.1Q 적용후 요구자본 fill — 배포 확인 결과 이미 라이브 (중복 push 없음)
 
 `inbox/publishing/20260716T0330Z`(validation) — 2026.1Q 5개사(한화생명·교보·하나·롯데손해·농협)
-적용후 요구자본 fill을 main에 반영할지. 게이트는 이미 clear(RED=0); 배포 여부만 owner 판단 남음.
-이번 세션에서 답변하지 않고 owner에게 직접 질문으로 전달(§ "publishing never decides live-deploy scope
-unilaterally").
+적용후 요구자본 fill을 main에 반영할지 owner에게 질의 → **"지금 배포 진행"** 승인. 착수 전
+`git fetch origin main` + `kics_disclosure.json` 정규화 전체 대조(18,878 레코드) → **diff 0** —
+다른 세션이 이 사이(`25d8e98` 2026-07-16 · `1c9ebdc`/`8e8c01d` 2026-07-21) 이미 라이브에 올려둠.
+**push 실행 안 함**(중복 배포 스킵), 스레드 resolved.
 
 ### 미착수 (다음 세션 트리아지 필요)
 
