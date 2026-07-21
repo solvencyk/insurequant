@@ -7,6 +7,38 @@ Validation-only history. Cross-stage changes also keep a 1-line cross-reference 
 
 ---
 
+## 2026-07-21 — 사고 포스트모템 관행 도입 + 기존 4건 소급 (owner `20260721T0233Z`)
+
+owner: "포스트모템이 게이트 룰로 종결되지 않으면 같은 부류가 다시 통과한다." 5칸 미충족 시 close 불가인
+blameless 포스트모템 관행 신설.
+
+- **구현형태 = 로컬 스킬 채택** (`.claude/skills/incident-postmortem/SKILL.md`). 외부 서드파티 스킬
+  미채택 사유: 종결 5칸이 이 저장소의 **게이트 파일명·registry 변수명·display-scope·두 게이트 분리**를
+  직접 지목해야 강제력이 생기는데 범용 포스트모템 스킬로는 불가. 기존 로컬스킬(`kics-parser`·
+  `ifrs17-parser`) 패턴 존재 + 금융데이터.
+- **정본**: `docs/postmortems/README.md`(관행·종결조건·색인·UH표) + `_TEMPLATE.md`.
+  스테이지 프롬프트 `docs/agents/claude-agent-validation.md` **§5.1 신설**에서 링크.
+- **소급 4건**: PM-2026-06-16 두 달 글리치(**closed**, push 게이트 배선) · PM-2026-07-07 적용후 전면
+  미검증(**open**) · PM-2026-07-08 V17 가짜복사(**open**) · PM-2026-07-15 부모 census(**closed**, 양쪽 배선).
+
+### 🔴 소급의 실질 산출물 — 미배선(UH) 4건
+
+- **UH-1 (P1, 최대 발견)**: 적용후 검증 7종(`_transition_ratio_after_capture`·`_transition_mmult_after`·
+  `_transition_identities_after`·`_parent_present_child_incomplete_after`·`_diversification_negative`·
+  `_item12_equals_item1`·`_ratio_series_spikes`)이 **push 게이트에 미배선**. `validate_data_contract.py`의
+  `check_census`는 `kics_json_rules.run_validation`의 rule-based 결과만 lift하고, **`prepush_check.py`는
+  `validate_kics_disclosure.py`를 import·실행하지 않음** → 07-07·V17 사고 대응 룰 전부가 push를 못 막는다.
+  사고 4건 중 3건이 여기 걸림.
+- **UH-2 (P1)**: `scripts/validate_data_contract.py`가 **git untracked**(머신-로컬) → push 게이트 배선
+  (V18 부모 census 포함)이 git에 없음.
+- **UH-3 (P2)**: provenance Phase-2 end-state 미강제 — sidecar 존재 3종(kics_disclosure·CSM_waterfall·
+  PL_breakdown)만 strict, 없는 마스터는 Phase-1 추론 fallback으로 통과.
+- **UH-4 (P2)**: `validate_data_contract.py --selftest`가 `_data_contract_selftest` 부재로 실행 불가.
+
+UH-1/UH-2 배선 발주는 **owner 판단 대기**(발주서 "스코프 밖" 지시대로 census 잔여건과 미혼합).
+
+---
+
 ## 2026-07-16 — 부모 census parser fill 적대검증 (worklist `20260715T0835Z` resolved)
 
 parser가 continuity 워크리스트 답변(fill: 삼성생명 2025.1Q·동양생명 4분기·한화생명 2025.2Q/3Q·흥국생명

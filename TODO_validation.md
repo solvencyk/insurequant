@@ -14,6 +14,27 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 
 ## 🔴 Open — P1
 
+### V19 — 사고 포스트모템 관행 도입 + 기존 4건 소급 (owner `20260721T0233Z`, 2026-07-21)
+"포스트모템이 게이트 룰로 종결되지 않으면 같은 부류가 재발한다" → 5칸(무엇이 통과/어떤 룰이면 잡았나/
+지금 배선됐나/exception 근거·등재위치/미배선 잔여+후속티켓) 미충족 시 close 불가인 관행 신설.
+- [x] **구현형태 = 로컬 스킬** (`.claude/skills/incident-postmortem/`). 외부 스킬 미채택 — 5칸이 이
+  저장소의 게이트 파일·registry 변수명·display-scope를 직접 지목해야 강제력이 생기는데 범용 스킬은 불가.
+  기존 로컬스킬(`kics-parser`·`ifrs17-parser`) 패턴 + 금융데이터.
+- [x] 정본 `docs/postmortems/README.md` + `_TEMPLATE.md`, 스테이지 프롬프트 §5.1에서 링크.
+- [x] **소급 4건 기록**: PM-2026-06-16(두 달 글리치, closed) · PM-2026-07-07(적용후 사각, **open**) ·
+  PM-2026-07-08(V17 가짜복사, **open**) · PM-2026-07-15(부모 census, closed).
+- [🔴] **소급의 실질 산출물 = 미배선(UH) 4건 — 다음 게이트 후보**:
+  - **UH-1 (P1)**: 적용후 검증 7종(`_transition_ratio_after_capture`/`_transition_mmult_after`/
+    `_transition_identities_after`/`_parent_present_child_incomplete_after`/`_diversification_negative`/
+    `_item12_equals_item1`/`_ratio_series_spikes`)이 **push 게이트 미배선**. `prepush_check.py`가
+    `validate_kics_disclosure.py`를 **호출조차 안 함** → 07-07·V17 대응 룰이 push를 못 막음.
+    사고 4건 중 3건이 여기 걸림 = **이번 소급의 최대 발견**.
+  - **UH-2 (P1)**: `scripts/validate_data_contract.py`가 **git untracked**(머신-로컬) → push 게이트
+    배선(V18 부모 census 포함)이 git에 없음. 재생성·타 환경에서 사각 부활.
+  - **UH-3 (P2)**: provenance Phase-2 end-state 미강제(sidecar 없는 마스터는 추론 fallback 통과).
+  - **UH-4 (P2)**: `validate_data_contract.py --selftest` 모듈(`_data_contract_selftest`) 부재.
+  - → UH-1/UH-2 배선 발주 여부는 **owner 판단 대기**(스코프 밖 지시 준수, census 잔여건과 미혼합).
+
 ### V18 — 적용후 요구자본 **부모** census blind spot 정정 (owner `20260715T0801Z`, 2026-07-15)
 07-12 V17 census(`_parent_present_child_incomplete_after`)는 **부모후가 present일 때** 자식후 결측만 봄 →
 **부모(15~21) 자체가 통째 결측이면 census/identity/mmult 전부 skip = false-green.** 2026.1Q 5적용사

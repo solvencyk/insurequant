@@ -324,6 +324,24 @@ LOOP (max 5 iterations):
 
 YELLOW(QoQ warn 포함)는 어떤 다운스트림도 차단하지 않는다. 보고서에 기록되고, 운영자가 사후 검토.
 
+### 5.1 사고 포스트모템 — 게이트 룰로 종결 (필수, 2026-07-21 owner 발주)
+
+게이트가 놓친 사고(false-green·라이브 오표시·검증 사각)를 발견하면 **반드시 포스트모템으로 종결**한다.
+정본: [`docs/postmortems/README.md`](../postmortems/README.md) · 템플릿:
+[`_TEMPLATE.md`](../postmortems/_TEMPLATE.md) · 운영 스킬: `.claude/skills/incident-postmortem/`.
+
+**종결 조건 5칸** (하나라도 비면 close 불가): ① 무엇이 통과했나(어떤 게이트가 왜 못 잡았나)
+② 어떤 룰이었으면 잡았나(구체 룰 정의 — 입력·판정식·임계값·severity·오탐억제) ③ 그 룰이 지금
+배선됐나(함수+파일+scope+exit-code) ④ documented exception 근거·**등재 registry 위치**
+⑤ 미배선 잔여 + 후속 티켓.
+
+> ⚠️ **③에서 두 게이트를 반드시 구분.** `prepush_check.py`는 `validate_kics_disclosure.py`를
+> **호출하지 않는다** → K-ICS 게이트에만 배선한 룰은 **push를 못 막는다.** push 차단이 필요하면
+> `validate_data_contract.py`의 `check_census`로 lift할 것.
+
+기록만 하고 룰로 안 굳으면 같은 부류가 재발한다는 게 이 저장소의 실측 이력이다(사고 4건 소급 결과
+3건의 대응 룰이 push 차단 경로 밖 = `README.md`의 UH-1).
+
 ---
 
 ## 6. 호출 예시 (메인 세션 → validation 서브에이전트)
