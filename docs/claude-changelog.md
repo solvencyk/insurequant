@@ -9,6 +9,26 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 ---
 
+## 2026-07-22 — 리팩토링 3차 (전수조사): 게이트 오조준 교정 · scripts 미참조 60개 아카이브
+
+**A. 데이터계약 게이트가 배포본이 아닌 죽은 사본을 검사하고 있었음 (`2c6587d`)** — `validate_data_contract.py`의 `MASTER_FILES`가 `templates/tier{1,2}_utilization_latest.json`을 가리켰는데 **이 파일들을 쓰는 스크립트가 하나도 없고** 2025.4Q(38사)에 얼어붙어 있었다(사이트는 2026.1Q·39사). 값 검사는 `_load_tier`가 `output/` 빌더 산출물을 읽어 우연히 무사했으나 **mtime 감시 + provenance 사이드카 조회**가 그 죽은 사본에 걸려 있었고, 사이드카는 **2026.1Q를 기술하면서 2025.4Q 파일 옆에** 놓여 있었다. → 배포 아티팩트(`kics_{tier1,tier2}_utilization.json`·`kics_forward_capital.json`)로 재조준 + 사이드카 3개 이전. **"게이트가 검사하는 파일 = 사용자가 보는 파일"이 구조적으로 성립.** 재조준 후 RED=0 YELLOW=200 불변, selftest 14/14.
+
+**B. `templates/kics_disclosure.json` 삭제 (5.9MB)** — 루트 마스터와 바이트 동일, **읽는 코드 0**. 그런데 validation 세션들이 라운드마다 "동기화 완료"를 반복하고 있었다(무의미한 수동작업 + drift 위험).
+
+**C. `IFRS17.html` 죽은 폴백 2개 제거** — `data/dart/viz/{CSM_waterfall,PL_breakdown}.json`. 저장소엔 소문자 `csm_waterfall.json`(내용이 다른 별개 파일)만 있고 배포서버는 case-sensitive라 **라이브 404**. 주 경로가 살아 있어 발화한 적 없는 잠복 결함(나머지 PATHS 전 항목 200 확인). **미배포** — 사용자 비가시라 다음 designer 배포에 동반.
+
+**D. `scripts/` 미참조 60개 아카이브 (`58bc489`)** — `archive/2026-07_unreferenced_scripts/`로 이동(삭제 아님). **217 → 157 .py (-7,783줄).** 판정은 `.git`/`__pycache__`/`node_modules`/`archive` 제외 **전 파일 4,204개** 워크(= `.claude/skills/` SOT·`data/` provenance 포함). 1차 census는 `pathlib.glob('**/*.md')`를 써서 **dot-디렉터리를 조용히 건너뛰어 `.claude/skills/`를 아예 안 읽었는데**, 전체 워크로 다시 돌려도 같은 60개라 그 구멍의 산물이 아님을 확인. 동적 호출은 별도 확인(`scripts/` 내 모든 `subprocess.run`이 리터럴 파일명 전달 → 같은 스캔에 포착).
+
+**E. "중복 9.77MB" — 조사 결과 3/4이 오탐이었음 (삭제 안 함).** 해시 census가 "바이트 동일"과 "불필요한 사본"을 혼동했다. 실제로는:
+- `_mvp.json` (11군·1.08MB): 추출기가 **의도적으로 둘 다 쓴다**(`mvp_tables ⊆ all_tables`, 필터가 전부 통과시킨 경우만 동일). 187개 중 168개는 내용이 다르고 `viz_build_ifrs17_panels.py` 등 라이브 코드가 읽음 → **유지**
+- `extracted/` ↔ `extracted_history/` (33군·2.49MB): FY2024 연간 코호트 파이프라인과 13분기 히스토리 파이프라인이 **2024.4Q에서 정당하게 겹침** → 유지
+- `output/<타임스탬프>/` (2군·0.19MB): 실행 이력 아카이브 → 유지
+- `data/dart/_fs_api_cache/` (5군·0.06MB): DART API 응답 캐시 → 유지
+
+  즉 **진짜 죽은 중복은 위 B 하나(5.9MB = 원래 총량의 61%)뿐이었고 그건 제거됨.** 남은 3.82MB는 전부 load-bearing.
+
+---
+
 ## 2026-07-21 — 리팩토링 2차: PL 빌더 분할 · K-ICS.html 인라인 JSON 외부화 · 품질게이트 복구
 
 **A. `build_pl_breakdown.py` 4,885줄 → 패키지 분할 (`8ef3136`+`7b21bfb`)** — 먼저 **골든 게이트**(`tests/test_pl_breakdown_golden.py`, `RUN_PL_GOLDEN=1`)를 깔아 빌더가 결정론적·오프라인임을 확인(연속 2회 실행이 커밋된 마스터와 바이트 동일). 그다음 AST로 내부 참조 그래프를 떠서 이음매를 **측정**하고 그 선을 따라 잘랐다: tier1↔tier2 간선 0, companies는 바깥에서 11개 이름만 참조, companies를 참조하는 상류 0(단방향). 결과 `pl_breakdown/{common 34, tier1 355, tier2 488, companies 3493}` + 엔트리 567줄. **회사별 핸들러 구조는 우발적 복잡도가 아니라 회사마다 다른 DART 주석 레이아웃**이므로 그대로 보존했다. 산출물 바이트 동일(2,940행/117 company-quarter).
