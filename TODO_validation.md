@@ -42,10 +42,11 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
     **이빨 검증**: `_item12_equals_item1`·`_post_transition_parent_census`를 monkeypatch로 죽이면
     해당 케이스 미검출→FAIL 확인. 이후 신규 룰은 여기 케이스 추가 필수.
   - [x] **UH-3 부분강화 (2026-07-21)**: sidecar 부재가 `notes`(비집계)로 조용히 통과하던 것을 집계되는
-    **YELLOW `MISSING_PROVENANCE_SIDECAR`**(현 4건: sensitivity_heatmap·forward_capital·tier1/tier2)로
-    승격. **RED 전환은 발행 후** — 지금 RED면 미발행 마스터 전부 red-out으로 push 영구차단.
-    발행 발주: publishing `20260721T0530Z__…provenance_sidecar_emission` ·
-    parser(ifrs17) `20260721T0530Z__…sensitivity_heatmap_provenance`.
+    **YELLOW `MISSING_PROVENANCE_SIDECAR`**로 승격. **RED 전환은 발행 후** — 지금 RED면 미발행 마스터
+    전부 red-out으로 push 영구차단. **진행: sidecar YELLOW 4→1** — publishing(`faa34cd`)이
+    forward_capital·tier1·tier2 발행 → 3종 Phase-2 strict 전환. **sensitivity_heatmap만 잔여**
+    (parser(ifrs17) `20260721T0530Z__…sensitivity_heatmap_provenance` 발주 대기). 4종 전부 발행 후
+    no-sidecar=RED 보편룰 활성화.
   - [x] **UH-5 종결 (owner 승인 2026-07-21, premise-refined)**: 선행조건이던 FSS 2023-03-20 붙임-1
     (`trend20230320_3.pdf` p6, 회사별 경과조치 종류)을 좌표추출 전수 복원(총계 검증 4/19/12/8 일치)
     → `_TRANSITION_KIND` registry(`scripts/validate_kics_disclosure.py`) 등재. **전제 falsify**:

@@ -67,7 +67,7 @@
 
 | ID | 내용 | 상태 |
 |---|---|---|
-| **UH-3** | provenance end-state(no-sidecar=RED) 미전환 | 가시화 완료(YELLOW 4). **상류 sidecar 발행 대기** → 발행 후 RED 전환 |
+| **UH-3** | provenance end-state(no-sidecar=RED) 미전환 | 진행 중 — sidecar YELLOW **4→1**. publishing(`faa34cd`)이 forward_capital·tier1·tier2 sidecar 발행 → 3종 Phase-2 strict 전환. **sensitivity_heatmap만 잔여**(parser(ifrs17) `20260721T0530Z` 발주 대기). 4종 전부 발행 후 no-sidecar=RED 보편룰 활성화 |
 
 ## ✅ 2026-07-21 (3차) — UH-5 종결 (owner 승인, premise-refined)
 
