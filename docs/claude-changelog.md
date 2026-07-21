@@ -9,6 +9,37 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 ---
 
+## 2026-07-22 — 리팩토링 4차: 체계적 감사 (10축 정적 분석)
+
+> **왜 4차까지 왔나.** 1~3차는 "그때 떠오른 방법을 그때 떠오른 영역에" 적용했다(1차=파일단위 dead code, 2차=HTML, 3차=해시/미참조). **"어떤 종류의 썩음이 × 어디에 있을 수 있나"를 한 번도 열거하지 않아** 매 라운드 새 게 나왔다. 이번엔 축을 먼저 정의하고 전부 측정했다.
+
+**측정한 10축과 결과** — 깨끗한 축도 기록한다(다음 라운드에 다시 뒤지지 않도록):
+
+| 축 | 결과 |
+|---|---|
+| dead top-level def | **31건** → 11건 제거(179줄), 나머지는 news/·J-ESR(보류) |
+| unused import | **33건**(`__future__` 제외) → 전부 제거, 재수출 가드 통과 0건 |
+| dead argparse flag | **0건** ✅ |
+| silent except | 42건 중 **3건이 실질 위험** → 게이트 수정 |
+| TODO/FIXME 마커 | 3건, 전부 정상 참조 ✅ |
+| requirements 정합 | **6건 불일치** → 수정 |
+| dangling 문서 링크 | **6건** → 수정 (2건은 수식 표기 오탐) |
+| dead CSS | **0건** ✅ |
+| 중복 상수맵 | 7건, 전부 이름 우연 일치 ✅ |
+| assert 없는 테스트 | 3건, Playwright `check()` 관용 ✅ |
+
+**탐지기가 틀렸던 2건(기록 가치 있음)** — `--dry-run`이 선언만 되고 안 읽힌다고 나왔으나, 네임스페이스 변수가 `args`가 아니라 `a`였고 Selenium `options.add_argument`를 argparse로 오인한 것. 파서/네임스페이스 변수를 AST로 해석하니 **0건**. `--port`도 `ap.parse_args().port` 인라인이라 오탐. **측정 결과를 그대로 믿고 보고했으면 "데이터 안전 결함"을 허위 보고할 뻔했다.**
+
+**A. requirements.txt 재현성 결함** — `numpy`가 미선언인데 `validate_kics_disclosure.py`·`kics_json_rules.py`가 import한다 → **새 환경에서 필수 K-ICS 게이트가 안 돈다.** `pypdf`(PDF 검증 게이트)·`pymupdf`(시장위험 회수 fallback)도 미선언. 반대로 `camelot-py`·`jsonschema`는 7/21 삭제 후 잔존. 전부 정리 + `playwright`(브라우저 별도 설치 주석).
+
+**B. 게이트: 깨진 파일 = 없는 파일 (`105b600`)** — `validate_data_contract`의 optional 로더가 모든 예외를 삼키고 None을 반환해서, **잘린/깨진 마스터가 "애초에 발행 안 된 아티팩트"와 구분되지 않았다.** as-of·provenance 검사가 조용히 추론 fallback으로 내려가고 GREEN 유지. → `ARTIFACT_UNREADABLE` RED 신설, 순서상 **최우선**(입력이 깨졌으면 이후 검사가 무의미). 검증: `sensitivity_heatmap.json`을 일부러 잘라 실행 → RED=2·exit 2(이전엔 통과), 복구 확인.
+
+**C. BOM 전수 스윕** — 7/21 BOM 수정을 `scripts/`로만 했더니 `src/bonds/{config,fsc_client,universe}.py`가 남아 있었다. 실행은 되지만(파이썬이 BOM을 무시) `ast.parse`가 거부 → **이번 감사의 모든 정적 체크에서 이 3개가 투명인간이었다.** 저장소 전체 스윕 + `tests/test_deploy_assets.py::test_every_python_file_parses`로 BOM·UTF-16 재발 차단.
+
+**D. 아카이브의 파급** — 3차에서 스크립트 60개를 아카이브한 결과 `src/ifrs17/kics_sensitivity_extractor.py`(497줄)가 고아가 됐다(유일한 러너가 아카이브로 감). 짝을 맞춰 같이 이동. `liability_extractor.py`(145줄)는 아카이브 포함해도 임포터 0 — 처음부터 러너가 없던 모듈. **교훈: 스크립트를 아카이브하면 src 모듈 고아 체크를 다시 돌려야 한다.**
+
+---
+
 ## 2026-07-22 — 리팩토링 3차 (전수조사): 게이트 오조준 교정 · scripts 미참조 60개 아카이브
 
 **A. 데이터계약 게이트가 배포본이 아닌 죽은 사본을 검사하고 있었음 (`2c6587d`)** — `validate_data_contract.py`의 `MASTER_FILES`가 `templates/tier{1,2}_utilization_latest.json`을 가리켰는데 **이 파일들을 쓰는 스크립트가 하나도 없고** 2025.4Q(38사)에 얼어붙어 있었다(사이트는 2026.1Q·39사). 값 검사는 `_load_tier`가 `output/` 빌더 산출물을 읽어 우연히 무사했으나 **mtime 감시 + provenance 사이드카 조회**가 그 죽은 사본에 걸려 있었고, 사이드카는 **2026.1Q를 기술하면서 2025.4Q 파일 옆에** 놓여 있었다. → 배포 아티팩트(`kics_{tier1,tier2}_utilization.json`·`kics_forward_capital.json`)로 재조준 + 사이드카 3개 이전. **"게이트가 검사하는 파일 = 사용자가 보는 파일"이 구조적으로 성립.** 재조준 후 RED=0 YELLOW=200 불변, selftest 14/14.
