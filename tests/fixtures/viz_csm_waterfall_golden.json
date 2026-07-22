@@ -1,0 +1,11 @@
+{
+  "sha256": "47e6e80f187eb0ce83cee1e8e08c4fd8c28e2537104aabb2fe61374740decb57",
+  "companies": 47,
+  "status_counts": {
+    "ok": 36,
+    "no_csm_columns": 6,
+    "partial": 3,
+    "no_stage_match": 2
+  },
+  "_what": "Refactor safety net for scripts/viz_build_csm_waterfall.py. Captured before the 1,344-line builder was touched. Pins sha256 + company/status counts for data/dart/viz/csm_waterfall.json."
+}

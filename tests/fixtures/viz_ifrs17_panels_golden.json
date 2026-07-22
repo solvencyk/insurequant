@@ -1,0 +1,36 @@
+{
+  "files": {
+    "csm_amort_schedule.json": {
+      "sha256": "874a4a79d63e2a2462db5cf162bedd976f9cfd9f82e0393439c45acb55970f96",
+      "companies": 30,
+      "status_counts": {
+        "ok": 28,
+        "empty": 1,
+        "partial": 1
+      }
+    },
+    "insurance_pl_breakdown.json": {
+      "sha256": "229cc649cf9c815a05c0214ce064489543b1da8c2114a88a94f8a0eb67074928",
+      "companies": 29,
+      "status_counts": {
+        "ok": 29
+      }
+    },
+    "bs_snapshot.json": {
+      "sha256": "8f96211b63a00b93d2ee3a1704317f85f5a0f142809be5c3aa34ba2a84e4a87e",
+      "companies": 23,
+      "status_counts": {
+        "ok": 23
+      }
+    },
+    "sensitivity_heatmap.json": {
+      "sha256": "945cf8d9f5d7243c0ee5e2c96a3ae2b9d24f319e99e3fb42e60498eae11eee70",
+      "companies": 32,
+      "status_counts": {
+        "ok": 31,
+        "unavailable": 1
+      }
+    }
+  },
+  "_what": "Refactor safety net for scripts/viz_build_ifrs17_panels.py. Captured before the 1,309-line builder was touched. Pins sha256 + company/status counts for all four panel JSONs it writes under data/dart/viz/."
+}
