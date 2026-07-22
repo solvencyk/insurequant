@@ -746,6 +746,204 @@ def _match_row_label(label: str, mapping: list[tuple[str, int]]) -> int | None:
     return None
 
 
+def _apply_post_corrections(
+    out: dict[int, tuple[str, str]],
+    provenance: dict[int, str],
+    unit_fixed_items: set[int],
+    log: list[str],
+    tables: list[dict],
+    company_code: str,
+    existing_values: dict[int, str],
+) -> None:
+    """Post-extraction reconciliation, split out of _extract_post_values 2026-07-22.
+
+    Mutates out/provenance/unit_fixed_items/log in place. Runs, in order: per-source
+    unit-fix vote, audit-statement fallback, headline-summary override for items
+    1/14/27, TAC amount, and the item15/16 derived identities. Behaviour identical to
+    the old inline block; pinned by tests/test_post_transition_golden.py."""
+    # Unit sanity check, scoped per source table: a 공통적용 or ②breakdown
+    # table may declare an unreliable `(단위 : 백만원, %)` hint (or inherit a
+    # stale one from an earlier, unrelated table — 예별손해보험 KR0004
+    # 2023.1Q's 공통적용 table has no unit line of its own and inherits
+    # "억원" when its numbers are actually 백만원). Compare each item's MD
+    # pre-value against the JSON 값 (authoritative). This MUST run before
+    # the item1/27 derivation below — deriving item27 from a still-
+    # unit-wrong item1 bakes the error into a ratio row, which is then
+    # exempt from correction (a % can't reveal an amount-unit mismatch, so
+    # it would never get fixed after the fact).
+    votes_by_source: dict[str, list[float]] = defaultdict(list)
+    for item_no, (pre_v_md, _post_v_md) in out.items():
+        if _is_percent_row(item_no):
+            continue
+        existing_s = existing_values.get(item_no)
+        if existing_s in (None, ""):
+            continue
+        try:
+            existing = float(str(existing_s).replace(",", ""))
+            md_pre = float(pre_v_md)
+        except (TypeError, ValueError):
+            continue
+        if md_pre == 0 or existing == 0:
+            continue
+        ratio = existing / md_pre
+        src = provenance.get(item_no, "common")
+        if 95 < ratio < 105:
+            votes_by_source[src].append(100.0)
+        elif 0.0095 < ratio < 0.0105:
+            votes_by_source[src].append(0.01)
+    for src, votes in votes_by_source.items():
+        if not (votes and all(abs(v - votes[0]) < 1e-6 for v in votes)):
+            continue
+        factor = votes[0]
+        log.append(f"  {company_code} UNIT-FIX[{src}]: applied ×{factor} to post values (MD hint mismatch vs JSON 값, votes={len(votes)})")
+        for item_no in list(out.keys()):
+            if provenance.get(item_no, "common") != src or _is_percent_row(item_no):
+                continue
+            try:
+                pre_v, post_v = out[item_no]
+                out[item_no] = (_fmt_amount(float(pre_v) * factor), _fmt_amount(float(post_v) * factor))
+                unit_fixed_items.add(item_no)
+            except (TypeError, ValueError):
+                pass
+
+    # [지급여력비율 총괄] is the company's own headline rollup — always the
+    # true cumulative 전/후 regardless of how many separate provisions
+    # (①TFI/②장수등/③주식·금리) are stacked. It wins over both common and
+    # breakdown for items 1/14/27 when parseable, because neither single
+    # provision table alone is reliable once more than one is active:
+    # 아이엠라이프생명 KR0076 has BOTH ①TFI (changes the 기본/보완 split
+    # *and* the total, item1 629,527→736,195) AND ②장수/사업비/해지 (changes
+    # item14 only, 582,352→446,029) — ①'s own item1 row is right but its
+    # item14 row is blind to ②'s effect, and vice versa for ②. Conversely
+    # 예별손해보험 KR0004 2023.1Q has BOTH ② AND ③(주식·금리, not parsed by
+    # this script at all) active, and there it's the ①공통 table whose
+    # item14 row happens to already reflect the full cumulative reduction
+    # (820,516) while ②'s own row alone only captures its own slice
+    # (907,125) — the *opposite* of KR0076's pattern. No fixed table
+    # priority is right for every company; only the headline rollup is.
+    if not out:
+        # Nothing at all matched (no 공통적용/②breakdown table) — try the
+        # 감사보고서 별첨 '지급여력금액'/'지급여력기준금액' Roman-numeral
+        # statement shape before giving up (하나생명 KR0097 FY-end filings).
+        # Require ALL FOUR items at once — a partial hit means the exact-
+        # label match landed on some unrelated 2-cell row by coincidence,
+        # not this specific statement shape (KR0082 2023.1Q: bare "기본자본"
+        # matched a footnote table, giving item2_후 a tiny bogus value).
+        audit_vals = _extract_audit_statement_values(tables)
+        if set(audit_vals) == {1, 2, 3, 14}:
+            for item_no, pair in audit_vals.items():
+                out[item_no] = pair
+                provenance[item_no] = "audit_statement"
+
+    headline_vals, headline_dbg = _extract_headline_summary(tables, company_code)
+    log.append(headline_dbg)
+    if headline_vals:
+        for item_no, pair in headline_vals.items():
+            out[item_no] = pair
+            provenance[item_no] = "headline"
+    else:
+        # Fallback when the headline rollup isn't present/parseable: derive
+        # item1(=기본+보완) and item27(=1/14×100) from their resolved parts
+        # instead of trusting whichever raw row got matched, so R1/R7 hold
+        # by construction even though item14 itself may still be an
+        # incomplete (single-provision) view in this fallback path.
+        if 2 in out and 3 in out and provenance.get(1) != "audit_statement":
+            # Don't clobber a directly-read audit-statement item1 (already
+            # includes TAC natively, e.g. 하나생명 KR0097) with a from-parts
+            # sum of item2+item3 that predates the TAC addition below.
+            try:
+                pre1 = float(out[2][0]) + float(out[3][0])
+                post1 = float(out[2][1]) + float(out[3][1])
+                out[1] = (_fmt_amount(pre1), _fmt_amount(post1))
+                provenance[1] = "derived"
+            except (TypeError, ValueError):
+                pass
+        if 1 in out and 14 in out:
+            try:
+                pre14 = float(out[14][0])
+                post14 = float(out[14][1])
+                if pre14 != 0 and post14 != 0:
+                    pre27 = float(out[1][0]) / pre14 * 100.0
+                    post27 = float(out[1][1]) / post14 * 100.0
+                    out[27] = (_fmt_ratio(pre27), _fmt_ratio(post27))
+                    provenance[27] = "derived"
+            except (TypeError, ValueError, ZeroDivisionError):
+                pass
+
+    # TAC(자본감소분경과조치) companies: item2/item3 above only reflect the
+    # ①TFI reclassification (validation confirmed via raw, KDB KR0072
+    # 2023.1Q: 기본자본 84,474→300,474·보완자본 644,136→428,136, netting to
+    # zero) — TAC's own amount (342,955) is a *separate* addition to item1
+    # that this company's disclosure never attributes to either tier. Add
+    # it onto item2 so R1(item1=item2+item3) closes with a real, derived
+    # value instead of leaving item2/3 post as if TAC didn't exist.
+    tac_amount = _extract_tac_amount(tables)
+    if tac_amount is not None and 2 in out:
+        try:
+            pre2, post2 = out[2]
+            out[2] = (pre2, _fmt_amount(float(post2) + float(tac_amount)))
+            if provenance.get(1) != "headline" and 3 in out:
+                pre3, post3 = out[3]
+                pre1 = out.get(1, (None, None))[0]
+                out[1] = (pre1, _fmt_amount(float(out[2][1]) + float(post3)))
+                provenance[1] = "derived"
+                if 14 in out:
+                    try:
+                        post14 = float(out[14][1])
+                        if post14 != 0:
+                            pre27 = out.get(27, (None, None))[0]
+                            out[27] = (pre27, _fmt_ratio(float(out[1][1]) / post14 * 100.0))
+                            provenance[27] = "derived"
+                    except (TypeError, ValueError, ZeroDivisionError):
+                        pass
+        except (TypeError, ValueError):
+            pass
+
+    # item15(기본요구자본)/item16(분산효과) — validation ROUND2 반려
+    # (20260707T0930Z) root cause: neither the ②-table's nor the (new) ③-
+    # table's own 기본요구자본 row is the true combined-post value — each is
+    # that single provision's *isolated* view. Confirmed via raw (IBK연금
+    # 2023.1Q): ②표 기본요구자본후=6,741.36 vs ③표=5,960.09 vs 총괄표
+    # 지급여력기준금액후=5,141 — K-ICS 기준금액 is a correlation-matrix
+    # diversification (√(V'MV)), not additive, so no combination of the two
+    # isolated tables reproduces the true combined figure. What *is* reliably
+    # the true combined figure is item14 itself (headline-sourced). The R5
+    # identity (item14 = item15 - item22 + item23) is definitional, not
+    # approximate, so back-solving item15 from it is exact. item22/23
+    # (법인세조정액/기타요구자본) are untouched by every transition type in
+    # this domain (TFI/TAC/TIR/TER/TIRR all target capital or insurance/
+    # market risk, never tax adjustment or foreign-sub add-ons) — fall back
+    # to their pre value when no table set a post value.
+    if 14 in out:
+        try:
+            post14 = float(out[14][1])
+            post22 = out.get(22, (None, existing_values.get(22)))[1]
+            post23 = out.get(23, (None, existing_values.get(23)))[1]
+            post22_f = float(post22) if post22 not in (None, "") else 0.0
+            post23_f = float(post23) if post23 not in (None, "") else 0.0
+            pre15 = existing_values.get(15)
+            if pre15 not in (None, ""):
+                out[15] = (pre15, _fmt_amount(post14 + post22_f - post23_f))
+                provenance[15] = "derived_identity"
+        except (TypeError, ValueError):
+            pass
+
+    # item16(분산효과) is never directly disclosed post-transition in any
+    # table (confirmed: IBK ②/③ tables have no 분산효과 row at all — only the
+    # 적용전 세부 table does) — it exists only as the derived identity
+    # sum(17..21) - 15, so there is no "extraction" for it, only this.
+    if 15 in out and all(i in out for i in (17, 18, 19, 20, 21)):
+        try:
+            post15 = float(out[15][1])
+            post_subs_sum = sum(float(out[i][1]) for i in (17, 18, 19, 20, 21))
+            pre16 = existing_values.get(16)
+            if pre16 not in (None, ""):
+                out[16] = (pre16, _fmt_amount(post_subs_sum - post15))
+                provenance[16] = "derived_identity"
+        except (TypeError, ValueError):
+            pass
+
+
 def _extract_post_values(
     tables: list[dict], company_code: str, existing_values: dict[int, str]
 ) -> tuple[dict[int, tuple[str, str]], dict[int, str], list[str], set[int]]:
@@ -1132,187 +1330,7 @@ def _extract_post_values(
             applied += 1
         log.append(f"  {company_code} market_rate(③): applied rows={applied}, unit={chosen_market_rate['unit']}")
 
-    # Unit sanity check, scoped per source table: a 공통적용 or ②breakdown
-    # table may declare an unreliable `(단위 : 백만원, %)` hint (or inherit a
-    # stale one from an earlier, unrelated table — 예별손해보험 KR0004
-    # 2023.1Q's 공통적용 table has no unit line of its own and inherits
-    # "억원" when its numbers are actually 백만원). Compare each item's MD
-    # pre-value against the JSON 값 (authoritative). This MUST run before
-    # the item1/27 derivation below — deriving item27 from a still-
-    # unit-wrong item1 bakes the error into a ratio row, which is then
-    # exempt from correction (a % can't reveal an amount-unit mismatch, so
-    # it would never get fixed after the fact).
-    votes_by_source: dict[str, list[float]] = defaultdict(list)
-    for item_no, (pre_v_md, _post_v_md) in out.items():
-        if _is_percent_row(item_no):
-            continue
-        existing_s = existing_values.get(item_no)
-        if existing_s in (None, ""):
-            continue
-        try:
-            existing = float(str(existing_s).replace(",", ""))
-            md_pre = float(pre_v_md)
-        except (TypeError, ValueError):
-            continue
-        if md_pre == 0 or existing == 0:
-            continue
-        ratio = existing / md_pre
-        src = provenance.get(item_no, "common")
-        if 95 < ratio < 105:
-            votes_by_source[src].append(100.0)
-        elif 0.0095 < ratio < 0.0105:
-            votes_by_source[src].append(0.01)
-    for src, votes in votes_by_source.items():
-        if not (votes and all(abs(v - votes[0]) < 1e-6 for v in votes)):
-            continue
-        factor = votes[0]
-        log.append(f"  {company_code} UNIT-FIX[{src}]: applied ×{factor} to post values (MD hint mismatch vs JSON 값, votes={len(votes)})")
-        for item_no in list(out.keys()):
-            if provenance.get(item_no, "common") != src or _is_percent_row(item_no):
-                continue
-            try:
-                pre_v, post_v = out[item_no]
-                out[item_no] = (_fmt_amount(float(pre_v) * factor), _fmt_amount(float(post_v) * factor))
-                unit_fixed_items.add(item_no)
-            except (TypeError, ValueError):
-                pass
-
-    # [지급여력비율 총괄] is the company's own headline rollup — always the
-    # true cumulative 전/후 regardless of how many separate provisions
-    # (①TFI/②장수등/③주식·금리) are stacked. It wins over both common and
-    # breakdown for items 1/14/27 when parseable, because neither single
-    # provision table alone is reliable once more than one is active:
-    # 아이엠라이프생명 KR0076 has BOTH ①TFI (changes the 기본/보완 split
-    # *and* the total, item1 629,527→736,195) AND ②장수/사업비/해지 (changes
-    # item14 only, 582,352→446,029) — ①'s own item1 row is right but its
-    # item14 row is blind to ②'s effect, and vice versa for ②. Conversely
-    # 예별손해보험 KR0004 2023.1Q has BOTH ② AND ③(주식·금리, not parsed by
-    # this script at all) active, and there it's the ①공통 table whose
-    # item14 row happens to already reflect the full cumulative reduction
-    # (820,516) while ②'s own row alone only captures its own slice
-    # (907,125) — the *opposite* of KR0076's pattern. No fixed table
-    # priority is right for every company; only the headline rollup is.
-    if not out:
-        # Nothing at all matched (no 공통적용/②breakdown table) — try the
-        # 감사보고서 별첨 '지급여력금액'/'지급여력기준금액' Roman-numeral
-        # statement shape before giving up (하나생명 KR0097 FY-end filings).
-        # Require ALL FOUR items at once — a partial hit means the exact-
-        # label match landed on some unrelated 2-cell row by coincidence,
-        # not this specific statement shape (KR0082 2023.1Q: bare "기본자본"
-        # matched a footnote table, giving item2_후 a tiny bogus value).
-        audit_vals = _extract_audit_statement_values(tables)
-        if set(audit_vals) == {1, 2, 3, 14}:
-            for item_no, pair in audit_vals.items():
-                out[item_no] = pair
-                provenance[item_no] = "audit_statement"
-
-    headline_vals, headline_dbg = _extract_headline_summary(tables, company_code)
-    log.append(headline_dbg)
-    if headline_vals:
-        for item_no, pair in headline_vals.items():
-            out[item_no] = pair
-            provenance[item_no] = "headline"
-    else:
-        # Fallback when the headline rollup isn't present/parseable: derive
-        # item1(=기본+보완) and item27(=1/14×100) from their resolved parts
-        # instead of trusting whichever raw row got matched, so R1/R7 hold
-        # by construction even though item14 itself may still be an
-        # incomplete (single-provision) view in this fallback path.
-        if 2 in out and 3 in out and provenance.get(1) != "audit_statement":
-            # Don't clobber a directly-read audit-statement item1 (already
-            # includes TAC natively, e.g. 하나생명 KR0097) with a from-parts
-            # sum of item2+item3 that predates the TAC addition below.
-            try:
-                pre1 = float(out[2][0]) + float(out[3][0])
-                post1 = float(out[2][1]) + float(out[3][1])
-                out[1] = (_fmt_amount(pre1), _fmt_amount(post1))
-                provenance[1] = "derived"
-            except (TypeError, ValueError):
-                pass
-        if 1 in out and 14 in out:
-            try:
-                pre14 = float(out[14][0])
-                post14 = float(out[14][1])
-                if pre14 != 0 and post14 != 0:
-                    pre27 = float(out[1][0]) / pre14 * 100.0
-                    post27 = float(out[1][1]) / post14 * 100.0
-                    out[27] = (_fmt_ratio(pre27), _fmt_ratio(post27))
-                    provenance[27] = "derived"
-            except (TypeError, ValueError, ZeroDivisionError):
-                pass
-
-    # TAC(자본감소분경과조치) companies: item2/item3 above only reflect the
-    # ①TFI reclassification (validation confirmed via raw, KDB KR0072
-    # 2023.1Q: 기본자본 84,474→300,474·보완자본 644,136→428,136, netting to
-    # zero) — TAC's own amount (342,955) is a *separate* addition to item1
-    # that this company's disclosure never attributes to either tier. Add
-    # it onto item2 so R1(item1=item2+item3) closes with a real, derived
-    # value instead of leaving item2/3 post as if TAC didn't exist.
-    tac_amount = _extract_tac_amount(tables)
-    if tac_amount is not None and 2 in out:
-        try:
-            pre2, post2 = out[2]
-            out[2] = (pre2, _fmt_amount(float(post2) + float(tac_amount)))
-            if provenance.get(1) != "headline" and 3 in out:
-                pre3, post3 = out[3]
-                pre1 = out.get(1, (None, None))[0]
-                out[1] = (pre1, _fmt_amount(float(out[2][1]) + float(post3)))
-                provenance[1] = "derived"
-                if 14 in out:
-                    try:
-                        post14 = float(out[14][1])
-                        if post14 != 0:
-                            pre27 = out.get(27, (None, None))[0]
-                            out[27] = (pre27, _fmt_ratio(float(out[1][1]) / post14 * 100.0))
-                            provenance[27] = "derived"
-                    except (TypeError, ValueError, ZeroDivisionError):
-                        pass
-        except (TypeError, ValueError):
-            pass
-
-    # item15(기본요구자본)/item16(분산효과) — validation ROUND2 반려
-    # (20260707T0930Z) root cause: neither the ②-table's nor the (new) ③-
-    # table's own 기본요구자본 row is the true combined-post value — each is
-    # that single provision's *isolated* view. Confirmed via raw (IBK연금
-    # 2023.1Q): ②표 기본요구자본후=6,741.36 vs ③표=5,960.09 vs 총괄표
-    # 지급여력기준금액후=5,141 — K-ICS 기준금액 is a correlation-matrix
-    # diversification (√(V'MV)), not additive, so no combination of the two
-    # isolated tables reproduces the true combined figure. What *is* reliably
-    # the true combined figure is item14 itself (headline-sourced). The R5
-    # identity (item14 = item15 - item22 + item23) is definitional, not
-    # approximate, so back-solving item15 from it is exact. item22/23
-    # (법인세조정액/기타요구자본) are untouched by every transition type in
-    # this domain (TFI/TAC/TIR/TER/TIRR all target capital or insurance/
-    # market risk, never tax adjustment or foreign-sub add-ons) — fall back
-    # to their pre value when no table set a post value.
-    if 14 in out:
-        try:
-            post14 = float(out[14][1])
-            post22 = out.get(22, (None, existing_values.get(22)))[1]
-            post23 = out.get(23, (None, existing_values.get(23)))[1]
-            post22_f = float(post22) if post22 not in (None, "") else 0.0
-            post23_f = float(post23) if post23 not in (None, "") else 0.0
-            pre15 = existing_values.get(15)
-            if pre15 not in (None, ""):
-                out[15] = (pre15, _fmt_amount(post14 + post22_f - post23_f))
-                provenance[15] = "derived_identity"
-        except (TypeError, ValueError):
-            pass
-
-    # item16(분산효과) is never directly disclosed post-transition in any
-    # table (confirmed: IBK ②/③ tables have no 분산효과 row at all — only the
-    # 적용전 세부 table does) — it exists only as the derived identity
-    # sum(17..21) - 15, so there is no "extraction" for it, only this.
-    if 15 in out and all(i in out for i in (17, 18, 19, 20, 21)):
-        try:
-            post15 = float(out[15][1])
-            post_subs_sum = sum(float(out[i][1]) for i in (17, 18, 19, 20, 21))
-            pre16 = existing_values.get(16)
-            if pre16 not in (None, ""):
-                out[16] = (pre16, _fmt_amount(post_subs_sum - post15))
-                provenance[16] = "derived_identity"
-        except (TypeError, ValueError):
-            pass
+    _apply_post_corrections(out, provenance, unit_fixed_items, log, tables, company_code, existing_values)
 
     return out, provenance, log, unit_fixed_items
 
