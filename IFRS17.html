@@ -36,8 +36,6 @@
       .brand{font-size:15px}
       .brand .hint{display:none}
       .container{padding:10px}
-      .tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;gap:6px;padding-bottom:2px}
-      .tab{flex:0 0 auto;padding:8px 12px;font-size:13px}
       .controls{gap:8px}
       .select{padding:7px 8px;font-size:13px}
       .panel{padding:14px}
@@ -307,12 +305,6 @@
     const v=rec ? rec[field||"y"] : null;   // y=연누계(기본), q=당분기
     return (typeof v==="number" && Number.isFinite(v)) ? v : null;
   }
-  // 모든 회사 통합 분기축(오름차순) — Panel 6 시계열 x축.
-  function wfAllPeriodsAsc(){
-    const set = new Set();
-    for (const m of ix.wfx.values()) for (const k of m.keys()) set.add(k);
-    return Array.from(set).sort((a,b)=> wfCmpDesc(b,a));
-  }
   // D5/D6: 분기 공시 여부 — 4Q 외 분기가 하나라도 있으면 분기 공시사. 데이터 기반(이름 하드코딩 금지).
   function wfHasQuarterly(company){
     return wfQuartersOf(company).some(p => { const [,qn]=wfParseQ(p); return qn!==4; });
@@ -340,13 +332,6 @@
   }
   // 드롭다운 이름(옛 파일)과 새 마스터 이름이 다른 5사 대응 (삼성생명 vs 삼성생명보험, 케이비 vs KB 등).
   function wfNorm(s){ return String(s).replace(/\s/g,"").replace(/케이비/g,"KB"); }
-  function wfResolve(display){
-    if (ix.wfx.has(display)) return display;
-    const d = wfNorm(display);
-    for (const k of ix.wfx.keys()){ if (wfNorm(k)===d) return k; }
-    for (const k of ix.wfx.keys()){ const nk=wfNorm(k); if (nk.includes(d) || d.includes(nk)) return k; }
-    return null;
-  }
   // 이름 → 코드. 코드 없는 옛 viz/NB는 boot에서 1회만 정규화 매칭 → 이후 전 패널 코드로 동작.
   function codeForName(name){
     if (codeToName[name]) return name; // 이미 코드
@@ -855,53 +840,6 @@
   // 적록색맹 시뮬레이션 하에서 ΔRGB 39-52로 헷갈림 — docs/a11y_baseline.md #11).
   // scripts/a11y_contrast_check.py로 검증: 신규 팔레트 전 쌍 최소 ΔRGB 82(기존 최저 39의 2배+).
   const NB_LINE_COLORS = ["#0d6efd", "#009E73", "#D55E00", "#343a40", "#CC79A7", "#7c5c00"];
-
-  function nbChartData(nbJson, slug, bucket){
-    if(!nbJson) return { periods: [], datasets: [] };
-    const section = nbJson[bucket];
-    if(!section||!section[slug]) return { periods: [], datasets: [] };
-    const companySeries = section[slug].series;
-    if(!companySeries || typeof companySeries!=="object" || Array.isArray(companySeries)){
-      return { periods: [], datasets: [] };
-    }
-
-    const periodSet = new Set();
-    const seriesList = [];
-    for (const [key, sub] of Object.entries(companySeries)){
-      if(!sub || !Array.isArray(sub.points) || !sub.points.length) continue;
-      const byPeriod = new Map();
-      for (const p of sub.points){
-        if(!p || p.period==null) continue;
-        const period = String(p.period);
-        const value = Number(p.value);
-        if(!Number.isFinite(value)) continue;
-        periodSet.add(period);
-        byPeriod.set(period, value);
-      }
-      if(!byPeriod.size) continue;
-      seriesList.push({ key, label: sub.label || key, byPeriod });
-    }
-
-    const periods = [...periodSet].sort((a,b)=> String(a).localeCompare(String(b), "ko", {numeric:true}));
-    const datasets = seriesList.map((s, idx)=>{
-      const color = NB_LINE_COLORS[idx % NB_LINE_COLORS.length];
-      const isTotal = s.key === "total";
-      return {
-        label: s.label,
-        data: periods.map(p=> s.byPeriod.has(p) ? s.byPeriod.get(p) : null),
-        borderColor: color,
-        backgroundColor: color + "18",
-        borderWidth: isTotal ? 2.5 : 1.5,
-        borderDash: isTotal ? [] : [6, 4],
-        pointRadius: isTotal ? 4 : 3,
-        tension: 0.25,
-        spanGaps: true,
-        fill: false,
-      };
-    });
-
-    return { periods, datasets };
-  }
 
   function mountDash(company){
     const host=document.getElementById("dashHost");
