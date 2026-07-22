@@ -341,6 +341,142 @@ def _validate_market_irr(
         )
 
 
+def _validate_transition_capital(
+    bucket: QuarterBucket,
+    findings: list[dict[str, Any]],
+    eff_tol: float,
+) -> None:
+    """경과조치 monotonicity: 기본자본 적용후>=적용전 (rule 9, grandfathered 신종자본
+    증권) and 지급여력기준금액 적용전>=적용후 (rule 10, risk-charge phase-in). Split out
+    of _validate_bucket 2026-07-22; pinned by tests/test_kics_rules_golden.py."""
+    # Rule 9: 기본자본 (item2) 적용후 >= 적용전.
+    # Transitional grandfather: pre-2022 신종자본증권 fully recognized in basic capital
+    # under 적용 후, but limit-deducted under 적용 전. So post should be >= pre (within tol).
+    item2_pre = bucket.get(2)
+    item2_post = bucket.get(2, post=True)
+    if item2_pre is not None and item2_post is not None and item2_post != item2_pre:
+        diff = item2_post - item2_pre  # should be >= -tol
+        # 대형사 grandfather 미세감소 허용: 절대 2.0은 수조원대 기본자본에 과도하게 엄격.
+        # 경과조치 2차효과(보완자본 한도 재계산 등)로 극소량 감소는 정상(한화손해 2024.2Q raw
+        # 확인: 기본자본 2,638,159→2,637,797 백만 = −0.015%). rule 8_life 동적허용오차와 동일 발상.
+        gf_tol = max(eff_tol, 0.0005 * abs(item2_pre))
+        if diff >= -gf_tol:
+            status = STATUS_GREEN
+        else:
+            status = STATUS_RED
+        findings.append(_finding(
+            bucket, "9",
+            status=status,
+            expected=item2_pre, actual=item2_post, diff=diff,
+            detail="item2(기본자본) 적용후 >= 적용전 expected (transitional grandfather, dynamic tol)",
+        ))
+    else:
+        findings.append(_finding(
+            bucket, "9",
+            status=STATUS_SKIP, expected=None, actual=item2_post, diff=None,
+            detail="no post-transition item2 (or equal to pre)",
+        ))
+
+    # Rule 10: 지급여력기준금액 (item14) 적용전 >= 적용후.
+    # Transitional risk-ramp: some risk charges phase in gradually, so SCR_post
+    # (currently effective) typically <= SCR_pre (strict end-state). Pre >= post (within tol).
+    item14_pre = bucket.get(14)
+    item14_post = bucket.get(14, post=True)
+    if item14_pre is not None and item14_post is not None and item14_post != item14_pre:
+        diff = item14_pre - item14_post  # should be >= -tol
+        if diff >= -eff_tol:
+            status = STATUS_GREEN
+        else:
+            status = STATUS_RED
+        findings.append(_finding(
+            bucket, "10",
+            status=status,
+            expected=item14_post, actual=item14_pre, diff=diff,
+            detail="item14(SCR) 적용전 >= 적용후 expected (transitional risk ramp)",
+        ))
+    else:
+        findings.append(_finding(
+            bucket, "10",
+            status=STATUS_SKIP, expected=None, actual=item14_pre, diff=None,
+            detail="no post-transition item14 (or equal to pre)",
+        ))
+
+
+def _validate_transition_basic(
+    bucket: QuarterBucket,
+    findings: list[dict[str, Any]],
+    eff_tol: float,
+) -> None:
+    """경과조치 적용후 기본자본비율 (8_post, item2후/item14후) and 생명장기 R7 sub-risk
+    diversification (8_life, item17 = sqrt(S·R7·S)). Both use a dynamic tolerance for
+    sub-scale denominators / accumulated sqrt rounding. Split out of _validate_bucket
+    2026-07-22; pinned by tests/test_kics_rules_golden.py."""
+    # Rule 8_post: post-transition basic capital ratio.
+    # expected = item2_post / item14_post * 100  (use POST values for both
+    # numerator and denominator). bucket.get(..., post=True) falls back to
+    # pre value when post is missing, which is correct: if pre==post then
+    # ratio is unchanged. SKIP only when neither item2 nor item14 has any
+    # post-transition data AND item28 has no post value either (no
+    # transitional reported at all).
+    post2 = bucket.get(2, post=True)
+    post14 = bucket.get(14, post=True)
+    has_any_post = (
+        2 in bucket.values_post
+        or 14 in bucket.values_post
+        or 28 in bucket.values_post
+    )
+    # 분자(item2)와 분모(item14)가 반드시 같은 기준(둘 다 genuine post, 또는 둘 다
+    # pre 폴백)이어야 한다. 한쪽만 post이면(예: item14후는 채워졌는데 item2후는 결측 →
+    # pre로 폴백) expected = pre2/post14 라는 무의미값이 나와 spurious RED가 뜬다
+    # (흥국생명 2024.4Q·에이비엘 2025.3Q·푸본 2023.1Q, 2026-07-07 validation 적발).
+    # 기준이 어긋나면 SKIP — 진짜 결측은 transition-after-capture MISSING 체크가 별도로 잡음.
+    same_basis = (2 in bucket.values_post) == (14 in bucket.values_post)
+    if has_any_post and same_basis and post2 is not None and post14 is not None and post14 != 0:
+        expected = post2 / post14 * 100.0
+        actual = bucket.get(28, post=True)
+        if actual is None:
+            actual = bucket.get(28)
+        # rule 8(적용전)과 동일한 dynamic tol: micro사(작은 item14후)는 억원-coarse 반올림으로
+        # 산출비율이 공시비율과 어긋남(카카오 2023.4Q item14후=20 → 974/20=4870 vs 공시4777).
+        # 8_post만 eff_tol 쓰던 불일치 교정(2026-07-12).
+        ratio_tol = max(eff_tol, abs(expected) * 0.5 / abs(post14) + 50.0 / abs(post14))
+        findings.append(_check_numeric(bucket, "8_post", expected, actual, ratio_tol))
+    else:
+        findings.append(
+            _finding(
+                bucket,
+                "8_post",
+                status=STATUS_SKIP,
+                expected=None,
+                actual=bucket.get(28, post=True),
+                diff=None,
+                detail="no post data or mixed pre/post basis for item2/14 (skip; MISSING caught by transition check)",
+            )
+        )
+
+    sub_items = list(range(29, 36))
+    if bucket.get(17) is not None and all(bucket.get(i) is not None for i in sub_items):
+        s = np.array([bucket.get(i) for i in sub_items], dtype=float)
+        expected = _diversified_sqrt(s, R7)
+        # 8_life only: dynamic tolerance = max(eff_tol, 5% of expected).
+        # Rationale: R7 diversified sqrt accumulates rounding from 7 sub-items,
+        # so absolute 2.0 tol is too tight when expected is large (hundreds-thousands).
+        life_tol = max(eff_tol, 0.05 * abs(expected))
+        findings.append(_check_numeric(bucket, "8_life", expected, bucket.get(17), life_tol))
+    else:
+        findings.append(
+            _finding(
+                bucket,
+                "8_life",
+                status=STATUS_SKIP,
+                expected=None,
+                actual=bucket.get(17),
+                diff=None,
+                detail="missing item17 or any of items 29-35",
+            )
+        )
+
+
 def _validate_bucket(
     bucket: QuarterBucket,
     findings: list[dict[str, Any]],
@@ -504,124 +640,11 @@ def _validate_bucket(
             )
         )
 
-    # Rule 8_post: post-transition basic capital ratio.
-    # expected = item2_post / item14_post * 100  (use POST values for both
-    # numerator and denominator). bucket.get(..., post=True) falls back to
-    # pre value when post is missing, which is correct: if pre==post then
-    # ratio is unchanged. SKIP only when neither item2 nor item14 has any
-    # post-transition data AND item28 has no post value either (no
-    # transitional reported at all).
-    post2 = bucket.get(2, post=True)
-    post14 = bucket.get(14, post=True)
-    has_any_post = (
-        2 in bucket.values_post
-        or 14 in bucket.values_post
-        or 28 in bucket.values_post
-    )
-    # 분자(item2)와 분모(item14)가 반드시 같은 기준(둘 다 genuine post, 또는 둘 다
-    # pre 폴백)이어야 한다. 한쪽만 post이면(예: item14후는 채워졌는데 item2후는 결측 →
-    # pre로 폴백) expected = pre2/post14 라는 무의미값이 나와 spurious RED가 뜬다
-    # (흥국생명 2024.4Q·에이비엘 2025.3Q·푸본 2023.1Q, 2026-07-07 validation 적발).
-    # 기준이 어긋나면 SKIP — 진짜 결측은 transition-after-capture MISSING 체크가 별도로 잡음.
-    same_basis = (2 in bucket.values_post) == (14 in bucket.values_post)
-    if has_any_post and same_basis and post2 is not None and post14 is not None and post14 != 0:
-        expected = post2 / post14 * 100.0
-        actual = bucket.get(28, post=True)
-        if actual is None:
-            actual = bucket.get(28)
-        # rule 8(적용전)과 동일한 dynamic tol: micro사(작은 item14후)는 억원-coarse 반올림으로
-        # 산출비율이 공시비율과 어긋남(카카오 2023.4Q item14후=20 → 974/20=4870 vs 공시4777).
-        # 8_post만 eff_tol 쓰던 불일치 교정(2026-07-12).
-        ratio_tol = max(eff_tol, abs(expected) * 0.5 / abs(post14) + 50.0 / abs(post14))
-        findings.append(_check_numeric(bucket, "8_post", expected, actual, ratio_tol))
-    else:
-        findings.append(
-            _finding(
-                bucket,
-                "8_post",
-                status=STATUS_SKIP,
-                expected=None,
-                actual=bucket.get(28, post=True),
-                diff=None,
-                detail="no post data or mixed pre/post basis for item2/14 (skip; MISSING caught by transition check)",
-            )
-        )
-
-    sub_items = list(range(29, 36))
-    if bucket.get(17) is not None and all(bucket.get(i) is not None for i in sub_items):
-        s = np.array([bucket.get(i) for i in sub_items], dtype=float)
-        expected = _diversified_sqrt(s, R7)
-        # 8_life only: dynamic tolerance = max(eff_tol, 5% of expected).
-        # Rationale: R7 diversified sqrt accumulates rounding from 7 sub-items,
-        # so absolute 2.0 tol is too tight when expected is large (hundreds-thousands).
-        life_tol = max(eff_tol, 0.05 * abs(expected))
-        findings.append(_check_numeric(bucket, "8_life", expected, bucket.get(17), life_tol))
-    else:
-        findings.append(
-            _finding(
-                bucket,
-                "8_life",
-                status=STATUS_SKIP,
-                expected=None,
-                actual=bucket.get(17),
-                diff=None,
-                detail="missing item17 or any of items 29-35",
-            )
-        )
+    _validate_transition_basic(bucket, findings, eff_tol)
 
     _validate_market_irr(bucket, findings, source_has_breakdown, eff_tol)
 
-    # Rule 9: 기본자본 (item2) 적용후 >= 적용전.
-    # Transitional grandfather: pre-2022 신종자본증권 fully recognized in basic capital
-    # under 적용 후, but limit-deducted under 적용 전. So post should be >= pre (within tol).
-    item2_pre = bucket.get(2)
-    item2_post = bucket.get(2, post=True)
-    if item2_pre is not None and item2_post is not None and item2_post != item2_pre:
-        diff = item2_post - item2_pre  # should be >= -tol
-        # 대형사 grandfather 미세감소 허용: 절대 2.0은 수조원대 기본자본에 과도하게 엄격.
-        # 경과조치 2차효과(보완자본 한도 재계산 등)로 극소량 감소는 정상(한화손해 2024.2Q raw
-        # 확인: 기본자본 2,638,159→2,637,797 백만 = −0.015%). rule 8_life 동적허용오차와 동일 발상.
-        gf_tol = max(eff_tol, 0.0005 * abs(item2_pre))
-        if diff >= -gf_tol:
-            status = STATUS_GREEN
-        else:
-            status = STATUS_RED
-        findings.append(_finding(
-            bucket, "9",
-            status=status,
-            expected=item2_pre, actual=item2_post, diff=diff,
-            detail="item2(기본자본) 적용후 >= 적용전 expected (transitional grandfather, dynamic tol)",
-        ))
-    else:
-        findings.append(_finding(
-            bucket, "9",
-            status=STATUS_SKIP, expected=None, actual=item2_post, diff=None,
-            detail="no post-transition item2 (or equal to pre)",
-        ))
-
-    # Rule 10: 지급여력기준금액 (item14) 적용전 >= 적용후.
-    # Transitional risk-ramp: some risk charges phase in gradually, so SCR_post
-    # (currently effective) typically <= SCR_pre (strict end-state). Pre >= post (within tol).
-    item14_pre = bucket.get(14)
-    item14_post = bucket.get(14, post=True)
-    if item14_pre is not None and item14_post is not None and item14_post != item14_pre:
-        diff = item14_pre - item14_post  # should be >= -tol
-        if diff >= -eff_tol:
-            status = STATUS_GREEN
-        else:
-            status = STATUS_RED
-        findings.append(_finding(
-            bucket, "10",
-            status=status,
-            expected=item14_post, actual=item14_pre, diff=diff,
-            detail="item14(SCR) 적용전 >= 적용후 expected (transitional risk ramp)",
-        ))
-    else:
-        findings.append(_finding(
-            bucket, "10",
-            status=STATUS_SKIP, expected=None, actual=item14_pre, diff=None,
-            detail="no post-transition item14 (or equal to pre)",
-        ))
+    _validate_transition_capital(bucket, findings, eff_tol)
 
 
 def run_validation(
