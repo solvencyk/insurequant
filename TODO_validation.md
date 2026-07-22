@@ -223,21 +223,7 @@ K-ICS rule 2 OCR 미정확 (KR0010, KR0079도 image-only). 사용자 owned (`TOD
 - [ ] 수기 OCR 완료 → KICS-VALIDATE RED 2 → 0 회복.
 
 ## ✅ Done (archive)
-- V10 19_market SKIP→RED 승격 + coverage census 신설 — 2026-06-12 (changelog 06-12)
-- V-RS K-ICS 금리민감도 RS1–RS4 룰 구현 + 검증(RED=0, KR0011 basis 예외) — 2026-06-10 (changelog 06-10); consolidate_inbox VALIDATORS 선배선(RS/waterfall) — 2026-06-12 (changelog 06-12 b)
-- V8 소비자 코드 구현 + 룰 정식화(PL_BRIDGE 8단·CSM_CROSSCHECK 4Q-only) — 2026-06-07 (changelog 06-07)
-- V8 CSM_waterfall closing 40F→0F — 2026-06-07b (changelog 06-07 b)
-- V8 CSM_CROSSCHECK tol 3단계 + 진짜 2F 해소→0F(KB라이프 wf 이중합산·코리안리 룰 스코프) — 2026-06-07c/d (changelog 06-07 c/d)
-- V8 보험손익 잔차=LOB 별도/연결 진단 + DB손해·KB손해 fix(PL_BRIDGE 31F→16F) — 2026-06-07e/f (changelog 06-07 e/f)
-- V8 흥국화재 해소(빌드 누락 원인) + 빌드→검증 통합 — 2026-06-07h/2026-06-08 (changelog 06-07 h)
-- V8 CSM_PLAUSIBILITY 룰 신설(dup/spike/cont) + 메트라이프 2배·케이디비 복붙·흥국·롯데 해소 — 2026-06-07g/2026-06-08 (changelog 06-07 g)
-- V8 MASTER_COVERAGE 룰 신설(HOLE 1급 검증) — 2026-06-08 (changelog 06-08)
-- V9 룰 3종 WFY/ZAMORT/ZLEG 신설 + 4갈래 조사 — 2026-06-11 (changelog 06-11)
-- V9 overrides 영속성·NB EX-기타·아이엠 정정 재검증 + exception 등록(WFY 9건·ZLEG_LEGIT) — 2026-06-11b (changelog 06-11 b)
-- V9 AIA 사코드 KR0080 + 불가능-0 leg 룰 + 현대 legit 오판 정정 — 2026-06-11c (changelog 06-11 c)
-- V2 PREFERRED_SCOPE 한화 monthly_avg_from_ytd + 정직성 플래그 + retry max 8→5 + 한화 fallback retire — 2026-05-31/2026-06-12 (changelog 06-12 b)
-- V7 history check 도구(`check_nb_csm_history.py`) + systemic 3건 발견 + 한화손해/코리안리 오진 정정 — 2026-06-01 (changelog 06-01 archive)
-- V4 `config/qoq_thresholds.yaml` v1 + QOQ_DELTA_WARN 구현 — 2026-05-31/2026-06-09 (changelog 06-09)
+완결 항목(V10 census·V-RS 금리민감도 RS1–RS4·V8 PL_BRIDGE/CSM_CROSSCHECK/CSM_PLAUSIBILITY/MASTER_COVERAGE·V9 WFY/ZAMORT/ZLEG·V2 한화 fallback retire·V7 history check·V4 QoQ v1, 2026-05-31~06-12). 각 항목의 날짜별 상세는 `docs/changelog_validation.md`(당시 이미 `(changelog MM-DD)`로 인덱싱됨) + git log.
 
 ## 🛡️ Documented exception 관리
 운영자(사용자)만 `TODO.md`에 `(도메인, 회사코드, 분기, rule_id, 사유)` 추가 가능. 서브에이전트가 자체 RED waiver 쓰지 말 것. `escalate_to_human` 단계에서만 "재파싱 5회 실패" 사유 기록.

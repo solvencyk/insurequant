@@ -108,32 +108,8 @@ Publishing currently has Tier1 4-bar in production. Tier2 (LOB 장기/자동차/
 - [ ] Caption variant per-company taxonomy (장기/자동차/일반 vs 보장성/물보험/저축성)
 
 ## ✅ Done (archive)
-- QA-GLITCH-0614 owner 라이브QA: K-ICS 드롭다운 누락사 보강(30→48, fillMissingCompanies) + 현대해상 키컬러 #FFB81C + ΔCSM 헤더 억원 + 모바일 표 패딩/nowrap — 2026-06-14 (changelog 06-14). 상류대기: shock표기통일·흥국행분리(parser), 소진율 100%+캡(publishing)
-- TREEMAP-SCALE 트리맵 색 임계 앵커 130/200% + 범례 임계표기 (권고선=130%, 민감도 패널 150%→130% 정합) — 2026-06-13 (changelog 06-13)
-- KEYCOLOR-V1 IFRS17 적용(워터폴 total + Panel2/5 라인 + Panel3 상각막대 + select 링 + 스와치, WCAG 보정) — 2026-06-13 (changelog 06-13)
-- NAME-ABBR index 회사 약칭 + 트리맵 '기타' 묶음 — 2026-06-12 (changelog 06-12)
-- SHINHAN-EZ-PAA 신한EZ손해(KR0051) CSM 미공시 사유 표기 — 2026-06-12 (changelog 06-12)
-- SAMO-ALL 음수 △(세모) 표기 전면화 (K-ICS + IFRS17) — 2026-06-12 (changelog 06-12)
-- KICS-RISK-TOGGLE 생명장기·시장위험액 하위 +/− 토글 (29~35·36~40) — 2026-06-12 (changelog 06-12)
-- P1-QUICKWIN Pretendard+tabular/파비콘/메타·OG/푸터/이모지 제거 (4p, 팔레트 보류) — 2026-06-12 (changelog 06-12)
-- BUBBLE-LOG index 버블 X축 log10 + 라벨 보정 — 2026-06-12 (changelog 06-12)
-- F-SENS-PANEL K-ICS 금리 민감도 패널 (kics_rate_sensitivity.json, coverage 29/30) — 2026-06-11 (changelog 06-11)
-- F-BUBBLE-MLIST index.html 모바일 CSM 버블 → 리스트 (M2 미러) — 2026-06-11 (changelog 06-11)
-- F-PL-WF Panel 3 당기순이익 bridge waterfall (PL_breakdown.json) — 2026-06-07 (changelog 06-07)
-- F-WF-WINDOW Panel 1 windowed CSM waterfall (company × 연도/분기) — 2026-06-07 (changelog 06-07)
-- M1 Mobile responsive foundation (4 pages, `@media max-width:640px`) — 2026-05-28 (changelog 05-28)
-- M2 index.html treemap → vertical list on phones (`renderList()`) — 2026-05-28 (changelog 05-28)
-- INDEX-TREEMAP-CLEAN desktop treemap label cleanup (size-aware) — 2026-05-28 (changelog 05-28)
-- INDEX-LIST-SORT mobile list sort → 지급여력기준금액 desc — 2026-05-28 (changelog 05-28)
-- IFRS17-PANEL-CLEAN KPI 카드 4개 + BS 스냅샷 panel 제거, 패널 1–6 재번호 — 2026-05-28 (changelog 05-28)
-- F6-HTML F6 yearly CSM amort Panel 2 (desktop 10y / mobile 5y) — 2026-05-28 (changelog 05-28)
-- F17-PANEL3 Panel 3 clean 4-bar swap — 2026-05-30 (changelog 05-30)
-- P1-HTML-SINGLE HTML single-source refactor (templates/*.html 삭제, root sole copy) — 2026-05-28 (changelog 05-28)
-- P4-DEAD-CDN index.html dropped unused xlsx.full.min.js CDN (~900KB) — 2026-05-28 (changelog 05-28)
-- CONSOLE-CLEAN debug console.log cleanup across pages — 2026-05-28 (changelog 05-28)
-- INDEX-C12 index treemap + IFRS17 quadrant (items 27/28 default) — done
-- KICS-HTML-SUB K-ICS.html sub-items + transition toggle + JSON sync — done
-- F1-HTML index.html → IFRS17 cross-nav (ECharts on('click') → URL param) — done (`fcdd544`)
+완결 항목 25+개(2026-05-28~06-14) — M1 모바일 foundation, KEYCOLOR/TREEMAP-SCALE, △(세모) 전면화, 생명장기·시장위험액 토글, PL/CSM 워터폴 패널, HTML single-source refactor, dead-CDN 제거 등. 상세는 `docs/changelog_designer.md`(당시 `(changelog MM-DD)`로 인덱싱) + git log.
+
 
 ## 🗂️ Conventions reference
 
