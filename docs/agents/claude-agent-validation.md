@@ -37,6 +37,24 @@
 - 구현: [src/solvency/validation/kics_json_rules.py](../../src/solvency/validation/kics_json_rules.py)
 - 러너: `python scripts/validate_kics_disclosure.py`
 
+> **⚠️ 2026-07-22 — 룰 엔진 함수 분해 + 골든 테스트. 룰 로직 수정 전 필독.**
+> `run_validation`(393줄)이 5개 함수로 쪼개졌다. **동작은 완전 동일**하고 골든이 지킨다.
+> | 함수 | 담당 룰 |
+> |---|---|
+> | `run_validation` (34줄) | 셋업 + 버킷 루프 + 요약 집계 |
+> | `_validate_bucket` (168줄) | 자본 1-3 + 요구자본 4-8 (base) + 아래 3개 위임 호출 |
+> | `_validate_market_irr` | 19_market, 36_irr (cadence-aware 분해) |
+> | `_validate_transition_basic` | 8_post, 8_life |
+> | `_validate_transition_capital` | 9, 10 (경과조치 단조성) |
+>
+> 룰을 고쳤으면 **`python -m pytest tests/test_kics_rules_golden.py`** 필수 — 라이브
+> 마스터에 대한 6,804 findings의 `(회사,분기,룰,상태)` 매트릭스를 고정한다(오프라인·<1초).
+> RED 카운트가 **의도적으로** 바뀌면 손으로 해시 고치지 말고 재생성: `python
+> tests/test_kics_rules_golden.py --update` + 커밋 메시지에 **왜** 바뀌었는지 기록.
+> 같은 방식의 골든이 마스터테이블 게이트에도 있다: `tests/test_master_tables_golden.py`
+> (`validate_master_tables.main()`의 SUMMARY 전체 + exit code 고정; main도 374→154줄로
+> `_check_plausibility`·`_check_pl_bridge`로 분해됨).
+
 | Rule | 검증 내용 | Tolerance |
 |---|---|---|
 | R1 | `item1 = item2 + item3` (지급여력금액 분해) | 2.0 억원 (OCR사 KR0010·KR0079=10.0) |

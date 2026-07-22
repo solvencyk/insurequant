@@ -23,6 +23,16 @@
 > 운영 상세(회사별 함정 포함) = `.claude/skills/ifrs17-parser/SKILL.md`
 > "PL breakdown is a package now".
 
+> **⚠️ 2026-07-22 — 골든 테스트 3종 + DART 캐시 정정공시 절차 (수정 전 필독).**
+>
+> - **`fill_post_transition_to_disclosure.py`** (경과조치 적용후, 라이브 마스터 인플레이스
+>   기록): `_extract_post_values` 569→389줄 분해(`_apply_post_corrections` 신설). 고쳤으면
+>   `python -m pytest tests/test_post_transition_golden.py`(6,114셀 고정, 오프라인).
+> - **DART FS 캐시 정정공시**: `_fetch_raw`는 캐시를 만료 없이 신뢰한다. DART 정정공시가 뜨면
+>   `python scripts/fetch_dart_fs.py --refresh <corp_code> <year>` → 마스터 재빌드 → PL 골든
+>   재생성 → 캐시+마스터+골든 함께 커밋. owner 정책: 캐시는 계속 커밋(정정공시 드묾).
+> - 상세 절차 = SKILL "경과조치 적용후" / "DART FS API 캐시" 절.
+
 ## 0. 운영 환경 & 회사 매핑 규칙
 
 - **OpenDART API key**는 `.env`의 `OPENDART_API_KEY`에서 읽음 (코드에 박지 말 것, 로그에도 찍지 말 것).

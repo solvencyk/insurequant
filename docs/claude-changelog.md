@@ -1,11 +1,41 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-07-21 · Stage: cross-stage
+> Last updated: 2026-07-22 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
 
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
+
+---
+
+## 2026-07-22 — 리팩토링 5차: 거대 함수 골든화·분해 + CSS/캐시 정책
+
+> **원칙: 안전망 먼저, 분해 나중.** 게이트/빌더 4개(라이브 마스터를 만들거나 push를 막는 함수)를 각각 골든 테스트로 먼저 고정한 뒤에만 분해했다. 실제로 분해 중 사고 2건을 골든이 잡았다(아래 D).
+
+**A. 게이트/빌더 함수 골든 4종 신설 (전부 오프라인·결정론).**
+- `test_pl_breakdown_golden` (7b21bfb 세션): PL 마스터 바이트(2,940행)
+- `test_post_transition_golden`: `_extract_post_values` 6,114 적용후 셀
+- `test_kics_rules_golden`: 룰 엔진 6,804 findings `(회사,분기,룰,상태)` 매트릭스(RED=12 게이트와 일치)
+- `test_master_tables_golden`: `validate_master_tables` SUMMARY 전체 + exit code
+
+**B. 4개 거대 함수 분해 (동작 불변, 골든이 증명).**
+| 함수 | before → after |
+|---|---|
+| `build_pl_breakdown.py` | 4,885 → 567줄 + `scripts/pl_breakdown/` 패키지 |
+| `_extract_post_values` | 569 → 389줄 (+`_apply_post_corrections` 196) |
+| `run_validation` | 393 → 34줄 (+`_validate_bucket` 168 + market_irr/transition_basic/transition_capital) |
+| `validate_master_tables.main` | 374 → 154줄 (+`_check_plausibility`·`_check_pl_bridge`) |
+
+**C. CSS 통합 (`a646561`).** 3대시보드가 각자 갖던 바이트동일 모바일 `.tabs`/`.tab` 규칙을 `common.css`의 `@media(max-width:640px)`로 hoist. **범위 좁게** — `.container`/`.brand`는 2-3페이지만 같아 제외, 페이지별로 다른 `@media`(트리맵 리스트·도넛)는 인라인 유지. **cascade 함정**: 공시보고서.html은 base `.tab`을 자체 재정의(14px)하고 common.css를 그 앞에 link하므로 공통 모바일 규칙이 cascade에서 짐 → 그 페이지엔 반응형 13px을 인라인 유지(안 그러면 모바일 폰트 14px 회귀, 모바일뷰포트 Playwright가 커밋 전 적발). designer §5.2 계약에 반영.
+
+**D. DART FS 캐시 정정공시 대응 (`fb931e3`).** owner 결정: `data/dart/_fs_api_cache/`(668파일·2.5MB) 계속 커밋(PL 골든 오프라인 근거 + git-purge 브랜치라 유일 사본 가능). 단 owner가 함정 지적 — `_fetch_raw`는 캐시를 **만료 없이** 신뢰해 DART 정정공시 시 stale 값을 영원히 씀. `_fetch_raw(force=)` + CLI `--refresh <corp_code> <year>` 추가(기본 동작 불변, PL 골든 오프라인 유지 검증). 절차를 ifrs17 SKILL·도메인doc에 문서화.
+
+**E. 분해 중 골든이 잡은 사고 2건 (기록 가치).**
+- `_validate_transition_capital` 시그니처에서 `eff_tol` 누락(rule 9 grandfather tol이 읽음) → `NameError`, rule-engine 골든이 잡음. `_validate_market_irr`를 먼저 커밋해 안전점 확보 후 재시도.
+- `validate_master_tables`의 PL 블록을 banner로 자르니 `pb_pass` 미정의(PL_BRIDGE와 ZERO_LEGS가 print 공유) → 골든이 잡음. 세 검사를 한 덩어리로 묶어 재분할.
+
+**계약 반영:** CLAUDE.md 불변식 #3(골든 테이블), validation §1.1(룰 엔진 5함수 + 골든), designer §5.2(CSS hoist 계약 + cascade 함정), ifrs17 SKILL/도메인doc(post-transition 골든 + 캐시 refresh 절차).
 
 ---
 

@@ -60,9 +60,18 @@ See `docs/agents/kics-json-validation-rules.md` for formulas, R4/R7 matrices, to
 | **publishing** | keep-list에 **루트 JSON 3개 추가**(`kics_{tier1,tier2}_utilization.json`·`kics_forward_capital.json`) — 빠지면 패널이 조용히 빈칸. `forward_capital_simulation.py`의 `--no-html` 소멸. `pytest tests/test_deploy_assets.py`가 keep-list를 기계 검사. | `claude-agent-publishing.md` §1 |
 | **designer** | **데이터를 HTML에 인라인 금지**(K-ICS.html 147KB=70% 제거). 폴백 경로는 대소문자까지 실서버 확인(라이브 404 전례). | `claude-agent-designer.md` §4 |
 
-**불변식 2개 (새로 명문화):**
+**불변식 3개 (새로 명문화):**
 1. **게이트가 검사하는 파일 = 사용자가 보는 파일.** 다르면 산수가 맞아도 소스가 틀린 통과가 된다.
 2. **모든 `.py`는 BOM 없는 UTF-8.** UTF-16은 실행 자체가 불가하고, UTF-8 BOM은 실행은 되지만 `ast.parse`를 깨뜨려 **정적 검사 도구에서 그 파일이 투명인간**이 된다. `pytest tests/test_deploy_assets.py`가 강제.
+3. **거대 게이트/빌더 함수는 골든 테스트로 고정돼 있다 — 고치면 반드시 돌려라.** 2026-07-22 리팩토링으로 네 개의 큰 함수가 분해됐고 각각 골든이 산출물을 고정한다. 산출이 **의도적으로** 바뀌면 손으로 해시 고치지 말고 `--update`로 재생성 + 커밋에 이유 기록.
+
+| 골든 테스트 | 고정 대상 | 언제 |
+|---|---|---|
+| `tests/test_pl_breakdown_golden.py` (`RUN_PL_GOLDEN=1`, ~95초) | `build_pl_breakdown.py` 산출 마스터 바이트 | PL 빌더/핸들러 수정 후 |
+| `tests/test_post_transition_golden.py` (오프라인, ~4초) | `_extract_post_values`의 6,114 적용후 셀 | `fill_post_transition_to_disclosure.py` 수정 후 |
+| `tests/test_kics_rules_golden.py` (오프라인, <1초) | 룰 엔진 6,804 findings 매트릭스 | `kics_json_rules.py` 룰 수정 후 |
+| `tests/test_master_tables_golden.py` (오프라인, <1초) | `validate_master_tables` SUMMARY + exit code | 그 게이트 수정 후 |
+| `tests/test_deploy_assets.py` (오프라인) | keep-list·인라인금지·BOM·삭제경로 참조 | HTML fetch/삭제/인코딩 변경 후 |
 
 ## 🈲 문서·TODO 인코딩 룰 (필수)
 
