@@ -1,0 +1,82 @@
+{
+  "sha256": "b292f6c2b8e01f74269102718dec4347932199c60fa38ced0f73fabe7bc06d6f",
+  "buckets": 486,
+  "findings": 6804,
+  "by_status": {
+    "YELLOW": 561,
+    "GREEN": 4701,
+    "SKIP": 1530,
+    "ERROR": 0,
+    "RED": 12
+  },
+  "by_rule": {
+    "1": {
+      "GREEN": 476,
+      "YELLOW": 9,
+      "RED": 1
+    },
+    "2": {
+      "GREEN": 451,
+      "YELLOW": 33,
+      "RED": 2
+    },
+    "3": {
+      "SKIP": 486
+    },
+    "4": {
+      "GREEN": 311,
+      "YELLOW": 173,
+      "RED": 2
+    },
+    "5": {
+      "GREEN": 409,
+      "YELLOW": 75,
+      "RED": 2
+    },
+    "6": {
+      "GREEN": 289,
+      "YELLOW": 195,
+      "RED": 2
+    },
+    "7": {
+      "GREEN": 481,
+      "YELLOW": 4,
+      "RED": 1
+    },
+    "8": {
+      "GREEN": 484,
+      "YELLOW": 1,
+      "RED": 1
+    },
+    "8_post": {
+      "GREEN": 483,
+      "SKIP": 2,
+      "YELLOW": 1
+    },
+    "8_life": {
+      "SKIP": 137,
+      "GREEN": 334,
+      "YELLOW": 14,
+      "RED": 1
+    },
+    "19_market": {
+      "SKIP": 133,
+      "GREEN": 346,
+      "YELLOW": 7
+    },
+    "36_irr": {
+      "SKIP": 267,
+      "GREEN": 170,
+      "YELLOW": 49
+    },
+    "9": {
+      "GREEN": 228,
+      "SKIP": 258
+    },
+    "10": {
+      "SKIP": 247,
+      "GREEN": 239
+    }
+  },
+  "_what": "Refactor safety net for run_validation (K-ICS rule engine). Captured before the 361-line per-bucket loop was extracted. Covers every (code, quarter, rule, status) finding over the live kics_disclosure.json."
+}
