@@ -242,47 +242,11 @@ def sensitivity_direction_sanity():
     return flags
 
 
-def main() -> int:
-    if "--no-build" not in sys.argv:
-        rebuild_root_masters()
-    pl = load_long(PL_PATH)
-    wf = load_long(WF_PATH)
-
-    # ===== 1. CLOSING_IDENTITY (CSM_waterfall, 억원) =====
-    need = ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"]
-    ci_pass = ci_skip = 0
-    ci_fail = []
-    for (co, q), m in sorted(wf.items()):
-        if any(m.get(k) is None for k in need):
-            ci_skip += 1
-            continue
-        lhs = sum(m[k] for k in need[:-1])
-        rhs = m["기말CSM"]
-        diff = lhs - rhs
-        if abs(diff) > max(0.001 * abs(rhs), 2.0):
-            ci_fail.append((co, q, round(rhs, 1), round(diff, 1)))
-        else:
-            ci_pass += 1
-
-    print("=" * 78)
-    print(f"1. CLOSING_IDENTITY (CSM_waterfall, 억원)  pass={ci_pass} fail={len(ci_fail)} skip={ci_skip}")
-    print("=" * 78)
-    for co, q, rhs, diff in ci_fail:
-        print(f"  FAIL {co:14s} {q}  기말={rhs:>11.1f}  diff={diff:>+10.1f}  ({diff/rhs*100:+.1f}%)")
-
-    # ===== 0. COVERAGE (데이터 누락 hole — SKIP으로 숨기지 않음) =====
-    wf_holes, wf_known, wf_struct = coverage_holes(wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"])
-    pl_holes, pl_known, pl_struct = coverage_holes(pl, ["보험손익", "생명장기손익", "당기순이익"])
-    print("=" * 78)
-    print(f"0. COVERAGE real hole(2024+)  CSM={len(wf_holes)} PL={len(pl_holes)}  | "
-          f"2023 known(비노출)={len(wf_known)+len(pl_known)} | struct(미공시)제외={len(wf_struct)+len(pl_struct)}")
-    print("=" * 78)
-    for co, q, kind in wf_holes:
-        print(f"  HOLE-CSM {co:14s} {q} ({kind})")
-    for co, q, kind in pl_holes:
-        print(f"  HOLE-PL  {co:14s} {q} ({kind})")
-    print()
-
+def _check_plausibility(wf: dict) -> tuple[list, list, list, list, list]:
+    """CSM absolute-value sanity the closing identity misses: dup / spike /
+    continuity break / FY-opening mismatch / zero-amortization. Prints its own
+    section and returns (dup_rows, spike_rows, cont_rows, wfy_rows, zamort_rows).
+    Split out of main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     # ===== 1b. CSM_PLAUSIBILITY (절댓값 sanity — closing identity가 못 잡는 것) =====
     # closing identity는 내부 산술 합산만 봐서 (a)분기 복붙 (b)기말 QoQ 폭락 같은
     # 절댓값 이상을 통과시킴. 별도 plausibility 체크로 보강.
@@ -389,7 +353,14 @@ def main() -> int:
         print(f"  WFYEX {co:14s} FY{fy} (documented: legit restatement) {opens}")
     for co, q in zamort_rows:
         print(f"  ZAMRT {co:14s} {q} CSM상각=0 (불가능 — 추출오류)")
+    return dup_rows, spike_rows, cont_rows, wfy_rows, zamort_rows
 
+
+def _check_pl_bridge(pl: dict) -> tuple[int, list, int, list, list]:
+    """PL bridge identity (2) + 생명장기 zero-legs (2b) + impossible-zero legs (2c).
+    All three read pl_breakdown and share one print block, so they stay together.
+    Returns (pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows). Split out of
+    main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     # ===== 2. PL_BRIDGE (pl_breakdown_master, 백만원) =====
     pb_pass = pb_skip = 0
     pb_fail = []
@@ -506,6 +477,53 @@ def main() -> int:
     print("  -- IMPOSSIBLE-0: 생명장기 분해손익 0원 불가 (owner 확정) --")
     for co, q, item in zerolegs_rows[:40]:
         print(f"  ZERO0 {co:14s} {q}  {item}=0 (불가능 — 추출오류)")
+    return pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows
+
+
+def main() -> int:
+    if "--no-build" not in sys.argv:
+        rebuild_root_masters()
+    pl = load_long(PL_PATH)
+    wf = load_long(WF_PATH)
+
+    # ===== 1. CLOSING_IDENTITY (CSM_waterfall, 억원) =====
+    need = ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"]
+    ci_pass = ci_skip = 0
+    ci_fail = []
+    for (co, q), m in sorted(wf.items()):
+        if any(m.get(k) is None for k in need):
+            ci_skip += 1
+            continue
+        lhs = sum(m[k] for k in need[:-1])
+        rhs = m["기말CSM"]
+        diff = lhs - rhs
+        if abs(diff) > max(0.001 * abs(rhs), 2.0):
+            ci_fail.append((co, q, round(rhs, 1), round(diff, 1)))
+        else:
+            ci_pass += 1
+
+    print("=" * 78)
+    print(f"1. CLOSING_IDENTITY (CSM_waterfall, 억원)  pass={ci_pass} fail={len(ci_fail)} skip={ci_skip}")
+    print("=" * 78)
+    for co, q, rhs, diff in ci_fail:
+        print(f"  FAIL {co:14s} {q}  기말={rhs:>11.1f}  diff={diff:>+10.1f}  ({diff/rhs*100:+.1f}%)")
+
+    # ===== 0. COVERAGE (데이터 누락 hole — SKIP으로 숨기지 않음) =====
+    wf_holes, wf_known, wf_struct = coverage_holes(wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"])
+    pl_holes, pl_known, pl_struct = coverage_holes(pl, ["보험손익", "생명장기손익", "당기순이익"])
+    print("=" * 78)
+    print(f"0. COVERAGE real hole(2024+)  CSM={len(wf_holes)} PL={len(pl_holes)}  | "
+          f"2023 known(비노출)={len(wf_known)+len(pl_known)} | struct(미공시)제외={len(wf_struct)+len(pl_struct)}")
+    print("=" * 78)
+    for co, q, kind in wf_holes:
+        print(f"  HOLE-CSM {co:14s} {q} ({kind})")
+    for co, q, kind in pl_holes:
+        print(f"  HOLE-PL  {co:14s} {q} ({kind})")
+    print()
+
+    dup_rows, spike_rows, cont_rows, wfy_rows, zamort_rows = _check_plausibility(wf)
+
+    pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows = _check_pl_bridge(pl)
 
     # ===== 3. CSM_CROSSCHECK (pl.원수CSM상각 + wf.CSM상각*100 ≈ 0, 백만원) =====
     # 4Q-only: pl 원수CSM상각/wf CSM상각 모두 YTD 누적이라 1~3Q는 분기배분 차이로 틀어짐.
