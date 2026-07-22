@@ -480,12 +480,10 @@ def _check_pl_bridge(pl: dict) -> tuple[int, list, int, list, list]:
     return pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows
 
 
-def main() -> int:
-    if "--no-build" not in sys.argv:
-        rebuild_root_masters()
-    pl = load_long(PL_PATH)
-    wf = load_long(WF_PATH)
-
+def _check_closing_identity(wf: dict) -> tuple[int, list, int]:
+    """CSM_WATERFALL_CLOSING_IDENTITY: 기초+신계약+이자+가정+상각 = 기말 (CSM_waterfall, 억원).
+    Prints its own section and returns (ci_pass, ci_fail, ci_skip). Split out of
+    main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     # ===== 1. CLOSING_IDENTITY (CSM_waterfall, 억원) =====
     need = ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"]
     ci_pass = ci_skip = 0
@@ -507,7 +505,13 @@ def main() -> int:
     print("=" * 78)
     for co, q, rhs, diff in ci_fail:
         print(f"  FAIL {co:14s} {q}  기말={rhs:>11.1f}  diff={diff:>+10.1f}  ({diff/rhs*100:+.1f}%)")
+    return ci_pass, ci_fail, ci_skip
 
+
+def _check_coverage(wf: dict, pl: dict) -> tuple[list, list]:
+    """COVERAGE: 데이터 누락(hole) census — SKIP으로 숨기지 않고 명시.
+    Prints its own section and returns (wf_holes, pl_holes). Split out of
+    main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     # ===== 0. COVERAGE (데이터 누락 hole — SKIP으로 숨기지 않음) =====
     wf_holes, wf_known, wf_struct = coverage_holes(wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"])
     pl_holes, pl_known, pl_struct = coverage_holes(pl, ["보험손익", "생명장기손익", "당기순이익"])
@@ -520,11 +524,13 @@ def main() -> int:
     for co, q, kind in pl_holes:
         print(f"  HOLE-PL  {co:14s} {q} ({kind})")
     print()
+    return wf_holes, pl_holes
 
-    dup_rows, spike_rows, cont_rows, wfy_rows, zamort_rows = _check_plausibility(wf)
 
-    pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows = _check_pl_bridge(pl)
-
+def _check_csm_crosscheck(pl: dict, wf: dict) -> tuple[int, list, int, int]:
+    """CSM_CROSSCHECK: pl.원수CSM상각 + wf.CSM상각*100 ≈ 0 (백만원), 4Q-only.
+    Prints its own section and returns (cc_pass, cc_fail, cc_minor, cc_skip).
+    Split out of main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     # ===== 3. CSM_CROSSCHECK (pl.원수CSM상각 + wf.CSM상각*100 ≈ 0, 백만원) =====
     # 4Q-only: pl 원수CSM상각/wf CSM상각 모두 YTD 누적이라 1~3Q는 분기배분 차이로 틀어짐.
     # 연말(4Q=연간 누계)에서만 동일 기준 → 4Q만 비교, 1~3Q SKIP.
@@ -571,7 +577,14 @@ def main() -> int:
         print(f"  FAIL  {co:14s} {q}  pl={p:>+12.1f}  wf={w:>+12.1f}  sum={s:>+10.1f}  ({rel*100:+.1f}%)")
     for co, q, p, w, s, rel in cc_minor_rows[:35]:
         print(f"  MINOR {co:14s} {q}  pl={p:>+12.1f}  wf={w:>+12.1f}  sum={s:>+10.1f}  ({rel*100:+.1f}%)")
+    return cc_pass, cc_fail, cc_minor, cc_skip
 
+
+def _check_qoq_warn(wf: dict) -> list:
+    """QOQ_DELTA_WARN: 시계열 anomaly (YELLOW — 다운스트림 차단 안 함).
+    Writes data/_derived/qoq_warn.json, prints its own section, and returns
+    qoq_rows. Split out of main() 2026-07-22; pinned by
+    tests/test_master_tables_golden.py."""
     # ===== 4. QOQ_DELTA_WARN (시계열 anomaly, YELLOW — 다운스트림 차단 안 함) =====
     # 누적항목(신계약/이자/상각, PL 손익)은 net-quarterly 증분 비교, 시점값(기말 CSM)은 raw QoQ.
     # 2024+ 분기만 평가. threshold는 config/qoq_thresholds.yaml.
@@ -597,7 +610,14 @@ def main() -> int:
           "threshold_pct": round(t * 100, 0), "cur": round(a, 1), "ref": round(b, 1),
           "basis": bs, "sign_flip": (a < 0) != (b < 0)} for c, q, it, d, t, a, b, bs in qoq_rows],
         ensure_ascii=False, indent=2), encoding="utf-8")
+    return qoq_rows
 
+
+def _check_sensitivity() -> tuple[list, list, list]:
+    """SENSITIVITY_UNIT_SANITY (5) + SENSITIVITY_DIRECTION_SANITY (5b): CSM 민감도
+    단위/부호 sanity via sensitivity_unit_sanity() / sensitivity_direction_sanity().
+    Prints its own sections and returns (sens_red, sens_yellow, sens_dir). Split out
+    of main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     sens_red, sens_yellow = sensitivity_unit_sanity()
     sens_dir = sensitivity_direction_sanity()
     print()
@@ -618,6 +638,28 @@ def main() -> int:
     print("=" * 78)
     for name, risk, shock, cd, pl, ratio in sens_dir:
         print(f"  SDIR {str(name):16s} {str(risk):14s} {str(shock):20s} CSM={cd:>+10.1f} 손익={pl:>+9.1f} (|CSM|/|손익|={ratio:.0f}x)")
+    return sens_red, sens_yellow, sens_dir
+
+
+def main() -> int:
+    if "--no-build" not in sys.argv:
+        rebuild_root_masters()
+    pl = load_long(PL_PATH)
+    wf = load_long(WF_PATH)
+
+    ci_pass, ci_fail, ci_skip = _check_closing_identity(wf)
+
+    wf_holes, pl_holes = _check_coverage(wf, pl)
+
+    dup_rows, spike_rows, cont_rows, wfy_rows, zamort_rows = _check_plausibility(wf)
+
+    pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows = _check_pl_bridge(pl)
+
+    cc_pass, cc_fail, cc_minor, cc_skip = _check_csm_crosscheck(pl, wf)
+
+    qoq_rows = _check_qoq_warn(wf)
+
+    sens_red, sens_yellow, sens_dir = _check_sensitivity()
 
     print()
     print("#" * 78)
