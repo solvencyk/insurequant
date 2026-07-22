@@ -92,6 +92,14 @@ These are the hard-won ones. Full detail + per-company table in **`references/qu
 - **Parallelize by (회사 × 분기 × kind)** when chunks are independent and large; small fixes do inline.
 - **What's verifiable on this branch:** `pytest tests/unit/`, and `viz_build_ifrs17_panels.py` (reads committed
   `data/dart/extracted/*.json`). FY2024-quarter cell re-parses are raw-blocked; FY2025 is unblocked (raw on disk).
+- **viz 빌더 골든 (2026-07-22):** `viz_build_ifrs17_panels.py`(4개 패널: csm_amort_schedule /
+  insurance_pl_breakdown / bs_snapshot / sensitivity_heatmap)와 `viz_build_csm_waterfall.py`
+  (csm_waterfall.json)에 골든이 있다 — `tests/test_viz_{ifrs17_panels,csm_waterfall}_golden.py`.
+  두 빌더는 커밋된 입력(`data/dart/extracted/*` + `CSM_waterfall.json` + `sensitivity_overrides.json`)의
+  순수 함수라 결정론적. **빌더를 고쳤으면 `python -m pytest tests/test_viz_*_golden.py` 필수**
+  (오프라인 각 ~1.5초). 이 빌더들은 `data/dart/viz/`의 커밋된 파일을 **인플레이스로 덮어쓰므로**
+  골든이 실행 전 백업·drift 시 복구한다. 산출이 의도적으로 바뀌면(추출 수정 등) `python
+  tests/test_viz_<x>_golden.py --update` + 커밋에 이유 기록.
 
 After changing a master JSON, regenerate `insurequant_master_tables.xlsx`
 (`python scripts/build_master_xlsx.py`) so the review loop stays in sync ([[feedback-rebuild-master-xlsx]]).

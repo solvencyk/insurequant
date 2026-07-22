@@ -52,8 +52,14 @@
 > RED 카운트가 **의도적으로** 바뀌면 손으로 해시 고치지 말고 재생성: `python
 > tests/test_kics_rules_golden.py --update` + 커밋 메시지에 **왜** 바뀌었는지 기록.
 > 같은 방식의 골든이 마스터테이블 게이트에도 있다: `tests/test_master_tables_golden.py`
-> (`validate_master_tables.main()`의 SUMMARY 전체 + exit code 고정; main도 374→154줄로
-> `_check_plausibility`·`_check_pl_bridge`로 분해됨).
+> (`validate_master_tables.main()`의 SUMMARY 전체 + exit code 고정). **main은 374→35줄로
+> 완전 분해**됐다 — 검사 7개가 각자 `_check_*(pl/wf)` 함수로 나뉘고 결과를 반환하며, main은
+> 로드 + 7개 호출 + SUMMARY 집계 + exit code만 남았다:
+> `_check_closing_identity` · `_check_coverage` · `_check_plausibility` · `_check_pl_bridge` ·
+> `_check_csm_crosscheck` · `_check_qoq_warn` · `_check_sensitivity`. 검사 하나를 고치면
+> 골든을 돌려라. **함정**(분해 중 실측): (1) main 본문·배너 주석 모두 4칸 들여쓰기라 dedent는
+> 4칸. (2) print를 공유하는 검사는 한 함수로 묶어라(PL_BRIDGE+ZERO_LEGS가 print 공유 →
+> banner로 자르면 `pb_pass` NameError). (3) 옮기기 전 자유변수(pl/wf 등)를 전부 파라미터로.
 
 | Rule | 검증 내용 | Tolerance |
 |---|---|---|

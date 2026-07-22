@@ -13,19 +13,22 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 > **원칙: 안전망 먼저, 분해 나중.** 게이트/빌더 4개(라이브 마스터를 만들거나 push를 막는 함수)를 각각 골든 테스트로 먼저 고정한 뒤에만 분해했다. 실제로 분해 중 사고 2건을 골든이 잡았다(아래 D).
 
-**A. 게이트/빌더 함수 골든 4종 신설 (전부 오프라인·결정론).**
+**A. 게이트/빌더 함수 골든 6종 신설 (전부 오프라인·결정론).**
 - `test_pl_breakdown_golden` (7b21bfb 세션): PL 마스터 바이트(2,940행)
 - `test_post_transition_golden`: `_extract_post_values` 6,114 적용후 셀
 - `test_kics_rules_golden`: 룰 엔진 6,804 findings `(회사,분기,룰,상태)` 매트릭스(RED=12 게이트와 일치)
 - `test_master_tables_golden`: `validate_master_tables` SUMMARY 전체 + exit code
+- `test_viz_ifrs17_panels_golden` / `test_viz_csm_waterfall_golden`: viz 빌더 2종(2,653줄, 안전망 없던 마지막 대형 코드)의 산출 JSON 해시 — 인플레이스 덮어쓰기라 백업·복구. **fixture 변조로 실발화 확인**(무의미 통과 아님).
 
-**B. 4개 거대 함수 분해 (동작 불변, 골든이 증명).**
+**B. 5개 거대 함수 분해 (동작 불변, 골든이 증명).**
 | 함수 | before → after |
 |---|---|
 | `build_pl_breakdown.py` | 4,885 → 567줄 + `scripts/pl_breakdown/` 패키지 |
 | `_extract_post_values` | 569 → 389줄 (+`_apply_post_corrections` 196) |
 | `run_validation` | 393 → 34줄 (+`_validate_bucket` 168 + market_irr/transition_basic/transition_capital) |
-| `validate_master_tables.main` | 374 → 154줄 (+`_check_plausibility`·`_check_pl_bridge`) |
+| `validate_master_tables.main` | 374 → **35줄** (검사 7개 전부 `_check_*`로; owner 요청으로 마지막 5개는 서브에이전트 병렬) |
+
+**B'. 병렬 처리 (owner 요청 "각각 병렬로").** 독립 두 작업을 서브에이전트로 동시 실행 — (A) `validate_master_tables.main` 나머지 검사 5개 함수화(골든 기존), (B) viz 빌더 2종 골든 신설(빌더 코드 무수정). 파일 disjoint(`validate_master_tables.py` 수정 ↔ viz 읽기+새 테스트). 오케가 두 결과를 **직접 재검증**(게이트 직접 실행·골든 fixture 변조 발화·`data/dart/viz/` 오염 0) 후 커밋(`df58b3c`·`60f6dce`).
 
 **C. CSS 통합 (`a646561`).** 3대시보드가 각자 갖던 바이트동일 모바일 `.tabs`/`.tab` 규칙을 `common.css`의 `@media(max-width:640px)`로 hoist. **범위 좁게** — `.container`/`.brand`는 2-3페이지만 같아 제외, 페이지별로 다른 `@media`(트리맵 리스트·도넛)는 인라인 유지. **cascade 함정**: 공시보고서.html은 base `.tab`을 자체 재정의(14px)하고 common.css를 그 앞에 link하므로 공통 모바일 규칙이 cascade에서 짐 → 그 페이지엔 반응형 13px을 인라인 유지(안 그러면 모바일 폰트 14px 회귀, 모바일뷰포트 Playwright가 커밋 전 적발). designer §5.2 계약에 반영.
 
@@ -35,7 +38,7 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 - `_validate_transition_capital` 시그니처에서 `eff_tol` 누락(rule 9 grandfather tol이 읽음) → `NameError`, rule-engine 골든이 잡음. `_validate_market_irr`를 먼저 커밋해 안전점 확보 후 재시도.
 - `validate_master_tables`의 PL 블록을 banner로 자르니 `pb_pass` 미정의(PL_BRIDGE와 ZERO_LEGS가 print 공유) → 골든이 잡음. 세 검사를 한 덩어리로 묶어 재분할.
 
-**계약 반영:** CLAUDE.md 불변식 #3(골든 테이블), validation §1.1(룰 엔진 5함수 + 골든), designer §5.2(CSS hoist 계약 + cascade 함정), ifrs17 SKILL/도메인doc(post-transition 골든 + 캐시 refresh 절차).
+**계약 반영:** CLAUDE.md 불변식 #3(골든 테이블 6종 — viz 2종 포함), validation §1.1(룰 엔진 5함수 + `validate_master_tables.main` 374→35 검사 7함수 + 골든), designer §5.2(CSS hoist 계약 + cascade 함정), ifrs17 SKILL/도메인doc(post-transition·viz 골든 + 캐시 refresh 절차), publishing §2.2(viz 빌더 2종 골든 표시).
 
 ---
 

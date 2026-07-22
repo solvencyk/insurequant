@@ -126,6 +126,10 @@ The HTML pages fetch these directly. **No staging templates between publishing a
 - `scripts/ifrs17_promote_history_to_measurement.py`
 - `scripts/build_ir_disclosed_multiples.py`, `scripts/build_nb_csm_multiple.py`, `scripts/build_net_income_breakdown.py`
 - `scripts/viz_build_{csm_bubble,csm_waterfall,csm_waterfall_history,earnings_quadrant,ifrs17_kpis,ifrs17_panels,nb_csm_ratio}.py`
+  > 이 중 `viz_build_ifrs17_panels.py`·`viz_build_csm_waterfall.py`는 **골든 있음**(2026-07-22):
+  > 산출을 바꾸면 `python -m pytest tests/test_viz_{ifrs17_panels,csm_waterfall}_golden.py`가
+  > `data/dart/viz/`의 커밋본과 대조한다. 나머지 5개는 아직 골든 없음(참고 목록에서 언급된
+  > `build_ir_disclosed_multiples.py`는 2026-06 아카이브로 이동 — `archive/2026-06_*`).
 
 ### 2.3 Misc
 - `scripts/build_lotte_series.py`

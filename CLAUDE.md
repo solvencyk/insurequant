@@ -71,7 +71,11 @@ See `docs/agents/kics-json-validation-rules.md` for formulas, R4/R7 matrices, to
 | `tests/test_post_transition_golden.py` (오프라인, ~4초) | `_extract_post_values`의 6,114 적용후 셀 | `fill_post_transition_to_disclosure.py` 수정 후 |
 | `tests/test_kics_rules_golden.py` (오프라인, <1초) | 룰 엔진 6,804 findings 매트릭스 | `kics_json_rules.py` 룰 수정 후 |
 | `tests/test_master_tables_golden.py` (오프라인, <1초) | `validate_master_tables` SUMMARY + exit code | 그 게이트 수정 후 |
+| `tests/test_viz_ifrs17_panels_golden.py` (오프라인, ~1.5초) | `viz_build_ifrs17_panels.py`가 쓰는 4개 패널 JSON 해시 | 그 빌더 수정 후 |
+| `tests/test_viz_csm_waterfall_golden.py` (오프라인, ~1.5초) | `viz_build_csm_waterfall.py` 산출 + 47사 status | 그 빌더 수정 후 |
 | `tests/test_deploy_assets.py` (오프라인) | keep-list·인라인금지·BOM·삭제경로 참조 | HTML fetch/삭제/인코딩 변경 후 |
+
+> viz 골든 2종은 산출 JSON을 **인플레이스로 덮어쓰는** 빌더라, 실행 전 백업하고 drift/예외 시 복구한다(마스터 반쯤 쓰임 방지). 산출이 의도적으로 바뀌면 `--update`로 재생성 + 커밋에 이유 기록.
 
 ## 🈲 문서·TODO 인코딩 룰 (필수)
 
