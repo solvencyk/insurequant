@@ -105,10 +105,18 @@ def resolve_corp(name):
     return cc
 
 
-def _fetch_raw(cc, year, reprt, fs_div):
+def _fetch_raw(cc, year, reprt, fs_div, force=False):
+    """Cached DART FS-API fetch. The cache under data/dart/_fs_api_cache/ is
+    committed (offline PL golden), and it is trusted as canonical once written —
+    there is no expiry. That is fine because DART 정정공시 (amended filings) are
+    rare, but when one lands the cached JSON for that (corp, year, reprt, fs_div)
+    is silently stale forever. To pick up an amendment, delete the matching cache
+    file (or run `python scripts/fetch_dart_fs.py --refresh <corp_code> <year>`)
+    and rebuild, then commit the refreshed cache alongside the master change.
+    `force=True` re-fetches and overwrites regardless of the cached copy."""
     CACHE.mkdir(parents=True, exist_ok=True)
     f = CACHE / f"{cc}_{year}_{reprt}_{fs_div}.json"
-    if f.exists():
+    if f.exists() and not force:
         return json.loads(f.read_text(encoding="utf-8"))
     d = _cl()._get("/api/fnlttSinglAcntAll.json",
                    {"corp_code": cc, "bsns_year": str(year), "reprt_code": reprt,
@@ -221,7 +229,35 @@ def tier1_for(name, quarter, code=None):
     return None
 
 
+def _refresh_cache(corp_code: str, year: str) -> int:
+    """Delete + re-fetch every cached (reprt × fs_div) for one (corp_code, year).
+    Use after a DART 정정공시 lands, then rebuild the PL master and commit the
+    refreshed cache. Requires OPENDART_API_KEY (live network call)."""
+    n = 0
+    for reprt in REPRT.values():
+        for fs_div in ("OFS", "CFS"):
+            f = CACHE / f"{corp_code}_{year}_{reprt}_{fs_div}.json"
+            if f.exists():
+                f.unlink()
+            try:
+                _fetch_raw(corp_code, year, reprt, fs_div, force=True)
+                n += 1
+            except Exception as e:  # noqa: BLE001 — report and continue other slices
+                print(f"  {reprt}/{fs_div}: {type(e).__name__}: {e}")
+    print(f"refreshed {n} cache files for {corp_code} {year}")
+    return 0
+
+
 if __name__ == "__main__":
+    if "--refresh" in sys.argv:
+        i = sys.argv.index("--refresh")
+        try:
+            corp_code, year = sys.argv[i + 1], sys.argv[i + 2]
+        except IndexError:
+            print("usage: fetch_dart_fs.py --refresh <corp_code> <year>", file=sys.stderr)
+            raise SystemExit(2)
+        raise SystemExit(_refresh_cache(corp_code, year))
+
     # smoke: validate against the golds
     import openpyxl
     GOLDS = [("삼성화재해상보험", "2025.4Q", "KR0008", "보험손익 breakdown_삼성화재.xlsx"),
