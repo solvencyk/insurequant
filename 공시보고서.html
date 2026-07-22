@@ -36,10 +36,12 @@
       .brand{font-size:15px}
       .brand .hint{display:none}
       .container{padding:10px}
-      .tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;gap:6px;padding-bottom:2px}
-      .tab{flex:0 0 auto;padding:8px 12px;font-size:13px}
       .panel{padding:14px}
       .panel h2{font-size:17px}
+      /* 이 페이지는 base .tab을 자체 재정의(14px)하므로 common.css의 공통 모바일
+         .tab 규칙이 cascade에서 지고, 반응형 13px도 여기 유지해야 함(2026-07-22). */
+      .tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;gap:6px;padding-bottom:2px}
+      .tab{flex:0 0 auto;padding:8px 12px;font-size:13px}
     }
   </style>
 </head>

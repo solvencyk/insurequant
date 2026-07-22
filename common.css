@@ -137,6 +137,21 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
 .subtoggle:hover{ border-color:var(--primary); color:var(--primary); }
 
 /* ============================================================================
+   Shared mobile foundation (<=640px). Hoisted 2026-07-22 from the three
+   dashboards, which each carried a byte-identical copy of the tab rules (M1
+   "shared foundation"). Only the .tabs/.tab rules are lifted here — every
+   dashboard's tab strip must scroll horizontally on mobile the same way. Page-
+   specific @media rules (treemap list view, donut layout, per-page .container/
+   .panel tuning) stay in their own <style> because their bodies differ.
+   Pages link common.css BEFORE their inline <style>, so a page may still
+   override these if it needs to.
+   ========================================================================== */
+@media (max-width:640px){
+  .tabs{ overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; gap:6px; padding-bottom:2px; }
+  .tab{ flex:0 0 auto; padding:8px 12px; font-size:13px; }
+}
+
+/* ============================================================================
    A11y baseline (additive — affects only keyboard focus / reduced-motion
    users; no change for default mouse rendering).
    ========================================================================== */
