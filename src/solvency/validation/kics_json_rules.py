@@ -238,6 +238,109 @@ def _diversified_sqrt(vector: np.ndarray, matrix: np.ndarray) -> float:
     return float(np.sqrt(inner))
 
 
+def _validate_market_irr(
+    bucket: QuarterBucket,
+    findings: list[dict[str, Any]],
+    source_has_breakdown: Optional[frozenset],
+    eff_tol: float,
+) -> None:
+    """Market-risk decomposition (19_market) and interest-rate-risk IRR (36_irr).
+    Both are cadence-aware: a disclosed parent with the breakdown missing is RED on
+    even quarters (full form) but a legit SKIP on odd quarters (간이공시), with
+    per-(company,quarter) documented exemptions. Split out of _validate_bucket
+    2026-07-22; pinned by tests/test_kics_rules_golden.py."""
+    # Rule 19_market: 시장위험액(item19) = sqrt(V'·M·V), V=[36,37,38,39,40].
+    # 8_life와 동형이나 부분결측 허용(부동산/자산집중 미보유 정상): 없는 하위=0.
+    # 핵심(2026-06-12): 부모 item19 공시인데 36-40이 *전부* 결측이면 SKIP이 아니라 RED.
+    #   부모를 공시한 회사가 표준모형 시장위험 분해(36-40)를 안 낼 수 없다 → parser gap
+    #   (하나손해 2025.4Q: 표가 <!-- image -->로 분절 / 삼성생명: "1.금리위험액"+충격시나리오방식 라벨변형).
+    #   진짜 미공시 legit 케이스만 MARKET_BREAKDOWN_EXEMPT에 (회사,분기) 문서화 면제.
+    mkt_items = list(range(36, 41))
+    mkt_present = [bucket.get(i) for i in mkt_items if bucket.get(i) is not None]
+    cq = (bucket.code, bucket.quarter)
+    if bucket.get(19) is not None and mkt_present:
+        v = np.array([bucket.get(i) or 0.0 for i in mkt_items], dtype=float)
+        expected = _diversified_sqrt(v, MARKET_M)
+        mkt_tol = max(eff_tol, 0.05 * abs(expected))
+        findings.append(_check_numeric(bucket, "19_market", expected, bucket.get(19), mkt_tol))
+    elif bucket.get(19) is None or cq in MARKET_BREAKDOWN_EXEMPT:
+        findings.append(
+            _finding(
+                bucket, "19_market", status=STATUS_SKIP, expected=None,
+                actual=bucket.get(19), diff=None,
+                detail="item19 absent (nothing to check) or documented breakdown-exempt",
+            )
+        )
+    elif (
+        source_has_breakdown is not None
+        and cq not in source_has_breakdown
+        and not bucket.quarter.endswith(("2Q", "4Q"))
+    ):
+        # cadence-SKIP은 **홀수분기(1Q/3Q)만** — 간이공시라 세부표 원천부재(MD 키워드<3로 확인).
+        # 짝수분기(2Q/4Q)는 반기/연간 full form이라 표가 반드시 있어야 함 → 결측은 아래 else에서 RED
+        # (텍스트 스캔만으론 이미지/스캔표를 못 보므로, 짝수는 source 부재여도 숨기지 않음. 2026-06-13).
+        findings.append(
+            _finding(
+                bucket, "19_market", status=STATUS_SKIP, expected=None,
+                actual=bucket.get(19), diff=None,
+                detail="item19 present but breakdown 36-40 absent from odd-quarter source (abbreviated 1Q/3Q form / cadence) — legit absent",
+            )
+        )
+    else:
+        # 짝수분기 full form 결측, 또는 홀수분기인데 원천에 표 있음(MD 키워드>=3), 또는 source 확인불가 -> 파서갭. RED.
+        findings.append(
+            _finding(
+                bucket, "19_market", status=STATUS_RED, expected=None,
+                actual=bucket.get(19), diff=None,
+                detail="item19 present + breakdown 36-40 expected (even-qtr full form, or source has table) but missing in JSON — parser gap (image-split/label-variant/MD-truncation/OCR)",
+            )
+        )
+
+    # Rule 36_irr: 금리위험액(item36) = sqrt(max(R상승,R하락)² + max(R평탄,R경사)²) + R평균회귀.
+    # R = base(item41) − 시나리오 순자산가치; 평균회귀는 signed(no max).
+    # 핵심(2026-06-13, 19_market과 동형 SKIP맹점 폐쇄): 41-46(시나리오 순자산가치 6종)은
+    #   **짝수분기(2Q/4Q) 서식에만** 존재. 홀수분기(1Q/3Q)는 서식 원천부재라 SKIP 정당.
+    #   짝수분기인데 item36 공시·41-46 결측/불완전이면 SKIP 아니라 RED(parser gap). 진짜 부재만
+    #   IRR_SCENARIO_EXEMPT 문서화 면제. 검증 empirics: 41-46은 전 분기 짝수에만 적재됨.
+    irr_items = [36, 41, 42, 43, 44, 45, 46]
+    is_even_q = bucket.quarter.endswith(("2Q", "4Q"))
+    if (bucket.code, bucket.quarter) in INTERNAL_MODEL_36IRR_EXEMPT:
+        findings.append(
+            _finding(
+                bucket, "36_irr", status=STATUS_SKIP, expected=None,
+                actual=bucket.get(36), diff=None,
+                detail="internal-model insurer: 표준 derive식 불適用 (회사 시나리오별 금리위험액 직접공시) — owner-approved exempt (2026-06-14)",
+            )
+        )
+    elif all(bucket.get(i) is not None for i in irr_items):
+        base = float(bucket.get(41))
+        r_up = max(base - float(bucket.get(43)), 0.0)
+        r_dn = max(base - float(bucket.get(44)), 0.0)
+        r_flat = max(base - float(bucket.get(45)), 0.0)
+        r_steep = max(base - float(bucket.get(46)), 0.0)
+        r_mr = base - float(bucket.get(42))  # 평균회귀: signed
+        expected = float(np.sqrt(max(r_up, r_dn) ** 2 + max(r_flat, r_steep) ** 2)) + r_mr
+        irr_tol = max(eff_tol, 0.05 * abs(expected))
+        findings.append(_check_numeric(bucket, "36_irr", expected, bucket.get(36), irr_tol))
+    elif (bucket.get(36) is not None and is_even_q
+          and (bucket.code, bucket.quarter) not in IRR_SCENARIO_EXEMPT):
+        findings.append(
+            _finding(
+                bucket, "36_irr", status=STATUS_RED, expected=None,
+                actual=bucket.get(36), diff=None,
+                detail="item36(금리위험액) present in even quarter but scenario table 41-46 missing/incomplete — parser gap, not legit (scenario table is in 2Q/4Q form)",
+            )
+        )
+    else:
+        findings.append(
+            _finding(
+                bucket, "36_irr", status=STATUS_SKIP, expected=None,
+                actual=bucket.get(36), diff=None,
+                detail="item36 absent, or odd quarter (scenario table not in 1Q/3Q form), or documented scenario-exempt",
+            )
+        )
+
+
 def _validate_bucket(
     bucket: QuarterBucket,
     findings: list[dict[str, Any]],
@@ -466,96 +569,7 @@ def _validate_bucket(
             )
         )
 
-    # Rule 19_market: 시장위험액(item19) = sqrt(V'·M·V), V=[36,37,38,39,40].
-    # 8_life와 동형이나 부분결측 허용(부동산/자산집중 미보유 정상): 없는 하위=0.
-    # 핵심(2026-06-12): 부모 item19 공시인데 36-40이 *전부* 결측이면 SKIP이 아니라 RED.
-    #   부모를 공시한 회사가 표준모형 시장위험 분해(36-40)를 안 낼 수 없다 → parser gap
-    #   (하나손해 2025.4Q: 표가 <!-- image -->로 분절 / 삼성생명: "1.금리위험액"+충격시나리오방식 라벨변형).
-    #   진짜 미공시 legit 케이스만 MARKET_BREAKDOWN_EXEMPT에 (회사,분기) 문서화 면제.
-    mkt_items = list(range(36, 41))
-    mkt_present = [bucket.get(i) for i in mkt_items if bucket.get(i) is not None]
-    cq = (bucket.code, bucket.quarter)
-    if bucket.get(19) is not None and mkt_present:
-        v = np.array([bucket.get(i) or 0.0 for i in mkt_items], dtype=float)
-        expected = _diversified_sqrt(v, MARKET_M)
-        mkt_tol = max(eff_tol, 0.05 * abs(expected))
-        findings.append(_check_numeric(bucket, "19_market", expected, bucket.get(19), mkt_tol))
-    elif bucket.get(19) is None or cq in MARKET_BREAKDOWN_EXEMPT:
-        findings.append(
-            _finding(
-                bucket, "19_market", status=STATUS_SKIP, expected=None,
-                actual=bucket.get(19), diff=None,
-                detail="item19 absent (nothing to check) or documented breakdown-exempt",
-            )
-        )
-    elif (
-        source_has_breakdown is not None
-        and cq not in source_has_breakdown
-        and not bucket.quarter.endswith(("2Q", "4Q"))
-    ):
-        # cadence-SKIP은 **홀수분기(1Q/3Q)만** — 간이공시라 세부표 원천부재(MD 키워드<3로 확인).
-        # 짝수분기(2Q/4Q)는 반기/연간 full form이라 표가 반드시 있어야 함 → 결측은 아래 else에서 RED
-        # (텍스트 스캔만으론 이미지/스캔표를 못 보므로, 짝수는 source 부재여도 숨기지 않음. 2026-06-13).
-        findings.append(
-            _finding(
-                bucket, "19_market", status=STATUS_SKIP, expected=None,
-                actual=bucket.get(19), diff=None,
-                detail="item19 present but breakdown 36-40 absent from odd-quarter source (abbreviated 1Q/3Q form / cadence) — legit absent",
-            )
-        )
-    else:
-        # 짝수분기 full form 결측, 또는 홀수분기인데 원천에 표 있음(MD 키워드>=3), 또는 source 확인불가 -> 파서갭. RED.
-        findings.append(
-            _finding(
-                bucket, "19_market", status=STATUS_RED, expected=None,
-                actual=bucket.get(19), diff=None,
-                detail="item19 present + breakdown 36-40 expected (even-qtr full form, or source has table) but missing in JSON — parser gap (image-split/label-variant/MD-truncation/OCR)",
-            )
-        )
-
-    # Rule 36_irr: 금리위험액(item36) = sqrt(max(R상승,R하락)² + max(R평탄,R경사)²) + R평균회귀.
-    # R = base(item41) − 시나리오 순자산가치; 평균회귀는 signed(no max).
-    # 핵심(2026-06-13, 19_market과 동형 SKIP맹점 폐쇄): 41-46(시나리오 순자산가치 6종)은
-    #   **짝수분기(2Q/4Q) 서식에만** 존재. 홀수분기(1Q/3Q)는 서식 원천부재라 SKIP 정당.
-    #   짝수분기인데 item36 공시·41-46 결측/불완전이면 SKIP 아니라 RED(parser gap). 진짜 부재만
-    #   IRR_SCENARIO_EXEMPT 문서화 면제. 검증 empirics: 41-46은 전 분기 짝수에만 적재됨.
-    irr_items = [36, 41, 42, 43, 44, 45, 46]
-    is_even_q = bucket.quarter.endswith(("2Q", "4Q"))
-    if (bucket.code, bucket.quarter) in INTERNAL_MODEL_36IRR_EXEMPT:
-        findings.append(
-            _finding(
-                bucket, "36_irr", status=STATUS_SKIP, expected=None,
-                actual=bucket.get(36), diff=None,
-                detail="internal-model insurer: 표준 derive식 불適用 (회사 시나리오별 금리위험액 직접공시) — owner-approved exempt (2026-06-14)",
-            )
-        )
-    elif all(bucket.get(i) is not None for i in irr_items):
-        base = float(bucket.get(41))
-        r_up = max(base - float(bucket.get(43)), 0.0)
-        r_dn = max(base - float(bucket.get(44)), 0.0)
-        r_flat = max(base - float(bucket.get(45)), 0.0)
-        r_steep = max(base - float(bucket.get(46)), 0.0)
-        r_mr = base - float(bucket.get(42))  # 평균회귀: signed
-        expected = float(np.sqrt(max(r_up, r_dn) ** 2 + max(r_flat, r_steep) ** 2)) + r_mr
-        irr_tol = max(eff_tol, 0.05 * abs(expected))
-        findings.append(_check_numeric(bucket, "36_irr", expected, bucket.get(36), irr_tol))
-    elif (bucket.get(36) is not None and is_even_q
-          and (bucket.code, bucket.quarter) not in IRR_SCENARIO_EXEMPT):
-        findings.append(
-            _finding(
-                bucket, "36_irr", status=STATUS_RED, expected=None,
-                actual=bucket.get(36), diff=None,
-                detail="item36(금리위험액) present in even quarter but scenario table 41-46 missing/incomplete — parser gap, not legit (scenario table is in 2Q/4Q form)",
-            )
-        )
-    else:
-        findings.append(
-            _finding(
-                bucket, "36_irr", status=STATUS_SKIP, expected=None,
-                actual=bucket.get(36), diff=None,
-                detail="item36 absent, or odd quarter (scenario table not in 1Q/3Q form), or documented scenario-exempt",
-            )
-        )
+    _validate_market_irr(bucket, findings, source_has_breakdown, eff_tol)
 
     # Rule 9: 기본자본 (item2) 적용후 >= 적용전.
     # Transitional grandfather: pre-2022 신종자본증권 fully recognized in basic capital
