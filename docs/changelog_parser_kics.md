@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-07-16 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-07-27 · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,17 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-07-27 — TODO_parser_kics.md `## Status` 섹션 압축 (문서 정리, 데이터 변경 없음)
+
+owner 지시(inbox `20260727T0700Z`, 컨텍스트 슬림화): `## Status` 649→273줄(섹션 자체는 504→127줄).
+라이브 게이트 재실행해 현재 RED 12건이 이 섹션의 어떤 문장에도 이름으로 안 걸려있음을 먼저 확인(근거는
+루트 `TODO.md`에 있음, 별도) — 즉 순수 작업이력이라 압축 안전. 최근 4라운드(2026-07-15 1~3차 + 07-16
+owner 스윕)는 현재 게이트 상태를 직접 서술해 원문 보존, 그 이전 18개 완결 라운드(2026-07-07~07-12)는
+전부 이 changelog에 대응 항목이 있음을 grep 대조 후 "라운드헤더+결과1줄+changelog참조"로 압축. `pytest
+tests/test_deploy_assets.py` 8 passed. 상세: `inbox/parser/20260727T0700Z`(`status: answered`).
 
 ---
 
