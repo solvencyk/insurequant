@@ -88,14 +88,13 @@
 When invoked, read in this order:
 
 1. This file (`TODO_downloader.md`) — current state and documented exceptions
-2. `docs/changelog_downloader.md` — history (what previous sessions did)
-3. `docs/agents/claude-agent-downloader.md` — master prompt (mission + 5 sources catalog + canonical layout)
-4. `docs/agents/source-catalog.yaml` — machine-readable URL/XPath catalog
-5. `data/dart/_inventory_manifest.json` — DART coverage; avoid re-fetching
-6. `data/disclosure/_meta/FY*/_manifest.json` — per-period manifests
-7. `data/ir/_*.json` — IR manifests (`_db_manifest.json`, `_db_decks_manifest.json`, `_hyundai_manifest.json`, `_kr_map.json`)
+2. `docs/agents/claude-agent-downloader.md` — master prompt (mission + 5 sources catalog + canonical layout)
+3. `docs/agents/source-catalog.yaml` — machine-readable URL/XPath catalog
+4. `data/dart/_inventory_manifest.json` — DART coverage; avoid re-fetching
+5. `data/disclosure/_meta/FY*/_manifest.json` — per-period manifests
+6. `data/ir/_*.json` — IR manifests (`_db_manifest.json`, `_db_decks_manifest.json`, `_hyundai_manifest.json`, `_kr_map.json`)
 
-For cross-stage context (other 4 stages), see root `TODO.md`.
+Deferred (2026-07-27): `docs/changelog_downloader.md` is history — open it only when you need the background of a past decision; most sessions don't. For cross-stage context, see root `TODO.md`.
 
 ---
 

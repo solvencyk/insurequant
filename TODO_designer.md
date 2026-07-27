@@ -131,7 +131,7 @@ Publishing currently has Tier1 4-bar in production. Tier2 (LOB 장기/자동차/
 **Local preview:** `python -m http.server 8000` from repo root. (preview_eval 반복 행 시 Edge headless `--dump-dom` 대체; 좀비 포트 회피로 현재 8889.)
 
 ## Reading order for designer subagent
-1. This file (`TODO_designer.md`) + [`docs/changelog_designer.md`](docs/changelog_designer.md)
+1. This file (`TODO_designer.md`) — current state (changelog is deferred: [`docs/changelog_designer.md`](docs/changelog_designer.md) is history, open only when you need a past decision's background)
 2. [`docs/agents/claude-agent-designer.md`](docs/agents/claude-agent-designer.md)
 3. Root HTML page(s) in scope
 4. Master JSON schema (publishing's output) for the panel you touch — read-only

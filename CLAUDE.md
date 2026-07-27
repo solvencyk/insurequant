@@ -27,13 +27,15 @@ Domain reference docs (K-ICS / IFRS17 / Misc IR) sit under `docs/domains/` and p
 
 이 저장소는 여러 Claude/Cursor 세션이 이어서 작업합니다.
 
-**새 세션 시작 시 읽는 순서:**
+**새 세션 시작 시 읽는 순서 (2026-07-27 deferred loading — changelog는 매 세션 로드 X):**
 1. 이 `CLAUDE.md` (정책 + 5-stage 인덱스)
-2. 루트 `TODO.md` (cross-stage 현황) + `docs/claude-changelog.md` (cross-stage 이력)
-3. 작업하려는 stage의 `TODO_<stage>.md` + `docs/changelog_<stage>.md` + `docs/agents/claude-agent-<stage>.md`
-   - **parser는 레인별**: `TODO_parser_<lane>.md` + `docs/changelog_parser_<lane>.md` + 공유 `claude-agent-parser.md` + `docs/domains/claude-agent-<lane>.md` (`<lane>` = `kics` 또는 `ifrs17`)
+2. 루트 `TODO.md` (cross-stage 현황)
+3. 작업하려는 stage의 `TODO_<stage>.md` + `docs/agents/claude-agent-<stage>.md`
+   - **parser는 레인별**: `TODO_parser_<lane>.md` + 공유 `claude-agent-parser.md` + `docs/domains/claude-agent-<lane>.md` (`<lane>` = `kics` 또는 `ifrs17`)
 
-변경·실행이 있을 때마다 **해당 stage**의 TODO/changelog 맨 위를 갱신. cross-stage 변경이면 root 두 파일 갱신.
+> **changelog는 읽는 순서에서 뺐다 (deferred, 2026-07-27).** `docs/claude-changelog.md`·`docs/changelog_<stage>.md`는 **이력 저장소** — 특정 과거 결정의 배경·근거가 필요할 때만 연다(대부분 세션은 안 열어도 됨). **현황은 TODO에**, 커밋레벨 상세는 **git log**(첫 push 2026-05-25 이후)에 있다. 이유: changelog가 매 세션 강제 로드되면 kics 세션 기준 ~1,900줄 중 868줄이 이력이라 컨텍스트 낭비(클로드 컨텍스트 엔지니어링 원칙: 필요시점 로드).
+
+**갱신 규칙은 유지:** 변경·실행 후 **해당 stage TODO 맨 위 갱신 필수**, 그리고 완결 항목은 **해당 stage changelog에 계속 기록**(이력은 쌓되 읽기는 필요 시). cross-stage 변경이면 root `TODO.md` + `docs/claude-changelog.md` 갱신.
 
 ## K-ICS validation gate (mandatory)
 

@@ -98,10 +98,11 @@ INDEX-IFRS17-BUBBLE 과 동일 pipeline. Waterfall validation 23/23. 버블맵 �
 ## Reading order for publishing subagent
 
 1. This file (`TODO_publishing.md`) — current state
-2. [`docs/changelog_publishing.md`](docs/changelog_publishing.md) — history
-3. [`docs/agents/claude-agent-publishing.md`](docs/agents/claude-agent-publishing.md) — master prompt
-4. Validation report (from validation stage) — must be `next_action: pass` before assembling
-5. Root [`TODO.md`](TODO.md) for cross-stage dependencies
+2. [`docs/agents/claude-agent-publishing.md`](docs/agents/claude-agent-publishing.md) — master prompt
+3. Validation report (from validation stage) — must be `next_action: pass` before assembling
+4. Root [`TODO.md`](TODO.md) for cross-stage dependencies
+
+Deferred (2026-07-27): [`docs/changelog_publishing.md`](docs/changelog_publishing.md) is history — open it only when you need the background of a past decision; most sessions don't (현황은 위 1번, 상세는 git log).
 
 ---
 

@@ -144,11 +144,12 @@ Remove once F17 lands and prompt §2.2 captures it.
 ## Reading order for parser subagent (IFRS17 lane)
 
 1. This file (`TODO_parser_ifrs17.md`) — open work + done archive + taxonomy note
-2. `docs/changelog_parser.md` — history (pre-split combined)
-3. `docs/agents/claude-agent-parser.md` — master prompt + per-domain contract
-4. Domain ref: `docs/domains/claude-agent-ifrs17.md` for label variants and company quirks
-5. Root `TODO.md` only for cross-stage items (F15/F16/F17/F18) — full detail lives here
-6. Sibling lane: `TODO_parser_kics.md` (solvency disclosure) — for [xref] items
+2. `docs/agents/claude-agent-parser.md` — master prompt + per-domain contract
+3. Domain ref: `docs/domains/claude-agent-ifrs17.md` for label variants and company quirks
+4. Root `TODO.md` only for cross-stage items (F15/F16/F17/F18) — full detail lives here
+5. Sibling lane: `TODO_parser_kics.md` (solvency disclosure) — for [xref] items
+
+Deferred (2026-07-27): `docs/changelog_parser_ifrs17.md` (+ pre-split `changelog_parser.md`) is history — open only when you need a past decision's background; most sessions don't.
 
 ## Hand-off to validation
 

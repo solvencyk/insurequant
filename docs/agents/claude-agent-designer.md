@@ -181,8 +181,10 @@ The `frontend-design` skill (or any redesign) must treat these four as fixed con
 
 When invoked, read in this order:
 
-1. This file (`TODO_designer.md`) + `docs/changelog_designer.md`
+1. This file (`TODO_designer.md`) — current state
 2. `docs/agents/claude-agent-designer.md` (this prompt)
 3. The page(s) in scope (root HTML)
 4. The master JSON schema for the data the page renders (don't modify; just understand)
 5. Root `TODO.md` for cross-stage dependencies / roadmap notes
+
+Deferred (2026-07-27): `docs/changelog_designer.md` is history — open only when you need a past decision's background; most sessions don't.
