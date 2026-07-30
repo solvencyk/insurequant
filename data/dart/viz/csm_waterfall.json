@@ -1111,8 +1111,8 @@
     {
       "company": "아이비케이연금보험",
       "rcept_no": "20240328000905",
-      "status": "partial",
-      "completeness": 0.67,
+      "status": "ok",
+      "completeness": 1.0,
       "caption": "(4) 보고기간 중 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).<당기>",
       "header": [
         [
@@ -1140,6 +1140,10 @@
           "label": "기초 순장부금액",
           "value_mn_krw": 307357.645
         },
+        "new_business": {
+          "label": "당기에 최초로 인식한 계약",
+          "value_mn_krw": 32334.44
+        },
         "interest": {
           "label": "보험금융손익",
           "value_mn_krw": 9687.051
@@ -1147,6 +1151,10 @@
         "assumption": {
           "label": "보험계약마진을 조정하는 추정치의 변동",
           "value_mn_krw": 132612.245
+        },
+        "amortization": {
+          "label": "제공된 서비스에 대해 인식한 보험계약마진",
+          "value_mn_krw": -26151.758
         },
         "closing": {
           "label": "기말 순부채 잔액",
@@ -1157,8 +1165,8 @@
     {
       "company": "아이비케이연금보험",
       "rcept_no": "20250328000503",
-      "status": "partial",
-      "completeness": 0.67,
+      "status": "ok",
+      "completeness": 1.0,
       "caption": "(5) 보고기간 중 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).<당기>",
       "header": [
         [
@@ -1186,6 +1194,10 @@
           "label": "기초 순장부금액",
           "value_mn_krw": 455839.623
         },
+        "new_business": {
+          "label": "당기에 최초로 인식한 계약",
+          "value_mn_krw": 40362.346
+        },
         "interest": {
           "label": "보험금융손익",
           "value_mn_krw": 14656.339
@@ -1193,6 +1205,10 @@
         "assumption": {
           "label": "보험계약마진을 조정하는 추정치의 변동",
           "value_mn_krw": -25634.76
+        },
+        "amortization": {
+          "label": "제공된 서비스에 대해 인식한 보험계약마진",
+          "value_mn_krw": -35111.633
         },
         "closing": {
           "label": "기말 순부채 잔액",
@@ -1203,9 +1219,9 @@
     {
       "company": "아이비케이연금보험",
       "rcept_no": "20260331004893",
-      "status": "partial",
-      "completeness": 0.67,
-      "caption": "2) 유배당 외<당기>",
+      "status": "ok",
+      "completeness": 1.0,
+      "caption": "(6) 보고기간 중 상품별 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).1) 연금과 저축보험<당기>",
       "header": [
         [
           "구분",
@@ -1230,19 +1246,27 @@
       "stages": {
         "opening": {
           "label": "기초 순장부금액",
-          "value_mn_krw": 425336.324
+          "value_mn_krw": 450111.915
+        },
+        "new_business": {
+          "label": "당기에 최초로 인식한 계약",
+          "value_mn_krw": 71773.097
         },
         "interest": {
           "label": "보험금융손익",
-          "value_mn_krw": 15264.546
+          "value_mn_krw": 16007.115
         },
         "assumption": {
           "label": "보험계약마진을 조정하는 추정치의 변동",
-          "value_mn_krw": 27385.261
+          "value_mn_krw": 26506.085
+        },
+        "amortization": {
+          "label": "제공된 서비스에 대해 인식한 보험계약마진",
+          "value_mn_krw": -44027.788
         },
         "closing": {
           "label": "기말 순부채 잔액",
-          "value_mn_krw": 498792.698
+          "value_mn_krw": 520376.251
         }
       }
     },

@@ -1,7 +1,7 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-07-04 · Stage 2/5 — parser (ifrs17 lane)
-> Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser.md
+> Last updated: 2026-07-30 · Stage 2/5 — parser (ifrs17 lane)
+> Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_ifrs17.md
 
 Stage 2 — **parser, IFRS17 lane**: CSM/PL extraction. Source = DART body XML; output = `CSM_waterfall` / `PL_breakdown` masters; validators = CSM golds / PL golds / `csm_waterfall` / `pl_bridge`. The K-ICS lane (solvency disclosure off Docling MD) lives in `TODO_parser_kics.md` and runs as a separate session.
 
@@ -10,6 +10,25 @@ Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/dom
 ## Status
 
 IFRS17 lane is **mature**: CSM waterfall + PL breakdown masters all built (root JSONs assembled, xlsx regenerated). 2026.1Q loaded (changelog (s)). CSM golds 8/8 and PL golds pass; `check_pl_reconcile.py` closed the large systematic gaps (예실차-미공시 generic closure + 에이비엘 leg + 하나 장기). Remaining work is residual Tier-2 coverage backfill + a few escalated owner decisions (코리안리 FY2025 basis), not core extractor rewrites.
+
+> **2026-07-30 inbox drain (17 lane:ifrs17 items processed)** — full detail in `docs/changelog_parser_ifrs17.md`
+> 2026-07-30 entry. Highlights: **KR0075(BNP파리바카디프) 100x + KR1098(카카오페이) 1000x CSM unit bugs
+> fixed** (raw-confirmed where raw exists, override-based where it doesn't — see overrides' `why` fields);
+> **KR0029(AIG)'s identical bug already resolved by an untracked prior session**; **KR0004(예별손해=구MG)
+> onboarded 3 years** via safe per-dir extraction (not the destructive full raw-glob); **KR1011(IBK) protected**
+> from a latent data-loss bug in the diag-rebuild path; **`sensitivity_heatmap_provenance.json` sidecar
+> shipped** (validation's UH-3 ask, gate RED=0); **FY2025 sensitivity mass-refresh confirmed already done**
+> (32/32사, TODO below was stale saying only 흥국 — corrected). **⚠️ Found + avoided a near-miss**: this
+> branch's `build_root_masters.py::main()` is unsafe as a whole — not just the CSM half (already known) but
+> **the PL half too** (`pl_breakdown_master.json` diag is equally stale from the git-purge; a bare `main()`
+> run silently collapsed the committed `PL_breakdown.json` from 319 to 117 (company,quarter) combos before
+> being caught by diffing and reverted). **Always call `build_csm()`/`build_pl()` individually and diff full
+> combo-sets against `git show HEAD:<file>` before trusting output on this branch** — see
+> `[[project_git_purge]]` memory. New open items from this session are filed under P1/P2 below and in the
+> relevant `inbox/{downloader,validation}/` tickets (KR1098 FY2024 raw refetch, KR0051 FY2025 raw refetch,
+> `CSM_WATERFALL_PLAUSIBILITY` rule request, postmortem `docs/postmortems/PM-2026-07-30_kr0075_csm_100x_unit.md`).
+> **Master xlsx needs regeneration** (publishing, official `xlsx` skill) — CSM_waterfall.json/NB_CSM_multiple.json
+> changed.
 
 > **Disposition pass 2026-06-14** (committed-master read-only, 5-agent; inbox `20260612T0900Z` 답변): V9/V7/PL-T2 잔여 14건 판정 → **legit 10 종결** (코리안리 상각 "1y lag" = 부호규약 artifact·워터폴 close / history off-by-one = year-shift 없음 / 메트라이프 영업이익 등식 OK / 한화손해 NB non-stale / 동양 재보 = net-only legit-absent, phantom item9/10 백필 금지 / 케이디비·롯데·교보플래닛 정상 또는 legit-absent), **real_gap 2 (raw-blocked)**: 현대해상 예실차(item6/11) pre-2025.3Q 결측 + 악사 interim 분기 부재 — fix는 purge된 분기 raw 필요, **designer handoff 1**: csm_delta=null→0 렌더(동양/NH, `inbox/designer/20260614T1300Z`), **out_of_scope 1**: 하나생명 item17 투자손익=FS-API 레인. fixable-now bug 0.
 
@@ -32,7 +51,7 @@ IFRS17 lane is **mature**: CSM waterfall + PL breakdown masters all built (root 
 - [x] PL_breakdown.json IBK 72레코드 적재 (tier1+tier2 gold override, closure 5종 Δ=0)
 - [x] viz 전파 (sensitivity_heatmap/csm_amort/insurance_pl/csm_waterfall/csm_bubble/kpis/quadrant)
 - [x] publishing inbox 발송
-- [ ] **IBK CSM waterfall newbiz 스테이지 누락** — `viz_build_csm_waterfall.py` partial 상태. measurement 라벨 `당기에 최초로 인식한 계약`이 STAGE_ROWS에 매핑 안 됨 → parser 추가 대응 필요 (P2).
+- [x] **IBK CSM waterfall newbiz 스테이지 누락 — 완료 (2026-07-30 세션 이어받음).** 라벨 미스매치 2건(`당기에 최초로 인식한 계약`/`제공된 서비스에 대해 인식한 보험계약마진`, STAGE_PATTERNS에 정확 리터럴 추가) 수정 중 **더 심각한 사전 버그 2건 추가 발견**: ① `_disambiguate_basis_period`가 IBK의 "2)유배당 외"(무배당) 세그먼트를 whole-book으로 오선택(5.5% 과소— 캡션 `^\d\)\s*유배당` 정규식으로 스왑대상에서 제외, 처브라이프도 같은 캡션 패턴이나 값 무변경 확인됨), ② FY2023 filing이 전기(FY2022) 컬럼을 선택(`len(full)<2` 조기return이 prior 판정 결과를 버림 — `len(current)==1`일 때 승격하도록 수정). 3개년 15값 전부 CSM_waterfall.json 마스터와 정확 일치 검증, 47개사 전체 diff로 IBK 외 회귀 0 확인(첫 시도 때 한화생명 등 12사 회귀 유발했던 버전은 폐기하고 재수정). `csm_bubble.json`/`downstream_kpis.json`은 별도의 사전 staleness(17개사, 무관)+kpis 자체 버그(closing null)까지 얽혀있어 미반영·원복 — 후속 필요.
 - [ ] **master xlsx 재생성** — xlsx skill 사용 (publishing 세션).
 
 ---

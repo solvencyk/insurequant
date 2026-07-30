@@ -55,6 +55,9 @@ STAGE_PATTERNS: dict[str, list[str]] = {
         "신규계약",
         # Samsung Fire §75: parent row empty; substance in sub-row.
         "손실부담계약을 제외한 집합",
+        # IBK연금(KR1011): "당기에 최초로 인식한 계약" (particle 최초+로, not the
+        # space-separated "최초 인식한" form the other patterns expect).
+        "당기에 최초로 인식한 계약",
     ],
     "interest": [
         "순보험금융손익",
@@ -106,6 +109,9 @@ STAGE_PATTERNS: dict[str, list[str]] = {
         "보험계약마진상각",
         "보험계약마진의 상각",
         "당기손익으로 인식한 보험계약마진 금액",
+        # IBK연금(KR1011): "제공된 서비스에 대해 인식한 보험계약마진" (제공된, not
+        # 제공한 — one syllable off the closest existing pattern above).
+        "제공된 서비스에 대해 인식한 보험계약마진",
     ],
     "closing": [
         "순부채(자산) (K",
@@ -640,11 +646,39 @@ def _disambiguate_basis_period(ranked: list[dict]) -> list[dict]:
         return False
 
     current = [t for i, t in enumerate(info) if not _is_prior(i)]
+    # Exactly one non-prior survivor = no 별도/연결 ambiguity left to resolve
+    # (that needs >=2 same-period candidates), just a plain 당기/전기 pair where
+    # continuity already proves which one is current. Promote it outright —
+    # don't fall through to the `len(full) < 2` "leave unchanged" branch below,
+    # which used to silently keep a PROVEN-prior block as the winner whenever
+    # its own score/nb_abs tiebreak happened to sort it first (IBK연금 FY2023
+    # filing: only 당기/전기 of one table; 전기's larger nb_abs won the initial
+    # sort, and the old code never re-checked prior-ness once `full` came up
+    # short). >=2 survivors still go through the existing magnitude logic
+    # unchanged (that's the genuine 별도-vs-연결 case, e.g. 한화생명).
+    if len(current) == 1:
+        best = current[0][0]
+        if best is not ranked[0]:
+            return [best] + [b for b in ranked if b is not best]
+        return ranked
     open_mags = [abs(o) for _b, o, _c in current if o is not None]
     if not open_mags:
         return ranked
     max_open = max(open_mags)
-    full = [t for t in current if t[1] is not None and abs(t[1]) >= max_open * 0.20]
+    # Exclude 배당여부(dividend-basis) sub-segment tables — captions numbered
+    # "1)유배당"/"2)유배당 외" (e.g. IBK연금; the lead-in "(7) …배당여부에 따른…"
+    # sentence is a SEPARATE table whose own caption is just the bare "2) 유배당
+    # 외<당기>" stub) — from the swap target. Such a block is BY CONSTRUCTION a
+    # subset of the whole book, never a 연결/별도 duplicate, but a large 무배당
+    # segment (~95% of a small-유배당 book) can still land inside the 20%-of-max
+    # band and wrongly win via "smaller = 별도" (IBK: this picked the 무배당-only
+    # table over the true whole-book "(6) 상품별…" one).
+    _DIVIDEND_SEGMENT_RE = re.compile(r"^\d\)\s*유배당")
+    full = [
+        t for t in current
+        if t[1] is not None and abs(t[1]) >= max_open * 0.20
+        and not _DIVIDEND_SEGMENT_RE.match((t[0].get("caption") or "").strip())
+    ]
     if len(full) < 2:
         return ranked  # no 연결/별도 duplicate pair — leave score order intact
     best = min(full, key=lambda t: abs(t[1]))[0]
