@@ -2,7 +2,7 @@
 from: owner
 to: parser
 created: 20260616T0007Z
-status: open
+status: resolved
 route: backlog
 company: 흥국생명, KR0083 푸본현대, 하나생명
 period: 2025

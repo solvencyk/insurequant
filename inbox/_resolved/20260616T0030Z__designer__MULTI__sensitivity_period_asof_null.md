@@ -2,7 +2,7 @@
 from: designer
 to: parser
 created: 20260616T0030Z
-status: open
+status: resolved
 route: backlog
 company: MULTI
 period: ALL

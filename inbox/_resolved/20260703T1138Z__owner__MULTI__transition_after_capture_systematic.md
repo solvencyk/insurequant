@@ -2,7 +2,7 @@
 from: owner
 to: parser
 created: 20260703T1138Z
-status: open
+status: resolved
 route: reextract
 company: MULTI (경과조치 적용사 22사)
 period: 2023.1Q~2026.1Q
@@ -83,3 +83,17 @@ IBK 11분기 신규파싱 겸 적용후 재구축. [지급여력비율 총괄]�
 
 **Tier C(금리민감도 `kics_rate_sensitivity.json`, 68건)는 여전히 완전 미착수** — 이번 라운드 스코프 밖,
 status: open 유지.
+
+**2026-07-11(2차) — Tier C 재검증 완료.** 118개 (사·분기·measure) 전수 스캔. "금액계열 동일 53건"은 원
+티켓 caveat대로 TAC 미적용사면 정당 — KR0002(한화손해) 2024.4Q를 raw와 완전 대조해 확인, 나머지도 같은
+패턴으로 일반화(개별 재검증 생략). **진짜 버그 2건**: KR0083(푸본현대) 2025.2Q 3개 measure 전부 적용전=
+적용후로 저장돼 있었는데 실은 저장값 자체가 raw와 완전히 다른(318% vs -10%) 오염 데이터 — item27 교차
+검증 후 6개 레코드 재적재. KR0004(예별손해) 2025.4Q는 "결측 1건"이 실제론 5개 레코드 통째 미존재 —
+raw에서 신규 추가. `validate_kics_rate_sensitivity.py`: RS1/RS2/RS4 RED 0, gate RED=0(RS3 방향성 32Y는
+여러 무관 회사 공통 패턴, advisory 유지).
+
+**이 티켓 원 스코프(헤드라인+Tier B+Tier C) 이번 라운드로 종결. status: resolved.** 잔여 소규모 항목
+(rule_8_life 3건·흥국화재 mmult 1건·세부위험 review 52건·RS3 32Y)은 전부 documented, non-blocking —
+후속 라운드 대상으로 각 changelog에 남겨둠, 이 티켓 재오픈 불필요.
+
+status: resolved

@@ -75,3 +75,19 @@ status=ok이고 sweep non-ok에 안 잡힘 → **partial 추출 아님**. DART 9
 
 status: req2 done(census) · req1 raw-blocked→downloader 발주 · req3 disposition(scope diff, 별건).
 
+## 후속 확인 2026-07-30 (parser/ifrs17)
+
+`check_nb_csm_history.py` 재실행 확인: 롯데손해(KR0003) 7건·미래에셋생명(KR0079) 5건 등 여전히
+OVER/UNDER 다수(총 27, 6주 전과 유사 규모). **단, 중요 발견**: 이 체커는 root `CSM_waterfall.json`이
+아니라 별도 파일 `data/dart/viz/csm_waterfall_history.json`(진단용 히스토리 캐시)을 읽는다. 직접
+대조 결과 **root 마스터는 이미 정상**(예: 롯데 2025.2Q 신계약 YTD=2135.4, 미래에셋 2025.2Q=2451.95 —
+전부 단조증가, partial 붕괴 없음 — 언제·어느 세션이 고쳤는지 불명, TODO 미기록). 즉 **실제 라이브
+데이터(root 마스터)는 이 건 대부분 해소된 상태**이나, **진단 파일(`csm_waterfall_history.json`)이
+그 갱신을 못 따라가 재실행 시 여전히 옛 문제를 보고**한다 — false-negative 방향(실제 좋은데 진단이
+나쁘다고 함)이라 라이브 리스크는 낮지만, 이 체커를 신뢰하는 향후 세션이 혼란스러울 수 있음.
+**req1(반기/3분기 interim 레이아웃 추출기 미인식)은 root 마스터 우회 경로로 실질 해소됐을 가능성이
+높으나, `csm_waterfall_history.json` 자체의 재생성(및 그 생성 스크립트의 interim 레이아웃 인식)은
+여전히 미완 — dedicated 세션에서 (a) root 마스터가 어떻게 고쳐졌는지 역추적(diag/override 확인),
+(b) `csm_waterfall_history.json` 재생성 스크립트를 그 방식과 정합시키는 작업 권장. 이번 세션은
+범위 밖으로 두고 기록만.**
+
