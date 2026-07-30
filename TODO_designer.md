@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-07-22 · Stage 5/5 — designer
+> Last updated: 2026-07-30 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (skeleton) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,15 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-07-30c):**
+- **CSM 보조표 숨김**: owner "너무 추하게 생겼어" 피드백 → 제거/숨김/재디자인 확인 후 **숨기기(코드 보존)** 선택. `#csm-coverage-panel` `display:none` 인라인 추가, 렌더 로직/CSS 그대로 둠(재노출은 style 제거만). 버블맵은 그대로 노출. **재디자인 여부는 미결 — 다음에 논의 필요.**
+
+**Recent (2026-07-30b, 배포 전 blocker fix):**
+- **KR0075 하드코딩 해제**: 보조표의 `verifying = r.code === 'KR0075'`가 parser의 100배 override 정정(inbox 답변)을 모른 채 계속 '검증중'으로 가리고 있었음 — 제거. 이제 정상 데이터(추정 (FY÷4), 0.86×) 표시. 검증 중 census가 35→36사(예별손해보험 신규 온보딩)로 늘어난 걸 보고 카드 제목의 "(전 35사)" 하드코딩도 `#csm-coverage-count` 동적 표기로 같이 고침(재발 방지). 카카오페이 CSM 급변은 상류 데이터 변경이라 designer가 손대지 않음. `pytest tests/test_deploy_assets.py` 8/8. 상세: `docs/changelog_designer.md` 2026-07-30b.
+
+**Recent (2026-07-30):**
+- **CSM 버블맵 연1회 공시사 fallback + 전 35사 보조표** (inbox `20260730T0035Z`, resolved): owner flagged IM라이프·IBK연금보험 missing from index.html bubble map — root cause is disclosure-cadence (13/35 companies only file IFRS17 annually, no 2026.1Q NB row), not a data bug. `buildBubbleData()` now censuses all 35 `CSM_waterfall` companies (was 34, missed IBK연금보험 which has no NB row at all); Group A (10사, multiplier carry-forward possible) falls back to latest quarter with both fields non-null, `nbCsm`÷4-annualized for chart X, multiplier carried unscaled; Group B (코리안리·IBK연금·BNP파리바카디프— structurally no multiplier) excluded from chart, kept for the table. Bubble chart: gray/dashed always-legended '추정 (연1회 공시)' series + branching tooltip + `#bubble-meta` count split. New card "IFRS17 — CSM 수록 현황 (전 35사)" below the bubble map — full census table (no new fetch, reuses already-loaded masters), muted+left-border for estimated/no-multiplier rows, remark text chips (not color-only), `<table>+<caption class="sr-only">+scope="col"`. BNP파리바카디프(KR0075) shows `검증중` for all numeric cells pending the 100x-unit-error fix routed to parser. Verified 1280px+375px, 0 console errors, no body horizontal scroll at mobile, cross-checked every Group A/B figure against the inbox's own census (±1억 rounding only). `pytest tests/test_deploy_assets.py` 8/8. Detail: `docs/changelog_designer.md` 2026-07-30.
 
 **Recent (2026-07-22):**
 - **Treemap red→blue reverted — owner: finviz identity**: the 07-21d commit's `colorForRatio()` blue swap (below) got reverted same-day-plus-one — owner flagged that the treemap's red/green is an intentional finviz.com market-map reference, not an oversight, and that outweighs the colorblind gap here. Back to red/green; documented as an accepted exception (every cell already shows the ratio as on-cell text too, so it was never color-only). Other 4 items from 07-21d (muted gray, bubble-legend green, placeholder gray, NB_LINE_COLORS, active-tab underline) unaffected. Detail: `docs/changelog_designer.md` 2026-07-22, `docs/a11y_baseline.md` §2b row 12.

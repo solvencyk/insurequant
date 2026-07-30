@@ -57,6 +57,14 @@
     #bubble-list{display:none}
     .bubble-legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
     .bubble-swatch{width:120px;height:10px;border-radius:6px;background:linear-gradient(90deg,#7f1d1d,#f59e0b,#84cc16,#14532d)}
+    /* CSM coverage table (전 35사 보조표, inbox 20260730T0035Z) */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .table-container{overflow-x:auto}
+    #csm-coverage-table{min-width:640px}
+    .csm-cov-muted td{color:var(--muted)}
+    .csm-cov-muted td:first-child{border-left:3px solid #adb5bd}
+    .csm-cov-chip{display:inline-block;font-size:11px;padding:2px 6px;border-radius:4px;border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+    .csm-cov-chip-flag{border-color:#adb5bd;background:var(--card)}
     /* M2: mobile list view for the treemap (shown only <=640px) */
     .map-list{display:none}
     .li-sector{font-size:12px;color:var(--muted);font-weight:700;margin:14px 0 6px;padding-left:2px}
@@ -87,6 +95,8 @@
       #csm-bubble-chart{display:none}
       #bubble-list{display:block}
       .swatch,.bubble-swatch{width:88px}
+      #csm-coverage-table{font-size:12px}
+      #csm-coverage-table th,#csm-coverage-table td{padding:4px 6px}
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" integrity="sha384-o5uz97et3bErHvpKfD4Jz4n0JfhJDWABFuF4NP+iEEDxE1VwMWJ19QGR0lqFZnr6" crossorigin="anonymous"></script>
@@ -152,7 +162,7 @@
     </div>
     <div class="panel" style="margin-top:16px">
       <div class="section-title">IFRS17 — CSM Bubble Map</div>
-      <p class="section-desc">X: 신계약 CSM 규모 · Y: NB CSM 배수 (X·Y = 2026.1Q 연누계 기준) · 크기: 기말 CSM 잔액 (최신 분기, 현재 총 재원)</p>
+      <p class="section-desc">X: 신계약 CSM 규모 · Y: NB CSM 배수 (X·Y = 2026.1Q 연누계 기준) · 크기: 기말 CSM 잔액 (최신 분기, 현재 총 재원) · 회색(*)=연1회 공시사 추정치(직전 회기 연누계 ÷4, 배수는 이월)</p>
       <div class="controls" style="margin-bottom:10px">
         <label>업권:
           <select id="bubble-sector" class="select">
@@ -170,6 +180,29 @@
       </div>
       <div id="csm-bubble-chart" role="img" aria-label="IFRS17 CSM 버블맵 — X: 신계약 CSM, Y: NB CSM 배수, 크기: 기말 CSM 잔액"></div>
       <div id="bubble-list" aria-label="CSM bubble list (mobile)"></div>
+    </div>
+    <!-- 2026-07-30: owner 피드백 — 디자인 정리 전까지 숨김(display:none). 렌더 로직/CSS/데이터는 보존, 재노출은 이 style 제거만 하면 됨. -->
+    <div class="panel" style="margin-top:16px;display:none" id="csm-coverage-panel">
+      <div class="section-title">IFRS17 — CSM 수록 현황 (전 <span id="csm-coverage-count">—</span>사)</div>
+      <p class="section-desc">버블맵에 없는 연1회 공시사 포함 전사 현황 · 비고 칩으로 실공시/추정/이월 구분</p>
+      <div class="table-container">
+        <table id="csm-coverage-table">
+          <caption class="sr-only" id="csm-coverage-caption">IFRS17 CSM 수록 현황 전사 — 회사, 구분, 기말 CSM, 기말 기준분기, 신계약 CSM, 신계약 기준분기, NB 배수, 비고</caption>
+          <thead>
+            <tr>
+              <th scope="col">회사</th>
+              <th scope="col">구분</th>
+              <th scope="col">기말 CSM(억)</th>
+              <th scope="col">기말 기준분기</th>
+              <th scope="col">신계약 CSM(억, 연누계)</th>
+              <th scope="col">신계약 기준분기</th>
+              <th scope="col">NB 배수(×)</th>
+              <th scope="col">비고</th>
+            </tr>
+          </thead>
+          <tbody id="csm-coverage-tbody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
   <script>
@@ -895,10 +928,13 @@
       if (!el || !window.echarts || !bubbleRows) return;
       if (window.matchMedia('(max-width:640px)').matches) return; // M3: 모바일은 #bubble-list가 대체 — 숨김(0×0) 컨테이너 init 방지
 
-      let rows = bubbleRows.filter(r => Number.isFinite(r.nbCsm) && r.nbCsm > 0 && Number.isFinite(r.multiple)); // log축: nbCsm>0 필수
+      let rows = bubbleRows.filter(r => Number.isFinite(r.nbCsm) && r.nbCsm > 0 && Number.isFinite(r.multiple)); // log축: nbCsm>0 필수 (Group B는 multiple null → 자동 제외)
       if (sectorFilter && sectorFilter !== 'ALL') rows = rows.filter(r => r.sector === sectorFilter);
 
-      if (metaEl) metaEl.textContent = `표시 ${rows.length}社 · 기준 2026.1Q · 크기=최신 기말 잔액`;
+      if (metaEl) {
+        const estCount = rows.filter(r => r.estimated).length;
+        metaEl.textContent = `표시 ${rows.length}社 (실공시 ${rows.length - estCount} · 추정 ${estCount}) · 기준 2026.1Q · 크기=최신 기말 잔액`;
+      }
       if (!rows.length) {
         el.innerHTML = '<div style="padding:24px;color:var(--muted);font-size:13px">NB 배수 데이터 없음 — data/_derived/nb_csm_multiple.json 확인</div>';
         return;
@@ -908,21 +944,31 @@
       const maxClosing = Math.max(...rows.map(r => r.closing || 0), 1);
       const SECTOR_COLOR = { 'Life': '#0d6efd', 'Non-Life': '#16a34a' };
       const sectors = ['Life', 'Non-Life'].filter(s => sectorFilter === 'ALL' || sectorFilter === s);
+      const ESTIMATED_NAME = '추정 (연1회 공시)';
+
+      const legendData = sectorFilter === 'ALL' ? ['생명보험', '손해보험'] : [];
+      legendData.push(ESTIMATED_NAME);                     // 섹터 필터와 무관하게 항상 노출
 
       bubbleChart.setOption({
         grid: { left: 70, right: 28, top: 40, bottom: 58 },
-        legend: sectorFilter === 'ALL' ? { top: 8, data: ['생명보험', '손해보험'] } : undefined,
+        legend: { top: 8, data: legendData },
         tooltip: {
           trigger: 'item',
           formatter: p => {
             const d = p.data.d;
             const cq = d.closingK ? (Math.floor(d.closingK/10)+'.'+(d.closingK%10)+'Q') : '—';
-            return [
-              `<b>${d.name}</b> · ${d.sector === 'Life' ? '생명' : '손해'}`,
-              `신계약 CSM 규모: ${Math.round(d.nbCsm).toLocaleString()}억 (${d.period})`,
-              `NB CSM 배수: ${d.multiple.toFixed(2)}× (${d.period})`,
-              `기말 CSM: ${d.closing != null ? Math.round(d.closing).toLocaleString() + '억' : '—'} (${cq})`
-            ].join('<br/>');
+            const lines = [`<b>${d.name}</b> · ${d.sector === 'Life' ? '생명' : '손해'}`];
+            if (d.estimated) {
+              lines.push(`신계약 CSM 규모: ${Math.round(d.nbCsm).toLocaleString()}억 (${d.srcQ} 연누계 ÷ 4 추정)`);
+              lines.push(`NB CSM 배수: ${d.multiple.toFixed(2)}× (${d.srcQ} 연누계 이월)`);
+              lines.push(`기말 CSM: ${d.closing != null ? Math.round(d.closing).toLocaleString() + '억' : '—'} (${cq})`);
+              lines.push('⚠ 2026.1Q 미공시 — 연1회 공시사');
+            } else {
+              lines.push(`신계약 CSM 규모: ${Math.round(d.nbCsm).toLocaleString()}억 (${d.period})`);
+              lines.push(`NB CSM 배수: ${d.multiple.toFixed(2)}× (${d.period})`);
+              lines.push(`기말 CSM: ${d.closing != null ? Math.round(d.closing).toLocaleString() + '억' : '—'} (${cq})`);
+            }
+            return lines.join('<br/>');
           }
         },
         xAxis: {
@@ -934,21 +980,38 @@
           type: 'value', name: 'NB CSM 배수 (×)', nameGap: 44, min: 0,
           splitLine: { lineStyle: { type: 'dashed', color: '#eef0f2' } }
         },
-        series: sectors.map(sec => ({
-          name: sec === 'Life' ? '생명보험' : '손해보험',
-          type: 'scatter',
-          labelLayout: { hideOverlap: true, moveOverlap: 'shiftY' },
-          labelLine: { show: true, length2: 4, lineStyle: { color: '#ced4da', width: 1 } },
-          data: rows.filter(r => r.sector === sec).map(r => ({
-            name: r.name,
-            value: [r.nbCsm, r.multiple],
-            d: r,
-            symbolSize: bubbleSize(r.closing, maxClosing),
-            itemStyle: { color: SECTOR_COLOR[sec], opacity: 0.6, borderColor: '#fff', borderWidth: 1 },
-            label: { show: true, formatter: shortName(r.name), position: 'top', fontSize: 10, color: '#495057', textBorderColor: '#fff', textBorderWidth: 2 },
-            emphasis: { focus: 'self', label: { show: true, fontWeight: 'bold' }, itemStyle: { opacity: 0.95 } }
-          }))
-        }))
+        series: [
+          ...sectors.map(sec => ({
+            name: sec === 'Life' ? '생명보험' : '손해보험',
+            type: 'scatter',
+            labelLayout: { hideOverlap: true, moveOverlap: 'shiftY' },
+            labelLine: { show: true, length2: 4, lineStyle: { color: '#ced4da', width: 1 } },
+            data: rows.filter(r => r.sector === sec && !r.estimated).map(r => ({
+              name: r.name,
+              value: [r.nbCsm, r.multiple],
+              d: r,
+              symbolSize: bubbleSize(r.closing, maxClosing),
+              itemStyle: { color: SECTOR_COLOR[sec], opacity: 0.6, borderColor: '#fff', borderWidth: 1 },
+              label: { show: true, formatter: shortName(r.name), position: 'top', fontSize: 10, color: '#495057', textBorderColor: '#fff', textBorderWidth: 2 },
+              emphasis: { focus: 'self', label: { show: true, fontWeight: 'bold' }, itemStyle: { opacity: 0.95 } }
+            }))
+          })),
+          {
+            name: ESTIMATED_NAME,
+            type: 'scatter',
+            labelLayout: { hideOverlap: true, moveOverlap: 'shiftY' },
+            labelLine: { show: true, length2: 4, lineStyle: { color: '#ced4da', width: 1 } },
+            data: rows.filter(r => r.estimated).map(r => ({
+              name: r.name,
+              value: [r.nbCsm, r.multiple],
+              d: r,
+              symbolSize: bubbleSize(r.closing, maxClosing),
+              itemStyle: { color: '#adb5bd', opacity: 0.45, borderColor: '#868e96', borderType: 'dashed', borderWidth: 1 },
+              label: { show: true, formatter: shortName(r.name) + '*', position: 'top', fontSize: 10, color: '#868e96', textBorderColor: '#fff', textBorderWidth: 2 },
+              emphasis: { focus: 'self', label: { show: true, fontWeight: 'bold' }, itemStyle: { opacity: 0.7 } }
+            }))
+          }
+        ]
       }, true);
 
       // F1: click a bubble → open IFRS17.html filtered to that company.
@@ -966,13 +1029,18 @@
     function qkey(q){ const m=/^(\d{4})\.(\d)Q$/.exec(String(q)); return m ? (+m[1])*10 + (+m[2]) : 0; }
 
     // 진짜 마스터: 루트 NB_CSM_multiple.json (코드·분기·신계약CSM_연누계·배수_연누계). CSM워터폴(기말)과 코드로 조인.
+    // 연1회(회기) 공시사는 2026.1Q 행이 없음(inbox 20260730T0035Z):
+    //   Group A(배수 carry 가능) — 같은 code의 직전 회기 값을 fallback으로 채택, nbCsm만 ÷4 추정(배수는 스케일 불변이라 이월).
+    //   Group B(배수 구조적 부재: 재보험/연금 월납초회보험료 0, 단위오류 검증대기) — multiple=null인 채로 census에 남겨 보조표(전 35사)에서만 노출, 버블에는 안 나감.
     function buildBubbleData(nbRows, wfRows) {
-      const wfClosing = {};                                // code -> {qkey -> 기말(6)}
+      const wfClosing = {}, wfNbItem = {}, wfMeta = {};    // wfNbItem: code -> {qkey -> {v,q}} 항목2(신계약CSM) — NB에 행 자체가 없는 사 fallback
       for (const r of (wfRows || [])) {
-        if (r['항목번호'] !== 6) continue;
-        const code = r['원보험사코드']; const v = Number(r['값']);
-        if (!code || !Number.isFinite(v)) continue;
-        (wfClosing[code] || (wfClosing[code] = {}))[qkey(r['공시분기'])] = v;
+        const code = r['원보험사코드']; if (!code) continue;
+        if (!wfMeta[code]) wfMeta[code] = { name: r['원수사명'], sector: r['생손보여부'] === '생명보험' ? 'Life' : 'Non-Life' };
+        const v = Number(r['값']); if (!Number.isFinite(v)) continue;
+        const k = qkey(r['공시분기']);
+        if (r['항목번호'] === 6) (wfClosing[code] || (wfClosing[code] = {}))[k] = v;
+        if (r['항목번호'] === 2) (wfNbItem[code] || (wfNbItem[code] = {}))[k] = { v, q: r['공시분기'] };
       }
       const nbByCode = {};                                 // code -> {qkey -> row}
       for (const r of (nbRows || [])) {
@@ -981,22 +1049,95 @@
       }
       const out = [];
       const TARGET = qkey('2026.1Q');                      // 2026.1Q(최신) 고정
-      for (const code in nbByCode) {
-        const r = nbByCode[code][TARGET];
-        if (!r || r['신계약CSM배수_연누계'] == null || r['신계약CSM_연누계'] == null) continue;
+      for (const code in wfClosing) {                       // census = CSM_waterfall 기말(6) 보유 35사 전체
         let closing = null, closingK = null;               // 기말은 stock → 최신 분기 잔액
         const wc = wfClosing[code];
-        if (wc) { const ks = Object.keys(wc).map(Number).sort((a, b) => b - a); if (ks.length) { closingK = ks[0]; closing = wc[closingK]; } }
+        { const ks = Object.keys(wc).map(Number).sort((a, b) => b - a); closingK = ks[0]; closing = wc[closingK]; }
+
+        const nbc = nbByCode[code];
+        const target = nbc ? nbc[TARGET] : null;
+        let r = target, estimated = false, srcQ = '2026.1Q';
+        if (!r || r['신계약CSM배수_연누계'] == null || r['신계약CSM_연누계'] == null) {
+          let fb = null;                                    // Group A fallback: 배수·CSM 둘 다 non-null인 가장 최신 회기
+          if (nbc) {
+            const ks = Object.keys(nbc).map(Number).sort((a, b) => b - a);
+            for (const k of ks) { const cand = nbc[k]; if (cand['신계약CSM배수_연누계'] != null && cand['신계약CSM_연누계'] != null) { fb = cand; break; } }
+          }
+          if (fb) { r = fb; estimated = true; srcQ = fb['공시분기']; }
+        }
+
+        if (r && r['신계약CSM배수_연누계'] != null && r['신계약CSM_연누계'] != null) {
+          out.push({
+            name: r['원수사명'], code, sector: r['생손보여부'] === '생명보험' ? 'Life' : 'Non-Life',
+            period: estimated ? srcQ : '2026.1Q', srcQ,
+            nbCsmRaw: r['신계약CSM_연누계'],
+            nbCsm: estimated ? r['신계약CSM_연누계'] / 4 : r['신계약CSM_연누계'],   // ÷4는 chart X축(분기 비교)용 — 배수는 이월(스케일 불변)
+            multiple: r['신계약CSM배수_연누계'],
+            closing, closingK, estimated
+          });
+          continue;
+        }
+
+        // Group B: 배수 없음 — 신계약 CSM 원값만 확보(target 우선, 없으면 NB 최신행, 그것도 없으면 워터폴 항목2).
+        const meta = wfMeta[code] || {};
+        let nbCsmRaw = null, srcQb = null;
+        const latestNb = target || (nbc ? nbc[Math.max(...Object.keys(nbc).map(Number))] : null);
+        if (latestNb && latestNb['신계약CSM_연누계'] != null) { nbCsmRaw = latestNb['신계약CSM_연누계']; srcQb = latestNb['공시분기']; }
+        else if (wfNbItem[code]) {
+          const ks = Object.keys(wfNbItem[code]).map(Number).sort((a, b) => b - a);
+          if (ks.length) { nbCsmRaw = wfNbItem[code][ks[0]].v; srcQb = wfNbItem[code][ks[0]].q; }
+        }
         out.push({
-          name: r['원수사명'], code,
-          sector: r['생손보여부'] === '생명보험' ? 'Life' : 'Non-Life',
-          period: '2026.1Q',
-          nbCsm: r['신계약CSM_연누계'],
-          multiple: r['신계약CSM배수_연누계'],
-          closing, closingK
+          name: meta.name, code, sector: meta.sector,
+          period: srcQb, srcQ: srcQb,
+          nbCsmRaw, nbCsm: null, multiple: null,
+          closing, closingK, estimated: false
         });
       }
       return out;
+    }
+
+    // 보조표 (전 35사): buildBubbleData()가 만든 census를 그대로 재사용 — 추가 fetch/인라인 없음.
+    const TARGET_QKEY = qkey('2026.1Q');
+    function qlabel(k) { return k ? (Math.floor(k / 10) + '.' + (k % 10) + 'Q') : null; }
+    function renderCsmCoverageTable() {
+      const tbody = document.getElementById('csm-coverage-tbody');
+      if (!tbody || !bubbleRows) return;
+      tbody.innerHTML = '';
+      const SECTOR_LABEL = { Life: '생명보험', 'Non-Life': '손해보험' };
+      const rows = [...bubbleRows].sort((a, b) => {
+        if (a.sector !== b.sector) return a.sector === 'Life' ? -1 : 1;  // 생보 → 손보
+        return (b.closing || 0) - (a.closing || 0);                     // 그룹 내 기말 CSM desc
+      });
+      const countEl = document.getElementById('csm-coverage-count');
+      if (countEl) countEl.textContent = rows.length;                   // census 크기는 CSM_waterfall 신규 onboarding에 따라 변동 — 하드코딩 금지
+      for (const r of rows) {
+        let remark, note = '';
+        if (r.multiple == null) { remark = '배수 미산출'; note = ' (월납초회보험료 0/미공시)'; }
+        else if (r.estimated) remark = '추정 (FY÷4)';
+        else if (r.closingK !== TARGET_QKEY) remark = '직전값 이월';
+        else remark = '실공시';
+
+        const tr = document.createElement('tr');
+        if (r.estimated || r.multiple == null) tr.className = 'csm-cov-muted';
+        const cellText = [
+          r.name,
+          SECTOR_LABEL[r.sector] || r.sector,
+          samoNum(r.closing, 0),
+          qlabel(r.closingK) || '—',
+          samoNum(r.nbCsmRaw, 0),
+          r.srcQ || '—',
+          r.multiple != null ? r.multiple.toFixed(2) + '×' : '—'
+        ];
+        cellText.forEach(txt => { const td = document.createElement('td'); td.textContent = txt; tr.appendChild(td); });
+        const remarkTd = document.createElement('td');
+        const chip = document.createElement('span');
+        chip.className = 'csm-cov-chip' + (remark === '실공시' ? '' : ' csm-cov-chip-flag');
+        chip.textContent = remark + note;
+        remarkTd.appendChild(chip);
+        tr.appendChild(remarkTd);
+        tbody.appendChild(tr);
+      }
     }
 
     // M3: mobile list mirror of the bubble map (CSS @media <=640px에서만 표시).
@@ -1063,10 +1204,11 @@
           nm.className = 'li-nm';
           nm.textContent = shortName(it.name);
           name.appendChild(nm);
-          if (it.nbQ !== '2026.1Q') {                  // 기준분기 미공시 → 사용 분기 칩
+          if (it.nbQ !== '2026.1Q') {                  // 기준분기 미공시(연1회 공시사) → 추정 칩 + 회색 텍스트로 정리(칩 중복 방지)
+            nm.style.color = 'var(--muted)';
             const chip = document.createElement('span');
             chip.className = 'li-chip';
-            chip.textContent = String(it.nbQ).slice(2); // '2025.4Q' → '25.4Q'
+            chip.textContent = '추정 ' + String(it.nbQ).slice(2); // '2025.4Q' → '추정 25.4Q'
             name.appendChild(chip);
           }
           const track = document.createElement('div');
@@ -1122,6 +1264,7 @@
         bubbleRows = buildBubbleData(nbRows, wfRows);
         renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
         renderBubbleList();
+        renderCsmCoverageTable();
         updateKpis(); buildJumpList();
       }).catch(e => {
         console.error('bubble masters load failed:', e);

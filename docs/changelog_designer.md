@@ -1,9 +1,41 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-07-22 · Stage 5/5 — designer
+> Last updated: 2026-07-30 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-07-30 — CSM bubble map annual-filer fallback + 전 35사 보조표 (inbox `20260730T0035Z`)
+
+Owner flagged on live: IM라이프·IBK연금보험 missing from the index.html CSM Bubble Map. Root cause was not a data bug — it's disclosure-cadence mismatch: `buildBubbleData()` hard-required a `2026.1Q` row, but 13 of the 35 CSM_waterfall companies only disclose IFRS17 annually (4Q-only), so their `NB_CSM_multiple.json` row for the current quarter doesn't exist. Owner decided: add estimated bubbles (visually distinct) **and** ship a new full-census supplementary table — both, not either/or.
+
+- **`buildBubbleData()` reworked**: census is now the 35 `CSM_waterfall` item-6 (기말 CSM) companies, not the 34 `NB_CSM_multiple` companies (picks up IBK연금보험, which has no NB row at all). For any code missing/incomplete at 2026.1Q, falls back to the most recent quarter with both `신계약CSM_연누계` and `신계약CSM배수_연누계` non-null (Group A, 10사) — `nbCsm` for chart X is that value **÷4** (annualized→quarterly estimate), `multiple` is carried over unscaled (ratio, so ÷4/÷4 cancels). Companies with no valid multiplier anywhere (Group B: 코리안리·IBK연금·BNP파리바카디프 — reinsurer/pension zero premium, or unit-error pending correction) get `multiple:null` and are excluded from the chart but kept in the row set for the table; IBK연금보험's 신계약 CSM has no NB row at all, so it falls back further to `CSM_waterfall` item-2 (신계약 CSM) directly.
+- **Bubble chart**: estimated points render as a separate always-legended gray/dashed series (`#adb5bd`, dashed border, label `name+'*'`), tooltip branches to explain the ÷4/이월 provenance + a "2026.1Q 미공시 — 연1회 공시사" warning line. `#bubble-meta` now reports `표시 32社 (실공시 22 · 추정 10)`. `.section-desc` gets one clause explaining the `*` convention. Mobile `#bubble-list` (unaffected data-wise — already used per-company latest quarter) merges its existing off-quarter chip into `추정 <Q>` + muted row text, no duplicate chip.
+- **New card — "IFRS17 — CSM 수록 현황 (전 35사)"**: table below the bubble map, reusing the already-fetched `NB_CSM_multiple.json`/`CSM_waterfall.json` (no new fetch, no master-JSON writes). Columns: 회사/구분/기말CSM/기말기준분기/신계약CSM(연누계)/신계약기준분기/NB배수/비고. Sorted 생보→손보, 기말CSM desc within group. Estimated/no-multiplier rows get `var(--muted)` text + left gray border; remark column carries a text chip (실공시/추정 (FY÷4)/직전값 이월/배수 미산출) so the estimate flag isn't color-only (a11y). `<table>`+`<caption class="sr-only">`+`scope="col"` throughout — first table on the site with an explicit caption. KR0075 (비엔피파리바카디프) shows `검증중` in place of every numeric cell — its 기말 CSM (299,584억) is a suspected 100x unit error, corrected separately via `inbox/parser/20260730T0035Z__owner__KR0075_FY2024-FY2025__bnp_cardif_csm_100x_unit.md`; this design-side change is display-only and doesn't touch the master.
+- Verified live in Claude Preview: 1280px (32-bubble chart incl. 10 gray-starred, per-sector filter legend behavior, tooltip formatter output for both estimated and real points, all cross-checked against the inbox's own census numbers — every Group A/B figure matched within ±1억 rounding), 375px (merged mobile chip + muted text on all 10 estimated rows, `document.body.scrollWidth === innerWidth` — no horizontal body scroll despite the 640px-min-width table). 0 console errors both breakpoints. `pytest tests/test_deploy_assets.py` — 8/8 pass (no inline data added, no new master write).
+- Not touched (owner hard constraints, unchanged): bubble map's 3-axis definition (X=신계약CSM/Y=NB배수/size=기말CSM), headline KPI calc (`업계 총 기말 CSM` still shows the pre-existing 163.8조 pending the KR0075 fix upstream).
+
+---
+
+## 2026-07-30b — CSM 보조표 KR0075 하드코딩 해제 + 전사 카운트 동적화 (배포 전 blocker)
+
+Owner 배포 전 점검: 07-30 작업에서 `renderCsmCoverageTable()`에 `verifying = r.code === 'KR0075'`를 하드코딩해 BNP파리바카디프를 '검증중'으로 계속 가리고 있었는데, parser가 그새 100배 단위오류를 override로 정정 완료(`inbox/parser/20260730T0035Z...` 답변 — CSM_waterfall/NB_CSM_multiple 3개 root 파일 직접 수정)했다. 코드는 정정을 몰라서 정상 데이터를 계속 숨기고 있었다.
+
+- `verifying` 하드코딩 제거. KR0075는 이제 데이터가 자연스럽게 흘러 Group A(연1회 공시 fallback, `estimated:true`)로 census — 기말CSM 2,996억(2025.4Q) · 신계약CSM 128억 · 배수 0.86× · 비고 "추정 (FY÷4)"로 정상 표시. 버블에도 정상 편입(생명 추정 시리즈).
+- **부수 발견**: 검증 중 census가 35→36사로 늘어난 것을 확인(`예별손해보험` KR0004가 CSM_waterfall에 신규 온보딩됨, 카카오페이 KR1098 기말 CSM도 3,412억→3.4억으로 크게 변경 — 둘 다 designer 손 밖의 상류 데이터 변경, 조사하지 않음). 카드 제목에 하드코딩돼 있던 "(전 35사)"가 이 때문에 즉시 stale해질 게 보여, `<span id="csm-coverage-count">`로 바꿔 `renderCsmCoverageTable()`이 실제 row 수를 매번 채우도록 동적화(재발 방지, 요청 범위 밖이었지만 동일 카테고리의 명백한 버그라 즉시 수정).
+- 재검증: file:// 프리뷰(로컬 http 서버 포트 충돌로 file://로 확인 — fetch는 정상 동작) — KR0075 정상 표시, 카운트 36 표시, 콘솔 에러 0. `pytest tests/test_deploy_assets.py` 8/8.
+- 카카오페이/예별손해보험 수치 변경은 designer가 임의로 판단하지 않음 — 표는 마스터를 그대로 반영할 뿐이고, 데이터 정합성은 parser/validation 소관.
+
+## 2026-07-30c — CSM 보조표 숨김 (owner: 디자인이 추함)
+
+Owner 채팅 피드백: "수록현황 테이블은 안보여주는게 낫겠는데? 너무 추하게 생겼어" — 제거 vs 숨김 vs 재디자인 중 확인, owner는 **숨기기(코드 보존)** 선택.
+
+- `#csm-coverage-panel`에 `display:none` 인라인 추가(주석: 재노출은 이 style 제거만 하면 됨). `renderCsmCoverageTable()`/`buildBubbleData()` Group B 로직/CSS는 전부 보존 — 렌더는 계속 돌지만 화면엔 안 보임(36행 빌드, 콘솔 에러 0 확인).
+- 버블맵(추정 버블 + 범례 + 툴팁)은 이 피드백과 무관 — 그대로 노출.
+- 재노출 시 할 일: `display:none` 제거 + (owner가 "추하다"고 한 원인 — 8컬럼 plain table, 36행, 칩 스타일 — 를 실제로 다시 디자인할지 owner와 논의 필요. 이번엔 숨김만 요청받았고 재디자인은 안 함).
+- `pytest tests/test_deploy_assets.py` 8/8.
 
 ---
 
