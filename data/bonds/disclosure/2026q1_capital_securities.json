@@ -1,0 +1,83 @@
+{
+  "_meta": {
+    "generated": "20260616T125009Z",
+    "source": "dart_주요사항보고서(자본으로인정되는채무증권발행결정)",
+    "note": "per-bond disclosure supplement for FSC-missing companies. FSC outstanding bonds for other companies remain in data/bonds/normalized/."
+  },
+  "companies": {
+    "KR0072": {
+      "insurer_code": "KR0072",
+      "bonds_outstanding": 2,
+      "amount_outstanding_won": 241000000000,
+      "bonds": [
+        {
+          "isin": null,
+          "name": "케이디비생명보험 (20241227)",
+          "insurer_code": "KR0072",
+          "insurer_name": "케이디비생명보험",
+          "tier": "tier1_hybrid",
+          "issue_date": "2024-12-26",
+          "issue_amount_won": 25000000000,
+          "maturity_date": "2054-12-26",
+          "is_perpetual": false,
+          "effective_call_date": "2029-12-26",
+          "next_deduction_date": "2029-12-26",
+          "status": "outstanding",
+          "source": "dart_주요사항보고서_20241227000303"
+        },
+        {
+          "isin": null,
+          "name": "케이디비생명보험 (20230517)",
+          "insurer_code": "KR0072",
+          "insurer_name": "케이디비생명보험",
+          "tier": "tier1_hybrid",
+          "issue_date": "2023-05-19",
+          "issue_amount_won": 216000000000,
+          "maturity_date": "2053-05-19",
+          "is_perpetual": false,
+          "effective_call_date": "2028-05-19",
+          "next_deduction_date": "2028-05-19",
+          "status": "outstanding",
+          "source": "dart_주요사항보고서_20230517000309"
+        }
+      ]
+    },
+    "KR0104": {
+      "insurer_code": "KR0104",
+      "bonds_outstanding": 2,
+      "amount_outstanding_won": 500000000000,
+      "bonds": [
+        {
+          "isin": null,
+          "name": "농협생명보험 (20220831)",
+          "insurer_code": "KR0104",
+          "insurer_name": "농협생명보험",
+          "tier": "tier1_hybrid",
+          "issue_date": "2022-09-28",
+          "issue_amount_won": 250000000000,
+          "maturity_date": "2052-09-28",
+          "is_perpetual": false,
+          "effective_call_date": "2027-09-28",
+          "next_deduction_date": "2027-09-28",
+          "status": "outstanding",
+          "source": "dart_주요사항보고서_20220831001673"
+        },
+        {
+          "isin": null,
+          "name": "농협생명보험 (20221227)",
+          "insurer_code": "KR0104",
+          "insurer_name": "농협생명보험",
+          "tier": "tier1_hybrid",
+          "issue_date": "2022-12-26",
+          "issue_amount_won": 250000000000,
+          "maturity_date": "",
+          "is_perpetual": true,
+          "effective_call_date": "2027-12-26",
+          "next_deduction_date": "2027-12-26",
+          "status": "outstanding",
+          "source": "dart_주요사항보고서_20221227000614"
+        }
+      ]
+    }
+  }
+}

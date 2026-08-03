@@ -1,0 +1,26 @@
+{
+  "master": "capital_securities_dart_supplement",
+  "generated_at": "20260803T063629Z",
+  "cells": [
+    {
+      "company_code": "KR0072",
+      "quarter": "2026.1Q",
+      "item_block": "capital_securities_dart_supplement",
+      "source_id": "DART",
+      "as_of_date": "2026-03-31",
+      "source_file": "data/bonds/disclosure/2026q1_capital_securities.json",
+      "effective_filtered": true,
+      "_note": "DART 주요사항보고서(자본으로인정되는채무증권발행결정) per-bond supplement; outstanding filter: all bonds issued before 2026-03-31 with call > 2026-03-31"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2026.1Q",
+      "item_block": "capital_securities_dart_supplement",
+      "source_id": "DART",
+      "as_of_date": "2026-03-31",
+      "source_file": "data/bonds/disclosure/2026q1_capital_securities.json",
+      "effective_filtered": true,
+      "_note": "DART 주요사항보고서(자본으로인정되는채무증권발행결정) per-bond supplement; outstanding filter: all bonds issued before 2026-03-31 with call > 2026-03-31"
+    }
+  ]
+}

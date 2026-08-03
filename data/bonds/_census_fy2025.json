@@ -1,0 +1,326 @@
+[
+  {
+    "code": "KR0001",
+    "name": "메리츠화재해상보험",
+    "hybrid_hits": 129,
+    "sub_strict": 11,
+    "sub_word": 24,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0002",
+    "name": "한화손해보험",
+    "hybrid_hits": 178,
+    "sub_strict": 14,
+    "sub_word": 18,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0003",
+    "name": "롯데손해보험",
+    "hybrid_hits": 77,
+    "sub_strict": 47,
+    "sub_word": 67,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0004",
+    "name": "엠지손해보험",
+    "hybrid_hits": 3,
+    "sub_strict": 3,
+    "sub_word": 3,
+    "has_bond_table": false,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "hybrid_hits": 110,
+    "sub_strict": 10,
+    "sub_word": 49,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0008",
+    "name": "삼성화재해상보험",
+    "hybrid_hits": 1,
+    "sub_strict": 0,
+    "sub_word": 5,
+    "has_bond_table": true,
+    "HAVE_BONDS": false
+  },
+  {
+    "code": "KR0009",
+    "name": "현대해상",
+    "hybrid_hits": 35,
+    "sub_strict": 47,
+    "sub_word": 57,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0010",
+    "name": "KB손해보험",
+    "hybrid_hits": 1,
+    "sub_strict": 15,
+    "sub_word": 29,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0011",
+    "name": "DB손해보험",
+    "hybrid_hits": 171,
+    "sub_strict": 42,
+    "sub_word": 52,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0029",
+    "name": "에이아이지손해보험",
+    "hybrid_hits": 1,
+    "sub_strict": 0,
+    "sub_word": 3,
+    "has_bond_table": false,
+    "HAVE_BONDS": false
+  },
+  {
+    "code": "KR0029",
+    "name": "에이아이지손해보험",
+    "hybrid_hits": 1,
+    "sub_strict": 0,
+    "sub_word": 3,
+    "has_bond_table": false,
+    "HAVE_BONDS": false
+  },
+  {
+    "code": "KR0032",
+    "name": "NH농협손해보험",
+    "hybrid_hits": 49,
+    "sub_strict": 20,
+    "sub_word": 28,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0068",
+    "name": "한화생명",
+    "hybrid_hits": 161,
+    "sub_strict": 72,
+    "sub_word": 83,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0069",
+    "name": "삼성생명",
+    "hybrid_hits": 7,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0070",
+    "name": "에이비엘생명보험",
+    "hybrid_hits": 1,
+    "sub_strict": 60,
+    "sub_word": 63,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "hybrid_hits": 117,
+    "sub_strict": 33,
+    "sub_word": 69,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0072",
+    "name": "케이디비생명보험",
+    "hybrid_hits": 62,
+    "sub_strict": 32,
+    "sub_word": 41,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "hybrid_hits": 166,
+    "sub_strict": 35,
+    "sub_word": 43,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0074",
+    "name": "라이나생명보험",
+    "hybrid_hits": 0,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": false,
+    "HAVE_BONDS": false
+  },
+  {
+    "code": "KR0074",
+    "name": "라이나생명보험",
+    "hybrid_hits": 0,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": false,
+    "HAVE_BONDS": false
+  },
+  {
+    "code": "KR0079",
+    "name": "미래에셋생명",
+    "hybrid_hits": 1,
+    "sub_strict": 26,
+    "sub_word": 36,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0080",
+    "name": "에이아이에이생명보험",
+    "hybrid_hits": 0,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": false,
+    "HAVE_BONDS": false
+  },
+  {
+    "code": "KR0080",
+    "name": "에이아이에이생명보험",
+    "hybrid_hits": 0,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": false,
+    "HAVE_BONDS": false
+  },
+  {
+    "code": "KR0082",
+    "name": "DB생명보험",
+    "hybrid_hits": 60,
+    "sub_strict": 8,
+    "sub_word": 23,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0083",
+    "name": "푸본현대생명보험",
+    "hybrid_hits": 100,
+    "sub_strict": 76,
+    "sub_word": 76,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0087",
+    "name": "동양생명",
+    "hybrid_hits": 125,
+    "sub_strict": 35,
+    "sub_word": 47,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0094",
+    "name": "신한라이프생명보험",
+    "hybrid_hits": 122,
+    "sub_strict": 20,
+    "sub_word": 41,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0095",
+    "name": "메트라이프생명보험",
+    "hybrid_hits": 0,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": false,
+    "HAVE_BONDS": false
+  },
+  {
+    "code": "KR0095",
+    "name": "메트라이프생명보험",
+    "hybrid_hits": 0,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": false,
+    "HAVE_BONDS": false
+  },
+  {
+    "code": "KR0097",
+    "name": "하나생명보험",
+    "hybrid_hits": 15,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": false,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0097",
+    "name": "하나생명보험",
+    "hybrid_hits": 14,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": false,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0099",
+    "name": "케이비라이프생명보험",
+    "hybrid_hits": 79,
+    "sub_strict": 8,
+    "sub_word": 40,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR0100",
+    "name": "처브라이프생명보험",
+    "hybrid_hits": 0,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": false,
+    "HAVE_BONDS": false
+  },
+  {
+    "code": "KR0104",
+    "name": "농협생명보험",
+    "hybrid_hits": 46,
+    "sub_strict": 13,
+    "sub_word": 17,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR1000",
+    "name": "코리안리",
+    "hybrid_hits": 210,
+    "sub_strict": 4,
+    "sub_word": 12,
+    "has_bond_table": true,
+    "HAVE_BONDS": true
+  },
+  {
+    "code": "KR1098",
+    "name": "카카오페이손해보험",
+    "hybrid_hits": 0,
+    "sub_strict": 0,
+    "sub_word": 0,
+    "has_bond_table": false,
+    "HAVE_BONDS": false
+  }
+]

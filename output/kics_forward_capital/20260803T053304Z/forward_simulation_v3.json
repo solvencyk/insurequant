@@ -1382,17 +1382,17 @@
       "ratio_post_pct": 175.58,
       "basic_ratio_post_pct": 64.41
     },
-    "outstanding_bonds_total_eok": 458.8,
+    "outstanding_bonds_total_eok": 0,
     "outstanding_tier1_eok": 0,
     "projections": [
       {
         "year": 2026,
-        "capital_eok": 3701.1,
+        "capital_eok": 4159.9,
         "basic_capital_eok": 1526.0,
         "scr_eok": 2369.2,
-        "ratio_pct": 156.22,
+        "ratio_pct": 175.58,
         "basic_ratio_pct": 64.41,
-        "cumulative_bond_dedu_eok": 458.8,
+        "cumulative_bond_dedu_eok": 0,
         "cumulative_tier1_dedu_eok": 0,
         "hybrid_remaining_eok": 0,
         "hybrid_tier1_eok": 0,
@@ -1404,12 +1404,12 @@
       },
       {
         "year": 2027,
-        "capital_eok": 3701.1,
+        "capital_eok": 4159.9,
         "basic_capital_eok": 1526.0,
         "scr_eok": 2420.5,
-        "ratio_pct": 152.91,
+        "ratio_pct": 171.86,
         "basic_ratio_pct": 63.05,
-        "cumulative_bond_dedu_eok": 458.8,
+        "cumulative_bond_dedu_eok": 0,
         "cumulative_tier1_dedu_eok": 0,
         "hybrid_remaining_eok": 0,
         "hybrid_tier1_eok": 0,
@@ -1421,12 +1421,12 @@
       },
       {
         "year": 2028,
-        "capital_eok": 3701.1,
+        "capital_eok": 4159.9,
         "basic_capital_eok": 1526.0,
         "scr_eok": 2471.8,
-        "ratio_pct": 149.73,
+        "ratio_pct": 168.29,
         "basic_ratio_pct": 61.74,
-        "cumulative_bond_dedu_eok": 458.8,
+        "cumulative_bond_dedu_eok": 0,
         "cumulative_tier1_dedu_eok": 0,
         "hybrid_remaining_eok": 0,
         "hybrid_tier1_eok": 0,
@@ -1438,12 +1438,12 @@
       },
       {
         "year": 2029,
-        "capital_eok": 3701.1,
+        "capital_eok": 4159.9,
         "basic_capital_eok": 1526.0,
         "scr_eok": 2523.1,
-        "ratio_pct": 146.69,
+        "ratio_pct": 164.87,
         "basic_ratio_pct": 60.48,
-        "cumulative_bond_dedu_eok": 458.8,
+        "cumulative_bond_dedu_eok": 0,
         "cumulative_tier1_dedu_eok": 0,
         "hybrid_remaining_eok": 0,
         "hybrid_tier1_eok": 0,
@@ -1455,12 +1455,12 @@
       },
       {
         "year": 2030,
-        "capital_eok": 3701.1,
+        "capital_eok": 4159.9,
         "basic_capital_eok": 1526.0,
         "scr_eok": 2574.4,
-        "ratio_pct": 143.76,
+        "ratio_pct": 161.59,
         "basic_ratio_pct": 59.28,
-        "cumulative_bond_dedu_eok": 458.8,
+        "cumulative_bond_dedu_eok": 0,
         "cumulative_tier1_dedu_eok": 0,
         "hybrid_remaining_eok": 0,
         "hybrid_tier1_eok": 0,
@@ -1471,15 +1471,15 @@
         "basic_capacity_exhausted": false
       }
     ],
-    "bond_coverage": "dart_listed",
+    "bond_coverage": "absent_in_source",
     "confidence": {
-      "level": "low",
+      "level": "high",
       "tier1_bucket": "no_data",
       "tier2_bucket": "no_data",
       "t1_gap_pct": null,
       "t2_gap_pct": null,
       "bond_t1_out_eok": 0,
-      "bond_t2_out_eok": 458.8,
+      "bond_t2_out_eok": 0,
       "kics_t1_issued_eok": 0.0,
       "kics_t1_field": "missing",
       "kics_t2_baseline_eok": 0.0,
@@ -1487,11 +1487,11 @@
       "kics_t2_numerator_eok": 0,
       "tier2_data_source": "dart_bonds_fy2025_경과조치",
       "tier2_quality_flag": "ok",
-      "issue_flags": [
-        "kics_missing_t2"
-      ],
+      "issue_flags": [],
       "sim_bias": "neutral",
-      "reasons": []
+      "reasons": [
+        "FSC outstanding face aligns with K-ICS BS table rows"
+      ]
     }
   },
   {
@@ -4462,15 +4462,15 @@
         "basic_capacity_exhausted": false
       }
     ],
-    "bond_coverage": "no_bonds_in_dart",
+    "bond_coverage": "absent_in_source",
     "confidence": {
       "level": "high",
       "tier1_bucket": "no_data",
       "tier2_bucket": "no_data",
       "t1_gap_pct": null,
       "t2_gap_pct": null,
-      "bond_t1_out_eok": 0.0,
-      "bond_t2_out_eok": 0.0,
+      "bond_t1_out_eok": 0,
+      "bond_t2_out_eok": 0,
       "kics_t1_issued_eok": 0.0,
       "kics_t1_field": "missing",
       "kics_t2_baseline_eok": 0.0,
@@ -4481,7 +4481,7 @@
       "issue_flags": [],
       "sim_bias": "neutral",
       "reasons": [
-        "no capital instruments in FSC or BS — flat capital, SCR-interp only"
+        "FSC outstanding face aligns with K-ICS BS table rows"
       ]
     }
   },
@@ -4588,25 +4588,25 @@
     ],
     "bond_coverage": "dart_listed",
     "confidence": {
-      "level": "high",
+      "level": "low",
       "tier1_bucket": "no_data",
-      "tier2_bucket": "low",
+      "tier2_bucket": "no_data",
       "t1_gap_pct": null,
-      "t2_gap_pct": 125.0,
+      "t2_gap_pct": null,
       "bond_t1_out_eok": 0,
       "bond_t2_out_eok": 3593.1,
       "kics_t1_issued_eok": 0.0,
       "kics_t1_field": "missing",
-      "kics_t2_baseline_eok": 1597.3,
-      "kics_t2_field": "subordinated_eok",
-      "kics_t2_numerator_eok": 797.8,
+      "kics_t2_baseline_eok": 0.0,
+      "kics_t2_field": "missing",
+      "kics_t2_numerator_eok": 0,
       "tier2_data_source": "dart_bonds_fy2025_경과조치",
       "tier2_quality_flag": "ok",
-      "issue_flags": [],
-      "sim_bias": "over_deduct",
-      "reasons": [
-        "T2 face/BS gap +125% (subordinated_eok) — advisory, not in overall"
-      ]
+      "issue_flags": [
+        "kics_missing_t2"
+      ],
+      "sim_bias": "neutral",
+      "reasons": []
     }
   },
   {

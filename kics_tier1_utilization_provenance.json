@@ -1,14 +1,15 @@
 {
   "master": "tier1_utilization",
-  "generated_at": "20260721T115831Z",
+  "generated_at": "20260803T011610Z",
   "cells": [
     {
       "quarter": "2026.1Q",
       "item_block": "tier1_utilization",
-      "source_id": "FSC_BONDS",
+      "source_id": "DART",
       "as_of_date": "2026-03-31",
       "source_file": "data/bonds/capital_securities_fy2025.json",
-      "effective_filtered": true
+      "effective_filtered": true,
+      "_note": "source_id derived from source_file lineage by emit_capsec_provenance.py (20260803T011610Z); as_of_date = 발행 분기말 (per-bond 스냅샷 자체의 as-of는 그보다 이를 수 있고, effective 필터는 게이트 CHECK2 2c가 계보별로 검사한다)"
     }
   ]
 }
