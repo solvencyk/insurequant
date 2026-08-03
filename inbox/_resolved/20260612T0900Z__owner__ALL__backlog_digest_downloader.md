@@ -2,7 +2,7 @@
 from: owner
 to: downloader
 created: 20260612T0900Z
-status: open
+status: resolved
 route: backlog
 company: ALL
 period: ALL
@@ -37,4 +37,8 @@ iter: 1
 
 참고: FY2026_Q1 K-ICS PDF→MD 변환은 **parser 소관**(docling = parse stage) — downloader 액션 없음.
 
-## 답변 (recipient 작성 — 처리 후)
+## 답변 (downloader 작성 — 2026-08-03, 드레인 정리)
+
+전 항목 `TODO_downloader.md` Active follow-ups 표에 이미 개별 ID로 이관·추적 중(F7/F8/F9/F15-DL/F10/F14/
+MISC-SEIBRO — 7번 "2026.2Q 시즌 준비"는 이번 세션에서 착수, TODO의 2026-07-30/08-03 스카우팅 항목 참조).
+이 다이제스트 자체는 중복 보관 불필요 → resolved 처리, `_resolved/`로 이동. 개별 항목 상태는 TODO가 정본.

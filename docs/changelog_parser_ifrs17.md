@@ -10,6 +10,64 @@ Code: `src/ifrs17/` (csm / measurement / insurance_pl / reinsurance / bs_snapsho
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
 
+## 2026-08-03 (4차) — bonds 폐지 체인 parser측 완결(KR0049/KR0150/KR1010) + golden re-drift 종결 + PL 근접사고 자체복구
+
+**발주**: downloader `inbox/parser/20260803T0546Z`(잔여 3사 raw-ready) + validation
+`inbox/parser/20260803T0400Z`(중복 발주, 이미 처리됨) + `inbox/parser/20260803T0540Z`(golden re-drift).
+
+### CAPSEC_COVERAGE_REGRESSION 잔여 3사 — 완료, RED 13→0
+
+- **KR0150(서울보증보험) — 무발행 확정, 최고신뢰도.** 사업보고서 본문(재무제표 첨부 아님)
+  "7. 증권의 발행을 통한 자금조달에 관한 사항"의 **표준 DART 구조화표** [신종자본증권 미상환잔액]·
+  [조건부자본증권 미상환잔액] 둘 다 공모/사모/전 잔여만기구간 전부 "-"(0). 자유서술 스캔이 아니라
+  회사가 직접 기입하는 정형 공시표라 이번 체인 전체에서 가장 신뢰도 높은 무발행 확인 사례.
+- **KR1010(교보라이프플래닛생명보험) — 무발행 확정.** 신종자본증권/후순위 전 용어 매칭 0건.
+- **KR0049(악사손해보험) — 🔴 실발행 발견, 편입(confidence=medium).** "17.금융부채" 주석: JPY
+  5,000,000,000엔 사모 후순위채 1건(투자자 AXA Life Insurance Co.,Ltd/AXA Life Japan, 그룹
+  계열사향), 표면금리 1~5년차 1.57%고정/6년차~만기 z-Tibor+1.37%변동, 최종만기 10년, 콜옵션
+  발행일로부터 5년 경과 후 매 이자지급일. 당기말 KRW환산 장부가액 45,881.5백만원 편입. ⚠️ 절대
+  발행연도가 disclosure에 없어 `call_date`를 as_of(2025-12-31)로 보수적 추정(콜 가능 시점 이미
+  도래 가정) — 발행 사실·금액은 정확, 정확한 콜 타이밍만 추정치.
+
+`forward_capital_simulation.py` → `wire_capital_securities_to_utilization.py` →
+`emit_capsec_provenance.py` → `validate_data_contract.py` 재실행: **`CAPSEC_COVERAGE_REGRESSION`
+RED 3→0**(원래 13건 전부 소멸). `bond_coverage_distribution: dart_listed=27 / no_bonds_in_dart=11 /
+absent_in_source=0`. 전체 게이트 RED=0·YELLOW=219. `data/bonds/capital_securities_fy2025.json`
+최종 39사.
+
+→ **`inbox/parser/20260803T0055Z`(forward_capital FSC→DART rebase) 완료조건 ①(발행잔액>0 ≥24사)
+최종 충족**(dart_listed=27) — owner 확인 후 최종 resolved 가능, downloader의 bonds 소스 폐지
+(`20260803T0057Z`) 착수 게이트 오픈. `inbox/parser/20260803T0400Z`(validation 중복 발주)도 같이 종결.
+
+### golden re-drift(`qoq_warn:198Y→197Y`) — 근본원인 특정 + 재생성
+
+`inbox/parser/20260803T0540Z`(validation)이 골든 재생성(11:20:41) 후 마스터가 다시 바뀌어
+(11:46~11:56, 이 세션의 KR0075/KR1098/KR0051 fix) 재drift됐다고 보고. 코드 추적으로 정확히 특정:
+`validate_master_tables.py::qoq_scan`의 신계약CSM YoY 체크가 참조분기(KR0075 2024.4Q) 값이
+`floor(50억)` 미만이면 평가를 skip한다. 재정정 전 2024.4Q 신계약CSM=98.312억(>50, 평가됨) →
+2025.4Q(128.465억) 대비 YoY +30.66% > threshold 30%(`new_business_csm`) → YELLOW 발화 중이었음.
+재정정 후 98.312→9.831억(**<50, 평가 자체 skip**) → 경고 소멸. **비율은 안 변했다**(양쪽 분기 모두
+정확히 ÷10이라 30.66%로 동일) — floor 미달로 룰 평가대상에서 빠진 것뿐. (경쟁 후보였던 이자부리는
+YoY −3.46%로 threshold 20% 미달, 재정정 전후 무관.) `python tests/test_master_tables_golden.py
+--update` 재실행(마스터 편집 완료 후) → PASS.
+
+### 🔴 자체 근접사고 — `PL_breakdown.json` 7799→2940행 붕괴, 즉시 복구
+
+위 근본원인 추적 중 `python scripts/validate_master_tables.py --help`를 실행 — `--help`가
+스크립트에 등록된 플래그가 아니라 **에러 없이 기본 경로(빌드 포함)로 그냥 실행**돼버려
+`build_root_masters.py::build_pl()`이 (stale한 diag 소스로) `PL_breakdown.json`을 7799→2940행/
+319→117조합으로 붕괴시킴 — [[project_git_purge]]에 이미 기록된 정확히 같은 near-miss 패턴을
+직접 재현한 것. combo-count 안전점검으로 즉시 발견 → `git checkout HEAD -- PL_breakdown.json`으로
+복구 → 이 세션에서 유실된 유일한 변경분(KR0051 item18/19 override)을 수기로 재적용 → HEAD 대비
+combo/row 수 무손실 재확인(319 combos, 7799 rows). **CSM_waterfall.json은 무관**(build_csm()의
+diag 소스는 완전해서 영향 없음, 327 combos 항상 불변 확인됨).
+**교훈**: `validate_master_tables.py`는 인식 못하는 인자를 조용히 무시하고 기본(빌드) 경로로
+빠진다(argparse 미사용 추정) — `--no-build` 없이 직접 호출 금지, 항상
+`pytest tests/test_master_tables_golden.py`(내부에서 `--no-build` 고정 전달) 경유할 것.
+
+**검증(최종)**: `validate_data_contract.py` RED=0·YELLOW=219 · `pytest tests/test_deploy_assets.py
+tests/test_master_tables_golden.py` 10 passed · combo-count HEAD 대비 CSM/PL 둘 다 무손실.
+
 ## 2026-08-03 — forward_capital bonds source rebase FSC → DART per-bond (inbox `20260803T0055Z`)
 
 **발주**: owner, `inbox/parser/20260803T0055Z__owner__MULTI_2026.1Q__forward_capital_rebase_fsc_to_dart.md`
@@ -86,6 +144,74 @@ Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
     `forward_capital_simulation.py` 재실행 → `bond_coverage: dart_listed` 전환 → `validate_data_contract.py`
     RED=0 재확인. 완료 시 owner의 bonds 소스 폐지 발주(`20260803T0057Z`) 선행조건 완전 종결.
   - (상세 결과는 각 서브에이전트 완료 후 이 changelog에 후속 추가 — 작성 시점엔 진행 중)
+
+## 2026-08-03 (3차) — 위 (2차) 배치 완결 확인 + `CAPSEC_COVERAGE_REGRESSION` 회귀 13→3
+
+세션이 (2차)를 쓰던 도중 종료돼(3개 서브에이전트 dispatch 후 "결과는 후속 추가"로 남김) 다음 세션이
+이어받음. 서브에이전트들은 이미 작업을 마쳐 워킹트리에 결과가 있었음(미커밋) — 각각 raw/combo-diff로
+검증 후 마무리, 도중 별도 회귀 1건 발견해 같이 처리.
+
+- **KR0075 — 2026-07-30 fix 자체가 10x 과소정정이었음 확정.** raw(FY2024_Q4·FY2025_Q4 `_00760.xml`,
+  Note(4) 측정요소별 변동내역)를 직접 대조한 결과 필요 배율은 was÷100이 아니라 **was÷1000**(raw가
+  천원 단위, 즉 ÷100,000이 정상 천원→억원 환산인데 7/30엔 ÷100만 적용해 최종값이 여전히 10배 컸음).
+  12셀(2024.4Q·2025.4Q × 6항목) 전부 raw 행 번호 인용해 재정정. 7/30 당시 "항등식이 원값·÷100값
+  양쪽에서 닫힌다"는 근거는 무효 판정 — item4(가정조정)가 나머지의 residual이라 균일 스케일링에서는
+  항상 닫히는 항진명제(배율 판별력 없음). `NB_CSM_multiple.json` 신계약CSM 값 재확인 결과 이미 정합
+  (다른 세션이 동기화까지 완료해둔 상태).
+  **부수 발견**: 이 재정정으로 `PM-2026-07-30_kr0075_csm_100x_unit.md` §3이 배선한
+  `CSM_WATERFALL_PLAUSIBILITY`(median×10) 임계값의 앵커 사례(KR0075 비율 1.530, 35사 1위)가 스테일해짐
+  — 재정정 후 재계산하면 0.153(35사 중 33위, median의 0.27배)로 완전 역전. 현재 threshold(median×10=5.6)
+  기준으로는 발화 대상이 KR0075든 현 최댓값 KR0076(0.9989)이든 미달이라 **당장 오탐/미탐 없음** — 급하지
+  않은 건이라 validation에 통지만(`inbox/validation/20260803T0545Z`).
+- **KR1098 — 2024.4Q 6셀 추정→확정.** 7/30에 연속성+회사규모 implausibility 추론만으로 넣은 추정
+  override(항목1~6)를 신규 raw(`20250331003494_00760.xml`, Note(4) "순보험계약부채의 변동" 표)로 전부
+  직접대조 — 6개 전부 추정치와 정확히 일치(단위: 천원, ÷100,000 환산). 2026-06 KR0004 케이스와 함께
+  "raw 없이 연속성+규모 추론만으로 넣은 override가 나중에 raw로 100% 확인된" 두 번째 사례 — 이 저장소의
+  추정 override 방법론 자체의 신뢰도를 뒷받침.
+- **KR0051 — PL item19(보험금융손익) parse_miss 확정 + exclude_companies spot-check.** raw 직접판독
+  (제23기 포괄손익계산서, 단위 원): 보험금융수익 36,452,010 + 재보험금융수익 3,149,145,386 −
+  보험금융비용 5,458,298,595 − 재보험금융비용 14,105,522 = −2,286,806,721원 = −2286.806721백만원.
+  근본원인 확정: `scripts/pl_breakdown/common.py::to_num`의 콤마/공백 제거가 "13, 24"류 복수 주석참조를
+  "1324"로 뭉개 `tier1.py::_drop_footnote`의 문턱(abs≤99)을 피해가고, 수익/비용 두 행이 우연히 같은
+  주석번호를 인용해 오채택값이 동일해 net이 정확히 0으로 상쇄되는 **결정론적 버그**(진짜 0 아님).
+  `_GOLD_CELL_OVERRIDE[("KR0051","2025.4Q")] = {18: -1603.902737, 19: -2286.806721}` 추가, 근본원인은
+  다른 회사·분기의 복수-주석 행에도 영향 가능한 범용 버그라 주석에 명시(별도 조사 필요, 이번엔 셀 1개만
+  대증). **추가로 기존 `exclude_companies["KR0051"]`(CSM 제외, 천원단위 오인) spot-check**: raw
+  가정민감도표(L4317, 기준금액 재보험효과반영전) 169,315천원=1.693억이 기존 결론("기말 CSM 1.69억")과
+  정합 — 제외 유지 재확인(CSM 변동표 완전 재도출까지는 안 함, 비필수 판단).
+- **KR0050/KR0076 — 검증만(이미 완료돼 있었음).** `capital_securities_fy2025.json`에 이미 편입,
+  `forward_capital_simulation.py` 재실행 결과 이미 양사 `bond_coverage: dart_listed` 확인 — 추가 작업
+  불요, `inbox/parser/20260803T0055Z` 완전히 닫힘.
+
+### 🆕 부수 발견 — `CAPSEC_COVERAGE_REGRESSION` RED 13건 (검증 중 조우)
+
+위 4건을 raw-verify하던 중 `python scripts/validate_data_contract.py`가 RED=13으로 나옴 — 원인은
+이 건들과 무관, validation이 신설한 별도 룰(`inbox/validation/20260803T0310Z`, capital-securities 커버리지
+census: forward_capital/tier1/tier2가 참조하는 회사인데 `capital_securities_fy2025.json`에 레코드
+자체가 없으면 RED — "스캔 후 무발행"과 "미검증"을 구분). 같은 소스 파일을 만지는 김에 처리:
+
+- raw 있는 10사 직접 확인 → **9사 무발행 확정**: KR0008(삼성화재)·KR0029(AIG손해)·KR0074(라이나)·
+  KR0075(비엔피파리바카디프)·KR0080(에이아이에이)·KR0095(메트라이프)·KR0100(처브라이프)·KR0051(신한이지)·
+  KR1098(카카오페이) — 신종자본증권/후순위채/후순위사채/무보증사채/조건부자본증권/사채발행내역 6개 용어
+  전부 매칭 0건이거나(대부분), 매칭이 있어도 **자사 발행이 아닌 타사 증권 투자보유**로 확인
+  (KR0008: 신한/하나/KB금융지주 조건부자본증권 8건 매칭 → AFS/AC 유가증권 명세표, 투자자산이지 자사
+  발행 부채 아님). `bonds: []` 명시 레코드 추가(KR0069 기존 패턴과 동일 스키마).
+- **🔴 1사 신규 발견 — KR1011(IBK연금보험) 후순위채 4건, 완전 누락 상태였음.** raw "18. 차입부채" 주석
+  표(단위 천원, 당기말)에서 직접 확인: 제1~4회 무보증 사모 후순위사채, 발행 2021-12-28~2023-03-30,
+  만기 2031-2033, 금리 3.98~7.40%, 액면 합계 360,000,000천원(=3,600억), 사채할인발행차금 차감 후
+  당기말 장부금액 합계 359,313,971천원(raw 합계행과 정확히 일치 검증). 콜옵션: 발행일로부터 5년째
+  되는 날 및 이후 매 이자지급기일에 전액 중도상환 가능(전부 as_of 2025-12-31 기준 미도래).
+  `capital_securities_fy2025.json`에 편입 → `wire_capital_securities_to_utilization.py` 재실행 →
+  tier2 소진율 22.2%로 반영(지금까지 0%로 완전히 빠져 있었음 — forward_capital/tier2_utilization
+  둘 다 이 회사의 실제 후순위채 부담을 반영하지 못하고 있었던 실질 데이터 갭).
+- **잔여 3사 raw 부재**: KR0049(악사손해보험)·KR0150(서울보증보험)·KR1010(교보라이프플래닛생명보험) —
+  downloader 발주(`inbox/downloader/20260803T0535Z`).
+
+**검증**: `forward_capital_simulation.py` → `wire_capital_securities_to_utilization.py` →
+`emit_capsec_provenance.py` → `validate_data_contract.py`: RED 13→3(잔여는 downloader 발주로 설명됨,
+미설명 RED 0) · YELLOW 210→219(신규 anomaly 아님 — CSM cohort median이 KR0075/KR1098 재정정으로
+이동하며 생긴 배경노이즈, generic scan 재계산 결과) · `pytest tests/test_deploy_assets.py` 9 passed.
+`inbox/parser/20260803T0150Z` status: answered.
 
 ## 2026-07-30 — inbox 드레인(17건) + KR0075/KR1098 100x/1000x unit bug fix + KR0004 온보딩 + PL near-miss
 

@@ -1,9 +1,164 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-07-21 · Stage 3/5 — validation
+> Last updated: 2026-08-03 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+---
+
+## 2026-08-03 (c) — UH-3 end-state: provenance 사이드카 **부재 = RED** 전환
+
+### V23 — `MISSING_PROVENANCE_SIDECAR` YELLOW → RED (UH-3 종결, 2026-07-21부터 미완이던 축)
+
+**전환 근거 = 선행조건 충족 확인.** UH-3는 2026-07-21에 "notes로 조용히 통과"를 **집계되는
+YELLOW**로만 승격한 상태였다(그때 RED로 올리면 미발행 마스터 4종이 전부 red-out돼 push가 영구
+차단). 오늘 CHECK 2 대상 4종이 **전부 발행 완료**됨을 실측 확인:
+
+| 마스터 | 사이드카 | 발행 주체 |
+|---|---|---|
+| `forward_capital` · `tier1_utilization` · `tier2_utilization` | ✅ 루트 3개 | publishing `faa34cd` → 2026-08-03 `scripts/emit_capsec_provenance.py`로 **도출식 전환**(V21) |
+| `sensitivity_heatmap` | ✅ `data/dart/viz/sensitivity_heatmap_provenance.json` | parser `scripts/emit_sensitivity_provenance.py` (UH-3 잔여 1건 해소) |
+
+라이브 `MISSING_PROVENANCE_SIDECAR` YELLOW **1 → 0** → `check_as_of._fallback_note`를
+**RED**로 승격. 이제 부재는 "아직 미발행(정상)"이 아니라 **발행 경로가 씻겨나갔다는 신호**다.
+parser의 emitter 독스트링도 같은 계약을 명시하고 있었다("once this sidecar exists, CHECK 2 flips
+… no-sidecar=RED") — 상류가 이미 통보받은 전환이다.
+
+**Phase-1 추론 블록은 지우지 않았다.** 코드 주석의 원래 end-state는 "fallback 삭제"였지만, 그
+분기가 이제 RED라 **통과 경로가 아니고**, 무엇이 어긋났는지(stale quarter / 결측 meta) 진단을 함께
+보여주는 값이 있다. 삭제는 작동하는 검사를 버리는 쪽이라 채택하지 않았다(surgical 원칙).
+
+**검증.**
+
+| 항목 | 결과 |
+|---|---|
+| 라이브 게이트 | CHECK 2 **RED=0 유지** · 총 RED **13**(전부 기존 `CAPSEC_COVERAGE_REGRESSION`) = 전환에 따른 신규 RED·오탐 **0** |
+| self-test | **21 → 22/22 PASS**. baseline에 유효 사이드카 4종 주입(`base_sidecars()`)해야 clean이 성립하도록 fixture 갱신 |
+| 신규 케이스 **C3** | 사이드카 1종(tier1) 제거 → RED 1건만 방출 |
+| 이빨 검증 | `GateResult.add`를 가로채 severity를 YELLOW로 **강등**하면 C3 미검출 FAIL = 판정이 실제로 일어남 |
+| 부수 fixture 정정 | `f_stale_as_of`는 사이드카가 낡은 기준일을 **정직하게 선언**하는 형태로 바꿔 STALE_AS_OF만 남김(사이드카 present면 index miss로 MISSING_PROVENANCE가 먼저 터짐). `f_source_id_lineage_mismatch`는 나머지 3종을 유효하게 유지(결함 1개 원칙). evidence 계보 키를 선언 소스와 맞춰 `FSC_BONDS → DART` |
+
+**잔여 = UH-8 신규.** `kics_rate_sensitivity`는 `MASTER_FILES`에 있으나 **CHECK 2 검사 대상이
+아니다**(사이드카 없음). 값은 `data/_derived/kics_rate_sensitivity_validation.json`이 보지만
+**소스 신선도는 아무도 안 본다** — UH-3가 닫은 것과 같은 부류. 발행 선행 발주
+`inbox/parser/20260803T0520Z__validation__MULTI__rate_sensitivity_provenance_sidecar.md`
+(lane: kics), 발행 후 CHECK 2 2a(iv) 배선. **발행 전 배선 금지**(즉시 red-out) — UH-3에서 검증된 순서.
+
+---
+
+## 2026-08-03 (b) — 자본성증권 **커버리지 census** 신설 (inbox 1건 드레인)
+
+### V22 — `CAPSEC_COVERAGE_REGRESSION` 신설 (owner `20260803T0310Z`, V21의 나머지 절반)
+
+**무엇이 통과했나.** V21이 "틀린 소스라고 **말하는 것**"을 막은 직후에도 게이트 RED=0이었다 —
+**소스가 통째로 비어도 통과**했기 때문. `20260803T0055Z`로 채권 원천이 FSC → DART per-bond로 바뀌면서
+DART FY2025 annual raw가 없는 회사의 채권이 통째로 빠졌고, 상환 차감이 사라져 비율이 **낙관 방향으로**
+틀렸다: KR0050 하나손해 1,000억→0 (2030 124.47%→146.09%), KR0076 아이엠라이프 2,700억→0
+(93.65%→**152.12%**, 권고선 130% 아래→위). 원인은 `bond_coverage`가 **"스캔 후 무발행"과 "소스에 아예
+없음"을 한 값(`no_bonds_in_dart`)으로 뭉갠 것** — 구분이 안 되니 룰이 성립할 수 없었다.
+`feedback_coverage_census_mandatory`의 사각.
+
+**조치 (`scripts/validate_data_contract.py` `check_census` 1e).**
+- **`CAPSEC_COVERAGE_REGRESSION`(RED)** — 축은 git diff가 아니라 **선언된 per-bond 소스 안의 회사 존재
+  여부**(git 없이 되는 축이어야 1차 판정이 된다). 소스에 레코드 없음 = RED(미검증) / 레코드 있고 해당
+  슬라이스 잔액 0 = **통과**(정당한 무발행) / 잔액>0인데 마스터 0 = RED(어댑터 drop).
+  **라벨을 믿지 않는다** — 마스터의 `bond_coverage`를 읽지 않고 `index_bond_source()`가 선언된 소스
+  파일을 직접 읽어 도출(DART/FSC 2계보 스키마). 모집단 하드코딩 없음 = 마스터가 발행한 행이 대상(self-census).
+- **`CAPSEC_SOURCE_UNRESOLVED`(RED)** — 마스터가 행을 발행하는데 소스 선언이 없으면 검사가 **빈 껍데기**가
+  된다(2c가 겪은 실패 유형). 축 소실 = 통과 아님.
+- **`CAPSEC_AMOUNT_MISMATCH`(YELLOW)** — 0은 아닌 금액 불일치(`max(1억,1%)`). 라이브 0건 → 관찰기.
+- **`CAPSEC_COVERAGE_DROP_VS_PRIOR`(YELLOW)** — 보조축(그물). 직전 `output/kics_forward_capital/<stamp>`
+  대비 회사별 >0→0 후퇴 또는 전사 20% 급감. 같은 버그로 두 번 생성되면 눈이 머는 축이라 **1차 판정에 안 씀**.
+- 오탐 억제: 슬라이스별 자기검열(신종만 발행한 회사의 후순위 0은 대상 아님) + tier 마스터는 소진율
+  분자(신규분)가 아니라 **경과조치 면제분까지 더한 총액**을 존재 신호로 사용.
+- **`bond_coverage` 3-way**(`forward_capital_simulation.py::_bond_coverage`, 배포 에셋 **추가만**):
+  `dart_listed` / `no_bonds_in_dart` / **`absent_in_source`**. 재생성 diff = 15행 라벨 + KR0069
+  confidence 사유 1건, **수치 무변**. 같이 발견: `compute_confidence`의 no-bond 지름길 리터럴이
+  `no_bonds_in_fsc`로 남아 rename 이후 **죽어 있었다** → 복구하되 `absent_in_source`에는 미적용
+  (스캔도 안 한 회사에 "reconcile 할 게 없으니 high"는 이 사건의 낙관 주장 그 자체).
+
+**mutation 증명.** 배선 전 라이브 RED **0** → 배선 후 **RED=15**(KR0050·KR0076 포함, push BLOCKED).
+selftest **16 → 21/21 PASS**(H1 absent·H2 어댑터 drop·H3 축 소실·H4 그물·H5 금액불일치).
+이빨 검증: `_capsec_coverage_findings`를 monkeypatch로 죽이면 H1~H5 전부 미검출 FAIL(21→16).
+`pytest tests/test_deploy_assets.py` 9 passed.
+
+**RED 15건은 exception으로 닫지 않았다**(owner 완료조건 #3) — raw 부재가 원인이므로 정상 경로는
+raw 도착 → 재추출 → 자연 소멸이고 그때까지 push가 막히는 것이 의도된 동작(`feedback_red_blocks_push`).
+발주: parser `20260803T0400Z`(raw 있는 12사 = 추출 또는 무발행 빈 레코드 명시) ·
+downloader `20260803T0405Z`(raw 없는 3사: KR0049 악사·KR1010 교보라플·KR0150 서울보증).
+7사는 `data/bonds/_census_fy2025.json`에 `HAVE_BONDS: false` 스캔 기록이 있으나 **그 census는 사이드카가
+선언한 소스가 아니다** → 정당한 0의 근거는 소스의 빈 레코드(`bonds: []`)로 남긴다는 계약(`20260803T0123Z`)에
+따라 RED 유지. 상세 5칸: `docs/postmortems/PM-2026-08-03_capsec_provenance_label_mismatch.md` **§6**.
+
+---
+
+## 2026-08-03 — provenance 라벨 계보 검사 + CSM 상대규모 plausibility (inbox 2건 드레인)
+
+### V21 — `SOURCE_ID_LINEAGE_MISMATCH` 신설 (owner `20260803T0056Z`, false-green 해소)
+
+**무엇이 통과했나.** `validate_data_contract.py`가 capital-securities 3마스터
+(`forward_capital`·`tier1_utilization`·`tier2_utilization`)에 `source_id == "FSC_BONDS"`를
+**하드코딩 요구**. 그런데 tier1/tier2는 2026-06-20부터 DART가 원천
+(`wire_capital_securities_to_utilization.py` → `data/bonds/capital_securities_fy2025.json`).
+사이드카는 하드코딩 요구를 만족시키려고 **DART 파일에 FSC 라벨**을 달았고, 게이트는 그 거짓 주장을
+"검증"해 **RED=0으로 통과**시켰다. PM-2026-06-16 "맞는 산수·틀린 소스"의 provenance 축 변종.
+
+**조치.**
+- **`source_id_for_lineage()` + `_SOURCE_LINEAGE`** — 경로 접두사 → 원천 매핑
+  (`normalized/**`·`raw/**`→FSC_BONDS / `capital_securities_*`·`disclosure/**`·`data/dart/**`→DART).
+  선언 라벨 ≠ 계보면 **RED `SOURCE_ID_LINEAGE_MISMATCH`**. **계보 미등록 경로도 RED**(검증 불가 = 통과 아님).
+  enum 확대(`{FSC,DART}` 둘 다 허용)를 거부한 이유 = 아무 라벨이나 통과해 검증력 소멸.
+- `effective_filtered == true` 요구 **유지**하되 `source_id` 검사와 **분리**(어느 쪽이 깨졌는지 구분).
+- **effective 증거 재조준**: 종전엔 FSC 스냅샷 **한 파일**만 봐서, tier1/tier2가 DART로 옮겨간 뒤
+  **서빙되는 DART per-bond의 도넛 가드는 아무도 검사하지 않았다.** `capsec_sources_in_use()`가
+  사이드카에서 `{계보: {source_file}}`를 뽑고 **계보마다 그 선언된 파일**을 검사(글롭·최신stamp 추측 제거
+  = 검사파일 == 서빙파일). DART 2축 신설: (i) 아티팩트 as-of에 콜 도래·outstanding>0이면
+  `past_call_outstanding: true` 필수, (ii) 스냅샷~마스터 as-of 구간 콜 도래분 — 후순위는 `amort()`가
+  0으로 떨어뜨리나 **신종은 tier1 분자에 무조건 합산**되므로 이 검사만이 막는다. 라이브 누출 0.
+- **`scripts/emit_capsec_provenance.py` 신설** — 루트 사이드카 3개를 **게이트와 같은 함수로 도출**
+  (하드코딩 금지). `--check`는 drift 시 exit 2. 손타이핑 사이드카는 리빌드에 무방비였다.
+- **`tests/test_deploy_assets.py::test_capsec_provenance_source_id_matches_lineage`** 신규 — 라벨/계보
+  일치 + `--check` 무drift 기계검사. → **9 passed**.
+
+**mutation 증명 (owner 완료조건 #2).** 배선 전 라이브 RED **0** → 배선 후(정정 전) RED **2**
+(tier1·tier2) → 사이드카 재발행 후 **0**. `source_id_for_lineage` 무력화 시 selftest G1 **FAIL**.
+
+**as-of 정본 확정 (owner §4).** 사이드카 `as_of_date` = **2026-03-31 (2026.1Q)** 정본
+(manifest `baseline_quarter`·tier doc `quarter`·`wire_…py AS_OF` 3중 일치). per-bond `as_of: 2025-12-31`은
+**다른 축**(채권 스냅샷 기준일). `baseline_2025_4Q` 키는 **stale 이름·값은 2026.1Q** →
+**UH-7**로 publishing 발주(`inbox/publishing/20260803T0210Z`, `K-ICS.html`이 1곳에서 읽어 동시 변경 필요).
+
+**진단 1건 정정.** owner §3의 "파일 없음 = 그냥 통과"는 사실과 달랐다 — 그 경로는 이미
+`MISSING_EFFECTIVE_LIST` RED를 방출한다. 실제 사각은 **틀린 파일(FSC)을 보고 있었다**는 쪽.
+
+### V20 — `CSM_WATERFALL_PLAUSIBILITY` 신설 (parser `20260730T0040Z`, UH-6 해소)
+
+`_csm_magnitude_implausible()` → `check_census` **1d**. 판정식 `기말CSM ÷ item1 지급여력금액`
+(회사별 최신 분기, KR코드 조인) > `median × 10`. severity **YELLOW**(관찰 1~2 릴리스 → RED).
+
+**임계값 parser 초안 ×20 → ×10 조정.** 초안 근거(KR0075 r=153.01 / 차순위 3.49)는 **정정 전** 값.
+정정 후 라이브 36사 분포 = median **0.563** · 최대 **1.530**(KR0075, ×2.7) → ×20(r>11.3)은 라이브
+최대의 7.4배 여유로 **중간규모사의 ×10 단위오류(r 0.563→5.63)를 놓친다**. ×10은 3.7배 여유 유지 +
+그 부류 포착. 100× 사고는 ×273이라 어느 쪽이든 발화. **라이브 발화 0건(오탐 0).**
+
+오탐 억제 (a) K-ICS 미공시사 skip · (b) 표본<10 skip · (c) 상한만 + **(d) 신규: 지급여력금액 ≤ 0 skip**
+(자본잠식사 예별손해 item1=△1,090 — 비율 무의미, 규모 이상치는 CHECK 5 generic scan 소관).
+
+회귀: `_data_contract_selftest.py` **G2**(항등식은 닫히나 규모만 비정상인 합성 케이스) + selftest에
+**YELLOW 기대 축** 추가. 부수 정정: selftest가 `wf_by_code`를 **디스크 실데이터**에서 읽던 것을 inject
+격리로 전환(합성 케이스 오염, pre-existing).
+
+### 상태
+
+`--selftest` **14 → 16/16 PASS**(G1·G2 둘 다 이빨 검증 통과) · 게이트 **RED=0** YELLOW=210(기존 generic
+anomaly 후보, 비차단) · `pytest tests/test_deploy_assets.py` **9 passed** · inbox validation **비었음**.
+PM-2026-08-03 신규 · PM-2026-07-30 `open → closed` · README UH-6 해소 / UH-7 신규.
+
+**잔여(절반-경화 재확인).** `prepush_check.py:23`은 `validate_data_contract`·`triage_anomaly_candidates`만
+import — `validate_kics_disclosure.py`를 **호출하지 않는다.** 이번 룰 2종은 push 게이트 배선이라 무관하지만,
+K-ICS 게이트 전용 룰(현 documented RED 8건 포함)은 여전히 push를 못 막는다. 체인 추가는 push를 즉시
+차단하므로 **owner 결정 사항**(임의 변경 안 함).
 
 ---
 

@@ -44,10 +44,13 @@
 
 | ID | 사고 | 룰 배선 | 상태 |
 |---|---|---|---|
-| [PM-2026-06-16](PM-2026-06-16_two_month_glitch.md) | 두 달 글리치 — 맞는 산수·틀린 소스 false-green | ✅ push 게이트(data-contract 5 CHECK) | `closed` (잔여 UH-3·UH-4) |
+| [PM-2026-06-16](PM-2026-06-16_two_month_glitch.md) | 두 달 글리치 — 맞는 산수·틀린 소스 false-green | ✅ push 게이트(data-contract 5 CHECK) | `closed` (UH-3·UH-4 **모두 해소** 2026-08-03) |
 | [PM-2026-07-07](PM-2026-07-07_after_capture_blindspot.md) | 경과조치 **적용후** 전면 미검증 | ✅ 양쪽 (2026-07-21 lift) | `closed` |
 | [PM-2026-07-08](PM-2026-07-08_v17_mirror_fill.md) | V17 가짜복사(적용후=round(적용전)) | ✅ 양쪽 (2026-07-21 lift) | `closed` |
 | [PM-2026-07-15](PM-2026-07-15_post_parent_census.md) | 적용후 요구자본 **부모** 결측 → 라이브 공란 | ✅ 양쪽(K-ICS + push) | `closed` |
+| [PM-2026-07-30](PM-2026-07-30_kr0075_csm_100x_unit.md) | KR0075 CSM_waterfall 100x 단위과대 — 절대값 cap은 있었으나 상대규모 검사축 없음 | ✅ push 게이트 `CSM_WATERFALL_PLAUSIBILITY` (2026-08-03 배선, 초기 YELLOW) | `closed` (UH-6 해소) |
+| [PM-2026-08-03](PM-2026-08-03_capsec_provenance_label_mismatch.md) | 자본성증권 provenance **라벨 거짓**(DART 파일에 `FSC_BONDS`)이 통과 — 게이트가 틀린 주장을 "검증" | ✅ push 게이트 `SOURCE_ID_LINEAGE_MISMATCH` + 계보별 effective 증거 + 사이드카 도출 emitter | `closed` (잔여 UH-7) |
+| [PM-2026-08-03 §6](PM-2026-08-03_capsec_provenance_label_mismatch.md#6-후속--같은-사건의-두-번째-얼굴-커버리지-census-2026-08-03-b) | **같은 사건의 두 번째 얼굴** — 소스가 통째로 비어도 통과(커버리지 후퇴). DART 전환으로 raw 없는 회사의 채권이 사라져 비율이 낙관 방향으로 틀림(KR0076 94→152%) | ✅ push 게이트 `CAPSEC_COVERAGE_REGRESSION` + `CAPSEC_SOURCE_UNRESOLVED` (+YELLOW 그물 2종) | `closed` (데이터 잔여 RED 15 = 의도된 push 차단, parser·downloader 발주) |
 
 ## ✅ 2026-07-21 해소 (owner 승인)
 
@@ -67,7 +70,10 @@
 
 | ID | 내용 | 상태 |
 |---|---|---|
-| **UH-3** | provenance end-state(no-sidecar=RED) 미전환 | 진행 중 — sidecar YELLOW **4→1**. publishing(`faa34cd`)이 forward_capital·tier1·tier2 sidecar 발행 → 3종 Phase-2 strict 전환. **sensitivity_heatmap만 잔여**(parser(ifrs17) `20260721T0530Z` 발주 대기). 4종 전부 발행 후 no-sidecar=RED 보편룰 활성화 |
+| **UH-3 ✅ 해소 (2026-08-03 c)** | **end-state 도달 = no-sidecar RED 전환.** 4종 사이드카 전부 발행 완료(publishing `faa34cd` → forward_capital·tier1·tier2 / parser `scripts/emit_sensitivity_provenance.py` → `data/dart/viz/sensitivity_heatmap_provenance.json`) → 라이브 `MISSING_PROVENANCE_SIDECAR` YELLOW **1→0** 확인 후 `_fallback_note`를 **YELLOW→RED** 승격(`validate_data_contract.check_as_of`). 이제 사이드카 부재 = "미발행 정상"이 아니라 **발행 경로가 씻겨나간 신호**이므로 push 차단. Phase-1 추론 블록은 진단용으로 존치(그 분기가 이미 RED라 통과 경로가 아니다). 회귀 케이스 **C3** + 이빨 검증(YELLOW로 강등하면 미검출 FAIL). **전환 후 라이브 CHECK2 RED=0 유지** = 오탐 0 |
+| **UH-8** | `kics_rate_sensitivity`는 `MASTER_FILES`에 있으나 **CHECK 2 provenance 검사 대상이 아니다**(사이드카 없음·as-of 축 미검사). 다른 검증기(`data/_derived/kics_rate_sensitivity_validation.json`)가 값은 보지만 **소스 신선도는 아무도 안 본다** — UH-3가 닫은 것과 같은 부류의 잔여 축 | 신규 — 발주 `inbox/parser/20260803T0520Z__validation__MULTI__rate_sensitivity_provenance_sidecar.md` (lane: kics). 사이드카 발행 후 CHECK 2에 배선 |
+| **UH-6 ✅ 해소 (2026-08-03)** | `CSM_WATERFALL_PLAUSIBILITY` 배선 완료 — `_csm_magnitude_implausible()` → `validate_data_contract.check_census` **1d**. 판정식 `기말CSM ÷ item1지급여력금액`(회사별 최신 분기, KR코드 조인) > `median × 10`. **임계값은 parser 초안 ×20에서 ×10으로 조정** — 초안 근거(KR0075 r=153)는 정정 전 값이고 정정 후 라이브 36사 분포는 median 0.563 / 최대 1.530(=median의 2.7배)이라 ×20(r>11.3)은 중간규모사의 ×10 단위오류를 놓친다. severity **초기 YELLOW**(관찰 1~2 릴리스 후 RED, UH-3 선례). 오탐 억제 4종(K-ICS 미공시사 skip·표본<10 skip·상한만·지급여력금액≤0 skip). 회귀 케이스 `_data_contract_selftest.py` **G2** + 이빨 검증(룰 죽이면 FAIL) |
+| **UH-7** | `kics_forward_capital.json`의 셀 키가 `baseline_2025_4Q`인데 실제 데이터는 `BASELINE_QUARTER="2026.1Q"` 산출물 — **값은 맞고 키 이름만 거짓**, as-of 정본 판단을 흐린다(`forward_capital_simulation.py:442`). HTML이 이 키를 읽으므로 rename은 publishing+designer 동시 변경 → validation 단독 수정 금지 | 신규 — 발주 `inbox/publishing/20260803T0210Z__validation__MULTI_2026.1Q__forward_baseline_key_misnomer.md` (PM-2026-08-03 §5) |
 
 ## ✅ 2026-07-21 (3차) — UH-5 종결 (owner 승인, premise-refined)
 

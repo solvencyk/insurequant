@@ -1,11 +1,66 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-07-15 · Stage 3/5 — validation
+> Last updated: 2026-08-03 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-03 c) UH-3 종결 — provenance 사이드카 부재 = RED 전환. push 게이트 RED=13 (의도된 차단, 15→13).**
+> **V23 `MISSING_PROVENANCE_SIDECAR` YELLOW → RED.** 2026-07-21부터 미완이던 UH-3 end-state.
+> 선행조건(CHECK 2 대상 4종 전부 발행) 충족 확인 — publishing `faa34cd`+`emit_capsec_provenance.py`
+> 3종 + parser `emit_sensitivity_provenance.py` 1종 → 라이브 YELLOW **1→0**. 이제 부재는
+> "미발행(정상)"이 아니라 **발행 경로가 씻겨나간 신호**다. Phase-1 추론 블록은 **진단용으로 존치**
+> (그 분기가 RED라 통과 경로 아님 — 작동하는 검사를 버리지 않는다).
+> **전환 후 CHECK 2 RED=0 유지 = 오탐 0** · selftest **21 → 22/22**(신규 C3) · 이빨 검증
+> (severity를 YELLOW로 강등하면 C3 미검출 FAIL) · pytest 10 passed.
+> baseline fixture에 유효 사이드카 4종(`base_sidecars()`) 주입 + `f_stale_as_of`/`f_source_id_lineage_mismatch`
+> 결함-1개 원칙 유지로 정정.
+> **잔여 UH-8 신규**: `kics_rate_sensitivity`는 `MASTER_FILES`에 있으나 **CHECK 2 검사 대상이 아니다**
+> (사이드카 없음 → 소스 신선도 미검증). 발행 선행 발주 `inbox/parser/20260803T0520Z…rate_sensitivity_provenance_sidecar`
+> (lane: kics), **발행 후** CHECK 2 2a(iv) 배선(발행 전 배선 = 즉시 red-out, UH-3에서 검증된 순서).
+> **RED 13 = 전부 `CAPSEC_COVERAGE_REGRESSION`**(15→13, parser가 KR0050·KR0076 레코드 적재 완료).
+> 잔여 13사는 parser `20260803T0400Z` / downloader `20260803T0405Z` 처리 대기 = 의도된 push 차단.
+> **부수**: `tests/test_master_tables_golden.py` `qoq_warn 198Y→197Y` 1축 재drift(마스터 미커밋 변경분,
+> validation 무관) → 기존 스레드 `inbox/parser/20260803T0245Z…master_tables_golden_drift` 추가 기재.
+
+## Status (이전)
+
+**(2026-08-03 b) inbox 1건 드레인 — 자본성증권 커버리지 census 신설. push 게이트 RED=15 (의도된 차단).**
+> **V22 (owner `20260803T0310Z`, blind_spot) `CAPSEC_COVERAGE_REGRESSION` 신설 = V21의 나머지 절반.**
+> V21이 "틀린 소스라고 **말하는 것**"을 막은 직후에도 RED=0 — **소스가 통째로 비어도 통과**했다.
+> DART 전환으로 annual raw 없는 회사의 채권이 사라져 KR0050 1,000억→0(2030 비율 124→146%),
+> KR0076 2,700억→0(94→**152%**, 권고선 아래→위). 원인 = `bond_coverage`가 "스캔 후 무발행"과
+> "소스에 아예 없음"을 **한 값으로 뭉갬**. 신규 룰의 축 = **선언된 per-bond 소스 안의 회사 존재 여부**
+> (git diff는 보조축 YELLOW `CAPSEC_COVERAGE_DROP_VS_PRIOR`로만). **라벨을 믿지 않고**
+> `index_bond_source()`가 소스를 직접 읽어 도출 + 3마스터 전부 + 축 소실 가드
+> `CAPSEC_SOURCE_UNRESOLVED`(RED) + 금액 불일치 `CAPSEC_AMOUNT_MISMATCH`(관찰기 YELLOW).
+> 배포 에셋 `bond_coverage`는 **추가만** 3-way(`absent_in_source` 신설, 수치 무변).
+> **mutation: 배선 전 RED=0 → 배선 후 RED=15** · selftest **16 → 21/21** · pytest 9 passed.
+> **RED 15건 exception 안 함** — parser `20260803T0400Z`(raw 있는 12사) + downloader
+> `20260803T0405Z`(raw 없는 3사) 발주, raw→재추출→자연소멸이 정상 경로. PM-2026-08-03 **§6**.
+
+## Status (이전)
+
+**(2026-08-03) inbox 2건 드레인 완료 — 신규 게이트 룰 2종 배선, push 게이트 RED=0.**
+> **V21 (owner `20260803T0056Z`, blind_spot) 자본성증권 provenance 라벨 거짓 = false-green 해소.**
+> 게이트가 capital-securities 3마스터에 `source_id == "FSC_BONDS"`를 **하드코딩 요구** → 2026-06-20부터
+> DART가 원천인 tier1/tier2 사이드카가 **DART 파일에 FSC 라벨**을 달아 통과 중이었다(게이트가 틀린 주장을
+> "검증"). 신규 **`SOURCE_ID_LINEAGE_MISMATCH`**(RED, 경로 계보 ↔ 선언 라벨 일치) + effective 증거를
+> **사이드카가 선언한 계보마다** 요구하도록 재조준(DART per-bond 2축 신설) + **`scripts/emit_capsec_provenance.py`**
+> 신설(라벨을 게이트와 같은 함수로 **도출**, 손타이핑 제거) + `tests/test_deploy_assets.py` 기계검사.
+> **mutation 증명: 배선 전 RED=0 → 배선 후(정정 전) RED=2 → 재발행 후 0.** as-of 정본 = 2026-03-31 확정,
+> `baseline_2025_4Q` 키 misnomer는 **UH-7**로 publishing 발주(`20260803T0210Z`). PM-2026-08-03 작성.
+> **V20 (parser `20260730T0040Z`, backlog) `CSM_WATERFALL_PLAUSIBILITY` 신설 = UH-6 해소.**
+> `check_census` 1d 배선, YELLOW(관찰기 후 RED). 임계값 **parser 초안 ×20 → ×10 조정** — 초안 근거는
+> 정정 전 값이고 정정 후 36사 분포 median 0.563/최대 1.530(×2.7)이라 ×20은 중간규모사 ×10 오류를 놓친다.
+> 오탐 억제 (d) 지급여력금액≤0 skip 추가. **라이브 발화 0**(오탐 0). PM-2026-07-30 → closed.
+> **게이트 self-test 14 → 16/16 PASS** (G1·G2 신규, 둘 다 이빨 검증 통과). `pytest tests/test_deploy_assets.py` 9 passed.
+> **잔여 = 절반-경화 재확인**: `prepush_check.py`는 `validate_kics_disclosure.py`를 호출하지 않아 K-ICS
+> 전용 룰은 push를 못 막는다. 체인 추가는 documented RED 8건으로 push를 즉시 차단 → **owner 결정 대기.**
+
+## Status (그 이전)
 
 **(2026-06-20 (b) 게이트 3종 전수 재검증 — owner JSON 직접수정 후)** owner가 root JSON 직접수정(`sync_owner_fills_to_json.py` 135셀 + `insert_kakao_missing_quarters.py` 89행 + MOLE 손정정) → validation은 owner 지시("덮어쓰지 마라")대로 **재적재 0, read-only 검증만**(`validate_master_tables.py --no-build`로 owner값 보존; 빌드 선행 시 diag 미반영분 소실 위험).
 > **push 게이트(`prepush_check.py` = data-contract): RED=4, 전부 tier2** — 동양·KB·미래에셋 2026.1Q `T2_UTIL_OVER_100_NO_EXEMPTION`(proxy-gross artifact) + 신한이지 `T2_DENOM_NOT_SCR_HALF`(분모 1/100 스케일). 하나손·악사=YELLOW(면제표 파싱 legit "100%+"). **전부 owner `TODO.md`(6-20)+inbox 라우팅 완료**(downloader OCR `…0617Z…tier2_exemption_ocr` + parser ifrs17 `…0238Z`). push는 이 4건 해소 후 = 현 BLOCKED 정상. **validation 신규발주 0.**

@@ -34,3 +34,8 @@ iter: 1
 **(2) 시장위험 스캔-only OCR — open (미착수).** KB손해·한화손해 2023.4Q 금리위험, 카카오페이 2025.4Q
 시장위험이 텍스트레이어 없는 이미지. downloader OCR 경로가 현재 파이프라인에 없음(신규 도구 필요) —
 owner 수동 OCR vs downloader OCR 스택 도입은 결정 필요. 다음 드레인까지 이 메시지 open 유지.
+
+## 추가 확인 (downloader — 2026-08-03 드레인)
+
+(1)은 이미 위에서 resolved. (2)는 여전히 owner 결정 대기 — `TODO_downloader.md`의 `OCR-MARKETRISK` 행이
+정본 추적 위치이니 이 스레드는 그 행이 닫힐 때까지 open 유지(중복 판단 없음, 새 정보 없음).

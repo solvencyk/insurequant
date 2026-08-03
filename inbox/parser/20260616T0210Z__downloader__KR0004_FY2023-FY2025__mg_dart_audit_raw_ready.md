@@ -71,3 +71,21 @@ FY2024 유지, FY2024 6 scen 채택). 단위(1억=100백만)·부호(△) 회귀
 
 status: raw 수신·추출 검증 OK / 통합 = rebuild-gated(파괴적 build + 단위 anchor) → raw-enabled 세션 route.
 
+## 답변 갱신 (parser/ifrs17 2026-07-30 — CSM 통합 완료, PL breakdown 잔여)
+
+위 우려(파괴적 `build_csm_waterfall_master`/단위 anchor 부재)는 **안전한 per-dir 추출**로
+우회 해소 — 전체 raw-glob 재빌드 대신 KR0004 3개 dir만 targeted 추출 후 `CSM_waterfall.json`에
+직접 upsert. 47개사 전체 diff로 KR0004 외 회귀 0 확인.
+
+- **CSM waterfall — ✅ 완료**: 2023.4Q/2024.4Q/2025.4Q, 항목1-6 전부 적재. Closure 검증:
+  2023.4Q 기말(6774.0) = 2024.4Q 기초(6774.0) 정합, continuity 이상 없음.
+- **Sensitivity — 이미 반영**: `sensitivity_heatmap.json`에 엠지손해보험 rcept 20260406003175로
+  이미 포함(status=`unavailable`, SA=0 미검출 — FY2023/FY2024는 회수됐으나 FY2025 filing 자체가
+  분류 실패, 동양/메트라이프류와 동일 유형). 원래 우려했던 "KR0004 마스터 부재로 anchor 없어 heatmap
+  추가 불가" 문제는 CSM 마스터 적재로 자연 해소됨.
+- **PL breakdown — 🟠 미완, 잔여**: `PL_breakdown.json`에 KR0004 행 0개. `scripts/pl_breakdown/`
+  패키지는 회사별 커스텀 핸들러 구조(예: `extract_tier2_hana`)라 신규 소형사 온보딩에 전용 핸들러
+  작성이 필요 — 이번 세션 스코프 밖으로 분리, `TODO_parser_ifrs17.md` P2에 등록.
+
+status: CSM 통합 완료(continuity 검증) · sensitivity 이미 반영(documented unavailable) · PL breakdown 잔여(별도 후속).
+

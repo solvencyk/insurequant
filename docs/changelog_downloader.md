@@ -1,7 +1,50 @@
 # Insurequant Changelog — Downloader Stage
 
-> Last updated: 2026-07-07 · Stage 1/5 — downloader
+> Last updated: 2026-08-03 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
+
+## 2026-08-03 -- `bonds`(FSC data.go.kr) 소스 폐지: 5대 소스 → 4대
+
+owner 발주 `inbox/downloader/20260803T0057Z`. 2026-06-20 owner 결정으로 자본성증권 인정한도
+소진율(tier1/tier2)의 발행잔액 분자가 이미 FSC→DART per-bond로 교체돼 있었고, 2026-08-03 전수
+조사 결과 FSC에 남은 라이브 의존은 `kics_forward_capital.json` 한 곳뿐이었음 — 그마저 같은 날
+parser 발주(`20260803T0055Z`, resolved)로 DART로 이관돼 FSC 소스 자체를 접을 수 있게 됨.
+선행조건(parser `20260803T0055Z` resolved + validation `20260803T0056Z` resolved) 확인 후 착수.
+
+**카탈로그/프롬프트**: `source-catalog.yaml`의 `- id: bonds` 블록 삭제(api_ids 중 nonlife/life_metrics·
+private_health 3개는 F9 future_sources_planned 엔트리로 이관, capital_securities 15059611은 폐기).
+`claude-agent-downloader.md` 5→4 소스 리넘버링(Source 2 DART / 3 KIDI / 4 IR로 당김) + 은퇴 note 삽입.
+
+**코드**: `src/bonds/{__init__,config,fsc_client,universe}.py` · `scripts/ingest_fsc_bonds.py` ·
+`scripts/normalize_bond_schedule.py` → `git mv`로 `data/_archive/20260803T063432Z/`(삭제 아님).
+`scripts/emit_bonds_provenance.py`는 FSC 절반(bonds/normalized 생성부)만 제거, DART supplement
+(`disclosure_bonds_provenance.json`) 절은 그대로 — 재실행 확인 완료.
+
+**데이터**: `data/bonds/normalized/**` + 레거시 bare-timestamp 잔재 2건(`20260525T050327Z`,
+`20260616T060238Z` — gitignore `[0-9]*/` 패턴 대상, 구버전 FSC raw pull 잔여물)을 같은 archive
+stamp로 이동. `data/bonds/raw/`는 빈 디렉터리였음(삭제). **유지**: `capital_securities_fy2025.json` /
+`capital_securities_forward_outlook.json` / `capital_securities_utilization_20261Q.json` /
+`disclosure/**`(전부 DART lineage, 라이브 소스) — `_census_fy2025.json`도 mtime 2026-06-20(FSC→DART
+전환 당일 census 산출물, `hybrid_hits`/`sub_strict` 필드가 DART raw 스캔 결과) 확인 후 유지.
+
+env 키(`DATA_GO_KR_BOND_ISSUANCE_KEY`/`DATA_GO_KR_BOND_REDE_KEY`)는 F9가 같은 data.go.kr 포털을 쓸 수
+있어 삭제 안 함(`TODO_downloader.md` D5에 주석 추가).
+
+**검증 4건 전부 통과**: (1) `grep -rn "src/bonds\|bonds_by_insurer\|ingest_fsc_bonds" --include=*.py .`
+→ archive 경로 외 0건(`report_collection_status.py`/`validate_data_contract.py`의 잔존 참조는 각각
+graceful-degrade 코드와 lineage-게이트 dead path로 확인, 안전). (2) `pytest tests/test_deploy_assets.py`
+9 passed. (3) `validate_data_contract.py` RED=0. (4) `report_collection_status.py` 크래시 없음 —
+단 **"자본성증권 발행" 컬럼이 이제 영구 0/39(0%)로 뜬다**(그 컬럼이 여전히 FSC 전용 경로만 읽음, DART로
+안 돌아섬) — 이 컬럼을 DART 소스로 재조준할지는 이번 발주 범위 밖(owner 결정 필요, 별도 발주 권장).
+
+⚠️ 이 폐지로 5-source 체제가 시작된 이래 최초로 **4-source 체제**가 됨(정기경영공시/DART/KIDI/IR).
+`TODO_downloader.md` 최상단 Status 갱신, `claude-agent-downloader.md` 전체 리넘버링 완료.
+
+**gotcha (재발 방지)**: `data/bonds/normalized/`는 `.gitignore` 대상이 아니어서 stamp dir 3개 중
+1개(`20260525T061945Z`, 3파일)가 실제로 git에 추적돼 있었음 — plain `mv`로 archive(gitignore 대상)에
+옮기면 git이 새 위치를 못 보고 옛 경로만 "unstaged 삭제"로 남긴다. **git 추적 여부가 불확실한 디렉터리를
+archive로 옮길 땐 `git ls-files <dir>`로 먼저 확인**, 추적 파일이 있으면 `git mv`(또는 이동 후 `git add`로
+삭제 스테이지) 해서 정리할 것 — plain `mv`만 쓰면 조용히 dangling deletion이 남는다.
 
 ## 2026-07-07 -- KR0005·KR0071 FY2024_Q4 "원본 결측" 판정 정정 — 실제로는 raw가 처음부터 맞았음
 

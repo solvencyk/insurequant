@@ -7,6 +7,38 @@ Stage 2 — **parser, IFRS17 lane**: CSM/PL extraction. Source = DART body XML; 
 
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-ifrs17.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
+> **2026-08-03 continuation (4th pass) — bonds-retirement chain closed on the parser side.**
+> Downloader delivered raw for the last 3 `CAPSEC_COVERAGE_REGRESSION` companies
+> (`inbox/parser/20260803T0546Z`): KR0150(서울보증보험) confirmed empty via the standard structured
+> DART "신종자본증권/조건부자본증권 미상환잔액" tables (all-dash, highest-confidence source);
+> KR1010(교보라이프플래닛) confirmed empty (0 term matches); **KR0049(악사손해보험) had a real bond**
+> — a JPY 5bn private-placement subordinated note to AXA Life Japan, ₩45.88bn carrying value, added
+> with `confidence: medium` since the filing discloses no absolute issue date (call_date estimated
+> conservatively at as-of). Re-ran the full pipeline: `CAPSEC_COVERAGE_REGRESSION` RED 3→0 (all 13
+> from the original regression now clear), `bond_coverage_distribution: dart_listed=27` — clears the
+> original `20260803T0055Z` ticket's completion condition (≥24 companies with issuance), which is now
+> ready for the owner to mark resolved. Also closed a second validation thread
+> (`20260803T0400Z`, an independently-filed duplicate of the same 12-company census — already done).
+>
+> **Traced and closed a golden-fixture re-drift** (`inbox/parser/20260803T0540Z`): today's KR0075
+> re-correction dropped its 2024.4Q 신계약CSM reference value from 98.3억 to 9.8억, pushing it under
+> the `qoq_scan` 50억 floor — the YoY comparison (which had been legitimately flagging a 30.66%
+> jump, just over the 30% threshold) is now skipped entirely rather than passing, so `qoq_warn`
+> dropped 198→197. Confirmed via the threshold config and hand-computed ratios (both periods were
+> corrected by exactly the same 10x, so the ratio itself didn't change — only the floor-skip did).
+> Regenerated the golden after confirming no more master edits were pending.
+>
+> **⚠️ Self-inflicted near-miss, caught and fixed**: while tracing the above, ran
+> `validate_master_tables.py --help` expecting usage text — the script doesn't recognize `--help` and
+> silently fell through to its default (build-included) path, collapsing `PL_breakdown.json`
+> 7799→2940 rows (the exact documented hazard in `[[project_git_purge]]`). Caught immediately via
+> combo-count check, `git checkout HEAD -- PL_breakdown.json`, then re-applied the one legitimate
+> change that was lost (KR0051 item18/19) by hand. Verified combo-for-combo against HEAD afterward —
+> zero loss. Lesson: this script has no flag validation, so an unrecognized argument is silently
+> **not** a no-op — never invoke `validate_master_tables.py` directly without `--no-build` unless a
+> real rebuild is intended; go through `pytest tests/test_master_tables_golden.py` instead, which
+> always passes `--no-build` internally.
+
 ## Status
 
 IFRS17 lane is **mature**: CSM waterfall + PL breakdown masters all built (root JSONs assembled, xlsx regenerated). 2026.1Q loaded (changelog (s)). CSM golds 8/8 and PL golds pass; `check_pl_reconcile.py` closed the large systematic gaps (예실차-미공시 generic closure + 에이비엘 leg + 하나 장기). Remaining work is residual Tier-2 coverage backfill + a few escalated owner decisions (코리안리 FY2025 basis), not core extractor rewrites.
@@ -38,7 +70,40 @@ IFRS17 lane is **mature**: CSM waterfall + PL breakdown masters all built (root 
 > multi-company/multi-year sensitivity/csm/insurance_pl backfill from an untracked prior session) —
 > needs a dedicated provenance-review session before touching those goldens. Also processed
 > downloader's raw-ready batch (`20260803T0150Z`, KR0075/KR1098/KR0051/KR0050/KR0076) via 3 parallel
-> subagents — results to follow once they land.
+> subagents — session ended before writing up results; **picked up and completed in a follow-on
+> session** (below, "2026-08-03 continuation").
+
+> **2026-08-03 continuation — completed the paused `20260803T0150Z` batch + found/closed a coverage
+> regression cascade.** Verified all 4 sub-tasks the interrupted session's subagents had already
+> landed in the working tree (uncommitted): **KR0075** 12-cell reverify found the 2026-07-30 ÷100 fix
+> was itself a 10x under-correction (raw is 천원, needed ÷1000 total) — refixed with raw-line-cited
+> values, `NB_CSM_multiple.json` sync confirmed. **KR1098** 2024.4Q 6-cell estimated override
+> upgraded to raw-confirmed (all 6 matched the estimate exactly). **KR0051** PL item19/18: root-caused
+> as a `to_num()`/`_drop_footnote()` footnote-concatenation bug ("13, 24" → "1324") causing income and
+> expense to spuriously cancel to exactly 0 — fixed via `_GOLD_CELL_OVERRIDE`, flagged as a possibly
+> general bug for other companies. **KR0050/KR0076** capital-securities already integrated, pipeline
+> already re-run (`bond_coverage: dart_listed` confirmed). Full detail + verification in
+> `docs/changelog_parser_ifrs17.md`.
+>
+> **Found mid-verification**: a new validation rule (`CAPSEC_COVERAGE_REGRESSION`,
+> `inbox/validation/20260803T0310Z`) was RED=13 — every company forward_capital/tier1/tier2 reference
+> that has no explicit record (even empty) in `data/bonds/capital_securities_fy2025.json` is flagged
+> (my earlier rebase left absent-companies silently unlabeled, which this rule correctly rejects).
+> Investigated raw for the 10 companies with raw on disk: **9 confirmed no capital-securities
+> issuance** (mentions traced to unrelated context — e.g. KR0008 삼성화재's "조건부자본증권" hits are
+> *investments held in other companies' bonds*, not its own issuance) → added explicit `bonds: []`
+> records. **1 real gap found: KR1011(IBK연금보험) had 4 subordinated bonds (₩360bn face) missing
+> entirely** — extracted from the raw "18. 차입부채" note, added to the source, now flows through
+> tier2_utilization (22.2% recognized). RED 13→3 (remaining: KR0049/KR0150/KR1010, no raw on disk,
+> routed to `inbox/downloader/20260803T0535Z`). Also flagged to validation (non-blocking,
+> `inbox/validation/20260803T0545Z`): KR0075's re-correction means the `CSM_WATERFALL_PLAUSIBILITY`
+> postmortem's anchor example (ratio 1.530, rank 1) is now stale (ratio 0.153, rank 33/35) — current
+> threshold still fires for nobody, so not urgent.
+>
+> Verify: `forward_capital_simulation.py` → `wire_capital_securities_to_utilization.py` →
+> `emit_capsec_provenance.py` → `validate_data_contract.py` → RED=3 (all 3 routed, none unexplained),
+> YELLOW=219 (background noise from the CSM cohort-median shift, no new regression) →
+> `pytest tests/test_deploy_assets.py` 9 passed.
 
 > **2026-07-30 inbox drain (17 lane:ifrs17 items processed)** — full detail in `docs/changelog_parser_ifrs17.md`
 > 2026-07-30 entry. Highlights: **KR0075(BNP파리바카디프) 100x + KR1098(카카오페이) 1000x CSM unit bugs

@@ -1,17 +1,54 @@
 # Insurequant TODO — Downloader Stage
 
-> Last updated: 2026-07-07 · Stage 1/5 — downloader
+> Last updated: 2026-08-03 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md (+ docs/agents/source-catalog.yaml) · Changelog: docs/changelog_downloader.md
 
 **Cross-stage TODO:** `TODO.md` (root). **This file:** active + done items scoped to data collection only.
 
 ## Status
 
-5-source 전수 수집 완료 (as of 2026-06-01). 무결성 **2,041/2,041 OK**. **전 source 실질 gap 0** (NONLIFE-Q123 26셀 자체사이트 backfill + 서울보증 분기/DART는 미상장·롤오프 구조적 drop). 상세 history는 `docs/changelog_downloader.md`.
+**4-source 체제 (2026-08-03부터)** — `bonds`(FSC data.go.kr) 소스 폐지, 5→4(정기경영공시/DART/KIDI/IR). 상세: `docs/changelog_downloader.md` 2026-08-03. 자본성증권 데이터 자체는 소멸 아님 — DART per-bond로 이미 대체(2026-06-20).
+
+이전 5-source 전수 수집 완료 (as of 2026-06-01). 무결성 **2,041/2,041 OK**. **전 source 실질 gap 0** (NONLIFE-Q123 26셀 자체사이트 backfill + 서울보증 분기/DART는 미상장·롤오프 구조적 drop). 상세 history는 `docs/changelog_downloader.md`.
 
 **Parser 핸드오프 주의 (Q2=반기):** AIG손해(KR0029)는 별도 2분기 공시가 없고 **상반기(반기) 누적** 공시로 FY{Y}_Q2를 채움(1.1~6.30 누적, 독립 분기 아님). 신한EZ(KR0051)·카카오페이(KR1098)의 Q2도 "상반기" 라벨. parser/validation에서 이들 Q2를 standalone-quarter가 아닌 cumulative-반기로 해석할 것.
 
 검증 도구: `scripts/audit_all_periods.py`(전수 gap audit) + `scripts/check_data_file_integrity.py`(파일 무결성). 신규 다운로드 후 이 둘을 게이트로 실행.
+
+**2026.2Q 공시 스카우팅 (2026-07-30):** K-ICS 정기경영공시 = 아직 전무. 생보협회 일괄페이지(pub.insure.or.kr) 22사 전부 2분기열 "-" 확인, 손보 3사(KB·삼성화재·한화손보) 개별사이트도 Q1만. DART는 39사 전수(corp_code 재검색, 영구매핑 없음) 반기보고서(A유형) 0건 — 법정기한 반기말+45일=8/14 전이라 정상. IR도 대부분(현대해상·삼성생명·한화생명) Q1만. **예외: 동양생명(KR0087)만 자체 IR자료실에 "FY2026 상반기실적발표자료" 선공시(07-27)** — DART "연결재무제표기준영업(잠정)실적(공정공시)"도 동일자 병행 공시. KB손보 과거 패턴(2015~2025 전부 8/29~31)상 나머지는 8월말 예상. 재스카우팅은 8월 중순 이후 권장.
+
+동양생명 건은 owner 지시로 **fetch 완료**: `scripts/download_ir_2026q2_dongyang.py` 신규(source-catalog KR0087 셀렉터가 신규 행 prepend로 밀림 → board-item 텍스트 anchor로 교체) → `data/ir/FY2026_Q2/raw/KR0087_동양생명/`에 PDF(1.18MB)+XLS(233KB) 확보, magic bytes 확인. parser/ifrs17 raw-ready `inbox/parser/20260730T0010Z`. 나머지 12개 IR 출처는 8월 중순 이후 `download_ir_2026q2.py` 풀패스로 별도 처리 예정(아직 미작성 — Q1 스크립트가 13사 중 8사만 성공했던 이력 있으니 재작성 시 실패 5사도 같이 점검).
+
+**재스카우팅 (2026-08-03, owner 요청):** DART 22사 재확인 — Q2 반기/분기보고서 여전히 0건, 신규 항목은 전부 routine(임원소유상황·자율공시 등). 삼성화재가 07-31 IR개최 안내공시 신규 등록했지만 자체 IR페이지 확인 결과 아직 FY26 1분기까지만 게시(과거 패턴상 상반기는 08-13경 예상, IR개최공시=실적공개 아님). 생보협회 일괄페이지 22사 전부 여전히 2분기열 "-". **동양생명 외 변동 없음.**
+
+**🔴 KIDI(보험개발원) 발견 — `data/kidi/premium_summary.json` 부재:** owner가 "신규매출 데이터 확인 중이냐"고 질문해서 처음 점검. `data/kidi/FY*_Q*/raw/`에 회사당 1개씩(KR0080 AIA만, 2026-06-08 단발성 디버그런 추정)만 남아있고 TODO의 "F2 완료(38사×13Q=494)" 산출물인 `premium_summary.json`은 디스크에 없음(`data/kidi/`는 gitignore 대상이라 git으로 복구 불가). 소비측 `scripts/crawl_assoc_nb_premium.py`가 이 파일 부재 시 **에러 없이 조용히 빈 dict로 스킵**해서 `nb_premium_wolnap.json`/`NB_CSM_multiple.json`이 KIDI 교차검증 없이 override/IR-benchmark만으로 돌고 있었을 가능성 — 원인 미상, 조사 필요. 라이브 `getML01LastYM`/`getMN07LastYM` 확인 결과 최신월=202604(4월)로 아직 6월(Q2) 데이터는 미공개. **`scripts/ingest_kidi_monthly_premium.py` 풀재실행(39사×13분기말, rate-limit 코드 없음 주의)으로 복구 필요 — owner 승인 대기.**
+
+**교차확인(같은 날 별도 스레드):** `inbox/_resolved/20260730T0823Z__owner__KR1098...kakaopay_nb_csm_1000x_half_done.md`에서 parser/ifrs17도 독립적으로 동일 gap에 부딪힘 — `NB_CSM_multiple.json` 재계산 중 "`data/kidi/premium_summary.json`이 로컬에 없음... 이 세션 네트워크 스코프 밖"이라 월납월초보험료 값을 그냥 보존만 하고 넘어감. **두 세션이 독립적으로 같은 결손을 확인** — 우연/일회성 아님, 실제로 다운스트림을 막고 있음. owner 승인 시 재수집 진행.
+
+**인박스 드레인 (2026-08-03):** `inbox/downloader/` 7건 처리 — 3건(BNP KR0075 FY24/25, 신한이지 KR0051 FY25, 카카오페이 KR1098 FY24) DART 감사보고서 raw 재취득 완료(전부 비상장·F유형만 존재, corp_code 신규 검색) → `data/dart/FY{2024,2025}_Q4/raw/KR####_.../`, `extract_dart_zips.py`로 언집, 보험계약마진/보험금융손익 키워드 확인. parser/ifrs17 raw-ready 회신 남김. 흥국화재/흥국생명 "wrong document type" 티켓(07-07)은 **이미 07-07 당일 다른 세션이 vision-read로 해결 완료된 건의 미정리 사본**이었음 — fitz 렌더링으로 재검증 후 중복 제거, `_resolved/`의 정본 기록 확인. 백로그 다이제스트 2건은 TODO 추적으로 정리(OCR-MARKETRISK 1건만 여전히 open, owner 결정 대기).
+
+**bonds 소스 폐지 게이트 재확인 (owner 질문, 2026-08-03 T01:50Z):** 선행조건 2개 상태 재조회 —
+validation(`20260803T0056Z`) **✅ resolved**(5건 전부 착지, RED=0, mutation-test 통과). parser
+(`20260803T0055Z`)는 **status: answered**(소스교체 자체는 완료·RED=0이지만, 자기 완료조건 ①"발행잔액
+회사 ≥24사"가 하나손보(KR0050)·아이엠라이프(KR0076) DART raw 부재로 미충족 — 이 2사분을 downloader에
+새 티켓(`20260803T0123Z`)으로 재발주해둔 상태였음). **즉 착수 아직 불가 — "resolved 둘 다"라는 원 게이트
+문구를 아직 못 채움(answered≠resolved).** 다만 그 신규 티켓은 그 자리에서 바로 처리: KR0050/KR0076
+FY2025 감사보고서(별도) raw 재취득 완료 → `data/dart/FY2025_Q4/raw/KR00{50,76}_.../`, 신종자본증권
+키워드 확인, parser에 raw-ready 통지(`inbox/parser/20260803T0150Z`, 나머지 4건도 함께 배치 통지 —
+이전에 개별 티켓 답변만 하고 parser 자신의 inbox엔 새 알림을 안 남겼던 누락을 이번에 같이 보정).
+**parser가 이 2사를 편입 → forward_capital 재실행 → 완료조건 충족 후 owner가 최종 resolved로 확정하면
+그때 착수 가능.**
+
+**같은 체인 3파(owner "inbox 확인+중단작업 처리" 요청, 2026-08-03 T05:46Z):** 재드레인 결과 신규 2건 도착
+— validation(`20260803T0405Z`)·parser(`20260803T0535Z`) 둘 다 **같은 3사**(KR0049 악사손해·KR0150
+서울보증·KR1010 교보라이프플래닛) capsec raw 부재를 지목(새 게이트 `CAPSEC_COVERAGE_REGRESSION`,
+RED 13→3으로 좁혀진 잔여분). 두 티켓 통합 처리: 3사 FY2025 raw 전부 fetch(**서울보증은 상장이라 사업
+보고서 확보** — 2024.4Q부터 정기공시 재개된 상태, 본문에 신종자본증권/후순위 각 1회. 악사손해·교보라이프
+플래닛은 감사보고서만). `validate_data_contract.py` 직접 재실행해 RED=3이 정확히 이 3사와만 일치함을
+확인(추가 미발견 gap 없음) — parser raw-ready 통지(`inbox/parser/20260803T0546Z`). **interrupted-work
+점검**: data/dart 전역에서 document.zip/xml 없이 meta.json만 있는 디렉터리 23개 스캔 — 전부
+`{"no_filing": true}` 정당 마커(비상장 감사보고서 전용사의 Q1-Q3 없음, 예별·IBK연금 등)로 확인, 진짜 미완료
+fetch 0건. zero-byte/1KB 미만 document.zip도 0건 — downloader 도메인엔 그 외 중단 작업 없음.
 
 ---
 
@@ -57,7 +94,7 @@
 
 | # | Decision | Date |
 |---|----------|------|
-| D5 | API keys: repo root `.env` only (gitignored). `OPENDART_API_KEY` / `DATA_GO_KR_BOND_ISSUANCE_KEY` / `DATA_GO_KR_BOND_REDE_KEY`. Never commit/log key values | 2026-05-24 |
+| D5 | API keys: repo root `.env` only (gitignored). `OPENDART_API_KEY` / `DATA_GO_KR_BOND_ISSUANCE_KEY` / `DATA_GO_KR_BOND_REDE_KEY`. Never commit/log key values. **2026-08-03: `bonds` source retired (`inbox/downloader/20260803T0057Z`) — the two `DATA_GO_KR_BOND_*` keys are kept as-is (not deleted) since F9 (`source-catalog.yaml` future_sources_planned, same data.go.kr portal) may reuse them.** | 2026-05-24 |
 | D6 | Bond Call rule: issue + 5y for ALL bonds (Korean market convention; ignore "콜" keyword gate). Past 5y = assume `called` (de facto mandatory per thebell/흥국 cases) | 2026-05-24 |
 | DL-FYR | **Next quarter onwards (2026.2Q+)**: find URLs / XPaths yourself. 2026.1Q only was user-provided. Reuse existing configs, swap only period-specific labels. Escalate to user only if site structure fully changed | 2026-05-30 |
 | DL-NOATTACH | **Don't fetch DART attachments (별첨/감사보고서 zip).** Body XML has all IFRS17 disclosures. Verified 2026-05-30 (한화 647 / KB 259 / 농협생명 176 / 라이나 audit 55 / AIG audit 55 occurrences of `보험계약마진` in body) | 2026-05-30 |

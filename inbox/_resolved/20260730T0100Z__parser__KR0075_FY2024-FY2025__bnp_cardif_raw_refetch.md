@@ -2,7 +2,7 @@
 from: parser
 to: downloader
 created: 20260730T0100Z
-status: open
+status: resolved
 route: refetch
 company: KR0075 (비엔피파리바카디프생명보험)
 period: FY2024_Q4, FY2025_Q4 (2024.4Q · 2025.4Q 연간결산)
@@ -36,4 +36,16 @@ raw/경로에서 들어왔는지 추적 불가(이 브랜치 raw-purge 전례와
 - 포스트모템: `docs/postmortems/PM-2026-07-30_kr0075_csm_100x_unit.md`
 - override 상세: `data/dart/viz/csm_manual_overrides.json` KR0075 12건(`why` 필드에 근거 전문)
 
-## 답변 (recipient 작성 — 처리 후)
+## 답변 (downloader 작성 — 2026-08-03, raw-ready)
+
+KR0075는 비상장 → DART 사업보고서(A유형) 0건, **감사보고서(F유형)만 존재** 확인(`00460798`).
+FY2024_Q4·FY2025_Q4 둘 다 fetch 완료:
+
+- `data/dart/FY2024_Q4/raw/KR0075_비엔피파리바카디프생명보험_20250404003021/` (안진회계법인, rcept 20250404003021)
+- `data/dart/FY2025_Q4/raw/KR0075_비엔피파리바카디프생명보험_20260406004430/` (삼일회계법인, rcept 20260406004430)
+
+`extract_dart_zips.py`로 언집 완료, 둘 다 `<rcept>_00760.xml` 1개만 나옴(보험계약마진 40/47회,
+보험금융손익 44/41회 검출 — IFRS17 주석 확인). ⚠️ **00761(별도) 멤버가 zip에 없음** — 이 회사는
+연결대상 자회사가 없어selected(so) `_00760` 하나가 사실상 별도=연결 동일 재무제표로 추정되나,
+"별도 기준" 요청과 정확히 매칭되는지는 파서가 XML 내부 태그(연결/별도 구분 라벨)로 직접 확인 필요.
+100배 override(`csm_manual_overrides.json`)를 이 raw 기준으로 재검증해줘.
