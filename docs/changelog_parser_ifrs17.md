@@ -1,6 +1,6 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-07-04 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-08-03 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
 IFRS17 extraction history: DART body XML → CSM_waterfall / PL_breakdown / NB-CSM-multiple masters.
@@ -9,6 +9,190 @@ Code: `src/ifrs17/` (csm / measurement / insurance_pl / reinsurance / bs_snapsho
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+## 2026-08-03 — forward_capital bonds source rebase FSC → DART per-bond (inbox `20260803T0055Z`)
+
+**발주**: owner, `inbox/parser/20260803T0055Z__owner__MULTI_2026.1Q__forward_capital_rebase_fsc_to_dart.md`
+— 다운로더 `bonds`(FSC data.go.kr) 소스 폐지 전수조사 중 유일하게 남은 FSC 실사용처(`kics_forward_capital.json`)
+를 DART per-bond로 옮기는 작업. tier1/tier2_utilization은 2026-06-20에 이미 DART 전환됨
+(`wire_capital_securities_to_utilization.py`) — 이번이 세 번째이자 마지막 소비처.
+
+- **소스 교체**: `scripts/forward_capital_simulation.py::load_outstanding_bonds()`가
+  `data/bonds/normalized/**/bonds_by_insurer.json`(FSC) 대신 `data/bonds/capital_securities_fy2025.json`
+  (DART FY2025 사업보고서 per-bond, 24사)을 직독. 어댑터 한 겹만 추가(tier hybrid/subordinated →
+  tier1_hybrid/tier2_subordinated, `outstanding_mn`×1e6 → `issue_amount_won`, `call_date or
+  legal_maturity` → `effective_call_date`, `outstanding_mn==0` 드롭) — `simulate_one()`/
+  `compute_confidence()`의 콜 roll-off·한도·경과조치 로직은 무변경. `outstanding_mn`(not
+  `face_amount_mn`) 선택 이유: 부분상환 반영된 "실제 투자자 지급액 기준"(2026-05-26 owner directive)에
+  더 정확. `past_call_outstanding=true`(6/119건)는 콜일자를 그대로 사용 — FSC 시절 동일 실물(흥국화재
+  KR0005 신종자본증권1)이 이미 이렇게 처리돼 있던 전례 확인 후 그대로 계승(로직 신설 아님).
+  `bond_coverage` enum값도 `fsc_listed`/`no_bonds_in_fsc` → `dart_listed`/`no_bonds_in_dart`로 동시 정정
+  (필드명 유지). `data/bonds/normalized/**` 참조 완전 제거(grep 확인).
+- **실측 영향**: 38사 전부 재시뮬레이션. 대부분 회사는 채권 스케줄 정밀도가 올라감(예: 푸본현대생명
+  2030 ratio 20.03%→104.35% — FSC 쪽 채권 매칭이 약했던 회사일수록 변동 큼). `KR0004`(예별손해)는
+  FSC엔 없던 680억 채권이 처음 반영됨(baseline capital 이미 음수라 표시비율 0%클램프는 불변, 내부
+  정확도만 개선).
+- **🟠 커버리지 회귀 2건, downloader 발주로 이관**: `KR0050`(하나손해보험)·`KR0076`(아이엠라이프생명보험)은
+  FSC엔 채권이 잡히는데 DART 24사 목록엔 없음 — FY2025 사업보고서 raw가 디스크에 없음(git-purge 추정,
+  `FY2026_Q1/raw/`엔 무관한 `no_filing:true` 스텁만). 이 둘만 `dart_listed`→`no_bonds_in_dart`로 역행,
+  2030 ratio가 낙관적으로 뜀(하나손보 124.47%→146.09%, iM라이프 93.65%→152.12% — 채권상환에 따른
+  미래 자본감소가 더는 반영 안 됨). raw 없이는 parser가 자력으로 못 채움 →
+  `inbox/downloader/20260803T0123Z__parser__KR0050_KR0076_FY2025__capital_securities_annual_raw_missing.md`
+  발주(route by raw availability 원칙).
+- **as-of 정합 — 사이드카는 이미 배선돼 있었음(발견).** 작업 중 `scripts/emit_capsec_provenance.py`
+  (미커밋)와 `validate_data_contract.py`의 `source_id_for_lineage()`/`_SOURCE_LINEAGE`가 **이미
+  존재**함을 발견 — validation companion 발주(`inbox/validation/20260803T0056Z`)가 이미 처리된 상태였음
+  (하드코딩 `FSC_BONDS` enum → 계보-기반 `SOURCE_ID_LINEAGE_MISMATCH` 검사로 전환 완료). 직접 사이드카
+  writer를 추가하려다 **철회** — 이미 있는 "하드코딩 금지, 계보에서 derive" 원칙의 단일 writer와 중복/
+  분기 위험. 대신 내 교체가 깨뜨릴 뻔한 지점 하나만 수정: `emit_capsec_provenance.py::_forward_source_file()`
+  가 `bonds_source`를 FSC 시절 bare-timestamp로 가정하고 경로를 재구성하던 로직 — 이제
+  `bonds_source`가 전체 상대경로 문자열이라 재구성이 필요 없어짐(내가 직접 유발한 지점이라 같이 fix).
+  `quarter`/`as_of_date`는 `BASELINE_QUARTER`(2026.1Q/2026-03-31, K-ICS baseline 신선도)를 그대로 유지 —
+  채권 스케줄 자체의 vintage(FY2025 사업보고서, 2025-12-31)와는 별개 개념임을 `check_as_of()` 코드로
+  확인(`:507-513`, `manifest.baseline_quarter` 대비 검사).
+- **검증**: `python scripts/forward_capital_simulation.py` → `python scripts/emit_capsec_provenance.py`
+  (사이드카 재발행, source_id FSC_BONDS→DART 확인) → `python scripts/validate_data_contract.py` →
+  **RED=0, YELLOW=210**(세션 시작 전과 동일 — 신규 anomaly 없음) → `pytest tests/test_deploy_assets.py`
+  → 9 passed.
+- **리뷰한 나머지 open ifrs17 inbox 항목 2건은 현상 유지** (프리세션이 이미 dedicated-session material로
+  정확히 스코프함): `20260616T0230Z`/`20260616T0420Z` twin threads(`csm_waterfall_history.json`
+  진단캐시 재생성 — root 마스터는 확인상 정상, false-negative 방향만) — 재작업 불필요, 그대로 open.
+  P2 백로그 `KR0004 PL breakdown`(`scripts/pl_breakdown/`에 신규 회사 핸들러 필요)도 이번 세션 스코프
+  밖으로 유지.
+
+## 2026-08-03 (2차) — inbox 드레인: master_tables golden drift 해소 + raw-ready 배치(KR0075/KR1098/KR0051/KR0050/KR0076)
+
+**발주**: validation `inbox/parser/20260803T0245Z`(golden drift) + downloader `inbox/parser/20260803T0150Z`
+(5사 FY2024/2025 연간 raw-ready 배치, 4개 개별 요청 통합).
+
+- **golden drift (`test_master_tables_golden.py`) — 원인 확인 후 재생성**: 늘어난 3쌍은 전부
+  `(KR0004, 예별손해보험, {2023,2024,2025}.4Q)` — 2026-07-30 세션이 온보딩·continuity 검증까지 끝냈으나
+  미커밋 상태로 남아있던 것 (validation의 "제품 세그먼트 컬럼/KR0075 override 계열" 추정은 빗나감, branch
+  이름과 무관). `git show HEAD:CSM_waterfall.json` vs 워킹트리를 (원보험사코드,원수사명,공시분기) 단위로
+  직접 diff해 확정 — SUMMARY 3축(closing+3P·crosscheck+2S·qoq_warn+5Y) 전부 방향 일치, 나머지 무변동.
+  `python tests/test_master_tables_golden.py --update` → PASS. `inbox/parser/20260803T0245Z` resolved.
+  **부수 발견(범위 밖, 손 안 댐)**: `test_viz_csm_waterfall_golden.py`·`test_viz_ifrs17_panels_golden.py`도
+  별도로 drift 중 — 원인은 KR0004가 아니라 `data/dart/extracted/`에 쌓인 **163개 미커밋 raw 추출 파일**
+  (여러 회사 FY2023-2026 sensitivity/csm/insurance_pl 백필로 보임, 어느 세션 소산인지 이 브랜치 이력에
+  기록 없음). in-place 덮어쓰기 빌더라 CLAUDE.md 불변식 3대로 건드리지 않음(테스트가 자체 backup-restore
+  하므로 라이브 오염은 없음) — **owner에게 별도 보고, dedicated 세션에서 provenance 확인 필요**.
+- **raw-ready 배치 4건 (3개 병렬 서브에이전트)**:
+  - **KR0075** (2024.4Q+2025.4Q, 12셀 100x override): 2026-07-30에 raw 부재로 "산술로 확정"했던 값을
+    신규 raw로 재검증.
+  - **KR1098** (2024.4Q, 6셀): "추정 정정(확정 아님)"이었던 override를 신규 raw로 재검증/확정.
+  - **KR0051**: PL item19(보험금융손익) 2025.4Q=0.0이 진짜인지 raw 판정 + `exclude_companies`(CSM 제외,
+    천원단위 오인) 재확인.
+  - **KR0050/KR0076**: `data/bonds/capital_securities_fy2025.json` per-bond 편입(24→26사) →
+    `forward_capital_simulation.py` 재실행 → `bond_coverage: dart_listed` 전환 → `validate_data_contract.py`
+    RED=0 재확인. 완료 시 owner의 bonds 소스 폐지 발주(`20260803T0057Z`) 선행조건 완전 종결.
+  - (상세 결과는 각 서브에이전트 완료 후 이 changelog에 후속 추가 — 작성 시점엔 진행 중)
+
+## 2026-07-30 — inbox 드레인(17건) + KR0075/KR1098 100x/1000x unit bug fix + KR0004 온보딩 + PL near-miss
+
+**전체 처리**: `inbox/parser/` lane:ifrs17 17건 전수 처리(2건 이미 완결분 bookkeeping만 정정+이동, 9건
+신규/재확인 답변, 3건 raw-refetch를 downloader에 재발주, 1건 신규 룰을 validation에 발주). 상세는 각
+inbox 파일의 `## 답변` 참조 — 요약만 아래.
+
+- **KR0075(비엔피파리바카디프생명) CSM_waterfall 100x 과대 — fix.** owner가 항등식+35사 census(CSM÷K-ICS
+  지급여력금액, KR0075=153.01 유일 이상치)로 확정한 건. raw는 이 브랜치에 없음(meta.json만) → 산술
+  근거로 `csm_manual_overrides.json` 12셀 ÷100 override. **포스트모템 작성**
+  (`docs/postmortems/PM-2026-07-30_kr0075_csm_100x_unit.md`, README UH-6) — 근본원인은
+  `build_root_masters.CSM_ABS_CAP=5e5`가 절대값만 보고 상대규모(동종 대비)를 안 봐서 통과(false-green).
+  `CSM_WATERFALL_PLAUSIBILITY`(기말CSM÷K-ICS지급여력금액, median×20) 신규 룰을 validation에 발주.
+- **KR1098(카카오페이손해) CSM_waterfall 1000x 과대 — fix (raw 직접대조).** 원 발주(`20260614T1330Z`)의
+  "신계약CSM 2조원대 비현실" flag를 FY2025 raw XML(`20260323001537_00760.xml`)에서 직접 확인: 해당
+  노트가 "(단위: 천원)"인데 combined-agn 추출기가 천원→백만원(÷1000) 환산을 건너뛰어 net ÷100(정답
+  ÷100,000)이 됨. 2025.4Q 6셀은 raw 확정 override, 2024.4Q 6셀은 raw 부재로 연속성+회사규모
+  implausibility 추론 적용(미확정 — downloader에 FY2024 raw 재취득 발주).
+- **KR0029(AIG) 동일 유형 — 이미 해소 확인.** 원 발주 당시(~2000x 과대) 대비 현재 마스터가 정확히
+  ÷1000된 정상값으로 이미 들어와 있음(경위 불명, 어느 세션이 고쳤는지 TODO 미기록 — 재작업 불요, 확인만).
+- **KR0004(예별손해=구MG) 신규 온보딩(3개년).** `waterfall_for_dir()`를 raw 3개 dir(FY2023/24/25_Q4)에
+  개별 호출(전체 raw-glob 아님, 안전) → 항등식 정확히 닫히는 18행 확보 → `csm_waterfall_master_diag.json`에
+  직접 append(override 아님 — 이 회사는 diag에 행 자체가 없어 override "set"이 no-op됨, 아래 근접사고 참조).
+- **KR1011(IBK연금보험) 잠재 데이터손실 방지.** 위 리빌드 검증 중 발견: KR1011(2026-07-04 온보딩, diag에
+  없음)이 `build_csm()` 재실행 시 18행 통째로 사라지는 것을 확인 → committed 값 그대로 diag에 append해 보호.
+- **🔴 근접사고 — `build_root_masters.py::main()` 통짜 실행 금지 확인.** KR0075 fix 검증 중
+  `build_pl()`(PL_breakdown.json 재생성)까지 같이 돌아 **PL 마스터가 7,799행/319 (company,quarter)조합
+  →2,940행/117조합으로 붕괴**(207조합 소실, 예: KR0001 전 분기)를 diff로 발견 → 즉시 `git checkout HEAD --
+  PL_breakdown.json`로 복구, PL은 이번 세션 미변경. 원인=`pl_breakdown_master.json` diag도 이 브랜치에서
+  raw-purge로 stale(CSM 쪽과 동일 근본원인, 이전엔 CSM만 알려져 있었음). 상세·재발방지 =
+  [[project_git_purge]] 메모리 갱신. **향후 이 브랜치에서는 `build_csm()`/`build_pl()` 개별 호출 +
+  git HEAD 대비 (company,quarter) combo-diff 필수 — bare `main()` 금지.**
+- **`sensitivity_heatmap_provenance.json` 신규 발행** (validation `20260721T0530Z`, UH-3 잔여). 신규
+  `scripts/emit_sensitivity_provenance.py` — rcept_no로 raw dir 역탐색해 source_file 확인 + as_of/quarter
+  파생(게이트와 동일 로직) + 회사는 코드가 아닌 **이름으로 조인**(이 마스터의 게이트 join key 특성).
+  31/32 사(엠지손해 SA=0 제외) 커버, 게이트 RED=0 확인.
+- **FY2025 sensitivity 전사 refresh — 이미 완료 확인.** TODO엔 "흥국만 FY2025, 나머지 FY2024"로 남아
+  있었으나 실제로는 **32/32사 전부 FY2025/2025-12-31**(언제 누가 했는지 미기록) — TODO 정정.
+- **NB CSM interim partial 이슈 — root는 상당수 해소, 진단파일만 stale.** `check_nb_csm_history.py`가
+  여전히 27건 OVER/UNDER 보고하나, 이는 별도 진단파일 `csm_waterfall_history.json`(재생성 안 됨)을 읽는
+  것이고 **root `CSM_waterfall.json` 자체는 이미 정상**(롯데/미래에셋/한화생명 등 2025.2Q/3Q 단조증가
+  확인) — false-negative 위주. extractor의 interim 레이아웃 인식 보강은 여전히 미완(dedicated 세션).
+- **KR0087(동양생명) FY2026.1H IR 신규 추출** (신규 raw, 서브에이전트). `data/ir/FY2026_Q2/parsed/KR0087_동양생명/csm_metrics.json`
+  신규(마스터 미수정 — 통합은 owner 판단 대기). 신계약CSM 1Q=944.7억(기존 마스터 944.6억과 근접 교차검증)·
+  2Q=1,480.2억·1H누계=2,424.9억. **배수는 IR 자체가 2가지 다른 정의(APE대비/월초P대비)를 공시**하는데
+  둘 다 이 저장소의 KIDI-월납월초 기준과 다름 — 같은 2026.1Q에 대해 마스터 9.463x vs IR 자체 8.15x(~16%
+  괴리) 확인, **정의 재조정 없이 그대로 병합 금지** 플래그.
+- **교보생명(KR0073) csm_extractor.py period_type 추가 + 3개 분기(2023.4Q/2024.1Q/2024.2Q) 전기 재추출**
+  (downloader `20260617T1130Z`, 서브에이전트) — 결과는 다음 세션 노트 참조.
+- **신한이지(KR0051) item19 raw 재확인** — 6주 전과 동일하게 여전히 raw 없음(meta.json뿐), downloader
+  발주가 실제로는 안 나가 있었던 것 발견 → 이번에 실제 발주.
+- **하나생명(KR0097) FY2025 audit-annual — 조사만, 미반영.** 주석 14-4 CSM 변동표(단위 천원,
+  수정소급법/공정가치법/이외모든계약 3-way 서브컬럼) 발견했으나 산출 기초값(4,446.82억)이 현재
+  마스터 2024.4Q 기말(4,389.6억)과 57억(1.3%) 어긋나 원인 미판별 — 신뢰도 부족해 마스터 미반영,
+  코드기반 재파싱 필요.
+
+## 2026-07-30 (2차) — inbox 재확인: NB_CSM_multiple.json half-sync fix + 6건 already-done 확인
+
+owner가 "inbox 다시 확인하고 작업 실시" 재발주. 1차 세션 종료 시점에 아직 open이던 lane:ifrs17
+9건(backlog digest 제외 실질 8건) 전수 재확인.
+
+- **`NB_CSM_multiple.json` half-sync — fix.** owner가 직접 지적(`inbox/_resolved/20260730T0823Z`,
+  route:reparse): 1차의 KR1098 ÷1000 fix가 `CSM_waterfall.json`에만 반영되고 파생 마스터
+  `NB_CSM_multiple.json`(빌더: `scripts/build_nb_csm_multiple.py`)은 재생성 안 된 채였음. 정식
+  스크립트는 `data/kidi/premium_summary.json`(gitignored, KIDI 라이브 재수집 필요)이 로컬에 없어
+  실행 불가 → 기존 파일의 월납월초보험료/티커 필드는 그대로 보존하고 `CSM_waterfall.json`에서
+  갱신된 신계약CSM만 다시 읽어 4개 파생필드(신계약CSM_연누계/당분기, 배수_연누계/당분기, 동일
+  `_ratio`/`_MULT_CAP=40`/`_MULT_FLOOR=1.0` 로직)만 재계산 — 전체 재실행과 수학적으로 동일한
+  결과, before/after 전수 diff로 무관 필드 불변 확인. KR1098: 2024.4Q 배수 12.8169→**0.0128**
+  (owner 기대값 일치), 2025.4Q 배수 null→**2.9711**(owner 수기계산 2.9707과 오차 0.0004, 반올림차).
+  **부수 발견 — 같은 half-sync 버그가 7개사 더**: KR0029(AIG, null→986.8)·KR0011(DB손해 2023
+  4개분기)·KR0073(교보 26.1Q)·KR0001(메리츠 26.1Q)·KR0094(신한라이프 26.1Q)·KR1000(코리안리
+  2023.4Q~2024.4Q, 당분기 부호반전 1건 포함 — 기존 disposition-pass의 "코리안리 Q4 불연속=
+  사업보고서 연간재작성" 기록과 일치, 신규 이상 아님)·KR0083(푸본현대 26.1Q) — 전부 함께 재동기화.
+  KR0004/KR1011은 파생파일에 행 자체가 없었어서 6행 신규 추가(월납 오프라인 미확보 → 배수 null).
+  **⚠️ 별건 회귀 발견, 미수정**: `CSM_waterfall.json`의 티커 필드가 20개사+에서 zero-pad 유실
+  ("000060"→"60") — `update_tickers_from_dart.py` 기준 6자리 zfill이 정본. `NB_CSM_multiple.json`엔
+  전파 안 함(기존 캐시 티커 보존), 소스 자체 회귀는 DART API 재조회 필요해 후속 세션 flag만.
+- **6건 already-done 확인, 인박스 페이퍼워크만 정리**:
+  - FY2025 sensitivity mass-refresh(`20260615T0520Z`) — 32/32사 확인(28사 원 요청 + IBK/AIG/MG/
+    카카오페이 4사), 흥국생명 파일럿 부호/크기 정확 일치. 티켓이 우려한 "장해질병 라벨 변형"은 raw
+    재확인 결과 **K-ICS 보험위험 방법론 서술 섹션의 무관한 키워드 매치**로 판명(IFRS17 민감도 표와
+    무관) — 헛다리, 조치 불요.
+  - `sensitivity_heatmap_provenance.json`(`20260721T0530Z`) — 게이트(`check_as_of` L483, "published"=
+    scenarios 비어있지 않은 회사) strict 모드 RED=0 실행 확인.
+  - KR0004 CSM 통합(`20260616T0210Z`) — continuity 검증 완료. PL breakdown은 여전히 미착수(행 0개,
+    전용 핸들러 필요) → `TODO_parser_ifrs17.md` P2 등록, 스레드는 open 유지.
+  - **KR0073(교보) 13개 분기 전체 — 1차 세션이 발주한 서브에이전트가 이미 완료**해 있었음(1차
+    changelog "결과는 다음 세션 노트 참조" 예고분, 이 항목이 그 노트). closure 13/13 정확, 연도경계
+    continuity(Q4말→익년Q1초) 3개년 전부 완전 일치 재검증. **조사 과정에서 아키텍처 확인**:
+    `csm_extractor.py`는 CSM 상각 스케줄(연차버킷) 전용이고, 티켓이 지목한 "17-4 요소별 변동내역"
+    롤포워드 표(컬럼=미래현금흐름/위험조정/보험계약마진)는 캡션에 "보험계약마진" 리터럴이 없어
+    `score_table()`에서 항상 score=0 → 애초에 선택 안 됨(period_type 유무와 무관한 별개 gap).
+    실제로 이 표를 다루는 건 `measurement_extractor.py`(§14(4), `_iter_tables_with_context`를
+    csm_extractor.py에서 shared import)로 보이나 거기도 당기/전기 라벨 구분은 미구현 — 다음에 이
+    gap이 재발하면 `measurement_extractor.py` 쪽에 period_type을 추가하는 게 맞는 위치.
+  - KR0087(동양생명) FY2026 H1 IR(`20260730T0010Z`) — 이미 완료 확인(`data/ir/FY2026_Q2/parsed/`,
+    다른 세션). CSM 롤포워드+상품별 신계약CSM+배수 2종(APE대비/월초P대비)+보험손익 전부 추출·상호검증
+    완료, 자체적으로 "IR 월초P 기준 배수 분모가 KIDI 대비 16% 큼(분자는 일치)" 발견까지 플래그.
+    루트 마스터 미반영은 의도적(4개 마스터 명시 보호) — 통합은 owner 결정 대기.
+- **2건은 open 유지(의도적)**: `20260616T0230Z`/`20260616T0420Z` 쌍 — `data/dart/viz/
+  csm_waterfall_history.json`의 생성 스크립트(`viz_build_csm_waterfall_history.py`)가 디스크에서
+  완전히 사라짐(`.pyc`만 잔존) — 재생성은 실질적 고고학 작업, 1차 세션이 이미 "dedicated session
+  대상"으로 정확히 스코프함(root 마스터 자체는 확인상 정상, false-negative 방향만 — 라이브 리스크 낮음).
+- **게이트 재확인**: `python scripts/validate_data_contract.py` 전체 재실행 — RED=0, YELLOW=210
+  (동일 generic-anomaly baseline, 신규 anomaly 없음).
+- **master xlsx 재생성 필요**(publishing, 공식 xlsx skill) — `NB_CSM_multiple.json` 추가 변경.
 
 ## 2026-07-04 — IBK연금보험 KR1011 신규 온보딩 (CSM + PL + viz 전파)
 

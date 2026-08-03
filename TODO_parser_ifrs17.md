@@ -1,6 +1,6 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-07-30 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-08-03 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md · Changelog: docs/changelog_parser_ifrs17.md
 
 Stage 2 — **parser, IFRS17 lane**: CSM/PL extraction. Source = DART body XML; output = `CSM_waterfall` / `PL_breakdown` masters; validators = CSM golds / PL golds / `csm_waterfall` / `pl_bridge`. The K-ICS lane (solvency disclosure off Docling MD) lives in `TODO_parser_kics.md` and runs as a separate session.
@@ -10,6 +10,35 @@ Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/dom
 ## Status
 
 IFRS17 lane is **mature**: CSM waterfall + PL breakdown masters all built (root JSONs assembled, xlsx regenerated). 2026.1Q loaded (changelog (s)). CSM golds 8/8 and PL golds pass; `check_pl_reconcile.py` closed the large systematic gaps (예실차-미공시 generic closure + 에이비엘 leg + 하나 장기). Remaining work is residual Tier-2 coverage backfill + a few escalated owner decisions (코리안리 FY2025 basis), not core extractor rewrites.
+
+> **2026-08-03 inbox drain (1 new lane:ifrs17 item — `forward_capital_rebase_fsc_to_dart`)** — full
+> detail in `docs/changelog_parser_ifrs17.md`. `scripts/forward_capital_simulation.py::load_outstanding_bonds()`
+> rebased off FSC data.go.kr → DART per-bond (`data/bonds/capital_securities_fy2025.json`), via a
+> schema adapter only (call-roll-off/limit/transition math untouched). `validate_data_contract.py`
+> RED=0 (YELLOW=210, unchanged baseline). **Discovered mid-task**: the validation-side companion
+> ticket (`20260803T0056Z`, lineage-based `source_id_for_lineage()` + `scripts/emit_capsec_provenance.py`)
+> was **already implemented, uncommitted**, by another session — so no RED-pending-companion-fix
+> gap materialized; only had to fix one FSC-path-reconstruction line in `emit_capsec_provenance.py`
+> that my manifest-format change would otherwise have broken. **Real gap surfaced by the swap**:
+> KR0050(하나손해보험)/KR0076(아이엠라이프생명보험) have FSC bond data but **no DART annual raw on
+> disk** (git-purge) — their forward-capital ratios now read more optimistically than before
+> (bond-call deductions silently disappeared, e.g. KR0076 2030 ratio 93.65%→152.12%) until raw is
+> refetched; routed to `inbox/downloader/20260803T0123Z`. Other 2 open ifrs17 inbox items reviewed
+> and left as-is (already correctly scoped as dedicated-session material by the prior session):
+> `20260616T0230Z`/`20260616T0420Z` twin threads (`csm_waterfall_history.json` diagnostic-cache
+> regeneration — root master confirmed fine, false-negative direction only) and P2 backlog
+> `KR0004(예별손해) PL breakdown` (needs a new per-company handler in `scripts/pl_breakdown/`).
+
+> **2026-08-03 inbox drain (2차)** — full detail in `docs/changelog_parser_ifrs17.md`. Resolved
+> validation's `master_tables_golden` drift ticket (`20260803T0245Z`): the 3 new (company,quarter)
+> pairs were the already-verified KR0004 3-year onboarding sitting uncommitted since 2026-07-30, not
+> today's work — confirmed via direct diff, golden regenerated + PASS. **Found but left untouched**
+> (out of scope, flagged to owner): `test_viz_csm_waterfall_golden.py`/`test_viz_ifrs17_panels_golden.py`
+> are also drifted, caused by **163 uncommitted files in `data/dart/extracted/`** (looks like
+> multi-company/multi-year sensitivity/csm/insurance_pl backfill from an untracked prior session) —
+> needs a dedicated provenance-review session before touching those goldens. Also processed
+> downloader's raw-ready batch (`20260803T0150Z`, KR0075/KR1098/KR0051/KR0050/KR0076) via 3 parallel
+> subagents — results to follow once they land.
 
 > **2026-07-30 inbox drain (17 lane:ifrs17 items processed)** — full detail in `docs/changelog_parser_ifrs17.md`
 > 2026-07-30 entry. Highlights: **KR0075(BNP파리바카디프) 100x + KR1098(카카오페이) 1000x CSM unit bugs
@@ -29,6 +58,45 @@ IFRS17 lane is **mature**: CSM waterfall + PL breakdown masters all built (root 
 > `CSM_WATERFALL_PLAUSIBILITY` rule request, postmortem `docs/postmortems/PM-2026-07-30_kr0075_csm_100x_unit.md`).
 > **Master xlsx needs regeneration** (publishing, official `xlsx` skill) — CSM_waterfall.json/NB_CSM_multiple.json
 > changed.
+
+> **2026-07-30 inbox drain (2차, 9 lane:ifrs17 open items reviewed)** — owner asked to re-check the
+> ifrs17 inbox; found the (1차) pass above had left `NB_CSM_multiple.json` **half-synced**: the KR1098
+> ÷1000 fix landed in `CSM_waterfall.json` but the derived multiple file was never regenerated (owner
+> flagged this explicitly, `inbox/_resolved/20260730T0823Z`). `scripts/build_nb_csm_multiple.py` couldn't
+> run (its `data/kidi/premium_summary.json` dependency is gitignored and absent locally — needs a live
+> KIDI refetch, out of this session's network scope), so re-synced by hand: kept every row's existing
+> 월납월초보험료/티커 fields untouched, recomputed only the 4 CSM-derived fields
+> (신계약CSM_연누계/당분기, 배수_연누계/당분기) from the corrected `CSM_waterfall.json`, verified via
+> full before/after diff. **Found 7 more companies stale the same way** (source fixed, derived file
+> never resynced) — KR0029(AIG), KR0011(DB손해), KR0073(교보), KR0001(메리츠), KR0094(신한라이프),
+> KR1000(코리안리), KR0083(푸본현대) — all resynced together; **KR0004/KR1011 got their first NB rows**
+> (월납 unavailable offline → 배수 null, expected). **⚠️ Separate regression found, NOT fixed**:
+> `CSM_waterfall.json`'s own 티커 field has lost zero-padding for ~20+ listed companies (메리츠
+> "000060"→"60" etc. — `update_tickers_from_dart.py` confirms 6-digit zfill is canonical). Did not
+> propagate this into `NB_CSM_multiple.json` (preserved its correct cached tickers instead) and did not
+> attempt to fix the source — needs a DART API re-run, flagged for a follow-up session.
+> Other 6 open ifrs17 tickets reviewed: **4 were already fully resolved by untracked prior work**
+> (just needed inbox paperwork closed) — FY2025 sensitivity mass-refresh (32/32사, 흥국 pilot sign/
+> magnitude matches, the "장해질병 label variant" caution turned out to be a false lead from an
+> unrelated K-ICS risk-methodology section) · `sensitivity_heatmap_provenance.json` sidecar (gate
+> strict-mode RED=0 confirmed) · KR0004 CSM integration (continuity holds, PL breakdown still genuinely
+> missing — no per-company handler exists yet, filed under P2) · KR0073(교보) full 13-quarter series
+> (already loaded, closure + year-boundary continuity clean — investigation revealed `csm_extractor.py`
+> only handles the amortisation-schedule table, not the "17-4 요소별 변동내역" rollforward table the
+> ticket described; that one's caption never contains "보험계약마진" so it scores 0 and is never
+> selected — real fix would be teaching `measurement_extractor.py` period_type disambiguation, not
+> `csm_extractor.py`; moot for KR0073 since the data is already in, kept as an architecture note for
+> next time this gap resurfaces) · KR0087(동양생명) FY2026 H1 IR extraction (already done by another
+> session — `data/ir/FY2026_Q2/parsed/`, exceptionally thorough, flags its own genuinely interesting
+> finding: IR's own "월초P" CSM-multiple denominator is ~16% larger than KIDI's 월납초회 for the same
+> quarter, numerator matches — needs owner reconciliation before treating the two multiples as
+> comparable). **2 threads left open on purpose** (`20260616T0230Z`/`20260616T0420Z` twin threads):
+> `data/dart/viz/csm_waterfall_history.json`'s generator script (`viz_build_csm_waterfall_history.py`)
+> no longer exists on disk (only a stale `.pyc` remains) — regenerating it is real archaeology, already
+> correctly scoped by a prior session as "dedicated session material," root master itself is confirmed
+> fine (false-negative direction only). Data contract gate re-run clean after all changes: RED=0,
+> YELLOW=210 (same generic-anomaly baseline, no new anomalies introduced).
+> **Master xlsx needs regeneration again** (publishing) — `NB_CSM_multiple.json` changed further.
 
 > **Disposition pass 2026-06-14** (committed-master read-only, 5-agent; inbox `20260612T0900Z` 답변): V9/V7/PL-T2 잔여 14건 판정 → **legit 10 종결** (코리안리 상각 "1y lag" = 부호규약 artifact·워터폴 close / history off-by-one = year-shift 없음 / 메트라이프 영업이익 등식 OK / 한화손해 NB non-stale / 동양 재보 = net-only legit-absent, phantom item9/10 백필 금지 / 케이디비·롯데·교보플래닛 정상 또는 legit-absent), **real_gap 2 (raw-blocked)**: 현대해상 예실차(item6/11) pre-2025.3Q 결측 + 악사 interim 분기 부재 — fix는 purge된 분기 raw 필요, **designer handoff 1**: csm_delta=null→0 렌더(동양/NH, `inbox/designer/20260614T1300Z`), **out_of_scope 1**: 하나생명 item17 투자손익=FS-API 레인. fixable-now bug 0.
 
@@ -74,6 +142,7 @@ IFRS17 lane is **mature**: CSM waterfall + PL breakdown masters all built (root 
 ### PL-T2 — PL Tier-2 residual gaps (after 2026-06-08 census, changelog (m))
 
 Track with `python scripts/check_pl_reconcile.py`. 큰 systematic 갭은 닫힘(예실차-미공시 generic closure + 에이비엘 leg + 하나 장기). Remaining actionable (non-legit, 2024.2Q+):
+- [ ] **KR0004(예별손해=구MG) PL breakdown 전무** (2026-07-30) — CSM waterfall은 3개년 적재+continuity 검증 완료(`inbox/_resolved/20260616T0210Z`)했으나 `PL_breakdown.json`엔 행 0개. `scripts/pl_breakdown/`이 회사별 커스텀 핸들러 구조(`companies.py`)라 신규 소형사 온보딩엔 전용 핸들러 작성 필요 — raw는 이미 3개 dir 확보돼 있음(`data/dart/FY{2023,2024,2025}_Q4/raw/KR0004_엠지손해보험_*`).
 - [ ] **동양(2024.x) / 케이디비(2025.x) 재보 CSM상각(item9) / RA(item10)** — 출재 섹션 깊이 박힘, 분기별 노트 구조 상이. Small (재보 sub-slice), per-company/quarter handler. fragile fix 강제 안 함.
 - [ ] **하나생명 투자손익(item17)** 2024.4Q/2025.4Q — Tier-1/FS-API lane (parser scope 밖일 수 있음).
 - [ ] **교보라이프플래닛 Tier-2 absent** — 디지털 생보, 공시 최소 (likely legit-absent; confirm).
