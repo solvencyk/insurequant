@@ -1,41 +1,99 @@
 {
-  "generated_at": "20260620T075605Z",
+  "generated_at": "20260703T123239Z",
   "insurers": 1,
   "periods": [
+    "2023.1Q",
+    "2023.2Q",
+    "2023.3Q",
+    "2023.4Q",
+    "2024.1Q",
+    "2024.2Q",
+    "2024.3Q",
     "2024.4Q",
     "2025.1Q",
-    "2025.2Q"
+    "2025.2Q",
+    "2025.3Q",
+    "2025.4Q",
+    "2026.1Q"
   ],
   "results": [
     {
-      "insurer_code": "KR0073",
-      "canonical": "교보생명보험",
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2023.1Q",
+      "status": "no_filing"
+    },
+    {
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2023.2Q",
+      "status": "no_filing"
+    },
+    {
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2023.3Q",
+      "status": "no_filing"
+    },
+    {
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2023.4Q",
+      "status": "no_filing"
+    },
+    {
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2024.1Q",
+      "status": "no_filing"
+    },
+    {
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2024.2Q",
+      "status": "no_filing"
+    },
+    {
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2024.3Q",
+      "status": "no_filing"
+    },
+    {
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
       "period": "2024.4Q",
-      "rcept_no": "20250331004015",
-      "status": "ok",
-      "csm_tables_found": 12,
-      "parse_errors": 0,
-      "json_out": "data\\dart\\extracted_history\\교보생명보험__2024.4Q_csm.json"
+      "status": "no_filing"
     },
     {
-      "insurer_code": "KR0073",
-      "canonical": "교보생명보험",
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
       "period": "2025.1Q",
-      "rcept_no": "20250515002967",
-      "status": "ok",
-      "csm_tables_found": 1,
-      "parse_errors": 0,
-      "json_out": "data\\dart\\extracted_history\\교보생명보험__2025.1Q_csm.json"
+      "status": "no_filing"
     },
     {
-      "insurer_code": "KR0073",
-      "canonical": "교보생명보험",
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
       "period": "2025.2Q",
-      "rcept_no": "20250814004112",
-      "status": "ok",
-      "csm_tables_found": 1,
-      "parse_errors": 0,
-      "json_out": "data\\dart\\extracted_history\\교보생명보험__2025.2Q_csm.json"
+      "status": "no_filing"
+    },
+    {
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2025.3Q",
+      "status": "no_filing"
+    },
+    {
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2025.4Q",
+      "status": "no_filing"
+    },
+    {
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2026.1Q",
+      "status": "no_filing"
     }
   ]
 }

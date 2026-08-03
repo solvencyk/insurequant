@@ -1,0 +1,2995 @@
+[
+  {
+    "caption": "4.9 민감도분석(1) 당사가 발행한 보험계약과 관련된 보험위험의 변수가 변동될 때 당기손익 및 자본에 미치는 영향 민감도 분석의 내용은 다음과 같습니다.<당기>",
+    "table_kind": "sensitivity_analysis",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 4766,
+    "score": 9,
+    "reasons": [
+      "caption: sensitivity keywords x2",
+      "rows: sensitivity stubs x3",
+      "kind: sensitivity_analysis",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "출재보험계약에 의한 위험 경감전",
+        "출재보험계약에 의한 위험 경감후"
+      ],
+      [
+        "보험계약마진",
+        "당기손익(*)",
+        "자본",
+        "보험계약마진",
+        "당기손익(*)",
+        "자본"
+      ]
+    ],
+    "rows": [
+      [
+        "손해율",
+        "10% 상승",
+        "(42,993)",
+        "(4,503)",
+        "369",
+        "(37,084)",
+        "(3,619)",
+        "635"
+      ],
+      [
+        "10% 하락",
+        "44,272",
+        "5,232",
+        "(293)",
+        "38,091",
+        "4,363",
+        "(508)"
+      ],
+      [
+        "해지율",
+        "10% 상승",
+        "(12,738)",
+        "(1,073)",
+        "(2,694)",
+        "(11,265)",
+        "(920)",
+        "(2,723)"
+      ],
+      [
+        "10% 하락",
+        "14,125",
+        "1,990",
+        "3,122",
+        "12,566",
+        "1,843",
+        "3,165"
+      ],
+      [
+        "사업비율",
+        "10% 상승",
+        "(10,160)",
+        "(2,070)",
+        "(1,358)",
+        "(10,161)",
+        "(2,068)",
+        "(1,357)"
+      ],
+      [
+        "10% 하락",
+        "10,132",
+        "2,805",
+        "1,663",
+        "10,135",
+        "2,803",
+        "1,661"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "4.9 민감도분석(1) 당사가 발행한 보험계약과 관련된 보험위험의 변수가 변동될 때 당기손익 및 자본에 미치는 영향 민감도 분석의 내용은 다음과 같습니다.<당기>",
+    "table_kind": "sensitivity_analysis",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 4881,
+    "score": 9,
+    "reasons": [
+      "caption: sensitivity keywords x2",
+      "rows: sensitivity stubs x3",
+      "kind: sensitivity_analysis",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "출재보험계약에 의한 위험 경감전",
+        "출재보험계약에 의한 위험 경감후"
+      ],
+      [
+        "보험계약마진",
+        "당기손익(*)",
+        "자본",
+        "보험계약마진",
+        "당기손익(*)",
+        "자본"
+      ]
+    ],
+    "rows": [
+      [
+        "손해율",
+        "10% 상승",
+        "(47,533)",
+        "(5,596)",
+        "3,658",
+        "(41,324)",
+        "(4,805)",
+        "3,329"
+      ],
+      [
+        "10% 하락",
+        "25,228",
+        "4,441",
+        "(702)",
+        "22,005",
+        "3,883",
+        "(899)"
+      ],
+      [
+        "해지율",
+        "10% 상승",
+        "(15,270)",
+        "(2,412)",
+        "(4,769)",
+        "(13,924)",
+        "(2,317)",
+        "(5,022)"
+      ],
+      [
+        "10% 하락",
+        "16,996",
+        "2,492",
+        "4,777",
+        "15,573",
+        "2,395",
+        "5,055"
+      ],
+      [
+        "사업비율",
+        "10% 상승",
+        "(8,820)",
+        "(2,090)",
+        "(628)",
+        "(8,823)",
+        "(2,090)",
+        "(625)"
+      ],
+      [
+        "10% 하락",
+        "8,822",
+        "2,087",
+        "626",
+        "8,821",
+        "2,085",
+        "626"
+      ]
+    ],
+    "footnotes": [
+      "(*) 계리적가정 변동으로 인한 손실요소 및 손실회수요소의 변동분을 당기손익으로 인식합니다.<전기>"
+    ],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "4.9 민감도분석(1) 당사가 발행한 보험계약과 관련된 보험위험의 변수가 변동될 때 당기손익 및 자본에 미치는 영향 민감도 분석의 내용은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 4998,
+    "score": 6,
+    "reasons": [
+      "caption: sensitivity keywords x2",
+      "header: sensitivity columns",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "출재보험계약에 의한 위험 경감전",
+        "출재보험계약에 의한 위험 경감후"
+      ],
+      [
+        "보험계약마진",
+        "당기손익",
+        "자본",
+        "보험계약마진",
+        "당기손익",
+        "자본"
+      ]
+    ],
+    "rows": [
+      [
+        "금리",
+        "50bp 상승",
+        "(465)",
+        "(29)",
+        "65,870",
+        "(589)",
+        "(43)",
+        "68,476"
+      ],
+      [
+        "50bp 하락",
+        "561",
+        "46",
+        "(75,957)",
+        "701",
+        "62",
+        "(78,843)"
+      ]
+    ],
+    "footnotes": [
+      "(*) 계리적가정 변동으로 인한 손실요소 및 손실회수요소의 변동분을 당기손익으로 인식합니다.<전기>",
+      "(*) 계리적가정 변동으로 인한 손실요소 및 손실회수요소의 변동분을 당기손익으로 인식합니다.(2) 당사가 발행한 보험계약과 관련된 금리민감도 분석의 내용은 다음과 같습니다.당사는 무위험 금리기간구조에 충격시나리오를 적용하여 자산과 부채의 가치를 재평가한 후 순자산가치의 감소금액을 측정하여 금리위험액을 산출하고 있습니다.당사의 금리위험 민감도분석결과 당기말과 전기말 현재 자본과 세전이익에 미치는 영향은 다음과 같습니다."
+    ],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "4.9 민감도분석(1) 당사가 발행한 보험계약과 관련된 보험위험의 변수가 변동될 때 당기손익 및 자본에 미치는 영향 민감도 분석의 내용은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 5071,
+    "score": 6,
+    "reasons": [
+      "caption: sensitivity keywords x2",
+      "header: sensitivity columns",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "출재보험계약에 의한 위험 경감전",
+        "출재보험계약에 의한 위험 경감후"
+      ],
+      [
+        "보험계약마진",
+        "당기손익",
+        "자본",
+        "보험계약마진",
+        "당기손익",
+        "자본"
+      ]
+    ],
+    "rows": [
+      [
+        "금리",
+        "50bp 상승",
+        "1,400",
+        "240",
+        "54,243",
+        "1,301",
+        "232",
+        "56,460"
+      ],
+      [
+        "50bp 하락",
+        "(1,589)",
+        "(273)",
+        "(63,016)",
+        "(1,480)",
+        "(264)",
+        "(65,480)"
+      ]
+    ],
+    "footnotes": [
+      "(*) 계리적가정 변동으로 인한 손실요소 및 손실회수요소의 변동분을 당기손익으로 인식합니다.<전기>",
+      "(*) 계리적가정 변동으로 인한 손실요소 및 손실회수요소의 변동분을 당기손익으로 인식합니다.(2) 당사가 발행한 보험계약과 관련된 금리민감도 분석의 내용은 다음과 같습니다.당사는 무위험 금리기간구조에 충격시나리오를 적용하여 자산과 부채의 가치를 재평가한 후 순자산가치의 감소금액을 측정하여 금리위험액을 산출하고 있습니다.당사의 금리위험 민감도분석결과 당기말과 전기말 현재 자본과 세전이익에 미치는 영향은 다음과 같습니다."
+    ],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(5) 주요 가정의 변동에 따른 대략적인 확정급여채무의 민감도 분석은 다음과 같습니다.",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 13752,
+    "score": 6,
+    "reasons": [
+      "caption: sensitivity keywords x1",
+      "rows: 1 assumption/sensitivity stub",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "주요 가정의 변동",
+        "부채금액의 변동"
+      ]
+    ],
+    "rows": [
+      [
+        "할인율",
+        "0.25% 포인트 증가 / 감소",
+        "1.41% 감소 / 1.45% 증가"
+      ],
+      [
+        "미래임금상승률",
+        "0.25% 포인트 증가 / 감소",
+        "1.46% 증가 / 1.43% 감소"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "4.3 보험위험관리(1) 보험위험의 개요보험위험이란 보험회사의 고유업무인 보험계약의 인수와 보험금 지급에 관련하여 발생하는 위험으로 보험계약시 예상했던 위험보다 실제 지급시 위험이 커져서 발생할 수 있는 손실 가능성 등을 말합니다.보험위험액은 계리적 가정 변동시 보험회사에 직ㆍ간접적으로 손실을 초래할 수 있는 자산 및 부채를 대상으로 하며, 자산의 경우 계리적가정 변동 시 장래현금흐름 변동으로 인해 가치가 변동하는 경우(예 : 재보험계약 등)에만 해당되고, 부채의 경우 모든 보험계약을 대상으로 산출합니다.다만, 퇴직보험 및 퇴직연금은 생명ㆍ장기손해보험리스크 측정대상에 포함하지 않습니다. 보험위험은 위험요인별로 사망위험액, 장수위험액, 장해ㆍ질병위험액, 재물ㆍ기타위험액, 해지위험액, 사업비위험액, 대재해위험액으로 나눌 수 있습니다.사망위험액, 장수위험액, 장해ㆍ질병위험액, 장기재물ㆍ기타위험액, 해지위험액, 사업비위험액은 충격시나리오 방식으로 측정하고, 대재해위험액은 위험계수 방식으로 측정하며 요인별 위험액 측정 기준은 다음과 같습니다.① 사망위험 및 장수위험은 보험계약자의 사망과 관련하여 예상하지 못한 손실이 발생할 위험을 의미하며, 사망률 수준(level), 추세(trend), 변동성(volatility) 등의 변화로 순자산가치가 감소할 위험으로 측정합니다.② 장해ㆍ질병위험은 보험계약자의 장해 및 질병과 관련하여 예상하지 못한 손실이 발생할 위험으로 장해ㆍ질병담보의 위험률 수준(level), 추세(trend), 변동성(volatility) 등의 변화로 순자산가치가 감소할 위험으로 측정합니다.③ 재물ㆍ기타위험은 재물, 비용, 배상, 기타 담보와 관련하여 예상하지 못한 손실이 발생할 위험으로 재물, 비용, 배상, 기타 담보의 위험률 수준(level), 추세(trend), 변동성(volatility) 등의 변화로 순자산가치가 감소할 위험으로 측정합니다.④ 해지위험은 계약의 해지, 갱신, 연금선택 등 보험계약자의 옵션 행사로 인해 예상하지 못한 손실이 발생할 위험을 의미하며, 보험계약자의 옵션 행사율 변화 또는 계약자 집단 해지로 순자산가치가 감소할 위험으로 측정합니다.⑤ 사업비위험은 보험계약 비용과 관련하여 장래 비용의 수준 및 인플레이션으로 인한 지출 변동으로 발생할 위험을 포함합니다. 보험 계약과 관련된 비용은 수당을 제외한 모든 비용항목을 포함합니다.⑥ 대재해 위험은 사망위험이나 장해ㆍ질병위험에서 고려하지 못한 극단적, 예외적 위험(예시: 신종 전염병 등)으로 인해 발생하는 위험을 의미합니다.(2) 보험위험의 집중 및 재보험정책 보험계약의 인수로 인해 발생할 수 있는 리스크의 전가 혹은 분산을 필요로 하는 계약을 출재대상으로 하여, 보험계약자에 대한 보험금 지급능력을 확고히 하고 회사 재무구조의 안정성을 확보하는 것을 목적으로 재보험을 활용하고 있습니다. 재보험의 출재방식은 사망담보의 경우 초과액재보험(Surplus) 방식, 기타 질병관련 급부는 위험보험료식 비례재보험(Quota Share) 방식을 기본으로 하며, 리스크의 성격, 재보험비용의 적정성, 거래의 효율성을 감안하여 별도의 방식도 적용할 수 있도록 하고 있습니다. (3) 보험계약 및 재보험계약에서 발생하는 위험의 발생사유는 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "reinsurance",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 2247,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x2",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "발생사유"
+      ]
+    ],
+    "rows": [
+      [
+        "보험위험",
+        "보험위험은 보험회사의 고유업무인 보험계약의 인수와 보험금 지급에 관련하여 발생하는 리스크로 보험계약자로부터 수령한 보험료와 실제 지급된 보험금 간의 차이 등으로 인하여 발생합니다."
+      ],
+      [
+        "신용위험",
+        "신용위험은 재보험거래의 상대방인 재보험회사의 채무불이행 등으로 인하여 발생합니다."
+      ],
+      [
+        "금리위험",
+        "금리위험은 미래 시장금리 변동, 자산과 부채의 만기구조, 금리조건의 불일치 등으로 인하여 발생합니다."
+      ],
+      [
+        "유동성위험",
+        "유동성위험은 보유한 금융부채에 대해 만기에 지급의무를 부담하지 못할 위험을 의미합니다."
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "당사는 보험부채 산출 시 보험업법 및 보험업감독규정이 정하는 바에 따라 한국채택국제회계기준 제1117호를 준용하여 최적가정을 적용한 보험부채를 매 결산기마다 산출하고 있습니다.보고기간말 현재 기준 보유계약에 대해 당사가 적용한 미래현금흐름에 대한 현행추정치의 가정과 그 산출근거는 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 2379,
+    "score": 5,
+    "reasons": [
+      "rows: sensitivity stubs x3",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "가정값(%)",
+        "산출근거"
+      ],
+      [
+        "당기말",
+        "전기말"
+      ]
+    ],
+    "rows": [
+      [
+        "해약률",
+        "1% ~ 56%",
+        "1% ~ 56%",
+        "최근 5년간 회사경험 데이터에 기초하여, 최저신뢰도 검증으로 해약률 산출 세부 단위 설정함. 보험 종목별/납입방법별/경과기간별/금리 수준별로 구분하여 산출한 경험데이터 결과를 산업통계와 신뢰도 기법 적용 후 보정 적용함 저해지/무해지형의 경우, 경험데이터 결과를 토대로 신뢰도 기법 적용 후 모형 추정 기법 적용함"
+      ],
+      [
+        "지급률",
+        "26% ~ 241%",
+        "32% ~ 255%",
+        "최근 5년 회사경험 데이터에 기초하여 담보(상품)별/경과기간별/성별 구분하여 산출하였으며, 9회 경험생명표 기준으로 변환된 위험보험료 대비 보험금 지급률의 경험데이터 사용하여 신뢰도 기법 적용 후 보정 적용함"
+      ],
+      [
+        "사업비율",
+        "보험취득현금흐름 : 0%~17.2% (초년도보험료) 0%~31.0% (가입금액) 0~906,000(건수) 계약 유지비 : 3.6%~6.1% (수입보험료) 13,500~63,000 (건수) 0.31% (보증수수료)",
+        "보험취득현금흐름 : 0%~11.2% (초년도보험료) 0%~9.4% (가입금액) 0~4,641,000 (건수) 계약 유지비 : 2.3%~73.6% (수입보험료) 12,000~53,000 (건수) 0.33% (보증수수료)",
+        "최근 1년 사업비구분별(신계약비, 유지비)/상품별/채널별 전체 집행금액 대비 구분별 해당 집행금액의 비율. 단, 일시적 비용은 제외함"
+      ],
+      [
+        "할인율",
+        "-4.71%~18.51%",
+        "-3.41%~21.41%",
+        "1000개의 확률론적 금리시나리오"
+      ],
+      [
+        "비금융위험에 대한 위험조정의 신뢰수준",
+        "75%",
+        "75%",
+        "각 보고시점 미래현금흐름 현재가치의 확률분포가 정규분포를 따른다는 가정하에 75% 백분위수가 미래현금흐름 현재가치의 확률가중평균치를 초과하는 부분을 위험조정으로 산출"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "당사는 금융감독원의 보험회사 책임준비금 산출 및 수익인식 가이드라인에 근거하여당기 중 보험계약마진 수익인식 기준 , 변동수수료 접근법 적용대상기준 및 위험조정 산출기준 중 기말 예상 위험 조정 산출 방식을 변경 적용하였습니다 . 4.4 금리위험관리(1) 금리위험의 개요금리위험이란 금리기간구조의 변화로 인해 예상하지 못한 손실이 발생할 위험을 말합니다.(2) 금리위험의 관리금리위험의 측정대상 자산은 일반적인 채권분만 아니라 대출, 파생상품, 비운용자산 등 금리평가요소를 갖고 있는 모든 자산을 포함하며, 금리위험 측정대상 부채는 보험부채 뿐만 아니라 금리 평가요소를 갖고 있는 모든 부채를 포함합니다. 금리위험에 대한 요구자본은 신지급여력제도(K-ICS)에 따라 금리기간구조에 충격시나리오를 적용하여 자산과 부채의 가치를 재평가한 후 순자산가치의 감소금액을 측정하여 산출합니다.이 때, 회사는 설정된 회사의 금리위험 허용한도를 기준으로 정기적으로 한도준수 여부를 점검하고 이를 매 분기 리스크관리위원회에 보고하여 관리하고 있습니다. 또한 극단적 상황하의 금리위험 수준 및 감내 능력 평가를 위해 정기적으로 Stress Test 분석을 실시하여 관리하고 있습니다. (3) 금리위험에 대한 익스포져 및 금리위험액보고기간말 현재 금리부 자산과 보험부채에 대한 주요 익스포져 현황은 다음과 같습니다.<당기말>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 2446,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "당사는 금융감독원의 보험회사 책임준비금 산출 및 수익인식 가이드라인에 근거하여당기 중 보험계약마진 수익인식 기준 , 변동수수료 접근법 적용대상기준 및 위험조정 산출기준 중 기말 예상 위험 조정 산출 방식을 변경 적용하였습니다 . 4.4 금리위험관리(1) 금리위험의 개요금리위험이란 금리기간구조의 변화로 인해 예상하지 못한 손실이 발생할 위험을 말합니다.(2) 금리위험의 관리금리위험의 측정대상 자산은 일반적인 채권분만 아니라 대출, 파생상품, 비운용자산 등 금리평가요소를 갖고 있는 모든 자산을 포함하며, 금리위험 측정대상 부채는 보험부채 뿐만 아니라 금리 평가요소를 갖고 있는 모든 부채를 포함합니다. 금리위험에 대한 요구자본은 신지급여력제도(K-ICS)에 따라 금리기간구조에 충격시나리오를 적용하여 자산과 부채의 가치를 재평가한 후 순자산가치의 감소금액을 측정하여 산출합니다.이 때, 회사는 설정된 회사의 금리위험 허용한도를 기준으로 정기적으로 한도준수 여부를 점검하고 이를 매 분기 리스크관리위원회에 보고하여 관리하고 있습니다. 또한 극단적 상황하의 금리위험 수준 및 감내 능력 평가를 위해 정기적으로 Stress Test 분석을 실시하여 관리하고 있습니다. (3) 금리위험에 대한 익스포져 및 금리위험액보고기간말 현재 금리부 자산과 보험부채에 대한 주요 익스포져 현황은 다음과 같습니다.<당기말>",
+    "table_kind": "assumption_values",
+    "block_type": "direct",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 2462,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "익스포져"
+      ]
+    ],
+    "rows": [
+      [
+        "가. 금리부자산",
+        ""
+      ],
+      [
+        "I. 현금성자산",
+        "55,213"
+      ],
+      [
+        "II. 당기손익-공정가치측정금융자산(*)",
+        "108,830"
+      ],
+      [
+        "III. 기타포괄손익-공정가치측정유가증권(*)",
+        "1,128,065"
+      ],
+      [
+        "IV. 상각후원가측정대출채권 및 기타수취채권",
+        "27,700"
+      ],
+      [
+        "합계",
+        "1,319,808"
+      ],
+      [
+        "나. 금리부부채",
+        ""
+      ],
+      [
+        "I. 보험계약부채",
+        "1,110,106"
+      ],
+      [
+        "II. 재보험계약부채",
+        "38,431"
+      ],
+      [
+        "합계",
+        "1,148,537"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "당사는 금융감독원의 보험회사 책임준비금 산출 및 수익인식 가이드라인에 근거하여당기 중 보험계약마진 수익인식 기준 , 변동수수료 접근법 적용대상기준 및 위험조정 산출기준 중 기말 예상 위험 조정 산출 방식을 변경 적용하였습니다 . 4.4 금리위험관리(1) 금리위험의 개요금리위험이란 금리기간구조의 변화로 인해 예상하지 못한 손실이 발생할 위험을 말합니다.(2) 금리위험의 관리금리위험의 측정대상 자산은 일반적인 채권분만 아니라 대출, 파생상품, 비운용자산 등 금리평가요소를 갖고 있는 모든 자산을 포함하며, 금리위험 측정대상 부채는 보험부채 뿐만 아니라 금리 평가요소를 갖고 있는 모든 부채를 포함합니다. 금리위험에 대한 요구자본은 신지급여력제도(K-ICS)에 따라 금리기간구조에 충격시나리오를 적용하여 자산과 부채의 가치를 재평가한 후 순자산가치의 감소금액을 측정하여 산출합니다.이 때, 회사는 설정된 회사의 금리위험 허용한도를 기준으로 정기적으로 한도준수 여부를 점검하고 이를 매 분기 리스크관리위원회에 보고하여 관리하고 있습니다. 또한 극단적 상황하의 금리위험 수준 및 감내 능력 평가를 위해 정기적으로 Stress Test 분석을 실시하여 관리하고 있습니다. (3) 금리위험에 대한 익스포져 및 금리위험액보고기간말 현재 금리부 자산과 보험부채에 대한 주요 익스포져 현황은 다음과 같습니다.<당기말>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 2536,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [
+      "(*) 재무상태표의 당기손익-공정가치측정금융자산 및 기타포괄손익-공정가치측정금융자산 중 지분증권 및 수익증권을 제외한 금액입니다 . <전기말>"
+    ],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "당사는 금융감독원의 보험회사 책임준비금 산출 및 수익인식 가이드라인에 근거하여당기 중 보험계약마진 수익인식 기준 , 변동수수료 접근법 적용대상기준 및 위험조정 산출기준 중 기말 예상 위험 조정 산출 방식을 변경 적용하였습니다 . 4.4 금리위험관리(1) 금리위험의 개요금리위험이란 금리기간구조의 변화로 인해 예상하지 못한 손실이 발생할 위험을 말합니다.(2) 금리위험의 관리금리위험의 측정대상 자산은 일반적인 채권분만 아니라 대출, 파생상품, 비운용자산 등 금리평가요소를 갖고 있는 모든 자산을 포함하며, 금리위험 측정대상 부채는 보험부채 뿐만 아니라 금리 평가요소를 갖고 있는 모든 부채를 포함합니다. 금리위험에 대한 요구자본은 신지급여력제도(K-ICS)에 따라 금리기간구조에 충격시나리오를 적용하여 자산과 부채의 가치를 재평가한 후 순자산가치의 감소금액을 측정하여 산출합니다.이 때, 회사는 설정된 회사의 금리위험 허용한도를 기준으로 정기적으로 한도준수 여부를 점검하고 이를 매 분기 리스크관리위원회에 보고하여 관리하고 있습니다. 또한 극단적 상황하의 금리위험 수준 및 감내 능력 평가를 위해 정기적으로 Stress Test 분석을 실시하여 관리하고 있습니다. (3) 금리위험에 대한 익스포져 및 금리위험액보고기간말 현재 금리부 자산과 보험부채에 대한 주요 익스포져 현황은 다음과 같습니다.<당기말>",
+    "table_kind": "assumption_values",
+    "block_type": "direct",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 2552,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "익스포져"
+      ]
+    ],
+    "rows": [
+      [
+        "가. 금리부자산",
+        ""
+      ],
+      [
+        "I. 현금성자산",
+        "79,607"
+      ],
+      [
+        "II. 당기손익인식금융자산(*)",
+        "111,912"
+      ],
+      [
+        "II. 매도가능금융자산(*)",
+        "321,187"
+      ],
+      [
+        "III. 만기보유금융자산",
+        "797,446"
+      ],
+      [
+        "IV. 대출채권및기타수취채권",
+        "26,500"
+      ],
+      [
+        "합계",
+        "1,336,652"
+      ],
+      [
+        "나. 금리부부채",
+        ""
+      ],
+      [
+        "I. 보험계약부채",
+        "945,817"
+      ],
+      [
+        "II. 재보험계약부채",
+        "31,097"
+      ],
+      [
+        "합계",
+        "976,914"
+      ]
+    ],
+    "footnotes": [
+      "(*) 재무상태표의 당기손익-공정가치측정금융자산 및 기타포괄손익-공정가치측정금융자산 중 지분증권 및 수익증권을 제외한 금액입니다 . <전기말>"
+    ],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "4.9 민감도분석(1) 당사가 발행한 보험계약과 관련된 보험위험의 변수가 변동될 때 당기손익 및 자본에 미치는 영향 민감도 분석의 내용은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 4750,
+    "score": 5,
+    "reasons": [
+      "caption: sensitivity keywords x2",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "4.9 민감도분석(1) 당사가 발행한 보험계약과 관련된 보험위험의 변수가 변동될 때 당기손익 및 자본에 미치는 영향 민감도 분석의 내용은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 4865,
+    "score": 5,
+    "reasons": [
+      "caption: sensitivity keywords x2",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [
+      "(*) 계리적가정 변동으로 인한 손실요소 및 손실회수요소의 변동분을 당기손익으로 인식합니다.<전기>"
+    ],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "4.9 민감도분석(1) 당사가 발행한 보험계약과 관련된 보험위험의 변수가 변동될 때 당기손익 및 자본에 미치는 영향 민감도 분석의 내용은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 4982,
+    "score": 5,
+    "reasons": [
+      "caption: sensitivity keywords x2",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [
+      "(*) 계리적가정 변동으로 인한 손실요소 및 손실회수요소의 변동분을 당기손익으로 인식합니다.<전기>",
+      "(*) 계리적가정 변동으로 인한 손실요소 및 손실회수요소의 변동분을 당기손익으로 인식합니다.(2) 당사가 발행한 보험계약과 관련된 금리민감도 분석의 내용은 다음과 같습니다.당사는 무위험 금리기간구조에 충격시나리오를 적용하여 자산과 부채의 가치를 재평가한 후 순자산가치의 감소금액을 측정하여 금리위험액을 산출하고 있습니다.당사의 금리위험 민감도분석결과 당기말과 전기말 현재 자본과 세전이익에 미치는 영향은 다음과 같습니다."
+    ],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "4.9 민감도분석(1) 당사가 발행한 보험계약과 관련된 보험위험의 변수가 변동될 때 당기손익 및 자본에 미치는 영향 민감도 분석의 내용은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 5055,
+    "score": 5,
+    "reasons": [
+      "caption: sensitivity keywords x2",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [
+      "(*) 계리적가정 변동으로 인한 손실요소 및 손실회수요소의 변동분을 당기손익으로 인식합니다.<전기>",
+      "(*) 계리적가정 변동으로 인한 손실요소 및 손실회수요소의 변동분을 당기손익으로 인식합니다.(2) 당사가 발행한 보험계약과 관련된 금리민감도 분석의 내용은 다음과 같습니다.당사는 무위험 금리기간구조에 충격시나리오를 적용하여 자산과 부채의 가치를 재평가한 후 순자산가치의 감소금액을 측정하여 금리위험액을 산출하고 있습니다.당사의 금리위험 민감도분석결과 당기말과 전기말 현재 자본과 세전이익에 미치는 영향은 다음과 같습니다."
+    ],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 파생상품으로부터 발생한 손익은 다음과 같습니다. <당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 7860,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 파생상품으로부터 발생한 손익은 다음과 같습니다. <당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 7876,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "매매목적",
+        "공정가액위험회피"
+      ],
+      [
+        "평가손익",
+        "거래손익",
+        "평가손익",
+        "거래손익"
+      ]
+    ],
+    "rows": [
+      [
+        "통화선도",
+        "4,567",
+        "(15,630)",
+        "-",
+        "-"
+      ],
+      [
+        "지수선물",
+        "83",
+        "6",
+        "-",
+        "-"
+      ],
+      [
+        "통화선물",
+        "(355)",
+        "66",
+        "-",
+        "-"
+      ],
+      [
+        "금리선물",
+        "(23)",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "합계",
+        "4,272",
+        "(15,558)",
+        "-",
+        "-"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 파생상품으로부터 발생한 손익은 다음과 같습니다. <당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 7947,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 파생상품으로부터 발생한 손익은 다음과 같습니다. <당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 7963,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "매매목적",
+        "공정가액위험회피"
+      ],
+      [
+        "평가손익",
+        "거래손익",
+        "평가손익",
+        "거래손익"
+      ]
+    ],
+    "rows": [
+      [
+        "통화선도",
+        "14,758",
+        "(43,624)",
+        "-",
+        "(4,969)"
+      ],
+      [
+        "지수선물",
+        "(303)",
+        "23",
+        "-",
+        "-"
+      ],
+      [
+        "통화선물",
+        "(403)",
+        "(97)",
+        "-",
+        "-"
+      ],
+      [
+        "금리선물",
+        "(27)",
+        "(4)",
+        "-",
+        "-"
+      ],
+      [
+        "합계",
+        "14,025",
+        "(43,702)",
+        "-",
+        "(4,969)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 보고기간말 현재 대출채권의 구성내역은 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 8092,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 보고기간말 현재 대출채권의 구성내역은 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 8108,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "당기말",
+        "전기말"
+      ]
+    ],
+    "rows": [
+      [
+        "환매조건부채권매수",
+        "27,700",
+        "26,500"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 유형자산의 변동내용은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 8581,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 유형자산의 변동내용은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 8597,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "기초",
+        "취득/자본적지출",
+        "처분/폐기",
+        "감가상각",
+        "대체",
+        "기말"
+      ]
+    ],
+    "rows": [
+      [
+        "공기구비품",
+        "450",
+        "76",
+        "-",
+        "(282)",
+        "-",
+        "244"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 유형자산의 변동내용은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 8637,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 유형자산의 변동내용은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 8653,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "기초",
+        "취득/자본적지출",
+        "처분/폐기",
+        "감가상각",
+        "대체",
+        "기말"
+      ]
+    ],
+    "rows": [
+      [
+        "공기구비품",
+        "760",
+        "161",
+        "(9)",
+        "(462)",
+        "-",
+        "450"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 보고기간말 현재 사용권자산의 내용은 다음과 같습니다.<당기말>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 8873,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 보고기간말 현재 사용권자산의 내용은 다음과 같습니다.<당기말>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 8889,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "취득원가",
+        "감가상각누계액",
+        "장부가액"
+      ]
+    ],
+    "rows": [
+      [
+        "부동산",
+        "741",
+        "(654)",
+        "87"
+      ],
+      [
+        "차량운반구",
+        "154",
+        "(37)",
+        "117"
+      ],
+      [
+        "비품",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "합계",
+        "895",
+        "(691)",
+        "204"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 보고기간말 현재 사용권자산의 내용은 다음과 같습니다.<당기말>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 8941,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 보고기간말 현재 사용권자산의 내용은 다음과 같습니다.<당기말>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 8957,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "취득원가",
+        "감가상각누계액",
+        "장부가액"
+      ]
+    ],
+    "rows": [
+      [
+        "부동산",
+        "1,572",
+        "(1,150)",
+        "422"
+      ],
+      [
+        "차량운반구",
+        "237",
+        "(158)",
+        "79"
+      ],
+      [
+        "비품",
+        "50",
+        "(45)",
+        "5"
+      ],
+      [
+        "합계",
+        "1,859",
+        "(1,353)",
+        "506"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 충당부채의 변동 내용은 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 13897,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 충당부채의 변동 내용은 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 13913,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "당기",
+        "전기"
+      ],
+      [
+        "복구충당부채",
+        "휴면보험금",
+        "복구충당부채",
+        "휴면보험금"
+      ]
+    ],
+    "rows": [
+      [
+        "기초",
+        "77",
+        "1,614",
+        "371",
+        "1,801"
+      ],
+      [
+        "증감",
+        "(8)",
+        "129",
+        "(294)",
+        "(187)"
+      ],
+      [
+        "기말",
+        "69",
+        "1,743",
+        "77",
+        "1,614"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 보고기간말 현재 회사의 자본잉여금의 내역은 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 14071,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 보고기간말 현재 회사의 자본잉여금의 내역은 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 14087,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "당기말",
+        "전기말"
+      ]
+    ],
+    "rows": [
+      [
+        "주식발행초과금",
+        "206,841",
+        "200,470"
+      ],
+      [
+        "주식기준보상",
+        "1,515",
+        "1,460"
+      ],
+      [
+        "합계",
+        "208,356",
+        "201,930"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 회사의 결손금처리계산서는 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 14651,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 회사의 결손금처리계산서는 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 14667,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "과목",
+        "당기",
+        "전기(*3)"
+      ],
+      [
+        "(처리예정일:2024년 3월 27일)",
+        "(처리확정일:2023년 3월 29일)"
+      ]
+    ],
+    "rows": [
+      [
+        "Ⅰ. 미처리결손금",
+        "",
+        "289,890",
+        "",
+        "307,045"
+      ],
+      [
+        "1. 전기이월미처리결손금",
+        "307,045",
+        "",
+        "416,992",
+        ""
+      ],
+      [
+        "2. 회계정책변경효과(*1)(*2)",
+        "615",
+        "",
+        "(108,196)",
+        ""
+      ],
+      [
+        "3. 당기순손실(이익)",
+        "(17,770)",
+        "",
+        "(1,751)",
+        ""
+      ],
+      [
+        "Ⅱ. 차기이월미처리결손금",
+        "",
+        "289,890",
+        "",
+        "307,045"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 배당수익은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 14878,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 배당수익은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 14894,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "금액"
+      ]
+    ],
+    "rows": [
+      [
+        "당기손익-공정가치 측정 금융자산",
+        "2,263"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 배당수익은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 14919,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 배당수익은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 14935,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "금액"
+      ]
+    ],
+    "rows": [
+      [
+        "당기손익인식금융자산",
+        "3,257"
+      ],
+      [
+        "매도가능금융자산",
+        "3,577"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "주식선택권은 부여일로부터 10년간 행사할 수 있으며, 양도제한조건부주식단위는 처분제한조건이 없습니다.(2) 당기 및 전기 중 부여된 주식선택권 및 양도제한조건부주식단위의 증감내역은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 15677,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:주)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "주식선택권은 부여일로부터 10년간 행사할 수 있으며, 양도제한조건부주식단위는 처분제한조건이 없습니다.(2) 당기 및 전기 중 부여된 주식선택권 및 양도제한조건부주식단위의 증감내역은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 15693,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "기초",
+        "부여",
+        "행사",
+        "취소(소멸)",
+        "기말"
+      ]
+    ],
+    "rows": [
+      [
+        "주식선택권",
+        "4,021",
+        "1,003",
+        "(334)",
+        "(120)",
+        "4,570"
+      ],
+      [
+        "양도제한조건부주식단위",
+        "2,883",
+        "752",
+        "-",
+        "(90)",
+        "3,545"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "주식선택권은 부여일로부터 10년간 행사할 수 있으며, 양도제한조건부주식단위는 처분제한조건이 없습니다.(2) 당기 및 전기 중 부여된 주식선택권 및 양도제한조건부주식단위의 증감내역은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 15739,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:주)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "주식선택권은 부여일로부터 10년간 행사할 수 있으며, 양도제한조건부주식단위는 처분제한조건이 없습니다.(2) 당기 및 전기 중 부여된 주식선택권 및 양도제한조건부주식단위의 증감내역은 다음과 같습니다.<당기>",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 15755,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "기초",
+        "부여",
+        "행사",
+        "취소(소멸)",
+        "기말"
+      ]
+    ],
+    "rows": [
+      [
+        "주식선택권",
+        "3,250",
+        "1,218",
+        "(23)",
+        "(424)",
+        "4,021"
+      ],
+      [
+        "양도제한조건부주식단위",
+        "2,311",
+        "913",
+        "-",
+        "(341)",
+        "2,883"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기의 법인세비용차감전순손실과 법인세비용 간의 관계는 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 15993,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기의 법인세비용차감전순손실과 법인세비용 간의 관계는 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 16009,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "당기",
+        "전기"
+      ]
+    ],
+    "rows": [
+      [
+        "법인세비용차감전순이익(손실)",
+        "11,821",
+        "(1,630)"
+      ],
+      [
+        "산출세액",
+        "2,449",
+        "(300)"
+      ],
+      [
+        "조정사항",
+        "",
+        ""
+      ],
+      [
+        "비과세수익",
+        "(107)",
+        "(125)"
+      ],
+      [
+        "기타(이월결손금 변동 포함)",
+        "(8,291)",
+        "(2,955)"
+      ],
+      [
+        "법인세비용(수익)",
+        "(5,949)",
+        "(3,381)"
+      ],
+      [
+        "유효세율(*)",
+        "-",
+        "-"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 특수관계자와의 자금거래내용은 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 17575,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 특수관계자와의 자금거래내용은 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 17591,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "회사명",
+        "유상증자"
+      ]
+    ],
+    "rows": [
+      [
+        "지배기업",
+        "CHUBB INA Holdings, Inc.",
+        "6,500"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 기업회계기준서 제1109호의 최초 적용일 현재 금융자산의 변경된 범주별 분류는 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 18140,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 기업회계기준서 제1109호의 최초 적용일 현재 금융자산의 변경된 범주별 분류는 다음과 같습니다.",
+    "table_kind": "assumption_values",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": true,
+    "line_no": 18156,
+    "score": 5,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "kind: assumption_values",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "당기초",
+        "합계"
+      ],
+      [
+        "당기손익-공정가치측정금융자산",
+        "기타포괄손익-공정가치측정채무증권",
+        "기타포괄손익-공정가치측정지분증권",
+        "상각후원가측정 금융자산(*1)",
+        "위험회피목적파생금융상품"
+      ]
+    ],
+    "rows": [
+      [
+        "금융자산"
+      ],
+      [
+        "현금 및 예치금",
+        "-",
+        "-",
+        "-",
+        "79,607",
+        "-",
+        "79,607"
+      ],
+      [
+        "당기손익-공정가치측정금융자산",
+        "269,046",
+        "-",
+        "-",
+        "-",
+        "-",
+        "269,046"
+      ],
+      [
+        "매매목적 파생상품자산",
+        "14,758",
+        "-",
+        "-",
+        "-",
+        "-",
+        "14,758"
+      ],
+      [
+        "기타포괄손익-공정가치측정금융자산",
+        "-",
+        "1,008,416",
+        "11",
+        "-",
+        "-",
+        "1,008,427"
+      ],
+      [
+        "대출채권",
+        "-",
+        "-",
+        "-",
+        "26,500",
+        "-",
+        "26,500"
+      ],
+      [
+        "기타수취채권",
+        "-",
+        "-",
+        "-",
+        "13,096",
+        "-",
+        "13,096"
+      ],
+      [
+        "합계",
+        "283,804",
+        "1,008,416",
+        "11",
+        "119,203",
+        "-",
+        "1,411,434"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 무형자산의 변동내역은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 9307,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 무형자산의 변동내역은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 9323,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "기초",
+        "취득",
+        "처분",
+        "대체",
+        "상각",
+        "기말"
+      ]
+    ],
+    "rows": [
+      [
+        "소프트웨어",
+        "621",
+        "96",
+        "-",
+        "-",
+        "(332)",
+        "385"
+      ],
+      [
+        "개발비",
+        "1,494",
+        "25",
+        "-",
+        "4,860",
+        "(1,100)",
+        "5,279"
+      ],
+      [
+        "건설중인자산",
+        "4,770",
+        "699",
+        "-",
+        "(4,860)",
+        "-",
+        "609"
+      ],
+      [
+        "회원권",
+        "79",
+        "-",
+        "-",
+        "-",
+        "-",
+        "79"
+      ],
+      [
+        "합계",
+        "6,964",
+        "820",
+        "-",
+        "-",
+        "(1,432)",
+        "6,352"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 무형자산의 변동내역은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 9403,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 무형자산의 변동내역은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 9419,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "기초",
+        "취득",
+        "처분",
+        "대체",
+        "상각",
+        "기말"
+      ]
+    ],
+    "rows": [
+      [
+        "소프트웨어",
+        "890",
+        "129",
+        "-",
+        "-",
+        "(398)",
+        "621"
+      ],
+      [
+        "개발비",
+        "2,310",
+        "35",
+        "-",
+        "207",
+        "(1,058)",
+        "1,494"
+      ],
+      [
+        "건설중인자산",
+        "3,828",
+        "1,113",
+        "-",
+        "(171)",
+        "-",
+        "4,770"
+      ],
+      [
+        "회원권",
+        "79",
+        "-",
+        "-",
+        "-",
+        "-",
+        "79"
+      ],
+      [
+        "합계",
+        "7,107",
+        "1,277",
+        "-",
+        "36",
+        "(1,456)",
+        "6,964"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 보험계약부채 및 재보험계약부채의 잔여보장부채와 발생사고부채의 변동내역은 다음과 같습니다.1) 보험계약부채의 잔여보장부채와 발생사고부채 변동내역은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "direct",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 9699,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 보험계약부채 및 재보험계약부채의 잔여보장부채와 발생사고부채의 변동내역은 다음과 같습니다.1) 보험계약부채의 잔여보장부채와 발생사고부채 변동내역은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "direct",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 9715,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "잔여보장요소",
+        "발생사고부채(자산)",
+        "보험계약부채(자산)"
+      ],
+      [
+        "손실요소 제외",
+        "손실요소"
+      ]
+    ],
+    "rows": [
+      [
+        "1. 보험계약자산 및 부채",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(1) 기초보험계약자산",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "(2) 기초보험계약부채",
+        "1,068,957",
+        "17,913",
+        "20,775",
+        "1,107,645"
+      ],
+      [
+        "기초 보험계약순부채(자산)",
+        "1,068,957",
+        "17,913",
+        "20,775",
+        "1,107,645"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "2. 당기손익과 기타포괄이익의 변동",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "(1) 보험수익으로 인한 변동",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "1) 공정가치법을 적용한 계약",
+        "(41,397)",
+        "-",
+        "-",
+        "(41,397)"
+      ],
+      [
+        "2) 완전소급법 적용 및 당기 발행계약",
+        "(20,131)",
+        "-",
+        "-",
+        "(20,131)"
+      ],
+      [
+        "보험수익 합계",
+        "(61,528)",
+        "-",
+        "-",
+        "(61,528)"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(2) 보험서비스비용으로 인한 변동",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "1) 발생보험금 및 기타보험서비스 비용",
+        "4,901",
+        "(1,794)",
+        "36,899",
+        "40,006"
+      ],
+      [
+        "2) 보험취득현금흐름의 상각",
+        "11,131",
+        "-",
+        "-",
+        "11,131"
+      ],
+      [
+        "3) 발생사고부채와 관련된 조정",
+        "-",
+        "-",
+        "(41)",
+        "(41)"
+      ],
+      [
+        "4) 손실부담계약 집합의 손실 및 손실환입",
+        "-",
+        "4,348",
+        "-",
+        "4,348"
+      ],
+      [
+        "보험서비스비용 합계",
+        "16,032",
+        "2,555",
+        "36,858",
+        "55,444"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(3) 투자요소로 인한 변동",
+        "(146,130)",
+        "-",
+        "146,130",
+        "-"
+      ],
+      [
+        "(4) 보험서비스결과 ((1)+(2)+(3))",
+        "(191,625)",
+        "2,555",
+        "182,988",
+        "(6,083)"
+      ],
+      [
+        "(5) 보험금융손익",
+        "140,011",
+        "340",
+        "732",
+        "141,083"
+      ],
+      [
+        "(6) 환율변동효과",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "당기손익과 기타포괄이익의 총 변동 ((4)+(5)+(6))",
+        "(51,614)",
+        "2,894",
+        "183,720",
+        "135,000"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "3. 현금흐름",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(1) 수취한 보험료",
+        "184,869",
+        "-",
+        "-",
+        "184,869"
+      ],
+      [
+        "(2) 보험취득현금흐름",
+        "(22,813)",
+        "-",
+        "-",
+        "(22,813)"
+      ],
+      [
+        "(3) 발생보험금과 기타보험서비스비용 지급액(투자요소포함)",
+        "-",
+        "-",
+        "(182,213)",
+        "(182,213)"
+      ],
+      [
+        "총 현금흐름 ((1)+(2)+(3))",
+        "162,056",
+        "-",
+        "(182,213)",
+        "(20,157)"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "4. 기말 자산 및 부채",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(1) 기말보험계약자산",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "(2) 기말보험계약부채",
+        "1,179,398",
+        "20,807",
+        "22,282",
+        "1,222,488"
+      ],
+      [
+        "기말 보험계약순부채(자산)",
+        "1,179,398",
+        "20,807",
+        "22,282",
+        "1,222,488"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 보험계약부채 및 재보험계약부채의 잔여보장부채와 발생사고부채의 변동내역은 다음과 같습니다.1) 보험계약부채의 잔여보장부채와 발생사고부채 변동내역은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "direct",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 10018,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 보험계약부채 및 재보험계약부채의 잔여보장부채와 발생사고부채의 변동내역은 다음과 같습니다.1) 보험계약부채의 잔여보장부채와 발생사고부채 변동내역은 다음과 같습니다.<당기>",
+    "table_kind": "unknown",
+    "block_type": "direct",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 10034,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "잔여보장요소",
+        "발생사고부채(자산)",
+        "보험계약부채(자산)"
+      ],
+      [
+        "손실요소 제외",
+        "손실요소"
+      ]
+    ],
+    "rows": [
+      [
+        "1. 보험계약자산 및 부채",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(1) 기초보험계약자산",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "(2) 기초보험계약부채",
+        "1,296,430",
+        "11,980",
+        "11,357",
+        "1,319,767"
+      ],
+      [
+        "기초 보험계약순부채(자산)",
+        "1,296,430",
+        "11,980",
+        "11,357",
+        "1,319,767"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "2. 당기손익과 기타포괄이익의 변동",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(1) 보험수익으로 인한 변동",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "1) 공정가치법을 적용한 계약",
+        "(45,989)",
+        "-",
+        "-",
+        "(45,989)"
+      ],
+      [
+        "2) 완전소급법 적용 및 당기 발행계약",
+        "(19,621)",
+        "-",
+        "-",
+        "(19,621)"
+      ],
+      [
+        "보험수익 합계",
+        "(65,611)",
+        "-",
+        "-",
+        "(65,611)"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(2) 보험서비스비용으로 인한 변동",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "1) 발생보험금 및 기타보험서비스 비용",
+        "3,114",
+        "(1,850)",
+        "36,954",
+        "38,219"
+      ],
+      [
+        "2) 보험취득현금흐름의 상각",
+        "11,027",
+        "-",
+        "-",
+        "11,027"
+      ],
+      [
+        "3) 발생사고부채와 관련된 조정",
+        "-",
+        "-",
+        "(352)",
+        "(352)"
+      ],
+      [
+        "4) 손실부담계약 집합의 손실 및 손실환입",
+        "-",
+        "7,452",
+        "-",
+        "7,452"
+      ],
+      [
+        "보험서비스비용 합계",
+        "14,141",
+        "5,602",
+        "36,603",
+        "56,346"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(3) 투자요소로 인한 변동",
+        "(130,738)",
+        "-",
+        "130,738",
+        "-"
+      ],
+      [
+        "(4) 보험서비스결과 ((1)+(2)+(3))",
+        "(182,207)",
+        "5,602",
+        "167,340",
+        "(9,265)"
+      ],
+      [
+        "(5) 보험금융손익",
+        "(203,861)",
+        "331",
+        "10,058",
+        "(193,473)"
+      ],
+      [
+        "(6) 환율변동효과",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "당기손익과 기타포괄이익의 총 변동 ((4)+(5)+(6))",
+        "(386,069)",
+        "5,933",
+        "177,398",
+        "(202,737)"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "3. 현금흐름",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "(1) 수취한 보험료",
+        "188,539",
+        "-",
+        "-",
+        "188,539"
+      ],
+      [
+        "(2) 보험취득현금흐름",
+        "(29,943)",
+        "-",
+        "-",
+        "(29,943)"
+      ],
+      [
+        "(3) 발생보험금과 기타보험서비스비용 지급액(투자요소포함)",
+        "-",
+        "-",
+        "(167,980)",
+        "(167,980)"
+      ],
+      [
+        "총 현금흐름 ((1)+(2)+(3))",
+        "158,596",
+        "-",
+        "(167,980)",
+        "(9,385)"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "4. 기말 자산 및 부채",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(1) 기말보험계약자산",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "(2) 기말보험계약부채",
+        "1,068,957",
+        "17,913",
+        "20,775",
+        "1,107,645"
+      ],
+      [
+        "기말 보험계약순부채(자산)",
+        "1,068,957",
+        "17,913",
+        "20,775",
+        "1,107,645"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 확정급여제도에 따른 확정급여채무의 변동내역은 다음과 같습니다.",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 13601,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 확정급여제도에 따른 확정급여채무의 변동내역은 다음과 같습니다.",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 13617,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "당기",
+        "전기"
+      ]
+    ],
+    "rows": [
+      [
+        "기초금액",
+        "10,776",
+        "17,083"
+      ],
+      [
+        "당기근무원가(*)",
+        "1,185",
+        "1,661"
+      ],
+      [
+        "과거근무원가",
+        "-",
+        "-"
+      ],
+      [
+        "이자비용",
+        "537",
+        "458"
+      ],
+      [
+        "제도에서의 지급",
+        "",
+        ""
+      ],
+      [
+        "- 급여지급액",
+        "(904)",
+        "(428)"
+      ],
+      [
+        "- 정산",
+        "-",
+        "(5,617)"
+      ],
+      [
+        "재측정요소:",
+        "",
+        ""
+      ],
+      [
+        "- 인구통계적가정의 변동으로 인한 보험수리적손익",
+        "(84)",
+        "-"
+      ],
+      [
+        "- 재무적가정의 변동으로 인한 보험수리적손익",
+        "733",
+        "(2,302)"
+      ],
+      [
+        "- 경험적조정으로 인한 보험수리적손익",
+        "913",
+        "(79)"
+      ],
+      [
+        "기말금액",
+        "13,156",
+        "10,776"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 영업활동으로 인한 자산부채의 변동내역은 다음과 같습니다.",
+    "table_kind": "unknown",
+    "block_type": "unknown",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 17094,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [],
+    "rows": [
+      [
+        "",
+        "(단위:백만원)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  },
+  {
+    "caption": "(2) 당기 및 전기 중 영업활동으로 인한 자산부채의 변동내역은 다음과 같습니다.",
+    "table_kind": "unknown",
+    "block_type": "direct",
+    "slice_label": "whole_company_life",
+    "slice_policy": "whole_company_life",
+    "mvp_candidate": false,
+    "line_no": 17110,
+    "score": 4,
+    "reasons": [
+      "caption: assumption keywords x1",
+      "slice: whole_company_life"
+    ],
+    "header": [
+      [
+        "구분",
+        "당기",
+        "전기"
+      ]
+    ],
+    "rows": [
+      [
+        "당기손익-공정가치측정금융자산의 증감",
+        "22,833",
+        "-"
+      ],
+      [
+        "당기손익인식금융자산의 증감",
+        "",
+        "15,018"
+      ],
+      [
+        "상각후원가측정 대출채권의 증감",
+        "(1,200)",
+        "3,000"
+      ],
+      [
+        "미수금의 증감",
+        "707",
+        "671"
+      ],
+      [
+        "순보험계약부채의 증감",
+        "(20,157)",
+        "(9,385)"
+      ],
+      [
+        "순재보험계약자산의 증감",
+        "(2,906)",
+        "(3,809)"
+      ],
+      [
+        "퇴직금의 지급",
+        "(2,439)",
+        "(6,015)"
+      ],
+      [
+        "보증금의 증감",
+        "157",
+        "1,259"
+      ],
+      [
+        "미수수익의 증감",
+        "137",
+        "(261)"
+      ],
+      [
+        "선급비용의 증감",
+        "(384)",
+        "(427)"
+      ],
+      [
+        "선급금의 증감",
+        "16",
+        "(52)"
+      ],
+      [
+        "미지급비용의 증감",
+        "2,594",
+        "(2,068)"
+      ],
+      [
+        "기타부채의 증감",
+        "(118)",
+        "(276)"
+      ],
+      [
+        "충당부채의 증감",
+        "(10)",
+        "(699)"
+      ],
+      [
+        "예치금의 증감",
+        "(69)",
+        "(73)"
+      ],
+      [
+        "미지급금의 증가",
+        "18,106",
+        "1,486"
+      ],
+      [
+        "합계",
+        "17,267",
+        "(1,631)"
+      ]
+    ],
+    "footnotes": [],
+    "_source_xml": "20240408003868_00760.xml"
+  }
+]

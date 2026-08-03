@@ -1,0 +1,3780 @@
+{
+  "true_appliers": {
+    "메리츠화재해상보험": "2023.1Q",
+    "한화손해보험": "2023.1Q",
+    "롯데손해보험": "2023.1Q",
+    "흥국화재": "2023.1Q",
+    "NH농협손해보험": "2025.4Q",
+    "악사손해보험": "2024.4Q",
+    "한화생명": "2023.1Q",
+    "에이비엘생명보험": "2025.1Q",
+    "흥국생명보험": "2023.2Q",
+    "교보생명보험": "2023.1Q",
+    "아이엠라이프생명보험": "2023.1Q",
+    "DB생명보험": "2023.3Q",
+    "푸본현대생명보험": "2023.1Q",
+    "처브라이프생명보험": "2023.1Q",
+    "동양생명": "2023.1Q",
+    "신한라이프생명보험": "2023.1Q",
+    "농협생명보험": "2023.1Q",
+    "KB라이프생명": "2023.1Q",
+    "코리안리재보험": "2023.1Q",
+    "교보라이프플래닛생명보험": "2023.3Q",
+    "IBK연금보험": "2025.4Q",
+    "예별손해보험": "2023.2Q"
+  },
+  "flipflop_cells": [
+    {
+      "company": "한화손해보험",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2023.1Q",
+      "items": [
+        {
+          "item": "14",
+          "status": "IDENT"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2023.1Q",
+      "items": [
+        {
+          "item": "14",
+          "status": "IDENT"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2023.3Q",
+      "items": [
+        {
+          "item": "22",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "22",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "22",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "22",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "22",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "22",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "22",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "22",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "22",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2023.3Q",
+      "items": [
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "18",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2023.4Q",
+      "items": [
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "18",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2023.1Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "18",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "NH농협손해보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "악사손해보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "18",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "악사손해보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "18",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "악사손해보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "악사손해보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "악사손해보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "에이비엘생명보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "에이비엘생명보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2023.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "23",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "23",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "23",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "23",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2023.3Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "37",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "교보생명보험",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "교보생명보험",
+      "quarter": "2023.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "교보생명보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "교보생명보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2023.1Q",
+      "items": [
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2023.3Q",
+      "items": [
+        {
+          "item": "19",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2023.4Q",
+      "items": [
+        {
+          "item": "19",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "19",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "19",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "19",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "19",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "19",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "19",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2023.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2023.3Q",
+      "items": [
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "22",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "푸본현대생명보험",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "푸본현대생명보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "푸본현대생명보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "푸본현대생명보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "푸본현대생명보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "푸본현대생명보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "푸본현대생명보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2023.1Q",
+      "items": [
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2023.3Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2023.4Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2023.4Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2023.3Q",
+      "items": [
+        {
+          "item": "27",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2023.1Q",
+      "items": [
+        {
+          "item": "27",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "신한라이프생명보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "신한라이프생명보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "신한라이프생명보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "신한라이프생명보험",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "1",
+          "status": "NULL"
+        },
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2023.3Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "농협생명보험",
+      "quarter": "2023.4Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "KB라이프생명",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "KB라이프생명",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        }
+      ]
+    },
+    {
+      "company": "교보라이프플래닛생명보험",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "교보라이프플래닛생명보험",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "교보라이프플래닛생명보험",
+      "quarter": "2023.4Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "교보라이프플래닛생명보험",
+      "quarter": "2023.3Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "교보라이프플래닛생명보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "교보라이프플래닛생명보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "교보라이프플래닛생명보험",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "33",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "IBK연금보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "30",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2025.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2023.2Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2023.3Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "18",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "36",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2023.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2024.1Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "18",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "36",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2024.3Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "18",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "36",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2024.4Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "IDENT"
+        },
+        {
+          "item": "3",
+          "status": "IDENT"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2025.1Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "18",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "36",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2025.2Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2025.3Q",
+      "items": [
+        {
+          "item": "2",
+          "status": "NULL"
+        },
+        {
+          "item": "3",
+          "status": "NULL"
+        },
+        {
+          "item": "14",
+          "status": "NULL"
+        },
+        {
+          "item": "15",
+          "status": "NULL"
+        },
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "17",
+          "status": "NULL"
+        },
+        {
+          "item": "18",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "27",
+          "status": "NULL"
+        },
+        {
+          "item": "36",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        },
+        {
+          "item": "28",
+          "status": "IDENT"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2026.1Q",
+      "items": [
+        {
+          "item": "16",
+          "status": "NULL"
+        },
+        {
+          "item": "19",
+          "status": "NULL"
+        },
+        {
+          "item": "36",
+          "status": "NULL"
+        },
+        {
+          "item": "37",
+          "status": "NULL"
+        },
+        {
+          "item": "33",
+          "status": "NULL"
+        },
+        {
+          "item": "34",
+          "status": "NULL"
+        },
+        {
+          "item": "35",
+          "status": "NULL"
+        }
+      ]
+    },
+    {
+      "company": "예별손해보험",
+      "quarter": "2024.2Q",
+      "items": [
+        {
+          "item": "27",
+          "status": "NULL"
+        }
+      ]
+    }
+  ],
+  "ratesens_amount_ident_highconf": [
+    {
+      "company": "메리츠화재해상보험",
+      "quarter": "2024.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "quarter": "2024.4Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2024.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2024.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "악사손해보험",
+      "quarter": "2024.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2024.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2024.4Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2024.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2024.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2024.4Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "악사손해보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2025.2Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "교보생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2025.2Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "KB라이프생명",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "KB라이프생명",
+      "quarter": "2025.2Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "교보라이프플래닛생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "한화손해보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "흥국화재",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "NH농협손해보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "악사손해보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2025.4Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "흥국생명보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "교보생명보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2025.4Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "처브라이프생명보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "DB생명보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "KB라이프생명",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    },
+    {
+      "company": "KB라이프생명",
+      "quarter": "2025.4Q",
+      "measure": "지급여력기준금액"
+    },
+    {
+      "company": "교보라이프플래닛생명보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력금액"
+    }
+  ],
+  "ratesens_ratio_ident_note": [
+    {
+      "company": "메리츠화재해상보험",
+      "quarter": "2024.4Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2024.4Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2024.4Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "푸본현대생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "KB라이프생명",
+      "quarter": "2025.2Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2025.2Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "메리츠화재해상보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "한화생명",
+      "quarter": "2025.4Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "동양생명",
+      "quarter": "2025.4Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "코리안리재보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "신한라이프생명보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력비율"
+    },
+    {
+      "company": "KB라이프생명",
+      "quarter": "2025.4Q",
+      "measure": "지급여력비율"
+    }
+  ],
+  "ratesens_after_missing": [
+    {
+      "company": "예별손해보험",
+      "quarter": "2025.4Q",
+      "measure": "지급여력비율"
+    }
+  ]
+}

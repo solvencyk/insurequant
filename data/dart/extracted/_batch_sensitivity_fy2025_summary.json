@@ -1,0 +1,312 @@
+[
+  {
+    "company": "DB생명보험",
+    "rcept": "20260327000191",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 115,
+    "sensitivity_analysis": 8,
+    "errors": [],
+    "out": "DB생명보험_20260327000191_sensitivity.json"
+  },
+  {
+    "company": "DB손해보험",
+    "rcept": "20260312001222",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 58,
+    "sensitivity_analysis": 18,
+    "errors": [],
+    "out": "DB손해보험_20260312001222_sensitivity.json"
+  },
+  {
+    "company": "KB손해보험",
+    "rcept": "20260313001064",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 117,
+    "sensitivity_analysis": 9,
+    "errors": [],
+    "out": "KB손해보험_20260313001064_sensitivity.json"
+  },
+  {
+    "company": "NH농협손해보험",
+    "rcept": "20260331004099",
+    "dirs": 1,
+    "xmls": 2,
+    "tables": 97,
+    "sensitivity_analysis": 6,
+    "errors": [],
+    "out": "NH농협손해보험_20260331004099_sensitivity.json"
+  },
+  {
+    "company": "교보생명보험",
+    "rcept": "20260331004015",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 45,
+    "sensitivity_analysis": 8,
+    "errors": [],
+    "out": "교보생명보험_20260331004015_sensitivity.json"
+  },
+  {
+    "company": "농협생명보험",
+    "rcept": "20260331002277",
+    "dirs": 1,
+    "xmls": 2,
+    "tables": 154,
+    "sensitivity_analysis": 10,
+    "errors": [],
+    "out": "농협생명보험_20260331002277_sensitivity.json"
+  },
+  {
+    "company": "동양생명",
+    "rcept": "20260313001227",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 1362,
+    "sensitivity_analysis": 0,
+    "errors": [],
+    "out": "동양생명_20260313001227_sensitivity.json"
+  },
+  {
+    "company": "라이나생명보험",
+    "rcept": "20260406004539",
+    "dirs": 2,
+    "xmls": 2,
+    "tables": 67,
+    "sensitivity_analysis": 8,
+    "errors": [],
+    "out": "라이나생명보험_20260406004539_sensitivity.json"
+  },
+  {
+    "company": "롯데손해보험",
+    "rcept": "20260319001293",
+    "dirs": 1,
+    "xmls": 2,
+    "tables": 56,
+    "sensitivity_analysis": 9,
+    "errors": [],
+    "out": "롯데손해보험_20260319001293_sensitivity.json"
+  },
+  {
+    "company": "메리츠화재해상보험",
+    "rcept": "20260331003916",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 161,
+    "sensitivity_analysis": 14,
+    "errors": [],
+    "out": "메리츠화재해상보험_20260331003916_sensitivity.json"
+  },
+  {
+    "company": "메트라이프생명보험",
+    "rcept": "20260403003825",
+    "dirs": 2,
+    "xmls": 2,
+    "tables": 60,
+    "sensitivity_analysis": 0,
+    "errors": [],
+    "out": "메트라이프생명보험_20260403003825_sensitivity.json"
+  },
+  {
+    "company": "미래에셋생명",
+    "rcept": "20260318001664",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 164,
+    "sensitivity_analysis": 7,
+    "errors": [],
+    "out": "미래에셋생명_20260318001664_sensitivity.json"
+  },
+  {
+    "company": "삼성생명",
+    "rcept": "20260311004614",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 144,
+    "sensitivity_analysis": 24,
+    "errors": [],
+    "out": "삼성생명_20260311004614_sensitivity.json"
+  },
+  {
+    "company": "삼성화재해상보험",
+    "rcept": "20260312001399",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 66,
+    "sensitivity_analysis": 14,
+    "errors": [],
+    "out": "삼성화재해상보험_20260312001399_sensitivity.json"
+  },
+  {
+    "company": "신한라이프생명보험",
+    "rcept": "20260318001034",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 188,
+    "sensitivity_analysis": 8,
+    "errors": [],
+    "out": "신한라이프생명보험_20260318001034_sensitivity.json"
+  },
+  {
+    "company": "에이비엘생명보험",
+    "rcept": "20260331003080",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 170,
+    "sensitivity_analysis": 0,
+    "errors": [],
+    "out": "에이비엘생명보험_20260331003080_sensitivity.json"
+  },
+  {
+    "company": "에이아이에이생명보험",
+    "rcept": "20260407002101",
+    "dirs": 2,
+    "xmls": 2,
+    "tables": 71,
+    "sensitivity_analysis": 6,
+    "errors": [],
+    "out": "에이아이에이생명보험_20260407002101_sensitivity.json"
+  },
+  {
+    "company": "에이아이지손해보험",
+    "rcept": "20260407002109",
+    "dirs": 2,
+    "xmls": 2,
+    "tables": 32,
+    "sensitivity_analysis": 12,
+    "errors": [],
+    "out": "에이아이지손해보험_20260407002109_sensitivity.json"
+  },
+  {
+    "company": "엠지손해보험",
+    "rcept": "20260406003175",
+    "dirs": 1,
+    "xmls": 1,
+    "tables": 18,
+    "sensitivity_analysis": 0,
+    "errors": [],
+    "out": "엠지손해보험_20260406003175_sensitivity.json"
+  },
+  {
+    "company": "처브라이프생명보험",
+    "rcept": "20260408003172",
+    "dirs": 1,
+    "xmls": 1,
+    "tables": 55,
+    "sensitivity_analysis": 0,
+    "errors": [],
+    "out": "처브라이프생명보험_20260408003172_sensitivity.json"
+  },
+  {
+    "company": "카카오페이손해보험",
+    "rcept": "20260323001537",
+    "dirs": 1,
+    "xmls": 1,
+    "tables": 16,
+    "sensitivity_analysis": 3,
+    "errors": [],
+    "out": "카카오페이손해보험_20260323001537_sensitivity.json"
+  },
+  {
+    "company": "케이디비생명보험",
+    "rcept": "20260331004180",
+    "dirs": 1,
+    "xmls": 2,
+    "tables": 70,
+    "sensitivity_analysis": 4,
+    "errors": [],
+    "out": "케이디비생명보험_20260331004180_sensitivity.json"
+  },
+  {
+    "company": "케이비라이프생명보험",
+    "rcept": "20260313001119",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 387,
+    "sensitivity_analysis": 8,
+    "errors": [],
+    "out": "케이비라이프생명보험_20260313001119_sensitivity.json"
+  },
+  {
+    "company": "코리안리",
+    "rcept": "20260319001095",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 109,
+    "sensitivity_analysis": 24,
+    "errors": [],
+    "out": "코리안리_20260319001095_sensitivity.json"
+  },
+  {
+    "company": "푸본현대생명보험",
+    "rcept": "20260331002089",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 188,
+    "sensitivity_analysis": 24,
+    "errors": [],
+    "out": "푸본현대생명보험_20260331002089_sensitivity.json"
+  },
+  {
+    "company": "하나생명보험",
+    "rcept": "20260325000202",
+    "dirs": 2,
+    "xmls": 2,
+    "tables": 41,
+    "sensitivity_analysis": 4,
+    "errors": [],
+    "out": "하나생명보험_20260325000202_sensitivity.json"
+  },
+  {
+    "company": "한화생명",
+    "rcept": "20260316001304",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 197,
+    "sensitivity_analysis": 18,
+    "errors": [],
+    "out": "한화생명_20260316001304_sensitivity.json"
+  },
+  {
+    "company": "한화손해보험",
+    "rcept": "20260310003000",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 294,
+    "sensitivity_analysis": 8,
+    "errors": [],
+    "out": "한화손해보험_20260310003000_sensitivity.json"
+  },
+  {
+    "company": "현대해상",
+    "rcept": "20260312001448",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 124,
+    "sensitivity_analysis": 16,
+    "errors": [],
+    "out": "현대해상_20260312001448_sensitivity.json"
+  },
+  {
+    "company": "흥국생명보험",
+    "rcept": "20260331004251",
+    "dirs": 1,
+    "xmls": 3,
+    "tables": 135,
+    "sensitivity_analysis": 2,
+    "errors": [],
+    "out": "흥국생명보험_20260331004251_sensitivity.json"
+  },
+  {
+    "company": "흥국화재",
+    "rcept": "20260319001047",
+    "dirs": 1,
+    "xmls": 2,
+    "tables": 57,
+    "sensitivity_analysis": 4,
+    "errors": [],
+    "out": "흥국화재_20260319001047_sensitivity.json"
+  }
+]

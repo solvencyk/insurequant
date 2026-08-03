@@ -1,0 +1,16 @@
+{
+  "_description": "Owner-verified PL_breakdown / CSM_waterfall cells. Values the owner has hand-fixed or explicitly confirmed-as-correct. The anomaly triage (scripts/triage_anomaly_candidates.py) suppresses these so the LLM-skeptic never re-flags them as EXTRACTION_ERROR. Match key = (master, company, item) with whitespace-insensitive item compare; `value` is the confirmed live value — suppression only applies while the master still matches it within tolerance, so a later drift re-surfaces. Add a cell here whenever the owner confirms a statistically-odd-but-correct value.",
+  "tolerance_abs": 2.0,
+  "tolerance_rel": 0.01,
+  "cells": [
+    {"master": "PL_breakdown", "company": "코리안리재보험", "quarter": "2026.1Q", "item": "기타생명장기재보험손익", "value": -11817, "note": "owner: 중복43 → 실값 −11817 직접 수정 (2026-06-20)"},
+    {"master": "PL_breakdown", "company": "코리안리재보험", "quarter": "2026.1Q", "item": "기타장기재보험출재손익", "value": 43, "note": "owner: 출재 leg 43 확정 (소계 −2178 닫힘) (2026-06-20)"},
+    {"master": "PL_breakdown", "company": "삼성화재해상보험", "quarter": "2026.1Q", "item": "자동차손익", "value": -40, "note": "owner: 자동차손익 △40 실값 확정 (소규모지만 misparse 아님) (2026-06-20)"},
+    {"master": "PL_breakdown", "company": "신한이지손해보험", "quarter": "2024.4Q", "item": "보험금융손익", "value": -2328.748444, "note": "owner: 보험금융손익 직접 수정 (2026-06-20)"},
+    {"master": "PL_breakdown", "company": "신한이지손해보험", "quarter": "2025.4Q", "item": "보험금융손익", "value": 0, "note": "owner: 보험금융손익 0 확정 (2026-06-20)"},
+    {"master": "PL_breakdown", "company": "IBK연금보험", "quarter": "2024.4Q", "item": "생명장기재보험손익", "value": 0, "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정. 재보험 5개 leg 전부 0 + 원수분해 정확히 닫힘(원수CSM상각+위험조정−예실차−기타=생명장기원수손익) (2026-07-05)"},
+    {"master": "PL_breakdown", "company": "IBK연금보험", "quarter": "2024.4Q", "item": "기타생명장기재보험손익", "value": 0, "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정 (2026-07-05)"},
+    {"master": "PL_breakdown", "company": "IBK연금보험", "quarter": "2025.4Q", "item": "생명장기재보험손익", "value": 0, "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정 (2026-07-05)"},
+    {"master": "PL_breakdown", "company": "IBK연금보험", "quarter": "2025.4Q", "item": "기타생명장기재보험손익", "value": 0, "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정 (2026-07-05)"}
+  ]
+}

@@ -1,0 +1,6754 @@
+{
+  "master": "kics_disclosure",
+  "generated_at": "20260616T1245Z",
+  "emitter": "parser",
+  "fields_owned": [
+    "source_id",
+    "item_block"
+  ],
+  "fields_pending_downloader": [
+    "as_of_date",
+    "source_file",
+    "effective_filtered"
+  ],
+  "cells": [
+    {
+      "company_code": "KR0001",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0150",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0150",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0150",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0150",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0150",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0150",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2026.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2026.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0150",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0150",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2026.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.4Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.1Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.2Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.3Q",
+      "item_block": "capital_summary",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.4Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.1Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.2Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.3Q",
+      "item_block": "life_subrisk",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2023.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2024.4Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.1Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.2Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.3Q",
+      "item_block": "market_irr",
+      "source_id": "DISCLOSURE_MD"
+    }
+  ]
+}

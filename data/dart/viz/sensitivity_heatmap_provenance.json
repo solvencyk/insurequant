@@ -1,0 +1,286 @@
+{
+  "master": "sensitivity_heatmap",
+  "generated_at": "20260730T0100Z",
+  "emitter": "parser",
+  "cells": [
+    {
+      "company_code": "DB생명보험",
+      "kr_code": "KR0082",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0082_DB생명보험_20260327000191/20260327000191_00760.xml"
+    },
+    {
+      "company_code": "DB손해보험",
+      "kr_code": "KR0011",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0011_DB손해보험_20260312001222/20260312001222_00760.xml"
+    },
+    {
+      "company_code": "KB손해보험",
+      "kr_code": "KR0010",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0010_KB손해보험_20260313001064/20260313001064_00760.xml"
+    },
+    {
+      "company_code": "NH농협손해보험",
+      "kr_code": "KR0032",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0032_NH농협손해보험_20260331004099/20260331004099_00760.xml"
+    },
+    {
+      "company_code": "교보생명보험",
+      "kr_code": "KR0073",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0073_교보생명보험_20260331004015/20260331004015_00760.xml"
+    },
+    {
+      "company_code": "농협생명보험",
+      "kr_code": "KR0104",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0104_농협생명보험_20260331002277/20260331002277_00760.xml"
+    },
+    {
+      "company_code": "동양생명",
+      "kr_code": "KR0087",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0087_동양생명_20260313001227/20260313001227_00760.xml"
+    },
+    {
+      "company_code": "라이나생명보험",
+      "kr_code": "KR0074",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0074_라이나생명보험_20260406004539/20260406004539_00761.xml"
+    },
+    {
+      "company_code": "롯데손해보험",
+      "kr_code": "KR0003",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293_00760.xml"
+    },
+    {
+      "company_code": "메리츠화재해상보험",
+      "kr_code": "KR0001",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916_00760.xml"
+    },
+    {
+      "company_code": "메트라이프생명보험",
+      "kr_code": "KR0095",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0095_메트라이프생명보험_20260403003825/20260403003825_00761.xml"
+    },
+    {
+      "company_code": "미래에셋생명",
+      "kr_code": "KR0079",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0079_미래에셋생명_20260318001664/20260318001664_00760.xml"
+    },
+    {
+      "company_code": "삼성생명",
+      "kr_code": "KR0069",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0069_삼성생명_20260311004614/20260311004614_00760.xml"
+    },
+    {
+      "company_code": "삼성화재해상보험",
+      "kr_code": "KR0008",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0008_삼성화재해상보험_20260312001399/20260312001399_00760.xml"
+    },
+    {
+      "company_code": "신한라이프생명보험",
+      "kr_code": "KR0094",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0094_신한라이프생명보험_20260318001034/20260318001034_00760.xml"
+    },
+    {
+      "company_code": "아이비케이연금보험",
+      "kr_code": "KR1011",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR1011_아이비케이연금보험_20260331004893/20260331004893_00760.xml"
+    },
+    {
+      "company_code": "에이비엘생명보험",
+      "kr_code": "KR0070",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0070_에이비엘생명보험_20260331003080/20260331003080_00760.xml"
+    },
+    {
+      "company_code": "에이아이에이생명보험",
+      "kr_code": "KR0080",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0080_에이아이에이생명보험_20260407002101/20260407002101_00761.xml"
+    },
+    {
+      "company_code": "에이아이지손해보험",
+      "kr_code": "KR0029",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0029_에이아이지손해보험_20260407002109/20260407002109_00761.xml"
+    },
+    {
+      "company_code": "처브라이프생명보험",
+      "kr_code": "KR0100",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0100_처브라이프생명보험_20260408003172/20260408003172_00760.xml"
+    },
+    {
+      "company_code": "카카오페이손해보험",
+      "kr_code": "KR1098",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR1098_카카오페이손해보험_20260323001537/20260323001537_00760.xml"
+    },
+    {
+      "company_code": "케이디비생명보험",
+      "kr_code": "KR0072",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0072_케이디비생명보험_20260331004180/20260331004180_00760.xml"
+    },
+    {
+      "company_code": "케이비라이프생명보험",
+      "kr_code": "KR0099",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0099_케이비라이프생명보험_20260313001119/20260313001119_00760.xml"
+    },
+    {
+      "company_code": "코리안리",
+      "kr_code": "KR1000",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR1000_코리안리_20260319001095/20260319001095_00760.xml"
+    },
+    {
+      "company_code": "푸본현대생명보험",
+      "kr_code": "KR0083",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0083_푸본현대생명보험_20260331002089/20260331002089_00760.xml"
+    },
+    {
+      "company_code": "하나생명보험",
+      "kr_code": "KR0097",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0097_하나생명보험_20260325000202/20260325000202_00761.xml"
+    },
+    {
+      "company_code": "한화생명",
+      "kr_code": "KR0068",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0068_한화생명_20260316001304/20260316001304_00760.xml"
+    },
+    {
+      "company_code": "한화손해보험",
+      "kr_code": "KR0002",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0002_한화손해보험_20260310003000/20260310003000_00760.xml"
+    },
+    {
+      "company_code": "현대해상",
+      "kr_code": "KR0009",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0009_현대해상_20260312001448/20260312001448_00760.xml"
+    },
+    {
+      "company_code": "흥국생명보험",
+      "kr_code": "KR0071",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0071_흥국생명보험_20260331004251/20260331004251_00760.xml"
+    },
+    {
+      "company_code": "흥국화재",
+      "kr_code": "KR0005",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DART",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/dart/FY2025_Q4/raw/KR0005_흥국화재_20260319001047/20260319001047_00760.xml"
+    }
+  ]
+}

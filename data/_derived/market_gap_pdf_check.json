@@ -1,0 +1,1683 @@
+{
+  "by_class": {
+    "pdf_market_total_only": [
+      {
+        "company": "메리츠화재해상보험",
+        "code": "KR0001",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "메리츠화재해상보험",
+        "code": "KR0001",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "메리츠화재해상보험",
+        "code": "KR0001",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "메리츠화재해상보험",
+        "code": "KR0001",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "메리츠화재해상보험",
+        "code": "KR0001",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "한화손해보험",
+        "code": "KR0002",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "롯데손해보험",
+        "code": "KR0003",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성화재해상보험",
+        "code": "KR0008",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB손해보험",
+        "code": "KR0011",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB손해보험",
+        "code": "KR0011",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB손해보험",
+        "code": "KR0011",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB손해보험",
+        "code": "KR0011",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB손해보험",
+        "code": "KR0011",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "NH농협손해보험",
+        "code": "KR0032",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "NH농협손해보험",
+        "code": "KR0032",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "NH농협손해보험",
+        "code": "KR0032",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "NH농협손해보험",
+        "code": "KR0032",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "NH농협손해보험",
+        "code": "KR0032",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "하나손해보험",
+        "code": "KR0050",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "흥국생명보험",
+        "code": "KR0071",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "미래에셋생명보험",
+        "code": "KR0079",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "동양생명",
+        "code": "KR0087",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "동양생명",
+        "code": "KR0087",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "동양생명",
+        "code": "KR0087",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "동양생명",
+        "code": "KR0087",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "동양생명",
+        "code": "KR0087",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "서울보증보험",
+        "code": "KR0150",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "코리안리재보험",
+        "code": "KR1000",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "카카오페이손해보험",
+        "code": "KR1098",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "카카오페이손해보험",
+        "code": "KR1098",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "카카오페이손해보험",
+        "code": "KR1098",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_market_total_only"
+      }
+    ],
+    "pdf_has_subrisk_table": [
+      {
+        "company": "메리츠화재해상보험",
+        "code": "KR0001",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "메리츠화재해상보험",
+        "code": "KR0001",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "메리츠화재해상보험",
+        "code": "KR0001",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "메리츠화재해상보험",
+        "code": "KR0001",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "메리츠화재해상보험",
+        "code": "KR0001",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "한화손해보험",
+        "code": "KR0002",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "현대해상",
+        "code": "KR0009",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "DB손해보험",
+        "code": "KR0011",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "DB손해보험",
+        "code": "KR0011",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "DB손해보험",
+        "code": "KR0011",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "DB손해보험",
+        "code": "KR0011",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "DB손해보험",
+        "code": "KR0011",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "NH농협손해보험",
+        "code": "KR0032",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "NH농협손해보험",
+        "code": "KR0032",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "NH농협손해보험",
+        "code": "KR0032",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "NH농협손해보험",
+        "code": "KR0032",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "하나손해보험",
+        "code": "KR0050",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "하나손해보험",
+        "code": "KR0050",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "하나손해보험",
+        "code": "KR0050",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "하나손해보험",
+        "code": "KR0050",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "하나손해보험",
+        "code": "KR0050",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "하나손해보험",
+        "code": "KR0050",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "하나손해보험",
+        "code": "KR0050",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "하나손해보험",
+        "code": "KR0050",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "하나손해보험",
+        "code": "KR0050",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "한화생명",
+        "code": "KR0068",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "미래에셋생명보험",
+        "code": "KR0079",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "미래에셋생명보험",
+        "code": "KR0079",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "미래에셋생명보험",
+        "code": "KR0079",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "동양생명",
+        "code": "KR0087",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "동양생명",
+        "code": "KR0087",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "동양생명",
+        "code": "KR0087",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한라이프생명보험",
+        "code": "KR0094",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "에이비엘생명보험",
+        "code": "KR0070",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "에이비엘생명보험",
+        "code": "KR0070",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "에이비엘생명보험",
+        "code": "KR0070",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "AIG손해보험",
+        "code": "KR0029",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2024.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2025.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB라이프생명",
+        "code": "KR0099",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "서울보증보험",
+        "code": "KR0150",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "코리안리재보험",
+        "code": "KR1000",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "코리안리재보험",
+        "code": "KR1000",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "코리안리재보험",
+        "code": "KR1000",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "카카오페이손해보험",
+        "code": "KR1098",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "하나생명보험",
+        "code": "KR0097",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "NH농협손해보험",
+        "code": "KR0032",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2023.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "신한이지손해보험",
+        "code": "KR0051",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "흥국생명보험",
+        "code": "KR0071",
+        "quarter": "2023.1Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "흥국생명보험",
+        "code": "KR0071",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "라이나생명보험",
+        "code": "KR0074",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "DB생명보험",
+        "code": "KR0082",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "교보생명보험",
+        "code": "KR0073",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "교보생명보험",
+        "code": "KR0073",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "교보생명보험",
+        "code": "KR0073",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "비엔피파리바카디프생명보험",
+        "code": "KR0075",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "아이엠라이프생명보험",
+        "code": "KR0076",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "푸본현대생명보험",
+        "code": "KR0083",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "처브라이프생명보험",
+        "code": "KR0100",
+        "quarter": "2023.2Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "삼성생명보험",
+        "code": "KR0069",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "동양생명",
+        "code": "KR0087",
+        "quarter": "2023.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "동양생명",
+        "code": "KR0087",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      },
+      {
+        "company": "에이비엘생명보험",
+        "code": "KR0070",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_has_subrisk_table"
+      }
+    ],
+    "pdf_image_only": [
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2024.1Q",
+        "detail": "",
+        "pdf_class": "pdf_image_only"
+      },
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_image_only"
+      },
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_image_only"
+      },
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_image_only"
+      }
+    ],
+    "pdf_no_market": [
+      {
+        "company": "KB손해보험",
+        "code": "KR0010",
+        "quarter": "2025.4Q",
+        "detail": "",
+        "pdf_class": "pdf_no_market"
+      },
+      {
+        "company": "악사손해보험",
+        "code": "KR0049",
+        "quarter": "2024.3Q",
+        "detail": "",
+        "pdf_class": "pdf_no_market"
+      },
+      {
+        "company": "미래에셋생명보험",
+        "code": "KR0079",
+        "quarter": "2025.1Q",
+        "detail": "",
+        "pdf_class": "pdf_no_market"
+      },
+      {
+        "company": "미래에셋생명보험",
+        "code": "KR0079",
+        "quarter": "2025.3Q",
+        "detail": "",
+        "pdf_class": "pdf_no_market"
+      },
+      {
+        "company": "흥국화재",
+        "code": "KR0005",
+        "quarter": "2024.4Q",
+        "detail": "",
+        "pdf_class": "pdf_no_market"
+      }
+    ]
+  },
+  "by_company": {
+    "메리츠화재해상보험": {
+      "pdf_market_total_only": 5,
+      "pdf_has_subrisk_table": 5
+    },
+    "한화손해보험": {
+      "pdf_market_total_only": 1,
+      "pdf_has_subrisk_table": 1
+    },
+    "롯데손해보험": {
+      "pdf_market_total_only": 1
+    },
+    "삼성화재해상보험": {
+      "pdf_market_total_only": 12
+    },
+    "현대해상": {
+      "pdf_market_total_only": 10,
+      "pdf_has_subrisk_table": 1
+    },
+    "KB손해보험": {
+      "pdf_market_total_only": 1,
+      "pdf_has_subrisk_table": 5,
+      "pdf_image_only": 4,
+      "pdf_no_market": 1
+    },
+    "DB손해보험": {
+      "pdf_market_total_only": 5,
+      "pdf_has_subrisk_table": 5
+    },
+    "NH농협손해보험": {
+      "pdf_market_total_only": 5,
+      "pdf_has_subrisk_table": 5
+    },
+    "악사손해보험": {
+      "pdf_market_total_only": 4,
+      "pdf_has_subrisk_table": 6,
+      "pdf_no_market": 1
+    },
+    "하나손해보험": {
+      "pdf_market_total_only": 1,
+      "pdf_has_subrisk_table": 9
+    },
+    "신한이지손해보험": {
+      "pdf_has_subrisk_table": 10,
+      "pdf_market_total_only": 2
+    },
+    "한화생명": {
+      "pdf_market_total_only": 8,
+      "pdf_has_subrisk_table": 3
+    },
+    "흥국생명보험": {
+      "pdf_market_total_only": 1,
+      "pdf_has_subrisk_table": 2
+    },
+    "라이나생명보험": {
+      "pdf_market_total_only": 6,
+      "pdf_has_subrisk_table": 6
+    },
+    "DB생명보험": {
+      "pdf_market_total_only": 6,
+      "pdf_has_subrisk_table": 5
+    },
+    "처브라이프생명보험": {
+      "pdf_market_total_only": 5,
+      "pdf_has_subrisk_table": 6
+    },
+    "삼성생명보험": {
+      "pdf_market_total_only": 10,
+      "pdf_has_subrisk_table": 2
+    },
+    "미래에셋생명보험": {
+      "pdf_has_subrisk_table": 3,
+      "pdf_no_market": 2,
+      "pdf_market_total_only": 1
+    },
+    "동양생명": {
+      "pdf_market_total_only": 5,
+      "pdf_has_subrisk_table": 5
+    },
+    "신한라이프생명보험": {
+      "pdf_market_total_only": 3,
+      "pdf_has_subrisk_table": 8
+    },
+    "에이비엘생명보험": {
+      "pdf_has_subrisk_table": 4
+    },
+    "흥국화재": {
+      "pdf_no_market": 1
+    },
+    "AIG손해보험": {
+      "pdf_has_subrisk_table": 1
+    },
+    "KB라이프생명": {
+      "pdf_market_total_only": 3,
+      "pdf_has_subrisk_table": 8
+    },
+    "서울보증보험": {
+      "pdf_market_total_only": 1,
+      "pdf_has_subrisk_table": 1
+    },
+    "코리안리재보험": {
+      "pdf_market_total_only": 1,
+      "pdf_has_subrisk_table": 3
+    },
+    "카카오페이손해보험": {
+      "pdf_has_subrisk_table": 1,
+      "pdf_market_total_only": 3
+    },
+    "하나생명보험": {
+      "pdf_has_subrisk_table": 1
+    },
+    "교보생명보험": {
+      "pdf_has_subrisk_table": 3
+    },
+    "비엔피파리바카디프생명보험": {
+      "pdf_has_subrisk_table": 1
+    },
+    "아이엠라이프생명보험": {
+      "pdf_has_subrisk_table": 1
+    },
+    "푸본현대생명보험": {
+      "pdf_has_subrisk_table": 1
+    }
+  }
+}
