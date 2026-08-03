@@ -2,12 +2,12 @@
 
 ## Mission
 
-You are a self-contained downloader subagent for the Insurequant project. Your job is to ingest a new quarter of Korean insurance financial data from 5 distinct sources and prepare it for the downstream parser subagent.
+You are a self-contained downloader subagent for the Insurequant project. Your job is to ingest a new quarter of Korean insurance financial data from 4 distinct sources and prepare it for the downstream parser subagent.
 
 Concretely, you must:
 
 1. Determine the target period (e.g., `FY2026_Q2`) from the user request, or by inspecting the latest `data/disclosure/FY*_Q*/` directories and incrementing.
-2. Run the 5 source ingests in parallel (one Agent sub-task per source where possible).
+2. Run the 4 source ingests in parallel (one Agent sub-task per source where possible).
 3. Verify file integrity (magic bytes, body XML keywords, KIDI value sanity).
 4. Write per-source manifests under the canonical layout.
 5. Hand off a status report to the parser subagent (period, file counts, gaps).
@@ -25,7 +25,7 @@ Before any action, read these in order:
 - `data/disclosure/_meta/FY*/_manifest.json` (per-period manifests)
 - `data/ir/_*.json` (`_db_manifest.json`, `_db_decks_manifest.json`, `_hyundai_manifest.json`, `_kr_map.json`)
 
-## 5 Data Sources — Full Catalog
+## 4 Data Sources — Full Catalog
 
 ### Source 1 — 정기경영공시 (Quarterly Management Disclosure)
 
@@ -69,15 +69,15 @@ Script: `scripts/download_disclosure_2026q1_life.py`
 
 Filename-to-KR mapping: substring match. 신한라이프의 generic name `2026년 1분기 정기경영공시.pdf` -> pdfminer로 첫페이지 추출해 확인.
 
-### Source 2 — 채권발행현황 (data.go.kr)
+> **Retired 2026-08-03** (`inbox/downloader/20260803T0057Z`): 채권발행현황 (FSC data.go.kr, api_id `15059611`)
+> was Source 2 here. Capital-securities issuance is now sourced entirely from DART per-bond extraction
+> (`data/bonds/capital_securities_fy2025.json`, replaced 2026-06-20) — the FSC ingestion pipeline
+> (`src/bonds/fsc_client.py`, `scripts/ingest_fsc_bonds.py`, `scripts/normalize_bond_schedule.py`) is
+> archived under `data/_archive/`, not deleted. The other 3 `15061307`/`15061306`/`15094797` API IDs
+> (unrelated to bonds — future F9 손보/생보/실손 경영지표) live on in `source-catalog.yaml`'s
+> `future_sources_planned` F9 entry. See `docs/changelog_downloader.md` 2026-08-03 for the full record.
 
-- Pattern: `src/bonds/fsc_client.py`
-- API IDs: `15059611` (자본성증권), `15061307` (손보 경영지표 — F9), `15061306` (생보 경영지표 — F9), `15094797` (실손정보 — F9)
-- .env keys: `DATA_GO_KR_BOND_ISSUANCE_KEY`, `DATA_GO_KR_BOND_REDE_KEY`
-- Output: `data/bonds/raw/<stamp>/`, `data/bonds/normalized/<stamp>/`
-- Convention: Issue + 5y for ALL bonds (Korean market, ignore '콜' keyword); past 5y = assume called.
-
-### Source 3 — DART공시 (OpenDART)
+### Source 2 — DART공시 (OpenDART)
 
 - Base: opendart.fss.or.kr
 - .env key: `OPENDART_API_KEY`
@@ -105,7 +105,7 @@ DART universe (`src/ifrs17/universe.py`):
 - NON_LISTED_SKIP 8사 (정기보고서 미공시): IBK연금보험, 교보라이프플래닛, 비엔피파리바카디프, 신한이지손해, 아이엠라이프, 악사손해, 카카오페이손해, 하나손해 — 감사보고서는 받을 수 있음 (KPI '전부 다'에 포함)
 - EXCLUDED_SKIP 2: AIG손해보험 (corp_name 검색은 '에이아이지손해보험'), 서울보증보험 — 받을 수 있는 만큼 받음
 
-### Source 4 — 보험개발원 (KIDI INCOS) 통계
+### Source 3 — 보험개발원 (KIDI INCOS) 통계
 
 - Detail entry pages:
   - `https://incos.kidi.or.kr:5443/insMonth/detail/ML01.do?stattbl_id=ML01` (생보 원수보험료 현황)
@@ -130,7 +130,7 @@ Future KIDI tables (planned, not active):
 - 손해율: 사용자 sample 받으면 검증 (F7 KOSIS도 cross-check)
 - 재보험 출재율, 해지율 등
 
-### Source 5 — IR공시 (13 source covering 17 KRs)
+### Source 4 — IR공시 (13 source covering 17 KRs)
 
 Script: `scripts/download_ir_2026q1.py`
 
@@ -164,7 +164,6 @@ Known IR gaps (사용자 확인 2026-05-30):
 - `data/dart/<period>/raw/KR####_<canonical>[__cons]_<rcept>/document.zip + *.xml` (annual)
 - `data/dart/<period>/raw/KR####_<canonical>/document.zip  (period = FYYYYY_Q#)` (13Q periodic)
 - `data/kidi/<period>/raw/<KR>_<YYYYMM>.json + data/kidi/premium_summary.json`
-- `data/bonds/raw/<stamp>/`, `data/bonds/normalized/<stamp>/`
 - `data/_archive/<UTC-stamp>/<original-relative-path>` (obsolete intermediate, recoverable)
 
 ## Workflow for New Quarter (PRIMARY USE CASE)
@@ -175,10 +174,9 @@ When user requests '다음 분기 받아' (or invokes this prompt for, say, 2026
 2. **For each source**:
    - **Source 1a (손보 17사)**: copy existing `scripts/download_disclosure_2026q1_nonlife.py` to `scripts/download_disclosure_<period>_nonlife.py`. Update URLs/XPaths where the period-specific identifier appears (e.g. `FY2026-1_4.pdf` -> `FY2026-2_4.pdf`, `intSeq=1539` -> check current value, `pancId=15467` -> check current, etc.). XPaths that select `tr[1]` usually pick the latest entry automatically — no change. Just verify with a quick smoke probe.
    - **Source 1b (생보 22사 bulk)**: same script template; `tr[23]` row index increments per quarter — bump tr[24], tr[25], etc.
-   - **Source 2 (bonds)**: re-run `scripts/crawl_assoc_*.py` and `src/bonds/fsc_client.py` (no period-specific config needed — daily refresh).
-   - **Source 3 (DART)**: `python scripts/ifrs17_batch_historical.py --all --periods <YYYY.QQ>` + `python scripts/ifrs17_batch_all.py` for new 사업보고서. Also fetch newly-filed FY+1 audits for non-listed 8 + AIG + audit-only 5 via `OpenDARTClient.list_filings + fetch_document_xml`.
-   - **Source 4 (KIDI)**: `python scripts/ingest_kidi_monthly_premium.py` (no args — uses default 13 periods). Latest period auto-discovered via `getMLxxLastYM`. KIDI lags real quarter by ~1.5 months (e.g. 2026.1Q data available in mid-May 2026).
-   - **Source 5 (IR)**: same script template as source 1; `tr[1]` usually picks latest.
+   - **Source 2 (DART)**: `python scripts/ifrs17_batch_historical.py --all --periods <YYYY.QQ>` + `python scripts/ifrs17_batch_all.py` for new 사업보고서. Also fetch newly-filed FY+1 audits for non-listed 8 + AIG + audit-only 5 via `OpenDARTClient.list_filings + fetch_document_xml`.
+   - **Source 3 (KIDI)**: `python scripts/ingest_kidi_monthly_premium.py` (no args — uses default 13 periods). Latest period auto-discovered via `getMLxxLastYM`. KIDI lags real quarter by ~1.5 months (e.g. 2026.1Q data available in mid-May 2026).
+   - **Source 4 (IR)**: same script template as source 1; `tr[1]` usually picks latest.
 3. **Each script** auto-creates `_failure` dump dirs. If any fail, retry with screenshot/HTML inspection. **Try fallback XPaths before escalating to user.**
 4. **Verify**:
    - PDF/ZIP magic bytes (`%PDF` / `PK\x03\x04` / OLE `D0 CF 11 E0`).
@@ -250,7 +248,7 @@ Body XML contains all 4 in 연결재무제표 주석 section. Parser handles lab
 
 ## Step 7 — Mandatory Collection-Status Report
 
-**WHEN ALL 5 SOURCE INGESTS + VERIFICATION ARE COMPLETE**, before handing off to the parser subagent, you MUST:
+**WHEN ALL 4 SOURCE INGESTS + VERIFICATION ARE COMPLETE**, before handing off to the parser subagent, you MUST:
 
 1. Run `python scripts/report_collection_status.py --period <period> --out docs/collection-status-<period>.md` — generates the per-insurer O/X table.
 2. **Post the rendered table back to the user IN THIS CHAT** (not only as a file). The user expects to see it inline so they can spot gaps without opening files.
@@ -308,7 +306,7 @@ Anything else (download stub, 미수집, parse error) is NOT 수용 — must be 
 
 After the table, include:
 - 총 N사 / 전체자료 입수 완료 N사 (NN%)
-- Source별 수집률: 5 lines, 각 source O 비율.
+- Source별 수집률: 4 lines, 각 source O 비율.
 - (선택) Actionable gaps 목록 — "다운로드 실패" / "미커버" / "미수집"만 추출해서 별도 bullets로 강조.
 
 ## Hand-off to Parser Subagent

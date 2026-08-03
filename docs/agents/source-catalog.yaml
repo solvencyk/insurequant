@@ -1,7 +1,7 @@
 meta:
   version: 1
-  last_updated: '2026-05-30'
-  scope: 5 data sources for ~28 Korean insurers
+  last_updated: '2026-08-03'
+  scope: 4 data sources for ~28 Korean insurers
   notes:
     - All file I/O must use UTF-8 (no BOM).
     - Korean filenames in zipfile: cp437 -> decode('cp437').encode('cp437').decode('cp949') if garbled.
@@ -160,22 +160,6 @@ sources:
       - KR1010 교보라이프플래닛
       - KR1011 IBK연금
       - non-KR AIA
-
-  - id: bonds
-    name: 채권발행현황 FSC data.go.kr
-    pattern: src/bonds/fsc_client.py
-    api_ids:
-      capital_securities: 15059611
-      nonlife_metrics: 15061307
-      life_metrics: 15061306
-      private_health: 15094797
-    env_keys:
-      - DATA_GO_KR_BOND_ISSUANCE_KEY
-      - DATA_GO_KR_BOND_REDE_KEY
-    output:
-      - data/bonds/raw/<stamp>/
-      - data/bonds/normalized/<stamp>/
-    convention: issue+5y for all bonds (Korean market, ignore '콜' keyword); past 5y = assume called
 
   - id: dart
     name: DART 공시 OpenDART
@@ -405,7 +389,13 @@ future_sources_planned:
     metrics: [채널별 불완전판매비율, 설계사정착률, 민원, 부지급률]
   - id: F9
     name: data.go.kr 추가
-    api_ids: [15061306, 15061307, 15094797]
+    api_ids:
+      nonlife_metrics: 15061307
+      life_metrics: 15061306
+      private_health: 15094797
+    notes:
+      - 2026-08-03 bonds 소스(capital_securities api_id 15059611) 폐지 시 이관됨(inbox/downloader/20260803T0057Z) — capital_securities 자체는 삭제, 자본성증권 발행현황은 DART per-bond로 이미 대체(data/bonds/capital_securities_fy2025.json).
+      - env keys DATA_GO_KR_BOND_ISSUANCE_KEY / DATA_GO_KR_BOND_REDE_KEY(TODO_downloader.md D5)를 F9 착수 시 재사용 가능 — 삭제하지 말 것.
   - id: F10
     name: GA통합공시
     url: https://gapub.insure.or.kr

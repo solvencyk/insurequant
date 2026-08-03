@@ -20,10 +20,17 @@ Phase 3 v2 additions:
   ratio is capped at 0% so negative outliers do not distort charts.
 
 Residual limitations:
-- Projection still uses outstanding bonds only + bond calendar effective_call (issue+5y).
-  'Called' securities are excluded from the deduction list — may over-state decline until
-  fully reconciled to K-ICS 자본성증권 표.
-- Insurer count = bond-data cohort size in latest normalized bonds snapshot (not fixed at 19).
+- Projection still uses outstanding bonds only + bond calendar effective_call (disclosed call
+  date, else legal maturity). 'Called'/fully-redeemed securities are excluded from the
+  deduction list — may over-state decline until fully reconciled to K-ICS 자본성증권 표.
+- Insurer count = bond-data cohort size in the DART per-bond source (not fixed at 19).
+
+2026-08-03 rebase (inbox/parser/20260803T0055Z): bonds source moved from FSC data.go.kr
+(data/bonds/normalized/**) to DART per-bond disclosure (data/bonds/capital_securities_fy2025.json,
+FY2025 사업보고서, as_of 2025-12-31). KR0050(하나손해보험)/KR0076(아이엠라이프생명보험) have FSC
+bond data but no DART annual raw on disk (git-purge) — routed to downloader for refetch; until
+backfilled they show bond_coverage=no_bonds_in_dart (flat SCR-interp projection, no bond
+deductions), same as any genuinely bond-free insurer.
 """
 from __future__ import annotations
 
@@ -37,8 +44,12 @@ sys.path.insert(0, str(REPO))
 sys.stdout.reconfigure(encoding="utf-8")
 
 KICS_JSON = REPO / "kics_disclosure.json"
-BONDS_DIR = REPO / "data" / "bonds" / "normalized"
+BONDS_FY2025_JSON = REPO / "data" / "bonds" / "capital_securities_fy2025.json"
 OUT_DIR = REPO / "output" / "kics_forward_capital"
+
+# DART per-bond tier labels -> internal tier labels the simulation/confidence
+# logic below already keys off of (kept unchanged from the FSC-era schema).
+_TIER_MAP = {"hybrid": "tier1_hybrid", "subordinated": "tier2_subordinated"}
 TIER1_JSON = REPO / "output" / "tier1_utilization" / "tier1_utilization_20261Q.json"
 TIER2_JSON = REPO / "output" / "tier2_utilization" / "tier2_utilization_20261Q.json"
 
@@ -62,13 +73,6 @@ T2_GAP_MED_PCT = 75.0
 
 def _stamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-
-
-def _latest_bonds_dir() -> Path:
-    candidates = sorted(p for p in BONDS_DIR.iterdir() if p.is_dir())
-    if not candidates:
-        raise FileNotFoundError(f"No normalized bonds under {BONDS_DIR}")
-    return candidates[-1]
 
 
 def _to_float(v) -> float | None:
@@ -111,13 +115,43 @@ def load_kics_baselines() -> dict[str, dict]:
 
 
 def load_outstanding_bonds() -> tuple[dict[str, list[dict]], str]:
-    """Per-insurer outstanding bonds (status='outstanding' only)."""
-    bdir = _latest_bonds_dir()
-    by_insurer_full = json.loads((bdir / "bonds_by_insurer.json").read_text(encoding="utf-8"))
+    """Per-insurer outstanding bonds, adapted from the DART per-bond disclosure
+    (2026-08-03 rebase off FSC data.go.kr, inbox/parser/20260803T0055Z).
+
+    The adapter maps DART fields onto the schema simulate_one()/compute_confidence()
+    already expect (isin/tier/issue_amount_won/status) so the call-roll-off, limit,
+    and transition math is untouched. `outstanding_mn` (not `face_amount_mn`) is used
+    as the deduction amount: it already reflects any partial paydown (e.g. the small
+    FX-translation drift on foreign-currency subordinated bonds), matching the
+    2026-05-26 owner directive to deduct the amount actually still owed to investors.
+    A bond fully redeemed in-period (outstanding_mn == 0, e.g. "당기 중 전액 상환") is
+    dropped, mirroring the old FSC status=='outstanding' filter.
+
+    past_call_outstanding==true bonds (call date passed without redemption, 6 of 119
+    in the FY2025 cohort) keep their disclosed call_date as-is rather than rolling
+    forward to legal_maturity — this matches how the one FSC-era precedent for the
+    same real bond (흥국화재 KR0005 신종자본증권1, effective_call_date=2021-12-29 kept
+    outstanding past its own call rule) was handled: the simulation's existing
+    call-date-based deduction logic already accounts for this, unchanged.
+    """
+    doc = json.loads(BONDS_FY2025_JSON.read_text(encoding="utf-8"))
     out: dict[str, list[dict]] = {}
-    for code, g in by_insurer_full.items():
-        out[code] = [b for b in g["bonds"] if b.get("status") == "outstanding"]
-    return out, bdir.name
+    for c in doc["companies"]:
+        bonds = []
+        for b in c.get("bonds", []):
+            out_mn = b.get("outstanding_mn")
+            if not out_mn:
+                continue
+            bonds.append({
+                "isin": b.get("name"),
+                "name": b.get("name"),
+                "tier": _TIER_MAP.get(b.get("tier"), b.get("tier")),
+                "issue_amount_won": out_mn * 1_000_000,
+                "effective_call_date": b.get("call_date") or b.get("legal_maturity"),
+                "status": "outstanding",
+            })
+        out[c["code"]] = bonds
+    return out, BONDS_FY2025_JSON.relative_to(REPO).as_posix()
 
 
 def load_utilization() -> tuple[dict, dict]:
@@ -203,13 +237,15 @@ def _overall_bucket(t1_bucket: str, t1_real_error: bool, t2_hard_error: bool) ->
 
 
 def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict,
-                       bond_coverage: str = "fsc_listed") -> dict:
+                       bond_coverage: str = "dart_listed") -> dict:
     """Score bond-schedule vs K-ICS BS reconciliation for forward sim trust.
 
-    bond_coverage='no_bonds_in_fsc' → insurer has no FSC capital instruments.
-    If BS also shows no T1/T2 capital, confidence is 'high' (nothing to deduct,
-    nothing to reconcile). If BS shows capital but FSC is empty, normal
-    fsc_missing_* flags fire as usual.
+    bond_coverage='no_bonds_in_dart' → the source WAS scanned and the insurer has no
+    DART capital instruments. If BS also shows no T1/T2 capital, confidence is 'high'
+    (nothing to deduct, nothing to reconcile). bond_coverage='absent_in_source' → the
+    insurer is missing from the source entirely (annual raw gap): never shortcut to
+    'high', the normal fsc_missing_* flags fire. If BS shows capital but DART is empty,
+    those flags fire as usual either way.
     """
     bond_t1_out = sum((b.get("issue_amount_won") or 0) / 1e8
                       for b in bonds
@@ -233,7 +269,11 @@ def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict,
     # Forward sim is just SCR-interpolation on flat capital, fully deterministic.
     # Threshold <1.0 (was ==0) tolerates sub-1억 BS rounding residual (e.g. KR1010
     # 교보라이프플래닛 has T2 = 0.1억 — moc 자본성증권 미발행 actual case).
-    if (bond_coverage == "no_bonds_in_fsc"
+    # 2026-08-03: the literal was still "no_bonds_in_fsc" after the DART rebase renamed the
+    # value, so this branch was dead. Restored — but ONLY for the *verified* zero. An insurer
+    # that is absent from the source has not been scanned, so "nothing to reconcile → high"
+    # would be the optimistic claim this whole ticket is about.
+    if (bond_coverage == "no_bonds_in_dart"
             and bond_t1_out < 1.0 and bond_t2_out < 1.0
             and kics_t1 < 1.0 and kics_t2 < 1.0):
         return {
@@ -453,6 +493,26 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
     }
 
 
+BOND_COVERAGE_VALUES = ("dart_listed", "no_bonds_in_dart", "absent_in_source")
+
+
+def _bond_coverage(code: str, bonds: list[dict], bonds_per_insurer: dict) -> str:
+    """3-way coverage state (validation inbox 20260803T0310Z — additive, no field removed).
+
+    ``no_bonds_in_dart`` used to mean two very different things at once:
+    "the source was scanned and this insurer has no capital securities" and
+    "this insurer is not in the source at all". The second is a *coverage gap*
+    (annual raw missing) whose 0 removes real bond redemptions from the
+    projection — KR0050/KR0076 lost 3,700억 that way and their 2030 지급여력비율
+    jumped 124%→146% / 94%→152%, i.e. the error runs in the optimistic direction.
+    Splitting the value is what lets the data-contract gate (and a reader of the
+    JSON) tell a verified zero from an unverified one.
+    """
+    if code not in bonds_per_insurer:
+        return "absent_in_source"        # 소스에 레코드 자체가 없음 = 미검증 (RED at the gate)
+    return "dart_listed" if bonds else "no_bonds_in_dart"   # 스캔 후 무발행 = 정당한 0
+
+
 def _write_forward_deploy_asset(results: list[dict]) -> None:
     """Write the root deploy asset K-ICS.html fetches for the forward panel.
 
@@ -481,7 +541,7 @@ def _confidence_histogram(results: list[dict]) -> dict[str, int]:
 def main() -> int:
     baselines = load_kics_baselines()
     bonds_per_insurer, bonds_src = load_outstanding_bonds()
-    # Universe = FSC bond cohort ∪ K-ICS baseline cohort. No-bond insurers
+    # Universe = DART bond cohort ∪ K-ICS baseline cohort. No-bond insurers
     # (e.g. KR0008 삼성화재) still get a flat-capital + SCR-interp projection.
     # Exclude PAA-only insurers (no CSM-driven capital projection makes sense):
     #   KR0150 서울보증보험 (PAA 적용, per F4 v2 report recommendation)
@@ -494,7 +554,7 @@ def main() -> int:
     results = []
     for code in insurer_codes:
         bonds = bonds_per_insurer.get(code, [])
-        bond_coverage = "fsc_listed" if code in bonds_per_insurer else "no_bonds_in_fsc"
+        bond_coverage = _bond_coverage(code, bonds, bonds_per_insurer)
         if not baselines.get(code):
             stub = {
                 "insurer_code": code,
@@ -534,8 +594,8 @@ def main() -> int:
         "missing_kics_baseline": sum(1 for r in results if r.get("status") == "missing_kics_baseline"),
         "missing_baseline": sum(1 for r in results if r.get("status") == "missing_baseline"),
         "bond_coverage_distribution": {
-            "fsc_listed": sum(1 for r in results if r.get("bond_coverage") == "fsc_listed"),
-            "no_bonds_in_fsc": sum(1 for r in results if r.get("bond_coverage") == "no_bonds_in_fsc"),
+            v: sum(1 for r in results if r.get("bond_coverage") == v)
+            for v in BOND_COVERAGE_VALUES
         },
         "confidence_distribution": hist,
         "notes": [
@@ -547,6 +607,21 @@ def main() -> int:
             "SCR baseline = item14 값_적용후; endpoint by 2032 = item14 값 (linear interp).",
             "2026-06-16 rebaseline: BASELINE_QUARTER=2026.1Q, tier{1,2}_utilization_20261Q; BASELINE_YEAR=2026 anchors 경과조치 phase-out ramp at the as-of date (avoids double-counting ~1yr run-off already in 2026.1Q post values).",
             "2026-06-16 (a) T2-decoupled confidence: overall = T1 reconciliation only (FSC face≈BS valid). T2 Face(FSC outstanding)-vs-BS(grandfathered issued) gap is a structural concept difference → advisory, NOT in overall. Genuine T2 errors (fsc_missing_t2 / kics_missing_t2 / t2_util_over_100) still force low.",
+            "2026-08-03 (b) coverage 3-way (inbox/validation/20260803T0310Z): bond_coverage adds "
+            "'absent_in_source' — 소스에 레코드 자체가 없는 회사(annual raw 부재)를 '스캔 후 무발행'"
+            "(no_bonds_in_dart)과 구분한다. 전자의 0은 상환차감을 지워 비율을 낙관 방향으로 틀리게 "
+            "만든다(KR0050 124→146%, KR0076 94→152%). validate_data_contract.py의 "
+            "CAPSEC_COVERAGE_REGRESSION이 같은 축을 소스에서 직접 도출해 RED로 막는다(라벨을 믿지 "
+            "않는다). 같은 커밋에서 compute_confidence의 no-bond shortcut 리터럴이 rename 이후 "
+            "죽어 있던 것(no_bonds_in_fsc)을 복구하되 absent_in_source에는 적용하지 않는다.",
+            "2026-08-03 rebase (inbox/parser/20260803T0055Z): bonds_source is now DART per-bond "
+            "(data/bonds/capital_securities_fy2025.json, FY2025 사업보고서, as_of 2025-12-31) — "
+            "FSC data.go.kr (data/bonds/normalized/**) no longer read here. bond_coverage renamed "
+            "fsc_listed/no_bonds_in_fsc -> dart_listed/no_bonds_in_dart (values only, field name "
+            "unchanged). Deduction amount = outstanding_mn (not face_amount_mn), already reflects "
+            "partial paydown. KR0050(하나손해보험)/KR0076(아이엠라이프생명보험) had FSC bond data but "
+            "have no DART annual raw on disk yet (git-purge) — bond_coverage=no_bonds_in_dart for "
+            "these two until downloader backfills FY2025 사업보고서 raw (inbox/downloader routed).",
         ],
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -556,6 +631,11 @@ def main() -> int:
     # No HTML is touched any more (2026-07-21): the panel reads its own JSON, so
     # publishing can produce it without crossing into designer's territory.
     _write_forward_deploy_asset(results)
+    # Root provenance sidecar (kics_forward_capital_provenance.json) is derived —
+    # not written here — by scripts/emit_capsec_provenance.py, which reads
+    # bonds_source back out of this run's manifest.json and looks up source_id
+    # from validate_data_contract.source_id_for_lineage (single source of truth,
+    # avoids a second hardcoded label drifting out of sync). Run it after this.
 
     print("=== Forward simulation v3 summary ===")
     for k, v in manifest.items():

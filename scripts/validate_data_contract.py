@@ -36,8 +36,11 @@ Python full path (env rule): C:/Users/sangwook.cho/venvs/insurequant/Scripts/pyt
 """
 from __future__ import annotations
 
+import datetime as _dt
+import itertools
 import json
 import re
+import statistics
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -108,6 +111,16 @@ def period_label_to_quarter(period: str | None, as_of: str | None) -> str | None
         if m:
             return f"{m.group(1)}.4Q"
     return None
+
+
+def _quarter_end_date(q: str | None) -> _dt.date | None:
+    """'2026.1Q' -> date(2026, 3, 31)."""
+    m = re.match(r"(\d{4})\.(\d)Q", str(q or ""))
+    if not m:
+        return None
+    y, qn = int(m.group(1)), int(m.group(2))
+    mo = qn * 3
+    return _dt.date(y, mo, {3: 31, 6: 30, 9: 30, 12: 31}[mo])
 
 
 # ---------------------------------------------------------------------------
@@ -282,6 +295,16 @@ def check_census(res: GateResult, env: "Env") -> None:
                 rule="RATIO_SERIES_SPIKE",
                 message=f"지급여력비율 {x} (인접 {qa}={a}, {qb}={b}) — 소스오염 의심(비차단, parser 재확인)")
 
+    # --- 1e. capital-securities 커버리지 census (owner 20260803T0310Z) ---
+    # 라벨 계보(20260803T0056Z)는 "틀린 소스라고 말하는 것"을 막았지만, **소스가 통째로 비어도**
+    # 게이트는 RED=0이었다: DART annual raw가 없는 2사의 채권이 마스터에서 사라져 상환차감이 없어지고
+    # 2030 지급여력비율이 실제보다 좋게(iM라이프 93.65%→152.12%, 권고선 아래→위) 나오는데도 통과.
+    # 판정축은 git diff가 아니라 **선언된 per-bond 소스 안의 회사 존재 여부**다(1차 방어선).
+    for kw in itertools.chain(_capsec_coverage_findings(env), _capsec_prior_snapshot_drop(env)):
+        if not _emit(kw.get("quarter")):
+            continue
+        res.add(check="census", **kw)
+
     # --- 1c. IFRS17 long-master holes (reuse validate_master_tables.coverage_holes) ---
     for master, idx, key_items in (
         ("CSM_waterfall", env.wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"]),
@@ -309,6 +332,77 @@ def check_census(res: GateResult, env: "Env") -> None:
         res.add(check="census", severity="RED", master="PL_breakdown", company=co, quarter=q,
                 rule="IMPOSSIBLE_ZERO_LEG",
                 message=f"{item}=0 (long-term insurer leg cannot be exactly 0 — extraction error)")
+    # CSM 상대규모 plausibility (parser 20260730T0040Z, PM-2026-07-30 UH-6). 항등식은 스케일과
+    # 무관하게 닫히므로 단위오류(×100)를 closure 검사로는 절대 못 잡는다 — 회사 규모로 정규화한
+    # 비율만이 잡는다. 초기 YELLOW(관찰 1~2 릴리스 후 RED 전환, UH-3 sidecar 선례).
+    for co, q, csm, cap, r, med, thr in _csm_magnitude_implausible(env):
+        res.add(check="census", severity="YELLOW", master="CSM_waterfall", company=co, quarter=q,
+                rule="CSM_WATERFALL_PLAUSIBILITY",
+                message=f"기말CSM {csm:,.0f}억 ÷ 지급여력금액 {cap:,.0f}억 = {r:.2f} "
+                        f"(전사 median {med:.2f}의 {r / med:.0f}배, 임계 {thr:.2f}) — 항등식은 닫히나 "
+                        f"규모가 비정상(단위 ×100/×1000 오류 지문). 초기 YELLOW, RED 전환 예정")
+
+
+# CSM_WATERFALL_PLAUSIBILITY (parser 20260730T0040Z / PM-2026-07-30 UH-6).
+# 판정식: r = 기말CSM ÷ 지급여력금액(item1), 회사별 최신 분기, KR코드 조인, 둘 다 억원.
+# 임계 = 전사 median × _CSM_PLAUS_MULT (상대값 — 신규사 온보딩으로 median이 이동해도 자동 추종).
+#
+# 임계값 재조정 근거 (validation 2026-08-03 실측, parser 초안 ×20에서 ×10으로 조정):
+#   parser가 제시한 실측(KR0075 r=153.01 → ×273, 차순위 KR1098 r=3.49 → ×6.2)은 **정정 전** 값이다.
+#   정정 후 라이브 36사 조인 분포: median 0.563 · 최대 1.530(KR0075) = median의 2.7배 · 최소 -0.0.
+#   → ×20(r>11.3)은 살아있는 코호트 대비 여유가 7.4배로 과하게 느슨해, **중간 규모 회사의 ×10 단위
+#     오류**(r 0.563→5.63 = ×10)를 놓친다. ×10(r>5.63)은 라이브 최대의 3.7배 여유를 남기면서 그
+#     부류를 잡는다. KR0075 100× 사고는 ×273로 어느 쪽이든 발화.
+# 오탐 억제: (a) K-ICS 미공시사(AIA 등) = 분모 부재 → skip. (b) 조인 표본 <10사 → median 불안정,
+#   룰 전체 skip. (c) 상한만 검사(소형사 낮은 비율은 정상). (d) 지급여력금액 ≤ 0(자본잠식사,
+#   예: 예별손해)은 비율이 무의미 → skip(규모 이상치는 CHECK 5 generic scan이 담당).
+_CSM_PLAUS_MULT = 10.0
+_CSM_PLAUS_MIN_SAMPLE = 10
+
+
+def _csm_magnitude_implausible(env: "Env"):
+    """[(company_name, quarter, closing_csm, capital, ratio, median, threshold), ...]"""
+    # 회사별 최신 분기의 기말CSM (code-keyed 인덱스 재사용)
+    closing = {}
+    for (code, q), m in (env.wf_by_code or {}).items():
+        v = _num(m.get("기말CSM"))
+        if not code or not q or v is None:
+            continue
+        if code not in closing or q_to_num(q) > q_to_num(closing[code][0]):
+            closing[code] = (q, v)
+    # 회사별 최신 분기의 item1 지급여력금액 (적용전 값; 없으면 적용후)
+    cap = {}
+    for r in env.kics_records:
+        if str(r.get("항목번호")) != "1":
+            continue
+        code, q = r.get("원보험사코드"), r.get("공시분기")
+        v = _num(r.get("값"))
+        if v is None:
+            v = _num(r.get("값_적용후"))
+        if not code or not q or v is None:
+            continue
+        if code not in cap or q_to_num(q) > q_to_num(cap[code][0]):
+            cap[code] = (q, v)
+
+    joined = []
+    for code, (q, csm) in closing.items():
+        if code not in cap:
+            continue            # (a) K-ICS 미공시사 → 분모 부재 skip
+        cq, cv = cap[code]
+        if cv <= 0:
+            continue            # (d) 자본잠식사 → 비율 무의미 skip
+        joined.append((code, q, csm, cv, csm / cv))
+    if len(joined) < _CSM_PLAUS_MIN_SAMPLE:
+        return []               # (b) median 불안정 → 룰 skip
+    med = statistics.median([j[4] for j in joined])
+    if med <= 0:
+        return []
+    thr = med * _CSM_PLAUS_MULT
+    out = []
+    for code, q, csm, cv, r in sorted(joined, key=lambda j: -j[4]):
+        if r > thr:             # (c) 상한만
+            out.append((env.code_name.get(code, code), q, csm, cv, r, med, thr))
+    return out
 
 
 def _csm_amort_zero(wf):
@@ -373,14 +467,232 @@ def _pl_impossible_zero_leg(pl, confirmed=None):
 #   - sidecar PRESENT  → strict verification per the provenance contract
 #                        (--print-provenance-contract): MISSING_PROVENANCE / STALE_AS_OF /
 #                        EFFECTIVE_LIST_NOT_FILTERED.
-#   - sidecar ABSENT   → fall back to the Phase-1 inference below (so the gate keeps working
-#                        TODAY) + a single informational note per such master.
-# END-STATE (once parser/downloader emit sidecars for ALL masters): delete the fallback and
-# treat no-sidecar as MISSING_PROVENANCE RED (owner principle 0 — never SKIP-as-pass). Until
-# then, no-sidecar must NOT be RED, or the gate would red-out everything before emission exists.
+#   - sidecar ABSENT   → **RED `MISSING_PROVENANCE_SIDECAR`** (UH-3 end-state, 2026-08-03) +
+#                        the Phase-1 inference below still runs for diagnosis.
+# END-STATE REACHED (2026-08-03): all four CHECK-2 masters (sensitivity_heatmap ·
+# forward_capital · tier1_utilization · tier2_utilization) now emit sidecars, so live
+# MISSING_PROVENANCE_SIDECAR hit 0 → the graceful YELLOW was retired and no-sidecar is RED
+# (owner principle 0 — never SKIP-as-pass). The earlier YELLOW existed only because red-ing
+# out un-emitted masters would have blocked push forever; that condition is gone.
 # ===========================================================================
-# Authoritative source enum per master (capital-securities effective list → FSC_BONDS).
+# Authoritative source per master (capital-securities effective list).
 _CAPITAL_SECURITIES_MASTERS = {"forward_capital", "tier1_utilization", "tier2_utilization"}
+
+# `source_id` must match the ACTUAL lineage of `source_file` — not a hardcoded enum
+# (owner inbox/validation/20260803T0056Z).
+# 2026-06-20부터 tier1/tier2 소진율의 per-bond 원천은 FSC(data.go.kr 채권등록)가 아니라 DART
+# 사업보고서(`data/bonds/capital_securities_fy2025.json`)다. 그런데 이 게이트는 세 마스터 전부에
+# `source_id == "FSC_BONDS"`를 강제하고 있었고, 사이드카는 그 요구를 만족시키려고 **DART 파일에
+# FSC 라벨**을 달아 통과했다 = 게이트가 "소스를 검증한다"면서 틀린 주장을 확인해준 false-green.
+# 고정 enum을 `{FSC_BONDS, DART}`로 넓히면 아무 라벨이나 통과해 검증력이 사라진다 → 대신
+# **경로 계보 ↔ 선언 라벨 일치**를 검사한다(불일치 = SOURCE_ID_LINEAGE_MISMATCH RED).
+_SOURCE_LINEAGE = (
+    ("data/bonds/capital_securities_", "DART"),   # DART 사업보고서 per-bond 추출물
+    ("data/bonds/disclosure/", "DART"),           # DART 주요사항보고서 supplement
+    ("data/dart/", "DART"),
+    ("data/bonds/normalized/", "FSC_BONDS"),      # FSC data.go.kr 채권등록 크롤 정규화
+    ("data/bonds/raw/", "FSC_BONDS"),
+)
+
+
+def source_id_for_lineage(source_file: str | None) -> str | None:
+    """`source_file` 경로가 함의하는 source_id. None = 계보 미등록(=검증 불가, 통과시키지 않는다)."""
+    p = str(source_file or "").replace("\\", "/").lstrip("./")
+    for prefix, sid in _SOURCE_LINEAGE:
+        if p.startswith(prefix):
+            return sid
+    return None
+
+
+def capsec_sources_in_use(sidecars: dict | None) -> dict[str, set[str]]:
+    """서빙되는 capital-securities 마스터들이 **실제로** 원천으로 선언한 {계보: {source_file, ...}}.
+    사이드카가 없으면 알 수 없으므로 역사적 기본값 FSC_BONDS를 요구한다(검사 축이 사라지지 않게 —
+    빈 dict을 돌려주면 2c가 아무것도 검사하지 않는 빈 껍데기가 된다)."""
+    out: dict[str, set[str]] = {}
+    for m in sorted(_CAPITAL_SECURITIES_MASTERS):
+        sc = (sidecars or {}).get(m)
+        if not sc:
+            continue
+        for c in sc.get("cells") or []:
+            sf = c.get("source_file")
+            sid = source_id_for_lineage(sf)
+            if sid:
+                out.setdefault(sid, set()).add(str(sf).replace("\\", "/"))
+    return out or {"FSC_BONDS": set()}
+
+
+# ---------------------------------------------------------------------------
+# CAPSEC_COVERAGE_REGRESSION (owner inbox/validation/20260803T0310Z) — CHECK 1의 1e에서 소비.
+#
+# 축 = **선언된 per-bond 소스 안에 회사 레코드가 있는가**. git diff(직전 배포본 대조)는 보조축일 뿐이라
+# 1차 판정에 쓰지 않는다. 세 상태를 구분해야 룰이 성립한다:
+#   (1) 소스에 회사 자체가 없다        → RED  (raw 부재 = 검증 불가. 마스터의 0은 "무발행"이 아니다)
+#   (2) 소스에 있고 잔액 전부 0        → 통과 (스캔했고 무발행 확인 = 정당한 0)
+#   (3) 소스에 잔액>0 인데 마스터가 0  → RED  (어댑터/필터 버그)
+# 마스터가 스스로 붙인 `bond_coverage` 라벨은 **믿지 않는다** — 라벨을 믿는 검증이 false-green이 된 게
+# PM-2026-08-03(사이드카가 DART 파일에 FSC 라벨). 존재 여부는 게이트가 소스에서 직접 도출한다.
+# 기대 모집단도 하드코딩하지 않는다: 마스터가 실제로 행을 발행한 회사 = 검사 대상(self-census).
+_CAPSEC_SLICE_FIELDS = {
+    # master: (소스 슬라이스, 마스터쪽 "발행잔액 존재" 필드들 — 합이 0이면 마스터는 이 회사에 채권이
+    #          없다고 말하는 것. tier 마스터는 소진율 분자(신규분)만 보면 경과조치 전액인 회사가
+    #          정당한 0으로 보이므로 **면제분까지 더한 총액**을 존재 신호로 쓴다.)
+    "forward_capital": ("all", ("outstanding_bonds_total_eok",)),
+    "tier1_utilization": ("hybrid", ("tier1_hybrid_issued_eok", "tier1_grandfathered_hybrid_eok")),
+    "tier2_utilization": ("sub", ("new_subordinated_gross_eok", "grandfathered_subordinated_eok")),
+}
+_CAPSEC_AMOUNT_TOL_EOK = 1.0
+_CAPSEC_AMOUNT_TOL_REL = 0.01
+_CAPSEC_PRIOR_DROP_REL = 0.20      # 보조축(§2 그물): 전체 발행잔액 20% 이상 급감 = YELLOW
+
+
+def index_bond_source(doc, idx: dict | None = None) -> dict:
+    """per-bond 소스를 `{code: {n_bonds, hybrid_mn, sub_mn, total_mn}}`로 정규화(백만원).
+
+    두 계보의 스키마를 모두 받는다:
+      DART  `{"companies": [{"code": .., "bonds": [{"tier": "hybrid|subordinated",
+                                                   "outstanding_mn": ..}]}]}`
+      FSC   `{"<code>": {"bonds": [{"tier": "tier1_hybrid|tier2_subordinated",
+                                    "issue_amount_won": .., "status": "outstanding"}]}}`
+    **레코드 존재 자체가 신호**다 — bonds가 비어 있어도 key를 만든다(= 스캔했고 무발행 확인).
+    """
+    idx = {} if idx is None else idx
+
+    def _put(code, bonds, hybrid_mn, sub_mn):
+        if not code:
+            return
+        e = idx.setdefault(str(code), {"n_bonds": 0, "hybrid_mn": 0.0, "sub_mn": 0.0, "total_mn": 0.0})
+        e["n_bonds"] += bonds
+        e["hybrid_mn"] += hybrid_mn
+        e["sub_mn"] += sub_mn
+        e["total_mn"] += hybrid_mn + sub_mn
+
+    if isinstance(doc, dict) and isinstance(doc.get("companies"), list):        # DART per-bond
+        for c in doc["companies"]:
+            hyb = sub = 0.0
+            bl = c.get("bonds") or []
+            for b in bl:
+                amt = _num(b.get("outstanding_mn")) or 0.0
+                if str(b.get("tier")) == "hybrid":
+                    hyb += amt
+                else:
+                    sub += amt
+            _put(c.get("code"), len(bl), hyb, sub)
+        return idx
+    if isinstance(doc, dict):                                                   # FSC normalized
+        for code, grp in doc.items():
+            if not isinstance(grp, dict):
+                continue
+            hyb = sub = 0.0
+            bl = [b for b in (grp.get("bonds") or []) if b.get("status") == "outstanding"]
+            for b in bl:
+                amt = (_num(b.get("issue_amount_won")) or 0.0) / 1e6
+                if str(b.get("tier")) == "tier1_hybrid":
+                    hyb += amt
+                else:
+                    sub += amt
+            _put(grp.get("insurer_code") or code, len(bl), hyb, sub)
+    return idx
+
+
+def _capsec_published_rows(env: "Env") -> dict[str, list[tuple]]:
+    """{master: [(code, name, row, quarter), ...]} — 각 마스터가 **실제로 발행한** 회사 행."""
+    t1 = env.tier1_latest or {}
+    t2 = env.tier2_latest or {}
+    fq = (env.forward_manifest or {}).get("baseline_quarter")
+    return {
+        "forward_capital": [(r.get("insurer_code"), r.get("insurer_name"), r, fq)
+                            for r in (env.forward_rows or []) if r.get("insurer_code")],
+        "tier1_utilization": [(r.get("code"), r.get("company"), r, r.get("quarter") or t1.get("quarter"))
+                              for r in (t1.get("results") or []) if r.get("code")],
+        "tier2_utilization": [(r.get("code"), r.get("company"), r, r.get("quarter") or t2.get("quarter"))
+                              for r in (t2.get("results") or []) if r.get("code")],
+    }
+
+
+def _capsec_coverage_findings(env: "Env"):
+    """CAPSEC_COVERAGE_REGRESSION findings (res.add kwargs). CHECK 1의 1e가 소비."""
+    src = env.capsec_bond_source or {}
+    declared = env.capsec_source_files or {}
+    rows_by_master = _capsec_published_rows(env)
+    absent: dict[str, list] = {}          # code -> [master, ...] (회사당 1건으로 묶어 보고)
+    absent_meta: dict[str, tuple] = {}
+
+    for master, rows in rows_by_master.items():
+        if not rows:
+            continue
+        files = declared.get(master) or []
+        if not files:
+            # 소스를 못 찾으면 커버리지 검사가 **빈 껍데기**가 된다(2c가 겪은 실패 유형).
+            # 조용히 통과시키지 않는다 — 미검증 = RED (owner 원칙 0).
+            yield dict(severity="RED", master=master, company=None, quarter=rows[0][3],
+                       rule="CAPSEC_SOURCE_UNRESOLVED",
+                       message=f"{master}: 회사 {len(rows)}행을 발행하면서 per-bond 소스를 선언하지 "
+                               f"않았다(사이드카 source_file 부재) — 커버리지 census를 수행할 축이 "
+                               f"없음(검증 불가 = RED)")
+            continue
+        slice_key, presence_fields = _CAPSEC_SLICE_FIELDS[master]
+        for code, name, row, quarter in rows:
+            rec = src.get(code)
+            if rec is None:
+                absent.setdefault(code, []).append(master)
+                absent_meta[code] = (name, quarter, files)
+                continue
+            src_eok = rec[{"all": "total_mn", "hybrid": "hybrid_mn", "sub": "sub_mn"}[slice_key]] / 100.0
+            master_eok = sum((_num(row.get(f)) or 0.0) for f in presence_fields)
+            if src_eok <= 0:
+                continue                    # (2) 스캔했고 그 슬라이스는 무발행 = 정당한 0
+            tol = max(_CAPSEC_AMOUNT_TOL_EOK, _CAPSEC_AMOUNT_TOL_REL * src_eok)
+            if master_eok <= 0:             # (3) 소스엔 잔액이 있는데 마스터는 0 = 어댑터/필터 버그
+                yield dict(severity="RED", master=master, company=name or code, quarter=quarter,
+                           rule="CAPSEC_COVERAGE_REGRESSION",
+                           message=f"{name or code}({code}): 소스 {files[0]} 에 {slice_key} 발행잔액 "
+                                   f"{src_eok:,.0f}억이 있는데 마스터 "
+                                   f"{'+'.join(presence_fields)}=0 — 어댑터/필터가 조용히 떨어뜨림 "
+                                   f"(상환차감·소진율 분자가 사라져 낙관 방향으로 틀림)")
+            elif abs(master_eok - src_eok) > tol:
+                # 부분 유실은 아직 라이브 실측 0건 → 관찰기 YELLOW(그물). 안정 확인 후 RED 승격.
+                yield dict(severity="YELLOW", master=master, company=name or code, quarter=quarter,
+                           rule="CAPSEC_AMOUNT_MISMATCH",
+                           message=f"{name or code}({code}): 마스터 {master_eok:,.1f}억 ≠ 소스 "
+                                   f"{src_eok:,.1f}억 ({slice_key} 슬라이스, tol {tol:,.1f}) — "
+                                   f"부분 유실/이중계상 의심(관찰기 YELLOW)")
+
+    for code, masters in sorted(absent.items()):
+        name, quarter, files = absent_meta[code]
+        yield dict(severity="RED", master="capital_securities_coverage", company=name or code,
+                   quarter=quarter, rule="CAPSEC_COVERAGE_REGRESSION",
+                   message=f"{name or code}({code}): 선언된 per-bond 소스({files[0]})에 회사 레코드 "
+                           f"자체가 없다 — {', '.join(sorted(masters))}가 발행한 0은 '무발행'이 아니라 "
+                           f"'미검증'이다(raw 부재). 무발행이면 소스에 빈 레코드(bonds: [])로 명시해야 "
+                           f"'스캔 후 0'과 구분된다")
+
+
+def _capsec_prior_snapshot_drop(env: "Env"):
+    """보조축(owner §2) — 직전 배포 스냅샷 대비 발행잔액 후퇴 감지. 1e가 1차 방어선이고 이건 그물이라
+    **YELLOW**(비차단). 소스에 레코드가 있는 채 값만 무너지는 부류(어댑터 회귀)를 늦게라도 잡는다."""
+    prior = env.forward_prior_rows
+    if not prior:
+        return
+    now = {r.get("insurer_code"): (_num(r.get("outstanding_bonds_total_eok")) or 0.0)
+           for r in (env.forward_rows or []) if r.get("insurer_code")}
+    was = {r.get("insurer_code"): (_num(r.get("outstanding_bonds_total_eok")) or 0.0)
+           for r in prior if r.get("insurer_code")}
+    q = (env.forward_manifest or {}).get("baseline_quarter")
+    for code, prev in sorted(was.items()):
+        cur = now.get(code)
+        if cur is None or prev <= 0:
+            continue
+        if cur <= 0:
+            yield dict(severity="YELLOW", master="forward_capital", company=code, quarter=q,
+                       rule="CAPSEC_COVERAGE_DROP_VS_PRIOR",
+                       message=f"{code}: 직전 스냅샷 발행잔액 {prev:,.0f}억 → 현재 0 "
+                               f"(배포본 대비 후퇴 — 소스 교체/어댑터 회귀 의심)")
+    tot_now, tot_was = sum(now.values()), sum(was.values())
+    if tot_was > 0 and (tot_was - tot_now) / tot_was >= _CAPSEC_PRIOR_DROP_REL:
+        yield dict(severity="YELLOW", master="forward_capital", company=None, quarter=q,
+                   rule="CAPSEC_COVERAGE_DROP_VS_PRIOR",
+                   message=f"전사 발행잔액 합계 {tot_was:,.0f}억 → {tot_now:,.0f}억 "
+                           f"({(tot_was - tot_now) / tot_was:.0%} 급감) — 커버리지 후퇴 의심")
 
 
 def _sidecar_quarter(as_of_date: str | None) -> str | None:
@@ -434,15 +746,28 @@ def verify_provenance_sidecar(res: GateResult, master: str, sidecar: dict,
                     rule="MISSING_PROVENANCE",
                     message=f"{company or '-'} {quarter or '-'}: source_file "
                             f"{sf or '(none)'} not found on disk (provenance unverifiable = RED)")
-        # capital-securities: authoritative source must be FSC_BONDS w/ effective_filtered==true
+        # capital-securities: (i) declared source_id must match source_file's real lineage,
+        # (ii) effective_filtered must be true (the actual donut-bug invariant).
         if master in _CAPITAL_SECURITIES_MASTERS:
-            if cell.get("source_id") != "FSC_BONDS" or cell.get("effective_filtered") is not True:
+            declared = cell.get("source_id")
+            expected = source_id_for_lineage(sf)
+            if expected is None:
+                res.add(check="as_of", severity="RED", master=master, company=company,
+                        quarter=quarter, rule="SOURCE_ID_LINEAGE_MISMATCH",
+                        message=f"{company or '-'} {quarter or '-'}: source_file={sf or '(none)'} "
+                                f"의 계보가 _SOURCE_LINEAGE에 미등록 → source_id={declared} 주장을 "
+                                f"검증할 수 없음 (미검증 = RED, owner 원칙 0)")
+            elif declared != expected:
+                res.add(check="as_of", severity="RED", master=master, company=company,
+                        quarter=quarter, rule="SOURCE_ID_LINEAGE_MISMATCH",
+                        message=f"{company or '-'} {quarter or '-'}: source_id={declared} 로 선언했으나 "
+                                f"source_file={sf} 의 실제 계보는 {expected} — provenance 라벨 거짓")
+            if cell.get("effective_filtered") is not True:
                 res.add(check="as_of", severity="RED", master=master, company=company,
                         quarter=quarter, rule="EFFECTIVE_LIST_NOT_FILTERED",
                         message=f"{company or '-'} {quarter or '-'}: capital-securities provenance "
-                                f"source_id={cell.get('source_id')} effective_filtered="
-                                f"{cell.get('effective_filtered')} — must be FSC_BONDS + "
-                                f"effective_filtered==true (donut bug guard)")
+                                f"effective_filtered={cell.get('effective_filtered')} — must be "
+                                f"true (상환·콜 도래분이 outstanding에 섞이는 도넛 버그 가드)")
 
 
 def check_as_of(res: GateResult, env: "Env") -> None:
@@ -456,19 +781,28 @@ def check_as_of(res: GateResult, env: "Env") -> None:
     sidecars = env.provenance_sidecars
 
     def _fallback_note(master):
-        # UH-3 (2026-07-21): 종전에는 notes에만 적어 **조용히 통과**했다 — 두 달 글리치(PM-2026-06-16)의
-        # 원형이 부분적으로 살아 있는 상태. notes는 집계도 안 되고 눈에 안 띈다.
-        # → 집계되는 YELLOW finding으로 승격(비차단). RED 전환은 상류가 sidecar를 발행한 뒤
-        #   (그 전에 RED로 두면 미발행 마스터가 전부 red-out돼 push가 영구히 막힌다).
-        res.add(check="as_of", severity="YELLOW", master=master, company=None, quarter=None,
+        # UH-3 이력 — 3단계로 굳었다:
+        #  (1) ~2026-07-21: notes에만 적어 **조용히 통과**(집계도 안 되고 눈에 안 띔) = 두 달
+        #      글리치(PM-2026-06-16)의 원형이 부분적으로 살아 있던 상태.
+        #  (2) 2026-07-21: 집계되는 YELLOW로 승격. RED로 못 올린 이유 = 그 시점엔 4개 마스터
+        #      전부 미발행이라 즉시 red-out으로 push가 영구히 막혔다.
+        #  (3) **2026-08-03: RED 전환 = UH-3 end-state 도달.** 4종(sensitivity_heatmap·
+        #      forward_capital·tier1/tier2_utilization) 사이드카가 모두 발행돼 라이브
+        #      MISSING_PROVENANCE_SIDECAR YELLOW가 0이 됐다 → 이제 "부재"는 정상 상태가 아니라
+        #      **발행 주체가 씻겨나갔다는 신호**다. 통과시키면 소스 신선도 검사축이 조용히 사라진다
+        #      (owner 원칙 0: SKIP-on-missing 금지).
+        # 아래 Phase-1 추론 블록은 지우지 않고 남긴다 — 이 분기는 이제 RED이므로 통과 경로가 아니고,
+        # 무엇이 어긋났는지(stale quarter / 결측 meta) 진단을 같이 보여주는 값이 있다.
+        res.add(check="as_of", severity="RED", master=master, company=None, quarter=None,
                 rule="MISSING_PROVENANCE_SIDECAR",
-                message=f"{master}: provenance sidecar 부재 → Phase-1 추론 fallback으로 통과 중 "
-                        f"(소스 신선도 미검증). 상류(parser/downloader)가 "
-                        f"`<master>_provenance.json` 발행 후 no-sidecar=RED로 전환 예정 "
-                        f"— `--print-provenance-contract` 참조")
+                message=f"{master}: provenance sidecar 부재 — 소스 신선도·계보가 미검증이다. "
+                        f"4종 전부 발행 완료(2026-08-03) 후이므로 부재 = 발행 경로가 씻겨나간 것. "
+                        f"`<master>_provenance.json` 재발행 필요 "
+                        f"(capital-securities 3종은 `scripts/emit_capsec_provenance.py`) "
+                        f"— 계약은 `--print-provenance-contract`")
         res.notes.append(
-            f"provenance sidecar absent for {master} → Phase-1 inference fallback (strict "
-            f"no-sidecar=RED activates after Phase 2 emission, owner principle 0)")
+            f"provenance sidecar absent for {master} → RED (UH-3 end-state active since "
+            f"2026-08-03; no-sidecar is no longer a pass, owner principle 0)")
 
     # --- 2a(i). sensitivity_heatmap as_of vs disclosure basis ---
     # Owner V12: heatmap must be on 25.4Q 경영공시 basis. A company still stamped FY2024
@@ -555,23 +889,34 @@ def check_as_of(res: GateResult, env: "Env") -> None:
     # The donut bug (spec §5.1): downloader used a stale snapshot WITHOUT filtering to bonds
     # effective (outstanding) as of the baseline. Evidence = bonds carry status/effective_call_date
     # AND only outstanding bonds feed the recognized totals. Absent evidence = RED.
+    #
+    # 2026-08-03 (owner 20260803T0056Z §3) — 증거를 **실제로 서빙되는 계보에서** 확인하도록 재조준.
+    # 종전에는 `data/bonds/normalized/<최신stamp>/bonds_by_insurer.json`(FSC 전용) 하나만 봤다.
+    # tier1/tier2는 이미 2026-06-20부터 DART per-bond가 원천이므로, 서빙되는 그 파일의 effective
+    # 필터는 **아무도 검증하지 않는 상태**였다(FSC 스냅샷이 통과해주면 그걸로 끝). forward_capital
+    # 까지 DART로 옮기면 FSC 스냅샷이 사라져 이 검사는 빈 껍데기가 된다.
+    # → 사이드카가 선언한 계보 집합을 구해, **쓰이는 계보마다** 증거를 요구한다. 증거 파일 부재 =
+    #   RED(통과 아님, owner 원칙 0).
     evid = env.bond_effective_evidence
-    if not evid["snapshot_present"]:
-        res.add(check="as_of", severity="RED", master="forward_capital", company=None, quarter=None,
-                rule="MISSING_EFFECTIVE_LIST",
-                message="no normalized bonds snapshot — cannot prove capital-securities effective "
-                        "as-of filtering was applied (donut bug guard, missing evidence = RED)")
-    else:
-        if not evid["has_status_field"] or not evid["has_effective_call_date"]:
-            res.add(check="as_of", severity="RED", master="forward_capital", company=None,
-                    quarter=None, rule="EFFECTIVE_LIST_NOT_FILTERED",
-                    message="bonds snapshot lacks status / effective_call_date fields — effective "
-                            "as-of filter cannot be applied (donut bug)")
-        elif evid["called_or_matured_in_recognized"]:
-            res.add(check="as_of", severity="RED", master="forward_capital", company=None,
-                    quarter=None, rule="EFFECTIVE_LIST_NOT_FILTERED",
-                    message="recognized/outstanding capital-securities total includes called or "
-                            "matured bonds — effective as-of filter NOT applied (donut bug)")
+    for lineage in sorted(evid):
+        ev = evid.get(lineage) or {}
+        if not ev.get("snapshot_present"):
+            res.add(check="as_of", severity="RED", master="capital_securities_effective_list",
+                    company=None, quarter=None, rule="MISSING_EFFECTIVE_LIST",
+                    message=f"{lineage}: 사이드카가 이 계보를 원천으로 선언했으나 per-bond 스냅샷이 "
+                            f"없거나 읽히지 않음 — capital-securities effective as-of 필터 적용을 "
+                            f"증명할 수 없음 (증거 부재 = RED, 도넛 버그 가드)")
+            continue
+        if not ev.get("has_status_field") or not ev.get("has_effective_call_date"):
+            res.add(check="as_of", severity="RED", master="capital_securities_effective_list",
+                    company=None, quarter=None, rule="EFFECTIVE_LIST_NOT_FILTERED",
+                    message=f"{lineage}: per-bond 스냅샷에 status/outstanding · call/maturity 필드가 "
+                            f"없음 — effective as-of 필터를 적용할 수 없다 (도넛 버그)")
+        elif ev.get("called_or_matured_in_recognized"):
+            detail = ev.get("leak_detail") or "상환·콜 도래분이 outstanding 인정액에 포함"
+            res.add(check="as_of", severity="RED", master="capital_securities_effective_list",
+                    company=None, quarter=None, rule="EFFECTIVE_LIST_NOT_FILTERED",
+                    message=f"{lineage}: {detail} — effective as-of 필터 미적용 (도넛 버그)")
 
 
 # ===========================================================================
@@ -836,8 +1181,15 @@ class Env:
                                       lambda: self._load_json_opt("kics_forward_capital.json") or [])
         self.tier1_latest = self._get("tier1_latest", lambda: self._load_tier("tier1_utilization"))
         self.tier2_latest = self._get("tier2_latest", lambda: self._load_tier("tier2_utilization"))
-        self.bond_effective_evidence = self._get("bond_effective_evidence", self._load_bond_evidence)
+        # sidecars FIRST — bond evidence는 사이드카가 선언한 source_file에서 계보를 뽑아 검사한다.
         self.provenance_sidecars = self._get("provenance_sidecars", self._load_provenance_sidecars)
+        self.bond_effective_evidence = self._get("bond_effective_evidence", self._load_bond_evidence)
+        # capital-securities 커버리지 census(owner 20260803T0310Z)의 입력. 마스터가 스스로 붙인
+        # bond_coverage 라벨이 아니라 **선언된 소스 파일**을 읽어 회사 존재 여부를 게이트가 도출한다.
+        self.capsec_source_files = self._get("capsec_source_files",
+                                             self._resolve_capsec_source_files)
+        self.capsec_bond_source = self._get("capsec_bond_source", self._load_capsec_bond_source)
+        self.forward_prior_rows = self._get("forward_prior_rows", self._load_forward_prior_rows)
 
         # derived
         self.code_name = {r["원보험사코드"]: r["원수사명"] for r in self.kics_records
@@ -845,8 +1197,15 @@ class Env:
         # wf is keyed by (원수사명, 공시분기); the code lookup is built from the K-ICS
         # records instead. (Until 2026-07-22 an empty `for ... : pass` loop walked the
         # whole waterfall here doing nothing — leftover scaffolding, removed.)
-        self.wf_by_code = {}
-        self._build_wf_by_code()
+        # selftest(inject 모드)는 합성데이터 격리 — 디스크 마스터를 읽지 않는다(안 그러면
+        # CSM_WATERFALL_PLAUSIBILITY 같은 조인 룰이 실데이터에 오염된다).
+        if "wf_by_code" in self.inject:
+            self.wf_by_code = self.inject["wf_by_code"]
+        elif self.inject:
+            self.wf_by_code = {}
+        else:
+            self.wf_by_code = {}
+            self._build_wf_by_code()
         self.latest_kics_quarter = self._latest_quarter(self.kics_records)
         # sensitivity heatmap target = the disclosure quarter the heatmap SHOULD be on.
         # Owner V12 anchored it to the 25.4Q 경영공시 basis. Use the latest sensitivity-bearing
@@ -887,6 +1246,51 @@ class Env:
             out[master] = self._load_json_opt(side)
         return out
 
+    def _resolve_capsec_source_files(self) -> dict[str, list[str]]:
+        """{capital-securities master: [사이드카가 선언한 per-bond source_file, ...]}.
+        선언이 없으면 빈 리스트 → 커버리지 census가 CAPSEC_SOURCE_UNRESOLVED RED을 낸다
+        (조용히 검사가 사라지는 '빈 껍데기'를 만들지 않는다)."""
+        out: dict[str, list[str]] = {}
+        for master in sorted(_CAPITAL_SECURITIES_MASTERS):
+            files: list[str] = []
+            sc = (self.provenance_sidecars or {}).get(master)
+            for c in (sc or {}).get("cells") or []:
+                sf = str(c.get("source_file") or "").replace("\\", "/")
+                if sf and sf not in files:
+                    files.append(sf)
+            out[master] = files
+        return out
+
+    def _load_capsec_bond_source(self) -> dict[str, dict]:
+        """선언된 per-bond 소스 전부를 `{code: {n_bonds, hybrid_mn, sub_mn, total_mn}}`로 병합."""
+        idx: dict[str, dict] = {}
+        seen: set[str] = set()
+        for files in (self.capsec_source_files or {}).values():
+            for rel in files:
+                if rel in seen:
+                    continue
+                seen.add(rel)
+                doc = self._load_json_opt(rel)   # 깨진 파일은 unreadable에 기록 → ARTIFACT_UNREADABLE
+                if doc:
+                    index_bond_source(doc, idx)
+        return idx
+
+    def _load_forward_prior_rows(self):
+        """직전 forward 스냅샷(`output/kics_forward_capital/<stamp>/forward_simulation_v3.json`)의
+        행들. 최신 stamp는 현 배포본과 같은 실행이므로 **그 앞 stamp**를 비교 대상으로 쓴다.
+        selftest(inject 모드)는 합성데이터 격리 — 디스크를 읽지 않는다."""
+        if self.inject:
+            return None
+        base = ROOT / "output" / "kics_forward_capital"
+        if not base.exists():
+            return None
+        dirs = sorted([d for d in base.iterdir()
+                       if d.is_dir() and (d / "forward_simulation_v3.json").exists()])
+        if len(dirs) < 2:
+            return None
+        return self._load_json_opt(
+            (dirs[-2] / "forward_simulation_v3.json").relative_to(ROOT).as_posix())
+
     def _load_forward_manifest(self):
         base = ROOT / "output" / "kics_forward_capital"
         if not base.exists():
@@ -917,24 +1321,120 @@ class Env:
             return None
 
     def _load_bond_evidence(self):
-        """Evidence that capital-securities effective as-of filtering was applied.
+        """Evidence that capital-securities effective as-of filtering was applied, **per lineage in
+        actual use** (owner 20260803T0056Z §3). Returns {lineage: evidence-dict}.
+
+        종전에는 `data/bonds/normalized/<최신stamp>/bonds_by_insurer.json`(FSC 전용) 한 파일만 봤다.
+        tier1/tier2는 2026-06-20부터 DART per-bond가 원천이므로 **서빙되는 그 파일의 effective
+        필터는 아무도 검증하지 않았다**. 이제 사이드카가 선언한 source_file 집합에서 계보를 뽑아,
+        쓰이는 계보마다 그 **선언된 파일**을 검사한다 — 게이트가 검사하는 파일 = 사용자가 보는 파일."""
+        in_use = capsec_sources_in_use(self.provenance_sidecars)
+        out = {}
+        for lineage, files in in_use.items():
+            if lineage == "DART":
+                out[lineage] = self._merge_bond_evidence(
+                    [self._load_dart_bond_evidence(f) for f in sorted(files)] or
+                    [self._blank_bond_evidence()])
+            else:
+                out[lineage] = self._merge_bond_evidence(
+                    [self._load_fsc_bond_evidence(f) for f in sorted(files)] or
+                    [self._load_fsc_bond_evidence(None)])
+        return out
+
+    @staticmethod
+    def _blank_bond_evidence():
+        return {"snapshot_present": False, "has_status_field": False,
+                "has_effective_call_date": False, "called_or_matured_in_recognized": False,
+                "leak_detail": None}
+
+    @staticmethod
+    def _merge_bond_evidence(evs):
+        """여러 선언 파일의 증거 결합: 필드존재/스냅샷은 AND(하나라도 못 갖추면 미증명),
+        누출은 OR(하나라도 새면 도넛 버그)."""
+        evs = [e for e in evs if e]
+        if not evs:
+            return Env._blank_bond_evidence()
+        det = [e.get("leak_detail") for e in evs if e.get("leak_detail")]
+        return {"snapshot_present": all(e["snapshot_present"] for e in evs),
+                "has_status_field": all(e["has_status_field"] for e in evs),
+                "has_effective_call_date": all(e["has_effective_call_date"] for e in evs),
+                "called_or_matured_in_recognized": any(e["called_or_matured_in_recognized"] for e in evs),
+                "leak_detail": "; ".join(det) or None}
+
+    @staticmethod
+    def _bond_date(s):
+        if not s:
+            return None
+        try:
+            parts = str(s).replace(".", "-").replace("/", "-").split("-")[:3]
+            return _dt.date(*(int(x) for x in parts))
+        except Exception:
+            return None
+
+    def _load_dart_bond_evidence(self, rel: str):
+        """DART 사업보고서 per-bond 추출물(사이드카가 선언한 `rel`)의 effective 증거.
+        이 파일이 2026-06-20부터 tier1/tier2 소진율 분자의 실제 원천인데 종전 게이트는 FSC 스냅샷만
+        봤다 = 서빙되는 파일이 미검증. 두 축으로 확인한다:
+          (i) 아티팩트 자체 as-of 기준: 콜/만기가 이미 도래했는데 outstanding>0이면 미행사 사실을
+              `past_call_outstanding: true`로 명시해야 한다(흥국식 콜경과 예외). 미표기 = 상환분이
+              인정액에 섞인 것.
+          (ii) 소비 시점 갭: 아티팩트 as-of < 마스터 as-of 구간에 콜이 도래한 채권. 후순위는
+              wire_capital_securities_to_utilization.amort()가 0으로 떨어뜨려 걸러지지만, 신종(hybrid)은
+              tier1 분자에 무조건 합산되므로(같은 스크립트 `new_hyb += out`) 이 검사만이 막는다."""
+        ev = self._blank_bond_evidence()
+        doc = self._load_json_opt(rel) if rel else None
+        if not doc:
+            return ev
+        ev["snapshot_present"] = True
+        snap = self._bond_date(doc.get("as_of"))
+        master_as_of = _quarter_end_date((self.tier1_latest or {}).get("quarter")
+                                         or (self.tier2_latest or {}).get("quarter")) or snap
+        leaks = []
+        for c in doc.get("companies") or []:
+            for b in c.get("bonds") or []:
+                if ("outstanding_mn" in b) and ("past_call_outstanding" in b):
+                    ev["has_status_field"] = True
+                if b.get("call_date") or b.get("legal_maturity"):
+                    ev["has_effective_call_date"] = True
+                eff = self._bond_date(b.get("call_date")) or self._bond_date(b.get("legal_maturity"))
+                out = b.get("outstanding_mn") or 0
+                if eff is None or snap is None or not out or b.get("past_call_outstanding") is True:
+                    continue
+                if eff <= snap:
+                    leaks.append(f"{c.get('code')} {b.get('name') or b.get('tier')} "
+                                 f"(eff {eff} <= 스냅샷 {snap}, outstanding {out}백만, 미행사 미표기)")
+                elif master_as_of and eff <= master_as_of and b.get("tier") == "hybrid":
+                    leaks.append(f"{c.get('code')} {b.get('name') or 'hybrid'} "
+                                 f"(콜 {eff} 이 마스터 as-of {master_as_of} 이전인데 신종 분자에 "
+                                 f"{out}백만 전액 합산)")
+        if leaks:
+            ev["called_or_matured_in_recognized"] = True
+            ev["leak_detail"] = "; ".join(leaks[:5]) + (f" (+{len(leaks) - 5}건)" if len(leaks) > 5 else "")
+        return ev
+
+    def _load_fsc_bond_evidence(self, rel: str | None = None):
+        """FSC(data.go.kr 채권등록) 정규화 스냅샷의 effective 증거.
+        `rel`이 주어지면 **사이드카가 선언한 그 파일**을, 없으면 최신 stamp 디렉터리를 본다.
         snapshot_present + status/effective_call_date fields + no called/matured bond counted in
         the outstanding totals (the donut-bug guard)."""
-        base = ROOT / "data" / "bonds" / "normalized"
-        ev = {"snapshot_present": False, "has_status_field": False,
-              "has_effective_call_date": False, "called_or_matured_in_recognized": False}
-        if not base.exists():
-            return ev
-        dirs = sorted([d for d in base.iterdir() if d.is_dir()])
-        if not dirs:
-            return ev
-        bi = dirs[-1] / "bonds_by_insurer.json"
-        if not bi.exists():
-            return ev
-        try:
-            doc = json.loads(bi.read_text(encoding="utf-8"))
-        except Exception:
-            return ev
+        ev = self._blank_bond_evidence()
+        if rel:
+            doc = self._load_json_opt(rel)
+            if not doc:
+                return ev
+        else:
+            base = ROOT / "data" / "bonds" / "normalized"
+            if not base.exists():
+                return ev
+            dirs = sorted([d for d in base.iterdir() if d.is_dir()])
+            if not dirs:
+                return ev
+            bi = dirs[-1] / "bonds_by_insurer.json"
+            if not bi.exists():
+                return ev
+            doc = self._load_json_opt(bi.relative_to(ROOT).as_posix())
+            if not doc:
+                return ev
         ev["snapshot_present"] = True
         for grp in doc.values():
             for b in (grp.get("bonds") or []):

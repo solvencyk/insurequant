@@ -15,8 +15,10 @@ deterministic: no browser, no server.
 from __future__ import annotations
 
 import ast
+import json
 import os
 import re
+import sys
 from pathlib import Path
 
 import pytest
@@ -190,3 +192,41 @@ def test_kics_panel_data_is_external():
                  "kics_forward_capital.json"):
         assert f"fetch('{name}')" in html, f"K-ICS.html no longer fetches {name}"
         assert (REPO / name).exists(), f"missing deploy asset {name}"
+
+
+def test_capsec_provenance_source_id_matches_lineage():
+    """The three capital-securities sidecars must declare the source_id their source_file's
+    lineage actually implies — and be reproducible by a generator, not typed by hand.
+
+    Until 2026-08-03 all three said `source_id: "FSC_BONDS"` because the gate hardcoded that
+    enum, while tier1/tier2 had been fed by DART since 2026-06-20
+    (`data/bonds/capital_securities_fy2025.json`). The gate "verified" a label that was false —
+    a false-green (owner inbox/validation/20260803T0056Z, PM-2026-08-03). The gate now REDs on
+    the mismatch (SOURCE_ID_LINEAGE_MISMATCH); this test is the fast local signal so a rebuild
+    that washes the correction out is caught before push.
+    """
+    import subprocess
+
+    sys.path.insert(0, str(REPO / "scripts"))
+    from validate_data_contract import source_id_for_lineage
+
+    for name in ("kics_forward_capital_provenance.json",
+                 "kics_tier1_utilization_provenance.json",
+                 "kics_tier2_utilization_provenance.json"):
+        p = REPO / name
+        assert p.exists(), f"missing provenance sidecar {name}"
+        for cell in json.loads(p.read_text(encoding="utf-8")).get("cells", []):
+            sf = cell.get("source_file")
+            expected = source_id_for_lineage(sf)
+            assert expected is not None, (
+                f"{name}: source_file={sf} lineage unregistered in _SOURCE_LINEAGE")
+            assert cell.get("source_id") == expected, (
+                f"{name}: source_id={cell.get('source_id')} but {sf} lineage is {expected}")
+            assert cell.get("effective_filtered") is True, (
+                f"{name}: effective_filtered must stay true (donut bug guard)")
+
+    # the sidecars must be regenerable — a hand-typed sidecar has no defence against a rebuild
+    r = subprocess.run([sys.executable, str(REPO / "scripts" / "emit_capsec_provenance.py"),
+                        "--check"], capture_output=True, text=True, encoding="utf-8", cwd=REPO)
+    assert r.returncode == 0, (
+        f"emit_capsec_provenance.py --check reports drift:\n{r.stdout}\n{r.stderr}")
