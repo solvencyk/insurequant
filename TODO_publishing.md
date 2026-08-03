@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-07-22 · Stage 4/5 — publishing
+> Last updated: 2026-08-03 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md (skeleton) · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -12,6 +12,8 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 ## Status
 
 Open viz-assembly work, all gated on upstream stages: F4 v2 (forward-outlook confidence research), F13 (재보험 지표, waits on downloader F8), F17/F18 viz (waits on parser Tier2/IR JSON). CSM bubble map **완결됨** (라이브, 2026-06-14 — 4축 V2 폐기). No master JSON push pending here standalone.
+
+**2026-08-03**: 2026-08-03 capsec 체인의 마스터 JSON 4종을 `main`에 배포 완료 (`a4e8a7c..255e445`) — `CSM_waterfall.json`(1944→1962행, KR0004 3개년 온보딩)·`NB_CSM_multiple.json`(321→327)·`PL_breakdown.json`(KR0051 2025.4Q 투자이익/보험금융손익 분리)·`kics_forward_capital.json`(FSC→DART 리베이스). HTML 4종+`common.css`는 main과 이미 동일해 미포함. Pre-flight `validate_data_contract.py` RED=0, 행 손실 가드 dropped=0, 배포 후 라이브 4파일 브라우저 fetch 검증 완료. **잔여: `insurequant_master_tables.xlsx` 재생성** — `inbox/publishing/20260803T0743Z__owner__MULTI__master_xlsx_regen_after_json_deploy.md` (open, 공식 `xlsx` skill 경유 필수).
 
 **2026-07-22**: designer의 A11y 색상/대비 2차분(owner-review queue 5건, `docs/changelog_designer.md` 2026-07-21d) + 트리맵 red→blue 원복(finviz 정체성, 07-22) — `launch_runbook.md` 절차로 격리 워크트리 cherry-push, owner GO 받고 `main`에 push 완료(`a5d0ffa`, index/K-ICS/IFRS17.html + common.css). Pre-flight `validate_data_contract.py` RED=0 확인. 배포 후 라이브 4개 값 curl 검증 완료.
 

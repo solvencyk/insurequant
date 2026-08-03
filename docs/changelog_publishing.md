@@ -10,6 +10,31 @@
 
 ---
 
+## 2026-08-03 — main 배포: 마스터 JSON 4종 동기화 (`a4e8a7c..255e445`)
+
+**배경**: 2026-08-03 capsec 체인(`184286c`·`64043fa`·`cb084e7`·`08321db`·`eea9da3`)이 작업 브랜치에만 커밋돼 있었고 라이브(main)에는 미반영. owner 지시로 배포.
+
+**올린 것 (4개, 전부 루트 마스터 JSON — HTML/CSS는 손대지 않음)**:
+
+| 파일 | 델타 |
+|---|---|
+| `CSM_waterfall.json` | KR0075 비엔피파리바카디프 CSM 단위 재정정 + KR0004 예별손해 3개년(2023/2024/2025.4Q) 18셀 신규 온보딩 (1944→1962행) |
+| `NB_CSM_multiple.json` | 위 반영 재산출 (321→327행) |
+| `PL_breakdown.json` | **KR0051 신한이지손해보험** 2025.4Q 투자이익 -3890.709458→-1603.902737 / 보험금융손익 0.0→-2286.806721 (부모 투자손익 -3890.709458 불변, 7799행 유지) |
+| `kics_forward_capital.json` | 자본증권 소스 FSC bonds → DART 개별사채 리베이스 (38사 유지, 값 전면 갱신) |
+
+**올리지 않은 것**: `index.html`/`K-ICS.html`/`IFRS17.html`/`공시보고서.html`/`common.css` — main과 이미 byte-identical(HTML은 designer 소관이기도 함). provenance sidecar 4종은 HTML이 참조하지 않아 keep-list 밖 → main slim 유지 위해 제외.
+
+**절차(runbook 준수)**: ① pre-flight `validate_data_contract.py` **SUMMARY RED=0** YELLOW=219 provisional=False ② K-ICS 게이트 별도 실행 — RED=12는 전부 `TODO.md` 등재 exception(KR0087 2023.2Q ×7 · KR0097 2024.2Q ×4 · KR0079 8_life ×1, image-only)이고 `kics_disclosure.json`은 main과 diff 0이라 이번 변경과 무관 ③ keep-list를 4개 HTML의 `fetch(`/`src=`/`href=`에서 재파생 ④ **행 손실 가드** — main 버전과 신버전을 (원보험사코드,항목번호,공시분기) 키로 대조해 dropped cells 0 확인 ⑤ 격리 워크트리 `git worktree add ../insurequant-main-deploy main`, staged가 정확히 4개인지 확인 ⑥ owner 사전 GO로 push ⑦ 워크트리 제거, 작업 브랜치 복귀 확인.
+
+**배포 후 검증(라이브 브라우저 fetch, cache-bust)**: CSM 1962행·KR0004 3분기 present·KR0075 2025.4Q 기말 299.584 / PL 7799행·KR0051 3항목 분리 확인 / NB 327행 / forward 38사. 회사망에서 `curl`은 TLS 차단으로 빈 응답 — 브라우저 경유로 검증했다.
+
+⚠️ **정정**: 배포 커밋 `255e445`의 메시지가 PL 델타 회사를 KR0075로 잘못 적었다(실제 KR0051). main은 공개 배포 브랜치라 force-push로 고치지 않고 여기에만 정정 기록.
+
+**후속**: `insurequant_master_tables.xlsx`가 stale(7/30 17:16 < 마스터 4종 8/3) → `inbox/publishing/20260803T0743Z__owner__MULTI__master_xlsx_regen_after_json_deploy.md`로 재생성 발주(공식 `xlsx` skill 경유, openpyxl 재저장 금지). xlsx는 keep-list 밖이라 배포 대상 아님.
+
+---
+
 ## 2026-07-22 — main 배포: K-ICS 패널 데이터 인라인 → 외부 JSON (`a5d0ffa..8372b53`)
 
 **올린 것 (4개)**: `K-ICS.html`(208,957→62,081자) + 신규 keep-list 3개 `kics_tier1_utilization.json`(39행)·`kics_tier2_utilization.json`(39행)·`kics_forward_capital.json`(38행). 배경·근거는 cross-stage changelog 2026-07-21 리팩토링 2차 B 항목.
