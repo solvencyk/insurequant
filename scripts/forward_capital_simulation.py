@@ -475,18 +475,26 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
             "basic_capacity_exhausted": basic_capacity_exhausted,
         })
 
+    baseline_payload = {
+        "capital_eok": cap_baseline,
+        "basic_capital_eok": basic_baseline,
+        "scr_post_eok": scr_post,
+        "scr_pre_eok": scr_pre,
+        "ratio_post_pct": round(cap_baseline / scr_post * 100, 2),
+        "basic_ratio_post_pct": round((basic_baseline or 0) / scr_post * 100, 2) if basic_baseline else None,
+    }
     return {
         "insurer_code": insurer_code,
         "insurer_name": baseline.get("insurer_name"),
         "status": "ok",
-        "baseline_2025_4Q": {
-            "capital_eok": cap_baseline,
-            "basic_capital_eok": basic_baseline,
-            "scr_post_eok": scr_post,
-            "scr_pre_eok": scr_pre,
-            "ratio_post_pct": round(cap_baseline / scr_post * 100, 2),
-            "basic_ratio_post_pct": round((basic_baseline or 0) / scr_post * 100, 2) if basic_baseline else None,
-        },
+        # Quarter-agnostic key (UH-7 fix, inbox/publishing/20260803T0210Z): the old
+        # key name hardcoded a quarter that drifted out of sync with BASELINE_QUARTER
+        # after the 2026-06-16 rebaseline. Consumers read baseline_quarter to know
+        # which quarter this is, not the key name.
+        "baseline": baseline_payload,
+        "baseline_quarter": BASELINE_QUARTER,
+        # TEMP alias, drop after designer swaps K-ICS.html off this key (same inbox).
+        "baseline_2025_4Q": baseline_payload,
         "outstanding_bonds_total_eok": round(sum(e["amount_eok"] for e in bond_events), 1),
         "outstanding_tier1_eok": round(sum(e["amount_eok"] for e in bond_events if e["tier"] == "tier1_hybrid"), 1),
         "projections": projections,

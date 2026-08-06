@@ -1,11 +1,30 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-07-22 · Stage: cross-stage
+> Last updated: 2026-08-06 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
 
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
+
+---
+
+## 2026-08-06 — 리팩토링 6차: 코드가 아니라 "규칙문서 층"(context rot)
+
+> 1~5차는 코드를 정리했는데, **그 코드를 가리키는 프롬프트·인덱스는 안 훑었다.** Anthropic 공식 `claude-md-management` 플러그인의 6축 rubric(Commands / Architecture / Non-obvious Patterns / Conciseness / Currency / Actionability)으로 규칙문서 31개를 실측한 결과.
+
+**측정 결과 (깨끗한 축도 기록).** `CLAUDE.md` 127줄 = 권고선 200줄 이하 통과. 경로 참조 136건 중 **대부분은 "이건 삭제됐다"는 의도적 기록**(= 정확한 내용)이라 진짜 rot은 5건뿐. 단 세션당 실제 로드량은 **970~1,507줄**(validation 최대) — CLAUDE.md 하나만 짧아도 체인 전체가 비용이며, 2026-07-27 changelog deferred가 이미 그 방향의 조치였다.
+
+**고친 것 2건 (rubric red flag "TODO items never completed" / "commands that would fail" 정면 해당):**
+
+1. **`CLAUDE.md` "Stage prompt 작성 진행도"가 매 세션 거짓말을 하고 있었다.** designer/publishing/parser를 "skeleton, TBD"로 표기했지만 designer의 TBD 6건(design system·common.css·A11y·legend density·donut breakpoint·mobile scope)은 **전부 프롬프트 §5.1~5.5에 이미 있었고**(2026-06-16 정식화), publishing의 branch policy·site-deploy hook·rollback 3건도 §5/§9/§10 + `launch-runbook` skill로 종결(2026-07-21, §8에 `[x]`로 표시돼 있었음). 에이전트가 프롬프트를 못 믿고 재작성·중복할 위험. → 상태표를 실측대로 교체하고, **잔여 TBD 목록은 각 프롬프트의 TBD 절이 정본**으로 못 박아 복사본을 없앴다(복사본이 stale의 원인이었다).
+2. **venv 경로가 저장소 어디에도 없었다 (Actionability).** `CLAUDE.md`는 `python scripts/validate_kics_disclosure.py`라 적었지만 2026-06-14에 venv가 트리 밖(`C:/Users/sangwook.cho/venvs/insurequant`)으로 나갔고 트리엔 `.venv`가 없다. 맨 `python`은 스토어 파이썬 3.13에 걸리는데 **`docling`이 없어 `--stage parse`가 즉사**하고, pandas·openpyxl·fitz·pdfplumber·playwright는 우연히 깔려 있어 **다른 스크립트는 조용히 돌아가므로 더 위험**했다. → `## 🐍 실행 환경` 절 신설 + 게이트 명령을 풀패스로 교체. **경로는 `/` 표기** — 백슬래시는 Bash 도구에서 이스케이프로 먹혀 `command not found`가 된다(PowerShell만 통과). 문서에 적힌 명령을 그대로 복붙 실행해 검증(RED=12·exit 2 = TODO.md L89-95 문서화 예외, 게이트 계약 충족).
+
+**부수 수정:** `docs/domains/claude-agent-kics.md`의 플로우 링크 4개 전부 깨져 있었다 — `claude-` 접두어 누락 3건 + `claude-json-build.md`는 커밋 0543414(2026-07-21 `kics_data.json` 파이프라인 제거)에서 **같이 삭제된 문서**를 계속 가리키고 있었다. 1~5차 리팩토링이 남긴 dangling reference의 전형.
+
+**미결 (owner 결정 필요):** 단일소스 위반 — 골든테스트 표가 4곳(`CLAUDE.md`·validation 프롬프트·ifrs17 도메인doc·ifrs17 SKILL), keep-list도 4곳에 복제돼 있어 골든 하나 추가하면 4곳을 고쳐야 한다. "정본은 프롬프트, `CLAUDE.md`는 링크만" 방향이 맞지만 미착수. 또 publishing 프롬프트 §1(L107)과 §9(L266)가 `data/ifrs17/viz` cutover 여부로 **자기모순** — §1을 먼저 읽으니 stale 쪽을 따라간다. publishing inbox 발주 대상.
+
+**도구:** `claude-md-management@claude-plugins-official` 설치(user scope). `claude-md-improver` 스킬(코드베이스 대조 채점) + `/revise-claude-md`(세션 학습 반영) — 마일스톤 전/주간 점검용.
 
 ---
 

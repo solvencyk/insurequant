@@ -10,6 +10,12 @@
 
 ---
 
+## 2026-08-03 (2차) — inbox 처리: master xlsx 재생성 + forward baseline 키 오기 수정 (UH-7)
+
+**1. `insurequant_master_tables.xlsx` 재생성** (`inbox/publishing/20260803T0743Z`, owner escalate → resolved). 위 배포로 마스터 JSON 4종이 갱신됐는데 xlsx가 7/30 stale이었음. 재생성 전 `data_only=False`로 전체 시트 스캔해 수식 셀 0건(=owner 수기 리뷰 formula 없음) 확인 → `.bak` 백업 → 공식 `xlsx` skill 워크플로우로 `scripts/build_master_xlsx.py` 실행(`build_csm_waterfall_master.py`는 미실행). 결과: CSM워터폴 1,962행·신계약CSM배수 327행·손익분해PL 7,799행(행수 유지, 값만 갱신). KR0004 3개년(2023/2024/2025.4Q) + KR0051 투자이익/보험금융손익 분리값을 xlsx에서 직접 read-back해 확인. xlsx는 git 미추적/keep-list 밖 — push 대상 아님.
+
+**2. `kics_forward_capital.json` `baseline_2025_4Q` 키 오기** (`inbox/publishing/20260803T0210Z`, validation UH-7 → answered). `scripts/forward_capital_simulation.py:482`의 키가 `BASELINE_QUARTER`("2026.1Q")와 무관하게 하드코딩된 `"baseline_2025_4Q"`였음(2026-06-16 rebaseline 때 안 따라간 잔존 이름) — 데이터는 맞고 키 이름만 거짓이라 게이트는 통과하지만 다음 분기 as-of 판단 때 같은 오독을 재생산할 위험. 조치: quarter-agnostic `"baseline"` 필드 + 형제 `"baseline_quarter"`로 교체(하드코딩 연도 재발 방지), 이번 릴리스만 `"baseline_2025_4Q"` alias를 같은 payload로 병기해 하위호환 유지. 재생성 후 `validate_data_contract.py` RED=0 YELLOW=219(불변) 확인, `pytest tests/test_deploy_assets.py` 9 passed. `K-ICS.html:1090`이 이 키를 읽는 유일한 소비처(publishing은 HTML을 못 건드림) → designer inbox(`20260803T0900Z`)로 스왑 요청, alias는 designer 확인 후 다음 실행에서 제거.
+
 ## 2026-08-03 — main 배포: 마스터 JSON 4종 동기화 (`a4e8a7c..255e445`)
 
 **배경**: 2026-08-03 capsec 체인(`184286c`·`64043fa`·`cb084e7`·`08321db`·`eea9da3`)이 작업 브랜치에만 커밋돼 있었고 라이브(main)에는 미반영. owner 지시로 배포.

@@ -13,7 +13,11 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 Open viz-assembly work, all gated on upstream stages: F4 v2 (forward-outlook confidence research), F13 (재보험 지표, waits on downloader F8), F17/F18 viz (waits on parser Tier2/IR JSON). CSM bubble map **완결됨** (라이브, 2026-06-14 — 4축 V2 폐기). No master JSON push pending here standalone.
 
-**2026-08-03**: 2026-08-03 capsec 체인의 마스터 JSON 4종을 `main`에 배포 완료 (`a4e8a7c..255e445`) — `CSM_waterfall.json`(1944→1962행, KR0004 3개년 온보딩)·`NB_CSM_multiple.json`(321→327)·`PL_breakdown.json`(KR0051 2025.4Q 투자이익/보험금융손익 분리)·`kics_forward_capital.json`(FSC→DART 리베이스). HTML 4종+`common.css`는 main과 이미 동일해 미포함. Pre-flight `validate_data_contract.py` RED=0, 행 손실 가드 dropped=0, 배포 후 라이브 4파일 브라우저 fetch 검증 완료. **잔여: `insurequant_master_tables.xlsx` 재생성** — `inbox/publishing/20260803T0743Z__owner__MULTI__master_xlsx_regen_after_json_deploy.md` (open, 공식 `xlsx` skill 경유 필수).
+**2026-08-03**: 2026-08-03 capsec 체인의 마스터 JSON 4종을 `main`에 배포 완료 (`a4e8a7c..255e445`) — `CSM_waterfall.json`(1944→1962행, KR0004 3개년 온보딩)·`NB_CSM_multiple.json`(321→327)·`PL_breakdown.json`(KR0051 2025.4Q 투자이익/보험금융손익 분리)·`kics_forward_capital.json`(FSC→DART 리베이스). HTML 4종+`common.css`는 main과 이미 동일해 미포함. Pre-flight `validate_data_contract.py` RED=0, 행 손실 가드 dropped=0, 배포 후 라이브 4파일 브라우저 fetch 검증 완료.
+
+**2026-08-03 (2차)**: inbox 2건 처리.
+1. `insurequant_master_tables.xlsx` 재생성 완료 (`inbox/publishing/20260803T0743Z`, resolved) — 재생성 전 수식 셀 0건 스캔 확인 후 `.bak` 백업 → `build_master_xlsx.py` 실행. KR0004 3개년·KR0051 PL 분리값 눈으로 확인. xlsx는 untracked/push 비대상.
+2. `kics_forward_capital.json`의 `baseline_2025_4Q` 키 오기(UH-7, `inbox/publishing/20260803T0210Z`, answered) — `scripts/forward_capital_simulation.py`에서 quarter-agnostic `baseline` + `baseline_quarter` 형제 필드로 교체, 하위호환 위해 이번 릴리스만 `baseline_2025_4Q` alias 병기. 재생성 후 `validate_data_contract.py` RED=0, `pytest tests/test_deploy_assets.py` 9 passed. HTML 소비처(`K-ICS.html:1090`, 1곳)는 publishing이 못 건드리므로 designer inbox로 라우팅(`inbox/designer/20260803T0900Z`) — alias 제거는 designer 스왑 확인 후.
 
 **2026-07-22**: designer의 A11y 색상/대비 2차분(owner-review queue 5건, `docs/changelog_designer.md` 2026-07-21d) + 트리맵 red→blue 원복(finviz 정체성, 07-22) — `launch_runbook.md` 절차로 격리 워크트리 cherry-push, owner GO 받고 `main`에 push 완료(`a5d0ffa`, index/K-ICS/IFRS17.html + common.css). Pre-flight `validate_data_contract.py` RED=0 확인. 배포 후 라이브 4개 값 curl 검증 완료.
 

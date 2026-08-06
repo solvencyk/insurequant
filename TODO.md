@@ -1,6 +1,6 @@
 # Insurequant TODO
 
-> Last updated: 2026-07-21 · Stage: cross-stage
+> Last updated: 2026-08-06 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage; parser 2-lane since 2026-06-13) · Stage TODOs: TODO_<stage>.md
 
 Pipeline organized as **downloader / parser / validation / publishing / designer** — each stage has its own prompt (`docs/agents/claude-agent-<stage>.md`), TODO (`TODO_<stage>.md`), and changelog (`docs/changelog_<stage>.md`). See `CLAUDE.md` for the full index. This root file carries cross-stage items + project-wide policy only.
@@ -8,6 +8,11 @@ Pipeline organized as **downloader / parser / validation / publishing / designer
 ## Status
 
 Cross-stage focus (2026-07-21): K-ICS gate **RED=12**, all three offenders already documented below as image/scan-only source (KR0087 동양 2023.2Q ×7 · KR0097 하나생명 2024.2Q ×4 · KR0079 미래에셋 2023.2Q 8_life ×1) → gate contract satisfied. Open cross-stage tails: 적용후 하위 census 결측 4 + 적용후 요구자본 continuity break 34셀/5(회사,분기) (validation), tier2 소진율 분자 정의 (아래 🟠), 항목4/12/13 값_적용후 18사 미러링 오염 후속 감사. Mid-long-term: duration-gap (MLG-1), K-ICS 시장위험 분해 (MLG-2) blocked on owner decisions.
+
+**규칙문서 리팩토링 (2026-08-06, 리팩토링 6차 — 상세는 `docs/claude-changelog.md`).** 코드가 아니라 프롬프트·인덱스 층의 context rot을 `claude-md-management` 6축 rubric으로 실측. 고침: ① `CLAUDE.md` 진행도표가 designer/publishing을 "skeleton"으로 오표기(실제론 §5.1~5.5·§5/§9/§10로 종결) → 실측 교체 + 잔여 TBD 정본을 각 프롬프트로 단일화, ② venv 경로 미기재(맨 `python`은 docling 없어 `--stage parse` 즉사) → `## 🐍 실행 환경` 신설, ③ kics 도메인doc 플로우 링크 4개 깨짐 수정. **잔여 2건:**
+
+- [ ] **DOC-1 단일소스 위반** — 골든테스트 표 4곳·keep-list 4곳 중복. 정본=프롬프트, `CLAUDE.md`는 링크만으로 축소. owner 결정 대기.
+- [ ] **DOC-2 publishing 프롬프트 자기모순** — §1(L107) "`data/ifrs17/viz` cutover 대기" vs §9(L266) "2026-06-16 LANDED". §1을 먼저 읽어 stale을 따라감. **발주 완료**: `inbox/publishing/20260806T0027Z__owner__MULTI__prompt_viz_path_self_contradiction.md`.
 
 **J-ESR (일본 ESR) — 2026-09/10까지 보류 (owner 확정).** 개별사 ESR은 EDINET 有価証券報告書 제출기한 2026-10-31 전에는 미공개라 지금 수집·화면 모두 불가. MVP는 2026-07-21 revert(`167cba1`). 재개 시점에 downloader/parser inbox로 신규 발주 — 과거 스레드는 `inbox/_resolved/*jesr*` 4건 참조.
 

@@ -3,6 +3,15 @@
     "insurer_code": "KR0001",
     "insurer_name": "메리츠화재해상보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 139045.0,
+      "basic_capital_eok": 50632.45,
+      "scr_post_eok": 57785.0,
+      "scr_pre_eok": 57785.0,
+      "ratio_post_pct": 240.62,
+      "basic_ratio_post_pct": 87.62
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 139045.0,
       "basic_capital_eok": 50632.45,
@@ -129,6 +138,15 @@
     "insurer_code": "KR0002",
     "insurer_name": "한화손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 62324.64,
+      "basic_capital_eok": 24202.73,
+      "scr_post_eok": 28231.79,
+      "scr_pre_eok": 33944.0,
+      "ratio_post_pct": 220.76,
+      "basic_ratio_post_pct": 85.73
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 62324.64,
       "basic_capital_eok": 24202.73,
@@ -255,6 +273,15 @@
     "insurer_code": "KR0003",
     "insurer_name": "롯데손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 26955.0,
+      "basic_capital_eok": -3962.0,
+      "scr_post_eok": 16394.0,
+      "scr_pre_eok": 20432.0,
+      "ratio_post_pct": 164.42,
+      "basic_ratio_post_pct": -24.17
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 26955.0,
       "basic_capital_eok": -3962.0,
@@ -381,6 +408,15 @@
     "insurer_code": "KR0004",
     "insurer_name": "예별손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": -1090.0,
+      "basic_capital_eok": -1092.0,
+      "scr_post_eok": 7138.0,
+      "scr_pre_eok": 8317.0,
+      "ratio_post_pct": -15.27,
+      "basic_ratio_post_pct": -15.3
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": -1090.0,
       "basic_capital_eok": -1092.0,
@@ -505,6 +541,15 @@
     "insurer_code": "KR0005",
     "insurer_name": "흥국화재",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 33015.0,
+      "basic_capital_eok": 6780.97,
+      "scr_post_eok": 16909.0,
+      "scr_pre_eok": 21029.0,
+      "ratio_post_pct": 195.25,
+      "basic_ratio_post_pct": 40.1
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 33015.0,
       "basic_capital_eok": 6780.97,
@@ -630,6 +675,15 @@
     "insurer_code": "KR0008",
     "insurer_name": "삼성화재해상보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 329489.0,
+      "basic_capital_eok": 225083.0,
+      "scr_post_eok": 121976.0,
+      "scr_pre_eok": 121976.0,
+      "ratio_post_pct": 270.13,
+      "basic_ratio_post_pct": 184.53
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 329489.0,
       "basic_capital_eok": 225083.0,
@@ -754,6 +808,15 @@
     "insurer_code": "KR0009",
     "insurer_name": "현대해상",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 144993.0,
+      "basic_capital_eok": 52407.0,
+      "scr_post_eok": 69990.0,
+      "scr_pre_eok": 69990.0,
+      "ratio_post_pct": 207.16,
+      "basic_ratio_post_pct": 74.88
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 144993.0,
       "basic_capital_eok": 52407.0,
@@ -878,6 +941,15 @@
     "insurer_code": "KR0010",
     "insurer_name": "KB손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 123858.0,
+      "basic_capital_eok": 51081.0,
+      "scr_post_eok": 66638.0,
+      "scr_pre_eok": 66638.0,
+      "ratio_post_pct": 185.87,
+      "basic_ratio_post_pct": 76.65
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 123858.0,
       "basic_capital_eok": 51081.0,
@@ -1002,6 +1074,15 @@
     "insurer_code": "KR0011",
     "insurer_name": "DB손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 229005.0,
+      "basic_capital_eok": 90863.0,
+      "scr_post_eok": 98666.0,
+      "scr_pre_eok": 98666.0,
+      "ratio_post_pct": 232.1,
+      "basic_ratio_post_pct": 92.09
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 229005.0,
       "basic_capital_eok": 90863.0,
@@ -1126,6 +1207,15 @@
     "insurer_code": "KR0029",
     "insurer_name": "AIG손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 6289.0,
+      "basic_capital_eok": 6289.0,
+      "scr_post_eok": 2455.0,
+      "scr_pre_eok": 2455.0,
+      "ratio_post_pct": 256.17,
+      "basic_ratio_post_pct": 256.17
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 6289.0,
       "basic_capital_eok": 6289.0,
@@ -1250,6 +1340,15 @@
     "insurer_code": "KR0032",
     "insurer_name": "NH농협손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 22654.0,
+      "basic_capital_eok": 9534.0,
+      "scr_post_eok": 11947.0,
+      "scr_pre_eok": 15549.0,
+      "ratio_post_pct": 189.62,
+      "basic_ratio_post_pct": 79.8
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 22654.0,
       "basic_capital_eok": 9534.0,
@@ -1374,6 +1473,15 @@
     "insurer_code": "KR0049",
     "insurer_name": "악사손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 4159.89,
+      "basic_capital_eok": 1526.01,
+      "scr_post_eok": 2369.18,
+      "scr_pre_eok": 2677.01,
+      "ratio_post_pct": 175.58,
+      "basic_ratio_post_pct": 64.41
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 4159.89,
       "basic_capital_eok": 1526.01,
@@ -1498,6 +1606,15 @@
     "insurer_code": "KR0050",
     "insurer_name": "하나손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 6758.0,
+      "basic_capital_eok": 1323.75,
+      "scr_post_eok": 4626.0,
+      "scr_pre_eok": 4626.0,
+      "ratio_post_pct": 146.09,
+      "basic_ratio_post_pct": 28.62
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 6758.0,
       "basic_capital_eok": 1323.75,
@@ -1625,6 +1742,15 @@
     "insurer_code": "KR0051",
     "insurer_name": "신한이지손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 1131.0,
+      "basic_capital_eok": 1114.0,
+      "scr_post_eok": 536.0,
+      "scr_pre_eok": 536.0,
+      "ratio_post_pct": 211.01,
+      "basic_ratio_post_pct": 207.84
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 1131.0,
       "basic_capital_eok": 1114.0,
@@ -1749,6 +1875,15 @@
     "insurer_code": "KR0068",
     "insurer_name": "한화생명",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 240415.0,
+      "basic_capital_eok": 87193.0,
+      "scr_post_eok": 148294.0,
+      "scr_pre_eok": 148294.0,
+      "ratio_post_pct": 162.12,
+      "basic_ratio_post_pct": 58.8
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 240415.0,
       "basic_capital_eok": 87193.0,
@@ -1873,6 +2008,15 @@
     "insurer_code": "KR0069",
     "insurer_name": "삼성생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 824258.0,
+      "basic_capital_eok": 666160.0,
+      "scr_post_eok": 392644.0,
+      "scr_pre_eok": 392644.0,
+      "ratio_post_pct": 209.93,
+      "basic_ratio_post_pct": 169.66
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 824258.0,
       "basic_capital_eok": 666160.0,
@@ -1997,6 +2141,15 @@
     "insurer_code": "KR0070",
     "insurer_name": "에이비엘생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 21224.0,
+      "basic_capital_eok": 9883.71,
+      "scr_post_eok": 12933.0,
+      "scr_pre_eok": 16504.0,
+      "ratio_post_pct": 164.11,
+      "basic_ratio_post_pct": 76.42
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 21224.0,
       "basic_capital_eok": 9883.71,
@@ -2121,6 +2274,15 @@
     "insurer_code": "KR0071",
     "insurer_name": "흥국생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 41496.0,
+      "basic_capital_eok": 20776.72,
+      "scr_post_eok": 20995.0,
+      "scr_pre_eok": 26822.0,
+      "ratio_post_pct": 197.65,
+      "basic_ratio_post_pct": 98.96
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 41496.0,
       "basic_capital_eok": 20776.72,
@@ -2247,6 +2409,15 @@
     "insurer_code": "KR0072",
     "insurer_name": "케이디비생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 18233.0,
+      "basic_capital_eok": 4108.33,
+      "scr_post_eok": 9798.0,
+      "scr_pre_eok": 14166.0,
+      "ratio_post_pct": 186.09,
+      "basic_ratio_post_pct": 41.93
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 18233.0,
       "basic_capital_eok": 4108.33,
@@ -2371,6 +2542,15 @@
     "insurer_code": "KR0073",
     "insurer_name": "교보생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 149556.0,
+      "basic_capital_eok": 78669.49,
+      "scr_post_eok": 69811.0,
+      "scr_pre_eok": 92362.0,
+      "ratio_post_pct": 214.23,
+      "basic_ratio_post_pct": 112.69
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 149556.0,
       "basic_capital_eok": 78669.49,
@@ -2495,6 +2675,15 @@
     "insurer_code": "KR0074",
     "insurer_name": "라이나생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 72600.0,
+      "basic_capital_eok": 52132.0,
+      "scr_post_eok": 21059.0,
+      "scr_pre_eok": 21059.0,
+      "ratio_post_pct": 344.75,
+      "basic_ratio_post_pct": 247.55
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 72600.0,
       "basic_capital_eok": 52132.0,
@@ -2619,6 +2808,15 @@
     "insurer_code": "KR0075",
     "insurer_name": "비엔피파리바카디프생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 1958.0,
+      "basic_capital_eok": 1732.0,
+      "scr_post_eok": 882.0,
+      "scr_pre_eok": 882.0,
+      "ratio_post_pct": 222.0,
+      "basic_ratio_post_pct": 196.37
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 1958.0,
       "basic_capital_eok": 1732.0,
@@ -2743,6 +2941,15 @@
     "insurer_code": "KR0076",
     "insurer_name": "아이엠라이프생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 8811.0,
+      "basic_capital_eok": 638.81,
+      "scr_post_eok": 4326.0,
+      "scr_pre_eok": 6525.0,
+      "ratio_post_pct": 203.68,
+      "basic_ratio_post_pct": 14.77
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 8811.0,
       "basic_capital_eok": 638.81,
@@ -2869,6 +3076,15 @@
     "insurer_code": "KR0079",
     "insurer_name": "미래에셋생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 37179.0,
+      "basic_capital_eok": 23151.0,
+      "scr_post_eok": 22187.0,
+      "scr_pre_eok": 22187.0,
+      "ratio_post_pct": 167.57,
+      "basic_ratio_post_pct": 104.34
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 37179.0,
       "basic_capital_eok": 23151.0,
@@ -2993,6 +3209,15 @@
     "insurer_code": "KR0080",
     "insurer_name": "에이아이에이생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 29617.0,
+      "basic_capital_eok": 25338.0,
+      "scr_post_eok": 15350.0,
+      "scr_pre_eok": 15350.0,
+      "ratio_post_pct": 192.94,
+      "basic_ratio_post_pct": 165.07
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 29617.0,
       "basic_capital_eok": 25338.0,
@@ -3117,6 +3342,15 @@
     "insurer_code": "KR0082",
     "insurer_name": "DB생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 29312.0,
+      "basic_capital_eok": 9441.0,
+      "scr_post_eok": 10020.06,
+      "scr_pre_eok": 14875.0,
+      "ratio_post_pct": 292.53,
+      "basic_ratio_post_pct": 94.22
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 29312.0,
       "basic_capital_eok": 9441.0,
@@ -3241,6 +3475,15 @@
     "insurer_code": "KR0083",
     "insurer_name": "푸본현대생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 21742.0,
+      "basic_capital_eok": 11732.42,
+      "scr_post_eok": 10867.0,
+      "scr_pre_eok": 13925.0,
+      "ratio_post_pct": 200.07,
+      "basic_ratio_post_pct": 107.96
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 21742.0,
       "basic_capital_eok": 11732.42,
@@ -3366,6 +3609,15 @@
     "insurer_code": "KR0087",
     "insurer_name": "동양생명",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 43457.0,
+      "basic_capital_eok": 15920.0,
+      "scr_post_eok": 22926.0,
+      "scr_pre_eok": 22926.0,
+      "ratio_post_pct": 189.55,
+      "basic_ratio_post_pct": 69.44
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 43457.0,
       "basic_capital_eok": 15920.0,
@@ -3490,6 +3742,15 @@
     "insurer_code": "KR0094",
     "insurer_name": "신한라이프생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 101068.0,
+      "basic_capital_eok": 48204.0,
+      "scr_post_eok": 50248.0,
+      "scr_pre_eok": 50248.0,
+      "ratio_post_pct": 201.14,
+      "basic_ratio_post_pct": 95.93
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 101068.0,
       "basic_capital_eok": 48204.0,
@@ -3614,6 +3875,15 @@
     "insurer_code": "KR0095",
     "insurer_name": "메트라이프생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 47147.0,
+      "basic_capital_eok": 26233.0,
+      "scr_post_eok": 18972.0,
+      "scr_pre_eok": 18972.0,
+      "ratio_post_pct": 248.51,
+      "basic_ratio_post_pct": 138.27
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 47147.0,
       "basic_capital_eok": 26233.0,
@@ -3738,6 +4008,15 @@
     "insurer_code": "KR0097",
     "insurer_name": "하나생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 8622.61,
+      "basic_capital_eok": 1160.97,
+      "scr_post_eok": 5558.0,
+      "scr_pre_eok": 6411.0,
+      "ratio_post_pct": 155.14,
+      "basic_ratio_post_pct": 20.89
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 8622.61,
       "basic_capital_eok": 1160.97,
@@ -3865,6 +4144,15 @@
     "insurer_code": "KR0099",
     "insurer_name": "KB라이프생명",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 60736.0,
+      "basic_capital_eok": 38163.0,
+      "scr_post_eok": 24075.0,
+      "scr_pre_eok": 24075.0,
+      "ratio_post_pct": 252.28,
+      "basic_ratio_post_pct": 158.52
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 60736.0,
       "basic_capital_eok": 38163.0,
@@ -3989,6 +4277,15 @@
     "insurer_code": "KR0100",
     "insurer_name": "처브라이프생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 2020.0,
+      "basic_capital_eok": 446.0,
+      "scr_post_eok": 864.0,
+      "scr_pre_eok": 1293.0,
+      "ratio_post_pct": 233.8,
+      "basic_ratio_post_pct": 51.62
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 2020.0,
       "basic_capital_eok": 446.0,
@@ -4113,6 +4410,15 @@
     "insurer_code": "KR0104",
     "insurer_name": "농협생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 69292.0,
+      "basic_capital_eok": 24878.0,
+      "scr_post_eok": 18500.0,
+      "scr_pre_eok": 32835.0,
+      "ratio_post_pct": 374.55,
+      "basic_ratio_post_pct": 134.48
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 69292.0,
       "basic_capital_eok": 24878.0,
@@ -4237,6 +4543,15 @@
     "insurer_code": "KR1000",
     "insurer_name": "코리안리재보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 47720.0,
+      "basic_capital_eok": 38480.72,
+      "scr_post_eok": 22895.0,
+      "scr_pre_eok": 22895.0,
+      "ratio_post_pct": 208.43,
+      "basic_ratio_post_pct": 168.07
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 47720.0,
       "basic_capital_eok": 38480.72,
@@ -4365,6 +4680,15 @@
     "insurer_code": "KR1010",
     "insurer_name": "교보라이프플래닛생명보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 1210.0,
+      "basic_capital_eok": 795.0,
+      "scr_post_eok": 532.0,
+      "scr_pre_eok": 721.0,
+      "ratio_post_pct": 227.44,
+      "basic_ratio_post_pct": 149.44
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 1210.0,
       "basic_capital_eok": 795.0,
@@ -4489,6 +4813,15 @@
     "insurer_code": "KR1011",
     "insurer_name": "IBK연금보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 10526.0,
+      "basic_capital_eok": 2713.52,
+      "scr_post_eok": 5389.0,
+      "scr_pre_eok": 7196.0,
+      "ratio_post_pct": 195.32,
+      "basic_ratio_post_pct": 50.35
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 10526.0,
       "basic_capital_eok": 2713.52,
@@ -4613,6 +4946,15 @@
     "insurer_code": "KR1098",
     "insurer_name": "카카오페이손해보험",
     "status": "ok",
+    "baseline": {
+      "capital_eok": 979.0,
+      "basic_capital_eok": 979.0,
+      "scr_post_eok": 404.0,
+      "scr_pre_eok": 404.0,
+      "ratio_post_pct": 242.33,
+      "basic_ratio_post_pct": 242.33
+    },
+    "baseline_quarter": "2026.1Q",
     "baseline_2025_4Q": {
       "capital_eok": 979.0,
       "basic_capital_eok": 979.0,

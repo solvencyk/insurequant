@@ -2,7 +2,7 @@
 from: validation
 to: publishing
 created: 20260803T0210Z
-status: open
+status: answered
 route: backlog
 company: MULTI
 period: 2026.1Q
@@ -56,3 +56,5 @@ owner가 `inbox/validation/20260803T0056Z` §4에서 **as-of 정본을 의심한
 `docs/postmortems/README.md` 미배선 표.
 
 ## 답변 (recipient 작성 — 처리 후)
+
+처리(2026-08-03, publishing): `scripts/forward_capital_simulation.py`에서 `baseline_2025_4Q`를 `baseline`(quarter-agnostic) + 형제 필드 `baseline_quarter`로 교체, 하드코딩 연도 제거. 하위호환 위해 이번 릴리스만 `baseline_2025_4Q` alias 병기(같은 payload). `kics_forward_capital.json` 재생성 완료(38 rows) — `validate_data_contract.py` RED=0 YELLOW=219 유지, `pytest tests/test_deploy_assets.py` 9 passed. HTML 소비처(`K-ICS.html:1090`, 1곳)는 publishing이 직접 못 건드리므로 designer inbox로 라우팅함(`inbox/designer/20260803T0900Z__publishing__MULTI_2026.1Q__forward_baseline_key_html_swap.md`) — designer가 `baseline` 키로 스왑 확인 후 alias 제거 요청 예정.

@@ -2,7 +2,7 @@
 from: owner
 to: publishing
 created: 20260803T0743Z
-status: open
+status: resolved
 route: escalate
 company: MULTI
 period: MULTI
@@ -54,4 +54,10 @@ HTML 4종(`index.html`/`K-ICS.html`/`IFRS17.html`/`공시보고서.html`)과 `co
 
 ## 답변 (recipient 작성 — 처리 후)
 
-<처리 결과 1~3줄. 못 했으면 왜 못 했는지.>
+처리 완료(2026-08-03 17:52). 재생성 전 현재 xlsx 전체 스캔(`data_only=False`)해 수식 셀 0건 확인 후 `.bak` 백업 → 공식 `xlsx` skill 워크플로우로 `scripts/build_master_xlsx.py`(풀패스 python) 실행, `build_csm_waterfall_master.py`는 미실행.
+
+- mtime: 17:52, 4개 JSON(11:56~15:04)보다 최신.
+- 행수: K-ICS 18,878 · 금리민감도 522 · **CSM워터폴 1,962**(1944→1962 반영) · CSM상각 290 · **신계약CSM배수 327**(321→327 반영) · **손익분해PL 7,799**(행수 유지).
+- 눈으로 확인: CSM워터폴 시트 KR0004 공시분기 = {2023.4Q, 2024.4Q, 2025.4Q} 3개년 존재. 손익분해PL 시트 KR0051·2025.4Q 투자이익=-1603.902737, 보험금융손익=-2286.806721, 부모 투자손익=-3890.709458 불변 — 요청한 델타와 일치.
+- xlsx는 untracked(git 미추적, keep-list 비대상) — push 대상 아님, 재생성만 완료.
+- `.bak`(재생성 전 상태) 보존됨: `insurequant_master_tables.xlsx.bak`.

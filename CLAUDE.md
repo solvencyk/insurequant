@@ -12,8 +12,8 @@ The pipeline is organized as **5 stages**, each owned by a subagent with its own
 | 1 — **downloader** | `docs/agents/claude-agent-downloader.md` (+ `docs/agents/source-catalog.yaml`) | `TODO_downloader.md` | `docs/changelog_downloader.md` |
 | 2 — **parser** (2 lanes ∥) | `docs/agents/claude-agent-parser.md` (shared) + domain `docs/domains/claude-agent-{kics,ifrs17}.md` | `TODO_parser_kics.md` · `TODO_parser_ifrs17.md` | `docs/changelog_parser_{kics,ifrs17}.md` (pre-split frozen: `changelog_parser.md`) |
 | 3 — **validation** | `docs/agents/claude-agent-validation.md` | `TODO_validation.md` | `docs/changelog_validation.md` |
-| 4 — **publishing** (merged former gathering + pushing, 2026-05-31) | `docs/agents/claude-agent-publishing.md` (skeleton — reports + recommends, never executes `git push`) | `TODO_publishing.md` | `docs/changelog_publishing.md` |
-| 5 — **designer** (HTML / CSS / responsive / chart layout, new 2026-05-31) | `docs/agents/claude-agent-designer.md` (skeleton) | `TODO_designer.md` | `docs/changelog_designer.md` |
+| 4 — **publishing** (merged former gathering + pushing, 2026-05-31) | `docs/agents/claude-agent-publishing.md` (reports + recommends, never executes `git push`) | `TODO_publishing.md` | `docs/changelog_publishing.md` |
+| 5 — **designer** (HTML / CSS / responsive / chart layout, new 2026-05-31) | `docs/agents/claude-agent-designer.md` | `TODO_designer.md` | `docs/changelog_designer.md` |
 
 **Stage 4 ↔ Stage 5 hard split:** publishing owns master JSONs (assembly + push recommendation). Designer owns HTML structure/styling. Master JSONs are read-only to designer; HTML files are off-limits to publishing (publishing reports `manual_html_edit` warn and stops). The two stages are otherwise independent (can run in parallel).
 
@@ -37,11 +37,21 @@ Domain reference docs (K-ICS / IFRS17 / Misc IR) sit under `docs/domains/` and p
 
 **갱신 규칙은 유지:** 변경·실행 후 **해당 stage TODO 맨 위 갱신 필수**, 그리고 완결 항목은 **해당 stage changelog에 계속 기록**(이력은 쌓되 읽기는 필요 시). cross-stage 변경이면 root `TODO.md` + `docs/claude-changelog.md` 갱신.
 
+## 🐍 실행 환경 — venv는 트리 밖에 있다 (필수)
+
+**저장소 안에 `.venv`가 없다.** 2026-06-14에 트리 밖으로 옮겼다(Cowork 로딩 가속):
+
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+```
+
+이 문서·프롬프트의 모든 `python ...` 명령은 **위 풀패스로 호출한다.** 슬래시는 `/`로 쓸 것 — 백슬래시 경로는 Bash 도구에서 이스케이프로 먹혀 `command not found`가 된다(PowerShell만 통과). 맨 `python`은 Windows 스토어 파이썬(3.13)에 걸리는데 거기엔 **`docling`이 없어서 `run_harness.py --stage parse`가 즉사한다** (pandas·openpyxl·fitz·pdfplumber·playwright는 우연히 깔려 있어 다른 스크립트는 조용히 돌아가므로 더 위험하다). 서브에이전트에 작업을 넘길 때도 이 경로를 프롬프트에 명시할 것.
+
 ## K-ICS validation gate (mandatory)
 
 Before proceeding to the next K-ICS pipeline stage (JSON swap, template sync, HTML deploy, push):
 
-1. Run `python scripts/validate_kics_disclosure.py` on root `kics_disclosure.json`.
+1. Run `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py` on root `kics_disclosure.json`.
 2. **RED count must be 0**, unless every remaining RED is a **documented exception** in `TODO.md` (company, quarter, rule id, reason).
 3. Any unexpected RED requires **parsing-error review** (MD source, parser scope, row mapping) before continuing.
 4. Rule `8_life` **SKIP** (missing items 29-35) does not block the gate; all other rules treat missing inputs as RED.
@@ -114,14 +124,17 @@ See `docs/agents/kics-json-validation-rules.md` for formulas, R4/R7 matrices, to
 - 메인 세션은 오케스트레이션(계획 조율, 결과 통합, changelog 갱신, 검증·푸시 게이트)만 담당. 도메인 코드/MD/JSON 직접 수정은 서브에이전트가 한다.
 - 한 도메인 안에서도 명백히 병렬 가능한 단계(예: 회사별 PDF 파싱)는 서브에이전트가 자체 판단으로 병렬화.
 
-## 🚧 Stage prompt 작성 진행도
+## 🚧 Stage prompt 작성 진행도 (2026-08-06 재확인)
 
-- [x] Downloader prompt (`docs/agents/claude-agent-downloader.md`) — owner-authored, complete
-- [x] Validation prompt (`docs/agents/claude-agent-validation.md`) — complete
-- [ ] Parser prompt — skeleton; TBD label variation matrix, split-table rules, Docling quality-gate thresholds, per-company YAML mapping path
-- [ ] Publishing prompt — skeleton; TBD idempotency contract, schema versioning, derived metrics DAG, viz JSON contract, branch policy, site-deploy hook, rollback procedure
-- [ ] Designer prompt — skeleton; TBD design system, common.css extraction, A11y baseline, chart legend density, donut stack breakpoint, mobile pass scope
+**5개 stage 프롬프트 전부 authoritative — skeleton 없음.** 그대로 신뢰하고 따를 것.
 
-The 3 incomplete stages still have a usable skeleton (Contract section: input/output/exit codes) so they can be invoked even before the TBD body is filled in.
+| stage | 상태 |
+|---|---|
+| downloader · validation | complete |
+| designer | §5 design system 정식화(2026-06-16) — 토큰·common.css·A11y·차트/반응형(legend density, donut breakpoint, mobile scope)·LOCKED 결정 4개 전부 §5.1~5.5에 있음 |
+| publishing | branch policy · site-deploy hook · rollback = §5/§9/§10 + `launch-runbook` skill로 종결(2026-07-21). 잔여 4건은 프롬프트 §8 |
+| parser | 잔여 4건은 프롬프트 §4 — 전부 "내용은 이미 다른 문서에 있고 이관·정식화만 미결"(예: split-table→`domains/claude-agent-kics.md`, YAML mapping→`domains/claude-agent-ifrs17.md` §3.5) |
+
+> 잔여 TBD 목록은 **각 프롬프트의 TBD 절이 정본** — 여기에 복사하지 말 것(2026-08-06에 이 표가 stale이라 designer/publishing을 skeleton으로 오인시킨 전례).
 
 ---
