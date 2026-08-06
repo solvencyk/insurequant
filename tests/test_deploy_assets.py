@@ -175,6 +175,59 @@ def test_docs_agree_with_what_pages_fetch():
     )
 
 
+def test_golden_table_docs_agree_with_tests():
+    """The docs that tabulate the golden tests must stay in sync with tests/.
+
+    CLAUDE.md carries the index of "which golden pins which artifact"; the
+    validation prompt, the ifrs17 domain doc and the ifrs17-parser SKILL each
+    restate a lane-specific subset. Four copies of one fact, and until now no
+    copy was checked against anything — add a golden and the other three go
+    quietly stale, which is how the rule layer rotted before: on 2026-08-06
+    CLAUDE.md was still calling three stage prompts "skeleton, TBD" months
+    after they were finished (see docs/claude-changelog.md, 리팩토링 6차).
+
+    Two directions a machine can settle, mirroring
+    test_docs_agree_with_what_pages_fetch above:
+
+      (a) completeness — CLAUDE.md names every tests/test_*_golden.py, so a
+          new golden cannot land unindexed.
+      (b) no dangling — every test_*_golden name any of these docs mentions
+          resolves to a real file, so a rename or deletion cannot leave the
+          docs pointing at nothing.
+
+    (b) is deliberately the weaker assertion for the subset docs: the ifrs17
+    domain doc has no business listing the K-ICS goldens, so exhaustiveness is
+    required only of the CLAUDE.md index. Docs are guarded with .exists()
+    because most .claude/skills/* are machine-local and absent on a clone.
+    """
+    actual = {p.stem for p in sorted((REPO / "tests").glob("test_*_golden.py"))}
+    assert actual, "no tests/test_*_golden.py found — did the glob or layout change?"
+
+    index = REPO / "CLAUDE.md"
+    index_text = index.read_text(encoding="utf-8")
+    unindexed = sorted(n for n in actual if n not in index_text)
+    assert not unindexed, (
+        "CLAUDE.md 골든 테스트 table does not name:\n  "
+        + "\n  ".join(unindexed)
+        + "\nAdd a row (what it pins + when to run it) or the golden is invisible to sessions."
+    )
+
+    subset_docs = [
+        "docs/agents/claude-agent-validation.md",
+        "docs/domains/claude-agent-ifrs17.md",
+        ".claude/skills/ifrs17-parser/SKILL.md",
+    ]
+    dangling = []
+    for rel in [index.name, *subset_docs]:
+        doc = REPO / rel
+        if not doc.exists():
+            continue
+        for name in sorted(set(re.findall(r"test_[a-z0-9_]*_golden", doc.read_text(encoding="utf-8")))):
+            if name not in actual:
+                dangling.append(f"{rel} names {name}, but tests/{name}.py does not exist")
+    assert not dangling, "stale golden references in the rule layer:\n  " + "\n  ".join(dangling)
+
+
 def test_kics_panel_data_is_external():
     """K-ICS.html must not carry its panel data inline again.
 

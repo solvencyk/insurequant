@@ -104,8 +104,6 @@ The HTML pages fetch these directly. **No staging templates between publishing a
 > 5. `templates/kics_disclosure.json`(5.9MB)도 **삭제됐다.** 루트 마스터와 바이트
 >    동일한데 읽는 코드가 0이었다. **더 이상 동기화하지 말 것.**
 
-> **Path note:** the table lists the post-migration canonical (`data/dart/viz/*`). Live `main` still reads `data/ifrs17/viz/*` — see §9 "Pending path migration" for detail and the cutover trigger (when `fix/csm-*` lands on `main`).
-
 ---
 
 ## 2. Per-domain assembly scripts
@@ -263,14 +261,14 @@ data/dart/viz/sensitivity_heatmap.json
 data/ir/nb_csm_ratio.json
 ```
 
-**Path migration LANDED (2026-06-16).** Live `main` now serves viz from `data/dart/viz/*` (matches §1 canonical); the old `data/ifrs17/viz/*` note is retired. `common.css` is a **new deploy asset** (designer frontend-design skill) — the 3 HTML pages `<link>` it, so it is now part of the keep-list and **must be pushed alongside any HTML change** (omitting it breaks all styling). No `csm_bubble.json` on main (index.html embeds the bubble inline).
+**Path migration LANDED (2026-06-16).** Live `main` serves viz from `data/dart/viz/*` (matches §1 canonical) — `data/ifrs17/viz/*` no longer exists anywhere in the repo (verified via `git ls-tree -r main` and local `data/`, 2026-08-06). `common.css` is a **new deploy asset** (designer frontend-design skill) — the 3 HTML pages `<link>` it, so it is now part of the keep-list and **must be pushed alongside any HTML change** (omitting it breaks all styling). No `csm_bubble.json` on main (index.html embeds the bubble inline).
 
 **Procedure (agent runs the local git mechanically; only the push is gated).**
 
 0. **Derive the keep-list, never guess it.** Grep each HTML for what it fetches (`fetch(` / `dataPaths(` / `resolveUrl(` / `src=` / `href=`). The keep-list = those files + the HTML + `CNAME` + `.gitignore`.
 1. **Park in-progress work first.** On the feature branch: `git add -A && git commit -m "WIP checkpoint <reason>"`. A durable commit guarantees nothing is lost on the branch switch (do NOT use `git stash` for this — see §10).
 2. **Switch to `main`** (must be clean): `git checkout main`. Untracked-but-present files can block the switch — move/remove them first.
-3. **Delete everything not in the keep-list:** `git rm -r <paths>`. Build the delete list from `git ls-files`, NOT from memory; for dirs where you keep some + drop some (e.g. `data/ir`, `data/ifrs17/viz`), list those file-by-file via `git ls-files <dir>` first.
+3. **Delete everything not in the keep-list:** `git rm -r <paths>`. Build the delete list from `git ls-files`, NOT from memory; for dirs where you keep some + drop some (e.g. `data/ir`), list those file-by-file via `git ls-files <dir>` first.
 4. **VERIFY before committing:** `git ls-files` must equal the keep-list exactly. If wrong → `git reset --hard` (safe pre-commit undo) and rebuild. This is the last safe checkpoint.
 5. **Commit:** `git commit -m "slim public repo: keep only HTML + master JSONs (site assets)"`.
 6. **GATE → push.** Show the user exactly what will be pushed; on their GO, run `git push origin main` (the user completes the browser login). The slim commit is tiny (deletions only) — a push that appears to "hang" is waiting for auth, not uploading.

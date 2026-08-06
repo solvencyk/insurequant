@@ -2,7 +2,7 @@
 from: owner
 to: publishing
 created: 20260806T0027Z
-status: open
+status: resolved
 route: backlog
 company: MULTI
 period: ALL
@@ -31,3 +31,12 @@ iter: 1
 **참고 — 이건 개별 수정이 아니라 패턴이다.** 같은 감사에서 `CLAUDE.md`도 designer/publishing 프롬프트를 "skeleton"이라 오표기하고 있었고(실제론 종결), 원인은 **한 사실이 두 곳에 복사돼 한쪽만 갱신된 것**이었다. 그래서 `CLAUDE.md` 쪽은 "잔여 TBD 정본 = 각 프롬프트의 TBD 절, 복사 금지"로 바꿨다. 이번 건도 고칠 때 **"§1은 canonical 표만, 마이그레이션 상태는 §9만"** 처럼 한 사실의 소유 절을 하나로 정할 것. 루트 TODO의 미결 **DOC-1**(골든테스트 표 4곳·keep-list 4곳 중복)이 같은 뿌리.
 
 ## 답변 (recipient 작성 — 처리 후)
+
+`git ls-tree -r main` + `git show main:{K-ICS,IFRS17,index}.html`로 확인: 라이브 `main`은 viz를 전부 `data/dart/viz/*`에서 fetch(`IFRS17.html:173-183`). `data/ifrs17/viz`는 `main`에도 로컬 `data/`에도 **존재하지 않음** — §9(LANDED)가 맞고 §1 Path note가 stale.
+
+`docs/agents/claude-agent-publishing.md` 수정 완료:
+1. §1 L107 "Path note"(cutover 미착수라고 오기) **삭제**. Migration 상태 소유 절 = §9만.
+2. §9 L266 문구 정리 — "old note is retired" 대신 실측 근거(git ls-tree/local 확인, 2026-08-06)로 교체.
+3. §9 L273 delete-list 예시에서 `data/ifrs17/viz` 제거(존재하지 않는 디렉터리를 keep-some/drop-some 예시로 들면 다음 slim-publish 때 혼란). `data/ir` 예시는 로컬 확인 결과 여전히 유효해 유지.
+
+Root `TODO.md`의 DOC-1(중복 표) 은 이번 스코프 밖 — 그대로 둠.

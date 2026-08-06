@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-08-03 · Stage 4/5 — publishing
+> Last updated: 2026-08-06 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md (skeleton) · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -10,6 +10,8 @@ Session start: read this file + `claude-agent-publishing.md` + relevant validati
 NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
 
 ## Status
+
+**2026-08-06**: `inbox/publishing/20260806T0027Z` (owner) — `claude-agent-publishing.md`가 viz path migration 상태를 두 곳에서 모순되게 서술(§1 "still reads data/ifrs17/viz" vs §9 "LANDED"). `git ls-tree -r main` + `git show main:IFRS17.html`로 실측 확인: 라이브는 전부 `data/dart/viz/*`에서 fetch, `data/ifrs17/viz`는 main·로컬 어디에도 없음 → §9가 맞음. §1 stale Path note 삭제, §9 문구를 실측근거로 교체, §9 delete-list 예시에서 존재하지 않는 `data/ifrs17/viz` 제거(`data/ir`는 유효해 유지). Resolved, `inbox/_resolved/`로 이동.
 
 Open viz-assembly work, all gated on upstream stages: F4 v2 (forward-outlook confidence research), F13 (재보험 지표, waits on downloader F8), F17/F18 viz (waits on parser Tier2/IR JSON). CSM bubble map **완결됨** (라이브, 2026-06-14 — 4축 V2 폐기). No master JSON push pending here standalone.
 

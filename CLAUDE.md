@@ -85,9 +85,11 @@ See `docs/agents/kics-json-validation-rules.md` for formulas, R4/R7 matrices, to
 | `tests/test_master_tables_golden.py` (오프라인, <1초) | `validate_master_tables` SUMMARY + exit code | 그 게이트 수정 후 |
 | `tests/test_viz_ifrs17_panels_golden.py` (오프라인, ~1.5초) | `viz_build_ifrs17_panels.py`가 쓰는 4개 패널 JSON 해시 | 그 빌더 수정 후 |
 | `tests/test_viz_csm_waterfall_golden.py` (오프라인, ~1.5초) | `viz_build_csm_waterfall.py` 산출 + 47사 status | 그 빌더 수정 후 |
-| `tests/test_deploy_assets.py` (오프라인) | keep-list·인라인금지·BOM·삭제경로 참조 | HTML fetch/삭제/인코딩 변경 후 |
+| `tests/test_deploy_assets.py` (오프라인) | keep-list·인라인금지·BOM·삭제경로 참조 + **이 표 자체의 동기화**(아래) | HTML fetch/삭제/인코딩 변경 후, **골든 신설·개명 시** |
 
 > viz 골든 2종은 산출 JSON을 **인플레이스로 덮어쓰는** 빌더라, 실행 전 백업하고 drift/예외 시 복구한다(마스터 반쯤 쓰임 방지). 산출이 의도적으로 바뀌면 `--update`로 재생성 + 커밋에 이유 기록.
+
+> **이 표는 손으로 관리하지 않는다 (2026-08-06).** `test_deploy_assets.py::test_golden_table_docs_agree_with_tests`가 ① `tests/test_*_golden.py` 전부가 위 표에 있는지(신설 골든 누락 차단) ② 이 표·validation 프롬프트·ifrs17 도메인doc·ifrs17 SKILL이 언급하는 골든 이름이 실제 파일로 존재하는지(개명·삭제 후 dangling 차단)를 검사한다. 골든을 추가·개명하면 이 표를 같이 고치지 않으면 **테스트가 막는다.** 이전에는 같은 사실이 4곳에 복사돼 있고 아무도 안 지켜서, `CLAUDE.md`가 완성된 프롬프트 3개를 몇 달간 "skeleton"이라 부른 전례가 있다.
 
 ## 🈲 문서·TODO 인코딩 룰 (필수)
 

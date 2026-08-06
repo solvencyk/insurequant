@@ -22,7 +22,15 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 **부수 수정:** `docs/domains/claude-agent-kics.md`의 플로우 링크 4개 전부 깨져 있었다 — `claude-` 접두어 누락 3건 + `claude-json-build.md`는 커밋 0543414(2026-07-21 `kics_data.json` 파이프라인 제거)에서 **같이 삭제된 문서**를 계속 가리키고 있었다. 1~5차 리팩토링이 남긴 dangling reference의 전형.
 
-**미결 (owner 결정 필요):** 단일소스 위반 — 골든테스트 표가 4곳(`CLAUDE.md`·validation 프롬프트·ifrs17 도메인doc·ifrs17 SKILL), keep-list도 4곳에 복제돼 있어 골든 하나 추가하면 4곳을 고쳐야 한다. "정본은 프롬프트, `CLAUDE.md`는 링크만" 방향이 맞지만 미착수. 또 publishing 프롬프트 §1(L107)과 §9(L266)가 `data/ifrs17/viz` cutover 여부로 **자기모순** — §1을 먼저 읽으니 stale 쪽을 따라간다. publishing inbox 발주 대상.
+**DOC-1 단일소스 위반 → 문서 정리가 아니라 게이트로 종결 (owner 결정).** 골든테스트 표가 4곳(`CLAUDE.md`·validation 프롬프트·ifrs17 도메인doc·ifrs17 SKILL), keep-list도 4곳에 복제. 조사 중 **반전**: keep-list는 이미 `test_docs_agree_with_what_pages_fetch`가 "HTML이 실제로 fetch하는 JSON이 문서 표에 다 있나"를 **현실과 대조**하고 있었다(4곳 중 2곳 방어). 무방비였던 건 골든표(0곳).
+
+→ owner 결정은 **문서 재배치 대신 그 pytest 패턴 복제**. `test_golden_table_docs_agree_with_tests` 신설(`tests/test_deploy_assets.py`, 기존 doc-sync 테스트 바로 옆):
+- (a) **완전성** — `tests/test_*_golden.py` 전부가 `CLAUDE.md` 표에 있어야 한다(신설 골든이 색인 없이 착지 불가).
+- (b) **dangling 금지** — 4개 문서가 언급하는 `test_*_golden` 이름이 실제 파일로 존재해야 한다(개명·삭제 후 허공 참조 차단).
+- (b)를 subset 문서엔 약하게만 건 이유: ifrs17 도메인doc이 K-ICS 골든을 열거할 이유가 없다. 완전성은 `CLAUDE.md` 색인에만 요구. 문서는 `.exists()` 가드 — `.claude/skills/*` 대부분이 머신-로컬이라 clone엔 없다(단 `ifrs17-parser/SKILL.md`는 추적됨, 불일치).
+- **실발화 검증**: 골든 이름 1개 제거 → (a) 발화, 존재하지 않는 골든 주입 → (b) 발화, 이후 `CLAUDE.md` sha256 동일 복구 확인. 통과만 보고 끝내지 않았다. (검증 스크립트가 pytest 출력을 `encoding='utf-8'`로만 읽어 cp949 메시지에서 리더 스레드가 죽는 함정 1건 — `errors='replace'` 필요. 인코딩 룰 재확인 사례.)
+
+**미결:** publishing 프롬프트 §1(L107)과 §9(L266)가 `data/ifrs17/viz` cutover 여부로 **자기모순** — §1을 먼저 읽으니 stale 쪽을 따라간다. **발주 완료**: `inbox/publishing/20260806T0027Z`. 문서끼리 대조하면 둘 다 틀렸을 때 못 잡으니 **git으로 라이브 `main`을 직접 확인한 뒤** 틀린 쪽을 지우라고 지시했다.
 
 **도구:** `claude-md-management@claude-plugins-official` 설치(user scope). `claude-md-improver` 스킬(코드베이스 대조 채점) + `/revise-claude-md`(세션 학습 반영) — 마일스톤 전/주간 점검용.
 

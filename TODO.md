@@ -11,8 +11,8 @@ Cross-stage focus (2026-07-21): K-ICS gate **RED=12**, all three offenders alrea
 
 **규칙문서 리팩토링 (2026-08-06, 리팩토링 6차 — 상세는 `docs/claude-changelog.md`).** 코드가 아니라 프롬프트·인덱스 층의 context rot을 `claude-md-management` 6축 rubric으로 실측. 고침: ① `CLAUDE.md` 진행도표가 designer/publishing을 "skeleton"으로 오표기(실제론 §5.1~5.5·§5/§9/§10로 종결) → 실측 교체 + 잔여 TBD 정본을 각 프롬프트로 단일화, ② venv 경로 미기재(맨 `python`은 docling 없어 `--stage parse` 즉사) → `## 🐍 실행 환경` 신설, ③ kics 도메인doc 플로우 링크 4개 깨짐 수정. **잔여 2건:**
 
-- [ ] **DOC-1 단일소스 위반** — 골든테스트 표 4곳·keep-list 4곳 중복. 정본=프롬프트, `CLAUDE.md`는 링크만으로 축소. owner 결정 대기.
-- [ ] **DOC-2 publishing 프롬프트 자기모순** — §1(L107) "`data/ifrs17/viz` cutover 대기" vs §9(L266) "2026-06-16 LANDED". §1을 먼저 읽어 stale을 따라감. **발주 완료**: `inbox/publishing/20260806T0027Z__owner__MULTI__prompt_viz_path_self_contradiction.md`.
+- [x] **DOC-1 단일소스 위반** — owner 결정(2026-08-06): **문서 재배치 대신 게이트**. keep-list는 이미 `test_docs_agree_with_what_pages_fetch`가 현실과 대조 중이었고(4곳 중 2곳), 무방비였던 골든표에 `test_golden_table_docs_agree_with_tests` 신설 — 신설 골든 누락 + dangling 개명 양방향 차단, mutation 2종으로 실발화 확인. 나머지 사본은 문서로 안 지키고 기계로 지킨다.
+- [x] **DOC-2 publishing 프롬프트 자기모순** — §1(L107) "`data/ifrs17/viz` cutover 대기" vs §9(L266) "2026-06-16 LANDED". publishing이 드레인·처리: `git ls-tree -r main` 실측으로 §9가 맞음을 확인(라이브는 `data/dart/viz/*`, `data/ifrs17/viz`는 repo 어디에도 없음) → stale한 §1 Path note 삭제, §9 문구를 실측 근거로 교체, §9 delete-list 예시에서 죽은 경로 제거. orchestrator 독립 재확인 후 `inbox/_resolved/`로 아카이브.
 
 **J-ESR (일본 ESR) — 2026-09/10까지 보류 (owner 확정).** 개별사 ESR은 EDINET 有価証券報告書 제출기한 2026-10-31 전에는 미공개라 지금 수집·화면 모두 불가. MVP는 2026-07-21 revert(`167cba1`). 재개 시점에 downloader/parser inbox로 신규 발주 — 과거 스레드는 `inbox/_resolved/*jesr*` 4건 참조.
 
