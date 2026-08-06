@@ -68,6 +68,8 @@ md_inbox/
 *~
 *.swp
 *.swo
+# Excel lock files (present whenever a workbook is open — never a deliverable)
+~$*
 
 # Stray scratch files at repo root (not deployable)
 seibro_smoke_*.txt
