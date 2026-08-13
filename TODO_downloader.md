@@ -1,11 +1,20 @@
 # Insurequant TODO — Downloader Stage
 
-> Last updated: 2026-08-06 · Stage 1/5 — downloader
+> Last updated: 2026-08-13 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md (+ docs/agents/source-catalog.yaml) · Changelog: docs/changelog_downloader.md
 
 **Cross-stage TODO:** `TODO.md` (root). **This file:** active + done items scoped to data collection only.
 
 ## Status
+
+**재스카우팅 (2026-08-13, owner "한화생명 반기보고서 게시" 제보 → 39사 전사 재조사):** DART 39사(kics_disclosure
+원수사명 기준, `resolve_corp` name-search) 전수 조회 — **한화생명(KR0068)·한화손해보험(KR0002) 둘 다 8/13
+반기보고서(2026.06) 게시 확인**(같은 날 동시). 나머지 37사는 미게시(교보생명 2건·농협생명 1건·미래에셋생명
+1건 A형 신규는 전부 `[기재정정]`뿐, 반기 아님). AIG손해만 상시 `NO_CORP_MATCH`(기지 known, EXCLUDED_SKIP).
+raw 취득 완료: `data/dart/FY2026_Q2/raw/KR0068_한화생명/20260813001536.xml`(22.3M자)·
+`.../KR0002_한화손해보험/20260813001433.xml`(16.2M자), 키워드 확인(보험계약마진 366·170회) →
+parser/ifrs17 raw-ready `inbox/parser/20260813T0600Z`. 법정기한(8/14) 하루 전 조기게시 — 한화그룹이 최초
+필러. 나머지 37사는 8월 중~말 순차 예상(KB손보 과거패턴 8/29~31), 재스카우팅 계속.
 
 **4-source 체제 (2026-08-03부터)** — `bonds`(FSC data.go.kr) 소스 폐지, 5→4(정기경영공시/DART/KIDI/IR). 상세: `docs/changelog_downloader.md` 2026-08-03. 자본성증권 데이터 자체는 소멸 아님 — DART per-bond로 이미 대체(2026-06-20).
 
@@ -94,6 +103,29 @@ listNo는 미탐색 — 파이프라인 구현 안 함, owner 판단 대기). pa
 분기)뿐**. 2024 세 분기는 fetch 시도 자체가 없었던 것(파일 부재)이라 방금 최초로 라이브 fetch해
 013 확인(캐시버그 아님). parser 통지에 반영 완료.
 
+**인박스 드레인 (2026-08-13, 추가분 — equity_composition item10 주석백필 raw)**: parser가 남긴
+2건 처리(`inbox/downloader/20260813T1425Z` KR0104 전체 + `20260813T1954Z` 18개사 부분,
+둘 다 resolved→`_resolved/`). **KR0104 티켓의 "0건 전체 FY" 주장은 오탐**이었음 — 티켓이 쓴
+`find -maxdepth 2`가 실제 leaf 깊이(3)보다 얕아 애초에 아무것도 못 찾는 명령이었음; canonical
+path helper로 재검증하니 2025.4Q·2026.1Q는 이미 raw 有, 실결측은 9개 분기뿐. 18개사 티켓 쪽
+gap 목록(108셀)은 재검증 결과 정확했음(같은 오탐 아님). **총 117셀 fetch, 전부 zip무결성+
+IFRS17키워드 확인**: 표준 유니버스 17개사는 `ifrs17_batch_historical.py --pilot --periods
+--skip-extract`를 period-set 서명별 8회 그룹 실행(KR0104 포함 — 9분기 gap이 다른 6개사와
+동일 서명이라 합류). **서울보증(KR0150) 3건은 `EXCLUDED_SKIP` 유니버스 필터에 걸려 표준
+CLI 불가** → `resolve_corp`+`process_one_period` 직접 호출하는 신규 `scripts/
+fetch_kr0150_item10_quarters.py`로 우회(KR0004류 기존 one-off 패턴 재사용), 3/3 성공.
+parser raw-ready `inbox/parser/20260813T2153Z`.
+
+**부수 발견·수정 — `BATCH-HISTORICAL-FIX` 실발화**: KR0104 2023.4Q fetch 중 기존 문서화된
+정정-rcept 오선택 버그가 처음으로 실제 에러(status=014)를 냄 — FY2023 사업보고서 후보 중
+`[첨부정정]`이 원본보다 먼저 골라짐. `ifrs17_batch_historical.py:fetch_rcept_no`를 "대괄호로
+시작하는 report_nm 전부 제외"로 수정 후 재시도해 해결(정정 아닌 원본 rcept 20240401002122
+확보). 이번 배치 나머지 116셀은 원래 원본이 primary[0]라 버그 영향 없었음. **미확인 잔여
+리스크**: 2026-05-30 이래 누적된 전체 DART 이력 중 이 버그로 조용히(에러 없이) 정정본이
+골라진 셀이 있을 가능성 — `[첨부정정]`이어도 document.xml이 성공 응답하는 경우가 있어 항상
+에러로 드러나지는 않음. 이번 세션은 오늘 두 티켓 스코프만 처리, 소급 전수 재검사는 안 함
+(아래 BATCH-HISTORICAL-FIX 행에 상태 갱신).
+
 ---
 
 ## Active follow-ups (next sessions)
@@ -111,7 +143,7 @@ listNo는 미탐색 — 파이프라인 구현 안 함, owner 판단 대기). pa
 | OCR-MARKETRISK | 시장위험 스캔-only PDF OCR 경로 | 🟠 P2 | KB손해·한화손해 2023.4Q 금리위험 = full-page 이미지(텍스트레이어 없음); 카카오페이 2025.4Q 시장위험 = 스캔. 파서가 fitz/pdfplumber로 텍스트 못 뜸 → OCR 필요. **결정 대기**: downloader OCR 스택 도입 vs owner 수동 OCR. 확보되면 parser/kics가 시장위험 36-40 추출. 출처 `inbox/downloader/20260614T1232Z` item(2) |
 | MISC-SEIBRO | Seibro HTML fallback | 🟢 low | m.seibro.or.kr smoke ok; lower priority since FSC works |
 | ~~REORG2-DART~~ | ~~DART batch script 3개 canonical-layout refactor~~ | ✅ **2026-05-30N 완료** | `scripts/_dart_path_helpers.py` 신규 + 3 script 갱신 + smoke 9/9. 다음 분기 fetch는 `data/dart/FY<year>_Q<q>/raw/` canonical 위치에 쌓임 |
-| BATCH-HISTORICAL-FIX | `ifrs17_batch_historical.py` 정정 rcept picking 버그 | 🟠 P2 | DART는 정정([기재정정], [첨부정정]) 공시가 원본보다 먼저 나올 수 있음 → 잘못된 rcept picking → status=014 'file not found' 에러. **고침 방향**: 정정 prefix 제외하고 가장 늦은 rcept (또는 원본 사업/반기/분기보고서)를 picking. REORG2-DART와 같은 PR에서 같이 처리 권장 |
+| BATCH-HISTORICAL-FIX | ~~`ifrs17_batch_historical.py` 정정 rcept picking 버그~~ | 🟠 P2 (코드 fix 완료, 소급감사 잔여) | **2026-08-13 코드 fix 완료**: KR0104 2023.4Q fetch 중 실발화(status=014, `[첨부정정]`이 원본보다 먼저 골라짐) → `fetch_rcept_no`를 "대괄호로 시작하는 report_nm 전부 제외"로 수정, 재시도 확인. **잔여**: 2026-05-30 이래 누적 DART 이력 중 이 버그로 조용히(에러 없이) 정정본이 골라진 셀이 있을 수 있음(첨부정정도 document.xml이 성공 응답하는 경우 있음) — 소급 전수 재검사 미실시, 필요시 validation이 우선순위 판단 |
 | F15-DL | 동양생명 2025.2Q~2026.1Q 재다운로드 검토 | 🟠 P2 | (F15 본체는 parser 버그 — `TODO.md`) 추출단계에서 wide `<TE>` 표의 잔액(기초/기말)행이 전부 0으로 들어옴 → 원본 다시 받아야 할 수도 있음. 재다운로드 후 재파싱이 효과적인지 먼저 확인 |
 | FUTURE-DL | DART 별첨 fetch endpoint 조사 (KB/메리츠/NH FY2025 LOB) | 🟠 P2 | KB/메리츠/NH FY2025 사업보고서는 LOB 표를 별첨 감사보고서로 분리. 결정 2026-05-30: **fetch 안 함** (본문에 다 있음, 회사별 라벨 변형 처리로 해결). 단 별첨 endpoint 위치는 future reference로 기록 — 새 이슈에 필요 시 조사 |
 | IR-SAMSUNGLIFE-23 | 삼성생명 IR FY2023 Q1/Q2/Q3 standalone factsheet 부재 | 🟢 low | samsunglife.com IR은 ~2년치만 보존 → FY23 Q1-Q3 standalone factsheet 롤오프됨 (2026-05-30P 확인). **단 데이터는 살아있음**: 보유 중인 `★ 4QFY23FactsheetKOR.xlsx`에 1Q~4Q 분기 컬럼 물리적 존재 → parser stage에서 구판 시트 레이아웃(`parse_factsheet`가 "월초대비 신계약CSM 배수" 라벨 못 찾음) 핸들링하면 복구 가능. **다운로더 액션 없음** — parser stage 이슈로 이관 |
