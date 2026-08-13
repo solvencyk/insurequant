@@ -168,6 +168,10 @@ sources:
     endpoints:
       list: /api/list.json
       document: /api/document.xml
+      fs_all: /api/fnlttSinglAcntAll.json   # 표준계정 전체 재무제표 (BS/IS/CIS/CF/SCE)
+    fs_all_params: { corp_code, bsns_year, reprt_code, fs_div: CFS|OFS }
+    fs_all_cache: data/dart/_fs_api_cache/<corp>_<year>_<reprt>_<CFS|OFS>.json
+    fs_all_used_by: [scripts/fetch_dart_fs.py (PL Tier-1), equity_composition (신규, 2026-08-13)]
     pblntf_ty:
       A: 정기공시 (사업/반기/분기)
       F: 감사보고서

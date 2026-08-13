@@ -1,6 +1,6 @@
 # Insurequant TODO — Downloader Stage
 
-> Last updated: 2026-08-03 · Stage 1/5 — downloader
+> Last updated: 2026-08-06 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md (+ docs/agents/source-catalog.yaml) · Changelog: docs/changelog_downloader.md
 
 **Cross-stage TODO:** `TODO.md` (root). **This file:** active + done items scoped to data collection only.
@@ -22,6 +22,10 @@
 **재스카우팅 (2026-08-03, owner 요청):** DART 22사 재확인 — Q2 반기/분기보고서 여전히 0건, 신규 항목은 전부 routine(임원소유상황·자율공시 등). 삼성화재가 07-31 IR개최 안내공시 신규 등록했지만 자체 IR페이지 확인 결과 아직 FY26 1분기까지만 게시(과거 패턴상 상반기는 08-13경 예상, IR개최공시=실적공개 아님). 생보협회 일괄페이지 22사 전부 여전히 2분기열 "-". **동양생명 외 변동 없음.**
 
 **🔴 KIDI(보험개발원) 발견 — `data/kidi/premium_summary.json` 부재:** owner가 "신규매출 데이터 확인 중이냐"고 질문해서 처음 점검. `data/kidi/FY*_Q*/raw/`에 회사당 1개씩(KR0080 AIA만, 2026-06-08 단발성 디버그런 추정)만 남아있고 TODO의 "F2 완료(38사×13Q=494)" 산출물인 `premium_summary.json`은 디스크에 없음(`data/kidi/`는 gitignore 대상이라 git으로 복구 불가). 소비측 `scripts/crawl_assoc_nb_premium.py`가 이 파일 부재 시 **에러 없이 조용히 빈 dict로 스킵**해서 `nb_premium_wolnap.json`/`NB_CSM_multiple.json`이 KIDI 교차검증 없이 override/IR-benchmark만으로 돌고 있었을 가능성 — 원인 미상, 조사 필요. 라이브 `getML01LastYM`/`getMN07LastYM` 확인 결과 최신월=202604(4월)로 아직 6월(Q2) 데이터는 미공개. **`scripts/ingest_kidi_monthly_premium.py` 풀재실행(39사×13분기말, rate-limit 코드 없음 주의)으로 복구 필요 — owner 승인 대기.**
+
+**재스카우팅 (2026-08-06, owner 요청 — 생보/손보 top5=10사 표적조사):** DART API(list.json, pblntf_ty=A, 20260601~20260806): 10사 전원 반기보고서 0건(NH농협생명만 1분기 [기재정정] 1건, Q2 아님) — 법정기한(반기말+45일=8/14) 전이라 정상. KIDI latest=202604(4월) 그대로, 8/3과 동일. 생보협회 일괄페이지: 22사 전부 2분기열 "-" 불변(타깃 5사 포함). 손보 개별사이트 4/5 직접확인(메리츠·삼성화재·KB손해·DB손해 전부 1분기가 최신, 작년도 등록일 패턴상 8월말 예상) — 현대해상만 hi.co.kr 홈페이지가 브라우저 도구에서 반복 렌더링 hang(WebFetch도 JS라 콘텐츠 미포착)이라 미확인, 나머지 4사와 동일할 것으로 추정되나 미검증.
+
+**신규 발견: IR(그룹 팩트북) 채널이 정식 공시보다 먼저 상반기를 냄** — KB금융그룹 팩트북에 `2026년도 상반기`(1분기보다 최신), NH농협금융지주 팩트북에 `NHFG Factbook 1H26` 확인됨(둘 다 kbfg.com/nhfngroup.com 직접 조회). 동양생명 07-27 선공시(`FY2026 상반기실적발표자료`)와 동일 패턴 — 그룹 IR이 DART/경영공시보다 먼저 잠정 상반기 실적을 공개. DB손보 팩트시트는 아직 1분기뿐(2026.05.15 등록). 나머지 IR(삼성생명·삼성화재·현대해상·신한금융그룹·메리츠금융그룹)은 JS-heavy라 이번 세션 도구(Browser+WebFetch)로 콘텐츠 확인 실패 — 차기 세션 재시도 필요. **owner 승인(같은 세션) → fetch 완료**: `data/ir/FY2026_Q2/raw/_groups/kb_financial/kbfg_2026_2Q.pdf`(1.94MB, `%PDF-1.7` 확인) + `.../nh_financial/nhfg_2026_2Q.xlsx`(2.61MB, `PK\x03\x04` 확인 — **주의: NH는 이번 분기 xlsx만 제공**, 작년 동분기 `nhfg_2025_2Q.pdf`는 PDF였음, 사이트 자체가 xlsx 아이콘으로 명시했으니 오류 아님). 둘 다 direct href(fileDownUtil.jsp / disclosureDown.do)라 PowerShell `Invoke-WebRequest -UseBasicParsing`으로 직접 fetch(브라우저 클릭다운로드 아님). **파서 handoff 전 확인 필요**: 그룹 합산표라 KB손해/KB라이프, NH농협손해/농협생명 사별 분해가 안 되면 parser가 못 쓸 수 있음(source-catalog "group factbook" 기존 caveat과 동일 이슈) — parser가 열어보고 사별 분해 가능한지 우선 확인할 것.
 
 **교차확인(같은 날 별도 스레드):** `inbox/_resolved/20260730T0823Z__owner__KR1098...kakaopay_nb_csm_1000x_half_done.md`에서 parser/ifrs17도 독립적으로 동일 gap에 부딪힘 — `NB_CSM_multiple.json` 재계산 중 "`data/kidi/premium_summary.json`이 로컬에 없음... 이 세션 네트워크 스코프 밖"이라 월납월초보험료 값을 그냥 보존만 하고 넘어감. **두 세션이 독립적으로 같은 결손을 확인** — 우연/일회성 아님, 실제로 다운스트림을 막고 있음. owner 승인 시 재수집 진행.
 
@@ -49,6 +53,46 @@ RED 13→3으로 좁혀진 잔여분). 두 티켓 통합 처리: 3사 FY2025 raw
 점검**: data/dart 전역에서 document.zip/xml 없이 meta.json만 있는 디렉터리 23개 스캔 — 전부
 `{"no_filing": true}` 정당 마커(비상장 감사보고서 전용사의 Q1-Q3 없음, 예별·IBK연금 등)로 확인, 진짜 미완료
 fetch 0건. zero-byte/1KB 미만 document.zip도 0건 — downloader 도메인엔 그 외 중단 작업 없음.
+
+**재스카우팅 (2026-08-13, owner 질문 — 뉴스 당기순이익 vs 정식공시 구분):** owner가 메리츠화재·
+한화생명·한화손보 당기순이익 뉴스를 보고 2026.2Q 정식 소스 공시 여부 질문 → 실시간 재확인. **뉴스 출처
+= DART "영업(잠정)실적(공정공시)"/"연결재무제표기준영업(잠정)실적(공정공시)"** 3사 전부 2026-08-12
+신규 제출 확인(메리츠화재는 비상장 자회사라 지주사 메리츠금융지주 명의로 "자회사의 주요경영사항" 공시).
+**정식 반기보고서(DART A유형, IFRS17 CSM 주석 포함)는 3사 전부 여전히 0건**(법정기한 반기말+45일=8/14,
+오늘 8/13=마감 하루 전이라 정상). K-ICS 정기경영공시도 3사 전부 미공시 재확인: 메리츠화재
+meritzfire.com 최신=CY2026 1/4분기(상반기 행 없음), 한화손보 hwgeneralins.com "2026년" 행 1/4분기만
+채워지고 상반기 열 공백, 생보협회 일괄페이지(pub.insure.or.kr) 22사 전부 2분기열 "-"(한화생명 포함).
+08-06 스캐닝과 동일 결론 — **잠정실적(공정공시)와 정식 K-ICS/IFRS17 공시는 별개 트랙**, 후자는 아직.
+재스카우팅은 반기보고서 법정기한(8/14) 경과 후 권장.
+
+**인박스 드레인 (2026-08-13, 오늘자):** 3건 확인. D1-D4(아래 항목, 이미 답변완료)는 `_resolved/`로
+정리만. 신규 1건 처리: validation이 `20260813T1330Z`에서 삼성생명(KR0069) DART FS API 캐시 2개
+(`00126256_2025_{11012,11014}_CFS.json`, 반기·3분기)의 재무상태표 자산·부채총계가 1분기 값에
+붙박여 있다고 신고(자본총계는 분기마다 정상 갱신 — 파일 통째 stale이 아니라 그 안의 특정 계정만
+고정). `fetch_dart_fs.py --refresh 00126256 2025`로 라이브 재조회 → **같은 값이 소수점까지 동일하게
+재확인됨**(4개 reprt 전부 status=000, 013 아님) — 캐시 문제 아니라 **DART API가 반기·3분기보고서
+조회 시 재무상태표 자산·부채 태그만 1분기 값을 돌려주는 소스 결함**으로 확정. PL_breakdown(IS만
+읽음)은 무관, 신규 equity_composition의 BS 항등식 체크에만 영향. 캐시 교체 불필요, validation에
+documented exception 등재 근거로 회신(`status: answered`, validation 재확인 대기).
+
+**인박스 처리 (2026-08-13, owner 발주 — equity_composition 신규 마스터용 소스 확보):**
+`inbox/downloader/20260813T0422Z` (D-1~D-4) 처리 완료(resolved). ① `source-catalog.yaml`
+dart 블록에 누락돼 있던 `fnlttSinglAcntAll`(fs_all) 엔드포인트 선언 추가. ② 24개사
+`fetch_dart_fs.py --refresh <corp> 2023`로 라이브 강제 재조회 → **24/24 전부 2023 1Q·2Q
+공히 status=013 확정**(캐시버그 아님, DART API 구조적 공백) → 영구결측 등록. ③ XBRL 전무
+15개사(14+예별) 전부 비상장 감사보고서(F형) 전용 확인(`universe.py` 분류와 1:1 일치), 본문
+XML 전부 이미 `data/dart/FY*/raw/`에 확보돼 있어 신규 fetch 0건(AIA생명=KR0080도 6건 확보
+완료 확인 — source-catalog "non-KR AIA" 표기가 stale이었을 뿐). 'None_*.json' 캐시 버그
+원인 = KR0029 AIG손해보험 name-search 실패(기존 문서화된 quirk, 신규 아님) — 무해한 잔재라
+삭제 안 함. ④ FISIS 앵커는 타당성만 확인(API 실재+별도 인증키 필요, 보험사 코드체계/AOCI
+listNo는 미탐색 — 파이프라인 구현 안 함, owner 판단 대기). parser raw-ready
+`inbox/parser/20260813T0530Z`.
+
+**같은 세션 후속 확인 (owner가 "전분기 다 받았냐" 재질문) — 24개사 나머지 10분기까지 전수
+재검증하다 서울보증보험(00112998/KR0150) 추가 gap 발견·해결.** 다른 23개사는 2023 1Q/2Q만
+결측이지만 KR0150은 **2023 전체 + 2024 전체가 013**, 실질 Tier-1은 **2025.1Q~2026.1Q(5개
+분기)뿐**. 2024 세 분기는 fetch 시도 자체가 없었던 것(파일 부재)이라 방금 최초로 라이브 fetch해
+013 확인(캐시버그 아님). parser 통지에 반영 완료.
 
 ---
 
