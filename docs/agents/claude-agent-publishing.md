@@ -60,16 +60,35 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 > EOF
 > ```
 
-**2026-07-22 도출 결과 (검증됨):**
+**2026-07-22 도출 결과 (검증됨), 2026-08-14 갱신 (equity_composition.json → IFRS17_BS.json 대체):**
 
 | Page | Fetches |
 |---|---|
 | `index.html` | `kics_disclosure.json` · `CSM_waterfall.json` · `NB_CSM_multiple.json` |
 | `K-ICS.html` | `kics_disclosure.json` · `kics_rate_sensitivity.json` · `kics_tier1_utilization.json` · `kics_tier2_utilization.json` · `kics_forward_capital.json` |
-| `IFRS17.html` | `CSM_waterfall.json` · `PL_breakdown.json` · `NB_CSM_multiple.json` · `data/dart/viz/csm_waterfall.json` · `csm_waterfall_history.json` · `csm_amort_schedule.json` · `insurance_pl_breakdown.json` · `sensitivity_heatmap.json` · `data/ir/nb_csm_ratio.json` |
-| `공시보고서.html` | (없음 — 정적 페이지) |
+| `IFRS17.html` | `CSM_waterfall.json` · `PL_breakdown.json` · `NB_CSM_multiple.json` · `data/dart/viz/csm_waterfall.json` · `csm_waterfall_history.json` · `csm_amort_schedule.json` · `insurance_pl_breakdown.json` · `sensitivity_heatmap.json` · `data/ir/nb_csm_ratio.json` · `IFRS17_BS.json` |
+| `공시보고서.html` | `dividend.json` |
 
 여기에 `common.css` + `CNAME` + `.gitignore` + 4개 HTML을 더한 것이 keep-list다.
+
+> **`dividend.json`(신규, 2026-08-15)** — DART alotMatter(배당에 관한 사항) 기반, 39개사 중
+> 24개사(Tier-1) 커버, 1,924행. `공시보고서.html`이 fetch(`inbox/publishing/20260814T2230Z`).
+> 게이트 배선 완료(`DIV_PAYOUT_IDENTITY`·`DIV_CENSUS_MISSING`·`DIV_ZERO_CONTRADICTION` 3룰,
+> 도메인 RED 0) — 단 **다른 마스터(`PL_breakdown.json`, 61셀/1,475행 유실)가 라이브 게이트를
+> RED=13으로 막고 있어 dividend.json을 포함한 어떤 배포도 아직 못 나간다**(`inbox/parser/20260814T1637Z`,
+> open, parser 소관). `공시보고서.html`도 아직 git 미커밋 상태.
+
+> **`equity_composition.json`(항목 1-49)은 2026-08-14 owner 지시로 아카이브됐다**
+> (`archive/2026-08_equity_composition/`, `inbox/publishing/20260814T0232Z`) — Panel 7의 정본은
+> **`IFRS17_BS.json`**(항목 1-7: 자산·부채·자본·AOCI누계액·법정준비금 3종) 한 벌로 통합. IFRS17.html은
+> 이미 이 마스터를 fetch하도록 갈아끼워졌다(designer, 2026-08-14). `equity_composition_provenance.json`도
+> 아카이브와 함께 사라졌다 — 대체 사이드카는 아직 없다(§9 keep-list에는 애초에 provenance류가 없다).
+> **RED=42→0 (2026-08-14, 세션 간 처리).** 6개사(AIG손보·하나손보·신한이지손보·비엔피파리바카디프·
+> 메트라이프·IBK연금)는 비상장이라 DART 정기공시 XBRL 자체가 없음을 API 실측(013/014)으로 확인,
+> owner 지시("걔네는 걍 접고 마무리해")로 `validate_data_contract.py`에 `IFRS17_BS_NO_SOURCE`
+> census 면제 추가(`inbox/_resolved/20260814T0620Z`) — `BS_IDENTITY`(항등식)는 이 6개사에도 계속
+> 돈다, census만 면제. 이제 `prepush_check.py` **RED=0** — 기술 게이트는 통과, **실제 push는
+> 여전히 owner의 명시적 GO 별도 필요**(publishing은 권고만, `git push` 미실행).
 
 **이전 표에 있었으나 어떤 페이지도 읽지 않는 것** (배포 대상 아님):
 `data/dart/viz/csm_bubble.json`(index.html은 버블을 **인라인**으로 갖고 있다 — 메모리
@@ -143,9 +162,15 @@ The HTML pages fetch these directly. **No staging templates between publishing a
 
 0. **Data-contract + anomaly gate** — run `python scripts/prepush_check.py` (supersedes standalone `validate_data_contract.py`). Runs: ① data-contract hard gate (census + as-of staleness + domain-identity CHECK4) + ② generic-anomaly triage chain. **exit 2 (RED ≥ 1) = push BLOCKED, no exception, no documented-exception bypass.** Outputs: `data/_derived/anomaly_triage.json` (review queue) + `data/_derived/anomaly_skeptic_input.json` (REAL+UNCERTAIN candidates).
 
-   **LLM-skeptic step (mandatory — publishing agent performs before recommending push):** Read `anomaly_skeptic_input.json` REAL+UNCERTAIN items and classify each adversarially as **EXTRACTION_ERROR / UNIT_ERROR / REAL_EVENT / NOISE**. Route EXTRACTION_ERROR/UNIT_ERROR to the appropriate parser inbox (lane: ifrs17 for CSM_waterfall/PL, lane: kics for K-ICS). REAL_EVENT/NOISE pass through. Prior verdict at `data/_derived/anomaly_skeptic_verdict.json` (orchestrator-generated) may be used as reference but must be re-verified if data changed. **Push recommendation forbidden without completing skeptic step.** Owner policy 2026-06-19.
+   **LLM-skeptic step (mandatory — publishing agent performs before recommending push):** classify each adversarially as **EXTRACTION_ERROR / UNIT_ERROR / REAL_EVENT / NOISE**. Route EXTRACTION_ERROR/UNIT_ERROR to the appropriate parser inbox (lane: ifrs17 for CSM_waterfall/PL, lane: kics for K-ICS). REAL_EVENT/NOISE pass through. **Push recommendation forbidden without completing skeptic step.** Owner policy 2026-06-19.
 
-   Current live (2026-06-20): RED=4 (all CHECK4 domain-identity: T2_UTIL_OVER_100_NO_EXEMPTION×3 [동양·KB·미래에셋, proxy-gross artifact] + T2_DENOM_NOT_SCR_HALF×1 [신한이지, 분모 1/100 스케일]). Routes pending: UTIL×3 → downloader OCR (`20260617T0000Z`) + kics parser; DENOM×1 → ifrs17 parser (`20260620T0238Z`); designer donut 잠정 숨김 완료.
+   **Hardening rules (owner 2026-06-20, `inbox/_resolved/20260620T0859Z__owner__MULTI__skeptic_hardening_grounding.md` — added after skeptic fabricated a sibling line-item and repeatedly re-flagged owner-confirmed cells, see [[project_owner_confirmed_registry]]):**
+   1. **Input scope = `anomaly_skeptic_input.json` UNCERTAIN items only.** REAL items are already high-precision from deterministic own-history triage — re-litigating them is double noise, not extra safety. Never re-derive candidates from the raw master, and never invent a cell/line-item that isn't in the input (the 코리안리 "두 항목이 동일" fabrication: skeptic invented a sibling value that doesn't exist in the master and called it a duplicate).
+   2. **Master grounding before EXTRACTION_ERROR.** Before returning that verdict, read the cell's actual value from the master (`PL_breakdown.json` / `CSM_waterfall.json`, keyed by 원수사명+공시분기+항목명) and compare against that company's own history. A "these two values are identical" claim is only valid after actually reading both values — not inferred from field names.
+   3. **Respect `data/_gold/user_pl_confirmed_cells.json`.** Triage already suppresses matches into `OWNER_CONFIRMED` before the skeptic sees the queue, so a confirmed cell should never appear in `anomaly_skeptic_input.json`. If one does, that means the registry is missing an entry — recommend registering it, never edit the data to make the flag go away.
+   4. Prior verdict at `data/_derived/anomaly_skeptic_verdict.json` (orchestrator-generated) may be used as reference but must be re-verified if data changed.
+
+   Current live (2026-08-14): gate **RED=0** (was RED=42 earlier same day — `[IFRS17_BS] BS_CENSUS_MISSING_ITEM` on 6 non-listed companies with no DART XBRL source at all; owner closed it via `IFRS17_BS_NO_SOURCE` census exemption, `inbox/_resolved/20260814T0620Z`; `BS_IDENTITY` still runs on those 6). Anomaly triage (K-ICS/IFRS17 domains): REAL=73 UNCERTAIN=6 NOISE(auto-suppressed)=133, LLM-skeptic input=79 pending classification.
 
 1. **Validation gate** — every domain's most recent validation report has `summary.red == 0` (or every RED has a TODO.md documented-exception entry). K-ICS: see TODO.md §K-ICS gate for current documented exceptions.
 2. **Assembly gate** — assembly/build scripts exit code 0; masters byte-changed (no spurious diffs).
@@ -238,7 +263,7 @@ The §9 slim-publish dance is **too heavy to repeat every update** and the user 
 
 **Why.** The public GitHub repo (`main`, served by GitHub Pages at www.insurequant.com) must contain **only site assets**: the HTML pages + the master JSONs those pages fetch + `CNAME` + `.gitignore`. All IP — `scripts/`, `src/`, `docs/`, agent MD/TODO, raw + intermediate data — stays **out** of the public repo. Working code lives on feature branches locally (and optionally a private repo); `main` is the public face.
 
-**Keep-list (the ONLY files allowed on public `main`).** Authoritative = `git ls-tree -r --name-only main`; re-derive per §9.0 (grep the HTML) whenever an HTML's fetches change. Snapshot **verified live 2026-06-16** (commit `dbbb096`):
+**Keep-list (the ONLY files allowed on public `main`).** Authoritative = `git ls-tree -r --name-only main`; re-derive per §9.0 (grep the HTML) whenever an HTML's fetches change. Snapshot **verified live 2026-08-14** (`git ls-tree main` = commit `255e445`):
 
 ```
 .gitignore
@@ -253,12 +278,20 @@ NB_CSM_multiple.json
 PL_breakdown.json
 kics_disclosure.json
 kics_rate_sensitivity.json
+kics_tier1_utilization.json
+kics_tier2_utilization.json
+kics_forward_capital.json
 data/dart/viz/csm_amort_schedule.json
 data/dart/viz/csm_waterfall.json
 data/dart/viz/csm_waterfall_history.json
 data/dart/viz/insurance_pl_breakdown.json
 data/dart/viz/sensitivity_heatmap.json
 data/ir/nb_csm_ratio.json
+IFRS17_BS.json                             # NOT on main yet — IFRS17.html already fetches it (2026-08-14),
+                                            # replaces archived equity_composition.json. Gate RED=0 as of
+                                            # 2026-08-14 (was RED=42, cleared via IFRS17_BS_NO_SOURCE census
+                                            # exemption on 6 non-listed cos, inbox/_resolved/20260814T0620Z).
+                                            # Technical gate clear — still needs explicit owner GO to push.
 ```
 
 **Path migration LANDED (2026-06-16).** Live `main` serves viz from `data/dart/viz/*` (matches §1 canonical) — `data/ifrs17/viz/*` no longer exists anywhere in the repo (verified via `git ls-tree -r main` and local `data/`, 2026-08-06). `common.css` is a **new deploy asset** (designer frontend-design skill) — the 3 HTML pages `<link>` it, so it is now part of the keep-list and **must be pushed alongside any HTML change** (omitting it breaks all styling). No `csm_bubble.json` on main (index.html embeds the bubble inline).
