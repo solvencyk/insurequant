@@ -53,6 +53,39 @@
 .kpi7-val{font-size:20px;font-weight:800;color:var(--text);line-height:1.1;letter-spacing:-.01em}
 .kpi7-lab{font-size:11px;color:var(--muted);margin-top:3px}
 @media(max-width:640px){.kpi7-strip{grid-template-columns:repeat(2,1fr)}}
+/* Panel 7: BS summary tiles (L2 capital stack / L3-a AOCI waterfall / L3-b reserves code kept but not called — 2026-08-14 scope correction) */
+.bs-l1{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.bs-tile{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 16px;text-align:left;font:inherit;appearance:none;cursor:default}
+.bs-tile-primary{cursor:pointer}
+.bs-tile-primary:hover{border-color:var(--primary)}
+.bs-tile-lab{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.bs-tile-sub{font-size:11px}
+.bs-tile-val{font-size:19px;font-weight:800;color:var(--text);margin-top:4px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.bs-l2-caret{display:inline-block;transition:transform .15s;color:var(--muted)}
+.bs-tile-primary[aria-expanded="true"] .bs-l2-caret,
+.bs-l2-row-drill[aria-expanded="true"] .bs-l2-caret{transform:rotate(90deg)}
+.bs-l2{margin-top:14px;padding-top:14px;border-top:1px dashed var(--border)}
+.bs-l2-rows{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.bs-l2-row{display:grid;grid-template-columns:160px 1fr 130px;align-items:center;gap:10px;background:none;border:none;padding:5px 6px;font:inherit;text-align:left;width:100%;border-radius:6px}
+.bs-l2-row-drill{cursor:pointer;appearance:none}
+.bs-l2-row-drill:hover,.bs-l2-row-drill[aria-expanded="true"]{background:var(--card)}
+.bs-l2-lab{font-size:13px;color:var(--text);display:flex;align-items:center;gap:4px}
+.bs-l2-bar-track{height:10px;background:var(--card);border-radius:5px;overflow:hidden}
+.bs-l2-bar{display:block;height:100%;background:var(--primary);border-radius:5px}
+.bs-l2-val{font-size:13px;font-weight:700;color:var(--text);text-align:right;font-variant-numeric:tabular-nums}
+.bs-l3{margin-top:14px;padding-top:14px;border-top:1px dashed var(--border)}
+.bs-l3 h3{font-size:15px;margin:0 0 4px 0;color:var(--text)}
+.bs-l3-row{display:grid;grid-template-columns:160px 1fr 130px;align-items:center;gap:10px;padding:6px;border-radius:6px}
+.bs-l3-row-emph{background:rgba(13,110,253,0.08);border:1px solid rgba(13,110,253,0.28)}
+.bs-l3-row-emph .bs-l2-lab{font-weight:700}
+.bs-l3-row-emph .bs-l2-bar{background:var(--primary)}
+.bs-l3-row-muted{opacity:.65}
+.bs-l3-row-muted .bs-l2-bar{background:var(--muted)}
+@media(max-width:640px){
+  .bs-l1{grid-template-columns:1fr}
+  .bs-l2-row,.bs-l3-row{grid-template-columns:1fr;gap:2px}
+  .bs-l2-val{text-align:left}
+}
 </style>
 </head>
 <body>
@@ -131,6 +164,54 @@
       <div id="senStub" class="stub-msg" style="display:none"></div>
       <div class="table-wrap" id="senTable"></div>
     </div>
+    <div class="panel" data-pane="bs">
+      <h2>7) 재무상태표 · 자본의 질</h2>
+      <div class="small-muted" id="bsCap"></div>
+      <div id="bsStub" class="stub-msg" style="display:none"></div>
+      <div id="bsWrap">
+        <!-- 2026-08-14 owner 정정발주(inbox/parser·validation 20260814T0035Z): 원 요구는
+             "high level 17BS(자산/부채/자본/AOCI) + 가능하면 해약환급금준비금(안되면 pass)"뿐이었음.
+             L2 자본구성/L3-a AOCI워터폴/L3-b 법정준비금 드릴다운은 오케스트레이터 과도주문으로 정정됨.
+             아래 5타일이 owner 실제 요구 스코프. L2/L3 마크업·렌더 함수는 코드 보존(호출만 안 함) —
+             재노출 시 이 주석 아래 5-tile 블록을 되돌리고 자본총계 tile을 button+onclick으로 복원. -->
+        <div class="bs-l1" id="bsL1">
+          <div class="bs-tile" id="bsTileAsset">
+            <div class="bs-tile-lab">자산총계</div>
+            <div class="bs-tile-val" id="bsAssetVal">—</div>
+          </div>
+          <div class="bs-tile" id="bsTileLiab">
+            <div class="bs-tile-lab">부채총계</div>
+            <div class="bs-tile-val" id="bsLiabVal">—</div>
+          </div>
+          <div class="bs-tile" id="bsTileEquity">
+            <div class="bs-tile-lab">자본총계</div>
+            <div class="bs-tile-val" id="bsEquityVal">—</div>
+          </div>
+          <div class="bs-tile" id="bsTileAoci">
+            <div class="bs-tile-lab">기타포괄손익누계액(AOCI)</div>
+            <div class="bs-tile-val" id="bsAociVal">—</div>
+          </div>
+          <div class="bs-tile" id="bsTileReserve">
+            <div class="bs-tile-lab">해약환급금준비금</div>
+            <div class="bs-tile-val" id="bsReserveVal">—</div>
+          </div>
+        </div>
+        <div class="bs-l2" id="bsL2" hidden>
+          <div class="small-muted">자본총계 구성 — 이익잉여금·AOCI를 누르면 세부가 펼쳐집니다</div>
+          <div class="bs-l2-rows" id="bsL2Rows"></div>
+        </div>
+        <div class="bs-l3" id="bsL3a" hidden>
+          <h3>AOCI(기타포괄손익누계액) 변동 분해</h3>
+          <div class="small-muted" id="bsL3aCap"></div>
+          <div class="chart-container chart-sm"><div id="chartBsAoci" style="width:100%;height:100%" role="img" aria-label="AOCI 변동 워터폴 차트 — 기초부터 기말까지 자산측·부채측 평가손익 분해"></div></div>
+        </div>
+        <div class="bs-l3" id="bsL3b" hidden>
+          <h3>이익잉여금 내 법정준비금</h3>
+          <div class="small-muted" id="bsL3bCap"></div>
+          <div class="bs-l2-rows" id="bsL3bRows"></div>
+        </div>
+      </div>
+    </div>
   </template>
 
 <script>
@@ -183,6 +264,7 @@
     hist: dataPaths("../data/dart/viz/csm_waterfall_history.json", "data/dart/viz/csm_waterfall_history.json"),
     plx: [resolveUrl("PL_breakdown.json")],
     nbm: dataPaths("NB_CSM_multiple.json", "NB_CSM_multiple.json"),
+    eqx: [resolveUrl("IFRS17_BS.json")],
   };
 
   const NB_LOOKUP = {
@@ -194,7 +276,7 @@
     한화생명: { slug: "hanwha_life", bucket: "life" },
   };
 
-  const charts = { wf: null, amort: null, pl: null, nb: null, hist: null };
+  const charts = { wf: null, amort: null, pl: null, nb: null, hist: null, bsAoci: null };
 
   const payload = { wf:null, amort:null, pl:null, sen:null, nb:null, hist:null, ni:null };
   const ix = {
@@ -205,6 +287,7 @@
     hist: new Map(),
     plx: new Map(),
     nbm: new Map(),
+    eqx: new Map(),
   };
   // 회사코드(KR0001…) 기반 매칭. 새 마스터(CSM_waterfall.json)가 코드↔이름 등록부.
   const codeToName = {};   // 'KR0001' → '메리츠화재해상보험'
@@ -251,7 +334,7 @@
   }
 
   function destroyCharts(){
-    for (const k of ["wf","pl"]){ // ECharts
+    for (const k of ["wf","pl","bsAoci"]){ // ECharts
       if (charts[k]){ try{ charts[k].dispose(); }catch(e){} charts[k]=null; }
     }
     for (const k of ["amort","nb","hist"]){ // Chart.js
@@ -898,6 +981,238 @@
     cu('kpi7NbMult',  nbMult!=null?Number(nbMult):null, v=>fmtNum(v,2)+'×');
   }
 
+    // ===== Panel 7: 재무상태표 · 자본의 질 (IFRS17_BS.json, 항목 1-7 — 2026-08-14 equity_composition.json에서 repoint) =====
+    // L1 자산/부채/자본/AOCI(1/2/3/4) + 해약환급금준비금(5, 결측 정상) — renderBsSection 참조.
+    // 스톡 전용 마스터(값_당분기 컬럼 자체가 없음)라 전부 y필드만 사용.
+    // L2/L3 드릴다운(아래)은 옛 equity_composition.json(항목 1-49) 스키마의 죽은 코드 —
+    // 항목번호 재사용 함정은 renderBsSection 위 주석 참조.
+    function eqQuartersOf(company){
+      const m = ix.eqx.get(company);
+      return m ? Array.from(m.keys()).sort(wfCmpDesc) : [];
+    }
+    function eqVal(company, qtr, num){
+      const m=ix.eqx.get(company); const qm=m&&m.get(qtr); const rec=qm&&qm.get(num);
+      const v=rec ? rec.y : null;
+      return (typeof v==="number" && Number.isFinite(v)) ? v : null;
+    }
+    // 항목1(자산총계)이 있는 최신 분기를 앵커로 — equity 커버리지가 wf/pl과 다를 수 있어(회사별 BS 공시 유무 차이) 최신 wf분기에 비어 있을 수 있음.
+    function eqLatestQuarter(company){
+      for (const qtr of eqQuartersOf(company)) if (eqVal(company,qtr,1)!=null) return qtr;
+      return null;
+    }
+    function eqAociSteps(company, qtr){
+      const g = num => eqVal(company, qtr, num);
+      const etcParts = [g(25), g(26), g(27), g(28), g(31)];
+      const etcVal = etcParts.some(x=>x!=null) ? etcParts.reduce((a,b)=>a+(b||0), 0) : null;
+      return [
+        { ko:"기초", role:"anchor", value: g(20) },
+        { ko:"①FVOCI\n평가손익\n(자산측)", role:"flow", side:"asset", value: g(21) },
+        { ko:"②보험계약\n순금융손익\n(부채측)", role:"flow", side:"liab", value: g(22) },
+        { ko:"재보험\n순금융손익", role:"flow", side:"neutral", value: g(23) },
+        { ko:"위험회피\n파생상품", role:"flow", side:"neutral", value: g(24) },
+        { ko:"기타", role:"flow", side:"neutral", value: etcVal },
+        { ko:"기말", role:"anchor", value: g(30) },
+      ];
+    }
+
+    function renderBsL2(host, company, qtr){
+      const box = q(host, "#bsL2Rows");
+      if (!box) return;
+      box.innerHTML = "";
+      const rows = [
+        { num:2, label:"자본금" },
+        { num:3, label:"자본잉여금" },
+        { num:4, label:"신종자본증권" },
+        { num:5, label:"이익잉여금", drill:"l3b" },
+        { num:6, label:"기타포괄손익누계액(AOCI)", drill:"l3a" },
+        { num:7, label:"자본조정" },
+      ];
+      const vals = rows.map(r=>eqVal(company,qtr,r.num));
+      const maxAbs = Math.max(1, ...vals.filter(v=>v!=null).map(Math.abs));
+      rows.forEach((r,i)=>{
+        const v = vals[i];
+        const pct = v==null ? 0 : Math.max(2, Math.abs(v)/maxAbs*100);
+        const isDrill = !!r.drill;
+        const el = document.createElement(isDrill ? "button" : "div");
+        if (isDrill){ el.type="button"; el.setAttribute("aria-expanded","false"); el.setAttribute("aria-controls", r.drill==="l3a"?"bsL3a":"bsL3b"); }
+        el.className = "bs-l2-row" + (isDrill ? " bs-l2-row-drill" : "");
+        el.innerHTML =
+          `<span class="bs-l2-lab">${r.label}${isDrill?' <span class="bs-l2-caret" aria-hidden="true">▸</span>':''}</span>`+
+          `<span class="bs-l2-bar-track"><span class="bs-l2-bar" style="width:${pct}%"></span></span>`+
+          `<span class="bs-l2-val">${v==null?'—':fmtEokKR(v/100)}</span>`;
+        if (isDrill) el.addEventListener("click", ()=>toggleBsDrill(host, company, qtr, r.drill, el));
+        box.appendChild(el);
+      });
+    }
+
+    function toggleBsL2(host, company, qtr){
+      const l2 = q(host, "#bsL2"); const tile = q(host, "#bsTileEquity");
+      if (!l2 || !tile) return;
+      const willOpen = l2.hidden;
+      l2.hidden = !willOpen;
+      tile.setAttribute("aria-expanded", String(willOpen));
+      if (!willOpen){ // collapsing L2 also collapses any open L3
+        const l3a=q(host,"#bsL3a"), l3b=q(host,"#bsL3b");
+        if (l3a) l3a.hidden = true; if (l3b) l3b.hidden = true;
+        host.querySelectorAll(".bs-l2-row-drill").forEach(b=>b.setAttribute("aria-expanded","false"));
+      }
+    }
+
+    function toggleBsDrill(host, company, qtr, which, btn){
+      const l3a = q(host,"#bsL3a"), l3b = q(host,"#bsL3b");
+      const target = which==="l3a" ? l3a : l3b;
+      if (!target) return;
+      const willOpen = target.hidden;
+      l3a.hidden = true; l3b.hidden = true;
+      host.querySelectorAll(".bs-l2-row-drill").forEach(b=>b.setAttribute("aria-expanded","false"));
+      if (willOpen){
+        target.hidden = false;
+        btn.setAttribute("aria-expanded","true");
+        if (which==="l3a") renderBsAociWaterfall(host, company, qtr);
+        else renderBsReserves(host, company, qtr);
+        target.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion:reduce)').matches ? "auto" : "smooth", block:"nearest"});
+      }
+    }
+
+    function renderBsReserves(host, company, qtr){
+      const box = q(host, "#bsL3bRows");
+      if (!box) return;
+      box.innerHTML = "";
+      const re = eqVal(company,qtr,5);
+      const surrender = eqVal(company,qtr,10), catastrophe = eqVal(company,qtr,12), creditLoss = eqVal(company,qtr,14);
+      const known = [surrender,catastrophe,creditLoss].filter(v=>v!=null);
+      const rest = (re!=null && known.length) ? re - known.reduce((a,b)=>a+b,0) : null;
+      const capEl = q(host, "#bsL3bCap");
+      if (capEl) capEl.textContent = "이익잉여금 "+(re==null?'—':fmtEokKR(re/100))+" 중 법정준비금 3종(기적립액) — 해약환급금준비금 강조";
+      const rows = [
+        { label:"해약환급금준비금", val:surrender, emph:true },
+        { label:"비상위험준비금", val:catastrophe },
+        { label:"대손준비금", val:creditLoss },
+        { label:"기타 이익잉여금(미처분 등)", val:rest, muted:true },
+      ];
+      const maxAbs = Math.max(1, ...rows.map(r=>r.val).filter(v=>v!=null).map(Math.abs));
+      rows.forEach(r=>{
+        const pct = r.val==null ? 0 : Math.max(2, Math.abs(r.val)/maxAbs*100);
+        const div = document.createElement("div");
+        div.className = "bs-l3-row" + (r.emph?" bs-l3-row-emph":"") + (r.muted?" bs-l3-row-muted":"");
+        div.innerHTML =
+          `<span class="bs-l2-lab">${r.label}</span>`+
+          `<span class="bs-l2-bar-track"><span class="bs-l2-bar" style="width:${pct}%"></span></span>`+
+          `<span class="bs-l2-val">${r.val==null?'—':fmtEokKR(r.val/100)}</span>`;
+        box.appendChild(div);
+      });
+    }
+
+    // AOCI decal(colorblind-safe 패턴): 부채측 막대에만 대각선 해치 — 색상 하나로만 자산/부채를 구분하지 않기 위함(owner 지시).
+    const AOCI_LIAB_DECAL = { symbol:"line", dashArrayX:[1,0], dashArrayY:[3,3], rotation:Math.PI/4, color:"rgba(255,255,255,0.65)" };
+    function renderBsAociWaterfall(host, company, qtr){
+      const el = q(host, "#chartBsAoci");
+      if (!el || typeof echarts === "undefined") return;
+      if (charts.bsAoci){ try{ charts.bsAoci.dispose(); }catch(e){} }
+      charts.bsAoci = echarts.init(el, null, { renderer:"canvas" });
+
+      const steps = eqAociSteps(company, qtr);
+      const isMobile = window.matchMedia("(max-width:640px)").matches;
+      const geo=[]; let running=0;
+      const xs = steps.map(s=>s.ko);
+      steps.forEach(bar=>{
+        if (bar.value==null){ geo.push(null); return; }
+        if (bar.role==="anchor"){
+          geo.push({ y0:0, y1:bar.value, color:currentKey.primary, side:"anchor" }); running=bar.value;
+        } else {
+          const end = running + bar.value;
+          const color = bar.side==="asset" ? "#2563eb" : bar.side==="liab" ? "#c2410c" : (bar.value>=0 ? "#22c55e" : "#ef4444");
+          geo.push({ y0:running, y1:end, color, side:bar.side }); running = end;
+        }
+      });
+
+      const capEl = q(host, "#bsL3aCap");
+      if (capEl) capEl.textContent = qtr+" 기준(FY 누계) · 기초→기말 변동 분해 · 단위 조원 · ①자산측·②부채측 평가 미스매치가 핵심(부채측 막대는 해치 패턴 병기)";
+
+      charts.bsAoci.setOption({
+        backgroundColor:"transparent",
+        tooltip:{
+          trigger:"axis", axisPointer:{ type:"shadow" },
+          formatter(items){
+            const i=items[0].dataIndex; const bar=steps[i]; if(!bar) return "";
+            if (bar.value==null) return `<b>${bar.ko.replace(/\n/g," ")}</b><br/>데이터 없음`;
+            const sign = bar.value<0 ? "△" : (bar.role==="flow" ? "+" : "");
+            return `<b>${bar.ko.replace(/\n/g," ")}</b><br/>${sign}${plFmtJo(Math.abs(bar.value),2)}조원`;
+          },
+        },
+        grid:{ left:56, right:18, top:24, bottom:46 },
+        xAxis:{
+          type:"category", data:xs,
+          axisLabel:{ color:"#495057", fontSize:isMobile?8:10, lineHeight:12, interval:0 },
+          axisLine:{ lineStyle:{ color:"#dee2e6" } }, axisTick:{ show:false },
+        },
+        yAxis:{
+          type:"value", name:"조원",
+          nameTextStyle:{ color:"#6c757d", fontSize:11 },
+          axisLabel:{ color:"#6c757d", formatter:v=>(v<0?"△":"")+Math.abs(v/1e6).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
+          splitLine:{ lineStyle:{ color:"#e9ecef" } },
+        },
+        series:[{
+          type:"custom",
+          encode:{ y:[0,1] },
+          renderItem:(params, api)=>{
+            const idx=params.dataIndex; const g=geo[idx]; const bar=steps[idx];
+            if (!g) return;
+            const xPix=api.coord([idx,0])[0];
+            const yHi=api.coord([idx, Math.max(g.y0,g.y1)])[1];
+            const yLo=api.coord([idx, Math.min(g.y0,g.y1)])[1];
+            const bw=Math.max(6, api.size([1,0])[0]*0.55);
+            const children=[{
+              type:"rect",
+              shape:{ x:xPix-bw/2, y:yHi, width:bw, height:Math.max(1, yLo-yHi) },
+              style:{ fill:g.color, decal: g.side==="liab" ? AOCI_LIAB_DECAL : undefined },
+            }];
+            if (!isMobile){
+              const isAnchor = bar.role!=="flow";
+              const txt=(bar.value<0?"△":(bar.role==="flow"?"+":""))+plFmtJo(Math.abs(bar.value),2)+(isAnchor?"조":"");
+              children.push({ type:"text", style:{ text:txt, x:xPix, y:yHi-4, textAlign:"center", textVerticalAlign:"bottom", fill:"#212529", fontSize:isAnchor?10:9, fontWeight:isAnchor?"bold":"normal" } });
+            }
+            return { type:"group", children };
+          },
+          data: geo.map(g=> g ? [g.y0,g.y1] : [0,0]),
+          z:2,
+        }],
+      }, true);
+    }
+
+    // 2026-08-14 owner 정정발주(inbox/parser·validation 20260814T0035Z): "high level 17BS
+    // (자산/부채/자본/AOCI) + 가능하면 해약환급금준비금(안되면 pass)"이 owner의 실제 요구 전부였고,
+    // L2 자본구성/L3-a AOCI워터폴/L3-b 법정준비금 드릴다운은 오케스트레이터 과도주문으로 정정됨.
+    // renderBsL2/toggleBsL2/toggleBsDrill/renderBsAociWaterfall/renderBsReserves는 코드 보존
+    // (호출만 안 함) — 재노출 시 이 함수에서 두 줄(renderBsL2 호출, 자본총계 tile onclick 배선)만
+    // 되살리면 됨(HTML도 button+onclick으로 되돌려야 함, bsL1 마크업 주석 참조).
+    // ⚠️ 2026-08-14T2232Z repoint 함정: 위 L2/L3 함수들의 항목번호(2-7/20-31/5·10·12·14)는 아카이브된
+    // equity_composition.json 스키마다. eqx는 지금 IFRS17_BS.json(항목 1-7, 뜻이 다름)을 가리키므로
+    // 그대로 되살리면 null이 아니라 "그럴듯하지만 다른 항목의" 실제값이 뜬다 — 예를 들어 새 항목5는
+    // 해약환급금준비금인데 renderBsL2는 그 값을 "이익잉여금"이라 라벨링한다. 되살리려면 매핑부터
+    // owner와 다시 확인할 것.
+    function renderBsSection(host, company){
+      const qtr = eqLatestQuarter(company);
+      const capEl = q(host, "#bsCap"), stubEl = q(host, "#bsStub"), wrap = q(host, "#bsWrap");
+      if (!qtr){
+        if (capEl) capEl.textContent = "";
+        if (wrap) wrap.style.display = "none";
+        stub(stubEl, true, "재무상태표·자본 구성 데이터가 아직 수록되지 않은 보험사입니다.");
+        return;
+      }
+      stub(stubEl, false);
+      if (wrap) wrap.style.display = "";
+      if (capEl) capEl.textContent = "기준 "+qtr+" · 단위 억원 · 음수 △";
+
+      const asset=eqVal(company,qtr,1), liab=eqVal(company,qtr,2), equity=eqVal(company,qtr,3), aoci=eqVal(company,qtr,4), reserve=eqVal(company,qtr,5);
+      const setTile=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=fmtEokKR(v==null?null:v/100); };
+      setTile("bsAssetVal", asset); setTile("bsLiabVal", liab); setTile("bsEquityVal", equity); setTile("bsAociVal", aoci);
+      // 해약환급금준비금은 owner 원 요구가 "안되면 pass" — null은 오류가 아니라 미공시사(해약환급금
+      // 준비금을 별도 공시하지 않는 회사)라 "—"(범용 결측) 대신 그 뜻을 그대로 담은 "미공시"로 표기.
+      const resEl = document.getElementById("bsReserveVal");
+      if (resEl) resEl.textContent = reserve==null ? "미공시" : fmtEokKR(reserve/100);
+    }
+
     function renderCompany(company){   // company = 회사코드(KR0001…)
     const coName = codeToName[company] || company;  // 표시용 이름
     currentKey = keyColorOf(coName);
@@ -1184,6 +1499,8 @@
         },
       });
     }
+
+    renderBsSection(host, company);
   }
 
   function onSelect(){
@@ -1205,10 +1522,11 @@
     // D10: 9개 JSON을 직렬 await → Promise.all 병렬(진입 로딩 지연 경감). 로딩 힌트 표시.
     const _eh=document.getElementById("emptyHint");
     if (_eh) _eh.textContent="데이터 불러오는 중…";
-    const [wf, amort, plx, senx, nbx, histx, wfxRaw, plxRaw, nbmRaw] = await Promise.all([
+    const [wf, amort, plx, senx, nbx, histx, wfxRaw, plxRaw, nbmRaw, eqxRaw] = await Promise.all([
       fetchJsonSafe(PATHS.wf), fetchJsonSafe(PATHS.amort), fetchJsonSafe(PATHS.pl),
       fetchJsonSafe(PATHS.sen), fetchJsonSafe(PATHS.nb), fetchJsonSafe(PATHS.hist),
       fetchJsonSafe(PATHS.wfx), fetchJsonSafe(PATHS.plx), fetchJsonSafe(PATHS.nbm),
+      fetchJsonSafe(PATHS.eqx),
     ]);
     if (_eh) _eh.textContent="보험사를 선택해 주세요";
 
@@ -1237,6 +1555,20 @@
         const y=Number(r["값"]); const dq=Number(r["값_당분기"]);
         byQ.get(qq) || byQ.set(qq, new Map());
         byQ.get(qq).set(String(num), { y: Number.isFinite(y)?y:null, q: Number.isFinite(dq)?dq:null });
+      }
+    }
+
+    // Panel 7 long-format index: CODE -> quarter -> 항목번호 -> {y:값(스톡/FY누계), q:값_당분기} (IFRS17_BS.json).
+    // 커버리지가 wfx/plx와 다른(kics 39사 기준) 회사도 있어 신규 코드가 여기서 처음 등록될 수 있음 — 드롭다운에 반영되는 게 맞음.
+    if (Array.isArray(eqxRaw)){
+      for (const r of eqxRaw){
+        const code=r&&r["원보험사코드"], qq=r&&r["공시분기"], num=r&&r["항목번호"];
+        if(!code||!qq||num==null) continue;
+        if(!codeToName[code] && r["원수사명"]) codeToName[code]=r["원수사명"];
+        let byQ=ix.eqx.get(code); if(!byQ){ byQ=new Map(); ix.eqx.set(code,byQ); }
+        let byN=byQ.get(qq); if(!byN){ byN=new Map(); byQ.set(qq,byN); }
+        const y=Number(r["값"]); const dq=Number(r["값_당분기"]);
+        byN.set(num, { y: Number.isFinite(y)?y:null, q: Number.isFinite(dq)?dq:null });
       }
     }
 
@@ -1275,7 +1607,7 @@
     sel.addEventListener("change", onSelect);
     const perSel=document.getElementById("wfPeriod");
     if (perSel) perSel.addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
-    window.addEventListener("resize", ()=>{ if (charts.wf) charts.wf.resize(); if (charts.pl) charts.pl.resize(); });
+    window.addEventListener("resize", ()=>{ if (charts.wf) charts.wf.resize(); if (charts.pl) charts.pl.resize(); if (charts.bsAoci) charts.bsAoci.resize(); });
     // Re-render on mobile/desktop breakpoint cross so the amort chart switches 5y <-> 10y.
     window.matchMedia("(max-width:640px)").addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
 
