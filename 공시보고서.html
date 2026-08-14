@@ -30,6 +30,16 @@
     .coming-soon{text-align:center;padding:60px 20px;color:var(--muted)}
     .coming-soon h3{font-size:24px;margin:0 0 12px 0;color:var(--text)}
     .coming-soon p{font-size:16px;margin:0}
+    /* 배당현황 (2026-08-15, inbox designer 20260814T2230Z) — 이 페이지 기존 로컬 토큰/클래스 그대로 사용 */
+    .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+    .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:var(--r-md,8px);background:#fff;font-size:13px}
+    .div-kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .div-kpi-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md,8px);padding:12px 14px}
+    .div-kpi-val{font-size:20px;font-weight:800;color:var(--text);line-height:1.1;letter-spacing:-.01em}
+    .div-kpi-lab{font-size:11px;color:var(--muted);margin-top:3px}
+    #divTables h3, #divClassSection h3{font-size:15px;margin:0 0 4px 0;color:var(--text)}
+    .div-class-label{font-size:13px;font-weight:600;color:var(--text);margin:12px 0 4px}
+    .stub-msg{color:var(--muted);font-size:14px;padding:12px;border:1px dashed var(--border);border-radius:var(--r-md,8px);background:#fff}
     /* Mobile responsive (<=640px) - M1 shared foundation */
     @media (max-width:640px){
       header{padding:8px 12px}
@@ -42,6 +52,11 @@
          .tab 규칙이 cascade에서 지고, 반응형 13px도 여기 유지해야 함(2026-07-22). */
       .tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;gap:6px;padding-bottom:2px}
       .tab{flex:0 0 auto;padding:8px 12px;font-size:13px}
+      .div-kpi-strip{grid-template-columns:repeat(2,1fr)}
+      .table-wrap{max-height:60vh}
+      table{font-size:12px}
+      th,td{padding:6px 8px}
+      td.num,th.num{white-space:nowrap}
     }
   </style>
 </head>
@@ -56,16 +71,33 @@
   </header>
   <div class="container">
     <div class="panel">
-      <h2>공시/보고서</h2>
-      <p>보험회사의 주요 공시사항과 보고서를 한눈에 확인할 수 있는 페이지입니다.</p>
-      <p>분기보고서, 반기보고서, 사업보고서, 공시정보 등을 통합적으로 관리하고 분석할 수 있습니다.</p>
+      <h2>배당현황</h2>
+      <p>보험회사 배당에 관한 사항(DART 사업·반기·분기보고서) — 주당배당금·배당총액·배당성향·배당수익률을 회사별로 확인할 수 있습니다.</p>
+      <p class="small-muted" id="divCoverageLine"></p>
     </div>
-    
+
     <div class="panel">
-      <div class="coming-soon">
-        <h3>준비 중입니다</h3>
-        <p>공시/보고서 기능이 곧 추가될 예정입니다.</p>
-        <p>보험회사별 공시사항 검색, 보고서 다운로드, 주요 지표 추이 분석 등의 기능을 제공할 예정입니다.</p>
+      <div class="controls">
+        <label>보험사: <select id="company" class="select"><option value="">보험사 선택</option></select></label>
+      </div>
+      <div id="emptyHint" class="coming-soon"><h3>보험사를 선택해 주세요</h3></div>
+      <div id="dashHost" style="display:none">
+        <div class="div-kpi-strip" id="divKpiStrip">
+          <div class="div-kpi-card"><div class="div-kpi-val" id="kpiCash">—</div><div class="div-kpi-lab" id="kpiCashLab">현금배당금총액</div></div>
+          <div class="div-kpi-card"><div class="div-kpi-val" id="kpiDps">—</div><div class="div-kpi-lab">주당현금배당금(보통주)</div></div>
+          <div class="div-kpi-card"><div class="div-kpi-val" id="kpiPayout">—</div><div class="div-kpi-lab">현금배당성향</div></div>
+          <div class="div-kpi-card"><div class="div-kpi-val" id="kpiYield">—</div><div class="div-kpi-lab">현금배당수익률</div></div>
+        </div>
+        <div class="small-muted" id="divKpiCap" style="margin-top:8px"></div>
+        <div style="margin-top:20px">
+          <h3>분기별 배당 지표</h3>
+          <div class="small-muted">단위 표시된 대로(백만원/원/%) · 결측(그 분기 공시 자체 없음)은 "정보없음", 무배당은 0으로 구분 표기</div>
+          <div class="table-wrap" id="divTable"></div>
+        </div>
+        <div id="divClassSection" style="margin-top:20px">
+          <h3>종류주별 주당배당금·배당수익률</h3>
+          <div id="divClassTables"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -73,5 +105,192 @@
     자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (2026.1Q)<br/>
     본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
   </footer>
+<script>
+/* 배당현황 (2026-08-15, inbox designer 20260814T2230Z — dividend.json, DART alotMatter API)
+   항목1-7=회사단위(종류주="-"), 항목8-10=종류주별(보통주/우선주). null=그 분기 공시 자체 없음
+   ("정보없음"), 0=진짜 무배당(그대로 0 표시) — 저장소 상습 함정(0값 맹점) 회피. */
+(() => {
+  function resolveUrl(p){ return new URL(p, window.location.href).href; }
+  const PATH = resolveUrl("dividend.json");
+
+  const ix = new Map();       // code -> quarter -> [{num,name,cls,value}]
+  const codeToName = {};
+
+  const ITEM_DEFS = [
+    { num:1, label:"주당액면가액", unit:"원", dp:0 },
+    { num:2, label:"당기순이익(연결)", unit:"백만원", dp:0 },
+    { num:3, label:"당기순이익(별도)", unit:"백만원", dp:0 },
+    { num:4, label:"주당순이익(연결)", unit:"원", dp:0 },
+    { num:5, label:"현금배당금총액", unit:"백만원", dp:0 },
+    { num:6, label:"주식배당금총액", unit:"백만원", dp:0 },
+    { num:7, label:"현금배당성향(연결)", unit:"%", dp:1 },
+  ];
+  const CLASS_ITEM_DEFS = [
+    { num:8, label:"주당현금배당금", unit:"원", dp:0 },
+    { num:9, label:"주당주식배당", unit:"주", dp:4 },
+    { num:10, label:"현금배당수익률", unit:"%", dp:2 },
+  ];
+
+  // 한국 회계 표기: 콤마 + 음수 △(세모). dp 지정 시 소수 고정, 아니면 정수 반올림.
+  function samo(n, dp){
+    if (n==null || !Number.isFinite(n)) return "—";
+    const neg = n<0, a = Math.abs(n);
+    const s = dp ? a.toLocaleString("ko-KR",{minimumFractionDigits:dp,maximumFractionDigits:dp}) : Math.round(a).toLocaleString("ko-KR");
+    return (neg?"△":"")+s;
+  }
+  function fmtItem(def, v){
+    return v==null ? "정보없음" : samo(v, def.dp)+def.unit;
+  }
+  // 백만원 -> "X조 Y,YYY억원"(1조 미만은 억원만). 결측은 정보없음.
+  function fmtEokKR(mn){
+    if (mn==null) return "정보없음";
+    const eok = mn/100, neg = eok<0, v = Math.round(Math.abs(eok));
+    const jo = Math.floor(v/10000), rem = v%10000;
+    const s = jo>0 ? (jo.toLocaleString()+"조"+(rem>0?(" "+rem.toLocaleString()+"억원"):"")) : (v.toLocaleString()+"억원");
+    return (neg?"△":"")+s;
+  }
+
+  function qParse(s){ const m=String(s).match(/^(\d{4})\.(\d)Q$/); return m?[+m[1],+m[2]]:[0,0]; }
+  function qCmpAsc(a,b){ const [ay,aq]=qParse(a),[by,bq]=qParse(b); return ay!==by?ay-by:aq-bq; }
+
+  function quartersOf(code){ const m=ix.get(code); return m ? Array.from(m.keys()).sort(qCmpAsc) : []; }
+  function rowsOf(code,qtr){ const m=ix.get(code); const arr=m&&m.get(qtr); return arr||[]; }
+  function val(code,qtr,num,cls){
+    const c = cls==null ? "-" : cls;
+    const row = rowsOf(code,qtr).find(r=> r.num===num && r.cls===c);
+    return row ? row.value : null;
+  }
+  // 회사별 실제 존재하는 종류주(보통주/우선주 등) — 하드코딩 없이 데이터에서 유도, 보통주 먼저.
+  function classesOf(code){
+    const set = new Set();
+    const m = ix.get(code);
+    if (m) for (const arr of m.values()) for (const r of arr) if (r.cls && r.cls!=="-") set.add(r.cls);
+    const arr = Array.from(set);
+    arr.sort((a,b)=> a==="보통주" ? -1 : b==="보통주" ? 1 : a.localeCompare(b,"ko"));
+    return arr;
+  }
+  // 배당성향·배당수익률 등은 사업보고서(4Q)에만 실리는 경우가 대부분이라 KPI는 최신 4Q 우선 앵커.
+  function latestKpiQuarter(code){
+    const qs = quartersOf(code); if(!qs.length) return null;
+    for (let i=qs.length-1;i>=0;i--){ if (qParse(qs[i])[1]===4) return qs[i]; }
+    return qs[qs.length-1];
+  }
+
+  function renderKpi(code){
+    const qtr = latestKpiQuarter(code);
+    const capEl = document.getElementById("divKpiCap");
+    if (!qtr){ if(capEl) capEl.textContent=""; return; }
+    if (capEl) capEl.textContent = "기준 "+qtr+" (사업/반기/분기보고서 중 최신 결산)";
+    const cls = classesOf(code)[0]; // 보통주가 있으면 그것, 없으면 첫 종류주
+    const cash = val(code,qtr,5);
+    const dps = cls ? val(code,qtr,8,cls) : null;
+    const payout = val(code,qtr,7);
+    const yieldV = cls ? val(code,qtr,10,cls) : null;
+    document.getElementById("kpiCash").textContent = fmtEokKR(cash);
+    document.getElementById("kpiDps").textContent = dps==null?"정보없음":samo(dps,0)+"원";
+    document.getElementById("kpiPayout").textContent = payout==null?"정보없음":samo(payout,1)+"%";
+    document.getElementById("kpiYield").textContent = yieldV==null?"정보없음":samo(yieldV,2)+"%";
+  }
+
+  function buildTable(headers, rows){
+    const tbl=document.createElement("table");
+    const thead=document.createElement("thead"); const htr=document.createElement("tr");
+    headers.forEach((h,i)=>{ const th=document.createElement("th"); th.textContent=h; if(i>0) th.className="num"; htr.appendChild(th); });
+    thead.appendChild(htr); tbl.appendChild(thead);
+    const tbody=document.createElement("tbody");
+    for (const r of rows){
+      const tr=document.createElement("tr");
+      r.forEach((c,i)=>{ const td=document.createElement("td"); td.textContent=c; if(i>0) td.className="num"; tr.appendChild(td); });
+      tbody.appendChild(tr);
+    }
+    tbl.appendChild(tbody);
+    return tbl;
+  }
+
+  function renderCompanyTable(code){
+    const box = document.getElementById("divTable");
+    box.innerHTML = "";
+    const qs = quartersOf(code);
+    if (!qs.length) return;
+    const headers = ["항목", ...qs];
+    const rows = ITEM_DEFS.map(def => [def.label+"("+def.unit+")", ...qs.map(qq=> fmtItem(def, val(code,qq,def.num)))]);
+    box.appendChild(buildTable(headers, rows));
+  }
+
+  function renderClassTables(code){
+    const box = document.getElementById("divClassTables");
+    box.innerHTML = "";
+    const qs = quartersOf(code);
+    const classes = classesOf(code);
+    if (!qs.length || !classes.length){
+      box.innerHTML = '<div class="small-muted">종류주별 세부(주당배당금 등) 공시 없음</div>';
+      return;
+    }
+    classes.forEach(cls=>{
+      const lab = document.createElement("div"); lab.className="div-class-label"; lab.textContent = cls;
+      box.appendChild(lab);
+      const headers = ["항목", ...qs];
+      const rows = CLASS_ITEM_DEFS.map(def => [def.label+"("+def.unit+")", ...qs.map(qq=> fmtItem(def, val(code,qq,def.num,cls)))]);
+      const wrap = document.createElement("div"); wrap.className="table-wrap";
+      wrap.appendChild(buildTable(headers, rows));
+      box.appendChild(wrap);
+    });
+  }
+
+  function renderCompany(code){
+    renderKpi(code);
+    renderCompanyTable(code);
+    renderClassTables(code);
+  }
+
+  function onSelect(){
+    const sel = document.getElementById("company");
+    const v = sel && sel.value;
+    const dash = document.getElementById("dashHost");
+    const hint = document.getElementById("emptyHint");
+    if (!v){ dash.style.display="none"; hint.style.display=""; return; }
+    dash.style.display=""; hint.style.display="none";
+    renderCompany(v);
+  }
+
+  async function boot(){
+    let raw = [];
+    try{
+      const r = await fetch(PATH);
+      if (r.ok) raw = await r.json();
+    }catch(e){ console.warn(e); }
+
+    for (const row of raw){
+      const code=row["원보험사코드"], qtr=row["공시분기"], num=row["항목번호"];
+      if (!code || !qtr || num==null) continue;
+      if (!codeToName[code] && row["원수사명"]) codeToName[code]=row["원수사명"];
+      let byQ = ix.get(code); if(!byQ){ byQ=new Map(); ix.set(code,byQ); }
+      let arr = byQ.get(qtr); if(!arr){ arr=[]; byQ.set(qtr,arr); }
+      const v = Number(row["값"]);
+      arr.push({ num, name:row["항목명"], cls: row["종류주"]||"-", value: Number.isFinite(v)?v:null });
+    }
+
+    const codes = Object.keys(codeToName).sort();
+    const sel = document.getElementById("company");
+    for (const code of codes){
+      const opt = document.createElement("option"); opt.value=code; opt.textContent=codeToName[code]; sel.appendChild(opt);
+    }
+    sel.addEventListener("change", onSelect);
+    const covEl = document.getElementById("divCoverageLine");
+    // DART alotMatter가 상장사만 다뤄 24개사 고정 상한 — kics_disclosure 전사(39사) 대비 나머지는
+    // 이 공시 자체가 구조적으로 없음(결측 아님). 드롭다운도 그 24개사로만 구성(빈 화면 스텁을
+    // 영구 노출하는 항목을 만들지 않기 위함 — 다른 페이지와 달리 이 마스터엔 전사 셀렉터가 없음).
+    if (covEl) covEl.textContent = codes.length ? ("배당 공시 커버리지: "+codes.length+"개사(DART 배당 API — 상장사만 대상, 비상장사는 이 공시 자체가 없어 결측이 아님)") : "";
+
+    try{
+      const params = new URLSearchParams(window.location.search);
+      const wanted = params.get("company");
+      if (wanted && codeToName[wanted]){ sel.value = wanted; onSelect(); }
+    } catch(e){ /* URL parse safe-guard */ }
+  }
+
+  boot().catch(()=>{ const h=document.getElementById("emptyHint"); if(h) h.innerHTML="<h3>데이터를 불러오지 못했습니다</h3>"; });
+})();
+</script>
 </body>
 </html>
