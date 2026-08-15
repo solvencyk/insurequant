@@ -1,11 +1,365 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-03 · Stage 3/5 — validation
+> Last updated: 2026-08-14 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-15 n) 파서 item16 수정 검증 — 현대해상 완결, 흥국화재·KB손해는 절반만 복원돼 새 음수 2건. 룰 스코프 해제로 드러남.**
+> `_zero_other_expense` 를 `0.0` → `None` 으로 고친 조치는 **통과**. HEAD 값→null 7셀도 전부
+> **HEAD 가 0.0 이던 자리**라 손실이 아니다(요청한 "0 대신 null" 그대로). 셀 유실 0(8,111→8,543행).
+> - **현대해상 item16 완결**: 4셀 복원, 시계열 단조·당분기 전부 양수. 손댈 것 없음.
+> - **흥국화재·KB손해는 1·2Q 만 채워져 3Q 가 0 으로 남았다 → 당분기 −11,246 / −192,135 신규 발생.**
+>   복원 전(전 분기 0)보다 화면상 더 나쁘다. **원인은 내 iter 1 발주가 "HEAD 대비 변경 셀"만
+>   나열한 것** — HEAD 도 0 이던 자리는 표에서 빠졌다. iter 2 에 좌표를 다시 줬다:
+>   `inbox/parser/20260815T1230Z…pl_item16_partial_restore_gaps.md`
+> - **`PL_YTD_COLLAPSE_TO_ZERO` 에서 `_DISPLAY_QUARTERS` 스코프 제거**(CSM 연속성 룰과 동일 판단).
+>   붕괴는 중간분기(2024.3Q)에서 일어나는데 스코프를 걸면 원인 분기가 사각이 된다 —
+>   실제로 위 2건이 그렇게 숨어 있었다(스코프 상태 적중 1 → 해제 후 **3**, 오탐 0).
+> - 현재 **RED=0 / YELLOW=229 (exit 0)** · `--selftest` **32/32** · 골든 3종 PASS.
+>   잔여 YTD 붕괴 3건 = 흥국화재 2024.3Q · KB손해 2024.3Q · 동양생명 2025.3Q(재보험 예실차, 미착수).
+
+**(2026-08-15 m) 마스터 wipe 후 복구본 전수 재검증 — 골격은 무손실, 그러나 PL 19셀이 0 으로 회귀. 신규 룰 1개로 그 자리를 메움.**
+> 작업 중 `CSM_waterfall`·`PL_breakdown` 이 HEAD 로 되감겨 오늘치가 통째로 날아갔다 파서가 복구.
+> **복구본을 HEAD 와 2층(셀·필드)으로 전수 대조**했다.
+>
+> | 검사 | 결과 |
+> |---|---|
+> | `validate_data_contract.py` | **RED=0** / YELLOW=239 (exit 0) |
+> | `validate_master_tables.py --no-build` | `0cont`, SUMMARY 골든 일치 |
+> | HEAD 대비 셀 유실 | CSM 0 · PL 0 · IFRS17_BS 0 · dividend 0 |
+> | 살아남은 셀 안 `값→null` | **전부 0** (2층 유실 없음) |
+> | FY 경계 / 라이나 6항목 | BREAK 0 / 6-6 정확 일치 |
+> | `--selftest` · 골든 3종 | **32/32** · 전부 PASS |
+>
+> **그런데 값 변경 19건이 나왔다 — 전량 `항목16 기타사업비용`이 HEAD 값 → `0.0`.**
+> 현대해상 4셀 · KB손해 3셀 · 흥국화재 2셀(+ 파생 `값_당분기`). 내부모순으로 0 이 틀렸음이 확정된다:
+> 현대해상 2023.3Q 누계 35,264.2 → **4Q 0.0**(당분기 **−35,264.2**), 2024 도 동형, 2025 는 1~2Q 가 비어
+> 3Q 당분기가 73,119.5 로 몰린다. **FY 누계 비용은 4Q 에 0 으로 떨어질 수 없다.**
+> `20260814T1637Z`(빌더가 61셀을 떨구는 원인) 와 같은 뿌리 — 그때 검증쪽이 HEAD 를 병합해 덮었고,
+> 오늘 재빌드로 덮개가 벗겨진 것이다. → `inbox/parser/20260815T1120Z…pl_item16_zeroed_again_after_rebuild.md`
+>
+> **게이트 사각 → 룰 신설 `PL_YTD_COLLAPSE_TO_ZERO`** (`_pl_ytd_collapse`, check_census).
+> 같은 FY 안에서 누계 non-zero → **정확히 0.0**. **0 은 등식을 깨지 않아 폐쇄식·PL 브리지가 조용히
+> 통과시킨다**(실제로 RED=0 이었다). 8,543행 전수에 **적중 3 / 오탐 0**(현대해상 2 + 동양생명
+> `재보험 예실차` 2025.3Q 7,026.0 → 0.0 신규 발견). 신설 관찰기라 **YELLOW**(선례 `CSM_WATERFALL_PLAUSIBILITY`),
+> push 는 막지 않는다. 셀프테스트 **L1** 로 고정(31/31 → 32/32).
+>
+> **publishing 발주**: `inbox/publishing/20260815T1130Z…root_master_wipe_stop_running_builders.md`
+> — 루트 마스터 빌더 직접 실행 금지, 게이트는 `validate_data_contract.py` 또는
+> `validate_master_tables.py --no-build` 둘만. 이틀 연속 같은 함정(2026-08-14 PL 8,111→6,636)이라
+> **기본값 반전**(기본 no-build)에 publishing 도 동의 표시하라고 요청했다.
+>
+> **배포 판단**: RED=0 이라 게이트상 push 가능. 단 19셀이 0/음수로 화면에 나가므로 **파서 수정 후 배포 권고**.
+> 강행 여부는 owner.
+
+**(2026-08-15 l) 라이나 재작성 반영 검증 통과 — push 게이트 RED=0, FY 경계 250/0. 남은 건 viz 골든 1건(fixture stale).**
+> 파서가 iter 2 발주대로 전기 비교표시 기준으로 재작성 적용. **회신을 그대로 믿지 않고 전부 독립 재측정했다.**
+>
+> | 검사 | 결과 |
+> |---|---|
+> | `validate_data_contract.py` | **RED=0 / YELLOW=236 (exit 0)** — push 차단 해제 |
+> | `validate_master_tables.py --no-build` | **`0cont`**(1→0), `qoq_warn` 206→205 |
+> | 라이나 2023.4Q 6항목 | 발주값과 **6/6 정확 일치**, 폐쇄식 잔차 0.00 |
+> | FY 경계 전수 | **OK 250 / BREAK 0** |
+> | HEAD 대비 행 유실 | **0** (1,962 → 2,136) |
+> | `csm_manual_overrides.json` | KR0074 **6건** — 원공시/재작성본 rcept 양쪽 + 계약경계 근거 + "파싱오류 아님" 명기 |
+> | `--selftest` · `test_master_tables_golden` · `test_deploy_assets` | 31/31 · PASS · PASS |
+> | 메트라이프(KR0095) | 재작성 이슈 없음 확인(2023.4Q 기말 21,521.1 == 2024.4Q 기초) |
+>
+> **`tests/test_viz_csm_waterfall_golden.py` 만 FAIL** — 파서 회신의 "113개 테스트 전부 통과"와 어긋난다.
+> **산출물이 아니라 fixture 가 stale**: 디스크 `csm_waterfall.json` 은 이미 새 빌드(`1b26bc91…`)인데
+> 골든이 `47e6e80f…` 에 멈춰 있다. drift 는 **개선**(`partial 3 → 0`, `ok 36 → 39`, 합계 47 동일) →
+> `--update` 재생성 + 커밋에 사유 기록이면 끝. → `inbox/parser/20260815T1030Z…viz_csm_golden_stale_after_lina_fix.md`
+> (같은 도구를 **위반 흡수**에 쓴 게 `20260815T0042Z` 반려 건이었다 — 이번은 반대 방향이라 정당한 사용.)
+>
+> **정정 기록**: 이 라운드에서 내 진단 2개(“스케줄 표에서 뽑았다” / “항목4 는 plug”)가 raw 재계산으로
+> 뒤집혔다. `(k)` 참조. 숫자 일치를 곧바로 "베낀 것"으로 읽지 말 것 — 두 공시표가 같은 잔액을 다른
+> 절단면으로 보여주면 일치가 정상이다.
+
+**(2026-08-15 k) 라이나 RED 원인 확정 — 파싱 오류 아님, 회사의 소급재작성이다. 내 iter 1 진단도 함께 정정.**
+> 파서가 "원천 데이터부터 틀렸다"고 회신 → raw 두 필링을 직접 열어 전 열 재계산했다. **양쪽 다 틀렸다.**
+> - **파서 근거 기각**: *"기초 자산+부채 ≠ 기초 잔액"* → 그 표는 `잔액 = 부채 − 자산`(자산은 음의 부채)이고
+>   그렇게 계산하면 **기초·기말 7개 열 전부 정확히 일치**한다(PV −1,977,369,986 등 전수 확인). 표는 흠이 없다.
+> - **내 iter 1 진단 취소**: 값은 상각스케줄 표가 아니라 **진짜 측정요소별 변동표**에서 나왔다.
+>   스케줄 합계가 CSM 잔액과 같은 건 정상 — 그 표가 *"기말 CSM 을 기대상각기간별로 배분"* 한 것이라
+>   합계 = 잔액이다. 두 표 일치는 오류가 아니라 **교차확인**. **"항목4 = plug" 도 취소**:
+>   30,211.1억 = 추정치변동분(−4,182.9) + **계약의 경계 변경 효과(+34,394.0)**, raw 행 그대로다.
+> - **진짜 원인 = 소급재작성.** 같은 FY2023 을 두 필링이 다르게 말한다(양쪽 다 자체 폐쇄식은 정확히 닫힘):
+>
+>   | FY2023 CSM | 원공시 `20240409003674` | 재작성 = FY2024 필링 `20250409002702` 전기 비교표시 |
+>   |---|---|---|
+>   | 기초 | 22,082.5억 | 35,264.0억 |
+>   | 기말 | **55,155.5억** | **32,301.6억** |
+>
+>   차이의 정체는 한 줄 — 원공시에만 있는 `기타 → 계약의 경계 변경 효과 +34,394억`(순부채 영향 0,
+>   측정요소 간 재배분)이 재작성본에선 **사라졌다.** 정정공시는 없다(비상장 → 감사보고서만, DART 4건 전수 확인).
+>   마스터가 2023.4Q=원공시 / 2024.4Q=재작성본 기준을 나란히 든 상태라 경계가 깨진 것이고, **어느 쪽도 파싱 오류가 아니다.**
+> - **처분**: 2023.4Q 를 전기 비교표시 기준으로 재작성(기초 35,264.0 → 기말 32,301.6) → 2024.4Q 기초와
+>   정확히 연결돼 RED 소멸. 추출 좌표(L9016 이후 두 번째 TABLE)와 6항목 값·검산까지 실어 발주:
+>   `inbox/parser/20260815T0940Z…lina_restatement_pull_from_comparative.md`(iter 2).
+>   **선례 있음** — `20260620T0600Z` 교보 CSM 전기값을 비교표시에서 끌어온 건. 새 방식이 아니다.
+> - **교훈(룰 아님, 기록)**: `feedback_continuity_break_is_red` 는 유효하다 — 다만 "소급재작성이면 면제"가
+>   아니라 **raw 로 재작성을 확정한 뒤 재작성 기준으로 값을 맞춘다**가 이 케이스의 올바른 종결이다.
+>   면제도, 값 보정도 아니다. iter 1 은 종결(`inbox/_resolved/`).
+
+**(2026-08-15 j) 파서 재조치 검증 완료 — RED 11 → 1. 남은 1건은 원인 특정 후 발주. 라이나 2023.4Q 가 CSM 변동표가 아니라 상각스케줄 표에서 만들어졌다.**
+> 파서가 "급한 건 다 처리"라고 해서 전량 재검증. 오늘 바뀐 마스터: `PL_breakdown`(8,543행) ·
+> `IFRS17_BS`(1,637→**5,008행**) · `CSM_waterfall`(1,962→2,136행) · `dividend`.
+>
+> **① 5사 앵커 조치 = 진짜 철회 확인(반려 iter 2 종결).** 교보·신한라이프·메리츠·에이비엘·푸본현대
+> **2026.1Q 6항목이 HEAD 와 완전 동일**(override 흔적 0) + 25.4Q 기말 == 26.1Q 기초 == 26.2Q 기초
+> (Δ 전부 0.0). 골든도 `6cont` → **`1cont`** 로 정직하게 되돌아왔고 live SUMMARY 와 **완전 일치**.
+> **복사 의심을 raw 로 배제**: 메리츠 2026.2Q 기초 111,037.0억을 반기보고서 원문에서 직접 확인
+> (`FY2026_Q2/raw/KR0001_.../20260814002253.xml` 합계행 `11,103,697` 백만원). 앵커를 베낀 게 아니다.
+>
+> **② 남은 RED 1건 = 라이나생명 2024.4Q 기초 32,302 ≠ 2023.4Q 기말 55,156 (Δ−22,854).**
+> 2023.4Q 쪽이 틀렸다 — 숫자 정확 일치 2건으로 특정:
+> 기말 55,155.5억 = 필링 `20240409003674` "기대상각기간별 보험계약마진" 표 합계 5,515,548,316천원,
+> 기초 22,082.5억 = 같은 caption 두 번째 표 2,208,247,317천원. **그 필링 추출 CSM 표 4장이 전부
+> 상각스케줄이고 변동표는 0장.** 스케줄 합계 = 미래 상각액 단순합(할인 전) → 잔액보다 구조적으로 큼(1.71배).
+> - **폐쇄식은 이 건을 못 잡는다**: 조정(항목4) 30,211.1 = 나머지를 맞추는 **역산 plug**
+>   (55,155.5−22,082.5−7,221.6−816.6+5,176.2 = 30,211.0). 356블록 중 352가 닫힌다 → **FY 경계 룰이
+>   유일한 탐지기**였다((i) 에서 이 룰을 push 게이트로 올린 판단이 하루 만에 값을 했다).
+> - 반대편(2024·2025)은 HEAD 와 값 동일 + 정상 연결. 전수 FY 경계 **OK 249 / BREAK 1**.
+> - → `inbox/parser/20260815T0700Z__validation__KR0074_2023.4Q__lina_csm_from_amort_schedule.md`
+>   (raw 있음 → parser. "변동표 없으면 블록을 빼라, plug 금지" 명시)
+> - **동봉(조용한 자리)**: 신규 2023.4Q 3건이 앵커 없어 경계 검사 불가 — AIA 는 24·25 동시 유입으로
+>   체인 OK 확인, **메트라이프는 라이나와 같은 지문**(추출 표가 스케줄뿐)이라 값 출처 확인 요청.
+>
+> **③ 17BS 확장 통과.** items 1-31(자산·부채·자본 세부 + 섹션/레벨 키)로 커졌는데
+> `BS_IDENTITY` 위반 0 · 코어(1·2·3·4) 결측 0. owner 지침대로 세부행은 코어에 안 넣고 **새 룰도 안 만들었다**
+> (`20260814T0149Z` "검증할 건덕지 없다 / 부모-자식 룰 신설 금지").
+>
+> **④ 회귀 없음**: CSM 행 유실 0(HEAD 1,962 → 2,136, 신규 29블록) · `--selftest` **31/31** ·
+> `pytest tests/test_master_tables_golden.py tests/test_deploy_assets.py` **11 passed** ·
+> `validate_master_tables.py --no-build` SUMMARY 골든 일치.
+> **push 게이트 RED=1 / YELLOW=236 (exit 2) — 차단 중, 해제 조건은 위 라이나 1건.**
+
+## Status (이전)
+
+**(2026-08-15 i) CSM 연속성 룰 push 차단 게이트로 승격 (owner 지시) — 라이브 RED=11, push 차단 중.**
+> - **왜**: `CONT` 가 `validate_master_tables.py` 에만 있고 `prepush_check.py` 는 `validate_data_contract.py` 하나만 부른다 → 파서가 5사 기초를 override 해 FY 경계를 새로 깼는데도 **push 경로는 초록**이었다. 게다가 그 게이트의 골든이 `1cont → 6cont` 로 재생성되며 위반을 흡수해 **테스트까지 통과**했다(골든 `--update` 오용).
+> - **무엇**: `check_csm_continuity()` + 룰 `CSM_CONTINUITY_FY_BOUNDARY`(RED, **면제 없음**). 판정식·허용오차는 기존 CONT 와 동일하게 맞춰 두 게이트가 다른 답을 내지 않게 함. **차이 1개 — FY→분기 하드코딩 제거**: 기존 `FY_Q` 가 2026.1Q 까지라 **2026.2Q 가 검사 밖**이었고, 도출식으로 바꾸니 안 보이던 위반 5건이 추가로 드러났다(6 → 11).
+> - **스코프**: `_DISPLAY_QUARTERS` 미적용. 그 집합에 2026.2Q 가 없는데 사이트는 그 분기를 그린다 → 스코프를 걸면 최신 분기가 사각이 된다.
+> - **현재 RED 11** = 교보·메리츠·신한라이프·에이비엘·푸본현대 각 2건(2026.1Q+2Q) + 라이나생명 2024.4Q 1건. 해제 조건은 `inbox/parser/20260815T0042Z`(iter 2 반려). 통지: `inbox/publishing/20260815T0055Z`.
+> - 셀프테스트 30/30 → **31/31**(K1 추가). `docs/postmortems/README.md` 게이트표에 마스터테이블 게이트 행 + 이번 실제 발화 사례 추가.
+
+**(2026-08-15 h) 2026.2Q 파서 산출물 전수 검토 — 항등식 5축 전부 통과, 실이슈 2건 발주.**
+> 발주: `inbox/parser/20260815T0018Z__validation__MULTI_2026.2Q__q2_review_anchor5_and_hanwha_bs.md`
+> - **통과**: CSM 마감항등식 23/23 · CSM 연속성 23/23 · 반기누계(`값_당분기`==2Q누계−1Q누계) 159/159 · PL 브리지 46/46 · 17BS 항등식 12/12.
+> - **검증쪽 자기정정 (기록용)**: 연속성을 `값`(누계) 컬럼으로 재면 **23사 전건 RED로 오탐**한다. 반기 기초는 **FY 시작(2025-12-31) 앵커**이고, 분기 기준 기초는 파서가 `값_당분기`에 따로 담는다. **저량항목의 `값_당분기` = 그 분기 자체의 기초/기말** — 다음 세션도 이 컬럼으로 연속성을 재라.
+> - **Q-1 (reparse)**: FY 시작 앵커가 1Q 보고서와 어긋나는 **5사** — 교보생명 +5,659(+8.7%) · 신한라이프 −1,114 · 메리츠화재 +857 · 에이비엘 −472 · 푸본현대 −237. 마감항등식은 자기완결이라 기초 오선택을 못 잡는다(2026.1Q 5사 misparse와 같은 자리). raw 대조 전 면제 금지.
+> - **Q-2 (owner 판정 필요)**: 17BS 2026.2Q 12사 중 **한화손보만 소스가 있는데 결측** — OFS `status=000`인데 BS 4행이 전부 값 공란(빈 껍데기), CFS는 45행 완전(자산 19.8조). owner P-1 "BS=OFS 고정"은 *틀린 값* 방지용이지 *항목 부재*를 상정하지 않았다 → "OFS에 항목1/2/3이 전무할 때만 CFS 폴백" 조건부 규칙 제안. 나머지 11사는 OFS·CFS 둘 다 013 = **정상 부재**.
+
+**(2026-08-14 g) 배당 마스터(`dividend.json`) 게이트 배선 — 배당 도메인 RED 0. 단 게이트 전체는 RED=13(PL_breakdown, 별건).**
+> 발주 `inbox/validation/20260814T1625Z`(owner) 드레인 완료. 신규 루트 마스터가 게이트 밖에 방치돼 있던 상태를 닫았다.
+> - **배선**: `MASTER_FILES["dividend"]` 등록(mtime·동시백필·ARTIFACT_UNREADABLE 커버) + `_ifrs17_bs_is_published()` → **`_html_fetches(master_file)` 로 일반화**(17BS·배당 공용). `공시보고서.html` 이 fetch 를 켜면 **코드 수정 없이 YELLOW→RED 승격**.
+> - **룰 3개**(`check_dividend`): `DIV_PAYOUT_IDENTITY`(46셀 위반0) · `DIV_CENSUS_MISSING`(310/310 결측0) · `DIV_ZERO_CONTRADICTION`(0) + `DIV_CENSUS_SOURCE_MISSING`(검사축 소실 감지) + `DIV_NO_FILING_COMPANY`(집계 YELLOW, 비상장 15사).
+> - **설계 핵심 2개**: ① 기대 그리드를 회사목록이 아니라 **수집 census 의 status=000** 에서 도출(회사목록 기준이면 비상장 15사의 정상 부재가 전부 RED). ② `_DISPLAY_QUARTERS` 스코프 **미적용** — 배당 화면은 2023.1Q~2026.2Q 전 계열을 그린다.
+> - **발주문의 "26셀 결측" 은 오케스트레이터 오기대**: 24사×14분기(336)는 산술격자일 뿐, 실제 기대는 필링 존재 310셀. 그 26칸은 전부 `status=013`(보고서 자체 없음) = 정상 부재.
+> - **1회성 전수감사**: 항목6 전행 0 · 항목5 264/310행 0 → raw 310파일에서 해당 `se` 행 전수 확인, **thstrm 이 `-`/공란/0 아닌 케이스 0건**(진짜 무배당, 파싱손실 아님). 상시 룰로 승격하지 않음(매 실행 raw I/O 불필요, 같은 사고는 ZERO_CONTRADICTION 이 더 싸게 잡음).
+> - **교차검증**: 독립 산출물 `배당현황_OpenDART_2023Q4-2026Q2.xlsx` 와 셀 단위 대사 **308/308 일치, mismatch 0**.
+> - **셀프테스트 25/25 → 30/30**(J1~J5 신설).
+> - **PL_breakdown 61셀/1,475행 유실 → owner 지시로 검증쪽이 합집합 병합 직접 실행. 게이트 RED 13 → 0.** 작업트리 PL = **8,111행/332셀**. 병합 = HEAD(=main, 동일) ∪ 작업트리, 키 `(코드,분기,항목번호)`. 내역: 작업트리 유지 6,636 · HEAD 복원 1,475 · **겹치는 키인데 작업트리가 `null` 이라 HEAD 로 채움 1,008**(셀 단위 combo-diff 가 못 잡는 층) · 값충돌 19(작업트리 15 / HEAD 4). `--no-build` SUMMARY 골든 일치 → 골든 재생성 불필요.
+> - **⚠ 원인 규명(재현됨)**: `validate_master_tables.py` 는 `--no-build` 없이 돌리면 `build_root_masters.py` 를 먼저 실행하고, 그 재빌드 산출이 정확히 6,636행이다. 병합 직후 검증쪽이 플래그 없이 한 번 돌려 **병합이 그 자리에서 되돌아갔다**(되돌아간 파일 = 병합 전 백업과 MD5 동일). 우발 사고가 아니라 **그 경로마다 재현되는 결정론적 손실** = `project_git_purge` 함정의 실물. **검증 세션은 앞으로 이 스크립트를 반드시 `--no-build` 로 호출할 것.**
+> - 파서 몫으로 남은 것(값 복구 아님): 빌더가 그 61셀을 떨구는 이유 규명 + 순가산화 또는 rebuild 기본값 반전. `inbox/parser/20260814T1637Z` 에 정책·충돌 19건·백업 경로까지 기록. 한화손보/한화생명 2023.1Q 항목20(영업이익) 2셀은 **HEAD 채택 + 파서 판정 대기**.
+
+## Status (이전)
+
+**(2026-08-14 f) owner 종결 지시 — 비상장 6개사 접음. 게이트 RED 42 → 0 (exit 0). 17BS 라운드 종료, 열린 티켓 0건.**
+> owner: *"그 귀찮은 짓을 하지 말라니까? 걔네는 걍 접고 마무리해."* → Tier-2 본표 추출 추적 중단.
+> - `validate_data_contract.py` 에 **`IFRS17_BS_NO_SOURCE`(6개사)** 추가 → 코어 census 면제.
+>   AIG · 하나손해 · 신한이지 · 비엔피파리바카디프 · 메트라이프 · IBK연금 (전부 비상장).
+>   면제 근거를 **코드 주석에 박았다**: OpenDART `013`/`014` 실측 + **상장 대조군 정상**(= 호출 문제 아님)
+>   + owner 지시. 파일 레지스트리를 되살리지 않았다(방금 아카이브한 기구를 다시 만들지 않으려고).
+> - **면제는 census 한정.** `BS_IDENTITY`(1==2+3)는 이 6개사에도 계속 돈다 — 값이 들어오면 구조검사는 받는다.
+> - 조용히 사라지지 않게 **집계 YELLOW 1건**(`BS_CENSUS_NO_SOURCE_COMPANY`, 11블록 명시).
+> - **최종: RED=0 / YELLOW=220 (exit 0) · `--selftest` 25/25 · `pytest tests/test_deploy_assets.py` 10/10.**
+>   **push 차단 해제** — 배포 판단은 publishing 소관(owner 승인 필요).
+> - 발주 티켓 2건 종결: `20260814T0500Z`(재확인 후 resolved) · `20260814T0620Z`(owner 취소로 resolved).
+>   → 둘 다 `inbox/_resolved/`. **validation inbox 비어 있음.**
+> - 남은 인지 항목(작업 아님): ① census 회사축 미검사(행 0건인 KR1098 카카오페이손해 무신호)
+>   ② 비상장 6개사는 화면에 자산/부채/자본/AOCI 가 빈다 — designer 가 빈칸을 0 으로 렌더하지 않는지만 확인.
+
+## Status (이전)
+
+**(2026-08-14 e) owner 지시 API 조사 = 막다른 길(발주 없음). `test_deploy_assets` 10/10 통과 — 이제 배포 blocker 는 RED=42 하나뿐.**
+> - **OpenDART 2종 실측 — 비상장사는 두 API 다 안 나온다.** owner 지목(`apiId=2019019` · `2019020`).
+>   비상장 3사(IBK연금·메트라이프·AIG) × 필링 6건 전수 vs **상장 대조군 한화생명**:
+>
+>   | API | 비상장 3사 | 대조군(한화생명) |
+>   |---|---|---|
+>   | `fnlttSinglAcntAll`(2019020, 현행) | `013 조회된 데이타가 없습니다` (OFS·CFS) | `000` OFS 245행 / CFS 346행 |
+>   | `fnlttXbrl`(2019019, 미사용) | `014 파일이 존재하지 않습니다` 6/6 | **ZIP OK** 1.4-1.7MB·7파일 3/3 |
+>
+>   구조적 이유 = `fnlttXbrl` 은 **정기공시 첨부 XBRL** 서비스인데 비상장 보험사는 **감사보고서(F)만**
+>   내고 XBRL 첨부가 없다. **대조군이 3/3 성공했으므로 호출 오류가 아니라 파일 부재.**
+>   → owner 지시("없으면 걍 패스")대로 **downloader 발주 없음.** 재조사 방지 근거는
+>   `inbox/parser/20260814T0620Z…`(iter 2) 에 표로 붙여 뒀다. **RED 42 는 우회 소스가 없다 =
+>   감사보고서 본문 XML 파싱 수정이 유일 경로**임이 확정됐다.
+> - **`pytest tests/test_deploy_assets.py` 10 passed** — publishing 이 keep-list swap 을 착지시켰다
+>   (`claude-agent-publishing.md` 5회 · `claude-agent-designer.md` 1회 `IFRS17_BS.json` 언급).
+>   (d) 에 적힌 "publishing 으로 이동한 FAIL" 은 **해소됨.**
+> - 게이트 재실행 **RED=42 / YELLOW=219 (exit 2)**, `--selftest` **25/25**. 수치 변화 없음 —
+>   남은 42셀은 전부 위 Tier-2 본표 미추출이고 parser iter 2 답신 대기.
+
+## Status (이전)
+
+**(2026-08-14 d) 배포 승격 발생 — `IFRS17.html` 이 `IFRS17_BS.json` fetch 시작(16:39) → 심각도 자동 RED. push 게이트 RED=42 = 실차단 중.**
+> **코드 수정 0줄.** 배포 HTML 이 그 JSON 을 읽으면 RED, 아니면 YELLOW라는 기존 판정식이 설계대로 동작한 것.
+> - **RED 42 = 원인 한 가지뿐** — Tier-2 6개사 11블록에서 **재무상태표 본표(코어 1·2·3·4)가 통째 미추출**.
+>   행은 있고 준비금 계열(5·7)만 들어와 있다. IBK연금 3분기 · 메트라이프 3분기 · AIG 1 · 하나손 1 ·
+>   신한이지 1 (+ KR0075 2분기 = **owner 지시로 이번 턴 보류**).
+>   → `inbox/parser/20260814T0620Z…ifrs17_bs_delta_after_ofs_rebuild.md`(iter 2, 실측대로 전면 갱신).
+> - **owner 정정 반영**: IBK 2023.4Q 는 해약환급금준비금 기적립액 **0 + 전입액 185,680백만원**이 정상이고
+>   (→ 2024.4Q 기적립액 185,680), 항목 5 는 optional 이라 **게이트가 애초에 안 본다.** 그 회사에서
+>   문제인 건 자산/부채/자본/AOCI 가 전 분기 없다는 것. 티켓에 오독 방지 문구로 못박음.
+> - **소스 수정으로 소멸 누계 14건, 예외 등재 0건**: 삼성생명 항등식 2 · 한화생명 3 · 흥국생명 5 ·
+>   **AIA 3 + 아이엠라이프 1(추가 소멸)**. owner V-3("예외로 덮지 말고 소스를 고쳐라")이 전 구간 성립.
+> - **남은 배포 blocker 1건(내 소관 밖)**: `pytest tests/test_deploy_assets.py` FAIL 이 designer →
+>   **publishing 으로 이동**했다. designer repoint 는 끝났고(문서·HTML 정합), 이제
+>   `claude-agent-publishing.md` 가 `IFRS17_BS.json` 을 언급하지 않는다 = keep-list 누락 → **라이브 404 위험.**
+>   기존 owner 발주 `inbox/publishing/20260814T0232Z…keeplist_swap_equity_to_ifrs17_bs.md`(open)가 그 자리다 —
+>   validation 신규 발주 없음.
+
+## Status (이전)
+
+**(2026-08-14 c) inbox 전량 드레인 + 재검증 종결 — 17BS 정본 전환 확정. push 게이트 RED=0 / YELLOW=261, `--selftest` 25/25.**
+> 8/13~8/14 owner 발주 4건(`20260813T0422Z` · `20260814T0035Z` · `0216Z` · `0232Z`)을 전부
+> `status: resolved`(0216Z 는 `superseded`) + `inbox/_resolved/` 이동. **validation inbox 는 현재 비어 있다.**
+> - **도메인 전환 완료**: `equity_composition`(항목 1-49) 게이트 철거 → `IFRS17_BS.json`(항목 1-5) 등록.
+>   룰은 **둘뿐** — `BS_IDENTITY`(1 == 2+3) · `BS_CENSUS_MISSING_ITEM`(코어 1·2·3·4). 5·6·7 optional=무검사.
+>   룰 파일은 지우지 않고 `archive/2026-08_equity_composition/` 로 이동(되살리면 룰 4개가 통째로 붙어 온다).
+> - **독립 재검증(파서 재빌드 `IFRS17_BS.json` 14:42 이후)**: 게이트 재실행 **RED=0 / YELLOW=261**(exit 0),
+>   `--selftest` **25/25**, `pytest tests/test_deploy_assets.py` **1 FAIL**(아래, validation 소관 아님).
+>   17BS findings **40 → 42**(전부 YELLOW — 아직 어떤 배포 HTML 도 `IFRS17_BS.json` 을 fetch 하지 않음.
+>   designer repoint 시 **코드 수정 없이 RED 승격**).
+> - **소스 수정으로 소멸 확인 10건 — 예외 등재 0건**: 삼성생명 `BS_IDENTITY` 2건(파서 P-1 OFS 고정) ·
+>   한화생명 3 + 흥국생명 5 = AOCI 8건(파서 P-2 태그 조건부 채택). owner V-3 이 요구한
+>   "예외로 덮지 말고 소스를 고쳐 소멸시킨다"가 그대로 성립했다.
+> - **잔여 42셀 → `inbox/parser/20260814T0620Z…ifrs17_bs_delta_after_ofs_rebuild.md`(iter 2)**:
+>   Tier-2 본표 부분산출 38(AIG·메트라이프·IBK·**KR0075 신규**·하나손·신한이지 — 준비금 주석만 잡고
+>   재무상태표 본표를 못 잡는 지문) + AOCI 태그변형 잔여 4(AIA 3·아이엠라이프 1). **값 보정 요청 0건.**
+> - **남은 FAIL 1건**(내 소관 밖, push 전 해소 필요): `IFRS17.html` 이 아직 `equity_composition.json` 을
+>   fetch → `test_docs_agree_with_what_pages_fetch` FAIL. designer `20260814T0232Z`(Panel 7 repoint) +
+>   publishing `20260814T0232Z`(keep-list swap) 완료 시 자동 해소.
+> - **owner 판단 대기 1건**: census 회사축. 현 census 는 "마스터에 행이 있는 (회사,분기)" 안에서만 돌아
+>   **행이 0건인 회사를 못 본다**(현재 KR1098 카카오페이손해 1사). 기대그리드(39사×7분기)로 올리면
+>   366셀이 뜨고 방금 아카이브한 예외 레지스트리가 다시 필요해져 이번 라운드엔 붙이지 않았다.
+
+## Status (이전)
+
+**(2026-08-14) owner 범위 정정 반영 — equity census 코어 축소. 룰 RED 182 → 21. 게이트는 이제 실차단(RED=21).**
+> 발주 `inbox/validation/20260814T0035Z…equity_scope_rollback_core_shrink.md` (지시 5개 전부 반영, **신규 룰 0개** — 줄이는 작업).
+> - `CORE_ITEMS = (1, 6, 40, 41)`(자산/부채/자본/AOCI = owner 원 요구 high-level 17BS).
+>   10/11(해약환급금준비금, "안되면 pass"였음)·5/20/29/30(요구된 적 없는 AOCI 흐름 분해) → **optional**,
+>   결측은 셀별 RED 대신 집계 **YELLOW 1건**(`EQ_OPTIONAL_ITEM_ABSENT`).
+> - `EQ_PARENT_CHILD_INCOMPLETE` RED→YELLOW. `EQ_TIER2_SCOPE_GAP`·`TIER2_CORE_ITEMS`·`load_tiers()` 삭제(Tier-2 중단).
+> - **Tier-2 15개사 census 예외 등재** — 근거 `inbox/parser/20260814T0035Z…equity_tier2_stop.md`
+>   "XBRL FS 없는 15개사 = 영구 결측 확정". 회사목록은 사이드카 `universe.tier2_companies`(14)+`tier2_still_missing`(KR1098).
+>   `_excepted()`가 `companies` 배열도 받도록 3줄 확장.
+> - 유지: `EQ_BS_IDENTITY`·`EQ_AOCI_ROLLFORWARD`·`EQ_AOCI_STOCK_FLOW_TIE`·`EQ_UNIT_SCALE_JUMP`·provenance RED·owner_confirmed 억제.
+>
+> **IFRS17.html 이 `equity_composition.json` 을 fetch 하기 시작 → 배포 판정 자동 전환**(스테이징 YELLOW 강등 종료).
+> `validate_data_contract.py` **RED=21 = push 차단 중.** 내역: AOCI(6) 결측 13(한화생명 7·흥국생명 6) ·
+> 롤포워드 6(KB라이프 328,699 / 한화손보 3,198 / DB생명·DB손보 각 2건 FY상수) ·
+> 삼성생명 BS 항등식 2(2025.2Q/3Q, 자산총계 동일값 반복 = DART 원본 품질 이슈로 파서 종결).
+> 앞 19건 → `inbox/parser/20260814T0130Z…equity_core4_gaps_after_scope_shrink.md`.
+> 뒤 2건 = **owner 결정 대기**(예외 등재 / 화면 제외 / RED 유지).
+>
+> **버그 1건 수정**: 심각도 승격 직후 `--selftest` 가 0/22 로 무너졌다 — `Env` 가 inject(합성) 모드에서도
+> `equity_findings` 를 디스크에서 읽어 실제 RED 21건이 22개 케이스 전부를 오염시켰다. `wf_by_code` 와 같은
+> 격리 규칙 적용(inject 면 `equity_findings=[]`·`equity_published=False`) → **22/22 복구**. YELLOW 였을 땐 조용히 통과 중이었음.
+>
+> **부수 발견(배포 위험)**: `pytest tests/test_deploy_assets.py::test_docs_agree_with_what_pages_fetch` **FAIL** —
+> keep-list 를 유도하는 문서 2곳(publishing·designer §1 표)에 `equity_composition.json` 이 없다.
+> 그대로 배포하면 라이브 404 → 두 스테이지에 각각 발주(`20260814T0135Z…equity_keeplist_doc_gap.md`).
+> **RED 0 + 이 테스트 통과 전에는 push 금지.**
+
+**(2026-08-13 b) 파서 답변 재검증(iter 2) — raw 대조로 P-1~P-7 확인, 신규 룰 4개 배선. 룰 RED=231, push 게이트 RED=0 유지.**
+> 파서 답변 `inbox/_resolved/20260813T0600Z…equity_composition_red_findings.md` → 재검증 후 resolved,
+> 잔여·신규는 `inbox/parser/20260813T1330Z…equity_composition_red_round2.md` (iter 2).
+>
+> **마스터가 아니라 raw 를 봤다.** 사이드카가 인용한 캐시 파일을 직접 열어 Tier-1 243 (회사,분기) 전수 재추출:
+> - **P-1 항목8(비지배지분) = 진짜 raw 값**(22셀 일치 + 폐쇄식 잔차 − item8 = 0). plug 아님 **확정**.
+> - **P-6 메리츠 = 파서 무결, 내 룰이 틀렸다**(원문 478,384,895,270원/-432,734,801원 둘 다 raw).
+>   0 을 통과하는 실제 스윙을 비율만 보고 단위오류로 오탐 → **부호 반전 쌍 skip** 으로 수정.
+>   owner_confirmed 등재 요청은 **거절**: 데이터가 아니라 탐지기가 틀린 것을 owner 승인으로 덮으면
+>   그 다음부터 진짜 단위오류를 못 잡는다.
+> - **P-4 = 값 판정은 맞으나 방식이 발주문 §3 위반** → 아래 신규 룰이 상시 탐지로 전환.
+>
+> **신규 룰 4개 (전부 `scripts/validate_equity_composition.py`, 게이트는 러너 결과를 흡수하므로 추가 배선 불요):**
+>
+> | rule id | 함수 | 무엇을 막나 | 현재 |
+> |---|---|---|---|
+> | `EQ_MASTER_VS_RAW_DRIFT` (RED) | `check_raw_fidelity` | **빌더의 무신고 값 정정.** 마스터 item 6/29/30 을 인용 캐시 raw 와 대조 | 1건 (KR0032 2024.4Q item30 부호 치환) |
+> | `EQ_OPENING_VS_BS_COMPARATIVE` (RED) | `check_raw_fidelity` | 기초(20) 행 오선택. item20 = 그 필링 자신의 BS 전기 | 0건 (FY2024+ 201/201 일치, FY2023 은 전환연도라 제외) |
+> | `EQ_BS_IDENTITY` (RED) | `check_identities` | 자산 = 부채 + 자본. **Tier-2 행에 걸 수 있는 유일한 구조검사**(단위오류 탐지) | 2건 (삼성생명 2025.2Q/3Q) |
+> | `EQ_DERIVED_UNDECLARED` (YELLOW) | `check_raw_fidelity` | 역산값이 공시값으로 위장 — 항등식이 파생값으로 닫히면 검증력 0 | 64셀(item29) |
+>
+> **룰 정정 3건:** ① census 회사 축을 `kics_disclosure`(39사)로 이동, 분기 축만 `PL_breakdown` —
+> PL 축이 6사를 통째로 못 보고 있었다(**카카오페이손보는 equity 행 0건인데 RED 0건**이었음).
+> PL 부재사는 연 1회 4Q 기대. ② `TIER2_CORE_ITEMS=(1,6,10)` + 스코프 밖 결측은
+> `EQ_TIER2_SCOPE_GAP` YELLOW 104건으로 상시 카운트(조용히 사라지지 않게). `EQ_PARENT_CHILD_INCOMPLETE`
+> 도 Tier-2 제외(같은 갭 이중계상 21→2). ③ continuity 에 **raw 기반 자동 판정** — 기초가 그 필링의
+> BS 전기와 일치하면 발행사 소급정정이 raw 2곳에서 확인된 것이므로 `EQ_AOCI_CONTINUITY_RESTATED`
+> YELLOW(푸본현대 2025.1Q). 사람이 "재작성이라 넘어가자"고 선언하는 면제 경로를 만들지 않는다.
+>
+> **RED 231 분해**: census 결측 항목 211(**item10 단독 181 = Tier-1 회사 주석 미착수**, item29 70, item6 25,
+> item20/30 각 15, item1 10) · census 셀 12 · 부모-자식 2 · 롤포워드 3 · BS 항등식 2 · raw drift 1.
+> **회귀**: `--selftest 22/22` · `pytest tests/test_deploy_assets.py 10 passed` · 라이브 게이트 **RED=0 / YELLOW=605**.
+>
+> **파서 질문 5건 전부 종결(owner 대기 없음)** — Tier-2 코어/universe/KB라이프 항목31/메리츠/DRIFT 정책.
+> DRIFT 는 owner 판단 요청이 왔으나 **데이터가 답했다**: item20 이 FY2024+ 201/201 에서 자기 필링의
+> BS 전기와 일치 → 분기값 유지가 맞다(FY 통일은 롤포워드를 22→30 으로 악화시킨다는 파서 실측과 일치).
+>
+> **잔여(UH-9 갱신)**: ① 사이드카 `derived_items` item 단위 신고(파서) ② KR0069 2025.2Q/3Q BS stale
+> 재페치 판정(`inbox/downloader/20260813T1330Z…fs_api_bs_stale_repeat.md`) — 판정 오면 캐시교체 또는
+> documented exception ③ 항목 31(소유주거래) 신설 후 롤포워드 룰을 `20+29+31==30` 으로 확장.
+
+**(2026-08-13 a) inbox 1건 드레인 — `equity_composition` (AOCI + 해약환급금준비금) 룰 신설 + 게이트 배선. 룰 RED=341, push 게이트는 RED=0 유지(미배포 스테이징).**
+> 발주 `inbox/validation/20260813T0422Z…equity_composition_rules_and_gate.md` (V-1~V-6).
+> 마스터가 같은 날 14:33에 1차 산출돼 룰 설계 + **실행 검증**까지 함께 수행.
+>
+> **배선 위치(V-6 요구대로 경로+함수명):**
+> - 룰 본체 = `scripts/validate_equity_composition.py` (`run()` / `check_census` / `check_identities` /
+>   `check_continuity` / `check_plausibility` / `check_provenance` / `check_cross_master`). 단독 실행 시 RED면 exit 2.
+> - push 게이트 = `scripts/validate_data_contract.py::check_equity_composition` (run_gate 2번째 호출),
+>   `Env._load_equity_findings` / `Env._equity_is_published`, `Env.MASTER_FILES["equity_composition"]`(mtime 감시).
+>   룰을 두 벌로 구현하지 않고 러너 결과를 흡수한다.
+> - **심각도는 배포 여부로 자동 결정**: 루트 배포 HTML 중 `equity_composition.json`을 fetch 하는 페이지가
+>   생기는 순간(디자이너/퍼블리싱 작업) 코드 수정 없이 YELLOW→RED 승격(검증: published=True 주입 시 RED 341).
+>   그전까지 무관한 배포를 막지 않으려는 스테이징 — 불변식 "게이트가 검사하는 파일 = 사용자가 보는 파일"의 적용.
+>
+> **발주문 1곳 정정(V-1 `AOCI_CONTINUITY`)**: "직전분기 30 == 당분기 20"이 아니라 **직전 FY 4Q의 30 == 당 FY의 20**.
+> 한국 중간 자본변동표는 FY 누계라 기초자본 행이 FY 내내 고정(실측: 직전분기 기준 일치 0건 / 직전 FY 4Q 기준 150건).
+> 인접분기로 짰으면 전 회사 false RED. 등급은 발주문대로 RED(CSM continuity 동급) 유지.
+>
+> **RED 328 분해** (파서 발주 `inbox/parser/20260813T0600Z…equity_composition_red_findings.md`):
+> census 결측 231(코어 item29 148·item10 167 등) · 부모-자식 28 · 자본총계 폐쇄 22(=CFS 2사 비지배지분 미포착) ·
+> AOCI 롤포워드 22(FY2023 기초 오선택, 회사별 상수 오차) · OCI 잔차 19 · stock-flow tie 2 ·
+> continuity 2 · 단위 1 · provenance 사이드카 부재 1.
+>
+> **owner 결정 3건 즉시 반영(341 → 328)**: ① `EQ_RESERVE_WITHIN_RE` RED→YELLOW — 이익잉여금 =
+> 준비금 3종 + **미처분이익잉여금**이고 잔여가 음수면 정당하게 초과하므로 항등식이 아니다
+> (에이비엘 11·롯데 2건, 파서 재추출 대상에서 제외 통보) ② 케이디비생명 자본잠식 3분기 owner 확인 →
+> `owner_confirmed` 등재(flag 성 룰만 억제, census/항등식 RED 는 불가) ③ AOCI↔K-ICS 가용자본 비교는
+> 미구현 종결(AOCI 는 IFRS17 개념).
+>
+> **documented exception 등재(V-2 요건: reason+evidence 없으면 미인정)** — 기계 레지스트리
+> `data/_gold/equity_census_exceptions.json`, 사람 사본은 아래 표. 근거는 downloader 답변.
+>
+> | 회사 | 분기 | rule id | 사유 |
+> |---|---|---|---|
+> | 전사(*) | 2023.1Q, 2023.2Q | `EQ_CENSUS_MISSING_CELL` | DART FS API status 013 영구공백(24개사 강제 재조회 24/24 일치). 근거: `inbox/parser/20260813T0530Z…equity_composition_raw_ready.md` §1 |
+> | KR0150 서울보증 | 2023 전체·2024 전체 | `EQ_CENSUS_MISSING_CELL` | 같은 013이나 gap이 더 넓음(실데이터 2025.1Q~). 근거: 동일 문서 |
+>
+> **잔여(UH-9 신규)**: ① provenance 사이드카 미발행 → 발행 후 `validate_data_contract` CHECK 2(as_of)에도
+> 정식 배선(UH-3에서 검증된 "발행 후 배선" 순서 준수) ② 기대그리드 universe를 형제 마스터 `PL_breakdown`(33사)에서
+> 유도 중 — downloader가 말한 Tier-2 대상 15사와 수가 달라, 사이드카의 universe 선언이 오면 그 목록으로 교체.
 
 **(2026-08-03 c) UH-3 종결 — provenance 사이드카 부재 = RED 전환. push 게이트 RED=13 (의도된 차단, 15→13).**
 > **V23 `MISSING_PROVENANCE_SIDECAR` YELLOW → RED.** 2026-07-21부터 미완이던 UH-3 end-state.

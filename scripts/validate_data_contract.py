@@ -332,6 +332,16 @@ def check_census(res: GateResult, env: "Env") -> None:
         res.add(check="census", severity="RED", master="PL_breakdown", company=co, quarter=q,
                 rule="IMPOSSIBLE_ZERO_LEG",
                 message=f"{item}=0 (long-term insurer leg cannot be exactly 0 — extraction error)")
+    # PL 누계(YTD) 붕괴 — 재빌드가 셀을 못 채운 지문. 신설 YELLOW(관찰기).
+    # **_DISPLAY_QUARTERS 스코프 미적용**(CSM 연속성 룰과 동일 판단): 붕괴는 중간분기에서 일어나고
+    # 그 여파가 표시분기의 `값_당분기`를 음수로 뒤집는다. 스코프를 걸면 원인 분기가 통째로 사각이 된다
+    # (실제로 흥국화재·KB손해 2024.3Q 2건이 그렇게 숨어 있었다). YELLOW라 push는 막지 않는다.
+    for co, q, item, prev in _pl_ytd_collapse(env.pl):
+        res.add(check="census", severity="YELLOW", master="PL_breakdown", company=co, quarter=q,
+                rule="PL_YTD_COLLAPSE_TO_ZERO",
+                message=f"{item} 누계가 직전분기 {prev:,.1f} → 이번분기 정확히 0.0 — FY 누계는 "
+                        f"이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심. "
+                        f"초기 YELLOW, RED 전환 예정")
     # CSM 상대규모 plausibility (parser 20260730T0040Z, PM-2026-07-30 UH-6). 항등식은 스케일과
     # 무관하게 닫히므로 단위오류(×100)를 closure 검사로는 절대 못 잡는다 — 회사 규모로 정규화한
     # 비율만이 잡는다. 초기 YELLOW(관찰 1~2 릴리스 후 RED 전환, UH-3 sidecar 선례).
@@ -443,6 +453,39 @@ def _owner_confirmed(confirmed, master, co, q, item, value) -> bool:
     owner_ok, tol_abs, tol_rel = confirmed
     cval = owner_ok.get((master, _norm_ws(co), str(q), _norm_ws(item)))
     return cval is not None and value is not None and abs(value - cval) <= max(tol_abs, tol_rel * abs(cval))
+
+
+def _pl_ytd_collapse(pl):
+    """같은 FY 안에서 누계(YTD)가 non-zero → **정확히 0.0** 으로 떨어지는 셀.
+
+    PL 마스터의 `값`은 FY 누계라 분기가 갈수록 단조로 쌓인다(부호는 항목마다 다르되 이미 인식된
+    누계가 통째로 사라지지는 않는다). 3Q 35,264 → 4Q 0.0 같은 자리는 회계 사건이 아니라 **재빌드가
+    그 셀을 못 채운 지문**이고, 파생 `값_당분기` 가 −35,264 같은 물리적으로 불가능한 값으로 뒤집힌다.
+
+    폐쇄식·브리지가 이걸 못 잡는 이유: 0 은 등식을 깨지 않고 조용히 통과한다(다른 항으로 닫히면 끝).
+    2026-08-15 에 마스터가 HEAD 로 되돌아갔다 재빌드된 뒤 19셀이 이 상태로 회귀한 것을 놓쳤다.
+    신설 시점 severity=YELLOW(관찰 1~2 릴리스 — CSM_WATERFALL_PLAUSIBILITY / UH-3 선례).
+    """
+    def _qn(q):
+        m = re.match(r"(\d{4})\.(\d)Q", str(q or ""))
+        return (int(m.group(1)), int(m.group(2))) if m else None
+
+    by_item: dict = {}
+    for (co, q), m in pl.items():
+        n = _qn(q)
+        if not n:
+            continue
+        for item, v in m.items():
+            by_item.setdefault((co, item), {})[n] = v
+    out = []
+    for (co, item), series in sorted(by_item.items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))):
+        for (y, qq), v in sorted(series.items()):
+            if qq == 1:
+                continue
+            prev = series.get((y, qq - 1))
+            if isinstance(prev, (int, float)) and prev != 0 and v == 0.0:
+                out.append((co, f"{y}.{qq}Q", item, prev))
+    return out
 
 
 def _pl_impossible_zero_leg(pl, confirmed=None):
@@ -1160,6 +1203,14 @@ class Env:
         "forward_capital": "kics_forward_capital.json",
         "tier1_utilization": "kics_tier1_utilization.json",
         "tier2_utilization": "kics_tier2_utilization.json",
+        # 2026-08-14 17BS 정본(owner 20260814T0232Z). 직전 equity_composition(항목 1-49)은
+        # archive/2026-08_equity_composition/ 로 내려갔고 룰도 함께 아카이브됐다 —
+        # 여기 남는 검사는 check_ifrs17_bs 의 두 개(BS 항등식 + 코어 census)뿐이다.
+        "IFRS17_BS": "IFRS17_BS.json",
+        # 2026-08-14 배당 마스터(owner 20260814T1625Z V-0). 여기 없으면 mtime 감시·
+        # ARTIFACT_UNREADABLE·동시백필 판정이 전부 이 마스터를 건너뛴다 — 신규 마스터가
+        # 게이트 밖에 방치되는 그 상태가 바로 등록 사유다.
+        "dividend": "dividend.json",
     }
 
     def __init__(self, inject: dict | None = None):
@@ -1190,6 +1241,28 @@ class Env:
                                              self._resolve_capsec_source_files)
         self.capsec_bond_source = self._get("capsec_bond_source", self._load_capsec_bond_source)
         self.forward_prior_rows = self._get("forward_prior_rows", self._load_forward_prior_rows)
+        # selftest(inject 모드)는 합성데이터 격리 — 디스크 마스터를 읽지 않는다(wf_by_code 와 동일 규칙).
+        # 격리하지 않으면 실제 17BS RED 가 합성 케이스 전부에 섞여 들어간다. 2026-08-14 에
+        # 직전 equity 마스터에서 실제로 터진 자리다(심각도가 YELLOW→RED 로 승격되자 selftest 가
+        # 0/22 로 무너졌다. 그전엔 YELLOW 라 조용히 통과 중이었다).
+        self.ifrs17_bs = self._get(
+            "ifrs17_bs",
+            (lambda: []) if self.inject else lambda: self._load_json_opt("IFRS17_BS.json") or [])
+        self.ifrs17_bs_published = self._get(
+            "ifrs17_bs_published",
+            (lambda: False) if self.inject else lambda: self._html_fetches("IFRS17_BS.json"))
+        # 배당 마스터도 같은 3종 세트(데이터 · 배포여부 · 수집 census). 수집 census 는
+        # dividend.json 의 **기대 그리드 원천**이다 — 어느 (회사,분기) 필링이 실제로 존재하는지는
+        # 회사 목록이 아니라 fetch 결과(status)가 정한다. 회사 목록으로 기대치를 세우면 비상장
+        # 15개사의 정상적 부재가 통째로 RED 가 된다.
+        self.dividend = self._get(
+            "dividend", (lambda: []) if self.inject else lambda: self._load_json_opt("dividend.json") or [])
+        self.dividend_published = self._get(
+            "dividend_published",
+            (lambda: False) if self.inject else lambda: self._html_fetches("dividend.json"))
+        self.dividend_fetch_census = self._get(
+            "dividend_fetch_census",
+            (lambda: None) if self.inject else lambda: self._load_json_opt(DIV_FETCH_CENSUS))
 
         # derived
         self.code_name = {r["원보험사코드"]: r["원수사명"] for r in self.kics_records
@@ -1479,6 +1552,24 @@ class Env:
         qs = {r.get("공시분기") for r in rs if r.get("공시분기")}
         return max(qs, key=q_to_num) if qs else self.latest_kics_quarter
 
+    @staticmethod
+    def _html_fetches(master_file: str) -> bool:
+        """루트 배포 HTML 중 이 마스터를 실제로 fetch 하는 페이지가 있는가.
+
+        불변식 "게이트가 검사하는 파일 = 사용자가 보는 파일" 의 적용: 아직 어느 페이지도
+        읽지 않는 신규 마스터의 결측을 push 차단 사유로 쓰면, 무관한 배포까지 함께 막힌다.
+        배포되기 전까지는 YELLOW(보고), 디자이너/퍼블리싱이 패널에 물리는 순간 **코드 수정
+        없이** 자동으로 RED 로 승격된다(owner 20260813T0422Z V-3 "배포 아티팩트가 되면 배선").
+        2026-08-14: 배당 마스터가 같은 패턴을 두 번째로 쓰게 되어 파일명 인자로 일반화.
+        """
+        for p in ROOT.glob("*.html"):
+            try:
+                if master_file in p.read_text(encoding="utf-8", errors="ignore"):
+                    return True
+            except Exception:
+                continue
+        return False
+
     def _snapshot_mtimes(self):
         out = {}
         for label, rel in self.MASTER_FILES.items():
@@ -1507,9 +1598,258 @@ def check_artifact_readable(res: GateResult, env: "Env") -> None:
                         f"downstream checks would have treated it as absent")
 
 
+# 17BS 코어 = 자산/부채/자본/AOCI. 5·6·7(해약환급금·비상위험·대손 준비금)은 optional —
+# owner 20260814T0232Z §2 "가능하면 찾아서 추가하되 안 되면 pass. 코어로 올리지 말 것".
+IFRS17_BS_CORE_ITEMS = (1, 2, 3, 4)
+IFRS17_BS_LABELS = {1: "자산총계", 2: "부채총계", 3: "자본총계", 4: "기타포괄손익 누계액"}
+IFRS17_BS_TOL_REL = 0.001   # 0.1%
+IFRS17_BS_TOL_ABS = 1.0     # 백만원
+# 코어 census 면제 = **소스가 존재하지 않는 회사**(owner 종결 지시 2026-08-14: "걔네는 걍 접어").
+# 전부 비상장이라 DART 에 감사보고서(F)만 내고 XBRL 첨부가 없다. 2026-08-14 실측:
+#   fnlttSinglAcntAll(2019020) = status 013 · fnlttXbrl(2019019) = status 014, 필링 6건 전수.
+#   같은 호출로 상장 대조군(한화생명)은 3/3 성공 → 우리 호출 문제가 아니라 파일 부재.
+# 채울 경로가 없는 결측을 RED 로 두면 게이트가 영구히 push 를 막는다. 면제는 **census 한정**이고
+# BS_IDENTITY 는 계속 돈다 — 값이 들어오는 순간 구조검사는 그대로 받는다.
+IFRS17_BS_NO_SOURCE = {
+    "KR0029",  # AIG손해보험
+    "KR0050",  # 하나손해보험
+    "KR0051",  # 신한이지손해보험
+    "KR0075",  # 비엔피파리바카디프생명보험
+    "KR0095",  # 메트라이프생명보험
+    "KR1011",  # IBK연금보험
+}
+
+
+def check_ifrs17_bs(res: GateResult, env: "Env") -> None:
+    """17BS 마스터(IFRS17_BS.json) — 룰은 딱 둘(owner 20260814T0232Z §2, "그 외 아무것도 만들지 마라").
+
+      BS_IDENTITY          항목1(자산총계) == 항목2(부채총계) + 항목3(자본총계)
+      CENSUS_MISSING_ITEM  코어 항목 1·2·3·4 중 결측
+
+    자본총계 폐쇄식(1=2+3+…)은 이 마스터에 자본 세부항목이 없어 성립하지 않는다 — AOCI 태그
+    채택 검산은 파서가 자체적으로 한다(발주 20260814T0216Z P-2).
+
+    심각도는 기존 방식 그대로 **배포 여부**가 정한다(불변식 "게이트가 검사하는 파일 = 사용자가
+    보는 파일"): 어느 배포 HTML 도 IFRS17_BS.json 을 아직 fetch 하지 않으면 YELLOW, 패널에
+    물리는 순간 코드 수정 없이 RED 로 자동 승격.
+    """
+    def _sev(msg: str) -> tuple[str, str]:
+        if env.ifrs17_bs_published:
+            return "RED", msg
+        return "YELLOW", msg + "  [미배포 — 어떤 페이지도 IFRS17_BS.json 을 아직 읽지 않아 " \
+                               "push 차단은 보류. 배포 keep-list 에 오르면 자동 RED]"
+
+    cells: dict[tuple, dict] = {}
+    names: dict[str, str] = {}
+    for r in env.ifrs17_bs:
+        code, q, item = r.get("원보험사코드"), r.get("공시분기"), r.get("항목번호")
+        if not code or not q or item is None:
+            continue
+        cells.setdefault((code, q), {})[item] = r.get("값")
+        names.setdefault(code, r.get("원수사명") or code)
+
+    skipped: list[str] = []
+    for (code, q), cell in sorted(cells.items()):
+        if not (env.inject or _in_scope(q)):   # live: 화면에 뜨는 분기만, selftest: 전수
+            continue
+        nm = names.get(code, code)
+        # census 면제(BS_IDENTITY 는 계속 검사한다 — 값이 들어오면 구조검사는 공짜다)
+        core_missing = [i for i in IFRS17_BS_CORE_ITEMS if cell.get(i) is None]
+        if core_missing and not env.inject and code in IFRS17_BS_NO_SOURCE:
+            skipped.append(f"{nm} {q}({len(core_missing)})")
+            core_missing = []
+        for item in core_missing:
+            sev, msg = _sev(f"코어 항목 {item}({IFRS17_BS_LABELS[item]}) 결측 — "
+                            f"이 (회사,분기) 행은 존재하는데 코어 셀이 비었다")
+            res.add(check="census", severity=sev, master="IFRS17_BS", company=nm,
+                    quarter=q, rule="BS_CENSUS_MISSING_ITEM", message=msg)
+        a, l, e = cell.get(1), cell.get(2), cell.get(3)
+        if a is not None and l is not None and e is not None:
+            s = l + e
+            if abs(a - s) > max(IFRS17_BS_TOL_ABS, IFRS17_BS_TOL_REL * max(abs(a), abs(s))):
+                sev, msg = _sev(f"자산총계 1({a:,.0f}) != 부채총계 2 + 자본총계 3 ({s:,.0f}) "
+                                f"[잔차 {a - s:,.0f}] — 연결/별도 오선택·단위 오적용·행 오인식 의심")
+                res.add(check="domain", severity=sev, master="IFRS17_BS", company=nm,
+                        quarter=q, rule="BS_IDENTITY", message=msg)
+
+    if skipped:   # 조용히 사라지지 않게 집계 1건으로 항상 보인다
+        res.add(check="census", severity="YELLOW", master="IFRS17_BS", company=None,
+                quarter=None, rule="BS_CENSUS_NO_SOURCE_COMPANY",
+                message=f"비상장 {len(IFRS17_BS_NO_SOURCE)}개사 코어 census 면제 — "
+                        f"{len(skipped)}블록 스킵: {', '.join(skipped)}. "
+                        f"근거: OpenDART fnlttSinglAcntAll=013 / fnlttXbrl=014(상장 대조군은 정상) "
+                        f"+ owner 종결 지시 2026-08-14. BS_IDENTITY 는 계속 검사한다")
+
+
+# 배당 마스터(dividend.json, DART alotMatter) — 룰은 딱 셋(owner 20260814T1625Z V-1
+# "3개로 끝낸다"). 항목번호: 2=(연결)당기순이익 · 5=현금배당금총액 · 6=주식배당금총액 ·
+# 7=(연결)현금배당성향 · 8=주당현금배당금 · 9=주당주식배당 · 10=현금배당수익률.
+DIV_FETCH_CENSUS = "data/_derived/alotmatter_fetch_census.json"
+DIV_REPRT_Q = {"11013": "1Q", "11012": "2Q", "11014": "3Q", "11011": "4Q"}
+DIV_PAYOUT_TOL_PP = 0.5     # %p — DART 공시 배당성향이 소수 1자리 반올림이라 그 폭은 허용
+
+
+def check_dividend(res: GateResult, env: "Env") -> None:
+    """배당 마스터 3룰.
+
+      DIV_PAYOUT_IDENTITY     항목7 == 항목5 / 항목2 × 100 (연결 기준 배당성향)
+      DIV_CENSUS_MISSING      수집 census 가 status=000(필링 존재)이라는데 마스터에 행이 없음
+      DIV_ZERO_CONTRADICTION  배당총액=0 인데 같은 (회사,분기)에 주당배당금/수익률은 양수
+
+    **기대 그리드는 회사 목록이 아니라 수집 census 에서 나온다.** alotMatter 는 비상장 15개사를
+    아예 다루지 않아(전 기간 status=013) 회사 목록으로 census 를 세우면 정상적 부재가 전부 RED 로
+    둔갑한다. status=000 인 셀만 "있어야 할 셀"이다.
+
+    분기 스코프를 걸지 않는다(K-ICS 의 _DISPLAY_QUARTERS 미적용): 배당 화면은 2023.1Q~2026.2Q
+    전 계열을 그리므로, 표시분기로 좁히면 화면에 뜨는 셀이 검사 밖에 남는다.
+
+    심각도는 17BS 와 같은 배포여부 승격(불변식 "게이트가 검사하는 파일 = 사용자가 보는 파일"):
+    아직 아무 HTML 도 dividend.json 을 fetch 하지 않으면 YELLOW, 공시보고서.html 이 물리는
+    순간 코드 수정 없이 RED.
+    """
+    if not env.dividend:
+        return
+
+    def _sev(msg: str) -> tuple[str, str]:
+        if env.dividend_published:
+            return "RED", msg
+        return "YELLOW", msg + "  [미배포 — 어떤 페이지도 dividend.json 을 아직 읽지 않아 " \
+                               "push 차단은 보류. 배포 keep-list 에 오르면 자동 RED]"
+
+    comp: dict[tuple, dict] = {}     # (code, quarter) -> {항목번호: 값}   회사단위(종류주="-")
+    per_class: dict[tuple, dict] = {}  # (code, quarter) -> {(항목번호, 종류주): 값}
+    names: dict[str, str] = {}
+    for r in env.dividend:
+        code, q, item = r.get("원보험사코드"), r.get("공시분기"), r.get("항목번호")
+        if not code or not q or item is None:
+            continue
+        names.setdefault(code, r.get("원수사명") or code)
+        kind = r.get("종류주")
+        if kind in (None, "-"):
+            comp.setdefault((code, q), {})[item] = r.get("값")
+        else:
+            per_class.setdefault((code, q), {})[(item, kind)] = r.get("값")
+
+    # ---- R1: 배당성향 항등식 -------------------------------------------------
+    for (code, q), cell in sorted(comp.items()):
+        payout, total, ni = cell.get(7), cell.get(5), cell.get(2)
+        if payout is None or total is None or ni is None or ni <= 0:
+            continue          # 적자/미공시 분기는 배당성향 자체가 정의되지 않는다
+        expected = total / ni * 100
+        if abs(expected - payout) > DIV_PAYOUT_TOL_PP:
+            sev, msg = _sev(f"(연결)현금배당성향 공시 {payout:.2f}% != 현금배당금총액"
+                            f"({total:,.0f}) / (연결)당기순이익({ni:,.0f}) × 100 = "
+                            f"{expected:.2f}% — 연결/별도 오선택(항목2 vs 항목3)·기간 오매칭 의심")
+            res.add(check="domain", severity=sev, master="dividend", company=names.get(code, code),
+                    quarter=q, rule="DIV_PAYOUT_IDENTITY", message=msg)
+
+    # ---- R2: 수집 census 대비 결측 -------------------------------------------
+    census = env.dividend_fetch_census
+    if not census:
+        sev, msg = _sev(f"수집 census({DIV_FETCH_CENSUS})가 없어 배당 마스터의 완전성을 "
+                        f"검증할 수 없다 — 결측 검사축이 통째로 사라진 상태")
+        res.add(check="census", severity=sev, master="dividend", company=None, quarter=None,
+                rule="DIV_CENSUS_SOURCE_MISSING", message=msg)
+    else:
+        have = set(comp) | set(per_class)
+        no_filing_only = {}          # code -> 000 필링이 하나도 없는 회사(정상적 전 기간 부재)
+        missing = []
+        for c in census.get("cells", []):
+            qlabel = DIV_REPRT_Q.get(c.get("reprt"))
+            code = c.get("kr")
+            if not qlabel or not code:
+                continue
+            q = f"{c.get('year')}.{qlabel}"
+            ok = c.get("status") == "000"
+            no_filing_only[code] = no_filing_only.get(code, True) and not ok
+            if ok and (code, q) not in have:
+                missing.append((code, q, c.get("corp_code")))
+        for code, q, cc in missing:
+            sev, msg = _sev(f"수집 census 는 이 분기 필링이 존재한다고(status=000) 기록했는데 "
+                            f"마스터에 행이 하나도 없다 — raw: "
+                            f"data/dart/_alotmatter_cache/{cc}_{q[:4]}_*.json. "
+                            f"무배당(값=0)과 미공시(행 없음)를 뒤바꾼 케이스이거나 빌더 누락")
+            res.add(check="census", severity=sev, master="dividend", company=names.get(code, code),
+                    quarter=q, rule="DIV_CENSUS_MISSING", message=msg)
+        absent = sorted(c for c, only in no_filing_only.items() if only)
+        if absent:
+            res.add(check="census", severity="YELLOW", master="dividend", company=None, quarter=None,
+                    rule="DIV_NO_FILING_COMPANY",
+                    message=f"{len(absent)}개사는 전 기간 alotMatter 필링 자체가 없다"
+                            f"(status 013 전량) — 비상장이라 이 엔드포인트가 다루지 않는 정상 상태. "
+                            f"기대 그리드에서 제외됨: {', '.join(absent)}")
+
+    # ---- R3: 0값 맹점 (총액 0인데 주당배당/수익률은 양수) ----------------------
+    for (code, q), cell in sorted(comp.items()):
+        cls = per_class.get((code, q), {})
+        for total_item, evidence_items, what in ((5, (8, 10), "현금배당"), (6, (9,), "주식배당")):
+            if cell.get(total_item) != 0:
+                continue
+            pos = {f"항목{item}·{kind}": v for (item, kind), v in cls.items()
+                   if item in evidence_items and isinstance(v, (int, float)) and v > 0}
+            if pos:
+                sev, msg = _sev(f"{what}금총액=0 인데 같은 분기에 {pos} 가 양수 — "
+                                f"공시 '-'(미공시)를 0으로 뭉갠 지문(0값 맹점). "
+                                f"raw alotMatter 의 해당 se 행을 다시 볼 것")
+                res.add(check="census", severity=sev, master="dividend",
+                        company=names.get(code, code), quarter=q,
+                        rule="DIV_ZERO_CONTRADICTION", message=msg)
+
+
+# CSM 연속성(FY 경계) — owner 2026-08-15 승격 지시로 push 차단 게이트에 편입.
+# 종전엔 validate_master_tables.py 의 CONT 에만 있었고, prepush_check.py 는
+# validate_data_contract 만 호출하므로 **위반이 있어도 push 가 나갔다**(UH 계열 구조갭).
+# 판정식·허용오차는 그쪽 CONT 와 동일하게 맞춘다 — 두 게이트가 다른 답을 내면 안 된다.
+# 차이는 하나: 그쪽은 FY→분기 목록이 하드코딩(`FY_Q`, 2026.1Q 까지)이라 **2026.2Q 가 검사
+# 밖이었다.** 여기서는 분기에서 FY 를 도출해 새 분기가 자동 편입되게 한다(실측: 그 하드코딩
+# 때문에 안 보이던 위반이 5건 더 있었다).
+CSM_CONT_TOL_REL = 0.005
+CSM_CONT_TOL_ABS = 2.0      # 억원
+
+
+def check_csm_continuity(res: GateResult, env: "Env") -> None:
+    """FY[t] 각 분기의 기초 CSM == FY[t-1].4Q 기말 CSM.
+
+    누계(`값`) 컬럼 기준이다 — 반기/분기 보고서의 기초는 **FY 시작(전년 12/31) 앵커**이고,
+    그 분기 자체의 기초는 파서가 `값_당분기`에 따로 담는다(2026.2Q 검토에서 확정).
+    두 컬럼을 섞으면 23사 전건 오탐이 난다.
+
+    **break = 무조건 RED, 면제 없음.** "소급재작성으로 보인다"는 raw 대조로 확정되기 전에는
+    사유가 못 된다 (owner 2026-06-16: self-closing identity 는 opening 을 검증하지 못한다 —
+    2026.1Q 5사 기시 misparse 를 '재작성'으로 오판한 사건). 정정은 면제셋이 아니라 **데이터
+    수정**으로 한다(후속 분기 공시의 '전기(비교)' 테이블에서 재작성값 추출).
+
+    표시분기 스코프(`_in_scope`)를 걸지 않는다: `_DISPLAY_QUARTERS` 는 2026.2Q 를 아직
+    포함하지 않는데 사이트는 그 분기를 그린다 — 스코프를 걸면 최신 분기가 검사 사각이 된다.
+    """
+    by_co: dict[str, dict[str, dict]] = {}
+    for (co, q), m in env.wf.items():
+        by_co.setdefault(co, {})[q] = m
+    for co, qmap in sorted(by_co.items()):
+        for q in sorted(qmap):
+            try:
+                fy = int(str(q)[:4])
+            except ValueError:
+                continue
+            prev_close = (qmap.get(f"{fy - 1}.4Q") or {}).get("기말CSM")
+            opening = (qmap.get(q) or {}).get("기초CSM")
+            if prev_close is None or opening is None:
+                continue
+            gap = opening - prev_close
+            if abs(gap) > max(CSM_CONT_TOL_REL * abs(prev_close), CSM_CONT_TOL_ABS):
+                res.add(check="domain", severity="RED", master="CSM_waterfall", company=co,
+                        quarter=q, rule="CSM_CONTINUITY_FY_BOUNDARY",
+                        message=f"기초 CSM {opening:,.0f} != {fy - 1}.4Q 기말 {prev_close:,.0f} "
+                                f"[Δ{gap:+,.0f}] — 기시≠직전기말은 면제 대상이 아니다. "
+                                f"raw 대조로 재작성 근거를 확정하거나 마스터를 정정할 것")
+
+
 def run_gate(env: Env) -> GateResult:
     res = GateResult()
     check_artifact_readable(res, env)
+    check_ifrs17_bs(res, env)
+    check_dividend(res, env)
+    check_csm_continuity(res, env)
     check_census(res, env)
     check_as_of(res, env)
     check_cross_source(res, env)

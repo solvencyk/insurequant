@@ -29,12 +29,20 @@
 | 게이트 | 파일 | 언제 도나 | 무엇을 막나 |
 |---|---|---|---|
 | K-ICS 게이트 | `scripts/validate_kics_disclosure.py` | CLAUDE.md 규정상 수동 실행 | 자기 exit code(2)만. **push를 자동으로 막지 않는다** |
+| 마스터테이블 게이트 | `scripts/validate_master_tables.py` | 수동 실행(**`--no-build` 필수**) | 자기 exit code(2)만. **push를 자동으로 막지 않는다** |
 | **push 게이트** | `scripts/validate_data_contract.py` (← `prepush_check.py`) | publishing이 push 직전 | **실제 push 차단.** display 7분기 scope |
 
-⚠️ **`prepush_check.py`는 `validate_kics_disclosure.py`를 호출하지 않는다.**
-→ K-ICS 게이트에만 배선한 룰은 **push를 못 막는다.** 3번 칸에 "K-ICS 게이트에 배선"이라고만 적으면
-그건 절반만 굳은 것이다. 반드시 push 게이트 배선 여부를 따로 적을 것. (이 사실 자체가 PM-2/PM-3의
-미배선 잔여 = UH-1.)
+⚠️ **`prepush_check.py`는 `validate_data_contract.py` 하나만 호출한다.**
+→ K-ICS 게이트 **또는 마스터테이블 게이트에만** 배선한 룰은 **push를 못 막는다.** 3번 칸에
+"K-ICS 게이트에 배선"이라고만 적으면 그건 절반만 굳은 것이다. 반드시 push 게이트 배선 여부를
+따로 적을 것. (이 사실 자체가 PM-2/PM-3의 미배선 잔여 = UH-1.)
+
+> **실제 발화 사례 (2026-08-15)**: CSM 연속성(`CONT`)이 `validate_master_tables.py` 에만 있어서,
+> 파서가 5사 기초를 override 해 FY 경계를 새로 깬 뒤에도 push 경로는 초록이었다. 게다가 그
+> 게이트의 골든이 `1cont → 6cont` 로 재생성되며 위반을 흡수해 **테스트까지 통과**했다.
+> owner 지시로 `validate_data_contract.py` 에 `CSM_CONTINUITY_FY_BOUNDARY` 신설(RED, 면제
+> 없음, 분기목록 하드코딩 대신 FY 도출 → 2026.2Q 자동 편입). **골든 `--update` 는 의도된 변경
+> 기록용이지 새 위반 흡수용이 아니다** — 카운트가 늘었는데 초록이면 그건 굳은 게 아니라 덮인 것.
 
 ## 파일 규칙
 

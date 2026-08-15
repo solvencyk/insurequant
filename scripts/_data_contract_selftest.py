@@ -287,6 +287,101 @@ def f_transition_copy():
     return base_inject(kics_records=rows)
 
 
+def bs_rows(assets=1000.0, items=(1, 2, 3, 4)):
+    """17BS 마스터 1행 세트 — 자산 1000 = 부채 700 + 자본 300, AOCI 20."""
+    vals = {1: assets, 2: 700.0, 3: 300.0, 4: 20.0}
+    return [{"원보험사코드": "KR9001", "원수사명": "KR9001", "항목번호": i,
+             "공시분기": LATEST, "값": vals[i]} for i in items]
+
+
+def f_bs_identity():
+    """자산총계 != 부채총계 + 자본총계 (연결/별도 오선택·단위 오적용 지문)."""
+    return base_inject(ifrs17_bs=bs_rows(assets=1200.0), ifrs17_bs_published=True)
+
+
+def f_bs_census_missing():
+    """코어 항목 4(AOCI) 결측 — 행은 있는데 셀이 비었다."""
+    return base_inject(ifrs17_bs=bs_rows(items=(1, 2, 3)), ifrs17_bs_published=True)
+
+
+def f_bs_unpublished():
+    """같은 결함이라도 **아무 페이지도 fetch 하지 않는 마스터**면 push를 막지 않는다(YELLOW).
+    배포 keep-list에 오르는 순간 코드 수정 없이 RED로 승격되는 쪽이 위 두 케이스."""
+    return base_inject(ifrs17_bs=bs_rows(assets=1200.0))
+
+
+def wf_continuity(opening=500.0):
+    """CSM 워터폴 2개 분기 — 2025.4Q 기말 500, 2026.1Q 기초는 인자대로.
+    같으면 clean, 다르면 FY 경계 연속성 위반."""
+    return {
+        ("KR9001", "2025.4Q"): {"기초CSM": 400.0, "기말CSM": 500.0},
+        ("KR9001", "2026.1Q"): {"기초CSM": opening, "기말CSM": 560.0},
+    }
+
+
+def f_csm_continuity_break():
+    """2026.1Q 기초가 2025.4Q 기말과 어긋남 — 기시 misparse / 미확정 소급재작성."""
+    return base_inject(wf=wf_continuity(opening=560.0))
+
+
+def div_rows(total=1000.0, payout=50.0, dps=None, stock_total=0.0):
+    """배당 마스터 1분기 세트 — 순이익 2000, 현금배당총액 1000 → 배당성향 50%."""
+    rows = [{"원보험사코드": "KR9001", "원수사명": "KR9001", "공시분기": LATEST,
+             "종류주": "-", "항목번호": i, "값": v}
+            for i, v in ((2, 2000.0), (5, total), (6, stock_total), (7, payout))]
+    if dps is not None:
+        rows.append({"원보험사코드": "KR9001", "원수사명": "KR9001", "공시분기": LATEST,
+                     "종류주": "보통주", "항목번호": 8, "값": dps})
+    return rows
+
+
+def div_census(status="000"):
+    """수집 census — 기대 그리드의 원천(회사 목록이 아니라 fetch status 가 정한다).
+    reprt 는 LATEST 의 분기와 반드시 같아야 한다 — 어긋나면 다른 분기를 기대하게 되어
+    모든 배당 케이스에 DIV_CENSUS_MISSING 오탐이 섞인다(실제로 겪음)."""
+    reprt = {"1Q": "11013", "2Q": "11012", "3Q": "11014", "4Q": "11011"}[LATEST[5:]]
+    return {"cells": [{"kr": "KR9001", "corp_code": "00000001",
+                       "year": LATEST[:4], "reprt": reprt, "status": status}]}
+
+
+def f_div_payout():
+    """배당성향 공시값이 배당총액/당기순이익과 안 맞음 (연결/별도 오선택 지문)."""
+    return base_inject(dividend=div_rows(payout=35.0), dividend_published=True,
+                       dividend_fetch_census=div_census())
+
+
+def f_div_census_missing():
+    """수집 census 는 필링 존재(000)라는데 그 (회사,분기) 행이 마스터에 없음."""
+    other = [dict(r, 원보험사코드="KR9002", 원수사명="KR9002") for r in div_rows()]
+    return base_inject(dividend=other, dividend_published=True,
+                       dividend_fetch_census=div_census())
+
+
+def f_div_zero_contradiction():
+    """현금배당금총액=0 인데 주당현금배당금은 양수 — '-'를 0으로 뭉갠 0값 맹점."""
+    return base_inject(dividend=div_rows(total=0.0, payout=0.0, dps=700.0),
+                       dividend_published=True, dividend_fetch_census=div_census())
+
+
+def f_div_census_source_missing():
+    """수집 census 파일이 사라지면 결측 검사축이 통째로 없어진다 — 조용히 통과 금지."""
+    return base_inject(dividend=div_rows(), dividend_published=True,
+                       dividend_fetch_census=None)
+
+
+def f_div_unpublished():
+    """같은 결함이라도 아직 아무 페이지도 fetch 하지 않으면 push 를 막지 않는다(YELLOW)."""
+    return base_inject(dividend=div_rows(payout=35.0), dividend_fetch_census=div_census())
+
+
+def f_pl_ytd_collapse():
+    """같은 FY 안에서 누계가 non-zero -> 정확히 0.0 (재빌드 결손 지문)."""
+    return base_inject(pl={
+        ("KR9001", "2025.3Q"): {"기타사업비용": 35264.2},
+        ("KR9001", "2025.4Q"): {"기타사업비용": 0.0},
+    })
+
+
 CASES = [
     # (이름, fixture, 기대 rule 집합, 그 외 RED 허용 안 함)
     ("A  clean baseline (오탐 0)",              base_inject,               set()),
@@ -319,6 +414,26 @@ CASES = [
      set(), {"CAPSEC_COVERAGE_DROP_VS_PRIOR"}),
     ("H5 CAPSEC_AMOUNT_MISMATCH (YELLOW 관찰기)", f_capsec_amount_mismatch,
      set(), {"CAPSEC_AMOUNT_MISMATCH"}),
+    # 17BS(IFRS17_BS.json) — 이 마스터에 남은 룰은 이 둘뿐이라 죽으면 검사축이 통째로 사라진다.
+    ("I1 BS_IDENTITY (자산 != 부채+자본)",        f_bs_identity,             {"BS_IDENTITY"}),
+    ("I2 BS_CENSUS_MISSING_ITEM (코어 결측)",     f_bs_census_missing,       {"BS_CENSUS_MISSING_ITEM"}),
+    ("I3 미배포 마스터는 push 차단 안 함(YELLOW)", f_bs_unpublished,
+     set(), {"BS_IDENTITY"}),
+    # 배당(dividend.json) — 신규 마스터 3룰 + 검사축 소실 + 미배포 강등(owner 20260814T1625Z).
+    ("J1 DIV_PAYOUT_IDENTITY (배당성향 불일치)",   f_div_payout,              {"DIV_PAYOUT_IDENTITY"}),
+    ("J2 DIV_CENSUS_MISSING (000인데 행 없음)",   f_div_census_missing,      {"DIV_CENSUS_MISSING"}),
+    ("J3 DIV_ZERO_CONTRADICTION (0값 맹점)",      f_div_zero_contradiction,  {"DIV_ZERO_CONTRADICTION"}),
+    ("J4 DIV_CENSUS_SOURCE_MISSING (검사축 소실)", f_div_census_source_missing,
+     {"DIV_CENSUS_SOURCE_MISSING"}),
+    ("J5 미배포 배당 마스터는 YELLOW",              f_div_unpublished,
+     set(), {"DIV_PAYOUT_IDENTITY"}),
+    # CSM 연속성 — owner 2026-08-15 지시로 validate_master_tables 에서 push 차단 게이트로 승격.
+    # clean baseline(wf={})은 위 A 케이스가 이미 오탐 0으로 지킨다.
+    ("K1 CSM_CONTINUITY_FY_BOUNDARY",           f_csm_continuity_break,
+     {"CSM_CONTINUITY_FY_BOUNDARY"}),
+    # PL 누계 붕괴 — 0 은 등식을 깨지 않아 폐쇄식·브리지가 조용히 통과시킨다. 신설 관찰기 YELLOW.
+    ("L1 PL_YTD_COLLAPSE_TO_ZERO (YELLOW 관찰기)", f_pl_ytd_collapse,
+     set(), {"PL_YTD_COLLAPSE_TO_ZERO"}),
 ]
 
 
