@@ -1061,6 +1061,21 @@
           window.location.href = url;
         }
       });
+      // owner 20260818 피드백 재확인: min/max를 명시로 고정한 뒤로 "범례에서 추정(연1회 공시)
+      // 체크 해제하면 왼쪽이 자동으로 좁혀지던" 동작이 죽었다 — xAxis.min/max를 setOption(notMerge)
+      // 로 고정하면 ECharts 기본 auto-range(선택 해제된 시리즈를 축 계산에서 제외하는 것)가 더는
+      // 안 먹는다. 범례 토글 시 현재 보이는 데이터만으로 직접 재계산해 복원.
+      bubbleChart.off('legendselectchanged');
+      bubbleChart.on('legendselectchanged', (params) => {
+        const sel = params.selected || {};
+        const visible = rows.filter(r => {
+          const name = r.estimated ? ESTIMATED_NAME : (r.sector === 'Life' ? '생명보험' : '손해보험');
+          return sel[name] !== false;
+        });
+        const xv2 = visible.map(r => r.nbCsm).filter(v => Number.isFinite(v) && v > 0);
+        if (!xv2.length) return;   // 전부 꺼졌으면 축 유지(빈 범위 방지)
+        bubbleChart.setOption({ xAxis: { min: Math.min(...xv2) / xPad, max: Math.max(...xv2) * xPad } });
+      });
       el.style.cursor = 'pointer';
     }
 
