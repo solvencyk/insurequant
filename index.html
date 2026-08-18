@@ -972,6 +972,14 @@
       }
 
       if (!bubbleChart) bubbleChart = echarts.init(el);
+      // owner 20260818 피드백: 로그축 자동범위가 데이터 최댓값을 "다음 10의 거듭제곱"(현재 ~1.7조인데
+      // 10조)으로 반올림해버려 버블이 왼쪽에 다닥다닥 몰리고 오른쪽 절반이 통째로 빈다. 실데이터
+      // 범위(현재 필터된 rows 기준 — 업권 필터 시 그 부분집합으로도 같이 좁혀짐)에 로그 패딩만
+      // 줘서 그때그때 맞춘다. 하드코딩 금지, 매 렌더마다 재계산.
+      const xVals = rows.map(r => r.nbCsm).filter(v => Number.isFinite(v) && v > 0);
+      const xPad = Math.pow(10, 0.2);   // 로그축 여백 ×1.58 (양옆 대칭)
+      const xAxisMin = Math.min(...xVals) / xPad;
+      const xAxisMax = Math.max(...xVals) * xPad;
       const maxClosing = Math.max(...rows.map(r => r.closing || 0), 1);
       const SECTOR_COLOR = { 'Life': '#0d6efd', 'Non-Life': '#16a34a' };
       const sectors = ['Life', 'Non-Life'].filter(s => sectorFilter === 'ALL' || sectorFilter === s);
@@ -1002,6 +1010,7 @@
         },
         xAxis: {
           type: 'log', logBase: 10, name: '신계약 CSM 규모 (억 · 로그축)', nameLocation: 'middle', nameGap: 34,
+          min: xAxisMin, max: xAxisMax,
           axisLabel: { formatter: v => v >= 10000 ? (v / 10000).toLocaleString('ko-KR') + '조' : Math.round(v).toLocaleString('ko-KR') + '억' },
           splitLine: { lineStyle: { type: 'dashed', color: '#eef0f2' } }
         },
