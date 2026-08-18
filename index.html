@@ -162,7 +162,7 @@
     </div>
     <div class="panel" style="margin-top:16px">
       <div class="section-title">IFRS17 — CSM Bubble Map</div>
-      <p class="section-desc">X: 신계약 CSM 규모 · Y: NB CSM 배수 (X·Y = 2026.1Q 연누계 기준) · 크기: 기말 CSM 잔액 (최신 분기, 현재 총 재원) · 회색(*)=연1회 공시사 추정치(직전 회기 연누계 ÷4, 배수는 이월)</p>
+      <p class="section-desc">X: 신계약 CSM 규모 · Y: NB CSM 배수 (X·Y는 2026.1Q 연누계 고정 — 배수 분모인 월납초회보험료가 2026.1Q까지만 수집됨) · 크기: 기말 CSM 잔액 (회사별 최신 공시 — 2026.1Q·2026.2Q 혼재) · 회색(*)=연1회 공시사 추정치(직전 회기 연누계 ÷4, 배수는 이월)</p>
       <div class="controls" style="margin-bottom:10px">
         <label>업권:
           <select id="bubble-sector" class="select">
@@ -216,6 +216,27 @@
     let nbRowsRaw = null, wfRowsRaw = null; // M3: 모바일 버블 리스트용 원본 마스터 행
     let allData = [];
     let GROUPED = {};
+    // D-2 20260818(owner): NB 배수 분모(월납초회) 재수집이 보류돼 2026.1Q에 고정 — owner 지시로 값 자체는
+    // 유지, 대신 "2026.1Q" 리터럴이 TARGET/캡션/툴팁/커버리지표 5곳에 복붙돼 있던 걸 여기 하나로 모음.
+    const NB_TARGET_Q = '2026.1Q';
+    // 푸터 "최신 공시 분기" — 이 페이지가 쓰는 두 마스터(K-ICS 트리맵 · CSM 버블) 중 더 최신 쪽으로
+    // 데이터에서 도출(하드코딩 금지). 둘은 독립 로드라 각자 끝나는 대로 갱신.
+    let _footerKicsQ = null, _footerWfQ = null;
+    function globalMaxQuarter(rows) {
+      let max = null;
+      for (const r of rows || []) {
+        const qq = r['공시분기']; if (!qq) continue;
+        if (max == null || qkey(qq) > qkey(max)) max = qq;
+      }
+      return max;
+    }
+    function refreshFooterQuarter() {
+      const cands = [_footerKicsQ, _footerWfQ].filter(Boolean);
+      if (!cands.length) return;
+      const best = cands.sort((a, b) => qkey(b) - qkey(a))[0];
+      const el = document.getElementById('footerQ');
+      if (el) el.textContent = best;
+    }
     
     // 숫자 값 추출 함수 (쉼표 제거)
     function extractNumericValue(value) {
@@ -438,6 +459,7 @@
             throw new Error('kics_disclosure.json must be a JSON array');
           }
           allData = data;
+          _footerKicsQ = getLatestQuarter(data); refreshFooterQuarter();
           GROUPED = processJsonData(data);
           const total = (GROUPED.Life?.length || 0) + (GROUPED['Non-Life']?.length || 0);
           if (total === 0) {
@@ -933,7 +955,11 @@
 
       if (metaEl) {
         const estCount = rows.filter(r => r.estimated).length;
-        metaEl.textContent = `표시 ${rows.length}社 (실공시 ${rows.length - estCount} · 추정 ${estCount}) · 기준 2026.1Q · 크기=최신 기말 잔액`;
+        // D-2 20260818: "최신 분기"는 거짓은 아니었지만 X·Y(2026.1Q 고정)와 크기(회사별 최신)가 다른
+        // 기준이란 게 안 보였다 — 크기 쪽 실제 범위(2026.1Q~회사별 최신)를 데이터에서 뽑아 명시.
+        const maxClosingK = Math.max(0, ...rows.map(r => r.closingK || 0));
+        const maxClosingQ = qlabel(maxClosingK) || NB_TARGET_Q;
+        metaEl.textContent = `표시 ${rows.length}社 (실공시 ${rows.length - estCount} · 추정 ${estCount}) · X·Y 기준 ${NB_TARGET_Q} · 크기=회사별 최신 기말(${NB_TARGET_Q}~${maxClosingQ} 혼재)`;
       }
       if (!rows.length) {
         el.innerHTML = '<div style="padding:24px;color:var(--muted);font-size:13px">NB 배수 데이터 없음 — data/_derived/nb_csm_multiple.json 확인</div>';
@@ -962,7 +988,7 @@
               lines.push(`신계약 CSM 규모: ${Math.round(d.nbCsm).toLocaleString()}억 (${d.srcQ} 연누계 ÷ 4 추정)`);
               lines.push(`NB CSM 배수: ${d.multiple.toFixed(2)}× (${d.srcQ} 연누계 이월)`);
               lines.push(`기말 CSM: ${d.closing != null ? Math.round(d.closing).toLocaleString() + '억' : '—'} (${cq})`);
-              lines.push('⚠ 2026.1Q 미공시 — 연1회 공시사');
+              lines.push(`⚠ ${NB_TARGET_Q} 미공시 — 연1회 공시사`);
             } else {
               lines.push(`신계약 CSM 규모: ${Math.round(d.nbCsm).toLocaleString()}억 (${d.period})`);
               lines.push(`NB CSM 배수: ${d.multiple.toFixed(2)}× (${d.period})`);
@@ -1048,7 +1074,7 @@
         (nbByCode[code] || (nbByCode[code] = {}))[qkey(r['공시분기'])] = r;
       }
       const out = [];
-      const TARGET = qkey('2026.1Q');                      // 2026.1Q(최신) 고정
+      const TARGET = qkey(NB_TARGET_Q);                     // owner 고정(D-2 20260818, NB_TARGET_Q 참조)
       for (const code in wfClosing) {                       // census = CSM_waterfall 기말(6) 보유 35사 전체
         let closing = null, closingK = null;               // 기말은 stock → 최신 분기 잔액
         const wc = wfClosing[code];
@@ -1056,7 +1082,7 @@
 
         const nbc = nbByCode[code];
         const target = nbc ? nbc[TARGET] : null;
-        let r = target, estimated = false, srcQ = '2026.1Q';
+        let r = target, estimated = false, srcQ = NB_TARGET_Q;
         if (!r || r['신계약CSM배수_연누계'] == null || r['신계약CSM_연누계'] == null) {
           let fb = null;                                    // Group A fallback: 배수·CSM 둘 다 non-null인 가장 최신 회기
           if (nbc) {
@@ -1098,7 +1124,7 @@
     }
 
     // 보조표 (전 35사): buildBubbleData()가 만든 census를 그대로 재사용 — 추가 fetch/인라인 없음.
-    const TARGET_QKEY = qkey('2026.1Q');
+    const TARGET_QKEY = qkey(NB_TARGET_Q);
     function qlabel(k) { return k ? (Math.floor(k / 10) + '.' + (k % 10) + 'Q') : null; }
     function renderCsmCoverageTable() {
       const tbody = document.getElementById('csm-coverage-tbody');
@@ -1261,6 +1287,7 @@
       ]).then(([nbRows, wfRows]) => {
         nbRowsRaw = nbRows;
         wfRowsRaw = wfRows;
+        _footerWfQ = globalMaxQuarter(wfRows); refreshFooterQuarter();
         bubbleRows = buildBubbleData(nbRows, wfRows);
         renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
         renderBubbleList();
@@ -1303,7 +1330,7 @@
     loadBubble();
   </script>
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
-    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (2026.1Q)<br/>
+    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">2026.1Q</span>)<br/>
     본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
   </footer>
 <script>

@@ -79,6 +79,10 @@
     <div class="panel">
       <div class="controls">
         <label>보험사: <select id="company" class="select"><option value="">보험사 선택</option></select></label>
+        <label>기간: <select id="period" class="select">
+          <option value="quarter" selected>분기</option>
+          <option value="year">연도</option>
+        </select></label>
       </div>
       <div id="emptyHint" class="coming-soon"><h3>보험사를 선택해 주세요</h3></div>
       <div id="dashHost" style="display:none">
@@ -90,7 +94,7 @@
         </div>
         <div class="small-muted" id="divKpiCap" style="margin-top:8px"></div>
         <div style="margin-top:20px">
-          <h3>분기별 배당 지표</h3>
+          <h3 id="divTableTitle">분기별 배당 지표</h3>
           <div class="small-muted">단위 표시된 대로(백만원/원/%) · 결측(그 분기 공시 자체 없음)은 "정보없음", 무배당은 0으로 구분 표기</div>
           <div class="table-wrap" id="divTable"></div>
         </div>
@@ -102,7 +106,7 @@
     </div>
   </div>
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
-    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (2026.1Q)<br/>
+    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">2026.1Q</span>)<br/>
     본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
   </footer>
 <script>
@@ -115,9 +119,10 @@
 
   const ix = new Map();       // code -> quarter -> [{num,name,cls,value}]
   const codeToName = {};
+  let GLOBAL_QUARTERS = [];   // D-5 20260818: 전사 공시분기 전체(desc) — boot()에서 1회 계산, 조회기간 선택의 기준
 
   const ITEM_DEFS = [
-    { num:1, label:"주당액면가액", unit:"원", dp:0 },
+    // D-5 20260818(owner): 항목1 주당액면가액 제거("필요없으니까 빼고")
     { num:2, label:"당기순이익(연결)", unit:"백만원", dp:0 },
     { num:3, label:"당기순이익(별도)", unit:"백만원", dp:0 },
     { num:4, label:"주당순이익(연결)", unit:"원", dp:0 },
@@ -154,6 +159,31 @@
   function qCmpAsc(a,b){ const [ay,aq]=qParse(a),[by,bq]=qParse(b); return ay!==by?ay-by:aq-bq; }
 
   function quartersOf(code){ const m=ix.get(code); return m ? Array.from(m.keys()).sort(qCmpAsc) : []; }
+
+  // D-5 20260818(owner): 조회기간 선택 — K-ICS.html 패턴(분기/연도 토글)을 따르되, 컬럼은 회사별이 아니라
+  // 전사 공통 윈도(GLOBAL_QUARTERS)로 고정한다. 그래야 "이 회사는 이 분기 미공시"가 헤더는 그대로 두고
+  // 해당 칸만 정보없음으로 정확히 읽힌다 — 회사별 윈도라면 컬럼 자체가 달라져 비교가 안 됨. 하드코딩 금지,
+  // 전부 데이터(GLOBAL_QUARTERS)에서 도출.
+  function globalRecentQuarters(n){
+    return GLOBAL_QUARTERS.slice(0, n).slice().reverse();   // desc→최근 n개→asc
+  }
+  function globalYearPeriods(){
+    if (!GLOBAL_QUARTERS.length) return [];
+    const set = new Set(GLOBAL_QUARTERS);
+    const latest = GLOBAL_QUARTERS[0];
+    const [ly, lq] = qParse(latest);
+    const out = [{ q:latest, label: lq===4 ? String(ly) : (latest+"누계") }];   // 최신 회기가 안 닫혔으면(4Q 아님) 그대로 노출
+    for (let k=1; k<4; k++){
+      const y = ly-k, yq = y+".4Q";
+      if (set.has(yq)) out.push({ q:yq, label:String(y) });
+    }
+    return out.sort((a,b)=> qCmpAsc(a.q,b.q));
+  }
+  function selectedPeriods(){
+    const mode = (document.getElementById("period")||{}).value || "quarter";
+    return mode==="year" ? globalYearPeriods() : globalRecentQuarters(5).map(q=>({q,label:q}));
+  }
+
   function rowsOf(code,qtr){ const m=ix.get(code); const arr=m&&m.get(qtr); return arr||[]; }
   function val(code,qtr,num,cls){
     const c = cls==null ? "-" : cls;
@@ -180,7 +210,7 @@
     const qtr = latestKpiQuarter(code);
     const capEl = document.getElementById("divKpiCap");
     if (!qtr){ if(capEl) capEl.textContent=""; return; }
-    if (capEl) capEl.textContent = "기준 "+qtr+" (사업/반기/분기보고서 중 최신 결산)";
+    if (capEl) capEl.textContent = "기준 "+qtr+" (사업/반기/분기보고서 중 최신 결산 — 아래 조회기간 선택과 무관하게 항상 최신 고정, D-5 20260818 owner 결정)";
     const cls = classesOf(code)[0]; // 보통주가 있으면 그것, 없으면 첫 종류주
     const cash = val(code,qtr,5);
     const dps = cls ? val(code,qtr,8,cls) : null;
@@ -210,27 +240,30 @@
   function renderCompanyTable(code){
     const box = document.getElementById("divTable");
     box.innerHTML = "";
-    const qs = quartersOf(code);
-    if (!qs.length) return;
-    const headers = ["항목", ...qs];
-    const rows = ITEM_DEFS.map(def => [def.label+"("+def.unit+")", ...qs.map(qq=> fmtItem(def, val(code,qq,def.num)))]);
+    const titleEl = document.getElementById("divTableTitle");
+    const mode = (document.getElementById("period")||{}).value || "quarter";
+    if (titleEl) titleEl.textContent = mode==="year" ? "연도별 배당 지표" : "분기별 배당 지표";
+    const periods = selectedPeriods();
+    if (!periods.length) return;
+    const headers = ["항목", ...periods.map(p=>p.label)];
+    const rows = ITEM_DEFS.map(def => [def.label+"("+def.unit+")", ...periods.map(p=> fmtItem(def, val(code,p.q,def.num)))]);
     box.appendChild(buildTable(headers, rows));
   }
 
   function renderClassTables(code){
     const box = document.getElementById("divClassTables");
     box.innerHTML = "";
-    const qs = quartersOf(code);
+    const periods = selectedPeriods();
     const classes = classesOf(code);
-    if (!qs.length || !classes.length){
+    if (!periods.length || !classes.length){
       box.innerHTML = '<div class="small-muted">종류주별 세부(주당배당금 등) 공시 없음</div>';
       return;
     }
     classes.forEach(cls=>{
       const lab = document.createElement("div"); lab.className="div-class-label"; lab.textContent = cls;
       box.appendChild(lab);
-      const headers = ["항목", ...qs];
-      const rows = CLASS_ITEM_DEFS.map(def => [def.label+"("+def.unit+")", ...qs.map(qq=> fmtItem(def, val(code,qq,def.num,cls)))]);
+      const headers = ["항목", ...periods.map(p=>p.label)];
+      const rows = CLASS_ITEM_DEFS.map(def => [def.label+"("+def.unit+")", ...periods.map(p=> fmtItem(def, val(code,p.q,def.num,cls)))]);
       const wrap = document.createElement("div"); wrap.className="table-wrap";
       wrap.appendChild(buildTable(headers, rows));
       box.appendChild(wrap);
@@ -260,15 +293,20 @@
       if (r.ok) raw = await r.json();
     }catch(e){ console.warn(e); }
 
+    const qSet = new Set();
     for (const row of raw){
       const code=row["원보험사코드"], qtr=row["공시분기"], num=row["항목번호"];
       if (!code || !qtr || num==null) continue;
       if (!codeToName[code] && row["원수사명"]) codeToName[code]=row["원수사명"];
+      qSet.add(qtr);
       let byQ = ix.get(code); if(!byQ){ byQ=new Map(); ix.set(code,byQ); }
       let arr = byQ.get(qtr); if(!arr){ arr=[]; byQ.set(qtr,arr); }
       const v = Number(row["값"]);
       arr.push({ num, name:row["항목명"], cls: row["종류주"]||"-", value: Number.isFinite(v)?v:null });
     }
+    GLOBAL_QUARTERS = Array.from(qSet).sort(qCmpAsc).reverse();   // desc — [0]=전사 최신 공시분기
+    const footerQEl = document.getElementById("footerQ");
+    if (footerQEl && GLOBAL_QUARTERS.length) footerQEl.textContent = GLOBAL_QUARTERS[0];
 
     const codes = Object.keys(codeToName).sort();
     const sel = document.getElementById("company");
@@ -276,6 +314,8 @@
       const opt = document.createElement("option"); opt.value=code; opt.textContent=codeToName[code]; sel.appendChild(opt);
     }
     sel.addEventListener("change", onSelect);
+    const perSel = document.getElementById("period");
+    if (perSel) perSel.addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
     const covEl = document.getElementById("divCoverageLine");
     // DART alotMatter가 상장사만 다뤄 24개사 고정 상한 — kics_disclosure 전사(39사) 대비 나머지는
     // 이 공시 자체가 구조적으로 없음(결측 아님). 드롭다운도 그 24개사로만 구성(빈 화면 스텁을
