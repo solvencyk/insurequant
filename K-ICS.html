@@ -1087,7 +1087,7 @@
         }
       });
 
-      const baseline = row.baseline_2025_4Q || {};
+      const baseline = row.baseline || row.baseline_2025_4Q || {};
       const lastProj = row.projections[row.projections.length - 1];
       const fmtDrop = d => (d < 0 ? '△' : '+') + Math.abs(d).toFixed(1);
       const dropRatio = (baseline.ratio_post_pct != null && lastProj.ratio_pct != null)
