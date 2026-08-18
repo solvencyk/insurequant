@@ -162,7 +162,7 @@
     </div>
     <div class="panel" style="margin-top:16px">
       <div class="section-title">IFRS17 — CSM Bubble Map</div>
-      <p class="section-desc">X: 신계약 CSM 규모 · Y: NB CSM 배수 (X·Y는 2026.1Q 연누계 고정 — 배수 분모인 월납초회보험료가 2026.1Q까지만 수집됨) · 크기: 기말 CSM 잔액 (회사별 최신 공시 — 2026.1Q·2026.2Q 혼재) · 회색(*)=연1회 공시사 추정치(직전 회기 연누계 ÷4, 배수는 이월)</p>
+      <p class="section-desc">X: 신계약 CSM 규모 (CSM_waterfall 기준, 회사별 최신 공시 — 2026.1Q·2026.2Q 혼재) · Y: NB CSM 배수 (2026.1Q 연누계 고정 — 배수 분모인 월납초회보험료가 2026.1Q까지만 수집됨) · 크기: 기말 CSM 잔액 (회사별 최신 공시 — 2026.1Q·2026.2Q 혼재) · 회색(*)=연1회 공시사 추정치(직전 마감연도 연누계 ÷2, 배수는 이월)</p>
       <div class="controls" style="margin-bottom:10px">
         <label>업권:
           <select id="bubble-sector" class="select">
@@ -216,8 +216,11 @@
     let nbRowsRaw = null, wfRowsRaw = null; // M3: 모바일 버블 리스트용 원본 마스터 행
     let allData = [];
     let GROUPED = {};
-    // D-2 20260818(owner): NB 배수 분모(월납초회) 재수집이 보류돼 2026.1Q에 고정 — owner 지시로 값 자체는
-    // 유지, 대신 "2026.1Q" 리터럴이 TARGET/캡션/툴팁/커버리지표 5곳에 복붙돼 있던 걸 여기 하나로 모음.
+    // D-2 20260818(owner): NB 배수(Y축) 분모(월납초회)가 재수집 보류돼 2026.1Q에 고정 — owner 지시로
+    // 값 자체는 유지, 대신 "2026.1Q" 리터럴이 여러 곳에 복붙돼 있던 걸 여기 하나로 모음.
+    // D-2 후속(20260818T0210Z, owner): X축(신계약CSM)은 이 상수와 분리됐다 — CSM_waterfall
+    // 항목2(wfNbItem)가 소스라 이 배수 마스터보다 최신(2026.2Q)이라서다. NB_TARGET_Q는 이제 Y축
+    // (배수) 전용 — X축 기준은 buildBubbleData()가 wfNbItem에서 회사별 최신으로 자동 도출한다.
     const NB_TARGET_Q = '2026.1Q';
     // 푸터 "최신 공시 분기" — 이 페이지가 쓰는 두 마스터(K-ICS 트리맵 · CSM 버블) 중 더 최신 쪽으로
     // 데이터에서 도출(하드코딩 금지). 둘은 독립 로드라 각자 끝나는 대로 갱신.
@@ -955,11 +958,13 @@
 
       if (metaEl) {
         const estCount = rows.filter(r => r.estimated).length;
-        // D-2 20260818: "최신 분기"는 거짓은 아니었지만 X·Y(2026.1Q 고정)와 크기(회사별 최신)가 다른
-        // 기준이란 게 안 보였다 — 크기 쪽 실제 범위(2026.1Q~회사별 최신)를 데이터에서 뽑아 명시.
+        // D-2 후속(20260818T0210Z): X축도 회사별 최신으로 바뀌어 크기와 같은 성격이 됐다 — Y(배수)만
+        // 여전히 고정 타깃이라 셋을 따로 표기. 범위는 데이터에서 도출(하드코딩 금지).
         const maxClosingK = Math.max(0, ...rows.map(r => r.closingK || 0));
         const maxClosingQ = qlabel(maxClosingK) || NB_TARGET_Q;
-        metaEl.textContent = `표시 ${rows.length}社 (실공시 ${rows.length - estCount} · 추정 ${estCount}) · X·Y 기준 ${NB_TARGET_Q} · 크기=회사별 최신 기말(${NB_TARGET_Q}~${maxClosingQ} 혼재)`;
+        const maxXK = Math.max(0, ...rows.map(r => qkey(r.srcQ)));
+        const maxXQ = qlabel(maxXK) || NB_TARGET_Q;
+        metaEl.textContent = `표시 ${rows.length}社 (실공시 ${rows.length - estCount} · 추정 ${estCount}) · X축(신계약CSM)=회사별 최신(~${maxXQ}) · Y축(배수)=${NB_TARGET_Q} 고정 · 크기(기말)=회사별 최신(~${maxClosingQ})`;
       }
       if (!rows.length) {
         el.innerHTML = '<div style="padding:24px;color:var(--muted);font-size:13px">NB 배수 데이터 없음 — data/_derived/nb_csm_multiple.json 확인</div>';
@@ -984,16 +989,14 @@
             const d = p.data.d;
             const cq = d.closingK ? (Math.floor(d.closingK/10)+'.'+(d.closingK%10)+'Q') : '—';
             const lines = [`<b>${d.name}</b> · ${d.sector === 'Life' ? '생명' : '손해'}`];
-            if (d.estimated) {
-              lines.push(`신계약 CSM 규모: ${Math.round(d.nbCsm).toLocaleString()}억 (${d.srcQ} 연누계 ÷ 4 추정)`);
-              lines.push(`NB CSM 배수: ${d.multiple.toFixed(2)}× (${d.srcQ} 연누계 이월)`);
-              lines.push(`기말 CSM: ${d.closing != null ? Math.round(d.closing).toLocaleString() + '억' : '—'} (${cq})`);
-              lines.push(`⚠ ${NB_TARGET_Q} 미공시 — 연1회 공시사`);
-            } else {
-              lines.push(`신계약 CSM 규모: ${Math.round(d.nbCsm).toLocaleString()}억 (${d.period})`);
-              lines.push(`NB CSM 배수: ${d.multiple.toFixed(2)}× (${d.period})`);
-              lines.push(`기말 CSM: ${d.closing != null ? Math.round(d.closing).toLocaleString() + '억' : '—'} (${cq})`);
-            }
+            // D-2 후속(20260818T0210Z): X(신계약CSM)와 Y(배수)의 기준 분기가 서로 달라질 수 있어
+            // 각 줄이 자기 분기를 직접 표기 — 더는 하나의 if/else로 묶지 않는다.
+            const xNote = d.estimated ? `${d.srcQ} 연누계 ÷2 추정` : `${d.srcQ} 연누계`;
+            lines.push(`신계약 CSM 규모: ${Math.round(d.nbCsm).toLocaleString()}억 (${xNote})`);
+            const yNote = d.multEstimated ? `${d.multPeriod} 연누계 이월` : `${d.multPeriod} 연누계`;
+            lines.push(`NB CSM 배수: ${d.multiple.toFixed(2)}× (${yNote})`);
+            lines.push(`기말 CSM: ${d.closing != null ? Math.round(d.closing).toLocaleString() + '억' : '—'} (${cq})`);
+            if (d.multEstimated) lines.push(`⚠ ${NB_TARGET_Q} 미공시 — 연1회 공시사(배수)`);
             return lines.join('<br/>');
           }
         },
@@ -1074,57 +1077,66 @@
         (nbByCode[code] || (nbByCode[code] = {}))[qkey(r['공시분기'])] = r;
       }
       const out = [];
-      const TARGET = qkey(NB_TARGET_Q);                     // owner 고정(D-2 20260818, NB_TARGET_Q 참조)
-      for (const code in wfClosing) {                       // census = CSM_waterfall 기말(6) 보유 35사 전체
+      const MULT_TARGET = qkey(NB_TARGET_Q);                // Y축(배수) 고정 타깃 — 변경 없음
+
+      // D-2 후속(20260818T0210Z, owner): X축은 더 이상 배수와 묶이지 않는다. wfNbItem(CSM_waterfall
+      // 항목2)에서 "회사별 최신"을 쓴다 — 크기(closing/closingK)와 같은 패턴, 고정 리터럴 없이 매
+      // 분기 자동 갱신. 전사 최신(xGlobalMaxK)과 다른 회사만 "추정"(연1회 공시사가 자기 최근
+      // 마감연도 값을 대신 쓰는 것) 취급.
+      let xGlobalMaxK = 0;
+      for (const code in wfNbItem) {
+        for (const k in wfNbItem[code]) { const kk = Number(k); if (kk > xGlobalMaxK) xGlobalMaxK = kk; }
+      }
+
+      for (const code in wfClosing) {                       // census = CSM_waterfall 기말(6) 보유 전사
         let closing = null, closingK = null;               // 기말은 stock → 최신 분기 잔액
         const wc = wfClosing[code];
         { const ks = Object.keys(wc).map(Number).sort((a, b) => b - a); closingK = ks[0]; closing = wc[closingK]; }
 
+        // X축: 회사별 CSM_waterfall 최신 신계약CSM(항목2).
+        const wn = wfNbItem[code];
+        let nbCsmRaw = null, xSrcQ = null, xEstimated = false;
+        if (wn) {
+          const ks = Object.keys(wn).map(Number).sort((a, b) => b - a);
+          if (ks.length) {
+            const kBest = ks[0];
+            nbCsmRaw = wn[kBest].v; xSrcQ = wn[kBest].q;
+            xEstimated = kBest !== xGlobalMaxK;             // 전사 최신 분기가 아니면 직전 마감연도 값 대용
+          }
+        }
+        // ⚠ 스케일(owner 실측): 전사 최신이 반기누계(2026.2Q)라 연간누계(4Q 마감) 대용값은 ÷4가 아니라
+        // ÷2 — 연 12개월분을 반기(6개월) 스케일로 맞춰야 정상 비교가 된다.
+        const nbCsm = nbCsmRaw == null ? null : (xEstimated ? nbCsmRaw / 2 : nbCsmRaw);
+
+        // Y축(배수): 기존 로직 그대로, NB_CSM_multiple.json에서만 — 변경 없음.
         const nbc = nbByCode[code];
-        const target = nbc ? nbc[TARGET] : null;
-        let r = target, estimated = false, srcQ = NB_TARGET_Q;
-        if (!r || r['신계약CSM배수_연누계'] == null || r['신계약CSM_연누계'] == null) {
-          let fb = null;                                    // Group A fallback: 배수·CSM 둘 다 non-null인 가장 최신 회기
+        const multRow = nbc ? nbc[MULT_TARGET] : null;
+        let mr = multRow, multEstimated = false, multPeriod = NB_TARGET_Q;
+        if (!mr || mr['신계약CSM배수_연누계'] == null) {
+          let fb = null;
           if (nbc) {
             const ks = Object.keys(nbc).map(Number).sort((a, b) => b - a);
-            for (const k of ks) { const cand = nbc[k]; if (cand['신계약CSM배수_연누계'] != null && cand['신계약CSM_연누계'] != null) { fb = cand; break; } }
+            for (const k of ks) { const cand = nbc[k]; if (cand['신계약CSM배수_연누계'] != null) { fb = cand; break; } }
           }
-          if (fb) { r = fb; estimated = true; srcQ = fb['공시분기']; }
+          if (fb) { mr = fb; multEstimated = true; multPeriod = fb['공시분기']; }
         }
+        const multiple = mr ? mr['신계약CSM배수_연누계'] : null;
 
-        if (r && r['신계약CSM배수_연누계'] != null && r['신계약CSM_연누계'] != null) {
-          out.push({
-            name: r['원수사명'], code, sector: r['생손보여부'] === '생명보험' ? 'Life' : 'Non-Life',
-            period: estimated ? srcQ : '2026.1Q', srcQ,
-            nbCsmRaw: r['신계약CSM_연누계'],
-            nbCsm: estimated ? r['신계약CSM_연누계'] / 4 : r['신계약CSM_연누계'],   // ÷4는 chart X축(분기 비교)용 — 배수는 이월(스케일 불변)
-            multiple: r['신계약CSM배수_연누계'],
-            closing, closingK, estimated
-          });
-          continue;
-        }
-
-        // Group B: 배수 없음 — 신계약 CSM 원값만 확보(target 우선, 없으면 NB 최신행, 그것도 없으면 워터폴 항목2).
         const meta = wfMeta[code] || {};
-        let nbCsmRaw = null, srcQb = null;
-        const latestNb = target || (nbc ? nbc[Math.max(...Object.keys(nbc).map(Number))] : null);
-        if (latestNb && latestNb['신계약CSM_연누계'] != null) { nbCsmRaw = latestNb['신계약CSM_연누계']; srcQb = latestNb['공시분기']; }
-        else if (wfNbItem[code]) {
-          const ks = Object.keys(wfNbItem[code]).map(Number).sort((a, b) => b - a);
-          if (ks.length) { nbCsmRaw = wfNbItem[code][ks[0]].v; srcQb = wfNbItem[code][ks[0]].q; }
-        }
         out.push({
-          name: meta.name, code, sector: meta.sector,
-          period: srcQb, srcQ: srcQb,
-          nbCsmRaw, nbCsm: null, multiple: null,
-          closing, closingK, estimated: false
+          name: meta.name || (mr && mr['원수사명']),
+          code,
+          sector: meta.sector || (mr && (mr['생손보여부'] === '생명보험' ? 'Life' : 'Non-Life')),
+          period: xSrcQ, srcQ: xSrcQ,           // X축(신계약CSM) 기준 분기 — 캡션/커버리지표가 참조
+          multPeriod, multEstimated,            // Y축(배수) 기준 분기/추정여부 — X와 분리 표기용
+          nbCsmRaw, nbCsm, multiple,
+          closing, closingK, estimated: xEstimated,
         });
       }
       return out;
     }
 
     // 보조표 (전 35사): buildBubbleData()가 만든 census를 그대로 재사용 — 추가 fetch/인라인 없음.
-    const TARGET_QKEY = qkey(NB_TARGET_Q);
     function qlabel(k) { return k ? (Math.floor(k / 10) + '.' + (k % 10) + 'Q') : null; }
     function renderCsmCoverageTable() {
       const tbody = document.getElementById('csm-coverage-tbody');
@@ -1139,9 +1151,11 @@
       if (countEl) countEl.textContent = rows.length;                   // census 크기는 CSM_waterfall 신규 onboarding에 따라 변동 — 하드코딩 금지
       for (const r of rows) {
         let remark, note = '';
+        // D-2 후속 20260818T0210Z: 신계약CSM/기말 둘 다 "회사별 최신"이 된 뒤로는 Y축(배수) 타깃과
+        // 견주는 "직전값 이월" 분기가 더는 성립하지 않는다(더 최신인 회사까지 "이월"로 오표시하던
+        // 버그) — 제거. X축이 회사 자신의 최신이 아닐 때(연1회 공시사)만 "추정"으로 남긴다.
         if (r.multiple == null) { remark = '배수 미산출'; note = ' (월납초회보험료 0/미공시)'; }
-        else if (r.estimated) remark = '추정 (FY÷4)';
-        else if (r.closingK !== TARGET_QKEY) remark = '직전값 이월';
+        else if (r.estimated) remark = '추정 (신계약CSM ÷2)';
         else remark = '실공시';
 
         const tr = document.createElement('tr');
