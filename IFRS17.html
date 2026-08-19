@@ -163,6 +163,12 @@
             </div>
           </div>
         </div>
+        <div class="bs-table-section" style="margin-top:20px">
+          <div class="small-muted" id="bsTableCap"></div>
+          <div id="bsTableStub" class="stub-msg" style="display:none"></div>
+          <div class="table-wrap" id="bsTable"></div>
+          <div class="small-muted" style="margin-top:6px">* 법정준비금은 당분기 기적립액 + 적립(환입)예정금액 기준</div>
+        </div>
       </div>
     </div>
         <div class="panel" data-pane="wf">
@@ -1012,6 +1018,26 @@
       for (const qtr of eqQuartersOf(company)) if (eqTotal(company,qtr,"자산")!=null) return qtr;
       return null;
     }
+    // owner 20260818(원천 테이블): CSM의 wfHasQuarterly와 같은 개념을 BS 자체 커버리지로 — BS는
+    // 회사별 공시 유무가 CSM/PL과 다를 수 있어 별도 계산 필요.
+    function eqHasQuarterly(company){
+      return eqQuartersOf(company).some(p => { const [,qn]=wfParseQ(p); return qn!==4; });
+    }
+    // 선택된 여러 분기에 걸친 세부 항목명 유니온(항목번호로 정렬) — 분기마다 있다/없다가 갈릴 수
+    // 있어 열(분기)을 고정한 뒤 행(항목)을 합집합으로 잡아야 표가 안 흔들린다. 항목번호 하드코딩 없음.
+    function eqUnionNames(company, periods, section){
+      const seen = new Map();
+      for (const qtr of periods){
+        for (const r of eqRows(company, qtr)){
+          if (r.section===section && r.level===2 && !seen.has(r.name)) seen.set(r.name, r.num);
+        }
+      }
+      return Array.from(seen.entries()).sort((a,b)=>a[1]-b[1]).map(([name])=>name);
+    }
+    function eqValByName(company, qtr, section, name){
+      const row = eqRows(company, qtr).find(r=> r.section===section && r.level===2 && r.name===name);
+      return row ? row.value : null;
+    }
 
     // validation 20260814T1710Z: 레벨2는 owner 스코프상 "주요 계정 최대 15줄 하이라이트"라
     // 폐쇄검산 대상이 아님(scripts/build_ifrs17_bs.py 주석) — 세부합이 총계에 못 미치는 게 정상인데
@@ -1138,6 +1164,142 @@
       }
     }
 
+    // owner 20260818("그 밑에 원천 테이블도 시계열로"): T자 스냅샷 아래 다분기 표. 상단 기준
+    // 셀렉터(#wfPeriod)를 그대로 따라간다 — selectPeriods 재사용(분기=직전5분기, 연도=최신+직전
+    // 3개년말), 분기 미제공사는 CSM 패널과 동일한 "연도로 바꿔라" 안내. 행: 자산/부채/자본 총계
+    // (+토글)→세부(+토글)→자본 세부의 "이익잉여금"은 자체 +토글로 법정준비금(섹션=준비금) 한 겹
+    // 더 하위에 — 합계 계산엔 여전히 안 넣는다(D-4 원칙 그대로, 여긴 총계를 eqTotal에서 직접 읽어
+    // 합산 자체를 안 하므로 애초에 이중계상 위험이 없음).
+    function renderBsTable(host, company, mode){
+      const box = q(host, "#bsTable"), capEl = q(host, "#bsTableCap"), stubEl = q(host, "#bsTableStub");
+      if (!box) return;
+      box.innerHTML = "";
+      const ascAll = eqQuartersOf(company).slice().reverse();
+      if (!ascAll.length){ stub(stubEl, false); if (capEl) capEl.textContent = ""; return; } // renderBsSection이 이미 상위 stub 처리
+      const hasQ = eqHasQuarterly(company);
+      if (mode === "quarter" && !hasQ){
+        stub(stubEl, true, "분기 공시 미제공 보험사입니다. 상단 ‘기준’을 ‘연도’로 바꾸면 연 단위 표가 표시됩니다.");
+        if (capEl) capEl.textContent = "";
+        return;
+      }
+      stub(stubEl, false);
+      const periods = selectPeriods(ascAll, mode, hasQ, false);
+      if (!periods.length) return;
+
+      if (capEl) capEl.textContent = "표시 " + periods[0] + " ~ " + periods[periods.length-1] + " · " + (mode==="quarter"?"분기":"연도") + " 기준 · 단위 억원 · 음수 △";
+
+      const headers = ["구분", ...periods.map(p => { const [y,qn]=wfParseQ(p); return (mode!=="quarter" && qn===4) ? String(y) : p; })];
+
+      const SECTIONS = [["자산","asset"], ["부채","liab"], ["자본","equity"]];
+      const rowDefs = [];
+      for (const [secKey, secId] of SECTIONS){
+        rowDefs.push({
+          label: secKey, bold: true, isToggle: true, toggleGroup: "g_"+secId,
+          cells: periods.map(qtr => { const v = eqTotal(company, qtr, secKey); return v==null ? "—" : samo(v/100); }),
+        });
+        const names = eqUnionNames(company, periods, secKey);
+        let reAttached = false;
+        for (const name of names){
+          const isRE = secKey==="자본" && name==="이익잉여금";
+          rowDefs.push({
+            label: name, level: 1, group: "g_"+secId, hidden: true,
+            isToggle: isRE, toggleGroup: isRE ? "g_re_"+secId : null,
+            cells: periods.map(qtr => { const v = eqValByName(company, qtr, secKey, name); return v==null ? "—" : samo(v/100); }),
+          });
+          if (isRE){
+            reAttached = true;
+            for (const rn of eqUnionNames(company, periods, "준비금")){
+              rowDefs.push({
+                label: rn, level: 2, group: "g_re_"+secId, hidden: true,
+                cells: periods.map(qtr => { const v = eqValByName(company, qtr, "준비금", rn); return v==null ? "—" : samo(v/100); }),
+              });
+            }
+          }
+        }
+        // 이익잉여금 행 자체가 없는 회사(비상장 등)도 준비금 공시는 있을 수 있음 — 누락 방지로 자본
+        // 세부 끝에 평행 배치(T자 D-4의 앵커-없음 폴백과 동일 취지).
+        if (secKey==="자본" && !reAttached){
+          for (const rn of eqUnionNames(company, periods, "준비금")){
+            rowDefs.push({
+              label: rn, level: 1, group: "g_"+secId, hidden: true,
+              cells: periods.map(qtr => { const v = eqValByName(company, qtr, "준비금", rn); return v==null ? "—" : samo(v/100); }),
+            });
+          }
+        }
+      }
+      box.appendChild(buildBsTableDom(headers, rowDefs));
+    }
+
+    function buildBsTableDom(headers, rowDefs){
+      const tbl = document.createElement("table");
+      const thead = document.createElement("thead"); const htr = document.createElement("tr");
+      headers.forEach((h,i)=>{ const th=document.createElement("th"); th.textContent=h; if(i>0) th.className="num"; htr.appendChild(th); });
+      thead.appendChild(htr); tbl.appendChild(thead);
+      const tbody = document.createElement("tbody");
+
+      const groups = {};   // toggleGroup -> [tr,...] (그 그룹에 속한 행들)
+      const btns = {};     // toggleGroup -> {btn, label} (그 그룹을 여는 버튼)
+
+      rowDefs.forEach(r=>{
+        const tr = document.createElement("tr");
+        if (r.hidden) tr.style.display = "none";
+        if (r.group) (groups[r.group] || (groups[r.group]=[])).push(tr);
+
+        const labTd = document.createElement("td");
+        const indent = "　".repeat(r.level || 0);
+        if (r.isToggle){
+          const btn = document.createElement("button");
+          btn.type = "button"; btn.className = "subtoggle"; btn.textContent = "+";
+          btn.setAttribute("aria-expanded","false"); btn.title = r.label + " 세부 펼치기";
+          labTd.appendChild(document.createTextNode(indent + r.label + " "));
+          labTd.appendChild(btn);
+          btns[r.toggleGroup] = { btn, label: r.label };
+        } else {
+          labTd.textContent = indent + r.label;
+        }
+        if (r.bold) labTd.style.fontWeight = "700";
+        tr.appendChild(labTd);
+        r.cells.forEach(c=>{
+          const td = document.createElement("td"); td.className = "num"; td.textContent = c;
+          if (r.bold) td.style.fontWeight = "700";
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+
+      // 그룹을 접을 때 그 안에 중첩된 하위 토글(예: 이익잉여금→준비금)도 같이 접어 상태를 초기화 —
+      // 안 그러면 상위를 접었다 다시 펼쳤을 때 하위가 이미 펼쳐진 채로 나타나 혼란스럽다.
+      function collapseGroup(groupKey){
+        for (const m of (groups[groupKey] || [])) m.style.display = "none";
+        rowDefs.forEach(r=>{
+          if (r.group===groupKey && r.isToggle && btns[r.toggleGroup]){
+            collapseGroup(r.toggleGroup);
+            const nb = btns[r.toggleGroup].btn;
+            nb.textContent = "+"; nb.setAttribute("aria-expanded","false");
+            nb.title = btns[r.toggleGroup].label + " 세부 펼치기";
+          }
+        });
+      }
+
+      rowDefs.forEach(r=>{
+        if (!r.isToggle) return;
+        const entry = btns[r.toggleGroup]; if (!entry) return;
+        entry.btn.addEventListener("click", ()=>{
+          const members = groups[r.toggleGroup] || [];
+          if (!members.length) return;
+          const showing = members[0].style.display !== "none";
+          if (showing) collapseGroup(r.toggleGroup);
+          else members.forEach(m=> m.style.display = "");
+          entry.btn.textContent = showing ? "+" : "−";
+          entry.btn.setAttribute("aria-expanded", String(!showing));
+          entry.btn.title = r.label + (showing ? " 세부 펼치기" : " 세부 접기");
+        });
+      });
+
+      tbl.appendChild(tbody);
+      return tbl;
+    }
+
     function renderCompany(company){   // company = 회사코드(KR0001…)
     const coName = codeToName[company] || company;  // 표시용 이름
     currentKey = keyColorOf(coName);
@@ -1202,15 +1364,20 @@
         data = ord.map(([k])=>{const v=(amRow.buckets||{})[k]; const n=v==null?NaN:Number(v); return Number.isFinite(n)?n:null});
         titleText = "버킷별 상각 규모 (연도별 데이터 없음 — 구간)";
       }
+      // data 단위 = 백만원. 1억=100백만, 1조=1,000,000백만(종전 100,000은 10배 과대).
       const amMax=Math.max(...data.filter(Number.isFinite),0);
-      const amDiv=amMax>=100000?100000:amMax>=100?100:1;
-      const amSfx=amMax>=100000?'조':amMax>=100?'억':'백만';
-      const amDp=amMax>=100000?1:0;
+      const amDiv=amMax>=1000000?1000000:amMax>=100?100:1;
+      const amSfx=amMax>=1000000?'조':amMax>=100?'억':'백만';
+      const amDp=amMax>=1000000?1:0;
       const amTitle=titleText.replace('백만원',amSfx+'원');
       charts.amort=new Chart(canvasCtx(host,"#canvasAmort"),{
         type:"bar",
         data:{ labels, datasets:[{ label:String(amRow.row_label||"CSM amort"), backgroundColor:currentKey.fill, data }]},
-        options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{display:false}, title:{display:true,text:amTitle}}, scales:{y:{beginAtZero:true, ticks:{ callback:(vv)=>(vv/amDiv).toFixed(amDp)+amSfx }}}}
+        options:{responsive:true,maintainAspectRatio:false,
+          plugins:{legend:{display:false}, title:{display:true,text:amTitle},
+            // 툴팁이 원시 백만원을 그대로 뿌려 축(억/조)과 단위가 어긋나던 버그 → 위 CSM 워터폴과 같은 억원으로 통일(음수 △).
+            tooltip:{callbacks:{label:(c)=> c.parsed.y==null ? "—" : (fmtEok(c.parsed.y)+"억원")}}},
+          scales:{y:{beginAtZero:true, ticks:{ callback:(vv)=>(vv/amDiv).toFixed(amDp)+amSfx }}}}
       })
     }
 
@@ -1429,6 +1596,7 @@
     }
 
     renderBsSection(host, company);
+    renderBsTable(host, company, wfMode);
   }
 
   function onSelect(){
