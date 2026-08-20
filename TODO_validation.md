@@ -1,11 +1,44 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-20 · Stage 3/5 — validation
+> Last updated: 2026-08-21 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-21 a) 🔴 owner 지시 mmult 전수감사 — 적용후가 안 닫힌다. 내 어제 "0" 발언은 틀렸다.**
+> - **정정**: 어제 "적용후 mmult 다 닫힌다"고 보고했는데, 그건 게이트가 찍은 `적용후 mmult
+>   불일치: 0` 한 줄을 **시장위험 축에 대해서만** 보고 전체로 일반화한 것이다. 3축 × 전후로
+>   전수 재계산하니 **안 닫힌다.**
+> - **전수 결과** (행렬은 룰엔진에서 import, 재타이핑 안 함):
+>
+>   | 축 | 컬럼 | 계산가능 | FAIL(tol2) | FAIL(5%) | 계산불가 |
+>   |---|---|---|---|---|---|
+>   | A 생명장기 17=f(29-35) | 적용전 | 350 | 5 | 1 | 136 |
+>   | A 생명장기 17=f(29-35) | 적용후 | 345 | **10** | 4 | 141 |
+>   | B 시장 19=f(36-40) | 적용전 | 340 | 3 | 0 | 146 |
+>   | B 시장 19=f(36-40) | 적용후 | 296 | **4** | 1 | 190 |
+>   | C 기본요구자본 15=f(17-20)+21 | 적용전 | 484 | **0** | 0 | 2 |
+>   | C 기본요구자본 15=f(17-20)+21 | 적용후 | 480 | **36** | 9 | 6 |
+>
+> - **게이트 검사범위 구멍 2개**(`_transition_mmult_after`): ① `if c not in _TRANSITION_APPLIERS:
+>   continue` → **비-applier 회사는 적용후 mmult 를 아예 안 본다** ② `_TRANS_PARENT_SUBS` 가
+>   `{17, 19}` 뿐 → **축 C(기본요구자본) 적용후 검사가 통째로 없다.** 게이트의 0 은 거짓말이
+>   아니라 범위 밖이었고, 결과는 false-green 이다.
+> - **축 C 는 전제가 틀린 게 아니라 데이터가 틀렸다**: 적용전 484/484 PASS(tol 2.0),
+>   적용후도 **444/480 이 닫힌다** → 항등식은 적용후에도 성립. 그러니 36건은 셀 결함이다.
+>   부호가 ± 섞여 단일 공식오류도 아니고, 회사별 연속분기로 묶인다(흥국생명·에이비엘·농협생명·흥국화재).
+> - **산술적으로 불가능한 셀 2건**(가장 확실): 신한이지 2025.1Q `item35후=43` 인데 부모
+>   `item17후=10` — **분산 후 부모가 개별 하위보다 작을 수 없다**. 하나손해 2025.2Q
+>   `item34후=44.43` = item35 값 그대로(한 칸 밀림). 둘 다 적용전은 깨끗하다.
+> - **또 다른 사각**: `계산불가`(하위결측)가 A 136~141 · B 146~190 = 전체 486의 **28~39%**.
+>   FAIL 로도 안 잡히고 조용히 넘어간다(SKIP-on-missing 부류). B축 적용후가 최악.
+> - **발주** `inbox/parser/20260821T0010Z` (lane: kics). 감사 스크립트 상주:
+>   `scripts/_probes/mmult_after_audit.py`.
+> - **게이트 배선은 안 했다** — 축 C 적용후를 RED 로 걸면 즉시 36건이 push 를 막는다.
+>   배선 방식(즉시 RED / 래칫 baseline / 비차단 관찰)은 **owner 판단 대기**.
+> - K-ICS 게이트 자체는 변경 없이 **RED=12 전건 documented** 유지.
 
 **(2026-08-20 l) inbox 재확인 3건 전부 종결(resolved) + 농협생명 item7 등재. baseline 16. RED=0.**
 > - 파서가 답한 내 스레드 3건(`20260819T0754Z` · `20260820T0430Z` · `20260820T1900Z`)을
@@ -1027,8 +1060,8 @@ owner SGI 게이트 사각 + parser INTERNAL_MODEL 승인 inbox 드레인.
 - [x] **메리츠 KR0001 rule5 reparse → ✅ RESOLVED**: parser가 item23+item25 12분기 적재(항등도출=공시값 일치). 재검증 **rule5 12 RED→0**. `_resolved/` 이관.
 - [x] **코리안리 KR1000 2025.2Q reparse → ✅ RESOLVED**: parser가 코어 1-28 + item28 파생(156.19) + 시장37-40 fitz 적재. 재검증 **7 RED + 19_market→0**. `_resolved/` 이관.
 - [x] **푸본현대 sensitivity (ifrs17 발주) → ✅ RESOLVED**: parser 근본원인=mis-tag 롤포워드(shock행0), `_has_shock_rows` 가드로 KB·푸본현대 ok→partial 정직화. 재검증 **SENSITIVITY YELLOW 1→0**. `_resolved/` 이관.
-- [ ] **(owner 결정) AIA KR0080 2025.1Q rule2 documented_exception**: image-only scan, item8/item9 819 중복 OCR키잉, 텍스트 reparse 불가. owner TODO.md 예외 등록 시 해소.
-- [ ] **(owner 결정) 미래에셋 KR0079 8_life documented_exception**: image-only(파싱 MD조차 부재), subs 29-35 OCR ~8.5% spread, 단일 culprit 없음. **기존 KR0079 rule2 예외를 8_life로 확장** 권고.
+- [x] **(종결 2026-08-20) AIA KR0080 2025.1Q rule2** — owner 예외 등재 **이미 완료**: `TODO.md` L115 *"rule 2 × 1: KR0080 AIA 2025.1Q (diff=−789) — scan-only(아래 documented)"*. 게이트 계약 충족.
+- [x] **(종결 2026-08-20) 미래에셋 KR0079 8_life** — owner 예외 등재 **이미 완료**: `TODO.md` L117 *"rule 8_life × 1: KR0079 미래에셋 2023.2Q — scan-only. 8_life는 SKIP=게이트 비차단"*. 게이트 계약 충족.
 - [ ] **(owner 결정) parser irr_exempt v2 잔여**: INTERNAL_MODEL_36IRR = **신한라이프 KR0094×4 + 교보 KR0073 2025.2Q = 5건만**(IBK KR1011은 parser fitz로 41-46 적재·derive rel 0.0% GREEN → 면제 불요, 2026-06-14 정정) + OCR(KB/한화생명/흥국×2) + micro(신한이지 KR0051×3) EXEMPT — 전부 owner 권한. inbox/validation answered 참조.
 - [x] **scan false-positive fix**: `_scan_breakdown_presence` clean-cell화 → 삼성생명 odd-Q 3 false RED 제거(19_market 15→10). parser D 종결.
 - [x] **SENSITIVITY_UNIT_SANITY 룰 신설**(owner 0712Z claim2): `validate_master_tables.py` RED>1000x/YEL>100x. 640배 회귀가드. 푸본현대 YEL 1(÷100 미정규화 의심) + 미래에셋·롯데·한화손해 sensitivity 0건 → parser/ifrs17.
@@ -1067,8 +1100,8 @@ PL_BRIDGE + CSM_CROSSCHECK 소비자 코드 구현 완료(2026-06-07). 빌드→
 
 ### V1 — DART↔IR cross-source 2개 룰 활성화 (segment 폐기로 3→2)
 룰 [§1.2 + §1.4]. RED → DART parser loopback. **현재 IR-side 정형 JSON 부재로 전사 SKIP.** (segment 룰 폐기 → V8 대체)
-- [ ] **IR parser delivery 대기**: `data/ir/<period>/parsed/<KR>.json` (root TODO F18). 도착 cohort 9사: 메리츠·삼성화재·현대·KB·DB·한화생명·삼성생명·미래에셋·동양. 도착 즉시 룰 자동 ON.
-- [ ] **Threshold v1 튜닝**: 활성화 후 실제 diff 분포 보고 조정. v1: `CSM_WATERFALL_DART_VS_IR` max(5%·|IR|,100억)/step; `CSM_BREAKDOWN_DART_VS_IR` max(5%·|IR|,100억)/item (메리츠는 보종 비교 영구 SKIP — 측정요소별 표만, total만).
+- [ ] **IR parser delivery 대기**: `data/ir/<period>/parsed/<KR>.json` (root TODO F18). 도착 cohort 9사: 메리츠·삼성화재·현대·KB·DB·한화생명·삼성생명·미래에셋·동양. 도착 즉시 룰 자동 ON. ⚠️ **2026-08-20 실측: 1년째 미도착.** `data/ir/**/parsed/` 전체에 파일이 **1개뿐**(KR0087 동양생명 FY2026_Q2, 2026-07-30). 9사 cohort는 오지 않았다 — 재개하려면 IR 파서 레인을 별도 발주해야 한다.
+- [ ] **Threshold v1 튜닝**: 활성화 후 실제 diff 분포 보고 조정. v1: `CSM_WATERFALL_DART_VS_IR` max(5%·|IR|,100억)/step; `CSM_BREAKDOWN_DART_VS_IR` max(5%·|IR|,100억)/item (메리츠는 보종 비교 영구 SKIP — 측정요소별 표만, total만). ⚠️ **2026-08-20 실측: 1년째 미도착.** `data/ir/**/parsed/` 전체에 파일이 **1개뿐**(KR0087 동양생명 FY2026_Q2, 2026-07-30). 9사 cohort는 오지 않았다 — 재개하려면 IR 파서 레인을 별도 발주해야 한다.
 - IR factsheet NB CSM multiple 가용성: 부재(현대해상·KB손해); 간접 산출 가능(DB손해 = 신계약 CSM + 월납보험료 derive).
 
 ### V2 — IFRS17-NB-RECONCILE 정합성 (한화 fallback retire 완료)
@@ -1092,7 +1125,7 @@ validation 룰 2개 구현 완료(2026-06-09b, `kics_json_rules.py`): `19_market
 
 ### V6 — KR0010 KB손해 OCR 잔여 RED 2건
 K-ICS rule 2 OCR 미정확 (KR0010, KR0079도 image-only). 사용자 owned (`TODO.md` `KICS-IMG`). validation gate는 documented exception 처리 중.
-- [ ] 수기 OCR 완료 → KICS-VALIDATE RED 2 → 0 회복.
+- [x] **(종결 2026-08-20) 수기 OCR → RED 2→0** — 무효. 현재 게이트는 **RED=12이고 전건 `TODO.md` documented exception**이라 계약을 이미 충족한다(RED 2라는 전제 자체가 stale). OCR은 owner가 2026-08-15 *"됐어 패스"*로 **명시 보류** — 재요청 전 미착수(`TODO_downloader.md` OCR-MARKETRISK 행이 정본).
 
 ## ✅ Done (archive)
 완결 항목(V10 census·V-RS 금리민감도 RS1–RS4·V8 PL_BRIDGE/CSM_CROSSCHECK/CSM_PLAUSIBILITY/MASTER_COVERAGE·V9 WFY/ZAMORT/ZLEG·V2 한화 fallback retire·V7 history check·V4 QoQ v1, 2026-05-31~06-12). 각 항목의 날짜별 상세는 `docs/changelog_validation.md`(당시 이미 `(changelog MM-DD)`로 인덱싱됨) + git log.
