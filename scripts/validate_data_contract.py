@@ -337,11 +337,10 @@ def check_census(res: GateResult, env: "Env") -> None:
     # 그 여파가 표시분기의 `값_당분기`를 음수로 뒤집는다. 스코프를 걸면 원인 분기가 통째로 사각이 된다
     # (실제로 흥국화재·KB손해 2024.3Q 2건이 그렇게 숨어 있었다). YELLOW라 push는 막지 않는다.
     for co, q, item, prev in _pl_ytd_collapse(env.pl):
-        res.add(check="census", severity="YELLOW", master="PL_breakdown", company=co, quarter=q,
+        res.add(check="census", severity="RED", master="PL_breakdown", company=co, quarter=q,
                 rule="PL_YTD_COLLAPSE_TO_ZERO",
                 message=f"{item} 누계가 직전분기 {prev:,.1f} → 이번분기 정확히 0.0 — FY 누계는 "
-                        f"이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심. "
-                        f"초기 YELLOW, RED 전환 예정")
+                        f"이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심")
     # CSM 상대규모 plausibility (parser 20260730T0040Z, PM-2026-07-30 UH-6). 항등식은 스케일과
     # 무관하게 닫히므로 단위오류(×100)를 closure 검사로는 절대 못 잡는다 — 회사 규모로 정규화한
     # 비율만이 잡는다. 초기 YELLOW(관찰 1~2 릴리스 후 RED 전환, UH-3 sidecar 선례).
@@ -464,7 +463,8 @@ def _pl_ytd_collapse(pl):
 
     폐쇄식·브리지가 이걸 못 잡는 이유: 0 은 등식을 깨지 않고 조용히 통과한다(다른 항으로 닫히면 끝).
     2026-08-15 에 마스터가 HEAD 로 되돌아갔다 재빌드된 뒤 19셀이 이 상태로 회귀한 것을 놓쳤다.
-    신설 시점 severity=YELLOW(관찰 1~2 릴리스 — CSM_WATERFALL_PLAUSIBILITY / UH-3 선례).
+    owner 지시(2026-08-15) 로 관찰기 없이 **RED**. "신설 룰도 당연히 맞아야 한다" —
+    라이브 오표시를 놓친 직후라 관찰기를 두는 것 자체가 같은 실수의 반복이다.
     """
     def _qn(q):
         m = re.match(r"(\d{4})\.(\d)Q", str(q or ""))
@@ -520,6 +520,11 @@ def _pl_impossible_zero_leg(pl, confirmed=None):
 # ===========================================================================
 # Authoritative source per master (capital-securities effective list).
 _CAPITAL_SECURITIES_MASTERS = {"forward_capital", "tier1_utilization", "tier2_utilization"}
+
+# PL↔워터폴 CSM상각 교차대조 임계. 상각 10억 미만은 소음, 배수 밴드는 개념차(손보 생명장기 leg vs
+# 전사)를 흡수할 만큼 넓게 — 이 룰의 목표는 미세오차가 아니라 **한쪽만 비어 있는 자리**다.
+_XCHK_MIN_AMORT_EOK = 10.0
+_XCHK_LO, _XCHK_HI = 0.4, 2.5
 
 # `source_id` must match the ACTUAL lineage of `source_file` — not a hardcoded enum
 # (owner inbox/validation/20260803T0056Z).
@@ -991,6 +996,47 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
     csm_steps_dart_vs_ir is not yet delivered (validation V1 SKIP), so the comparable path emits
     no findings today — but the registry + guard are wired so they activate the moment IR JSON
     lands, and the guard is exercised now (regression #5) to prove tier2 Face↔BS never docks."""
+    # --- 3z. PL_breakdown 의 CSM상각 ↔ CSM_waterfall 의 상각액 (owner 2026-08-15) ---
+    # 왜 필요했나: 두 마스터가 **같은 회사·같은 분기의 같은 사건**을 각자 들고 있는데 서로를 한 번도
+    # 안 봤다. 그래서 라이브에 삼성화재 2026.2Q PL 생명장기 분해가 통째로 null(화면 0)인 채로
+    # 나갔다 — 같은 분기 워터폴엔 상각 8,029.5억이 멀쩡히 있었는데도 게이트는 조용했다.
+    # 폐쇄식은 결측을 통과시킨다(0/None 이 등식을 안 깬다) → 교차대조만이 유일한 탐지기다.
+    #
+    # 개념이 완전히 같지는 않다(손보 PL 은 생명장기 leg 만, 워터폴은 전사) → **배수는 느슨하게**,
+    # 대신 "한쪽이 0/결측인데 다른 쪽은 유의미" 라는 명백한 자리를 잡는다(different-concept guard 정신).
+    for (co, q), m in sorted(env.pl.items()):
+        wfm = env.wf.get((co, q))
+        if not wfm:
+            continue
+        amort = wfm.get("CSM상각")
+        direct = m.get("원수CSM상각")
+        # 역방향: PL 엔 상각이 있는데 워터폴 상각이 결측/0. 폐쇄식은 조정(plug)이 흡수해 닫히므로
+        # 절대 못 잡는다(미래에셋 2026.2Q: 기초+신계약+이자+조정 = 기말 이 정확히 닫히는데 상각만 null).
+        # 기존 IMPOSSIBLE_ZERO_AMORT 는 `상각 == 0` 만 봐서 **None 을 통과**시킨다.
+        if isinstance(direct, (int, float)) and abs(direct) / 100.0 >= _XCHK_MIN_AMORT_EOK \
+                and (amort is None or amort == 0):
+            res.add(check="cross_source", severity="RED", master="CSM_waterfall",
+                    company=co, quarter=q, rule="CSM_AMORT_MISSING_VS_PL",
+                    message=f"CSM_waterfall 상각={amort!s} 인데 같은 분기 PL 원수CSM상각은 "
+                            f"{abs(direct) / 100.0:,.1f}억 — 워터폴 쪽이 비었다. 폐쇄식은 조정 항이 "
+                            f"흡수해 닫히므로 이 결측을 못 잡는다")
+            continue
+        if not isinstance(amort, (int, float)) or abs(amort) < _XCHK_MIN_AMORT_EOK:
+            continue                       # 워터폴 상각 자체가 미미하면 대조 의미 없음
+        if direct is None or direct == 0:
+            res.add(check="cross_source", severity="RED", master="PL_breakdown",
+                    company=co, quarter=q, rule="PL_CSM_AMORT_VS_WATERFALL",
+                    message=f"PL 원수CSM상각={direct!s} 인데 같은 분기 CSM_waterfall 상각은 "
+                            f"{abs(amort):,.1f}억 — 한쪽만 비었다(생명장기 분해 결측 지문)")
+            continue
+        pl_eok = (abs(direct) + abs(m.get("재보험CSM상각") or 0)) / 100.0   # 백만원 → 억원
+        ratio = pl_eok / abs(amort)
+        if ratio < _XCHK_LO or ratio > _XCHK_HI:
+            res.add(check="cross_source", severity="RED", master="PL_breakdown",
+                    company=co, quarter=q, rule="PL_CSM_AMORT_SCALE_GAP",
+                    message=f"PL CSM상각 {pl_eok:,.1f}억 vs 워터폴 상각 {abs(amort):,.1f}억 "
+                            f"(배수 {ratio:.2f}, 허용 {_XCHK_LO}~{_XCHK_HI}) — 단위·범위 불일치 의심")
+
     # --- 3a. comparable: DART↔IR CSM steps (active only when IR parsed JSON present) ---
     ir_dir = ROOT / "data" / "ir"
     reg = CONCEPT_REGISTRY["csm_steps_dart_vs_ir"]
@@ -1075,6 +1121,36 @@ def _tier2_concept_guard_violations(env):
 # ===========================================================================
 # CHECK 4 — Domain identity (K-ICS capital recognition-limit 분모/소진율)
 # ===========================================================================
+# CSM 워터폴 부호 규약 — 전사 355:1 로 만장일치인 축이라 위반은 사실상 추출 사고다.
+#   신계약 CSM < 0 : IFRS17 상 최초인식이 손실부담이면 CSM=0 + 손실요소(즉시 손익)라 음수가 못 나온다.
+#   CSM 상각  > 0 : 상각은 CSM 을 소모하므로 음수여야 한다. 양수면 그 필링의 변동 블록이
+#                   손익(P&L) 기준인데 부호를 그대로 옮긴 것이다(예별 2023.4Q 가 그 사례).
+# **폐쇄식은 이 클래스에 무력하다** — 조정(item4)이 잔차로 채워지면 부호가 뒤집혀도 그대로 닫힌다.
+_CSM_SIGN_EXCEPTIONS = {
+    # (원수사명, 공시분기, 항목): 사유. raw 로 확인된 공시 자체의 표기만 등재한다.
+    ("예별손해보험", "2025.4Q", "신계약CSM"):
+        "raw 확인(20260406003175): 이 회사는 손실부담계약 전입/환입을 **CSM 열 안에** 표시한다"
+        "(표준 표기는 CSM 열을 비운다 — 라이나 동일 표 대조). 그래서 신계약인식효과 행이 "
+        "onerous 분을 net 한 (1,166,995)천원으로 찍힌다. PV +380,349 / RA +786,646 / CSM (1,166,995) "
+        "합계 0 으로 행이 닫히고, 같은 필링의 상각은 (17,399,016) 로 **정상 부호**라 2023.4Q 식 "
+        "부호역전이 아니다. 공시 표기를 그대로 옮긴 값.",
+}
+
+
+def _csm_sign_violations(wf):
+    out = []
+    for (co, q), m in sorted(wf.items()):
+        for key, bad, why in (("신계약CSM", lambda v: v < 0, "신계약 CSM 은 음수가 될 수 없다"
+                               "(손실부담이면 CSM=0 + 손실요소)"),
+                              ("CSM상각", lambda v: v > 0, "CSM 상각은 CSM 을 소모하므로 음수여야 한다"
+                               " — 양수면 변동 블록이 손익 기준인데 부호를 그대로 옮긴 지문")):
+            v = m.get(key)
+            if isinstance(v, (int, float)) and v != 0 and bad(v):
+                exc = _CSM_SIGN_EXCEPTIONS.get((co, q, key))
+                out.append((co, q, key, v, why, exc))
+    return out
+
+
 def check_domain_identity(res: GateResult, env: "Env") -> None:
     """Domain plausibility identities for K-ICS capital recognition limits.
 
@@ -1089,6 +1165,17 @@ def check_domain_identity(res: GateResult, env: "Env") -> None:
                   = inflated numerator = artifact = RED (KB손보 패턴). >100% WITH the table parsed =
                   genuine over-issuance (송미정) → YELLOW (designer shows "100%+").
     """
+    # CSM 부호 규약(2026-08-17). 등재된 예외는 사유를 메시지에 실어 YELLOW 로 남긴다 —
+    # 조용히 사라지면 다음에 진짜 부호역전이 와도 같은 자리에서 안 보인다.
+    for co, q, key, v, why, exc in _csm_sign_violations(env.wf):
+        if exc:
+            res.add(check="domain", severity="YELLOW", master="CSM_waterfall", company=co,
+                    quarter=q, rule="CSM_SIGN_CONVENTION_EXCEPTED",
+                    message=f"{key}={v:,.1f} — 등재된 예외: {exc}")
+        else:
+            res.add(check="domain", severity="RED", master="CSM_waterfall", company=co,
+                    quarter=q, rule="CSM_SIGN_CONVENTION",
+                    message=f"{key}={v:,.1f} — {why}. 전사 규약은 355:1 로 만장일치다")
     doc = env.tier2_latest
     if not doc or not doc.get("results"):
         return  # absence is a CHECK 2 (MISSING_PROVENANCE) concern, not here
@@ -1620,6 +1707,8 @@ IFRS17_BS_NO_SOURCE = {
 }
 
 
+
+
 def check_ifrs17_bs(res: GateResult, env: "Env") -> None:
     """17BS 마스터(IFRS17_BS.json) — 룰은 딱 둘(owner 20260814T0232Z §2, "그 외 아무것도 만들지 마라").
 
@@ -1649,6 +1738,16 @@ def check_ifrs17_bs(res: GateResult, env: "Env") -> None:
         names.setdefault(code, r.get("원수사명") or code)
 
     skipped: list[str] = []
+    try:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import validate_statutory_reserves as _rsv   # noqa: E402
+        carry_ok, carry_rejected = _rsv.carry_forward_exempt()
+    except Exception as _e:      # 모듈이 없으면 면제 없음 = 보수적(더 많이 RED)
+        carry_ok, carry_rejected = set(), []
+        res.add(check="census", severity="YELLOW", master="IFRS17_BS", company=None,
+                quarter=None, rule="BS_CARRY_FORWARD_LOADER_UNAVAILABLE",
+                message=f"이월 면제 로더 사용 불가 — 면제 없이 검사한다: {_e}")
+    carry_skipped: list[str] = []
     for (code, q), cell in sorted(cells.items()):
         if not (env.inject or _in_scope(q)):   # live: 화면에 뜨는 분기만, selftest: 전수
             continue
@@ -1657,6 +1756,11 @@ def check_ifrs17_bs(res: GateResult, env: "Env") -> None:
         core_missing = [i for i in IFRS17_BS_CORE_ITEMS if cell.get(i) is None]
         if core_missing and not env.inject and code in IFRS17_BS_NO_SOURCE:
             skipped.append(f"{nm} {q}({len(core_missing)})")
+            core_missing = []
+        elif core_missing and not env.inject and (code, q) in carry_ok:
+            # 준비금 이월로 생긴 칸 — 그 분기엔 회사가 재무제표를 안 낸다(위에서 재검증함).
+            # 회사 통째 면제가 아니라 **이 칸만** 빠지므로 같은 회사의 4Q 는 계속 검사된다.
+            carry_skipped.append(f"{nm} {q}({len(core_missing)})")
             core_missing = []
         for item in core_missing:
             sev, msg = _sev(f"코어 항목 {item}({IFRS17_BS_LABELS[item]}) 결측 — "
@@ -1671,6 +1775,22 @@ def check_ifrs17_bs(res: GateResult, env: "Env") -> None:
                                 f"[잔차 {a - s:,.0f}] — 연결/별도 오선택·단위 오적용·행 오인식 의심")
                 res.add(check="domain", severity=sev, master="IFRS17_BS", company=nm,
                         quarter=q, rule="BS_IDENTITY", message=msg)
+
+    if carry_skipped:
+        res.add(check="census", severity="YELLOW", master="IFRS17_BS", company=None,
+                quarter=None, rule="BS_CENSUS_CARRY_FORWARD_CELL",
+                message=f"준비금 hold-forward 로 생긴 {len(carry_skipped)}블록 코어 census 면제 "
+                        f"(연1회 공시사, 그 분기 필링 없음을 raw meta.json `no_filing` 로 재확인): "
+                        f"{', '.join(carry_skipped[:12])}"
+                        + (f" …외 {len(carry_skipped)-12}" if len(carry_skipped) > 12 else "")
+                        + ". 근거 사이드카 data/_derived/bs_carry_forward_cells.json, "
+                          "owner 2026-08-20 이월 결정. BS_IDENTITY 는 계속 검사한다")
+    for code, q, why in carry_rejected:
+        # 사이드카가 면제를 주장했지만 독립 근거가 안 맞는 칸 — 조용히 넘기지 않는다.
+        res.add(check="census", severity="RED", master="IFRS17_BS",
+                company=names.get(code, code), quarter=q,
+                rule="BS_CARRY_FORWARD_EXEMPTION_REJECTED",
+                message=f"이월 면제 주장이 근거와 어긋난다: {why}")
 
     if skipped:   # 조용히 사라지지 않게 집계 1건으로 항상 보인다
         res.add(check="census", severity="YELLOW", master="IFRS17_BS", company=None,
@@ -1844,10 +1964,73 @@ def check_csm_continuity(res: GateResult, env: "Env") -> None:
                                 f"raw 대조로 재작성 근거를 확정하거나 마스터를 정정할 것")
 
 
+
+def check_statutory_reserves(res: GateResult, env: "Env") -> None:
+    """법정준비금 룰 R-RSV-1~12 (owner 발주 inbox/validation/20260819T0558Z).
+
+    구현은 `scripts/validate_statutory_reserves.py` 한 곳에 있고 여기서는 **호출만** 한다
+    (룰 로직을 두 벌로 만들지 않는다). 그 모듈이 하는 세 가지:
+
+      1. 마스터(IFRS17_BS.json)만 보고 판정한다. raw 부호를 재해석하지 않는다 —
+         부호 해석은 개념별·표별로 갈리고 그 지식은 이미 빌더에 있다. 2026-08-19 에
+         validation 이 그걸 재구현했다가 NH농협손보 2026.2Q 를 297,481 로 오판했고
+         parser 반박으로 309,489 가 정답으로 확정됐다(모듈 docstring 참조).
+      2. legit-zero 는 `data/_gold/user_pl_confirmed_cells.json`(master="IFRS17_BS")로 면제.
+      3. **래칫 baseline**: `data/_gold/statutory_reserve_baseline.json` 에 건별로 열거된
+         기존 결함 58건은 비차단(BASELINE), 목록에 없는 새 RED 만 차단. CLAUDE.md 의
+         "RED=0 또는 documented exception(회사·분기·룰·사유)" 계약을 기계검사 형태로 만족한다.
+         parser 가 한 건 고칠 때마다 그 줄을 지운다.
+
+    심각도는 이 파일의 기존 관례를 따른다 — IFRS17_BS 가 아직 어느 배포 HTML 에도 안 물리면
+    YELLOW, 물리는 순간 RED 로 자동 승격(`check_ifrs17_bs._sev` 와 같은 규칙).
+    """
+    try:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import validate_statutory_reserves as rsv    # noqa: E402
+    except Exception as e:
+        res.add(check="census", severity="YELLOW", master="IFRS17_BS", company=None,
+                quarter=None, rule="RESERVE_RULES_UNAVAILABLE",
+                message=f"법정준비금 룰 모듈 로드 실패 — 이 축은 검사되지 않았다: {e}")
+        return
+    rows = env.ifrs17_bs
+    if not rows:
+        return
+    findings = rsv.run(rows, rsv.load_registry())
+    findings = rsv.apply_baseline(findings, rsv.load_baseline())
+
+    counts = {"RED": 0, rsv.BASELINE_SEV: 0, "ORANGE": 0, "SUPPRESSED": 0}
+    for f in findings:
+        counts[f["severity"]] = counts.get(f["severity"], 0) + 1
+        if f["severity"] == "SUPPRESSED":
+            continue
+        q = f.get("quarter")
+        # 시계열 룰의 quarter 는 "2023.1Q~2024.3Q" 형태 구간일 수 있어 스코프 판정에 앞 분기를 쓴다.
+        q_head = str(q).split("~")[0] if q else None
+        if q_head and not (env.inject or _in_scope(q_head)):
+            continue
+        if f["severity"] == "RED":
+            sev = "RED" if env.ifrs17_bs_published else "YELLOW"
+            msg = f["message"] if env.ifrs17_bs_published else                 f["message"] + "  [미배포 — push 차단 보류]"
+        else:
+            sev = "YELLOW"
+            msg = f["message"]
+        res.add(check="census", severity=sev, master="IFRS17_BS",
+                company=f.get("company"), quarter=q,
+                rule=f["rule"].replace("-", "_"), message=msg)
+    res.add(check="census", severity="YELLOW", master="IFRS17_BS", company=None, quarter=None,
+            rule="RESERVE_RULES_SUMMARY",
+            message=(f"법정준비금 R-RSV 룰: 신규 RED={counts['RED']} · "
+                     f"기존 baseline={counts[rsv.BASELINE_SEV]}(건별 열거, "
+                     f"data/_gold/statutory_reserve_baseline.json) · "
+                     f"ORANGE={counts['ORANGE']} · legit-zero 면제={counts['SUPPRESSED']}. "
+                     f"baseline 이 0 이 되면 이 축은 완전 차단 모드가 된다"))
+
+
 def run_gate(env: Env) -> GateResult:
     res = GateResult()
     check_artifact_readable(res, env)
     check_ifrs17_bs(res, env)
+    check_statutory_reserves(res, env)
     check_dividend(res, env)
     check_csm_continuity(res, env)
     check_census(res, env)

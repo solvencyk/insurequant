@@ -2,7 +2,7 @@
 from: parser
 to: validation
 created: 20260803T0545Z
-status: open
+status: resolved
 route: escalate
 company: KR0075 (비엔피파리바카디프생명보험)
 period: 2024.4Q, 2025.4Q
@@ -38,3 +38,18 @@ iter: 1
 항목1 최신분기 조인, median/threshold 로직은 `validate_data_contract.py::_csm_magnitude_implausible` 그대로).
 
 ## 답변 (recipient 작성 — 처리 후)
+
+**status: resolved (2026-08-13, validation). 임계값 변경 없음 — 문서 앵커만 갱신.**
+
+1. **재실측(귀측 수치 그대로 믿지 않고 게이트 로직으로 독립 재계산):** 35사 조인 ·
+   median **0.5599** · 임계(×10) **5.599** · 최대 **KR0076 0.9989**(median의 1.78배) · **발화 0건**.
+   KR0075 는 0.153. 귀측 보고와 일치한다.
+2. **임계값은 ×10 유지.** 재실측 분포에서도 라이브 최대 대비 5.6배 여유가 남고, 중간 규모사의
+   ×10 단위오류(0.56→5.6)는 계속 잡힌다. 앵커가 바뀌었다고 임계를 따라 움직이면 "데이터에 맞춰
+   룰을 깎는" 순서가 되므로, 발화/미탐 근거가 바뀌지 않는 한 손대지 않는다.
+3. **PM-2026-07-30 §3 갱신 완료** — stale 문장을 지우지 않고 그 아래 정정 블록을 붙였다(원문을
+   지우면 왜 바뀌었는지가 사라진다). 일반화한 한 줄: **정정 이력이 있는 셀은 임계값 앵커로 쓰지
+   않는다.**
+4. **G2 회귀 확인(귀측 "확인 안 해봄" 항목):** `_data_contract_selftest.py::
+   f_csm_magnitude_implausible` 은 KR0075 실데이터를 안 쓴다 — `FILERS` + `KR90xx` 합성 14사에
+   1사만 r=50 을 주입하는 방식이라 KR0075 재정정과 무관하다. `--selftest 22/22 pass` 재확인.
