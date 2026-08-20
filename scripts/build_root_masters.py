@@ -27,16 +27,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PL_SRC = ROOT / "data" / "dart" / "viz" / "pl_breakdown_master.json"
 PL_OUT = ROOT / "PL_breakdown.json"
-# Owner manual corrections for PL (xlsx review-loop) — survive master rebuilds. Upserts 값
-# by (code, item, quarter) AFTER _zero_other_expense, BEFORE 당분기 recompute. Mirrors CSM_OVR.
-PL_OVR = ROOT / "data" / "dart" / "viz" / "pl_manual_overrides.json"
+# Owner manual corrections for PL (xlsx review-loop) — durable gold overlay, survives master
+# rebuilds. Upserts 값 by (code, item, quarter) AFTER _zero_other_expense, BEFORE 당분기
+# recompute. Mirrors CSM_OVR. data/_gold/ convention (matches K-ICS's user_kics_cells.json) —
+# owner 20260620T0859Z: unify the gold-overlay pattern across all masters, not just K-ICS.
+PL_OVR = ROOT / "data" / "_gold" / "user_pl_cells.json"
 # CSM source = the build_csm_waterfall_master.py output (item4=residual → closing closes by
 # construction; 35 companies, all coded).  Supersedes the old history-chain root file.
 CSM_SRC = ROOT / "data" / "dart" / "viz" / "csm_waterfall_master_diag.json"
 CSM_OUT = ROOT / "CSM_waterfall.json"
-# Owner manual corrections (xlsx review, 2026-06-10) — survive diag rebuilds. Upserts 값
-# by (code, item, quarter) and drops excluded companies BEFORE 당분기 recompute.
-CSM_OVR = ROOT / "data" / "dart" / "viz" / "csm_manual_overrides.json"
+# Owner manual corrections (xlsx review, 2026-06-10) — durable gold overlay, survives diag
+# rebuilds. Upserts 값 by (code, item, quarter) and drops excluded companies BEFORE 당분기
+# recompute. data/_gold/ convention (see PL_OVR above).
+CSM_OVR = ROOT / "data" / "_gold" / "user_csm_cells.json"
 CSM_ABS_CAP = 5e5    # 억: real insurer CSM max (삼성생명) ≈ 3e5; >5e5 = unit error (AIG 2025.4Q ~1000×)
 
 CSM_OPEN, CSM_CLOSE = 1, 6          # 저량 (stock) 항목번호: 기초 CSM / 기말 CSM
@@ -67,15 +70,56 @@ def _flow_dangi(ytd_by_q, q):
     return None if prev is None else round(cur - prev, 6)
 
 
+def _additive_merge(fresh_rows, existing_path):
+    """Union-merge fresh SRC rows with whatever's already at existing_path (the root master
+    being overwritten), keyed by (원보험사코드, 항목번호, 공시분기): fresh's non-null 값 wins;
+    where fresh is missing a key entirely, or has it with 값=None, fall back to the value
+    already committed. Without this, a bare rebuild silently drops every cell whose upstream
+    source (data/dart/extracted*, raw XML) isn't on disk right now -- reproducible, not a
+    one-off accident (inbox/parser/20260814T1637Z: 61 cells / 1,475 rows of PL_breakdown.json
+    lost this exact way, restored by hand in 79b1f7d; this is the root-cause fix that commit
+    left open). Call this FIRST, before any derived-field logic (_zero_other_expense etc.)
+    needs the complete picture, not just what fresh alone can currently reproduce."""
+    if not existing_path.exists():
+        return fresh_rows
+    try:
+        existing_rows = json.loads(existing_path.read_text(encoding="utf-8"))
+    except Exception:
+        return fresh_rows
+    existing_by_key = {(r["원보험사코드"], r["항목번호"], r["공시분기"]): r for r in existing_rows}
+    fresh_by_key = {(r["원보험사코드"], r["항목번호"], r["공시분기"]): r for r in fresh_rows}
+    merged = []
+    for key, r in fresh_by_key.items():
+        e = existing_by_key.get(key)
+        if r.get("값") is None and e is not None and e.get("값") is not None:
+            r = {**r, "값": e["값"]}
+        merged.append(r)
+    for key, e in existing_by_key.items():
+        if key not in fresh_by_key:
+            merged.append(e)
+    return merged
+
+
 _PL_COMP = (4, 5, 6, 7, 8, 13, 14, 15)   # 보험손익(1) components excluding 16
 
 
 def _zero_other_expense(rows):
-    """item16(기타사업비) -> 0 where 보험손익(1) already closes WITHOUT it (item16 is
-    below-the-line opex there, not a 보험손익 component — owner/validation 20260616T1210Z;
-    IFRS17.html:470 waterfall subtracts -16). General, raw-independent closure test:
-    |item1 - Σ(4,5,6,7,8,13,14,15)| <= max(100, 1%·|item1|). Naturally keeps cells that only
-    close WITH -16 (KEEP) and excludes partial mis-extracts (DB손해 2023.2Q resid 6869 > tol)."""
+    """item16(기타사업비) flagged where 보험손익(1) already closes WITHOUT it. Originally this
+    wrote 0 (owner/validation 20260616T1210Z, item16 below-the-line for some companies —
+    IFRS17.html:470 waterfall subtracts -16), but the closure test is a weak proxy: if item16
+    is structurally never a component of item1 for a company, item1 closes without it EVERY
+    quarter regardless of whether item16 itself is genuinely zero or a real disclosed figure —
+    so as more data landed (more sibling items populated) this started overwriting REAL
+    non-zero item16 values with 0, producing accounting-impossible FY-YTD-collapses-to-zero-at-
+    Q4 patterns (inbox/parser/20260815T1120Z, validation, 19 cells incl. 현대해상/KB손해/흥국화재
+    quarters that previously extracted correctly). Changed to null instead of a silent wrong
+    zero (validation's request): 0 satisfies the closing/PL-bridge identities and hides the
+    gap; null surfaces it via the completeness/census checks instead. Cells this nulls should
+    get their real value restored via pl_manual_overrides.json once raw-confirmed, not left
+    null indefinitely.
+    General, raw-independent closure test: |item1 - Σ(4,5,6,7,8,13,14,15)| <= max(100, 1%·|item1|).
+    Naturally keeps cells that only close WITH -16 (KEEP) and excludes partial mis-extracts
+    (DB손해 2023.2Q resid 6869 > tol)."""
     by_cq = defaultdict(dict)
     for r in rows:
         by_cq[(r["원보험사코드"], r["공시분기"])][r["항목번호"]] = r
@@ -91,9 +135,9 @@ def _zero_other_expense(rows):
         # tol tuned to catch genuine closures (흥국화재 resid ≤278, KB/KDB exact) while
         # excluding partial mis-extracts (DB손해 2023.2Q resid 6869 = separate PL-bridge issue).
         if abs(i1 - comp) <= max(300, abs(i1) * 0.001):
-            r16["값"] = 0.0
+            r16["값"] = None
             n += 1
-    print(f"  pl 기타사업비(item16)->0: {n} cells (보험손익 closes without -16)")
+    print(f"  pl 기타사업비(item16)->null: {n} cells (보험손익 closes without -16, was silently 0)")
     return rows
 
 
@@ -118,6 +162,7 @@ def _apply_pl_overrides(rows):
 
 def build_pl():
     rows = json.loads(PL_SRC.read_text(encoding="utf-8"))
+    rows = _additive_merge(rows, PL_OUT)
     rows = _zero_other_expense(rows)
     rows = _apply_pl_overrides(rows)
     # YTD by (code, item) -> {quarter: 값}
@@ -166,6 +211,7 @@ def _apply_csm_overrides(rows):
 
 def build_csm():
     rows = json.loads(CSM_SRC.read_text(encoding="utf-8"))
+    rows = _additive_merge(rows, CSM_OUT)
     rows = _apply_csm_overrides(rows)
     # Unit-error guard: drop a (company, quarter) whose ANY stage exceeds the absolute cap
     # (e.g. AIG손해 2025.4Q is ~1000× — a filing-unit misread).  Null its stages, don't ship.

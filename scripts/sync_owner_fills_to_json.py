@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """Sync owner's xlsx 누계(값) fills into the master JSONs, keyed by (원보험사코드, 공시분기, 항목번호),
 and recompute 값_당분기 (당분기[Q1]=누계, 당분기[Qn]=누계[Qn]-누계[Qn-1] within FY; left None if the
-prior-quarter 누계 is missing). Direct JSON overwrite (owner-requested); durable diag reflection =
-parser order 0811Z. Backs up each JSON to .bak. Does NOT run any build script."""
+prior-quarter 누계 is missing).
+
+PL/CSM fills are UPSERTed into the durable gold overlay (data/_gold/user_pl_cells.json /
+user_csm_cells.json) *and* applied to the current root JSON for instant reflection — the gold
+write is what makes the fill survive a later build_root_masters.py rebuild (owner 20260620T0859Z:
+unify the gold-overlay pattern so rebuilds can never clobber an owner fill; previously this script
+only did the direct JSON overwrite, which a rebuild would silently discard). K-ICS keeps its
+existing separate gold flow (apply_user_kics_gold.py) and is still written directly here.
+Backs up each JSON (and touched gold file) to .bak. Does NOT run any build script."""
 import sys
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -65,6 +72,30 @@ def read_sheet(title):
     return out
 
 
+# data/_gold/ durable overlay per master (owner 20260620T0859Z: unify gold-overlay so a
+# rebuild can never clobber an owner fill — see build_root_masters.py PL_OVR/CSM_OVR). K-ICS
+# keeps its existing separate flow (apply_user_kics_gold.py) untouched; only PL/CSM route here.
+GOLD_PATHS = {"손익분해PL": ROOT / "data" / "_gold" / "user_pl_cells.json",
+              "CSM워터폴": ROOT / "data" / "_gold" / "user_csm_cells.json"}
+
+
+def _upsert_gold(gold_path, code, quarter, item_no, value):
+    """UPSERT one cell into a gold overlay file's "set" list by (code, item, quarter),
+    matching the schema build_root_masters._apply_pl_overrides / _apply_csm_overrides read.
+    Preserves any other keys already in the file (exclude_companies, _doc, ...)."""
+    blob = json.loads(gold_path.read_text(encoding="utf-8")) if gold_path.exists() else {"set": []}
+    blob.setdefault("set", [])
+    for s in blob["set"]:
+        if (s.get("원보험사코드"), s.get("공시분기"), s.get("항목번호")) == (code, quarter, item_no):
+            s["값"] = value
+            break
+    else:
+        blob["set"].append({"원보험사코드": code, "항목번호": item_no, "공시분기": quarter, "값": value})
+    if gold_path.exists():
+        shutil.copy2(gold_path, str(gold_path) + ".bak")
+    gold_path.write_text(json.dumps(blob, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
 MASTERS = [("손익분해PL", "PL_breakdown.json", True),
            ("CSM워터폴", "CSM_waterfall.json", True),
            ("K-ICS공시", "kics_disclosure.json", False)]
@@ -79,6 +110,7 @@ for sheet, fn, has_dangi in MASTERS:
     if not xl:
         print(f"[{sheet}] xlsx 0 — skip")
         continue
+    gold_path = GOLD_PATHS.get(sheet)
     matched = changed = 0
     edited = set()
     for row in data:
@@ -98,7 +130,11 @@ for sheet, fn, has_dangi in MASTERS:
         if jvf is not None and abs(jvf - xv) <= 2.0:
             continue
         all_changes.append((sheet, key[0], key[1], row.get(KITEM), jv, xv))
-        row[KV] = xv
+        if gold_path is not None:
+            # durable: persist to the gold overlay first, so a later rebuild re-applies it —
+            # this is what makes the fill survive build_root_masters.py (owner 20260620T0859Z).
+            _upsert_gold(gold_path, key[0], key[1], int(key[2]), xv)
+        row[KV] = xv                       # instant reflection in the current root JSON too
         changed += 1
         edited.add((key[0], key[2]))
     # recompute 값_당분기 for edited (code, item_no) series

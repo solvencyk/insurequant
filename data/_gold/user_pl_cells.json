@@ -1,0 +1,1407 @@
+{
+  "_doc": "Owner manual xlsx fills (review-loop). Applied by build_root_masters.build_pl() AFTER _zero_other_expense, BEFORE 값_당분기 recompute. set: upsert 값 by (code,item,quarter). Owner already synced these to root; this file makes them survive master rebuilds. estimate=true (현대해상 생명장기 leg): provenance/designer 음영.",
+  "set": [
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 11,
+      "공시분기": "2023.4Q",
+      "값": -15460.571360999998,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 11,
+      "공시분기": "2024.4Q",
+      "값": 26108.94744600002,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 11,
+      "공시분기": "2025.1Q",
+      "값": 7206.916803999951,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 11,
+      "공시분기": "2025.2Q",
+      "값": 16908.376677999993,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 12,
+      "공시분기": "2023.4Q",
+      "값": -4379.140639,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 12,
+      "공시분기": "2024.4Q",
+      "값": -8195.286886,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 12,
+      "공시분기": "2025.1Q",
+      "값": -2231.38088,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 12,
+      "공시분기": "2025.2Q",
+      "값": -1477.774299,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 13,
+      "공시분기": "2023.4Q",
+      "값": 201238.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 14,
+      "공시분기": "2023.4Q",
+      "값": 76426.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 3,
+      "공시분기": "2023.4Q",
+      "값": 276940.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 3,
+      "공시분기": "2024.4Q",
+      "값": 866141.1764889997,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 3,
+      "공시분기": "2025.1Q",
+      "값": 113623.89907600005,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 3,
+      "공시분기": "2025.2Q",
+      "값": 291278.695445,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 6,
+      "공시분기": "2023.4Q",
+      "값": -190242.60050099998,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 6,
+      "공시분기": "2024.4Q",
+      "값": -238471.80764499994,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 6,
+      "공시분기": "2025.1Q",
+      "값": -110511.08101199986,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 6,
+      "공시분기": "2025.2Q",
+      "값": -161649.0862980002,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 7,
+      "공시분기": "2023.4Q",
+      "값": -543993.134499,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 7,
+      "공시분기": "2024.4Q",
+      "값": 20598.23213399967,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 7,
+      "공시분기": "2025.1Q",
+      "값": -45149.08991200008,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 7,
+      "공시분기": "2025.2Q",
+      "값": -90696.34750599976,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 8,
+      "공시분기": "2023.4Q",
+      "값": -28112.5,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 8,
+      "공시분기": "2024.4Q",
+      "값": -812.4994399999814,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 8,
+      "공시분기": "2025.1Q",
+      "값": 697.1009239999503,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 8,
+      "공시분기": "2025.2Q",
+      "값": 7158.304554999995,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)",
+      "estimate": true
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 10,
+      "공시분기": "2025.4Q",
+      "값": -17.198,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 11,
+      "공시분기": "2025.4Q",
+      "값": 167.88500000000002,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 12,
+      "공시분기": "2025.4Q",
+      "값": 365.11799999999994,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 14,
+      "공시분기": "2025.4Q",
+      "값": -23606.809,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 2,
+      "공시분기": "2025.4Q",
+      "값": -3392.223000000001,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 3,
+      "공시분기": "2025.4Q",
+      "값": -3849.5700000000006,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 4,
+      "공시분기": "2025.4Q",
+      "값": 64.451,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 5,
+      "공시분기": "2025.4Q",
+      "값": 131.196,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 6,
+      "공시분기": "2025.4Q",
+      "값": -2523.906,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 7,
+      "공시분기": "2025.4Q",
+      "값": -1521.3110000000006,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 8,
+      "공시분기": "2025.4Q",
+      "값": 457.347,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0051",
+      "항목번호": 9,
+      "공시분기": "2025.4Q",
+      "값": -58.458,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 6,
+      "공시분기": "2024.4Q",
+      "값": 128048.0,
+      "was": 0.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 6,
+      "공시분기": "2025.1Q",
+      "값": 50690.0,
+      "was": 0.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 6,
+      "공시분기": "2025.4Q",
+      "값": 193163.0,
+      "was": 0.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 6,
+      "공시분기": "2026.1Q",
+      "값": 18254.0,
+      "was": 0.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 7,
+      "공시분기": "2024.4Q",
+      "값": -360673.934592,
+      "was": -232625.934592,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 7,
+      "공시분기": "2025.1Q",
+      "값": -53417.51988199999,
+      "was": -2727.519882,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 7,
+      "공시분기": "2025.4Q",
+      "값": -484520.870981,
+      "was": -291357.870981,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 7,
+      "공시분기": "2026.1Q",
+      "값": -6013.393878000003,
+      "was": 12240.606122,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 1,
+      "공시분기": "2024.4Q",
+      "값": -13639.253189000003,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 1,
+      "공시분기": "2025.4Q",
+      "값": -24222.942939,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 10,
+      "공시분기": "2024.4Q",
+      "값": -13.814,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 10,
+      "공시분기": "2025.4Q",
+      "값": -22.399,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 11,
+      "공시분기": "2024.4Q",
+      "값": 95.16300000000001,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 11,
+      "공시분기": "2025.4Q",
+      "값": 152.58799999999997,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 12,
+      "공시분기": "2024.4Q",
+      "값": -5292.504378,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 12,
+      "공시분기": "2025.4Q",
+      "값": 723.8829999999999,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 16,
+      "공시분기": "2024.4Q",
+      "값": 10169.128183,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 16,
+      "공시분기": "2025.4Q",
+      "값": 10147.580446,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 17,
+      "공시분기": "2024.4Q",
+      "값": -779.0990140000067,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 17,
+      "공시분기": "2025.4Q",
+      "값": 3030.5334799999837,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 18,
+      "공시분기": "2024.4Q",
+      "값": 174590.222096,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 18,
+      "공시분기": "2025.4Q",
+      "값": 245234.095105,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 19,
+      "공시분기": "2024.4Q",
+      "값": -175369.32111000002,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 19,
+      "공시분기": "2025.4Q",
+      "값": -242203.561625,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 2,
+      "공시분기": "2024.4Q",
+      "값": -13639.253189000003,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 2,
+      "공시분기": "2025.4Q",
+      "값": -24222.942939,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 20,
+      "공시분기": "2024.4Q",
+      "값": -14418.352203,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 20,
+      "공시분기": "2025.4Q",
+      "값": -21192.409459,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 21,
+      "공시분기": "2024.4Q",
+      "값": -176.19334800000001,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 21,
+      "공시분기": "2025.4Q",
+      "값": -85.389436,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 22,
+      "공시분기": "2024.4Q",
+      "값": -14594.545551,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 22,
+      "공시분기": "2025.4Q",
+      "값": -21227.798895,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 23,
+      "공시분기": "2024.4Q",
+      "값": -2090.350242,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 23,
+      "공시분기": "2025.4Q",
+      "값": 3544.202309,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 24,
+      "공시분기": "2024.4Q",
+      "값": -12504.195308999999,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 24,
+      "공시분기": "2025.4Q",
+      "값": -24772.001204,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 3,
+      "공시분기": "2024.4Q",
+      "값": -1833.578628000003,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 3,
+      "공시분기": "2025.4Q",
+      "값": -12261.467528000001,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 4,
+      "공시분기": "2024.4Q",
+      "값": 6286.095,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 4,
+      "공시분기": "2025.4Q",
+      "값": 6379.544,
+      "was": 6379544.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 5,
+      "공시분기": "2024.4Q",
+      "값": 1768.401,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 5,
+      "공시분기": "2025.4Q",
+      "값": 1110.537,
+      "was": 1768401.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 6,
+      "공시분기": "2024.4Q",
+      "값": 1760.5660000000025,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 6,
+      "공시분기": "2025.4Q",
+      "값": -3826.768,
+      "was": -581440.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 7,
+      "공시분기": "2024.4Q",
+      "값": -11648.640628000006,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 7,
+      "공시분기": "2025.4Q",
+      "값": -15924.780528000003,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 8,
+      "공시분기": "2024.4Q",
+      "값": -1636.546378,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 8,
+      "공시분기": "2025.4Q",
+      "값": -1813.896,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 9,
+      "공시분기": "2024.4Q",
+      "값": 3574.609,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0075",
+      "항목번호": 9,
+      "공시분기": "2025.4Q",
+      "값": -2667.968,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 10,
+      "공시분기": "2023.4Q",
+      "값": 1400.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 10,
+      "공시분기": "2024.4Q",
+      "값": 1559.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 10,
+      "공시분기": "2025.1Q",
+      "값": 295.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 10,
+      "공시분기": "2025.3Q",
+      "값": -841.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 11,
+      "공시분기": "2023.4Q",
+      "값": -1306.0,
+      "was": 6241.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 11,
+      "공시분기": "2025.1Q",
+      "값": 3361.0,
+      "was": 10633.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 11,
+      "공시분기": "2025.3Q",
+      "값": 0.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 12,
+      "공시분기": "2023.4Q",
+      "값": 8332.654626,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 12,
+      "공시분기": "2024.4Q",
+      "값": 151.72592600000007,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 12,
+      "공시분기": "2025.1Q",
+      "값": 6515.22178,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 12,
+      "공시분기": "2025.3Q",
+      "값": 16566.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 9,
+      "공시분기": "2023.4Q",
+      "값": -2185.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 9,
+      "공시분기": "2024.4Q",
+      "값": -1711.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 9,
+      "공시분기": "2025.1Q",
+      "값": 461.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 9,
+      "공시분기": "2025.3Q",
+      "값": -1401.0,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1000",
+      "항목번호": 11,
+      "공시분기": "2026.1Q",
+      "값": 3896.0,
+      "was": -7964.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1000",
+      "항목번호": 12,
+      "공시분기": "2026.1Q",
+      "값": -11817.0,
+      "was": 43.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1000",
+      "항목번호": 6,
+      "공시분기": "2026.1Q",
+      "값": 5090.0,
+      "was": 5815.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1000",
+      "항목번호": "6-1",
+      "공시분기": "2026.1Q",
+      "값": -41149.0,
+      "was": -41131.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1000",
+      "항목번호": 7,
+      "공시분기": "2026.1Q",
+      "값": -1907.0,
+      "was": -2632.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1000",
+      "항목번호": "7-1",
+      "공시분기": "2026.1Q",
+      "값": 33981.0,
+      "was": 33963.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 10,
+      "공시분기": "2024.4Q",
+      "값": 192.724826,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 12,
+      "공시분기": "2024.4Q",
+      "값": -3034.2296140000003,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 18,
+      "공시분기": "2024.4Q",
+      "값": 22504.809618999996,
+      "was": 677.908214,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 19,
+      "공시분기": "2024.4Q",
+      "값": -21826.901404999997,
+      "was": 0.0,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 2,
+      "공시분기": "2024.4Q",
+      "값": -26015.543184,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 3,
+      "공시분기": "2024.4Q",
+      "값": -17846.322598,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 4,
+      "공시분기": "2024.4Q",
+      "값": 2155.876493,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 5,
+      "공시분기": "2024.4Q",
+      "값": 1270.782698,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 6,
+      "공시분기": "2024.4Q",
+      "값": 6266.011685999998,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 7,
+      "공시분기": "2024.4Q",
+      "값": -27538.993474999996,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 8,
+      "공시분기": "2024.4Q",
+      "값": -1907.799346,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 9,
+      "공시분기": "2024.4Q",
+      "값": 933.705442,
+      "was": null,
+      "note": "owner xlsx fill (review-loop 2026-06-19/20)"
+    },
+    {
+      "원보험사코드": "KR0002",
+      "항목번호": 20,
+      "공시분기": "2023.1Q",
+      "값": 112735.190992,
+      "was": 26.27293,
+      "note": "parser adjudication 2026-08-15 (inbox/parser/20260814T1637Z): FS-API has status=013 (both OFS/CFS) for this cell, so item20 only ever comes from raw-XML HTML fallback -- 26.27백만 quarterly operating profit is implausible by orders of magnitude for 한화손보, HEAD's value kept as the plausible one. Root cause of the HTML-extractor producing the smaller figure not diagnosed."
+    },
+    {
+      "원보험사코드": "KR0068",
+      "항목번호": 20,
+      "공시분기": "2023.1Q",
+      "값": 375708.317423,
+      "was": 114569.359386,
+      "note": "parser adjudication 2026-08-15 (inbox/parser/20260814T1637Z): same cause as KR0002 2023.1Q above -- FS-API status=013 both bases, HTML-fallback-only cell, HEAD's larger figure kept as plausible."
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 16,
+      "공시분기": "2023.4Q",
+      "값": 38491.0,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 16,
+      "공시분기": "2024.4Q",
+      "값": 54759.3,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 16,
+      "공시분기": "2025.1Q",
+      "값": 22973.4,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 16,
+      "공시분기": "2025.2Q",
+      "값": 48243.0,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2024.1Q",
+      "값": 93892.0,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2024.2Q",
+      "값": 192135.0,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2026.2Q",
+      "값": 199561.0,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 16,
+      "공시분기": "2024.1Q",
+      "값": 5112.0,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 16,
+      "공시분기": "2024.2Q",
+      "값": 11246.0,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 16,
+      "공시분기": "2024.3Q",
+      "값": null,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1230Z (validation iter2): FY 중간에 0.0이 남아 당분기가 음수로 뒤집는 것 방지 -- raw 부재 확인(FY2024_Q3/Q4등 해당 분기 디렉토리 자체가 없음), 재추출 불가 -- null로 명시(0 대신). 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 16,
+      "공시분기": "2024.4Q",
+      "값": null,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1230Z (validation iter2): FY 중간에 0.0이 남아 당분기가 음수로 뒤집는 것 방지 -- raw 부재 확인(FY2024_Q3/Q4등 해당 분기 디렉토리 자체가 없음), 재추출 불가 -- null로 명시(0 대신). 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2024.3Q",
+      "값": null,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1230Z (validation iter2): FY 중간에 0.0이 남아 당분기가 음수로 뒤집는 것 방지 -- raw 부재 확인(FY2024_Q3/Q4등 해당 분기 디렉토리 자체가 없음), 재추출 불가 -- null로 명시(0 대신). 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2024.4Q",
+      "값": null,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1230Z (validation iter2): FY 중간에 0.0이 남아 당분기가 음수로 뒤집는 것 방지 -- raw 부재 확인(FY2024_Q3/Q4등 해당 분기 디렉토리 자체가 없음), 재추출 불가 -- null로 명시(0 대신). 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2025.1Q",
+      "값": null,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1230Z (validation iter2): FY 중간에 0.0이 남아 당분기가 음수로 뒤집는 것 방지 -- raw 부재 확인(FY2024_Q3/Q4등 해당 분기 디렉토리 자체가 없음), 재추출 불가 -- null로 명시(0 대신). 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2025.2Q",
+      "값": null,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1230Z (validation iter2): FY 중간에 0.0이 남아 당분기가 음수로 뒤집는 것 방지 -- raw 부재 확인(FY2024_Q3/Q4등 해당 분기 디렉토리 자체가 없음), 재추출 불가 -- null로 명시(0 대신). 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2025.3Q",
+      "값": null,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1230Z (validation iter2): FY 중간에 0.0이 남아 당분기가 음수로 뒤집는 것 방지 -- raw 부재 확인(FY2024_Q3/Q4등 해당 분기 디렉토리 자체가 없음), 재추출 불가 -- null로 명시(0 대신). 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2026.1Q",
+      "값": 97277.0,
+      "was": null,
+      "note": "inbox/parser/20260815T1230Z (validation iter2): raw 존재, FS-API tier1_for() 가 item16=97277.0 반환(item1=182800.0과 동일 소스로 일치 확인) -- _zero_other_expense 휴리스틱이 진짜 값 있는데도 null로 덩음. 복원하면 2026.2Q 당분기 null 이슈도 함께 해소. 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 11,
+      "공시분기": "2025.3Q",
+      "값": null,
+      "was": 0.0,
+      "note": "inbox/parser/20260815T1120Z/1230Z (validation): HEAD에서부터 값=0.0이었고 (_zero_other_expense와 무관, item16 전용 함수라) 이 세션 이전부터 이미 있던 객, 값_당분기가 -7026.0으로 뒤집는 것이 증상. raw(FY2025_Q3, 20251114002594.xml) 직접 확인: 측정요소 변동 note 자체가 이 분기(중간기 간략공시)에 없음 (해당 note 캡션 0건, \"7,026\" 숫자도 raw에 없음). 중간산출물(pl_breakdown_master.json)도 이미 None -- 즉 베이스 추출은 정직하게 결측을 말하는데 root의 구수가 어느 시점의 0.0을 additive_merge로 계속 대물림. 7,026.0은 raw에서 독립 확인 불가 -- null로 명시(0 대신, 값 보정 아님). 2026-08-15."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 3,
+      "공시분기": "2026.2Q",
+      "값": 71856.0,
+      "was": null,
+      "note": "inbox/parser/20260816T2312Z (owner LIVE find, validation agent investigation): DART CSM row label 재구성(2026.2Q 반기부터, 여러 회사 공통) 때문에 이 회사 handler extract_tier2_heungkuk의 게이트가 통째로 실패, 항목3-7 전체 null 또는 소계혼입 오류. 코드 라벨매칭 수정했으나 같은 함수의 item13/14(cum() 컬럼계산)가 별도로 망가져 있어 (2026.1Q -11182 대비 2026.2Q -620653, 55배 = 명백 오류) RC게이트가 여전히 막음 -- item13/14/2/8/9-12는 신뢰 못해 null 유지, item3-7만 raw 직접 재검증(교차검증 2가지 방법 일치)으로 override. 2026-08-16."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 4,
+      "공시분기": "2026.2Q",
+      "값": 130489.0,
+      "was": null,
+      "note": "inbox/parser/20260816T2312Z (owner LIVE find, validation agent investigation): DART CSM row label 재구성(2026.2Q 반기부터, 여러 회사 공통) 때문에 이 회사 handler extract_tier2_heungkuk의 게이트가 통째로 실패, 항목3-7 전체 null 또는 소계혼입 오류. 코드 라벨매칭 수정했으나 같은 함수의 item13/14(cum() 컬럼계산)가 별도로 망가져 있어 (2026.1Q -11182 대비 2026.2Q -620653, 55배 = 명백 오류) RC게이트가 여전히 막음 -- item13/14/2/8/9-12는 신뢰 못해 null 유지, item3-7만 raw 직접 재검증(교차검증 2가지 방법 일치)으로 override. 2026-08-16."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 5,
+      "공시분기": "2026.2Q",
+      "값": 25932.0,
+      "was": 13009.0,
+      "note": "inbox/parser/20260816T2312Z (owner LIVE find, validation agent investigation): DART CSM row label 재구성(2026.2Q 반기부터, 여러 회사 공통) 때문에 이 회사 handler extract_tier2_heungkuk의 게이트가 통째로 실패, 항목3-7 전체 null 또는 소계혼입 오류. 코드 라벨매칭 수정했으나 같은 함수의 item13/14(cum() 컬럼계산)가 별도로 망가져 있어 (2026.1Q -11182 대비 2026.2Q -620653, 55배 = 명백 오류) RC게이트가 여전히 막음 -- item13/14/2/8/9-12는 신뢰 못해 null 유지, item3-7만 raw 직접 재검증(교차검증 2가지 방법 일치)으로 override. 2026-08-16."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 6,
+      "공시분기": "2026.2Q",
+      "값": -83316.0,
+      "was": -53922.0,
+      "note": "inbox/parser/20260816T2312Z (owner LIVE find, validation agent investigation): DART CSM row label 재구성(2026.2Q 반기부터, 여러 회사 공통) 때문에 이 회사 handler extract_tier2_heungkuk의 게이트가 통째로 실패, 항목3-7 전체 null 또는 소계혼입 오류. 코드 라벨매칭 수정했으나 같은 함수의 item13/14(cum() 컬럼계산)가 별도로 망가져 있어 (2026.1Q -11182 대비 2026.2Q -620653, 55배 = 명백 오류) RC게이트가 여전히 막음 -- item13/14/2/8/9-12는 신뢰 못해 null 유지, item3-7만 raw 직접 재검증(교차검증 2가지 방법 일치)으로 override. 2026-08-16."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 7,
+      "공시분기": "2026.2Q",
+      "값": -1249.0,
+      "was": null,
+      "note": "inbox/parser/20260816T2312Z (owner LIVE find, validation agent investigation): DART CSM row label 재구성(2026.2Q 반기부터, 여러 회사 공통) 때문에 이 회사 handler extract_tier2_heungkuk의 게이트가 통째로 실패, 항목3-7 전체 null 또는 소계혼입 오류. 코드 라벨매칭 수정했으나 같은 함수의 item13/14(cum() 컬럼계산)가 별도로 망가져 있어 (2026.1Q -11182 대비 2026.2Q -620653, 55배 = 명백 오류) RC게이트가 여전히 막음 -- item13/14/2/8/9-12는 신뢰 못해 null 유지, item3-7만 raw 직접 재검증(교차검증 2가지 방법 일치)으로 override. 2026-08-16."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2023.1Q",
+      "값": 22664.0,
+      "was": 3364.0,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 의 caption 게이트가 '보험수익' 리터럴만 받는데 이 분기는 '...잔여보장요소 및 현금흐름 회수 관련 보험료 배분액은...' 표현이라 미매칭 -> extract_tier2_life_old 자기가드 통과 -> 제네릭 extract_tier2_life 로 폴백 -> _pick_life_table 이 '재보험수익' substring 을 '보험수익' 으로 오매칭해 출재(재보험) 레그를 원수로 잘못 뽑음. 진짜 원수 CSM상각은 별개 노트(전환방법별 CSM 변동표, '제공된 서비스 관련 당기손익 인식' 행, 합계열)에 있고 두 함수 모두 _is_rollforward() 로 그 노트를 건너뜀 -- raw 직접 재검증(합계열)으로 override, 코드 수정은 공용함수 blast-radius 커서 별건 후속. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2024.1Q",
+      "값": 22447.0,
+      "was": 2313.0,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 캡션 게이트 미매칭 -> 제네릭 extract_tier2_life 폴백에서 출재(재보험) 레그 오매칭. 상세는 동일 회사 2023.1Q 항목 note 참조. raw 직접 재검증(전환방법별 CSM 변동표 합계열)으로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2024.2Q",
+      "값": 44994.0,
+      "was": 4652.0,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 캡션 게이트 미매칭 -> 제네릭 extract_tier2_life 폴백에서 출재(재보험) 레그 오매칭. 상세는 동일 회사 2023.1Q 항목 note 참조. raw 직접 재검증(전환방법별 CSM 변동표 합계열)으로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2024.3Q",
+      "값": 66762.0,
+      "was": 7155.0,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 캡션 게이트 미매칭 -> 제네릭 extract_tier2_life 폴백에서 출재(재보험) 레그 오매칭. 상세는 동일 회사 2023.1Q 항목 note 참조. raw 직접 재검증(전환방법별 CSM 변동표 합계열)으로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 4,
+      "공시분기": "2024.2Q",
+      "값": 129439.0,
+      "was": 65243.0,
+      "note": "inbox/parser/20260815T1400Z 조사 중 콜래터럴 발견(원 티켓은 2024.3Q만 지목, ratio 0.504 로 RED 밴드를 근소하게 벗어나 안 걸렸으나 동일 버그): extract_tier2_dongyang 의 row-0 라벨 게이트가 '보험수익' 정확매칭만 받는데 2024년식 filing 은 '1. 보험계약의 보험서비스결과'->'(1) 보험수익' 로 중첩되어 있어 항상 미매칭 -> extract_tier2_life_old -> _oll_layout2 폴백. DART 가 같은 note 를 두 벌 중복 추출하는데 그 중 헤더가 깨진(\"누적\" 토큰 유실) 사본을 집어 _oll_ytd() 가 3개월(당분기)/누적(YTD) 구분을 못 하고 3개월 컬럼을 읽음. raw 의 누적 컬럼으로 직접 재검증(교차검증 CSM_waterfall 과 억원 단위까지 일치)해 override. 2026.2Q 는 어제(20260816T2312Z) _life_cum_col() 로 별도 수정됐으나 그 수정은 extract_tier2_dongyang 내부라 2024년식 filing 은 애초 그 함수에 못 들어가 미적용 -- 공용 _oll_ytd() 자체 수정은 별건 후속. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 4,
+      "공시분기": "2024.3Q",
+      "값": 196194.0,
+      "was": 66756.0,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP, ratio 0.34): extract_tier2_dongyang row-0 라벨 미매칭 -> _oll_layout2/_oll_ytd 폴백이 3개월 컬럼을 누적으로 오독. 상세는 동일 회사 2024.2Q 항목 note 참조. raw 누적 컬럼 직접 재검증(CSM_waterfall 1962.0억과 일치)으로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0072",
+      "항목번호": 4,
+      "공시분기": "2023.2Q",
+      "값": 23415.0,
+      "was": 12290.0,
+      "note": "inbox/parser/20260815T1400Z 조사 중 콜래터럴 발견(원 티켓은 2023.3Q만 지목, ratio 0.525 로 RED 밴드를 근소하게 벗어나 안 걸렸으나 동일 버그): extract_tier2_life_comprehensive 가 extract_tier2_life_old 결과를 무조건 우선 반환 -> _oll_layout2 가 note '36. 보험영업수익(비용) 및 재보험영업수익(비용)' 의 두 중복 추출본 중 헤더가 통째로 빈 배열([])로 깨진 사본을 선택 -> _oll_ytd() 가 3개월/누적 구분 불가로 3개월 컬럼을 읽음. raw 누적 컬럼 직접 재검증(CSM_waterfall 234.15억과 정확 일치)으로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0072",
+      "항목번호": 4,
+      "공시분기": "2023.3Q",
+      "값": 35250.0,
+      "was": 11835.0,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP -- 티켓 원문 138.7억은 작성 시점 이후 데이터가 바뀐 stale 값, 현재 마스터 118.35억 기준으로 조사): extract_tier2_life_comprehensive 가 extract_tier2_life_old 결과를 무조건 우선 반환 -> _oll_layout2 가 헤더 빈 사본을 선택 -> _oll_ytd() 가 3개월 컬럼을 누적으로 오독. 당분기 파생값이 -455(음수, 누계 항목 불가능)로도 독립 증빙됨. 상세는 동일 회사 2023.2Q 항목 note 참조. raw 누적 컬럼 직접 재검증(CSM_waterfall 352.5억과 정확 일치)으로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0002",
+      "항목번호": 4,
+      "공시분기": "2023.1Q",
+      "값": 94523.6,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): extract_tier2_hanwha_old 자체는 정확히 94,523.6 을 뽑음(data/dart/FY2023_Q1/raw/KR0002_한화손해보험/xml/20230515002513.xml Note26 '보험계약마진상각수익' 장기=합계). 그런데 assemble() 의 RC 재조정 게이트(item1 vs LOB합산 25% 허용오차)가 item1/LOB총합 불일치로 items2-14 를 통째로 null 처리 -- item4 자체 값과는 무관한 오탐. CSM_waterfall -945.2억과 0.004% 이내 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0002",
+      "항목번호": 4,
+      "공시분기": "2023.2Q",
+      "값": 189879.93,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): FY2023_Q2 raw 자체가 저장소에 없음(2023-08 rcept 부재, 다운로더 갭). 같은 회사 FY2023_Q3 filing(20231114001106.xml Note '당분기 및 전분기 중 발생한 보험영업수익 내역')이 당분기(Q3단독)/당기누적(9M) 을 같은 표에 병기 -- H1 = 9M누적(286,461.536) - Q3당분기(96,581.606) = 189,879.93 로 역산(분기간 파생). CSM_waterfall 1,898.8억과 거의 정확 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 4,
+      "공시분기": "2023.2Q",
+      "값": 80785.0,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): FY2023_Q2 raw 부재(다운로더 갭, 한화손보와 동일 패턴). FY2023_Q3 filing 의 당기누적/당분기 병기 표(row '보험계약마진 상각')에서 H1 = 9M누적(131,623) - Q3당분기(50,838) = 80,785 로 역산. CSM_waterfall 807.9억과 거의 정확 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 4,
+      "공시분기": "2023.3Q",
+      "값": 131623.0,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): extract_tier2_lotte 의 3개 서브전략 전부 미매칭 -- 이 분기 raw(20231114002985.xml)는 수익/비용이 '25.보험수익'/'26.보험비용' 로 분리된 별개 노트인데 combined 전략은 '보험손익' 통합캡션을, 나머지 두 fallback 은 2025+ 표준 '~분석공시' 서식을 요구해 이 표 형태를 인식 못함. row '보험계약마진 상각' 당기누적 컬럼 = 131,623 (단위 백만원, header 확인). CSM_waterfall 1,316.2억과 거의 정확 일치로 override, extract_tier2_lotte 의 표 형태 인식 확장은 공용함수 blast-radius 커서 별건 후속. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 4,
+      "공시분기": "2023.2Q",
+      "값": 94037.0,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): FY2023_Q2 raw 부재(다운로더 갭, 한화손보·롯데손보와 동일 패턴). FY2023_Q3 filing Note32 '보험수익' 이 당기누적/당분기를 컬럼이 아닌 캡션 반복 미니표 4개로 병기 -- H1 = 9M누적(155,579, line18984) - Q3당분기(61,542, line19129) = 94,037 로 역산(비율 155,579/61,542≈2.96≈9M/3M 로 식별 재확인). CSM_waterfall 940.4억과 거의 정확 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0074",
+      "항목번호": 4,
+      "공시분기": "2023.4Q",
+      "값": 443127.76,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): 이 세션에서 이미 CSM_waterfall 측 라이나생명(KR0074) 2023.4Q 를 동일 기법(FY2024 연차보고서의 전기 비교컬럼에서 pull)으로 재확정한 바 있음(csm_manual_overrides.json 참조) -- 같은 소스(FY2024_Q4/raw/..._00760.xml Note23 '보험서비스수익 및 보험서비스비용', row '제공된 서비스의 보험계약마진', 전기컬럼) = 443,127.76백만원. build_pl_breakdown.py 의 _GOLD_CELL_OVERRIDE 딕셔너리에 이미 KR0074/2024.4Q·2025.4Q 항목4 선례가 있으나 2023.4Q 만 누락돼 있던 것 -- 코드 상수 대신 이 override 파일로 통일 적용(오늘 세션 다른 fix들과 일관). CSM_waterfall 4,431.3억과 거의 정확 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0095",
+      "항목번호": 4,
+      "공시분기": "2023.4Q",
+      "값": 208561.289,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): t2 추출 자체는 값을 찾음(FY2023_Q4/raw/KR0095_메트라이프생명보험_..._00760.xml, row '3) 서비스제공에 따른 보험계약마진의 변동', 당기=208,561,289) 이나 raw 단위가 '(단위: 천원)' 인데 제네릭 생보 폴백 경로가 ÷1000 을 안 걸어 208,561,289 를 그대로 백만원인 것처럼 취급 -- assemble() 의 '재스케일 안 된 단위오류' 가드(abs(v)>1e7)에 걸려 items2-14 통째로 null. 올바른 값 = 208,561.289백만원(÷1000). CSM_waterfall 2,085.6억과 거의 정확 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 4,
+      "공시분기": "2024.4Q",
+      "값": 13944.082,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): FY2024_Q4 raw 자체 미보유. FY2025_Q4 filing(20260407002104_00760.xml) 이 명시적 '<전기>' 블록(Note6-1 '당기 및 전기 중 발생한 보험계약의 보험수익', 단위 천원, row '보험계약마진상각', 장기=합계)을 포함 -- 라이나 2023.4Q·AIG 2025.4Q 와 같은 '비교컬럼 pull' 기법으로 13,944,082천원=13,944.082백만원 확정. CSM_waterfall 139.4억과 거의 정확 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 4,
+      "공시분기": "2025.4Q",
+      "값": 12303.631,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): KR0029 가 SONBO_HANDLERS 에 미등록 -- 4개 제네릭 폴백 전부 AIG 특유의 [장기,일반,합계]+'<원수재>'/'<당기>' 블록마커 표 형태를 인식 못해 {} 반환. FY2025_Q4 filing(20260407002104_00760.xml) 의 '<당기>' 블록(row '보험계약마진상각', 장기=합계) = 12,303,631천원=12,303.631백만원. csm_manual_overrides.json 의 기존 owner 확정 CSM_waterfall 오버라이드(KR0029/item5/2025.4Q=-123.03631억, was:ROW_NULLED)와 소수점 5자리까지 정확 일치로 교차검증 -- override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0004",
+      "항목번호": 4,
+      "공시분기": "2023.4Q",
+      "값": 47175.854,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): extract_tier2_yebyeol 이 KR0004 를 디스패치하지만 자체 docstring 대로 items13/14(자동차/일반 PAA)만 커버 -- items4/5/6 은 같은 raw XML 안에 있는데도 미조회. FY2023_Q4/raw/KR0004_엠지손해보험_..._00760.xml Note '(4)/(5) 당기 및 전기 중 인식된 보험료배분접근법을 적용한 보험계약 이외의 보험계약에 대한... 보험계약마진의 변동내역', row '보험계약마진상각' 합계(당기) = 47,175,854천원=47,175.854백만원. CSM_waterfall 471.8억과 거의 정확 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0004",
+      "항목번호": 4,
+      "공시분기": "2024.4Q",
+      "값": 52506.877,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): extract_tier2_yebyeol items4/5/6 미조회. 상세는 동일 회사 2023.4Q 항목 note 참조. 같은 노트 구조에서 52,506,877천원(raw 부호는 음수로 인쇄되나 항목4 관례는 항상 양수 절대값)=52,506.877백만원. CSM_waterfall 525.1억과 거의 정확 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0004",
+      "항목번호": 4,
+      "공시분기": "2025.4Q",
+      "값": 17399.016,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): extract_tier2_yebyeol items4/5/6 미조회. 상세는 동일 회사 2023.4Q 항목 note 참조. 17,399,016천원=17,399.016백만원. CSM_waterfall 174.0억과 거의 정확 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR1010",
+      "항목번호": 4,
+      "공시분기": "2025.4Q",
+      "값": 1769.993335,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): KR1010 이 LIFE_HANDLERS 에 미등록 -- t2 가 통째로 None, item2/3/8 만 t1-only 생보 폴백으로 채워지고 item4-12 는 전부 결측(RC게이트는 item1 vs item2 만 봐서 이 결측을 못 잡음). FY2025_Q4 filing Note16-10(단위 원, row '(3) 당기손익에 인식한 보험계약마진 금액', 당기) = 1,769,993,335원=1,769.993335백만원 -- 같은 filing 의 상세 rollforward 표 합계와 정확 일치로 교차검증. CSM_waterfall 17.7억과 거의 정확 일치로 override. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0074",
+      "항목번호": 9,
+      "공시분기": "2023.4Q",
+      "값": -7365.047,
+      "was": -3162314.0,
+      "note": "inbox/parser/20260815T1400Z 조사 중 콜래터럴 발견(item4 를 위 override 로 고치자 PL_CSM_AMORT_SCALE_GAP RED 로 새로 노출 -- 검증 룰이 원수+재보험 CSM상각 합산(item4+item9)으로 워터폴과 비교하는데 item9 가 -31,623.14억으로 터무니없이 커서 배수 8.14). raw 직접 재검증(FY2024_Q4/raw/KR0074_라이나생명보험_20250409002702/20250409002702_00760.xml): Note23-(2) '보험서비스비용의 내역'(line14749, 단위 천원) row '제공된 서비스의 보험계약마진' 전기컬럼=7,365,047천원, 독립적으로 Note(3) '출재보험계약자산(부채)의 측정요소별 변동'(line12909) '전환이후 계약' 컬럼의 동일 행 전기=7,365,047 로 2중 교차일치 -- 기존 -3,162,314(429배 이상치, 정수배 아니라 단위오류 아닌 오행추출)를 -7,365.047 로 정정. 2024.4Q 기존값(-11,684.0)은 같은 두 표의 당기컬럼(11,683,647/11,683,646)과 일치해 그대로 둠. 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 4,
+      "공시분기": "2023.4Q",
+      "값": 22760.117,
+      "was": null,
+      "note": "inbox/parser/20260815T1400Z 마지막 잔여 1건 -- downloader가 raw 확보(inbox/parser/20260817T0231Z, corp_code 00983606, rcept 20240403002101, FY2023_Q4/raw/KR0029_에이아이지손해보험_20240403002101/, document.zip 압축해제). Note6-1 '당기 및 전기 중 발생한 보험계약의 보험수익'(line4479, 표 직전 <당기>/(단위: 천원) 마커 확인), row '보험계약마진상각' 장기=합계=22,760,117천원 -- 같은 filing Note28-3(line13105)의 합계열과도 정확 일치로 2중 교차검증. CSM_waterfall 227.6억과 거의 정확 일치(22,760.117 vs 22,760). item9(재보험CSM상각)도 raw에 있으나(Note6-4, 당기=1,784,857천원) 이 티켓 스코프는 item4 뿐이고 item9=None이면 SCALE_GAP 룰이 item4 단독으로 비교해 통과하므로 손대지 않음(items2/3/5-14 전부 이미 null인 이 회사-분기의 기존 스코프 유지). 2026-08-17."
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 9,
+      "공시분기": "2023.4Q",
+      "값": -1784.857,
+      "was": null,
+      "note": "inbox/parser/20260817T0400Z (validation): '룰이 안 잡으니 안 채웠다'는 근거가 뒤집혔다는 지적, 타당함 -- raw에 있는 값을 게이트 관대함을 이유로 비워두지 말 것. FY2023_Q4/raw/KR0029_에이아이지손해보험_20240403002101/20240403002101_00760.xml Note6-4 '당기 및 전기의 보유한 재보험계약의 재보험비용'(line5101, <당기> 순서 확인 -- item4와 동일 필링의 동일 순서 규약), row '보험계약마진상각' 장기=합계=1,784,857천원=1,784.857백만원. 부호: item9 기존 데이터셋 314건 중 272건(87%)이 음수(재보험비용 성격) -- 라이나생명 item9 fix와 동일 근거로 음수 적용. 2026-08-19."
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 9,
+      "공시분기": "2024.4Q",
+      "값": -2884.841,
+      "was": null,
+      "note": "inbox/parser/20260817T0400Z (validation, '2024.4Q도 같은 note 있으면 같이'). FY2024_Q4 raw 자체는 없음(item4 때와 동일 사정) -- FY2025_Q4/raw/KR0029_에이아이지손해보험_20260407002104/20260407002104_00760.xml Note6-4의 <전기> 비교컬럼(line3078, item4 2024.4Q 도출과 동일 필링·동일 비교컬럼 pull 기법)에서 재보험 보험계약마진상각=2,884,841천원=2,884.841백만원. item4(13,944.082) 대비 비율 20.7%로 플로저블. 음수 부호 근거는 2023.4Q 항목 note 참조. 2026-08-19."
+    },
+    {
+      "원보험사코드": "KR0029",
+      "항목번호": 9,
+      "공시분기": "2025.4Q",
+      "값": -2013.871,
+      "was": null,
+      "note": "inbox/parser/20260817T0400Z. 같은 filing(20260407002104_00760.xml)의 Note6-4 <당기> 블록(line2982) 재보험 보험계약마진상각=2,013,871천원=2,013.871백만원. item4(12,303.631) 대비 비율 16.4%로 플로저블. 음수 부호 근거는 2023.4Q 항목 note 참조. 2026-08-19."
+    }
+  ]
+}

@@ -24,11 +24,11 @@ REPO = Path(__file__).resolve().parents[1]
 GENERATED_AT = "20260620T0000Z"
 
 CSM_SRC = REPO / "CSM_waterfall.json"
-CSM_OVR = REPO / "data" / "dart" / "viz" / "csm_manual_overrides.json"
+CSM_OVR = REPO / "data" / "_gold" / "user_csm_cells.json"
 CSM_OUT = REPO / "CSM_waterfall_provenance.json"
 
 PL_SRC = REPO / "PL_breakdown.json"
-PL_OVR = REPO / "data" / "dart" / "viz" / "pl_manual_overrides.json"
+PL_OVR = REPO / "data" / "_gold" / "user_pl_cells.json"
 PL_OUT = REPO / "PL_breakdown_provenance.json"
 
 # PL Tier split (build_pl_breakdown): Tier-2 계약유형별/재보험 leg vs everything else (Tier-1 income statement)

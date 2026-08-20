@@ -1464,6 +1464,326 @@
       "값": 4.6064,
       "was": 4606.4,
       "why": "2026-07-30 추정 정정(continuity anchor) - 2025.4Q raw확정 기초값(4.60636)과 일치시킴. 상세는 2024.4Q 항목2 참조. | 2026-08-03 raw 확정: '기말보험계약 순부채(자산)' 행(L6659, 보험계약자산 세부는 L6643) CSM열 460,637천원(L6646/L6662)=4.60637억원→4.6064, 추정치와 일치. 2025.4Q raw확정 기초값(460,636천원=4.60636억, L9218 in 20260323001537_00760.xml)과도 1천원 이내로 정합 - continuity 재확인, 확정(추정→확정)."
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 1,
+      "공시분기": "2026.2Q",
+      "값": 65109.6,
+      "was": 70768.8,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (별도 basis, note 보험료배분접근법을 적용한 계약 이외의 요소별 변동내역, 1)당반기, 유배당+무배당+변액계약 3개 서브테이블 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)=65109.6이 2025.4Q 기말(target)과 정확 일치. raw: FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L40058-40911 (유배당 L40059, 무배당 L40344, 변액 L40629). item2=최초 인식한 계약의 효과 소계합, item3=보험금융손익 소계합, item5=서비스 이전을 반영하기 위해 인식한 보험계약마진 소계합, item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 ~0.1)."
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 2,
+      "공시분기": "2026.2Q",
+      "값": 8060.0,
+      "was": 5340.2,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (별도 basis, note 보험료배분접근법을 적용한 계약 이외의 요소별 변동내역, 1)당반기, 유배당+무배당+변액계약 3개 서브테이블 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)=65109.6이 2025.4Q 기말(target)과 정확 일치. raw: FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L40058-40911 (유배당 L40059, 무배당 L40344, 변액 L40629). item2=최초 인식한 계약의 효과 소계합, item3=보험금융손익 소계합, item5=서비스 이전을 반영하기 위해 인식한 보험계약마진 소계합, item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 ~0.1)."
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 3,
+      "공시분기": "2026.2Q",
+      "값": 992.9,
+      "was": 12195.8,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (별도 basis, note 보험료배분접근법을 적용한 계약 이외의 요소별 변동내역, 1)당반기, 유배당+무배당+변액계약 3개 서브테이블 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)=65109.6이 2025.4Q 기말(target)과 정확 일치. raw: FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L40058-40911 (유배당 L40059, 무배당 L40344, 변액 L40629). item2=최초 인식한 계약의 효과 소계합, item3=보험금융손익 소계합, item5=서비스 이전을 반영하기 위해 인식한 보험계약마진 소계합, item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 ~0.1)."
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 4,
+      "공시분기": "2026.2Q",
+      "값": -1726.8,
+      "was": -18306.4,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (별도 basis, note 보험료배분접근법을 적용한 계약 이외의 요소별 변동내역, 1)당반기, 유배당+무배당+변액계약 3개 서브테이블 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)=65109.6이 2025.4Q 기말(target)과 정확 일치. raw: FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L40058-40911 (유배당 L40059, 무배당 L40344, 변액 L40629). item2=최초 인식한 계약의 효과 소계합, item3=보험금융손익 소계합, item5=서비스 이전을 반영하기 위해 인식한 보험계약마진 소계합, item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 ~0.1)."
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 5,
+      "공시분기": "2026.2Q",
+      "값": -3185.5,
+      "was": -3141.3,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (별도 basis, note 보험료배분접근법을 적용한 계약 이외의 요소별 변동내역, 1)당반기, 유배당+무배당+변액계약 3개 서브테이블 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)=65109.6이 2025.4Q 기말(target)과 정확 일치. raw: FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L40058-40911 (유배당 L40059, 무배당 L40344, 변액 L40629). item2=최초 인식한 계약의 효과 소계합, item3=보험금융손익 소계합, item5=서비스 이전을 반영하기 위해 인식한 보험계약마진 소계합, item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 ~0.1)."
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 6,
+      "공시분기": "2026.2Q",
+      "값": 69250.1,
+      "was": 66857.1,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (별도 basis, note 보험료배분접근법을 적용한 계약 이외의 요소별 변동내역, 1)당반기, 유배당+무배당+변액계약 3개 서브테이블 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)=65109.6이 2025.4Q 기말(target)과 정확 일치. raw: FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L40058-40911 (유배당 L40059, 무배당 L40344, 변액 L40629). item2=최초 인식한 계약의 효과 소계합, item3=보험금융손익 소계합, item5=서비스 이전을 반영하기 위해 인식한 보험계약마진 소계합, item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 ~0.1)."
+    },
+    {
+      "원보험사코드": "KR0094",
+      "항목번호": 1,
+      "공시분기": "2026.2Q",
+      "값": 75537.3,
+      "was": 74422.9,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0094_신한라이프생명보험/20260814001090.xml L42102 이하 (별도, 유배당 L42104/무배당 L42622/변액 L43140), 1)당반기, 유배당+무배당+변액 3개 (CSM 소계열 있음, 다만 전환법 서브컴럼 라벨이 KR0073와 다릅: 수정소급법/공정가치법/전환이후) 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0094",
+      "항목번호": 2,
+      "공시분기": "2026.2Q",
+      "값": 7160.6,
+      "was": 7073.5,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0094_신한라이프생명보험/20260814001090.xml L42102 이하 (별도, 유배당 L42104/무배당 L42622/변액 L43140), 1)당반기, 유배당+무배당+변액 3개 (CSM 소계열 있음, 다만 전환법 서브컴럼 라벨이 KR0073와 다릅: 수정소급법/공정가치법/전환이후) 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0094",
+      "항목번호": 3,
+      "공시분기": "2026.2Q",
+      "값": 1380.9,
+      "was": 1314.7,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0094_신한라이프생명보험/20260814001090.xml L42102 이하 (별도, 유배당 L42104/무배당 L42622/변액 L43140), 1)당반기, 유배당+무배당+변액 3개 (CSM 소계열 있음, 다만 전환법 서브컴럼 라벨이 KR0073와 다릅: 수정소급법/공정가치법/전환이후) 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0094",
+      "항목번호": 4,
+      "공시분기": "2026.2Q",
+      "값": -1122.1,
+      "was": -2739.8,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0094_신한라이프생명보험/20260814001090.xml L42102 이하 (별도, 유배당 L42104/무배당 L42622/변액 L43140), 1)당반기, 유배당+무배당+변액 3개 (CSM 소계열 있음, 다만 전환법 서브컴럼 라벨이 KR0073와 다릅: 수정소급법/공정가치법/전환이후) 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0094",
+      "항목번호": 5,
+      "공시분기": "2026.2Q",
+      "값": -3847.8,
+      "was": -3825.7,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0094_신한라이프생명보험/20260814001090.xml L42102 이하 (별도, 유배당 L42104/무배당 L42622/변액 L43140), 1)당반기, 유배당+무배당+변액 3개 (CSM 소계열 있음, 다만 전환법 서브컴럼 라벨이 KR0073와 다릅: 수정소급법/공정가치법/전환이후) 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0094",
+      "항목번호": 6,
+      "공시분기": "2026.2Q",
+      "값": 79108.9,
+      "was": 76245.6,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0094_신한라이프생명보험/20260814001090.xml L42102 이하 (별도, 유배당 L42104/무배당 L42622/변액 L43140), 1)당반기, 유배당+무배당+변액 3개 (CSM 소계열 있음, 다만 전환법 서브컴럼 라벨이 KR0073와 다릅: 수정소급법/공정가치법/전환이후) 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0001",
+      "항목번호": 1,
+      "공시분기": "2026.2Q",
+      "값": 111037.0,
+      "was": 111893.5,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml L43919 이하 (별도, 유배당 L43919/무배당 L44630), 1)당반기, 유배당+무배당 2개 (손보사, 변액 없음). CSM 소계열 자체가 없어 3개 전환법 서브컴럼 직접 합산(합계열=PV+RA+ΣCSM 검증됨). 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0001",
+      "항목번호": 2,
+      "공시분기": "2026.2Q",
+      "값": 8942.2,
+      "was": 7299.4,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml L43919 이하 (별도, 유배당 L43919/무배당 L44630), 1)당반기, 유배당+무배당 2개 (손보사, 변액 없음). CSM 소계열 자체가 없어 3개 전환법 서브컴럼 직접 합산(합계열=PV+RA+ΣCSM 검증됨). 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0001",
+      "항목번호": 3,
+      "공시분기": "2026.2Q",
+      "값": 1797.0,
+      "was": 1798.6,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml L43919 이하 (별도, 유배당 L43919/무배당 L44630), 1)당반기, 유배당+무배당 2개 (손보사, 변액 없음). CSM 소계열 자체가 없어 3개 전환법 서브컴럼 직접 합산(합계열=PV+RA+ΣCSM 검증됨). 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0001",
+      "항목번호": 4,
+      "공시분기": "2026.2Q",
+      "값": 5690.0,
+      "was": -2753.1,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml L43919 이하 (별도, 유배당 L43919/무배당 L44630), 1)당반기, 유배당+무배당 2개 (손보사, 변액 없음). CSM 소계열 자체가 없어 3개 전환법 서브컴럼 직접 합산(합계열=PV+RA+ΣCSM 검증됨). 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0001",
+      "항목번호": 5,
+      "공시분기": "2026.2Q",
+      "값": -6258.5,
+      "was": -5748.0,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml L43919 이하 (별도, 유배당 L43919/무배당 L44630), 1)당반기, 유배당+무배당 2개 (손보사, 변액 없음). CSM 소계열 자체가 없어 3개 전환법 서브컴럼 직접 합산(합계열=PV+RA+ΣCSM 검증됨). 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0001",
+      "항목번호": 6,
+      "공시분기": "2026.2Q",
+      "값": 121207.6,
+      "was": 112490.4,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml L43919 이하 (별도, 유배당 L43919/무배당 L44630), 1)당반기, 유배당+무배당 2개 (손보사, 변액 없음). CSM 소계열 자체가 없어 3개 전환법 서브컴럼 직접 합산(합계열=PV+RA+ΣCSM 검증됨). 소계열 합산) 재추출. 자동추출은 2026.1Q와 동일한 상품슬라이스 테이블 선택 버그를 반복. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item2=신규계약효과 소계합, item3=순/보험금융손익 소계합, item5=당기손익 인식 CSM 소계합, item4=잔차(residual, 별도 발출된 '추정치 변동' 행과 대조 검증됨). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 1,
+      "공시분기": "2026.2Q",
+      "값": 9702.5,
+      "was": 9229.7,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml L32002 이하 (별도, 유배당 L32004/무배당 L32221/변액 L32438/기타보험 L32655), 1)당반기, 유배당+무배당+변액+기타보험 4개 (이 회사만 유니하게 4사이드: '기타보험' 서브테이블 전구간 CSM=0. 단일 보험계약마진(CSM) 컴럼 하나만 있음, 4개 대신 적용되는 전환법 서브컴럼 구분 없음). 버그 원인: 파서가 서브테이블 2개만 열거하고 멈춤(유+무만 합산=9229.7, 변액/기타 누락). 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 2,
+      "공시분기": "2026.2Q",
+      "값": 1965.7,
+      "was": 1965.7,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml L32002 이하 (별도, 유배당 L32004/무배당 L32221/변액 L32438/기타보험 L32655), 1)당반기, 유배당+무배당+변액+기타보험 4개 (이 회사만 유니하게 4사이드: '기타보험' 서브테이블 전구간 CSM=0. 단일 보험계약마진(CSM) 컴럼 하나만 있음, 4개 대신 적용되는 전환법 서브컴럼 구분 없음). 버그 원인: 파서가 서브테이블 2개만 열거하고 멈춤(유+무만 합산=9229.7, 변액/기타 누락). 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 3,
+      "공시분기": "2026.2Q",
+      "값": 197.8,
+      "was": 193.2,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml L32002 이하 (별도, 유배당 L32004/무배당 L32221/변액 L32438/기타보험 L32655), 1)당반기, 유배당+무배당+변액+기타보험 4개 (이 회사만 유니하게 4사이드: '기타보험' 서브테이블 전구간 CSM=0. 단일 보험계약마진(CSM) 컴럼 하나만 있음, 4개 대신 적용되는 전환법 서브컴럼 구분 없음). 버그 원인: 파서가 서브테이블 2개만 열거하고 멈춤(유+무만 합산=9229.7, 변액/기타 누락). 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2026.2Q",
+      "값": -690.5,
+      "was": -1159.8,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml L32002 이하 (별도, 유배당 L32004/무배당 L32221/변액 L32438/기타보험 L32655), 1)당반기, 유배당+무배당+변액+기타보험 4개 (이 회사만 유니하게 4사이드: '기타보험' 서브테이블 전구간 CSM=0. 단일 보험계약마진(CSM) 컴럼 하나만 있음, 4개 대신 적용되는 전환법 서브컴럼 구분 없음). 버그 원인: 파서가 서브테이블 2개만 열거하고 멈춤(유+무만 합산=9229.7, 변액/기타 누락). 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 5,
+      "공시분기": "2026.2Q",
+      "값": -471.4,
+      "was": -426.0,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml L32002 이하 (별도, 유배당 L32004/무배당 L32221/변액 L32438/기타보험 L32655), 1)당반기, 유배당+무배당+변액+기타보험 4개 (이 회사만 유니하게 4사이드: '기타보험' 서브테이블 전구간 CSM=0. 단일 보험계약마진(CSM) 컴럼 하나만 있음, 4개 대신 적용되는 전환법 서브컴럼 구분 없음). 버그 원인: 파서가 서브테이블 2개만 열거하고 멈춤(유+무만 합산=9229.7, 변액/기타 누락). 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 6,
+      "공시분기": "2026.2Q",
+      "값": 10704.1,
+      "was": 9802.8,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml L32002 이하 (별도, 유배당 L32004/무배당 L32221/변액 L32438/기타보험 L32655), 1)당반기, 유배당+무배당+변액+기타보험 4개 (이 회사만 유니하게 4사이드: '기타보험' 서브테이블 전구간 CSM=0. 단일 보험계약마진(CSM) 컴럼 하나만 있음, 4개 대신 적용되는 전환법 서브컴럼 구분 없음). 버그 원인: 파서가 서브테이블 2개만 열거하고 멈춤(유+무만 합산=9229.7, 변액/기타 누락). 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 1,
+      "공시분기": "2026.2Q",
+      "값": 1906.5,
+      "was": 1669.3,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0083_푸본현대생명보험/20260814004204.xml L30114 이하 (별도, 유배당 L30117/무배당 L30457/변액 L30798), 1)당반기, 유배당+무배당+변액 3개. 이 회사 테이블은 CSM 소계열 없이 2개 서브컴럼(공정가치법/그외)만 있어 직접 합산. 버그 원인: 파서가 무배당 테이블 단독(166,934백만=1669.3억) 만 잡고 유배당(21,207)+변액(2,514) 누락 -- 별도 note 21(1) 모형별(일반모형/VFA) 분류표의 전기말 합계(188,141+2,514=190,655) 와 교차검증됨. 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 2,
+      "공시분기": "2026.2Q",
+      "값": 702.9,
+      "was": 698.2,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0083_푸본현대생명보험/20260814004204.xml L30114 이하 (별도, 유배당 L30117/무배당 L30457/변액 L30798), 1)당반기, 유배당+무배당+변액 3개. 이 회사 테이블은 CSM 소계열 없이 2개 서브컴럼(공정가치법/그외)만 있어 직접 합산. 버그 원인: 파서가 무배당 테이블 단독(166,934백만=1669.3억) 만 잡고 유배당(21,207)+변액(2,514) 누락 -- 별도 note 21(1) 모형별(일반모형/VFA) 분류표의 전기말 합계(188,141+2,514=190,655) 와 교차검증됨. 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 3,
+      "공시분기": "2026.2Q",
+      "값": 26.0,
+      "was": 34.8,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0083_푸본현대생명보험/20260814004204.xml L30114 이하 (별도, 유배당 L30117/무배당 L30457/변액 L30798), 1)당반기, 유배당+무배당+변액 3개. 이 회사 테이블은 CSM 소계열 없이 2개 서브컴럼(공정가치법/그외)만 있어 직접 합산. 버그 원인: 파서가 무배당 테이블 단독(166,934백만=1669.3억) 만 잡고 유배당(21,207)+변액(2,514) 누락 -- 별도 note 21(1) 모형별(일반모형/VFA) 분류표의 전기말 합계(188,141+2,514=190,655) 와 교차검증됨. 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 4,
+      "공시분기": "2026.2Q",
+      "값": -756.9,
+      "was": -792.0,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0083_푸본현대생명보험/20260814004204.xml L30114 이하 (별도, 유배당 L30117/무배당 L30457/변액 L30798), 1)당반기, 유배당+무배당+변액 3개. 이 회사 테이블은 CSM 소계열 없이 2개 서브컴럼(공정가치법/그외)만 있어 직접 합산. 버그 원인: 파서가 무배당 테이블 단독(166,934백만=1669.3억) 만 잡고 유배당(21,207)+변액(2,514) 누락 -- 별도 note 21(1) 모형별(일반모형/VFA) 분류표의 전기말 합계(188,141+2,514=190,655) 와 교차검증됨. 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 5,
+      "공시분기": "2026.2Q",
+      "값": -90.2,
+      "was": -82.8,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0083_푸본현대생명보험/20260814004204.xml L30114 이하 (별도, 유배당 L30117/무배당 L30457/변액 L30798), 1)당반기, 유배당+무배당+변액 3개. 이 회사 테이블은 CSM 소계열 없이 2개 서브컴럼(공정가치법/그외)만 있어 직접 합산. 버그 원인: 파서가 무배당 테이블 단독(166,934백만=1669.3억) 만 잡고 유배당(21,207)+변액(2,514) 누락 -- 별도 note 21(1) 모형별(일반모형/VFA) 분류표의 전기말 합계(188,141+2,514=190,655) 와 교차검증됨. 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 6,
+      "공시분기": "2026.2Q",
+      "값": 1788.2,
+      "was": 1527.5,
+      "why": "CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, validation Option A: 2025.4Q close is authoritative, reparse 2Q instead of overriding 1Q). 2026.2Q raw (FY2026_Q2/raw/KR0083_푸본현대생명보험/20260814004204.xml L30114 이하 (별도, 유배당 L30117/무배당 L30457/변액 L30798), 1)당반기, 유배당+무배당+변액 3개. 이 회사 테이블은 CSM 소계열 없이 2개 서브컴럼(공정가치법/그외)만 있어 직접 합산. 버그 원인: 파서가 무배당 테이블 단독(166,934백만=1669.3억) 만 잡고 유배당(21,207)+변액(2,514) 누락 -- 별도 note 21(1) 모형별(일반모형/VFA) 분류표의 전기말 합계(188,141+2,514=190,655) 와 교차검증됨. 소계 합산) 재추출. 기초(item1)이 2025.4Q 기말(target)과 정확 일치. item4=잔차(residual). closing identity 거의 정확(rounding 노이즈 이내)."
+    },
+    {
+      "원보험사코드": "KR0074",
+      "항목번호": 1,
+      "공시분기": "2023.4Q",
+      "값": 35264.0,
+      "was": 22082.5,
+      "why": "CSM restatement pull-from-comparative 2026-08-15 (inbox/parser/20260815T0940Z, validation iter2, precedent: 20260620T0600Z KR0073 교보 사례). 원공시(감사보고서 2023.12, rcept 20240409003674)의 FY2023 수치와 재작성본(감사보고서 2024.12, rcept 20250409002702의 전기 비교표시, L9016 이하 두 번째 TABLE)이 서로 다름 -- 정정공시는 없음(비상장사, 감사보고서만 제출). 원공시에는 '계약의 경계 변경 효과' 행이 CSM에 +34,394억 가산되는데 재작성본에는 그 행 자체가 없음 -- 회사가 FY2023 계약경계 변경 처리를 다음해 보고서에서 뒤집은 것. 양쪽 필링 모두 자체적으로 완벽히 닫힌다(각각 검증됨) -- 파싱 오류 아님. 재작성본 기준으로 바꿔야 2024.4Q 기초와 정합(CSM_CONTINUITY_FY_BOUNDARY 소멸). 6항목 모두 raw 행에서 직접 나옴(plug/수작업 아님), 독립 재검증 완료."
+    },
+    {
+      "원보험사코드": "KR0074",
+      "항목번호": 2,
+      "공시분기": "2023.4Q",
+      "값": 5732.7,
+      "was": 7221.6,
+      "why": "CSM restatement pull-from-comparative 2026-08-15 (inbox/parser/20260815T0940Z, validation iter2, precedent: 20260620T0600Z KR0073 교보 사례). 원공시(감사보고서 2023.12, rcept 20240409003674)의 FY2023 수치와 재작성본(감사보고서 2024.12, rcept 20250409002702의 전기 비교표시, L9016 이하 두 번째 TABLE)이 서로 다름 -- 정정공시는 없음(비상장사, 감사보고서만 제출). 원공시에는 '계약의 경계 변경 효과' 행이 CSM에 +34,394억 가산되는데 재작성본에는 그 행 자체가 없음 -- 회사가 FY2023 계약경계 변경 처리를 다음해 보고서에서 뒤집은 것. 양쪽 필링 모두 자체적으로 완벽히 닫힌다(각각 검증됨) -- 파싱 오류 아님. 재작성본 기준으로 바꿔야 2024.4Q 기초와 정합(CSM_CONTINUITY_FY_BOUNDARY 소멸). 6항목 모두 raw 행에서 직접 나옴(plug/수작업 아님), 독립 재검증 완료."
+    },
+    {
+      "원보험사코드": "KR0074",
+      "항목번호": 3,
+      "공시분기": "2023.4Q",
+      "값": 1145.2,
+      "was": 816.6,
+      "why": "CSM restatement pull-from-comparative 2026-08-15 (inbox/parser/20260815T0940Z, validation iter2, precedent: 20260620T0600Z KR0073 교보 사례). 원공시(감사보고서 2023.12, rcept 20240409003674)의 FY2023 수치와 재작성본(감사보고서 2024.12, rcept 20250409002702의 전기 비교표시, L9016 이하 두 번째 TABLE)이 서로 다름 -- 정정공시는 없음(비상장사, 감사보고서만 제출). 원공시에는 '계약의 경계 변경 효과' 행이 CSM에 +34,394억 가산되는데 재작성본에는 그 행 자체가 없음 -- 회사가 FY2023 계약경계 변경 처리를 다음해 보고서에서 뒤집은 것. 양쪽 필링 모두 자체적으로 완벽히 닫힌다(각각 검증됨) -- 파싱 오류 아님. 재작성본 기준으로 바꿔야 2024.4Q 기초와 정합(CSM_CONTINUITY_FY_BOUNDARY 소멸). 6항목 모두 raw 행에서 직접 나옴(plug/수작업 아님), 독립 재검증 완료."
+    },
+    {
+      "원보험사코드": "KR0074",
+      "항목번호": 4,
+      "공시분기": "2023.4Q",
+      "값": -5409.0,
+      "was": 30211.1,
+      "why": "CSM restatement pull-from-comparative 2026-08-15 (inbox/parser/20260815T0940Z, validation iter2, precedent: 20260620T0600Z KR0073 교보 사례). 원공시(감사보고서 2023.12, rcept 20240409003674)의 FY2023 수치와 재작성본(감사보고서 2024.12, rcept 20250409002702의 전기 비교표시, L9016 이하 두 번째 TABLE)이 서로 다름 -- 정정공시는 없음(비상장사, 감사보고서만 제출). 원공시에는 '계약의 경계 변경 효과' 행이 CSM에 +34,394억 가산되는데 재작성본에는 그 행 자체가 없음 -- 회사가 FY2023 계약경계 변경 처리를 다음해 보고서에서 뒤집은 것. 양쪽 필링 모두 자체적으로 완벽히 닫힌다(각각 검증됨) -- 파싱 오류 아님. 재작성본 기준으로 바꿔야 2024.4Q 기초와 정합(CSM_CONTINUITY_FY_BOUNDARY 소멸). 6항목 모두 raw 행에서 직접 나옴(plug/수작업 아님), 독립 재검증 완료."
+    },
+    {
+      "원보험사코드": "KR0074",
+      "항목번호": 5,
+      "공시분기": "2023.4Q",
+      "값": -4431.3,
+      "was": -5176.2,
+      "why": "CSM restatement pull-from-comparative 2026-08-15 (inbox/parser/20260815T0940Z, validation iter2, precedent: 20260620T0600Z KR0073 교보 사례). 원공시(감사보고서 2023.12, rcept 20240409003674)의 FY2023 수치와 재작성본(감사보고서 2024.12, rcept 20250409002702의 전기 비교표시, L9016 이하 두 번째 TABLE)이 서로 다름 -- 정정공시는 없음(비상장사, 감사보고서만 제출). 원공시에는 '계약의 경계 변경 효과' 행이 CSM에 +34,394억 가산되는데 재작성본에는 그 행 자체가 없음 -- 회사가 FY2023 계약경계 변경 처리를 다음해 보고서에서 뒤집은 것. 양쪽 필링 모두 자체적으로 완벽히 닫힌다(각각 검증됨) -- 파싱 오류 아님. 재작성본 기준으로 바꿔야 2024.4Q 기초와 정합(CSM_CONTINUITY_FY_BOUNDARY 소멸). 6항목 모두 raw 행에서 직접 나옴(plug/수작업 아님), 독립 재검증 완료."
+    },
+    {
+      "원보험사코드": "KR0074",
+      "항목번호": 6,
+      "공시분기": "2023.4Q",
+      "값": 32301.6,
+      "was": 55155.5,
+      "why": "CSM restatement pull-from-comparative 2026-08-15 (inbox/parser/20260815T0940Z, validation iter2, precedent: 20260620T0600Z KR0073 교보 사례). 원공시(감사보고서 2023.12, rcept 20240409003674)의 FY2023 수치와 재작성본(감사보고서 2024.12, rcept 20250409002702의 전기 비교표시, L9016 이하 두 번째 TABLE)이 서로 다름 -- 정정공시는 없음(비상장사, 감사보고서만 제출). 원공시에는 '계약의 경계 변경 효과' 행이 CSM에 +34,394억 가산되는데 재작성본에는 그 행 자체가 없음 -- 회사가 FY2023 계약경계 변경 처리를 다음해 보고서에서 뒤집은 것. 양쪽 필링 모두 자체적으로 완벽히 닫힌다(각각 검증됨) -- 파싱 오류 아님. 재작성본 기준으로 바꿔야 2024.4Q 기초와 정합(CSM_CONTINUITY_FY_BOUNDARY 소멸). 6항목 모두 raw 행에서 직접 나옴(plug/수작업 아님), 독립 재검증 완료."
+    },
+    {
+      "원보험사코드": "KR0004",
+      "항목번호": 2,
+      "공시분기": "2023.4Q",
+      "값": 509.7,
+      "was": -509.7,
+      "why": "inbox/validation/20260817T1159Z (parser 발주, 신계약CSM 음수 이상 -> validation 이 부호규약 버그로 진단, iter1 답신에서 raw 재계산 제시 -> parser 가 독립 재검증 완료, 2026-08-17). data/dart/FY2023_Q4/raw/KR0004_엠지손해보험_20240408000665/20240408000665_00760.xml: 이 회사의 FY2023(전환 첫 해) 연차보고서 CSM 변동표는 '변동' 블록이 손익(P&L) 관점(수익=+)이고 '잔액' 블록은 부채 관점이라 부호가 반대 -- raw 값을 그대로 옮기면 폐쇄식이 '기초-변동=기말'로 닫히는데(기초 605,551,876-변동소계(-71,849,290)=677,401,166=기말, 정확히 일치) 정상 부채관점 폐쇄식('기초+변동=기말')이 아님. 부호를 뒤집으면 신계약인식효과 행의 PV/RA/CSM 셋 다 IFRS17 규약에 맞음(PV 순유입 음수·RA 양수·CSM 양수, 합계 0 유지 -- 라이나생명 FY2023 같은 표의 최초인식 행과 동일 부호 패턴). raw 신계약인식효과 CSM 소계=(50,969,591)천원, 부호 반전=+50,969,591=+509.7억. 2024.4Q/2025.4Q 는 같은 회사라도 이 버그 없음(각각 독립 검산: opening+변동=closing 이 정상적으로 닫힘, 전환 첫 해 필링에만 있는 문제로 확인) -- 그 두 분기는 손대지 않음."
+    },
+    {
+      "원보험사코드": "KR0004",
+      "항목번호": 3,
+      "공시분기": "2023.4Q",
+      "값": 203.1,
+      "was": -203.1,
+      "why": "inbox/validation/20260817T1159Z 같은 부호규약 버그(항목2 note 참조). raw 보험금융손익 행 CSM 소계=(20,305,746)천원(공정가치법 -16,218,552 + 그외 -4,087,194), 부호 반전=+20,305,746=+203.1억. 2024.4Q/2025.4Q 는 이 버그 없음 확인, 손대지 않음."
+    },
+    {
+      "원보험사코드": "KR0004",
+      "항목번호": 4,
+      "공시분기": "2023.4Q",
+      "값": 477.5,
+      "was": 959.5,
+      "why": "inbox/validation/20260817T1159Z 같은 부호규약 버그(항목2 note 참조). 이 항목은 raw 행이 아니라 잔차(기말-기초-나머지)라 항목2/3/5 가 뒤집히면 자동으로 바뀜: 6055.5+509.7+203.1+477.5-471.8=6774.0(기말)로 폐쇄. 독립 교차검증: raw '보험계약마진을 조정하는 추정치 변동분' CSM 소계=(15,458,725)천원 + '손실부담계약의 인식(환입)' CSM 소계=(32,291,082)천원, 둘 다 부호 반전 후 합산=15,458,725+32,291,082=47,749,807천원=477.5억 -- 잔차 계산과 정확히 일치(우연 아님, 부호반전이 맞다는 추가 증거). 2024.4Q/2025.4Q 는 이 버그 없음, 손대지 않음."
+    },
+    {
+      "원보험사코드": "KR0004",
+      "항목번호": 5,
+      "공시분기": "2023.4Q",
+      "값": -471.8,
+      "was": 471.8,
+      "why": "inbox/validation/20260817T1159Z 같은 부호규약 버그(항목2 note 참조). raw 보험계약마진상각 행 CSM 소계=47,175,854천원(공정가치법 40,331,964 + 그외 6,843,890, 원본은 '보험수익' 인식이라 P&L 관점에서 + 로 찍힘), 부호 반전(부채/CSM 잔액 관점: 상각은 CSM 을 줄이는 항목)=-47,175,854=-471.8억. 2024.4Q(-525.1)/2025.4Q(-174.0) 는 이미 음수로 정상 -- 이 버그 없음, 손대지 않음."
     }
   ]
 }
