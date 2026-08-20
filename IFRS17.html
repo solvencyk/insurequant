@@ -1164,12 +1164,30 @@
       }
     }
 
+    // owner 20260819 재확인 — 연도모드가 "직전 3년"을 어김: selectPeriods()는 존재하는 4Q를 전부
+    // 반환하는 함수라, BS 데이터가 2021년까지 있는 회사(메리츠화재·현대해상·KB손보·코리안리 등
+    // 실측)는 5-6개 열이 붙었다(2021.4Q~2026.2Q). CSM Panel 2의 wfYearBuckets()와 동일하게
+    // 최신 분기 + 직전 3개년말로 강하게 캡. selectPeriods는 다른 패널(PL표·CSM 시계열·NB)에서도
+    // 공유돼 있어 그쪽 동작을 바꾸지 않도록 여기선 건드리지 않고 BS 전용 함수를 새로 둔다.
+    function eqYearPeriods(periodsAsc){
+      if (!periodsAsc.length) return [];
+      const set = new Set(periodsAsc);
+      const last = periodsAsc[periodsAsc.length-1];
+      const [ly] = wfParseQ(last);
+      const out = [last];
+      for (let k=1; k<4; k++){
+        const yq = (ly-k)+".4Q";
+        if (set.has(yq)) out.push(yq);
+      }
+      return out.sort((a,b)=>{ const [ay,aq]=wfParseQ(a), [by,bq]=wfParseQ(b); return ay!==by ? ay-by : aq-bq; });
+    }
+
     // owner 20260818("그 밑에 원천 테이블도 시계열로"): T자 스냅샷 아래 다분기 표. 상단 기준
-    // 셀렉터(#wfPeriod)를 그대로 따라간다 — selectPeriods 재사용(분기=직전5분기, 연도=최신+직전
-    // 3개년말), 분기 미제공사는 CSM 패널과 동일한 "연도로 바꿔라" 안내. 행: 자산/부채/자본 총계
-    // (+토글)→세부(+토글)→자본 세부의 "이익잉여금"은 자체 +토글로 법정준비금(섹션=준비금) 한 겹
-    // 더 하위에 — 합계 계산엔 여전히 안 넣는다(D-4 원칙 그대로, 여긴 총계를 eqTotal에서 직접 읽어
-    // 합산 자체를 안 하므로 애초에 이중계상 위험이 없음).
+    // 셀렉터(#wfPeriod)를 그대로 따라간다 — 분기=직전5분기(selectPeriods 재사용), 연도=최신+직전
+    // 3개년말(eqYearPeriods, 위), 분기 미제공사는 CSM 패널과 동일한 "연도로 바꿔라" 안내. 행: 자산/
+    // 부채/자본 총계(+토글)→세부(+토글)→자본 세부의 "이익잉여금"은 자체 +토글로 법정준비금(섹션=
+    // 준비금) 한 겹 더 하위에 — 합계 계산엔 여전히 안 넣는다(D-4 원칙 그대로, 여긴 총계를 eqTotal
+    // 에서 직접 읽어 합산 자체를 안 하므로 애초에 이중계상 위험이 없음).
     function renderBsTable(host, company, mode){
       const box = q(host, "#bsTable"), capEl = q(host, "#bsTableCap"), stubEl = q(host, "#bsTableStub");
       if (!box) return;
@@ -1183,7 +1201,7 @@
         return;
       }
       stub(stubEl, false);
-      const periods = selectPeriods(ascAll, mode, hasQ, false);
+      const periods = mode === "quarter" ? selectPeriods(ascAll, mode, hasQ, false) : eqYearPeriods(ascAll);
       if (!periods.length) return;
 
       if (capEl) capEl.textContent = "표시 " + periods[0] + " ~ " + periods[periods.length-1] + " · " + (mode==="quarter"?"분기":"연도") + " 기준 · 단위 억원 · 음수 △";
@@ -1217,13 +1235,23 @@
           }
         }
         // 이익잉여금 행 자체가 없는 회사(비상장 등)도 준비금 공시는 있을 수 있음 — 누락 방지로 자본
-        // 세부 끝에 평행 배치(T자 D-4의 앵커-없음 폴백과 동일 취지).
+        // 세부 끝에 평행 배치(T자 D-4의 앵커-없음 폴백과 동일 취지). owner 20260819(inbox
+        // 20260819T0620Z, 악사손해보험 실사례): 이 경로엔 소속 라벨이 없어서, 그 섹션에 AOCI 하나만
+        // 남아있으면 준비금이 화면상 "AOCI의 하위 항목"처럼 오독됨 — T자(L1090)와 같은 문구의 구분
+        // 행을 넣어 AOCI와 시각적으로 분리.
         if (secKey==="자본" && !reAttached){
-          for (const rn of eqUnionNames(company, periods, "준비금")){
+          const reNames = eqUnionNames(company, periods, "준비금");
+          if (reNames.length){
             rowDefs.push({
-              label: rn, level: 1, group: "g_"+secId, hidden: true,
-              cells: periods.map(qtr => { const v = eqValByName(company, qtr, "준비금", rn); return v==null ? "—" : samo(v/100); }),
+              note: true, group: "g_"+secId, hidden: true,
+              label: "법정준비금 — 이익잉여금 내부 적립, 자본총계 합계에는 미포함",
             });
+            for (const rn of reNames){
+              rowDefs.push({
+                label: rn, level: 1, group: "g_"+secId, hidden: true,
+                cells: periods.map(qtr => { const v = eqValByName(company, qtr, "준비금", rn); return v==null ? "—" : samo(v/100); }),
+              });
+            }
           }
         }
       }
@@ -1244,6 +1272,19 @@
         const tr = document.createElement("tr");
         if (r.hidden) tr.style.display = "none";
         if (r.group) (groups[r.group] || (groups[r.group]=[])).push(tr);
+
+        // 데이터 없는 소속 구분행(예: 이익잉여금 앵커가 없는 회사의 법정준비금 — owner 20260819) —
+        // 전체 폭 라벨만, 토글/셀 로직과 무관.
+        if (r.note){
+          const noteTd = document.createElement("td");
+          noteTd.colSpan = headers.length;
+          noteTd.className = "small-muted";
+          noteTd.style.cssText = "font-style:italic;padding-top:10px;border-top:1px dashed var(--border)";
+          noteTd.textContent = "　".repeat(r.level || 0) + r.label;
+          tr.appendChild(noteTd);
+          tbody.appendChild(tr);
+          return;
+        }
 
         const labTd = document.createElement("td");
         const indent = "　".repeat(r.level || 0);
