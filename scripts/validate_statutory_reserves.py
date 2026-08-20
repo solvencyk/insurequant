@@ -283,24 +283,68 @@ def rollforward_exempt() -> tuple[set, list]:
     return ok, rejected
 
 
-def load_baseline() -> set[tuple]:
-    """이미 알려진 미해결 RED 목록. 키 = (rule, company, item, quarter)."""
+def load_baseline() -> tuple[set, list]:
+    """이미 알려진 미해결 RED 목록.
+
+    두 벌로 돌려준다:
+      exact : {(rule, company, item, quarter)}  — 단일 분기 엔트리(R-RSV-5/6/8/9 등)
+      spans : [(rule, company, item, from, to, value)] — 구간 엔트리(R-RSV-1)
+
+    **구간을 문자열 정확일치로 잡지 않는 이유** (2026-08-20, parser 20260820T2010Z):
+    래칫이 막아야 하는 것은 **새로운 결함**인데, 구간 문자열을 키로 쓰면 **데이터가 좋아져도**
+    RED 이 뜬다. 뒤채움 사본을 걷어내자 flat 구간이 짧아졌고(예: DB생명 item5
+    `2023.1Q~2024.3Q` → `2023.4Q~2024.3Q`, 값은 1,633,087 그대로), 축소된 구간이 키에서
+    빠져 신규 RED 6건으로 잡혔다 — 같은 결함의 **경계 이동**일 뿐인데 막아 버린다.
+
+    같은 실패를 오늘 이미 한 번 했다: `legit_flat` 도 span 정확일치라 이월로 구간이 늘자
+    등재해 둔 정당 사유가 RED 로 되살아났다(그때는 from/to 포함관계로 고쳤다).
+    **구간 키를 문자열 정확일치로 잡지 말 것** — 데이터가 자라거나 줄면 조용히 어긋난다.
+    """
     if not BASELINE.exists():
-        return set()
+        return set(), []
     d = json.loads(BASELINE.read_text(encoding="utf-8"))
-    return {(e["rule"], _norm(e.get("company")), e.get("item"), str(e.get("quarter")))
-            for e in d.get("entries", [])}
+    exact, spans = set(), []
+    for e in d.get("entries", []):
+        q = str(e.get("quarter"))
+        key3 = (e["rule"], _norm(e.get("company")), e.get("item"))
+        if "~" in q and e.get("value") is not None:
+            a, b = q.split("~", 1)
+            spans.append((*key3, a, b, float(e["value"])))
+        else:
+            exact.add((*key3, q))
+    return exact, spans
 
 
-def apply_baseline(findings: list[Finding], baseline: set[tuple]) -> list[Finding]:
-    """baseline 에 있는 RED 는 BASELINE(비차단)으로 강등한다. ORANGE 는 원래 비차단이라 그대로."""
+def apply_baseline(findings: list[Finding], baseline) -> list[Finding]:
+    """baseline 에 있는 RED 는 BASELINE(비차단)으로 강등한다. ORANGE 는 원래 비차단이라 그대로.
+
+    구간 엔트리는 **포함관계 + 값 일치**로 판정한다. 둘 다 요구하는 이유:
+      - 포함관계만 보면, 프리즌 구간 안에서 **다른 값**의 새 flat 이 생겨도 흡수해 버린다.
+      - 값만 보면, 구간이 **길어진 것**(결함 확대)도 통과시킨다 — 포함관계가 그걸 막는다.
+    구간이 프리즌 밖으로 뻗으면 포함이 깨져 RED 로 남는다(의도).
+    """
+    exact, spans = baseline if isinstance(baseline, tuple) else (baseline, [])
     for f in findings:
         if f["severity"] != RED:
             continue
-        key = (f["rule"], _norm(f["company"]), f["item"], str(f["quarter"]))
-        if key in baseline:
+        key3 = (f["rule"], _norm(f["company"]), f["item"])
+        q = str(f["quarter"])
+        hit = (*key3, q) in exact
+        why = "동결된 기존 결함"
+        if not hit and "~" in q and f.get("value") is not None:
+            a, b = q.split("~", 1)
+            fv = float(f["value"])
+            for (r, c, it, fa, fb, bv) in spans:
+                if (r, c, it) != key3:
+                    continue
+                if _qk(fa) <= _qk(a) and _qk(b) <= _qk(fb)                         and abs(fv - bv) <= max(1e-6, abs(bv) * 1e-9):
+                    hit = True
+                    why = ("동결된 기존 결함" if (fa, fb) == (a, b)
+                           else f"동결 구간 {fa}~{fb} 의 축소분(같은 값 {bv:,.0f})")
+                    break
+        if hit:
             f["severity"] = BASELINE_SEV
-            f["message"] += "  [BASELINE — 2026-08-20 동결된 기존 결함, 비차단]"
+            f["message"] += f"  [BASELINE — 2026-08-20 {why}, 비차단]"
     return findings
 
 
@@ -459,7 +503,8 @@ def run(rows: list[dict], reg, legit=None, carry=None, rollfwd=None) -> list[Fin
                         "R-RSV-1", sev, names[co], item, f"{span[0]}~{span[-1]}",
                         f"{n}분기 연속 동일값 {v:,.0f}"
                         + (" (FY경계+4Q 포함 — 결산 적립이 안 움직였다)"
-                           if crosses_fy and has_q4 else "")))
+                           if crosses_fy and has_q4 else ""),
+                        value=v))
                 i = j + 1
 
     # ---------- R-RSV-9 census ----------
