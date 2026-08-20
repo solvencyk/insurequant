@@ -1,0 +1,30 @@
+{
+  "sha256": "1857db60bdacf27d1e31e3dac9d362d55800b15143251033e34ecc031996fdc8",
+  "rows": 6953,
+  "companies": 39,
+  "quarters": 22,
+  "rows_per_item": {
+    "1": 371,
+    "2": 371,
+    "3": 371,
+    "4": 362,
+    "5": 366,
+    "6": 219,
+    "7": 453,
+    "8": 199,
+    "10": 367,
+    "11": 350,
+    "12": 320,
+    "13": 345,
+    "14": 303,
+    "15": 367,
+    "20": 357,
+    "21": 328,
+    "22": 217,
+    "23": 216,
+    "24": 368,
+    "30": 367,
+    "31": 336
+  },
+  "_what": "Refactor safety net for scripts/build_ifrs17_bs.py (2026-08-14, sole 17BS master since equity_composition.json's archive). Pins sha256 + row/company/quarter/per-item counts for IFRS17_BS.json."
+}

@@ -1,0 +1,19 @@
+{
+  "sha256": "070e2ec4e5596663912bb18abf59e313217fb4403e8eb6375c44897be19246af",
+  "rows": 2043,
+  "companies": 24,
+  "quarters": 14,
+  "rows_per_item": {
+    "1": 315,
+    "2": 287,
+    "3": 284,
+    "4": 314,
+    "5": 329,
+    "6": 329,
+    "7": 48,
+    "8": 78,
+    "9": 28,
+    "10": 31
+  },
+  "_what": "Refactor safety net for scripts/build_dividend.py (2026-08-14, inbox/parser/20260814T0938Z). Pins sha256 + row/company/quarter/per-item counts for dividend.json."
+}
