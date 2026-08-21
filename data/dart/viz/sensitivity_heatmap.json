@@ -1175,7 +1175,7 @@
       "caption": "8) 가정민감도당기말과 전기말 현재 장기손해보험의 가정민감도는 다음과 같습니다.① 보험위험<제5(당)기>",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "unit_detected": "백만원",
+      "unit_detected": "천원",
       "unit_source": "xref",
       "header": [
         [
@@ -1198,38 +1198,38 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -4.07,
-          "pl_impact": -2.35
+          "csm_delta": -0.0041,
+          "pl_impact": -0.0024
         },
         {
           "risk": "장해질병 (정액보상)",
           "shock": "정액보상 3.40% 증가",
-          "csm_delta": -631.97,
-          "pl_impact": -7315.21
+          "csm_delta": -0.632,
+          "pl_impact": -7.3152
         },
         {
           "risk": "장기재물기타",
           "shock": "4.19% 증가",
           "csm_delta": null,
-          "pl_impact": -0.25
+          "pl_impact": -0.0003
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": -623.31,
-          "pl_impact": -2761.71
+          "csm_delta": -0.6233,
+          "pl_impact": -2.7617
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": 692.64,
-          "pl_impact": 3004.03
+          "csm_delta": 0.6926,
+          "pl_impact": 3.004
         },
         {
           "risk": "사업비율(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": -143.42,
-          "pl_impact": -2021.53
+          "csm_delta": -0.1434,
+          "pl_impact": -2.0215
         }
       ],
       "period": "FY2025",
