@@ -128,9 +128,17 @@ def test_unwired_gates_still_fail():
     script = ROOT / "scripts" / (name + ".py")
     if not script.exists():
         pytest.skip("slim 워크트리")
-    rc = subprocess.run([sys.executable, str(script)], cwd=str(ROOT),
-                        capture_output=True, text=True, encoding="utf-8",
-                        errors="replace").returncode
+    # 이 게이트는 자기 산출 JSON 을 덮어쓴다. 테스트가 워킹트리를 더럽히면 안 되므로
+    # 바이트를 떠 두고 되돌린다(`prepush_check.py` 의 도메인 게이트 절과 같은 계약).
+    out = ROOT / "data" / "dart" / "viz" / "csm_waterfall_validation.json"
+    before = out.read_bytes() if out.exists() else None
+    try:
+        rc = subprocess.run([sys.executable, str(script)], cwd=str(ROOT),
+                            capture_output=True, text=True, encoding="utf-8",
+                            errors="replace").returncode
+    finally:
+        if before is not None and out.exists() and out.read_bytes() != before:
+            out.write_bytes(before)
     assert rc != 0, (
         f"{name} 이 이제 통과한다(exit 0). 미배선 사유('지금 깨져 있다')가 더는 참이 아니다 — "
         f"WIRED 로 옮기고 prepush_check.py 1c 목록에 이름을 넣어라."

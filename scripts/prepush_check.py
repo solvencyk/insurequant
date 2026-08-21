@@ -62,11 +62,16 @@ def main() -> int:
     #     게이트를 안 부르는 것은 공짜로 검증을 버리는 것이다 — 지금 넣는다.
     #     어떤 게이트가 배선됐고 어떤 게 왜 빠졌는지는 `tests/test_push_gate_wiring.py` 가
     #     매니페스트로 강제한다(새 validate_* 를 추가하면 거기서 막힌다).
-    #     **주의**: 이 세 스크립트는 자기 산출 JSON(`csm_continuity_validation.json` ·
-    #     `kics_rate_sensitivity_validation.json` · `nb_csm_validation.json`)을 덮어쓴다.
-    #     따라서 push 후 워킹트리가 dirty 해 보일 수 있다 — 커밋 내용과 무관한 검증 산출물이다.
+    #     **이 세 스크립트는 자기 산출 JSON 을 덮어쓴다**(`built_at` 타임스탬프만 바뀌어도
+    #     diff 가 난다). 게이트는 **검사만 하고 트리를 바꾸지 않는다**는 계약이라, 실행 전
+    #     바이트를 떠 두고 끝나면 되돌린다 — 안 그러면 push 할 때마다 워킹트리가 더러워지고
+    #     다음 세션이 "이 diff 는 뭐지"로 시간을 쓴다(2026-08-21 실측).
     print("\n" + "=" * 72)
     print("DOMAIN GATES (csm_continuity · kics_rate_sensitivity · nb_csm_multiple)")
+    _dom_outputs = [ROOT / "data" / "dart" / "viz" / "csm_continuity_validation.json",
+                    ROOT / "data" / "_derived" / "kics_rate_sensitivity_validation.json",
+                    ROOT / "data" / "_derived" / "nb_csm_validation.json"]
+    _before = {f: f.read_bytes() for f in _dom_outputs if f.exists()}
     n_dom = 0
     for _name in ("validate_csm_continuity", "validate_kics_rate_sensitivity",
                   "validate_nb_csm_multiple"):
@@ -81,6 +86,9 @@ def main() -> int:
         for _ln in _tail:
             print("      " + _ln)
         n_dom |= _p.returncode
+    for _f, _bytes in _before.items():          # 검사만 하고 트리는 원래대로
+        if _f.read_bytes() != _bytes:
+            _f.write_bytes(_bytes)
 
     # 2) discovery → precision triage  (owner-confirmed cells are suppressed, never reach skeptic)
     real, _noise, uncertain, _confirmed = triage.triage()
