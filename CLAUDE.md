@@ -63,10 +63,19 @@ honor-system** 이었다. 실측: `scripts/prepush_check.py` 를 참조하는 11
 게이트에 룰을 아무리 배선해도 누가 그 명령어를 기억해서 쳐야만 돌았고, 안 치면 조용히 통과했다.
 **"게이트에 배선했다" 와 "실제로 강제된다" 는 다른 말이다** — 새 룰을 배선할 때 이 구분을 확인할 것.
 
-훅이 하는 일 = `scripts/prepush_check.py` (~84초): ① data-contract 하드게이트 ② anomaly triage
+훅이 하는 일 = `scripts/prepush_check.py` (~5분): ① data-contract 하드게이트
+**①b K-ICS 룰 게이트**(`validate_kics_disclosure.py`) ② anomaly triage
 ③ **inbox 위생**(`scripts/check_inbox_hygiene.py`, `inbox/README.md` §64-71 강제)
-④ **오프라인 테스트 126개** — 골든 4종 + `tests/test_rule_coverage_manifest.py`.
+④ **오프라인 테스트 140개** — 골든 + `test_rule_coverage_manifest.py` + `test_identity_tautology.py`.
 그 전까지 **pytest 를 자동으로 돌리는 것이 아무것도 없었다**(골든을 만들어 놓고 아무도 안 돌리는 상태).
+
+> **①b 는 2026-08-21 **두 번째 라운드**에 들어갔다 — 훅을 만든 그날 빠뜨렸던 것이다.** 바로 위
+> "K-ICS validation gate (mandatory)" 절이 push 전 필수라고 못박은 그 게이트인데, 훅에도 CI 에도
+> 호출이 없었다. 증거가 코드에 남아 있었다 — `validate_data_contract.py` L305 주석:
+> *"(prepush_check.py 는 validate_kics_disclosure.py 를 호출하지 않는다) 여기서 같이 건다"*.
+> 빠진 게이트를 눈치챌 때마다 **룰을 한 개씩 베껴 심고** 있었던 것이다. 5.9초짜리다.
+> **교훈 재확인: "mandatory 라고 문서에 썼다" 는 강제가 아니다.** 새 게이트를 만들면
+> `prepush_check.py` 에 호출을 넣었는지 그 자리에서 확인할 것.
 
 > `test_rule_coverage_manifest.py` 는 **어떤 항목이 어떤 룰에 의해 실제로 검사되는지**를 선언하고
 > 변이시험으로 대조한다(룰엔진 층 + 게이트 전체 층). 룰을 추가·개명·삭제하거나 축의 커버리지를

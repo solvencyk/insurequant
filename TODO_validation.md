@@ -7,6 +7,44 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 
 ## Status
 
+**(2026-08-21 k) ✅ owner 결정으로 R2 동어반복 2건 면제 → 게이트 exit 0, 라이브 배포 진행.**
+> owner: *"테이블 숫자를 바꾸는 RED는 아닌거같은대? 이번에는 일단 풀고 올려라"* — 맞다.
+> `IDENTITY_TAUTOLOGY` 는 census 를 읽어 findings 만 만들고 `records` 에 쓰지 않는다(확인함).
+> **상한 박제형**으로 배선: `_TAUT_EXEMPT` + `_TAUT_PIN_EXCESS_TOL=0.10`. 더 되맞춰지면
+> `IDENTITY_TAUTOLOGY_PIN_DRIFT` RED 복귀(허용오차가 실측 폭 +0.59 를 못 삼킨다), 수렴하면
+> `..._EXEMPT_UNNECESSARY` review 로 등재 삭제 안내. **경고 인쇄는 3곳 모두 유지** — 면제한
+> 것은 push 차단이지 경고가 아니다. 변이시험 5개 추가(총 10). 원인 조사는 계속(티켓 1830Z 2·3번).
+
+**(2026-08-21 j) 🔴 push 차단중 — 훅이 `validate_kics_disclosure.py` 를 안 부르고 있었다. 배선하니 R2 동어반복 2건이 실제로 막는다.**
+> `PRE-PUSH VERDICT: gate RED=0 · K-ICS rule gate=BLOCK · domain gates=pass · inbox 0 · tests=pass → BLOCKED`
+>
+> **(i) 의 "exit 0 / gate-clear" 는 이 게이트를 안 돌린 상태의 결과였다.** `CLAUDE.md` 의
+> "K-ICS validation gate (mandatory)" 가 push 전 필수라고 못박은 `validate_kics_disclosure.py`
+> (5.9초)를 훅도 CI 도 부르지 않았다. 증거: `validate_data_contract.py` L305 주석
+> *"(prepush_check.py 는 validate_kics_disclosure.py 를 호출하지 않는다) 여기서 같이 건다"* —
+> 빠진 게이트를 눈치챌 때마다 룰을 한 개씩 베껴 심고 있었다.
+>
+> **전수확인 결과 `scripts/validate_*.py` 8개 중 훅이 부르던 것은 1개뿐이었다.**
+> · 배선함(1b·1c): `validate_kics_disclosure`(exit 2) · `validate_csm_continuity`(0, 2초) ·
+>   `validate_kics_rate_sensitivity`(0, 3초) · `validate_nb_csm_multiple`(0, 3초)
+> · 미배선+사유등재: `validate_csm_waterfall`(**exit 1**, `balance_incomplete:assumption` —
+>   지금 걸면 모든 push 차단 → parser/ifrs17 티켓 `20260821T1900Z`) ·
+>   `validate_master_tables`(골든 경유, 직접 호출은 `--no-build` 없으면 마스터 파괴) ·
+>   `validate_statutory_reserves`(data-contract 가 import 해 실행)
+> · **`tests/test_push_gate_wiring.py` 신설(12 tests)** — 새 `validate_*.py` 는 WIRED 나
+>   사유 있는 NOT_A_PUSH_GATE 중 하나에 없으면 막힌다. `test_unwired_gates_still_fail` 은
+>   "지금 깨져 있어서 뺐다" 사유가 아직 참인지 매 push 재확인한다.
+>
+> **남은 차단 원인 = R2_순자산합 IDENTITY_TAUTOLOGY 2건(적용전·적용후).**
+> parser 가 넘긴 가설("image-only 24셀이 초과분을 설명한다")을 실측으로 **반증**했다 —
+> 그 셀을 빼도 excess 1.25→1.23 / 1.43→1.40 밖에 안 움직인다(적용후는 여전히 RED).
+> 진짜 신호는 **회사 단위 이봉분포**: KR0069 9/9 · KR0008 12/13 · KR0050 12/13 이 스캔사가
+> 아닌데도 100%대이고, 반대로 **KR0073 은 13칸 중 1칸**(귀무 49%)으로 계통 이탈이다.
+> 티켓 `inbox/validation/20260821T1830Z` · 프로브 `scripts/_probes/probe_r2_excluding_scan_cells.py`.
+>
+> **영향: 라이브(main) 배포가 이것 때문에 대기중.** main 의 `kics_disclosure.json` 은 2026-07-21 판
+> (지난 한 달 = 적용후 710칸 변경 + 신규 204칸 미반영). 배포 사본은 `deploy/20260821-json` 에 준비됨.
+
 **(2026-08-21 i) ✅ push 게이트 RED 8 → 0. `36_irr` documented exception 배선 완료 (owner 승인).**
 > `sh .githooks/pre-push < /dev/null` → **exit 0** ·
 > `PRE-PUSH VERDICT: gate RED=0 · inbox 기계적위반=0 · offline tests=pass → gate-clear` (140 passed / 243s).

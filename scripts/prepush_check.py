@@ -36,6 +36,52 @@ def main() -> int:
     gate.print_report(res)
     n_red = len(res.red)
 
+    # 1b) K-ICS 룰 게이트 (owner 2026-08-21 2차). `CLAUDE.md` 의 "K-ICS validation gate (mandatory)"
+    #     는 push 전에 이것을 돌리라고 **명시**하는데, 이 훅도 CI 도 그것을 부르지 않았다. 실제로
+    #     `validate_data_contract.py` L305 에 "(prepush_check.py 는 validate_kics_disclosure.py 를
+    #     호출하지 않는다) 여기서 같이 건다" 라는 주석과 함께 **룰 하나만 베껴 놓은 흔적**이 있다 —
+    #     빠진 게이트를 눈치챌 때마다 룰을 한 개씩 옮겨 심는 것은 배선이 아니다. 5.9초짜리를
+    #     안 돌려서 생긴 구멍이다. exit 2 = 룰엔진 blocking RED · census RED · 동어반복
+    #     (IDENTITY_TAUTOLOGY) · 미평가축 · 근거 없는 면제 중 하나 이상.
+    print("\n" + "=" * 72)
+    print("K-ICS RULE GATE (CLAUDE.md 'mandatory' — scripts/validate_kics_disclosure.py)")
+    import subprocess                              # noqa: E402
+    kp = subprocess.run([sys.executable, str(ROOT / "scripts" / "validate_kics_disclosure.py")],
+                        cwd=str(ROOT), capture_output=True, text=True, encoding="utf-8")
+    klines = [ln for ln in (kp.stdout or "").splitlines() if ln.strip()]
+    keep = [ln for ln in klines
+            if any(t in ln for t in ("Status counts:", "blocking RED", "Coverage census:",
+                                     "RED failures by rule", "(blocking)", "documented exception"))]
+    print("\n".join(keep[:14]) or (kp.stderr or "")[-600:])
+    n_kics = kp.returncode
+    print(f"  → K-ICS gate exit={n_kics} ({'BLOCK' if n_kics else 'clear'})")
+
+    # 1c) 나머지 도메인 게이트 (owner 2026-08-21 2차). `scripts/validate_*.py` 8개 중 훅이 부르던
+    #     것은 data-contract 하나뿐이었다. 1b 로 K-ICS 룰게이트를 넣으면서 전수 확인했더니
+    #     **통과하고 있으면서 아무도 안 부르는 게이트가 3개** 더 있었다(각 2~3초). 통과하는
+    #     게이트를 안 부르는 것은 공짜로 검증을 버리는 것이다 — 지금 넣는다.
+    #     어떤 게이트가 배선됐고 어떤 게 왜 빠졌는지는 `tests/test_push_gate_wiring.py` 가
+    #     매니페스트로 강제한다(새 validate_* 를 추가하면 거기서 막힌다).
+    #     **주의**: 이 세 스크립트는 자기 산출 JSON(`csm_continuity_validation.json` ·
+    #     `kics_rate_sensitivity_validation.json` · `nb_csm_validation.json`)을 덮어쓴다.
+    #     따라서 push 후 워킹트리가 dirty 해 보일 수 있다 — 커밋 내용과 무관한 검증 산출물이다.
+    print("\n" + "=" * 72)
+    print("DOMAIN GATES (csm_continuity · kics_rate_sensitivity · nb_csm_multiple)")
+    n_dom = 0
+    for _name in ("validate_csm_continuity", "validate_kics_rate_sensitivity",
+                  "validate_nb_csm_multiple"):
+        # 자식 스크립트 일부가 stdout 을 utf-8 로 reconfigure 하지 않아 한글이 깨진 채 올라온다
+        # (`validate_nb_csm_multiple` 실측). 훅이 그 출력을 사람에게 보여주므로 여기서 강제한다.
+        _p = subprocess.run([sys.executable, str(ROOT / "scripts" / (_name + ".py"))],
+                            cwd=str(ROOT), capture_output=True, text=True,
+                            encoding="utf-8", errors="replace",
+                            env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+        _tail = [ln for ln in (_p.stdout or "").splitlines() if ln.strip()][-2:]
+        print(f"  {_name}: exit={_p.returncode}")
+        for _ln in _tail:
+            print("      " + _ln)
+        n_dom |= _p.returncode
+
     # 2) discovery → precision triage  (owner-confirmed cells are suppressed, never reach skeptic)
     real, _noise, uncertain, _confirmed = triage.triage()
     out_dir = ROOT / "data" / "_derived"
@@ -71,7 +117,6 @@ def main() -> int:
     #    pl_breakdown ~95초 opt-in)은 뺀다. 이 묶음 ~19초.
     print("\n" + "=" * 72)
     print("OFFLINE TESTS (goldens + 룰 커버리지 매니페스트)")
-    import subprocess                              # noqa: E402
     fast = ["tests/test_kics_rules_golden.py", "tests/test_master_tables_golden.py",
             "tests/test_post_transition_golden.py", "tests/test_deploy_assets.py",
             "tests/test_rule_coverage_manifest.py",
@@ -79,6 +124,9 @@ def main() -> int:
             # 올리면 영원히 0건) 변이시험이 매 push 마다 돌아야 한다. 여기 안 넣으면 "게이트에
             # 배선했다"가 또 honor-system 이 된다 — 이 훅이 생긴 이유 그 자체. <1초.
             "tests/test_identity_tautology.py",
+            # 게이트가 훅에 실제로 걸려 있는지를 검사하는 매니페스트. 이게 없으면 "새 게이트를
+            # 만들고 훅에 안 거는" 사고가 조용히 반복된다(2026-08-21 에 5개가 호출처 0 이었다).
+            "tests/test_push_gate_wiring.py",
             "tests/unit/"]
     # 커버리지 매니페스트는 훅에서만 **전수(48칸 × 게이트 1회)** 로 돌린다. 로컬 pytest 기본값은
     # 선언된 사각만 셀 단위 + 나머지 묶음(42초)인데, 묶음은 "44칸이 통째로 죽는 것"만 잡고
@@ -92,8 +140,10 @@ def main() -> int:
     n_test = proc.returncode
 
     print("\n" + "#" * 72)
-    blocked = n_red or n_hyg or n_test
-    print(f"PRE-PUSH VERDICT: gate RED={n_red} · inbox 기계적위반={'있음' if n_hyg else '0'}"
+    blocked = n_red or n_hyg or n_test or n_kics or n_dom
+    print(f"PRE-PUSH VERDICT: gate RED={n_red} · K-ICS rule gate={'BLOCK' if n_kics else 'clear'}"
+          f" · domain gates={'FAIL' if n_dom else 'pass'}"
+          f" · inbox 기계적위반={'있음' if n_hyg else '0'}"
           f" · offline tests={'FAIL' if n_test else 'pass'}"
           f" → {'BLOCKED (fix or owner-escalate)' if blocked else 'gate-clear'}"
           f"  |  anomaly review queue={len(skeptic_input)}")

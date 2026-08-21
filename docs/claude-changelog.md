@@ -9,6 +9,57 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 ---
 
+## 2026-08-21 (2차) — 그 훅이 정작 **mandatory 게이트를 안 부르고 있었다**
+
+> 위 항목(같은 날 오전)이 "이제 git 이 강제한다"고 선언했다. 그 커밋이 `CLAUDE.md` 의
+> **"K-ICS validation gate (mandatory)"** 절이 push 전 필수라고 못박은
+> `scripts/validate_kics_disclosure.py`(**5.9초**)를 빠뜨렸다. 발견 경로는 우연이다 —
+> 라이브 배포용 JSON 을 검증하려고 그 게이트를 직접 돌렸더니 **exit 2** 였다.
+
+**전수확인: `scripts/validate_*.py` 8개 중 훅이 부르던 것은 1개.**
+
+| 게이트 | 실측 | 조치 |
+|---|---|---|
+| `validate_data_contract` | exit 0 | 이미 배선 |
+| `validate_kics_disclosure` | **exit 2** | **1b 로 배선** |
+| `validate_csm_continuity` | exit 0, 2초 | **1c 로 배선** (통과하는데 아무도 안 불렀다) |
+| `validate_kics_rate_sensitivity` | exit 0, 3초 | **1c 로 배선** |
+| `validate_nb_csm_multiple` | exit 0, 3초 | **1c 로 배선** |
+| `validate_csm_waterfall` | **exit 1** (`balance_incomplete:assumption`) | 미배선 + 사유등재 → ifrs17 티켓 `20260821T1900Z`. **실패 중인데 아무도 안 불러서 아무도 몰랐다** |
+| `validate_master_tables` | 골든 경유 | 미배선 (직접 호출은 `--no-build` 없으면 마스터 파괴) |
+| `validate_statutory_reserves` | data-contract 가 import 실행 | 미배선 (이중 호출 방지) |
+
+> **흔적이 코드에 남아 있었다** — `validate_data_contract.py` L305:
+> *"(prepush_check.py 는 validate_kics_disclosure.py 를 호출하지 않는다) 여기서 같이 건다"*.
+> 빠진 게이트를 눈치챌 때마다 **룰을 한 개씩 베껴 심는** 방식으로 버티고 있었다.
+
+**재발 방지 — `tests/test_push_gate_wiring.py` (12 tests, 훅 묶음 포함).** 새 `validate_*.py` 는
+`WIRED`(호출을 소스에서 확인) 이거나 **60자 이상 사유가 적힌** `NOT_A_PUSH_GATE` 중 하나여야
+한다. 어느 쪽에도 없으면 막힌다 — "이건 push 를 막아야 하나?"를 한 번은 묻게 만드는 장치다.
+`test_unwired_gates_still_fail` 은 "지금 깨져 있어서 뺐다"는 사유가 **아직 참인지** 매 push
+실제로 돌려 확인한다(고쳐지면 배선하라고 막는다). `test_wired_gates_are_in_the_blocking_verdict`
+는 호출만 하고 exit code 를 안 보는 것(= 게이트가 아니라 로그)을 막는다.
+
+**R2 동어반복 → owner 면제 (상한 박제형).** 배선하자 `IDENTITY_TAUTOLOGY` RED 2건
+(`R2_순자산합` 적용전·적용후)이 실제로 push 를 막았다. parser 가 넘긴 가설("image-only 24셀이
+초과분을 설명한다")을 실측 **반증** — 제외해도 excess 1.25→1.23 / 1.43→1.40 이고 적용후는
+여전히 RED, 즉 표본만 19칸 줄여 검정력을 떨어뜨리는 조치였다. 진짜 신호는 **회사 단위
+이봉분포**(KR0069 9/9 · KR0008 12/13 · KR0050 12/13 이 비스캔사 / 반대로 KR0073 은 13칸 중 1칸).
+owner 결정: *"테이블 숫자를 바꾸는 RED 는 아닌거같은대? 이번에는 일단 풀고 올려라"* — 맞다,
+이 메타룰은 `records` 에 쓰지 않아 화면 숫자가 안 움직인다. **끄지 않고 상한을 박았다**:
+`_TAUT_EXEMPT` + `_TAUT_PIN_EXCESS_TOL=0.10`(실측 되맞춤 폭 +0.59 를 못 삼킴) → 더 되맞춰지면
+`IDENTITY_TAUTOLOGY_PIN_DRIFT` RED 복귀, 수렴하면 `..._EXEMPT_UNNECESSARY` 로 등재 삭제 안내.
+경고 인쇄는 3곳 모두 유지. 변이시험 5개 추가. 원인 조사는 계속(`inbox/validation/20260821T1830Z`).
+
+**부수 — `sync_master_xlsx_sheet.py` 버그 2개.** ① `coerce` 가 `레벨` 을 문자열로 만드는데 owner 가
+Excel 로 열어 저장하면 숫자가 된다 → 키가 영원히 어긋나 **17BS 시트를 "6,855행 삭제 + 6,852행
+재삽입"으로 보고**했다(그대로 실행했으면 시트가 갈려 나갔다). ② xlsx 는 float 를 유효숫자
+15자리로 쓰는데(openpyxl `%.15g`) 16자리째 차이를 '변경'으로 세서 **동기화 직후에도 34칸이
+영원히 EDIT 로 남았다**. 둘 다 `norm()` 에서 수정. 그 뒤 8개 시트 전부 동기화 — 실제 drift 는
+K-ICS공시 445칸+180행 · 17BS 3행 · CSM상각 6칸이었다(40,002행, 현재 drift 0).
+
+---
+
 ## 2026-08-21 — 게이트를 git 이 강제하게 만들다 (owner 지적: "전에도 강제해 놨다더니 또 이렇게 됐잖아")
 
 > **"게이트에 배선했다" 와 "실제로 강제된다" 는 다른 말이었다.** 실측: `scripts/prepush_check.py`

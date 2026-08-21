@@ -80,11 +80,28 @@ def sheet_rows(ws, ncol: int) -> list[list]:
 
 
 def norm(v):
-    """Compare-normalize: Excel round-trips whole floats to int, and blanks to None."""
+    """Compare-normalize: Excel round-trips whole floats to int, and blanks to None.
+
+    `coerce` 는 값이 아닌 열을 전부 문자열로 만든다(`레벨` -> '1'). 그런데 owner 가 워크북을
+    Excel 로 열어 저장하면 숫자처럼 보이는 그 텍스트가 **숫자 1 로 바뀌어** 저장된다. 그러면
+    시트(int 1) 와 목표(str '1') 의 키가 영원히 어긋나 difflib 이 정렬을 포기하고 17BS 시트
+    전체를 delete+insert 하겠다고 보고했다(2026-08-21 실측: 삭제 6855 · 추가 6852). 앞뒤로
+    한 번 왕복해 같은 표기로 돌아오는 것만 숫자로 본다 — 티커 '000060' 은 int 로 가면 '60' 이
+    되어 왕복이 깨지므로 문자열로 남는다(선행 0 보존).
+    """
     if v is None or v == "":
         return None
     if isinstance(v, float) and v.is_integer():
         return int(v)
+    if isinstance(v, str) and v.lstrip("-").isdigit() and str(int(v)) == v:
+        return int(v)
+    if isinstance(v, float):
+        # xlsx 는 float 를 유효숫자 15자리로 쓴다(openpyxl `%.15g`). 마스터 JSON 의
+        # 168.79000000000002 는 시트에 168.79 로 밖에 못 들어가므로, 16자리째만 다른 것을
+        # '차이'로 세면 **영원히 수렴하지 않는 EDIT 34칸**이 매번 보고된다(2026-08-21 실측:
+        # 동기화 직후 재확인에서 K-ICS 1 · 금리민감도 7 · 손익분해PL 26). 시트가 담을 수 있는
+        # 정밀도로 맞춰 비교한다 — 진짜 값 차이가 16자리째에서만 나는 일은 없다.
+        return float("%.15g" % v)
     return v
 
 

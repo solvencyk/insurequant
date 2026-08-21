@@ -52,7 +52,7 @@ def rows():
 def _red_axes(records):
     census, drift = gate._identity_tautology_census(records)
     assert not drift, f"축 정의 불일치(TAUTOLOGY_AXIS_SPEC_DRIFT): {drift}"
-    red, _review = gate._identity_tautology_findings(census)
+    red, _review, _exempt = gate._identity_tautology_findings(census)
     return {(r["axis"], r["column"]) for r in red}, {(r["axis"], r["column"]): r for r in census}
 
 
@@ -133,3 +133,79 @@ def test_reconciling_a_healthy_axis_makes_it_fire(rows, column, key):
         f"(정확0 {row['zeros']}/{row['n']} = {100*row['zero_rate']:.1f}%, "
         f"귀무 {100*row['null_rate']:.1f}%, excess {row['excess']:.2f}, z {row['z']:.1f}). "
         "임계가 느슨해졌거나 그 컬럼이 배선에서 빠졌다.")
+
+
+# ---------------------------------------------------------------------------
+# owner 승인 면제 (2026-08-21) — 상한 박제가 실제로 되돌아오는지
+# ---------------------------------------------------------------------------
+# 면제를 넣으면 그 축의 변이시험이 통째로 무력화되기 쉽다("발화 안 하니 통과"). 그래서 면제
+# **그 자체**를 변이시험한다 — 박제 상한을 넘기면 RED 가 돌아와야 하고, 축이 수렴하면
+# "이제 지워라" 가 나와야 한다. 둘 다 안 되면 면제는 그냥 blanket skip 이다.
+
+def _findings_with_registry(census, registry, tol=None):
+    """`_TAUT_EXEMPT` 를 일시 교체해 findings 를 다시 계산한다."""
+    old_reg, old_tol = gate._TAUT_EXEMPT, gate._TAUT_PIN_EXCESS_TOL
+    gate._TAUT_EXEMPT = registry
+    if tol is not None:
+        gate._TAUT_PIN_EXCESS_TOL = tol
+    try:
+        return gate._identity_tautology_findings(census)
+    finally:
+        gate._TAUT_EXEMPT, gate._TAUT_PIN_EXCESS_TOL = old_reg, old_tol
+
+
+def test_exempt_registry_axes_actually_exist(rows):
+    """등재된 축이 실제 축 목록에 있어야 한다 — 오타로 등재하면 면제가 조용히 안 걸린다."""
+    census, _drift = gate._identity_tautology_census(rows)
+    known = {(r["axis"], r["column"]) for r in census}
+    ghost = sorted(set(gate._TAUT_EXEMPT) - known)
+    assert not ghost, f"_TAUT_EXEMPT 에 실재하지 않는 축 {ghost}"
+
+
+def test_exempt_axis_is_not_red_but_stays_flagged(rows):
+    """면제 축은 push 를 막지 않지만 **동어반복이라는 표시는 유지**돼야 한다."""
+    census, _drift = gate._identity_tautology_census(rows)
+    red, _review, exempt = gate._identity_tautology_findings(census)
+    red_axes = {(r["axis"], r["column"]) for r in red}
+    exempt_axes = {(r["axis"], r["column"]) for r in exempt}
+    for key in gate._TAUT_EXEMPT:
+        assert key not in red_axes, f"{key} 는 면제인데 RED 로 남았다"
+    assert exempt_axes, "면제 목록이 비었다 — 등재 축이 더는 발화하지 않으면 등재를 지워라"
+
+
+def test_pin_drift_brings_the_red_back(rows):
+    """박제 상한을 넘게 되맞춰지면 RED 가 돌아온다. 이게 안 되면 면제 = blanket skip."""
+    census, _drift = gate._identity_tautology_census(rows)
+    # 등재값보다 훨씬 낮은 상한으로 바꾼다 = "실측이 그만큼 더 되맞춰진" 상황과 동치.
+    tightened = {k: {**v, "excess": 1.00} for k, v in gate._TAUT_EXEMPT.items()}
+    red, _review, exempt = _findings_with_registry(census, tightened)
+    drift = [r for r in red if r.get("rule") == "IDENTITY_TAUTOLOGY_PIN_DRIFT"]
+    assert drift, (
+        "박제 상한을 1.00 으로 낮췄는데 IDENTITY_TAUTOLOGY_PIN_DRIFT 가 안 났다 — "
+        "면제가 실측을 다시 안 재고 있다"
+    )
+    assert not exempt, "상한을 넘겼는데도 면제로 남은 축이 있다"
+
+
+def test_tolerance_is_not_wide_enough_to_swallow_a_reintroduced_rewrite(rows):
+    """허용오차가 실측 되맞춤 폭(1.25 -> 1.84)을 삼키면 안 된다."""
+    assert gate._TAUT_PIN_EXCESS_TOL < 0.59, (
+        f"허용오차 {gate._TAUT_PIN_EXCESS_TOL} 가 너무 넓다 — R2 되맞춤 재유입 실측폭"
+        f"(1.25 -> 1.84 = +0.59)을 통과시킨다"
+    )
+
+
+def test_converged_axis_tells_you_to_delete_the_exemption(rows):
+    """축이 수렴해 발화가 멈추면 '등재를 지워라' 가 나와야 한다 — 면제가 영구 잔류하는 것 차단."""
+    census, _drift = gate._identity_tautology_census(rows)
+    healthy = next((r for r in census
+                    if r["excess"] is not None and r["n"] >= gate._TAUT_MIN_CELLS
+                    and not (r["excess"] >= gate._TAUT_EXCESS_FLOOR
+                             and (r["z"] or 0) >= gate._TAUT_Z_FLOOR)), None)
+    assert healthy is not None, "건전 축이 하나도 없다 — 대조군이 사라졌다"
+    key = (healthy["axis"], healthy["column"])
+    _red, review, _exempt = _findings_with_registry(
+        census, {key: {"excess": 1.25, "z": 5.4, "n": healthy["n"], "zeros": healthy["zeros"]}})
+    hits = [r for r in review if r.get("rule") == "IDENTITY_TAUTOLOGY_EXEMPT_UNNECESSARY"
+            and (r["axis"], r["column"]) == key]
+    assert hits, f"{key} 는 발화하지 않는 축인데 면제 등재를 지우라는 review 가 안 나왔다"

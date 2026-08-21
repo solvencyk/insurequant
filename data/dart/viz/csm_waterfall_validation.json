@@ -14,7 +14,7 @@
     },
     "source": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\dart\\viz\\csm_waterfall.json",
     "period": "annual (fiscal 2024 reporting)",
-    "built_at": "2026-08-20T05:22:34Z",
+    "built_at": "2026-08-21T09:16:40Z",
     "build_script": "scripts/validate_csm_waterfall.py",
     "companies_total": 47,
     "companies_pass": 29,

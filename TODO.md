@@ -13,6 +13,21 @@ Pipeline organized as **downloader / parser / validation / publishing / designer
 오프라인 테스트 126개(`tests/test_rule_coverage_manifest.py` 포함), ~84초. 실제 `git push` 차단 확인.
 상세: `docs/claude-changelog.md` 2026-08-21.
 
+**🔴 2026-08-21 (2차) — 그 훅이 정작 `validate_kics_disclosure.py` 를 안 불렀다.** 바로 위 문단이
+"강제된다"고 선언한 그 커밋이, `CLAUDE.md` 가 **mandatory** 라고 못박은 K-ICS 룰게이트(5.9초)를
+빠뜨렸다. 전수확인: `scripts/validate_*.py` **8개 중 훅이 부르던 것은 1개**. 3개는 통과 중인데
+미배선, 1개(`validate_csm_waterfall`)는 **실패 중인데 미배선이라 아무도 몰랐다**. 흔적은
+`validate_data_contract.py` L305 주석에 남아 있었다 — *"(prepush_check 는 이걸 호출하지 않는다)
+여기서 같이 건다"*, 즉 빠진 게이트를 눈치챌 때마다 **룰을 한 개씩 베껴 심고** 있었다.
+지금 1b(K-ICS 룰게이트)·1c(도메인 게이트 3종)로 배선했고, **`tests/test_push_gate_wiring.py`**
+(12 tests, 훅 묶음에 포함)가 새 `validate_*.py` 는 WIRED 이거나 사유 있는 NOT_A_PUSH_GATE 여야
+한다고 강제한다. **현재 push 는 차단 상태** — 원인은 `R2_순자산합` IDENTITY_TAUTOLOGY 2건
+(적용전·적용후). parser 가 넘긴 "image-only 24셀이 원인" 가설은 실측 반증됐고(제외해도
+excess 1.25→1.23 / 1.43→1.40), 진짜 신호는 회사 단위 이봉분포다(KR0069 9/9 · KR0008 12/13 ·
+KR0050 12/13 이 비스캔사 / 반대로 KR0073 은 13칸 중 1칸). 티켓 `inbox/validation/20260821T1830Z`.
+**라이브(main) 배포도 이것 때문에 대기중** — main 의 `kics_disclosure.json` 은 2026-07-21 판이라
+지난 한 달(적용후 710칸 변경 + 신규 204칸)이 미반영이고, 배포 사본은 `deploy/20260821-json` 준비완료.
+
 Cross-stage focus (2026-08-20): K-ICS gate **RED=12**, all three offenders already documented below as image/scan-only source (KR0087 동양 2023.2Q ×7 · KR0097 하나생명 2024.2Q ×4 · KR0079 미래에셋 2023.2Q 8_life ×1) → gate contract satisfied. **✅ 닫힘 (parser 2026-08-20, inbox `20260706T0502Z` iter-2):** 적용후 하위 census 결측 4→**0** · 적용후 요구자본 continuity break 34셀/5(회사,분기)→**0** · 적용후 조정항목(22/23) review 17→**5**(전부 사유 기재). Open cross-stage tails: 항목4/12/13 값_적용후 18사 미러링 오염 후속 감사. (**tier2 소진율 분자 정의는 2026-08-20 종결** — DART per-bond 리베이스로 100%+ 0건.) Mid-long-term: duration-gap (MLG-1), K-ICS 시장위험 분해 (MLG-2) blocked on owner decisions.
 
 **🔴 2026-08-21 업데이트 — validation이 면제 근거 raw 재검증으로 위 "gate contract satisfied"를 반증.** `INTERNAL_MODEL_36IRR_EXEMPT`(5건)·`_AFTER_SUBRISK_NOT_DISCLOSED`(5→1)·`_POST_PARENT_NOT_DISCLOSED`(3→1) 등재사유가 raw 대조에서 거짓으로 확인돼 해제됨(상세: 아래 `INTERNAL_MODEL_36IRR_EXEMPT` 항목 갱신분 + `inbox/parser/20260821T1600Z`·`20260821T1620Z`). parser(kics) 처리 결과: **하나생명(KR0097) 2024.4Q item16/17 값_적용후 = 실제 결함으로 확정, raw p281 값으로 fix 완료**(1건 종결). 36_irr 5건은 raw에서 items 41-46 정식 로드했으나(더는 결측 아님) 표준 derive식이 공시 금리위험액을 5.25~25.6% 벗어나 **RED 잔존**(같은 근본원인이 완전성 확보로 `TRANSITION_AFTER_IRR_MISMATCH` 4건도 새로 노출 — 이전엔 41-46후 결측이라 미판정이었을 뿐 통과였던 적이 없음, false-green 아님). 흥국생명(KR0071)×4·흥국화재(KR0005)×1 은 **디스크의 raw가 K-ICS 공시가 아니라 DART 사업보고서임을 validation이 확인**(`inbox/downloader/20260821T1625Z` refetch 대기) — parser 손 안 댐. `validate_data_contract.py` RED: 10(면제 해제 직후 노출분, display-scope) → **13**(TRANSITION_AFTER_IRR_MISMATCH 4건 신규 노출 − 하나생명 1건 종결). RED 증가는 회귀가 아니라 이전에 결측이라 못 보던 동일 결함이 완전성 확보로 드러난 것. 남은 13건 전부 parser 소관 밖 결정 대기 — 36_irr/TRANSITION_AFTER_IRR_MISMATCH 8건(같은 근본원인)=공식·스코프 불일치 owner 검토, 흥국생명·흥국화재 5건=downloader refetch 대기.
@@ -108,6 +123,27 @@ kics_tier2_utilization.json   100% 초과 = 0 / 39사  (data_source: dart_bonds_
 >   복구) + 2024.2Q #35 대재해 0.04→40.86(콤마→마침표 오독). (3) **KR0076 아이엠라이프 26.1Q** sub 적용후
 >   4개 채움(장수 68.37·해지 1249.87·사업비 433.16·대재해 36.95; 사망/장해질병=비대상, 장기재물=원천 N/A).
 >   → 게이트 사각 2건(cross-quarter plausibility·parent-present-child-absent census) validation 발주.
+
+**✅ Identity tautology — documented exception (owner 2026-08-21, 상한 박제형):**
+
+| 축 | 컬럼 | rule id | 사유 | 박제 상한 |
+|---|---|---|---|---|
+| **R2_순자산합** (item4 = Σitem5..11) | **적용전** | `IDENTITY_TAUTOLOGY` | **셀 값을 바꾸는 RED 가 아니다.** 이 메타룰은 census 를 읽어 findings 만 만들고 `records` 에 쓰는 경로가 없다 — 면제해도 화면·마스터·xlsx 숫자가 한 칸도 안 움직인다. 막고 있던 것은 "이 항등식이 통과해도 증거가 아니다"라는 **검증 품질** 신호인데, 그것 때문에 실제로 검증된 한 달치 데이터가 라이브에 못 올라가고 있었다. **owner 결정: 이번엔 풀고 올린다.** | **excess ≤ 1.35** (등재 1.25 + tol 0.10), n=393 zeros=267 |
+| 〃 | **적용후** | 〃 | 〃 (적용후는 미러 182칸이라 적용전 되맞춤을 그대로 물려받는다) | **excess ≤ 1.53** (등재 1.43 + tol 0.10), n=182 zeros=142 |
+
+> **끄기가 아니라 상한 박제다.** `_TAUT_EXEMPT`(scripts/validate_kics_disclosure.py)가 등재시점
+> 지표를 들고 있고 게이트가 **매 실행 재측정**한다. 더 되맞춰지면(excess 가 상한 초과)
+> `IDENTITY_TAUTOLOGY_PIN_DRIFT` **RED 로 즉시 차단** — 되맞춤 write-path 재유입을 잡는 자리다.
+> 허용오차 0.10 은 실측 되맞춤 폭(1.25 → 1.84 = +0.59)을 절대 못 삼키게 잡았고
+> `test_tolerance_is_not_wide_enough_to_swallow_a_reintroduced_rewrite` 가 그것을 강제한다.
+> **경고는 그대로 찍힌다** — 축별 표·"위반 0" 옆 주석·전용 블록 세 곳 모두. 면제한 것은 push
+> 차단이지 경고가 아니다. 축이 수렴해 발화가 멈추면 `IDENTITY_TAUTOLOGY_EXEMPT_UNNECESSARY`
+> review 가 "등재를 지워라"라고 알린다(면제의 영구 잔류 방지).
+> **해제 조건**: R2 되맞춤의 진짜 원인 규명. 신호는 **회사 단위 이봉분포** — KR0069 9/9 ·
+> KR0008 12/13 · KR0050 12/13 이 스캔사가 아닌데 100%대이고, 반대로 KR0073 은 13칸 중 1칸
+> (귀무 49%)으로 계통 이탈이다. parser 가 넘긴 "image-only 24셀이 원인" 가설은 **실측 반증**
+> (제외해도 1.25→1.23 · 1.43→1.40, `scripts/_probes/probe_r2_excluding_scan_cells.py`).
+> 티켓: `inbox/validation/20260821T1830Z`.
 
 **✅ Issuer self-inconsistency — documented exception (owner 2026-08-21, 잔차 박제형):**
 

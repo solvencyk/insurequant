@@ -1268,6 +1268,37 @@ _TAUT_MIN_CELLS = 30      # 실측 최소 축 n=39(R23 적용후). 이보다 작
 _TAUT_ZERO_EPS = 1e-6     # 실제 잔차 최소 granularity 는 0.01(백만원) — float 잡음만 흡수한다.
 _TAUT_MAX_K = 8
 
+# ---------------------------------------------------------------------------
+# owner 승인 documented exception — 상한 박제형 (2026-08-21)
+# ---------------------------------------------------------------------------
+# owner 원문: *"딱 보니까 테이블 숫자를 바꾸는 RED는 아닌거같은대? 이번에는 일단 풀고 올려라"*
+#
+# 맞는 판단이다. `IDENTITY_TAUTOLOGY` 는 **셀 값을 건드리지 않는다** — census 를 읽어 findings 만
+# 만들고, 그 결과는 리포트·artifacts·exit code 로만 흘러간다(`records` 에 쓰는 경로 없음).
+# 즉 이 축을 면제해도 화면·마스터·xlsx 숫자는 한 칸도 안 움직인다. 막고 있던 것은 "이 항등식이
+# 통과해도 증거가 아니다" 라는 **검증 품질** 신호였고, 그것 때문에 실제로 검증된 한 달치
+# 데이터가 라이브에 못 올라가고 있었다.
+#
+# **그래서 면제는 '끄기'가 아니라 '상한 박제'다.** 등재 시점 지표를 박아 두고 매 실행 재측정한다:
+#   · 더 되맞춰지면(excess 가 박제 + 허용오차 초과) → RED `IDENTITY_TAUTOLOGY_PIN_DRIFT`. 차단.
+#     되맞춤 write-path 가 다시 들어오는 것을 잡는 자리다.
+#   · 여전히 발화하되 상한 안이면 → 면제(비차단). 다만 축별 표·"FAIL 0" 옆 경고는 **그대로 찍는다** —
+#     면제한 것은 push 차단이지 경고가 아니다.
+#   · 더 이상 발화하지 않으면 → REVIEW `IDENTITY_TAUTOLOGY_EXEMPT_UNNECESSARY`. 데이터가 수렴했다는
+#     뜻이니 이 등재를 지우라고 알린다(면제가 영구 잔류물이 되는 것을 막는다).
+#
+# 해제 조건 = R2 되맞춤의 진짜 원인 규명. 회사 단위 이봉분포가 신호다(KR0069 9/9 · KR0008 12/13 ·
+# KR0050 12/13 이 비스캔사인데 100%대 / 반대로 KR0073 은 13칸 중 1칸). 티켓
+# `inbox/validation/20260821T1830Z`. parser 가 넘긴 "image-only 24셀이 원인" 가설은 실측 반증됨
+# (제외해도 1.25→1.23 · 1.43→1.40, `scripts/_probes/probe_r2_excluding_scan_cells.py`).
+_TAUT_EXEMPT: dict[tuple[str, str], dict[str, float]] = {
+    ("R2_순자산합", "적용전"): {"excess": 1.25, "z": 5.4, "n": 393, "zeros": 267},
+    ("R2_순자산합", "적용후"): {"excess": 1.43, "z": 6.4, "n": 182, "zeros": 142},
+}
+# 상한 여유. 데이터가 고쳐지면 n 이 움직이며 excess 도 소수점 둘째 자리에서 흔들린다 —
+# 그 잡음은 통과시키되, 되맞춤 재유입(실측 전례: 1.25 -> 1.84)은 반드시 걸리는 폭이다.
+_TAUT_PIN_EXCESS_TOL = 0.10
+
 # 축별 부호표. **항목집합은 `_TRANS_AFTER_IDENT` 에서 가져오고** 여기서는 부호만 준다
 # (그쪽이 lambda 라 부호를 기계추출할 수 없다). 두 곳이 어긋나면 조용히 다른 축을 재게 되므로
 # 불일치는 skip 이 아니라 RED 다 — `TAUTOLOGY_AXIS_SPEC_DRIFT`.
@@ -1389,8 +1420,8 @@ def _identity_tautology_census(records: list[dict]) -> tuple[list[dict], list[di
     return out, drift
 
 
-def _identity_tautology_findings(census: list[dict]) -> tuple[list[dict], list[dict]]:
-    """census → (red, review).
+def _identity_tautology_findings(census: list[dict]) -> tuple[list[dict], list[dict], list[dict]]:
+    """census → (red, review, exempt).
 
     RED `IDENTITY_TAUTOLOGY` — excess ≥ 1.20 **그리고** z ≥ 5.0. 이 축의 `FAIL: 0` 은 증거가
     아니라 파이프라인이 대상값을 입력으로부터 되맞춰 저장했다는 지문이다. **해소는 데이터 쪽에서만
@@ -1402,7 +1433,7 @@ def _identity_tautology_findings(census: list[dict]) -> tuple[list[dict], list[d
 
     표본부족(`n < 30`)은 통과가 아니라 `IDENTITY_TAUTOLOGY_UNDERPOWERED` review 다 — 축이
     사라져서 n 이 줄면 지표가 '개선'되는 census 고질병을 여기서도 막는다."""
-    red, review = [], []
+    red, review, exempt = [], [], []
     for row in census:
         if row["excess"] is None:
             review.append({**row, "rule": "IDENTITY_TAUTOLOGY_UNDERPOWERED",
@@ -1414,12 +1445,31 @@ def _identity_tautology_findings(census: list[dict]) -> tuple[list[dict], list[d
             continue
         hi_excess = row["excess"] >= _TAUT_EXCESS_FLOOR
         hi_z = row["z"] is not None and row["z"] >= _TAUT_Z_FLOOR
+        pin = _TAUT_EXEMPT.get((row["axis"], row["column"]))
         if hi_excess and hi_z:
-            red.append(row)
+            if pin is None:
+                red.append(row)
+            elif row["excess"] > pin["excess"] + _TAUT_PIN_EXCESS_TOL:
+                red.append({**row, "rule": "IDENTITY_TAUTOLOGY_PIN_DRIFT",
+                            "pin": pin,
+                            "why": f"면제 등재 시점 excess {pin['excess']} 보다 "
+                                   f"{row['excess'] - pin['excess']:+.2f} 되맞춰졌다 "
+                                   f"(허용 +{_TAUT_PIN_EXCESS_TOL}) — 되맞춤 write-path 재유입 의심"})
+            else:
+                exempt.append({**row, "rule": "IDENTITY_TAUTOLOGY_EXEMPT", "pin": pin,
+                               "why": f"owner 승인 documented exception (2026-08-21). "
+                                      f"박제 excess {pin['excess']} · 실측 {row['excess']:.2f} "
+                                      f"(Δ{row['excess'] - pin['excess']:+.2f}, 허용 "
+                                      f"+{_TAUT_PIN_EXCESS_TOL})"})
+        elif pin is not None:
+            review.append({**row, "rule": "IDENTITY_TAUTOLOGY_EXEMPT_UNNECESSARY", "pin": pin,
+                           "why": f"면제 등재돼 있으나 더는 발화하지 않는다 "
+                                  f"(excess {row['excess']:.2f} · z {row['z']:.1f}) — "
+                                  f"데이터가 수렴했다. _TAUT_EXEMPT 에서 이 축을 지워라"})
         elif hi_excess or hi_z:
             review.append({**row, "rule": "IDENTITY_TAUTOLOGY_MARGINAL",
                            "why": ("excess" if hi_excess else "z") + " 한쪽만 임계 초과"})
-    return red, review
+    return red, review, exempt
 
 
 # ---------------------------------------------------------------------------
@@ -2326,8 +2376,10 @@ def main() -> int:
                          for r in axis_census if r["mirrored"]},
     }
     taut_census, taut_drift = _identity_tautology_census(records)
-    taut_red, taut_review = _identity_tautology_findings(taut_census)
-    taut_red_axes = {(r["axis"], r["column"]) for r in taut_red}
+    taut_red, taut_review, taut_exempt = _identity_tautology_findings(taut_census)
+    # 경고 표시는 **면제 축도 포함**한다. 면제한 것은 push 차단이지 경고가 아니다 —
+    # "FAIL 0" 이 찍히는 자리마다 "이 축은 통과해도 증거가 아니다" 가 같이 붙어야 한다.
+    taut_red_axes = {(r["axis"], r["column"]) for r in taut_red + taut_exempt}
     report["identity_tautology"] = {
         "doc": ("가법 항등식 축의 **잔차 분포**. 억원으로 반올림된 표에서 부모−Σ자식이 정확히 0 인 "
                 "비율은 반올림 잡음이 허용하는 범위(Irwin–Hall 귀무)를 넘을 수 없다. 넘으면 입력이 "
@@ -2345,6 +2397,9 @@ def main() -> int:
                     "why": r["why"], "n": r["n"], "excess": r["excess"], "z": r["z"]}
                    for r in taut_review],
         "spec_drift_red": taut_drift,
+        "exempt": [{"axis": r["axis"], "column": r["column"], "n": r["n"], "zeros": r["zeros"],
+                    "excess": r["excess"], "z": r["z"], "pin": r["pin"], "why": r["why"]}
+                   for r in taut_exempt],
     }
     exempt_red, exempt_review = _exemption_provenance_findings()
     report["exemption_provenance"] = {
@@ -2679,6 +2734,15 @@ def main() -> int:
         print(f"동어반복 축 정의 불일치 (TAUTOLOGY_AXIS_SPEC_DRIFT, RED): {len(taut_drift)}")
         for d in taut_drift:
             print(f"    {d['axis']}: {d['detail']}")
+    if taut_exempt:
+        print(f"동어반복 documented exception (owner 2026-08-21, 상한 박제): {len(taut_exempt)}"
+              f"  — **경고는 유지, push 차단만 면제**")
+        for r in taut_exempt:
+            print(f"    {r['axis']} [{r['column']}] — {r['n']}칸 중 {r['zeros']}칸 잔차 정확히 0 "
+                  f"({r['zero_rate'] * 100:.1f}%, 귀무 {r['null_rate'] * 100:.1f}%, "
+                  f"excess {r['excess']:.2f}, z {r['z']:.1f}). {r['why']}")
+            print(f"      해제조건: R2 되맞춤 원인 규명 (inbox/validation/20260821T1830Z). "
+                  f"이 축이 통과해도 증거가 아니라는 사실은 그대로다.")
     if taut_red:
         print(f"동어반복 RED — IDENTITY_TAUTOLOGY (blocking): {len(taut_red)}")
         for r in taut_red:
