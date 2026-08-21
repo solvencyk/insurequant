@@ -113,7 +113,17 @@ def _fetch_raw(cc, year, reprt, fs_div, force=False):
     is silently stale forever. To pick up an amendment, delete the matching cache
     file (or run `python scripts/fetch_dart_fs.py --refresh <corp_code> <year>`)
     and rebuild, then commit the refreshed cache alongside the master change.
-    `force=True` re-fetches and overwrites regardless of the cached copy."""
+    `force=True` re-fetches and overwrites regardless of the cached copy.
+
+    Only status=000 (success) responses are persisted. A status:013 ("no data")
+    is NOT written to disk -- it's returned for this call but re-checked live next
+    time. Confirmed 2026-08-19 (inbox/downloader/20260819T0116Z): a same-quarter
+    negative response caches identically to a genuinely-permanent one, but many
+    013s are transient (queried the morning after a filing, before DART's FS-API
+    had indexed it yet) -- caching those forever turned "not indexed yet" into a
+    silent, permanent hole in IFRS17_BS.json. Genuinely permanent gaps (e.g. the
+    2023 1Q/2Q coverage void, or non-listed insurers with no XBRL ever) just keep
+    re-confirming 013 on every future call -- cheap, and no worse than before."""
     CACHE.mkdir(parents=True, exist_ok=True)
     f = CACHE / f"{cc}_{year}_{reprt}_{fs_div}.json"
     if f.exists() and not force:
@@ -121,7 +131,8 @@ def _fetch_raw(cc, year, reprt, fs_div, force=False):
     d = _cl()._get("/api/fnlttSinglAcntAll.json",
                    {"corp_code": cc, "bsns_year": str(year), "reprt_code": reprt,
                     "fs_div": fs_div}).json()
-    f.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
+    if d.get("status") == "000":
+        f.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
     return d
 
 
@@ -230,15 +241,17 @@ def tier1_for(name, quarter, code=None):
 
 
 def _refresh_cache(corp_code: str, year: str) -> int:
-    """Delete + re-fetch every cached (reprt × fs_div) for one (corp_code, year).
+    """Re-fetch every cached (reprt × fs_div) for one (corp_code, year), live.
     Use after a DART 정정공시 lands, then rebuild the PL master and commit the
-    refreshed cache. Requires OPENDART_API_KEY (live network call)."""
+    refreshed cache. Requires OPENDART_API_KEY (live network call).
+
+    Does NOT pre-delete the existing file (2026-08-19 fix): `_fetch_raw` only
+    overwrites on a status=000 response, so if this refresh's live call comes
+    back 013 (e.g. a transient server hiccup) the previous good cache -- if any
+    -- is left in place instead of being deleted with nothing to replace it."""
     n = 0
     for reprt in REPRT.values():
         for fs_div in ("OFS", "CFS"):
-            f = CACHE / f"{corp_code}_{year}_{reprt}_{fs_div}.json"
-            if f.exists():
-                f.unlink()
             try:
                 _fetch_raw(corp_code, year, reprt, fs_div, force=True)
                 n += 1

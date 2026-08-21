@@ -1,0 +1,19 @@
+{
+  "company": "동양생명",
+  "kr": "KR0087",
+  "period": "FY2026_Q2",
+  "source_file": "data/ir/FY2026_Q2/raw/KR0087_동양생명/(TYL)+FY2026.1H+Factsheet.xlsx",
+  "csm_waterfall": {
+    "opening": 24570.95,
+    "new_business": 2424.87,
+    "interest": 503.44,
+    "assumption": 212.92,
+    "amortization": -1255.11,
+    "closing": 26457.06
+  },
+  "csm_breakdown": {
+    "total": 26457.06
+  },
+  "segment_insurance_income": null,
+  "notes": "FY2026 1H (연누계, Jan-Jun) cumulative — this repo's FY####_Q# convention labels a half-year filing by its calendar quarter-end (Q2), matching data/dart/FY2025_Q2 usage elsewhere. All values eok (억원), converted from source unit 십억원 (KRW billion) at eok = krw_bn * 10. Closure verified: 24570.95+2424.87+503.44+212.92-1255.11=26457.07 (rounds to 26457.06). `assumption` here is mapped from the IR's own label '기타' (경상조정및기타, per xlsx 'CSM' sheet) -- semantically the closest match to this schema's 'assumption' bucket (IFRS17 changes-in-estimates), but the source label is NOT literally '가정 및 경험 조정' like the DART-side masters use; treat as best-effort mapping, not a confirmed label match. csm_breakdown.total is the only field filled -- the xlsx has a closing-CSM-by-product breakdown (사업연금/건강/종신, referenced in PDF p7 '기말CSM 상품별 구성') but those specific figures were not extracted into structured form this pass (only new-business-by-product was, which is a DIFFERENT breakdown and would be a schema mismatch if put here) -- follow-up read of xlsx 'CSM' sheet needed for the balance-breakdown figures. Full extraction detail (new-business by product, both CSM-multiple definitions IR discloses, insurance/investment P&L breakdown, and a flagged ~16% denominator gap between this company's own disclosed multiple and the KIDI-sourced NB_CSM_multiple.json master) is in the sibling file data/ir/FY2026_Q2/parsed/KR0087_동양생명/csm_metrics.json (not schema-conformant, kept as the full working detail). Comparator FY25.1H (same basis): opening 26710.89 / new_business 3028.86 / closing 27442.35 (interest/assumption not separately available for the comparator period)."
+}

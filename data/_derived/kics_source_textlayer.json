@@ -1,0 +1,3897 @@
+{
+ "_doc": "K-ICS 정기경영공시 raw PDF 텍스트레이어 밀도. 게이트(validate_kics_disclosure)가 '적용후 세부 결측(후=전)' 을 '원천 판독가능' 과 '판독불가(스캔본)' 로 가르는 데 쓴다. docling MD 가 아니라 raw PDF 에서 잰다 — MD 유실을 '원천 부재' 로 오독한 전례가 이 사이드카의 존재 이유다. 게이트는 bytes 를 디스크와 대조해 stale 이면 UNMEASURED 로 강등한다.",
+ "_builder": "scripts/build_kics_source_textlayer.py",
+ "generated_at": "20260820T234639Z",
+ "unreadable_floor_chars_per_page": 100.0,
+ "borderline_floor_chars_per_page": 400.0,
+ "cells": {
+  "KR0001|2023.1Q": {
+   "raw": "KR0001_메리츠화재해상보험.pdf",
+   "bytes": 408679,
+   "pages": 14,
+   "chars": 9080,
+   "chars_per_page": 648.6,
+   "status": "READABLE"
+  },
+  "KR0001|2023.2Q": {
+   "raw": "KR0001_메리츠화재해상보험_amended.pdf",
+   "bytes": 1080576,
+   "pages": 54,
+   "chars": 45351,
+   "chars_per_page": 839.8,
+   "status": "READABLE"
+  },
+  "KR0001|2023.3Q": {
+   "raw": "KR0001_메리츠화재해상보험_amended_amended2.pdf",
+   "bytes": 490632,
+   "pages": 22,
+   "chars": 13747,
+   "chars_per_page": 624.9,
+   "status": "READABLE"
+  },
+  "KR0001|2023.4Q": {
+   "raw": "KR0001_메리츠화재해상보험_amended_amended3.pdf",
+   "bytes": 1400883,
+   "pages": 102,
+   "chars": 93209,
+   "chars_per_page": 913.8,
+   "status": "READABLE"
+  },
+  "KR0001|2024.1Q": {
+   "raw": "KR0001_메리츠화재해상보험_amended.pdf",
+   "bytes": 511793,
+   "pages": 20,
+   "chars": 14038,
+   "chars_per_page": 701.9,
+   "status": "READABLE"
+  },
+  "KR0001|2024.2Q": {
+   "raw": "KR0001_메리츠화재해상보험_amended_amended2.pdf",
+   "bytes": 1067476,
+   "pages": 57,
+   "chars": 56577,
+   "chars_per_page": 992.6,
+   "status": "READABLE"
+  },
+  "KR0001|2024.3Q": {
+   "raw": "KR0001_메리츠화재해상보험_amended_amended3.pdf",
+   "bytes": 550207,
+   "pages": 20,
+   "chars": 13835,
+   "chars_per_page": 691.8,
+   "status": "READABLE"
+  },
+  "KR0001|2024.4Q": {
+   "raw": "KR0001_메리츠화재해상보험.pdf",
+   "bytes": 1543540,
+   "pages": 119,
+   "chars": 120949,
+   "chars_per_page": 1016.4,
+   "status": "READABLE"
+  },
+  "KR0001|2025.1Q": {
+   "raw": "KR0001_메리츠화재해상보험.pdf",
+   "bytes": 501615,
+   "pages": 24,
+   "chars": 16415,
+   "chars_per_page": 684.0,
+   "status": "READABLE"
+  },
+  "KR0001|2025.2Q": {
+   "raw": "KR0001_메리츠화재해상보험_amended2.pdf",
+   "bytes": 1152347,
+   "pages": 65,
+   "chars": 62660,
+   "chars_per_page": 964.0,
+   "status": "READABLE"
+  },
+  "KR0001|2025.3Q": {
+   "raw": "KR0001_메리츠화재해상보험_amended3.pdf",
+   "bytes": 575587,
+   "pages": 23,
+   "chars": 15892,
+   "chars_per_page": 691.0,
+   "status": "READABLE"
+  },
+  "KR0001|2025.4Q": {
+   "raw": "KR0001_메리츠화재해상보험.pdf",
+   "bytes": 1682796,
+   "pages": 130,
+   "chars": 135770,
+   "chars_per_page": 1044.4,
+   "status": "READABLE"
+  },
+  "KR0001|2026.1Q": {
+   "raw": "KR0001_메리츠화재해상보험.pdf",
+   "bytes": 514420,
+   "pages": 25,
+   "chars": 17208,
+   "chars_per_page": 688.3,
+   "status": "READABLE"
+  },
+  "KR0002|2023.1Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 3262847,
+   "pages": 264,
+   "chars": 261352,
+   "chars_per_page": 990.0,
+   "status": "READABLE"
+  },
+  "KR0002|2023.2Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 2526194,
+   "pages": 302,
+   "chars": 318422,
+   "chars_per_page": 1054.4,
+   "status": "READABLE"
+  },
+  "KR0002|2023.3Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 1821319,
+   "pages": 128,
+   "chars": 132364,
+   "chars_per_page": 1034.1,
+   "status": "READABLE"
+  },
+  "KR0002|2023.4Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 3915114,
+   "pages": 486,
+   "chars": 469359,
+   "chars_per_page": 965.8,
+   "status": "READABLE"
+  },
+  "KR0002|2024.1Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 2261755,
+   "pages": 249,
+   "chars": 241146,
+   "chars_per_page": 968.5,
+   "status": "READABLE"
+  },
+  "KR0002|2024.2Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 3157250,
+   "pages": 293,
+   "chars": 309671,
+   "chars_per_page": 1056.9,
+   "status": "READABLE"
+  },
+  "KR0002|2024.3Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 2469640,
+   "pages": 240,
+   "chars": 268162,
+   "chars_per_page": 1117.3,
+   "status": "READABLE"
+  },
+  "KR0002|2024.4Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 14396283,
+   "pages": 573,
+   "chars": 525973,
+   "chars_per_page": 917.9,
+   "status": "READABLE"
+  },
+  "KR0002|2025.1Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 2303696,
+   "pages": 253,
+   "chars": 257643,
+   "chars_per_page": 1018.4,
+   "status": "READABLE"
+  },
+  "KR0002|2025.2Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 2904967,
+   "pages": 303,
+   "chars": 304265,
+   "chars_per_page": 1004.2,
+   "status": "READABLE"
+  },
+  "KR0002|2025.3Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 2352930,
+   "pages": 263,
+   "chars": 265215,
+   "chars_per_page": 1008.4,
+   "status": "READABLE"
+  },
+  "KR0002|2025.4Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 1472071,
+   "pages": 113,
+   "chars": 117909,
+   "chars_per_page": 1043.4,
+   "status": "READABLE"
+  },
+  "KR0002|2026.1Q": {
+   "raw": "KR0002_한화손해보험.pdf",
+   "bytes": 2158637,
+   "pages": 279,
+   "chars": 263150,
+   "chars_per_page": 943.2,
+   "status": "READABLE"
+  },
+  "KR0003|2023.1Q": {
+   "raw": "KR0003_롯데손해보험.pdf",
+   "bytes": 645396,
+   "pages": 23,
+   "chars": 22172,
+   "chars_per_page": 964.0,
+   "status": "READABLE"
+  },
+  "KR0003|2023.2Q": {
+   "raw": "KR0003_롯데손해보험.pdf",
+   "bytes": 1330186,
+   "pages": 64,
+   "chars": 60410,
+   "chars_per_page": 943.9,
+   "status": "READABLE"
+  },
+  "KR0003|2023.3Q": {
+   "raw": "KR0003_롯데손해보험_amended.pdf",
+   "bytes": 654379,
+   "pages": 26,
+   "chars": 25807,
+   "chars_per_page": 992.6,
+   "status": "READABLE"
+  },
+  "KR0003|2023.4Q": {
+   "raw": "KR0003_롯데손해보험_amended.pdf",
+   "bytes": 2116912,
+   "pages": 116,
+   "chars": 93549,
+   "chars_per_page": 806.5,
+   "status": "READABLE"
+  },
+  "KR0003|2024.1Q": {
+   "raw": "KR0003_롯데손해보험.pdf",
+   "bytes": 623809,
+   "pages": 22,
+   "chars": 15607,
+   "chars_per_page": 709.4,
+   "status": "READABLE"
+  },
+  "KR0003|2024.2Q": {
+   "raw": "KR0003_롯데손해보험_amended.pdf",
+   "bytes": 1349725,
+   "pages": 64,
+   "chars": 55365,
+   "chars_per_page": 865.1,
+   "status": "READABLE"
+  },
+  "KR0003|2024.3Q": {
+   "raw": "KR0003_롯데손해보험_amended.pdf",
+   "bytes": 623746,
+   "pages": 22,
+   "chars": 16742,
+   "chars_per_page": 761.0,
+   "status": "READABLE"
+  },
+  "KR0003|2024.4Q": {
+   "raw": "KR0003_롯데손해보험.pdf",
+   "bytes": 3085398,
+   "pages": 135,
+   "chars": 128846,
+   "chars_per_page": 954.4,
+   "status": "READABLE"
+  },
+  "KR0003|2025.1Q": {
+   "raw": "KR0003_롯데손해보험.pdf",
+   "bytes": 666811,
+   "pages": 29,
+   "chars": 23618,
+   "chars_per_page": 814.4,
+   "status": "READABLE"
+  },
+  "KR0003|2025.2Q": {
+   "raw": "KR0003_롯데손해보험.pdf",
+   "bytes": 1446959,
+   "pages": 77,
+   "chars": 68540,
+   "chars_per_page": 890.1,
+   "status": "READABLE"
+  },
+  "KR0003|2025.3Q": {
+   "raw": "KR0003_롯데손해보험.pdf",
+   "bytes": 751155,
+   "pages": 31,
+   "chars": 21392,
+   "chars_per_page": 690.1,
+   "status": "READABLE"
+  },
+  "KR0003|2025.4Q": {
+   "raw": "KR0003_롯데손해보험.pdf",
+   "bytes": 5035695,
+   "pages": 167,
+   "chars": 139028,
+   "chars_per_page": 832.5,
+   "status": "READABLE"
+  },
+  "KR0003|2026.1Q": {
+   "raw": "KR0003_롯데손해보험.pdf",
+   "bytes": 886240,
+   "pages": 33,
+   "chars": 22184,
+   "chars_per_page": 672.2,
+   "status": "READABLE"
+  },
+  "KR0004|2023.1Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 445694,
+   "pages": 31,
+   "chars": 29215,
+   "chars_per_page": 942.4,
+   "status": "READABLE"
+  },
+  "KR0004|2023.2Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 1073677,
+   "pages": 66,
+   "chars": 58054,
+   "chars_per_page": 879.6,
+   "status": "READABLE"
+  },
+  "KR0004|2023.3Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 459520,
+   "pages": 35,
+   "chars": 31630,
+   "chars_per_page": 903.7,
+   "status": "READABLE"
+  },
+  "KR0004|2023.4Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 1465474,
+   "pages": 87,
+   "chars": 62715,
+   "chars_per_page": 720.9,
+   "status": "READABLE"
+  },
+  "KR0004|2024.1Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 493699,
+   "pages": 28,
+   "chars": 19681,
+   "chars_per_page": 702.9,
+   "status": "READABLE"
+  },
+  "KR0004|2024.2Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 1111096,
+   "pages": 60,
+   "chars": 47778,
+   "chars_per_page": 796.3,
+   "status": "READABLE"
+  },
+  "KR0004|2024.3Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 612517,
+   "pages": 29,
+   "chars": 24161,
+   "chars_per_page": 833.1,
+   "status": "READABLE"
+  },
+  "KR0004|2024.4Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 3499536,
+   "pages": 98,
+   "chars": 95451,
+   "chars_per_page": 974.0,
+   "status": "READABLE"
+  },
+  "KR0004|2025.1Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 718350,
+   "pages": 32,
+   "chars": 25880,
+   "chars_per_page": 808.8,
+   "status": "READABLE"
+  },
+  "KR0004|2025.2Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 1624855,
+   "pages": 69,
+   "chars": 59830,
+   "chars_per_page": 867.1,
+   "status": "READABLE"
+  },
+  "KR0004|2025.3Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 694910,
+   "pages": 27,
+   "chars": 16758,
+   "chars_per_page": 620.7,
+   "status": "READABLE"
+  },
+  "KR0004|2025.4Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 2941514,
+   "pages": 91,
+   "chars": 74573,
+   "chars_per_page": 819.5,
+   "status": "READABLE"
+  },
+  "KR0004|2026.1Q": {
+   "raw": "KR0004_예별손해보험.pdf",
+   "bytes": 520363,
+   "pages": 28,
+   "chars": 18702,
+   "chars_per_page": 667.9,
+   "status": "READABLE"
+  },
+  "KR0005|2023.1Q": {
+   "raw": "KR0005_흥국화재_amended.pdf",
+   "bytes": 916827,
+   "pages": 125,
+   "chars": 90602,
+   "chars_per_page": 724.8,
+   "status": "READABLE"
+  },
+  "KR0005|2023.2Q": {
+   "raw": "KR0005_흥국화재_amended.pdf",
+   "bytes": 1747952,
+   "pages": 164,
+   "chars": 130826,
+   "chars_per_page": 797.7,
+   "status": "READABLE"
+  },
+  "KR0005|2023.3Q": {
+   "raw": "KR0005_흥국화재_amended.pdf",
+   "bytes": 1115349,
+   "pages": 136,
+   "chars": 102384,
+   "chars_per_page": 752.8,
+   "status": "READABLE"
+  },
+  "KR0005|2023.4Q": {
+   "raw": "KR0005_흥국화재_amended.pdf",
+   "bytes": 3752641,
+   "pages": 292,
+   "chars": 235711,
+   "chars_per_page": 807.2,
+   "status": "READABLE"
+  },
+  "KR0005|2024.1Q": {
+   "raw": "KR0005_흥국화재_amended.pdf",
+   "bytes": 1236297,
+   "pages": 125,
+   "chars": 92085,
+   "chars_per_page": 736.7,
+   "status": "READABLE"
+  },
+  "KR0005|2024.2Q": {
+   "raw": "KR0005_흥국화재_amended.pdf",
+   "bytes": 2196677,
+   "pages": 166,
+   "chars": 131165,
+   "chars_per_page": 790.2,
+   "status": "READABLE"
+  },
+  "KR0005|2024.3Q": {
+   "raw": "KR0005_흥국화재.pdf",
+   "bytes": 1225050,
+   "pages": 136,
+   "chars": 105550,
+   "chars_per_page": 776.1,
+   "status": "READABLE"
+  },
+  "KR0005|2024.4Q": {
+   "raw": "KR0005_흥국화재.pdf",
+   "bytes": 28358329,
+   "pages": 367,
+   "chars": 247146,
+   "chars_per_page": 673.4,
+   "status": "READABLE"
+  },
+  "KR0005|2025.1Q": {
+   "raw": "KR0005_흥국화재.pdf",
+   "bytes": 1132650,
+   "pages": 135,
+   "chars": 102434,
+   "chars_per_page": 758.8,
+   "status": "READABLE"
+  },
+  "KR0005|2025.2Q": {
+   "raw": "KR0005_흥국화재.pdf",
+   "bytes": 1976671,
+   "pages": 187,
+   "chars": 155171,
+   "chars_per_page": 829.8,
+   "status": "READABLE"
+  },
+  "KR0005|2025.3Q": {
+   "raw": "KR0005_흥국화재.pdf",
+   "bytes": 1180235,
+   "pages": 136,
+   "chars": 108119,
+   "chars_per_page": 795.0,
+   "status": "READABLE"
+  },
+  "KR0005|2025.4Q": {
+   "raw": "KR0005_흥국화재.pdf",
+   "bytes": 20363944,
+   "pages": 387,
+   "chars": 289882,
+   "chars_per_page": 749.0,
+   "status": "READABLE"
+  },
+  "KR0005|2026.1Q": {
+   "raw": "KR0005_흥국화재.pdf",
+   "bytes": 1157906,
+   "pages": 144,
+   "chars": 108554,
+   "chars_per_page": 753.8,
+   "status": "READABLE"
+  },
+  "KR0008|2023.1Q": {
+   "raw": "KR0008_삼성화재해상보험_amended.pdf",
+   "bytes": 430540,
+   "pages": 18,
+   "chars": 12617,
+   "chars_per_page": 700.9,
+   "status": "READABLE"
+  },
+  "KR0008|2023.2Q": {
+   "raw": "KR0008_삼성화재해상보험_amended.pdf",
+   "bytes": 924496,
+   "pages": 55,
+   "chars": 47658,
+   "chars_per_page": 866.5,
+   "status": "READABLE"
+  },
+  "KR0008|2023.3Q": {
+   "raw": "KR0008_삼성화재해상보험_amended.pdf",
+   "bytes": 452365,
+   "pages": 21,
+   "chars": 14404,
+   "chars_per_page": 685.9,
+   "status": "READABLE"
+  },
+  "KR0008|2023.4Q": {
+   "raw": "KR0008_삼성화재해상보험_amended.pdf",
+   "bytes": 1516611,
+   "pages": 118,
+   "chars": 111923,
+   "chars_per_page": 948.5,
+   "status": "READABLE"
+  },
+  "KR0008|2024.1Q": {
+   "raw": "KR0008_삼성화재해상보험_amended.pdf",
+   "bytes": 540656,
+   "pages": 23,
+   "chars": 15294,
+   "chars_per_page": 665.0,
+   "status": "READABLE"
+  },
+  "KR0008|2024.2Q": {
+   "raw": "KR0008_삼성화재해상보험_amended.pdf",
+   "bytes": 1168937,
+   "pages": 64,
+   "chars": 58617,
+   "chars_per_page": 915.9,
+   "status": "READABLE"
+  },
+  "KR0008|2024.3Q": {
+   "raw": "KR0008_삼성화재해상보험_amended.pdf",
+   "bytes": 541918,
+   "pages": 23,
+   "chars": 15232,
+   "chars_per_page": 662.3,
+   "status": "READABLE"
+  },
+  "KR0008|2024.4Q": {
+   "raw": "KR0008_삼성화재해상보험.pdf",
+   "bytes": 1553466,
+   "pages": 131,
+   "chars": 127505,
+   "chars_per_page": 973.3,
+   "status": "READABLE"
+  },
+  "KR0008|2025.1Q": {
+   "raw": "KR0008_삼성화재해상보험.pdf",
+   "bytes": 548798,
+   "pages": 25,
+   "chars": 17642,
+   "chars_per_page": 705.7,
+   "status": "READABLE"
+  },
+  "KR0008|2025.2Q": {
+   "raw": "KR0008_삼성화재해상보험.pdf",
+   "bytes": 1120248,
+   "pages": 68,
+   "chars": 60142,
+   "chars_per_page": 884.4,
+   "status": "READABLE"
+  },
+  "KR0008|2025.3Q": {
+   "raw": "KR0008_삼성화재해상보험.pdf",
+   "bytes": 566553,
+   "pages": 25,
+   "chars": 17439,
+   "chars_per_page": 697.6,
+   "status": "READABLE"
+  },
+  "KR0008|2025.4Q": {
+   "raw": "KR0008_삼성화재해상보험.pdf",
+   "bytes": 1598770,
+   "pages": 139,
+   "chars": 138478,
+   "chars_per_page": 996.2,
+   "status": "READABLE"
+  },
+  "KR0008|2026.1Q": {
+   "raw": "KR0008_삼성화재해상보험.pdf",
+   "bytes": 570173,
+   "pages": 24,
+   "chars": 18225,
+   "chars_per_page": 759.4,
+   "status": "READABLE"
+  },
+  "KR0009|2023.1Q": {
+   "raw": "KR0009_현대해상.pdf",
+   "bytes": 602650,
+   "pages": 14,
+   "chars": 9339,
+   "chars_per_page": 667.1,
+   "status": "READABLE"
+  },
+  "KR0009|2023.2Q": {
+   "raw": "KR0009_현대해상.pdf",
+   "bytes": 1497408,
+   "pages": 56,
+   "chars": 47385,
+   "chars_per_page": 846.2,
+   "status": "READABLE"
+  },
+  "KR0009|2023.3Q": {
+   "raw": "KR0009_현대해상_amended.pdf",
+   "bytes": 706361,
+   "pages": 23,
+   "chars": 14272,
+   "chars_per_page": 620.5,
+   "status": "READABLE"
+  },
+  "KR0009|2023.4Q": {
+   "raw": "KR0009_현대해상_amended.pdf",
+   "bytes": 2643281,
+   "pages": 109,
+   "chars": 91059,
+   "chars_per_page": 835.4,
+   "status": "READABLE"
+  },
+  "KR0009|2024.1Q": {
+   "raw": "KR0009_현대해상_amended.pdf",
+   "bytes": 714272,
+   "pages": 24,
+   "chars": 14025,
+   "chars_per_page": 584.4,
+   "status": "READABLE"
+  },
+  "KR0009|2024.2Q": {
+   "raw": "KR0009_현대해상_amended.pdf",
+   "bytes": 1657197,
+   "pages": 66,
+   "chars": 55566,
+   "chars_per_page": 841.9,
+   "status": "READABLE"
+  },
+  "KR0009|2024.3Q": {
+   "raw": "KR0009_현대해상_amended.pdf",
+   "bytes": 732947,
+   "pages": 24,
+   "chars": 14224,
+   "chars_per_page": 592.7,
+   "status": "READABLE"
+  },
+  "KR0009|2024.4Q": {
+   "raw": "KR0009_현대해상.pdf",
+   "bytes": 4193740,
+   "pages": 133,
+   "chars": 132395,
+   "chars_per_page": 995.5,
+   "status": "READABLE"
+  },
+  "KR0009|2025.1Q": {
+   "raw": "KR0009_현대해상.pdf",
+   "bytes": 835080,
+   "pages": 25,
+   "chars": 16327,
+   "chars_per_page": 653.1,
+   "status": "READABLE"
+  },
+  "KR0009|2025.2Q": {
+   "raw": "KR0009_현대해상_amended.pdf",
+   "bytes": 1829929,
+   "pages": 68,
+   "chars": 60299,
+   "chars_per_page": 886.8,
+   "status": "READABLE"
+  },
+  "KR0009|2025.3Q": {
+   "raw": "KR0009_현대해상.pdf",
+   "bytes": 824528,
+   "pages": 25,
+   "chars": 16866,
+   "chars_per_page": 674.6,
+   "status": "READABLE"
+  },
+  "KR0009|2025.4Q": {
+   "raw": "KR0009_현대해상.pdf",
+   "bytes": 4897192,
+   "pages": 135,
+   "chars": 141122,
+   "chars_per_page": 1045.3,
+   "status": "READABLE"
+  },
+  "KR0009|2026.1Q": {
+   "raw": "KR0009_현대해상.pdf",
+   "bytes": 573529,
+   "pages": 27,
+   "chars": 19146,
+   "chars_per_page": 709.1,
+   "status": "READABLE"
+  },
+  "KR0010|2023.1Q": {
+   "raw": "KR0010_KB손해보험.pdf",
+   "bytes": 1093370,
+   "pages": 24,
+   "chars": 18627,
+   "chars_per_page": 776.1,
+   "status": "READABLE"
+  },
+  "KR0010|2023.2Q": {
+   "raw": "KR0010_KB손해보험_amended.pdf",
+   "bytes": 2668574,
+   "pages": 54,
+   "chars": 53538,
+   "chars_per_page": 991.4,
+   "status": "READABLE"
+  },
+  "KR0010|2023.3Q": {
+   "raw": "KR0010_KB손해보험_amended.pdf",
+   "bytes": 804429,
+   "pages": 29,
+   "chars": 23413,
+   "chars_per_page": 807.3,
+   "status": "READABLE"
+  },
+  "KR0010|2023.4Q": {
+   "raw": "KR0010_KB손해보험.pdf",
+   "bytes": 5713345,
+   "pages": 106,
+   "chars": 101654,
+   "chars_per_page": 959.0,
+   "status": "READABLE"
+  },
+  "KR0010|2024.1Q": {
+   "raw": "KR0010_KB손해보험_amended.pdf",
+   "bytes": 6467049,
+   "pages": 25,
+   "chars": 247,
+   "chars_per_page": 9.9,
+   "status": "UNREADABLE"
+  },
+  "KR0010|2024.2Q": {
+   "raw": "KR0010_KB손해보험_amended.pdf",
+   "bytes": 3621018,
+   "pages": 61,
+   "chars": 51240,
+   "chars_per_page": 840.0,
+   "status": "READABLE"
+  },
+  "KR0010|2024.3Q": {
+   "raw": "KR0010_KB손해보험_amended.pdf",
+   "bytes": 5997811,
+   "pages": 23,
+   "chars": 318,
+   "chars_per_page": 13.8,
+   "status": "UNREADABLE"
+  },
+  "KR0010|2024.4Q": {
+   "raw": "KR0010_KB손해보험.pdf",
+   "bytes": 4628614,
+   "pages": 120,
+   "chars": 120042,
+   "chars_per_page": 1000.4,
+   "status": "READABLE"
+  },
+  "KR0010|2025.1Q": {
+   "raw": "KR0010_KB손해보험.pdf",
+   "bytes": 6912441,
+   "pages": 26,
+   "chars": 261,
+   "chars_per_page": 10.0,
+   "status": "UNREADABLE"
+  },
+  "KR0010|2025.2Q": {
+   "raw": "KR0010_KB손해보험.pdf",
+   "bytes": 2695784,
+   "pages": 64,
+   "chars": 56301,
+   "chars_per_page": 879.7,
+   "status": "READABLE"
+  },
+  "KR0010|2025.3Q": {
+   "raw": "KR0010_KB손해보험.pdf",
+   "bytes": 6748803,
+   "pages": 26,
+   "chars": 199,
+   "chars_per_page": 7.7,
+   "status": "UNREADABLE"
+  },
+  "KR0010|2025.4Q": {
+   "raw": "KR0010_KB손해보험.pdf",
+   "bytes": 42093639,
+   "pages": 136,
+   "chars": 31352,
+   "chars_per_page": 230.5,
+   "status": "BORDERLINE"
+  },
+  "KR0010|2026.1Q": {
+   "raw": "KR0010_KB손해보험.pdf",
+   "bytes": 6486350,
+   "pages": 27,
+   "chars": 900,
+   "chars_per_page": 33.3,
+   "status": "UNREADABLE"
+  },
+  "KR0011|2023.1Q": {
+   "raw": "KR0011_DB손해보험.pdf",
+   "bytes": 349141,
+   "pages": 17,
+   "chars": 9783,
+   "chars_per_page": 575.5,
+   "status": "READABLE"
+  },
+  "KR0011|2023.2Q": {
+   "raw": "KR0011_DB손해보험.pdf",
+   "bytes": 1318540,
+   "pages": 58,
+   "chars": 45538,
+   "chars_per_page": 785.1,
+   "status": "READABLE"
+  },
+  "KR0011|2023.3Q": {
+   "raw": "KR0011_DB손해보험_amended2.pdf",
+   "bytes": 548522,
+   "pages": 23,
+   "chars": 15320,
+   "chars_per_page": 666.1,
+   "status": "READABLE"
+  },
+  "KR0011|2023.4Q": {
+   "raw": "KR0011_DB손해보험.pdf",
+   "bytes": 1903345,
+   "pages": 106,
+   "chars": 90476,
+   "chars_per_page": 853.5,
+   "status": "READABLE"
+  },
+  "KR0011|2024.1Q": {
+   "raw": "KR0011_DB손해보험_amended2.pdf",
+   "bytes": 567802,
+   "pages": 21,
+   "chars": 15252,
+   "chars_per_page": 726.3,
+   "status": "READABLE"
+  },
+  "KR0011|2024.2Q": {
+   "raw": "KR0011_DB손해보험.pdf",
+   "bytes": 1713754,
+   "pages": 63,
+   "chars": 56522,
+   "chars_per_page": 897.2,
+   "status": "READABLE"
+  },
+  "KR0011|2024.3Q": {
+   "raw": "KR0011_DB손해보험_amended2.pdf",
+   "bytes": 724788,
+   "pages": 21,
+   "chars": 16324,
+   "chars_per_page": 777.3,
+   "status": "READABLE"
+  },
+  "KR0011|2024.4Q": {
+   "raw": "KR0011_DB손해보험.pdf",
+   "bytes": 2413581,
+   "pages": 114,
+   "chars": 106906,
+   "chars_per_page": 937.8,
+   "status": "READABLE"
+  },
+  "KR0011|2025.1Q": {
+   "raw": "KR0011_DB손해보험_amended2.pdf",
+   "bytes": 791469,
+   "pages": 24,
+   "chars": 17770,
+   "chars_per_page": 740.4,
+   "status": "READABLE"
+  },
+  "KR0011|2025.2Q": {
+   "raw": "KR0011_DB손해보험.pdf",
+   "bytes": 1795662,
+   "pages": 68,
+   "chars": 61178,
+   "chars_per_page": 899.7,
+   "status": "READABLE"
+  },
+  "KR0011|2025.3Q": {
+   "raw": "KR0011_DB손해보험.pdf",
+   "bytes": 788684,
+   "pages": 25,
+   "chars": 17236,
+   "chars_per_page": 689.4,
+   "status": "READABLE"
+  },
+  "KR0011|2025.4Q": {
+   "raw": "KR0011_DB손해보험.pdf",
+   "bytes": 2375540,
+   "pages": 120,
+   "chars": 116488,
+   "chars_per_page": 970.7,
+   "status": "READABLE"
+  },
+  "KR0011|2026.1Q": {
+   "raw": "KR0011_DB손해보험.pdf",
+   "bytes": 767251,
+   "pages": 25,
+   "chars": 17151,
+   "chars_per_page": 686.0,
+   "status": "READABLE"
+  },
+  "KR0029|2025.4Q": {
+   "raw": "KR0029_AIG손해보험.pdf",
+   "bytes": 1533281,
+   "pages": 103,
+   "chars": 111897,
+   "chars_per_page": 1086.4,
+   "status": "READABLE"
+  },
+  "KR0029|2026.1Q": {
+   "raw": "KR0029_AIG손해보험.pdf",
+   "bytes": 708152,
+   "pages": 28,
+   "chars": 25442,
+   "chars_per_page": 908.6,
+   "status": "READABLE"
+  },
+  "KR0032|2023.1Q": {
+   "raw": "KR0032_NH농협손해보험_amended.pdf",
+   "bytes": 609558,
+   "pages": 30,
+   "chars": 28070,
+   "chars_per_page": 935.7,
+   "status": "READABLE"
+  },
+  "KR0032|2023.2Q": {
+   "raw": "KR0032_NH농협손해보험_amended.pdf",
+   "bytes": 1326408,
+   "pages": 60,
+   "chars": 59083,
+   "chars_per_page": 984.7,
+   "status": "READABLE"
+  },
+  "KR0032|2023.3Q": {
+   "raw": "KR0032_NH농협손해보험_amended.pdf",
+   "bytes": 647961,
+   "pages": 33,
+   "chars": 33079,
+   "chars_per_page": 1002.4,
+   "status": "READABLE"
+  },
+  "KR0032|2023.4Q": {
+   "raw": "KR0032_NH농협손해보험_amended.pdf",
+   "bytes": 2113520,
+   "pages": 99,
+   "chars": 98419,
+   "chars_per_page": 994.1,
+   "status": "READABLE"
+  },
+  "KR0032|2024.1Q": {
+   "raw": "KR0032_NH농협손해보험_amended.pdf",
+   "bytes": 628741,
+   "pages": 24,
+   "chars": 19935,
+   "chars_per_page": 830.6,
+   "status": "READABLE"
+  },
+  "KR0032|2024.2Q": {
+   "raw": "KR0032_NH농협손해보험_amended.pdf",
+   "bytes": 1379271,
+   "pages": 57,
+   "chars": 54079,
+   "chars_per_page": 948.8,
+   "status": "READABLE"
+  },
+  "KR0032|2024.3Q": {
+   "raw": "KR0032_NH농협손해보험_amended.pdf",
+   "bytes": 668584,
+   "pages": 25,
+   "chars": 21019,
+   "chars_per_page": 840.8,
+   "status": "READABLE"
+  },
+  "KR0032|2024.4Q": {
+   "raw": "KR0032_NH농협손해보험.pdf",
+   "bytes": 1858626,
+   "pages": 109,
+   "chars": 122416,
+   "chars_per_page": 1123.1,
+   "status": "READABLE"
+  },
+  "KR0032|2025.1Q": {
+   "raw": "KR0032_NH농협손해보험.pdf",
+   "bytes": 646800,
+   "pages": 26,
+   "chars": 24448,
+   "chars_per_page": 940.3,
+   "status": "READABLE"
+  },
+  "KR0032|2025.2Q": {
+   "raw": "KR0032_NH농협손해보험.pdf",
+   "bytes": 1440433,
+   "pages": 65,
+   "chars": 64165,
+   "chars_per_page": 987.2,
+   "status": "READABLE"
+  },
+  "KR0032|2025.3Q": {
+   "raw": "KR0032_NH농협손해보험.pdf",
+   "bytes": 604850,
+   "pages": 30,
+   "chars": 25315,
+   "chars_per_page": 843.8,
+   "status": "READABLE"
+  },
+  "KR0032|2025.4Q": {
+   "raw": "KR0032_NH농협손해보험.pdf",
+   "bytes": 1985631,
+   "pages": 111,
+   "chars": 120234,
+   "chars_per_page": 1083.2,
+   "status": "READABLE"
+  },
+  "KR0032|2026.1Q": {
+   "raw": "KR0032_NH농협손해보험.pdf",
+   "bytes": 612809,
+   "pages": 30,
+   "chars": 27260,
+   "chars_per_page": 908.7,
+   "status": "READABLE"
+  },
+  "KR0049|2023.1Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 716645,
+   "pages": 22,
+   "chars": 11439,
+   "chars_per_page": 520.0,
+   "status": "READABLE"
+  },
+  "KR0049|2023.2Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 1957627,
+   "pages": 60,
+   "chars": 42741,
+   "chars_per_page": 712.4,
+   "status": "READABLE"
+  },
+  "KR0049|2023.3Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 903274,
+   "pages": 25,
+   "chars": 14522,
+   "chars_per_page": 580.9,
+   "status": "READABLE"
+  },
+  "KR0049|2023.4Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 2722186,
+   "pages": 115,
+   "chars": 91723,
+   "chars_per_page": 797.6,
+   "status": "READABLE"
+  },
+  "KR0049|2024.1Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 718039,
+   "pages": 26,
+   "chars": 15055,
+   "chars_per_page": 579.0,
+   "status": "READABLE"
+  },
+  "KR0049|2024.2Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 1677078,
+   "pages": 68,
+   "chars": 49928,
+   "chars_per_page": 734.2,
+   "status": "READABLE"
+  },
+  "KR0049|2024.3Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 2310378,
+   "pages": 19,
+   "chars": 5845,
+   "chars_per_page": 307.6,
+   "status": "BORDERLINE"
+  },
+  "KR0049|2024.4Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 5492577,
+   "pages": 104,
+   "chars": 76202,
+   "chars_per_page": 732.7,
+   "status": "READABLE"
+  },
+  "KR0049|2025.1Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 2823774,
+   "pages": 30,
+   "chars": 15202,
+   "chars_per_page": 506.7,
+   "status": "READABLE"
+  },
+  "KR0049|2025.2Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 1752271,
+   "pages": 76,
+   "chars": 53669,
+   "chars_per_page": 706.2,
+   "status": "READABLE"
+  },
+  "KR0049|2025.3Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 700804,
+   "pages": 29,
+   "chars": 18381,
+   "chars_per_page": 633.8,
+   "status": "READABLE"
+  },
+  "KR0049|2025.4Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 2827794,
+   "pages": 115,
+   "chars": 84185,
+   "chars_per_page": 732.0,
+   "status": "READABLE"
+  },
+  "KR0049|2026.1Q": {
+   "raw": "KR0049_악사손해보험.pdf",
+   "bytes": 2828273,
+   "pages": 30,
+   "chars": 15700,
+   "chars_per_page": 523.3,
+   "status": "READABLE"
+  },
+  "KR0050|2023.1Q": {
+   "raw": "KR0050_하나손해보험_amended.pdf",
+   "bytes": 396559,
+   "pages": 15,
+   "chars": 9265,
+   "chars_per_page": 617.7,
+   "status": "READABLE"
+  },
+  "KR0050|2023.2Q": {
+   "raw": "KR0050_하나손해보험_amended.pdf",
+   "bytes": 1412688,
+   "pages": 51,
+   "chars": 40481,
+   "chars_per_page": 793.7,
+   "status": "READABLE"
+  },
+  "KR0050|2023.3Q": {
+   "raw": "KR0050_하나손해보험_amended.pdf",
+   "bytes": 1002112,
+   "pages": 24,
+   "chars": 17024,
+   "chars_per_page": 709.3,
+   "status": "READABLE"
+  },
+  "KR0050|2023.4Q": {
+   "raw": "KR0050_하나손해보험_amended.pdf",
+   "bytes": 1856312,
+   "pages": 80,
+   "chars": 68103,
+   "chars_per_page": 851.3,
+   "status": "READABLE"
+  },
+  "KR0050|2024.1Q": {
+   "raw": "KR0050_하나손해보험_amended.pdf",
+   "bytes": 723759,
+   "pages": 25,
+   "chars": 16125,
+   "chars_per_page": 645.0,
+   "status": "READABLE"
+  },
+  "KR0050|2024.2Q": {
+   "raw": "KR0050_하나손해보험_amended.pdf",
+   "bytes": 1621245,
+   "pages": 55,
+   "chars": 46340,
+   "chars_per_page": 842.5,
+   "status": "READABLE"
+  },
+  "KR0050|2024.3Q": {
+   "raw": "KR0050_하나손해보험_amended.pdf",
+   "bytes": 755476,
+   "pages": 25,
+   "chars": 16738,
+   "chars_per_page": 669.5,
+   "status": "READABLE"
+  },
+  "KR0050|2024.4Q": {
+   "raw": "KR0050_하나손해보험.pdf",
+   "bytes": 2284923,
+   "pages": 106,
+   "chars": 112463,
+   "chars_per_page": 1061.0,
+   "status": "READABLE"
+  },
+  "KR0050|2025.1Q": {
+   "raw": "KR0050_하나손해보험.pdf",
+   "bytes": 807874,
+   "pages": 29,
+   "chars": 18910,
+   "chars_per_page": 652.1,
+   "status": "READABLE"
+  },
+  "KR0050|2025.2Q": {
+   "raw": "KR0050_하나손해보험.pdf",
+   "bytes": 1621707,
+   "pages": 60,
+   "chars": 49214,
+   "chars_per_page": 820.2,
+   "status": "READABLE"
+  },
+  "KR0050|2025.3Q": {
+   "raw": "KR0050_하나손해보험.pdf",
+   "bytes": 803308,
+   "pages": 29,
+   "chars": 20918,
+   "chars_per_page": 721.3,
+   "status": "READABLE"
+  },
+  "KR0050|2025.4Q": {
+   "raw": "KR0050_하나손해보험.pdf",
+   "bytes": 2317844,
+   "pages": 109,
+   "chars": 117472,
+   "chars_per_page": 1077.7,
+   "status": "READABLE"
+  },
+  "KR0050|2026.1Q": {
+   "raw": "KR0050_하나손해보험.pdf",
+   "bytes": 796438,
+   "pages": 29,
+   "chars": 19078,
+   "chars_per_page": 657.9,
+   "status": "READABLE"
+  },
+  "KR0051|2023.1Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 444374,
+   "pages": 18,
+   "chars": 20951,
+   "chars_per_page": 1163.9,
+   "status": "READABLE"
+  },
+  "KR0051|2023.2Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 1019161,
+   "pages": 43,
+   "chars": 75244,
+   "chars_per_page": 1749.9,
+   "status": "READABLE"
+  },
+  "KR0051|2023.3Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 536669,
+   "pages": 18,
+   "chars": 21337,
+   "chars_per_page": 1185.4,
+   "status": "READABLE"
+  },
+  "KR0051|2023.4Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 1779369,
+   "pages": 68,
+   "chars": 92730,
+   "chars_per_page": 1363.7,
+   "status": "READABLE"
+  },
+  "KR0051|2024.1Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 557056,
+   "pages": 21,
+   "chars": 28158,
+   "chars_per_page": 1340.9,
+   "status": "READABLE"
+  },
+  "KR0051|2024.2Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 1064960,
+   "pages": 48,
+   "chars": 71600,
+   "chars_per_page": 1491.7,
+   "status": "READABLE"
+  },
+  "KR0051|2024.3Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 630784,
+   "pages": 22,
+   "chars": 32572,
+   "chars_per_page": 1480.5,
+   "status": "READABLE"
+  },
+  "KR0051|2024.4Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 1827418,
+   "pages": 73,
+   "chars": 110269,
+   "chars_per_page": 1510.5,
+   "status": "READABLE"
+  },
+  "KR0051|2025.1Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 638976,
+   "pages": 23,
+   "chars": 33624,
+   "chars_per_page": 1461.9,
+   "status": "READABLE"
+  },
+  "KR0051|2025.2Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 1130496,
+   "pages": 48,
+   "chars": 76021,
+   "chars_per_page": 1583.8,
+   "status": "READABLE"
+  },
+  "KR0051|2025.3Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 565248,
+   "pages": 22,
+   "chars": 27502,
+   "chars_per_page": 1250.1,
+   "status": "READABLE"
+  },
+  "KR0051|2025.4Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 1540335,
+   "pages": 79,
+   "chars": 107802,
+   "chars_per_page": 1364.6,
+   "status": "READABLE"
+  },
+  "KR0051|2026.1Q": {
+   "raw": "KR0051_신한이지손해보험.pdf",
+   "bytes": 548864,
+   "pages": 22,
+   "chars": 22676,
+   "chars_per_page": 1030.7,
+   "status": "READABLE"
+  },
+  "KR0068|2023.1Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 354252,
+   "pages": 33,
+   "chars": 29081,
+   "chars_per_page": 881.2,
+   "status": "READABLE"
+  },
+  "KR0068|2023.2Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 1117618,
+   "pages": 71,
+   "chars": 58230,
+   "chars_per_page": 820.1,
+   "status": "READABLE"
+  },
+  "KR0068|2023.3Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 397062,
+   "pages": 44,
+   "chars": 53492,
+   "chars_per_page": 1215.7,
+   "status": "READABLE"
+  },
+  "KR0068|2023.4Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 5419382,
+   "pages": 547,
+   "chars": 615911,
+   "chars_per_page": 1126.0,
+   "status": "READABLE"
+  },
+  "KR0068|2024.1Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 321072,
+   "pages": 41,
+   "chars": 33388,
+   "chars_per_page": 814.3,
+   "status": "READABLE"
+  },
+  "KR0068|2024.2Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 843487,
+   "pages": 73,
+   "chars": 105335,
+   "chars_per_page": 1442.9,
+   "status": "READABLE"
+  },
+  "KR0068|2024.3Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 390397,
+   "pages": 38,
+   "chars": 50587,
+   "chars_per_page": 1331.2,
+   "status": "READABLE"
+  },
+  "KR0068|2024.4Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 5335332,
+   "pages": 740,
+   "chars": 835178,
+   "chars_per_page": 1128.6,
+   "status": "READABLE"
+  },
+  "KR0068|2025.1Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 314789,
+   "pages": 35,
+   "chars": 34284,
+   "chars_per_page": 979.5,
+   "status": "READABLE"
+  },
+  "KR0068|2025.2Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 751366,
+   "pages": 71,
+   "chars": 87395,
+   "chars_per_page": 1230.9,
+   "status": "READABLE"
+  },
+  "KR0068|2025.3Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 328087,
+   "pages": 38,
+   "chars": 34394,
+   "chars_per_page": 905.1,
+   "status": "READABLE"
+  },
+  "KR0068|2025.4Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 8937443,
+   "pages": 797,
+   "chars": 872190,
+   "chars_per_page": 1094.3,
+   "status": "READABLE"
+  },
+  "KR0068|2026.1Q": {
+   "raw": "KR0068_한화생명.pdf",
+   "bytes": 318066,
+   "pages": 37,
+   "chars": 35262,
+   "chars_per_page": 953.0,
+   "status": "READABLE"
+  },
+  "KR0069|2023.1Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 376197,
+   "pages": 45,
+   "chars": 30001,
+   "chars_per_page": 666.7,
+   "status": "READABLE"
+  },
+  "KR0069|2023.2Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 828000,
+   "pages": 78,
+   "chars": 47378,
+   "chars_per_page": 607.4,
+   "status": "READABLE"
+  },
+  "KR0069|2023.3Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 548195,
+   "pages": 49,
+   "chars": 32865,
+   "chars_per_page": 670.7,
+   "status": "READABLE"
+  },
+  "KR0069|2023.4Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 3859916,
+   "pages": 604,
+   "chars": 502513,
+   "chars_per_page": 832.0,
+   "status": "READABLE"
+  },
+  "KR0069|2024.1Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 855897,
+   "pages": 34,
+   "chars": 19728,
+   "chars_per_page": 580.2,
+   "status": "READABLE"
+  },
+  "KR0069|2024.2Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 1855635,
+   "pages": 67,
+   "chars": 41459,
+   "chars_per_page": 618.8,
+   "status": "READABLE"
+  },
+  "KR0069|2024.3Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 865321,
+   "pages": 34,
+   "chars": 20313,
+   "chars_per_page": 597.4,
+   "status": "READABLE"
+  },
+  "KR0069|2024.4Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 4918917,
+   "pages": 655,
+   "chars": 561971,
+   "chars_per_page": 858.0,
+   "status": "READABLE"
+  },
+  "KR0069|2025.1Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 920675,
+   "pages": 35,
+   "chars": 21604,
+   "chars_per_page": 617.3,
+   "status": "READABLE"
+  },
+  "KR0069|2025.2Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 1844522,
+   "pages": 68,
+   "chars": 46564,
+   "chars_per_page": 684.8,
+   "status": "READABLE"
+  },
+  "KR0069|2025.3Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 659703,
+   "pages": 35,
+   "chars": 24666,
+   "chars_per_page": 704.7,
+   "status": "READABLE"
+  },
+  "KR0069|2025.4Q": {
+   "raw": "KR0069_삼성생명.pdf",
+   "bytes": 5315684,
+   "pages": 733,
+   "chars": 655127,
+   "chars_per_page": 893.8,
+   "status": "READABLE"
+  },
+  "KR0069|2026.1Q": {
+   "raw": "KR0069_삼성생명보험.pdf",
+   "bytes": 692133,
+   "pages": 36,
+   "chars": 25594,
+   "chars_per_page": 710.9,
+   "status": "READABLE"
+  },
+  "KR0070|2023.1Q": {
+   "raw": "KR0070_에이비엘생명보험_amended.pdf",
+   "bytes": 570484,
+   "pages": 29,
+   "chars": 15997,
+   "chars_per_page": 551.6,
+   "status": "READABLE"
+  },
+  "KR0070|2023.2Q": {
+   "raw": "KR0070_에이비엘생명보험_amended.pdf",
+   "bytes": 1147333,
+   "pages": 60,
+   "chars": 48359,
+   "chars_per_page": 806.0,
+   "status": "READABLE"
+  },
+  "KR0070|2023.3Q": {
+   "raw": "KR0070_에이비엘생명보험_amended.pdf",
+   "bytes": 578923,
+   "pages": 29,
+   "chars": 18456,
+   "chars_per_page": 636.4,
+   "status": "READABLE"
+  },
+  "KR0070|2023.4Q": {
+   "raw": "KR0070_에이비엘생명보험_amended.pdf",
+   "bytes": 4825273,
+   "pages": 526,
+   "chars": 438377,
+   "chars_per_page": 833.4,
+   "status": "READABLE"
+  },
+  "KR0070|2024.1Q": {
+   "raw": "KR0070_에이비엘생명보험_amended.pdf",
+   "bytes": 610487,
+   "pages": 31,
+   "chars": 21100,
+   "chars_per_page": 680.6,
+   "status": "READABLE"
+  },
+  "KR0070|2024.2Q": {
+   "raw": "KR0070_에이비엘생명보험_amended.pdf",
+   "bytes": 1090680,
+   "pages": 60,
+   "chars": 49344,
+   "chars_per_page": 822.4,
+   "status": "READABLE"
+  },
+  "KR0070|2024.3Q": {
+   "raw": "KR0070_에이비엘생명보험.pdf",
+   "bytes": 719958,
+   "pages": 30,
+   "chars": 32700,
+   "chars_per_page": 1090.0,
+   "status": "READABLE"
+  },
+  "KR0070|2024.4Q": {
+   "raw": "KR0070_에이비엘생명보험.pdf",
+   "bytes": 5713970,
+   "pages": 598,
+   "chars": 540629,
+   "chars_per_page": 904.1,
+   "status": "READABLE"
+  },
+  "KR0070|2025.1Q": {
+   "raw": "KR0070_에이비엘생명보험.pdf",
+   "bytes": 629723,
+   "pages": 34,
+   "chars": 25412,
+   "chars_per_page": 747.4,
+   "status": "READABLE"
+  },
+  "KR0070|2025.2Q": {
+   "raw": "KR0070_에이비엘생명보험.pdf",
+   "bytes": 1136951,
+   "pages": 66,
+   "chars": 55037,
+   "chars_per_page": 833.9,
+   "status": "READABLE"
+  },
+  "KR0070|2025.3Q": {
+   "raw": "KR0070_에이비엘생명보험.pdf",
+   "bytes": 635350,
+   "pages": 35,
+   "chars": 26332,
+   "chars_per_page": 752.3,
+   "status": "READABLE"
+  },
+  "KR0070|2025.4Q": {
+   "raw": "KR0070_에이비엘생명보험.pdf",
+   "bytes": 6616320,
+   "pages": 625,
+   "chars": 596568,
+   "chars_per_page": 954.5,
+   "status": "READABLE"
+  },
+  "KR0070|2026.1Q": {
+   "raw": "KR0070_에이비엘생명보험.pdf",
+   "bytes": 698519,
+   "pages": 35,
+   "chars": 25970,
+   "chars_per_page": 742.0,
+   "status": "READABLE"
+  },
+  "KR0071|2023.1Q": {
+   "raw": "KR0071_흥국생명보험_amended.pdf",
+   "bytes": 483339,
+   "pages": 29,
+   "chars": 26319,
+   "chars_per_page": 907.6,
+   "status": "READABLE"
+  },
+  "KR0071|2023.2Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 810832,
+   "pages": 64,
+   "chars": 59858,
+   "chars_per_page": 935.3,
+   "status": "READABLE"
+  },
+  "KR0071|2023.3Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 413381,
+   "pages": 41,
+   "chars": 39040,
+   "chars_per_page": 952.2,
+   "status": "READABLE"
+  },
+  "KR0071|2023.4Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 3886310,
+   "pages": 461,
+   "chars": 362285,
+   "chars_per_page": 785.9,
+   "status": "READABLE"
+  },
+  "KR0071|2024.1Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 348397,
+   "pages": 30,
+   "chars": 22107,
+   "chars_per_page": 736.9,
+   "status": "READABLE"
+  },
+  "KR0071|2024.2Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 699514,
+   "pages": 62,
+   "chars": 53275,
+   "chars_per_page": 859.3,
+   "status": "READABLE"
+  },
+  "KR0071|2024.3Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 314125,
+   "pages": 30,
+   "chars": 25910,
+   "chars_per_page": 863.7,
+   "status": "READABLE"
+  },
+  "KR0071|2024.4Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 35932312,
+   "pages": 538,
+   "chars": 287019,
+   "chars_per_page": 533.5,
+   "status": "READABLE"
+  },
+  "KR0071|2025.1Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 326989,
+   "pages": 34,
+   "chars": 26090,
+   "chars_per_page": 767.4,
+   "status": "READABLE"
+  },
+  "KR0071|2025.2Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 702076,
+   "pages": 69,
+   "chars": 59384,
+   "chars_per_page": 860.6,
+   "status": "READABLE"
+  },
+  "KR0071|2025.3Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 329446,
+   "pages": 35,
+   "chars": 29838,
+   "chars_per_page": 852.5,
+   "status": "READABLE"
+  },
+  "KR0071|2025.4Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 14023123,
+   "pages": 602,
+   "chars": 449385,
+   "chars_per_page": 746.5,
+   "status": "READABLE"
+  },
+  "KR0071|2026.1Q": {
+   "raw": "KR0071_흥국생명보험.pdf",
+   "bytes": 297402,
+   "pages": 34,
+   "chars": 25552,
+   "chars_per_page": 751.5,
+   "status": "READABLE"
+  },
+  "KR0072|2023.1Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 307345,
+   "pages": 32,
+   "chars": 19828,
+   "chars_per_page": 619.6,
+   "status": "READABLE"
+  },
+  "KR0072|2023.2Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 713812,
+   "pages": 69,
+   "chars": 52287,
+   "chars_per_page": 757.8,
+   "status": "READABLE"
+  },
+  "KR0072|2023.3Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 422770,
+   "pages": 49,
+   "chars": 41215,
+   "chars_per_page": 841.1,
+   "status": "READABLE"
+  },
+  "KR0072|2023.4Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 12926697,
+   "pages": 499,
+   "chars": 398722,
+   "chars_per_page": 799.0,
+   "status": "READABLE"
+  },
+  "KR0072|2024.1Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 357344,
+   "pages": 33,
+   "chars": 24415,
+   "chars_per_page": 739.8,
+   "status": "READABLE"
+  },
+  "KR0072|2024.2Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 721579,
+   "pages": 63,
+   "chars": 46996,
+   "chars_per_page": 746.0,
+   "status": "READABLE"
+  },
+  "KR0072|2024.3Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 341994,
+   "pages": 32,
+   "chars": 19828,
+   "chars_per_page": 619.6,
+   "status": "READABLE"
+  },
+  "KR0072|2024.4Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 14005961,
+   "pages": 658,
+   "chars": 1075962,
+   "chars_per_page": 1635.2,
+   "status": "READABLE"
+  },
+  "KR0072|2025.1Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 365416,
+   "pages": 33,
+   "chars": 22975,
+   "chars_per_page": 696.2,
+   "status": "READABLE"
+  },
+  "KR0072|2025.2Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 785842,
+   "pages": 64,
+   "chars": 52900,
+   "chars_per_page": 826.6,
+   "status": "READABLE"
+  },
+  "KR0072|2025.3Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 467186,
+   "pages": 34,
+   "chars": 23835,
+   "chars_per_page": 701.0,
+   "status": "READABLE"
+  },
+  "KR0072|2025.4Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 8460993,
+   "pages": 519,
+   "chars": 513227,
+   "chars_per_page": 988.9,
+   "status": "READABLE"
+  },
+  "KR0072|2026.1Q": {
+   "raw": "KR0072_케이디비생명보험.pdf",
+   "bytes": 370112,
+   "pages": 36,
+   "chars": 23073,
+   "chars_per_page": 640.9,
+   "status": "READABLE"
+  },
+  "KR0073|2023.1Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 427303,
+   "pages": 21,
+   "chars": 27729,
+   "chars_per_page": 1320.4,
+   "status": "READABLE"
+  },
+  "KR0073|2023.2Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 716828,
+   "pages": 38,
+   "chars": 54398,
+   "chars_per_page": 1431.5,
+   "status": "READABLE"
+  },
+  "KR0073|2023.3Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 524167,
+   "pages": 27,
+   "chars": 32323,
+   "chars_per_page": 1197.1,
+   "status": "READABLE"
+  },
+  "KR0073|2023.4Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 3388535,
+   "pages": 545,
+   "chars": 500327,
+   "chars_per_page": 918.0,
+   "status": "READABLE"
+  },
+  "KR0073|2024.1Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 482889,
+   "pages": 23,
+   "chars": 27760,
+   "chars_per_page": 1207.0,
+   "status": "READABLE"
+  },
+  "KR0073|2024.2Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 787927,
+   "pages": 41,
+   "chars": 58232,
+   "chars_per_page": 1420.3,
+   "status": "READABLE"
+  },
+  "KR0073|2024.3Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 812272,
+   "pages": 24,
+   "chars": 28959,
+   "chars_per_page": 1206.6,
+   "status": "READABLE"
+  },
+  "KR0073|2024.4Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 8714484,
+   "pages": 586,
+   "chars": 536937,
+   "chars_per_page": 916.3,
+   "status": "READABLE"
+  },
+  "KR0073|2025.1Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 709821,
+   "pages": 27,
+   "chars": 31888,
+   "chars_per_page": 1181.0,
+   "status": "READABLE"
+  },
+  "KR0073|2025.2Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 897185,
+   "pages": 46,
+   "chars": 63158,
+   "chars_per_page": 1373.0,
+   "status": "READABLE"
+  },
+  "KR0073|2025.3Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 696381,
+   "pages": 26,
+   "chars": 29416,
+   "chars_per_page": 1131.4,
+   "status": "READABLE"
+  },
+  "KR0073|2025.4Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 6842488,
+   "pages": 638,
+   "chars": 669751,
+   "chars_per_page": 1049.8,
+   "status": "READABLE"
+  },
+  "KR0073|2026.1Q": {
+   "raw": "KR0073_교보생명보험.pdf",
+   "bytes": 866656,
+   "pages": 26,
+   "chars": 31789,
+   "chars_per_page": 1222.7,
+   "status": "READABLE"
+  },
+  "KR0074|2023.1Q": {
+   "raw": "KR0074_라이나생명보험_amended.pdf",
+   "bytes": 1322141,
+   "pages": 85,
+   "chars": 67379,
+   "chars_per_page": 792.7,
+   "status": "READABLE"
+  },
+  "KR0074|2023.2Q": {
+   "raw": "KR0074_라이나생명보험_amended.pdf",
+   "bytes": 1655371,
+   "pages": 113,
+   "chars": 91793,
+   "chars_per_page": 812.3,
+   "status": "READABLE"
+  },
+  "KR0074|2023.3Q": {
+   "raw": "KR0074_라이나생명보험_amended.pdf",
+   "bytes": 1427707,
+   "pages": 94,
+   "chars": 74133,
+   "chars_per_page": 788.6,
+   "status": "READABLE"
+  },
+  "KR0074|2023.4Q": {
+   "raw": "KR0074_라이나생명보험.pdf",
+   "bytes": 2904254,
+   "pages": 189,
+   "chars": 158696,
+   "chars_per_page": 839.7,
+   "status": "READABLE"
+  },
+  "KR0074|2024.1Q": {
+   "raw": "KR0074_라이나생명보험_amended.pdf",
+   "bytes": 1338488,
+   "pages": 83,
+   "chars": 62255,
+   "chars_per_page": 750.1,
+   "status": "READABLE"
+  },
+  "KR0074|2024.2Q": {
+   "raw": "KR0074_라이나생명보험_amended.pdf",
+   "bytes": 1762752,
+   "pages": 108,
+   "chars": 86403,
+   "chars_per_page": 800.0,
+   "status": "READABLE"
+  },
+  "KR0074|2024.3Q": {
+   "raw": "KR0074_라이나생명보험.pdf",
+   "bytes": 1223952,
+   "pages": 84,
+   "chars": 66390,
+   "chars_per_page": 790.4,
+   "status": "READABLE"
+  },
+  "KR0074|2024.4Q": {
+   "raw": "KR0074_라이나생명보험.pdf",
+   "bytes": 5749951,
+   "pages": 266,
+   "chars": 229823,
+   "chars_per_page": 864.0,
+   "status": "READABLE"
+  },
+  "KR0074|2025.1Q": {
+   "raw": "KR0074_라이나생명보험.pdf",
+   "bytes": 1444911,
+   "pages": 92,
+   "chars": 69523,
+   "chars_per_page": 755.7,
+   "status": "READABLE"
+  },
+  "KR0074|2025.2Q": {
+   "raw": "KR0074_라이나생명보험.pdf",
+   "bytes": 1804636,
+   "pages": 118,
+   "chars": 94451,
+   "chars_per_page": 800.4,
+   "status": "READABLE"
+  },
+  "KR0074|2025.3Q": {
+   "raw": "KR0074_라이나생명보험.pdf",
+   "bytes": 3253469,
+   "pages": 165,
+   "chars": 131824,
+   "chars_per_page": 798.9,
+   "status": "READABLE"
+  },
+  "KR0074|2025.4Q": {
+   "raw": "KR0074_라이나생명보험.pdf",
+   "bytes": 7428449,
+   "pages": 424,
+   "chars": 347475,
+   "chars_per_page": 819.5,
+   "status": "READABLE"
+  },
+  "KR0074|2026.1Q": {
+   "raw": "KR0074_라이나생명보험.pdf",
+   "bytes": 2614866,
+   "pages": 174,
+   "chars": 137137,
+   "chars_per_page": 788.1,
+   "status": "READABLE"
+  },
+  "KR0075|2023.1Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험.pdf",
+   "bytes": 1212569,
+   "pages": 28,
+   "chars": 21134,
+   "chars_per_page": 754.8,
+   "status": "READABLE"
+  },
+  "KR0075|2023.2Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험_amended.pdf",
+   "bytes": 2052200,
+   "pages": 49,
+   "chars": 65056,
+   "chars_per_page": 1327.7,
+   "status": "READABLE"
+  },
+  "KR0075|2023.3Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험_amended.pdf",
+   "bytes": 1223964,
+   "pages": 30,
+   "chars": 25991,
+   "chars_per_page": 866.4,
+   "status": "READABLE"
+  },
+  "KR0075|2023.4Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험_amended.pdf",
+   "bytes": 1928014,
+   "pages": 97,
+   "chars": 70112,
+   "chars_per_page": 722.8,
+   "status": "READABLE"
+  },
+  "KR0075|2024.1Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험_amended.pdf",
+   "bytes": 1202079,
+   "pages": 28,
+   "chars": 29662,
+   "chars_per_page": 1059.4,
+   "status": "READABLE"
+  },
+  "KR0075|2024.2Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험_amended.pdf",
+   "bytes": 1356161,
+   "pages": 33,
+   "chars": 43628,
+   "chars_per_page": 1322.1,
+   "status": "READABLE"
+  },
+  "KR0075|2024.3Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험_amended.pdf",
+   "bytes": 1431279,
+   "pages": 32,
+   "chars": 31420,
+   "chars_per_page": 981.9,
+   "status": "READABLE"
+  },
+  "KR0075|2024.4Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험.pdf",
+   "bytes": 5166584,
+   "pages": 282,
+   "chars": 189097,
+   "chars_per_page": 670.6,
+   "status": "READABLE"
+  },
+  "KR0075|2025.1Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험.pdf",
+   "bytes": 1550128,
+   "pages": 37,
+   "chars": 38486,
+   "chars_per_page": 1040.2,
+   "status": "READABLE"
+  },
+  "KR0075|2025.2Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험.pdf",
+   "bytes": 2631258,
+   "pages": 65,
+   "chars": 80518,
+   "chars_per_page": 1238.7,
+   "status": "READABLE"
+  },
+  "KR0075|2025.3Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험.pdf",
+   "bytes": 1428953,
+   "pages": 38,
+   "chars": 42040,
+   "chars_per_page": 1106.3,
+   "status": "READABLE"
+  },
+  "KR0075|2025.4Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험.pdf",
+   "bytes": 6457111,
+   "pages": 290,
+   "chars": 254711,
+   "chars_per_page": 878.3,
+   "status": "READABLE"
+  },
+  "KR0075|2026.1Q": {
+   "raw": "KR0075_비엔피파리바카디프생명보험.pdf",
+   "bytes": 667585,
+   "pages": 38,
+   "chars": 18520,
+   "chars_per_page": 487.4,
+   "status": "READABLE"
+  },
+  "KR0076|2023.1Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 577450,
+   "pages": 26,
+   "chars": 15113,
+   "chars_per_page": 581.3,
+   "status": "READABLE"
+  },
+  "KR0076|2023.2Q": {
+   "raw": "KR0076_아이엠라이프생명보험_amended.pdf",
+   "bytes": 989854,
+   "pages": 51,
+   "chars": 34156,
+   "chars_per_page": 669.7,
+   "status": "READABLE"
+  },
+  "KR0076|2023.3Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 514130,
+   "pages": 28,
+   "chars": 17612,
+   "chars_per_page": 629.0,
+   "status": "READABLE"
+  },
+  "KR0076|2023.4Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 8143437,
+   "pages": 252,
+   "chars": 187708,
+   "chars_per_page": 744.9,
+   "status": "READABLE"
+  },
+  "KR0076|2024.1Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 672408,
+   "pages": 27,
+   "chars": 17293,
+   "chars_per_page": 640.5,
+   "status": "READABLE"
+  },
+  "KR0076|2024.2Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 971063,
+   "pages": 58,
+   "chars": 44418,
+   "chars_per_page": 765.8,
+   "status": "READABLE"
+  },
+  "KR0076|2024.3Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 559203,
+   "pages": 27,
+   "chars": 16309,
+   "chars_per_page": 604.0,
+   "status": "READABLE"
+  },
+  "KR0076|2024.4Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 6478183,
+   "pages": 328,
+   "chars": 217778,
+   "chars_per_page": 664.0,
+   "status": "READABLE"
+  },
+  "KR0076|2025.1Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 560907,
+   "pages": 28,
+   "chars": 16679,
+   "chars_per_page": 595.7,
+   "status": "READABLE"
+  },
+  "KR0076|2025.2Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 788340,
+   "pages": 58,
+   "chars": 43062,
+   "chars_per_page": 742.4,
+   "status": "READABLE"
+  },
+  "KR0076|2025.3Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 349102,
+   "pages": 26,
+   "chars": 18804,
+   "chars_per_page": 723.2,
+   "status": "READABLE"
+  },
+  "KR0076|2025.4Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 8178892,
+   "pages": 354,
+   "chars": 261929,
+   "chars_per_page": 739.9,
+   "status": "READABLE"
+  },
+  "KR0076|2026.1Q": {
+   "raw": "KR0076_아이엠라이프생명보험.pdf",
+   "bytes": 347698,
+   "pages": 27,
+   "chars": 19832,
+   "chars_per_page": 734.5,
+   "status": "READABLE"
+  },
+  "KR0079|2023.1Q": {
+   "raw": "KR0079_미래에셋생명_amended.pdf",
+   "bytes": 5396268,
+   "pages": 39,
+   "chars": 1776,
+   "chars_per_page": 45.5,
+   "status": "UNREADABLE"
+  },
+  "KR0079|2023.2Q": {
+   "raw": "KR0079_미래에셋생명.pdf",
+   "bytes": 7999256,
+   "pages": 58,
+   "chars": 4859,
+   "chars_per_page": 83.8,
+   "status": "UNREADABLE"
+  },
+  "KR0079|2023.3Q": {
+   "raw": "KR0079_미래에셋생명.pdf",
+   "bytes": 5363225,
+   "pages": 37,
+   "chars": 2250,
+   "chars_per_page": 60.8,
+   "status": "UNREADABLE"
+  },
+  "KR0079|2023.4Q": {
+   "raw": "KR0079_미래에셋생명_amended.pdf",
+   "bytes": 15341391,
+   "pages": 510,
+   "chars": 354843,
+   "chars_per_page": 695.8,
+   "status": "READABLE"
+  },
+  "KR0079|2024.1Q": {
+   "raw": "KR0079_미래에셋생명_amended.pdf",
+   "bytes": 3633868,
+   "pages": 29,
+   "chars": 1263,
+   "chars_per_page": 43.6,
+   "status": "UNREADABLE"
+  },
+  "KR0079|2024.2Q": {
+   "raw": "KR0079_미래에셋생명_amended.pdf",
+   "bytes": 7010692,
+   "pages": 55,
+   "chars": 4501,
+   "chars_per_page": 81.8,
+   "status": "UNREADABLE"
+  },
+  "KR0079|2024.3Q": {
+   "raw": "KR0079_미래에셋생명_amended.pdf",
+   "bytes": 3374976,
+   "pages": 27,
+   "chars": 1691,
+   "chars_per_page": 62.6,
+   "status": "UNREADABLE"
+  },
+  "KR0079|2024.4Q": {
+   "raw": "KR0079_미래에셋생명.pdf",
+   "bytes": 18600621,
+   "pages": 559,
+   "chars": 343295,
+   "chars_per_page": 614.1,
+   "status": "READABLE"
+  },
+  "KR0079|2025.1Q": {
+   "raw": "KR0079_미래에셋생명.pdf",
+   "bytes": 3522559,
+   "pages": 31,
+   "chars": 2275,
+   "chars_per_page": 73.4,
+   "status": "UNREADABLE"
+  },
+  "KR0079|2025.2Q": {
+   "raw": "KR0079_미래에셋생명.pdf",
+   "bytes": 7482287,
+   "pages": 65,
+   "chars": 4586,
+   "chars_per_page": 70.6,
+   "status": "UNREADABLE"
+  },
+  "KR0079|2025.3Q": {
+   "raw": "KR0079_미래에셋생명.pdf",
+   "bytes": 3634669,
+   "pages": 35,
+   "chars": 1916,
+   "chars_per_page": 54.7,
+   "status": "UNREADABLE"
+  },
+  "KR0079|2025.4Q": {
+   "raw": "KR0079_미래에셋생명.pdf",
+   "bytes": 18290619,
+   "pages": 564,
+   "chars": 355206,
+   "chars_per_page": 629.8,
+   "status": "READABLE"
+  },
+  "KR0079|2026.1Q": {
+   "raw": "KR0079_미래에셋생명.pdf",
+   "bytes": 3405143,
+   "pages": 32,
+   "chars": 1788,
+   "chars_per_page": 55.9,
+   "status": "UNREADABLE"
+  },
+  "KR0080|2023.1Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 302941,
+   "pages": 17,
+   "chars": 12009,
+   "chars_per_page": 706.4,
+   "status": "READABLE"
+  },
+  "KR0080|2023.2Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 645405,
+   "pages": 35,
+   "chars": 30594,
+   "chars_per_page": 874.1,
+   "status": "READABLE"
+  },
+  "KR0080|2023.3Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 340040,
+   "pages": 22,
+   "chars": 18613,
+   "chars_per_page": 846.0,
+   "status": "READABLE"
+  },
+  "KR0080|2023.4Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 3591856,
+   "pages": 402,
+   "chars": 318216,
+   "chars_per_page": 791.6,
+   "status": "READABLE"
+  },
+  "KR0080|2024.1Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 1051801,
+   "pages": 29,
+   "chars": 28320,
+   "chars_per_page": 976.6,
+   "status": "READABLE"
+  },
+  "KR0080|2024.2Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 2208107,
+   "pages": 58,
+   "chars": 54900,
+   "chars_per_page": 946.6,
+   "status": "READABLE"
+  },
+  "KR0080|2024.3Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 1138130,
+   "pages": 30,
+   "chars": 27362,
+   "chars_per_page": 912.1,
+   "status": "READABLE"
+  },
+  "KR0080|2024.4Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 15101689,
+   "pages": 475,
+   "chars": 243866,
+   "chars_per_page": 513.4,
+   "status": "READABLE"
+  },
+  "KR0080|2025.1Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 5688265,
+   "pages": 32,
+   "chars": 3286,
+   "chars_per_page": 102.7,
+   "status": "BORDERLINE"
+  },
+  "KR0080|2025.2Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 11087821,
+   "pages": 52,
+   "chars": 5694,
+   "chars_per_page": 109.5,
+   "status": "BORDERLINE"
+  },
+  "KR0080|2025.3Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 4931379,
+   "pages": 33,
+   "chars": 8885,
+   "chars_per_page": 269.2,
+   "status": "BORDERLINE"
+  },
+  "KR0080|2025.4Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 15706403,
+   "pages": 493,
+   "chars": 258876,
+   "chars_per_page": 525.1,
+   "status": "READABLE"
+  },
+  "KR0080|2026.1Q": {
+   "raw": "KR0080_에이아이에이생명보험.pdf",
+   "bytes": 5027101,
+   "pages": 36,
+   "chars": 8997,
+   "chars_per_page": 249.9,
+   "status": "BORDERLINE"
+  },
+  "KR0082|2023.1Q": {
+   "raw": "KR0082_DB생명보험_amended.pdf",
+   "bytes": 590463,
+   "pages": 39,
+   "chars": 35830,
+   "chars_per_page": 918.7,
+   "status": "READABLE"
+  },
+  "KR0082|2023.2Q": {
+   "raw": "KR0082_DB생명보험_amended.pdf",
+   "bytes": 1101827,
+   "pages": 63,
+   "chars": 58021,
+   "chars_per_page": 921.0,
+   "status": "READABLE"
+  },
+  "KR0082|2023.3Q": {
+   "raw": "KR0082_DB생명보험_amended.pdf",
+   "bytes": 652669,
+   "pages": 42,
+   "chars": 39723,
+   "chars_per_page": 945.8,
+   "status": "READABLE"
+  },
+  "KR0082|2023.4Q": {
+   "raw": "KR0082_DB생명보험.pdf",
+   "bytes": 7256389,
+   "pages": 445,
+   "chars": 326387,
+   "chars_per_page": 733.5,
+   "status": "READABLE"
+  },
+  "KR0082|2024.1Q": {
+   "raw": "KR0082_DB생명보험_amended.pdf",
+   "bytes": 516606,
+   "pages": 34,
+   "chars": 25325,
+   "chars_per_page": 744.9,
+   "status": "READABLE"
+  },
+  "KR0082|2024.2Q": {
+   "raw": "KR0082_DB생명보험_amended.pdf",
+   "bytes": 1066494,
+   "pages": 61,
+   "chars": 49984,
+   "chars_per_page": 819.4,
+   "status": "READABLE"
+  },
+  "KR0082|2024.3Q": {
+   "raw": "KR0082_DB생명보험_amended.pdf",
+   "bytes": 538396,
+   "pages": 31,
+   "chars": 22168,
+   "chars_per_page": 715.1,
+   "status": "READABLE"
+  },
+  "KR0082|2024.4Q": {
+   "raw": "KR0082_DB생명보험.pdf",
+   "bytes": 5691594,
+   "pages": 555,
+   "chars": 443614,
+   "chars_per_page": 799.3,
+   "status": "READABLE"
+  },
+  "KR0082|2025.1Q": {
+   "raw": "KR0082_DB생명보험.pdf",
+   "bytes": 563990,
+   "pages": 33,
+   "chars": 26702,
+   "chars_per_page": 809.2,
+   "status": "READABLE"
+  },
+  "KR0082|2025.2Q": {
+   "raw": "KR0082_DB생명보험.pdf",
+   "bytes": 943549,
+   "pages": 62,
+   "chars": 51543,
+   "chars_per_page": 831.3,
+   "status": "READABLE"
+  },
+  "KR0082|2025.3Q": {
+   "raw": "KR0082_DB생명보험.pdf",
+   "bytes": 499523,
+   "pages": 31,
+   "chars": 24807,
+   "chars_per_page": 800.2,
+   "status": "READABLE"
+  },
+  "KR0082|2025.4Q": {
+   "raw": "KR0082_DB생명보험.pdf",
+   "bytes": 5709325,
+   "pages": 600,
+   "chars": 491170,
+   "chars_per_page": 818.6,
+   "status": "READABLE"
+  },
+  "KR0082|2026.1Q": {
+   "raw": "KR0082_DB생명보험.pdf",
+   "bytes": 500266,
+   "pages": 33,
+   "chars": 25489,
+   "chars_per_page": 772.4,
+   "status": "READABLE"
+  },
+  "KR0083|2023.1Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 282957,
+   "pages": 27,
+   "chars": 17692,
+   "chars_per_page": 655.3,
+   "status": "READABLE"
+  },
+  "KR0083|2023.2Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 702454,
+   "pages": 54,
+   "chars": 37411,
+   "chars_per_page": 692.8,
+   "status": "READABLE"
+  },
+  "KR0083|2023.3Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 361039,
+   "pages": 31,
+   "chars": 20530,
+   "chars_per_page": 662.3,
+   "status": "READABLE"
+  },
+  "KR0083|2023.4Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 3594212,
+   "pages": 412,
+   "chars": 331624,
+   "chars_per_page": 804.9,
+   "status": "READABLE"
+  },
+  "KR0083|2024.1Q": {
+   "raw": "KR0083_푸본현대생명보험_amended.pdf",
+   "bytes": 373839,
+   "pages": 33,
+   "chars": 20643,
+   "chars_per_page": 625.5,
+   "status": "READABLE"
+  },
+  "KR0083|2024.2Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 741159,
+   "pages": 61,
+   "chars": 44419,
+   "chars_per_page": 728.2,
+   "status": "READABLE"
+  },
+  "KR0083|2024.3Q": {
+   "raw": "KR0083_푸본현대생명보험_amended.pdf",
+   "bytes": 346198,
+   "pages": 33,
+   "chars": 21405,
+   "chars_per_page": 648.6,
+   "status": "READABLE"
+  },
+  "KR0083|2024.4Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 6628981,
+   "pages": 512,
+   "chars": 367721,
+   "chars_per_page": 718.2,
+   "status": "READABLE"
+  },
+  "KR0083|2025.1Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 380347,
+   "pages": 36,
+   "chars": 22894,
+   "chars_per_page": 635.9,
+   "status": "READABLE"
+  },
+  "KR0083|2025.2Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 843463,
+   "pages": 69,
+   "chars": 50326,
+   "chars_per_page": 729.4,
+   "status": "READABLE"
+  },
+  "KR0083|2025.3Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 410312,
+   "pages": 37,
+   "chars": 23384,
+   "chars_per_page": 632.0,
+   "status": "READABLE"
+  },
+  "KR0083|2025.4Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 6962858,
+   "pages": 545,
+   "chars": 493554,
+   "chars_per_page": 905.6,
+   "status": "READABLE"
+  },
+  "KR0083|2026.1Q": {
+   "raw": "KR0083_푸본현대생명보험.pdf",
+   "bytes": 562616,
+   "pages": 39,
+   "chars": 26409,
+   "chars_per_page": 677.2,
+   "status": "READABLE"
+  },
+  "KR0087|2023.1Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 985962,
+   "pages": 47,
+   "chars": 55583,
+   "chars_per_page": 1182.6,
+   "status": "READABLE"
+  },
+  "KR0087|2023.2Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 1624437,
+   "pages": 74,
+   "chars": 77229,
+   "chars_per_page": 1043.6,
+   "status": "READABLE"
+  },
+  "KR0087|2023.3Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 1099188,
+   "pages": 67,
+   "chars": 71050,
+   "chars_per_page": 1060.4,
+   "status": "READABLE"
+  },
+  "KR0087|2023.4Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 4486155,
+   "pages": 161,
+   "chars": 179968,
+   "chars_per_page": 1117.8,
+   "status": "READABLE"
+  },
+  "KR0087|2024.1Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 782476,
+   "pages": 26,
+   "chars": 23749,
+   "chars_per_page": 913.4,
+   "status": "READABLE"
+  },
+  "KR0087|2024.2Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 2085274,
+   "pages": 65,
+   "chars": 68699,
+   "chars_per_page": 1056.9,
+   "status": "READABLE"
+  },
+  "KR0087|2024.3Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 792752,
+   "pages": 26,
+   "chars": 23666,
+   "chars_per_page": 910.2,
+   "status": "READABLE"
+  },
+  "KR0087|2024.4Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 11928911,
+   "pages": 642,
+   "chars": 567979,
+   "chars_per_page": 884.7,
+   "status": "READABLE"
+  },
+  "KR0087|2025.1Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 845778,
+   "pages": 32,
+   "chars": 27406,
+   "chars_per_page": 856.4,
+   "status": "READABLE"
+  },
+  "KR0087|2025.2Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 1555364,
+   "pages": 47,
+   "chars": 50927,
+   "chars_per_page": 1083.6,
+   "status": "READABLE"
+  },
+  "KR0087|2025.3Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 762604,
+   "pages": 29,
+   "chars": 23363,
+   "chars_per_page": 805.6,
+   "status": "READABLE"
+  },
+  "KR0087|2025.4Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 9325444,
+   "pages": 677,
+   "chars": 489078,
+   "chars_per_page": 722.4,
+   "status": "READABLE"
+  },
+  "KR0087|2026.1Q": {
+   "raw": "KR0087_동양생명.pdf",
+   "bytes": 8998874,
+   "pages": 32,
+   "chars": 148,
+   "chars_per_page": 4.6,
+   "status": "UNREADABLE"
+  },
+  "KR0094|2023.1Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 1118509,
+   "pages": 23,
+   "chars": 38082,
+   "chars_per_page": 1655.7,
+   "status": "READABLE"
+  },
+  "KR0094|2023.2Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 2849826,
+   "pages": 51,
+   "chars": 85000,
+   "chars_per_page": 1666.7,
+   "status": "READABLE"
+  },
+  "KR0094|2023.3Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 454286,
+   "pages": 34,
+   "chars": 54847,
+   "chars_per_page": 1613.1,
+   "status": "READABLE"
+  },
+  "KR0094|2023.4Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 9342079,
+   "pages": 560,
+   "chars": 532829,
+   "chars_per_page": 951.5,
+   "status": "READABLE"
+  },
+  "KR0094|2024.1Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 500846,
+   "pages": 28,
+   "chars": 48630,
+   "chars_per_page": 1736.8,
+   "status": "READABLE"
+  },
+  "KR0094|2024.2Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 2359890,
+   "pages": 51,
+   "chars": 93808,
+   "chars_per_page": 1839.4,
+   "status": "READABLE"
+  },
+  "KR0094|2024.3Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 476918,
+   "pages": 27,
+   "chars": 48895,
+   "chars_per_page": 1810.9,
+   "status": "READABLE"
+  },
+  "KR0094|2024.4Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 11165301,
+   "pages": 667,
+   "chars": 623888,
+   "chars_per_page": 935.4,
+   "status": "READABLE"
+  },
+  "KR0094|2025.1Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 526059,
+   "pages": 36,
+   "chars": 27812,
+   "chars_per_page": 772.6,
+   "status": "READABLE"
+  },
+  "KR0094|2025.2Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 864689,
+   "pages": 62,
+   "chars": 55153,
+   "chars_per_page": 889.6,
+   "status": "READABLE"
+  },
+  "KR0094|2025.3Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 507735,
+   "pages": 37,
+   "chars": 27967,
+   "chars_per_page": 755.9,
+   "status": "READABLE"
+  },
+  "KR0094|2025.4Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 9884310,
+   "pages": 697,
+   "chars": 806699,
+   "chars_per_page": 1157.4,
+   "status": "READABLE"
+  },
+  "KR0094|2026.1Q": {
+   "raw": "KR0094_신한라이프생명보험.pdf",
+   "bytes": 250276,
+   "pages": 36,
+   "chars": 42804,
+   "chars_per_page": 1189.0,
+   "status": "READABLE"
+  },
+  "KR0095|2023.1Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 270678,
+   "pages": 23,
+   "chars": 14621,
+   "chars_per_page": 635.7,
+   "status": "READABLE"
+  },
+  "KR0095|2023.2Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 636073,
+   "pages": 47,
+   "chars": 38035,
+   "chars_per_page": 809.3,
+   "status": "READABLE"
+  },
+  "KR0095|2023.3Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 403723,
+   "pages": 25,
+   "chars": 18208,
+   "chars_per_page": 728.3,
+   "status": "READABLE"
+  },
+  "KR0095|2023.4Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 3909258,
+   "pages": 467,
+   "chars": 393281,
+   "chars_per_page": 842.1,
+   "status": "READABLE"
+  },
+  "KR0095|2024.1Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 325487,
+   "pages": 28,
+   "chars": 18899,
+   "chars_per_page": 675.0,
+   "status": "READABLE"
+  },
+  "KR0095|2024.2Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 712688,
+   "pages": 55,
+   "chars": 44060,
+   "chars_per_page": 801.1,
+   "status": "READABLE"
+  },
+  "KR0095|2024.3Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 343274,
+   "pages": 28,
+   "chars": 20153,
+   "chars_per_page": 719.8,
+   "status": "READABLE"
+  },
+  "KR0095|2024.4Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 4686601,
+   "pages": 533,
+   "chars": 500440,
+   "chars_per_page": 938.9,
+   "status": "READABLE"
+  },
+  "KR0095|2025.1Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 347830,
+   "pages": 31,
+   "chars": 21819,
+   "chars_per_page": 703.8,
+   "status": "READABLE"
+  },
+  "KR0095|2025.2Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 737136,
+   "pages": 62,
+   "chars": 46919,
+   "chars_per_page": 756.8,
+   "status": "READABLE"
+  },
+  "KR0095|2025.3Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 359451,
+   "pages": 31,
+   "chars": 21920,
+   "chars_per_page": 707.1,
+   "status": "READABLE"
+  },
+  "KR0095|2025.4Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 6959459,
+   "pages": 604,
+   "chars": 617826,
+   "chars_per_page": 1022.9,
+   "status": "READABLE"
+  },
+  "KR0095|2026.1Q": {
+   "raw": "KR0095_메트라이프생명보험.pdf",
+   "bytes": 347082,
+   "pages": 31,
+   "chars": 21403,
+   "chars_per_page": 690.4,
+   "status": "READABLE"
+  },
+  "KR0097|2023.1Q": {
+   "raw": "KR0097_하나생명보험_amended.pdf",
+   "bytes": 475225,
+   "pages": 24,
+   "chars": 9144,
+   "chars_per_page": 381.0,
+   "status": "BORDERLINE"
+  },
+  "KR0097|2023.2Q": {
+   "raw": "KR0097_하나생명보험_amended.pdf",
+   "bytes": 892847,
+   "pages": 53,
+   "chars": 27033,
+   "chars_per_page": 510.1,
+   "status": "READABLE"
+  },
+  "KR0097|2023.3Q": {
+   "raw": "KR0097_하나생명보험_amended.pdf",
+   "bytes": 521860,
+   "pages": 27,
+   "chars": 11768,
+   "chars_per_page": 435.9,
+   "status": "READABLE"
+  },
+  "KR0097|2023.4Q": {
+   "raw": "KR0097_하나생명보험_amended.pdf",
+   "bytes": 1624446,
+   "pages": 85,
+   "chars": 59436,
+   "chars_per_page": 699.2,
+   "status": "READABLE"
+  },
+  "KR0097|2024.1Q": {
+   "raw": "KR0097_하나생명보험_amended.pdf",
+   "bytes": 519975,
+   "pages": 29,
+   "chars": 12133,
+   "chars_per_page": 418.4,
+   "status": "READABLE"
+  },
+  "KR0097|2024.2Q": {
+   "raw": "KR0097_하나생명보험_amended.pdf",
+   "bytes": 15139581,
+   "pages": 56,
+   "chars": 0,
+   "chars_per_page": 0.0,
+   "status": "UNREADABLE"
+  },
+  "KR0097|2024.3Q": {
+   "raw": "KR0097_하나생명보험_amended.pdf",
+   "bytes": 604275,
+   "pages": 28,
+   "chars": 12289,
+   "chars_per_page": 438.9,
+   "status": "READABLE"
+  },
+  "KR0097|2024.4Q": {
+   "raw": "KR0097_하나생명보험.pdf",
+   "bytes": 31469563,
+   "pages": 347,
+   "chars": 236426,
+   "chars_per_page": 681.3,
+   "status": "READABLE"
+  },
+  "KR0097|2025.1Q": {
+   "raw": "KR0097_하나생명보험.pdf",
+   "bytes": 479033,
+   "pages": 33,
+   "chars": 15937,
+   "chars_per_page": 482.9,
+   "status": "READABLE"
+  },
+  "KR0097|2025.2Q": {
+   "raw": "KR0097_하나생명보험.pdf",
+   "bytes": 1273536,
+   "pages": 63,
+   "chars": 41219,
+   "chars_per_page": 654.3,
+   "status": "READABLE"
+  },
+  "KR0097|2025.3Q": {
+   "raw": "KR0097_하나생명보험.pdf",
+   "bytes": 735126,
+   "pages": 38,
+   "chars": 17351,
+   "chars_per_page": 456.6,
+   "status": "READABLE"
+  },
+  "KR0097|2025.4Q": {
+   "raw": "KR0097_하나생명보험.pdf",
+   "bytes": 7299648,
+   "pages": 550,
+   "chars": 510199,
+   "chars_per_page": 927.6,
+   "status": "READABLE"
+  },
+  "KR0097|2026.1Q": {
+   "raw": "KR0097_하나생명보험.pdf",
+   "bytes": 1836200,
+   "pages": 18,
+   "chars": 18182,
+   "chars_per_page": 1010.1,
+   "status": "READABLE"
+  },
+  "KR0099|2023.1Q": {
+   "raw": "KR0099_케이비라이프생명보험.pdf",
+   "bytes": 431036,
+   "pages": 23,
+   "chars": 15628,
+   "chars_per_page": 679.5,
+   "status": "READABLE"
+  },
+  "KR0099|2023.2Q": {
+   "raw": "KR0099_케이비라이프생명보험.pdf",
+   "bytes": 1010132,
+   "pages": 60,
+   "chars": 46935,
+   "chars_per_page": 782.2,
+   "status": "READABLE"
+  },
+  "KR0099|2023.3Q": {
+   "raw": "KR0099_케이비라이프생명보험.pdf",
+   "bytes": 560612,
+   "pages": 30,
+   "chars": 21803,
+   "chars_per_page": 726.8,
+   "status": "READABLE"
+  },
+  "KR0099|2023.4Q": {
+   "raw": "KR0099_케이비라이프생명보험_amended.pdf",
+   "bytes": 22784195,
+   "pages": 518,
+   "chars": 378846,
+   "chars_per_page": 731.4,
+   "status": "READABLE"
+  },
+  "KR0099|2024.1Q": {
+   "raw": "KR0099_케이비라이프생명보험_amended.pdf",
+   "bytes": 486244,
+   "pages": 30,
+   "chars": 20725,
+   "chars_per_page": 690.8,
+   "status": "READABLE"
+  },
+  "KR0099|2024.2Q": {
+   "raw": "KR0099_케이비라이프생명보험.pdf",
+   "bytes": 1065230,
+   "pages": 62,
+   "chars": 51846,
+   "chars_per_page": 836.2,
+   "status": "READABLE"
+  },
+  "KR0099|2024.3Q": {
+   "raw": "KR0099_케이비라이프생명보험_amended.pdf",
+   "bytes": 507425,
+   "pages": 31,
+   "chars": 23313,
+   "chars_per_page": 752.0,
+   "status": "READABLE"
+  },
+  "KR0099|2024.4Q": {
+   "raw": "KR0099_케이비라이프생명보험.pdf",
+   "bytes": 7496210,
+   "pages": 538,
+   "chars": 483351,
+   "chars_per_page": 898.4,
+   "status": "READABLE"
+  },
+  "KR0099|2025.1Q": {
+   "raw": "KR0099_케이비라이프생명보험.pdf",
+   "bytes": 858583,
+   "pages": 36,
+   "chars": 28078,
+   "chars_per_page": 779.9,
+   "status": "READABLE"
+  },
+  "KR0099|2025.2Q": {
+   "raw": "KR0099_케이비라이프생명보험.pdf",
+   "bytes": 1786549,
+   "pages": 70,
+   "chars": 59630,
+   "chars_per_page": 851.9,
+   "status": "READABLE"
+  },
+  "KR0099|2025.3Q": {
+   "raw": "KR0099_케이비라이프생명보험.pdf",
+   "bytes": 816662,
+   "pages": 37,
+   "chars": 25849,
+   "chars_per_page": 698.6,
+   "status": "READABLE"
+  },
+  "KR0099|2025.4Q": {
+   "raw": "KR0099_케이비라이프생명보험.pdf",
+   "bytes": 7470548,
+   "pages": 606,
+   "chars": 508329,
+   "chars_per_page": 838.8,
+   "status": "READABLE"
+  },
+  "KR0099|2026.1Q": {
+   "raw": "KR0099_KB라이프생명.pdf",
+   "bytes": 847535,
+   "pages": 38,
+   "chars": 28214,
+   "chars_per_page": 742.5,
+   "status": "READABLE"
+  },
+  "KR0100|2023.1Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 312401,
+   "pages": 13,
+   "chars": 22244,
+   "chars_per_page": 1711.1,
+   "status": "READABLE"
+  },
+  "KR0100|2023.2Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 650851,
+   "pages": 51,
+   "chars": 38933,
+   "chars_per_page": 763.4,
+   "status": "READABLE"
+  },
+  "KR0100|2023.3Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 313736,
+   "pages": 14,
+   "chars": 22212,
+   "chars_per_page": 1586.6,
+   "status": "READABLE"
+  },
+  "KR0100|2023.4Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 2294670,
+   "pages": 239,
+   "chars": 167775,
+   "chars_per_page": 702.0,
+   "status": "READABLE"
+  },
+  "KR0100|2024.1Q": {
+   "raw": "KR0100_처브라이프생명보험_amended.pdf",
+   "bytes": 341618,
+   "pages": 22,
+   "chars": 69713,
+   "chars_per_page": 3168.8,
+   "status": "READABLE"
+  },
+  "KR0100|2024.2Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 668486,
+   "pages": 71,
+   "chars": 57751,
+   "chars_per_page": 813.4,
+   "status": "READABLE"
+  },
+  "KR0100|2024.3Q": {
+   "raw": "KR0100_처브라이프생명보험_amended.pdf",
+   "bytes": 331843,
+   "pages": 39,
+   "chars": 36457,
+   "chars_per_page": 934.8,
+   "status": "READABLE"
+  },
+  "KR0100|2024.4Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 4656071,
+   "pages": 283,
+   "chars": 176880,
+   "chars_per_page": 625.0,
+   "status": "READABLE"
+  },
+  "KR0100|2025.1Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 345615,
+   "pages": 42,
+   "chars": 40074,
+   "chars_per_page": 954.1,
+   "status": "READABLE"
+  },
+  "KR0100|2025.2Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 677101,
+   "pages": 70,
+   "chars": 61846,
+   "chars_per_page": 883.5,
+   "status": "READABLE"
+  },
+  "KR0100|2025.3Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 344034,
+   "pages": 42,
+   "chars": 39412,
+   "chars_per_page": 938.4,
+   "status": "READABLE"
+  },
+  "KR0100|2025.4Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 5026093,
+   "pages": 298,
+   "chars": 206603,
+   "chars_per_page": 693.3,
+   "status": "READABLE"
+  },
+  "KR0100|2026.1Q": {
+   "raw": "KR0100_처브라이프생명보험.pdf",
+   "bytes": 313991,
+   "pages": 29,
+   "chars": 20080,
+   "chars_per_page": 692.4,
+   "status": "READABLE"
+  },
+  "KR0104|2023.1Q": {
+   "raw": "KR0104_농협생명보험.pdf",
+   "bytes": 280108,
+   "pages": 30,
+   "chars": 16046,
+   "chars_per_page": 534.9,
+   "status": "READABLE"
+  },
+  "KR0104|2023.2Q": {
+   "raw": "KR0104_농협생명보험_amended.pdf",
+   "bytes": 697629,
+   "pages": 59,
+   "chars": 40262,
+   "chars_per_page": 682.4,
+   "status": "READABLE"
+  },
+  "KR0104|2023.3Q": {
+   "raw": "KR0104_농협생명보험.pdf",
+   "bytes": 371368,
+   "pages": 38,
+   "chars": 24000,
+   "chars_per_page": 631.6,
+   "status": "READABLE"
+  },
+  "KR0104|2023.4Q": {
+   "raw": "KR0104_농협생명보험.pdf",
+   "bytes": 5069884,
+   "pages": 495,
+   "chars": 382597,
+   "chars_per_page": 772.9,
+   "status": "READABLE"
+  },
+  "KR0104|2024.1Q": {
+   "raw": "KR0104_농협생명보험_amended.pdf",
+   "bytes": 1620107,
+   "pages": 122,
+   "chars": 89571,
+   "chars_per_page": 734.2,
+   "status": "READABLE"
+  },
+  "KR0104|2024.2Q": {
+   "raw": "KR0104_농협생명보험.pdf",
+   "bytes": 775131,
+   "pages": 52,
+   "chars": 42636,
+   "chars_per_page": 819.9,
+   "status": "READABLE"
+  },
+  "KR0104|2024.3Q": {
+   "raw": "KR0104_농협생명보험_amended.pdf",
+   "bytes": 325402,
+   "pages": 15,
+   "chars": 18652,
+   "chars_per_page": 1243.5,
+   "status": "READABLE"
+  },
+  "KR0104|2024.4Q": {
+   "raw": "KR0104_농협생명보험.pdf",
+   "bytes": 4221738,
+   "pages": 384,
+   "chars": 341190,
+   "chars_per_page": 888.5,
+   "status": "READABLE"
+  },
+  "KR0104|2025.1Q": {
+   "raw": "KR0104_농협생명보험.pdf",
+   "bytes": 337156,
+   "pages": 32,
+   "chars": 20164,
+   "chars_per_page": 630.1,
+   "status": "READABLE"
+  },
+  "KR0104|2025.2Q": {
+   "raw": "KR0104_농협생명보험.pdf",
+   "bytes": 730713,
+   "pages": 60,
+   "chars": 45253,
+   "chars_per_page": 754.2,
+   "status": "READABLE"
+  },
+  "KR0104|2025.3Q": {
+   "raw": "KR0104_농협생명보험.pdf",
+   "bytes": 343007,
+   "pages": 31,
+   "chars": 21215,
+   "chars_per_page": 684.4,
+   "status": "READABLE"
+  },
+  "KR0104|2025.4Q": {
+   "raw": "KR0104_농협생명보험.pdf",
+   "bytes": 1502148,
+   "pages": 128,
+   "chars": 114950,
+   "chars_per_page": 898.0,
+   "status": "READABLE"
+  },
+  "KR0104|2026.1Q": {
+   "raw": "KR0104_농협생명보험.pdf",
+   "bytes": 345139,
+   "pages": 32,
+   "chars": 21489,
+   "chars_per_page": 671.5,
+   "status": "READABLE"
+  },
+  "KR0150|2023.4Q": {
+   "raw": "KR0150_서울보증보험.pdf",
+   "bytes": 2192190,
+   "pages": 98,
+   "chars": 55151,
+   "chars_per_page": 562.8,
+   "status": "READABLE"
+  },
+  "KR0150|2024.4Q": {
+   "raw": "KR0150_서울보증보험.pdf",
+   "bytes": 2071076,
+   "pages": 102,
+   "chars": 61819,
+   "chars_per_page": 606.1,
+   "status": "READABLE"
+  },
+  "KR0150|2025.1Q": {
+   "raw": "KR0150_서울보증보험.pdf",
+   "bytes": 945753,
+   "pages": 24,
+   "chars": 16430,
+   "chars_per_page": 684.6,
+   "status": "READABLE"
+  },
+  "KR0150|2025.4Q": {
+   "raw": "KR0150_서울보증보험.pdf",
+   "bytes": 1904869,
+   "pages": 104,
+   "chars": 59046,
+   "chars_per_page": 567.8,
+   "status": "READABLE"
+  },
+  "KR0150|2026.1Q": {
+   "raw": "KR0150_서울보증보험.pdf",
+   "bytes": 579028,
+   "pages": 27,
+   "chars": 18966,
+   "chars_per_page": 702.4,
+   "status": "READABLE"
+  },
+  "KR1000|2023.1Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 365583,
+   "pages": 15,
+   "chars": 16426,
+   "chars_per_page": 1095.1,
+   "status": "READABLE"
+  },
+  "KR1000|2023.2Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 887857,
+   "pages": 31,
+   "chars": 40263,
+   "chars_per_page": 1298.8,
+   "status": "READABLE"
+  },
+  "KR1000|2023.3Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 508083,
+   "pages": 19,
+   "chars": 21880,
+   "chars_per_page": 1151.6,
+   "status": "READABLE"
+  },
+  "KR1000|2023.4Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 1338538,
+   "pages": 45,
+   "chars": 57173,
+   "chars_per_page": 1270.5,
+   "status": "READABLE"
+  },
+  "KR1000|2024.1Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 504347,
+   "pages": 17,
+   "chars": 18406,
+   "chars_per_page": 1082.7,
+   "status": "READABLE"
+  },
+  "KR1000|2024.2Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 891393,
+   "pages": 31,
+   "chars": 42151,
+   "chars_per_page": 1359.7,
+   "status": "READABLE"
+  },
+  "KR1000|2024.3Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 494689,
+   "pages": 17,
+   "chars": 18619,
+   "chars_per_page": 1095.2,
+   "status": "READABLE"
+  },
+  "KR1000|2024.4Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 1350227,
+   "pages": 49,
+   "chars": 78869,
+   "chars_per_page": 1609.6,
+   "status": "READABLE"
+  },
+  "KR1000|2025.1Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 516016,
+   "pages": 20,
+   "chars": 20041,
+   "chars_per_page": 1002.0,
+   "status": "READABLE"
+  },
+  "KR1000|2025.2Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 1117783,
+   "pages": 35,
+   "chars": 50615,
+   "chars_per_page": 1446.1,
+   "status": "READABLE"
+  },
+  "KR1000|2025.3Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 649073,
+   "pages": 20,
+   "chars": 21848,
+   "chars_per_page": 1092.4,
+   "status": "READABLE"
+  },
+  "KR1000|2025.4Q": {
+   "raw": "KR1000_코리안리.pdf",
+   "bytes": 2059511,
+   "pages": 57,
+   "chars": 93073,
+   "chars_per_page": 1632.9,
+   "status": "READABLE"
+  },
+  "KR1000|2026.1Q": {
+   "raw": "KR1000_코리안리재보험.pdf",
+   "bytes": 484725,
+   "pages": 19,
+   "chars": 21859,
+   "chars_per_page": 1150.5,
+   "status": "READABLE"
+  },
+  "KR1010|2023.1Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험.pdf",
+   "bytes": 288296,
+   "pages": 26,
+   "chars": 15034,
+   "chars_per_page": 578.2,
+   "status": "READABLE"
+  },
+  "KR1010|2023.2Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험.pdf",
+   "bytes": 621481,
+   "pages": 58,
+   "chars": 31550,
+   "chars_per_page": 544.0,
+   "status": "READABLE"
+  },
+  "KR1010|2023.3Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험.pdf",
+   "bytes": 339621,
+   "pages": 29,
+   "chars": 17403,
+   "chars_per_page": 600.1,
+   "status": "READABLE"
+  },
+  "KR1010|2023.4Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험_amended.pdf",
+   "bytes": 1385460,
+   "pages": 130,
+   "chars": 118701,
+   "chars_per_page": 913.1,
+   "status": "READABLE"
+  },
+  "KR1010|2024.1Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험_amended.pdf",
+   "bytes": 452178,
+   "pages": 30,
+   "chars": 17388,
+   "chars_per_page": 579.6,
+   "status": "READABLE"
+  },
+  "KR1010|2024.2Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험_amended.pdf",
+   "bytes": 855475,
+   "pages": 57,
+   "chars": 36139,
+   "chars_per_page": 634.0,
+   "status": "READABLE"
+  },
+  "KR1010|2024.3Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험.pdf",
+   "bytes": 352857,
+   "pages": 30,
+   "chars": 17360,
+   "chars_per_page": 578.7,
+   "status": "READABLE"
+  },
+  "KR1010|2024.4Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험.pdf",
+   "bytes": 2991862,
+   "pages": 192,
+   "chars": 200242,
+   "chars_per_page": 1042.9,
+   "status": "READABLE"
+  },
+  "KR1010|2025.1Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험.pdf",
+   "bytes": 358020,
+   "pages": 34,
+   "chars": 22035,
+   "chars_per_page": 648.1,
+   "status": "READABLE"
+  },
+  "KR1010|2025.2Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험.pdf",
+   "bytes": 712928,
+   "pages": 66,
+   "chars": 40928,
+   "chars_per_page": 620.1,
+   "status": "READABLE"
+  },
+  "KR1010|2025.3Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험.pdf",
+   "bytes": 345554,
+   "pages": 35,
+   "chars": 21228,
+   "chars_per_page": 606.5,
+   "status": "READABLE"
+  },
+  "KR1010|2025.4Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험.pdf",
+   "bytes": 6142940,
+   "pages": 185,
+   "chars": 187799,
+   "chars_per_page": 1015.1,
+   "status": "READABLE"
+  },
+  "KR1010|2026.1Q": {
+   "raw": "KR1010_교보라이프플래닛생명보험.pdf",
+   "bytes": 348253,
+   "pages": 34,
+   "chars": 21139,
+   "chars_per_page": 621.7,
+   "status": "READABLE"
+  },
+  "KR1011|2023.1Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 307915,
+   "pages": 23,
+   "chars": 14538,
+   "chars_per_page": 632.1,
+   "status": "READABLE"
+  },
+  "KR1011|2023.2Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 633204,
+   "pages": 40,
+   "chars": 28708,
+   "chars_per_page": 717.7,
+   "status": "READABLE"
+  },
+  "KR1011|2023.3Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 311734,
+   "pages": 23,
+   "chars": 15993,
+   "chars_per_page": 695.3,
+   "status": "READABLE"
+  },
+  "KR1011|2023.4Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 2680913,
+   "pages": 245,
+   "chars": 196925,
+   "chars_per_page": 803.8,
+   "status": "READABLE"
+  },
+  "KR1011|2024.1Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 337651,
+   "pages": 26,
+   "chars": 14864,
+   "chars_per_page": 571.7,
+   "status": "READABLE"
+  },
+  "KR1011|2024.2Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 703259,
+   "pages": 45,
+   "chars": 31466,
+   "chars_per_page": 699.2,
+   "status": "READABLE"
+  },
+  "KR1011|2024.3Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 396570,
+   "pages": 26,
+   "chars": 15572,
+   "chars_per_page": 598.9,
+   "status": "READABLE"
+  },
+  "KR1011|2024.4Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 7868002,
+   "pages": 336,
+   "chars": 262425,
+   "chars_per_page": 781.0,
+   "status": "READABLE"
+  },
+  "KR1011|2025.1Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 359859,
+   "pages": 29,
+   "chars": 17942,
+   "chars_per_page": 618.7,
+   "status": "READABLE"
+  },
+  "KR1011|2025.2Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 662393,
+   "pages": 48,
+   "chars": 35578,
+   "chars_per_page": 741.2,
+   "status": "READABLE"
+  },
+  "KR1011|2025.3Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 323141,
+   "pages": 27,
+   "chars": 17732,
+   "chars_per_page": 656.7,
+   "status": "READABLE"
+  },
+  "KR1011|2025.4Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 5553597,
+   "pages": 315,
+   "chars": 209296,
+   "chars_per_page": 664.4,
+   "status": "READABLE"
+  },
+  "KR1011|2026.1Q": {
+   "raw": "KR1011_IBK연금보험.pdf",
+   "bytes": 357200,
+   "pages": 28,
+   "chars": 17700,
+   "chars_per_page": 632.1,
+   "status": "READABLE"
+  },
+  "KR1098|2023.1Q": {
+   "raw": "KR1098_카카오페이손해보험_amended2.pdf",
+   "bytes": 2027407,
+   "pages": 20,
+   "chars": 11273,
+   "chars_per_page": 563.6,
+   "status": "READABLE"
+  },
+  "KR1098|2023.2Q": {
+   "raw": "KR1098_카카오페이손해보험_amended.pdf",
+   "bytes": 3449278,
+   "pages": 34,
+   "chars": 24196,
+   "chars_per_page": 711.6,
+   "status": "READABLE"
+  },
+  "KR1098|2023.3Q": {
+   "raw": "KR1098_카카오페이손해보험_amended.pdf",
+   "bytes": 2175688,
+   "pages": 22,
+   "chars": 12595,
+   "chars_per_page": 572.5,
+   "status": "READABLE"
+  },
+  "KR1098|2023.4Q": {
+   "raw": "KR1098_카카오페이손해보험.pdf",
+   "bytes": 6207211,
+   "pages": 50,
+   "chars": 31398,
+   "chars_per_page": 628.0,
+   "status": "READABLE"
+  },
+  "KR1098|2024.1Q": {
+   "raw": "KR1098_카카오페이손해보험.pdf",
+   "bytes": 2514947,
+   "pages": 23,
+   "chars": 14890,
+   "chars_per_page": 647.4,
+   "status": "READABLE"
+  },
+  "KR1098|2024.4Q": {
+   "raw": "KR1098_카카오페이손해보험.pdf",
+   "bytes": 9563485,
+   "pages": 61,
+   "chars": 190,
+   "chars_per_page": 3.1,
+   "status": "UNREADABLE"
+  },
+  "KR1098|2025.1Q": {
+   "raw": "KR1098_카카오페이손해보험.pdf",
+   "bytes": 780700,
+   "pages": 23,
+   "chars": 15373,
+   "chars_per_page": 668.4,
+   "status": "READABLE"
+  },
+  "KR1098|2025.2Q": {
+   "raw": "KR1098_카카오페이손해보험.pdf",
+   "bytes": 799319,
+   "pages": 50,
+   "chars": 38184,
+   "chars_per_page": 763.7,
+   "status": "READABLE"
+  },
+  "KR1098|2025.3Q": {
+   "raw": "KR1098_카카오페이손해보험.pdf",
+   "bytes": 722356,
+   "pages": 21,
+   "chars": 16465,
+   "chars_per_page": 784.0,
+   "status": "READABLE"
+  },
+  "KR1098|2025.4Q": {
+   "raw": "KR1098_카카오페이손해보험.pdf",
+   "bytes": 2125223,
+   "pages": 63,
+   "chars": 59253,
+   "chars_per_page": 940.5,
+   "status": "READABLE"
+  },
+  "KR1098|2026.1Q": {
+   "raw": "KR1098_카카오페이손해보험.pdf",
+   "bytes": 824031,
+   "pages": 23,
+   "chars": 16478,
+   "chars_per_page": 716.4,
+   "status": "READABLE"
+  }
+ }
+}

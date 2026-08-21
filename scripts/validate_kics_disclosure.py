@@ -16,17 +16,47 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from solvency.validation.kics_json_rules import (
+    IMAGE_OCR_COMPANIES,
+    IMAGE_OCR_TOLERANCE,
+    INTERNAL_MODEL_36IRR_EXEMPT,
+    IRR_DERIVE_ISSUER_INCONSISTENT,
+    IRR_PIN_TOL,
+    IRR_SCENARIO_EXEMPT,
+    IRR_SCENARIO_ITEMS,
     KEY_CODE,
     KEY_ITEM,
     KEY_NAME,
     KEY_QUARTER,
     KEY_VALUE,
     KEY_VALUE_POST,
+    MARKET_BREAKDOWN_EXEMPT,
     MARKET_M,
+    R4,
     R7,
     _diversified_sqrt,
+    irr_derive_expected,
+    irr_pin_verdict,
     run_validation,
 )
+
+
+def _eff_tol(code: str) -> float:
+    """룰엔진(적용전)이 쓰는 회사별 기본 허용오차와 동일. 이미지/OCR사만 10.0.
+    적용후 검사가 적용전과 **같은 허용오차**를 쓰게 하기 위한 단일 소스 — 적용후 쪽만
+    느슨하면 '룰은 돌지만 못 잡는' false-green 이 된다(2026-08-21 실측: 합-항등식 적용후가
+    0.5% 였던 탓에 한화손해 2024.2Q item1후 COPY 오염 4.03억을 130배 여유로 통과시켰다)."""
+    return IMAGE_OCR_TOLERANCE if code in IMAGE_OCR_COMPANIES else 2.0
+
+
+def _ratio_tol(code: str, expected: float, denom: float | None) -> float:
+    """비율룰(R7/R8) 허용오차 — 룰엔진 rule 7/8 과 동일한 sub-scale 동적식.
+    초소형 분모(item14)의 억원 반올림이 재계산 비율을 크게 흔든다(카카오페이 item14후=20억
+    → ±120%p). 정상 분모에선 사실상 eff_tol 과 같다. 적용후엔 **적용후 분모**를 넣는다."""
+    base = _eff_tol(code)
+    if not denom:
+        return base
+    d = abs(denom)
+    return max(base, abs(expected) * 0.5 / d + 50.0 / d)
 
 SPOT_CODE = "KR0005"
 SPOT_QUARTER = "2025.4Q"
@@ -435,7 +465,14 @@ def _transition_ratio_after_capture(records: list[dict]) -> list[tuple]:
       MISSING = None(결측) / COPY = 전과 |diff|<margin(적용전 복사·반올림 위장) /
       LOWER = 분자≥0인데 전보다 낮음(방향위반) /
       AMT_MISMATCH = 후는 margin 넘겼으나 분자후/분모후×100(항등식)과 불일치(비율만 패치·금액후 미수정)
-    → RED. 공통 경과조치사(18사 외)는 후=전이어도 정상이라 검사 안 함.
+    → RED.
+
+    **명시된 scope 제한(2026-08-21 재확인 — 다른 적용후 룰과 달리 여기는 18사 한정이 정당하다)**:
+    이 룰은 '후 > 전'이라는 **방향성** 불변식이고, 그건 선택(elective) 경과조치를 신청한 회사에서만
+    성립한다. 공통(TFI) 경과조치만 적용받는 나머지 21사는 후=전이 정상이라 전사로 넓히면 전건 오탐이
+    된다. 대신 그 21사의 적용후 비율은 **항등식**(R7/R8후, `_transition_identities_after`)과
+    **결측**(`_post_transition_parent_census` 의 item27/28)으로 전사 검사된다 — 즉 방향성만 18사,
+    산술·결측은 39사. 조용한 미순회가 아니라 근거 있는 축소다.
     반환 튜플: (code, quarter, name, item, before, after, kind)."""
     idx: dict[tuple, dict] = defaultdict(dict)  # (code, item) -> {q: (before, after)}
     name: dict[str, str] = {}
@@ -506,29 +543,92 @@ def _item12_equals_item1(records: list[dict]) -> list[tuple]:
     return out
 
 
-# 적용후 mmult: 부모위험액 → (세부항목, 상관행렬). item17=sqrt(29-35·R7)·item19=sqrt(36-40·MARKET_M).
-_TRANS_PARENT_SUBS = {17: (list(range(29, 36)), R7), 19: (list(range(36, 41)), MARKET_M)}
+# 적용후 mmult 축: 부모위험액 → (세부항목, 상관행렬, 가산항목, 허용오차종류).
+#   17 = sqrt(29-35·R7)                     ← 룰엔진 8_life    (동적 tol: max(eff, 5%))
+#   19 = sqrt(36-40·MARKET_M)               ← 룰엔진 19_market (동적 tol: max(eff, 5%))
+#   15 = sqrt([17,18,19,20]·R4) + item21    ← 룰엔진 rule 4    (flat eff_tol)
+# **행렬은 전부 룰엔진에서 import** — 손으로 옮기면 검증기가 검증대상과 다른 행렬을 쓰게 된다.
+# 축 15(기본요구자본)는 2026-08-21 신설: 그 전까지 `_TRANS_PARENT_SUBS` 가 {17,19} 뿐이라
+# **기본요구자본 적용후 항등식이 통째로 미검사**였다(게이트의 '적용후 mmult 불일치: 0' 은
+# 거짓말이 아니라 범위 밖이었다 = false-green).
+_TRANS_PARENT_SUBS = {
+    15: (list(range(17, 21)), R4, 21, "flat"),
+    17: (list(range(29, 36)), R7, None, "dyn5"),
+    19: (list(range(36, 41)), MARKET_M, None, "dyn5"),
+}
 
 
 # 적용후 세부위험 documented exception (owner 확정 2026-07-12): raw로 적용후 세부를 안전하게
 # 도출 불가 → 추출갭·mmult 둘 다에서 제외(재플래그 방지). TODO.md에도 기록. parser 재파싱해도 안 바뀜.
 _AFTER_SUBRISK_NOT_DISCLOSED = {
-    ("KR0097", "2024.4Q"),  # 하나생명 — 감사보고서주석 스타일, 적용후 세부 미공시(phase-in 10%만)
-    ("KR0097", "2026.1Q"),  # 하나생명 대재해 동일
-    ("KR0104", "2023.1Q"),  # 농협생명 — ①②③ 다중경과조치 결합공식 불명(개별표 어느것도 헤드라인과 불일치)
-    ("KR0100", "2024.3Q"),  # 처브 — ②표 값이 행별로 다른 컬럼 착지, 일반화 규칙 없음
-    ("KR0005", "2024.4Q"),  # 흥국화재 — image-only PDF(텍스트레이어0), owner GOLD-SCAN 대기
-    ("KR0003", "2026.1Q"),  # 롯데손해 — raw ①표(적용후 blank) 다음 바로 Ⅴ.수익성 점프, ②③표 부재(raw 정독 확인)
-    ("KR0073", "2026.1Q"),  # 교보생명 — 경과조치 섹션 자체 없음, 헤드라인 지급여력비율후 214.23만(raw 확인)
+    # 하나생명 2024.4Q — **유지**. 2026-08-21 validation 이 raw 를 열어 재확인했고, 주장이 참이다:
+    #   p281 [지급여력기준금액] 은 적용후를 **위험 대분류(17·18·19·20·21)까지만** 공시하고,
+    #   생명장기 7 하위위험(29~35)의 적용후 컬럼은 어디에도 없다. p325~327(C.3.1 경과조치 적용내역)은
+    #   서술형이라 "최초 산출 금액 + 적용비율 10%" 만 준다(장수 14,325,093 · 해지 66,403,015 ·
+    #   사업비 43,877,926 · 대재해 7,847,532 천원). 표준서식 헤딩 2개가 347p 전체에서 부재 —
+    #   원장 verify.absent_markers 로 매 실행 기계 재확인된다.
+    ("KR0097", "2024.4Q"),
+    # ("KR0097", "2026.1Q") 해제 2026-08-21: 등재사유 "적용후 세부 미공시"가 **거짓**이다 —
+    #   raw p10 의 [② 장수위험·사업비위험·해지위험 및 대재해위험 경과조치] 표가 적용후 세부를
+    #   전부 싣는다(백만원: 사망 38,228 · 장수 - · 장해질병 71,560 · 장기재물 - · 해지 320,365 ·
+    #   사업비 103,062 · 대재해 3,430, 생명장기 합계 405,579). 마스터 item29~35후가 이미 이 값과
+    #   일치하고 R7 집계도 닫힌다(item17후 4,055.79 vs 4,055.7891, 잔차 +0.0009). 면제로 두면
+    #   **실제로 공시됐고 이미 맞게 적재된 값이 영구 미검사**로 남는다.
+    # ("KR0104", "2023.1Q") 해제 2026-08-21: 같은 유형. raw p12(②)·p13(③)이 적용후 세부를 전부
+    #   싣는다. 등재사유는 "결합공식 불명"인데 그건 `_AFTER_SUBRISK_NOT_DISCLOSED`(=세부 미공시)의
+    #   의미가 아니고, 게다가 결합은 지금 풀린다: ②의 생명장기후(897,970) + ③의 시장후(1,813,184)를
+    #   함께 적용하면 기본요구자본후 = 39,138.92 − 분산효과후 10,221.92 = 28,917 로 마스터와 일치하고,
+    #   item14후 22,802 · item27후 325.5 는 raw p9 [지급여력비율 총괄] 헤드라인과 정확히 같다.
+    #   mmult 적용후도 양축 모두 닫힌다(item17후 잔차 +0.0048 · item19후 +0.0009).
+    # ("KR0100", "2024.3Q") 해제 2026-08-20 (parser): "②표 값이 행별로 다른 컬럼 착지"는 Docling MD
+    #   아티팩트였고 raw PDF는 fitz로 깨끗이 읽힌다(p15-16). 적용후 세부 전량 로드 완료 —
+    #   R4(45,312·0·64,131·31,102)+5,563=106,993.75 = 공시 지급여력기준금액후 106,994,
+    #   R7(적용후 subs)=45,312 정확. 면제로 두면 이 값들이 mmult 검사에서 영구 skip된다.
+    # ("KR0005", "2024.4Q") 해제 2026-08-21: 등재사유 "image-only PDF(텍스트레이어 0)"가 **거짓**이다.
+    #   data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf 는 367p / 246,676자(672자/p)이고,
+    #   자본적정성 절(p173 "4-6. 자본 적정성 평가")을 240dpi 로 렌더링해 육안 확인한 결과
+    #   **이미지 표가 아니라 순수 산문**이다(465자, 선택 가능). 그리고 "경과조치"가 367p 전체에서
+    #   0회 — 이 파일은 정기경영공시가 아니라 DART 사업보고서(쪽바닥 "전자공시시스템 dart.fss.or.kr")
+    #   이고, p173 다음이 곧바로 "5. 금융자산 및 금융부채"라 K-ICS 수치표 자체가 없다.
+    #   docling 파싱 스코프도 p35-37/139-144/172-174(전부 산문)라 이 마스터 값들의 출처가 이 파일이
+    #   아님을 확인했다. 면제를 유지하면 mmult19 적용후 실패가 계속 가려진다(아래 RED 참조).
+    # ("KR0003", "2026.1Q") 해제 2026-08-21: 등재사유 "②③표 부재(raw 정독 확인)"가 **거짓**이었다 —
+    #   raw PDF p24·p25 에 ②③표가 둘 다 있다. docling MD 가 그 페이지를 떨어뜨린 것을 raw 확인으로 적었다.
+    #   parser 가 p24 로 item29~35후 7셀을 정정 완료(적대검증 20260821T0400Z ⑥).
+    # ("KR0073", "2026.1Q") 해제 2026-08-21: 등재사유 "경과조치 섹션 자체 없음"도 **거짓** —
+    #   raw PDF p15 에 ②표 전체가 있다. 같은 docling 페이지 유실. parser 가 p15 로 item29~35 7행 신설
+    #   (R7 로 부모값 재현 확인). 면제로 두면 실제 공시된 값이 영구 미검사로 남는다.
 }
 
 
-def _transition_mmult_after(records: list[dict]) -> tuple[list, list]:
-    """선택경과조치 적용사의 '적용후' 세부위험 mmult 정합 (owner 2026-07-07 지적 blind spot).
-    기존 8_life/19_market 룰은 적용전(값)만 검사 → 적용후(값_적용후) mmult 미검증.
-    반환 (mismatch, sub_missing):
-      mismatch = 적용후 세부 완비인데 부모후 ≠ sqrt(세부후·행렬) (닫히지 않음) = RED.
-      sub_missing = 부모후 있고 경과조치 효과 有(후≠전)인데 세부후 결측 = 적용후 세부 추출갭(review)."""
+def _transition_mmult_after(records: list[dict], readability: dict | None = None
+                            ) -> tuple[list, list, Counter, list]:
+    """'적용후' mmult 정합 3축 — **전사 39사**(owner 2026-07-07/2026-08-21 blind spot).
+    룰엔진의 8_life·19_market·rule4 는 적용전(값)만 검사 → 적용후(값_적용후) mmult 미검증.
+
+    **2026-08-21 배선 확대 2건** (그 전까지의 '적용후 mmult 불일치: 0' 은 범위 밖이라 false-green):
+      ① `if c not in _TRANSITION_APPLIERS: continue` 제거 → 비-applier 21사(적용후 셀 8,914개,
+         적용사 6,089개보다 많다)가 통째로 미검사였다. 공통(TFI)경과조치사는 후=전이 정상이라
+         '방향성'룰은 못 걸지만 **항등식은 후에도 그대로 성립해야** 하고, 실제로 그 축에서만
+         적용후 오염 3건(신한이지 25.1Q item35후·하나손해 25.2Q item34후·KB라이프 24.2Q item33후)이
+         나왔다. 방향성 룰(_transition_ratio_after_capture)만 18사 한정이 정당하다.
+      ② 축 15(기본요구자본 = sqrt([17-20]·R4) + item21) 추가 — 종전 {17,19} 뿐이라 미검사.
+
+    허용오차는 **룰엔진 적용전과 동일**(_eff_tol / dyn5) — 적용후만 느슨하면 룰이 돌아도 안 잡힌다.
+
+    **2026-08-21 (b) — '후=전' 버킷을 원천 판독성으로 가른다** (owner 적대적 재검증 ④).
+    종전엔 `세부후결측(후=전)` 246칸을 한 덩어리로 세면서 사실상 '구조적으로 정당' 취급했다.
+    그 안에 **스캔본이라 애초에 판독 불가능한 셀**이 섞여 있었다(실측 13개 (회사,분기) = 26칸:
+    KB손해·미래에셋·동양생명). 판독불가는 "확인했더니 정당"이 아니라 **"확인 자체를 못 함"** 이다 —
+    정당 버킷에 섞이면 그 숫자가 곧 false-green 이 된다. 신호는 `data/_derived/kics_source_textlayer.json`
+    (raw PDF 텍스트레이어 밀도)에서 온다. docling MD 길이로 대신하지 않는다 — MD 유실을 '원천 부재'로
+    오독한 것이 이번에 적발된 면제 2건의 실패 모드다.
+
+    반환 (mismatch, sub_missing, skipped, unverifiable):
+      mismatch = 적용후 세부 완비인데 부모후 ≠ 계산값 = RED.
+      sub_missing = 부모후 있고 경과조치 효과 有(후≠전)인데 세부후 결측 = 적용후 세부 추출갭(review).
+      skipped = 축별 '계산불가/면제' 명시 집계 (조용한 미순회 금지 — 결측을 결함과 섞지 않되 숨기지도 않는다).
+      unverifiable = '후=전' 인데 원천이 판독불가/경계/미측정이라 **정당하다고 말할 수 없는** 셀."""
     def _num(v):
         try:
             return float(str(v).replace(",", ""))
@@ -546,26 +646,39 @@ def _transition_mmult_after(records: list[dict]) -> tuple[list, list]:
             continue
         if c and q:
             byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
-    mismatch, sub_missing = [], []
+    if readability is None:
+        readability = _source_readability()
+    mismatch, sub_missing, unverifiable = [], [], []
+    skipped: Counter = Counter()
     for (c, q), m in sorted(byq.items()):
-        if c not in _TRANSITION_APPLIERS:
-            continue
-        if (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
-            continue  # owner 확정 documented exception (미공시/오염/공식불명) — mmult·추출갭 둘 다 제외
-        for parent, (subs, mat) in _TRANS_PARENT_SUBS.items():
+        exempt = (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED
+        for parent, (subs, mat, add_item, tol_kind) in _TRANS_PARENT_SUBS.items():
+            if exempt:
+                # owner 확정 documented exception (미공시/오염/공식불명) — mmult·추출갭 둘 다 제외
+                skipped[f"item{parent}:DOCUMENTED_EXEMPT"] += 1
+                continue
             pre_p, post_p = m.get(parent, (None, None))
             if post_p is None:
-                continue  # 부모후 없음 = 별개 갭(transition MISSING 소관)
+                skipped[f"item{parent}:부모후결측"] += 1
+                continue  # 부모후 없음 = 별개 갭(post_transition_parent_census 소관)
             post_subs = [m.get(i, (None, None))[1] for i in subs]
-            if all(v is not None for v in post_subs):
-                exp = _diversified_sqrt(np.array(post_subs, dtype=float), mat)
-                if abs(post_p - exp) > max(2.0, 0.05 * abs(exp)):
+            add_post = m.get(add_item, (None, None))[1] if add_item else 0.0
+            if all(v is not None for v in post_subs) and add_post is not None:
+                exp = _diversified_sqrt(np.array(post_subs, dtype=float), mat) + add_post
+                tol = _eff_tol(c) if tol_kind == "flat" else max(_eff_tol(c), 0.05 * abs(exp))
+                if abs(post_p - exp) > tol:
                     mismatch.append((c, q, name.get(c, c), parent, round(post_p, 1), round(exp, 1)))
             elif pre_p is not None and abs(post_p - pre_p) > 1.0:
-                if (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
-                    continue  # owner 확정 미공시(적용후 세부 raw 부재, phase-in 비율만)
                 sub_missing.append((c, q, name.get(c, c), parent))
-    return mismatch, sub_missing
+                skipped[f"item{parent}:세부후결측(추출갭)"] += 1
+            else:
+                tag = readability.get((c, q), "UNMEASURED")
+                if tag == "READABLE":
+                    skipped[f"item{parent}:세부후결측(후=전)·원천판독가능"] += 1
+                else:
+                    skipped[f"item{parent}:세부후결측(후=전)·원천{tag}(판정불가)"] += 1
+                    unverifiable.append((c, q, name.get(c, c), parent, tag))
+    return mismatch, sub_missing, skipped, unverifiable
 
 
 # 적용후 항등식 배터리 (owner 2026-07-07: "모든 룰은 적용전·적용후 동일 적용"). 적용사, genuine 적용후
@@ -580,10 +693,20 @@ _TRANS_AFTER_IDENT = [
 ]
 
 
-def _transition_identities_after(records: list[dict]) -> list[tuple]:
-    """선택경과조치 적용사의 '적용후' 항등식 정합 (owner 2026-07-07 blind spot). 기존 R1~R8은 적용전만
-    검사 → 적용후(값_적용후)는 미검증이었음. genuine 적용후 입력 완비 셀만: 안 닫히면 RED.
-    반환: (code, quarter, name, rule, expected_after, disclosed_after, diff)."""
+def _transition_identities_after(records: list[dict]) -> tuple[list, Counter]:
+    """'적용후' 항등식 정합 R1/R2/R5/R6/R7/R8 — **전사 39사** (owner 2026-07-07 blind spot).
+    룰엔진의 R1~R8 은 적용전만 검사 → 적용후(값_적용후)는 미검증이었음.
+
+    **2026-08-21 수정 2건** (둘 다 '룰은 돌지만 못 잡는' 유형):
+      ① 적용사 18사 한정 제거 → 전사 39사. 비-applier 도 후=전 항등식은 그대로 성립해야 한다.
+      ② **허용오차를 룰엔진(적용전)과 일치**시켰다. 종전 합-항등식 `max(2.0, 0.5%)` 는 적용전
+         (flat 2.0)보다 최대 130배 느슨해서 한화손해 2024.2Q item1후=53,541(= 적용전 복사;
+         raw 적용후는 5,353,772백만 = 53,537.7)의 4.03억 오염을 통과시켰다. 비율룰도 종전
+         flat 2.0 → 룰엔진과 같은 sub-scale 동적식으로 바꿨다(카카오페이 micro 반올림 3건이
+         적용전에선 GREEN 인데 적용후에서만 RED 로 뜨던 비대칭 제거).
+
+    genuine 적용후 입력 완비 셀만 판정 — 결측은 결함과 섞지 않되 `skipped` 로 명시 집계한다.
+    반환: (fails, skipped). fails = (code, quarter, name, rule, expected_after, disclosed_after, diff)."""
     def _num(v):
         try:
             return float(str(v).replace(",", ""))
@@ -602,23 +725,1201 @@ def _transition_identities_after(records: list[dict]) -> list[tuple]:
         if c and q:
             byq.setdefault((c, q), {})[it] = _num(r.get(KEY_VALUE_POST))
     fails = []
+    skipped: Counter = Counter()
     for (c, q), m in sorted(byq.items()):
-        if c not in _TRANSITION_APPLIERS:
-            continue
         for rule, tgt, ins, fn, is_ratio in _TRANS_AFTER_IDENT:
             tv = m.get(tgt)
             if tv is None or any(m.get(i) is None for i in ins):
+                skipped[f"{rule}:적용후입력결측"] += 1
                 continue  # genuine 적용후 입력 완비 셀만 (결측은 추출갭 = 별도 리포트)
             exp = fn(m)
             if exp is None:
+                skipped[f"{rule}:분모0"] += 1
                 continue
-            # exact 합-항등식(R1가용자본·R2순자산·R5기준금액 등)은 반올림오차만 허용 → tight.
-            # 5%는 mmult(sqrt 반올림누적)용을 잘못 복사한 것: 농협생명 가용자본 2693억 break를
-            # 마스킹함(5%of74562=3728). 0.5%+2억floor로 교정(2026-07-08 owner 재적발).
-            tol = 2.0 if is_ratio else max(2.0, 0.005 * abs(exp))
+            tol = _ratio_tol(c, exp, m.get(14)) if is_ratio else _eff_tol(c)
             if abs(exp - tv) > tol:
                 fails.append((c, q, name.get(c, c), rule, round(exp, 2), round(tv, 2), round(tv - exp, 2)))
-    return fails
+    return fails, skipped
+
+
+# 36_irr 축의 항목 집합 — 단일 소스. `_transition_irr_after` 와 축 평가율 census 가 같은 것을 본다.
+#   41=충격 전 순자산 · 42=평균회귀 · 43=금리상승 · 44=금리하락 · 45=평탄 · 46=경사
+# **룰엔진에서 import** 한다(재타이핑 금지 — 게이트가 룰과 다른 항목집합을 보게 된다).
+_IRR_SCENARIO_ITEMS = IRR_SCENARIO_ITEMS
+_IRR_ALL_ITEMS = (36,) + _IRR_SCENARIO_ITEMS
+
+
+def _transition_irr_after(records: list[dict]) -> tuple[list, Counter]:
+    """36_irr(금리위험액 = 충격시나리오별 순자산가치에서 도출)의 '적용후' 검사 — **전사 39사**.
+    2026-08-21 신설: 룰엔진 36_irr 은 적용전만 돌고 적용후 배선이 **아예 없었다**(R4 축과 함께
+    '미배선 2건' 중 하나). 공식·면제목록은 전부 룰엔진에서 그대로 쓴다(재구현 금지):
+        item36 = sqrt(max(R상승,R하락)² + max(R평탄,R경사)²) + R평균회귀,  R = item41 − 시나리오
+    허용오차도 룰엔진과 동일 max(eff_tol, 5%).
+
+    **결측을 RED 로 올리지 않는 이유(명시 skip)**: 41-46 적용후는 실측 103셀뿐이고 그 103셀은
+    **전부 적용전과 값이 동일**(차 0건). 즉 원천에 시나리오표의 적용전/후 구분이 있는지 자체가
+    미확인이라, 결측 114셀(짝수Q·적용전완비·적용후결측, 대부분 경과조치 적용사)을 RED 로 걸면
+    근거 없이 push 를 막는다. → `POST_SCENARIO_ABSENT` 로 **세어서 보고**하고 원천 판정은
+    parser 레인에 발주한다(조용한 미순회 금지, 그러나 미확인 결측을 결함으로 세지도 않는다).
+    반환: (fails, skipped)."""
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
+    irr_items = _IRR_ALL_ITEMS
+    fails, skipped = [], Counter()
+    for (c, q), m in sorted(byq.items()):
+        post = {i: m.get(i, (None, None))[1] for i in irr_items}
+        pre = {i: m.get(i, (None, None))[0] for i in irr_items}
+        if (c, q) in INTERNAL_MODEL_36IRR_EXEMPT:
+            skipped["INTERNAL_MODEL_EXEMPT"] += 1
+            continue
+        if (c, q) in IRR_SCENARIO_EXEMPT:
+            skipped["IRR_SCENARIO_EXEMPT"] += 1
+            continue
+        # documented exception (owner 2026-08-21) — **적용후도 따로 박제한다.** 적용전만 면제하면
+        # 이 축이 그대로 막는다(KR0079 8_life 전례). 박제잔차는 이 컬럼에서 재계산해 대조하고,
+        # 이탈·결측은 SKIP 이 아니라 fails(=RED) 로 내려보낸다.
+        pv, pinned, actual = irr_pin_verdict(c, q, "적용후", post)
+        if pv == "MATCH":
+            skipped["DOCUMENTED_EXEMPT_PINNED(적용후 잔차 박제 일치)"] += 1
+            continue
+        if pv == "DRIFT":
+            skipped["IRR_EXEMPTION_RESIDUAL_DRIFT(면제 무효 → RED)"] += 1
+            fails.append((c, q, name.get(c, c), round(post[36], 2),
+                          round(irr_derive_expected(post), 2)))
+            continue
+        if pv == "INPUT_MISSING":
+            skipped["IRR_EXEMPTION_INPUT_MISSING(면제 확인불가 → RED)"] += 1
+            fails.append((c, q, name.get(c, c), post.get(36), None))
+            continue
+        if all(post.get(i) is not None for i in irr_items):
+            exp = irr_derive_expected(post)
+            if abs(post[36] - exp) > max(_eff_tol(c), 0.05 * abs(exp)):
+                fails.append((c, q, name.get(c, c), round(post[36], 2), round(exp, 2)))
+        elif post.get(36) is None:
+            skipped["부모(item36)후_결측"] += 1
+        elif not q.endswith(("2Q", "4Q")):
+            skipped["홀수분기_시나리오표_서식부재"] += 1
+        elif all(pre.get(i) is not None for i in irr_items):
+            skipped["POST_SCENARIO_ABSENT(짝수Q·적용전완비)"] += 1
+        else:
+            skipped["적용전도_시나리오_불완전"] += 1
+    return fails, skipped
+
+
+# ===========================================================================
+# item23(기타 요구자본) = item24 + item25 + item26 — **적용전·적용후 양 컬럼**
+# ---------------------------------------------------------------------------
+# 배경(티켓 inbox/validation/20260821T1100Z): 룰엔진이 실제로 소비하는 항목집합을 마스터 46개
+# 항목과 대조하니 **12·13·24·25·26 을 어떤 항등식도 참조하지 않았다**(적용전 2,254셀 +
+# 적용후 1,111셀). 셀이 존재하므로 census 는 통과하고, 값은 아무도 안 본다 — 이 저장소가
+# '맞는 산수·틀린 소스'로 두 달 데인 바로 그 유형이다. 24/25/26 을 잡아 주는 다리가 이 합계
+# 하나뿐이라 먼저 건다(12·13 은 item2 다리 조사 중, 같은 티켓 ②).
+#
+# 이 항등식의 근거는 파생 가설이 아니라 **원문 행 라벨 자체**다: `Ⅲ. 기타 요구자본(1+2+3)`.
+# 공시가 선언한 합이라 구조적으로 오탐 여지가 없다. 실측(2026-08-21, 라이브 마스터):
+# 적용전 401검사/400통과/불일치 1 · 적용후 203검사/203통과/불일치 0.
+#
+# 검출 1건 = 흥국생명 KR0071 2023.3Q item24=8,313(날조). raw
+# `data/disclosure/FY2023_Q3/raw/KR0071_흥국생명보험.pdf` p11 은 1번 행이 `-`, 3번 행만 8,313
+# 이다(fitz 로 직접 확인). 같은 `-` 인 2번 행은 0 으로 들어갔으니 **같은 기호를 두 가지로 읽은**
+# 파서 dash 처리 버그다. 이 오류를 잡는 검사가 지금까지 하나도 없었다.
+_OTHER_CAPITAL_PARENT = 23
+_OTHER_CAPITAL_CHILDREN = (24, 25, 26)
+
+
+def _other_capital_children_sum(records: list[dict]) -> tuple[list, Counter]:
+    """`item23 = item24 + item25 + item26` (기타 요구자본 = 종속회사 환산치 + 비례성원칙 대응치
+    + 관계회사 환산치) 를 **적용전(값)·적용후(값_적용후) 양쪽**에서 검산한다. RED(blocking).
+
+    허용오차는 룰엔진(적용전)과 동일한 `_eff_tol` — 적용후만 느슨하면 '룰은 돌지만 못 잡는'
+    false-green 이 된다(2026-08-21 한화손해 item1후 사례).
+
+    **결측은 결함으로 세지 않는다**(이 저장소 원칙: 결측과 결함을 섞지 말 것). 다만 조용히
+    넘기지도 않는다 — `skipped` 로 사유별 명시 집계하고, 그중 `부모>0·자식전부결측` 은
+    '값은 있는데 분해가 통째로 없는' 추출갭 후보라 따로 센다.
+    반환: (fails, skipped). fails = (code, quarter, name, column, disclosed, expected, kids)."""
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
+    fails: list[tuple] = []
+    skipped: Counter = Counter()
+    for (c, q), m in sorted(byq.items()):
+        for col, idx in (("적용전", 0), ("적용후", 1)):
+            tgt = m.get(_OTHER_CAPITAL_PARENT, (None, None))[idx]
+            kids = [m.get(i, (None, None))[idx] for i in _OTHER_CAPITAL_CHILDREN]
+            if tgt is None:
+                skipped[f"{col}:부모(item23)결측"] += 1
+                continue
+            if any(k is None for k in kids):
+                if all(k is None for k in kids):
+                    # 부모가 material 한데 분해가 통째로 없으면 '미공시'가 아니라 추출갭 후보.
+                    tag = "자식전부결측·부모>0(추출갭 후보)" if abs(tgt) >= 1.0 else "자식전부결측·부모≈0"
+                else:
+                    tag = "자식일부결측"
+                skipped[f"{col}:{tag}"] += 1
+                continue
+            exp = sum(kids)
+            if abs(exp - tgt) > _eff_tol(c):
+                fails.append((c, q, name.get(c, c), col, round(tgt, 2), round(exp, 2),
+                              tuple(round(k, 2) for k in kids)))
+    return fails, skipped
+
+
+# ===========================================================================
+# 메타룰 — "룰이 돌았다"와 "룰이 판정했다"를 분리한다 (owner 2026-08-21 적대적 재검증)
+# ---------------------------------------------------------------------------
+# 배경: 어느 축도 '평가율'을 방출하지 않아서, 그리드의 21%만 판정하는 축이 `FAIL: 0` 한 줄로
+# 통과처럼 읽혔다. 게다가 36_irr 적용후는 그 21% 조차 **값_적용후가 적용전과 전부 동일**해서
+# 자기 자신과 비교하는 동어반복이었다(원천 시나리오표에 경과조치 전/후 축이 아예 없다).
+# 그래서 두 가지를 1급 finding 으로 방출한다:
+#   ① 평가율(evaluated / grid)  ② 자기미러(적용후 입력이 적용전과 수치 동일 = 정보량 0)
+# 그리고 판정의 기준은 평가율이 아니라 **실질 평가율(평가 − 미러)** 이다.
+# ===========================================================================
+
+# 그리드 하한. 평가'율'은 모수가 몇 칸뿐이면 의미가 없다 — 실데이터 축의 그리드는 180~486 이라
+# 이 하한에 걸리지 않고, 합성 selftest 픽스처(최대 12버킷)만 걸러진다.
+_AXIS_MIN_GRID = 20
+# 리뷰 임계. 데이터 임계가 아니라 **의사소통 임계**다: 그리드의 절반도 판정 못 하는 축의
+# "FAIL 0" 은 소수파를 요약한 문장이라, 정보보다 오해를 더 많이 준다. 0% 는 아래에서 별도 RED.
+_AXIS_EVAL_RATE_FLOOR = 0.50
+
+
+def _axis_specs() -> list[tuple]:
+    """축 정의 = (axis_id, target_item, input_items, exempt_set, 설명).
+
+    **전부 기존 상수에서 파생한다** — 항목번호도 상관행렬도 여기서 다시 타이핑하지 않는다.
+    재타이핑하면 평가율 측정기가 실제 룰과 다른 축을 재게 되고, 그때부터 이 메타룰 자신이
+    false-green 의 원천이 된다."""
+    specs: list[tuple] = []
+    for parent, (subs, _mat, add_item, _tol) in sorted(_TRANS_PARENT_SUBS.items()):
+        ins = list(subs) + ([add_item] if add_item is not None else [])
+        specs.append((f"mmult{parent}", parent, ins, _AFTER_SUBRISK_NOT_DISCLOSED,
+                      f"item{parent} = sqrt(세부·상관행렬)"))
+    for rule, tgt, ins, _fn, _is_ratio in _TRANS_AFTER_IDENT:
+        specs.append((rule, tgt, list(ins), frozenset(), f"item{tgt} 항등식"))
+    specs.append(("36_irr", 36, list(_IRR_SCENARIO_ITEMS),
+                  INTERNAL_MODEL_36IRR_EXEMPT | IRR_SCENARIO_EXEMPT,
+                  "item36 = 시나리오 순자산(41-46) 도출"))
+    return specs
+
+
+# 축 → **그 축을 실제로 움직이는 경과조치 종류**. `_TRANSITION_KIND`(FSS 2023-03-20 붙임-1 정본)와 짝.
+# 자기미러(값_적용후 == 값)의 의미가 회사마다 다르기 때문에 필요하다:
+#   · 비적용사        → 후 = 전이 **정의상 참**. 조작이 아니라 그게 정답이다. 결함이 아니다.
+#   · 적용사인데 그 종류를 **안 신청**했다 → 그 축은 안 움직이는 게 정상. 결함이 아니다.
+#     (실측 2026-08-21: R1 적용후 미러 82건이 전부 여기 — 10사 모두 'AC' 미신청. 종류 게이팅 없이
+#      "적용사 미러 = 오염"으로 걸었으면 82건 전건 오탐이었다.)
+#   · 적용사이고 그 종류를 **신청**했는데 후 = 전 → 그때만 미러링 오염 의심.
+# None = 그 축에 대해 '움직여야 한다'를 단정할 수 없음 → **카운트만 하고 발화하지 않는다**:
+#   · EQ·INT 는 **조건부 발동**(K-ICS리스크 60%>RBC 일 때만) → 신청사여도 후=전이 정당할 수 있다.
+#     owner 가 UH-5(2026-07-21)에서 정확히 이 이유로 item19 COPY 룰 신설을 기각했다(오탐 52건).
+#   · 15/14/16/27/28 은 하류 집계축이라 어느 종류든 흘러들어와 단일 매핑이 불가능하다.
+_AXIS_TRANSITION_KIND: dict[str, set | None] = {
+    "R1_가용자본=기본+보완": {"AC"},   # 가용자본(시가평가 자본감소분 점진적 인식) — 조건부 아님
+    "R2_순자산합": {"AC"},            # 순자산 세부도 가용자본측
+    "mmult17": {"IR"},               # 신규 보험위험(장수·해지·사업비·대재해) — 적용사 전원, 조건부 아님
+    "mmult19": None,                 # EQ·INT 조건부 → 발화 금지(UH-5)
+    "36_irr": None,                  # INT 조건부 → 발화 금지
+    "mmult15": None, "R5_기준금액": None, "R6_item16": None,
+    "R7_지급여력비율": None, "R8_기본자본비율": None,
+}
+
+
+# ---------------------------------------------------------------------------
+# 축 적용범위(scope) — `rate_all` 의 분모를 **구조**로 제한한다 (owner 2026-08-21).
+# ---------------------------------------------------------------------------
+# 배경: `36_irr`·`R2 적용후` 세 축이 절대 해소될 수 없는 AXIS_EVAL_RATE_LOW 를 매 실행 찍고
+# 있었다. 영구 미해소 review 는 review 가 없는 것보다 나쁘다 — 사람들이 그 블록을 넘겨 읽는
+# 습관을 들이기 때문이다. 원인은 임계가 아니라 **분모**였다: 반기공시 항목을 전 분기로 나누고,
+# 경과조치 표가 재작성하지 않는 블록을 전 회사로 나누고 있었다.
+#
+# ⚠️ scope 는 **구조(분기 주기 · 경과조치 적용여부)에서만** 나온다. "값이 있는 버킷" 으로 정하면
+# 추출갭이 분모에서 같이 사라져 지표가 저절로 좋아진다 — 이 파일이 두 분모를 두는 이유가 바로
+# 그 함정이고, scope 를 데이터로 정하면 그 함정을 분모 안으로 다시 들여오는 셈이다.
+# 그래서 범위 안인데 평가 안 된 칸은 `scope_missing` 으로 **이름을 붙여 인쇄한다.**
+#
+# 실측 근거 (validation 2026-08-21, 라이브 마스터 488버킷 · 39사 · 적용사 18 / 비적용사 21):
+#   · cadence — 항목 41-46(금리위험 시나리오 순자산가치) 적용전 보유 버킷:
+#     짝수분기 220/226, **홀수분기 0/262**(2023.1Q·3Q · 2024.1Q·3Q · 2025.1Q·3Q · 2026.1Q 전부 0).
+#     원천에서도 확인됨(orchestrator 가 6사 × 2024.4Q~2026.1Q 라벨 스캔). 룰엔진이 이미 같은
+#     주기를 쓴다(`is_even_q` → 홀수분기 결측은 SKIP, 짝수분기 결측은 RED).
+#   · applier — 적용후 보유 여부가 경과조치 적용사/비적용사로 **완전히 갈린다**:
+#     items 5-11  적용사 0/18 보유 · 비적용사 21/21 보유
+#     items 41-46 적용사 0/18 보유 · 비적용사 21/21 보유
+#     구조적 이유: [지급여력비율의 경과조치 적용에 관한 사항] ①②③ 표는 지급여력금액·기본자본·
+#     보완자본·지급여력기준금액·기본요구자본과 위험액 legs 를 재작성하지만 **순자산 6구성
+#     (보통주·자본증권·이익잉여금·자본조정·기타포괄손익·비지배지분)은 재작성하지 않고**
+#     (하나생명 2026.1Q raw p10-11 · 농협생명 2023.1Q raw p11-13 직접 확인),
+#     [② 금리위험액 현황] 표의 열 축은 충격 전/충격후 5시나리오뿐이라 **경과조치 축이 아예 없다**
+#     (교보 2025.2Q p21 · 신한라이프 p22/p28/p131/p144 직접 확인).
+#     따라서 적용사에게 이 두 블록의 적용후가 없는 것은 결함이 아니라 서식의 귀결이고,
+#     비적용사는 후=전 미러라 값이 존재한다.
+#     (orchestrator 가 보고한 예외 하나 — 하나생명 2024.2Q item41-46후 — 는 parser 가 이미
+#      null 처리해 현재 적용사 × 41-46후 보유 셀은 **0건**이다. 재측정으로 확인.)
+_AXIS_EVEN_QUARTER_ONLY = frozenset({"36_irr"})
+_AXIS_POST_NONAPPLIER_ONLY = frozenset({"36_irr", "R2_순자산합"})
+
+
+def _axis_scope(axis: str, column: str, all_cq) -> set:
+    """그 축이 **구조적으로 적용되는** (회사,분기) 집합. 값 유무는 보지 않는다."""
+    scope = set(all_cq)
+    if axis in _AXIS_EVEN_QUARTER_ONLY:
+        scope = {(c, q) for (c, q) in scope if q.endswith(("2Q", "4Q"))}
+    if column == "적용후" and axis in _AXIS_POST_NONAPPLIER_ONLY:
+        scope = {(c, q) for (c, q) in scope if c not in _TRANSITION_APPLIERS}
+    return scope
+
+
+def _axis_evaluation_census(records: list[dict]) -> list[dict]:
+    """축 × 컬럼(적용전/적용후) 별 평가율 + 자기미러 3분류.
+
+    **2026-08-21 (f) 정정 — 미러를 한 덩어리로 세던 게 틀렸다.** 처음 배선에서 "적용후 입력이
+    적용전과 전부 동일 = 정보량 0" 이라 보고 전부 실질평가에서 뺐는데, **비적용사에게 후 = 전은
+    정의상 참**이다. 조작된 값이 아니라 유일하게 가능한 값이고, 그 셀을 검사한 건 헛일이 아니라
+    맞는 값을 확인한 것이다. 그걸 빼버리니 `36_irr 적용후`·`R2 적용후` 가 실질 0칸이 되어
+    **정의를 결함으로 뒤집어 읽었다**(owner 지적). 미러는 이제 셋으로 나눈다:
+      · `mirror_nonapplier`     비적용사 — **정의상 동일**. 평가로 인정한다.
+      · `mirror_applier_legit`  적용사인데 그 축을 움직이는 종류를 미신청 — 정상. 평가로 인정한다.
+      · `mirror_applier_suspect` 적용사 + 해당 종류 신청 + 후 = 전 → **미러링 오염 의심**(발화 대상).
+    실질평가(effective) = evaluated − suspect. 즉 "동어반복" 판정은 **적용사 오염에만** 쓴다.
+
+    나머지 용어
+    - grid       = 그 축이 '적용되는' (회사,분기) = 적용전 컬럼에 **대상항목 + 입력 최소 1개**가
+                   실재하는 버킷. 회사유형으로 단정하지 않고 그 회사의 실보고값으로만 정한다
+                   (memory: no-category-assumptions). 면제 등재분은 grid 에 남기되 평가에서 뺀다 —
+                   면제도 '판정 안 한 칸'이므로 분모에서 지워버리면 면제가 평가율을 올려준다.
+    - buckets    = 그 축이 **구조적으로 적용되는** (회사,분기) = `_axis_scope`. grid 만 보면
+                   **함정**이 있다: 추출갭으로 입력이 통째로 사라지면 grid 가 같이 줄어 평가율이
+                   오히려 좋아진다(= '데이터가 사라질수록 지표가 개선'되는 census 룰 고질병의
+                   거울상). 그래서 두 분모를 **둘 다** 재고 둘 중 하나라도 바닥을 뚫으면 review.
+                   **2026-08-21 정정**: 종전에는 이것이 무조건 '전체 버킷'이었는데, 반기공시 항목
+                   (41-46)을 홀수분기로도 나누고 경과조치 표가 재작성하지 않는 블록을 적용사로도
+                   나누고 있어서 세 축이 **영원히 해소 불가능한 review** 를 찍었다. 영구 미해소
+                   review 는 사람들에게 그 블록을 건너뛰는 습관을 준다. 분모를 구조로 좁히되
+                   **좁힌 범위 안에서 평가 안 된 칸은 `scope_missing` 으로 이름을 붙여 인쇄**한다 —
+                   범위 제한이 갭을 흡수해 숨기는 일은 없어야 한다.
+    - buckets_all= 참고용 전체 (회사,분기). scope 가 얼마나 좁혀졌는지 보이기 위해 같이 싣는다.
+    - evaluated  = 그 컬럼에서 대상+전 입력이 present → 실제로 비교가 돌아간 버킷.
+    - independent = evaluated − 정의상/정상 미러. "후가 전과 달라질 수 있는 칸 중 판정한 수" —
+                   보고용 보조지표이고 **판정에는 쓰지 않는다**(비적용사 미러는 결함이 아니다).
+    """
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
+
+    out: list[dict] = []
+    for axis, tgt, ins, exempt_set, desc in _axis_specs():
+        items = [tgt] + list(ins)
+        kinds = _AXIS_TRANSITION_KIND.get(axis)
+        grid_cells = [(c, q) for (c, q), m in byq.items()
+                      if m.get(tgt, (None, None))[0] is not None
+                      and any(m.get(x, (None, None))[0] is not None for x in ins)]
+        for column, i in (("적용전", 0), ("적용후", 1)):
+            scope = _axis_scope(axis, column, byq)
+            # grid 도 같은 범위로 자른다. grid_cells 는 **적용전** 존재로 정의되므로, 적용후
+            # 컬럼에서는 "경과조치 표가 재작성하지 않아 구조적으로 적용후가 없는" 적용사 버킷까지
+            # 분모에 들어가 있었다 — 그래서 36_irr·R2 적용후가 분모만 바꿔서는 안 풀리고
+            # grid 쪽 바닥을 계속 뚫었다. 두 분모는 여전히 서로 다른 것을 잰다:
+            #   grid  = 범위 안에서 **입력이 실재하는** 버킷 (데이터 의존 — 추출갭이 나면 줄어든다)
+            #   범위  = 구조적으로 적용되는 버킷 (데이터 무관 — 줄지 않는다)
+            # 둘의 차이가 곧 추출갭이고, 36_irr 적용전이 220/226 으로 그 6건을 그대로 보여 준다.
+            col_grid = [cq for cq in grid_cells if cq in scope]
+            ev = exempt = 0
+            mir_non = mir_legit = 0
+            suspect_cells, mirror_cells, exempt_cells, eval_cells = [], [], [], []
+            for (c, q) in col_grid:
+                m = byq[(c, q)]
+                if (c, q) in exempt_set:
+                    exempt += 1
+                    exempt_cells.append((c, q))
+                    continue  # documented exception 도 '판정 안 한 칸' — 분모에 남긴다
+                if any(m.get(x, (None, None))[i] is None for x in items):
+                    continue
+                ev += 1
+                eval_cells.append((c, q))
+                if column != "적용후":
+                    continue
+                if not all(m.get(x, (None, None))[0] is not None
+                           and m.get(x, (None, None))[0] == m.get(x, (None, None))[1]
+                           for x in items):
+                    continue
+                mirror_cells.append((c, q))
+                if c not in _TRANSITION_APPLIERS:
+                    mir_non += 1                      # 비적용사 → 후=전은 정의상 참
+                elif kinds is None or not (kinds & _TRANSITION_KIND.get(c, set())):
+                    mir_legit += 1                    # 그 축을 움직이는 종류 미신청/조건부 → 정상
+                else:
+                    suspect_cells.append((c, q))      # 신청했는데 후=전 → 오염 의심
+            grid = len(col_grid)
+            suspect = len(suspect_cells)
+            eff = ev - suspect
+            indep = ev - mir_non - mir_legit - suspect
+            # 범위 안인데 평가되지 않은 칸 = **진짜 잔여 갭**. scope 로 분모를 줄이면 이것들이
+            # 분모에서 사라지지 않고 이름으로 남아야 한다 — 그러라고 scope 를 구조로만 정했다.
+            scope_missing = sorted(scope - set(eval_cells) - set(exempt_cells))
+            out.append({
+                "axis": axis, "column": column, "desc": desc, "grid": grid,
+                "buckets": len(scope), "buckets_all": len(byq),
+                "scope_missing": scope_missing[:60],
+                "scope_missing_n": len(scope_missing),
+                "scoped": len(scope) != len(byq),
+                "evaluated": ev, "exempt": exempt,
+                "mirrored": len(mirror_cells),
+                "mirror_nonapplier": mir_non,          # 미적용사_정의상_동일
+                "mirror_applier_legit": mir_legit,     # 적용사_해당종류_미신청(또는 조건부)
+                "mirror_applier_suspect": suspect,     # 적용사_해당종류_신청인데 후=전 → 발화
+                "suspect_cells": sorted(suspect_cells),
+                "gated_kinds": sorted(kinds) if kinds else None,
+                "effective": eff, "independent": indep,
+                "rate": (ev / grid) if grid else None,
+                "rate_all": (ev / len(scope)) if scope else None,
+                "effective_rate": (eff / grid) if grid else None,
+                "independent_rate": (indep / grid) if grid else None,
+                "mirror_share": (len(mirror_cells) / ev) if ev else None,
+                "mirror_cells": sorted(mirror_cells)[:400],
+                "exempt_cells": sorted(exempt_cells),
+            })
+    return out
+
+
+def _axis_mirror_findings(census: list[dict]) -> list[dict]:
+    """적용사 미러링 오염 `AXIS_SELF_MIRRORED_APPLIER` (RED, 셀 단위).
+
+    **비적용사·비신청 적용사는 절대 여기 안 들어온다** — 그건 정의이거나 정상이다. 걸리는 건
+    "그 축을 움직이는 경과조치를 실제로 신청한 회사인데 적용후가 적용전과 한 자리도 안 다른" 칸,
+    즉 적용후 컬럼을 적용전에서 복사해 온 지문뿐이다. 현재 라이브 카운트 0 — 룰이 '없다'고
+    말할 수 있는 상태가 정답이고, 전부를 동어반복이라 부르던 직전 배선이 오답이었다."""
+    out = []
+    for row in census:
+        for (c, q) in row.get("suspect_cells") or []:
+            out.append({"axis": row["axis"], "column": row["column"], "code": c, "quarter": q,
+                        "kinds": row.get("gated_kinds")})
+    return out
+
+
+# 축 단위 documented exception — **(axis_id, column)** 쌍. 기본 비어 있다.
+# 존재 이유: `AXIS_NOT_EVALUATED` 의 해소 경로는 두 개뿐이다 — 원천을 채워 실질 평가를 만들거나,
+# owner 가 "이 축은 원천에 존재하지 않는다" 를 문서화 면제로 등재하는 것. 후자의 경로가 없으면
+# 게이트가 영원히 막히거나(비생산적) 누군가 룰을 조용히 끄게 된다(원래 병으로 회귀).
+# **등재는 owner 권한**이고, 여기 넣는 순간 `_exemption_registries()` 를 통해 근거 원장
+# (data/_gold/kics_exemption_provenance.json) 기록이 강제된다 — registry 항목 = company 자리에
+# axis_id, quarter 자리에 column("적용전"/"적용후"). 근거 없이 넣으면 즉시
+# EXEMPTION_PROVENANCE_MISSING RED 라, '조용히 끄기'가 구조적으로 불가능하다.
+# 2026-08-21 (f): 직전 배선이 `36_irr 적용후`·`R2 적용후` 를 여기 후보로 올렸었는데 **오판이었다**.
+# 두 축의 미러 103/182 셀은 전부 **비적용사**라 후=전이 정의상 참이다(적용사 미러 0건 실측).
+# 따라서 면제 후보가 아니라 평가율이 낮은 축일 뿐이고, 지금은 AXIS_EVAL_RATE_LOW(review)로만 뜬다.
+_AXIS_NOT_EVALUATED_EXEMPT: frozenset[tuple[str, str]] = frozenset()
+
+
+def _axis_eval_findings(census: list[dict]) -> tuple[list, list]:
+    """평가율 census → (red, review).
+
+    RED `AXIS_NOT_EVALUATED` — **실질 평가 0칸**. 두 가지가 여기 들어온다:
+      (a) 그 컬럼에서 아무 칸도 계산되지 않은 축,
+      (b) 계산된 칸이 **전부 적용사 미러링 오염**이라 새로 확인한 게 한 칸도 없는 축.
+    둘 다 "FAIL 0" 을 증거로 쓸 수 없다는 점에서 같다. 이 저장소는 이미 같은 부류를 RED 로
+    다룬다 — `CAPSEC_SOURCE_UNRESOLVED` · `DIV_CENSUS_SOURCE_MISSING`("검사축 소실 = 통과 아님").
+    해소 경로는 두 개뿐이다: 원천을 채워 실질 평가를 만들거나, **owner 가** 그 축을 문서화 면제로
+    등재하는 것. 게이트가 스스로 조용해지는 경로는 없다.
+
+    ⚠️ **비적용사 미러를 실질평가에서 빼지 않는다** (2026-08-21 (f) 정정). 경과조치 미적용사에게
+    후 = 전은 정의상 참이라 그 칸을 확인한 것은 헛일이 아니다. 직전 배선이 그걸 빼는 바람에
+    `36_irr 적용후`·`R2 적용후` 를 "전부 동어반복" 이라 잘못 RED 로 올렸다 — 정의를 결함으로
+    뒤집어 읽은 것이다. 미러의 결함성 판정은 `_axis_mirror_findings`(적용사 + 해당 종류 신청)만 한다.
+
+    REVIEW `AXIS_EVAL_RATE_LOW` — **축 적용 그리드 기준 평가율** 또는 **전 버킷 기준 평가율**
+    둘 중 하나가 50% 미만. 두 분모를 다 보는 이유는 grid 가 데이터와 함께 줄어드는 함정 때문이다
+    (입력이 통째로 사라지면 grid 도 줄어 rate 는 100% 를 유지한다). 차단은 안 하지만 그 축의
+    "FAIL 0" 옆에 항상 같이 인쇄돼서 소수파 요약을 전체로 오독하지 못하게 한다."""
+    red, review = [], []
+    for row in census:
+        if row["grid"] < _AXIS_MIN_GRID:
+            continue  # 모수 부족 → 비율 자체가 무의미(합성 픽스처·신규 축 도입기)
+        if (row["axis"], row["column"]) in _AXIS_NOT_EVALUATED_EXEMPT:
+            continue  # owner 등재 축 면제 — 근거 원장 기록이 별도로 강제된다
+        if row["effective"] == 0:
+            red.append(row)
+            continue
+        low = [(k, row[k]) for k in ("rate", "rate_all")
+               if row[k] is not None and row[k] < _AXIS_EVAL_RATE_FLOOR]
+        if low:
+            review.append({**row, "low_on": [k for k, _v in low]})
+    return red, review
+
+
+# ---------------------------------------------------------------------------
+# 메타룰 — 동어반복 `IDENTITY_TAUTOLOGY` (owner/orchestrator 티켓 20260821T1500Z)
+# ---------------------------------------------------------------------------
+# 커버리지(변이시험)와 동어반복은 **서로 다른 축**이다. `tests/test_rule_coverage_manifest.py`
+# 는 "룰이 이 칸을 본다"를 증명하지만 "룰이 실패할 수 있다"는 증명하지 않는다. 파이프라인이
+# 대상값을 자식합으로 되맞춰(reconcile) 저장하면 룰은 실데이터에서 영원히 통과하고, 변이시험은
+# 여전히 GUARDED 로 나오며, 게이트는 그 축에 대해 `FAIL: 0` 을 인쇄한다. 그 0 은 증거가 아니다.
+#
+# ## 어떻게 재나 — 잔차 분포
+#
+# 공시표는 억원(일부 백만원)으로 **반올림해서 인쇄된다.** 부모와 자식이 각자 독립적으로 반올림된
+# 값이면 `부모 − Σ자식` 은 0 이 아니라 ±1 을 오가는 것이 정상이다. 그 잔차가 정확히 0 인 비율이
+# 반올림 잡음이 허용하는 것보다 높으면, 입력이 공시값이 아니라 **파생값**이라는 뜻이다.
+#
+# 귀무모형: k 개의 항이 각자 독립적으로 반올림됐다면 잔차 = round(ΣX) − Σround(X) 이고
+# `P(잔차 = 0) = P(|S_k| ≤ 0.5)`, `S_k` = k 개 U(-0.5, 0.5) 의 합(Irwin–Hall). 스케일 무관이라
+# 원천이 억원이든 백만원이든 같은 값이다 — 그래서 소수 셀을 굳이 걸러내지 않는다(걸러내면
+# 적용후에서 '미러 셀만 남는' 선택편의가 생겨 통계가 망가진다. 실측으로 확인함).
+#
+# ## 임계는 추측이 아니라 실측이다 (2026-08-21, 라이브 마스터 486버킷)
+#
+# 6개 가법 항등식 축 × 2컬럼 = 12개를 전수 측정했다(`k_eff` = 0 아닌 항의 수, `k_eff ≥ 2` 만).
+# `excess` = 실측 정확0비율 / 귀무기대비율, `z` = 이항 z-score.
+#
+#     축                              컬럼    n    정확0        excess     z
+#     BR  item2 = item4-12-13         적용후  209   39.7%        0.57    -9.5   건전
+#     BR  item2 = item4-12-13         적용전  465   47.7%        0.68   -10.7   건전
+#     R1  item1 = item2+item3         적용후  476   56.3%        0.75    -9.4   건전
+#     R6  item16 = Σ(17..21)-item15   적용후  481   40.3%        0.76    -5.8   건전
+#     R5  item14 = 15-22+23           적용후  316   61.4%        0.86    -4.1   건전
+#     R23 item23 = 24+25+26           적용전   52   67.3%        0.95    -0.6   건전
+#     R5  item14 = 15-22+23           적용전  321   76.9%        1.07     2.1   건전
+#     R23 item23 = 24+25+26           적용후   39   76.9%        1.10     1.0   건전
+#     R6  item16 = Σ(17..21)-item15   적용전  486   59.3%        1.11     2.6   건전  ← 건전 최대
+#     ---------------------------------------------------------------------------------
+#     R1  item1 = item2+item3         적용전  477   97.7%        1.30    11.4   동어반복 ← 확인 최소
+#     R2  item4 = Σ(5..11)            적용후  182  100.0%        1.83    12.3   동어반복
+#     R2  item4 = Σ(5..11)            적용전  393   99.7%        1.84    18.1   동어반복
+#
+# 두 축이 **원인이 코드로 확인된** 동어반복이라 대조군의 반대편 끝을 고정해 준다:
+#   · R2 — `scripts/fill_period_to_disclosure.py::_reconcile_item4_from_components` 가
+#     item4 를 Σ(5..11) 로 덮어쓴다(잔차 ≤ 10 일 때). `scripts/recalc_kics_derived.py` 도 같은 일.
+#   · R1 — `scripts/recalc_kics_derived.py` 가 **item3 = item1 − item2 를 무조건 덮어쓴다**
+#     (라인 199-221). 그래서 R1 적용전은 정의상 닫힌다. 적용후는 recalc 가 안 건드려서 0.75 다.
+#
+# 임계 두 개를 **관측된 간극의 기하중점**에 놓는다. 하나만 쓰면 소표본에서 오탐/미탐이 난다:
+#   · excess ≥ 1.20  — 건전 최대 1.11 과 확인 최소 1.30 의 기하중점 = 1.202. "효과가 크다".
+#   · z      ≥ 5.0   — 건전 최대 2.6 과 확인 최소 11.4 의 기하중점 = 5.4. "잡음이 아니다".
+# 둘 다 만족해야 발화한다. 임계를 느슨하게 잡아 0건으로 만드는 것은 이 룰의 존재 이유에 반한다.
+#
+# **위 표를 지금 다시 재면 R1·R2 행이 안 맞는다 — 정상이고, 룰이 작동한다는 증거다.** 같은 날
+# parser 가 티켓 20260821T1505Z 로 item4 되맞춤을 원문값으로 복원하는 중이었고, 세션 내에서
+# 다음처럼 걸어 내려왔다:
+#     R2 적용전  1.84(z 18.1) → 1.28(z 6.0) → 1.25(z 5.4)   ← 아직 발화
+#     R2 적용후  1.83(z 12.3) → 1.46(z 6.8) → 1.43(z 6.4)   ← 아직 발화
+#     R1 적용전  1.30(z 11.4) →              → 1.08(z 3.2)   ← **발화 중단**
+# 되맞춤이 걷힐수록 excess 가 귀무로 수렴하고, 복원이 끝나면 축은 **저절로 꺼진다**. R1 이
+# 이미 그렇게 꺼졌다.
+#
+# **내 첫 판단이 틀린 부분을 남긴다** (validation 2026-08-21). 처음에 "R2 는 고쳐지는 중이니
+# 임계를 코드로 원인이 확정되고 값이 고정된 R1 적용전(1.30)에 앵커한다"고 적었는데, R1 도 같은
+# 세션에 1.08 로 내려갔다. 즉 **동어반복 쪽 끝은 어느 것도 고정 앵커가 아니다** — 고치면 다
+# 움직인다. 앵커로 쓸 수 있는 것은 반대편, 즉 **건전 대조군의 위쪽 가장자리**뿐이고 그쪽은
+# 세 번의 측정에서 R6 적용전 1.11 / z 2.6 으로 한 번도 움직이지 않았다. 따라서 임계의 정당화는
+# 이렇게 읽어야 한다: 1.20 은 **안정적인 건전 상한 1.11 위**에 있고, 이 축들이 동어반복이던
+# 동안 관측된 **최솟값 1.25 아래**에 있다. 위 표는 그 시점의 실측 기록으로 보존한다 —
+# 재현이 안 된다고 표를 지우면 다음 사람이 임계의 근거를 잃는다.
+#
+# ## 왜 비율축·mmult축은 안 재나 (배제도 실측이다)
+#
+# `R7`(item27) · `R8`(item28) 은 나눗셈, `R4`/`8_life`/`19_market` 는 sqrt 라 잔차가 **연속량**이다.
+# 실측: R4 적용전 486칸 중 |r|<1e-9 이 **0칸**, 8_life 363칸 중 0칸, 19_market 355칸 중 0칸.
+# '정확히 0' 통계 자체가 정의되지 않으므로 여기서 재면 항상 excess ≈ 0 = 무조건 통과가 된다
+# (검사처럼 보이는 무검사). 이 축들의 동어반복은 다른 지표(미러링·복사 지문)로 잡는다.
+_TAUT_EXCESS_FLOOR = 1.20
+_TAUT_Z_FLOOR = 5.0
+_TAUT_MIN_CELLS = 30      # 실측 최소 축 n=39(R23 적용후). 이보다 작으면 비율 자체가 의미 없다.
+_TAUT_ZERO_EPS = 1e-6     # 실제 잔차 최소 granularity 는 0.01(백만원) — float 잡음만 흡수한다.
+_TAUT_MAX_K = 8
+
+# 축별 부호표. **항목집합은 `_TRANS_AFTER_IDENT` 에서 가져오고** 여기서는 부호만 준다
+# (그쪽이 lambda 라 부호를 기계추출할 수 없다). 두 곳이 어긋나면 조용히 다른 축을 재게 되므로
+# 불일치는 skip 이 아니라 RED 다 — `TAUTOLOGY_AXIS_SPEC_DRIFT`.
+_TAUT_SIGNS: dict[str, dict[int, int]] = {
+    "R1_가용자본=기본+보완": {2: +1, 3: +1},
+    "R2_순자산합": {5: +1, 6: +1, 7: +1, 8: +1, 9: +1, 10: +1, 11: +1},
+    "R5_기준금액": {15: +1, 22: -1, 23: +1},
+    "R6_item16": {17: +1, 18: +1, 19: +1, 20: +1, 21: +1, 15: -1},
+}
+
+
+def _taut_axes() -> tuple[list[tuple], list[dict]]:
+    """(축 목록, spec drift RED). 축 = (axis_id, target_item, {item: sign}, desc)."""
+    axes, drift = [], []
+    for rule, tgt, ins, _fn, is_ratio in _TRANS_AFTER_IDENT:
+        if is_ratio:
+            continue  # 비율축은 잔차가 연속량 — 위 주석 참조
+        signs = _TAUT_SIGNS.get(rule)
+        if signs is None or set(signs) != set(ins):
+            drift.append({"rule": "TAUTOLOGY_AXIS_SPEC_DRIFT", "axis": rule,
+                          "detail": f"_TAUT_SIGNS {sorted(signs) if signs else None} != "
+                                    f"_TRANS_AFTER_IDENT {sorted(ins)} — 부호표가 항등식과 "
+                                    "어긋났다. 동어반복 검사가 다른 축을 재고 있다"})
+            continue
+        axes.append((rule, tgt, signs, f"item{tgt} 가법 항등식"))
+    axes.append(("R23_기타요구자본", _OTHER_CAPITAL_PARENT,
+                 {i: +1 for i in _OTHER_CAPITAL_CHILDREN},
+                 f"item{_OTHER_CAPITAL_PARENT} = " +
+                 "+".join(f"item{i}" for i in _OTHER_CAPITAL_CHILDREN)))
+    return axes, drift
+
+
+def _ih_cdf(x: float, k: int) -> float:
+    """Irwin–Hall(k) CDF. MC 대신 닫힌형 — 시드 없이 결정론적이어야 골든이 고정된다."""
+    if x <= 0:
+        return 0.0
+    if x >= k:
+        return 1.0
+    from math import comb, factorial
+    return sum((-1) ** j * comb(k, j) * (x - j) ** k
+               for j in range(int(x) + 1)) / factorial(k)
+
+
+def _taut_null_p0(k: int) -> float:
+    """k 개 항이 독립 반올림됐을 때 `P(잔차 = 0)` = P(|S_k| ≤ 0.5). 스케일 무관.
+    실측 대조: k=2 0.750 · k=3 0.667 · k=5 0.550 · k=7 0.479."""
+    k = min(max(int(k), 2), _TAUT_MAX_K)
+    return _ih_cdf(k / 2 + 0.5, k) - _ih_cdf(k / 2 - 0.5, k)
+
+
+def _identity_tautology_census(records: list[dict]) -> tuple[list[dict], list[dict]]:
+    """가법 항등식 축 × 컬럼별 잔차분포 → (census, spec_drift_red).
+
+    **적용전·적용후 둘 다 잰다.** 적용후가 이 저장소의 최대 검증사각이고, 실제로 R2 적용후는
+    적용전보다 더 심한 100.0%(182/182) 다 — 미러 셀이 적용전의 되맞춤을 그대로 물려받는다.
+
+    `k_eff` = 그 셀에서 **0 이 아닌** 항의 수. 0 항은 반올림 오차를 만들지 않으므로 귀무기대에
+    기여하지 않는다. `k_eff ≤ 1` 셀은 항등식이 자명하게 닫히는 퇴화 셀이라 통계에서 뺀다 —
+    이걸 안 빼면 item23 축이 299칸의 `k_eff=0` 때문에 95.8% 로 부풀어 **건전한 축이 동어반복으로
+    오탐된다**(실측 확인: 퇴화셀 제외 시 0.95 로 정상 복귀)."""
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
+
+    axes, drift = _taut_axes()
+    out: list[dict] = []
+    for axis, tgt, signs, desc in axes:
+        for column, i in (("적용전", 0), ("적용후", 1)):
+            n = zeros = degenerate = incomplete = 0
+            exp = var = 0.0
+            khist: Counter = Counter()
+            nonzero_examples: list[tuple] = []
+            for (c, q), m in sorted(byq.items()):
+                tv = m.get(tgt, (None, None))[i]
+                if tv is None:
+                    incomplete += 1
+                    continue
+                vals = {it: m.get(it, (None, None))[i] for it in signs}
+                if any(v is None for v in vals.values()):
+                    incomplete += 1
+                    continue
+                k_eff = sum(1 for v in vals.values() if v != 0)
+                if k_eff < 2:
+                    degenerate += 1
+                    continue
+                p = _taut_null_p0(k_eff)
+                n += 1
+                exp += p
+                var += p * (1 - p)
+                khist[k_eff] += 1
+                resid = tv - sum(s * vals[it] for it, s in signs.items())
+                if abs(resid) < _TAUT_ZERO_EPS:
+                    zeros += 1
+                elif len(nonzero_examples) < 8:
+                    nonzero_examples.append((c, q, round(resid, 4)))
+            rate = (zeros / n) if n else None
+            exp_rate = (exp / n) if n else None
+            excess = (rate / exp_rate) if (rate is not None and exp_rate) else None
+            z = ((zeros - exp) / var ** 0.5) if var > 0 else None
+            out.append({
+                "axis": axis, "column": column, "desc": desc, "n": n, "zeros": zeros,
+                "degenerate": degenerate, "incomplete": incomplete,
+                "zero_rate": rate, "null_rate": exp_rate, "excess": excess, "z": z,
+                "k_eff_hist": dict(sorted(khist.items())),
+                "nonzero_examples": nonzero_examples,
+            })
+    return out, drift
+
+
+def _identity_tautology_findings(census: list[dict]) -> tuple[list[dict], list[dict]]:
+    """census → (red, review).
+
+    RED `IDENTITY_TAUTOLOGY` — excess ≥ 1.20 **그리고** z ≥ 5.0. 이 축의 `FAIL: 0` 은 증거가
+    아니라 파이프라인이 대상값을 입력으로부터 되맞춰 저장했다는 지문이다. **해소는 데이터 쪽에서만
+    가능하다** — 되맞춤을 제거해 공시값을 복원하면 잔차가 정상 분포로 돌아오고 룰은 저절로 꺼진다.
+    임계를 올려서 끄는 것은 이 룰이 존재하는 이유 그 자체를 무력화한다.
+
+    REVIEW `IDENTITY_TAUTOLOGY_MARGINAL` — 한쪽 임계만 넘은 축. 차단하지 않지만 인쇄한다.
+    표본이 커지면 RED 로 넘어갈 수 있는 자리이고, 조용히 두면 임계 바로 밑에 눌러앉는다.
+
+    표본부족(`n < 30`)은 통과가 아니라 `IDENTITY_TAUTOLOGY_UNDERPOWERED` review 다 — 축이
+    사라져서 n 이 줄면 지표가 '개선'되는 census 고질병을 여기서도 막는다."""
+    red, review = [], []
+    for row in census:
+        if row["excess"] is None:
+            review.append({**row, "rule": "IDENTITY_TAUTOLOGY_UNDERPOWERED",
+                           "why": "판정 가능한 셀 0칸"})
+            continue
+        if row["n"] < _TAUT_MIN_CELLS:
+            review.append({**row, "rule": "IDENTITY_TAUTOLOGY_UNDERPOWERED",
+                           "why": f"n={row['n']} < {_TAUT_MIN_CELLS}"})
+            continue
+        hi_excess = row["excess"] >= _TAUT_EXCESS_FLOOR
+        hi_z = row["z"] is not None and row["z"] >= _TAUT_Z_FLOOR
+        if hi_excess and hi_z:
+            red.append(row)
+        elif hi_excess or hi_z:
+            review.append({**row, "rule": "IDENTITY_TAUTOLOGY_MARGINAL",
+                           "why": ("excess" if hi_excess else "z") + " 한쪽만 임계 초과"})
+    return red, review
+
+
+# ---------------------------------------------------------------------------
+# 메타룰 — 원천 판독성 (스캔본을 '정당'으로 세지 않는다)
+# ---------------------------------------------------------------------------
+_TEXTLAYER_SIDECAR = ROOT / "data" / "_derived" / "kics_source_textlayer.json"
+
+
+def _source_readability(path: Path | None = None) -> dict:
+    """(code, quarter) -> 'READABLE'|'BORDERLINE'|'UNREADABLE'|'UNMEASURED'.
+
+    `scripts/build_kics_source_textlayer.py` 가 raw PDF 텍스트레이어 밀도를 재서 남긴 사이드카를
+    읽는다. **사이드카를 그대로 믿지 않는다**: 기록된 파일 크기를 디스크와 대조해 어긋나거나
+    파일이 사라졌으면 그 칸을 `UNMEASURED` 로 강등한다(stale 사이드카가 조용히 '판독가능'을
+    주장하는 경로 차단 — 2026-08-13 equity 라운드와 같은 지점). 사이드카 자체가 없으면 전 칸
+    UNMEASURED = '판정 못 함'이지 '정당'이 아니다."""
+    p = path or _TEXTLAYER_SIDECAR
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    out: dict[tuple, str] = {}
+    for key, rec in (data.get("cells") or {}).items():
+        if "|" not in key or not isinstance(rec, dict):
+            continue
+        code, q = key.split("|", 1)
+        raw, st = rec.get("raw"), rec.get("status")
+        if not raw or st not in ("READABLE", "BORDERLINE", "UNREADABLE"):
+            out[(code, q)] = "UNMEASURED"
+            continue
+        f = ROOT / "data" / "disclosure" / f"FY{q[:4]}_Q{q[5]}" / "raw" / raw
+        try:
+            fresh = f.stat().st_size == rec.get("bytes")
+        except OSError:
+            fresh = False
+        out[(code, q)] = st if fresh else "UNMEASURED"
+    return out
+
+
+# ---------------------------------------------------------------------------
+# 메타룰 — 면제 근거(provenance). "raw 확인" 이라고 쓰기만 하면 되던 자리를 닫는다.
+# ---------------------------------------------------------------------------
+# 2026-08-21 owner 적대적 재검증 ③: `_AFTER_SUBRISK_NOT_DISCLOSED` 의 두 항목이 "raw 정독 확인"
+# 을 근거로 달고 있었는데, raw 에는 그 표가 **멀쩡히 있었다**(KR0003 2026.1Q p24·p25 / KR0073
+# 2026.1Q p15 — 본 세션에서 fitz 로 직접 재확인). 실제로 본 것은 docling MD 였고 MD 가 그 페이지를
+# 떨어뜨린 것이다. 즉 면제 근거가 **검증 불가능한 산문**이라 아무도 반박할 수 없었다.
+# → 모든 면제 항목은 기계가 확인할 수 있는 인용(파일 + 페이지)을 들고 있어야 하고, 인용이 없으면
+#   그 사실 자체가 finding 이 된다. 원장은 **억제 장치가 아니다** — 항목을 조용하게 만드는 필드가
+#   아예 없고, 게이트는 원장으로 finding 을 지우지 않는다(오직 추가한다).
+_EXEMPTION_LEDGER = ROOT / "data" / "_gold" / "kics_exemption_provenance.json"
+# 원장에 있어선 안 되는 키 — 면제원장이 면제억제기로 변질되는 것을 기계로 막는다.
+_LEDGER_FORBIDDEN_KEYS = {"suppress", "exempt", "ignore", "waive", "skip", "silence"}
+
+
+def _after_parent_missing_child_present(records: list[dict]) -> list[tuple]:
+    """**부모후 결측 + 세부후 present** = mmult 축이 아예 안 도는 조합 (review, 비차단).
+
+    parser 가 2026-08-20 에 직접 지목한 룰 사각이다(inbox/parser/20260706T0502Z §2):
+    `_transition_mmult_after` 는 `post_p is None` 이면 그 (회사,분기,부모)를 통째로 건너뛴다.
+    부모후가 없는데 세부후가 채워져 있으면 **세부후가 틀려도 영원히 조용하다.** 실제로 예별손해
+    2023.1Q·3Q 에서 item36/37후가 ②표(시장 불변) 값으로 잘못 채워져 있었는데 item19후 결측 때문에
+    숨어 있었다 — 그 셀들은 지금 정정됐지만 조합 자체는 다음 분기에 재발한다.
+
+    RED 로 올리지 않는 이유: 부모후 결측 자체는 `post_transition_parent_census` 가 이미 자기
+    기준으로 판정하고 있어 여기서 또 차단하면 같은 사실을 두 번 막는다. 여기의 값은 **"이 칸은
+    검사되지 않았다"를 명시적으로 세는 것** — 미판정을 통과로 읽지 않게 하는 census 다.
+
+    R5(item14후 = item15후 − item22후 + item23후)로 부모후를 역산할 수 있으면 같이 실어 보낸다:
+    검산할 앵커가 하나라도 있으면 다음 사람이 raw 를 열 때 먼저 볼 곳이 생긴다.
+    반환 (code, quarter, name, parent, n_present, n_subs, derived_parent_or_None)."""
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
+    out: list[tuple] = []
+    for (c, q), m in sorted(byq.items()):
+        if (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
+            continue  # 등재 면제분은 이 census 의 대상이 아니다(별도 축에서 이미 보고됨)
+        for parent, (subs, _mat, _add, _tk) in _TRANS_PARENT_SUBS.items():
+            if m.get(parent, (None, None))[1] is not None:
+                continue
+            present = [i for i in subs if m.get(i, (None, None))[1] is not None]
+            if not present:
+                continue
+            derived = None
+            if parent == 15:
+                i14, i22, i23 = (m.get(x, (None, None))[1] for x in (14, 22, 23))
+                if i14 is not None:
+                    derived = round(i14 + (i22 or 0.0) - (i23 or 0.0), 2)
+            out.append((c, q, name.get(c, c), parent, len(present), len(subs), derived))
+    return out
+
+
+# ---------------------------------------------------------------------------
+# documented exception — 발행사 자기모순 (8_life). **통째 skip 이 아니라 '잔차 박제'다.**
+# ---------------------------------------------------------------------------
+# KR0079 미래에셋생명 2023.2Q: 총괄표 item17 = 17,495 와 세부표 29~35 의 R7 집계 16,127.5950 이
+# 1,367.40억 어긋난다. **추출 오류가 아니라 발행사가 자기 표 둘을 안 맞게 공시한 것**이다.
+# validation 이 2026-08-21 에 raw 를 200dpi 로 렌더링해 직접 판독했다
+# (data/disclosure/FY2023_Q2/raw/KR0079_미래에셋생명.pdf):
+#   p11 [경과조치 적용 전 지급여력비율 세부] 23.2Q 열 → 1.생명장기손해보험위험액 = 17,495,
+#       지급여력비율 209.7. 마스터 item17 과 일치.
+#   p15/p16 세부표(백만원) → 마스터 item29~35 와 ÷100 일치.
+# 어느 쪽이 옳은지는 item17 쪽으로 기운다 — 독립 확증 4개(23.2Q p11 · 23.3Q p11 직전분기열 ·
+# rule4 잔차 +0.74 · rule6 잔차 +1.00) 대 세부표 쪽 0개. item17 을 자체산출값으로 갈아끼우면
+# RED 가 1→2 로 늘고 원문 2곳에서 확인된 지급여력비율 209.7 과도 어긋난다.
+# **owner 가 이 측정을 보고 "원문 기재대로 두자" 로 결정했다(2026-08-21).**
+#
+# 설계 원칙 — **통째 skip 금지**. 기대잔차를 값으로 박제하고 매 실행 마스터에서 재계산한다.
+# 잔차가 박제값에서 벗어나면 면제가 깨지고 다시 RED 다. 그래야 나중에 item17 이나 29~35 중
+# 한 칸이 바뀌었을 때 이 면제가 그 변화를 숨기지 못한다. blanket skip 은 이 셀을 영구
+# 사각지대로 만든다 — 이 저장소가 반복해서 데인 실패모드가 정확히 그것이다.
+#
+# **적용전·적용후 둘 다 박제한다.** 같은 자기모순이 게이트에 RED 를 두 번 만든다:
+# 룰엔진 `8_life`(적용전) 1건 + 게이트 `_transition_mmult_after` 축 17(적용후) 1건.
+# 적용전만 면제하면 적용후가 그대로 막는다 — '적용후가 최대 검증사각' 의 거울상이다.
+_LIFE8_ISSUER_INCONSISTENT: dict[tuple[str, str], dict[str, float]] = {
+    ("KR0079", "2023.2Q"): {"적용전": 1367.4049866571877, "적용후": 1367.4049866571877},
+}
+# 박제 허용오차. 마스터 셀은 소수 2자리라 재계산이 결정론적이다 — 느슨하게 잡는 순간
+# '박제' 가 아니라 또 하나의 blanket skip 이 된다.
+_LIFE8_PIN_TOL = 0.01
+
+
+def _life8_residual(m: dict[int, tuple], idx: int) -> float | None:
+    """item17 − sqrt(29~35 · R7) 을 한 컬럼에서 재계산. 입력 한 칸이라도 결측이면 None.
+
+    R7 은 룰엔진에서 **import** 한다(재타이핑 금지 — 검증기가 검증대상과 다른 행렬을 쓰게 된다)."""
+    parent = m.get(17, (None, None))[idx]
+    subs = [m.get(i, (None, None))[idx] for i in range(29, 36)]
+    if parent is None or any(s is None for s in subs):
+        return None
+    return parent - _diversified_sqrt(np.array(subs, dtype=float), R7)
+
+
+def _life8_issuer_inconsistent(records: list[dict]) -> tuple[set, list, list, list]:
+    """`_LIFE8_ISSUER_INCONSISTENT` 를 매 실행 마스터에 대고 재검산한다.
+
+    반환 (accepted, red, review, detail)
+      accepted — 적용전·적용후 **두 컬럼 모두** 박제잔차와 일치한 (code, quarter). 이 셀에 한해
+                 8_life(적용전) RED 와 mmult 축17(적용후) RED 를 차단집계에서 뺀다.
+      red      — 면제가 깨진 경우. 세 가지 전부 RED 다(결측을 skip 으로 삼지 않는다):
+                 LIFE8_EXEMPTION_INPUT_MISSING   item17 또는 29~35 중 결측 → 박제 확인 불가
+                 LIFE8_EXEMPTION_RESIDUAL_DRIFT  잔차가 박제값에서 이탈 → owner 판단의 전제가 바뀜
+      review   — LIFE8_EXEMPTION_INERT: 잔차는 맞는데 그 셀에 8_life RED 가 없다(룰 허용오차가
+                 바뀌었거나 룰이 안 돌았다). 차단하지 않지만 조용히 두지도 않는다 — 면제가
+                 무용해졌으면 등재를 풀어야 한다.
+      detail   — 인쇄용 (code, quarter, column, pinned, actual, delta)."""
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
+
+    accepted: set = set()
+    red: list = []
+    review: list = []
+    detail: list = []
+    for (c, q), pins in sorted(_LIFE8_ISSUER_INCONSISTENT.items()):
+        m = byq.get((c, q))
+        if m is None:
+            red.append({"rule": "LIFE8_EXEMPTION_INPUT_MISSING", "code": c, "quarter": q,
+                        "detail": "면제 등재분인데 마스터에 그 (회사,분기) 버킷이 없다"})
+            continue
+        ok = True
+        for col, idx in (("적용전", 0), ("적용후", 1)):
+            pinned = pins.get(col)
+            if pinned is None:
+                continue
+            actual = _life8_residual(m, idx)
+            if actual is None:
+                ok = False
+                red.append({"rule": "LIFE8_EXEMPTION_INPUT_MISSING", "code": c, "quarter": q,
+                            "column": col,
+                            "detail": f"item17/29~35 [{col}] 결측 — 박제잔차 {pinned:.4f} 확인 불가. "
+                                      "결측은 SKIP 이 아니라 RED 다"})
+                continue
+            detail.append((c, name.get(c, c), q, col, round(pinned, 4), round(actual, 4),
+                           round(actual - pinned, 4)))
+            if abs(actual - pinned) > _LIFE8_PIN_TOL:
+                ok = False
+                red.append({"rule": "LIFE8_EXEMPTION_RESIDUAL_DRIFT", "code": c, "quarter": q,
+                            "column": col,
+                            "detail": f"[{col}] 박제 {pinned:.4f} → 실측 {actual:.4f} "
+                                      f"(Δ{actual - pinned:+.4f}, tol {_LIFE8_PIN_TOL}). "
+                                      "owner 판단의 전제(양쪽 다 원문 그대로)가 바뀌었다 — 면제 무효"})
+        if ok:
+            accepted.add((c, q))
+    return accepted, red, review, detail
+
+
+def _irr_pin_recheck(records: list[dict]) -> tuple[list, list]:
+    """`IRR_DERIVE_ISSUER_INCONSISTENT` 를 매 실행 마스터에 대고 **인쇄용으로** 재검산한다.
+
+    차단은 이 함수가 하지 않는다 — 이미 두 축이 각자 한다(룰엔진 `36_irr` 적용전 ·
+    `_transition_irr_after` 적용후). 여기서는 ① 두 컬럼의 실측 잔차를 매 실행 눈에 보이게 찍고
+    ② **면제가 무용해졌는지**(INERT) 를 본다. 잔차가 룰 자신의 허용오차 안으로 들어오면 룰이
+    이미 통과시킬 셀이라 면제가 사각지대만 남긴다 → 등재를 풀어야 한다.
+
+    반환 (detail, review). detail = (code, name, quarter, column, pinned, actual, delta, verdict)."""
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
+
+    detail, review = [], []
+    for (c, q), pins in sorted(IRR_DERIVE_ISSUER_INCONSISTENT.items()):
+        m = byq.get((c, q))
+        if m is None:
+            review.append({"rule": "IRR_EXEMPTION_BUCKET_ABSENT", "code": c, "quarter": q,
+                           "detail": "면제 등재분인데 마스터에 그 (회사,분기) 버킷이 없다 — "
+                                     "등재를 풀거나 데이터를 확인하라"})
+            continue
+        for col, idx in (("적용전", 0), ("적용후", 1)):
+            if col not in pins:
+                continue
+            vals = {i: m.get(i, (None, None))[idx] for i in _IRR_ALL_ITEMS}
+            verdict, pinned, actual = irr_pin_verdict(c, q, col, vals)
+            detail.append((c, name.get(c, c), q, col, round(pinned, 4),
+                           None if actual is None else round(actual, 4),
+                           None if actual is None else round(actual - pinned, 4), verdict))
+            if verdict != "MATCH":
+                continue
+            exp = irr_derive_expected(vals)
+            if abs(actual) <= max(_eff_tol(c), 0.05 * abs(exp)):
+                review.append({"rule": "IRR_EXEMPTION_INERT", "code": c, "quarter": q,
+                               "column": col,
+                               "detail": f"[{col}] 잔차 {actual:.4f} 가 룰 허용오차 "
+                                         f"{max(_eff_tol(c), 0.05 * abs(exp)):.4f} 안에 들어왔다 — "
+                                         "룰이 이미 통과시킬 셀이라 면제가 사각지대만 남긴다. 등재를 풀어라"})
+    return detail, review
+
+
+def _exemption_registries() -> dict[str, frozenset]:
+    """게이트·룰엔진이 실제로 소비하는 면제 레지스트리 전부. 새 레지스트리를 만들면 여기에
+    등록해야 provenance 검사를 받는다(빠뜨리면 그 레지스트리는 근거 없이 조용히 산다)."""
+    return {
+        "_AFTER_SUBRISK_NOT_DISCLOSED": frozenset(_AFTER_SUBRISK_NOT_DISCLOSED),
+        "_POST_PARENT_NOT_DISCLOSED": frozenset(_POST_PARENT_NOT_DISCLOSED),
+        "INTERNAL_MODEL_36IRR_EXEMPT": frozenset(INTERNAL_MODEL_36IRR_EXEMPT),
+        "IRR_SCENARIO_EXEMPT": frozenset(IRR_SCENARIO_EXEMPT),
+        "MARKET_BREAKDOWN_EXEMPT": frozenset(MARKET_BREAKDOWN_EXEMPT),
+        # (axis_id, column) 쌍 — company 자리=axis, quarter 자리=column 으로 원장에 적는다.
+        "_AXIS_NOT_EVALUATED_EXEMPT": frozenset(_AXIS_NOT_EVALUATED_EXEMPT),
+        "_LIFE8_ISSUER_INCONSISTENT": frozenset(_LIFE8_ISSUER_INCONSISTENT),
+        # 잔차 박제형 면제 2번째. 룰엔진에 살지만 근거 검사는 여기서 받는다 — 레지스트리를
+        # 여기 등록하지 않으면 그 면제는 근거 없이 조용히 산다.
+        "IRR_DERIVE_ISSUER_INCONSISTENT": frozenset(IRR_DERIVE_ISSUER_INCONSISTENT),
+    }
+
+
+def _load_exemption_ledger(path: Path | None = None):
+    p = path or _EXEMPTION_LEDGER
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return None
+    except Exception:
+        return {"_unreadable": True}
+
+
+def _verify_absent_markers(spec: dict) -> tuple[bool, str]:
+    """인용된 원천을 **게이트가 직접 다시 열어** 근거를 매 실행 재확인한다.
+
+    `verify = {file, pages?, absent_markers[], present_markers[]}`. 공백을 모두 제거한 뒤
+    부분문자열로 찾는다 (PDF 텍스트 추출은 줄바꿈·공백이 제멋대로라 정확일치는 못 쓴다).
+    페이지를 지정하면 그 페이지만 열어 비용이 사실상 0 이다.
+
+    두 방향을 다 본다. 한 방향만으로는 근거를 못 세우는 면제가 실제로 있기 때문이다:
+      · `absent_markers` — 발견되면 '그 표/섹션이 없다'는 주장이 **거짓** → 반증.
+      · `present_markers` — 사라지면 근거로 든 문장 자체가 없어진 것 → 역시 **반증**.
+        (2026-08-21 신설. 악사손해 2024.3Q 는 부재 증명보다 원문 각주 "지급여력비율은 2024년
+         12월말 공시 예정임(보험업감독규정 부칙 제3조)" 가 훨씬 강한 근거다. 부재 마커만
+         지원하면 이런 항목은 영원히 UNVERIFIED 로 남고, 그건 근거가 없어서가 아니라
+         검사기가 그 모양의 근거를 표현하지 못해서다.)
+
+    반환 (contradicted, why). why 는 사람이 읽을 사유 문자열."""
+    f = spec.get("file")
+    absent = [m for m in (spec.get("absent_markers") or []) if m]
+    present = [m for m in (spec.get("present_markers") or []) if m]
+    if not f or not (absent or present):
+        return False, ""
+    p = ROOT / f
+    if not p.exists():
+        return False, ""
+    pages = spec.get("pages")
+    try:
+        if p.suffix.lower() == ".pdf":
+            import fitz  # 인용을 실제로 든 항목에서만 임포트 — 평시 게이트는 fitz 를 안 쓴다
+            doc = fitz.open(p)
+            idx = [n - 1 for n in pages] if pages else range(doc.page_count)
+            text = "".join(doc[n].get_text() for n in idx if 0 <= n < doc.page_count)
+            doc.close()
+        else:
+            text = p.read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        return False, ""
+    flat = "".join(text.split())
+    found = [m for m in absent if "".join(m.split()) in flat]
+    missing = [m for m in present if "".join(m.split()) not in flat]
+    why = []
+    if found:
+        why.append(f"부재 주장 반증 — {found} 실재")
+    if missing:
+        why.append(f"근거 문장 소실 — {missing} 를 인용 페이지에서 찾을 수 없음")
+    return bool(why), " / ".join(why)
+
+
+def _verify_markers_ran(spec: dict) -> bool:
+    """근거 마커가 **실제로 대조됐는지**. 마커가 없거나 인용 파일이 디스크에 없으면 False.
+    이게 없으면 'verify 블록을 비워 두는 것' 이 조용한 통과 경로가 된다 — 검사처럼 보이는 무검사."""
+    f = spec.get("file")
+    if not f or not (ROOT / f).exists():
+        return False
+    return bool([m for m in (spec.get("absent_markers") or []) if m]
+                or [m for m in (spec.get("present_markers") or []) if m])
+
+
+def _cited_page_text_density(spec: dict) -> tuple[int, int] | None:
+    """인용 페이지의 텍스트레이어 밀도를 잰다 → (pages, total_chars). 못 재면 None.
+
+    쓰임: 원장이 "스캔본이라 기계검증이 불가능하다" 고 주장할 때 **그 주장 자체를 기계로
+    확인**하기 위한 것. 텍스트가 멀쩡히 나오는 PDF 에 image-only 를 적어 두면 그건 근거가
+    아니라 회피다."""
+    f = spec.get("file")
+    if not f:
+        return None
+    p = ROOT / f
+    if not p.exists() or p.suffix.lower() != ".pdf":
+        return None
+    pages = spec.get("pages")
+    try:
+        import fitz
+        doc = fitz.open(p)
+        idx = [n - 1 for n in pages] if pages else range(doc.page_count)
+        idx = [n for n in idx if 0 <= n < doc.page_count]
+        total = sum(len(doc[n].get_text().strip()) for n in idx)
+        doc.close()
+    except Exception:
+        return None
+    return (len(idx), total)
+
+
+# image-only 주장을 반증하는 임계. 실측 기준점: 텍스트가 살아 있는 정상 표 페이지는 1,000~3,000자
+# (예: 푸본현대 2026.1Q p18), 미래에셋 2023.2Q 스캔본은 p11/p15/p16 이 360/76/323자로 **행 라벨이
+# 중간에서 잘려 값이 아예 없다**. 800자/페이지면 두 세계 사이에 넉넉히 들어간다.
+_IMAGE_CLAIM_MAX_CHARS_PER_PAGE = 800
+
+
+def _exemption_provenance_findings(registries: dict | None = None, ledger=None
+                                   ) -> tuple[list, list]:
+    """면제 근거 검사 → (red, review). red/review 원소는 dict(rule, registry, code, quarter, detail).
+
+    RED  EXEMPTION_LEDGER_UNREADABLE      원장이 있는데 파싱 불가 (깨진 파일 ≠ 없는 파일).
+    RED  EXEMPTION_LEDGER_SCHEMA_INVALID  원장에 억제성 키가 들어옴 = 원장이 면제억제기로 변질.
+    RED  EXEMPTION_PROVENANCE_MISSING     레지스트리엔 있는데 원장에 기록이 아예 없음
+                                          → **새 면제를 조용히 추가하는 경로를 즉시 막는다.**
+    RED  EXEMPTION_CITATION_UNRESOLVED    인용한 파일이 디스크에 없음(확인 불가능한 인용).
+    RED  EXEMPTION_CITATION_CONTRADICTED  게이트가 인용 원천을 열어 '부재' 주장을 반증함,
+                                          또는 원장이 스스로 CONTRADICTED 로 기록.
+    REVIEW EXEMPTION_PROVENANCE_UNVERIFIED 기록은 있으나 아직 기계검증 가능한 인용이 없음."""
+    registries = _exemption_registries() if registries is None else registries
+    if ledger is None:
+        ledger = _load_exemption_ledger()
+    red, review = [], []
+    if isinstance(ledger, dict) and ledger.get("_unreadable"):
+        red.append({"rule": "EXEMPTION_LEDGER_UNREADABLE", "registry": "-", "code": None,
+                    "quarter": None,
+                    "detail": f"{_EXEMPTION_LEDGER.name} 존재하지만 파싱 불가 — 면제 근거 검사축이 죽었다"})
+        ledger = None
+    entries = {}
+    if isinstance(ledger, dict):
+        for e in ledger.get("entries") or []:
+            if not isinstance(e, dict):
+                continue
+            bad = sorted(_LEDGER_FORBIDDEN_KEYS & set(e))
+            if bad:
+                red.append({"rule": "EXEMPTION_LEDGER_SCHEMA_INVALID",
+                            "registry": e.get("registry", "?"), "code": e.get("company"),
+                            "quarter": e.get("quarter"),
+                            "detail": f"금지 키 {bad} — 원장은 근거 기록이지 억제 장치가 아니다"})
+            entries[(e.get("registry"), e.get("company"), e.get("quarter"))] = e
+    for reg, cells in sorted(registries.items()):
+        for code, q in sorted(cells):
+            e = entries.get((reg, code, q))
+            if e is None:
+                red.append({"rule": "EXEMPTION_PROVENANCE_MISSING", "registry": reg,
+                            "code": code, "quarter": q,
+                            "detail": "면제 등재분인데 근거 원장에 기록이 없다 — "
+                                      "확인 가능한 인용(파일+페이지) 없이 검사에서 빠져 있다"})
+                continue
+            cit = e.get("citation") or {}
+            cf = cit.get("file")
+            if cf and not (ROOT / cf).exists():
+                red.append({"rule": "EXEMPTION_CITATION_UNRESOLVED", "registry": reg,
+                            "code": code, "quarter": q,
+                            "detail": f"인용 파일 부재: {cf}"})
+                continue
+            contradicted, why = _verify_absent_markers(e.get("verify") or {})
+            if contradicted:
+                v = e.get("verify") or {}
+                red.append({"rule": "EXEMPTION_CITATION_CONTRADICTED", "registry": reg,
+                            "code": code, "quarter": q,
+                            "detail": f"'{e.get('claim','')}' — {v.get('file')} "
+                                      f"p{v.get('pages')}: {why}"})
+                continue
+            if e.get("status") == "CONTRADICTED":
+                red.append({"rule": "EXEMPTION_CITATION_CONTRADICTED", "registry": reg,
+                            "code": code, "quarter": q,
+                            "detail": f"원장 status=CONTRADICTED — {e.get('note', '')}"[:400]})
+                continue
+            # ---- 판독방식 = 렌더링 육안 (스캔본/텍스트레이어 손상본) -------------------
+            # absent_markers 는 텍스트레이어가 살아 있는 PDF 에서만 뜻이 있다. 텍스트가 안 나오는
+            # 원천에 마커 검사를 걸면 **항상 '마커 없음' = 주장 확인** 으로 끝나 검사가 무력해진다
+            # (기계검증처럼 보이는데 실제로는 아무것도 안 보는 false-green). 그래서 그런 항목은
+            # 'VERIFIED' 를 참칭하지 않고 VERIFIED_BY_IMAGE 로 적고, 게이트는 두 가지를 한다:
+            #   ① image-only 라는 주장 자체를 기계로 검증(인용 페이지 텍스트 밀도 재측정),
+            #   ② 그래도 조용해지지 않는다 — 매 실행 REVIEW 로 인쇄한다.
+            if e.get("status") == "VERIFIED_BY_IMAGE":
+                iv = e.get("image_verification") or {}
+                missing = [k for k in ("method", "pages", "read_by", "why_not_machine_verifiable")
+                           if not iv.get(k)]
+                if missing:
+                    red.append({"rule": "EXEMPTION_IMAGE_RECORD_INCOMPLETE", "registry": reg,
+                                "code": code, "quarter": q,
+                                "detail": f"VERIFIED_BY_IMAGE 인데 image_verification 필드 누락 {missing} "
+                                          "— 판독방식·판독자·기계검증 불가 사유를 적지 않으면 산문 근거와 같다"})
+                    continue
+                dens = _cited_page_text_density({"file": cf, "pages": iv.get("pages")})
+                if dens and dens[0] and dens[1] / dens[0] > _IMAGE_CLAIM_MAX_CHARS_PER_PAGE:
+                    red.append({"rule": "EXEMPTION_IMAGE_CLAIM_REFUTED", "registry": reg,
+                                "code": code, "quarter": q,
+                                "detail": f"'기계검증 불가(스캔본)' 주장 반증 — {cf} p{iv.get('pages')} "
+                                          f"텍스트레이어 {dens[1]}자/{dens[0]}페이지 "
+                                          f"(={dens[1] / dens[0]:.0f}자/p > {_IMAGE_CLAIM_MAX_CHARS_PER_PAGE}). "
+                                          "텍스트가 읽히는 원천이면 인용은 기계검증 가능하게 적어야 한다"})
+                    continue
+                review.append({"rule": "EXEMPTION_VERIFIED_BY_IMAGE_ONLY", "registry": reg,
+                               "code": code, "quarter": q,
+                               "detail": f"판독방식={iv.get('method')} 판독자={iv.get('read_by')} "
+                                         f"p{iv.get('pages')} — 기계검증 불가 사유: "
+                                         f"{iv.get('why_not_machine_verifiable')}"
+                                         + (f" (인용페이지 텍스트 {dens[1]}자/{dens[0]}p 로 확인)"
+                                            if dens else "")})
+                continue
+            if e.get("status") != "VERIFIED" or not cf:
+                red_or = review
+                red_or.append({"rule": "EXEMPTION_PROVENANCE_UNVERIFIED", "registry": reg,
+                               "code": code, "quarter": q,
+                               "detail": f"status={e.get('status')} citation="
+                                         f"{cf or 'None'} — 기계검증 가능한 인용 미비"})
+                continue
+            # status=VERIFIED 인데 대조할 마커가 없으면 그건 '검증됨'이 아니라 **검증한 척**이다.
+            # 이 구멍을 막지 않으면 verify 블록을 비워 두는 것이 가장 조용한 면제 경로가 된다.
+            if not _verify_markers_ran(e.get("verify") or {}):
+                red.append({"rule": "EXEMPTION_VERIFIED_WITHOUT_MARKERS", "registry": reg,
+                            "code": code, "quarter": q,
+                            "detail": f"status=VERIFIED 인데 verify 마커가 대조되지 않았다 "
+                                      f"(file={(e.get('verify') or {}).get('file') or 'None'}, "
+                                      "absent_markers/present_markers 없음 또는 파일 부재). "
+                                      "매 실행 재확인되지 않는 인용은 산문 근거와 같다"})
+    return red, review
 
 
 # 적용후 부모→자식 완전성 census 맵. 적용전 _PARENT_CHILD_ITEMS(하위위험 17·19만)에 더해
@@ -637,6 +1938,9 @@ def _parent_present_child_incomplete_after(records: list[dict]) -> list[tuple]:
     present & material(≥floor)'인 항목 (적용전이 공시하는 항목은 적용후 표도 동일 구조로 공시해야 함).
     결측 = 파싱갭: 분산효과후 파생누락 / 신용·운영후 carry-forward누락 / 시장·생명장기후 재추출필요.
     raw 도출불가 documented exception(_AFTER_SUBRISK_NOT_DISCLOSED)만 제외. RED(blocking).
+
+    2026-08-21: 적용사 18사 한정 제거 → **전사 39사**. 적용전 census 는 전사인데 그 '적용후 미러'만
+    18사였다(비-applier 21사의 적용후 부분충전이 미검사). 확대 즉시 코리안리 2023.3Q 가 잡혔다.
     반환: (code, quarter, parent, name, missing_children)."""
     def _num(v):
         try:
@@ -657,8 +1961,6 @@ def _parent_present_child_incomplete_after(records: list[dict]) -> list[tuple]:
             byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
     out = []
     for (c, q), m in sorted(byq.items()):
-        if c not in _TRANSITION_APPLIERS:
-            continue
         if (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
             continue  # raw 도출불가 documented exception
         for p, kids in _PARENT_CHILD_AFTER.items():
@@ -721,6 +2023,11 @@ def _diversification_negative(records: list[dict]) -> list[tuple]:
 # 15~21=코어(경과조치 적용후에도 반드시 공시), 22/23=간헐(종속회사·법인세 유무로 legit-absent 가능).
 _POST_PARENT_CORE = (15, 16, 17, 18, 19, 20, 21)
 _POST_PARENT_ADJUST = (22, 23)
+# 가용자본측·헤드라인 적용후 continuity (2026-08-21 신설). 요구자본(15-23)만 census 하고 있어
+# item1(지급여력금액)·2(기본자본)·3(보완자본)·14(기준금액)·27/28(비율) 적용후가 통째로 빠져도
+# 게이트가 아무 말도 안 했다 — 그 여섯은 항등식 R1/R5/R7/R8후의 **입력**이라, 결측이면 항등식이
+# 조용히 skip 되어 이중으로 새는 자리다. 현재 break 0(확대해도 신규 RED 없음 = 순수 보험).
+_POST_CAPITAL_CORE = (1, 2, 3, 14, 27, 28)
 
 # 적용후 부모 census documented exception — 요구자본 '적용후' 컬럼이 구조적으로 미공시/재현불가 확정된
 # (회사,분기)만. NO_POST_TRANSITION_DISCLOSURE(항목 4/12/13류)의 요구자본-부모 버전. exemption 추가는
@@ -732,8 +2039,28 @@ _POST_PARENT_ADJUST = (22, 23)
 #     등재분. item16후 산술파생 가능하나 입력 item17후=1757.32가 raw page(2001.90) 불일치=partial-mmult
 #     아티팩트 의심 → 파생값 불신. owner 승인 2026-07-16.
 _POST_PARENT_NOT_DISCLOSED: frozenset = frozenset({
-    ("KR0071", "2024.4Q"),
-    ("KR0097", "2024.4Q"),
+    # ("KR0071", "2024.4Q") 해제 2026-08-21 (validation, raw fitz 전수). 등재사유 "image-only PDF"
+    #   가 **거짓**이다: data/disclosure/FY2024_Q4/raw/KR0071_흥국생명보험.pdf 는 538p / 286,634자
+    #   (533자/p)로 텍스트레이어가 멀쩡하고, K-ICS 인접 페이지(p249·p253·p302·p304)를 직접 열어
+    #   보면 전부 선택 가능한 조밀한 본문이다. 진짜 문제는 다른 것 — **"경과조치" 가 538p 전체에서
+    #   0회**다. 이 파일은 정기경영공시가 아니라 DART 사업보고서(연결 IFRS17 주석, 쪽번호 "- 135 -")
+    #   이기 때문이다. "우리가 가진 파일이 틀린 문서다" 는 "발행사가 공시하지 않았다" 가 아니다 —
+    #   문서화 면제로 등재하면 downloader 갭이 영구 사각으로 굳는다. downloader 재수집 대상.
+    # ("KR0097", "2024.4Q") 해제 2026-08-21 (validation, raw fitz). 등재사유 "item16후 산술파생
+    #   가능하나 입력 item17후=1757.32 가 raw page(2001.90)와 불일치 → 파생값 불신" 의 결론이
+    #   **거꾸로였다**: raw p281 [지급여력기준금액] 표가 적용후 컬럼을 통째로 공시한다(단위 천원) —
+    #   Ⅰ.기본요구자본 430,530,508 · 생명장기 200,189,811 · 시장 200,345,315 · 신용 154,877,709 ·
+    #   운영 36,485,031 · (분산효과) (161,367,358) · Ⅳ.지급여력기준금액 430,530,508.
+    #   즉 item16후는 파생할 필요조차 없이 **원문에 1,613.67억으로 찍혀 있고**, 마스터의
+    #   item17후=1757.32 쪽이 결함이다(원문 2,001.90). 원문이 정본이므로 면제가 아니라 정정 사안.
+    # 악사손해 2024.3Q — 그 분기 공시서에 지급여력비율 섹션이 아예 없다("지급여력비율은 2024년
+    # 12월말 공시 예정임(보험업감독규정 부칙 제3조)", raw p3/p9/p11). JSON의 2024.3Q 값은 전부
+    # FY2024_Q4 공시서의 '당분기-1분기' 컬럼에서 온 것인데, 그 공시서의 경과조치 적용에 관한
+    # 사항 표(p41-43)는 당분기 전용이고, 과거분기 경과조치후를 싣는 건 [지급여력비율 총괄](p36)
+    # 뿐이며 거기엔 비율·지급여력금액·지급여력기준금액 세 줄만 있다. 즉 15-23후는 원천 부재.
+    # (가용자본측 item3후는 TIR 단독 적용 → 전=후로 확정 가능해 채웠다.) parser 2026-08-20,
+    # TODO.md documented exception 등재.
+    ("KR0049", "2024.3Q"),
 })
 
 
@@ -748,7 +2075,7 @@ def _post_transition_parent_census(records):
     증거라, 당 분기 결측은 구조적 미공시가 아니라 파싱 유실. (직전 적용후 없는 도입초 onset·항구적
     중단은 flag 안 함 — 오탐 억제.)
 
-    - 코어(15~21): continuity break = RED(blocking).
+    - 코어(15~21 요구자본 + 1·2·3·14·27·28 가용자본/헤드라인): continuity break = RED(blocking).
     - 조정(22/23=법인세조정·기타요구자본): 같은 (회사,분기)에 코어 break가 있을 때만 RED(표 전체 유실의
       일부) — 단독 22/23 break는 종속회사/법인세 legit-absence일 수 있어 review(비차단).
     - _POST_PARENT_NOT_DISCLOSED 등재 (회사,분기)만 면제.
@@ -757,7 +2084,8 @@ def _post_transition_parent_census(records):
     # (code, item) -> {quarter: (pre_present, post_present)}
     idx: dict[tuple, dict] = defaultdict(dict)
     name: dict[str, str] = {}
-    items_of_interest = set(_POST_PARENT_CORE) | set(_POST_PARENT_ADJUST)
+    items_of_interest = (set(_POST_PARENT_CORE) | set(_POST_PARENT_ADJUST)
+                         | set(_POST_CAPITAL_CORE))
     for r in records:
         c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
         name[c] = r.get(KEY_NAME, c)
@@ -793,7 +2121,7 @@ def _post_transition_parent_census(records):
                 out.append((c, q, name.get(c, c), it, dq[i - 1], kind))
         return out
 
-    core = _breaks(_POST_PARENT_CORE)
+    core = _breaks(set(_POST_PARENT_CORE) | set(_POST_CAPITAL_CORE))
     adjust = _breaks(_POST_PARENT_ADJUST)
     core_cells = {(c, q) for c, q, *_ in core}
     red = sorted(core + [b for b in adjust if (b[0], b[1]) in core_cells])
@@ -806,7 +2134,12 @@ def main() -> int:
         sys.stdout.reconfigure(encoding="utf-8")  # Windows console defaults to cp949
     except Exception:
         pass
+    # `--master PATH` 는 **추가만 하는 인자**다(기본 동작 불변). 커버리지 변이시험이 마스터를
+    # 흔든 사본으로 게이트를 돌려야 하는데, 진짜 마스터를 덮어쓰면서 시험할 수는 없기 때문에
+    # 넣었다 — tests/test_rule_coverage_manifest.py 의 전체게이트 축 참조.
     src = ROOT / "kics_disclosure.json"
+    if "--master" in sys.argv:
+        src = Path(sys.argv[sys.argv.index("--master") + 1])
     records = _load_records(src)
     report = run_validation(records, source_has_breakdown=_scan_breakdown_presence(records))
     findings = report.get("findings", [])
@@ -879,8 +2212,26 @@ def main() -> int:
     report["item12_equals_item1"] = [
         {"code": c, "quarter": q, "name": n, "value": v} for c, q, n, v in item12_copy
     ]
-    mmult_mismatch, mmult_submissing = _transition_mmult_after(records)
+    mmult_mismatch, mmult_submissing, mmult_skipped, mmult_unverifiable = \
+        _transition_mmult_after(records)
+    # documented exception(잔차 박제) — 축 17 적용후의 같은 자기모순 1건을 차단집계에서만 뺀다.
+    # **finding 자체는 지우지 않는다**: 아래 report/print 에 exempted 로 그대로 남는다.
+    pmcp = _after_parent_missing_child_present(records)
+    report["after_parent_missing_child_present"] = {
+        "doc": ("부모후 결측 + 세부후 present = mmult 축 미가동 (review). parser 지목 사각 "
+                "(inbox/parser/20260706T0502Z §2) — 2026-08-21 배선."),
+        "review": [
+            {"code": c, "quarter": q, "name": n, "parent_item": p,
+             "children_present": np_, "children_total": nt, "derived_parent_r5": d}
+            for c, q, n, p, np_, nt, d in pmcp
+        ],
+    }
+    life8_ok, life8_red, life8_review, life8_detail = _life8_issuer_inconsistent(records)
+    mmult_exempted = [row for row in mmult_mismatch
+                      if row[3] == 17 and (row[0], row[1]) in life8_ok]
+    mmult_mismatch = [row for row in mmult_mismatch if row not in mmult_exempted]
     report["transition_mmult_after"] = {
+        "scope": "all 39 filers x 3 axes (15/17/19) — 2026-08-21 widened from 18 appliers x 2 axes",
         "mismatch_red": [
             {"code": c, "quarter": q, "name": n, "parent_item": p, "after": pv, "computed": ev}
             for c, q, n, p, pv, ev in mmult_mismatch
@@ -889,13 +2240,58 @@ def main() -> int:
             {"code": c, "quarter": q, "name": n, "parent_item": p}
             for c, q, n, p in mmult_submissing
         ],
+        "not_evaluated": dict(sorted(mmult_skipped.items())),
+        "unverifiable_source": [
+            {"code": c, "quarter": q, "name": n, "parent_item": p, "readability": tag}
+            for c, q, n, p, tag in mmult_unverifiable
+        ],
     }
-    after_ident_fails = _transition_identities_after(records)
-    report["transition_identities_after"] = [
-        {"code": c, "quarter": q, "name": n, "rule": rule,
-         "expected_after": e, "disclosed_after": a, "diff": diff}
-        for c, q, n, rule, e, a, diff in after_ident_fails
-    ]
+    after_ident_fails, after_ident_skipped = _transition_identities_after(records)
+    report["transition_identities_after"] = {
+        "scope": "all 39 filers — 2026-08-21 widened from 18 appliers; tolerance now matches the pre-column engine",
+        "red": [
+            {"code": c, "quarter": q, "name": n, "rule": rule,
+             "expected_after": e, "disclosed_after": a, "diff": diff}
+            for c, q, n, rule, e, a, diff in after_ident_fails
+        ],
+        "not_evaluated": dict(sorted(after_ident_skipped.items())),
+    }
+    irr_after_fails, irr_after_skipped = _transition_irr_after(records)
+    report["transition_irr_after"] = {
+        "scope": "all 39 filers — 2026-08-21 new wiring (36_irr had no post-column check at all)",
+        "red": [
+            {"code": c, "quarter": q, "name": n, "after": a, "computed": e}
+            for c, q, n, a, e in irr_after_fails
+        ],
+        "not_evaluated": dict(sorted(irr_after_skipped.items())),
+    }
+    irr_pin_detail, irr_pin_review = _irr_pin_recheck(records)
+    report["irr_derive_issuer_inconsistent_exception"] = {
+        "doc": ("36_irr documented exception (owner 2026-08-21) — blanket skip 이 아니라 기대잔차 박제. "
+                "적용전(룰엔진 36_irr)·적용후(_transition_irr_after) 두 축이 각자 이 박제를 대조해 "
+                "일치할 때만 차단하지 않는다. 잔차가 움직이거나 입력이 결측이면 다시 RED."),
+        "registry": {f"{c}|{q}": pins
+                     for (c, q), pins in IRR_DERIVE_ISSUER_INCONSISTENT.items()},
+        "pin_tolerance": IRR_PIN_TOL,
+        "residual_recheck": [
+            {"code": c, "name": n, "quarter": q, "column": col,
+             "pinned": p, "actual": a, "delta": d, "verdict": v}
+            for c, n, q, col, p, a, d, v in irr_pin_detail
+        ],
+        "review": irr_pin_review,
+    }
+    other_cap_fails, other_cap_skipped = _other_capital_children_sum(records)
+    report["other_capital_children_sum"] = {
+        "scope": "all filers x both columns (값 / 값_적용후) — 2026-08-21 new wiring; "
+                 "items 24/25/26 were referenced by no identity at all",
+        "identity": "item23 = item24 + item25 + item26 (원문 행 라벨 'Ⅲ. 기타 요구자본(1+2+3)')",
+        "red": [
+            {"code": c, "quarter": q, "name": n, "column": col,
+             "disclosed": tv, "expected": ev, "children": list(kids)}
+            for c, q, n, col, tv, ev, kids in other_cap_fails
+        ],
+        "not_evaluated": dict(sorted(other_cap_skipped.items())),
+    }
     after_incomplete = _parent_present_child_incomplete_after(records)
     report["parent_present_child_incomplete_after"] = [
         {"code": c, "quarter": q, "parent_item": p, "name": n, "missing_children": list(miss)}
@@ -906,6 +2302,57 @@ def main() -> int:
         {"code": c, "quarter": q, "name": n, "mode": mode, "value": v, "kind": k}
         for c, q, n, mode, v, k in div_negative
     ]
+    axis_census = _axis_evaluation_census(records)
+    axis_red, axis_review = _axis_eval_findings(axis_census)
+    axis_mirror_red = _axis_mirror_findings(axis_census)
+    report["axis_evaluation_census"] = {
+        "doc": ("축 × 컬럼별 평가율. grid=적용전에 대상항목+입력 1개 이상이 실재하는 (회사,분기). "
+                "미러(적용후=적용전)는 3분류: 비적용사=정의상 동일(정상) / 적용사·해당종류 미신청=정상 / "
+                "적용사·해당종류 신청=오염 의심(AXIS_SELF_MIRRORED_APPLIER). "
+                "effective=evaluated−오염의심 이 그 축이 실제로 확인해 준 칸 수다."),
+        "mirror_applier_suspect": axis_mirror_red,
+        "min_grid": _AXIS_MIN_GRID,
+        "rate_floor": _AXIS_EVAL_RATE_FLOOR,
+        "rows": [{k: v for k, v in r.items() if k != "mirror_cells"} for r in axis_census],
+        "not_evaluated_red": [{"axis": r["axis"], "column": r["column"], "grid": r["grid"],
+                               "evaluated": r["evaluated"], "mirrored": r["mirrored"]}
+                              for r in axis_red],
+        "rate_low_review": [{"axis": r["axis"], "column": r["column"], "grid": r["grid"],
+                             "buckets": r["buckets"], "evaluated": r["evaluated"],
+                             "rate": r["rate"], "rate_all": r["rate_all"],
+                             "low_on": r["low_on"]}
+                            for r in axis_review],
+        "mirror_cells": {f'{r["axis"]}|{r["column"]}': [list(x) for x in r["mirror_cells"]]
+                         for r in axis_census if r["mirrored"]},
+    }
+    taut_census, taut_drift = _identity_tautology_census(records)
+    taut_red, taut_review = _identity_tautology_findings(taut_census)
+    taut_red_axes = {(r["axis"], r["column"]) for r in taut_red}
+    report["identity_tautology"] = {
+        "doc": ("가법 항등식 축의 **잔차 분포**. 억원으로 반올림된 표에서 부모−Σ자식이 정확히 0 인 "
+                "비율은 반올림 잡음이 허용하는 범위(Irwin–Hall 귀무)를 넘을 수 없다. 넘으면 입력이 "
+                "공시값이 아니라 파생값이고, 그 축의 'FAIL 0' 은 증거가 아니다. "
+                "커버리지(변이시험)와는 다른 축 — 변이시험은 '룰이 이 칸을 본다'만 증명한다."),
+        "excess_floor": _TAUT_EXCESS_FLOOR,
+        "z_floor": _TAUT_Z_FLOOR,
+        "min_cells": _TAUT_MIN_CELLS,
+        "rows": taut_census,
+        "red": [{"axis": r["axis"], "column": r["column"], "n": r["n"], "zeros": r["zeros"],
+                 "zero_rate": r["zero_rate"], "null_rate": r["null_rate"],
+                 "excess": r["excess"], "z": r["z"],
+                 "verdict": "이 축의 FAIL 0 은 증거가 아니다 (동어반복)"} for r in taut_red],
+        "review": [{"axis": r["axis"], "column": r["column"], "rule": r["rule"],
+                    "why": r["why"], "n": r["n"], "excess": r["excess"], "z": r["z"]}
+                   for r in taut_review],
+        "spec_drift_red": taut_drift,
+    }
+    exempt_red, exempt_review = _exemption_provenance_findings()
+    report["exemption_provenance"] = {
+        "ledger": str(_EXEMPTION_LEDGER.relative_to(ROOT)),
+        "registries": {k: len(v) for k, v in sorted(_exemption_registries().items())},
+        "red": exempt_red,
+        "review": exempt_review,
+    }
     post_parent_red, post_parent_review = _post_transition_parent_census(records)
     report["post_transition_parent_census"] = {
         "red": [{"code": c, "quarter": q, "name": n, "item": it,
@@ -924,12 +2371,64 @@ def main() -> int:
     err = int(by_status.get("ERROR", 0))
     census_red = len(census["missing_rows"])
 
+    # documented exception(잔차 박제) — 룰엔진 8_life RED 중 면제분만 **차단집계에서** 뺀다.
+    # findings 매트릭스와 report 는 손대지 않는다: 골든이 고정하는 것도, 다음 사람이 읽는 것도
+    # '룰이 무엇을 봤는가' 이고, 면제는 '그중 무엇을 차단하지 않기로 했는가' 라 층이 다르다.
+    life8_exempt_findings = [
+        f for f in findings
+        if f.get("status") == "RED" and str(f.get("rule")) == "8_life"
+        and (f.get(KEY_CODE), f.get(KEY_QUARTER)) in life8_ok
+    ]
+    for c, q in sorted(life8_ok):
+        if not any((f.get(KEY_CODE), f.get(KEY_QUARTER)) == (c, q) for f in life8_exempt_findings):
+            life8_review.append({"rule": "LIFE8_EXEMPTION_INERT", "code": c, "quarter": q,
+                                 "detail": "잔차는 박제값과 일치하는데 그 셀에 8_life RED 가 없다 — "
+                                           "룰 허용오차가 바뀌었거나 룰이 안 돌았다. 면제가 무용해졌으면 "
+                                           "등재를 풀어라(면제가 남으면 그 자체가 사각지대다)"})
+    red_blocking = red - len(life8_exempt_findings)
+    report["life8_issuer_inconsistent_exception"] = {
+        "doc": ("발행사 자기모순 documented exception — blanket skip 이 아니라 기대잔차 박제. "
+                "적용전·적용후 두 컬럼 모두 박제값과 일치할 때만 차단집계에서 뺀다. 잔차가 움직이면 "
+                "면제가 깨지고 다시 RED."),
+        "registry": {f"{c}|{q}": pins for (c, q), pins in _LIFE8_ISSUER_INCONSISTENT.items()},
+        "pin_tolerance": _LIFE8_PIN_TOL,
+        "accepted": [{"code": c, "quarter": q} for c, q in sorted(life8_ok)],
+        "residual_recheck": [
+            {"code": c, "name": n, "quarter": q, "column": col,
+             "pinned": p, "actual": a, "delta": d}
+            for c, n, q, col, p, a, d in life8_detail
+        ],
+        "red": life8_red,
+        "review": life8_review,
+        "exempted_findings": {
+            "rule_8_life_적용전": [
+                {"code": f.get(KEY_CODE), "quarter": f.get(KEY_QUARTER), "diff": f.get("diff")}
+                for f in life8_exempt_findings
+            ],
+            "mmult_item17_적용후": [
+                {"code": c, "quarter": q, "name": n, "after": pv, "computed": ev}
+                for c, q, n, _p, pv, ev in mmult_exempted
+            ],
+        },
+    }
+
     fail_by_rule = Counter(f.get("rule") for f in findings if f.get("status") == "RED")
     print(f"K-ICS validation report: {out_path}")
     print(
         f"Status counts: RED={red} YELLOW={yellow} GREEN={by_status.get('GREEN', 0)} "
         f"SKIP={by_status.get('SKIP', 0)} ERROR={err}"
     )
+    if _LIFE8_ISSUER_INCONSISTENT:
+        print(f"  documented exception (발행사 자기모순, 잔차 박제): "
+              f"blocking RED={red_blocking} (= {red} − 8_life {len(life8_exempt_findings)}건) "
+              f"· 적용후 mmult item17 면제 {len(mmult_exempted)}건")
+        for c, n, q, col, p, a, d in life8_detail:
+            print(f"    {q} {c} {n} [{col}] 박제잔차={p} 실측={a} Δ={d:+} "
+                  f"(tol {_LIFE8_PIN_TOL}) → {'일치' if abs(d) <= _LIFE8_PIN_TOL else 'DRIFT'}")
+        for r in life8_red:
+            print(f"    RED [{r['rule']}] {r.get('quarter')} {r.get('code')}: {r.get('detail')}")
+        for r in life8_review:
+            print(f"    REVIEW [{r['rule']}] {r.get('quarter')} {r.get('code')}: {r.get('detail')}")
     print(
         f"Coverage census: regular_filers={census['regular_filers']} "
         f"median/q={census['median_filers_per_q']} "
@@ -997,22 +2496,67 @@ def main() -> int:
     else:
         print("item12=item1 셀밀림: 0")
     if mmult_mismatch:
-        print(f"적용후 mmult 불일치 (item17/19후 ≠ sqrt(세부후), RED): {len(mmult_mismatch)}")
+        print(f"적용후 mmult 불일치 (item15/17/19후 ≠ 계산값, 전사 39사, RED): {len(mmult_mismatch)}")
         for c, q, n, p, pv, ev in mmult_mismatch[:20]:
             print(f"    {q} {c} {n} item{p}후: 공시={pv} 계산={ev} → 적용후 세부 미정합")
     else:
-        print("적용후 mmult 불일치: 0")
+        print("적용후 mmult 불일치 (item15/17/19, 전사 39사): 0")
+    print(f"    [적용후 mmult 미판정 내역] {dict(sorted(mmult_skipped.items()))}")
+    if pmcp:
+        print(f"적용후 부모결측·세부present (mmult 미가동 = 세부후 무검사, review): {len(pmcp)}")
+        for c, q, n, p, np_, nt, d in pmcp[:20]:
+            print(f"    {q} {c} {n} item{p}후 결측인데 세부후 {np_}/{nt} present"
+                  + (f" · R5 역산 부모후≈{d}" if d is not None else " · 역산 앵커 없음"))
+    else:
+        print("적용후 부모결측·세부present (mmult 미가동): 0")
+    if mmult_unverifiable:
+        ucq = sorted({(c, q, n, tag) for c, q, n, _p, tag in mmult_unverifiable})
+        tc = Counter(tag for *_x, tag in mmult_unverifiable)
+        print(f"적용후 '후=전' 중 **원천 판독불가라 정당하다고 말할 수 없는** 칸: "
+              f"{len(mmult_unverifiable)}칸 / {len(ucq)}(회사,분기) {dict(tc)}")
+        print("    (종전엔 이 칸들이 '구조적으로 정당' 버킷에 섞여 있었다 — 확인한 게 아니라 못 읽은 것)")
+        for c, q, n, tag in ucq:
+            print(f"    {q} {c} {n} [{tag}] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음")
     if mmult_submissing:
         print(f"적용후 세부위험 추출갭 (부모후≠전인데 세부후 결측, review): {len(mmult_submissing)}")
+    if irr_after_fails:
+        print(f"적용후 36_irr 불일치 (item36후 ≠ 시나리오후 도출, 전사 39사, RED): {len(irr_after_fails)}")
+        for c, q, n, a, e in irr_after_fails[:20]:
+            print(f"    {q} {c} {n} item36후: 공시={a} 계산={e}")
+    else:
+        print("적용후 36_irr 불일치 (전사 39사): 0")
+    print(f"    [적용후 36_irr 미판정 내역] {dict(sorted(irr_after_skipped.items()))}")
+    if IRR_DERIVE_ISSUER_INCONSISTENT:
+        print(f"36_irr documented exception (재현식 미적용, 잔차 박제) {len(IRR_DERIVE_ISSUER_INCONSISTENT)}건 "
+              f"— 적용전·적용후 각각 재검산 (tol {IRR_PIN_TOL}):")
+        for c, n, q, col, p, a, d, verdict in irr_pin_detail:
+            print(f"    {q} {c} {n} [{col}] 박제잔차={p} 실측={a} Δ={d if d is None else f'{d:+}'} → {verdict}")
+        for r in irr_pin_review:
+            print(f"    REVIEW [{r['rule']}] {r.get('quarter')} {r.get('code')}: {r.get('detail')}")
     if after_ident_fails:
         ic = Counter(rule for _, _, _, rule, *_ in after_ident_fails)
-        print(f"적용후 항등식 위반 (적용사 R1/R2/R5/R6/R7/R8후 안 닫힘, RED): {len(after_ident_fails)} {dict(ic)}")
+        print(f"적용후 항등식 위반 (전사 39사 R1/R2/R5/R6/R7/R8후 안 닫힘, RED): {len(after_ident_fails)} {dict(ic)}")
         for c, q, n, rule, e, a, diff in after_ident_fails[:25]:
             print(f"    {q} {c} {n} [{rule}] 공시후={a} 계산후={e} diff={diff}")
         if len(after_ident_fails) > 25:
             print(f"    ... +{len(after_ident_fails) - 25} more")
     else:
-        print("적용후 항등식 위반: 0")
+        print("적용후 항등식 위반 (전사 39사): 0")
+    print(f"    [적용후 항등식 미판정 내역] {dict(sorted(after_ident_skipped.items()))}")
+    if taut_red_axes:
+        print(f"    ⚠ 위 '위반 0' 중 **동어반복으로 판정된 축은 증거가 아니다**: "
+              f"{sorted(f'{a}[{c}]' for a, c in taut_red_axes)} — 아래 동어반복 검사 참조")
+    if other_cap_fails:
+        cc = Counter(col for *_x, col, _t, _e, _k in other_cap_fails)
+        print(f"기타요구자본 분해 위반 (item23 ≠ item24+25+26, 전·후 양컬럼, RED): "
+              f"{len(other_cap_fails)} {dict(cc)}")
+        for c, q, n, col, tv, ev, kids in other_cap_fails[:25]:
+            print(f"    {q} {c} {n} [{col}] item23={tv} ≠ 24+25+26={ev} {list(kids)}")
+        if len(other_cap_fails) > 25:
+            print(f"    ... +{len(other_cap_fails) - 25} more")
+    else:
+        print("기타요구자본 분해 위반 (item23 = item24+25+26, 전·후 양컬럼): 0")
+    print(f"    [기타요구자본 미판정 내역] {dict(sorted(other_cap_skipped.items()))}")
     if after_incomplete:
         pc = Counter(p for _, _, p, _, _ in after_incomplete)
         PLBL = {15: "요구자본(16~21)", 17: "생명장기(29~35)", 19: "시장(36~40)"}
@@ -1050,6 +2594,119 @@ def main() -> int:
               f"가능, 비차단 review): {len(post_parent_review)}")
         for c, q, n, it, nb, k in post_parent_review:
             print(f"    {q} {c} {n} item{it}후 결측 [{k}] → 원천확인(단독=코어 break 없음)")
+    # ---- 메타룰: 축별 평가율 / 자기미러 (owner 2026-08-21) ----------------------------
+    print("축별 평가율 — 미러 3분류: 미적용사=정의상 동일(정상) / 적용사·해당종류 미신청=정상 / "
+          "적용사·신청=오염의심. 실질=평가−오염의심.")
+    print(f"    분모 '범위' = 그 축이 구조적으로 적용되는 (회사,분기) — `*` 표시는 전 버킷"
+          f"({axis_census[0]['buckets_all'] if axis_census else 0})보다 좁혀졌다는 뜻이다"
+          f"(36_irr=짝수분기 한정 · 적용후 순자산/시나리오=경과조치 비적용사 한정). "
+          f"좁힌 범위 안의 미평가 칸은 아래에 이름으로 인쇄된다:")
+    scope_gaps = [r for r in axis_census if r.get("scoped") and r.get("scope_missing_n")]
+    for r in scope_gaps:
+        cells = ", ".join(f"{c} {q}" for c, q in r["scope_missing"][:12])
+        print(f"      · {r['axis']} [{r['column']}] 범위 {r['buckets']} 중 미평가 "
+              f"{r['scope_missing_n']}건 — {cells}"
+              + (" ..." if r["scope_missing_n"] > 12 else ""))
+    if not scope_gaps:
+        print("      · 범위 제한 축 전부 잔여 미평가 0건")
+    for r in axis_census:
+        if r["grid"] == 0:
+            continue
+        rate = f"{100*r['rate']:5.1f}%" if r["rate"] is not None else "   n/a"
+        rall = f"{100*r['rate_all']:5.1f}%" if r["rate_all"] is not None else "   n/a"
+        eff = f"{100*r['effective_rate']:5.1f}%" if r["effective_rate"] is not None else "   n/a"
+        ind = f"{100*r['independent_rate']:5.1f}%" if r["independent_rate"] is not None else "   n/a"
+        flag = ""
+        if r["grid"] >= _AXIS_MIN_GRID and r["effective"] == 0:
+            flag = "  <<< RED 실질평가 0칸 (이 축의 'FAIL 0' 은 증거가 아니다)"
+        elif r["grid"] >= _AXIS_MIN_GRID and any(
+                r[k] is not None and r[k] < _AXIS_EVAL_RATE_FLOOR for k in ("rate", "rate_all")):
+            flag = f"  <<< REVIEW 평가율 {int(_AXIS_EVAL_RATE_FLOOR*100)}% 미만"
+        # 평가율이 100% 여도 그 축이 동어반복이면 판정 자체가 무의미하다 — 두 표시는 배타가 아니다.
+        if (r["axis"], r["column"]) in taut_red_axes:
+            flag += "  <<< 동어반복 (평가율과 무관하게 증거 아님)"
+        scope_tag = (f"{r['buckets']}*" if r.get("scoped") else f"{r['buckets']}")
+        print(f"    {r['axis']:<22s} {r['column']}  grid={r['grid']:>3}/{scope_tag:<5s} "
+              f"평가={r['evaluated']:>3}(grid {rate} · 범위 {rall})  "
+              f"미러[정의상 {r['mirror_nonapplier']:>3} · 정상 {r['mirror_applier_legit']:>3} · "
+              f"의심 {r['mirror_applier_suspect']:>2}]  면제={r['exempt']:>2}  "
+              f"실질={r['effective']:>3}({eff}) 독립={r['independent']:>3}({ind}){flag}")
+    if axis_mirror_red:
+        print(f"적용사 미러링 오염 — AXIS_SELF_MIRRORED_APPLIER (경과조치 신청 종류가 그 축을 "
+              f"움직여야 하는데 후=전, RED): {len(axis_mirror_red)}")
+        for f in axis_mirror_red[:30]:
+            print(f"    {f['quarter']} {f['code']} {f['axis']}[{f['column']}] "
+                  f"신청종류={f['kinds']} → 적용후가 적용전과 한 자리도 다르지 않음(복사 지문)")
+    else:
+        print("적용사 미러링 오염 (AXIS_SELF_MIRRORED_APPLIER): 0 "
+              "— 비적용사·비신청 적용사의 후=전은 정의/정상이라 세지 않는다")
+    if axis_red:
+        print(f"축 평가율 RED — AXIS_NOT_EVALUATED (실질 평가 0칸, blocking): {len(axis_red)}")
+        for r in axis_red:
+            why = ("계산된 칸이 전부 적용사 미러링 오염"
+                   if r["mirror_applier_suspect"] and r["mirror_applier_suspect"] == r["evaluated"]
+                   else "계산가능 칸 자체가 0")
+            print(f"    {r['axis']} [{r['column']}] grid={r['grid']} 평가={r['evaluated']} "
+                  f"오염의심={r['mirror_applier_suspect']} → {why}")
+    else:
+        print("축 평가율 RED (AXIS_NOT_EVALUATED): 0")
+    if axis_review:
+        print(f"축 평가율 REVIEW — AXIS_EVAL_RATE_LOW (<{int(_AXIS_EVAL_RATE_FLOOR*100)}%, 비차단): "
+              f"{len(axis_review)}")
+        for r in axis_review:
+            print(f"    {r['axis']} [{r['column']}] 평가 {r['evaluated']}칸 — "
+                  f"입력실재(grid {r['grid']}) 기준 {100*r['rate']:.1f}% / "
+                  f"구조범위({r['buckets']}) 기준 {100*r['rate_all']:.1f}% "
+                  f"(바닥 뚫은 분모: {r['low_on']}, 범위 내 미평가 {r['scope_missing_n']}건)")
+    # ---- 메타룰: 동어반복(IDENTITY_TAUTOLOGY) ------------------------------------------
+    print(f"항등식 동어반복 검사 — 잔차 '정확히 0' 비율 vs 반올림 귀무(Irwin–Hall). "
+          f"임계 excess≥{_TAUT_EXCESS_FLOOR} 및 z≥{_TAUT_Z_FLOOR} (둘 다, 실측 보정):")
+    for r in sorted(taut_census, key=lambda x: -(x["excess"] or 0)):
+        if r["n"] == 0:
+            print(f"    {r['axis']:<22s} {r['column']}  판정가능 0칸 "
+                  f"(퇴화 {r['degenerate']} · 입력결측 {r['incomplete']})  <<< UNDERPOWERED")
+            continue
+        mark = ""
+        if (r["axis"], r["column"]) in taut_red_axes:
+            mark = "  <<< RED 동어반복 — 이 축의 'FAIL 0' 은 증거가 아니다"
+        elif any(v["axis"] == r["axis"] and v["column"] == r["column"] for v in taut_review):
+            mark = "  <<< REVIEW"
+        print(f"    {r['axis']:<22s} {r['column']}  n={r['n']:>3}  "
+              f"정확0={r['zeros']:>3}({100*r['zero_rate']:5.1f}%)  귀무={100*r['null_rate']:5.1f}%  "
+              f"excess={r['excess']:4.2f}  z={r['z']:6.1f}  "
+              f"k_eff={r['k_eff_hist']}{mark}")
+    if taut_drift:
+        print(f"동어반복 축 정의 불일치 (TAUTOLOGY_AXIS_SPEC_DRIFT, RED): {len(taut_drift)}")
+        for d in taut_drift:
+            print(f"    {d['axis']}: {d['detail']}")
+    if taut_red:
+        print(f"동어반복 RED — IDENTITY_TAUTOLOGY (blocking): {len(taut_red)}")
+        for r in taut_red:
+            ex = ", ".join(f"{c} {q} r={v:+g}" for c, q, v in r["nonzero_examples"]) or "없음"
+            print(f"    {r['axis']} [{r['column']}] — {r['n']}칸 중 {r['zeros']}칸이 잔차 정확히 0 "
+                  f"({100*r['zero_rate']:.1f}%, 반올림 귀무 {100*r['null_rate']:.1f}%, "
+                  f"excess {r['excess']:.2f}, z {r['z']:.1f}). "
+                  f"**이 축이 통과해도 의미 없다** — 대상값이 입력으로부터 되맞춰져 있다. "
+                  f"0 아닌 잔차 표본: {ex}")
+    else:
+        print("동어반복 RED (IDENTITY_TAUTOLOGY): 0")
+    for r in taut_review:
+        print(f"    REVIEW [{r['rule']}] {r['axis']} [{r['column']}]: {r['why']} "
+              f"(n={r['n']}, excess={r['excess'] if r['excess'] is None else round(r['excess'], 2)}, "
+              f"z={r['z'] if r['z'] is None else round(r['z'], 1)})")
+    # ---- 메타룰: 면제 근거(provenance) ------------------------------------------------
+    if exempt_red or exempt_review:
+        rc = Counter(f["rule"] for f in exempt_red)
+        print(f"면제 근거(provenance) 검사: RED={len(exempt_red)} {dict(rc)} "
+              f"REVIEW={len(exempt_review)}")
+        for f in exempt_red:
+            print(f"    RED    [{f['rule']}] {f['registry']} {f.get('code')} {f.get('quarter')}: "
+                  f"{f['detail']}")
+        for f in exempt_review[:20]:
+            print(f"    REVIEW [{f['rule']}] {f['registry']} {f.get('code')} {f.get('quarter')}: "
+                  f"{f['detail']}")
+    else:
+        print("면제 근거(provenance) 검사: 전 면제 항목이 기계검증 가능한 인용을 갖고 있음")
     print("RED failures by rule:")
     for rule_id, cnt in sorted(fail_by_rule.items(), key=lambda x: (-x[1], x[0])):
         print(f"  rule {rule_id}: {cnt}")
@@ -1070,9 +2727,16 @@ def main() -> int:
                 f"actual={f.get('actual')} diff={f.get('diff')}"
             )
 
-    return 2 if (red > 0 or census_red > 0 or parent_child or partial_child
+    # `red_blocking` = 룰엔진 RED − documented exception(잔차 박제로 매 실행 재확인된 것만).
+    # 면제가 깨지면 `life8_red` 가 대신 차단한다 — 면제는 검사를 끄는 게 아니라 조건부로 미룬다.
+    return 2 if (red_blocking > 0 or census_red > 0 or parent_child or partial_child
                  or trans_after or item12_copy or mmult_mismatch or after_ident_fails
-                 or after_incomplete or div_negative or post_parent_red) else 0
+                 or irr_after_fails or other_cap_fails
+                 or after_incomplete or div_negative or post_parent_red
+                 # 메타룰(2026-08-21): 판정하지 않은 축·적용사 미러링 오염·근거 없는 면제는 '통과'가 아니다.
+                 or axis_red or axis_mirror_red or exempt_red or life8_red
+                 # 동어반복 축의 'FAIL 0' 도 통과가 아니다 — 되맞춘 값은 룰을 영원히 통과시킨다.
+                 or taut_red or taut_drift) else 0
 
 
 if __name__ == "__main__":

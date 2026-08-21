@@ -1,7 +1,7 @@
 [
   {
     "caption": "(6) 당분기말과 전분기말 현재 남아있는 보험계약마진의 향후 상각금액은 다음과 같습니다.<당분기말>",
-    "line_no": 20962,
+    "line_no": 21228,
     "score": 5,
     "form_type": "unknown",
     "reasons": [
@@ -92,11 +92,11 @@
       ]
     ],
     "footnotes": [],
-    "_source_xml": "20260515001370.xml"
+    "_source_xml": "20260529001425.xml"
   },
   {
     "caption": "(6) 당분기말과 전분기말 현재 남아있는 보험계약마진의 향후 상각금액은 다음과 같습니다.<당분기말>",
-    "line_no": 43231,
+    "line_no": 43497,
     "score": 5,
     "form_type": "unknown",
     "reasons": [
@@ -187,6 +187,6 @@
       ]
     ],
     "footnotes": [],
-    "_source_xml": "20260515001370.xml"
+    "_source_xml": "20260529001425.xml"
   }
 ]

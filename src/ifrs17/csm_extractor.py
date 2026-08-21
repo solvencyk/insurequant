@@ -94,7 +94,10 @@ def _text(el: etree._Element) -> str:
 
 _SUBCAPTION_PATTERNS = (
     re.compile(r"^\(?\d+\)?\s*(당기|전기|당기말|전기말)?(\s*\(.*\))?$"),
-    re.compile(r"^\d+\)\s*\d{4}년"),                # "1) 2024년 12월 31일 현재"
+    re.compile(r"^\(?\d+\)\s*\d{4}년"),              # "1) 2024년 12월 31일 현재" /
+                                                      # "(1) 2025년 12월 31일 현재" (KR0009
+                                                      # FY2025 필링, parser 2026-08-21,
+                                                      # inbox/parser/20260820T2210Z)
     re.compile(r"^[<\[]?\s*(당기|전기|당기말|전기말|당분기|전분기|당반기|전반기)\s*[>\]]?$"),
     re.compile(r"^[가나다라마바사아자차]\.\s*$"),
     re.compile(r"^[①②③④⑤⑥⑦⑧⑨⑩]"),
@@ -144,7 +147,9 @@ def _iter_tables_with_context(xml_path: Path) -> Iterable[ExtractedTable]:
     pending_footnotes: list[str] = []
 
     for el in root.iter():
-        tag = (el.tag or "").lower()
+        if not isinstance(el.tag, str):
+            continue  # skip Comment/PI nodes -- el.tag is a callable there, not a string
+        tag = el.tag.lower()
 
         if tag == "p":
             txt = _text(el)

@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260620T0600Z
-status: open
+status: resolved
 route: reparse
 company: KR0073 교보생명보험
 period: 2023.4Q, 2024.1Q, 2024.2Q

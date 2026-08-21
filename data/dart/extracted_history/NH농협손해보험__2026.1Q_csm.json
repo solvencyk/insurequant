@@ -1,7 +1,7 @@
 [
   {
     "caption": "(9) 당분기말 및 전기말 현재 보험계약마진의 기간별 손익 인식 예정액은 다음과 같습니다.",
-    "line_no": 14046,
+    "line_no": 15126,
     "score": 6,
     "form_type": "A",
     "reasons": [
@@ -41,11 +41,11 @@
       ]
     ],
     "footnotes": [],
-    "_source_xml": "20260515002230.xml"
+    "_source_xml": "20260529001870.xml"
   },
   {
     "caption": "(9) 당분기말 및 전기말 현재 보험계약마진의 기간별 손익 인식 예정액은 다음과 같습니다.",
-    "line_no": 14112,
+    "line_no": 15192,
     "score": 6,
     "form_type": "A",
     "reasons": [
@@ -85,6 +85,6 @@
       ]
     ],
     "footnotes": [],
-    "_source_xml": "20260515002230.xml"
+    "_source_xml": "20260529001870.xml"
   }
 ]

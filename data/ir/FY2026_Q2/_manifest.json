@@ -1,0 +1,175 @@
+{
+  "_meta": {
+    "period": "FY2026_Q2",
+    "stamp_utc": "2026-08-17T02:34:02.329369+00:00",
+    "source_count": 13,
+    "ok_count": 11,
+    "fail_count": 2,
+    "note": "reconstructed 2026-08-17 after a partial rerun clobbered the manifest; underlying files were never touched"
+  },
+  "results": [
+    {
+      "key": "KR0001",
+      "name": "메리츠화재해상보험",
+      "covers": [
+        "KR0001"
+      ],
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/KR0001_메리츠화재해상보험/MFG_202606(k).xlsx",
+      "bytes": 912905,
+      "ext": "xlsx",
+      "note": "reconstructed from disk (2026-08-17, manifest was clobbered by a partial rerun before the merge-fix)"
+    },
+    {
+      "key": "KR0008",
+      "name": "삼성화재해상보험",
+      "covers": [
+        "KR0008"
+      ],
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/KR0008_삼성화재해상보험/(KOR) SFMI 26.2Q_F.xlsx",
+      "bytes": 1709251,
+      "ext": "xlsx",
+      "note": "reconstructed from disk (2026-08-17, manifest was clobbered by a partial rerun before the merge-fix)"
+    },
+    {
+      "key": "KR0009",
+      "name": "현대해상",
+      "covers": [
+        "KR0009"
+      ],
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/KR0009_현대해상/f3ddeb4fbc9183173b0cdf458e6b61a7.xlsx",
+      "bytes": 221900,
+      "ext": "xlsx",
+      "note": "reconstructed from disk (2026-08-17, manifest was clobbered by a partial rerun before the merge-fix)"
+    },
+    {
+      "key": "KR0010",
+      "name": "KB금융그룹",
+      "covers": [
+        "KR0010",
+        "KR0099"
+      ],
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/KR0010_KB금융그룹/KR0010_KB금융그룹.xlsx",
+      "bytes": 1513668,
+      "ext": "xlsx",
+      "note": "reconstructed from disk (2026-08-17, manifest was clobbered by a partial rerun before the merge-fix)"
+    },
+    {
+      "key": "KR0011_factsheet",
+      "name": "DB손해보험_factsheet",
+      "covers": [
+        "KR0011",
+        "KR0082"
+      ],
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/KR0011_factsheet_DB손해보험_factsheet/KR0011_factsheet_DB손해보험_factsheet.xlsx",
+      "bytes": 665476,
+      "ext": "xlsx",
+      "note": "reconstructed from disk (2026-08-17, manifest was clobbered by a partial rerun before the merge-fix)"
+    },
+    {
+      "key": "KR0051",
+      "name": "신한금융그룹",
+      "covers": [
+        "KR0051",
+        "KR0094"
+      ],
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/KR0051_신한금융그룹/KR0051_신한금융그룹.xlsx",
+      "bytes": 2338276,
+      "ext": "xlsx",
+      "note": "reconstructed from disk (2026-08-17, manifest was clobbered by a partial rerun before the merge-fix)"
+    },
+    {
+      "key": "KR0032",
+      "name": "농협금융지주",
+      "covers": [
+        "KR0032",
+        "KR0104"
+      ],
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/KR0032_농협금융지주/NHFG Factbook 1H26.xlsx",
+      "bytes": 2608644,
+      "ext": "xlsx",
+      "note": "reconstructed from disk (2026-08-17, manifest was clobbered by a partial rerun before the merge-fix)"
+    },
+    {
+      "key": "KR0068",
+      "name": "한화생명",
+      "covers": [
+        "KR0068"
+      ],
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/KR0068_한화생명/1H26 HLI FactSheet(KOR).xlsx",
+      "bytes": 5208450,
+      "ext": "xlsx",
+      "note": "reconstructed from disk (2026-08-17, manifest was clobbered by a partial rerun before the merge-fix)"
+    },
+    {
+      "key": "KR0079",
+      "name": "미래에셋생명",
+      "covers": [
+        "KR0079"
+      ],
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/KR0079_미래에셋생명/2026+Q2+FactSheet_Kr.xlsx",
+      "bytes": 6272405,
+      "ext": "xlsx",
+      "note": "reconstructed from disk (2026-08-17, manifest was clobbered by a partial rerun before the merge-fix)"
+    },
+    {
+      "key": "KR0087",
+      "name": "동양생명",
+      "covers": [
+        "KR0087"
+      ],
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/raw/KR0087_동양생명/(TYL)+FY2026.1H+Factsheet.xlsx",
+      "bytes": 232744,
+      "ext": "xlsx",
+      "note": "reconstructed from disk (2026-08-17, manifest was clobbered by a partial rerun before the merge-fix)"
+    },
+    {
+      "key": "KR1000",
+      "name": "코리안리재보험",
+      "mode": "two_step_direct_url",
+      "covers": [
+        "KR1000"
+      ],
+      "started_at": 1786934018.360701,
+      "status": "fail",
+      "error": "Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://koreanre.co.kr/sub.asp?maincode=503&sub_sequence=551&sub_sub_sequence=552&exec=list&strBoardID=kui_552\nCall log:\n  - navigating to \"https://koreanre.co.kr/sub.asp?maincode=503&sub_sequence=551&sub_sub_sequence=552&exec=list&strBoardID=kui_552\", waiting until \"domcontentloaded\"\n",
+      "screenshot": "data/ir/FY2026_Q2/_failures/KR1000_failure.png",
+      "html_dump": "data/ir/FY2026_Q2/_failures/KR1000_failure.html",
+      "elapsed_s": 9.84
+    },
+    {
+      "key": "KR0069",
+      "name": "삼성생명",
+      "mode": "click_dl",
+      "covers": [
+        "KR0069"
+      ],
+      "started_at": 1786934028.4167006,
+      "status": "ok",
+      "path": "data/ir/FY2026_Q2/KR0069_삼성생명/SLI 1HFY26 Factsheet_KOR.xlsx",
+      "src_url": "https://www.samsunglife.com/dcms/upload/2026/08/13/SLI%201HFY26%20Factsheet_KOR.xlsx",
+      "bytes": 798959,
+      "ext": "xlsx",
+      "suggested_filename": "SLI 1HFY26 Factsheet_KOR.xlsx",
+      "elapsed_s": 13.14
+    },
+    {
+      "key": "KR0003",
+      "name": "롯데손해보험",
+      "covers": [
+        "KR0003"
+      ],
+      "status": "fail",
+      "error": "WAF block (Web firewall security policies) -- confirmed via script + manual browser, no bypass attempted"
+    }
+  ]
+}

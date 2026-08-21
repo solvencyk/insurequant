@@ -1,99 +1,79 @@
 {
-  "generated_at": "20260703T123239Z",
-  "insurers": 1,
+  "generated_at": "20260819T083523Z",
+  "insurers": 10,
   "periods": [
-    "2023.1Q",
-    "2023.2Q",
-    "2023.3Q",
-    "2023.4Q",
-    "2024.1Q",
-    "2024.2Q",
-    "2024.3Q",
-    "2024.4Q",
-    "2025.1Q",
-    "2025.2Q",
-    "2025.3Q",
-    "2025.4Q",
-    "2026.1Q"
+    "2023.1Q"
   ],
   "results": [
     {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
+      "insurer_code": "KR0082",
+      "canonical": "DB생명보험",
       "period": "2023.1Q",
-      "status": "no_filing"
+      "rcept_no": "20230515002932",
+      "status": "fetched"
     },
     {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2023.2Q",
-      "status": "no_filing"
+      "insurer_code": "KR0099",
+      "canonical": "케이비라이프생명보험",
+      "period": "2023.1Q",
+      "rcept_no": "20230515002204",
+      "status": "fetched"
     },
     {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2023.3Q",
-      "status": "no_filing"
+      "insurer_code": "KR0010",
+      "canonical": "KB손해보험",
+      "period": "2023.1Q",
+      "rcept_no": "20230515001575",
+      "status": "fetched"
     },
     {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2023.4Q",
-      "status": "no_filing"
+      "insurer_code": "KR0032",
+      "canonical": "NH농협손해보험",
+      "period": "2023.1Q",
+      "rcept_no": "20230515002460",
+      "status": "fetched"
     },
     {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2024.1Q",
-      "status": "no_filing"
+      "insurer_code": "KR0104",
+      "canonical": "농협생명보험",
+      "period": "2023.1Q",
+      "rcept_no": "20230515002904",
+      "status": "fetched"
     },
     {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2024.2Q",
-      "status": "no_filing"
+      "insurer_code": "KR0001",
+      "canonical": "메리츠화재해상보험",
+      "period": "2023.1Q",
+      "rcept_no": "20230515002118",
+      "status": "fetched"
     },
     {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2024.3Q",
-      "status": "no_filing"
+      "insurer_code": "KR0069",
+      "canonical": "삼성생명",
+      "period": "2023.1Q",
+      "rcept_no": "20230515002761",
+      "status": "fetched"
     },
     {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2024.4Q",
-      "status": "no_filing"
+      "insurer_code": "KR0094",
+      "canonical": "신한라이프생명보험",
+      "period": "2023.1Q",
+      "rcept_no": "20230515002845",
+      "status": "fetched"
     },
     {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2025.1Q",
-      "status": "no_filing"
+      "insurer_code": "KR0083",
+      "canonical": "푸본현대생명보험",
+      "period": "2023.1Q",
+      "rcept_no": "20230515002882",
+      "status": "fetched"
     },
     {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2025.2Q",
-      "status": "no_filing"
-    },
-    {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2025.3Q",
-      "status": "no_filing"
-    },
-    {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2025.4Q",
-      "status": "no_filing"
-    },
-    {
-      "insurer_code": "KR1011",
-      "canonical": "아이비케이연금보험",
-      "period": "2026.1Q",
-      "status": "no_filing"
+      "insurer_code": "KR0071",
+      "canonical": "흥국생명보험",
+      "period": "2023.1Q",
+      "rcept_no": "20230515002959",
+      "status": "fetched"
     }
   ]
 }

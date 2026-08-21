@@ -2,7 +2,7 @@
 from: owner
 to: designer
 created: 20260616T0506Z
-status: answered
+status: resolved
 route: backlog
 company: MULTI
 period: ALL

@@ -1,16 +1,183 @@
 {
-  "_description": "Owner-verified PL_breakdown / CSM_waterfall cells. Values the owner has hand-fixed or explicitly confirmed-as-correct. The anomaly triage (scripts/triage_anomaly_candidates.py) suppresses these so the LLM-skeptic never re-flags them as EXTRACTION_ERROR. Match key = (master, company, item) with whitespace-insensitive item compare; `value` is the confirmed live value — suppression only applies while the master still matches it within tolerance, so a later drift re-surfaces. Add a cell here whenever the owner confirms a statistically-odd-but-correct value.",
+  "_description": "Owner-verified PL_breakdown / CSM_waterfall cells. Values the owner has hand-fixed or explicitly confirmed-as-correct. The anomaly triage (scripts/triage_anomaly_candidates.py) suppresses these so the LLM-skeptic never re-flags them as EXTRACTION_ERROR. Match key = (master, company, item) with whitespace-insensitive item compare; `value` is the confirmed live value — suppression only applies while the master still matches it within tolerance, so a later drift re-surfaces. Add a cell here whenever the owner confirms a statistically-odd-but-correct value. | 2026-08-20: IFRS17_BS 법정준비금(항목5~8) legit-zero 도 같은 레지스트리로 면제한다 — 회사가 기적립액 전액을 환입예정으로 상계해 잔액이 정말 0인 케이스. R-RSV-6(ZERO_AFTER_NONZERO)가 이 셀들을 재플래그하지 않게 한다.",
   "tolerance_abs": 2.0,
   "tolerance_rel": 0.01,
   "cells": [
-    {"master": "PL_breakdown", "company": "코리안리재보험", "quarter": "2026.1Q", "item": "기타생명장기재보험손익", "value": -11817, "note": "owner: 중복43 → 실값 −11817 직접 수정 (2026-06-20)"},
-    {"master": "PL_breakdown", "company": "코리안리재보험", "quarter": "2026.1Q", "item": "기타장기재보험출재손익", "value": 43, "note": "owner: 출재 leg 43 확정 (소계 −2178 닫힘) (2026-06-20)"},
-    {"master": "PL_breakdown", "company": "삼성화재해상보험", "quarter": "2026.1Q", "item": "자동차손익", "value": -40, "note": "owner: 자동차손익 △40 실값 확정 (소규모지만 misparse 아님) (2026-06-20)"},
-    {"master": "PL_breakdown", "company": "신한이지손해보험", "quarter": "2024.4Q", "item": "보험금융손익", "value": -2328.748444, "note": "owner: 보험금융손익 직접 수정 (2026-06-20)"},
-    {"master": "PL_breakdown", "company": "신한이지손해보험", "quarter": "2025.4Q", "item": "보험금융손익", "value": 0, "note": "owner: 보험금융손익 0 확정 (2026-06-20)"},
-    {"master": "PL_breakdown", "company": "IBK연금보험", "quarter": "2024.4Q", "item": "생명장기재보험손익", "value": 0, "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정. 재보험 5개 leg 전부 0 + 원수분해 정확히 닫힘(원수CSM상각+위험조정−예실차−기타=생명장기원수손익) (2026-07-05)"},
-    {"master": "PL_breakdown", "company": "IBK연금보험", "quarter": "2024.4Q", "item": "기타생명장기재보험손익", "value": 0, "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정 (2026-07-05)"},
-    {"master": "PL_breakdown", "company": "IBK연금보험", "quarter": "2025.4Q", "item": "생명장기재보험손익", "value": 0, "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정 (2026-07-05)"},
-    {"master": "PL_breakdown", "company": "IBK연금보험", "quarter": "2025.4Q", "item": "기타생명장기재보험손익", "value": 0, "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정 (2026-07-05)"}
+    {
+      "master": "PL_breakdown",
+      "company": "코리안리재보험",
+      "quarter": "2026.1Q",
+      "item": "기타생명장기재보험손익",
+      "value": -11817,
+      "note": "owner: 중복43 → 실값 −11817 직접 수정 (2026-06-20)"
+    },
+    {
+      "master": "PL_breakdown",
+      "company": "코리안리재보험",
+      "quarter": "2026.1Q",
+      "item": "기타장기재보험출재손익",
+      "value": 43,
+      "note": "owner: 출재 leg 43 확정 (소계 −2178 닫힘) (2026-06-20)"
+    },
+    {
+      "master": "PL_breakdown",
+      "company": "삼성화재해상보험",
+      "quarter": "2026.1Q",
+      "item": "자동차손익",
+      "value": -40,
+      "note": "owner: 자동차손익 △40 실값 확정 (소규모지만 misparse 아님) (2026-06-20)"
+    },
+    {
+      "master": "PL_breakdown",
+      "company": "신한이지손해보험",
+      "quarter": "2024.4Q",
+      "item": "보험금융손익",
+      "value": -2328.748444,
+      "note": "owner: 보험금융손익 직접 수정 (2026-06-20)"
+    },
+    {
+      "master": "PL_breakdown",
+      "company": "신한이지손해보험",
+      "quarter": "2025.4Q",
+      "item": "보험금융손익",
+      "value": 0,
+      "note": "owner: 보험금융손익 0 확정 (2026-06-20)"
+    },
+    {
+      "master": "PL_breakdown",
+      "company": "IBK연금보험",
+      "quarter": "2024.4Q",
+      "item": "생명장기재보험손익",
+      "value": 0,
+      "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정. 재보험 5개 leg 전부 0 + 원수분해 정확히 닫힘(원수CSM상각+위험조정−예실차−기타=생명장기원수손익) (2026-07-05)"
+    },
+    {
+      "master": "PL_breakdown",
+      "company": "IBK연금보험",
+      "quarter": "2024.4Q",
+      "item": "기타생명장기재보험손익",
+      "value": 0,
+      "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정 (2026-07-05)"
+    },
+    {
+      "master": "PL_breakdown",
+      "company": "IBK연금보험",
+      "quarter": "2025.4Q",
+      "item": "생명장기재보험손익",
+      "value": 0,
+      "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정 (2026-07-05)"
+    },
+    {
+      "master": "PL_breakdown",
+      "company": "IBK연금보험",
+      "quarter": "2025.4Q",
+      "item": "기타생명장기재보험손익",
+      "value": 0,
+      "note": "owner: 연금보험사 무재보험 → 재보험 leg=0 legit 확정 (2026-07-05)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "케이디비생명보험",
+      "quarter": "2025.1Q",
+      "item": "보증준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20: raw 원문 '보증준비금 기적립액 2,913 / 환입 예정 금액 (2,913) / 보증준비금 잔액 -' — 기적립액 전액을 환입예정으로 상계해 잔액 0. 진짜 0 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "케이디비생명보험",
+      "quarter": "2025.2Q",
+      "item": "보증준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20: raw 원문 '보증준비금 기적립액 2,913 / 환입 예정 금액 (2,913) / 보증준비금 잔액 -' — 기적립액 전액을 환입예정으로 상계해 잔액 0. 진짜 0 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "케이디비생명보험",
+      "quarter": "2025.3Q",
+      "item": "보증준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20: raw 원문 '보증준비금 기적립액 2,913 / 환입 예정 금액 (2,913) / 보증준비금 잔액 -' — 기적립액 전액을 환입예정으로 상계해 잔액 0. 진짜 0 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "케이디비생명보험",
+      "quarter": "2025.4Q",
+      "item": "보증준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20: raw 원문 '보증준비금 기적립액 2,913 / 환입 예정 금액 (2,913) / 보증준비금 잔액 -' — 기적립액 전액을 환입예정으로 상계해 잔액 0. 진짜 0 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "케이디비생명보험",
+      "quarter": "2026.1Q",
+      "item": "보증준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20: raw 원문 '보증준비금 기적립액 2,913 / 환입 예정 금액 (2,913) / 보증준비금 잔액 -' — 기적립액 전액을 환입예정으로 상계해 잔액 0. 진짜 0 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "케이디비생명보험",
+      "quarter": "2026.2Q",
+      "item": "보증준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20: raw 원문 '보증준비금 기적립액 2,913 / 환입 예정 금액 (2,913) / 보증준비금 잔액 -' — 기적립액 전액을 환입예정으로 상계해 잔액 0. 진짜 0 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "하나생명보험",
+      "quarter": "2024.4Q",
+      "item": "대손준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20: raw 원문 '대손준비금 기적립액 / 대손준비금 환입예정액 / 대손준비금 잔액  -  -' — 당기·전기 모두 잔액 0. 진짜 0 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "하나생명보험",
+      "quarter": "2024.4Q",
+      "item": "보증준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20: 하나생명 보증준비금도 대손과 동일한 3행 표 형태(잔액 '-'). 진짜 0 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "하나생명보험",
+      "quarter": "2025.4Q",
+      "item": "대손준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20: raw 원문 '대손준비금 기적립액 / 대손준비금 환입예정액 / 대손준비금 잔액  -  -' — 당기·전기 모두 잔액 0. 진짜 0 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "하나생명보험",
+      "quarter": "2025.4Q",
+      "item": "보증준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20: 하나생명 보증준비금도 대손과 동일한 3행 표 형태(잔액 '-'). 진짜 0 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "삼성생명보험",
+      "quarter": "2024.4Q",
+      "item": "보증준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20 (owner 승인 20260820): raw 원문 FY2024_Q4 20250312001063 '③ 보증준비금의 내역' — 기 적립액 12,297 / 적립(환입) 예정액 (12,297) / 잔액 0. FY2025_Q4 20260311004614 은 기적립액 0 / 예정액 0 / 잔액 0 으로 명시. 기적립액 전액을 환입예정으로 상계해 잔액 0인 정상 케이스 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "삼성생명보험",
+      "quarter": "2025.4Q",
+      "item": "보증준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20 (owner 승인 20260820): raw 원문 FY2024_Q4 20250312001063 '③ 보증준비금의 내역' — 기 적립액 12,297 / 적립(환입) 예정액 (12,297) / 잔액 0. FY2025_Q4 20260311004614 은 기적립액 0 / 예정액 0 / 잔액 0 으로 명시. 기적립액 전액을 환입예정으로 상계해 잔액 0인 정상 케이스 (R-RSV-6 면제)"
+    },
+    {
+      "master": "IFRS17_BS",
+      "company": "푸본현대생명보험",
+      "quarter": "2023.4Q",
+      "item": "대손준비금 적립액",
+      "value": 0,
+      "note": "validation 2026-08-20 (owner 승인 20260820): raw 원문 FY2023_Q4 20240329002122 '(7) 대손준비금' — 기적립액 47,622 / 적립(환입) 예정액 (47,622) / 잔액 '-'. 같은 필링이 결손금 (458,471) 상태라 미처리결손금 처리 전까지 적립 중단 (R-RSV-6 면제)"
+    }
   ]
 }

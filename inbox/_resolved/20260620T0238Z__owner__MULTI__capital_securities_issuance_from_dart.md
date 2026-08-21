@@ -2,7 +2,7 @@
 from: owner
 to: parser
 created: 20260620T0238Z
-status: open
+status: resolved
 route: parse
 company: MULTI
 period: 2023.4Q~2026.1Q

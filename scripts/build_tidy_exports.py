@@ -55,6 +55,11 @@ DART_NAME_TO_KICS = {
     "미래에셋생명": "미래에셋생명보험",
     "코리안리": "코리안리재보험",
     "케이비라이프생명보험": "KB라이프생명",
+    # 2026-08-20: 상각 패널을 FY2025 로 갱신하면서 이 3사가 새로 들어왔는데 DART 등록명이
+    # K-ICS 원수사명과 달라 `원보험사코드`가 null 인 행이 30개 생겼다(다운스트림 조인 깨짐).
+    "아이비케이연금보험": "IBK연금보험",
+    "에이아이지손해보험": "AIG손해보험",
+    "엠지손해보험": "예별손해보험",      # KR0004, 구 MG손해보험 -> 예별손해보험으로 사명 변경
 }
 
 # kics_disclosure.json에 없는 회사(감사보고서-only 등)의 (코드, 티커, 생손보) fallback.
@@ -167,9 +172,23 @@ for c in ni.get("companies", []):
         if abs(recon - vals[1]) <= max(50.0, abs(vals[1]) * 0.02):
             pl_tie += 1
 
+# ⚠ **통짜 실행은 파괴적일 수 있다.** `CSM_waterfall.json` 은 여기서
+# `data/dart/viz/csm_waterfall_history.json`(진단용 히스토리 캐시)로부터 재생성되는데, 그
+# 진단 파일이 root 마스터보다 낡은 상태로 오래 방치돼 있다(open 티켓
+# inbox/parser/20260616T0230Z: root 마스터가 옳고 진단 파일이 그걸 못 따라간다). 그 상태에서
+# 이 스크립트를 통짜로 돌리면 **정상 root 마스터가 옛값으로 되돌아간다.** 그래서 산출물을
+# 골라 쓸 수 있게 `--only` 를 둔다. 기존 동작(인자 없음 = 3개 전부)은 그대로다.
+_ONLY = {a for a in sys.argv[1:] if not a.startswith("-")} if "--only" in sys.argv else None
+_WRITE = {
+    "waterfall": ("CSM_waterfall.json", wf_rows),
+    "amort": ("CSM_amortization.json", am_rows),
+    "pl": ("PL_breakdown.json", pl_rows),
+}
 print("building tidy exports:")
-W("CSM_waterfall.json", wf_rows)
-W("CSM_amortization.json", am_rows)
-W("PL_breakdown.json", pl_rows)
+for _k, (_name, _rows) in _WRITE.items():
+    if _ONLY is not None and _k not in _ONLY:
+        print(f"  skipped {_name} (--only {' '.join(sorted(_ONLY))})")
+        continue
+    W(_name, _rows)
 print(f"  PL 검증 (보험손익 = 장기+자동차+일반+기타영업수익−기타사업비용): {pl_tie}/{pl_total} tie")
 print(f"meta matched companies: {len(META)} in kics master")

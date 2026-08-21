@@ -1,6 +1,6 @@
 ---
 from: owner
-to: publishing
+to: parser
 created: 20260612T0900Z
 status: resolved
 route: backlog
@@ -10,42 +10,119 @@ rule: BACKLOG_DIGEST
 iter: 1
 ---
 
-> **RESOLVED 2026-06-16 (publishing):** 모든 decision-free 항목 완료 — 🔴-1(rate-sens)·🔴-2(kics_disclosure 배포 dbbb096)·🔴-3(xlsx)·🟠-4/5(bubble)·🟠-6(V7 gate). 잔여 **🟡-7/8/9는 upstream-gated**(F17 Tier2=parser / F18 IR=parser·downloader / F13 재보험=downloader F8 / F4 v2=Cat C/D 리서치) — `TODO_publishing.md` "Open work"에 추적. 이 digest의 triage 목적 소진.
-
 ## 미결 (sender 작성)
 
-**owner 백로그 다이제스트 (2026-06-12 전수 점검) — publishing inbox 신설 첫 메시지.**
-상세는 `TODO_publishing.md` 해당 ID. (리마인드: push는 추천만, 실행은 사람.)
+**owner 백로그 다이제스트 (2026-06-12 전수 점검).** 상세는 `TODO_parser.md` + 아래 신규 2건.
 
-### 🔴 즉시 — 커밋 번들 추천 작성
-1. **금리민감도 feature 일괄**: `kics_rate_sensitivity.json`(435행, RS게이트 RED=0) +
-   `extract_kics_rate_sensitivity.py` + `validate_kics_rate_sensitivity.py` + diag/validation JSON +
-   K-ICS.html 민감도 패널(designer 완료분) + 스펙 `docs/agents/kics-rate-sensitivity-spec.md`.
-   feature 단위 커밋 메시지·파일 리스트 추천안 작성 → 사람 승인 대기.
-2. **kics_disclosure.json 정정분**: KR0104 후레그 복사적재 정정 + KR0008 2025.3Q 후분해/item1후 오타
-   정정 + `recalc_kics_derived.py` 공식수정 + item28후 62셀 재유도. 게이트 RED=2(기존 OCR만) 확인됨.
-3. **`insurequant_master_tables.xlsx` 재생성 확인** (`python scripts/build_master_xlsx.py`) — 마스터
-   JSON 갱신 시 필수 룰. 신규 `kics_rate_sensitivity` 시트 포함 여부 결정 포함.
+### 🔴 신규-1 — 시장위험 하위(item36-40) 추가 backfill (owner xlsx 작업 중 발견)
 
-### 🟠 착수 가능
-4. **INDEX-BUBBLE-V2 4축 빌더**: X=당기순이익(net_income_breakdown.json, Tier1 28사 존재) ×
-   Y=CSM잔액 × size=신계약CSM × color=배수(csm_bubble.json 존재). join 빌더 신규 → ECharts spec은
-   designer 핸드오프.
-5. **INDEX-IFRS17-BUBBLE 완성도**: 27/28 (코리안리 N/A) 데이터 파이프라인 점검.
-6. **V7 gate enforcement** (validation→publishing 이관 항목): NB_CSM_DART_VS_IR RED 시 어셈블 차단
-   로직이 publishing 플로우에 실제로 걸려있는지 확인.
+owner가 md_inbox 전수 스캔(`scripts/_probes/_scan_market_subs_source.py` 실행 재현 가능):
+**소스 MD에 5종 세부표(자산집중위험 행) 있는데 JSON 미적재**인 (사,분기) — Phase-2가 놓친 잔여:
 
-### 🟡 대기 (선행조건)
-7. F17 Tier2 LOB 어셈블 — parser F17 결정 대기. / F18 IR 통합 — parser `data/ir/<period>/parsed/` 대기.
-8. F13 재보험 지표 — downloader F8(knia consumer) 대기.
-9. F4 v2 — Cat C/D 리서치(자본성증권 carrying value 정의) 후 over/under_deduct 재정의.
+- 하나손해(KR0050): 2024.1Q~2025.4Q **8분기** — 표가 `<!-- image -->`로 분단된 레이아웃
+  (FY2025_Q4 MD 578~588행: 시장위험액 76,839 | 금리 30,358 / 주식 62,491 / 부동산 2,643 / 외환 12,483 / 자산집중 5,251, 백만원)
+- 현대해상(KR0009): 2023.4Q, 2024.2Q, 2024.4Q, 2025.2Q, 2025.4Q (concat-cell 회사)
+- 삼성화재(KR0008): 2023.2Q, 2023.4Q, 2024.2Q, 2025.2Q / 메리츠(KR0001): 2023.4Q, 2024.2Q, 2025.2Q
+- DB손해(KR0011): 2023.4Q, 2024.2Q, 2025.4Q / 코리안리(KR1000): 2023.4Q, 2024.4Q, 2025.2Q, 2025.4Q
+- 악사(KR0049): 2024.2Q, 2024.4Q, 2025.2Q, 2025.4Q / NH농협손보(KR0032): 2023.4Q, 2024.2Q
+- AIG(KR0029) 2025.4Q / 신한이지(KR0051) 2025.2Q / 서울보증(KR0150) 2025.4Q / 카카오페이(KR1098) 2023.3Q, 2025.4Q
 
-## 답변 (recipient 작성 — 처리 후)
+도구: `fill_market_subs_from_pdf.py`(words-coordinate 전략 추가 = TODO_parser Phase-2 잔여와 동일 축)
+또는 MD 분단표 합치기. **게이트: 19_market 행렬합 rel<2%** 통과분만 적재. 생보도 동일 스캔 후 일괄 권장.
 
-- [x] **🔴-1 금리민감도 feature 커밋 묶음** — 완료 (commit `f8bb6ff`, fix/csm-product-segmented-columns). 8파일(master+gold+diag/validation+추출/검증/gold스크립트+spec). RS게이트 RED=0 확인. K-ICS.html 드롭다운 helper는 designer 소관이라 제외(→designer manual_html_edit). 리포트: artifacts/publishing/ratesens_feature_20260614T073954Z.md. **push는 owner GO 대기.**
-- [x] **🔴-2 kics_disclosure.json 정정분** — 배포 완료(2026-06-16 `dbbb096`). 정정분 + 예별 13Q 백필 포함, K-ICS 게이트 RED=24 전부 documented. origin/main 라이브.
-- [x] **🔴-3 master xlsx 재생성** — 완료(2026-06-16, xlsx skill 채택 발주 `20260616T0043Z` 첫 적용). master JSON 2건 신규(kics_disclosure/rate_sensitivity) → `build_master_xlsx.py` 재생성, 7시트 한글 무결, CSM워터폴 1,926행 유지. untracked 빌드물이라 미배포.
-- [x] **🟠-4 INDEX-BUBBLE-V2** — 폐기(완결). 버블맵은 3축으로 main 라이브 완결(X=신계약CSM·Y=NB배수·크기=기말CSM). 4축 재설계 불필요(owner 2026-06-14). TODO 정리 완료.
-- [x] **🟠-5 INDEX-IFRS17-BUBBLE** — 완결(위와 동일 차트). IFRS17-CSM-BUBBLE 도 흡수 완결.
-- [x] **🟠-6 V7 gate enforcement** — 조사 완료(2026-06-16). **결론: NB_CSM_DART_VS_IR RED는 publishing 어셈블을 차단하지 않음 — 전용 차단이 어디에도 미배선.** 3층 확인: (1) `build_root_masters.py` 검증게이트 전무(diag→마스터 무조건 빌드); (2) V7 도구 `check_nb_csm_widespread.py`·`check_nb_csm_history.py` **소스 둘 다 부재(.pyc만)**, 파이프라인 미호출, `validate_master_tables.py` 미포함, validation_report.json 0건; (3) publishing §3.1 게이트는 generic("validation subagent report summary.red==0→else BLOCKED")이라 V7가 그 리포트에 올라오면 이미 차단 가능. **판정: publishing 코드 갭 아님 = validation 측 배선 갭.** V7는 parser-loopback 설계 + V1으로 retire 예정이라 전용 게이트 신설 비권장. 갭은 validation inbox로 발주(`20260616T0100Z__publishing__MULTI__v7_gate_enforcement_findings`). publishing 무코드(체크리스트 1줄만).
-- [ ] 🟡-7/8/9 — upstream 대기(미착수).
+### 🔴 신규-2 — 생보 경과조치 적용후 요구자본(item14후/15후) 적재 (owner xlsx #3 블로커)
+
+경과조치 적용사(후 비율≠전 비율 공시)인데 item14후 미적재 + item15후 유도값이 공시 비율과 불일치하는
+생보 20건 — **원천 MD [경과조치 전|후] 표에서 item14후(나.지급여력기준금액 후)를 직접 적재**해야 함:
+- ABL(KR0070): 2025.1Q/2Q/4Q · 푸본현대(KR0083): 2023.3Q~2025.3Q 9개 분기
+- iM라이프(KR0076): 2024.4Q~2025.4Q 4개 분기 · IBK연금(KR1011): 2025.4Q
+- 농협생명(KR0104): 2024.4Q, 2025.2Q, 2025.3Q
+(이들은 item15후−22+23 유도가 공시 item27후와 5%p+ 어긋남 — 22/23 후값 차이 의심. 검증식:
+적재 후 `(2후+3후)/14후×100 ≈ item27후` ±0.6%p.)
+추가 확인 6건(적용사인데 14후·15후 둘 다 없음): 한화생명 2025.2Q / 삼성생명 2025.1Q / 동양 2025.2Q /
+iM 2023.1Q / 처브 2024.3Q. 완료 시 owner가 xlsx 채움 마무리함.
+
+### 🟠 기존 잔여 (TODO_parser ID 참조)
+- V9 큐: 메트라이프 영업이익 등식 2분기 / 코리안리 crosscheck 2F(상각 1y lag 의심) / 동양 2025.3Q zleg /
+  현대 예실차 2분기·롯데 2025.2Q·악사 zleg 핸들러 / 아이엠라이프 배수 정식 빌더 핸들러
+- V7 큐: 롯데 FY2025 NB 구성요소 표 capture / **history 빌더 off-by-one-year 회귀 수정 후 재빌드** /
+  한화손해 2025.1Q NB stale carryover
+- PL Tier-2: 동양(2024.x)·케이디비(2025.x) 재보 CSM상각/RA / 하나생명 투자손익 / 교보플래닛 legit-absent 확인
+- **FY2026_Q1 K-ICS PDF→MD docling** (`data/disclosure/FY2026_Q1/raw/` → md_inbox) → 금리민감도·시장하위
+  추출기 재실행으로 흡수
+- 🟢 low: IRR 직접형 15건 별도 스키마 / KB손해 image-only OCR 경로 / 삼성생명 FY23 구판 factsheet 레이아웃
+
+### ⏸ owner 결정 대기 (작업 금지, 재상기용)
+- 코리안리(KR1000) FY2025 CSM basis A/B (escalated `20260609T0200Z`)
+- MLG-1 듀레이션 유도식 / MLG-2 금리위험액 유도규칙
+
+## 답변 (parser 작성 2026-06-13 — 신규-1 처리, 나머지 큐잉)
+
+- **신규-1 (시장위험 36-40) — 대부분 처리**: `extract_mkt_subs` 전면 재작성(분절표 봉합 + enumerator/액
+  변형 + 값셀탐색) + IRR total→item36 저장 버그 수정. **item36 214→281, all-five 90→103.** 하나손해
+  8분기(분단표)·삼성생명(라벨변형) 회수. concat-cell 손보(현대/메리츠/삼성화재/DB)는 item36(금리위험액)만
+  공시 = G36_ONLY 적재(37-40은 별도 미분해 가능성 — `market_subrisk_pdf_recover.py` PDF 증거 census로
+  확정 중). 상세: changelog (t), inbox 20260611T2200Z answered.
+- **신규-2 (생보 item14후/15후) — ✅ 완료(2026-06-13)**: fill_post 두 버그 수정(전=후 스킵이 14후 누락 +
+  서술문 오분류로 처브 공통표 제외). 경과조치 적용사 코어 {1,2,3,14,27} 동일값도 적재. **검증식 25/25 통과**,
+  rule 8_post 해소. inbox 20260613T2030Z. (15후는 이미 적재돼 있었고 14후 부재가 유도불일치 원인이었음.)
+- **기존 잔여**: FY2026_Q1 docling은 (s)에서 완료(36/39사). 나머지 V9/V7/PL-T2 큐 유지.
+- ⏸ owner 결정대기 건은 작업 안 함.
+
+### 갱신 (2026-06-14) — 신규-1 (시장위험 36-40) 종결
+
+신규-1 잔여 + 짝수분기 19_market/36_irr RED 전수를 reconcile-gated 워크플로우로 재추출(2회전). **파서로 닫히는
+RED=0**으로 확정 — 잔여는 전부 비-파서(downloader 손상/no-source/re-docling, owner OCR image-only, 내부모형
+narrative, 비표준 IRR, 삼성생명 odd-Q MD불일치). +10행 적재(한화 24.2Q item36+IRR + 검증된 0), 게이트
+RED 52→52 무변동. inbox 라우팅 완료(owner 2025.4Q thread resolved, validation 19_market·36_irr answered,
+downloader+validation 신규 발주). 상세: changelog_parser_kics 2026-06-14 top.
+
+status: open 유지 (digest — 신규-1 종결, 신규-2 완료(2026-06-13), V9/V7/PL-T2 등 잔여).
+
+## 답변 추가 (parser 2026-06-14 — IFRS17 잔여 V9/V7/PL-T2 disposition pass, committed 마스터 read-only 5-agent)
+
+raw purge로 *재추출 수정*은 막혔지만 committed PL/CSM/NB 마스터로 **각 항목이 진짜 갭인지 disposition** 확정
+(파괴적 재빌드 없음, 마스터 무변경 확인). 14건 판정 → **legit 10 / real_gap 2(raw-blocked) / designer 1 /
+out_of_scope 1 / fixable-now bug 0.**
+
+### ✅ legit (종결 — 의심이 근거 없음으로 판명)
+- **코리안리 CSM 상각 1y lag**: 오해였음. 부호규약(상각 음수) 적용 시 YTD 워터폴이 **전 분기 closing**(max resid 0.10).
+  상각은 동시기 ramp(분기누적), off-by-4Q 없음. Q4 불연속은 사업보고서 연간 재작성(분기보고서→연차)일 뿐. 1y lag 아님.
+- **history 빌더 off-by-one-year**: 삼성생명/삼성화재/메리츠/한화생명 모두 Q4말=익년 Q1초 **정확 일치**, 분기 워터폴
+  closing. 연-shift 없음 → 재현 불가, 종결.
+- **메트라이프 영업이익 등식**: 안 깨짐(item20=item1+item17, item22=item20+item21 ±1억 반올림). 연간전용 filer. 종결.
+- **한화손해 2025.1Q NB stale carryover**: copy 아님. 1891.2(연누계=당분기, Q1 정상), 배수 9.94가 월납월초와 정합,
+  인접분기 전부 distinct. 종결.
+- **동양 재보 CSM상각/RA 2024**: legit-absent — 동양은 재보를 net/예실차(item11)로만 공시, 서브슬라이스 미분해.
+  phantom item9/10 백필 금지.
+- **케이디비 재보 2025 / 롯데 2025.2Q Tier-2 / 롯데 FY2025 NB**: 전부 이미 적재·정상. 갭 아님.
+- **교보라이프플래닛 PL Tier-2**: legit-absent(디지털 생보 최소공시; top-line PL 자기정합, Tier-2 서브라인 미공시).
+
+### 🔴 real_gap (2건 — fix는 raw 복원 대기, blocked)
+- **현대해상 예실차(item6/item11)**: 2023.1Q~2025.2Q 전 분기 None, 2025.3Q부터 적재. FY2024 연간 raw엔 경험조정
+  실재 → pre-2025.3Q 분기 셀은 **진짜 결측**(PAA 미공시 아님). 재계산엔 purge된 분기 raw 필요 → blocked.
+- **악사손해 interim 분기**: 마스터에 2024.4Q·2025.4Q(연간)만, Q1~Q3 전무. 현재 연차셀은 완전. interim 추가엔
+  분기 raw 필요 → blocked.
+
+### 🎨 designer handoff (1) → `inbox/designer/20260614T1300Z__…sensitivity_csm_null_render.md`
+- PL-only 공시사(동양생명·NH농협손해) `csm_delta=null(미공시)`가 화면에 **0으로 렌더** → `—`(미공시)로 표시 요청.
+  데이터 정확(원천에 CSM 컬럼 없음), 표시 레이어만.
+
+### ↪ out_of_scope (1) → FS-API 레인
+- **하나생명 item17 투자손익**(2024.4Q/2025.4Q null): footnote 파서 항목 아님 = Tier-1 FS-API 라인
+  (`dart_InvestmentIncomeExpenses`, `fetch_dart_fs.py`). IFRS17 footnote 파서 scope 밖 → FS-API 레인으로 라우팅.
+
+status: open 유지 (digest — disposition pass 완료; legit 종결분 반영, real_gap 2건 raw-blocked, 하나 item17 FS-API 레인).
+
+---
+
+### 종결 (owner 지시 stale 감사, 2026-08-20)
+
+**완료 — 두 항목 모두 해소됨 (오케스트레이터 실측 2026-08-20).**
+
+**신규-1 시장위험 하위(36-40) backfill**: 티켓이 회사·분기로 지목한 **23셀 전부 적재됨(결측 0)** — 하나손해 8분기·현대해상 5·삼성화재 4·메리츠 3·DB손해 3 전건 확인.
+전체 모수로는 36-40 결측이 144 (사,분기)로 보이지만 **133건이 홀수분기**다 — 시장위험 세부표는 짝수분기(반기·연말) 공시가 표준이라 구조적 정상이다. 짝수분기 잔여는 **11건뿐**이고 KR0051(1)·KR0079 미래에셋(6)·KR0080 AIA(4) — 전부 이미지/스캔 원천으로 알려진 회사다.
+
+**신규-2 생보 적용후 요구자본(item14후/15후)**: 18 적용사 전 분기 기준 **item14후 234/234(100%) · item15후 226/234(97%)**. owner xlsx #3 블로커였던 항목이 풀렸다.
+
+두 달 넘게 열려 있었지만 내용은 그 사이 다른 라운드에서 처리됐다.

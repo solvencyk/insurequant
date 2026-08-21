@@ -2,7 +2,7 @@
 from: parser
 to: designer
 created: 20260614T1300Z
-status: answered
+status: resolved
 route: backlog
 company: 동양생명, NH농협손해보험
 period: 2025 (FY2024 skim)

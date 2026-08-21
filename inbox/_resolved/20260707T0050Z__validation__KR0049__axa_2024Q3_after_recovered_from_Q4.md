@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260707T0050Z
-status: answered
+status: resolved
 route: reextract
 company: KR0049 (악사손해보험)
 period: 2024.3Q

@@ -1,13 +1,92 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-07-30 · Stage 5/5 — designer
-> Prompt: docs/agents/claude-agent-designer.md (skeleton) · Changelog: docs/changelog_designer.md
+> Last updated: 2026-08-20 · Stage 5/5 — designer
+> Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-08-20, inbox 처리 — 준비금/AOCI 표기 오독 수정):**
+- `inbox/designer/20260819T0620Z`(owner, 악사손해보험 실사례) + `20260820T0033Z`(orchestrator 전체 상태 점검, 같은 건 재확인 + amort-schedule 경고문구 유지 지시) 2건 드레인. 이익잉여금(항목31) 앵커가 없는 회사에서 법정준비금 3~4항목이 시계열 표의 자본 세부 끝에 평행 배치되는데, 그 섹션에 AOCI 하나만 남아있으면 화면상 "AOCI의 하위 항목"처럼 오독됨(분류가 틀린 게 아니라 배치가 오해를 부름). T자 패널(L1090)엔 이미 있던 구분 라벨("법정준비금 — 이익잉여금 내부 적립, 자본총계 합계에는 미포함")을 표의 폴백 경로에도 `colspan` 전체폭 구분행으로 추가, 준비금이 없는 회사는 이 행 자체가 안 붙게 가드. 브라우저 실측(악사손해보험/KR0049): AOCI → 구분행 → 준비금 항목들 순으로 정상 분리 확인, 앵커 있는 회사(삼성화재)는 회귀 없음(기존처럼 이익잉여금 하위로만). `IFRS17_BS.json`은 parser가 재빌드 중이라던 경고대로 읽기만 함.
+- amort-schedule 경고 문구(TODO L16 아래)는 지시대로 미변경 — parser 답변 대기.
+
+**Recent (2026-08-19, owner 채팅 — CSM 상각 스케줄 단위 어긋남):**
+- owner가 라이브에서 AIA생명을 보다 지적: "CSM상각스케줄 y축은 억원인데 커서 대면 나오는 숫자(1년차 88,446)는 백만원 단위인 것 같다, 위 CSM 워터폴이랑 단위가 완전 다르다." → 실제로 `IFRS17.html` amort 차트에 **tooltip 콜백이 아예 없어** Chart.js 기본 툴팁이 원시 백만원 값을 그대로 뿌리고 있었음(축·타이틀만 억/조로 환산). 같은 페이지 CSM 워터폴은 억원이라 패널 간 단위도 어긋남.
+- 부수 발견: `amDiv`의 조원 임계가 `amMax>=100000 ? 100000` — data가 백만원이므로 1조=1,000,000백만원인데 100,000으로 나눠 **10배 과대**. 삼성화재가 실제로 이 분기를 타서 10.6조로 표시되던 중(정답 1.06조).
+- 수정: 조 divisor 100000→1000000, tooltip 콜백 추가(기존 `fmtEok()` 재사용 → 워터폴과 같은 **억원**·음수 △). 브라우저 실측: AIA 축 "900억"/툴팁 "884억원" 일치, 삼성화재 축 "1.2조"/툴팁 "10,586억원" 일치, 교보 "60억원", 콘솔 에러 0.
+- **표시층만 고친 것 — 데이터는 여전히 틀림.** `csm_amort_schedule.json`이 단위 정규화 없이 원표 값을 담고 있어(교보=억원·라이나/IBK연금=천원·나머지 백만원) 화면 숫자가 회사별로 100~1,000배 어긋난다. parser inbox 발주: `20260819T0058Z__owner__MULTI_2025.4Q__amort_schedule_unit_not_normalized.md`. 그 티켓이 닫히기 전엔 이 패널 숫자를 신뢰하지 말 것.
+
+**Recent (2026-08-19, 채팅 발주 — IFRS17.html BS 원천 테이블 시계열 신설):**
+- owner: "상단 BS부분 만든건 좋은데, 그 밑에 원천 테이블도 시계열로 넣어놓자." T자(Panel 1, 최신 1개 분기 스냅샷) 바로 밑에 다분기 표를 신설 — 기준 셀렉터(`#wfPeriod`)를 그대로 따라감: 분기=직전5분기(`selectPeriods` 재사용, CSM Panel 2와 완전히 동일한 윈도잉 함수 — 하드코딩 없이 데이터에서 도출), 연도=최신+직전3개년말(4Q). 분기 미제공사는 CSM 패널과 동일한 문구("분기 공시 미제공...연도로 바꾸면...")로 처리 — 신규 문구 발명 안 함.
+- 행 구조는 owner 목업 그대로: 자산[+]/부채[+]/자본[+] 총계 행(각자 토글로 세부 펼침) → 자본 세부 중 "이익잉여금"은 **자체 중첩 토글**로 법정준비금(섹션="준비금") 항목을 한 겹 더 하위에(D-4 T자와 달리 이번엔 항상 노출이 아니라 접혀 있다가 별도 클릭으로 펼침 — owner가 목업에 `[+]`를 명시적으로 그려서 그대로 반영). 항목 존재 여부는 회사·분기마다 다를 수 있어 선택된 기간 전체에 걸친 **항목명 유니온**으로 행을 잡음(`eqUnionNames` 신설) — 항목번호 하드코딩 없음.
+- **부수 발견(브라우저 실측 중)**: `IFRS17_BS.json`에 준비금 4번째 항목(`보증준비금 기적립액`, 항목번호8)이 이 세션 사이에 파서 쪽에서 새로 추가돼 있었음(오전 D-4 작업 때는 3개뿐이었음) — 생보 16개사에만 존재(비상장 포함, 손보는 0사, 업권 특성상 정상: 보증준비금은 변액/연금 보증형 상품 개념). owner 목업의 "보증준비금 적립액"과 실제 항목명("보증준비금 기적립액")이 살짝 다른데, 항목명을 하드코딩하지 않고 데이터 그대로 표시하는 설계라 자동으로 올바른 이름이 뜬다.
+- 접기/펼치기 상태 관리: 상위 토글(자본)을 접으면 하위 중첩 토글(이익잉여금→준비금)도 재귀적으로 같이 접고 버튼 상태를 리셋(`collapseGroup` — 안 그러면 다시 펼쳤을 때 하위가 이미 펼쳐진 채로 나오는 혼란). 브라우저 실측으로 왕복 확인(펼침→중첩펼침→상위접기→하위도같이접힘+버튼 "+"로 리셋).
+- 캡션에 표시 기간 범위 + 모드 + 단위, 아래에 owner 요청 각주 "* 법정준비금은 당분기 기적립액 + 적립(환입)예정금액 기준" 고정 표시.
+- **브라우저 실측**: 삼성화재(KR0008, 손보) 연도모드 헤더 `[2023,2024,2025,2026.2Q]` 정확 일치(owner 예시와 동일), 준비금 3항목(보증준비금 없음 — 손보라 정상). 삼성생명(KR0069, 생보) 준비금 4항목 전부 표시. 분기모드 헤더 `[2025.2Q,2025.3Q,2025.4Q,2026.1Q,2026.2Q]` owner 예시와 정확 일치. AIG손보(KR0029, 분기 BS 미제공)에서 분기모드 stub 메시지 정상, 연도모드 전환 시 정상 표로 복귀. 카카오페이(KR1098, BS 데이터 전무)에서 T자 자체 stub만 뜨고 신규 표는 조용히 비어있음(중복 메시지 없음). 375px에서 `.table-wrap{overflow:auto}`가 6열 표를 컨테이너 안에 가둬 페이지 가로 스크롤 없음 확인. 콘솔 에러 0 전 케이스. `pytest tests/test_deploy_assets.py` 10/10.
+- (참고, 안 건드림) `EQ_SECTION_LEVEL_BRIDGE`(항목 1-7 임시 매핑)가 실 섹션/레벨 컬럼이 전 행에 채워진 지금은 사실상 죽은 코드로 보임(폴백 분기가 한 번도 안 걸림) — owner가 스코프 준 적 없어 이번엔 안 건드리고 기록만.
+
+**Recent (2026-08-18d, 같은 대화 연속 — legend 토글 재스케일 복원):**
+- owner가 바로 이어서: "왼쪽부분이 또 너무 휑하게 비는데? 원래는 연1회 공시사들 체크 해제하면 x축 왼쪽이 자동으로 rescaling되면서 버블끼리 덜 겹치는게 됐는데 지금은 그 기능이 날아갔어." — 원인: `xAxis.min/max`를 `setOption(...,true)`(notMerge)로 명시 고정한 순간, ECharts의 "범례에서 끈 시리즈는 축 auto-range 계산에서 제외"하던 기본 동작이 죽었다(고정값이 항상 이김). 실측(정확한 재현법 `dispatchAction({type:'legendToggleSelect',...})` — 처음 `legendUnSelect`/`legendSelect`로 테스트했을 땐 거의 변화가 없어 오진할 뻔했는데, 실제 클릭과 동일한 `legendToggleSelect`로 재현하니 "추정" 끄면 [4.05,27219.9]→[443.5,27219.9]로 확 바뀜 — 최솟값 6개(비엔피파리바카디프·교보라이프플래닛·카카오페이·처브라이프·악사·AIG, 전부 est:true)가 실제로 X축 왼쪽을 끌어내리고 있었다는 게 데이터로 확인됨).
+- `renderBubble()`에 `legendselectchanged` 리스너 추가 — 토글마다 `rows`를 현재 범례 선택 상태로 다시 필터링해 min/max 재계산 후 `setOption({xAxis:{min,max}})`(merge, notMerge 아님)로 축만 갱신. 클릭 핸들러와 동일하게 `off()`+`on()`으로 재등록(중복 리스너 방지).
+- 브라우저 실측: "추정" 토글 [4.05,27219.9]↔[443.5,27219.9] 정상 왕복, "생명보험" 토글 [4.05,27219.9]↔[4.05,19689.9](삼성생명 최댓값 제외되며 반응)도 확인. 콘솔 에러 0, `pytest tests/test_deploy_assets.py` 10/10.
+
+**Recent (2026-08-18c, 채팅 피드백 — 버블 X축 log 범위 고정 제거):**
+- owner 채팅: "버블끼리 다닥다닥 붙어있다, x축 범위를 log(10조)로 fix하지 말고 그때그때 바뀌게" — 코드엔 `xAxis.max` 하드코딩이 없었지만(직접 확인), ECharts 로그축 auto-range가 실데이터 최댓값을 **다음 10의 거듭제곱으로 반올림**해버려(실측: 데이터 최댓값 1.72조인데 축은 10조까지) 결과적으로 같은 증상(버블이 왼쪽에 몰리고 오른쪽 절반 이상이 빈 채로 남음).
+- `renderBubble()`에서 매 렌더마다 현재 필터된 `rows`(업권 필터 반영)의 실제 min/max에 로그 패딩(×10^0.2≈1.58, 양옆 대칭)만 줘서 `xAxis.min`/`max`로 명시 — 하드코딩 없이 데이터 바뀔 때마다 자동 재계산. 브라우저 실측: 전체 [1, 100000] → [4.05, 27219.9](로그 스팬 5.0→3.83), 손해보험만 필터하면 [6.37, 19689.9]로 더 좁혀짐(정상 동작). 콘솔 에러 0, `pytest tests/test_deploy_assets.py` 10/10.
+- 이 세션은 owner와 직접 채팅 중 나온 요청이라 inbox 티켓 생성 없이 바로 처리(비동기 핸드오프가 필요한 상황이 아님).
+
+**Recent (2026-08-18b, D-2 follow-up — bubble X축 실제로 2026.2Q로 이동):**
+- owner가 D-2 캡션 수정을 라이브에서 재확인하고 지적(`inbox/_resolved/20260818T0210Z__owner__MULTI__bubble_x_axis_to_2026q2.md`): D-2는 **표기만** 정직하게 고쳤을 뿐, index.html 버블맵 X축(신계약 CSM)이 여전히 `NB_CSM_multiple.json`(배수와 묶여 2026.1Q 고정)에서 나와 **기준 자체**는 안 옮겨져 있었음. owner 요구는 X축을 진짜 2026.2Q로 옮기라는 것.
+- `buildBubbleData()`를 재작성 — X(신계약CSM)와 Y(배수)를 완전히 분리된 소스로: **X는 `wfNbItem`(CSM_waterfall 항목2)에서 "회사별 최신"**(크기/`closing`과 동일 패턴, 고정 리터럴 없음 — 전사 최신(`xGlobalMaxK`)과 다른 회사만 자기 최근 마감연도 값을 대신 쓰는 "추정"), **Y는 기존 그대로 `NB_CSM_multiple.json`에서 `NB_TARGET_Q`(2026.1Q) 고정**(KIDI 월납초회 재수집 보류, 변경 없음). owner 실측대로 23사 전부 유지(0사 탈락).
+- **⚠ 스케일 함정 수정**: 연1회 공시사 추정값이 전엔 "연간누계 ÷4"(1분기 스케일 가정)였는데, X 기준이 반기누계(2026.2Q)로 바뀌었으니 ÷2가 맞다(owner 계산) — 안 고치면 추정사 버블만 절반으로 찌그러짐. 실측(AIG손보): raw 986.8 → 493.4(정확히 ÷2).
+- 캡션(`.section-desc`)·`metaEl`·툴팁을 X/Y 분리 표기로 재작성("X축(신계약CSM)=회사별 최신 · Y축(배수)=2026.1Q 고정 · 크기=회사별 최신"). 툴팁도 X/Y 각 줄이 자기 분기를 직접 표기(`d.srcQ` vs `d.multPeriod`)하도록 if/else 통합 제거.
+- **부수 발견·수정**: 커버리지표의 "직전값 이월" 분기(`closingK !== TARGET_QKEY`)가 신계약CSM/기말이 둘 다 "회사별 최신"이 된 지금은 성립하지 않아 **더 최신인 2026.2Q 실공시 회사들을 "이월"로 오표시**하고 있었음(브라우저 실측으로 발견 — 삼성생명 등 6개사 전부 잘못된 라벨). 그 분기·이제 안 쓰는 `TARGET_QKEY` 상수 삭제, "실공시"로 정상화.
+- 잔여 하드코딩(`period: estimated ? srcQ : '2026.1Q'`)도 제거 — X는 이제 항상 실제 조회된 분기를 씀.
+- 브라우저 실측: 삼성화재(KR0008) X=12,423.5억(CSM_waterfall 2026.2Q 원값과 일치, raw fetch로 대조 확인), 표시 33社 불변(census 37사 중), ECharts 시리즈 13+9+11=33 정합, 콘솔 에러 0, 375px(모바일 리스트는 애초에 X를 안 보여줘 무변경) 확인. `pytest tests/test_deploy_assets.py` 10/10.
+
+**Recent (2026-08-18, owner live-QA 4건 — D-1~D-5):**
+- **D-1 민감도 캡션**: FY2025는 stale이 아니라 무설명이었음 — IFRS17 가정민감도(할인율·손해율·사업비율)는 사업보고서 연1회 주석, 반기·분기보고서엔 표 자체가 없음(원문 XML 라벨 출현횟수로 재검증: 한화생명/삼성화재/DB손보 3사). `#senCap`에 "보험계약 가정민감도는 사업보고서 연 1회 공시 — 반기·분기보고서 미공시 항목" 상시 표기.
+- **D-2 분기 하드코딩 전수 제거 + PL 실버그 발견**: IFRS17.html 3곳(h2/aria-label/커버리지줄)의 "2023.1Q~2026.1Q" 복붙을 `ix.wfx` 전사 최소~최대에서 도출하는 `CSM_RANGE_LABEL` 하나로 통합. index.html 버블 캡션도 "2026.1Q" 리터럴 5곳(TARGET/캡션/메타/툴팁/커버리지표)을 `NB_TARGET_Q` 상수로 통합하고 문구를 "X·Y=2026.1Q 고정(배수 분모 재수집 보류) / 크기=회사별 최신(2026.1Q~2026.2Q 혼재)"로 정정. 푸터 "최신 공시 분기"를 IFRS17·index·공시보고서 3파일에서 데이터 기반 `<span id="footerQ">`로 교체(K-ICS.html은 owner 지시대로 미변경 — 실측 2026.2Q 행 0건, 아직 2026.1Q가 맞음). **PL 워터폴에서 실제 버그 발견**: `plPeriod()`가 `qs.find(4Q)`로 최신 반기(2026.2Q)보다 직전 마감연도(FY2025)를 우선해서 연도 모드가 상시 1년 stale이었음(owner가 신고한 "PL breakdown이 25회기 기준" 증상의 근본원인) — 최신 우선으로 뒤집고 비4Q 최신은 "2026.2Q(반기누계)"로 라벨링(`fyPartialLabel`, PL 표 헤더도 동일 적용). 브라우저 실측(KR0008): `plCap`="당기순이익 워터폴 · 2026.2Q(반기누계) · …" 정상 확인(수정 전이었다면 "FY2025 (연 누계)"로 표시됐을 것).
+- **D-3 🔴 BS T자 + 버튼 무반응 버그 수정**: `.bs-l2-rows{display:flex}`가 UA `[hidden]{display:none}`을 cascade에서 이겨 `box.hidden` 토글이 화면에 반영 안 됐음(aria-expanded는 바뀌어 접근성 트리·실표시 불일치). `.bs-l2-rows[hidden]{display:none}` 한 줄로 수정. 4개 HTML 파일 전수 `hidden` grep 감사 — 이 클래스 외 display+hidden 충돌 없음(K-ICS/index/공시보고서는 `hidden` 속성 자체를 안 씀, PL 재보험 세부 토글은 `style.display` 방식이라 무관). 브라우저 실측(KR0008): 자산/부채/자본 3구역 전부 클릭 후 `hidden:false`+computed `display:flex` 확인.
+- **D-4 법정준비금 재배치**: 별도 `#bsReserveNote` 블록(HTML+렌더코드+CSS) 삭제, `renderReserveSubrows()` 신설 — 자본 세부 렌더 시 항목명("이익잉여금", 번호 아님) 매칭으로 앵커를 찾아 준비금 3항목(해약환급금·비상위험·대손)을 들여쓴 하위 행으로 삽입. 합계(잔차 "기타·미표시") 계산에서는 계속 제외(별도 배열로 분리 렌더 — owner 이중계상 경고 유지). 이익잉여금 행이 없는 회사(비상장 등)는 잔차 행 앞에 폴백 삽입(잔차가 항상 마지막 줄이도록). 브라우저 실측: 삼성화재(KR0008, 이익잉여금 有)에서 준비금 3행이 이익잉여금 바로 아래·잔차 위에 정확히 배치되고 잔차가 △81억(소액)으로 준비금이 합계에서 안 빠졌음을 확인, 라이나생명보험(KR0074, 이익잉여금 無)에서 폴백 경로도 정상.
+- **Real-viewport 재확인 — 3세션째 carried-over 항목 종결**: 이전 세션들(08-14b/c/d)이 겪던 Browser pane 미compositing이 이번엔 `window.innerWidth`가 실제로 375를 반환해 `resize_window`+JS 쿼리로 실측 가능했음(스크린샷 자체는 여전히 pane 비표시로 실패, DOM/computed-style 쿼리로 대체). 375px에서 `.bs-t` flex-column 전환, 준비금 하위행 1열 grid, 가로 오버플로우 없음(`body.scrollWidth`=`innerWidth`), 콘솔 0건 확인.
+- **DIVIDEND-PAGE D-5 개편**: 항목1 주당액면가액 제거. K-ICS.html 패턴을 딴 기간 선택(분기/연도) 신설 — 컬럼은 회사별이 아니라 **전사 공통 윈도**(`GLOBAL_QUARTERS`, dividend.json 전체에서 도출)로 고정해 "이 회사 이 분기 미공시"가 헤더는 유지한 채 셀만 정보없음으로 읽히게 함. 분기=직전5분기, 연도=최신+직전3개년말(4Q, 안 닫힌 최신 회기는 "…누계" 라벨). KPI 카드는 조회기간과 별개로 "최신 4Q 우선 앵커" 그대로 유지하기로 결정, 캡션에 명시(D-5 4번 항목 대응). 브라우저 실측(KR0008): 분기모드 헤더 2025.2Q~2026.2Q, 연도모드 2023/2024/2025/2026.2Q누계 정확히 일치, 0(현금배당금총액 3개분기)과 정보없음(현금배당성향 비4Q) 구분 유지 확인.
+- **부수 처리**: publishing 티켓(`inbox/designer/20260803T0900Z`, UH-7) — `K-ICS.html:1090` baseline 키 폴백을 `row.baseline || row.baseline_2025_4Q`로 갱신(HTML 만지는 김에 처리, 급하지 않던 건). validation 티켓(`20260815T0130Z`, 분기 라벨)은 이 owner 티켓 D-2가 흡수해 `_resolved/`로 이동.
+- `python -m pytest tests/test_deploy_assets.py` 10/10 (구조적 변경 없음 — keep-list·인라인금지·BOM 영향 없음). 4페이지(IFRS17/index/K-ICS/공시보고서) 전부 데스크톱+375px 0 console errors. K-ICS.html 푸터·`kics_disclosure.json` 등 owner "건드리지 말 것" 대상 미변경 확인. Detail: `docs/changelog_designer.md` 2026-08-18.
+
+**Recent (2026-08-15, 공시보고서.html filled in — 배당현황):**
+- **`공시보고서.html`'s "준비 중" shell replaced with a dividend-disclosure screen** (inbox `20260814T2230Z__parser__MULTI__dividend_json_ready_for_gongsi_page.md`, resolved). Owner's C-4 chain confirmed: fill the *existing* page, no new tab/page. Company selector (same UX as the other 3 pages) populated straight from `dividend.json`'s own 24-company registry — not the 39-company kics_disclosure universe, since this DART endpoint structurally never covers the other 15 (non-listed) and a permanent "no data" stub for those adds no value. KPI strip (latest-4Q anchored, since payout ratio/yield are mostly annual-only disclosures) + a company-level table (items 1-7 × all quarters) + one mini-table per 종류주 actually present in the data (보통주/우선주 — auto-detected, no hardcoded 4-company preferred-stock list). Explicit `0` (real no-dividend quarter) kept distinct from absent-row `"정보없음"` (that quarter/item never disclosed) throughout — the exact trap owner flagged twice in the upstream orders. Verified against real data: a company with both share classes showing genuinely different per-class figures (삼성화재, 보통주 16,000원/6.50% vs 우선주 16,005원/8.60% at 2023.4Q), a company with no class-level disclosure at all (롯데손해보험 — real data gap, not a bug, confirmed via direct JSON inspection), 0 console errors. `pytest tests/test_deploy_assets.py` — fixed the designer half of the doc-table gap (`claude-agent-designer.md` §1 row added), publishing half + git-tracking + validation-gate wiring are pre-existing, already-ticketed, out-of-scope blockers (`inbox/publishing/20260814T2230Z` P-1~P-4) — not touched. No push. Detail: `docs/changelog_designer.md` 2026-08-15.
+
+**Recent (2026-08-14d, owner-requested redesign — T-account):**
+- **BS panel rebuilt as T-account, moved to top of IFRS17.html** (inbox `20260814T1250Z__owner__IFRS17__bs_taccount_top_panel.md`, answered). Owner's own words this time (not an orchestrator paraphrase): move the BS panel above CSM panel 1, draw it like an actual T-account (자산 left / 부채 right-top / 자본 right-bottom, height proportional to value), `+` toggle per zone for a 2-level drill-down. Panels renumbered 1→7 (BS is now 1, CSM waterfall etc. shifted to 2-7). Render logic groups by `섹션`/`레벨` fields data-contract-style — no item-number branching — with a small bridge constant (`EQ_SECTION_LEVEL_BRIDGE`) mapping the *current* pre-migration `IFRS17_BS.json` (items 1-7, no 섹션/레벨 columns yet) so the frame works today; once parser lands the real columns (`inbox/parser/20260814T1250Z…ifrs17bs_detail_lines_for_taccount.md`, in progress) the bridge stops mattering with zero HTML changes. 준비금 (해약환급금 등) kept out of the capital total/detail — separate side note, per owner's explicit double-counting warning.
+- **Deleted (not hidden this time) the 08-14b/c dead L2/L3 code**: `renderBsL2`/`toggleBsL2`/`toggleBsDrill`/`renderBsReserves`/`renderBsAociWaterfall`/`eqAociSteps` were preserved-but-uncalled twice already and both times turned out unreusable as-is (schema kept moving under them) — a third preservation added confusion with no realistic reuse path, so this time they're gone; history lives in the changelog instead of dead code in the file.
+- Verified 4 companies incl. all three owner-named edge cases: has-detail (삼성화재, 자본 `+` shows AOCI), listed-but-scope-not-landed-yet (자산/부채 `+` disabled everywhere right now, expected pre-parser), non-listed/no-XBRL (라이나생명보험 — totals only, `+` disabled, matches owner's D-3 spec exactly), zero-BS-data (카카오페이손해보험 — stub). T-split flexGrow ratio double-checked against raw values. 0 console errors. `pytest tests/test_deploy_assets.py` 10/10 (no new JSON, no keep-list change expected or seen). No screenshot again — same Browser-pane non-compositing limitation as 08-14b/c (this time confirmed via `window.innerWidth===0`), substituted with direct DOM/attribute queries. Detail: `docs/changelog_designer.md` 2026-08-14d.
+- **Still open**: real-viewport mobile stack + keyboard check (carried over, now 3 sessions running — worth prioritizing next time this page is touched in an environment where the Browser pane actually composites). Full detail expansion waits on parser's 섹션/레벨 landing — no designer action needed until that notification arrives.
+
+**Recent (2026-08-14c, same-day repoint):**
+- **Panel 7 repoint: `equity_composition.json` → `IFRS17_BS.json`** — owner archived the old 49-item
+  master (`inbox/designer/20260814T0232Z`), validator flagged the resulting live-404 risk. Swapped
+  `PATHS.eqx` (`IFRS17.html:267`) and remapped `renderBsSection`'s item numbers (old 40/41/1/6/10 →
+  new 1/2/3/4/5 — schema changed shape, not just filename). Added a warning comment on the hidden
+  L2/L3 code from 08-14b: its item numbers (2-7/20-31/5·10·12·14) belong to the archived schema and
+  now silently collide with the new one's 1-7 if ever re-enabled (wrong-labeled real values, not
+  nulls). Added `IFRS17_BS.json` to `claude-agent-designer.md` §1 (was never there for
+  `equity_composition.json` either — the doc gap validation actually flagged). Verified: all 39
+  dropdown companies cycled with 0 console errors, `IFRS17_BS.json` 200s and `equity_composition.json`
+  is no longer fetched at all, identity check (KR0001), "미공시" fallback (KR0004, no item5 ever), and
+  the no-BS-data stub (KR1098) all still correct. `pytest tests/test_deploy_assets.py::test_docs_agree_with_what_pages_fetch`
+  passes on the designer-doc side; the publishing-doc side is still red pending
+  `inbox/publishing/20260814T0232Z` (separate stage, not this session's scope). Detail:
+  `docs/changelog_designer.md` 2026-08-14c.
+
+**Recent (2026-08-14b, same-day scope correction):**
+- **BS-DRILLDOWN cut down to owner's actual ask**: the 8/14 Panel 7 build below turned out to be built off an over-scoped spec — `inbox/parser/20260814T0035Z__owner__MULTI__equity_tier2_stop.md` + `inbox/validation/20260814T0035Z__owner__MULTI__equity_scope_rollback_core_shrink.md` (both same-day owner corrections to the other two stages, quoting owner's real ask: "high level 17BS(자산/부채/자본/AOCI), 가능하면 해약환급금준비금(안되면 pass)") made clear the L2/L3 drill-down was never requested. No designer-addressed correction existed yet, but confirmed the same read with the user and cut Panel 7 to 5 flat tiles (자산/부채/자본/AOCI/해약환급금, `null`→"미공시"). Drill-down code (L2 stack, L3-a AOCI waterfall, L3-b reserves) **hidden, not deleted** — same convention as the 07-30c CSM 보조표 hide. Detail: `docs/changelog_designer.md` 2026-08-14b.
+
+**Recent (2026-08-14):**
+- **IFRS17.html Panel 7 "재무상태표 · 자본의 질"** (inbox `20260813T0422Z`/`20260813T0436Z`, mockup, **not live — superseded same day, see 2026-08-14b above**): new 3-level drill-down section (L1 자산/부채/자본 tiles → L2 자본구성 row-bars → L3-a AOCI waterfall / L3-b 법정준비금) consuming the new `equity_composition.json` root master (항목 1-49). AOCI waterfall reuses the existing PL-panel 0-line-crossing custom-renderItem pattern verbatim; colorblind-safe via ECharts `decal` + text tags (not color-only) on the asset/liability-side bars. Verified against real data (identity checks, a genuine sign-flip case) with 0 console errors across repeated company switches; keyboard/375px pixel verification blocked by this session's Browser-pane compositing limitation (confirmed session-wide via a control test on a pre-existing production button, not a defect in the new code) — flagged below for next-session recheck. **Gated behind validation RED=0 (currently 207) — no deploy, no push.** Detail: `docs/changelog_designer.md` 2026-08-14.
 
 **Recent (2026-07-30c):**
 - **CSM 보조표 숨김**: owner "너무 추하게 생겼어" 피드백 → 제거/숨김/재디자인 확인 후 **숨기기(코드 보존)** 선택. `#csm-coverage-panel` `display:none` 인라인 추가, 렌더 로직/CSS 그대로 둠(재노출은 style 제거만). 버블맵은 그대로 노출. **재디자인 여부는 미결 — 다음에 논의 필요.**
@@ -57,6 +136,30 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
 
 ## 🔴 Open — P1
 
+### BS-TACCOUNT — IFRS17.html Panel 1 (was Panel 7) 재무상태표 (formerly BS-DRILLDOWN, renamed 2026-08-14d)
+Now a T-account at the **top** of the dashboard (owner's own explicit ask this round — `inbox/designer/20260814T1250Z__owner__IFRS17__bs_taccount_top_panel.md`, answered), not a mockup panel anymore in intent. Data-contract-driven by `섹션`/`레벨` fields on `IFRS17_BS.json` (parser landing separately, `inbox/parser/20260814T1250Z…`) — no item-number branching in the render code.
+- [x] **T-account + reposition (2026-08-14d)**: moved above Panel "2) CSM 이동" (was 7, all panels renumbered 1-7). 좌 자산 / 우상단 부채 / 우하단 자본, right-column height ∝ value ratio. Per-zone `+` (`.subtoggle`, reused from the PL panel) toggles a 레벨2 detail list; disabled+`aria-disabled`+"세부 미공시" when a section has zero 레벨2 rows (covers both "parser hasn't landed detail yet" and "company doesn't disclose" with the same code path — no special-casing needed). 준비금 kept structurally separate from 자본 (own side-note block, excluded from the capital total/detail) per owner's explicit double-counting warning.
+- [x] `EQ_SECTION_LEVEL_BRIDGE` bridges the *current* pre-migration schema (items 1-7, no 섹션/레벨 columns yet) so the frame renders today; disappears in effect the moment parser's real columns land (row data wins over the bridge automatically, zero HTML changes needed).
+- [x] **This time actually deleted** (not hidden) the 08-14b/c dead L2/L3 functions — preserved-uncalled twice already, proven unreusable both times because the schema kept moving under them. History is in the changelog, not in commented-out code.
+- [x] Verified 4 companies incl. all 3 of owner's named edge cases (has-detail / listed-no-detail-yet / non-listed-never-has-detail / zero-BS-data). 0 console errors. `pytest tests/test_deploy_assets.py` 10/10.
+- [x] **Real-viewport recheck (2026-08-18, resolved after 3 carried-over sessions)**: this session's Browser pane returned a real `window.innerWidth===375` (not the `0` bug from 08-14b/c/d) — confirmed via `resize_window`+JS query: `.bs-t` switches to `flex-direction:column`, detail/sub rows collapse to 1 grid column, `body.scrollWidth` never exceeds `innerWidth` (no horizontal overflow), 0 console errors. Screenshot pixels still unavailable (pane still doesn't composite for actual frame capture), but this is real DOM/computed-style verification, not a skip.
+- [x] **Schema landed same session** (owner shrank scope to 13 detail items, not the original ~60 — `inbox/_resolved/20260815T0100Z__parser__MULTI__ifrs17bs_taccount_schema_ready.md`): confirmed compatible with zero HTML changes (contract design worked as intended). Data shape + render-code field matching verified by direct inspection (`fetch(...,{cache:'no-store'})` vs. `renderBsZone`); a true fresh-browser render wasn't achieved that session — local server's HTTP cache kept serving the pre-migration snapshot. **2026-08-18: confirmed live** — 자산/부채/자본 `+` all enable and render real rows for KR0008 (Tier-1), verified via `.click()` + `box.hidden`/`getComputedStyle(...).display` in a clean preview.
+- [x] **Partial-detail confusion fixed (2026-08-15, inbox `20260814T1710Z__validation__IFRS17__bs_detail_is_highlight_label_it.md`)**: validation caught that the 레벨2 detail is an intentional "≤15-line highlight" (owner scope, not full closure — `scripts/build_ifrs17_bs.py`), so a section's shown detail routinely undershoots its total (worst case validation found: 신한라이프 자산 세부 17-21조 vs 59조+ total) with zero on-screen explanation — reads as broken. Fixed by computing a "기타·미표시" residual row client-side (`total − Σshown`, no master change) plus a short caption clause. Re-verified on the exact worst-case company (신한라이프/KR0094): shown-detail + residual now ties out to the total within rounding.
+- [x] **🔴 `+` toggle dead-on-arrival bug fixed (2026-08-18, owner live-QA `inbox/designer/20260818T0026Z` D-3)**: `.bs-l2-rows{display:flex}` was beating the UA `[hidden]{display:none}` default in cascade, so `box.hidden` toggling never changed the rendered layout — the button looked completely dead (aria-expanded flipped, screen didn't). Fixed with one CSS rule, `.bs-l2-rows[hidden]{display:none}`. Audited all 4 HTML pages for the same display+hidden collision pattern — none found elsewhere (K-ICS/index/공시보고서 don't use the `hidden` attribute at all; the PL 재보험 subrow toggle uses `style.display`, unaffected).
+- [x] **법정준비금 재배치 (2026-08-18, D-4)**: moved from a standalone `#bsReserveNote` block (deleted, along with its render code + CSS) into the 자본 zone's own detail list, as indented sub-rows anchored right after the "이익잉여금" row (name-matched, not item-number — new `renderReserveSubrows()`). Still excluded from the shown/residual sum (rendered via a separate pass, owner's double-counting warning preserved) — verified on KR0008 the residual stayed a small △81억 (not off by the ~6.95조 it would be if reserves had leaked into the sum). Companies without an 이익잉여금 row (non-listed) get the sub-rows inserted before the residual row instead.
+- [x] **버그 수정(같은 대화, owner 즉시 재확인): 연도모드 "직전 3년" 위반** — 재사용한 `selectPeriods()`가 무상한(전체 4Q) 반환이라 BS가 2021년까지 있는 회사(메리츠화재·현대해상·KB손보·코리안리 등)에서 6열까지 붙었음. BS 전용 `eqYearPeriods()`(최신+직전3개년말 하드캡, `wfYearBuckets()`와 동일 패턴) 신설로 교체, 공유 함수는 미변경(CSM/PL/NB 마스터는 실측상 전부 2023년 시작이라 이 결함이 잠재적일 뿐 미발현 — 확인만 하고 안 건드림). 6개사 전부 재검증 완료.
+- [x] **시계열 원천 테이블 신설 (2026-08-19, owner 채팅 발주)**: T자 밑에 다분기(`#wfPeriod` 연동, `selectPeriods` 재사용) 표 추가 — 분기=직전5분기 / 연도=최신+직전3개년말, 분기 미제공사는 CSM 패널과 동일 문구의 stub. 자산/부채/자본[+] → 세부[+] → 자본 세부의 "이익잉여금"은 자체 중첩 [+]로 법정준비금(이제 4항목 — `보증준비금 기적립액` 신규, 생보 16사만) 한 겹 더. 항목은 선택 기간 전체의 이름 유니온(`eqUnionNames`)이라 항목번호 하드코딩 없음. 상위 토글 접을 때 중첩 하위 토글도 재귀 리셋(`collapseGroup`). `renderBsTable`/`buildBsTableDom`/`eqHasQuarterly`/`eqUnionNames`/`eqValByName` 신설. 브라우저 실측 다수(연도/분기 헤더 owner 예시와 정확 일치, 생보/손보 준비금 항목수 차이 확인, stub 전환, zero-BS-data 회사 무충돌, 375px 표 자체 스크롤). `pytest` 10/10.
+- [x] **(종결 2026-08-20)** Deploy 차단 해소 — 게이트 `RED=0 YELLOW=276 exit=0`, main 배포 실제로 진행됨(`a0979b9`, 오늘만 3회). 원문: (unrelated to this rebuild, standing condition). No push attempted.
+
+### DIVIDEND-PAGE — 공시보고서.html 배당현황 (built 2026-08-15)
+Owner's C-4 chain, designer leg (`inbox/_resolved/20260814T2230Z__parser__MULTI__dividend_json_ready_for_gongsi_page.md`). Fills the page's long-standing "준비 중" shell — no new tab/page, per owner's explicit constraint.
+- [x] Company selector (24-company registry, drawn from `dividend.json` itself, not the 39-company kics universe — the 15 non-listed companies structurally never have this DART disclosure, so they're left out of the picker rather than showing a permanent empty stub) + KPI strip + company-level table (항목 1-7) + per-종류주 mini-tables (항목 8-10, auto-detected classes, no hardcoded company list).
+- [x] `0` vs `"정보없음"` kept strictly separate everywhere (owner's own repeatedly-flagged trap) — verified on real data, not just written and assumed.
+- [x] `claude-agent-designer.md` §1 doc-table gap fixed (my half of `test_docs_agree_with_what_pages_fetch`).
+- [x] **(종결 2026-08-20)** `dividend.json`은 **git 추적 중**이고(`git ls-files` 확인) 2026.2Q 24사까지 배포됐다. 'untracked·deploy far off' 전제 stale. 원문:, `claude-agent-publishing.md` doesn't mention it yet, and `validate_data_contract.py` doesn't wire this master into its gate at all — all three already ticketed in `inbox/publishing/20260814T2230Z` (P-1/P-2/P-4), not this stage's files to touch.
+- [x] **Period selector added (2026-08-18, owner live-QA `inbox/_resolved/20260818T0026Z` D-5)**: the "shows all 14 raw quarters" gap above is closed — added a K-ICS.html-style 기간(분기/연도) toggle. Quarter mode = last 5 quarters, year mode = latest + prior 3 fiscal year-ends (partial current year labeled "…누계", e.g. "2026.2Q누계"), both derived from `dividend.json`'s own data (`GLOBAL_QUARTERS`), not hardcoded. Window is **global** (same header columns regardless of which company is selected), not per-company — deliberate, so a company's missing quarter shows as a 정보없음 cell under a stable header rather than shifting the whole column set. Also removed 항목1 주당액면가액 (owner: "필요없으니까 빼고"). KPI strip decision: stays anchored to "latest 4Q" regardless of the new period selector (a multi-quarter window doesn't map to a single KPI snapshot) — documented in `#divKpiCap`'s caption per owner's explicit ask to decide-and-state. Verified live on KR0008: quarter headers 2025.2Q~2026.2Q, year headers 2023/2024/2025/2026.2Q누계, `0`-vs-정보없음 distinction intact (현금배당금총액 real 0 for 3 quarters vs 정보없음 for the undisclosed 2026.2Q cell), 0 console errors, 375px no horizontal overflow.
+- [x] Real-viewport mobile recheck done for this page too (2026-08-18, same session as BS-TACCOUNT above) — `resize_window`+JS query confirmed `.controls` wraps, period selector visible, no horizontal overflow at 375px.
+
 ### KEYCOLOR-V1 — 회사 키컬러 액센트 시스템 ~~(K-ICS 취소, IFRS17 재검토 대기)~~
 IFRS17 적용 완료 2026-06-13. K-ICS 적용은 **owner가 2026-06-17 취소** (IFRS17 구현 불만족). IFRS17 키컬러도 재검토 필요 — owner 피드백 대기.
 - [x] IFRS17 적용 완료 (2026-06-13)
@@ -84,6 +187,7 @@ Owner confirmed scope: **full-panel mobile pass + alternative render** (not foun
 ### MOB-IFRS17 — IFRS17.html full mobile layout (scope confirmed by owner 2026-06-12)
 Owner confirmed scope: **full-panel mobile pass + alternative render**. M1 foundation only so far.
 - [ ] Panel 1–6 mobile policy: which to keep, which to collapse, which to swap for alternate viz
+- [ ] Panel 7 (BS-DRILLDOWN, added 2026-08-14) has `@media(max-width:640px)` CSS following the same pattern as Panels 1-6 but hasn't had a real-viewport pixel check — fold into this pass' verification
 - [ ] **(owner open rec 1)** horizontal-scroll range for dense panels
 - [ ] **(owner open rec 2)** breakpoint set confirmation
 - (shares the two owner open recs with MOB-KICS — resolve once for both pages.)
@@ -106,8 +210,8 @@ IFRS17.html 대시보드 최상단에 4-card KPI strip 추가(기말 CSM 잔액�
 
 ### INDEX-BUBBLE-V2 HTML side — 4축 bubble rendering
 Publishing ships the data (`TODO_publishing.md` INDEX-BUBBLE-V2). Designer ships the ECharts spec:
-- [ ] 4축 mapping: X=당기순이익 / Y=CSM 잔액 / size=신계약 CSM / color=신계약 CSM 배수
-- [ ] Mobile rendering: 4축 → simplified (e.g. bar 또는 list with sort options)
+- [x] **🚫 폐기 — 재착수 금지 (2026-08-20 확인)**. 4축 V2는 owner가 폐기했고 **3축이 이미 라이브 완결**이다: `index.html` L165 *"X: 신계약 CSM 규모 · Y: NB CSM 배수 · 크기: 기말 CSM 잔액"*. 이 줄을 열린 항목으로 두면 다음 세션이 완결된 기능을 다시 만든다. 원문:
+- [ ] Mobile rendering: **3축** 버블맵 → simplified (bar 또는 list with sort options) — 위 4축 폐기에 맞춰 축 표기 정정(2026-08-20)
 - [ ] Click → cross-nav (existing pattern)
 
 ### F17 Panel 3 — Tier2 LOB drill-down rendering (when publishing ships Tier2 JSON)
@@ -134,8 +238,8 @@ Publishing currently has Tier1 4-bar in production. Tier2 (LOB 장기/자동차/
 **Page roster (root single-source since 2026-05-28)**
 - `index.html` — market map + IFRS17 quadrant + bubble
 - `K-ICS.html` — per-insurer detail + sub-items + forward outlook
-- `IFRS17.html` — 6-panel dashboard
-- `공시보고서.html` — static info
+- `IFRS17.html` — 7-panel dashboard (1=BS T-account, 2-7=CSM/PL/NB/sensitivity)
+- `공시보고서.html` — 배당현황 (per-company dividend disclosure, filled in 2026-08-15; was a static "coming soon" shell before)
 
 **Local preview:** `python -m http.server 8000` from repo root. (preview_eval 반복 행 시 Edge headless `--dump-dom` 대체; 좀비 포트 회피로 현재 8889.)
 

@@ -1,0 +1,46 @@
+#!/bin/sh
+# insurequant PUSH 게이트 — git 이 직접 강제한다 (owner 2026-08-21).
+#
+# 왜 있나: 이 저장소의 "하드 게이트"는 전부 꼭대기가 honor-system 이었다. 실측 결과
+# `scripts/prepush_check.py` 를 참조하는 곳 11군데가 **전부 문서**(SKILL·docs/agents·
+# launch_runbook·postmortem)였고, 코드나 설정에서 부르는 곳은 0, CI 도 없었다.
+# 즉 게이트에 룰을 아무리 배선해도 사람이나 에이전트가 그 명령어를 기억해서 쳐야만 돌았고,
+# 안 치면 그냥 통과했다. 이 저장소에서 실제로 강제되는 지점은 git 하나뿐이라 여기 건다.
+#
+# 소요 ~6초. 통과 못 하면 push 가 막힌다.
+# 진짜로 우회해야 하면:  git push --no-verify   (우회했다는 사실을 커밋/이슈에 남길 것)
+# 훅 자체를 끄려면:      git config --unset core.hooksPath
+
+PY="C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe"
+ROOT="$(git rev-parse --show-toplevel)"
+GATE="$ROOT/scripts/prepush_check.py"
+
+# main 은 slim 브랜치라 scripts/ 가 추적되지 않는다(격리 워크트리 cherry-push 경로).
+# 게이트 파일이 없는 워크트리에서 훅이 죽으면 배포가 막힌다 — 경고만 하고 통과시킨다.
+if [ ! -f "$GATE" ]; then
+  echo "pre-push: scripts/prepush_check.py 가 이 워크트리에 없다 — 게이트 건너뜀." >&2
+  exit 0
+fi
+
+if [ ! -f "$PY" ]; then
+  echo "pre-push: venv 인터프리터를 못 찾음: $PY" >&2
+  echo "          경로가 바뀌었으면 .githooks/pre-push 의 PY 를 고칠 것." >&2
+  exit 1
+fi
+
+echo "pre-push: 게이트 실행 중 (~6초)..."
+"$PY" "$GATE"
+rc=$?
+
+if [ "$rc" -ne 0 ]; then
+  echo "" >&2
+  echo "########################################################################" >&2
+  echo "PUSH BLOCKED — pre-push 게이트 exit=$rc" >&2
+  echo "  RED 이 있거나 inbox 스키마/폴더 위반이 있다. 위 출력을 볼 것." >&2
+  echo "  inbox 기계적 위반은:  python scripts/check_inbox_hygiene.py --fix" >&2
+  echo "  RED 은 고쳐서 0 으로 만든다. 면제는 owner 승인 건만." >&2
+  echo "########################################################################" >&2
+  exit 1
+fi
+
+exit 0

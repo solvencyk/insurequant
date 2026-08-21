@@ -1,0 +1,415 @@
+{
+  "scouted_at": "20260814T174616Z",
+  "target": "2026.2Q",
+  "results": [
+    {
+      "kr": "KR0001",
+      "name": "메리츠화재해상보험",
+      "corp_code": "00117744",
+      "pre_existing": true,
+      "insurer_code": "KR0001",
+      "canonical": "메리츠화재해상보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814002253",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0002",
+      "name": "한화손해보험",
+      "corp_code": "00135917",
+      "pre_existing": true,
+      "insurer_code": "KR0002",
+      "canonical": "한화손해보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260813001433",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0003",
+      "name": "롯데손해보험",
+      "corp_code": "00113562",
+      "pre_existing": true,
+      "insurer_code": "KR0003",
+      "canonical": "롯데손해보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814002802",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0004",
+      "name": "예별손해보험",
+      "corp_code": "01974696",
+      "pre_existing": false,
+      "insurer_code": "KR0004",
+      "canonical": "예별손해보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0005",
+      "name": "흥국화재",
+      "corp_code": "00103176",
+      "pre_existing": true,
+      "insurer_code": "KR0005",
+      "canonical": "흥국화재",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003618",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0008",
+      "name": "삼성화재해상보험",
+      "corp_code": "00139214",
+      "pre_existing": true,
+      "insurer_code": "KR0008",
+      "canonical": "삼성화재해상보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003992",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0009",
+      "name": "현대해상",
+      "corp_code": "00164973",
+      "pre_existing": true,
+      "insurer_code": "KR0009",
+      "canonical": "현대해상",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003474",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0010",
+      "name": "KB손해보험",
+      "corp_code": "00120216",
+      "pre_existing": true,
+      "insurer_code": "KR0010",
+      "canonical": "KB손해보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814002234",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0011",
+      "name": "DB손해보험",
+      "corp_code": "00159102",
+      "pre_existing": true,
+      "insurer_code": "KR0011",
+      "canonical": "DB손해보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003682",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0029",
+      "name": "AIG손해보험",
+      "status": "no_corp_match"
+    },
+    {
+      "kr": "KR0032",
+      "name": "NH농협손해보험",
+      "corp_code": "00908155",
+      "pre_existing": true,
+      "insurer_code": "KR0032",
+      "canonical": "NH농협손해보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003298",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0049",
+      "name": "악사손해보험",
+      "corp_code": "00383198",
+      "pre_existing": false,
+      "insurer_code": "KR0049",
+      "canonical": "악사손해보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0050",
+      "name": "하나손해보험",
+      "corp_code": "00471891",
+      "pre_existing": false,
+      "insurer_code": "KR0050",
+      "canonical": "하나손해보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0051",
+      "name": "신한이지손해보험",
+      "corp_code": "00499426",
+      "pre_existing": false,
+      "insurer_code": "KR0051",
+      "canonical": "신한이지손해보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0068",
+      "name": "한화생명",
+      "corp_code": "00113058",
+      "pre_existing": true,
+      "insurer_code": "KR0068",
+      "canonical": "한화생명",
+      "period": "2026.2Q",
+      "rcept_no": "20260813001536",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0069",
+      "name": "삼성생명",
+      "corp_code": "00126256",
+      "pre_existing": true,
+      "insurer_code": "KR0069",
+      "canonical": "삼성생명",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003263",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0070",
+      "name": "에이비엘생명보험",
+      "corp_code": "00148391",
+      "pre_existing": true,
+      "insurer_code": "KR0070",
+      "canonical": "에이비엘생명보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003770",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0071",
+      "name": "흥국생명보험",
+      "corp_code": "00167068",
+      "pre_existing": true,
+      "insurer_code": "KR0071",
+      "canonical": "흥국생명보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003688",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0072",
+      "name": "케이디비생명보험",
+      "corp_code": "00104069",
+      "pre_existing": true,
+      "insurer_code": "KR0072",
+      "canonical": "케이디비생명보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814002071",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0073",
+      "name": "교보생명보험",
+      "corp_code": "00112882",
+      "pre_existing": true,
+      "insurer_code": "KR0073",
+      "canonical": "교보생명보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814004024",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0074",
+      "name": "라이나생명보험",
+      "corp_code": "00504232",
+      "pre_existing": false,
+      "insurer_code": "KR0074",
+      "canonical": "라이나생명보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0075",
+      "name": "비엔피파리바카디프생명보험",
+      "corp_code": "00460798",
+      "pre_existing": false,
+      "insurer_code": "KR0075",
+      "canonical": "비엔피파리바카디프생명보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0076",
+      "name": "아이엠라이프생명보험",
+      "corp_code": "00124063",
+      "pre_existing": false,
+      "insurer_code": "KR0076",
+      "canonical": "아이엠라이프생명보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0079",
+      "name": "미래에셋생명",
+      "corp_code": "00112332",
+      "pre_existing": true,
+      "insurer_code": "KR0079",
+      "canonical": "미래에셋생명",
+      "period": "2026.2Q",
+      "rcept_no": "20260814004054",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0080",
+      "name": "에이아이에이생명보험",
+      "corp_code": "01295517",
+      "pre_existing": false,
+      "insurer_code": "KR0080",
+      "canonical": "에이아이에이생명보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0082",
+      "name": "DB생명보험",
+      "corp_code": "00168933",
+      "pre_existing": true,
+      "insurer_code": "KR0082",
+      "canonical": "DB생명보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814001853",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0083",
+      "name": "푸본현대생명보험",
+      "corp_code": "00459844",
+      "pre_existing": true,
+      "insurer_code": "KR0083",
+      "canonical": "푸본현대생명보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814004204",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0087",
+      "name": "동양생명",
+      "corp_code": "00117267",
+      "pre_existing": true,
+      "insurer_code": "KR0087",
+      "canonical": "동양생명",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003397",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0094",
+      "name": "신한라이프생명보험",
+      "corp_code": "00137517",
+      "pre_existing": true,
+      "insurer_code": "KR0094",
+      "canonical": "신한라이프생명보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814001090",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0095",
+      "name": "메트라이프생명보험",
+      "corp_code": "00171104",
+      "pre_existing": false,
+      "insurer_code": "KR0095",
+      "canonical": "메트라이프생명보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0097",
+      "name": "하나생명보험",
+      "corp_code": "00187123",
+      "pre_existing": false,
+      "insurer_code": "KR0097",
+      "canonical": "하나생명보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0099",
+      "name": "케이비라이프생명보험",
+      "corp_code": "00160393",
+      "pre_existing": true,
+      "insurer_code": "KR0099",
+      "canonical": "케이비라이프생명보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003260",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0100",
+      "name": "처브라이프생명보험",
+      "corp_code": "00203102",
+      "pre_existing": false,
+      "insurer_code": "KR0100",
+      "canonical": "처브라이프생명보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR0104",
+      "name": "농협생명보험",
+      "corp_code": "00909349",
+      "pre_existing": true,
+      "insurer_code": "KR0104",
+      "canonical": "농협생명보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003072",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR0150",
+      "name": "서울보증보험",
+      "corp_code": "00112998",
+      "pre_existing": true,
+      "insurer_code": "KR0150",
+      "canonical": "서울보증보험",
+      "period": "2026.2Q",
+      "rcept_no": "20260814002650",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR1000",
+      "name": "코리안리",
+      "corp_code": "00113191",
+      "pre_existing": true,
+      "insurer_code": "KR1000",
+      "canonical": "코리안리",
+      "period": "2026.2Q",
+      "rcept_no": "20260814003862",
+      "status": "fetched"
+    },
+    {
+      "kr": "KR1010",
+      "name": "교보라이프플래닛생명보험",
+      "corp_code": "00992622",
+      "pre_existing": false,
+      "insurer_code": "KR1010",
+      "canonical": "교보라이프플래닛생명보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR1011",
+      "name": "아이비케이연금보험",
+      "corp_code": "00844635",
+      "pre_existing": false,
+      "insurer_code": "KR1011",
+      "canonical": "아이비케이연금보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    },
+    {
+      "kr": "KR1098",
+      "name": "카카오페이손해보험",
+      "corp_code": "01603877",
+      "pre_existing": false,
+      "insurer_code": "KR1098",
+      "canonical": "카카오페이손해보험",
+      "period": "2026.2Q",
+      "status": "no_filing"
+    }
+  ]
+}

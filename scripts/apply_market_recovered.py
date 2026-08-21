@@ -45,7 +45,21 @@ def main(argv):
     ap.add_argument("--results", default=str(RESULTS))
     args = ap.parse_args(argv)
 
-    results = json.loads(Path(args.results).read_text(encoding="utf-8"))
+    results_path = Path(args.results)
+    if not results_path.exists():
+        # No script produces this file: it is the recover-market-subrisks Workflow's
+        # return value, saved here by hand. Absent = that recovery run is over (or has
+        # not been started), not a corrupt tree — so say which phase to run instead of
+        # dying on a bare FileNotFoundError.
+        print(f"results file not found: {results_path}", file=sys.stderr)
+        print("This is Phase 3 of the 시장위험 36-46 recovery; it only materialises cells "
+              "the Workflow already gated. Run the earlier phases first:", file=sys.stderr)
+        print("  Phase 0  python scripts/extract_market_section_pages.py", file=sys.stderr)
+        print("  Phase 1-2  recover-market-subrisks Workflow -> save its return value "
+              "to the path above (or pass --results <path>)", file=sys.stderr)
+        sys.exit(2)
+
+    results = json.loads(results_path.read_text(encoding="utf-8"))
     rows = json.loads(JSON_PATH.read_text(encoding="utf-8"))
     existing = {(r["원보험사코드"], int(r["항목번호"]), r["공시분기"]) for r in rows}
 

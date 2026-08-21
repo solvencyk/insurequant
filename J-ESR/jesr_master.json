@@ -1,0 +1,300 @@
+{
+  "_meta": {
+    "lane": "jesr",
+    "track": "J-ESR",
+    "period": "2026.1Q",
+    "as_of_target": "2026-03-31",
+    "unit": "억엔 (1兆=10000억, 1bn=10억)",
+    "source": "downloader inbox/parser/20260624T0200Z (jesr_sources_2026Q1.csv)",
+    "validator": {
+      "plausible_range": [],
+      "component_identity": [],
+      "census": {
+        "downloader_collected": 11,
+        "master_records": 11,
+        "with_esr_value": 9,
+        "as_of_consistent(2026-03-31)": 4,
+        "prior_period(flagged false)": 5,
+        "not_yet_disclosed": [
+          "T&Dホールディングス",
+          "かんぽ生命保険"
+        ],
+        "component_identity_runnable": false
+      }
+    },
+    "supplemental_not_checked": [
+      "大同生命",
+      "太陽生命",
+      "ライフネット生命"
+    ],
+    "note": "데이터레이어 전용 — as-of 혼재(2025.3~2026.3). 비교 viz 금지, designer가 as_of_consistent로 분리. △는 표시레이어(designer)."
+  },
+  "records": [
+    {
+      "company_jp": "東京海上ホールディングス",
+      "company_en": "Tokio Marine Holdings",
+      "ticker": "8766",
+      "entity_type": "group",
+      "esr_pct": 238,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS",
+      "as_of": "2026-03-31",
+      "as_of_consistent": true,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": 319600,
+      "단위": "억엔",
+      "target_pct": "190%+",
+      "yoy_change_pp": null,
+      "provenance": {
+        "source_url": "https://www.tokiomarinehd.com/ir/event/presentation/2025/gi58a8000000246z-att/4Q_FY2025_Summary_Report_j.pdf",
+        "doc": "決算短信",
+        "doc_date": "2026-05-20",
+        "page": null
+      },
+      "notes": "Q1 FY2026 (Jun 2025) ESR=238% reported stable within target 200-250%. New J-ICS basis from 2026.3末; target reset to 190%+."
+    },
+    {
+      "company_jp": "MS&ADインシュアランスグループHD",
+      "company_en": "MS&AD Insurance Group Holdings",
+      "ticker": "8725",
+      "entity_type": "group",
+      "esr_pct": 214,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS",
+      "as_of": "2026-03-31",
+      "as_of_consistent": true,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": null,
+      "단위": "억엔",
+      "target_pct": null,
+      "yoy_change_pp": -12,
+      "provenance": {
+        "source_url": "https://finance.logmi.jp/articles/385032",
+        "doc": "決算説明",
+        "doc_date": "2026-05",
+        "page": null
+      },
+      "notes": "ESR 214% as of 2026.3末, -12pp yoy. Source: logmi finance earnings transcript."
+    },
+    {
+      "company_jp": "SOMPOホールディングス",
+      "company_en": "Sompo Holdings",
+      "ticker": "8630",
+      "entity_type": "group",
+      "esr_pct": 270,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS_VaR99.5",
+      "as_of": "2026-03-31",
+      "as_of_consistent": true,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": null,
+      "단위": "억엔",
+      "target_pct": "200%+",
+      "yoy_change_pp": null,
+      "provenance": {
+        "source_url": "https://www.sompo-hd.com/-/media/hd/files/doc/pdf/ir/2026/ir_20260520.pdf?la=ja-JP",
+        "doc": "決算説明資料",
+        "doc_date": "2026-05-20",
+        "page": null
+      },
+      "notes": "ESR 270% as of 2026.3末. Target capital level 200%+. VaR 99.5% methodology."
+    },
+    {
+      "company_jp": "ソニーフィナンシャルグループ",
+      "company_en": "Sony Financial Group",
+      "ticker": "8729",
+      "entity_type": "group",
+      "esr_pct": 177,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS",
+      "as_of": "2026-03-31",
+      "as_of_consistent": true,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": 207800,
+      "단위": "억엔",
+      "target_pct": null,
+      "yoy_change_pp": -12,
+      "provenance": {
+        "source_url": "https://www.sonyfg.co.jp/ja/financial_info/results/sfgi_fy2025_4q_01.pdf",
+        "doc": "決算説明資料",
+        "doc_date": "2026-05-14",
+        "page": null
+      },
+      "notes": "ESR 177% as of 2026.3末 (FY2025末), -12pp yoy. Total assets 20兆7,755億円. Source: FY2025 earnings presentation."
+    },
+    {
+      "company_jp": "第一生命ホールディングス",
+      "company_en": "Dai-ichi Life Holdings",
+      "ticker": "8750",
+      "entity_type": "group",
+      "esr_pct": 213,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS",
+      "as_of": "2025-12-31",
+      "as_of_consistent": false,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": null,
+      "단위": "억엔",
+      "target_pct": null,
+      "yoy_change_pp": 3,
+      "provenance": {
+        "source_url": "https://www.daiichilife-group.com/investor/library/presentation/pdf/2025_third_phone.pdf",
+        "doc": "決算報告",
+        "doc_date": "2026-02-13",
+        "page": null
+      },
+      "notes": "Q3 ESR 213% as of 2025.12末 (+3pp vs 2025.3末 210%). 2026.3末 annual figure not yet confirmed in search. Projected 170-200% range under new J-ICS basis per 2024.2 IR presentation."
+    },
+    {
+      "company_jp": "T&Dホールディングス",
+      "company_en": "T&D Holdings",
+      "ticker": "8795",
+      "entity_type": "group",
+      "esr_pct": null,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS",
+      "as_of": "2026-03-31",
+      "as_of_consistent": true,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": null,
+      "단위": "억엔",
+      "target_pct": null,
+      "yoy_change_pp": null,
+      "provenance": {
+        "source_url": "https://www.td-holdings.co.jp/ir/document/results.php",
+        "doc": "IR資料室",
+        "doc_date": "2026-05-15",
+        "page": null
+      },
+      "notes": "ESR % not found in web search. Group EV 42,386億円 disclosed for 2026.3末. Need direct IR PDF access. Group adjusted profit 1,585億円.",
+      "status": "not_yet_disclosed"
+    },
+    {
+      "company_jp": "かんぽ生命保険",
+      "company_en": "Japan Post Insurance",
+      "ticker": "7181",
+      "entity_type": "group",
+      "esr_pct": null,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS",
+      "as_of": "2026-03-31",
+      "as_of_consistent": true,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": null,
+      "단위": "억엔",
+      "target_pct": null,
+      "yoy_change_pp": null,
+      "provenance": {
+        "source_url": "https://pdf.irpocket.com/C7181/fcDL/shwf/kVj1.pdf",
+        "doc": "決算経営説明会資料",
+        "doc_date": "2026-05-29",
+        "page": null
+      },
+      "notes": "Provisional ESR published (audit pending as of May 2026). Specific % not extractable from web search. Solvency Margin Ratio 831.8% as of Dec 2025. ESR calculation aligned to new regulation.",
+      "status": "not_yet_disclosed"
+    },
+    {
+      "company_jp": "日本生命保険",
+      "company_en": "Nippon Life Insurance",
+      "ticker": null,
+      "entity_type": "mutual",
+      "esr_pct": 224,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS_preliminary",
+      "as_of": "2025-03-31",
+      "as_of_consistent": false,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": null,
+      "단위": "억엔",
+      "target_pct": "200-270%",
+      "yoy_change_pp": null,
+      "provenance": {
+        "source_url": "https://www.nissay.co.jp/kaisha/annai/gyoseki/pdf/kessan202505/gaiyo.pdf",
+        "doc": "決算概要",
+        "doc_date": "2025-05-23",
+        "page": null
+      },
+      "notes": "FY2024末 (2025.3末) ESR 224%. Target range 200-270% for FY2026末. 2026.3末 figure not yet found. Non-listed mutual company; does NOT file via EDINET."
+    },
+    {
+      "company_jp": "住友生命保険",
+      "company_en": "Sumitomo Life Insurance",
+      "ticker": null,
+      "entity_type": "mutual",
+      "esr_pct": 184,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS_preliminary",
+      "as_of": "2025-09-30",
+      "as_of_consistent": false,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": null,
+      "단위": "억엔",
+      "target_pct": null,
+      "yoy_change_pp": 6,
+      "provenance": {
+        "source_url": "https://www.sumitomolife.co.jp/about/pdf/company/ir/settlement/260526.pdf",
+        "doc": "決算説明資料",
+        "doc_date": "2026-05-26",
+        "page": null
+      },
+      "notes": "H1 FY2025 (Sep 2025) ESR 184%, +6pp yoy. FY2025末 (2026.3末) figure not confirmed. EEV also disclosed. Non-listed mutual; no EDINET."
+    },
+    {
+      "company_jp": "明治安田生命保険",
+      "company_en": "Meiji Yasuda Life Insurance",
+      "ticker": null,
+      "entity_type": "mutual",
+      "esr_pct": 216,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS_preliminary",
+      "as_of": "2025-03-31",
+      "as_of_consistent": false,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": null,
+      "단위": "억엔",
+      "target_pct": null,
+      "yoy_change_pp": -4,
+      "provenance": {
+        "source_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/myinfo-2025/ld/detail/02-01-kenzen.html",
+        "doc": "ディスクロージャー",
+        "doc_date": "2025",
+        "page": null
+      },
+      "notes": "FY2024末 (2025.3末) ESR 216% (-4pp, prior year 220%). FY2025末 (2026.3末) figure not confirmed. Model revised for new regulation. Non-listed mutual; no EDINET."
+    },
+    {
+      "company_jp": "富国生命保険",
+      "company_en": "Fukoku Life Insurance",
+      "ticker": null,
+      "entity_type": "mutual",
+      "esr_pct": 260.9,
+      "esr_basis": "新J-ICS",
+      "esr_basis_raw": "J-ICS_preliminary",
+      "as_of": "2025-09-30",
+      "as_of_consistent": false,
+      "所要資本_억엔": null,
+      "적격자본_억엔": null,
+      "총자산_억엔": null,
+      "단위": "억엔",
+      "target_pct": null,
+      "yoy_change_pp": null,
+      "provenance": {
+        "source_url": "https://www.fukoku-life.co.jp/about/finance/health/",
+        "doc": "健全性指標",
+        "doc_date": "2025",
+        "page": null
+      },
+      "notes": "H1 FY2025 (Sep 2025) ESR 260.9%. FY2025末 figure not confirmed. Non-listed."
+    }
+  ]
+}

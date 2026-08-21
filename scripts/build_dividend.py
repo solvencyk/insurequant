@@ -7,6 +7,14 @@ Source = data/dart/_alotmatter_cache/{corp_code}_{year}_{reprt}.json (already fe
 39 companies x FY2023-2026 x 4 reprt_code, committed offline). KR-code <-> corp_code from
 data/_derived/alotmatter_fetch_census.json's cells (built by the same fetch pass).
 
+**The census supplies the (kr, corp_code, year, reprt) grid only -- filing status is read from
+the cache file itself.** The census also carries a `status` field, but it is a snapshot written
+by the fetch pass and `fetch_dart_alotmatter.py --refresh` does not rewrite it, so it goes stale:
+the 2026-08-20 refresh flipped 19 companies' 2026/11012 cells 013->000 on disk while the census
+still said 013, which would have silently dropped those 19 companies from 2026.2Q (owner ticket
+inbox/parser/20260820T1540Z). Only status=000 responses are persisted now, so on disk a missing
+file means no filing; a pre-2026-08-20 013 file also means no filing.
+
 Schema (9 columns -- adds 종류주 to the usual 8; "-" for company-level items):
   원보험사코드 / 원수사명 / 티커 / 생손보여부 / 항목번호 / 항목명 / 종류주 / 공시분기 / 값
 
@@ -96,19 +104,19 @@ def main():
         if not qlabel or kr not in meta:
             continue
         quarter = f"{year}.{qlabel}"
-        if cell["status"] != "000":
-            n_no_filing += 1
-            continue
-        n_ok += 1
         f = CACHE / f"{cc}_{year}_{reprt}.json"
         if not f.exists():
-            per_company_diag.setdefault(kr, []).append(f"{quarter}: cache file missing")
+            n_no_filing += 1        # only status=000 is persisted -- absent file = no filing
             continue
         try:
             d = json.loads(f.read_text(encoding="utf-8"))
         except Exception as e:
             per_company_diag.setdefault(kr, []).append(f"{quarter}: EXC {e}")
             continue
+        if d.get("status") != "000":
+            n_no_filing += 1        # pre-fix negative-cache file left on disk
+            continue
+        n_ok += 1
         name, ticker, sb = meta[kr]
         base = {"원보험사코드": kr, "원수사명": name, "티커": ticker, "생손보여부": sb,
                 "공시분기": quarter}

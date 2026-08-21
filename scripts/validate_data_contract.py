@@ -56,15 +56,24 @@ except Exception:
 
 # Reuse existing validators rather than re-implementing (spec §1 "흡수·통합"):
 from validate_kics_disclosure import (  # noqa: E402
+    _axis_eval_findings,
+    _axis_evaluation_census,
+    _axis_mirror_findings,
     _coverage_census,
     _diversification_negative,
+    _exemption_provenance_findings,
+    _exemption_registries,
     _item12_equals_item1,
+    _load_exemption_ledger,
+    _other_capital_children_sum,
     _parent_present_child_incomplete_after,
     _parent_zero_child_nonzero,
     _post_transition_parent_census,
     _ratio_series_spikes,
     _scan_breakdown_presence,
+    _source_readability,
     _transition_identities_after,
+    _transition_irr_after,
     _transition_mmult_after,
     _transition_ratio_after_capture,
 )
@@ -255,19 +264,54 @@ def check_census(res: GateResult, env: "Env") -> None:
                 rule=f"TRANSITION_AFTER_{kind}",
                 message=f"item{item} 적용후={after} 적용전={before} [{kind}] — 선택경과조치 적용사의 "
                         f"적용후 유실/복사/역전/항등식붕괴")
-    mmult_mismatch, _mmult_submissing = _transition_mmult_after(kd_records)
+    # 2026-08-21: 아래 3개는 **전사 39사 × 적용후** 로 확대됐다(종전 적용사 18사 한정 = 비-applier
+    # 21사의 적용후 8,914셀이 통째로 미검사 = false-green). mmult 는 축 15(기본요구자본 R4)도 추가.
+    # 반환 3/2-튜플의 마지막 원소는 '계산불가 명시집계'라 차단엔 안 쓰되 리포트엔 남긴다.
+    mmult_mismatch, _mmult_submissing, _mmult_skipped, mmult_unverifiable = \
+        _transition_mmult_after(kd_records, env.source_readability)
     for c, q, n, parent, post_v, computed in mmult_mismatch:
         if not _emit(q):
             continue
         res.add(check="census", severity="RED", master="kics_disclosure", company=n, quarter=q,
                 rule="TRANSITION_AFTER_MMULT_MISMATCH",
                 message=f"item{parent}후 공시={post_v} ≠ sqrt(세부후·상관행렬)={computed} — 적용후 세부 미정합")
-    for c, q, n, rule, exp_after, disc_after, diff in _transition_identities_after(kd_records):
+    # 2026-08-21 ④: '적용후 세부결측(후=전)' 중 **원천이 스캔본이라 판정 자체가 불가능한** 칸.
+    # 종전엔 이 칸들이 "구조적으로 정당" 버킷에 섞여 정당 카운트를 부풀렸다 — 확인한 게 아니라
+    # 못 읽은 것이다. 결함이라고 단정할 근거도 없으므로 차단은 안 하되(YELLOW) 별도 카테고리로
+    # 세어 OCR/재수집 워크리스트가 되게 한다.
+    for c, q, n, parent, tag in mmult_unverifiable:
+        if not _emit(q):
+            continue
+        res.add(check="census", severity="YELLOW", master="kics_disclosure", company=n, quarter=q,
+                rule="SOURCE_UNREADABLE_NOT_VERIFIED",
+                message=f"item{parent}후 세부결측(후=전)인데 raw 텍스트레이어 {tag} — "
+                        f"'전=후라 정당'이 아니라 **판정 불가**(OCR/재수집 전까지 미검증)")
+    _ident_after, _ident_skipped = _transition_identities_after(kd_records)
+    for c, q, n, rule, exp_after, disc_after, diff in _ident_after:
         if not _emit(q):
             continue
         res.add(check="census", severity="RED", master="kics_disclosure", company=n, quarter=q,
                 rule="TRANSITION_AFTER_IDENTITY",
                 message=f"[{rule}] 공시후={disc_after} 계산후={exp_after} diff={diff} — 적용후 항등식 위반")
+    _irr_after, _irr_skipped = _transition_irr_after(kd_records)
+    for c, q, n, disc_after, exp_after in _irr_after:
+        if not _emit(q):
+            continue
+        res.add(check="census", severity="RED", master="kics_disclosure", company=n, quarter=q,
+                rule="TRANSITION_AFTER_IRR_MISMATCH",
+                message=f"item36후 공시={disc_after} ≠ 시나리오후(41-46) 도출={exp_after} — 적용후 금리위험 미정합")
+    # 2026-08-21: item23 = item24+25+26 (기타 요구자본 분해). 24/25/26 은 **어떤 항등식도 참조하지
+    # 않던 항목**이라 셀이 있어도 값은 아무도 안 봤다. K-ICS 게이트에만 걸면 prepush 경로 밖이라
+    # (prepush_check.py 는 validate_kics_disclosure.py 를 호출하지 않는다) 여기서 같이 건다.
+    # 적용전·적용후 양 컬럼을 한 함수가 본다 — 적용후가 검증사각이었던 전례(PM-2026-07-07).
+    _other_cap, _other_cap_skipped = _other_capital_children_sum(kd_records)
+    for c, q, n, col, disclosed, expected, kids in _other_cap:
+        if not _emit(q):
+            continue
+        res.add(check="census", severity="RED", master="kics_disclosure", company=n, quarter=q,
+                rule="OTHER_CAPITAL_CHILDREN_SUM",
+                message=f"[{col}] item23(기타 요구자본)={disclosed} ≠ item24+25+26={expected} "
+                        f"{list(kids)} — 원문 라벨이 선언한 합(1+2+3)이 안 닫힘")
     for c, q, parent, n, missing in _parent_present_child_incomplete_after(kd_records):
         if not _emit(q):
             continue
@@ -294,6 +338,59 @@ def check_census(res: GateResult, env: "Env") -> None:
         res.add(check="census", severity="YELLOW", master="kics_disclosure", company=n, quarter=q,
                 rule="RATIO_SERIES_SPIKE",
                 message=f"지급여력비율 {x} (인접 {qa}={a}, {qb}={b}) — 소스오염 의심(비차단, parser 재확인)")
+
+    # --- 1b(v). 메타룰: 축이 '돌았는가' 가 아니라 '판정했는가' (owner 2026-08-21) ---
+    # 어느 축도 평가율을 방출하지 않아서, 그리드의 21%만 판정하는 축이 `FAIL 0` 한 줄로 통과처럼
+    # 읽혔다. 실질 평가 0칸인 축은 이 저장소가 이미 RED 로 다루는 '검사축 소실'
+    # (CAPSEC_SOURCE_UNRESOLVED · DIV_CENSUS_SOURCE_MISSING)과 같은 부류다.
+    # 축 단위 finding 이라 quarter 가 없다 → display-scope 필터를 타지 않고 항상 방출된다(의도).
+    #
+    # ⚠️ 2026-08-21 (f) 정정: 처음엔 "적용후 입력이 적용전과 전부 동일 = 동어반복" 이라 보고 미러를
+    # 통째로 실질평가에서 뺐다가 `36_irr 적용후`·`R2 적용후` 를 잘못 RED 로 올렸다.
+    # **경과조치 미적용사에게 후 = 전은 정의상 참**이다(적용사 미러 실측 0건) — 정의를 결함으로
+    # 뒤집어 읽은 것이다. 이제 미러의 결함성은 `AXIS_SELF_MIRRORED_APPLIER` 가 **적용사 + 그 축을
+    # 움직이는 종류를 실제 신청한 경우에만** 판정한다.
+    _axis_census = _axis_evaluation_census(kd_records)
+    axis_red, axis_review = _axis_eval_findings(_axis_census)
+    for f in _axis_mirror_findings(_axis_census):
+        if not _emit(f["quarter"]):
+            continue
+        res.add(check="census", severity="RED", master="kics_disclosure",
+                company=env.code_name.get(f["code"], f["code"]), quarter=f["quarter"],
+                rule="AXIS_SELF_MIRRORED_APPLIER",
+                message=f"{f['axis']}[{f['column']}] — 경과조치 {f['kinds']} 신청사인데 적용후가 "
+                        f"적용전과 한 자리도 다르지 않다(대상+전 입력 수치 동일) = 적용후 컬럼 복사 지문")
+    for r in axis_red:
+        why = ("계산된 칸이 전부 적용사 미러링 오염"
+               if r["mirror_applier_suspect"] and r["mirror_applier_suspect"] == r["evaluated"]
+               else "계산가능 칸이 0")
+        res.add(check="census", severity="RED", master="kics_disclosure", company=None, quarter=None,
+                rule="AXIS_NOT_EVALUATED",
+                message=f"{r['axis']} [{r['column']}] grid={r['grid']} 평가={r['evaluated']} "
+                        f"오염의심={r['mirror_applier_suspect']} 실질=0 — {why}. 이 축의 'FAIL 0' 은 "
+                        f"증거가 아니다 (해소: 원천을 채우거나 owner 가 축 면제를 등재)")
+    for r in axis_review:
+        res.add(check="census", severity="YELLOW", master="kics_disclosure", company=None,
+                quarter=None, rule="AXIS_EVAL_RATE_LOW",
+                message=f"{r['axis']} [{r['column']}] 평가 {r['evaluated']}칸 = 축그리드 "
+                        f"{100*r['rate']:.1f}% / 전버킷 {100*r['rate_all']:.1f}% "
+                        f"(바닥: {r['low_on']}) — 'FAIL 0' 이 그리드 절반도 설명하지 못한다")
+
+    # --- 1b(vi). 메타룰: 면제 근거(provenance) ---
+    # 면제 2건이 '(raw 정독 확인)' 을 근거로 달고 있었는데 raw 에는 표가 멀쩡히 있었다(실제로 본 건
+    # docling MD). 근거가 검증 불가능한 산문이면 아무도 반박할 수 없다 → 모든 면제는 기계가 열어볼
+    # 수 있는 인용을 들어야 하고, 없으면 그 사실 자체가 finding 이다. 특히 **레지스트리엔 있는데
+    # 원장에 기록조차 없는 항목은 RED** — 새 면제를 조용히 추가하는 경로를 즉시 막는다.
+    exempt_red, exempt_review = _exemption_provenance_findings(
+        env.exemption_registries, env.exemption_ledger)
+    for f in exempt_red:
+        res.add(check="census", severity="RED", master="kics_disclosure",
+                company=f.get("code"), quarter=f.get("quarter"), rule=f["rule"],
+                message=f"[{f['registry']}] {f['detail']}")
+    for f in exempt_review:
+        res.add(check="census", severity="YELLOW", master="kics_disclosure",
+                company=f.get("code"), quarter=f.get("quarter"), rule=f["rule"],
+                message=f"[{f['registry']}] {f['detail']}")
 
     # --- 1e. capital-securities 커버리지 census (owner 20260803T0310Z) ---
     # 라벨 계보(20260803T0056Z)는 "틀린 소스라고 말하는 것"을 막았지만, **소스가 통째로 비어도**
@@ -933,6 +1030,37 @@ def check_as_of(res: GateResult, env: "Env") -> None:
                     rule="STALE_AS_OF",
                     message=f"{label} latest is {tq} but latest K-ICS quarter is {latest_q} — stale")
 
+    # --- 2a(iv). kics_rate_sensitivity provenance (2026-08-21 배선, UH-8) ---
+    # 배경: 이 마스터는 `Env.MASTER_FILES` 에 등재돼 mtime 감시만 받고 **as-of·계보 축은 아무도
+    # 보지 않았다**(inbox/parser/20260803T0520Z). 값 정합은 validate_kics_rate_sensitivity.py 가
+    # 보지만 그건 "이 값이 맞는가" 이고 "어느 분기·어느 파일에서 나왔는가" 는 미검증이었다 —
+    # PM-2026-06-16 두 달 글리치와 같은 부류(맞는 산수·틀린 소스).
+    # 사이드카는 parser 가 2026-08-20 에 발행했다(scripts/emit_rate_sensitivity_provenance.py, 87셀).
+    #
+    # **target_q 를 None 으로 넘긴다 — 의도적이다.** sensitivity_heatmap·forward_capital·tier1/2 는
+    # '최신 한 분기'만 담는 단일기준 아티팩트라 target_q(=최신분기)보다 오래되면 stale 이 맞다.
+    # 이 마스터는 **이력형**이다(실측 2026-08-21: 2024.4Q 102행 · 2025.2Q 192행 · 2025.4Q 228행).
+    # 여기에 target_q=latest_q 를 걸면 과거분기 86/87 셀이 전부 STALE_AS_OF RED 로 터진다 —
+    # 데이터가 틀려서가 아니라 검사축을 잘못 잡아서다. 그래서 셀 단위 축만 강제한다:
+    #   as_of_date 의 분기 == 그 셀의 공시분기 / source_file 디스크 존재 / source_id 계보 일치.
+    # 마스터 전체의 신선도(최신분기가 최신 공시분기인가)는 **별개 축**이고, 지금은 미배선이다 —
+    # 근거 없이 걸면 red-out 이라 스레드에 열린 항목으로 남긴다(공시 주기가 회사·분기마다 달라
+    # "2026.1Q 가 없으면 stale" 이 참인지 실데이터로 확정하지 않았다. 카테고리로 단정 금지).
+    rs_rows = env.rate_sensitivity_rows
+    if sidecars.get("kics_rate_sensitivity") is not None:
+        published = sorted({
+            (r.get("원보험사코드"), r.get("공시분기"), "rate_sensitivity")
+            for r in rs_rows if r.get("원보험사코드") and r.get("공시분기")
+        })
+        verify_provenance_sidecar(res, "kics_rate_sensitivity",
+                                  sidecars["kics_rate_sensitivity"], published, None)
+    elif not rs_rows:
+        res.add(check="as_of", severity="RED", master="kics_rate_sensitivity", company=None,
+                quarter=None, rule="MISSING_PROVENANCE",
+                message="kics_rate_sensitivity.json absent/empty — cannot resolve provenance (RED)")
+    else:
+        _fallback_note("kics_rate_sensitivity")
+
     # --- 2c. effective-list applied evidence (capital-securities) ---
     # The donut bug (spec §5.1): downloader used a stale snapshot WITHOUT filtering to bonds
     # effective (outstanding) as of the baseline. Evidence = bonds carry status/effective_call_date
@@ -1319,6 +1447,11 @@ class Env:
                                       lambda: self._load_json_opt("kics_forward_capital.json") or [])
         self.tier1_latest = self._get("tier1_latest", lambda: self._load_tier("tier1_utilization"))
         self.tier2_latest = self._get("tier2_latest", lambda: self._load_tier("tier2_utilization"))
+        # 2026-08-21 CHECK 2 2a(iv) 배선용. 이 마스터는 **이력형**(여러 분기 동시 보유)이라
+        # 단일기준 아티팩트(forward/tier)와 달리 target_q 를 걸지 않는다 — 아래 배선부 주석 참조.
+        self.rate_sensitivity_rows = self._get(
+            "rate_sensitivity_rows",
+            lambda: self._load_json_opt("kics_rate_sensitivity.json") or [])
         # sidecars FIRST — bond evidence는 사이드카가 선언한 source_file에서 계보를 뽑아 검사한다.
         self.provenance_sidecars = self._get("provenance_sidecars", self._load_provenance_sidecars)
         self.bond_effective_evidence = self._get("bond_effective_evidence", self._load_bond_evidence)
@@ -1350,6 +1483,15 @@ class Env:
         self.dividend_fetch_census = self._get(
             "dividend_fetch_census",
             (lambda: None) if self.inject else lambda: self._load_json_opt(DIV_FETCH_CENSUS))
+        # 2026-08-21 메타룰 입력 3종. selftest(inject 모드)는 합성데이터 격리 — 디스크의 실제
+        # 레지스트리·원장·판독성 사이드카를 읽지 않는다(안 읽으면 clean baseline 이 실데이터
+        # finding 에 오염된다. 17BS·dividend 와 같은 규칙).
+        self.exemption_registries = self._get(
+            "exemption_registries", (lambda: {}) if self.inject else _exemption_registries)
+        self.exemption_ledger = self._get(
+            "exemption_ledger", (lambda: None) if self.inject else _load_exemption_ledger)
+        self.source_readability = self._get(
+            "source_readability", (lambda: {}) if self.inject else _source_readability)
 
         # derived
         self.code_name = {r["원보험사코드"]: r["원수사명"] for r in self.kics_records

@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260616T1252Z
-status: open
+status: resolved
 route: backlog
 company: ALL
 period: ALL

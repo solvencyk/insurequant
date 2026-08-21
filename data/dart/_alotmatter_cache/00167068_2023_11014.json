@@ -1,0 +1,90 @@
+{
+  "status": "000",
+  "message": "정상",
+  "list": [
+    {
+      "rcept_no": "20231229000331",
+      "corp_cls": "E",
+      "corp_code": "00167068",
+      "corp_name": "흥국생명보험",
+      "se": "주당액면가액(원)",
+      "stock_knd": "-",
+      "thstrm": "-",
+      "frmtrm": "-",
+      "lwfr": "-",
+      "stlm_dt": "2023-09-30"
+    },
+    {
+      "rcept_no": "20231229000331",
+      "corp_cls": "E",
+      "corp_code": "00167068",
+      "corp_name": "흥국생명보험",
+      "se": "(연결)당기순이익(백만원)",
+      "stock_knd": "-",
+      "thstrm": "-",
+      "frmtrm": "-",
+      "lwfr": "-",
+      "stlm_dt": "2023-09-30"
+    },
+    {
+      "rcept_no": "20231229000331",
+      "corp_cls": "E",
+      "corp_code": "00167068",
+      "corp_name": "흥국생명보험",
+      "se": "(별도)당기순이익(백만원)",
+      "stock_knd": "-",
+      "thstrm": "-",
+      "frmtrm": "-",
+      "lwfr": "-",
+      "stlm_dt": "2023-09-30"
+    },
+    {
+      "rcept_no": "20231229000331",
+      "corp_cls": "E",
+      "corp_code": "00167068",
+      "corp_name": "흥국생명보험",
+      "se": "(연결)주당순이익(원)",
+      "stock_knd": "-",
+      "thstrm": "-",
+      "frmtrm": "-",
+      "lwfr": "-",
+      "stlm_dt": "2023-09-30"
+    },
+    {
+      "rcept_no": "20231229000331",
+      "corp_cls": "E",
+      "corp_code": "00167068",
+      "corp_name": "흥국생명보험",
+      "se": "현금배당금총액(백만원)",
+      "stock_knd": "-",
+      "thstrm": "-",
+      "frmtrm": "-",
+      "lwfr": "-",
+      "stlm_dt": "2023-09-30"
+    },
+    {
+      "rcept_no": "20231229000331",
+      "corp_cls": "E",
+      "corp_code": "00167068",
+      "corp_name": "흥국생명보험",
+      "se": "주식배당금총액(백만원)",
+      "stock_knd": "-",
+      "thstrm": "-",
+      "frmtrm": "-",
+      "lwfr": "-",
+      "stlm_dt": "2023-09-30"
+    },
+    {
+      "rcept_no": "20231229000331",
+      "corp_cls": "E",
+      "corp_code": "00167068",
+      "corp_name": "흥국생명보험",
+      "se": "(연결)현금배당성향(%)",
+      "stock_knd": "-",
+      "thstrm": "-",
+      "frmtrm": "-",
+      "lwfr": "-",
+      "stlm_dt": "2023-09-30"
+    }
+  ]
+}

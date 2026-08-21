@@ -112,6 +112,10 @@ STAGE_PATTERNS: dict[str, list[str]] = {
         # IBK연금(KR1011): "제공된 서비스에 대해 인식한 보험계약마진" (제공된, not
         # 제공한 — one syllable off the closest existing pattern above).
         "제공된 서비스에 대해 인식한 보험계약마진",
+        # 2026.2Q 반기보고서부터 DART 라벨 재구성(다수사 공통, PL_breakdown 측 동일 이슈—
+        # scripts/pl_breakdown/companies.py의 _S2_CSM/_MA_CSM_KEYS/CSM_AMORT 참조):
+        # "서비스의 이전으로 당기손익에 인식한 보험계약마진" → 아래 문구로 어순 변경.
+        "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진",
     ],
     "closing": [
         "순부채(자산) (K",

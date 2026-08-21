@@ -2921,8 +2921,8 @@
               "value_mn_krw": 731936.0
             },
             "interest": {
-              "label": "보험서비스결과 및 및 보험금융손익의당기손익 및 기타포괄손익의 총 변동",
-              "value_mn_krw": 206465.0
+              "label": "보험금융손익 / 당기손익",
+              "value_mn_krw": 111471.0
             },
             "assumption": {
               "label": "미래서비스관련 변동 / 보험계약마진 추정의 변경",
@@ -3226,8 +3226,8 @@
           "new_business_increment_span_q": 1
         },
         "2025.2Q": {
-          "status": "partial",
-          "completeness": 0.83,
+          "status": "ok",
+          "completeness": 1.0,
           "caption": "(단위 : 백만원)",
           "unit_divisor_to_mn": 1.0,
           "stages": {
@@ -3238,6 +3238,10 @@
             "new_business": {
               "label": "해당 기간에 처음 인식한 계약의 영향에 따른 증가분(감소분), 보험계약부채(자산)",
               "value_mn_krw": 0.0
+            },
+            "interest": {
+              "label": "재보험금융수익(비용)에 따른 증가분(감소분), 보험계약부채(자산) / 당기손익으로 인식된, 보유재보험계약 금융수익(비용)",
+              "value_mn_krw": 29256.0
             },
             "assumption": {
               "label": "보험계약마진을 조정하는 추정치의 변동분에 따른 증가분(감소분), 보험계약부채(자산)",
@@ -3680,7 +3684,7 @@
           "new_business_increment_span_q": 1
         },
         "2025.4Q": {
-          "status": "download_error"
+          "status": "no_extract"
         },
         "2026.1Q": {
           "status": "ok",
@@ -4877,7 +4881,7 @@
           "new_business_increment_span_q": 1
         },
         "2025.4Q": {
-          "status": "download_error"
+          "status": "no_extract"
         },
         "2026.1Q": {
           "status": "no_csm_block",
@@ -6562,7 +6566,7 @@
           "stages": {
             "opening": {
               "label": "기초 순장부금액",
-              "value_mn_krw": 2968518.0
+              "value_mn_krw": 3228870.0
             },
             "new_business": {
               "label": "신계약 인식효과",
@@ -6571,19 +6575,19 @@
             },
             "interest": {
               "label": "보험금융손익(PL)",
-              "value_mn_krw": 23841.0
+              "value_mn_krw": 28625.0
             },
             "assumption": {
               "label": "보험계약마진을 조정하는 추정치 변동",
-              "value_mn_krw": -94149.0
+              "value_mn_krw": 89821.0
             },
             "amortization": {
               "label": "서비스 제공에 따른 보험계약마진 변동",
-              "value_mn_krw": -70926.0
+              "value_mn_krw": -80601.0
             },
             "closing": {
               "label": "분기말 순장부금액",
-              "value_mn_krw": 2952975.0
+              "value_mn_krw": 3408243.0
             }
           },
           "new_business_increment_mn_krw": 125691.0,
@@ -7717,8 +7721,8 @@
           "new_business_increment_span_q": 1
         },
         "2025.2Q": {
-          "status": "partial",
-          "completeness": 0.83,
+          "status": "ok",
+          "completeness": 1.0,
           "caption": "(단위 : 백만원)",
           "unit_divisor_to_mn": 1.0,
           "stages": {
@@ -7729,6 +7733,10 @@
             "new_business": {
               "label": "해당 기간에 처음 인식한 계약의 영향에 따른 증가분(감소분), 보험계약부채(자산)",
               "value_mn_krw": 925519.0
+            },
+            "interest": {
+              "label": "보험금융수익(비용)에 따른 증가분(감소분), 보험계약부채(자산)",
+              "value_mn_krw": 176969.0
             },
             "assumption": {
               "label": "구성요소별 차이조정을 위한 보험계약의 변동분 / 보험계약마진을 조정하는 추정치의 변동분에 따른 증가분(감소분), 보험계약부채(자산)",
@@ -8463,8 +8471,8 @@
           "new_business_increment_span_q": 1
         },
         "2025.2Q": {
-          "status": "partial",
-          "completeness": 0.83,
+          "status": "ok",
+          "completeness": 1.0,
           "caption": "(단위 : 원)",
           "unit_divisor_to_mn": 1000000.0,
           "stages": {
@@ -8475,6 +8483,10 @@
             "new_business": {
               "label": "해당 기간에 처음 인식한 계약의 영향에 따른 증가분(감소분), 보험계약부채(자산)",
               "value_mn_krw": 846932.265743
+            },
+            "interest": {
+              "label": "보험금융수익(비용)에 따른 총 증가분(감소분), 보험계약부채(자산)",
+              "value_mn_krw": 155516.128139
             },
             "assumption": {
               "label": "보험계약마진을 조정하는 추정치의 변동분에 따른 증가분(감소분), 보험계약부채(자산)",

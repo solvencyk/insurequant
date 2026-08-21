@@ -45,8 +45,8 @@ If a master JSON adds a new field, publishing tells designer (`manual_html_edit`
 |---|---|---|
 | `index.html` | Market map (treemap on desktop, vertical list on mobile) + IFRS17 quadrant + bubble | `kics_disclosure.json`, `CSM_waterfall.json`, `NB_CSM_multiple.json` — **버블 데이터는 이 페이지에 인라인**돼 있다(별도 `csm_bubble.json`을 fetch하지 않음) |
 | `K-ICS.html` | Per-insurer K-ICS detail + sub-items + 자본 도넛 + forward outlook | `kics_disclosure.json`, `kics_rate_sensitivity.json`, `kics_tier1_utilization.json`, `kics_tier2_utilization.json`, `kics_forward_capital.json` |
-| `IFRS17.html` | 6-panel IFRS17 dashboard (CSM waterfall / amort / P&L / NB / sensitivity / history) | `CSM_waterfall.json`, `PL_breakdown.json`, `NB_CSM_multiple.json`, `data/dart/viz/csm_waterfall.json`, `csm_waterfall_history.json`, `csm_amort_schedule.json`, `insurance_pl_breakdown.json`, `sensitivity_heatmap.json`, `data/ir/nb_csm_ratio.json` |
-| `공시보고서.html` | Static info page | (fetch 없음) |
+| `IFRS17.html` | 7-panel IFRS17 dashboard (CSM waterfall / amort / P&L / NB / sensitivity / history / BS) | `CSM_waterfall.json`, `PL_breakdown.json`, `NB_CSM_multiple.json`, `data/dart/viz/csm_waterfall.json`, `csm_waterfall_history.json`, `csm_amort_schedule.json`, `insurance_pl_breakdown.json`, `sensitivity_heatmap.json`, `data/ir/nb_csm_ratio.json`, `IFRS17_BS.json` |
+| `공시보고서.html` | 배당현황 — 회사별 배당지표(주당배당금·배당총액·배당성향·배당수익률) | `dividend.json` |
 
 > 이 열은 2026-07-22에 HTML에서 **기계 도출**해 교정했다. 그전에는 아무 페이지도 읽지 않는
 > `ifrs17_panels.json` / `csm_bubble.json` / `net_income_breakdown.json` /
@@ -111,6 +111,11 @@ Don't introduce a new chart lib without owner approval.
   배포 서버는 case-sensitive라 **라이브에서 404**였다. 주 경로가 살아 있어 발화한 적이 없어
   아무도 몰랐다(2026-07-22 제거). 새 경로를 넣으면
   `curl -o /dev/null -w '%{http_code}' https://www.insurequant.com/<path>`로 확인하라.
+- **`hidden` 속성으로 토글하는 요소엔 `display:`를 직접 주지 마라 (2026-08-18).** author CSS의
+  `.foo{display:flex}`는 특이도로 UA 기본 `[hidden]{display:none}`을 이긴다 — `el.hidden=true`가
+  DOM 속성은 바뀌는데 화면은 그대로라 "버튼이 죽었다"로 보인다(`IFRS17.html`의 BS T자 `+` 버튼
+  실사고, `.bs-l2-rows[hidden]{display:none}`으로 수정). `hidden`으로 토글할 클래스는 항상
+  `.foo[hidden]{display:none}`을 같이 적든지, 아예 `hidden` 대신 클래스 토글 방식을 써라.
 
 ---
 

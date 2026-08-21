@@ -89,3 +89,7 @@ archive/
 
 # Prototype HTML at root — superseded by templates/* + root deploy mirror
 prototype_*.html
+
+# archived root-cleanup binaries (2026-08-20) — kept on disk for recovery, not in git
+archive/2026-08_root_cleanup/xlsx_backups/
+archive/2026-08_root_cleanup/owner_worksheets/

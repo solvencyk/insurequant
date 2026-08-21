@@ -2,7 +2,7 @@
 from: owner
 to: downloader
 created: 20260703T1138Z
-status: done
+status: resolved
 route: pipeline
 company: KR1011 (IBK연금보험)
 period: 2023.1Q~2026.1Q

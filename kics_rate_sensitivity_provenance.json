@@ -1,0 +1,703 @@
+{
+  "master": "kics_rate_sensitivity",
+  "generated_at": "20260820T1410Z",
+  "emitter": "parser",
+  "cells": [
+    {
+      "company_code": "KR0001",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0001_메리츠화재해상보험.md"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0001_메리츠화재해상보험_amended2.md"
+    },
+    {
+      "company_code": "KR0001",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0001_메리츠화재해상보험.md"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0002_한화손해보험.md"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0002_한화손해보험.md"
+    },
+    {
+      "company_code": "KR0002",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0002_한화손해보험.md"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0003_롯데손해보험.md"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0003_롯데손해보험.md"
+    },
+    {
+      "company_code": "KR0003",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0003_롯데손해보험.md"
+    },
+    {
+      "company_code": "KR0004",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0004_예별손해보험.md"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0005_흥국화재.md"
+    },
+    {
+      "company_code": "KR0005",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0005_흥국화재.md"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0008_삼성화재해상보험.md"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0008_삼성화재해상보험.md"
+    },
+    {
+      "company_code": "KR0008",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0008_삼성화재해상보험.md"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0009_현대해상.md"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0009_현대해상_amended.md"
+    },
+    {
+      "company_code": "KR0009",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0009_현대해상.md"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0010_KB손해보험.md"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0010_KB손해보험.md"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0011_DB손해보험.md"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0011_DB손해보험.md"
+    },
+    {
+      "company_code": "KR0011",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0011_DB손해보험.md"
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0029_AIG손해보험.md"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0032_NH농협손해보험.md"
+    },
+    {
+      "company_code": "KR0032",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0032_NH농협손해보험.md"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0049_악사손해보험.md"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0049_악사손해보험.md"
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0049_악사손해보험.md"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0050_하나손해보험.md"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0050_하나손해보험.md"
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0050_하나손해보험.md"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0051_신한이지손해보험.md"
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0051_신한이지손해보험.md"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0068_한화생명.md"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0068_한화생명.md"
+    },
+    {
+      "company_code": "KR0068",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0068_한화생명.md"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0069_삼성생명.md"
+    },
+    {
+      "company_code": "KR0069",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0069_삼성생명.md"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0070_에이비엘생명보험.md"
+    },
+    {
+      "company_code": "KR0070",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0070_에이비엘생명보험.md"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0071_흥국생명보험.md"
+    },
+    {
+      "company_code": "KR0071",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0071_흥국생명보험.md"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0072_케이디비생명보험.md"
+    },
+    {
+      "company_code": "KR0072",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0072_케이디비생명보험.md"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0073_교보생명보험.md"
+    },
+    {
+      "company_code": "KR0073",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0073_교보생명보험.md"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0074_라이나생명보험.md"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0074_라이나생명보험.md"
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0074_라이나생명보험.md"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0075_비엔피파리바카디프생명보험.md"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0075_비엔피파리바카디프생명보험.md"
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0075_비엔피파리바카디프생명보험.md"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0076_아이엠라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0076_아이엠라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0079",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0079_미래에셋생명.md"
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0080_에이아이에이생명보험.md"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0082_DB생명보험.md"
+    },
+    {
+      "company_code": "KR0082",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0082_DB생명보험.md"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0083_푸본현대생명보험.md"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0083_푸본현대생명보험.md"
+    },
+    {
+      "company_code": "KR0083",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0083_푸본현대생명보험.md"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0087_동양생명.md"
+    },
+    {
+      "company_code": "KR0087",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0087_동양생명.md"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0094_신한라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0094",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0094_신한라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0095_메트라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0095_메트라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0095_메트라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0097_하나생명보험.md"
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0097_하나생명보험.md"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0099_케이비라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0099",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0099_케이비라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0100_처브라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0100_처브라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0100_처브라이프생명보험.md"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR0104_농협생명보험.md"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR0104_농협생명보험.md"
+    },
+    {
+      "company_code": "KR0104",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0104_농협생명보험.md"
+    },
+    {
+      "company_code": "KR0150",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0150_서울보증보험.md"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR1000_코리안리.md"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR1000_코리안리.md"
+    },
+    {
+      "company_code": "KR1000",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR1000_코리안리.md"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR1010_교보라이프플래닛생명보험.md"
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR1010_교보라이프플래닛생명보험.md"
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR1011_IBK연금보험.md"
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR1098_카카오페이손해보험.md"
+    }
+  ]
+}

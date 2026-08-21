@@ -5,12 +5,13 @@ deliberately per-company rather than a generic parser.
 """
 # Split out of scripts/build_pl_breakdown.py on 2026-07-21. Behaviour unchanged;
 # the golden gate (tests/test_pl_breakdown_golden.py) pins the builder output.
+import glob
 import re
 
 from scripts.build_net_income_breakdown import to_num
 
 from .common import _norm, _row_nums
-from .tier1 import _header_blob, _ytd_col
+from .tier1 import _header_blob, _pick_line, _ytd_col
 from .tier2 import _is_rollforward, _lab0, _row_by_label, _scale, extract_tier2_abl
 
 
@@ -354,15 +355,25 @@ def extract_tier2_hyundai(tables):
             return n[1]
         return n[0]
 
-    csm = jang(rev_t, "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    # 2026.2Q 반기부터 라벨 재구성된 회사가 다수 확인됨(같은 개념, 어순만 다름) -- 기존 라벨
+    # 유지, 신규 라벨도 인정.
+    _NEW_CSM = "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진"
+    csm = jang(rev_t, "서비스의 이전으로 당기손익에 인식한 보험계약마진", _NEW_CSM)
     ra = jang(rev_t, "비금융위험에 대한 위험조정의 변동분")
     rev_exp = jang(rev_t, "보고기간에 발생한 보험서비스비용")
     cost_act = jang(cost_t, "발생한 보험금 및 그 밖의 발생한 보험서비스비용")
-    re_csm = jang(recost_t, "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    re_csm = jang(recost_t, "서비스의 이전으로 당기손익에 인식한 보험계약마진", _NEW_CSM)
     re_ra = jang(recost_t, "비금융위험에 대한 위험조정의 변동분")
     re_rev = jang(rerev_t, "발생한 보험금 및 그 밖의 발생한 보험서비스비용",
                   "발생한 보험금 및 그 밖의 발생한 재보험수익")
     re_cost_exp = jang(recost_t, "보고기간에 발생한 보험서비스비용")
+
+    # unit auto-detect: DART changed this company's disclosed note unit between filings
+    # (2026.1Q "(단위 : 원)" vs 2026.2Q 반기 "(단위 : 천원)" -- inbox/parser/20260816T2312Z).
+    # Probe magnitude of whichever raw value is available: 원-denominated CSM-amortization
+    # figures run ~1e11-1e12; 천원-denominated ones ~1e8-1e9 for the same real-world size.
+    _probe = next((abs(x) for x in (csm, ra, re_csm) if x), None)
+    _unit_scale = 1e-3 if (_probe is not None and _probe < 1e10) else 1e-6
 
     if csm is not None:
         out[4] = abs(csm)
@@ -428,10 +439,10 @@ def extract_tier2_hyundai(tables):
     if rev3 and cost3 and rerev3 and recost3:
         out["_lob_gross_13"] = rev3[1] - abs(cost3[1]) + rerev3[1] - abs(recost3[1])
         out["_lob_gross_14"] = rev3[2] - abs(cost3[2]) + rerev3[2] - abs(recost3[2])
-    # note items are in 원 -> 백만원
-    _scale(out, 1e-6, (4, 5, 6, 9, 10, 11,
-                       "_jang_rev", "_jang_cost", "_jang_rerev", "_jang_recost",
-                       "_lob_gross_13", "_lob_gross_14"))
+    # note items are in 원 (or 천원, this quarter -- see _unit_scale probe above) -> 백만원
+    _scale(out, _unit_scale, (4, 5, 6, 9, 10, 11,
+                              "_jang_rev", "_jang_cost", "_jang_rerev", "_jang_recost",
+                              "_lob_gross_13", "_lob_gross_14"))
 
     # 13/14 + 장기 net from the LOB summary table (already 백만원!)
     _, sumrow = _hyundai_lob_summary(tables)
@@ -596,11 +607,15 @@ def extract_tier2_hanwha(tables):
            "보험수익, 예상 유지비 (기초", "보험수익, 예상 투자관리비 (기초")
     ACT = ("보험서비스비용, 발생한 보험금", "보험서비스비용, 발생한 손해조사비",
            "보험서비스비용, 발생한 유지비", "보험서비스비용, 발생한 투자관리비")
-    csm = rnum(rev_t, "보험수익, 서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    # 2026.2Q 반기보고서부터 라벨 재구성(같은 개념, 어순만 다름 -- 삼성화재/DB손보에서 먼저
+    # 확인). "보험수익," 접두 없이 라벨 자체에 포함된 형태라 별도 문자열로 추가.
+    csm = rnum(rev_t, "보험수익, 서비스의 이전으로 당기손익에 인식한 보험계약마진",
+               "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진")
     ra = rnum(rev_t, "보험수익, 비금융위험에 대한 위험조정의 변동분")
     rev_exp = rsum(rev_t, EXP)
     cost_act = rsum(cost_t, ACT)
-    re_csm = rnum(recost_t, "재보험비용, 서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    re_csm = rnum(recost_t, "재보험비용, 서비스의 이전으로 당기손익에 인식한 보험계약마진",
+                  "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진")
     re_ra = rnum(recost_t, "재보험비용, 비금융위험에 대한 위험조정의 변동분")
     re_rev_dev = rsum(rerev_t, ("재보험수익, 발생한 보험금", "재보험수익, 발생한 손해조사비")) \
         if rerev_t else None
@@ -759,8 +774,13 @@ def _hanwha_dispatch(tables):
 
 
 # ----------------------------- DB 손보 (KR0011) ---------------------------- #
+# 2026.2Q 반기보고서부터 일부 회사가 "서비스의 이전으로 당기손익에 인식한 보험계약마진"을
+# "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진"으로 재구성했다
+# (같은 개념, 어순만 다름 — 삼성화재 확인, DB손보 등도 같은 note 구조 공유). 기존 라벨은
+# 사라지지 않았으니 추가만, 제거는 안 함.
 _S2_CSM = ("서비스의 이전으로 당기손익에 인식한 보험계약마진", "보험계약마진 상각",
-           "제공된 서비스의 보험계약마진")
+           "제공된 서비스의 보험계약마진",
+           "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진")
 _S2_RA = ("비금융위험에 대한 위험조정의 변동분", "위험조정 변동",
           "위험해제로 인한 비금융위험에 대한 위험조정의 변동")
 _EXP_SPLIT = ("예상 보험금 (기초 예상 측정치)", "예상 유지비 (기초 예상 측정치)",
@@ -820,8 +840,11 @@ def extract_tier2_db(tables):
                       and t.rows and len(_row_nums(t.rows[-1])) >= 4)
     rerev = cands(lambda t: lastlab(t) == "재보험자에게서 회수한 금액에서 생기는 수익")
     recost = cands(lambda t: lastlab(t) == "재보험자에게 지급된 보험료 배분액에서 생기는 비용")
+    # 2026.2Q 반기보고서부터 라벨 재구성(같은 개념, 어순만 다름 -- 삼성화재에서 먼저 확인,
+    # _S2_CSM에 이미 추가돼 있음) -- 이 게이트는 하드코드 문자열이라 _S2_CSM을 안 거쳐서 별도로
+    # 반영 필요.
     rev_d = cands(lambda t: _fl(t).startswith("보험수익, 예상 보험금")
-                  and has(t, "서비스의 이전으로 당기손익에 인식한 보험계약마진"))
+                  and any(has(t, k) for k in _S2_CSM))
     cost_d = cands(lambda t: _fl(t).startswith("보험서비스비용, 발생한 보험금"))
     recost_d = cands(lambda t: _fl(t).startswith("재보험비용, 예상 보험금"))
     if not all((rev_sums, cost_sums, rerev, recost, rev_d, cost_d, recost_d)):
@@ -926,8 +949,13 @@ def extract_tier2_sonbo_component(tables):
     def cands(pred):
         return [(i, t) for i, t in enumerate(tables) if pred(t) and not is_prior(i)]
 
+    # 2026.2Q 반기보고서부터 이 행 라벨이 재구성됐다(같은 개념, 어순만 다름): "서비스의 이전으로
+    # 당기손익에 인식한 보험계약마진" -> "보험계약서비스의 이전 때문에 당기손익으로 인식된
+    # 보험수익, 보험계약마진" (삼성화재 확인). 둘 다 인정 — 원래 라벨이 사라진 건 아니라서
+    # 유지, 새 라벨만 추가.
     revd = cands(lambda t: fr(t) == "보험수익"
-                 and hasrow(t, "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+                 and (hasrow(t, "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+                      or hasrow(t, "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진"))
                  and "자동차보험" in _header_blob(t))
     costd = cands(lambda t: fr(t).startswith("발행한 보험계약에서 생기는 보험서비스비용")
                   and hasrow(t, "발생한 보험금"))
@@ -1070,10 +1098,14 @@ def extract_tier2_heungkuk(tables):
               and has(t, must) and "장기보험" in _header_blob(t)]
         return min(cs, key=lambda it: abs(totrow(it[1], totlabel)[-1]))[1] if cs else None
 
-    rev = find("보험수익", "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    # 2026.2Q 반기부터 라벨 재구성된 회사가 있어(같은 개념, 어순만 다름 -- 삼성화재/한화손보/
+    # DB손보에서 먼저 확인) 두 라벨 중 아무거나 있으면 통과.
+    rev = find("보험수익", "서비스의 이전으로 당기손익에 인식한 보험계약마진") \
+        or find("보험수익", "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진")
     cost = find("보험서비스비용", "발생한 보험금")
     rerev = find("재보험수익", "재보험수익, 발생한 보험금")
-    recost = find("재보험비용", "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    recost = find("재보험비용", "서비스의 이전으로 당기손익에 인식한 보험계약마진") \
+        or find("재보험비용", "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진")
     if None in (rev, cost, rerev, recost):
         return {}
 
@@ -1314,10 +1346,15 @@ def extract_tier2_heungkuk_single(tables):
               and "3개월" not in _header_blob(t) and "누적" not in _header_blob(t)]
         return min(cs, key=lambda it: it[0])[1] if cs else None  # current = first printed
 
-    rev = find("보험수익", "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    # find()'s `must` only takes one string; 2026.2Q 반기부터 라벨이 재구성된 회사가 있어
+    # (같은 개념, 어순만 다름 -- 삼성화재/한화손보에서 먼저 확인) 두 라벨 중 아무거나 있으면
+    # 통과하도록 별도 호출 후 병합.
+    rev = find("보험수익", "서비스의 이전으로 당기손익에 인식한 보험계약마진") \
+        or find("보험수익", "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진")
     cost = find("보험서비스비용", "발생한 보험금")
     rerev = find("재보험수익", "재보험수익, 발생한 보험금")
-    recost = find("재보험비용", "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    recost = find("재보험비용", "서비스의 이전으로 당기손익에 인식한 보험계약마진") \
+        or find("재보험비용", "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진")
     if None in (rev, cost, rerev, recost):
         return {}
 
@@ -1511,11 +1548,16 @@ def extract_tier2_coreanre(tables):
               and has(t, must) and "생명보험" in _header_blob(t) and "장기보험" in _header_blob(t)]
         return max(cs, key=lambda it: it[0])[1] if cs else None
 
-    rev = find("보험수익", "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+    # 2026.2Q 반기부터 라벨 재구성된 회사가 다수 확인됨(같은 개념, 어순만 다름) -- 기존 라벨
+    # 유지, OR로 신규 라벨도 인정.
+    _NEW_CSM = "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익, 보험계약마진"
+    rev = find("보험수익", "서비스의 이전으로 당기손익에 인식한 보험계약마진") \
+        or find("보험수익", _NEW_CSM)
     cost = find("보험비용", "발생한 보험금")
     rerev = find("재보험자에게서 회수한 금액에서 생기는 수익", "재보험수익, 발생한 보험금")
     recost = find("재보험자에게 지급된 보험료 배분액에서 생기는 비용",
-                  "서비스의 이전으로 당기손익에 인식한 보험계약마진")
+                  "서비스의 이전으로 당기손익에 인식한 보험계약마진") \
+        or find("재보험자에게 지급된 보험료 배분액에서 생기는 비용", _NEW_CSM)
     if None in (rev, cost, rerev, recost):
         return _coreanre_old(tables)          # pre-2025.2Q 구분-rows merged note
 
@@ -2407,10 +2449,24 @@ def _life_is_rollforward(t):
                                 "기초보유", "기말보유", "총현금흐름", "수취한보험료", "순장부금액"))
 
 
+def _life_cum_col(t):
+    """0 for a plain [당기,전기] row; 1 when the table's header shows a 3개월/누적 split
+    (반기보고서: 당반기[3개월,누적] | 전반기[3개월,누적], or a bare [3개월,누적] pair with no
+    inline prior-period block) -- 누적 is always the 2nd cell of whichever half it's in, so
+    index 1 is right for both a 4-col and a 2-col 누적-bearing row. A plain 당기/전기 row has no
+    '누적' in its header, so this returns 0 and _life_first_num's prior behavior is unchanged
+    (DB생명/교보생명/동양생명 2026.2Q half-year-filing bug, inbox/parser/20260816T2312Z)."""
+    hb = "".join(c for row in (t.header or []) for c in row)
+    return 1 if "누적" in hb else 0
+
+
 def _life_first_num(t, label_variants):
-    """First numeric cell of the FIRST row whose flattened label contains any variant."""
+    """Numeric cell of the FIRST row whose flattened label contains any variant -- index 0
+    (당기) normally, or index 1 (누적, i.e. half-year cumulative) when the table header carries
+    a 3개월/누적 split -- see _life_cum_col."""
     if t is None:
         return None
+    col = _life_cum_col(t)
     for r in t.rows:
         lf = _life_label_flat(r)
         nums = _row_nums(r)
@@ -2418,7 +2474,7 @@ def _life_first_num(t, label_variants):
             continue
         for v in label_variants:
             if v.replace(" ", "") in lf:
-                return nums[0]
+                return nums[col] if col < len(nums) else nums[0]
     return None
 
 
@@ -3230,7 +3286,10 @@ def extract_tier2_samsung_life(tables):
 
 
 # --------------------------- 미래에셋생명 (KR0079) ------------------------- #
-_MA_CSM_KEY = "서비스의이전으로당기손익에인식한보험계약마진"   # both note forms
+# 2026.2Q 반기부터 라벨 재구성된 회사가 다수 확인됨(같은 개념, 어순만 다름) -- 기존 라벨 유지,
+# 신규 라벨 추가.
+_MA_CSM_KEYS = ("서비스의이전으로당기손익에인식한보험계약마진",   # both note forms
+                "보험계약서비스의이전때문에당기손익으로인식된보험수익,보험계약마진")
 _MA_RA_KEYS = ("위험조정변동분",
                "미래또는과거서비스와관련없는비금융위험에대한위험조정의변동",
                "비금융위험에대한위험조정의변동분")
@@ -3269,9 +3328,10 @@ def extract_tier2_miraeasset(tables):
         return " ".join(" ".join(h) for h in t.header).replace(" ", "")
 
     def has_amort(t):
-        return _MA_CSM_KEY in " ".join(
+        flat = " ".join(
             _norm(r[0]) + (_norm(r[1]) if len(r) > 1 else "") for r in t.rows
         ).replace(" ", "")
+        return any(k in flat for k in _MA_CSM_KEYS)
 
     # ---- Era 1: 백만원 per-product 보험수익 note ----
     seen = set()
@@ -3288,7 +3348,7 @@ def extract_tier2_miraeasset(tables):
         if fp in seen:
             continue
         seen.add(fp)
-        c = _ma_block_val(t, (_MA_CSM_KEY,), last_only=True)
+        c = _ma_block_val(t, _MA_CSM_KEYS, last_only=True)
         a = _ma_block_val(t, _MA_RA_KEYS, last_only=True)
         if is_recost:
             if c is not None:
@@ -3329,14 +3389,14 @@ def extract_tier2_miraeasset(tables):
                 first_re = t
     out = {}
     if first_issue is not None:
-        c = _ma_block_val(first_issue, (_MA_CSM_KEY,), last_only=False)
+        c = _ma_block_val(first_issue, _MA_CSM_KEYS, last_only=False)
         a = _ma_block_val(first_issue, _MA_RA_KEYS, last_only=False)
         if c is not None:
             out[4] = abs(c) / 1e6
         if a is not None:
             out[5] = abs(a) / 1e6
     if first_re is not None:
-        c = _ma_block_val(first_re, (_MA_CSM_KEY,), last_only=False)
+        c = _ma_block_val(first_re, _MA_CSM_KEYS, last_only=False)
         a = _ma_block_val(first_re, _MA_RA_KEYS, last_only=False)
         if c is not None:
             out[9] = -abs(c) / 1e6
@@ -3402,11 +3462,323 @@ def extract_tier2_hana(tables):
     return {k: (v * f if isinstance(v, (int, float)) else v) for k, v in out.items() if v is not None}
 
 
+def extract_tier2_yebyeol(tables):
+    """예별손해보험(구 MG손해보험, KR0004) 감사보고서 '(N) 당기 및 전기 중 인식된
+    보험료배분접근법이 적용된 보험계약의 변동내역' note -- 자동차보험/일반보험 2개
+    직접(원수) LOB 테이블만 존재(장기 직접 LOB 없음; '장기보험-비비례보험'은 별도
+    재보험(출재) note에만 있음 -- 이 회사는 장기 리스크를 직접 인수하지 않고 출재만
+    받는 것으로 보임, raw 확인). 각 LOB 테이블의 '보험서비스결과 소계' 행 합계
+    (마지막)열이 그 LOB의 순보험손익(items 13/14 자동차손익/일반손익).
+
+    재보험(출재) 버전 note가 캡션까지 유사/중복돼 캡션만으로 구분 불가 -- 행0
+    (구분열)에 '재보험' 접두 라벨이 있는지로 직접/재보험을 구분(직접 테이블만 채택).
+    같은 캡션이 당기/전기 두 번 반복되는 해(FY2024)가 있어 문서상 첫 매치(document
+    order)만 채택 -- 이 저장소 기존 관행(extract_tier2_axa 등)과 동일한 컨벤션.
+    단위(천원)는 note 전체의 첫 캡션에만 있고 개별 LOB 서브캡션엔 없어 하드코드
+    (raw로 두 회계연도 모두 확인).
+
+    측정요소(CSM/RA/예실차, items 4/5/6 -- GMM 장기보험분)는 이 note에 없다. 이미
+    적재된 CSM_waterfall.json의 KR0004 CSM은 별도 note에서 나온 것으로 추정되나
+    그 note는 아직 못 찾음 -- item1(보험손익) 대비 13+14 합의 잔차가 크므로(FY2024
+    -59535.8 vs -5300.1, FY2025 -22136.1 vs -13101.4) 미확보 장기 GMM 기여분이
+    상당하다는 신호. items 4/5/6 및 재보험(9/10/11) 확보는 별도 후속 조사
+    (2026-08-15 inbox/parser/20260616T0210Z 참조)."""
+    out = {}
+    for lob, item in (("자동차보험", 13), ("일반보험", 14)):
+        for t in tables:
+            cap = t.caption or ""
+            if lob not in cap or not t.rows:
+                continue
+            if any("재보험" in (r[0] if r else "") for r in t.rows[:3]):
+                continue  # ceded-reinsurance twin, skip
+            for r in t.rows:
+                lab = (r[0] or "").replace(" ", "")
+                if lab != "보험서비스결과소계":
+                    continue
+                nums = []
+                for c in r[1:]:
+                    c = (c or "").replace(",", "").replace(" ", "")
+                    neg = c.startswith("(") and c.endswith(")")
+                    c2 = c.strip("()")
+                    try:
+                        v = float(c2)
+                        nums.append(-v if neg else v)
+                    except ValueError:
+                        pass
+                if nums:
+                    out[item] = nums[-1] * 1e-3   # 천원 -> 백만원
+                break
+            break  # first direct-LOB match in document order == 당기
+    return out
+
+
+# --------------------- 에이아이에이생명보험 (KR0080) ------------------------ #
+# Both KR0080 and 처브라이프생명보험(KR0100) turned out to have NO table-form 손익분해 at
+# all for KR0080 -- disclosed only as a PROSE PARAGRAPH inside the "1. 일반사항" note of
+# their (annual-only) DART 감사보고서.  The standard pipeline (extract_tier1 for the
+# income-statement top line, every note-table LIFE_HANDLERS for the LOB breakdown) never
+# sees this data, so both companies were entirely absent from PL_breakdown (owner ticket
+# inbox/parser/20260819T0058Z__owner__KR0080_2025.4Q__aia_chubb_pl_disclosed_in_prose.md).
+# KR0100 turned out to ALSO carry a full structured note (see extract_tier2_chubb below)
+# so it does NOT need this prose path -- only KR0080 genuinely has no table form at all.
+def _eok(m):
+    """(sign_marker, digits) regex match -> signed 억원 float, or None."""
+    if not m:
+        return None
+    sign = -1.0 if m.group(1) else 1.0
+    return sign * float(m.group(2).replace(",", ""))
+
+
+def extract_tier2_aia(tables, dirs=None):
+    """에이아이에이생명보험(KR0080): the ENTIRE PL breakdown -- including the top-level
+    보험손익/투자손익/영업외손익/법인세/당기순이익 that every other company gets from Tier-1
+    (extract_tier1 / the DART FS-API) -- is disclosed ONLY as a prose paragraph in 주석 '1.
+    일반사항' (raw: data/dart/FY2025_Q4/raw/KR0080_에이아이에이생명보험_20260407002100/
+    20260407002100_00760.xml, verified 2026-08-19 byte-for-byte against the owner's ticket
+    transcription). There is no table anywhere in the filing carrying this data (Tier-1 AND
+    every Tier-2 note-table path already returned None for every filed year -- pre-fix
+    data/_derived/pl_breakdown_coverage.json showed status=no_income_statement, all 24
+    items missing, for 2022.4Q/2023.4Q/2024.4Q/2025.4Q), so this reads the raw XML directly
+    via `dirs` (parse_filing() in build_pl_breakdown.py special-cases this handler to pass
+    dirs=dirs) rather than `tables` (_iter_tables_with_context only ever yields <TABLE>
+    elements, never bare <P> prose -- this company's income statement has no such table).
+
+    Company files ONLY a 사업보고서 (annual) -- no quarterly filings exist (confirmed:
+    data/dart/FY2026_Q{1,2}/raw/KR0080_.../meta.json says "no_filing":true) -- so this
+    naturally only ever fires on a 4Q raw dir; no quarterly grid is fabricated.  It is
+    written as a genuine regex parser (not a hardcoded per-quarter override) so a future
+    year's 사업보고서, if it repeats the same sentence template, backfills automatically;
+    if the wording changes it safely returns {} (see sanity gate below) rather than mis-fire.
+
+    3 figures from the prose the owner's ticket left unmapped -- 손실요소의 전입 (-)65억,
+    발생사고요소조정 +258억, 기타사업비용 (-)591억:
+      * 손실요소전입 + 발생사고요소조정 (=+193억) -> item7 (기타 생명장기 원수손익).  Both are
+        IFRS17 LRC/CSM adjustments the 24-item schema has no dedicated slot for; item7 is
+        exactly the schema's residual/catch-all for items 4/5/6-adjacent 원수 components
+        (assemble(): item7 = item3-(item4+item5+item6)).
+      * 기타사업비용 (591억) -> item16, NOT item7 -- despite being narrated as one of
+        several "금년도 보험손익 392억원 중" components (i.e. nominally inside item1 in this
+        company's own prose), it keeps the schema's dedicated item16 slot because (a) it is
+        a VERBATIM literal-name match to ITEM_NAMES[16]="기타사업비용", and (b) this exact
+        "기타사업비용 disclosed INSIDE 보험손익" situation already has a codebase precedent --
+        악사손해(KR0049)'s extract_tier2_axa, which also assigns it to item16 and relies on
+        assemble()'s RC-gate 'adj' bridge (item1 = ΣLOB(item2) + item15 - item16) to
+        reconcile.  That bridge is what makes THIS company's gate close at all: lob=item2=
+        99,300, item1=39,200 -> bare gap 60,100 (fails the 25% tolerance) but
+        adj=|99,300+0-59,100-39,200|=1,000 (comfortably passes) -- i.e. item16 pulling 591억
+        out of the LOB side is *why* the RC gate accepts this breakdown, not an arbitrary
+        choice.  (Folding all 3 figures into item7 instead and leaving item16 unset also
+        numerically clears the gate via the looser 'bare' formula, but has no comparable
+        structural justification and would leave item16 empty for a company whose own text
+        names it verbatim -- and 처브라이프생명보험's independently-derived income statement,
+        see extract_tier2_chubb, confirms the SAME filer-family convention: its own
+        '3.기타사업비용' line is what closes ITS 보험손익 identity too.)
+
+    item18/19 (투자이익/보험금융손익) are deliberately NOT populated even though the same
+    paragraph also states "보험계약에서 발생하는 보험금융비용은 (-)7,446억원입니다" (which
+    would cleanly close item18=item17-item19, the same way KR0100/처브라이프's independently
+    confirmed 보험금융수익-보험금융비용 table split validates the analogous figure there --
+    see extract_tier2_chubb) -- held back because for THIS company there is only the one
+    already-netted prose sentence and no second, independent citation (structured table) to
+    confirm the netting convention, unlike 처브.  Flagged for the owner rather than guessed.
+
+    Sanity gate before returning anything: 영업이익 must equal 보험손익+투자손익, and
+    당기순이익 must equal 영업이익+영업외손익-법인세, both within 2억원 (matches the owner's
+    own cross-check, which found a 1억 rounding gap on the 2nd identity) -- protects against
+    the regexes partial-matching a differently-worded paragraph in a future filing year."""
+    text = None
+    for d in dirs or []:
+        for x in sorted(glob.glob(d + "/*.xml")):
+            try:
+                raw = open(x, "rb").read().decode("utf-8")
+            except (UnicodeDecodeError, OSError):
+                continue
+            if "당사의 금년도 영업이익은" in raw and "재보험손익은" in raw:
+                text = raw
+                break
+        if text:
+            break
+    if text is None:
+        return {}
+
+    # Bound the search window to just this one paragraph -- re.search on the full ~900KB
+    # document with loose per-figure patterns could otherwise cross-match an unrelated note
+    # that happens to reuse the same label words elsewhere in the filing.
+    m0 = re.search(
+        r"당사의\s*금년도\s*영업이익은.+?재보험손익은\s*(\(-\))?\s*[\d,]+억원입니다\.",
+        text, re.S)
+    if not m0:
+        return {}
+    para = m0.group(0)
+
+    def find(pat):
+        return _eok(re.search(pat, para, re.S))
+
+    op = find(r"당사의\s*금년도\s*영업이익은\s*(\(-\))?\s*([\d,]+)억원입니다")
+    ins = find(r"영업이익\s*[\d,]+억원\s*중\s*보험손익은\s*(\(-\))?\s*([\d,]+)억원이며")
+    inv = find(r"보험손익은\s*[\d,]+억원이며,\s*투자손익은\s*(\(-\))?\s*([\d,]+)억원입니다")
+    oth_op = find(r"영업외손익은\s*(\(-\))?\s*([\d,.]+)억원입니다\.\s*법인세는")
+    tax = find(r"법인세는\s*(\(-\))?\s*([\d,]+)억원이며,\s*영업이익에서")
+    ni = find(r"차감한\s*당기순이익은\s*(\(-\))?\s*([\d,]+)억원입니다")
+    csm = find(r"보험계약마진은\s*총.+?%인\s*(\(-\))?\s*([\d,]+)억원이\s*상각되어\s*수익으로\s*인식")
+    ra = find(r"위험조정은\s*총.+?%인\s*(\(-\))?\s*([\d,]+)억원이\s*상각되어\s*수익으로\s*인식")
+    claim_diff = find(r"실제\s*보험금\s*차이가\s*(\(-\))?\s*([\d,]+)억원이고")
+    exp_diff = find(r"실제\s*사업비\s*차이가\s*(\(-\))?\s*([\d,]+)억원,\s*손실요소")
+    loss_comp = find(r"손실요소의\s*전입으로\s*발생한\s*손실은\s*(\(-\))?\s*([\d,]+)억원입니다")
+    incurred_adj = find(r"발생사고요소조정은\s*(\(-\))?\s*([\d,]+)억원,\s*기타사업비용")
+    oth_cost = find(r"기타사업비용은\s*(\(-\))?\s*([\d,]+)억원입니다\.\s*재보험손익")
+    reins = find(r"재보험손익은\s*(\(-\))?\s*([\d,]+)억원입니다")
+
+    if any(x is None for x in (op, ins, inv, oth_op, tax, ni, csm, ra, claim_diff,
+                                exp_diff, loss_comp, incurred_adj, oth_cost, reins)):
+        return {}
+    if abs((ins + inv) - op) > 2 or abs((op + oth_op - tax) - ni) > 2:
+        return {}
+
+    f = 100.0  # 억원 -> 백만원
+    item4, item5 = csm * f, ra * f
+    item6 = (claim_diff + exp_diff) * f
+    item7 = (loss_comp + incurred_adj) * f
+    item3 = item4 + item5 + item6 + item7
+    return {
+        1: ins * f, 3: item3, 4: item4, 5: item5, 6: item6, 7: item7,
+        8: reins * f, 15: 0.0, 16: oth_cost * f, 17: inv * f,
+        21: oth_op * f, 23: tax * f, 24: ni * f,
+    }
+
+
+# ----------------------------- 처브라이프생명보험 (KR0100) ------------------- #
+def _chubb_note_table(tables, cap_needle):
+    """Second (data) table whose caption contains cap_needle -- 처브 prints EACH note(4)
+    sub-table's caption twice: a unit-only placeholder (header=[], one row '(단위:백만원)')
+    immediately followed by the real [구분|당기|전기] table (the mini unit-table sits
+    between the <P> caption and the real <TABLE> but doesn't reset _iter_tables_with_context's
+    last_caption, so both tables share the identical caption string -- filter on a populated
+    header to skip the placeholder)."""
+    for t in tables:
+        cap = (t.caption or "").replace(" ", "")
+        if cap_needle in cap and t.header:
+            return t
+    return None
+
+
+def extract_tier2_chubb(tables):
+    """처브라이프생명보험(KR0100) 감사보고서 주석 '(4) 보험손익 및 재보험손익' -- FOUR
+    [구분|당기|전기] sub-tables (1)보험영업수익 2)보험영업비용 3)재보험수익 4)재보험비용의
+    내역), 단위 백만원.  Confirmed via raw (2026-08-19,
+    data/dart/FY2025_Q4/raw/KR0100_처브라이프생명보험_20260408003172/20260408003172_00760.xml):
+    each sub-table's own '합계' row matches, to the 백만원, the corresponding
+    1.보험영업수익/2.재보험수익/1.보험영업비용/2.재보험비용 sub-line of the SAME filing's
+    audited 포괄손익계산서 (Ⅰ.영업수익/Ⅱ.영업비용) -- a 4-for-4 cross-check between two
+    independent parts of the filing, high confidence.
+
+    The owner's ticket (inbox/parser/20260819T0058Z) suspected this company uses the SAME
+    prose-paragraph pattern as KR0080/에이아이에이생명보험 ("보험손익 4회 등장" in the raw) --
+    it does NOT, on closer look.  처브's '1. 일반사항' note does carry a short prose summary
+    (보험손익 (-)105억원 등) but it only gives NET (원수+재보험 combined) CSM/RA/예실차
+    figures that don't match the schema's 원수-only items 4/5/6 (e.g. prose CSM=48억 vs this
+    note's direct-only CSM=61.22억; 48 = 61.22 - 12.82, i.e. direct MINUS the
+    reinsurance-ceded CSM found in this same note's table 4) -- the FULL split the schema
+    wants is only available here (table), so the prose is not used at all for this company.
+
+    재보험 sign/mirroring convention: the "재보험수익" note mirrors the DIRECT-COST
+    ("actual incurred") structure and the "재보험비용" note mirrors the DIRECT-REVENUE
+    ("expected"/CSM/RA) structure -- standard IFRS17 reinsurance-held presentation, the same
+    convention already used by extract_tier2_axa/extract_tier2_hana in this file. item9/10
+    (재보험 CSM/RA) are forced negative (-abs), matching those precedents.
+
+    item1(보험손익)/item17(투자손익) are NOT printed anywhere in this filing -- the income
+    statement is 성격별 (nature-of-expense: Ⅰ.영업수익/Ⅱ.영업비용 lump insurance AND
+    investment lines together), unlike the 기능별 Ⅰ.보험손익/Ⅱ.투자손익 layout most other
+    insurers use, so extract_tier1()'s _is_income_statement() never matches it (tier1.py
+    requires "보험손익"/"보험서비스결과" as a literal row label). item1 is instead computed
+    via the SAME 'adj' reconciliation bridge assemble() already uses for a company whose
+    기타사업비용 sits inside 보험손익 (item1 = item2+item15-item16 -- see
+    extract_tier2_axa/KR0049 and extract_tier2_aia/KR0080 above for that precedent):
+    -3,704(lob) + 27.5(기타영업수익) - 6,834(기타사업비용) = -10,510 백만원 = -105.1억,
+    matching the prose's rounded "보험손익은 (-)105억원" -- cross-validated. item17 =
+    item20(Ⅲ.영업이익, printed exactly) - item1, so item1+item17=item20 holds by
+    construction (assemble() only ever derives item20 FROM item1+item17, never the reverse,
+    so item17 must be supplied here or it would stay None)."""
+    rev = _chubb_note_table(tables, "보험영업수익의내역")
+    cost = _chubb_note_table(tables, "보험영업비용의내역")
+    rerev = _chubb_note_table(tables, "재보험수익의내역")
+    recost = _chubb_note_table(tables, "재보험비용의내역")
+    if not (rev and cost and rerev and recost):
+        return {}
+
+    out = {}
+    rev_tot = _life_first_num(rev, ["합계", "합 계"])
+    cost_tot = _life_first_num(cost, ["합계", "합 계"])
+    if rev_tot is not None and cost_tot is not None:
+        out[3] = rev_tot - cost_tot
+    csm = _life_first_num(rev, ["당기 서비스의 이전으로 당기손익에 인식된 보험계약마진"])
+    ra = _life_first_num(rev, ["비금융위험에 대한 위험조정 변동"])
+    if csm is not None:
+        out[4] = abs(csm)
+    if ra is not None:
+        out[5] = abs(ra)
+    exp_claim = _life_first_num(rev, ["기초 예상 당기 발생보험금 및 기타 보험서비스비용"])
+    act_claim = _life_first_num(cost, ["발생보험금 및 기타보험서비스비용"])
+    if exp_claim is not None and act_claim is not None:
+        out[6] = exp_claim - act_claim
+
+    rerev_tot = _life_first_num(rerev, ["합계", "합 계"])
+    recost_tot = _life_first_num(recost, ["합계", "합 계"])
+    if rerev_tot is not None and recost_tot is not None:
+        out[8] = rerev_tot - recost_tot
+    re_csm = _life_first_num(recost, ["당기 서비스의 이전으로 당기손익에 인식된 보험계약마진"])
+    re_ra = _life_first_num(recost, ["비금융위험에 대한 위험조정 변동"])
+    if re_csm is not None:
+        out[9] = -abs(re_csm)
+    if re_ra is not None:
+        out[10] = -abs(re_ra)
+    re_act = _life_first_num(rerev, ["재보험 발생보험금 및 기타보험서비스비용"])
+    re_exp = _life_first_num(recost, ["기초 예상 당기 발생보험금 및 이익수수료"])
+    if re_act is not None and re_exp is not None:
+        out[11] = re_act - re_exp
+
+    # Tier-1 substitute: find the audited 포괄손익계산서 by ROW CONTENT (not caption -- its
+    # actual preceding <P> is the audit-report boilerplate disclaimer, since the real title
+    # "포 괄 손 익 계 산 서" lives in a non-<P> tag that _iter_tables_with_context never
+    # registers as a caption).
+    is_t = None
+    for t in tables:
+        labs = " ".join(_norm(r[0] if r else "") for r in t.rows)
+        if "당기순이익" in labs and "법인세비용" in labs and "영업이익" in labs:
+            is_t = t
+            break
+    if is_t is None:
+        return out  # note(4) alone still gives 3/4/5/6/8/9/10/11 -- better than nothing
+
+    f = 1e-6  # 원 -> 백만원
+    op = _pick_line(is_t, "영업이익", exclude=("영업외",))       # Ⅲ. 영업이익
+    oth_op = _pick_line(is_t, "영업외손익")                      # Ⅳ. 영업외손익
+    ni = _pick_line(is_t, "당기순이익")                          # Ⅶ. 당기순이익
+    oth_exp = _pick_line(is_t, "기타사업비용")                   # 3. 기타사업비용 (Ⅱ항)
+    oth_inc = _pick_line(is_t, "기타영업수익")                   # 9. 기타영업수익 (Ⅰ항)
+    if op is None or ni is None:
+        return out
+    out[20] = op * f
+    out[21] = (oth_op * f) if oth_op is not None else None
+    out[24] = ni * f
+    out[16] = (oth_exp * f) if oth_exp is not None else None
+    out[15] = (oth_inc * f) if oth_inc is not None else 0.0
+
+    if out.get(3) is not None and out.get(8) is not None and out.get(16) is not None:
+        lob = out[3] + out[8]
+        out[1] = lob + (out.get(15) or 0.0) - abs(out[16])
+        if out.get(20) is not None:
+            out[17] = out[20] - out[1]
+    return out
+
+
 # Per-company routing tables (FY2025+ annual Tier-2 handlers).
 SONBO_HANDLERS = {
     "KR0010": extract_tier2_kb,
     "KR0009": extract_tier2_hyundai,
     "KR0002": _hanwha_dispatch,                # 한화손해 (NEW 2025.2Q+ → OLD pre-2025.2Q)
+    "KR0004": extract_tier2_yebyeol,           # 예별손해(구MG) 자동차/일반 (장기 직접분 없음)
     "KR0008": extract_tier2_sonbo_component,   # 삼성화재 (gold-validated 2025.2Q)
     "KR0005": _heungkuk_dispatch,              # 흥국화재 (NEW 2025.2Q+ → OLD pre-2025.2Q)
     "KR0011": extract_tier2_db,
@@ -3429,4 +3801,6 @@ LIFE_HANDLERS = {
     "KR0099": extract_tier2_kblife,            # KB라이프생명 (KB-specific row labels)
     "KR0069": extract_tier2_samsung_life,      # 삼성생명 OLD combined note (9/10/11); NEW→generic
     "KR0097": extract_tier2_hana,              # 하나생명 (disaggregated 보험수익/비용 notes)
+    "KR0080": extract_tier2_aia,               # 에이아이에이생명보험 (prose-only, 주석 1.일반사항)
+    "KR0100": extract_tier2_chubb,             # 처브라이프생명보험 ('(4) 보험손익 및 재보험손익' note)
 }

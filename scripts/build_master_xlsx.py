@@ -15,6 +15,8 @@ FONT = "맑은 고딕"
 
 # (json file, sheet name, description) — only real masters (diff snapshots excluded)
 MASTERS = [
+    ("IFRS17_BS.json", "17BS",
+     "재무상태표 요약 (자산총계·부채총계·자본총계·AOCI누계액·법정준비금 3종 = 항목 1-7) long-format"),
     ("kics_disclosure.json", "K-ICS공시",
      "K-ICS 지급여력 공시 항목 (요구자본 1-35 + 시장위험 하위분해 36-46) long-format"),
     ("kics_rate_sensitivity.json", "금리민감도",
@@ -27,12 +29,14 @@ MASTERS = [
      "신계약 CSM / 월납초회보험료 배수 (연누계)"),
     ("PL_breakdown.json", "손익분해PL",
      "손익계산서 24항목 분해 (보험·투자손익 등)"),
+    ("dividend.json", "배당",
+     "배당에 관한 사항 (DART alotMatter) — 항목1-7 회사단위 + 8-11 종류주(보통주/우선주)별"),
 ]
 
 NUMERIC_COLS = {"값", "-100bp", "-50bp", "base", "+50bp", "+100bp",
                 "상각액", "신계약CSM_연누계", "월납월초보험료_연누계", "신계약CSM배수_연누계"}
 TEXT_COLS = {"원보험사코드", "원수사명", "티커", "생손보여부", "공시분기",
-             "항목명", "경과조치여부", "measure구분", "경과차년"}
+             "항목명", "경과조치여부", "measure구분", "경과차년", "종류주", "섹션", "레벨"}
 
 
 def coerce(df):
@@ -50,7 +54,8 @@ def main():
     frames = []
     for fn, sheet, desc in MASTERS:
         data = json.loads((REPO / fn).read_text(encoding="utf-8"))
-        df = coerce(pd.DataFrame(data))
+        df = pd.DataFrame(data)
+        df = coerce(df)
         frames.append((sheet, df, fn, desc))
 
     with pd.ExcelWriter(OUT, engine="openpyxl") as xw:

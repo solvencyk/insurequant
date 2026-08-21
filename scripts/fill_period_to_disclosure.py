@@ -88,54 +88,6 @@ def _supplement_core_baseline(baseline: list, rows: list, code: str, F: dict) ->
     return out
 
 
-def _reconcile_item4_from_components(rows: list, F: dict) -> int:
-    """Align item4 to sum(items 5-11) when all components exist (rule 2)."""
-    buckets: dict[tuple[str, str], dict[int, dict]] = defaultdict(dict)
-    for r in rows:
-        it = r.get(F["item"])
-        if it is None or not str(it).isdigit():
-            continue
-        item_no = int(it)
-        if item_no > 11:
-            continue
-        buckets[(r.get(F["code"]), r.get(F["quarter"]))][item_no] = r
-    updated = 0
-    for items in buckets.values():
-        if 4 not in items:
-            continue
-        component_vals: list[float] = []
-        complete = True
-        for i in range(5, 12):
-            if i not in items:
-                complete = False
-                break
-            raw = items[i].get(F["val"])
-            if raw is None:
-                complete = False
-                break
-            try:
-                component_vals.append(float(raw))
-            except (TypeError, ValueError):
-                complete = False
-                break
-        if not complete or len(component_vals) != 7:
-            continue
-        total = sum(component_vals)
-        row4 = items[4]
-        try:
-            current = float(row4[F["val"]])
-        except (TypeError, ValueError):
-            continue
-        if abs(current - total) < 1e-6:
-            continue
-        if abs(current - total) > 10:
-            continue
-        rounded = int(round(total)) if abs(total - round(total)) < 1e-6 else total
-        row4[F["val"]] = str(int(rounded)) if isinstance(rounded, int) else str(rounded)
-        updated += 1
-    return updated
-
-
 def _baseline_for_company(rows, code, tq, bq, F):
     """Row templates for items 1-28 when prior-quarter baseline is missing."""
     baseline = [r for r in rows if r.get(F["code"]) == code and r.get(F["quarter"]) == bq]
@@ -221,7 +173,15 @@ def _process(rows, periods, refresh, F, target_quarter=None):
                     rows.append(nr)
                     index[key] = nr
                     ins += 1
-    upd += _reconcile_item4_from_components(rows, F)
+    # NOTE: this used to end with upd += _reconcile_item4_from_components(rows, F),
+    # which force-aligned item4 to sum(items 5-11) whenever they were already
+    # close (<=10 억원 apart). Removed 2026-08-21 (inbox 20260821T1505Z /
+    # 20260821T1420Z) -- item4 is a disclosed value; snapping near-matches to
+    # exact matches made rule 2 (item4 == sum(5..11)) structurally incapable
+    # of ever failing on real data. 122 cells had already been silently
+    # overwritten this way (see
+    # scripts/fix_20260821_item4_writepath_restore.py for the raw-sourced
+    # restoration). item4 must come from extraction only, never reconciled.
     return ins, upd, rem
 
 def main(argv):

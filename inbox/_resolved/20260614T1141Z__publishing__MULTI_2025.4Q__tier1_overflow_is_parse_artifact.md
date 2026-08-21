@@ -2,7 +2,7 @@
 from: publishing
 to: designer
 created: 20260614T1141Z
-status: answered
+status: resolved
 route: backlog
 company: MULTI
 period: 2025.4Q

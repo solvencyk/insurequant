@@ -2,7 +2,7 @@
 from: downloader
 to: parser
 created: 20260814T0000Z
-status: open
+status: resolved
 route: reparse
 company: MULTI (18사)
 period: 2026.1Q
@@ -65,3 +65,10 @@ owner가 한화생명 반기보고서 확인 요청 후 "26.1Q 정정공시 뜬 
 **참고**: 정정 원인 조사(왜 5/29에 17사가 한꺼번에 정정했는지)는 downloader 스코프 밖 — DART 공시 자체엔
 정정사유 요약이 없어 원문 diff로만 판단 가능. 필요시 parser가 raw 두 버전(현재본 vs `data/_archive/...`
 아카이브본) 직접 대사 권장.
+
+## 답변 (recipient 작성)
+
+처리 완료. 정정본 raw로 CSM_waterfall/PL_breakdown 재추출 후 기존 마스터 셀과 18사 전수
+대사(교보생명 2차 정정 포함) — **값 차이 0건**(두 마스터 전부). 요청 3번 그대로: "정정 확인,
+변경사항 없음"으로 문서화만 하고 재적재 스킵. 상세: `TODO_parser_ifrs17.md` 2026-08-14
+(5th pass), `docs/changelog_parser_ifrs17.md` 동일 항목.

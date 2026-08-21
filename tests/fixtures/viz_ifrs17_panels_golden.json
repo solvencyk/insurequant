@@ -1,11 +1,11 @@
 {
   "files": {
     "csm_amort_schedule.json": {
-      "sha256": "874a4a79d63e2a2462db5cf162bedd976f9cfd9f82e0393439c45acb55970f96",
-      "companies": 30,
+      "sha256": "c63188dc8dc6bde3daa50c0404817666c23198699ab6fe911db17d64d16447b5",
+      "companies": 39,
       "status_counts": {
-        "ok": 28,
-        "empty": 1,
+        "ok": 34,
+        "empty": 4,
         "partial": 1
       }
     },
@@ -24,7 +24,7 @@
       }
     },
     "sensitivity_heatmap.json": {
-      "sha256": "945cf8d9f5d7243c0ee5e2c96a3ae2b9d24f319e99e3fb42e60498eae11eee70",
+      "sha256": "3309a03e80fcd03fbd4eebd8ee43df9a70f24d4b569db49911a7361b8d97525c",
       "companies": 32,
       "status_counts": {
         "ok": 31,

@@ -2,7 +2,7 @@
 from: owner
 to: downloader
 created: 20260624T0113Z
-status: done
+status: resolved
 route: collect
 company: JP_MULTI
 period: 2026.1Q

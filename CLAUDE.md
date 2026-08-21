@@ -47,6 +47,34 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 
 이 문서·프롬프트의 모든 `python ...` 명령은 **위 풀패스로 호출한다.** 슬래시는 `/`로 쓸 것 — 백슬래시 경로는 Bash 도구에서 이스케이프로 먹혀 `command not found`가 된다(PowerShell만 통과). 맨 `python`은 Windows 스토어 파이썬(3.13)에 걸리는데 거기엔 **`docling`이 없어서 `run_harness.py --stage parse`가 즉사한다** (pandas·openpyxl·fitz·pdfplumber·playwright는 우연히 깔려 있어 다른 스크립트는 조용히 돌아가므로 더 위험하다). 서브에이전트에 작업을 넘길 때도 이 경로를 프롬프트에 명시할 것.
 
+## 🔒 push 게이트는 git 훅으로 강제된다 (2026-08-21 신설) — 새 클론이면 한 줄 실행
+
+```bash
+git config core.hooksPath .githooks
+```
+
+**이 한 줄을 안 하면 게이트가 안 돈다.** 훅 파일(`.githooks/pre-push`)은 추적되지만 `core.hooksPath`
+설정은 클론마다 로컬이다. 새 머신·새 워크트리에서 세션을 시작하면 먼저 확인할 것
+(`git config --get core.hooksPath`).
+
+**왜 생겼나 (owner 2026-08-21 지적).** 그 전까지 이 저장소의 "하드 게이트"는 **전부 꼭대기가
+honor-system** 이었다. 실측: `scripts/prepush_check.py` 를 참조하는 11곳이 **전부 문서**
+(SKILL·`docs/agents/*`·`launch_runbook`·postmortem)였고 코드·설정에서 호출하는 곳 **0**, CI **없음**.
+게이트에 룰을 아무리 배선해도 누가 그 명령어를 기억해서 쳐야만 돌았고, 안 치면 조용히 통과했다.
+**"게이트에 배선했다" 와 "실제로 강제된다" 는 다른 말이다** — 새 룰을 배선할 때 이 구분을 확인할 것.
+
+훅이 하는 일 = `scripts/prepush_check.py` (~84초): ① data-contract 하드게이트 ② anomaly triage
+③ **inbox 위생**(`scripts/check_inbox_hygiene.py`, `inbox/README.md` §64-71 강제)
+④ **오프라인 테스트 126개** — 골든 4종 + `tests/test_rule_coverage_manifest.py`.
+그 전까지 **pytest 를 자동으로 돌리는 것이 아무것도 없었다**(골든을 만들어 놓고 아무도 안 돌리는 상태).
+
+> `test_rule_coverage_manifest.py` 는 **어떤 항목이 어떤 룰에 의해 실제로 검사되는지**를 선언하고
+> 변이시험으로 대조한다(룰엔진 층 + 게이트 전체 층). 룰을 추가·개명·삭제하거나 축의 커버리지를
+> 바꾸면 **그 매니페스트를 같이 고치지 않는 한 테스트가 막는다.** 골든은 "있는 것"만 박제하므로
+> 룰을 아예 안 쓰면 그 부재까지 고정한다 — 그 사각을 메우는 테스트다.
+`main` 처럼 `scripts/` 가 없는 slim 워크트리에서는 경고만 하고 통과한다(배포 경로를 막지 않기 위해).
+진짜 우회는 `git push --no-verify` — 썼으면 그 사실을 커밋에 남긴다.
+
 ## K-ICS validation gate (mandatory)
 
 Before proceeding to the next K-ICS pipeline stage (JSON swap, template sync, HTML deploy, push):
@@ -85,6 +113,8 @@ See `docs/agents/kics-json-validation-rules.md` for formulas, R4/R7 matrices, to
 | `tests/test_master_tables_golden.py` (오프라인, <1초) | `validate_master_tables` SUMMARY + exit code | 그 게이트 수정 후 |
 | `tests/test_viz_ifrs17_panels_golden.py` (오프라인, ~1.5초) | `viz_build_ifrs17_panels.py`가 쓰는 4개 패널 JSON 해시 | 그 빌더 수정 후 |
 | `tests/test_viz_csm_waterfall_golden.py` (오프라인, ~1.5초) | `viz_build_csm_waterfall.py` 산출 + 47사 status | 그 빌더 수정 후 |
+| `tests/test_ifrs17_bs_golden.py` (오프라인, ~2분) | `build_ifrs17_bs.py` 산출 마스터 바이트(해시 + row/company/quarter/item별 카운트), 17BS 유일 마스터(2026-08-14, equity_composition.json archive 이후) | 그 빌더(계정 매핑·OFS/AOCI 조건부·준비금) 수정 후 |
+| `tests/test_dividend_golden.py` (오프라인, <1초) | `build_dividend.py` 산출 마스터 바이트(해시 + row/company/quarter/item별 카운트), 배당에 관한 사항(alotMatter) | 그 빌더(se 매핑·종류주 정규화·zero-vs-missing) 수정 후 |
 | `tests/test_deploy_assets.py` (오프라인) | keep-list·인라인금지·BOM·삭제경로 참조 + **이 표 자체의 동기화**(아래) | HTML fetch/삭제/인코딩 변경 후, **골든 신설·개명 시** |
 
 > viz 골든 2종은 산출 JSON을 **인플레이스로 덮어쓰는** 빌더라, 실행 전 백업하고 drift/예외 시 복구한다(마스터 반쯤 쓰임 방지). 산출이 의도적으로 바뀌면 `--update`로 재생성 + 커밋에 이유 기록.

@@ -1,12 +1,50 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-07-22 · Stage 4/5 — publishing
+> Last updated: 2026-08-14 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
 
 **Cross-stage history:** `docs/claude-changelog.md`.
 **This file:** entries scoped to publishing work only.
+
+---
+
+## 2026-08-15 (배포 2차) — IFRS17 재무상태표 패널 T자 재구성 main push
+
+`4f1d344..6e5634f`, 격리 워크트리 cherry-push. `IFRS17.html`(Panel 7 타일형 → Panel 1 최상단 T자, 좌 자산/우상 부채/우하 자본을 실값 비율로 배치 + 2단계 `+` 드릴다운, 세부 미공시 회사는 버튼 disabled) + `IFRS17_BS.json`(`섹션`·`레벨` 컬럼 신규, 항목 1-7→1-31, 1,637→5,008행 — 파서가 예고보다 빨리 세부계정 랜딩, owner가 원 발주 60여개 항목을 13개로 축소). 원 발주 `inbox/_resolved/20260814T1250Z`(owner→designer) — designer가 섹션/레벨 그룹핑 계약(항목번호 무하드코딩)으로 짜둬서 파서 스키마 랜딩 후 HTML 무수정으로 호환 확인.
+
+부수 발견: `scripts/build_ifrs17_bs.py`가 이 시점까지 한 번도 git에 커밋된 적이 없었다(`git log --all` 이력 0건) — 이번 배포 커밋에 같이 포함해 추적 시작(단 main의 site-assets-only keep-list에는 안 들어감, 작업 브랜치에만).
+
+Pre-flight `validate_data_contract.py` RED=0 YELLOW=236, `pytest test_deploy_assets.py` 10 passed. owner에게 파일목록 제시 후 GO 받고 push. **배포 확인 함정**: legacy `pages/builds/latest` API가 새 push 후 한동안 직전 커밋을 계속 "built"로 보여줘 폴링이 안 됨 — 이 저장소는 실제로 `pages-build-deployment` GitHub Actions 워크플로우로 배포되므로 `gh run list`/`gh run view --json headSha,conclusion`으로 해당 커밋의 run을 직접 확인하는 게 맞다(다음부터 이쪽 우선). 라이브 검증: `IFRS17_BS.json`에서 `섹션`/`레벨` 필드 WebFetch로 확인, `IFRS17.html`은 브라우저에서 삼성화재해상보험 선택 후 T자 패널 DOM 텍스트 직접 조회로 확인(자산 112조4,436억 = 부채 77조981억 + 자본 35조3,455억, 항등식 성립) — 세부 드릴다운 행(현금및현금성자산·보험계약부채·이익잉여금 등)도 실값으로 렌더.
+
+---
+
+## 2026-08-15 (배포) — 배당현황 오픈 + PL_breakdown 유실 셀 복구 main push
+
+`de0aef9..4f1d344`, 격리 워크트리 cherry-push. 3파일: `dividend.json`(신규, DART alotMatter 배당에 관한 사항, 24개사, 1,924행) · `공시보고서.html`("준비 중" placeholder → 배당현황 대시보드, KPI 4종 + 항목1-7 분기표 + 종류주별 드릴다운, designer 작업물) · `PL_breakdown.json`(작업트리에서 유실됐던 61셀/1,475행 복구, 7,799→8,111행).
+
+**dividend keep-list 등록** (`inbox/publishing/20260814T2230Z`): `dividend.json`+`scripts/build_dividend.py` 커밋(기존 미추적), `claude-agent-publishing.md` §1 fetch표에 `공시보고서.html`→`dividend.json` 등록해 `test_deploy_assets.py::test_docs_agree_with_what_pages_fetch` FAIL→PASS 복구. xlsx는 이미 `배당` 시트가 있어 재생성 불필요(파서 확인).
+
+**PL_breakdown 유실 복구**: 원 사고는 `inbox/parser/20260814T1637Z`(validation 발견, MASTER_HOLE RED=13) — `validate_master_tables.py`를 `--no-build` 없이 돌리면 첫 동작으로 `build_root_masters.py`를 재실행하는데, 그 산출물이 결정론적으로 61셀(1,475행)을 떨어뜨림(2026-07-30 근접사고와 동일 계열, `project_git_purge`). validation이 owner 지시로 HEAD∪작업트리 union-merge(키=원보험사코드+공시분기+항목번호, null-vs-실값까지 셀 단위 판정)로 8,111행 복구, `validate_master_tables.py --no-build` 골든 일치 확인. publishing은 그 복구본을 `PL_breakdown.json`만 단독 스코프로 커밋(`79b1f7d`, 공유 워킹트리 다른 세션 변경분 섞이지 않게 `git commit -- <path>`로 범위 고정)한 뒤 위 3파일과 함께 배포. **근본원인(빌더가 순가산이 아님 / rebuild 기본값)은 미수정 — `inbox/parser/20260814T1637Z`에 열어둠**, parser 몫.
+
+Pre-flight `validate_data_contract.py` RED=0 YELLOW=220, `pytest test_deploy_assets.py` 10 passed. owner에게 정확한 파일목록+이유+게이트결과 제시 후 GO 받고 push. 배포 후 GitHub Pages 빌드 완료(`gh api .../pages/builds/latest` status=built로 폴링) 확인 후 라이브 검증: `dividend.json`/`PL_breakdown.json` WebFetch로 스키마 확인, `공시보고서.html`은 브라우저에서 실제로 삼성화재해상보험을 선택해 배당 Panel이 렌더되는지 DOM에서 직접 확인(현금배당금총액 8,289억원·주당배당금 19,500원·배당성향 41.1%, 2025.4Q 기준) — 콘솔 에러 0. 워크트리 정리 완료.
+
+---
+
+## 2026-08-14 (배포) — IFRS17_BS.json + IFRS17.html Panel 7 main push
+
+`255e445..de0aef9`. 격리 워크트리(`../insurequant-main-deploy`)로 `IFRS17_BS.json`(신규 마스터, 1,637행) + `IFRS17.html`(Panel 7 "재무상태표·자본의 질") 2개 파일만 cherry-push — `common.css`는 main과 diff 0이라 미포함. Pre-flight `validate_data_contract.py` RED=0 YELLOW=220 확인, 정확한 파일목록+이유+게이트결과 제시 후 owner GO 받고 `git push origin main` 실행. 배포 후 검증: `IFRS17_BS.json`을 WebFetch로 스키마 확인(원보험사코드/원수사명/티커/생손보여부/항목번호/항목명/공시분기/값), `IFRS17.html`은 브라우저에서 실제로 삼성생명(KR0069)을 선택해 Panel 7이 렌더되는지 DOM에서 직접 확인(자산총계 309조 9,483억원 표시, 2025.4Q) — 콘솔 에러 0. 로컬 static server(8896 config) 사전 확인은 Browser pane 컴포지팅 문제로 무산됐으나 curl 200 확인 후 진행, 라이브 브라우저 검증으로 최종 확인 완료. 워크트리 정리 완료.
+
+## 2026-08-14 — equity_composition → IFRS17_BS keep-list swap (HIGH, `20260814T0232Z`) + inbox backlog triage
+
+**1. keep-list + xlsx source swap.** Owner archived `equity_composition.json`(항목1-49) in favor of the single `IFRS17_BS.json`(항목1-7) master — `docs/agents/claude-agent-publishing.md` §1 fetch table, §9 keep-list snapshot, and §0 live-gate line updated to match; `scripts/build_master_xlsx.py:18` MASTERS entry repointed `equity_composition.json`→`IFRS17_BS.json` (sheet name `17BS` unchanged, columns 9→8 since the schema is stock-only, no `값_당분기`). Regenerated via the official `xlsx` skill after confirming with owner that the pre-existing `17BS_PIVOT` manual sheet (owner's 해약환급금준비금 hand-review) would be lost on rewrite — its correction logic was already ported into `build_ifrs17_bs.py`, so proceeded with a `.bak_20260814_prepivotloss` backup. Result: 8 cols × 1,637 rows, xlsx mtime newer than `IFRS17_BS.json`. `pytest tests/test_deploy_assets.py` 10 passed.
+**Not pushed yet.** `IFRS17_BS.json` is not yet on `main`. At the time of the original report, `validate_data_contract.py` was RED=42, all `[IFRS17_BS] BS_CENSUS_MISSING_ITEM` (6 companies with partial Tier-2 face-table extraction). **Correction (re-checked same day):** a concurrent validation-lane session closed this out before this note was finalized — owner confirmed via live DART API probe (status 013/014) that those 6 companies are non-listed and file only audit reports with no XBRL attachment at all, so the extraction gap is unrecoverable; owner directed a census exemption (`IFRS17_BS_NO_SOURCE`, `BS_IDENTITY` still checked) added to `validate_data_contract.py` (`inbox/_resolved/20260814T0620Z`). **Gate is now RED=0** (YELLOW 220, one new `BS_CENSUS_NO_SOURCE_COMPANY` for visibility). §9 keep-list comment and §0 live-gate line corrected to match. Technical gate is clear; actual `main` push still needs an explicit owner GO (publishing recommends only, never executes `git push`).
+
+**2. Inbox hygiene.** Several publishing-inbox tickets going back to 2026-06-16 had already been substantively completed (their `## 답변` sections said so, some literally writing "status: answered" in the body) but the YAML frontmatter `status` field was still `open`, or the ticket had been overtaken by later architecture changes. Reconciled against current repo state and closed out:
+- Archived to `_resolved/` as genuinely done/superseded: `20260803T0743Z`(xlsx regen, prior answer verified) · `20260814T0135Z`(equity keep-list gap, confirmed superseded by this session's 0232Z) · `20260620T0859Z_skeptic_hardening_grounding`(all 4 hardening rules verified present in `claude-agent-publishing.md` §3) · `20260616T0700Z`(K-ICS inline `FORWARD_DATA` reembed — moot, superseded by the later no-inline-data-in-HTML refactor; grep confirms 0 occurrences of `FORWARD_DATA` in `K-ICS.html` now) · `20260813T0422Z`(equity_composition deploy-prep — file itself archived, superseded).
+- Frontmatter synced `open`→`answered` (content already resolved, left in place per protocol since these are informational owner-instruction tickets, not archived unilaterally): `20260619T0412Z`(prepush_check chain + LLM-skeptic wiring, confirmed live in §0) · `20260620T0834Z`(코리안리/삼성화재/신한이지 5-cell owner-confirmed registry, confirmed `data/_gold/user_pl_confirmed_cells.json` exists).
+- **Left genuinely open, not started**: `20260620T0859Z__gold_overlay_durable_ownerfix` — owner's request to unify all masters (not just K-ICS) onto a durable gold-overlay-as-last-build-step pattern. `## 답변` is blank; this is real unstarted architecture work, out of scope for this session without owner check-in.
 
 ---
 

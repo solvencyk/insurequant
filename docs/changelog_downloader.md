@@ -1,7 +1,455 @@
 # Insurequant Changelog — Downloader Stage
 
-> Last updated: 2026-08-03 · Stage 1/5 — downloader
+> Last updated: 2026-08-21 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
+
+## 2026-08-21 -- KR0005/KR0071 2024.4Q wrong-document 재취득 — 1건 해결, 1건 원천 오문서 확인
+
+`inbox/downloader/20260821T1625Z`(validation): 두 회사의 2024.4Q raw가 K-ICS 정기경영공시가
+아니라 DART 사업보고서였고(텍스트레이어는 멀쩡한데 "경과조치" 0회, 꼬리말 dart.fss.or.kr),
+그 상태로 "발행사 미공시" 면제가 잘못 등재돼 있었다 — 면제 해제 후 downloader로 회부.
+
+**KR0005 흥국화재 — 해결.** kpub.knia.or.kr(손보협회 통합공시) 결산 2024 열에서 재취득
+(일회성 `scripts/refetch_kr0005_kr0071_fy2024q4.py`, `backfill_nonlife_disclosure_kpub.py`와
+같은 라우트, 기존 `WANT` 리스트는 안 건드림). 표지 "보험업감독규정 제7-44조" 문구 + p37
+"[지급여력비율 총괄]" 표에 경과조치 전(154.01%)/후(199.56%) 24.4Q 수치가 명시돼 있어 정본
+확인. `fitz` 텍스트검색으로 "경과조치" 0회가 나왔던 건 오탐이었다 — 이 문서는 프로즈/헤더는
+네이티브 텍스트지만 **데이터 표는 래스터 이미지**라 텍스트 레이어 검색이 안 먹는다(240dpi
+렌더 + 육안 판독으로 재확인). 기존 오문서(28,358,329B/367p)는
+`data/_archive/20260821T044328Z/data/disclosure/FY2024_Q4/raw/`로 이동, 신규 검증본
+(38,960,137B/96p)을 `data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf`에 설치.
+
+**KR0071 흥국생명 — 원천 자체가 오문서, honest gap.** 독립된 두 경로를 시도했다:
+(A) pub.insure.or.kr(생보협회 통합공시) 결산 컬럼, (B) 흥국생명 자사 사이트
+(`heungkuklife.co.kr/front/public/manageList.do`, 번호101 "FY2024 결산 경영공시"). **둘 다
+디스크의 기존 오문서와 SHA256이 완전히 동일한 파일을 반환** — 협회 일괄 경로와 자사 공시
+채널이 모두 같은 잘못된 파일을 걸어두고 있다는 뜻이다. 538p 본문을 직접 열어 확인(p250·
+p421 "지급여력" 부분매치)해도 K-ICS 제도 일반설명(적기시정조치 구간표)뿐, 흥국생명 고유
+수치·표는 없다 — DART 사업보고서 그대로. 다운로더가 접근 가능한 표준 경로로는 정본을 구할
+수 없다고 결론. 기존 파일은 그대로 둠(대체본 없이 지우면 자리표시만 사라짐), 면제 재등록
+안 함(RED 유지가 맞음). owner 판단 필요 — 흥국생명 직접 문의 또는 정정 게시 대기.
+
+**참고 (자사 사이트 접근 함정)**: `heungkuklife.co.kr`은 직접 URL 진입(특히 `www.` 없이,
+또는 첫 headless goto)에 "현재 잘못된 접근경로" 에러를 반환한다 — 메뉴 클릭 흐름(session/
+referer)을 요구하는 사이트. `www.` prefix + 홈 방문 후 진입으로 재현 가능하게 우회함.
+
+parser hand-off: KR0005는 raw ready이나 경과조치/지급여력기준금액 상세 표가 이미지라 OCR
+경로 필요(기존 pdfplumber EOF→fitz fallback과는 다른 갭). KR0071은 여전히 못 넘김,
+`POST_TRANSITION_PARENT_MISSING` RED 4건 유지. 상세: `inbox/downloader/20260821T1625Z` 답변
+(status: answered, 완결 아님).
+
+## 2026-08-20b -- alotMatter negative-cache 버그 수정, 2026.2Q 배당 19사 복구
+
+owner가 "26.2Q 배당현황 다시 시작하자"며 `inbox/downloader/20260820T1600Z`를 남김.
+`dividend.json` 2026.2Q가 24사 중 5사뿐이라 파고들어 보니, **`fetch_dart_fs.py`가 8/19에 고친
+것과 완전히 동일한 버그**가 `fetch_dart_alotmatter.py`엔 이식이 안 돼 있었다: alotMatter
+도메인 온보딩이 2026-08-14였는데 그날이 반기보고서 법정기한 당일이라 DART가 색인하기 전에
+013("조회된 데이터가 없습니다")이 돌아왔고, `fetch_one()`이 status를 안 가리고 무조건
+캐시에 썼다 — 게다가 `--refresh` 플래그 자체가 없어서 스크립트를 다시 돌려도 이미 파일이
+있으니 그대로 013을 반환, 재취득 경로가 원천 차단돼 있었다.
+
+**수정**: `fetch_one()`이 `status=="000"`일 때만 디스크에 쓰도록(`fetch_dart_fs.py` L134와
+동일 패턴), 신규 `refresh_year_reprt(client, year, reprt)` + CLI `--refresh <year> <reprt>`로
+지정 슬라이스를 유니버스 전체 강제 재조회. `fetch_dart_fs.py`의 `--refresh <corp> <year>`와
+스코프 축이 다른 이유: 이번 사고는 특정 회사가 아니라 **특정 회차(반기법정기한 당일에 긁은
+배치) 전체**가 오염됐으므로 (corp, year) 단위보다 (year, reprt) 단위가 이 사고 형태에 맞다.
+
+**재취득 결과** (`python scripts/fetch_dart_alotmatter.py --refresh 2026 11012`, 39사 유니버스):
+`000: 5→24`, `013: 34→15`(19사 복구). AIG(KR0029)는 `resolve_corp()` 이름검색 quirk로 유니버스
+루프에서 빠져 corp_code `00983606` 직접 지정으로 별도 확인 — 역시 013, 최종 15개 안에 포함
+(39/39 전수 확인 완결). **남은 15개 013은 캐싱 문제가 아니라 구조적 legit-absent** —
+2026-08-13 FS-API 온보딩 때 독립적으로 확인된 "XBRL 전무 15개사(14+예별, 전부 비상장
+감사보고서만 제출)" 집합과 정확히 1:1 일치한다. 두 서로 다른 DART API(fnlttSinglAcntAll,
+alotMatter)가 같은 15개사에서 같은 이유(사업보고서/반기보고서 자체를 안 냄)로 막힌 것 — 우연이
+아니라 구조. 기존 2023~2025 캐시는 `(year, reprt)` 스코프 밖이라 무영향.
+
+parser raw-ready: `inbox/parser/20260820T1720Z` (blocked_on이던 `20260820T1540Z` 재개 트리거,
+`build_dividend.py` 재빌드 + `tests/test_dividend_golden.py --update` 필요).
+
+## 2026-08-20 -- 재드레인: 악사손해 등 5사 연혁 백필 + status-sweep 정리
+
+owner가 IFRS17.html에서 직접 지적(`inbox/downloader/20260819T0620Z`): "악사는 2025.4Q밖에
+BS정보가 없네 왜지?" 실측하니 KR0049(악사)·KR0050(하나손해)·KR0051(신한이지)·KR0076(아이엠
+라이프)·KR1010(교보라이프플래닛) 5개사가 전부 `FY2025_Q4` 딱 1건 raw만 있고 그 이전은
+아예 폴더가 없었다 — FY2025_Q4 온보딩 때 처음 받은 회사들이라 과거분을 받은 적이 없었음.
+
+**진단 먼저, 그다음 fetch.** 어제 AIG(KR0029)에서 "사업보고서"로 검색하면 no_filing만
+나온다는 걸 직접 겪었던 터라, 이번엔 5개사 전부 `list_filings(pblntf_ty=None)`로 먼저
+전체 필링 이력을 뽑아봤다 — 예상대로 **5개사 전부 비상장이라 감사보고서/연결감사보고서만
+내고 사업보고서는 한 번도 안 냈다.** 원 요청 문구가 "사업보고서 raw 취득"이었지만 그대로
+따라 검색했으면 21건 전부 `no_filing`으로 끝났을 것.
+
+**FY2022~2024 3개년 21건 전부 알려진 rcept 직접 fetch로 확보**(신규 `scripts/
+fetch_annual_only5_history.py`, AIG 우회와 동일 패턴 — `annual_raw_dir`+
+`client.fetch_document_xml`만 직접 호출, `process_one_period`의 A001 검색은 안 씀). 하나손해·
+교보라이프플래닛은 감사+연결감사 둘 다(기존 FY2025_Q4 확보 관례와 동일), 나머지 3사는 감사만
+존재. 21/21 zip무결성 통과, `보험계약마진` 키워드 전부 확인(4~60회, zero-hit 없음).
+
+**"가능하면 전사 FY2022_Q4 백필"은 스코프만 정확히 잡고 미착수.** 현재 `FY2022_Q4/raw/`
+보유 코드 11개(요청 원문의 6개 + 이번 5개)를 kics_disclosure 39사 전체와 대조 — **28개사
+잔여**(KR0001·2·3·4·5·8·9·10·11·29·32·68·69·70·71·72·73·75·79·82·83·87·94·99·104·150·
+1000·1098). 이 중 상당수는 정상 상장사라 표준 경로로 되겠지만 `ifrs17_batch_historical.py`의
+`_make_targets()`가 2023.1Q부터 시작이라 2022.4Q 타깃 자체가 없고(새로 만들어야 함), 오늘
+겪은 대로 회사별로 사업보고서/감사보고서가 갈릴 수 있어(AIG·5개사 전부 그랬다) 28개사를
+한 번에 밀면 조용히 틀린 fetch가 섞일 위험이 있다고 판단 — 원 요청이 "없으면 5개사만이라도"
+로 스코프를 열어뒀으므로 이번엔 필수분만 완결. parser raw-ready:
+`inbox/parser/20260820T0052Z`.
+
+**같은 회차, owner의 status-sweep 인박스 처리**(`inbox/downloader/20260820T0033Z`) — 78건
+활성 스레드 중 51건이 answered인 채 원 sender 재확인 없이 방치돼 있다는 전 프로젝트 지적.
+downloader 몫 3건 대응: ①`20260614T1232Z`가 (1) resolved 이후에도 `status: open`인 채
+남아있던 걸 `answered`로 정정(OCR-MARKETRISK는 owner가 이미 보류 결정, 미결 아님) ②
+`20260819T0116Z`(negative-cache)는 owner sign-off받아 `_resolved/`로 이동 ③
+`20260819T0820Z`의 E항목(2022.4Q 24사)은 이미 전날 owner에게 직접 물어 "보류" 확정돼 있던
+게 sweep 스냅샷엔 반영이 안 됐던 것뿐이라고 회신. sweep 자체도 resolved.
+
+## 2026-08-19b -- 법정준비금 raw gap 인박스 처리 (A/B/C/D 완료, E owner 대기)
+
+parser가 IFRS17_BS 항목5-8(해약환급금·비상위험·대손·보증준비금) 재작업 끝에 남은 결측이
+전부 raw 미수집임을 확인하고 발주(`inbox/downloader/20260819T0820Z`, HIGH). 5갈래 요청 중
+4갈래 처리:
+
+**A(2023.2Q 19사 중 18사)+B(2023.1Q 11사 중 10사)** — `ifrs17_batch_historical.py --pilot
+... --skip-extract` 표준 경로로 28건 전부 `fetched`, zip 안 `보험계약마진` 키워드 전부
+실측(28~212회, zero-hit 없음).
+
+**C(KR0150 서울보증, 2023.1Q~2024.4Q 8분기)** — `EXCLUDED_SKIP` 유니버스 필터라 표준
+`--pilot`에 안 걸림(기존 `fetch_kr0150_item10_quarters.py`와 동일 우회 필요) → 신규
+`scripts/fetch_reserve_gap_kr0150_kr0029.py`. **7분기 `no_filing` 확정**(DART에 정기보고서
+자체가 없음 — 기존 문서화된 "2024.4Q부터 정기공시 재개" 사실과 정확히 일치, 새 결손
+아니라 재확인), **2024.4Q만 fetched**(rcept `20250324000440`). 여기서 `보험계약마진`=0이
+나와서 처음엔 오문서 의심했으나, 서울보증은 보증보험 전업이라 구조적으로 CSM이 없는
+회사(기존 "CSM-0 정상" 판정과 동일 선상) — 대신 준비금 특정 키워드(비상위험준비금 32회·
+대손준비금 26회)로 재확인해 진짜 재무제표 본문임을 확정. PDF-wrong-document 패턴과 같은
+함정이라 반드시 다른 키워드로 교차확인했다.
+
+**D(AIG KR0029 FY2024_Q4)** — 처음엔 `process_one_period`(사업보고서/A001 검색)로
+시도했는데 `no_filing`. `pblntf_ty` 필터 없이 전종류 재조회해보니 **AIG는 2023~2026 전
+기간 사업/반기/분기보고서를 아예 안 내고 감사보고서·연결감사보고서만 낸다** — 기존에
+이미 확보돼 있던 FY2023_Q4 raw(`20240403002101`)도 실은 감사보고서였는데, 폴더가
+annual(`FY..._Q4`) 버킷에 들어가다 보니 지금까지 아무도 눈치 못 챘던 것. 알려진 rcept
+직접 fetch로 감사보고서(`20250409001949`)+연결감사보고서(`20250409001951`) 2건 확보,
+`보험계약마진` 51회씩. 이 사실은 parser에게도 참고사항으로 명시(사업보고서 구조를
+가정하는 코드가 있다면 이 회사엔 안 맞을 수 있음).
+
+**E(2022.4Q 24사)** — 미착수. 원 티켓이 스스로 "owner 판단 필요"로 스코프를 열어뒀음
+(항목5는 2023년 신설 제도라 2022년말 값은 회사가 FY2023 필링에 소급 가정치로만 남긴
+전기열이고, 항목6·7만 목적이면 지금 받아도 되지만 항목5까지 필요하면 파서 쪽에 소급
+전기열 수확기를 별도로 만들어야 함) — downloader가 임의로 결정하지 않고 owner에게
+그대로 질문 전달.
+
+parser raw-ready: `inbox/parser/20260819T0841Z`. 같은 드레인에서 완결된 스레드 4건도
+정리(halfyear scout D-1/D-2/D-3 최종 완결 확인, viewer_fallback 사후확인 2건, IR
+factsheet 재수집 완료분) → `_resolved/`.
+
+## 2026-08-19 -- FS API 영구음성캐시 버그: 2026.2Q 9/10사 복구 + 근본 수정
+
+owner가 마스터 xlsx "17BS" 시트에서 `IFRS17_BS.json` 2026.2Q가 24사 중 14사뿐임을 발견,
+직접 원인까지 진단해서 발주(`inbox/downloader/20260819T0116Z`) — 캐시 파일 mtime이 전부
+반기보고서 접수(8/14) 다음날 새벽(8/15 00:32~02:00)이라, DART FS API가 아직 재무제표를
+색인하기 전에 긁혀서 013(무응답)이 그대로 굳었다고 정확히 짚었다. 이 시점은 나의 8/15
+새벽 시간당 재시도 루프(2026.2Q body XML 스카우팅)와 겹치는 창 — 그 세션의 `--refresh`
+호출들이 원인일 가능성이 높음.
+
+**9개사 재취득**: 메리츠화재해상보험·삼성생명보험·현대해상·교보생명보험·농협생명보험·
+동양생명·미래에셋생명보험·NH농협손해보험·KB라이프생명 — 전부 OFS `status=000` 회복,
+BS 항등식(자산=부채+자본) 검산 전부 통과. **흥국화재(10번째)는 재취득해도 BS 1행
+(사용권자산)뿐** — owner가 미리 예견한 "한화손보 4-row blank shell"류로 확인, 캐시버그가
+아니라 DART API 응답 자체의 빈 껍데기. parser에 본문 XML 폴백 대상으로 명시해 raw-ready
+통지(`inbox/parser/20260819T0140Z`).
+
+**근본 수정** (`scripts/fetch_dart_fs.py`): `_fetch_raw`가 `status=000`(성공)일 때만
+캐시 파일에 쓰도록 변경 — 013은 그 호출에서만 반환되고 디스크엔 안 남아, 다음 호출 때
+다시 라이브로 확인한다. 부수 수정: `_refresh_cache`가 재fetch 전에 기존 파일을 먼저
+지우던 구조였는데, 이제 013을 안 쓰다 보니 "지우고 → 013 받으면 → 완전 결측"이 될 수
+있어 **사전삭제 제거**(force=True가 성공시에만 덮어써서, 실패해도 기존 좋은 캐시가
+보존됨). 기존에 이미 확정된 영구결측(2023 1Q/2Q 24개사, 비상장 15개사 등)은 캐시 파일이
+이미 있어 매번 재확인 없이 그대로 재사용 — 이번 변경으로 API 호출이 늘지 않음.
+
+## 2026-08-17 -- 인박스 드레인: AIG 2023.4Q raw(push게이트 마지막 RED) + IR D-1/D-2 종결
+
+**AIG손해보험(KR0029) 2023.4Q 감사보고서** — validation이 push 게이트 마지막 RED 1건
+(`PL_CSM_AMORT_VS_WATERFALL`)의 근거로 정확한 corp_code(`00983606`, 이름검색 불가 등록명
+"AIG")와 rcept(`20240403002101`)를 지정해서 요청 → 직접 fetch,
+`data/dart/FY2023_Q4/raw/KR0029_에이아이지손해보험_20240403002101/`, 보험계약마진 52회·
+상각 117회 확인. FY2024_Q4는 요청 스코프 밖(parser가 FY2025 전기컬럼으로 이미 해결)이라
+안 받음. parser raw-ready `inbox/parser/20260817T0231Z`.
+
+**IR D-1(실패3사 재시도)/D-2(9사 우선순위 확인) 종결** — `inbox/downloader/20260815T0907Z`
+(2026-08-15에 발주됐던 LOW 우선순위 티켓, 오늘 드레인하며 마무리):
+- 삼성생명(KR0069): 실패 dump 확인 결과 SPA(sslife_v1) JS 렌더링이 기존 wait_ms=3000보다
+  오래 걸리는 문제로 진단 → `wait_networkidle: True` + `wait_ms: 6000`으로 스크립트 수정,
+  재시도 성공(`SLI 1HFY26 Factsheet_KOR.xlsx`, 799KB).
+- 코리안리(KR1000): 재시도해도 동일 `ERR_EMPTY_RESPONSE` → 루트 도메인에 순수 HTTP로
+  직접 찔러봐도 연결 자체가 거부됨 확인 — 이 페이지만이 아니라 `koreanre.co.kr` 전체 장애.
+  재시도로 해결 불가, documented gap으로 보류.
+- 롯데손보(KR0003): WAF 차단 페이지("Web firewall security policies") 재확인, 스크립트·
+  수동 브라우저 동일 — bot-detection 우회 시도 안 함(정책), documented gap.
+- 한화손보(KR0002): 9사 우선순위 목록에 있었지만 IR 소스 카탈로그에 없던 이유를 site
+  직접 확인으로 규명 — `/notice/ir/main.do`("공시실")가 유일 IR 경로인데 이건 정기경영공시
+  성격(Source 1a)이지 별도 factsheet 코너가 아님. 구조적 결측으로 확정.
+- 최종 11/13(삼성생명 신규 확보분 반영), 9사 우선순위 중 7/9.
+
+**부수 발견 + 자체 수정 2건** (`scripts/download_ir_2026q2.py`):
+1. **매니페스트 통째-덮어쓰기 버그.** 부분 재실행(2사만 타겟)했더니 원래 13사 매니페스트가
+   2건으로 축소됨 — 실물 파일은 무사(경로 착각으로 "유실"로 오판할 뻔했다가 재확인), 기존
+   매니페스트를 key 기준 merge하도록 수정해 재발 방지. `_meta.period`의 "FY2026_Q1" 복붙
+   잔재도 "FY2026_Q2"로 수정.
+2. IR 저장 경로가 두 관례로 혼재 확인 — 스크립트 자체 fetch는 `data/ir/FY2026_Q2/<key>_
+   <name>/`(raw 하위폴더 없음), 기존 수작업 fetch(동양생명·KB/NH그룹)는 `data/ir/FY2026_Q2/
+   raw/<key>_<name>/`. 이번 스코프 밖이라 통일 안 함, 기록만 남김(향후 세션 주의).
+
+parser raw-ready는 IR 쪽은 발주 안 함(owner 지시 — KIDI 통계 나온 뒤 대조용으로만 씀).
+
+## 2026-08-15c -- viewer_fallback 다중문서 이어붙임 버그, parser 빠꾸 → 로컬 재포장으로 수정
+
+parser가 `inbox/downloader/20260815T0230Z`로 어제(2026-08-15b) 배송한 14개사 viewer_fallback
+raw를 반송. **원인**: `report/viewer.do`가 섹션마다 완전한 `<!DOCTYPE><HTML><HEAD><BODY>
+...</BODY></HTML>` 통짜 문서를 돌려주는데(실제 뷰어에서 iframe 임베드용으로 쓰는 형식),
+내 스크립트가 이걸 wrapper 안 벗기고 그대로 이어붙여서 파일 하나에 독립 HTML 문서가 최대
+146개(삼성생명) 겹쳐 있었음. `lxml.etree.HTMLParser`가 두 번째 문서부터 "Misplaced DOCTYPE"
+에러를 내고 첫 문서(표지, 표 4개)만 파싱 — **CSM 워터폴 14개사 전부 0건, PL breakdown도
+7개사 완전 0건**(나머지 7개사는 이 raw와 무관한 FS-API 캐시 폴백 덕에 일부만 생존)으로
+parser가 실제 파싱 시도 중 발견.
+
+**내 검증 방법(`full_doc.count(keyword)`) 자체가 맹점이었음** — 문자열 카운트는 문서 경계를
+안 보니 146개 문서에 흩어진 키워드를 다 세어서 통과한 것처럼 보였다. "성공"으로 잘못 보고한
+점 인정.
+
+**수정 — 재fetch 없이 로컬 재포장:**
+1. 이미 받은 14개사 raw를 내가 넣어둔 섹션 구분자(`<!-- ===== id: text ===== -->`)로 재분해.
+2. 각 섹션의 `<BODY>` 안쪽만 정규식으로 추출(`<BODY[^>]*>(.*?)</BODY>`).
+3. 전체를 새 DOCTYPE/HTML/HEAD/BODY 껍데기 하나로 재조립, 같은 `document.zip`/`<rcept>.xml`
+   경로에 덮어씀(경로·파일명 불변, parser의 `*.xml` glob·raw-ready 포인터 그대로 유효).
+4. 일회성 스크립트 `scripts/fix_viewer_fallback_multidoc.py`로 실행(14개사 전부 자동).
+
+**검증은 parser와 동일한 도구(lxml)로 재현**: `Misplaced DOCTYPE` 에러 14개사 전부 0건, 표
+인식 524(NH농협손해)~2857개(삼성생명) — 기존 "4개만 인식"에서 정상 범위로 회복. CSM 키워드
+카운트는 수정 전후 완전 동일(예: 삼성생명 563회 그대로) — 내용 손실 없이 구조만 교정 확인.
+
+**원인 스크립트도 수정** — `scripts/fetch_dart_viewer_fallback.py`가 이제 fetch 단계에서부터
+`<BODY>` 추출→단일문서 조립을 하도록 고쳐서, 이 경로를 다시 쓸 때(정본 API 복구 전 신규
+배치 등) 같은 버그가 재발하지 않음.
+
+parser 재확인 요청 회신: `inbox/downloader/20260815T0230Z`(status: answered — 포맷 검증은
+통과했지만 실제 CSM/PL 추출 정상화는 parser 재파싱이 정본, 그쪽 확인 대기). 중복 방지로
+원 raw-ready 티켓(`inbox/parser/20260815T0130Z`)은 이 스레드로 합류시켜 `_resolved/`.
+
+## 2026-08-15b -- DART 웹뷰어 우회 fallback 신설, 2026.2Q body 정체 14사 전부 해소
+
+owner "당장 실시 후 파서에게 발주" — API가 24h+ 막힌 나머지 14개사를 신규 우회경로로 확보,
+상장 24개사 전원 body raw 확보 완료.
+
+**메커니즘**: `dsaf001/main.do?rcpNo=`(뷰어 셸)를 열면 전체 문서목차가 `node1/node2/node3`
+JS 객체(text/id/rcpNo/dcmNo/eleId/offset/length/dtd)로 인라인 임베드돼 있음 — 이걸 정규식으로
+파싱해 각 섹션을 `report/viewer.do?rcpNo=&dcmNo=&eleId=&offset=&length=&dtd=`로 순회
+요청하면 그 섹션 HTML을 돌려줌. 둘 다 인증/세션 불요, 브라우저로 첫 발견 후 순수
+`requests.get()`으로 재현 확인. 신규 `scripts/fetch_dart_viewer_fallback.py`.
+
+**1차 시도 버그 2개 → 재수정 후 14/14 성공:**
+1. **트리 깊이별 변수명 불일치.** `node3`만 매치하는 정규식으로 1차 실행 → 6개사(NH농협손해·
+   ABL생명·흥국생명·교보생명·푸본현대생명·KB라이프)가 4~8섹션만 잡힘(주석 섹션 전체
+   누락 — 예: NH농협손해는 재무제표(4-1~4-4)만 잡히고 "5. 재무제표 주석"(76만자)이 통째
+   빠짐). 원인: 회사마다 노트가 `node3` 자식들로 잘게 쪼개지거나(삼성생명류, ~30개 소단위)
+   `node2` 하나로 통짜(NH농협손해류)로 실려있어 트리 깊이가 다름. `node\d+`로 전체 매치하도록
+   수정.
+2. **부모-자식 중복 위험.** 위 수정만 하면 삼성생명류(부모 "3. 연결재무제표 주석" 자체가
+   630만자로 자식 30개 전체를 포함)에서 부모+자식을 같이 받아 노트 섹션이 통째 중복.
+   트리 구조를 몰라도 되는 방법으로 해소: **offset/length 수치 범위가 다른 노드를 포함하면
+   그 노드는 제외**(leaf만 채택) — 삼성생명류는 부모 제외+자식 유지, NH농협손해류는 애초에
+   포함관계가 없어 그대로 유지, 양쪽 다 정확히 동작 확인.
+3. 네트워크 타임아웃 6건(흥국화재·삼성화재·DB손해·삼성생명·동양생명·코리안리) → 백오프
+   재시도(최대 3회) 추가로 해소.
+
+**최종 14/14**: 섹션 48~146개, 1.2M~4.8M자, IFRS17 핵심 키워드(보험계약마진/보험료배분접근법/
+신계약/보험손익) 전부 확인(동양생명만 "신계약" 0회 — 라벨 변형 추정, parser 판단으로 라우팅).
+저장 경로는 정본과 동일(`document.zip`에 `<rcept>.xml`, `*.xml` glob 그대로 작동) +
+`meta.json`에 `"source": "viewer_fallback"`로 출처 구분. parser 통지: `inbox/parser/
+20260815T0130Z`.
+
+**앞서 확보한 5개사(메리츠화재·KB손해보험·KDB생명·DB생명·서울보증) 결과 확인**: parser가
+CSM/PL 반영 완료 회신(`inbox/parser/20260815T0015Z`) — 4개사 CSM 워터폴 정확히 폐쇄, 서울보증은
+PAA 구조상 CSM 없는 게 정상 판정. 확인 후 `_resolved/`로 아카이브.
+
+## 2026-08-15 -- 2026.2Q body XML 24h+ 정체 확인: 웹뷰어엔 있는데 API export만 막힘
+
+owner 재질문("지금도 안되니") → 재스카우팅. **5개사 신규 확보**(메리츠화재·KB손해보험·KDB생명·
+DB생명·서울보증, body+FS 캐시 둘 다 refreshed) — body 확보 누계 3→8/24. 나머지 16개사는
+여전히 `document.xml status:014`(어제 rcept 그대로).
+
+**진단 상향 — 단순 propagation-lag가 아닐 수 있음.** DART 웹뷰어(`https://dart.fss.or.kr/
+dsaf001/main.do?rcpNo=<rcept>`)로 삼성생명(20260814003263)·코리안리(20260814003862) 직접
+확인: **둘 다 문서목차·다운로드 버튼까지 완전히 렌더링됨**(회사개요 등 정상 트리). 같은
+rcept로 API `document.xml` 즉시 재시도해도 여전히 014. → **문서 자체는 DART에 존재·서빙되고
+있는데 OpenDART API의 zip export 파이프라인만 별도로 막혀있는 상태**로 재진단(index만 뜨고
+본문이 안 붙은 게 아니라, 본문은 이미 붙어있고 API 전용 패키징만 안 됨). 24시간을 넘긴 정체는
+기존 propagation-lag 사례(보통 시간 단위 내 해소)와 다른 패턴. FS API(fnlttSinglAcntAll)
+쪽 16개사 재확인은 백그라운드 실행 중, 결과는 다음 항목에서 갱신.
+
+TODO 상태를 🟢(안정)에서 🟡(재검토 필요)로 되돌림 — owner 판단 대기(계속 대기 vs 웹뷰어
+스크레이핑 등 대체경로).
+
+## 2026-08-14e -- 신규 도메인 온보딩: 배당에 관한 사항(DART alotMatter) 39사 전수
+
+owner `inbox/downloader/20260814T0746Z` — KRFS 세션에서 19사×4시점 1회성 수집했던 배당현황을
+정식 회기별 정기 수집 도메인으로 편입, 후속 addendum(20260814T1250Z)에서 스코프를 최소안(19사)
+대신 **전사안**(kics_disclosure 커버리지 39사 × FY2023-2026 × reprt_code 4종)으로 확정.
+
+신규 `scripts/fetch_dart_alotmatter.py`: `OpenDARTClient` 클래스는 무수정, `client._get(
+"/api/alotMatter.json", ...)` 직접 호출만 추가(지시 준수). corp_code 해결은 `fetch_dart_fs.py`의
+`resolve_corp` 재사용("OO생명보험"→"OO생명" alias가 삼성생명·미래에셋생명에 이미 적용됨). 2-pass
+설계(11011+11012 우선완주 → 11013+11014, rate-limit 대비) — 실제로는 에러 0건, 전량 1패스에
+가깝게 완주. 캐시 `data/dart/_alotmatter_cache/{corp_code}_{year}_{reprt}.json`(원본 그대로,
+`_fs_api_cache`와 동일 컨벤션 — 존재 시 skip, `--refresh` 강제갱신).
+
+**KR0029 AIG손해보험만 이름검색 실패**(기존 문서화된 quirk) — 문서화된 corp_code `00983606`으로
+직접 16셀 fetch(전부 013=배당공시 없음, resolve 실패지 fetch 실패 아님). 최종 **39/39개사 ×
+624셀 전수 완주, status 000=310·013=314.** 013 분해: reprt별(11011 81·11012 77·11013 58·11014
+82) · 연도별(2023 60·2024 59·2025 56·2026 123 — 2026이 압도적으로 높은 건 3Q·사업보고서가
+아직 안 왔기 때문, 구조적). 013 전량이 기존에 이미 확인된 14개 구조적 미제출사(NON_LISTED_SKIP/
+AUDIT_REPORT_ANNUAL — 오늘 반기보고서 스카우팅에서도 동일 14사가 "no_filing"이었음, 완전히
+독립적인 두 도메인이 같은 회사 리스트로 수렴 — 강한 교차검증)와 2026 미도래 분기에 수렴. 상장사
+16/16 완전커버 0개사이지만 이 역시 구조적(2026 최대 도달치가 14/16).
+
+**함정 2건 raw 실측 확인** (owner 원 티켓 경고 그대로 재현):
+1. 삼성생명 2023.4Q `주당 현금배당금(원)` 두 행 — 종류주 없어 두번째 행이 `thstrm='-'`
+   placeholder(값 3,700 vs `-`). 한화생명 2023.4Q는 `stock_knd`가 실제 "보통주"/"우선주"로
+   나뉨(150원/`-`) — 정상 케이스도 확인.
+2. status=000+전항목`-`(무배당) vs status=013(무공시) 구분 필요 — census status 필드로 판별 가능.
+
+**루트 `배당현황_OpenDART_2023Q4-2026Q2.xlsx`(owner 1회성 KRFS 산출물) 교차검증 — 1건 불일치.**
+19사×4시점 대조: 53/53 대부분 일치(27 "배당있음" + 26 "무배당,전항목`-`"), `무배당(웹조사,
+API조회 생략)` 표기 7건 중 6건도 일치하지만 **한화생명 2023.4Q는 그 xlsx가 오답** — 그 셀만
+API를 안 부르고 웹조사로 "무배당" 단정했는데 raw는 실제 배당(현금배당금총액 112,709백만원,
+보통주 주당 150원)을 보여줌. 재수집(API 기반)이 정답, xlsx는 참조로만 쓰고 마스터 소스로
+승격하지 말 것(owner 지시 그대로 준수).
+
+parser 후속 발주(마스터 `dividend.json` 빌드 → designer가 `공시보고서.html` "준비 중" 채우는
+체인): `inbox/parser/20260814T0938Z`. downloader 몫은 완결 — 원 티켓 `resolved`로
+`inbox/_resolved/`.
+
+## 2026-08-14d -- 반기공시 스카우팅 3회차 완결: 실제로는 21사 동시제출, 상장 24/24 전원 확인
+
+owner 재확인("지금은? 거의 다 올렸을걸?") → 2026-08-14c 스냅샷(6개 신규 rcept, 3사 FS
+확보) 직후 재스캔했더니 **실제로는 21개사가 한꺼번에 신규 제출된 상태**였음(2026-08-14c가
+잡은 6사는 이 21사의 부분집합). 전체 목록: 메리츠화재·롯데손보·흥국화재·삼성화재·현대해상·
+KB손보·DB손해·NH농협손해·삼성생명·ABL생명·흥국생명·KDB생명·교보생명·미래에셋생명·DB생명·
+푸본현대생명·동양생명·KB라이프·농협생명·서울보증·코리안리 — 전부 오늘자 "반기보고서
+(2026.06)" 원본 1건씩(정정 아님). 신한라이프(2026-08-14b)까지 합쳐 오늘 신규 22사 + 8/13
+한화 2사(2026-08-14) = **상장 universe 24/24 제출 완료**, 나머지 14사는 구조적 미제출,
+AIG는 `NO_CORP_MATCH` 불변.
+
+FS API 21개사 일괄 `--refresh`(`fetch_dart_fs._refresh_cache`, 스크래치 배치 스크립트로
+루프 — `scripts/` 구조는 안 건드림) → **4개사 반영**: 2026-08-14c의 KB손보·KDB생명·DB생명
+3사에 더해 **서울보증(KR0150)도 이 시점엔 013→000으로 전환 확인**(OFS 자산 9,259,640=
+부채 4,265,939+자본 4,993,701 백만원, 항등식 검산). 나머지 17개사는 FS API도 여전히 013.
+10분 간격 재스캔 2회, 4/21에서 변화 없음(스냅샷 안정 확인).
+
+**본문 XML은 22개사(신한라이프 포함) 전부 `status:014` 불변** — list.json 색인과 문서서빙
+간 DART 쪽 전파지연으로 판단(21사가 한꺼번에 몰려 큐가 밀린 것으로 추정, BATCH-HISTORICAL-FIX
+류 정정-rcept 오선택과는 무관 — 후보 rcept가 회사마다 1건뿐이라 선택 로직 자체가 개입할
+여지가 없음). parser 완결 통지(2026-08-14c의 3사 재확인 + 서울보증 신규 + 17사 pending
+명시): `inbox/parser/20260814T0612Z`. owner 티켓 3차 답변 완결: `inbox/downloader/
+20260814T0149Z`, status open 유지 — 다음 재호출 시 22개사 body + 17개사 FS 재시도.
+
+## 2026-08-14c -- 반기공시 스카우팅 3회차: FS API가 body보다 먼저 열리는 패턴이 3사로 확산
+
+owner 제보("지금 꽤 많이 올라와있다") → `scripts/scout_2026q2_halfyear.py` 재실행. body XML
+기준 확보사는 3사(한화생명·한화손보·신한라이프) 불변, 신한라이프 body 재시도도 여전히
+`014`. **신규 rcept 6사 발견** — 메리츠화재(KR0001)·롯데손보(KR0003)·KB손보(KR0010)·
+KDB생명(KR0072)·DB생명(KR0082)·서울보증(KR0150), 전부 오늘 "반기보고서 (2026.06)" 원본
+1건씩(정정 아님).
+
+**FS API를 body와 무관하게 직접 시도(`fetch_dart_fs._fetch_raw` 직접 호출, reprt=11012) —
+2회차 신한라이프 패턴이 재현**: 6사 중 3사는 이미 열려 있었음.
+- KB손보(KR0010): OFS+CFS 둘 다 `status=000`, BS 항등식 검산(44,555,655=38,226,369+6,329,286)
+- KDB생명(KR0072): OFS만(CFS `013`), 항등식 검산(16,143,656=15,617,471+526,186)
+- DB생명(KR0082): OFS+CFS 둘 다, 항등식 검산(11,968,742=10,169,214+1,799,528)
+- 메리츠화재·롯데손보·서울보증 3사는 FS API도 `013`(body·FS 둘 다 아직).
+
+parser 통지(FS-raw-ready, body pending 명시): `inbox/parser/20260814T0245Z`. owner 티켓
+3차 회신 완료, status open 유지(실질 잔여 33사, FS만 확보 3사, rcept만 찍힌 3사 별도 추적).
+
+**부수 정리**: 이전 턴에서 KR0094 관련 중복 알림 파일(`inbox/parser/20260814T0245Z__downloader
+__KR0094__halfyear_2026q2_raw_ready.md`)을 실수로 새로 만들었다가, 이미 더 상세한
+`inbox/parser/20260814T0538Z`(2회차 산출물)가 존재함을 뒤늦게 확인하고 삭제 — 세션 중간
+컨텍스트 압축으로 직전 라운드 작업 내역을 놓쳤던 것. 재발 방지: 반복 스카우팅 재호출 시
+TODO/inbox 최신 상태를 먼저 읽고 회차 번호를 확인할 것.
+
+## 2026-08-14b -- 반기공시 스카우팅 2회차: 신한라이프 신규 확보 (FS API 확보, body는 DART 전파지연)
+
+owner 재호출(`inbox/downloader/20260814T0149Z` 2차) — `scripts/scout_2026q2_halfyear.py`
+재실행. **신한라이프생명보험(KR0094, corp 00137517) 신규 확보**(rcept 20260814001090,
+DART list.json에 "반기보고서 (2026.06)"로 오늘 신규 등재, 정정 아님 유일후보). `fetch_dart_fs.py
+--refresh 00137517 2026` → FS API 캐시 `00137517_2026_11012_{OFS,CFS}.json` 둘 다 status=000
+실데이터(OFS 213줄/CFS 244줄) 확보, OFS 기준 BS 항등식 직접 검산(자산 59,078,872 = 부채
+51,810,614 + 자본 7,268,258 백만원, 정확히 닫힘) — `IFRS17_BS.json` 항목1-4 즉시 반영 가능.
+
+**본문 XML은 아직 불가**: `document.xml`이 `status:014`("파일이 존재하지 않습니다") 반환,
+5분 간격 2회 재시도 동일 결과 — list.json 색인과 문서 서빙 간 DART 쪽 전파 지연으로 판단
+(BATCH-HISTORICAL-FIX의 정정-rcept 오선택 패턴과는 다름, 후보 rcept가 애초에 1건뿐). 다음
+재호출 시 재시도 필요. parser에 FS API만 raw-ready로 통지(본문 pending 명시):
+`inbox/parser/20260814T0538Z`. 한화생명·한화손보 불변 재확인, 나머지 35사 미제출, AIG손해
+기존 `NO_CORP_MATCH` 불변. owner 티켓 `inbox/downloader/20260814T0149Z` status open 유지
+(실질 36사 잔여), 재스카우팅 계속.
+
+## 2026-08-14 -- inbox 드레인: equity item10 라운드3 backfill(24셀) + 반기공시 법정기한 당일 스카우팅
+
+인박스 2건 처리(둘 다 8/14 신규). ① parser `20260814T0000Z`(equity_composition item10-notes
+백필 라운드3, `_resolved/`로 이동): 24셀 전부 fetch — KR0001/2/3(2023.3Q,2023.4Q,2024.1Q,
+2024.2Q)+KR0005/8/9/10/11(2024.1Q,2024.2Q)+KR0079(2024.1Q)는 `ifrs17_batch_historical.py
+--pilot <9사> --periods <4개 라벨> --skip-extract` 1회(36 combo, 기존 12개는 zip 존재로
+자동 skip). KR0150(2026.1Q)만 `EXCLUDED_SKIP` 우회 신규 `scripts/fetch_kr0150_2026q1.py`
+(기존 `fetch_kr0150_item10_quarters.py` 패턴 재사용). parser에 raw-ready 재통지
+(`inbox/parser/20260814T0235Z`). 검증 스크립트가 KR0001/2/3의 2023.4Q(사업보고서, annual_raw_dir
+경로)를 quarterly_raw_dir로 잘못 짚어 "MISSING" 오탐 냈던 것 정정 확인 — 실제론 24/24 정상.
+parser가 물었던 "KR0001/2/3 raw git-purge 영향권" 질문엔 별도 사유 없음 확인, 표준 재수집으로 처리.
+
+② owner `20260814T0149Z`(반기보고서 법정기한 당일, HIGH): 39사 `resolve_corp` 재스카우팅
+1회차 — **8/13 대비 변화 없음(2/39: 한화생명·한화손보, 36사 미제출, AIG손해 기존
+NO_CORP_MATCH)**. 결과 `data/_derived/scout_2026q2_halfyear.json`. 재사용 가능한 신규
+`scripts/scout_2026q2_halfyear.py`(PeriodTarget 2026.2Q를 로컬 구성, 기존
+`ifrs17_batch_historical.py`의 전역 레지스트리는 안 건드림 — "새 스크립트 구조 손대지
+말 것" 지시 준수, 파이프라인 자체는 그대로 재사용). FS API 캐시(`fetch_dart_fs.py --refresh`)
+는 확보된 2사분 이미 11012 OFS+CFS 실데이터(158~302 items) 확인, 신규 확보 없어 추가 조치 없음.
+**18사 2026.1Q 정정본 FS 캐시 확인**: 이번 세션 이전에 이미 일괄 갱신되어 있던 상태 발견(mtime
+전부 오늘 07:33경, 교보생명 8/13 2차 정정 이후) — 전부 status=000 정상, 재페치 안 함(지시대로
+"재페치 남발 금지"). owner 티켓은 37사 잔여로 `status: open` 유지, 재스카우팅 계속 필요.
+
+## 2026-08-13 -- equity_composition item10 주석백필 raw (117셀) + rcept-picking 버그 fix
+
+parser inbox 2건 드레인: `inbox/downloader/20260813T1425Z`(KR0104 농협생명 "전체 결측" 주장)
++ `20260813T1954Z`(18개사 부분 결측 108셀). 둘 다 `inbox/_resolved/`로 이동, parser에
+raw-ready 통지(`inbox/parser/20260813T2153Z`).
+
+**KR0104 티켓 재검증 결과 오탐 정정**: 티켓이 근거로 든 `find data/dart -maxdepth 2
+-iname "*KR0104*"` 는 실제 leaf 디렉터리 깊이(`FY<y>_Q<q>/raw/KR####_<name>/` = repo 루트
+기준 depth 4, `data/dart` 기준 depth 3)보다 얕은 `-maxdepth 2`라 애초에 아무것도 못 찾는
+명령이었음 — "0건 전체 FY"는 명령 자체의 한계였지 실제 결측이 아니었다. `scripts/
+_dart_path_helpers.period_label_to_dir` 기준으로 재검증하니 2025.4Q·2026.1Q는 이미
+raw 有, 실결측은 9개 분기(2023.3Q~2025.3Q)뿐. 18개사 티켓의 108셀 gap 목록은 재검증
+결과 전부 정확했음(같은 종류의 오탐 아님, 별개 방법으로 도출된 목록이었던 것으로 보임).
+
+**117셀 전부 fetch + 검증 완료**(zip 무결성 + IFRS17 본문 키워드 ≥1: 보험계약마진/신계약/
+보험료배분접근법/보험손익의 상세/이익잉여금). 실행: 표준 유니버스 17개사(KR0104 포함)는
+`ifrs17_batch_historical.py --pilot <KR목록> --periods <목록> --skip-extract`를 동일
+period-set 서명별로 8회 그룹 실행(전체 조합을 일일이 안 부르고 서명이 같은 회사를 묶음).
+서울보증(KR0150) 3건은 `src.ifrs17.universe.EXCLUDED_SKIP`에 걸려 있어(K-ICS PAA-only 취급
+때문에 유니버스에서 제외됨, DART 자체엔 필진 有) 표준 CLI로 안 됨 → `resolve_corp` +
+`process_one_period`를 직접 호출하는 신규 `scripts/fetch_kr0150_item10_quarters.py`로
+우회(기존 KR0004류 one-off 스크립트와 동일 패턴, 재사용 가능하게 유지).
+
+**부수 발견·수정 — `BATCH-HISTORICAL-FIX`(TODO 기존 문서화 버그) 실발화**: KR0104 2023.4Q
+fetch 중 DART가 status=014('파일이 존재하지 않습니다')로 거부. 원인: FY2023 사업보고서
+후보 3건(원본 + `[기재정정]` + `[첨부정정]`) 중 기존 `fetch_rcept_no` 필터
+(`"기재정정" not in report_nm`만 제외)가 `[첨부정정]`을 못 걸러 그 rcept를 골랐던 것.
+`scripts/ifrs17_batch_historical.py:fetch_rcept_no` 필터를 "대괄호로 시작하는 report_nm
+전부 제외"로 수정 후 재시도 → 원본 rcept(20240401002122) 확보. 이번 배치 나머지 116셀은
+원래 원본이 filings 목록 첫 항목이라 버그 영향 없었음. **잔여 리스크(미조치)**: 2026-05-30
+Reorg #2 이후 누적된 전체 DART 이력 배치 중, `[첨부정정]`이어도 document.xml이 에러 없이
+성공 응답하는 경우가 있어 이 버그로 조용히 정정본이 골라진 셀이 더 있을 가능성 — 이번
+세션은 오늘 두 티켓 스코프만 처리, 소급 전수 재검사는 안 함(`TODO_downloader.md`
+BATCH-HISTORICAL-FIX 행에 기록, validation 우선순위 판단 대기).
 
 ## 2026-08-03 -- `bonds`(FSC data.go.kr) 소스 폐지: 5대 소스 → 4대
 

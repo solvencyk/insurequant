@@ -406,7 +406,7 @@ def _extract_transposed_amort(rows):
     return buckets
 
 
-def extract_amort_schedule(blocks: list[dict]) -> dict | None:
+def extract_amort_schedule(blocks: list[dict], company: str = "") -> dict | None:
     kw = ("상각", "인식", "예상", "기대", "CSM")
 
     def _eligible(b: dict) -> bool:
@@ -446,9 +446,22 @@ def extract_amort_schedule(blocks: list[dict]) -> dict | None:
         bucket_vals = _extract_transposed_amort(rows) or {}
         yearly = _extract_transposed_yearly(rows) or {}
         status = 'ok' if bucket_vals else 'partial'
+        factor, unit, source = _detect_unit(blk, company)
+        if source == "default":
+            snap = _amort_unit_xref((bucket_vals or yearly or {}).get("total"), company)
+            if snap:
+                factor, unit, source = snap[0], snap[1], "xref"
+        if source == "default" and company in _AMORT_UNIT_OVERRIDE:
+            unit = _AMORT_UNIT_OVERRIDE[company]
+            factor, source = _UNIT_TO_EOKWON[unit], "override"
+        _normalize_amort_values(bucket_vals, factor)
+        _normalize_amort_values(yearly, factor)
         return {
             'status': status,
             'caption': blk.get('caption'),
+            'unit': "억원",
+            'unit_detected': unit,
+            'unit_source': source,
             'buckets': bucket_vals,
             'yearly': yearly,
             'granularity': _yearly_granularity(yearly),
@@ -457,22 +470,39 @@ def extract_amort_schedule(blocks: list[dict]) -> dict | None:
         }
 
     total_row = None
-    hit_labels = (
-        "당기손익인식",
-        "합계",
-        "소계",
+    total_label = None
+    # Grand-total labels first, sub-tier labels only if no grand total exists
+    # (owner inbox 20260819T0058Z): some tables carry BOTH a per-tier "소계"
+    # (e.g. 생명 소계 / 장기손해 소계) AND a final "합계" grand total — taking
+    # the first row-order match used to stop at the earlier 소계 (코리안리:
+    # picked "생명 소계" over the real "합계" two rows later). Matched against
+    # whitespace-stripped stubs so "합 계"/"소 계" (space-padded in several
+    # companies' raw tables — DB생명/농협생명/롯데손해/신한라이프/메트라이프/
+    # 하나생명 all use this spaced form) are found too; substring match on the
+    # unstripped "합계"/"소계" silently missed all of them and fell through to
+    # the "most numeric cells" fallback below, which can pick a single
+    # portfolio row instead of the company-wide total.
+    hit_labels_tiers = (
+        ("당기손익인식", "합계"),
+        ("소계",),
     )
-    for row in rows:
-        if not row:
-            continue
-        stub = str(row[0]).strip()
-        if any(k in stub for k in hit_labels) and len(row) >= 4:
-            total_row = [str(v) for v in row]
+    for tier in hit_labels_tiers:
+        for row in rows:
+            if not row:
+                continue
+            stub = str(row[0]).strip()
+            stub_compact = stub.replace(" ", "").replace("\xa0", "")
+            if any(k in stub_compact for k in tier) and len(row) >= 4:
+                total_row = [str(v) for v in row]
+                total_label = stub
+                break
+        if total_row is not None:
             break
 
     if total_row is None:
         best = None
         best_n = 0
+        best_label = None
         for row in rows:
             if not row:
                 continue
@@ -481,7 +511,14 @@ def extract_amort_schedule(blocks: list[dict]) -> dict | None:
             if nums > best_n:
                 best_n = nums
                 best = aligned_try
+                # Pre-padding label: the fallback fires precisely when no row's
+                # stub matched hit_labels, so surface WHICH row got treated as
+                # the total instead of hiding it behind an empty row_label
+                # (owner inbox 20260819T0058Z) — makes a wrong-row pick visible
+                # downstream instead of silently blank.
+                best_label = next((str(c).strip() for c in row if str(c).strip()), None)
         total_row = best
+        total_label = best_label
 
     if not total_row:
         return {'status': 'no_rows', 'caption': blk.get('caption')}
@@ -535,15 +572,29 @@ def extract_amort_schedule(blocks: list[dict]) -> dict | None:
     ybuckets = _year_bucket_indices(flat_hdr)
     yearly = _yearly_from_aligned(aligned, ybuckets)
 
+    factor, unit, source = _detect_unit(blk, company)
+    if source == "default":
+        snap = _amort_unit_xref((bucket_vals or yearly or {}).get("total"), company)
+        if snap:
+            factor, unit, source = snap[0], snap[1], "xref"
+    if source == "default" and company in _AMORT_UNIT_OVERRIDE:
+        unit = _AMORT_UNIT_OVERRIDE[company]
+        factor, source = _UNIT_TO_EOKWON[unit], "override"
+    _normalize_amort_values(bucket_vals, factor)
+    _normalize_amort_values(yearly, factor)
+
     status = 'ok' if bucket_vals else 'partial'
     return {
         'status': status if bucket_vals else 'partial',
         'caption': blk.get('caption'),
+        'unit': "억원",
+        'unit_detected': unit,
+        'unit_source': source,
         'buckets': bucket_vals,
         'yearly': yearly,
         'granularity': _yearly_granularity(yearly),
         'header': header,
-        'row_label': aligned[0] if aligned else '',
+        'row_label': total_label or (aligned[0] if aligned else ''),
     }
 
 
@@ -924,6 +975,86 @@ def _normalize_unit(scenarios: list[dict], factor: float) -> None:
         for k in ("csm_delta", "pl_impact"):
             if s.get(k) is not None:
                 s[k] = round(s[k] * factor, 4)
+
+
+# --- amort schedule unit normalization (owner inbox 20260819T0058Z) --------
+# extract_amort_schedule() reuses _detect_unit()'s cue path as-is, but its
+# xref path never engages for amort tables (_first_base_csm requires a
+# 보험계약마진 HEADER column that year-bucket amort tables don't have), so an
+# amort block with no caption/footnote/header cue always falls through to
+# _detect_unit's generic "백만원" default. For the 4 companies below that
+# default is confirmed WRONG by direct raw citation — docling's table-block
+# extraction drops a standalone "(단위: X)" parenthetical that sits between
+# the caption sentence and the header row, so the unit text never reaches
+# caption/footnotes/header for _unit_cue() to find (verified: absent from all
+# candidate blocks in the extracted JSON for all 4). Only applied when
+# _detect_unit already fell through to "default" — never overrides a real
+# cue/xref hit.
+_AMORT_UNIT_OVERRIDE = {
+    # raw: data/dart/FY2025_Q4/raw/KR0009_현대해상_20260312001448/20260312001448_00760.xml
+    # 주석 16.3, comparative(전기말=2024.12.31) column explicitly "(단위: 원)"
+    # and reproduces 560,401,752,149 for FY2024 — /1000 == the currently
+    # extracted FY2024 table's stored value (560,401,752) exactly.
+    "현대해상": "천원",
+    # raw: data/dart/FY2025_Q4/raw/KR0002_한화손해보험_20260310003000/20260310003000_00760.xml
+    # note (2), literal "(단위: 천원)" immediately precedes this exact
+    # table/caption/numbers (합계 row 253,134,608 등).
+    "한화손해보험": "천원",
+    # raw: data/dart/FY2025_Q4/raw/KR0097_하나생명보험_20260325000201/20260325000201_00760.xml
+    # note 14-6, literal "(단위: 천원)" immediately precedes the header row;
+    # cross-checked against this same filing's own MD&A prose ("보험계약마진은
+    # 총 7,269억원") which matches the table's 합계 grand total (726,895,690)
+    # x 1e-5 = 7,268.9569억원 to 4 significant figures.
+    "하나생명보험": "천원",
+    # raw: data/dart/FY2025_Q4/raw/KR0095_메트라이프생명보험_20260403003824/20260403003824_00760.xml
+    # note (7) 가.원수보험, literal "(단위: 천원)" immediately precedes the
+    # header row. Found via the ratio census below (467x over CSM_waterfall
+    # under the 백만원 default), then confirmed against this exact raw text —
+    # not applied on the ratio alone.
+    "메트라이프생명보험": "천원",
+    # raw: data/dart/FY2025_Q4/raw/KR0029_에이아이지손해보험_20260407002104/20260407002104_00760.xml
+    # 주석 25-5, 표(합계 92,807,498)가 L11976 에서 시작하는데 바로 앞 L11712·11787·11864 가
+    # 전부 리터럴 "(단위: 천원)" 이다. 이 회사는 CSM_waterfall 에 행이 없어(감사보고서만 제출)
+    # 아래 xref 스냅이 걸리지 않으므로 오버라이드로 못박는다. 백만원 기본값이면 합계가
+    # 922,678억(=92조)이 되는데 이 회사 자산총계가 1조원대라 성립 불가다. 천원이면 928억.
+    "에이아이지손해보험": "천원",
+    # raw: data/dart/FY2025_Q4/raw/KR0075_비엔피파리바카디프생명보험_20260406004430/…_00760.xml
+    # 표(합 계 29,958,390)가 L6452, 바로 앞 L6271·6373 이 리터럴 "(단위: 천원)".
+    # 아래 xref 스냅으로도 잡히지만(CSM_waterfall 기말 300억 ↔ 천원 환산 299.58억, 0.14% 차),
+    # 원문 인용이 있으므로 명시해 둔다 -- 이 회사는 100배 단위 사고 전력이 있다
+    # (docs/postmortems/PM-2026-07-30_kr0075_csm_100x_unit.md).
+    "비엔피파리바카디프생명보험": "천원",
+}
+# 상각표 전용 xref (2026-08-20). 위 주석이 적어둔 대로 `_detect_unit` 의 xref 는 상각표에서
+# 절대 발동하지 않아(`_first_base_csm` 이 보험계약마진 헤더 열을 요구한다) 단위 cue 가 없는
+# 회사는 전부 "백만원" 기본값으로 떨어졌다. 상각표에는 더 좋은 앵커가 있다 -- **그 표의 총계는
+# 개념상 기말 CSM 잔액**이므로 `CSM_waterfall.json` 의 기말 CSM 과 자릿수가 맞아야 한다.
+# 그래서 기본값으로 떨어진 경우에 한해 총계/기말CSM 비율을 단위 후보에 스냅한다(깨끗하게
+# 맞을 때만). 실측: 비엔피파리바카디프 백만원 기본값이면 224,411억인데 기말 CSM 은 300억
+# -- 748배. 천원으로 스냅하면 299.58억으로 0.14% 안에 든다.
+_AMORT_XREF_MAX_LOG10_GAP = 0.3
+
+
+def _amort_unit_xref(total_raw: float, company: str):
+    """(factor, unit) or None -- 상각표 총계와 기말 CSM 의 비율로 단위를 스냅."""
+    master = _csm_totals_eokwon().get(company)
+    if not master or not total_raw or total_raw <= 0 or master <= 0:
+        return None
+    ratio = master / total_raw
+    unit, factor = min(_UNIT_TO_EOKWON.items(),
+                       key=lambda kv: abs(math.log10(ratio) - math.log10(kv[1])))
+    if abs(math.log10(ratio) - math.log10(factor)) < _AMORT_XREF_MAX_LOG10_GAP:
+        return factor, unit
+    return None
+
+
+def _normalize_amort_values(d: dict, factor: float) -> None:
+    if factor == 1.0:
+        return
+    for k in list(d.keys()):
+        v = d[k]
+        if isinstance(v, (int, float)):
+            d[k] = round(v * factor, 4)
 
 
 def _extract_pl_only(blk: dict) -> list[dict]:

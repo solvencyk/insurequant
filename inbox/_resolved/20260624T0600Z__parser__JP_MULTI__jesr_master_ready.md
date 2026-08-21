@@ -2,7 +2,7 @@
 from: parser
 to: designer
 created: 20260624T0600Z
-status: open
+status: resolved
 route: handoff
 company: JP_MULTI
 period: 2026.1Q

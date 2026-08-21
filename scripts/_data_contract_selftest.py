@@ -16,6 +16,10 @@
   F. **1b(iii)/(iv)** : POST_TRANSITION_PARENT_MISSING · POST_TRANSITION_CHILD_MISSING ·
                         DIVERSIFICATION_NEGATIVE · ITEM12_EQUALS_ITEM1 · TRANSITION_AFTER_COPY
                         ← 2026-07-21 lift(UH-1) 회귀 보호. 이게 이 suite의 신설 핵심 이유.
+  N. **1b(v)/(vi) 메타룰** : AXIS_NOT_EVALUATED · AXIS_EVAL_RATE_LOW · EXEMPTION_PROVENANCE_MISSING ·
+                        EXEMPTION_CITATION_CONTRADICTED · EXEMPTION_CITATION_UNRESOLVED ·
+                        EXEMPTION_LEDGER_SCHEMA_INVALID · SOURCE_UNREADABLE_NOT_VERIFIED
+                        ← 2026-08-21 owner 적대적 재검증. "룰이 돌았다"와 "룰이 판정했다"를 가른다.
 
 Run: C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py --selftest
 """
@@ -72,6 +76,12 @@ def base_sidecars(sens_quarter=LATEST, sens_as_of="2026-03-31"):
         "forward_capital": capsec("forward_capital"),
         "tier1_utilization": capsec("tier1_utilization"),
         "tier2_utilization": capsec("tier2_utilization"),
+        # 2026-08-21 CHECK 2 2a(iv) 신설분. 여기 없으면 baseline 이 MISSING_PROVENANCE_SIDECAR 로
+        # 터진다 — 새 축을 배선하면 selftest baseline 도 같이 늘려야 한다는 계약의 실물.
+        "kics_rate_sensitivity": {"master": "kics_rate_sensitivity", "cells": [
+            {"company_code": "KR9001", "quarter": LATEST, "item_block": "rate_sensitivity",
+             "source_id": "DISCLOSURE_MD", "as_of_date": "2026-03-31",
+             "source_file": SENS_SOURCE}]},
     }
 
 
@@ -105,6 +115,10 @@ def base_inject(**over):
         capsec_bond_source={"KR9001": {"n_bonds": 2, "hybrid_mn": 4000.0,
                                        "sub_mn": 6000.0, "total_mn": 10000.0}},
         forward_prior_rows=None,
+        # 2026-08-21 CHECK 2 2a(iv). 주입하지 않으면 selftest 가 **디스크 실마스터 522행**을
+        # 읽어 합성 사이드카(KR9001 1셀)와 대조하게 되고, 87건 MISSING_PROVENANCE 오탐이 난다.
+        rate_sensitivity_rows=[{"원보험사코드": "KR9001", "공시분기": LATEST,
+                                "measure구분": "비율", "경과조치여부": "적용전"}],
         # 2026-08-03: 계보별(per-lineage) 구조로 변경 — 2c가 "쓰이는 계보마다" 증거를 요구한다
         # (owner 20260803T0056Z §3). 종전 flat dict을 그대로 두면 키가 계보로 오해된다.
         # 계보 키는 사이드카가 선언한 소스(CAPSEC_SOURCE = DART)와 일치시킨다.
@@ -287,6 +301,208 @@ def f_transition_copy():
     return base_inject(kics_records=rows)
 
 
+# --- F6~F9: 2026-08-21 적용후 배선 확대의 회귀 그물 -------------------------------------
+# 넷 다 "적용전은 깨끗하고 적용후만 깨진" 데이터다 — 적용후 검사가 실제로 도는지만 본다.
+# 이 넷이 죽으면 곧 '적용사 18사 한정으로 되돌렸다 / 축 15를 뺐다 / 36_irr 후를 껐다 /
+# 적용후 허용오차를 다시 느슨하게 했다' 는 뜻이다.
+
+def f_after_mmult_nonapplier():
+    """**비-applier**(KR9001)의 적용후 생명장기 mmult 불일치. 적용전은 정확히 닫힌다
+    (sqrt([10]*7·R7)=37.4166). 종전 게이트는 `c not in _TRANSITION_APPLIERS: continue` 라
+    이 셀을 아예 안 봤다 = 비-applier 21사 적용후 8,914셀 전량 미검사(false-green)."""
+    rows = base_kics()
+    rows += [rec("KR9001", LATEST, 17, "37.4166", post="500")]     # 후만 붕괴
+    rows += [rec("KR9001", LATEST, i, "10", post="10") for i in range(29, 36)]
+    return base_inject(kics_records=rows)
+
+
+def f_after_mmult_axis15():
+    """축 C(기본요구자본) 적용후: item15후 ≠ sqrt([17-20]후·R4) + item21후.
+    적용전은 176.3519+20=196.3519 로 닫힌다. 종전 `_TRANS_PARENT_SUBS`가 {17,19}뿐이라
+    이 축은 **적용후 검사가 통째로 없었다**. (item15후를 정답보다 '작게' 흔들어 분산효과
+    음수 룰과 겹치지 않게 한다 — 케이스당 결함 하나 원칙.)"""
+    rows = base_kics()
+    subs = {17: "100", 18: "50", 19: "80", 20: "40", 21: "20"}
+    rows += [rec("KR9002", LATEST, i, v, post=v) for i, v in subs.items()]
+    rows += [rec("KR9002", LATEST, 15, "196.3519", post="150")]
+    return base_inject(kics_records=rows)
+
+
+def f_after_irr():
+    """36_irr 적용후: item36후 ≠ 시나리오후(41-46) 도출. 적용전은 닫힌다.
+    R상승=100-40=60 · R하락=100-70=30 · R평탄=100-80=20 · R경사=100-90=10 · 평균회귀=100-100=0
+    → sqrt(60²+20²)=63.2456. 종전엔 36_irr 적용후 배선이 **아예 없었다**."""
+    rows = base_kics()
+    sc = {41: "100", 42: "100", 43: "40", 44: "70", 45: "80", 46: "90"}
+    rows += [rec("KR9003", LATEST, i, v, post=v) for i, v in sc.items()]
+    rows += [rec("KR9003", LATEST, 36, "63.2456", post="200")]
+    return base_inject(kics_records=rows)
+
+
+def f_after_identity_tolerance():
+    """적용후 합-항등식 허용오차가 적용전(엔진 flat 2.0)과 같은가.
+    item1후 = item2후+item3후 + 3.0 (1000 대비 0.3%). 종전 `max(2.0, 0.5%)`(=5.0)면 통과,
+    엔진과 같은 flat 2.0 이면 RED. 한화손해 2024.2Q item1후 복사(4.03억)를 놓친 그 구멍."""
+    rows = base_kics()
+    rows += [rec("KR9001", LATEST, 1, "1000", post="1003"),
+             rec("KR9001", LATEST, 2, "500", post="500"),
+             rec("KR9001", LATEST, 3, "500", post="500")]
+    return base_inject(kics_records=rows)
+
+
+# --- O1~O3: 2026-08-21 item23 = item24+25+26 (기타 요구자본 분해) 의 회귀 그물 -----------
+# 24/25/26 은 이 날까지 **어떤 항등식도 참조하지 않던 항목**이었다 — 셀은 존재하니 census 는
+# 통과하고 값은 아무도 안 봤다. 이 셋이 죽으면 곧 그 세 항목이 다시 무검증으로 돌아갔다는 뜻이다.
+# O3 은 **오탐 금지**를 고정한다(결측을 결함으로 세면 라이브에서 97칸이 거짓 RED 가 된다).
+
+def f_other_capital_pre():
+    """적용전 분해 붕괴 — 흥국생명 KR0071 2023.3Q 실사례의 축소판.
+    raw p11 은 1번 행이 `-` 인데 마스터가 부모값 8,313 을 넣어 합이 정확히 2배가 됐다
+    (같은 `-` 인 2번 행은 0 으로 들어감 = 같은 기호를 두 가지로 읽은 파서 dash 버그)."""
+    rows = base_kics()
+    rows += [rec("KR9001", LATEST, 23, "8313"),
+             rec("KR9001", LATEST, 24, "8313"),          # raw 는 '-' → 날조값
+             rec("KR9001", LATEST, 25, "0"),
+             rec("KR9001", LATEST, 26, "8313")]
+    return base_inject(kics_records=rows)
+
+
+def f_other_capital_post():
+    """**적용후만** 붕괴 — 적용전은 300=100+100+100 으로 정확히 닫힌다.
+    적용후 컬럼 배선이 살아 있는지만 본다(적용후가 검증사각이었던 전례 PM-2026-07-07)."""
+    rows = base_kics()
+    rows += [rec("KR9002", LATEST, 23, "300", post="300"),
+             rec("KR9002", LATEST, 24, "100", post="100"),
+             rec("KR9002", LATEST, 25, "100", post="100"),
+             rec("KR9002", LATEST, 26, "100", post="250")]   # 후만 어긋남
+    return base_inject(kics_records=rows)
+
+
+def f_other_capital_partial_is_clean():
+    """오탐 금지: 자식이 일부만 공시된 셀(24 만 있고 25/26 없음)은 **결측이지 결함이 아니다**.
+    결측을 RED 로 세면 라이브 적용전 59칸 · 적용후 38칸이 통째로 거짓 RED 가 된다."""
+    rows = base_kics()
+    rows += [rec("KR9003", LATEST, 23, "500"), rec("KR9003", LATEST, 24, "500")]
+    return base_inject(kics_records=rows)
+
+
+# --- N1~N7: 2026-08-21 메타룰(평가율 · 자기미러 · 면제근거 · 판독불가)의 회귀 그물 ----------
+# 이 일곱이 죽으면 곧 "판정하지 않은 축이 다시 통과처럼 읽힌다 / 근거 없는 면제를 조용히 추가할 수
+# 있다 / 스캔본이 다시 '정당' 으로 세어진다" 는 뜻이다.
+# 평가율 룰은 `_AXIS_MIN_GRID`(=20) 이상의 그리드에서만 판정하므로, 아래 두 픽스처는 일부러
+# 12사 × 3분기 = 36버킷으로 넓힌다(기존 4사 픽스처로는 룰이 아예 안 깨어난다).
+_WIDE = [f"KR9{i:03d}" for i in range(1, 13)]        # KR9001 은 tier2 픽스처가 참조하므로 유지
+
+
+def wide_kics(codes=None):
+    """item14 만 깐다 — item1/2/3 은 축 픽스처가 전·후를 직접 지정하므로 중복행을 만들지 않는다."""
+    return [rec(c, q, 14, "500") for q in QS for c in (codes or _WIDE)]
+
+
+# 'AC'(가용자본 시가평가 자본감소분)를 실제로 신청한 적용사 — R1 축을 움직여야 하는 회사.
+# 정본은 `_TRANSITION_KIND`(FSS 붙임-1). 여기서 코드를 재타이핑하지 않고 그 registry 에서 뽑는다.
+def _ac_applier():
+    from validate_kics_disclosure import _TRANSITION_KIND
+    return sorted(c for c, k in _TRANSITION_KIND.items() if "AC" in k)[0]
+
+
+def f_axis_mirror_applier():
+    """**AC 경과조치를 신청한 적용사**의 R1 적용후가 적용전과 한 자리도 다르지 않다 = 적용후 컬럼
+    복사 지문(AXIS_SELF_MIRRORED_APPLIER). 항등식은 전·후 모두 깨끗하게 닫힌다 — 즉 **산술이
+    틀려서가 아니라 적용후가 적용전의 사본이라서** RED 다."""
+    rows = wide_kics()
+    c = _ac_applier()
+    for q in QS:
+        rows += [rec(c, q, 14, "500"),
+                 rec(c, q, 1, "1000", post="1000"),
+                 rec(c, q, 2, "500", post="500"),
+                 rec(c, q, 3, "500", post="500")]
+    return base_inject(kics_records=rows)
+
+
+def f_axis_mirror_nonapplier_is_clean():
+    """**경과조치 미적용사**의 R1 적용후가 적용전과 동일 — 이건 정의상 참이라 finding 이 **없어야**
+    한다. 2026-08-21 첫 배선이 정확히 여기서 뒤집혔다(정의를 동어반복으로 읽어 축을 RED 로 올림).
+    이 케이스는 '무엇을 잡는가'가 아니라 **'무엇을 잡으면 안 되는가'**를 고정한다."""
+    rows = wide_kics()
+    for q in QS:
+        for c in _WIDE:                      # KR9xxx 는 전부 비적용사
+            rows += [rec(c, q, 1, "1000", post="1000"),
+                     rec(c, q, 2, "500", post="500"),
+                     rec(c, q, 3, "500", post="500")]
+    return base_inject(kics_records=rows)
+
+
+def f_axis_eval_rate_low():
+    """R1 적용후를 12사 중 4사만 판정 가능하게 만든다(평가 12/36 = 33%). 판정된 칸은 미러가 아니고
+    항등식도 닫힌다 → 결함은 0인데 **그리드의 3분의 1만 본 'FAIL 0'** 이다. 비차단 YELLOW."""
+    rows = wide_kics()
+    for q in QS:
+        for c in _WIDE:
+            p = c in _WIDE[:4]          # 분기가 아니라 '회사' 로 갈라야 continuity break 가 안 생김
+            rows += [rec(c, q, 1, "1000", post="1200" if p else None),
+                     rec(c, q, 2, "500", post="600" if p else None),
+                     rec(c, q, 3, "500", post="600" if p else None)]
+    return base_inject(kics_records=rows)
+
+
+def f_exemption_provenance_missing():
+    """레지스트리엔 면제가 등재돼 있는데 근거 원장에 기록이 아예 없다 = 근거 없이 검사에서 빠진 칸.
+    **새 면제를 조용히 추가하는 경로**가 바로 여기다."""
+    return base_inject(
+        exemption_registries={"_AFTER_SUBRISK_NOT_DISCLOSED": {("KR9001", LATEST)}},
+        exemption_ledger=None)
+
+
+# 인용 원천으로는 저장소에 반드시 존재하는 게이트 소스 자체를 쓴다 — 마커도 그 안의 상수명이라
+# 룰이 살아 있는 한 반드시 발견된다(픽스처가 외부 문서의 문구 변경에 흔들리지 않는다).
+_CITE_FILE = "scripts/validate_kics_disclosure.py"
+
+
+def _ledger(entry_over):
+    e = {"registry": "_AFTER_SUBRISK_NOT_DISCLOSED", "company": "KR9001", "quarter": LATEST,
+         "claim": "적용후 세부표 부재", "claim_kind": "TABLE_ABSENT",
+         "status": "VERIFIED", "citation": {"file": _CITE_FILE, "pages": None}, "verify": None}
+    e.update(entry_over)
+    return {"entries": [e]}
+
+
+def f_exemption_citation_contradicted():
+    """'그 표는 원천에 없다' 는 주장을 게이트가 **인용 원천을 직접 열어** 반증한다. 라이브에서
+    KR0003 2026.1Q(p24·p25) · KR0073 2026.1Q(p15) 두 건이 정확히 이렇게 잡힌다 — 둘 다 근거를
+    docling MD 에서 읽고 'raw 확인' 이라 적었다."""
+    led = _ledger({"verify": {"file": _CITE_FILE,
+                              "absent_markers": ["_AFTER_SUBRISK_NOT_DISCLOSED"]}})
+    return base_inject(
+        exemption_registries={"_AFTER_SUBRISK_NOT_DISCLOSED": {("KR9001", LATEST)}},
+        exemption_ledger=led)
+
+
+def f_exemption_citation_unresolved():
+    """인용한 파일이 디스크에 없다 = 확인 불가능한 인용(= 사실상 근거 없음)."""
+    led = _ledger({"citation": {"file": "data/disclosure/FY1999_Q9/raw/nope.pdf"}})
+    return base_inject(
+        exemption_registries={"_AFTER_SUBRISK_NOT_DISCLOSED": {("KR9001", LATEST)}},
+        exemption_ledger=led)
+
+
+def f_exemption_ledger_schema_invalid():
+    """원장이 '근거 기록' 에서 '면제 억제기' 로 변질되는 경로를 기계로 막는다."""
+    led = _ledger({"suppress": True})
+    return base_inject(
+        exemption_registries={"_AFTER_SUBRISK_NOT_DISCLOSED": {("KR9001", LATEST)}},
+        exemption_ledger=led)
+
+
+def f_source_unreadable_not_verified():
+    """'적용후 세부결측(후=전)' 인데 원천이 스캔본 — 종전엔 '구조적으로 정당' 버킷에 섞여 정당
+    카운트를 부풀렸다. 확인한 게 아니라 못 읽은 것이므로 별도 카테고리(YELLOW)."""
+    rows = base_kics()
+    rows.append(rec("KR9001", LATEST, 17, "100", post="100"))    # 부모후 present · 후=전 · 세부후 없음
+    return base_inject(kics_records=rows,
+                       source_readability={("KR9001", LATEST): "UNREADABLE"})
+
+
 def bs_rows(assets=1000.0, items=(1, 2, 3, 4)):
     """17BS 마스터 1행 세트 — 자산 1000 = 부채 700 + 자본 300, AOCI 20."""
     vals = {1: assets, 2: 700.0, 3: 300.0, 4: 20.0}
@@ -374,12 +590,45 @@ def f_div_unpublished():
     return base_inject(dividend=div_rows(payout=35.0), dividend_fetch_census=div_census())
 
 
+def f_csm_sign_convention():
+    """신계약 CSM 음수 = 부호역전 지문(예별 2023.4Q 실사례)."""
+    return base_inject(wf={("KR9001", LATEST): {"기초CSM": 6055.5, "신계약CSM": -509.7,
+                                                "CSM상각": -471.8, "기말CSM": 6774.0}})
+
+
+def f_pl_csm_amort_vs_waterfall():
+    """워터폴엔 상각이 있는데 PL 원수CSM상각이 결측 = 생명장기 분해 결측(라이브 사고 재현)."""
+    return base_inject(
+        pl={("KR9001", LATEST): {"원수CSM상각": None}},
+        wf={("KR9001", LATEST): {"기초CSM": 10000.0, "기말CSM": 9000.0, "CSM상각": -8029.5}})
+
+
 def f_pl_ytd_collapse():
     """같은 FY 안에서 누계가 non-zero -> 정확히 0.0 (재빌드 결손 지문)."""
     return base_inject(pl={
         ("KR9001", "2025.3Q"): {"기타사업비용": 35264.2},
         ("KR9001", "2025.4Q"): {"기타사업비용": 0.0},
     })
+
+
+def f_rs_provenance_missing():
+    """CHECK 2 2a(iv): 마스터가 발행한 (회사,분기)가 사이드카에 없으면 MISSING_PROVENANCE.
+    이 축이 없던 동안 kics_rate_sensitivity 는 mtime 감시만 받고 as-of·계보는 아무도 안 봤다
+    (inbox/parser/20260803T0520Z, UH-8)."""
+    return base_inject(rate_sensitivity_rows=[
+        {"원보험사코드": "KR9001", "공시분기": LATEST},
+        {"원보험사코드": "KR9002", "공시분기": LATEST},   # 사이드카에 없는 회사
+    ])
+
+
+def f_rs_stale_as_of():
+    """같은 축의 as-of 어긋남: 사이드카 as_of 분기 ≠ 셀 분기 → STALE_AS_OF."""
+    sc = base_sidecars()
+    sc["kics_rate_sensitivity"] = {
+        "master": "kics_rate_sensitivity",
+        "cells": [dict(sc["kics_rate_sensitivity"]["cells"][0], as_of_date="2024-12-31")],
+    }
+    return base_inject(provenance_sidecars=sc)
 
 
 CASES = [
@@ -399,6 +648,14 @@ CASES = [
     ("F3 DIVERSIFICATION_NEGATIVE",             f_diversification_negative, {"DIVERSIFICATION_NEGATIVE"}),
     ("F4 ITEM12_EQUALS_ITEM1",                  f_item12_equals_item1,     {"ITEM12_EQUALS_ITEM1"}),
     ("F5 TRANSITION_AFTER_COPY (V17 패턴)",      f_transition_copy,         {"TRANSITION_AFTER_COPY"}),
+    ("F6 적용후 mmult — 비-applier 도 검사",       f_after_mmult_nonapplier,
+     {"TRANSITION_AFTER_MMULT_MISMATCH"}),
+    ("F7 적용후 mmult — 축15(기본요구자본 R4)",     f_after_mmult_axis15,
+     {"TRANSITION_AFTER_MMULT_MISMATCH"}),
+    ("F8 TRANSITION_AFTER_IRR_MISMATCH",         f_after_irr,
+     {"TRANSITION_AFTER_IRR_MISMATCH"}),
+    ("F9 적용후 항등식 허용오차 = 적용전과 동일",     f_after_identity_tolerance,
+     {"TRANSITION_AFTER_IDENTITY"}),
     ("G1 SOURCE_ID_LINEAGE_MISMATCH",           f_source_id_lineage_mismatch,
      {"SOURCE_ID_LINEAGE_MISMATCH"}),
     # CSM plausibility는 신설 시점 severity=YELLOW(관찰 1~2 릴리스) → 4번째 원소로 기대 YELLOW 지정.
@@ -432,8 +689,41 @@ CASES = [
     ("K1 CSM_CONTINUITY_FY_BOUNDARY",           f_csm_continuity_break,
      {"CSM_CONTINUITY_FY_BOUNDARY"}),
     # PL 누계 붕괴 — 0 은 등식을 깨지 않아 폐쇄식·브리지가 조용히 통과시킨다. 신설 관찰기 YELLOW.
-    ("L1 PL_YTD_COLLAPSE_TO_ZERO (YELLOW 관찰기)", f_pl_ytd_collapse,
-     set(), {"PL_YTD_COLLAPSE_TO_ZERO"}),
+    ("L1 PL_YTD_COLLAPSE_TO_ZERO",                f_pl_ytd_collapse,
+     {"PL_YTD_COLLAPSE_TO_ZERO"}),
+    # 마스터 2개가 같은 사건을 각자 들고 있으면서 서로를 안 보던 자리 — 라이브 사고(2026-08-15)의 탐지기.
+    ("L2 PL_CSM_AMORT_VS_WATERFALL",              f_pl_csm_amort_vs_waterfall,
+     {"PL_CSM_AMORT_VS_WATERFALL"}),
+    # 폐쇄식이 잔차(조정)로 닫혀 부호역전을 통과시키는 자리 — 예별 2023.4Q 가 그 실사례였다.
+    ("M1 CSM_SIGN_CONVENTION",                    f_csm_sign_convention,
+     {"CSM_SIGN_CONVENTION"}),
+    # N: 메타룰 — "룰이 돌았다" 와 "룰이 판정했다" 를 가르는 그물 (owner 2026-08-21 적대적 재검증).
+    ("N1 AXIS_SELF_MIRRORED_APPLIER (적용사 적용후 복사)", f_axis_mirror_applier,
+     {"AXIS_SELF_MIRRORED_APPLIER"}),
+    # N1b 는 **오탐 금지**를 고정한다 — 미적용사의 후=전은 정의라 아무 finding 도 나오면 안 된다.
+    ("N1b 미적용사 후=전은 정의 — finding 0",          f_axis_mirror_nonapplier_is_clean, set()),
+    ("N2 AXIS_EVAL_RATE_LOW (그리드 1/3만 판정, YELLOW)", f_axis_eval_rate_low,
+     set(), {"AXIS_EVAL_RATE_LOW"}),
+    ("N3 EXEMPTION_PROVENANCE_MISSING (근거 없는 면제)", f_exemption_provenance_missing,
+     {"EXEMPTION_PROVENANCE_MISSING"}),
+    ("N4 EXEMPTION_CITATION_CONTRADICTED (원천이 반증)", f_exemption_citation_contradicted,
+     {"EXEMPTION_CITATION_CONTRADICTED"}),
+    ("N5 EXEMPTION_CITATION_UNRESOLVED (인용 파일 부재)", f_exemption_citation_unresolved,
+     {"EXEMPTION_CITATION_UNRESOLVED"}),
+    ("N6 EXEMPTION_LEDGER_SCHEMA_INVALID (억제기 변질)", f_exemption_ledger_schema_invalid,
+     {"EXEMPTION_LEDGER_SCHEMA_INVALID"}),
+    ("N7 SOURCE_UNREADABLE_NOT_VERIFIED (스캔본, YELLOW)", f_source_unreadable_not_verified,
+     set(), {"SOURCE_UNREADABLE_NOT_VERIFIED"}),
+    # O: item23 = item24+25+26 — 종전 무참조 항목 3개(24/25/26)를 처음으로 묶는 다리.
+    ("O1 OTHER_CAPITAL_CHILDREN_SUM (적용전)",      f_other_capital_pre,
+     {"OTHER_CAPITAL_CHILDREN_SUM"}),
+    ("O2 OTHER_CAPITAL_CHILDREN_SUM (적용후)",      f_other_capital_post,
+     {"OTHER_CAPITAL_CHILDREN_SUM"}),
+    ("O3 자식 일부결측은 결함 아님 — finding 0",       f_other_capital_partial_is_clean, set()),
+    # P: kics_rate_sensitivity provenance (CHECK 2 2a(iv), UH-8 — 18일 방치 스레드 종결분).
+    ("P1 RS MISSING_PROVENANCE (사이드카 미커버 셀)", f_rs_provenance_missing,
+     {"MISSING_PROVENANCE"}),
+    ("P2 RS STALE_AS_OF (as_of 분기 ≠ 셀 분기)",     f_rs_stale_as_of, {"STALE_AS_OF"}),
 ]
 
 

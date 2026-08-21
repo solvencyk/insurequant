@@ -128,15 +128,19 @@ def fetch_rcept_no(
         end_de=target.end_de,
         pblntf_detail_ty=target.pblntf_detail_ty,
     )
-    # Filter to exactly the target keyword + skip 기재정정 amended re-filings
+    # Filter to exactly the target keyword + skip ANY bracket-prefixed amended
+    # re-filing (기재정정/첨부정정/etc). Some 정정 rcepts (esp. 첨부정정) have no
+    # standalone document.xml bundle and return status=014 on fetch; even when
+    # they do fetch, they're not the original filing. See TODO_downloader.md
+    # BATCH-HISTORICAL-FIX.
     primary = [
         f for f in filings
         if target.report_keyword in f.get("report_nm", "")
-        and "기재정정" not in f.get("report_nm", "")
+        and not f.get("report_nm", "").strip().startswith("[")
     ]
     if primary:
         return primary[0]["rcept_no"]
-    # Fallback: include 기재정정 if no primary
+    # Fallback: no clean original found — allow amendments (기재정정/첨부정정 등)
     amended = [
         f for f in filings
         if target.report_keyword in f.get("report_nm", "")

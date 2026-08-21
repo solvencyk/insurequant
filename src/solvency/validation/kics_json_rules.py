@@ -80,15 +80,129 @@ MARKET_BREAKDOWN_EXEMPT: frozenset[tuple[str, str]] = frozenset()
 # raw에 짝수분기에도 시나리오표 없음을 교차검증한 케이스만 등록(문서화 면제). 기본 비어있음.
 IRR_SCENARIO_EXEMPT: frozenset[tuple[str, str]] = frozenset()
 
-# 36_irr 내부모형 면제: 내부모형사 — 41-46 순자산가치는 정확 추출되나 표준 derive식(R=충격전−시나리오)이
-# 공시 금리위험액과 불일치. 회사가 시나리오별 금리위험액을 **직접 공시**하고 그 값을 같은 식에 넣으면
-# 공시총액과 정확 일치(KR0094 2025.4Q=578,999 검증) = 내부모형. owner 승인(2026-06-14, "한화 선례 동형").
-# 41-46이 present라 위 if 분기로 들어가 _check_numeric RED가 나므로 블록 최상단에서 SKIP 단락.
-INTERNAL_MODEL_36IRR_EXEMPT: frozenset[tuple[str, str]] = frozenset({
-    ("KR0073", "2025.2Q"),
-    ("KR0094", "2024.2Q"), ("KR0094", "2024.4Q"),
-    ("KR0094", "2025.2Q"), ("KR0094", "2025.4Q"),
-})
+# 36_irr 내부모형 면제. **2026-08-21 전건 해제 — 등재사유가 raw 대조에서 거짓으로 확인됐다.**
+#
+# 종전 사유: "내부모형사 — 회사가 시나리오별 금리위험액을 **직접 공시**하고 그 값을 같은 식에 넣으면
+# 공시총액과 정확 일치(KR0094 2025.4Q=578,999 검증)". validation 이 2026-08-21 에 다섯 건의 raw 를
+# 전부 열어(fitz 텍스트 + 240dpi 렌더링 육안) 확인한 결과 **두 전제가 모두 사실이 아니었다**:
+#
+#   ① 다섯 건 모두 표준서식 [② 금리위험액 현황] 표를 그대로 싣는다 — 충격 전 + 충격후 5시나리오
+#      (평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 `Ⅲ. 순자산가치` 행이 완비돼 있다.
+#      즉 항목 41-46 의 원천은 실재하고, 마스터에 없는 것은 **추출갭**이지 원천부재가 아니다.
+#        KR0073 2025.2Q  FY2025_Q2 raw p21   (Ⅳ.금리위험액 459,988 = 마스터 item36 4,599.88)
+#        KR0094 2024.2Q  FY2024_Q2 raw p22   (750,104 = 7,501.04)
+#        KR0094 2024.4Q  FY2024_Q4 raw p144  (633,214 = 6,332.14)
+#        KR0094 2025.2Q  FY2025_Q2 raw p28   (931,833 = 9,318.33)
+#        KR0094 2025.4Q  FY2025_Q4 raw p131  (578,999 = 5,789.99)
+#   ② `Ⅳ. 금리 위험액` 은 표 전체 폭을 덮는 **단일 병합셀**이다 — 시나리오별로 쪼개져 있지 않다.
+#      "회사가 시나리오별 금리위험액을 직접 공시" 는 어느 페이지에서도 성립하지 않는다.
+#   ③ 결정적으로 KR0094 는 스스로 **표준모형사**라고 적는다: FY2025_Q4 raw p135 "회사는
+#      보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다" + 표준식
+#      "금리위험액 = √max(금리상승, 금리하락)² + √max(금리평탄, 금리경사)² + 평균회귀금액".
+#      '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.
+#
+# 해제하면 다섯 건 전부 36_irr RED("even quarter 인데 41-46 결측 = parser gap")가 된다. 그게 참이다 —
+# 표는 원천에 있고 우리가 안 읽었을 뿐이다. **표준식이 공시총액을 재현하지 못하는 것은 별개의 미해결
+# 질문**이고(추출 후 교보 25.2Q +5.5% · 신한 +8~34%), 그 건으로 새 면제를 만들려면 owner 승인이
+# 필요하다. 검증 stage 는 반증된 면제를 지울 수 있을 뿐 새 면제를 만들지 않는다.
+INTERNAL_MODEL_36IRR_EXEMPT: frozenset[tuple[str, str]] = frozenset()
+
+# ---------------------------------------------------------------------------
+# 36_irr documented exception — **통째 skip 이 아니라 '잔차 박제'다** (owner 2026-08-21 승인)
+# ---------------------------------------------------------------------------
+# 대상은 아래 5개 (회사,분기)뿐이다. 이 다섯은 41-46 이 원문 그대로 적재돼 있는데도 표준 도출식이
+# 공시 금리위험액(item36)을 재현하지 못한다. **데이터가 아니라 재현식이 이 회사들에 안 맞는다**:
+#
+#   ① item36 자체는 정상값이다 — 같은 item36 을 시장위험 축에 넣으면 닫힌다.
+#      실측 `item19 == sqrt(item36~40 · MARKET_M)` 잔차: 교보 25.2Q −0.0042(−0.0000%) ·
+#      신한 24.2Q −0.3312 · 24.4Q −0.2521 · 25.2Q −0.3338 · 25.4Q +0.4791 (전부 |rel| ≤ 0.0022%).
+#      즉 공시 금리위험액은 **다른 축에서 검산되는 값**이고, 안 맞는 것은 41-46 부속표 재현뿐이다.
+#   ② 41-46 은 원문 그대로다. raw 대조(fitz, 아래 provenance 원장의 present_markers 와 동일):
+#      교보 25.2Q p21 Ⅲ.순자산가치 -5,667,711/-5,414,904/-6,352,338/-5,586,899/-5,463,138/-5,742,051,
+#      Ⅳ.금리위험액 459,988 → 마스터 item41~46·item36 과 백만원↔억원 환산까지 정확 일치.
+#      신한 24.2Q p22(750,104) · 24.4Q p144(633,214) · 25.2Q p28(931,833) · 25.4Q p131(578,999) 동일.
+#   ③ **현행 식이 옳다 — 전사로 검증했다.** owner 가 "평균회귀 충격량도 0 으로 절단해야 하지
+#      않냐"고 지적해 41-46 완비 226버킷 전수 재측정(validation 2026-08-21):
+#         A 현행 signed 평균회귀 : 221/226 (97.8%)
+#         B 평균회귀도 0 절단     : 123/226 (54.4%)
+#      판정이 갈리는 102건 중 **100건이 A만 통과**(B-only 2건은 이 면제 대상인 신한 25.2Q·25.4Q).
+#      A 는 소수점까지 맞는다(메리츠 23.4Q 공시 5,060.65 vs A 5,060.66 · 삼성화재 등).
+#      **평균회귀 이익을 상계하는 것이 실제 서식이다 → 식은 건드리지 않는다.**
+#   ④ 교보는 하한 자체를 못 지킨다. 25.2Q 금리상승 단일 충격량 684,627 백만원(= -5,667,711 −
+#      (-6,352,338))이 공시 금리위험액 459,988 보다 크다. 어떤 합성식을 써도 최악 단일 시나리오보다
+#      작아질 수 없다 → 표의 순자산가치와 공시 위험액이 같은 기준이 아니다.
+#   ⑤ **원인 미규명(UNEXPLAINED).** 신한 24.4Q raw p144 주2 "2024년부터 금리위험액 현황의 자산 및
+#      부채는 금리위험에 직·간접적으로 노출된 자산 및 부채를 대상으로 작성" 은 작성기준 변경을
+#      명시하지만 **잔차를 설명하지 못한다** — 금리에 둔감한 항목은 모든 시나리오 열에 동일하게
+#      들어가 열 간 차이(=충격량)에서 상쇄된다. 게다가 그 주2 는 25.2Q(p28)·25.4Q(p131)에는
+#      아예 없는데 잔차는 그대로다(+7.5% · +14.9%). "스코프 때문"이라고 단정하지 말 것.
+#
+# 설계 원칙 — **통째 skip 금지**(_LIFE8_ISSUER_INCONSISTENT 와 동형). 기대잔차를 값으로 박제하고
+# 매 실행 마스터에서 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌어 잔차가 박제값에서
+# 벗어나면 면제가 깨지고 **다시 RED** 다. blanket skip 은 이 셀을 영구 사각지대로 만든다.
+#
+# **적용전·적용후 두 컬럼을 각각 박제한다.** 같은 미정합이 게이트에 RED 를 두 번 만든다:
+# 룰엔진 `36_irr`(적용전) + 게이트 `_transition_irr_after` 축(적용후 = TRANSITION_AFTER_IRR_MISMATCH).
+# 적용전만 면제하면 적용후가 그대로 막는다 — KR0079 8_life 때 실제로 그랬다.
+# (이 다섯 건은 41-46 후 == 41-46 전 미러라 두 컬럼의 잔차가 같지만, 값이 아니라 **컬럼별로**
+#  재계산·대조한다 — 미러가 깨지면 그것도 검출돼야 한다.)
+#
+# 잔차 부호 = item36(공시) − derive(41-46). 전부 양수(공시 > 도출).
+IRR_DERIVE_ISSUER_INCONSISTENT: dict[tuple[str, str], dict[str, float]] = {
+    ("KR0073", "2025.2Q"): {"적용전": 241.4373504145833, "적용후": 241.4373504145833},
+    ("KR0094", "2024.2Q"): {"적용전": 1287.8295634268043, "적용후": 1287.8295634268043},
+    ("KR0094", "2024.4Q"): {"적용전": 1622.0506399332953, "적용후": 1622.0506399332953},
+    ("KR0094", "2025.2Q"): {"적용전": 698.1839921629144, "적용후": 698.1839921629144},
+    ("KR0094", "2025.4Q"): {"적용전": 863.8221082879018, "적용후": 863.8221082879018},
+}
+# 박제 허용오차. 마스터 셀은 소수 2자리라 재계산이 결정론적이다 — 느슨하게 잡는 순간
+# '박제'가 아니라 또 하나의 blanket skip 이 된다. (룰 허용오차는 손대지 않는다: 잔차가 5~26% 다.)
+IRR_PIN_TOL = 0.01
+
+# 36_irr 도출식 입력 항목. 41=충격 전 순자산 · 42=평균회귀 · 43=금리상승 · 44=금리하락 ·
+# 45=금리평탄 · 46=금리경사. 게이트의 적용후 축이 **여기서 import** 한다(재타이핑 금지).
+IRR_SCENARIO_ITEMS: tuple[int, ...] = (41, 42, 43, 44, 45, 46)
+
+
+def irr_derive_expected(values: Mapping[int, Optional[float]]) -> Optional[float]:
+    """금리위험액 = sqrt(max(R상승,R하락)² + max(R평탄,R경사)²) + R평균회귀(signed).
+    R = item41 − 시나리오 순자산가치. 입력 41-46 중 한 칸이라도 결측이면 None.
+
+    적용전(룰엔진)·적용후(게이트) 두 축이 **이 함수 하나**를 쓴다 — 재구현하면 검증기가
+    검증대상과 다른 식을 쓰게 된다."""
+    if any(values.get(i) is None for i in IRR_SCENARIO_ITEMS):
+        return None
+    base = float(values[41])
+    r_up = max(base - float(values[43]), 0.0)
+    r_dn = max(base - float(values[44]), 0.0)
+    r_flat = max(base - float(values[45]), 0.0)
+    r_steep = max(base - float(values[46]), 0.0)
+    r_mr = base - float(values[42])          # 평균회귀: signed (0 절단 금지 — 위 ③ 참조)
+    return float(np.sqrt(max(r_up, r_dn) ** 2 + max(r_flat, r_steep) ** 2)) + r_mr
+
+
+def irr_pin_verdict(
+    code: str, quarter: str, column: str, values: Mapping[int, Optional[float]]
+) -> tuple[str, Optional[float], Optional[float]]:
+    """등재된 잔차 박제를 **매 실행 마스터에 대고 재검산**한다.
+
+    반환 (verdict, pinned, actual):
+      NOT_PINNED     이 (회사,분기,컬럼)은 면제 등재분이 아니다 → 평소 룰대로.
+      MATCH          잔차가 박제값과 일치 → 이 셀에 한해 차단하지 않는다(SKIP).
+      DRIFT          잔차가 박제값에서 이탈 → owner 판단의 전제가 바뀌었다 → RED.
+      INPUT_MISSING  item36 또는 41-46 결측 → 박제 확인 불가 → **SKIP 이 아니라 RED**."""
+    pins = IRR_DERIVE_ISSUER_INCONSISTENT.get((code, quarter))
+    if not pins or column not in pins:
+        return ("NOT_PINNED", None, None)
+    pinned = pins[column]
+    parent = values.get(36)
+    expected = irr_derive_expected(values)
+    if parent is None or expected is None:
+        return ("INPUT_MISSING", pinned, None)
+    actual = float(parent) - expected
+    if abs(actual - pinned) > IRR_PIN_TOL:
+        return ("DRIFT", pinned, actual)
+    return ("MATCH", pinned, actual)
 
 
 def parse_numeric(raw: Any) -> Optional[float]:
@@ -304,6 +418,12 @@ def _validate_market_irr(
     #   IRR_SCENARIO_EXEMPT 문서화 면제. 검증 empirics: 41-46은 전 분기 짝수에만 적재됨.
     irr_items = [36, 41, 42, 43, 44, 45, 46]
     is_even_q = bucket.quarter.endswith(("2Q", "4Q"))
+    irr_vals = {i: bucket.get(i) for i in irr_items}
+    # documented exception (owner 2026-08-21) — **잔차 박제**. 통째 skip 이 아니라
+    # "이 잔차인 동안만 차단하지 않는다". 드리프트·결측은 둘 다 RED. 상세는
+    # IRR_DERIVE_ISSUER_INCONSISTENT 주석 참조.
+    pin_verdict, pinned_resid, actual_resid = irr_pin_verdict(
+        bucket.code, bucket.quarter, "적용전", irr_vals)
     if (bucket.code, bucket.quarter) in INTERNAL_MODEL_36IRR_EXEMPT:
         findings.append(
             _finding(
@@ -312,14 +432,40 @@ def _validate_market_irr(
                 detail="internal-model insurer: 표준 derive식 불適用 (회사 시나리오별 금리위험액 직접공시) — owner-approved exempt (2026-06-14)",
             )
         )
+    elif pin_verdict == "MATCH":
+        findings.append(
+            _finding(
+                bucket, "36_irr", status=STATUS_SKIP,
+                expected=irr_derive_expected(irr_vals), actual=bucket.get(36),
+                diff=actual_resid,
+                detail=f"documented exception (owner 2026-08-21, 잔차 박제): 적용전 잔차 "
+                       f"{actual_resid:.4f} == 박제 {pinned_resid:.4f} (tol {IRR_PIN_TOL}). "
+                       "item36 은 19_market 축에서 닫히고 41-46 은 원문 그대로 — 재현식이 이 "
+                       "회사에 안 맞는 것이며 원인 미규명(UNEXPLAINED). 잔차가 움직이면 RED 로 복귀",
+            )
+        )
+    elif pin_verdict == "DRIFT":
+        findings.append(
+            _finding(
+                bucket, "36_irr", status=STATUS_RED,
+                expected=irr_derive_expected(irr_vals), actual=bucket.get(36),
+                diff=actual_resid,
+                detail=f"IRR_EXEMPTION_RESIDUAL_DRIFT — 박제 {pinned_resid:.4f} → 실측 "
+                       f"{actual_resid:.4f} (Δ{actual_resid - pinned_resid:+.4f}, tol {IRR_PIN_TOL}). "
+                       "owner 판단의 전제(item36·41-46 모두 원문 그대로)가 바뀌었다 — 면제 무효",
+            )
+        )
+    elif pin_verdict == "INPUT_MISSING":
+        findings.append(
+            _finding(
+                bucket, "36_irr", status=STATUS_RED, expected=None,
+                actual=bucket.get(36), diff=None,
+                detail=f"IRR_EXEMPTION_INPUT_MISSING — 면제 등재분인데 item36/41-46 [적용전]이 "
+                       f"결측이라 박제잔차 {pinned_resid:.4f} 를 확인할 수 없다. 결측은 SKIP 이 아니라 RED",
+            )
+        )
     elif all(bucket.get(i) is not None for i in irr_items):
-        base = float(bucket.get(41))
-        r_up = max(base - float(bucket.get(43)), 0.0)
-        r_dn = max(base - float(bucket.get(44)), 0.0)
-        r_flat = max(base - float(bucket.get(45)), 0.0)
-        r_steep = max(base - float(bucket.get(46)), 0.0)
-        r_mr = base - float(bucket.get(42))  # 평균회귀: signed
-        expected = float(np.sqrt(max(r_up, r_dn) ** 2 + max(r_flat, r_steep) ** 2)) + r_mr
+        expected = irr_derive_expected(irr_vals)
         irr_tol = max(eff_tol, 0.05 * abs(expected))
         findings.append(_check_numeric(bucket, "36_irr", expected, bucket.get(36), irr_tol))
     elif (bucket.get(36) is not None and is_even_q

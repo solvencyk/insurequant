@@ -2,7 +2,7 @@
 from: owner
 to: parser
 created: 20260619T0811Z
-status: open
+status: resolved
 route: backlog
 company: MULTI
 period: 2023.4Q~2026.1Q

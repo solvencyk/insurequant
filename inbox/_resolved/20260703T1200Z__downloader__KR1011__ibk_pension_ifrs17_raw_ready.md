@@ -2,7 +2,7 @@
 from: downloader
 to: parser
 created: 20260703T1200Z
-status: done
+status: resolved
 route: extract
 company: KR1011 IBK연금보험
 period: FY2023~FY2025

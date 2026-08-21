@@ -2,7 +2,7 @@
 from: owner
 to: publishing
 created: 20260620T0859Z
-status: open
+status: resolved
 route: prompt_hardening
 company: MULTI
 period: "-"
@@ -21,3 +21,12 @@ iter: 1
 검증: 위 규칙 반영 후 `prepush_check.py` 재실행 시 owner-confirmed 5셀이 skeptic에 안 뜨는지 확인(현재 통과). 근거 메모리: `project_owner_confirmed_registry`.
 
 ## 답변 (recipient 작성 — 처리 후)
+
+처리 완료(구체 시점 불명 — 이전 세션이 이미 반영, 이번 세션에서 확인 후 정식 close). `docs/agents/claude-agent-publishing.md` §3 LLM-skeptic 절에 "Hardening rules (owner 2026-06-20, ...)" 블록으로 4개 규칙 전부 명문화돼 있음을 확인:
+
+1. 입력 한정(UNCERTAIN만, fabricate 금지, 코리안리 사례 명시) — 반영됨.
+2. 마스터 grounding 필수(EXTRACTION_ERROR 전 실값 대조) — 반영됨.
+3. owner-confirmed 존중(`user_pl_confirmed_cells.json` 매칭 시 데이터 수정 대신 등록 권고) — 반영됨.
+4. LLM 역할 축소(UNCERTAIN 잔여만 판단) — 반영됨.
+
+검증: `docs/agents/claude-agent-publishing.md` §0 "Current live" 라인에 이번 세션 재실행한 `prepush_check.py` 앤_스켑틱 트리아지 수치 병기(REAL=73 UNCERTAIN=6 NOISE=133) — owner-confirmed 셀이 skeptic 입력에 재등장하지 않음. `_resolved/`로 이동.

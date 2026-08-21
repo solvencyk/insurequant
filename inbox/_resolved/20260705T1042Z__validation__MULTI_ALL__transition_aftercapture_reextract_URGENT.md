@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260705T1042Z
-status: answered
+status: resolved
 route: reextract
 company: MULTI (경과조치 적용사 22사)
 period: 2023.1Q~2026.1Q

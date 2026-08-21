@@ -2,7 +2,7 @@
 from: parser
 to: downloader
 created: 20260617T0000Z
-status: done
+status: resolved
 route: refetch
 company: KR0010 KB손해, KR0087 동양생명, KR0079 미래에셋
 period: 2026.1Q

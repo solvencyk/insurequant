@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260616T1210Z
-status: open
+status: resolved
 route: reparse
 company: KB손해(KR0010), 흥국화재(KR0005), 케이디비생명(KR0072), DB손해(KR0011)
 period: MULTI

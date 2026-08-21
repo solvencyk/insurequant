@@ -70,6 +70,27 @@ raw: data/dart/FY2025_Q4/raw/KR0003_.../_00760.xml
    - 자기완결(refetch 완료 등) → `status: resolved` → `_resolved/`로 이동
 4. **원 sender 재실행 시** → 자기가 보낸 `answered` 재확인 → 통과면 `resolved`+이동, 실패면 `iter++` 새 노트. **`iter==5`면 `route: escalate`로 바꿔 사람 큐.**
 
+### 이 계약은 기계가 검사한다 (2026-08-21 신설)
+
+위 4단계는 오래 전부터 여기 적혀 있었지만 **검사하는 것이 없어서 지켜지지 않았다.** 2026-08-21
+실측: 스키마 밖 status(`done`) 5건, `_resolved/`에 있는데 status는 미종결 27건, sender가
+재확인 안 한 `answered` 46일·18일 방치 2건. 끝난 스레드가 활성 폴더에 남으면 매 세션 다시 읽히고
+다시 언급된다 — owner가 "stale한 inbox가 계속 짹짹거린다"고 지적한 게 이것이다.
+
+```bash
+python scripts/check_inbox_hygiene.py          # 검사 (위반 있으면 exit 1)
+python scripts/check_inbox_hygiene.py --fix    # 폴더-status 불일치만 자동 정합
+```
+
+- **`scripts/prepush_check.py` 3단계로 배선돼 있다.** 스키마·폴더 불일치(E1/E2/E3/E6)는 **push를 막는다** —
+  언제나 기계적으로 고칠 수 있으므로 막아도 된다. 방치(E4/E5)는 보고만 한다: 진행 중인 스레드
+  하나 때문에 배포가 막히면 안 된다.
+- **나이는 `created:` frontmatter로 잰다. mtime이 아니다.** 나중에 누가 한 줄만 고쳐도 mtime은
+  오늘로 리셋돼서, 65일 묵은 스레드가 "오늘 것"으로 보인다.
+- `status` 허용값은 **`open` · `answered` · `resolved` · `superseded` 넷뿐.** 지어내지 말 것.
+- **자동 종결은 폴더-status 불일치까지만 한다.** 방치된 `answered`를 기계가 닫아주지 않는다 —
+  그건 원 sender가 실제로 재확인해야 하는 일이고, 자동으로 닫으면 미결이 조용히 사라진다.
+
 ## 드라이버 (가장 중요한 제약)
 
 에이전트는 inbox를 **백그라운드로 감시하지 않는다.** 호출돼야 드레인한다.

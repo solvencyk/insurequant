@@ -1,81 +1,73 @@
 {
-  "sha256": "b292f6c2b8e01f74269102718dec4347932199c60fa38ced0f73fabe7bc06d6f",
-  "buckets": 486,
-  "findings": 6804,
+  "sha256": "fca5af7d3f8b8d6f33e588a91af684a679f4d2a8f9d3efba23309596bf497393",
+  "buckets": 488,
+  "findings": 6832,
   "by_status": {
-    "YELLOW": 561,
-    "GREEN": 4701,
-    "SKIP": 1530,
+    "YELLOW": 773,
+    "GREEN": 4538,
+    "SKIP": 1520,
     "ERROR": 0,
-    "RED": 12
+    "RED": 1
   },
   "by_rule": {
     "1": {
-      "GREEN": 476,
-      "YELLOW": 9,
-      "RED": 1
+      "GREEN": 402,
+      "YELLOW": 86
     },
     "2": {
-      "GREEN": 451,
-      "YELLOW": 33,
-      "RED": 2
+      "GREEN": 327,
+      "YELLOW": 161
     },
     "3": {
-      "SKIP": 486
+      "SKIP": 488
     },
     "4": {
-      "GREEN": 311,
-      "YELLOW": 173,
-      "RED": 2
+      "GREEN": 314,
+      "YELLOW": 174
     },
     "5": {
-      "GREEN": 409,
-      "YELLOW": 75,
-      "RED": 2
+      "GREEN": 413,
+      "YELLOW": 75
     },
     "6": {
-      "GREEN": 289,
-      "YELLOW": 195,
-      "RED": 2
+      "GREEN": 292,
+      "YELLOW": 196
     },
     "7": {
-      "GREEN": 481,
-      "YELLOW": 4,
-      "RED": 1
+      "GREEN": 482,
+      "YELLOW": 6
     },
     "8": {
-      "GREEN": 484,
-      "YELLOW": 1,
-      "RED": 1
+      "GREEN": 485,
+      "YELLOW": 3
     },
     "8_post": {
-      "GREEN": 483,
-      "SKIP": 2,
-      "YELLOW": 1
+      "GREEN": 485,
+      "YELLOW": 3
     },
     "8_life": {
-      "SKIP": 137,
-      "GREEN": 334,
+      "SKIP": 124,
+      "GREEN": 349,
       "YELLOW": 14,
       "RED": 1
     },
     "19_market": {
-      "SKIP": 133,
-      "GREEN": 346,
-      "YELLOW": 7
+      "SKIP": 132,
+      "GREEN": 350,
+      "YELLOW": 6
     },
     "36_irr": {
       "SKIP": 267,
-      "GREEN": 170,
+      "GREEN": 172,
       "YELLOW": 49
     },
     "9": {
-      "GREEN": 228,
-      "SKIP": 258
+      "GREEN": 229,
+      "SKIP": 259
     },
     "10": {
-      "SKIP": 247,
-      "GREEN": 239
+      "SKIP": 250,
+      "GREEN": 238
     }
   },
   "_what": "Refactor safety net for run_validation (K-ICS rule engine). Captured before the 361-line per-bucket loop was extracted. Covers every (code, quarter, rule, status) finding over the live kics_disclosure.json."

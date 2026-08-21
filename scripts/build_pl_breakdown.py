@@ -42,6 +42,7 @@ from scripts.pl_breakdown.tier2 import (  # noqa: E402
 from scripts.pl_breakdown.companies import (  # noqa: E402
     LIFE_HANDLERS,
     SONBO_HANDLERS,
+    extract_tier2_aia,
     extract_tier2_kb,
     extract_tier2_life_comprehensive,
     extract_tier2_life_old,
@@ -315,6 +316,10 @@ def parse_filing(dirs, is_life, code=None, name=None, quarter=None):
         handler = LIFE_HANDLERS.get(code)
         if handler is extract_tier2_life_comprehensive:
             t2 = handler(tables, code=code)
+        elif handler is extract_tier2_aia:
+            # AIA has no table at all for this data (prose-only note) -- needs the raw
+            # rcept dirs to re-read the XML text directly, not the parsed `tables`.
+            t2 = handler(tables, dirs=dirs)
         else:
             t2 = handler(tables) if handler else {}
         if not t2 or all(t2.get(i) is None for i in (4, 5)):

@@ -366,14 +366,21 @@ def run(rows: list[dict], reg, legit=None, carry=None, rollfwd=None) -> list[Fin
     series: dict[tuple[str, int], dict[str, float]] = collections.defaultdict(dict)
     bs_quarters: dict[str, set] = collections.defaultdict(set)
     for r in rows:
-        co = r["원보험사코드"]
-        names[co] = r["원수사명"]
-        biz[co] = r["생손보여부"]
-        if r["항목번호"] in (1, 2, 3):
-            bs_quarters[co].add(r["공시분기"])
-        if r["항목번호"] in RESERVE_ITEMS:
-            series[(co, r["항목번호"])][r["공시분기"]] = r["값"]
-            labels[r["항목번호"]] = r["항목명"]
+        # 메타 3종은 .get 으로 읽는다: 실마스터 행엔 항상 있지만 데이터계약 게이트의
+        # --selftest 가 주입하는 **합성 BS 행**엔 없어서 KeyError 로 죽었고, 그 바람에
+        # selftest I1/I2/I3(BS 항등식·코어 census·미배포 YELLOW) 세 케이스가 ERROR 로
+        # 남아 **그 세 룰이 사실상 무검증**이었다(2026-08-21 적발, 게이트 자기검사의 사각).
+        co = r.get("원보험사코드")
+        if not co:
+            continue
+        item_no = r.get("항목번호")
+        names[co] = r.get("원수사명", co)
+        biz[co] = r.get("생손보여부", "")
+        if item_no in (1, 2, 3):
+            bs_quarters[co].add(r.get("공시분기"))
+        if item_no in RESERVE_ITEMS:
+            series[(co, item_no)][r.get("공시분기")] = r.get("값")
+            labels[item_no] = r.get("항목명", f"item{item_no}")
 
     # ---------- R-RSV-8: 항목명이 4종 사이에서 같은 정의를 쓰는가 ----------
     # 빌더는 4개 항목 모두 `기적립액 + 적립(환입)예정액` 합산을 싣는다. 항목명이 "기적립액"/"기말"

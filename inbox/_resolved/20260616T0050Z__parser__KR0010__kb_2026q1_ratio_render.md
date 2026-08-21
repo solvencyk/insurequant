@@ -2,7 +2,7 @@
 from: parser
 to: designer
 created: 20260616T0050Z
-status: answered
+status: resolved
 route: render
 company: KB, 예별손보
 period: 2026.1Q

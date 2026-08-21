@@ -257,7 +257,6 @@
     pl: dataPaths("../data/dart/viz/insurance_pl_breakdown.json", "data/dart/viz/insurance_pl_breakdown.json"),
     sen: dataPaths("../data/dart/viz/sensitivity_heatmap.json", "data/dart/viz/sensitivity_heatmap.json"),
     nb: dataPaths("../data/ir/nb_csm_ratio.json", "data/ir/nb_csm_ratio.json"),
-    hist: dataPaths("../data/dart/viz/csm_waterfall_history.json", "data/dart/viz/csm_waterfall_history.json"),
     plx: [resolveUrl("PL_breakdown.json")],
     nbm: dataPaths("NB_CSM_multiple.json", "NB_CSM_multiple.json"),
     eqx: [resolveUrl("IFRS17_BS.json")],
@@ -275,13 +274,12 @@
   const charts = { wf: null, amort: null, pl: null, nb: null, hist: null };
   let CSM_RANGE_LABEL = "";  // D-2 20260818: 전사 wfx 최소~최대 분기, boot()에서 1회 계산 — h2/aria-label/커버리지줄 3곳이 공유
 
-  const payload = { wf:null, amort:null, pl:null, sen:null, nb:null, hist:null, ni:null };
+  const payload = { wf:null, amort:null, pl:null, sen:null, nb:null, ni:null };
   const ix = {
     wfx: new Map(),
     amort: new Map(),
     pl: new Map(),
     sen: new Map(),
-    hist: new Map(),
     plx: new Map(),
     nbm: new Map(),
     eqx: new Map(),
@@ -1659,15 +1657,15 @@
     // D10: 9개 JSON을 직렬 await → Promise.all 병렬(진입 로딩 지연 경감). 로딩 힌트 표시.
     const _eh=document.getElementById("emptyHint");
     if (_eh) _eh.textContent="데이터 불러오는 중…";
-    const [wf, amort, plx, senx, nbx, histx, wfxRaw, plxRaw, nbmRaw, eqxRaw] = await Promise.all([
+    const [wf, amort, plx, senx, nbx, wfxRaw, plxRaw, nbmRaw, eqxRaw] = await Promise.all([
       fetchJsonSafe(PATHS.wf), fetchJsonSafe(PATHS.amort), fetchJsonSafe(PATHS.pl),
-      fetchJsonSafe(PATHS.sen), fetchJsonSafe(PATHS.nb), fetchJsonSafe(PATHS.hist),
+      fetchJsonSafe(PATHS.sen), fetchJsonSafe(PATHS.nb),
       fetchJsonSafe(PATHS.wfx), fetchJsonSafe(PATHS.plx), fetchJsonSafe(PATHS.nbm),
       fetchJsonSafe(PATHS.eqx),
     ]);
     if (_eh) _eh.textContent="보험사를 선택해 주세요";
 
-    payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.sen=senx; payload.nb=nbx; payload.hist=histx;
+    payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.sen=senx; payload.nb=nbx;
 
     // Panel 1/2 long-format index: CODE -> quarter -> 항목번호 -> 값  (+ 코드↔이름 등록부)
     if (Array.isArray(wfxRaw)){

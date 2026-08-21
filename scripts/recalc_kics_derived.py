@@ -143,25 +143,14 @@ def recalc(rows: list[dict]) -> dict[str, int]:
                 if row8.get(KEY_VAL) != "0":
                     row8[KEY_VAL] = "0"
                     stats["item8_zeroed"] += 1
-            core_present = all(
-                items.get(n) is not None
-                and _to_float(items.get(n, {}).get(KEY_VAL)) is not None
-                for n in (5, 6, 7, 8, 9, 11)
-            )
-            i10 = comp.get(10, 0.0)
-            if (
-                core_present
-                and abs(s_all - i4) > 2
-                and abs(s_all - i4) / max(abs(s_all), 1.0) > 0.05
-                and (row10 is None or i10 == 0.0)
-            ):
-                row4 = items.get(4)
-                if row4 is not None:
-                    new_v = _fmt_amount(s_all)
-                    if row4.get(KEY_VAL) != new_v:
-                        row4[KEY_VAL] = new_v
-                        stats["item4_reconciled"] += 1
-                        i4 = s_all
+            # NOTE: this used to also overwrite item4 itself with s_all (sum of
+            # items 5-11) whenever they disagreed by >5%. Removed 2026-08-21
+            # (inbox 20260821T1505Z / 20260821T1420Z) -- item4 is a disclosed
+            # value; forcing it to equal the children sum makes rule 2
+            # (item4 == sum(5..11)) structurally incapable of ever failing on
+            # real data. 122 cells had already been silently overwritten this
+            # way (see scripts/fix_20260821_item4_writepath_restore.py for the
+            # raw-sourced restoration). item4 must come from extraction only.
 
         row22 = items.get(22)
         row23 = items.get(23)
@@ -197,9 +186,13 @@ def recalc(rows: list[dict]) -> dict[str, int]:
                 stats["item22_zeroed"] += 1
 
         if i1 is not None and i2 is not None:
-            i3_val = i1 - i2
             row3 = items.get(3)
             if row3 is None:
+                # item3 (\ubcf4\uc644\uc790\ubcf8) genuinely missing -- backfill from the
+                # disclosed identity item1 = item2 + item3. This branch only
+                # ever CREATES a row; it never touches one that already
+                # holds a disclosed value (see removed 'else' branch below).
+                i3_val = i1 - i2
                 template = items.get(2) or items.get(1) or next(iter(items.values()))
                 new_row = {
                     KEY_CODE: code,
@@ -214,11 +207,17 @@ def recalc(rows: list[dict]) -> dict[str, int]:
                 rows.append(new_row)
                 items[3] = new_row
                 stats["item3_added"] += 1
-            else:
-                new_v = _fmt_amount(i3_val)
-                if row3.get(KEY_VAL) != new_v:
-                    row3[KEY_VAL] = new_v
-                    stats["item3_updated"] += 1
+            # NOTE: this used to also unconditionally overwrite an EXISTING
+            # item3 with item1-item2 whenever they differed (no tolerance
+            # gate at all). Removed 2026-08-21 (inbox 20260821T1505Z,
+            # surfaced via validation's IDENTITY_TAUTOLOGY meta-rule --
+            # R1_\uac00\uc6a9\uc790\ubcf8=\uae30\ubcf8+\ubcf4\uc644 \uc801\uc6a9\uc804 n=477, 97.7% exact-zero vs 75.0%
+            # null). item3 is a disclosed value (\uac00.\uc9c0\uae09\uc5ec\ub825\uae08\uc561 = \uae30\ubcf8\uc790\ubcf8 +
+            # \ubcf4\uc644\uc790\ubcf8 in the source table); forcing it to always equal
+            # item1-item2 makes rule 1 structurally incapable of failing on
+            # real data. 80 cells had already been silently overwritten this
+            # way (see scripts/fix_20260821_item3_writepath_restore.py for
+            # the raw-sourced restoration).
 
         if i1 is not None and i14 and i14 != 0:
             expected27 = i1 / i14 * 100.0

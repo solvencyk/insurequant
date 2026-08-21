@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260616T0605Z
-status: open
+status: resolved
 route: reparse
 company: 교보생명, 메리츠화재, 신한라이프, 에이비엘생명, 푸본현대생명
 period: 2026.1Q

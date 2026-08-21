@@ -1,0 +1,333 @@
+{
+  "_meta": {
+    "purpose": "IR-disclosed CSM metrics for 동양생명 (KR0087) FY2026 1H, extracted from downloader-delivered raw IR files. NOT yet integrated into root masters (NB_CSM_multiple.json / CSM_waterfall.json) -- integration is a separate follow-up.",
+    "company": "동양생명",
+    "kr_code": "KR0087",
+    "ticker": "082640",
+    "sector": "생명보험",
+    "period": "2026.2Q (당분기=FY26.2Q, 연누계=FY26.1H)",
+    "inbox_ref": "inbox/parser/20260730T0010Z__downloader__KR0087__fy2026q2_ir_raw_ready.md",
+    "source_files": {
+      "pdf": "data/ir/FY2026_Q2/raw/KR0087_동양생명/FY2026.1H+Tongyang+Life+IR+Presentation_KR.pdf",
+      "xlsx": "data/ir/FY2026_Q2/raw/KR0087_동양생명/(TYL)+FY2026.1H+Factsheet.xlsx"
+    },
+    "unit_conversion": "Source unit = 십억원 (KRW billion, xlsx header '(단위 십억원)' / PDF '(십억원)'). Repo master convention = 억원 (KRW 100-million). 1 십억원 = 10억원, so eok = krw_bn * 10. Both are recorded below for traceability.",
+    "output_path_is_new_convention": "No existing data/ir/*/parsed/ directory convention was found in this repo prior to this file (checked via glob before writing). This introduces data/ir/<FY_Q>/parsed/<KR>_<name>/<file>.json as a sibling to the existing data/ir/<FY_Q>/raw/<KR>_<name>/ layout. A human should confirm this matches other IR-ingestion output conventions before this pattern is reused for the other 12 IR sources due mid-August.",
+    "extracted_at": "2026-07-30",
+    "not_modified": [
+      "NB_CSM_multiple.json",
+      "CSM_waterfall.json",
+      "PL_breakdown.json",
+      "data/dart/viz/csm_manual_overrides.json"
+    ]
+  },
+  "csm_balance_rollforward": {
+    "note": "전사 CSM 이동표 (세후, 십억원). xlsx sheet 'CSM' rows16-21. Identity verified: 기시+신계약+이자부리+CSM상각+기타=기말 (rounds exactly for FY26.1H).",
+    "unit": "krw_bn (십억원); eok = krw_bn*10",
+    "FY26.1Q": {
+      "기시_CSM": {
+        "krw_bn": 2457.1,
+        "eok": 24570.95
+      },
+      "신계약": {
+        "krw_bn": 94.47,
+        "eok": 944.65
+      },
+      "이자부리_Unwinding": {
+        "krw_bn": 24.75,
+        "eok": 247.46
+      },
+      "CSM상각_Amortization": {
+        "krw_bn": -62.11,
+        "eok": -621.14
+      },
+      "기타": {
+        "krw_bn": -3.36,
+        "eok": -33.58
+      },
+      "기말_CSM": {
+        "krw_bn": 2510.83,
+        "eok": 25108.35
+      }
+    },
+    "FY26.2Q_당분기": {
+      "기시_CSM": {
+        "krw_bn": 2510.83,
+        "eok": 25108.35
+      },
+      "신계약": {
+        "krw_bn": 148.02,
+        "eok": 1480.21
+      },
+      "이자부리_Unwinding": {
+        "krw_bn": 25.6,
+        "eok": 255.98
+      },
+      "CSM상각_Amortization": {
+        "krw_bn": -63.4,
+        "eok": -633.98
+      },
+      "기타": {
+        "krw_bn": 24.65,
+        "eok": 246.5
+      },
+      "기말_CSM": {
+        "krw_bn": 2645.71,
+        "eok": 26457.06
+      }
+    },
+    "FY26.1H_연누계": {
+      "기시_CSM_연초": {
+        "krw_bn": 2457.1,
+        "eok": 24570.95,
+        "note": "PDF p4/p7: 'FY2026 기시' = 2.46조원 (matches)"
+      },
+      "신계약": {
+        "krw_bn": 242.49,
+        "eok": 2424.87
+      },
+      "이자부리_Unwinding": {
+        "krw_bn": 50.34,
+        "eok": 503.44
+      },
+      "CSM상각_Amortization": {
+        "krw_bn": -125.51,
+        "eok": -1255.11
+      },
+      "기타": {
+        "krw_bn": 21.29,
+        "eok": 212.92
+      },
+      "기말_CSM": {
+        "krw_bn": 2645.71,
+        "eok": 26457.06,
+        "note": "PDF p4/p7: 2.65조원, YTD+7.7% (matches)"
+      }
+    },
+    "FY25.1H_comparator": {
+      "기시_CSM": {
+        "krw_bn": 2671.09,
+        "eok": 26710.89
+      },
+      "신계약": {
+        "krw_bn": 302.89,
+        "eok": 3028.86
+      },
+      "기말_CSM": {
+        "krw_bn": 2744.24,
+        "eok": 27442.35
+      }
+    }
+  },
+  "nb_csm_by_product": {
+    "note": "신계약 CSM (New Business CSM), 세전 (PDF note 1: 세전CSM). xlsx sheet 'CSM' rows 27-31. 보장성=사망(=PDF '종신')+건강.",
+    "unit": "krw_bn (십억원); eok = krw_bn*10",
+    "FY26.1Q": {
+      "합계": {
+        "krw_bn": 94.47,
+        "eok": 944.65
+      }
+    },
+    "FY26.2Q_당분기": {
+      "보장성_total": {
+        "krw_bn": 133.2,
+        "eok": 1332.04
+      },
+      "사망_종신": {
+        "krw_bn": 73.3,
+        "eok": 732.97
+      },
+      "건강": {
+        "krw_bn": 59.91,
+        "eok": 599.07
+      },
+      "저축성_연금및저축": {
+        "krw_bn": 14.82,
+        "eok": 148.17
+      },
+      "합계": {
+        "krw_bn": 148.02,
+        "eok": 1480.21
+      }
+    },
+    "FY26.1H_연누계": {
+      "보장성_total": {
+        "krw_bn": 218.83,
+        "eok": 2188.31
+      },
+      "사망_종신": {
+        "krw_bn": 105.43,
+        "eok": 1054.26,
+        "YoY": "+133.4%"
+      },
+      "건강": {
+        "krw_bn": 113.41,
+        "eok": 1134.05,
+        "YoY": "-55.8%"
+      },
+      "저축성_연금및저축": {
+        "krw_bn": 23.66,
+        "eok": 236.55
+      },
+      "합계": {
+        "krw_bn": 242.49,
+        "eok": 2424.87,
+        "YoY": "-19.9%"
+      }
+    },
+    "FY25.1H_comparator": {
+      "보장성_total": {
+        "krw_bn": 301.93,
+        "eok": 3019.34
+      },
+      "사망_종신": {
+        "krw_bn": 45.16,
+        "eok": 451.64
+      },
+      "건강": {
+        "krw_bn": 256.77,
+        "eok": 2567.7
+      },
+      "저축성_연금및저축": {
+        "krw_bn": 0.95,
+        "eok": 9.52
+      },
+      "합계": {
+        "krw_bn": 302.89,
+        "eok": 3028.86
+      }
+    },
+    "cross_check_vs_root_master": "NB_CSM_multiple.json 2026.1Q row (원보험사코드=KR0087) already has 신계약CSM_연누계=944.6억원 -- matches this IR figure (944.65억원 for FY26.1Q) almost exactly. Numerator (CSM) is consistent between DART/KIDI-sourced master and IR disclosure; FY26.2Q (148.02 bn = 1,480.2억원) and FY26.1H (242.49bn = 2,424.9억원) are the NEW figures this IR file adds, not yet in the master (DART 반기보고서 not due until 45 days after half-year end, ~2026-08-14)."
+  },
+  "nb_csm_multiple": {
+    "note": "동양생명 IR discloses TWO distinct 'CSM 배수/Margin' tables (xlsx sheet 'CSM'), with DIFFERENT denominators. Neither uses KIDI's 월납월초보험료 (the denominator scripts/build_nb_csm_multiple.py uses for the DART-sourced master) -- see denominator_discrepancy below.",
+    "variant_A_vs_APE": {
+      "definition": "신계약CSM / 신계약APE (Annualized Premium Equivalent). Fraction, NOT a 'times' multiple like the repo master (values are ~0.4-1.0, i.e. CSM is 40-100% of APE).",
+      "source": "xlsx 'CSM' rows 37-41, section header 'APE 대비 신계약 CSM 배수 (New Business CSM Margin compared to New Business APE)'",
+      "unit": "ratio (dimensionless)",
+      "FY26.1Q": {
+        "합계": 0.6789
+      },
+      "FY26.2Q_당분기": {
+        "합계": 0.7168
+      },
+      "FY26.1H_연누계": {
+        "보장성": 0.7631,
+        "사망_종신": 0.6662,
+        "건강": 0.8824,
+        "저축성": 0.4017,
+        "합계": 0.7015
+      }
+    },
+    "variant_B_vs_monthly_initial_premium": {
+      "definition": "신계약CSM / 월초P (Monthly initial premium) -- conceptually the SAME basis as the repo's 월납월초보험료 (both = 'monthly initial premium'), but 동양생명's own internal 월초P figure is NOT the same series as KIDI's 월납 초회 that scripts/build_nb_csm_multiple.py uses. This is the directly-disclosed 'times' multiple comparable in magnitude to other companies' IR-disclosed multiples in data/ir/disclosed_csm_multiple.json (range ~5-22x).",
+      "source": "xlsx 'CSM' rows 44-51, section header '월초P 대비 신계약 CSM 배수 (New Business CSM Margin compared to Monthly initial premium)'",
+      "unit": "times (x)",
+      "FY26.1Q": {
+        "합계": 8.1462
+      },
+      "FY26.2Q_당분기": {
+        "합계": 8.6016
+      },
+      "FY26.1H_연누계": {
+        "보장성": 9.1572,
+        "사망_종신": 7.9945,
+        "건강": 10.5889,
+        "저축성": 4.8201,
+        "합계": 8.4183
+      },
+      "implied_premium_base_backcalculated_NOT_disclosed": {
+        "note": "월초P absolute krw value is NOT disclosed anywhere in the PDF or xlsx -- only the ratio is shown. Back-calculated here as CSM/multiple purely for comparison; this is a derived number, not a source figure.",
+        "FY26.1Q_krw_bn": 11.6,
+        "FY26.1Q_eok": 116.0,
+        "FY26.1H_krw_bn": 28.81,
+        "FY26.1H_eok": 288.1
+      }
+    },
+    "denominator_discrepancy_vs_root_master": "Root NB_CSM_multiple.json (DART CSM numerator + KIDI 월납월초보험료 denominator) has KR0087 2026.1Q: 신계약CSM배수_연누계=9.463 (월납월초보험료_연누계=99.8207억원). IR's own 월초P-basis multiple for the same quarter (FY26.1Q) is 8.1462x, implying a denominator of ~116.0억원 -- about 16% LARGER than KIDI's 99.82억원 for what should be the same quarter. Numerator (CSM) matches almost exactly (944.6 vs 944.65억원) so the gap is entirely in the premium denominator definition/scope. Do NOT treat the IR multiple and the master multiple as interchangeable without reconciling what 동양생명's internal '월초P' includes/excludes vs KIDI's INCOS 월납초회 category.",
+    "not_disclosed": "No 'CSM 배수' or 'New Business CSM multiple' figure appears anywhere in the PDF presentation itself (grepped full extracted text -- zero matches for 배수/월납/환산/multiple). Both multiple variants above come ONLY from the xlsx factsheet's 'CSM' sheet."
+  },
+  "other_csm_related_pl": {
+    "note": "보험손익/투자손익 breakdown, FY26.1H 연누계 vs FY25.1H comparator. xlsx sheet 'FS' rows 37-48; cross-validated against PDF page 10 (매치 확인).",
+    "unit": "krw_bn (십억원); eok = krw_bn*10",
+    "보험손익_Insurance_service_result": {
+      "FY26.1H": {
+        "krw_bn": 97.01,
+        "eok": 970.12,
+        "YoY": "+37.8%"
+      },
+      "FY25.1H": {
+        "krw_bn": 70.42,
+        "eok": 704.2
+      },
+      "components_FY26.1H": {
+        "CSM상각_Amortization_of_CSM": {
+          "krw_bn": 125.51,
+          "eok": 1255.11,
+          "YoY": "-0.4%"
+        },
+        "RA상각_Amortization_of_RA": {
+          "krw_bn": 20.26,
+          "eok": 202.59,
+          "YoY": "-8.5%"
+        },
+        "예실차_Experience_variance": {
+          "krw_bn": -44.47,
+          "eok": -444.7,
+          "sub": {
+            "보험금예실차": -433.36,
+            "사업비예실차": -11.34
+          }
+        },
+        "기타": {
+          "krw_bn": -4.29,
+          "eok": -42.88
+        }
+      }
+    },
+    "투자손익_Investment_profit": {
+      "FY26.1H": {
+        "krw_bn": 20.93,
+        "eok": 209.32,
+        "YoY": "-29.4%"
+      },
+      "FY25.1H": {
+        "krw_bn": 29.63,
+        "eok": 296.34
+      },
+      "components_FY26.1H": {
+        "이자배당손익": {
+          "krw_bn": 471.15,
+          "eok": 4711.5
+        },
+        "비이자손익": {
+          "krw_bn": 678.43,
+          "eok": 6784.27
+        },
+        "보험금융손익_expense": {
+          "krw_bn": -1150.09,
+          "eok": -11500.9
+        },
+        "기타": {
+          "krw_bn": 21.44,
+          "eok": 214.45
+        }
+      }
+    }
+  },
+  "provenance": {
+    "pdf_pages_used": {
+      "p4": "1H26 주요 하이라이트 -- 신계약APE/신계약CSM/CSM잔액 헤드라인 (누적3,029억원->2,425억원, CSM잔액 2.46조->2.65조 +7.7%)",
+      "p6": "신계약 CSM 상품별 breakdown (건강/종신/연금및저축), 채널별 보장성 신계약CSM 비중",
+      "p7": "CSM 잔액 rollforward table (조정: 계리가정/경상조정및기타) + 신계약CSM 분기별(26.1Q/26.2Q/26.1H) 보장성/저축성/합계 표 + CSM 잔액 상품별 구성(저축및연금/건강/종신)",
+      "p10": "당기순이익 -- 보험손익세부내역(CSM상각/RA상각/예실차/기타), 투자손익세부내역",
+      "p11": "K-ICS (out of scope for this task, not extracted)"
+    },
+    "xlsx_sheets_used": {
+      "CSM": "rows 1-51: BEL/RA/CSM movement, 신계약CSM by product, APE-대비 및 월초P-대비 CSM 배수 tables",
+      "FS": "rows 34-52: 요약손익계산서 (보험손익/투자손익 세부내역)",
+      "FH": "rows 1-18: cross-check only (동일 신계약CSM/기말CSM 누계 시리즈 재확인)"
+    },
+    "cross_validation": "PDF text-extracted figures (via pdfplumber, layout-jumbled slide text) and xlsx structured cells agree on every checked figure (신계약CSM 누계/당분기, 기말CSM, CSM상각, 보험손익/투자손익 breakdown all match to rounding). xlsx figures also reconcile with the existing DART/KIDI-sourced root NB_CSM_multiple.json for the one overlapping quarter (2026.1Q CSM numerator matches to within 0.05억원); the CSM-multiple DENOMINATOR does not reconcile (see denominator_discrepancy_vs_root_master above) -- this is the key finding a human reviewer should look at before any integration."
+  }
+}

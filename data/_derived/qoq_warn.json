@@ -33,17 +33,6 @@
     "sign_flip": false
   },
   {
-    "company": "예별손해보험",
-    "quarter": "2024.4Q",
-    "item": "이자부리",
-    "delta_pct": 222.0,
-    "threshold_pct": 20.0,
-    "cur": 247.7,
-    "ref": -203.1,
-    "basis": "yoy",
-    "sign_flip": true
-  },
-  {
     "company": "케이디비생명보험",
     "quarter": "2024.1Q",
     "item": "신계약CSM",
@@ -53,17 +42,6 @@
     "ref": 387.3,
     "basis": "yoy",
     "sign_flip": false
-  },
-  {
-    "company": "예별손해보험",
-    "quarter": "2024.4Q",
-    "item": "CSM상각",
-    "delta_pct": -211.3,
-    "threshold_pct": 10.0,
-    "cur": -525.1,
-    "ref": 471.8,
-    "basis": "yoy",
-    "sign_flip": true
   },
   {
     "company": "교보생명보험",
@@ -128,17 +106,6 @@
     "threshold_pct": 20.0,
     "cur": -116.4,
     "ref": 331.8,
-    "basis": "yoy",
-    "sign_flip": true
-  },
-  {
-    "company": "예별손해보험",
-    "quarter": "2024.4Q",
-    "item": "신계약CSM",
-    "delta_pct": 134.2,
-    "threshold_pct": 30.0,
-    "cur": 174.3,
-    "ref": -509.7,
     "basis": "yoy",
     "sign_flip": true
   },
@@ -396,6 +363,17 @@
     "sign_flip": false
   },
   {
+    "company": "처브라이프생명보험",
+    "quarter": "2024.4Q",
+    "item": "신계약CSM",
+    "delta_pct": -68.9,
+    "threshold_pct": 30.0,
+    "cur": 30.5,
+    "ref": 98.1,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
     "company": "코리안리재보험",
     "quarter": "2024.1Q",
     "item": "CSM상각",
@@ -469,6 +447,17 @@
     "threshold_pct": 30.0,
     "cur": 1163.0,
     "ref": 698.3,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
+    "company": "예별손해보험",
+    "quarter": "2024.4Q",
+    "item": "신계약CSM",
+    "delta_pct": -65.8,
+    "threshold_pct": 30.0,
+    "cur": 174.3,
+    "ref": 509.7,
     "basis": "yoy",
     "sign_flip": false
   },
@@ -726,6 +715,17 @@
     "sign_flip": false
   },
   {
+    "company": "에이아이에이생명보험",
+    "quarter": "2024.4Q",
+    "item": "이자부리",
+    "delta_pct": 46.5,
+    "threshold_pct": 20.0,
+    "cur": 769.0,
+    "ref": 524.9,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
     "company": "롯데손해보험",
     "quarter": "2024.1Q",
     "item": "CSM상각",
@@ -942,6 +942,17 @@
     "threshold_pct": 10.0,
     "cur": -139.4,
     "ref": -227.6,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
+    "company": "에이아이에이생명보험",
+    "quarter": "2024.4Q",
+    "item": "신계약CSM",
+    "delta_pct": 38.6,
+    "threshold_pct": 30.0,
+    "cur": 3557.2,
+    "ref": 2566.6,
     "basis": "yoy",
     "sign_flip": false
   },
@@ -1166,6 +1177,17 @@
     "sign_flip": false
   },
   {
+    "company": "에이아이에이생명보험",
+    "quarter": "2025.4Q",
+    "item": "이자부리",
+    "delta_pct": -34.0,
+    "threshold_pct": 20.0,
+    "cur": 507.4,
+    "ref": 769.0,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
     "company": "케이디비생명보험",
     "quarter": "2025.1Q",
     "item": "CSM상각",
@@ -1261,6 +1283,17 @@
     "threshold_pct": 20.0,
     "cur": 1163.3,
     "ref": 879.9,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
+    "company": "처브라이프생명보험",
+    "quarter": "2024.4Q",
+    "item": "이자부리",
+    "delta_pct": -32.0,
+    "threshold_pct": 20.0,
+    "cur": 38.4,
+    "ref": 56.5,
     "basis": "yoy",
     "sign_flip": false
   },
@@ -1496,6 +1529,17 @@
     "sign_flip": false
   },
   {
+    "company": "처브라이프생명보험",
+    "quarter": "2024.4Q",
+    "item": "CSM상각",
+    "delta_pct": 25.5,
+    "threshold_pct": 10.0,
+    "cur": -74.4,
+    "ref": -99.9,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
     "company": "IBK연금보험",
     "quarter": "2025.4Q",
     "item": "CSM상각",
@@ -1657,6 +1701,17 @@
     "threshold_pct": 10.0,
     "cur": -1470.7,
     "ref": -1204.3,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
+    "company": "예별손해보험",
+    "quarter": "2024.4Q",
+    "item": "이자부리",
+    "delta_pct": 22.0,
+    "threshold_pct": 20.0,
+    "cur": 247.7,
+    "ref": 203.1,
     "basis": "yoy",
     "sign_flip": false
   },
@@ -2079,6 +2134,17 @@
     "sign_flip": false
   },
   {
+    "company": "예별손해보험",
+    "quarter": "2024.4Q",
+    "item": "CSM상각",
+    "delta_pct": -11.3,
+    "threshold_pct": 10.0,
+    "cur": -525.1,
+    "ref": -471.8,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
     "company": "에이비엘생명보험",
     "quarter": "2024.3Q",
     "item": "CSM상각",
@@ -2145,6 +2211,17 @@
     "sign_flip": false
   },
   {
+    "company": "라이나생명보험",
+    "quarter": "2024.4Q",
+    "item": "CSM상각",
+    "delta_pct": 10.3,
+    "threshold_pct": 10.0,
+    "cur": -3973.5,
+    "ref": -4431.3,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
     "company": "현대해상",
     "quarter": "2024.2Q",
     "item": "CSM상각",
@@ -2152,6 +2229,17 @@
     "threshold_pct": 10.0,
     "cur": -4862.4,
     "ref": -4410.3,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
+    "company": "에이아이에이생명보험",
+    "quarter": "2024.4Q",
+    "item": "CSM상각",
+    "delta_pct": -10.2,
+    "threshold_pct": 10.0,
+    "cur": -1561.6,
+    "ref": -1417.0,
     "basis": "yoy",
     "sign_flip": false
   },

@@ -2,7 +2,7 @@
 from: downloader
 to: parser
 created: 20260616T0640Z
-status: open
+status: resolved
 route: reparse
 company: KR0073,KR0001,KR0094,KR0070,KR0083,KR0009,KR0072,KR1000,KR0099
 period: 2026.1Q · FY2023(Q1-Q4) · FY2024(Q1-Q4)

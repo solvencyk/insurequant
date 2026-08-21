@@ -9,6 +9,42 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 ---
 
+## 2026-08-21 — 게이트를 git 이 강제하게 만들다 (owner 지적: "전에도 강제해 놨다더니 또 이렇게 됐잖아")
+
+> **"게이트에 배선했다" 와 "실제로 강제된다" 는 다른 말이었다.** 실측: `scripts/prepush_check.py`
+> ("push 직전 유일 게이트")를 참조하는 11곳이 **전부 문서** — SKILL.md · `docs/agents/*` ·
+> `docs/launch_runbook.md` · postmortem. **코드·설정에서 호출하는 곳 0 · CI 없음 · `.git/hooks/` 비어 있음.**
+> 즉 룰을 아무리 배선해도 누가 그 명령어를 기억해서 쳐야만 돌았고, 안 치면 조용히 통과했다.
+> 이 저장소에서 실제로 강제되는 지점은 git 하나뿐이라(CI 없음) 거기 걸었다.
+
+**신설 3종 + 훅 배선.**
+
+| 산출물 | 하는 일 |
+|---|---|
+| `.githooks/pre-push` | `prepush_check.py` 를 git 이 직접 실행. `git config core.hooksPath .githooks` **1회 필요**(클론마다 로컬 — CLAUDE.md 최상단에 명시). slim 워크트리(`main`, `scripts/` 미추적)는 경고만 하고 통과 — 배포 cherry-push 를 막지 않기 위해 |
+| `scripts/check_inbox_hygiene.py` | `inbox/README.md` §64-71 을 기계로 강제. 나이는 **`created:` frontmatter** 로 잰다(mtime 은 한 줄만 고쳐도 오늘로 리셋돼 65일 묵은 스레드가 "오늘 것"으로 보인다). 스키마·폴더 불일치만 차단, 방치 스레드는 경고 |
+| `tests/test_rule_coverage_manifest.py` | **커버리지를 선언하고 변이로 대조.** 골든은 "있는 것"을 박제하지 "있어야 할 것"을 모른다 — 룰을 안 쓰면 그 부재까지 같이 고정한다 |
+| `prepush_check.py` §3·§4 | inbox 위생 + 오프라인 테스트 126개를 체인에 추가. 그 전까지 **pytest 를 자동으로 돌리는 것이 아무것도 없었다**(같은 함정의 반복 직전이었다) |
+
+**첫 실행 적발.** inbox 위반 34건 — 스키마 밖 status `done` 5건(에이전트가 지어냄) · `_resolved/` 인데
+status 미종결 27건 · sender 가 46일·18일 방치 2건. 앞의 32건은 폴더-status 기계 정합, 뒤 2건은
+자동 종결하지 않았다(기계가 닫으면 미결이 조용히 사라진다).
+
+**커버리지 실측 (변이시험, 항목별로 값을 흔들어 어떤 룰이라도 반응하는지).**
+룰엔진 기준 적용전 41/46 방비 · 적용후 3/46. **게이트 전체까지 넣으면 엔진 무방비 48칸 중 44칸은
+잡히고 진짜 사각은 4칸** = `item12`·`item13` 전·후. 원인까지 규명됨: 원문 각주가
+`기본자본 = 순자산 − (불인정항목 − 보완자본한도초과) − 재분류` 라고 정의하는데
+**'보완자본 한도초과액' 이 스키마에 없다**(푸본현대 2026.1Q 3,447.4억 등 백만원 단위 일치).
+
+**증명 (주장 아님).** 룰 '6' 삭제 → 두 테스트 다 FAIL · item17 보던 룰 전부 삭제 → 커버리지 FAIL ·
+GATE_BLIND 거짓 선언 양방향 FAIL · **로컬 bare 원격에 진짜 `git push` → `error: failed to push some refs`,
+원격에 브랜치 미생성**. 훅 전체 ~84초(게이트 6초 + 위생 + 테스트 126개).
+
+**이 테스트가 증명 못 하는 것도 같이 박아뒀다 — 동어반복.** 변이시험은 "룰이 이 칸을 본다"를
+증명하지 "룰이 실패할 수 있다"는 증명하지 않는다. 실측 반례: `item4` 가 자식합으로 덮여 있어
+rule 2 의 잔차가 **484건 중 452건에서 정확히 0**(억원 반올림 표에서 불가능). 원인 스크립트
+2종은 파서에, 잔차분포 기반 `IDENTITY_TAUTOLOGY` 룰은 validation 에 발주.
+
 ## 2026-08-06 — 리팩토링 6차: 코드가 아니라 "규칙문서 층"(context rot)
 
 > 1~5차는 코드를 정리했는데, **그 코드를 가리키는 프롬프트·인덱스는 안 훑었다.** Anthropic 공식 `claude-md-management` 플러그인의 6축 rubric(Commands / Architecture / Non-obvious Patterns / Conciseness / Currency / Actionability)으로 규칙문서 31개를 실측한 결과.

@@ -14,13 +14,13 @@
     },
     "source": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\dart\\viz\\csm_waterfall.json",
     "period": "annual (fiscal 2024 reporting)",
-    "built_at": "2026-07-30T03:01:56Z",
+    "built_at": "2026-08-20T05:22:34Z",
     "build_script": "scripts/validate_csm_waterfall.py",
     "companies_total": 47,
-    "companies_pass": 26,
-    "companies_fail": 21,
-    "new_business_fail": 11,
-    "must_reparse_count": 11,
+    "companies_pass": 29,
+    "companies_fail": 18,
+    "new_business_fail": 8,
+    "must_reparse_count": 8,
     "needs_reparse_loop": true,
     "needs_reparse_for_new_business": true
   },
@@ -118,81 +118,6 @@
         "missing_stage:closing",
         "new_business_missing",
         "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20240328000905",
-      "waterfall_status": "partial",
-      "caption": "(4) 보고기간 중 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20250328000503",
-      "waterfall_status": "partial",
-      "caption": "(5) 보고기간 중 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20260331004893",
-      "waterfall_status": "partial",
-      "caption": "2) 유배당 외<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
       ],
       "status": "fail"
     },
@@ -451,81 +376,6 @@
         "missing_stage:closing",
         "new_business_missing",
         "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20240328000905",
-      "waterfall_status": "partial",
-      "caption": "(4) 보고기간 중 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20250328000503",
-      "waterfall_status": "partial",
-      "caption": "(5) 보고기간 중 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20260331004893",
-      "waterfall_status": "partial",
-      "caption": "2) 유배당 외<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
       ],
       "status": "fail"
     },
@@ -919,81 +769,6 @@
         "missing_stage:closing",
         "new_business_missing",
         "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20240328000905",
-      "waterfall_status": "partial",
-      "caption": "(4) 보고기간 중 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20250328000503",
-      "waterfall_status": "partial",
-      "caption": "(5) 보고기간 중 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20260331004893",
-      "waterfall_status": "partial",
-      "caption": "2) 유배당 외<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
       ],
       "status": "fail"
     },
@@ -1754,77 +1529,65 @@
     {
       "company": "아이비케이연금보험",
       "rcept_no": "20240328000905",
-      "waterfall_status": "partial",
+      "waterfall_status": "ok",
       "caption": "(4) 보고기간 중 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).<당기>",
       "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
+      "new_business_mn_krw": 32334.44,
+      "new_business_ok": true,
+      "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 307357.645,
+        "computed_closing_mn_krw": 455839.62,
+        "reported_closing_mn_krw": 455839.623,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 2279.2,
+        "missing_stages": []
       },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "아이비케이연금보험",
       "rcept_no": "20250328000503",
-      "waterfall_status": "partial",
+      "waterfall_status": "ok",
       "caption": "(5) 보고기간 중 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).<당기>",
       "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
+      "new_business_mn_krw": 40362.346,
+      "new_business_ok": true,
+      "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 455839.623,
+        "computed_closing_mn_krw": 450111.92,
+        "reported_closing_mn_krw": 450111.915,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 2250.56,
+        "missing_stages": []
       },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "아이비케이연금보험",
       "rcept_no": "20260331004893",
-      "waterfall_status": "partial",
-      "caption": "2) 유배당 외<당기>",
+      "waterfall_status": "ok",
+      "caption": "(6) 보고기간 중 상품별 보험계약부채(자산)의 구성요소 별 변동내역은 다음과 같습니다(단위:천원).1) 연금과 저축보험<당기>",
       "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
+      "new_business_mn_krw": 71773.097,
+      "new_business_ok": true,
+      "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "new_business",
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 450111.915,
+        "computed_closing_mn_krw": 520370.42,
+        "reported_closing_mn_krw": 520376.251,
+        "residual_mn_krw": -5.83,
+        "tolerance_mn_krw": 2601.88,
+        "missing_stages": []
       },
-      "issues": [
-        "missing_stage:new_business",
-        "new_business_missing",
-        "balance_incomplete:new_business,amortization"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "에이비엘생명보험",

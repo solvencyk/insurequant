@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260707T0013Z
-status: answered
+status: resolved
 route: reextract
 company: MULTI (KR0071, KR0005, KR0049)
 period: 2024.3Q, 2024.4Q
