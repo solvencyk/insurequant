@@ -20,6 +20,11 @@
                         EXEMPTION_CITATION_CONTRADICTED · EXEMPTION_CITATION_UNRESOLVED ·
                         EXEMPTION_LEDGER_SCHEMA_INVALID · SOURCE_UNREADABLE_NOT_VERIFIED
                         ← 2026-08-21 owner 적대적 재검증. "룰이 돌았다"와 "룰이 판정했다"를 가른다.
+                        **N8~N10 (2026-08-24)**: EXEMPTION_ABSENCE_PIN_PARTIAL_FILL ·
+                        EXEMPTION_PIN_LEDGER_DISAGREE · EXEMPTION_PIN_RE_REGISTERED
+                        ← 부재형 면제가 축을 통째로 눈감기던 자리(PM-2026-08-24_absence_
+                        exemption_blinded_axis). "면제는 축을 빼는 방식이 아니라 잔차·부재를
+                        박제하는 방식으로만 걸린다" 를 회귀로 고정한다.
 
 Run: C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py --selftest
 """
@@ -487,11 +492,77 @@ def f_exemption_citation_unresolved():
 
 
 def f_exemption_ledger_schema_invalid():
-    """원장이 '근거 기록' 에서 '면제 억제기' 로 변질되는 경로를 기계로 막는다."""
-    led = _ledger({"suppress": True})
+    """원장이 '근거 기록' 에서 '면제 억제기' 로 변질되는 경로를 기계로 막는다.
+
+    2026-08-24 수정: 종전 픽스처는 `verify: None` 이라 `EXEMPTION_VERIFIED_WITHOUT_MARKERS`
+    가 **같이** 터져 케이스가 계속 FAIL 이었다(이 라운드 이전부터 50/51). 이 케이스가 고정할
+    명제는 '금지 키가 들어오면 RED' 하나이므로 다른 축은 통과시켜 놓는다 — 마커가 도는 verify
+    블록을 주고(원천에 없는 문자열이라 반증도 안 난다) 금지 키만 남긴다."""
+    led = _ledger({"suppress": True,
+                   "verify": {"file": _CITE_FILE,
+                              "absent_markers": ["ZZZ_THIS_STRING_IS_NOT_IN_THE_FILE_ZZZ"]}})
     return base_inject(
         exemption_registries={"_AFTER_SUBRISK_NOT_DISCLOSED": {("KR9001", LATEST)}},
         exemption_ledger=led)
+
+
+def f_exemption_absence_pin_partial_fill():
+    """**부재형 면제가 축을 눈감기던 자리** (2026-08-24 사고).
+
+    원장이 '이 셀들은 원천에 없다' 고 박제한 그룹인데 **일부만** 값이 채워진 상태.
+    섞인 상태는 항등식을 입력결측 SKIP 으로 만들어 채워진 값이 아무 검사도 안 받게 한다 —
+    하나생명 2024.4Q 에서 item33후·item34후가 직전분기 값 복사인 채로 살아남은 경로가
+    정확히 이것이다. 전부 결측(= 명제 그대로)이거나 전부 present(= 파생값, 항등식이 검산)
+    둘 중 하나여야 한다."""
+    # 적용전을 0 으로 둔다 — `_parent_present_child_incomplete_after`(자식 census)는 적용전이
+    # material 한 자식만 기대하므로 이 픽스처가 **그 축과 겹치지 않는다**. 케이스는 결함을
+    # 하나만 심어야 한다.
+    rows = base_kics()
+    rows.append(rec("KR9001", LATEST, 17, "100", post="100"))
+    rows.append(rec("KR9001", LATEST, 29, "0", post="0"))       # 박제된 셀인데 적용후 값이 있다
+    rows.append(rec("KR9001", LATEST, 30, "0"))                 # 같은 그룹인데 적용후 결측
+    return base_inject(
+        kics_records=rows,
+        absence_pins={"_AFTER_SUBRISK_NOT_DISCLOSED": {("KR9001", LATEST): frozenset({29, 30})}})
+
+
+def f_exemption_absence_pin_all_missing_is_clean():
+    """**오탐 금지 고정** — 박제 그룹이 통째로 비어 있는 것은 면제가 지키는 바로 그 상태다."""
+    rows = base_kics()
+    rows.append(rec("KR9001", LATEST, 17, "100", post="100"))
+    rows.append(rec("KR9001", LATEST, 29, "0"))
+    rows.append(rec("KR9001", LATEST, 30, "0"))
+    return base_inject(
+        kics_records=rows,
+        absence_pins={"_AFTER_SUBRISK_NOT_DISCLOSED": {("KR9001", LATEST): frozenset({29, 30})}})
+
+
+def f_exemption_pin_ledger_disagree():
+    """**원장 숫자를 아무도 안 읽던 자리** (2026-08-24). 진짜 박제는 코드 상수에 있고 원장은
+    사본인데, 둘이 어긋나도 아무 일이 없었다 — 실제로 KR0075 3분기의 축 목록이 어긋나 있었다.
+    이제 축 목록·잔차값·부재셀집합 중 하나라도 다르면 RED."""
+    led = _ledger({"registry": "_TIER2_ISSUER_INCONSISTENT",
+                   "expected_residual": {"3_tier2_composition|적용전": 1.0},
+                   "verify": {"file": _CITE_FILE,
+                              "absent_markers": ["ZZZ_THIS_STRING_IS_NOT_IN_THE_FILE_ZZZ"]}})
+    return base_inject(
+        exemption_ledger=led,
+        code_pins={("_TIER2_ISSUER_INCONSISTENT", "KR9001", LATEST): {
+            "expected_residual": {"3_tier2_composition|적용전": 999.0}}})
+
+
+def f_exemption_pin_re_registered():
+    """**해제된 박제가 조용히 되살아나는 경로.** 원장 `contradicted_pins` 에 적힌 축이 코드에
+    다시 등재되면 RED — KR0087 2025.2Q `2_tier1_bridge`(우리 룰 결함으로 해제) 의 tripwire."""
+    led = _ledger({"registry": "_TIER2_ISSUER_INCONSISTENT",
+                   "expected_residual": {"2_tier1_bridge|적용전": 5.0},
+                   "contradicted_pins": {"2_tier1_bridge|적용전": "반증돼 해제된 축"},
+                   "verify": {"file": _CITE_FILE,
+                              "absent_markers": ["ZZZ_THIS_STRING_IS_NOT_IN_THE_FILE_ZZZ"]}})
+    return base_inject(
+        exemption_ledger=led,
+        code_pins={("_TIER2_ISSUER_INCONSISTENT", "KR9001", LATEST): {
+            "expected_residual": {"2_tier1_bridge|적용전": 5.0}}})
 
 
 def f_source_unreadable_not_verified():
@@ -714,6 +785,16 @@ CASES = [
      {"EXEMPTION_LEDGER_SCHEMA_INVALID"}),
     ("N7 SOURCE_UNREADABLE_NOT_VERIFIED (스캔본, YELLOW)", f_source_unreadable_not_verified,
      set(), {"SOURCE_UNREADABLE_NOT_VERIFIED"}),
+    # N8~N11: 부재형 면제를 **셀 단위 박제**로 바꾼 라운드 (2026-08-24). 종전엔 (회사,분기)
+    # 통째로 축을 순회에서 빼서, 그 안의 값이 stale 이어도 게이트 출력이 바이트 동일했다.
+    ("N8 EXEMPTION_ABSENCE_PIN_PARTIAL_FILL (부재 박제 부분충전)",
+     f_exemption_absence_pin_partial_fill, {"EXEMPTION_ABSENCE_PIN_PARTIAL_FILL"}),
+    ("N8b 부재 박제 전부결측은 정상 — finding 0",
+     f_exemption_absence_pin_all_missing_is_clean, set()),
+    ("N9 EXEMPTION_PIN_LEDGER_DISAGREE (원장≠코드 박제)",
+     f_exemption_pin_ledger_disagree, {"EXEMPTION_PIN_LEDGER_DISAGREE"}),
+    ("N10 EXEMPTION_PIN_RE_REGISTERED (해제된 박제 재등재)",
+     f_exemption_pin_re_registered, {"EXEMPTION_PIN_RE_REGISTERED"}),
     # O: item23 = item24+25+26 — 종전 무참조 항목 3개(24/25/26)를 처음으로 묶는 다리.
     ("O1 OTHER_CAPITAL_CHILDREN_SUM (적용전)",      f_other_capital_pre,
      {"OTHER_CAPITAL_CHILDREN_SUM"}),

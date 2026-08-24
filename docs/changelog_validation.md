@@ -7,6 +7,136 @@ Validation-only history. Cross-stage changes also keep a 1-line cross-reference 
 
 ---
 
+## 2026-08-24 (iter-4) — 면제 재감사 26버킷 반영: 부재형 면제 셀단위 박제 · 원장 경화 · 마커 행 귀속
+
+오전 재감사(`artifacts/validation/reaudit_20260824_*.md` 5건)가 지목한 **안전 층**을 코드에 반영했다.
+휴리스틱 룰 정리는 이번 범위 밖(발주자 지시). `kics_disclosure.json` · `insurequant_master_tables.xlsx`
+는 **읽기만 했다** — 이번 라운드는 값 변경이 0 이다.
+
+### A. 부재형 면제가 축을 통째로 눈감기던 구조 제거 (`scripts/validate_kics_disclosure.py`)
+
+**사고**: 하나생명 KR0097 2024.4Q 의 `item33후`(942.86)·`item34후`(896.15)는 **2024.3Q 값의 복사**
+였고 `item30후`·`item35후` 는 결측이었다. 그런데 `_AFTER_SUBRISK_NOT_DISCLOSED` 가
+`(회사,분기)` 통째로 mmult 3축(15·17·19) · `_after_parent_missing_child_present` ·
+`_parent_present_child_incomplete_after` · `_diversification_negative` 적용후 · 축 평가율 census
+**다섯 곳**에서 순회를 건너뛰어 **어떤 룰도 그 셀을 본 적이 없다.**
+실측: 그 4셀을 정정 전 값으로 되돌린 마스터로 게이트를 돌려도 출력이 **바이트 동일**.
+
+**수정 — 면제는 축을 빼지 않고 셀을 박제한다.**
+
+- `_AFTER_SOURCE_ABSENT_CELLS` / `_POST_PARENT_SOURCE_ABSENT_CELLS` — `(회사,분기) → 원천에 적용후
+  컬럼이 없는 항목집합`. 종전 `(회사,분기)` 집합은 호환 껍데기로만 남겼다(축 제거 용도 폐기).
+- 축의 적용후 입력이 **완비되면 면제와 무관하게 검산**한다. 결측인 입력이 **전부** 박제 셀일 때만
+  `SOURCE_ABSENT_PINNED(29후,30후,…)` 로 미판정 처리하고 **셀 번호를 인쇄**한다
+  (`_all_missing_are_pinned`). 박제 밖 셀이 섞이면 기존 추출갭 갈래로 내려간다.
+- **`EXEMPTION_ABSENCE_PIN_PARTIAL_FILL` RED 신설** — 박제 그룹(부모별 자식집합)이 부분충전이면
+  차단. 섞인 상태는 항등식을 입력결측 SKIP 으로 만들어 채워진 값이 무검사가 되는데, 사고 당시가
+  정확히 그 상태였다(면제를 풀어도 결측 2칸 때문에 mmult 가 SKIP 이었다).
+- `EXEMPTION_ABSENCE_PIN_VALUE_PRESENT` review — 원장이 '부재' 라는 셀에 값이 있으면 그 값은
+  파생값이므로 매 실행 인쇄한다.
+- **범위를 claim 에 맞게 좁혔다**: 축 15후(원문 p281 이 여섯 값을 다 인쇄하고 diff +0.0043 으로
+  닫힌다)와 KR0049 의 `item1/2/3/14/27/28후` 가 근거 없이 사각이었다. 반대로 KR0097 의 `36~40후`
+  부재는 사실인데 원장 어디에도 없어서 새로 명시했다(raw p301~309 B.2 절 `경과조치` 0회).
+
+**수용기준 실측**: 정정 전 마스터 → 게이트 **EXIT 2** (`EXEMPTION_ABSENCE_PIN_PARTIAL_FILL`),
+정정 후 → **EXIT 0**. 재현 `scripts/_probes/probe_20260824_v_mutate_kr0097.py` + `--master`.
+
+### B. KR0087 동양생명 2025.2Q — `OUR_RULE_DEFECT` 확정, 면제 해제
+
+발행사가 `보완자본 한도 적용 전` 행에 **한도값**(item47 == item48 == 1,210,705백만)을 인쇄해
+`한도초과 = max(0, item47 − item48)` 이 구조적으로 0 이 됐고, 다리가 정확히 item12(1,188억)만큼
+어긋났다. 등재 주장("발행사가 자기 각주 주1) 을 어겼다")은 **거짓** — 각주는 지켜졌다.
+
+`kics_json_rules._tier2_excess_recovered_from_post` 신설(적용전 컬럼 한정, 가드 5개):
+
+```
+promo     = item2후 − item2전                    (경과조치 기본자본 승격액)
+debt_post = item51후 − item49후                  (적용후 인정 채무성 보완자본)
+debt_true = debt_post + promo   →  한도초과 = debt_true − item48전
+가드: 중복행(47≈48) · promo>tol · 적용후 미구속 · 한도 구속 · 인쇄 보완자본 재현
+```
+
+실측 1,188.00 → 다리 잔차 **0.00**. **전 버킷 시뮬(488): 발동 1 · 해결 1 · 파손 0 · 무변동 0.**
+같은 회사 2025.4Q·2026.1Q 는 `47 > 48` 을 정상 인쇄해 가드 D 에서 걸러지고 현행대로 닫힌다
+(잔차 0.24 · 0.38). **되짚기 식 자체의 독립 검증**: 중복행 가드를 빼면 item47 이 정상 인쇄된
+5버킷(KR0076 2023.1Q · KR0104 2024.4Q~2025.3Q)에서도 발동하는데, 되짚은 초과액이 인쇄값 기반
+초과액과 **0.41 이내로 일치**한다(82.24/82.57 · 810.57/810.98 · 1904.33/1904.59 · 1968.77/1968.74 ·
+974.76/974.70). 즉 이 식은 검증 가능한 곳에서 이미 맞고, 검증 불가능한 곳에만 대신 쓰인다.
+
+면제는 `2_tier1_bridge` 축만 해제하고 `47_tier2_census`(TIER2_DUPLICATE_ROW, 발행사 사실)는 유지.
+해제한 축은 원장 `contradicted_pins` 에 남겨 재등재 시 `EXEMPTION_PIN_RE_REGISTERED` RED.
+(한화생명은 전 축이 풀려 `status=CONTRADICTED` 였는데, 여기는 한 축만 풀려서 **축 단위 tripwire**
+가 필요했다.)
+
+### C. 원장의 박제 숫자를 코드가 실제로 읽는다 (`_pin_ledger_agreement_findings`)
+
+감사 H2: `expected_residual` 을 읽는 코드가 **하나도 없었다** — 진짜 박제는 코드 상수에만 있고
+원장 숫자는 사본이며 아무도 안 봤다. 감사 H3: 그 사본이 **이미 어긋나 있었다**(KR0075 2024.3Q 는
+존재하지 않는 축 이름 `47_tier2_census|적용후`, 2024.4Q·2025.1Q 는 census 두 축 결손).
+
+`_code_pin_map()` 이 코드 박제 5종(`_TIER2_*` residual · `_LIFE8_*` · `IRR_DERIVE_*` · 부재 박제 2종)
+을 원장과 같은 모양으로 펴고, 축 목록 · 잔차값(tol 0.01) · `absent_cells` · `contradicted_pins` 를
+대조한다. **정본은 코드**, 원장은 반드시 일치해야 하는 사본. 배선 직후 위 5건을 실제로 잡았고
+`scripts/fix_20260824_ledger_pin_sync.py` 로 동기화했다.
+
+### D. verify 마커 행 귀속 (`verify.present_rows`)
+
+감사 H5: 마커 155개 중 132개가 숫자-only, 그중 **57개가 인용 페이지에서 2회 이상** 등장 —
+원장이 기록하는 명제는 "어느 **행**이 값 V 를 인쇄한다" 인데 검사는 "V 가 어딘가 있다" 만 봤다.
+
+`present_rows = [{row, value}]` 신설. 판정: 라벨과 값의 y-중심 거리 ≤ `_ROW_ANCHOR_BAND`(3.0pt)
+**이고** 값이 라벨 오른쪽(x). 캘리브레이션 15케이스(참 9 + 음성대조 6)에서 참 최대 Δ 0.21pt ·
+거짓 최소 Δ 8.87pt. 어긋나면 `EXEMPTION_CITATION_CONTRADICTED` RED.
+
+> **구현 중 실제로 밟은 버그**: 단어 run 이 행 경계를 넘어 누적돼 서로 다른 행의 조각이 한
+> 라벨로 '발견' 되고 평균 y 가 행 사이에 찍혔다 — 롯데손해 2023.1Q 에서 `8,034` 를 `기본자본`·
+> `보완자본`·`지급여력금액` **세 행에 동시 귀속**시켰다. `_word_runs` 에 같은 행 제약을 넣어
+> 고쳤고 회귀시험으로 못 박았다(`test_a_word_run_never_spans_two_rows`). 이 버그를 안 잡았으면
+> **행 귀속 검사 자체가 새로운 무검사**가 될 뻔했다.
+
+**57 중 51쌍 승격**(`scripts/fix_20260824_marker_row_anchors.py`, 게이트 자신의 판정기를 그대로 사용).
+등급 census 를 매 실행 인쇄한다: `ANCHORED 51 · LABELLED 23 · UNIQUE 75 · AMBIGUOUS 11`.
+**남은 11개**(9 항목)는 라벨이 여러 줄로 감기는 행(`해약환급금 부족분 상당액 중 …` 계열)이라
+3.0pt 로 앵커되지 않는다 — 밴드를 키우면 음성대조군이 무너지므로 **승격하지 않고 전건 인쇄**한다
+(`EXEMPTION_MARKER_UNANCHORED`, UH-10).
+
+### E. 면제 사유 갱신 6건 (`scripts/fix_20260824_ledger_reasons.py`) — 판정은 하나도 안 뒤집었다
+
+| 대상 | 갱신 내용 |
+|---|---|
+| KR0032 2024.3Q | "고칠 셀이 없다" → 발행사가 FY2024_Q4 **p43** 에서 같은 분기 Ⅲ행을 8,867 → **9,390** 으로 정정했다(9,390 이면 다리 +1). `release_condition` 이 **이미 충족**돼 있어 재작성 — as-disclosed 유지가 현 상태이고 as-restated 채택은 owner 결정. `registered_by` 도 보충(26건 중 유일한 결손, 감사 H7) |
+| KR0032 2025.4Q | `claim_kind` **variant → 행 오기**(13분기 투표 A 12 : C 2, C 쪽 1건은 한도구속이라 판별력 없음). 적용후 잔차 **1,899.18 = 949.59 × 2**(차감 스텝 수)를 박제 대상에 편입 — KR0094 IRR 면제와의 적용후 커버리지 비대칭 해소 |
+| KR0073 2025.2Q | note 의 "최악 단일 시나리오보다 작아질 수 없다" 논증이 **우리 도출값 435,845 로 반증**됨 → 전수 탐색(재현 조합 0건) + 221/221 대조군으로 근거 교체. 6개 짝수분기 전부에 같은 편의가 있고 **5% 상대 tol 이 5분기를 흡수**한다는 사실을 기록(UH-11) |
+| KR1000 2024.4Q | "보완자본만 적용전으로 넘어갔다" → **기본자본도 함께**(32,860 ≈ TFI 적용전 32,859.53) |
+| KR0049 2024.3Q | 근거의 절반인 **FY2024_Q4 p36/p42/p43** 을 `citation.also` 에 추가 + `absent_cells`(15~23) 신설 |
+| KR0079 2023.2Q | 적용후 박제의 **유일한 근거 페이지 p12**(경과조치 3종 미적용 명시)를 `citation`·`image_verification` 에 추가 |
+
+### F. 배선·회귀
+
+- **push 게이트 위임**: `validate_data_contract.check_census` **1b(vi-b)** 에서 `_absence_pin_census`
+  · `_pin_ledger_agreement_findings` 를 호출(재구현 금지 — 소스 검사로 강제).
+  K-ICS 게이트에만 배선하면 push 를 못 막는다는 이 저장소의 반복 함정 그대로다.
+- `tests/test_exemption_absence_pin.py` **34 케이스** 신설 — 라이브 마스터·라이브 원장 변이시험.
+- `scripts/_data_contract_selftest.py` **N8 · N8b · N9 · N10** 추가 → **55/55**.
+  덤으로 **기존 N6 이 이 라운드 전부터 FAIL 이던 것을 고쳤다**(픽스처가 `verify: None` 이라
+  `EXEMPTION_VERIFIED_WITHOUT_MARKERS` 가 같이 터졌다 — 케이스는 결함을 하나만 심어야 한다).
+- `tests/test_tier2_issuer_inconsistent_exemption.py`: KR0087 파라미터 제거 + `_post` 박제 회귀 2건
+  추가 + `test_a_post_axis_pin_never_lowers_the_blocking_count` 신설
+  (`_post` 박제 도입 직후 blocking RED 가 **-2** 로 찍혔다 — accepted 전체를 차감했기 때문).
+- 골든 `tests/fixtures/kics_rules_golden.json` **6차 재생성**(`--update`), 사유는
+  `test_kics_rules_golden.py` `_update()` ⑩ 항목. RED 37→36 · GREEN 9,522→9,523 · findings 총계 불변.
+- 사고 기록: `docs/postmortems/PM-2026-08-24_absence_exemption_blinded_axis.md` (색인·UH 표 갱신,
+  신규 **UH-10 · UH-11 · UH-12**).
+
+### 게이트 실측
+
+```
+validate_kics_disclosure.py   EXIT 0 · RED=36 YELLOW=1519 GREEN=9523 SKIP=2586 · blocking RED=0
+validate_data_contract.py     EXIT 0 · RED=0 YELLOW=297
+validate_data_contract.py --selftest   55/55
+pytest tests/ -q              379 passed, 2 skipped
+```
+
 ## 2026-08-24 (iter-3) — `item47` 스코프 인식 룰 수정 · 한화생명 면제 해제 · 원천 육안판독 원장 신설
 
 iter-2 가 규명한 인과를 코드에 반영하고, 남아 있던 sender 티켓을 닫았다. **inbox 활성 0건.**

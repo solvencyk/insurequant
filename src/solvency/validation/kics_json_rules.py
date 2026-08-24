@@ -839,6 +839,83 @@ def _tier2_debt(i47: float, i49: float, scope: str) -> float:
     return i47 - i49 if scope == _TIER2_SCOPE_INCL else i47
 
 
+def _tier2_excess_recovered_from_post(
+    bucket: "QuarterBucket", tol: float
+) -> tuple[Optional[float], str]:
+    """`한도 적용 전` 행에 **한도값이 인쇄된** 분기의 한도초과액을 적용후 컬럼에서 되짚는다.
+
+    ## 왜 필요한가 (동양생명 KR0087 2025.2Q — 2026-08-24 재감사가 뒤집은 버킷)
+
+    룰의 `한도초과 = max(0, item47 − item48)` 은 **item47 이 한도 적용 *전* 값일 때만** 뜻이 있다.
+    이 발행사는 2025.2Q 에 그 행에 한도값을 그대로 인쇄했다(item47 == item48 == 1,210,705백만).
+    그러면 초과액이 기계적으로 0 이 되고, 다리 `item2 = item4 − (item12 − 한도초과) − item13` 이
+    정확히 item12 만큼(1,188억) 어긋난다. 종전엔 이 잔차를 **발행사가 자기 각주를 어겼다** 로
+    읽어 면제로 등재했는데, 각주는 지켜졌고 틀린 것은 우리 룰의 `item47` 해석이었다.
+    (한화생명 `_tier2_i47_scope_map` 과 같은 계열의 결함이다 — 그쪽은 item49 포함 여부,
+    이쪽은 **한도 적용 여부**다. 스코프 투표로는 못 잡는다: 스코프는 두 읽기가 모두 공시
+    보완자본을 재현하는지로 갈리는데, 이 버킷은 어느 스코프에서도 CAPPED 로 재현되기 때문이다.)
+
+    ## 되짚는 방법 — 헤드라인표를 **전혀 보지 않는다**
+
+    같은 TFI 표의 적용후 컬럼만 쓴다(검산 대상인 item2/4/12/13 과 입력이 겹치지 않는다):
+
+        promo      = item2후 − item2전          경과조치가 기본자본으로 승격시킨 금액
+        debt_post  = item51후 − item49후        적용후 인정 채무성 보완자본(한도 미구속일 때 참값)
+        debt_true  = debt_post + promo          적용전 채무성 자본(승격 전이므로 그만큼 크다)
+        한도초과   = debt_true − item48전
+
+    ## 가드 (전부 통과해야 발동)
+
+      D 중복행     `item47 ≈ item48` — 인쇄된 행이 한도값이라 쓸 수 없다는 **바로 그 증거**.
+                   이 가드만 유일하게 발동 대상을 좁힌다(실측: 있으면 1버킷, 없으면 6버킷).
+      promo > tol  경과조치가 실제로 자본을 승격시켰다. 아니면 되짚을 지렛대가 없다.
+      적용후 미구속 `debt_post + tol < item48후` — 적용후도 한도에 잘렸으면 debt_post 가 한도값
+                   이라 아무것도 못 읽는다(그때는 정직하게 복원 불가).
+      구속        `debt_true > item48전 + tol` — 아니면 초과액 0 이라 결과가 안 바뀐다.
+      재현        `min(debt_true, item48전) + item49전 == item51전` — 되짚은 값이 **인쇄된
+                   보완자본을 재현**해야 한다. 재현 못 하면 되짚기가 틀린 것이다.
+
+    ## 전 버킷 시뮬레이션 (2026-08-24, `scripts/_probes/probe_20260824_v_kr0087_sim.py`)
+
+        488버킷 · 발동 1 · **해결 1 · 파손 0 · 무변동 0**
+
+    같은 발행사 2025.4Q·2026.1Q 는 `item47 > item48` 을 정상 인쇄해 가드 D 에서 걸러진다 —
+    그 두 분기는 현행 룰로 이미 닫히고(잔차 0.24 · 0.38) 이 변경이 건드리지 못한다.
+
+    **되짚기 식 자체의 독립 검증**: 가드 D 를 뺀 채로 돌리면 `item47` 이 **정상 인쇄된**
+    5버킷(KR0076 2023.1Q · KR0104 2024.4Q~2025.3Q)에서도 발동하는데, 그 5건에서 되짚은 초과액이
+    인쇄값 기반 초과액과 **0.41 이내로 일치**한다(82.24 vs 82.57 · 810.57 vs 810.98 ·
+    1904.33 vs 1904.59 · 1968.77 vs 1968.74 · 974.76 vs 974.70). 즉 이 식은 검증 가능한 곳에서
+    이미 맞고, 검증 불가능한 곳(중복행)에만 대신 쓰인다.
+
+    적용후 컬럼에는 이 되짚기를 걸지 않는다 — 적용후의 참 채무성 자본은 한도가 구속하지 않는 한
+    `item51후 − item49후` 로 **직접 읽히고**, 구속하면 되짚을 다음 컬럼이 없다.
+
+    반환 (한도초과액, 사유) 또는 (None, 미발동사유)."""
+    pre, post = bucket.values, bucket.values_post
+    i2, i2p = pre.get(2), post.get(2)
+    i47, i48, i49, i51 = pre.get(47), pre.get(48), pre.get(49), pre.get(51)
+    i48p, i49p, i51p = post.get(48), post.get(49), post.get(51)
+    if None in (i2, i2p, i47, i48, i49, i51, i48p, i49p, i51p):
+        return None, "입력결측"
+    if abs(i47 - i48) > tol:
+        return None, "중복행 아님(인쇄된 item47 을 그대로 쓴다)"
+    promo = i2p - i2
+    if promo <= tol:
+        return None, "경과조치 기본자본 승격액 없음 — 되짚을 지렛대가 없다"
+    debt_post = i51p - i49p
+    if debt_post + tol >= i48p:
+        return None, "적용후도 한도구속 — 복원 불가"
+    debt_true = debt_post + promo
+    if debt_true <= i48 + tol:
+        return None, "복원해도 한도 미구속(초과액 0)"
+    if abs((min(debt_true, i48) + i49) - i51) > tol:
+        return None, "복원값이 인쇄된 보완자본을 재현하지 못함"
+    return debt_true - i48, (f"item47 이 한도값으로 인쇄됨(47==48) → 적용후에서 복원: "
+                             f"promo={promo:g} + debt_post={debt_post:g} = {debt_true:g}, "
+                             f"한도초과 = {debt_true - i48:g}")
+
+
 def _tier2_expected(branch: str, i47: float, i48: float, i49: float, scope: str) -> float:
     """갈래·스코프에 맞는 **기대 보완자본**.
 
@@ -1146,6 +1223,15 @@ def _validate_tier2_limit(
             ))
         else:
             raw_exc = excess if branch in _TIER2_EXCESS_BEARING_BRANCHES else 0.0
+            # **`한도 적용 전` 행에 한도값이 인쇄된 분기 복원** (2026-08-24, KR0087 2025.2Q).
+            # 인쇄된 item47 이 이미 한도 적용 후 값이면 `max(0, 47−48)` 은 구조적으로 0 이라
+            # 초과액을 표현할 수 없다. 그때만 적용후 컬럼에서 되짚는다(가드 5개 전부 통과 시).
+            # 전 버킷 시뮬: 발동 1 · 해결 1 · **파손 0**.
+            recovered_why = ""
+            if not post and branch in _TIER2_EXCESS_BEARING_BRANCHES:
+                rec, why = _tier2_excess_recovered_from_post(bucket, strict_tol)
+                if rec is not None:
+                    raw_exc, recovered_why = rec, f" [복원] {why}"
             # **구조적 상한: 한도초과액 ≤ 불인정항목(item12).**
             #
             # 발행사 각주가 정의를 써 놨다(미래에셋생명 2023.2Q p11 주2): 기본자본은 순자산에서
@@ -1172,6 +1258,7 @@ def _validate_tier2_limit(
             f["detail"] = (
                 f"item2 == item4 − (item12 − 한도초과) − item13 [{col}] "
                 f"branch={branch} scope={scope} 한도초과={exc:g}"
+                + recovered_why
                 + (f" (근사치 {raw_exc:g} 를 item12={i12:g} 로 클램프 — "
                    "한도초과액은 불인정항목의 구성요소라 그보다 클 수 없다)"
                    if raw_exc > exc + 1e-9 else "")

@@ -1,11 +1,90 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-24 (iter-3 룰 수정·면제 해제·inbox 전건 종결) · Stage 3/5 — validation
+> Last updated: 2026-08-24 (iter-4 면제 재감사 반영 — 부재형 면제 셀단위 박제·원장 경화) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-24 iter-4, 면제 재감사 26버킷 반영) 🟢 부재형 면제가 축을 눈감기던 구조를 없앴다 —
+게이트 3종 전부 exit 0 · pytest 379 pass · selftest 55/55.**
+
+> **① 최우선 — 면제가 축을 통째로 눈감겨 틀린 값이 살아남았다** (사고 기록:
+> `docs/postmortems/PM-2026-08-24_absence_exemption_blinded_axis.md`).
+> 하나생명 KR0097 2024.4Q 의 `item33후`·`item34후` 는 **직전분기 값 복사**였고 `item30후`·
+> `item35후` 는 결측이었는데, `_AFTER_SUBRISK_NOT_DISCLOSED` 가 `(회사,분기)` 통째로 mmult 3축·
+> 부모-자식 census·분산효과 적용후를 순회에서 빼서 **어떤 룰도 그 셀을 본 적이 없다.**
+> 실측 증거: 그 4셀을 정정 전 값으로 되돌린 마스터로 게이트를 돌려도 출력이 **바이트 동일**했다.
+>
+> **면제를 셀 단위 `부재 박제` 로 재설계**했다 — `_AFTER_SOURCE_ABSENT_CELLS` /
+> `_POST_PARENT_SOURCE_ABSENT_CELLS`. 규칙 셋: ① 박제 셀이 결측이면 그 셀을 입력으로 쓰는 축만
+> `SOURCE_ABSENT_PINNED(셀번호)` 로 미판정 처리하고 **셀 단위로 인쇄**한다 ② 값이 나타나면 면제는
+> 그 셀에 대해 즉시 무효이고 축이 되살아나 검산한다 ③ 박제 그룹이 **부분충전**이면
+> `EXEMPTION_ABSENCE_PIN_PARTIAL_FILL` **RED**(섞인 상태는 항등식을 입력결측 SKIP 으로 만들어
+> 채워진 값이 무검사가 된다 — 사고 당시가 정확히 그 상태였다).
+> **수용기준 충족**: 정정 전 마스터로 돌리면 게이트 **EXIT 2**, 정정 후 **EXIT 0**.
+> 범위도 claim 에 맞게 좁혔다 — 축 15후(원문 p281 에 여섯 값이 다 있고 diff +0.0043 으로 닫힌다)와
+> KR0049 의 `item1/2/3/14/27/28후` 가 근거 없이 사각이었다.
+>
+> **② KR0087 동양생명 2025.2Q — 우리 룰 결함이었다. 면제 해제.** 발행사가 `보완자본 한도 적용 전`
+> 행에 **한도값**을 인쇄해 `max(0, item47−item48)` 이 구조적으로 0 이 됐다. 참 한도초과는 같은 표
+> 적용후 컬럼에서 되짚어진다(`_tier2_excess_recovered_from_post`, 가드 5개):
+> `promo = item2후−item2전 = 3,445.63` + `debt_post = item51후−item49후 = 9,849.42` → 13,295.05 →
+> **한도초과 1,188.00**, 다리 잔차 **0.00**. 전 버킷 시뮬(488): **발동 1 · 해결 1 · 파손 0.**
+> 같은 회사 2025.4Q·2026.1Q 는 `47 > 48` 을 정상 인쇄해 가드에서 걸러지고 현행대로 닫힌다
+> (잔차 0.24 · 0.38). 되짚기 식 독립 검증: 중복행 가드를 빼면 item47 이 **정상 인쇄된** 5버킷에서도
+> 발동하는데 되짚은 초과액이 인쇄값 기반과 **0.41 이내로 일치**한다.
+> 해제한 축은 원장 `contradicted_pins` 에 남겨 재등재 시 `EXEMPTION_PIN_RE_REGISTERED` RED.
+>
+> **③ 원장의 박제 숫자를 코드가 실제로 읽게 했다.** 그 전까지 `expected_residual` 을 읽는 코드가
+> **하나도 없어서** 원장은 장식이었고, 실제로 **KR0075 3분기에서 축 목록이 어긋나 있었다**
+> (2024.3Q 는 존재하지 않는 축 이름 `47_tier2_census|적용후`, 2024.4Q·2025.1Q 는 census 두 축 결손).
+> `_pin_ledger_agreement_findings` 신설 — 축 목록·잔차값·`absent_cells` 중 하나라도 다르면 RED.
+> **정본은 코드**(게이트를 실제로 움직이는 쪽)이고 원장은 반드시 일치해야 하는 사본이다.
+> 배선 직후 그 5건을 실제로 잡았고, 원장을 코드에 맞춰 동기화했다.
+>
+> **④ verify 마커를 행 귀속 검사로 강화.** 종전 마커 155개 중 **57개가 인용 페이지에서 2회 이상**
+> 등장하는 숫자-only 였다 — "V 가 어딘가 있다" 만 검사하는 무검사. `verify.present_rows`
+> (`[{row, value}]`) 신설: 라벨과 값의 y-중심 거리 ≤ **3.0pt** + 값이 라벨 오른쪽.
+> 캘리브레이션 15케이스(참 9 + 음성대조 6)에서 참 최대 Δ 0.21 · 거짓 최소 Δ 8.87.
+> **57 중 51쌍을 승격**했고(ANCHORED 51 · LABELLED 23 · UNIQUE 75 · **AMBIGUOUS 11**),
+> 남은 11개는 라벨이 여러 줄로 감기는 행이라 앵커가 안 된다 — **매 실행 전건 인쇄**된다
+> (`EXEMPTION_MARKER_UNANCHORED`, UH-10).
+>
+> **⑤ 면제 사유 갱신 6건** (판정은 하나도 안 뒤집었다 — 근거만 정확하게):
+> KR0032 2024.3Q(발행사가 FY2024_Q4 p43 에서 8,867→9,390 정정, `release_condition` 이 이미
+> 충족돼 있어 재작성 + `registered_by` 보충) · KR0032 2025.4Q(variant 아니라 **행 오기**, 13분기
+> 투표 12:2 로 확정 + 적용후 잔차 1,899.18=949.59×2 를 박제 대상에 편입) · KR0073 2025.2Q(note 의
+> "최악 단일 시나리오" 하한 논증이 우리 도출값 435,845 로 **반증** → 전수 탐색 근거로 교체 +
+> 6개 짝수분기 중 5분기를 5% 상대 tol 이 흡수한다는 사실 기록, UH-11) · KR1000 2024.4Q("보완자본만"
+> → 기본자본도) · KR0049 2024.3Q(FY2024_Q4 p36/p42/p43 인용 추가 + 부재 박제) ·
+> KR0079 2023.2Q(적용후 박제의 유일한 근거 p12 를 인용에 추가).
+
+### 이번 라운드 실측 (재현 명령)
+
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py
+  -> EXIT 0 · RED=36 YELLOW=1519 GREEN=9523 SKIP=2586 · blocking RED=0
+     면제 근거(provenance) RED=0 · 부재 박제 census 21셀(결측 14 · 값존재 7) / 2버킷
+     마커 등급 {ANCHORED 51 · LABELLED 23 · UNIQUE 75 · AMBIGUOUS 11}
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py
+  -> EXIT 0 · RED=0 YELLOW=297
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py --selftest
+  -> 55/55 (N8·N8b·N9·N10 신설)
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/ -q
+  -> 379 passed, 2 skipped
+```
+
+### 안 한 것 (다음 라운드)
+
+- **휴리스틱 룰 쳐내기는 이번 범위 밖**(발주자 지시). 이상치 탐지(peer/cohort) · 동어반복
+  excess/z-score · 축 평가율 · 텍스트밀도 판독성은 **손대지 않았다.**
+- 허용오차는 하나도 안 건드렸다(UH-11 은 기록만).
+- `kics_disclosure.json` 에 쓰지 않았다. `insurequant_master_tables.xlsx` 도 안 건드렸다.
+
+---
+
 
 **(2026-08-24 iter-3, 룰 수정 + 면제 해제 + inbox 전건 종결) 🟢 `item47` 스코프 결함을 고쳤다 —
 전 버킷 시뮬 **해결 1 / 파손 0**. 한화생명 면제 **해제**, 게이트 3종 전부 exit 0, inbox **활성 0건**.**

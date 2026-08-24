@@ -164,7 +164,29 @@ def _update() -> int:
                     "이동했다(−221 -> +14.86 등, status 는 RED 그대로) — 게이트 박제값과 원장을 "
                     "같이 갱신했고 종전 값은 expected_residual_alt_reading 에 남겼다. "
                     "한화생명 면제는 **해제**했다(게이트가 TIER2_EXEMPTION_INERT 로 먼저 "
-                    "알려 줬다). blocking RED 0 · 게이트 exit 0.")
+                    "알려 줬다). blocking RED 0 · 게이트 exit 0. "
+                    "2026-08-24 (6차, 면제 재감사 반영) 재생성 사유 — 데이터는 이번에도 안 "
+                    "건드렸다(kics_disclosure.json 읽기만 했다). **룰 하나만 바뀌었고 산출은 "
+                    "한 칸만 움직였다**: RED 37 -> 36 · GREEN 9,522 -> 9,523, findings 총계 불변. "
+                    "⑩ **`한도 적용 전` 행에 한도값이 인쇄된 분기의 한도초과액 복원** "
+                    "(`kics_json_rules._tier2_excess_recovered_from_post`). 동양생명 KR0087 "
+                    "2025.2Q 는 발행사가 그 행에 한도값(item47 == item48 == 1,210,705백만)을 "
+                    "그대로 인쇄해 `max(0, 47−48)` 이 구조적으로 0 이 됐고, 다리가 정확히 "
+                    "item12(1,188억)만큼 어긋났다. 종전엔 그것을 '발행사가 자기 각주 주1) 을 "
+                    "어겼다' 로 읽어 면제로 등재했는데 **주1) 은 지켜졌고 틀린 것은 우리 룰의 "
+                    "item47 해석이었다**(2026-08-24 재감사 판정 OUR_RULE_DEFECT). 참 한도초과는 "
+                    "같은 표 적용후 컬럼에서 되짚어진다: promo = item2후 − item2전 = 3,445.63 · "
+                    "debt_post = item51후 − item49후 = 9,849.42 → debt_true 13,295.05 → "
+                    "한도초과 1,188.00, 다리 잔차 0.00. 가드 5개(중복행·승격액>0·적용후 미구속·"
+                    "한도 구속·인쇄 보완자본 재현) 전부 통과할 때만 발동한다. "
+                    "전 버킷 시뮬(488): 발동 1 · **해결 1 · 파손 0 · 무변동 0** "
+                    "(`scripts/_probes/probe_20260824_v_kr0087_sim.py`). 같은 발행사 2025.4Q·"
+                    "2026.1Q 는 47 > 48 을 정상 인쇄해 가드에서 걸러지고 현행대로 닫힌다"
+                    "(잔차 0.24 · 0.38). 되짚기 식 자체의 독립 검증: 중복행 가드를 빼면 item47 이 "
+                    "정상 인쇄된 5버킷(KR0076 2023.1Q · KR0104 2024.4Q~2025.3Q)에서도 발동하는데 "
+                    "되짚은 초과액이 인쇄값 기반 초과액과 **0.41 이내로 일치**한다. "
+                    "KR0087 2025.2Q `2_tier1_bridge` 면제는 해제했고 원장 `contradicted_pins` "
+                    "tripwire 로 재등재를 막는다. blocking RED 0 · 게이트 exit 0.")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

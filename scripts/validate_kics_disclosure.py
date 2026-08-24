@@ -642,16 +642,53 @@ _TRANS_PARENT_SUBS = {
 }
 
 
-# 적용후 세부위험 documented exception (owner 확정 2026-07-12): raw로 적용후 세부를 안전하게
-# 도출 불가 → 추출갭·mmult 둘 다에서 제외(재플래그 방지). TODO.md에도 기록. parser 재파싱해도 안 바뀜.
-_AFTER_SUBRISK_NOT_DISCLOSED = {
+# ---------------------------------------------------------------------------
+# 부재형 면제 = **셀 단위 부재 박제**. 축을 순회에서 빼지 않는다 (2026-08-24 재설계).
+# ---------------------------------------------------------------------------
+# **사고 기록: 면제가 축을 눈감겨 틀린 값이 살아남았다.**
+# 종전 `_AFTER_SUBRISK_NOT_DISCLOSED` 는 `(회사,분기)` 집합이었고, `_transition_mmult_after` 가
+# 부모 조회 **전에** `continue` 했다. 그래서 하나생명 2024.4Q 는 mmult 3축(15·17·19) 전부와
+# `_parent_present_child_incomplete_after` · `_diversification_negative` 적용후가 통째로
+# 순회 대상이 아니었다. 그 사각 안에서 `item33후`·`item34후` 가 **직전분기 값 복사(stale)** 로
+# 앉아 있었고 `item30후`·`item35후` 는 결측이었는데, 어떤 룰도 그 셀을 본 적이 없다.
+# 실측 증거(2026-08-24): 그 4셀을 정정 전(942.86/896.15/결측/결측) 값으로 되돌린 마스터 사본으로
+# 게이트를 돌려도 출력이 **바이트 동일**했다 — 값이 바뀌어도 게이트가 모른다 = false-green.
+#
+# **재설계 원칙 — 부재도 박제한다.** 면제는 "이 축을 보지 마라" 가 아니라
+# "이 **셀**이 원천에 없다" 는 검증 가능한 명제로만 걸린다:
+#   ① 박제된 셀이 **결측이면** → 그 사실을 셀 단위로 세어 인쇄한다(조용한 미순회 금지).
+#      그 셀을 입력으로 쓰는 축만 `SOURCE_ABSENT_PINNED` 로 미판정 처리되고, 나머지 축은 그대로 돈다.
+#   ② 박제된 셀에 **값이 나타나면** → 면제는 즉시 무효다. 축이 정상적으로 되살아나 검산하고,
+#      `EXEMPTION_ABSENCE_PIN_VALUE_PRESENT` review 로 "원장은 부재라는데 값이 있다(=파생값)" 를 인쇄한다.
+#   ③ 박제되지 **않은** 셀·축은 면제와 무관하다. 종전엔 하나생명 축 15후가 근거 없이 사각이었다
+#      (원문 p281 에 여섯 값이 전부 인쇄돼 있고 실제로 닫힌다 — 실측 diff +0.0043, tol 2.0).
+#
+# 값은 `(회사, 분기) -> {원천에 적용후 컬럼이 없는 항목번호}`. 원장
+# `data/_gold/kics_exemption_provenance.json` 의 `absent_cells` 와 **매 실행 대조**된다
+# (`_exemption_pin_ledger_findings`) — 어긋나면 RED.
+_AFTER_SOURCE_ABSENT_CELLS: dict[tuple[str, str], frozenset[int]] = {
+    # 하나생명 2024.4Q — **claim 은 참, 스코프는 좁힌다.**
+    #   · 29~35후(생명장기 7 하위위험) — 원문에 적용후 컬럼이 없다(아래 근거).
+    #   · 36~40후(시장 5 하위위험)     — 2026-08-24 재감사가 추가 확인: p301~309 B.2 시장리스크
+    #     절에 `경과조치` 0회. 종전엔 이 사실이 원장 어디에도 없이 축 19가 면제되고 있었다.
+    #   · 축 15후(= sqrt([17~20]·R4) + item21후)는 **박제하지 않는다** — p281 이 여섯 값을 전부
+    #     인쇄하고 산수도 닫힌다. 근거 없이 사각으로 들어가 있던 축이다.
+    ("KR0097", "2024.4Q"): frozenset(range(29, 36)) | frozenset(range(36, 41)),
+}
+
+# 종전 이름의 호환 껍데기 — **축 제거용으로 쓰지 말 것.** 남겨 둔 이유는 면제 레지스트리
+# census(`_exemption_registries`)·원장 대조가 (회사,분기) 키로 돌기 때문이다.
+_AFTER_SUBRISK_NOT_DISCLOSED = frozenset(_AFTER_SOURCE_ABSENT_CELLS)
+
+# 원래 등재 근거(그대로 보존):
+_AFTER_SUBRISK_NOT_DISCLOSED_NOTES = {
     # 하나생명 2024.4Q — **유지**. 2026-08-21 validation 이 raw 를 열어 재확인했고, 주장이 참이다:
     #   p281 [지급여력기준금액] 은 적용후를 **위험 대분류(17·18·19·20·21)까지만** 공시하고,
     #   생명장기 7 하위위험(29~35)의 적용후 컬럼은 어디에도 없다. p325~327(C.3.1 경과조치 적용내역)은
     #   서술형이라 "최초 산출 금액 + 적용비율 10%" 만 준다(장수 14,325,093 · 해지 66,403,015 ·
     #   사업비 43,877,926 · 대재해 7,847,532 천원). 표준서식 헤딩 2개가 347p 전체에서 부재 —
     #   원장 verify.absent_markers 로 매 실행 기계 재확인된다.
-    ("KR0097", "2024.4Q"),
+    ("KR0097", "2024.4Q"): "29~35후 원문 부재(p281 은 대분류까지) + 36~40후 부재(B.2 절 경과조치 0회)",
     # ("KR0097", "2026.1Q") 해제 2026-08-21: 등재사유 "적용후 세부 미공시"가 **거짓**이다 —
     #   raw p10 의 [② 장수위험·사업비위험·해지위험 및 대재해위험 경과조치] 표가 적용후 세부를
     #   전부 싣는다(백만원: 사망 38,228 · 장수 - · 장해질병 71,560 · 장기재물 - · 해지 320,365 ·
@@ -683,6 +720,16 @@ _AFTER_SUBRISK_NOT_DISCLOSED = {
     #   raw PDF p15 에 ②표 전체가 있다. 같은 docling 페이지 유실. parser 가 p15 로 item29~35 7행 신설
     #   (R7 로 부모값 재현 확인). 면제로 두면 실제 공시된 값이 영구 미검사로 남는다.
 }
+
+
+def _all_missing_are_pinned(subs, m: dict, absent: frozenset, add_item=None) -> bool:
+    """이 축의 적용후 입력 중 **결측인 것이 전부** 부재 박제 셀인가.
+
+    하나라도 박제 밖 셀이 결측이면 False — 그건 부재 박제가 아니라 추출갭이다.
+    결측이 아예 없으면 False (완비 = 검산 대상이지 미판정이 아니다)."""
+    items = list(subs) + ([add_item] if add_item is not None else [])
+    missing = [i for i in items if m.get(i, (None, None))[1] is None]
+    return bool(missing) and all(i in absent for i in missing)
 
 
 def _transition_mmult_after(records: list[dict], readability: dict | None = None
@@ -735,12 +782,8 @@ def _transition_mmult_after(records: list[dict], readability: dict | None = None
     mismatch, sub_missing, unverifiable = [], [], []
     skipped: Counter = Counter()
     for (c, q), m in sorted(byq.items()):
-        exempt = (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED
+        absent = _AFTER_SOURCE_ABSENT_CELLS.get((c, q), frozenset())
         for parent, (subs, mat, add_item, tol_kind) in _TRANS_PARENT_SUBS.items():
-            if exempt:
-                # owner 확정 documented exception (미공시/오염/공식불명) — mmult·추출갭 둘 다 제외
-                skipped[f"item{parent}:DOCUMENTED_EXEMPT"] += 1
-                continue
             pre_p, post_p = m.get(parent, (None, None))
             if post_p is None:
                 skipped[f"item{parent}:부모후결측"] += 1
@@ -748,10 +791,18 @@ def _transition_mmult_after(records: list[dict], readability: dict | None = None
             post_subs = [m.get(i, (None, None))[1] for i in subs]
             add_post = m.get(add_item, (None, None))[1] if add_item else 0.0
             if all(v is not None for v in post_subs) and add_post is not None:
+                # **면제가 있어도 값이 완비되면 검산한다.** 부재 박제는 "원천에 없다" 는 명제이지
+                # "검사하지 마라" 가 아니다 — 값이 나타나면 그 명제가 깨진 것이고 축은 되살아난다.
                 exp = _diversified_sqrt(np.array(post_subs, dtype=float), mat) + add_post
                 tol = _eff_tol(c) if tol_kind == "flat" else max(_eff_tol(c), 0.05 * abs(exp))
                 if abs(post_p - exp) > tol:
                     mismatch.append((c, q, name.get(c, c), parent, round(post_p, 1), round(exp, 1)))
+            elif _all_missing_are_pinned(subs, m, absent, add_item):
+                # 결측 셀이 **전부** 박제된 부재 셀 → 이 축만 미판정. 셀 번호를 세어 인쇄한다
+                # (조용한 미순회 금지). 박제 밖 셀이 하나라도 섞이면 아래 추출갭 갈래로 내려간다.
+                miss = [i for i in list(subs) + ([add_item] if add_item else [])
+                        if m.get(i, (None, None))[1] is None]
+                skipped[f"item{parent}:SOURCE_ABSENT_PINNED({','.join(str(i) + '후' for i in miss)})"] += 1
             elif pre_p is not None and abs(post_p - pre_p) > 1.0:
                 sub_missing.append((c, q, name.get(c, c), parent))
                 skipped[f"item{parent}:세부후결측(추출갭)"] += 1
@@ -1006,7 +1057,11 @@ def _axis_specs() -> list[tuple]:
     specs: list[tuple] = []
     for parent, (subs, _mat, add_item, _tol) in sorted(_TRANS_PARENT_SUBS.items()):
         ins = list(subs) + ([add_item] if add_item is not None else [])
-        specs.append((f"mmult{parent}", parent, ins, _AFTER_SUBRISK_NOT_DISCLOSED,
+        # 면제 집합도 **축별**로 좁힌다(2026-08-24). 종전엔 (회사,분기) 통째 집합이라 축 15 처럼
+        # 부재 박제가 하나도 없는 축까지 분모에서 빠졌다 — 평가율 측정기가 실제 룰과 다른 축을 잰다.
+        ex = frozenset((c, q) for (c, q), cells in _AFTER_SOURCE_ABSENT_CELLS.items()
+                       if cells & set(ins))
+        specs.append((f"mmult{parent}", parent, ins, ex,
                       f"item{parent} = sqrt(세부·상관행렬)"))
     for rule, tgt, ins, _fn, _is_ratio in _TRANS_AFTER_IDENT:
         specs.append((rule, tgt, list(ins), frozenset(), f"item{tgt} 항등식"))
@@ -1706,8 +1761,8 @@ def _after_parent_missing_child_present(records: list[dict]) -> list[tuple]:
             byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
     out: list[tuple] = []
     for (c, q), m in sorted(byq.items()):
-        if (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
-            continue  # 등재 면제분은 이 census 의 대상이 아니다(별도 축에서 이미 보고됨)
+        # 2026-08-24: `(회사,분기)` 통째 skip 을 없앴다. 부재 박제는 **셀 단위**이므로 여기서
+        # 걸러야 할 것은 "박제된 부재 셀이 present 로 나타난 조합" 뿐인데, 그건 오히려 봐야 할 신호다.
         for parent, (subs, _mat, _add, _tk) in _TRANS_PARENT_SUBS.items():
             if m.get(parent, (None, None))[1] is not None:
                 continue
@@ -2162,20 +2217,24 @@ _TIER2_ISSUER_INCONSISTENT: dict[tuple[str, str], dict] = {
         },
     },
     # --- 동양생명 KR0087 2025.2Q ---------------------------------------------
-    # 헤드라인표(raw FY2025_Q2 p15, 억원)가 **자기 각주 주1) 을 어긴다.** 주1) 은
-    # "기본자본은 … 순자산에서 지급여력금액 불인정 항목(단, 보완자본 한도를 초과한 금액을
-    # 제외) 및 보완자본으로 재분류하는 항목을 차감한 금액" 이라고 써 놓고, 인쇄된 값은
-    # 불인정항목을 빼지 않았다:
-    #   33,001 − (1,188 − 0) − 18,883 = 12,930   vs 공시 기본자본 14,118   (잔차 +1,188)
-    #   33,001 −      0      − 18,883 = 14,118   = 공시 기본자본            (정확 일치)
-    # 잔차가 **정확히 item12(1,188)** 다. 입력은 전부 독립 확증이 있다:
-    #   순자산 33,001 = 12,705 + 3,446 + 15,883 − 595 − 14,943 + 0 + 16,505 (자기 7행 합, 정확)
-    #   기본자본 14,118 = TFI 표 p16 기본자본 1,411,796 ÷ 100 = 14,117.96 (다른 표에서 재확인)
-    # 대조군: **같은 발행사 이웃 두 분기는 정확히 닫힌다** — 2025.1Q 30,625−0−18,777=11,848 ·
-    # 2024.4Q 35,559−0−19,119=16,440. 둘 다 item12=0 이고, item12≠0 인 이 분기만 깨진다.
-    # `47_tier2_census` 의 `TIER2_DUPLICATE_ROW` 도 같은 뿌리다 — 발행사가 `한도적용전` 자리에
-    # `한도`(1,210,705)를 그대로 인쇄해 `max(0, 47−48) = 0` 이 된다. PRE composition 은 그
-    # 인쇄값으로 **정확히** 닫히므로(min+49 = 2,754,428 = 보완자본_전) 우리 추출은 원문 그대로다.
+    # **2026-08-24: `2_tier1_bridge` 박제를 해제했다 — 우리 룰 결함이었다.**
+    #
+    # 등재 당시 주장은 "헤드라인표가 자기 각주 주1) 을 어긴다" 였다. 그 주장은 **거짓**이다.
+    # 주1) 은 지켜졌고, 틀린 것은 `한도초과 = max(0, item47 − item48)` 이라는 우리 룰의 가정이다.
+    # 발행사는 `보완자본 한도 적용 전` 행에 **한도값을 그대로**(1,210,705 = item48) 인쇄했고,
+    # 그러면 그 식은 구조적으로 0 을 낸다. 참 한도초과는 같은 표 적용후 컬럼에서 되짚어진다:
+    #   promo = item2후 − item2전 = 17,563.63 − 14,118 = 3,445.63  (= (기발행 신종자본증권) 3,445.67)
+    #   debt_post = item51후 − item49후 = 25,286.65 − 15,437.23 = 9,849.42
+    #   debt_true = 13,295.05  →  한도초과 = 13,295.05 − 12,107.05 = 1,188.00
+    #   다리: 33,001 − (1,188 − 1,188.00) − 18,883 = 14,118.00 = 공시 기본자본 (잔차 0.00)
+    # 되짚기는 헤드라인표를 전혀 안 본다(입력이 겹치지 않는 독립 도출).
+    # 같은 발행사 2025.4Q·2026.1Q 는 `47 > 48` 을 정상 인쇄해 현행 룰로 이미 닫히고(잔차 0.24·0.38)
+    # 새 갈래가 그 두 분기를 건드리지 않는다(가드 D). 전 버킷 시뮬: 발동 1 · 해결 1 · **파손 0**.
+    # 배선: `kics_json_rules._tier2_excess_recovered_from_post`.
+    #
+    # **`47_tier2_census` 의 `TIER2_DUPLICATE_ROW` 는 그대로 유지한다** — 그건 여전히 발행사쪽
+    # 사실이다. 다만 사유를 정확히 적는다: "발행사가 우연히 같은 값을 두 줄에 인쇄했다" 가 아니라
+    # **"참 한도적용전 13,295.05 인데 한도값 12,107.05 가 인쇄됐다"** 이다.
     ("KR0087", "2025.2Q"): {
         "cells": {2: {"값": 14118.0}, 3: {"값": 27544.0}, 4: {"값": 33001.0},
                   12: {"값": 1188.0}, 13: {"값": 18883.0},
@@ -2184,7 +2243,6 @@ _TIER2_ISSUER_INCONSISTENT: dict[tuple[str, str], dict] = {
                   49: {"값": 15437.23, "값_적용후": 15437.23},
                   50: {"값": 14117.96}, 51: {"값": 27544.28, "값_적용후": 25286.65}},
         "findings": {
-            "2_tier1_bridge": {"flag": "item2 ==", "residual": 1188.0},
             "47_tier2_census": {"flag": "TIER2_DUPLICATE_ROW", "residual": None},
         },
     },
@@ -2215,6 +2273,20 @@ _TIER2_ISSUER_INCONSISTENT: dict[tuple[str, str], dict] = {
     # 결측이 되면 `..._INPUT_MISSING` RED 다(SKIP 아님). 잔차가 움직여도 `..._RESIDUAL_DRIFT`.
     # 잔차 두 개가 미세하게 다른 이유: `3_tier2_composition` 은 헤드라인 item3(=12,401, 억원
     # 반올림)과, `51_tfi_tier2_composition` 은 같은 표 item51(=12,401.12)과 대조하기 때문이다.
+    #
+    # **2026-08-24 재감사 정정 2건.**
+    # ① `claim_kind` 가 `ISSUER_TABLE_COMPOSITION_VARIANT` 였는데 **variant 가 아니다.**
+    #    회사 관행이라면 다른 분기도 같아야 하는데 반대다 — 같은 발행사 13분기 스코어카드는
+    #    현행 읽기 12 : `+item54` 읽기 2 이고, 그 2건 중 1건(2026.1Q)은 한도가 구속해 판별력이
+    #    없다. 즉 원장이 "원문만으로 확정 불가" 라고 남긴 두 해석은 이제 **확정된다.**
+    #    실제로 일어난 일은 **한 행이 후순위채무 한 스텝만큼 밀려 인쇄된 것**이다:
+    #      관행대로면 적용전 한도적용전 = 보완자본 1,240,112 − 해약환급금 447,254 = 792,858
+    #      인쇄값은 792,858 − 94,959 = 697,899, 적용후는 거기서 또 − 94,959 = 602,940
+    # ② 그 진단을 **적용후 컬럼이 독립 확증한다** — 적용후 잔차가 정확히 **2배**다
+    #    (1,899.18 = 949.59 × 2). 우연이 아니라 차감 스텝 수다.
+    #    그런데 그 적용후 잔차가 종전엔 박제 대상 **밖**이었다(YELLOW 풀에 섞여 들어감).
+    #    같은 원장의 KR0094 IRR 면제는 적용전·적용후를 각각 박제하는데 이 축만 비대칭이었다
+    #    → 아래 `_post` 두 축을 추가로 박제한다(등급은 YELLOW 그대로, 재검산만 켜진다).
     ("KR0032", "2025.4Q"): {
         "cells": {3: {"값": 12401.0}, 47: {"값": 6978.99, "값_적용후": 6029.4},
                   48: {"값": 8019.52, "값_적용후": 8019.52},
@@ -2224,6 +2296,10 @@ _TIER2_ISSUER_INCONSISTENT: dict[tuple[str, str], dict] = {
         "findings": {
             "3_tier2_composition": {"flag": "COMPOSITION_NEITHER", "residual": 949.47},
             "51_tfi_tier2_composition": {"flag": "TFI_COMPOSITION_NEITHER", "residual": 949.59},
+            # 적용후 = 후순위채무 2회 차감 (949.59 x 2). 적용전 1배와 짝이라 진단의 확증이다.
+            "3_tier2_composition_post": {"flag": "COMPOSITION_NEITHER", "residual": 1899.06},
+            "51_tfi_tier2_composition_post": {"flag": "TFI_COMPOSITION_NEITHER",
+                                              "residual": 1899.18},
         },
     },
     # --- 예별손해 KR0004 2025.1Q ----------------------------------------------
@@ -2365,8 +2441,15 @@ def _tier2_issuer_inconsistent(records: list[dict], findings: list[dict]):
                                           f"(delta {actual - pinned:+.4f}, tol {_TIER2_PIN_TOL}). "
                                           "owner 판단의 전제(원문 그대로)가 바뀌었다 — 면제 무효"})
         for rule, pin in sorted(spec["findings"].items()):
+            # `_post` 축은 관계식 미확립이라 설계상 YELLOW 로 내려간다(`_POST_UNESTABLISHED`).
+            # 그래도 **박제는 걸 수 있어야 한다** — 잔차가 움직이면 알아야 하기 때문이다.
+            # 2026-08-24 감사 지적: KR0094 IRR 면제는 적용전·적용후 두 컬럼을 각각 박제하는데
+            # tier2 축은 적용전만 박아, 같은 원장 안에서 적용후 커버리지가 비대칭이었다.
+            # (박제해도 차단 등급은 안 바뀐다 — YELLOW 는 그대로 YELLOW 다. 바뀌는 것은
+            #  '그 잔차를 매 실행 재검산한다' 뿐이고, 이탈하면 RESIDUAL_DRIFT RED 다.)
+            want = ("RED", "YELLOW") if rule.endswith("_post") else ("RED",)
             hit = [f for f in findings
-                   if f.get("status") == "RED" and str(f.get("rule")) == rule
+                   if f.get("status") in want and str(f.get("rule")) == rule
                    and f.get(KEY_CODE) == c and f.get(KEY_QUARTER) == q]
             if not hit:
                 review.append({"rule": "TIER2_EXEMPTION_INERT", "code": c, "quarter": q,
@@ -2488,6 +2571,119 @@ def _load_exemption_ledger(path: Path | None = None):
         return {"_unreadable": True}
 
 
+# 행 귀속 검사 밴드(포인트). 마커가 기록하려는 명제는 "**어느 행**이 값 V 를 인쇄한다" 인데
+# 종전 검사는 "V 가 이 페이지 어딘가 있다" 만 봤다 — 검사처럼 보이는 무검사다(2026-08-24 감사 H5:
+# 마커 155개 중 숫자만 132개, 그중 57개가 인용 페이지 안에서 2회 이상 등장).
+# 이 밴드는 라벨과 값의 y-중심 거리 상한이다. 실측 캘리브레이션(12케이스 = 참 9 + 음성대조 3):
+#   참 히트 최대 Δ 0.21pt · 거짓 히트 최소 Δ 4.63pt → 3.0 에서 12/12 정답, 여유 20배.
+# 값이 라벨 **오른쪽**(x)에 있어야 한다는 조건도 같이 건다(표는 라벨열 → 값열 순).
+_ROW_ANCHOR_BAND = 3.0
+
+
+def _word_runs(words, needle: str, band: float = _ROW_ANCHOR_BAND
+               ) -> list[tuple[float, float, float]]:
+    """공백을 무시한 연속 단어매칭 → [(x0, y중심, x1)]. PDF 는 한 셀을 여러 단어로 쪼갠다.
+
+    **매칭된 단어들이 같은 행 안에 있어야 한다**(y 산포 ≤ band). 이 제약이 없으면 버퍼가
+    행 경계를 넘어 누적돼 서로 다른 행의 조각이 한 라벨로 '발견' 되고, 그 run 의 평균 y 가
+    행 사이 아무 데나 찍힌다 — 2026-08-24 최초 구현이 정확히 이 버그로 롯데손해 2023.1Q 에서
+    `8,034` 를 `기본자본`·`보완자본`·`지급여력금액` 세 행에 동시 귀속시켰다."""
+    n = "".join(needle.split())
+    if not n:
+        return []
+    out = []
+    for i in range(len(words)):
+        buf = ""
+        for j in range(i, min(i + 16, len(words))):
+            buf += "".join(str(words[j][4]).split())
+            ys = [(w[1] + w[3]) / 2 for w in words[i:j + 1]]
+            if max(ys) - min(ys) > band:
+                break  # 행을 넘어가는 누적은 매칭이 아니다
+            if n in buf:
+                out.append((words[i][0], sum(ys) / len(ys), words[j][2]))
+                break
+            if len(buf) > len(n) + 32:
+                break
+    return out
+
+
+def _row_anchor_check(pdf_path: Path, pages, row: str, value: str
+                      ) -> tuple[bool, float | None]:
+    """`행 라벨 row` 와 `값 value` 가 **같은 행**에 있는가 → (anchored, 최소Δ).
+
+    발행사가 값을 다른 행으로 옮기거나 행 순서를 바꾸면 이 검사가 깨진다 — 그것이
+    "V 가 페이지 어딘가 있다" 와의 차이다."""
+    try:
+        import fitz
+    except Exception:
+        return False, None
+    try:
+        doc = fitz.open(pdf_path)
+    except Exception:
+        return False, None
+    best = None
+    idx = [n - 1 for n in pages] if pages else range(doc.page_count)
+    for n in idx:
+        if not (0 <= n < doc.page_count):
+            continue
+        ws = sorted(doc[n].get_text("words"), key=lambda w: (w[5], w[6], w[7]))
+        labels, values = _word_runs(ws, row), _word_runs(ws, value)
+        for _lx0, ly, lx1 in labels:
+            for vx0, vy, _vx1 in values:
+                if vx0 >= lx1 - 1:
+                    d = abs(vy - ly)
+                    if best is None or d < best:
+                        best = d
+    doc.close()
+    return (best is not None and best <= _ROW_ANCHOR_BAND), best
+
+
+def _row_anchor_ys(pdf_path: Path, pages, row: str, value: str) -> list[float]:
+    """행 귀속이 성립하는 **라벨 y 목록** (원장 마커 승격 도구가 쓴다). 게이트 판정은
+    `_row_anchor_check` 하나로 하고, 이 함수는 그 내부 관측을 그대로 노출한다 —
+    승격 도구가 판정기와 다른 기하를 쓰면 원장이 게이트와 다른 것을 근거로 삼게 된다."""
+    try:
+        import fitz
+        doc = fitz.open(pdf_path)
+    except Exception:
+        return []
+    out = []
+    idx = [n - 1 for n in pages] if pages else range(doc.page_count)
+    for n in idx:
+        if not (0 <= n < doc.page_count):
+            continue
+        ws = sorted(doc[n].get_text("words"), key=lambda w: (w[5], w[6], w[7]))
+        labels, values = _word_runs(ws, row), _word_runs(ws, value)
+        for _lx0, ly, lx1 in labels:
+            if any(vx0 >= lx1 - 1 and abs(vy - ly) <= _ROW_ANCHOR_BAND
+                   for vx0, vy, _vx1 in values):
+                out.append(ly)
+    doc.close()
+    return out
+
+
+def _verify_present_rows(spec: dict) -> tuple[list, list]:
+    """`verify.present_rows = [{row, value}]` 를 행 귀속으로 검사 → (ok, broken).
+
+    broken 원소는 (row, value, 최소Δ 또는 None). 하나라도 깨지면 근거가 반증된 것이다."""
+    f = spec.get("file")
+    rows = [r for r in (spec.get("present_rows") or []) if isinstance(r, dict)]
+    if not f or not rows:
+        return [], []
+    p = ROOT / f
+    if not p.exists() or p.suffix.lower() != ".pdf":
+        return [], []
+    pages = spec.get("pages")
+    ok, broken = [], []
+    for r in rows:
+        row, val = r.get("row"), r.get("value")
+        if not row or not val:
+            continue
+        hit, d = _row_anchor_check(p, pages, str(row), str(val))
+        (ok if hit else broken).append((str(row), str(val), d))
+    return ok, broken
+
+
 def _verify_absent_markers(spec: dict) -> tuple[bool, str]:
     """인용된 원천을 **게이트가 직접 다시 열어** 근거를 매 실행 재확인한다.
 
@@ -2507,7 +2703,8 @@ def _verify_absent_markers(spec: dict) -> tuple[bool, str]:
     f = spec.get("file")
     absent = [m for m in (spec.get("absent_markers") or []) if m]
     present = [m for m in (spec.get("present_markers") or []) if m]
-    if not f or not (absent or present):
+    rows_spec = [r for r in (spec.get("present_rows") or []) if isinstance(r, dict)]
+    if not f or not (absent or present or rows_spec):
         return False, ""
     p = ROOT / f
     if not p.exists():
@@ -2532,6 +2729,12 @@ def _verify_absent_markers(spec: dict) -> tuple[bool, str]:
         why.append(f"부재 주장 반증 — {found} 실재")
     if missing:
         why.append(f"근거 문장 소실 — {missing} 를 인용 페이지에서 찾을 수 없음")
+    _ok_rows, broken_rows = _verify_present_rows(spec)
+    if broken_rows:
+        why.append("행 귀속 반증 — " + ", ".join(
+            f"'{r}' 행이 {v} 를 인쇄하지 않는다"
+            + (f"(최소Δ {d:.1f}pt > {_ROW_ANCHOR_BAND})" if d is not None else "(값·라벨 미발견)")
+            for r, v, d in broken_rows))
     return bool(why), " / ".join(why)
 
 
@@ -2542,7 +2745,8 @@ def _verify_markers_ran(spec: dict) -> bool:
     if not f or not (ROOT / f).exists():
         return False
     return bool([m for m in (spec.get("absent_markers") or []) if m]
-                or [m for m in (spec.get("present_markers") or []) if m])
+                or [m for m in (spec.get("present_markers") or []) if m]
+                or [r for r in (spec.get("present_rows") or []) if isinstance(r, dict)])
 
 
 def _cited_page_text_density(spec: dict) -> tuple[int, int] | None:
@@ -2739,6 +2943,286 @@ def _exemption_provenance_findings(registries: dict | None = None, ledger=None
     return red, review
 
 
+# ---------------------------------------------------------------------------
+# 원장 ↔ 코드 박제 대조 (2026-08-24 신설)
+# ---------------------------------------------------------------------------
+# **문제**: 원장 `expected_residual` 을 읽는 코드가 하나도 없었다. 진짜 박제는 전부 코드
+# 상수(`_TIER2_ISSUER_INCONSISTENT` / `_LIFE8_*` / `IRR_DERIVE_*`)에 있고 원장 숫자는 **사본**
+# 이라, 원장만 바꿔도 아무 일이 안 일어났다. 규율이지 강제가 아니었다.
+# 실제로 이미 어긋나 있었다 — KR0075 3분기의 **축 목록**이 코드와 다르다(2026-08-24 감사 H3):
+#   2024.3Q 원장 `47_tier2_census|적용후` ← 존재하지 않는 축 이름(코드는 `_post` 접미사)
+#   2024.4Q · 2025.1Q 원장에 census 두 축이 통째로 없다
+# 숫자는 맞는데 "어떤 축을 박제했는가" 가 어긋난 상태였고, 아무도 못 봤다.
+#
+# **정본은 코드다** — 게이트를 실제로 움직이는 것이 코드 상수이기 때문이다. 원장은 그 사본이고,
+# 사본이 어긋나면 RED 다. 이러면 원장이 "장식" 이 아니라 **두 번째 독립 기록**이 된다:
+#   · 코드만 고치고 원장을 안 고치면  → `EXEMPTION_PIN_LEDGER_DISAGREE` RED
+#   · 원장만 고치고 코드를 안 고쳐도  → 같은 RED (조용한 원장 편집 경로가 막힌다)
+# 변이시험: `tests/test_exemption_pin_ledger.py`.
+_PIN_COL_PRE, _PIN_COL_POST = "적용전", "적용후"
+
+
+def _pin_axis_key(rule: str) -> str:
+    """코드쪽 룰 이름 → 원장 `expected_residual` 키. `_post` 접미사가 곧 컬럼이다."""
+    return f"{rule}|{_PIN_COL_POST if rule.endswith('_post') else _PIN_COL_PRE}"
+
+
+def _code_pin_map() -> dict[tuple[str, str, str], dict]:
+    """게이트가 **실제로 강제하는** 박제 전부를 원장과 같은 모양으로 편다.
+
+    반환 `{(registry, company, quarter): {"expected_residual": {...}, "absent_cells": [...]}}`.
+    새 박제형 레지스트리를 만들면 여기에 등록해야 원장 대조를 받는다(빠뜨리면 그 박제는
+    원장과 어긋나도 조용하다 — 이 함수 자체가 `_exemption_registries` 와 같은 계약이다)."""
+    out: dict[tuple[str, str, str], dict] = {}
+    for (c, q), spec in _TIER2_ISSUER_INCONSISTENT.items():
+        out[("_TIER2_ISSUER_INCONSISTENT", c, q)] = {
+            "expected_residual": {_pin_axis_key(rule): pin.get("residual")
+                                  for rule, pin in spec.get("findings", {}).items()},
+        }
+    for (c, q), pins in _LIFE8_ISSUER_INCONSISTENT.items():
+        out[("_LIFE8_ISSUER_INCONSISTENT", c, q)] = {"expected_residual": dict(pins)}
+    for (c, q), pins in IRR_DERIVE_ISSUER_INCONSISTENT.items():
+        out[("IRR_DERIVE_ISSUER_INCONSISTENT", c, q)] = {"expected_residual": dict(pins)}
+    for (c, q), cells in _AFTER_SOURCE_ABSENT_CELLS.items():
+        out[("_AFTER_SUBRISK_NOT_DISCLOSED", c, q)] = {"absent_cells": sorted(cells)}
+    for (c, q), cells in _POST_PARENT_SOURCE_ABSENT_CELLS.items():
+        out[("_POST_PARENT_NOT_DISCLOSED", c, q)] = {"absent_cells": sorted(cells)}
+    return out
+
+
+def _pin_ledger_agreement_findings(ledger=None, pin_tol: float = 0.01,
+                                   code_pins: dict | None = None) -> list:
+    """코드 박제 == 원장 박제. 어긋나면 RED `EXEMPTION_PIN_LEDGER_DISAGREE`.
+
+    세 방향을 전부 본다(한 방향만 보면 나머지 방향의 편집이 조용히 통과한다):
+      ① 축 목록  — 코드에만 있는 키 / 원장에만 있는 키
+      ② 잔차 값  — 같은 키의 값이 `pin_tol` 밖으로 다름 (None ↔ 숫자도 불일치)
+      ③ 부재 셀  — `absent_cells` 항목집합이 다름
+    `expected_residual_alt_reading` 은 종전 읽기의 보존 기록이라 대조 대상이 아니다."""
+    if ledger is None:
+        ledger = _load_exemption_ledger()
+    red: list = []
+    if not isinstance(ledger, dict) or ledger.get("_unreadable"):
+        return red  # 원장 자체 이상은 `_exemption_provenance_findings` 가 이미 RED 로 낸다
+    entries = {(e.get("registry"), e.get("company"), e.get("quarter")): e
+               for e in (ledger.get("entries") or [])
+               if isinstance(e, dict) and e.get("status") != "CONTRADICTED"}
+    for key, code_pin in sorted((code_pins if code_pins is not None
+                                 else _code_pin_map()).items()):
+        e = entries.get(key)
+        if e is None:
+            continue  # 원장 기록 자체 부재는 EXEMPTION_PROVENANCE_MISSING 소관
+        reg, c, q = key
+        if "expected_residual" in code_pin:
+            want, have = code_pin["expected_residual"], (e.get("expected_residual") or {})
+            only_code = sorted(set(want) - set(have))
+            only_led = sorted(set(have) - set(want))
+            if only_code or only_led:
+                red.append({"rule": "EXEMPTION_PIN_LEDGER_DISAGREE", "registry": reg,
+                            "code": c, "quarter": q,
+                            "detail": f"박제 축 목록 불일치 — 코드에만 {only_code} · "
+                                      f"원장에만 {only_led}. 원장 숫자는 코드 박제의 사본이고, "
+                                      "어긋나면 원장이 장식이 된다"})
+            for k in sorted(set(want) & set(have)):
+                a, b = want[k], have[k]
+                if (a is None) != (b is None):
+                    red.append({"rule": "EXEMPTION_PIN_LEDGER_DISAGREE", "registry": reg,
+                                "code": c, "quarter": q,
+                                "detail": f"박제 {k}: 코드 {a!r} vs 원장 {b!r} (한쪽만 null)"})
+                elif a is not None and abs(float(a) - float(b)) > pin_tol:
+                    red.append({"rule": "EXEMPTION_PIN_LEDGER_DISAGREE", "registry": reg,
+                                "code": c, "quarter": q,
+                                "detail": f"박제 {k}: 코드 {a} vs 원장 {b} "
+                                          f"(Δ{float(b) - float(a):+.4f}, tol {pin_tol})"})
+        # 축 단위 tripwire — **해제된 박제가 조용히 되살아나는 경로를 막는다.**
+        # 원장 status 를 통째로 CONTRADICTED 로 돌리는 것(한화생명 선례)은 그 (회사,분기)의
+        # **모든** 축이 풀렸을 때만 쓸 수 있다. 한 축만 풀리고 다른 축은 정당하게 남는 경우
+        # (KR0087 2025.2Q: 다리는 우리 룰 결함으로 해제, census 중복행은 발행사 사실로 유지)
+        # 를 담으려면 축 단위 기록이 필요하다.
+        for k, why in sorted((e.get("contradicted_pins") or {}).items()):
+            if k in (code_pin.get("expected_residual") or {}):
+                red.append({"rule": "EXEMPTION_PIN_RE_REGISTERED", "registry": reg,
+                            "code": c, "quarter": q,
+                            "detail": f"박제 {k} 는 반증돼 해제된 축인데 코드에 다시 등재됐다 — "
+                                      f"해제 사유: {str(why)[:300]}"})
+        if "absent_cells" in code_pin:
+            want_c = list(code_pin["absent_cells"])
+            have_c = e.get("absent_cells")
+            if have_c is None:
+                red.append({"rule": "EXEMPTION_PIN_LEDGER_DISAGREE", "registry": reg,
+                            "code": c, "quarter": q,
+                            "detail": f"부재 박제 {want_c} 가 코드에 있는데 원장에 `absent_cells` "
+                                      "가 없다 — 부재형 면제는 '어느 셀이 원천에 없는가' 가 "
+                                      "명제 자체다. 적지 않으면 검증 불가능한 산문이다"})
+            elif sorted(int(x) for x in have_c) != want_c:
+                red.append({"rule": "EXEMPTION_PIN_LEDGER_DISAGREE", "registry": reg,
+                            "code": c, "quarter": q,
+                            "detail": f"부재 박제 셀집합 불일치 — 코드 {want_c} vs "
+                                      f"원장 {sorted(int(x) for x in have_c)}"})
+    return red
+
+
+_MARKER_NUMERIC = re.compile(r"^[\d,.\s()%△▲-]+$")
+
+
+def _marker_grade_census(ledger=None) -> tuple[list, list]:
+    """verify 마커의 **신뢰도 등급**을 매 실행 센다 → (detail, review).
+
+    ANCHORED   `present_rows` 의 (행 라벨, 값) 쌍 — 행 귀속을 실제로 검사한다. 최고 등급.
+    LABELLED   라벨을 포함한 `present_markers` — 문장·행이름이라 위치가 어느 정도 특정된다.
+    UNIQUE     숫자만이지만 인용 페이지에서 **1회**뿐 — 귀속이 유일성으로 함의된다.
+    AMBIGUOUS  숫자만인데 2회 이상 — "V 가 이 페이지 어딘가 있다" 만 확인한다.
+               **이건 검사처럼 보이는 무검사다.** 발행사가 행 순서를 바꾸거나 같은 값이 다른
+               행으로 옮겨가도 통과한다. 등급을 낮춰 인쇄하고 review 로 남긴다.
+
+    2026-08-24 감사 H5 가 지적한 그대로다 — `PM-2026-08-24_i47_scope_misread.md` 의
+    "근거의 존재는 검사하지만 귀속은 검사하지 않는다" 가 마커 층에서 반복되고 있었다.
+    반환 detail = (registry, code, quarter, {등급: [마커…]})."""
+    if ledger is None:
+        ledger = _load_exemption_ledger()
+    detail, review = [], []
+    if not isinstance(ledger, dict) or ledger.get("_unreadable"):
+        return detail, review
+    for e in ledger.get("entries") or []:
+        if not isinstance(e, dict) or e.get("status") == "CONTRADICTED":
+            continue
+        v = e.get("verify") or {}
+        f, pages = v.get("file"), v.get("pages")
+        pres = [m for m in (v.get("present_markers") or []) if m]
+        rows = [r for r in (v.get("present_rows") or []) if isinstance(r, dict)]
+        if not f or not (pres or rows):
+            continue
+        p = ROOT / f
+        if not p.exists():
+            continue
+        flat = ""
+        try:
+            if p.suffix.lower() == ".pdf":
+                import fitz
+                doc = fitz.open(p)
+                idx = [n - 1 for n in pages] if pages else range(doc.page_count)
+                flat = "".join("".join(doc[n].get_text().split())
+                               for n in idx if 0 <= n < doc.page_count)
+                doc.close()
+            else:
+                flat = "".join(p.read_text(encoding="utf-8", errors="ignore").split())
+        except Exception:
+            continue
+        anchored_vals = {"".join(str(r.get("value", "")).split()) for r in rows}
+        g = {"ANCHORED": [f"{r.get('row')}←{r.get('value')}" for r in rows],
+             "LABELLED": [], "UNIQUE": [], "AMBIGUOUS": []}
+        for m in pres:
+            fm = "".join(m.split())
+            n = flat.count(fm)
+            if not _MARKER_NUMERIC.match(m):
+                g["LABELLED"].append(m)
+            elif n <= 1:
+                g["UNIQUE"].append(m)
+            elif fm in anchored_vals:
+                pass  # 같은 값이 `present_rows` 로 행 귀속 검사를 받고 있다 → 더 이상 모호하지 않다
+            else:
+                g["AMBIGUOUS"].append(f"{m}(×{n})")
+        detail.append((e.get("registry"), e.get("company"), e.get("quarter"), g))
+        if g["AMBIGUOUS"]:
+            review.append({
+                "rule": "EXEMPTION_MARKER_UNANCHORED", "registry": e.get("registry"),
+                "code": e.get("company"), "quarter": e.get("quarter"),
+                "detail": "숫자만인 마커가 인용 페이지에서 2회 이상 등장하는데 행 귀속"
+                          "(`present_rows`)이 없다 — '값이 어딘가 있다' 만 검사한다: "
+                          + ", ".join(g["AMBIGUOUS"])
+                          + f" (같은 항목의 행 귀속 마커 {len(g['ANCHORED'])}개는 검사 중)"})
+    return detail, review
+
+
+def _absence_pin_groups(reg: str, cells: frozenset) -> list[tuple[str, list[int]]]:
+    """부재 박제 셀을 **축(부모) 단위 그룹**으로 가른다. 부분충전 판정의 단위다.
+
+    `_AFTER_*` 는 `_PARENT_CHILD_AFTER`(15→16~21 · 17→29~35 · 19→36~40)로 가르고,
+    요구자본 부모 박제(`_POST_PARENT_*`)는 그 자체가 한 표라 한 그룹이다."""
+    if reg == "_POST_PARENT_NOT_DISCLOSED":
+        return [("요구자본 부모표", sorted(cells))]
+    out = []
+    seen: set[int] = set()
+    for p, kids in _PARENT_CHILD_AFTER.items():
+        g = sorted(cells & set(kids))
+        if g:
+            out.append((f"item{p} 세부", g))
+            seen |= set(g)
+    rest = sorted(cells - seen)
+    if rest:
+        out.append(("기타", rest))
+    return out
+
+
+def _absence_pin_census(records: list[dict], pins: dict | None = None
+                        ) -> tuple[list, list, list]:
+    """부재 박제 셀의 **현재 상태**를 셀 단위로 센다 → (detail, red, review).
+
+    detail = (registry, code, quarter, item, column, "결측"|"값존재", value)
+    review = `EXEMPTION_ABSENCE_PIN_VALUE_PRESENT` — 원장이 '원천 부재' 라고 한 셀에 값이 있다.
+             면제는 그 셀에 대해 **이미 무효**이고(축이 되살아나 검산 중이다), 그 값은 원문
+             추출이 아니라 파생값이라는 뜻이므로 조용히 두지 않는다.
+    red    = `EXEMPTION_ABSENCE_PIN_PARTIAL_FILL` — 한 축 그룹의 박제 셀이 **일부만** 채워졌다.
+
+    ## 부분충전을 왜 RED 로 거는가 (이 라운드의 핵심 룰)
+
+    부재 박제의 명제는 "이 그룹의 적용후 컬럼이 원천에 없다" 다. 그러면 상태는 둘 중 하나여야
+    한다 — 전부 결측(명제 그대로)이거나, 전부 값이 있음(파생해서 채웠고 항등식이 검산한다).
+    **섞여 있으면 항등식이 입력 결측으로 SKIP 되면서 채워진 쪽 값이 아무 검사도 안 받는다.**
+    이것이 하나생명 2024.4Q 에서 실제로 일어난 일이다: item33후·item34후에 직전분기 값이
+    복사돼 있었고 item30후·item35후는 결측이라, 설령 면제를 풀었어도 mmult 는 SKIP 이었다
+    (2026-08-24 감사 H1 ②). 그 상태를 직접 겨냥하는 룰이 이것이다 — 부분충전 자체가 결함
+    시그니처이고, 결측을 SKIP 으로 삼지 않는다는 이 저장소의 원칙 그대로다.
+
+    이 census 가 이 라운드의 핵심이다 — 종전 부재형 면제는 축을 통째로 순회에서 빼서,
+    박제된 셀이 결측인지 stale 값이 앉아 있는지조차 게이트 출력에 **한 줄도 안 나왔다**."""
+    byq: dict[tuple, dict] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = _num_cell(r.get(KEY_VALUE_POST))
+    detail, red, review = [], [], []
+    # `pins` 는 selftest 주입용 override — 기본은 라이브 레지스트리다(주입은 추가만 하고
+    # 기본 동작을 안 바꾼다: `--master` 인자와 같은 계약).
+    sources = (pins.items() if pins is not None else
+               (("_AFTER_SUBRISK_NOT_DISCLOSED", _AFTER_SOURCE_ABSENT_CELLS),
+                ("_POST_PARENT_NOT_DISCLOSED", _POST_PARENT_SOURCE_ABSENT_CELLS)))
+    for reg, reg_pins in sources:
+        for (c, q), cells in sorted(reg_pins.items()):
+            m = byq.get((c, q), {})
+            present = []
+            for it in sorted(cells):
+                v = m.get(it)
+                detail.append((reg, c, q, it, "적용후",
+                               "결측" if v is None else "값존재", v))
+                if v is not None:
+                    present.append((it, v))
+            for gname, group in _absence_pin_groups(reg, cells):
+                have = [i for i in group if m.get(i) is not None]
+                if have and len(have) < len(group):
+                    red.append({
+                        "rule": "EXEMPTION_ABSENCE_PIN_PARTIAL_FILL", "registry": reg,
+                        "code": c, "quarter": q,
+                        "detail": f"[{gname}] 부재 박제 {len(group)}셀 중 {len(have)}셀만 값이 있다 "
+                                  f"(값존재 {[f'item{i}후' for i in have]} · "
+                                  f"결측 {[f'item{i}후' for i in group if i not in have]}). "
+                                  "부분충전은 항등식을 입력결측 SKIP 으로 만들어 채워진 값이 "
+                                  "아무 검사도 안 받게 한다 — 결측은 SKIP 이 아니라 RED 다. "
+                                  "전부 채우거나(파생 근거를 원장에 적고) 전부 비워라"})
+            if present:
+                review.append({
+                    "rule": "EXEMPTION_ABSENCE_PIN_VALUE_PRESENT", "registry": reg,
+                    "code": c, "quarter": q,
+                    "detail": "원장은 '원천 부재' 인데 값이 있다 → 파생값이다. 이 셀들의 면제는 "
+                              "무효이고 해당 축은 정상 검산 중이다: "
+                              + ", ".join(f"item{i}후={v:g}" for i, v in present)})
+    return detail, red, review
+
+
 # 적용후 부모→자식 완전성 census 맵. 적용전 _PARENT_CHILD_ITEMS(하위위험 17·19만)에 더해
 # 요구자본 구성(15→16~21)까지 포함 — 적용후 요구자본 부분충전(분산효과16·신용20·운영21후 결측)이
 # 적용전 census(하위위험만)와 적용후 identity(결측셀 skip) 양쪽으로 새던 사각을 닫는다.
@@ -2754,11 +3238,13 @@ def _parent_present_child_incomplete_after(records: list[dict]) -> list[tuple]:
     미러, owner 2026-07-12 '적용후도 적용전 검증로직 동일 적용'). 기대 자식 = 같은 셀에서 '적용전이
     present & material(≥floor)'인 항목 (적용전이 공시하는 항목은 적용후 표도 동일 구조로 공시해야 함).
     결측 = 파싱갭: 분산효과후 파생누락 / 신용·운영후 carry-forward누락 / 시장·생명장기후 재추출필요.
-    raw 도출불가 documented exception(_AFTER_SUBRISK_NOT_DISCLOSED)만 제외. RED(blocking).
+    부재 박제(`_AFTER_SOURCE_ABSENT_CELLS`)된 **셀만** 기대목록에서 빠지고 따로 집계된다 —
+    (회사,분기) 통째 면제가 아니다(2026-08-24). RED(blocking).
 
     2026-08-21: 적용사 18사 한정 제거 → **전사 39사**. 적용전 census 는 전사인데 그 '적용후 미러'만
     18사였다(비-applier 21사의 적용후 부분충전이 미검사). 확대 즉시 코리안리 2023.3Q 가 잡혔다.
-    반환: (code, quarter, parent, name, missing_children)."""
+    반환: (out, pinned_absent). out = (code, quarter, parent, name, missing_children),
+    pinned_absent = "회사 분기 item부모" → 부재 박제로 빠진 셀 수(인쇄용)."""
     def _num(v):
         try:
             return float(str(v).replace(",", ""))
@@ -2777,9 +3263,12 @@ def _parent_present_child_incomplete_after(records: list[dict]) -> list[tuple]:
         if c and q:
             byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
     out = []
+    pinned_absent: Counter = Counter()
     for (c, q), m in sorted(byq.items()):
-        if (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
-            continue  # raw 도출불가 documented exception
+        # 2026-08-24: `(회사,분기)` 통째 skip → **셀 단위 부재 박제**. 박제된 셀만 기대목록에서
+        # 빼고 따로 센다. 박제 밖 셀은 그대로 RED 이고, 박제된 셀에 값이 나타나면 자동으로
+        # 기대목록을 만족해 아무 일도 안 일어난다(= 되살아난다).
+        absent = _AFTER_SOURCE_ABSENT_CELLS.get((c, q), frozenset())
         for p, kids in _PARENT_CHILD_AFTER.items():
             post_p = m.get(p, (None, None))[1]
             if post_p is None or abs(post_p) < 1.0:
@@ -2788,9 +3277,13 @@ def _parent_present_child_incomplete_after(records: list[dict]) -> list[tuple]:
                         if (m.get(k, (None, None))[0] is not None
                             and abs(m.get(k, (None, None))[0]) >= _CHILD_MATERIAL_FLOOR)]
             missing = [k for k in expected if m.get(k, (None, None))[1] is None]
+            pinned = [k for k in missing if k in absent]
+            if pinned:
+                pinned_absent[f"{c} {q} item{p}"] += len(pinned)
+            missing = [k for k in missing if k not in absent]
             if missing:
                 out.append((c, q, p, name.get(c, c), tuple(missing)))
-    return out
+    return out, pinned_absent
 
 
 def _diversification_negative(records: list[dict]) -> list[tuple]:
@@ -2820,8 +3313,8 @@ def _diversification_negative(records: list[dict]) -> list[tuple]:
     out = []
     for (c, q), m in sorted(byq.items()):
         for mode, idx in (("전", 0), ("후", 1)):
-            if mode == "후" and (c, q) in _AFTER_SUBRISK_NOT_DISCLOSED:
-                continue
+            # 2026-08-24: 적용후 통째 skip 제거. 이 축의 입력(16·15·17~21)은 부재 박제 대상이
+            # 아니고(하나생명도 p281 에 전부 인쇄됨), 결측이면 아래 조건이 알아서 통과시킨다.
             v16 = m.get(16, (None, None))[idx]
             i15 = m.get(15, (None, None))[idx]
             subs = [m.get(i, (None, None))[idx] for i in (17, 18, 19, 20, 21)]
@@ -2855,7 +3348,18 @@ _POST_CAPITAL_CORE = (1, 2, 3, 14, 27, 28)
 #   ("KR0097","2024.4Q") 하나생명 — 비표준(감사보고서 재무상태표) 공시. 이미 _AFTER_SUBRISK_NOT_DISCLOSED
 #     등재분. item16후 산술파생 가능하나 입력 item17후=1757.32가 raw page(2001.90) 불일치=partial-mmult
 #     아티팩트 의심 → 파생값 불신. owner 승인 2026-07-16.
-_POST_PARENT_NOT_DISCLOSED: frozenset = frozenset({
+#
+# **2026-08-24 재설계 — 여기도 셀 단위 부재 박제다.** 종전엔 `(회사,분기)` 통째 skip 이라
+# 그 버킷의 **모든** 적용후 부모(1·2·3·14·15~23·27·28)가 continuity census 밖이었다.
+# 검증된 claim 은 "15~23후가 원천 부재" 였고 1/2/3/14/27/28후는 실제로 채워져 있다 —
+# claim 보다 넓은 면제였다. 이제 박제된 항목만 빠지고, 그 항목에 값이 나타나면 애초에
+# break 가 성립하지 않아 자동으로 되살아난다.
+_POST_PARENT_SOURCE_ABSENT_CELLS: dict[tuple[str, str], frozenset[int]] = {
+    ("KR0049", "2024.3Q"): frozenset(range(15, 24)),
+}
+_POST_PARENT_NOT_DISCLOSED: frozenset = frozenset(_POST_PARENT_SOURCE_ABSENT_CELLS)
+
+_POST_PARENT_NOT_DISCLOSED_NOTES: dict = {
     # ("KR0071", "2024.4Q") 해제 2026-08-21 (validation, raw fitz 전수). 등재사유 "image-only PDF"
     #   가 **거짓**이다: data/disclosure/FY2024_Q4/raw/KR0071_흥국생명보험.pdf 는 538p / 286,634자
     #   (533자/p)로 텍스트레이어가 멀쩡하고, K-ICS 인접 페이지(p249·p253·p302·p304)를 직접 열어
@@ -2877,8 +3381,11 @@ _POST_PARENT_NOT_DISCLOSED: frozenset = frozenset({
     # 뿐이며 거기엔 비율·지급여력금액·지급여력기준금액 세 줄만 있다. 즉 15-23후는 원천 부재.
     # (가용자본측 item3후는 TIR 단독 적용 → 전=후로 확정 가능해 채웠다.) parser 2026-08-20,
     # TODO.md documented exception 등재.
-    ("KR0049", "2024.3Q"),
-})
+    # 2026-08-24 재감사 보강 인용: FY2024_Q4 p36 [지급여력비율 총괄]이 과거분기 적용후로 싣는 것은
+    # 비율·지급여력금액·지급여력기준금액 3줄뿐(당분기-1분기 = 1,939 · 286.5), p42 경과조치 세부표는
+    # 당분기 1열 전용, p43 은 분기 컬럼 없음. → 15~23후는 어느 원천에도 없다.
+    ("KR0049", "2024.3Q"): "15~23후 원천 부재 (FY2024_Q3 섹션 자체 없음 + FY2024_Q4 p36/p42/p43)",
+}
 
 
 def _post_transition_parent_census(records):
@@ -2895,9 +3402,12 @@ def _post_transition_parent_census(records):
     - 코어(15~21 요구자본 + 1·2·3·14·27·28 가용자본/헤드라인): continuity break = RED(blocking).
     - 조정(22/23=법인세조정·기타요구자본): 같은 (회사,분기)에 코어 break가 있을 때만 RED(표 전체 유실의
       일부) — 단독 22/23 break는 종속회사/법인세 legit-absence일 수 있어 review(비차단).
-    - _POST_PARENT_NOT_DISCLOSED 등재 (회사,분기)만 면제.
+    - `_POST_PARENT_SOURCE_ABSENT_CELLS` 에 **셀 단위로** 박제된 (회사,분기,항목)만 면제이고,
+      그 사실은 `pinned_absent` 로 세어 인쇄된다(2026-08-24 — 종전 (회사,분기) 통째 skip 폐지).
 
-    반환 (red, review): 각 (code, quarter, name, item, neighbor_q, kind[SANDWICHED|TRAILING])."""
+    반환 (red, review, pinned_absent): 앞 둘은 각 (code, quarter, name, item, neighbor_q,
+    kind[SANDWICHED|TRAILING])."""
+    pinned_absent: Counter = Counter()
     # (code, item) -> {quarter: (pre_present, post_present)}
     idx: dict[tuple, dict] = defaultdict(dict)
     name: dict[str, str] = {}
@@ -2932,8 +3442,11 @@ def _post_transition_parent_census(records):
                 later_post = any(qv[dq[j]][1] for j in range(i + 1, len(dq)))
                 if not (later_post or is_latest):
                     continue  # 직전만 있고 이후 계속 없음(항구적 중단) → 구조변화 가능, flag 안 함
-                if (c, q) in _POST_PARENT_NOT_DISCLOSED:
-                    continue  # owner 확정 구조적 미공시
+                if it in _POST_PARENT_SOURCE_ABSENT_CELLS.get((c, q), frozenset()):
+                    # 셀 단위 부재 박제 — 세어서 인쇄한다(조용한 미순회 금지). 값이 나타나면
+                    # 애초에 break 가 성립하지 않으므로(위 `if qv[q][1]: continue`) 자동 복귀.
+                    pinned_absent[f"{c} {q} item{it}후"] += 1
+                    continue
                 kind = "TRAILING" if is_latest else "SANDWICHED"
                 out.append((c, q, name.get(c, c), it, dq[i - 1], kind))
         return out
@@ -2943,7 +3456,7 @@ def _post_transition_parent_census(records):
     core_cells = {(c, q) for c, q, *_ in core}
     red = sorted(core + [b for b in adjust if (b[0], b[1]) in core_cells])
     review = sorted(b for b in adjust if (b[0], b[1]) not in core_cells)
-    return red, review
+    return red, review, pinned_absent
 
 
 def main() -> int:
@@ -3111,11 +3624,12 @@ def main() -> int:
         ],
         "not_evaluated": dict(sorted(other_cap_skipped.items())),
     }
-    after_incomplete = _parent_present_child_incomplete_after(records)
+    after_incomplete, after_pinned_absent = _parent_present_child_incomplete_after(records)
     report["parent_present_child_incomplete_after"] = [
         {"code": c, "quarter": q, "parent_item": p, "name": n, "missing_children": list(miss)}
         for c, q, p, n, miss in after_incomplete
     ]
+    report["parent_present_child_source_absent_pinned"] = dict(sorted(after_pinned_absent.items()))
     div_negative = _diversification_negative(records)
     report["diversification_negative"] = [
         {"code": c, "quarter": q, "name": n, "mode": mode, "value": v, "kind": k}
@@ -3171,18 +3685,49 @@ def main() -> int:
                    for r in taut_exempt],
     }
     exempt_red, exempt_review = _exemption_provenance_findings()
+    # 원장 ↔ 코드 박제 대조(2026-08-24). 어긋나면 RED — 원장 숫자를 아무도 안 읽던 구멍을 닫는다.
+    pin_ledger_red = _pin_ledger_agreement_findings()
+    exempt_red = exempt_red + pin_ledger_red
+    # 부재 박제 셀단위 census + '값이 나타났다' review
+    absence_detail, absence_red, absence_review = _absence_pin_census(records)
+    exempt_red = exempt_red + absence_red
+    exempt_review = exempt_review + absence_review
+    # 마커 신뢰도 등급 census (행 귀속 검사 여부)
+    marker_detail, marker_review = _marker_grade_census()
+    exempt_review = exempt_review + marker_review
     report["exemption_provenance"] = {
         "ledger": str(_EXEMPTION_LEDGER.relative_to(ROOT)),
         "registries": {k: len(v) for k, v in sorted(_exemption_registries().items())},
         "red": exempt_red,
         "review": exempt_review,
+        "pin_ledger_agreement": {
+            "doc": ("코드 박제(게이트가 실제로 강제하는 것) == 원장 expected_residual/absent_cells. "
+                    "정본은 코드이고 원장은 사본이다 — 어긋나면 RED."),
+            "code_pins": {"|".join(k): v for k, v in sorted(_code_pin_map().items())},
+            "red": pin_ledger_red,
+        },
+        "absence_pin_census": [
+            {"registry": reg, "code": c, "quarter": q, "item": it, "column": col,
+             "state": st, "value": v}
+            for reg, c, q, it, col, st, v in absence_detail
+        ],
+        "marker_grades": {
+            "doc": ("ANCHORED=행 귀속 검사(present_rows) · LABELLED=라벨 포함 · "
+                    "UNIQUE=숫자만이나 인용페이지 1회 · AMBIGUOUS=숫자만·2회 이상"
+                    "(= '값이 어딘가 있다' 만 검사 = 검사처럼 보이는 무검사)"),
+            "totals": {k: sum(len(g[k]) for *_x, g in marker_detail)
+                       for k in ("ANCHORED", "LABELLED", "UNIQUE", "AMBIGUOUS")},
+            "by_entry": [{"registry": r, "code": c, "quarter": q, "grades": g}
+                         for r, c, q, g in marker_detail],
+        },
     }
-    post_parent_red, post_parent_review = _post_transition_parent_census(records)
+    post_parent_red, post_parent_review, post_parent_pinned = _post_transition_parent_census(records)
     report["post_transition_parent_census"] = {
         "red": [{"code": c, "quarter": q, "name": n, "item": it,
                  "neighbor_q": nb, "kind": k} for c, q, n, it, nb, k in post_parent_red],
         "review_22_23": [{"code": c, "quarter": q, "name": n, "item": it,
                           "neighbor_q": nb, "kind": k} for c, q, n, it, nb, k in post_parent_review],
+        "source_absent_pinned": dict(sorted(post_parent_pinned.items())),
     }
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     # stable-name 최신 포인터: glob 정렬 함정(stale report_latest.json) 방지 — 매 실행 fresh 덮어쓰기.
@@ -3214,7 +3759,11 @@ def main() -> int:
     tier2_accept, tier2_red, tier2_review, tier2_detail = _tier2_issuer_inconsistent(
         records, findings)
     tier2_exempt_ids = {id(f) for f in tier2_accept}
-    red_blocking = red - len(life8_exempt_findings) - len(tier2_accept)
+    # **RED 만 차감한다.** `_post` 축 박제는 YELLOW finding 을 받으므로(관계식 미확립 설계),
+    # 그것까지 빼면 blocking RED 가 음수가 된다 — 2026-08-24 에 실제로 -2 가 찍혔다.
+    # 면제는 등급을 바꾸지 않는다: YELLOW 박제는 '매 실행 재검산' 만 켜고 차단집계는 안 건드린다.
+    tier2_accept_red = [f for f in tier2_accept if f.get("status") == "RED"]
+    red_blocking = red - len(life8_exempt_findings) - len(tier2_accept_red)
     report["tier2_issuer_inconsistent_exception"] = {
         "doc": ("tier2/다리 축 발행사 자기모순 documented exception — blanket skip 이 아니라 "
                 "**두 겹 박제**다. ① raw 로 판독한 마스터 셀을 매 실행 재확인(INPUT_DRIFT/"
@@ -3298,7 +3847,8 @@ def main() -> int:
     if _LIFE8_ISSUER_INCONSISTENT:
         print(f"  documented exception (발행사 자기모순, 잔차 박제): "
               f"blocking RED={red_blocking} (= {red} − 8_life {len(life8_exempt_findings)}건 "
-              f"− tier2 {len(tier2_accept)}건) "
+              f"− tier2 RED {len(tier2_accept_red)}건; tier2 YELLOW 박제 "
+              f"{len(tier2_accept) - len(tier2_accept_red)}건은 차감 대상 아님) "
               f"· 적용후 mmult item17 면제 {len(mmult_exempted)}건")
         for c, n, q, col, p, a, d in life8_detail:
             print(f"    {q} {c} {n} [{col}] 박제잔차={p} 실측={a} Δ={d:+} "
@@ -3309,7 +3859,8 @@ def main() -> int:
             print(f"    REVIEW [{r['rule']}] {r.get('quarter')} {r.get('code')}: {r.get('detail')}")
     if _TIER2_ISSUER_INCONSISTENT:
         print(f"  tier2/다리 발행사 자기모순 documented exception (잔차 박제, 두 겹): "
-              f"{len(_TIER2_ISSUER_INCONSISTENT)}버킷 · finding {len(tier2_accept)}건 면제")
+              f"{len(_TIER2_ISSUER_INCONSISTENT)}버킷 · finding {len(tier2_accept)}건 재검산"
+              f"(그중 RED 면제 {len(tier2_accept_red)}건)")
         for c, n, q, rule, p, a, d in tier2_detail:
             verdict = ("일치" if (p is None and a is None)
                        else "DRIFT" if (p is None or a is None or abs(d) > _TIER2_PIN_TOL)
@@ -3463,6 +4014,8 @@ def main() -> int:
             print(f"    ... +{len(after_incomplete) - 30} more")
     else:
         print("적용후 하위 census 결측: 0")
+    if after_pinned_absent:
+        print(f"    [부재 박제로 기대목록에서 제외된 자식후 셀] {dict(after_pinned_absent)}")
     if div_negative:
         print(f"분산효과(item16) 음수 (물리적 불가능, 구성요소 과소/기준금액 과대 misparse, RED): {len(div_negative)}")
         for c, q, n, mode, v, k in div_negative:
@@ -3483,6 +4036,8 @@ def main() -> int:
             print(f"    {q} {c} {n} [{k}]: item{sorted(its)}후 결측 (인접분기 적용후 present → 표 유실)")
     else:
         print("적용후 요구자본 부모 continuity break: 0")
+    if post_parent_pinned:
+        print(f"    [부재 박제로 continuity 에서 제외된 셀] {dict(post_parent_pinned)}")
     if post_parent_review:
         print(f"적용후 조정항목(22법인세·23기타요구자본) 단독 continuity break (종속회사/법인세 legit-absent "
               f"가능, 비차단 review): {len(post_parent_review)}")
@@ -3598,6 +4153,23 @@ def main() -> int:
               f"(n={r['n']}, excess={r['excess'] if r['excess'] is None else round(r['excess'], 2)}, "
               f"z={r['z'] if r['z'] is None else round(r['z'], 1)})")
     # ---- 메타룰: 면제 근거(provenance) ------------------------------------------------
+    if absence_detail:
+        miss = sum(1 for *_x, st, _v in absence_detail if st == "결측")
+        pres = len(absence_detail) - miss
+        print(f"부재형 면제 — 셀단위 부재 박제 census: {len(absence_detail)}셀 "
+              f"(결측 {miss} · 값존재 {pres}) / {len({(r, c, q) for r, c, q, *_ in absence_detail})}버킷")
+        for reg, c, q, it, col, st, v in absence_detail:
+            print(f"    {q} {c} item{it}{col[-1]} [{reg}] {st}"
+                  + ("" if v is None else f"={v:g} → 파생값, 해당 축 검산 라이브"))
+    if marker_detail:
+        tot = {k: sum(len(g[k]) for *_x, g in marker_detail)
+               for k in ("ANCHORED", "LABELLED", "UNIQUE", "AMBIGUOUS")}
+        print(f"면제 근거 마커 신뢰도 등급: {tot} "
+              f"(AMBIGUOUS = 숫자만·인용페이지 2회 이상 → 행 귀속 미검사)")
+        amb = [(r, c, q, g) for r, c, q, g in marker_detail if g["AMBIGUOUS"]]
+        for r, c, q, g in amb:
+            print(f"    {q} {c}: ANCHORED={len(g['ANCHORED'])} 잔여 AMBIGUOUS "
+                  f"{g['AMBIGUOUS']}")
     if exempt_red or exempt_review:
         rc = Counter(f["rule"] for f in exempt_red)
         print(f"면제 근거(provenance) 검사: RED={len(exempt_red)} {dict(rc)} "

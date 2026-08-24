@@ -56,6 +56,7 @@ except Exception:
 
 # Reuse existing validators rather than re-implementing (spec §1 "흡수·통합"):
 from validate_kics_disclosure import (  # noqa: E402
+    _absence_pin_census,
     _axis_eval_findings,
     _axis_evaluation_census,
     _axis_mirror_findings,
@@ -69,6 +70,7 @@ from validate_kics_disclosure import (  # noqa: E402
     _other_capital_children_sum,
     _parent_present_child_incomplete_after,
     _parent_zero_child_nonzero,
+    _pin_ledger_agreement_findings,
     _post_transition_parent_census,
     _ratio_series_spikes,
     _scan_breakdown_presence,
@@ -362,7 +364,7 @@ def check_census(res: GateResult, env: "Env") -> None:
     # 부모후가 통째 결측이면 기존 적용후 census/identity/mmult가 전부 skip → false-green (2026.1Q 5사
     # 통과사고). 인접분기에 적용후가 있었는데 당 분기 결측 = 추출갭 → RED. display 분기만 push 차단
     # (git-purge 과거분기 제외, 다른 census와 동일 scope). 22/23 단독 break는 review(비차단)라 여기서 제외.
-    post_parent_red, _post_parent_review = _post_transition_parent_census(kd_records)
+    post_parent_red, _post_parent_review, _post_parent_pinned =         _post_transition_parent_census(kd_records)
     for c, q, n, item, nb, kind in post_parent_red:
         if not _emit(q):
             continue
@@ -461,7 +463,8 @@ def check_census(res: GateResult, env: "Env") -> None:
                 rule="OTHER_CAPITAL_CHILDREN_SUM",
                 message=f"[{col}] item23(기타 요구자본)={disclosed} ≠ item24+25+26={expected} "
                         f"{list(kids)} — 원문 라벨이 선언한 합(1+2+3)이 안 닫힘")
-    for c, q, parent, n, missing in _parent_present_child_incomplete_after(kd_records):
+    _after_incomplete, _after_pinned_absent = _parent_present_child_incomplete_after(kd_records)
+    for c, q, parent, n, missing in _after_incomplete:
         if not _emit(q):
             continue
         kids = ", ".join(f"item{k}" for k in missing)
@@ -532,6 +535,21 @@ def check_census(res: GateResult, env: "Env") -> None:
     # 원장에 기록조차 없는 항목은 RED** — 새 면제를 조용히 추가하는 경로를 즉시 막는다.
     exempt_red, exempt_review = _exemption_provenance_findings(
         env.exemption_registries, env.exemption_ledger)
+    # --- 1b(vi-b). 부재형 면제의 **셀 단위 부재 박제** + 원장↔코드 박제 대조 (2026-08-24) ---
+    # 종전 부재형 면제는 `(회사,분기)` 통째로 축을 순회에서 뺐다. 그 사각에서 하나생명 2024.4Q 의
+    # item33후·item34후가 직전분기 값 복사(stale)로 앉아 있었고, 그 4셀을 정정 전 값으로 되돌린
+    # 마스터로 게이트를 돌려도 출력이 **바이트 동일**했다 = 값이 바뀌어도 게이트가 모른다.
+    # → 면제는 축을 빼는 방식이 아니라 **셀 단위 부재 박제**로만 걸리고, 박제 그룹이 부분충전이면
+    #   RED 다(섞인 상태는 항등식을 입력결측 SKIP 으로 만들어 채워진 값이 무검사가 된다).
+    # 그리고 원장 `expected_residual`/`absent_cells` 는 코드 박제의 사본이라 어긋나면 RED —
+    # 그 전까지 원장 숫자를 읽는 코드가 하나도 없어서 원장은 장식이었다.
+    # **여기에 lift 하는 이유**: `prepush_check.py` 는 이 게이트를 부르고 `validate_kics_disclosure.py`
+    # 도 부르지만, 차단 회계의 정본은 이 파일이다(문서에 mandatory 라고 쓰는 것은 강제가 아니다).
+    _absence_detail, absence_red, absence_review = _absence_pin_census(
+        kd_records, env.absence_pins)
+    exempt_red = exempt_red + absence_red + _pin_ledger_agreement_findings(
+        env.exemption_ledger, code_pins=env.code_pins)
+    exempt_review = exempt_review + absence_review
     for f in exempt_red:
         res.add(check="census", severity="RED", master="kics_disclosure",
                 company=f.get("code"), quarter=f.get("quarter"), rule=f["rule"],
@@ -1639,6 +1657,10 @@ class Env:
             "exemption_registries", (lambda: {}) if self.inject else _exemption_registries)
         self.exemption_ledger = self._get(
             "exemption_ledger", (lambda: None) if self.inject else _load_exemption_ledger)
+        # 부재 박제(셀 단위) / 코드 박제 — selftest 주입용. 주입은 **추가만** 하고 기본 동작을
+        # 안 바꾼다(기본값 None = 게이트가 라이브 레지스트리를 그대로 본다).
+        self.absence_pins = self._get("absence_pins", lambda: None)
+        self.code_pins = self._get("code_pins", lambda: None)
         self.source_readability = self._get(
             "source_readability", (lambda: {}) if self.inject else _source_readability)
         # 2026-08-24: 원천 육안판독 근거 원장(`SOURCE_UNREADABLE_NOT_VERIFIED` 축 전용).

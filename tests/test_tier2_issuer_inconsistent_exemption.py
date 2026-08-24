@@ -249,9 +249,18 @@ def test_the_whole_bucket_vanishing_is_red(records, findings):
     # 사실 자체는 같은 버킷의 `3_tier2_composition` 이 그대로 잡으므로 사각이 생기지 않는다.
     ("KR0003", "2026.1Q", "3_tier2_composition"),
     ("KR0075", "2024.4Q", "51_tfi_tier2_composition"),
-    ("KR0087", "2025.2Q", "2_tier1_bridge"),
+    # 2026-08-24 재감사: ("KR0087","2025.2Q","2_tier1_bridge") 는 **면제가 해제됐다.**
+    # 잔차 1,188.0 은 발행사 결함이 아니라 우리 룰 결함이었다(인쇄된 item47 이 이미 한도
+    # 적용 후 값이라 max(0,47-48)=0 이 나왔다). 적용후 컬럼에서 되짚은 참 한도초과 1,188.00
+    # 으로 다리가 잔차 0.00 에 닫힌다. 같은 (회사,분기)의 `47_tier2_census` 박제는 그대로
+    # 살아 있고, 재등재 시도는 원장 `contradicted_pins` tripwire 가 막는다
+    # (tests/test_exemption_absence_pin.py::test_a_released_pin_cannot_be_re_registered_silently).
     # iter-7 신규 등재분도 같은 잣대로 흔든다 — 등재만 하고 재검산을 안 걸면 blanket skip 이다.
     ("KR0032", "2025.4Q", "51_tfi_tier2_composition"),
+    # 2026-08-24: `_post` 축 박제(설계상 YELLOW)도 같은 잣대로 흔든다. 적용후 tier2 축은
+    # 관계식 미확립이라 YELLOW 지만 **박제는 걸 수 있어야 한다** — 안 그러면 같은 원장 안에서
+    # IRR 면제(두 컬럼 박제)와 tier2 면제(적용전만)의 적용후 커버리지가 비대칭이 된다.
+    ("KR0032", "2025.4Q", "51_tfi_tier2_composition_post"),
     # ---- 2026-08-24 2차 owner 위임 등재분 4버킷 -------------------------------
     ("KR0003", "2023.1Q", "50_tfi_tier_split"),
     ("KR0075", "2024.3Q", "51_tfi_tier2_composition"),
@@ -261,13 +270,14 @@ def test_the_whole_bucket_vanishing_is_red(records, findings):
 def test_residual_drift_revives_the_red(records, findings, code, quarter, rule):
     """잔차가 박제값에서 벗어나면 `TIER2_EXEMPTION_RESIDUAL_DRIFT` RED 다."""
     finds = copy.deepcopy(findings)
+    want = ("RED", "YELLOW") if rule.endswith("_post") else ("RED",)
     for f in finds:
-        if (f.get("status") == "RED" and f.get("rule") == rule
+        if (f.get("status") in want and f.get("rule") == rule
                 and f.get(KEY_CODE) == code and f.get(KEY_QUARTER) == quarter):
             f["diff"] = (f.get("diff") or 0.0) + 7.0
             break
     else:
-        pytest.fail(f"{code} {quarter} {rule} 의 RED 가 findings 에 없다")
+        pytest.fail(f"{code} {quarter} {rule} 의 {want} finding 이 findings 에 없다")
     _acc, red, _rev, _det = _run(records, finds)
     assert any(r["rule"] == "TIER2_EXEMPTION_RESIDUAL_DRIFT" and r.get("axis") == rule
                for r in red)
@@ -326,7 +336,31 @@ def test_findings_are_never_deleted_only_uncounted(records, findings):
     assert accepted, "면제된 finding 이 하나도 없다 — 시험이 무의미하다"
     for f in accepted:
         assert f in findings
-        assert f.get("status") == "RED", "면제가 status 를 갈아치우면 안 된다"
+        # 면제는 등급을 **갈아치우지 않는다.** 적용전 축은 RED 그대로, `_post` 축은 설계상
+        # YELLOW 그대로다(2026-08-24 `_post` 박제 도입). 바뀌는 것은 "차단집계에서 뺀다" 뿐이고
+        # YELLOW 는 애초에 차단집계에 없으므로 차감 대상도 아니다.
+        if str(f.get("rule", "")).endswith("_post"):
+            assert f.get("status") in ("RED", "YELLOW")
+        else:
+            assert f.get("status") == "RED", "면제가 status 를 갈아치우면 안 된다"
+
+
+def test_a_post_axis_pin_never_lowers_the_blocking_count(records, findings):
+    """`_post` 박제가 blocking RED 를 깎으면 안 된다.
+
+    2026-08-24 에 실제로 blocking RED 가 **-2** 로 찍혔다 — 적용후 박제를 도입하면서 accepted
+    전체를 차감했기 때문이다. 면제는 차단 등급을 못 바꾼다: YELLOW 박제가 켜는 것은
+    '매 실행 재검산' 뿐이다."""
+    accepted, _red, _rev, _det = _run(records, findings)
+    yellow_pins = [f for f in accepted if f.get("status") == "YELLOW"]
+    assert yellow_pins, (
+        "YELLOW 등급 적용후 박제가 하나도 없다 — 커버리지 비대칭이 되돌아갔다 "
+        "(구성축 `_post` 는 관계식 미확립이라 YELLOW 로 내려간다)")
+    red_total = sum(1 for f in findings if f.get("status") == "RED")
+    accepted_red = sum(1 for f in accepted if f.get("status") == "RED")
+    assert red_total - accepted_red >= 0, "blocking RED 가 음수가 된다"
+    assert accepted_red < len(accepted), (
+        "차단 회계는 accepted 전체가 아니라 그중 RED 만 차감해야 한다")
 
 
 def test_pin_tolerance_stays_tight():

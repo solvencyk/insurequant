@@ -1,6 +1,43 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-08-24(17회차) — inbox `20260821T0620Z`(validation, §3
+> Last updated: 2026-08-24(18회차) — orchestrator 발주(재감사 보고서
+> `artifacts/validation/reaudit_20260824_KR0097_KR0049_KR0079_plus_ledger_quality.md`
+> 파트 1-A 승계): **KR0097 하나생명보험 2024.4Q 생명장기 하위위험 값_적용후 4셀 정정
+> — 마스터 결함(면제가 가리고 있던 것) 확정 처리.** status: resolved → `_resolved/` 대상
+> (root TODO에 이 티켓 자체가 없어 별도 이동 없음, 아래 상세 참조).
+>
+> - **재현**: raw `KR0097_하나생명보험.pdf`(347p) p281(item17후 200,189,811천원=2,001.898억)
+>   ·p296(item29-35 적용전, 적용후 컬럼 없음)·p326(최초산출액 표) 전부 fitz 텍스트로 직접
+>   재확인 — 감사보고서 claim과 소수점까지 일치. `942.86`·`896.15`·`94,286`·`89,615` 전수
+>   grep 0 hit(원문에 없음), `200,189,811` 1 hit(p281). phase-in 식
+>   `적용후=max(0,적용전−(1−인식비율)×최초산출액)`을 13분기 전부 재계산 →
+>   **2024.4Q 를 뺀 12분기 전부 derived==master(±0.01억)**.
+> - **결함**: item33후="942.86"·item34후="896.15" 가 2024.3Q 값의 **stale carry-forward**
+>   (원문 어디에도 없음), item30후·item35후는 결측. 이 4셀은 `_AFTER_SUBRISK_NOT_DISCLOSED`
+>   면제가 `_transition_mmult_after` 부모 조회 전에 축 전체를 스킵시켜 **어떤 룰도 검사한
+>   적이 없었다**(감사기 발견).
+> - **정정**(`scripts/fix_20260824_kr0097_2024q4_after_subrisk.py`, dry-run 지원·
+>   idempotent·expect_old guard): item30후 신설="0", item33후 942.86→**1377.71**,
+>   item34후 896.15→**714.73**, item35후 신설="0". R7([230.82,0,391.46,0,1377.71,
+>   714.73,0])=2001.896 vs 공시 item17후 2001.898 → **잔차 −0.0023억**(구값은 −201.08,
+>   tol 100.09 대비 2배 초과 FAIL). `git diff` 로 딱 4필드만 변경됐음을 확인(행 추가/삭제 0).
+> - **게이트**: `validate_kics_disclosure.py` exit **0**(불변) — `git stash` 로 수정전/후
+>   양쪽 실행해 대조한 결과 RED=37/YELLOW=1519/GREEN=9522 findings **바이트단위로 완전
+>   동일**(면제가 이 4셀을 여전히 검사 밖에 두고 있다는 뜻, 감사보고서 판정과 일치).
+> - **골든**: `test_kics_rules_golden.py` **PASS 그대로**(재생성 불필요) — 예상과 달리
+>   findings matrix가 안 바뀐 이유는 위와 동일(면제가 순회에서 이 4셀을 아예 뺌).
+>   관련 137개 테스트(`test_identity_tautology`·`test_kics_item_registry`·
+>   `test_post_transition_golden`·`test_rule_coverage_manifest`·
+>   `test_source_vision_verified`·`test_tfi_memo_rows`·
+>   `test_tier2_issuer_inconsistent_exemption`·`test_irr_pin_exemption`·
+>   `test_kics_disclosure_parser`) 전부 PASS.
+> - `sync_master_xlsx_sheet.py "K-ICS공시"`: EDIT 4·INSERT 0·DELETE 0, 22658행×9열 검증
+>   OK, 재실행 drift 0.
+> - **면제 레지스트리는 안 건드림**(발주 범위 밖). `_AFTER_SUBRISK_NOT_DISCLOSED` claim
+>   자체(29-35 세부표 없음)는 참이지만 레지스트리 효과가 축15·19·census까지 덮는 과대스코프
+>   문제(감사보고서 H8)는 owner/validation 판단 대기.
+>
+> Last updated (이전): 2026-08-24(17회차) — inbox `20260821T0620Z`(validation, §3
 > `SOURCE_UNREADABLE_NOT_VERIFIED` 잔여 9쌍) 드레인: **9쌍 전부 vision 판독으로 "미러링이
 > 원문으로 확정됨" — 마스터 변경 0건**(KB손해 2025.3Q/2026.1Q · 미래에셋생명 2025.1Q/2025.3Q/
 > 2026.1Q · AIA생명 2025.1Q/2025.3Q/2026.1Q · 동양생명 2026.1Q). raw PDF를 `fitz.get_pixmap
@@ -105,8 +142,75 @@ Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/dom
 
 ## Status
 
-**2026-08-24(17회차) — inbox `20260821T0620Z`(validation, §3 `SOURCE_UNREADABLE_NOT_VERIFIED`
-잔여 9쌍) 드레인: 9쌍 전부 vision 판독으로 확정, 마스터 변경 0건. status: answered.**
+**2026-08-24(18회차) — orchestrator 발주(재감사 보고서 파트 1-A 승계): KR0097 하나생명보험
+2024.4Q 생명장기 하위위험 값_적용후 4셀 정정. status: resolved.**
+
+발주 근거: `artifacts/validation/reaudit_20260824_KR0097_KR0049_KR0079_plus_ledger_quality.md`
+파트 1-A. validation stage 의 면제 재감사가 KR0097 2024.4Q 를 `MASTER_DEFECT`로 뒤집었다 —
+등재된 면제 claim("29-35 적용후 세부표가 원문에 없다")은 참이지만, 그 면제가 `_transition_
+mmult_after` 축을 부모 조회 전에 통째로 스킵시켜 마스터 안의 실제 결함(item33후·34후가
+직전분기 값의 stale carry-forward, item30후·35후는 결측)이 등재 이후 오늘까지 한 번도
+검사받지 않았다.
+
+- **raw 독립 재현**(감사기 주장을 액면 그대로 믿지 않고 재확인 — `scripts/_probes/
+  probe_20260824b_kr0097_raw_verify.py`): `data/disclosure/FY2024_Q4/raw/KR0097_하나생명보험.pdf`
+  (347p, 텍스트레이어 정상) p281 `[지급여력기준금액]` 표에서 `1. 생명·장기손해보험위험액`
+  경과조치 적용후 = **200,189,811천원**(=2,001.89811억) 직접 확인. p296 `B.1.1
+  생명·장기손해보험리스크` 표는 사망/장수/장해질병/장기재물/해지/사업비/대재해 7개 항목의
+  **당기말(=적용전)·전기말 두 컬럼뿐, 적용후 컬럼이 없음**을 확인(claim 그대로). p326
+  `(2) …경과조치` 표에서 최초 산출 금액(장수 14,325,093·해지 66,403,015·사업비
+  43,877,926·대재해 7,847,532 천원)과 "2024년 인식비율 10%"를 확인. 전수 grep으로
+  `942.86`·`896.15`·`94,286`·`89,615` **0 hit**(원문 어디에도 없음), `200,189,811`
+  **1 hit**(p281) — 마스터의 두 stale 값이 원문 출처가 아님을 재확인.
+- **식 검증**(`scripts/_probes/probe_20260824_kr0097_phasein.py` 재실행): `적용후 = max(0,
+  적용전 − (1−인식비율)×최초산출액)`을 2023.1Q~2026.1Q 전체 13분기에 적용 → **2024.4Q를
+  제외한 12분기 전부** derived 값이 마스터 값_적용후와 ±0.01억 이내로 일치(부동소수 반올림
+  수준, 사실상 동일 — 이 회사가 13분기 내내 따르는 식임을 확인).
+- **정정 적용**(`scripts/fix_20260824_kr0097_2024q4_after_subrisk.py`, `--dry-run` 지원,
+  `expect_old`/`_MISSING` sentinel guard로 동시편집 방지, 셀 단위 UPSERT — JSON 통째
+  read-modify-write 아님):
+  - item30후(장수) 신설 = **"0"** (95.51 − 0.9×143.25093 = −33.42 → clamp 0, 다른 12분기와
+    동일 패턴 — item30후는 2024.4Q를 제외한 전 분기가 "0")
+  - item33후(해지) 942.86 → **"1377.71"** (1975.34 − 0.9×664.03015 = 1377.712865)
+  - item34후(사업비) 896.15 → **"714.73"** (1109.63 − 0.9×438.77926 = 714.728666)
+  - item35후(대재해) 신설 = **"0"** (52.08 − 0.9×78.47532 = −18.55 → clamp 0, 2024.3Q까지도
+    동일 패턴이었다가 2025.1Q부터 적용전이 커지며 양수 전환 — 2024.4Q는 아직 그 전)
+  - `git diff -- kics_disclosure.json`으로 **정확히 이 4필드만** 바뀌었음을 확인(행 추가/
+    삭제 0, 다른 회사·분기 무손상).
+- **잔차 재계산**(`scripts/_probes/probe_20260824e_kr0097_final_check.py`, 반올림된
+  2decimal 값으로 재확인 — 파생 float 그대로가 아니라 마스터에 실제로 쓰는 문자열 기준):
+  R7([230.82, 0, 391.46, 0, 1377.71, 714.73, 0]) = **2001.8958** vs 공시 item17후
+  raw p281 기준 **2001.89811** → **잔차 −0.0023억**(≈230원, tol 100.09 대비 무시 가능).
+  구 값(942.86/896.15, 결측 2칸은 0 취급)으로는 R7=1800.8172, 잔차 **−201.08**(tol을
+  2배 초과, FAIL) — 참값만 닫히고 구 값은 깨진다는 감사보고서 판정을 절대값까지 재현.
+- **게이트**(`validate_kics_disclosure.py`): exit **0** 그대로. `git stash`로 수정 전/후
+  양쪽을 각각 재실행해 리포트를 대조 — 타임스탬프 한 줄만 빼고 **RED=37/YELLOW=1519/
+  GREEN=9522/SKIP=2586 findings 가 바이트단위로 완전 동일**. 즉 이 수정은 게이트가 보는
+  어떤 것도 바꾸지 않았다 — `_AFTER_SUBRISK_NOT_DISCLOSED` 면제가 여전히 이 4셀을 룰
+  순회에서 빼고 있다는 뜻이며, 정확히 감사보고서가 지적한 사각과 일치한다.
+- **골든**(`tests/test_kics_rules_golden.py`): 재실행 결과 **PASS 그대로**(해시 재생성
+  불필요). 발주 지시는 "findings 매트릭스가 바뀔 것"으로 예상했으나, 위 게이트 대조가
+  보여주듯 findings 자체가 이 4셀을 포함하지 않으므로 값 변경이 골든에 반영되지 않는다
+  — 손으로 만지지 않았고 `--update`도 돌리지 않았다(돌릴 필요가 없어서). 연관 테스트
+  137개(`test_identity_tautology`·`test_kics_item_registry`·`test_post_transition_golden`
+  ·`test_rule_coverage_manifest`·`test_source_vision_verified`·`test_tfi_memo_rows`·
+  `test_tier2_issuer_inconsistent_exemption`·`tests/unit/test_irr_pin_exemption`·
+  `tests/unit/test_kics_disclosure_parser`) 전부 PASS.
+- **xlsx**: `sync_master_xlsx_sheet.py "K-ICS공시"` — EDIT 4·INSERT 0·DELETE 0, 22658행×9열
+  마스터와 완전 일치 검증, 재실행 drift 0.
+- **면제 레지스트리는 건드리지 않음**(발주 범위 — "너는 값만 고친다"). `_AFTER_SUBRISK_
+  NOT_DISCLOSED` 의 claim(29-35 적용후 세부표가 원문에 없다) 자체는 참이라 자동 해제
+  대상이 아니다. 다만 그 면제 효과가 claim 스코프(29-35)보다 넓게 축15·19·census 전체까지
+  덮고 있다는 것(감사보고서 H8), 그리고 이번 사고처럼 부재형 면제에는 "채워지면 즉시 RED"가
+  되는 부재 박제가 없다는 것(H1)은 이 세션이 고치지 않았다 — validation/owner 후속 판단
+  대기 사항으로 남긴다.
+- 신규 파일(전부 read-only 진단 + 1개 정정 스크립트, BOM 없음·ast.parse 확인):
+  `scripts/_probes/probe_20260824b_kr0097_raw_verify.py` ·
+  `probe_20260824c_kr0097_schema.py` · `probe_20260824d_kr0097_fmt_survey.py` ·
+  `probe_20260824e_kr0097_final_check.py` · `scripts/fix_20260824_kr0097_2024q4_after_subrisk.py`.
+
+Last updated (이전) — 2026-08-24(17회차) — inbox `20260821T0620Z`(validation, §3 `SOURCE_UNREADABLE_NOT_VERIFIED`
+잔여 9쌍) 드레인: 9쌍 전부 vision 판독으로 확정, 마스터 변경 0건. status: answered.
 
 이 티켓은 §1(면제근거 거짓)·§2(축 동어반복)가 이미 해소됐고 §3만 미결이었다(KB손해 2025.1Q 1쌍만
 기왕 vision 검증됨, 나머지 9쌍 미판독). 오늘 세션이 그 9쌍을 처리했다.
