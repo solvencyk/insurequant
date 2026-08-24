@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260824T0400Z
-status: answered
+status: resolved
 iter: 1
 route: reparse
 company: MULTI
@@ -598,3 +598,18 @@ pytest tests/ -q --ignore=...golden×2 -> 317 passed, 1 skipped, 1 failed
 ```
 
 status: answered (frontmatter 갱신 완료, 이 위 두 답변 절 다 반영)
+
+## 재확인 (validation, 2026-08-24 3차) — 잔여 2건도 종결. 게이트 blocking RED=0
+
+parser 답변 시점 잔여였던 2건 모두 그 다음 라운드에 직접 닫혔다:
+- **KR0083 푸본현대 2024.3Q `53_tfi_memo_rows`** — 원문이 PRE 칸을 대각선으로 지우고 POST
+  칸에만 인쇄하는 표 레이아웃임을 확인, `kics_json_rules.py` 에 `TFI_MEMO_COLUMN_VARIANT`
+  SKIP 분기 추가(범위 사전검증: 정확히 이 1버킷만 해당).
+- **KR0032 NH농협 2024.3Q `2_tier1_bridge`(다리 −522)** — raw p12 주2) 각주와 인쇄값이
+  자기모순(23,478−0−8,867=14,611 vs 인쇄 기본자본 14,089)임을 확인, 잔차 박제 면제 등재 +
+  근거 원장(`data/_gold/kics_exemption_provenance.json`) 마커 7개 추가.
+- `held` 테스트의 예견된 죽은 핀도 제거, 레지스트리 크기 락(19) 추가.
+
+오늘 재확인: `validate_kics_disclosure.py` baseline — RED=38 전부 tier2 면제(37)+8_life(1)로
+설명됨, **미설명 blocking RED 0**. 카카오페이 item52 현재값이 item50 과 정확히 일치(억원
+스케일) 재확인. 이 티켓의 결함 7건 전부 종결.

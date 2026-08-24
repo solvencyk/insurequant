@@ -7,6 +7,12 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 
 ## Status
 
+**(2026-08-24 3차, inbox 잔여 6건 정리) 🟢 서브에이전트 4개 529 과부하로 소실 → 직접
+재확인. 3건 resolved(csm_waterfall 게이트 배선·item52/54 카카오페이 fix·메타룰 항목1/2)
+· 3건 open 유지(viz 패널 3종 단위분열 / leaf residual 4셀 / 한화생명 인과) → 2026.2Q
+서브에이전트 배정 예정, 상세는 `docs/changelog_validation.md` 이 날짜 항목.
+가설 5연속 오답 경위 + 재발방지 규율은 `docs/agents/claude-agent-validation.md` §3.1 신설.**
+
 **(2026-08-24 2차 owner 위임) 🟢 면제 4건 등재 — blocking RED 29 → 19. 남은 19 중 18 은 parser
 발주분(`inbox/parser/20260824T0400Z`), 1 은 NH농협 2024.3Q 미조사.**
 

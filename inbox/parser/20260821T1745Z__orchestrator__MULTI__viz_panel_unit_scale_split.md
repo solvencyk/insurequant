@@ -164,3 +164,12 @@ insurance_pl_breakdown.json · csm_waterfall.json 전부). 즉 지금 브랜치 
 ### 결론
 
 3개 파일 모두 **branch 채택 = 라이브 배포 가능**. main 상태를 유지·복사할 이유 없음.
+
+## sender 재확인 (orchestrator, 2026-08-24 3차) — status: open 유지, 착수 안 됨
+
+`git diff main -- data/dart/viz/{sensitivity_heatmap,csm_waterfall_history,csm_amort_schedule}.json`
+재확인 — 3파일 전부 아직 main 과 다르다(화해 안 됨). 카카오페이손해 단위 확정(DART 원문
+"단위: 천원" vs "백만원" 실측) 등 raw 레벨 조사는 이번 라운드에 착수하지 못했다 — 배정된
+서브에이전트가 API 529(모델 과부하)로 죽었다. 화면 숫자가 바뀌는 변경이라 확정 전 배포 불가
+원칙 그대로 유지, 다음 라운드로 이월. 상세는 `docs/changelog_validation.md` 2026-08-24(3차)
+항목 C.

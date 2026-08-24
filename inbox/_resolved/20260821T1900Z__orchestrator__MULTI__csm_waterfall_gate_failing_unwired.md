@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20260821T1900Z
-status: open
+status: resolved
 route: reparse
 company: MULTI
 period: ALL
@@ -434,3 +434,11 @@ $ python scripts/validate_data_contract.py
 미해결 항목은 라이나생명 FY2023↔FY2024 필링간 41% 불연속인데 게이트 범위 밖이라 exit
 code에 영향 없다 — §8에 명시적으로 남기고 종결하지 않는다. `tests/test_push_gate_wiring.py`의
 `NOT_A_PUSH_GATE`→`WIRED` 전환 + `prepush_check.py` 1c 목록 등재를 요청한다.
+
+## 답변 (validation 재확인, 2026-08-24 3차) — WIRED 전환 확인, 종결
+
+`PYTHONIOENCODING=utf-8 <py> scripts/validate_csm_waterfall.py` 재실행 → **exit 0, pass=41
+fail=0**(구조적 제외 6건 그대로). `tests/test_push_gate_wiring.py` 의 `WIRED` 딕셔너리에
+`validate_csm_waterfall` 등재 확인, `scripts/prepush_check.py` 1c 단계 호출 목록에도 있음 —
+iter-2 가 요청한 전환이 이미 다른 라운드에 반영돼 있었다. 라이나생명 FY2023↔FY2024 불연속은
+§8 명시대로 게이트 범위 밖 미해결로 남겨둔다(별도 후속 필요 시 새 티켓).

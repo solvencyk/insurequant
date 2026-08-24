@@ -7,6 +7,59 @@ Validation-only history. Cross-stage changes also keep a 1-line cross-reference 
 
 ---
 
+## 2026-08-24 (3차, 잔여 inbox 6건 정리) — 가설 5연속 오답 경위 기록 + 티켓 3건 종결·3건 존속
+
+**owner 지시**: 남은 inbox 6건("`inbox/parser/20260821T0620Z, 1745Z, 1900Z, 2010Z, 20260824T0400Z`,
+`inbox/validation/20260824T0410Z`")을 확인하고, 이번엔 서브에이전트 4개가 전부 API 529(모델
+과부하)로 죽어서 직접 스크립트로 재확인했다. owner 사전 판단: "실제로 원본 데이터 단에서
+발생한 오류고 우리가 고칠 건 없지싶다" — 아래 실측이 대체로 이 판단과 일치한다.
+
+### A. 가설 5연속 오답 경위 (`docs/agents/claude-agent-validation.md` §3.1 규율의 근거)
+
+2026-08-21~24 TFI(공통적용경과조치)/tier2 표 작업 중 다섯 가설이 전부 반증됐다:
+1. **"적용후 429/430 이 동일=복사"** → 215:0 전수 실측으로 반증. `item48_적용후` 는 항상
+   `item14_적용전 × 50%` 를 따르는 것이었다 — TFI 스코프 ≠ 결합 스코프.
+2. **"item3==item13 이면 분기 처리"** → 147건 중 125건이 이미 통과 중이었고, 나머지 47/49
+   축이 검사 밖으로 빠지는 수정이라 반려.
+3. **"다른 분기에 표가 있으니 추출 갭"** → 해당 회사(교보라이프플래닛) 7개 분기 전수 확인,
+   표 자체가 원문에 없음(정당 부재).
+4. **"적용후를 item1_적용전과 비교"** → raw 대조 결과 IBK연금 1개사만 일치, 나머지는 원문
+   구조 자체가 다름.
+5. **"47==48 이면 item49 를 초과분으로"** → 전수 시뮬레이션 통과 423→295, **1건 고치고
+   129건 깨짐**(`feedback_simulate_rule_change_before_editing` 메모리에도 등재).
+
+owner: "가설 다섯번 세워서 다섯번 틀리면 니가 가설 세우는 방식을 재고해야 하는거 아니야?"
+사후진단 — 다섯 건 전부 **집계 패턴 → 원인을 반증쿼리 없이 추론**했고, 정보 흐름이 거꾸로였다
+(집계만 쥔 orchestrator 가 raw 를 쥔 서브에이전트에게 원인을 지시). 규율화: 원인은 반증쿼리
+1건을 직접 돌린 뒤에만 발주문에 적는다, 못 돌렸으면 관측+질문으로만 적는다(§3.1) · 룰 코드
+수정은 편집 전 전수 시뮬레이션 필수(§3.1, `feedback_simulate_rule_change_before_editing`).
+메모리 신설: `feedback_verify_cause_before_dispatch`.
+
+### B. 티켓별 실측 결과 (오늘, 직접 재현 — 서브에이전트 결과 아님)
+
+| 티켓 | 실측 | 처리 |
+|---|---|---|
+| `20260821T1900Z` csm_waterfall 게이트 미배선 | `validate_csm_waterfall.py` 재실행 → **exit 0, pass=41 fail=0**(구조적 제외 6건). `prepush_check.py` 1c·`test_push_gate_wiring.py` WIRED 양쪽 다 확인됨 | **resolved** — 이미 다른 라운드에서 닫혀 있었다 |
+| `20260824T0400Z` item52/54 결함 7건(카카오페이 100배 등) | 카카오페이(KR1098) item52 현재값이 전 분기 item50 과 정확히 일치(억원 스케일) 확인. 게이트 baseline: RED 38 전부 tier2 면제(37)+8_life(1)로 설명됨, 미설명 RED 0 | **resolved** — 이미 커밋 04f5fe0 에서 fix 반영됨 |
+| `20260821T0620Z` 메타룰 3종 | 항목1(면제근거 거짓 2건) 이미 ✅. 항목2(`AXIS_SELF_MIRRORED_APPLIER`·`AXIS_NOT_EVALUATED`, 동어반복 오판정) 재실행 **둘 다 0건** — 이미 게이트 쪽에서 분모를 구조인식으로 고쳐 해소돼 있었다. 항목3 `SOURCE_UNREADABLE_NOT_VERIFIED` 는 `validate_data_contract.py` 에서 **20건 YELLOW**(KB손해보험·미래에셋생명·AIA생명 각 2025.1/3Q·2026.1Q, 동양생명 2026.1Q) 살아있음 — non-blocking. 10쌍 중 1쌍(KB손해 2025.1Q)은 티켓 자체가 이미 vision 판독으로 "폰트매핑 문제일 뿐 값은 정확·휴리스틱만 영구 YELLOW" 확인 완료, 나머지 9쌍은 미판독 | **파일은 open 유지**(티켓 자신이 "항목3 때문에 열려있다"고 명시) — 항목1·2 재확인만 추가, 항목3 은 TODO 로 이월(downloader 후보, 아래 C) |
+| `20260821T1745Z` viz 패널 3종 단위 분열 | `git diff main` 재확인 — 3파일(`sensitivity_heatmap`·`csm_waterfall_history`·`csm_amort_schedule`) 전부 아직 main 과 다름, 화해 안 됨. raw 단위 확정 작업(카카오페이손해 천원/백만원)은 미착수 | **open 유지** — 화면 숫자 바뀌는 변경이라 확정 전 배포 불가, 다음 라운드로 이월 |
+| `20260821T2010Z` leaf residual 4셀 | `leaf_scale_residue_audit.py` 재실행 — **불일치 4건 그대로**(예별손해보험 item36_적용후 ×3, 처브라이프생명 item35 ×1). 1030Z 의 안전가드(부모19 재현실패 HOLD)가 여전히 유효 | **open 유지** — raw 레벨 조사 필요, 다음 라운드로 이월 |
+| `20260824T0410Z` 한화생명 KR0068 tier1_bridge | 직접 측정: **KR0068 13개 분기 중 2025.2Q 만 diff +826**(2025.3Q/2026.1Q 는 반올림 ±1, 나머지는 정확히 0) — 이웃 분기 대조(티켓 §4-2)에 답. raw p17 재확인: 헤드라인(221,809=82,506+139,303)·순자산 구성행(합 213,476, 반올림 1)·주2) 각주 전부 마스터와 일치, 모순 위치는 여전히 못 짚음 | **open 유지**(티켓 자체가 "인과 규명 전 close 불가"로 명시) — §4 조사 방향(item12/47 스코프)에 단일분기 확증만 추가 |
+
+### C. TODO 이월 (2026.2Q 재검토, 서브에이전트 배정 예정)
+
+- **kics parser**: 예별손해보험 item36_적용후 3셀 + 처브라이프생명 item35 1셀 —
+  `scripts/_probes/leaf_scale_residue_audit.py` 로 재현, 부모19 HOLD 가드부터 확인.
+- **ifrs17 parser**: viz 패널 3종(카카오페이손해 민감도 단위, `companies[15]` 워터폴, amort
+  캡션/버킷) — DART 원문 단위표기부터 확정, `git diff main -- data/dart/viz/*.json` 로 재현.
+- **downloader 후보**: `SOURCE_UNREADABLE_NOT_VERIFIED` 20건(KB손해보험·미래에셋생명·AIA생명
+  2025.1/3Q·2026.1Q, 동양생명 2026.1Q) — raw 판독성(스캔/저해상도) 확인 후 refetch 여부 결정.
+  YELLOW 라 push 는 안 막지만 방치 금지.
+- **validation 자체**: 한화생명 KR0068 2025.2Q 인과 — `inbox/validation/20260824T0410Z` 그대로
+  열어둠(exemption `VERIFIED_BY_OWNER` 로 push 는 안 막힘).
+
+---
+
 ## 2026-08-24 (2차 owner 위임) — tier2/다리 면제 4건 등재 · `VERIFIED_BY_OWNER` provenance status 신설
 
 **게이트**: `validate_kics_disclosure.py` exit 2 · RED 56 · **blocking RED 29 → 19**.

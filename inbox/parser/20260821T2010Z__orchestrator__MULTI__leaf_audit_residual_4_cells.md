@@ -176,3 +176,12 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/leaf_
 
 **게이트**: `kics_disclosure.json` 무변경(이 티켓 단독으로는 diff 0) — 다른 두 티켓(tier2
 3줄·KB손해 vision)의 변경과 합쳐 세션 끝에 한 번에 검증(본 세션 최종 보고 참조).
+
+## sender 재확인 (orchestrator, 2026-08-24 3차) — status: open 유지, 불일치 그대로
+
+`scripts/_probes/leaf_scale_residue_audit.py` 재실행 — **불일치 4건 그대로**(예별손해보험
+2023.4Q/2024.1Q/2024.2Q item36_적용후, 처브라이프생명 2024.4Q item35). 1030Z 의 안전가드
+(부모19 재현실패 HOLD 로그)가 여전히 유효해 강제 기입은 안 했다. raw 레벨 원인 조사(이 값이
+FIXABLE/ISSUER_DEFECT/UNEXTRACTABLE 중 무엇인지)는 이번 라운드에 착수하지 못했다 — 배정된
+서브에이전트가 API 529(모델 과부하)로 죽었다. 다음 라운드로 이월. 상세는
+`docs/changelog_validation.md` 2026-08-24(3차) 항목 C.
