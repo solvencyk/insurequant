@@ -155,3 +155,92 @@ def test_claude_md_mandatory_gate_is_wired():
     assert "validate_kics_disclosure" in WIRED, (
         "CLAUDE.md 가 mandatory 라고 쓴 게이트가 WIRED 에 없다"
     )
+
+
+# ---------------------------------------------------------------------------
+# data-contract 게이트 **내부** 검사(check_*)의 배선 선언 (2026-08-25 신설)
+# ---------------------------------------------------------------------------
+# 위 매니페스트는 `scripts/validate_*.py` **파일** 단위만 강제한다. 그런데 한 파일 안의
+# `check_*` 하나를 `run_gate()` 에서 빼는 것도 똑같이 게이트를 좁히는 행위인데 아무도 안 봤다.
+# 2026-08-25 에 CHECK 5(일반 이상치)를 실제로 뺐고, 그 결정이 **선언 없이** 코드 주석으로만
+# 남으면 다음 세션이 회귀로 오인하거나(되살려 놓고 이유를 모름) 반대로 다른 검사가 조용히
+# 빠져도 못 잡는다. 그래서 같은 방식으로 못 박는다.
+DATA_CONTRACT_CHECKS = {
+    "check_artifact_readable": "WIRED — 깨진 아티팩트 ≠ 없는 아티팩트",
+    "check_ifrs17_bs": "WIRED — BS 항등식 + 코어 census",
+    "check_statutory_reserves": "WIRED — 법정준비금 R-RSV",
+    "check_dividend": "WIRED — 배당 census/항등식",
+    "check_csm_continuity": "WIRED — CSM 기초≠직전기말 boundary break",
+    "check_census": "WIRED — 결측 census·부모자식 완전성·메타룰. 산술의 전제라 절대 빼지 말 것",
+    "check_as_of": "WIRED — as-of/stale/effective-list",
+    "check_cross_source": "WIRED — 동일개념 tolerance + 다른개념 guard",
+    "check_domain_identity": "WIRED — 보완자본 한도 분모=SCR×50% / 소진율",
+    "check_generic_anomalies":
+        "DEWIRED 2026-08-25 — owner 지시로 게이트에서 분리(scripts/scan_generic_anomalies.py). "
+        "근거: YELLOW 전용이라 RED 를 한 건도 낸 적이 없어 `blocked` 에 들어간 적이 구조적으로 "
+        "없고(=push 를 막은 적이 없다), 게이트 YELLOW 297건 중 224건(75.4%)을 혼자 만들었다. "
+        "마지막 데이터 수정 기여는 2026-06-19/20 라운드(교보 원수예실차·BNP 단위오류·코리안리 "
+        "중복 43). 커버리지 불변은 변이시험으로 증명 "
+        "(scripts/_probes/probe_20260825_coverage_equivalence.py). 되살리려면 run_gate() 의 "
+        "주석을 풀고 여기 선언을 WIRED 로 바꿔라.",
+}
+DEWIRED_PREFIX = "DEWIRED"
+
+
+def _dc_src() -> str:
+    return (ROOT / "scripts" / "validate_data_contract.py").read_text(encoding="utf-8")
+
+
+def test_every_data_contract_check_is_declared():
+    """`validate_data_contract.py` 의 `check_*` 전부가 위 선언에 있어야 한다."""
+    found = set(re.findall(r"^def (check_\w+)\(", _dc_src(), re.M))
+    undeclared = sorted(found - set(DATA_CONTRACT_CHECKS))
+    assert not undeclared, (
+        f"미선언 검사 {undeclared} — run_gate() 에 걸었는지 정하고 "
+        f"tests/test_push_gate_wiring.py 의 DATA_CONTRACT_CHECKS 에 사유와 함께 넣어라."
+    )
+    ghost = sorted(set(DATA_CONTRACT_CHECKS) - found)
+    assert not ghost, f"선언에만 있고 함수가 없다 {ghost} — 개명/삭제됐다면 선언도 고쳐라"
+
+
+def _run_gate_body() -> str:
+    m = re.search(r"^def run_gate\(.*?\n(.*?)^\S", _dc_src(), re.M | re.S)
+    assert m, "validate_data_contract.py 에서 run_gate() 본문을 못 찾았다"
+    return m.group(1)
+
+
+@pytest.mark.parametrize("name", sorted(DATA_CONTRACT_CHECKS))
+def test_data_contract_check_wiring_matches_declaration(name):
+    """선언(WIRED/DEWIRED)과 `run_gate()` 본문의 실제 호출이 일치해야 한다.
+
+    주석 처리된 호출은 호출이 아니다 — 주석까지 세면 '뺐는데 배선됐다'로 읽힌다."""
+    body = _run_gate_body()
+    live = [ln for ln in body.splitlines()
+            if re.search(rf"^\s*{re.escape(name)}\(res, env\)", ln)]
+    declared_dewired = DATA_CONTRACT_CHECKS[name].startswith(DEWIRED_PREFIX)
+    if declared_dewired:
+        assert not live, (
+            f"{name} 은 DEWIRED 로 선언됐는데 run_gate() 가 실제로 부르고 있다. "
+            f"되살린 것이라면 선언을 WIRED 로 고쳐라 — 안 고치면 다음에 또 빠져도 아무도 모른다."
+        )
+    else:
+        assert live, (
+            f"{name} 이 WIRED 로 선언됐는데 run_gate() 에서 호출을 못 찾았다. "
+            f"검사가 조용히 빠졌다 — 되돌리거나 선언을 DEWIRED 로 바꾸고 사유를 적어라."
+        )
+
+
+def test_dewired_check_has_a_reason_and_a_home():
+    """뺀 검사는 **사유**와 **손으로 돌리는 경로**가 둘 다 있어야 한다.
+
+    사유 없이 빼는 것이 이 저장소가 두 달을 날린 false-green 의 시작이고, 돌릴 경로가 없으면
+    그건 분리가 아니라 삭제다."""
+    for name, reason in DATA_CONTRACT_CHECKS.items():
+        if not reason.startswith(DEWIRED_PREFIX):
+            continue
+        assert len(reason) >= 120, f"{name}: DEWIRED 사유가 너무 짧다 — 근거 수치를 적어라"
+        m = re.search(r"scripts/(\w+\.py)", reason)
+        assert m, f"{name}: 손으로 돌리는 스크립트 경로가 사유에 없다"
+        assert (ROOT / "scripts" / m.group(1)).exists(), (
+            f"{name}: 사유가 가리키는 scripts/{m.group(1)} 이 없다 — 분리가 아니라 삭제다"
+        )

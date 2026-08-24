@@ -373,9 +373,16 @@ YELLOW(QoQ warn 포함)는 어떤 다운스트림도 차단하지 않는다. 보
 배선됐나(함수+파일+scope+exit-code) ④ documented exception 근거·**등재 registry 위치**
 ⑤ 미배선 잔여 + 후속 티켓.
 
-> ⚠️ **③에서 두 게이트를 반드시 구분.** `prepush_check.py`는 `validate_kics_disclosure.py`를
-> **호출하지 않는다** → K-ICS 게이트에만 배선한 룰은 **push를 못 막는다.** push 차단이 필요하면
-> `validate_data_contract.py`의 `check_census`로 lift할 것.
+> ⚠️ **③에서 배선 위치를 반드시 확인.** ~~`prepush_check.py`는 `validate_kics_disclosure.py`를
+> 호출하지 않는다~~ — **2026-08-21 에 해소됐다**(훅 1b 절이 subprocess 로 부르고 exit code 가
+> `blocked` 에 들어간다). 이제 K-ICS 게이트에만 배선한 룰도 push 를 막는다.
+> 다만 **"배선했다"와 "강제된다"는 여전히 다르다** — 확인 순서는:
+> ① `run_gate()` 나 `main()` 이 그 검사를 실제로 호출하나(주석 처리된 호출은 호출이 아니다)
+> ② 그 결과가 exit code / `blocked` 에 들어가나(YELLOW 전용이면 안 막는다)
+> ③ 훅(`.githooks/pre-push` + `core.hooksPath`)이 그 스크립트를 부르나.
+> `tests/test_push_gate_wiring.py` 가 이 셋을 매니페스트로 강제한다 —
+> `WIRED`/`NOT_A_PUSH_GATE`(파일 단위) + `DATA_CONTRACT_CHECKS`(`check_*` 단위, 2026-08-25 신설).
+> 검사를 빼거나 추가하면 **선언을 같이 고치지 않는 한 테스트가 막는다.**
 
 기록만 하고 룰로 안 굳으면 같은 부류가 재발한다는 게 이 저장소의 실측 이력이다(사고 4건 소급 결과
 3건의 대응 룰이 push 차단 경로 밖 = `README.md`의 UH-1).

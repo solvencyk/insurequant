@@ -1,9 +1,248 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-24 · Stage 3/5 — validation
+> Last updated: 2026-08-25 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+---
+
+## 2026-08-25 — 저수익 휴리스틱 쳐내기: 5개 후보 중 **1개만 잘랐다** (나머지 4개는 반증으로 살림)
+
+owner 지시: *"씰데없는 룰들은 좀 쳐내 제발"*, *"실질 검증은 산술적으로 닫히는 거에서 다 걸린다."*
+오케스트레이터가 5개 후보를 지목하고 **"지우기 전에 각 룰별로 반증을 한 번씩 돌려라"** 를 조건으로 달았다.
+전수 실측한 결과 **후보 5개 중 4개는 전제가 사실과 달랐다.** 자른 것은 1개다.
+
+`kics_disclosure.json` · 마스터 xlsx 는 **한 칸도 안 건드렸다**(코드·룰·선언만). 허용오차 무수정.
+
+### 판정 요약
+
+| # | 후보 | 실측 | 판정 |
+|---|---|---|---|
+| 1 | generic anomaly discovery (CHECK 5) | YELLOW **224/297 (75.4%)** + 리뷰 큐 83 · **RED 0** · 마지막 수정기여 2026-06-19/20 | **잘랐다** → `scripts/scan_generic_anomalies.py` |
+| 2 | `IDENTITY_TAUTOLOGY` / excess·z | 현재 RED 0 · REVIEW **2줄** · **write-path 버그 2건을 잡은 이력** | **살림 (반증)** |
+| 3 | `AXIS_EVAL_RATE_LOW` / `AXIS_NOT_EVALUATED` | **둘 다 현재 0건.** 음성대조군 20·3 발화 | **살림 (반증)** |
+| 4 | `SOURCE_UNREADABLE_NOT_VERIFIED` 밀도 휴리스틱 | 죽이면 판정불가 칸 **35 → 251 (7.2배)** | **살림 (반증)** |
+| 5 | leaf 감사기 `LEAF_VS_RAW_MISMATCH` | push 경로 호출처 **0** — 이미 `scripts/_probes/` | **이미 되어 있음** |
+
+### 1. 잘라낸 것 — 일반 이상치 발견 레이어 (유일한 진짜 저수익)
+
+`validate_data_contract.run_gate()` 의 `check_generic_anomalies` 호출과 `prepush_check.py` 의
+트리아지 절을 뺐다. **삭제가 아니라 이전이다** — `scripts/scan_generic_anomalies.py` 신설.
+
+근거(실측):
+- 게이트 YELLOW **297건 중 224건(75.4%)** 을 혼자 만든다(PEER_OUTLIER 147 · COHORT_ZERO 77).
+- **RED 를 한 건도 낸 적이 없다.** 설계상 YELLOW 전용이라 `blocked = n_red or n_hyg or n_test
+  or n_kics or n_dom` 에 **애초에 항이 없었다** — push 를 막은 적이 구조적으로 없다.
+- 게이트가 찍던 224건은 **트리아지 이전(정밀화 전)** 숫자다. 트리아지가 134건을 노이즈로
+  자동 억제하는데 게이트는 그 앞단을 날것으로 인쇄하고 있었다
+  (예: "비엔피파리바카디프 기초CSM=342 vs cohort median 26,882" — 그냥 작은 회사다).
+- 마지막으로 데이터 수정을 낳은 것은 **2026-06-19/20 라운드**(교보생명 원수예실차 4분기 ·
+  BNP파리바카디프 단위오류 1.77조 · 코리안리 중복 43 · 교보라이프플래닛 보험금융손익 = 9칸).
+  그 뒤 두 달간 이 큐에서 나온 데이터 수정 0건.
+- 비용은 wall time 이 아니라 **사람 주의력**이다: CHECK 5 단독 실행 시간 **0.00초**.
+
+**조용히 사라지지 않게 했다.** 게이트와 훅이 매 실행 한 줄로 "분리됨 + 어디서 돌리는지" 를 찍는다.
+다음 세션이 "이상치 검사가 원래 없었다" 로 읽는 것이 이 저장소의 반복 사고형태다.
+
+### 2. 반증 — `IDENTITY_TAUTOLOGY` 는 **write-path 버그 2건을 잡은 룰**이다
+
+오케스트레이터 전제: *"오늘 validation 스스로 '내 룰이 틀렸다' 며 되돌린 룰이다."*
+**틀렸다.** 되돌린 것은 **축 미러 룰**(`AXIS_SELF_MIRRORED_APPLIER`, 2026-08-21 (f) 자기정정)이지
+동어반복 탐지기가 아니다. 동어반복 탐지기의 실적은 커밋 `0c04537` 에 박혀 있다:
+
+> *"item4·item3 되맞춤 경로 제거. rule 2·R1 이 동어반복이었다(잔차 정확0 93%→67%)"*
+
+구체적으로 —
+- `recalc_kics_derived.py` 가 **허용오차 게이트 없이** `item3 = item1 − item2` 로 공시값을
+  무조건 덮어쓰고 있었다. 그 결과 **rule 1(R1)이 실데이터에서 구조적으로 실패할 수 없었다**
+  (n=477, 잔차 정확0 97.7% vs 귀무 75.0%, excess 1.30, z 11.4).
+  → write-path 제거 + `fix_20260821_item3_writepath_restore.py` 로 79칸 원문복원.
+- 같은 형태가 `item4`(rule 2)에도 있었다(`_reconcile_item4_from_components`).
+
+**오늘 그 탐지기가 살아 있음을 다시 쟀다**: R1 은 이제 excess **1.08 · z 3.20** 으로 임계
+(1.20 / 5.0) 아래다. **버그를 고치니 지표가 내려갔다** — 탐지기와 수정이 닫힌 고리를 이룬다.
+룰 1·2 가 덮는 findings 는 **976건**(각 488)이고, 그것을 되맞춤으로 무력화한 스크립트
+(`recalc_kics_derived.py`)는 지금도 살아 있는 코드다. 이 탐지기를 빼면 그 되맞춤이 다시
+들어와도 아무도 모른다.
+
+현재 비용: **RED 0 · REVIEW 2줄**(owner 면제된 `R2_순자산합` 적용전·적용후 상한 박제).
+2줄 때문에 976건짜리 축의 falsifiability 감시를 끄는 것은 수지가 안 맞는다.
+→ **룰 유지. owner 면제 2건도 그대로 둔다**(룰이 살아 있으므로 면제도 살아 있어야 한다).
+
+### 3. 반증 — 축 평가율은 "매 실행 찍는 계기판" 이 아니라 **0 을 찍는 조용한 트립와이어**다
+
+전제는 *"매 실행 찍고 있어 사람들이 넘겨 읽는다"* 였는데, 실측은 **둘 다 0건**이다:
+`AXIS_NOT_EVALUATED` = 0, `AXIS_EVAL_RATE_LOW` = 0 (축 census 20행 전부 통과).
+게다가 `prepush_check.py` 는 K-ICS 게이트 출력을 키워드 필터로 추려 보여줘서 훅 화면에는
+이 줄이 **아예 안 나온다.** 즉 노이즈 비용이 0 이다.
+
+죽은 검사가 아님도 확인했다(음성대조군):
+- 평가율 바닥을 101% 로 올리면 → `AXIS_EVAL_RATE_LOW` **20건** 발화
+- `effective=0` 을 강제하면 → `AXIS_NOT_EVALUATED` **3건** 발화
+
+그리고 `AXIS_NOT_EVALUATED` 는 통계룰이 아니라 **결측 census 와 같은 부류**다 —
+"이 축의 `FAIL 0` 은 증거가 아니다". 오케스트레이터의 절대금지 목록에 든
+`MISSING_CELLS`("셀이 비면 항등식은 0들끼리도 닫힌다")와 같은 논리이고, 실제로
+`CAPSEC_SOURCE_UNRESOLVED` · `DIV_CENSUS_SOURCE_MISSING` 과 한 가족으로 설계됐다.
+**차이는 이것이 "셀이 비었나" 가 아니라 "룰이 그 셀을 순회하기는 하나" 를 본다는 점**이고,
+후자는 결측 census 가 구조적으로 못 보는 사각이다(회사 필터·부모-자식 맵 누락).
+→ **둘 다 유지.** 판정 강등도 하지 않았다 — 0 을 찍는 검사를 리포트로 내려도 얻는 게 없고,
+잃는 것은 트립와이어다.
+
+### 4. 반증 — 텍스트밀도 휴리스틱은 노이즈 **생산자가 아니라 감축자**다
+
+전제는 *"vision 원장이 대체했으니 밀도 휴리스틱을 죽여라"* 였다. 방향이 반대였다.
+밀도 사이드카는 460버킷을 `READABLE` 로 **인증**해서 "후=전 은 구조적으로 정당" 을 성립시킨다.
+사이드카를 빈 맵으로 바꿔 보면(= 휴리스틱 제거):
+
+| | 판정불가(unverifiable) 칸 |
+|---|---|
+| 현행(밀도 사이드카 사용) | **35** (그중 20칸은 vision 원장이 판정 완료) |
+| 밀도 휴리스틱 제거 | **251** |
+
+전 칸이 `UNMEASURED` 로 떨어져 **7.2배로 늘어난다.** 그리고 vision 원장은 바로 이 35칸에만
+붙으므로, 밀도 휴리스틱을 죽이면 **원장도 같이 죽는다**(전부 `SOURCE_VISION_INERT`).
+현재 `SOURCE_UNREADABLE_NOT_VERIFIED` 실발화는 **0건**이다 — 20줄은 전부 원장이 판정한
+`SOURCE_VISION_VERIFIED` 다. → **유지.**
+
+### 5. 이미 되어 있던 것 — leaf 감사기
+
+`LEAF_VS_RAW_MISMATCH` 는 `scripts/_probes/leaf_scale_residue_audit.py` 에 있고
+`prepush_check.py` · `validate_*.py` · `.githooks/pre-push` 어디에서도 **호출처가 0** 이다.
+이미 push 경로 밖이다. (이력상 실적은 있다 — KR0071 item24 날조 dash 행을 잡았다.
+`inbox/_resolved/20260821T1105Z__…`.) → **무작업.**
+
+### 커버리지 불변 증명 (변이시험)
+
+`scripts/_probes/probe_20260825_coverage_equivalence.py` 신설. 쳐내기 전/후 각각 돌려
+반응 집합을 대조한다. 하니스 자신의 함정 3개를 명시적으로 피했다:
+
+1. **문자열 값.** `kics_disclosure.json` 의 `값` 22,658칸 중 **진짜 숫자는 724칸(3.2%)**,
+   나머지는 숫자문자열이다(`probe_20260825_value_types.py` 실측). `isinstance(v,(int,float))`
+   로 거르면 40,655칸 중 1,434칸(3.5%)만 흔들고 "전부 눈멀었다" 는 거짓 결과가 나온다.
+   `_shake()` 가 쉼표·△·괄호까지 파싱한다.
+2. **공유 리포트 폴더.** `artifacts/kics_validation/` 을 읽지도 쓰지도 않는다 — `main()` 을
+   안 부르고 `run_validation` / `run_gate` 를 in-process 로 호출해 **반환값만** 쓴다.
+3. **음성대조군 양방향.** ① 아무것도 안 흔든 사본이 무반응인지(비결정성 탐지)
+   ② 반드시 반응해야 하는 표적(item1·14·15·19)이 반응하는지
+   ③ 선언된 사각(item12·13 적용후)이 여전히 무반응인지.
+
+### 커버리지 불변 — 실측 결과 (exit 0)
+
+쳐내기 **전** 한 번(48분 26초), **후** 한 번(46분 48초) 전수로 돌려 대조했다.
+
+| 스윕 | 표적 | 눈먼 표적 | 쳐낸 룰 외 손실 | 모의≠실제 |
+|---|---:|---:|---:|---:|
+| A. CSM_waterfall / PL_breakdown 버킷 | 366 | **0** (+4는 아래 자기정정) | **0** | **0** |
+| B. kics_disclosure 항목×컬럼 | 108 | **0** | **0** | **0** |
+
+- **모의≠실제 0** 이 핵심이다. before 실행 중에 계산해 둔 "쳐낸 뒤" 예측이 실제 after 와
+  **474개 표적 전부에서 일치**했다 — 쳐내기가 `check_generic_anomalies` 제거 **이상의 일을
+  하지 않았다**는 기계적 증거다. (근거: 그 함수는 `env.wf`·`env.pl` 을 읽기만 하고 `res` 에
+  YELLOW 를 append 만 한다. 공유 헬퍼도 env 변경도 없다.)
+- 대조군은 before/after 동일: noop(무변이) 반응 0 · must-react `item1·14·15·19` 적용전/후
+  **6/6 True** · 선언된 사각(item12·13 적용후) 불변.
+- 하니스는 `artifacts/kics_validation/` 공유폴더를 **읽지도 쓰지도 않는다**(`main()` 우회,
+  `run_validation`/`run_gate` in-process 반환값만 사용) — 남의 리포트를 자기 것으로 읽어
+  "변화 없음" 이 나오는 함정 회피.
+- 문자열 처리: `kics_disclosure.json` 의 `값` 22,658칸 중 **진짜 숫자는 724칸(3.2%)** 뿐이라
+  `isinstance(v,(int,float))` 필터는 40,655칸 중 1,434칸(3.5%)만 흔든다. `_shake()` 가
+  쉼표·△·괄호를 파싱해 **22,648 + 17,997칸**을 실제로 흔든다.
+
+### 자기정정 — **내 하니스가 "아무도 안 본다" 고 거짓말했다**
+
+전수 스윕 1차 결과에서 366버킷 중 **4버킷**이 "쳐내면 어떤 룰도 안 본다" 로 나왔다.
+반응룰이 `ANOMALY_COHORT_ZERO`·`ANOMALY_PEER_OUTLIER` 둘뿐이었고, **3버킷이 표시분기**였다.
+수용기준대로면 여기서 쳐내기를 되돌려야 했다.
+
+**되돌리기 전에 한 번 더 확인했고, 오판이었다.** 하니스가 `validate_data_contract` +
+K-ICS 룰엔진 **두 층만** 재고 있었다. PL 항등식(브리지)·CSM closing identity·plausibility 는
+`scripts/validate_master_tables.py` 에 있고 그 게이트는 `tests/test_master_tables_golden.py` 를
+통해 **push 경로 안에서 돈다.** 네 버킷을 그 층에서 다시 흔들었더니 전부 반응한다:
+
+| 버킷 | 흔든 칸 | 반응 |
+|---|---:|---|
+| 서울보증보험 2026.2Q | 11 | `pl_bridge` |
+| 신한이지손해보험 2024.4Q | 11 | `pl_bridge` |
+| 신한이지손해보험 2025.4Q | 23 | `pl_bridge` |
+| 하나생명보험 2025.4Q | 24 | `pl_bridge` |
+| (음성대조군) DB생명 2025.2Q | 30 | `pl_bridge`·`closing`·`plausibility` |
+| (음성대조군) 삼성생명 2025.4Q | 30 | `pl_bridge`·`closing`·`plausibility`·`crosscheck` |
+
+원인은 단순했다 — **네 버킷 모두 `CSM_waterfall` 행이 아예 없다.** 그래서 CSM 계열 룰
+(`CSM_CONTINUITY_FY_BOUNDARY`·`CSM_SIGN_CONVENTION`·`PL_CSM_AMORT_SCALE_GAP`)이 안 돌 뿐,
+PL 항등식은 멀쩡히 본다.
+
+**교훈은 이 저장소의 반복 주제 그대로이되 거울상이다.** 평소 경계는 *"룰이 0이라고 말한다 ≠
+그 축이 깨끗하다"* 인데, 이번엔 *"내 하니스가 무반응이라고 말한다 ≠ 아무도 안 본다"* 였다.
+**검증기의 검사범위를 의심하라는 규율은 내가 만든 계측기에도 똑같이 적용된다.**
+하니스에 한계와 실측을 주석으로 박고(`RESIDUAL_COVERED_BY_MASTER_TABLES`), 새 버킷이 거기
+들어오려면 **다른 층이 본다는 실측을 반드시 붙이도록** 못 박았다.
+
+### 부산물 — `CSM_waterfall` 이 드문드문한 회사 3곳 (census 사각)
+
+위 4버킷을 파다가 나왔다. `coverage_holes(idx, key_items, active_min=7)` 가 **"활성 신고사"
+문턱(7분기)을 못 넘는 회사를 struct(미공시)로 분류해 뺀다** — 즉 **적게 있을수록 검사에서
+빠지는** 구조다. 0분기인 회사는 `MASTER_HOLE` 이 영원히 0 이다.
+
+| 회사 | WF 분기 | PL 분기 | raw 디렉터리 |
+|---|---:|---:|---:|
+| 서울보증보험 | 0 | 6 | 13 |
+| 신한이지손해보험 | 0 | 2 | 6 |
+| 하나생명보험 | **1** (2024.4Q) | 3 | 7 |
+
+앞의 둘은 PAA 라 CSM 워터폴이 정말 없을 개연성이 높지만 **카테고리로 단정하지 않았다.**
+하나생명은 생보사인데 1분기만 있어 확인이 필요하다. raw 가 `data/dart/` 에 **있으므로**
+parser(ifrs17)로 발주했다 — `inbox/parser/20260825T0230Z__validation__MULTI__csm_waterfall_sparse_3companies.md`.
+정당 미공시가 확정되면 그때 `active_min` 사각을 **레지스트리 기반 판정**으로 바꾼다
+(지금 배선하면 근거가 없어 오탐 발생기가 된다).
+
+### 선언 — 다음 세션이 회귀로 오인하지 않게
+
+`tests/test_push_gate_wiring.py` 에 `DATA_CONTRACT_CHECKS` 매니페스트를 신설했다.
+종전 매니페스트는 `scripts/validate_*.py` **파일** 단위만 강제했는데, 한 파일 안의 `check_*`
+하나를 `run_gate()` 에서 빼는 것도 똑같이 게이트를 좁히는 행위인데 아무도 안 보고 있었다.
+이제 검사 10개 전부가 `WIRED` 또는 `DEWIRED`(+사유+손으로 돌리는 스크립트 경로)로 선언되고,
+선언과 실제 호출이 어긋나면 테스트가 막는다. 변이시험 2건으로 무효성 확인:
+- `check_generic_anomalies` 를 되살리면 → FAIL (선언을 안 고쳤으므로)
+- `check_census` 를 조용히 빼면 → FAIL
+
+### 게이트 실측 (before / after)
+
+| 지표 | before | after |
+|---|---|---|
+| `prepush_check.py` wall time | 7분 47.6초 | **7분 21.7초** |
+| `prepush_check.py` exit | 0 | **0** |
+| data-contract RED / YELLOW | 0 / **297** | 0 / **73** |
+| ├ CHECK 5 (anomaly) | 224 | 0 (게이트 밖) |
+| └ 나머지 4개 검사 | 73 | 73 (불변) |
+| 이상치 리뷰 큐(매 실행 재생성) | 83 | 0 (수동 실행 시에만) |
+| K-ICS findings 총계 | 13,664 | 13,664 |
+| K-ICS RED / YELLOW / GREEN / SKIP | 36 / 1,519 / 9,523 / 2,586 | 동일 |
+| 오프라인 테스트 | 164 passed, 1 skipped | **176 passed, 1 skipped** |
+| `--selftest` | 55/55 | 55/55 |
+
+수동 실행은 종전과 같은 수를 낸다: `scan_generic_anomalies.py` → 후보 224
+(PEER_OUTLIER 147 · COHORT_ZERO 77) · 트리아지 REAL 77 / UNCERTAIN 6 / NOISE 134 /
+OWNER_CONFIRMED 8 · `anomaly_skeptic_input.json` 83건.
+
+### 남긴 것 / 되살리는 법
+
+`run_gate()` 의 `# check_generic_anomalies(res, env)` 주석을 풀고
+`DATA_CONTRACT_CHECKS["check_generic_anomalies"]` 를 `WIRED` 로 바꾸면 원상복귀다.
+선언을 안 고치면 테스트가 막는다(의도).
+
+### handoff
+
+`docs/agents/claude-agent-publishing.md` §0(L163)·§3(L168-170)이 트리아지가 prepush 안에
+있다고 적고 있다 — **다른 stage 프롬프트라 내가 안 고쳤다.**
+→ `inbox/publishing/20260825T0130Z__validation__MULTI__anomaly_discovery_dewired_from_prepush.md`
+
+CSM 드문드문 3사(위 부산물)는 raw 가 `data/dart/` 에 있으므로 parser(ifrs17)로 발주 —
+→ `inbox/parser/20260825T0230Z__validation__MULTI__csm_waterfall_sparse_3companies.md`
+
+인보 위생: 활성 2 · 위반 0(기계적 0 · 방치 0).
 
 ---
 

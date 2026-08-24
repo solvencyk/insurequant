@@ -1,9 +1,104 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-24 (iter-4 면제 재감사 반영 — 부재형 면제 셀단위 박제·원장 경화) · Stage 3/5 — validation
+> Last updated: 2026-08-25 (저수익 휴리스틱 쳐내기 — 5개 후보 중 1개만 절단, 4개는 반증으로 존치) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
+
+## Status
+
+**(2026-08-25, 휴리스틱 쳐내기) 🟢 후보 5개 중 **1개만 잘랐다.** 나머지 4개는 실측이
+전제를 반증했다. 게이트 3종 exit 0 · prepush **exit 0**.**
+
+> owner: *"씰데없는 룰들은 좀 쳐내 제발"*, *"실질 검증은 산술적으로 닫히는 거에서 다 걸린다."*
+> 오케스트레이터가 5개 후보를 지목하되 **"지우기 전에 각 룰별로 반증을 한 번씩 돌려라"** 를
+> 조건으로 달았다. 그 조건이 결과를 뒤집었다.
+>
+> | # | 후보 | 실측 | 판정 |
+> |---|---|---|---|
+> | 1 | generic anomaly (CHECK 5) | YELLOW **224/297 (75.4%)** + 큐 83 · **RED 0** | **절단** → `scripts/scan_generic_anomalies.py` |
+> | 2 | `IDENTITY_TAUTOLOGY` | RED 0 · REVIEW **2줄** · write-path 버그 **2건** 검거 이력 | **존치(반증)** |
+> | 3 | 축 평가율 2종 | **둘 다 현재 0건**. 음성대조군 20·3 발화 | **존치(반증)** |
+> | 4 | 텍스트밀도 판독성 | 죽이면 판정불가 **35 → 251 (7.2배)** | **존치(반증)** |
+> | 5 | leaf 감사기 | push 경로 호출처 **0** | **이미 되어 있음** |
+>
+> **① 잘라낸 것.** `check_generic_anomalies` 를 `run_gate()` 에서, 트리아지를
+> `prepush_check.py` 에서 뺐다. **삭제가 아니라 이전** — `scripts/scan_generic_anomalies.py`.
+> RED 를 한 건도 낸 적이 없어 `blocked` 에 **애초에 항이 없었다**(= push 를 막은 적이 구조적으로
+> 없다). 게이트가 찍던 224건은 트리아지 **이전** 숫자고, 트리아지가 134건을 노이즈로 억제한다.
+> 마지막 수정 기여는 2026-06-19/20(교보 원수예실차·BNP 단위오류·코리안리 중복 43 = 9칸).
+> **게이트·훅이 매 실행 "분리됨 + 어디서 돌리는지" 한 줄을 찍는다** — 조용히 사라지면 다음 세션이
+> "원래 없었다"로 읽는다.
+>
+> **② `IDENTITY_TAUTOLOGY` 는 반증됐다 — 되돌린 룰은 이게 아니다.** 되돌린 것은 축 미러 룰
+> (`AXIS_SELF_MIRRORED_APPLIER`, 2026-08-21 (f))이다. 동어반복 탐지기는 커밋 `0c04537` 에서
+> **write-path 버그 2건**을 잡았다: `recalc_kics_derived.py` 가 허용오차 게이트 없이
+> `item3 = item1 − item2` 로 공시값을 덮어써 **rule 1 이 실데이터에서 실패할 수 없었다**
+> (n=477 · 잔차 정확0 97.7% vs 귀무 75.0% · excess 1.30 · z 11.4). item4/rule 2 도 같은 형태.
+> **오늘 다시 재니 R1 은 excess 1.08 · z 3.20 으로 임계 아래** — 버그를 고치니 지표가 내려갔다.
+> 룰 1·2 가 덮는 findings 는 **976건**이고 되맞춤 스크립트는 지금도 살아 있는 코드다.
+> 비용 2줄로 그 감시를 사는 것은 남는 장사다. **owner 면제 2건도 그대로 둔다**(룰이 살아 있으므로).
+>
+> **③ 축 평가율은 계기판이 아니라 0 을 찍는 트립와이어.** `AXIS_NOT_EVALUATED` 0 ·
+> `AXIS_EVAL_RATE_LOW` 0. `prepush_check.py` 는 K-ICS 출력을 키워드로 추려서 훅 화면엔
+> 아예 안 나온다 = 노이즈 비용 0. 죽은 검사도 아니다(바닥 101% → 20건, effective=0 강제 → 3건).
+> `AXIS_NOT_EVALUATED` 는 **결측 census 와 같은 부류**이되 "셀이 비었나" 가 아니라
+> **"룰이 그 셀을 순회하기는 하나"** 를 본다 — 결측 census 가 구조적으로 못 보는 사각이다.
+>
+> **④ 밀도 휴리스틱은 노이즈 감축자였다(방향 반대).** 사이드카가 460버킷을 READABLE 로
+> 인증해서 "후=전 정당" 을 성립시킨다. 빈 맵으로 바꾸면 판정불가가 **35 → 251**.
+> vision 원장은 그 35칸에만 붙으므로 밀도를 죽이면 **원장도 같이 죽는다**.
+> `SOURCE_UNREADABLE_NOT_VERIFIED` 실발화는 이미 **0** 이다(20줄은 전부 원장이 판정한
+> `SOURCE_VISION_VERIFIED`).
+>
+> **⑤ 선언을 신설했다.** `tests/test_push_gate_wiring.py` `DATA_CONTRACT_CHECKS` — 종전
+> 매니페스트는 `validate_*.py` **파일** 단위만 강제했고, 한 파일 안의 `check_*` 를 `run_gate()`
+> 에서 빼는 것은 아무도 안 보고 있었다. 이제 10개 검사 전부가 `WIRED` / `DEWIRED`(+사유+수동
+> 실행경로)로 선언되고 어긋나면 막힌다. 무효성 확인 2건(되살리면 FAIL · census 빼면 FAIL).
+
+### 이번 라운드 실측 (before / after)
+
+| 지표 | before | after |
+|---|---|---|
+| `prepush_check.py` wall time | 7분 47.6초 | **7분 21.7초** (−26초) |
+| data-contract YELLOW | 297 | **73** |
+| ├ CHECK 5 (anomaly) | 224 | **0 (게이트 밖)** |
+| └ 나머지 | 73 | 73 |
+| data-contract RED | 0 | 0 |
+| 이상치 리뷰 큐(매 실행 재생성) | 83 | **0 (수동 실행 시에만)** |
+| K-ICS findings 총계 | 13,664 | 13,664 (불변) |
+| K-ICS RED / YELLOW / GREEN / SKIP | 36 / 1,519 / 9,523 / 2,586 | 동일 |
+| 오프라인 테스트 | 164 passed, 1 skipped | **176 passed, 1 skipped** (+12 배선선언 테스트) |
+
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py
+  -> EXIT 0 · 7분21.7초 · gate RED=0 · K-ICS clear · domain pass · inbox 0 · tests 176 passed
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/scan_generic_anomalies.py
+  -> 후보 224 · 트리아지 REAL=77 UNCERTAIN=6 NOISE=134 OWNER_CONFIRMED=8 (종전과 동일)
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260825_prune_refutation.py
+  -> 반증 실측 (b) 35 vs 251 · (c) 0건 + 음성대조군 20/3 · (d) 224건 0.00초
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260825_coverage_equivalence.py --out X.json
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260825_coverage_equivalence.py --compare before.json after.json
+  -> EXIT 0 · sweep_pl_csm 366표적 눈멈 0 · sweep_kics 108표적 눈멈 0
+     쳐낸 룰 외 손실 0 · **모의≠실제 0**(쳐내기가 CHECK 5 제거 이상의 일을 안 했다는 증거)
+     대조군 before==after: noop 안정 · must-react 6/6 True · 선언된 사각 불변
+```
+
+### 되살리는 법
+
+`scripts/validate_data_contract.py` `run_gate()` 의 `# check_generic_anomalies(res, env)` 주석을
+풀고 `tests/test_push_gate_wiring.py` 의 `DATA_CONTRACT_CHECKS["check_generic_anomalies"]` 를
+`WIRED` 로 바꾼다. 선언을 안 고치면 테스트가 막는다(의도).
+
+### 안 한 것
+
+- **마스터에 안 썼다.** `kics_disclosure.json` · `insurequant_master_tables.xlsx` 읽기만.
+- 허용오차 무수정. 골든 무수정(산출이 안 바뀌었다).
+- `docs/agents/claude-agent-publishing.md` §0·§3 이 트리아지를 prepush 안에 있다고 적고 있다 —
+  **다른 stage 프롬프트라 안 고쳤다.** inbox 발주:
+  `inbox/publishing/20260825T0130Z__validation__MULTI__anomaly_discovery_dewired_from_prepush.md`
+
+---
 
 ## Status
 

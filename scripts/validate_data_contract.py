@@ -1511,6 +1511,12 @@ def check_domain_identity(res: GateResult, env: "Env") -> None:
 
 # ===========================================================================
 # CHECK 5 — Generic anomaly DISCOVERY (metric-AGNOSTIC; no per-metric rules)
+#
+# ⚠️ 2026-08-25: **`run_gate()` 는 이 함수를 더 이상 부르지 않는다.** 게이트에서 분리해
+#    `scripts/scan_generic_anomalies.py` 로 내렸다(owner: "씰데없는 룰들은 좀 쳐내").
+#    함수는 지우지 않았다 — 그 스크립트가 이걸 import 해서 쓴다.
+#    사유·실측·되살리는 법은 `run_gate()` 의 주석과
+#    `tests/test_push_gate_wiring.py` 의 `DATA_CONTRACT_CHECKS` 선언에 있다.
 # ===========================================================================
 def check_generic_anomalies(res: GateResult, env: "Env") -> None:
     """The GENERAL layer (vs CHECK 1–4 which each encode ONE known identity by hand). This
@@ -2356,7 +2362,20 @@ def run_gate(env: Env) -> GateResult:
     check_as_of(res, env)
     check_cross_source(res, env)
     check_domain_identity(res, env)
-    check_generic_anomalies(res, env)
+    # 2026-08-25 — CHECK 5(일반 이상치 스캐너)를 **게이트에서 뺐다**(owner: "씰데없는 룰들은
+    # 좀 쳐내"). 지운 게 아니라 `scripts/scan_generic_anomalies.py` 로 내렸다.
+    #
+    # 근거(실측): 이 스캐너는 게이트 YELLOW 297건 중 **224건(75.4%)** 을 혼자 만들고
+    # (PEER_OUTLIER 147 · COHORT_ZERO 77) 거기에 리뷰 큐 83건이 붙는데, **RED 를 한 건도
+    # 내지 않는다** — 설계상 YELLOW 전용이라 push 를 막은 적이 구조적으로 없다.
+    # 마지막으로 수정을 낳은 것은 2026-06-19/20 라운드(교보 원수예실차 4분기 · BNP 단위오류 ·
+    # 코리안리 중복 43)이고 그 이후 두 달 동안 이 큐에서 나온 데이터 수정은 0건이다.
+    # 발견 능력 자체는 살아 있으므로 지우지 않고 손으로 돌리는 경로로 옮겼다.
+    #
+    # ⚠️ 되살리려면 이 줄의 주석을 풀면 된다. 뺀 것이 커버리지 손실이 아님은
+    # `scripts/_probes/probe_20260825_coverage_equivalence.py` 변이시험으로 증명했다
+    # (PL/CSM 470버킷 + kics 항목x컬럼 전수, 반응 집합 동일).
+    # check_generic_anomalies(res, env)      # → scripts/scan_generic_anomalies.py
     res.provisional = env.check_concurrent_backfill()
     return res
 
@@ -2381,6 +2400,15 @@ def print_report(res: GateResult) -> None:
     }
     for check in ("census", "as_of", "cross_source", "domain", "anomaly"):
         items = by_check.get(check, [])
+        # CHECK 5 는 2026-08-25 에 게이트에서 빠졌다. **조용히 사라지면 안 된다** — 다음 세션이
+        # "이상치 검사가 원래 없었다" 로 읽으면 그게 이 저장소의 반복 사고다. 한 줄로 남긴다.
+        if check == "anomaly" and not items:
+            print("=" * 78)
+            print(f"{titles[check]}   [게이트에서 분리됨 2026-08-25]")
+            print("=" * 78)
+            print("  YELLOW 전용(RED 0)이라 push 를 막은 적이 없고 게이트 YELLOW 의 75%를 혼자 만들었다.")
+            print("  손으로 돌린다: scripts/scan_generic_anomalies.py  (스캔 + 트리아지 + 리뷰 큐)")
+            continue
         red = [f for f in items if f.severity == "RED"]
         yel = [f for f in items if f.severity == "YELLOW"]
         print("=" * 78)

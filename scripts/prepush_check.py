@@ -2,10 +2,12 @@
 """PRE-PUSH check (owner 2026-06-19): the single gate publishing runs RIGHT BEFORE a push
 (push-time only, not a daily cron). Chains:
   1. hard data-contract gate  (validate_data_contract) — exit 2 if any RED → push BLOCKED.
-  2. generic-anomaly triage   (triage_anomaly_candidates) — writes the review queue.
-Then it hands the triage residual (REAL + UNCERTAIN) to the publishing LLM-skeptic step
-(see claude-agent-publishing §3): each is classified extraction/unit-error (→parser) vs real
-economic event (→none) before the push is recommended.
+  1b. K-ICS rule gate · 1c. domain gates · 3. inbox hygiene · 4. offline tests.
+
+2026-08-25: the generic-anomaly discovery/triage step was REMOVED from this chain (it emitted
+YELLOW only, never entered `blocked`, and produced 224 of the gate's 297 YELLOWs). It now lives
+in `scripts/scan_generic_anomalies.py` and is run by hand; publishing §3's LLM-skeptic still
+reads the same `data/_derived/anomaly_skeptic_input.json` it writes.
 
 Run:  C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py
 """
@@ -14,7 +16,6 @@ try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
     pass
-import json
 import os
 from pathlib import Path
 
@@ -22,12 +23,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 import validate_data_contract as gate            # noqa: E402
-import triage_anomaly_candidates as triage       # noqa: E402
 
 
 def main() -> int:
     print("=" * 72)
-    print("PRE-PUSH CHECK  (1: data-contract gate  +  2: anomaly triage → skeptic)")
+    print("PRE-PUSH CHECK  (data-contract · K-ICS rules · domain gates · inbox · offline tests)")
     print("=" * 72)
 
     # 1) hard gate (blocks on RED)
@@ -91,24 +91,23 @@ def main() -> int:
         if _f.read_bytes() != _bytes:
             _f.write_bytes(_bytes)
 
-    # 2) discovery → precision triage  (owner-confirmed cells are suppressed, never reach skeptic)
-    real, _noise, uncertain, _confirmed = triage.triage()
-    out_dir = ROOT / "data" / "_derived"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "anomaly_triage.json").write_text(
-        json.dumps({"real": real, "uncertain": uncertain, "noise_count": len(_noise),
-                    "owner_confirmed": _confirmed}, ensure_ascii=False, indent=2), encoding="utf-8")
-    skeptic_input = real + uncertain
-    (out_dir / "anomaly_skeptic_input.json").write_text(
-        json.dumps(skeptic_input, ensure_ascii=False, indent=2), encoding="utf-8")
-
+    # 2) 일반 이상치 발견 → 트리아지 — **2026-08-25 에 push 경로에서 뺐다** (owner: "씰데없는
+    #    룰들은 좀 쳐내"). 지운 게 아니라 `scripts/scan_generic_anomalies.py` 로 내렸다.
+    #
+    #    근거(실측): 이 층은 게이트 YELLOW 297건 중 224건(75.4%)과 리뷰 큐 83건을 매 실행
+    #    재생산하는데 **RED 를 한 건도 내지 않는다** — YELLOW 전용이라 `blocked` 계산에 들어간
+    #    적이 없다(아래 verdict 줄 참조: n_red·n_hyg·n_test·n_kics·n_dom 뿐이었다). 즉 push 를
+    #    막은 적이 구조적으로 없고, 마지막으로 데이터 수정을 낳은 것은 2026-06-19/20 라운드다.
+    #    발견 능력은 살아 있으므로 손으로 돌리는 경로로 옮겼다.
+    #
+    #    ⚠️ **조용히 사라지면 안 된다.** 다음 세션이 "이상치 검사가 원래 없었다" 로 읽는 것이
+    #    이 저장소의 반복 사고형태라, 매 실행 한 줄로 남긴다. 되살리려면 이 절을 복구하고
+    #    `tests/test_push_gate_wiring.py` 의 `DATA_CONTRACT_CHECKS` 선언을 같이 고쳐라.
     print("\n" + "=" * 72)
-    print(f"ANOMALY TRIAGE: REAL={len(real)} UNCERTAIN={len(uncertain)} "
-          f"NOISE(auto-suppressed)={len(_noise)}")
-    print(f"  → review queue: data/_derived/anomaly_triage.json")
-    print(f"  → LLM-skeptic input ({len(skeptic_input)}): data/_derived/anomaly_skeptic_input.json")
-    print("  NEXT (publishing §3): LLM-skeptic classifies each REAL/UNCERTAIN "
-          "(extraction/unit-error→parser | real event→none) BEFORE recommending push.")
+    print("ANOMALY DISCOVERY: [push 경로에서 분리됨 2026-08-25]")
+    print("  YELLOW 전용(RED 0)이라 push 를 막은 적이 없다. 필요할 때 손으로 돌린다:")
+    print("    scripts/scan_generic_anomalies.py  → data/_derived/anomaly_skeptic_input.json")
+    print("  (publishing §3 LLM-skeptic 은 그 산출을 종전 경로 그대로 읽는다)")
 
     # 3) inbox 위생 (owner 2026-08-21). 생명주기 계약(inbox/README.md §64-71)은 문서로만 있고
     #    검사하는 것이 없어서 지켜지지 않았다 — 끝난 스레드가 활성 폴더에 남아 매 세션 다시 읽히고,
@@ -155,7 +154,7 @@ def main() -> int:
           f" · inbox 기계적위반={'있음' if n_hyg else '0'}"
           f" · offline tests={'FAIL' if n_test else 'pass'}"
           f" → {'BLOCKED (fix or owner-escalate)' if blocked else 'gate-clear'}"
-          f"  |  anomaly review queue={len(skeptic_input)}")
+          f"  |  anomaly discovery: 게이트 밖(scripts/scan_generic_anomalies.py)")
     print("#" * 72)
     return 2 if blocked else 0
 
