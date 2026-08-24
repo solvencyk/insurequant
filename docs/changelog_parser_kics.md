@@ -1,6 +1,6 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-08-21(4회차) · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-08-24 · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
@@ -9,6 +9,106 @@ market census.
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).
+
+---
+
+## 2026-08-24 — `SOURCE_UNREADABLE_NOT_VERIFIED` 잔여 9쌍 vision 판독: 전부 확정, 마스터 무변경
+
+inbox `20260821T0620Z`(validation, §3). 2026-08-21에 열린 메타룰 티켓의 §1(면제근거 거짓
+2건)·§2(축 동어반복)는 이미 해소돼 있었고, §3(원천판독성 사이드카가 UNREADABLE/BORDERLINE로
+찍은 10쌍의 item17후·item19후 "후=전" 미러링이 정당한지 판정불가인지)만 미결이었다. KB손해
+2025.1Q 1쌍은 8/21에 이미 vision 검증됐고(폰트매핑 문제, 값 정확), 이번 세션이 나머지 9쌍
+(KB손해 2025.3Q/2026.1Q · 미래에셋생명 2025.1Q/2025.3Q/2026.1Q · AIA생명 2025.1Q/2025.3Q/
+2026.1Q · 동양생명 2026.1Q)을 처리했다.
+
+**방법과 핵심 발견.** `fitz.get_pixmap(dpi=240)`로 각 raw PDF의 경과조치 관련 페이지를 렌더링해
+Read 도구로 육안 판독(스크립트 `scripts/_probes/render_kics_pages.py` 신설 — 8/21 1회성
+`render_kr0010_2025q1.py`를 재사용 가능한 형태로 일반화). **9쌍 전부 렌더링해 보니 진짜 래스터
+스캔이 아니라 또렷한 벡터 텍스트였다** — KB손해 2025.1Q와 같은 "폰트 유니코드 매핑 실패" 계열.
+특히 미래에셋생명(KR0079) 3개 분기는 fitz `get_text()`만으로도 대상 페이지 원문이 그대로 나왔다
+— 사이드카가 UNREADABLE로 분류한 것은 문서 전체 평균 텍스트밀도가 낮아서였지("해당사항없음"류
+공백 페이지가 많음), 대상 페이지 자체가 안 읽혀서가 아니었다. 이 발견을 지어내지 않고 validation에
+보고했다(사이드카 재설계 여부는 내 권한 밖).
+
+**판정 — 9쌍 전부 "미러링이 원문으로 확정됨".** 매 쌍마다 raw 원문이 명시적으로 경과조치
+전·후 동일함을 진술한다: "당사는 (자본감소분/장수·사업비·해지·대재해/주식·금리) 경과조치를
+적용하지 않아 경과조치 전·후 금액 및 비율이 동일함"(①②③ 각 각주, 미래에셋·AIA·동양생명 공통
+패턴) 또는 "당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다"(AIA 서술문)
++ [최근 3개 사업연도 변동요인] 표에서 경과조치전/후 숫자 완전 동일. KB손해(KR0010)만 공통(TFI)=O
+이지만 TFI는 가용자본측(신종자본증권/후순위채무 인정범위) 조치라 item17/19(요구자본측 SCR
+항목)엔 원천적으로 영향이 없다 — 지급여력기준금액(item14)이 적용전=적용후 백만원 단위까지
+완전 동일함을 직접 확인해 이를 검증했고, 선택적용 ①②③은 KB손해도 전부 미신청이었다. item17전·
+item19전 값도 마스터와 소수점까지 정확히 일치 재확인(9쌍×2항목=18셀 cross-check).
+
+**결론: 수정 필요 0건, 판정불가 0건.** `kics_disclosure.json`은 이번 세션에서 셀 하나도
+쓰지 않았다(원래 값이 이미 정확). `sync_master_xlsx_sheet.py`도 실행하지 않았다.
+
+**게이트(영향 없음, read-only로 실측 확인).** `validate_data_contract.py`의
+`SOURCE_UNREADABLE_NOT_VERIFIED` YELLOW는 20건 그대로다 — vision 판독이 원천판독성 사이드카의
+텍스트밀도 휴리스틱 자체를 바꾸지 못한다(KB손해 2025.1Q 선례와 같은 한계, 사이드카 갱신·면제
+등재는 validation/owner 권한). `validate_kics_disclosure.py`는 exit code 0(`blocking RED=0`,
+38건 전부 이 티켓과 무관한 기존 documented exception). 티켓 status를 `answered`로 두었다
+(validation이 이 티켓에서 3차례 적대적 재검증을 해 온 이력이라 관례상 self-close 안 함).
+
+**부수 발견, 스코프 밖(안 건드림).** 렌더링 중 item47-54(TFI표 tier 분해, 직전 15회차 세션이
+`task_66ee6d43`로 전수감사 스핀오프한 영역) 라인도 같은 페이지에서 눈에 띄어 교차확인했다.
+KR0010/KR0080/KR0087은 이미 채워져 있고 내가 읽은 raw 값과 정확히 일치. **미래에셋생명(KR0079)
+3개 분기는 item47-54가 전부 결측인데 raw엔 "1) 공통적용경과조치 관련" 표가 매 분기 존재한다**
+(TFI=X라도 표 자체는 인쇄됨, 전부 적용전=적용후). 또한 이 표의 "(기발행 신종자본증권)"·
+"(기발행 후순위채무)" 메모행은 어느 컬럼(적용전/적용후)에 대각선 취소선이 그려지는지가 **회사마다
+다르다** — KB손해·미래에셋은 적용후 쪽 취소선인데, 15회차 TODO에 기록된 푸본현대(KR0083)
+2024.3Q 사례는 적용전 쪽 취소선이었다. 좌표 없는 평문 추출로는 이 방향을 구분 못 하므로,
+item53/54 계열 스크립트가 "고정 컬럼을 취한다"고 가정하면 회사에 따라 반대로 읽을 위험이 있다
+— `task_66ee6d43` 세션이 참고할 수 있게 원문 값과 함께 티켓에 남겨 뒀다.
+
+상세: `inbox/parser/20260821T0620Z...md` `## 답변 (parser-kics, 2026-08-24)` 절.
+
+---
+
+## 2026-08-24 — leaf 감사기(`leaf_scale_residue_audit.py`) 잔차 4건: 마스터 무변경, 감사기 버그 2종 수정
+
+inbox `20260821T2010Z`(orchestrator, iter-2). 2026-08-21 답변("4건 전부 마스터가 이미 맞다,
+감사기 오탐")을 액면 신뢰하지 않고 처음부터 독립 재현한 뒤, 감사기 자체를 고쳐 재실행
+불일치를 4→0으로 만들었다(마스터는 시작부터 끝까지 1바이트도 안 건드림).
+
+**재검증**: 예별손해(KR0004) raw fitz 원문을 다시 직접 읽어 "③ 주식위험 경과조치 또는
+금리위험 경과조치" 표의 금리위험 적용후 칸이 2023.4Q/2024.1Q/2024.2Q 전부 리터럴 대시(`-`)임을
+재확인. `MARKET_M` 상관행렬로 회사 인쇄 시장위험액후 합계(110,677/116,622/134,130백만)를
+재현하는 쪽이 "금리후=0" 가설뿐임(diff <1백만 vs "carry-forward" 가설 26,000~38,000백만
+어긋남)을 재확인 — 결론 안 뒤집힘.
+
+**원인은 마스터가 아니라 감사기였다.** `scripts/rebuild_combined_transition_after.py::
+scan_occurrences()`가 시장위험(36-40) 리프의 적용후 대시를 무조건 carry-forward(`b=a`)로
+스냅하는 규칙을 갖고 있었는데, 이는 "형제 위험 5개가 전부 대시=선택 자체를 안 함"인 롯데손보
+2026.1Q류에만 맞고, 예별손해처럼 같은 표 안 형제(주식위험)가 진짜 감소값을 보이는 "선택적용이
+실제로 걸린 표"에는 틀렸다(그 경우 대시=적용후 인정액 0). 수정 전 APPLIERS 18사×234버킷
+전수 시뮬레이션(신규 `probe_20260824_market_dash_simulate.py`)으로 이 규칙 변경이 영향을
+주는 버킷이 정확히 4건(예별손해 3분기 + 앵커불가라 감사기 집계엔 안 잡히는 흥국화재
+2023.4Q 1건, 시뮬레이션 확인용)뿐이고 전부 마스터에 더 가까워지거나 같아짐(역행 0건)을
+확인한 뒤 `scan_occurrences()`를 수정 — dash 위치만 기록해 뒀다가 표를 다 읽은 후 형제 중
+진짜 변화 유무로 사후 판정하는 2단계 로직으로 바꿨다.
+
+처브라이프(KR0100) 2024.4Q item35는 발행사가 같은 개념(대재해위험 적용전, 2024.4Q)을 두 표
+— 전용 대재해위험표(p55-56, 업무보고서 AH725/AI725, 마스터와 일치하는 46.81억)와 선택적용
+경과조치 결합표(p47-48, 44.99억) — 에서 다르게 인쇄한 **발행사 내부 불일치**로 확정(item29-34
+나머지 6항목은 두 표가 이미 일치함을 재확인). 감사기는 구조상(경과조치+기본요구자본 페이지만
+스캔) 정본표를 볼 수 없어 다른 표를 잘못 대조하는 것 — 감사기에 exact-value pin
+(`KNOWN_ISSUER_TABLE_INCONSISTENCY`) 1건 추가, 마스터/대조값 어느 한쪽이라도 바뀌면 즉시
+재발화하게 설계(통째 스킵 아님).
+
+"앵커불가 21"(기본요구자본 occurrence 없음 10건 + 스케일비율 이상 11건, 둘 다 진단기 자신의
+다중occurrence 처리 한계 — 마스터 문제 0건)도 감사기 자신이 그 분해를 출력하도록 고쳐, 다음
+라운드가 또 "이게 뭐냐"를 묻지 않게 했다.
+
+재실행: `대조 셀 4,516 | 불일치 0 | 앵커불가 21 (기본요구자본occ없음 10 + 스케일비율이상 11)`,
+exit 0. `validate_kics_disclosure.py`는 수정 전/후 재실행 결과가 byte-identical(Top RED
+offender 10줄 동일), `kics_disclosure.json` git diff 없음 — 마스터 변경 0건 재확인.
+
+수정: `scripts/rebuild_combined_transition_after.py`(`scan_occurrences()`),
+`scripts/_probes/leaf_scale_residue_audit.py`(pin + 앵커불가 분해출력). 신규(read-only):
+`scripts/_probes/probe_20260824_kr0004_master_state.py`,
+`scripts/_probes/probe_20260824_market_dash_simulate.py`. 티켓은 `status: resolved` →
+`inbox/_resolved/20260821T2010Z__orchestrator__MULTI__leaf_audit_residual_4_cells.md`.
 
 ---
 

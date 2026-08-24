@@ -790,8 +790,74 @@ def _validate_transition_basic(
         )
 
 
+# --------------------------------------------------------------------------
+# item47(보완자본 한도 적용 전)의 **스코프** — 발행사마다 다르다 (2026-08-24)
+# --------------------------------------------------------------------------
+# 한도(`item48`)는 **채무성 자본**에만 걸린다. `item49`(해약환급금 부족분 상당액 중 해약환급금
+# 상당액 초과분)는 한도와 무관하게 전액 보완자본에 들어간다. 문제는 발행사가 `item47` 을 두
+# 관행으로 인쇄한다는 것이다:
+#
+#   EXCL : item47 = 채무성 자본만            → 보완자본 = min(item47, item48) + item49
+#   INCL : item47 이 item49 를 **포함**       → 보완자본 = min(item47 − item49, item48) + item49
+#
+# **원문 대조(두 PDF 를 나란히 놓은 실측, 추론 아님):**
+#   · EXCL — IBK연금 2025.3Q p16: 한도적용전 403,778 < 보완자본 695,572 이고
+#     min(403,778, 352,469) + 343,103 = 695,572 로 정확히 닫힌다. item47 이 보완자본보다
+#     **작다** = item49 가 밖에 있다.
+#   · INCL — 한화생명 2025.2Q p18: 한도적용전 14,012,828 > 보완자본 13,930,253 이고
+#     해약환급금 6,999,555 보다도 크다. 채무성 = 14,012,828 − 6,999,555 = 7,013,273 이
+#     한도 6,930,699 를 82,574백만(=825.74억) 초과 →
+#     min(7,013,273, 6,930,699) + 6,999,555 = 13,930,254 (인쇄 13,930,253, 반올림 1).
+#
+# **왜 이걸 안 갈랐던 것이 결함인가.** 2026-08-24 이전의 룰은 EXCL 만 알았고, INCL 회사의
+# 한도 **미구속** 분기를 `UNCAPPED`(= 한도로 안 자름) 라는 별개 관행으로 오분류했다. 미구속일
+# 때는 두 읽기가 같은 값을 내서 그 오분류가 드러나지 않는다. 그러나 한도가 **실제로 구속하는**
+# 분기에서는 한도초과액이 `item49` 만큼 과대해진다 — 그 과대값이 기본자본 다리(축 A)에 그대로
+# 들어가 한화생명 2025.2Q 에서 −30,095 라는 잔차를 만들었고, 그것이 "발행사 모순" 으로 오진돼
+# owner 판단 면제까지 갔다. 원인은 발행사가 아니라 **우리 룰의 스코프 가정**이었다.
+#
+# **회사 하드코딩 리스트를 만들지 않는다.** 스코프는 그 회사 자신의 **결정적 버킷**에서
+# 투표로 정한다(`_tier2_cross_bucket_context`). 결정적 = 두 읽기 중 정확히 하나만 공시
+# 보완자본을 재현하는 버킷. 근거는 원문 안에서 닫히는 산수뿐이고, 새 분기가 들어오면
+# 판정도 자동으로 갱신된다.
+_TIER2_SCOPE_EXCL = "EXCL"
+_TIER2_SCOPE_INCL = "INCL"
+
+# `item3 == item47` 로 재현되는 갈래 — 한도초과액이 없다(전액 인정).
+_TIER2_UNCAPPED_BRANCHES = frozenset({"UNCAPPED", "I49_IN_I47_UNCAPPED"})
+
+# **축 A 가 한도초과액을 실제로 더하는 갈래 집합.** 이름을 붙여 상수로 뺀 이유가 있다 —
+# 이 저장소의 반복 사고형태가 "룰이 어떤 대상을 순회조차 안 한다" 는 은닉 필터다
+# (`_TRANSITION_APPLIERS` · `_TRANS_PARENT_SUBS`). 갈래를 늘리면서 이 집합을 안 고치면
+# 새 갈래는 조용히 한도초과액 0 으로 취급돼 다리가 틀린 채 통과한다.
+# `tests/test_tier2_limit_rules.py::test_every_capped_branch_feeds_the_bridge` 가 강제한다.
+_TIER2_EXCESS_BEARING_BRANCHES = frozenset({"CAPPED", "BOTH", "I49_IN_I47_CAPPED"})
+
+
+def _tier2_debt(i47: float, i49: float, scope: str) -> float:
+    """한도(`item48`)가 걸리는 **채무성 자본**. INCL 관행은 item47 이 item49 를 포함해 인쇄된다."""
+    return i47 - i49 if scope == _TIER2_SCOPE_INCL else i47
+
+
+def _tier2_expected(branch: str, i47: float, i48: float, i49: float, scope: str) -> float:
+    """갈래·스코프에 맞는 **기대 보완자본**.
+
+    finding 의 `expected`/`diff` 는 판정에 쓴 읽기와 **같은 식**에서 나와야 한다. 갈래는
+    INCL 로 판정해 놓고 expected 는 EXCL 식으로 인쇄하면, 게이트 출력이 통과 사유와
+    어긋난 숫자를 찍는다(2026-08-24 시뮬에서 축 F 79칸이 실제로 그랬다)."""
+    if branch in _TIER2_UNCAPPED_BRANCHES:
+        return i47
+    return min(_tier2_debt(i47, i49, scope), i48) + i49
+
+
+def _tier2_formula(scope: str) -> str:
+    """게이트 출력에 박는 식 문자열 — 어떤 읽기로 쟀는지 사람이 바로 읽게."""
+    return ("min(47−49, 48)+49" if scope == _TIER2_SCOPE_INCL else "min(47,48)+49")
+
+
 def _tier2_branch(
-    bucket: QuarterBucket, post: bool, tol: float, target_item: int = 3
+    bucket: QuarterBucket, post: bool, tol: float, target_item: int = 3,
+    scope: str = _TIER2_SCOPE_EXCL,
 ) -> tuple[str, Optional[float]]:
     """보완자본 관행 분류 → (branch, 한도초과액).
 
@@ -805,6 +871,21 @@ def _tier2_branch(
       TFI_NA_OK  : TFI 표 자체가 미기재(아래) + 대체 항등식 `target == item13` 성립
       TFI_NA_RED : TFI 표 자체가 미기재인데 대체 항등식도 깨짐 → RED
       NEITHER    : 어느 쪽으로도 target 이 재현되지 않음     → RED
+
+    ## `scope` — item47 이 item49 를 포함해 인쇄되는 회사 (2026-08-24)
+
+    `scope="INCL"` 이면 한도가 걸리는 채무성 자본이 `item47 − item49` 다(위 상수 절의 원문
+    대조 참조). 그때만 갈래 이름이 갈린다:
+
+      I49_IN_I47_CAPPED   : target == min(item47 − item49, item48) + item49, 한도가 구속
+      I49_IN_I47_UNCAPPED : target == item47, 한도 미구속(초과액 0)
+
+    **이름을 갈라 두는 것이 핵심이다.** 같은 `CAPPED` 라는 이름이 회사에 따라 다른 식을
+    뜻하면, 게이트 출력만 보고는 어느 식으로 통과했는지 알 수 없다 — 이 함수가 애초에
+    하나로 합쳐진 이유(축마다 갈래를 재구현하면 같은 이름이 다른 뜻을 갖는다)와 같은 원칙이다.
+    또한 새 이름은 기존 이름의 **접두사가 아니다** — 게이트·테스트가 `"branch=CAPPED" in detail`
+    같은 부분문자열로 갈래를 읽기 때문에, `CAPPED_...` 로 지으면 두 갈래가 한 이름으로 뭉개진다.
+    (`tests/test_rule_coverage_manifest.py::test_branch_names_are_not_prefixes_of_each_other`)
 
     ## `target_item` — 갈래 정의는 **하나뿐이다** (2026-08-22)
 
@@ -846,14 +927,23 @@ def _tier2_branch(
     i3, i47, i48, i49 = (src.get(target_item), src.get(47), src.get(48), src.get(49))
     if None in (i3, i47, i48, i49):
         return "INPUT_MISSING", None
-    capped = abs(i3 - (min(i47, i48) + i49)) <= tol
+    debt = _tier2_debt(i47, i49, scope)
+    capped = abs(i3 - (min(debt, i48) + i49)) <= tol
     uncapped = abs(i3 - i47) <= tol
-    if capped and uncapped:
-        return "BOTH", max(0.0, i47 - i48)
-    if capped:
-        return "CAPPED", max(0.0, i47 - i48)
-    if uncapped:
-        return "UNCAPPED", 0.0
+    if scope == _TIER2_SCOPE_INCL:
+        # 미구속이면 `min(debt, i48) + i49 == i47` 이라 두 시험이 같은 상태를 가리킨다.
+        # 그때 초과액은 0 이므로 uncapped 를 먼저 본다(이름이 사실을 말하게).
+        if uncapped:
+            return "I49_IN_I47_UNCAPPED", 0.0
+        if capped:
+            return "I49_IN_I47_CAPPED", max(0.0, debt - i48)
+    else:
+        if capped and uncapped:
+            return "BOTH", max(0.0, debt - i48)
+        if capped:
+            return "CAPPED", max(0.0, debt - i48)
+        if uncapped:
+            return "UNCAPPED", 0.0
     # TFI 표 미기재: 세 행이 전부 0 인데 SCR 이 양수 → item48 은 한도가 아니다.
     # 한도 메커니즘이 없으므로 한도초과액도 0 이고, 대체 항등식은 target == item13.
     # item51 을 대상으로 해도 같은 항등식이 성립한다 — 실측 12칸(메트라이프 10 ·
@@ -891,6 +981,7 @@ def _tier2_composition_finding(
     na_break_tag: str,
     na_missing_tag: str,
     same_table_note: str,
+    scope: str = _TIER2_SCOPE_EXCL,
 ) -> None:
     """`_tier2_branch` 판정 하나를 finding 으로 옮긴다 — 갈래→status 매핑의 단일 지점.
 
@@ -930,13 +1021,13 @@ def _tier2_composition_finding(
         ))
         return
     if branch == "NEITHER":
-        expected = min(i47, i48) + i49
+        expected = _tier2_expected(branch, i47, i48, i49, scope)
         findings.append(_finding(
             bucket, rule, status=status,
             expected=expected, actual=tgt, diff=tgt - expected,
             detail=f"{neither_tag}: [{col}] 공시 보완자본 item{target_item} = {tgt:g} 이 "
-                   f"min(47,48)+49 = {expected:g} 도, item47 = {i47:g} 도 재현하지 못한다 "
-                   f"— {same_table_note}" + post_note,
+                   f"{_tier2_formula(scope)} = {expected:g} 도, item47 = {i47:g} 도 "
+                   f"재현하지 못한다 (item47 스코프={scope}) — {same_table_note}" + post_note,
         ))
         return
     if branch == "TFI_NA_RED":
@@ -958,7 +1049,7 @@ def _tier2_composition_finding(
                    f"item{target_item}({tgt:g}) == item13({i13:g}) 로 검산했다",
         ))
         return
-    expected = min(i47, i48) + i49 if branch != "UNCAPPED" else i47
+    expected = _tier2_expected(branch, i47, i48, i49, scope)
     findings.append(_finding(
         bucket, rule, status=status, expected=expected, actual=tgt,
         diff=None if tgt is None else tgt - expected,
@@ -974,6 +1065,7 @@ def _validate_tier2_limit(
     tier2_stale_limit: Optional[frozenset] = None,
     tfi_applicability: Optional[Mapping[tuple[str, str], str]] = None,
     tier2_x_present_codes: Optional[frozenset] = None,
+    tier2_i47_scope: Optional[Mapping[str, str]] = None,
 ) -> None:
     """보완자본 한도 3줄(47·48·49) 축 — **적용전·적용후를 각각** 검산한다.
 
@@ -1029,12 +1121,15 @@ def _validate_tier2_limit(
     마스터의 `item14_적용후` 는 선택 경과조치까지 합친 **전체결합 스코프**라 개념이 다르다.
     """
     strict_tol = eff_tol
+    # item47 스코프는 **그 회사 자신의 결정적 버킷 투표**로 정해진다(하드코딩 리스트 아님).
+    # 근거가 없으면 종전 관행인 EXCL — 판정을 못 한 회사에서 룰이 조용히 바뀌지 않게 한다.
+    scope = (tier2_i47_scope or {}).get(bucket.code, _TIER2_SCOPE_EXCL)
     for post in (False, True):
         col = KEY_VALUE_POST if post else KEY_VALUE
         sfx = "_post" if post else ""
         src = bucket.values_post if post else bucket.values
         present = {i for i in TIER2_ITEMS if i in src}
-        branch, excess = _tier2_branch(bucket, post, strict_tol)
+        branch, excess = _tier2_branch(bucket, post, strict_tol, scope=scope)
 
         # --- 축 A: 기본자본 다리 -------------------------------------------
         rule_a = f"2_tier1_bridge{sfx}"
@@ -1050,7 +1145,7 @@ def _validate_tier2_limit(
                        "(폴백 금지 — 적용전 값으로 메우면 혼합기준 무의미값이 된다)",
             ))
         else:
-            raw_exc = excess if branch in ("CAPPED", "BOTH") else 0.0
+            raw_exc = excess if branch in _TIER2_EXCESS_BEARING_BRANCHES else 0.0
             # **구조적 상한: 한도초과액 ≤ 불인정항목(item12).**
             #
             # 발행사 각주가 정의를 써 놨다(미래에셋생명 2023.2Q p11 주2): 기본자본은 순자산에서
@@ -1064,13 +1159,19 @@ def _validate_tier2_limit(
             # **정확히 닫힌다**. 그중 셋은 근사치가 item12 와 소수점 반올림 차이(203.10 vs 203 ·
             # 2,015.35 vs 2,015 · 513.09 vs 513)라 "불인정항목 전액이 한도초과" 임을 직접 보여준다.
             # 실측 성적: 461/16 → **467/10**. 남은 1칸(한화생명 2025.2Q, 근사치가 item12 의
-            # 2.3배)은 클램프로도 안 닫히고 그대로 RED 다 — 클램프는 실패를 지우지 않는다.
+            # 2.3배)은 클램프로도 안 닫히고 그대로 RED 였다 — 클램프는 실패를 지우지 않는다.
+            #
+            # **2026-08-24: 그 마지막 1칸의 원인이 클램프가 아니라 스코프였다.** 한화생명은
+            # item47 이 item49 를 포함해 인쇄되는 INCL 회사이고, 채무성 자본은 item47 − item49
+            # 다. 스코프를 인식하자 근사치가 70,821.29 → 825.74 로 내려가 item12(30,921) 안에
+            # 들어가고(클램프 미발동) 다리가 잔차 0.26 으로 닫힌다. 즉 **클램프가 밴드에이드로
+            # 가리고 있던 것이 스코프 결함**이었다. 클램프는 남긴다 — 위 9칸의 근거는 그대로다.
             exc = min(raw_exc, max(0.0, i12))
             expected = i4 - (i12 - exc) - i13
             f = _check_numeric(bucket, rule_a, expected, i2, strict_tol)
             f["detail"] = (
                 f"item2 == item4 − (item12 − 한도초과) − item13 [{col}] "
-                f"branch={branch} 한도초과={exc:g}"
+                f"branch={branch} scope={scope} 한도초과={exc:g}"
                 + (f" (근사치 {raw_exc:g} 를 item12={i12:g} 로 클램프 — "
                    "한도초과액은 불인정항목의 구성요소라 그보다 클 수 없다)"
                    if raw_exc > exc + 1e-9 else "")
@@ -1104,14 +1205,15 @@ def _validate_tier2_limit(
         elif branch == "NEITHER":
             i3 = src.get(3)
             i47, i48, i49 = src.get(47), src.get(48), src.get(49)
+            exp_b = _tier2_expected(branch, i47, i48, i49, scope)
             findings.append(_finding(
                 bucket, rule_b,
                 status=STATUS_YELLOW if post else STATUS_RED,
-                expected=min(i47, i48) + i49, actual=i3,
-                diff=i3 - (min(i47, i48) + i49),
+                expected=exp_b, actual=i3,
+                diff=i3 - exp_b,
                 detail=f"COMPOSITION_NEITHER: [{col}] 공시 보완자본 {i3:g} 이 "
-                       f"min(47,48)+49 = {min(i47, i48) + i49:g} 도, "
-                       f"item47 = {i47:g} 도 재현하지 못한다 "
+                       f"{_tier2_formula(scope)} = {exp_b:g} 도, "
+                       f"item47 = {i47:g} 도 재현하지 못한다 (item47 스코프={scope}) "
                        "— 47/48/49 의 값·스케일 또는 item3 중 하나가 틀렸다"
                        + (_POST_UNESTABLISHED if post else ""),
             ))
@@ -1325,9 +1427,14 @@ def _validate_tier2_limit(
 
 
 def _validate_tfi_tier_rows(
-    bucket: QuarterBucket, findings: list[dict[str, Any]], eff_tol: float
+    bucket: QuarterBucket, findings: list[dict[str, Any]], eff_tol: float,
+    scope: str = _TIER2_SCOPE_EXCL,
 ) -> None:
     """TFI 표 자신의 기본자본·보완자본(50·51) 축 — **적용전·적용후를 각각** 검산한다.
+
+    `scope` 는 축 F 가 `_tier2_branch` 에 그대로 넘기는 회사별 `item47` 스코프다. 축 B 와
+    **같은 값**이 들어가야 두 축이 같은 갈래를 낸다 — 한쪽만 스코프를 모르면
+    `test_both_composition_axes_agree_on_the_branch_and_the_status` 가 깨진다.
 
     ## 축 E 적용전 — `50_tfi_tier_split` (blocking RED)
 
@@ -1529,7 +1636,8 @@ def _validate_tfi_tier_rows(
         # 위 함수 docstring 에 있다 — 두 축이 각자 갈래를 구현하면 같은 이름이 다른 뜻을 갖는다.
         rule_f = f"51_tfi_tier2_composition{sfx}"
         i47, i48, i49 = src.get(47), src.get(48), src.get(49)
-        branch51, _exc51 = _tier2_branch(bucket, post, eff_tol, target_item=51)
+        branch51, _exc51 = _tier2_branch(bucket, post, eff_tol, target_item=51,
+                                         scope=scope)
         _tier2_composition_finding(
             bucket, findings, rule_f, branch51, 51, post, col, src,
             skip_tag="TFI_COMPOSITION_INPUT_MISSING",
@@ -1538,6 +1646,7 @@ def _validate_tfi_tier_rows(
             na_missing_tag="TFI_COMPOSITION_TFI_NA_RECLASS_MISSING",
             same_table_note=("네 항목 전부 같은 표·같은 컬럼이라 두 표 사이 스코프 차이가 "
                              "개입할 수 없다"),
+            scope=scope,
         )
 
         # --- 축 G: 기발행 자본증권 메모행 53/54 (census · 부호 · 포함관계) ------
@@ -1709,11 +1818,72 @@ def _validate_tfi_memo_rows(
     ))
 
 
+def _tier2_i47_scope_map(
+    buckets: list["QuarterBucket"], tolerance: float
+) -> dict[str, str]:
+    """회사별 `item47` 스코프를 **그 회사 자신의 결정적 버킷 투표**로 정한다.
+
+    결정적 버킷 = 두 읽기 중 **정확히 하나만** 공시 보완자본(item3)을 재현하는 버킷.
+      EXCL 표 : `item3 == min(item47, item48) + item49` 만 성립
+      INCL 표 : `item3 == min(item47 − item49, item48) + item49` 만 성립
+    둘 다 성립(한도 미구속·item49=0 등)하거나 둘 다 실패(NEITHER)면 증거가 아니므로 뺀다.
+    TFI 표 미기재(47=48=49≈0)도 뺀다 — 한도 메커니즘 자체가 없다.
+
+    **회사 리스트를 코드에 박지 않는 이유.** 스코프는 발행사의 인쇄 관행이고, 그 관행은
+    같은 회사의 다른 분기 산수가 원문 안에서 닫히는지로 판정된다. 리스트를 박으면 새 회사·새
+    분기가 들어올 때 조용히 틀린 읽기로 검사된다(이 저장소가 `_TRANSITION_APPLIERS` 에서
+    이미 겪은 은닉 필터 사고와 같은 형태다).
+
+    적용전·적용후를 **둘 다** 센다. 관행은 표의 인쇄 방식이라 컬럼과 무관하고, 적용후를 빼면
+    표본이 절반이 된다. 실측(2026-08-24, kics_disclosure.json 전수)에서 두 방식의 판정 결과는
+    **완전히 같았다**(INCL 5사 · CONFLICT 4사 동일).
+
+    허용오차는 룰엔진과 **같은 것**을 쓴다(이미지 OCR 회사는 10.0). 다르면 투표가 검사와
+    다른 잣대로 갈린다.
+
+    한 회사 안에서 두 표가 갈리면(CONFLICT) **종전 관행 EXCL 로 남긴다** — 새 읽기를 근거
+    없이 넓히지 않는다. 실측 CONFLICT 4사(KR0010·KR0050·KR0051·KR0069)를 INCL 로 뒤집어도
+    게이트 status 전이는 0 건이라, 이 선택은 지금 데이터에서 결과를 바꾸지 않는다
+    (`scripts/_probes/probe_20260824_i47_scope_rule_ab.py` V3).
+
+    **알려진 한계 — 회사 단위 투표는 관행이 시간에 따라 바뀌는 발행사를 못 담는다.**
+    KB손해(KR0010)는 2023.1Q~2025.1Q 가 전부 INCL 이고 2025.2Q 부터 EXCL 로 **깨끗하게
+    갈린다**(item47 이 66,275 → 14,398 로 떨어지고 그 뒤로 item49 를 따로 더한다). 지금은
+    이 회사가 CONFLICT 로 묶여 EXCL 로 처리되는데, 해당 버킷들은 전부 한도 미구속이라
+    한도초과액이 어느 읽기에서든 0 이라 결과가 같다. **분기 단위 판정으로 내려가는 것은
+    측정된 이득이 0 인 지금은 하지 않는다** — 필요해지는 시점은 CONFLICT 회사에서 한도가
+    실제로 구속하는 버킷이 생길 때이고, 그때는 이 축이 `3_tier2_composition` RED 로 먼저
+    드러난다. 재현: `scripts/_probes/probe_20260824_kr0075_scope_evidence.py` 를 CODES 에
+    CONFLICT 4사를 넣어 돌린다.
+    """
+    vote: dict[str, dict[str, int]] = {}
+    for b in buckets:
+        tol = IMAGE_OCR_TOLERANCE if b.code in IMAGE_OCR_COMPANIES else tolerance
+        for post in (False, True):
+            src = b.values_post if post else b.values
+            i3, i47, i48, i49 = src.get(3), src.get(47), src.get(48), src.get(49)
+            if None in (i3, i47, i48, i49):
+                continue
+            if max(abs(i47), abs(i48), abs(i49)) <= TIER2_ZERO_EPS:
+                continue
+            excl = abs(i3 - (min(i47, i48) + i49)) <= tol
+            incl = abs(i3 - (min(i47 - i49, i48) + i49)) <= tol
+            if excl == incl:
+                continue
+            c = vote.setdefault(b.code, {_TIER2_SCOPE_EXCL: 0, _TIER2_SCOPE_INCL: 0})
+            c[_TIER2_SCOPE_EXCL if excl else _TIER2_SCOPE_INCL] += 1
+    return {
+        code: _TIER2_SCOPE_INCL
+        for code, c in vote.items()
+        if c[_TIER2_SCOPE_INCL] and not c[_TIER2_SCOPE_EXCL]
+    }
+
+
 def _tier2_cross_bucket_context(
     buckets: list["QuarterBucket"], tolerance: float,
     tfi_applicability: Optional[Mapping[tuple[str, str], str]] = None,
-) -> tuple[frozenset, frozenset, frozenset]:
-    """버킷 하나만 봐서는 못 잡는 세 가지를 미리 계산한다.
+) -> tuple[frozenset, frozenset, frozenset, dict[str, str]]:
+    """버킷 하나만 봐서는 못 잡는 네 가지를 미리 계산한다.
 
     1. `tier2_seen_codes` — 47/48/49 표를 **한 분기라도** 공시한 회사 코드. 2026-08-22 까지는
        이것이 RED/SKIP 의 **판정 근거**였는데 그게 틀렸다(TFI 는 분기마다 꺼졌다 켜진다).
@@ -1727,6 +1897,8 @@ def _tier2_cross_bucket_context(
        한다. 전수 실측으로 그렇지 않은 발행사가 있다(하나손해: 13분기 전부 X 인데 12분기가
        표를 인쇄 — "해당사항 없음" 문장 뒤에 적용전 컬럼만 채운 표를 그린다). 그런 회사에서는
        X 가 부재를 설명하지 못하므로 SKIP 대신 review 로 내린다.
+    4. `tier2_i47_scope` — 회사별 `item47` 스코프(위 `_tier2_i47_scope_map`). 발행사가
+       item49 를 item47 **안에** 넣어 인쇄하는지 여부이고, 한도초과액 계산식이 여기서 갈린다.
     """
     seen: set[str] = set()
     x_present: set[str] = set()
@@ -1766,7 +1938,8 @@ def _tier2_cross_bucket_context(
                 if (abs(i48 - i14_cur * TIER2_LIMIT_RATIO) > tolerance
                         and abs(i48 - i14_prev * TIER2_LIMIT_RATIO) <= tolerance):
                     stale.add((cur.code, cur.quarter, is_post))
-    return frozenset(seen), frozenset(stale), frozenset(x_present)
+    return (frozenset(seen), frozenset(stale), frozenset(x_present),
+            _tier2_i47_scope_map(buckets, tolerance))
 
 
 def _validate_bucket(
@@ -1778,6 +1951,7 @@ def _validate_bucket(
     tier2_stale_limit: Optional[frozenset] = None,
     tfi_applicability: Optional[Mapping[tuple[str, str], str]] = None,
     tier2_x_present_codes: Optional[frozenset] = None,
+    tier2_i47_scope: Optional[Mapping[str, str]] = None,
 ) -> None:
     """Apply all 14 rules to one (company, quarter) bucket, appending to `findings`.
 
@@ -1944,9 +2118,12 @@ def _validate_bucket(
 
     _validate_tier2_limit(bucket, findings, eff_tol,
                           tier2_seen_codes, tier2_stale_limit,
-                          tfi_applicability, tier2_x_present_codes)
+                          tfi_applicability, tier2_x_present_codes,
+                          tier2_i47_scope)
 
-    _validate_tfi_tier_rows(bucket, findings, eff_tol)
+    _validate_tfi_tier_rows(
+        bucket, findings, eff_tol,
+        (tier2_i47_scope or {}).get(bucket.code, _TIER2_SCOPE_EXCL))
 
 
 def run_validation(
@@ -1966,14 +2143,16 @@ def run_validation(
     review 카운트가 튄다."""
     buckets = _group_records(records)
     findings: list[dict[str, Any]] = []
-    tier2_seen_codes, tier2_stale_limit, tier2_x_present_codes = (
+    (tier2_seen_codes, tier2_stale_limit, tier2_x_present_codes,
+     tier2_i47_scope) = (
         _tier2_cross_bucket_context(buckets, tolerance, tfi_applicability)
     )
 
     for bucket in buckets:
         _validate_bucket(bucket, findings, tolerance, source_has_breakdown,
                          tier2_seen_codes, tier2_stale_limit,
-                         tfi_applicability, tier2_x_present_codes)
+                         tfi_applicability, tier2_x_present_codes,
+                         tier2_i47_scope)
 
     summary_status: dict[str, int] = {
         STATUS_YELLOW: 0,

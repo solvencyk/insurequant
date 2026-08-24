@@ -90,6 +90,106 @@ QS = ["2023.1Q", "2023.2Q", "2023.3Q", "2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q
       "2024.4Q", "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q"]
 
 
+SOURCE_VISION_LEDGER = ROOT / "data" / "_gold" / "kics_source_vision_verified.json"
+
+# 원장이 반드시 갖춰야 하는 필드. 하나라도 비면 `SOURCE_VISION_RECORD_INCOMPLETE` RED —
+# "누군가 확인했다" 는 산문과 같다(`EXEMPTION_OWNER_RECORD_INCOMPLETE` 와 같은 잣대).
+SOURCE_VISION_REQUIRED = ("company", "quarter", "claim", "method", "read_by", "read_date",
+                          "pdf", "pages_0idx", "printed_quote", "pinned_cells")
+
+
+def _load_source_vision_ledger():
+    """`data/_gold/kics_source_vision_verified.json` → dict 또는 None.
+
+    없거나 안 읽히면 None = '등재 없음'. 그러면 해당 축이 종전대로 YELLOW 를 낸다 —
+    **파일이 사라졌다고 조용히 통과하지 않는다.** 사이드카 stale 사고의 반대 방향 방어다."""
+    try:
+        return json.loads(SOURCE_VISION_LEDGER.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def _source_vision_index(ledger) -> dict:
+    """(company, quarter) -> entry. 원장이 없으면 빈 dict."""
+    if not isinstance(ledger, dict):
+        return {}
+    out = {}
+    for e in ledger.get("entries") or []:
+        if isinstance(e, dict) and e.get("company") and e.get("quarter"):
+            out[(e["company"], e["quarter"])] = e
+    return out
+
+
+def _source_vision_findings(entry: dict, kd_records: list, parent, tag: str):
+    """등재된 육안판독 근거 하나를 **매 실행 재검산**한다 → [(severity, rule, message)].
+
+    통째 skip 이 아니다. 네 가지를 다시 건다:
+
+      ① 필수 필드      비면 `SOURCE_VISION_RECORD_INCOMPLETE` **RED**.
+      ② 결측           박제 셀이 마스터에서 사라지면 `SOURCE_VISION_INPUT_MISSING` **RED**
+                       (결측은 SKIP 이 아니다).
+      ③ 주장 재검산    등재 주장은 "경과조치 미적용 → 전 항목 적용후=적용전" 이다. 박제한
+                       항목 중 하나라도 `값 != 값_적용후` 면 `SOURCE_VISION_CLAIM_REFUTED`
+                       **RED** — 판독 결과가 데이터와 어긋난다.
+      ④ 값 드리프트    주장은 서 있는데 박제값이 움직였으면 `SOURCE_VISION_PIN_DRIFT` YELLOW.
+                       판독은 그때의 숫자에 대해 한 것이라 다시 봐야 하지만, 주장 자체가
+                       깨진 것은 아니므로 차단하지 않는다(원래 이 축이 YELLOW 였다).
+
+    전부 통과하면 `SOURCE_VISION_VERIFIED` YELLOW(review) 로 **매 실행 인쇄한다.** 조용해지면
+    다음 세션이 이 칸을 '검사된 칸' 으로 오독한다. 판독 깊이(`reproduced_by_sender`)도 같이
+    찍는다 — parser 판독만 있는 것과 원 sender 가 재현한 것은 강도가 다르다.
+    """
+    missing_fields = [f for f in SOURCE_VISION_REQUIRED if not entry.get(f)]
+    if missing_fields:
+        return [("RED", "SOURCE_VISION_RECORD_INCOMPLETE",
+                 f"item{parent}후 육안판독 등재인데 필수 필드 {missing_fields} 가 비었다 — "
+                 "판독자·판독일·본 페이지·인쇄된 문구가 없으면 '누군가 확인했다' 는 산문과 같다")]
+
+    code, quarter = entry["company"], entry["quarter"]
+    live = {}
+    for r in kd_records:
+        if r.get("원보험사코드") != code or r.get("공시분기") != quarter:
+            continue
+        try:
+            live[str(int(r.get("항목번호")))] = (r.get("값"), r.get("값_적용후"))
+        except (TypeError, ValueError):
+            continue
+
+    absent, refuted, drifted = [], [], []
+    for item, pin in (entry.get("pinned_cells") or {}).items():
+        cur = live.get(str(item))
+        if cur is None:
+            absent.append(item)
+            continue
+        pre, post = cur
+        if str(pre) != str(post):
+            refuted.append(f"item{item} 전={pre!r} 후={post!r}")
+        if str(pre) != str(pin.get("값")) or str(post) != str(pin.get("값_적용후")):
+            drifted.append(f"item{item} 박제={pin.get('값')!r} 실측={pre!r}")
+
+    out = []
+    if absent:
+        out.append(("RED", "SOURCE_VISION_INPUT_MISSING",
+                    f"item{parent}후 육안판독 등재의 박제 셀 item{absent} 이 마스터에서 사라졌다 "
+                    "— 결측은 SKIP 이 아니다. 판독 근거가 가리키는 값이 없으면 등재는 무효다"))
+    if refuted:
+        out.append(("RED", "SOURCE_VISION_CLAIM_REFUTED",
+                    f"item{parent}후 육안판독 등재의 주장('경과조치 미적용 → 적용후=적용전')이 "
+                    f"마스터와 어긋난다: {', '.join(refuted)}. 판독이 틀렸거나 데이터가 바뀐 것이다"))
+    if drifted:
+        out.append(("YELLOW", "SOURCE_VISION_PIN_DRIFT",
+                    f"item{parent}후 육안판독 등재의 박제값이 움직였다: {', '.join(drifted)}. "
+                    "주장(전=후)은 아직 서 있으나 판독은 옛 숫자에 대해 한 것이라 재판독 대상이다"))
+    if out:
+        return out
+    return [("YELLOW", "SOURCE_VISION_VERIFIED",
+             f"item{parent}후 세부결측(후=전) — raw 텍스트레이어 {tag} 이지만 "
+             f"**육안 판독으로 판정 완료**. 판독자={entry['read_by']} 판독일={entry['read_date']} "
+             f"sender재현={entry.get('reproduced_by_sender', '?')} "
+             f"{entry['pdf']} p{entry['pages_0idx']}(0-idx) — "
+             f"인쇄된 문구: {str(entry['printed_quote'])[:180]}")]
+
+
 def q_to_num(q: str) -> int:
     """'2025.4Q' -> 20254  (sortable)."""
     m = re.match(r"(\d{4})\.(\d)Q", q or "")
@@ -303,13 +403,38 @@ def check_census(res: GateResult, env: "Env") -> None:
     # 종전엔 이 칸들이 "구조적으로 정당" 버킷에 섞여 정당 카운트를 부풀렸다 — 확인한 게 아니라
     # 못 읽은 것이다. 결함이라고 단정할 근거도 없으므로 차단은 안 하되(YELLOW) 별도 카테고리로
     # 세어 OCR/재수집 워크리스트가 되게 한다.
+    # 2026-08-24: 이 20칸 중 상당수는 **이미 육안으로 판정이 끝났다**(폰트 유니코드 매핑 실패라
+    # 렌더링하면 읽힌다). 판정을 게이트에 안 넣으면 같은 YELLOW 20줄이 매 라운드 반복되고
+    # 아무도 안 보게 되며, 나중에 진짜 미판독 칸이 그 사이에 섞여도 안 보인다. 그래서 근거
+    # 원장(`data/_gold/kics_source_vision_verified.json`)을 두고 **매 실행 재검산**한다 —
+    # 조용히 지우는 것이 아니다. 선례: `EXEMPTION_VERIFIED_BY_IMAGE_ONLY`(KR0079 2023.2Q).
+    _vision = _source_vision_index(env.source_vision_ledger)
+    _vision_hit: set = set()
     for c, q, n, parent, tag in mmult_unverifiable:
         if not _emit(q):
             continue
-        res.add(check="census", severity="YELLOW", master="kics_disclosure", company=n, quarter=q,
-                rule="SOURCE_UNREADABLE_NOT_VERIFIED",
-                message=f"item{parent}후 세부결측(후=전)인데 raw 텍스트레이어 {tag} — "
-                        f"'전=후라 정당'이 아니라 **판정 불가**(OCR/재수집 전까지 미검증)")
+        entry = _vision.get((c, q))
+        if entry is None:
+            res.add(check="census", severity="YELLOW", master="kics_disclosure",
+                    company=n, quarter=q, rule="SOURCE_UNREADABLE_NOT_VERIFIED",
+                    message=f"item{parent}후 세부결측(후=전)인데 raw 텍스트레이어 {tag} — "
+                            f"'전=후라 정당'이 아니라 **판정 불가**(OCR/재수집 전까지 미검증)")
+            continue
+        _vision_hit.add((c, q))
+        for sev, rule, msg in _source_vision_findings(entry, kd_records, parent, tag):
+            res.add(check="census", severity=sev, master="kics_disclosure",
+                    company=n, quarter=q, rule=rule, message=msg)
+    # 등재했는데 그 축이 더 이상 미판독을 안 내면 죽은 핀이다 — 조용히 두면 다음 세션이
+    # "그 칸은 검증돼 있다" 로 잘못 읽는다(면제 레지스트리의 `..._INERT` 와 같은 장치).
+    for key, entry in sorted(_vision.items()):
+        if key in _vision_hit or not _emit(key[1]):
+            continue
+        res.add(check="census", severity="YELLOW", master="kics_disclosure",
+                company=env.code_name.get(key[0], key[0]), quarter=key[1],
+                rule="SOURCE_VISION_INERT",
+                message="육안판독 근거를 등재했는데 이 (회사,분기)가 더 이상 "
+                        "SOURCE_UNREADABLE_NOT_VERIFIED 를 내지 않는다 — 원천이 판독 가능해졌거나 "
+                        "세부가 적재됐다. 등재를 풀어라(죽은 핀)")
     _ident_after, _ident_skipped = _transition_identities_after(kd_records)
     for c, q, n, rule, exp_after, disc_after, diff in _ident_after:
         if not _emit(q):
@@ -1516,6 +1641,12 @@ class Env:
             "exemption_ledger", (lambda: None) if self.inject else _load_exemption_ledger)
         self.source_readability = self._get(
             "source_readability", (lambda: {}) if self.inject else _source_readability)
+        # 2026-08-24: 원천 육안판독 근거 원장(`SOURCE_UNREADABLE_NOT_VERIFIED` 축 전용).
+        # 없으면 빈 dict = '등재 없음' 이고, 그러면 축이 종전대로 전부 YELLOW 를 낸다.
+        # **파일이 사라지면 조용히 통과가 아니라 조용히 미판독으로 돌아간다** — 안전한 쪽이다.
+        self.source_vision_ledger = self._get(
+            "source_vision_ledger",
+            (lambda: None) if self.inject else _load_source_vision_ledger)
 
         # derived
         self.code_name = {r["원보험사코드"]: r["원수사명"] for r in self.kics_records

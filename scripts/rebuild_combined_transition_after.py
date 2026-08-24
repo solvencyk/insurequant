@@ -176,6 +176,7 @@ def scan_occurrences(pdf: Path):
         lines.extend(x.strip() for x in page_texts[i].splitlines())
 
     occ: dict[str, list[tuple]] = defaultdict(list)
+    market_dash_idx: dict[str, list[int]] = defaultdict(list)  # MARKET5 항목별 dash-post 항목의 occ[key] 인덱스 (F4, 아래)
     block = None            # None | life | nl | market  (survives page breaks)
     last_key = None         # 대재해위험 은 바로 앞 leaf 로 판별한다 — 표 사이에 ①표가 끼어들면
                             # block 이 리셋돼(지급여력기준금액 행) 생명/일반 구분이 날아간다
@@ -233,13 +234,37 @@ def scan_occurrences(pdf: Path):
                 # p25: 시장위험 하위위험 전부 "-"=전후동일). ZERO 취급(0.0)으로 읽으면 정상 미러값을
                 # 0 으로 무너뜨린다. 생명장기(29-35)는 같은 표 안에서도 진짜 0 과 "-"가 섞여 나와
                 # (장수/사업비=완전 소멸 vs 해지/대재해=일부잔존) 이 규칙을 적용할 수 없어 제외한다(F3).
-                if key in MARKET5 and toks[1] in DASH and a != 0.0:
-                    b = a
+                # F4(2026-08-24): 위 carry-forward 는 "이 표를 통째로 선택 안 함"(형제 5개가 전부
+                # dash/무변화) 케이스에만 맞다. 같은 표 안에서 다른 시장위험 형제가 **진짜 변화**를
+                # 보이면(선택적용이 실제로 걸린 표) dash 는 "적용후 인정액 0"을 뜻한다 — 예별손해보험
+                # (KR0004) 2023.4Q~2024.2Q item36: 금리위험 65,239~71,606백만/'-', 형제 주식위험은
+                # 188,325→112,644 등으로 실변화, MARKET_M 상관행렬로 회사 자신이 인쇄한 시장위험액후
+                # 합계를 '금리후=0' 가설만 소수점까지 재현(carry-forward 가설은 26,000~38,000백만
+                # 어긋남 — probe_20260821_kr0004_verify.py). 판정은 이 표(scan_occurrences 호출 1회
+                # = 통상 회사·분기 1건) 전체를 다 읽은 뒤에야 가능해 즉시 스냅하지 않고 위치만
+                # 기록, 루프 종료 후 일괄 후처리한다(아래). 전 APPLIERS x quarter(234버킷)
+                # 시뮬레이션으로 이 갈래가 예별손해 3분기 외에는 결과를 바꾸지 않음을 확인했다
+                # (scripts/_probes/probe_20260824_market_dash_simulate.py).
+                is_dash_post = key in MARKET5 and toks[1] in DASH and a != 0.0
+                if is_dash_post:
+                    market_dash_idx[key].append(len(occ[key]))
                 occ[key].append((a, b))
                 last_key = key
                 k = j
                 continue
         k += 1
+
+    if market_dash_idx:
+        market_real_change = any(
+            idx not in market_dash_idx.get(k5, []) and a2 is not None and b2 is not None and abs(a2 - b2) > 0.5
+            for k5 in MARKET5 for idx, (a2, b2) in enumerate(occ.get(k5, []))
+        )
+        if not market_real_change:
+            for k5, idxs in market_dash_idx.items():
+                for idx in idxs:
+                    a2, _b2 = occ[k5][idx]
+                    occ[k5][idx] = (a2, a2)   # 형제 전부 무변화 -> 표 전체 미선택, 종전대로 carry-forward
+        # market_real_change=True 이면 dash 항목은 이미 (a, 0.0)으로 들어가 있어 손댈 것 없음
     return occ, headline
 
 

@@ -1,7 +1,56 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-08-19 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-08-24 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-08-24 (34th pass) — viz 패널 3종 분쟁: 이미 origin/main 에 배포돼 있었다 (false-diff 규명)
+
+발주: `inbox/parser/20260821T1745Z` (orchestrator, "sender 재확인 3차" — "착수 안 됨, 서브
+에이전트 API 529 로 죽었다"). 실제로는 티켓에 이미 상세한 `## 답변 (parser-ifrs17)`
+(32nd pass, 2026-08-21)이 붙어 있었고, orchestrator 의 재확인 노트는 그걸 반영하지 못한
+상태였다 — 이번 pass 의 첫 일은 그 모순을 실측으로 정리하는 것이었다.
+
+**raw 재재현**: 32nd pass 의 결론(카카오페이손해=천원, 케이비라이프 2026.1Q=당분기,
+DB생명 상각스케줄=합계+FY2025 신규필링)을 셋 다 처음부터 독립적으로 raw XML 에서
+재확인했다 — 캡션·단위 셀·항목 값을 줄번호까지 다시 짚었다. 카카오페이 필링의
+"(단위: 천원)" 카운트만 45→100회로 정정(결론 불변). DB생명 표의 "합 계" 행이 공백 2칸
+(`합  계`)이라 단순 grep(`"합 계"`/`"합계"` 어느 쪽으로도) 로 못 찾히던 것을 직접 통독으로
+확정(49726행, 합계열 1,981,301백만원=19,813.01억원, `CSM_waterfall.json` 기말CSM
+19,813.1억원과 0.0005% 이내 일치).
+
+**핵심 발견 — 로컬 `main` ref 가 stale 이었다.** `git rev-parse main`=346e4dab(08-20 21:54)
+vs `git rev-parse origin/main`=fba59f0d(08-24 14:54), 사이 4커밋
+(`0fbe186`·`a883399`·`c4ce39f`·`fba59f0`). `git merge-base --is-ancestor main origin/main`
+= true(순수 뒤처짐, 분기 아님). 그 중 `a883399`(08-21 20:06, "deploy: IFRS17 viz 패널
+4종 — 라이브가 틀린 값을 보여주고 있던 3건 정정")의 커밋 메시지가 티켓 답변과 근거·수치가
+사실상 동일 — 32nd pass 세션이 원문 대조 직후 바로 push 까지 실행했으나 티켓 파일의
+`status` frontmatter 만 갱신을 안 하고 넘어간 것으로 보인다. `diff <(git show
+HEAD:data/dart/viz/<f>) <(git show origin/main:data/dart/viz/<f>)` 실측 —
+`sensitivity_heatmap.json`·`csm_waterfall_history.json`·`csm_amort_schedule.json`·
+`csm_waterfall.json` **4개 전부 IDENTICAL**. orchestrator 의 재확인이 봤던 `git diff main
+-- ...`(로컬 main 기준)은 데이터 문제가 아니라 fetch 안 한 워크스페이스의 false-diff 였다.
+
+**보너스 발견**: `csm_waterfall_history.json`을 재생성하는 살아있는 스크립트가 없다는 것
+외에도(유일 writer `viz_build_csm_waterfall_history.py`는 `archive/2026-06_...`), 현재
+`IFRS17.html` Panel 6 이 이미 `CSM_waterfall.json`(`ix.wfx`) 기반으로 갈아타 있어 이 파일을
+fetch 는 해도(`PATHS.hist`) 그 결과(`payload.hist`)를 실제로 소비하는 렌더 코드가 없다
+(`ix.hist` Map 은 `new Map()`으로 선언만 되고 `.set(` 호출이 파일 전체에 0회) — 이 파일의
+내용은 현재 어느 배포본에서도 화면 숫자에 영향을 주지 않는다(검증·내보내기 스크립트 입력
+으로만 쓰임).
+
+**빌더·골든**: `data/dart/viz/*.json` 18개 sha256 백업 후 `viz_build_ifrs17_panels.py` +
+`viz_build_csm_waterfall.py` 재실행 → 18개 전부 바이트 무변동. `test_viz_ifrs17_panels_golden.py`
+· `test_viz_csm_waterfall_golden.py` 2 passed.
+
+**신규 파일 census**: origin/main 기준으로 재실측(로컬 main 기준이었던 기존 census 는
+부정확) — 수정 4개는 이제 0개(이미 배포), 순수추가는 14개(`bs_snapshot.json`·
+`sensitivity_heatmap_provenance.json` 포함). 이 둘은 origin/main `IFRS17.html`에 fetch
+경로가 없어 배포해도 화면 무영향 — 포함 권고(결정은 orchestrator). 나머지 12개는 이 티켓
+범위 밖이라 존재만 보고.
+
+산출물: 티켓에 `## 답변 (parser-ifrs17, 2026-08-24 iter-2)` 절 추가, status `open`→`answered`.
+K-ICS 레인 파일(`git status`에 보이던 미커밋 probe 스크립트 등)은 병행 세션 잔여물이라
+미접촉. `git commit`/`push`/`fetch` 없음.
 
 ## 2026-08-20 (4) — 준비금 뒤채움 제거. 사본은 사본이라고 말하는 대신 지웠다
 

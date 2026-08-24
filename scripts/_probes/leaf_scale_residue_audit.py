@@ -26,6 +26,23 @@ from rebuild_combined_transition_after import (  # noqa: E402
 TOL = 0.005          # 억원. 원문→억원 변환은 정확히 재현돼야 한다.
 MASTER = REPO / "kics_disclosure.json"
 
+# 발행사 내부 표간 불일치로 원문 대조까지 마친 잔차 (마스터가 정본 표를 정확히 반영, 감사기가
+# 다른 표를 대조에 쓰는 것) — exact-value pin. cur/want 가 조금이라도 바뀌면 매치가 깨져
+# 즉시 다시 살아난다(값이 움직이면 재검토 대상으로 복귀). 통째 (회사,분기,item) skip 아님.
+#
+# 처브라이프생명(KR0100) 2024.4Q item35(대재해위험) 값(적용전): 마스터 46.81억은 raw p55-56
+# "[생명·장기손해보험위험액-대재해위험]"(업무보고서 AH725/AI725 서식) "Ⅲ.총계" 당기란
+# 4,681백만 그대로다(정본, 경과조치와 무관한 전용 세부표). 감사기가 raw에서 찾는 44.99억은
+# p47-48 "② 장수위험·사업비위험·해지위험 및 대재해위험 경과조치"(선택적용 경과조치 결합표)의
+# 대재해위험 행 4,499백만 — 같은 개념·같은 분기를 발행사가 두 표에서 다르게 인쇄한 것뿐이고
+# scan_occurrences()는 경과조치 문맥 페이지만 훑어 구조적으로 정본표(AH725, 경과조치 언급 없음)를
+# 못 본다. [[feedback-issuer-inconsistent-keep-as-disclosed]] 관례대로 정본 표 값을 유지.
+# 근거: inbox/parser/20260821T2010Z...md `## 답변 (parser-kics, 2026-08-21)` §2,
+# scripts/_probes/probe_20260821_chubb_item35.py 원문 덤프.
+KNOWN_ISSUER_TABLE_INCONSISTENCY = {
+    ("KR0100", "2024.4Q", 35, "값"): (46.81, 44.99),
+}
+
 
 def main() -> int:
     rows = json.loads(MASTER.read_text(encoding="utf-8"))
@@ -36,7 +53,8 @@ def main() -> int:
         name[c] = r.get("원수사명", c)
         by_cq.setdefault((c, q), {})[int(r["항목번호"])] = r
 
-    bad, checked, noraw, noanchor = [], 0, 0, 0
+    bad, pinned, checked, noraw = [], [], 0, 0
+    no_occ, bad_ratio = 0, 0        # 앵커불가 2부류 (probe_20260821_anchor_fail_census.py 와 동일 판정)
     for (c, q), items in sorted(by_cq.items()):
         if c not in APPLIERS:
             continue
@@ -46,13 +64,13 @@ def main() -> int:
             continue
         occ, _hl = scan_occurrences(pdf)
         if not occ.get("기본요구자본"):
-            noanchor += 1
+            no_occ += 1
             continue
         base_pre_raw = max(a for a, _b in occ["기본요구자본"])
         item15_pre = _num((items.get(15) or {}).get("값"))
         ratio = (item15_pre or 0) / base_pre_raw if base_pre_raw else 0
         if not (0.009 < ratio < 0.011 or 0.99 < ratio < 1.01):
-            noanchor += 1
+            bad_ratio += 1
             continue
         scale = 0.01 if ratio < 0.5 else 1.0
 
@@ -81,9 +99,24 @@ def main() -> int:
                     checked += 1
                     want = round(v * scale, 2)
                     if abs(cur - want) > TOL:
+                        pin = KNOWN_ISSUER_TABLE_INCONSISTENCY.get((c, q, ITEM_OF[k], col))
+                        if pin and abs(cur - pin[0]) < TOL and abs(want - pin[1]) < TOL:
+                            pinned.append((c, name[c], q, ITEM_OF[k], col, cur, want, v))
+                            continue
                         bad.append((c, name[c], q, ITEM_OF[k], col, cur, want, v))
 
-    print(f"대조 셀 {checked:,}  |  불일치 {len(bad)}  |  raw없음 {noraw} (회사,분기)  앵커불가 {noanchor}")
+    noanchor = no_occ + bad_ratio
+    print(f"대조 셀 {checked:,}  |  불일치 {len(bad)}  |  raw없음 {noraw} (회사,분기)  "
+          f"앵커불가 {noanchor} (기본요구자본occ없음 {no_occ} + 스케일비율이상 {bad_ratio})")
+    print(f"  ※ 앵커불가는 진단기 자신의 다중occurrence 처리 한계다 — occ없음 10건은 흥국화재/"
+          f"흥국생명 wrong-document·하나생명 스캔본·악사손해 저밀도 + 교보생명 홀수분기(라벨-값"
+          f"분리 레이아웃), 비율이상 {bad_ratio}건은 4Q 부속명세서가 같은 표를 천원단위로 재인쇄해"
+          f"'최댓값 anchor'가 부풀려짐. 마스터 데이터 문제 0건(근거: inbox/parser/"
+          f"20260821T2010Z...md §4, probe_20260821_anchor_fail_census.py).")
+    if pinned:
+        print(f"\n발행사 내부 표간 불일치로 확인·고정된 잔차 {len(pinned)}건 (마스터가 정본, bad 집계 제외):")
+        for c, nm, q, it, col, cur, want, v in pinned:
+            print(f"  {nm[:12]:<12}{q:<9}item{it} {col:<9}마스터={cur:,.2f}  감사기대조값={want:,.2f}(원문 {v:,.0f}백만)")
     if bad:
         print(f"\n{'회사':<14}{'분기':<9}{'item':>5} {'열':<9}{'저장':>13}{'원문환산':>13}{'차이':>9}  원문(백만원)")
         for c, nm, q, it, col, cur, want, v in bad:

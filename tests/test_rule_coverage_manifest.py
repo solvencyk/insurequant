@@ -152,10 +152,28 @@ POST_UNESTABLISHED_RULES = {"2_tier1_bridge_post", "3_tier2_composition_post",
 # **나누기만 하면 검사가 아니라 분류다.** 바로 전날 `48_tier2_limit` 이 로더 강제라 무의미해진
 # 전례가 있어(LOADER_ENFORCED) 같은 실수를 기계로 막는다. 갈래를 하나 늘리고 falsifiability
 # 를 증명하지 않으면 그 갈래는 면제와 구별되지 않는다.
+#
+# 2026-08-24: 갈래가 4 → 6 으로 늘었다. `item47`(보완자본 한도 적용 전)의 **스코프가 발행사마다
+# 다르다**는 것이 원문 대조로 확정됐기 때문이다(한화생명 2025.2Q p18 = 포함 / IBK연금 2025.3Q
+# p16 = 제외). 스코프가 갈리면 한도초과액 계산식이 갈리고, 그 값이 `2_tier1_bridge` 에 그대로
+# 들어간다 — 안 갈랐던 동안 한화생명 2025.2Q 다리가 −30,095 로 틀렸고 그것이 "발행사 모순" 으로
+# 오진돼 owner 판단 면제까지 갔다.
+#
+# **새 이름이 기존 이름의 접두사가 아니라는 점이 중요하다.** 게이트·테스트가
+# `"branch=CAPPED" in detail` 같은 부분문자열로 갈래를 읽으므로 `CAPPED_INCL` 같은 이름을
+# 쓰면 두 갈래가 한 이름으로 뭉개져 조용히 오분류된다.
+# `test_branch_names_are_not_prefixes_of_each_other` 가 기계로 막는다.
 COMPOSITION_BRANCHES = {
-    "CAPPED":    "target == min(47,48) + 49 — 한도가 실제로 자른다",
-    "UNCAPPED":  "target == item47 — 한도로 안 잘림(49 가 47 안에 포함된 관행)",
-    "BOTH":      "위 둘 다 성립(초과액도 item49 도 0)",
+    "CAPPED":    "target == min(47,48) + 49 — 한도가 실제로 자른다 (item47 스코프=EXCL)",
+    "UNCAPPED":  "target == item47 — 한도로 안 잘림 (item47 스코프=EXCL)",
+    "BOTH":      "위 둘 다 성립(초과액도 item49 도 0) (item47 스코프=EXCL)",
+    "I49_IN_I47_CAPPED":
+                 "target == min(47−49, 48) + 49 — item47 이 item49 를 포함해 인쇄되는 회사에서 "
+                 "한도가 실제로 자른다. 한도초과 = (47−49) − 48.",
+    "I49_IN_I47_UNCAPPED":
+                 "target == item47 — 같은 회사에서 한도가 구속하지 않는 분기(초과액 0). "
+                 "2026-08-24 이전에는 이 칸들이 `UNCAPPED` 로 뭉뚱그려져 있었고, 그래서 "
+                 "한도가 구속하는 분기의 오분류가 드러나지 않았다.",
     "TFI_NA_OK": "47=48=49=0 이고 item14>0 → item48 은 한도가 아니다(해당사항 없음). "
                  "대체 항등식 target == item13 으로 검산한다. 실측 24/24 성립.",
 }
@@ -363,6 +381,42 @@ def test_composition_axes_share_one_branch_definition():
     # status 매핑도 공유 상수 하나에서 온다
     assert K._COMPOSITION_RED_BRANCHES == frozenset({"NEITHER", "TFI_NA_RED"})
     assert K._COMPOSITION_SKIP_BRANCHES == frozenset({"INPUT_MISSING", "TFI_NA_NO_INPUT"})
+    # 갈래는 스코프를 인자로 받는다 — 회사별 item47 스코프가 안 들어오면 룰이 한 관행만 안다
+    assert "scope" in sig.parameters, (
+        "_tier2_branch 가 item47 스코프를 인자로 안 받는다 — 스코프가 갈리는 회사에서 "
+        "한도초과액이 item49 만큼 과대·과소 계산된다(2026-08-24 한화생명 2025.2Q 사고)")
+
+
+def test_branch_names_are_not_prefixes_of_each_other():
+    """**갈래 이름이 서로의 접두사이면 안 된다.**
+
+    게이트 출력·테스트·면제 원장이 전부 `"branch=<이름>" in detail` 이라는 **부분문자열**로
+    갈래를 읽는다. `CAPPED` 와 `CAPPED_INCL` 처럼 지으면 뒤엣것이 앞엣것으로 읽혀 두 갈래가
+    한 이름으로 뭉개지고, 그 오분류는 어떤 출력에도 안 나타난다. 2026-08-24 에 스코프 갈래를
+    추가하면서 실제로 밟을 뻔한 함정이라 기계로 못 박는다."""
+    from solvency.validation import kics_json_rules as K
+    names = sorted(set(COMPOSITION_BRANCHES) | K._TIER2_UNCAPPED_BRANCHES
+                   | K._TIER2_EXCESS_BEARING_BRANCHES
+                   | K._COMPOSITION_RED_BRANCHES | K._COMPOSITION_SKIP_BRANCHES)
+    bad = [(a, b) for a in names for b in names if a != b and b.startswith(a)]
+    assert not bad, (
+        f"갈래 이름이 서로의 접두사다: {bad} — 부분문자열 판독이 두 갈래를 한 이름으로 뭉갠다")
+
+
+def test_every_excess_bearing_branch_is_declared():
+    """**한도초과액을 다리에 더하는 갈래 집합이 갈래 정의와 어긋나지 않게 한다.**
+
+    `2_tier1_bridge` 는 `_TIER2_EXCESS_BEARING_BRANCHES` 에 든 갈래에서만 한도초과액을 더한다.
+    갈래를 새로 만들면서 이 집합을 안 고치면 **새 갈래는 조용히 초과액 0 으로 취급**돼 다리가
+    틀린 채 통과한다 — 이 저장소가 반복해서 당한 '룰이 그 대상을 순회조차 안 한다' 형태다.
+    (2026-08-24 시뮬레이션에서 실제로 이 누락 때문에 수정이 아무 효과도 못 냈다.)"""
+    from solvency.validation import kics_json_rules as K
+    undeclared = K._TIER2_EXCESS_BEARING_BRANCHES - set(COMPOSITION_BRANCHES)
+    assert not undeclared, (
+        f"초과액을 더하는 갈래인데 매니페스트에 선언이 없다: {sorted(undeclared)}")
+    # 초과액을 더하는 갈래와 '한도 미구속' 갈래는 겹칠 수 없다
+    assert not (K._TIER2_EXCESS_BEARING_BRANCHES & K._TIER2_UNCAPPED_BRANCHES), (
+        "같은 갈래가 '한도 미구속' 이면서 '초과액을 더한다' 로 동시에 분류돼 있다")
 
 
 def test_item_coverage_matches_manifest(rows):

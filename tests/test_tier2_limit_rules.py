@@ -111,6 +111,15 @@ def _status(records, rule: str) -> str:
     return found[rule]["status"]
 
 
+def _branch_of(detail: str) -> str:
+    """detail 에서 갈래 이름을 **정확히** 뽑는다.
+
+    `"branch=CAPPED" in detail` 같은 부분문자열 검사는 `branch=I49_IN_I47_CAPPED` 도 참으로
+    만들어 두 갈래를 한 이름으로 뭉갠다(2026-08-24 스코프 갈래 신설 때의 함정)."""
+    i = detail.find("branch=")
+    return "" if i < 0 else detail[i + len("branch="):].split()[0]
+
+
 # ---------------------------------------------------------------------------
 # 0. 배선 — 데이터가 없어도 룰은 자기 존재와 결측 사유를 알려야 한다
 # ---------------------------------------------------------------------------
@@ -165,13 +174,43 @@ def test_bridge_does_not_apply_excess_to_uncapped_issuers():
 
     실측 근거: 초과항을 조건 없이 더하면 적용전 통과가 425 → 393 으로 **줄어든다**
     (한화생명 13분기 · KB손해 6분기가 새로 깨진다). 조건부만이 맞다."""
-    # item3 == item47 → UNCAPPED. 초과액 개념이 없으므로 다리는 초과항 없이 닫혀야 한다.
+    # item3 == item47 → 한도 미구속. 초과액 개념이 없으므로 다리는 초과항 없이 닫혀야 한다.
+    # 이 필링은 item47 이 item49 를 포함해 인쇄되는 쪽이라 갈래 이름은
+    # `I49_IN_I47_UNCAPPED` 다(2026-08-24 스코프 인식 전에는 `UNCAPPED` 로 뭉개져 있었다).
+    from solvency.validation.kics_json_rules import _TIER2_UNCAPPED_BRANCHES
     pre = {2: 26_838.0, 3: 20_000.0, 4: 51_965.0, 12: 639.0, 13: 24_488.0,
            14: 32_387.0, 47: 20_000.0, 48: 16_193.0, 49: 5_000.0}
     found = _findings(_mk(pre))
-    assert "UNCAPPED" in found[COMP]["detail"]
+    assert _branch_of(found[COMP]["detail"]) in _TIER2_UNCAPPED_BRANCHES, (
+        f"한도 미구속 갈래로 안 갔다: {_branch_of(found[COMP]['detail'])!r}")
     assert found[BRIDGE]["status"] == STATUS_GREEN, (
-        "UNCAPPED 회사에 초과항을 더해 다리를 깨뜨렸다")
+        "한도 미구속 회사에 초과항을 더해 다리를 깨뜨렸다")
+
+
+def test_bridge_uses_the_debt_only_excess_for_i49_in_i47_issuers():
+    """**한화생명 2025.2Q 재현 — 이 시험이 없었으면 그 −30,095 가 또 생긴다.**
+
+    이 발행사는 `item47`(보완자본 한도 적용 전)에 `item49`(해약환급금 초과분)를 **포함해서**
+    인쇄하고, 한도(`item48`)는 나머지 채무성 자본에만 걸린다. 그래서 한도초과액은
+    `item47 − item48`(= 70,821.29) 이 아니라 `(item47 − item49) − item48`(= 825.74) 이다.
+
+    값은 raw FY2025_Q2 p17·p18 그대로다. 여기 두 분기를 같이 넣는 이유는 스코프가 **회사
+    단위 투표**이기 때문이다 — 2025.1Q(한도 미구속, `item3 == item47` 이고 item49 > 0)가
+    "item49 가 item47 안에 있다"는 증거를 제공한다."""
+    binding = {2: 82_506.0, 3: 139_303.0, 4: 213_475.0, 12: 30_921.0, 13: 100_874.0,
+               14: 138_613.97, 47: 140_128.28, 48: 69_306.99, 49: 69_995.55}
+    evidence = {3: 122_252.26, 14: 136_764.42,
+                47: 122_252.26, 48: 68_382.21, 49: 64_328.43}
+    found = _findings_q(_mk(binding) + _mk(evidence, quarter="2025.1Q"), QUARTER)
+    assert _branch_of(found[COMP]["detail"]) == "I49_IN_I47_CAPPED", (
+        f"스코프를 못 알아봤다: {_branch_of(found[COMP]['detail'])!r}")
+    # 213,475 − (30,921 − 825.74) − 100,874 = 82,505.74  vs 공시 82,506  -> 잔차 0.26
+    assert found[BRIDGE]["status"] == STATUS_GREEN, (
+        f"다리가 안 닫힌다 (diff={found[BRIDGE]['diff']}) — 한도초과액이 item49 만큼 "
+        "과대·과소 계산되고 있다. 갈래를 늘리면서 _TIER2_EXCESS_BEARING_BRANCHES 를 "
+        "안 고치면 정확히 이 상태가 된다(초과액이 조용히 0 이 된다).")
+    assert "825.74" in found[BRIDGE]["detail"], (
+        f"한도초과액이 825.74 가 아니다: {found[BRIDGE]['detail']}")
 
 
 def test_bridge_skips_on_missing_input_with_a_reason_never_falls_back():
@@ -629,10 +668,23 @@ TFI_BRANCH_CASES = {
     "CAPPED": {1: 115_146.0, 2: 36_312.0, 3: 78_834.0, 4: 102_196.0, 12: 257.0,
                13: 65_626.0, 14: 56_947.0, 47: 16_229.0, 48: 28_473.0, 49: 62_604.0,
                50: 36_312.0, 51: 78_834.0},
-    # 예별손해 2023.1Q — item51 2,390.38 == item47 그대로(한도로 안 잘림)
-    "UNCAPPED": {1: 6_774.0, 2: 4_384.0, 3: 2_390.0, 4: 5_890.0, 12: 0.0,
-                 13: 1_506.0, 14: 10_420.0, 47: 2_390.38, 48: 5_209.97, 49: 1_506.13,
-                 50: 4_383.5, 51: 2_390.38},
+    # 예별손해 2023.1Q — item51 2,390.38 == item47 그대로(한도로 안 잘림).
+    # **2026-08-24: 갈래 이름이 `UNCAPPED` → `I49_IN_I47_UNCAPPED` 로 바뀌었다.** 이 필링은
+    # item47(2,390.38) 이 item49(1,506.13) 를 **포함**해서 인쇄된 것이고(채무성 884.25 가
+    # 한도 5,209.97 에 안 걸린다), 스코프 인식 전에는 그 사실이 `UNCAPPED` 라는 이름 아래
+    # 뭉개져 있었다. 값은 한 자리도 안 바꿨다 — 같은 원문을 정확한 이름으로 부를 뿐이다.
+    "I49_IN_I47_UNCAPPED": {
+        1: 6_774.0, 2: 4_384.0, 3: 2_390.0, 4: 5_890.0, 12: 0.0,
+        13: 1_506.0, 14: 10_420.0, 47: 2_390.38, 48: 5_209.97, 49: 1_506.13,
+        50: 4_383.5, 51: 2_390.38},
+    # 삼성생명 2023.4Q — item51 70,685.30 == item47 인데 **INCL 읽기도 성립하지 않는다**
+    # (채무성 50,930.02 < 한도 121,948.24 라 INCL 은 70,685.30 을 내지만, 이 회사는 자기
+    # 다른 분기들이 EXCL 로 갈려 CONFLICT → 종전 관행 EXCL 로 판정된다). 그래서 순수
+    # `UNCAPPED` 갈래가 실데이터에 살아 있다. 이 케이스가 사라지면 갈래가 죽은 것이므로
+    # 아래 falsifiability 시험이 그 사실을 드러낸다.
+    "UNCAPPED": {1: 533_725.0, 2: 463_040.0, 3: 70_685.0, 4: 503_744.0, 12: 20_320.0,
+                 13: 20_384.0, 14: 243_896.0, 47: 70_685.3, 48: 121_948.24,
+                 49: 19_755.28, 50: 463_039.8, 51: 70_685.3},
     # 예별손해 2023.2Q — 초과액도 item49 도 0 이라 두 식이 같은 값을 낸다
     "BOTH": {1: 6_284.0, 2: 3_722.0, 3: 2_562.0, 4: 5_349.0, 12: 0.0,
              13: 1_627.0, 14: 10_120.0, 47: 2_561.95, 48: 5_060.0, 49: 0.0,
@@ -643,16 +695,43 @@ TFI_BRANCH_CASES = {
                   50: 40_676.29, 51: 8_080.59},
 }
 
+# 스코프 판정용 **형제 분기**. 갈래에 따라 같은 회사의 다른 분기가 있어야 재현되는 것이 있다.
+#
+# `_tier2_i47_scope_map` 은 회사별 투표라 **한 버킷만 넣으면 그 버킷이 곧 회사 관행**이 된다.
+# 순수 `UNCAPPED`(= EXCL 관행인데 한도로 안 잘림)는 실데이터에서 CONFLICT 회사에만 남아
+# 있으므로, 합성으로 재현하려면 같은 회사에 EXCL 표를 찍는 분기를 하나 같이 넣어야 한다.
+# 그게 없으면 이 갈래는 `I49_IN_I47_UNCAPPED` 로 분류되고 시험은 자기가 뭘 검사하는지 모른 채
+# 통과한다. **아래 값은 하나손해(KR0050) 2025.4Q 실제 필링이다** — min(1,019.98, 2,168.58)
+# + 3,963.97 = 4,983.95 로 EXCL 읽기만 성립한다.
+_EXCL_SIBLING_QUARTER = "2025.4Q"
+_EXCL_SIBLING = {3: 4_984.0, 14: 4_337.0, 47: 1_019.98, 48: 2_168.58, 49: 3_963.97}
+_NEEDS_EXCL_SIBLING = frozenset({"UNCAPPED"})
+
+
+def _mk_branch_case(branch: str, over: dict | None = None) -> list[dict]:
+    """갈래 대표 버킷 + (필요하면) 스코프를 정하는 형제 분기."""
+    rows = _mk(_base_of(TFI_BRANCH_CASES[branch], over or {}))
+    if branch in _NEEDS_EXCL_SIBLING:
+        rows += _mk(_EXCL_SIBLING, quarter=_EXCL_SIBLING_QUARTER)
+    return rows
+
+
+def _branch_findings(branch: str, over: dict | None = None) -> dict[str, dict]:
+    return _findings_q(_mk_branch_case(branch, over), QUARTER)
+
 
 @pytest.mark.parametrize("branch", sorted(TFI_BRANCH_CASES))
 def test_tfi_composition_reuses_the_sibling_branch_instead_of_flagging(branch):
     """이식 전에는 이 네 갈래 중 CAPPED/BOTH 만 통과했다 — 나머지 62칸이 오탐이었다.
 
     통과 사유에 갈래 이름이 박혀야 한다. 안 박히면 게이트 출력만 보고 '무검사'와 구별할 수 없다."""
-    found = _findings(_mk(TFI_BRANCH_CASES[branch]))
+    found = _branch_findings(branch)
     assert found[TCOMP]["status"] == STATUS_GREEN, (
         f"{branch} 갈래가 여전히 RED 다 — 갈래 이식이 축 F 에 안 걸렸다")
-    assert f"branch={branch}" in found[TCOMP]["detail"]
+    # **정확 일치로 읽는다.** `"branch=CAPPED" in detail` 은 `branch=I49_IN_I47_CAPPED` 도
+    # 참으로 만든다 — 부분문자열 판독이 두 갈래를 한 이름으로 뭉개는 함정이다.
+    assert _branch_of(found[TCOMP]["detail"]) == branch, (
+        f"갈래 이름이 {branch} 가 아니라 {_branch_of(found[TCOMP]['detail'])!r} 다")
 
 
 @pytest.mark.parametrize("branch", sorted(TFI_BRANCH_CASES))
@@ -661,8 +740,7 @@ def test_every_tfi_composition_branch_is_falsifiable(branch):
 
     이식했더니 전부 자동 통과한다면 그건 검사가 아니라 면제다. 어제 `48_tier2_limit` 이
     로더 강제라 증거력을 잃은 것과 같은 실패양식을 갈래 단위로 막는다."""
-    case = _base_of(TFI_BRANCH_CASES[branch], {51: TFI_BRANCH_CASES[branch][51] + 9_999.0})
-    found = _findings(_mk(case))
+    found = _branch_findings(branch, {51: TFI_BRANCH_CASES[branch][51] + 9_999.0})
     assert found[TCOMP]["status"] == STATUS_RED, (
         f"{branch} 갈래에서 item51 을 9,999 흔들었는데 통과했다 — 갈래가 면제가 됐다")
 
@@ -673,9 +751,8 @@ def test_tfi_composition_checks_its_own_inputs_not_only_the_target(branch):
 
     TFI_NA 갈래는 47/48/49 가 전부 0 인 것이 갈래의 정의라 세 행을 흔들면 갈래 자체가
     바뀐다(그래도 통과하면 안 된다). 나머지 갈래는 47 을 흔들면 재현이 깨져야 한다."""
-    case = _base_of(TFI_BRANCH_CASES[branch],
-                    {47: TFI_BRANCH_CASES[branch][47] + 9_999.0})
-    assert _findings(_mk(case))[TCOMP]["status"] == STATUS_RED
+    found = _branch_findings(branch, {47: TFI_BRANCH_CASES[branch][47] + 9_999.0})
+    assert found[TCOMP]["status"] == STATUS_RED
 
 
 @pytest.mark.parametrize("branch", sorted(TFI_BRANCH_CASES))
@@ -685,16 +762,14 @@ def test_both_composition_axes_agree_on_the_branch_and_the_status(branch):
     47/48/49 를 공유하고 item3 == item51 로 맞추면 축 B 와 축 F 는 같은 갈래·같은 status 를
     내야 한다. 갈라지면 `_tier2_branch` 를 한쪽만 고쳤거나 status 매핑이 복제됐다는 뜻이다 —
     이름이 같은 갈래가 다른 뜻을 갖는 순간 실패시킨다."""
-    case = dict(TFI_BRANCH_CASES[branch])
-    case[3] = case[51]                     # 두 표의 보완자본을 같게 맞춘다
-    found = _findings(_mk(case))
+    found = _branch_findings(branch, {3: TFI_BRANCH_CASES[branch][51]})
     assert found[COMP]["status"] == found[TCOMP]["status"], (
         f"{branch}: axis B={found[COMP]['status']} vs axis F={found[TCOMP]['status']} 갈라졌다")
-    for name in ("CAPPED", "UNCAPPED", "BOTH", "TFI_NA_OK", "NEITHER", "TFI_NA_RED"):
-        if f"branch={name}" in found[COMP]["detail"]:
-            assert f"branch={name}" in found[TCOMP]["detail"], (
-                f"axis B 는 {name} 인데 axis F 는 다른 갈래로 갔다")
-            break
+    # 갈래 이름도 정확 일치로 비교한다 — 접두사가 겹치는 이름끼리 뭉개지면 두 축이 다른
+    # 갈래로 갔는데도 통과한다(2026-08-24 스코프 갈래 신설 때 실제로 밟을 뻔한 함정).
+    assert _branch_of(found[COMP]["detail"]) == _branch_of(found[TCOMP]["detail"]), (
+        f"axis B 는 {_branch_of(found[COMP]['detail'])!r} 인데 "
+        f"axis F 는 {_branch_of(found[TCOMP]['detail'])!r} 로 갔다")
 
 
 def test_tfi_composition_still_reds_the_issuer_inconsistent_cells():

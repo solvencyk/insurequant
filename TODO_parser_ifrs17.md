@@ -1,5 +1,42 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-24 (34th pass) — `inbox/parser/20260821T1745Z` iter-2 회신: viz 패널 3종
+> 재확인 결과 이미 `origin/main`에 배포 완료돼 있었다(false-diff, 로컬 main ref 가 stale).**
+>
+> orchestrator 로부터 "sender 재확인(3차) — 착수 안 됨, `git diff main` 아직 다름"이라는
+> 지시로 재조사를 발주받았다. 32nd pass 가 남긴 `## 답변 (parser-ifrs17)`(카카오페이손해
+> 단위·케이비라이프 당분기/전분기·DB생명 상각스케줄 3건)을 **전부 raw XML 부터 처음부터
+> 독립 재재현** — 캡션·단위 셀·항목 행 값 전부 정확한 줄번호로 재확인, 결론 불변. 카카오
+> 페이 필링의 "(단위: 천원)" 카운트만 45→**100**회로 정정(결론 영향 없음). DB생명 표에서
+> "합 계" 행이 공백 **2칸**(`합  계`)이라 단순 grep 으로 못 찾던 이유를 규명(직접 통독으로
+> 확정, 49726행).
+>
+> **핵심 발견 — 로컬 `main` ref 가 origin/main 보다 4커밋(약 3일) 뒤처져 있었다.**
+> `git rev-parse main`=346e4dab(08-20) vs `origin/main`=fba59f0d(08-24). 사이에 있는 4커밋
+> 중 `a883399`(08-21 20:06, "deploy: IFRS17 viz 패널 4종 — 라이브가 틀린 값을 보여주고
+> 있던 3건 정정")가 이 티켓의 3파일(+ csm_waterfall.json 보너스 수정)을 **이미 origin/main
+> 에 배포해 놓았다** — 커밋 메시지 근거·수치가 티켓 답변과 사실상 동일해, 32nd pass 세션이
+> 원문 대조 직후 바로 push 까지 했으나 티켓 파일 자체의 status 만 못 바꾸고 넘어간 것으로
+> 보인다. `diff <(git show HEAD:<f>) <(git show origin/main:<f>)` 실측 — 4파일 전부
+> **IDENTICAL**. orchestrator 의 "sender 재확인" 이 봤던 `git diff main -- ...`(로컬 main
+> 기준)는 데이터 문제가 아니라 fetch 안 한 워크스페이스가 만든 false-diff 였다.
+>
+> **보너스 발견**: `csm_waterfall_history.json`은 살아있는 빌더가 없을 뿐 아니라(archive된
+> `viz_build_csm_waterfall_history.py`가 유일 writer), `IFRS17.html` Panel 6 이 이미
+> `CSM_waterfall.json`(`ix.wfx`) 기반으로 갈아타 있어 이 파일의 fetch 결과(`payload.hist`,
+> `ix.hist` Map)를 실제로 쓰는 렌더 코드가 **하나도 없다** — 현재 화면 숫자에 영향 0.
+>
+> 빌더 재실행(`viz_build_ifrs17_panels.py`+`viz_build_csm_waterfall.py`, 실행 전 18개 파일
+> sha256 백업) → 전부 바이트 무변동. `test_viz_ifrs17_panels_golden.py`·
+> `test_viz_csm_waterfall_golden.py` 2 passed. 순수신규 파일 census 를 origin/main 기준으로
+> 재실측 — `bs_snapshot.json`·`sensitivity_heatmap_provenance.json` 포함 14개가 added-only
+> (둘 다 origin/main `IFRS17.html`에 fetch 경로 없음 = 포함해도 화면 무영향, 권고: 포함
+> 안전). 티켓 `## 답변 (parser-ifrs17, 2026-08-24 iter-2)` 절 추가, status `answered`.
+> HTML·root 마스터·xlsx·K-ICS 레인 파일 전부 미접촉(`git status`의 K-ICS 관련 미커밋
+> 항목은 병행 세션 잔여물).
+>
+> ---
+>
 > **2026-08-21 (33rd pass) — `validate_csm_waterfall.py` 13→0건, exit 0 달성.
 > `inbox/parser/20260821T1900Z` iter-2 회신, `NOT_A_PUSH_GATE`→`WIRED` 전환 요청.**
 >

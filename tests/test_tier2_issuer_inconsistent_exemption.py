@@ -139,8 +139,12 @@ def test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets(records, fi
 
     # 보류 목록이 1개로 줄면서 이 시험이 약해졌다. 그 자리를 **레지스트리 크기 고정**으로 메운다 —
     # 조용히 한 버킷이 더 들어오면 여기서 막힌다. 늘릴 땐 이 숫자와 근거를 같이 고쳐야 한다.
-    assert len(registered) == 19, (
-        f"면제 레지스트리 크기가 19 -> {len(registered)} 로 바뀌었다. 등재를 늘렸다면 "
+    # 2026-08-24 (iter-3): 19 -> 18. **늘린 게 아니라 줄였다** — 한화생명 2025.2Q 의
+    # 잔차 원인이 규명돼(우리 룰의 item47 스코프 오독) 룰을 고치자 그 축이 닫혔고, 게이트가
+    # `TIER2_EXEMPTION_INERT` 로 "등재를 풀어라" 를 인쇄해 풀었다. 죽은 핀을 남기면 다음
+    # 세션이 "그 축은 면제됐다" 로 잘못 읽는다.
+    assert len(registered) == 18, (
+        f"면제 레지스트리 크기가 18 -> {len(registered)} 로 바뀌었다. 등재를 늘렸다면 "
         f"원장(`data/_gold/kics_exemption_provenance.json`)의 근거와 이 숫자를 같이 고쳐라. "
         f"현재 키: {sorted(registered)}"
     )
@@ -170,12 +174,11 @@ def test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets(records, fi
     ("KR0003", "2023.1Q", 51, "값"),     # 두 표가 다른 값 + TFI 적용전만 안 닫힘
     ("KR0075", "2024.3Q", 47, "값"),     # 표가 자기 안에서 안 닫힘(메모행 둘 다 대시)
     ("KR0004", "2025.1Q", 48, "값"),     # 합계는 같은데 tier 분할만 다름
-    # 한화생명은 **다리 입력 4칸 전부**를 흔든다. orchestrator 발주가 "item2·4·12·13 중
-    # 하나라도 바뀌면 자동 RED" 를 요구했고, 인과가 미규명인 면제라 해제조건이 유일한 안전장치다.
-    ("KR0068", "2025.2Q", 2, "값"),
-    ("KR0068", "2025.2Q", 4, "값"),
-    ("KR0068", "2025.2Q", 12, "값"),
-    ("KR0068", "2025.2Q", 13, "값"),
+    # 한화생명 2025.2Q 4칸은 2026-08-24 iter-3 에 **면제 해제와 함께 빠졌다.** 그 축은 이제
+    # 면제가 아니라 진짜로 닫힌다(다리 잔차 0.26) — 면제가 없으니 흔들 핀도 없다. 같은 데이터를
+    # 지키는 시험은 `tests/test_tier2_limit_rules.py::
+    # test_bridge_uses_the_debt_only_excess_for_i49_in_i47_issuers` 로 옮겨 갔다(그쪽이 더 세다:
+    # 잔차가 우연히 맞는 게 아니라 한도초과액이 825.74 인지까지 본다).
 ])
 def test_input_drift_revives_the_red(records, findings, code, quarter, item, col):
     """박제한 셀을 한 칸만 흔들면 `TIER2_EXEMPTION_INPUT_DRIFT` RED 가 뜬다.
@@ -253,7 +256,7 @@ def test_the_whole_bucket_vanishing_is_red(records, findings):
     ("KR0003", "2023.1Q", "50_tfi_tier_split"),
     ("KR0075", "2024.3Q", "51_tfi_tier2_composition"),
     ("KR0004", "2025.1Q", "3_tier2_composition"),
-    ("KR0068", "2025.2Q", "2_tier1_bridge"),
+    # 한화생명 2025.2Q 는 2026-08-24 iter-3 면제 해제로 빠졌다(위 input-drift 목록 주석 참조).
 ])
 def test_residual_drift_revives_the_red(records, findings, code, quarter, rule):
     """잔차가 박제값에서 벗어나면 `TIER2_EXEMPTION_RESIDUAL_DRIFT` RED 다."""
@@ -410,21 +413,59 @@ def test_every_registered_bucket_has_a_verifiable_provenance_entry():
         assert (ROOT / v["file"]).exists(), f"{key}: 인용한 파일이 디스크에 없다"
 
 
+def _owner_judgement_fixture():
+    """`VERIFIED_BY_OWNER` 시험용 **합성 항목**.
+
+    2026-08-24 현재 이 status 를 쓰는 **살아 있는 면제가 하나도 없다** — 유일했던 한화생명
+    2025.2Q 가 같은 날 해제됐다(원인이 발행사가 아니라 우리 룰의 item47 스코프 결함으로
+    규명돼 룰을 고치자 다리가 잔차 0.26 으로 닫혔다).
+
+    **그래도 아래 시험들을 지우지 않는다.** 게이트의 `VERIFIED_BY_OWNER` 배선(필수 필드 검사 ·
+    마커 검사 · 매 실행 review 인쇄)은 그대로 살아 있고, 다음 owner 판단 면제가 등재되는 순간
+    다시 필요해진다. 살아 있는 항목이 없다는 이유로 시험을 지우면 **그때 배선이 이미 썩어 있는지
+    아무도 모른다.** 그래서 해제된 그 기록(원장에 `status=CONTRADICTED` 로 남아 있다)을
+    fixture 로 되살려 배선만 흔든다 — 원장 자체는 건드리지 않는다."""
+    e = copy.deepcopy(_ledger_entries()[("KR0068", "2025.2Q")])
+    e["status"] = "VERIFIED_BY_OWNER"
+    return ("KR0068", "2025.2Q"), e
+
+
+def test_the_released_hanwha_record_is_kept_as_a_tripwire():
+    """**해제한 면제의 기록을 지우지 않는다.**
+
+    한화생명 2025.2Q 는 2026-08-24 에 해제됐다(사유가 반증됐다 — 잔차 −30,095 는 발행사가
+    만든 값이 아니라 우리 룰이 item47 스코프를 잘못 읽어 만든 값이었다). 레지스트리에서는
+    뺐지만 원장 기록은 `status=CONTRADICTED` 로 남긴다: 같은 (회사,분기)가 다시 면제로
+    등재되면 게이트가 즉시 `EXEMPTION_CITATION_CONTRADICTED` RED 를 띄운다.
+
+    지우면 그 안전장치가 사라지고, 반증된 사유가 다음 세션에 조용히 되살아난다."""
+    assert ("KR0068", "2025.2Q") not in gate._TIER2_ISSUER_INCONSISTENT, (
+        "해제한 면제가 레지스트리에 되살아났다 — 룰이 스코프를 인식하는 한 이 축은 닫힌다")
+    e = _ledger_entries()[("KR0068", "2025.2Q")]
+    assert e["status"] == "CONTRADICTED", f"해제 기록의 status 가 {e['status']} 다"
+    assert e.get("resolved_note"), "왜 해제했는지가 적혀 있지 않다"
+    # 되살아나는 경로를 실제로 흔들어 확인한다 — 선언만 하고 안 도는 검사를 막는다.
+    red, _review = gate._exemption_provenance_findings(
+        registries={"_TIER2_ISSUER_INCONSISTENT": frozenset({("KR0068", "2025.2Q")})},
+        ledger={"entries": [copy.deepcopy(e)]})
+    assert any(r["rule"] == "EXEMPTION_CITATION_CONTRADICTED" for r in red), (
+        f"반증된 기록을 다시 등재했는데 조용하다: {red}")
+
+
 def test_an_owner_judgement_entry_must_say_who_read_what_and_when():
     """`VERIFIED_BY_OWNER` 는 산수 증명이 없는 대신 **누가·언제·무엇을 보고 무엇을 결정했는지**
     로 서 있다. 그 블록이 비면 '누군가 확인했다' 는 산문과 같다 — 게이트가 RED 로 막는다."""
-    have = _ledger_entries()
-    owner_kind = {k: e for k, e in have.items() if e.get("status") == "VERIFIED_BY_OWNER"}
-    assert owner_kind, "이 status 를 쓰는 항목이 하나도 없다 — 시험이 무의미하다"
-    for key, e in owner_kind.items():
+    # 살아 있는 항목뿐 아니라 fixture 로도 건다 — 지금은 살아 있는 항목이 0 이다(위 fixture 주석).
+    for key, e in _ledger_entries().items():
+        if e.get("status") != "VERIFIED_BY_OWNER":
+            continue
         oc = e.get("owner_confirmation") or {}
         for f in ("read_by", "date", "what_was_read", "verdict"):
             assert oc.get(f), f"{key}: owner_confirmation.{f} 가 비어 있다"
 
     # 그리고 그 요구가 **게이트에 실제로 배선돼 있는지**를 흔들어 확인한다(선언만 하고 안 도는
     # 검사를 막는다). 필드를 하나 지우면 RED 가 떠야 한다.
-    key = next(iter(owner_kind))
-    broken = copy.deepcopy(owner_kind[key])
+    key, broken = _owner_judgement_fixture()
     broken["owner_confirmation"].pop("what_was_read")
     ledger = {"entries": [broken]}
     red, _review = gate._exemption_provenance_findings(
@@ -435,9 +476,7 @@ def test_an_owner_judgement_entry_must_say_who_read_what_and_when():
 
 def test_an_owner_judgement_entry_still_has_to_pass_the_marker_check():
     """owner 가 봤다는 사실이 **숫자 재확인을 면제하지 않는다.** verify 마커를 비우면 RED."""
-    have = _ledger_entries()
-    key, e = next((k, v) for k, v in have.items() if v.get("status") == "VERIFIED_BY_OWNER")
-    broken = copy.deepcopy(e)
+    key, broken = _owner_judgement_fixture()
     broken["verify"] = {"file": broken["verify"]["file"]}   # 마커만 제거
     red, _review = gate._exemption_provenance_findings(
         registries={"_TIER2_ISSUER_INCONSISTENT": frozenset({key})},
@@ -449,42 +488,39 @@ def test_an_owner_judgement_entry_still_has_to_pass_the_marker_check():
 def test_an_owner_judgement_exemption_never_goes_quiet():
     """인과가 규명된 면제와 **owner 판단으로만 서 있는 면제**를 게이트가 매 실행 구분해 인쇄한다.
     조용해지면 다음 세션이 '이건 증명된 것' 으로 오독한다 — 이 저장소의 반복 실패모드다."""
+    # 라이브 원장에 이 status 항목이 있으면 전부 인쇄돼야 한다(지금은 0 건 — fixture 로 흔든다).
     _red, review = gate._exemption_provenance_findings()
     hits = [r for r in review if r["rule"] == "EXEMPTION_STANDS_ON_OWNER_JUDGEMENT"]
-    assert hits, "owner 판단 면제가 review 로 인쇄되지 않는다"
     assert {(r["code"], r["quarter"]) for r in hits} == {
         k for k, e in _ledger_entries().items() if e.get("status") == "VERIFIED_BY_OWNER"}
 
-
-def test_the_two_readings_of_the_hanwha_residual_are_both_recorded():
-    """한화생명 면제는 **박제값(−30,095)이 owner 에게 제시된 숫자(826)와 다르다.** 같은 축의
-    같은 불일치를 각주 괄호(보완자본 한도 초과액 제외)를 어떻게 읽느냐로 다르게 잰 값이다.
-
-    두 값을 다 적어 두지 않으면 다음 세션이 "박제값이 발주와 다르다" 로 읽고 826 으로 고친다 —
-    그 순간 면제가 성립하지 않아(RESIDUAL_DRIFT) 조용히 RED 가 되거나, 더 나쁘게는 허용오차를
-    건드려 푼다. 그래서 원장에 **둘 다** 있는 것을 기계로 강제한다."""
-    e = _ledger_entries()[("KR0068", "2025.2Q")]
-    assert e["expected_residual"]["2_tier1_bridge|적용전"] == -30095.0
-    alt = e.get("expected_residual_alt_reading") or {}
-    assert any(v == 826.0 for k, v in alt.items() if not k.startswith("_")), \
-        "owner 에게 제시된 826 이 원장에 없다"
-    assert alt.get("_why"), "두 값이 왜 다른지가 적혀 있지 않다"
-    # 박제값은 룰이 실제로 내는 값이어야 한다 — 코드와 원장이 어긋나면 그것부터 사고다.
-    assert gate._TIER2_ISSUER_INCONSISTENT[("KR0068", "2025.2Q")]["findings"][
-        "2_tier1_bridge"]["residual"] == -30095.0
+    key, entry = _owner_judgement_fixture()
+    _red2, review2 = gate._exemption_provenance_findings(
+        registries={"_TIER2_ISSUER_INCONSISTENT": frozenset({key})},
+        ledger={"entries": [entry]})
+    assert any(r["rule"] == "EXEMPTION_STANDS_ON_OWNER_JUDGEMENT"
+               and (r["code"], r["quarter"]) == key for r in review2), (
+        f"owner 판단 면제가 review 로 인쇄되지 않는다: {review2}")
 
 
-def test_the_hanwha_pin_catches_a_branch_change_not_only_a_residual_change(records, findings):
-    """한화생명 다리는 `branch=CAPPED` 갈래에서만 −30,095 다. 갈래가 바뀌면 같은 잔차가 나와도
-    **다른 사실**이므로 면제가 성립하지 않는다 — flag 대조가 그걸 잡는지 흔들어 확인한다."""
+def test_a_pin_that_names_a_branch_catches_a_branch_change_not_only_a_residual(records, findings):
+    """갈래 이름으로 박제한 축은 **갈래가 바뀌면** 같은 잔차라도 면제가 아니다.
+
+    2026-08-24 까지 이 시험의 대상은 한화생명 2025.2Q(`branch=CAPPED`)였다. 그 면제는 같은 날
+    해제됐다 — 잔차의 원인이 발행사가 아니라 우리 룰의 item47 스코프 오독이었기 때문이다.
+    **시험을 지우지 않고 대상을 옮긴다**: NH농협 2024.3Q 가 같은 방식(`branch=CAPPED`)으로
+    박제돼 있으므로 그 축을 흔든다. 지우면 '갈래가 바뀌어도 통과' 라는 사각이 다시 생긴다."""
+    code, quarter, rule = "KR0032", "2024.3Q", "2_tier1_bridge"
+    assert "branch=" in gate._TIER2_ISSUER_INCONSISTENT[(code, quarter)][
+        "findings"][rule]["flag"], "이 버킷은 갈래 이름으로 박제돼 있지 않다 — 대상을 바꿔라"
     finds = copy.deepcopy(findings)
     for f in finds:
-        if (f.get("status") == "RED" and f.get("rule") == "2_tier1_bridge"
-                and f.get(KEY_CODE) == "KR0068" and f.get(KEY_QUARTER) == "2025.2Q"):
+        if (f.get("status") == "RED" and f.get("rule") == rule
+                and f.get(KEY_CODE) == code and f.get(KEY_QUARTER) == quarter):
             f["detail"] = f["detail"].replace("branch=CAPPED", "branch=NEITHER")
             break
     else:
-        pytest.fail("KR0068 2025.2Q 2_tier1_bridge RED 가 없다")
+        pytest.fail(f"{code} {quarter} {rule} RED 가 없다")
     _acc, red, _rev, _det = _run(records, finds)
-    assert any(r["rule"] == "TIER2_EXEMPTION_RESIDUAL_DRIFT" and r.get("axis") == "2_tier1_bridge"
-               and r["code"] == "KR0068" for r in red)
+    assert any(r["rule"] == "TIER2_EXEMPTION_RESIDUAL_DRIFT" and r.get("axis") == rule
+               and r["code"] == code for r in red)

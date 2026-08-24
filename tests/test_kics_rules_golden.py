@@ -146,7 +146,25 @@ def _update() -> int:
                     "없다) + 부호 + `53+54 <= item51` 포함관계. RED 7(롯데 2026.1Q · 하나생명 "
                     "2025.2Q · 동양생명 2024.1Q·2024.3Q · 푸본현대 2024.3Q 는 행 유실/컬럼 "
                     "오배정, 처브라이프 2023.1Q · 농협생명 2024.3Q 적용후는 원문에 없는 값). "
-                    "blocking RED 13 -> 29(신규 18 - NH농협 면제 2).")
+                    "blocking RED 13 -> 29(신규 18 - NH농협 면제 2). "
+                    "2026-08-24 (5차, iter-3) 재생성 사유 — 데이터는 이번에도 안 건드렸다"
+                    "(kics_disclosure.json 읽기만 했다). **룰 하나만 바뀌었고 산출은 한 칸만 "
+                    "움직였다**: RED 38 -> 37 · GREEN 9,521 -> 9,522, findings 총계 13,664 불변. "
+                    "⑨ **item47 스코프 인식.** `item47`(보완자본 한도 적용 전)이 `item49`"
+                    "(해약환급금 초과분)를 포함해 인쇄되는 발행사가 있다(원문 대조: 한화생명 "
+                    "FY2025_Q2 p18 = 포함 / IBK연금 FY2025_Q3 p16 = 제외). 룰은 제외만 알아서 "
+                    "포함 관행 회사에서 한도초과액을 item49 만큼 과대계산했고, 그 값이 "
+                    "`2_tier1_bridge` 에 들어가 한화생명 2025.2Q 다리를 −30,095 로 만들었다 — "
+                    "그것이 '발행사 모순' 으로 오진돼 owner 판단 면제(VERIFIED_BY_OWNER)까지 "
+                    "갔다. 스코프는 회사 하드코딩이 아니라 **그 회사 자신의 결정적 버킷 투표**로 "
+                    "정한다(`_tier2_i47_scope_map`). 갈래 이름이 4 -> 6 으로 늘었다"
+                    "(I49_IN_I47_CAPPED / I49_IN_I47_UNCAPPED). 전 버킷 시뮬: 새로 닫힘 1 · "
+                    "새로 깨짐 0(`scripts/_probes/probe_20260824_findings_snapshot.py` diff). "
+                    "부수효과로 BNP카디프 3버킷의 COMPOSITION_NEITHER 잔차가 새 식 기준으로 "
+                    "이동했다(−221 -> +14.86 등, status 는 RED 그대로) — 게이트 박제값과 원장을 "
+                    "같이 갱신했고 종전 값은 expected_residual_alt_reading 에 남겼다. "
+                    "한화생명 면제는 **해제**했다(게이트가 TIER2_EXEMPTION_INERT 로 먼저 "
+                    "알려 줬다). blocking RED 0 · 게이트 exit 0.")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

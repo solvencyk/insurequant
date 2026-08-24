@@ -1,11 +1,86 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-24 (2차 owner 위임 등재) · Stage 3/5 — validation
+> Last updated: 2026-08-24 (iter-3 룰 수정·면제 해제·inbox 전건 종결) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-24 iter-3, 룰 수정 + 면제 해제 + inbox 전건 종결) 🟢 `item47` 스코프 결함을 고쳤다 —
+전 버킷 시뮬 **해결 1 / 파손 0**. 한화생명 면제 **해제**, 게이트 3종 전부 exit 0, inbox **활성 0건**.**
+
+> **① 룰 수정 — 발행사 모순이 아니라 우리 룰의 결함이었다.** `item47`(보완자본 한도 적용 전)의
+> 스코프가 발행사마다 다르다(한화생명 2025.2Q p18 = `item49` 포함 / IBK연금 2025.3Q p16 = 제외).
+> 룰은 한 관행만 알아서 포함 관행 회사의 **한도 구속 분기**에 한도초과액을 `item49` 만큼 과대계산했고,
+> 그 값이 다리에 들어가 KR0068 2025.2Q 를 −30,095 로 만들었다. **스코프는 회사 하드코딩 리스트가
+> 아니라 그 회사 자신의 결정적 버킷 투표**로 정한다(`_tier2_i47_scope_map`). 갈래 4 → 6
+> (`I49_IN_I47_CAPPED` / `I49_IN_I47_UNCAPPED`, **기존 이름의 접두사가 아니게** 지었다 — 게이트가
+> `"branch=CAPPED" in detail` 부분문자열로 갈래를 읽어서 `CAPPED_INCL` 로 지으면 두 갈래가 뭉개진다).
+>
+> **시뮬을 룰엔진 전층으로 다시 쟀다** — 종전 시뮬은 다리만 재구현해서 갈래를 공유하는 축 B·F 의
+> 부수효과를 못 봤다. `run_validation` 산출 전체 대조(`probe_20260824_findings_snapshot.py`):
+> **새로 닫힘 1 · 새로 깨짐 0 · findings 총계 13,664 불변 · RED 38→37 · GREEN 9,521→9,522.**
+> 시뮬 도중 **은닉 필터를 실제로 밟았다** — 갈래만 만들고 `raw_exc = excess if branch in
+> ("CAPPED","BOTH")` 를 안 고쳐서 새 갈래가 조용히 초과액 0 이 됐다. 상수(`_TIER2_EXCESS_BEARING_
+> BRANCHES`)로 빼고 시험으로 못 박았다.
+>
+> **② 면제 정리.** KR0068 2025.2Q **해제**(게이트가 `TIER2_EXEMPTION_INERT` 로 먼저 알려 줬다,
+> 다리 잔차 0.26). 원장 기록은 지우지 않고 `status=CONTRADICTED` 로 남겨 **재등재 시 즉시 RED**.
+> KR0075 3버킷은 해제가 아니라 **박제잔차 6개 갱신**(−221/−242 → +14.86/+87.22 …) — 마스터 셀은
+> 한 칸도 안 움직였고 룰의 기대식만 바뀌었다. 새 값이 **다리 잔차와 수렴**하는 것이 방증
+> (구성 +14.86 vs 다리 +15). 종전 값은 `expected_residual_alt_reading` 에 사유와 함께 보존.
+> 면제를 지탱하던 시험 6건은 **지우지 않고 이전·fixture 화**했다(삭제 이유를 코드에 명시 —
+> `VERIFIED_BY_OWNER` 배선은 살아 있어야 다음 owner 판단 면제 때 썩어 있지 않다).
+> 골든 `--update` 재생성, 사유는 `test_kics_rules_golden.py` `_what` **5차** 항목.
+>
+> **③ `SOURCE_UNREADABLE_NOT_VERIFIED` YELLOW 20건을 근거 원장으로 판정 전환.** 매 라운드 같은
+> 20줄을 찍고 아무도 안 보는 상태였다. `data/_gold/kics_source_vision_verified.json` 신설 +
+> `validate_data_contract.py` 배선: 필수필드 결손 RED · 박제셀 결측 RED · **주장(적용후=적용전)
+> 붕괴 RED** · 값 드리프트 YELLOW · 통과해도 **매 실행 인쇄**(`SOURCE_VISION_VERIFIED`) · 무용해지면
+> `SOURCE_VISION_INERT`. 원장이 사라지면 조용히 통과가 아니라 종전 YELLOW 로 되돌아간다.
+> 변이시험 23건(`tests/test_source_vision_verified.py`).
+> **줄 수는 그대로 20 이다 — 침묵시킨 게 아니다.** 이제 진짜 미판독이 생기면
+> `SOURCE_UNREADABLE_NOT_VERIFIED` 가 0 에서 튄다.
+>
+> **④ recipient 답변을 그대로 받지 않았다.** 4개 회사 각 1분기(TFI=O·X·UNKNOWN 전부 포함)를 직접
+> 렌더링해 재현했고, 10쌍 전수로 **기계적 필요조건**(item1·14·15·17·19·27 60칸이 전부 전==후,
+> 지급여력비율 소수 8자리까지 동일)을 따로 걸었다. **답변의 진단 한 줄은 반증했다** — "대상 페이지는
+> 읽히는데 문서 평균 때문에 UNREADABLE 로 찍힌다" 는 틀렸다(인용 페이지가 문서 평균보다 **더**
+> 안 읽힌다: 34.0 vs 68.9 · 2.0 vs 5.8 · 0.0 vs 1.2 자/p). 그 제안대로 사이드카를 대상 페이지
+> 기준으로 바꾸면 YELLOW 가 준다가 아니라 **는다.**
+>
+> **⑤ 사고 기록.** `docs/postmortems/PM-2026-08-24_i47_scope_misread.md` 신설(5칸 = `closed`) +
+> 색인·UH 표 갱신. 신규 **UH-9**(회사 단위 스코프 투표는 관행이 시간에 따라 바뀌는 발행사를 못
+> 담는다 — KB손해가 2025.2Q 에 INCL→EXCL). **분기 단위 판정은 만들지 않았다** — 측정된 이득 0
+> (전수 시뮬 status 전이 0건), UH-5 선례(오탐억제를 설계할 수 없으면 배선하지 않는다).
+>
+> **⑥ 게이트 실측(재현 명령은 각 티켓 §7/§4).**
+> `validate_kics_disclosure.py` **exit 0**(RED=37 · blocking RED=0) ·
+> `validate_data_contract.py` **exit 0**(RED=0 · YELLOW=296) ·
+> `pytest tests/ -q --ignore=tests/test_pl_breakdown_golden.py --ignore=tests/test_ifrs17_bs_golden.py`
+> **343 passed, 1 skipped**(직전 318). `kics_disclosure.json`·`insurequant_master_tables.xlsx`
+> **읽기만 했다.**
+>
+> **⑦ 범위 밖 발견 1건(수정 안 함).** `validate_data_contract.py --selftest` 가 **50/51**
+> — `N6 EXEMPTION_LEDGER_SCHEMA_INVALID` 케이스가 실패한다. HEAD 로 되돌려도 재현되므로
+> **이번 라운드 이전부터 깨져 있었다.** 게이트 자신의 자기시험이 조용히 실패 중인 상태라
+> 별도 티켓으로 분리했다.
+>
+> 종결: `inbox/_resolved/20260824T0410Z__validation__KR0068_2025.2Q__…` ·
+> `inbox/_resolved/20260821T0620Z__validation__MULTI__meta_rules_wired_axis_and_provenance.md`.
+> 인보 위생 검사 **활성 0 · 위반 0**.
+
+
+**(2026-08-24 iter-2, KR0068 한화생명 2025.2Q 인과 규명) 🟢 `2_tier1_bridge` 잔차 −30,095 의
+원인은 **발행사 모순이 아니라 우리 룰의 결함**이었다. `item47`(보완자본 한도 적용 전)의 스코프가
+발행사마다 다르다 — 한화생명은 `item49`(해약환급금 초과분)를 **포함**해 인쇄하고 한도는 나머지
+채무성 부분에만 걸리는데, 룰은 `한도초과 = max(0, item47 − item48)` 로 `item49` 만큼 과대계산한다.
+raw 3분기 + EXCL 대조군(IBK연금 2025.3Q) 실측으로 확증. 스코프 인식 시뮬레이션 = **1 fix / 0 break**.
+**룰은 안 고쳤다** — 골든이 라이브 마스터에 물려 있고 다른 세션이 그 마스터를 만지는 중이라
+lost-update 위험. 면제도 **해제하지 않고 사유만 정정**(해제하면 RED → push 차단). 게이트 exit 0,
+RED 카운트 무변화, 142 tests pass. 상세·재현·후속 착수조건:
+`inbox/validation/20260824T0410Z__validation__KR0068_2025.2Q__tier1_bridge_residual_unexplained.md` §답변 iter-2.**
 
 **(2026-08-24 3차, inbox 잔여 6건 정리) 🟢 서브에이전트 4개 529 과부하로 소실 → 직접
 재확인. 3건 resolved(csm_waterfall 게이트 배선·item52/54 카카오페이 fix·메타룰 항목1/2)
@@ -21,7 +96,7 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 | KR0004 예별손해 2025.1Q | `3_tier2_composition` | +997.00 | ① 두 표가 tier 분할만 다르게 인쇄 |
 | KR0003 롯데손해 2023.1Q | `2_tier1_bridge` · `3_tier2_composition` · `50_tfi_tier_split` | +19.00 / −19.00 / −18.00 | ① 두 표가 다른 값 + TFI 적용전만 안 닫힘 |
 | KR0075 BNP카디프 2024.3Q | `2_tier1_bridge` · `3_tier2_composition` · `47_tier2_census`(전·후) · `51_tfi_tier2_composition` | +15.00 / −220.98 / census 2 / −221.31 | ② 표가 자기 구성행과 안 닫힘 |
-| **KR0068 한화생명 2025.2Q** | `2_tier1_bridge` | **−30,095.00** ⚠️ | **④ 인과 미규명 — owner 판단** |
+| **KR0068 한화생명 2025.2Q** | `2_tier1_bridge` | **−30,095.00** ⚠️ | ~~④ 인과 미규명~~ → **2026-08-24 iter-2 규명: 우리 룰의 `item47` 스코프 오독. 룰 수정 대기** |
 
 > **앞의 세 건은 새 조사가 아니다.** iter-6·iter-7 에 raw 확증을 이미 끝내 놓고 "owner 위임 목록
 > 밖" 이라는 이유만으로 등재하지 않았던 것들이다(면제를 스스로 넓히지 않는다는 원칙). 이번에
