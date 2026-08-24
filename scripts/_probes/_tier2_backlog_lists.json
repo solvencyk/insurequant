@@ -1,0 +1,380 @@
+{
+  "intermittent_38": [
+    {
+      "code": "KR0005",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR0009",
+      "quarter": "2023.1Q"
+    },
+    {
+      "code": "KR0010",
+      "quarter": "2024.1Q"
+    },
+    {
+      "code": "KR0010",
+      "quarter": "2024.3Q"
+    },
+    {
+      "code": "KR0010",
+      "quarter": "2025.3Q"
+    },
+    {
+      "code": "KR0010",
+      "quarter": "2025.4Q"
+    },
+    {
+      "code": "KR0010",
+      "quarter": "2026.1Q"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.3Q"
+    },
+    {
+      "code": "KR0050",
+      "quarter": "2023.1Q"
+    },
+    {
+      "code": "KR0069",
+      "quarter": "2025.4Q"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR0073",
+      "quarter": "2023.1Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2025.1Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2025.2Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2025.3Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2025.4Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2026.1Q"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2024.2Q"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2023.2Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2023.3Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2023.4Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.1Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.2Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.3Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.1Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.2Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.3Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.4Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2026.1Q"
+    },
+    {
+      "code": "KR1098",
+      "quarter": "2024.2Q"
+    },
+    {
+      "code": "KR1098",
+      "quarter": "2024.3Q"
+    },
+    {
+      "code": "KR1098",
+      "quarter": "2024.4Q"
+    }
+  ],
+  "backlog_430": [
+    {
+      "code": "KR0010",
+      "quarter": "2025.1Q"
+    },
+    {
+      "code": "KR0051",
+      "quarter": "2023.1Q"
+    },
+    {
+      "code": "KR0051",
+      "quarter": "2023.2Q"
+    },
+    {
+      "code": "KR0051",
+      "quarter": "2023.3Q"
+    },
+    {
+      "code": "KR0051",
+      "quarter": "2025.2Q"
+    },
+    {
+      "code": "KR0073",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR0073",
+      "quarter": "2025.4Q"
+    },
+    {
+      "code": "KR0087",
+      "quarter": "2026.1Q"
+    },
+    {
+      "code": "KR1000",
+      "quarter": "2023.1Q"
+    },
+    {
+      "code": "KR1000",
+      "quarter": "2025.1Q"
+    }
+  ],
+  "no_table": [
+    {
+      "code": "KR0005",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR0009",
+      "quarter": "2023.1Q"
+    },
+    {
+      "code": "KR0010",
+      "quarter": "2024.1Q"
+    },
+    {
+      "code": "KR0010",
+      "quarter": "2024.3Q"
+    },
+    {
+      "code": "KR0010",
+      "quarter": "2025.3Q"
+    },
+    {
+      "code": "KR0010",
+      "quarter": "2025.4Q"
+    },
+    {
+      "code": "KR0010",
+      "quarter": "2026.1Q"
+    },
+    {
+      "code": "KR0049",
+      "quarter": "2024.3Q"
+    },
+    {
+      "code": "KR0050",
+      "quarter": "2023.1Q"
+    },
+    {
+      "code": "KR0069",
+      "quarter": "2025.4Q"
+    },
+    {
+      "code": "KR0071",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR0073",
+      "quarter": "2023.1Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2023.1Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2023.2Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2023.3Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2023.4Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2024.1Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2024.2Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2024.3Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2025.1Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2025.2Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2025.3Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2025.4Q"
+    },
+    {
+      "code": "KR0079",
+      "quarter": "2026.1Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2025.1Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2025.2Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2025.3Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2025.4Q"
+    },
+    {
+      "code": "KR0080",
+      "quarter": "2026.1Q"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2024.2Q"
+    },
+    {
+      "code": "KR0097",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2023.2Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2023.3Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2023.4Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.1Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.2Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.3Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2024.4Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.1Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.2Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.3Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2025.4Q"
+    },
+    {
+      "code": "KR1010",
+      "quarter": "2026.1Q"
+    },
+    {
+      "code": "KR1098",
+      "quarter": "2024.2Q"
+    },
+    {
+      "code": "KR1098",
+      "quarter": "2024.3Q"
+    },
+    {
+      "code": "KR1098",
+      "quarter": "2024.4Q"
+    }
+  ]
+}

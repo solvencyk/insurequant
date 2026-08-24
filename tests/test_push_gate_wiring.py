@@ -34,15 +34,14 @@ WIRED = {
     "validate_csm_continuity": "CSM 기초≠직전기말 boundary break (2026-08-21 배선, 2초)",
     "validate_kics_rate_sensitivity": "금리민감도 표 정합 (2026-08-21 배선, 3초)",
     "validate_nb_csm_multiple": "신계약 CSM 배수 (2026-08-21 배선, 3초)",
+    "validate_csm_waterfall":
+        "CSM 워터폴 항등식 + 단계 커버리지. 2026-08-21 에 18건 실패 상태로 발견됐고(호출처 0 이라 "
+        "아무도 몰랐다) 같은 날 exit 0 까지 닫혀 WIRED 로 옮겼다. 구조적 제외 6건(IFRS17 시행 전 "
+        "FY2022 필링)은 조용한 skip 이 아니라 매 실행 이름과 함께 인쇄된다.",
 }
 
 # push 를 막지 않는 것들. **사유 없이 여기 넣지 말 것** — 그게 이 테스트를 무력화하는 방법이다.
 NOT_A_PUSH_GATE = {
-    "validate_csm_waterfall":
-        "2026-08-21 현재 exit 1 (`balance_incomplete:assumption`). 데이터가 실제로 미완이라 "
-        "지금 배선하면 모든 push 를 막는다. ifrs17 레인이 닫으면 WIRED 로 옮긴다 "
-        "(inbox 티켓 20260821T1900Z). **통과하기 시작하면 이 사유는 거짓이 된다** — "
-        "test_unwired_gates_still_fail 이 그때 막는다.",
     "validate_statutory_reserves":
         "직접 호출은 아니지만 `validate_data_contract.py` 가 법정준비금 절에서 이 모듈을 "
         "import 해 실제로 돌린다(구현이 한 곳에만 있고 게이트는 호출만 한다는 설계). "

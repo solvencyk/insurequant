@@ -12,7 +12,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 13.7,
-      "schedule_run_rate": 0.0,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 3.63,
       "inputs": {
         "closing_csm_mn_krw": 1770485.0,
@@ -20,11 +20,11 @@
         "new_business_mn_krw": 469446.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 268.0,
-          "y1_y3": 346.0,
-          "y3_y5": 219.0,
-          "y5_plus": 272.0,
-          "total": 1213.0
+          "y1": 590.33,
+          "y1_y3": 930.37,
+          "y3_y5": 777.81,
+          "y5_plus": 8878.33,
+          "total": 19813.01
         }
       }
     },
@@ -33,7 +33,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.43,
-      "schedule_run_rate": 0.165,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 2.37,
       "inputs": {
         "closing_csm_mn_krw": 12231759.0,
@@ -41,11 +41,11 @@
         "new_business_mn_krw": 3078038.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 775719.0,
-          "y1_y3": 1240612.0,
-          "y3_y5": 963024.0,
-          "y5_plus": 4639152.0,
-          "total": 12231759.0
+          "y1": 7757.19,
+          "y1_y3": 12406.12,
+          "y3_y5": 9630.24,
+          "y5_plus": 46391.52,
+          "total": 122317.59
         }
       }
     },
@@ -54,7 +54,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.53,
-      "schedule_run_rate": 0.147,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 2.31,
       "inputs": {
         "closing_csm_mn_krw": 8820482.0,
@@ -62,11 +62,11 @@
         "new_business_mn_krw": 1932321.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 484975.0,
-          "y1_y3": 814664.0,
-          "y3_y5": 649376.0,
-          "y5_plus": 3629422.0,
-          "total": 8820482.0
+          "y1": 5019.47,
+          "y1_y3": 8257.67,
+          "y3_y5": 6475.84,
+          "y5_plus": 40082.48,
+          "total": 92850.33
         }
       }
     },
@@ -75,7 +75,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 8.59,
-      "schedule_run_rate": 0.291,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 1.48,
       "inputs": {
         "closing_csm_mn_krw": 2055155.0,
@@ -83,11 +83,11 @@
         "new_business_mn_krw": 355183.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 226205.0,
-          "y1_y3": 372707.0,
-          "y3_y5": 286995.0,
-          "y5_plus": 1169248.0,
-          "total": 2055155.0
+          "y1": 1233.28,
+          "y1_y3": 2047.72,
+          "y3_y5": 1553.46,
+          "y5_plus": 4391.25,
+          "total": 15132.26
         }
       }
     },
@@ -104,11 +104,11 @@
         "new_business_mn_krw": 1371568.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 6003.4,
-          "y1_y3": 8683.1,
-          "y3_y5": 5984.9,
-          "y5_plus": 29072.0,
-          "total": 64380.5
+          "y1": 3758.1,
+          "y1_y3": 6574.6,
+          "y3_y5": 5842.200000000001,
+          "y5_plus": 21103.3,
+          "total": 65109.6
         }
       }
     },
@@ -125,11 +125,11 @@
         "new_business_mn_krw": 814277.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 2267.0,
-          "y1_y3": 4201.0,
-          "y3_y5": 3853.0,
-          "y5_plus": 14122.0,
-          "total": 43606.0
+          "y1": 2212.16,
+          "y1_y3": 3997.77,
+          "y3_y5": 3545.46,
+          "y5_plus": 16363.25,
+          "total": 42991.11
         }
       }
     },
@@ -138,7 +138,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.86,
-      "schedule_run_rate": 0.14,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 2.95,
       "inputs": {
         "closing_csm_mn_krw": 2541801.0,
@@ -146,11 +146,11 @@
         "new_business_mn_krw": 760162.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 132882.0,
-          "y1_y3": 223891.0,
-          "y3_y5": 178147.0,
-          "y5_plus": 1071062.0,
-          "total": 2541802.0
+          "y1": 1395.38,
+          "y1_y3": 2336.77,
+          "y3_y5": 1906.77,
+          "y5_plus": 11061.29,
+          "total": 26710.88
         }
       }
     },
@@ -167,11 +167,11 @@
         "new_business_mn_krw": null,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 242818814.0,
-          "y1_y3": 407706348.0,
-          "y3_y5": 328015777.0,
-          "y5_plus": 385378720.0,
-          "total": 1363919659.0
+          "y1": 2428.1881,
+          "y1_y3": 4077.0635,
+          "y3_y5": 3280.1578,
+          "y5_plus": 3853.7872,
+          "total": 13639.1966
         }
       }
     },
@@ -180,7 +180,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.66,
-      "schedule_run_rate": 0.0,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 1.4,
       "inputs": {
         "closing_csm_mn_krw": 5515548.316,
@@ -188,11 +188,11 @@
         "new_business_mn_krw": 722159.428,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 242818814.0,
-          "y1_y3": 407706348.0,
-          "y3_y5": 328015777.0,
-          "y5_plus": 385378720.0,
-          "total": 1363919659.0
+          "y1": 2428.1881,
+          "y1_y3": 4077.0635,
+          "y3_y5": 3280.1578,
+          "y5_plus": 3853.7872,
+          "total": 13639.1966
         }
       }
     },
@@ -201,7 +201,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 7.29,
-      "schedule_run_rate": 0.0,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 1.29,
       "inputs": {
         "closing_csm_mn_krw": 3230161.575,
@@ -209,11 +209,11 @@
         "new_business_mn_krw": 573265.585,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 242818814.0,
-          "y1_y3": 407706348.0,
-          "y3_y5": 328015777.0,
-          "y5_plus": 385378720.0,
-          "total": 1363919659.0
+          "y1": 2428.1881,
+          "y1_y3": 4077.0635,
+          "y3_y5": 3280.1578,
+          "y5_plus": 3853.7872,
+          "total": 13639.1966
         }
       }
     },
@@ -222,7 +222,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 6.96,
-      "schedule_run_rate": 0.0,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 1.35,
       "inputs": {
         "closing_csm_mn_krw": 2763826.124,
@@ -230,11 +230,11 @@
         "new_business_mn_krw": 536653.88,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 242818814.0,
-          "y1_y3": 407706348.0,
-          "y3_y5": 328015777.0,
-          "y5_plus": 385378720.0,
-          "total": 1363919659.0
+          "y1": 2428.1881,
+          "y1_y3": 4077.0635,
+          "y3_y5": 3280.1578,
+          "y5_plus": 3853.7872,
+          "total": 13639.1966
         }
       }
     },
@@ -243,7 +243,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.29,
-      "schedule_run_rate": 0.064,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 2.15,
       "inputs": {
         "closing_csm_mn_krw": 2320157.0,
@@ -251,11 +251,11 @@
         "new_business_mn_krw": 485252.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 50821.0,
-          "y1_y3": 97940.0,
-          "y3_y5": 84162.0,
-          "y5_plus": 423053.0,
-          "total": 1147076.0
+          "y1": 1378.58,
+          "y1_y3": 2486.83,
+          "y3_y5": 2094.52,
+          "y5_plus": 8656.84,
+          "total": 24748.63
         }
       }
     },
@@ -264,7 +264,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.73,
-      "schedule_run_rate": 0.255,
+      "schedule_run_rate": 0.003,
       "nb_replacement": 1.2,
       "inputs": {
         "closing_csm_mn_krw": 11187889.0,
@@ -272,11 +272,11 @@
         "new_business_mn_krw": 1379571.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 1078110.0,
-          "y1_y3": 1772316.0,
-          "y3_y5": 1404678.0,
-          "y5_plus": 6932786.0,
-          "total": 11187890.0
+          "y1": 10781.1,
+          "y1_y3": 17723.16,
+          "y3_y5": 14046.78,
+          "y5_plus": 69327.86,
+          "total": 111878.9
         }
       }
     },
@@ -293,11 +293,11 @@
         "new_business_mn_krw": null,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 337709.0,
-          "y1_y3": 613058.0,
-          "y3_y5": 532536.0,
-          "y5_plus": 673082.0,
-          "total": 2156385.0
+          "y1": 2040.5646,
+          "y1_y3": 3514.3844,
+          "y3_y5": 2970.6617,
+          "y5_plus": 3662.5202,
+          "total": 12188.1309
         }
       }
     },
@@ -306,7 +306,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.32,
-      "schedule_run_rate": 0.442,
+      "schedule_run_rate": 0.003,
       "nb_replacement": 2.42,
       "inputs": {
         "closing_csm_mn_krw": 2152105.61,
@@ -314,11 +314,11 @@
         "new_business_mn_krw": 504448.141,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 337709.0,
-          "y1_y3": 613058.0,
-          "y3_y5": 532536.0,
-          "y5_plus": 673082.0,
-          "total": 2156385.0
+          "y1": 2040.5646,
+          "y1_y3": 3514.3844,
+          "y3_y5": 2970.6617,
+          "y5_plus": 3662.5202,
+          "total": 12188.1309
         }
       }
     },
@@ -327,7 +327,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.32,
-      "schedule_run_rate": 0.442,
+      "schedule_run_rate": 0.003,
       "nb_replacement": 1.79,
       "inputs": {
         "closing_csm_mn_krw": 2152105.61,
@@ -335,11 +335,11 @@
         "new_business_mn_krw": 374208.778,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 337709.0,
-          "y1_y3": 613058.0,
-          "y3_y5": 532536.0,
-          "y5_plus": 673082.0,
-          "total": 2156385.0
+          "y1": 2040.5646,
+          "y1_y3": 3514.3844,
+          "y3_y5": 2970.6617,
+          "y5_plus": 3662.5202,
+          "total": 12188.1309
         }
       }
     },
@@ -348,7 +348,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 11.34,
-      "schedule_run_rate": 1.258,
+      "schedule_run_rate": 0.007,
       "nb_replacement": 7.43,
       "inputs": {
         "closing_csm_mn_krw": 755779.349,
@@ -356,11 +356,11 @@
         "new_business_mn_krw": 495099.686,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 337709.0,
-          "y1_y3": 613058.0,
-          "y3_y5": 532536.0,
-          "y5_plus": 673082.0,
-          "total": 2156385.0
+          "y1": 2040.5646,
+          "y1_y3": 3514.3844,
+          "y3_y5": 2970.6617,
+          "y5_plus": 3662.5202,
+          "total": 12188.1309
         }
       }
     },
@@ -377,8 +377,8 @@
         "new_business_mn_krw": 394605.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y5_plus": 1352940.0,
-          "total": 2078205.0
+          "y5_plus": 13615.79,
+          "total": 20584.24
         }
       }
     },
@@ -387,7 +387,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.39,
-      "schedule_run_rate": 0.203,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 2.37,
       "inputs": {
         "closing_csm_mn_krw": 13080691.0,
@@ -395,11 +395,11 @@
         "new_business_mn_krw": 3298494.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 1030710.0,
-          "y1_y3": 1620321.0,
-          "y3_y5": 1219863.0,
-          "y5_plus": 9031129.0,
-          "total": 12902023.0
+          "y1": 10561.21,
+          "y1_y3": 16583.3,
+          "y3_y5": 12467.08,
+          "y5_plus": 42677.74,
+          "total": 130806.91
         }
       }
     },
@@ -408,7 +408,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 8.73,
-      "schedule_run_rate": 0.195,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 2.14,
       "inputs": {
         "closing_csm_mn_krw": 14073908.0,
@@ -416,11 +416,11 @@
         "new_business_mn_krw": 3451183.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 1058610.0,
-          "y1_y3": 1681189.0,
-          "y3_y5": 1288901.0,
-          "y5_plus": 4927321.0,
-          "total": 14073909.0
+          "y1": 10586.1,
+          "y1_y3": 16811.89,
+          "y3_y5": 12889.01,
+          "y5_plus": 49273.21,
+          "total": 140739.09
         }
       }
     },
@@ -429,7 +429,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.86,
-      "schedule_run_rate": 0.001,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 1.73,
       "inputs": {
         "closing_csm_mn_krw": 7226793.0,
@@ -437,11 +437,11 @@
         "new_business_mn_krw": 1265763.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 1394.0,
-          "y1_y3": 2724.0,
-          "y3_y5": 2654.0,
-          "y5_plus": 12210.0,
-          "total": 37819.0
+          "y1": 4415.41,
+          "y1_y3": 7388.38,
+          "y3_y5": 6078.85,
+          "y5_plus": 28730.2,
+          "total": 75548.97
         }
       }
     },
@@ -458,74 +458,74 @@
         "new_business_mn_krw": null,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 29581932.0,
-          "y1_y3": 61417604.0,
-          "y3_y5": 59764899.0,
-          "y5_plus": 369611816.0,
-          "total": 520376251.0
+          "y1": 295.8193,
+          "y1_y3": 614.176,
+          "y3_y5": 597.649,
+          "y5_plus": 3696.1182,
+          "total": 5203.7625
         }
       }
     },
     {
       "company": "아이비케이연금보험",
       "status": "ok",
-      "csm_dependency": null,
-      "csm_runway_years": null,
-      "schedule_run_rate": 0.0,
-      "nb_replacement": null,
+      "csm_dependency": 1.0,
+      "csm_runway_years": 17.43,
+      "schedule_run_rate": 0.002,
+      "nb_replacement": 1.24,
       "inputs": {
         "closing_csm_mn_krw": 455839.623,
-        "csm_amort_mn_krw": null,
-        "new_business_mn_krw": null,
+        "csm_amort_mn_krw": -26151.758,
+        "new_business_mn_krw": 32334.44,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 29581932.0,
-          "y1_y3": 61417604.0,
-          "y3_y5": 59764899.0,
-          "y5_plus": 369611816.0,
-          "total": 520376251.0
+          "y1": 295.8193,
+          "y1_y3": 614.176,
+          "y3_y5": 597.649,
+          "y5_plus": 3696.1182,
+          "total": 5203.7625
         }
       }
     },
     {
       "company": "아이비케이연금보험",
       "status": "ok",
-      "csm_dependency": null,
-      "csm_runway_years": null,
-      "schedule_run_rate": 0.0,
-      "nb_replacement": null,
+      "csm_dependency": 1.0,
+      "csm_runway_years": 12.82,
+      "schedule_run_rate": 0.002,
+      "nb_replacement": 1.15,
       "inputs": {
         "closing_csm_mn_krw": 450111.915,
-        "csm_amort_mn_krw": null,
-        "new_business_mn_krw": null,
+        "csm_amort_mn_krw": -35111.633,
+        "new_business_mn_krw": 40362.346,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 29581932.0,
-          "y1_y3": 61417604.0,
-          "y3_y5": 59764899.0,
-          "y5_plus": 369611816.0,
-          "total": 520376251.0
+          "y1": 295.8193,
+          "y1_y3": 614.176,
+          "y3_y5": 597.649,
+          "y5_plus": 3696.1182,
+          "total": 5203.7625
         }
       }
     },
     {
       "company": "아이비케이연금보험",
       "status": "ok",
-      "csm_dependency": null,
-      "csm_runway_years": null,
-      "schedule_run_rate": 0.0,
-      "nb_replacement": null,
+      "csm_dependency": 1.0,
+      "csm_runway_years": 11.82,
+      "schedule_run_rate": 0.002,
+      "nb_replacement": 1.63,
       "inputs": {
-        "closing_csm_mn_krw": 498792.698,
-        "csm_amort_mn_krw": null,
-        "new_business_mn_krw": null,
+        "closing_csm_mn_krw": 520376.251,
+        "csm_amort_mn_krw": -44027.788,
+        "new_business_mn_krw": 71773.097,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 29581932.0,
-          "y1_y3": 61417604.0,
-          "y3_y5": 59764899.0,
-          "y5_plus": 369611816.0,
-          "total": 520376251.0
+          "y1": 295.8193,
+          "y1_y3": 614.176,
+          "y3_y5": 597.649,
+          "y5_plus": 3696.1182,
+          "total": 5203.7625
         }
       }
     },
@@ -534,7 +534,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.54,
-      "schedule_run_rate": 0.166,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 2.76,
       "inputs": {
         "closing_csm_mn_krw": 937462.0,
@@ -542,11 +542,11 @@
         "new_business_mn_krw": 245843.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 57415.0,
-          "y1_y3": 98057.0,
-          "y3_y5": 78967.0,
-          "y5_plus": 309242.0,
-          "total": 869543.0
+          "y1": 532.4,
+          "y1_y3": 948.62,
+          "y3_y5": 815.89,
+          "y5_plus": 3536.56,
+          "total": 9374.62
         }
       }
     },
@@ -563,11 +563,11 @@
         "new_business_mn_krw": null,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 88446.0,
-          "y1_y3": 165081.0,
-          "y3_y5": 147860.0,
-          "y5_plus": 198112.0,
-          "total": 599499.0
+          "y1": 884.46,
+          "y1_y3": 1650.81,
+          "y3_y5": 1478.6,
+          "y5_plus": 1981.12,
+          "total": 5994.99
         }
       }
     },
@@ -576,7 +576,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 11.17,
-      "schedule_run_rate": 0.164,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 2.16,
       "inputs": {
         "closing_csm_mn_krw": 1541758.0,
@@ -584,11 +584,11 @@
         "new_business_mn_krw": 297618.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 88446.0,
-          "y1_y3": 165081.0,
-          "y3_y5": 147860.0,
-          "y5_plus": 198112.0,
-          "total": 599499.0
+          "y1": 884.46,
+          "y1_y3": 1650.81,
+          "y3_y5": 1478.6,
+          "y5_plus": 1981.12,
+          "total": 5994.99
         }
       }
     },
@@ -597,7 +597,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.67,
-      "schedule_run_rate": 0.168,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 2.28,
       "inputs": {
         "closing_csm_mn_krw": 1509649.0,
@@ -605,11 +605,11 @@
         "new_business_mn_krw": 355720.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 88446.0,
-          "y1_y3": 165081.0,
-          "y3_y5": 147860.0,
-          "y5_plus": 198112.0,
-          "total": 599499.0
+          "y1": 884.46,
+          "y1_y3": 1650.81,
+          "y3_y5": 1478.6,
+          "y5_plus": 1981.12,
+          "total": 5994.99
         }
       }
     },
@@ -618,7 +618,7 @@
       "status": "ok",
       "csm_dependency": null,
       "csm_runway_years": null,
-      "schedule_run_rate": 0.511,
+      "schedule_run_rate": 0.005,
       "nb_replacement": null,
       "inputs": {
         "closing_csm_mn_krw": 495942.0,
@@ -626,11 +626,11 @@
         "new_business_mn_krw": -9157.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 88446.0,
-          "y1_y3": 165081.0,
-          "y3_y5": 147860.0,
-          "y5_plus": 198112.0,
-          "total": 599499.0
+          "y1": 884.46,
+          "y1_y3": 1650.81,
+          "y3_y5": 1478.6,
+          "y5_plus": 1981.12,
+          "total": 5994.99
         }
       }
     },
@@ -647,11 +647,11 @@
         "new_business_mn_krw": null,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 3718.0,
-          "y1_y3": 6648.0,
-          "y3_y5": 5892.0,
-          "y5_plus": 8003.0,
-          "total": 24261.0
+          "y1": 37.18,
+          "y1_y3": 66.48,
+          "y3_y5": 58.92,
+          "y5_plus": 80.03,
+          "total": 242.61
         }
       }
     },
@@ -660,7 +660,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 11.91,
-      "schedule_run_rate": 0.064,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 1.47,
       "inputs": {
         "closing_csm_mn_krw": 161828.0,
@@ -668,11 +668,11 @@
         "new_business_mn_krw": 19944.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 3718.0,
-          "y1_y3": 6648.0,
-          "y3_y5": 5892.0,
-          "y5_plus": 8003.0,
-          "total": 24261.0
+          "y1": 37.18,
+          "y1_y3": 66.48,
+          "y3_y5": 58.92,
+          "y5_plus": 80.03,
+          "total": 242.61
         }
       }
     },
@@ -681,7 +681,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 11.25,
-      "schedule_run_rate": 0.092,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 0.98,
       "inputs": {
         "closing_csm_mn_krw": 112382.0,
@@ -689,11 +689,11 @@
         "new_business_mn_krw": 9806.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 3718.0,
-          "y1_y3": 6648.0,
-          "y3_y5": 5892.0,
-          "y5_plus": 8003.0,
-          "total": 24261.0
+          "y1": 37.18,
+          "y1_y3": 66.48,
+          "y3_y5": 58.92,
+          "y5_plus": 80.03,
+          "total": 242.61
         }
       }
     },
@@ -702,7 +702,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 14.31,
-      "schedule_run_rate": 0.119,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 1.01,
       "inputs": {
         "closing_csm_mn_krw": 86809.0,
@@ -710,11 +710,11 @@
         "new_business_mn_krw": 6107.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 3718.0,
-          "y1_y3": 6648.0,
-          "y3_y5": 5892.0,
-          "y5_plus": 8003.0,
-          "total": 24261.0
+          "y1": 37.18,
+          "y1_y3": 66.48,
+          "y3_y5": 58.92,
+          "y5_plus": 80.03,
+          "total": 242.61
         }
       }
     },
@@ -723,7 +723,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 12.18,
-      "schedule_run_rate": 0.166,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 4.62,
       "inputs": {
         "closing_csm_mn_krw": 865045.0,
@@ -731,11 +731,11 @@
         "new_business_mn_krw": 328222.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 52914.0,
-          "y1_y3": 90284.0,
-          "y3_y5": 73864.0,
-          "y5_plus": 165194.0,
-          "total": 583047.0
+          "y1": 420.98,
+          "y1_y3": 784.61,
+          "y3_y5": 721.68,
+          "y5_plus": 3059.42,
+          "total": 8650.43
         }
       }
     },
@@ -744,7 +744,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.27,
-      "schedule_run_rate": 0.141,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 1.71,
       "inputs": {
         "closing_csm_mn_krw": 3010509.0,
@@ -752,11 +752,11 @@
         "new_business_mn_krw": 501304.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 152557.0,
-          "y1_y3": 271554.0,
-          "y3_y5": 239005.0,
-          "y5_plus": 1057669.0,
-          "total": 3010510.0
+          "y1": 2049.54,
+          "y1_y3": 3561.26,
+          "y3_y5": 2987.63,
+          "y5_plus": 11076.12,
+          "total": 32637.75
         }
       }
     },
@@ -765,7 +765,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 7.42,
-      "schedule_run_rate": 0.044,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 2.23,
       "inputs": {
         "closing_csm_mn_krw": 803146.0,
@@ -773,11 +773,11 @@
         "new_business_mn_krw": 241650.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 12781.0,
-          "y1_y3": 22640.0,
-          "y3_y5": 21668.0,
-          "y5_plus": 340553.0,
-          "total": 617720.0
+          "y1": 309.09,
+          "y1_y3": 485.83,
+          "y3_y5": 433.34,
+          "y5_plus": 4635.08,
+          "total": 9046.74
         }
       }
     },
@@ -786,7 +786,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 8.34,
-      "schedule_run_rate": 0.325,
+      "schedule_run_rate": 0.003,
       "nb_replacement": 3.1,
       "inputs": {
         "closing_csm_mn_krw": 142349.0,
@@ -794,11 +794,11 @@
         "new_business_mn_krw": 52876.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 17739.0,
-          "y1_y3": 28494.0,
-          "y3_y5": 22005.0,
-          "y5_plus": 97587.0,
-          "total": 165825.0
+          "y1": 157.35,
+          "y1_y3": 257.87,
+          "y3_y5": 195.31,
+          "y5_plus": 812.97,
+          "total": 1423.5
         }
       }
     },
@@ -815,11 +815,11 @@
         "new_business_mn_krw": null,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 3997929.0,
-          "y1_y3": 7110217.0,
-          "y3_y5": 7531141.0,
-          "y5_plus": 141873674.0,
-          "total": 287305474.0
+          "y1": 331.9474,
+          "y1_y3": 530.1415,
+          "y3_y5": 441.2812,
+          "y5_plus": 2934.0321,
+          "total": 7268.9569
         }
       }
     },
@@ -836,11 +836,11 @@
         "new_business_mn_krw": null,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 3997929.0,
-          "y1_y3": 7110217.0,
-          "y3_y5": 7531141.0,
-          "y5_plus": 141873674.0,
-          "total": 287305474.0
+          "y1": 331.9474,
+          "y1_y3": 530.1415,
+          "y3_y5": 441.2812,
+          "y5_plus": 2934.0321,
+          "total": 7268.9569
         }
       }
     },
@@ -849,7 +849,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 11.01,
-      "schedule_run_rate": 0.025,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 8.13,
       "inputs": {
         "closing_csm_mn_krw": 438955.662,
@@ -857,11 +857,11 @@
         "new_business_mn_krw": 324034.743,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 3997929.0,
-          "y1_y3": 7110217.0,
-          "y3_y5": 7531141.0,
-          "y5_plus": 141873674.0,
-          "total": 287305474.0
+          "y1": 331.9474,
+          "y1_y3": 530.1415,
+          "y3_y5": 441.2812,
+          "y5_plus": 2934.0321,
+          "total": 7268.9569
         }
       }
     },
@@ -878,11 +878,11 @@
         "new_business_mn_krw": null,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 3997929.0,
-          "y1_y3": 7110217.0,
-          "y3_y5": 7531141.0,
-          "y5_plus": 141873674.0,
-          "total": 287305474.0
+          "y1": 331.9474,
+          "y1_y3": 530.1415,
+          "y3_y5": 441.2812,
+          "y5_plus": 2934.0321,
+          "total": 7268.9569
         }
       }
     },
@@ -891,7 +891,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.69,
-      "schedule_run_rate": 0.15,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 2.49,
       "inputs": {
         "closing_csm_mn_krw": 9109141.0,
@@ -899,11 +899,11 @@
         "new_business_mn_krw": 2123086.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 516503.0,
-          "y1_y3": 852598.0,
-          "y3_y5": 720044.0,
-          "y5_plus": 7173422.0,
-          "total": 9262567.0
+          "y1": 4484.27,
+          "y1_y3": 7512.89,
+          "y3_y5": 6375.79,
+          "y5_plus": 70379.09,
+          "total": 88752.04
         }
       }
     },
@@ -912,14 +912,20 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 9.28,
-      "schedule_run_rate": null,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 1.81,
       "inputs": {
         "closing_csm_mn_krw": 3803220.796,
         "csm_amort_mn_krw": -409737.121,
         "new_business_mn_krw": 740989.093,
         "service_margin_proxy_mn_krw": null,
-        "amort_buckets": {}
+        "amort_buckets": {
+          "y1": 2481.8167,
+          "y1_y3": 3993.6152,
+          "y3_y5": 3143.1402,
+          "y5_plus": 14312.6734,
+          "total": 38032.208
+        }
       }
     },
     {
@@ -927,7 +933,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 8.73,
-      "schedule_run_rate": 0.0,
+      "schedule_run_rate": 0.002,
       "nb_replacement": 1.92,
       "inputs": {
         "closing_csm_mn_krw": 8305487.262,
@@ -935,11 +941,11 @@
         "new_business_mn_krw": 1827879.353,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 560401752.0,
-          "y1_y3": 908244443.0,
-          "y3_y5": 716981813.0,
-          "y5_plus": 6119859254.0,
-          "total": 8305487262.0
+          "y1": 6227.1686,
+          "y1_y3": 9972.1124,
+          "y3_y5": 7792.4297,
+          "y5_plus": 65786.71,
+          "total": 89778.4207
         }
       }
     },
@@ -948,7 +954,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 10.38,
-      "schedule_run_rate": 0.231,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 1.82,
       "inputs": {
         "closing_csm_mn_krw": 2215205.0,
@@ -956,11 +962,11 @@
         "new_business_mn_krw": 388299.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 189418.0,
-          "y1_y3": 322567.0,
-          "y3_y5": 264930.0,
-          "y5_plus": 1465784.0,
-          "total": 2242699.0
+          "y1": 1186.93,
+          "y1_y3": 1968.44,
+          "y3_y5": 1628.4,
+          "y5_plus": 8462.38,
+          "total": 22152.05
         }
       }
     },
@@ -969,7 +975,7 @@
       "status": "ok",
       "csm_dependency": 1.0,
       "csm_runway_years": 11.23,
-      "schedule_run_rate": 0.138,
+      "schedule_run_rate": 0.001,
       "nb_replacement": 1.42,
       "inputs": {
         "closing_csm_mn_krw": 2470794.0,
@@ -977,11 +983,11 @@
         "new_business_mn_krw": 312758.0,
         "service_margin_proxy_mn_krw": null,
         "amort_buckets": {
-          "y1": 117471.0,
-          "y1_y3": 224121.0,
-          "y3_y5": 209028.0,
-          "y5_plus": 892935.0,
-          "total": 2470792.0
+          "y1": 1060.8,
+          "y1_y3": 2007.1,
+          "y3_y5": 1759.64,
+          "y5_plus": 9348.41,
+          "total": 24707.94
         }
       }
     }

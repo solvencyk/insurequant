@@ -76,6 +76,12 @@ STAGE_PATTERNS: dict[str, list[str]] = {
         "보험계약마진 조정 추정치",
         "보험계약마진을 조정하는 추정치의 변동",
         "보험계약마진을 조정하는 추정치 변동",
+        # 라이나생명(KR): "을" 조사 없이 "...변동분"으로 끝맺는 변형 (FY2023~FY2025
+        # 3개년 raw 확인, validate_csm_waterfall balance_incomplete:assumption).
+        "보험계약마진 조정하는 추정치의 변동",
+        # 처브라이프생명(KR): "조정" 대신 "변경" 동사를 쓰는 변형 (FY2023~FY2025
+        # 3개년 raw 확인, 동일 티켓).
+        "보험계약마진을 변경하는 추정치",
         "보험계약마진에 반영된 추정치 변동",
         "보험계약마진 추정의 변경",
         "미래서비스와 관련된 변동",
@@ -418,6 +424,33 @@ def find_csm_leaf_cols(
             grp = len(sub2) if sub2 else 1
             flat_start = max(0, i * grp)
             if sub2 and grp >= 2:
+                # This assumes EVERY sub column (PV/RA/합계 too) repeats `grp`
+                # times, true for the Dongyang/Mirae/Pubon layout that
+                # motivated this branch. Some filings (하나생명 13-3/14-4) instead
+                # carry a narrow leading super-header row (e.g. ['구분',
+                # '보험료배분접근법외 보험계약'], only 2 cells) that this function
+                # reads as `top`, pushing the REAL [PV, RA, 보험계약마진, 합계]
+                # labels down into `sub` — there PV/RA are single-width, so
+                # grp-multiplying overshoots the real data (computes cols
+                # [6,7,8] when the row only has 6 data cells -> every stage
+                # silently empty, no_stage_match). Validate against the actual
+                # data width and fall back to the single-width offset
+                # (flat_start=i) when the multiplied range doesn't fit but the
+                # unmultiplied one does.
+                ref = None
+                if rows:
+                    ref = _richest_value_slice(rows, "기초") or _richest_value_slice(rows, "기말")
+                if ref is not None and flat_start + grp > len(ref) and i + grp <= len(ref):
+                    # sub2 here is CSM's OWN method breakdown (not repeated
+                    # for every top-level column), so a trailing 소계
+                    # (subtotal) sub-column must be dropped like the sibling
+                    # method_cols builder above does — else it double-counts
+                    # (하나생명 14-4 FY2025: sub2 = [수정소급법, 공정가치법,
+                    # 이외모든계약, 소계]; 소계's value == the other 3 summed,
+                    # verified against the row's own data, so including all 4
+                    # doubled every CSM stage and blew up the balance check).
+                    method_idx = [k for k in range(grp) if not _is_subtotal_label(sub2[k])]
+                    return [i + k for k in method_idx] or list(range(i, i + grp))
                 return list(range(flat_start, flat_start + grp))
             return [flat_start]
 
@@ -540,6 +573,18 @@ def _is_ceded_block(blk: dict) -> bool:
         return True
     if "출재" in cap and "원수" not in cap:
         return True
+    # Terse sibling sub-item caption whose ENTIRE subject (after stripping
+    # leading numbering and a trailing <당기/전기> tag) is bare "재보험" — e.g.
+    # 하나생명 "(2) 재보험 <당기>" paired with a "14-4 ...보험계약..." direct
+    # sibling. Row labels can't catch this one: its sub-rows drop the 재
+    # prefix (자산/부채, same as the direct block's), and only the combined
+    # rollup row carries it, spelled "재보험계약순자산(부채)" — the extra 순
+    # breaks every exact-substring token in the ceded list above (looks for
+    # "재보험계약자산"/"재보험계약부채", not "...순자산(부채)").
+    cap_bare = re.sub(r"^[(（]?\s*\d+[)）]\s*", "", cap.strip())
+    cap_bare = re.sub(r"<(당기|전기|당분기|전분기|당반기|전반기)>\s*$", "", cap_bare).strip()
+    if cap_bare == "재보험":
+        return True
     return False
 
 
@@ -650,6 +695,23 @@ def _disambiguate_basis_period(ranked: list[dict]) -> list[dict]:
         return False
 
     current = [t for i, t in enumerate(info) if not _is_prior(i)]
+    # Never let a ceded (출재/재보험) block win here. `is_direct` is already
+    # the PRIMARY sort key one level up in rank_main_blocks, but this
+    # function's own magnitude-band pick (below) compares opening/closing
+    # size only and can override that ordering whenever a real direct
+    # block's opening happens to sit within 20% of a coexisting reinsurance
+    # block's (에이아이에이생명 FY2025 필링, rcept 20260407002100: 재보험
+    # 기초 521,402가 원수 기초 1,509,649의 34.5%로 20% 문턱을 넘어 함께
+    # 살아남았고, "작은 쪽이 별도" 휴리스틱이 원수/재보험 — 전혀 다른 축 —
+    # 쌍에도 그대로 적용돼 재보험 블록이 승격됐다: opening/closing 전부가
+    # 재보험 것으로 바뀌며 amortization 스테이지까지 통째로 사라졌다).
+    # Direct survivors are preferred whenever any exist among the non-prior
+    # candidates; only fall back to the mixed set if none are direct (should
+    # not happen for a company with real direct-business disclosure, but
+    # avoids ever returning an empty candidate set).
+    direct_current = [t for t in current if not _is_ceded_block(t[0])]
+    if direct_current:
+        current = direct_current
     # Exactly one non-prior survivor = no 별도/연결 ambiguity left to resolve
     # (that needs >=2 same-period candidates), just a plain 당기/전기 pair where
     # continuity already proves which one is current. Promote it outright —
@@ -683,8 +745,55 @@ def _disambiguate_basis_period(ranked: list[dict]) -> list[dict]:
         if t[1] is not None and abs(t[1]) >= max_open * 0.20
         and not _DIVIDEND_SEGMENT_RE.match((t[0].get("caption") or "").strip())
     ]
-    if len(full) < 2:
-        return ranked  # no 연결/별도 duplicate pair — leave score order intact
+    if not full:
+        return ranked  # nothing survives the main-magnitude band
+    if len(full) >= 3:
+        # Whole-vs-parts collision: the 20%-of-max band can admit a company's
+        # OWN product-segment sub-tables (무배당/변액/유배당 등) alongside the
+        # whole-company aggregate when a segment is individually large enough
+        # to look like a legitimate 연결/별도 peer. A genuine 연결/별도
+        # duplicate never sums to another member of `full`; a product segment
+        # does (메트라이프생명 FY2025 필링, rcept 20260403003824: "변액보험계약"
+        # alone won via "smallest opening" even though the aggregate's closing
+        # 2,608,160,261 ≈ 무배당 1,847,845,220 + 변액 755,779,349 =
+        # 2,603,624,569, 0.17% off — the gap is exactly the excluded tiny
+        # 유배당 segment). Reuses the same 5% "one block is the total of the
+        # rest" tolerance collect_current_product_blocks already applies to
+        # this identical signature. When found, the WHOLE wins outright — the
+        # others are its own components, never alternate consolidation bases.
+        # Requires >=3 members: for exactly 2, "sum of the other 1" degenerates
+        # to plain equality, which a genuine 연결/별도 pair satisfies whenever
+        # 별도 happens to sit close to 연결 (few/no subsidiaries) — that
+        # false-fired on 교보생명보험 FY2024 필링(rcept 20250331004015, 연결
+        # 6,458,257 vs 별도 6,438,058, 0.3% apart) and wrongly promoted 연결,
+        # reversing the function's own documented 별도-preference below.
+        closes = [t[2] for t in full]
+        for i, c in enumerate(closes):
+            if c is None:
+                continue
+            others = sum(abs(x) for j, x in enumerate(closes) if j != i and x is not None)
+            if others > 0 and abs(abs(c) - others) / others <= 0.05:
+                best = full[i][0]
+                if best is ranked[0]:
+                    return ranked
+                return [best] + [b for b in ranked if b is not best]
+    if len(full) == 1:
+        # Same situation as the len(current)==1 branch above, just discovered
+        # one filter later: after dropping proven-prior blocks, exactly one
+        # main-magnitude-band survivor remains, so there is no genuine
+        # 별도/연결 duplicate pair to disambiguate — promote it outright
+        # rather than leaving a block that lost on being prior/tiny (but
+        # still won the earlier nb_abs sort) as the winner (메트라이프생명
+        # FY2024 필링, rcept 20250402000865: a footnote-captioned PRIOR block
+        # — "(주1) 위험경감 선택권…" — outscored the real current-period block
+        # on new_business magnitude; _is_prior already proves it prior, but
+        # the old code only re-promoted when len(current)==1 and never
+        # revisited the pick after the magnitude-band cut narrowed a tiny
+        # reinsurance side-table away, leaving exactly this one survivor).
+        best = full[0][0]
+        if best is ranked[0]:
+            return ranked
+        return [best] + [b for b in ranked if b is not best]
     best = min(full, key=lambda t: abs(t[1]))[0]
     if best is ranked[0]:
         return ranked
@@ -871,12 +980,28 @@ def extract_stages(blk: dict) -> dict:
         out[stage] = {"label": label, "value_mn_krw": signed_total}
 
     # Rowspan-split balance blocks (e.g. 하나생명 13-4): the 기초/당기말 marker
-    # only tags the 자산 sub-row (all zeros); the net CSM lives in the next
-    # 보험계약순부채 row. Only patch a stage that resolved to ~0 so companies
-    # with normal (non-zero) opening/closing balances are never affected.
+    # only tags the 자산 sub-row; the net CSM lives in the next 보험계약순부채
+    # row. Usually the 자산 sub-row is all zeros (resolves to ~0, the original
+    # trigger below), but it can be genuinely non-zero too (하나생명 FY2025
+    # 필링, rcept 20260325000201: 당기말 자산 sub-row = -19,577,929, picked as
+    # "closing" via the bare "기말" fallback since only THIS sub-row's stub
+    # carries the "당기말" tag — 부채/보험계약순부채 siblings don't repeat it —
+    # while the true net 보험계약순부채 = 726,895,688 사라짐, residual 62%).
+    # Also patch whenever the current pick's own label is that 자산 sub-row
+    # specifically (last " / "-joined segment == "자산"), regardless of its
+    # value, so companies whose opening/closing already resolve correctly via
+    # a DIFFERENT label (기말잔액 등) are never touched.
     for stage, region in (("opening", rows[:6]), ("closing", rows[-6:])):
         cur = out.get(stage)
-        if cur is not None and abs(cur.get("value_mn_krw", 0.0)) > 1e-6:
+        cur_is_asset_subrow = False
+        if cur is not None:
+            label_parts = (cur.get("label") or "").split(" / ")
+            cur_is_asset_subrow = label_parts[-1].strip() == "자산"
+        if (
+            cur is not None
+            and abs(cur.get("value_mn_krw", 0.0)) > 1e-6
+            and not cur_is_asset_subrow
+        ):
             continue
         for row in region:
             if not row or not isinstance(row[0], str):
@@ -894,6 +1019,59 @@ def extract_stages(blk: dict) -> dict:
             if vals and abs(sum(vals)) > 1e-6:
                 out[stage] = {"label": row[0].strip(), "value_mn_krw": sum(vals)}
                 break
+
+    # Supplementary additive CSM rollforward lines: some filings disclose a
+    # component that never matches ANY of the 6 stage patterns above because
+    # it sits as its OWN top-level rollforward line — not nested under a
+    # matched parent, and not itself resembling any stage's usual wording —
+    # so it would otherwise silently vanish from the balance identity. Each
+    # entry is verified per-company via the row's own arithmetic (PV+RA+
+    # CSM(+ext)=합계) and/or the balance-identity residual it exactly closes,
+    # and gets SUMMED INTO whichever stage already resolved above — never
+    # REPLACING it, unlike the main pattern loop, because these are always
+    # siblings of the main pick, not alternates for it.
+    _SUPPLEMENTARY_ADDITIVE: tuple[tuple[str, tuple[str, ...]], ...] = (
+        # 라이나생명(FY2023 필링, rcept 20240409003674): 최초 IFRS17 연차 특유의
+        # "계약의 경계" 재판정 catch-up. "미래서비스 관련 변동" 그룹(신계약/
+        # 조정추정치/손실부담)과는 무관한 별개 최상위 라인("기타" 부모행의
+        # 유일한 자식) — 잔차 3,439,401,606천원이 이 행 하나로 정확히 0에
+        # 닫힘(항등식 검증 완료). 46개 필링 전수조회 결과 이 라벨은 이 회사
+        # 이 연도에만 등장 — 다른 회사에 흡수될 위험 없음.
+        ("assumption", ("계약의 경계 변경 효과",)),
+        # 메트라이프생명(3개년 전부): "7. 환율변동효과 등"은 "6. 보험계약의
+        # 순 금융손익" 바로 다음 줄의 자체 최상위 라인 — row5(보험서비스결과)
+        # +row6(순금융손익)+row7(이 행)=row8(당기손익 및 기타포괄손익의 총
+        # 변동) 항등식으로 검증(3개년 전부 확인). 트레일링 "등"까지 정확히
+        # 일치시켜야 한다 — 케이비라이프는 같은 접두어로 시작하는 "환율변동
+        # 효과 외"/"환율변동효과"가 "보험금융손익(PL)" 부모 행의 CHILD라
+        # (123,071=102,487+20,584 항등식으로 확인) "환율변동효과"만 부분
+        # 일치시키면 부모+자식 이중계상으로 이전엔 통과하던 필링을 깨뜨렸다
+        # (실측 회귀: residual 0→102,487). 삼성생명도 정확히 "환율변동효과
+        # 등" 라벨을 쓰지만 값이 0에 가까워(수백만원대) 흡수돼도 무해.
+        ("interest", ("환율변동효과 등",)),
+    )
+    for target_stage, tokens in _SUPPLEMENTARY_ADDITIVE:
+        for row in rows:
+            if not row or not isinstance(row[0], str):
+                continue
+            stub_roll = rollforward_row_stub(row)
+            if not any(t in stub_roll for t in tokens):
+                continue
+            vs = row_value_start(row)
+            data_cells = row[vs:]
+            vals = [parse_num(data_cells[i]) for i in csm_cols if 0 <= i < len(data_cells)]
+            vals = [v for v in vals if v is not None]
+            if not vals:
+                continue
+            add_total = sum(vals)
+            if abs(add_total) < 1e-6:
+                continue
+            if target_stage in out:
+                out[target_stage]["value_mn_krw"] += add_total
+                out[target_stage]["label"] = out[target_stage]["label"] + " + " + row[0].strip()
+            else:
+                out[target_stage] = {"label": row[0].strip(), "value_mn_krw": add_total}
+            break  # one matching row per filing — avoid double-adding repeats
     return out
 
 

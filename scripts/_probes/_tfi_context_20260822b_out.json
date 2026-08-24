@@ -1,0 +1,414 @@
+[
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2024.4Q",
+    "pdf": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\disclosure\\FY2024_Q4\\raw\\KR0005_흥국화재.pdf",
+    "pdf_size": 38960137,
+    "page_count": 96,
+    "total_chars": 1330,
+    "avg_chars_per_page": 13.9,
+    "low_density_pages": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      92,
+      93,
+      94,
+      95
+    ],
+    "low_density_page_dens": [
+      6,
+      6,
+      6,
+      6,
+      0,
+      10,
+      6,
+      6,
+      6,
+      7,
+      7,
+      7,
+      7,
+      7,
+      19
+    ],
+    "existing_items": {
+      "1": {
+        "값": "27894",
+        "값_적용후": "27894"
+      },
+      "14": {
+        "값": "18112",
+        "값_적용후": "13978"
+      },
+      "47": null,
+      "48": null,
+      "49": null,
+      "50": null,
+      "51": null
+    },
+    "extract_tfi_full": {
+      "found": {},
+      "anchor": null,
+      "reason": "UNREADABLE(스캔본 의심, 13.9자/p, 96p)"
+    }
+  },
+  {
+    "code": "KR0009",
+    "name": "현대해상",
+    "quarter": "2023.1Q",
+    "pdf": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\disclosure\\FY2023_Q1\\raw\\KR0009_현대해상.pdf",
+    "pdf_size": 602650,
+    "page_count": 14,
+    "total_chars": 9339,
+    "avg_chars_per_page": 667.1,
+    "low_density_pages": [
+      0,
+      1,
+      13
+    ],
+    "low_density_page_dens": [
+      151,
+      168,
+      149
+    ],
+    "existing_items": {
+      "1": {
+        "값": "133398",
+        "값_적용후": "133398"
+      },
+      "14": {
+        "값": "74686",
+        "값_적용후": "74686"
+      },
+      "47": null,
+      "48": null,
+      "49": null,
+      "50": null,
+      "51": null
+    },
+    "extract_tfi_full": {
+      "found": {},
+      "anchor": null,
+      "reason": "'공통적용'+'보완자본'+'한도' 3키워드 동시 페이지 없음"
+    }
+  },
+  {
+    "code": "KR0049",
+    "name": "악사손해보험",
+    "quarter": "2024.3Q",
+    "pdf": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\disclosure\\FY2024_Q3\\raw\\KR0049_악사손해보험.pdf",
+    "pdf_size": 2310378,
+    "page_count": 19,
+    "total_chars": 5845,
+    "avg_chars_per_page": 307.6,
+    "low_density_pages": [
+      0,
+      1,
+      4,
+      6,
+      8,
+      10,
+      16,
+      17,
+      18
+    ],
+    "low_density_page_dens": [
+      162,
+      136,
+      0,
+      0,
+      71,
+      96,
+      0,
+      0,
+      85
+    ],
+    "existing_items": {
+      "1": {
+        "값": "5554",
+        "값_적용후": "5554"
+      },
+      "14": {
+        "값": "2314",
+        "값_적용후": "1939"
+      },
+      "47": null,
+      "48": null,
+      "49": null,
+      "50": null,
+      "51": null
+    },
+    "extract_tfi_full": {
+      "found": {},
+      "anchor": null,
+      "reason": "UNREADABLE(스캔본 의심, 307.6자/p, 19p)"
+    }
+  },
+  {
+    "code": "KR0050",
+    "name": "하나손해보험",
+    "quarter": "2023.1Q",
+    "pdf": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\disclosure\\FY2023_Q1\\raw\\KR0050_하나손해보험_amended.pdf",
+    "pdf_size": 396559,
+    "page_count": 15,
+    "total_chars": 9265,
+    "avg_chars_per_page": 617.7,
+    "low_density_pages": [
+      0,
+      14
+    ],
+    "low_density_page_dens": [
+      99,
+      198
+    ],
+    "existing_items": {
+      "1": {
+        "값": "3507",
+        "값_적용후": "3507"
+      },
+      "14": {
+        "값": "2160",
+        "값_적용후": "2160"
+      },
+      "47": null,
+      "48": null,
+      "49": null,
+      "50": null,
+      "51": null
+    },
+    "extract_tfi_full": {
+      "found": {},
+      "anchor": null,
+      "reason": "'공통적용'+'보완자본'+'한도' 3키워드 동시 페이지 없음"
+    }
+  },
+  {
+    "code": "KR0069",
+    "name": "삼성생명보험",
+    "quarter": "2025.4Q",
+    "pdf": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\disclosure\\FY2025_Q4\\raw\\KR0069_삼성생명.pdf",
+    "pdf_size": 5315684,
+    "page_count": 733,
+    "total_chars": 655127,
+    "avg_chars_per_page": 893.8,
+    "low_density_pages": [
+      0,
+      6,
+      10,
+      42,
+      59,
+      60,
+      65,
+      66,
+      177,
+      182,
+      196,
+      207,
+      297,
+      308,
+      348,
+      399,
+      414,
+      456,
+      461,
+      462,
+      463,
+      475,
+      525,
+      527,
+      615,
+      726,
+      727,
+      728,
+      729,
+      730
+    ],
+    "low_density_page_dens": [
+      70,
+      19,
+      128,
+      99,
+      43,
+      125,
+      0,
+      199,
+      149,
+      77,
+      84,
+      39,
+      129,
+      170,
+      150
+    ],
+    "existing_items": {
+      "1": {
+        "값": "657402",
+        "값_적용후": "657402"
+      },
+      "14": {
+        "값": "332075",
+        "값_적용후": "332075"
+      },
+      "47": null,
+      "48": null,
+      "49": null,
+      "50": null,
+      "51": null
+    },
+    "extract_tfi_full": {
+      "found": {
+        "47": [
+          16603763.0,
+          16603763.0
+        ],
+        "48": [
+          7336968.0,
+          7336968.0
+        ],
+        "49": [
+          0.0,
+          0.0
+        ],
+        "51": [
+          6628879.0,
+          6628879.0
+        ],
+        "50": [
+          13965846.0,
+          13965846.0
+        ]
+      },
+      "anchor": null,
+      "reason": null
+    }
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2023.1Q",
+    "pdf": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\disclosure\\FY2023_Q1\\raw\\KR0073_교보생명보험.pdf",
+    "pdf_size": 427303,
+    "page_count": 21,
+    "total_chars": 27729,
+    "avg_chars_per_page": 1320.4,
+    "low_density_pages": [
+      0,
+      1
+    ],
+    "low_density_page_dens": [
+      171,
+      124
+    ],
+    "existing_items": {
+      "1": {
+        "값": "129746",
+        "값_적용후": "129746"
+      },
+      "14": {
+        "값": "83151",
+        "값_적용후": "55834"
+      },
+      "47": null,
+      "48": null,
+      "49": null,
+      "50": null,
+      "51": null
+    },
+    "extract_tfi_full": {
+      "found": {},
+      "anchor": null,
+      "reason": "라벨 매칭 실패(페이지는 찾았으나 못 읽음)"
+    }
+  }
+]

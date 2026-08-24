@@ -64,6 +64,7 @@ from validate_kics_disclosure import (  # noqa: E402
     _exemption_provenance_findings,
     _exemption_registries,
     _item12_equals_item1,
+    _life8_issuer_inconsistent,
     _load_exemption_ledger,
     _other_capital_children_sum,
     _parent_present_child_incomplete_after,
@@ -72,6 +73,7 @@ from validate_kics_disclosure import (  # noqa: E402
     _ratio_series_spikes,
     _scan_breakdown_presence,
     _source_readability,
+    _tier2_issuer_inconsistent,
     _transition_identities_after,
     _transition_irr_after,
     _transition_mmult_after,
@@ -219,8 +221,30 @@ def check_census(res: GateResult, env: "Env") -> None:
     if env.delegate_kics:
         kics_report = kics_run_validation(
             kd_records, source_has_breakdown=_scan_breakdown_presence(kd_records))
-        for f in kics_report.get("findings", []):
+        kics_findings = kics_report.get("findings", [])
+        # documented exception 도 **같이 위임한다.** 룰만 위임하고 면제를 안 위임하면 두 게이트가
+        # 같은 finding 을 놓고 서로 다른 대답을 한다 — K-ICS 게이트는 '차단 안 함', 여기서는
+        # '차단' 이 되어 등재가 조용히 무효가 되고, 다음 사람은 그 불일치를 다른 곳을 넓혀서
+        # 푼다. **재구현하지 않고 같은 함수를 부른다**(위 §1b(ii) 의 duplicate-and-drift 회피와
+        # 같은 이유): 면제 재검산이 두 벌이 되는 순간 한쪽만 깨지는 경로가 생긴다.
+        # 면제가 깨져 있으면(`tier2_exempt_red`) 그것 자체가 아래에서 RED 로 나간다 — 즉 여기서
+        # 빠지는 것은 '매 실행 재검산에 통과한 면제' 뿐이다.
+        tier2_exempt, tier2_exempt_red, _t2_review, _t2_detail = _tier2_issuer_inconsistent(
+            kd_records, kics_findings)
+        life8_ok, life8_exempt_red, _l8_review, _l8_detail = _life8_issuer_inconsistent(kd_records)
+        exempt_ids = {id(f) for f in tier2_exempt}
+        exempt_ids |= {id(f) for f in kics_findings
+                       if f.get("status") == "RED" and str(f.get("rule")) == "8_life"
+                       and (f.get(KEY_CODE), f.get(KEY_QUARTER)) in life8_ok}
+        for f in tier2_exempt_red + life8_exempt_red:
+            res.add(check="census", severity="RED", master="kics_disclosure",
+                    company=env.code_name.get(f.get("code"), f.get("code")),
+                    quarter=f.get("quarter"), rule=f"KICS_{f.get('rule')}",
+                    message=f"documented exception 재검산 실패: {f.get('detail')}")
+        for f in kics_findings:
             if f.get("status") != "RED":
+                continue
+            if id(f) in exempt_ids:
                 continue
             rule = f.get("rule")
             code = f.get(KEY_CODE)

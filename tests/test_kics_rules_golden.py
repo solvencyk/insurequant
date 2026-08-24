@@ -34,10 +34,15 @@ MASTER = REPO / "kics_disclosure.json"
 
 def _run() -> dict:
     from solvency.validation.kics_json_rules import run_validation
-    from validate_kics_disclosure import _scan_breakdown_presence
+    from validate_kics_disclosure import _load_tfi_applicability, _scan_breakdown_presence
 
     records = json.loads(MASTER.read_text(encoding="utf-8"))
-    report = run_validation(records, source_has_breakdown=_scan_breakdown_presence(records))
+    # 게이트와 **같은 부수입력**을 실어야 골든이 게이트를 박제한다. `tfi_applicability` 를
+    # 빼면 `47_tier2_census` 의 부재 판정이 전부 UNKNOWN review 로 떨어져, 골든은 게이트가
+    # 실제로 내는 RED 를 한 건도 고정하지 못한다(2026-08-22 iter-5 신설).
+    report = run_validation(records,
+                            source_has_breakdown=_scan_breakdown_presence(records),
+                            tfi_applicability=_load_tfi_applicability())
     return report
 
 
@@ -77,7 +82,71 @@ def _update() -> int:
     man["_what"] = ("Refactor safety net for run_validation (K-ICS rule engine). "
                     "Captured before the 361-line per-bucket loop was extracted. "
                     "Covers every (code, quarter, rule, status) finding over the live "
-                    "kics_disclosure.json.")
+                    "kics_disclosure.json. "
+                    "2026-08-22 재생성 사유(의도된 산출 변경, 손으로 해시 고치지 않았다): "
+                    "① 신규 축 50_tfi_tier_split / 51_tfi_tier2_composition (각 적용전·적용후) "
+                    "배선 → findings 10,736 -> 12,688 (+1,952 = 488버킷 x 2룰 x 2컬럼). "
+                    "② TIER2_TABLE_ABSENT_INTERMITTENT 를 SKIP -> RED 승격(orchestrator 결정) "
+                    "→ RED 32 -> 108 (+76 = 38버킷 x 2컬럼). 데이터는 안 건드렸다. "
+                    "2026-08-22 (2차) 재생성 사유 — parser 가 50/51 을 431버킷 백필하자 위 두 "
+                    "신규 축이 127칸 RED 로 터졌고, 전수 분해 결과 **데이터 오염 0건 · 전부 룰 "
+                    "커버리지 결손**이었다. 룰만 고쳤고 데이터는 이번에도 안 건드렸다: "
+                    "③ 51_tfi_tier2_composition 이 형제 룰 3_tier2_composition 의 갈래 "
+                    "(CAPPED/UNCAPPED/BOTH/TFI_NA)를 안 쓰고 min(47,48)+49 만 무조건 검사하고 "
+                    "있었다 → _tier2_branch 에 target_item 인자를 추가해 **같은 함수를 공유**. "
+                    "적용전 RED 67 -> 5 (해소 62 = UNCAPPED 50 + TFI_NA 12). "
+                    "④ 50_tfi_tier_split_post 가 TFI 단독 스코프를 전체결합 item1_적용후와 "
+                    "비교하고 있었다. 올바른 비교 대상은 TFI 표 자신의 지급여력금액 행(item52)인데 "
+                    "마스터에 없고, item1_적용전으로 대신하는 것도 원문에 반증된다(IBK연금 "
+                    "FY2026_Q1 p17: 그 합계 행이 857,997 -> 938,740 으로 움직인다). 없는 값을 "
+                    "대신 채우지 않고 min/max(item1_전, item1_후) 범위검사로 바꿨다 — item1 이 "
+                    "전=후 인 362칸(84%)에서는 범위가 한 점으로 붕괴해 등식과 같은 강도다. "
+                    "적용후 RED 60 -> 5, 신규 YELLOW 69(범위만 통과 = item52 발주 대기). "
+                    "남은 10칸은 전부 발행사 원본 불일치(5) 또는 확증된 추출결함(교보생명 4 · "
+                    "롯데손해 1)이고 raw 로 개별 확인했다. "
+                    "※ by_status 가 크게 움직인 것(SKIP 3,953 -> 2,257 · GREEN 7,352 -> 8,758)은 "
+                    "내 룰 수정이 아니라 **parser 의 431버킷 백필** 때문이다 — 직전 골든이 백필 "
+                    "전에 박제된 상태였다(parser 가 RED=236 을 정상으로 박제하는 것이 옳은지 "
+                    "판단이 안 서서 --update 를 미뤄 둔 것이고, 그 판단이 옳았다). findings 총계 "
+                    "12,688 은 그대로다 — 룰 개수도 버킷 수도 안 변했고 셀이 채워진 것뿐이다. "
+                    "2026-08-22 (3차, iter-5) 재생성 사유 — 데이터는 이번에도 안 건드렸다: "
+                    "⑤ 47_tier2_census 의 **전부 부재** 판정을 추론에서 실측으로 교체. 종전 "
+                    "기준 TIER2_TABLE_ABSENT_INTERMITTENT(= 같은 회사가 다른 분기엔 공시했나) "
+                    "가 틀렸다 — 47/48/49 는 (1)공통적용 경과조치 표의 행이고 TFI 는 해당 "
+                    "자본증권이 상환·만기되면 적용이 끝나므로 분기마다 켜졌다 꺼지는 것이 "
+                    "정상이다(교보라이프플래닛 FY2023_Q1 MD 는 `보완자본 한도` 3회 + 표 존재, "
+                    "FY2023_Q2 이후는 0회). 이제 그 버킷 자신의 TFI 실측값"
+                    "(data/_derived/kics_transition_applicability.json)으로 가른다: "
+                    "O=RED(추출갭) · X=SKIP(정상 부재) · NA/UNKNOWN/키없음=YELLOW(통과 아님). "
+                    "부재 28버킷 x 2컬럼: 30 RED + 26 SKIP -> **2 RED + 26 YELLOW + 28 SKIP**. "
+                    "X 를 무조건 면죄부로 쓰지는 않는다 — P(부재|TFI=X)=15/108=13.9% 이고 "
+                    "하나손해는 13분기 전부 X 인데 12분기가 표를 인쇄하므로, 같은 회사의 다른 "
+                    "TFI=X 분기에 행이 있으면 SKIP 대신 review 로 내린다. "
+                    "⑥ 골든·매니페스트 테스트가 게이트와 **같은 부수입력**(tfi_applicability)을 "
+                    "싣도록 호출부를 고쳤다. 안 그러면 부재 판정이 전부 UNKNOWN review 로 "
+                    "떨어져 골든이 게이트의 RED 를 한 건도 고정하지 못한다. "
+                    "blocking RED 81 -> 53. "
+                    "2026-08-24 (4차, iter-7) 재생성 사유 — 데이터는 이번에도 안 건드렸다"
+                    "(kics_disclosure.json 읽기만 했다). parser iter-10 이 item52/53/54 를 "
+                    "1,291셀 적재했고 그 항목을 보는 룰이 하나도 없었다: "
+                    "⑦ **축 E 등식 승격.** 50_tfi_tier_split{,_post} 의 비교 대상을 "
+                    "item1(헤드라인)/범위검사에서 item52(TFI 표 자신의 지급여력금액 행, "
+                    "**같은 표·같은 컬럼**)로 바꿨다. 적용후 YELLOW 70 -> 69칸이 등식으로 "
+                    "닫히고, **GREEN 이던 6칸이 RED 로 뒤집혔다** — 카카오페이 5버킷의 "
+                    "item52 100배(로더의 ALL_ZERO_TRIVIAL 스케일 단축이 만든 구멍: "
+                    "47/48/49/51 이 전부 '-' 라 '스케일 무관'으로 판정했는데 같은 표의 "
+                    "item52 는 0 이 아니었다. raw FY2023_Q3 p10 `지급여력금액 119,870` "
+                    "백만원인데 마스터 119870) + 삼성화재 2025.3Q 적용후 발행사 자릿수 전치 "
+                    "(raw FY2025_Q3 p16 `28,650,195 / 28,605,195`, 같은 표 비율은 "
+                    "275.92/275.92 불변이고 각주가 전후 동일이라 씀). item52 결측 버킷에서는 "
+                    "종전 폴백이 살고 TFI_TOTAL_ROW_ABSENT 사유로 세어진다. "
+                    "⑧ **신규 축 53_tfi_memo_rows{,_post}** (+976 findings). 53/54 는 메모행이라 "
+                    "항등식의 항이 아니다(`item51 == min(47,48)+49+item54` 전수 시뮬: 새로 "
+                    "닫힘 1 · 새로 깨짐 218) → census(적용전만, 원문에 적용후 칸이 대부분 "
+                    "없다) + 부호 + `53+54 <= item51` 포함관계. RED 7(롯데 2026.1Q · 하나생명 "
+                    "2025.2Q · 동양생명 2024.1Q·2024.3Q · 푸본현대 2024.3Q 는 행 유실/컬럼 "
+                    "오배정, 처브라이프 2023.1Q · 농협생명 2024.3Q 적용후는 원문에 없는 값). "
+                    "blocking RED 13 -> 29(신규 18 - NH농협 면제 2).")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

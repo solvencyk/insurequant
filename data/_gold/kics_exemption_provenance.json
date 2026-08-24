@@ -1,626 +1,1369 @@
 {
- "_doc": "K-ICS 면제 레지스트리 근거 원장 (provenance ledger). 2026-08-21 owner 적대적 재검증 ③ 대응 신설. 게이트(scripts/validate_kics_disclosure.py::_exemption_provenance_findings)가 소비한다.",
- "_why": "면제 2건이 '(raw 정독 확인)' 이라는 근거를 달고 있었는데 raw 에는 그 표가 멀쩡히 있었다(KR0003 2026.1Q p24·p25 / KR0073 2026.1Q p15). 실제로 본 것은 docling MD 였고 MD 가 그 페이지를 떨어뜨린 것이다. 근거가 검증 불가능한 산문이면 아무도 반박할 수 없다 → 모든 면제 항목은 기계가 열어볼 수 있는 인용(파일+페이지)을 들어야 한다.",
- "_not_a_suppressor": "이 파일은 면제를 정당화하거나 finding 을 지우지 않는다. 게이트는 이 원장으로 finding 을 **추가만** 한다. 억제성 키(suppress/exempt/ignore/waive/skip/silence)가 들어오면 EXEMPTION_LEDGER_SCHEMA_INVALID RED 로 막힌다. 면제 등재·해제는 owner 권한이고, 이 원장은 '그 면제의 근거가 확인 가능한가' 만 기록한다.",
- "_status_values": {
-  "UNVERIFIED": "기록은 있으나 기계검증 가능한 인용이 아직 없음 → EXEMPTION_PROVENANCE_UNVERIFIED (review, 비차단)",
-  "VERIFIED": "인용(파일+페이지) 존재 + 게이트가 매 실행 재확인 가능 → finding 없음",
-  "CONTRADICTED": "인용 원천이 주장을 반증함 → EXEMPTION_CITATION_CONTRADICTED (RED)",
-  "VERIFIED_BY_IMAGE": "원천이 스캔본/텍스트레이어 손상본이라 absent_markers 기계검증이 원리적으로 불가능한 경우. 필수 필드 image_verification={method, pages, read_by, why_not_machine_verifiable}. 게이트는 ① 인용 페이지 텍스트밀도를 재서 '기계검증 불가' 주장 자체를 검증하고(밀도가 높으면 EXEMPTION_IMAGE_CLAIM_REFUTED RED) ② 그래도 침묵하지 않고 매 실행 EXEMPTION_VERIFIED_BY_IMAGE_ONLY(review)로 인쇄한다. 'VERIFIED'를 참칭하지 않는 이유: 텍스트가 안 나오는 원천에 absent_markers를 걸면 항상 '마커 없음=주장 확인'으로 끝나 기계검증처럼 보이는데 실제로는 아무것도 안 보는 false-green이 된다."
- },
- "_verify_contract": "verify = {file(저장소 상대경로), pages(1-base, 생략시 전체), absent_markers[], present_markers[]}. 게이트가 그 페이지를 직접 열어 공백제거 부분문자열로 마커를 찾는다. absent_markers 가 발견되면 '그 표/섹션이 없다'는 주장이 거짓 → RED. present_markers 가 사라지면 근거로 든 원문 문장 자체가 없어진 것 → 역시 RED (2026-08-21 신설: 부재 증명보다 원문 각주 인용이 강한 근거인 항목이 있는데, 부재 마커만 지원하면 그런 항목은 근거가 있어도 영원히 UNVERIFIED 로 남는다). **부재 주장은 pages 를 생략해 문서 전체를 훑는 것이 원칙** — 인용 페이지만 보면 그 안에 없는 것은 자명해 무검사가 된다. status=VERIFIED 인데 마커가 하나도 대조되지 않으면 EXEMPTION_VERIFIED_WITHOUT_MARKERS RED.",
- "entries": [
-  {
-   "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
-   "company": "KR0003",
-   "quarter": "2026.1Q",
-   "claim": "raw 1표(적용후 blank) 다음 바로 5.수익성 점프, 2·3표 부재(raw 정독 확인)",
-   "claim_kind": "TABLE_ABSENT",
-   "status": "CONTRADICTED",
-   "citation": {
-    "file": "data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf",
-    "pages": [
-     23,
-     24,
-     25
-    ]
-   },
-   "verify": {
-    "file": "data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf",
-    "pages": [
-     24,
-     25
-    ],
-    "absent_markers": [
-     "장수위험·사업비위험·해지위험 및 대재해위험 경과조치",
-     "주식위험 경과조치 또는 금리위험 경과조치"
-    ]
-   },
-   "note": "validation 2026-08-21 fitz 직접 확인. p23=1자본감소분(적용후 '-', 미적용 각주) · p24=2 장수/사업비/해지/대재해(적용후 컬럼 전부 채워짐: 지급여력비율후 164.42 · 생명장기후 1,124,541 · 사망 103,317 · 장수 19 · 장해질병 1,003,161 · 장기재물 51,528 · 해지 343,533 · 사업비 47,394 · 대재해 5,298 · 시장위험액후 670,846) · p25=3 주식/금리(미적용 각주로 적용후 '-'). 즉 '2·3표 부재' 는 사실이 아니고, 2표의 적용후 세부는 원천에 그대로 있다. 면제 해제·재추출 여부는 owner/parser 소관 — validation 은 근거가 거짓임만 기록한다.",
-   "registered_by": "owner 2026-07-12 documented exception (TODO.md)",
-   "refuted_by": "validation 2026-08-21 (raw fitz, docling MD 아님)",
-   "resolved_note": "2026-08-21 parser 가 _AFTER_SUBRISK_NOT_DISCLOSED 에서 이 항목을 해제하고 p24 로 item29~35후 7셀을 정정했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
+  "_doc": "K-ICS 면제 레지스트리 근거 원장 (provenance ledger). 2026-08-21 owner 적대적 재검증 ③ 대응 신설. 게이트(scripts/validate_kics_disclosure.py::_exemption_provenance_findings)가 소비한다.",
+  "_why": "면제 2건이 '(raw 정독 확인)' 이라는 근거를 달고 있었는데 raw 에는 그 표가 멀쩡히 있었다(KR0003 2026.1Q p24·p25 / KR0073 2026.1Q p15). 실제로 본 것은 docling MD 였고 MD 가 그 페이지를 떨어뜨린 것이다. 근거가 검증 불가능한 산문이면 아무도 반박할 수 없다 → 모든 면제 항목은 기계가 열어볼 수 있는 인용(파일+페이지)을 들어야 한다.",
+  "_not_a_suppressor": "이 파일은 면제를 정당화하거나 finding 을 지우지 않는다. 게이트는 이 원장으로 finding 을 **추가만** 한다. 억제성 키(suppress/exempt/ignore/waive/skip/silence)가 들어오면 EXEMPTION_LEDGER_SCHEMA_INVALID RED 로 막힌다. 면제 등재·해제는 owner 권한이고, 이 원장은 '그 면제의 근거가 확인 가능한가' 만 기록한다.",
+  "_status_values": {
+    "UNVERIFIED": "기록은 있으나 기계검증 가능한 인용이 아직 없음 → EXEMPTION_PROVENANCE_UNVERIFIED (review, 비차단)",
+    "VERIFIED": "인용(파일+페이지) 존재 + 게이트가 매 실행 재확인 가능 → finding 없음",
+    "CONTRADICTED": "인용 원천이 주장을 반증함 → EXEMPTION_CITATION_CONTRADICTED (RED)",
+    "VERIFIED_BY_IMAGE": "원천이 스캔본/텍스트레이어 손상본이라 absent_markers 기계검증이 원리적으로 불가능한 경우. 필수 필드 image_verification={method, pages, read_by, why_not_machine_verifiable}. 게이트는 ① 인용 페이지 텍스트밀도를 재서 '기계검증 불가' 주장 자체를 검증하고(밀도가 높으면 EXEMPTION_IMAGE_CLAIM_REFUTED RED) ② 그래도 침묵하지 않고 매 실행 EXEMPTION_VERIFIED_BY_IMAGE_ONLY(review)로 인쇄한다. 'VERIFIED'를 참칭하지 않는 이유: 텍스트가 안 나오는 원천에 absent_markers를 걸면 항상 '마커 없음=주장 확인'으로 끝나 기계검증처럼 보이는데 실제로는 아무것도 안 보는 false-green이 된다.",
+    "VERIFIED_BY_OWNER": "잔차가 실재하는데 **원문 어디에도 그 항목이 없어** 산수로 증명할 근거가 없는 경우. 남는 근거는 'owner 가 원문을 직접 열어 보고 설명이 없음을 확인한 뒤 원문 그대로 오차를 용인하기로 결정했다' 뿐이다. 필수 필드 owner_confirmation={read_by, date, what_was_read, verdict}(누락시 EXEMPTION_OWNER_RECORD_INCOMPLETE RED). 게이트는 ① VERIFIED 와 **동일한** 마커 검사를 그대로 걸고(owner 판단이 숫자 재확인을 면제해 주지 않는다) ② 매 실행 EXEMPTION_STANDS_ON_OWNER_JUDGEMENT(review)로 '이 면제는 인과가 아니라 owner 판단 위에 서 있다' 를 인쇄한다. 'VERIFIED'를 참칭하지 않는 이유: 그렇게 적으면 다음 세션이 인과가 규명된 것으로 오독하고, 이 저장소가 반복해서 데인 형태다."
   },
-  {
-   "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
-   "company": "KR0073",
-   "quarter": "2026.1Q",
-   "claim": "경과조치 섹션 자체 없음, 헤드라인 지급여력비율후 214.23만(raw 확인)",
-   "claim_kind": "SECTION_ABSENT",
-   "status": "CONTRADICTED",
-   "citation": {
-    "file": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf",
-    "pages": [
-     13,
-     15,
-     16
-    ]
-   },
-   "verify": {
-    "file": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf",
-    "pages": [
-     15
-    ],
-    "absent_markers": [
-     "지급여력비율의 경과조치 적용에 관한 사항",
-     "장수위험·사업비위험·해지위험 및 대재해위험 경과조치"
-    ]
-   },
-   "note": "validation 2026-08-21 fitz 직접 확인. p13=경과조치 종류표(공통 TFI / 선택 TAC·TIR·TER·TIRR 적용여부) · p15=[지급여력비율의 경과조치 적용에 관한 사항] 1공통(적용후 161.92) + 2 장수/사업비/해지/대재해(적용후 컬럼 완비: 지급여력비율후 201.87 · 기준금액후 7,408,635 · 기본요구자본후 8,689,561 · 생명장기후 3,222,672 · 사망 782,849 · 장수 257,378 · 장해질병 2,471,949 · 장기재물 0 · 해지 1,266,318 · 사업비 159,550 · 대재해 105,385 · 시장위험액후 5,467,384) · p16=3 주식/금리. '섹션 자체 없음' 은 사실이 아니다. 주장된 헤드라인 214.23 은 p15 의 어느 표에도 없다(공통 161.92 / 2표 201.87).",
-   "registered_by": "owner 2026-07-12 documented exception (TODO.md)",
-   "refuted_by": "validation 2026-08-21 (raw fitz, docling MD 아님)",
-   "resolved_note": "2026-08-21 parser 가 _AFTER_SUBRISK_NOT_DISCLOSED 에서 해제하고 p15 로 item29~35 7행을 신설했다(R7 로 부모값 재현 확인). 고아 기록으로 보존 — 재등재 시 즉시 RED."
-  },
-  {
-   "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
-   "company": "KR0097",
-   "quarter": "2024.4Q",
-   "claim": "감사보고서주석 스타일 공시, 적용후 세부 미공시(phase-in 10%만)",
-   "claim_kind": "TABLE_ABSENT",
-   "status": "VERIFIED",
-   "citation": {
-    "file": "data/disclosure/FY2024_Q4/raw/KR0097_하나생명보험.pdf",
-    "pages": [
-     281,
-     325,
-     326,
-     327
-    ]
-   },
-   "verify": {
-    "file": "data/disclosure/FY2024_Q4/raw/KR0097_하나생명보험.pdf",
-    "absent_markers": [
-     "지급여력비율의 경과조치 적용에 관한 사항",
-     "장수위험·사업비위험·해지위험 및 대재해위험 경과조치"
-    ],
-    "present_markers": [
-     "생명ㆍ장기손해보험위험액 중 장수위험액, 사업비위험액, 해지위험액, 대재해위험액 경과조치",
-     "최초 산출 금액"
-    ]
-   },
-   "note": "validation 2026-08-21 raw 직접 재확인 — 주장이 참이다. p281 [지급여력기준금액] 은 적용후를 **위험 대분류(생명장기·일반·시장·신용·운영·분산효과)까지만** 공시하고, 생명장기 7 하위위험(29~35)의 적용후 컬럼은 347p 어디에도 없다. p325~327 (C.3.1 경과조치 적용내역)은 서술형이라 '최초 산출 금액 + 적용비율 10%(2024년)' 만 준다(천원: 장수 14,325,093 · 해지 66,403,015 · 사업비 43,877,926 · 대재해 7,847,532)와 가용자본/요구자본/지급여력비율 전후 총액뿐이다. 표준서식 헤딩 2개가 문서 전체에서 부재이므로 게이트가 매 실행 pages 생략 전수 스캔으로 재확인한다. **주의**: 같은 (회사,분기)의 `_POST_PARENT_NOT_DISCLOSED` 항목은 2026-08-21 에 해제됐다 — 요구자본 대분류 적용후는 p281 에 실재하기 때문이다. 두 면제의 범위가 다르다.",
-   "registered_by": "owner 2026-07-12 documented exception (TODO.md)"
-  },
-  {
-   "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
-   "company": "KR0097",
-   "quarter": "2026.1Q",
-   "claim": "하나생명 대재해 동일 — 적용후 세부 미공시",
-   "claim_kind": "TABLE_ABSENT",
-   "status": "CONTRADICTED",
-   "citation": null,
-   "verify": null,
-   "note": "raw p10 [② 장수위험·사업비위험·해지위험 및 대재해위험 경과조치] 표가 적용후 세부를 전부 싣는다(백만원: 사망 38,228 · 장수 - · 장해질병 71,560 · 장기재물 - · 해지 320,365 · 사업비 103,062 · 대재해 3,430 / 생명·장기손해보험 위험액 405,579 · 기본요구자본 576,970 · 지급여력비율 146.04). 마스터 item29~35후가 이미 이 값과 일치하며 R7 집계도 닫힌다(item17후 4,055.79 vs 4,055.7891, 잔차 +0.0009). 면제로 두면 실제로 공시됐고 이미 맞게 적재된 값이 영구 미검사로 남는다.",
-   "registered_by": "owner 2026-07-12 documented exception (TODO.md)",
-   "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
-   "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
-  },
-  {
-   "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
-   "company": "KR0104",
-   "quarter": "2023.1Q",
-   "claim": "1·2·3 다중경과조치 결합공식 불명(개별표 어느 것도 헤드라인과 불일치)",
-   "claim_kind": "FORMULA_UNKNOWN",
-   "status": "CONTRADICTED",
-   "citation": null,
-   "verify": null,
-   "note": "raw p12(②)·p13(③)이 적용후 세부를 전부 싣는다(② 사망 247,335 · 장수 - · 장해질병 803,613 · 장기재물 - · 해지 - · 사업비 - · 대재해 - / 생명장기 897,970 ; ③ 금리 1,479,046 · 주식 483,213 · 부동산 248,941 · 외환 236,386 / 시장 1,813,184). 등재사유 '결합공식 불명'은 이 레지스트리(=적용후 세부 미공시)의 의미가 아니고, 결합 자체도 지금은 풀린다: ②+③ 동시적용 → 기본요구자본후 39,138.92 − 분산효과후 10,221.92 = 28,917 로 마스터 item15후와 일치하고, item14후 22,802 · item27후 325.5 는 raw p9 [지급여력비율 총괄] 헤드라인과 정확히 같다. mmult 적용후 양축 모두 닫힘(item17후 잔차 +0.0048 · item19후 +0.0009).",
-   "registered_by": "owner 2026-07-12 documented exception (TODO.md)",
-   "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
-   "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
-  },
-  {
-   "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
-   "company": "KR0005",
-   "quarter": "2024.4Q",
-   "claim": "image-only PDF(텍스트레이어 0), owner GOLD-SCAN 대기",
-   "claim_kind": "SOURCE_UNREADABLE",
-   "status": "CONTRADICTED",
-   "citation": null,
-   "verify": null,
-   "note": "등재사유 'image-only PDF(텍스트레이어 0)'가 거짓이다. 실측 367p / 246,676자 = 672자/p 이고, 자본적정성 절 p173 '4-6. 자본 적정성 평가'를 240dpi 로 렌더링해 육안 판독한 결과 이미지 표가 아니라 선택 가능한 순수 산문(465자)이다. 더 결정적으로 '경과조치'가 367p 전체에서 0회 — 이 파일은 정기경영공시가 아니라 DART 사업보고서(쪽바닥 '전자공시시스템 dart.fss.or.kr')이고 p173 다음이 곧바로 '5. 금융자산 및 금융부채'라 K-ICS 수치표 자체가 없다. docling 파싱 스코프도 p35-37/139-144/172-174(전부 산문). 즉 마스터 값의 출처가 이 파일이 아니며, '우리가 가진 파일이 틀린 문서'인 것을 '발행사 미공시'로 등재한 것이다. 해제 결과 가려져 있던 mmult19 적용후 실패가 드러난다(item19후 3,860.81 vs MARKET_M(36~40후) 2,801.4428, 잔차 +1,059.3672).",
-   "registered_by": "owner documented exception (TODO.md)",
-   "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
-   "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
-  },
-  {
-   "registry": "_POST_PARENT_NOT_DISCLOSED",
-   "company": "KR0071",
-   "quarter": "2024.4Q",
-   "claim": "image-only PDF + TIR/TER 다중경과조치, R4 재현불가(역산 item15 14,747 vs 헤드라인 16,987, 차 2,240 비반올림)",
-   "claim_kind": "FORMULA_UNKNOWN",
-   "status": "CONTRADICTED",
-   "citation": null,
-   "verify": null,
-   "note": "등재사유 'image-only PDF'가 거짓이다. 실측 538p / 286,634자 = 533자/p 이고 K-ICS 인접 페이지(p249·p253·p302·p304)는 전부 선택 가능한 조밀한 본문이다. 그리고 '경과조치'가 538p 전체에서 0회 — 이 파일도 정기경영공시가 아니라 DART 사업보고서(연결 IFRS17 주석, 쪽번호 '- 135 -')다. 원천부재가 아니라 downloader 가 다른 문서를 받아 둔 것이므로 문서화 면제 대상이 아니다. '우리가 가진 파일이 틀린 문서다'를 '발행사가 공시하지 않았다'로 등재하면 downloader 갭이 영구 사각으로 굳는다.",
-   "registered_by": "owner 2026-07-16",
-   "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
-   "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
-  },
-  {
-   "registry": "_POST_PARENT_NOT_DISCLOSED",
-   "company": "KR0097",
-   "quarter": "2024.4Q",
-   "claim": "비표준(감사보고서 재무상태표) 공시. item16후 산술파생 가능하나 입력 item17후=1757.32 가 raw page(2001.90)와 불일치 → 파생값 불신",
-   "claim_kind": "FORMULA_UNKNOWN",
-   "status": "CONTRADICTED",
-   "citation": null,
-   "verify": null,
-   "note": "등재사유의 결론이 거꾸로였다. raw p281 [지급여력기준금액] 표가 적용후 컬럼을 통째로 공시한다(단위 천원): Ⅰ.기본요구자본 430,530,508 · 1.생명·장기손해보험위험액 200,189,811 · 2.일반손해보험위험액 - · 3.시장위험액 200,345,315 · 4.신용위험액 154,877,709 · 5.운영위험액 36,485,031 · (분산효과) (161,367,358) · Ⅱ.법인세조정액 - · Ⅲ.기타요구자본 - · Ⅳ.지급여력기준금액 430,530,508. 즉 item16후는 파생할 필요조차 없이 원문에 1,613.67억으로 찍혀 있다. 등재사유가 '파생값 불신'의 근거로 든 2001.90 이 바로 이 페이지의 생명장기 적용후(200,189,811천원 = 2,001.90억)이고, 원문이 정본이므로 마스터의 item17후=1,757.32 쪽이 결함이다. 면제가 아니라 정정 사안.",
-   "registered_by": "owner 2026-07-16",
-   "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
-   "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
-  },
-  {
-   "registry": "_POST_PARENT_NOT_DISCLOSED",
-   "company": "KR0049",
-   "quarter": "2024.3Q",
-   "claim": "그 분기 공시서에 지급여력비율 섹션 자체가 없음(2024년 12월말 공시 예정). JSON 2024.3Q 값은 FY2024_Q4 공시서의 '당분기-1분기' 컬럼에서 온 것이고 그 공시서의 경과조치 표는 당분기 전용이라 15-23후는 원천 부재",
-   "claim_kind": "SECTION_ABSENT",
-   "status": "VERIFIED",
-   "citation": {
-    "file": "data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf",
-    "pages": [
-     3,
-     9,
-     11
-    ]
-   },
-   "verify": {
-    "file": "data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf",
-    "absent_markers": [
-     "지급여력비율의 경과조치 적용에 관한 사항",
-     "경과조치 적용 전 지급여력비율 세부"
-    ],
-    "present_markers": [
-     "지급여력비율은 2024 년 12 월말 공시 예정임"
-    ]
-   },
-   "note": "validation 2026-08-21 raw 직접 재확인 — 주장이 참이고 원문이 이유까지 적어 놨다. p3 [1-1. 주요 경영지표] 의 '지급여력비율(경과조치 전)'·'지급여력비율(경과조치 후)' 두 행이 **모두 공란**이고 각주가 '(*) 지급여력비율은 2024년 12월말 공시 예정임 (보험업감독규정 부칙 제3조)' 라고 명시한다. 19p / 5,685자 문서 전체에 경과조치 세부표 헤딩이 없다. 이 항목은 부재 증명보다 그 각주가 훨씬 강한 근거라, 2026-08-21 에 신설한 present_markers 로 각주 문장 자체를 매 실행 재확인한다.",
-   "registered_by": "parser 2026-08-20 / TODO.md documented exception"
-  },
-  {
-   "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
-   "company": "KR0073",
-   "quarter": "2025.2Q",
-   "claim": "내부모형사 — 회사가 시나리오별 금리위험액을 직접 공시, 표준 derive 식(R=충격전−시나리오)과 불일치",
-   "claim_kind": "INTERNAL_MODEL",
-   "status": "CONTRADICTED",
-   "citation": {
-    "file": "data/disclosure/FY2025_Q2/raw/KR0073_교보생명보험.pdf",
-    "pages": [
-     21
-    ]
-   },
-   "verify": null,
-   "note": "등재사유의 두 전제가 모두 거짓이다. ① raw data/disclosure/FY2025_Q2/raw/KR0073_교보생명보험.pdf p21 에 표준서식 [② 금리위험액 현황] 표가 그대로 있다 — 충격 전 + 충격후 5시나리오(평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 'Ⅲ. 순자산가치' 행이 완비돼 있어 항목 41-46 의 원천이 실재한다(마스터에 없는 것은 추출갭). ② 'Ⅳ. 금리 위험액' 은 표 전체 폭을 덮는 단일 병합셀(459,988 백만원 = 마스터 item36 4,599.88억)이라 '회사가 시나리오별 금리위험액을 직접 공시' 는 어느 페이지에서도 성립하지 않는다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 raw p135: '회사는 보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다' + 표준식 '금리위험액 = √max(금리상승위험액, 금리하락위험액)² + √max(금리평탄위험액, 금리경사위험액)² + 평균회귀금액'). '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.",
-   "registered_by": "owner 2026-06-14",
-   "refuted_by": "validation 2026-08-21 (raw fitz + 240dpi 렌더링 육안)",
-   "resolved_note": "2026-08-21 해제. 해제 결과 이 (회사,분기)는 36_irr RED('짝수분기인데 41-46 결측 = parser gap')가 된다 — 표는 원천에 있고 우리가 안 읽었을 뿐이므로 그 RED 가 참이다. **미해결 잔여(면제 아님)**: 41-46 을 적재해도 표준식이 공시 금리위험액을 재현하지 못한다(교보 25.2Q 계산 4,358.44 vs 공시 4,599.88 = +5.5% ; 신한 24.2Q +20.7% · 24.4Q +34.4% · 25.2Q +8.1% · 25.4Q +17.5%). 원인 후보: 2024년부터 이 표의 자산·부채가 '금리위험에 직·간접적으로 노출된' 것만 대상이라(KR0094 2024.4Q p144 주2) 전체 재무상태표 기준 위험액과 모수가 다르다. 이 건으로 새 면제를 만들려면 owner 승인이 필요하다 — validation 은 반증된 면제를 지울 뿐 새 면제를 만들지 않는다."
-  },
-  {
-   "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
-   "company": "KR0094",
-   "quarter": "2024.2Q",
-   "claim": "내부모형사 — 시나리오별 금리위험액 직접 공시",
-   "claim_kind": "INTERNAL_MODEL",
-   "status": "CONTRADICTED",
-   "citation": {
-    "file": "data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     22
-    ]
-   },
-   "verify": null,
-   "note": "등재사유의 두 전제가 모두 거짓이다. ① raw data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf p22 에 표준서식 [② 금리위험액 현황] 표가 그대로 있다 — 충격 전 + 충격후 5시나리오(평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 'Ⅲ. 순자산가치' 행이 완비돼 있어 항목 41-46 의 원천이 실재한다(마스터에 없는 것은 추출갭). ② 'Ⅳ. 금리 위험액' 은 표 전체 폭을 덮는 단일 병합셀(750,104 백만원 = 마스터 item36 7,501.04억)이라 '회사가 시나리오별 금리위험액을 직접 공시' 는 어느 페이지에서도 성립하지 않는다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 raw p135: '회사는 보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다' + 표준식 '금리위험액 = √max(금리상승위험액, 금리하락위험액)² + √max(금리평탄위험액, 금리경사위험액)² + 평균회귀금액'). '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.",
-   "registered_by": "owner 2026-06-14",
-   "refuted_by": "validation 2026-08-21 (raw fitz + 240dpi 렌더링 육안)",
-   "resolved_note": "2026-08-21 해제. 해제 결과 이 (회사,분기)는 36_irr RED('짝수분기인데 41-46 결측 = parser gap')가 된다 — 표는 원천에 있고 우리가 안 읽었을 뿐이므로 그 RED 가 참이다. **미해결 잔여(면제 아님)**: 41-46 을 적재해도 표준식이 공시 금리위험액을 재현하지 못한다(교보 25.2Q 계산 4,358.44 vs 공시 4,599.88 = +5.5% ; 신한 24.2Q +20.7% · 24.4Q +34.4% · 25.2Q +8.1% · 25.4Q +17.5%). 원인 후보: 2024년부터 이 표의 자산·부채가 '금리위험에 직·간접적으로 노출된' 것만 대상이라(KR0094 2024.4Q p144 주2) 전체 재무상태표 기준 위험액과 모수가 다르다. 이 건으로 새 면제를 만들려면 owner 승인이 필요하다 — validation 은 반증된 면제를 지울 뿐 새 면제를 만들지 않는다."
-  },
-  {
-   "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
-   "company": "KR0094",
-   "quarter": "2024.4Q",
-   "claim": "내부모형사 — 시나리오별 금리위험액 직접 공시",
-   "claim_kind": "INTERNAL_MODEL",
-   "status": "CONTRADICTED",
-   "citation": {
-    "file": "data/disclosure/FY2024_Q4/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     144
-    ]
-   },
-   "verify": null,
-   "note": "등재사유의 두 전제가 모두 거짓이다. ① raw data/disclosure/FY2024_Q4/raw/KR0094_신한라이프생명보험.pdf p144 에 표준서식 [② 금리위험액 현황] 표가 그대로 있다 — 충격 전 + 충격후 5시나리오(평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 'Ⅲ. 순자산가치' 행이 완비돼 있어 항목 41-46 의 원천이 실재한다(마스터에 없는 것은 추출갭). ② 'Ⅳ. 금리 위험액' 은 표 전체 폭을 덮는 단일 병합셀(633,214 백만원 = 마스터 item36 6,332.14억)이라 '회사가 시나리오별 금리위험액을 직접 공시' 는 어느 페이지에서도 성립하지 않는다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 raw p135: '회사는 보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다' + 표준식 '금리위험액 = √max(금리상승위험액, 금리하락위험액)² + √max(금리평탄위험액, 금리경사위험액)² + 평균회귀금액'). '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.",
-   "registered_by": "owner 2026-06-14",
-   "refuted_by": "validation 2026-08-21 (raw fitz + 240dpi 렌더링 육안)",
-   "resolved_note": "2026-08-21 해제. 해제 결과 이 (회사,분기)는 36_irr RED('짝수분기인데 41-46 결측 = parser gap')가 된다 — 표는 원천에 있고 우리가 안 읽었을 뿐이므로 그 RED 가 참이다. **미해결 잔여(면제 아님)**: 41-46 을 적재해도 표준식이 공시 금리위험액을 재현하지 못한다(교보 25.2Q 계산 4,358.44 vs 공시 4,599.88 = +5.5% ; 신한 24.2Q +20.7% · 24.4Q +34.4% · 25.2Q +8.1% · 25.4Q +17.5%). 원인 후보: 2024년부터 이 표의 자산·부채가 '금리위험에 직·간접적으로 노출된' 것만 대상이라(KR0094 2024.4Q p144 주2) 전체 재무상태표 기준 위험액과 모수가 다르다. 이 건으로 새 면제를 만들려면 owner 승인이 필요하다 — validation 은 반증된 면제를 지울 뿐 새 면제를 만들지 않는다."
-  },
-  {
-   "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
-   "company": "KR0094",
-   "quarter": "2025.2Q",
-   "claim": "내부모형사 — 시나리오별 금리위험액 직접 공시",
-   "claim_kind": "INTERNAL_MODEL",
-   "status": "CONTRADICTED",
-   "citation": {
-    "file": "data/disclosure/FY2025_Q2/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     28
-    ]
-   },
-   "verify": null,
-   "note": "등재사유의 두 전제가 모두 거짓이다. ① raw data/disclosure/FY2025_Q2/raw/KR0094_신한라이프생명보험.pdf p28 에 표준서식 [② 금리위험액 현황] 표가 그대로 있다 — 충격 전 + 충격후 5시나리오(평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 'Ⅲ. 순자산가치' 행이 완비돼 있어 항목 41-46 의 원천이 실재한다(마스터에 없는 것은 추출갭). ② 'Ⅳ. 금리 위험액' 은 표 전체 폭을 덮는 단일 병합셀(931,833 백만원 = 마스터 item36 9,318.33억)이라 '회사가 시나리오별 금리위험액을 직접 공시' 는 어느 페이지에서도 성립하지 않는다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 raw p135: '회사는 보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다' + 표준식 '금리위험액 = √max(금리상승위험액, 금리하락위험액)² + √max(금리평탄위험액, 금리경사위험액)² + 평균회귀금액'). '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.",
-   "registered_by": "owner 2026-06-14",
-   "refuted_by": "validation 2026-08-21 (raw fitz + 240dpi 렌더링 육안)",
-   "resolved_note": "2026-08-21 해제. 해제 결과 이 (회사,분기)는 36_irr RED('짝수분기인데 41-46 결측 = parser gap')가 된다 — 표는 원천에 있고 우리가 안 읽었을 뿐이므로 그 RED 가 참이다. **미해결 잔여(면제 아님)**: 41-46 을 적재해도 표준식이 공시 금리위험액을 재현하지 못한다(교보 25.2Q 계산 4,358.44 vs 공시 4,599.88 = +5.5% ; 신한 24.2Q +20.7% · 24.4Q +34.4% · 25.2Q +8.1% · 25.4Q +17.5%). 원인 후보: 2024년부터 이 표의 자산·부채가 '금리위험에 직·간접적으로 노출된' 것만 대상이라(KR0094 2024.4Q p144 주2) 전체 재무상태표 기준 위험액과 모수가 다르다. 이 건으로 새 면제를 만들려면 owner 승인이 필요하다 — validation 은 반증된 면제를 지울 뿐 새 면제를 만들지 않는다."
-  },
-  {
-   "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
-   "company": "KR0094",
-   "quarter": "2025.4Q",
-   "claim": "내부모형사 — 시나리오별 금리위험액 직접 공시(공시총액 578,999 일치 확인)",
-   "claim_kind": "INTERNAL_MODEL",
-   "status": "CONTRADICTED",
-   "citation": {
-    "file": "data/disclosure/FY2025_Q4/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     131
-    ]
-   },
-   "verify": null,
-   "note": "등재사유의 두 전제가 모두 거짓이다. ① raw data/disclosure/FY2025_Q4/raw/KR0094_신한라이프생명보험.pdf p131 에 표준서식 [② 금리위험액 현황] 표가 그대로 있다 — 충격 전 + 충격후 5시나리오(평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 'Ⅲ. 순자산가치' 행이 완비돼 있어 항목 41-46 의 원천이 실재한다(마스터에 없는 것은 추출갭). ② 'Ⅳ. 금리 위험액' 은 표 전체 폭을 덮는 단일 병합셀(578,999 백만원 = 마스터 item36 5,789.99억)이라 '회사가 시나리오별 금리위험액을 직접 공시' 는 어느 페이지에서도 성립하지 않는다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 raw p135: '회사는 보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다' + 표준식 '금리위험액 = √max(금리상승위험액, 금리하락위험액)² + √max(금리평탄위험액, 금리경사위험액)² + 평균회귀금액'). '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.",
-   "registered_by": "owner 2026-06-14",
-   "refuted_by": "validation 2026-08-21 (raw fitz + 240dpi 렌더링 육안)",
-   "resolved_note": "2026-08-21 해제. 해제 결과 이 (회사,분기)는 36_irr RED('짝수분기인데 41-46 결측 = parser gap')가 된다 — 표는 원천에 있고 우리가 안 읽었을 뿐이므로 그 RED 가 참이다. **미해결 잔여(면제 아님)**: 41-46 을 적재해도 표준식이 공시 금리위험액을 재현하지 못한다(교보 25.2Q 계산 4,358.44 vs 공시 4,599.88 = +5.5% ; 신한 24.2Q +20.7% · 24.4Q +34.4% · 25.2Q +8.1% · 25.4Q +17.5%). 원인 후보: 2024년부터 이 표의 자산·부채가 '금리위험에 직·간접적으로 노출된' 것만 대상이라(KR0094 2024.4Q p144 주2) 전체 재무상태표 기준 위험액과 모수가 다르다. 이 건으로 새 면제를 만들려면 owner 승인이 필요하다 — validation 은 반증된 면제를 지울 뿐 새 면제를 만들지 않는다."
-  },
-  {
-   "registry": "_LIFE8_ISSUER_INCONSISTENT",
-   "company": "KR0079",
-   "quarter": "2023.2Q",
-   "claim": "발행사가 총괄표(item17=17,495)와 세부표(29~35, R7집계 16,127.5950)를 서로 안 맞게 공시했다. 양쪽 모두 원문 그대로이며 어느 쪽도 추출 오류가 아니다. 잔차 +1,367.4050억.",
-   "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
-   "status": "VERIFIED_BY_IMAGE",
-   "citation": {
-    "file": "data/disclosure/FY2023_Q2/raw/KR0079_미래에셋생명.pdf",
-    "pages": [
-     11,
-     15,
-     16
-    ]
-   },
-   "corroboration": {
-    "item17_side": [
-     "23.2Q p11 [경과조치 적용 전 지급여력비율 세부] 해당분기(23.2Q) 열: 1.생명장기손해보험위험액 = 17,495",
-     "23.3Q p11 직전분기(23.2Q) 열: 동일하게 17,495",
-     "rule4 (R4[17-20]+21 = item15) 잔차 +0.74",
-     "rule6 (분산효과 항등식) 잔차 +1.00",
-     "동일 p11의 지급여력비율 209.7 이 item17=17,495 기준에서만 성립"
-    ],
-    "subtable_side": [],
-    "control": "같은 표 구조의 KR0079 2023.4Q 는 잔차 -0.0047 로 닫힌다 — 세부표 추출 방식 자체는 정상"
-   },
-   "image_verification": {
-    "method": "PyMuPDF(fitz) 200dpi 렌더링 후 육안 판독",
-    "pages": [
-     11,
-     15,
-     16
-    ],
-    "read_by": "validation 2026-08-21",
-    "why_not_machine_verifiable": "이 PDF는 텍스트레이어가 존재하지만 행 단위로 잘려 있다 — p11 360자 / p15 76자 / p16 323자(58페이지 전체 4,773자)이고, 추출되는 문자열이 '3. 시장위험액9,53' 처럼 값 중간에서 끊긴다. 따라서 absent_markers 부분문자열 검사는 마커를 절대 찾지 못하고 항상 '주장 확인'으로 끝난다(검사처럼 보이는 무검사). 게이트는 대신 인용 페이지 텍스트밀도를 매 실행 재측정해 이 사유 자체를 검증한다."
-   },
-   "note": "validation 2026-08-21 독립 재검산: master item17=17,495.0, item29~35 = 1,873.89 / 241.93 / 6,507.31 / 0.0 / 11,498.72 / 2,997.09 / 706.74 → R7 집계 16,127.5950, 잔차 1,367.4050. 룰 8_life 동적허용오차 max(2.0, 5%×16,127.60)=806.38 을 넘어 RED. 값_적용후 컬럼은 값과 전부 동일(미러)이라 적용후 잔차도 1,367.4050 이며, 게이트 _transition_mmult_after 축17(적용후)에서 같은 자기모순이 두 번째 RED 를 만든다. 그래서 면제는 적용전·적용후 두 컬럼 모두를 박제한다.",
-   "expected_residual": {
-    "적용전": 1367.4049866571877,
-    "적용후": 1367.4049866571877
-   },
-   "pin_tolerance": 0.01,
-   "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 재계산한다. item17 이나 29~35 중 한 칸이라도 바뀌면 잔차가 이동해 LIFE8_EXEMPTION_RESIDUAL_DRIFT RED 가 되고, 결측이 되면 LIFE8_EXEMPTION_INPUT_MISSING RED 가 된다. finding 자체도 지우지 않는다 — report 의 exempted_findings 에 그대로 남는다.",
-   "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1300Z, root TODO.md)",
-   "scope": "KR0079 2023.2Q 의 8_life(적용전) + mmult 축17(적용후) 단 하나. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
-  },
-  {
-   "registry": "IRR_DERIVE_ISSUER_INCONSISTENT",
-   "company": "KR0073",
-   "quarter": "2025.2Q",
-   "claim": "표준 도출식이 공시 금리위험액을 재현하지 못한다 — item36 +5.25% 잔차 241.4374억. item36 도 41-46 도 원문 그대로이며 어느 쪽도 추출 오류가 아니다. item36 은 시장위험 축(item19 = sqrt(item36~40·MARKET_M))에서 |rel| ≤ 0.0022% 로 닫히므로 값 자체는 다른 축에서 검산된다.",
-   "claim_kind": "DERIVATION_NOT_REPRODUCIBLE",
-   "status": "VERIFIED",
-   "citation": {
-    "file": "data/disclosure/FY2025_Q2/raw/KR0073_교보생명보험.pdf",
-    "pages": [
-     21
-    ]
-   },
-   "verify": {
-    "file": "data/disclosure/FY2025_Q2/raw/KR0073_교보생명보험.pdf",
-    "pages": [
-     21
-    ],
-    "present_markers": [
-     "② 금리위험액 현황",
-     "당기(25.2Q)",
-     "Ⅲ. 순자산가치",
-     "Ⅳ. 금리 위험액",
-     "-5,667,711",
-     "-5,414,904",
-     "-6,352,338",
-     "-5,586,899",
-     "-5,463,138",
-     "-5,742,051",
-     "459,988"
-    ]
-   },
-   "machine_readability": "이 PDF 는 텍스트레이어가 정상이라 VERIFIED_BY_IMAGE 경로를 쓰지 않았다 — 인용 페이지 텍스트밀도가 1,829~3,093자/페이지로 게이트의 image-only 반증 임계(800자/p)를 크게 넘는다. 위 present_markers 는 실제로 이 파일의 그 페이지에서 발견되며 게이트가 매 실행 재대조한다.",
-   "source_readback": "p21 [② 금리위험액 현황] 당기(25.2Q) 열 Ⅲ.순자산가치 = 충격전 -5,667,711 / 평균회귀 -5,414,904 / 금리상승 -6,352,338 / 금리하락 -5,586,899 / 금리평탄 -5,463,138 / 금리경사 -5,742,051 (백만원) → 마스터 item41~46 = -56,677.11 / -54,149.04 / -63,523.38 / -55,868.99 / -54,631.38 / -57,420.51 (억원) 과 정확 일치. Ⅳ.금리 위험액 = 459,988 백만원 → 마스터 item36 = 4,599.88 억원 과 정확 일치.",
-   "corroboration": {
-    "item36_side": [
-     "19_market 축에서 닫힘: item19 == sqrt(item36~40 · MARKET_M), 잔차 |rel| ≤ 0.0022% (교보 25.2Q -0.0042 / 신한 24.2Q -0.3312 · 24.4Q -0.2521 · 25.2Q -0.3338 · 25.4Q +0.4791)",
-     "원문 Ⅳ.금리 위험액 병합셀 값이 마스터 item36 과 백만원↔억원 환산까지 정확 일치"
-    ],
-    "scenario_side": [
-     "원문 Ⅲ.순자산가치 6개 열이 마스터 item41~46 과 정확 일치 (위 source_readback)"
-    ],
-    "control": "같은 식이 41-46 완비 226버킷 중 221건에서 닫힌다(97.8%) — 도출식·추출방식 자체는 정상이고 이 다섯 건만 재현되지 않는다"
-   },
-   "note": "**이 건은 어떤 합성식으로도 닫힐 수 없다**: 금리상승 시나리오 단일 충격량 -5,667,711 − (-6,352,338) = 684,627 백만원이 공시 금리위험액 459,988 백만원보다 크다. K-ICS 금리위험액은 최악 단일 시나리오 충격량보다 작아질 수 없으므로, 이 표의 순자산가치와 공시 금리위험액이 같은 기준으로 작성된 값이 아니라는 뜻이다. 파서 문제가 아니다. 식은 바꾸지 않았다. owner 제안(평균회귀 충격량도 0 절단)을 226버킷 전수로 재측정한 결과 현행 signed 식 221/226(97.8%) vs 0절단 123/226(54.4%), 판정이 갈리는 102건 중 100건이 '현행만 통과'다(0절단만 통과하는 2건은 바로 이 면제 대상 KR0094 2025.2Q·2025.4Q). 허용오차도 넓히지 않았다 — 잔차가 5~26% 라 어떤 합리적 tol 로도 덮이지 않는다.",
-   "cause": "UNEXPLAINED",
-   "cause_note": "원인 미규명. 이 filing 에는 신한라이프 같은 작성기준 각주조차 없다 — p21 은 '주) 세부 작성요령은 업무보고서 AH732/AI732 참조' 뿐이다. 위 하한 위반이 '기준 불일치' 라는 사실만 말해 주고, 어떤 기준인지는 원문에서 확정할 수 없다.",
-   "expected_residual": {
-    "적용전": 241.4373504145833,
-    "적용후": 241.4373504145833
-   },
-   "pin_tolerance": 0.01,
-   "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 두 컬럼 각각 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌면 잔차가 이동해 적용전은 룰엔진 36_irr RED(IRR_EXEMPTION_RESIDUAL_DRIFT), 적용후는 TRANSITION_AFTER_IRR_MISMATCH RED 로 되살아난다. 결측이 되면 IRR_EXEMPTION_INPUT_MISSING RED (결측은 SKIP 이 아니다). 잔차가 반대로 룰 허용오차 안으로 들어오면 IRR_EXEMPTION_INERT review 로 '등재를 풀어라'가 찍힌다.",
-   "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1810Z__orchestrator__KR0073_KR0094__irr_derive_exempt_owner_approved.md). owner 는 룰을 YELLOW 로 강등하는 것을 명시적으로 거부했다 — 다른 모든 (회사,분기)에서 36_irr 은 RED 그대로다.",
-   "scope": "KR0073 2025.2Q + KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q 다섯 (회사,분기)의 36_irr 축, 적용전·적용후 두 컬럼뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 실측(2026-08-21, 라이브 마스터): 41-46 완비 226버킷 중 현행식 FAIL 은 정확히 이 다섯 건뿐이라 면제 범위 = 현 RED 범위다."
-  },
-  {
-   "registry": "IRR_DERIVE_ISSUER_INCONSISTENT",
-   "company": "KR0094",
-   "quarter": "2024.2Q",
-   "claim": "표준 도출식이 공시 금리위험액을 재현하지 못한다 — item36 +17.17% 잔차 1287.8296억. item36 도 41-46 도 원문 그대로이며 어느 쪽도 추출 오류가 아니다. item36 은 시장위험 축(item19 = sqrt(item36~40·MARKET_M))에서 |rel| ≤ 0.0022% 로 닫히므로 값 자체는 다른 축에서 검산된다.",
-   "claim_kind": "DERIVATION_NOT_REPRODUCIBLE",
-   "status": "VERIFIED",
-   "citation": {
-    "file": "data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     22,
-     23
-    ]
-   },
-   "verify": {
-    "file": "data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     22,
-     23
-    ],
-    "present_markers": [
-     "② 금리위험액 현황",
-     "Ⅲ. 순자산가치",
-     "Ⅳ. 금리 위험액",
-     "8,326,156",
-     "8,361,277",
-     "7,862,316",
-     "8,405,536",
-     "7,861,647",
-     "8,768,184",
-     "750,104",
-     "2024년부터 금리위험액 현황의 자산 및 부채는 금리위험에 직·간접적으로 노출된 자산 및 부채를 대상으로 작성"
-    ]
-   },
-   "machine_readability": "이 PDF 는 텍스트레이어가 정상이라 VERIFIED_BY_IMAGE 경로를 쓰지 않았다 — 인용 페이지 텍스트밀도가 1,829~3,093자/페이지로 게이트의 image-only 반증 임계(800자/p)를 크게 넘는다. 위 present_markers 는 실제로 이 파일의 그 페이지에서 발견되며 게이트가 매 실행 재대조한다.",
-   "source_readback": "p22 [② 금리위험액 현황] 당기 열 Ⅲ.순자산가치 = 8,326,156 / 8,361,277 / 7,862,316 / 8,405,536 / 7,861,647 / 8,768,184 (백만원) → 마스터 item41~46 = 83,261.56 / 83,612.77 / 78,623.16 / 84,055.36 / 78,616.47 / 87,681.84 (억원) 과 정확 일치. Ⅳ.금리 위험액 = 750,104 백만원 → 마스터 item36 = 7,501.04 억원 과 정확 일치. p23 에 작성기준 주2 가 실려 있다.",
-   "corroboration": {
-    "item36_side": [
-     "19_market 축에서 닫힘: item19 == sqrt(item36~40 · MARKET_M), 잔차 |rel| ≤ 0.0022% (교보 25.2Q -0.0042 / 신한 24.2Q -0.3312 · 24.4Q -0.2521 · 25.2Q -0.3338 · 25.4Q +0.4791)",
-     "원문 Ⅳ.금리 위험액 병합셀 값이 마스터 item36 과 백만원↔억원 환산까지 정확 일치"
-    ],
-    "scenario_side": [
-     "원문 Ⅲ.순자산가치 6개 열이 마스터 item41~46 과 정확 일치 (위 source_readback)"
-    ],
-    "control": "같은 식이 41-46 완비 226버킷 중 221건에서 닫힌다(97.8%) — 도출식·추출방식 자체는 정상이고 이 다섯 건만 재현되지 않는다"
-   },
-   "note": "식은 바꾸지 않았다. owner 제안(평균회귀 충격량도 0 절단)을 226버킷 전수로 재측정한 결과 현행 signed 식 221/226(97.8%) vs 0절단 123/226(54.4%), 판정이 갈리는 102건 중 100건이 '현행만 통과'다(0절단만 통과하는 2건은 바로 이 면제 대상 KR0094 2025.2Q·2025.4Q). 허용오차도 넓히지 않았다 — 잔차가 5~26% 라 어떤 합리적 tol 로도 덮이지 않는다.",
-   "cause": "UNEXPLAINED",
-   "cause_note": "회사가 2024년 작성기준 변경을 명시하지만(주2, p23) **그 문구만으로 잔차가 설명되지 않는다**: 금리에 둔감한 자산·부채는 충격전 열과 5개 시나리오 열에 동일한 금액으로 들어가므로 열 간 차이(=충격량)에서 상쇄되어, 대상 범위를 좁히든 넓히든 도출식 결과를 바꾸지 못한다. '스코프 때문'이라고 단정하지 말 것 — 근거가 약하다.",
-   "expected_residual": {
-    "적용전": 1287.8295634268043,
-    "적용후": 1287.8295634268043
-   },
-   "pin_tolerance": 0.01,
-   "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 두 컬럼 각각 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌면 잔차가 이동해 적용전은 룰엔진 36_irr RED(IRR_EXEMPTION_RESIDUAL_DRIFT), 적용후는 TRANSITION_AFTER_IRR_MISMATCH RED 로 되살아난다. 결측이 되면 IRR_EXEMPTION_INPUT_MISSING RED (결측은 SKIP 이 아니다). 잔차가 반대로 룰 허용오차 안으로 들어오면 IRR_EXEMPTION_INERT review 로 '등재를 풀어라'가 찍힌다.",
-   "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1810Z__orchestrator__KR0073_KR0094__irr_derive_exempt_owner_approved.md). owner 는 룰을 YELLOW 로 강등하는 것을 명시적으로 거부했다 — 다른 모든 (회사,분기)에서 36_irr 은 RED 그대로다.",
-   "scope": "KR0073 2025.2Q + KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q 다섯 (회사,분기)의 36_irr 축, 적용전·적용후 두 컬럼뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 실측(2026-08-21, 라이브 마스터): 41-46 완비 226버킷 중 현행식 FAIL 은 정확히 이 다섯 건뿐이라 면제 범위 = 현 RED 범위다."
-  },
-  {
-   "registry": "IRR_DERIVE_ISSUER_INCONSISTENT",
-   "company": "KR0094",
-   "quarter": "2024.4Q",
-   "claim": "표준 도출식이 공시 금리위험액을 재현하지 못한다 — item36 +25.62% 잔차 1622.0506억. item36 도 41-46 도 원문 그대로이며 어느 쪽도 추출 오류가 아니다. item36 은 시장위험 축(item19 = sqrt(item36~40·MARKET_M))에서 |rel| ≤ 0.0022% 로 닫히므로 값 자체는 다른 축에서 검산된다.",
-   "claim_kind": "DERIVATION_NOT_REPRODUCIBLE",
-   "status": "VERIFIED",
-   "citation": {
-    "file": "data/disclosure/FY2024_Q4/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     144
-    ]
-   },
-   "verify": {
-    "file": "data/disclosure/FY2024_Q4/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     144
-    ],
-    "present_markers": [
-     "② 금리위험액 현황",
-     "III. 순자산가치",
-     "IV. 금리 위험액",
-     "8,318,935",
-     "8,352,002",
-     "7,999,316",
-     "8,180,819",
-     "7,929,145",
-     "8,689,718",
-     "633,214",
-     "2024년부터 금리위험액 현황의 자산 및 부채는 금리위험에 직·간접적으로 노출된 자산 및 부채를 대상으로 작성"
-    ]
-   },
-   "machine_readability": "이 PDF 는 텍스트레이어가 정상이라 VERIFIED_BY_IMAGE 경로를 쓰지 않았다 — 인용 페이지 텍스트밀도가 1,829~3,093자/페이지로 게이트의 image-only 반증 임계(800자/p)를 크게 넘는다. 위 present_markers 는 실제로 이 파일의 그 페이지에서 발견되며 게이트가 매 실행 재대조한다.",
-   "source_readback": "p144 [② 금리위험액 현황] 당기(2024년 4Q) 열 III.순자산가치 = 8,318,935 / 8,352,002 / 7,999,316 / 8,180,819 / 7,929,145 / 8,689,718 (백만원) → 마스터 item41~46 = 83,189.35 / 83,520.02 / 79,993.16 / 81,808.19 / 79,291.45 / 86,897.18 (억원) 과 정확 일치. IV.금리 위험액 = 633,214 백만원 → 마스터 item36 = 6,332.14 억원 과 정확 일치. 같은 페이지 주2 = 티켓이 인용한 작성기준 변경 문구.",
-   "corroboration": {
-    "item36_side": [
-     "19_market 축에서 닫힘: item19 == sqrt(item36~40 · MARKET_M), 잔차 |rel| ≤ 0.0022% (교보 25.2Q -0.0042 / 신한 24.2Q -0.3312 · 24.4Q -0.2521 · 25.2Q -0.3338 · 25.4Q +0.4791)",
-     "원문 Ⅳ.금리 위험액 병합셀 값이 마스터 item36 과 백만원↔억원 환산까지 정확 일치"
-    ],
-    "scenario_side": [
-     "원문 Ⅲ.순자산가치 6개 열이 마스터 item41~46 과 정확 일치 (위 source_readback)"
-    ],
-    "control": "같은 식이 41-46 완비 226버킷 중 221건에서 닫힌다(97.8%) — 도출식·추출방식 자체는 정상이고 이 다섯 건만 재현되지 않는다"
-   },
-   "note": "식은 바꾸지 않았다. owner 제안(평균회귀 충격량도 0 절단)을 226버킷 전수로 재측정한 결과 현행 signed 식 221/226(97.8%) vs 0절단 123/226(54.4%), 판정이 갈리는 102건 중 100건이 '현행만 통과'다(0절단만 통과하는 2건은 바로 이 면제 대상 KR0094 2025.2Q·2025.4Q). 허용오차도 넓히지 않았다 — 잔차가 5~26% 라 어떤 합리적 tol 로도 덮이지 않는다.",
-   "cause": "UNEXPLAINED",
-   "cause_note": "티켓이 인용한 p144 주2(작성기준 변경)는 **잔차를 기계적으로 설명하지 못한다** — 금리 비민감 항목은 모든 시나리오 열에 동일하게 들어가 열 간 차이에서 상쇄된다. 게다가 같은 주2 가 2025.2Q(p28)·2025.4Q(p131)에는 아예 없는데 잔차는 그대로 남는다(+7.49% · +14.92%). 원인 미규명으로 기록한다.",
-   "expected_residual": {
-    "적용전": 1622.0506399332953,
-    "적용후": 1622.0506399332953
-   },
-   "pin_tolerance": 0.01,
-   "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 두 컬럼 각각 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌면 잔차가 이동해 적용전은 룰엔진 36_irr RED(IRR_EXEMPTION_RESIDUAL_DRIFT), 적용후는 TRANSITION_AFTER_IRR_MISMATCH RED 로 되살아난다. 결측이 되면 IRR_EXEMPTION_INPUT_MISSING RED (결측은 SKIP 이 아니다). 잔차가 반대로 룰 허용오차 안으로 들어오면 IRR_EXEMPTION_INERT review 로 '등재를 풀어라'가 찍힌다.",
-   "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1810Z__orchestrator__KR0073_KR0094__irr_derive_exempt_owner_approved.md). owner 는 룰을 YELLOW 로 강등하는 것을 명시적으로 거부했다 — 다른 모든 (회사,분기)에서 36_irr 은 RED 그대로다.",
-   "scope": "KR0073 2025.2Q + KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q 다섯 (회사,분기)의 36_irr 축, 적용전·적용후 두 컬럼뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 실측(2026-08-21, 라이브 마스터): 41-46 완비 226버킷 중 현행식 FAIL 은 정확히 이 다섯 건뿐이라 면제 범위 = 현 RED 범위다."
-  },
-  {
-   "registry": "IRR_DERIVE_ISSUER_INCONSISTENT",
-   "company": "KR0094",
-   "quarter": "2025.2Q",
-   "claim": "표준 도출식이 공시 금리위험액을 재현하지 못한다 — item36 +7.49% 잔차 698.1840억. item36 도 41-46 도 원문 그대로이며 어느 쪽도 추출 오류가 아니다. item36 은 시장위험 축(item19 = sqrt(item36~40·MARKET_M))에서 |rel| ≤ 0.0022% 로 닫히므로 값 자체는 다른 축에서 검산된다.",
-   "claim_kind": "DERIVATION_NOT_REPRODUCIBLE",
-   "status": "VERIFIED",
-   "citation": {
-    "file": "data/disclosure/FY2025_Q2/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     28
-    ]
-   },
-   "verify": {
-    "file": "data/disclosure/FY2025_Q2/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     28
-    ],
-    "present_markers": [
-     "② 금리위험액 현황",
-     "III. 순자산가치",
-     "IV. 금리 위험액",
-     "(25.2Q)",
-     "7,340,700",
-     "7,433,020",
-     "7,512,474",
-     "6,481,382",
-     "6,925,577",
-     "7,692,321",
-     "931,833"
-    ]
-   },
-   "machine_readability": "이 PDF 는 텍스트레이어가 정상이라 VERIFIED_BY_IMAGE 경로를 쓰지 않았다 — 인용 페이지 텍스트밀도가 1,829~3,093자/페이지로 게이트의 image-only 반증 임계(800자/p)를 크게 넘는다. 위 present_markers 는 실제로 이 파일의 그 페이지에서 발견되며 게이트가 매 실행 재대조한다.",
-   "source_readback": "p28 [② 금리위험액 현황] 당기(25.2Q) 열 III.순자산가치 = 7,340,700 / 7,433,020 / 7,512,474 / 6,481,382 / 6,925,577 / 7,692,321 (백만원) → 마스터 item41~46 = 73,407.00 / 74,330.20 / 75,124.74 / 64,813.82 / 69,255.77 / 76,923.21 (억원) 과 정확 일치. IV.금리 위험액 = 931,833 백만원 → 마스터 item36 = 9,318.33 억원 과 정확 일치.",
-   "corroboration": {
-    "item36_side": [
-     "19_market 축에서 닫힘: item19 == sqrt(item36~40 · MARKET_M), 잔차 |rel| ≤ 0.0022% (교보 25.2Q -0.0042 / 신한 24.2Q -0.3312 · 24.4Q -0.2521 · 25.2Q -0.3338 · 25.4Q +0.4791)",
-     "원문 Ⅳ.금리 위험액 병합셀 값이 마스터 item36 과 백만원↔억원 환산까지 정확 일치"
-    ],
-    "scenario_side": [
-     "원문 Ⅲ.순자산가치 6개 열이 마스터 item41~46 과 정확 일치 (위 source_readback)"
-    ],
-    "control": "같은 식이 41-46 완비 226버킷 중 221건에서 닫힌다(97.8%) — 도출식·추출방식 자체는 정상이고 이 다섯 건만 재현되지 않는다"
-   },
-   "note": "식은 바꾸지 않았다. owner 제안(평균회귀 충격량도 0 절단)을 226버킷 전수로 재측정한 결과 현행 signed 식 221/226(97.8%) vs 0절단 123/226(54.4%), 판정이 갈리는 102건 중 100건이 '현행만 통과'다(0절단만 통과하는 2건은 바로 이 면제 대상 KR0094 2025.2Q·2025.4Q). 허용오차도 넓히지 않았다 — 잔차가 5~26% 라 어떤 합리적 tol 로도 덮이지 않는다.",
-   "cause": "UNEXPLAINED",
-   "cause_note": "이 filing 에는 2024년 작성기준 주2 가 **없다**(p28 은 '주) 세부 작성요령은 업무보고서 AH732/AI732 참조' 한 줄뿐). 그런데 잔차는 +7.49% 로 남는다 → 작성기준 각주로는 설명 불가.",
-   "expected_residual": {
-    "적용전": 698.1839921629144,
-    "적용후": 698.1839921629144
-   },
-   "pin_tolerance": 0.01,
-   "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 두 컬럼 각각 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌면 잔차가 이동해 적용전은 룰엔진 36_irr RED(IRR_EXEMPTION_RESIDUAL_DRIFT), 적용후는 TRANSITION_AFTER_IRR_MISMATCH RED 로 되살아난다. 결측이 되면 IRR_EXEMPTION_INPUT_MISSING RED (결측은 SKIP 이 아니다). 잔차가 반대로 룰 허용오차 안으로 들어오면 IRR_EXEMPTION_INERT review 로 '등재를 풀어라'가 찍힌다.",
-   "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1810Z__orchestrator__KR0073_KR0094__irr_derive_exempt_owner_approved.md). owner 는 룰을 YELLOW 로 강등하는 것을 명시적으로 거부했다 — 다른 모든 (회사,분기)에서 36_irr 은 RED 그대로다.",
-   "scope": "KR0073 2025.2Q + KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q 다섯 (회사,분기)의 36_irr 축, 적용전·적용후 두 컬럼뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 실측(2026-08-21, 라이브 마스터): 41-46 완비 226버킷 중 현행식 FAIL 은 정확히 이 다섯 건뿐이라 면제 범위 = 현 RED 범위다."
-  },
-  {
-   "registry": "IRR_DERIVE_ISSUER_INCONSISTENT",
-   "company": "KR0094",
-   "quarter": "2025.4Q",
-   "claim": "표준 도출식이 공시 금리위험액을 재현하지 못한다 — item36 +14.92% 잔차 863.8221억. item36 도 41-46 도 원문 그대로이며 어느 쪽도 추출 오류가 아니다. item36 은 시장위험 축(item19 = sqrt(item36~40·MARKET_M))에서 |rel| ≤ 0.0022% 로 닫히므로 값 자체는 다른 축에서 검산된다.",
-   "claim_kind": "DERIVATION_NOT_REPRODUCIBLE",
-   "status": "VERIFIED",
-   "citation": {
-    "file": "data/disclosure/FY2025_Q4/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     131
-    ]
-   },
-   "verify": {
-    "file": "data/disclosure/FY2025_Q4/raw/KR0094_신한라이프생명보험.pdf",
-    "pages": [
-     131
-    ],
-    "present_markers": [
-     "② 금리위험액 현황",
-     "Ⅲ. 순자산가치",
-     "Ⅳ. 금리 위험액",
-     "6,241,944",
-     "6,331,093",
-     "6,279,673",
-     "5,719,761",
-     "5,985,475",
-     "6,463,759",
-     "578,999"
-    ]
-   },
-   "machine_readability": "이 PDF 는 텍스트레이어가 정상이라 VERIFIED_BY_IMAGE 경로를 쓰지 않았다 — 인용 페이지 텍스트밀도가 1,829~3,093자/페이지로 게이트의 image-only 반증 임계(800자/p)를 크게 넘는다. 위 present_markers 는 실제로 이 파일의 그 페이지에서 발견되며 게이트가 매 실행 재대조한다.",
-   "source_readback": "p131 [② 금리위험액 현황] 당기 열 Ⅲ.순자산가치 = 6,241,944 / 6,331,093 / 6,279,673 / 5,719,761 / 5,985,475 / 6,463,759 (백만원) → 마스터 item41~46 = 62,419.44 / 63,310.93 / 62,796.73 / 57,197.61 / 59,854.75 / 64,637.59 (억원) 과 정확 일치. Ⅳ.금리 위험액 = 578,999 백만원 → 마스터 item36 = 5,789.99 억원 과 정확 일치.",
-   "corroboration": {
-    "item36_side": [
-     "19_market 축에서 닫힘: item19 == sqrt(item36~40 · MARKET_M), 잔차 |rel| ≤ 0.0022% (교보 25.2Q -0.0042 / 신한 24.2Q -0.3312 · 24.4Q -0.2521 · 25.2Q -0.3338 · 25.4Q +0.4791)",
-     "원문 Ⅳ.금리 위험액 병합셀 값이 마스터 item36 과 백만원↔억원 환산까지 정확 일치"
-    ],
-    "scenario_side": [
-     "원문 Ⅲ.순자산가치 6개 열이 마스터 item41~46 과 정확 일치 (위 source_readback)"
-    ],
-    "control": "같은 식이 41-46 완비 226버킷 중 221건에서 닫힌다(97.8%) — 도출식·추출방식 자체는 정상이고 이 다섯 건만 재현되지 않는다"
-   },
-   "note": "이 (회사,분기)는 2026-08-21 에 INTERNAL_MODEL_36IRR_EXEMPT 에서 **해제된** 건이다. 그 면제의 등재사유('내부모형사 — 시나리오별 금리위험액 직접공시')는 raw 대조에서 거짓으로 확인됐고(같은 원장의 그 항목 참조), 해제로 드러난 잔차가 지금 이 항목이다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 p135). 식은 바꾸지 않았다. owner 제안(평균회귀 충격량도 0 절단)을 226버킷 전수로 재측정한 결과 현행 signed 식 221/226(97.8%) vs 0절단 123/226(54.4%), 판정이 갈리는 102건 중 100건이 '현행만 통과'다(0절단만 통과하는 2건은 바로 이 면제 대상 KR0094 2025.2Q·2025.4Q). 허용오차도 넓히지 않았다 — 잔차가 5~26% 라 어떤 합리적 tol 로도 덮이지 않는다.",
-   "cause": "UNEXPLAINED",
-   "cause_note": "2025.2Q 와 같다 — p131 에는 작성기준 주2 가 없고(주) 세부 작성요령 … 참조' 뿐) 잔차만 +14.92% 로 남는다.",
-   "expected_residual": {
-    "적용전": 863.8221082879018,
-    "적용후": 863.8221082879018
-   },
-   "pin_tolerance": 0.01,
-   "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 두 컬럼 각각 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌면 잔차가 이동해 적용전은 룰엔진 36_irr RED(IRR_EXEMPTION_RESIDUAL_DRIFT), 적용후는 TRANSITION_AFTER_IRR_MISMATCH RED 로 되살아난다. 결측이 되면 IRR_EXEMPTION_INPUT_MISSING RED (결측은 SKIP 이 아니다). 잔차가 반대로 룰 허용오차 안으로 들어오면 IRR_EXEMPTION_INERT review 로 '등재를 풀어라'가 찍힌다.",
-   "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1810Z__orchestrator__KR0073_KR0094__irr_derive_exempt_owner_approved.md). owner 는 룰을 YELLOW 로 강등하는 것을 명시적으로 거부했다 — 다른 모든 (회사,분기)에서 36_irr 은 RED 그대로다.",
-   "scope": "KR0073 2025.2Q + KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q 다섯 (회사,분기)의 36_irr 축, 적용전·적용후 두 컬럼뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 실측(2026-08-21, 라이브 마스터): 41-46 완비 226버킷 중 현행식 FAIL 은 정확히 이 다섯 건뿐이라 면제 범위 = 현 RED 범위다."
-  }
- ],
- "_residual_pin_contract": "일부 면제는 '이 셀을 보지 마라'가 아니라 '이 잔차인 동안만 차단하지 마라'다(_LIFE8_ISSUER_INCONSISTENT). 기대잔차를 값으로 박제하고 게이트가 매 실행 마스터에서 재계산한다 — 잔차가 tol을 벗어나면 LIFE8_EXEMPTION_RESIDUAL_DRIFT RED, 입력이 결측이면 LIFE8_EXEMPTION_INPUT_MISSING RED. blanket skip은 그 셀을 영구 사각지대로 만들기 때문에 금지."
+  "_verify_contract": "verify = {file(저장소 상대경로), pages(1-base, 생략시 전체), absent_markers[], present_markers[]}. 게이트가 그 페이지를 직접 열어 공백제거 부분문자열로 마커를 찾는다. absent_markers 가 발견되면 '그 표/섹션이 없다'는 주장이 거짓 → RED. present_markers 가 사라지면 근거로 든 원문 문장 자체가 없어진 것 → 역시 RED (2026-08-21 신설: 부재 증명보다 원문 각주 인용이 강한 근거인 항목이 있는데, 부재 마커만 지원하면 그런 항목은 근거가 있어도 영원히 UNVERIFIED 로 남는다). **부재 주장은 pages 를 생략해 문서 전체를 훑는 것이 원칙** — 인용 페이지만 보면 그 안에 없는 것은 자명해 무검사가 된다. status=VERIFIED 인데 마커가 하나도 대조되지 않으면 EXEMPTION_VERIFIED_WITHOUT_MARKERS RED.",
+  "entries": [
+    {
+      "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
+      "company": "KR0003",
+      "quarter": "2026.1Q",
+      "claim": "raw 1표(적용후 blank) 다음 바로 5.수익성 점프, 2·3표 부재(raw 정독 확인)",
+      "claim_kind": "TABLE_ABSENT",
+      "status": "CONTRADICTED",
+      "citation": {
+        "file": "data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf",
+        "pages": [
+          23,
+          24,
+          25
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf",
+        "pages": [
+          24,
+          25
+        ],
+        "absent_markers": [
+          "장수위험·사업비위험·해지위험 및 대재해위험 경과조치",
+          "주식위험 경과조치 또는 금리위험 경과조치"
+        ]
+      },
+      "note": "validation 2026-08-21 fitz 직접 확인. p23=1자본감소분(적용후 '-', 미적용 각주) · p24=2 장수/사업비/해지/대재해(적용후 컬럼 전부 채워짐: 지급여력비율후 164.42 · 생명장기후 1,124,541 · 사망 103,317 · 장수 19 · 장해질병 1,003,161 · 장기재물 51,528 · 해지 343,533 · 사업비 47,394 · 대재해 5,298 · 시장위험액후 670,846) · p25=3 주식/금리(미적용 각주로 적용후 '-'). 즉 '2·3표 부재' 는 사실이 아니고, 2표의 적용후 세부는 원천에 그대로 있다. 면제 해제·재추출 여부는 owner/parser 소관 — validation 은 근거가 거짓임만 기록한다.",
+      "registered_by": "owner 2026-07-12 documented exception (TODO.md)",
+      "refuted_by": "validation 2026-08-21 (raw fitz, docling MD 아님)",
+      "resolved_note": "2026-08-21 parser 가 _AFTER_SUBRISK_NOT_DISCLOSED 에서 이 항목을 해제하고 p24 로 item29~35후 7셀을 정정했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
+    },
+    {
+      "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
+      "company": "KR0073",
+      "quarter": "2026.1Q",
+      "claim": "경과조치 섹션 자체 없음, 헤드라인 지급여력비율후 214.23만(raw 확인)",
+      "claim_kind": "SECTION_ABSENT",
+      "status": "CONTRADICTED",
+      "citation": {
+        "file": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf",
+        "pages": [
+          13,
+          15,
+          16
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf",
+        "pages": [
+          15
+        ],
+        "absent_markers": [
+          "지급여력비율의 경과조치 적용에 관한 사항",
+          "장수위험·사업비위험·해지위험 및 대재해위험 경과조치"
+        ]
+      },
+      "note": "validation 2026-08-21 fitz 직접 확인. p13=경과조치 종류표(공통 TFI / 선택 TAC·TIR·TER·TIRR 적용여부) · p15=[지급여력비율의 경과조치 적용에 관한 사항] 1공통(적용후 161.92) + 2 장수/사업비/해지/대재해(적용후 컬럼 완비: 지급여력비율후 201.87 · 기준금액후 7,408,635 · 기본요구자본후 8,689,561 · 생명장기후 3,222,672 · 사망 782,849 · 장수 257,378 · 장해질병 2,471,949 · 장기재물 0 · 해지 1,266,318 · 사업비 159,550 · 대재해 105,385 · 시장위험액후 5,467,384) · p16=3 주식/금리. '섹션 자체 없음' 은 사실이 아니다. 주장된 헤드라인 214.23 은 p15 의 어느 표에도 없다(공통 161.92 / 2표 201.87).",
+      "registered_by": "owner 2026-07-12 documented exception (TODO.md)",
+      "refuted_by": "validation 2026-08-21 (raw fitz, docling MD 아님)",
+      "resolved_note": "2026-08-21 parser 가 _AFTER_SUBRISK_NOT_DISCLOSED 에서 해제하고 p15 로 item29~35 7행을 신설했다(R7 로 부모값 재현 확인). 고아 기록으로 보존 — 재등재 시 즉시 RED."
+    },
+    {
+      "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
+      "company": "KR0097",
+      "quarter": "2024.4Q",
+      "claim": "감사보고서주석 스타일 공시, 적용후 세부 미공시(phase-in 10%만)",
+      "claim_kind": "TABLE_ABSENT",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR0097_하나생명보험.pdf",
+        "pages": [
+          281,
+          325,
+          326,
+          327
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR0097_하나생명보험.pdf",
+        "absent_markers": [
+          "지급여력비율의 경과조치 적용에 관한 사항",
+          "장수위험·사업비위험·해지위험 및 대재해위험 경과조치"
+        ],
+        "present_markers": [
+          "생명ㆍ장기손해보험위험액 중 장수위험액, 사업비위험액, 해지위험액, 대재해위험액 경과조치",
+          "최초 산출 금액"
+        ]
+      },
+      "note": "validation 2026-08-21 raw 직접 재확인 — 주장이 참이다. p281 [지급여력기준금액] 은 적용후를 **위험 대분류(생명장기·일반·시장·신용·운영·분산효과)까지만** 공시하고, 생명장기 7 하위위험(29~35)의 적용후 컬럼은 347p 어디에도 없다. p325~327 (C.3.1 경과조치 적용내역)은 서술형이라 '최초 산출 금액 + 적용비율 10%(2024년)' 만 준다(천원: 장수 14,325,093 · 해지 66,403,015 · 사업비 43,877,926 · 대재해 7,847,532)와 가용자본/요구자본/지급여력비율 전후 총액뿐이다. 표준서식 헤딩 2개가 문서 전체에서 부재이므로 게이트가 매 실행 pages 생략 전수 스캔으로 재확인한다. **주의**: 같은 (회사,분기)의 `_POST_PARENT_NOT_DISCLOSED` 항목은 2026-08-21 에 해제됐다 — 요구자본 대분류 적용후는 p281 에 실재하기 때문이다. 두 면제의 범위가 다르다.",
+      "registered_by": "owner 2026-07-12 documented exception (TODO.md)"
+    },
+    {
+      "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
+      "company": "KR0097",
+      "quarter": "2026.1Q",
+      "claim": "하나생명 대재해 동일 — 적용후 세부 미공시",
+      "claim_kind": "TABLE_ABSENT",
+      "status": "CONTRADICTED",
+      "citation": null,
+      "verify": null,
+      "note": "raw p10 [② 장수위험·사업비위험·해지위험 및 대재해위험 경과조치] 표가 적용후 세부를 전부 싣는다(백만원: 사망 38,228 · 장수 - · 장해질병 71,560 · 장기재물 - · 해지 320,365 · 사업비 103,062 · 대재해 3,430 / 생명·장기손해보험 위험액 405,579 · 기본요구자본 576,970 · 지급여력비율 146.04). 마스터 item29~35후가 이미 이 값과 일치하며 R7 집계도 닫힌다(item17후 4,055.79 vs 4,055.7891, 잔차 +0.0009). 면제로 두면 실제로 공시됐고 이미 맞게 적재된 값이 영구 미검사로 남는다.",
+      "registered_by": "owner 2026-07-12 documented exception (TODO.md)",
+      "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
+      "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
+    },
+    {
+      "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
+      "company": "KR0104",
+      "quarter": "2023.1Q",
+      "claim": "1·2·3 다중경과조치 결합공식 불명(개별표 어느 것도 헤드라인과 불일치)",
+      "claim_kind": "FORMULA_UNKNOWN",
+      "status": "CONTRADICTED",
+      "citation": null,
+      "verify": null,
+      "note": "raw p12(②)·p13(③)이 적용후 세부를 전부 싣는다(② 사망 247,335 · 장수 - · 장해질병 803,613 · 장기재물 - · 해지 - · 사업비 - · 대재해 - / 생명장기 897,970 ; ③ 금리 1,479,046 · 주식 483,213 · 부동산 248,941 · 외환 236,386 / 시장 1,813,184). 등재사유 '결합공식 불명'은 이 레지스트리(=적용후 세부 미공시)의 의미가 아니고, 결합 자체도 지금은 풀린다: ②+③ 동시적용 → 기본요구자본후 39,138.92 − 분산효과후 10,221.92 = 28,917 로 마스터 item15후와 일치하고, item14후 22,802 · item27후 325.5 는 raw p9 [지급여력비율 총괄] 헤드라인과 정확히 같다. mmult 적용후 양축 모두 닫힘(item17후 잔차 +0.0048 · item19후 +0.0009).",
+      "registered_by": "owner 2026-07-12 documented exception (TODO.md)",
+      "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
+      "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
+    },
+    {
+      "registry": "_AFTER_SUBRISK_NOT_DISCLOSED",
+      "company": "KR0005",
+      "quarter": "2024.4Q",
+      "claim": "image-only PDF(텍스트레이어 0), owner GOLD-SCAN 대기",
+      "claim_kind": "SOURCE_UNREADABLE",
+      "status": "CONTRADICTED",
+      "citation": null,
+      "verify": null,
+      "note": "등재사유 'image-only PDF(텍스트레이어 0)'가 거짓이다. 실측 367p / 246,676자 = 672자/p 이고, 자본적정성 절 p173 '4-6. 자본 적정성 평가'를 240dpi 로 렌더링해 육안 판독한 결과 이미지 표가 아니라 선택 가능한 순수 산문(465자)이다. 더 결정적으로 '경과조치'가 367p 전체에서 0회 — 이 파일은 정기경영공시가 아니라 DART 사업보고서(쪽바닥 '전자공시시스템 dart.fss.or.kr')이고 p173 다음이 곧바로 '5. 금융자산 및 금융부채'라 K-ICS 수치표 자체가 없다. docling 파싱 스코프도 p35-37/139-144/172-174(전부 산문). 즉 마스터 값의 출처가 이 파일이 아니며, '우리가 가진 파일이 틀린 문서'인 것을 '발행사 미공시'로 등재한 것이다. 해제 결과 가려져 있던 mmult19 적용후 실패가 드러난다(item19후 3,860.81 vs MARKET_M(36~40후) 2,801.4428, 잔차 +1,059.3672).",
+      "registered_by": "owner documented exception (TODO.md)",
+      "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
+      "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
+    },
+    {
+      "registry": "_POST_PARENT_NOT_DISCLOSED",
+      "company": "KR0071",
+      "quarter": "2024.4Q",
+      "claim": "image-only PDF + TIR/TER 다중경과조치, R4 재현불가(역산 item15 14,747 vs 헤드라인 16,987, 차 2,240 비반올림)",
+      "claim_kind": "FORMULA_UNKNOWN",
+      "status": "CONTRADICTED",
+      "citation": null,
+      "verify": null,
+      "note": "등재사유 'image-only PDF'가 거짓이다. 실측 538p / 286,634자 = 533자/p 이고 K-ICS 인접 페이지(p249·p253·p302·p304)는 전부 선택 가능한 조밀한 본문이다. 그리고 '경과조치'가 538p 전체에서 0회 — 이 파일도 정기경영공시가 아니라 DART 사업보고서(연결 IFRS17 주석, 쪽번호 '- 135 -')다. 원천부재가 아니라 downloader 가 다른 문서를 받아 둔 것이므로 문서화 면제 대상이 아니다. '우리가 가진 파일이 틀린 문서다'를 '발행사가 공시하지 않았다'로 등재하면 downloader 갭이 영구 사각으로 굳는다.",
+      "registered_by": "owner 2026-07-16",
+      "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
+      "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
+    },
+    {
+      "registry": "_POST_PARENT_NOT_DISCLOSED",
+      "company": "KR0097",
+      "quarter": "2024.4Q",
+      "claim": "비표준(감사보고서 재무상태표) 공시. item16후 산술파생 가능하나 입력 item17후=1757.32 가 raw page(2001.90)와 불일치 → 파생값 불신",
+      "claim_kind": "FORMULA_UNKNOWN",
+      "status": "CONTRADICTED",
+      "citation": null,
+      "verify": null,
+      "note": "등재사유의 결론이 거꾸로였다. raw p281 [지급여력기준금액] 표가 적용후 컬럼을 통째로 공시한다(단위 천원): Ⅰ.기본요구자본 430,530,508 · 1.생명·장기손해보험위험액 200,189,811 · 2.일반손해보험위험액 - · 3.시장위험액 200,345,315 · 4.신용위험액 154,877,709 · 5.운영위험액 36,485,031 · (분산효과) (161,367,358) · Ⅱ.법인세조정액 - · Ⅲ.기타요구자본 - · Ⅳ.지급여력기준금액 430,530,508. 즉 item16후는 파생할 필요조차 없이 원문에 1,613.67억으로 찍혀 있다. 등재사유가 '파생값 불신'의 근거로 든 2001.90 이 바로 이 페이지의 생명장기 적용후(200,189,811천원 = 2,001.90억)이고, 원문이 정본이므로 마스터의 item17후=1,757.32 쪽이 결함이다. 면제가 아니라 정정 사안.",
+      "registered_by": "owner 2026-07-16",
+      "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
+      "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
+    },
+    {
+      "registry": "_POST_PARENT_NOT_DISCLOSED",
+      "company": "KR0049",
+      "quarter": "2024.3Q",
+      "claim": "그 분기 공시서에 지급여력비율 섹션 자체가 없음(2024년 12월말 공시 예정). JSON 2024.3Q 값은 FY2024_Q4 공시서의 '당분기-1분기' 컬럼에서 온 것이고 그 공시서의 경과조치 표는 당분기 전용이라 15-23후는 원천 부재",
+      "claim_kind": "SECTION_ABSENT",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf",
+        "pages": [
+          3,
+          9,
+          11
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf",
+        "absent_markers": [
+          "지급여력비율의 경과조치 적용에 관한 사항",
+          "경과조치 적용 전 지급여력비율 세부"
+        ],
+        "present_markers": [
+          "지급여력비율은 2024 년 12 월말 공시 예정임"
+        ]
+      },
+      "note": "validation 2026-08-21 raw 직접 재확인 — 주장이 참이고 원문이 이유까지 적어 놨다. p3 [1-1. 주요 경영지표] 의 '지급여력비율(경과조치 전)'·'지급여력비율(경과조치 후)' 두 행이 **모두 공란**이고 각주가 '(*) 지급여력비율은 2024년 12월말 공시 예정임 (보험업감독규정 부칙 제3조)' 라고 명시한다. 19p / 5,685자 문서 전체에 경과조치 세부표 헤딩이 없다. 이 항목은 부재 증명보다 그 각주가 훨씬 강한 근거라, 2026-08-21 에 신설한 present_markers 로 각주 문장 자체를 매 실행 재확인한다.",
+      "registered_by": "parser 2026-08-20 / TODO.md documented exception"
+    },
+    {
+      "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
+      "company": "KR0073",
+      "quarter": "2025.2Q",
+      "claim": "내부모형사 — 회사가 시나리오별 금리위험액을 직접 공시, 표준 derive 식(R=충격전−시나리오)과 불일치",
+      "claim_kind": "INTERNAL_MODEL",
+      "status": "CONTRADICTED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR0073_교보생명보험.pdf",
+        "pages": [
+          21
+        ]
+      },
+      "verify": null,
+      "note": "등재사유의 두 전제가 모두 거짓이다. ① raw data/disclosure/FY2025_Q2/raw/KR0073_교보생명보험.pdf p21 에 표준서식 [② 금리위험액 현황] 표가 그대로 있다 — 충격 전 + 충격후 5시나리오(평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 'Ⅲ. 순자산가치' 행이 완비돼 있어 항목 41-46 의 원천이 실재한다(마스터에 없는 것은 추출갭). ② 'Ⅳ. 금리 위험액' 은 표 전체 폭을 덮는 단일 병합셀(459,988 백만원 = 마스터 item36 4,599.88억)이라 '회사가 시나리오별 금리위험액을 직접 공시' 는 어느 페이지에서도 성립하지 않는다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 raw p135: '회사는 보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다' + 표준식 '금리위험액 = √max(금리상승위험액, 금리하락위험액)² + √max(금리평탄위험액, 금리경사위험액)² + 평균회귀금액'). '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.",
+      "registered_by": "owner 2026-06-14",
+      "refuted_by": "validation 2026-08-21 (raw fitz + 240dpi 렌더링 육안)",
+      "resolved_note": "2026-08-21 해제. 해제 결과 이 (회사,분기)는 36_irr RED('짝수분기인데 41-46 결측 = parser gap')가 된다 — 표는 원천에 있고 우리가 안 읽었을 뿐이므로 그 RED 가 참이다. **미해결 잔여(면제 아님)**: 41-46 을 적재해도 표준식이 공시 금리위험액을 재현하지 못한다(교보 25.2Q 계산 4,358.44 vs 공시 4,599.88 = +5.5% ; 신한 24.2Q +20.7% · 24.4Q +34.4% · 25.2Q +8.1% · 25.4Q +17.5%). 원인 후보: 2024년부터 이 표의 자산·부채가 '금리위험에 직·간접적으로 노출된' 것만 대상이라(KR0094 2024.4Q p144 주2) 전체 재무상태표 기준 위험액과 모수가 다르다. 이 건으로 새 면제를 만들려면 owner 승인이 필요하다 — validation 은 반증된 면제를 지울 뿐 새 면제를 만들지 않는다."
+    },
+    {
+      "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
+      "company": "KR0094",
+      "quarter": "2024.2Q",
+      "claim": "내부모형사 — 시나리오별 금리위험액 직접 공시",
+      "claim_kind": "INTERNAL_MODEL",
+      "status": "CONTRADICTED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          22
+        ]
+      },
+      "verify": null,
+      "note": "등재사유의 두 전제가 모두 거짓이다. ① raw data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf p22 에 표준서식 [② 금리위험액 현황] 표가 그대로 있다 — 충격 전 + 충격후 5시나리오(평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 'Ⅲ. 순자산가치' 행이 완비돼 있어 항목 41-46 의 원천이 실재한다(마스터에 없는 것은 추출갭). ② 'Ⅳ. 금리 위험액' 은 표 전체 폭을 덮는 단일 병합셀(750,104 백만원 = 마스터 item36 7,501.04억)이라 '회사가 시나리오별 금리위험액을 직접 공시' 는 어느 페이지에서도 성립하지 않는다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 raw p135: '회사는 보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다' + 표준식 '금리위험액 = √max(금리상승위험액, 금리하락위험액)² + √max(금리평탄위험액, 금리경사위험액)² + 평균회귀금액'). '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.",
+      "registered_by": "owner 2026-06-14",
+      "refuted_by": "validation 2026-08-21 (raw fitz + 240dpi 렌더링 육안)",
+      "resolved_note": "2026-08-21 해제. 해제 결과 이 (회사,분기)는 36_irr RED('짝수분기인데 41-46 결측 = parser gap')가 된다 — 표는 원천에 있고 우리가 안 읽었을 뿐이므로 그 RED 가 참이다. **미해결 잔여(면제 아님)**: 41-46 을 적재해도 표준식이 공시 금리위험액을 재현하지 못한다(교보 25.2Q 계산 4,358.44 vs 공시 4,599.88 = +5.5% ; 신한 24.2Q +20.7% · 24.4Q +34.4% · 25.2Q +8.1% · 25.4Q +17.5%). 원인 후보: 2024년부터 이 표의 자산·부채가 '금리위험에 직·간접적으로 노출된' 것만 대상이라(KR0094 2024.4Q p144 주2) 전체 재무상태표 기준 위험액과 모수가 다르다. 이 건으로 새 면제를 만들려면 owner 승인이 필요하다 — validation 은 반증된 면제를 지울 뿐 새 면제를 만들지 않는다."
+    },
+    {
+      "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
+      "company": "KR0094",
+      "quarter": "2024.4Q",
+      "claim": "내부모형사 — 시나리오별 금리위험액 직접 공시",
+      "claim_kind": "INTERNAL_MODEL",
+      "status": "CONTRADICTED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          144
+        ]
+      },
+      "verify": null,
+      "note": "등재사유의 두 전제가 모두 거짓이다. ① raw data/disclosure/FY2024_Q4/raw/KR0094_신한라이프생명보험.pdf p144 에 표준서식 [② 금리위험액 현황] 표가 그대로 있다 — 충격 전 + 충격후 5시나리오(평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 'Ⅲ. 순자산가치' 행이 완비돼 있어 항목 41-46 의 원천이 실재한다(마스터에 없는 것은 추출갭). ② 'Ⅳ. 금리 위험액' 은 표 전체 폭을 덮는 단일 병합셀(633,214 백만원 = 마스터 item36 6,332.14억)이라 '회사가 시나리오별 금리위험액을 직접 공시' 는 어느 페이지에서도 성립하지 않는다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 raw p135: '회사는 보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다' + 표준식 '금리위험액 = √max(금리상승위험액, 금리하락위험액)² + √max(금리평탄위험액, 금리경사위험액)² + 평균회귀금액'). '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.",
+      "registered_by": "owner 2026-06-14",
+      "refuted_by": "validation 2026-08-21 (raw fitz + 240dpi 렌더링 육안)",
+      "resolved_note": "2026-08-21 해제. 해제 결과 이 (회사,분기)는 36_irr RED('짝수분기인데 41-46 결측 = parser gap')가 된다 — 표는 원천에 있고 우리가 안 읽었을 뿐이므로 그 RED 가 참이다. **미해결 잔여(면제 아님)**: 41-46 을 적재해도 표준식이 공시 금리위험액을 재현하지 못한다(교보 25.2Q 계산 4,358.44 vs 공시 4,599.88 = +5.5% ; 신한 24.2Q +20.7% · 24.4Q +34.4% · 25.2Q +8.1% · 25.4Q +17.5%). 원인 후보: 2024년부터 이 표의 자산·부채가 '금리위험에 직·간접적으로 노출된' 것만 대상이라(KR0094 2024.4Q p144 주2) 전체 재무상태표 기준 위험액과 모수가 다르다. 이 건으로 새 면제를 만들려면 owner 승인이 필요하다 — validation 은 반증된 면제를 지울 뿐 새 면제를 만들지 않는다."
+    },
+    {
+      "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
+      "company": "KR0094",
+      "quarter": "2025.2Q",
+      "claim": "내부모형사 — 시나리오별 금리위험액 직접 공시",
+      "claim_kind": "INTERNAL_MODEL",
+      "status": "CONTRADICTED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          28
+        ]
+      },
+      "verify": null,
+      "note": "등재사유의 두 전제가 모두 거짓이다. ① raw data/disclosure/FY2025_Q2/raw/KR0094_신한라이프생명보험.pdf p28 에 표준서식 [② 금리위험액 현황] 표가 그대로 있다 — 충격 전 + 충격후 5시나리오(평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 'Ⅲ. 순자산가치' 행이 완비돼 있어 항목 41-46 의 원천이 실재한다(마스터에 없는 것은 추출갭). ② 'Ⅳ. 금리 위험액' 은 표 전체 폭을 덮는 단일 병합셀(931,833 백만원 = 마스터 item36 9,318.33억)이라 '회사가 시나리오별 금리위험액을 직접 공시' 는 어느 페이지에서도 성립하지 않는다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 raw p135: '회사는 보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다' + 표준식 '금리위험액 = √max(금리상승위험액, 금리하락위험액)² + √max(금리평탄위험액, 금리경사위험액)² + 평균회귀금액'). '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.",
+      "registered_by": "owner 2026-06-14",
+      "refuted_by": "validation 2026-08-21 (raw fitz + 240dpi 렌더링 육안)",
+      "resolved_note": "2026-08-21 해제. 해제 결과 이 (회사,분기)는 36_irr RED('짝수분기인데 41-46 결측 = parser gap')가 된다 — 표는 원천에 있고 우리가 안 읽었을 뿐이므로 그 RED 가 참이다. **미해결 잔여(면제 아님)**: 41-46 을 적재해도 표준식이 공시 금리위험액을 재현하지 못한다(교보 25.2Q 계산 4,358.44 vs 공시 4,599.88 = +5.5% ; 신한 24.2Q +20.7% · 24.4Q +34.4% · 25.2Q +8.1% · 25.4Q +17.5%). 원인 후보: 2024년부터 이 표의 자산·부채가 '금리위험에 직·간접적으로 노출된' 것만 대상이라(KR0094 2024.4Q p144 주2) 전체 재무상태표 기준 위험액과 모수가 다르다. 이 건으로 새 면제를 만들려면 owner 승인이 필요하다 — validation 은 반증된 면제를 지울 뿐 새 면제를 만들지 않는다."
+    },
+    {
+      "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
+      "company": "KR0094",
+      "quarter": "2025.4Q",
+      "claim": "내부모형사 — 시나리오별 금리위험액 직접 공시(공시총액 578,999 일치 확인)",
+      "claim_kind": "INTERNAL_MODEL",
+      "status": "CONTRADICTED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q4/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          131
+        ]
+      },
+      "verify": null,
+      "note": "등재사유의 두 전제가 모두 거짓이다. ① raw data/disclosure/FY2025_Q4/raw/KR0094_신한라이프생명보험.pdf p131 에 표준서식 [② 금리위험액 현황] 표가 그대로 있다 — 충격 전 + 충격후 5시나리오(평균회귀·금리상승·금리하락·금리평탄·금리경사) 열에 'Ⅲ. 순자산가치' 행이 완비돼 있어 항목 41-46 의 원천이 실재한다(마스터에 없는 것은 추출갭). ② 'Ⅳ. 금리 위험액' 은 표 전체 폭을 덮는 단일 병합셀(578,999 백만원 = 마스터 item36 5,789.99억)이라 '회사가 시나리오별 금리위험액을 직접 공시' 는 어느 페이지에서도 성립하지 않는다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 raw p135: '회사는 보험업감독업무시행세칙 [별표22] … 기준에 따라 시장위험액을 측정하고 있습니다' + 표준식 '금리위험액 = √max(금리상승위험액, 금리하락위험액)² + √max(금리평탄위험액, 금리경사위험액)² + 평균회귀금액'). '내부모형사' 라는 면제 이름 자체가 원문과 어긋난다.",
+      "registered_by": "owner 2026-06-14",
+      "refuted_by": "validation 2026-08-21 (raw fitz + 240dpi 렌더링 육안)",
+      "resolved_note": "2026-08-21 해제. 해제 결과 이 (회사,분기)는 36_irr RED('짝수분기인데 41-46 결측 = parser gap')가 된다 — 표는 원천에 있고 우리가 안 읽었을 뿐이므로 그 RED 가 참이다. **미해결 잔여(면제 아님)**: 41-46 을 적재해도 표준식이 공시 금리위험액을 재현하지 못한다(교보 25.2Q 계산 4,358.44 vs 공시 4,599.88 = +5.5% ; 신한 24.2Q +20.7% · 24.4Q +34.4% · 25.2Q +8.1% · 25.4Q +17.5%). 원인 후보: 2024년부터 이 표의 자산·부채가 '금리위험에 직·간접적으로 노출된' 것만 대상이라(KR0094 2024.4Q p144 주2) 전체 재무상태표 기준 위험액과 모수가 다르다. 이 건으로 새 면제를 만들려면 owner 승인이 필요하다 — validation 은 반증된 면제를 지울 뿐 새 면제를 만들지 않는다."
+    },
+    {
+      "registry": "_LIFE8_ISSUER_INCONSISTENT",
+      "company": "KR0079",
+      "quarter": "2023.2Q",
+      "claim": "발행사가 총괄표(item17=17,495)와 세부표(29~35, R7집계 16,127.5950)를 서로 안 맞게 공시했다. 양쪽 모두 원문 그대로이며 어느 쪽도 추출 오류가 아니다. 잔차 +1,367.4050억.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED_BY_IMAGE",
+      "citation": {
+        "file": "data/disclosure/FY2023_Q2/raw/KR0079_미래에셋생명.pdf",
+        "pages": [
+          11,
+          15,
+          16
+        ]
+      },
+      "corroboration": {
+        "item17_side": [
+          "23.2Q p11 [경과조치 적용 전 지급여력비율 세부] 해당분기(23.2Q) 열: 1.생명장기손해보험위험액 = 17,495",
+          "23.3Q p11 직전분기(23.2Q) 열: 동일하게 17,495",
+          "rule4 (R4[17-20]+21 = item15) 잔차 +0.74",
+          "rule6 (분산효과 항등식) 잔차 +1.00",
+          "동일 p11의 지급여력비율 209.7 이 item17=17,495 기준에서만 성립"
+        ],
+        "subtable_side": [],
+        "control": "같은 표 구조의 KR0079 2023.4Q 는 잔차 -0.0047 로 닫힌다 — 세부표 추출 방식 자체는 정상"
+      },
+      "image_verification": {
+        "method": "PyMuPDF(fitz) 200dpi 렌더링 후 육안 판독",
+        "pages": [
+          11,
+          15,
+          16
+        ],
+        "read_by": "validation 2026-08-21",
+        "why_not_machine_verifiable": "이 PDF는 텍스트레이어가 존재하지만 행 단위로 잘려 있다 — p11 360자 / p15 76자 / p16 323자(58페이지 전체 4,773자)이고, 추출되는 문자열이 '3. 시장위험액9,53' 처럼 값 중간에서 끊긴다. 따라서 absent_markers 부분문자열 검사는 마커를 절대 찾지 못하고 항상 '주장 확인'으로 끝난다(검사처럼 보이는 무검사). 게이트는 대신 인용 페이지 텍스트밀도를 매 실행 재측정해 이 사유 자체를 검증한다."
+      },
+      "note": "validation 2026-08-21 독립 재검산: master item17=17,495.0, item29~35 = 1,873.89 / 241.93 / 6,507.31 / 0.0 / 11,498.72 / 2,997.09 / 706.74 → R7 집계 16,127.5950, 잔차 1,367.4050. 룰 8_life 동적허용오차 max(2.0, 5%×16,127.60)=806.38 을 넘어 RED. 값_적용후 컬럼은 값과 전부 동일(미러)이라 적용후 잔차도 1,367.4050 이며, 게이트 _transition_mmult_after 축17(적용후)에서 같은 자기모순이 두 번째 RED 를 만든다. 그래서 면제는 적용전·적용후 두 컬럼 모두를 박제한다.",
+      "expected_residual": {
+        "적용전": 1367.4049866571877,
+        "적용후": 1367.4049866571877
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 재계산한다. item17 이나 29~35 중 한 칸이라도 바뀌면 잔차가 이동해 LIFE8_EXEMPTION_RESIDUAL_DRIFT RED 가 되고, 결측이 되면 LIFE8_EXEMPTION_INPUT_MISSING RED 가 된다. finding 자체도 지우지 않는다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1300Z, root TODO.md)",
+      "scope": "KR0079 2023.2Q 의 8_life(적용전) + mmult 축17(적용후) 단 하나. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "IRR_DERIVE_ISSUER_INCONSISTENT",
+      "company": "KR0073",
+      "quarter": "2025.2Q",
+      "claim": "표준 도출식이 공시 금리위험액을 재현하지 못한다 — item36 +5.25% 잔차 241.4374억. item36 도 41-46 도 원문 그대로이며 어느 쪽도 추출 오류가 아니다. item36 은 시장위험 축(item19 = sqrt(item36~40·MARKET_M))에서 |rel| ≤ 0.0022% 로 닫히므로 값 자체는 다른 축에서 검산된다.",
+      "claim_kind": "DERIVATION_NOT_REPRODUCIBLE",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR0073_교보생명보험.pdf",
+        "pages": [
+          21
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR0073_교보생명보험.pdf",
+        "pages": [
+          21
+        ],
+        "present_markers": [
+          "② 금리위험액 현황",
+          "당기(25.2Q)",
+          "Ⅲ. 순자산가치",
+          "Ⅳ. 금리 위험액",
+          "-5,667,711",
+          "-5,414,904",
+          "-6,352,338",
+          "-5,586,899",
+          "-5,463,138",
+          "-5,742,051",
+          "459,988"
+        ]
+      },
+      "machine_readability": "이 PDF 는 텍스트레이어가 정상이라 VERIFIED_BY_IMAGE 경로를 쓰지 않았다 — 인용 페이지 텍스트밀도가 1,829~3,093자/페이지로 게이트의 image-only 반증 임계(800자/p)를 크게 넘는다. 위 present_markers 는 실제로 이 파일의 그 페이지에서 발견되며 게이트가 매 실행 재대조한다.",
+      "source_readback": "p21 [② 금리위험액 현황] 당기(25.2Q) 열 Ⅲ.순자산가치 = 충격전 -5,667,711 / 평균회귀 -5,414,904 / 금리상승 -6,352,338 / 금리하락 -5,586,899 / 금리평탄 -5,463,138 / 금리경사 -5,742,051 (백만원) → 마스터 item41~46 = -56,677.11 / -54,149.04 / -63,523.38 / -55,868.99 / -54,631.38 / -57,420.51 (억원) 과 정확 일치. Ⅳ.금리 위험액 = 459,988 백만원 → 마스터 item36 = 4,599.88 억원 과 정확 일치.",
+      "corroboration": {
+        "item36_side": [
+          "19_market 축에서 닫힘: item19 == sqrt(item36~40 · MARKET_M), 잔차 |rel| ≤ 0.0022% (교보 25.2Q -0.0042 / 신한 24.2Q -0.3312 · 24.4Q -0.2521 · 25.2Q -0.3338 · 25.4Q +0.4791)",
+          "원문 Ⅳ.금리 위험액 병합셀 값이 마스터 item36 과 백만원↔억원 환산까지 정확 일치"
+        ],
+        "scenario_side": [
+          "원문 Ⅲ.순자산가치 6개 열이 마스터 item41~46 과 정확 일치 (위 source_readback)"
+        ],
+        "control": "같은 식이 41-46 완비 226버킷 중 221건에서 닫힌다(97.8%) — 도출식·추출방식 자체는 정상이고 이 다섯 건만 재현되지 않는다"
+      },
+      "note": "**이 건은 어떤 합성식으로도 닫힐 수 없다**: 금리상승 시나리오 단일 충격량 -5,667,711 − (-6,352,338) = 684,627 백만원이 공시 금리위험액 459,988 백만원보다 크다. K-ICS 금리위험액은 최악 단일 시나리오 충격량보다 작아질 수 없으므로, 이 표의 순자산가치와 공시 금리위험액이 같은 기준으로 작성된 값이 아니라는 뜻이다. 파서 문제가 아니다. 식은 바꾸지 않았다. owner 제안(평균회귀 충격량도 0 절단)을 226버킷 전수로 재측정한 결과 현행 signed 식 221/226(97.8%) vs 0절단 123/226(54.4%), 판정이 갈리는 102건 중 100건이 '현행만 통과'다(0절단만 통과하는 2건은 바로 이 면제 대상 KR0094 2025.2Q·2025.4Q). 허용오차도 넓히지 않았다 — 잔차가 5~26% 라 어떤 합리적 tol 로도 덮이지 않는다.",
+      "cause": "UNEXPLAINED",
+      "cause_note": "원인 미규명. 이 filing 에는 신한라이프 같은 작성기준 각주조차 없다 — p21 은 '주) 세부 작성요령은 업무보고서 AH732/AI732 참조' 뿐이다. 위 하한 위반이 '기준 불일치' 라는 사실만 말해 주고, 어떤 기준인지는 원문에서 확정할 수 없다.",
+      "expected_residual": {
+        "적용전": 241.4373504145833,
+        "적용후": 241.4373504145833
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 두 컬럼 각각 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌면 잔차가 이동해 적용전은 룰엔진 36_irr RED(IRR_EXEMPTION_RESIDUAL_DRIFT), 적용후는 TRANSITION_AFTER_IRR_MISMATCH RED 로 되살아난다. 결측이 되면 IRR_EXEMPTION_INPUT_MISSING RED (결측은 SKIP 이 아니다). 잔차가 반대로 룰 허용오차 안으로 들어오면 IRR_EXEMPTION_INERT review 로 '등재를 풀어라'가 찍힌다.",
+      "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1810Z__orchestrator__KR0073_KR0094__irr_derive_exempt_owner_approved.md). owner 는 룰을 YELLOW 로 강등하는 것을 명시적으로 거부했다 — 다른 모든 (회사,분기)에서 36_irr 은 RED 그대로다.",
+      "scope": "KR0073 2025.2Q + KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q 다섯 (회사,분기)의 36_irr 축, 적용전·적용후 두 컬럼뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 실측(2026-08-21, 라이브 마스터): 41-46 완비 226버킷 중 현행식 FAIL 은 정확히 이 다섯 건뿐이라 면제 범위 = 현 RED 범위다."
+    },
+    {
+      "registry": "IRR_DERIVE_ISSUER_INCONSISTENT",
+      "company": "KR0094",
+      "quarter": "2024.2Q",
+      "claim": "표준 도출식이 공시 금리위험액을 재현하지 못한다 — item36 +17.17% 잔차 1287.8296억. item36 도 41-46 도 원문 그대로이며 어느 쪽도 추출 오류가 아니다. item36 은 시장위험 축(item19 = sqrt(item36~40·MARKET_M))에서 |rel| ≤ 0.0022% 로 닫히므로 값 자체는 다른 축에서 검산된다.",
+      "claim_kind": "DERIVATION_NOT_REPRODUCIBLE",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          22,
+          23
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          22,
+          23
+        ],
+        "present_markers": [
+          "② 금리위험액 현황",
+          "Ⅲ. 순자산가치",
+          "Ⅳ. 금리 위험액",
+          "8,326,156",
+          "8,361,277",
+          "7,862,316",
+          "8,405,536",
+          "7,861,647",
+          "8,768,184",
+          "750,104",
+          "2024년부터 금리위험액 현황의 자산 및 부채는 금리위험에 직·간접적으로 노출된 자산 및 부채를 대상으로 작성"
+        ]
+      },
+      "machine_readability": "이 PDF 는 텍스트레이어가 정상이라 VERIFIED_BY_IMAGE 경로를 쓰지 않았다 — 인용 페이지 텍스트밀도가 1,829~3,093자/페이지로 게이트의 image-only 반증 임계(800자/p)를 크게 넘는다. 위 present_markers 는 실제로 이 파일의 그 페이지에서 발견되며 게이트가 매 실행 재대조한다.",
+      "source_readback": "p22 [② 금리위험액 현황] 당기 열 Ⅲ.순자산가치 = 8,326,156 / 8,361,277 / 7,862,316 / 8,405,536 / 7,861,647 / 8,768,184 (백만원) → 마스터 item41~46 = 83,261.56 / 83,612.77 / 78,623.16 / 84,055.36 / 78,616.47 / 87,681.84 (억원) 과 정확 일치. Ⅳ.금리 위험액 = 750,104 백만원 → 마스터 item36 = 7,501.04 억원 과 정확 일치. p23 에 작성기준 주2 가 실려 있다.",
+      "corroboration": {
+        "item36_side": [
+          "19_market 축에서 닫힘: item19 == sqrt(item36~40 · MARKET_M), 잔차 |rel| ≤ 0.0022% (교보 25.2Q -0.0042 / 신한 24.2Q -0.3312 · 24.4Q -0.2521 · 25.2Q -0.3338 · 25.4Q +0.4791)",
+          "원문 Ⅳ.금리 위험액 병합셀 값이 마스터 item36 과 백만원↔억원 환산까지 정확 일치"
+        ],
+        "scenario_side": [
+          "원문 Ⅲ.순자산가치 6개 열이 마스터 item41~46 과 정확 일치 (위 source_readback)"
+        ],
+        "control": "같은 식이 41-46 완비 226버킷 중 221건에서 닫힌다(97.8%) — 도출식·추출방식 자체는 정상이고 이 다섯 건만 재현되지 않는다"
+      },
+      "note": "식은 바꾸지 않았다. owner 제안(평균회귀 충격량도 0 절단)을 226버킷 전수로 재측정한 결과 현행 signed 식 221/226(97.8%) vs 0절단 123/226(54.4%), 판정이 갈리는 102건 중 100건이 '현행만 통과'다(0절단만 통과하는 2건은 바로 이 면제 대상 KR0094 2025.2Q·2025.4Q). 허용오차도 넓히지 않았다 — 잔차가 5~26% 라 어떤 합리적 tol 로도 덮이지 않는다.",
+      "cause": "UNEXPLAINED",
+      "cause_note": "회사가 2024년 작성기준 변경을 명시하지만(주2, p23) **그 문구만으로 잔차가 설명되지 않는다**: 금리에 둔감한 자산·부채는 충격전 열과 5개 시나리오 열에 동일한 금액으로 들어가므로 열 간 차이(=충격량)에서 상쇄되어, 대상 범위를 좁히든 넓히든 도출식 결과를 바꾸지 못한다. '스코프 때문'이라고 단정하지 말 것 — 근거가 약하다.",
+      "expected_residual": {
+        "적용전": 1287.8295634268043,
+        "적용후": 1287.8295634268043
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 두 컬럼 각각 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌면 잔차가 이동해 적용전은 룰엔진 36_irr RED(IRR_EXEMPTION_RESIDUAL_DRIFT), 적용후는 TRANSITION_AFTER_IRR_MISMATCH RED 로 되살아난다. 결측이 되면 IRR_EXEMPTION_INPUT_MISSING RED (결측은 SKIP 이 아니다). 잔차가 반대로 룰 허용오차 안으로 들어오면 IRR_EXEMPTION_INERT review 로 '등재를 풀어라'가 찍힌다.",
+      "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1810Z__orchestrator__KR0073_KR0094__irr_derive_exempt_owner_approved.md). owner 는 룰을 YELLOW 로 강등하는 것을 명시적으로 거부했다 — 다른 모든 (회사,분기)에서 36_irr 은 RED 그대로다.",
+      "scope": "KR0073 2025.2Q + KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q 다섯 (회사,분기)의 36_irr 축, 적용전·적용후 두 컬럼뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 실측(2026-08-21, 라이브 마스터): 41-46 완비 226버킷 중 현행식 FAIL 은 정확히 이 다섯 건뿐이라 면제 범위 = 현 RED 범위다."
+    },
+    {
+      "registry": "IRR_DERIVE_ISSUER_INCONSISTENT",
+      "company": "KR0094",
+      "quarter": "2024.4Q",
+      "claim": "표준 도출식이 공시 금리위험액을 재현하지 못한다 — item36 +25.62% 잔차 1622.0506억. item36 도 41-46 도 원문 그대로이며 어느 쪽도 추출 오류가 아니다. item36 은 시장위험 축(item19 = sqrt(item36~40·MARKET_M))에서 |rel| ≤ 0.0022% 로 닫히므로 값 자체는 다른 축에서 검산된다.",
+      "claim_kind": "DERIVATION_NOT_REPRODUCIBLE",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          144
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          144
+        ],
+        "present_markers": [
+          "② 금리위험액 현황",
+          "III. 순자산가치",
+          "IV. 금리 위험액",
+          "8,318,935",
+          "8,352,002",
+          "7,999,316",
+          "8,180,819",
+          "7,929,145",
+          "8,689,718",
+          "633,214",
+          "2024년부터 금리위험액 현황의 자산 및 부채는 금리위험에 직·간접적으로 노출된 자산 및 부채를 대상으로 작성"
+        ]
+      },
+      "machine_readability": "이 PDF 는 텍스트레이어가 정상이라 VERIFIED_BY_IMAGE 경로를 쓰지 않았다 — 인용 페이지 텍스트밀도가 1,829~3,093자/페이지로 게이트의 image-only 반증 임계(800자/p)를 크게 넘는다. 위 present_markers 는 실제로 이 파일의 그 페이지에서 발견되며 게이트가 매 실행 재대조한다.",
+      "source_readback": "p144 [② 금리위험액 현황] 당기(2024년 4Q) 열 III.순자산가치 = 8,318,935 / 8,352,002 / 7,999,316 / 8,180,819 / 7,929,145 / 8,689,718 (백만원) → 마스터 item41~46 = 83,189.35 / 83,520.02 / 79,993.16 / 81,808.19 / 79,291.45 / 86,897.18 (억원) 과 정확 일치. IV.금리 위험액 = 633,214 백만원 → 마스터 item36 = 6,332.14 억원 과 정확 일치. 같은 페이지 주2 = 티켓이 인용한 작성기준 변경 문구.",
+      "corroboration": {
+        "item36_side": [
+          "19_market 축에서 닫힘: item19 == sqrt(item36~40 · MARKET_M), 잔차 |rel| ≤ 0.0022% (교보 25.2Q -0.0042 / 신한 24.2Q -0.3312 · 24.4Q -0.2521 · 25.2Q -0.3338 · 25.4Q +0.4791)",
+          "원문 Ⅳ.금리 위험액 병합셀 값이 마스터 item36 과 백만원↔억원 환산까지 정확 일치"
+        ],
+        "scenario_side": [
+          "원문 Ⅲ.순자산가치 6개 열이 마스터 item41~46 과 정확 일치 (위 source_readback)"
+        ],
+        "control": "같은 식이 41-46 완비 226버킷 중 221건에서 닫힌다(97.8%) — 도출식·추출방식 자체는 정상이고 이 다섯 건만 재현되지 않는다"
+      },
+      "note": "식은 바꾸지 않았다. owner 제안(평균회귀 충격량도 0 절단)을 226버킷 전수로 재측정한 결과 현행 signed 식 221/226(97.8%) vs 0절단 123/226(54.4%), 판정이 갈리는 102건 중 100건이 '현행만 통과'다(0절단만 통과하는 2건은 바로 이 면제 대상 KR0094 2025.2Q·2025.4Q). 허용오차도 넓히지 않았다 — 잔차가 5~26% 라 어떤 합리적 tol 로도 덮이지 않는다.",
+      "cause": "UNEXPLAINED",
+      "cause_note": "티켓이 인용한 p144 주2(작성기준 변경)는 **잔차를 기계적으로 설명하지 못한다** — 금리 비민감 항목은 모든 시나리오 열에 동일하게 들어가 열 간 차이에서 상쇄된다. 게다가 같은 주2 가 2025.2Q(p28)·2025.4Q(p131)에는 아예 없는데 잔차는 그대로 남는다(+7.49% · +14.92%). 원인 미규명으로 기록한다.",
+      "expected_residual": {
+        "적용전": 1622.0506399332953,
+        "적용후": 1622.0506399332953
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 두 컬럼 각각 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌면 잔차가 이동해 적용전은 룰엔진 36_irr RED(IRR_EXEMPTION_RESIDUAL_DRIFT), 적용후는 TRANSITION_AFTER_IRR_MISMATCH RED 로 되살아난다. 결측이 되면 IRR_EXEMPTION_INPUT_MISSING RED (결측은 SKIP 이 아니다). 잔차가 반대로 룰 허용오차 안으로 들어오면 IRR_EXEMPTION_INERT review 로 '등재를 풀어라'가 찍힌다.",
+      "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1810Z__orchestrator__KR0073_KR0094__irr_derive_exempt_owner_approved.md). owner 는 룰을 YELLOW 로 강등하는 것을 명시적으로 거부했다 — 다른 모든 (회사,분기)에서 36_irr 은 RED 그대로다.",
+      "scope": "KR0073 2025.2Q + KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q 다섯 (회사,분기)의 36_irr 축, 적용전·적용후 두 컬럼뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 실측(2026-08-21, 라이브 마스터): 41-46 완비 226버킷 중 현행식 FAIL 은 정확히 이 다섯 건뿐이라 면제 범위 = 현 RED 범위다."
+    },
+    {
+      "registry": "IRR_DERIVE_ISSUER_INCONSISTENT",
+      "company": "KR0094",
+      "quarter": "2025.2Q",
+      "claim": "표준 도출식이 공시 금리위험액을 재현하지 못한다 — item36 +7.49% 잔차 698.1840억. item36 도 41-46 도 원문 그대로이며 어느 쪽도 추출 오류가 아니다. item36 은 시장위험 축(item19 = sqrt(item36~40·MARKET_M))에서 |rel| ≤ 0.0022% 로 닫히므로 값 자체는 다른 축에서 검산된다.",
+      "claim_kind": "DERIVATION_NOT_REPRODUCIBLE",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          28
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          28
+        ],
+        "present_markers": [
+          "② 금리위험액 현황",
+          "III. 순자산가치",
+          "IV. 금리 위험액",
+          "(25.2Q)",
+          "7,340,700",
+          "7,433,020",
+          "7,512,474",
+          "6,481,382",
+          "6,925,577",
+          "7,692,321",
+          "931,833"
+        ]
+      },
+      "machine_readability": "이 PDF 는 텍스트레이어가 정상이라 VERIFIED_BY_IMAGE 경로를 쓰지 않았다 — 인용 페이지 텍스트밀도가 1,829~3,093자/페이지로 게이트의 image-only 반증 임계(800자/p)를 크게 넘는다. 위 present_markers 는 실제로 이 파일의 그 페이지에서 발견되며 게이트가 매 실행 재대조한다.",
+      "source_readback": "p28 [② 금리위험액 현황] 당기(25.2Q) 열 III.순자산가치 = 7,340,700 / 7,433,020 / 7,512,474 / 6,481,382 / 6,925,577 / 7,692,321 (백만원) → 마스터 item41~46 = 73,407.00 / 74,330.20 / 75,124.74 / 64,813.82 / 69,255.77 / 76,923.21 (억원) 과 정확 일치. IV.금리 위험액 = 931,833 백만원 → 마스터 item36 = 9,318.33 억원 과 정확 일치.",
+      "corroboration": {
+        "item36_side": [
+          "19_market 축에서 닫힘: item19 == sqrt(item36~40 · MARKET_M), 잔차 |rel| ≤ 0.0022% (교보 25.2Q -0.0042 / 신한 24.2Q -0.3312 · 24.4Q -0.2521 · 25.2Q -0.3338 · 25.4Q +0.4791)",
+          "원문 Ⅳ.금리 위험액 병합셀 값이 마스터 item36 과 백만원↔억원 환산까지 정확 일치"
+        ],
+        "scenario_side": [
+          "원문 Ⅲ.순자산가치 6개 열이 마스터 item41~46 과 정확 일치 (위 source_readback)"
+        ],
+        "control": "같은 식이 41-46 완비 226버킷 중 221건에서 닫힌다(97.8%) — 도출식·추출방식 자체는 정상이고 이 다섯 건만 재현되지 않는다"
+      },
+      "note": "식은 바꾸지 않았다. owner 제안(평균회귀 충격량도 0 절단)을 226버킷 전수로 재측정한 결과 현행 signed 식 221/226(97.8%) vs 0절단 123/226(54.4%), 판정이 갈리는 102건 중 100건이 '현행만 통과'다(0절단만 통과하는 2건은 바로 이 면제 대상 KR0094 2025.2Q·2025.4Q). 허용오차도 넓히지 않았다 — 잔차가 5~26% 라 어떤 합리적 tol 로도 덮이지 않는다.",
+      "cause": "UNEXPLAINED",
+      "cause_note": "이 filing 에는 2024년 작성기준 주2 가 **없다**(p28 은 '주) 세부 작성요령은 업무보고서 AH732/AI732 참조' 한 줄뿐). 그런데 잔차는 +7.49% 로 남는다 → 작성기준 각주로는 설명 불가.",
+      "expected_residual": {
+        "적용전": 698.1839921629144,
+        "적용후": 698.1839921629144
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 두 컬럼 각각 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌면 잔차가 이동해 적용전은 룰엔진 36_irr RED(IRR_EXEMPTION_RESIDUAL_DRIFT), 적용후는 TRANSITION_AFTER_IRR_MISMATCH RED 로 되살아난다. 결측이 되면 IRR_EXEMPTION_INPUT_MISSING RED (결측은 SKIP 이 아니다). 잔차가 반대로 룰 허용오차 안으로 들어오면 IRR_EXEMPTION_INERT review 로 '등재를 풀어라'가 찍힌다.",
+      "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1810Z__orchestrator__KR0073_KR0094__irr_derive_exempt_owner_approved.md). owner 는 룰을 YELLOW 로 강등하는 것을 명시적으로 거부했다 — 다른 모든 (회사,분기)에서 36_irr 은 RED 그대로다.",
+      "scope": "KR0073 2025.2Q + KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q 다섯 (회사,분기)의 36_irr 축, 적용전·적용후 두 컬럼뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 실측(2026-08-21, 라이브 마스터): 41-46 완비 226버킷 중 현행식 FAIL 은 정확히 이 다섯 건뿐이라 면제 범위 = 현 RED 범위다."
+    },
+    {
+      "registry": "IRR_DERIVE_ISSUER_INCONSISTENT",
+      "company": "KR0094",
+      "quarter": "2025.4Q",
+      "claim": "표준 도출식이 공시 금리위험액을 재현하지 못한다 — item36 +14.92% 잔차 863.8221억. item36 도 41-46 도 원문 그대로이며 어느 쪽도 추출 오류가 아니다. item36 은 시장위험 축(item19 = sqrt(item36~40·MARKET_M))에서 |rel| ≤ 0.0022% 로 닫히므로 값 자체는 다른 축에서 검산된다.",
+      "claim_kind": "DERIVATION_NOT_REPRODUCIBLE",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q4/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          131
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q4/raw/KR0094_신한라이프생명보험.pdf",
+        "pages": [
+          131
+        ],
+        "present_markers": [
+          "② 금리위험액 현황",
+          "Ⅲ. 순자산가치",
+          "Ⅳ. 금리 위험액",
+          "6,241,944",
+          "6,331,093",
+          "6,279,673",
+          "5,719,761",
+          "5,985,475",
+          "6,463,759",
+          "578,999"
+        ]
+      },
+      "machine_readability": "이 PDF 는 텍스트레이어가 정상이라 VERIFIED_BY_IMAGE 경로를 쓰지 않았다 — 인용 페이지 텍스트밀도가 1,829~3,093자/페이지로 게이트의 image-only 반증 임계(800자/p)를 크게 넘는다. 위 present_markers 는 실제로 이 파일의 그 페이지에서 발견되며 게이트가 매 실행 재대조한다.",
+      "source_readback": "p131 [② 금리위험액 현황] 당기 열 Ⅲ.순자산가치 = 6,241,944 / 6,331,093 / 6,279,673 / 5,719,761 / 5,985,475 / 6,463,759 (백만원) → 마스터 item41~46 = 62,419.44 / 63,310.93 / 62,796.73 / 57,197.61 / 59,854.75 / 64,637.59 (억원) 과 정확 일치. Ⅳ.금리 위험액 = 578,999 백만원 → 마스터 item36 = 5,789.99 억원 과 정확 일치.",
+      "corroboration": {
+        "item36_side": [
+          "19_market 축에서 닫힘: item19 == sqrt(item36~40 · MARKET_M), 잔차 |rel| ≤ 0.0022% (교보 25.2Q -0.0042 / 신한 24.2Q -0.3312 · 24.4Q -0.2521 · 25.2Q -0.3338 · 25.4Q +0.4791)",
+          "원문 Ⅳ.금리 위험액 병합셀 값이 마스터 item36 과 백만원↔억원 환산까지 정확 일치"
+        ],
+        "scenario_side": [
+          "원문 Ⅲ.순자산가치 6개 열이 마스터 item41~46 과 정확 일치 (위 source_readback)"
+        ],
+        "control": "같은 식이 41-46 완비 226버킷 중 221건에서 닫힌다(97.8%) — 도출식·추출방식 자체는 정상이고 이 다섯 건만 재현되지 않는다"
+      },
+      "note": "이 (회사,분기)는 2026-08-21 에 INTERNAL_MODEL_36IRR_EXEMPT 에서 **해제된** 건이다. 그 면제의 등재사유('내부모형사 — 시나리오별 금리위험액 직접공시')는 raw 대조에서 거짓으로 확인됐고(같은 원장의 그 항목 참조), 해제로 드러난 잔차가 지금 이 항목이다. 덧붙여 KR0094 는 스스로 표준모형사라고 적는다(FY2025_Q4 p135). 식은 바꾸지 않았다. owner 제안(평균회귀 충격량도 0 절단)을 226버킷 전수로 재측정한 결과 현행 signed 식 221/226(97.8%) vs 0절단 123/226(54.4%), 판정이 갈리는 102건 중 100건이 '현행만 통과'다(0절단만 통과하는 2건은 바로 이 면제 대상 KR0094 2025.2Q·2025.4Q). 허용오차도 넓히지 않았다 — 잔차가 5~26% 라 어떤 합리적 tol 로도 덮이지 않는다.",
+      "cause": "UNEXPLAINED",
+      "cause_note": "2025.2Q 와 같다 — p131 에는 작성기준 주2 가 없고(주) 세부 작성요령 … 참조' 뿐) 잔차만 +14.92% 로 남는다.",
+      "expected_residual": {
+        "적용전": 863.8221082879018,
+        "적용후": 863.8221082879018
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 마스터에서 잔차를 두 컬럼 각각 재계산한다. item36 이나 41-46 중 한 칸이라도 바뀌면 잔차가 이동해 적용전은 룰엔진 36_irr RED(IRR_EXEMPTION_RESIDUAL_DRIFT), 적용후는 TRANSITION_AFTER_IRR_MISMATCH RED 로 되살아난다. 결측이 되면 IRR_EXEMPTION_INPUT_MISSING RED (결측은 SKIP 이 아니다). 잔차가 반대로 룰 허용오차 안으로 들어오면 IRR_EXEMPTION_INERT review 로 '등재를 풀어라'가 찍힌다.",
+      "registered_by": "owner 2026-08-21 documented exception (inbox/validation/20260821T1810Z__orchestrator__KR0073_KR0094__irr_derive_exempt_owner_approved.md). owner 는 룰을 YELLOW 로 강등하는 것을 명시적으로 거부했다 — 다른 모든 (회사,분기)에서 36_irr 은 RED 그대로다.",
+      "scope": "KR0073 2025.2Q + KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q 다섯 (회사,분기)의 36_irr 축, 적용전·적용후 두 컬럼뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 실측(2026-08-21, 라이브 마스터): 41-46 완비 226버킷 중 현행식 FAIL 은 정확히 이 다섯 건뿐이라 면제 범위 = 현 RED 범위다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR1000",
+      "quarter": "2023.2Q",
+      "claim": "발행사가 같은 필링에서 '경과조치 적용 전 보완자본' 을 두 값으로 인쇄한다 — 헤드라인 [경과조치 적용 전 지급여력비율 세부] 의 보완자본은 TFI 표의 **적용후** 컬럼과 같고, TFI 표의 **적용전** 컬럼은 자기 구성행(min(한도적용전,한도)+초과분)으로 정확히 닫힌다. 양쪽 다 원문 그대로이며 어느 쪽도 추출 오류가 아니다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+        "pages": [
+          8,
+          9
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+        "pages": [
+          8,
+          9
+        ],
+        "present_markers": [
+          "619,243",
+          "520,920",
+          "616,744",
+          "983,238"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. TFI 표(백만원): 보완자본 619,243 / 520,920 · 한도적용전 616,744 · 한도 983,238. 표 자체가 자기 공식으로 닫힌다. 헤드라인표(억원) 보완자본 = 5,209 로 TFI **적용후** 520,920/100 과 같다 — 즉 헤드라인의 '적용 전' 열이 실제로는 TFI 반영 후 수치다. 마스터 item3=5,209 · item51=619,243/100 로 양쪽 다 원문 그대로 적재돼 있어 고칠 셀이 없다. 잔차 -983.43 는 분기마다 다르다(TFI 재분류액 자체가 분기마다 달라서다) → 분기별로 따로 박았다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": -983.43
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR1000 2023.2Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR1000",
+      "quarter": "2023.3Q",
+      "claim": "발행사가 같은 필링에서 '경과조치 적용 전 보완자본' 을 두 값으로 인쇄한다 — 헤드라인 [경과조치 적용 전 지급여력비율 세부] 의 보완자본은 TFI 표의 **적용후** 컬럼과 같고, TFI 표의 **적용전** 컬럼은 자기 구성행(min(한도적용전,한도)+초과분)으로 정확히 닫힌다. 양쪽 다 원문 그대로이며 어느 쪽도 추출 오류가 아니다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2023_Q3/raw/KR1000_코리안리.pdf",
+        "pages": [
+          9
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2023_Q3/raw/KR1000_코리안리.pdf",
+        "pages": [
+          9
+        ],
+        "present_markers": [
+          "610,272",
+          "511,364",
+          "610,272",
+          "989,085"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. TFI 표(백만원): 보완자본 610,272 / 511,364 · 한도적용전 610,272 · 한도 989,085. 표 자체가 자기 공식으로 닫힌다. 헤드라인표(억원) 보완자본 = 5,114 로 TFI **적용후** 511,364/100 과 같다 — 즉 헤드라인의 '적용 전' 열이 실제로는 TFI 반영 후 수치다. 마스터 item3=5,114 · item51=610,272/100 로 양쪽 다 원문 그대로 적재돼 있어 고칠 셀이 없다. 잔차 -988.72 는 분기마다 다르다(TFI 재분류액 자체가 분기마다 달라서다) → 분기별로 따로 박았다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": -988.72
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR1000 2023.3Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR1000",
+      "quarter": "2023.4Q",
+      "claim": "발행사가 같은 필링에서 '경과조치 적용 전 보완자본' 을 두 값으로 인쇄한다 — 헤드라인 [경과조치 적용 전 지급여력비율 세부] 의 보완자본은 TFI 표의 **적용후** 컬럼과 같고, TFI 표의 **적용전** 컬럼은 자기 구성행(min(한도적용전,한도)+초과분)으로 정확히 닫힌다. 양쪽 다 원문 그대로이며 어느 쪽도 추출 오류가 아니다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2023_Q4/raw/KR1000_코리안리.pdf",
+        "pages": [
+          18,
+          19
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2023_Q4/raw/KR1000_코리안리.pdf",
+        "pages": [
+          18,
+          19
+        ],
+        "present_markers": [
+          "646,944",
+          "546,989",
+          "608,179",
+          "999,550"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. TFI 표(백만원): 보완자본 646,944 / 546,989 · 한도적용전 608,179 · 한도 999,550. 표 자체가 자기 공식으로 닫힌다. 헤드라인표(억원) 보완자본 = 5,470 로 TFI **적용후** 546,989/100 과 같다 — 즉 헤드라인의 '적용 전' 열이 실제로는 TFI 반영 후 수치다. 마스터 item3=5,470 · item51=646,944/100 로 양쪽 다 원문 그대로 적재돼 있어 고칠 셀이 없다. 잔차 -999.44 는 분기마다 다르다(TFI 재분류액 자체가 분기마다 달라서다) → 분기별로 따로 박았다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": -999.44
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR1000 2023.4Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR1000",
+      "quarter": "2024.1Q",
+      "claim": "발행사가 같은 필링에서 '경과조치 적용 전 보완자본' 을 두 값으로 인쇄한다 — 헤드라인 [경과조치 적용 전 지급여력비율 세부] 의 보완자본은 TFI 표의 **적용후** 컬럼과 같고, TFI 표의 **적용전** 컬럼은 자기 구성행(min(한도적용전,한도)+초과분)으로 정확히 닫힌다. 양쪽 다 원문 그대로이며 어느 쪽도 추출 오류가 아니다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q1/raw/KR1000_코리안리.pdf",
+        "pages": [
+          9,
+          10
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q1/raw/KR1000_코리안리.pdf",
+        "pages": [
+          9,
+          10
+        ],
+        "present_markers": [
+          "651,623",
+          "548,988",
+          "602,818",
+          "1,026,355"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. TFI 표(백만원): 보완자본 651,623 / 548,988 · 한도적용전 602,818 · 한도 1,026,355. 표 자체가 자기 공식으로 닫힌다. 헤드라인표(억원) 보완자본 = 5,490 로 TFI **적용후** 548,988/100 과 같다 — 즉 헤드라인의 '적용 전' 열이 실제로는 TFI 반영 후 수치다. 마스터 item3=5,490 · item51=651,623/100 로 양쪽 다 원문 그대로 적재돼 있어 고칠 셀이 없다. 잔차 -1026.23 는 분기마다 다르다(TFI 재분류액 자체가 분기마다 달라서다) → 분기별로 따로 박았다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": -1026.23
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR1000 2024.1Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR1000",
+      "quarter": "2024.2Q",
+      "claim": "발행사가 같은 필링에서 '경과조치 적용 전 보완자본' 을 두 값으로 인쇄한다 — 헤드라인 [경과조치 적용 전 지급여력비율 세부] 의 보완자본은 TFI 표의 **적용후** 컬럼과 같고, TFI 표의 **적용전** 컬럼은 자기 구성행(min(한도적용전,한도)+초과분)으로 정확히 닫힌다. 양쪽 다 원문 그대로이며 어느 쪽도 추출 오류가 아니다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q2/raw/KR1000_코리안리.pdf",
+        "pages": [
+          9,
+          10
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q2/raw/KR1000_코리안리.pdf",
+        "pages": [
+          9,
+          10
+        ],
+        "present_markers": [
+          "650,396",
+          "544,394",
+          "596,090",
+          "1,060,014"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. TFI 표(백만원): 보완자본 650,396 / 544,394 · 한도적용전 596,090 · 한도 1,060,014. 표 자체가 자기 공식으로 닫힌다. 헤드라인표(억원) 보완자본 = 5,444 로 TFI **적용후** 544,394/100 과 같다 — 즉 헤드라인의 '적용 전' 열이 실제로는 TFI 반영 후 수치다. 마스터 item3=5,444 · item51=650,396/100 로 양쪽 다 원문 그대로 적재돼 있어 고칠 셀이 없다. 잔차 -1059.96 는 분기마다 다르다(TFI 재분류액 자체가 분기마다 달라서다) → 분기별로 따로 박았다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": -1059.96
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR1000 2024.2Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR1000",
+      "quarter": "2024.3Q",
+      "claim": "발행사가 같은 필링에서 '경과조치 적용 전 보완자본' 을 두 값으로 인쇄한다 — 헤드라인 [경과조치 적용 전 지급여력비율 세부] 의 보완자본은 TFI 표의 **적용후** 컬럼과 같고, TFI 표의 **적용전** 컬럼은 자기 구성행(min(한도적용전,한도)+초과분)으로 정확히 닫힌다. 양쪽 다 원문 그대로이며 어느 쪽도 추출 오류가 아니다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q3/raw/KR1000_코리안리.pdf",
+        "pages": [
+          9,
+          10
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q3/raw/KR1000_코리안리.pdf",
+        "pages": [
+          9,
+          10
+        ],
+        "present_markers": [
+          "707,693",
+          "599,602",
+          "591,912",
+          "1,080,903"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. TFI 표(백만원): 보완자본 707,693 / 599,602 · 한도적용전 591,912 · 한도 1,080,903. 표 자체가 자기 공식으로 닫힌다. 헤드라인표(억원) 보완자본 = 5,996 로 TFI **적용후** 599,602/100 과 같다 — 즉 헤드라인의 '적용 전' 열이 실제로는 TFI 반영 후 수치다. 마스터 item3=5,996 · item51=707,693/100 로 양쪽 다 원문 그대로 적재돼 있어 고칠 셀이 없다. 잔차 -1080.92 는 분기마다 다르다(TFI 재분류액 자체가 분기마다 달라서다) → 분기별로 따로 박았다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": -1080.92
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR1000 2024.3Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR1000",
+      "quarter": "2024.4Q",
+      "claim": "같은 헤드라인표의 두 행이 서로 다른 기준으로 인쇄됐다 — 보완자본 8,953 은 TFI 표의 **적용전**(8,953.27)인데 `Ⅲ. 보완자본으로 재분류하는 항목` 7,863 은 TFI 표의 **적용후**(7,862.67)다. 양쪽 다 원문 그대로다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR1000_코리안리.pdf",
+        "pages": [
+          24
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR1000_코리안리.pdf",
+        "pages": [
+          24
+        ],
+        "present_markers": [
+          "895,327",
+          "786,267",
+          "762,784",
+          "1,090,597"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독(헤드라인·TFI 가 같은 p24). TFI(백만원): 기본자본 3,285,953 / 3,395,012 · 보완자본 895,327 / 786,267 · 한도적용전 762,784 / 433,609 · 한도 1,090,597. 헤드라인(억원): 기본자본 32,860 · 보완자본 8,953 · Ⅰ순자산 42,723 · Ⅱ불인정 910 · Ⅲ재분류 7,863. 다리 42,723 − 910 − 7,863 = 33,950 ≈ TFI **적용후** 기본자본 33,950.12 인데 공시 기본자본은 32,860 ≈ TFI **적용전** 32,859.53 이라 잔차가 정확히 −1,090 이다. 2023.2Q~2024.3Q 는 헤드라인이 적용후 기준이었는데 이 분기부터 보완자본만 적용전으로 넘어갔다 — 같은 자기모순의 거울상이다. 대조: 2024.3Q·2024.2Q 는 item13 == item3 로 닫힌다.",
+      "expected_residual": {
+        "2_tier1_bridge|적용전": -1090.0
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR1000 2024.4Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0075",
+      "quarter": "2024.4Q",
+      "claim": "TFI 표 자신의 `보완자본` 행이 자기 구성행(min(한도적용전,한도)+초과분)과 안 맞는다. 표 전체를 덤프해도 더 읽을 행이 없다 — `(기발행 신종자본증권)`·`(기발행 후순위채무)` 두 메모행이 둘 다 대시라 잔차를 메울 인쇄행이 존재하지 않는다. 숨은 공식도 아니다(잔차/초과분 비율이 6.2%→26.3%→20.1% 로 흔들려 상수가 아니다).",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+        "pages": [
+          49,
+          50
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+        "pages": [
+          49,
+          50
+        ],
+        "present_markers": [
+          "209,061",
+          "165,708",
+          "43,353",
+          "34,678",
+          "32,949"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 독립 재확인(parser iter-9 전체덤프와 일치). TFI 표 p50(백만원): 지급여력금액 209,061 · 기본자본 165,708 · 보완자본 43,353 · 한도적용전 34,678 · 한도 34,678 · 초과분 32,949 · 신종자본증권 '-' · 후순위채무 '-'. min(34,678, 34,678) + 32,949 = 67,627 ≠ 인쇄된 43,353. `item47 == item48` 은 두 셀을 잘못 읽은 지문이 아니다 — 채무성 자본이 0인 회사가 한도-체크 두 줄에 같은 숫자를 실제로 인쇄한다(좌표읽기·pixmap·전체덤프 3방법 확인). 그 잔차가 다리에도 나타난다: item51 − item47 = 86.75 ≈ 다리 잔차 87.",
+      "expected_residual": {
+        "2_tier1_bridge|적용전": 87.0,
+        "3_tier2_composition|적용전": -242.27,
+        "51_tfi_tier2_composition|적용전": -242.74
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR0075 2024.4Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0075",
+      "quarter": "2025.1Q",
+      "claim": "TFI 표 자신의 `보완자본` 행이 자기 구성행(min(한도적용전,한도)+초과분)과 안 맞는다. 표 전체를 덤프해도 더 읽을 행이 없다 — `(기발행 신종자본증권)`·`(기발행 후순위채무)` 두 메모행이 둘 다 대시라 잔차를 메울 인쇄행이 존재하지 않는다. 숨은 공식도 아니다(잔차/초과분 비율이 6.2%→26.3%→20.1% 로 흔들려 상수가 아니다).",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+        "pages": [
+          19,
+          20
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+        "pages": [
+          19,
+          20
+        ],
+        "present_markers": [
+          "211,756",
+          "170,878",
+          "40,878",
+          "34,759",
+          "30,450"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 독립 재확인. TFI 표 p20(백만원): 지급여력금액 211,756 · 기본자본 170,878 · 보완자본 40,878 · 한도적용전 34,759 · 한도 34,759 · 초과분 30,450 · 신종자본증권 '-' · 후순위채무 '-'. min(34,759, 34,759) + 30,450 = 65,209 ≠ 인쇄된 40,878. 이 필링은 페이지 전체가 두 번 찍히지만 라벨-값 짝은 안 깨진다(중복 제거 후 대조). 이 분기는 다리가 닫히므로 `2_tier1_bridge` 는 박제하지 않았다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": -243.09,
+        "51_tfi_tier2_composition|적용전": -243.31
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR0075 2025.1Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0087",
+      "quarter": "2025.2Q",
+      "claim": "헤드라인표가 **자기 각주 주1) 을 어긴다.** 주1) 은 '기본자본은 … 순자산에서 지급여력금액 불인정 항목(단, 보완자본 한도를 초과한 금액을 제외) 및 보완자본으로 재분류하는 항목을 차감한 금액' 이라고 써 놓고, 인쇄된 기본자본은 불인정항목 1,188 을 빼지 않았다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR0087_동양생명.pdf",
+        "pages": [
+          15,
+          16
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR0087_동양생명.pdf",
+        "pages": [
+          15,
+          16
+        ],
+        "present_markers": [
+          "1,411,796",
+          "2,754,428",
+          "1,210,705",
+          "1,543,723",
+          "866,138",
+          "기본자본은 건전성감독기준 재무상태표 상의 순자산에서 지급여력금액 불인정 항목"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. 헤드라인 p15(억원): Ⅰ순자산 33,001 (= 12,705 + 3,446 + 15,883 − 595 − 14,943 + 0 + 16,505, 자기 7행 합과 정확 일치) · Ⅱ불인정 1,188 · Ⅲ재분류 18,883 · 기본자본 14,118 · 보완자본 27,544. 33,001 − (1,188 − 0) − 18,883 = 12,930 ≠ 14,118 (잔차 +1,188 = 정확히 item12). 33,001 − 0 − 18,883 = 14,118 = 공시 기본자본(정확 일치). 기본자본은 TFI 표 p16 의 1,411,796/100 = 14,117.96 으로 다른 표에서도 확증된다. 대조군: 같은 발행사 2025.1Q(30,625−0−18,777=11,848) · 2024.4Q(35,559−0−19,119=16,440) 는 정확히 닫히고 둘 다 item12=0 이다 — item12≠0 인 이 분기만 깨진다. `TIER2_DUPLICATE_ROW`(47==48==1,210,705) 도 같은 뿌리다: 발행사가 `한도적용전` 자리에 `한도` 를 그대로 인쇄해 max(0, 47−48)=0 이 된다. 그 인쇄값으로 PRE composition 은 min(1,210,705, 1,210,705) + 1,543,723 = 2,754,428 = 보완자본_전 으로 **정확히** 닫히므로 우리 추출은 원문 그대로다.",
+      "expected_residual": {
+        "2_tier1_bridge|적용전": 1188.0,
+        "47_tier2_census|적용전": null
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR0087 2025.2Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0003",
+      "quarter": "2024.4Q",
+      "claim": "TFI 표의 **적용전 컬럼만** 자기 구성행과 301백만원 어긋난다. 적용후 컬럼은 정확히 닫힌다. 인쇄된 숫자만으로 산수가 완결되므로 재추출로 바뀔 수 있는 것이 없다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR0003_롯데손해보험.pdf",
+        "pages": [
+          59,
+          60
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q4/raw/KR0003_롯데손해보험.pdf",
+        "pages": [
+          59,
+          60
+        ],
+        "present_markers": [
+          "2,730,081",
+          "2,803,038",
+          "869,948",
+          "1,084,663",
+          "1,933,391",
+          "2,757,668",
+          "824,278"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. TFI 표 p60(백만원): 보완자본 2,803,038 / 2,757,668 · 한도적용전 869,948 / 824,278 · 한도 1,084,663 · 초과분 1,933,391. 적용전 869,948 + 1,933,391 = 2,803,339 vs 인쇄 2,803,038 (−301). 적용후 824,278 + 1,933,391 = 2,757,669 vs 인쇄 2,757,668 (−1, 반올림). 대조군: 같은 발행사 2025.1Q 는 870,735 + 1,753,563 = 2,624,298 로 **정확히** 닫힌다. 헤드라인 보완자본 28,030 은 TFI 적용전 28,030.38 과 같으므로 '두 표가 다른 값' 계열이 아니라 '표 자신이 안 닫힘' 계열이다. NH농협과 달리 잔차 3.01억을 설명하는 다른 인쇄행이 없다 — 신종 45,370 + 후순위 822,410 = 867,780 은 어느 쪽과도 안 맞는다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": -3.39,
+        "51_tfi_tier2_composition|적용전": -3.01
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR0003 2024.4Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0003",
+      "quarter": "2025.1Q",
+      "claim": "헤드라인표 안에서 `Ⅲ. 보완자본으로 재분류하는 항목` 만 나머지 행과 1,205억 어긋난다. 나머지 입력은 전부 독립 확증이 있고, 같은 발행사의 이웃 분기는 같은 식으로 정확히 닫힌다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q1/raw/KR0003_롯데손해보험.pdf",
+        "pages": [
+          18,
+          19
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q1/raw/KR0003_롯데손해보험.pdf",
+        "pages": [
+          18,
+          19
+        ],
+        "present_markers": [
+          "2,389,453",
+          "(234,845)",
+          "2,624,298",
+          "870,735",
+          "1,175,909",
+          "1,753,563"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. 헤드라인 p18(억원): Ⅰ순자산 15,657 (= 6,390 + 454 + 3,837 + 504 − 6,128 + 0 + 10,600, 자기 7행 합과 정확 일치) · Ⅱ불인정 8 · Ⅲ재분류 19,202 · 기본자본 (2,348) · 보완자본 26,243. 15,657 − 8 − 19,202 = −3,553 vs 공시 −2,348 → 잔차 +1,205. 기본자본은 TFI 표 p19 의 (234,845)/100 = −2,348.45 로 다른 표에서도 확증된다. TFI 표는 자기 공식으로 닫힌다: min(870,735, 1,175,909) + 1,753,563 = 2,624,298 = 보완자본. 대조군: 같은 발행사 2024.3Q(21,670−14−20,121=1,535) · 2024.4Q(19,095−19−19,806=−730) · 2026.1Q(19,208−23−23,147=−3,962) 는 전부 정확히 닫힌다 — 이 분기만 안 닫힌다.",
+      "expected_residual": {
+        "2_tier1_bridge|적용전": 1205.0
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR0003 2025.1Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0003",
+      "quarter": "2026.1Q",
+      "claim": "발행사가 **전기(2025.4Q) TFI 표를 그대로 재게시했다.** 같은 필링 안에서 TFI 표가 헤드라인의 직전분기 열과 소수점까지 일치하고 당분기 열과는 다르다. 이 버킷의 RED 5건은 전부 이 한 원인이다.",
+      "claim_kind": "ISSUER_STALE_REPUBLISHED_TABLE",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf",
+        "pages": [
+          21,
+          22
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf",
+        "pages": [
+          21,
+          22
+        ],
+        "present_markers": [
+          "2,605,850",
+          "(387,514)",
+          "2,993,363",
+          "836,625",
+          "1,033,534",
+          "2,067,069"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. 헤드라인 p21(억원) 당분기(2026.1Q): 지급여력금액 26,955 · 기본자본 (3,962) · 보완자본 30,918 · 지급여력기준금액 20,432. 직전분기(2025.4Q): 26,058 · (3,875) · 29,934 · 20,671. TFI 표 p22(백만원): 2,605,850 · (387,514) · 2,993,363 · 2,067,069 = 26,058.50 / −3,875.14 / 29,933.63 / 20,670.69 — **직전분기 열과 일치**한다. 그래서 `TIER2_LIMIT_STALE` 도 같은 뿌리다: item48 = 10,335.34 = **직전분기** item14 20,671 × 50% 이고 당분기 20,432 × 50% = 10,216 이 아니다. parser iter-8 이 2025.4Q p77 표와의 전면 대조로 같은 결론을 냈고(전 항목 동일, 바뀐 건 헤드라인 비율 126.06%→131.93% 뿐) 이번에 독립 재확인했다. 마스터는 raw 와 정확히 일치한다. || 2026-08-24 (iter-7) 핀 2개 제거(50_tfi_tier_split|적용전 896.51 · 50_tfi_tier_split_post|적용후 −896.51). 축 E 의 comparand 가 item1(헤드라인)에서 item52(TFI 표 자신의 지급여력금액 행)로 승격되면서 이 버킷은 그 축에서 정확히 닫힌다 — 재게시된 전기 표는 자기 안에서 일관되기 때문이다(item52 26,058.50 = item50 −3,875.14 + item51 29,933.63). 게이트가 TIER2_EXEMPTION_INERT review 로 먼저 알려 줬고, 재게시 사실 자체는 3_tier2_composition·TIER2_LIMIT_STALE 이 그대로 잡으므로 사각이 생기지 않는다. 죽은 핀을 남기면 다음 세션이 '그 축도 면제돼 있다'고 잘못 읽는다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": 984.36,
+        "47_tier2_census|적용전": null,
+        "47_tier2_census_post|적용후": null
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
+      "scope": "KR0003 2026.1Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0032",
+      "quarter": "2025.4Q",
+      "claim": "이 발행사는 `보완자본 한도 적용 전`(item47)을 **후순위채무를 제외한** 기준으로 인쇄하고, 그만큼을 같은 표의 메모행 `(기발행 후순위채무)`(item54)로 따로 적는다. 그래서 표는 `47 + 49 + 54 = 보완자본` 으로 마지막 자리까지 닫히는데 우리 공통식 `min(47,48) + 49` 는 정확히 item54 만큼 모자란다. **전사 공식으로 고칠 수 없다** — 전수 시뮬레이션 결과 `+item54` 를 강제하면 새로 닫히는 것은 이 1버킷뿐이고 218버킷이 새로 깨진다(대다수 회사는 item47 이 이미 후순위채무를 포함한다).",
+      "claim_kind": "ISSUER_TABLE_COMPOSITION_VARIANT",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q4/raw/KR0032_NH농협손해보험.pdf",
+        "pages": [
+          46
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q4/raw/KR0032_NH농협손해보험.pdf",
+        "pages": [
+          46
+        ],
+        "present_markers": [
+          "1,240,112",
+          "697,899",
+          "801,952",
+          "447,254",
+          "94,959"
+        ]
+      },
+      "note": "validation 2026-08-24 (iter-7). raw p46 (단위 백만원): 보완자본 1,240,112 / 1,240,112 · 보완자본 한도 적용 전 697,899 / 602,940 · 보완자본 한도 801,952 / 801,952 · 해약환급금…초과분 447,254 / 447,254 · (기발행 신종자본증권) − · (기발행 후순위채무) 94,959. 697,899 + 447,254 + 94,959 = 1,240,112 로 인쇄된 보완자본과 마지막 자리까지 일치한다. 두 번째 해석도 같은 결론을 준다: 697,899 + 94,959 = 792,858 < 한도 801,952 라 '한도 적용 전을 후순위채무 제외 기준으로 적는다' 로 읽어도 표가 닫힌다. 어느 쪽인지는 원문만으로 확정 불가지만 **둘 다 발행사 표 구성의 문제이지 우리 추출 오류가 아니다** — 마스터의 47/48/49/51/54 다섯 값 전부 raw 와 정확히 일치한다(parser iter-10 이 좌표로, validation 이 텍스트 덤프로 각각 확인). 잔차 949.59 는 item54 와 **1원 단위로 같다**. iter-6 에는 '우리 식에 항이 빠졌다'고 보고 등재를 거부했는데, item54 가 적재된 뒤 전수 시뮬(450버킷: 새로 닫힘 1 · 새로 깨짐 218)이 그 판단을 반증했다 — 공통식이 아니라 이 발행사의 관행이다. 판단을 뒤집은 근거를 그대로 남긴다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": 949.47,
+        "51_tfi_tier2_composition|적용전": 949.59
+      },
+      "pin_tolerance": 0.01,
+      "release_condition": "박제 셀에 item54(949.59)·47·48·49·51·52·53 을 포함시켰다. 발행사가 표 구성을 바꾸거나 item54 가 움직이면 TIER2_EXEMPTION_INPUT_DRIFT RED, 결측이 되면 TIER2_EXEMPTION_INPUT_MISSING RED 로 **자동 해제**된다. 잔차가 움직이면 TIER2_EXEMPTION_RESIDUAL_DRIFT RED. 매 실행 재검산된다.",
+      "not_a_blanket_skip": "게이트는 매 실행 두 겹을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / ..._INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내는지 재확인(..._RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "orchestrator 발주 2026-08-24 (iter-7) — 'NH농협 2025.4Q 는 공식 수정이 아니라 잔차 박제형 documented exception 이다. 해제조건은 발행사가 표 구성을 바꾸거나 item54 가 변하면 자동 RED'.",
+      "scope": "KR0032 2025.4Q 의 위 두 축뿐. 같은 회사 2024.3Q(다리 잔차 −522)는 사유가 다르고 미조사라 **RED 로 남긴다**. 다른 (회사,분기)로 넓히지 않는다."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0003",
+      "quarter": "2023.1Q",
+      "claim": "한 필링 안에서 두 표가 '경과조치 적용 전 보완자본' 을 17,812(헤드라인)와 17,830(TFI 표)으로 다르게 인쇄하고, TFI 표의 **적용전 컬럼만** 자기 합계행과 안 닫힌다(8,034 + 17,830 = 25,864 vs 인쇄된 지급여력금액 25,846). 같은 표의 적용후 컬럼은 정확히 닫힌다(8,469 + 17,377 = 25,846). 양쪽 다 원문 그대로이며 어느 쪽도 추출 오류가 아니다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2023_Q1/raw/KR0003_롯데손해보험.pdf",
+        "pages": [
+          9,
+          10
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2023_Q1/raw/KR0003_롯데손해보험.pdf",
+        "pages": [
+          9,
+          10
+        ],
+        "present_markers": [
+          "17,812",
+          "17,830",
+          "25,846",
+          "8,034",
+          "8,469",
+          "4,085",
+          "9,385",
+          "13,746",
+          "22,293",
+          "14,248"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz 직접 판독(티켓 iter-6 수치를 베끼지 않고 독립 재현). p9 헤드라인(억원): 지급여력금액 25,846 = 기본자본 8,034 + 보완자본 17,812 — 헤드라인은 자기 안에서 닫힌다(보완자본이 25,846-8,034 로 역산된 값이다). p10 TFI 표(이 발행사는 이 표도 **억원**): 25,846/25,846 · 기본 8,034/8,469 · 보완 17,830/17,377 · 한도적용전 4,085/3,631 · 한도 9,385/9,385 · 초과분 13,746/13,746 · (신종) 454 · (후순위) 3,583. 세 축이 같은 18~19 를 가리키고 **부호가 정확히 반대**로 갈린다: 다리 +19(22,293-30-14,248=8,015 vs 8,034) · 구성 -19(min(4,085,9,385)+13,746=17,831 vs 17,812) · TFI 분할 -18. 순자산은 독립 확증됨(6,902+454+4,788-10+3,538+6,621=22,293, 자기 6행 합 정확). 계산값 25,864 는 문서 전체 검색에서 **0회** — 표에 숨은 행이 있어서 닫히는 것이 아니다. 마스터는 양쪽을 원문 그대로 싣고 있어 고칠 셀이 없다.",
+      "expected_residual": {
+        "2_tier1_bridge|적용전": 19.0,
+        "3_tier2_composition|적용전": -19.0,
+        "50_tfi_tier_split|적용전": -18.0
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (2차) — 3건(예별손해 2025.1Q · BNP카디프 2024.3Q · 롯데손해 2023.1Q)은 이미 raw 로 확증돼 있었으나 1차 위임 목록 밖이라 두 라운드를 RED 로 버텼고, owner 가 '나머지는 원수사 모순 그대로 가자' 로 등재를 승인했다. 한화생명 2025.2Q 는 owner 가 raw 를 직접 열어 보고 별도로 결정했다(status=VERIFIED_BY_OWNER).",
+      "scope": "KR0003 2023.1Q 의 위 세 축(적용전)뿐. **적용후는 면제하지 않는다** — 그 컬럼은 실제로 닫히므로 사각이 생기지 않는다. 다른 (회사,분기)로 넓히지 않는다.",
+      "release_condition": "박제 셀(1·2·3·4·12·13·47·48·49·50·51·52·53·54) 중 하나라도 움직이거나 결측이 되면 자동 RED. 세 축 중 하나라도 잔차가 tol 0.01 을 벗어나면 자동 RED. 발행사가 정정공시로 두 표를 일치시키면 INERT review."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0075",
+      "quarter": "2024.3Q",
+      "claim": "TFI 표(1) 공통적용 경과조치의 `보완자본` 행이 자기 구성행과 안 닫힌다 — min(한도적용전 31,614, 한도 31,614) + 초과분 23,584 = 55,198 인데 인쇄된 보완자본은 33,067 이다. 잔차를 메울 인쇄행이 존재하지 않는다: (기발행 신종자본증권)·(기발행 후순위채무)가 **둘 다 대시**다. `item47 == item48` 도 두 셀을 잘못 읽은 것이 아니라 발행사가 같은 숫자를 두 줄에 실제로 인쇄한 것이다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+        "pages": [
+          15,
+          16
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+        "pages": [
+          15,
+          16
+        ],
+        "present_markers": [
+          "31,614",
+          "23,584",
+          "33,067",
+          "206,824",
+          "173,757",
+          "2,069",
+          "2,098",
+          "331"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz 직접 판독. **이 버킷은 iter-6 에 '증거가 2024.4Q·2025.1Q 와 동일한데 owner 위임 목록 밖' 이라는 이유만으로 등재하지 않고 RED 로 남겨 뒀던 건이다**(면제를 스스로 넓히지 않는다는 원칙). 2026-08-24 위임됐다. p16 TFI(백만원): 보완자본 33,067/33,067 · 한도적용전 31,614/31,614 · 한도 31,614/31,614 · 초과분 23,584/23,584 · (신종) - · (후순위) - · 지급여력금액 206,824 · 기본자본 173,757. TFI 표의 tier 분할 자체는 정확히 닫힌다(173,757 + 33,067 = 206,824) — 깨지는 것은 보완자본 **구성**뿐이다. p15 헤드라인(억원)도 자기 안에서 닫힌다(2,069 = 1,738 + 331). 다리만 +15 어긋난다(2,098 - 44 - 331 = 1,723 vs 인쇄된 기본자본 1,738) — 2024.4Q 의 +87 과 같은 모양이다. 잔차/초과분 비율이 3분기에 걸쳐 6.2% -> 26.3% -> 20.1% 로 흔들려 상수가 아니다 — 표에 없는 행을 가정해 채우지 않는다.",
+      "expected_residual": {
+        "2_tier1_bridge|적용전": 15.0,
+        "3_tier2_composition|적용전": -220.98,
+        "51_tfi_tier2_composition|적용전": -221.31,
+        "47_tier2_census|적용전": null,
+        "47_tier2_census|적용후": null
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (2차) — 3건(예별손해 2025.1Q · BNP카디프 2024.3Q · 롯데손해 2023.1Q)은 이미 raw 로 확증돼 있었으나 1차 위임 목록 밖이라 두 라운드를 RED 로 버텼고, owner 가 '나머지는 원수사 모순 그대로 가자' 로 등재를 승인했다. 한화생명 2025.2Q 는 owner 가 raw 를 직접 열어 보고 별도로 결정했다(status=VERIFIED_BY_OWNER).",
+      "scope": "KR0075 2024.3Q 의 위 다섯 축뿐. census 2건은 잔차 없는 플래그로 박았으므로 diff 가 생기면 축의 성격이 바뀐 것으로 보고 자동 RED. 다른 분기로 넓히지 않는다.",
+      "release_condition": "박제 셀(1·2·3·4·12·13·47·48·49·50·51·52) 중 하나라도 움직이거나 결측이 되면 자동 RED. 발행사가 (신종)·(후순위) 메모행에 값을 채워 잔차가 설명되면 잔차가 움직여 자동 RED."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0004",
+      "quarter": "2025.1Q",
+      "claim": "헤드라인표와 TFI 표가 **합계는 같은데 tier 분할만 다르게** 인쇄한다. 헤드라인(억원) 지급여력금액 △1,651 = 기본자본 △2,648 + 보완자본 997 인데, TFI 표(백만원)는 지급여력금액 △165,099 = 기본자본 △165,099 + 보완자본 0 으로 적어 보완자본 997억을 기본자본 쪽에 통째로 합쳤다. 합계(△1,651 vs △1,650.99)는 일치한다. 양쪽 다 원문 그대로다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf",
+        "pages": [
+          16,
+          17
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf",
+        "pages": [
+          16,
+          17
+        ],
+        "present_markers": [
+          "△165,099",
+          "537,868",
+          "△1,651",
+          "△2,648",
+          "997"
+        ]
+      },
+      "note": "validation 2026-08-24 fitz 직접 판독(iter-7 면제 초안을 독립 재현). 자본잠식사라 기본자본이 음수인데, TFI 표는 그 상태에서 tier 를 나누지 않고 한 줄로 적었다. **다른 축은 전부 정확히 닫힌다**: TFI 구성식 item51 = 0 = min(0, 5,378.68) + 0 · 다리도 통과(△2,629 - 0 - 19 = △2,648 = 인쇄된 기본자본). 남는 RED 는 3_tier2_composition 1건뿐이고 잔차가 **정확히 헤드라인 보완자본 997** 이다 — 즉 '보완자본이 997억 있다고 말하는 표' 와 '0 이라고 말하는 표' 가 한 필링 안에 같이 있다. 한도 537,868 은 SCR 과 맞는다(item14_전 10,757 x 50% = 5,378.5 ~= 5,378.68). 고칠 셀이 없다.",
+      "expected_residual": {
+        "3_tier2_composition|적용전": 997.0
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (2차) — 3건(예별손해 2025.1Q · BNP카디프 2024.3Q · 롯데손해 2023.1Q)은 이미 raw 로 확증돼 있었으나 1차 위임 목록 밖이라 두 라운드를 RED 로 버텼고, owner 가 '나머지는 원수사 모순 그대로 가자' 로 등재를 승인했다. 한화생명 2025.2Q 는 owner 가 raw 를 직접 열어 보고 별도로 결정했다(status=VERIFIED_BY_OWNER).",
+      "scope": "KR0004 2025.1Q 의 3_tier2_composition(적용전) 한 축뿐. 다른 축·분기로 넓히지 않는다.",
+      "release_condition": "박제 셀(1·2·3·4·12·13·47·48·49·50·51·53·54) 중 하나라도 움직이거나 결측이 되면 자동 RED. 잔차가 997.00 에서 tol 0.01 을 벗어나면 자동 RED. 발행사가 TFI 표에도 tier 를 나눠 적으면 INERT review 로 '등재를 풀어라'."
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0068",
+      "quarter": "2025.2Q",
+      "claim": "기본자본 다리가 각주 주2)의 정의로 닫히지 않는데 **원문 어디에도 그 차액에 해당하는 항목이 인쇄돼 있지 않다.** 213,475 - 30,921 - 100,874 = 81,680 인데 인쇄된 기본자본은 82,506 이다(차 826). 인과는 규명되지 않았다 — 이 항목은 '발행사 자기모순을 산수로 증명' 한 것이 아니라 **owner 가 원문을 직접 열어 보고 설명이 없음을 확인한 뒤 원문 그대로 오차를 용인하기로 결정** 한 것이다.",
+      "claim_kind": "ISSUER_UNEXPLAINED_RESIDUAL_OWNER_ACCEPTED",
+      "status": "VERIFIED_BY_OWNER",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR0068_한화생명.pdf",
+        "pages": [
+          17,
+          18
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR0068_한화생명.pdf",
+        "pages": [
+          17,
+          18
+        ],
+        "present_markers": [
+          "213,475",
+          "30,921",
+          "100,874",
+          "82,506",
+          "139,303",
+          "221,809",
+          "14,012,828",
+          "13,930,253",
+          "8,250,615",
+          "22,180,868",
+          "6,930,699",
+          "6,999,555"
+        ]
+      },
+      "owner_confirmation": {
+        "read_by": "owner",
+        "date": "2026-08-24",
+        "what_was_read": "data/disclosure/FY2025_Q2/raw/KR0068_한화생명.pdf p17 [경과조치 적용 전 지급여력비율 세부] 와 주2) 각주 원문",
+        "verdict": "차이가 있는 건 사실인데 원문이 그렇게 적혀 있고 별다른 언급은 없다. 원문대로 오차 용인하고 처리한다.",
+        "open_lead": "item51(경과조치표 보완자본) 후 140,128.28 - 전 139,302.53 = 825.75 로 필요 잔차 826.00 과 반올림 오차 이내다. **설명이 아니다** — 우연일 수 있고 owner 도 원인을 못 찾았다. 이 관계가 규명되면 등재를 재검토한다.",
+        "open_ticket": "inbox/validation/20260824T0410Z__validation__KR0068_2025.2Q__tier1_bridge_residual_unexplained.md (status: open 유지 — 면제는 push 를 푼 것이지 원인을 닫은 것이 아니다)"
+      },
+      "note": "validation 2026-08-24 fitz 독립 판독으로 owner 가 본 숫자를 재확인했다. p17(억원): 지급여력금액 221,809 = 기본자본 82,506 + 보완자본 139,303(헤드라인은 자기 안에서 닫힌다) · Ⅰ 순자산 213,475 · Ⅱ 불인정 30,921 · Ⅲ 재분류 100,874. 순자산도 자기 구성행 합과 맞는다(48,289+30,685+85,295-8,459-26,801+36,220+48,247 = 213,476, 반올림 1). p18 TFI(백만원): 22,180,868/22,263,443 · 기본 8,250,615/8,250,615 · 보완 13,930,253/14,012,828 · 한도적용전 14,012,828 · 한도 6,930,699 · 초과분 6,999,555 — 마스터와 전부 일치한다. TFI 구성식도 닫힌다(6,930,699 + 6,999,555 = 13,930,254 vs 13,930,253, 반올림 1). **잔차가 두 개로 읽힌다 — 각주 괄호(보완자본 한도 초과액 제외)의 해석 차이다.** ① 한도초과=0 으로 읽으면 +826.00(owner 에게 제시된 숫자) · ② 룰이 실제로 쓰는 읽기 한도초과=min(item47-item48, item12)=min(70,821.29, 30,921)=30,921 로 읽으면 -30,095.00(branch=CAPPED). **박제는 룰이 내는 값(-30,095.00)이어야 재검산이 성립한다** — 826 을 박으면 등재 즉시 RESIDUAL_DRIFT RED 가 되어 면제가 아예 성립하지 않는다(실측 확인). 두 숫자는 같은 축의 같은 불일치를 다른 각주 해석으로 잰 값이다. **어느 해석에서도 826/30,095 에 해당하는 항목은 원문에 없다.**",
+      "expected_residual": {
+        "2_tier1_bridge|적용전": -30095.0
+      },
+      "expected_residual_alt_reading": {
+        "2_tier1_bridge|적용전|한도초과=0": 826.0,
+        "_why": "owner 에게 제시된 숫자는 이쪽이다. 룰은 각주 괄호를 문자 그대로 읽어 한도초과를 item12 로 클램프하므로 실제 emit 되는 diff 는 -30,095.00 이다. 두 값을 다 적어 두지 않으면 다음 세션이 '박제값이 발주와 다르다' 로 읽는다."
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+      "registered_by": "owner 위임 2026-08-24 (2차) — 3건(예별손해 2025.1Q · BNP카디프 2024.3Q · 롯데손해 2023.1Q)은 이미 raw 로 확증돼 있었으나 1차 위임 목록 밖이라 두 라운드를 RED 로 버텼고, owner 가 '나머지는 원수사 모순 그대로 가자' 로 등재를 승인했다. 한화생명 2025.2Q 는 owner 가 raw 를 직접 열어 보고 별도로 결정했다(status=VERIFIED_BY_OWNER).",
+      "scope": "KR0068 2025.2Q 의 2_tier1_bridge(적용전) 한 축뿐. **인과 미규명이므로 다른 회사·분기에 같은 사유를 적용하지 않는다** — 이 status 는 선례가 아니다.",
+      "release_condition": "다리 입력 4칸(item2·4·12·13) 중 하나라도 움직이거나 결측이 되면 자동 RED. 갈래를 정하는 item47·48 과 미규명 단서 item51(전·후)도 박았으므로 그쪽이 움직여도 자동 RED. 갈래가 CAPPED 에서 벗어나면 flag 대조가 RESIDUAL_DRIFT 로 잡는다. **인과가 규명되면(티켓 20260824T0410Z) 등재를 재검토한다.**"
+    },
+    {
+      "registry": "_TIER2_ISSUER_INCONSISTENT",
+      "company": "KR0032",
+      "quarter": "2024.3Q",
+      "claim": "발행사가 같은 페이지에 자기 각주 공식과 그 공식을 만족하지 않는 숫자를 함께 인쇄한다. p12 주2) 가 '기본자본 = 순자산 − 불인정항목(보완자본 한도 초과액 제외) − 보완자본 재분류' 라고 정의하는데, 같은 표의 인쇄값으로 계산하면 23,478 − 0 − 8,867 = 14,611 이고 인쇄된 기본자본은 14,089 다(차 522). 다리가 닫히려면 한도초과 = −522 여야 하는데 '한도를 초과한 금액'은 음수일 수 없고, 불인정항목(Ⅱ)이 0 이라 −522 가 식에 들어갈 자리가 없다. 마스터는 양쪽 다 원문 그대로 적재돼 있어 고칠 셀이 없다.",
+      "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2024_Q3/raw/KR0032_NH농협손해보험_amended.pdf",
+        "pages": [
+          12,
+          13
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2024_Q3/raw/KR0032_NH농협손해보험_amended.pdf",
+        "pages": [
+          12,
+          13
+        ],
+        "present_markers": [
+          "14,089",
+          "23,478",
+          "8,867",
+          "1,408,851",
+          "1,037,828",
+          "579,111",
+          "886,613"
+        ]
+      },
+      "note": "orchestrator 2026-08-24 fitz 텍스트 직접 판독. p12 = [경과조치 적용 전 지급여력비율 세부] 헤드라인표(억원): 기본자본주2) 14,089 · 순자산(1+2+3+4+5+6+7) 23,478 · Ⅲ.보완자본 재분류 8,867. p13 = [지급여력비율의 경과조치 적용에 관한 사항] TFI 표(백만원): 기본자본 1,408,851 / 1,408,851 · 보완자본 1,037,828 / 1,037,828 · 한도적용전 579,111 · 한도 886,613. TFI 표는 전·후가 동일해 이 잔차와 무관하다 — 문제는 헤드라인표가 자기 각주 공식을 안 지키는 것이다. 후보 전부 반증: item54 후순위채무 988.61(차 −1,510.61) · item49 초과분 8,866.13(차 −9,388.13) · max(47−48,0)=0(차 −522). 같은 회사 2025.4Q 는 필요 초과 0 으로 정확히 닫힌다 — 이 분기만의 현상이다. owner 결정(2026-08-24): '나머지는 원수사 모순 그대로 가자'.",
+      "expected_residual": {
+        "2_tier1_bridge|적용전": -522.0
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "게이트는 매 실행 박제 셀(item2/4/12/13 등)을 마스터에서 다시 읽어 대조하고, 그 축이 실제로 이 잔차의 RED 를 내고 있는지도 확인한다. 한 칸이라도 움직이면 TIER2_EXEMPTION_INPUT_DRIFT / RESIDUAL_DRIFT RED 로 되살아나고, RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라'가 뜬다.",
+      "release_condition": "item2/4/12/13 중 한 칸이라도 변하거나, 발행사가 정정공시로 522 의 정체를 밝히면 등재를 푼다."
+    }
+  ],
+  "_residual_pin_contract": "일부 면제는 '이 셀을 보지 마라'가 아니라 '이 잔차인 동안만 차단하지 마라'다(_LIFE8_ISSUER_INCONSISTENT). 기대잔차를 값으로 박제하고 게이트가 매 실행 마스터에서 재계산한다 — 잔차가 tol을 벗어나면 LIFE8_EXEMPTION_RESIDUAL_DRIFT RED, 입력이 결측이면 LIFE8_EXEMPTION_INPUT_MISSING RED. blanket skip은 그 셀을 영구 사각지대로 만들기 때문에 금지."
 }

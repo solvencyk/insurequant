@@ -14,1013 +14,60 @@
     },
     "source": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\dart\\viz\\csm_waterfall.json",
     "period": "annual (fiscal 2024 reporting)",
-    "built_at": "2026-08-21T09:16:40Z",
+    "built_at": "2026-08-21T13:33:19Z",
     "build_script": "scripts/validate_csm_waterfall.py",
+    "ifrs17_effective_fiscal_year": 2023,
     "companies_total": 47,
-    "companies_pass": 29,
-    "companies_fail": 18,
-    "new_business_fail": 8,
-    "must_reparse_count": 8,
-    "needs_reparse_loop": true,
-    "needs_reparse_for_new_business": true
+    "companies_excluded_pre_ifrs17": 6,
+    "companies_in_scope": 41,
+    "companies_pass": 41,
+    "companies_fail": 0,
+    "new_business_fail": 0,
+    "must_reparse_count": 0,
+    "needs_reparse_loop": false,
+    "needs_reparse_for_new_business": false
   },
-  "new_business_failed": [
+  "excluded_pre_ifrs17": [
     {
       "company": "라이나생명보험",
       "rcept_no": "20230414000060",
-      "waterfall_status": "no_csm_columns",
-      "caption": "회사가 2022년 12월 31일 기준 보험부채에 대해 기업회계기준 제1117호를 적용할 경우 보험계약자산 및 보험계약부채는 각각 231,934백만원, 397,454백만원으로 평가됩니다(단위: 백만원).",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
+      "fiscal_year": 2022,
+      "reason": "annual filing covers FY2022, before IFRS17's 2023-01-01 effective date — no rollforward existed to disclose"
     },
     {
       "company": "메트라이프생명보험",
       "rcept_no": "20230407003159",
-      "waterfall_status": "no_csm_columns",
-      "caption": "3) 보험부채 관련 재무영향당사가 2022년 12월 31일 기준 보험부채에 대해 기업회계기준서 제1117호를 적용할 경우 보험계약자산 및 보험계약부채는 각각 18,206백만원, 15,192,494백만원으로 평가됩니다.",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
+      "fiscal_year": 2022,
+      "reason": "annual filing covers FY2022, before IFRS17's 2023-01-01 effective date — no rollforward existed to disclose"
     },
     {
       "company": "아이비케이연금보험",
       "rcept_no": "20230407000580",
-      "waterfall_status": "no_csm_columns",
-      "caption": "(5) 보고기간 중 기타포괄손익인식채무증권의 손실충당금(*) 변동내역은 다음과 같습니다(단위:천원).<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
+      "fiscal_year": 2022,
+      "reason": "annual filing covers FY2022, before IFRS17's 2023-01-01 effective date — no rollforward existed to disclose"
     },
     {
       "company": "에이아이에이생명보험",
       "rcept_no": "20230410002773",
-      "waterfall_status": "no_csm_columns",
-      "caption": "당기 및 전기 중 유형자산의 변동내역은 다음과 같습니다.",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
+      "fiscal_year": 2022,
+      "reason": "annual filing covers FY2022, before IFRS17's 2023-01-01 effective date — no rollforward existed to disclose"
     },
     {
       "company": "처브라이프생명보험",
       "rcept_no": "20230412002541",
-      "waterfall_status": "no_csm_columns",
-      "caption": "",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
+      "fiscal_year": 2022,
+      "reason": "annual filing covers FY2022, before IFRS17's 2023-01-01 effective date — no rollforward existed to disclose"
     },
     {
       "company": "하나생명보험",
       "rcept_no": "20230331001232",
-      "waterfall_status": "no_csm_columns",
-      "caption": "17-2 당기 및 전기 중 보험계약부채의 변동내역은 다음과 같습니다.17-2-1 보험료적립금<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "하나생명보험",
-      "rcept_no": "20240329000112",
-      "waterfall_status": "no_stage_match",
-      "caption": "13-3 보험료배분접근법을 적용한 보험계약 이외의 보험계약에 대하여 다음 사항에 대한 기초잔액에서 보고기간말잔액까지의 차이조정은 다음과 같습니다.(1) 보험<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_stage_match",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "하나생명보험",
-      "rcept_no": "20260325000201",
-      "waterfall_status": "no_stage_match",
-      "caption": "(2) 재보험 <당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_stage_match",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
+      "fiscal_year": 2022,
+      "reason": "annual filing covers FY2022, before IFRS17's 2023-01-01 effective date — no rollforward existed to disclose"
     }
   ],
-  "must_reparse": [
-    {
-      "company": "라이나생명보험",
-      "rcept_no": "20230414000060",
-      "waterfall_status": "no_csm_columns",
-      "caption": "회사가 2022년 12월 31일 기준 보험부채에 대해 기업회계기준 제1117호를 적용할 경우 보험계약자산 및 보험계약부채는 각각 231,934백만원, 397,454백만원으로 평가됩니다(단위: 백만원).",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "메트라이프생명보험",
-      "rcept_no": "20230407003159",
-      "waterfall_status": "no_csm_columns",
-      "caption": "3) 보험부채 관련 재무영향당사가 2022년 12월 31일 기준 보험부채에 대해 기업회계기준서 제1117호를 적용할 경우 보험계약자산 및 보험계약부채는 각각 18,206백만원, 15,192,494백만원으로 평가됩니다.",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20230407000580",
-      "waterfall_status": "no_csm_columns",
-      "caption": "(5) 보고기간 중 기타포괄손익인식채무증권의 손실충당금(*) 변동내역은 다음과 같습니다(단위:천원).<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "에이아이에이생명보험",
-      "rcept_no": "20230410002773",
-      "waterfall_status": "no_csm_columns",
-      "caption": "당기 및 전기 중 유형자산의 변동내역은 다음과 같습니다.",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "처브라이프생명보험",
-      "rcept_no": "20230412002541",
-      "waterfall_status": "no_csm_columns",
-      "caption": "",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "하나생명보험",
-      "rcept_no": "20230331001232",
-      "waterfall_status": "no_csm_columns",
-      "caption": "17-2 당기 및 전기 중 보험계약부채의 변동내역은 다음과 같습니다.17-2-1 보험료적립금<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "하나생명보험",
-      "rcept_no": "20240329000112",
-      "waterfall_status": "no_stage_match",
-      "caption": "13-3 보험료배분접근법을 적용한 보험계약 이외의 보험계약에 대하여 다음 사항에 대한 기초잔액에서 보고기간말잔액까지의 차이조정은 다음과 같습니다.(1) 보험<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_stage_match",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "하나생명보험",
-      "rcept_no": "20260325000201",
-      "waterfall_status": "no_stage_match",
-      "caption": "(2) 재보험 <당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_stage_match",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    }
-  ],
-  "failed": [
-    {
-      "company": "라이나생명보험",
-      "rcept_no": "20230414000060",
-      "waterfall_status": "no_csm_columns",
-      "caption": "회사가 2022년 12월 31일 기준 보험부채에 대해 기업회계기준 제1117호를 적용할 경우 보험계약자산 및 보험계약부채는 각각 231,934백만원, 397,454백만원으로 평가됩니다(단위: 백만원).",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "라이나생명보험",
-      "rcept_no": "20240409003674",
-      "waterfall_status": "ok",
-      "caption": "(4) 당기와 전기 중 보험계약부채(자산)의 측정요소별 변동 내역은 다음과 같습니다(단위:천원).",
-      "period_hint": null,
-      "new_business_mn_krw": 722159.428,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "라이나생명보험",
-      "rcept_no": "20250409002702",
-      "waterfall_status": "ok",
-      "caption": "(6) 당기와 전기 중 보험계약부채(자산)의 측정요소별 변동 내역은 다음과 같습니다(단위:천원).",
-      "period_hint": null,
-      "new_business_mn_krw": 573265.585,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "라이나생명보험",
-      "rcept_no": "20260406004538",
-      "waterfall_status": "ok",
-      "caption": "(6) 당기 및 전기 중 보험계약부채(자산)의 측정요소별 변동 내역은 다음과 같습니다(단위:천원).① 유배당 보험",
-      "period_hint": null,
-      "new_business_mn_krw": 536653.88,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "메트라이프생명보험",
-      "rcept_no": "20230407003159",
-      "waterfall_status": "no_csm_columns",
-      "caption": "3) 보험부채 관련 재무영향당사가 2022년 12월 31일 기준 보험부채에 대해 기업회계기준서 제1117호를 적용할 경우 보험계약자산 및 보험계약부채는 각각 18,206백만원, 15,192,494백만원으로 평가됩니다.",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "메트라이프생명보험",
-      "rcept_no": "20240405002628",
-      "waterfall_status": "ok",
-      "caption": "당기 및 전기 중 보험료배분접근법을 적용하지 않은 보험계약의 측정요소별 변동내역은 다음과 같습니다.",
-      "period_hint": null,
-      "new_business_mn_krw": 504448.141,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "opening_mn_krw": 1924620.067,
-        "computed_closing_mn_krw": 2132291.84,
-        "reported_closing_mn_krw": 2152105.61,
-        "residual_mn_krw": -19813.77,
-        "tolerance_mn_krw": 10760.53,
-        "missing_stages": []
-      },
-      "issues": [
-        "balance_fail:residual=-19813.77 tol=10760.53"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "메트라이프생명보험",
-      "rcept_no": "20250402000865",
-      "waterfall_status": "ok",
-      "caption": "(주1) 위험경감 선택권 적용에 따른 위험경감과 관련된 이행현금흐름 변동분 7,751,538천원이 포함되어 있습니다. 동 금액 중 9,048,451천원만큼 보험계약마진 조정에서제외하였으며, 1,296,913천원만큼 보험서비스비용에서 조정하였습니다.",
-      "period_hint": null,
-      "new_business_mn_krw": 374208.778,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "opening_mn_krw": 1924620.067,
-        "computed_closing_mn_krw": 2002052.47,
-        "reported_closing_mn_krw": 2152105.61,
-        "residual_mn_krw": -150053.14,
-        "tolerance_mn_krw": 10760.53,
-        "missing_stages": []
-      },
-      "issues": [
-        "balance_fail:residual=-150053.14 tol=10760.53"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "메트라이프생명보험",
-      "rcept_no": "20260403003824",
-      "waterfall_status": "ok",
-      "caption": "- 변액보험계약",
-      "period_hint": null,
-      "new_business_mn_krw": 495099.686,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "opening_mn_krw": 721754.936,
-        "computed_closing_mn_krw": 1195839.64,
-        "reported_closing_mn_krw": 755779.349,
-        "residual_mn_krw": 440060.29,
-        "tolerance_mn_krw": 3778.9,
-        "missing_stages": []
-      },
-      "issues": [
-        "balance_fail:residual=440060.29 tol=3778.9"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20230407000580",
-      "waterfall_status": "no_csm_columns",
-      "caption": "(5) 보고기간 중 기타포괄손익인식채무증권의 손실충당금(*) 변동내역은 다음과 같습니다(단위:천원).<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "에이아이에이생명보험",
-      "rcept_no": "20230410002773",
-      "waterfall_status": "no_csm_columns",
-      "caption": "당기 및 전기 중 유형자산의 변동내역은 다음과 같습니다.",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "에이아이에이생명보험",
-      "rcept_no": "20260407002100",
-      "waterfall_status": "ok",
-      "caption": "(3) 당기 및 전기 중 보험료배분접근법을 적용하지 않은 재보험계약자산의 측정요소별 변동내역은 다음과 같습니다.1) 당기",
-      "period_hint": null,
-      "new_business_mn_krw": -9157.0,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "balance_incomplete:amortization"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "처브라이프생명보험",
-      "rcept_no": "20230412002541",
-      "waterfall_status": "no_csm_columns",
-      "caption": "",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "처브라이프생명보험",
-      "rcept_no": "20240408003868",
-      "waterfall_status": "ok",
-      "caption": "(3) 당기 및 전기 중 보험계약부채 및 출재보험계약자산의 구성요소별 변동내역은 다음과 같습니다.1) 보험계약부채의 구성요소에 따른 변동분석은 다음과 같습니다.<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": 19944.0,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "처브라이프생명보험",
-      "rcept_no": "20250407003402",
-      "waterfall_status": "ok",
-      "caption": "(3) 당기 및 전기 중 보험계약부채 및 출재보험계약자산의 구성요소별 변동내역은 다음과 같습니다.1) 보험계약부채의 구성요소에 따른 변동분석은 다음과 같습니다.<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": 9806.0,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "처브라이프생명보험",
-      "rcept_no": "20260408003172",
-      "waterfall_status": "ok",
-      "caption": "2) 유배당 외 보험계약부채의 구성요소에 따른 변동분석은 다음과 같습니다.<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": 6107.0,
-      "new_business_ok": true,
-      "must_reparse": false,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "하나생명보험",
-      "rcept_no": "20230331001232",
-      "waterfall_status": "no_csm_columns",
-      "caption": "17-2 당기 및 전기 중 보험계약부채의 변동내역은 다음과 같습니다.17-2-1 보험료적립금<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "하나생명보험",
-      "rcept_no": "20240329000112",
-      "waterfall_status": "no_stage_match",
-      "caption": "13-3 보험료배분접근법을 적용한 보험계약 이외의 보험계약에 대하여 다음 사항에 대한 기초잔액에서 보고기간말잔액까지의 차이조정은 다음과 같습니다.(1) 보험<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_stage_match",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "하나생명보험",
-      "rcept_no": "20260325000201",
-      "waterfall_status": "no_stage_match",
-      "caption": "(2) 재보험 <당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_stage_match",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    }
-  ],
+  "new_business_failed": [],
+  "must_reparse": [],
+  "failed": [],
   "results": [
     {
       "company": "DB생명보험",
@@ -1091,16 +138,16 @@
       "waterfall_status": "ok",
       "caption": "나. 측정요소별 변동내역",
       "period_hint": null,
-      "new_business_mn_krw": 355183.0,
+      "new_business_mn_krw": 271360.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 2106008.0,
-        "computed_closing_mn_krw": 2055155.0,
-        "reported_closing_mn_krw": 2055155.0,
+        "opening_mn_krw": 2055155.0,
+        "computed_closing_mn_krw": 1513226.0,
+        "reported_closing_mn_krw": 1513226.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 10275.77,
+        "tolerance_mn_krw": 7566.13,
         "missing_stages": []
       },
       "issues": [],
@@ -1154,52 +201,20 @@
       "waterfall_status": "ok",
       "caption": "(2) 당기와 전기 중 보험계약의 측정요소별 변동내역은 다음과 같습니다. <당기>",
       "period_hint": null,
-      "new_business_mn_krw": 760162.0,
+      "new_business_mn_krw": 731976.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 2374228.0,
-        "computed_closing_mn_krw": 2541801.0,
-        "reported_closing_mn_krw": 2541801.0,
+        "opening_mn_krw": 2541801.0,
+        "computed_closing_mn_krw": 2671088.0,
+        "reported_closing_mn_krw": 2671088.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 12709.01,
+        "tolerance_mn_krw": 13355.44,
         "missing_stages": []
       },
       "issues": [],
       "status": "pass"
-    },
-    {
-      "company": "라이나생명보험",
-      "rcept_no": "20230414000060",
-      "waterfall_status": "no_csm_columns",
-      "caption": "회사가 2022년 12월 31일 기준 보험부채에 대해 기업회계기준 제1117호를 적용할 경우 보험계약자산 및 보험계약부채는 각각 231,934백만원, 397,454백만원으로 평가됩니다(단위: 백만원).",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
     },
     {
       "company": "라이나생명보험",
@@ -1211,17 +226,16 @@
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 2208247.318,
+        "computed_closing_mn_krw": 5515548.32,
+        "reported_closing_mn_krw": 5515548.316,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 27577.74,
+        "missing_stages": []
       },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "라이나생명보험",
@@ -1229,21 +243,20 @@
       "waterfall_status": "ok",
       "caption": "(6) 당기와 전기 중 보험계약부채(자산)의 측정요소별 변동 내역은 다음과 같습니다(단위:천원).",
       "period_hint": null,
-      "new_business_mn_krw": 573265.585,
+      "new_business_mn_krw": 536653.88,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 3230161.575,
+        "computed_closing_mn_krw": 2764859.85,
+        "reported_closing_mn_krw": 2764859.849,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 13824.3,
+        "missing_stages": []
       },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "라이나생명보험",
@@ -1251,21 +264,20 @@
       "waterfall_status": "ok",
       "caption": "(6) 당기 및 전기 중 보험계약부채(자산)의 측정요소별 변동 내역은 다음과 같습니다(단위:천원).① 유배당 보험",
       "period_hint": null,
-      "new_business_mn_krw": 536653.88,
+      "new_business_mn_krw": 461837.308,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 2763826.124,
+        "computed_closing_mn_krw": 2374366.29,
+        "reported_closing_mn_krw": 2374366.289,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 11871.83,
+        "missing_stages": []
       },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "롯데손해보험",
@@ -1311,38 +323,6 @@
     },
     {
       "company": "메트라이프생명보험",
-      "rcept_no": "20230407003159",
-      "waterfall_status": "no_csm_columns",
-      "caption": "3) 보험부채 관련 재무영향당사가 2022년 12월 31일 기준 보험부채에 대해 기업회계기준서 제1117호를 적용할 경우 보험계약자산 및 보험계약부채는 각각 18,206백만원, 15,192,494백만원으로 평가됩니다.",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "메트라이프생명보험",
       "rcept_no": "20240405002628",
       "waterfall_status": "ok",
       "caption": "당기 및 전기 중 보험료배분접근법을 적용하지 않은 보험계약의 측정요소별 변동내역은 다음과 같습니다.",
@@ -1351,64 +331,58 @@
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
+        "ok": true,
         "opening_mn_krw": 1924620.067,
-        "computed_closing_mn_krw": 2132291.84,
+        "computed_closing_mn_krw": 2152105.61,
         "reported_closing_mn_krw": 2152105.61,
-        "residual_mn_krw": -19813.77,
+        "residual_mn_krw": 0.0,
         "tolerance_mn_krw": 10760.53,
         "missing_stages": []
       },
-      "issues": [
-        "balance_fail:residual=-19813.77 tol=10760.53"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "메트라이프생명보험",
       "rcept_no": "20250402000865",
       "waterfall_status": "ok",
-      "caption": "(주1) 위험경감 선택권 적용에 따른 위험경감과 관련된 이행현금흐름 변동분 7,751,538천원이 포함되어 있습니다. 동 금액 중 9,048,451천원만큼 보험계약마진 조정에서제외하였으며, 1,296,913천원만큼 보험서비스비용에서 조정하였습니다.",
+      "caption": "당기 및 전기 중 보험료배분접근법을 적용하지 않은 보험계약의 측정요소별 변동내역은 다음과 같습니다.",
       "period_hint": null,
       "new_business_mn_krw": 374208.778,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "opening_mn_krw": 1924620.067,
-        "computed_closing_mn_krw": 2002052.47,
-        "reported_closing_mn_krw": 2152105.61,
-        "residual_mn_krw": -150053.14,
-        "tolerance_mn_krw": 10760.53,
+        "ok": true,
+        "opening_mn_krw": 2152105.61,
+        "computed_closing_mn_krw": 2406691.08,
+        "reported_closing_mn_krw": 2406691.083,
+        "residual_mn_krw": -0.0,
+        "tolerance_mn_krw": 12033.46,
         "missing_stages": []
       },
-      "issues": [
-        "balance_fail:residual=-150053.14 tol=10760.53"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "메트라이프생명보험",
       "rcept_no": "20260403003824",
       "waterfall_status": "ok",
-      "caption": "- 변액보험계약",
+      "caption": "당기 및 전기 중 보험료배분접근법을 적용하지 않은 보험계약의 측정요소별 변동내역은 다음과 같습니다.",
       "period_hint": null,
       "new_business_mn_krw": 495099.686,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "opening_mn_krw": 721754.936,
-        "computed_closing_mn_krw": 1195839.64,
-        "reported_closing_mn_krw": 755779.349,
-        "residual_mn_krw": 440060.29,
-        "tolerance_mn_krw": 3778.9,
+        "ok": true,
+        "opening_mn_krw": 2406691.083,
+        "computed_closing_mn_krw": 2608160.26,
+        "reported_closing_mn_krw": 2608160.261,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 13040.8,
         "missing_stages": []
       },
-      "issues": [
-        "balance_fail:residual=440060.29 tol=3778.9"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "미래에셋생명",
@@ -1443,9 +417,9 @@
       "balance": {
         "ok": true,
         "opening_mn_krw": 12392570.0,
-        "computed_closing_mn_krw": 13051386.0,
+        "computed_closing_mn_krw": 13080691.0,
         "reported_closing_mn_krw": 13080691.0,
-        "residual_mn_krw": -29305.0,
+        "residual_mn_krw": 0.0,
         "tolerance_mn_krw": 65403.46,
         "missing_stages": []
       },
@@ -1493,38 +467,6 @@
       },
       "issues": [],
       "status": "pass"
-    },
-    {
-      "company": "아이비케이연금보험",
-      "rcept_no": "20230407000580",
-      "waterfall_status": "no_csm_columns",
-      "caption": "(5) 보고기간 중 기타포괄손익인식채무증권의 손실충당금(*) 변동내역은 다음과 같습니다(단위:천원).<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
     },
     {
       "company": "아이비케이연금보험",
@@ -1612,52 +554,20 @@
     },
     {
       "company": "에이아이에이생명보험",
-      "rcept_no": "20230410002773",
-      "waterfall_status": "no_csm_columns",
-      "caption": "당기 및 전기 중 유형자산의 변동내역은 다음과 같습니다.",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "에이아이에이생명보험",
       "rcept_no": "20240409002583",
       "waterfall_status": "ok",
       "caption": "(3) 당기와 전기 중 보험계약부채의 측정요소별 변동내역은 다음과 같습니다.1) 당기",
       "period_hint": null,
-      "new_business_mn_krw": 297618.0,
+      "new_business_mn_krw": 256662.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 1364776.0,
-        "computed_closing_mn_krw": 1541758.0,
-        "reported_closing_mn_krw": 1541758.0,
+        "opening_mn_krw": 1541759.0,
+        "computed_closing_mn_krw": 1477068.0,
+        "reported_closing_mn_krw": 1477068.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 7708.79,
+        "tolerance_mn_krw": 7385.34,
         "missing_stages": []
       },
       "issues": [],
@@ -1688,55 +598,22 @@
       "company": "에이아이에이생명보험",
       "rcept_no": "20260407002100",
       "waterfall_status": "ok",
-      "caption": "(3) 당기 및 전기 중 보험료배분접근법을 적용하지 않은 재보험계약자산의 측정요소별 변동내역은 다음과 같습니다.1) 당기",
+      "caption": "(4) 당기 및 전기 중 보험료배분접근법을 적용하지 않은 보험계약부채의 측정요소별 변동내역은 다음과 같습니다.1) 당기",
       "period_hint": null,
-      "new_business_mn_krw": -9157.0,
+      "new_business_mn_krw": 281629.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "amortization"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 1509649.0,
+        "computed_closing_mn_krw": 1590364.0,
+        "reported_closing_mn_krw": 1590365.0,
+        "residual_mn_krw": -1.0,
+        "tolerance_mn_krw": 7951.82,
+        "missing_stages": []
       },
-      "issues": [
-        "balance_incomplete:amortization"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "처브라이프생명보험",
-      "rcept_no": "20230412002541",
-      "waterfall_status": "no_csm_columns",
-      "caption": "",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "처브라이프생명보험",
@@ -1744,21 +621,20 @@
       "waterfall_status": "ok",
       "caption": "(3) 당기 및 전기 중 보험계약부채 및 출재보험계약자산의 구성요소별 변동내역은 다음과 같습니다.1) 보험계약부채의 구성요소에 따른 변동분석은 다음과 같습니다.<당기>",
       "period_hint": null,
-      "new_business_mn_krw": 19944.0,
+      "new_business_mn_krw": 9806.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 161828.0,
+        "computed_closing_mn_krw": 112383.0,
+        "reported_closing_mn_krw": 112382.0,
+        "residual_mn_krw": 1.0,
+        "tolerance_mn_krw": 561.91,
+        "missing_stages": []
       },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "처브라이프생명보험",
@@ -1766,21 +642,20 @@
       "waterfall_status": "ok",
       "caption": "(3) 당기 및 전기 중 보험계약부채 및 출재보험계약자산의 구성요소별 변동내역은 다음과 같습니다.1) 보험계약부채의 구성요소에 따른 변동분석은 다음과 같습니다.<당기>",
       "period_hint": null,
-      "new_business_mn_krw": 9806.0,
+      "new_business_mn_krw": 3049.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 112382.0,
+        "computed_closing_mn_krw": 98021.0,
+        "reported_closing_mn_krw": 98021.0,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 500.0,
+        "missing_stages": []
       },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "처브라이프생명보험",
@@ -1792,17 +667,16 @@
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "assumption"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 97881.0,
+        "computed_closing_mn_krw": 86810.0,
+        "reported_closing_mn_krw": 86809.0,
+        "residual_mn_krw": 1.0,
+        "tolerance_mn_krw": 500.0,
+        "missing_stages": []
       },
-      "issues": [
-        "balance_incomplete:assumption"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "케이디비생명보험",
@@ -1852,16 +726,16 @@
       "waterfall_status": "ok",
       "caption": "(3) 당기와 전기 중 수재(원수 포함) 및 출재 일반모형 변동내역은 다음과 같습니다.1) 수재(원수 포함) 일반모형",
       "period_hint": null,
-      "new_business_mn_krw": 241650.0,
+      "new_business_mn_krw": 195506.0,
       "new_business_ok": true,
       "must_reparse": false,
       "balance": {
         "ok": true,
-        "opening_mn_krw": 1064090.0,
-        "computed_closing_mn_krw": 803146.0,
-        "reported_closing_mn_krw": 803146.0,
+        "opening_mn_krw": 803146.0,
+        "computed_closing_mn_krw": 904674.0,
+        "reported_closing_mn_krw": 904674.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 4015.73,
+        "tolerance_mn_krw": 4523.37,
         "missing_stages": []
       },
       "issues": [],
@@ -1890,67 +764,24 @@
     },
     {
       "company": "하나생명보험",
-      "rcept_no": "20230331001232",
-      "waterfall_status": "no_csm_columns",
-      "caption": "17-2 당기 및 전기 중 보험계약부채의 변동내역은 다음과 같습니다.17-2-1 보험료적립금<당기>",
-      "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
-      "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
-      },
-      "issues": [
-        "waterfall_status=no_csm_columns",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
-    },
-    {
-      "company": "하나생명보험",
       "rcept_no": "20240329000112",
-      "waterfall_status": "no_stage_match",
+      "waterfall_status": "ok",
       "caption": "13-3 보험료배분접근법을 적용한 보험계약 이외의 보험계약에 대하여 다음 사항에 대한 기초잔액에서 보고기간말잔액까지의 차이조정은 다음과 같습니다.(1) 보험<당기>",
       "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
+      "new_business_mn_krw": 209183.792,
+      "new_business_ok": true,
+      "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 187737.313,
+        "computed_closing_mn_krw": 301650.7,
+        "reported_closing_mn_krw": 301609.288,
+        "residual_mn_krw": 41.41,
+        "tolerance_mn_krw": 1508.05,
+        "missing_stages": []
       },
-      "issues": [
-        "waterfall_status=no_stage_match",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "하나생명보험",
@@ -1976,34 +807,23 @@
     {
       "company": "하나생명보험",
       "rcept_no": "20260325000201",
-      "waterfall_status": "no_stage_match",
-      "caption": "(2) 재보험 <당기>",
+      "waterfall_status": "ok",
+      "caption": "14-4 보험료배분접근법을 적용한 보험계약 이외의 보험계약에 대하여 다음 사항에 대한 기초잔액에서 보고기간말잔액까지의 차이조정은 다음과 같습니다.(1) 보험",
       "period_hint": null,
-      "new_business_mn_krw": null,
-      "new_business_ok": false,
-      "must_reparse": true,
+      "new_business_mn_krw": 408616.322,
+      "new_business_ok": true,
+      "must_reparse": false,
       "balance": {
-        "ok": false,
-        "missing_stages": [
-          "opening",
-          "new_business",
-          "interest",
-          "assumption",
-          "amortization",
-          "closing"
-        ],
-        "residual_mn_krw": null,
-        "tolerance_mn_krw": null
+        "ok": true,
+        "opening_mn_krw": 444682.065,
+        "computed_closing_mn_krw": 726895.69,
+        "reported_closing_mn_krw": 726895.688,
+        "residual_mn_krw": 0.0,
+        "tolerance_mn_krw": 3634.48,
+        "missing_stages": []
       },
-      "issues": [
-        "waterfall_status=no_stage_match",
-        "missing_stage:opening",
-        "missing_stage:new_business",
-        "missing_stage:closing",
-        "new_business_missing",
-        "balance_incomplete:opening,new_business,interest,assumption,amortization,closing"
-      ],
-      "status": "fail"
+      "issues": [],
+      "status": "pass"
     },
     {
       "company": "한화생명",

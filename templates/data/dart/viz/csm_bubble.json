@@ -5,7 +5,7 @@
     "numerator_period": "annual (fiscal 2024 reporting)",
     "size_field": "csm_closing_eok (억원)",
     "color_field": "nb_csm_multiple (×)",
-    "built_at": "2026-07-30T04:11:39Z",
+    "built_at": "2026-08-21T10:45:26Z",
     "build_script": "scripts/viz_build_csm_bubble.py",
     "premium_source": "data/_derived/nb_premium_wolnap.json",
     "validation_source": "data/_derived/nb_csm_validation.json",
@@ -26,7 +26,7 @@
         "rel": 0.25,
         "abs": 3.0
       },
-      "built_at": "2026-06-17T00:06:36Z",
+      "built_at": "2026-08-21T09:12:02Z",
       "build_script": "scripts/validate_nb_csm_multiple.py",
       "cohort_tested": 5,
       "cohort_pass": 5,
@@ -423,7 +423,7 @@
     {
       "company": "아이비케이연금보험",
       "sector": "Non-Life",
-      "csm_closing_eok": 4987.93,
+      "csm_closing_eok": 5203.76,
       "nb_csm_eok_annual": 717.73,
       "nb_csm_eok_monthly": 59.8108,
       "wolnap_premium_eok_month": null,

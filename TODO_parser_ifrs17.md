@@ -1,5 +1,113 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-21 (33rd pass) — `validate_csm_waterfall.py` 13→0건, exit 0 달성.
+> `inbox/parser/20260821T1900Z` iter-2 회신, `NOT_A_PUSH_GATE`→`WIRED` 전환 요청.**
+>
+> 32nd pass가 함수·라인까지 규명해 놓은 잔여 13건(Type A~E)을 전부 닫았다.
+> `scripts/viz_build_csm_waterfall.py` 4개 함수 수정: ① `extract_stages()`에 보조가산
+> 메커니즘 신설(라이나 "계약의 경계 변경 효과"→assumption, 메트라이프 "환율변동효과
+> 등"→interest — 트레일링 "등"까지 정확일치 안 하면 케이비라이프에서 부모+자식 이중계상
+> 회귀 발생, 실측으로 잡음) ② `find_csm_leaf_cols()` Case 2에 데이터폭 검증 fallback(하나
+> 생명 spurious 상위헤더로 인한 3배 컬럼오프셋 과대추정 + "소계"열 이중계상 둘 다 수정)
+> ③ `_disambiguate_basis_period()`에 세 가드 신설 — ceded 배제(에이아이에이 재보험 오선택
+> 차단) · `len(full)==1` 승격(메트라이프 FY2024 전기블록 오선택 차단, `len(current)==1`과
+> 대칭) · whole-vs-parts 판별(메트라이프 FY2025 상품분해표 오선택 차단, `len(full)>=3`
+> 한정 — 2개짜리에 적용했다가 교보생명 연결/별도 오탐 회귀 나서 즉시 좁힘) ④ Rowspan-split
+> 패치에 "자산" 라벨 기반 재검 추가(하나생명 자산 하위행이 0 아닐 때 가드 통과 못 하던 문제).
+>
+> **원 범위 밖 부수 발견 — 같은 공유 함수 버그가 3개사에 이미 숨어 false-green이었다.**
+> 코리안리·NH농협손해보험·동양생명은 `balance_fail` 없이 통과 중이었지만 실은 전기 블록을
+> 당기로 표시하고 있었다(연속성 자기검산: 새 opening == 구 closing 완전일치로 수학적 증명,
+> `_is_prior` 로직 자체가 그 증거). 삼성생명은 FX가산 라벨매치로 소폭(+0.06%) 변경.
+>
+> **미해결 오픈 이슈 1건 — 게이트 범위 밖.** 라이나생명 FY2023 필링 자체 기말(5,515,548백만)
+> vs FY2024 필링이 제시하는 전기값(3,230,161백만)이 41% 불연속. 내 수정 이전에도 있던
+> 필링간(cross-filing) 불일치라 `validate_csm_waterfall.py`(필링 내부 항등식만 검사)는
+> 못 잡고 exit code에도 영향 없음. 원인 미상 — 소급수정 개연성 있으나 measurement.json만
+> 으로 확정 불가, 추측하지 않고 inbox 회신에 명시.
+>
+> **게이트**: `validate_csm_waterfall.py` exit=**0**(pass=41 fail=0 excluded_pre_ifrs17=6
+> total=47, IFRS17 시행일 이전 FY2022 6건은 게이트에 구조적 제외 신설 — 조용한 skip 아니고
+> `_meta.companies_excluded_pre_ifrs17` 카운트 + 콘솔 6줄 인쇄) ·
+> `test_viz_csm_waterfall_golden.py --update` 재생성 후 통과(값 의도적 변경 8사) ·
+> `test_viz_ifrs17_panels_golden.py`·`tests/unit/test_csm_extractor.py` 회귀 없음(9 passed) ·
+> `test_push_gate_wiring.py -k unwired_gates_still_fail`가 예상대로 FAILED(게이트가 이제
+> 통과한다는 신호, 오케스트레이터의 WIRED 전환 트리거) · `validate_data_contract.py`
+> RED=36 YELLOW=296 exit=0(root master 기준, 이번 세션 미접촉 파일이라 기존 베이스라인).
+> root 마스터·xlsx·kics 레인 파일 전혀 미접촉(`git status`로 이번 세션이 건드린 파일이
+> 정확히 5개뿐임을 확인). 회신 `inbox/parser/20260821T1900Z` iter-2(status 미변경, 원
+> 발신자=orchestrator 재확인 대기).
+>
+> ---
+>
+> **2026-08-21 (32nd pass) — inbox 2건 드레인. viz 3파일 main-vs-branch 분쟁 전부 원문으로
+> branch 채택 판정(라이브 배포 가능). `validate_csm_waterfall.py` 18→13건, 5건 완전 닫힘 +
+> 인코딩 버그로 죽어있던 reconcile loop 복구.**
+>
+> `inbox/parser/20260821T1745Z`(viz 단위/전기열 분쟁 3건) + `20260821T1900Z`
+> (csm_waterfall 게이트 미배선) 처리.
+>
+> **viz 패널 3개 — 전부 원문 XML 대조로 branch 확정, 코드 수정 없이 재실행만으로 재현.**
+> ① `sensitivity_heatmap.json` 카카오페이손해: 원문 표 바로 아래 리터럴 `(단위: 천원)`
+> (필링 전체 45회, `백만원` 표marker 0회) + `CSM_waterfall.json` 기말 CSM 3.41188억 =
+> 원표값 341,189 × 1e-5 정확 일치(0.0003% 오차). main(백만원)은 1,000배 부풀어 있었다 —
+> 24th pass가 이미 고친 상태를 main이 아직 못 받은 것. ② `csm_waterfall_history.json`
+> companies[15] 케이비라이프 2026.1Q: 원문에 "당분기"/"전분기" 두 표가 나란히 있는데 branch
+> 5개 값(기초/조정/상각/이자/기말) 전부 "당분기" 표와 소수점까지 일치, main은 "전분기"
+> (비교기간) 열을 그대로 옮겼다 — 게다가 main의 기초는 어느 인접분기 기말과도 안 이어지는
+> 연속성 단절. ③ `csm_amort_schedule.json` companies[0] DB생명보험: branch는 FY2025 신규
+> 필링(owner 승인 25th pass)의 "합계"(전상품) 행 19,813.01억, main은 FY2024 필링의
+> "Non-Par(\*1)"(무배당만) 부분합 1,213억 — CSM_waterfall 기말 CSM 19,813.1억과 branch가
+> 0.0005% 이내 일치. 두 빌더(`viz_build_ifrs17_panels.py`/`viz_build_csm_waterfall.py`)를
+> 현재 마스터로 재실행해 **완전 no-op**(백업과 바이트 동일) 확인 — 지금 브랜치 값이 곧
+> 현재 코드의 결정론적 재현값. `bs_snapshot.json`·`sensitivity_heatmap_provenance.json`은
+> main에 아예 없던 순수 신규 파일(비분쟁, cherry-push 포함 여부는 orchestrator 판단).
+>
+> **`validate_csm_waterfall.py` — 아무도 안 부르던 게이트, 18건 중 5건 완전 닫힘.**
+> `scripts/viz_build_csm_waterfall.py`의 `STAGE_PATTERNS["assumption"]`에 원문 실측 라벨
+> 2종 추가(순수 가산): 라이나생명보험("보험계약마진 조정하는 추정치의 변동" — "을" 조사
+> 없이 "...변동분"으로 끝맺는 변형) · 처브라이프생명보험("보험계약마진을 변경하는 추정치" —
+> "조정" 대신 "변경" 동사). 각사 3개년 raw에서 동일 라벨 반복 확인. combo-diff로
+> `csm_waterfall.json` 47개 (회사,rcept) 엔트리 중 정확히 이 6개만 변경, 나머지 41개
+> 바이트 무변화 확인. **결과: 처브라이프 3/3 완전 통과, 라이나 2/3 통과 + 1/3(FY2023 첫
+> IFRS17 연차, 공정가치법/수정소급법/전환이후계약 3분해 + 일회성 재작성행이 섞인 특수
+> 표구조)은 assumption이 채워지자 그 아래 깔려있던 별개의 열-오프셋 결함이
+> `balance_fail:residual=-3439401.61`로 노출됨(회귀 아님, 미수정으로 이관)**.
+> `test_viz_csm_waterfall_golden.py --update` 재생성 후 통과.
+>
+> **덤으로 나온 결함 — `run_ifrs17_csm_reconcile_loop.py`가 실행 즉시 죽고 있었다.**
+> `sys.stdout.reconfigure(encoding="utf-8")` 미적용이라 Windows cp949 콘솔에서 서브프로세스
+> 출력 중 대체문자(`�`)를 못 써 `UnicodeEncodeError`로 즉사 — SKILL.md가 명시하는
+> cp949 함정에 이 스크립트만 빠져 있었다. 2줄 추가(순수 가산)로 복구, 재실행하니
+> `validate_csm_waterfall.py` 단독 실행과 정확히 같은 결과(13건 실패)를 냄 — 루프가 이제
+> 작동한다. **부수 발견(지시 밖, 되돌리지 않음)**: `--waterfall-only`로도 무조건 도는
+> kpis/bubble 빌드 단계가 `downstream_kpis.json`·`csm_bubble.json`(마지막 커밋 2026-07-04)을
+> `csm_amort_schedule.json`의 2026-08-20 단위정규화 이전 상태(1.5개월 stale)에서 정정함
+> (삼성생명 상각 y1버킷 1,030,710→10,561.21, `closing_csm_mn_krw`/100과 정확 일치) —
+> `validate_data_contract.py` RED=0·`test_deploy_assets.py` 10/10로 안전만 확인, 별도
+> staleness 감사 필요성만 티켓에 기록.
+>
+> **잔여 13건 — 전부 `_disambiguate_basis_period()`(`viz_build_csm_waterfall.py:614-691`)
+> 레벨까지 원인 규명, 미수정.** Type A(6, 라이나·메트라이프·아이비케이연금·에이아이에이·
+> 처브라이프·하나생명 FY2022=IFRS17 시행 이전, 원천 부재 정상) · Type C(3, 메트라이프 —
+> 타이브레이커가 전기열을 1순위로 정렬한 뒤 `len(current)==1` 전용 가드라 안 끌어내림,
+> IBK연금 사례로 고쳤던 것과 같은 함수의 다른 케이스) · Type D(2, 하나생명 no_stage_match —
+> 표는 이미 이름으로 명시된 rowspan 보정 로직이 있는데 opening/closing 2스테이지에만 적용) ·
+> Type E(1, 에이아이에이생명보험 — direct/재보험 쌍에 "작은 쪽=별도" 연결/별도 전용
+> 휴리스틱이 잘못 적용돼 재보험표 승격, `find_csm_leaf_cols` RA+CSM 합산 2차결함도 확인).
+> C·E가 같은 함수에 몰려 있어 다음 세션에서 한화생명·IBK연금 케이스 포함 전사 재검증과
+> 함께 고치는 걸 권함 — 이번엔 규모상 보류.
+>
+> **게이트**: `validate_csm_waterfall.py` exit=1(13건, NOT_A_PUSH_GATE 유지) ·
+> `run_ifrs17_csm_reconcile_loop.py --skip-measurement --waterfall-only` 정상 완주 ·
+> `scripts/prepush_check.py` RED=0·K-ICS rule gate=clear·domain gates=pass·offline
+> tests 157 passed·exit=0(동시 진행 중이던 K-ICS 레인 세션 워킹트리 변경분은 실행 전후
+> git status 대조로 훼손 없음 확인) · `validate_data_contract.py` RED=0.
+> root 마스터(CSM_waterfall.json 등)·xlsx는 이번 세션에서 전혀 안 건드림.
+> 회신 `inbox/parser/20260821T1745Z` · `20260821T1900Z`(둘 다 status 유지, 원 발신자
+> 재확인 대기).
+
+
 > **2026-08-21 (31st pass) — inbox 2건 드레인. 현대해상 상각 세대 통일 완료(닫힘). 준비금
 > 잔여 3종 처리하다 케이디비 item5 조작오류 발견 → 고치니 새 RED 1건(등재 대기, push 막힘).**
 >

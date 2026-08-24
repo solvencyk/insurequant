@@ -1,9 +1,340 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-21 · Stage 3/5 — validation
+> Last updated: 2026-08-24 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+---
+
+## 2026-08-24 (2차 owner 위임) — tier2/다리 면제 4건 등재 · `VERIFIED_BY_OWNER` provenance status 신설
+
+**게이트**: `validate_kics_disclosure.py` exit 2 · RED 56 · **blocking RED 29 → 19**.
+`validate_data_contract.py` RED **7 → 5**(잔여 5건 전부 parser 발주분).
+`pytest tests/ -q --ignore={pl_breakdown,ifrs17_bs}_golden` **318 passed · 1 skipped**(직전 302).
+**골든 무변경** — 룰 엔진을 안 건드렸다(면제는 findings 매트릭스 밖의 층이다).
+`kics_disclosure.json` · `insurequant_master_tables.xlsx` **읽기만** 했다(parser 가 동시 작업 중).
+
+**등재 4건.** 앞의 셋은 새 조사가 아니라 **이미 확증돼 있었는데 위임 목록 밖이라 두 라운드를
+RED 로 버틴 것들**이다(면제를 스스로 넓히지 않는다는 원칙의 비용). 값은 티켓에서 베끼지 않고
+raw 를 다시 열어 독립 재현했고 전부 일치했다.
+
+| 버킷 | 축 · 박제 잔차 | 사유 |
+|---|---|---|
+| KR0004 예별손해 2025.1Q | `3_tier2_composition` **+997.00** | 합계는 두 표가 같은데 tier 분할만 다르다 — TFI 표가 보완자본 997억을 기본자본 쪽에 합쳐 인쇄(자본잠식사). 다리·TFI 구성식은 둘 다 정확히 닫힌다 |
+| KR0003 롯데손해 2023.1Q | `2_tier1_bridge` **+19.00** · `3_tier2_composition` **−19.00** · `50_tfi_tier_split` **−18.00** | 두 표가 '적용 전 보완자본' 을 17,812/17,830 으로 다르게 인쇄 + TFI **적용전 컬럼만** 자기 합계행과 안 닫힘(적용후는 정확히 닫힌다 → 추출 결함일 수 없다). 세 축이 같은 18~19 를 가리키고 **부호가 정확히 반대** |
+| KR0075 BNP카디프 2024.3Q | `2_tier1_bridge` **+15.00** · `3_tier2_composition` **−220.98** · `47_tier2_census`(전·후) · `51_tfi_tier2_composition` **−221.31** | 2024.4Q·2025.1Q 와 증거 동일. `min(31,614,31,614)+23,584 = 55,198` vs 인쇄 `33,067`, 메모행 둘 다 대시라 메울 행이 없다 |
+| **KR0068 한화생명 2025.2Q** | `2_tier1_bridge` **−30,095.00** | **인과 미규명.** owner 가 raw 를 직접 열어 보고 "원문이 그렇게 적혀 있고 별다른 언급은 없다 — 원문대로 오차 용인" 결정 |
+
+**신설: 원장 status `VERIFIED_BY_OWNER`.** 나머지 17건은 발행사 자기모순을 **산수로** 증명하지만
+한화생명은 **잔차가 실재하는데 원문 어디에도 그 항목이 없다.** 같은 `VERIFIED` 로 적으면 다음
+세션이 인과가 규명된 것으로 오독한다 — 이 저장소의 반복 실패모드다. 게이트에 배선한 것:
+① **마커 검사는 `VERIFIED` 와 동일하게 그대로 건다**(owner 판단이 숫자 재확인을 면제하지 않는다),
+② `owner_confirmation`{read_by, date, what_was_read, verdict} 필수 —
+누락시 `EXEMPTION_OWNER_RECORD_INCOMPLETE` **RED**,
+③ 매 실행 `EXEMPTION_STANDS_ON_OWNER_JUDGEMENT` **review** 로 인쇄(조용해지지 않는다).
+후속 티켓 `inbox/validation/20260824T0410Z` 는 **open 유지** — 면제는 push 를 푼 것이지 원인을
+닫은 것이 아니다. 미규명 단서(item51 후−전 = 825.75 ≈ 826)는 사유가 아니라 해제조건 메모로만 적었다.
+
+**🔴 발주된 박제값이 룰이 내는 값과 달랐다 — 기록해 둔다.** owner 에게 제시된 한화생명 잔차는
+**826.00**(각주 괄호 "보완자본 한도 초과액 제외" 를 무시한 읽기)인데, 룰이 emit 하는 diff 는
+**−30,095.00**(`branch=CAPPED`: 한도초과 = `min(item47−item48, item12)` = `min(70,821.29, 30,921)`
+= 30,921 클램프). **826 을 그대로 박았으면 등재 즉시 `TIER2_EXEMPTION_RESIDUAL_DRIFT` RED 라
+면제가 성립조차 안 한다**(실측). 박제는 owner 에게 보고된 숫자가 아니라 **룰이 내는 값**이어야
+매 실행 재검산이 성립한다. 두 값을 원장에 **둘 다** 적고
+(`expected_residual` / `expected_residual_alt_reading`) 테스트로 강제했다 — 안 적으면 다음 세션이
+"박제값이 발주와 다르다" 로 읽고 826 으로 고치거나 허용오차를 건드린다.
+
+**등재하지 않은 것.**
+- **KR0008 삼성화재 2025.3Q** — owner 결정이 "면제" 가 아니라 **"우리가 고친다"** 다.
+  등재하면 정정 후에도 죽은 핀이 남아 "그 축은 면제됐다" 로 오독된다(지난 라운드에 롯데
+  2026.1Q 죽은 핀을 `TIER2_EXEMPTION_INERT` 로 잡아낸 그 형태). parser 정정 중.
+- **KR0032 NH농협손해 2024.3Q** — 다리 잔차 −522, **미조사**. 조사 전 등재는 추측이다.
+`test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets` 가 두 버킷을 기계로 막는다.
+
+**변이시험**: `tests/test_tier2_issuer_inconsistent_exemption.py` **28 → 47건**. 신규 등재 4버킷을
+셀·축 양 겹으로 흔들고(한화생명은 발주 요구대로 **다리 입력 4칸 item2·4·12·13 을 각각**),
+`VERIFIED_BY_OWNER` 계약 4건(owner 블록 누락 RED · 마커 누락 RED · review 상시 인쇄 ·
+두 잔차 병기)을 추가했다.
+
+**변경 파일**: `scripts/validate_kics_disclosure.py` · `data/_gold/kics_exemption_provenance.json`
+(entries 34 → 38) · `tests/test_tier2_issuer_inconsistent_exemption.py` · `TODO.md` ·
+`TODO_validation.md` · 티켓 2건 회신. **허용오차 무변경. 커밋·push 안 했다.**
+
+---
+
+## 2026-08-24 (iter-7) — item52/53/54 배선: 축 E 등식 승격 · 축 G 신설 · 항목번호 등록부
+
+**게이트**: `validate_kics_disclosure.py` exit 2 · RED 56 · **blocking RED 13 → 29**
+(기존 11 잔존 + 신규 18 − NH농협 면제 2). `validate_data_contract.py` RED 4 → 7.
+`pytest tests/ -q --ignore={pl_breakdown,ifrs17_bs}_golden` **302 passed · 1 skipped**.
+
+**무엇이 통과하고 있었나 (false-green)**: parser iter-10 이 item52/53/54 를 1,291셀 적재했는데
+그 항목을 보는 룰이 하나도 없었다. `tests/test_rule_coverage_manifest.py` 가 즉시 실패로 잡았고
+(설계대로), 룰을 배선하자 **GREEN 이던 18칸이 RED 로 뒤집혔다.** 전부 raw PDF 로 확정:
+카카오페이 5버킷 item52 100배 · 처브라이프 item54 원문에 없는 값 · 농협생명 적용후 값 없음 ·
+푸본현대 컬럼 오배정 · 행 유실 3건 · 동양 2024.3Q 미확정 · 삼성화재 발행사 자릿수 전치.
+
+**배선**:
+- `50_tfi_tier_split{,_post}` — comparand 를 item1(헤드라인)/범위검사 → **item52**(같은 표·같은
+  컬럼)로 승격. 적용후 YELLOW 70 → 69칸이 등식으로 닫히고 GREEN 6칸이 RED 로 뒤집혔다.
+  item52 결측 30버킷은 폴백 + `TFI_TOTAL_ROW_ABSENT` 사유로 매 실행 세어진다.
+- `53_tfi_memo_rows{,_post}` **신설** — census(적용전만) + 부호 + `53+54 ≤ item51`.
+  등식(`+item54`)은 **안 걸었다**: 전수 시뮬 새로 닫힘 1 · 새로 깨짐 218.
+  포함관계 후보 `≤47`·`≤52` 는 raw 로 반증(DB생명 · 푸본현대 자본잠식).
+- 레지스트리 2종(`_TFI_MEMO_ISSUER_BLANK` 12칸 · `_TFI_MEMO_TABLE_NOT_SCANNED` 20버킷) —
+  결측 사유를 셋으로 갈라 우리 backlog 를 발행사 탓으로 박제하지 않는다.
+
+**면제**: NH농협 2025.4Q 등재(iter-6 거부 판단을 뒤집었다 — 근거가 바뀌었다). 롯데 2026.1Q 의
+축 E 핀 2개 제거(승격으로 그 축이 닫힘, 게이트가 `TIER2_EXEMPTION_INERT` 로 먼저 알림).
+
+**재발방지**: `data/_gold/kics_item_registry.json` + `tests/test_kics_item_registry.py`.
+오늘 두 레인이 52 를 동시에 잡았고 게이트가 **우연히** 잡았다 — 예약이 산문에만 있었다.
+47~54 등재, 1~46 은 명시적 미등재 선언. `reserved` 번호에 데이터가 들어오면 테스트가 막는다.
+
+**변이시험 신설** `tests/test_tfi_memo_rows.py` 10건 — 세 검사의 RED 발화 + 두 레지스트리가
+면제로 넓어지지 않는 것 + 축 E 폴백이 조용하지 않은 것을 라이브 마스터로 강제.
+
+**데이터 무변경**: `kics_disclosure.json` · `insurequant_master_tables.xlsx` 읽기만. 허용오차 무변경.
+골든은 `--update` + `_what` 에 사유 기록. 커밋·push 안 함.
+
+
+## 2026-08-24 — tier2/다리 발행사 자기모순 documented exception 등재 (13버킷 26 finding), blocking RED 39 → 13
+
+owner 가 이번 라운드 등재까지 위임했다. `inbox/parser/20260821T1425Z` iter-6.
+
+### 등재 전에 갈래를 기계로 갈랐다
+
+후보를 눈으로 고르지 않고 두 질문으로 전수 분류했다 — ① TFI 표가 **자기 구성행으로 닫히는가**
+(`item51 == min(47,48)+49`, 같은 표·같은 컬럼) ② 그런데 헤드라인 `item3` 과는 다른가. 그 다음
+후보 전부를 raw PDF `get_text("words")` 좌표로 직접 열어 확인했다. parser iter-8·iter-9 값과
+1원 단위까지 일치했지만 **베끼지 않고 독립 재현**했다.
+
+### 두 계열, 사유를 구분해 적었다
+
+- **계열 ① 두 표가 서로 다른 값을 인쇄** — 코리안리 2023.2Q~2024.4Q(7) · 롯데손해 2026.1Q(1).
+- **계열 ② 한 표가 자기 구성행과 안 닫힌다** — 롯데 2024.4Q·2025.1Q · BNP 2024.4Q·2025.1Q ·
+  동양생명 2025.2Q.
+
+**owner 발주서의 사유 하나를 실측으로 바꿔 적었다.** 롯데 2024.4Q 는 "공시 보완자본 28,030 vs
+min(47,48)+49 = 28,033.4" 로 계열 ①처럼 적혀 있었는데, 실측하면 `item51 = 28,030.38` 이라
+헤드라인과 **같다** — 계열 ②다. 사유가 틀린 면제는 다음 세션의 잘못된 일반화 씨앗이 된다.
+
+### 코리안리 — 7분기 전수 raw 판독이 이번 조사의 핵심
+
+```
+분기      헤드라인(억)   TFI 적용전(백만)      TFI 적용후(백만)
+2023.2Q      5,209        619,243=6,192.43      520,920=5,209.20
+2023.3Q      5,114        610,272=6,102.72      511,364=5,113.64
+2023.4Q      5,470        646,944=6,469.44      546,989=5,469.89
+2024.1Q      5,490        651,623=6,516.23      548,988=5,489.88
+2024.2Q      5,444        650,396=6,503.96      544,394=5,443.94
+2024.3Q      5,996        707,693=7,076.93      599,602=5,996.02
+2024.4Q      8,953        895,327=8,953.27      786,267=7,862.67   <- 여기서 뒤집힌다
+```
+
+2023.2Q~2024.3Q 는 헤드라인 = TFI **적용후**이고 TFI 적용전은 자기 구성행으로 정확히 닫힌다.
+2024.4Q 에서 보완자본만 적용전으로 넘어갔는데 `Ⅲ.재분류항목`(7,863)은 적용후(7,862.67) 그대로라
+다리가 정확히 그 차액(−1,090)만큼 깨진다. **독립 방증**: FY2024_Q4 필링의 직전분기 열이 2024.3Q
+보완자본을 **7,077**(= 그 분기 `item51_적용전`)로 재게시한다 — 그 분기 자기 필링의 헤드라인은
+5,996 이었다. 같은 셀을 두 필링이 다른 값으로 인쇄한다.
+
+잔차가 −983 ~ −1,081 로 분기마다 다르다(TFI 재분류액 자체가 분기마다 달라서다) → **분기별로 따로
+박았다.** 하나로 뭉치면 그 순간 blanket skip 이다.
+
+### 면제를 두 겹으로 짰다
+
+`_LIFE8_ISSUER_INCONSISTENT` 는 잔차 한 겹만 박는다. 이번 것(`_TIER2_ISSUER_INCONSISTENT`)은
+두 겹이다:
+
+| 겹 | 박제 대상 | 깨질 때 |
+|---|---|---|
+| ① `cells` | raw 로 판독한 마스터 셀 | `TIER2_EXEMPTION_INPUT_DRIFT` / `..._INPUT_MISSING` RED |
+| ② `findings` | 그 축이 실제로 내는 RED 의 **잔차 + 사유 플래그** | `..._RESIDUAL_DRIFT` RED · 사라지면 `..._INERT` review |
+
+①만 있으면 룰이 바뀐 것을 못 보고, ②만 있으면 데이터가 바뀐 것을 못 본다. 사유 플래그까지 박는
+이유는 잔차만 보면 **같은 축이 다른 사유로 깨진 것**을 못 잡기 때문이다(`TIER2_LIMIT_STALE` 자리에
+`TIER2_DUPLICATE_ROW` 가 와도 통과해 버린다). finding 자체는 안 지운다 — report 의
+`tier2_issuer_inconsistent_exception.exempted_findings` 에 남는다.
+
+변이시험 **28건** 신설(`tests/test_tier2_issuer_inconsistent_exemption.py`). 합성이 아니라
+**라이브 마스터**를 흔든다 — 합성이면 "코드가 돈다"만 보이고 "등재된 13버킷이 실제로 재검산된다"는
+안 보인다. 그 구분이 정확히 false-green 의 자리다.
+
+### 등재를 스스로 넓히지 않았다 (기계로 강제)
+
+`test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets` 가 보류 버킷이 면제로 새어
+들어가지 않는 것 **+ 실제로 RED 로 남아 있는 것**을 둘 다 검사한다.
+
+**BNP카디프 2024.3Q 는 2024.4Q·2025.1Q 와 증거가 동일한데도 등재하지 않았다** — owner 위임 목록
+밖이기 때문이다. TODO 와 게이트 report 의 `not_registered` 에 그 사실을 적어 RED 로 남겼다.
+
+### NH농협손해 2025.4Q — 등재하려다 반대 결론이 나왔다
+
+raw `FY2025_Q4/KR0032` p46:
+
+```
+보완자본                1,240,112
+ 보완자본 한도 적용 전     697,899
+ 해약환급금 … 초과분       447,254
+ (기발행 후순위채무)        94,959
+```
+
+`697,899 + 447,254 + 94,959 = 1,240,112` — **인쇄된 보완자본과 마지막 자리까지 정확히 같다.**
+잔차 949.59억이 그 후순위채무 행과 1원 단위로 일치한다. 발행사 자기모순이 아니라 **`min(47,48)+49`
+라는 우리 식에 항이 모자란 것**이다 → parser 발주(메모행 2개 적재 + 전사 census). 면제로 덮으면
+우리 결손이 발행사 탓으로 박제된다. BNP 는 같은 두 행이 **둘 다 대시**라 이 설명이 안 통한다 —
+그래서 NH농협만 갈라냈다.
+
+### 게이트 사각 하나를 같이 메웠다 — 면제를 위임하지 않고 있었다
+
+등재 직후 `validate_data_contract.py` 를 돌리니 **RED=25** 였고 **그중 21건이 방금 등재한 면제분**
+이었다. 그 게이트는 K-ICS 룰을 `kics_run_validation` 으로 **위임**해 RED 를 들어 올리면서
+**면제 층은 위임하지 않고 있었다.** 두 게이트가 같은 finding 에 서로 다른 대답을 하면 등재가
+조용히 무효가 되고, 다음 사람은 그 불일치를 다른 곳을 넓혀서 푼다.
+
+같은 함수를 부르도록 위임을 배선했다 — **복사가 아니다.** 면제 재검산이 두 벌이 되는 순간 한쪽만
+깨지는 경로가 생긴다(코드 자신이 §1b(ii) 에 적어 둔 duplicate-and-drift 회피와 같은 이유).
+`8_life` 도 같이 배선했다(현재는 분기 필터에 걸려 미발화지만 같은 모양의 구멍이다). 면제가 깨져
+있으면 그 자체가 RED 로 나간다 — 빠지는 것은 매 실행 재검산에 통과한 면제뿐이다.
+`validate_data_contract.py` **RED 25 → 4.** `test_..._delegates_the_exemption_not_only_the_rules`
+가 소스에서 이 위임을 강제한다.
+
+### 남은 blocking RED 13 · 라우팅
+
+| 버킷 | 건 | 다음 행동 |
+|---|---|---|
+| KR0075 2024.3Q | 5 | owner 승인만 있으면 즉시 등재 가능(증거 확정) |
+| KR0032 2025.4Q | 2 | parser 발주 — 신종/후순위 메모행 적재 + 전사 census |
+| KR0003 2023.1Q | 3 | owner 승인 대기(TFI 표 자기합 25,864 ≠ 자기 지급여력금액 행 25,846) |
+| KR0032 2024.3Q | 1 | 미조사(다리 잔차 −522) |
+| KR0068 2025.2Q | 1 | 후속 티켓 — `item51_후 − item51_전 = 825.75` ≈ 다리 잔차 826, **인과 미규명** |
+| KR0004 2025.1Q | 1 | 두 표 스코프 통합 규칙 정의 시 재평가(다리는 이미 닫혀 있다) |
+
+**한화생명을 RED 로 남긴 것이 이 라운드의 판단이다.** 825.75 ≈ 826 은 흥미롭지만 인과가 안
+밝혀졌다. "거의 같다"를 근거로 면제하면 패턴을 원인으로 단정하는 것이고, 그건 이 저장소가
+반복해서 데인 실패모드다.
+
+### 게이트·테스트
+
+- `validate_kics_disclosure.py` exit 2 · RED=40 · **blocking RED=13**(= 40 − `8_life` 1 − tier2 26).
+  박제 26건 전부 tol 0.01 안에서 일치 · 면제 근거(provenance) 검사 RED=0(13건 전부 등재 전
+  `present_markers` 기계검증 통과).
+- `pytest tests/ -q --ignore=...pl_breakdown... --ignore=...ifrs17_bs...` → **282 passed, 1 skipped.**
+- **골든 `--update` 안 했다** — 룰 엔진 무변경이라 필요 없었다.
+- 데이터·xlsx·허용오차·기존 레지스트리 3종 전부 무변경(`kics_disclosure.json` mtime 08-22 그대로).
+- `validate_data_contract.py --selftest` 는 50/51 인데 실패하는 N6 은 **내 변경 전에도 동일하게
+  실패**한다(3파일 stash 후 재확인). 합성 원장 헬퍼 `_ledger()` 가 `status=VERIFIED` + `verify=None`
+  을 만드는 selftest 자체의 결손 — 별건.
+- 커밋·push 안 했다.
+- **부수 관찰(내 변경과 무관, 기록만).** `validate_data_contract.py` 는 실행할 때마다
+  `dividend.json` · `data/_derived/qoq_warn.json` · `data/dart/viz/{bs_snapshot,csm_amort_schedule,
+  csm_waterfall,insurance_pl_breakdown,sensitivity_heatmap}.json` **7개를 다시 쓴다.** 두 번 돌려
+  md5 를 대조하니 **내용은 바이트 동일**이고 mtime 만 갱신된다(커밋 `adbf08c` 의 "산출물은
+  되돌린다" 가 내용은 되돌리지만 mtime 은 못 되돌린다는 뜻). 지금은 무해하지만 **mtime 을
+  신선도 근거로 쓰는 검사가 생기면 그 순간 거짓 신호가 된다** — 그때 고칠 것. `kics_disclosure.json`
+  md5 는 이 세션 내내 불변(`20b43e45…`)임을 확인했다.
+
+---
+
+## 2026-08-22 (a) — tier2 갈래 전수 분류 + 다리 구조적 상한: blocking RED 43 → 34, 면제 신설 0
+
+`inbox/parser/20260821T1425Z` iter-3 회신("43건 전부 원문과 일치 = 룰 문제")에 대한 sender 재확인.
+절반은 맞았다 — 9건은 공식이 덜 모델링해서 뜬 RED였고, 나머지 34건은 데이터 쪽이라 예측값을
+붙여 되돌려 보냈다.
+
+### 채택하지 않은 안 — `item3 == item13` 을 세 번째 갈래로
+
+parser 는 이 패턴을 7건, orchestrator 는 160건이라 봤다. 실측은 **147건**(47/48/49 완비 기준)이고
+**그중 125건이 이미 `CAPPED`/`UNCAPPED` 로 통과**한다. 갈래로 승격하면 그 125칸의 item47·item49 가
+통째로 무검사가 된다 — 전날 `48_tier2_limit` 이 로더 강제라 증거력을 잃은 것과 같은 형태다.
+`item3 == item13` 은 갈래가 아니라 **채무성 tier2 가 없을 때 자연히 따라오는 결과**다.
+
+### 신설 갈래 `TFI_NA` — 판정 근거가 산술적 모순이라 레지스트리가 필요 없다
+
+`item48`(보완자본 한도)은 `SCR × 50%` 공식값이므로 SCR 이 양수인 한 0 일 수 없다. `item48 == 0
+∧ item14 > 0` 이면 그 0 은 금액이 아니라 "해당사항 없음" 표시다(parser 원문 확인: 메트라이프
+2023.1Q p11 `보완자본 한도 0 0` + `(기발행 신종자본증권) 0` + `(기발행 후순위채무) 0`).
+그 상태에서 한도 항등식은 적용 대상이 아니므로 **대체 항등식 `item3 == item13`** 으로 검산한다.
+해당 조건 24칸 전부 성립하고, 실제 갈래 진입은 12칸(메트라이프 10 · 카카오페이 2).
+
+적용전 488 버킷 전수: `CAPPED` 324 · `UNCAPPED` 51 · `BOTH` 34 · `TFI_NA_OK` 12 ·
+`INPUT_MISSING` 52 · `NEITHER` 15(RED).
+
+### 다리 — `한도초과 ≤ item12` 구조적 상한
+
+발행사 각주(미래에셋생명 2023.2Q p11 주2)가 기본자본을 *"순자산에서 지급여력금액 불인정 항목
+(단, 보완자본 한도를 초과한 금액을 제외)"* 을 차감한 금액으로 정의한다 → 한도초과액은
+불인정항목 Ⅱ **안의 구성요소**라 그보다 클 수 없다. 근사치 `max(0, item47 − item48)` 이 상한을
+넘으면 넘은 만큼은 다른 데서 온 값이다.
+
+| 후보식 | 통과 | 실패 |
+|---|---:|---:|
+| 초과항 없음 `i4−i12−i13` | 425 | 52 |
+| 무조건 더함 | 440 | 37 |
+| CAPPED 조건부 (직전) | 461 | 16 |
+| **CAPPED 조건부 + `min(exc, i12)` (채택)** | **467** | **10** |
+| `exc = max(0, i47 − i3)` 계열 | 435~440 | 37~42 |
+
+클램프 발동 10칸 중 **9칸에서 다리가 정확히 닫힌다.** 셋은 근사치가 item12 와 반올림 차이
+(케이디비 2025.3Q 203.10/203 · 아이엠라이프 2025.2Q 2,015.35/2,015 · IBK연금 2025.3Q 513.09/513)
+라 "불인정항목 전액이 한도초과" 임을 직접 보여준다. 남은 1칸(한화생명 2025.2Q)은 그대로 RED —
+**클램프는 실패를 지우지 않는다.** 대가는 그 10칸에서 item12 가 상쇄돼 item12 오류를 못 보는 것.
+게이트가 발동 칸수를 매번 인쇄한다(`※ 한도초과 클램프 발동 10칸`).
+
+### census 신설 2종 — 하나는 진짜 false-green 을 잡았다
+
+- `TIER2_DUPLICATE_ROW`: `item47 == item48` 소수점까지 정확 일치(4칸 — BNP카디프 3분기 ·
+  동양생명 2025.2Q). item48 은 공식값, item47 은 독립 합계라 우연일 수 없다 = 같은 셀 두 번 읽기.
+  4칸 전부 이미 다른 축에서 깨져 있었으므로 오탐 0, 진단 정확도만 오른다.
+- `TIER2_LIMIT_STALE`: item48 이 당분기 `item14×50%` 와 어긋나는데 **직전분기** 것과는 맞는다.
+  롯데손해 2026.1Q 1칸 — 47/48/49 적용전 3칸이 2025.4Q 와 바이트까지 동일하고 item48(10,335.34)이
+  2025.4Q SCR×50%(10,335.50)와 일치, 당분기(10,216)와는 119.34 어긋난다. **적용전 컬럼만** 전기
+  것이다(적용후는 5,775.82 vs 5,801.18 로 다르다). 산수는 맞는데 소스가 직전분기인 false-green.
+
+### `TIER2_TABLE_ABSENT` 52칸 사유 2분할
+
+`..._INTERMITTENT` **39**(같은 회사가 다른 분기엔 공시 → 추출갭) · `..._COMPANYWIDE` 13
+(미래에셋생명 전 분기 부재). **RED 승격은 하지 않았다** — blocking 이 39 늘어나는 정책 결정이라
+orchestrator/owner 판단으로 올린다. 사유가 갈렸으니 더는 "SKIP 52" 가 통과처럼 읽히지 않는다.
+
+### 변이시험 — 갈래가 면제로 변질되는 것을 기계로 막는다
+
+- `tests/test_tier2_limit_rules.py` 37 → **53**. `TFI_NA` 갈래 안에서 item3·item13 을 흔들면
+  RED 가 나는지, 세 행 중 하나라도 0 이 아니면 갈래에서 빠지는지, SCR=0 이면 갈래가 사라지는지,
+  클램프가 실패를 지우지 않는지, 중복행/전기잔존이 적용전·적용후 둘 다에서 잡히는지.
+- `tests/test_rule_coverage_manifest.py` 4 → **6**. `COMPOSITION_BRANCHES` 선언 +
+  `test_composition_branch_set_matches_manifest`(통과 사유에 갈래 이름이 반드시 박힌다) +
+  `test_every_composition_branch_is_falsifiable`(실데이터에서 네 갈래 대표를 뽑아 item3 을
+  9,999 흔들면 전부 통과가 깨진다). **갈래를 늘리고 falsifiability 를 증명 안 하면 테스트가 막는다.**
+- 순회 범위 실측: 8축 전부 **488/488 버킷 · 39/39 회사**, 중복 발행 0.
+
+### 잔여 34건 — 전부 parser 발주 (면제 신설 0, 허용오차 미변경)
+
+`inbox/parser/20260821T1425Z...md` `## sender 재확인 (validation, iter-2)`, status open · iter 3.
+전기 잔존 1 · 중복행 4 · 계열 이탈 2(NH농협손해 2025.4Q 예측 7,928.46 · 한화생명 2025.2Q 예측
+≈139,303) · 코리안리 스코프 6(잔차가 `item14 × 5.00%` 와 최대 편차 0.38억으로 일치) ·
+순수 코어잔차 6 · 추출불가 1(동양생명 2026.1Q 완전 스캔본).
+
+**owner 승인 필요 3건**: ① 코리안리 — TFI 표 자신의 보완자본/기본자본 행 신규 적재(마스터로는
+절대 못 닫는다, 면제보다 이쪽이 맞다) ② `..._INTERMITTENT` 39칸 RED 승격 여부 ③ 동양생명
+2026.1Q vision 판독 시도 여부.
+
+### 재현
+
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py
+  -> exit 2, blocking RED=34 (= 35 − 8_life documented exception 1)
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py
+  -> SUMMARY RED=20 (종전 24)
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/ -q \
+  --ignore=tests/test_pl_breakdown_golden.py --ignore=tests/test_ifrs17_bs_golden.py
+  -> 221 passed, 1 skipped
+```
+
+골든 `tests/fixtures/kics_rules_golden.json` 은 룰이 **의도적으로** 바뀌었으므로
+`python tests/test_kics_rules_golden.py --update` 로 재생성(RED 44 → 35). 해시를 손으로 고치지
+않았다. `kics_disclosure.json` · `insurequant_master_tables.xlsx` 미변경, 커밋·push 없음.
 
 ---
 

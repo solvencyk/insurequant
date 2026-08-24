@@ -67,14 +67,15 @@ def main() -> int:
     #     바이트를 떠 두고 끝나면 되돌린다 — 안 그러면 push 할 때마다 워킹트리가 더러워지고
     #     다음 세션이 "이 diff 는 뭐지"로 시간을 쓴다(2026-08-21 실측).
     print("\n" + "=" * 72)
-    print("DOMAIN GATES (csm_continuity · kics_rate_sensitivity · nb_csm_multiple)")
-    _dom_outputs = [ROOT / "data" / "dart" / "viz" / "csm_continuity_validation.json",
+    print("DOMAIN GATES (csm_continuity · kics_rate_sensitivity · nb_csm_multiple · csm_waterfall)")
+    _dom_outputs = [ROOT / "data" / "dart" / "viz" / "csm_waterfall_validation.json",
+                    ROOT / "data" / "dart" / "viz" / "csm_continuity_validation.json",
                     ROOT / "data" / "_derived" / "kics_rate_sensitivity_validation.json",
                     ROOT / "data" / "_derived" / "nb_csm_validation.json"]
     _before = {f: f.read_bytes() for f in _dom_outputs if f.exists()}
     n_dom = 0
     for _name in ("validate_csm_continuity", "validate_kics_rate_sensitivity",
-                  "validate_nb_csm_multiple"):
+                  "validate_nb_csm_multiple", "validate_csm_waterfall"):
         # 자식 스크립트 일부가 stdout 을 utf-8 로 reconfigure 하지 않아 한글이 깨진 채 올라온다
         # (`validate_nb_csm_multiple` 실측). 훅이 그 출력을 사람에게 보여주므로 여기서 강제한다.
         _p = subprocess.run([sys.executable, str(ROOT / "scripts" / (_name + ".py"))],

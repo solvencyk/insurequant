@@ -32,6 +32,41 @@ NB_ISSUE_CODES = frozenset({"new_business_missing", "new_business_zero"})
 REL_TOL = 0.005
 ABS_TOL_MN = 500.0
 
+# IFRS17 (K-IFRS 제1117호) is mandatorily effective for annual periods
+# beginning on or after 2023-01-01. Every entry in csm_waterfall.json is an
+# ANNUAL 사업보고서 filed in Q1 (Jan-Apr) of the year AFTER the fiscal year it
+# covers (rcept_no's first 4 digits = filing year; verified across all 47
+# entries currently in this file — every rcept_no month is 03 or 04, none
+# fall in the 05/08/11 windows that would mark a quarterly/half-year filing).
+# So a filing whose fiscal year is 2022 or earlier (rcept_no filed in 2023)
+# reports BEFORE the standard existed: its measurement-note extract carries,
+# at most, a single point-in-time "적용할 경우"(if-applied) pro-forma preview —
+# never a rollforward with opening/new_business/.../closing stages, because
+# that concept did not apply to the FY2022 financial statements themselves.
+# Confirmed by direct inspection: all 6 affected filings' extracted
+# measurement blocks contain ZERO occurrences of "보험계약마진" anywhere
+# (not just in the picked block — searched every block in the file).
+# These are therefore a STRUCTURAL exclusion (never had the data to report),
+# not a parsing gap — reparsing them can never produce a waterfall. Excluding
+# them keeps the gate meaningful for the 41 in-scope filings instead of
+# permanently pinned at fail=6 for filings that can never pass.
+IFRS17_EFFECTIVE_FISCAL_YEAR = 2023
+
+
+def _annual_fiscal_year(rcept_no: str) -> int | None:
+    """Fiscal year covered by an ANNUAL (사업보고서) filing, from its rcept_no.
+
+    First 4 digits of rcept_no are the filing year; annual reports file in
+    Q1 of the year after the fiscal year they cover (same convention as
+    ``scripts/_dart_path_helpers.py:annual_period_dir_for_rcept`` and
+    ``scripts/viz_build_ifrs17_panels.py:_period_asof_from_rcept``'s months
+    1-4 branch). Returns None when rcept_no doesn't look like a 14-digit
+    DART receipt number, so a malformed value is never silently excluded.
+    """
+    if not (isinstance(rcept_no, str) and len(rcept_no) >= 4 and rcept_no[:4].isdigit()):
+        return None
+    return int(rcept_no[:4]) - 1
+
 
 def _stage_val(stages: dict, key: str) -> float | None:
     node = stages.get(key) or {}
@@ -126,7 +161,28 @@ def validate_company(entry: dict) -> dict:
 def build_report() -> dict:
     payload = json.loads(WATERFALL_PATH.read_text(encoding="utf-8"))
     companies = payload.get("companies") or []
-    results = [validate_company(c) for c in companies]
+
+    in_scope: list[dict] = []
+    excluded: list[dict] = []
+    for c in companies:
+        fy = _annual_fiscal_year(c.get("rcept_no") or "")
+        if fy is not None and fy < IFRS17_EFFECTIVE_FISCAL_YEAR:
+            excluded.append(
+                {
+                    "company": c.get("company") or "?",
+                    "rcept_no": c.get("rcept_no"),
+                    "fiscal_year": fy,
+                    "reason": (
+                        f"annual filing covers FY{fy}, before IFRS17's "
+                        f"{IFRS17_EFFECTIVE_FISCAL_YEAR}-01-01 effective date — "
+                        "no rollforward existed to disclose"
+                    ),
+                }
+            )
+        else:
+            in_scope.append(c)
+
+    results = [validate_company(c) for c in in_scope]
     failed = [r for r in results if r["status"] == "fail"]
     passed = [r for r in results if r["status"] == "pass"]
     nb_failed = [r for r in results if not r.get("new_business_ok")]
@@ -146,7 +202,10 @@ def build_report() -> dict:
             "period": payload.get("period"),
             "built_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "build_script": "scripts/validate_csm_waterfall.py",
-            "companies_total": len(results),
+            "ifrs17_effective_fiscal_year": IFRS17_EFFECTIVE_FISCAL_YEAR,
+            "companies_total": len(companies),
+            "companies_excluded_pre_ifrs17": len(excluded),
+            "companies_in_scope": len(results),
             "companies_pass": len(passed),
             "companies_fail": len(failed),
             "new_business_fail": len(nb_failed),
@@ -154,6 +213,7 @@ def build_report() -> dict:
             "needs_reparse_loop": len(failed) > 0,
             "needs_reparse_for_new_business": len(nb_failed) > 0,
         },
+        "excluded_pre_ifrs17": excluded,
         "new_business_failed": nb_failed,
         "must_reparse": must_reparse,
         "failed": failed,
@@ -174,8 +234,12 @@ def main() -> int:
     print(f"Wrote {OUT_PATH}")
     print(
         f"  pass={meta['companies_pass']} fail={meta['companies_fail']} "
-        f"nb_fail={meta['new_business_fail']} total={meta['companies_total']}"
+        f"nb_fail={meta['new_business_fail']} in_scope={meta['companies_in_scope']} "
+        f"excluded_pre_ifrs17={meta['companies_excluded_pre_ifrs17']} "
+        f"total={meta['companies_total']}"
     )
+    for x in report.get("excluded_pre_ifrs17") or []:
+        print(f"  EXCLUDED (pre-IFRS17, FY{x['fiscal_year']}): {x['company']} {x['rcept_no']}")
     for f in report.get("new_business_failed") or []:
         print(f"  NB BLOCK {f['company']}: {', '.join(f.get('issues') or [])}")
     for f in report.get("failed") or []:

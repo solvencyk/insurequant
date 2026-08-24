@@ -1,0 +1,101 @@
+{
+  "_schema": "kics_item_registry/v1",
+  "_doc": "K-ICS 마스터(kics_disclosure.json)의 **항목번호 등록부**. 항목번호는 parser-kics 레인과 validation 레인이 공유하는 이름공간인데 2026-08-24 까지 등록부가 없었다.",
+  "_why": "2026-08-24 에 두 레인이 52 번을 동시에 잡았다. parser 는 `(기발행 신종자본증권)` 을, validation 은 `50_tfi_tier_split_post` 등식 승격용 `지급여력금액(TFI표)` 을 각각 52 로 예약해 두고 있었다. parser 가 게이트를 돌리다 우연히 게이트 출력 문구에서 눈치채고 되돌렸다 — **다음엔 못 잡는다.** 룰 코드 주석과 TODO 산문에만 있던 예약을 기계가 읽는 파일로 옮긴 것이 이 등록부다.",
+  "_contract": "① 마스터에 실린 항목번호는 전부 `items` 에 있어야 한다(없으면 테스트 실패). ② `items` 의 항목은 마스터에 있거나 `status`=`reserved` 여야 한다(dangling 예약 차단). ③ `reserved` 항목에 데이터가 들어오면 테스트가 막는다 — 예약을 채운 레인이 이 파일을 같이 고쳐야 통과한다. ④ `wired_rules` 에 적은 룰 id 는 룰엔진이 실제로 내보내는 id 여야 한다. 강제: tests/test_kics_item_registry.py",
+  "_scope_note": "1-46 은 **의도적으로 미등재**다. 이 등록부의 목적은 완결성이 아니라 다음 번호충돌을 막는 것이라, 오늘 신설된 47-54 만 먼저 채웠다. 1-46 을 채우려면 각 항목의 출처표·소유레인을 원문으로 확인해야 하는데 그 작업은 이 등록부 없이도 안전하다(그 번호들은 이미 다 쓰이고 있어서 새로 잡을 일이 없다). `unregistered_ranges` 가 그 사실을 선언하고, 테스트는 그 범위만 면제한다.",
+  "_owner_lanes": {
+    "parser_kics": "src/solvency/parser + scripts/fix_2026*.py — 값을 raw PDF 에서 뽑아 마스터에 적재한다",
+    "validation": "src/solvency/validation/kics_json_rules.py + scripts/validate_kics_disclosure.py — 룰을 배선한다",
+    "shared": "번호 자체는 두 레인 공유 이름공간이다. **새 번호를 잡기 전에 이 파일에 reserved 로 먼저 등재하라.**"
+  },
+  "unregistered_ranges": [
+    {
+      "from": 1,
+      "to": 46,
+      "reason": "2026-08-24 등록부 신설 이전부터 쓰이던 항목(핵심 1-28 · 생명장기 sub-risk 29-35 · 시장위험 36-40 · 금리IRR 순자산가치 41-46). 번호가 이미 점유돼 있어 충돌 위험이 없으므로 미등재로 선언한다. 룰 커버리지는 tests/test_rule_coverage_manifest.py 가 따로 강제한다."
+    }
+  ],
+  "items": {
+    "47": {
+      "label": "보완자본 한도 적용 전",
+      "source_table": "[지급여력비율의 경과조치 적용에 관한 사항] (1) 공통적용 경과조치 (단위 백만원)",
+      "owner_lane": "parser_kics",
+      "registered": "2026-08-21",
+      "status": "loaded",
+      "columns": ["값", "값_적용후"],
+      "wired_rules": ["3_tier2_composition", "3_tier2_composition_post", "47_tier2_census", "47_tier2_census_post", "2_tier1_bridge", "2_tier1_bridge_post", "51_tfi_tier2_composition", "51_tfi_tier2_composition_post"],
+      "note": "발행사마다 후순위채무 포함/제외 기준이 다르다 — DB생명은 item54(301,919)가 item47(300,748)보다 크게 인쇄된다(raw FY2025_Q2 p19)."
+    },
+    "48": {
+      "label": "보완자본 한도",
+      "source_table": "[지급여력비율의 경과조치 적용에 관한 사항] (1) 공통적용 경과조치 (단위 백만원)",
+      "owner_lane": "parser_kics",
+      "registered": "2026-08-21",
+      "status": "loaded",
+      "columns": ["값", "값_적용후"],
+      "wired_rules": ["48_tier2_limit", "48_tier2_limit_post", "3_tier2_composition", "3_tier2_composition_post", "47_tier2_census", "47_tier2_census_post", "51_tfi_tier2_composition", "51_tfi_tier2_composition_post"],
+      "note": "= item14(지급여력기준금액, 적용전) x 50%. **LOADER_ENFORCED** — 로더가 이 식으로 배율을 골랐으므로 48_tier2_limit 의 통과는 추출 정확성의 증거가 아니다(YELLOW 고정, tests/test_rule_coverage_manifest.py 가 RED 승격을 막는다)."
+    },
+    "49": {
+      "label": "해약환급금 부족분 상당액 중 해약환급금 상당액 초과분",
+      "source_table": "[지급여력비율의 경과조치 적용에 관한 사항] (1) 공통적용 경과조치 (단위 백만원)",
+      "owner_lane": "parser_kics",
+      "registered": "2026-08-21",
+      "status": "loaded",
+      "columns": ["값", "값_적용후"],
+      "wired_rules": ["3_tier2_composition", "3_tier2_composition_post", "47_tier2_census", "47_tier2_census_post", "51_tfi_tier2_composition", "51_tfi_tier2_composition_post"]
+    },
+    "50": {
+      "label": "기본자본(TFI표, 공통적용경과조치)",
+      "source_table": "[지급여력비율의 경과조치 적용에 관한 사항] (1) 공통적용 경과조치 (단위 백만원)",
+      "owner_lane": "parser_kics",
+      "registered": "2026-08-22",
+      "status": "loaded",
+      "columns": ["값", "값_적용후"],
+      "wired_rules": ["50_tfi_tier_split", "50_tfi_tier_split_post"],
+      "note": "헤드라인 item2 와 **다른 값일 수 있다** — 코리안리 FY2023_Q2 는 한 필링 안에서 같은 개념을 두 값으로 인쇄한다(p8 32,204 / p9 3,122,114·3,220,438)."
+    },
+    "51": {
+      "label": "보완자본(TFI표, 공통적용경과조치)",
+      "source_table": "[지급여력비율의 경과조치 적용에 관한 사항] (1) 공통적용 경과조치 (단위 백만원)",
+      "owner_lane": "parser_kics",
+      "registered": "2026-08-22",
+      "status": "loaded",
+      "columns": ["값", "값_적용후"],
+      "wired_rules": ["50_tfi_tier_split", "50_tfi_tier_split_post", "51_tfi_tier2_composition", "51_tfi_tier2_composition_post", "53_tfi_memo_rows", "53_tfi_memo_rows_post"],
+      "note": "47/48/49 의 **부모행**이다(헤드라인 item3 이 아니다). 53/54 의 포함관계 상한이기도 하다."
+    },
+    "52": {
+      "label": "지급여력금액(TFI표, 공통적용경과조치)",
+      "source_table": "[지급여력비율의 경과조치 적용에 관한 사항] (1) 공통적용 경과조치 표 맨 윗줄 (단위 백만원)",
+      "owner_lane": "validation",
+      "reserved_by": "validation 2026-08-22 (kics_json_rules.py 축 E 주석 + TODO_validation.md 'parser 발주 3건' 2번)",
+      "registered": "2026-08-24",
+      "status": "loaded",
+      "columns": ["값", "값_적용후"],
+      "wired_rules": ["50_tfi_tier_split", "50_tfi_tier_split_post"],
+      "note": "**번호 충돌이 실제로 난 항목이다.** parser iter-10 이 처음 `(기발행 신종자본증권)` 을 여기 앉혔다가 게이트 출력에서 validation 예약을 발견하고 되돌렸다. 2026-08-24 에 축 E 의 comparand 로 승격돼 적용전·적용후 둘 다 `item50 + item51 == item52` 로 검산한다."
+    },
+    "53": {
+      "label": "(기발행 신종자본증권)(TFI표, 공통적용경과조치)",
+      "source_table": "[지급여력비율의 경과조치 적용에 관한 사항] (1) 공통적용 경과조치 **메모행** (단위 백만원)",
+      "owner_lane": "parser_kics",
+      "registered": "2026-08-24",
+      "status": "loaded",
+      "columns": ["값", "값_적용후"],
+      "wired_rules": ["53_tfi_memo_rows", "53_tfi_memo_rows_post"],
+      "note": "메모행이라 항등식의 항이 아니다 — census(적용전) · 부호 · `53+54 <= item51` 포함관계로만 검사한다. 라벨 변형: `기발행신종자본증권`(괄호·공백 없음, 동양생명 FY2024_Q4) · `기발생`(오식, 신한라이프) · `(기발행 신〮자본증권)`(U+302E 혼입, 롯데손해 FY2026_Q1)."
+    },
+    "54": {
+      "label": "(기발행 후순위채무)(TFI표, 공통적용경과조치)",
+      "source_table": "[지급여력비율의 경과조치 적용에 관한 사항] (1) 공통적용 경과조치 **메모행** (단위 백만원)",
+      "owner_lane": "parser_kics",
+      "registered": "2026-08-24",
+      "status": "loaded",
+      "columns": ["값", "값_적용후"],
+      "wired_rules": ["53_tfi_memo_rows", "53_tfi_memo_rows_post"],
+      "note": "NH농협 2025.4Q 를 닫는 항이지만 **전사 공식이 아니다** — `item51 == min(47,48)+49+item54` 를 전 버킷에 강제하면 새로 닫힘 1 · 새로 깨짐 218(대다수 회사는 item47 이 이미 후순위채무를 포함). 그 1버킷은 잔차 박제형 documented exception 으로 등재했다(scripts/validate_kics_disclosure.py `_TIER2_ISSUER_INCONSISTENT`)."
+    }
+  }
+}

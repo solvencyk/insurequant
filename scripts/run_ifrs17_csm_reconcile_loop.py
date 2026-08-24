@@ -26,6 +26,9 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 ROOT = Path(__file__).resolve().parents[1]
 PY = sys.executable
 ARTIFACTS = ROOT / "artifacts"

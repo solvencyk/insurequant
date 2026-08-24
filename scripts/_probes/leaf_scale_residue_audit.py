@@ -65,7 +65,12 @@ def main() -> int:
                 if row is None:
                     continue
                 cand = [a for a, _b in pairs]
-                pre_raw = max(set(cand), key=cand.count) if cand else None
+                # `max(set(cand), key=cand.count)` 였다. 카운트가 동률(1 vs 1)이면 `set` 순회
+                # 순서가 승자를 정해서, **원문 첫 occurrence 대신 엉뚱한 값(0.0)을 고르는** 일이
+                # 있었다 — 교보생명 item35 3분기가 그 탓에 "마스터가 틀렸다"로 3건 오탐됐다
+                # (실제로는 마스터가 맞았다, inbox/_resolved/20260821T1030Z 답변 표).
+                # 동률이면 **원문에 먼저 나온 값**을 쓴다: 표를 위에서 아래로 읽는 순서와 같다.
+                pre_raw = max(cand, key=lambda v: (cand.count(v), -cand.index(v))) if cand else None
                 post_raw, note = resolve_leaf(pairs)
                 for col, v in (("값", pre_raw), ("값_적용후", post_raw)):
                     if v is None or note.startswith("두 표"):
