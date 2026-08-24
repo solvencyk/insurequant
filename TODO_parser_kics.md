@@ -1,5 +1,77 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
+> Last updated: 2026-08-25(20회차) — inbox `20260825T0400Z`(orchestrator, item52 적용후
+> 분기 미배선 주장) 드레인: **티켓의 가설은 틀렸다(코드는 이미 적용전·적용후 대칭이었다) —
+> 실제 원인은 item52 커버리지가 100%가 되며 item1[값_적용후]의 유일한 엔진 가드였던
+> 폴백이 죽은 코드가 된 것.** `7_post`(item27후=item1후/item14후×100, 기존 `8_post`의
+> 대칭짝) 신설로 복원.
+>
+> - **가설 반증**: `_validate_tfi_tier_rows()`의 item52 등식 분기(`kics_json_rules.py`
+>   L1648)는 `post` 값과 무관하게 이미 하나의 코드 경로다 — "적용전만 배선되고 적용후는
+>   안 됐다"는 코드 구조상 불가능했다. 변이시험(`scripts/_probes/
+>   probe_20260825_item1_post_coverage.py`) 실측: item1[값_적용후] 488칸 흔들어도
+>   반응 0건(양성대조군 item1[값] 적용전은 976건 반응 — 하니스는 정상). 분해: 50/51 둘 다
+>   있는 450버킷 **전부**가 item52도 갖고 있어(없음 0), item1_적용후를 참조하던 옛 폴백이
+>   0/450에서만 산다 — 즉 죽은 코드. 그 폴백이 엔진에서 item1 post를 보는 유일한 코드였다
+>   (rule "7"은 pre만 봄).
+> - **수정**: `_validate_tfi_tier_rows`/`50_tfi_tier_split_post`는 안 건드림(item52 등식이
+>   이미 더 강한 검사). 대신 `_validate_transition_basic()`에 `7_post` 신설 — 기존
+>   `8_post`와 정확히 대칭(same-basis 가드·동적허용오차 동일).
+> - **전 버킷 시뮬레이션**(`scripts/_probes/probe_20260825_7post_before_after.py`, git HEAD
+>   vs 현재를 임시 모듈 2개로 로드해 대조): 기존 13,664개 (회사,분기,rule) 키 status 변경
+>   **0건**(회귀 없음, 8_post 포함) · 신규 7_post **RED 0 · YELLOW 6(전부 소액분모 반올림,
+>   기존 카카오 사례와 동일 패턴) · GREEN 482** → item1_적용후 488칸 전량 커버리지 복원,
+>   새 RED 없어 판정할 대상 없음.
+> - **item52 census**(부탁 3번, `scripts/_probes/probe_20260825_tfi_skip38_census.py`):
+>   50/51 있는데 item52만 빠진 버킷 **0개** — 이번 건 백필은 이미 완료 상태였다. 남은
+>   SKIP 38(NO_TABLE 28 · BACKLOG 10)은 전부 이미 다른 티켓에 추적 중(NO_TABLE 13칸=
+>   미래에셋생명 `task_66ee6d43` 스핀오프분, 나머지는 룰 docstring에 이미 문서화된 표
+>   부재/50-51 백로그) — 중복작업 방지 위해 이번엔 추가 적재 안 함.
+> - **부수 2건**: ① `validate_kics_disclosure.py::_print_tier2_axis_report`의
+>   `_TIER2_POST_RANGE_ONLY` 노트가 하드코딩이라 item52 100% 채워진 뒤에도 "결측이라
+>   범위검사"를 계속 인쇄하던 것(티켓이 지적한 정확히 그 증상) — 이번 실행 실측 폴백
+>   히트수를 세어 0이면 "전량 등식 검사됨"으로 동적 출력하게 고침. ② `tests/
+>   test_tfi_memo_rows.py::test_axis_e_fallback_still_exists_for_missing_item52` —
+>   라이브 마스터에서 폴백이 자연발생하길 기대하던 테스트가 30버킷 적재로 그런 버킷이
+>   0개가 되며 **내 세션 이전부터** 깨져 있었다(전/후 시뮬레이션으로 7_post와 무관함을
+>   확인). 대표 버킷 하나의 item52를 인위적으로 지우는 변이로 바꿔 메커니즘은 계속 검증.
+> - **골든**: `tests/test_kics_rules_golden.py --update` — findings 13,664 → 14,152
+>   (+488 = 신규 7_post 전량), by_status GREEN +482 · YELLOW +6 · RED/SKIP 불변. 사유는
+>   해당 파일 "2026-08-25 (7차)" 문단.
+> - **게이트/prepush 실측**: `test_rule_coverage_manifest.py` **11 passed**(38.99s,
+>   FULL_COVERAGE_SWEEP 포함) · `validate_kics_disclosure.py` **exit 0**(RED=36 전부
+>   기존 documented exception, blocking RED=0, 내 변경 전후 동일) · **`prepush_check.py`
+>   전체 실측 완료(450초)**: K-ICS RULE GATE exit=0(clear) · DOMAIN GATES pass(4개 전부
+>   exit=0) · INBOX HYGIENE 기계적위반=0 · OFFLINE TESTS(FULL_COVERAGE_SWEEP=1, 8파일+
+>   tests/unit/) **176 passed, 1 skipped, 0 failed**(test_rule_coverage_manifest.py 전수
+>   스윕 포함) · **overall verdict = BLOCKED(exit 2)**, 유일한 사유는 data-contract 게이트
+>   SUMMARY RED=2(`[PL_breakdown] 하나생명보험 2023.4Q`·`[CSM_waterfall] 하나생명보험
+>   2025.4Q`, 둘 다 ifrs17 레인 소관, K-ICS·item52·item1과 무관 — 병렬 세션이 처리 중).
+>   내 몫(K-ICS 게이트·offline tests·domain gates)은 전부 clear/pass. `kics_disclosure.json`
+>   은 이번 세션에서 바이트 0 변경(git diff 없음), xlsx sync 불필요(dry-run 변경 0, 이미 최신).
+> - 티켓 status: resolved → `inbox/_resolved/` (이동 완료).
+>
+> Last updated (이전): 2026-08-25(19회차) — orchestrator 발주(재감사 부수발견 승계):
+> **item52(경과조치표 자신의 지급여력금액 행) 30버킷 적재 완료 — 다만 담당 에이전트가
+> 문서 작성 전에 멈춰(watchdog stall) 오케스트레이터가 검증·기록을 대신했다.**
+>
+> - **적재 결과(오케스트레이터 실측)**: item52 행 428 → **458**(신규 30행), 적용전·적용후
+>   **458/458 전부 값 있음**. 신규 버킷은 KR0004(4) · KR0010(5) · KR0080(6) · KR0087(4) ·
+>   KR0068(3) · KR1098(3) · KR0005 · KR0009 · KR0071 · KR0097 · KR0100 각 1.
+> - **게이트**: `validate_kics_disclosure.py` **exit 0** · blocking RED=0 유지.
+>   `50_tfi_tier_split` [적용전] RED=1 YELLOW=1 GREEN=448(적재 전과 동일 — 이 축은
+>   원래 item1 폴백으로 돌고 있었다), [적용후] YELLOW 2 → **1**.
+> - **🔴 미완 1건 (다음 세션이 이어받을 것)**: 데이터는 두 컬럼 다 들어왔는데
+>   **게이트 적용후 경로가 아직 item52 를 안 쓴다.** 리포트가 여전히
+>   `※ 등식 아님 — item52(TFI표 자신의 지급여력금액 행) 결측이라 범위검사` 를 인쇄한다.
+>   축 라벨과 적용전 분기만 바뀌고 적용후 분기가 안 바뀐 반쪽 변경이다 —
+>   **"메시지는 X 라는데 코드는 Y"** 유형이라 그대로 두면 다음 세션을 오도한다.
+>   티켓: `inbox/parser/20260825T0400Z__orchestrator__MULTI__item52_post_branch_unwired.md`
+> - **부수**: 같은 커밋에 게이트 리포트의 stale 산문 2건 제거(KR0004 2025.1Q · KR0003
+>   2023.1Q 를 "미등록" 이라 설명했으나 실제로는 `_TIER2_ISSUER_INCONSISTENT` 에 등록돼
+>   있었다 — 재감사보고서 F2 지적분). 차단집계에는 영향 없고 산문만 고쳤다.
+
+
 > Last updated: 2026-08-24(18회차) — orchestrator 발주(재감사 보고서
 > `artifacts/validation/reaudit_20260824_KR0097_KR0049_KR0079_plus_ledger_quality.md`
 > 파트 1-A 승계): **KR0097 하나생명보험 2024.4Q 생명장기 하위위험 값_적용후 4셀 정정

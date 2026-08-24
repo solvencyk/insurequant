@@ -186,7 +186,29 @@ def _update() -> int:
                     "정상 인쇄된 5버킷(KR0076 2023.1Q · KR0104 2024.4Q~2025.3Q)에서도 발동하는데 "
                     "되짚은 초과액이 인쇄값 기반 초과액과 **0.41 이내로 일치**한다. "
                     "KR0087 2025.2Q `2_tier1_bridge` 면제는 해제했고 원장 `contradicted_pins` "
-                    "tripwire 로 재등재를 막는다. blocking RED 0 · 게이트 exit 0.")
+                    "tripwire 로 재등재를 막는다. blocking RED 0 · 게이트 exit 0. "
+                    "2026-08-25 (7차) 재생성 사유 — 데이터는 이번에도 안 건드렸다"
+                    "(kics_disclosure.json 읽기만 했다). **신규 축 `7_post`** (+488 findings, "
+                    "GREEN 482 · YELLOW 6 · RED 0). parser 가 item52 를 30버킷 더 적재해 "
+                    "428→458행이 되자, item50/51 이 둘 다 있는 450버킷 **전부**가 item52 도 "
+                    "갖게 됐다 — `50_tfi_tier_split_post` 가 종전에 item52 결측 폴백으로만 "
+                    "참조하던 item1_적용후 범위검사 분기에 도달하는 버킷이 0 이 됐다. 그 "
+                    "폴백이 엔진에서 item1 의 post 컬럼을 보는 **유일한** 코드여서, item52 "
+                    "커버리지가 늘수록 역설적으로 item1_적용후가 완전 무방비가 됐다 "
+                    "(`tests/test_rule_coverage_manifest.py::test_item_coverage_matches_manifest` "
+                    "가 '488칸 흔들어도 아무 룰도 반응 없음' 으로 즉시 잡음, orchestrator 티켓 "
+                    "`20260825T0400Z`). `50_tfi_tier_split_post` 자체는 안 건드렸다(item52 등식이 "
+                    "이미 더 강한 검사라 손댈 이유가 없다) — 대신 기존 `8_post`"
+                    "(item28후=item2후/item14후×100)와 **정확히 같은 모양**으로 item27후="
+                    "item1후/item14후×100 을 신설했다(같은 same-basis 가드·동적허용오차). "
+                    "전 버킷 시뮬(488, `scripts/_probes/probe_20260825_7post_before_after.py`): "
+                    "13,664개 기존 (회사,분기,rule) 키 중 status 변경 **0건**(회귀 없음, 8_post "
+                    "포함) · 신규 7_post **RED 0 · YELLOW 6**(전부 카카오페이 등 소액분모 반올림, "
+                    "8_post 와 같은 기존 패턴 — 그중 하나는 코드에 이미 인용된 "
+                    "'카카오 2023.4Q item14후=20 → 974/20=4870 vs 공시4777' 사례와 정확히 일치) "
+                    "· GREEN 482. 부수: `POST_GUARDED` 에 27 추가(item27후가 7_post 의 대조 "
+                    "대상이라 부수적으로 엔진 커버리지에 들어옴 — item1 은 이미 있었다). "
+                    "blocking RED 0 · 게이트 exit 0(불변) · findings 13,664 → 14,152.")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

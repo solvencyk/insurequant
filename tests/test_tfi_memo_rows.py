@@ -204,12 +204,35 @@ def test_axis_e_equation_uses_item52_in_both_columns(rows, base, col):
     assert st == "RED", f"[{col}] {c} {q}: item52 를 9,999 흔들어도 {st} 다"
 
 
-def test_axis_e_fallback_still_exists_for_missing_item52(base):
+def test_axis_e_fallback_still_exists_for_missing_item52(rows, base):
     """item52 결측 버킷에서 폴백(적용전=item1 / 적용후=범위)이 살아 있고, **사유가 찍힌다.**
 
-    폴백이 조용하면 item52 백필 발주가 사라진다."""
-    tags = [f.get("detail", "") for f in base
-            if f["rule"].startswith("50_tfi_tier_split")]
-    assert any("TFI_TOTAL_ROW_ABSENT" in d for d in tags), (
-        "item52 결측 폴백이 사유 없이 통과하고 있다 — 어느 버킷이 약한 검사만 받았는지 "
-        "게이트 출력만 보고 알 수 없게 된다")
+    폴백이 조용하면 item52 백필 발주가 사라진다.
+
+    2026-08-25: 원래 이 테스트는 **라이브 마스터를 그대로** 스캔해서 폴백 사유가 자연히
+    발생하는 버킷을 찾았다. parser 가 item52 를 30버킷 더 적재(428→458)하자 item50/51 이
+    둘 다 있는 450버킷 **전부**가 item52 도 갖게 됐다 — 폴백에 도달하는 라이브 버킷이 0 이
+    됐다(정상: 커버리지가 늘어난 결과이지 결함이 아니다). 그래서 자연발생 스캔은 이제 항상
+    빈손이라 이 테스트가 늘 실패한다. **메커니즘 자체**(item52 가 미래에 다시 결측되는 회사가
+    생기면 폴백이 조용하지 않다는 것)는 여전히 지켜야 하므로, 대표 버킷 하나의 item52 를
+    **인위적으로 지워서** 폴백이 그 즉시 사유를 찍는지 직접 증명한다(다른 테스트들과 같은
+    라이브-데이터 변이 관행, `_mutate(..., new=None)`)."""
+    target = None
+    for f in base:
+        if f["rule"] == "50_tfi_tier_split" and "item52" in f.get("detail", ""):
+            c, q = f["원보험사코드"], f["공시분기"]
+            if (_cell(rows, c, q, 52, PRE) or {}).get(PRE) not in (None, "") and \
+               (_cell(rows, c, q, 52, POST) or {}).get(POST) not in (None, ""):
+                target = (c, q)
+                break
+    assert target, "item50+51 이 있고 item52 등식으로 검사되는 라이브 버킷이 없다 — 축 E 승격이 살아있는지부터 확인할 것"
+    c, q = target
+    mutated = _mutate(rows, c, q, 52, PRE, None)
+    mutated = _mutate(mutated, c, q, 52, POST, None)
+    after = _findings(mutated)
+    for rule in ("50_tfi_tier_split", "50_tfi_tier_split_post"):
+        st, detail = _status(after, c, q, rule)
+        assert "TFI_TOTAL_ROW_ABSENT" in detail, (
+            f"{rule} {c} {q}: item52 를 지웠는데 폴백 사유가 안 찍힌다(status={st}, "
+            f"detail={detail!r}) — 어느 버킷이 약한 검사만 받았는지 게이트 출력만 보고 "
+            "알 수 없게 된다")

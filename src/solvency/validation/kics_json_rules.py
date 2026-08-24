@@ -720,10 +720,61 @@ def _validate_transition_basic(
     findings: list[dict[str, Any]],
     eff_tol: float,
 ) -> None:
-    """경과조치 적용후 기본자본비율 (8_post, item2후/item14후) and 생명장기 R7 sub-risk
-    diversification (8_life, item17 = sqrt(S·R7·S)). Both use a dynamic tolerance for
-    sub-scale denominators / accumulated sqrt rounding. Split out of _validate_bucket
-    2026-07-22; pinned by tests/test_kics_rules_golden.py."""
+    """경과조치 적용후 지급여력비율 (7_post, item1후/item14후) · 기본자본비율 (8_post,
+    item2후/item14후) and 생명장기 R7 sub-risk diversification (8_life, item17 =
+    sqrt(S·R7·S)). All three use a dynamic tolerance for sub-scale denominators /
+    accumulated sqrt rounding. Split out of _validate_bucket 2026-07-22; pinned by
+    tests/test_kics_rules_golden.py.
+
+    ## 7_post — 2026-08-25 신설: item1[값_적용후]가 무방비였다
+
+    `50_tfi_tier_split_post`(TFI 표 자신의 50+51 vs item52)가 2026-08-24에 item52
+    등식으로 승격되면서, 그 축이 이전에 폴백으로 쓰던 `item1_적용후` 범위검사 분기가
+    죽은 코드가 됐다 — item50/51 이 있는 450버킷 **전부**가 이제 item52 도 갖고 있어서
+    (parser가 그 사이 30버킷을 더 적재, 428→458행) 폴백 분기에 도달하는 버킷이 0이
+    됐다(`scripts/_probes/probe_20260825_item1_post_coverage.py` 실측). item1_적용후는
+    그 폴백이 **유일한** 엔진 레벨 가드였다 — `run_validation()` 안 어떤 룰도 item1의
+    post 컬럼을 참조하지 않았다(rule 7 은 `bucket.get(1)` 즉 pre 만 본다). 그래서
+    `test_rule_coverage_manifest.py::test_item_coverage_matches_manifest` 가 "item1
+    [값_적용후] 488칸 흔들어도 아무 룰도 반응 안 함" 으로 즉시 잡았다(설계대로 동작).
+
+    수정은 `50_tfi_tier_split_post` 를 건드리지 않는다(item52 등식은 이미 올바르고
+    더 강한 검사다) — 대신 이미 있는 `8_post`(item28후=item2후/item14후×100)와 **정확히
+    같은 모양**으로 item1의 자기 축을 하나 더 만든다. item27=지급여력비율/item1 이 item28=
+    기본자본비율/item2 의 헤드라인 짝인데 8_post만 있고 7_post가 없었던 것 자체가 원래
+    누락이었다(둘 다 있어야 대칭이다). same-basis 가드·동적허용오차 로직은 8_post와 동일
+    (근거도 동일 — 흥국생명 2024.4Q 류 분자/분모 기준 불일치 spurious RED 방지)."""
+    # Rule 7_post: post-transition solvency ratio (item27 후 = item1후/item14후×100).
+    # Mirrors 8_post's structure exactly — see module note above.
+    post1 = bucket.get(1, post=True)
+    post14_r7 = bucket.get(14, post=True)
+    has_any_post_r7 = (
+        1 in bucket.values_post
+        or 14 in bucket.values_post
+        or 27 in bucket.values_post
+    )
+    same_basis_r7 = (1 in bucket.values_post) == (14 in bucket.values_post)
+    if (has_any_post_r7 and same_basis_r7 and post1 is not None and post14_r7 is not None
+            and post14_r7 != 0):
+        expected = post1 / post14_r7 * 100.0
+        actual = bucket.get(27, post=True)
+        if actual is None:
+            actual = bucket.get(27)
+        ratio_tol = max(eff_tol, abs(expected) * 0.5 / abs(post14_r7) + 50.0 / abs(post14_r7))
+        findings.append(_check_numeric(bucket, "7_post", expected, actual, ratio_tol))
+    else:
+        findings.append(
+            _finding(
+                bucket,
+                "7_post",
+                status=STATUS_SKIP,
+                expected=None,
+                actual=bucket.get(27, post=True),
+                diff=None,
+                detail="no post data or mixed pre/post basis for item1/14 (skip; MISSING caught by transition check)",
+            )
+        )
+
     # Rule 8_post: post-transition basic capital ratio.
     # expected = item2_post / item14_post * 100  (use POST values for both
     # numerator and denominator). bucket.get(..., post=True) falls back to

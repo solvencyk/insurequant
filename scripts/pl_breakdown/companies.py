@@ -3409,7 +3409,18 @@ def extract_tier2_hana(tables):
     """하나생명(KR0097): disaggregated 보험수익/보험서비스비용 notes (NOT a P&L-analysis note).
     4 separate tables captioned '발행한 보험계약…보험수익/보험서비스비용' + the 재보험 pair.
     Unit 천원 → 백만원 (×1e-3); current period = col 0.  (Tier-1 item1=순보험서비스손익,
-    item16←기타보험비용 are fixed in extract_tier1.)"""
+    item16←기타보험비용 are fixed in extract_tier1.)
+
+    2023.4Q label-variant gap (found via inbox/parser 20260825T0230Z follow-up,
+    PL_CSM_AMORT_VS_WATERFALL RED): that filing's raw XML has the target-caption table
+    TWICE -- a "13-4" note-13 companion summary (document order: first, so `pick()` binds
+    to it) that words the CSM/RA rows differently, and the standard "21. 보험수익 및
+    재보험수익" note (document order: later) using the literal labels below. Both cite the
+    SAME underlying figures (CSM row: 27,913,708천원 in both) -- confirmed byte-identical
+    against `data/dart/extracted/..._measurement.json`'s FY2023 rollforward amortization
+    stage (279.14억, CSM_waterfall.json). FY2024/FY2025 filings only ever have ONE
+    matching-caption table (the "21."/"20." form with the literal labels already handled),
+    so these extra variants are 2023-only fallbacks and don't touch those years' output."""
     f = 1e-3
 
     def pick(*cap_frags):
@@ -3431,8 +3442,9 @@ def extract_tier2_hana(tables):
     if cost:
         out["_jang_cost"] = _life_first_num(cost, ["합 계", "합계"])
     if rev:
-        csm = _life_first_num(rev, ["보험계약마진상각"])
-        ra = _life_first_num(rev, ["비금융위험에 대한 위험조정 변동"])
+        csm = _life_first_num(rev, ["보험계약마진상각", "당기손익에인식한보험계약마진"])
+        ra = _life_first_num(rev, ["비금융위험에 대한 위험조정 변동",
+                                    "비금융위험에 대한 위험조정의 변동분"])
         if csm is not None:
             out[4] = abs(csm)
         if ra is not None:

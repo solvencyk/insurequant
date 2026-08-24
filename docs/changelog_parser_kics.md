@@ -1,11 +1,76 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-08-24 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-08-25 · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
 금리민감도/rate-sensitivity). Code: `src/solvency/parser/`. Validators: `validate_kics_disclosure.py`, RS1-4,
 market census.
+
+## 2026-08-25 (20회차) — item1[값_적용후] 커버리지 소실 원인규명 + `7_post` 신설로 복원
+
+inbox `20260825T0400Z`(orchestrator) 드레인. 티켓 가설("50_tfi_tier_split 적용후 분기가
+item52를 안 쓴다")은 **틀렸다** — `_validate_tfi_tier_rows()`의 item52 등식 분기는
+`post` 값과 무관하게 이미 하나의 코드 경로였다(적용전만 배선되고 적용후가 반쪽인 상태는
+코드 구조상 불가능). 실제 원인은 그 반대 방향의 부작용이었다: 아래 19회차 항목에서 item52가
+30버킷 더 실려(428→458) 50/51이 둘 다 있는 450버킷 **전부**가 item52도 갖게 되자,
+`50_tfi_tier_split_post`가 item52 결측일 때만 쓰던 폴백(item1_적용후를 범위 상한으로
+참조)이 0/450 버킷에서만 살아있는 **죽은 코드**가 됐다. 그 폴백이 `run_validation()` 안에서
+item1의 post 컬럼을 보는 **유일한** 코드였어서, item52 커버리지가 100%에 도달할수록
+역설적으로 item1[값_적용후]가 완전 무방비가 됐다 — `tests/test_rule_coverage_manifest.py::
+test_item_coverage_matches_manifest`가 "488칸 흔들어도 아무 룰도 반응 없음"으로 즉시 잡음.
+
+변이시험으로 반증(`scripts/_probes/probe_20260825_item1_post_coverage.py`): 양성대조군
+item1[값](적용전) 488칸 흔듦 → 976건 반응(하니스 정상) vs 본시험 item1[값_적용후] 488칸
+흔듦 → 반응 0건. 분해: 50/51 둘 다 있는 450버킷 중 item52 없는 버킷 0개.
+
+**수정**: `50_tfi_tier_split_post`는 안 건드림(item52 등식이 이미 더 강한 검사) — 대신
+기존 `8_post`(item28후=item2후/item14후×100)와 정확히 대칭인 `7_post`(item27후=
+item1후/item14후×100)를 `_validate_transition_basic()`에 신설. 전 버킷 시뮬레이션
+(`scripts/_probes/probe_20260825_7post_before_after.py`, git HEAD/현재 버전을 임시
+모듈로 동시 로드): 기존 13,664개 (회사,분기,rule) 키 status 변경 **0건**(회귀 없음) ·
+신규 7_post RED 0 · YELLOW 6(전부 기존에도 알려진 소액분모 반올림 패턴) · GREEN 482.
+item52 census(`scripts/_probes/probe_20260825_tfi_skip38_census.py`): 50/51 있는데
+item52만 빠진 버킷 0개 — 백필은 이미 끝나 있었다. 남은 SKIP 38은 전부 이미 다른 티켓
+(미래에셋생명 `task_66ee6d43` 등)에 추적 중이라 중복 적재 안 함.
+
+부수 2건: ① `validate_kics_disclosure.py`의 `_TIER2_POST_RANGE_ONLY` 리포트 노트가
+하드코딩이라 item52 100% 채워진 뒤에도 "결측이라 범위검사"를 계속 인쇄하던 것(티켓이
+지적한 정확한 증상)을 실측 폴백 히트수 기반 동적 출력으로 교체. ② `tests/
+test_tfi_memo_rows.py`의 폴백 자연발생 스캔 테스트가 30버킷 적재 이후(내 세션 이전부터)
+깨져 있던 것을 대표 버킷 인위적 mutation 방식으로 교체(9→10 passed).
+
+골든 `tests/test_kics_rules_golden.py --update`: findings 13,664→14,152(+488). 게이트
+`validate_kics_disclosure.py` exit 0(RED=36 전부 기존 documented exception, blocking
+RED=0, 변경 전후 동일). `kics_disclosure.json` 바이트 0 변경.
+
+`prepush_check.py` 전체 실측(450초): K-ICS RULE GATE exit=0(clear) · DOMAIN GATES
+4개 전부 exit=0 · INBOX HYGIENE 기계적위반=0 · OFFLINE TESTS(FULL_COVERAGE_SWEEP=1)
+176 passed·1 skipped·0 failed(`test_rule_coverage_manifest.py` 전수 스윕 포함) —
+**overall verdict는 BLOCKED(exit 2)**지만 유일한 사유는 data-contract 게이트의
+`[PL_breakdown]`/`[CSM_waterfall]` RED 2건(둘 다 하나생명보험, ifrs17 레인 소관 파일 —
+K-ICS/item52/item1과 무관, 병렬 세션이 처리 중)이다. 상세는
+`inbox/_resolved/20260825T0400Z__orchestrator__MULTI__item52_post_branch_unwired.md`
+`## 답변`.
+
+## 2026-08-25 — item52 30버킷 적재 (19회차, 에이전트 stall 후 오케스트레이터가 마무리)
+
+`item52`(경과조치표 자신의 지급여력금액 행)를 원문에서 30버킷 적재했다. 428 → 458행,
+적용전·적용후 458/458 전부 값 존재. 근거는 재감사 부수발견
+(`artifacts/validation/reaudit_20260824_KR0003_KR0004.md`) — "원문 p17 에 인쇄돼 있는데
+마스터에 없다".
+
+담당 에이전트가 **문서 작성 전에 watchdog stall 로 죽어서**, 오케스트레이터가 트리 상태를
+검증하고(추가 330줄·삭제 0, 게이트 exit 0) 이 기록을 대신 남겼다.
+
+**미완**: 게이트 적용후 경로가 아직 item52 를 참조하지 않는다 — 축 라벨과 적용전 분기만
+바뀌었고, 리포트는 여전히 "item52 결측이라 범위검사" 를 인쇄한다. 데이터는 있는데 쓰는
+코드가 반쪽이라 다음 세션이 오도된다. 후속 티켓
+`inbox/parser/20260825T0400Z__orchestrator__MULTI__item52_post_branch_unwired.md`.
+
+같은 변경에 게이트 리포트 stale 산문 2건 제거(KR0004 2025.1Q·KR0003 2023.1Q — "미등록"
+이라 적혀 있었으나 실제로는 면제 원장에 등록돼 있었다). 차단집계 무영향, 산문만.
+
 
 **Pre-split combined history (before 2026-06-13): [`changelog_parser.md`](changelog_parser.md)** (frozen).
 Convention: see [`docs/agents/doc-style.md`](agents/doc-style.md).

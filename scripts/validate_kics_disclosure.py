@@ -130,7 +130,7 @@ _TIER2_AXES = {
     # --- TFI 표 자신의 기본자본/보완자본(50/51), 2026-08-22 신설 ---------------
     # 47/48/49 의 부모행이다. 축 B(3_tier2_composition)는 **헤드라인** item3 를 쓰므로
     # 두 표의 스코프가 갈리면 깨지는데(코리안리 원문 확인), 축 F 는 표 안에서만 닫는다.
-    "50_tfi_tier_split": "TFI표 tier 분할 item50+item51 (적용전=item1 · 적용후=범위검사)",
+    "50_tfi_tier_split": "TFI표 tier 분할 item50+item51 (item52 있으면 등식 · 없으면 적용전=item1 폴백/적용후=범위검사)",
     "51_tfi_tier2_composition": "TFI표 안 보완자본 구성 item51 (축B와 같은 갈래, 동일표·동일컬럼)",
 }
 _TIER2_LOADER_ENFORCED = {"48_tier2_limit"}
@@ -148,6 +148,7 @@ def _print_tier2_axis_report(findings: list[dict]) -> None:
     by_rule: dict[str, _C] = {}
     reasons: dict[str, _C] = {}
     clamped: dict[str, int] = {}
+    fallback_hits: dict[str, int] = {}
     for f in findings:
         rid = str(f.get("rule"))
         if rid.split("_post")[0] not in _TIER2_AXES:
@@ -155,6 +156,13 @@ def _print_tier2_axis_report(findings: list[dict]) -> None:
         by_rule.setdefault(rid, _C())[f.get("status")] += 1
         if "클램프" in str(f.get("detail", "")):
             clamped[rid] = clamped.get(rid, 0) + 1
+        # item52 결측 폴백(범위검사/구 item1 대조)이 **이번 실행에서 실제로 몇 칸을 탔는지**.
+        # RED/YELLOW/GREEN 세 상태 다 이 접두어를 쓰므로 상태를 안 가리고 센다 — 아래
+        # _TIER2_POST_RANGE_ONLY 노트를 하드코딩 문구가 아니라 이 실측으로 찍기 위해서다
+        # (2026-08-25: item52 가 30버킷 더 실려 폴백이 0/450 이 됐는데도 노트가 그대로
+        # "결측이라 범위검사"를 인쇄해 orchestrator 티켓 `20260825T0400Z`로 지적됐다).
+        if str(f.get("detail", "")).startswith("TFI_TOTAL_ROW_ABSENT"):
+            fallback_hits[rid] = fallback_hits.get(rid, 0) + 1
         # 결측·판정불가를 통과로 세지 않으려면 **사유별로** 쪼개야 한다. SKIP 뿐 아니라
         # YELLOW 도 센다 — `47_tier2_census` 의 "적용여부 미확정" 부재가 YELLOW 로 나가는데,
         # 사유 없이 `YELLOW=13` 만 찍히면 그 13칸이 review 인지 약한 통과인지 구분이 안 된다
@@ -180,8 +188,15 @@ def _print_tier2_axis_report(findings: list[dict]) -> None:
             elif rid.endswith("_post") and base in _TIER2_POST_UNESTABLISHED:
                 note = "  ※ 적용후 관계식 미확립 → review(YELLOW), blocking 아님"
             elif rid.endswith("_post") and base in _TIER2_POST_RANGE_ONLY:
-                note = ("  ※ 등식 아님 — item52(TFI표 자신의 지급여력금액 행) 결측이라 "
-                        "범위검사. YELLOW = 약한 검사만 통과, parser 발주 대기")
+                hits = fallback_hits.get(rid, 0)
+                if hits:
+                    note = (f"  ※ {hits}칸은 등식 아님 — item52(TFI표 자신의 지급여력금액 행) "
+                            "결측이라 범위검사(폴백). 나머지는 item52 로 등식 검사됨. "
+                            "YELLOW = 약한 검사만 통과, parser 발주 대기")
+                else:
+                    note = ("  ※ item52(TFI표 자신의 지급여력금액 행)가 모든 대상 버킷에 있어 "
+                            "전량 등식으로 검사됨 — 범위검사 폴백은 이번 실행 0칸 "
+                            "(item52 결측 버킷이 재발하면 자동으로 다시 켜진다)")
             print(f"  [{col}] {desc}")
             print(f"        RED={c['RED']} YELLOW={c['YELLOW']} GREEN={c['GREEN']} "
                   f"SKIP={c['SKIP']}{note}")
@@ -3793,16 +3808,20 @@ def main() -> int:
             "KR0068 2025.2Q": ("판정불가 유지. 단서 1건 — TFI 표 보완자본의 (적용후 − 적용전) = 825.75 가 "
                                "다리 잔차 826 과 반올림 이내로 같다. **인과는 못 박았다.** '거의 같다' 를 "
                                "근거로 면제하면 패턴을 원인으로 단정하는 것이다 — RED 로 남긴다"),
-            "KR0004 2025.1Q": ("분류 정정: 다리(2_tier1_bridge)는 애초에 잔차 0 으로 닫혀 있다"
-                               "(−2,629 − 0 − 19 = −2,648 = item2). 남은 RED 는 보완자본 구성식 1건뿐이고 "
-                               "원인은 TFI 표와 헤드라인표의 스코프 차이다 — 확정 전이라 RED 로 남긴다"),
             "KR0032 2025.4Q": ("표가 실제로는 닫힌다: 697,899 + 447,254 + 94,959(기발행 후순위채무) "
                                "= 1,240,112 = 공시 보완자본. 잔차 949.59억이 그 행과 정확히 같다 — "
                                "발행사 자기모순이 아니라 룰/적재 커버리지 결손이라 면제 대상이 아니다"),
             "KR0075 2024.3Q": ("2024.4Q·2025.1Q 와 **증거가 동일**하다(같은 표 구조·같은 지문, "
                                "잔차 −220.98/−221.31, gap 14.53). 그런데 owner 위임 목록에 없어서 "
                                "등재하지 않았다 — 면제를 스스로 넓히지 않는다. 다음 라운드 승인 대상"),
-            "KR0003 2023.1Q": "TFI 표 자기합(25,864) != 자기 지급여력금액 행(25,846). owner 위임 목록 밖",
+            # 2026-08-25 제거: "KR0004 2025.1Q"·"KR0003 2023.1Q" 는 이 dict 에 stale 하게 남아
+            # "확정 전"/"owner 위임 목록 밖"이라 적고 있었으나 실제로는 두 버킷 다
+            # `_TIER2_ISSUER_INCONSISTENT`(L2024/L2325)에 이미 등록돼 있다(재감사보고서
+            # artifacts/validation/reaudit_20260824_KR0003_KR0004.md F2 가 지적한 stale 산문 —
+            # "다음 세션이 이 버킷은 면제가 아니다로 읽는 함정"). 차단집계 로직에는 영향 없었지만
+            # (`not_registered` 는 리포트 산문일 뿐, `_TIER2_ISSUER_INCONSISTENT` 등록만 실제로
+            # 차단여부를 정한다) 리포트 판독자를 오도하므로 이 항목만 제거한다(나머지 3건은
+            # 실제로 미등록이라 그대로 둔다).
         },
     }
     report["life8_issuer_inconsistent_exception"] = {

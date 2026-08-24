@@ -1,5 +1,139 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-25 (36th pass) — push 게이트 RED 2건 해소. 35th pass 가 넣은 하나생명 12셀이
+> 교차대조 게이트(`validate_data_contract.py`)를 걸었다 — 35th pass 는 자기 도메인 게이트만
+> 보고 통과 판정했지만 교차대조는 안 돌렸었다. raw 재대조로 둘 다 정정 완료, RED=0.**
+>
+> **① `PL_CSM_AMORT_VS_WATERFALL` 하나생명 2023.4Q — 진짜 추출갭.** `data/dart/FY2023_Q4/raw/
+> KR0097_하나생명보험_20240329000112/20240329000112_00760.xml` note "21. 보험수익 및
+> 재보험수익"(line 14134)에 표준 라벨 "보험계약마진상각"(27,913,708천원) 표가 있는데,
+> `scripts/pl_breakdown/companies.py`의 `extract_tier2_hana`가 문서순서상 더 앞선 "13-4"
+> companion 요약표(line 9783 근처)를 먼저 골랐고 그 표는 **같은 값을 다른 라벨**("해당
+> 기간에 서비스의 이전으로 당기손익에인식한 보험계약마진 금액")로 적어 놓쳤다(같은 라벨변형
+> 패턴이 `extract_tier2_kyobo`엔 이미 fallback 이 있었음 — 그 substring 재사용). `csm`/`ra`
+> label_variants 에 각 1개씩 추가. FY2024/FY2025 raw 엔 이 캡션 표가 1개뿐(표준 라벨)이라
+> 두 해 출력은 재확인 결과 바이트 불변.
+>
+> raw 값(item4=279.14억)은 CSM_waterfall.json 의 2023.4Q CSM상각(-279.1억)·
+> `data/dart/viz/csm_waterfall.json`(독립 추출 파이프라인)의 amortization(27,913.708백만원)과
+> 3중 일치. **적용은 코드 fix + 값 2셀만 손patch** — `build_pl_breakdown.py` 전체 재실행을
+> 한번 해봤더니 하나생명과 무관한 5개사(KR0002/KR0003/KR0010/KR0068/KR0082, 부호역전 포함)
+> 값 변경 + 2개사(KR0049/KR0051) 신규 company-quarter 추가가 같이 딸려나왔다 — 마지막 실전
+> 빌드 이후의 raw/FS-API 캐시 드리프트로 보이며 이번 티켓 범위 밖이라 **그 전체재실행 결과는
+> 버리고 백업으로 원복**, root `PL_breakdown.json` 에만 2셀 직접 patch(`git diff` 2줄).
+> `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py`가 이 드리프트 때문에 FAIL 하는
+> 것 확인(master_rows 7199→7991, company_quarters 294→327 — 전부 위 5+2개사 몫, 하나생명
+> 몫 아님) → 후속조사 spawn_task 로 분리 등재, 이번 커밋엔 미포함.
+>
+> **② `CSM_CONTINUITY_FY_BOUNDARY` 하나생명 2025.4Q — 발행사 재작성, 데이터 정정으로 처리
+> (면제 아님).** 35th pass 가 이미 "부산물 CONT 플래그 1건"으로 포착했지만 "각자 원문 그대로,
+> 값을 임의로 맞추지 않았다"며 남겨뒀던 것 — `check_csm_continuity`의 자체 규율("소급재작성
+> 으로 보인다"는 raw 대조 전엔 사유가 못 됨, `validate_data_contract.py` L2262-2265)이 정확히
+> 막는 패턴이라 raw 를 끝까지 대조해 확정했다.
+>
+> `data/dart/FY2025_Q4/raw/KR0097_하나생명보험_20260325000201/20260325000201_00760.xml`
+> note 38 "재무제표 재작성"(line 25432-25433)에 **명문 공시**: 보험금융수익(비용) 인식
+> 회계정책 변경을 K-IFRS 1008 에 따라 소급 적용, 비교표시 전기 재무제표 재작성. Note 38 자체
+> 영향표: 전기말(2024.12.31) 보험계약부채 증감 +5,726,404천원(+57.26억, line 25567-25570) /
+> 전기초(2024.1.1) 증감 +7,292,841천원(+72.93억, line 25811-25815). note 14-4 의 <당기>/
+> <전기> CSM 측정요소표(line 8490-8995)로 독립 재확인 — 두 표 모두 CSM 소계=444,682,065천원
+> =4,446.82억으로 자기정합(35th pass 가 2025.4Q 기초로 넣은 4446.8 은 그대로 맞았음). FY2024
+> 사업보고서 원표(rcept 20250331000222, line 8392-8399)는 CSM 소계=438,955,662천원=4,389.56억
+> (기존 마스터 2024.4Q 기말과 일치) — 두 필링이 같은 시점을 다르게 말하는 게 note 38 재작성
+> 때문임을 확인.
+>
+> **수정 = 2024.4Q 의 이자·상각·기말·조정 4셀 patch, 기초·신계약은 불변.** note 38 은 2024.1.1/
+> 2024.12.31 두 시점만 재작성(2023 이전 소급 없음) → 2023.4Q 는 안 건드림(건드리면 raw 근거
+> 없는 plug 발생). 이자 179.0→181.3·상각 -398.6→-403.7·기말 4389.6→4446.8 은 note 14-4
+> <전기>표 raw 행 그대로. 조정 -1647.4→-1587.2 는 그 4개 확정값이 닫히는 유일값이자, raw
+> "보험계약마진을 조정하는 추정치의 변동분" <전기>행(-1660.22억)+note 38 전기초 누적재작성
+> 효과(+72.93억) 합과 0.06억 이내 일치(우리 6항목 스키마엔 "재작성 누적효과" 전용 칸이 없어
+> 기존 관례대로 조정 칸에 흡수 — plug 아니고 두 raw 인용의 합으로 이중확인). closure 재검산:
+> 3016.1+3240.3+181.3-1587.2-403.7=4446.8 (Δ=0.00).
+>
+> **게이트 (전부 fresh 재실행)**: `validate_data_contract.py` RED **2→0** exit=0(YELLOW=73
+> 무변동) · `validate_csm_continuity.py` flagged=0 red=0 exit=0 · `validate_csm_waterfall.py`
+> pass=41 fail=0(불변 — 독립 viz 패널이라 무관) · `validate_nb_csm_multiple.py`/
+> `validate_kics_rate_sensitivity.py` 둘 다 불변 exit=0 · `validate_master_tables.py --no-build`
+> exit=2(기존 무관 사유로 이미 2, `cont 1→0`·`qoq_warn 210→209Y` 만 이동, 새 실패 카테고리
+> 없음 → `test_master_tables_golden.py --update` 재생성) · viz 골든 2종(csm_waterfall/
+> ifrs17_panels) PASSED 무변동 · `test_deploy_assets`/`test_identity_tautology`/
+> `test_push_gate_wiring`/`tests/unit/` 전부 pass · `test_ifrs17_bs_golden.py`
+> PASSED(무변동, CSM_waterfall.json·PL_breakdown.json 비참조 빌더).
+>
+> **건드리지 않음**: `kics_disclosure.json`·`scripts/validate_kics_disclosure.py`·
+> `src/solvency/validation/kics_json_rules.py`·`tests/fixtures/kics_rules_golden.json`·
+> `tests/test_kics_rules_golden.py`·`tests/test_rule_coverage_manifest.py`·
+> `tests/test_tfi_memo_rows.py`(git status 에 잡히나 전부 병행 K-ICS 세션 소유, 이번 세션
+> 미접촉 확인) · `build_root_masters.py main()`(미실행, `build_pl()`만 개별 호출) ·
+> `build_csm_waterfall_master.py`(미실행). `pl_breakdown_master.json`/
+> `pl_breakdown_coverage.json`은 원상태 그대로(위 드리프트 때문에 손 안 댐 — 다음 진짜
+> 전체재빌드 때 그 5+2개사도 같이 raw 대조 필요, spawn_task 로 별건 등재).
+>
+> **변경 파일**: `scripts/pl_breakdown/companies.py`(라벨변형 fallback 2줄) ·
+> `PL_breakdown.json`(2셀) · `CSM_waterfall.json`(4셀) · `insurequant_master_tables.xlsx`
+> ("CSM워터폴"·"손익분해PL" 시트 cherry-pick, `sync_master_xlsx_sheet.py` 검증 OK) ·
+> `tests/fixtures/master_tables_golden.json`(`--update`).
+>
+> 원 티켓 `inbox/parser/20260825T0230Z`에 후속 기록, status `resolved`(자기완결 —
+> 원 sender=validation 재확인 불요, 게이트 수치로 자기증명).
+>
+> ---
+>
+> **2026-08-25 (35th pass) — `inbox/parser/20260825T0230Z` 처리: CSM_waterfall 드문드문
+> 3사(서울보증·신한이지·하나생명) 판정 — 1사는 진짜 추출갭(수정), 2사는 정당 미공시
+> (확정/재확인).**
+>
+> validation 이 census 사각(`coverage_holes`의 `active_min=7` 문턱 미달 회사는 struct로
+> 분류돼 검사에서 빠짐)의 부산물로 잡은 3사를 raw XML 직접 대조로 판정.
+>
+> **서울보증보험(KR0150) — 신규 정당 미공시 확정.** 최근 2개 사업보고서(FY2024.4Q·
+> FY2025.4Q) 4개 XML 전수 grep, "보험계약마진" 0/1(그 1회도 미시행 개정기준서 boilerplate
+> 문단 속 언급, 표 아님)회. `waterfall_for_dir()` 도 raw 13개 분기 전부 `src=None`.
+> 보증보험=PAA 적격 구조적 미공시. `data/_gold/user_csm_cells.json`의 `exclude_companies`
+> 에 KR0150 신규 등재(CSM_waterfall.json 엔 애초에 행이 없어 build_csm() 에는 no-op,
+> census 참조용 문서화).
+>
+> **신한이지손해보험(KR0051) — 기존 owner 제외(2026-06-11/08-03)가 옳았다. 근거 보강
+> 재확인.** raw 에서 실제 §14(4) 측정요소 변동내역 표를 처음으로 직접 찾음(2026-08-03
+> spot-check 은 가정민감도표 숫자 1건뿐이었음) — 리터럴 "(단위: 천원)" 명시, 실제 기초
+> CSM=70,957천원=0.71억(owner 의 "~2억" 오더와 정합). 연속 항등식(기말=차기기초) 완전
+> 일치까지 확인했지만, 이건 `waterfall_for_dir()`의 자동 단위판별(mag>1e8 휴리스틱)이
+> 이 회사 규모에선 ÷1000 보정을 못 트리거해 **1000배 부풀린 값으로 우연히 자기정합**한
+> 것 — 근본원인 규명(별건 버그로 기록, 신한이지는 제외돼 있어 화면 무영향이라 이번 범위
+> 밖). `exclude_companies["KR0051"]`에 이번 확인 내용 append(기존 텍스트 보존).
+>
+> **하나생명보험(KR0097) — 진짜 추출갭. 수정함.** FY2023_Q4·FY2025_Q4 raw 에 IFRS17
+> §14(4) 표가 이미 `_measurement.json`에 score=6 로 추출까지 돼 있었는데
+> `csm_waterfall_master_diag.json`(8/21 stale)→root 경로에서 누락돼 있었다.
+> `waterfall_for_dir()` 를 **read-only import**(main() 미실행, 파일 기록 없음)로 두
+> raw dir 에 직접 호출해 2023.4Q={1877.4,2091.8,77.1,-751.0,-279.1,3016.1},
+> 2025.4Q={4446.8,4086.2,217.1,-942.7,-538.4,7269.0} 확보. 2023.4Q 기말(3016.1)=2024.4Q
+> 기초(3016.1) 완전 일치로 교차검증, 2024.4Q 값은 기존 root 값과 바이트 일치(같은 anchor
+> 조건 재현 신뢰도). `CSM_waterfall.json`에 12셀 셀단위 INSERT(2136→2148행, combo-diff:
+> 추가 12/삭제 0/변경 0). `insurequant_master_tables.xlsx`"CSM워터폴"시트
+> cherry-pick 동기화. **부산물**: `validate_master_tables.py`가 새 CONT 플래그 1건
+> (하나생명 2025.4Q 기초=4447≠2024.4Q 기말=4390, Δ1.3%) — 파싱오차 아니고 양쪽 다 각자
+> 원문 그대로(연차보고서간 소폭 재작성, 33rd-pass 라이나생명 cross-filing 케이스와 동일
+> 유형·더 작은 폭), 값을 임의로 맞추지 않고 그대로 실었다.
+>
+> **census 사각 개선 제안**: 레지스트리 신설 불요 — (a) "회사가 CSM 자체 미공시" 유형은
+> `data/_gold/user_csm_cells.json`의 `exclude_companies` 키 목록, (b) "연1회 공시사의
+> 중간분기 결측" 유형은 raw `meta.json`의 `"no_filing": true` 마커(validate_data_contract.py
+> 가 이미 동일 패턴 사용)를 census 가 참조하면 `active_min` 카운트 추론 없이 명시적으로
+> 판정 가능. 배선은 validation 소관 — 티켓 `status: answered`로 회신.
+>
+> **게이트**: `validate_csm_waterfall.py` exit=0(불변, pass=41) ·
+> `validate_csm_continuity.py` exit=0(불변, red=0) ·
+> `validate_master_tables.py --no-build` exit=2(패치 전과 동일 — 무관한 기존 사유들 때문에
+> 이미 2였음, SUMMARY 만 합법적 이동 → `test_master_tables_golden.py --update` 재생성) ·
+> `test_viz_csm_waterfall_golden.py`/`test_viz_ifrs17_panels_golden.py`/
+> `test_ifrs17_bs_golden.py` 전부 PASSED(무변동, CSM_waterfall.json 을 안 읽거나 읽어도
+> 출력 바이트 불변). `kics_disclosure.json`·`tests/fixtures/kics_rules_golden.json`은
+> 병행 K-ICS 세션 소유物로 이번 세션 미접촉 확인(git status 에는 잡히나 내가 안 건드림).
+>
+> ---
+>
 > **2026-08-24 (34th pass) — `inbox/parser/20260821T1745Z` iter-2 회신: viz 패널 3종
 > 재확인 결과 이미 `origin/main`에 배포 완료돼 있었다(false-diff, 로컬 main ref 가 stale).**
 >
