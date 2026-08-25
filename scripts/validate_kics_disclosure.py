@@ -17,7 +17,9 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from solvency.validation.kics_json_rules import (
     IMAGE_OCR_COMPANIES,
+    DIVERSIFIED_SQRT_TOL_REL,
     IMAGE_OCR_TOLERANCE,
+    IRR_DERIVED_TOL_REL,
     INTERNAL_MODEL_36IRR_EXEMPT,
     IRR_DERIVE_ISSUER_INCONSISTENT,
     IRR_PIN_TOL,
@@ -643,8 +645,11 @@ def _item12_equals_item1(records: list[dict]) -> list[tuple]:
 
 
 # 적용후 mmult 축: 부모위험액 → (세부항목, 상관행렬, 가산항목, 허용오차종류).
-#   17 = sqrt(29-35·R7)                     ← 룰엔진 8_life    (동적 tol: max(eff, 5%))
-#   19 = sqrt(36-40·MARKET_M)               ← 룰엔진 19_market (동적 tol: max(eff, 5%))
+#   17 = sqrt(29-35·R7)                     ← 룰엔진 8_life    (동적 tol: max(eff, 1%))
+#   19 = sqrt(36-40·MARKET_M)               ← 룰엔진 19_market (동적 tol: max(eff, 1%))
+# 'dyn5' 라는 이름은 5% 이던 시절의 흔적이다. 실제 배율은 `DIVERSIFIED_SQRT_TOL_REL`
+# (2026-08-25 에 5%→1%) 이고, **적용전 룰엔진과 같은 상수를 import 해서 쓴다** —
+# 적용후만 느슨하면 룰이 돌아도 안 잡힌다.
 #   15 = sqrt([17,18,19,20]·R4) + item21    ← 룰엔진 rule 4    (flat eff_tol)
 # **행렬은 전부 룰엔진에서 import** — 손으로 옮기면 검증기가 검증대상과 다른 행렬을 쓰게 된다.
 # 축 15(기본요구자본)는 2026-08-21 신설: 그 전까지 `_TRANS_PARENT_SUBS` 가 {17,19} 뿐이라
@@ -809,7 +814,8 @@ def _transition_mmult_after(records: list[dict], readability: dict | None = None
                 # **면제가 있어도 값이 완비되면 검산한다.** 부재 박제는 "원천에 없다" 는 명제이지
                 # "검사하지 마라" 가 아니다 — 값이 나타나면 그 명제가 깨진 것이고 축은 되살아난다.
                 exp = _diversified_sqrt(np.array(post_subs, dtype=float), mat) + add_post
-                tol = _eff_tol(c) if tol_kind == "flat" else max(_eff_tol(c), 0.05 * abs(exp))
+                tol = (_eff_tol(c) if tol_kind == "flat"
+                       else max(_eff_tol(c), DIVERSIFIED_SQRT_TOL_REL * abs(exp)))
                 if abs(post_p - exp) > tol:
                     mismatch.append((c, q, name.get(c, c), parent, round(post_p, 1), round(exp, 1)))
             elif _all_missing_are_pinned(subs, m, absent, add_item):
@@ -958,7 +964,7 @@ def _transition_irr_after(records: list[dict]) -> tuple[list, Counter]:
             continue
         if all(post.get(i) is not None for i in irr_items):
             exp = irr_derive_expected(post)
-            if abs(post[36] - exp) > max(_eff_tol(c), 0.05 * abs(exp)):
+            if abs(post[36] - exp) > max(_eff_tol(c), IRR_DERIVED_TOL_REL * abs(exp)):
                 fails.append((c, q, name.get(c, c), round(post[36], 2), round(exp, 2)))
         elif post.get(36) is None:
             skipped["부모(item36)후_결측"] += 1
@@ -2547,11 +2553,11 @@ def _irr_pin_recheck(records: list[dict]) -> tuple[list, list]:
             if verdict != "MATCH":
                 continue
             exp = irr_derive_expected(vals)
-            if abs(actual) <= max(_eff_tol(c), 0.05 * abs(exp)):
+            if abs(actual) <= max(_eff_tol(c), IRR_DERIVED_TOL_REL * abs(exp)):
                 review.append({"rule": "IRR_EXEMPTION_INERT", "code": c, "quarter": q,
                                "column": col,
                                "detail": f"[{col}] 잔차 {actual:.4f} 가 룰 허용오차 "
-                                         f"{max(_eff_tol(c), 0.05 * abs(exp)):.4f} 안에 들어왔다 — "
+                                         f"{max(_eff_tol(c), IRR_DERIVED_TOL_REL * abs(exp)):.4f} 안에 들어왔다 — "
                                          "룰이 이미 통과시킬 셀이라 면제가 사각지대만 남긴다. 등재를 풀어라"})
     return detail, review
 

@@ -9,12 +9,12 @@
     "new_business_rule": "IFRS17 CSM rollforward: new_business CSM mandatory non-null/non-zero for every disclosed entity at every reporting period in scope",
     "new_business_required_nonzero": true,
     "balance_tolerance": {
-      "rel": 0.005,
-      "abs_mn_krw": 500.0
+      "rel": 0.001,
+      "abs_mn_krw": 200.0
     },
     "source": "C:\\Users\\sangwook.cho\\Desktop\\insurequant\\data\\dart\\viz\\csm_waterfall.json",
     "period": "annual (fiscal 2024 reporting)",
-    "built_at": "2026-08-25T00:45:59Z",
+    "built_at": "2026-08-25T05:58:57Z",
     "build_script": "scripts/validate_csm_waterfall.py",
     "ifrs17_effective_fiscal_year": 2023,
     "companies_total": 47,
@@ -84,7 +84,7 @@
         "computed_closing_mn_krw": 1770485.0,
         "reported_closing_mn_krw": 1770485.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 8852.43,
+        "tolerance_mn_krw": 1770.49,
         "missing_stages": []
       },
       "issues": [],
@@ -105,7 +105,7 @@
         "computed_closing_mn_krw": 12231759.0,
         "reported_closing_mn_krw": 12231759.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 61158.79,
+        "tolerance_mn_krw": 12231.76,
         "missing_stages": []
       },
       "issues": [],
@@ -126,7 +126,7 @@
         "computed_closing_mn_krw": 8820482.0,
         "reported_closing_mn_krw": 8820482.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 44102.41,
+        "tolerance_mn_krw": 8820.48,
         "missing_stages": []
       },
       "issues": [],
@@ -147,7 +147,7 @@
         "computed_closing_mn_krw": 1513226.0,
         "reported_closing_mn_krw": 1513226.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 7566.13,
+        "tolerance_mn_krw": 1513.23,
         "missing_stages": []
       },
       "issues": [],
@@ -168,7 +168,7 @@
         "computed_closing_mn_krw": 6438058.0,
         "reported_closing_mn_krw": 6438058.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 32190.29,
+        "tolerance_mn_krw": 6438.06,
         "missing_stages": []
       },
       "issues": [],
@@ -189,7 +189,7 @@
         "computed_closing_mn_krw": 4591536.0,
         "reported_closing_mn_krw": 4591536.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 22957.68,
+        "tolerance_mn_krw": 4591.54,
         "missing_stages": []
       },
       "issues": [],
@@ -210,7 +210,7 @@
         "computed_closing_mn_krw": 2671088.0,
         "reported_closing_mn_krw": 2671088.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 13355.44,
+        "tolerance_mn_krw": 2671.09,
         "missing_stages": []
       },
       "issues": [],
@@ -231,7 +231,7 @@
         "computed_closing_mn_krw": 5515548.32,
         "reported_closing_mn_krw": 5515548.316,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 27577.74,
+        "tolerance_mn_krw": 5515.55,
         "missing_stages": []
       },
       "issues": [],
@@ -252,7 +252,7 @@
         "computed_closing_mn_krw": 2764859.85,
         "reported_closing_mn_krw": 2764859.849,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 13824.3,
+        "tolerance_mn_krw": 2764.86,
         "missing_stages": []
       },
       "issues": [],
@@ -273,7 +273,7 @@
         "computed_closing_mn_krw": 2374366.29,
         "reported_closing_mn_krw": 2374366.289,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 11871.83,
+        "tolerance_mn_krw": 2374.37,
         "missing_stages": []
       },
       "issues": [],
@@ -294,7 +294,7 @@
         "computed_closing_mn_krw": 2320157.0,
         "reported_closing_mn_krw": 2320157.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 11600.78,
+        "tolerance_mn_krw": 2320.16,
         "missing_stages": []
       },
       "issues": [],
@@ -315,7 +315,7 @@
         "computed_closing_mn_krw": 11187889.0,
         "reported_closing_mn_krw": 11187889.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 55939.44,
+        "tolerance_mn_krw": 11187.89,
         "missing_stages": []
       },
       "issues": [],
@@ -336,7 +336,7 @@
         "computed_closing_mn_krw": 2152105.61,
         "reported_closing_mn_krw": 2152105.61,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 10760.53,
+        "tolerance_mn_krw": 2152.11,
         "missing_stages": []
       },
       "issues": [],
@@ -357,7 +357,7 @@
         "computed_closing_mn_krw": 2406691.08,
         "reported_closing_mn_krw": 2406691.083,
         "residual_mn_krw": -0.0,
-        "tolerance_mn_krw": 12033.46,
+        "tolerance_mn_krw": 2406.69,
         "missing_stages": []
       },
       "issues": [],
@@ -378,7 +378,7 @@
         "computed_closing_mn_krw": 2608160.26,
         "reported_closing_mn_krw": 2608160.261,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 13040.8,
+        "tolerance_mn_krw": 2608.16,
         "missing_stages": []
       },
       "issues": [],
@@ -399,7 +399,7 @@
         "computed_closing_mn_krw": 2078211.0,
         "reported_closing_mn_krw": 2078210.0,
         "residual_mn_krw": 1.0,
-        "tolerance_mn_krw": 10391.05,
+        "tolerance_mn_krw": 2078.21,
         "missing_stages": []
       },
       "issues": [],
@@ -420,7 +420,7 @@
         "computed_closing_mn_krw": 13080691.0,
         "reported_closing_mn_krw": 13080691.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 65403.46,
+        "tolerance_mn_krw": 13080.69,
         "missing_stages": []
       },
       "issues": [],
@@ -441,7 +441,7 @@
         "computed_closing_mn_krw": 14073908.0,
         "reported_closing_mn_krw": 14073908.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 70369.54,
+        "tolerance_mn_krw": 14073.91,
         "missing_stages": []
       },
       "issues": [],
@@ -462,7 +462,7 @@
         "computed_closing_mn_krw": 7226333.0,
         "reported_closing_mn_krw": 7226793.0,
         "residual_mn_krw": -460.0,
-        "tolerance_mn_krw": 36133.97,
+        "tolerance_mn_krw": 7226.79,
         "missing_stages": []
       },
       "issues": [],
@@ -483,7 +483,7 @@
         "computed_closing_mn_krw": 455839.62,
         "reported_closing_mn_krw": 455839.623,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 2279.2,
+        "tolerance_mn_krw": 455.84,
         "missing_stages": []
       },
       "issues": [],
@@ -504,7 +504,7 @@
         "computed_closing_mn_krw": 450111.92,
         "reported_closing_mn_krw": 450111.915,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 2250.56,
+        "tolerance_mn_krw": 450.11,
         "missing_stages": []
       },
       "issues": [],
@@ -525,7 +525,7 @@
         "computed_closing_mn_krw": 520370.42,
         "reported_closing_mn_krw": 520376.251,
         "residual_mn_krw": -5.83,
-        "tolerance_mn_krw": 2601.88,
+        "tolerance_mn_krw": 520.38,
         "missing_stages": []
       },
       "issues": [],
@@ -546,7 +546,7 @@
         "computed_closing_mn_krw": 937462.0,
         "reported_closing_mn_krw": 937462.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 4687.31,
+        "tolerance_mn_krw": 937.46,
         "missing_stages": []
       },
       "issues": [],
@@ -567,7 +567,7 @@
         "computed_closing_mn_krw": 1477068.0,
         "reported_closing_mn_krw": 1477068.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 7385.34,
+        "tolerance_mn_krw": 1477.07,
         "missing_stages": []
       },
       "issues": [],
@@ -588,7 +588,7 @@
         "computed_closing_mn_krw": 1509649.0,
         "reported_closing_mn_krw": 1509649.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 7548.24,
+        "tolerance_mn_krw": 1509.65,
         "missing_stages": []
       },
       "issues": [],
@@ -609,7 +609,7 @@
         "computed_closing_mn_krw": 1590364.0,
         "reported_closing_mn_krw": 1590365.0,
         "residual_mn_krw": -1.0,
-        "tolerance_mn_krw": 7951.82,
+        "tolerance_mn_krw": 1590.37,
         "missing_stages": []
       },
       "issues": [],
@@ -630,7 +630,7 @@
         "computed_closing_mn_krw": 112383.0,
         "reported_closing_mn_krw": 112382.0,
         "residual_mn_krw": 1.0,
-        "tolerance_mn_krw": 561.91,
+        "tolerance_mn_krw": 200.0,
         "missing_stages": []
       },
       "issues": [],
@@ -651,7 +651,7 @@
         "computed_closing_mn_krw": 98021.0,
         "reported_closing_mn_krw": 98021.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 500.0,
+        "tolerance_mn_krw": 200.0,
         "missing_stages": []
       },
       "issues": [],
@@ -672,7 +672,7 @@
         "computed_closing_mn_krw": 86810.0,
         "reported_closing_mn_krw": 86809.0,
         "residual_mn_krw": 1.0,
-        "tolerance_mn_krw": 500.0,
+        "tolerance_mn_krw": 200.0,
         "missing_stages": []
       },
       "issues": [],
@@ -693,7 +693,7 @@
         "computed_closing_mn_krw": 865044.0,
         "reported_closing_mn_krw": 865045.0,
         "residual_mn_krw": -1.0,
-        "tolerance_mn_krw": 4325.23,
+        "tolerance_mn_krw": 865.05,
         "missing_stages": []
       },
       "issues": [],
@@ -714,7 +714,7 @@
         "computed_closing_mn_krw": 3010509.0,
         "reported_closing_mn_krw": 3010509.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 15052.55,
+        "tolerance_mn_krw": 3010.51,
         "missing_stages": []
       },
       "issues": [],
@@ -735,7 +735,7 @@
         "computed_closing_mn_krw": 904674.0,
         "reported_closing_mn_krw": 904674.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 4523.37,
+        "tolerance_mn_krw": 904.67,
         "missing_stages": []
       },
       "issues": [],
@@ -756,7 +756,7 @@
         "computed_closing_mn_krw": 142349.0,
         "reported_closing_mn_krw": 142349.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 711.75,
+        "tolerance_mn_krw": 200.0,
         "missing_stages": []
       },
       "issues": [],
@@ -777,7 +777,7 @@
         "computed_closing_mn_krw": 301650.7,
         "reported_closing_mn_krw": 301609.288,
         "residual_mn_krw": 41.41,
-        "tolerance_mn_krw": 1508.05,
+        "tolerance_mn_krw": 301.61,
         "missing_stages": []
       },
       "issues": [],
@@ -798,7 +798,7 @@
         "computed_closing_mn_krw": 438955.66,
         "reported_closing_mn_krw": 438955.662,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 2194.78,
+        "tolerance_mn_krw": 438.96,
         "missing_stages": []
       },
       "issues": [],
@@ -819,7 +819,7 @@
         "computed_closing_mn_krw": 726895.69,
         "reported_closing_mn_krw": 726895.688,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 3634.48,
+        "tolerance_mn_krw": 726.9,
         "missing_stages": []
       },
       "issues": [],
@@ -840,7 +840,7 @@
         "computed_closing_mn_krw": 9109141.0,
         "reported_closing_mn_krw": 9109141.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 45545.71,
+        "tolerance_mn_krw": 9109.14,
         "missing_stages": []
       },
       "issues": [],
@@ -861,7 +861,7 @@
         "computed_closing_mn_krw": 3803220.8,
         "reported_closing_mn_krw": 3803220.796,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 19016.1,
+        "tolerance_mn_krw": 3803.22,
         "missing_stages": []
       },
       "issues": [],
@@ -882,7 +882,7 @@
         "computed_closing_mn_krw": 8305487.26,
         "reported_closing_mn_krw": 8305487.262,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 41527.44,
+        "tolerance_mn_krw": 8305.49,
         "missing_stages": []
       },
       "issues": [],
@@ -903,7 +903,7 @@
         "computed_closing_mn_krw": 2215205.0,
         "reported_closing_mn_krw": 2215205.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 11076.02,
+        "tolerance_mn_krw": 2215.2,
         "missing_stages": []
       },
       "issues": [],
@@ -924,7 +924,7 @@
         "computed_closing_mn_krw": 2470794.0,
         "reported_closing_mn_krw": 2470794.0,
         "residual_mn_krw": 0.0,
-        "tolerance_mn_krw": 12353.97,
+        "tolerance_mn_krw": 2470.79,
         "missing_stages": []
       },
       "issues": [],

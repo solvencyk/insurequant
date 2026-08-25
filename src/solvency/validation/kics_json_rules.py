@@ -67,6 +67,28 @@ STATUS_SKIP = "SKIP"
 
 # Image-only PDF insurers: OCR rounding may exceed default tolerance (see KICS-IMG).
 IMAGE_OCR_TOLERANCE = 10.0
+
+# 분산효과 제곱근 항등식(17 = sqrt(29-35·R7) · 19 = sqrt(36-40·MARKET_M))의 상대 허용오차.
+# **등식이므로 반올림 폭만 허용한다** — 2026-08-25 에 5% → 1% 로 조였다.
+# 근거(실측, 게이트 report findings 전수):
+#     8_life    n=364  잔차 rel p50 0.0023% · p90 0.049% · 5%→1% 로 조여도 새로 걸리는 것 0건
+#     19_market n=356  잔차 rel p50 0.0037% · p90 0.083% · 5%→1% 로 조여도 새로 걸리는 것 0건
+# 즉 5% 는 "7개 하위항목의 반올림이 누적된다"는 이유로 붙어 있었지만 실측 누적폭은 그 1/50 이었고,
+# 밴드만큼의 오차를 봐줄 근거가 데이터에 없었다. 이 상수는 **적용후 미러**
+# (`scripts/validate_kics_disclosure.py` `_TRANS_PARENT_SUBS` 의 "dyn5")도 같이 쓴다 —
+# 적용후만 느슨하면 '룰은 돌지만 못 잡는' false-green 이 된다(2026-08-21 한화손해 실측).
+DIVERSIFIED_SQRT_TOL_REL = 0.01
+
+# 금리위험 시나리오 파생식(36 = f(41-46))의 상대 허용오차. **여기는 아직 등식으로 못 조인다.**
+# 실측: 1% 로 조이면 12건이 새로 걸리는데 **12/12 전부 actual > expected 인 양(+)의 계통편차**
+# (+1.08% ~ +4.69%, 교보/미래에셋/코리안리/롯데/NH농협/메트라이프/BNP, 전부 짝수분기)다.
+# 부호가 한쪽으로 몰린다 = 파생식이 원문 산출식의 **하한**일 가능성이 높다는 뜻이고, 그러면
+# 12건은 데이터 결함이 아니라 식 결함이다. 원문 산출식을 확정하기 전에 조이면 오탐 12건을
+# 만든다 → 원인 규명 티켓(inbox/parser/20260825T1520Z__validation__MULTI__
+# csm_amort_identity_28_ledgered_buckets.md §⑥)이 닫힐 때까지 5% 유지.
+# **이것은 정당화가 아니라 미결이다.** tests/test_identity_registry.py 가 사유·티켓·실측비용을
+# 등재하도록 강제하며, 등재 없이는 통과하지 않는다.
+IRR_DERIVED_TOL_REL = 0.05
 IMAGE_OCR_COMPANIES = frozenset({"KR0010", "KR0079"})
 
 # ---------------------------------------------------------------------------
@@ -542,7 +564,7 @@ def _validate_market_irr(
     if bucket.get(19) is not None and mkt_present:
         v = np.array([bucket.get(i) or 0.0 for i in mkt_items], dtype=float)
         expected = _diversified_sqrt(v, MARKET_M)
-        mkt_tol = max(eff_tol, 0.05 * abs(expected))
+        mkt_tol = max(eff_tol, DIVERSIFIED_SQRT_TOL_REL * abs(expected))
         findings.append(_check_numeric(bucket, "19_market", expected, bucket.get(19), mkt_tol))
     elif bucket.get(19) is None or cq in MARKET_BREAKDOWN_EXEMPT:
         findings.append(
@@ -633,7 +655,7 @@ def _validate_market_irr(
         )
     elif all(bucket.get(i) is not None for i in irr_items):
         expected = irr_derive_expected(irr_vals)
-        irr_tol = max(eff_tol, 0.05 * abs(expected))
+        irr_tol = max(eff_tol, IRR_DERIVED_TOL_REL * abs(expected))
         findings.append(_check_numeric(bucket, "36_irr", expected, bucket.get(36), irr_tol))
     elif (bucket.get(36) is not None and is_even_q
           and (bucket.code, bucket.quarter) not in IRR_SCENARIO_EXEMPT):
@@ -822,10 +844,9 @@ def _validate_transition_basic(
     if bucket.get(17) is not None and all(bucket.get(i) is not None for i in sub_items):
         s = np.array([bucket.get(i) for i in sub_items], dtype=float)
         expected = _diversified_sqrt(s, R7)
-        # 8_life only: dynamic tolerance = max(eff_tol, 5% of expected).
-        # Rationale: R7 diversified sqrt accumulates rounding from 7 sub-items,
-        # so absolute 2.0 tol is too tight when expected is large (hundreds-thousands).
-        life_tol = max(eff_tol, 0.05 * abs(expected))
+        # 8_life: dynamic tolerance = max(eff_tol, DIVERSIFIED_SQRT_TOL_REL).
+        # 근거는 그 상수 선언부 참조 (2026-08-25 에 5% → 1% 로 조임, 실측 비용 0건).
+        life_tol = max(eff_tol, DIVERSIFIED_SQRT_TOL_REL * abs(expected))
         findings.append(_check_numeric(bucket, "8_life", expected, bucket.get(17), life_tol))
     else:
         findings.append(

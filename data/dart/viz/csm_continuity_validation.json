@@ -4,8 +4,20 @@
     "rule": "within-FY opening constant + FY-boundary 기말→기초 continuity",
     "purpose": "catch off-year / basis-swap / mis-pick invisible to closing-identity",
     "companies_total": 37,
-    "companies_flagged": 0,
+    "companies_flagged": 1,
     "red_findings": 0
   },
-  "flagged": {}
+  "flagged": {
+    "KR0001": {
+      "name": "메리츠화재해상보험",
+      "findings": [
+        {
+          "rule": "WITHIN_FY_OPENING_DRIFT_EXCEPTED",
+          "fy": 2023,
+          "severity": "YELLOW",
+          "detail": "FY2023 기초 CSM 변동 96376~100384 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]"
+        }
+      ]
+    }
+  }
 }

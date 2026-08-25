@@ -1,13 +1,78 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-25 (c) (CSM continuity 면제 심사 — 산문 면제를 잔차 박제로 승격 + 변이시험 신설) · Stage 3/5 — validation
+> Last updated: 2026-08-25 (d) (산술 항등식 레지스트리 신설 — 등식을 밴드로 구현하는 것을 기계로 차단) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
 
-**(2026-08-25 c, CSM continuity 면제 심사) 🟢 데이터는 한 셀도 안 고쳤다. 면제 코드에 이빨을
+**(2026-08-25 d, 항등식 레지스트리) 🟢 마스터 데이터는 한 셀도 안 고쳤다. 등식이어야 할 것이
+밴드로 구현되는 것을 기계가 막는다. prepush **exit 0** (gate RED=0 · 오프라인 테스트 230 passed).**
+
+> 신설 `tests/test_identity_registry.py` (14 tests, <1초, `prepush_check.py` 오프라인 묶음에 배선) ·
+> 등재부 `data/_gold/csm_amort_identity_ledger.json` ·
+> 티켓 `inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md`
+>
+> ### 문제 — 룰이 없어서가 아니라, 등식을 밴드로 구현해 뒀다
+>
+> owner 지시: *"0.7~1.4 band 가 아니라 당연히 1 이어야돼."* owner 가 지정한 등식
+> "워터폴 CSM상각 = PL CSM상각" 은 코드에 `_XCHK_LO, _XCHK_HI = 0.4, 2.5` 라는 **배수 밴드**로
+> 들어가 있었고, **346버킷 중 잡은 것 0건**이었다. 게다가 대조식 자체가 틀렸다 — PL 쪽을
+> `원수 + 재보험`으로 더했는데 재보험(출재)은 별도의 **보유** 재보험계약자산 워터폴이다.
+> 틀린 식으로 재니 잔차가 커 보였고 → 밴드를 넓혔고 → 진짜 결함이 지나갔다.
+> 같은 등식이 `validate_master_tables._check_csm_crosscheck` 에도 **다른 대조식·다른 폭·4Q 한정**
+> 으로 또 있었다(같은 축의 이중 구현).
+>
+> ### 고친 것 — 등식으로 승격 + 단일 구현
+>
+> 대조식 = **PL(원수 + 수재)**. 증명: 코리안리 11분기가 정확히 1.0000(원수 단독이면 0.41~0.71).
+> 허용오차 = `max(0.1억, 0.05%)` (억원 1자리 ±0.05 + 백만원 ±0.005 결합 반올림 + 상품라인 블록
+> 합의 누적폭). 스코프 = **전 분기**("1~3Q 는 분기배분 차이로 틀어진다"는 전제는 실측 반증 —
+> 318/346 이 반올림 폭 안에서 닫힌다). 구현은 `validate_master_tables` 한 곳, data-contract 는 import.
+>
+> | 대조식 | ±1% 밖 |
+> |---|---|
+> | 원수+재보험 (종전, 틀린 식) | 245 |
+> | 원수 단독 | 31 |
+> | **원수+수재 (정본)** | **20** |
+>
+> ### 같은 병을 다른 축에서도 (전부 실측 시뮬 후)
+>
+> | 축 | 종전 | 지금 | 조인 비용 |
+> |---|---|---|---|
+> | `8_life` (17 = sqrt(29-35·R7)) | max(2억, **5%**) | max(2억, **1%**) | **0건** (p90 0.049%) |
+> | `19_market` (19 = sqrt(36-40·M)) | max(2억, **5%**) | max(2억, **1%**) | **0건** (p90 0.083%) |
+> | viz closing identity | max(500mn, **0.5%**) | max(200mn, **0.1%**) | **0건** (루트 구현과 폭 통일) |
+> | continuity WITHIN_FY | **5%** | **1%** | 새 blocking RED **0** (1건은 등재 면제 → YELLOW) |
+> | `36_irr` | 5% | 5% **유지** | 조이면 +12건, **12/12 전부 양(+) 계통편차** = 식 결함 지문 → `documented_widening` 등재 |
+>
+> ### 걸린 28버킷 — 전건 원인 분류해 잔차까지 박제
+>
+> | 원인 | 건수 | 회사 |
+> |---|---|---|
+> | `WATERFALL_MISEXTRACT` (raw 확정) | 10 | 삼성생명 2024.1Q~2026.2Q |
+> | `WATERFALL_SUSPECT` | 4 | 코리안리 2023.1~3Q · 미래에셋 2025.2Q |
+> | `RESTATEMENT_BASIS` (원인 규명, 화면 무영향) | 3 | DB손해 2023.1~3Q |
+> | `UNRESOLVED` (**원인 미규명** — 정당화 아님) | 11 | 교보생명 4 · 신한라이프 6 · 하나생명 1 |
+>
+> 삼성생명은 raw 로 확정했다 — FY2024 사업보고서 3개 상품라인 `제공한 서비스에 대해 인식한
+> 보험계약마진` 합 `563,990+691,566+137,822 = 1,393,378` = PL `1,393,380` 인데 루트 마스터는
+> `1,369,540`. viz·history 둘 다 PL 편이라 diag→루트 경로 회귀다.
+> **owner 의 '코리안리 수재 leg 누락' 가설은 기각** — 수재 leg 는 있고, 원수+수재로 11/14 분기가
+> 1.0000 이다. 어긋나는 3분기는 루트 워터폴 쪽이 의심된다(history 가 PL 과 일치).
+>
+> ### 레지스트리가 강제하는 것 (변이시험 3종으로 발화 확인)
+>
+> 45개 축을 `IDENTITY`(33) / `RANGE`(9) / `HEURISTIC`(3) 으로 전수 분류하고 진술·구현위치·
+> 현재 허용오차·실측 근거를 등재했다. 테스트가 막는 것: ① 선언한 tol 과 **코드 상수**가 갈라지면
+> ② `IDENTITY` 인데 상대 tol > 1% 인데 사유·티켓·실측비용이 없으면 ③ RANGE/HEURISTIC 인데
+> **왜 등식이 아닌지** 안 썼으면 ④ K-ICS 룰이 성격 분류 없이 추가되면 ⑤ 검증기에 **등재 안 된
+> 새 임계 상수**가 생기면 ⑥ 값을 흔들었는데 게이트가 RED 를 안 내면.
+> 변이 실측: 선언 삭제 → 1 fail · 밴드 확대(0.05%→60%) → 4 fail · 룰 무력화 → 1 fail · 원복 → 14 passed.
+
+
+### 직전 — (2026-08-25 c, CSM continuity 면제 심사) 🟢 데이터는 한 셀도 안 고쳤다. 면제 코드에 이빨을
 달았다. prepush **exit 0** (RED=0 · YELLOW 74 — 승격 전후 동일).**
 
 > 티켓 `inbox/_resolved/20260825T0230Z__…__csm_waterfall_sparse_3companies.md` **iter 4 종결** ·

@@ -81,7 +81,17 @@ from validate_kics_disclosure import (  # noqa: E402
     _transition_mmult_after,
     _transition_ratio_after_capture,
 )
-from validate_master_tables import coverage_holes, load_long  # noqa: E402
+from validate_master_tables import (  # noqa: E402
+    CSM_AMORT_MIN_EOK,
+    CSM_AMORT_TOL_ABS_EOK,
+    CSM_AMORT_TOL_REL,
+    coverage_holes,
+    csm_amort_ledger,
+    csm_amort_ledger_verdict,
+    csm_amort_residual,
+    csm_amort_tol,
+    load_long,
+)
 from solvency.validation.kics_json_rules import (  # noqa: E402
     KEY_CODE,
     KEY_QUARTER,
@@ -785,10 +795,17 @@ def _pl_impossible_zero_leg(pl, confirmed=None):
 # Authoritative source per master (capital-securities effective list).
 _CAPITAL_SECURITIES_MASTERS = {"forward_capital", "tier1_utilization", "tier2_utilization"}
 
-# PL↔워터폴 CSM상각 교차대조 임계. 상각 10억 미만은 소음, 배수 밴드는 개념차(손보 생명장기 leg vs
-# 전사)를 흡수할 만큼 넓게 — 이 룰의 목표는 미세오차가 아니라 **한쪽만 비어 있는 자리**다.
-_XCHK_MIN_AMORT_EOK = 10.0
-_XCHK_LO, _XCHK_HI = 0.4, 2.5
+# PL↔워터폴 CSM상각 교차대조. **밴드가 아니라 등식이다** (owner 2026-08-25:
+# "0.7~1.4 band 가 아니라 당연히 1 이어야돼").
+#
+# 종전: `_XCHK_LO, _XCHK_HI = 0.4, 2.5` — 2.5배까지 봐주는 배수 밴드였고, 게다가 PL 쪽을
+# `원수 + 재보험`으로 더했다(재보험=출재는 별도의 **보유** 재보험계약자산 워터폴이라 더하면
+# 안 된다). 그 결과 346버킷 중 **밴드가 잡은 것 0건**이었고, 에이비엘생명 2025.1~3Q 의
+# 복사 결함(비율 1.09~1.12)이 그냥 통과했다. 정정 후 그 6분기는 0.9999~1.0001 이다.
+# 대조식·허용오차·근거는 `validate_master_tables.py` 상단 `CSM_AMORT_*` 주석에 한 곳으로
+# 모았다 — 같은 등식을 두 파일에 서로 다르게 구현해 둔 것이 이 사고의 절반이었으므로
+# **여기서 재구현하지 말고 import 해서 쓴다**(상관행렬을 재타이핑하지 않는 것과 같은 이유).
+_XCHK_MIN_AMORT_EOK = CSM_AMORT_MIN_EOK
 
 # `source_id` must match the ACTUAL lineage of `source_file` — not a hardcoded enum
 # (owner inbox/validation/20260803T0056Z).
@@ -1297,8 +1314,11 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
     # 나갔다 — 같은 분기 워터폴엔 상각 8,029.5억이 멀쩡히 있었는데도 게이트는 조용했다.
     # 폐쇄식은 결측을 통과시킨다(0/None 이 등식을 안 깬다) → 교차대조만이 유일한 탐지기다.
     #
-    # 개념이 완전히 같지는 않다(손보 PL 은 생명장기 leg 만, 워터폴은 전사) → **배수는 느슨하게**,
-    # 대신 "한쪽이 0/결측인데 다른 쪽은 유의미" 라는 명백한 자리를 잡는다(different-concept guard 정신).
+    # 2026-08-25: "개념이 완전히 같지는 않으니 배수는 느슨하게" 라는 종전 전제는 **실측으로
+    # 틀렸다**. 정본 대조식(PL 원수+수재)으로 재면 346버킷 중 318건이 반올림 폭(0.1억/0.05%)
+    # 안에서 닫힌다. 느슨했던 것은 개념차가 아니라 **틀린 식**이었다.
+    _ledger = csm_amort_ledger().get("entries", {})
+    _seen_ledger_keys = set()
     for (co, q), m in sorted(env.pl.items()):
         wfm = env.wf.get((co, q))
         if not wfm:
@@ -1324,13 +1344,43 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
                     message=f"PL 원수CSM상각={direct!s} 인데 같은 분기 CSM_waterfall 상각은 "
                             f"{abs(amort):,.1f}억 — 한쪽만 비었다(생명장기 분해 결측 지문)")
             continue
-        pl_eok = (abs(direct) + abs(m.get("재보험CSM상각") or 0)) / 100.0   # 백만원 → 억원
-        ratio = pl_eok / abs(amort)
-        if ratio < _XCHK_LO or ratio > _XCHK_HI:
+        rr = csm_amort_residual(m, wfm)
+        if rr is None:
+            continue
+        resid, pl_eok, amort_eok = rr
+        if abs(resid) <= csm_amort_tol(amort_eok):
+            continue
+        key = f"{co}|{q}"
+        _seen_ledger_keys.add(key)
+        entry = _ledger.get(key)
+        verdict = csm_amort_ledger_verdict(entry, resid)
+        tol = csm_amort_tol(amort_eok)
+        base = (f"PL(원수+수재) CSM상각 {pl_eok:,.2f}억 vs 워터폴 상각 {amort_eok:,.2f}억 "
+                f"— 잔차 {resid:+,.2f}억 ({abs(resid)/amort_eok*100:.3f}%), 허용 {tol:,.2f}억")
+        if verdict == "PINNED":
+            res.add(check="cross_source", severity="YELLOW", master="PL_breakdown",
+                    company=co, quarter=q, rule="CSM_AMORT_IDENTITY_PINNED",
+                    message=f"{base}. 등재부 박제 [{entry.get('cause')}] — "
+                            f"{str(entry.get('note'))[:110]}")
+        elif verdict == "PIN_DRIFT":
             res.add(check="cross_source", severity="RED", master="PL_breakdown",
-                    company=co, quarter=q, rule="PL_CSM_AMORT_SCALE_GAP",
-                    message=f"PL CSM상각 {pl_eok:,.1f}억 vs 워터폴 상각 {abs(amort):,.1f}억 "
-                            f"(배수 {ratio:.2f}, 허용 {_XCHK_LO}~{_XCHK_HI}) — 단위·범위 불일치 의심")
+                    company=co, quarter=q, rule="CSM_AMORT_IDENTITY_PIN_DRIFT",
+                    message=f"{base}. 등재부 박제 잔차 {entry.get('residual_eok')} 에서 벗어났다 — "
+                            f"고쳐졌으면 등재부에서 줄을 지우고, 나빠졌으면 회귀다")
+        else:
+            res.add(check="cross_source", severity="RED", master="PL_breakdown",
+                    company=co, quarter=q, rule="CSM_AMORT_IDENTITY_BREAK",
+                    message=f"{base}. 등재부에 없다 — 이 등식은 반올림 폭만 허용한다"
+                            f"(밴드 아님, owner 2026-08-25)")
+
+    # 등재부에만 남은 줄 = 고쳐졌거나 대조 대상에서 빠진 것. 조용히 두면 등재부가 화석이 되고
+    # "면제가 몇 건인지" 를 아무도 모르게 된다 → YELLOW 로 매 실행 올린다.
+    for _k in sorted(k for k in _ledger if k not in _seen_ledger_keys):
+        _co, _, _q = _k.partition("|")
+        res.add(check="cross_source", severity="YELLOW", master="PL_breakdown",
+                company=_co, quarter=_q, rule="CSM_AMORT_IDENTITY_LEDGER_STALE",
+                message=f"등재부에 있으나 더는 벌어지지 않는다(또는 대조 대상이 아니다) — "
+                        f"data/_gold/csm_amort_identity_ledger.json 에서 줄을 지워라")
 
     # --- 3a. comparable: DART↔IR CSM steps (active only when IR parsed JSON present) ---
     ir_dir = ROOT / "data" / "ir"

@@ -28,9 +28,14 @@ REQUIRED_STAGES = ("opening", "new_business", "closing")
 # must publish new-business CSM (신계약 CSM). Missing/zero → block viz + reparse.
 NB_ISSUE_CODES = frozenset({"new_business_missing", "new_business_zero"})
 
-# Balance tolerance: 0.5% of |closing| or 500 mn KRW, whichever is larger.
-REL_TOL = 0.005
-ABS_TOL_MN = 500.0
+# Rollforward 항등식의 허용오차. **등식이므로 반올림 폭만** (2026-08-25).
+# 종전 0.5% / 500백만 은 `scripts/validate_master_tables.py` 의 CLOSING_IDENTITY
+# (max(0.1%, 2억=200백만)) 와 **같은 등식을 다른 폭으로** 재구현한 것이었다 — 같은 축을
+# 두 파일이 서로 다르게 구현해 둔 것이 2026-08-25 CSM 상각 사고의 절반이라, 폭을 맞췄다.
+# 전 버킷 시뮬레이션(41사): 0.5%/500mn·0.1%/200mn·0.05%/100mn 어디서도 위반 0 —
+# 조이는 비용이 0 이고, 이제 이 게이트가 잡을 수 있는 결함의 폭이 5배 좁아졌다.
+REL_TOL = 0.001
+ABS_TOL_MN = 200.0
 
 # IFRS17 (K-IFRS 제1117호) is mandatorily effective for annual periods
 # beginning on or after 2023-01-01. Every entry in csm_waterfall.json is an

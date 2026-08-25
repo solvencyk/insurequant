@@ -1,9 +1,174 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-25 (c) · Stage 3/5 — validation
+> Last updated: 2026-08-25 (d) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+---
+
+## 2026-08-25 (d) — 산술 항등식 레지스트리: **등식을 밴드로 구현하는 것을 기계로 막는다**
+
+owner 지시: *"별도 축이 아니라 기존 rule 이 의무적으로 돌게 하면 된다고. 내가 정해준 rule 을
+성실하게 다 돌리기만 했어도 진작에 잡혔잖아."* / *"0.7~1.4 band 가 아니라 당연히 1 이어야돼."*
+
+마스터 데이터는 한 셀도 안 고쳤다. 게이트 코드 · 등재부 · 테스트만.
+
+### 1. 진단 — 룰이 없어서가 아니라 등식을 밴드로 구현했다
+
+owner 가 지정한 등식 "워터폴 CSM상각 = PL CSM상각(부호 반대)" 의 구현:
+
+```
+scripts/validate_data_contract.py:791   _XCHK_LO, _XCHK_HI = 0.4, 2.5
+```
+
+배수 2.5배까지 봐주는 범위검사였고, **대조 가능한 346버킷 중 잡은 것 0건**이다. 에이비엘생명
+2025.1~3Q 의 복사 결함(비율 1.09~1.12)이 그냥 통과했다. 정정 후 그 6분기 비율은 0.9999~1.0001 —
+등식은 원래 성립한다.
+
+그리고 **대조식 자체가 틀려 있었다**: PL 쪽을 `원수 + 재보험`으로 더했는데 재보험(출재)은
+별도의 **보유** 재보험계약자산 워터폴이라 더하면 안 된다. 인과가 이렇게 돈다 —
+틀린 식 → 잔차가 커 보임 → 밴드를 넓힘 → 진짜 결함이 지나감.
+
+같은 등식이 `validate_master_tables._check_csm_crosscheck` 에도 있었는데 **대조식(원수+수재)은
+맞고 폭은 다르고(OK≤max(5%,300mn)/FAIL>10%) 스코프는 4Q 한정**이었다. 즉 정답을 아는 구현이
+저장소 안에 이미 있었는데 push 를 막는 쪽이 틀린 식을 쓰고 있었다.
+
+### 2. 대조식 확정 — 원수 + 수재 (전 버킷 실측)
+
+| 대조식 | ±1% 밖 |
+|---|---|
+| 원수 + 재보험 (종전 data-contract) | 245 |
+| 원수 단독 | 31 |
+| **원수 + 수재** | **20** |
+
+증명: 코리안리재보험 2023.4Q · 2024.1Q~2026.2Q **11분기가 정확히 1.0000**(원수 단독이면
+0.41~0.71). 워터폴은 "발행한 보험계약" 의 CSM 이라 원수(direct) + 수재(assumed)를 포함하고,
+출재(코리안리 항목 `9-1` / 타사 항목 `9`)는 보유 자산이라 제외한다.
+
+### 3. 허용오차 — 반올림 폭만
+
+`max(0.1억, 0.05%)`. 근거는 저장 granularity 실측:
+
+- 워터폴 억원 1자리 → ±0.05억 · PL 백만원 → ±0.005억 → 결합 상한을 억원 그리드로 올려 **0.1억**
+- 워터폴 상각은 **상품라인 블록의 합**(관측 최대 5블록, `summed_product_lines`)이라 블록별
+  반올림이 누적된다 → **0.05%**
+
+전 분기 346버킷 중 **318건이 이 안에서 닫힌다**(잔차 p50 0.029억 · p75 0.040억 · p90 0.21억).
+`4Q-only` 제한("1~3Q 는 분기배분 차이로 틀어진다")은 근거 없는 전제였고 실측으로 반증됐다.
+
+구현은 `validate_master_tables` 한 곳(`csm_amort_tol` / `csm_amort_residual` /
+`csm_amort_ledger*`)에 두고 data-contract 는 import 한다 — 상관행렬을 재타이핑하지 않는 것과
+같은 이유다.
+
+### 4. 걸린 28버킷 — 전건 원인 분류 + 잔차 박제
+
+`data/_gold/csm_amort_identity_ledger.json`. 통째 skip 이 아니라 **건별 + 잔차값까지** 박제라,
+고쳐지거나 나빠지면 `PIN_DRIFT` RED 가 되고 등재부에만 남으면 `LEDGER_STALE` YELLOW 가 뜬다.
+
+| 원인 | 건수 | 대상 |
+|---|---|---|
+| `WATERFALL_MISEXTRACT` | 10 | 삼성생명 2024.1Q~2026.2Q — **raw 확정** |
+| `WATERFALL_SUSPECT` | 4 | 코리안리 2023.1~3Q · 미래에셋 2025.2Q |
+| `RESTATEMENT_BASIS` | 3 | DB손해 2023.1~3Q — 원인 규명, 화면 무영향 |
+| `UNRESOLVED` | 11 | 교보생명 4 · 신한라이프 6 · 하나생명 1 — **원인 미규명** |
+
+**삼성생명 (raw 확정).** FY2024 사업보고서 `20250312001063` 의 `보험계약 상품라인 측정요소별
+변동내역` 3개 상품라인 `제공한 서비스에 대해 인식한 보험계약마진` 합
+`563,990 + 691,566 + 137,822 = 1,393,378` 백만원 = PL `1,393,380` 인데 루트 마스터는
+`1,369,540`(−238.40억). `csm_waterfall.json`(viz) 과 `csm_waterfall_history.json` **둘 다
+−1,393,378** 로 PL 편이다 → diag→루트 경로의 회귀. 2023 분기는 세 소스가 소수 둘째자리까지
+일치하므로 FY2024 필링부터 생겼다. 잔차가 분기당 +57억(2024) → +71억(2025) → +94억(2026)로
+꾸준히 커지는 것이 "구성요소 하나가 빠진다" 는 모양이다.
+
+**코리안리 — owner 가설 기각.** owner 는 "수재 leg 누락" 을 지목했는데 실측으로 아니다:
+PL 에 수재 leg 는 있고(항목 `4-1`, 14분기 전부) 원수+수재로 11/14 분기가 1.0000 이다.
+남는 2023.1~3Q 는 루트 워터폴 쪽이 의심된다 — `csm_waterfall_history` 의 2023.2Q(706.11)·
+2023.3Q(923.11)가 PL(706.12 · 923.11)과 일치하고 루트만 1,042.40 · 1,560.10 이다.
+
+**DB손해 — 원인 규명.** 루트의 2023.1~3Q 는 2024년 필링의 비교(전기) 컬럼 = 소급재작성값,
+PL 은 2023년 원 필링값. 근거: history 의 2024.1/2/3Q(3,118.50 / 6,193.43 / 9,357.89)가 루트의
+2023.1/2/3Q 와 정확히 같다. 2023 분기는 사이트 비노출.
+
+**미규명 11건.** 신한라이프는 2025.1Q 부터 갑자기 **+0.086~0.152% 의 일정한** 차가 생긴다
+(그 전 8분기는 완전 일치) — 반올림으로 설명되지 않는 계통 차이 지문인데 원문에서 원인을
+확정하지 못했다. 교보생명 2023.1~3Q 는 루트·PL·history **3자가 전부 다르다**.
+등재부의 `UNRESOLVED` 는 **정당화가 아니라 미규명 표시**이며 note 에 그렇게 적혀 있다.
+
+전건 `inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md`
+로 발주(lane: ifrs17).
+
+### 5. 같은 병을 다른 축에서 — 전수 훑고 실측 시뮬 후에만 조였다
+
+| 축 | 종전 | 지금 | 조인 비용(실측) |
+|---|---|---|---|
+| `8_life` (item17 = sqrt(29-35·R7)) | max(2억, **5%**) | max(2억, **1%**) | **0건** (n=364, p90 0.049%) |
+| `19_market` (item19 = sqrt(36-40·M)) | max(2억, **5%**) | max(2억, **1%**) | **0건** (n=356, p90 0.083%) |
+| viz rollforward (`validate_csm_waterfall`) | max(500mn, **0.5%**) | max(200mn, **0.1%**) | **0건** (루트 구현과 폭 통일) |
+| continuity `WITHIN_FY` | **5%** | **1%** | 새 blocking RED **0** |
+| `36_irr` (item36 = f(41-46)) | 5% | 5% **유지** | +12건 — 아래 |
+
+`8_life` / `19_market` 의 5% 는 *"7개 하위항목의 반올림이 누적된다"* 는 이유로 붙어 있었는데
+**실측 누적폭이 그 1/50** 이었다. 상수를 `DIVERSIFIED_SQRT_TOL_REL` 하나로 모아 적용전 룰엔진과
+적용후 미러(`_TRANS_PARENT_SUBS` 의 `dyn5`)가 **같은 값을 import** 하게 했다 — 적용후만 느슨하면
+'룰은 돌지만 못 잡는' false-green 이 된다.
+
+`continuity WITHIN_FY` 를 조이자 메리츠화재 FY2023 하나가 새로 걸렸는데, 그건
+`validate_master_tables.WFY_EXCEPTIONS` 에 이미 '소급재작성' 으로 등재된 건이었다. 면제셋을
+모듈 레벨로 올려 `validate_csm_continuity` 가 **import 해서 쓰게** 했다(같은 면제를 두 곳에
+복사하지 않는다). 그 축은 이제 YELLOW `WITHIN_FY_OPENING_DRIFT_EXCEPTED` 로 인쇄된다.
+
+`36_irr` 은 **조이지 않았다.** 1% 로 조이면 12건이 새로 걸리는데 **12/12 전부 actual > expected
+인 양(+)의 계통편차**(+1.08%~+4.69%, 전부 짝수분기)다. 부호가 한쪽으로만 몰리는 것은 데이터
+12건이 동시에 틀린 게 아니라 **파생식이 원문 산출식의 하한**이라는 지문이라, 원문 산출식을
+확정하기 전에 조이면 오탐 12건을 만든다. `IRR_DERIVED_TOL_REL = 0.05` 에
+`documented_widening`(사유 + 티켓 + 실측비용)을 달았다 — 정당화가 아니라 미결 표시다.
+
+### 6. `tests/test_identity_registry.py` (신설, 14 tests, <1초)
+
+45개 축을 `IDENTITY` 33 / `RANGE` 9 / `HEURISTIC` 3 으로 전수 분류하고 각각 진술(부호 규약 포함) ·
+구현 위치 · 현재 허용오차 · 실측 근거 · 변이시험 소재를 등재했다. 강제하는 것:
+
+1. **선언 ↔ 코드 동기화** — `tol_from` 으로 살아 있는 상수를 읽어 대조. 몰래 넓히면 막힌다.
+2. **IDENTITY 는 밴드일 수 없다** — 상대 tol ≤ 1%(= 관측 반올림폭의 10배 이상 여유). 넘기려면
+   RANGE 로 재분류하고 사유를 쓰거나 `documented_widening`(사유·**실재하는 티켓**·실측비용).
+3. **RANGE/HEURISTIC 은 사유 필수** (최소 60자). 사유 없이 RANGE 로 옮기는 것이 이 테스트를
+   무력화하는 유일한 길이라 거기를 막는다.
+4. **K-ICS 룰 전수 분류** — `test_rule_coverage_manifest.DECLARED_RULES` 의 모든 룰이 여기
+   성격을 가져야 한다. 새 룰을 넣으면서 '등식인가' 를 안 정하는 길이 없어진다.
+5. **등재 안 된 새 임계 상수 탐지** — 검증기 6개 파일의 모듈 레벨 상수를 AST 로 긁어 이름이
+   임계처럼 생긴 것(`*_TOL/_LO/_HI/_REL/_ABS/BAND/EPS/FLOOR/CEILING/THRESH*`)이 레지스트리
+   참조나 사유 붙은 allowlist 에 없으면 FAIL. `_XCHK_LO/_HI` 가 아무 선언 없이 태어나 몇 달을
+   산 경로를 막는다. **이 검사가 즉시 미등재 3건을 잡았다**(`IFRS17_BS_TOL_ABS/REL` ·
+   `TIER2_ZERO_EPS`) — 앞의 둘은 진짜 항등식이라 등재했다(자산총계 == 부채총계 + 자본총계).
+6. **변이시험 발화** — IFRS17 축은 직접 흔들고(항등식 헬퍼 + **게이트 전체 in-process**),
+   K-ICS 축은 `test_rule_coverage_manifest` 에 위임하되 위임이 실제인지(그쪽
+   `DECLARED_RULES` 에 있는지) 검사한다.
+
+`prepush_check.py` 오프라인 묶음에 **배선했다** — 안 넣으면 레지스트리도 honor-system 이 된다.
+
+변이 3종 실측(파일을 잠깐 고쳐 pytest 를 돌리고 원복):
+
+| 변이 | 결과 |
+|---|---|
+| ① 선언 삭제 (`tol_from` 비움) | 1 failed (`test_no_undeclared_threshold_constants`) |
+| ② 밴드 확대 (`CSM_AMORT_TOL_REL` 0.0005 → 0.6) | **4 failed** (동기화 · 항등식 발화 2종 · 게이트 RED) |
+| ③ 룰 무력화 (게이트 절을 즉시 `continue`) | 1 failed (`test_mutation_gate_emits_red_for_broken_identity`) |
+| 원복 | 14 passed |
+
+### 7. 게이트 착지
+
+```
+scripts/prepush_check.py  →  exit 0
+  gate RED=0 · K-ICS rule gate=clear · domain gates=pass · DART raw 유실=0
+  · inbox 기계적위반=0 · offline tests=230 passed, 1 skipped
+```
+
+`tests/fixtures/master_tables_golden.json` 재생성(`--update`, 사유 `_regenerated` 에 기록):
+SUMMARY 필드 `crosscheck:97P/0M/0F/249S` → `csm_amort_identity:318P/28PIN/0F/0S`.
+249 skip 이 0 이 된 것은 4Q-only 제한이 사라졌기 때문이고 exit_code 는 2 로 불변이다.
+`tests/test_kics_rules_golden.py` 는 **무변동** — 8_life / 19_market 을 조인 비용이 실제로
+0 이었다는 독립 증거다.
 
 ---
 

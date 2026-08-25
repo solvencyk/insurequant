@@ -1,0 +1,273 @@
+{
+  "_what": "CSM 상각 항등식(PL 원수+수재 == 워터폴 상각)이 반올림 폭 밖으로 벌어지는 버킷의 건별 등재부. 통째 면제가 아니다 — 잔차까지 박제하며, 여기 없는 버킷이 하나라도 벌어지면 게이트가 RED 로 push 를 막는다. 고쳐지면 박제가 깨져 등재부에서 지우게 된다.",
+  "_tolerance": {
+    "abs_eok": 0.1,
+    "rel": 0.0005,
+    "min_amort_eok": 10.0,
+    "basis": "억원 1자리(±0.05) + 백만원(±0.005) 결합 반올림을 억원 그리드로 올린 0.1억 · 워터폴이 상품라인 블록의 합이라 누적되는 폭 0.05%"
+  },
+  "_pin_tolerance": {
+    "abs_eok": 0.5,
+    "rel": 0.05
+  },
+  "_measured_at": "2026-08-25",
+  "_population": {
+    "compared_buckets": 346,
+    "within_identity": 318,
+    "ledgered": 28
+  },
+  "entries": {
+    "DB손해보험|2023.1Q": {
+      "residual_eok": 176.16,
+      "pl_eok": 3294.66,
+      "waterfall_eok": 3118.5,
+      "rel": 0.056489,
+      "cause": "RESTATEMENT_BASIS",
+      "note": "루트 CSM_waterfall 의 2023.1~3Q 상각은 2024년 필링의 비교(전기)컬럼 = 소급재작성값이고, PL 은 2023년 원 필링값이다. 근거: csm_waterfall_history 의 2024.1/2/3Q 값 (3,118.50 / 6,193.43 / 9,357.89)이 루트의 2023.1/2/3Q 와 정확히 같다. 2024.1Q 이후는 두 마스터가 소수 둘째자리까지 일치한다. 2023 분기는 사이트 비노출.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "DB손해보험|2023.2Q": {
+      "residual_eok": 513.07,
+      "pl_eok": 6706.47,
+      "waterfall_eok": 6193.4,
+      "rel": 0.082841,
+      "cause": "RESTATEMENT_BASIS",
+      "note": "루트 CSM_waterfall 의 2023.1~3Q 상각은 2024년 필링의 비교(전기)컬럼 = 소급재작성값이고, PL 은 2023년 원 필링값이다. 근거: csm_waterfall_history 의 2024.1/2/3Q 값 (3,118.50 / 6,193.43 / 9,357.89)이 루트의 2023.1/2/3Q 와 정확히 같다. 2024.1Q 이후는 두 마스터가 소수 둘째자리까지 일치한다. 2023 분기는 사이트 비노출.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "DB손해보험|2023.3Q": {
+      "residual_eok": 53.78,
+      "pl_eok": 9411.68,
+      "waterfall_eok": 9357.9,
+      "rel": 0.005747,
+      "cause": "RESTATEMENT_BASIS",
+      "note": "루트 CSM_waterfall 의 2023.1~3Q 상각은 2024년 필링의 비교(전기)컬럼 = 소급재작성값이고, PL 은 2023년 원 필링값이다. 근거: csm_waterfall_history 의 2024.1/2/3Q 값 (3,118.50 / 6,193.43 / 9,357.89)이 루트의 2023.1/2/3Q 와 정확히 같다. 2024.1Q 이후는 두 마스터가 소수 둘째자리까지 일치한다. 2023 분기는 사이트 비노출.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "교보생명보험|2023.1Q": {
+      "residual_eok": -12.43,
+      "pl_eok": 1045.67,
+      "waterfall_eok": 1058.1,
+      "rel": 0.011747,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2023.1~3Q 는 루트·PL·history 3자가 전부 다르고(1,058.10 / 1,045.67 / 1,038.43) 2023.4Q 에서만 일치한다. 2026.1Q(4.36억)는 별건의 소액 차이다. 2024.1Q~2025.4Q 는 두 마스터가 소수 둘째자리까지 일치하므로 계통 결함은 아니다. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "교보생명보험|2023.2Q": {
+      "residual_eok": -25.12,
+      "pl_eok": 2119.58,
+      "waterfall_eok": 2144.7,
+      "rel": 0.011713,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2023.1~3Q 는 루트·PL·history 3자가 전부 다르고(1,058.10 / 1,045.67 / 1,038.43) 2023.4Q 에서만 일치한다. 2026.1Q(4.36억)는 별건의 소액 차이다. 2024.1Q~2025.4Q 는 두 마스터가 소수 둘째자리까지 일치하므로 계통 결함은 아니다. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "교보생명보험|2023.3Q": {
+      "residual_eok": -37.74,
+      "pl_eok": 3217.86,
+      "waterfall_eok": 3255.6,
+      "rel": 0.011592,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2023.1~3Q 는 루트·PL·history 3자가 전부 다르고(1,058.10 / 1,045.67 / 1,038.43) 2023.4Q 에서만 일치한다. 2026.1Q(4.36억)는 별건의 소액 차이다. 2024.1Q~2025.4Q 는 두 마스터가 소수 둘째자리까지 일치하므로 계통 결함은 아니다. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "교보생명보험|2026.1Q": {
+      "residual_eok": -4.36,
+      "pl_eok": 1537.34,
+      "waterfall_eok": 1541.7,
+      "rel": 0.002828,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2023.1~3Q 는 루트·PL·history 3자가 전부 다르고(1,058.10 / 1,045.67 / 1,038.43) 2023.4Q 에서만 일치한다. 2026.1Q(4.36억)는 별건의 소액 차이다. 2024.1Q~2025.4Q 는 두 마스터가 소수 둘째자리까지 일치하므로 계통 결함은 아니다. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "미래에셋생명보험|2025.2Q": {
+      "residual_eok": 200.77,
+      "pl_eok": 992.07,
+      "waterfall_eok": 791.3,
+      "rel": 0.253722,
+      "cause": "WATERFALL_SUSPECT",
+      "note": "단일 분기 outlier. 루트 상각 시계열 483.6 / 791.3 / 1,531.21 인데 PL 은 483.7 / 992.07 / 1,531.20 — 1Q·3Q 는 소수 둘째자리까지 일치하고 2025.2Q 만 벌어진다. 누계 항목이라 2Q 만 200억 낮은 것은 시계열상 불가능 → 루트 2025.2Q 상각이 의심된다. history 는 이 분기 status=partial 이라 3자 대조 불가.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "삼성생명보험|2024.1Q": {
+      "residual_eok": 56.94,
+      "pl_eok": 3565.74,
+      "waterfall_eok": 3508.8,
+      "rel": 0.016228,
+      "cause": "WATERFALL_MISEXTRACT",
+      "note": "루트 CSM_waterfall 상각이 원문과 다르다(PL 이 맞다). raw 대조 확정 — FY2024 사업보고서 (rcept 20250312001063) 의 '보험계약 상품라인 측정요소별 변동내역' 3개 상품라인 '제공한 서비스에 대해 인식한 보험계약마진' 합 = 563,990+691,566+137,822 = 1,393,378 백만원 (= PL '제공된 서비스의 보험계약마진' 1,393,380) 인데 루트는 1,369,540 이다. csm_waterfall_history 도 -1,393,378 로 PL 편이다. 2023 분기는 3자 일치 → 2024 필링부터 회귀.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "삼성생명보험|2024.2Q": {
+      "residual_eok": 113.4,
+      "pl_eok": 7194.9,
+      "waterfall_eok": 7081.5,
+      "rel": 0.016014,
+      "cause": "WATERFALL_MISEXTRACT",
+      "note": "루트 CSM_waterfall 상각이 원문과 다르다(PL 이 맞다). raw 대조 확정 — FY2024 사업보고서 (rcept 20250312001063) 의 '보험계약 상품라인 측정요소별 변동내역' 3개 상품라인 '제공한 서비스에 대해 인식한 보험계약마진' 합 = 563,990+691,566+137,822 = 1,393,378 백만원 (= PL '제공된 서비스의 보험계약마진' 1,393,380) 인데 루트는 1,369,540 이다. csm_waterfall_history 도 -1,393,378 로 PL 편이다. 2023 분기는 3자 일치 → 2024 필링부터 회귀.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "삼성생명보험|2024.3Q": {
+      "residual_eok": 171.41,
+      "pl_eok": 10859.01,
+      "waterfall_eok": 10687.6,
+      "rel": 0.016038,
+      "cause": "WATERFALL_MISEXTRACT",
+      "note": "루트 CSM_waterfall 상각이 원문과 다르다(PL 이 맞다). raw 대조 확정 — FY2024 사업보고서 (rcept 20250312001063) 의 '보험계약 상품라인 측정요소별 변동내역' 3개 상품라인 '제공한 서비스에 대해 인식한 보험계약마진' 합 = 563,990+691,566+137,822 = 1,393,378 백만원 (= PL '제공된 서비스의 보험계약마진' 1,393,380) 인데 루트는 1,369,540 이다. csm_waterfall_history 도 -1,393,378 로 PL 편이다. 2023 분기는 3자 일치 → 2024 필링부터 회귀.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "삼성생명보험|2024.4Q": {
+      "residual_eok": 238.4,
+      "pl_eok": 13933.8,
+      "waterfall_eok": 13695.4,
+      "rel": 0.017407,
+      "cause": "WATERFALL_MISEXTRACT",
+      "note": "루트 CSM_waterfall 상각이 원문과 다르다(PL 이 맞다). raw 대조 확정 — FY2024 사업보고서 (rcept 20250312001063) 의 '보험계약 상품라인 측정요소별 변동내역' 3개 상품라인 '제공한 서비스에 대해 인식한 보험계약마진' 합 = 563,990+691,566+137,822 = 1,393,378 백만원 (= PL '제공된 서비스의 보험계약마진' 1,393,380) 인데 루트는 1,369,540 이다. csm_waterfall_history 도 -1,393,378 로 PL 편이다. 2023 분기는 3자 일치 → 2024 필링부터 회귀.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "삼성생명보험|2025.1Q": {
+      "residual_eok": 70.96,
+      "pl_eok": 3681.76,
+      "waterfall_eok": 3610.8,
+      "rel": 0.019652,
+      "cause": "WATERFALL_MISEXTRACT",
+      "note": "루트 CSM_waterfall 상각이 원문과 다르다(PL 이 맞다). raw 대조 확정 — FY2024 사업보고서 (rcept 20250312001063) 의 '보험계약 상품라인 측정요소별 변동내역' 3개 상품라인 '제공한 서비스에 대해 인식한 보험계약마진' 합 = 563,990+691,566+137,822 = 1,393,378 백만원 (= PL '제공된 서비스의 보험계약마진' 1,393,380) 인데 루트는 1,369,540 이다. csm_waterfall_history 도 -1,393,378 로 PL 편이다. 2023 분기는 3자 일치 → 2024 필링부터 회귀.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "삼성생명보험|2025.2Q": {
+      "residual_eok": 144.71,
+      "pl_eok": 7581.31,
+      "waterfall_eok": 7436.6,
+      "rel": 0.019459,
+      "cause": "WATERFALL_MISEXTRACT",
+      "note": "루트 CSM_waterfall 상각이 원문과 다르다(PL 이 맞다). raw 대조 확정 — FY2024 사업보고서 (rcept 20250312001063) 의 '보험계약 상품라인 측정요소별 변동내역' 3개 상품라인 '제공한 서비스에 대해 인식한 보험계약마진' 합 = 563,990+691,566+137,822 = 1,393,378 백만원 (= PL '제공된 서비스의 보험계약마진' 1,393,380) 인데 루트는 1,369,540 이다. csm_waterfall_history 도 -1,393,378 로 PL 편이다. 2023 분기는 3자 일치 → 2024 필링부터 회귀.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "삼성생명보험|2025.3Q": {
+      "residual_eok": 230.0,
+      "pl_eok": 11450.2,
+      "waterfall_eok": 11220.2,
+      "rel": 0.020499,
+      "cause": "WATERFALL_MISEXTRACT",
+      "note": "루트 CSM_waterfall 상각이 원문과 다르다(PL 이 맞다). raw 대조 확정 — FY2024 사업보고서 (rcept 20250312001063) 의 '보험계약 상품라인 측정요소별 변동내역' 3개 상품라인 '제공한 서비스에 대해 인식한 보험계약마진' 합 = 563,990+691,566+137,822 = 1,393,378 백만원 (= PL '제공된 서비스의 보험계약마진' 1,393,380) 인데 루트는 1,369,540 이다. csm_waterfall_history 도 -1,393,378 로 PL 편이다. 2023 분기는 3자 일치 → 2024 필링부터 회귀.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "삼성생명보험|2025.4Q": {
+      "residual_eok": 320.36,
+      "pl_eok": 15116.36,
+      "waterfall_eok": 14796.0,
+      "rel": 0.021652,
+      "cause": "WATERFALL_MISEXTRACT",
+      "note": "루트 CSM_waterfall 상각이 원문과 다르다(PL 이 맞다). raw 대조 확정 — FY2024 사업보고서 (rcept 20250312001063) 의 '보험계약 상품라인 측정요소별 변동내역' 3개 상품라인 '제공한 서비스에 대해 인식한 보험계약마진' 합 = 563,990+691,566+137,822 = 1,393,378 백만원 (= PL '제공된 서비스의 보험계약마진' 1,393,380) 인데 루트는 1,369,540 이다. csm_waterfall_history 도 -1,393,378 로 PL 편이다. 2023 분기는 3자 일치 → 2024 필링부터 회귀.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "삼성생명보험|2026.1Q": {
+      "residual_eok": 93.65,
+      "pl_eok": 3767.65,
+      "waterfall_eok": 3674.0,
+      "rel": 0.02549,
+      "cause": "WATERFALL_MISEXTRACT",
+      "note": "루트 CSM_waterfall 상각이 원문과 다르다(PL 이 맞다). raw 대조 확정 — FY2024 사업보고서 (rcept 20250312001063) 의 '보험계약 상품라인 측정요소별 변동내역' 3개 상품라인 '제공한 서비스에 대해 인식한 보험계약마진' 합 = 563,990+691,566+137,822 = 1,393,378 백만원 (= PL '제공된 서비스의 보험계약마진' 1,393,380) 인데 루트는 1,369,540 이다. csm_waterfall_history 도 -1,393,378 로 PL 편이다. 2023 분기는 3자 일치 → 2024 필링부터 회귀.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "삼성생명보험|2026.2Q": {
+      "residual_eok": 187.6,
+      "pl_eok": 7524.2,
+      "waterfall_eok": 7336.6,
+      "rel": 0.02557,
+      "cause": "WATERFALL_MISEXTRACT",
+      "note": "루트 CSM_waterfall 상각이 원문과 다르다(PL 이 맞다). raw 대조 확정 — FY2024 사업보고서 (rcept 20250312001063) 의 '보험계약 상품라인 측정요소별 변동내역' 3개 상품라인 '제공한 서비스에 대해 인식한 보험계약마진' 합 = 563,990+691,566+137,822 = 1,393,378 백만원 (= PL '제공된 서비스의 보험계약마진' 1,393,380) 인데 루트는 1,369,540 이다. csm_waterfall_history 도 -1,393,378 로 PL 편이다. 2023 분기는 3자 일치 → 2024 필링부터 회귀.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "신한라이프생명보험|2025.1Q": {
+      "residual_eok": 1.83,
+      "pl_eok": 1837.83,
+      "waterfall_eok": 1836.0,
+      "rel": 0.000997,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2025.1Q 부터 두 마스터가 일정하게 0.09~0.15% 벌어진다(그 전 8분기는 소수 둘째자리까지 일치). 반올림으로 설명되지 않는 계통 차이 지문이지만 원문에서 원인을 확정하지 못했다. history 는 이 회사에서 한 해 lag 값을 들고 있어 3자 대조 불가. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "신한라이프생명보험|2025.2Q": {
+      "residual_eok": 3.58,
+      "pl_eok": 3650.68,
+      "waterfall_eok": 3647.1,
+      "rel": 0.000982,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2025.1Q 부터 두 마스터가 일정하게 0.09~0.15% 벌어진다(그 전 8분기는 소수 둘째자리까지 일치). 반올림으로 설명되지 않는 계통 차이 지문이지만 원문에서 원인을 확정하지 못했다. history 는 이 회사에서 한 해 lag 값을 들고 있어 3자 대조 불가. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "신한라이프생명보험|2025.3Q": {
+      "residual_eok": 5.38,
+      "pl_eok": 5501.58,
+      "waterfall_eok": 5496.2,
+      "rel": 0.000979,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2025.1Q 부터 두 마스터가 일정하게 0.09~0.15% 벌어진다(그 전 8분기는 소수 둘째자리까지 일치). 반올림으로 설명되지 않는 계통 차이 지문이지만 원문에서 원인을 확정하지 못했다. history 는 이 회사에서 한 해 lag 값을 들고 있어 3자 대조 불가. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "신한라이프생명보험|2025.4Q": {
+      "residual_eok": 6.32,
+      "pl_eok": 7358.62,
+      "waterfall_eok": 7352.3,
+      "rel": 0.00086,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2025.1Q 부터 두 마스터가 일정하게 0.09~0.15% 벌어진다(그 전 8분기는 소수 둘째자리까지 일치). 반올림으로 설명되지 않는 계통 차이 지문이지만 원문에서 원인을 확정하지 못했다. history 는 이 회사에서 한 해 lag 값을 들고 있어 3자 대조 불가. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "신한라이프생명보험|2026.1Q": {
+      "residual_eok": 2.02,
+      "pl_eok": 1877.02,
+      "waterfall_eok": 1875,
+      "rel": 0.001077,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2025.1Q 부터 두 마스터가 일정하게 0.09~0.15% 벌어진다(그 전 8분기는 소수 둘째자리까지 일치). 반올림으로 설명되지 않는 계통 차이 지문이지만 원문에서 원인을 확정하지 못했다. history 는 이 회사에서 한 해 lag 값을 들고 있어 3자 대조 불가. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "신한라이프생명보험|2026.2Q": {
+      "residual_eok": 5.84,
+      "pl_eok": 3853.64,
+      "waterfall_eok": 3847.8,
+      "rel": 0.001518,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2025.1Q 부터 두 마스터가 일정하게 0.09~0.15% 벌어진다(그 전 8분기는 소수 둘째자리까지 일치). 반올림으로 설명되지 않는 계통 차이 지문이지만 원문에서 원인을 확정하지 못했다. history 는 이 회사에서 한 해 lag 값을 들고 있어 3자 대조 불가. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "코리안리재보험|2023.1Q": {
+      "residual_eok": -107.18,
+      "pl_eok": 416.22,
+      "waterfall_eok": 523.4,
+      "rel": 0.204776,
+      "cause": "WATERFALL_SUSPECT",
+      "note": "원수+수재가 정본 조합임은 같은 회사 11분기(2023.4Q·2024.1Q~2026.2Q)가 1.0000 으로 닫혀 증명된다. 어긋나는 2023.1~3Q 는 루트 워터폴 쪽이 의심된다 — csm_waterfall_history 의 2023.2Q(706.11억)·2023.3Q(923.11억)가 PL(706.12·923.11)과 일치하고 루트만 1,042.40·1,560.10 이다. 'PL 에 수재 leg 누락' 가설은 실측으로 기각.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "코리안리재보험|2023.2Q": {
+      "residual_eok": -336.28,
+      "pl_eok": 706.12,
+      "waterfall_eok": 1042.4,
+      "rel": 0.322602,
+      "cause": "WATERFALL_SUSPECT",
+      "note": "원수+수재가 정본 조합임은 같은 회사 11분기(2023.4Q·2024.1Q~2026.2Q)가 1.0000 으로 닫혀 증명된다. 어긋나는 2023.1~3Q 는 루트 워터폴 쪽이 의심된다 — csm_waterfall_history 의 2023.2Q(706.11억)·2023.3Q(923.11억)가 PL(706.12·923.11)과 일치하고 루트만 1,042.40·1,560.10 이다. 'PL 에 수재 leg 누락' 가설은 실측으로 기각.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "코리안리재보험|2023.3Q": {
+      "residual_eok": -636.99,
+      "pl_eok": 923.11,
+      "waterfall_eok": 1560.1,
+      "rel": 0.408301,
+      "cause": "WATERFALL_SUSPECT",
+      "note": "원수+수재가 정본 조합임은 같은 회사 11분기(2023.4Q·2024.1Q~2026.2Q)가 1.0000 으로 닫혀 증명된다. 어긋나는 2023.1~3Q 는 루트 워터폴 쪽이 의심된다 — csm_waterfall_history 의 2023.2Q(706.11억)·2023.3Q(923.11억)가 PL(706.12·923.11)과 일치하고 루트만 1,042.40·1,560.10 이다. 'PL 에 수재 leg 누락' 가설은 실측으로 기각.",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    },
+    "하나생명보험|2024.4Q": {
+      "residual_eok": -5.13,
+      "pl_eok": 398.57,
+      "waterfall_eok": 403.7,
+      "rel": 0.012707,
+      "cause": "UNRESOLVED",
+      "note": "원인 미규명. 2024.4Q 한 분기만 1.27% 벌어진다(2025.4Q·2026.1Q 는 일치). **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
+      "routed": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
+    }
+  }
+}

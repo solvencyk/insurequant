@@ -4,7 +4,7 @@
 Implements V8 consumer code:
   - CSM_WATERFALL_CLOSING_IDENTITY : 기초+신계약+이자+가정+상각 = 기말  (CSM_waterfall, 억원)
   - PL_BRIDGE_DART_INTERNAL        : 8-eq P&L bridge                  (pl_breakdown_master, 백만원)
-  - CSM_CROSSCHECK_WATERFALL_VS_PL : pl.원수CSM상각(+) + wf.CSM상각(-)*100 ≈ 0
+  - CSM_AMORT_IDENTITY             : pl.(원수+수재)CSM상각 == wf.CSM상각  (등식, 반올림 폭만)
 
 Both masters long-format. PL master is **백만원**, CSM waterfall is **억원**:
 cross-check aligns by ×100 (억→백만). Item names space-normalized.
@@ -54,6 +54,109 @@ PL_BRIDGE_BASELINE_PATH = "data/_gold/pl_bridge_baseline.json"
 
 def norm(s: str) -> str:
     return (s or "").replace(" ", "")
+
+
+# ===========================================================================
+# CSM 상각 항등식 — **등식이지 밴드가 아니다** (owner 2026-08-25)
+# ===========================================================================
+# owner 원문: "0.7~1.4 band 가 아니라 당연히 1 이어야돼."
+#
+# 이 관계는 이 저장소에 **두 번** 구현돼 있었고 둘 다 밴드였다:
+#   · `scripts/validate_data_contract.py` `_XCHK_LO/_HI = 0.4, 2.5`  (배수 밴드, 전 분기)
+#   · 이 파일의 `_check_csm_crosscheck`   `OK≤max(5%,300mn) / FAIL>10%` (4Q 한정)
+# 게다가 **대조식(comparand)이 서로 달랐다** — data-contract 쪽은 `원수 + 재보험`을 더했는데
+# 재보험(출재)은 별도의 **보유 재보험계약자산** 워터폴이라 더하면 안 된다. 실측(346버킷):
+#     원수+재보험(당시 식)  ±1% 밖 245건   ← 식 자체가 틀려서 신호가 잡음에 묻혔다
+#     원수 단독              ±1% 밖  31건
+#     원수+수재              ±1% 밖  20건   ← 정본
+# 그 밴드가 실제로 잡은 것은 346버킷 중 **0건**이었고, 에이비엘생명 2025.1~3Q 의 복사 결함
+# (비율 1.09~1.12)이 그냥 통과했다. 정정 후 그 6분기 비율은 0.9999~1.0001 이다.
+#
+# 정본 대조식 = **원수 + 수재**. 워터폴은 "발행한 보험계약"의 CSM 이므로 원수(direct)와
+# 수재(assumed reinsurance) 둘 다 포함한다. 출재(ceded, 코리안리 9-1 / 타사 항목 9 재보험)는
+# 보유 자산이라 제외한다. 실증: 코리안리 2023.4Q·2024.1Q~2026.2Q 11분기가 원수+수재로
+# 정확히 1.0000 (원수 단독이면 0.41~0.71).
+#
+# 허용오차는 **반올림 폭만**:
+#   0.1억  = 두 마스터 저장 그리드의 결합 반올림 상한(워터폴 억원 1자리 ±0.05 +
+#            PL 백만원 ±0.005)을 억원 그리드 1스텝으로 올린 값.
+#   0.05%  = 워터폴 상각이 **상품라인별 블록의 합**이라(관측 최대 5블록:
+#            csm_waterfall_history 의 `summed_product_lines`) 블록별 반올림이 누적되는 폭.
+# 실측 346버킷 중 318건이 이 안에 들어온다(p50 0.029억 · p90 0.21억). 밖으로 나가는 28건은
+# 전건 원인을 분류해 `data/_gold/csm_amort_identity_ledger.json` 에 **건별 박제**했다 —
+# 통째 skip 이 아니고, 잔차 값까지 박아서 데이터가 움직이면 박제가 깨진다.
+CSM_AMORT_TOL_ABS_EOK = 0.1
+CSM_AMORT_TOL_REL = 0.0005
+CSM_AMORT_MIN_EOK = 10.0            # 상각 10억 미만은 대조 의미 없음(반올림이 지배)
+CSM_AMORT_LEDGER_PATH = "data/_gold/csm_amort_identity_ledger.json"
+# 등재부 잔차 박제가 "이 정도면 같다"고 볼 폭. 데이터가 고쳐지거나 더 나빠지면 깨진다.
+CSM_AMORT_PIN_TOL_ABS_EOK = 0.5
+CSM_AMORT_PIN_TOL_REL = 0.05
+
+# PL 쪽 발행계약 CSM 상각 leg. 출재/재보험은 **의도적으로 빠져 있다**(보유 재보험계약자산).
+CSM_AMORT_PL_LEGS = ("원수CSM상각", "수재CSM상각")
+
+# FY내 기초 CSM 동일성(WFY) 축의 문서화된 면제 — 전부 legit_restatement
+# (parser 판별 2026-06-11, inbox user_xlsx_audit_followup 답변). 원천 공시가 FY 중
+# 정정·소급재작성한 건이라 데이터 수정 대상이 아니다(교보는 3Q24 공식 소급재작성 주석).
+# **CONT(FY 경계 연속성)에는 적용하지 않는다** — owner 2026-06-16: continuity break 는 무조건 RED.
+# 이 셋을 소비하는 곳이 두 군데다: 이 파일의 `_check_plausibility` 와
+# `scripts/validate_csm_continuity.py` 의 WITHIN_FY_OPENING_DRIFT. 정본은 여기 하나다.
+WFY_EXCEPTIONS = {
+    ("교보생명보험", "2023"), ("교보생명보험", "2024"), ("KB라이프생명", "2024"),
+    ("한화생명", "2023"), ("현대해상", "2023"), ("케이디비생명보험", "2023"),
+    ("메리츠화재해상보험", "2023"), ("에이비엘생명보험", "2023"), ("농협생명보험", "2023"),
+}
+
+
+def csm_amort_tol(amort_eok: float) -> float:
+    """CSM 상각 항등식의 허용오차(억원). 반올림 폭만 — 밴드가 아니다."""
+    return max(CSM_AMORT_TOL_ABS_EOK, CSM_AMORT_TOL_REL * abs(amort_eok))
+
+
+def csm_amort_pl_side_eok(plm: dict) -> float | None:
+    """PL 쪽 발행계약 CSM 상각 합(억원). 원수 leg 가 없으면 None(대조 불가)."""
+    direct = plm.get("원수CSM상각")
+    if not isinstance(direct, (int, float)):
+        return None
+    total = abs(direct)
+    for leg in CSM_AMORT_PL_LEGS[1:]:
+        v = plm.get(leg)
+        if isinstance(v, (int, float)):
+            total += abs(v)
+    return total / 100.0                      # 백만원 → 억원
+
+
+def csm_amort_residual(plm: dict, wfm: dict) -> tuple[float, float, float] | None:
+    """(잔차억, PL측억, 워터폴측억). 대조 불가(결측·미미)면 None."""
+    amort = wfm.get("CSM상각")
+    if not isinstance(amort, (int, float)) or abs(amort) < CSM_AMORT_MIN_EOK:
+        return None
+    pl_eok = csm_amort_pl_side_eok(plm)
+    if pl_eok is None or pl_eok == 0:
+        return None
+    # 두 마스터의 실제 granularity 는 0.01억(백만원)이다. float 잔여를 그대로 두면
+    # 푸본현대 2026.1Q 처럼 잔차가 정확히 tol 인 칸이 1e-16 때문에 RED 로 튄다.
+    return (round(pl_eok - abs(amort), 2), pl_eok, abs(amort))
+
+
+def csm_amort_ledger() -> dict:
+    """기지 잔차 등재부. 없으면 빈 등재부(= 전부 신규로 취급)."""
+    p = ROOT / CSM_AMORT_LEDGER_PATH
+    if not p.exists():
+        return {"entries": {}}
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def csm_amort_ledger_verdict(entry: dict | None, residual: float) -> str:
+    """등재부 판정. 'NEW'(미등재) / 'PINNED'(박제 일치) / 'PIN_DRIFT'(박제 이탈)."""
+    if entry is None:
+        return "NEW"
+    pinned = entry.get("residual_eok")
+    if not isinstance(pinned, (int, float)):
+        return "PIN_DRIFT"
+    tol = max(CSM_AMORT_PIN_TOL_ABS_EOK, CSM_AMORT_PIN_TOL_REL * abs(pinned))
+    return "PINNED" if abs(residual - pinned) <= tol else "PIN_DRIFT"
 
 
 def load_long(path: str) -> dict:
@@ -325,11 +428,9 @@ def _check_plausibility(wf: dict) -> tuple[list, list, list, list, list]:
     # 전부 legit_restatement — 원천 공시가 FY 중 정정/소급재작성(교보는 3Q24 공식 소급재작성 주석).
     # 데이터 수정 대상 아님 → EXC 표시만, 게이트 제외. (CONT/연속성에는 적용 안 함 — owner 2026-06-16:
     # continuity break는 무조건 RED. WFY[FY내 동일성]만 이 면제 유지.)
-    WFY_EXCEPTIONS = {
-        ("교보생명보험", "2023"), ("교보생명보험", "2024"), ("KB라이프생명", "2024"),
-        ("한화생명", "2023"), ("현대해상", "2023"), ("케이디비생명보험", "2023"),
-        ("메리츠화재해상보험", "2023"), ("에이비엘생명보험", "2023"), ("농협생명보험", "2023"),
-    }
+    # 2026-08-25: 모듈 레벨로 올렸다 — `validate_csm_continuity` 가 같은 축을 검사하는데
+    # 자기 면제셋이 없어서, 폭을 조이면 여기서 이미 판별이 끝난 건이 거기서 다시 RED 로
+    # 튀었다. 면제를 두 번 쓰지 않도록 **정본을 한 곳에 두고 import** 한다.
     wfy_rows = []   # (co, fy, {q: 기초})
     wfy_exc = []
     for co, qmap in sorted(wf_co.items()):
@@ -548,56 +649,61 @@ def _check_coverage(wf: dict, pl: dict) -> tuple[list, list]:
 
 
 def _check_csm_crosscheck(pl: dict, wf: dict) -> tuple[int, list, int, int]:
-    """CSM_CROSSCHECK: pl.원수CSM상각 + wf.CSM상각*100 ≈ 0 (백만원), 4Q-only.
-    Prints its own section and returns (cc_pass, cc_fail, cc_minor, cc_skip).
-    Split out of main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
-    # ===== 3. CSM_CROSSCHECK (pl.원수CSM상각 + wf.CSM상각*100 ≈ 0, 백만원) =====
-    # 4Q-only: pl 원수CSM상각/wf CSM상각 모두 YTD 누적이라 1~3Q는 분기배분 차이로 틀어짐.
-    # 연말(4Q=연간 누계)에서만 동일 기준 → 4Q만 비교, 1~3Q SKIP.
-    # cross-table(서로 다른 DART 표: PL 보험수익 구성 vs CSM 변동표)이라 표간 반올림/집계 차이로
-    # 수% 편차는 구조적 → 3단계 tol: OK ≤ max(5%,300mn) / MINOR ≤ 10%(경고,pass) / FAIL > 10%.
-    cc_pass = cc_minor = cc_skip = 0
-    cc_fail = []
-    cc_minor_rows = []
+    """CSM_AMORT_IDENTITY: PL(원수+수재) CSM상각 == 워터폴 CSM상각. **등식이다.**
+    Prints its own section and returns (cc_pass, cc_fail, cc_pinned, cc_skip).
+    Split out of main() 2026-07-22; pinned by tests/test_master_tables_golden.py.
+
+    2026-08-25 (owner "당연히 1 이어야돼"): 세 가지가 같이 바뀌었다 —
+      ① tol  : OK≤max(5%,300mn)/FAIL>10% 라는 **밴드** → 반올림 폭 max(0.1억, 0.05%)
+      ② scope: 4Q-only → **전 분기**. "1~3Q 는 분기배분 차이로 틀어진다"는 근거 없는 전제였다.
+               실측: 전 분기 346버킷 중 318건이 반올림 폭 안에서 닫힌다(4Q 만 볼 이유가 없다).
+      ③ 기지 잔차는 `data/_gold/csm_amort_identity_ledger.json` 에 **건별·잔차까지 박제**.
+    대조식·허용오차의 근거는 파일 상단 `CSM_AMORT_*` 주석 참조.
+    """
+    ledger = csm_amort_ledger().get("entries", {})
+    cc_pass = cc_pinned = cc_skip = 0
+    cc_fail = []          # 등재부에 없는 신규 이탈 + 박제 이탈 → exit code 에 반영
+    cc_pinned_rows = []
     common = sorted(set(pl) & set(wf))
+    seen = set()
     for (co, q) in common:
-        if not q.endswith(".4Q"):
+        r = csm_amort_residual(pl[(co, q)], wf[(co, q)])
+        if r is None:
             cc_skip += 1
             continue
-        # wf '발행한 보험계약' CSM상각 = 원수(direct) + 수재(assumed reinsurance). For a
-        # reinsurer (코리안리) the PL splits these into 원수CSM상각(4) + 수재CSM상각(4-1):
-        # both are issued contracts, so the PL side must add 수재 to match the rollforward.
-        # (출재/retro = 9-1 출재CSM상각, a HELD reinsurance asset — excluded, not added.)
-        p_dir = pl[(co, q)].get("원수CSM상각")       # 백만원, 보험수익 기여 → 양수
-        p_assumed = pl[(co, q)].get("수재CSM상각")   # 재보험사만 존재 (수재 발행계약)
-        p = None if p_dir is None else p_dir + (p_assumed or 0.0)
-        w = wf[(co, q)].get("CSM상각")               # 억원, CSM 감소 → 음수
-        if p is None or w is None:
-            cc_skip += 1
-            continue
-        w_mn = w * 100.0                              # 억 → 백만
-        s = p + w_mn
-        abs_s = abs(s)
-        rel = abs_s / abs(p) if p else 0.0
-        if abs_s <= max(0.05 * abs(p), 300.0):
+        resid, p_eok, w_eok = r
+        key = f"{co}|{q}"
+        if abs(resid) <= csm_amort_tol(w_eok):
             cc_pass += 1
-        elif rel <= 0.10:
-            cc_minor += 1
-            cc_minor_rows.append((co, q, round(p, 1), round(w_mn, 1), round(s, 1), rel))
+            continue
+        seen.add(key)
+        verdict = csm_amort_ledger_verdict(ledger.get(key), resid)
+        row = (co, q, round(p_eok, 2), round(w_eok, 2), resid, abs(resid) / w_eok,
+               (ledger.get(key) or {}).get("cause", "-"), verdict)
+        if verdict == "PINNED":
+            cc_pinned += 1
+            cc_pinned_rows.append(row)
         else:
-            cc_fail.append((co, q, round(p, 1), round(w_mn, 1), round(s, 1), rel))
+            cc_fail.append(row)
+    stale = sorted(k for k in ledger if k not in seen)
 
     print()
     print("=" * 78)
-    print(f"3. CSM_CROSSCHECK (pl.원수CSM상각 + wf.CSM상각 ≈ 0, 4Q-only 백만원)  "
-          f"common={len(common)} pass={cc_pass} minor={cc_minor} fail={len(cc_fail)} skip={cc_skip}")
-    print("   tol: OK≤max(5%,300mn) / MINOR≤10%(경고) / FAIL>10%")
+    print(f"3. CSM_AMORT_IDENTITY (PL 원수+수재 == 워터폴 상각, 억원, 전 분기)  "
+          f"common={len(common)} pass={cc_pass} pinned={cc_pinned} fail={len(cc_fail)} "
+          f"skip={cc_skip} stale={len(stale)}")
+    print(f"   tol: max({CSM_AMORT_TOL_ABS_EOK}억, {CSM_AMORT_TOL_REL*100:g}%) — 반올림 폭. "
+          f"밴드가 아니다(owner 2026-08-25)")
     print("=" * 78)
-    for co, q, p, w, s, rel in cc_fail[:35]:
-        print(f"  FAIL  {co:14s} {q}  pl={p:>+12.1f}  wf={w:>+12.1f}  sum={s:>+10.1f}  ({rel*100:+.1f}%)")
-    for co, q, p, w, s, rel in cc_minor_rows[:35]:
-        print(f"  MINOR {co:14s} {q}  pl={p:>+12.1f}  wf={w:>+12.1f}  sum={s:>+10.1f}  ({rel*100:+.1f}%)")
-    return cc_pass, cc_fail, cc_minor, cc_skip
+    for co, q, p, w, s, rel, cause, verdict in cc_fail[:40]:
+        print(f"  FAIL  {co:14s} {q}  PL={p:>+12.2f}  WF={w:>+12.2f}  잔차={s:>+10.2f}억 "
+              f"({rel*100:+.3f}%)  [{verdict}/{cause}]")
+    for co, q, p, w, s, rel, cause, verdict in cc_pinned_rows[:40]:
+        print(f"  PIN   {co:14s} {q}  PL={p:>+12.2f}  WF={w:>+12.2f}  잔차={s:>+10.2f}억 "
+              f"({rel*100:+.3f}%)  [{cause}]")
+    for k in stale[:20]:
+        print(f"  FIXED? {k}  <- 더는 벌어지지 않는다. 등재부에서 줄을 지워라")
+    return cc_pass, cc_fail, cc_pinned, cc_skip
 
 
 def _check_qoq_warn(wf: dict) -> list:
@@ -715,7 +821,7 @@ def main() -> int:
 
     pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows = _check_pl_bridge(pl)
 
-    cc_pass, cc_fail, cc_minor, cc_skip = _check_csm_crosscheck(pl, wf)
+    cc_pass, cc_fail, cc_pinned, cc_skip = _check_csm_crosscheck(pl, wf)
 
     qoq_rows = _check_qoq_warn(wf)
 
@@ -740,7 +846,7 @@ def main() -> int:
           f"pl_bridge:{pb_pass}P/{len(pb_fail)}F/{pb_skip}S/{pb_new}NEW | "
           f"zero_legs:{len(zleg_rows)} | "
           f"impossible0:{len(zerolegs_rows)} | "
-          f"crosscheck:{cc_pass}P/{cc_minor}M/{len(cc_fail)}F/{cc_skip}S | "
+          f"csm_amort_identity:{cc_pass}P/{cc_pinned}PIN/{len(cc_fail)}F/{cc_skip}S | "
           f"qoq_warn:{len(qoq_rows)}Y | sens:{len(sens_red)}R/{len(sens_yellow)}Y/{len(sens_dir)}dir")
     print("#" * 78)
     # QOQ/sens_yellow는 YELLOW(anomaly)라 exit code에 반영 안 함. wfy/zamort/zleg/impossible0/sens_red은 데이터 오류라 반영.
