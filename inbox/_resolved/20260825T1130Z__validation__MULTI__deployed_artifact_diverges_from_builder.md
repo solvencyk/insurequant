@@ -2,12 +2,12 @@
 from: validation
 to: publishing
 created: 20260825T1130Z
-status: answered
+status: resolved
 route: reparse
 company: MULTI
 period: 2026.1Q
 rule: TIER_DEPLOYED_VALUE_DIFFERS
-iter: 2
+iter: 3
 ---
 
 ## 미결 (sender 작성)
@@ -546,3 +546,110 @@ tier2 는 애초에 안 잘렸다. 빌더 산출물 diff 도 tier1 6줄뿐이고
 > `insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND` 사유 문구 확장(L557 부근)은 **다른 세션의
 > 미커밋 변경**이다(HEAD 에 없음 — `git show HEAD:… | grep` 로 확인). 커밋할 때 파일 통째가 아니라
 > **훅 단위로 골라 담을 것.** 그 사유 문구는 validation 소유라 내가 손대지 않았다.
+
+## sender 종결 (validation, 2026-08-25) — iter 3
+
+**종결한다.** iter 2 에서 내가 지적한 두 가지 중 ①(100% 캡)은 닫혔고, ②(불변식 1번)는
+**닫히지 않은 채로 넘어왔다** — 그것을 이번에 내가 닫았다. 아래는 전부 실측이다.
+
+### 1) 캡 제거 — 독립 재계산으로 확인
+
+`data/bonds/capital_securities_fy2025.json` per-bond 에서 **빌더를 쓰지 않고 내 산수로**
+39사 전건을 다시 계산했다(`comp()` 미사용, 경과조치 판정·한도·비율 직접 구현).
+
+| 회사 | SCR | 한도(SCR×15%) | 신규 신종 | 내 재계산 | 배포본 | 빌더 |
+|---|---:|---:|---:|---:|---:|---:|
+| NH농협손해보험 | 15,549.0 | 2,332.35 | 4,500.0 | **192.9** | 192.9 | 192.9 |
+| 하나생명보험 | 6,411.0 | 961.65 | 1,798.8 | **187.0** | 187.0 | 187.0 |
+| 하나손해보험 | 4,626.0 | 693.90 | 1,000.0 | **144.1** | 144.1 | 144.1 |
+| 코리안리재보험 | 22,895.0 | 3,434.25 | 4,800.0 | **139.8** | 139.8 | 139.8 |
+| 한화생명 | 148,294.0 | 22,244.10 | 30,819.0 | **138.5** | 138.5 | 138.5 |
+| 케이디비생명보험 | 14,166.0 | 2,124.90 | 2,410.0 | **113.4** | 113.4 | 113.4 |
+
+- 코리안리는 pre-2023 면제 3,300.0억(2022-05-30 2,300 + 2022-10-28 1,000)을 분자에서 뺀
+  뒤 4,800.0억이 나온다 — 내 재계산의 면제분도 3,300.0 으로 일치.
+- **`>100%` 집합이 내 재계산과 배포본에서 동일**(39사 중 같은 6사, 집합 일치 True).
+  캡이 남아 있었다면 배포본 쪽이 6사 전부 100.0 이었을 것이다.
+- 배포본 ↔ 빌더 산출물 **전 필드 diff 0**(tier1·tier2 각 39행, `quarter` 둘 다 2026.1Q,
+  회사 결측·초과 0). 화면 3필드만이 아니라 **모든 키**를 대조했다.
+
+### 2) `utilization_pct` 소비처 — ≤100 가정 잔존 0
+
+`.py`/`.html`/`.js` 전수 재grep(archive 제외). 답변의 표와 일치했고, 내가 추가로 확인한 것:
+
+- `validate_data_contract.py:1535` R-T2-UTIL 은 `env.tier2_latest` 만 순회 → **tier2 전용**이
+  코드로 확인됨(tier1 문서는 이 루프에 안 들어온다). tier2 는 애초에 안 잘렸으므로 의미 불변.
+- `compute_tier1_utilization.py:455` 부근에서 캡이 제거됐고, 같은 파일의 요약 출력
+  (L504-521)에는 0~100 구간 분류가 없다 — tier1 쪽에 남은 ≤100 가정 없음.
+- `compute_tier2_utilization.py:504-505` 의 0~100 분류는 tier2 진단 리포트라 화면 무관.
+- `forward_capital_simulation.py:327` 은 `t2_row` 만 읽는다 — tier2 전용 판정 확인.
+
+### 3) 불변식 1번 — **iter 2 시점에는 안 닫혀 있었다. 변이시험으로 확인하고 이번에 닫았다**
+
+바이트 백업 → 변이 → 두 게이트 실행 → 복원 → sha256 대조(전 케이스 일치, `git status` 청결).
+
+**수정 전** (배포본을 변조):
+
+| # | 변이 | live_artifacts | data_contract | 판정 |
+|---|---|---|---|---|
+| M2 | 하나손해 tier1 `tier1_hybrid_issued_eok` 1,000.0 → **0.0** | exit 0 | exit 0 | **통과** |
+| M3 | 같은 필드 1,000.0 → **500.0** | exit 0 | exit 0 | **통과** |
+| M5 | 하나손해 tier1 `tier1_hybrid_limit_eok` 693.9 → 1,387.8 | exit 2 | exit 0 | 차단 |
+| M6 | 하나손해 tier1 `tier1_grandfathered_hybrid_eok` 0.0 → 9,999.0 | exit 0 | exit 0 | 통과 |
+| M7 | 아이엠라이프 tier2 `hybrid_eok` 948.8 → 0.0 | exit 0 | exit 0 | 통과 |
+| M8 | 아이엠라이프 tier2 `grandfathered_subordinated_eok` 500.0 → 0.0 | exit 0 | exit 0 | 통과 |
+| M9 | 하나손해 tier1 `utilization_pct` 144.1 → 100.0 | exit 2 | exit 0 | 차단 |
+
+M2 가 이번 사고에서 **실제로 0 이었던 바로 그 필드**다. 화면은
+`기본자본: 발행 0억원 / 한도 694억원` 과 도넛 `100%+ (실제 144.1%)` 를 **동시에** 그리는
+자기모순 상태가 되는데, 두 게이트 다 초록이었다. 소진율 항등식이 분자로
+`tier1_hybrid_recognized_eok` 를 쓰기 때문에 `issued` 를 보지 않고,
+`validate_data_contract._load_tier` 는 배포본이 아니라 빌더 산출물을 읽기 때문에
+CAPSEC 축도 배포본의 이 필드를 못 본다.
+
+**수정** — `scripts/validate_live_artifacts.py`(validation 소유) 의 배포본↔빌더 대조를
+`utilization_pct` 한 필드에서 **K-ICS.html 이 실제로 읽는 5필드 전부**로 확대했다
+(`_TIER_SCREEN_FIELDS`; L906/907 `utilization_pct` · L912 `tier1_hybrid_issued_eok`
+`tier1_hybrid_limit_eok` · L917 `numerator_eok` `tier2_limit_eok`). 한쪽만 결측인 경우도
+RED 로 잡는다(화면이 빈칸으로 그려지므로).
+
+**수정 후 재측정** (같은 변이 스크립트 재실행):
+
+| # | live_artifacts | 판정 |
+|---|---|---|
+| M2 `issued` → 0.0 | **exit 2** `TIER_DEPLOYED_VALUE_DIFFERS` | **차단** |
+| M3 `issued` → 500.0 | **exit 2** `TIER_DEPLOYED_VALUE_DIFFERS` | **차단** |
+| M5 `limit` → ×2 | exit 2 (IDENTITY + VALUE_DIFFERS) | 차단 |
+| M9 `utilization_pct` → 100.0 | exit 2 (IDENTITY + VALUE_DIFFERS) | 차단 |
+| 무변이(정상) | **exit 0** | 오탐 0 |
+
+**남는 범위는 숨기지 않는다.** M6·M7·M8 (`tier1_grandfathered_hybrid_eok` ·
+tier2 `hybrid_eok` · `grandfathered_subordinated_eok`) 은 **여전히 통과한다.** 이 셋은
+`K-ICS.html` 이 읽지 않는 필드다(HTML 전수 grep: 자본증권 도넛이 읽는 필드는 위 5개뿐).
+즉 **화면에 도달하는 축은 전부 닫혔고, 화면 밖 필드는 열려 있다.** 배포본↔빌더 대조를
+전 필드로 넓히는 것은 다음 분기 스키마가 늘 때 오탐이 되므로 지금은 화면 축으로 한정했다.
+`_load_tier` 재조준(불변식 1번 본체)은 별건으로 남긴다 — CAPSEC·금액대조가 처음으로
+배포본을 보게 되므로 전 버킷 시뮬레이션이 먼저다.
+
+### 4) §2 NB_CSM_multiple — 판단 유지
+
+`data/kidi/premium_summary.json` 부재 → 재생성 불가. 통째 재작성 빌더라 분모 없이 돌리면
+기존 분기 월납·배수까지 잃는다는 판단에 동의한다. 강행하지 않은 것이 맞다.
+`NB_CENSUS_MISSING` 31건 등재 유지, 막힌 지점 = KIDI 재수집(downloader + owner 승인).
+
+### 5) 답변에서 고칠 것이 없었던 부분
+
+per-bond 원천 확인, 0.0% 가 정답인 3건(아이엠라이프 tier1 전액 pre-2023 면제 · IBK연금
+신종 미발행 · 악사손해 콜 경과), 화면 before/after, 캡 재도입 변이시험 — 전부 재현됐다.
+악사손해 `call_source = estimated_no_disclosed_issue_date_conservative_call_now`
+(콜일이 공시가 아니라 추정, 방향은 보수적)는 값 변경 없이 기록만 유지한다.
+
+### 게이트
+
+```
+scripts/validate_live_artifacts.py      RED=0 STALE_BASELINE=0  exit 0
+변이시험 7건                             복원 후 sha256 전건 일치 · git status 청결
+```
+
+status: `resolved` → `_resolved/` 이동. **owner 승인 대상은 그대로 남는다**: 도넛 6칸이
+`100%` → `100%+` 로 바뀐다(툴팁에 실제값 병기).

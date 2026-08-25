@@ -1,0 +1,24 @@
+{
+  "company": "삼성화재해상보험",
+  "kr": "KR0008",
+  "period": "FY2026_Q2",
+  "source_file": "data/ir/FY2026_Q2/KR0008_삼성화재해상보험/(KOR) SFMI 26.2Q_F.xlsx",
+  "csm_waterfall": {
+    "opening": 141676.63803381,
+    "new_business": 12423.48530328,
+    "interest": 2395.9525531,
+    "assumption": -2519.3189640099995,
+    "amortization": -8029.49758226,
+    "closing": 145947.25934392
+  },
+  "csm_breakdown": {
+    "total": 145947.25934392
+  },
+  "segment_insurance_income": {
+    "basis": "separate (별도) for net income (confirmed); 보험손익 sub-item not cleanly comparable due to non-life multi-LOB scoping",
+    "note": "sheet 'PL-별도감독 2606' (별도 감독회계 손익계산서, full official statement, unit 원): FY26 1H(2026.01-06) Ⅶ.당기순이익=1,253,442,327,998원=1,253,442.328백만 vs PL_breakdown.json KR0008 2026.2Q item24(당기순이익)=1,253,442.33 -- EXACT MATCH. sheet 'PL-연결감독 2606' (연결) Ⅶ.연결당기순이익 for the same period=1,373,953,295,615원=1,373,953.296백만 -- does NOT match master (diff 120,511백만=1,205억, 8.8%). The 'Profit & Loss status' summary tab (labeled 손익현황) carries footnote '주) 연결재무제표 기준' (explicitly consolidated) and its 당기순이익=13,739.53295615억원 reproduces the SAME consolidated figure -- confirms internal consistency (summary tab==연결 full statement). Ⅰ.보험손익 (item1) does NOT cleanly match either basis (별도=1,087,926.62백만 vs master 1,040,273.50, diff 4.4%; 연결=1,114,520.58백만, diff 6.7%) -- for this NON-LIFE, multi-LOB company (auto/general/장기 lines) master's item1 is likely LOB-scoped (per SKILL note '손보=장기 열') rather than the entity-wide Ⅰ.보험손익 total, so item1 is not a valid basis-discriminator here; 당기순이익 (unambiguous, LOB-scope-independent) is.",
+    "net_income_eok_FY26_1H_separate": 12534.42327998,
+    "net_income_eok_FY26_1H_consolidated": 13739.53295615
+  },
+  "notes": "FY2026 1H (YTD, FY26.2Q) cumulative. Source: '(KOR) SFMI 26.2Q_F.xlsx'. Unit 억원 directly in sheet 'CSM' (no conversion needed); unit 원 in 'PL-별도감독 2606'/'PL-연결감독 2606' (divided by 1,000,000 for 백만원 comparability with PL_breakdown.json); unit 억원 in 'Profit & Loss status' summary tab. sheet 'CSM' footnote: '주) 보험계약부채 기준, 재보험 관련 CSM 제외' (원수 CSM basis, no explicit 별도/연결 tag, but numerically confirmed against master below). CSM_waterfall.json for KR0008 was NOT touched by commit 8a3b930 (before==after, unchanged) -- not one of the 5 companies with the block-selection bug. ALL SIX csm_waterfall items above reproduce the repo's CURRENT master for KR0008 2026.2Q to the exact eok (기초=141676.6, 신계약=12423.5, 이자부리=2395.9, 가정조정=-2519.3, 상각=-8029.5, 기말=145947.3 -- master identical before/after 8a3b930). BASIS DETERMINATION: CSM = 별도 (by structural convention across all 4 companies checked + exact numeric match). PL headline net income = 별도, CONFIRMED via exact match against the OFFICIAL 별도-basis financial statement, and explicitly diverging from the OFFICIALLY-labeled 연결 statement (which itself matches the factsheet's own '연결재무제표 기준'-footnoted summary tab, so the divergence is real, not a units/rounding artifact). This is the 3rd of 4 companies (with Hanwha Life, DB Insurance) where PL_breakdown.json is ALREADY separate-basis-correct; Samsung Life remains the sole consolidated outlier found so far. See inbox/parser/20260825T2300Z__parser-ifrs17__MULTI__ir_basis_separate_vs_consolidated.md."
+}

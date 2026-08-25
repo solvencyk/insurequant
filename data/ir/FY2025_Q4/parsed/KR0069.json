@@ -1,0 +1,25 @@
+{
+  "company": "삼성생명",
+  "kr": "KR0069",
+  "period": "FY2025_Q4",
+  "source_file": "data/ir/FY2025_Q4/raw/KR0069_삼성생명/2025_4Q_earnings_kor.pdf",
+  "csm_waterfall": {
+    "opening": 129020.2,
+    "new_business": 30594.7,
+    "interest": 4937.5,
+    "assumption": -17577.8,
+    "amortization": -14796.0,
+    "closing": 132178.7
+  },
+  "csm_breakdown": {
+    "total": 132178.7
+  },
+  "segment_insurance_income": {
+    "basis": "consolidated (연결)",
+    "note": "PDF p.7 '연결손익현황' -- explicitly labeled consolidated. FY25 annual: 보험서비스손익(insurance service result) 975 십억원, 투자손익(investment result) 2,022 십억원, 지배주주연결손익 2,303 십억원 + 비지배지분 149 십억원 = 총 2,452 십억원. Converted to 억원 (x10): 보험손익=9,750억, 투자손익=20,220억, 당기순이익(total incl. NCI)=24,520억.",
+    "insurance_income_eok": 9750.0,
+    "investment_income_eok": 20220.0,
+    "net_income_total_eok": 24520.0
+  },
+  "notes": "FY2025 4Q (annual/연차, Jan-Dec 2025 cumulative) -- this repo's FY####_Q# convention labels the annual filing by its calendar quarter-end (Q4). Source: 2025_4Q_earnings_kor.pdf (29 pages). All csm_waterfall values eok (억원), converted from source unit 조원 (KRW trillion, x10,000) at p.11 'CSM 변동내역': 신계약 +3.06조, 이자부리 +0.49조, CSM 조정등 -1.76조, 상각 -1.48조, 기시CSM 12.9조, 기말CSM 13.2조 (rounded to 2 decimals in the PDF chart). Precise (unrounded) figures cross-checked against the sibling FY2026_Q2 factsheet xlsx (SLI 1HFY26 Factsheet_KOR.xlsx, sheet Ⅰ-5 'CSM 상세 (별도)' col J = FY25 4Q standalone-quarter, and sheet Ⅰ-3 'CSM' section col H = FY26 1Q opening = FY25 4Q closing): opening=129020.2, new_business=30594.7 (=sum of 4 quarterly increments 657.77+768.56+871.41+761.72, x10), interest=4937.5, assumption=-17577.8, amortization=-14796.0, closing=132178.7 -- ALL SIX ITEMS reproduce this repo's CSM_waterfall.json PRE-commit-8a3b930 ('before') value for KR0069 2025.4Q to within +/-0.1eok (rounding). The POST-8a3b930 ('after'/current, consolidated-leak) value for the same quarter differs by 187-899eok per item (see basis_determination.md-equivalent ticket for the full table). BASIS DETERMINATION: p.7 '연결손익현황' (consolidated P&L status) is EXPLICITLY labeled 연결 (consolidated) in the PDF itself -- this is the headline P&L (보험손익/투자손익/당기순이익), a DIFFERENT metric from the CSM waterfall on p.11 which carries no basis label in this PDF but numerically matches the separate-basis figure (confirmed via the FY2026_Q2 xlsx which explicitly tags the equivalent CSM sheet '(별도)'). i.e. for Samsung Life: CSM = separate, but headline P&L = consolidated, disclosed side-by-side in the SAME earnings release without being the same accounting scope. See inbox/parser/20260825T2300Z__parser-ifrs17__MULTI__ir_basis_separate_vs_consolidated.md for the full cross-company verdict."
+}

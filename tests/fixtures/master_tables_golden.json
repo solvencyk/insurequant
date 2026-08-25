@@ -1,6 +1,5 @@
 {
   "exit_code": 2,
-  "summary": "SUMMARY coverage_hole:0CSM/0PL | closing:358P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:2513P/16F/319S/0NEW | zero_legs:3 | impossible0:0 | csm_amort_identity:338P/8PIN/0F/0S | qoq_warn:209Y | sens:2R/1Y/20dir",
-  "_what": "Refactor safety net for validate_master_tables.main(). Captured before the 374-line function was split into per-check functions. Asserts the SUMMARY count matrix + exit code (--no-build).",
-  "_regenerated": "2026-08-25 (2차): 28버킷 라운드 — 삼성생명 pick_pattern2 블록선택 버그 수정(65535 sentinel) 60셀 · 코리안리 18셀 · 교보 14셀 · 신한라이프 29셀 · 아이엠라이프 5셀 정정 + NB_CSM_multiple 파생필드 73셀 CSM 재동기화. 원장 csm_amort_identity 28건 -> 8건."
+  "summary": "SUMMARY coverage_hole:0CSM/0PL | closing:358P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:2517P/14F/317S/0NEW | zero_legs:3 | impossible0:0 | csm_amort_identity:324P/22PIN/0F/0S | qoq_warn:206Y | sens:2R/1Y/20dir",
+  "_what": "Refactor safety net for validate_master_tables.main(). Captured before the 374-line function was split into per-check functions. Asserts the SUMMARY count matrix + exit code (--no-build)."
 }

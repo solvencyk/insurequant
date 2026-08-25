@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260825T0800Z
-status: open
+status: answered
 route: reparse
 company: MULTI
 period: ALL
@@ -98,3 +98,105 @@ item4(원수CSM상각) 6,379,544 · item5(원수 위험조정변동) 1,768,401 �
 이 티켓에서 건드리지 말 것. 게이트 재조준은 validation 숙제로 `TODO_validation.md` 에 있다.
 
 ## 답변 (parser-ifrs17 작성 — 처리 후)
+
+**코드를 고쳤다. 리터럴이 표를 정확히 지배하고, 302개 raw 디렉터리(생손보 전체 331 디렉터리)
+시뮬레이션으로 판정이 바뀌는 버킷이 8개 기지 사례로 정확히 한정됨을 확인했다 — 파손 0.**
+`main()`은 실행하지 않았고 `csm_waterfall_master_diag.json`/`csm_waterfall_master_cov.json`도
+쓰지 않았다(요청대로 코드만).
+
+### 1) 단위 리터럴을 실제로 읽도록 고쳤다
+
+`scripts/build_csm_waterfall_master.py`에 `_detect_unit_udiv(rd, mag)`을 신설하고
+`waterfall_for_dir()`의 L1035 최종 환산(구 `udiv = 1e6 if mag>1e10 else (1e3 if mag>1e8 else 1)`)을
+그 함수 호출로 교체했다. 판정 우선순위(오늘 다른 세션이 `insurance_pl_breakdown`에서 쓴
+"근접 단위선언 → 문서전체 다수결 → 크기추정" 계층을 CSM 롤포워드 캡션에 맞게 적용):
+
+1. **`lit-conf`** — 캡션(측정요소별 변동/차이조정/보험계약마진의 변동/보험계약부채(자산)의
+   변동) 바로 앞의 "(단위: X)" 리터럴이 크기휴리스틱과 일치 — 값 불변, 근거만 리터럴로 교체.
+2. **`lit-near`** — 리터럴이 크기휴리스틱과 불일치(진짜 버그 케이스). `near`(캡션-근접 단위
+   집합)가 1개면 그 값, 2개 이상이면(신한이지: {원,천원}) 문서 전체 히스토그램에서 그
+   근접후보들 중 더 많이 등장한 쪽 채택 — 단, 크기휴리스틱이 이미 `near`에 있으면(예:
+   미래에셋생명 2025.4Q, near={백만원,원}이지만 백만원도 근접후보) **1번으로 처리해
+   불필요한 override를 안 한다.** 이 안전장치가 없으면 문서 전체에 흩어진 무관 표(주당배당 등)의
+   "원" 단위가 캡션-근접 후보를 역전시켜 미래에셋생명을 잘못 건드릴 뻔했다(시뮬레이션으로
+   포착 후 규칙 추가).
+3. **`lit-doc`** — 캡션 근처에 리터럴이 전혀 없을 때(AIG: near 없음)만 문서 전체 히스토그램의
+   최다 단위. 여전히 "리터럴 있음"이지 크기추정이 아니다.
+4. **`mag`** — 문서 어디에도 단위 텍스트가 없을 때만 옛 크기 휴리스틱(폴백, 현재 0건).
+5. **`ambiguous`** — `near`가 2개 이상인데 그중 1위와 2위 문서-등장수가 3배 미만으로 백중일
+   때는 **값을 쓰지 않고 `None`을 반환**한다(부탁②: 어긋나면 값 대신 표시). 현재 0건.
+
+`src`(선택전략 태그)에 `+u:<tag>`를 붙여 산출에 남긴다 — 예 `combined-agn+u:lit-near`.
+`grep "+u:mag"`로 폴백 사용 버킷을 항상 감사할 수 있다.
+
+### 2) 전 회사·전 분기 시뮬레이션 (`scripts/_probes/probe_20260825b_csm_unit_fix_simulation.py`)
+
+패치 전(구 3줄 휴리스틱 재현) vs 패치 후(`waterfall_for_dir` 실제 호출)를 331개 디렉터리
+전부(생손보 전체 — 원 티켓의 SONBO 8개사보다 넓게, anchor도 old/new 두 세계를 독립 계산해
+내부 anchor-비교 사이트가 영향을 받는지도 같이 검사) 돌렸다:
+
+```
+same=293  changed=8  both_none=30   (293+8+30=331)
+```
+
+**바뀐 8개가 정확히 기지 8개 버킷과 일치, 그 외 0건.** `src`의 전략 태그(접미사 제외)가
+old/new 전건 동일 — 즉 L134·285·550·806·911(anchor 비교용 내부 udiv 5곳)은 이번 패치와
+무관하게 후보 선택을 바꾸지 않았다(고치지 않았고, 시뮬레이션으로 안전 확인). 태그 집계:
+`lit-conf=226 · lit-doc=68 · lit-near=7 · no-wf=30`, **`mag`/`ambiguous` 0건** — 현재
+데이터셋엔 폴백도 미해결 동률도 없다.
+
+| 회사 | 분기 | 舊(억) | 新(억) | 태그 |
+|---|---|---:|---:|---|
+| AIG손해 KR0029 | 2025.4Q | 928,075.0 | 928.1 | lit-doc |
+| 신한이지손해 KR0051 | 2023.4Q | 1,752.3 | 1.8 | lit-near |
+| 〃 | 2024.4Q | 709.6 | 0.7 | lit-near |
+| 〃 | 2025.4Q | 1,693.2 | 1.7 | lit-near |
+| BNP카디프 KR0075 | 2024.4Q | 288,755.8 | 288.8 | lit-near |
+| 〃 | 2025.4Q | 299,583.9 | 299.6 | lit-near |
+| 카카오페이손해 KR1098 | 2024.4Q | 4,606.4 | 4.6 | lit-near |
+| 〃 | 2025.4Q | 3,411.9 | 3.4 | lit-near |
+
+### 3) gold `set` 30셀 — 코드 단독 재현 확인, 제거 가능해 보이나 **제거는 안 했다**
+
+새 코드가 산출하는 6항목 전 벡터를 `user_csm_cells.json`의 `set` 30셀(BNP카디프 12·
+카카오페이 12·AIG 6)과 항목별로 대조 — **30셀 전부 code-only 값과 일치**(표시 정밀도
+내). 예: AIG 2025.4Q `{1:922.7, 2:986.8, 3:45.8, 4:-904.2, 5:-123.0, 6:928.1}` vs gold
+`{1:922.67849, 2:986.82564, 3:45.81277, 4:-904.20562, 5:-123.03631, 6:928.07497}` — 전부
+반올림 이내 일치. 신한이지(exclude_companies, `set` 아님)도 연속 3개년 기말=기초 항등식이
+코드만으로 완전히 닫히고(1.8=1.8, 0.7=0.7), exclude 노트의 프로즈 수치("기초=0.71억",
+"신계약=10.1억")와도 정확히 일치.
+
+**owner/validation 판단 요청**: 30개 `set`은 이제 코드가 이미 맞으므로 제거해도 화면에
+영향이 없어 보인다(제거하면 그만큼 손패치가 준다). 신한이지 `exclude_companies`는 단위버그
+근거는 stale해졌지만 구조적 근거(PAA 중심사라 이 일반모형 CSM ~2억이 경제적으로 무의미)는
+별개로 남아 있어 **exclude 자체는 유지가 맞아 보인다** — 다만 노트 문구의 "known bug,
+미수정" 부분은 이제 사실이 아니니 갱신이 필요하다. 이 티켓의 지시("반영은 owner와 정한
+뒤")에 따라 두 파일 다 손대지 않고 판단만 보고한다.
+
+### 부수 확인 — IBK연금보험(KR1011) 미래 위험 해소
+
+티켓이 "다음 후보"로 지목한 KR1011은 현재 이미 `lit-doc`(근접 리터럴은 없지만 문서
+히스토그램이 천원x100 압도적)로 정확히 판정되고 있었다 — 앞으로 CSM 규모가 더 줄어도
+크기휴리스틱과 무관하게 계속 천원으로 잡힌다.
+
+### 재현
+
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260825b_csm_unit_fix_simulation.py
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260825_csm_unit_heuristic_sweep.py   # 舊 판정 재확인(비교용, 코드 미변경 상태 필요시 git stash)
+```
+전부 read-only(`main()` 미호출, 파일 미기록).
+
+### 건드리지 않음
+
+`CSM_waterfall.json`·`NB_CSM_multiple.json`·`data/_gold/live_artifact_baseline.json`·
+`data/_gold/user_csm_cells.json`(읽기만) · `build_csm_waterfall_master.py`의 `main()`
+(미실행) · L134/285/550/806/911(내부 anchor 비교 5곳, 시뮬레이션으로 불필요 확인).
+
+### 게이트
+
+`scripts/prepush_check.py` → **exit 0**(PRE-PUSH VERDICT: gate-clear, offline tests
+230 passed/1 skipped). 이 티켓 자체는 별도 골든이 없다(`build_csm_waterfall_master.py`는
+diag 전용, 어떤 골든도 그 산출을 pin하지 않음 — `grep`으로 확인).
+
+status: **answered** (30셀 제거·신한이지 노트 갱신은 owner/validation 확인 필요).

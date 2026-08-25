@@ -416,6 +416,27 @@ def check_insurance_pl_breakdown(fd: Findings) -> dict:
 
 
 # --------------------------------------------------------------------------- 5) tier
+# K-ICS.html 의 자본증권 도넛이 실제로 읽는 필드 전부 (updateDonutPanel, L906-917):
+#   L906/907 utilization_pct(t1,t2) · L912 tier1_hybrid_issued_eok / tier1_hybrid_limit_eok
+#   L917 numerator_eok / tier2_limit_eok
+# 배포본↔빌더 대조를 utilization_pct 한 필드로만 걸어 두었더니(2026-08-25 최초 배선) 나머지
+# 네 필드는 배포본에서 어떤 값으로 틀어져도 두 게이트가 전부 exit 0 이었다 — 변이시험 실측
+# (2026-08-25 validation 재확인): 배포본 하나손해 tier1_hybrid_issued_eok 1,000.0 → 0.0 /
+# → 500.0, 아이엠라이프 tier2 hybrid_eok·grandfathered_subordinated_eok → 0.0 넷 다
+# live_artifacts exit 0 · data_contract exit 0. 화면은 "발행 0억 / 한도 694억 · 소진율
+# 144.1%" 라는 자기모순 상태를 그리는데 아무 룰도 안 걸린다. 이번 사고에서 실제로 0 이었던
+# 필드가 바로 그 issued 다(소진율까지 같이 0 이라 우연히 걸렸을 뿐).
+# 소진율 항등식은 분자로 tier1_hybrid_recognized_eok 를 쓰므로 issued 를 보지 않고,
+# validate_data_contract 의 CAPSEC 축은 배포본이 아니라 빌더 산출물을 읽는다(_load_tier) —
+# 즉 이 네 필드에는 배포본을 보는 룰이 하나도 없었다. 여기서 붙인다.
+# 이것은 소스 대조가 아니라 **같은 파이프라인의 두 산출물 동일성** 대조라, 다르면 조립을
+# 건너뛴 것 외의 해석이 없다(관찰기 YELLOW 를 거칠 이유가 없는 RED).
+_TIER_SCREEN_FIELDS = {
+    "tier1": ("utilization_pct", "tier1_hybrid_issued_eok", "tier1_hybrid_limit_eok"),
+    "tier2": ("utilization_pct", "numerator_eok", "tier2_limit_eok"),
+}
+
+
 def check_tier_utilization(fd: Findings) -> dict:
     """`kics_tier{1,2}_utilization.json` — 배포본의 **값**을 처음으로 검사한다.
 
@@ -500,13 +521,20 @@ def check_tier_utilization(fd: Findings) -> dict:
             stat[f"{tier}_behind"] += 1
         if dep_q == up_q:
             for co in sorted(set(urows) & set(drows), key=str):
-                a, b = drows[co].get("utilization_pct"), urows[co].get("utilization_pct")
-                if a is None or b is None:
-                    continue
-                if abs(a - b) > max(0.15, 0.005 * abs(b)):
-                    fd.add(rel, "TIER_DEPLOYED_VALUE_DIFFERS", str(co),
-                           f"배포본 utilization_pct={a} vs 빌더 산출물={b} — 같은 분기인데 다르다")
-                    stat[f"{tier}_value_differs"] += 1
+                for fld in _TIER_SCREEN_FIELDS[tier]:
+                    a, b = drows[co].get(fld), urows[co].get(fld)
+                    if a is None and b is None:
+                        continue
+                    if a is None or b is None:
+                        fd.add(rel, "TIER_DEPLOYED_VALUE_DIFFERS", str(co),
+                               f"배포본 {fld}={a} vs 빌더 산출물={b} — 한쪽만 결측이다"
+                               f"(화면이 읽는 필드라 빈칸으로 그려진다)")
+                        stat[f"{tier}_value_differs"] += 1
+                        continue
+                    if abs(a - b) > max(0.15, 0.005 * abs(b)):
+                        fd.add(rel, "TIER_DEPLOYED_VALUE_DIFFERS", str(co),
+                               f"배포본 {fld}={a} vs 빌더 산출물={b} — 같은 분기인데 다르다")
+                        stat[f"{tier}_value_differs"] += 1
     return stat
 
 
@@ -518,7 +546,8 @@ RULE_REASON = {
         "정적 스냅샷 drift. 이 파일의 선언 빌더(scripts/ifrs17_batch_historical.py, 파일 "
         "source 필드)는 2026-06 에 아카이브돼 **아무도 재생성하지 않는다**. 마스터가 백필·"
         "정정될 때마다 이 파일은 그 자리에 남는다. 2026-08-25 실측: 대조 1,581셀 중 933건"
-        "(59.0%) drift, 최대 Δ 43,852억(삼성화재 2023.3Q closing). **화면에는 안 나간다** — IFRS17.html 이 이 파일을 fetch 하지만 렌더 코드는 다른 소스를 쓴다(2026-08-25 origin/main 배포본 직접 대조로 확인, 종전 사유의 \"이력 패널이 그린다\" 는 오기라 정정). 따라서 사용자 피해는 없고, 파일의 거취(재생성 경로 복구 / 루트 마스터 파생 / 화면 fetch 제거)가 designer·owner 결정 대기 중이다. 마스터가 정정될 때마다 이 drift 는 **늘어난다** — 2026-08-25 삼성생명·교보생명 정정으로 11건 증가.",
+        "(59.0%) drift, 최대 Δ 43,852억(삼성화재 2023.3Q closing). **화면에는 안 나간다** — IFRS17.html 이 이 파일을 fetch 하지만 렌더 코드는 다른 소스를 쓴다(2026-08-25 origin/main 배포본 직접 대조로 확인, 종전 사유의 \"이력 패널이 그린다\" 는 오기라 정정). 따라서 사용자 피해는 없고, 파일의 거취(재생성 경로 복구 / 루트 마스터 파생 / 화면 fetch 제거)가 designer·owner 결정 대기 중이다. 마스터가 정정될 때마다 이 drift 는 **늘어난다** — 2026-08-25 삼성생명·교보생명 정정으로 11건 증가(917건으로 emit). "
+        "2026-08-25(2차, inbox/parser/20260825T1520Z iter2 반영): 그 11건 증가는 실은 **CSM_waterfall 을 연결(consolidated) 기준으로 잘못 되돌린 결과**였다 — 이 스냅샷 자체가 삼성생명 한정으로 연결 기준(raw 확인: opening 12,392,570 백만은 _00761 연결에만 존재)이라, 마스터가 연결로 틀어지자 우연히 이 스냅샷과 더 가까워져 STALE 이 늘고 RED 가 준 것이었다. 삼성생명 CSM 을 별도(separate, gold basis)로 재복원하자 12건 RED(신규 drift) + 10건 STALE(더는 안 벌어짐) = 순증 2건, 919건으로 재emit. 이 스냅샷은 회사별로 기준이 혼재돼 있어(삼성생명=연결 확인, 신한라이프 opening 은 별도 쪽 문자열이 우세하게 일치 — 회사마다 다른, 이제는 아카이브된 파이프라인의 개별 버그) '전체가 연결'도 '전체가 별도'도 아니다 — drift 증감을 기준 판정의 근거로 쓰지 말 것.",
     "csm_waterfall_history.json|HIST_STAGE_IDENTITY":
         "스냅샷 자체의 단계 항등식 파탄 41건(opening+nb+int+assum+amort ≠ closing). 위와 같은 "
         "정적 스냅샷 결함 — 마스터 쪽 동일 (회사,분기) 는 closing identity 358P/0F 로 닫힌다.",

@@ -80,9 +80,9 @@
     "company": "삼성생명보험",
     "quarter": "2024.2Q",
     "item": "이자부리",
-    "delta_pct": 162.2,
+    "delta_pct": 159.1,
     "threshold_pct": 20.0,
-    "cur": 2304.1,
+    "cur": 2276.4,
     "ref": 878.7,
     "basis": "yoy",
     "sign_flip": false
@@ -1386,17 +1386,6 @@
     "sign_flip": false
   },
   {
-    "company": "신한라이프생명보험",
-    "quarter": "2025.4Q",
-    "item": "신계약CSM",
-    "delta_pct": 30.4,
-    "threshold_pct": 30.0,
-    "cur": 16487.9,
-    "ref": 12646.8,
-    "basis": "yoy",
-    "sign_flip": false
-  },
-  {
     "company": "에이비엘생명보험",
     "quarter": "2024.3Q",
     "item": "신계약CSM",
@@ -1415,6 +1404,17 @@
     "threshold_pct": 30.0,
     "cur": 443.8,
     "ref": 636.1,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
+    "company": "신한라이프생명보험",
+    "quarter": "2025.4Q",
+    "item": "신계약CSM",
+    "delta_pct": 30.2,
+    "threshold_pct": 30.0,
+    "cur": 16460.0,
+    "ref": 12646.8,
     "basis": "yoy",
     "sign_flip": false
   },
@@ -1617,17 +1617,6 @@
     "sign_flip": false
   },
   {
-    "company": "삼성생명보험",
-    "quarter": "2024.4Q",
-    "item": "이자부리",
-    "delta_pct": 23.7,
-    "threshold_pct": 20.0,
-    "cur": 4951.1,
-    "ref": 4002.3,
-    "basis": "yoy",
-    "sign_flip": false
-  },
-  {
     "company": "현대해상",
     "quarter": "2024.3Q",
     "item": "이자부리",
@@ -1690,17 +1679,6 @@
     "threshold_pct": 20.0,
     "cur": 736.5,
     "ref": 602.1,
-    "basis": "yoy",
-    "sign_flip": false
-  },
-  {
-    "company": "삼성생명보험",
-    "quarter": "2024.3Q",
-    "item": "이자부리",
-    "delta_pct": 22.3,
-    "threshold_pct": 20.0,
-    "cur": 3587.5,
-    "ref": 2934.3,
     "basis": "yoy",
     "sign_flip": false
   },
@@ -2284,17 +2262,6 @@
     "threshold_pct": 10.0,
     "cur": -2105.5,
     "ref": -1912.3,
-    "basis": "yoy",
-    "sign_flip": false
-  },
-  {
-    "company": "삼성생명보험",
-    "quarter": "2024.3Q",
-    "item": "CSM상각",
-    "delta_pct": -10.0,
-    "threshold_pct": 10.0,
-    "cur": -10859.0,
-    "ref": -9870.9,
     "basis": "yoy",
     "sign_flip": false
   }

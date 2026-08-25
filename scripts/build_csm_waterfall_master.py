@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "scripts"))
 sys.stdout.reconfigure(encoding="utf-8")
 from src.ifrs17.measurement_extractor import extract_measurement_tables, to_jsonable
-from viz_build_csm_waterfall import normalize_block_header, deduplicate, find_product_segmented_csm_cols, row_value_start, parse_num, filter_current_period_rows, extract_stages, STAGE_PATTERNS, collect_current_product_blocks, extract_stages_summed
+from viz_build_csm_waterfall import normalize_block_header, deduplicate, find_product_segmented_csm_cols, row_value_start, parse_num, filter_current_period_rows, extract_stages, STAGE_PATTERNS
 
 def _ns(s):  # normalize: drop ALL whitespace incl. \xa0 (KB rows lead with \xa0)
     return re.sub(r"\s", "", s) if isinstance(s, str) else ""
@@ -289,30 +289,18 @@ def _select(cands, anchor, fallback="min"):
 
 
 def pick_pattern2(blocks, anchor=None):
-    tagged = [(st, b.get("line_no")) for b in blocks if not _reins_header(b)
-              and (st := pattern2_stages(b)) is not None]
-    if not tagged:
-        return None
-    cands = [st for st, _ln in tagged]
-    if anchor and abs(anchor) > 1:
-        return _select(cands, anchor, "min")
-    # No-anchor (annual Q4 pass): _select's fallback is plain MIN-opening among the
-    # non-prior candidates, which silently prefers a later, corrupted near-repeat of
-    # the real CER table over the real one when the repeat happens to have a smaller
-    # opening (raw-confirmed 삼성생명 FY2025 annual, rcept 20260311004614, 216,261
-    # lines: the real 당기/전기 pair sits at line_no 45157/45789; a later spurious
-    # pair — caption mismatched to an unrelated 사용가치 discount-rate note — sits at
-    # line_no==65535, the lxml/libxml2 sourceline cap, and its smaller opening wins
-    # the plain min() (wrong by ~8%: item5 -1,479.6억 vs the correct -1,511.6억).
-    # Drop 65535-tagged candidates first, but ONLY within this already narrow,
-    # structurally-validated pattern2 candidate pool (not all blocks in the filing —
-    # a blanket filter at blocks_for_dir regressed 한화생명/현대해상, whose filings
-    # legitimately carry a second same-shaped rollforward beyond line 65535).
-    opens = [s[1] for s in cands if s.get(1) is not None]
-    reliable = [(st, ln) for st, ln in tagged
-                if not _is_prior_stage(st, opens) and ln != _LXML_LINE_NO_SENTINEL]
-    pool = [st for st, _ln in reliable] if reliable else cands
-    return _select(pool, anchor, "min")
+    # 2026-08-25 (inbox/parser/20260825T1520Z iter2): a prior commit (8a3b930) added a
+    # line_no==65535 drop here, reasoning that the 65535-tagged candidate was a
+    # "corrupted near-repeat". validation's raw grep disproved that: 65535 is the
+    # lxml/libxml2 sourceline SATURATION value for any element past line 65535 in a
+    # long file (confirmed here: 삼성생명 FY2024 main-body XML is 129,508 lines) — it
+    # marks POSITION, not corruption. Filings embed BOTH 연결(consolidated) and
+    # 별도(separate, the repo's gold basis) sections in ONE body file, and 별도 often
+    # sits LATER (past line 65535) than 연결, so the "65535 = fake" filter was silently
+    # dropping the real 별도 candidate and keeping 연결. Reverted to the pre-8a3b930
+    # plain min-opening pick (별도 ≤ 연결 in practice, see _select's docstring).
+    cands = [st for b in blocks if not _reins_header(b) and (st := pattern2_stages(b)) is not None]
+    return _select(cands, anchor, "min") if cands else None
 
 
 _EXCLUDE_KW = ("재보험", "출재", "보유한재보험", "관계기업", "종속기업", "관계종속", "공동기업")
@@ -579,23 +567,6 @@ def pick_combined_agnostic(blocks, anchor=None, code=None):
             continue
         if _is_prior_header(b):     # annual 당기/전기 split: drop the 전기-header block
             continue
-        # 신한라이프 (KR0094) ONLY: drop a block whose line_no==65535 (the
-        # lxml/libxml2 sourceline cap for this 107,431-line FY2025 annual body).
-        # Raw-confirmed (rcept 20260318001034): the real 무배당보험 당기/전기 pair
-        # sits at line_no 33187/33456 (opening 6,972,351); a later corrupted
-        # near-repeat — same caption "2)무배당보험①제37(당)기", values off by
-        # ~0.04% — sits at line_no==65535 (opening 6,969,672). Both survive
-        # _is_prior_caption/_is_prior_header (their captions look like a fresh
-        # 당기 pair), so the disjoint-sub-portfolio check below clusters them
-        # (±10%) and _opening_clusters' per-cluster MIN picks the spurious one
-        # (wrong by ~0.04-0.15% quarter to quarter — the exact residual pattern
-        # ledgered as UNRESOLVED for 신한라이프 2025.1Q-2026.2Q). Company-scoped
-        # like the 삼성생명 walker above: dropping ALL line_no==65535 blocks
-        # unconditionally (tried first) regressed 12 other companies in a full
-        # sweep, since some filings' only legitimate copy of a table sits past
-        # that line with no earlier duplicate.
-        if code == "KR0094" and b.get("line_no") == _LXML_LINE_NO_SENTINEL:
-            continue
         ctx = _ns(cap) + _ns(
             " ".join(" ".join(str(c) for c in row) for row in (b.get("header") or [])))
         capn = _ns(cap)
@@ -627,42 +598,17 @@ def pick_combined_agnostic(blocks, anchor=None, code=None):
     if not cands:
         return None
     sts = [st for st, _cap in cands]
-    # 삼성생명 (KR0069) ONLY: prefer the proven per-product-block walker
-    # (viz_build_csm_waterfall's collect_current_product_blocks) before any
-    # opening-proximity clustering below. It walks blocks in DOCUMENT ORDER and
-    # stops at the first cycle-repeat (전기 continuation, detected via exact
-    # closing==opening balance continuity), so it never reaches a LATER near-
-    # duplicate occurrence of the same note — unlike _opening_clusters (used by
-    # the seg branch, the disjoint sub-portfolio check below, and
-    # _anchor_segment_sum), which groups by opening-proximity alone and cannot
-    # tell a genuine 별도/연결 pair from a spurious later repeat, so it can pick
-    # the wrong (smaller-opening) member. Raw-confirmed on 삼성생명 (rcept
-    # 20250312001063 FY2024 annual, seg=True path; 20250515002067 FY2025.1Q
-    # quarterly, seg=False anchor path): both filings carry a real ≥3-product-
-    # line block set followed by a later corrupted/incomplete repeat (line_no
-    # either the lxml/libxml2 65535 sourceline cap for the 129,508-line annual
-    # body, or just a later real line_no for the smaller quarterly body) whose
-    # smaller openings win the proximity-cluster MIN and get summed instead —
-    # e.g. FY2025.1Q: real 3-line sum item1 13,080,691 (== the anchor, PL-
-    # matched) vs the clustered-wrong pick 12,902,023 (off by ~1.4%).
-    # code-scoped: trying this ahead of every other company's already-working
-    # picks (before the caption/anchor logic below gets a look) regressed 11
-    # OTHER companies in a full-population sweep (한화생명 KR0068, 흥국생명
-    # KR0032, 신한라이프 KR0082 등 — 2026-08-25) — collect_current_product_blocks
-    # is tuned for viz_build_csm_waterfall's single-latest-quarter use, not for
-    # picking among 당기/전기 CANDIDATES ACROSS QUARTERS the way this builder's
-    # anchor chain does, so it silently "succeeds" (≥3 blocks) on the wrong
-    # subset for filings whose real table is NOT the first same-shaped triple in
-    # document order. Only known-safe for KR0069; only used when it finds ≥3
-    # blocks (its own internal gate).
-    if code == "KR0069":
-        direct_blocks = collect_current_product_blocks(blocks)
-        if len(direct_blocks) >= 3:
-            summed = extract_stages_summed(direct_blocks)
-            walked = {no: (summed.get(name) or {}).get("value_mn_krw")
-                      for no, name in STAGE_KEYS.items()}
-            if walked.get(1) is not None and walked.get(6) is not None:
-                return walked
+    # 2026-08-25 (inbox/parser/20260825T1520Z iter2): a prior commit (8a3b930) added a
+    # KR0069-only branch here that preferred viz_build_csm_waterfall's document-order
+    # walker (collect_current_product_blocks) over the opening-proximity clustering
+    # below, reasoning that a LATER same-shaped block was a "corrupted repeat". Raw
+    # grep disproved that premise: 삼성생명's product-line note legitimately appears
+    # TWICE per filing (once under 연결, once under 별도 — the repo's gold basis), and
+    # for this company's filings 연결 sits FIRST in document order, so "prefer the
+    # first occurrence" silently picked 연결. The hardcode is removed; this function's
+    # existing opening-proximity clustering (_segment_min_sum et al., below) already
+    # picks 별도 correctly (별도 ≤ 연결 in practice — see _select's docstring) and is
+    # not company-scoped.
     # Product-line segment note: the 별도 book is split by product line and disclosed as
     # separate (별도, 연결) blocks per segment, with NO combined total. Detect via the
     # 상품라인 caption (삼성생명) OR ≥3 distinct product-line markers (미래에셋 every quarter:
@@ -956,6 +902,131 @@ def quarter_from(path: Path):
 _LXML_LINE_NO_SENTINEL = 65535  # lxml/libxml2 caps element.sourceline at 2**16-1
 
 
+# --- Unit-literal detection (2026-08-25, inbox/parser/20260825T0800Z) ----------------
+# waterfall_for_dir's final raw->백만원 conversion used to be pure magnitude guessing:
+#   udiv = 1e6 if mag>1e10 else (1e3 if mag>1e8 else 1)
+# That is only safe inside a band that depends on the table's DECLARED unit (checked
+# below) and silently flips once a company's CSM crosses the threshold either way — AIG
+# 손해 2025.4Q: mag fell 2.66e8(2023.4Q, safely >1e8) -> 1.55e8(2024.4Q) -> 9.87e7
+# (2025.4Q, just under 1e8) while the raw table stayed "(단위: 천원)" the whole time; the
+# heuristic silently produced a 1000x-inflated 기말 CSM the year it crossed. validation's
+# full-population sweep (scripts/_probes/probe_20260825_csm_unit_heuristic_sweep.py, 302
+# raw dirs) found the table's own "(단위: X)" declaration, read immediately before the
+# CSM rollforward caption, resolves all 8 known-bad buckets (신한이지 x3, BNP카디프 x2,
+# 카카오페이 x2, AIG x1) — so read that literal instead of guessing, and use the
+# magnitude heuristic only as a last resort when the raw XML carries no unit text at all
+# (0 of the 302 current dirs hit that path — kept only for filings not yet on disk).
+_UNIT_LITERAL_RE = re.compile(r"단위\s*[:：]\s*(원|천원|백만원|십억원|억원)")
+_UNIT_TO_UDIV = {"백만원": 1.0, "천원": 1_000.0, "원": 1_000_000.0,
+                 "십억원": 0.001, "억원": 0.01}
+# Same CSM-rollforward caption family waterfall()/pattern2_stages/block_stages key off
+# of (측정요소별 변동 / 차이조정 / 보험계약마진의 변동 / 보험계약부채(자산)의 변동), so
+# the "nearest preceding unit literal" is read from the same note the pickers draw from,
+# not just any unit text in the filing.
+_UNIT_CAPTION_MARKERS = ("측정요소별 변동", "측정요소별변동", "차이조정",
+                         "보험계약마진의 변동", "보험계약마진 변동",
+                         "보험계약부채(자산)의 변동")
+
+
+def _xml_files_for_dir(rd):
+    """Same file selection as blocks_for_dir (top-level + xml/ + extracted/, dedup by
+    name, drop the _00761 연결 주석) — kept as a standalone duplicate rather than a
+    shared helper so blocks_for_dir's proven file-discovery stays byte-for-byte
+    untouched by this unit-detection addition."""
+    xmls = {}
+    for x in list(rd.glob("*.xml")) + list(rd.glob("xml/*.xml")) + list(rd.glob("extracted/*.xml")):
+        if x.name.endswith("_00761.xml"):
+            continue
+        xmls.setdefault(x.name, x)
+    return sorted(xmls.values())
+
+
+def _strip_xml_text(path):
+    raw = path.read_bytes()
+    try:
+        t = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        t = raw.decode("cp949", errors="replace")
+    t = re.sub(r"<[^>]+>", " ", t)
+    t = re.sub(r"&[a-zA-Z]+;|&#\d+;", " ", t)
+    return re.sub(r"\s+", " ", t)
+
+
+def _unit_evidence_for_dir(rd):
+    """(near, hist): `near` = distinct unit literals seen immediately before a CSM-
+    rollforward caption anywhere in rd's XMLs (precise but sometimes empty); `hist` =
+    doc-wide unit-literal histogram (coarser fallback signal for when no caption-
+    adjacent literal exists — still literal evidence, not a magnitude guess)."""
+    from collections import Counter
+    near, hist = set(), Counter()
+    for x in _xml_files_for_dir(rd):
+        txt = _strip_xml_text(x)
+        units = [(m.start(), m.group(1)) for m in _UNIT_LITERAL_RE.finditer(txt)]
+        hist.update(u for _, u in units)
+        for cap in _UNIT_CAPTION_MARKERS:
+            for m in re.finditer(re.escape(cap), txt):
+                prev = [u for pos, u in units if pos < m.start()]
+                if prev:
+                    near.add(prev[-1])
+    return near, hist
+
+
+def _detect_unit_udiv(rd, mag):
+    """Resolve raw->백만원 udiv from the filing's own declared unit; fall back to the
+    magnitude heuristic only when no unit literal exists anywhere in the raw XML, and
+    refuse to guess (return udiv=None) when the literal evidence is itself an unresolved
+    near-tie (ticket item 2: don't silently pick a side on real ambiguity).  Returns
+    (udiv, tag):
+      lit-conf  = a single caption-adjacent literal that AGREES with the heuristic guess
+                  (no value change — now backed by evidence instead of the luck that the
+                  magnitude happened to fall inside the heuristic's safe band)
+      lit-near  = a caption-adjacent literal OVERRIDES a disagreeing heuristic guess —
+                  the 신한이지/BNP카디프/카카오페이/AIG fix. When `near` itself has >1
+                  distinct value (신한이지: {원,천원}), resolved by doc-wide count among
+                  ONLY those near-candidates (never let an unrelated table elsewhere in
+                  the filing, e.g. per-share 원 amounts, outvote a caption-adjacent
+                  candidate the heuristic didn't even name).
+      lit-doc   = no caption-adjacent literal at all; the doc-wide literal histogram's
+                  outright top pick is used (still literal-based, just less precisely
+                  located — AIG 2025.4Q: near empty, hist 천원x138 vs 백만원x10 vs 원x4).
+      mag       = no unit literal anywhere in the raw XML -> old magnitude heuristic,
+                  unchanged value but now flagged so a future silent flip is visible.
+      ambiguous = near has >=2 candidates within 3x of each other (no clear winner) ->
+                  udiv=None, caller must blank the bucket rather than guess."""
+    heur = 1_000_000.0 if mag > 1e10 else (1_000.0 if mag > 1e8 else 1.0)
+    near, hist = _unit_evidence_for_dir(rd)
+    heur_label = {1.0: "백만원", 1_000.0: "천원", 1_000_000.0: "원"}[heur]
+    if heur_label in near:
+        return heur, "lit-conf"
+    if near:
+        ranked = sorted(near, key=lambda u: hist.get(u, 0), reverse=True)
+        top_n = hist.get(ranked[0], 0)
+        second_n = hist.get(ranked[1], 0) if len(ranked) > 1 else 0
+        if second_n and top_n < 3 * second_n:
+            return None, "ambiguous"
+        return _UNIT_TO_UDIV[ranked[0]], "lit-near"
+    if hist:
+        return _UNIT_TO_UDIV[hist.most_common(1)[0][0]], "lit-doc"
+    return heur, "mag"
+
+
+def _block_basis(src_name):
+    """File-level basis tag (2026-08-25, inbox/parser/20260825T1520Z iter2): _00760.xml
+    (첨부 감사보고서) is the SEPARATE(별도) financial statements as a standalone document
+    -- basis-pure by construction, confirmed by raw grep (Samsung/Shinhan FY2024-25
+    annual: the CSM rollforward's 별도 total appears there and NEVER in _00761). _00761
+    is already excluded from `xmls` above, but tag it defensively in case that filter
+    is ever relaxed. The MAIN BODY file (no suffix) embeds BOTH 연결 and 별도 sections
+    in ONE document (that mixing is what commit 8a3b930 misdiagnosed as a "corrupted
+    near-repeat" at the lxml sourceline cap) -- basis there is NOT determinable from the
+    filename alone, so it is left "unknown" rather than guessed."""
+    if src_name.endswith("_00760.xml"):
+        return "separate"
+    if src_name.endswith("_00761.xml"):
+        return "consolidated"
+    return "unknown"
+
+
 def blocks_for_dir(rd, name):
     xmls = {}
     for x in list(rd.glob("*.xml")) + list(rd.glob("xml/*.xml")) + list(rd.glob("extracted/*.xml")):
@@ -975,8 +1046,68 @@ def blocks_for_dir(rd, name):
     for b in deduplicate(tables):
         nb = normalize_block_header(b)
         nb["_src"] = b.get("_src", "")       # survive normalize
+        nb["basis"] = _block_basis(nb["_src"])
         out.append(nb)
     return out
+
+
+def _basis_tag_for_dir(blocks, wf):
+    """Cheap, additive diagnostic (2026-08-25, inbox/parser/20260825T1520Z iter2) --
+    does NOT influence the pick. When a basis-pure 별도 source (_00760.xml) exists for
+    this filing, independently re-derive stages from JUST those blocks (bypassing
+    whatever clustering/segment-sum path produced `wf`) and check whether the picked
+    opening is within 5% of one of them. This is the self-check that would have caught
+    the 8a3b930 regression at the source: a 별도 file exists but the pick doesn't match
+    it -> 'sep-avail-mismatch'. Returns one of:
+      sep-match           picked wf.opening matches a 별도-tagged block's own opening (<=5%)
+      sep-avail-mismatch  a 별도-tagged block exists but no stage-extraction from it is
+                          within 5% of the pick -- WARN, re-check basis by hand
+      sep-avail-nomatch   a 별도-tagged block exists but stage-extraction on it failed
+                          (table shape not recognized by block_stages/pattern2_stages)
+      sep-unavail         no _00760.xml for this filing (quarterly/half-year filings,
+                          or an annual filing whose 별도 attachment wasn't fetched) --
+                          basis cannot be cross-checked this way; not itself a red flag.
+                          Also fires when deduplicate() collapses every _00760-sourced
+                          block into a content-identical main-body duplicate (keeping
+                          the first-seen, non-suffixed `_src`) -- a known blind spot of
+                          this file-level tag, not evidence either way.
+    Segmented books (삼성생명: 별도 disclosed as 2-3 per-product-line blocks, no single
+    combined total) never match a SINGLE 별도 block's opening, so both the single-block
+    check and the drop-prior-then-SUM of all surviving 별도 candidates are tried before
+    declaring a mismatch (raw-confirmed 삼성생명 2025.4Q: sum of the 3 당기 product-line
+    별도 openings 4,760,509+7,096,915+1,044,599=12,902,023 ≈ picked wf.opening).
+    KNOWN LIMITATION: a company whose _00760.xml carries MULTIPLE caption families for
+    the same book on different axes (삼성생명: both "(5) 상품라인" AND "(6) 배당여부" split
+    the SAME 별도 book) or a genuinely separate reinsurance-ceded note ("(3) 출재...") will
+    still over-sum and read 'sep-avail-mismatch' even when the pick is correct -- this
+    diagnostic does not replicate pick_combined_agnostic's caption/axis disambiguation
+    (_dedup_axes, _EXCLUDE_KW). Treat 'sep-avail-mismatch' as "go verify by hand", not as
+    a confirmed defect; a single-caption company hitting it (not 삼성생명-shaped) is the
+    strong signal."""
+    sep_blocks = [b for b in blocks if b.get("basis") == "separate"
+                  and not _is_prior_caption(b.get("caption") or "") and not _is_prior_header(b)]
+    if not sep_blocks:
+        return "sep-unavail"
+    wf_open = wf.get(1) if wf else None
+    if wf_open is None:
+        return "sep-avail-nomatch"
+    sep_stages = []
+    for b in sep_blocks:
+        for st in (block_stages(b), pattern2_stages(b)):
+            if st and st.get(1) is not None:
+                sep_stages.append(st)
+                break
+    if not sep_stages:
+        return "sep-avail-nomatch"
+    sep_stages = _drop_prior(sep_stages)
+    for st in sep_stages:
+        o = st.get(1)
+        if o is not None and abs(o) > 1 and abs(o - wf_open) <= abs(o) * 0.05:
+            return "sep-match"
+    ssum = sum((st.get(1) or 0) for st in sep_stages)
+    if abs(ssum) > 1 and abs(ssum - wf_open) <= abs(ssum) * 0.05:
+        return "sep-match"
+    return "sep-avail-mismatch"
 
 
 def _annual_newbiz_from_detail(blocks):
@@ -1018,7 +1149,15 @@ def _annual_newbiz_from_detail(blocks):
 def waterfall_for_dir(rd, name, anchor=None):
     """Return (vals dict {1..6: 억}, src) for one company-quarter raw dir.
     anchor (억) = this year's opening (= prior-year 별도 Q4 기말); disambiguates
-    당기/전기 + 별도/연결 in 반기/분기 차이조정표."""
+    당기/전기 + 별도/연결 in 반기/분기 차이조정표.  `src` carries a `+u:<tag>` suffix
+    from _detect_unit_udiv recording how the raw->백만원 unit was resolved (see that
+    function's docstring for the tag meanings) — grep `+u:mag` for buckets still on the
+    old magnitude-only fallback, `+u:lit-near`/`+u:lit-doc` for buckets the table's own
+    declared unit overrode a disagreeing magnitude guess on. `src` also carries a
+    `+b:<tag>` suffix from _basis_tag_for_dir (별도/연결 cross-check, see that
+    function's docstring) — grep `+b:sep-avail-mismatch` for buckets whose pick
+    disagrees with an available 별도-only source (the exact signature of the
+    8a3b930 regression this ticket reverted)."""
     blocks = blocks_for_dir(rd, name)
     if not blocks:
         return None, None
@@ -1031,8 +1170,12 @@ def waterfall_for_dir(rd, name, anchor=None):
         if nb is not None:
             wf = {**wf, 2: nb}
             src = (src or "") + "+nb"
+    src = (src or "") + f"+b:{_basis_tag_for_dir(blocks, wf)}"
     mag = max((abs(v) for v in wf.values() if v is not None), default=0.0)
-    udiv = 1_000_000.0 if mag > 1e10 else (1_000.0 if mag > 1e8 else 1.0)  # 원/천원→백만
+    udiv, utag = _detect_unit_udiv(rd, mag)                   # 원/천원/백만원→백만 (표 리터럴 우선)
+    if udiv is None:               # unresolved near-tie (ticket item 2) → don't guess, flag+blank
+        return None, (src or "") + f"+u:{utag}"
+    src = (src or "") + f"+u:{utag}"
     if udiv != 1.0:
         wf = {no: (v / udiv if v is not None else None) for no, v in wf.items()}
     clo = wf.get(6) or 0

@@ -1,5 +1,204 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-25 (45th pass) — CSM 연결→별도 복원(`inbox/parser/20260825T1520Z` iter2
+> 재작업): 코드 3-diff revert + 하드코딩 2곳 제거 + 84셀 복원 + NB 52필드 + 원장 22건 +
+> live baseline 재측정. 전 회사 전 분기 시뮬레이션(2,178셀) 파손 0. prepush 실행 중.**
+>
+> commit `8a3b930`(삼성생명 루트 블록선택 버그 수정이라 자칭)이 실은 **삼성생명·신한라이프
+> CSM 을 별도→연결로 오염**시켰다는 validation 의 iter2 반려를 받아 재작업했다. 원인:
+> `pick_pattern2` 의 line_no==65535 드롭이 "손상 근접반복" 오진이었다(65535 는 lxml/
+> libxml2 가 65535 줄 넘는 파일에서 sourceline 을 saturate 시키는 값일 뿐 — 삼성생명
+> FY2024 본문 XML 129,508줄. 별도 섹션이 연결보다 뒤에 오는 필링에서 saturate 된 진짜
+> 별도 블록이 "가짜"로 걸러졌다), `pick_combined_agnostic` 의 `code=="KR0069"`/
+> `code=="KR0094"` 하드코딩 2곳도 같은 오염 경로.
+>
+> **1) census (전수 판정)**: 파일 접미사(`_00760`=별도 첨부·`_00761`=연결 첨부, 후자는
+> 이미 후보군 제외)만 믿지 않고 본문 XML 내 위치까지 raw grep 으로 재확인(신설 위치기반
+> classifier, `basis_classifier.py` 패턴 — 넘버링된 "N.연결재무제표"/"N.연결재무제표
+> 주석"/"N.재무제표"/"N.재무제표 주석" 헤더로 구간 판정). 결과: **삼성생명(KR0069)
+> 2024.1Q~2026.2Q·신한라이프(KR0094) 2025.1Q~4Q = 연결 오염, 별도 복원 대상**(84셀).
+> **신한라이프 2024.4Q·아이엠라이프 2025.4Q = 이미 별도**(별건 FY경계 티켓이 먼저 정정,
+> 이번 code-bug 영향권 밖 — 시뮬레이션 diff 0 으로 확인). **교보생명 2023.1~3Q = 이미
+> 별도(다른 버그, 방향은 우연히 맞음)**: raw 재확인 결과 8a3b930이 "고른" 값이 실은
+> raw line 38283(별도 구간)·"버린" 값이 line 19282(**연결** 구간)이었다 — 삼성/신한과
+> 정반대 방향. code diff 에 KR0073 언급 자체가 없어(gold override 직접 패치) 이번 되돌림
+> 대상이 아니다. **코리안리 2023.1~3Q = 판정불가**(두 후보 값이 raw 에서 연결·별도
+> 양쪽에 다 나타남 — 재보험사 특성상 이 지표의 연결효과가 미미해 파일위치로 판별 불가,
+> gold override 자체 근거(closed-form + history 교차일치 + PL 소수2자리 일치)가 견고해
+> 유지). **나머지 33사 = 8a3b930 이 값을 바꾼 적 없음(전수 시뮬레이션 diff=0), census
+> 범위 밖.**
+>
+> **2) 84셀 복원**: `CSM_waterfall.json` 삼성생명 10분기×6항목(60) + 신한라이프
+> 2025.1~4Q×6항목(24). 단순 git revert 아님 — 시뮬레이션(raw 재현) 값으로 셀단위 패치,
+> `값_당분기` cascade 도 build_csm() 유량/저량 알고리즘 그대로 재현해 84셀 갱신(closing
+> identity 358P/0F, FY경계 연속성 전 분기 clean 재확인). `data/_gold/user_csm_cells.json`
+> 에서 연결 기준을 실은 104건(삼성생명 "raw재현확정"60+"레벨보정"20, 신한라이프
+> "raw재현확정"24) 정밀 제거 — 남겨두면 리빌드 시 UPSERT 로 되돌린 값을 다시 덮어씀.
+>
+> **3) 빌더 수정** `scripts/build_csm_waterfall_master.py`: 65535 드롭 로직 제거(`pick_
+> pattern2` 원문 복귀) + `code=="KR0069"`/`code=="KR0094"` 하드코딩 2곳 제거(이제 미사용인
+> `collect_current_product_blocks`/`extract_stages_summed` import 도 제거) + **basis-aware
+> 진단 신설**(`_block_basis`/`_basis_tag_for_dir`, `unit_source` 선례처럼 `src` 에
+> `+b:<tag>` 부착 — `sep-match`/`sep-avail-mismatch`/`sep-avail-nomatch`/`sep-unavail`).
+> **능동 선택 필터는 보류**: `pick_segment_760`의 seg=True 조기반환을 없애 별도 우선
+> 필터를 시뮬레이션했더니 삼성생명 2025분기 전체(anchor cascade) + **`20260825T2200Z`
+> 가 독자 조사 중인 미래에셋 17셀**까지 건드려 범위 밖 부수효과 — 진단 태그만 남기고
+> 선택 로직은 안 바꿈. 전수 시뮬레이션(2,178 (회사·분기·항목) 셀, `waterfall_for_dir`
+> read-only import, `main()`/`build_root_masters.py` 미실행): CURRENT vs REVERTED diff
+> = **정확히 84셀, 그 외 0건**. 지시받은 **한화생명(KR0068)·현대해상(KR0009) diff 0
+> 재확인 완료**(예전 blanket-filter 시도의 회귀 대상 2사).
+>
+> **4) NB_CSM_multiple.json**: KIDI 소스(`data/kidi/premium_summary.json`) 디스크에
+> 없어 빌더 자체는 못 돌림 — `_ratio()` 로직만 복제해 삼성생명·신한라이프 14분기의
+> CSM 파생 4필드(연누계·당분기·배수×2)만 재계산, 월납월초보험료 필드는 100% 보존.
+> 52필드 변경(신한라이프 2026.1Q/2Q·삼성생명 2026.2Q 는 NB 행 자체가 없음 — 기지
+> `NB_CENSUS_MISSING` 1분기 lag, 새로 안 만듦).
+>
+> **5) 원장 `csm_amort_identity_ledger.json` 8→22건**: `validate_master_tables.py
+> --no-build` 실측(수작업 전사 아님) — 14건 복원(cause 신설 `CONSOLIDATION_BASIS_
+> MISMATCH`, "연결 기준으로 잘못 닫았던 것을 별도로 복원" 명시) + 하나생명 2024.4Q
+> `UNRESOLVED`→`RESTATEMENT_BASIS` 재분류(validation 요청) + 신한라이프 2026.1Q/2Q·
+> 미래에셋 2025.2Q 사유 텍스트 보강(값 불변, validation 요청). 게이트 재실행:
+> `csm_amort_identity: common=346 pass=324 pinned=22 fail=0 skip=0 stale=0`(346=
+> 8a3b930^ 시절과 동일 모집단). `test_master_tables_golden.py --update`(csm_amort_
+> identity 338P/8PIN→324P/22PIN, qoq_warn 209Y→206Y, exit_code=2 불변 — 기존 sensitivity
+> RED 무관).
+>
+> **6) `csm_waterfall_history.json` 기준 판정 = 회사마다 다르다(단일기준 아님)**:
+> 삼성생명은 raw로 **연결** 확정(opening 12,392,570백만이 `_00761` 전용) — 원 티켓 §①이
+> "history도 PL편"이라 인용한 것 자체가 이 오염이었다(history=연결이라 PL=연결과 우연히
+> 같았을 뿐, 별도가 틀렸다는 증거가 아니었음). 신한라이프는 판정보류(closing 값이 어느
+> 후보와도 5%+ 이상 벌어짐). `data/_gold/live_artifact_baseline.json` HIST_MASTER_DRIFT
+> 재측정: RED 12(신규, 전부 삼성생명 예상 셀)+STALE 10(더는 안 벌어짐)=순증 2, 917→**919**
+> `--emit-baseline` 재박제(RED=0 재확인). "+11건 증가"였던 8a3b930 당시 사유는 실은
+> **연결로 잘못 맞춰서 이 스냅샷과 우연히 더 가까워졌던 것**이었다는 사실을 `RULE_REASON`
+> 에 기록 — drift 증감을 기준 판정 근거로 쓰지 말 것.
+>
+> **7) PL_breakdown 기준 census (읽기 전용, 미수정)**: 삼성생명·신한라이프 PL 원수CSM상각
+> = raw 연결전용 파일 값과 정확 일치(연결 확정). 교보생명은 반대로 별도와 일치(2023.1Q
+> item5 spot check). **★ 병렬 세션의 `inbox/parser/20260825T1415Z`(IR 4개사 대조, owner
+> 재확인 대기)가 훨씬 강한 증거로 같은 결론 도달**: CSM 4/4사 별도 수렴(삼성생명 owner
+> 예시 수치 32,606.0/32,984.9 IR 로 독립 재현 — 내 raw census 와 100% 일치) + **PL 은
+> 4사 중 삼성생명만 연결 오염, 한화생명·삼성화재·(추정)DB손해보험 3사는 이미 별도로 정답**
+> — "PL=연결"이라는 전제가 삼성생명 단일사례에서 나온 일반화였다는 뜻. **PL 다음 작업은
+> 전사 일괄 basis-flip 이 아니라 회사별 감사**(한화/삼성화재/DB 는 이미 정답, 건드리면
+> 깨짐) — 삼성생명 PL_breakdown.json 의 item17(투자손익)·item24(당기순이익)부터 시작할 것.
+>
+> **게이트**: `validate_master_tables.py --no-build` csm_amort_identity 324P/22PIN/0F/0S
+> · `validate_live_artifacts.py` RED=0 YELLOW=1022 STALE=0 · `test_master_tables_golden.py`
+> 1 passed(재생성) · `insurequant_master_tables.xlsx` "CSM워터폴"+"신계약CSM배수" 2개
+> 시트만 `sync_master_xlsx_sheet.py`(각 96/21셀 검증 통과, 나머지 시트 값 동일 확인) ·
+> `scripts/prepush_check.py` 1차 실행 RED=4(전부 `CSM_STEP_DART_VS_IR` · KR0011 2026.2Q ·
+> 내 84셀과 무관 — 병렬 세션(44th pass, `20260825T1415Z`)이 방금 넣은
+> `data/ir/FY2026_Q2/parsed/KR0011.json` 의 자체 진단 버그: 그 파일 자신의 `notes` 필드가
+> "폴더는 FY2026_Q2 인데 워크북 내용은 26.1Q 뿐"이라고 이미 밝혀놨는데 `"period"` 필드는
+> `"FY2026_Q2"`로 남아 있었다 — CSM_waterfall 2026.1Q 값과는 소수점까지 정확히 일치,
+> 2026.2Q 값과는 당연히 안 맞아 RED. `period`를 `"FY2026_Q1"`로 1필드만 정정(그 세션의
+> 파일이라 로직·값은 안 건드림) → `validate_data_contract.py` RED=0 재확인. **2차 전체
+> 실행 — `scripts/prepush_check.py` exit=0, "PRE-PUSH VERDICT: gate RED=0 · K-ICS rule
+> gate=clear · domain gates=pass · DART raw 유실=0 · inbox 기계적위반=0 · offline
+> tests=pass → gate-clear"**(230 passed/1 skipped, 435.99초, inbox 활성 6·위반 0).
+>
+> **파일**: `scripts/build_csm_waterfall_master.py`(revert +basis 진단, 순증 소폭) ·
+> `CSM_waterfall.json`(84셀+cascade) · `NB_CSM_multiple.json`(52필드) ·
+> `data/_gold/user_csm_cells.json`(104건 제거) · `data/_gold/csm_amort_identity_
+> ledger.json`(8→22건) · `data/_gold/live_artifact_baseline.json`(1020→1022건) ·
+> `scripts/validate_live_artifacts.py`(RULE_REASON 텍스트만 보강) ·
+> `data/ir/FY2026_Q2/parsed/KR0011.json`(`period` 필드 1개, 병렬 세션 파일의 자체진단
+> 버그 수정) · `tests/fixtures/master_tables_golden.json` · `insurequant_master_tables.xlsx`.
+>
+> **건드리지 않음**: `PL_breakdown.json`(명시적 범위 밖) · 코리안리·교보생명 CSM 값(census
+> 상 무관 확인) · `build_root_masters.py`/`build_csm_waterfall_master.py` 의 `main()`
+> (미실행) · `csm_waterfall_master_diag.json`(전부터 stale, 이 세션에서 더 stale 해지지
+> 않음) · `pick_segment_760` 능동 필터(시뮬레이션만, 미적용) · K-ICS 레인.
+>
+> 원 티켓 `inbox/parser/20260825T1520Z`(status `answered` — validation 재확인 필요).
+> 관련: `inbox/parser/20260825T1415Z`(IR 대조, 병렬 세션, owner 재확인 대기 — 내용 미변경).
+
+> **2026-08-25 (44th pass) — 오케스트레이터 발주 단발 조사: IR 자료 CSM/PL 이 연결/별도 중
+> 무엇인지 판정. 마스터 미접촉(읽기 전용), `data/ir/*/parsed/`에만 씀. `inbox/parser/
+> 20260825T1415Z` 로 결과 등재, owner 재확인 대기(status: open).**
+>
+> owner 질문: "별도 통일이 IR 교차검증(IR 공시자료 PL은 연결 아니냐)을 깨는 것 아니냐."
+> 삼성생명(KR0069)·한화생명(KR0068)·삼성화재(KR0008)·DB손해보험(KR0011) 4개사의 IR
+> 팩트시트/실적PDF 를 파싱해 `CSM_waterfall.json`(8a3b930^=별도 전 / 8a3b930=연결 후,
+> 현재 워킹트리와 동일)·`PL_breakdown.json`(현재 워킹트리, 읽기전용) 양쪽과 대조했다.
+>
+> **판정: IR = 별도.** CSM 은 4/4사 전원 별도로 수렴(삼성생명은 before/after 8a3b930
+> 대조로 owner 예시 수치 32,606.0 vs 32,984.9 재현, 나머지 3사는 마스터가 8a3b930 영향권
+> 밖이라 전후 불변인 채로 IR과 6항목 정확 일치). **PL 은 3/4사(한화생명·삼성화재·
+> 추정 DB손해보험)가 이미 별도로 정확히 일치하고, 삼성생명 1사만 연결로 새는 이상치다**
+> (한화생명 IR 각주 "SAP 기준"=별도 vs "GAAP 기준"=연결로 명시 대조, 삼성화재 IR 각주
+> "연결재무제표 기준" 대 `PL-별도감독`/`PL-연결감독` 공식표 대조 — 둘 다 마스터=별도
+> 확인). 즉 "PL_breakdown.json 이 연결 기준" 이라는 전제는 삼성생명 단일사례에서 나온
+> 것으로 보이며, 별도 복원 작업은 **전사 일괄 basis-flip 이 아니라 회사별 감사**가 필요
+> (한화/삼성화재/DB 는 이미 정답이라 건드리면 깨짐, 삼성생명만 CSM·PL 둘 다 정정 대상).
+>
+> **파일**: `data/ir/FY2025_Q4/parsed/KR0069.json`(신규) · `data/ir/FY2026_Q2/parsed/
+> {KR0069,KR0068,KR0008,KR0011}.json`(신규, 셀 좌표·수치까지 notes 에 인용) ·
+> `inbox/parser/20260825T1415Z__parser__MULTI__ir_basis_separate_vs_consolidated.md`(신규).
+>
+> **건드리지 않음**: `CSM_waterfall.json`·`PL_breakdown.json`·`NB_CSM_multiple.json`·
+> `data/_gold/*`·`scripts/build_csm_waterfall_master.py`(전부 읽기만, 병렬 복원 세션 축) ·
+> `build_root_masters.py::main()`(미실행) · K-ICS 레인.
+
+> **2026-08-25 (43rd pass) — validation 반려 2건: CSM 단위판별 코드 수정(전 331디렉터리
+> 시뮬레이션, 파손 0) + PL 부모/자식행 오선택 정정(디비생명 2개 분기, item1/17/18/19 9셀).
+> prepush exit 0.**
+>
+> **티켓 1** `inbox/parser/20260825T0800Z` — `build_csm_waterfall_master.py::waterfall_for_dir`
+> 의 단위판별을 크기추정에서 표 리터럴 읽기로 교체(`_detect_unit_udiv` 신설, 근접캡션
+> 단위 → 문서전체 다수결 → 크기추정 폴백 3단 우선순위 + 미해결 동률은 값 대신 blank).
+> 302개 raw 디렉터리(생손보 전체 331) 시뮬레이션: `same=293 changed=8 both_none=30` —
+> 바뀐 8개가 기지 8버킷(신한이지×3·BNP카디프×2·카카오페이×2·AIG)과 정확히 일치, 그 외
+> 0건(내부 anchor-비교 udiv 5곳은 미수정 — src 전략태그가 old/new 전건 동일해 안전 확인).
+> 8버킷 신규 code-only 값이 `user_csm_cells.json` gold `set` 30셀과 항목별로 전부 일치
+> (30셀 제거 가능해 보임, 반영은 owner 판단 대기). `main()` 미실행, CSM 관련 파일 전부
+> 미접촉(읽기만).
+>
+> **티켓 2** `inbox/parser/20260825T1120Z` iter2 — validation 이 기각한
+> `issuer_structural_residual`(디비생명 KR0082 2023.1Q)을 raw 로 재확인해 item1 을
+> 부모행(`I.보험서비스손익` 24,548.24847)으로 정정. **item1 만 고치면 '영업이익=
+> 보험손익+투자손익' 등식이 item8 만큼 새로 깨지는 걸 발견** — item17(舊값이 실은
+> `영업이익−舊item1` 잔차였음, item8 오차 전이) 도 raw 로 재구성하고 item18/19(종전
+> 결측) 도 gap-fill. 같은 병을 2023.2Q(등재부 `pre_existing`, 티켓 범위 밖)에서 독립
+> 발견해 같이 정정 — 총 9 YTD 셀 + 캐스케이드 당분기 5셀 = 14행/23필드,
+> `PL_breakdown.json` 셀단위 패치(전체 combo-diff 로 다른 회사 0건 확인). **`build_pl()`
+> 개별 호출을 실제로 돌렸다가 무관 회사(흥국화재·KB손해 item16 6셀)가 조용히 null 로
+> 널링되는 걸 발견**(`pl_breakdown_master.json` 중간산출물이 배포본보다 1,307행 stale
+> 해서 생기는 부작용) — 그 경로를 버리고 셀단위 직접 패치로 전환, stale 중간산출물은
+> `spawn_task task_8b1cfdc1` 로 별도 발주. `user_pl_cells.json` 에 KR0082 10건(durable
+> overlay, 배포본과 0 mismatch 재확인) 등재. 잔존 5건 재조사: **3건(교보라플 2024.4Q·
+> BNP카디프 2024.4Q/2025.4Q)은 `item2=item3+item8-item16` 로 잔차 0 닫힘 확인 —
+> 데이터가 아니라 검증룰(PL_EQS '생명장기손익=원수손익+재보험손익')이 item16 항을 안
+> 쓰는 게 원인**(validation 에 룰 수정 요청, 등재부엔 진단만 갱신). 2건(DB손해 2023.2Q·
+> 흥국화재 2025.1Q)은 새 가설도 반증돼 미해결 유지(사유 등재부에 기록).
+> `issuer_structural_residual` 분류는 등재부에서 완전 삭제(다른 사용처 0건).
+>
+> **게이트**: `test_master_tables_golden.py` `--update`(pl_bridge:2513P/16F/319S/0NEW
+> → 2517P/14F/317S/0NEW, 이유 기록) · `insurequant_master_tables.xlsx` "손익분해PL"
+> 시트만 `sync_master_xlsx_sheet.py`(23셀, 검증 통과) · `scripts/prepush_check.py`
+> **exit 0**(gate-clear, offline tests 230 passed/1 skipped).
+>
+> **파일**: `scripts/build_csm_waterfall_master.py`(단위판별 신설, +117/-2줄) ·
+> `PL_breakdown.json`(23필드) · `data/_gold/user_pl_cells.json`(KR0082 10건) ·
+> `data/_gold/pl_bridge_baseline.json`(2건 삭제 + 3건 진단 갱신 + `issuer_structural_
+> residual` 소멸) · `scripts/build_pl_breakdown.py`(`_GOLD_CELL_OVERRIDE` 2건, 코드만
+> — 중간산출물 미재생성) · `insurequant_master_tables.xlsx` · `tests/fixtures/
+> master_tables_golden.json` · `scripts/_probes/probe_20260825{b,c,d,e,f,g,h,i,j,k,
+> l,m,n}_*.py` · `patch_20260825b_kr0082_pl_bridge_full.py` · `update_20260825b_pl_
+> bridge_baseline_5cases.py`(신규).
+>
+> **건드리지 않음**: `CSM_waterfall.json`·`NB_CSM_multiple.json`·`data/_gold/live_
+> artifact_baseline.json`·`user_csm_cells.json`(읽기만, 병렬 validation 세션 축) ·
+> `data/dart/viz/pl_breakdown_master.json`·`data/_derived/pl_breakdown_coverage.json`
+> (실수로 재생성됐다가 원상복구) · `validate_master_tables.py`(룰 로직 미수정) ·
+> `build_root_masters.py::main()`(미실행).
+>
+> 원 티켓 `inbox/parser/20260825T0800Z__validation__MULTI__csm_unit_heuristic_reads_
+> magnitude_not_label.md`, `inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_
+> deployed_master_defects.md` (둘 다 status `answered` — validation 재확인 필요).
+
 > **2026-08-25 (42nd pass) — `inbox/parser/20260825T1340Z` CSM FY경계 tol-바로-밑 4사 —
 > 재작성 1(무수정) · 추출결함 정정 2(신한/IM Life) · 추출결함 확정·발주 1(미래에셋).
 > `CSM_waterfall.json` 16필드 셀단위 patch. prepush 백그라운드 실행 중(완료 시 갱신).**

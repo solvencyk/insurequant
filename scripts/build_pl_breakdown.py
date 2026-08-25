@@ -499,6 +499,43 @@ _GOLD_CELL_OVERRIDE = {
         2: 50472.844, 3: 50472.844, 4: 44027.788, 5: 2878.019, 6: 2508.072, 7: 1058.965,
         8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0,
     },
+    # 디비생명보험 KR0082 2023.1Q/2Q (FS-API status-013 -> HTML tier1.extract_tier1()
+    # fallback, DEPRECATED): the fallback's needle list for item1 is ("보험손익",
+    # "보험서비스결과") — neither is a substring of THIS company's parent-line label
+    # "보험서비스손익" (보험 + 서비스 + 손익, "서비스" sits between 보험 and 손익 so
+    # "보험손익" does not match it), so _pick_line's single-pass row scan walks PAST the
+    # parent row "I. 보험서비스손익" (no needle match) and stops at the very next row,
+    # child sub-line "1. 보험손익" (DOES match), silently returning ~1.6~5.9십억원 too
+    # little (raw '(2) 요약포괄손익계산서' 표: parent = child["1.보험손익"] +
+    # child["2.재보험손익"]). Root cause is general (any HTML-fallback company/quarter
+    # whose parent line reads "보험서비스손익" verbatim would trip the same needle gap) but
+    # only these 2 cells currently hit it (KR0082 is the only code with both an FS-API gap
+    # here AND this exact parent-label spelling); scoped per-cell rather than widening the
+    # needle list, to avoid re-verifying every OTHER company's already-correct HTML-fallback
+    # row-scan order (see the identical scoping precedent 3 entries up: KR0051 2025.4Q's
+    # to_num/_drop_footnote root-cause note "범용 버그... 이 override는 셀 하나만 대증").
+    # Both cells raw-confirmed 2026-08-25 (inbox/parser/20260825T1120Z iter2 + independent
+    # re-verification, parser-ifrs17): identity item1 = item2(생명장기손익, Tier-2-sourced,
+    # already correct) + item13 + item14 + item15 − item16 closes to EXACT 0.000 residual
+    # both quarters once item1 uses the parent row (was: the mis-picked child row).
+    # 2023.1Q: raw data/dart/FY2023_Q1/raw/KR0082_디비생명보험/20230515002932.xml
+    #   '(2) 요약포괄손익계산서' 제35(당)기1분기: 'I. 보험서비스손익' 24,548,248,470원 (parent,
+    #   correct item1) vs '1. 보험손익' 22,946,356,594원 (child, mis-picked old item1).
+    #   item16(기타사업비용)=2,577.053702 already raw-confirmed in a prior pass (2026-08-25,
+    #   user_pl_cells.json). Check: 27125.302172(item2)+0+0+0-2577.053702(item16) =
+    #   24548.24847 = item1 below, diff 0.000.
+    ("KR0082", "2023.1Q"): {1: 24548.24847},
+    #   NOTE: item16 for this quarter is NOT in _GOLD_CELL_OVERRIDE — it was fixed earlier
+    #   via the data/_gold/user_pl_cells.json overlay (applied downstream in
+    #   build_root_masters.py::build_pl, after this module's pl_breakdown_master.json).
+    # 2023.2Q: raw data/dart/FY2023_Q2/raw/KR0082_DB생명보험/20230814002739.xml '(2)
+    #   요약포괄손익계산서' 제35(당)기반기 누적열: 'I. 보험서비스손익' 59,719,308,746원 (parent,
+    #   correct item1) vs '1. 보험손익' 60,174,304,424원 (child, mis-picked old item1);
+    #   '(3) 기타사업비' 5,850,450,986원 (item16, was missing entirely — same row-scan gap,
+    #   needle "기타사업비용" doesn't match label "기타사업비" either, no trailing 용).
+    #   Check: 65569.759732(item2)+0+0+0-5850.450986(item16 below) = 59719.308746 = item1
+    #   below, diff 0.000.
+    ("KR0082", "2023.2Q"): {1: 59719.308746, 16: 5850.450986},
 }
 
 

@@ -1,0 +1,25 @@
+{
+  "company": "삼성생명",
+  "kr": "KR0069",
+  "period": "FY2026_Q2",
+  "source_file": "data/ir/FY2026_Q2/KR0069_삼성생명/SLI 1HFY26 Factsheet_KOR.xlsx",
+  "csm_waterfall": {
+    "opening": 132178.735974920,
+    "new_business": 17174.634186021858,
+    "interest": 2584.55284095,
+    "assumption": -7188.350712351839,
+    "amortization": -7336.60903693,
+    "closing": 137412.96325261
+  },
+  "csm_breakdown": {
+    "total": 137412.96325261
+  },
+  "segment_insurance_income": {
+    "basis": "consolidated (연결) for investment result / net income; separate for insurance-service result specifically (see caveat in notes)",
+    "note": "sheet Ⅴ-2 '연결 손익계산서' (explicit label) matches this repo's PL_breakdown.json for KR0069 2026.2Q EXACTLY (to the 백만원): 보험손익(item1) R8=522,659.575197 vs master 522,660.00; Ⅲ.영업이익 R166=1,980,430.320887 vs master item20; Ⅸ.당기연결순이익 R203=1,967,672.824565 vs master item24=1,967,673.00. sheet Ⅴ-4 '별도 손익계산서' (separate) gives materially DIFFERENT figures for the same period (e.g. 당기순이익 O24=510,211,993... wait see KR0068/KR0008 files for the separate-side pattern; for THIS company Ⅴ-4's own FY26 1H net income differs from Ⅴ-2's by a wide margin) -- master's item17/item24 match CONSOLIDATED, not separate. CAVEAT: sheet Ⅰ-2 ('요약 손익계산서(연결)') carries footnote '1) 별도기준' specifically on its '보험서비스손익' row -- i.e. even inside the nominally-consolidated summary sheet, the insurance-service-result line is disclosed SEPARATE-basis (Samsung Life's subsidiaries don't write insurance, so 별도=연결 for this one line by construction). item1 therefore can NOT discriminate basis for this company; item17(투자손익)/item24(당기순이익) CAN and DO, and both match consolidated (연결효과 +784~989십억, 비지배지분 +74~149십억 are only present in the consolidated column).",
+    "insurance_income_eok_FY26_1H": 5226.59575197,
+    "operating_profit_eok_FY26_1H": 19804.30320887,
+    "net_income_eok_FY26_1H": 19676.72824565
+  },
+  "notes": "FY2026 1H (연누계, Jan-Jun) cumulative -- matches KR0087 convention (FY####_Q# labels a half-year filing by its calendar quarter-end). Source: SLI 1HFY26 Factsheet_KOR.xlsx. Unit 십억원 (KRW billion) in sheets Ⅰ-3/Ⅰ-5, converted to eok (억원) at x10; unit 백만원 in sheets Ⅴ-2/Ⅴ-4 (already directly comparable to PL_breakdown.json's 백만원 unit). BASIS DETERMINATION (the point of this file): sheet Ⅰ-5 is explicitly titled 'CSM 상세 (별도)' and sheet Ⅰ-3 'CSM' section is explicitly titled '보험부채 movement (별도) 1) 원수보험 기준' -- BOTH tag CSM as SEPARATE (별도). Numerically, ALL SIX waterfall items here (opening/new_business/interest/assumption/amortization/closing, cumulative FY26 1H = this repo's '2026.2Q') reproduce CSM_waterfall.json's PRE-commit-8a3b930 ('before'/separate) values to within +/-0.1eok: opening 132178.7 vs before=132178.7 (after/consolidated=133077.2, diff 898.5), new_business 17174.6 vs before=17174.6 (after=17628.3, diff 453.7), interest 2584.55 vs before=2584.6 (after=2654.2, diff 69.6), assumption -7188.35 vs before=-7188.4 (after=-7378.6, diff 190.2), amortization -7336.61 vs before=-7336.6 (after=-7524.2, diff 187.6), closing 137413.0 vs before=137413.0 (after=138456.9, diff 1043.9). VERDICT for CSM: 별도(separate), and the repo's CURRENT (post-8a3b930) master is WRONG for this company (leaked to consolidated by the same commit that fixed the line-65535 block-selection bug -- the 'fix' picked a genuine table but from the wrong (consolidated) section). VERDICT for PL (item17/item24, the only discriminating items): 연결(consolidated) -- sheet Ⅴ-2 matches PL_breakdown.json exactly, sheet Ⅴ-4 (별도) does not. This is the OPPOSITE basis from CSM, within the SAME company's SAME factsheet. Cross-company verdict (CSM is separate for ALL 4 companies checked; PL headline is separate for 3 of 4 -- Hanwha Life/Samsung F&M/DB Insurance's PL_breakdown.json ALREADY matches separate -- and only Samsung Life's PL is a consolidated outlier) is in inbox/parser/20260825T2300Z__parser-ifrs17__MULTI__ir_basis_separate_vs_consolidated.md."
+}

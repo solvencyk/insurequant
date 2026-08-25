@@ -1,0 +1,25 @@
+{
+  "company": "DB손해보험",
+  "kr": "KR0011",
+  "period": "FY2026_Q1",
+  "source_file": "data/ir/FY2026_Q2/KR0011_factsheet_DB손해보험_factsheet/KR0011_factsheet_DB손해보험_factsheet.xlsx",
+  "csm_waterfall": {
+    "opening": 122053.41405432917,
+    "new_business": 6245.891940321696,
+    "interest": 1009.9733920445331,
+    "assumption": 2129.8130033653567,
+    "amortization": -3216.790097160441,
+    "closing": 128222.30229290025
+  },
+  "csm_breakdown": {
+    "total": 128222.30229290025
+  },
+  "segment_insurance_income": {
+    "basis": "unknown -- single unified P&L only, no 별도/연결 split in this workbook to disambiguate; matches master exactly regardless",
+    "note": "sheet '요약손익' 보험손익=226,558.707백만 vs master item1(2026.1Q)=226,559.00; 투자손익=236,141.024백만 vs master item17=236,141.00; 영업이익=462,699.730백만 vs master item20=462,700.00; 당기순이익=268,503.750백만 vs master item24=268,504.00 -- ALL FOUR EXACT MATCHES. Unlike Samsung Life/Hanwha Life/Samsung F&M, this workbook does NOT carry parallel 별도-vs-연결 P&L sheets (only one '요약손익' + one 'BEL,CSM변동', no basis label on either), so this file alone cannot POSITIVELY discriminate separate vs consolidated the way the other 3 companies' files can -- it only confirms master reproduces whatever this single IR figure is. Given DB Insurance is a stand-alone non-life insurer without the large financial/card/asset-management subsidiaries that drive Samsung Life's/Samsung F&M's/Hanwha Life's separate-vs-consolidated gap, and given the exact match, this is CONSISTENT with (not proof of) the separate-basis pattern found at the other 3 companies.",
+    "insurance_income_eok": 2265.58706597,
+    "operating_profit_eok": 4626.99730253,
+    "net_income_eok": 2685.03750126
+  },
+  "notes": "CAVEAT: this file was found under the FY2026_Q2 raw folder (data/ir/FY2026_Q2/KR0011_factsheet_DB손해보험_factsheet/), but the workbook's OWN content only has columns filled for '26.1Q (this repo's '2026.1Q') -- the 2Q/3Q/4Q columns in sheets '요약손익' and 'BEL,CSM변동' are empty (D/E/F blank next to C='26.1Q'). So despite the folder label, the actual disclosed period here is 2026.1Q, not 2026.1H/2026.2Q -- values above and the basis check are for KR0011 2026.1Q. Source: KR0011_factsheet_DB손해보험_factsheet.xlsx, sheets '요약손익' (단위:백만원, no conversion needed -- already directly comparable to PL_breakdown.json) and 'BEL,CSM변동' section '(2) CSM' (단위:백만원, divided by 100 for eok since CSM_waterfall.json is in eok). CSM_waterfall.json for KR0011 was NOT touched by commit 8a3b930 (before==after, unchanged). ALL SIX csm_waterfall items above reproduce the repo's CURRENT master for KR0011 2026.1Q to the exact eok (기초=122053.4, 신계약=6245.9, 이자부리=1010.0, 가정조정=2129.8, 상각=-3216.8, 기말=128222.3). This is the 4th of 4 companies checked where CSM cleanly matches the (structurally-implied-separate) master value. See inbox/parser/20260825T2300Z__parser-ifrs17__MULTI__ir_basis_separate_vs_consolidated.md for the full cross-company table and final verdict."
+}

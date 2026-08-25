@@ -1,0 +1,25 @@
+{
+  "company": "한화생명",
+  "kr": "KR0068",
+  "period": "FY2026_Q2",
+  "source_file": "data/ir/FY2026_Q2/KR0068_한화생명/1H26 HLI FactSheet(KOR).xlsx",
+  "csm_waterfall": {
+    "opening": 87136.53754881,
+    "new_business": 13001.15363337,
+    "interest": 1804.4448256,
+    "assumption": -8927.239281480001,
+    "amortization": -3730.2491295800004,
+    "closing": 89284.64759669
+  },
+  "csm_breakdown": {
+    "total": 89284.64759669
+  },
+  "segment_insurance_income": {
+    "basis": "separate (별도, SAP-기준)",
+    "note": "sheet '(별도) 요약 손익계산서' footnote '※ SAP 기준' (SAP = 감독회계기준, the standalone regulatory/statutory basis) matches PL_breakdown.json for KR0068 EXACTLY at two independent quarters: FY26 1H cumulative (O col) 보험손익 285.293477196십억원=285,293.477백만 vs master 2026.2Q item1=285,293.00; 당기순이익 O24=510.211993977십억원=510,211.994백만 vs master item24=510,212.00. FY25 annual (D+E+F+G sum) 보험손익=344.419294122십억원=344,419.294백만 vs master 2025.4Q item1=344,419.00. sheet '(연결) 요약 손익계산서' footnote '※ GAAP 기준' gives DIFFERENT figures for the same periods (FY26 1H 보험손익=486.598십억원=486,598백만, 당기순이익=904.525십억원=904,525백만) that do NOT match master.",
+    "insurance_income_eok_FY26_1H": 2852.93477196,
+    "operating_profit_eok_FY26_1H": 6401.02736965,
+    "net_income_eok_FY26_1H": 5102.11993977
+  },
+  "notes": "FY2026 1H (누적기준 2026.1~6) cumulative. Source: 1H26 HLI FactSheet(KOR).xlsx, sheets '신계약 CSM 및 수익성' + '보험부채 Movement' (CSM section, unit 십억원, x10 to eok; no explicit 별도/연결 tag on these two sheets themselves, unlike the '(연결)'/'(별도)' prefix used for the full financial-statement sheets in this same workbook) and '(연결) 요약 손익계산서'/'(별도) 요약 손익계산서' (unit 십억원 x10 to eok, or already-백만원-comparable after x1000 -- used 십억원x1000=백만원 for the direct PL_breakdown.json cross-check above). CSM_waterfall.json for KR0068 was NOT touched by commit 8a3b930 (before==after, unchanged) -- this company was never in the 5-company block-selection-bug list (Samsung Life/Shinhan Life/Korean Re/Kyobo Life/IM Life). The CSM values above match the repo's CURRENT (and pre-8a3b930) master essentially exactly regardless, meaning KR0068's CSM extraction has always been separate-basis correct (no bug here, unlike KR0069). BASIS DETERMINATION: CSM = 별도 (by structural convention + exact numeric match, though this specific sheet carries no explicit basis tag). PL headline (보험손익/당기순이익) = 별도(SAP), CONFIRMED via explicit footnote AND exact numeric match at 2 independent quarters -- and this is the OPPOSITE of Samsung Life's PL finding (연결) for the SAME line items. See inbox/parser/20260825T2300Z__parser-ifrs17__MULTI__ir_basis_separate_vs_consolidated.md for the full cross-company table."
+}
