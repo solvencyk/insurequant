@@ -1,0 +1,181 @@
+{
+  "per_script": {
+    "validate_csm_continuity": {
+      "reads": [
+        "CSM_waterfall.json"
+      ],
+      "writes": [
+        "data/dart/viz/csm_continuity_validation.json"
+      ],
+      "consts": {
+        "ROOT": "",
+        "SRC": "CSM_waterfall.json",
+        "OUT": "data/dart/viz/csm_continuity_validation.json"
+      }
+    },
+    "validate_csm_waterfall": {
+      "reads": [
+        "data/dart/viz/csm_waterfall.json"
+      ],
+      "writes": [
+        "data/dart/viz/csm_waterfall_validation.json"
+      ],
+      "consts": {
+        "ROOT": "",
+        "WATERFALL_PATH": "data/dart/viz/csm_waterfall.json",
+        "OUT_PATH": "data/dart/viz/csm_waterfall_validation.json"
+      }
+    },
+    "validate_data_contract": {
+      "reads": [
+        "CSM_waterfall.json",
+        "PL_breakdown.json",
+        "data/_gold/kics_source_vision_verified.json",
+        "data/_gold/user_pl_confirmed_cells.json"
+      ],
+      "writes": [],
+      "consts": {
+        "ROOT": "",
+        "SOURCE_VISION_LEDGER": "data/_gold/kics_source_vision_verified.json",
+        "_OWNER_CONFIRMED_GOLD": "data/_gold/user_pl_confirmed_cells.json",
+        "DIV_FETCH_CENSUS": "data/_derived/alotmatter_fetch_census.json",
+        "PROVENANCE_CONTRACT": "PHASE 2 PROVENANCE CONTRACT (validation → parser/downloader)\n============================================================\nGoal: every published metric must resolve to (source_id, as_of_date, source_file) so the\ndata-contract gate's CHECK 2 (as-of/effective) can verify provenance from emitted metadata\ninstead of inferring it from period/path/flags. Recommendation: one sidecar per master\n(cell schema unchanged) at the path shown.\n\nFor EACH master, emit a sidecar JSON `<master>_provenance.json`:\n\n  {\n    \"master\": \"<master_name>\",                 # kics_disclosure | CSM_waterfall | PL_breakdown |\n                                                #   kics_rate_sensitivity | tier1_utilization |\n                                                #   tier2_utilization | forward_capital |\n                                                #   sensitivity_heatmap\n    \"generated_at\": \"20260616T1200Z\",          # ISO8601-basic UTC of emission\n    \"cells\": [\n      {\n        \"company_code\": \"KR0008\",              # 원보험사코드 (or insurer_code)\n        \"quarter\": \"2025.4Q\",                  # disclosure quarter the value belongs to\n        \"item_block\": \"market_subrisk|csm_waterfall|...\",  # logical block (optional, per master)\n        \"source_id\": \"DART|FSC_BONDS|KIDI|DISCLOSURE_MD|IR_FACTSHEET\",  # authoritative source enum\n        \"as_of_date\": \"2025-12-31\",            # ISO date the SOURCE figure is effective as of\n        \"source_file\": \"data/dart/FY2025_Q4/raw/KR0008_...xml\",  # repo-relative provenance path\n        \"effective_filtered\": true             # capital-securities ONLY: as-of effective (call/\n                                               #   maturity) filter actually applied to the list\n      }\n    ]\n  }\n\nHard requirements the gate enforces (Phase 2):\n  - as_of_date's quarter MUST equal `quarter` (else STALE_AS_OF RED).\n  - source_id MUST be the authoritative source for that metric (e.g. capital-securities effective\n    list → source_id == \"FSC_BONDS\" with effective_filtered == true; else MISSING_EFFECTIVE_LIST /\n    EFFECTIVE_LIST_NOT_FILTERED RED).\n  - A published (company, quarter, item_block) with NO matching provenance cell = MISSING_PROVENANCE\n    RED (never SKIP-as-pass, spec §0).\n  - source_file MUST exist on disk (else MISSING_PROVENANCE RED).\n\nRouting: downloader owns source_file + as_of_date + effective_filtered for fetched artifacts\n(bonds, DART raw); parser owns source_id + item_block mapping when it writes the master.\n"
+      }
+    },
+    "validate_kics_disclosure": {
+      "reads": [],
+      "writes": [],
+      "consts": {
+        "ROOT": "",
+        "SPOT_CODE": "KR0005",
+        "SPOT_QUARTER": "2025.4Q",
+        "SPOT_NAME_HINT": "헕국화재",
+        "_TEXTLAYER_SIDECAR": "data/_derived/kics_source_textlayer.json",
+        "_TFI_APPLICABILITY_SIDECAR": "data/_derived/kics_transition_applicability.json",
+        "_EXEMPTION_LEDGER": "data/_gold/kics_exemption_provenance.json"
+      }
+    },
+    "validate_kics_rate_sensitivity": {
+      "reads": [
+        "kics_disclosure.json",
+        "kics_rate_sensitivity.json"
+      ],
+      "writes": [],
+      "consts": {
+        "ROOT": "",
+        "REGIME_START": "2024.4Q"
+      }
+    },
+    "validate_master_tables": {
+      "reads": [
+        "CSM_waterfall.json",
+        "data/dart/viz/pl_breakdown_master.json"
+      ],
+      "writes": [],
+      "consts": {
+        "ROOT": "",
+        "PL_PATH": "data/dart/viz/pl_breakdown_master.json",
+        "WF_PATH": "CSM_waterfall.json",
+        "SENS_PATH": "data/dart/viz/sensitivity_heatmap.json"
+      }
+    },
+    "validate_nb_csm_multiple": {
+      "reads": [
+        "data/_derived/nb_premium_wolnap.json",
+        "data/dart/viz/csm_waterfall.json",
+        "data/ir/nb_csm_ratio.json"
+      ],
+      "writes": [
+        "data/_derived/nb_csm_validation.json"
+      ],
+      "consts": {
+        "ROOT": "",
+        "VIZ": "data/dart/viz",
+        "IR": "data/ir",
+        "PREMIUM_PATH": "data/_derived/nb_premium_wolnap.json",
+        "OUT_PATH": "data/_derived/nb_csm_validation.json"
+      }
+    },
+    "validate_statutory_reserves": {
+      "reads": [
+        "data/_derived/bs_carry_forward_cells.json",
+        "data/_gold/statutory_reserve_baseline.json",
+        "data/_gold/statutory_reserve_legit.json",
+        "data/_gold/user_pl_confirmed_cells.json"
+      ],
+      "writes": [],
+      "consts": {
+        "ROOT": "",
+        "MASTER": "IFRS17_BS.json",
+        "GOLD": "data/_gold/user_pl_confirmed_cells.json",
+        "BASELINE": "data/_gold/statutory_reserve_baseline.json",
+        "LEGIT": "data/_gold/statutory_reserve_legit.json",
+        "BASELINE_SEV": "BASELINE",
+        "CARRY_FORWARD_SIDECAR": "data/_derived/bs_carry_forward_cells.json"
+      }
+    },
+    "prepush_check": {
+      "reads": [],
+      "writes": [],
+      "consts": {
+        "ROOT": ""
+      }
+    }
+  },
+  "reader_of": {
+    "CSM_waterfall.json": [
+      "validate_csm_continuity",
+      "validate_data_contract",
+      "validate_master_tables"
+    ],
+    "data/dart/viz/csm_waterfall.json": [
+      "validate_csm_waterfall",
+      "validate_nb_csm_multiple"
+    ],
+    "PL_breakdown.json": [
+      "validate_data_contract"
+    ],
+    "data/_gold/kics_source_vision_verified.json": [
+      "validate_data_contract"
+    ],
+    "data/_gold/user_pl_confirmed_cells.json": [
+      "validate_data_contract",
+      "validate_statutory_reserves"
+    ],
+    "kics_disclosure.json": [
+      "validate_kics_rate_sensitivity"
+    ],
+    "kics_rate_sensitivity.json": [
+      "validate_kics_rate_sensitivity"
+    ],
+    "data/dart/viz/pl_breakdown_master.json": [
+      "validate_master_tables"
+    ],
+    "data/_derived/nb_premium_wolnap.json": [
+      "validate_nb_csm_multiple"
+    ],
+    "data/ir/nb_csm_ratio.json": [
+      "validate_nb_csm_multiple"
+    ],
+    "data/_derived/bs_carry_forward_cells.json": [
+      "validate_statutory_reserves"
+    ],
+    "data/_gold/statutory_reserve_baseline.json": [
+      "validate_statutory_reserves"
+    ],
+    "data/_gold/statutory_reserve_legit.json": [
+      "validate_statutory_reserves"
+    ]
+  },
+  "writer_of": {
+    "data/dart/viz/csm_continuity_validation.json": [
+      "validate_csm_continuity"
+    ],
+    "data/dart/viz/csm_waterfall_validation.json": [
+      "validate_csm_waterfall"
+    ],
+    "data/_derived/nb_csm_validation.json": [
+      "validate_nb_csm_multiple"
+    ]
+  }
+}

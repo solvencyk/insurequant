@@ -1,0 +1,221 @@
+{
+  "_what": "validate_master_tables.py PL_BRIDGE 기지 실패 등재부. 2026-08-25 에 PL 축 소스를 중간산출물(data/dart/viz/pl_breakdown_master.json)에서 배포본(PL_breakdown.json)으로 재조준하면서, 처음 검사 대상이 된 1,307셀에서 드러난 실패를 건별로 등재한다. **통째 skip 이 아니다** — 여기 없는 실패는 SUMMARY 의 pl_bridge NEW 카운트로 올라가 골든이 push 를 막는다.",
+  "_promote": "승격 조건 — 아래 중 하나라도 충족되면 그 줄을 지우고 RED 로 되돌린다.\n  (1) parser/ifrs17 가 해당 셀을 정정해 항등식이 닫히면 즉시 그 줄 삭제 (게이트가       FIXED? 로 인쇄해 알려준다).\n  (2) 등재 없이 새로 뜬 실패는 이미 RED 다 — SUMMARY 의 `pl_bridge:...NEW` 가 0 을       벗어나면 골든(tests/test_master_tables_golden.py)이 push 를 막는다.\n  (3) 기한: 2026-10-31. 그때까지 남은 줄은 등재를 갱신하거나 documented exception 으로       승격 사유를 다시 쓴다 — 무기한 방치 금지.\n라우팅: 전건 parser/ifrs17 레인. 발주 티켓 inbox/parser/20260825T*__validation__MULTI__pl_bridge_deployed_master_defects.md",
+  "_counts": {
+    "basis_mix_csm_amort": 5,
+    "copied_cell": 3,
+    "lob_sum_gap": 5,
+    "pre_existing": 10,
+    "sub_leg_gap": 3
+  },
+  "entries": {
+    "DB생명보험|2023.1Q|보험손익(dual)": {
+      "class": "lob_sum_gap",
+      "reason": "보험손익 22,946 vs ΣLOB 27,125 (Δ 4,179). 기타사업비용 미추출로 adj-form 평가 불가.",
+      "route": "parser/ifrs17",
+      "lhs": 22946.4,
+      "diff": 4178.9,
+      "first_seen": "2026-08-25"
+    },
+    "DB생명보험|2023.2Q|보험손익(dual)": {
+      "class": "pre_existing",
+      "reason": "재조준 전에도 실패하던 항목(소스 변경과 무관). 기존 잔여 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 60174.3,
+      "diff": 5395.5,
+      "first_seen": "2026-08-25"
+    },
+    "DB손해보험|2023.1Q|보험손익(dual)": {
+      "class": "pre_existing",
+      "reason": "재조준 전에도 실패하던 항목(소스 변경과 무관). 기존 잔여 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 431045.4,
+      "diff": 8094.6,
+      "first_seen": "2026-08-25"
+    },
+    "DB손해보험|2023.2Q|보험손익(dual)": {
+      "class": "lob_sum_gap",
+      "reason": "보험손익 971,298 vs ΣLOB 978,167 (Δ 6,869). build_root_masters._zero_other_expense docstring 이 이 잔차를 partial mis-extract 로 이미 명시 — 기지 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 971297.9,
+      "diff": 6869.1,
+      "first_seen": "2026-08-25"
+    },
+    "DB손해보험|2023.3Q|보험손익(dual)": {
+      "class": "pre_existing",
+      "reason": "재조준 전에도 실패하던 항목(소스 변경과 무관). 기존 잔여 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 1307758.6,
+      "diff": 1384.7,
+      "first_seen": "2026-08-25"
+    },
+    "KB라이프생명|2024.1Q|보험손익(dual)": {
+      "class": "pre_existing",
+      "reason": "재조준 전에도 실패하던 항목(소스 변경과 무관). 기존 잔여 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 80418.0,
+      "diff": 1136.0,
+      "first_seen": "2026-08-25"
+    },
+    "교보라이프플래닛생명보험|2024.4Q|생명장기손익 = 원수손익+재보험손익": {
+      "class": "sub_leg_gap",
+      "reason": "생명장기손익 -26,016 vs 원수(-17,846)+재보험(-1,908) = -19,754 (Δ -6,261).",
+      "route": "parser/ifrs17",
+      "lhs": -26015.5,
+      "diff": 6261.4,
+      "first_seen": "2026-08-25"
+    },
+    "동양생명|2023.1Q|보험손익(dual)": {
+      "class": "pre_existing",
+      "reason": "재조준 전에도 실패하던 항목(소스 변경과 무관). 기존 잔여 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 61068.3,
+      "diff": 6327.7,
+      "first_seen": "2026-08-25"
+    },
+    "동양생명|2024.2Q|생명장기원수손익 = 원수CSM상각+원수RA+원수예실차+기타원수": {
+      "class": "basis_mix_csm_amort",
+      "reason": "배포본 원수CSM상각=129,439(YTD 계열로 깨끗)인데 기타생명장기원수손익 plug 는 당분기 65,243 기준으로 계산돼 있어 항등식이 64,196 벌어진다. 마스터 쪽 YTD 가 맞고 plug 를 다시 계산해야 한다.",
+      "route": "parser/ifrs17",
+      "lhs": 148875.3,
+      "diff": 64196.0,
+      "first_seen": "2026-08-25"
+    },
+    "동양생명|2024.3Q|생명장기원수손익 = 원수CSM상각+원수RA+원수예실차+기타원수": {
+      "class": "basis_mix_csm_amort",
+      "reason": "위와 같음. Δ=129,438.",
+      "route": "parser/ifrs17",
+      "lhs": 254111.6,
+      "diff": 129438.0,
+      "first_seen": "2026-08-25"
+    },
+    "메리츠화재해상보험|2023.1Q|보험손익(dual)": {
+      "class": "lob_sum_gap",
+      "reason": "보험손익 419,537 vs ΣLOB 407,167 (Δ 12,370). 기타영업수익/기타사업비용 미추출.",
+      "route": "parser/ifrs17",
+      "lhs": 419537.0,
+      "diff": -12370.0,
+      "first_seen": "2026-08-25"
+    },
+    "메리츠화재해상보험|2023.2Q|보험손익(dual)": {
+      "class": "lob_sum_gap",
+      "reason": "보험손익 822,607 vs ΣLOB 894,154 (Δ 71,547).",
+      "route": "parser/ifrs17",
+      "lhs": 822607.0,
+      "diff": 71547.0,
+      "first_seen": "2026-08-25"
+    },
+    "메리츠화재해상보험|2023.3Q|보험손익(dual)": {
+      "class": "pre_existing",
+      "reason": "재조준 전에도 실패하던 항목(소스 변경과 무관). 기존 잔여 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 1234393.8,
+      "diff": 67395.3,
+      "first_seen": "2026-08-25"
+    },
+    "비엔피파리바카디프생명보험|2024.4Q|생명장기손익 = 원수손익+재보험손익": {
+      "class": "sub_leg_gap",
+      "reason": "생명장기손익 -13,639 vs 원수+재보험 -3,470 (Δ -10,169).",
+      "route": "parser/ifrs17",
+      "lhs": -13639.3,
+      "diff": 10169.1,
+      "first_seen": "2026-08-25"
+    },
+    "비엔피파리바카디프생명보험|2025.4Q|생명장기손익 = 원수손익+재보험손익": {
+      "class": "sub_leg_gap",
+      "reason": "생명장기손익 -24,223 vs 원수+재보험 -14,075 (Δ -10,148).",
+      "route": "parser/ifrs17",
+      "lhs": -24222.9,
+      "diff": 10147.6,
+      "first_seen": "2026-08-25"
+    },
+    "에이비엘생명보험|2023.1Q|생명장기원수손익 = 원수CSM상각+원수RA+원수예실차+기타원수": {
+      "class": "basis_mix_csm_amort",
+      "reason": "배포본 원수CSM상각=22,664 vs viz 3,364. Δ=19,300.",
+      "route": "parser/ifrs17",
+      "lhs": 21169.0,
+      "diff": 19300.0,
+      "first_seen": "2026-08-25"
+    },
+    "에이비엘생명보험|2024.1Q|생명장기원수손익 = 원수CSM상각+원수RA+원수예실차+기타원수": {
+      "class": "copied_cell",
+      "reason": "배포본 2024.1Q 원수CSM상각=22,447 인데 이 값은 **2025.1Q 값과 완전 동일**하다. 2024.2Q(44,994)=2025.2Q, 2024.3Q(66,762)=2025.3Q 도 같다 — 연도 통째 복사 지문.",
+      "route": "parser/ifrs17",
+      "lhs": 19541.2,
+      "diff": 20134.0,
+      "first_seen": "2026-08-25"
+    },
+    "에이비엘생명보험|2024.2Q|생명장기원수손익 = 원수CSM상각+원수RA+원수예실차+기타원수": {
+      "class": "copied_cell",
+      "reason": "위와 같음(=2025.2Q 값).",
+      "route": "parser/ifrs17",
+      "lhs": 43033.9,
+      "diff": 40342.0,
+      "first_seen": "2026-08-25"
+    },
+    "에이비엘생명보험|2024.3Q|생명장기원수손익 = 원수CSM상각+원수RA+원수예실차+기타원수": {
+      "class": "copied_cell",
+      "reason": "위와 같음(=2025.3Q 값).",
+      "route": "parser/ifrs17",
+      "lhs": 49350.0,
+      "diff": 59607.0,
+      "first_seen": "2026-08-25"
+    },
+    "에이아이에이생명보험|2025.4Q|보험손익(dual)": {
+      "class": "pre_existing",
+      "reason": "재조준 전에도 실패하던 항목(소스 변경과 무관). 기존 잔여 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 39200.0,
+      "diff": 1000.0,
+      "first_seen": "2026-08-25"
+    },
+    "케이디비생명보험|2023.2Q|생명장기원수손익 = 원수CSM상각+원수RA+원수예실차+기타원수": {
+      "class": "basis_mix_csm_amort",
+      "reason": "배포본 23,415 vs viz 12,290. Δ=11,125.",
+      "route": "parser/ifrs17",
+      "lhs": 13292.0,
+      "diff": 11125.0,
+      "first_seen": "2026-08-25"
+    },
+    "케이디비생명보험|2023.3Q|생명장기원수손익 = 원수CSM상각+원수RA+원수예실차+기타원수": {
+      "class": "basis_mix_csm_amort",
+      "reason": "배포본 35,250 vs viz 11,835. Δ=23,415 (직전분기 배포본 값과 같다).",
+      "route": "parser/ifrs17",
+      "lhs": -4480.3,
+      "diff": 23415.0,
+      "first_seen": "2026-08-25"
+    },
+    "한화생명|2023.2Q|세전이익 = 영업이익+영업외손익": {
+      "class": "pre_existing",
+      "reason": "재조준 전에도 실패하던 항목(소스 변경과 무관). 기존 잔여 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 625430.8,
+      "diff": -90613.0,
+      "first_seen": "2026-08-25"
+    },
+    "한화손해보험|2023.2Q|세전이익 = 영업이익+영업외손익": {
+      "class": "pre_existing",
+      "reason": "재조준 전에도 실패하던 항목(소스 변경과 무관). 기존 잔여 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 259658.7,
+      "diff": -285.9,
+      "first_seen": "2026-08-25"
+    },
+    "흥국화재|2023.1Q|보험손익(dual)": {
+      "class": "pre_existing",
+      "reason": "재조준 전에도 실패하던 항목(소스 변경과 무관). 기존 잔여 결함.",
+      "route": "parser/ifrs17",
+      "lhs": 85993.0,
+      "diff": -345.0,
+      "first_seen": "2026-08-25"
+    },
+    "흥국화재|2025.1Q|보험손익(dual)": {
+      "class": "lob_sum_gap",
+      "reason": "보험손익 59,132 vs ΣLOB 64,684 (Δ 5,552 / adj-form Δ 714).",
+      "route": "parser/ifrs17",
+      "lhs": 59132.0,
+      "diff": -714.0,
+      "first_seen": "2026-08-25"
+    }
+  }
+}

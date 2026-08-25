@@ -1,0 +1,488 @@
+{
+  "fetches": {
+    "index.html": [
+      "CSM_waterfall.json",
+      "NB_CSM_multiple.json",
+      "kics_disclosure.json"
+    ],
+    "K-ICS.html": [
+      "kics_disclosure.json",
+      "kics_forward_capital.json",
+      "kics_rate_sensitivity.json",
+      "kics_tier1_utilization.json",
+      "kics_tier2_utilization.json"
+    ],
+    "IFRS17.html": [
+      "CSM_waterfall.json",
+      "IFRS17_BS.json",
+      "NB_CSM_multiple.json",
+      "PL_breakdown.json",
+      "data/dart/viz/csm_amort_schedule.json",
+      "data/dart/viz/csm_waterfall.json",
+      "data/dart/viz/csm_waterfall_history.json",
+      "data/dart/viz/insurance_pl_breakdown.json",
+      "data/dart/viz/sensitivity_heatmap.json",
+      "data/ir/nb_csm_ratio.json"
+    ],
+    "공시보고서.html": [
+      "dividend.json"
+    ]
+  },
+  "reads": {
+    "validate_csm_continuity": {
+      "literals": [
+        "CSM_waterfall.json",
+        "csm_continuity_validation.json"
+      ],
+      "dynamic": [
+        "ROOT / 'CSM_waterfall.json'",
+        "ROOT / 'data' / 'dart' / 'viz' / 'csm_continuity_validation.json'"
+      ],
+      "via_import": [],
+      "via_import_dynamic": [],
+      "imports_local": []
+    },
+    "validate_csm_waterfall": {
+      "literals": [
+        "csm_waterfall.json",
+        "csm_waterfall_validation.json"
+      ],
+      "dynamic": [
+        "ROOT / 'data' / 'dart' / 'viz' / 'csm_waterfall.json'",
+        "ROOT / 'data' / 'dart' / 'viz' / 'csm_waterfall_validation.json'"
+      ],
+      "via_import": [],
+      "via_import_dynamic": [],
+      "imports_local": []
+    },
+    "validate_data_contract": {
+      "literals": [
+        "*/parsed/*.json",
+        "CSM_waterfall.json",
+        "IFRS17_BS.json",
+        "PL_breakdown.json",
+        "_*.json",
+        "_provenance.json",
+        "bonds_by_insurer.json",
+        "data/_derived/alotmatter_fetch_census.json",
+        "data/dart/viz/sensitivity_heatmap.json",
+        "dividend.json",
+        "forward_simulation_v3.json",
+        "json",
+        "kics_disclosure.json",
+        "kics_forward_capital.json",
+        "kics_rate_sensitivity.json",
+        "kics_source_vision_verified.json",
+        "kics_tier1_utilization.json",
+        "kics_tier2_utilization.json",
+        "manifest.json",
+        "user_pl_confirmed_cells.json"
+      ],
+      "dynamic": [
+        "(rel[:-5] if rel.endswith('.json') else rel) + '_provenance.json'",
+        "ROOT / 'data' / '_gold' / 'kics_source_vision_verified.json'",
+        "ROOT / 'data' / '_gold' / 'user_pl_confirmed_cells.json'",
+        "d / 'forward_simulation_v3.json'",
+        "d / 'manifest.json'",
+        "dirs[-1] / 'bonds_by_insurer.json'",
+        "dirs[-2] / 'forward_simulation_v3.json'",
+        "msg + '  [미배포 — 어떤 페이지도 IFRS17_BS.json 을 아직 읽지 않아 push 차단은 보류. 배포 keep-list 에 오르면 자동 RED]'",
+        "msg + '  [미배포 — 어떤 페이지도 dividend.json 을 아직 읽지 않아 push 차단은 보류. 배포 keep-list 에 오르면 자동 RED]'",
+        "{?}: provenance sidecar 부재 — 소스 신선도·계보가 미검증이다. 4종 전부 발행 완료(2026-08-03) 후이므로 부재 = 발행 경로가 씻겨나간 것. `<master>_provenance.json` 재발행 필요 (capital-securities 3종은 `scripts/emit_capsec_provenance.py`) — 계약은 `--print-provenance-contract`",
+        "{?}_*.json",
+        "법정준비금 R-RSV 룰: 신규 RED={?} · 기존 baseline={?}(건별 열거, data/_gold/statutory_reserve_baseline.json) · ORANGE={?} · legit-zero 면제={?}. baseline 이 0 이 되면 이 축은 완전 차단 모드가 된다",
+        "수집 census 는 이 분기 필링이 존재한다고(status=000) 기록했는데 마스터에 행이 하나도 없다 — raw: data/dart/_alotmatter_cache/{?}_{?}_*.json. 무배당(값=0)과 미공시(행 없음)를 뒤바꾼 케이스이거나 빌더 누락",
+        "준비금 hold-forward 로 생긴 {?}블록 코어 census 면제 (연1회 공시사, 그 분기 필링 없음을 raw meta.json `no_filing` 로 재확인): {?}"
+      ],
+      "via_import": [
+        "CSM_waterfall.json",
+        "IFRS17_BS.json",
+        "bs_carry_forward_cells.json",
+        "data/bonds/capital_securities_fy2025.json",
+        "data/dart/*/raw/*/meta.json",
+        "data/dart/viz/pl_breakdown_master.json",
+        "data/dart/viz/sensitivity_heatmap.json",
+        "json",
+        "kics_disclosure.json",
+        "kics_exemption_provenance.json",
+        "kics_source_textlayer.json",
+        "kics_transition_applicability.json",
+        "market_pages_nonok.json",
+        "meta.json",
+        "qoq_warn.json",
+        "report_latest.json",
+        "statutory_reserve_baseline.json",
+        "statutory_reserve_legit.json",
+        "user_pl_confirmed_cells.json"
+      ],
+      "via_import_dynamic": [
+        "[validate_kics_disclosure] ROOT / 'artifacts' / 'kics_validation' / 'market_pages_nonok.json'",
+        "[validate_kics_disclosure] ROOT / 'data' / '_derived' / 'kics_source_textlayer.json'",
+        "[validate_kics_disclosure] ROOT / 'data' / '_derived' / 'kics_transition_applicability.json'",
+        "[validate_kics_disclosure] ROOT / 'data' / '_gold' / 'kics_exemption_provenance.json'",
+        "[validate_kics_disclosure] ROOT / 'kics_disclosure.json'",
+        "[validate_kics_disclosure] out_dir / 'report_latest.json'",
+        "[validate_kics_disclosure] report_{?}.json",
+        "[validate_master_tables] ROOT / 'data' / '_derived' / 'qoq_warn.json'",
+        "[validate_statutory_reserves]   신규 RED 없음. baseline {?}건은 data/_gold/statutory_reserve_baseline.json 에 건별 열거돼 있다 (parser 가 고칠 때마다 줄을 지운다).",
+        "[validate_statutory_reserves] ROOT / 'IFRS17_BS.json'",
+        "[validate_statutory_reserves] ROOT / 'data' / '_derived' / 'bs_carry_forward_cells.json'",
+        "[validate_statutory_reserves] ROOT / 'data' / '_gold' / 'statutory_reserve_baseline.json'",
+        "[validate_statutory_reserves] ROOT / 'data' / '_gold' / 'statutory_reserve_legit.json'",
+        "[validate_statutory_reserves] ROOT / 'data' / '_gold' / 'user_pl_confirmed_cells.json'",
+        "[validate_statutory_reserves] dirs[0] / 'meta.json'",
+        "[validate_statutory_reserves] {?} {?} → {?} 0 — owner/validation 확정 legit-zero (data/_gold/user_pl_confirmed_cells.json)"
+      ],
+      "imports_local": [
+        "_data_contract_selftest",
+        "validate_kics_disclosure",
+        "validate_master_tables",
+        "validate_statutory_reserves"
+      ]
+    },
+    "validate_kics_disclosure": {
+      "literals": [
+        "json",
+        "kics_disclosure.json",
+        "kics_exemption_provenance.json",
+        "kics_source_textlayer.json",
+        "kics_transition_applicability.json",
+        "market_pages_nonok.json",
+        "report_latest.json"
+      ],
+      "dynamic": [
+        "ROOT / 'artifacts' / 'kics_validation' / 'market_pages_nonok.json'",
+        "ROOT / 'data' / '_derived' / 'kics_source_textlayer.json'",
+        "ROOT / 'data' / '_derived' / 'kics_transition_applicability.json'",
+        "ROOT / 'data' / '_gold' / 'kics_exemption_provenance.json'",
+        "ROOT / 'kics_disclosure.json'",
+        "out_dir / 'report_latest.json'",
+        "report_{?}.json"
+      ],
+      "via_import": [],
+      "via_import_dynamic": [],
+      "imports_local": []
+    },
+    "validate_kics_rate_sensitivity": {
+      "literals": [
+        "kics_disclosure.json",
+        "kics_rate_sensitivity.json",
+        "kics_rate_sensitivity_validation.json"
+      ],
+      "dynamic": [
+        "ROOT / 'data' / '_derived' / 'kics_rate_sensitivity_validation.json'",
+        "ROOT / 'kics_disclosure.json'",
+        "ROOT / 'kics_rate_sensitivity.json'"
+      ],
+      "via_import": [],
+      "via_import_dynamic": [],
+      "imports_local": []
+    },
+    "validate_master_tables": {
+      "literals": [
+        "CSM_waterfall.json",
+        "data/dart/viz/pl_breakdown_master.json",
+        "data/dart/viz/sensitivity_heatmap.json",
+        "qoq_warn.json"
+      ],
+      "dynamic": [
+        "ROOT / 'data' / '_derived' / 'qoq_warn.json'"
+      ],
+      "via_import": [],
+      "via_import_dynamic": [],
+      "imports_local": []
+    },
+    "validate_nb_csm_multiple": {
+      "literals": [
+        "KR0008_삼성화재해상보험.json",
+        "csm_waterfall.json",
+        "extracted_202603.json",
+        "nb_csm_ratio.json",
+        "nb_csm_validation.json",
+        "nb_premium_wolnap.json"
+      ],
+      "dynamic": [
+        "IR / 'meritz' / 'extracted_202603.json'",
+        "IR / 'nb_csm_ratio.json'",
+        "ROOT / 'data' / '_derived' / 'nb_csm_validation.json'",
+        "ROOT / 'data' / '_derived' / 'nb_premium_wolnap.json'",
+        "VIZ / 'csm_waterfall.json'"
+      ],
+      "via_import": [],
+      "via_import_dynamic": [],
+      "imports_local": []
+    },
+    "validate_statutory_reserves": {
+      "literals": [
+        "IFRS17_BS.json",
+        "bs_carry_forward_cells.json",
+        "data/dart/*/raw/*/meta.json",
+        "meta.json",
+        "statutory_reserve_baseline.json",
+        "statutory_reserve_legit.json",
+        "user_pl_confirmed_cells.json"
+      ],
+      "dynamic": [
+        "  신규 RED 없음. baseline {?}건은 data/_gold/statutory_reserve_baseline.json 에 건별 열거돼 있다 (parser 가 고칠 때마다 줄을 지운다).",
+        "ROOT / 'IFRS17_BS.json'",
+        "ROOT / 'data' / '_derived' / 'bs_carry_forward_cells.json'",
+        "ROOT / 'data' / '_gold' / 'statutory_reserve_baseline.json'",
+        "ROOT / 'data' / '_gold' / 'statutory_reserve_legit.json'",
+        "ROOT / 'data' / '_gold' / 'user_pl_confirmed_cells.json'",
+        "dirs[0] / 'meta.json'",
+        "{?} {?} → {?} 0 — owner/validation 확정 legit-zero (data/_gold/user_pl_confirmed_cells.json)"
+      ],
+      "via_import": [],
+      "via_import_dynamic": [],
+      "imports_local": []
+    },
+    "prepush_check": {
+      "literals": [
+        "    scripts/scan_generic_anomalies.py  → data/_derived/anomaly_skeptic_input.json",
+        "csm_continuity_validation.json",
+        "csm_waterfall_validation.json",
+        "kics_rate_sensitivity_validation.json",
+        "nb_csm_validation.json"
+      ],
+      "dynamic": [
+        "ROOT / 'data' / '_derived' / 'kics_rate_sensitivity_validation.json'",
+        "ROOT / 'data' / '_derived' / 'nb_csm_validation.json'",
+        "ROOT / 'data' / 'dart' / 'viz' / 'csm_continuity_validation.json'",
+        "ROOT / 'data' / 'dart' / 'viz' / 'csm_waterfall_validation.json'"
+      ],
+      "via_import": [
+        "*/parsed/*.json",
+        "CSM_waterfall.json",
+        "IFRS17_BS.json",
+        "PL_breakdown.json",
+        "_*.json",
+        "_provenance.json",
+        "bonds_by_insurer.json",
+        "data/_derived/alotmatter_fetch_census.json",
+        "data/dart/viz/sensitivity_heatmap.json",
+        "dividend.json",
+        "forward_simulation_v3.json",
+        "json",
+        "kics_disclosure.json",
+        "kics_forward_capital.json",
+        "kics_rate_sensitivity.json",
+        "kics_source_vision_verified.json",
+        "kics_tier1_utilization.json",
+        "kics_tier2_utilization.json",
+        "manifest.json",
+        "user_pl_confirmed_cells.json"
+      ],
+      "via_import_dynamic": [
+        "[validate_data_contract] (rel[:-5] if rel.endswith('.json') else rel) + '_provenance.json'",
+        "[validate_data_contract] ROOT / 'data' / '_gold' / 'kics_source_vision_verified.json'",
+        "[validate_data_contract] ROOT / 'data' / '_gold' / 'user_pl_confirmed_cells.json'",
+        "[validate_data_contract] d / 'forward_simulation_v3.json'",
+        "[validate_data_contract] d / 'manifest.json'",
+        "[validate_data_contract] dirs[-1] / 'bonds_by_insurer.json'",
+        "[validate_data_contract] dirs[-2] / 'forward_simulation_v3.json'",
+        "[validate_data_contract] msg + '  [미배포 — 어떤 페이지도 IFRS17_BS.json 을 아직 읽지 않아 push 차단은 보류. 배포 keep-list 에 오르면 자동 RED]'",
+        "[validate_data_contract] msg + '  [미배포 — 어떤 페이지도 dividend.json 을 아직 읽지 않아 push 차단은 보류. 배포 keep-list 에 오르면 자동 RED]'",
+        "[validate_data_contract] {?}: provenance sidecar 부재 — 소스 신선도·계보가 미검증이다. 4종 전부 발행 완료(2026-08-03) 후이므로 부재 = 발행 경로가 씻겨나간 것. `<master>_provenance.json` 재발행 필요 (capital-securities 3종은 `scripts/emit_capsec_provenance.py`) — 계약은 `--print-provenance-contract`",
+        "[validate_data_contract] {?}_*.json",
+        "[validate_data_contract] 법정준비금 R-RSV 룰: 신규 RED={?} · 기존 baseline={?}(건별 열거, data/_gold/statutory_reserve_baseline.json) · ORANGE={?} · legit-zero 면제={?}. baseline 이 0 이 되면 이 축은 완전 차단 모드가 된다",
+        "[validate_data_contract] 수집 census 는 이 분기 필링이 존재한다고(status=000) 기록했는데 마스터에 행이 하나도 없다 — raw: data/dart/_alotmatter_cache/{?}_{?}_*.json. 무배당(값=0)과 미공시(행 없음)를 뒤바꾼 케이스이거나 빌더 누락",
+        "[validate_data_contract] 준비금 hold-forward 로 생긴 {?}블록 코어 census 면제 (연1회 공시사, 그 분기 필링 없음을 raw meta.json `no_filing` 로 재확인): {?}"
+      ],
+      "imports_local": [
+        "check_inbox_hygiene",
+        "validate_data_contract"
+      ]
+    }
+  },
+  "reader_of": {
+    "CSM_waterfall.json": [
+      "validate_csm_continuity",
+      "validate_data_contract",
+      "validate_data_contract",
+      "validate_master_tables",
+      "prepush_check"
+    ],
+    "csm_continuity_validation.json": [
+      "validate_csm_continuity",
+      "prepush_check"
+    ],
+    "csm_waterfall.json": [
+      "validate_csm_waterfall",
+      "validate_nb_csm_multiple"
+    ],
+    "csm_waterfall_validation.json": [
+      "validate_csm_waterfall",
+      "prepush_check"
+    ],
+    "*/parsed/*.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "IFRS17_BS.json": [
+      "validate_data_contract",
+      "validate_data_contract",
+      "validate_statutory_reserves",
+      "prepush_check"
+    ],
+    "PL_breakdown.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "_*.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "_provenance.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "bonds_by_insurer.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "data/_derived/alotmatter_fetch_census.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "data/dart/viz/sensitivity_heatmap.json": [
+      "validate_data_contract",
+      "validate_data_contract",
+      "validate_master_tables",
+      "prepush_check"
+    ],
+    "dividend.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "forward_simulation_v3.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "json": [
+      "validate_data_contract",
+      "validate_data_contract",
+      "validate_kics_disclosure",
+      "prepush_check"
+    ],
+    "kics_disclosure.json": [
+      "validate_data_contract",
+      "validate_data_contract",
+      "validate_kics_disclosure",
+      "validate_kics_rate_sensitivity",
+      "prepush_check"
+    ],
+    "kics_forward_capital.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "kics_rate_sensitivity.json": [
+      "validate_data_contract",
+      "validate_kics_rate_sensitivity",
+      "prepush_check"
+    ],
+    "kics_source_vision_verified.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "kics_tier1_utilization.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "kics_tier2_utilization.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "manifest.json": [
+      "validate_data_contract",
+      "prepush_check"
+    ],
+    "user_pl_confirmed_cells.json": [
+      "validate_data_contract",
+      "validate_data_contract",
+      "validate_statutory_reserves",
+      "prepush_check"
+    ],
+    "bs_carry_forward_cells.json": [
+      "validate_data_contract",
+      "validate_statutory_reserves"
+    ],
+    "data/bonds/capital_securities_fy2025.json": [
+      "validate_data_contract"
+    ],
+    "data/dart/*/raw/*/meta.json": [
+      "validate_data_contract",
+      "validate_statutory_reserves"
+    ],
+    "data/dart/viz/pl_breakdown_master.json": [
+      "validate_data_contract",
+      "validate_master_tables"
+    ],
+    "kics_exemption_provenance.json": [
+      "validate_data_contract",
+      "validate_kics_disclosure"
+    ],
+    "kics_source_textlayer.json": [
+      "validate_data_contract",
+      "validate_kics_disclosure"
+    ],
+    "kics_transition_applicability.json": [
+      "validate_data_contract",
+      "validate_kics_disclosure"
+    ],
+    "market_pages_nonok.json": [
+      "validate_data_contract",
+      "validate_kics_disclosure"
+    ],
+    "meta.json": [
+      "validate_data_contract",
+      "validate_statutory_reserves"
+    ],
+    "qoq_warn.json": [
+      "validate_data_contract",
+      "validate_master_tables"
+    ],
+    "report_latest.json": [
+      "validate_data_contract",
+      "validate_kics_disclosure"
+    ],
+    "statutory_reserve_baseline.json": [
+      "validate_data_contract",
+      "validate_statutory_reserves"
+    ],
+    "statutory_reserve_legit.json": [
+      "validate_data_contract",
+      "validate_statutory_reserves"
+    ],
+    "kics_rate_sensitivity_validation.json": [
+      "validate_kics_rate_sensitivity",
+      "prepush_check"
+    ],
+    "KR0008_삼성화재해상보험.json": [
+      "validate_nb_csm_multiple"
+    ],
+    "extracted_202603.json": [
+      "validate_nb_csm_multiple"
+    ],
+    "nb_csm_ratio.json": [
+      "validate_nb_csm_multiple"
+    ],
+    "nb_csm_validation.json": [
+      "validate_nb_csm_multiple",
+      "prepush_check"
+    ],
+    "nb_premium_wolnap.json": [
+      "validate_nb_csm_multiple"
+    ],
+    "    scripts/scan_generic_anomalies.py  → data/_derived/anomaly_skeptic_input.json": [
+      "prepush_check"
+    ]
+  },
+  "unread": [
+    "NB_CSM_multiple.json",
+    "data/dart/viz/csm_amort_schedule.json",
+    "data/dart/viz/csm_waterfall.json",
+    "data/dart/viz/csm_waterfall_history.json",
+    "data/dart/viz/insurance_pl_breakdown.json",
+    "data/ir/nb_csm_ratio.json"
+  ]
+}

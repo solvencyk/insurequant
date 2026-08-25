@@ -34,6 +34,13 @@ WIRED = {
     "validate_csm_continuity": "CSM 기초≠직전기말 boundary break (2026-08-21 배선, 2초)",
     "validate_kics_rate_sensitivity": "금리민감도 표 정합 (2026-08-21 배선, 3초)",
     "validate_nb_csm_multiple": "신계약 CSM 배수 (2026-08-21 배선, 3초)",
+    "validate_live_artifacts":
+        "라이브 HTML 이 fetch 하는 아티팩트를 마스터와 대조 (2026-08-25 신설, 3초). 불변식 1번"
+        "('게이트가 검사하는 파일 = 사용자가 보는 파일')의 집행자다. 런타임 추적으로 대조했더니 "
+        "배포 HTML 이 fetch 하는 .json 16개 중 6개를 어떤 검사기도 읽지 않고 있었다 — "
+        "NB_CSM_multiple · csm_amort_schedule · csm_waterfall_history · insurance_pl_breakdown · "
+        "kics_tier{1,2}_utilization(값 축). 기지 결함은 data/_gold/live_artifact_baseline.json 에 "
+        "건별 등재되어 매 실행 인쇄되고, 등재에 없는 신규 발견은 RED 로 push 를 막는다.",
     "validate_csm_waterfall":
         "CSM 워터폴 항등식 + 단계 커버리지. 2026-08-21 에 18건 실패 상태로 발견됐고(호출처 0 이라 "
         "아무도 몰랐다) 같은 날 exit 0 까지 닫혀 WIRED 로 옮겼다. 구조적 제외 6건(IFRS17 시행 전 "
@@ -244,3 +251,145 @@ def test_dewired_check_has_a_reason_and_a_home():
         assert (ROOT / "scripts" / m.group(1)).exists(), (
             f"{name}: 사유가 가리키는 scripts/{m.group(1)} 이 없다 — 분리가 아니라 삭제다"
         )
+
+
+# ---------------------------------------------------------------------------
+# 라이브 아티팩트 배선 매트릭스 (2026-08-25 신설) — 불변식 1번을 기계가 강제한다
+# ---------------------------------------------------------------------------
+# `CLAUDE.md` 불변식 1: **게이트가 검사하는 파일 = 사용자가 보는 파일.**
+# 위 두 매니페스트는 "어떤 게이트가 도는가"(파일 단위)와 "게이트 안 어떤 검사가 도는가"
+# (check 단위)를 강제한다. 그런데 **그 검사가 어떤 파일을 읽는가**는 아무도 안 봤다.
+#
+# 2026-08-25 에 런타임 추적으로 전수 대조했더니(`scripts/_probes/
+# probe_20260825_trace_validator_reads.py` — 정적 문자열 census 는 동적 경로 조립
+# `VIZ / "x.json"` 을 놓쳐 양방향으로 틀린다) `origin/main` 배포 HTML 4종이 fetch 하는
+# .json **16개 중 6개를 어떤 검사기도 읽지 않고 있었다.** 게다가 읽고는 있는데 **배포본이
+# 아니라 파서 중간산출물**을 읽던 축이 하나 더 있었다(`validate_master_tables` 의 PL 축:
+# `data/dart/viz/pl_breakdown_master.json`. 그 결과 배포본에만 있던 1,307셀이 PL 항등식을
+# 한 번도 안 거쳤고, 게이트가 찍던 HOLE-PL 24건은 24/24 전부 phantom 이었다).
+#
+# 그래서 여기서 못 박는다:
+#   · 라이브가 fetch 하는 .json 은 **전부** 어느 검사기가 읽는지 선언돼 있어야 한다.
+#   · 배포본과 중간산출물이 둘 다 있으면 검사기는 **배포본**을 읽어야 한다.
+#   · 화면에 새 파일이 붙으면 선언이 없어서 여기서 막힌다.
+
+# 라이브 HTML 이 fetch 하는 .json -> 그 파일을 **읽는** 검사기(들).
+# 값은 사람이 읽는 용도가 아니라 기계 검사 대상이다: 이름이 적힌 스크립트 소스에 그 경로
+# 리터럴이 실제로 있어야 통과한다.
+LIVE_ARTIFACT_READERS = {
+    "CSM_waterfall.json": ["validate_data_contract", "validate_csm_continuity",
+                           "validate_master_tables", "validate_live_artifacts"],
+    "PL_breakdown.json": ["validate_data_contract", "validate_master_tables",
+                          "validate_live_artifacts"],
+    "IFRS17_BS.json": ["validate_statutory_reserves"],
+    "dividend.json": ["validate_data_contract"],
+    "kics_disclosure.json": ["validate_kics_disclosure", "validate_kics_rate_sensitivity"],
+    "kics_rate_sensitivity.json": ["validate_kics_rate_sensitivity"],
+    "kics_forward_capital.json": ["validate_data_contract"],
+    "kics_tier1_utilization.json": ["validate_live_artifacts"],
+    "kics_tier2_utilization.json": ["validate_live_artifacts"],
+    "NB_CSM_multiple.json": ["validate_live_artifacts"],
+    "data/dart/viz/csm_amort_schedule.json": ["validate_live_artifacts"],
+    "data/dart/viz/csm_waterfall_history.json": ["validate_live_artifacts"],
+    "data/dart/viz/insurance_pl_breakdown.json": ["validate_live_artifacts"],
+    "data/dart/viz/csm_waterfall.json": ["validate_csm_waterfall", "validate_nb_csm_multiple"],
+    "data/dart/viz/sensitivity_heatmap.json": ["validate_data_contract",
+                                               "validate_master_tables"],
+    "data/ir/nb_csm_ratio.json": ["validate_nb_csm_multiple"],
+}
+
+# (배포본, 중간산출물) 짝 — 같은 개념이 두 파일로 존재하는 자리. 검사기가 중간산출물 쪽만
+# 읽고 있으면 "맞는 산수 · 틀린 소스" 가 통과한다. 값 = 배포본을 반드시 읽어야 하는 검사기.
+DEPLOYED_VS_UPSTREAM = {
+    "PL_breakdown.json": ("data/dart/viz/pl_breakdown_master.json",
+                          ["validate_master_tables", "validate_data_contract"]),
+    "NB_CSM_multiple.json": ("data/ir/nb_csm_ratio.json", ["validate_live_artifacts"]),
+    "kics_tier1_utilization.json": ("output/tier1_utilization/", ["validate_live_artifacts"]),
+    "kics_tier2_utilization.json": ("output/tier2_utilization/", ["validate_live_artifacts"]),
+}
+
+_HTML = ["index.html", "K-ICS.html", "IFRS17.html", "공시보고서.html"]
+
+
+def _origin_main_fetches() -> set[str] | None:
+    """`origin/main` 의 배포 HTML 이 참조하는 .json 경로. 못 읽으면 None(슬림/무리모트)."""
+    import subprocess
+    out: set[str] = set()
+    any_ok = False
+    for h in _HTML:
+        p = subprocess.run(["git", "show", f"origin/main:{h}"], cwd=str(ROOT),
+                           capture_output=True)
+        if p.returncode != 0:
+            continue
+        any_ok = True
+        src = p.stdout.decode("utf-8", errors="replace")
+        for m in re.finditer(r"""['"`]([^'"`\s]+?\.json)['"`]""", src):
+            out.add(m.group(1).lstrip("./"))
+    return out if any_ok else None
+
+
+def test_every_live_fetched_artifact_has_a_declared_reader():
+    """화면이 fetch 하는 .json 은 전부 선언돼 있어야 한다.
+
+    새 파일이 화면에 붙는 순간 여기서 막힌다 — 그때 "이건 누가 검사하나?" 를 한 번은
+    생각하게 된다. 그 질문을 아무도 안 해서 6개가 무검사로 방치됐다."""
+    fetched = _origin_main_fetches()
+    if fetched is None:
+        pytest.skip("origin/main 의 배포 HTML 을 읽을 수 없다(슬림 워크트리/무리모트)")
+    undeclared = sorted(fetched - set(LIVE_ARTIFACT_READERS))
+    assert not undeclared, (
+        f"라이브가 fetch 하는데 선언이 없는 아티팩트 {undeclared} — 어떤 검사기가 읽을지 "
+        f"정하고 LIVE_ARTIFACT_READERS 에 넣어라. 선언만 하고 안 읽으면 아래 테스트가 막는다."
+    )
+    ghost = sorted(set(LIVE_ARTIFACT_READERS) - fetched)
+    assert not ghost, (
+        f"선언에만 있고 라이브가 더는 fetch 하지 않는 아티팩트 {ghost} — 화면에서 빠졌다면 "
+        f"선언도 지워라(죽은 사본을 계속 검사하게 된다)."
+    )
+
+
+@pytest.mark.parametrize("artifact", sorted(LIVE_ARTIFACT_READERS))
+def test_declared_reader_actually_references_the_artifact(artifact):
+    """선언한 검사기의 소스에 그 경로가 실제로 있어야 한다 — 선언만 하고 안 읽는 것을 막는다."""
+    readers = LIVE_ARTIFACT_READERS[artifact]
+    assert readers, f"{artifact}: 읽는 검사기가 하나도 선언돼 있지 않다"
+    for name in readers:
+        p = ROOT / "scripts" / f"{name}.py"
+        if not p.exists():
+            pytest.skip(f"slim 워크트리: scripts/{name}.py 없음")
+        src = p.read_text(encoding="utf-8")
+        # 경로 전체 또는 (동적 조립인 경우) 파일명 조각이 소스에 있어야 한다
+        base = artifact.rsplit("/", 1)[-1]
+        assert artifact in src or f'"{base}"' in src or f"'{base}'" in src, (
+            f"{name} 이 {artifact} 를 읽는다고 선언됐는데 소스에서 그 경로를 못 찾았다. "
+            f"읽지 않는다면 선언에서 빼고, 다른 검사기가 읽는다면 그 이름을 적어라."
+        )
+
+
+@pytest.mark.parametrize("deployed", sorted(DEPLOYED_VS_UPSTREAM))
+def test_gate_reads_the_deployed_artifact_not_the_upstream_copy(deployed):
+    """배포본과 중간산출물이 둘 다 있으면 게이트는 **배포본**을 읽어야 한다.
+
+    2026-08-25 이전 `validate_master_tables` 는 PL 축에서 중간산출물을 읽었다. 산수는 맞는데
+    소스가 틀린 통과 — 이 저장소의 반복 사고 유형이고 `CLAUDE.md` 불변식 1번 위반이다.
+    """
+    upstream, must_read = DEPLOYED_VS_UPSTREAM[deployed]
+    base = deployed.rsplit("/", 1)[-1]
+    for name in must_read:
+        p = ROOT / "scripts" / f"{name}.py"
+        if not p.exists():
+            pytest.skip(f"slim 워크트리: scripts/{name}.py 없음")
+        src = p.read_text(encoding="utf-8")
+        assert deployed in src or f'"{base}"' in src or f"'{base}'" in src, (
+            f"{name} 이 배포본 {deployed} 를 읽지 않는다. 상류 사본({upstream})만 읽고 있다면 "
+            f"그건 사용자가 보는 파일을 검사하지 않는 것이다 — 불변식 1번 위반."
+        )
+        # 상류를 **읽기 경로로** 쓰고 있지 않은지: 주석/참고 상수는 허용하되 실제 로드는 금지.
+        for ln in src.splitlines():
+            s = ln.strip()
+            if upstream not in s or s.startswith("#"):
+                continue
+            assert not re.search(r"(load_long|json\.loads?|read_text|open)\s*\(", s), (
+                f"{name} 이 상류 사본을 직접 로드하는 줄이 남아 있다: {s[:120]}\n"
+                f"배포본({deployed})을 읽어야 한다."
+            )

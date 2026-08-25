@@ -7,6 +7,99 @@ Validation-only history. Cross-stage changes also keep a 1-line cross-reference 
 
 ---
 
+## 2026-08-25 (b) — 라이브 아티팩트 배선: 게이트가 **보지도 않던** 파일 6개를 검사에 올렸다
+
+포스트모템: [`docs/postmortems/PM-2026-08-25_gate_read_the_wrong_file.md`](postmortems/PM-2026-08-25_gate_read_the_wrong_file.md)
+
+### 반증 먼저 — 발주받은 census 5건 중 5건 참, 1건 거짓, 2건 누락
+
+발주 census 는 **문자열 리터럴** 기반이라 양방향으로 틀렸다. 런타임 추적
+(`scripts/_probes/probe_20260825_trace_validator_reads.py` — `builtins.open`/`Path.read_*` 을
+감싸고 검사기를 실제로 돌려 열린 경로를 기록)으로 확정했다.
+
+- ✅ 5건 전부 참 (PL 축 오조준 · NB_CSM_multiple · csm_amort_schedule · csm_waterfall_history ·
+  insurance_pl_breakdown)
+- ❌ **`equity_composition.json` 404 는 거짓** — `origin/main:IFRS17.html` 131행의 **HTML 주석**
+  하나뿐이고 "죽은 코드는 이번에 진짜 삭제함"이라고 적혀 있다. fetch 하지 않는다. 티켓 불요.
+- ⚠️ 오탐 2건: `data/dart/viz/csm_waterfall.json` · `data/ir/nb_csm_ratio.json` 은
+  `validate_nb_csm_multiple` 이 `VIZ / "csm_waterfall.json"` 형태로 **읽고 있었다**(동적 조립).
+- ➕ **census 가 놓친 2건**: `kics_tier{1,2}_utilization.json`. `validate_data_contract.ARTIFACTS`
+  에 배포 경로로 **등록만** 돼 있고 값은 `_load_tier()` 가 `output/tier{1,2}_utilization/` 를 읽는다
+  — 런타임에 배포본이 **한 번도 열리지 않는다**. 여기서 **라이브 오표시 4건**이 나왔다.
+
+### 고친 것
+
+**① PL 축 소스 재조준** (`scripts/validate_master_tables.py`)
+`PL_PATH` 를 `data/dart/viz/pl_breakdown_master.json` → `PL_breakdown.json`. 배포본에만 있던
+**1,307셀이 처음으로 PL 항등식·CSM 교차대조**를 받는다. 카운트 이동:
+
+| 축 | 전 | 후 |
+|---|---|---|
+| `HOLE-PL (통째)` | 24 | **0** — 24/24 전부 phantom |
+| `crosscheck fail` | 1 (BNP 2025.4Q) | **0** — 같은 이유의 phantom |
+| `PL_BRIDGE fail` | 12 | **26** (phantom 2 소멸 + 처음 검사받아 드러난 16) |
+| `zero_legs` | 5 | 3 |
+
+**게이트 출력과 골든 `_regenerated` 에 "24건은 phantom 이었다"를 박아 뒀다** — 다음 세션이
+"HOLE 이 사라졌다"를 회귀로 오인하지 않게.
+
+**② `scripts/validate_live_artifacts.py` 신설** → `prepush_check.py` **1c 도메인 게이트** 배선.
+`NB_CSM_multiple` · `csm_amort_schedule` · `csm_waterfall_history` · `insurance_pl_breakdown` +
+`kics_tier{1,2}_utilization`(값 축). **형식 검사(파일 존재 여부) 금지** 원칙대로, 전부 마스터
+교차대조 · 파일 안에서 닫혀야 하는 산수 · 기대 그리드 census 다. 룰 16종은 PM §2 참조.
+
+**③ 배선 매트릭스** (`tests/test_push_gate_wiring.py`) — `LIVE_ARTIFACT_READERS` (라이브가
+fetch 하는 .json 은 전부 읽는 검사기가 선언돼 있어야 한다) + `DEPLOYED_VS_UPSTREAM` (배포본과
+중간산출물이 둘 다 있으면 배포본을 읽어야 한다). **변이 5종 5/5 발화**
+(`scripts/_probes/probe_20260825_mutate_wiring_matrix.py`), 실행 후 트리 복원 확인.
+
+### 드러난 것 — 라이브가 실제로 틀리다
+
+같은 분기·같은 한도인데 **배포본만 분자가 0** (게이트는 상류를 봐서 몰랐다):
+
+| 파일 | 회사 | 화면 | 빌더 산출물 |
+|---|---|---|---|
+| tier1 | 하나손해보험 | **0.0%** | 100.0% (`issued` 0 vs 1,000억) |
+| tier2 | IBK연금보험 | **0.0%** | 22.2% (`subordinated` 0 vs 1,597.3억) |
+| tier2 | 아이엠라이프생명보험 | **0.0%** | 40.6% (`hybrid` 0 vs 948.8억) |
+| tier2 | 하나손해보험 | **0.0%** | 13.2% |
+
+그 밖에: `NB_CSM_multiple.json` 이 **한 분기 뒤처짐**(마스터 2026.2Q / 배포본 2026.1Q, 28사 결측)
+· 예별손해 2023.4Q 신계약CSM **부호 반전**(-509.7 vs 마스터 +509.7) · `csm_amort_schedule` 이
+**16~30년+ 컬럼을 통째로 버려** 22사에서 Σ(연차)가 합계보다 35~44% 작음 · `csm_waterfall_history`
+가 **아무도 재생성 안 하는 정적 스냅샷**이라 마스터 대비 **933/1,581셀(59.0%) drift** ·
+에이비엘생명 2024 Q1~Q3 `원수CSM상각` 이 **2025 Q1~Q3 와 1원도 다르지 않음**(복사 지문).
+
+### 착지 — 초기 YELLOW + 승격 조건 박제 (선례 UH-3 · `CSM_WATERFALL_PLAUSIBILITY`)
+
+건별 등재부 2종. **통째 skip 이 아니고**, 매 실행 사유와 함께 인쇄되며, 고쳐지면 게이트가
+`BASELINE STALE` / `FIXED?` 로 알려준다. **등재에 없는 신규 발견은 처음부터 RED.**
+
+- `data/_gold/pl_bridge_baseline.json` — 26건 (pre_existing 10 · basis_mix 5 · lob_sum_gap 5 ·
+  sub_leg_gap 3 · **copied_cell 3**)
+- `data/_gold/live_artifact_baseline.json` — 1,086건
+- 승격 기한 **2026-10-31** 을 `_promote` 필드에 박았다. `csm_waterfall_history` 는 예외적으로
+  **파일의 처분**(마스터 파생으로 교체 권고)이 승격 조건이다.
+
+### 우리 룰의 결함으로 판정해 **등재하지 않고 룰을 고친 것**
+
+`TIER_UTILIZATION_IDENTITY` 초안이 5사(NH농협손해 192.9% 등)에서 실패했는데 데이터가 아니라
+**룰이 틀렸다** — 소진율은 owner 결정으로 100 에서 잘린다. `min(100, …)` 으로 고쳐 5건 소멸.
+**baseline 은 룰 결함을 덮는 데 쓰지 않는다.**
+
+### 발주
+
+- `inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md` (ifrs17)
+- `inbox/parser/20260825T1125Z__validation__MULTI__live_viz_artifacts_unchecked.md` (ifrs17)
+- `inbox/publishing/20260825T1130Z__validation__MULTI__deployed_artifact_diverges_from_builder.md`
+
+### 검증
+
+`pytest tests/` 413 passed · 변이 5/5 발화 · `validate_live_artifacts` exit 0 (RED 0 / YELLOW 1,086)
+· `validate_master_tables --no-build` SUMMARY 골든 `--update` 재생성(사유는 fixture `_regenerated`).
+
+---
+
 ## 2026-08-25 — CSM sparse 티켓 재확인: **게이트의 PL 축이 배포본을 안 보고 있었다**
 
 `inbox/parser/20260825T0230Z__validation__MULTI__csm_waterfall_sparse_3companies.md` 가

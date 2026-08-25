@@ -1,5 +1,6 @@
 {
   "exit_code": 2,
-  "summary": "SUMMARY coverage_hole:0CSM/24PL | closing:358P/0F/0S | plausibility:0dup/1spike/1cont/1wfy/0zamort | pl_bridge:2157P/12F/247S | zero_legs:5 | impossible0:0 | crosscheck:75P/0M/1F/217S | qoq_warn:209Y | sens:2R/1Y/20dir",
-  "_what": "Refactor safety net for validate_master_tables.main(). Captured before the 374-line function was split into per-check functions. Asserts the SUMMARY count matrix + exit code (--no-build)."
+  "summary": "SUMMARY coverage_hole:0CSM/0PL | closing:358P/0F/0S | plausibility:0dup/1spike/1cont/1wfy/0zamort | pl_bridge:2503P/26F/319S/0NEW | zero_legs:3 | impossible0:0 | crosscheck:97P/0M/0F/249S | qoq_warn:209Y | sens:2R/1Y/20dir",
+  "_what": "Refactor safety net for validate_master_tables.main(). Captured before the 374-line function was split into per-check functions. Asserts the SUMMARY count matrix + exit code (--no-build).",
+  "_regenerated": "2026-08-25 — PL 축 소스 재조준(불변식 1번 위반 시정). PL_PATH 를 파서 중간산출물 data/dart/viz/pl_breakdown_master.json 에서 배포본 PL_breakdown.json 으로 바꿨다. 배포본에만 있던 1,307셀이 처음으로 PL 항등식·CSM 교차대조를 받는다. 카운트 이동: coverage_hole 24PL->0PL (24/24 전부 phantom — 중간산출물에만 없던 것이라 배포본엔 값이 있었다), crosscheck 1F->0F (BNP 2025.4Q, 같은 이유의 phantom), pl_bridge 12F->26F (phantom 2건 소멸 + 처음 검사받아 드러난 16건), zero_legs 5->3, pass/skip 은 검사 대상 확대분. 새 필드 `pl_bridge:...NEW` = data/_gold/pl_bridge_baseline.json 에 등재되지 않은 실패 수 — 여기가 0 을 벗어나면 회귀다. 재현: scripts/_probes/probe_20260825_simulate_pl_source_reaim.py"
 }

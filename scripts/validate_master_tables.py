@@ -28,8 +28,28 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.stdout.reconfigure(encoding="utf-8")
 
-PL_PATH = "data/dart/viz/pl_breakdown_master.json"
+# 2026-08-25: PL 축을 **배포본**으로 재조준했다. 그 전까지 이 게이트는 파서 중간산출물
+# `data/dart/viz/pl_breakdown_master.json` 을 읽었다 — CSM 축은 배포본(CSM_waterfall.json)을
+# 보는데 PL 축만 상류를 보는 비대칭이었고, 그건 **불변식 1번 위반**이다
+# (게이트가 검사하는 파일 = 사용자가 보는 파일). 실측(scripts/_probes/
+# probe_20260825_simulate_pl_source_reaim.py):
+#   · viz 소스 7,391셀 / 배포본 8,698셀 → **배포본에만 있는 1,307셀이 PL 항등식을 한 번도 안 거쳤다**
+#   · 이 게이트가 찍던 `HOLE-PL (통째)` 24건은 **24/24 전부 phantom** — 배포본엔 값이 다 있다
+#   · `crosscheck fail` 1건(BNP 2025.4Q)도 phantom — 배포본 기준이면 통과
+#   · 대신 PL_BRIDGE 실패가 12 → 26 으로 늘었다(2건은 phantom 소멸, 16건이 처음 검사받아 드러남)
+# 방향 근거: `build_root_masters.build_pl` 은 viz 를 읽은 뒤 `_additive_merge(rows, PL_OUT)` 로
+# 루트 마스터에 union 병합한다. 즉 **루트가 누적된 정본, viz 는 재생성 가능한 부분입력**이다.
+# 다음 세션이 "HOLE-PL 24건이 사라졌다"를 회귀로 오인하지 않도록 SUMMARY 가 phantom 소멸을
+# 명시한다(아래 main() 의 PHANTOM 주석·PL_BASELINE 참조).
+PL_PATH = "PL_breakdown.json"
+PL_SRC_UPSTREAM = "data/dart/viz/pl_breakdown_master.json"   # 참고용(더 이상 검사 대상 아님)
 WF_PATH = "CSM_waterfall.json"
+
+# 재조준으로 **처음 검사받게 된** 셀에서 드러난 기지(旣知) PL_BRIDGE 실패 등재부.
+# 통째 면제가 아니다 — 건별로 열거하고, 여기 없는 실패가 하나라도 생기면 `pl_new` 가 0 을
+# 벗어나 SUMMARY 가 움직이고 골든(tests/test_master_tables_golden.py)이 push 를 막는다.
+# parser 가 고칠 때마다 그 줄을 지운다(선례: data/_gold/statutory_reserve_baseline.json).
+PL_BRIDGE_BASELINE_PATH = "data/_gold/pl_bridge_baseline.json"
 
 
 def norm(s: str) -> str:
@@ -461,7 +481,7 @@ def _check_pl_bridge(pl: dict) -> tuple[int, list, int, list, list]:
 
     print()
     print("=" * 78)
-    print(f"2. PL_BRIDGE (pl_breakdown_master, 백만원)  pass={pb_pass} fail={len(pb_fail)} skip={pb_skip}  "
+    print(f"2. PL_BRIDGE (PL_breakdown.json 배포본, 백만원)  pass={pb_pass} fail={len(pb_fail)} skip={pb_skip}  "
           f"| 2b. ZERO_LEGS flag={len(zleg_rows)} | 2c. IMPOSSIBLE-0 leg={len(zerolegs_rows)}")
     print("=" * 78)
     print("  -- fail count by equation --")
@@ -641,6 +661,46 @@ def _check_sensitivity() -> tuple[list, list, list]:
     return sens_red, sens_yellow, sens_dir
 
 
+def _pl_bridge_baseline() -> dict:
+    """기지 PL_BRIDGE 실패 등재부. 없으면 빈 등재부(= 전부 신규로 취급)."""
+    p = ROOT / PL_BRIDGE_BASELINE_PATH
+    if not p.exists():
+        return {"entries": {}}
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def _pl_fail_id(row) -> str:
+    co, q, label = row[0], row[1], row[2]
+    return f"{co}|{q}|{label}"
+
+
+def _report_pl_baseline(pb_fail) -> tuple[int, int, list[str]]:
+    """(baselined, new, stale) — 신규 실패를 기지 실패와 갈라낸다.
+
+    소스 재조준(2026-08-25)으로 1,307셀이 처음 검사 대상이 되면서 16건이 드러났다. 전부
+    이번 라운드에 고칠 수 없어 **초기 YELLOW 로 착지**시키되(선례: UH-3 ·
+    CSM_WATERFALL_PLAUSIBILITY), 조용히 통과시키지는 않는다 — 매 실행 건별로 인쇄하고,
+    등재되지 않은 실패는 `pl_new` 로 SUMMARY 에 올라가 골든이 push 를 막는다.
+    """
+    base = _pl_bridge_baseline()
+    entries = base.get("entries", {})
+    ids = {_pl_fail_id(r) for r in pb_fail}
+    new = sorted(i for i in ids if i not in entries)
+    stale = sorted(i for i in entries if i not in ids)
+    print()
+    print("=" * 78)
+    print(f"2d. PL_BRIDGE BASELINE (data/_gold/pl_bridge_baseline.json)  "
+          f"기지={len(ids) - len(new)} 신규={len(new)} 등재부에만 남은 것={len(stale)}")
+    print("    기지 = 2026-08-25 소스 재조준으로 처음 검사받아 드러난 실패. 건별 등재이며")
+    print("    통째 skip 이 아니다. parser 가 고칠 때마다 그 줄을 지운다.")
+    print("=" * 78)
+    for i in new:
+        print(f"  NEW-FAIL  {i}   <- 등재부에 없다. 진짜 회귀인지 확인하고 고치거나 등재하라")
+    for i in stale[:20]:
+        print(f"  FIXED?    {i}   <- 더는 실패하지 않는다. 고쳐진 것이면 등재부에서 줄을 지워라")
+    return len(ids) - len(new), len(new), stale
+
+
 def main() -> int:
     if "--no-build" not in sys.argv:
         rebuild_root_masters()
@@ -661,13 +721,24 @@ def main() -> int:
 
     sens_red, sens_yellow, sens_dir = _check_sensitivity()
 
+    pb_base, pb_new, pb_stale = _report_pl_baseline(pb_fail)
+
+    print()
+    print("-" * 78)
+    print("NOTE (2026-08-25): PL 축 소스를 배포본으로 재조준했다. 그 전 이 게이트가 찍던")
+    print("  `HOLE-PL (통째)` 24건은 **24/24 전부 phantom** 이었다(중간산출물에만 없던 것이고")
+    print("  배포본엔 값이 있었다). crosscheck fail 1건(BNP 2025.4Q)도 같은 이유로 사라졌다.")
+    print("  즉 아래 0 은 회귀가 아니라 **가짜 hole 의 소멸**이다. 되살리려 하지 말 것.")
+    print("-" * 78)
+
     print()
     print("#" * 78)
     print(f"SUMMARY  coverage_hole:{len(wf_holes)}CSM/{len(pl_holes)}PL | "
           f"closing:{ci_pass}P/{len(ci_fail)}F/{ci_skip}S | "
           f"plausibility:{len(dup_rows)}dup/{len(spike_rows)}spike/{len(cont_rows)}cont/"
           f"{len(wfy_rows)}wfy/{len(zamort_rows)}zamort | "
-          f"pl_bridge:{pb_pass}P/{len(pb_fail)}F/{pb_skip}S | zero_legs:{len(zleg_rows)} | "
+          f"pl_bridge:{pb_pass}P/{len(pb_fail)}F/{pb_skip}S/{pb_new}NEW | "
+          f"zero_legs:{len(zleg_rows)} | "
           f"impossible0:{len(zerolegs_rows)} | "
           f"crosscheck:{cc_pass}P/{cc_minor}M/{len(cc_fail)}F/{cc_skip}S | "
           f"qoq_warn:{len(qoq_rows)}Y | sens:{len(sens_red)}R/{len(sens_yellow)}Y/{len(sens_dir)}dir")

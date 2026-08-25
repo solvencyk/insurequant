@@ -1,11 +1,76 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-25 (CSM sparse 티켓 재확인 — 게이트 PL 축이 배포본을 안 본다: phantom hole 19 · 미검사 1,451셀) · Stage 3/5 — validation
+> Last updated: 2026-08-25 (b) (라이브 아티팩트 배선 — 안 보던 파일 6개를 검사에 올리고 PL 축을 배포본으로 재조준) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-25 b, 라이브 아티팩트 배선) 🟢 불변식 1번을 닫았다. prepush **exit 0**
+(gate RED=0 · K-ICS clear · domain gates pass · inbox 0 · offline tests 198 passed).**
+
+> 포스트모템 [`PM-2026-08-25`](docs/postmortems/PM-2026-08-25_gate_read_the_wrong_file.md) ·
+> changelog `docs/changelog_validation.md` 2026-08-25 (b)
+>
+> ### 직전 Status(a)의 1순위를 닫았다
+>
+> `validate_master_tables.PL_PATH` 를 배포본 `PL_breakdown.json` 으로 재조준.
+> **배포본에만 있던 1,307셀이 처음으로 PL 항등식·CSM 교차대조를 받는다.**
+> `HOLE-PL` 24건은 **24/24 전부 phantom** 으로 확정돼 사라졌고(회귀 아님 — 게이트 출력과
+> 골든 `_regenerated` 에 박아 뒀다), `crosscheck fail` 1건도 같은 이유로 사라졌다.
+> `PL_BRIDGE fail` 은 12 → 26 (phantom 2 소멸 + 처음 검사받아 드러난 16).
+>
+> ### 그 위에 더 있었다 — 라이브가 fetch 하는데 **아무도 안 읽던 파일 6개**
+>
+> 런타임 추적(`scripts/_probes/probe_20260825_trace_validator_reads.py`)으로 확정.
+> 정적 문자열 census 는 **양방향으로 틀린다** — 동적 조립(`VIZ / "x.json"`)을 놓쳐 UNREAD
+> 오탐 2건, "등록만 하고 안 읽는" 자리를 읽는 것으로 착각해 **누락 2건**.
+>
+> | 파일 | 상태 |
+> |---|---|
+> | `NB_CSM_multiple.json` · `csm_amort_schedule` · `csm_waterfall_history` · `insurance_pl_breakdown` | 발주 census 대로 **무검사 확정** |
+> | `kics_tier1_utilization.json` · `kics_tier2_utilization.json` | **census 가 놓친 2건.** `ARTIFACTS` 에 등록만 되고 값은 `output/` 상류를 읽는다 |
+> | `equity_composition.json` 404 의혹 | ❌ **반증.** `origin/main:IFRS17.html` 131행 **HTML 주석**뿐. fetch 안 함 |
+>
+> ### 신설 — `scripts/validate_live_artifacts.py` (prepush 1c 배선)
+>
+> 룰 16종. 전부 마스터 교차대조 · 파일 안에서 닫히는 산수 · 기대 그리드 census 다
+> (파일 존재 여부 같은 형식 검사 금지 원칙). 배수축은 **연누계·당분기 둘 다** 검산한다.
+>
+> ### 라이브가 실제로 틀리다 (게이트가 상류를 봐서 몰랐던 것)
+>
+> 같은 분기·같은 한도인데 배포본만 분자 0 → 화면 소진율 **0%**:
+> 하나손해(tier1 0 vs 100 · tier2 0 vs 13.2) · IBK연금(0 vs 22.2) · 아이엠라이프(0 vs 40.6).
+> 그 밖에 `NB_CSM_multiple` 이 **한 분기 뒤처짐**(마스터 2026.2Q / 배포본 2026.1Q, 28사) ·
+> 예별손해 2023.4Q 신계약CSM **부호 반전** · `csm_amort_schedule` 이 **16~30년+ 컬럼을 통째로
+> 버려** 22사에서 Σ(연차)가 합계보다 35~44% 작음 · `csm_waterfall_history` 가 아무도 재생성
+> 안 하는 정적 스냅샷이라 **933/1,581셀(59.0%) drift** · 에이비엘 2024 Q1~Q3 `원수CSM상각` 이
+> **2025 Q1~Q3 와 1원도 다르지 않음**(복사 지문).
+>
+> ### 착지 — 초기 YELLOW + 승격 조건 박제 (선례 UH-3)
+>
+> 건별 등재부 2종. **통째 skip 아님**, 매 실행 사유와 함께 인쇄, 고쳐지면 `BASELINE STALE` /
+> `FIXED?` 로 알려줌. **등재 밖 신규는 처음부터 RED.** 승격 기한 **2026-10-31** 을 `_promote`
+> 필드에 박았다.
+> - `data/_gold/pl_bridge_baseline.json` 26건 · `data/_gold/live_artifact_baseline.json` 1,086건
+>
+> ### 배선 매트릭스 (변이 5/5 발화)
+>
+> `tests/test_push_gate_wiring.py` 에 `LIVE_ARTIFACT_READERS` + `DEPLOYED_VS_UPSTREAM` 신설.
+> 라이브가 fetch 하는 .json 은 전부 선언돼야 하고, 배포본/중간산출물 짝은 배포본을 읽어야 한다.
+> 이빨 확인: `scripts/_probes/probe_20260825_mutate_wiring_matrix.py`
+>
+> ### 남은 것 (다음 세션)
+>
+> - **UH-13**: `csm_waterfall_history.json` 의 **처분** 미결(검사는 배선됨). 마스터 파생으로
+>   교체를 권고했다 — parser 답변 대기.
+> - **UH-14**: 매트릭스가 소스 문자열 검사다. 런타임 추적은 느려서 push 묶음에 안 넣었다.
+> - 직전 Status(a)의 **2순위(완결성 census 사각)** 는 아직 안 닫혔다 — 1순위를 먼저
+>   고치라고 적어 뒀고, 이제 고쳐졌으니 다음 라운드에서 배선 가능.
+> - 발주 3건 답변 대기: parser ×2 · publishing ×1
+
+## Status (2026-08-25 a, CSM sparse 재확인 — 직전 라운드)
 
 **(2026-08-25, CSM sparse 티켓 재확인) 🔴 불변식 1번이 깨져 있다 — **게이트의 PL 축이
 사용자가 보는 파일을 안 본다.** 그리고 완결성 census 사각은 안 닫혔다. prepush 는 **exit 0**
