@@ -3,6 +3,106 @@
 > Last updated: 2026-08-25 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-08-25 (42nd pass) — CSM FY경계 tol-바로-밑 4사 (inbox 20260825T1340Z)
+
+하나생명 선례(iter4, `20260825T0230Z`)와 "같은 병" 후보 4사 — 전부 tol 바로 밑(sub-tol,
+게이트 침묵)에 있던 CSM 기초/기말 FY 경계 불일치를 raw 로 각각 확정. **원인이 넷 다 다르다.**
+
+**롯데손해보험 2024.4Q(Δ−105.4억, tol 의 88%) — 재작성 확정, 데이터 무수정.** FY2024
+사업보고서(rcept `20250320001732`) note 47 "재무제표 소급재작성"(K-IFRS 1008, 보험금융손익
+체계적배분 관련 회계정책변경+오류수정)이 실재. 같은 필링 안의 원수 CSM 측정요소표
+<당기>/<전기> 두 표를 직접 대조 — FY2024 필링 <전기>(재작성 후) 기말 CSM 2,386,081백만원이
+FY2023 자기 필링(rcept `20240321001822`)의 기말 2,396,624백만원과 10,543백만원(=105.43억)
+차이로, 관측 갭과 소수점까지 일치. 2024.1Q~4Q 각 행은 이미 자기 필링 단일 표에서만 왔고
+(item4 잔차 closure 재검산 통과, plug 없음) 필링 간 섞임이 없어 고칠 셀이 없다. tol 안쪽
+이라 `_CSM_CONTINUITY_EXCEPTIONS` 등재도 안 함 — 지금 등재하면 gap≤tol 이라 이 룰의
+lookup 자체가 안 걸려 즉시 `CSM_CONTINUITY_EXCEPTION_INERT`(무용 면제)로 잡힌다. tol 이
+조여지는 시점에 owner 승인 하에 등재.
+
+**신한라이프생명보험 2024.4Q — 추출 결함, 정정함.** 연차(Q4, `waterfall()`의 `anchor=None`
+경로) 필링에 원수 CSM 측정요소표가 연결·별도 두 벌 존재(캡션 동일, `blocks_for_dir`가 4블록
+추출) — 기초(Jan1 2024)는 7,168,725백만원으로 완전 일치하는데 기말(Dec31 2024)만 갈림:
+연결 7,226,793백만원(=72,267.93억) vs 별도 7,224,114백만원(=72,241.14억). no-anchor
+선택 로직(`pick_combined_agnostic`)이 연결을 골라 마스터에 72267.9 로 들어가 있었다.
+2025분기는 anchor 가 있어(`annual_open.get(2025)`) 별도가 이미 선택돼 72241.1 이 들어가
+있었음 — raw 직접 확인(FY2025.1Q 자기 filing, `20250515001071.xml`: 연결 표 offset 95089
+"7,226,793" / 별도 표 offset 227236 "7,224,114", 두 섹션 경계는 "2. 재무제표 작성기준"
+표제 재등장 지점 ~176000자). 코드 관례(`blocks_for_dir` 주석 `_00760 = 별도 주석(gold
+basis)`)와 일치시켜 2024.4Q 를 별도 기준으로 통일 — 신계약 12657.6→12646.8, 이자부리
+2558.5→2558.3, 조정 -7306.6→-7324.7(잔차, raw 정수 단위로 정확히 닫힘 재검산), 상각
+-7328.8→-7326.5, 기말 72267.9→72241.1(항목1 은 이 시점엔 연결=별도라 불변). `값_당분기`도
+2024.3Q 누계와의 차분으로 재계산(3166.9→3156.1 등, 기말은 항상 `값` 과 동일). 경계
+Δ=0 으로 완전히 닫혔다. `data/_gold/user_csm_cells.json`에 KR0094 5건 append(기존
+2026-06-16/08-15 entries 뒤). **겹침 보고**: `inbox/parser/20260825T1520Z`(validation,
+CSM_AMORT_IDENTITY 28버킷 원장) §⑤ "신한라이프 2025.1Q~2026.2Q, 원인미규명 계통 0.09~
+0.15%차"가 바로 이 연결/별도 혼용으로 설명된다 — 셀은 안 겹치나(내가 고친 건 2024.4Q,
+그쪽은 2025.1Q~) 그 티켓엔 손대지 않고 이 답변으로 보고만 함.
+
+**미래에셋생명보험 2024.4Q→2025.1Q(Δ+6.52억, tol 의 6.3%) — 추출 결함 확정, 이번엔
+미수정(발주).** 원수 CSM 측정요소표가 상품별(사망/건강/연금/저축/기타) 5블록 분리 — 3중
+raw 교차검증(FY2024.4Q 연차 5블록 "기말" 합, FY2025.1Q 분기 5블록 "기초" 합, FY2025.2Q
+반기 단일 WIDE 표 인쇄값)이 전부 백만원 단위까지 20,782.12억(=2,078,212백만원)으로 일치.
+현재 코드(`waterfall_for_dir`)는 두 지점 다 20,775.6억을 내는데(6.52억 부족, "기타" 상품
+CSM 잔액 649~939백만원대와 크기가 맞아떨어짐 — 다중-상품 합산 경로가 그 블록을 누락하는
+것으로 강하게 의심되나 코드 내부 정확한 위치는 이번 세션에서 못 짚음). 2026-06-11 gold
+override 가 2025.2Q/3Q/4Q 의 item1 은 이미 20782.12 로 고쳐놨는데 2025.1Q·FY2024.4Q 기말은
+안 고쳐져 있어 census 에 "FY 중간에 바뀐다"로 잡힌 것 — 실제로는 처음부터 쭉 20,782.12.
+`inbox/parser/20260825T1520Z`가 같은 회사 2025.2Q **item5**(CSM상각, 다른 셀)를 독자
+조사 중이라 충돌 회피 + 영향범위(몇 분기부터인지) 미확정이라 손대지 않고 `spawn_task
+task_0596294e`("Audit Mirae Asset CSM for dropped '기타' product line")로 전체
+재조사·정정 + 그 티켓과의 교차확인을 발주. 화면 영향 없음(tol 안쪽, 미변경).
+
+**아이엠라이프생명보험 2024.4Q→2025.4Q — 추출 결함, 정정함(6셀).** 연1회 공시사. 2026-06-11
+gold override(note: "무배당 구성요소별변동표 CSM열만 추출")가 2025.4Q 필링부터 새로 생긴
+소액 "1)유배당 보험계약" 표(기초 CSM 925백만원)를 빠뜨리고 "2)유배당 외 보험계약" 표만
+합산했었다(FY2024.4Q는 상품분리 자체가 없어 문제 없었음). raw(`data/dart/FY2025_Q4/raw/
+KR0076_아이엠라이프생명보험_20260406004393/20260406004393_00760.xml`) 두 표 전부 합산해
+6항목 재도출: 기초 7051.3→7060.5, 신계약 1599.8(불변, 유배당분 신규=0), 이자부리
+186.7→186.9, 조정 -686.3→-689.1(잔차, 두 표 자신의 "추정치의 변동분" 라인 합과 일치),
+상각 -537.0→-537.9, 기말 7614.5→7620.3. 기초 706,053백만원=7060.53억이 2024.4Q 기말
+(7060.5, 상품분리 없는 단일표라 원래도 정확)과 Δ0.03(반올림 이내)으로 닫힌다.
+`data/_gold/user_csm_cells.json`에 KR0076 6건 append(기존 2026-06-11 entry 뒤, "was"로
+이전 잘못값 보존).
+
+**전수 census(정정 후, 252경계, `scripts/_probes/probe_20260825b_fy_boundary_census_
+and_tol_sim.py`)**: 잔차=0 233(정정전 228, +5=신한 4분기[2025.1~4Q, 같은 prev_close 대비]
++ IM Life 1분기) / 0<잔차≤tol 18(정정전 23) / tol초과 1(하나생명, 기존 등재 예외 불변).
+남은 18건 중 미래에셋 3건(6.3%×3)만 유의미, 나머지 8버킷(현대해상·삼성생명·DB생명·
+푸본현대·AIG·케이디비·미래에셋2026.2Q·흥국화재, 전부 ≤1.2%)은 순수 반올림 — 원 티켓이
+배제한 3버킷과 같은 등급, 추가조사 대상 아님.
+
+**tol 조이기 시뮬레이션(수치만, 실제로 안 조임)**: rel 0.5%→0.4/0.3/0.2/0.1%(5배까지)
+전부 새로 걸리는 건 롯데 하나뿐. abs 2.0→1.0/0.5억은 아무것도 안 걸림(전부 rel-tol 이
+지배적인 대형사 경계). 미래에셋의 남은 +6.52 갭은 이 범위에서 tol 조정만으로는 안
+드러난다(rel=0.1% 에서도 tol=20.78 > 6.52) — spawn_task 재조사가 유일한 경로.
+
+**왜 넷 다 tol 근처였나**: 세 메커니즘(재작성/연결·별도 basis 혼용/상품라인 누락)이 전부
+"장부 전체가 아니라 한 조각만 틀렸다"는 공통 성질이라 그 조각의 절대크기가 tol 스케일
+(회사 장부의 0.5%)과 우연히 겹친다 — 선택효과다. 자릿수 통째 오류(하나생명 484%)는 이미
+걸리고 순수 반올림(≤1.2%, 8버킷)은 tol 근처에도 안 간다 — "중간 크기" 결함만 이 사각에
+숨을 수 있고, 이번 4사가 그 사례다.
+
+게이트: `validate_csm_continuity.py` flagged=1(메리츠, 무관/기존) red=0 ·
+`validate_data_contract.py` RED=0 YELLOW=102(회귀 없음 — `csm_amort_identity:
+318P/28PIN/0F/0S`, 다른 세션의 28버킷 원장 STALE=0/FAIL=0 불변, 내 정정이 그 원장을 안
+건드림) · `tests/test_master_tables_golden.py` / `test_viz_csm_waterfall_golden.py` /
+`test_viz_ifrs17_panels_golden.py` 전부 PASSED 드리프트 0(재생성 불필요 — 두 경계 모두
+정정 전에도 이미 게이트 tol 안쪽이라 SUMMARY 카운트가 안 움직였다) ·
+`validate_csm_waterfall.py` pass=41 fail=0 불변 · `scripts/prepush_check.py` **exit=0**
+(230 passed/1 skipped, 7분54초, 전체 verdict gate-clear).
+
+변경: `CSM_waterfall.json`(16 필드, 신한 5+5 · IM Life 6+1, 회사 2곳만 — git diff 로
+확인) · `data/_gold/user_csm_cells.json`(KR0094 5건 + KR0076 6건 append) ·
+`insurequant_master_tables.xlsx`("CSM워터폴" 시트만 cherry-pick, 검증 OK) ·
+`scripts/_probes/probe_20260825b_fy_boundary_census_and_tol_sim.py`(신규 probe).
+건드리지 않음: `PL_breakdown.json`·`data/dart/viz/*`(지시) · K-ICS 레인 ·
+`build_root_masters.py`/`build_csm_waterfall_master.py`(미실행, read-only import 만) ·
+`_CSM_CONTINUITY_EXCEPTIONS` 코드(신규 등재 없음, tol 안쪽이라 필요 없어짐) ·
+`inbox/parser/20260825T1520Z`(다른 세션 진행 중 파일, 미수정).
+
+원 티켓: `inbox/parser/20260825T1340Z__validation__MULTI__csm_fy_opening_disagrees_
+across_filings_subtol.md`(status `answered`).
+
 ## 2026-08-25 (41st pass) — 라이브 viz 아티팩트 3종 + NB 마스터 (inbox 20260825T1125Z)
 
 발주: validation, `inbox/_resolved/20260825T1125Z__validation__MULTI__live_viz_artifacts_unchecked.md`.

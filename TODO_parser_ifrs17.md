@@ -1,5 +1,83 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-25 (42nd pass) — `inbox/parser/20260825T1340Z` CSM FY경계 tol-바로-밑 4사 —
+> 재작성 1(무수정) · 추출결함 정정 2(신한/IM Life) · 추출결함 확정·발주 1(미래에셋).
+> `CSM_waterfall.json` 16필드 셀단위 patch. prepush 백그라운드 실행 중(완료 시 갱신).**
+>
+> 하나생명 선례(`20260825T0230Z`)와 "같은 병" 후보 4사(전부 tol 바로 밑, 조용함)를
+> raw 로 각각 확정했다 — **넷의 원인이 전부 다르다**:
+>
+> **롯데손해보험 2024.4Q(Δ−105.4, tol의 88%) — 재작성 확정, 데이터 무수정.** FY2024
+> 사업보고서 note 47 "재무제표 소급재작성"(K-IFRS 1008, 보험금융손익 체계적배분 회계정책
+> 변경+오류수정)이 실재. 같은 필링 안의 <당기>/<전기> 두 표를 직접 대조 — FY2024 필링의
+> <전기>(재작성 후) 기말 CSM 2,386,081백만원이 FY2023 자기 필링의 기말 2,396,624백만원과
+> 10,543백만원(=105.43억) 차이, 관측 갭과 소수점까지 일치. 각 분기 행은 이미 자기 필링
+> 한 표에서만 왔고(plug 없음, item4 closure 재검산 통과) 섞임이 없어 고칠 셀이 없다.
+> tol 안쪽이라 등재도 안 함(지금 등재하면 `CSM_CONTINUITY_EXCEPTION_INERT`로 즉시 무용
+> 판정 — tol 조여질 때 owner 승인 하에 등재).
+>
+> **신한라이프생명보험 2024.4Q — 추출 결함, 정정함(10필드).** 연차(Q4, anchor=None) 필링에
+> 원수 CSM표가 연결·별도 두 벌 있는데(기초는 동일, 기말만 갈림: 연결 72,267.93억 vs 별도
+> 72,241.14억) no-anchor 선택 로직이 연결을 골랐다. 2025분기는 anchor 있어 별도가 이미
+> 선택돼 있었음(raw 직접 확인: 연결/별도 두 섹션 오프셋까지 특정). 코드 관례("_00760=별도
+> =gold basis")대로 2024.4Q 5항목(+값_당분기 5항목)을 별도 기준으로 통일 → 경계 Δ=0.
+> **`inbox/parser/20260825T1520Z`(validation, CSM_AMORT_IDENTITY 28버킷)의 §⑤ "신한라이프
+> 2025.1Q~2026.2Q 원인미규명 계통 0.1%차"가 바로 이 연결/별도 혼용이다** — 그 티켓 셀과는
+> 안 겹쳐(내가 고친 건 2024.4Q, 그쪽은 2025.1Q~) 직접 수정은 안 하고 이 답변으로 보고만 함.
+>
+> **미래에셋생명보험 2024.4Q→2025.1Q(Δ+6.52, tol의 6.3%) — 추출 결함 확정, 이번엔
+> 미수정(발주).** 원수 CSM표가 상품별(사망/건강/연금/저축/기타) 5블록 분리, "기타"(잔액
+> 649~939백만원)가 다중-상품 합산에서 누락되는 것으로 3중 raw 교차검증(FY2024.4Q 연차·
+> FY2025.1Q 분기·FY2025.2Q 반기, 서로 다른 표 형식이 전부 20,782.12억으로 백만원 단위까지
+> 일치) 확정. 2026-06-11 gold override 가 2025.2Q/3Q/4Q 는 이미 20782.12로 고쳐놨는데
+> 2025.1Q·FY2024.4Q 기말만 안 고쳐져 있어 "FY 중간에 바뀐다"로 보였던 것 — 실제로는 처음부터
+> 쭉 20,782.12. `inbox/parser/20260825T1520Z`가 같은 회사 2025.2Q **item5**(CSM상각, 다른
+> 셀)를 독자 조사 중이라 충돌 회피 + 영향범위(몇 분기부터인지) 미확정이라 이번엔 손대지
+> 않고 `spawn_task task_0596294e`로 전체 재조사 발주. 화면 영향 없음(여전히 tol 안쪽).
+>
+> **아이엠라이프생명보험 2024.4Q→2025.4Q — 추출 결함, 정정함(6셀).** 2026-06-11 gold
+> override가 "유배당외" 표만 합산하고 FY2025부터 새로 생긴 소액 "유배당" 표를 빠뜨림. 두
+> 표 합산으로 6항목 재도출(item4=identity 잔차, plug 아님) → 경계 Δ0.03(반올림 이내)로
+> 사실상 완전히 닫힘.
+>
+> **전수 census(정정 후, 252경계)**: 잔차=0 233(정정전 228, +5=신한4분기+IM Life1분기) /
+> 0<잔차≤tol 18(정정전 23) / tol초과 1(하나생명, 기존 등재 예외 불변). 남은 18건 중 미래에셋
+> 3건(6.3%)만 유의미, 나머지(현대해상·삼성생명·DB생명·푸본현대·AIG·케이디비·미래에셋2026.2Q·
+> 흥국화재, 전부 ≤1.2%)는 순수 반올림 — 원 티켓이 배제한 3버킷과 같은 등급.
+>
+> **tol 조이기 시뮬레이션(수치만, 실제로 안 조임)**: rel 0.5%→0.1%(5배) 까지 조여도 새로
+> 걸리는 건 롯데 하나뿐. abs 2.0→0.5억 은 아무것도 안 걸림. 미래에셋의 남은 +6.52 갭은 이
+> 범위에서 tol 조정만으로는 못 잡는다(rel=0.1%에서도 tol=20.78 > 6.52) — spawn_task 재조사
+> 없이는 안 드러남.
+>
+> **왜 넷 다 tol 근처**: 세 메커니즘(재작성/basis혼용/상품라인누락)이 전부 "장부 전체가
+> 아니라 한 조각만 틀렸다"는 공통 성질이라 그 조각의 절대크기가 tol 스케일(0.5%)과 우연히
+> 겹친다 — 선택효과. 자릿수 통째 오류(하나생명 484%)는 이미 걸리고 순수 반올림(≤1.2%,
+> 8버킷)은 tol 근처에도 안 감.
+>
+> **게이트**: `validate_csm_continuity.py` flagged=1(무관, 메리츠) red=0 ·
+> `validate_data_contract.py` RED=0 YELLOW=102(회귀 없음, csm_amort_identity 28버킷
+> 원장 STALE=0/FAIL=0 불변) · `test_master_tables_golden.py`/`test_viz_csm_waterfall_
+> golden.py`/`test_viz_ifrs17_panels_golden.py` 전부 PASSED 드리프트 0(재생성 불필요 —
+> 두 경계 모두 정정 전에도 이미 tol 안쪽이라 게이트 카운트가 안 움직임) ·
+> `validate_csm_waterfall.py` pass=41 fail=0 불변 · `scripts/prepush_check.py` **exit=0**
+> ("PRE-PUSH VERDICT: gate RED=0 · K-ICS rule gate=clear · domain gates=pass · DART raw
+> 유실=0 · inbox 기계적위반=0 · offline tests=pass → gate-clear", 230 passed/1 skipped, 7분54초).
+>
+> **파일**: `CSM_waterfall.json`(16필드, 신한 5+5·IM Life 6+1) · `data/_gold/
+> user_csm_cells.json`(KR0094 5건 + KR0076 6건 append, "was"로 이전값 보존) ·
+> `insurequant_master_tables.xlsx`("CSM워터폴" 시트만) ·
+> `scripts/_probes/probe_20260825b_fy_boundary_census_and_tol_sim.py`(신규).
+>
+> **건드리지 않음**: `PL_breakdown.json`·`data/dart/viz/*`(지시) · K-ICS 레인 ·
+> `build_root_masters.py`/`build_csm_waterfall_master.py`(미실행) ·
+> `_CSM_CONTINUITY_EXCEPTIONS`(신규 등재 없음, 필요 없어짐) ·
+> `inbox/parser/20260825T1520Z`(다른 세션 진행 중 파일, 미수정).
+>
+> 원 티켓 `inbox/parser/20260825T1340Z__validation__MULTI__csm_fy_opening_disagrees_
+> across_filings_subtol.md` (status `answered` — 미래에셋 라우팅/롯데 tol 판단은 validation
+> 재확인 필요).
+
 > **2026-08-25 (41st pass) — `inbox/parser/20260825T1125Z` 라이브 viz 아티팩트 3종 + NB
 > 마스터 처리: B(상각스케줄 22개사) 전원 닫힘 · C(947x) 완전정정 · D(NB 부호) 정정 ·
 > A(이력 스냅샷)는 raw로 "화면 영향 0" 반증해 처분 보류. baseline 1082→1036(46건 삭제).

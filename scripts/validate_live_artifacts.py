@@ -518,8 +518,7 @@ RULE_REASON = {
         "정적 스냅샷 drift. 이 파일의 선언 빌더(scripts/ifrs17_batch_historical.py, 파일 "
         "source 필드)는 2026-06 에 아카이브돼 **아무도 재생성하지 않는다**. 마스터가 백필·"
         "정정될 때마다 이 파일은 그 자리에 남는다. 2026-08-25 실측: 대조 1,581셀 중 933건"
-        "(59.0%) drift, 최대 Δ 43,852억(삼성화재 2023.3Q closing). 화면 IFRS17.html 워터폴 "
-        "이력 패널이 그 벌어진 값을 그린다.",
+        "(59.0%) drift, 최대 Δ 43,852억(삼성화재 2023.3Q closing). **화면에는 안 나간다** — IFRS17.html 이 이 파일을 fetch 하지만 렌더 코드는 다른 소스를 쓴다(2026-08-25 origin/main 배포본 직접 대조로 확인, 종전 사유의 \"이력 패널이 그린다\" 는 오기라 정정). 따라서 사용자 피해는 없고, 파일의 거취(재생성 경로 복구 / 루트 마스터 파생 / 화면 fetch 제거)가 designer·owner 결정 대기 중이다. 마스터가 정정될 때마다 이 drift 는 **늘어난다** — 2026-08-25 삼성생명·교보생명 정정으로 11건 증가.",
     "csm_waterfall_history.json|HIST_STAGE_IDENTITY":
         "스냅샷 자체의 단계 항등식 파탄 41건(opening+nb+int+assum+amort ≠ closing). 위와 같은 "
         "정적 스냅샷 결함 — 마스터 쪽 동일 (회사,분기) 는 closing identity 358P/0F 로 닫힌다.",

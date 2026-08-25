@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "scripts"))
 sys.stdout.reconfigure(encoding="utf-8")
 from src.ifrs17.measurement_extractor import extract_measurement_tables, to_jsonable
-from viz_build_csm_waterfall import normalize_block_header, deduplicate, find_product_segmented_csm_cols, row_value_start, parse_num, filter_current_period_rows, extract_stages, STAGE_PATTERNS
+from viz_build_csm_waterfall import normalize_block_header, deduplicate, find_product_segmented_csm_cols, row_value_start, parse_num, filter_current_period_rows, extract_stages, STAGE_PATTERNS, collect_current_product_blocks, extract_stages_summed
 
 def _ns(s):  # normalize: drop ALL whitespace incl. \xa0 (KB rows lead with \xa0)
     return re.sub(r"\s", "", s) if isinstance(s, str) else ""
@@ -289,8 +289,30 @@ def _select(cands, anchor, fallback="min"):
 
 
 def pick_pattern2(blocks, anchor=None):
-    cands = [st for b in blocks if not _reins_header(b) and (st := pattern2_stages(b)) is not None]
-    return _select(cands, anchor, "min") if cands else None
+    tagged = [(st, b.get("line_no")) for b in blocks if not _reins_header(b)
+              and (st := pattern2_stages(b)) is not None]
+    if not tagged:
+        return None
+    cands = [st for st, _ln in tagged]
+    if anchor and abs(anchor) > 1:
+        return _select(cands, anchor, "min")
+    # No-anchor (annual Q4 pass): _select's fallback is plain MIN-opening among the
+    # non-prior candidates, which silently prefers a later, corrupted near-repeat of
+    # the real CER table over the real one when the repeat happens to have a smaller
+    # opening (raw-confirmed 삼성생명 FY2025 annual, rcept 20260311004614, 216,261
+    # lines: the real 당기/전기 pair sits at line_no 45157/45789; a later spurious
+    # pair — caption mismatched to an unrelated 사용가치 discount-rate note — sits at
+    # line_no==65535, the lxml/libxml2 sourceline cap, and its smaller opening wins
+    # the plain min() (wrong by ~8%: item5 -1,479.6억 vs the correct -1,511.6억).
+    # Drop 65535-tagged candidates first, but ONLY within this already narrow,
+    # structurally-validated pattern2 candidate pool (not all blocks in the filing —
+    # a blanket filter at blocks_for_dir regressed 한화생명/현대해상, whose filings
+    # legitimately carry a second same-shaped rollforward beyond line 65535).
+    opens = [s[1] for s in cands if s.get(1) is not None]
+    reliable = [(st, ln) for st, ln in tagged
+                if not _is_prior_stage(st, opens) and ln != _LXML_LINE_NO_SENTINEL]
+    pool = [st for st, _ln in reliable] if reliable else cands
+    return _select(pool, anchor, "min")
 
 
 _EXCLUDE_KW = ("재보험", "출재", "보유한재보험", "관계기업", "종속기업", "관계종속", "공동기업")
@@ -557,6 +579,23 @@ def pick_combined_agnostic(blocks, anchor=None, code=None):
             continue
         if _is_prior_header(b):     # annual 당기/전기 split: drop the 전기-header block
             continue
+        # 신한라이프 (KR0094) ONLY: drop a block whose line_no==65535 (the
+        # lxml/libxml2 sourceline cap for this 107,431-line FY2025 annual body).
+        # Raw-confirmed (rcept 20260318001034): the real 무배당보험 당기/전기 pair
+        # sits at line_no 33187/33456 (opening 6,972,351); a later corrupted
+        # near-repeat — same caption "2)무배당보험①제37(당)기", values off by
+        # ~0.04% — sits at line_no==65535 (opening 6,969,672). Both survive
+        # _is_prior_caption/_is_prior_header (their captions look like a fresh
+        # 당기 pair), so the disjoint-sub-portfolio check below clusters them
+        # (±10%) and _opening_clusters' per-cluster MIN picks the spurious one
+        # (wrong by ~0.04-0.15% quarter to quarter — the exact residual pattern
+        # ledgered as UNRESOLVED for 신한라이프 2025.1Q-2026.2Q). Company-scoped
+        # like the 삼성생명 walker above: dropping ALL line_no==65535 blocks
+        # unconditionally (tried first) regressed 12 other companies in a full
+        # sweep, since some filings' only legitimate copy of a table sits past
+        # that line with no earlier duplicate.
+        if code == "KR0094" and b.get("line_no") == _LXML_LINE_NO_SENTINEL:
+            continue
         ctx = _ns(cap) + _ns(
             " ".join(" ".join(str(c) for c in row) for row in (b.get("header") or [])))
         capn = _ns(cap)
@@ -588,6 +627,42 @@ def pick_combined_agnostic(blocks, anchor=None, code=None):
     if not cands:
         return None
     sts = [st for st, _cap in cands]
+    # 삼성생명 (KR0069) ONLY: prefer the proven per-product-block walker
+    # (viz_build_csm_waterfall's collect_current_product_blocks) before any
+    # opening-proximity clustering below. It walks blocks in DOCUMENT ORDER and
+    # stops at the first cycle-repeat (전기 continuation, detected via exact
+    # closing==opening balance continuity), so it never reaches a LATER near-
+    # duplicate occurrence of the same note — unlike _opening_clusters (used by
+    # the seg branch, the disjoint sub-portfolio check below, and
+    # _anchor_segment_sum), which groups by opening-proximity alone and cannot
+    # tell a genuine 별도/연결 pair from a spurious later repeat, so it can pick
+    # the wrong (smaller-opening) member. Raw-confirmed on 삼성생명 (rcept
+    # 20250312001063 FY2024 annual, seg=True path; 20250515002067 FY2025.1Q
+    # quarterly, seg=False anchor path): both filings carry a real ≥3-product-
+    # line block set followed by a later corrupted/incomplete repeat (line_no
+    # either the lxml/libxml2 65535 sourceline cap for the 129,508-line annual
+    # body, or just a later real line_no for the smaller quarterly body) whose
+    # smaller openings win the proximity-cluster MIN and get summed instead —
+    # e.g. FY2025.1Q: real 3-line sum item1 13,080,691 (== the anchor, PL-
+    # matched) vs the clustered-wrong pick 12,902,023 (off by ~1.4%).
+    # code-scoped: trying this ahead of every other company's already-working
+    # picks (before the caption/anchor logic below gets a look) regressed 11
+    # OTHER companies in a full-population sweep (한화생명 KR0068, 흥국생명
+    # KR0032, 신한라이프 KR0082 등 — 2026-08-25) — collect_current_product_blocks
+    # is tuned for viz_build_csm_waterfall's single-latest-quarter use, not for
+    # picking among 당기/전기 CANDIDATES ACROSS QUARTERS the way this builder's
+    # anchor chain does, so it silently "succeeds" (≥3 blocks) on the wrong
+    # subset for filings whose real table is NOT the first same-shaped triple in
+    # document order. Only known-safe for KR0069; only used when it finds ≥3
+    # blocks (its own internal gate).
+    if code == "KR0069":
+        direct_blocks = collect_current_product_blocks(blocks)
+        if len(direct_blocks) >= 3:
+            summed = extract_stages_summed(direct_blocks)
+            walked = {no: (summed.get(name) or {}).get("value_mn_krw")
+                      for no, name in STAGE_KEYS.items()}
+            if walked.get(1) is not None and walked.get(6) is not None:
+                return walked
     # Product-line segment note: the 별도 book is split by product line and disclosed as
     # separate (별도, 연결) blocks per segment, with NO combined total. Detect via the
     # 상품라인 caption (삼성생명) OR ≥3 distinct product-line markers (미래에셋 every quarter:
@@ -876,6 +951,9 @@ def waterfall(blocks, anchor=None, code=None):
 def quarter_from(path: Path):
     m = re.search(r"FY(\d{4})_Q(\d)", str(path))
     return f"{m.group(1)}.{m.group(2)}Q" if m else None
+
+
+_LXML_LINE_NO_SENTINEL = 65535  # lxml/libxml2 caps element.sourceline at 2**16-1
 
 
 def blocks_for_dir(rd, name):
