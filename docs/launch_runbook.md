@@ -34,7 +34,7 @@
 
 ```bash
 python scripts/validate_data_contract.py
-# 또는 anomaly triage까지 포함한 상위 래퍼
+# 또는 K-ICS 룰게이트·도메인게이트 4종·inbox 위생·오프라인 테스트까지 묶은 상위 래퍼(권장, ~5분)
 python scripts/prepush_check.py
 ```
 
@@ -46,8 +46,12 @@ python scripts/prepush_check.py
   ```bash
   python scripts/validate_data_contract.py --selftest
   ```
-- K-ICS 전용 게이트(`validate_kics_disclosure.py`)는 **`prepush_check.py`가 감싸지 않는다** — K-ICS
-  세부 RED은 별도로 확인(`docs/postmortems/incident-postmortem` skill의 함정표 참조).
+- K-ICS 전용 게이트(`validate_kics_disclosure.py`)는 **2026-08-21부터 `prepush_check.py`가 감싼다**
+  (단계 1b, exit code가 `blocked`에 들어간다). 그 전까지는 감싸지 않아 K-ICS 게이트에만 배선한 룰이
+  push를 못 막았다 — 옛 문서에 그 서술이 남아 있으면 stale이다. 단 `validate_data_contract.py`를
+  **단독으로** 돌릴 때는 여전히 K-ICS 룰이 안 돈다(래퍼를 써라).
+- **일반 이상치 발견(`scan_generic_anomalies.py`)은 이 게이트 안에 없다**(2026-08-25 분리). push마다가
+  아니라 **분기 라운드에 1회** 돌린다 — 시점·책임은 `claude-agent-publishing.md` §3.0b가 정본.
 
 ## 2. 무엇을 어디로 (배포 경로 결정)
 

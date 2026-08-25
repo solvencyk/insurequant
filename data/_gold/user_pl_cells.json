@@ -1068,6 +1068,22 @@
       "note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15."
     },
     {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2023.1Q",
+      "값": 92565.0,
+      "was": 0.0,
+      "note": "parser adjudication 2026-08-25 (PL_breakdown.json builder-drift audit): 2023.1Q/2Q 는 build_pl_breakdown.py 재실행 전엔 pl_breakdown_master.json 에 행 자체가 없어 이 회사의 item16 정책(위 2024-2026 9개 분기와 동일 패턴)이 적용될 기회가 없었다. raw 재확인: data/dart/FY2023_Q1/raw/KR0010_KB손해보험/20230515001575.xml '(3) 기타사업비용' 당기1분기열 92,565(백만원, line 6169-6169 부근). item1(보험손익)이 item16 없이 이미 닫히는 동일 구조(위 note 그대로 적용) -- _zero_other_expense 가 null 로 덮기 전 원값 복원."
+    },
+    {
+      "원보험사코드": "KR0010",
+      "항목번호": 16,
+      "공시분기": "2023.2Q",
+      "값": 190719.0,
+      "was": 0.0,
+      "note": "parser adjudication 2026-08-25 (PL_breakdown.json builder-drift audit): 위 2023.1Q 항목과 동일 사유. raw 재확인: data/dart/FY2023_Q2/raw/KR0010_KB손해보험/20230814001763.xml '(3) 기타사업비용' 당기2분기열 190,719(백만원, line 7647 부근). _zero_other_expense 가 null 로 덮기 전 원값 복원."
+    },
+    {
       "원보험사코드": "KR0005",
       "항목번호": 16,
       "공시분기": "2024.1Q",

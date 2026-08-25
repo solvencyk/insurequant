@@ -2251,6 +2251,31 @@ def check_dividend(res: GateResult, env: "Env") -> None:
 CSM_CONT_TOL_REL = 0.005
 CSM_CONT_TOL_ABS = 2.0      # 억원
 
+# 연1회 공시사에서 "두 인접 회계연도의 종가가 서로 다른 filing 기준"이라 원천적으로 못 닫히는
+# 경계 — 데이터 정정으로도 못 없앤다(양쪽 다 각자 raw 가 정직하게 보고한 값이고, 그 사이를
+# 잇는 제3의 raw 는 존재하지 않는다). "소급재작성으로 보인다"는 근거가 못 된다는 아래 함수의
+# 원칙은 그대로 유지 — 여기 등재되려면 raw 재작성 공시(재무상태표 영향표 등)로 델타 금액까지
+# 정확히 일치 확인된 것만 허용한다. 등재돼도 findings 에서 사라지지 않고 YELLOW 로 남는다
+# (_CSM_SIGN_EXCEPTIONS 와 동일 관행) — 조용히 사라지면 다음에 진짜 파싱사고가 와도 같은
+# 자리에서 안 보인다.
+_CSM_CONTINUITY_EXCEPTIONS = {
+    ("하나생명보험", "2024.4Q"):
+        "FY2025 사업보고서(rcept 20260325000201) note 38 '재무제표 재작성': 보험금융수익(비용) "
+        "인식 회계정책을 K-IFRS 1008호에 따라 소급 적용, 비교표시된 전기(FY2024) 재무제표를 "
+        "재작성. 재무상태표 영향표(line 25567-25570/25811-25815)가 전기말(2024.12.31) "
+        "보험계약부채 +5,726,404천원(+57.26억), 전기초(2024.1.1) +7,292,841천원(+72.93억)를 "
+        "명문 공시 — 델타의 소재도 CSM '이외모든계약' 서브컬럼(주석 14-4)으로 정확히 일치 "
+        "확인(둘 다 소수점 둘째자리까지 일치). 2024.4Q 6항목은 FY2025 필링의 <전기> 비교표"
+        "(주석 14-4)에서 전부 단일 표로 가져왔다 — 기초/신계약/이자/조정/상각/기말 어느 것도 "
+        "plug 아님(조정=그 표 자신의 '보험계약마진을 조정하는 추정치의 변동분' 행). 그래서 "
+        "2025.4Q 와는 닫히지만(같은 표 내부 자기정합), 2023.4Q(FY2023 원본 필링 값 — FY2024 "
+        "필링의 <전기> 비교표와도 완전 일치 재확인, 그 경계엔 재작성이 없음을 별도 확정) 와는 "
+        "이 재작성 때문에 +73억 못 닫는다. note 38 이 재작성한 대차대조표 시점은 "
+        "2024.1.1/2024.12.31 뿐(2023 이전 소급 없음) — 이 경계를 닫으려면 어느 필링에도 없는 "
+        "숫자를 지어내야 한다(금지). inbox/parser/20260825T0230Z(iter2) 및 "
+        "TODO_parser_ifrs17.md 참조.",
+}
+
 
 def check_csm_continuity(res: GateResult, env: "Env") -> None:
     """FY[t] 각 분기의 기초 CSM == FY[t-1].4Q 기말 CSM.
@@ -2263,6 +2288,12 @@ def check_csm_continuity(res: GateResult, env: "Env") -> None:
     사유가 못 된다 (owner 2026-06-16: self-closing identity 는 opening 을 검증하지 못한다 —
     2026.1Q 5사 기시 misparse 를 '재작성'으로 오판한 사건). 정정은 면제셋이 아니라 **데이터
     수정**으로 한다(후속 분기 공시의 '전기(비교)' 테이블에서 재작성값 추출).
+
+    **단 하나의 예외 클래스**(`_CSM_CONTINUITY_EXCEPTIONS`): raw 재작성 공시로 델타까지 정확히
+    확정됐지만, 두 인접 회계연도가 원천적으로 서로 다른 filing 기준일 수밖에 없어(연1회
+    공시사, 재작성이 한쪽 경계만 소급) 데이터 정정으로도 못 닫는 경우. 등재 기준은 위 주석—
+    "그럴듯함"이 아니라 재무상태표 영향표 등 raw 수치 대조로 델타가 일치해야 한다. 등재돼도
+    RED 가 사라지는 게 아니라 근거를 실은 YELLOW 로 남는다.
 
     표시분기 스코프(`_in_scope`)를 걸지 않는다: `_DISPLAY_QUARTERS` 는 2026.2Q 를 아직
     포함하지 않는데 사이트는 그 분기를 그린다 — 스코프를 걸면 최신 분기가 검사 사각이 된다.
@@ -2282,11 +2313,19 @@ def check_csm_continuity(res: GateResult, env: "Env") -> None:
                 continue
             gap = opening - prev_close
             if abs(gap) > max(CSM_CONT_TOL_REL * abs(prev_close), CSM_CONT_TOL_ABS):
-                res.add(check="domain", severity="RED", master="CSM_waterfall", company=co,
-                        quarter=q, rule="CSM_CONTINUITY_FY_BOUNDARY",
-                        message=f"기초 CSM {opening:,.0f} != {fy - 1}.4Q 기말 {prev_close:,.0f} "
-                                f"[Δ{gap:+,.0f}] — 기시≠직전기말은 면제 대상이 아니다. "
-                                f"raw 대조로 재작성 근거를 확정하거나 마스터를 정정할 것")
+                exc = _CSM_CONTINUITY_EXCEPTIONS.get((co, q))
+                if exc:
+                    res.add(check="domain", severity="YELLOW", master="CSM_waterfall", company=co,
+                            quarter=q, rule="CSM_CONTINUITY_FY_BOUNDARY_EXCEPTED",
+                            message=f"기초 CSM {opening:,.0f} != {fy - 1}.4Q 기말 {prev_close:,.0f} "
+                                    f"[Δ{gap:+,.0f}] — 등재된 예외(raw 확정 소급재작성, "
+                                    f"데이터 정정으로 못 닫음): {exc}")
+                else:
+                    res.add(check="domain", severity="RED", master="CSM_waterfall", company=co,
+                            quarter=q, rule="CSM_CONTINUITY_FY_BOUNDARY",
+                            message=f"기초 CSM {opening:,.0f} != {fy - 1}.4Q 기말 {prev_close:,.0f} "
+                                    f"[Δ{gap:+,.0f}] — 기시≠직전기말은 면제 대상이 아니다. "
+                                    f"raw 대조로 재작성 근거를 확정하거나 마스터를 정정할 것")
 
 
 

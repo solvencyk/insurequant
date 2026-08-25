@@ -1,12 +1,34 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-08-14 · Stage 4/5 — publishing
+> Last updated: 2026-08-25 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
 
 **Cross-stage history:** `docs/claude-changelog.md`.
 **This file:** entries scoped to publishing work only.
+
+---
+
+## 2026-08-25 — 이상치 발견이 게이트에서 분리된 뒤의 프롬프트 정합 + 실행 주기 확정 (`20260825T0130Z`)
+
+validation 티켓 처리. 코드 미수정, 문서·프로세스 작업. 커밋/푸시 없음(오케스트레이터 몫).
+
+**배경.** owner 지시("씰데없는 룰들은 좀 쳐내")로 커밋 `22697c2`에서 일반 이상치 발견/트리아지가 push 게이트에서 빠졌다. **삭제가 아니라 이전** — `scripts/scan_generic_anomalies.py`로 내려갔고 산출 경로(`data/_derived/anomaly_{triage,skeptic_input}.json`)는 그대로다. 근거는 실측: 이 층이 데이터계약 게이트 YELLOW 297건 중 224건(75.4%)과 리뷰 큐 83건을 매 실행 재생산하면서 **RED을 한 건도 낸 적이 없다**(YELLOW 전용이라 `blocked = n_red or n_hyg or n_test or n_kics or n_dom`에 애초에 항이 없다).
+
+**티켓 주장 전건 코드 대조.** 액면으로 받지 않고 확인했고 전부 맞았다 — `validate_data_contract.py:2378`이 주석 처리된 `# check_generic_anomalies(res, env)`, `prepush_check.py:151`의 `blocked` 식에 이상치 항 부재, `test_push_gate_wiring.py:178`에 되살리기용 선언 존재.
+
+**정정한 stale 문장 4개** (§3): ① `"Runs: ① data-contract hard gate ... + ② generic-anomaly triage chain"` — ②가 없을 뿐 아니라 **①만 적힌 것도 이미 stale이었다**(2026-08-21에 들어간 ①b K-ICS 룰게이트·①c 도메인게이트 4종·③ inbox 위생·④ 오프라인 테스트가 통째로 누락). ② `"Outputs: ... anomaly_triage.json + anomaly_skeptic_input.json"` — 파일은 맞지만 주어(`prepush_check.py`가 만든다)가 틀림. ③ `"LLM-skeptic step (mandatory — ... before recommending push)"` + `"Push recommendation forbidden without completing skeptic step."` — 가장 위험했다. 입력을 만들어 주던 단계가 사라진 채 금지 문장만 남아, 다음 세션이 없는 산출물을 기다리다 배포를 못 하거나 그 문장을 통째로 무시하는 두 결말밖에 없었다(실제로 skeptic 입력 83건은 2026-06 이후 미분류 방치 상태 — 그 문장대로면 이후 배포 10여 건이 전부 계약 위반이 된다). ④ 라이브 수치(REAL=73/입력 79) — 실측 REAL=77 UNCERTAIN=6 NOISE=134 OWNER_CONFIRMED=8, 입력 83. 아울러 §3.0에 박혀 있던 **캐시된 "Current live: RED=0" 줄을 아예 없앴다** — 이번에 `prepush_check.py`를 돌리지 않았고(~5분, 병렬 세션이 게이트 코드 작업 중), 무엇보다 **날짜 박힌 통과 기록이 다음 세션에 배포 허가로 읽힌다**. 대신 "돌리지 않은 게이트 판정을 인용하지 말라"를 명문화했다.
+
+**결정 — 분기 라운드 1회 (§3.0b 신설).** 세 선택지(주기 배치 / owner 요청 시에만 / 폐지) 중 **주기 배치**. 근거: 이 층이 데이터 수정을 낳은 것은 2026-06-19/20 **한 라운드뿐**이고(교보생명 원수예실차 4분기·BNP파리바카디프 단위오류 1.77조·코리안리 중복 43·교보라이프플래닛 보험금융손익) 이후 증분 push 두 달간 0건 — 가치가 대량 적재 시점에 몰려 있으니 그 시점에만 비용을 낸다. **폐지 기각**: 산술 게이트는 내부적으로 닫히는 단위오류(BNP 1.77조가 정확히 그 종류 — 항등식은 성립하는데 자릿수가 틀림)를 못 잡고, 코호트 스캔이 그 층의 유일한 룰이다. **"owner 요청 시에만" 기각**: 문서에만 있고 아무도 안 부르는 단계가 이 저장소의 반복 실패형태다(`prepush_check.py` 호출처 0곳 사건). 명문화한 것 = 주체(publishing) · 4개 트리거(분기 라운드 첫 push 전 / 새 마스터 온보딩 직후 — 신규 마스터는 자기 이력이 없어 코호트 스캔이 유일한 검사다 / 빌더 대개편·±100행 뒤채움 / owner 요청) · 증분 push 제외 · **기록이 단계의 일부**(라운드 리포트에 anomaly 줄이 없으면 건너뛴 것이고 그 자체가 지적 대상) · skeptic 판정은 그 자체로 push를 막지 않고 inbox 티켓을 만든다(그래야 §3.0의 "RED=0 아니면 BLOCKED"와 모순되지 않는다).
+
+**스캐너 실측.** `--no-write`로 실행(산출 JSON 2개가 git 추적 대상이라 그냥 돌리면 워킹트리가 더러워지고 병렬 세션이 있었다): 후보 224건(ANOMALY_PEER_OUTLIER 147 · ANOMALY_COHORT_ZERO 77, RED=0) → 트리아지 REAL=77 UNCERTAIN=6 NOISE 134 OWNER_CONFIRMED 8. 티켓 재현 수치와 일치. **판독성 평가**: 룰별 집계 → 예시 8건(회사·분기·사유 한 줄) → 트리아지 4버킷 → 다음 단계 안내까지 단독 실행물로 읽을 만하다. **다만 화면에 나오는 건 224건 중 앞 8건뿐이고 정작 조치 대상 83건은 JSON에만 있다** — 게이트 안에 있을 땐 파이프라인이 파일을 읽었지만 손으로 돌리는 스크립트는 터미널이 곧 UI다. 하드닝 룰상 skeptic 스코프인 UNCERTAIN 6건은 전건 인쇄돼야 한다(6줄). 코드 미수정, 스크립트 소유자(validation)에 권고만.
+
+**부수 발견 — 같은 병에 걸린 다른 사본.** grep 범위를 `.py`/`.claude/skills`까지 넓히다 **무관한 stale 사실**을 4곳에서 찾았다: `"prepush_check.py는 validate_kics_disclosure.py를 호출하지 않는다"`. 2026-08-21에 단계 1b로 배선돼(`prepush_check.py:46-57`, `n_kics`가 `blocked`에 들어간다) 거짓이 됐는데 CLAUDE.md만 정정돼 있고 나머지는 옛 문장 그대로 — 즉 **"K-ICS 룰은 push를 못 막는다"는 정반대 사실**을 퍼뜨리고 있었다. 정정: `docs/launch_runbook.md:37-38,49` · `.claude/skills/launch-runbook/SKILL.md` 함정절 · `.claude/skills/incident-postmortem/SKILL.md`(frontmatter description + 본문 함정표 — frontmatter는 매 세션 스킬 목록으로 로드되는 자리라 가장 널리 퍼지는 사본이었다; 함정표를 1b/1c 배선 + 이상치 분리까지 4행으로 갱신하되 핵심 교훈 "배선했다 ≠ push를 막는다"는 살렸다. 이 스킬은 validation/postmortem 소유라 사실 정정만 하고 절차는 미수정). `docs/postmortems/PM-2026-06-16_two_month_glitch.md` §3 배선표는 이력이라 보존하고 후속 정정 각주만 추가(폐지가 아니라 주기 변경임 명시). **SKILL 2건은 `.gitignore:86`이 `.claude/`를 통째로 무시해 커밋에 안 실린다** — 이 머신에만 반영됐고 다른 클론에는 stale 문장이 남는다(스킬 = 머신-로컬 운영정본이라는 기존 계약대로. "고쳤다"를 "전파됐다"로 읽지 말 것). 고치지 않은 것: `changelog_validation.md`·`TODO_validation.md`(validation의 정확한 기록) · `changelog_parser_ifrs17.md:1832`·`TODO_parser_ifrs17.md:2047`(당시 실행 결과를 적은 과거형 사실) · 이 changelog L46(당시엔 참이었던 이력 — 이 항목으로 supersede).
+
+부수로 이 프롬프트 헤더의 `"Status: SKELETON"` 표시도 걷어냈다 — CLAUDE.md "Stage prompt 작성 진행도"가 2026-08-06에 5개 프롬프트 전부 authoritative라고 재확인했는데 헤더만 옛 표시가 남아 있었다(같은 종류의 stale 표시가 완성된 프롬프트 3개를 몇 달간 skeleton으로 오인시킨 전례가 있다).
+
+검증: 편집 5파일 UTF-8 BOM 없음(`od -An -tx1` 확인), `pytest tests/test_deploy_assets.py` **10 passed**(골든표 동기화·keep-list 기계검사 포함), `check_inbox_hygiene.py --mechanical-only` 위반 0. 티켓 `status: resolved` + `inbox/_resolved/` 이동 — publishing inbox 드레인 완료.
 
 ---
 

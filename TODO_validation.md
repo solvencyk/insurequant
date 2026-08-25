@@ -1,11 +1,97 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-25 (저수익 휴리스틱 쳐내기 — 5개 후보 중 1개만 절단, 4개는 반증으로 존치) · Stage 3/5 — validation
+> Last updated: 2026-08-25 (CSM sparse 티켓 재확인 — 게이트 PL 축이 배포본을 안 본다: phantom hole 19 · 미검사 1,451셀) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-25, CSM sparse 티켓 재확인) 🔴 불변식 1번이 깨져 있다 — **게이트의 PL 축이
+사용자가 보는 파일을 안 본다.** 그리고 완결성 census 사각은 안 닫혔다. prepush 는 **exit 0**
+(막는 룰이 아니라 **보는 범위**가 문제라 게이트가 초록인 채로 지나간다).**
+
+> `inbox/parser/20260825T0230Z__…__csm_waterfall_sparse_3companies.md` 가 `answered` 로 돌아와
+> 재확인한 결과다(그 파일 `## sender 재확인` 절에 전문). 판정 3건 중 2건 확정, 1건 반려.
+>
+> ### 🔴 1순위 — `validate_master_tables.py` 가 죽은 사본을 검사한다 (validation 자기 숙제)
+>
+> ```
+> PL_PATH = "data/dart/viz/pl_breakdown_master.json"   # 파서 중간산출물
+> WF_PATH = "CSM_waterfall.json"                       # 배포본
+> ```
+>
+> **CSM 축은 배포본을 보는데 PL 축(COVERAGE·PL_BRIDGE·CSM_CROSSCHECK)은 상류 사본을 본다.** 실측:
+>
+> | 지표 | 실측 |
+> |---|---|
+> | 게이트 소스 `pl_breakdown_master.json` | 7,199행 |
+> | 배포본 `PL_breakdown.json` | **8,650행** |
+> | **배포본에만 있어 이 게이트의 PL 검사 3종이 못 보는 셀** | **1,451 (16.8%, 24개사·7분기)** |
+> | viz 에만 있는 셀 | 0 |
+> | 공유 키 값 불일치 | **30건** (최대 ×1,592 — BNP카디프 2025.4Q item5) |
+> | 게이트가 찍는 `HOLE-PL (통째)` 19건 | **19/19 전부 phantom** (배포본엔 값 있음) |
+> | `crosscheck fail=1` (BNP 2025.4Q) | 배포본 기준이면 **통과**. 그 실패가 골든에 `1F` 로 박제 |
+>
+> 즉 게이트가 **아무도 안 보는 파일**을 상대로 hole 과 fail 을 찍고 있고, 진짜 배포본의
+> 1,451셀은 PL 항등식(PL_BRIDGE)·CSM 교차대조를 한 번도 안 거친다. (다행히
+> `validate_data_contract.py` 는 배포본을 읽으므로 census·cross_source 는 그 셀들을 본다 —
+> 그래서 RED=0 이 유지된 것이지, 항등식이 통과한 것이 아니다.)
+> `test_master_tables_golden.py` 는 그 상태를 그대로 굳혀 놨다.
+>
+> **왜 갈라졌나**: `build_root_masters.py::build_pl` 은 viz 소스를 읽은 뒤
+> `_additive_merge(rows, PL_OUT)` 로 **기존 루트 마스터를 union 병합**한다(그 함수 docstring:
+> 2026-08-14 에 61셀/1,475행을 이 경로로 날린 사고의 근본원인 수정). 즉 **루트가 누적된 정본이고
+> viz 소스는 재생성 가능한 부분입력**이다 — 게이트가 부분입력 쪽을 보고 있었던 것이다.
+> 방향은 명확하다: 룰이 봐야 할 것은 루트다.
+>
+> **다음 행동**: 배포본으로 재조준. 단 그 순간 1,451셀이 처음 검사 대상이 되므로
+> **룰별 전 버킷 시뮬레이션(닫힘/깨짐 양방향) 선행**(memory `feedback_simulate_rule_change_before_editing`).
+> 골든은 `--update` + 사유 기록. 재현: `scripts/_probes/probe_20260825_gate_pl_source_vs_deployed.py`
+>
+> ### 🟠 2순위 — 완결성 census 사각(원 티켓의 (2)번). 근거는 이제 확보됐다
+>
+> `coverage_holes(idx, key_items, active_min=7)` 는 그대로고, `validate_master_tables.py` 안에
+> `exclude_companies` 문자열이 **0회**다. 결과:
+> - 서울보증·신한이지는 CSM 마스터 행이 0개 → `if not present: continue` 로 조기 탈출.
+>   **struct 목록에조차 안 뜬다** = "등재된 정당 미공시"가 아니라 "룰이 순회조차 안 한다".
+> - active_min 미만으로 CSM census 밖인 회사가 **14곳** — 이번에 12셀을 채운 **하나생명 포함**.
+>
+> 배선 재료는 parser 답변으로 확보됐다: ① `user_csm_cells.json::exclude_companies` 키 목록
+> ② raw `meta.json` 의 `"no_filing": true` 마커. **단 두 회사를 같은 사유로 묶지 말 것** —
+> 서울보증=표 부존재(구조적), 신한이지=표 존재+금액 미미(owner 판단).
+> 1순위를 먼저 고치고 나서 배선한다(PL 축이 죽은 사본을 보는 채로 census 를 조이면 오탐 발생기).
+> 재현: `scripts/_probes/probe_20260825_coverage_census_blindspot.py`
+>
+> ### 🟡 3순위 — 되돌린 건 (parser 대기)
+>
+> 하나생명 2024.4Q 6셀이 **두 filing 기준을 섞고** item4 가 그 차이를 잔차로 먹었다
+> (`-1587.2` = 어느 공시에도 없는 수. 원본 -1647.4 / 재작성 -1660.2). 항등식 Δ=0 · FY 경계 Δ=0 ·
+> 게이트 전부 초록인데 **화면 막대만 틀린** 전형적 false-green. 티켓 `iter: 2` 로 반려했다.
+> 재현: `scripts/_probes/probe_20260825_hana_csm_rows.py`
+>
+> ### 🟢 확정한 것
+>
+> - **서울보증보험 = 정당 미공시 확정.** 키워드 부재가 아니라 **주석 14 회계모형별 표의 컬럼이
+>   보험료배분접근법 하나뿐**이라는 긍정 증거로 확정했다(FY2024.4Q 2,770,640,620천원 /
+>   FY2025.4Q 2,754,928,850천원 / FY2026.2Q 2,900,029,184,824원, 일반모형 컬럼 부재).
+>   parser 가 안 본 분기·반기보고서 5건도 `"보험계약마진"` 0회. 텍스트 XML 확인(한글 5.8만~18.5만자).
+> - **신한이지 = 제외 유지.** 다만 사유는 "미공시"가 아니라 **금액 미미**(기초 CSM 70,957천원=0.71억,
+>   기말 169,315천원=1.69억, 원문 표 실재).
+> - **단위판별 버그 전수 = 4개사 8버킷, 새로 안 덮인 케이스 0건.** 전부 gold(`set` 30셀 +
+>   제외 1개사)로 덮여 마스터는 옳다. **코드는 미수정** → 별건 티켓
+>   `inbox/parser/20260825T0800Z__…__csm_unit_heuristic_reads_magnitude_not_label.md`.
+>   AIG 가 mag 2.66e8→1.55e8→**9.87e7** 로 내려오다 임계 1e8 을 넘으며 그 해에 처음 깨졌다.
+>   다음 후보는 IBK연금(천원 표, 기말 4,501~5,204억).
+>   재현: `scripts/_probes/probe_20260825_csm_unit_heuristic_sweep.py`
+>
+> ### 이 세션이 안 한 것
+>
+> 마스터 JSON·룰 코드·골든 **한 줄도 안 고쳤다**(재확인 발주 라운드). 추가한 것은
+> `scripts/_probes/probe_20260825_*.py` 4개와 inbox 문서뿐이다.
+
+## Status (2026-08-25, 휴리스틱 쳐내기 — 직전 라운드)
+
 
 **(2026-08-25, 휴리스틱 쳐내기) 🟢 후보 5개 중 **1개만 잘랐다.** 나머지 4개는 실측이
 전제를 반증했다. 게이트 3종 exit 0 · prepush **exit 0**.**

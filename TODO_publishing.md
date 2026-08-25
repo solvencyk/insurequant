@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-08-14 · Stage 4/5 — publishing
+> Last updated: 2026-08-25 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -10,6 +10,8 @@ Session start: read this file + `claude-agent-publishing.md` + relevant validati
 NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
 
 ## Status
+
+**2026-08-25 (프롬프트 정합 — 이상치 분류 주기 확정)**: validation 티켓(`inbox/_resolved/20260825T0130Z`) 처리. 2026-08-25 커밋 `22697c2`로 일반 이상치 발견/트리아지가 push 게이트에서 분리(삭제 아님 → `scripts/scan_generic_anomalies.py`)되면서 stale해진 프롬프트 문장 4개를 코드 대조로 확인 후 정정. **핵심 결정: 이상치 발견+LLM-skeptic 은 push마다가 아니라 "분기 라운드 1회"로 돌린다** — 실행 주체(publishing)·4개 트리거(분기 라운드 첫 push 전 / 새 마스터 온보딩 / 빌더 대개편·±100행 뒤채움 / owner 요청)·기록 위치(라운드 리포트 + 이 TODO)를 `claude-agent-publishing.md` **§3.0b**에 명문화. 폐지도 "owner 요청 시에만"도 기각(근거: 산술 게이트는 내부적으로 닫히는 단위오류(BNP 1.77조)를 못 잡는다 / 문서에만 있고 아무도 안 부르는 단계가 이 저장소의 반복 실패형태). §3.0도 실제 체인(①·①b K-ICS·①c 도메인 4종·③ inbox·④ 오프라인 테스트)으로 갱신 — 종전 서술은 이상치 건 이전에 이미 2026-08-21 배선 4종이 통째로 빠져 있었다. 스캐너 실측(`--no-write`, 산출 JSON이 git 추적이라 트리 안 더럽힘): 후보 224(PEER_OUTLIER 147·COHORT_ZERO 77) → REAL=77 UNCERTAIN=6 NOISE=134 OWNER_CONFIRMED=8 → skeptic 입력 83건(2026-06 이후 **미분류 방치 중**, 다음 분기 라운드에서 소화). **부수 발견**: 무관한 stale 사실 `"prepush_check.py는 validate_kics_disclosure.py를 호출하지 않는다"`가 4곳에 복사돼 있었는데 2026-08-21 단계 1b 배선으로 이미 거짓(정반대를 퍼뜨리고 있었음) — `docs/launch_runbook.md`·`.claude/skills/launch-runbook/SKILL.md`·`.claude/skills/incident-postmortem/SKILL.md`(frontmatter+본문 함정표) 정정. `docs/postmortems/PM-2026-06-16` 배선표에는 후속 정정 각주 추가(이력은 보존). **단 SKILL 2건은 `.gitignore:86`이 `.claude/`를 통째로 무시해 git에 안 실린다 — 이 머신에만 반영됐고 다른 클론에는 stale 문장이 남는다**(스킬 = 머신-로컬 운영정본이라는 기존 계약대로이나, "고쳤다"를 "전파됐다"로 읽지 말 것). `docs/` 4건은 추적되므로 커밋 시 전파된다. 검증: 편집 5파일 UTF-8 BOM 없음, `pytest test_deploy_assets.py` 10 passed, inbox 위생 위반 0. **미착수 권고 1건**: `scan_generic_anomalies.py`가 화면에 후보 8건만 찍고 정작 조치 대상 83건(특히 skeptic 스코프인 UNCERTAIN 6건)은 JSON에만 남긴다 — 게이트 밖 수동 스크립트는 터미널이 곧 UI라 UNCERTAIN 전건 인쇄 권고(스크립트 소유자 = validation, 코드 미수정). 커밋/푸시 없음.
 
 **2026-08-20 (배포 12차)**: 이전 턴에서 남겨뒀던 "2023년 준비금 뒤채움 과대계상" 건이 parser+validation 왕복으로 해소된 것을 확인 후 배포. `IFRS17_BS.json` 6,953→6,855행(뒤채움 사본 98칸 제거+원문대조 10칸 정정) — 삭제분은 validation이 FS-API 캐시 전수 조회로 실관측 0건 확인, 정정분은 원문 raw 대조로 이중검증됨(4중 독립검증 기록 확인 후 진행). combo-diff로 재확인(lost 98/gained 0/value-changed 10, 티켓 수치와 일치). 부수로 R-RSV-1 래칫 baseline 키 구조 버그도 같이 고쳐짐(구간축소를 오탐 RED로 잡던 것). 골든 fixture 재추적(이전 커밋에 stale 버전이 실려 있던 걸 최신화). xlsx 17BS 시트 재동기화. `55ef3ec..346e4da`. 라이브 확인: 6,855행, 삼성화재 2023.2Q 해약환급금준비금=556,503.49(정정값) 확인, 콘솔 에러 0.
 

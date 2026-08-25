@@ -1,6 +1,8 @@
 """Tier-1: 포괄손익계산서 (income statement) extraction."""
 # Split out of scripts/build_pl_breakdown.py on 2026-07-21. Behaviour unchanged;
 # the golden gate (tests/test_pl_breakdown_golden.py) pins the builder output.
+import re
+
 from .common import _label, _norm, _row_nums
 
 
@@ -16,6 +18,11 @@ INCOME_PROFIT_LABELS = ("보험손익", "보험서비스결과")  # 손보 / 생
 BASIS_OVERRIDE = {
     "KR0068": "별도", "KR0073": "별도", "KR0082": "별도", "KR0087": "별도",
     "KR0009": "별도",  # 현대해상: 별도 own-company 보험손익 (연결 folds subsidiaries)
+    # 한화손해: 사업의개황 narrative self-reports "별도 재무제표 기준 영업이익 2,587억원"
+    # (FY2023.2Q); 별도 영업이익(258,721.875251)도 매칭, 연결(240,885.017566)은 비지배지분
+    # 등 그룹 편입 효과로 다름. FS-API가 서는 다른 모든 분기도 이미 별도(BASIS_CFS 미등재)
+    # 이므로 이 분기만 연결을 쓰면 시계열 내 basis 불일치가 생김.
+    "KR0002": "별도",
 }
 
 # Per-code Tier-1 statement-selection hints (FY2025 item1 fixes).  Each value carries a
@@ -144,6 +151,32 @@ def _pick_priority(t, needles, exclude=(), col=0):
     return None
 
 
+def _pick_op_line(t, col):
+    """Grand-total 영업이익/영업손익 row (col=1 = YTD/누적 for a [3개월,누적,...] table).
+    Needle-substring matching on "영업이익"/"영업손익" also hits business-segment SUBTOTAL
+    rows that carry the same suffix — "1.보험영업손익"/"II.투자영업손익"/"3.기타영업손익" —
+    which sit ABOVE the true grand total in row order, so a plain _pick_line() (first match
+    wins) silently returns the wrong subtotal (한화손해 KR0002 / 롯데손해 KR0003 / 한화생명
+    KR0068 FY2023.2Q fallback regression, found reconciling PL_breakdown.json against a fresh
+    rebuild). The grand-total row's label has NO business-segment word before "영업" — once
+    the leading Roman/Arabic index ("IV. ", "Ⅲ. ") is stripped, it is bare "영업이익"/
+    "영업손익", unlike the subtotals. Also always drops a leading footnote-reference cell
+    (e.g. a multi-ref "26,27,29,30" 주석 column that _row_nums parses as one bogus number)
+    before indexing col — _pick_line's col>0 branch skips that strip, so a row with such a
+    footnote silently reads one column to the left of the one asked for."""
+    for r in t.rows:
+        lab = _label(r).strip("[]")
+        bare = re.sub(r"^[^가-힣]+", "", lab)
+        if bare in ("영업이익", "영업손익"):
+            nums = _drop_footnote(_row_nums(r))
+            if col:
+                if len(nums) > col:
+                    return nums[col]
+            elif nums:
+                return nums[0]
+    return None
+
+
 def _income_unit_factor(ni_raw):
     """Anchor 당기순이익 into a plausible band (백만원 output).
     Plausible 당기순이익 across the insurer universe: ~1만 ~ 1천만 백만원 (=1천억~10조 원)
@@ -206,7 +239,8 @@ def extract_tier1(tables, code=None):
         oth_exp = L("기타사업비용")
         if oth_exp is None:
             oth_exp = L("기타보험비용")          # 하나생명 income-statement label variant
-        op = L("영업이익", "영업손익", exclude=("영업외",))
+        op_raw = _pick_op_line(t, tcol)
+        op = None if op_raw is None else round(op_raw * f, 6)
         oi = L("영업외수익")
         oe = L("영업외비용")
         oth_op = L("영업외손익")

@@ -48,6 +48,12 @@
 
 ✅ **push 차단 경로에 배선됨.** 이 사고의 대응은 처음부터 push 게이트로 만들어져서 굳었다.
 
+> **후속 정정 (2026-08-25).** 위 표의 `check_generic_anomalies` 는 **더 이상 push 게이트에 있지 않다**
+> (commit `22697c2`). 애초에 YELLOW 전용이라 `blocked` 계산에 들어간 적이 없어 실제로 push 를 막은
+> 적은 없었고, 게이트 YELLOW 297건 중 224건을 혼자 만들어 `scripts/scan_generic_anomalies.py` 로
+> 분리했다. **폐지가 아니라 주기 변경** — 분기 라운드 1회 실행이 정본이다
+> (`docs/agents/claude-agent-publishing.md` §3.0b). 나머지 4개 함수는 그대로 배선돼 있다.
+
 ## 4. documented exception
 
 **없음.** owner 2026-06-16 명시: "RED=0 to pass, no exception mechanism — fix or owner-escalate."

@@ -7,6 +7,90 @@ Validation-only history. Cross-stage changes also keep a 1-line cross-reference 
 
 ---
 
+## 2026-08-25 — CSM sparse 티켓 재확인: **게이트의 PL 축이 배포본을 안 보고 있었다**
+
+`inbox/parser/20260825T0230Z__validation__MULTI__csm_waterfall_sparse_3companies.md` 가
+`answered` 로 돌아와 재확인한 라운드. 판정 3건 중 2건 확정 · 1건 반려(`iter: 2`), 그리고
+**원 티켓이 물었던 "census 가 왜 조용한가"의 답 절반이 게이트 자신에게 있었다.**
+
+### 1. 불변식 1번 위반 — 검사 대상 ≠ 배포본 (PL 축만)
+
+`scripts/validate_master_tables.py` L31-32 는 `WF_PATH = "CSM_waterfall.json"`(배포본)인데
+`PL_PATH = "data/dart/viz/pl_breakdown_master.json"`(파서 중간산출물)이다. 실측:
+
+- 게이트 소스 7,199행 vs 배포본 `PL_breakdown.json` 8,650행
+- **배포본에만 있는 셀 1,451개(16.8%, 24개사)** = 이 파일의 PL 검사 3종(COVERAGE·PL_BRIDGE·
+  CSM_CROSSCHECK)이 순회하지 못한다. 역방향은 0. (`validate_data_contract.py` 는 배포본을 읽으므로
+  census·cross_source 는 그 셀들을 본다 — 즉 결측은 잡히되 **PL 항등식은 한 번도 안 걸린다**.)
+- 공유 키 값 불일치 30건. BNP카디프 2025.4Q item5 ×1,592 / item4 ×1,000 / 라이나 2023.4Q item9 ×429.
+- 게이트가 매 실행 찍던 `HOLE-PL … (통째)` **19건은 19/19 전부 phantom** — 배포본엔 값이 다 있다
+  (삼성화재 2024.4Q 보험손익 1,780,370 등). 죽은 사본에만 없다.
+- `crosscheck fail=1`(BNP 2025.4Q)도 배포본 기준이면 통과한다. 그 실패가
+  `tests/fixtures/master_tables_golden.json` 에 `1F` 로 박제돼 있었다.
+
+갈라진 이유는 `build_root_masters.py::build_pl` 이 viz 소스를 읽은 뒤 `_additive_merge(rows, PL_OUT)`
+로 **기존 루트 마스터를 union 병합**하기 때문이다(그 함수 docstring: 2026-08-14 에 61셀/1,475행을
+이 경로로 날린 사고의 근본원인 수정). **루트가 누적된 정본이고 viz 소스는 재생성 가능한 부분입력**인데
+게이트가 부분입력 쪽을 보고 있었다.
+
+**아직 안 고쳤다.** 배포본으로 재조준하는 순간 1,451셀이 처음 검사 대상이 되므로 룰별 전 버킷
+시뮬레이션이 선행이다. `TODO_validation.md` 1순위.
+
+### 2. 완결성 census 사각은 안 닫혔다
+
+`coverage_holes(..., active_min=7)` 무변경, `exclude_companies` 참조 0회. 서울보증·신한이지는
+CSM 마스터 행이 0개라 `if not present: continue` 로 조기 탈출해 **struct 목록에조차 안 뜬다.**
+active_min 미만으로 CSM census 밖인 회사는 **14곳**이고 이번에 12셀을 채운 하나생명도 그 안이다.
+
+### 3. 반려 1건 — 하나생명 2024.4Q 는 두 filing 기준을 섞은 행이다
+
+FY2025 filing 「38. 재무제표 재작성」(K-IFRS 1008 소급적용, 보험계약부채 +5,726,404천원)은
+실재하고 2025.4Q·2023.4Q 는 전부 원문과 일치한다. 문제는 2024.4Q 다:
+
+| 항목 | FY2024 원본 | FY2025 재작성 전기 | 마스터 |
+|---|---:|---:|---:|
+| 기초 | **3,016.13** | 3,089.06 | **3016.1** (원본) |
+| 이자 | 179.02 | **181.33** | **181.3** (재작성) |
+| 조정 | -1,647.36 | -1,660.22 | **-1587.2** ← 어느 쪽도 아님 |
+| 상각 | -398.57 | **-403.69** | **-403.7** (재작성) |
+| 기말 | 4,389.56 | **4,446.82** | **4446.8** (재작성) |
+
+`-1587.2` 는 순수 잔차 플러그이고, 발행사 값과의 차이 +73.0억은 **기초의 재작성분 +72.93억**과
+정확히 같다. item4 는 빌더 설계상 잔차라 나머지 다섯 칸이 **한 표에서** 올 때만 발행사 값과
+같아지는데 그 전제가 깨졌다. 항등식 Δ=0 · FY 경계 Δ=0 · 게이트 전부 초록 —
+**화면 막대만 어느 공시에도 없는 값**인 전형적 false-green.
+
+### 4. 확정 2건 + 단위버그 전수
+
+- **서울보증보험 정당 미공시 확정.** 근거를 키워드 부재에서 **긍정 증거**로 교체했다 —
+  주석 14 「회계모형별, 포트폴리오별 보험부채 현황」의 컬럼이 보험료배분접근법 **하나뿐**이고
+  일반모형 컬럼이 아예 없다(FY2024.4Q 2,770,640,620천원 · FY2025.4Q 2,754,928,850천원 ·
+  FY2026.2Q 2,900,029,184,824원). parser 가 안 본 분기·반기 5건도 `"보험계약마진"` 0회이고,
+  `"측정요소"` 12회는 전부 `재측정요소`(확정급여채무)라 키워드만 셌으면 오탐할 자리였다.
+- **신한이지 제외 유지** — 단 사유는 "미공시"가 아니라 금액 미미(기초 CSM 0.71억 / 기말 1.69억,
+  원문 표 실재).
+- **`waterfall_for_dir()` 단위판별 전수(302 dirs)**: 표가 선언한 단위와 코드가 가정한 단위가
+  어긋나는 버킷 **8건 / 4개사**(신한이지·BNP카디프·카카오페이·**AIG 2025.4Q**). 전부 이미 gold
+  (`set` 30셀 + 제외 1개사)로 덮여 마스터는 옳지만 **코드는 미수정**. AIG 가 mag
+  2.66e8→1.55e8→**9.87e7** 로 내려오다 임계 `1e8` 을 넘으며 그 해에 처음 깨졌다 —
+  규모가 줄어드는 회사는 언젠가 반드시 걸린다. 다음 후보 IBK연금(천원 표, 기말 4,501~5,204억).
+  → `inbox/parser/20260825T0800Z__validation__MULTI__csm_unit_heuristic_reads_magnitude_not_label.md`
+
+### 신규 프로브 (전부 read-only)
+
+- `scripts/_probes/probe_20260825_gate_pl_source_vs_deployed.py` — 불변식 1 감사
+- `scripts/_probes/probe_20260825_csm_unit_heuristic_sweep.py` — 단위판별 전수(79초)
+- `scripts/_probes/probe_20260825_hana_csm_rows.py` — 하나생명 행 vs 원문 3종 대조
+- `scripts/_probes/probe_20260825_coverage_census_blindspot.py` — census 사각 실측
+
+### 게이트
+
+`scripts/prepush_check.py` **exit 0** (RED=0 · K-ICS clear · 도메인 4종 pass · inbox 위반 0 ·
+오프라인 176 passed/1 skipped, 7분 01초). `validate_master_tables.py --no-build` exit 2 이고
+SUMMARY 가 골든 박제와 문자열까지 일치(드리프트 0). **마스터 JSON·룰 코드·골든 무변경.**
+
+---
+
 ## 2026-08-25 — 저수익 휴리스틱 쳐내기: 5개 후보 중 **1개만 잘랐다** (나머지 4개는 반증으로 살림)
 
 owner 지시: *"씰데없는 룰들은 좀 쳐내 제발"*, *"실질 검증은 산술적으로 닫히는 거에서 다 걸린다."*

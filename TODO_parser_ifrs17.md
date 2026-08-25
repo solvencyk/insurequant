@@ -1,5 +1,98 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-25 (38th pass) — 하나생명 2024.4Q CSM 6셀, validation iter2 반려 반영해 재정정
+> (36th pass 의 "혼합 filing + 합성잔차" 오류를 raw 로 다시 확정). prepush exit=0.**
+>
+> **문제.** 36th pass 는 2024.4Q 를 기초/신계약=원본, 이자/상각/기말=재작성(FY2025 note 14-4
+> <전기>표) 으로 섞고, 가정및경험조정(item4)을 "재작성 조정행(-1660.22)+note38 전기초
+> 재작성효과(+72.93)" 합인 -1587.2 로 채웠다. validation 이 검산: 그 -1587.2 는 **어느
+> 필링에도 인쇄돼 있지 않다** — item4 는 원래 "그 행이 닫히는 잔차"인데 전제(나머지 5칸이
+> 한 표에서 옴)가 깨졌으니 잔차 자체가 의미를 잃는다(순수 plug).
+>
+> **재확정 — 2024.4Q 6항목 전부 FY2025 사업보고서(rcept 20260325000201) note 14-4 <전기>표
+> 하나로 통일.** 기초 3016.1→**3089.1**(308,905,720천원) · 신계약 3240.3(불변, 원본·재작성
+> 동일값) · 이자 181.3(불변, 이미 재작성값이었음) · 조정 -1587.2→**-1660.2**(그 표 자신의
+> "보험계약마진을 조정하는 추정치의 변동분" 행 -166,022,230천원 — plug 아니고 raw 행 원값)
+> · 상각 -403.7(불변) · 기말 4446.8(불변). closure 재검산
+> 3089.1+3240.3+181.3-1660.2-403.7=4446.8(Δ=0.00). 실제로 바뀐 셀은 **기초·조정 2개뿐**
+> (신계약/이자/상각/기말은 우연히도 원본=재작성 이거나 36th pass 가 이미 옳게 옮겨놨었음).
+>
+> 이 선택(재작성 통일)은 이 저장소 기존 선례와 일치한다: 라이나생명(15th pass, KR0074
+> 2023.4Q, gold overlay 자체 문구 "6항목 모두 raw 행에서 직접 나옴")·교보/삼성(2026-06-20,
+> "재작성 기준 통일") 전부 같은 방식 — 후속 filing 이 명문 재작성을 공시하면 그 표 전체를
+> 단일 소스로 채택하고 plug 는 안 쓴다.
+>
+> **2023.4Q 는 안 건드림 — raw 로 이중 확정.** FY2023 자기 필링(1877.4/3016.1) 과 FY2024
+> 필링 자신의 <전기>비교표(주석 13-4, line 8462-8479 기초 / 8618-8645 전기말)가 **소수점까지
+> 완전 일치**(기초 CSM 68,921,318+36,345,016+44,369,098=... 187,737,377≈1877.4 · 기말
+> 301,612,879≈3016.1) — note 38 의 재작성이 2024.1.1/2024.12.31 두 시점만 건드린다는
+> 진술과 정합, 2023 이전엔 대체할 raw 자체가 없다(만들면 추측·보간 금지 위반).
+>
+> **결과 — 2023.4Q→2024.4Q 경계가 새로 안 닫힘(Δ+73).** note 38 이 명문 공시한 전기초
+> (2024.1.1) 재작성효과 +7,292,841천원(+72.93억, line 25812-25815, 직접 재확인) 과
+> **소수점까지 정확히 일치**(CSM "이외모든계약" 서브컬럼만 196,346,545→203,639,386 로
+> 움직임, FCF/RA 는 불변). `check_csm_continuity`(validate_data_contract.py) 는 이 경계를
+> "무조건 RED, 면제 없음"으로 잡는데, 원본유지/재작성통일 **두 방향 다 실측으로 확인** —
+> 반대편 경계가 어느 쪽이든 똑같이 못 닫힌다(raw 가 셋 중 하나를 항상 깨뜨림, 제3의 소스
+> 없음). **`_CSM_SIGN_EXCEPTIONS` 와 동일한 기존 관행으로 `_CSM_CONTINUITY_EXCEPTIONS`
+> 신설**(`validate_data_contract.py`) — 이 (회사,분기) 1건만 RED→YELLOW(`_EXCEPTED` 룰명,
+> 근거 전문이 메시지에 그대로 남아 findings 에서 안 사라짐), 다른 모든 회사/분기는 "면제
+> 없음" 그대로 유지(코드 기본 분기 불변). 이건 "진짜 추출불가" 케이스다 — raw 를 다 뒤져도
+> 그 경계를 잇는 제3의 숫자가 없다(있다면 그게 plug).
+>
+> **전수 확인(같은 병 다른 회사).** raw XML 전체(FY2022~2025_Q4/raw)에서 "소급 재작성으로
+> 재무상태표에 미치는 영향" 고정밀 문구로 census(단순 "재작성" 단어는 74개 파일 중 대부분
+> 보일러플레이트 노트제목이라 무의미) → **2개사만 매칭**: 하나생명(이번 건) ·
+> **푸본현대생명보험(KR0083, note 52 "회계정책의 변경")**. 후자는 전기말 BS 영향
+> +13.94억(하나생명 CSM 단독 57.26억 대비 작고 FCF/RA/CSM 미분리), 현재
+> `CSM_waterfall.json` 연속성은 깨끗하고(2024.4Q 기말 1423.5=2025.1Q 기초 1423.5)
+> gold overlay/changelog 어디에도 손댄 기록이 없어 위험도는 낮아 보이나 **raw 재검증은
+> 안 했다**(범위 밖) → `spawn_task task_207ddf55` 로 분리. 기존 continuity 정정 3건(라이나
+> KR0074 15th pass · 교보 KR0073/삼성 KR0069 2026-06-20)은 gold overlay 자체 기록이 "전부
+> raw 행에서 직접 나옴, plug 아님"이라 같은 병 아님(이번 세션에서 raw 재검증 자체는 안 함).
+>
+> **파일**: `CSM_waterfall.json`(하나생명 2024.4Q item1/item4, 2셀 patch) ·
+> `scripts/validate_data_contract.py`(`_CSM_CONTINUITY_EXCEPTIONS` 신설, +49줄) ·
+> `insurequant_master_tables.xlsx`("CSM워터폴" 시트만 cherry-pick 동기화).
+> **건드리지 않음**: `kics_disclosure.json`·`PL_breakdown.json`·`scripts/pl_breakdown/
+> tier1.py`(git status 에 잡히나 병행 37th-pass/타 스테이지 세션 소유, `git diff --stat` 로
+> 이 세션 미접촉 확인) · `build_root_masters.py`(미실행) ·
+> `build_csm_waterfall_master.py`(미실행).
+>
+> **게이트**: `validate_data_contract.py` RED **1→0**(exception 추가 전 실측으로 RED=1
+> 직접 확인 후 추가, YELLOW 73→74 — 새 finding 은 숨지 않고 그대로 보임) ·
+> `validate_csm_continuity.py` flagged=0/red=0(불변 — 이 스크립트는 애초에 연1회 공시사의
+> 이 경계를 스코프 밖에 둔다, 별건 기지 사각·이번 티켓 범위 밖) · `validate_csm_waterfall.py`
+> pass=41/fail=0(불변) · `scripts/prepush_check.py` → **exit 0**. 재현:
+> `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py`.
+>
+> 상세: `docs/changelog_parser_ifrs17.md` 38th pass 항목 · `inbox/parser/
+> 20260825T0230Z__validation__MULTI__csm_waterfall_sparse_3companies.md` 답변(iter 3).
+>
+> ---
+>
+> **2026-08-25 (37th pass) — PL_breakdown.json 빌더 드리프트("5+2개사") 전수 판정 완료,
+> prepush exit=0. 상세: `docs/changelog_parser_ifrs17.md` 37th pass 항목.**
+>
+> 근본 드리프트는 21개사/792셀(FS-API의 2023 1Q/2Q 공시공백 — raw·코드 둘 다 무변화, 마스터가
+> 한 번도 최신화된 적이 없었을 뿐). root PL_breakdown.json에 실제로 보이는 7개사(KR0002·3·10·
+> 49·51·68·82)만 raw로 전수 판정: **빌더가 맞음 2개사**(KR0082 Tier-2 컬럼버그 잔재, KR0010
+> item16 owner선례 적용) · **둘 다 틀림→원문값 2개사**(KR0002·KR0068 item20, `tier1.py`
+> `_pick_op_line` 신설로 "IV.영업이익" 그랜드토탈과 "1.보험영업손익"류 하위소계 오매칭 fix) ·
+> **신규행 확인 2개사**(KR0049·KR0051 2023.4Q, identity 완전polygon 재확인). 8개
+> company-quarter(192행)만 surgical merge, combo-diff 셀손실 0. 나머지 14개사/600셀은
+> root 무영향이라 미판정 → `spawn_task task_3387b0d6` 분리 + KR0010 2024.3Q~2025.3Q raw
+> 결측은 `inbox/downloader/20260825T0001Z__...__pl_raw_gap.md`로 refetch 발주.
+>
+> 게이트: `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py` FAIL(예상대로, 14개사분
+> 미반영이라 golden 의도적 미갱신, backup/restore 로 무사확인) · `validate_master_tables.py
+> --no-build` exit=2(HEAD와 동일, `19→24PL`·`9→12F`만 합법이동 → `--update` 재생성) ·
+> **`scripts/prepush_check.py` exit=0**("PRE-PUSH VERDICT: ... → gate-clear", 176 passed/
+> 1 skipped, 9분32초). 재현: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+> scripts/prepush_check.py`.
+>
+> ---
+>
 > **2026-08-25 (36th pass) — push 게이트 RED 2건 해소. 35th pass 가 넣은 하나생명 12셀이
 > 교차대조 게이트(`validate_data_contract.py`)를 걸었다 — 35th pass 는 자기 도메인 게이트만
 > 보고 통과 판정했지만 교차대조는 안 돌렸었다. raw 재대조로 둘 다 정정 완료, RED=0.**

@@ -113,7 +113,15 @@ push 차단력은 push 게이트 단독으로 확보된다(절반-경화 아님)
 | **UH-7** (신규) | `kics_forward_capital.json` 셀 키가 `baseline_2025_4Q`인데 실제 데이터는 `BASELINE_QUARTER = "2026.1Q"` 필터 산출물(`scripts/forward_capital_simulation.py:45,93,442`). **값은 맞고 키 이름만 거짓** — as-of 정본 판단을 흐린다(owner §4가 이걸 stale로 의심한 원인). HTML이 이 키를 읽으므로 rename은 designer/publishing 동시 변경 필요 → validation 단독 수정 금지 | `inbox/publishing/20260803T0210Z__validation__MULTI_2026.1Q__forward_baseline_key_misnomer.md` |
 | ~~**UH-3**~~ | ~~provenance end-state(no-sidecar=RED) 미전환~~ | ✅ **해소 2026-08-03 (c)** — §7 참조 |
 | **UH-8** (신규) | `kics_rate_sensitivity`는 `MASTER_FILES`에 있으나 **CHECK 2 검사 대상이 아니다**(사이드카 없음 → 소스 신선도 미검증). UH-3가 닫은 것과 같은 부류의 잔여 축 | `inbox/parser/20260803T0520Z__validation__MULTI__rate_sensitivity_provenance_sidecar.md` (lane: kics) |
-| 절반-경화(확인) | `prepush_check.py`가 `validate_kics_disclosure.py`를 **호출하지 않음**을 재확인(`:23` import는 `validate_data_contract`·`triage_anomaly_candidates`뿐). 이번 룰은 push 게이트 배선이라 무관하지만, K-ICS 게이트 전용 룰(현 documented RED 8건 포함)은 여전히 push를 못 막는다. 체인 추가는 push 의미를 바꾸므로 **owner 결정 사항** | owner 판단 대기 (본 PM에서 수정하지 않음) |
+| 절반-경화(확인) | `prepush_check.py`가 `validate_kics_disclosure.py`를 **호출하지 않음**을 재확인(`:23` import는 `validate_data_contract`·`triage_anomaly_candidates`뿐). 이번 룰은 push 게이트 배선이라 무관하지만, K-ICS 게이트 전용 룰(현 documented RED 8건 포함)은 여전히 push를 못 막는다. 체인 추가는 push 의미를 바꾸므로 **owner 결정 사항** | ~~owner 판단 대기~~ → **✅ 해소 2026-08-21** (아래 각주) |
+
+> **정정 각주 (2026-08-25).** 위 표의 마지막 행 "절반-경화(확인)" 은 **더 이상 유효하지 않다.**
+> 2026-08-21 에 `prepush_check.py` 단계 1b 로 `validate_kics_disclosure.py` 가 배선됐고
+> (`scripts/prepush_check.py:49`, `n_kics` 가 `blocked` 계산에 들어간다), `tests/test_push_gate_wiring.py`
+> 가 그 배선을 기계로 강제한다. 즉 **K-ICS 게이트 전용 룰도 이제 push 를 막는다** — 이 행이 owner
+> 결정 사항으로 올려 둔 질문은 이미 답이 났다. 이력 보존을 위해 원문은 그대로 두고 각주만 단다
+> (같은 stale 문장이 `docs/launch_runbook.md` 등 4곳에 복사돼 있던 것을 2026-08-25 publishing
+> 라운드에서 일괄 정정했다 — `docs/changelog_publishing.md` 참조).
 
 ## 6. 후속 — 같은 사건의 두 번째 얼굴: 커버리지 census (2026-08-03 b)
 

@@ -1,6 +1,6 @@
 # Agent: Publishing (Stage 4 — assemble masters + recommend push)
 
-> **Status: SKELETON.** Body marked `TBD` is for the user/owner to author.
+> **Status: authoritative** (CLAUDE.md "Stage prompt 작성 진행도", re-confirmed 2026-08-06 — no stage prompt is a skeleton). Only the §8 items still marked `TBD` are unauthored; everything else here is binding.
 >
 > **Execution model (user decision 2026-05-31, supersedes 2026-05-30):** this agent **executes the mechanical git/file work itself** via its own tools — status, add, commit, branch checkout, `git rm`, and the master-JSON build scripts. It does NOT make the user paste each command by hand. The user is asked only for: (a) browser login / auth approval, (b) an explicit GO immediately before the outward-facing `git push`, (c) genuine decisions. "The user approves the push" means the user authorises that one outward step — it never meant the user runs the whole pipeline manually.
 
@@ -160,9 +160,33 @@ The HTML pages fetch these directly. **No staging templates between publishing a
 
 **#0 must pass first. Any RED = BLOCKED. No documented-exception bypass.**
 
-0. **Data-contract + anomaly gate** — run `python scripts/prepush_check.py` (supersedes standalone `validate_data_contract.py`). Runs: ① data-contract hard gate (census + as-of staleness + domain-identity CHECK4) + ② generic-anomaly triage chain. **exit 2 (RED ≥ 1) = push BLOCKED, no exception, no documented-exception bypass.** Outputs: `data/_derived/anomaly_triage.json` (review queue) + `data/_derived/anomaly_skeptic_input.json` (REAL+UNCERTAIN candidates).
+0. **Data-contract gate** — run `python scripts/prepush_check.py` (supersedes standalone `validate_data_contract.py`). Runs: ① data-contract hard gate (census + as-of staleness + domain-identity CHECK4) · ①b K-ICS rule gate (`validate_kics_disclosure.py`, wired 2026-08-21) · ①c 4 domain gates (csm_continuity · kics_rate_sensitivity · nb_csm_multiple · csm_waterfall) · ③ inbox hygiene (`check_inbox_hygiene.py --mechanical-only`) · ④ offline test bundle (goldens + rule-coverage manifest + push-gate wiring manifest). **exit 2 = push BLOCKED, no exception, no documented-exception bypass.** `blocked = n_red or n_hyg or n_test or n_kics or n_dom`.
 
-   **LLM-skeptic step (mandatory — publishing agent performs before recommending push):** classify each adversarially as **EXTRACTION_ERROR / UNIT_ERROR / REAL_EVENT / NOISE**. Route EXTRACTION_ERROR/UNIT_ERROR to the appropriate parser inbox (lane: ifrs17 for CSM_waterfall/PL, lane: kics for K-ICS). REAL_EVENT/NOISE pass through. **Push recommendation forbidden without completing skeptic step.** Owner policy 2026-06-19.
+   > **The generic-anomaly discovery/triage chain is NOT in this gate any more (2026-08-25, commit `22697c2`).** It was moved out — not deleted — to `scripts/scan_generic_anomalies.py`. Reason (measured): the layer produced 224 of the gate's 297 YELLOWs plus an 83-item review queue on *every* run, and **never once emitted a RED** — being YELLOW-only by design it was never in `blocked`, so it structurally could not block a push. `prepush_check.py` still prints one line about it every run so it cannot vanish silently. **Do not treat "it left the gate" as "it is not done any more"** — see §3.0b for who runs it and when.
+
+   The run takes ~5 min (the offline bundle runs `FULL_COVERAGE_SWEEP=1`). **Never quote a gate verdict you did not run** — this section deliberately carries no cached "current live RED=0" line any more, because a stale pass here reads as permission. Run it, paste the verdict into the round report, and remember that a technical gate-clear is still not a push: an explicit owner GO is required (publishing recommends only).
+
+0b. **Generic-anomaly discovery + LLM-skeptic — round-scoped, not per-push (decision 2026-08-25).**
+
+   **When it runs (all four triggers; publishing is the owner of the step):**
+   1. **Once per quarterly round** — before the *first* push of a newly-loaded quarter, after both parser lanes have landed and validation reports RED=0. This is the default cadence.
+   2. **After a new master JSON is onboarded** (e.g. `IFRS17_BS.json` 2026-08-14, `dividend.json` 2026-08-15) — a brand-new master has no own-history for triage to lean on, so the cohort scan is the only outlier check it gets.
+   3. **After a builder/parser overhaul or a bulk backfill** (a master gains/loses ≥100 rows in one change).
+   4. **On owner request.**
+
+   It does **not** run on incremental pushes (an HTML tweak, a handful of corrected cells). Rationale, measured: every data fix this layer ever produced came from one mass-load round (2026-06-19/20 — 교보생명 원수예실차 4분기 · BNP파리바카디프 단위오류 1.77조 · 코리안리 중복 43 · 교보라이프플래닛 보험금융손익); across the two months of incremental pushes that followed it produced **0**. The value is concentrated in mass-load moments, so that is where the cost is paid. Abolishing it outright was rejected: the arithmetic gates close on a unit error that is internally consistent (the 1.77조 case), so this is the only layer that catches that class. "Owner request only" was rejected too — this repo's recurring failure mode is a step that is documented but that nobody remembers exists.
+
+   **Recording it is part of the step.** Whether it ran, and the verdicts, go into the round's `artifacts/publishing/<period>_<ts>.md` report **and** the `TODO_publishing.md` status entry for that round. A round report with no anomaly line means the step was skipped, and that is a finding, not a default.
+
+   **How to run:**
+   ```
+   C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/scan_generic_anomalies.py
+   ```
+   Writes the same two paths it always did — `data/_derived/anomaly_triage.json` (full review queue) + `data/_derived/anomaly_skeptic_input.json` (REAL+UNCERTAIN). Both files are **git-tracked**, so a run dirties the working tree; use `--no-write` for a look-only pass. Baseline as of 2026-08-25: 224 candidates (PEER_OUTLIER 147 · COHORT_ZERO 77) → triage REAL=77 UNCERTAIN=6 NOISE=134 OWNER_CONFIRMED=8 → skeptic input 83.
+
+   **LLM-skeptic step (publishing performs, on the cadence above):** classify each adversarially as **EXTRACTION_ERROR / UNIT_ERROR / REAL_EVENT / NOISE**. Route EXTRACTION_ERROR/UNIT_ERROR to the appropriate parser inbox (lane: ifrs17 for CSM_waterfall/PL, lane: kics for K-ICS). REAL_EVENT/NOISE pass through. A skeptic verdict never blocks a push by itself — it produces inbox tickets, and it is the resulting parser fix landing as a gate RED that blocks.
+
+   **Reviving it into the gate** (if the round cadence proves too loose): uncomment `# check_generic_anomalies(res, env)` in `run_gate()` of `scripts/validate_data_contract.py` and flip `DATA_CONTRACT_CHECKS["check_generic_anomalies"]` to `WIRED` in `tests/test_push_gate_wiring.py` — the test blocks you if you change one without the other, deliberately.
 
    **Hardening rules (owner 2026-06-20, `inbox/_resolved/20260620T0859Z__owner__MULTI__skeptic_hardening_grounding.md` — added after skeptic fabricated a sibling line-item and repeatedly re-flagged owner-confirmed cells, see [[project_owner_confirmed_registry]]):**
    1. **Input scope = `anomaly_skeptic_input.json` UNCERTAIN items only.** REAL items are already high-precision from deterministic own-history triage — re-litigating them is double noise, not extra safety. Never re-derive candidates from the raw master, and never invent a cell/line-item that isn't in the input (the 코리안리 "두 항목이 동일" fabrication: skeptic invented a sibling value that doesn't exist in the master and called it a duplicate).
@@ -170,7 +194,9 @@ The HTML pages fetch these directly. **No staging templates between publishing a
    3. **Respect `data/_gold/user_pl_confirmed_cells.json`.** Triage already suppresses matches into `OWNER_CONFIRMED` before the skeptic sees the queue, so a confirmed cell should never appear in `anomaly_skeptic_input.json`. If one does, that means the registry is missing an entry — recommend registering it, never edit the data to make the flag go away.
    4. Prior verdict at `data/_derived/anomaly_skeptic_verdict.json` (orchestrator-generated) may be used as reference but must be re-verified if data changed.
 
-   Current live (2026-08-14): gate **RED=0** (was RED=42 earlier same day — `[IFRS17_BS] BS_CENSUS_MISSING_ITEM` on 6 non-listed companies with no DART XBRL source at all; owner closed it via `IFRS17_BS_NO_SOURCE` census exemption, `inbox/_resolved/20260814T0620Z`; `BS_IDENTITY` still runs on those 6). Anomaly triage (K-ICS/IFRS17 domains): REAL=73 UNCERTAIN=6 NOISE(auto-suppressed)=133, LLM-skeptic input=79 pending classification.
+   Queue state (2026-08-25, `scan_generic_anomalies.py`): REAL=77 UNCERTAIN=6 NOISE(auto-suppressed)=134 OWNER_CONFIRMED(suppressed)=8 → `anomaly_skeptic_input.json` 83 items, **unclassified** — carried since the 2026-06 round. Per the hardening rule above only the 6 UNCERTAIN are in scope for the skeptic; the 77 REAL are already high-precision from deterministic own-history triage.
+
+   > The data-contract RED=42 episode of 2026-08-14 (`[IFRS17_BS] BS_CENSUS_MISSING_ITEM` on 6 non-listed companies with no DART XBRL source at all) was closed by owner via the `IFRS17_BS_NO_SOURCE` census exemption (`inbox/_resolved/20260814T0620Z`); `BS_IDENTITY` still runs on those 6.
 
 1. **Validation gate** — every domain's most recent validation report has `summary.red == 0` (or every RED has a TODO.md documented-exception entry). K-ICS: see TODO.md §K-ICS gate for current documented exceptions.
 2. **Assembly gate** — assembly/build scripts exit code 0; masters byte-changed (no spurious diffs).
