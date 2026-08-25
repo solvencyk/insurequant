@@ -1,11 +1,37 @@
 # Insurequant TODO — Downloader Stage
 
-> Last updated: 2026-08-21 · Stage 1/5 — downloader
+> Last updated: 2026-08-25 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md (+ docs/agents/source-catalog.yaml) · Changelog: docs/changelog_downloader.md
 
 **Cross-stage TODO:** `TODO.md` (root). **This file:** active + done items scoped to data collection only.
 
 ## Status
+
+**🟢 2026-08-25 인박스 처리 — DART raw 유실 45칸 복구 + 유실 탐지기 신설·배선
+(`inbox/downloader/20260825T0001Z`):** parser(ifrs17)가 KB손해보험 2024.3Q~2025.3Q PL 5개 분기
+결측을 회부. census 를 직접 떠 보니 **KB 만이 아니라 손보 상장 코호트 9개사 × 2024.3Q~2025.1Q**
+가 본체 구멍이었고(KR0001·KR0010 만 2025.3Q 까지), 티켓이 KB 만 짚은 건 그 회사 census
+관측범위만 앞당겨져 있었기 때문이다.
+
+- **원인 = 디스크 유실.** 원천 부재 ❌(필링 전부 존재) · negative cache ❌ · 유실 ⭕.
+  근거: `_inventory_manifest.json`(2026-05-30 디스크 스냅샷)의 zip 바이트와 오늘 재취득한
+  바이트가 **정확히 일치**. `data/_archive/` 에도 없어 Reorg 이동이 아닌 삭제.
+  **누가 지웠는지는 특정 못 했다** — `.gitignore:41` 이 `data/dart/**/raw/` 를 제외해 git 에
+  기록이 없다(추측 금지).
+- **FS-API 음성캐시는 깨끗했다(실측).** 굳은 013 622개 중 113개 표본 라이브 재호출 →
+  **113/113 여전히 013, 회수 0**. 2026-08-19 근본수정은 제대로 먹었고 이 건과 무관.
+  다음 세션은 이 축을 다시 의심하지 말 것.
+- **복구 45칸** 검증 통과(PK 매직·testzip·본문 XML·`보험계약마진` 25~405회).
+  재취득 후 manifest 303칸 대조 **누락 0**.
+- **재발 방지 배선 완료**: `scripts/check_dart_raw_coverage.py`(high-water mark 395칸,
+  `data/dart/_raw_coverage_baseline.json`) → **`scripts/prepush_check.py` 1d 단계**.
+  유실 발생 시 push 차단. slim 워크트리는 자동 skip.
+- parser raw-ready: `inbox/parser/20260825T0430Z`.
+
+**🟡 잔여(우선순위 낮음) — `raw_annual` 미보유 5건.** baseline 의 `known_absent` 에 사유와 함께
+등재돼 매 실행 인쇄된다. AIG 2022.4Q 감사보고서 2건(사유 미확정, 조사 필요) · 교보라이프플래닛
+2025.4Q 연결 · 하나손해 2025.4Q 연결(둘 다 "별도가 본체" 관례 추정이나 명시 기록 없음 —
+확정하면 사유를 갱신할 것). AIG 2023.4Q `…2106` 은 의도적 미취득으로 **확정**(2026-08-17 티켓).
 
 **🟢/🔴 2026-08-21 인박스 처리 — KR0005 흥국화재 wrong-document 재취득 완료, KR0071 흥국생명은
 원천 자체 오문서 확인 (honest gap, `inbox/downloader/20260821T1625Z`):** validation이 두 회사

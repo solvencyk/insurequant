@@ -1,7 +1,59 @@
 # Insurequant Changelog — Downloader Stage
 
-> Last updated: 2026-08-21 · Stage 1/5 — downloader
+> Last updated: 2026-08-25 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
+
+## 2026-08-25 -- DART raw 유실 45칸 복구 + 유실 탐지기 신설·배선 (`inbox/downloader/20260825T0001Z`)
+
+parser(ifrs17)가 KB손해보험(KR0010) 2024.3Q~2025.3Q PL 이 5개 분기 통째로 비어 있다고 회부.
+티켓 주장을 그대로 믿지 않고 `data/dart/FY*/raw/` 를 전수 census 했더니 **KB 만의 문제가
+아니었다** — 구멍의 본체는 **손보 상장 코호트(KR0001·0002·0003·0005·0008·0009·0010·0011·1000)
+× 2024.3Q~2025.1Q** 이고, KR0001·KR0010 만 2025.2Q·2025.3Q 까지 길었다. 티켓이 KB 만 짚은 건
+그 회사의 census 관측범위만 2023.1Q 로 앞당겨졌기 때문이지, 나머지 8개사도 같은 상태였다.
+
+**원인 = 디스크 유실.** 세 갈래를 각각 반증했다.
+1. **원천 부재 아님** — `list.json` 조회 시 5개 분기 전부 원본 필링 존재(KB: `20241114002445`
+   `20250314001697` `20250515001437` `20250814003072` `20251114001554`).
+2. **negative cache 아님** — DART 문서 fetch 경로엔 영구 음성캐시가 구조적으로 없다
+   (`process_one_period` 는 `meta.json` 에 `no_filing: true` 만 남기고 다음 실행에서 재조회).
+   그래도 티켓 지시대로 FS-API 캐시를 전수 점검: 1,006개 중 **013 이 622개**, 전부 2026-08-19
+   근본수정 이전 mtime 이라 원리상 영구히 굳어 있다 → **라이브 재호출로 실측**(제출기한 미도래
+   100건 제외 522개 중 113개 표본 = KR0010 전건 + 2026.1Q/2Q 전건 + 연도별 층화). **113/113 이
+   여전히 013, 회수 0건.** 남은 013 은 진짜 구조적 부재(비상장 XBRL 전무·2023 1Q/2Q 공백)이고
+   8-19 수정은 제대로 먹었다. **깨끗한 축도 기록해 둔다** — 다음 세션이 다시 의심하지 않도록.
+3. **유실이 맞다** — `data/dart/_inventory_manifest.json`(`audit_date: 2026-05-30`, 디스크
+   스냅샷)에 그 칸들의 **zip 바이트 크기**가 적혀 있었고, 오늘 재취득한 zip 이 **정확히 일치**
+   (KB: 183007·716493·207768·277541·219642). manifest 가 디스크 스냅샷이라는 것도 교차확인
+   (2026.1Q 207195 = `data/_archive/20260813T235249Z/.../KR0010_KB손해보험/document.zip` 바이트).
+   `data/_archive/` 어디에도 없으니 Reorg 이동이 아니라 삭제. **누가 지웠는지는 특정 못 했다** —
+   `.gitignore:41` 이 `data/dart/**/raw/` 를 제외해 git 에 기록이 없다. 추측으로 적지 않는다.
+
+**복구 45칸.** `ifrs17_batch_historical.py --skip-extract` + `extract_dart_zips.py`(zip→본문 XML).
+검증 45/45: PK 매직 · `zipfile.testzip()` 무결 · 본문 XML 존재 · `보험계약마진` 25~405회(0건 없음),
+`신계약`·`보험료배분접근법`·`보험손익`·`투자손익` 전건 확인. 재취득 후 `_inventory_manifest.json`
+303칸 전수 대조 **디스크 누락 0**(2026.1Q 18건은 이후 재취득으로 바이트만 다름 — 정상).
+
+**재발 방지 — 배선까지 했다.** 원인이 013 가드가 아니었으므로 거긴 손댈 게 없었고, 진짜 사각은
+**"한 번 받아 놓은 raw 가 사라져도 아무도 모른다"** 였다. raw 는 gitignore 라 git 이 탐지도 복구도
+못 하고, 이 구멍은 3개월 가까이 방치되다 다른 레인의 census 가 우연히 건드려 드러났다.
+- 신설 `scripts/check_dart_raw_coverage.py` — 디스크에 한 번이라도 있었던 (period, 회사) 칸을
+  `data/dart/_raw_coverage_baseline.json` 에 박제(high-water mark, **절대 줄지 않음**), 사라지면 RED.
+  칸 판정 = `document.zip` 존재 + PK 매직(빈 껍데기 `no_filing` 은 칸이 아니다). 의도적으로 뺀
+  칸은 `known_absent` 에 **사유와 함께** 옮기게 강제. 씨앗 395칸.
+- **`scripts/prepush_check.py` 1d 단계로 배선** — `n_raw` 가 `blocked` 계산에 들어가므로 유실이
+  있으면 **push 가 막힌다**. `CLAUDE.md` 의 "배선했다 ≠ 강제된다" 를 이번엔 처음부터 지켰다.
+  raw 가 통째로 없는 slim 워크트리(main)에서는 스스로 skip → 배포 경로를 막지 않는다. 현재 exit 0.
+- `tests/test_push_gate_wiring.py` 는 `scripts/validate_*.py` 만 열거하므로(`check_*` 는 대상 밖)
+  매니페스트 수정 불필요 — `check_inbox_hygiene.py` 와 같은 취급. 테스트 55 passed 확인.
+
+**잔여(스코프 밖, 기록만).** `raw_annual` 76건 중 디스크에 없는 5건을 추가 발견해 전부
+`known_absent` 에 사유와 함께 등재(매 실행 인쇄): AIG 2022.4Q 감사보고서 2건(사유 미확정) ·
+AIG 2023.4Q `…2106`(**연결감사보고서, 2026-08-17 티켓에 "참고용, 본체 아님" 으로 명시된 의도적
+미취득**) · 교보라이프플래닛 2025.4Q 연결 · 하나손해 2025.4Q 연결(뒤 2건은 같은 "별도가 본체"
+관례 추정, 명시 기록 없음).
+
+parser raw-ready: `inbox/parser/20260825T0430Z__downloader__MULTI_2024.3Q-2025.3Q__pl_raw_gap_45cells_ready.md`.
+원 티켓은 `inbox/_resolved/` 로 이동.
 
 ## 2026-08-21 -- KR0005/KR0071 2024.4Q wrong-document 재취득 — 1건 해결, 1건 원천 오문서 확인
 

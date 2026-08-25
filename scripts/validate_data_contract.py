@@ -2258,8 +2258,47 @@ CSM_CONT_TOL_ABS = 2.0      # 억원
 # 정확히 일치 확인된 것만 허용한다. 등재돼도 findings 에서 사라지지 않고 YELLOW 로 남는다
 # (_CSM_SIGN_EXCEPTIONS 와 동일 관행) — 조용히 사라지면 다음에 진짜 파싱사고가 와도 같은
 # 자리에서 안 보인다.
+#
+# ⚠️ 2026-08-25 (validation iter4 심사) — **산문에서 잔차 박제로 승격했다.**
+# 등재 직후의 형태는 `(회사,분기) -> 사유 문자열` 이었고, 코드는 키 존재만 보고 RED 를 YELLOW 로
+# 내렸다. 변이시험(`scripts/_probes/probe_20260825_mutate_csm_continuity_exception.py`) 실측:
+#   · 기초를 +1000억 밀어 Δ 를 +73 -> +1,073 으로 바꿔도 **여전히 YELLOW**(같은 산문 그대로).
+#   · 기초를 결측으로 만들면 **완전 침묵**(RED=0 YELLOW=0).
+#   · 경계가 닫히도록 되돌려도 **아무 말 없음**(죽은 면제가 영구 잔류).
+# 즉 그 형태는 '잔차 박제' 가 아니라 그 버킷 통째 무조건 통과였다 —
+# `tests/test_tier2_issuer_inconsistent_exemption.py` 가 다른 면제에 요구하는 잣대에 미달.
+# 스코프(다른 회사·다른 분기로 안 새는 것)만 처음부터 맞았다(M4/M5 둘 다 RED 유지).
+# 이제 등재는 **세 겹**이다. 어느 겹이라도 어긋나면 면제가 아니라 RED 다:
+#   ① pins        — 경계 양끝 셀값. 데이터가 움직이면 CSM_CONTINUITY_EXCEPTION_DRIFT.
+#   ② expected_gap— 발행사가 명문 공시한 재작성 델타. 잔차가 그 값이 아니면 등재 근거가 아니다.
+#   ③ verify      — 그 델타를 인쇄한 raw 파일 + 기계가 찾을 수 있는 마커 문자열.
+#                   (raw 는 .gitignore 대상이라 파일이 없는 클론에서는 RED 가 아니라
+#                    CSM_CONTINUITY_EXCEPTION_UNCHECKABLE YELLOW 로 정직하게 말한다.)
+# 그리고 면제가 무용해지면(경계가 닫히면) 조용히 남지 않고 EXCEPTION_INERT 로 인쇄한다.
 _CSM_CONTINUITY_EXCEPTIONS = {
-    ("하나생명보험", "2024.4Q"):
+    ("하나생명보험", "2024.4Q"): {
+        # ① 경계 양끝 셀 (억원, 마스터 소수 1자리)
+        "pins": {"prev_close": 3016.1, "opening": 3089.1},
+        # ② 발행사 명문 공시 델타: 전기초(2024.1.1) 보험계약부채 +7,292,841천원 = +72.93억.
+        #    마스터가 소수 1자리라 관측 잔차는 3089.1-3016.1 = +73.0. tol 은 반올림 폭만 허용한다
+        #    (0.2 -> 느슨하게 잡는 순간 박제가 아니라 또 하나의 blanket skip 이다).
+        "expected_gap": 73.0,
+        "tol": 0.2,
+        # ③ 그 숫자들이 실제로 인쇄된 파일과 마커
+        "verify": {
+            "file": "data/dart/FY2025_Q4/raw/KR0097_하나생명보험_20260325000201/"
+                    "20260325000201_00760.xml",
+            "present_markers": [
+                "308,905,720",    # FY2025 filing <전기> 기초 CSM 소계 (재작성 후)
+                "444,682,065",    # FY2025 filing <전기> 전기말 CSM 소계 = 2025.4Q 기초
+                "166,022,230",    # 그 표의 '보험계약마진을 조정하는 추정치의 변동분' 소계
+                "7,292,841",      # note 38 전기초(2024.1.1) 재작성 영향 = 이 경계의 Δ
+            ],
+            # 대조군: FY2024 원본 필링의 기초 CSM. 재작성 전 값이라 **이 파일에는 없어야** 한다 —
+            # 있으면 두 기준이 한 파일에 섞여 있다는 뜻이라 "단일 표에서 왔다"는 전제가 깨진다.
+            "absent_markers": ["301,612,879"],
+        },
+        "why":
         "FY2025 사업보고서(rcept 20260325000201) note 38 '재무제표 재작성': 보험금융수익(비용) "
         "인식 회계정책을 K-IFRS 1008호에 따라 소급 적용, 비교표시된 전기(FY2024) 재무제표를 "
         "재작성. 재무상태표 영향표(line 25567-25570/25811-25815)가 전기말(2024.12.31) "
@@ -2268,13 +2307,68 @@ _CSM_CONTINUITY_EXCEPTIONS = {
         "확인(둘 다 소수점 둘째자리까지 일치). 2024.4Q 6항목은 FY2025 필링의 <전기> 비교표"
         "(주석 14-4)에서 전부 단일 표로 가져왔다 — 기초/신계약/이자/조정/상각/기말 어느 것도 "
         "plug 아님(조정=그 표 자신의 '보험계약마진을 조정하는 추정치의 변동분' 행). 그래서 "
-        "2025.4Q 와는 닫히지만(같은 표 내부 자기정합), 2023.4Q(FY2023 원본 필링 값 — FY2024 "
-        "필링의 <전기> 비교표와도 완전 일치 재확인, 그 경계엔 재작성이 없음을 별도 확정) 와는 "
-        "이 재작성 때문에 +73억 못 닫는다. note 38 이 재작성한 대차대조표 시점은 "
+        "2025.4Q 와는 닫히지만(같은 표 내부 자기정합), 2023.4Q(FY2023 원본 필링 주석 13-3 자기 "
+        "값) 와는 이 재작성 때문에 +73억 못 닫는다. note 38 이 재작성한 대차대조표 시점은 "
         "2024.1.1/2024.12.31 뿐(2023 이전 소급 없음) — 이 경계를 닫으려면 어느 필링에도 없는 "
-        "숫자를 지어내야 한다(금지). inbox/parser/20260825T0230Z(iter2) 및 "
-        "TODO_parser_ifrs17.md 참조.",
+        "숫자를 지어내야 한다(금지). "
+        "[validation iter4 정정] 종전 이 자리에 있던 'FY2024 필링의 <전기> 비교표와 완전 일치' "
+        "라는 문장은 실측상 과장이었다: FY2024 필링 <전기> 표는 조정 -750.59 / 상각 -279.56 / "
+        "기말 3,016.13 을 인쇄하는데 FY2023 자기 표는 -751.05(기타행 -41,413천원 포함) / "
+        "-279.14 / 3,016.09 다(최대 0.46억 차, 마스터 소수 1자리에서 2셀이 갈린다). 결론은 안 "
+        "바뀐다 — 어느 쪽을 쓰든 2023.4Q 기말은 3,016.1 이고 이 경계 Δ 는 +73.0 이다. "
+        "inbox/parser/20260825T0230Z(iter2·iter4) 및 TODO_parser_ifrs17.md 참조.",
+    },
 }
+
+
+def _csm_continuity_exception_status(co, q, spec, prev_close, opening, gap):
+    """등재된 continuity 면제의 **재검산**. (ok, findings) 를 돌려준다.
+
+    ok=False 면 면제가 성립하지 않으므로 호출부가 RED 로 간다. 반환 findings 는 면제가
+    깨진 이유(kwargs 형태)다 — '조용히 통과' 경로를 만들지 않는다.
+    """
+    bad = []
+    pins = spec.get("pins") or {}
+    for name, observed in (("prev_close", prev_close), ("opening", opening)):
+        pinned = pins.get(name)
+        if pinned is None:
+            bad.append(f"{name} 박제가 비어 있다(면제가 데이터 변화를 못 본다)")
+        elif abs(observed - pinned) > 0.051:      # 마스터 소수 1자리 반올림 폭
+            bad.append(f"{name} 박제 {pinned:,.1f} != 현재 {observed:,.1f}")
+    exp, tol = spec.get("expected_gap"), spec.get("tol", 0.2)
+    if exp is None:
+        bad.append("expected_gap 박제가 없다")
+    elif abs(gap - exp) > tol:
+        bad.append(f"잔차 박제 {exp:+,.1f} != 현재 {gap:+,.1f} (tol {tol})")
+    if bad:
+        return False, [dict(severity="RED", rule="CSM_CONTINUITY_EXCEPTION_DRIFT",
+                            message=f"등재된 예외의 전제가 깨졌다 — {' / '.join(bad)}. "
+                                    f"면제는 (회사,분기) 통째 통과가 아니라 잔차 박제다: "
+                                    f"박제를 다시 raw 로 확정하거나 마스터를 정정할 것")]
+    # ③ 인용 재검증. raw 는 .gitignore 대상이라 없는 클론이 정상이다 — 그 사실을 숨기지 않는다.
+    v = spec.get("verify") or {}
+    f = ROOT / str(v.get("file") or "")
+    if not v.get("file") or not v.get("present_markers"):
+        return False, [dict(severity="RED", rule="CSM_CONTINUITY_EXCEPTION_DRIFT",
+                            message="기계검증 가능한 인용(file + present_markers)이 없다 — "
+                                    "산문만 있는 면제는 아무도 반박할 수 없다")]
+    if not f.exists():
+        return True, [dict(severity="YELLOW", rule="CSM_CONTINUITY_EXCEPTION_UNCHECKABLE",
+                           message=f"인용 파일이 이 작업트리에 없다({v['file']}) — raw 는 "
+                                   f"gitignore 대상이라 정상일 수 있으나, 이번 실행은 등재 근거를 "
+                                   f"**원문으로 확인하지 못했다**")]
+    try:
+        txt = f.read_text(encoding="utf-8", errors="replace")
+    except OSError as e:
+        return False, [dict(severity="RED", rule="CSM_CONTINUITY_EXCEPTION_DRIFT",
+                            message=f"인용 파일을 읽지 못했다: {e}")]
+    miss = [m for m in v["present_markers"] if m not in txt]
+    extra = [m for m in (v.get("absent_markers") or []) if m in txt]
+    if miss or extra:
+        return False, [dict(severity="RED", rule="CSM_CONTINUITY_EXCEPTION_DRIFT",
+                            message=f"인용한 raw 가 등재 근거를 뒷받침하지 않는다 — "
+                                    f"없어야 할 마커 발견={extra} / 있어야 할 마커 누락={miss}")]
+    return True, []
 
 
 def check_csm_continuity(res: GateResult, env: "Env") -> None:
@@ -2301,31 +2395,65 @@ def check_csm_continuity(res: GateResult, env: "Env") -> None:
     by_co: dict[str, dict[str, dict]] = {}
     for (co, q), m in env.wf.items():
         by_co.setdefault(co, {})[q] = m
+    fired: set = set()
     for co, qmap in sorted(by_co.items()):
         for q in sorted(qmap):
             try:
                 fy = int(str(q)[:4])
             except ValueError:
                 continue
-            prev_close = (qmap.get(f"{fy - 1}.4Q") or {}).get("기말CSM")
+            prev = qmap.get(f"{fy - 1}.4Q")
+            if prev is None:
+                continue        # 직전 FY 4Q 행 자체가 없다 = 경계가 존재하지 않는다(구조적)
+            prev_close = prev.get("기말CSM")
             opening = (qmap.get(q) or {}).get("기초CSM")
             if prev_close is None or opening is None:
+                # **결측은 SKIP 이 아니라 RED 다.** 직전 FY 4Q 행이 있는데 경계 양끝 중 하나가
+                # 비어 있으면 그 경계는 '깨끗한' 게 아니라 **검산되지 않은** 것이다. 2026-08-25
+                # 현재 이 경로에 걸리는 버킷은 0 개다(census: `probe_20260825_csm_continuity_
+                # scope_census.py`) — 즉 이 배선은 현재 게이트 출력을 한 줄도 바꾸지 않고
+                # 앞으로 생길 결측만 막는다. 등재된 예외 버킷이면 더 나쁘다: 박제를 확인할 수
+                # 없으니 면제 자체가 성립하지 않는다.
+                missing = "직전기말" if prev_close is None else "기초"
+                res.add(check="domain", severity="RED", master="CSM_waterfall", company=co,
+                        quarter=q, rule="CSM_CONTINUITY_INPUT_MISSING",
+                        message=f"{fy - 1}.4Q 행은 있는데 경계 입력 '{missing} CSM' 이 결측 — "
+                                f"이 경계는 통과한 게 아니라 검산되지 않았다"
+                                + (" (등재된 예외 버킷이라 면제 전제도 확인 불가)"
+                                   if (co, q) in _CSM_CONTINUITY_EXCEPTIONS else ""))
                 continue
             gap = opening - prev_close
             if abs(gap) > max(CSM_CONT_TOL_REL * abs(prev_close), CSM_CONT_TOL_ABS):
-                exc = _CSM_CONTINUITY_EXCEPTIONS.get((co, q))
-                if exc:
-                    res.add(check="domain", severity="YELLOW", master="CSM_waterfall", company=co,
-                            quarter=q, rule="CSM_CONTINUITY_FY_BOUNDARY_EXCEPTED",
-                            message=f"기초 CSM {opening:,.0f} != {fy - 1}.4Q 기말 {prev_close:,.0f} "
-                                    f"[Δ{gap:+,.0f}] — 등재된 예외(raw 확정 소급재작성, "
-                                    f"데이터 정정으로 못 닫음): {exc}")
-                else:
-                    res.add(check="domain", severity="RED", master="CSM_waterfall", company=co,
-                            quarter=q, rule="CSM_CONTINUITY_FY_BOUNDARY",
-                            message=f"기초 CSM {opening:,.0f} != {fy - 1}.4Q 기말 {prev_close:,.0f} "
-                                    f"[Δ{gap:+,.0f}] — 기시≠직전기말은 면제 대상이 아니다. "
-                                    f"raw 대조로 재작성 근거를 확정하거나 마스터를 정정할 것")
+                spec = _CSM_CONTINUITY_EXCEPTIONS.get((co, q))
+                if spec:
+                    fired.add((co, q))
+                    ok, extra = _csm_continuity_exception_status(
+                        co, q, spec, prev_close, opening, gap)
+                    for kw in extra:
+                        res.add(check="domain", master="CSM_waterfall", company=co, quarter=q, **kw)
+                    if ok:
+                        res.add(check="domain", severity="YELLOW", master="CSM_waterfall",
+                                company=co, quarter=q, rule="CSM_CONTINUITY_FY_BOUNDARY_EXCEPTED",
+                                message=f"기초 CSM {opening:,.0f} != {fy - 1}.4Q 기말 "
+                                        f"{prev_close:,.0f} [Δ{gap:+,.0f}] — 등재된 예외(raw 확정 "
+                                        f"소급재작성, 데이터 정정으로 못 닫음, 박제 재검산 통과): "
+                                        f"{spec.get('why')}")
+                        continue
+                    # 박제가 깨졌으면 면제가 아니다 — 원래 RED 를 그대로 낸다(아래로 흘린다).
+                res.add(check="domain", severity="RED", master="CSM_waterfall", company=co,
+                        quarter=q, rule="CSM_CONTINUITY_FY_BOUNDARY",
+                        message=f"기초 CSM {opening:,.0f} != {fy - 1}.4Q 기말 {prev_close:,.0f} "
+                                f"[Δ{gap:+,.0f}] — 기시≠직전기말은 면제 대상이 아니다. "
+                                f"raw 대조로 재작성 근거를 확정하거나 마스터를 정정할 것")
+    # 무용해진 면제는 조용히 두지 않는다 — 죽은 핀이 남으면 다음 세션이 "그 축은 면제됐다" 로
+    # 오독한다(`TIER2_EXEMPTION_INERT` 와 같은 관행). 경계가 닫혔거나 버킷이 사라진 경우 둘 다.
+    for key in _CSM_CONTINUITY_EXCEPTIONS:
+        if key in fired:
+            continue
+        res.add(check="domain", severity="YELLOW", master="CSM_waterfall", company=key[0],
+                quarter=key[1], rule="CSM_CONTINUITY_EXCEPTION_INERT",
+                message="등재된 continuity 예외가 이번 실행에서 발화하지 않았다(경계가 닫혔거나 "
+                        "버킷이 사라졌다) — 죽은 면제는 등재에서 빼라")
 
 
 

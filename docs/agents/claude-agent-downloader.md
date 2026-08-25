@@ -190,6 +190,14 @@ When user requests '다음 분기 받아' (or invokes this prompt for, say, 2026
 
 ## Validation Rules
 
+- **DART raw 유실 검사 (2026-08-25 신설, push 게이트에 배선됨).** 세션 시작 시와 새 분기 수집
+  직후 `python scripts/check_dart_raw_coverage.py` 를 돌려라. 한 번이라도 디스크에 있었던
+  (period, 회사) 칸을 `data/dart/_raw_coverage_baseline.json` 에 박제(high-water mark)해 두고
+  사라지면 RED 다. 새로 받은 분기는 `--update` 로 baseline 에 합친다(합집합만, 절대 줄지 않음).
+  의도적으로 뺀 칸은 `known_absent` 에 **사유와 함께** 옮긴다.
+  왜: `data/dart/**/raw/` 는 gitignore 라 **git 이 유실을 탐지도 복구도 못 한다** — 2026-08-25 에
+  손보 9개사 × 5분기 45칸이 조용히 사라진 채 3개월 가까이 방치된 전례가 있다
+  (`inbox/_resolved/20260825T0001Z`). `scripts/prepush_check.py` 1d 단계라 유실 시 push 가 막힌다.
 - PDF magic: `%PDF`
 - ZIP/xlsx/pptx magic: `PK\x03\x04` (xlsx has `xl/workbook.xml` in head 8KB, pptx has `ppt/presentation.xml`)
 - OLE compound (xls/doc/ppt/hwp): `\xd0\xcf\x11\xe0` — IR context default .xls

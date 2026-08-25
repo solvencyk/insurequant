@@ -1418,6 +1418,142 @@
       "값": -2013.871,
       "was": null,
       "note": "inbox/parser/20260817T0400Z. 같은 filing(20260407002104_00760.xml)의 Note6-4 <당기> 블록(line2982) 재보험 보험계약마진상각=2,013,871천원=2,013.871백만원. item4(12,303.631) 대비 비율 16.4%로 플로저블. 음수 부호 근거는 2023.4Q 항목 note 참조. 2026-08-19."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 7,
+      "공시분기": "2023.1Q",
+      "값": -1767.0,
+      "was": 17533.0,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 7,
+      "공시분기": "2024.1Q",
+      "값": -3101.757812,
+      "was": 17032.242188,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 7,
+      "공시분기": "2024.2Q",
+      "값": -2329.139877,
+      "was": 38012.860123,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 7,
+      "공시분기": "2024.3Q",
+      "값": -17990.010136,
+      "was": 41616.989864,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2025.1Q",
+      "값": 20087.0,
+      "was": 22447.0,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell 조사 중 발견): 배포본 원수CSM상각이 2024.1Q 값과 완전 동일한 복제 지문 — raw 원문(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열, scripts/_probes/probe_20260825_abl_transition_csm_table.py 재현)으로 확정한 결과 이 분기는 20,087. 같은 표의 '2) 전분기'절(=2024 동기 비교값)이 22,447로 더 커서 max(abs) 선택 로직이 전분기 열을 잘못 고른 것으로 보인다(코드 수정은 blast-radius 커서 이번 라운드는 override 로 정정, 핸들러 조사는 별도 후속)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 7,
+      "공시분기": "2025.1Q",
+      "값": -5947.368229,
+      "was": -8307.368229,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2025.2Q",
+      "값": 40080.0,
+      "was": 44994.0,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell 조사 중 발견): 배포본 원수CSM상각이 2024.2Q 값과 완전 동일한 복제 지문 — raw 원문(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열, scripts/_probes/probe_20260825_abl_transition_csm_table.py 재현)으로 확정한 결과 이 분기는 40,080. 같은 표의 '2) 전분기'절(=2024 동기 비교값)이 44,994로 더 커서 max(abs) 선택 로직이 전분기 열을 잘못 고른 것으로 보인다(코드 수정은 blast-radius 커서 이번 라운드는 override 로 정정, 핸들러 조사는 별도 후속)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 7,
+      "공시분기": "2025.2Q",
+      "값": -15683.46952,
+      "was": -20597.46952,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2025.3Q",
+      "값": 61207.0,
+      "was": 66762.0,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell 조사 중 발견): 배포본 원수CSM상각이 2024.3Q 값과 완전 동일한 복제 지문 — raw 원문(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열, scripts/_probes/probe_20260825_abl_transition_csm_table.py 재현)으로 확정한 결과 이 분기는 61,207. 같은 표의 '2) 전분기'절(=2024 동기 비교값)이 66,762로 더 커서 max(abs) 선택 로직이 전분기 열을 잘못 고른 것으로 보인다(코드 수정은 blast-radius 커서 이번 라운드는 override 로 정정, 핸들러 조사는 별도 후속)."
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 7,
+      "공시분기": "2025.3Q",
+      "값": -24184.492374,
+      "was": -29739.492374,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py)."
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 7,
+      "공시분기": "2024.2Q",
+      "값": -3670.662495,
+      "was": 60525.337505,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_dy_kdb_item7_fix.py). item4 값 자체는 변경 없음."
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 7,
+      "공시분기": "2024.3Q",
+      "값": 40979.623446,
+      "was": 170417.623446,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_dy_kdb_item7_fix.py). item4 값 자체는 변경 없음."
+    },
+    {
+      "원보험사코드": "KR0072",
+      "항목번호": 7,
+      "공시분기": "2023.2Q",
+      "값": -18990.0,
+      "was": -7865.0,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_dy_kdb_item7_fix.py). item4 값 자체는 변경 없음."
+    },
+    {
+      "원보험사코드": "KR0072",
+      "항목번호": 7,
+      "공시분기": "2023.3Q",
+      "값": -44935.275872,
+      "was": -21520.275872,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_dy_kdb_item7_fix.py). item4 값 자체는 변경 없음."
+    },
+    {
+      "원보험사코드": "KR0082",
+      "항목번호": 16,
+      "공시분기": "2023.1Q",
+      "값": 2577.053702,
+      "was": null,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE lob_sum_gap): item16(기타사업비용) 결측 -> raw '(2) 요약포괄손익계산서' '(3) 기타사업비' 행 2,577,053,702원=2,577.053702백만원 (라벨변형: '기타사업비' vs 코드탐색 '기타사업비용', trailing '용' 없음이라 미매칭). 주의: 이 값을 넣어도 dual-form PL_BRIDGE 는 완전히 안 닫힌다(잔차 1,601.89 = 정확히 item8 생명장기재보험손익). DB생명 원표에서 '1.보험손익'이 '2.재보험손익'과 별도 최상위 항목으로 병기돼 있어(재보험 제외) 이 회사 '보험손익' 캡션 자체가 구조적으로 재보험을 뺀다 — item1 은 원문과 정확히 일치하므로 변경하지 않음, 잔차는 별도 박제."
+    },
+    {
+      "원보험사코드": "KR0001",
+      "항목번호": 16,
+      "공시분기": "2023.1Q",
+      "값": -12370.224177,
+      "was": null,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE lob_sum_gap): item16(기타사업비용) 결측 -> raw '(3) 기타사업비용' 행 -12,370,224,177원=-12,370.224177백만원(원문 자체가 음수 — 이 분기는 기타손익이 순이익 방향). assemble() 의 v[16]=abs(v[16]) 정규화를 우회해 부호 보존 override. adj=bare-item16=407,167+12,370.22=419,537.22 ≈ 보험손익 419,537.0(잔차 0.22, 허용오차 419.5 이내) — 닫힘 확인."
+    },
+    {
+      "원보험사코드": "KR0001",
+      "항목번호": 16,
+      "공시분기": "2023.2Q",
+      "값": 71546.566619,
+      "was": null,
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE lob_sum_gap): item16(기타사업비용) 결측 -> raw '(3) 기타사업비용' 행 71,546,566,619원=71,546.566619백만원(이 분기는 정상 양수 부호). adj=bare-item16=894,154-71,546.57=822,607.43 ≈ 보험손익 822,607.0(잔차 0.43, 허용오차 822.6 이내) — 닫힘 확인."
     }
   ]
 }

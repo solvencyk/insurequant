@@ -10,6 +10,108 @@
 
 ---
 
+## 2026-08-25 — 자본증권 소진율 도넛이 4사를 "발행 없음 0%"로 그리고 있었다 — 조립 단계 부재 (`20260825T1130Z`)
+
+validation 티켓 처리. **라이브 화면 오표시 수정.** 커밋/푸시 없음(owner 승인은 오케스트레이터 몫).
+
+**원인 — 한 문장.** 빌더 산출물 `output/tier{1,2}_utilization/*_20261Q.json` 에서 배포본 루트
+`kics_tier{1,2}_utilization.json` 을 갱신하는 **조립 스크립트가 이 저장소에 존재한 적이 없었다.**
+루트 파일은 2026-07-22 `a629e34`(K-ICS.html 인라인 JSON 147KB 분리) 때 손으로 한 번 복사된
+스냅샷이고, 2026-08-03 `cb084e7` 로 DART per-bond 소스가 24사→39사로 늘어나
+`wire_capital_securities_to_utilization.py` 가 빌더 산출물을 갱신하는 동안 배포본은 옛 0 을 유지했다.
+
+**추측하지 않고 확정한 방법.** 티켓은 "조립 경로에 분자 필드를 떨어뜨리는 자리가 있는 것으로 보인다"
+고 했고, 발주에는 `issued_source: "bs_transposed"` 폴백 가설이 붙어 있었다. **둘 다 틀렸다** —
+떨어뜨리는 자리가 있었던 게 아니라 **경로 자체가 없었고**, `issued_source` 는 `wire_` 이전 레거시
+잔재라 소진율 계산에 쓰이지 않는다(분자는 `data/bonds/` per-bond 에서만 온다). 확정 근거 4개:
+① 배포본을 **쓰는** 코드 전수 grep = 0곳(`emit_capsec_provenance.py` 는 사이드카 발행용으로 읽기만),
+② `git diff a629e34 -- <두 파일>` 이 비어 있음(2026-07-22 이후 한 번도 안 바뀜),
+③ `wire_capital_securities_to_utilization.py` **재실행 → 빌더 산출물 바이트 동일**(diff 0) = 빌더
+쪽이 현재 소스로 재현되는 최신값이고 배포본이 낡은 쪽,
+④ `data/bonds/capital_securities_fy2025.json` 에 해당 채권 실물 확인(하나손해 신종 1,000억
+2024-05-14 발행 = post-K-ICS 신규 / IBK연금 후순위 4건 중 3건 pre-2023 면제 1,597.3억 + 1건
+2023-03-30 신규 / 아이엠라이프 신종 948.8억 2022-03-30 = 전액 면제).
+그리고 이 채권들이 들어온 시점이 바로 `inbox/_resolved/20260803T0310Z`(owner, KR0050·KR0076 을
+`absent_in_source` 로 특정한 커버리지 census 건)다 — 상류는 그때 고쳤는데 **배포본만 안 따라갔다.**
+
+**전수 확인(39사 × 2파일 = 78행, 필드 단위).** 회사 결측·초과 0. 어긋난 곳 **5사 / 25필드**,
+전부 `배포본 0 → 빌더 값 있음` **한 방향**이다 — 반대 방향 0건이라 배포본에만 있던 값은 없고
+통째 교체로 잃는 것이 없음을 먼저 증명한 뒤에 썼다.
+
+| 회사 | tier1 | tier2 | 화면 |
+|---|---|---|---|
+| KR0050 하나손해보험 | 6필드 | 3필드 | ✅ 양쪽 |
+| KR0076 아이엠라이프생명보험 | 1필드(면제분) | 8필드 | ✅ tier2 만 |
+| KR1011 IBK연금보험 | — | 6필드 | ✅ tier2 만 |
+| KR0049 악사손해보험 | — | 1필드(gross) | ❌ |
+
+**티켓·발주의 "3사 tier1 소진율 0" 은 tier1/tier2 혼동이다.** tier1 에서 실제로 화면이 바뀌는
+회사는 **하나손해보험 1사뿐**이고, 나머지의 0.0% 는 정답이다 — 아이엠라이프는 신종이 전액
+pre-2023 경과조치 면제(신규 분자 0 이 맞다), IBK연금은 신종 발행 자체가 없고, 악사는 유일한
+후순위의 call 이 2025-12-31 로 as-of(2026-03-31) 이전이라 잔존만기 직선상각 인정액이 0 이다.
+**0 이 전부 버그인 것은 아니다** — 회사별 실데이터로 갈랐다(`feedback_no_category_assumptions`).
+
+**화면 before/after** (K-ICS.html `updateDonutPanel` L906-917 이 읽는 필드만):
+
+| 회사 | 패널 | before | after |
+|---|---|---|---|
+| 하나손해보험 | tier1 소진율 / 발행액 | 0.0% / 0억 | **100.0%** / 1,000억 (한도 693.9억) |
+| 하나손해보험 | tier2 소진율 / 인정액 | 0.0% / 0억 | **13.2%** / 306.1억 (한도 2,313억) |
+| 아이엠라이프생명보험 | tier2 소진율 / 인정액 | 0.0% / 0억 | **40.6%** / 1,324.3억 (한도 3,262.5억) |
+| IBK연금보험 | tier2 소진율 / 인정액 | 0.0% / 0억 | **22.2%** / 797.8억 (한도 3,598억) |
+
+한도(분모)는 before/after 전부 동일 — 바뀐 것은 분자뿐이다. 하나손해 tier1 은 raw 144.1% 를 owner
+결정대로 100 에서 자른 값이다(`reference_kics_capital_tiering`).
+
+**조치 — 빠진 단계를 만들었다.** `scripts/sync_tier_utilization_to_deploy.py` 신설. 기본 dry-run
+(필드 단위 전건 열거 + 화면 필드에 `*SCREEN*` 표시), `--apply` 로 반영. 배포본 포맷
+(indent=1 · CRLF · BOM 없음)을 보존해 **git diff 가 값 25줄만** 나온다(포맷 churn 0 — 값 변경과
+재직렬화 노이즈가 섞이면 리뷰가 불가능해진다). `docs/agents/claude-agent-publishing.md` §2.1 에
+`compute_tier{1,2}_utilization.py` → `wire_capital_securities_to_utilization.py` → **이 sync** 3단
+체인으로 명문화했다. **표에 없던 것이 실행되지 않은 것이 이 사고의 전부**라, 고친 값보다 이 줄이
+본체다.
+
+**등재 해제.** `data/_gold/live_artifact_baseline.json` 에서 `TIER_DEPLOYED_VALUE_DIFFERS` 4건 +
+`_counts` 2키 삭제, `_promote` 라우팅 문장에서 tier 절 제거. 등재부 `_promote` (1) 절차 그대로 —
+고친 뒤 게이트가 `BASELINE STALE 4건` 으로 알려준 것을 확인하고 지웠다(안 지우면 등재부가
+거짓말을 시작한다). `RED=0 YELLOW 1086 → 1082`, `STALE_BASELINE 0 → 4 → 0`.
+
+**티켓 §2 (`NB_CSM_multiple.json` 2026.2Q) 는 못 고친다 — 원천 부재.** `build_nb_csm_multiple.py`
+의 분모 `data/kidi/premium_summary.json` 이 디스크에 없고(gitignore 대상이라 git 복구도 불가),
+`data/kidi/FY2026_Q2/` 도 없다(있는 것은 FY2023_Q1~FY2026_Q1). 빌더는 `load_wolnap()` 의
+`KIDI.read_text` 에서 즉사한다. 강행 가정을 따져 봐도 안 된다 — 분모 없이 돌리면 2026.2Q 행은
+생기되 배수가 전부 null 이라 버블맵 Y축이 안 그려지고(결측 31건이 "배수 null 31건"으로 모양만
+바뀐다), 이 빌더는 파일을 통째로 새로 쓰므로 **기존 2023~2026.1Q 의 월납·배수까지 날아간다**
+(마스터 통째 read-modify-write 유실형 — `project_master_json_lost_update`). 막힌 지점 = KIDI
+재수집이고 그건 owner 보류 사안이라(`reference_kidi_premium_summary_gap`: 재요청 전 먼저 물을 것)
+owner 판단으로 올렸다. `NB_CENSUS_MISSING` 31건은 등재 유지.
+
+**검증**: sync 재실행 `차이 없음(in sync)` · `validate_live_artifacts` RED=0 STALE=0 ·
+`emit_capsec_provenance.py --check` 0 out of sync · `pytest test_deploy_assets.py
+test_push_gate_wiring.py` 55 passed · 편집 파일 전부 UTF-8 BOM 없음 ·
+**HTML 무수정**(designer 소관 경계 준수).
+
+**게이트 — 통과했다, 그리고 지금 트리는 남의 작업으로 막혀 있다(둘 다 사실이라 둘 다 쓴다).**
+내 변경(배포본 2 + baseline)만 워킹트리에 있던 상태의 전체 `prepush_check.py` 는 **exit 0**
+(`RED=0 · K-ICS clear · domain pass · inbox 위반 0 · offline tests 198 passed`). 문서·스크립트
+편집을 마친 뒤 확인용으로 다시 돌린 실행은 **exit 2** 인데, 그 사이 **다른 세션이
+`PL_breakdown.json` · `data/_gold/user_pl_cells.json` 을 수정**했다(KR0070 에이비엘생명 item7
+재계산 — item4 override 가 residual item7 을 재계산하지 않아 깨져 있던 PL_BRIDGE 등식 수정,
+`inbox/parser/20260825T1120Z`). 실패 테스트는 `test_master_tables_golden.py` **한 건**, 델타는
+**`pl_bridge:2503P/26F → 2513P/16F`** 하나뿐 — PL_BRIDGE 실패 10건이 통과로 바뀐 것이라
+**개선이 골든에 아직 반영되지 않은 상태**다. 나머지 카운트(coverage_hole · closing · crosscheck ·
+zero_legs · qoq · sens)는 전부 골든과 일치한다. 내 변경집합은 tier 배포본·baseline·문서·신설
+스크립트라 **PL 축에 입력을 주지 않는다.** 골든 `--update` 는 그 수정의 소유자(parser/ifrs17)
+몫이라 손대지 않았다 — 남의 레인 골든을 대신 재생성하면 진행 중인 작업을 반쯤 박제한다.
+
+공유 트리 주의: 위 두 파일 외에 `scripts/validate_data_contract.py` · `scripts/prepush_check.py`
+(신설 단계 `DART raw 유실` 이 두 실행 사이에 들어왔다)도 다른 세션이 수정 중이라 손대지 않았다.
+커밋 시 내 파일만 골라 담을 것: `kics_tier{1,2}_utilization.json` ·
+`data/_gold/live_artifact_baseline.json` · `scripts/sync_tier_utilization_to_deploy.py` ·
+`docs/agents/claude-agent-publishing.md` · `TODO_publishing.md` · 이 changelog · 티켓 md.
+
+---
+
 ## 2026-08-25 — 이상치 발견이 게이트에서 분리된 뒤의 프롬프트 정합 + 실행 주기 확정 (`20260825T0130Z`)
 
 validation 티켓 처리. 코드 미수정, 문서·프로세스 작업. 커밋/푸시 없음(오케스트레이터 몫).

@@ -1,9 +1,144 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-25 · Stage 3/5 — validation
+> Last updated: 2026-08-25 (c) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+---
+
+## 2026-08-25 (c) — CSM continuity 면제 심사: **산문 면제를 잔차 박제로 승격**
+
+티켓 `inbox/_resolved/20260825T0230Z__validation__MULTI__csm_waterfall_sparse_3companies.md`
+(iter 4, 종결). 데이터는 한 셀도 안 고쳤다 — 재확인 + 게이트 코드/테스트만.
+
+### 1. 하나생명 2024.4Q 6셀 재검산 — 통과 (plug 0개)
+
+iter2 에서 반려했던 plug(`-1,587.2`, 어느 공시에도 없는 잔차)가 iter3 정정으로 사라졌음을
+**원문에서** 확인했다. FY2025 사업보고서 `20260325000201_00760.xml` 주석 14-4 (1) 보험의
+`<전기>` 표는 CSM 을 `수정소급법/공정가치법/이외모든계약/소계` 4열로 인쇄하고, **소계 열에
+6항목이 전부 그대로 있다**(우리가 합산할 필요조차 없다):
+
+```
+308,905,720 - 166,022,230 + 324,034,743 - 40,368,775 + 18,132,607 = 444,682,065   Δ=0 천원
+```
+
+억원 반올림 뒤가 아니라 **원문 정수에서 정확히 닫힌다.** 특히 '가정 및 경험 조정' -1,660.2 는
+그 표 자신의 `보험계약마진을 조정하는 추정치의 변동분` 행 소계 `(166,022,230)` 의 인쇄값이다.
+
+**2023.4Q 는 옮기면 안 된다(확정).** FY2025 note 38 이 재작성한 것은 2023.12.31 **잔액**뿐이고
+(301,612,879 -> 308,905,720 = +7,292,841천원 = +72.93억, 공시 금액과 정확히 일치), FY2023 의
+재작성 **rollforward 는 어느 filing 에도 없다**. 기말만 옮기면 그 행이 72.93 만큼 안 닫혀
+2023 행에 새 plug 가 생긴다.
+
+**parser 근거 문장 1건 정정.** iter3 의 "FY2023 자기 값과 FY2024 필링 `<전기>` 표가 소수점까지
+완전 일치"는 실측상 과장이다 — FY2024 `<전기>` 는 조정 **-750.59** / 상각 **-279.56** / 기말
+**3,016.13** 인데 FY2023 자기 표는 -751.05(기타행 -41,413천원 포함) / -279.14 / 3,016.09 다.
+마스터 소수 1자리에서 2셀이 갈린다. 결론(경계 Δ=+73.0)은 안 바뀌므로 데이터 정정은 발주하지
+않고, 게이트 코드의 등재 사유에서 그 문장을 실측치로 교체했다.
+
+### 2. `_CSM_CONTINUITY_EXCEPTIONS` — 이빨이 없었다
+
+parser 가 iter3 에 신설한 면제(하나생명 2024.4Q, owner 유지 승인). **해제하지 않았다** —
+등재 1건 유지, 게이트 출력도 YELLOW 1건 그대로(RED=0 / YELLOW=74, 승격 전후 동일).
+바꾼 것은 이빨이다. 승격 전 변이시험 실측
+(`scripts/_probes/probe_20260825_mutate_csm_continuity_exception.py`):
+
+| 물음 | 승격 전 |
+|---|---|
+| 등재 기준이 기계로 검사되나 | ❌ 산문뿐. 코드는 `.get((co,q))` 로 **키 존재만** 봤다 |
+| 스코프가 (회사,분기)에 묶여 있나 | ✅ 맞다 (같은 회사 다른 분기·다른 회사 파괴 → 둘 다 RED) |
+| 입력이 움직이면 되살아나나 | ❌ 기초 +1,000억 → Δ +73 **→ +1,073** 인데 같은 산문 그대로 YELLOW |
+| 결측이면 | ❌ 완전 침묵 (RED=0 YELLOW=0) |
+| 무용해지면 | ❌ 아무 말 없음 — 죽은 핀 영구 잔류 |
+| 변이시험 | ❌ 없음 |
+
+즉 '잔차 박제'가 아니라 그 버킷 **통째 무조건 통과**였다.
+`tests/test_tier2_issuer_inconsistent_exemption.py` 가 tier2 면제에 요구하는 잣대에 미달.
+
+**승격 (`scripts/validate_data_contract.py`)** — 산문 문자열 → 세 겹 박제 dict:
+
+1. `pins` 경계 양끝 셀(3016.1 / 3089.1) — 데이터가 움직이면 `CSM_CONTINUITY_EXCEPTION_DRIFT`
+2. `expected_gap 73.0` / `tol 0.2` — 발행사 명문 공시 델타(+72.93억)와 같은 크기
+3. `verify` 인용 파일 + `present_markers` 4개(`308,905,720` `444,682,065` `166,022,230`
+   `7,292,841`) + **`absent_markers`** `301,612,879`(재작성 전 값 — 그 파일에 있으면 '단일
+   표에서 왔다'는 전제가 깨진 것). raw 는 gitignore 라 파일이 없는 클론에서는 RED 가 아니라
+   `CSM_CONTINUITY_EXCEPTION_UNCHECKABLE` YELLOW 로 **정직하게 말한다**(push 는 안 막는다).
+
+같이 닫은 것 둘:
+- **결측 SKIP** → `CSM_CONTINUITY_INPUT_MISSING` RED. 직전 FY 4Q 행이 있는데 경계 양끝 중
+  하나가 비면 그 경계는 '깨끗한' 게 아니라 **검산되지 않은** 것이다. 현재 이 경로 버킷 **0개**
+  (census 실측)라 게이트 출력을 한 줄도 안 바꾼다 — 앞으로 생길 결측만 막는다.
+- **죽은 면제** → `CSM_CONTINUITY_EXCEPTION_INERT` YELLOW (경계가 닫히거나 버킷이 사라지면).
+
+**신설 `tests/test_csm_continuity_exception.py` (18 tests, 2.4초, 오프라인).** 변이 전부 발화:
+기초 +1,000억/+0.5억·직전기말 +40억 → RED×2, 기초 결측 → RED, 경계 복원/버킷 삭제 → INERT,
+인용 마커 누락/대조군 마커 존재/산문 등재 후퇴 → RED×2, 인용 파일 부재 → UNCHECKABLE YELLOW.
+레지스트리 크기 `== 1` 고정 — 조용히 한 건 더 들어오면 테스트가 막는다.
+
+**관찰(결함 아님)**: `validate_master_tables.py` 의 `CONT` 는 이 면제를 모르고 `cont:1` 을 계속
+찍는다(골든에 박제). `check_csm_continuity` docstring 의 "두 게이트가 다른 답을 내면 안 된다"는
+면제 층에서 지금 사실이 아니다 — **그대로 두는 편이 낫다**(두 곳에서 보이는 편이 안전).
+그 문장은 다음에 그 게이트를 손볼 때 정리 대상.
+
+### 3. 같은 병 전수 census — **키워드 축은 판별력이 0이다**
+
+parser iter3 은 `"소급 재작성으로 재무상태표에 미치는 영향"` **한 문구**로 raw 를 뒤져 2사만
+매칭이라고 결론냈다. 실측으로 두 방향에서 반박한다.
+
+**(a)** 라벨 변형 9종으로 넓히면 raw XML 444개 중 **'강한 후보' 309건** — 사실상 전 회사·전
+분기다. **좁히면 1건, 넓히면 전부.** 어느 쪽도 census 가 못 된다("키워드 부재 ≠ 원천 부재").
+
+**(b) 라벨을 안 쓰는 축이 본선.** 마스터의 FY 경계 잔차 전수 분포가 이 병의 직접 탐지기다
+(빌더가 각 filing 의 `<당기>` 표를 쓰므로, 후속 filing 이 전기를 재작성하면 그 filing 의
+기초가 직전 filing 의 기말과 갈라진다):
+
+```
+평가된 경계 252 :  잔차 0 = 228 / 0 < 잔차 <= tol = 23 / tol 초과 = 1 (하나생명, 등재된 예외)
+```
+
+**tol 바로 밑에 같은 병 후보 4사**: 롯데손해 2024.4Q **-105.4억**(0.44%, tol 의 88% — 2024.1Q/
+2Q/3Q 기초는 2023.4Q 기말과 소수점까지 일치하는데 **연차 filing 만** 다르다) · 신한라이프
+FY2025 -26.8억 · 미래에셋 FY2025 +6.5억(**FY 중간에** 기초가 바뀐다) · 아이엠라이프 2025.4Q
+-9.2억. 원인은 단정하지 않고(반증쿼리 1건까지만) 별건 발주:
+`inbox/parser/20260825T1340Z__validation__MULTI__csm_fy_opening_disagrees_across_filings_subtol.md`
+
+### 프로브 (전부 read-only, 마스터 미기록)
+
+- `scripts/_probes/probe_20260825_hana_note144_raw_cells.py` — raw 표 원문 셀 인쇄
+- `scripts/_probes/probe_20260825_hana_master_vs_raw.py` — 마스터 ↔ raw 셀 대조 + 천원 항등식
+- `scripts/_probes/probe_20260825_mutate_csm_continuity_exception.py` — 면제 변이 9종
+- `scripts/_probes/probe_20260825_csm_continuity_scope_census.py` — 룰 검사범위 census
+- `scripts/_probes/probe_20260825_restatement_census_broad.py` — 재작성 census (키워드 축 + 무키워드 축)
+
+### 4b. 그리고 그 변이시험이 **push 에서 안 돌고 있었다** — 훅에 배선했다
+
+`prepush_check.py` 의 offline 테스트는 **고정 목록**(`fast = [...]`)이라, 새 테스트 파일을
+만들어도 그 목록에 안 넣으면 push 때 한 번도 안 돈다. 처음 prepush 실행이 `198 passed` 로
+초록이었는데 그 198 에 이 18건이 **안 들어 있었다**(파일은 이미 디스크에 있었다).
+이 저장소가 이름 붙여 둔 실패모드 그대로다 — **"배선했다"와 "강제된다"는 다른 말.**
+→ `tests/test_csm_continuity_exception.py` 를 `fast` 목록에 추가(2.4초).
+
+**남은 같은 종류의 사각(이번 범위 밖, 다음 라운드)**: `tests/test_tier2_issuer_inconsistent_exemption.py`
+와 `tests/test_exemption_absence_pin.py` 도 그 목록에 없다. 둘 다 **면제 변이시험**이라 같은
+논리로 push 마다 돌아야 한다. 실행시간 측정 후 넣을 것.
+
+### 게이트
+
+```
+scripts/validate_data_contract.py       exit=0  RED=0  YELLOW=74  (승격 전후 동일)
+scripts/prepush_check.py                exit=0  (198 passed / 1 skipped, 11분 27초)
+tests/test_csm_continuity_exception.py  18 passed (2.4초)
+tests/test_push_gate_wiring.py          45 passed (배선 추가 후 재확인)
+tests/test_deploy_assets.py             10 passed
+```
+
+**동시 세션 주의 — 내 것이 아닌 FAIL 1건.** `tests/test_master_tables_golden.py` 가
+`pl_bridge:2511P/18F` vs 골든 `2503P/26F` 로 실패한다. 이건 **병행 PL 세션**이 13:29 에
+`PL_breakdown.json` 을 바꾼 결과다(`insurequant_master_tables.xlsx.bak_20260825_pldrift` 동반).
+`validate_master_tables.py` 에는 `validate_data_contract`/`CSM_CONTINUITY` 참조가 **0건**이라
+이번 변경과 인과가 없고, 같은 SUMMARY 의 `cont:1` 은 기대/실측이 동일하다.
+**골든을 `--update` 하지 않았다** — 그 축은 그 세션 소유다.
 
 ---
 

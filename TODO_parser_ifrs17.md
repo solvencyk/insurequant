@@ -1,5 +1,101 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-25 (39th pass) — PL_BRIDGE 배포본 재조준 결함 16건(inbox
+> 20260825T1120Z) 처리: 10건 완전히 고쳐 등재삭제, 6건은 raw 재조사 후 잔차 박제. prepush exit=0.**
+>
+> **배경.** `validate_master_tables.py` 의 PL 축이 배포본(`PL_breakdown.json`)으로 재조준되며
+> 처음 검사받은 1,307셀에서 16건이 드러났다(다른 세션이 `data/_gold/pl_bridge_baseline.json`
+> 에 건별 등재). 분류: copied_cell 3 · basis_mix_csm_amort 5 · lob_sum_gap 5 · sub_leg_gap 3.
+>
+> **① copied_cell 3건 — 티켓의 "2024=2025 복제" 가설을 raw 로 뒤집었다.** 에이비엘생명(KR0070)
+> 원수CSM상각 2024.1Q~3Q(22,447/44,994/66,762)가 2025.1Q~3Q 와 완전 동일한 지문은 맞지만,
+> raw(`data/dart/FY2024_Q{1,2,3}/raw` "전환방법별 CSM 변동표" "1) 당분기" 절 "제공된 서비스
+> 관련 당기손익 인식" 합계열)를 직접 읽으면 **2024 쪽이 맞다**(2026-08-17 gold override 가
+> 이미 이 값으로 정정해 놓았고 FY2025 filing 자신의 "2) 전분기" 비교열도 소수점까지 일치 —
+> 이중 확증). 틀린 건 **2025 쪽**: raw 자신의 "1) 당분기" 절은 20,087/40,080/61,207 인데,
+> 파서 폴백 경로가 같은 표의 더 큰 "전분기"(=2024 비교열) 열을 max(abs) 로 잘못 골랐다.
+> **진짜 원인은 item4 가 아니라 item7(기타생명장기원수손익)이었다** — item7 은
+> `build_pl_breakdown.py assemble()` 의 설계식 residual(`item3-(4+5+6)`)인데, 2026-08-17
+> override 가 item4 만 고치고 item7 을 재계산하지 않아 **옛 item4 기준 plug 로 정체**돼 있었다
+> (수치로 재현: item7_현재 == item3 - item4_구값 - item5 - item6, 4개 분기 소수 6자리까지
+> 일치). item4(2024 3분기, 이미 정확)는 그대로 두고 item7 만 재계산 + 2025 3분기는 item4 를
+> raw 값으로 내리고 item7 도 같이 재계산(안 그러면 2025 에 같은 병을 새로 심는다).
+> 잔차 전부 0.000000000 로 닫힘(`probe_20260825_compute_abl_item7_fix.py`).
+>
+> **② basis_mix_csm_amort 5건 — 같은 stale-plug 병.** 동양생명(KR0087) 2024.2Q/3Q ·
+> 케이디비생명보험(KR0072) 2023.2Q/3Q 도 2026-08-17 item4 override(각각 raw+CSM_waterfall
+> 교차검증으로 확정, 이미 신뢰됨)가 item7 을 안 건드려 같은 stale plug. item7 만 재계산해
+> 4건 모두 잔차 0. 에이비엘 2023.1Q 도 이 버킷 소속이라 ①과 같이 처리 — **버킷 5건 전부 닫힘.**
+>
+> **③ lob_sum_gap 5건 — 회사마다 다른 원인, 2건 완전 정정 + 1건 부분정정 + 2건 raw 로
+> 이미 맞음을 확인.** dual-form 등식(보험손익=ΣLOB[+기타영업수익-기타사업비용])에서:
+>   - **메리츠화재(KR0001) 2023.1Q/2Q — item16(기타사업비용) 결측을 raw 로 채워 완전 정정.**
+>     "(3) 기타사업비용" 원문이 분기마다 **부호가 다르다**(2023.1Q=-12,370.22백만, 진성 음수 —
+>     `assemble()` 의 `v[16]=abs(v[16])` 정규화를 우회해 override 로 부호 보존). 닫힘(잔차
+>     0.2~0.4백만, 허용오차 이내).
+>   - **DB생명보험(KR0082) 2023.1Q — item16 raw 보강(2,577.05, 라벨변형 "기타사업비" vs
+>     코드탐색 "기타사업비용")했지만 완전히는 안 닫힌다.** 잔차가 정확히 item8(생명장기재보험
+>     손익) 크기와 일치 — 이 회사 원표는 "1.보험손익"과 "2.재보험손익"을 별도 최상위 항목으로
+>     병기해(56행 표 직접 확인) 재보험을 구조적으로 제외한다. 3개사로 "item3 단독" 대안을
+>     시뮬레이션한 결과 2개사(메리츠 양쪽)는 오히려 더 벌어져 **범용 룰 변경은 보류**, item16
+>     만 반영하고 잔차는 `issuer_structural_residual` 로 재분류 + 박제.
+>   - **DB손해보험(KR0011) 2023.2Q · 흥국화재(KR0005) 2025.1Q — item16 이미 raw 와 정확히
+>     일치**(각각 70,375.73 / 6,266, 둘 다 라벨 그대로 정확 추출). DB손해는 그 값을 등식에
+>     적용하면 잔차가 오히려 6,869→63,507 로 악화돼(이중차감 의심) 적용 불가 — 코드 주석의
+>     기존 "partial mis-extract" 진단(`_zero_other_expense` docstring)을 재확인만 하고 새
+>     근거는 못 찾음. 흥국화재는 잔차 -714(허용오차 200 살짝 초과)를 설명할 추가 항목을
+>     못 찾음. **둘 다 데이터 변경 없이 조사노트만 등재부에 추가.**
+>
+> **④ sub_leg_gap 3건 — 전부 raw 교차검증했으나 못 닫음, 조사노트 등재.**
+> 비엔피파리바카디프(KR0075) 2024.4Q/2025.4Q: item3·item8 을 별도 raw 표(보험계약부채 변동표
+> "보험서비스결과 합계", 부호주의 — 직접은 부채감소=이익이라 부호반전)로 0.01 이내 교차검증
+> 완료(둘 다 신뢰 가능). 그런데도 item2(Tier1 헤드라인)와 item3+item8(Tier2 합) 사이 갭이
+> 연도 간 비슷한 크기(10,169.1 / 10,147.6)로 지속 — 구조적 성분이 있는데 특정 못 함.
+> 교보라이프플래닛(KR1010) 2024.4Q: PAA(보험료배분접근법) 노트 캡션 4건을 찾았으나 그 표가
+> `rows=1`/빈 nums 로 파싱이 깨져(멀티페이지 표 분리 아티팩트 추정) 수치를 못 읽음 — 같은
+> 회사 2025.4Q 는 이 등식이 정확히 닫혀(diff=0.000) 스키마 자체는 유효하므로 **2024.4Q 한정
+> 추출 결함**으로 추정, 이번 라운드엔 표 분리 로직 복구가 필요해 미해결.
+>
+> **결과.** `pl_bridge_baseline.json`: 26→16건(10건 삭제, `_counts` 갱신), 신규=0·등재부만
+> 남은것=0(완전 일치). `validate_master_tables.py --no-build` SUMMARY
+> `pl_bridge:2503P/26F→2513P/16F`(exit code 2 불변 — 16건이 전부 baseline 에 등재돼 있어
+> `pl_bridge NEW`=0). 골든 `tests/fixtures/master_tables_golden.json` **`--update` 로
+> 재생성**(사유를 `_regenerated` 필드에 기록). combo-diff: `PL_breakdown.json` 8698행→8698행
+> (0 손실, 정확히 40줄=13개 셀의 값+당분기 변경, 전부 KR0070/72/87/01/82 만).
+> `build_pl()` **개별 호출만**(3회, 매회 전후 diff 확인) — `build_root_masters.main()` 미실행.
+>
+> **가드레일 확인.** `data/_gold/user_pl_confirmed_cells.json` 조회 — 16건 관련 회사 전부
+> 무관(그 레지스트리는 `IFRS17_BS`/케이디비생명 보증준비금 항목뿐, PL_breakdown 과 무충돌).
+> `data/_gold/user_pl_cells.json` 는 **순증(191개, 삭제 0)** — 새 override 13건은 전부
+> 이 파일에 근거·raw 인용 포함해 기록.
+>
+> **파일.** `PL_breakdown.json`(13셀, combo-diff 확인) · `data/_gold/user_pl_cells.json`
+> (override 13건 추가) · `data/_gold/pl_bridge_baseline.json`(10건 삭제 + 6건 조사노트) ·
+> `tests/fixtures/master_tables_golden.json`(`--update`) ·
+> `insurequant_master_tables.xlsx`("손익분해PL" 시트만 cherry-pick 동기화,
+> `scripts/sync_master_xlsx_sheet.py`, 검증OK) · `scripts/_probes/` 신규 진단 스크립트 다수
+> (재현용, git 미추적 관례 그대로 유지).
+> **건드리지 않음.** `kics_disclosure.json`·`kics_tier{1,2}_utilization.json`(다른 세션이
+> 병행 수정 중, git status 로 미접촉 확인) · `data/dart/viz/{csm_amort_schedule,
+> csm_waterfall_history,insurance_pl_breakdown}.json`(범위 밖, 다음 파도) ·
+> `scripts/pl_breakdown/*.py`·`build_pl_breakdown.py`(핸들러 코드 미수정 — override 로
+> 처리, 원인 함수 위치는 조사노트에 기록) · `scripts/prepush_check.py`·
+> `scripts/validate_data_contract.py`·`data/_gold/live_artifact_baseline.json`(git status 에
+> 잡히나 다른 세션 소유, 이 세션 미접촉).
+>
+> **미결 6건(등재부에 남음, 기한 2026-10-31).** DB손해 2023.2Q(원인 후보 3개 다 기각, 재조사
+> 필요) · 흥국화재 2025.1Q(잔차 714, 근거 못 찾음) · 교보라이프플래닛 2024.4Q(PAA 표 파싱
+> 복구 필요) · BNP카디프 2024.4Q/2025.4Q(item2 vs item3+8 구조적 성분 미특정) · DB생명
+> 2023.1Q(issuer_structural_residual 로 재분류, 범용 룰 변경은 시뮬레이션에서 기각).
+> pre_existing 10건은 이번 티켓 범위 밖(발주문이 "나머지 13건"으로 명시)이라 손대지 않음.
+>
+> **검증.** `pytest tests/test_kics_rules_golden.py tests/test_master_tables_golden.py
+> tests/test_post_transition_golden.py tests/test_deploy_assets.py
+> tests/test_rule_coverage_manifest.py tests/test_identity_tautology.py
+> tests/test_push_gate_wiring.py tests/unit/` → 198 passed, 1 skipped.
+> `scripts/prepush_check.py`(FULL_COVERAGE_SWEEP=1 포함) → **exit 0**, RED=0·K-ICS gate
+> clear·domain gates pass·DART raw 유실 0·inbox 위반 0·offline tests 216 passed 1 skipped.
+
 > **2026-08-25 (38th pass) — 하나생명 2024.4Q CSM 6셀, validation iter2 반려 반영해 재정정
 > (36th pass 의 "혼합 filing + 합성잔차" 오류를 raw 로 다시 확정). prepush exit=0.**
 >

@@ -1,7 +1,7 @@
 {
   "_what": "라이브 아티팩트 게이트(scripts/validate_live_artifacts.py)의 기지 결함 등재부. 건별 등재이며 통째 skip 이 아니다. 담당 stage 가 고칠 때마다 그 줄을 지운다 (고쳐지면 게이트가 BASELINE STALE 로 알려준다). 선례: data/_gold/statutory_reserve_baseline.json",
   "_emitted": "2026-08-25",
-  "_promote": "승격 조건 — 아래를 충족하면 그 줄을 지우고 RED 로 되돌린다.\n  (1) 담당 stage 가 고쳐서 더는 실패하지 않으면 게이트가 BASELINE STALE 로 인쇄한다. 그때 그 줄을 지운다(지우지 않으면 등재부가 거짓말을 시작한다).\n  (2) 등재에 없는 새 발견은 이미 RED 다 — exit 2 로 push 를 막는다. 초기 착지만 YELLOW 이고 신규는 처음부터 RED 다.\n  (3) 기한 2026-10-31. 그때까지 남은 줄은 (a) 정당하면 legit 레지스트리로 승격, (b) 아니면 RED 로 되돌린다. 무기한 방치 금지.\n  (4) csm_waterfall_history.json 은 예외적으로 **파일 자체의 처분**이 승격 조건이다 — 빌더 재생성 또는 마스터 파생으로 교체(=drift 구조적으로 0). 그 전까지 drift 등재는 '스냅샷이 낡았다'는 사실의 박제이지 값의 승인이 아니다.\n라우팅: parser/ifrs17 (history·amort·insurance_pl·NB 부호), publishing (tier1/tier2 배포본 == 빌더 산출물 동기화, NB 배포본 분기 갱신).",
+  "_promote": "승격 조건 — 아래를 충족하면 그 줄을 지우고 RED 로 되돌린다.\n  (1) 담당 stage 가 고쳐서 더는 실패하지 않으면 게이트가 BASELINE STALE 로 인쇄한다. 그때 그 줄을 지운다(지우지 않으면 등재부가 거짓말을 시작한다).\n  (2) 등재에 없는 새 발견은 이미 RED 다 — exit 2 로 push 를 막는다. 초기 착지만 YELLOW 이고 신규는 처음부터 RED 다.\n  (3) 기한 2026-10-31. 그때까지 남은 줄은 (a) 정당하면 legit 레지스트리로 승격, (b) 아니면 RED 로 되돌린다. 무기한 방치 금지.\n  (4) csm_waterfall_history.json 은 예외적으로 **파일 자체의 처분**이 승격 조건이다 — 빌더 재생성 또는 마스터 파생으로 교체(=drift 구조적으로 0). 그 전까지 drift 등재는 '스냅샷이 낡았다'는 사실의 박제이지 값의 승인이 아니다.\n라우팅: parser/ifrs17 (history·amort·insurance_pl·NB 부호), publishing (NB 배포본 분기 갱신). tier1/tier2 배포본 == 빌더 산출물 동기화는 2026-08-25 해소(scripts/sync_tier_utilization_to_deploy.py).",
   "_counts": {
     "csm_waterfall_history.json|HIST_MASTER_DRIFT": 933,
     "csm_waterfall_history.json|HIST_STAGE_IDENTITY": 41,
@@ -12,11 +12,9 @@
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING": 7,
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK": 5,
     "csm_amort_schedule.json|AMORT_TOTAL_VS_CLOSING_CSM_BAND": 4,
-    "kics_tier2_utilization.json|TIER_DEPLOYED_VALUE_DIFFERS": 3,
     "NB_CSM_multiple.json|NB_VS_WATERFALL": 1,
     "insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND": 1,
-    "insurance_pl_breakdown.json|INSPL_CSM_AMORT_SCALE": 1,
-    "kics_tier1_utilization.json|TIER_DEPLOYED_VALUE_DIFFERS": 1
+    "insurance_pl_breakdown.json|INSPL_CSM_AMORT_SCALE": 1
   },
   "entries": {
     "NB_CSM_multiple.json|NB_VS_WATERFALL|KR0004|2023.4Q": {
@@ -5427,26 +5425,6 @@
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|예별손해보험": {
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
       "reason": "PL 마스터 36사 중 29사만 있어 7사가 원표 패널에서 빠진다.",
-      "first_seen": "2026-08-25"
-    },
-    "kics_tier1_utilization.json|TIER_DEPLOYED_VALUE_DIFFERS|하나손해보험": {
-      "detail": "배포본 utilization_pct=0.0 vs 빌더 산출물=100.0 — 같은 분기인데 다르다",
-      "reason": "**불변식 1번 위반의 직접 증거.** 배포본(K-ICS.html 이 fetch)과 게이트가 실제로 검사하는 빌더 산출물(output/tier1_utilization/)이 같은 분기인데 값이 다르다. 하나손해보험: 배포본 tier1_hybrid_issued=0 → 소진율 0.0%, 빌더 산출물은 1,000억 발행 → 100.0%. 화면은 발행이 없는 것처럼 보인다.",
-      "first_seen": "2026-08-25"
-    },
-    "kics_tier2_utilization.json|TIER_DEPLOYED_VALUE_DIFFERS|IBK연금보험": {
-      "detail": "배포본 utilization_pct=0.0 vs 빌더 산출물=22.2 — 같은 분기인데 다르다",
-      "reason": "위와 같음. IBK연금보험(배포본 0.0% vs 빌더 22.2%, subordinated 0 vs 1,597.3억), 아이엠라이프생명보험(0.0% vs 40.6%, hybrid 0 vs 948.8억) 등 3사.",
-      "first_seen": "2026-08-25"
-    },
-    "kics_tier2_utilization.json|TIER_DEPLOYED_VALUE_DIFFERS|아이엠라이프생명보험": {
-      "detail": "배포본 utilization_pct=0.0 vs 빌더 산출물=40.6 — 같은 분기인데 다르다",
-      "reason": "위와 같음. IBK연금보험(배포본 0.0% vs 빌더 22.2%, subordinated 0 vs 1,597.3억), 아이엠라이프생명보험(0.0% vs 40.6%, hybrid 0 vs 948.8억) 등 3사.",
-      "first_seen": "2026-08-25"
-    },
-    "kics_tier2_utilization.json|TIER_DEPLOYED_VALUE_DIFFERS|하나손해보험": {
-      "detail": "배포본 utilization_pct=0.0 vs 빌더 산출물=13.2 — 같은 분기인데 다르다",
-      "reason": "위와 같음. IBK연금보험(배포본 0.0% vs 빌더 22.2%, subordinated 0 vs 1,597.3억), 아이엠라이프생명보험(0.0% vs 40.6%, hybrid 0 vs 948.8억) 등 3사.",
       "first_seen": "2026-08-25"
     }
   }

@@ -2,7 +2,7 @@
 """PRE-PUSH check (owner 2026-06-19): the single gate publishing runs RIGHT BEFORE a push
 (push-time only, not a daily cron). Chains:
   1. hard data-contract gate  (validate_data_contract) — exit 2 if any RED → push BLOCKED.
-  1b. K-ICS rule gate · 1c. domain gates · 3. inbox hygiene · 4. offline tests.
+  1b. K-ICS rule gate · 1c. domain gates · 1d. DART raw coverage · 3. inbox hygiene · 4. offline tests.
 
 2026-08-25: the generic-anomaly discovery/triage step was REMOVED from this chain (it emitted
 YELLOW only, never entered `blocked`, and produced 224 of the gate's 297 YELLOWs). It now lives
@@ -96,6 +96,18 @@ def main() -> int:
         if _f.read_bytes() != _bytes:
             _f.write_bytes(_bytes)
 
+    # 1d) DART raw 커버리지 high-water mark (2026-08-25 신설,
+    #     `inbox/downloader/20260825T0001Z`). parser 가 KB손해보험 2024.3Q~2025.3Q 가 통째로
+    #     빈 것을 발견했는데, 원천 부재도 negative cache 도 아니고 **디스크에 있던 raw 가
+    #     사라진 것**이었다(2026-05-30 인벤토리에 기록된 zip 바이트와 오늘 재취득한 바이트가
+    #     정확히 일치). 같은 창에서 손보 8개사가 함께 비어 있었고, 3개월 가까이 아무도 몰랐다 —
+    #     `data/dart/**/raw/` 는 gitignore 대상이라 **git 이 유실을 탐지도 복구도 못 한다.**
+    #     그래서 baseline 이 유일한 탐지기다. raw 가 통째로 없는 slim 워크트리에서는 스스로 skip.
+    print("\n" + "=" * 72)
+    print("DART RAW COVERAGE (high-water mark — scripts/check_dart_raw_coverage.py)")
+    import check_dart_raw_coverage as rawcov       # noqa: E402
+    n_raw = rawcov.main([])
+
     # 2) 일반 이상치 발견 → 트리아지 — **2026-08-25 에 push 경로에서 뺐다** (owner: "씰데없는
     #    룰들은 좀 쳐내"). 지운 게 아니라 `scripts/scan_generic_anomalies.py` 로 내렸다.
     #
@@ -140,6 +152,12 @@ def main() -> int:
             # 게이트가 훅에 실제로 걸려 있는지를 검사하는 매니페스트. 이게 없으면 "새 게이트를
             # 만들고 훅에 안 거는" 사고가 조용히 반복된다(2026-08-21 에 5개가 호출처 0 이었다).
             "tests/test_push_gate_wiring.py",
+            # CSM FY 경계 면제의 변이시험(2026-08-25 신설). `check_csm_continuity` 의 원칙은
+            # "break = 무조건 RED, 면제 없음" 이고 그 첫 예외가 그날 들어왔다 — 면제는 이
+            # 저장소에서 가장 위험한 코드라 "박제를 흔들면 RED 가 돌아온다"가 매 push 마다
+            # 돌아야 한다. 등재 직후의 형태는 실제로 (회사,분기) 통째 무조건 통과였고
+            # 변이시험이 없어 아무도 몰랐다. 2.4초.
+            "tests/test_csm_continuity_exception.py",
             "tests/unit/"]
     # 커버리지 매니페스트는 훅에서만 **전수(48칸 × 게이트 1회)** 로 돌린다. 로컬 pytest 기본값은
     # 선언된 사각만 셀 단위 + 나머지 묶음(42초)인데, 묶음은 "44칸이 통째로 죽는 것"만 잡고
@@ -153,9 +171,10 @@ def main() -> int:
     n_test = proc.returncode
 
     print("\n" + "#" * 72)
-    blocked = n_red or n_hyg or n_test or n_kics or n_dom
+    blocked = n_red or n_hyg or n_test or n_kics or n_dom or n_raw
     print(f"PRE-PUSH VERDICT: gate RED={n_red} · K-ICS rule gate={'BLOCK' if n_kics else 'clear'}"
           f" · domain gates={'FAIL' if n_dom else 'pass'}"
+          f" · DART raw 유실={'있음' if n_raw else '0'}"
           f" · inbox 기계적위반={'있음' if n_hyg else '0'}"
           f" · offline tests={'FAIL' if n_test else 'pass'}"
           f" → {'BLOCKED (fix or owner-escalate)' if blocked else 'gate-clear'}"

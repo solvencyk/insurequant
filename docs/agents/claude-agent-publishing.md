@@ -134,7 +134,17 @@ The HTML pages fetch these directly. **No staging templates between publishing a
 - `scripts/fill_missing_ratios.py` — derived ratio backfill
 - `scripts/fill_2025_q4_to_disclosure.py` — period-specific (template for future quarter scripts)
 - `scripts/recalc_kics_derived.py` / `scripts/recalc_basic_capital_ratio_post.py` — derived metrics
-- `scripts/compute_tier{1,2}_utilization.py` — Tier 1/2 hybrid utilization
+- `scripts/compute_tier{1,2}_utilization.py` — Tier 1/2 hybrid utilization → `output/tier{1,2}_utilization/`
+- `scripts/wire_capital_securities_to_utilization.py` — 위 산출물의 분자를 DART per-bond
+  (`data/bonds/capital_securities_fy2025.json`) + 경과조치 면제로 갈아끼운다 (in place)
+- **`scripts/sync_tier_utilization_to_deploy.py` — `output/tier{1,2}_utilization/` → 배포본 루트
+  `kics_tier{1,2}_utilization.json`. 이 줄이 없어서 사고가 났다 (2026-08-25).** 위 두 스크립트를
+  돌렸으면 **반드시** 이것도 돌린다(기본 dry-run, `--apply` 로 반영). 2026-07-22~08-25 동안 이
+  단계가 존재하지 않아 배포본이 옛 스냅샷에 굳었고, DART 소스가 24사→39사로 늘어난 뒤에도
+  4사(하나손해·아이엠라이프·IBK연금·악사)의 분자가 0으로 남아 **화면이 "발행 없음 0%"를 그렸다**.
+  게이트는 상류만 보고 있어 초록이었다(`PM-2026-08-25_gate_read_the_wrong_file.md`, 불변식 1번).
+  이제 `scripts/validate_live_artifacts.py` 의 `TIER_DEPLOYED_VALUE_DIFFERS` 가 이 축을 막는다 —
+  그 룰이 뜨면 이 sync 를 건너뛴 것이다.
 - `scripts/forward_capital_simulation.py` — forward-looking sim (F4/F5)
 - `scripts/promote_from_to_be.py` — what-if → as-is promotion
 

@@ -3,6 +3,52 @@
 > Last updated: 2026-08-25 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-08-25 (39th pass) — PL_BRIDGE 배포본 재조준 결함 16건 처리 (inbox 20260825T1120Z)
+
+발주: validation, `inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md`.
+`validate_master_tables.py` 의 PL 축이 배포본(`PL_breakdown.json`)으로 재조준되며 처음 검사받은
+1,307셀에서 드러난 16건(`data/_gold/pl_bridge_baseline.json` 건별 등재). 상세 조사·수식·수치는
+`TODO_parser_ifrs17.md` 39th pass 항목 참조 — 여기는 요약.
+
+### 핵심 발견 — copied_cell "복제" 는 티켓 가설과 반대 방향이었다
+
+에이비엘생명(KR0070) 2024.1Q~3Q 원수CSM상각이 2025.1Q~3Q 와 완전 동일한 건 맞지만, raw
+("전환방법별 CSM 변동표" 표의 "1) 당분기"/"2) 전분기" 두 절)를 직접 대조하면 **2024 쪽이
+raw 로 이중 확증되는 진짜 값**이고 **2025 쪽이 파서 폴백의 max(abs) 당기/전기 뒤바뀜으로
+오염**돼 있었다. item4 문제라고 생각했던 것의 실제 근본원인은 **item7(기타생명장기원수손익)
+이 2026-08-17 의 이전 item4 gold override 이후 재계산되지 않은 stale plug** 였다는 것도
+같이 확인 — `build_pl_breakdown.py assemble()` 의 설계식(`item7 = item3-(4+5+6)`)을 새
+item4 로 재적용해 4개 회사·10개 분기가 잔차 0 으로 닫혔다(에이비엘·동양생명·케이디비생명 +
+에이비엘 2025 3분기 자체정정). 나머지 6건(DB생명/DB손해/흥국화재/교보라이프플래닛/BNP카디프
+×2)은 raw 로 교차검증했지만 완전히는 못 닫아 조사노트와 함께 등재부에 남겼다(통째 skip 아님
+— 매 건 인용·수치 포함).
+
+### 결과
+
+- `pl_bridge_baseline.json`: 26건→16건(10건 완전 삭제), 신규 0·등재부-only 0(완전 일치).
+- `PL_breakdown.json`: combo-diff 8698행→8698행(0 손실), 40줄=13셀(값+당분기) 변경, 전부
+  KR0070/KR0072/KR0087/KR0001/KR0082. `build_pl()` 개별 호출만 3회(매회 diff 확인) —
+  `build_root_masters.main()` 미실행.
+- `data/_gold/user_pl_cells.json`: 순증 13건(174→187... 실제 191, 중간 스킵분 포함), 삭제 0,
+  전부 raw 인용 포함.
+- `tests/fixtures/master_tables_golden.json`: `pl_bridge:2503P/26F→2513P/16F` 로 `--update`
+  재생성(exit_code 2 불변 — 16건 전부 baseline 등재라 `pl_bridge NEW`=0).
+- `insurequant_master_tables.xlsx`: "손익분해PL" 시트만 `sync_master_xlsx_sheet.py` 로
+  cherry-pick 동기화, 사후검증 "8698행×9열 마스터와 완전 일치" 통과.
+- `data/_gold/user_pl_confirmed_cells.json` 조회 — 16건 관련 회사 전부 무관 확인(그 레지스트리
+  엔트리는 `IFRS17_BS`/케이디비 보증준비금뿐), owner 확정 셀 미접촉.
+- 게이트: `pytest`(골든+매니페스트+wiring 묶음) 198 passed/1 skipped ·
+  `scripts/prepush_check.py`(FULL_COVERAGE_SWEEP=1) **exit 0**.
+
+### 건드리지 않음
+
+`kics_disclosure.json`·`kics_tier{1,2}_utilization.json`(다른 세션 병행 수정, git status 로
+미접촉 확인) · `data/dart/viz/{csm_amort_schedule,csm_waterfall_history,
+insurance_pl_breakdown}.json`(범위 밖, 다음 파도) · `scripts/pl_breakdown/*.py`·
+`build_pl_breakdown.py`(핸들러 코드 미수정, override 로 처리) · `scripts/prepush_check.py`·
+`scripts/validate_data_contract.py`·`data/_gold/live_artifact_baseline.json`(git status 에
+잡히나 다른 세션 소유).
+
 ## 2026-08-25 (38th pass) — 하나생명 2024.4Q CSM 6셀 재정정 (validation iter2 반려 반영), 같은 병 전수 census
 
 발주: validation, `inbox/parser/20260825T0230Z__validation__MULTI__csm_waterfall_sparse_3companies.md`

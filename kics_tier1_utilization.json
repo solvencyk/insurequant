@@ -195,7 +195,7 @@
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 2465.98,
-   "tier1_grandfathered_hybrid_eok": 0.0,
+   "tier1_grandfathered_hybrid_eok": 948.8,
    "utilization_pct_raw": 0.0
   },
   {
@@ -394,19 +394,19 @@
    "scr_eok": 4626.0,
    "tier1_hybrid_limit_eok": 693.9,
    "tier1_hybrid_limit_strict_eok": 462.6,
-   "tier1_hybrid_issued_eok": 0.0,
+   "tier1_hybrid_issued_eok": 1000.0,
    "tier1_hybrid_excess_eok": null,
-   "tier1_hybrid_recognized_eok": 0.0,
-   "tier1_hybrid_overflow_eok": 0.0,
-   "utilization_pct": 0.0,
-   "utilization_pct_strict": 0.0,
+   "tier1_hybrid_recognized_eok": 1000.0,
+   "tier1_hybrid_overflow_eok": 306.1,
+   "utilization_pct": 100.0,
+   "utilization_pct_strict": 216.2,
    "data_source": "dart_bonds_fy2025_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_transposed",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 144.1
   },
   {
    "company": "신한이지손해보험",

@@ -1,9 +1,64 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-25 (b) (라이브 아티팩트 배선 — 안 보던 파일 6개를 검사에 올리고 PL 축을 배포본으로 재조준) · Stage 3/5 — validation
+> Last updated: 2026-08-25 (c) (CSM continuity 면제 심사 — 산문 면제를 잔차 박제로 승격 + 변이시험 신설) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
+
+## Status
+
+**(2026-08-25 c, CSM continuity 면제 심사) 🟢 데이터는 한 셀도 안 고쳤다. 면제 코드에 이빨을
+달았다. prepush **exit 0** (RED=0 · YELLOW 74 — 승격 전후 동일).**
+
+> 티켓 `inbox/_resolved/20260825T0230Z__…__csm_waterfall_sparse_3companies.md` **iter 4 종결** ·
+> changelog `docs/changelog_validation.md` 2026-08-25 (c)
+>
+> ### 하나생명 2024.4Q 6셀 — 통과 (plug 0개)
+>
+> FY2025 주석 14-4 `<전기>` 표는 CSM 을 4열(`수정소급법/공정가치법/이외모든계약/소계`)로 인쇄하고
+> **소계 열에 6항목이 전부 있다.** `308,905,720 − 166,022,230 + 324,034,743 − 40,368,775 +
+> 18,132,607 = 444,682,065` — **Δ=0 천원**, 억원 반올림 뒤가 아니라 원문 정수에서 닫힌다.
+> iter2 가 반려한 plug(−1,587.2)는 사라졌다. **2023.4Q 는 옮기면 안 된다**(재작성된 것은 잔액뿐,
+> FY2023 rollforward 가 어느 filing 에도 없어 옮기면 2023 행에 새 plug 가 생긴다).
+>
+> ### 면제는 '잔차 박제'가 아니라 **버킷 통째 무조건 통과**였다
+>
+> 변이 실측(승격 전): 기초 +1,000억으로 Δ 를 +73 → **+1,073** 으로 만들어도 **YELLOW 그대로** ·
+> 기초 결측이면 **완전 침묵** · 경계가 닫혀 무용해져도 **아무 말 없음** · 변이시험 **없음**.
+> 스코프(다른 회사·다른 분기)만 처음부터 맞았다. owner 가 유지를 승인했으므로 **해제하지 않고**
+> 세 겹 박제로 승격했다 — `pins`(경계 양끝 셀) · `expected_gap 73.0/tol 0.2` ·
+> `verify`(raw 인용 + present/absent 마커). 결측 SKIP 도 `CSM_CONTINUITY_INPUT_MISSING` RED 로
+> 닫았다(현재 해당 버킷 0개라 출력 무변동). 죽은 면제는 `..._EXCEPTION_INERT` 로 인쇄.
+> **신설 `tests/test_csm_continuity_exception.py` 18 tests** — 변이 9종 전부 발화, 레지스트리
+> 크기 `==1` 고정.
+>
+> ### census 는 검색어가 판별력 0 이었다
+>
+> parser 의 고정밀 문구 1개 = 2사 매칭 / 라벨 변형 9종 = **444개 XML 중 강한 후보 309건**(전 회사).
+> **좁히면 1건, 넓히면 전부.** 라벨 없는 축(마스터 FY 경계 잔차 전수)이 본선:
+> `잔차 0 = 228 / 0<잔차≤tol = 23 / tol 초과 = 1`. **tol 바로 밑에 같은 병 후보 4사** —
+> 롯데손해 2024.4Q −105.4억(tol 의 88%) · 신한라이프 −26.8 · 미래에셋 +6.5 · 아이엠라이프 −9.2.
+> 원인 단정 없이 별건 발주(`inbox/parser/20260825T1340Z__…__csm_fy_opening_disagrees_…`).
+>
+> ### 그 변이시험이 push 에서 안 돌고 있었다 (배선 추가)
+>
+> `prepush_check.py` 의 offline 테스트는 **고정 목록**이다. 새 테스트를 만들어도 목록에 안
+> 넣으면 push 때 한 번도 안 돈다 — 첫 prepush 가 `198 passed` 로 초록이었는데 그 198 에
+> 이 18건이 **안 들어 있었다**(파일은 이미 디스크에 있었다). "배선했다 ≠ 강제된다" 그대로.
+> `tests/test_csm_continuity_exception.py` 를 목록에 넣었다(2.4초).
+>
+> ### 남은 것
+>
+> - **같은 종류의 사각 2건**: `tests/test_tier2_issuer_inconsistent_exemption.py` ·
+>   `tests/test_exemption_absence_pin.py` 도 prepush 고정 목록에 **없다**. 둘 다 면제
+>   변이시험이라 같은 논리로 push 마다 돌아야 한다 — 실행시간 재고 넣을 것.
+> - 직전 Status(b)의 **UH-13/UH-14** 그대로.
+> - 직전 Status(a)의 **완결성 census 사각**(`coverage_holes(active_min=7)`) 아직 안 닫혔다 —
+>   전제(불변식 1번)는 (b)에서 고쳐졌으니 다음 라운드에서 배선 가능.
+> - `validate_master_tables.CONT` 는 이 면제를 모른다(의도적 유지 — 두 곳에서 보이는 편이 안전).
+>   다만 `check_csm_continuity` docstring 의 "두 게이트가 다른 답을 내면 안 된다"는 현재 사실과
+>   다르므로 그 게이트를 다음에 손볼 때 정리할 것.
+> - 발주 답변 대기: parser ×3 · publishing ×1
 
 ## Status
 
@@ -70,7 +125,7 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 >   고치라고 적어 뒀고, 이제 고쳐졌으니 다음 라운드에서 배선 가능.
 > - 발주 3건 답변 대기: parser ×2 · publishing ×1
 
-## Status (2026-08-25 a, CSM sparse 재확인 — 직전 라운드)
+## Status (2026-08-25 a, CSM sparse 재확인)
 
 **(2026-08-25, CSM sparse 티켓 재확인) 🔴 불변식 1번이 깨져 있다 — **게이트의 PL 축이
 사용자가 보는 파일을 안 본다.** 그리고 완결성 census 사각은 안 닫혔다. prepush 는 **exit 0**

@@ -1,0 +1,37 @@
+{
+  "2023.1Q": {
+    "item4_new": 22664.0,
+    "item7_new": -1767.0,
+    "item4_changed": false
+  },
+  "2024.1Q": {
+    "item4_new": 22447.0,
+    "item7_new": -3101.757812,
+    "item4_changed": false
+  },
+  "2024.2Q": {
+    "item4_new": 44994.0,
+    "item7_new": -2329.139877,
+    "item4_changed": false
+  },
+  "2024.3Q": {
+    "item4_new": 66762.0,
+    "item7_new": -17990.010136,
+    "item4_changed": false
+  },
+  "2025.1Q": {
+    "item4_new": 20087.0,
+    "item7_new": -5947.368229,
+    "item4_changed": true
+  },
+  "2025.2Q": {
+    "item4_new": 40080.0,
+    "item7_new": -15683.46952,
+    "item4_changed": true
+  },
+  "2025.3Q": {
+    "item4_new": 61207.0,
+    "item7_new": -24184.492374,
+    "item4_changed": true
+  }
+}
