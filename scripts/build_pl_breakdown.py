@@ -32,6 +32,7 @@ from src.ifrs17.csm_extractor import _iter_tables_with_context  # noqa: E402
 from scripts.pl_breakdown.common import (  # noqa: E402
     _quarter_from_path,
     _quarter_sort_key,
+    _tag_basis,
 )
 from scripts.pl_breakdown.tier1 import extract_tier1  # noqa: E402
 from scripts.pl_breakdown.tier2 import (  # noqa: E402
@@ -304,7 +305,7 @@ def parse_filing(dirs, is_life, code=None, name=None, quarter=None):
     for d in dirs:
         for x in _xmls_in(d):
             try:
-                tables.extend(_iter_tables_with_context(Path(x)))
+                tables.extend(_tag_basis(list(_iter_tables_with_context(Path(x))), x))
             except Exception:
                 pass
     if not tables:

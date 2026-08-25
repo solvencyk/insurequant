@@ -1,5 +1,112 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-26 (46th pass) — PL 연결→별도 회사별 감사(`inbox/parser/20260825T1415Z` 후속,
+> 오케스트레이터 발주): 신한라이프 판정(mixed) + 삼성생명·메리츠·신한라이프 369셀 정정 +
+> 추출경로 5곳 basis-aware 화 + viz 상각패널 삼성생명 정정. prepush exit 0.**
+>
+> **① 신한라이프 판정 (두 세션이 갈렸던 지점)**: raw 로 확정한 결과 **혼합(mixed) 기준**이다
+> — item1/15/17-24(Tier1, FS-API) = **별도**(2023.4Q/2024.4Q/2025.4Q 3개 연도 요약손익표
+> "라. 요약포괄손익계산서"(신한라이프생명보험 단독) 당기순이익이 마스터와 507,708/533,681/
+> 515,916백만 등 소수점까지 3개년 전부 일치, "나. 요약연결포괄손익계산서"(그 종속기업)의
+> 507,708 은 별도 회사와 우연히 일부 겹치되 전체는 불일치). item4/5/6/7(Tier2, CSM/RA 노트) =
+> **연결로 오염**(2025.4Q "36.보험영업수익(비용)" 연결 노트 CSM상각 735,862 = 마스터 정확일치,
+> 같은 문서 "35.보험영업수익(비용)" 별도 노트는 735,229 — 다른 값). CSM 복원 세션(45th pass)의
+> "신한라이프도 연결" 진단은 item4 만 본 것이라 부분적으로 맞았고, IR 대조 세션(44th pass)은
+> 신한라이프를 아예 4개사 표본에 안 넣어 실측이 없었다 — 모순이 아니라 **항목별로 답이 다른**
+> 상황이었다.
+>
+> **② 근본원인 (일반화된 코드 결함, 회사코드 하드코딩 아님)**: 양쪽 기준(별도 `_00760.xml`/
+> 연결 `_00761.xml` 첨부 + 본문 XML 도 ATOC `<TITLE ATOC="Y" ENG="...">` 로 "N.연결재무제표"→
+> "N+1.연결재무제표 주석"→"N+2.재무제표"→"N+3.재무제표 주석" 순으로 같은 노트를 두 번 싣는다)이
+> 있는데, PL Tier-2 추출기 4곳이 **문서 순서상 먼저 오는 연결을 그냥 집었다**(first-match-wins
+> 또는 line_no 최댓값 tiebreak — 파일이 달라 line_no 가 서로 비교 불가한데 비교하고 있었다):
+> `_life_comprehensive`(신한/농협/흥국/케이디비/푸본 공용) · `extract_tier2_samsung_life`
+> (삼성생명 구양식) · `extract_tier2_life`(생보 공용 폴백, 삼성생명 신양식이 여기로 떨어짐) ·
+> `extract_tier2_sonbo_structured`(메리츠 "(재)보험손익 상세내역"). Tier-1 은 별도 메커니즘
+> `fetch_dart_fs.py::BASIS_CFS = {"KR0069","KR0001"}` 이 삼성생명·메리츠를 연결 우선으로
+> **하드코딩**(2026-06-07, "gold=연결" 주석 — owner 의 "별도 통일" 발표보다 훨씬 전, 확인 결과
+> 근거 자체가 stale). **owner 지시대로 별도 통일**하려면: (a) BASIS_CFS 에서 두 코드 제거
+> (별도가 OFS 로 성공 fetch 됨, FY2023-2025 검증), (b) Tier-2 4곳에 `_prefer_ofs`(basis-tag
+> 필터, `scripts/pl_breakdown/common.py` 신설 `_tag_basis`/`_ofs_line_boundary`/`_prefer_ofs`) 배선.
+>
+> **③ 안전장치 — 폴백 필수(1차 시도에서 회귀 2건 자체 발견·차단)**: `_prefer_ofs` 를 무조건
+> 앞단에서 필터링했더니 (a) **한화생명 2025.4Q item4-12 전부 None** 으로 떨어짐(raw 확인:
+> 원래 값 787,290 은 XBRL `ACONTEXT=...SeparateMember` 태그로 이미 별도 확정 — 별도 note 가
+> 이 함수의 캡션/섹션 매칭 조건에 안 걸려 필터 후 후보 0). (b) **viz 상각패널에서 미래에셋
+> 생명·한화생명 이 더 나쁜 블록으로 바뀜**(별도 첨부의 동일 노트가 행수 적고 단위단서 헤더가
+> 없는 등 구조 자체가 다름 — 캡션스코어가 정당하게 연결을 고르던 경우였는데 basis 를
+> 최우선순위로 두어 덮어씀). 대책: PL 쪽은 **"별도 pool 로 먼저 시도 → item4 가 None 이면
+> 원래 pool 로 재시도"** 폴백(`_life_comprehensive_core`/`_samsung_life_core`/
+> `_life_generic_core`/`_oll_layout1_core` 4곳), viz 쪽은 **basis 를 기존 캡션/모양 tiebreak
+> 체인의 맨 뒤(line_no 바로 앞)에만 삽입**(둘 다 시뮬레이션으로 회귀 0 확인 후 채택 — "전
+> 버킷 시뮬레이션 먼저" 규율 그대로 실전에서 걸림).
+>
+> **④ 메리츠 item13/14 별건 결함 (별도 정정이 노출시킨 것)**: 메리츠 Tier1 을 별도로 고쳤더니
+> `validate_master_tables.py` 의 "보험손익(dual)" 항등식(item1 ≈ item2+13+14[+15-16])이 9개
+> 분기에서 새로 깨짐(diff -700~-2700, 이전엔 전부 <3 로 거의 완전히 닫혀 있었음 — 항등식이
+> **닫히던 이유 자체가 item1 이 연결이라 item2/13/14(당시도 연결) 와 우연히 짝이 맞았기
+> 때문**이었다는 뜻). raw 로 확인: `extract_tier2_sonbo_structured` 의 "(재)보험손익 상세내역"
+> 노트도 연결/별도 이중공시(라인 25966=연결·63919=별도)이고, **컬럼 수가 기준마다 다르다**
+> (연결 5칸[장기,일반-1,자동차,일반-2,합계] vs 별도 4칸[장기,일반,자동차,합계]) — 기존
+> `item14 = nums[고정인덱스1]+nums[고정인덱스2]` 공식이 별도에 그대로 적용되면 합계 컬럼을
+> "일반-2" 로 잘못 읽어 garbage 가 됨. **`item14 = 합계-장기-자동차` 구조식**(컬럼 수 무관하게
+> 항상 성립)으로 교체 + `_prefer_ofs`(같은 폴백 패턴) 적용 → 9개 분기 중 7개 닫힘, 2개
+> (2023.4Q/2024.1Q) 는 raw 자체에 이중공시 구조가 없어(ATOC 마커도 해당 캡션도 부재, 구버전
+> 템플릿) 판정불가로 `data/_gold/pl_bridge_baseline.json` 신규 등재(class
+> `basis_dual_note_absent`, 잔차 -1520.7/-975.6).
+>
+> **⑤ census 결과 (raw 실측 + 코드경로 전수 재빌드 diff 로 확정)**:
+>
+> | 회사 | 판정 | 근거 |
+> |---|---|---|
+> | 삼성생명(KR0069) | Tier1 전항목 연결→별도, Tier2 item4-11 중 5개 분기 연결→별도 | XBRL ACONTEXT 태그(item4/17/24 3중 확증) + IR 44th pass(item17/24 owner 예시수치 재현) |
+> | 메리츠(KR0001) | Tier1 전항목 연결→별도, item13/14 공식결함 겸 basis 수정 | XBRL ACONTEXT 태그(item24 2025.4Q 1,692,867연결/1,681,024별도=신값) |
+> | 신한라이프(KR0094) | Tier1=원래도 별도(불변), Tier2 item4-7 7개 분기 연결→별도 | 3개년 "라.요약포괄손익계산서" + "35 vs 36.보험영업수익(비용)" 노트 대조 |
+> | 농협생명·흥국생명·케이디비생명·푸본현대생명(`_life_comprehensive` 동일 함수 사용) | 2025.4Q 표본 확인 결과 무변화(연결 노트 부재이거나 연결=별도 우연일치) | raw grep(4사) — 코드 수정은 배선됐으나 값 변화 없음 |
+> | 한화생명(KR0068) | 무변화(원래도 별도, 폴백이 지켜냄) | XBRL SeparateMember 태그 |
+> | 그 외 40개사 | **미검증 — 판정불가로 남김.** 재빌드 diff 에 안 뜬 회사는 "내가 고친 5개 함수가 그 회사에 다른 결과를 안 냈다"는 뜻이지, 그 회사의 다른 미수정 Tier2 핸들러(회사별 전용 함수 다수)까지 basis 검증했다는 뜻이 아니다 | — |
+>
+> **⑥ 시뮬레이션**: 코드수정 5곳 적용 후 `build_pl_breakdown.py` 전체 재실행(8698행,
+> 전과 동일 — 행손실 0) → 배포본과 combo-diff: **369셀(KR0001 13분기·KR0069 12분기·KR0094
+> 7분기), 그 외 회사 0건**(전수 key-by-key + full-row 대조). 이 diff 자체가 사실상 "내가
+> 건드린 5개 함수가 실제로 영향을 준 회사"의 전수 목록이다 — 대조군: 코드수정 전 동일 재빌드
+> (`git stash`)에서도 KR0002/KR0005/KR0010/KR0072/KR0097/KR1010 6개사 20셀이 이미 배포본과
+> 다름을 확인(내 수정과 무관한 **기존 drift** — FS-API 캐시가 배포본 마지막 빌드 이후
+> 갱신됐거나 유사한 별건 원인으로 추정, 이번 범위 밖이라 미수정·후속 발주).
+>
+> **파일**: `PL_breakdown.json`(369셀+캐스케이드) · `scripts/pl_breakdown/common.py`
+> (`_tag_basis`/`_ofs_line_boundary`/`_prefer_ofs` 신설) · `scripts/build_pl_breakdown.py`
+> (`parse_filing` 테이블 수집 루프에 `_tag_basis` 배선) · `scripts/pl_breakdown/companies.py`
+> (`_life_comprehensive`/`extract_tier2_samsung_life`/`_oll_layout1` 폴백 래핑) ·
+> `scripts/pl_breakdown/tier2.py`(`extract_tier2_life`/`extract_tier2_sonbo_structured`
+> 폴백 래핑 + item14 구조식 교체) · `scripts/fetch_dart_fs.py`(`BASIS_CFS = set()`) ·
+> `scripts/viz_build_ifrs17_panels.py`(`_pick_amort_block` basis tiebreak 삽입) ·
+> `data/dart/viz/csm_amort_schedule.json`(삼성생명 total 130,806.91→129,020.23억원 등,
+> 한화손해보험 헤더 라벨 공백차만 변경) · `data/_gold/pl_bridge_baseline.json`(2건 신규
+> 등재) · `data/dart/_fs_api_cache/00126256_2024_1101{1,2,3,4}_OFS.json`(신규, 삼성생명
+> 2024 별도 4분기 캐시) · `tests/fixtures/{master_tables,viz_ifrs17_panels}_golden.json`
+> (`--update`, 이유 기록) · `insurequant_master_tables.xlsx`("손익분해PL" 시트만
+> `sync_master_xlsx_sheet.py`).
+>
+> **건드리지 않음**: `CSM_waterfall.json`·`NB_CSM_multiple.json`(명시적 범위 밖, 45th pass
+> 산출물 그대로) · `data/_gold/csm_amort_identity_ledger.json`(PL 정정으로 22PIN→11PIN 이
+> **저절로** 닫혔을 뿐 파일 자체는 미수정 — 0F/0S 로 게이트가 stale-pin 없음을 스스로 확인) ·
+> `_oll_layout2`(농협/흥국/케이디비/푸본 구양식, 자체 별도선호 휴리스틱 있고 이번 census 로
+> 문제 미확인) · `pick_best_block`(bs_snapshot/insurance_pl_breakdown 이 공유하는 함수라
+> `_pick_amort_block` 만 별도로 분리, 다른 두 패널은 이번 세션 산출 byte-identical 확인) ·
+> `build_root_masters.py::main()`(미실행, 셀단위 패치만) · K-ICS 레인.
+>
+> **⚠️ PL golden 이 이번 세션과 무관하게 심하게 stale 함을 발견**: `RUN_PL_GOLDEN=1 pytest
+> tests/test_pl_breakdown_golden.py` 가 `master_rows: 7199→8698`(1,499행 차) 로 실패한다.
+> `prepush_check.py` 는 이 테스트를 **opt-in 으로 명시 제외**(주석: "느린 것... 은 뺀다")하고
+> 있어 push 를 막지는 않지만, 코드 수정 전(stash 상태)에서도 동일하게 stale 했다 — 내 세션
+> 원인이 아니다. `build_root_masters.main()` 급의 미검증 전체 리빌드가 필요해(과거 PL
+> 7,799→2,940행 절단 사고와 같은 위험군) 이번 세션 범위 밖으로 두고 spawn_task 로 별도 발주.
+> **골든을 손으로 --update 하지 않았다** — 8,698행 전체를 감사 못 한 채 고치면 근거 없는
+> 종결이 된다.
+>
+> 원 티켓 `inbox/parser/20260825T1415Z`(status `open`→`answered`로 갱신, owner 재확인 대기).
+>
 > **2026-08-25 (45th pass) — CSM 연결→별도 복원(`inbox/parser/20260825T1520Z` iter2
 > 재작업): 코드 3-diff revert + 하드코딩 2곳 제거 + 84셀 복원 + NB 52필드 + 원장 22건 +
 > live baseline 재측정. 전 회사 전 분기 시뮬레이션(2,178셀) 파손 0. prepush 실행 중.**

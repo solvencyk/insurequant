@@ -1,5 +1,5 @@
 {
   "exit_code": 2,
-  "summary": "SUMMARY coverage_hole:0CSM/0PL | closing:358P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:2517P/14F/317S/0NEW | zero_legs:3 | impossible0:0 | csm_amort_identity:324P/22PIN/0F/0S | qoq_warn:206Y | sens:2R/1Y/20dir",
+  "summary": "SUMMARY coverage_hole:0CSM/0PL | closing:358P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:2515P/16F/317S/0NEW | zero_legs:3 | impossible0:0 | csm_amort_identity:335P/11PIN/0F/0S | qoq_warn:206Y | sens:2R/1Y/20dir",
   "_what": "Refactor safety net for validate_master_tables.main(). Captured before the 374-line function was split into per-check functions. Asserts the SUMMARY count matrix + exit code (--no-build)."
 }

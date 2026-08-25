@@ -2,13 +2,13 @@
 from: parser
 to: parser
 created: 20260825T1415Z
-status: open
+status: answered
 route: escalate
 company: MULTI
 period: MULTI
 rule: IR_BASIS_DETERMINATION
 lane: ifrs17
-iter: 1
+iter: 2
 ---
 
 ## 미결 (parser 작성 -- 오케스트레이터 발주 조사 결과)
@@ -90,6 +90,97 @@ owner 가 "IR 공시자료 PL 은 연결 아니냐"고 재질문해 급히 검�
 이게 이 티켓의 실질적 행동 항목이다: CSM 복원이 끝나는 대로 PL_breakdown.json 의
 KR0069 item17(투자손익)·item24(당기순이익) 도 같은 별도 기준으로 재추출 필요.
 
-## 답변 (원 sender 재확인 필요)
+## 답변 iter2 (parser-ifrs17, 2026-08-26 — PL 회사별 감사 완료)
 
-<owner/오케스트레이터가 위 판정을 검토 후 기입>
+**요청받은 후속조치를 완료했다: 신한라이프 PL 기준 확정 + PL 전사 census + 확정된 셀만 정정 +
+추출 경로 basis-aware 화 + 같은 뿌리 viz 결함(task_4dce23e7) 처리.**
+
+### 1) 신한라이프 판정 — 혼합(mixed) 기준으로 확정 (두 세션이 갈렸던 지점)
+
+raw 로 직접 확인한 결과 신한라이프는 **항목군마다 기준이 다르다**:
+- item1/15/17-24(Tier1, DART FS-API 소스) = **원래도 별도**. `data/dart/FY{2023,2024,
+  2025}_Q4/raw/KR0094_.../*.xml`의 "라. 요약포괄손익계산서"(회사명 "신한라이프생명보험
+  주식회사" 단독, 종속기업 제외) 당기순이익이 3개 연도 전부 마스터와 소수점까지 일치
+  (제35기 481,851 / 제36기 533,681 / 제37기 515,916백만).
+- item4/5/6/7(Tier2, CSM/RA 노트 소스) = **연결로 오염**돼 있었다. 2025.4Q 원문 "36.보험영업
+  수익(비용)"(연결 노트) CSM상각=735,862=마스터와 일치, "35.보험영업수익(비용)"(별도 노트)=
+  735,229=다른 값(raw 직접 대조로 확증).
+
+**두 세션이 갈린 이유**: CSM 복원 세션(45th pass)의 "신한라이프도 연결" 진단은 item4 하나만
+본 것이라 부분적으로 맞았다. IR 대조 세션(44th pass)은 신한라이프를 표본 4개사(삼성생명·
+한화생명·삼성화재·DB손해)에 아예 포함하지 않아 실측이 없었다 — 모순이 아니라 **애초에 같은
+회사의 다른 항목을 보고 있었다.**
+
+### 2) PL 전사 census — 코드경로 분석 + 재빌드 diff (선언한 방법론)
+
+값을 raw 두 소스(별도 `_00760.xml`/연결 `_00761.xml` 첨부 + 본문 XML 의 ATOC 마커 구간)에서
+grep 해 판정하는 방법을 지시받은 대로 썼고, 이를 **코드 수정 후 전체 재빌드 diff** 로 확장해
+"내가 고친 함수가 실제로 값을 바꾸는 회사"를 전수 확정했다(재빌드가 8,698행 전체를 다시
+평가하므로, diff 에 안 뜬 회사 = 그 함수들 관점에서 무변화). 결과표:
+
+| 회사 | 판정 | 근거 |
+|---|---|---|
+| 삼성생명(KR0069) | Tier1 전항목 + Tier2 5개 분기 연결→별도 | XBRL `ACONTEXT=...ConsolidatedMember`/`SeparateMember` 태그(item4/17/24 3중 확증) + 44th pass IR 수치(2025.2Q 당기순이익 1,200,474백만 owner 예시치 재현) |
+| 메리츠(KR0001) | Tier1 전항목 연결→별도 + item13/14 별건 공식결함 | XBRL ACONTEXT 태그(item24 2025.4Q 1,692,867연결→1,681,024별도) |
+| 신한라이프(KR0094) | Tier2 item4-7 × 7개 분기 연결→별도(Tier1 은 원래 별도) | 3개년 요약포괄손익계산서 + 35/36번 노트 대조 (위 1항) |
+| 농협생명·흥국생명·케이디비생명·푸본현대생명 | 무변화(2025.4Q raw 표본: 연결 노트 부재 또는 연결=별도 우연일치) | raw grep 4사 |
+| 한화생명 | 무변화(원래도 별도) | XBRL SeparateMember 태그 |
+| 그 외 40개사 | **미검증 — 판정불가로 남김** (아래 "한계" 참조) | — |
+
+정정 규모: **369셀**(메리츠 13분기·삼성생명 12분기·신한라이프 7분기), 다른 회사 0건(combo-diff
+전수 확인, 대조군으로 코드수정 전 동일 재빌드에서도 6개사 20셀의 기존 drift 존재를 확인해
+분리 — 이건 내 수정과 무관, 후속 발주함).
+
+### 3) 근본원인 + 추출경로 수정 (owner 지시대로 회사코드 하드코딩 아닌 일반 수정)
+
+Tier-1: `fetch_dart_fs.py::BASIS_CFS = {"KR0069","KR0001"}`(2026-06-07, "gold=연결" 주석 —
+owner 의 별도-통일 지시보다 훨씬 이전에 박힌 stale 가정으로 확인) → `BASIS_CFS = set()`.
+Tier-2: 4개 함수(`_life_comprehensive`·`extract_tier2_samsung_life`·`extract_tier2_life`·
+`extract_tier2_sonbo_structured`)가 문서에 두 번 실리는 같은 노트(연결이 항상 먼저) 중 먼저
+오는 쪽을 그냥 집던 것을, `_prefer_ofs`(신설 `common.py` 유틸, `_00760`/`_00761` 첨부파일명
++ 본문 ATOC 라인위치로 basis 태깅) 로 별도를 우선하도록 고쳤다 — **단, basis 필터를 무조건
+앞단에 걸면 한화생명 item4-12 가 전부 None 이 되고 viz 상각패널에서 미래에셋생명·한화생명이
+더 나쁜 블록으로 바뀌는 회귀를 시뮬레이션에서 자체 발견해**, "별도 pool 먼저 시도 → 없으면
+원래 pool 로 폴백" 구조로 재설계해 회귀 0 을 확인한 뒤 반영했다(상세는 TODO/changelog).
+
+### 4) 같은 뿌리 viz 결함(task_4dce23e7) 처리 완료
+
+`viz_build_ifrs17_panels.py::_pick_amort_block` 의 line_no 최종 tiebreak 이 파일이 다르면
+비교 불가한 line_no 를 비교해 삼성생명만 연결 노트를 골랐다(raw 확인: 별도 노트 총액이 연결
+대비 약 1.4% 작음). basis 를 **기존 캡션/모양 tiebreak 체인의 최후단**(line_no 바로 앞)에만
+삽입해 삼성생명(130,806.91→129,020.23억원)만 정정, 미래에셋생명/한화생명은 무변화(캡션
+스코어가 정당하게 우선하던 경우라 override 하면 안 됨을 시뮬레이션으로 확인), 한화손해보험은
+헤더 라벨 공백 표기차만(수치 불변).
+
+### 5) 한계 — 판정 안 된 것을 판정했다고 적지 않기 위해
+
+**나머지 40개사는 이번 census 범위 밖이다.** 재빌드 diff 에 안 뜬 회사는 "이번에 고친 5개
+함수가 그 회사에 다른 결과를 안 냈다"는 뜻이지, 그 회사 전용 Tier2 핸들러(회사별 전용 함수
+다수, 예: `extract_tier2_kb`/`extract_tier2_hyundai`/`extract_tier2_db`/`extract_tier2_dblife`
+등)까지 basis 감사를 했다는 뜻이 아니다. 전사(47개사×14분기×24항목) 전수 raw 대조는 이번
+세션 범위를 넘어섰다.
+
+### 검증
+
+- `build_pl_breakdown.py` 전체 재실행(8698행, 손실 0) → combo-diff 369셀, 다른 회사 0건.
+- `validate_master_tables.py --no-build`: `pl_bridge:2515P/16F/317S/0NEW` ·
+  `csm_amort_identity:335P/11PIN/0F/0S`(PL 정정으로 11건 저절로 닫힘, 원장 파일 자체는
+  미수정).
+- `test_master_tables_golden.py --update`(exit_code 2 불변) ·
+  `test_viz_ifrs17_panels_golden.py --update`(csm_amort_schedule.json 만 변경, 나머지 3
+  패널 byte-identical).
+- `insurequant_master_tables.xlsx` "손익분해PL" 시트만 `sync_master_xlsx_sheet.py`(8698행×
+  9열 완전일치).
+- `scripts/prepush_check.py`: 세션 하단 별도 기록(진행 중 실행, 완료 시 TODO 최상단에 결과
+  반영).
+
+### 별도 발주(이번 범위 밖, spawn_task)
+
+1. `data/dart/viz/pl_breakdown_master.json`/`pl_breakdown_coverage.json`(중간산출물) vs
+   배포본 drift — 코드수정 전 재빌드에서도 KR0002/KR0005/KR0010/KR0072/KR0097/KR1010 6개사
+   20셀이 이미 배포본과 다름(원인 미규명).
+2. `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py` 가 이번 세션과 무관하게 심하게
+   stale(master_rows 7199→8698). `prepush_check.py` 는 opt-in 제외라 push 는 안 막지만,
+   `build_root_masters.main()` 급의 미검증 전체 리빌드가 필요해 범위 밖으로 뒀다.
+
+status: **answered** (원 sender/owner 재확인 필요).

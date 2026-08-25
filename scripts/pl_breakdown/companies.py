@@ -10,7 +10,7 @@ import re
 
 from scripts.build_net_income_breakdown import to_num
 
-from .common import _norm, _row_nums
+from .common import _norm, _prefer_ofs, _row_nums
 from .tier1 import _header_blob, _pick_line, _ytd_col
 from .tier2 import _is_rollforward, _lab0, _row_by_label, _scale, extract_tier2_abl
 
@@ -2660,7 +2660,30 @@ def _life2_is_rollfwd(t):
 
 
 def _life_comprehensive(tables):
-    """Family A: positional-section P&L-analysis note with 당기/전기 columns."""
+    """Family A: positional-section P&L-analysis note with 당기/전기 columns.
+    2026-08-26 (inbox/parser/20260825T1415Z follow-up): the note this scans for is filed
+    TWICE in a both-basis filing (연결 note, then 별도 note -- same row labels, independent
+    note numbers e.g. "36. 보험영업수익(비용)" 연결 vs "35. ..." 별도).  `add()`'s
+    first-occurrence-wins (non-accumulate kinds) / sum-all (accumulate kinds) semantics
+    then silently locks in whichever comes first in `tables` = 연결 (document order), or
+    double-counts an accumulate kind across both notes.  Confirmed via raw for 신한라이프
+    (item4 2025.4Q: 연결 735,862 vs 별도 735,229; master had 735,862).  Try the OFS-only
+    pool first so 별도 wins without a per-company code check; if that finds nothing (e.g.
+    a filing whose 별도 attachment doesn't carry this note in the exact shape/caption this
+    scan needs -- 한화생명 2025.4Q was observed dropping to empty this way even though its
+    ORIGINAL result was already 별도, via the no-해외-columns pick inside `_pick_life_table`'s
+    사촌 note, not this function -- confirmed empty here too), fall back to the full pool
+    so a filing with no usable OFS candidate does not silently lose a previously-populated
+    cell (빈 칸 우선, but not at the cost of a coverage regression when the unfiltered pool
+    already carried the right basis)."""
+    ofs_only = _prefer_ofs(tables)
+    secvals, totals = _life_comprehensive_core(ofs_only)
+    if secvals.get("rev", {}).get("csm") is None and ofs_only is not tables:
+        secvals, totals = _life_comprehensive_core(tables)
+    return secvals, totals
+
+
+def _life_comprehensive_core(tables):
     secvals = {}
     totals = {}
 
@@ -3037,6 +3060,19 @@ def _oll_l1_collect(t):
 
 
 def _oll_layout1(tables):
+    """2026-08-26: this OLD-format layout has no basis check of its own ('별도 (pure life)
+    preferred' below is a LOB-purity filter, not a 연결/별도 one) -- try the OFS-only pool
+    first, fall back to the full pool if that finds nothing, same pattern as the other
+    generic 생보 Tier-2 paths."""
+    out = _oll_layout1_core(_prefer_ofs(tables))
+    if out.get(4) is None:
+        out2 = _oll_layout1_core(tables)
+        if out2.get(4) is not None:
+            out = out2
+    return out
+
+
+def _oll_layout1_core(tables):
     rc = [t for t in tables if _oll_l1_is(t)]
     pool = [t for t in rc if _oll_l1_pure(t)] or rc        # 별도 (pure life) preferred
     rev_t = next((t for t in pool if _oll_l1_hassec(t, "보험수익")), None)
@@ -3237,10 +3273,24 @@ def extract_tier2_life_comprehensive(tables, code=None):
 
 
 def extract_tier2_samsung_life(tables):
-    """삼성생명(연결, KR0069) OLD-format combined 보험서비스수익/비용 notes (2023.1Q–2025.1Q).
+    """삼성생명(KR0069) OLD-format combined 보험서비스수익/비용 notes (2023.1Q–2025.1Q).
     Reads the 당기 누적 column; 재보 lives under the 출재보험서비스수익/비용 col0 sections
     (재보 CSM labelled '제공받은 서비스의 보험계약마진').  2025.2Q+ uses dedicated 재보 tables →
-    handler returns {} there and parse_filing's generic fallback (extract_tier2_life) handles it."""
+    handler returns {} there and parse_filing's generic fallback (extract_tier2_life) handles it.
+    2026-08-26: this note is filed both-basis (연결/별도); the caption match below took
+    whichever came first (연결, confirmed via raw XBRL ConsolidatedMember tag vs master) --
+    try the OFS-only pool first so 별도 wins; if that finds nothing (별도 attachment lacks
+    this exact caption for some filing), fall back to the full pool rather than losing a
+    previously-populated cell."""
+    out = _samsung_life_core(_prefer_ofs(tables))
+    if out.get(4) is None:
+        out2 = _samsung_life_core(tables)
+        if out2.get(4) is not None:
+            out = out2
+    return out
+
+
+def _samsung_life_core(tables):
     def cum(r):                       # 당기 누적 = last col of the 당기 block
         n = _row_nums(r)
         return n[max(1, len(n) // 2) - 1] if n else None

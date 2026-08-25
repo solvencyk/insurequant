@@ -362,14 +362,38 @@ def _bucket_columns_count(b: dict) -> int:
     )
 
 
+def _block_basis(b):
+    """'OFS' (별도) / 'CFS' (연결) / None from a block's `_source_xml` (DART's
+    single-basis audit-report attachments: _00760.xml=별도, _00761.xml=연결).
+    None when the block came from a main-body XML or the suffix is absent --
+    `_prefer_ofs_blocks` treats that as basis-unknown, not CFS."""
+    src = str(b.get('_source_xml') or '')
+    if src.endswith('_00760.xml'):
+        return 'OFS'
+    if src.endswith('_00761.xml'):
+        return 'CFS'
+    return None
+
+
 def _pick_amort_block(blocks):
     """Pick best CSM-amort block.
 
-    Caption score is clamped to a non-positive value so reinsurance-only
-    captions are still penalized but a small +4 direct bonus does not
-    outweigh table-shape evidence. Tiebreakers (in order): year-bucket
-    column count (Form A detailed > abbreviated summary), body row count,
-    extractor score, line position.
+    2026-08-26 (inbox/parser/20260825T1415Z follow-up): a filing can carry this note
+    TWICE (별도 _00760.xml + 연결 _00761.xml audit-report attachments). The old
+    last-resort tiebreaker -- raw `line_no`, which only means something WITHIN one
+    file -- silently favoured whichever attachment happened to have more content
+    before the note, which for 삼성생명 happened to be 연결 (raw-confirmed: separate
+    note total ≈1.4% below the previously-selected consolidated one; 신한라이프/메리츠
+    saw larger PL-side gaps from the same class of bug -- see build_pl_breakdown.py).
+    Basis is inserted as a tiebreak BEFORE line_no, not before the existing
+    caption/shape scoring (cap / bucket-column-count / row-count / extractor score):
+    a blanket "OFS always wins" pass was tried first and it also flipped 미래에셋생명·
+    한화생명 to a WORSE block (fewer rows, no unit-cue header) purely because their
+    별도 attachment's copy of this note happens to have a less specific caption --
+    that is a real, independent caption-quality signal, not a basis bug, and must
+    keep deciding those cases. Only when everything else ties (삼성생명's case,
+    raw-confirmed: identical row/col counts and score between the 별도/연결 copies)
+    does basis get to break it.
     """
     if not blocks:
         return None
@@ -382,6 +406,7 @@ def _pick_amort_block(blocks):
             _bucket_columns_count(b),
             len(b.get('rows') or []),
             b.get('score', 0),
+            1 if _block_basis(b) == 'OFS' else 0,
             b.get('line_no', 0),
         )
 

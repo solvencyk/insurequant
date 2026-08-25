@@ -1,7 +1,7 @@
 """Tier-2: generic 발행보험 계약유형별 / 재보험 note extraction."""
 # Split out of scripts/build_pl_breakdown.py on 2026-07-21. Behaviour unchanged;
 # the golden gate (tests/test_pl_breakdown_golden.py) pins the builder output.
-from .common import _label, _norm, _row_nums
+from .common import _label, _norm, _prefer_ofs, _row_nums
 
 
 # --------------------------------------------------------------------------- #
@@ -176,8 +176,14 @@ def _b_note_table(tables):
 def extract_tier2_sonbo_structured(tables):
     """Format-B 손보 note (메리츠).  Sections delimited by header rows
     보험수익 / 보험서비스비용 / 재보험수익 / 재보험비용 / 총 보험서비스결과.
-    col0 = 장기(GMM); 자동차 & 일반 read from the '총 보험서비스결과' row."""
-    t = _b_note_table(tables)
+    col0 = 장기(GMM); 자동차 & 일반 read from the '총 보험서비스결과' row.
+    2026-08-26: this caption is filed both-basis (연결/별도, raw-confirmed for 메리츠
+    2025.4Q); `_b_note_table` took the first match = 연결 (document order), which the
+    'item1 = ΣLOB(+15−16)' bridge caught after Tier-1 switched to 별도 (diff went from
+    ~0 to ~-700..-2700 across 9 quarters).  Try the OFS-only pool first."""
+    t = _b_note_table(_prefer_ofs(tables))
+    if t is None:
+        t = _b_note_table(tables)
     if t is None:
         return {}
     out = {}
@@ -257,14 +263,21 @@ def extract_tier2_sonbo_structured(tables):
     if totals.get("re_cost") is not None:
         out["_jang_recost"] = totals["re_cost"]
 
-    # 13/14 from the '총 보험서비스결과' row.  Single-period cols [장기, 일반-1, 자동차, 일반-2];
-    # 분기/반기 doubles each LOB into [3개월, 누적] -> read 누적 at index st*pos+(st-1).
+    # 13/14 from the '총 보험서비스결과' row.  Single-period cols [장기, 일반-1, 자동차, 일반-2,
+    # 합계]; 분기/반기 doubles each LOB into [3개월, 누적] -> read 누적 at index st*pos+(st-1).
+    # 2026-08-26: 일반 used to be read as a fixed 2-column position (일반-1 + 일반-2), which
+    # only holds for the 연결(consolidated) note -- the 별도(separate) note for this same
+    # caption has ONE FEWER column (no 일반-2 consolidation-elimination component: raw-confirmed
+    # 메리츠 2025.4Q consolidated row [1,573,297 / 36,147 / (46,324) / (2,665) / 1,560,455] vs
+    # separate [1,573,297 / 36,147 / (46,324) / 1,563,120] -- reusing the old fixed g2 index on
+    # the separate row would read the 합계 cell itself as "일반-2" (item14 → 1,599,267, garbage).
+    # 일반 = 합계 − 장기 − 자동차 is structurally correct regardless of how many 일반 sub-columns
+    # the row carries (1 or 2), so it works for both notes without a basis check.
     if result_row is not None:
         nums = _row_nums(result_row)
         if len(nums) >= 3 * st:
-            g1, g2 = 2 * st - 1, 4 * st - 1
-            out[13] = nums[3 * st - 1]                                # 자동차 (누적)
-            out[14] = nums[g1] + (nums[g2] if len(nums) > g2 else 0)  # 일반 (PAA split)
+            out[13] = nums[3 * st - 1]                        # 자동차 (누적)
+            out[14] = nums[-1] - nums[st - 1] - out[13]        # 일반 = 합계 − 장기 − 자동차
     return out
 
 
@@ -336,7 +349,26 @@ def _pick_life_table(tables, must_have, context_any, section=None, prefer_no_ove
 
 def extract_tier2_life(tables):
     """생보: items 4,5,6,9,10,11 from the 발행/출재 analysis notes (domestic 합계).
-    삼성생명: single 발행 column.  한화생명: 계약유형별 columns + 합계 (excl. 해외)."""
+    삼성생명: single 발행 column.  한화생명: 계약유형별 columns + 합계 (excl. 해외).
+    2026-08-26: `_pick_life_table`'s sort (no-해외 then fewest-cols) ties when a 연결 note
+    and its 별도 twin have identical shape, and a stable sort then keeps whichever is
+    FIRST in `tables` = 연결 (document order) -- this is the fallback path for 삼성생명's
+    2025.2Q+ quarters once its dedicated OLD-format handler defers, and was shipping the
+    연결 CSM-amort figure (raw-confirmed via XBRL ConsolidatedMember tag).  Try the
+    OFS-only pool first so the tie resolves to 별도; if that comes up empty (a filing
+    whose 별도 attachment doesn't carry a candidate in the exact caption/section shape
+    `_pick_life_table` needs -- 한화생명 2025.4Q dropped item4-11 to None entirely this
+    way even though its ORIGINAL value was already 별도), fall back to the unfiltered
+    pool so a working extraction never regresses to empty."""
+    out = _life_generic_core(_prefer_ofs(tables))
+    if out.get(4) is None:
+        out2 = _life_generic_core(tables)
+        if out2.get(4) is not None:
+            out = out2
+    return out
+
+
+def _life_generic_core(tables):
     out = {}
     REV_CTX = ("일반보험서비스수익", "보험수익", "발행한 보험계약")
     COST_CTX = ("일반보험서비스비용", "발행한 보험계약에서 생기는 보험서비스비용", "보험서비스비용")

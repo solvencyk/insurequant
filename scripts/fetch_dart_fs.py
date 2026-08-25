@@ -22,12 +22,21 @@ from src.ifrs17.opendart_client import OpenDARTClient  # noqa: E402
 
 CACHE = Path("data/dart/_fs_api_cache")
 REPRT = {"1Q": "11013", "2Q": "11012", "3Q": "11014", "4Q": "11011"}
-# Basis (fs_div): the gold methodology is 별도(OFS) for the standalone insurer.  A few big
-# groups headline 연결(CFS) because insurance/financial subsidiaries are material — those
-# golds (삼성생명·메리츠) match CFS.  Default OFS; CFS only for the confirmed-연결 codes.
+# Basis (fs_div): owner directive 2026-08 — CSM/PL masters are unified on 별도(OFS).
+# Default OFS; CFS is a same-quarter FALLBACK only (when OFS has no income statement at
+# all), never a preferred primary — BASIS_CFS stays empty.
 # NOTE: 삼성화재(KR0008) 연결→별도 on 2026-06-05 (owner: 별도 답지 2025.2Q; 연결은 해외 일반/자동차
 # 자회사를 끌어와 LOB 분해를 왜곡 — 별도가 본체 보험손익 분해에 맞음).
-BASIS_CFS = {"KR0069", "KR0001"}  # 삼성생명, 메리츠 (gold=연결)
+# 2026-08-26 (inbox/parser/20260825T1415Z follow-up): 삼성생명·메리츠 REMOVED from this set.
+# Both were audited against raw XBRL ACONTEXT tags (…ConsolidatedAndSeparateFinancial
+# StatementsAxis_ifrs-full_{Consolidated,Separate}Member) — the master's item24 exactly
+# matched the ConsolidatedMember cell for both (삼성생명 2025.4Q: 2,451,515 vs SeparateMember
+# 1,699,762 candidate value fetched fresh below; 메리츠 2025.4Q: 1,692,866.810136 vs
+# SeparateMember 1,681,024.330229), i.e. the "gold=연결" comment was the same class of bug
+# as the CSM line-65535 block-selection defect (b2293c8) — a stale pre-owner-directive
+# assumption, not a verified exception.  OFS income-statement data exists and parses cleanly
+# for both codes across FY2023–FY2025 (spot-checked), so this is not a coverage regression.
+BASIS_CFS = set()
 # name-search aliases (Korean transliteration the substring search can't reach) — NOT a
 # permanent KR↔corp map; just better search terms.
 ALIAS = {"KB라이프생명": "케이비라이프생명보험", "IBK연금보험": "아이비케이연금보험"}
