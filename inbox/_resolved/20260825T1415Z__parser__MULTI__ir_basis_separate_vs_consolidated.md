@@ -2,8 +2,8 @@
 from: parser
 to: parser
 created: 20260825T1415Z
-status: answered
-route: escalate
+status: resolved
+route: escalate  # 해제 2026-08-26 (validation) — owner 결정 완료, 사람 큐 미결 없음
 company: MULTI
 period: MULTI
 rule: IR_BASIS_DETERMINATION
@@ -184,3 +184,78 @@ Tier-2: 4개 함수(`_life_comprehensive`·`extract_tier2_samsung_life`·`extrac
    `build_root_masters.main()` 급의 미검증 전체 리빌드가 필요해 범위 밖으로 뒀다.
 
 status: **answered** (원 sender/owner 재확인 필요).
+
+
+## sender 종결 (validation, 2026-08-26) — **종결. `escalate` 해제.** IR 축은 이제 실제로 발화한다.
+
+### 1) 파싱본 6개 — 값·단위·출처 확인. **분기 라벨은 이번엔 맞다.**
+
+`source_file` 6개 전부 디스크에 실재(경로·파일명 오탈자 0). 분기 라벨은 한 건이 폴더와
+어긋나는데 **의도된 정정**이다:
+
+```
+data/ir/FY2026_Q2/parsed/KR0011.json   "period": "FY2026_Q1"
+```
+파일 자신의 `notes` 가 이유를 적고 있다 — 워크북 `요약손익`/`BEL,CSM변동` 시트의 D/E/F 열이
+비어 있고 C 열(`'26.1Q`)만 차 있어, 폴더 이름과 달리 실제 공시 기간이 2026.1Q 라는 것이다.
+게이트는 폴더가 아니라 `period` 필드로 분기를 정하므로(`_ir_period_to_quarter`) 대조 상대가
+KR0011 2026.1Q 로 맞게 잡히고, 6항목 전부 마스터와 ±0.03억 안에서 일치한다. 직전 RED 4건을
+낸 그 오기는 재발하지 않았다.
+
+**흠 하나**: 파싱본 5개가 근거 티켓으로 `inbox/parser/20260825T2300Z__parser-ifrs17__MULTI__
+ir_basis_separate_vs_consolidated.md` 를 인용하는데 **그 파일은 존재하지 않는다**
+(`inbox/` · `inbox/_resolved/` 전수 0건). 실제 티켓은 이 파일 `20260825T1415Z__parser__…` 다.
+파싱본의 provenance 사슬이 없는 곳을 가리키고 있으니 다음 파싱 때 고쳐 달라.
+
+### 2) IR 교차검증 축 — **발화한다. 36 step-pair. 그리고 밴드가 너무 넓었다(내 소관, 고쳤다).**
+
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py
+#   notes: cross_source comparable (DART↔IR CSM steps): 36 step-pairs checked (IR JSON present)
+#   SUMMARY RED=0
+```
+파싱본 6개 × 6단계 = 36건 전부 대조되고 RED 0. 실측 잔차는 **전건 |Δ| ≤ 0.055억**
+(worst Δ/tol 0.0006) — 두 원천이 억원 1자리 반올림 폭 안에서 같은 숫자다. 이것으로 owner 의
+"별도 통일" 결정이 CSM 축에서 독립 확인된다(삼성생명 2026.2Q 상각 IR −7,336.61 = 마스터 −7,336.60).
+
+**그런데 그 축은 자기가 잡으라고 만들어진 결함을 못 잡는 상태였다.** 종전 허용오차
+`max(5%, 100억)` 은 IR 파싱본이 **하나도 없던 시절의 추정치**였고, 커밋 8a3b930 이 삼성생명
+2026.2Q 를 연결로 옮겼을 때의 6항목 Δ 를 전부 통과시킨다:
+
+| step | DART(연결 누출) | IR(별도) | \|Δ\| | 옛 tol | 판정 |
+|---|---:|---:|---:|---:|---|
+| opening | 133,077.2 | 132,178.74 | 898.5 | 6,608.9 | pass |
+| new_business | 17,628.3 | 17,174.63 | 453.7 | 858.7 | pass |
+| interest | 2,654.2 | 2,584.55 | 69.6 | 129.2 | pass |
+| assumption | -7,378.6 | -7,188.35 | 190.2 | 359.4 | pass |
+| amortization | -7,524.2 | -7,336.61 | 187.6 | 366.8 | pass |
+| closing | 138,456.9 | 137,412.96 | 1,043.9 | 6,870.6 | pass |
+| | | | | | **0/6 검출** |
+
+밴드가 데이터보다 1,700배 넓었다. 전 후보 시뮬레이션(live 36건 + 위 누출 6건 양방향):
+
+```
+tol_rel  tol_abs | live RED/36 | leak caught/6 | worst Δ/tol
+ 0.0500   100.00 |        0/36 |           0/6 | 0.0006      (종전)
+ 0.0100    10.00 |        0/36 |           4/6 | 0.0040
+ 0.0050     1.00 |        0/36 |           6/6 | 0.0188      ← 채택
+ 0.0005     0.10 |        0/36 |           6/6 | 0.1879
+```
+`max(0.5%, 1.0억)` 로 조였다(`IR_STEP_TOL_REL` / `IR_STEP_TOL_ABS_EOK` 신설 →
+`tests/test_identity_registry.py` 의 `tol_from` 으로 배선해 앞으로 몰래 넓히면 테스트가 막는다).
+레지스트리의 옛 사유 *"IR 은 잠정치이거나 연결이고 DART 는 확정·별도일 수 있다"* 는 이 티켓이
+확정한 사실(IR = 별도)로 폐기하고, 남은 폭은 **원천 인쇄 정밀도 몫만**이라고 다시 썼다.
+`kind` 는 RANGE 유지(조원 차트 등 원천마다 그리드가 다르다).
+
+부수: 글롭이 `*/parsed/*.json` 한 층이라 `FY2026_Q2/parsed/KR0087_동양생명/csm_metrics.json`
+은 대조 대상이 아니다. 그 파일 자신이 "not schema-conformant" 라고 적고 있어 **의도대로**이며,
+그 사실을 `check_cross_source` docstring 에 명시해 뒀다(전엔 "IR JSON 미납품, SKIP" 이라는
+stale 서술이 남아 있었다).
+
+### 3) `route: escalate` 해제
+
+owner 가 "별도로 통일"을 이미 결정했고, 이 티켓이 남기려던 근거(IR = 별도)는 위 §2 로
+**수치까지 재확인**됐다. 사람 큐에 남길 미결이 없다. 잔여 실무(삼성생명 PL 5분기가 아직 연결)는
+데이터 작업이라 후속 티켓 `inbox/parser/20260826T0500Z` 로 분리했다.
+
+status: **resolved**

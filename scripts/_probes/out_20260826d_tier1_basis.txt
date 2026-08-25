@@ -1,0 +1,6 @@
+KR0029 AIG손해보험: resolve_corp FAILED
+OFS succeeded: 282
+OFS failed, CFS fallback used (basis leak in Tier-1): 0
+both failed (no FS-API tier1 at all -> HTML fallback in real pipeline): 141
+
+=== rows where CFS fallback fired (Tier-1 currently CONSOLIDATED) ===

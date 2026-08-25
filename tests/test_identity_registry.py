@@ -251,13 +251,18 @@ REGISTRY: dict[str, dict] = {
         "statement": "DART CSM 워터폴 단계 ↔ IR 팩트시트 같은 단계",
         "impl": [("scripts/validate_data_contract.py", "check_cross_source")],
         "kind": "RANGE",
-        "tol": {"abs": 100.0, "rel": 0.05, "unit": "억원"},
-        "tol_from": [],
-        "measured": "현재 6 step-pair 대조. IR JSON 이 들어오는 만큼만 활성.",
-        "reason": "두 원천의 **작성 시점·범위가 다르다** — IR 팩트시트는 잠정치이거나 연결 "
-                  "기준이고 DART 는 확정·별도인 경우가 있다. 같은 개념이지만 같은 숫자가 "
-                  "나와야 할 이유가 없어 comparable(참고 대조)로 등록돼 있다. 등식으로 "
-                  "승격하려면 두 원천의 스코프를 회사별로 확정해야 한다.",
+        "tol": {"abs": 1.0, "rel": 0.005, "unit": "억원"},
+        "tol_from": [("validate_data_contract", "IR_STEP_TOL_ABS_EOK", 1.0),
+                     ("validate_data_contract", "IR_STEP_TOL_REL", 0.005)],
+        "measured": "2026-08-26 실측: 파싱본 6개(KR0008/KR0011/KR0068/KR0069×2/KR0087) "
+                    "36 step-pair 전건 |Δ| ≤ 0.055억, worst Δ/tol 0.0188. 그 전 밴드 "
+                    "max(5%,100억) 은 커밋 8a3b930 의 연결 누출(Δ 69.6~1,043.9억)을 "
+                    "**0/6 놓쳤다** — 조인 뒤 6/6 검출, live RED 는 0.",
+        "reason": "등식이 아니다 — IR 원천마다 **인쇄 정밀도**가 다르다(조원 차트는 ±50억 "
+                  "그리드). 스코프는 이제 확정됐다: IR = 별도(삼성생명 시트 라벨 "
+                  "`CSM 상세 (별도)` · 한화생명 각주 `※ SAP 기준(별도)`)이고 마스터도 별도라 "
+                  "**두 원천은 같은 숫자여야 한다**. 그래서 종전의 '작성시점·범위가 달라 "
+                  "같을 이유가 없다' 는 사유는 폐기하고, 남은 폭은 원천 정밀도 몫만이다.",
         "mutation": "tests/test_deploy_assets.py",
     },
     "nb_csm_multiple": {
@@ -409,7 +414,7 @@ REGISTRY: dict[str, dict] = {
                    "것이 아니라 **파생식이 원문 산출식의 하한**이라는 지문이다. 원문 산출식을 "
                    "확정하기 전에 조이면 오탐 12건을 만든다. 조이지 않는 것이 정당하다는 뜻이 "
                    "아니라 **원인 미규명이라는 뜻**이다.",
-            "ticket": "inbox/parser/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md",
+            "ticket": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md",
             "measured_cost": "tol 1% → 위반 17건(현행 5% 는 5건). 순증 12건.",
         },
         "mutation": "tests/test_rule_coverage_manifest.py",
@@ -552,9 +557,18 @@ def test_identity_tolerances_are_rounding_level():
             if len(str(dw.get(field, "")).strip()) < (MIN_REASON_CHARS if field == "why" else 8):
                 bad.append(f"{rid}: documented_widening.{field} 가 비었거나 너무 짧다")
         # 티켓은 **실재해야 한다** — 없는 파일을 가리키는 면제는 면제가 아니라 방치다.
+        # 단 티켓은 종결되면 `inbox/<stage>/` → `inbox/_resolved/` 로 옮겨진다(정상 수명주기).
+        # 그때마다 이 테스트가 깨지면 "티켓을 닫으면 게이트가 막힌다"가 되어 닫기를 미루게
+        # 된다 — 실제로 2026-08-26 에 그렇게 한 번 막혔다. 그래서 **두 자리 다** 본다.
+        # 어느 쪽에도 없으면 여전히 FAIL(그게 이 검사의 본론이다).
         tk = str(dw.get("ticket", "")).strip()
-        if tk and not (ROOT / tk).exists():
-            bad.append(f"{rid}: documented_widening.ticket 이 가리키는 파일이 없다 — {tk}")
+        if tk:
+            here = ROOT / tk
+            sibling = (ROOT / "inbox" / "_resolved" / here.name if "_resolved" not in here.parts
+                       else ROOT / "inbox" / "parser" / here.name)
+            if not here.exists() and not sibling.exists():
+                bad.append(f"{rid}: documented_widening.ticket 이 가리키는 파일이 없다 "
+                           f"(활성·_resolved 양쪽 확인) — {tk}")
     assert not bad, "등식이 밴드로 구현돼 있다:\n  " + "\n  ".join(bad)
 
 

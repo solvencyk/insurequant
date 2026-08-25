@@ -1,9 +1,137 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-25 (f) · Stage 3/5 — validation
+> Last updated: 2026-08-26 (a) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-08-26 (a) — answered 4건 전건 종결: 게이트 룰 갭 2곳을 실측으로 조이다
+
+내가(그리고 parser 가) 보낸 `answered` 4건을 재확인해 **전부 resolved** 로 닫았다. 마스터
+JSON(`CSM_waterfall.json` · `PL_breakdown.json`)은 한 셀도 안 고쳤다 — 재확인 세션이고 PL 은
+병렬 세션이 작업 중이었다. 고친 것은 게이트 2곳 + 등재부 2종 + 골든 1개다.
+
+### 1) `csm_steps_dart_vs_ir` — 축이 살아났는데 허용오차가 데이터보다 1,700배 넓었다
+
+IR 파싱본 6개(`data/ir/*/parsed/`)가 들어오면서 이 축이 처음으로 실제 대조를 한다:
+**36 step-pair, RED 0.** 종전엔 `check_cross_source` docstring 이 "IR JSON 미납품, validation
+V1 SKIP" 이라고 적힌 채였다.
+
+문제는 그 다음이다. 실측 잔차는 **전건 |Δ| ≤ 0.055억**(worst Δ/tol 0.0006)인데 허용오차는
+`max(5%, 100억)` — IR 파싱본이 하나도 없던 시절의 추정치였다. 그 밴드는 **자기가 잡으라고
+만들어진 결함을 통과시킨다**: 커밋 `8a3b930` 이 삼성생명 2026.2Q 를 연결로 옮겼을 때 6항목
+Δ 는 69.6~1,043.9억이었는데 전부 밴드 안이다(상각 Δ187.6 < tol 366.8) → **0/6 검출**.
+
+전 후보 시뮬레이션(live 36건 + 누출 6건, 양방향):
+
+| tol_rel | tol_abs | live RED/36 | leak 검출/6 | worst Δ/tol |
+|---|---|---|---|---|
+| 0.05 | 100.0 | 0 | **0** | 0.0006 (종전) |
+| 0.01 | 10.0 | 0 | 4 | 0.0040 |
+| **0.005** | **1.0** | **0** | **6** | **0.0188** (채택) |
+| 0.0005 | 0.1 | 0 | 6 | 0.1879 |
+
+`IR_STEP_TOL_REL = 0.005` · `IR_STEP_TOL_ABS_EOK = 1.0` 을 모듈 상수로 빼고
+`tests/test_identity_registry.py` 의 `tol_from` 에 배선했다(종전 `tol_from: []` 이라 선언과
+코드가 갈라져도 아무도 못 잡았다). 레지스트리의 옛 사유 *"IR 은 잠정치이거나 연결이고 DART 는
+확정·별도일 수 있다"* 는 폐기했다 — IR = 별도가 문서 라벨로 확정됐고(삼성생명 `CSM 상세 (별도)`,
+한화생명 `※ SAP 기준(별도)`) 마스터도 별도라 **같은 숫자여야 한다.** `kind` 는 RANGE 유지
+(원천마다 인쇄 정밀도가 다르다).
+
+### 2) PL 생명장기 등식이 발행사 표의 세 번째 다리를 안 보고 있었다
+
+`20260825T1120Z` §4 의 3건(교보라플 2024.4Q · BNP카디프 2024.4Q/2025.4Q)이 "데이터가 아니라
+룰 갭" 이라고 넘어왔다. raw 로 확정했다 — 교보라플 `20250328001411_00760.xml` `(단위 : 원)`:
+
+```
+Ⅰ. 보험손익 (26,015,543,184) = 1.보험영업수익 19,825,745,982 − 2.보험서비스비용 45,841,289,166
+   원수  19,783,534,758 − 37,629,857,356 = −17,846,322,598 = item3
+   재보험     42,211,224 −  1,950,010,570 =  −1,907,799,346 = item8
+   (3) 기타사업비용 6,261,421,240          ← 원수·재보험과 나란한 세 번째 다리
+   item3 + item8 − 기타사업비용 = −26,015,543,184 = item2   (원 단위까지)
+```
+
+`보험손익(dual)` 이 이미 쓰던 bare/adj 패턴을 `생명장기손익` 층에도 준다(`PL_EQ_ADJ` 신설).
+전 버킷 시뮬레이션 **3 닫힘 · 파손 0 · 잔존 0**(309/3 → 312/0). 비용도 기록했다: min-|잔차|
+후보라 통과 버킷은 못 깨지지만, **잔차가 하필 기타사업비용과 같은 크기인 미래의 추출결함은
+통과시킨다.** 등재부에서 `sub_leg_gap` 3건 삭제(16 → 13건).
+
+### 3) 원장이 두 시간 만에 화석이 됐다 — 답변이 박제한 수치의 유효기간
+
+`20260825T1520Z` 답변은 `pinned=22 fail=0 stale=0` 을 재현 명령과 함께 박제했다. 그 값은
+커밋 `b2293c8` 시점 것이고, **같은 레인의 다음 커밋 `8c1666b`(PL 을 별도로)가 두 시간 뒤에
+11건을 저절로 닫았다.** 실측 `common=346 pass=335 pinned=11 stale=11`.
+
+닫힌 11건 = 삼성생명 5분기 + 신한라이프 6분기. 신한라이프 2026.1Q/2Q 는 내가 iter2 반려문에
+"연결·별도 차일 가능성이 매우 높다"고 적은 가설이 그대로 확인된 것이다. FIXED 11줄을 지우고
+`_population` 갱신 · 남은 삼성생명 5분기 note 에 "이 분기는 8c1666b 범위 밖, 고칠 대상은 PL"
+을 명시했다. `validate_data_contract` YELLOW 96 → 85.
+
+**교훈**: 답변의 게이트 수치는 커밋 시점 스냅샷이다. 재확인은 그 수치를 믿지 말고 다시 재야
+한다 — 특히 같은 레인에서 병렬 커밋이 흐를 때.
+
+### 4) census 판정 재검증 — raw 로 직접 갈랐다
+
+- **삼성생명·신한라이프 84셀 = 확인.** 3-way 셀 대조(`8a3b930^` / `8a3b930` / 워킹트리,
+  키 2,148 전건 일치): 값 84셀 · 값_당분기 84셀 · 2개사. 한화생명·현대해상 세 대조 전부 0셀.
+- **교보생명 미복원 = 옳다, 사유는 틀렸다.** parser 는 "당기/전기류 후보선택 버그" 라 했는데
+  `20230515002764.xml`(54,435줄)에서 절 마커로 가르면 버린 105,807 은 **연결재무제표 주석**
+  (line 19282), 채택한 104,567 은 **재무제표 주석=별도**(line 38283) — 삼성생명과 같은 축이고
+  문서 순서만 반대다. 그리고 이 회사는 **gold override 로만** 고쳐져 픽커는 여전히 연결을
+  선호한다. census 의 "나머지 33사 판정불가" 를 낙관적으로 읽으면 안 되는 이유다.
+- **코리안리 판정불가 = 맞다.** PL 과 맞는 값 70,611(FY2023_Q2) · 92,311(FY2023_Q3)이
+  연결·별도 **양쪽 절에 같은 숫자로** 인쇄돼 있다. 재보험사라 이 줄의 연결효과가 0이다.
+- **gold `set` 30셀 제거는 반대.** `csm_waterfall_master_diag.json` mtime **2026-08-17** 로
+  stale — AIG 2025.4Q 기말이 아직 928,075.0(1000배)이다. `build_csm()` 은 diag + gold overlay
+  라 지금 지우면 그대로 되돌아간다. diag 재생성(owner 승인) → 삭제 → 산출 동일 확인 순서.
+
+### 5) 못 닫은 것 (후속 `inbox/parser/20260826T0500Z`)
+
+① 삼성생명 item3/item4 **10셀**이 `8a3b930^` 와 다르다 — parser 답변의 "결과적으로 일치" 는
+틀리다. 두 항이 정확히 상쇄돼 closing 항등식은 안 깨지지만 `이자부리`는 화면 계열이고
+2024.4Q 에서 70.1억이 움직였는데 **어느 원천으로도 확인이 안 된다**(워터폴이 상품라인 3블록
+합이라 단일 인쇄값 대조 불가, IR 은 그 5분기 미포함). vintage 혼재(stale diag vs 새 실행)가
+유력.
+② 삼성생명 PL 5분기가 아직 연결 — 반기(2Q) 필링 전부 + FY2024 분기. 2026.2Q 는 IR 파싱본이
+별도 −7,336.61 / 연결 −7,524.2 를 둘 다 명시해 **확증**된다.
+③ diag stale + `_LXML_LINE_NO_SENTINEL` 죽은 상수.
+
+### 6) 그밖에 기록만
+
+- IR 파싱본 5개가 근거 티켓으로 `20260825T2300Z…` 를 인용하는데 **그 파일은 없다**(실제는
+  `20260825T1415Z`). provenance 사슬이 없는 곳을 가리킨다.
+- `_UNIT_TO_UDIV` 에 `억원`(0.01)·`십억원`(0.001)이 있어 `lit-doc`(문서 최다) 경로가 그걸
+  뽑으면 100~1000배가 난다. 지금 68건 전부 값 불변이라 실현되진 않았다.
+- `user_csm_cells.json` `set` 277건 중 `why` 빈 항목 **44건**(KR0003 12 · KR0072 5 · KR0079 27).
+
+### 7) 티켓을 닫자 게이트가 막혔다 — 두 개를 같이 고쳤다
+
+4건을 `_resolved/` 로 옮기고 prepush 를 돌리니 **exit 2** 가 났다. 원인 둘:
+
+- `test_identity_registry.py` 의 `36_irr` `documented_widening.ticket` 이
+  `inbox/parser/20260825T1520Z…` 를 가리키는데 그 파일을 내가 옮겼다. 검사 자체는 옳다
+  ("없는 파일을 가리키는 면제는 방치다"). 하지만 **티켓이 종결되면 옮겨지는 것이 정상 수명주기**라
+  그때마다 게이트가 막히면 "닫으면 막히니 닫기를 미루자"가 된다. 경로를 `_resolved` 로 갱신하고,
+  검사가 **활성·_resolved 양쪽을 보도록** 고쳤다(어느 쪽에도 없으면 여전히 FAIL).
+- 그 실패를 **prepush 가 보여주지 못했다.** `subprocess.run(..., encoding="utf-8")` 리더가
+  pytest 의 한국어 assert 메시지(콘솔 cp949 바이트 0xb7)에서 죽어 stdout 이 통째로 사라지고
+  "offline tests=FAIL" 만 찍혔다. 실패 이유를 못 보여주는 게이트는 나쁜 게이트다 —
+  `errors="replace"` 를 붙였다(2곳). 정상 통과할 때는 안 드러나던 자리다.
+
+등재부 2종의 `routed` 포인터 14개도 `_resolved` 로 재지정했다(강제되지 않지만 다음 세션이 읽는다).
+
+### 재현
+
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_master_tables.py --no-build
+#   pl_bridge:2518P/13F/317S/0NEW · csm_amort_identity:335P/11PIN/0F/0S (stale 0)
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py
+#   RED=0 YELLOW=85 · cross_source comparable (DART↔IR CSM steps): 36 step-pairs checked
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260825b_csm_unit_fix_simulation.py
+#   same=293 changed=8 both_none=30 (파손 0)
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py
+#   PRE-PUSH VERDICT: gate-clear (exit 0, offline tests 230 passed/1 skipped)
+```
 
 ## 2026-08-25 (f) — answered 3건 재확인: CSM 워터폴이 연결로 넘어간 회귀 적발 · 불변식 1번 배선
 

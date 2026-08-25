@@ -1284,11 +1284,27 @@ def check_as_of(res: GateResult, env: "Env") -> None:
 # ===========================================================================
 # Concept registry (spec §3): classify which (source_a, source_b) pairs measure the SAME concept
 # (comparable → tolerance check) vs structurally DIFFERENT concepts (reference-only → NEVER penalize).
+#
+# DART↔IR CSM step 허용오차 (2026-08-26 validation, inbox/parser/20260825T1415Z 재확인).
+# 종전 값은 `max(5%, 100억)` 이었고 **IR 파싱본이 하나도 없던 시절에 정해진 추정치**였다
+# ("IR 은 잠정치이거나 연결이고 DART 는 확정·별도일 수 있다"). 파싱본 6개가 들어와 실측이
+# 가능해지자 그 전제가 무너졌다 —
+#   · 실측: 36 step-pair 전건 |Δ| ≤ 0.055억 (worst Δ/tol = 0.0006). 두 원천은 억원 1자리
+#     반올림 폭 안에서 같은 숫자다. IR = 별도(separate)임이 문서 라벨로 확정됐고
+#     (삼성생명 `CSM 상세 (별도)` · 한화생명 `※ SAP 기준(별도)`), 마스터도 별도다.
+#   · 그런데 종전 밴드는 **자신이 잡으라고 만들어진 결함을 0/6 으로 놓친다**: 커밋 8a3b930
+#     이 삼성생명 2026.2Q 를 연결로 옮겼을 때 6항목 Δ 는 69.6~1,043.9억이었는데 전부
+#     밴드 안이었다(예: 상각 Δ187.6 < tol 366.8). 밴드가 데이터보다 1,700배 넓었다.
+# 조인 값 `max(0.5%, 1.0억)` 은 실측 최악값의 18배 여유를 두면서 그 연결 누출을 6/6 잡는다
+# (시뮬레이션: live 36건 RED 0 · leak 6/6 검출 · worst Δ/tol 0.0188).
+# 등식(IDENTITY)이 아니라 RANGE 로 남긴다 — IR 원천마다 인쇄 정밀도가 다르다(조원 차트 등).
+IR_STEP_TOL_REL = 0.005
+IR_STEP_TOL_ABS_EOK = 1.0
 CONCEPT_REGISTRY = {
     # comparable: same economic concept across two sources → tolerance check
     "csm_steps_dart_vs_ir": {
         "kind": "comparable",
-        "tol_rel": 0.05, "tol_abs_eok": 100.0,
+        "tol_rel": IR_STEP_TOL_REL, "tol_abs_eok": IR_STEP_TOL_ABS_EOK,
         "note": "DART CSM waterfall step ↔ IR factsheet same step (opening/new_business/...)",
     },
     # reference-only: DIFFERENT concepts — display side-by-side but NEVER dock confidence
@@ -1304,10 +1320,12 @@ CONCEPT_REGISTRY = {
 def check_cross_source(res: GateResult, env: "Env") -> None:
     """Same-concept tolerance check + the different-concept guard.
 
-    Phase 1 reality: the IR-side formal JSON (data/ir/<period>/parsed/<KR>.json) that powers
-    csm_steps_dart_vs_ir is not yet delivered (validation V1 SKIP), so the comparable path emits
-    no findings today — but the registry + guard are wired so they activate the moment IR JSON
-    lands, and the guard is exercised now (regression #5) to prove tier2 Face↔BS never docks."""
+    2026-08-26: the IR-side formal JSON (data/ir/<period>/parsed/<KR>.json) HAS landed — 6 files
+    (KR0008/KR0011/KR0068/KR0069×2/KR0087), 36 step-pairs actually compared, so csm_steps_dart_vs_ir
+    is no longer a SKIP. Note the glob is `*/parsed/*.json` (one level): a nested working file such
+    as FY2026_Q2/parsed/KR0087_동양생명/csm_metrics.json is deliberately NOT compared (its own note
+    says it is not schema-conformant). The different-concept guard is exercised alongside
+    (regression #5) to prove tier2 Face↔BS never docks confidence."""
     # --- 3z. PL_breakdown 의 CSM상각 ↔ CSM_waterfall 의 상각액 (owner 2026-08-15) ---
     # 왜 필요했나: 두 마스터가 **같은 회사·같은 분기의 같은 사건**을 각자 들고 있는데 서로를 한 번도
     # 안 봤다. 그래서 라이브에 삼성화재 2026.2Q PL 생명장기 분해가 통째로 null(화면 0)인 채로

@@ -3,6 +3,78 @@
 > Last updated: 2026-08-26 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-08-26 (47th pass) — PL 연결→별도 잔여 33개사 전수감사, 정정 0셀 (46th pass 잔여분)
+
+오케스트레이터가 46th pass의 "그 외 40개사는 미검증"을 이어받아 발주했다. 실측 모집단을 다시
+세어보니 `PL_breakdown.json`엔 36개사뿐이었다(CSM/NB의 47개사와 다른 모집단 — "40개사"는
+근사치). 46th pass가 정정한 3개사(메리츠·삼성생명·신한라이프) + 표본확인만 한 5개사(한화생명·
+흥국생명·케이디비생명·푸본현대생명·농협생명)를 뺀 **33개사**가 이번 세션의 신규 전수감사
+대상이다.
+
+**판정 방법 기계화.** 지시받은 3종(XBRL태그/파일접미사, 요약손익표 다년대조, 그리고 필요시
+직접 raw 대조)을 재사용 가능한 스크립트로 만들었다. 파일접미사·ATOC 위치기반 태깅은 46th
+pass가 이미 `scripts/pl_breakdown/common.py::_tag_basis`로 심어놨던 것을 그대로 재사용했다.
+새로 만든 것은 46th pass가 3개사에 손으로 적용했던 안전패턴("별도 pool 먼저 시도 → 핵심항목이
+전부 None이면 원래 pool로 재시도, 구조적 실패는 신호로 안 씀")을 **모든** Tier2 경로(전용
+핸들러 25개사 + 핸들러 미등록 10개사의 제네릭 폴백 캐스케이드) 및 Tier1 FS-API 경로에
+일반화해, `parse_filing()`을 "현재 그대로"와 "`_prefer_ofs(tables)` 선적용" 두 버전으로 돌려
+결과를 diff하는 진단 스크립트 3종(`scripts/_probes/probe_20260826{_,d,g}*.py`)이다. 전부
+읽기전용 — production 파일은 하나도 건드리지 않았다(git status로 재확인).
+
+**세 방법이 전부 일치했다 — 불일치 0.** 코드-diff 시뮬레이션 결과를 raw 요약손익표 다년대조로
+독립 재확인했다. 교보생명(연결효과 실재 — 자회사 교보라이프플래닛 보유): raw FY2025
+연결당기순이익 773,072백만 vs 별도 763,210백만(1.3% 괴리) — 마스터 값 763,210.477599 =
+별도와 정확 일치. 삼성화재(연결효과가 더 큼): raw FY2025 연결 2,020,287백만 vs 별도
+1,690,878백만(19.5% 괴리) — 마스터 값 1,690,878.214258 = 별도와 정확 일치. 두 회사 모두
+FY2024도 동일하게 별도와 일치, 연결과는 불일치를 재확인했다.
+
+**결과: 33개사 전부 이미 별도로 정확함. 정정 0셀.**
+- Tier1(FS-API, item1/15/17-24): 36개사 전체에서 OFS 1차성공 282 filing-quarter 전수 —
+  연결 폴백 0건(46th pass의 `BASIS_CFS=set()` 수정이 전사에 유효함을 재확인). 나머지 141
+  filing-quarter는 OFS/CFS 둘 다 실패(주로 비상장 연1회 감사보고서사) → HTML tier1 폴백 또는
+  owner `_GOLD_CELL_OVERRIDE`로 대체, basis와 무관.
+- Tier2 전용핸들러 25개사(신규 23개사 + 기존 2개사 회귀재확인), 313 filing-quarter: 2건만
+  OFS선호에 반응(흥국생명 2024.4Q·DB생명 2025.4Q, 둘 다 item6/예실차 Δ1.0백만=0.002~0.003%) —
+  반올림 잡음이지 연결/별도 실질 차이가 아니라고 판단해 미정정. 나머지 311건 무변화.
+- Tier2 제네릭 폴백 10개사(핸들러 미등록: AIG·신한이지·서울보증·한화생명·라이나·BNP카디프·
+  아이엠라이프·메트라이프·교보라이프플래닛·IBK연금), 50 filing-quarter: 0건 반응. AIG·
+  서울보증은 raw에 실제 CFS 태그가 있었는데도(연결효과가 존재할 수 있는 회사) 기존 캐스케이드가
+  이미 별도로 안착해 있었다.
+- 구조적으로 교차검증이 안 되는 93 filing-quarter(전용62+제네릭31, 동양생명 12건 최다)는
+  판정불가로 남겼다 — OFS-only pool에서 해당 핸들러가 핵심항목을 못 찾아 신호 자체가 없다.
+  현재값을 유지했지만 연결오염 여부가 확인된 건 아니다(다음 세션 재조사 후보).
+- 나머지 대부분(주로 2023.1Q~2024.3Q 전 분기 + 다수 소형/단일법인 전 분기)은 raw 자체에
+  이중기준 신호가 전혀 없어 판정 대상 자체가 성립하지 않는다 — 회사 특유가 아니라 2025.1Q
+  전후로 공시양식이 바뀐 결과다(46th pass가 고친 3개사도 그 이전 분기는 같은 패턴).
+
+**되돌린 셀 = 0, 코드 수정 = 0.** 연결로 확인된 셀이 없어 되돌릴 것이 없었다 — Tier1·Tier2
+전용핸들러·Tier2 제네릭폴백 세 경로 모두 이미 올바르게 배선돼 있음을 확인했을 뿐이다.
+`PL_breakdown.json`을 비롯한 production 파일은 전부 무변경이라 combo-diff·골든 재생성이
+불필요했다(입력이 안 바뀌었으므로).
+
+**부가 발견(범위 밖, spawn_task 발주)**: 아이엠라이프생명보험(KR0076)·카카오페이손해보험
+(KR1098) 2개사가 `PL_breakdown.json`에 행이 0개 — basis 문제가 아니라 포괄손익계산서 추출
+자체가 Tier1/Tier2 전부 실패하는 별개의 커버리지 결손(`task_bad9b2b2`). prepush의
+`check_dart_raw_coverage.py`가 보여준 AIG·하나손해·교보라이프플래닛의 "연결감사보고서는
+참고용이라 의도적 미취득" 기존 기록이 이번 census에서 그 회사들 여러 분기가 CFS=0으로 나온
+이유와 정확히 부합함을 확인했다(새 문제 아님, 기존 다운로더 결정을 재확인).
+
+게이트: `scripts/prepush_check.py` exit=0(gate-clear, offline tests 230 passed/1 skipped,
+488초). 1차 실행에서 골든 테스트 1건이 일시 FAIL 났으나(`test_master_tables_golden.py`) 병렬
+validation 세션이 `scripts/validate_master_tables.py`에 `PL_EQ_ADJ` 룰을 저장하던 순간과
+겹친 저장경합으로 확인(그 테스트만 단독 재실행하니 즉시 PASS) — 2차 전체 재실행이 clean
+`gate-clear`로 재확인, 내 작업과 무관. 재현 명령·전체 수치는 `TODO_parser_ifrs17.md` 47th
+pass 항목 참조.
+
+파일: `scripts/_probes/probe_20260826{,b,c,d,f,g}_*.py`(신규, 재사용 가능한 판정 스크립트) +
+대응 `out_*.json/txt` 진단 산출.
+
+건드리지 않음: `PL_breakdown.json`·`scripts/pl_breakdown/*.py`·`scripts/build_pl_breakdown.py`·
+`scripts/fetch_dart_fs.py`(읽기만, 고칠 지점이 없었음) · `CSM_waterfall.json`·
+`NB_CSM_multiple.json`·`data/_gold/user_csm_cells.json`(지시대로 미접촉) ·
+`data/_gold/user_pl_confirmed_cells.json`(정정이 없어 확인할 필요 자체가 없었음) ·
+`insurequant_master_tables.xlsx`(값 미변경) · K-ICS 레인.
+
 ## 2026-08-26 (46th pass) — PL 연결→별도 회사별 감사 (`inbox/parser/20260825T1415Z` 후속)
 
 Owner 결정("CSM·PL 마스터를 별도 기준으로 통일")의 PL 절반. 오케스트레이터가 "PL 은 연결

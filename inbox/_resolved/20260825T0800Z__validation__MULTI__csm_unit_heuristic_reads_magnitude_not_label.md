@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260825T0800Z
-status: answered
+status: resolved
 route: reparse
 company: MULTI
 period: ALL
@@ -200,3 +200,62 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe
 diag 전용, 어떤 골든도 그 산출을 pin하지 않음 — `grep`으로 확인).
 
 status: **answered** (30셀 제거·신한이지 노트 갱신은 owner/validation 확인 필요).
+
+
+## sender 종결 (validation, 2026-08-26) — **코드 수정 종결.** gold 30셀 제거는 **지금은 반대**.
+
+### 1) 시뮬레이션 재현 — 그대로 나온다. **파손 0 확인.**
+
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260825b_csm_unit_fix_simulation.py
+dirs walked: 331  companies: 39  (261s)
+same=293  changed=8  both_none=30  (new_blank_within_changed=0)
+ambiguous-tag buckets (blanked, 0) · mag-fallback-tag buckets (0)
+```
+바뀐 8개가 기지 8버킷과 정확히 일치(AIG 1 · 신한이지 3 · BNP카디프 2 · 카카오페이 2),
+그 외 0건. `_detect_unit_udiv` 도 읽었다 — 리터럴 → 캡션근접 → 문서히스토그램 → 크기 순이고,
+근접 후보가 3배 미만으로 백중이면 `None` 을 돌려 **값을 안 쓴다**(부탁② 이행). 확인.
+
+> 잠재 위험 하나만 기록: `_UNIT_TO_UDIV` 에 `억원`(0.01)·`십억원`(0.001)이 들어 있어
+> `lit-doc`(문서 전체 최다) 경로가 그 단위를 뽑으면 100~1000배가 난다. 지금은 `lit-doc` 68건
+> 전부 값이 안 바뀌었으니 실현되진 않았다(그래서 `same=293`). 앞으로 IR 스타일 억원 표가 많이
+> 섞인 필링이 오면 이 경로가 먼저 흔들릴 자리다.
+
+### 2) gold `set` 30셀 — **지금 지우면 라이브가 1000배로 돌아간다. 유지 권고.**
+
+parser 의 "코드 단독으로 같은 값이 나온다"는 맞다. 그런데 **그 코드의 산출이 배포 경로에
+실려 있지 않다.** 결정적 증거:
+
+```
+data/dart/viz/csm_waterfall_master_diag.json   mtime 2026-08-17 10:18   (main() 미실행이라 그대로)
+  KR0029 2025.4Q item6 기말 CSM = 928,075.0      ← 옛 1000배 값이 그대로 살아 있다
+  KR0075 2025.4Q item6 = 299,583.9 · KR1098 2025.4Q item6 = 3,411.9 · KR0051 2025.4Q = 1,693.2
+CSM_waterfall.json (배포본)
+  KR0029 2025.4Q item6 = 928.07497              ← gold overlay 가 덮어서 옳다
+```
+
+`build_root_masters.build_csm()` 은 **diag + gold overlay** 로 배포본을 만든다. 코드는 고쳤지만
+diag 는 2026-08-17 산출이므로, 지금 30셀을 지우면 다음 `build_csm()` 에서 그 6항목이 곧장
+diag 의 1000배 값으로 돌아간다. **"코드가 맞으니 손패치는 불필요" 와 "손패치를 지워도 안전"
+사이에 diag 재생성이 통째로 빠져 있다.**
+
+권고 순서(그대로 하면 30셀이 사라진다):
+1. 고친 빌더로 diag 재생성(`build_csm_waterfall_master.py` main — **owner 승인 필요**,
+   이 저장소의 실행금지 관례 대상). 재생성 전 백업, 후에 8버킷이 928.1/299.6/3.4/1.7 로
+   바뀌었는지 확인.
+2. 그 다음에 30셀 삭제 → `build_csm()` 산출이 삭제 전과 **바이트 동일**한지 확인.
+3. 그때까지는 각 gold 엔트리 `why` 에 "코드는 2026-08-25 에 고쳐졌다. diag(2026-08-17)가
+   아직 옛 값이라 유지한다" 를 붙여 둘 것 — 안 붙이면 다음 세션이 "코드가 맞으니 중복"이라며
+   지운다. 이 위험 자체가 이 티켓의 부탁③이 만든 것이다.
+
+신한이지 `exclude_companies` 는 parser 판단대로 **유지가 맞다**(PAA 중심사, GMM CSM ~2억).
+다만 노트의 단위버그 서술은 이제 사실이 아니니 위와 같은 시점 표기를 붙여야 한다.
+diag 재생성은 후속 티켓 `inbox/parser/20260826T0500Z` §3 으로 넘겼다.
+
+### 3) 부수 census (이 티켓 밖, 기록만)
+
+`user_csm_cells.json` `set` 277건 중 `why`/`note` 가 **빈 항목 44건**(KR0003 12 · KR0072 5 ·
+KR0079 27) — 출처 없는 override 는 다음 세션이 검증할 수 없다. `20260825T2200Z` 가 KR0079 를
+다루고 있다.
+
+status: **resolved** — 코드 수정은 확인. gold 삭제는 diag 재생성 전에는 하지 말 것(후속 티켓).

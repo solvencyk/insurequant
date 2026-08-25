@@ -47,7 +47,8 @@ def main() -> int:
     print("K-ICS RULE GATE (CLAUDE.md 'mandatory' — scripts/validate_kics_disclosure.py)")
     import subprocess                              # noqa: E402
     kp = subprocess.run([sys.executable, str(ROOT / "scripts" / "validate_kics_disclosure.py")],
-                        cwd=str(ROOT), capture_output=True, text=True, encoding="utf-8")
+                        cwd=str(ROOT), capture_output=True, text=True,
+                        encoding="utf-8", errors="replace")
     klines = [ln for ln in (kp.stdout or "").splitlines() if ln.strip()]
     keep = [ln for ln in klines
             if any(t in ln for t in ("Status counts:", "blocking RED", "Coverage census:",
@@ -171,7 +172,12 @@ def main() -> int:
     # 대가: 이 묶음이 ~40초에서 ~4분으로 늘어난다. push 는 드물고 되돌리기 어려운 동작이라 감수한다.
     env = dict(os.environ, FULL_COVERAGE_SWEEP="1")
     proc = subprocess.run([sys.executable, "-m", "pytest", "-q", *fast],
-                          cwd=str(ROOT), capture_output=True, text=True, encoding="utf-8", env=env)
+                          cwd=str(ROOT), capture_output=True, text=True,
+                          # errors="replace" 는 필수다. pytest 가 **실패할 때만** 한국어
+                          # assert 메시지를 콘솔 코드페이지(cp949)로 흘리는데, 엄격 utf-8
+                          # 리더는 그 바이트에서 죽어 stdout 이 통째로 사라진다 — 게이트가
+                          # "FAIL" 만 찍고 이유를 못 보여주던 자리다(2026-08-26 실측).
+                          encoding="utf-8", errors="replace", env=env)
     tail = [ln for ln in (proc.stdout or "").splitlines() if ln.strip()][-6:]
     print("\n".join(tail) or (proc.stderr or "")[-800:])
     n_test = proc.returncode
