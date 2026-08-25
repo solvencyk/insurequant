@@ -318,6 +318,11 @@ def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict,
     # (a) T2 decoupling (owner 2026-06-16): overall = T1 reconciliation. A genuine T2
     # error (one source missing, or T2 util>100%) still forces low; the T2 face/BS
     # concept gap (FSC outstanding vs BS grandfathered-issued) does not.
+    # NOTE (2026-08-25): this >100 test is **tier2 only** and stays as-is. Tier2's
+    # utilization_pct was never capped, so removing the tier1 100% data-cap
+    # (wire_capital_securities_to_utilization.py) does not change this rule. T1 is read
+    # through _pick_kics_t1_baseline, which uses issued/recognized 금액 — not a 소진율 —
+    # so no ≤100 assumption exists on the tier1 side of this script.
     t2_util_over = (t2_row.get("quality_flag") == "util_over_100"
                     or (_to_float(t2_row.get("utilization_pct")) or 0.0) > 100.0)
     if t2_util_over:

@@ -119,8 +119,12 @@ for r in t1doc["results"]:
     r["tier1_hybrid_recognized_eok"] = x["new_hyb"]
     r["tier1_hybrid_overflow_eok"] = x["overflow"]
     r["tier1_grandfathered_hybrid_eok"] = x["gf_hyb"]
-    r["utilization_pct"] = min(x["t1_util"], 100.0) if x["t1_util"] is not None else None
-    r["utilization_pct_raw"] = x["t1_util"]
+    # 캡 없음 (owner 2026-06-14 결정, docs/changelog_designer.md:783-789 · designer 프롬프트 L177 LOCKED).
+    # 분자=발행액(KOFIA/DART per-bond), 분모=인정한도(공시 SCR 기반) — 독립 소스라 >100% 가 정당하게
+    # 나온다. 자르는 것은 **화면의 원호뿐**이고(K-ICS.html L833 Math.min(...,100)), 숫자는 생짜로
+    # 넘겨 HTML 이 '100%+' + 툴팁 실제값(L841/L879)으로 표기한다. tier2(L140)와 같은 규약.
+    r["utilization_pct"] = x["t1_util"]
+    r["utilization_pct_raw"] = x["t1_util"]   # 하위호환 별칭(캡 제거 후 utilization_pct 와 항상 동일)
     r["utilization_pct_strict"] = round(x["new_hyb"] / x["t1lim_strict"] * 100, 1) if x["t1lim_strict"] else None
     r["data_source"] = "dart_bonds_fy2025_경과조치"
     r["quality_flag"] = "ok"

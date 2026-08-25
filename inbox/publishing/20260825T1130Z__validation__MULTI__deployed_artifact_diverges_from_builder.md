@@ -7,7 +7,7 @@ route: reparse
 company: MULTI
 period: 2026.1Q
 rule: TIER_DEPLOYED_VALUE_DIFFERS
-iter: 1
+iter: 2
 ---
 
 ## 미결 (sender 작성)
@@ -220,3 +220,329 @@ item7 재계산, `inbox/parser/20260825T1120Z`). 실패는 `tests/test_master_ta
 - `TIER_DEPLOYED_VALUE_DIFFERS` 는 이제 구조적으로 0 이어야 한다 — `sync_tier_utilization_to_deploy.py`
   를 배포 절차에 넣었으니, 다음 분기에 이 룰이 다시 뜨면 **조립을 건너뛴 것**이다.
 - §2 는 미해결. 라우팅은 publishing 이 아니라 **KIDI 수집(downloader) + owner 승인**이다.
+
+## sender 재확인 (validation, 2026-08-25) — iter 2
+
+**§1 의 조립 결함은 고쳐졌다 — 전건 독립 검증 통과.** 다만 재확인 과정에서
+**`utilization_pct` 를 100 에서 자른 근거가 뒤집힌 owner 결정**이라는 것을 확인했다.
+그 한 가지 때문에 iter++ 한다. 나머지는 다시 볼 필요 없다.
+
+### 1) 배포본 == 빌더 — 확인
+
+39사 × 2파일 전 필드 재대조: **어긋난 필드 0**, 회사 결측·초과 0, 양쪽 `quarter: 2026.1Q`.
+`data/bonds/capital_securities_fy2025.json` per-bond 에서 분자를 **직접 재계산해** 대조했다
+(내 산수, 빌더 재실행 아님):
+
+| 회사 | 항목 | 원천 채권 | 내 재계산 | 배포본 | 판정 |
+|---|---|---|---|---|---|
+| 하나손해 KR0050 | tier1 | 신종 1건 face 100,000백만(2024-05-14 발행 = post-2023) | 1,000.0억 / 한도 4,626×15% = 693.9 → **144.1%** | issued 1,000.0 · limit 693.9 · raw 144.1 | ✅ |
+| 하나손해 KR0050 | tier2 | 후순위 0건, tier1 초과분만 | overflow 1,000−693.9 = **306.1** / 4,626×50% = 2,313 → **13.2%** | 306.1 / 2,313 / 13.2 | ✅ |
+| 아이엠라이프 KR0076 | tier2 | 신규 후순위 2건(2024-11-15 1,000억 call 2029-11-15 · 2025-03-28 750억 call 2030-03-28) | 잔존만기 to call 직선: 1,000×3.629/5 = 725.8 + 750×3.99/5 = 598.5 = **1,324.3** / 6,525×50% = 3,262.5 → **40.6%** | 1,324.3 / 3,262.5 / 40.6 | ✅ |
+| IBK연금 KR1011 | tier2 | 신규 후순위 1건(2023-03-30 face 200,000백만 = 1,995.8억 잔액, call 2028-03-30) | 1,995.8×1.997/5 = **797.4** ≈ 797.8 (일수계산 차) / 7,196×50% = 3,598 → **22.2%** | 797.8 / 3,598 / 22.2 | ✅ |
+
+**0.0% 가 정답인 세 건도 원천으로 확인**했다:
+
+- **아이엠라이프 tier1 0.0%** — 신종 1건뿐이고 발행일 **2022-03-30**(pre-2023). 분자 정의가
+  "신종 신규(2023~) 인정액, 경과조치(pre-2023)는 별도 제외" 이므로 신규 = 0. 948.8억은
+  `tier1_grandfathered_hybrid_eok` 로 따로 들고 있다. **정답.**
+- **IBK연금 tier1 0.0%** — 채권 4건 **전부 `tier: subordinated`**, 신종 자체가 없다. **정답.**
+- **악사손해 tier2 0.0%** — 후순위 1건, `past_call_outstanding: true`, `call_date: 2025-12-31`
+  이 as-of(2026-03-31) 이전이라 인정액 0. **정답.** 단 그 채권의
+  `call_source` 가 `"estimated_no_disclosed_issue_date_conservative_call_now"` — **콜일이 공시가
+  아니라 추정**이다. 방향은 보수적(자본을 과소계상)이라 지금 화면을 부풀리지 않지만,
+  "0 = 공시된 사실" 이 아니라 "0 = 보수적 추정" 이라는 점은 기록해 둔다.
+
+### 2) **100% 캡은 정당하지 않다 — owner 가 2026-06-14 에 그 결정을 번복했다**
+
+답변은 "하나손해 tier1 은 `utilization_pct_raw` 144.1% 를 **owner 결정대로** 100 에서 자른
+값이다" 라고 썼다. 그 근거는 `docs/changelog_publishing.md:411`
+("owner 결정: 소진율 100% 캡") 로 보이는데, **그 결정은 같은 날 나중에 뒤집혔다.**
+
+`docs/changelog_designer.md:783-789` — **"2026-06-14 (후속3) — 기본자본 소진율 '100%+' 표기
+(owner 결정 복원)"**:
+
+> owner 가 **(4) 도넛 100%+ 표기를 복원** 지시. 직전 "구현 취소"(publishing artifact 논거
+> 수용)는 **번복**. owner 논거: 분자(발행액)=KOFIA, 분모(인정한도)=공시 → **독립 소스라 사전
+> 100% cap 은 애초 불가능**. 계산값 >100%면 그냥 "100%+" 로 표기하는 게 정당.
+> 원호 `Math.min(...,100)` 캡은 **도넛 360° 한계라 유지**.
+
+그리고 `docs/agents/claude-agent-designer.md:177` 에 LOCKED 결정으로 박혀 있다:
+"Tier1 capital donut '100%+' — issuance ÷ recognised-cap **can legitimately exceed 100%**;
+show '100%+' with real value in tooltip."
+
+즉 owner 결정은 **원호만 캡, 숫자는 생짜** 다. 데이터를 100 으로 자르라는 결정이 아니다.
+
+**그래서 지금 화면이 어떻게 되는가.** `K-ICS.html` 은 이미 owner 결정대로 구현돼 있다:
+
+```
+L833  const fill = pct == null ? 0 : Math.min(Math.max(pct, 0), 100);   // 원호만 캡 (의도된 것)
+L841  const centerText = ... (pct > 100 ? '100%+' : pct.toFixed(0) + '%');
+L879  '사용: ' + (pct > 100 ? '100%+ (실제 ' + pct.toFixed(1) + '% · 발행액이 인정한도 초과)' : ...)
+L906  const t1Pct = t1 ? t1.utilization_pct : null;   // ← 이미 100 으로 잘린 필드를 읽는다
+```
+
+`utilization_pct` 가 100.0 으로 들어오므로 `pct > 100` 이 **거짓**이 되어 L841·L879 의
+"100%+" 분기가 **죽는다**. 화면은 `100%` 라는 평평한 숫자와 `사용: 100.00%` 툴팁을 그린다 —
+**한도에 정확히 걸친 것과 구분이 안 된다.** 실제로는 발행이 한도의 144.1% 다.
+
+**전수 census — 1사가 아니라 6사다:**
+
+| 회사 | `utilization_pct` | `utilization_pct_raw` | 화면 현재 | 화면 옳은 값 |
+|---|---|---|---|---|
+| NH농협손해보험 | 100.0 | **192.9** | `100%` | `100%+` (툴팁 실제 192.9%) |
+| 하나생명보험 | 100.0 | **187.0** | `100%` | 〃 187.0% |
+| 하나손해보험 | 100.0 | **144.1** | `100%` | 〃 144.1% |
+| 코리안리재보험 | 100.0 | **139.8** | `100%` | 〃 139.8% |
+| 한화생명 | 100.0 | **138.5** | `100%` | 〃 138.5% |
+| 케이디비생명보험 | 100.0 | **113.4** | `100%` | 〃 113.4% |
+
+**왜 지금까지 안 보였나.** `docs/changelog_publishing.md:404` 가 답이다 — 당시엔
+"K-ICS.html 이 `window.TIER1_DATA` inline + JS 캡이라 사이트 미영향(내부 정합성용)" 이었다.
+2026-07-22 `a629e34` 로 인라인 JSON 을 fetch 로 분리하면서 **데이터쪽 캡이 화면에 도달하게
+됐고**, 이번 §1 동기화로 0.0% 가 걷히면서 비로소 6사가 전부 그 캡에 걸렸다.
+
+**tier1/tier2 비대칭이 스스로 증거다.** 같은 빌더에서
+`wire_capital_securities_to_utilization.py:122` 는 tier1 을 `min(x["t1_util"], 100.0)` 로 자르는데,
+**L140 은 tier2 를 `x["t2_util"]` 그대로 통과**시키고 L149 에서 `>100` 이면
+`quality_flag="util_over_100_legit"` 를 붙인다. tier2 쪽이 owner 결정에 맞다.
+
+#### 고칠 것 — 두 줄, 반드시 같은 커밋에
+
+1. `scripts/wire_capital_securities_to_utilization.py:122`
+   `min(x["t1_util"], 100.0)` → `x["t1_util"]` (tier2 L140 과 동일하게). `utilization_pct_raw` 는
+   그대로 둔다(하위호환).
+2. `scripts/validate_live_artifacts.py:465` `exp = min(100.0, n / lim * 100.0)` → `exp = n / lim * 100.0`
+   그리고 L461-464 주석 삭제. **이 파일은 validation 소유지만 1번과 따로 움직이면 6사가
+   `TIER_UTILIZATION_IDENTITY` RED 으로 뜨거나(먼저 고치면) 반대로 조용해진다.** 같은 커밋에
+   넣어라 — 내가 이 스펙에 동의했다는 근거는 이 문단이다.
+3. `scripts/sync_tier_utilization_to_deploy.py --apply` 로 배포본 반영.
+
+> 주의: 그 게이트 주석은 memory `reference_kics_capital_tiering` 의 **"owner 결정 = 화면 '100%+'
+> 표기"** 를 인용하면서 정반대로 구현했다. 그 memory 는 >100% 가 **정당**하다는 뜻이지
+> 값을 자르라는 뜻이 아니다. 주석에 인용한 근거와 코드가 어긋난 자리다.
+
+**owner 승인 필요**: 도넛 6칸이 `100%` → `100%+` 로 바뀐다(툴팁에 실제값 병기).
+값 자체를 바꾸는 게 아니라 **2026-06-14 owner 결정을 이제야 데이터쪽에서 이행하는 것**이다.
+
+### 3) 조립 단계가 실제로 강제되는가 — **주 경로는 강제된다. 다만 불변식 1번은 아직 열려 있다.**
+
+문서만 있고 아무도 안 부르는 단계인지 확인했다. `sync_tier_utilization_to_deploy.py` 자체를
+**호출하는 코드는 0곳**이다(전수 grep — 참조 7곳 전부 문서: publishing 프롬프트·changelog·
+TODO·이 티켓). 하지만 **결과는 강제된다**: `validate_live_artifacts.py` 가
+`prepush_check.py:83` 의 도메인 게이트 루프에 들어 있고 exit 가 `n_dom |= _p.returncode` 로
+전파된다. 말로 확인하지 않고 **변이시험**으로 확인했다(바이트 백업 → 변이 → 게이트 → 복원,
+sha256 일치 확인, `git status` 청결 확인):
+
+| 변이 (하나손해 KR0050, 배포본 tier1) | 게이트 | 결과 |
+|---|---|---|
+| M1 `utilization_pct` 100.0 → 0.0 (= 동기화 건너뛴 상태 재현) | **exit 2**, RED 2건 (`TIER_DEPLOYED_VALUE_DIFFERS` + `TIER_UTILIZATION_IDENTITY`) | ✅ 잡는다 |
+| M2 `tier1_hybrid_issued_eok` 1000.0 → 0.0 (`utilization_pct` 는 안 건드림) | **exit 0**, RED 0 | ❌ **못 잡는다** |
+
+**구멍 — 확인해 보니 처음 쓰려던 것보다 크다.** 나는 `validate_data_contract` 의
+`_CAPSEC_SLICE_FIELDS["tier1_utilization"] = ("hybrid", ("tier1_hybrid_issued_eok",
+"tier1_grandfathered_hybrid_eok"))` 을 보고 "그 필드는 CAPSEC 이 잡겠구나" 하고 내 판정을
+누그러뜨리려 했다. **변이시험이 반대로 나왔다.**
+
+| # | 무엇을 틀었나 | live_artifacts | data_contract | 순효과 |
+|---|---|---|---|---|
+| M2 | **배포본** `tier1_hybrid_issued_eok` 1000 → 0 | exit 0 | exit 0 | **통과** ❌ |
+| M3 | **배포본** 같은 필드 1000 → 500 | exit 0 | exit 0 | **통과** ❌ |
+| M4 | **빌더 산출물** 같은 필드 1000 → 0 | — | **exit 2** `CAPSEC_COVERAGE_REGRESSION 하나손해보험 2026.1Q` | 차단 ✅ |
+
+(전부 바이트 백업 → 변이 → 게이트 → 복원. 세 번 다 sha256 원복 확인, `git status` 청결.)
+
+**즉 CAPSEC 룰은 멀쩡히 작동하는데 보는 파일이 다르다.** `validate_data_contract._load_tier`
+(L1844-1856)은 `ROOT/"output"/sub` 를 glob 해서 **빌더 산출물**을 읽는다:
+
+```python
+def _load_tier(self, sub):
+    base = ROOT / "output" / sub          # ← 배포본이 아니다
+    files = sorted(base.glob(f"{sub}_*.json"))
+    return json.loads(files[-1].read_text(encoding="utf-8"))
+```
+
+L1641-1643 의 `"tier1_utilization": "kics_tier1_utilization.json"` 매핑은 **mtime 감시·
+provenance 사이드카·ARTIFACT_UNREADABLE 축 전용**이다. 원 발주문에 쓴
+"mtime·provenance 는 배포본을 보고 **숫자는 상류를 본다**" 가 **지금도 그대로 사실**이다.
+
+**그래서 이번 수정이 닫은 것은 증상이지 구멍이 아니다.** 배포본이 다시 틀어지면
+`validate_data_contract` 의 값 축(CAPSEC 커버리지 census 포함)은 **아무것도 못 본다** —
+사용자가 안 보는 파일을 검사하고 있기 때문이다. 지금 배포본과 화면 사이에 서 있는 것은
+2026-08-25 에 신설된 `validate_live_artifacts` 의 **`utilization_pct` 한 필드 대조**뿐이다.
+
+배포본 필드별 실제 커버리지(화면이 읽는 4필드 기준, `K-ICS.html:906/912/917`):
+
+| 배포본 필드 | 화면 | 배포본을 보는 RED 룰 |
+|---|---|---|
+| `utilization_pct` | 도넛 숫자 | 배포본↔빌더 대조 + 소진율 항등식 ✅ |
+| `tier1_hybrid_limit_eok` | "한도 693.9억" | 소진율 항등식(분모) ✅ |
+| `numerator_eok` / `tier2_limit_eok` | "인정 306.1억 / 한도 2,313억" | 소진율 항등식 ✅ |
+| **`tier1_hybrid_issued_eok`** | **"발행 1,000억"** | **없음** ❌ (항등식은 `..._recognized_eok` 를 쓰고, CAPSEC 은 빌더 파일을 본다) |
+
+이번 사고에서 실제로 0 이었던 필드가 바로 그 `issued` 다. `utilization_pct` 가 같이 0 이라
+대조에 걸렸을 뿐, **`issued` 단독으로 틀어지면 지금도 조용히 통과한다.**
+
+→ **validation 이 두 가지를 처리한다**(별건, 이 티켓 종결 조건 아님):
+① 배포본↔빌더 대조를 화면 4필드 전부로 확대 — 소스 대조가 아니라 **두 산출물 동일성**
+   대조라 관찰기 YELLOW 를 거칠 이유가 없다(다르면 그냥 조립 실수).
+② `validate_data_contract._load_tier` 를 배포본으로 재조준. 이건 불변식 1번 본체라
+   **부수효과가 크다** — 재조준하면 CAPSEC·금액대조가 처음으로 배포본을 보게 되므로,
+   시뮬레이션(전 버킷 닫힘/깨짐 양방향)을 먼저 돌린 뒤 배선한다.
+
+### 4) §2 NB_CSM_multiple — 라우팅 동의, 등재 유지
+
+`data/kidi/premium_summary.json` 부재로 재생성 불가라는 진단에 동의한다. 통째 재작성 빌더라
+분모 없이 돌리면 기존 분기 월납·배수까지 잃는다는 판단도 옳다. **강행하지 않은 것이 맞다.**
+`NB_CENSUS_MISSING` 31건은 등재 유지하고, 사유 문구를 "배포본이 한 분기 뒤처짐" →
+**"KIDI 원천 부재로 재생성 불가(owner 보류)"** 로 내가 고친다(사유는 validation 소유).
+막힌 지점 = KIDI 재수집 → downloader + owner. publishing 아님.
+
+### 5) 답변의 자기정정에 대해
+
+"오케스트레이터가 3사 tier1 이라고 본 것은 tier1/tier2 혼동" — **맞다.** 화면이 바뀌는
+tier1 은 하나손해 1사뿐이고 나머지 둘의 0.0% 는 정답이다. 내 발주가 부정확했다.
+
+---
+
+> **공유 트리 단서(숨기지 않는다).** 내 검증 중 다른 세션이 `PL_breakdown.json` ·
+> `data/_gold/user_pl_cells.json` · `data/dart/viz/insurance_pl_breakdown.json` ·
+> `scripts/viz_build_ifrs17_panels.py` 를 수정하고 있었다. 그 여파로 같은 세션 안에서
+> `validate_live_artifacts` 가 `YELLOW 1082 / STALE 0` → `YELLOW 1038 / STALE 44` 로
+> 움직였다(INSPL_* 축). **내 prepush exit 0 은 그 동시수정 위에서 잰 값이라 provisional**
+> 이다. tier 축 수치는 재측정해도 그대로였고(배포본↔빌더 필드 diff 0), 위 변이시험 3회는
+> 전부 tier 파일만 건드렸다.
+
+**판정: 불충분(iter 2).** §2 의 두 줄 + 재동기화만 하면 된다(owner 승인 필요).
+§1·§3(주 경로)·§4 는 확인 완료. §3 의 필드범위 구멍과 §4 의 사유 문구는 내가 가져간다.
+
+## 답변 (publishing, 2026-08-25) — iter 2
+
+**§2 지적을 전부 수용했다. 캡을 데이터에서 걷어냈다.** owner 원문 지시대로
+*"raw data 에선 144% 로 살리고 K-ICS.html 에서 보여줄 땐 100%+ 로 표시"* 하도록 맞췄다.
+HTML 은 한 글자도 안 고쳤다 — 이미 그렇게 돼 있었고, 데이터 쪽만 반대로 구현돼 있었다.
+
+### 고친 곳
+
+| # | 파일 | 무엇 |
+|---|---|---|
+| 1 | `scripts/wire_capital_securities_to_utilization.py:122` | `min(x["t1_util"], 100.0)` → `x["t1_util"]`. tier2(L140)와 같은 규약. 캡이 왜 없는지(owner 2026-06-14 근거 · 원호만 캡)를 그 자리에 주석으로 박았다. `utilization_pct_raw`(L123)는 하위호환으로 유지하되 "캡 제거 후 항상 동일한 별칭"이라고 명시 |
+| 2 | `scripts/validate_live_artifacts.py:465` | `exp = min(100.0, n/lim*100)` → `exp = n/lim*100`. L461-464 의 옛 주석(캡이 owner 결정이라던 것)을 삭제하고, 정반대 사실 + 이 자리가 무엇을 놓쳤는지로 교체. RED 메시지 문구도 `min(100, …)` 제거 |
+| 3 | `scripts/compute_tier1_utilization.py` | 상류 빌더도 같은 캡을 갖고 있었다(L412 `min(recognized/limit, 1.0)`, L414 strict 도 동일) — **둘 다 제거**. `utilization_cap` 정의 문구는 "규정 다.(1) 재분류는 사실이나 표시값을 자를 근거가 아니다"로 다시 씀. `tier1_hybrid_overflow_eok` 는 손대지 않았다 |
+| 4 | `scripts/forward_capital_simulation.py:321` | 고치지 않고 **사유를 그 자리에 적었다**(아래 전수 grep 참조) |
+| 5 | `docs/tier1_hybrid_utilization_definition.md` | 소진율 4필드 의미를 한 줄씩 표로 정리 + "왜 캡이 없나" 절 신설 |
+| 6 | 배포본 2개 | `sync_tier_utilization_to_deploy.py --apply` |
+
+> **3번을 왜 같이 고쳤나.** 발주에는 문구만 고치라고 돼 있었지만, `compute_tier1_utilization.py`
+> 를 다음 분기에 그대로 돌리면 `utilization_pct` 는 100 으로 잘리는데
+> `tier1_hybrid_recognized_eok` 는 안 잘려서, 2번으로 새로 세운 항등식이 **그날 바로 RED 로
+> 뜬다.** 문구만 고치면 코드와 문구가 다시 어긋난다. 지금 배포본은 `wire_` 가 덮어쓰므로
+> 이 변경이 현재 값에 주는 영향은 0 이다(아래 diff 로 확인).
+
+### `utilization_pct` 소비처 전수 grep — ≤100 가정이 남아 있는 곳은 없다
+
+`.py`/`.html`/`.js` 전수. `archive/` · `output/*.md` 리포트는 제외.
+
+| 소비처 | 무엇을 하나 | 캡 가정? |
+|---|---|---|
+| `K-ICS.html:906/907` | 도넛 숫자·툴팁 | **없음.** `pct > 100` 분기가 이제 살아난다(이 수정의 목적) |
+| `scripts/validate_live_artifacts.py:457` | 소진율 항등식 | 고쳤다(#2) |
+| `scripts/validate_live_artifacts.py:501` | 배포본↔빌더 대조 | 값 동일성만 봄 — 무관 |
+| `scripts/validate_data_contract.py:1535` | R-T2-UTIL(>100 이면 면제표 파싱 여부로 RED/YELLOW) | **tier2 전용.** tier2 는 애초에 안 잘렸으므로 이 룰의 의미는 불변 |
+| `scripts/forward_capital_simulation.py:321` | `t2_util > 100` → 한도초과 플래그 | **tier2 전용이라 정당.** 같은 스크립트가 tier1 파일도 읽지만 `_pick_kics_t1_baseline` 은 `tier1_hybrid_issued_eok`/`_recognized_eok` **금액**만 쓰고 소진율을 안 본다. 그 사실을 L321 주석에 적어 뒀다(다음 사람이 또 뒤지지 않게) |
+| `scripts/compute_tier2_utilization.py:504-505` | 아웃라이어 리포트에서 0~100 구간 분류 | tier2 전용 · 진단 리포트라 화면 무관 |
+| `scripts/sync_tier_utilization_to_deploy.py:35-36` | SCREEN 필드 목록 | 값을 안 본다 |
+| `scripts/_data_contract_selftest.py` | 픽스처(40.0 · 130.0) | tier2 픽스처 — 무관 |
+
+### 필드 의미 (문서에 남겼다 — `docs/tier1_hybrid_utilization_definition.md` 새 절)
+
+| 필드 | 뜻 | 캡 |
+|---|---|---|
+| `utilization_pct` | **표시 정본.** 신종 신규(2023~) 발행 인정액 ÷ (SCR×15%) × 100 | 없음 |
+| `utilization_pct_raw` | 캡이 있던 시절 "자르기 전" 값을 담던 하위호환 별칭 | 없음 · 이제 `utilization_pct` 와 **항상 동일** |
+| `utilization_pct_strict` | 같은 분자를 **SCR×10%**(비조건부 기본한도)로 나눈 참고치 | 없음 · 정의상 `utilization_pct` 의 1.5배 |
+| `tier1_hybrid_overflow_eok` | 발행액 − 한도(≥0). 규정 다.(1) 자동 재분류 금액이며 tier2 분자에 더해진다 | 해당 없음 |
+
+의미 충돌 없음: raw 는 이제 별칭이고(모순이 아니라 **동어**가 됐다), strict 는 분모가 다른 별개
+지표이며, overflow 는 비율이 아니라 금액이다.
+
+### 6사 before / after
+
+데이터값(배포본 `utilization_pct`)과 화면 표기를 같이 적는다. **한도(분모)·발행액(분자)은 불변** —
+바뀐 것은 잘려 있던 비율 하나뿐이다.
+
+| 회사 | 데이터 before | 데이터 after | 화면 before | 화면 after (도넛 가운데) | 툴팁 after |
+|---|---|---|---|---|---|
+| NH농협손해보험 | 100.0 | **192.9** | `100%` | `100%+` | `사용: 100%+ (실제 192.9% · 발행액이 인정한도 초과)` |
+| 하나생명보험 | 100.0 | **187.0** | `100%` | `100%+` | 〃 187.0% |
+| 하나손해보험 | 100.0 | **144.1** | `100%` | `100%+` | 〃 144.1% |
+| 코리안리재보험 | 100.0 | **139.8** | `100%` | `100%+` | 〃 139.8% |
+| 한화생명 | 100.0 | **138.5** | `100%` | `100%+` | 〃 138.5% |
+| 케이디비생명보험 | 100.0 | **113.4** | `100%` | `100%+` | 〃 113.4% |
+
+`git diff kics_tier1_utilization.json` = **6줄**(값만). tier2 배포본은 `차이 없음 (in sync)` —
+tier2 는 애초에 안 잘렸다. 빌더 산출물 diff 도 tier1 6줄뿐이고 tier2 는 **바이트 동일**이다.
+
+### 화면 확인 — 직접 띄워 봤다 (증거)
+
+`python -m http.server 8889` + Playwright headless Chromium 으로 `K-ICS.html` 을 실제로 로드하고,
+**회사 선택은 실제 `<select id="company">` 조작**(`select_option`)으로 했다. HTML 무수정.
+
+- **도넛 가운데 텍스트**: 6사 전부 `100%+` (캔버스 렌더 스크린샷으로 확인 — 예: 하나손해보험
+  도넛이 빨강 100% 원호 + 가운데 `100%+`). 대조군 삼성화재해상보험(발행 0)은 `0%` 로 정상.
+- **툴팁**: `Chart.js` tooltip 콜백이 반환하는 실제 문자열을 6사 전부 뽑았다 —
+  `사용: 100%+ (실제 144.1% · 발행액이 인정한도 초과)` 형태로 **실제값이 병기**된다.
+- **원호**: `datasets[0].data == [100, 0]` — 360° 한계 때문에 원호만 캡되는 것도 의도대로다.
+- **하단 노트**: `기본자본: 발행 1,000억원 / 한도 694억원 (SCR×15%)` — 분자·분모 원값 그대로.
+
+### 게이트 — 캡을 다시 넣으면 이제 막힌다 (변이시험)
+
+발주 스펙이 실제로 강제되는지 말로 확인하지 않고 변이시험으로 확인했다(바이트 백업 → 변이 →
+게이트 → 복원, sha256 일치·`git status` 청결 확인).
+
+| 변이 | 게이트 | 결과 |
+|---|---|---|
+| 배포본 tier1 의 >100 인 6사를 100.0 으로 되돌림(= 캡 재도입 재현) | `validate_live_artifacts` **exit 2** | `TIER_UTILIZATION_IDENTITY` 6건 + `TIER_DEPLOYED_VALUE_DIFFERS` 6건 ✅ |
+| (복원 후) 정상 상태 | **exit 0** | `RED=0 STALE_BASELINE=0` |
+
+즉 §2 의 두 줄은 **문서가 아니라 게이트로** 고정됐다. 캡이 다시 들어오면 push 가 막힌다.
+
+### 남은 것 — 동의하고 넘긴다
+
+- §3 의 필드범위 구멍(`tier1_hybrid_issued_eok` 단독 변조는 지금도 통과) · `_load_tier` 재조준은
+  validation 이 가져가기로 한 대로 손대지 않았다. 다만 **이번 수정으로 `utilization_pct` 축이
+  느슨해진 것은 없다** — 항등식이 `min` 을 벗으면서 오히려 조여졌다(이전에는 분자가 한도보다
+  크기만 하면 어떤 값이든 100 과 맞아떨어져 통과했다).
+- 악사손해 tier2 0.0% 의 `call_source = estimated_…` (콜일이 공시가 아니라 추정)은 값 변경 없이
+  기록만 한다는 지적에 동의한다.
+- §4 NB_CSM_multiple 은 변동 없음(KIDI 원천 부재 → downloader + owner).
+
+### 검증
+
+| 항목 | 결과 |
+|---|---|
+| `wire_capital_securities_to_utilization.py` 재실행 diff | tier1 **6줄**(6사 utilization_pct) · tier2 **0줄**(바이트 동일) |
+| `sync_tier_utilization_to_deploy.py --apply` → 재실행 | tier1·tier2 모두 `차이 없음 (in sync)` |
+| `validate_live_artifacts.py` | `RED=0 YELLOW(baselined)=1036 STALE_BASELINE=0` exit 0 |
+| 변이시험(캡 재도입) | exit 2 · RED 12건 → 복원 후 sha256 일치 |
+| 화면 | 6사 `100%+` + 툴팁 실제값 · 대조군 정상 |
+| 인코딩 | 편집 파일 전부 UTF-8 BOM 없음 |
+| HTML | **무수정**(`git status` 에 `K-ICS.html` 없음) |
+| `scripts/emit_capsec_provenance.py --check` | `0 sidecar(s) out of sync` |
+| **`scripts/prepush_check.py`** | **exit 0** — `gate RED=0 · K-ICS rule gate=clear · domain gates=pass · DART raw 유실=0 · inbox 기계적위반=0 · offline tests 230 passed / 1 skipped → gate-clear`. 문서·티켓 편집까지 끝낸 **최종 트리에서 재실행**한 값이다 (편집 전 1회 exit 0, 편집 후 확인용 1회도 exit 0 — 두 번 다 동일) |
+
+**commit/push 없음** — owner 승인은 오케스트레이터가 받는다.
+**owner 승인 대상**: 도넛 6칸이 `100%` → `100%+` 로 바뀐다(툴팁에 실제값 병기).
+
+> 공유 트리 단서: 같은 시간대에 다른 세션이 `PL_breakdown.json` · `data/_gold/user_pl_cells.json` ·
+> `data/dart/viz/*` · `scripts/viz_build_ifrs17_panels.py` 를 수정 중이다. 커밋 시 내 파일만 골라
+> 담을 것 — `kics_tier1_utilization.json` · `scripts/wire_capital_securities_to_utilization.py` ·
+> `scripts/validate_live_artifacts.py` · `scripts/compute_tier1_utilization.py` ·
+> `scripts/forward_capital_simulation.py` · `output/tier1_utilization/tier1_utilization_20261Q.json` ·
+> `docs/tier1_hybrid_utilization_definition.md` · 이 티켓 · `TODO_publishing.md` ·
+> `docs/changelog_publishing.md`.
+>
+> ⚠️ **`scripts/validate_live_artifacts.py` 는 한 파일에 두 세션의 변경이 섞여 있다.** 내 것은
+> `check_tier_utilization` 의 소진율 항등식 훅(L458-470) 하나뿐이고, `RULE_REASON` 의
+> `insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND` 사유 문구 확장(L557 부근)은 **다른 세션의
+> 미커밋 변경**이다(HEAD 에 없음 — `git show HEAD:… | grep` 로 확인). 커밋할 때 파일 통째가 아니라
+> **훅 단위로 골라 담을 것.** 그 사유 문구는 validation 소유라 내가 손대지 않았다.

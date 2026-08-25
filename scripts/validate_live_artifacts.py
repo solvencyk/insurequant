@@ -458,14 +458,16 @@ def check_tier_utilization(fd: Findings) -> dict:
             if u is None or n is None or lim in (None, 0):
                 stat[f"{tier}_util_skip"] += 1
                 continue
-            # 소진율은 **100 에서 잘린다** — owner 결정(memory reference_kics_capital_tiering:
-            # "도넛은 발행/한도라 >100% 정당, owner 결정=화면 '100%+' 표기"). 캡을 모르고
-            # 생짜 비율과 비교하면 정상 5건(NH농협 192.9% 등)이 전부 오탐으로 뜬다 — 2026-08-25
-            # 초안이 실제로 그랬다. 캡을 넘는 몫은 utilization_pct_strict / overflow 가 들고 있다.
-            exp = min(100.0, n / lim * 100.0)
+            # 소진율은 **자르지 않는다** — owner 2026-06-14 결정(docs/changelog_designer.md:783-789,
+            # designer 프롬프트 L177 LOCKED). 분자=발행액(KOFIA/DART), 분모=인정한도(공시)로 소스가
+            # 독립이라 >100% 가 정당하게 나온다. 자르는 것은 화면 원호뿐이고(K-ICS.html L833),
+            # 숫자는 '100%+' + 툴팁 실제값(L841/L879)으로 표기한다. 2026-08-25 이전 이 자리에 있던
+            # min(100, ...) 은 그 결정과 반대로 구현된 것이었고, 데이터쪽 캡(6사)을 정상으로
+            # 통과시켜 화면이 평평한 100% 를 그리게 했다.
+            exp = n / lim * 100.0
             if abs(exp - u) > max(0.15, 0.005 * abs(exp)):
                 fd.add(rel, "TIER_UTILIZATION_IDENTITY", str(co),
-                       f"utilization_pct={u} 인데 min(100, {num_key}/{lim_key}×100)={exp:.2f}")
+                       f"utilization_pct={u} 인데 {num_key}/{lim_key}×100={exp:.2f}")
                 stat[f"{tier}_util_fail"] += 1
             else:
                 stat[f"{tier}_util_pass"] += 1
@@ -555,8 +557,18 @@ RULE_REASON = {
         "한화손해보험 2024.4Q — 표의 보험계약마진상각 행 마지막 숫자가 -387,989,612 로 "
         "마스터(409,737)의 947배. 행 병합/열 오선택으로 셀 값이 이어붙은 파싱 사고다.",
     "insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND":
-        "코리안리재보험 2024.4Q ratio 2.841. 재보험사 표 구조가 달라 원수/재보험 합산 행을 "
-        "집었을 가능성 — 미확인.",
+        "코리안리재보험 2024.4Q ratio 2.841. 2026-08-25 raw 재확인: 108,252 는 파싱 사고가 "
+        "아니다 — data/dart/FY2024_Q4/raw/KR1000_코리안리_20250320001161/xml/"
+        "20250320001161_00760.xml L14365 에 리터럴로 존재(캡션 '(4) 당기와 전기 중 "
+        "보험손익 상세내역', 장기31,250+생명77,002+일반-=합계108,252). 마스터 원수CSM상각"
+        "(38,102, PL_breakdown item4) 과 이 회사가 가진 나머지 CSM상각류 항목(item9 재보험 "
+        "11,236 · item4-1 수재 33,740 · item9-1 출재 -8,756) 을 여러 조합으로 더해봐도 "
+        "108,252 에 안 맞는다 — 원수/재보험/수재/출재 4축 구조라 이 표의 '합계' 열이 정확히 "
+        "어느 조합인지 특정 못 함. **행/열 오선택이 아니라 재보험사 특유의 다축 구조에서 "
+        "비교 앵커(item4 원수CSM상각 단독) 가 이 표 범위와 안 맞는 문제로 좁혀짐** — "
+        "표시값은 원문 그대로이므로 안 고침. 다음 행동: PL_breakdown.json 쪽에서 이 표의 "
+        "'합계' 열과 정확히 대응하는 파생 항목(또는 조합)을 규명하거나, 이 회사는 앵커 "
+        "비교를 건너뛰도록 체커 쪽에서 판단할 것 — 둘 다 parser 단독 결정 범위 밖.",
     "insurance_pl_breakdown.json|INSPL_STATUS_NOT_OK": "status != ok.",
     "kics_tier1_utilization.json|TIER_DEPLOYED_VALUE_DIFFERS":
         "**불변식 1번 위반의 직접 증거.** 배포본(K-ICS.html 이 fetch)과 게이트가 실제로 검사하는 "

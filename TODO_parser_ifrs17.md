@@ -1,5 +1,206 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-25 (41st pass) — `inbox/parser/20260825T1125Z` 라이브 viz 아티팩트 3종 + NB
+> 마스터 처리: B(상각스케줄 22개사) 전원 닫힘 · C(947x) 완전정정 · D(NB 부호) 정정 ·
+> A(이력 스냅샷)는 raw로 "화면 영향 0" 반증해 처분 보류. baseline 1082→1036(46건 삭제).
+> prepush exit=0.**
+>
+> `scripts/validate_live_artifacts.py`(2026-08-25 신설, prepush 1c 배선)가 처음 검사한
+> 라이브 아티팩트 4종 중 3종 + NB 마스터의 기지 결함을 처리했다.
+>
+> **B. `csm_amort_schedule.json` 22개사 컬럼 누락 — 정규식 1개로 전원 닫힘.**
+> `_year_bucket_cell`/`_classify_bucket_cell`(`scripts/viz_build_ifrs17_panels.py`)의 연차
+> 버킷 정규식 4종 전부 `"11년~15년"` 꼴(**둘째 뿐 아니라 첫 숫자 뒤에도 "년"**)을 못 잡았다
+> — `_RANGE_TILDE_RE`는 "5~10년"(첫 숫자엔 "년" 없음)만, `_RANGE_CHOGWA_IHA_RE`는
+> "1년초과2년이하" 꼴만 매치. `"30년 이후/초과/이상"`만 `_OVER_ONLY_RE`로 우연히 잡혀
+> y10plus 를 채웠고 `11~15/16~20/21~25/26~30년` 4개 컬럼은 매치되는 패턴이 아예 없어
+> 통째로 버려졌다(DB생명보험 raw 헤더로 실측: Σ=11,176.8 vs 원표합계=19,813.0, -43.6%).
+> `_RANGE_YEAR_TILDE_YEAR_RE` 신규(순수 가산) 로 39사 중 22사(header-column 형 20사 +
+> row-키 전치형 DB손해보험·케이비라이프생명보험 2사, 같은 두 함수 공유) 전원 gap
+> 0.00%(±0.005 이내)로 닫힘. `AMORT_YEARLY_SUM_NE_TOTAL` 22 + `AMORT_BUCKETS_SUM_NE_TOTAL`
+> 22 = 44건 baseline 삭제.
+>
+> **C. `insurance_pl_breakdown.json` 한화손해보험 947x — 원인은 둘의 곱(기간 오선택 ×
+> 단위 미정규화), 완전정정.** raw
+> (`data/dart/FY2024_Q4/raw/KR0002_한화손해보험_20250311001216/20250311001216_00760.xml`)에
+> 같은 캡션의 "(당기)"(L12520-, CSM소계 -409,737,121천원)/"(전기)"(L12770-,
+> -387,989,612천원) 표가 문서 안에 8번 중복 등장(본문+첨부) — `pick_best_block` 동점
+> tie-break(line_no **최댓값**)가 DART 관행상(당기가 먼저, 전기가 항상 뒤) 구조적으로
+> 전기를 고른다. 게다가 이 표 unit cue "(단위: 천원)"이 `<TABLE>` 형제 텍스트라 블록에
+> 안 담기고(`_AMORT_UNIT_OVERRIDE`에 이미 5개사 기록된 같은 docling 함정) 이 패널
+> (`extract_pl_breakdown`) 자체엔 애초에 단위 감지가 없었다 — 전기값(천원 그대로)을
+> 마스터(백만원)와 무변환 대조해 두 오차가 곱해져 947배(=1000배 × 0.947배 역수 근방).
+> **`_dedupe_prefer_current_period()`+`_PL_UNIT_OVERRIDE` 신규, 둘 다 `company ==
+> "한화손해보험"` 로 게이팅.** 처음엔 기간보정을 전 회사 무조건 적용했다가 KB손해보험 등
+> 15개사의 선택이 바뀌고(흥국생명보험은 아예 다른 노트로 이동) 그중 KB손해보험은 **이미
+> 완벽했던 표(837,664, ratio 1.0000)가 라벨 변형("보험계약마진 상각" vs "제공된 서비스의
+> 보험계약마진", 같은 값의 문서 내 재렌더링 잡음)에 걸려 체커가 못 찾는 None 으로
+> 퇴행**하는 걸 실측(before/after 캡션 전수 diff)으로 잡아 롤백 후 한화손해보험 1개사
+> 허용리스트로 좁혔다. 최종: 표시값 -409,737.121(백만원 표시) vs 마스터 409,737.121 —
+> ratio 1.0000. `bs_snapshot.json`·`sensitivity_heatmap.json` 바이트 무변동, PL 패널
+> 한화 외 28개사 캡션까지 바이트 동일 재확인.
+> **코리안리재보험 2024.4Q ratio 2.841 — raw로 파싱사고는 배제, 원인 좁힘(미수정).**
+> 표시값 108,252 는 raw L14365 에 리터럴로 존재(파싱 사고 아님). 이 회사는
+> 원수/재보험/수재/출재 4축 CSM상각 항목(38,102/11,236/33,740/-8,756)이 각각 있는
+> 재보험사 구조라 체커의 단일 앵커(원수CSM상각)가 이 표 범위와 안 맞는다 — 여러 조합을
+> 시도했으나 108,252 에 정확히 닫히는 조합을 못 찾아 표시값은 원문 그대로 두고 baseline
+> 사유만 갱신(4축 항목 인용 포함, 다음 세션 재추적용).
+>
+> **D. `NB_CSM_multiple.json` 예별손해보험(KR0004) 2023.4Q 부호 정정(1셀).**
+> `신계약CSM_연누계` 는 `build_nb_csm_multiple.py` 가 `CSM_waterfall.json` 항목2 를 그대로
+> 복사만 하는 필드 — 드리프트는 파생 파일이 상류 정정(-509.7→+509.7, 다른 세션이 이미
+> 확정)을 못 받아 굳어있던 stale copy. raw 로 상류 쪽이 맞다는 것까지 재확인(마스터는 안
+> 건드림): `data/dart/FY2023_Q4/raw/KR0004_엠지손해보험_20240408000665/
+> 20240408000665_00760.xml`의 CSM 변동표가 기초(605,551,876천원=6,055.5억)·기말
+> (677,401,166천원=6,774.0억) 둘 다 마스터와 일치하는데, 표의 개별 변동행들은 **전체
+> 합계가 (기말-기초)의 정확한 음수**라(스크립트로 정밀검산) 부호반전 인쇄 관례 — 균일
+> 반전 적용하면 신규(+509.7)·이자부리(+203.1)·가정+손실부담(477.5)·상각(-471.8) 4항목
+> 전부 마스터와 소수 1자리까지 일치. `NB_CSM_multiple.json` 1셀 손패치(빌더 재실행 안 함
+> — `data/kidi/premium_summary.json` 이 디스크에 없어[gitignore] 재실행하면 358행 규모
+> 월납/배수 필드 전부 null 로 wipe될 뻔했다). xlsx는 `sync_master_xlsx_sheet.py
+> 신계약CSM배수` 로 cherry-pick(검증 OK, 나머지 시트 값 동일).
+>
+> **A. `csm_waterfall_history.json` — raw로 "화면 영향 0" 반증, 처분 보류(코드 미작성).**
+> 티켓 전제("IFRS17.html 워터폴 이력 패널이 그 낡은 값을 그린다")를 **로컬 브랜치가 아닌
+> `origin/main`(rev fba59f0, 실제 라이브)** 직접 대조로 반증: L260 이 `hist:` fetch 는
+> 선언하지만, L1525 자체 주석이 "기존 csm_waterfall_history.json은 stale... 폐기"를
+> 명시하고 Panel 6 렌더 블록(`wfHistName`/`wfVal`/`wfNbIncrement`)은 전부
+> `ix.wfx`(=CSM_waterfall.json, Panel 1과 동일소스) 참조 — `payload.hist`/`ix.hist` 읽는
+> 코드는 파일 전체에 0곳(대입 한 줄만 있고 아무도 안 읽음). 34th pass(2026-08-24)의 동일
+> 결론을 오늘 origin/main 기준으로 재확인. **933건 drift 는 화면에 단 한 셀도 안 나간다.**
+> 셋 중 ③(HTML에서 fetch 자체 제거)이 유일하게 근거 있는 선택이나 화면구조 변경이라
+> 실행 안 함, designer/owner 보고로 대체. 게이트는 유지(파일이 fetch 되는 한 감시 가치
+> 있음), baseline 은 그대로.
+>
+> **baseline**: `data/_gold/live_artifact_baseline.json` 1082→1036건(46건 삭제: B 44 +
+> C 1(한화) + D 1). `STALE_BASELINE=0` 재확인. 코리안리 잔여 1건은 사유만 갱신.
+>
+> **게이트**: `validate_live_artifacts.py` RED=0 YELLOW=1036 STALE=0 ·
+> `test_viz_ifrs17_panels_golden.py`(`--update`, B+C 반영) + `test_viz_csm_waterfall_golden.py`
+> (무변동) 2 passed · `scripts/prepush_check.py` exit=0("PRE-PUSH VERDICT: ... →
+> gate-clear", offline tests 230 passed/1 skipped). 재현:
+> `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_live_artifacts.py`
+> · `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py`.
+>
+> **건드리지 않음**: `CSM_waterfall.json`·`PL_breakdown.json`(다른 두 세션 병행, git status
+> 에 잡히나 미접촉) · `kics_tier{1,2}_utilization.json` 등 K-ICS 레인 파일(미접촉) ·
+> 배포 HTML 4종(읽기만) · `bs_snapshot.json`·`sensitivity_heatmap.json`(재실행했지만 바이트
+> 무변동) · `build_root_masters.py`(미실행).
+>
+> **파일**: `scripts/viz_build_ifrs17_panels.py`(정규식 1개 + PL 기간/단위 보정 2종, 둘 다
+> 게이팅) · `data/dart/viz/csm_amort_schedule.json`(22개사) ·
+> `data/dart/viz/insurance_pl_breakdown.json`(한화만) · `NB_CSM_multiple.json`(1셀) ·
+> `data/_gold/live_artifact_baseline.json`(46건 삭제+코리안리 사유) ·
+> `scripts/validate_live_artifacts.py`(코리안리 RULE_REASON) ·
+> `tests/fixtures/viz_ifrs17_panels_golden.json`(`--update`) ·
+> `insurequant_master_tables.xlsx`("신계약CSM배수" 시트만).
+>
+> 원 티켓 `inbox/_resolved/20260825T1125Z__validation__MULTI__live_viz_artifacts_unchecked.md`
+> (status `resolved`, 자기완결 — 게이트 수치·재현 명령으로 자기증명).
+>
+> ---
+>
+> **2026-08-25 (40th pass) — 손보 9개사 45칸 raw 복구 후 PL 재검증: item16(기타사업비용)
+> 11셀 채움(그리드 내 7 + 인접 4), 45칸 표준그리드 1080항목 전수 재추출 자가검증 완료
+> (일치 1044·구조적null 11·채움 7·owner-estimate 재확인유지 18, 판정 안 된 셀 0). prepush exit=0.**
+>
+> **배경.** `inbox/parser/20260825T0430Z`(downloader): 손보 상장 9개사(KR0001/0002/0003/0005/
+> 0008/0009/0010/0011/1000) 2024.3Q~2025.3Q 구간 raw 가 디스크에서 유실됐다가(3개월 미탐지,
+> `data/dart/**/raw/` 가 gitignore 라 git 이 탐지 못함) 오늘 재취득됐다 — 9사×5분기=45칸.
+>
+> **① census — 45칸 중 32칸은 이미 완전(24/24), 13칸에만 항목결측, 진짜 결측은 18항목뿐.**
+> `PL_breakdown.json`
+> 은 gitignore 대상이 아니라 raw 유실 이전에 파싱된 값이 그대로 커밋돼 있었다(원인:
+> `build_root_masters._additive_merge` 가 상류(`data/dart/viz/pl_breakdown_master.json`)에
+> 그 (회사,분기) 행 자체가 없으면 — raw 디렉터리가 없으니 `discover_filings()` 가 애초에
+> 못 찾음 — 루트에 이미 있던 값을 무조건 보존한다. **복사·추정이 아니라 유실 전 진짜 파싱
+> 결과가 살아남은 것**임을 연도별 YoY 동일값 스캔(45칸 전 항목, 임계 30% 이상 일치 0건)으로
+> 확인). 진짜 결측 18항목: item16(기타사업비용) 7칸(흥국화재 24.3Q/4Q·KB 5분기 전부, 전부
+> `data/_gold/user_pl_cells.json` 에 "raw 부재 확인… null로 명시"로 강제 null 등재돼 있었음)
+> + 현대해상 2024.3Q item3/6/7/8/11/12 6항목(구조적, 아래 참조) + 코리안리 5분기×item13
+> (자동차손익) 5항목(구조적, 아래 참조). 그 외 owner 추정치(estimate:true) 12항목 —
+> 현대해상 2024.4Q/2025.1Q item3/6/7/8/11/12 (2026-06-19/20 xlsx 리뷰루프 fill).
+>
+> **② raw 재추출로 45칸(표준 24항목 그리드 1080개, 코리안리 부가 11항목은 별도) 전수
+> 자가검증.** `scripts/build_pl_breakdown.py` 의
+> `parse_filing`/`assemble`/`_fs_tier1`/`_GOLD_CELL_OVERRIDE` 를 직접 import 해(← 스킬 문서
+> 지시대로 패키지 경로 사용, `main()` 미호출·`data/dart/viz/*` 미접촉) 45칸을 전부
+> 재파싱·재계산: **일치 1044 · 양쪽 null(구조적) 11 · 결측→채움 가능 7 · 기존값과 불일치(전부
+> 현대해상 owner-estimate, fresh=None) 18.** 즉 채울 수 있었던 건 딱 7항목(전부 item16) —
+> 나머지는 이미 맞거나(1044) 원문 자체가 못 주거나(11, 구조적) owner 추정이 최선(18, raw가
+> None 반환해 대체 불가 재확인)이었다.
+>
+> **③ 채움 — item16 7항목(45칸 그리드 내) + 4항목(그리드 밖, 동일회사·동일메커니즘 즉시수정).**
+> DART FS-API 캐시(`data/dart/_fs_api_cache/`, `account_id=dart_OtherOperatingExpenseInsurance`,
+> `account_nm='기타사업비용'`, status=000, 오프라인·기존 캐시)에서 직접 인용:
+>   - 흥국화재(KR0005) 24.3Q=18005.0 · 24.4Q=27686.0
+>   - KB손해보험(KR0010) 24.3Q=284474.0 · 24.4Q=380949.0 · 25.1Q=91927.0 · 25.2Q=190741.0 ·
+>     25.3Q=283832.0
+>   - (그리드 밖, 인접분기 즉시완결) 흥국화재 23.3Q=13225.0 · 23.4Q=18758.0 · KB 23.3Q=282385.0
+>     · 23.4Q=390033.0 — 같은 2사·같은 항목의 2023.1Q/2Q 는 이미 같은 날 다른 티켓
+>     (`user_pl_cells.json` "parser adjudication 2026-08-25 builder-drift audit")에서 같은
+>     메커니즘으로 고쳐져 있었는데 3Q/4Q 만 빠져 있었다 — "발주범위 밖이라도 명백한 버그+
+>     명확한 해결법" 원칙으로 같이 닫음.
+>   각 항목마다 item1(보험손익)이 item16 없이 이미 bare-form 으로 닫히는지 확인
+>   (|diff| 0.0~278.0, tol 213~978 이내 전부 PASS) — 이 2사는 item16 이 구조적으로 보험손익의
+>   구성요소가 아니라는 기존 확립 패턴과 일치. `값_당분기` 는 `build_root_masters._flow_dangi`
+>   와 동일한 유량 공식(YTD 차분, FY 경계에서 리셋)으로 프로그램적으로 재계산 —
+>   3건이 DART 자체 `thstrm_amount`(단독분기 값)와 소수점까지 정확히 일치(2025.2Q/3Q KB,
+>   손계산 검산), 1건은 반올림 오차 1.0(92339 vs 92338, 두 개의 다른 필링을 차분한 결과라
+>   당연한 폭).
+>
+> **④ 오늘 조인 항등식(PL 원수+수재 CSM상각 == 워터폴 CSM상각) — 45칸 전부 OK.**
+> `csm_amort_residual`(`validate_master_tables.py`, 등식·반올림오차만: max(0.1억,0.05%))
+> 를 45칸 전부에 대해 실행 — **45/45 [OK]**, 잔차 -0.06~+0.05억(허용오차 0.10~8.06억 대비
+> 여유). item16 은 item4 와 무관해 내가 채운 값은 이 항등식에 영향을 주지 않지만, 채운
+> 분기마다 항등식 자체는 확인하라는 지시대로 전부 실측했다.
+>
+> **⑤ 안 채운 것 — 전부 사유 있음, 방치 아님.**
+>   - **현대해상(KR0009) item3/6/7/8/11/12** (24.3Q null 6개 + 24.4Q/25.1Q owner-estimate
+>     12개): fresh 재추출도 None — `assemble()` 코드 주석 자체가 "현대 has no clean rev/cost
+>     split" 이라고 명기한 기존 구조적 한계(2026-06-14 조사, `ZLEG_LEGIT_CQ` 등재:
+>     2024.1Q~2025.2Q 는 OLD-form 노트가 원수/재보험 LOB 를 안 나눔)와 정확히 일치 — raw 가
+>     못 주는 값이라 owner 추정(estimate:true, 라벨 그대로 유지)이 최선. 24.3Q 6개는 라벨
+>     그대로 null 유지("틀린 값을 싣느니 빈 칸").
+>   - **코리안리(KR1000) item13(자동차손익) 5분기**: 전체 이력(2023.1Q~2026.2Q, 14분기 전부)
+>     상시 null — 재보험사라 자동차를 별도 LOB 로 안 끊는 구조(item14 일반손익엔 포함, item1
+>     은 item13=0 취급 reconciliation 으로 정상 닫힘). 이번 45칸과 무관한 회사 전체 패턴,
+>     안 건드림.
+>   - **KB손해보험(KR0010) 2025.4Q item16**: 그리드 밖(2025.4Q raw 는 원래부터 있었음),
+>     별건 결측 관찰만 — 조사 안 함(범위 밖 확대는 여기서 멈춤).
+>
+> **⑥ 미해결 — `data/dart/viz/pl_breakdown_master.json` 재빌드 필요(이번 세션 금지 구역).**
+> `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py` 를 시험삼아 돌려보니(코드
+> 미수정 — 순수 확인 목적) **FAIL**: 골든 7391행 vs 지금 raw 로 풀 리빌드하면 7561행(+170,
+> 45칸 밖 포함 전사 raw 복구 반영). 이 테스트는 `build_pl_breakdown.py main()` 을 실제로
+> 실행해 `data/dart/viz/pl_breakdown_master.json` 을 인플레이스로 쓴다 — **실패시 자동
+> 백업복원**되므로 `git status` 로 확인한 결과 그 파일은 이번 세션 내내 미접촉 상태다(안전).
+> 이 골든은 **`prepush_check.py` 의 필수 묶음에 없다**(코드 주석 "느린 것(pl_breakdown
+> ~95초 opt-in)은 뺀다" — `fast` 리스트 미포함, `RUN_PL_GOLDEN` 도 안 켬) 그래서 이번 세션의
+> gate exit code 에는 영향이 없다. 하지만 다음에 누군가 `data/dart/viz/*` 를 재빌드할 때
+> (CSM/viz 병행 세션 완료 후) 이 드리프트를 반영해 골든도 같이 `--update` 해야 한다 — 이번
+> 세션에선 안 건드림(다른 2개 병행 세션과 충돌 위험, 발주문 명시 금지구역). **다음 세션 위한
+> 메모: `build_csm_waterfall_master.py` 도 같은 `discover_filings()` 패턴을 쓰므로 CSM 쪽
+> 골든도 같은 raw 복구로 드리프트했을 가능성이 있다 — CSM 레인 세션이 직접 확인할 것.**
+>
+> **파일.** `PL_breakdown.json`(11셀: item16 × 흥국화재 4분기 + KB 7분기, combo-diff
+> 8698행→8698행 0손실 확인) · `data/_gold/user_pl_cells.json`(forced-null 7건 삭제 +
+> 신규 fill 근거 4건 추가, 191→188, 나머지 184건 무접촉·diff 로 확인) ·
+> `insurequant_master_tables.xlsx`("손익분해PL" 시트만 2회 cherry-pick sync, 매회 "검증 OK")·
+> 스크립트는 재현용으로 세션 scratch 에만 있고 저장소엔 커밋 안 함(관례상 `scripts/_probes/`
+> 에 남기는 사례도 있으나 이번엔 전부 1회성 census/patch 라 생략, 필요하면 이 항목의 수치로
+> 재현 가능).
+> **건드리지 않음.** `CSM_waterfall.json` · `data/dart/viz/*`(발주문 명시 금지구역, git status
+> 로 전 세션 내내 미접촉 확인) · `scripts/pl_breakdown/*.py`·`build_pl_breakdown.py`(코드
+> 미수정, 데이터만 패치) · `data/_gold/user_pl_confirmed_cells.json`(조회만, 45칸 그리드와
+> 무관 확인 — 0 overlap).
+>
+> **검증.** `pytest tests/test_master_tables_golden.py` → PASS(SUMMARY 불변, `--update` 불요).
+> `validate_master_tables.py --no-build` SUMMARY `pl_bridge:2513P/16F/319S/0NEW ·
+> csm_amort_identity:318P/28PIN/0F/0S`(패치 전후 완전 동일 — item16 은 이 두 항등식의 입력이
+> 아니므로 예상대로 무변화). `scripts/prepush_check.py` → **exit 0**(RED=0·K-ICS gate clear·
+> domain gates pass·DART raw 유실=0·inbox 위반=0·offline tests 230 passed 1 skipped).
+
 > **2026-08-25 (39th pass) — PL_BRIDGE 배포본 재조준 결함 16건(inbox
 > 20260825T1120Z) 처리: 10건 완전히 고쳐 등재삭제, 6건은 raw 재조사 후 잔차 박제. prepush exit=0.**
 >

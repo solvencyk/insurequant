@@ -399,9 +399,11 @@ def compute_one(md_path: Path, quarter: str, scr_info: dict[str, object] | None)
         recognized = max(issued - excess_val, 0.0)
 
     # K-ICS 해설서 [별표22] Ⅲ.2.다.(1): 신종자본증권 중 인정한도(SCR×10%, 「보험업법」 조건부자본증권
-    # 15%) 초과분은 규정상 보완자본으로 자동 재분류된다 → tier1으로 인정되는 금액은 한도까지뿐이므로
-    # 소진율은 정의상 ≤100%. 2025.4Q 9개사는 재분류액(Ⅴ.1)을 별도 행 없이 보완자본 총액에만 반영해
-    # excess가 추출되지 않으므로, 한도 초과분(overflow, 보완자본 재분류분)을 명시하고 소진율을 100% 캡.
+    # 15%) 초과분은 규정상 보완자본으로 자동 재분류된다 → 한도 초과분은 overflow 로 명시한다.
+    # **그 재분류는 소진율 표시값을 자르는 근거가 아니다** (owner 2026-06-14, 아래 run() 의
+    # utilization_cap 설명 참조): 소진율은 발행/한도 그대로 두고 >100% 는 화면이 '100%+' 로 표기한다.
+    # 2025.4Q 9개사처럼 재분류액(Ⅴ.1)이 별도 행 없이 보완자본 총액에만 반영돼 excess 가 추출되지
+    # 않으면 소진율이 100% 를 넘는데, 그것은 잘라 숨길 것이 아니라 overflow 로 드러낼 사실이다.
     overflow = None
     if recognized is not None and limit is not None:
         overflow = round(max(recognized - limit, 0.0), 2)
@@ -409,9 +411,9 @@ def compute_one(md_path: Path, quarter: str, scr_info: dict[str, object] | None)
     util = None
     util_strict = None
     if recognized is not None and limit and limit > 0:
-        util = round(min(recognized / limit, 1.0) * 100.0, 2)
+        util = round(recognized / limit * 100.0, 2)
     if recognized is not None and limit_strict and limit_strict > 0:
-        util_strict = round(min(recognized / limit_strict, 1.0) * 100.0, 2)
+        util_strict = round(recognized / limit_strict * 100.0, 2)
 
     if issued is None and scr is None:
         data_source = "missing"
@@ -481,7 +483,7 @@ def run(quarter: str, md_dir: Path, out_dir: Path) -> list[UtilizationResult]:
                     "limit_primary": "SCR × 15%  (KIRI 2024-14 p.22 common-transition / p.12 conditional-bump)",
                     "limit_strict": "SCR × 10%  (KIRI 2024-14 p.12 base, non-conditional new issuance)",
                     "numerator": "BS 신종자본증권 issued − Ⅴ.1 excess reclassified",
-                    "utilization_cap": "소진율 100% 캡 (규정 다.(1): 신종 한도초과분은 보완자본 자동 재분류, 이미 공시 보완자본에 포함). 한도초과액 = tier1_hybrid_overflow_eok",
+                    "utilization_cap": "없음 — 소진율은 자르지 않는다 (owner 2026-06-14). 규정 다.(1) 상 신종 한도초과분이 보완자본으로 자동 재분류되는 것은 사실이나(그 금액 = tier1_hybrid_overflow_eok, 이미 공시 보완자본에 포함), 그것은 '한도를 얼마나 채웠나'라는 소진율의 표시값을 100 에서 자를 근거가 아니다. 분자=발행액·분모=인정한도로 소스가 독립이라 >100% 가 정당하게 나오며, 화면(K-ICS.html)이 원호만 100 에서 멈추고 숫자는 '100%+' + 툴팁 실제값으로 표기한다",
                     "scr_source": "kics_disclosure.json item14 (지급여력기준금액)",
                     "source_pdf": "artifacts/kiri_study/nre2024-14_2.pdf",
                 },

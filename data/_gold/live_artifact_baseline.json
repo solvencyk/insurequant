@@ -6,22 +6,13 @@
     "csm_waterfall_history.json|HIST_MASTER_DRIFT": 933,
     "csm_waterfall_history.json|HIST_STAGE_IDENTITY": 41,
     "NB_CSM_multiple.json|NB_CENSUS_MISSING": 31,
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL": 22,
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL": 22,
     "csm_waterfall_history.json|HIST_CENSUS_MISSING": 14,
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING": 7,
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK": 5,
     "csm_amort_schedule.json|AMORT_TOTAL_VS_CLOSING_CSM_BAND": 4,
-    "NB_CSM_multiple.json|NB_VS_WATERFALL": 1,
-    "insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND": 1,
-    "insurance_pl_breakdown.json|INSPL_CSM_AMORT_SCALE": 1
+    "insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND": 1
   },
   "entries": {
-    "NB_CSM_multiple.json|NB_VS_WATERFALL|KR0004|2023.4Q": {
-      "detail": "NB 신계약CSM_연누계=-509.7 vs CSM_waterfall 항목2=509.7 (Δ=-1,019.4, ratio=-1.000)",
-      "reason": "예별손해보험 2023.4Q 신계약CSM 부호 반전(NB=-509.7 vs 마스터=+509.7). 화면 버블맵의 X축이 그 회사만 음수로 그려진다.",
-      "first_seen": "2026-08-25"
-    },
     "NB_CSM_multiple.json|NB_CENSUS_MISSING|KR0001|2026.2Q": {
       "detail": "CSM_waterfall 에 신계약CSM 이 있는데 NB 배포본에 그 (회사,분기) 행이 없다",
       "reason": "배포본이 **한 분기 뒤처져 있다**. 31건 중 28건이 2026.2Q — 마스터 CSM_waterfall 은 2026.2Q 를 갖는데 NB 배포본의 최신 분기는 2026.1Q 다. 나머지 3건은 연차공시사 (라이나/AIA/메트라이프/하나/처브)의 4Q 결측.",
@@ -177,79 +168,9 @@
       "reason": "배포본이 **한 분기 뒤처져 있다**. 31건 중 28건이 2026.2Q — 마스터 CSM_waterfall 은 2026.2Q 를 갖는데 NB 배포본의 최신 분기는 2026.1Q 다. 나머지 3건은 연차공시사 (라이나/AIA/메트라이프/하나/처브)의 4Q 결측.",
       "first_seen": "2026-08-25"
     },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|DB생명보험": {
-      "detail": "Σ=11,176.8 vs total=19,813.0 (Δ=-8,636.2, -43.6%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|DB생명보험": {
-      "detail": "Σ=11,176.8 vs total=19,813.0 (Δ=-8,636.2, -43.6%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|DB손해보험": {
-      "detail": "Σ=76,185.1 vs total=122,317.6 (Δ=-46,132.5, -37.7%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|DB손해보험": {
-      "detail": "Σ=76,185.1 vs total=122,317.6 (Δ=-46,132.5, -37.7%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|KB손해보험": {
-      "detail": "Σ=59,835.5 vs total=92,850.3 (Δ=-33,014.9, -35.6%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|KB손해보험": {
-      "detail": "Σ=59,835.5 vs total=92,850.3 (Δ=-33,014.9, -35.6%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|NH농협손해보험": {
-      "detail": "Σ=9,225.7 vs total=15,132.3 (Δ=-5,906.6, -39.0%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|NH농협손해보험": {
-      "detail": "Σ=9,225.7 vs total=15,132.3 (Δ=-5,906.6, -39.0%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK|교보라이프플래닛생명보험": {
       "detail": "status=empty — 패널이 이 회사를 빈칸으로 그린다",
       "reason": "status=empty 4사 + partial 1사. 패널이 이 회사를 빈칸으로 그린다. 원표 부존재인지 추출 실패인지 raw 확인 전이라 단정하지 않는다(키워드 부재≠원문 부재, memory feedback_keyword_absence_is_not_source_absence).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|교보생명보험": {
-      "detail": "Σ=37,278.2 vs total=65,109.6 (Δ=-27,831.4, -42.7%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|교보생명보험": {
-      "detail": "Σ=37,278.2 vs total=65,109.6 (Δ=-27,831.4, -42.7%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|농협생명보험": {
-      "detail": "Σ=26,118.6 vs total=42,991.1 (Δ=-16,872.5, -39.2%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|농협생명보험": {
-      "detail": "Σ=26,118.6 vs total=42,991.1 (Δ=-16,872.5, -39.2%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|동양생명": {
-      "detail": "Σ=16,700.2 vs total=26,710.9 (Δ=-10,010.7, -37.5%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|동양생명": {
-      "detail": "Σ=16,700.2 vs total=26,710.9 (Δ=-10,010.7, -37.5%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
       "first_seen": "2026-08-25"
     },
     "csm_amort_schedule.json|AMORT_TOTAL_VS_CLOSING_CSM_BAND|라이나생명보험": {
@@ -257,49 +178,9 @@
       "reason": "상각스케줄 합계 / 기말CSM 이 0.28~0.57 인 4사(처브·AIA·메트라이프·라이나). 단위오류는 아니고(SCALE 룰 통과) PAA 적용분이 스케줄 표 밖일 가능성이 있다 — **미확인**. 정당하면 legit 레지스트리로 옮기고, 아니면 추출 범위를 고쳐야 한다.",
       "first_seen": "2026-08-25"
     },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|롯데손해보험": {
-      "detail": "Σ=14,616.8 vs total=24,748.6 (Δ=-10,131.9, -40.9%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|롯데손해보험": {
-      "detail": "Σ=14,616.8 vs total=24,748.6 (Δ=-10,131.9, -40.9%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
     "csm_amort_schedule.json|AMORT_TOTAL_VS_CLOSING_CSM_BAND|메트라이프생명보험": {
       "detail": "2025.4Q 상각스케줄 합계=12,188.1 vs 기말CSM=26,081.6 (ratio=0.467)",
       "reason": "상각스케줄 합계 / 기말CSM 이 0.28~0.57 인 4사(처브·AIA·메트라이프·라이나). 단위오류는 아니고(SCALE 룰 통과) PAA 적용분이 스케줄 표 밖일 가능성이 있다 — **미확인**. 정당하면 legit 레지스트리로 옮기고, 아니면 추출 범위를 고쳐야 한다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|미래에셋생명보험": {
-      "detail": "Σ=13,615.8 vs total=20,584.2 (Δ=-6,968.5, -33.9%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|미래에셋생명보험": {
-      "detail": "Σ=13,615.8 vs total=20,584.2 (Δ=-6,968.5, -33.9%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|삼성생명보험": {
-      "detail": "Σ=82,289.3 vs total=130,806.9 (Δ=-48,517.6, -37.1%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|삼성생명보험": {
-      "detail": "Σ=82,289.3 vs total=130,806.9 (Δ=-48,517.6, -37.1%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|삼성화재해상보험": {
-      "detail": "Σ=89,560.2 vs total=140,739.1 (Δ=-51,178.9, -36.4%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|삼성화재해상보험": {
-      "detail": "Σ=89,560.2 vs total=140,739.1 (Δ=-51,178.9, -36.4%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
       "first_seen": "2026-08-25"
     },
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK|서울보증보험": {
@@ -307,54 +188,14 @@
       "reason": "status=empty 4사 + partial 1사. 패널이 이 회사를 빈칸으로 그린다. 원표 부존재인지 추출 실패인지 raw 확인 전이라 단정하지 않는다(키워드 부재≠원문 부재, memory feedback_keyword_absence_is_not_source_absence).",
       "first_seen": "2026-08-25"
     },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|신한라이프생명보험": {
-      "detail": "Σ=46,612.8 vs total=75,549.0 (Δ=-28,936.1, -38.3%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|신한라이프생명보험": {
-      "detail": "Σ=46,612.8 vs total=75,549.0 (Δ=-28,936.1, -38.3%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|아이엠라이프생명보험": {
-      "detail": "Σ=4,422.6 vs total=7,060.5 (Δ=-2,638.0, -37.4%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|아이엠라이프생명보험": {
-      "detail": "Σ=4,422.6 vs total=7,060.5 (Δ=-2,638.0, -37.4%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK|악사손해보험": {
       "detail": "status=empty — 패널이 이 회사를 빈칸으로 그린다",
       "reason": "status=empty 4사 + partial 1사. 패널이 이 회사를 빈칸으로 그린다. 원표 부존재인지 추출 실패인지 raw 확인 전이라 단정하지 않는다(키워드 부재≠원문 부재, memory feedback_keyword_absence_is_not_source_absence).",
       "first_seen": "2026-08-25"
     },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|에이비엘생명보험": {
-      "detail": "Σ=5,833.5 vs total=9,374.6 (Δ=-3,541.2, -37.8%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|에이비엘생명보험": {
-      "detail": "Σ=5,833.5 vs total=9,374.6 (Δ=-3,541.2, -37.8%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
     "csm_amort_schedule.json|AMORT_TOTAL_VS_CLOSING_CSM_BAND|에이아이에이생명보험": {
       "detail": "2025.4Q 상각스케줄 합계=5,995.0 vs 기말CSM=15,903.6 (ratio=0.377)",
       "reason": "상각스케줄 합계 / 기말CSM 이 0.28~0.57 인 4사(처브·AIA·메트라이프·라이나). 단위오류는 아니고(SCALE 룰 통과) PAA 적용분이 스케줄 표 밖일 가능성이 있다 — **미확인**. 정당하면 legit 레지스트리로 옮기고, 아니면 추출 범위를 고쳐야 한다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|AIG손해보험": {
-      "detail": "Σ=696.3 vs total=922.7 (Δ=-226.4, -24.5%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|AIG손해보험": {
-      "detail": "Σ=696.3 vs total=922.7 (Δ=-226.4, -24.5%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
       "first_seen": "2026-08-25"
     },
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK|예별손해보험": {
@@ -367,79 +208,9 @@
       "reason": "상각스케줄 합계 / 기말CSM 이 0.28~0.57 인 4사(처브·AIA·메트라이프·라이나). 단위오류는 아니고(SCALE 룰 통과) PAA 적용분이 스케줄 표 밖일 가능성이 있다 — **미확인**. 정당하면 legit 레지스트리로 옮기고, 아니면 추출 범위를 고쳐야 한다.",
       "first_seen": "2026-08-25"
     },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|케이디비생명보험": {
-      "detail": "Σ=4,986.7 vs total=8,650.4 (Δ=-3,663.7, -42.4%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|케이디비생명보험": {
-      "detail": "Σ=4,986.7 vs total=8,650.4 (Δ=-3,663.7, -42.4%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|KB라이프생명": {
-      "detail": "Σ=19,674.5 vs total=32,637.8 (Δ=-12,963.2, -39.7%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|KB라이프생명": {
-      "detail": "Σ=19,674.6 vs total=32,637.8 (Δ=-12,963.2, -39.7%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|코리안리재보험": {
-      "detail": "Σ=5,863.3 vs total=9,046.7 (Δ=-3,183.4, -35.2%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|코리안리재보험": {
-      "detail": "Σ=5,863.3 vs total=9,046.7 (Δ=-3,183.4, -35.2%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|하나생명보험": {
-      "detail": "Σ=4,237.4 vs total=7,269.0 (Δ=-3,031.6, -41.7%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|하나생명보험": {
-      "detail": "Σ=4,237.4 vs total=7,269.0 (Δ=-3,031.6, -41.7%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK|하나손해보험": {
       "detail": "status=empty — 패널이 이 회사를 빈칸으로 그린다",
       "reason": "status=empty 4사 + partial 1사. 패널이 이 회사를 빈칸으로 그린다. 원표 부존재인지 추출 실패인지 raw 확인 전이라 단정하지 않는다(키워드 부재≠원문 부재, memory feedback_keyword_absence_is_not_source_absence).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|한화손해보험": {
-      "detail": "Σ=23,931.2 vs total=38,032.2 (Δ=-14,101.0, -37.1%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|한화손해보험": {
-      "detail": "Σ=23,931.2 vs total=38,032.2 (Δ=-14,101.0, -37.1%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|흥국생명보험": {
-      "detail": "Σ=13,246.1 vs total=22,152.0 (Δ=-8,905.9, -40.2%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|흥국생명보험": {
-      "detail": "Σ=13,246.1 vs total=22,152.0 (Δ=-8,905.9, -40.2%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_YEARLY_SUM_NE_TOTAL|흥국화재": {
-      "detail": "Σ=14,176.0 vs total=24,707.9 (Δ=-10,532.0, -42.6%)",
-      "reason": "장기 꼬리 버킷 누락. 원표 헤더에 16~20년·21~25년·26~30년·30년이후 컬럼이 있는데 추출은 y1~y10 + y10plus(=11~15년)까지만 담는다 → 39사 중 22사에서 Σ(연차)가 합계보다 35~44% 작다. 화면 막대가 그만큼 짧다.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_amort_schedule.json|AMORT_BUCKETS_SUM_NE_TOTAL|흥국화재": {
-      "detail": "Σ=14,176.0 vs total=24,707.9 (Δ=-10,532.0, -42.6%)",
-      "reason": "위와 같은 원인(buckets 도 같은 연차 집계를 재사용한다).",
       "first_seen": "2026-08-25"
     },
     "csm_waterfall_history.json|HIST_MASTER_DRIFT|DB생명보험|2023.1Q|opening": {
@@ -5384,12 +5155,7 @@
     },
     "insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND|코리안리재보험|2024.4Q": {
       "detail": "표=108,252.0 vs 마스터=38,102.0 (ratio=2.841)",
-      "reason": "코리안리재보험 2024.4Q ratio 2.841. 재보험사 표 구조가 달라 원수/재보험 합산 행을 집었을 가능성 — 미확인.",
-      "first_seen": "2026-08-25"
-    },
-    "insurance_pl_breakdown.json|INSPL_CSM_AMORT_SCALE|한화손해보험|2024.4Q": {
-      "detail": "표 보험계약마진상각 합계=-387,989,612.0 vs PL 마스터 원수CSM상각=409,737.1 (ratio=946.9) — 행/열 오선택 또는 단위 미정규화 의심",
-      "reason": "한화손해보험 2024.4Q — 표의 보험계약마진상각 행 마지막 숫자가 -387,989,612 로 마스터(409,737)의 947배. 행 병합/열 오선택으로 셀 값이 이어붙은 파싱 사고다.",
+      "reason": "코리안리재보험 2024.4Q ratio 2.841. 2026-08-25 raw 재확인: 108,252 는 파싱 사고가 아니다 — data/dart/FY2024_Q4/raw/KR1000_코리안리_20250320001161/xml/20250320001161_00760.xml L14365 에 리터럴로 존재(캡션 '(4) 당기와 전기 중 보험손익 상세내역', 장기31,250+생명77,002+일반-=합계108,252). 마스터 원수CSM상각(38,102, PL_breakdown item4) 과 이 회사가 가진 나머지 CSM상각류 항목(item9 재보험 11,236 · item4-1 수재 33,740 · item9-1 출재 -8,756) 을 여러 조합으로 더해봐도 108,252 에 안 맞는다 — 원수/재보험/수재/출재 4축 구조라 이 표의 '합계' 열이 정확히 어느 조합인지 특정 못 함. 행/열 오선택이 아니라 재보험사 특유의 다축 구조에서 비교 앵커(item4 원수CSM상각 단독) 가 이 표 범위와 안 맞는 문제로 좁혀짐 — 표시값은 원문 그대로이므로 안 고침. 다음 행동: PL_breakdown.json 쪽에서 이 표의 '합계' 열과 정확히 대응하는 파생 항목(또는 조합)을 규명하거나, 이 회사는 앵커 비교를 건너뛰도록 체커 쪽에서 판단할 것 — 둘 다 parser 단독 결정 범위 밖.",
       "first_seen": "2026-08-25"
     },
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|AIG손해보험": {

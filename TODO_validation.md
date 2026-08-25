@@ -1,11 +1,73 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-25 (d) (산술 항등식 레지스트리 신설 — 등식을 밴드로 구현하는 것을 기계로 차단) · Stage 3/5 — validation
+> Last updated: 2026-08-25 (e) (answered 2건 재확인 — 면제 1건 기각 · 화면 6칸 캡 오적용 적발) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-25 e, answered 2건 sender 재확인) 🟡 둘 다 iter++ 로 되돌렸다. 마스터 데이터는
+한 셀도 안 고쳤다. prepush **exit 0**.**
+
+> 티켓 `inbox/parser/20260825T1120Z__...__pl_bridge_deployed_master_defects.md` (iter 2) ·
+> `inbox/publishing/20260825T1130Z__...__deployed_artifact_diverges_from_builder.md` (iter 2)
+>
+> ### 재확인 결과 — 15/16 · 5/5 는 통과, 각 1건이 틀렸다
+>
+> **① 복사셀 방향은 내 발주가 틀렸다(parser 가 맞다).** raw XML 을 직접 다시 읽어 삼중 확증:
+> FY2024 `1) 당분기` = 22,447/44,994/66,762 · FY2025 `1) 당분기` = 20,087/40,080/61,207 ·
+> FY2025 의 `2) 전분기` 열이 정확히 2024 값. 세 분기 전부 `|전분기|>|당분기|` 라 `max(abs)`
+> 폴백이 반드시 전분기를 고른다 — 오염 기전이 표 안에서 보인다. **독립 확인**: 이번 커밋이
+> 손대지 않은 `CSM_waterfall.json`(마지막 변경 `c738c92`) 의 CSM상각이 정정 **후** 값과만
+> 맞는다. 정정 후 KR0070/0072/0087/0001 전 분기 `PL item4 ÷ (WF item5×100)` = **0.9999~1.0002**.
+>
+> **② `issuer_structural_residual`(DB생명 2023.1Q) 기각.** 등재 사유는 "이 회사 보험손익
+> 캡션이 재보험을 구조적으로 제외한다" 인데 **그 회사 자신의 다른 분기가 반증한다** —
+> 재보험 포함형이 닫히는 분기 **12**, 원수 단독형이 닫히는 분기 **1**(2023.1Q뿐), 둘 다/둘 다
+> 아님 0. raw 가 원인을 그대로 보여준다: `(2) 요약포괄손익계산서` 에 부모행
+> `I. 보험서비스손익 24,548,248,470` 바로 아래 자식행 `1. 보험손익 22,946,356,594` 가 있고,
+> 마스터 item1 이 **자식행**을 집었다. `item2 − item16 = 24,548.248` = 부모행과 소수 3자리 일치.
+> 발행사 구조가 아니라 **2023.1Q 한정 parent/child 오선택**이고, 화면 보험손익이 16억 과소다.
+>
+> **③ 100% 캡은 뒤집힌 결정이었다 — 화면 6칸이 지금 틀리다.** publishing 이
+> `changelog_publishing.md:411`("owner 결정: 소진율 100% 캡")을 근거로 들었으나 그 결정은
+> 같은 날 **번복**됐다(`changelog_designer.md:783-789` "owner 결정 복원", designer 프롬프트
+> L177 LOCKED). owner 논거는 "분자 KOFIA·분모 공시 → **독립 소스라 사전 cap 은 애초 불가능**,
+> 원호만 캡". `K-ICS.html` 은 이미 그대로 구현돼 있는데(L841 `pct>100 ? '100%+'`, L879 툴팁
+> "실제 144.1%"), 빌더가 `min(t1_util,100.0)` 로 잘라 보내므로 그 분기가 **죽는다**.
+> 전수 census **6사**(NH농협 192.9 · 하나생명 187.0 · 하나손해 144.1 · 코리안리 139.8 ·
+> 한화생명 138.5 · KDB생명 113.4)가 전부 평평한 `100%` 로 그려진다.
+> 2026-07-22 `a629e34` 인라인→fetch 분리로 데이터쪽 캡이 화면에 도달하게 된 것이 발현 시점.
+>
+> ### 이번에 확인한 게이트 사각 2개 (validation 이 가져감)
+>
+> - **PL 등재부가 값을 안 본다.** `validate_master_tables._report_pl_baseline`(L783-807)은
+>   `회사|분기|라벨` **키만** 대조하고 등재부의 `lhs`·`diff` 를 읽는 코드가 **0곳**이다 →
+>   등재 6건은 값이 아무리 움직여도 영원히 YELLOW. 같은 파일 L151 `csm_amort_ledger_verdict`
+>   는 `residual_eok` 를 tol 로 박제하고 `PIN_DRIFT` 를 띄운다 — **옳은 패턴이 함수 하나 옆에
+>   있다.** PL 등재부에도 pin 을 건다.
+> - **불변식 1번이 tier 축에서 아직 안 닫혔다 — 이번 수정이 닫은 것은 증상이다.**
+>   변이시험 3회(바이트 백업→변이→게이트→복원, 매회 sha256 원복·`git status` 청결):
+>   **배포본**의 `tier1_hybrid_issued_eok` 를 0 으로(M2) 또는 절반으로(M3) 틀어도
+>   `validate_live_artifacts`·`validate_data_contract` 둘 다 **exit 0**. 같은 필드를
+>   **빌더 산출물**에서 0 으로 틀면(M4) 즉시 **exit 2 `CAPSEC_COVERAGE_REGRESSION`**.
+>   원인은 `validate_data_contract._load_tier`(L1844) 가 `ROOT/"output"/sub` 를 glob 해
+>   **빌더 산출물을 읽기 때문**이다 — L1641-1643 의 배포본 매핑은 mtime·provenance·
+>   ARTIFACT_UNREADABLE 축 전용이다. 원 발주문의 "mtime·provenance 는 배포본을 보고
+>   **숫자는 상류를 본다**" 가 지금도 사실이다. 배포본과 화면 사이에 서 있는 것은
+>   `validate_live_artifacts` 의 **`utilization_pct` 한 필드 대조**뿐이고, 화면이 인쇄하는
+>   `tier1_hybrid_issued_eok`(`K-ICS.html:912`, 이번 사고에서 실제로 0 이었던 그 필드)는
+>   **어느 RED 룰도 배포본에서 보지 않는다**(항등식은 `..._recognized_eok` 를 쓴다).
+>   → ① 배포본↔빌더 대조를 화면 4필드로 확대(동일성 대조라 관찰기 불요)
+>     ② `_load_tier` 배포본 재조준 — 부수효과가 커서 전 버킷 시뮬레이션 먼저.
+>
+> ### 조립 단계 강제 여부 — 주 경로는 강제된다
+>
+> `sync_tier_utilization_to_deploy.py` 를 **호출하는 코드는 0곳**(참조 7곳 전부 문서)이지만,
+> 결과는 `validate_live_artifacts` 가 `prepush_check.py:83` 도메인 게이트 루프에 배선돼 있어
+> exit 가 전파된다(위 변이시험 M1 이 실증). "문서에만 있고 아무도 안 부르는 단계" 는 아니다.
+
 
 **(2026-08-25 d, 항등식 레지스트리) 🟢 마스터 데이터는 한 셀도 안 고쳤다. 등식이어야 할 것이
 밴드로 구현되는 것을 기계가 막는다. prepush **exit 0** (gate RED=0 · 오프라인 테스트 230 passed).**

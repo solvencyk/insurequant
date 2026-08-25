@@ -1,9 +1,119 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-25 (d) · Stage 3/5 — validation
+> Last updated: 2026-08-25 (e) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-08-25 (e) — answered 2건 sender 재확인: 면제 1건 기각 · 화면 6칸 캡 오적용 적발
+
+내가 sender 인 티켓 2건이 `answered` 로 돌아와 재확인했다. **재확인은 전부 독립 재측정으로
+했다** — recipient 가 남긴 probe 를 재실행하지 않고 raw XML·per-bond 원천을 직접 다시 읽었다.
+결론은 **둘 다 iter++**. 마스터 데이터는 한 셀도 안 고쳤다.
+
+### 확인된 것 (다시 볼 필요 없음)
+
+- **에이비엘 복사셀 3건 — 내 발주가 틀렸고 parser 가 맞았다.** 나는 "2024 가 2025 를 복제"
+  라고 썼는데 반대였다. raw 삼중 확증: FY2024 `1) 당분기`=22,447/44,994/66,762 ·
+  FY2025 `1) 당분기`=20,087/40,080/61,207 · FY2025 의 `2) 전분기` 열이 2024 값과 동일.
+  세 분기 전부 `|전분기|>|당분기|` 라 `max(abs)` 폴백이 반드시 전분기를 집는다.
+  **독립 확인** — 이번 커밋(`aa47315`)이 손대지 않은 `CSM_waterfall.json` 의 CSM상각이
+  정정 후 값과만 맞는다(2025.1~3Q = -200.9/-400.8/-612.1억).
+- **basis_mix 5건.** 단 `assemble(): item7 = item3-(item4+item5+item6)` 이라 `item3=Σ(4..7)` 은
+  **설계상 항등식** — 닫힘은 증거가 아니다. 대신 원천 교차대조로 봤고
+  KR0070/0072/0087/0001 전 분기 `PL item4 ÷ (WF item5×100)` = 0.9999~1.0002.
+- **잔존 6건 중 5건**은 "못 닫았다"를 그대로 적었고 인용 probe 6종이 전부 디스크에 실재한다.
+- **tier 배포본 == 빌더**: 39사×2파일 전 필드 재대조 어긋남 0. 바뀐 4칸과 0.0% 정답 3건을
+  `data/bonds/capital_securities_fy2025.json` per-bond 에서 직접 재계산해 전건 일치
+  (예: 아이엠라이프 tier2 = 1,000×3.629/5 + 750×3.99/5 = 1,324.3 / 3,262.5 = 40.6%).
+
+### 기각한 것
+
+**`issuer_structural_residual`(DB생명 2023.1Q).** 사유가 "이 회사 보험손익 캡션이 재보험을
+구조적으로 제외한다" 는 **회사 단위 주장**인데, 그 회사의 다른 분기가 반증한다 — 재보험
+포함형이 닫히는 분기 **12**, 원수 단독형 **1**(2023.1Q뿐). raw 가 원인을 보여준다:
+부모행 `I. 보험서비스손익 24,548,248,470` 아래 자식행 `1. 보험손익 22,946,356,594` 가 있고
+마스터 item1 이 자식행을 집었다(`item2−item16 = 24,548.248` 이 부모행과 3자리 일치).
+**parent/child 오선택, 2023.1Q 한정.** recipient 는 한 분기의 raw 만 보고 회사 성질로
+일반화했다 — 같은 회사의 다른 분기가 가장 싼 반증쿼리였다.
+
+### 새로 적발한 것 — 화면 6칸이 틀리다 (owner 승인 대기)
+
+publishing 이 하나손해 tier1 144.1%→100.0 캡을 "owner 결정" 으로 정당화했는데, 근거로 든
+`changelog_publishing.md:411` 의 결정은 **같은 날 번복됐다**
+(`changelog_designer.md:783-789` "owner 결정 복원" + designer 프롬프트 L177 LOCKED).
+owner 논거: 분자=KOFIA 발행액·분모=공시 한도라 **독립 소스라 사전 cap 이 애초 불가능**,
+원호(`Math.min`)만 캡. `K-ICS.html` 은 이미 그렇게 구현돼 있으나(L841 `pct>100 ? '100%+'`,
+L879 툴팁 "실제 144.1%") 빌더가 잘라 보내 그 분기가 죽는다. 전수 census **6사**
+(NH농협 192.9 · 하나생명 187.0 · 하나손해 144.1 · 코리안리 139.8 · 한화생명 138.5 ·
+KDB생명 113.4)가 평평한 `100%` 로 그려진다 — 한도에 정확히 걸친 것과 구분 불가.
+2026-07-22 `a629e34`(인라인→fetch)로 데이터쪽 캡이 화면에 도달한 것이 발현 시점이고,
+이번 §1 동기화로 0.0% 가 걷히면서 6사가 전부 캡에 걸렸다.
+**tier1/tier2 비대칭이 스스로 증거** — 같은 빌더 L140 은 tier2 를 안 자르고 `>100` 이면
+`util_over_100_legit` 플래그를 붙인다.
+
+> `validate_live_artifacts.py:465` 도 `exp = min(100.0, ...)` 로 그 캡을 **축복**하고 있고,
+> 주석은 memory `reference_kics_capital_tiering` 의 "owner 결정 = 화면 100%+ 표기" 를
+> 인용하면서 정반대로 구현했다. 인용한 근거와 코드가 어긋난 자리다. 빌더와 **같은 커밋**에
+> 고쳐야 6사가 transient RED 으로 뜨지 않는다.
+
+### 게이트 사각 2개 (validation 이 가져감)
+
+1. **PL 등재부가 값을 안 본다.** `_report_pl_baseline`(L783-807)은 `회사|분기|라벨` 키만 보고
+   등재부의 `lhs`·`diff` 를 읽는 코드가 0곳 → 등재 6건은 값이 움직여도 영원히 YELLOW.
+   같은 파일 L151 `csm_amort_ledger_verdict` 는 `residual_eok` 를 tol 로 박제하고 `PIN_DRIFT`
+   를 띄운다. 옳은 패턴이 함수 하나 옆에 있는데 PL 축만 안 쓴다.
+2. **불변식 1번이 tier 축에서 아직 안 닫혔다 — publishing 이 닫은 것은 증상이다.**
+   나는 처음에 "`tier1_hybrid_issued_eok` 는 CAPSEC 이 잡겠지" 하고 내 판정을 누그러뜨리려
+   했다(`validate_data_contract._CAPSEC_SLICE_FIELDS` 에 그 필드가 있다). **변이시험이
+   반대로 나왔다** — 매회 바이트 백업→변이→게이트→복원, sha256 원복·`git status` 청결:
+
+   | # | 무엇을 틀었나 | live_artifacts | data_contract |
+   |---|---|---|---|
+   | M2 | **배포본** `tier1_hybrid_issued_eok` 1000→0 | exit 0 | exit 0 |
+   | M3 | **배포본** 같은 필드 1000→500 | exit 0 | exit 0 |
+   | M4 | **빌더 산출물** 같은 필드 1000→0 | — | **exit 2 `CAPSEC_COVERAGE_REGRESSION`** |
+
+   CAPSEC 룰은 멀쩡한데 **보는 파일이 다르다.** `_load_tier`(L1844)가 `ROOT/"output"/sub` 를
+   glob 해 빌더 산출물을 읽는다. L1641-1643 의 배포본 매핑은 mtime·provenance·
+   ARTIFACT_UNREADABLE 축 전용 — 원 발주문의 *"mtime·provenance 는 배포본을 보고 숫자는
+   상류를 본다"* 가 **지금도 사실**이다. 배포본과 화면 사이에 서 있는 것은 이번에 신설된
+   `validate_live_artifacts` 의 `utilization_pct` **한 필드 대조**뿐이고, 화면이 인쇄하는
+   `tier1_hybrid_issued_eok`(이번 사고에서 실제로 0 이었던 그 필드)는 어느 RED 룰도
+   배포본에서 보지 않는다(항등식은 `..._recognized_eok` 를 쓴다).
+   → ① 배포본↔빌더 대조를 화면 4필드로 확대 ② `_load_tier` 배포본 재조준(부수효과 커서
+   전 버킷 시뮬레이션 먼저). 둘 다 validation 이 가져간다.
+
+### 조립 단계 강제 여부
+
+`sync_tier_utilization_to_deploy.py` 를 **호출하는 코드는 0곳**(참조 7곳 전부 문서)이지만
+결과는 강제된다 — `validate_live_artifacts` 가 `prepush_check.py:83` 도메인 게이트 루프에
+있고 exit 가 `n_dom |= _p.returncode` 로 전파된다. 위 변이시험 M1 이 실증(exit 2).
+"문서에만 있고 아무도 안 부르는 단계" 는 아니다.
+
+### 부수 실측
+
+`PL item4 ÷ (WF item5×100)` 346 버킷 전수: 현행 밴드 `0.4~2.5` 를 벗어나는 것 **0건**.
+정정 전 에이비엘 2025 는 1.09~1.12 였으므로 이 밴드는 이번 결함을 구조적으로 볼 수 없었다.
+코리안리 14버킷이 0.41~0.71 로 계통적(수재 레그 누락 방향)이고, 삼성생명 1.02·미래에셋
+2025.2Q 1.25 가 다음 후보다.
+
+### 검증
+
+- `scripts/validate_master_tables.py --no-build` → exit 0,
+  `pl_bridge:2513P/16F/319S/0NEW`, `PL_BRIDGE BASELINE 기지=16 신규=0 등재부에만 남은 것=0`.
+- `scripts/validate_live_artifacts.py` → `RED=0 YELLOW(baselined)=1082 STALE_BASELINE=0` exit 0.
+- 변이시험 후 `kics_tier1_utilization.json` sha256 원복 확인 + `git status` 청결.
+- `scripts/prepush_check.py` → **exit 0** (gate RED=0 · K-ICS clear · domain pass ·
+  DART raw 유실 0 · inbox 기계적위반 0 · offline tests **230 passed/1 skipped**, 9분46초).
+- **마스터 JSON·배포본·HTML 무수정.** 편집한 것은 티켓 2개 + 이 문서 2개뿐.
+- ⚠️ **공유 트리 — 위 exit 0 은 provisional.** 검증 중 다른 세션이 `PL_breakdown.json` ·
+  `data/_gold/user_pl_cells.json` · `data/dart/viz/insurance_pl_breakdown.json` ·
+  `scripts/viz_build_ifrs17_panels.py` 를 수정 중이었다. 그 여파로 같은 세션 안에서
+  `validate_live_artifacts` 가 `YELLOW 1082/STALE 0` → `YELLOW 1038/STALE 44` 로 움직였다
+  (INSPL_* 축). 내가 잰 tier·PL 수치는 재측정해도 동일했고, 변이시험 3회는 tier 파일만
+  건드렸다(전부 원복). **커밋 시 내 4파일만 골라 담을 것.**
+
 
 ---
 

@@ -16,6 +16,13 @@ _FILENAME_RE = re.compile(r"^(.+?)_(\d{14})")
 _YEAR_CELL_RE = re.compile(r"^(\d{1,2})\uB144$")
 # Range-bucket cell parsers (header tokens with all spaces removed).
 _RANGE_TILDE_RE = re.compile(r"^(\d{1,2})~(\d{1,2})\uB144$")  # 1~2\uB144, 5~10\uB144
+_RANGE_YEAR_TILDE_YEAR_RE = re.compile(
+    r"^(\d{1,2})\uB144~(\d{1,2})\uB144$"
+)  # 11\uB144~15\uB144, 16\uB144~20\uB144 (\uB144 after BOTH numbers, distinct from
+   # _RANGE_TILDE_RE's "5~10\uB144" shape). 22/39 companies' amort-schedule tail
+   # buckets (11~15/16~20/21~25/26~30\uB144) use this exact form and fell through
+   # every existing pattern -> silently dropped (2026-08-25, validate_live_artifacts
+   # AMORT_YEARLY_SUM_NE_TOTAL, 35~44% short).
 _RANGE_CHOGWA_IHA_RE = re.compile(
     r"^(\d{1,2})\uB144\uCD08\uACFC(\d{1,2})\uB144\uC774\uD558$"
 )  # 1\uB144\uCD08\uACFC2\uB144\uC774\uD558
@@ -108,6 +115,10 @@ def _classify_bucket_cell(cell: str) -> str | None:
     if m:
         return _bucket_for_range(int(m.group(1)), int(m.group(2)))
 
+    m = _RANGE_YEAR_TILDE_YEAR_RE.match(no_space)
+    if m:
+        return _bucket_for_range(int(m.group(1)), int(m.group(2)))
+
     m = _RANGE_CHOGWA_IHA_RE.match(no_space)
     if m:
         return _bucket_for_range(int(m.group(1)), int(m.group(2)))
@@ -167,6 +178,10 @@ def _year_bucket_cell(cell: str) -> str | None:
         hi = int(m.group(2))
         return f"y{hi}" if 1 <= hi <= 10 else "y10plus"
     m = _RANGE_TILDE_RE.match(no_space)  # 'N~M년' -> year M
+    if m:
+        hi = int(m.group(2))
+        return f"y{hi}" if 1 <= hi <= 10 else "y10plus"
+    m = _RANGE_YEAR_TILDE_YEAR_RE.match(no_space)  # 'N년~M년' -> year M
     if m:
         hi = int(m.group(2))
         return f"y{hi}" if 1 <= hi <= 10 else "y10plus"
@@ -598,7 +613,102 @@ def extract_amort_schedule(blocks: list[dict], company: str = "") -> dict | None
     }
 
 
-def extract_pl_breakdown(blocks: list[dict]) -> dict | None:
+## companies whose PL-breakdown candidates need the \uB2F9\uAE30/\uC804\uAE30 dedup below applied.
+# Tried this as an unconditional pre-filter first (2026-08-25) and reverted --
+# it changes the winning candidate for ~15 companies (verified via full before/
+# after caption diff), several into a DIFFERENT NOTE entirely (e.g. \uD765\uAD6D\uC0DD\uBA85\uBCF4\uD5D8
+# "(7) \uBCF4\uD5D8\uC11C\uBE44\uC2A4\uACB0\uACFC\uC758 \uC0C1\uC138\uB0B4\uC5ED" -> "(7) \uBCF4\uD5D8\uC190\uC775\uC758 \uC0C1\uC138\uB0B4\uC5ED", DB\uC0DD\uBA85\uBCF4\uD5D8 note "15.4"
+# -> "14.4"), because captions/row-labels drift across a company's *repeated*
+# occurrences of the same note in ways that don't cleanly separate into "true
+# \uB2F9\uAE30/\uC804\uAE30 pairs" vs "duplicate renderings of the same period with extraction
+# noise in the row label" (KB\uC190\uD574\uBCF4\uD5D8: two score=11 candidates with the SAME
+# 837,664 value but row-label "\uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4 \uC0C1\uAC01" vs "\uC81C\uACF5\uB41C \uC11C\uBE44\uC2A4\uC758 \uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4" --
+# not a period pair at all, just label noise -- dedup demoted the
+# checker-recognized label). Scoping to an explicit allowlist keeps every other
+# company's selection byte-identical to pre-fix output.
+_PL_PREFER_CURRENT_PERIOD = {"\uD55C\uD654\uC190\uD574\uBCF4\uD5D8"}
+
+
+def _dedupe_prefer_current_period(blocks: list[dict]) -> list[dict]:
+    """Collapse (\uB2F9\uAE30)/(\uC804\uAE30) twin CSM-note tables to the earlier (current-period) copy.
+
+    IFRS17 CSM-rollforward notes conventionally print an identical-shaped
+    "(\uB2F9\uAE30)" [current period] table immediately followed by a "(\uC804\uAE30)"
+    [prior-period comparative] table -- same caption, same header, same row
+    labels, only the cell values differ. Neither the caption nor the parsed
+    block dict carries that "(\uB2F9\uAE30)"/"(\uC804\uAE30)" sub-label (it's a sibling
+    text node the upstream extractor drops, not part of the table) -- but
+    the document always prints the current-period table first, so within a
+    group of structurally-identical blocks (same caption+header+row-labels)
+    the smallest line_no is \uB2F9\uAE30.
+
+    Without this, pick_best_block's tie-break (max line_no, since score and
+    row-count tie exactly across the twin pair) systematically prefers the
+    LAST occurrence -- which is \uC804\uAE30 whenever a filing repeats the note
+    across doc sections. Confirmed 2026-08-25 on \uD55C\uD654\uC190\uD574\uBCF4\uD5D8 2024.4Q raw
+    XML (data/dart/FY2024_Q4/raw/KR0002_.../20250311001216_00760.xml lines
+    12520-12920): \uB2F9\uAE30 \uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4\uC0C1\uAC01 \uC18C\uACC4=-409,737,121\uCC9C\uC6D0 (matches PL
+    master \uC6D0\uC218CSM\uC0C1\uAC01 409,737\uBC31\uB9CC\uC6D0 almost exactly) vs \uC804\uAE30=-387,989,612\uCC9C\uC6D0 (the
+    picked-by-bug value, 947x the master once compared without a /1000
+    unit conversion this panel never applied).
+
+    Grouping key = (caption, header, row-label tuple) so this only merges
+    true duplicates, not just any same-caption blocks with genuinely
+    different row content (different product-line breakdowns etc. keep
+    pick_best_block's existing score/row-count/line_no ordering). Gated by
+    _PL_PREFER_CURRENT_PERIOD (see that constant's comment) -- do not lift
+    the gate without re-verifying the full before/after caption diff across
+    every company this touches.
+    """
+    groups: dict[tuple, list[dict]] = {}
+    order: list[tuple] = []
+    for b in blocks:
+        key = (
+            b.get("caption"),
+            json.dumps(b.get("header") or [], ensure_ascii=False, sort_keys=True),
+            tuple(str((r or [None])[0]) for r in (b.get("rows") or [])),
+        )
+        if key not in groups:
+            groups[key] = []
+            order.append(key)
+        groups[key].append(b)
+    out = []
+    for key in order:
+        cands = groups[key]
+        out.append(min(cands, key=lambda b: b.get("line_no", 0)) if len(cands) > 1 else cands[0])
+    return out
+
+
+# extract_pl_breakdown() stores this note's rows "as filed" (no unit detection at
+# all -- unlike the amort-schedule panel, which has _detect_unit/_AMORT_UNIT_OVERRIDE
+# precisely because docling drops the standalone "(\uB2E8\uC704: X)" parenthetical that sits
+# between the caption sentence and the header row). Confirmed 2026-08-25 by direct
+# raw citation (data/dart/FY2024_Q4/raw/KR0002_\uD55C\uD654\uC190\uD574\uBCF4\uD5D8_20250311001216/
+# 20250311001216_00760.xml, both the "(\uB2F9\uAE30)" table at line ~12520 and its "(\uC804\uAE30)"
+# twin at ~12920 are captioned "(\uB2E8\uC704: \uCC9C\uC6D0)") -- same company/convention already on
+# record in _AMORT_UNIT_OVERRIDE above for its FY2025 filing. Cross-checked against
+# PL_breakdown.json's \uC6D0\uC218CSM\uC0C1\uAC01 anchor for 2024.4Q: \uB2F9\uAE30 \uD45C \uBCF4\uD5D8\uACC4\uC57D\uB9C8\uC9C4 \uC18C\uACC4
+# 409,737,121\uCC9C\uC6D0 / 1000 = 409,737.121\uBC31\uB9CC\uC6D0 == master's 409737.121 to 6 significant
+# figures (the master's own stored value already carries that exact /1000 precision,
+# confirming this is genuinely the raw unit, not a coincidence).
+_PL_UNIT_OVERRIDE = {
+    "\uD55C\uD654\uC190\uD574\uBCF4\uD5D8": "\uCC9C\uC6D0",
+}
+
+
+def _rescale_pl_cell(cell: str, factor: float) -> str:
+    """Rescale one raw table cell string by `factor`, preserving '-'/blank cells
+    (dash_means_zero=False so a literal '-' round-trips unchanged, not "0") and
+    the parenthesized-negative display convention."""
+    v = parse_num(cell, dash_means_zero=False)
+    if v is None:
+        return cell
+    r = round(v * factor, 3)
+    txt = f"{int(abs(r)):,}" if r == int(r) else f"{abs(r):,.3f}"
+    return f"({txt})" if r < 0 else txt
+
+
+def extract_pl_breakdown(blocks: list[dict], company: str = "") -> dict | None:
     kw_caption = (
         "\uBCF4\uD5D8\uC11C\uBE44\uC2A4",
         "\uBCF4\uD5D8\uC218\uC775",
@@ -609,6 +719,8 @@ def extract_pl_breakdown(blocks: list[dict]) -> dict | None:
         for b in blocks
         if any(k in str(b.get("caption") or "") for k in kw_caption) or int(b.get("score", 0)) >= 6
     ]
+    if company in _PL_PREFER_CURRENT_PERIOD:
+        candidates = _dedupe_prefer_current_period(candidates)
     blk = pick_best_block(candidates) or pick_best_block(blocks)
     if not blk:
         return None
@@ -631,12 +743,22 @@ def extract_pl_breakdown(blocks: list[dict]) -> dict | None:
     if not rows_out:
         return {"status": "no_rows", "caption": blk.get("caption")}
 
-    return {
+    unit = _PL_UNIT_OVERRIDE.get(company)
+    if unit:
+        factor = _UNIT_TO_EOKWON[unit] * 100  # -> \uBC31\uB9CC\uC6D0 (this panel's comparison basis)
+        rows_out = [[row[0]] + [_rescale_pl_cell(c, factor) for c in row[1:]] for row in rows_out]
+
+    out = {
         "status": "ok",
         "caption": blk.get("caption"),
         "header": blk.get("header") or [],
         "table": rows_out,
     }
+    if unit:
+        out["unit"] = "\uBC31\uB9CC\uC6D0"
+        out["unit_detected"] = unit
+        out["unit_source"] = "override"
+    return out
 
 
 def extract_bs_snapshot(blocks: list[dict]) -> dict | None:
