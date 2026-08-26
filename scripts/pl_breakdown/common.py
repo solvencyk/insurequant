@@ -90,10 +90,19 @@ def _ofs_line_boundary(path):
     basis as unknown rather than guessing.  ATOC markers inside note cross-references
     (prose like '...5.재무제표 주석...부분을 참고') are excluded by the ATOC="Y"+ENG
     attribute requirement on the English path and by the `$`-anchored heading pattern on
-    the Korean one -- neither matches a sentence."""
+    the Korean one -- neither matches a sentence.
+
+    The Korean path additionally requires at least one <TABLE> between the 연결 heading and
+    the 별도 heading it accepts.  Without that it matches the document's own 목차 first: the
+    TOC lists "2. 연결재무제표" and "4. 재무제표" as plain lines a few hundred lines apart, and a
+    boundary of ~295 puts EVERY table after it -- so every table reads OFS, `_prefer_ofs`
+    finds no CFS to drop, and the filter goes silently dead.  Measured on the tree
+    (2026-08-26, inbox/parser/20260826T0730Z §3): 91 of 265 main-body XMLs across 11
+    companies took the TOC line.  A 목차 has no tables in it, the statements sections do."""
     try:
         cfs_seen = False
         kr_cfs_seen = False
+        kr_tables_since_cfs = 0
         kr_hit = None
         with open(path, encoding="utf-8", errors="replace") as f:
             for i, line in enumerate(f, 1):
@@ -107,12 +116,19 @@ def _ofs_line_boundary(path):
                             elif ("separate" in eng or "non-consolidated" in eng) and cfs_seen:
                                 return i
                 # Korean fallback -- scanned in the same pass so the file is read once.
-                if kr_hit is None and "재무" in line:
-                    t = _plain(line)
-                    if _CFS_HEAD_RE.match(t):
-                        kr_cfs_seen = True
-                    elif kr_cfs_seen and _OFS_HEAD_RE.match(t):
-                        kr_hit = i
+                if kr_hit is None:
+                    if kr_cfs_seen and "<table" in line.lower():
+                        kr_tables_since_cfs += 1
+                    if "재무" in line:
+                        t = _plain(line)
+                        if _CFS_HEAD_RE.match(t):
+                            kr_cfs_seen = True      # count from the FIRST 연결 heading, never
+                            # reset: a later one can sit a few lines above the 별도 heading
+                            # (에이비엘 2026.2Q: "37. 연결재무제표 요약사항" 8 lines before
+                            # "4-1. 재무상태표"), and resetting there would reject a real
+                            # boundary for having no table in that 8-line gap.
+                        elif kr_cfs_seen and kr_tables_since_cfs and _OFS_HEAD_RE.match(t):
+                            kr_hit = i
     except OSError:
         return None
     return kr_hit

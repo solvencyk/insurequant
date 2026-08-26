@@ -10,7 +10,8 @@
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING": 7,
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK": 5,
     "csm_amort_schedule.json|AMORT_TOTAL_VS_CLOSING_CSM_BAND": 4,
-    "insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND": 1
+    "insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND": 1,
+    "entries": 1025
   },
   "entries": {
     "NB_CSM_multiple.json|NB_CENSUS_MISSING|KR0001|2026.2Q": {
@@ -5122,6 +5123,24 @@
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
       "reason": "PL 마스터 36사 중 29사만 있어 7사가 원표 패널에서 빠진다.",
       "first_seen": "2026-08-25"
+    },
+    "csm_waterfall_history.json|HIST_MASTER_DRIFT|삼성생명보험|2023.2Q|interest": {
+      "detail": "snapshot=878.7 vs master=900.2 (Δ=-21.5 억원)",
+      "reason": "정적 스냅샷 drift. 이 파일의 선언 빌더(scripts/ifrs17_batch_historical.py, 파일 source 필드)는 2026-06 에 아카이브돼 아무도 재생성하지 않는다 — 마스터가 백필·정정될 때마다 벌어진다(같은 class 919건 기등재). IFRS17.html:1523 이 이 파일을 stale 로 폐기했고 배포 HTML 어느 것도 fetch 하지 않는다. 이번 3건의 원인: 2026-08-26 별도기준 정정 (inbox/parser/20260826T0500Z·0730Z) — 2023.2Q/3Q interest 는 환율변동효과 가산이 diag 재생성으로 산출에 실린 몫, 2023.4Q amortization 은 연결→별도 정정분(−13,842.8 = 연결 _00761 값, −13,676.7 = 별도 _00760 값). 마스터 쪽이 옳다.",
+      "first_seen": "2026-08-26",
+      "route": "owner (파일 거취 미결: 아카이브 유지 vs 삭제)"
+    },
+    "csm_waterfall_history.json|HIST_MASTER_DRIFT|삼성생명보험|2023.3Q|interest": {
+      "detail": "snapshot=2,934.3 vs master=2,969.2 (Δ=-34.9 억원)",
+      "reason": "정적 스냅샷 drift. 이 파일의 선언 빌더(scripts/ifrs17_batch_historical.py, 파일 source 필드)는 2026-06 에 아카이브돼 아무도 재생성하지 않는다 — 마스터가 백필·정정될 때마다 벌어진다(같은 class 919건 기등재). IFRS17.html:1523 이 이 파일을 stale 로 폐기했고 배포 HTML 어느 것도 fetch 하지 않는다. 이번 3건의 원인: 2026-08-26 별도기준 정정 (inbox/parser/20260826T0500Z·0730Z) — 2023.2Q/3Q interest 는 환율변동효과 가산이 diag 재생성으로 산출에 실린 몫, 2023.4Q amortization 은 연결→별도 정정분(−13,842.8 = 연결 _00761 값, −13,676.7 = 별도 _00760 값). 마스터 쪽이 옳다.",
+      "first_seen": "2026-08-26",
+      "route": "owner (파일 거취 미결: 아카이브 유지 vs 삭제)"
+    },
+    "csm_waterfall_history.json|HIST_MASTER_DRIFT|삼성생명보험|2023.4Q|amortization": {
+      "detail": "snapshot=-13,842.8 vs master=-13,676.7 (Δ=-166.0 억원)",
+      "reason": "정적 스냅샷 drift. 이 파일의 선언 빌더(scripts/ifrs17_batch_historical.py, 파일 source 필드)는 2026-06 에 아카이브돼 아무도 재생성하지 않는다 — 마스터가 백필·정정될 때마다 벌어진다(같은 class 919건 기등재). IFRS17.html:1523 이 이 파일을 stale 로 폐기했고 배포 HTML 어느 것도 fetch 하지 않는다. 이번 3건의 원인: 2026-08-26 별도기준 정정 (inbox/parser/20260826T0500Z·0730Z) — 2023.2Q/3Q interest 는 환율변동효과 가산이 diag 재생성으로 산출에 실린 몫, 2023.4Q amortization 은 연결→별도 정정분(−13,842.8 = 연결 _00761 값, −13,676.7 = 별도 _00760 값). 마스터 쪽이 옳다.",
+      "first_seen": "2026-08-26",
+      "route": "owner (파일 거취 미결: 아카이브 유지 vs 삭제)"
     }
   }
 }

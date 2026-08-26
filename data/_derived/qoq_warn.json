@@ -784,10 +784,10 @@
     "company": "교보생명보험",
     "quarter": "2024.3Q",
     "item": "이자부리",
-    "delta_pct": -43.8,
+    "delta_pct": -43.7,
     "threshold_pct": 20.0,
     "cur": 3242.4,
-    "ref": 5773.1,
+    "ref": 5755.0,
     "basis": "yoy",
     "sign_flip": false
   },

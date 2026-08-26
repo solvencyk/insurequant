@@ -12,7 +12,9 @@ from src.ifrs17.csm_extractor import _iter_tables_with_context
 
 KEEP = (1, 15, 16, 17, 19, 20, 21, 22, 23, 24)
 filings = BP.discover_filings()
-for code, name, q in [("KR0002", "한화손해보험", "2023.1Q"), ("KR0002", "한화손해보험", "2023.2Q")]:
+import sys as _s
+TARGETS = [("KR0001","메리츠화재해상보험","2023.1Q"),("KR0001","메리츠화재해상보험","2023.2Q"),("KR0001","메리츠화재해상보험","2024.2Q")]
+for code, name, q in TARGETS:
     dirs = filings[code][q]
     tables = []
     for d in dirs:
