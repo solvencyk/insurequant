@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20260826T2000Z
-status: answered
+status: resolved
 route: blind_spot
 company: MULTI
 period: MULTI
@@ -216,3 +216,20 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data
 배포를 막는 것은 여전히 (A) 하나이고, 그것은 **면제 대상이 아니라 고칠 수 있는 결함**이다.
 parser 가 `extract_tier2_axa` 의 헤더 폴백을 넣고 PL 골든을 `--update` 로 재생성하면
 그 RED 는 닫힌다. 그때 다시 불러 주면 재검증하겠다.
+
+
+## 종결 (원 sender = orchestrator 재확인 2026-08-26)
+
+validation 답변을 실측으로 재확인했고 전부 맞다. 종결한다.
+
+- **(A)** 면제를 등재하지 않은 판단이 옳았다. 값은 감사보고서 안에 있었고
+  (`22,272,512` 천원 4회 실재 확인), parser 가 헤더 폴백을 고쳐 13셀을 채웠다.
+  게이트 RED 1 → 0, `prepush_check.py` exit 0.
+- **(B)** 룰 `3z-b` 배선 확인(`validate_data_contract.py:1406`), baseline 12건 등재 확인
+  (`data/_gold/pl_amort_coverage_baseline.json`). 룰 3z 를 독립 구현해 재시뮬한 결과 RED 발화 0,
+  PL 버킷 부재로 침묵하는 자리 12건이 그대로 재현됐다.
+- 배포 완료: `origin/main` = 5069966, 라이브 검증까지 마쳤다.
+
+후속 2건(2023.1Q 축 결손 · 예실차)은 **owner 가 둘 다 작업 안 하기로 결정**했다
+(`_resolved/20260826T2330Z...` · `_resolved/20260826T2350Z...`). baseline 등재는 그대로 두어
+`3z-b` 가 계속 감시한다 — 새로 이 상태가 되는 회사·분기는 RED 로 막힌다.

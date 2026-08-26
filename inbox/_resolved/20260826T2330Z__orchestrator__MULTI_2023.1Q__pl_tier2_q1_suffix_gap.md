@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20260826T2330Z
-status: open
+status: resolved
 route: reparse
 company: MULTI
 period: 2023.1Q
@@ -64,3 +64,13 @@ data/dart/FY2023_Q1/raw/KR0008_삼성화재해상보험/xml/20230515002508.xml
 ## 답변 (parser 작성 — 처리 후)
 
 <처리 결과. 못 했으면 왜 못 했는지.>
+
+
+## 종결 (owner 결정 2026-08-26)
+
+**작업하지 않는다.** owner: *"23.1q는 하도 옛날이니까 패스."*
+
+2023.1Q 축 결손 4사(삼성화재·NH농협손해·롯데손해·KDB생명)는 그대로 둔다. 삼성화재 2023.1Q 는
+raw 에 `보험계약마진 상각 376,038백만원` 이 실재하는 확정 구멍이라는 사실은
+`data/_gold/pl_amort_coverage_baseline.json` 의 해당 등재(`PARSER_GAP_CONFIRMED`)에 남아 있다 —
+나중에 되살릴 일이 있으면 거기서 시작하면 된다. 룰 `3z-b` 가 비차단으로 계속 감시한다.
