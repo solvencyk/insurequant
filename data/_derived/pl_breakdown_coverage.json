@@ -1586,23 +1586,9 @@
   "code": "KR0049",
   "name": "악사손해보험",
   "quarter": "2023.4Q",
-  "status": "partial",
-  "missing": [
-   2,
-   3,
-   4,
-   5,
-   6,
-   7,
-   8,
-   9,
-   10,
-   11,
-   12,
-   13,
-   14
-  ],
-  "tier2": "suppressed"
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
  },
  {
   "code": "KR0049",

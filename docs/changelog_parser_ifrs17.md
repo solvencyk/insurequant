@@ -3,6 +3,67 @@
 > Last updated: 2026-08-26 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-08-26 (49th pass) — 악사손해 2023.4Q PL 원수CSM상각 RED 마감 (`extract_tier2_axa` 헤더 폴백)
+
+`inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md`가 발주.
+push 를 막던 RED [`PL_breakdown`] `PL_CSM_AMORT_VS_WATERFALL` 악사손해보험 2023.4Q — PL
+원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 222.7억이었다.
+
+validation 이 이전 세션(48th pass ④·`inbox/_resolved/20260826T1200Z`)의 "원문 결손(사업보고서
+본문 XML 없음)" 결론을 뒤집었다: 그 진단이 판별식으로 쓴 `계약유형별` 키워드는 이 회사 필링에
+애초에 등장하지 않는다(2024.4Q 도 0회인데 그 분기는 성공). 실제 PL 소스는 이미 받아 놓은 별도
+감사보고서 첨부 안의 **'(5) 보험손익 상세내역'** 노트(2024.4Q 이후는 '(6) …', 절 번호만 다름) —
+`extract_tier2_axa`가 이미 그 캡션을 잡고 있었는데 그 다음 단계에서 죽고 있었다.
+
+**근본원인 2가지** (`probe_20260826_axa_tier2_extract.py`로 실측): (1) 2023 필링은
+`[구분|자동차|일반|장기|합계]` 헤더행이 `note.header`가 아니라 `note.rows[0]` 안에 들어온다
+(2024/2025 필링은 `note.header`에 정상 배치) — `for hr in note.header:`가 한 바퀴도 안 돌아
+`col`이 못 만들어져 `return {}`. (2) 2023 필링의 재보험 섹션 라벨이 `재보험수익`/`재보험비용`인데
+`_AXA_SEC`는 `출재보험수익`/`출재보험비용`(2024/2025 표기)만 매핑해 item9-12가 못 채워진다.
+
+**수정** (`scripts/pl_breakdown/companies.py::extract_tier2_axa`): `note.header`가 비면
+`rows[0]`을 헤더 후보로 쓰고 그 행을 데이터에서 제외하는 폴백을 추가했고, `_AXA_SEC`에
+`재보험수익→re_rev`/`재보험비용→re_cost`를 추가했다. 2024.4Q/2025.4Q는 그 두 필링 모두
+`note.header`가 원래 비어있지 않아 폴백에 안 들어간다 — 수정 전후 `extract_tier2_axa()` 반환값이
+byte-identical함을 재실행으로 확인(2025.4Q는 신규로 별도 확인).
+
+**채워진 값**(표에서 그대로, 파생 대입 없음): item4(원수CSM상각)=22,272.512백만원=222.7억 =
+같은 분기 CSM_waterfall 상각(-222.7억) 절대값과 일치 — RED 원인이 닫힌다. item2/3/5-14 나머지
+12셀도 같은 노트에서 함께 채워졌고, item2/3/7/8/12는 회사 무관 공통 파생식(`build_pl_breakdown.py`
+`assemble()`의 `_jang_rev/_jang_cost/_jang_rerev/_jang_recost` 잔차식)이 자동 산출했다(핸들러가
+직접 계산하지 않음).
+
+**combo-diff.** `build_pl_breakdown.py` 전체 재실행(8,698행/356 company-quarters 불변) →
+기존 `pl_breakdown_master.json` 대비 KR0049 2023.4Q 13셀만 None→값, 다른 355 버킷 0건. 그 후
+`build_root_masters.build_pl()`을 **개별 호출**(`main()`·`build_csm()`은 실행하지 않음)해
+`PL_breakdown.json`도 동일 13셀만 이동(8,698행/356버킷 불변, 손실 0). item16(기타사업비용)은
+`_zero_other_expense`의 널링 조건(item1-Σ 잔차 ≤ 300)에 안 걸려 15/16-adjusted RC 브리지가
+그대로 유지된다.
+
+**골든.** `pl_breakdown_golden.json` `--update`(non_null_values 7829→7842, 행수/버킷수/
+coverage_rows 불변) 후 재실행 PASS 재확인(167초). `master_tables_golden.json`도 `--no-build`
+SUMMARY가 같이 움직여 `--update`: `pl_bridge 2519P/317S → 2523P/313S`,
+`csm_amort_identity 340P/1S → 341P/0S`(AXA 1버킷이 skip→pass), 다른 9개 필드 불변. viz 패널
+5종(`viz_build_ifrs17_panels.py` 4개 + `viz_build_csm_waterfall.py`)은 재실행해도 byte-identical
+(둘 다 `PL_breakdown.json`을 프로그램적으로 읽지 않는 별도 추출기라서) — mtime만 갱신해 "패널
+build 시각 > 마스터 build 시각" 순서를 복원했다. 마스터 xlsx는
+`sync_master_xlsx_sheet.py "손익분해PL"`로 13셀만 cherry-pick(검증 OK, 다른 시트 불변).
+
+**게이트.** `validate_data_contract.py` → `SUMMARY RED=0 YELLOW=92 provisional=False`.
+`prepush_check.py` → exit=0, `PRE-PUSH VERDICT: gate RED=0 · K-ICS rule gate=clear · domain
+gates=pass · DART raw 유실=0 · inbox 기계적위반=0 · offline tests=pass → gate-clear`
+(offline tests 230 passed/1 skipped, 392초).
+
+파일: `scripts/pl_breakdown/companies.py`(수정) · `data/dart/viz/pl_breakdown_master.json` ·
+`data/_derived/pl_breakdown_coverage.json` · `PL_breakdown.json` · `insurequant_master_tables.xlsx` ·
+`tests/fixtures/{pl_breakdown,master_tables}_golden.json`(재생성).
+
+건드리지 않음: `CSM_waterfall.json`·`NB_CSM_multiple.json`·`IFRS17_BS.json`·
+`data/_gold/user_{pl,csm}_cells.json`·validation 소관 파일(`scripts/validate_data_contract.py`·
+`scripts/validate_master_tables.py`·`scripts/_data_contract_selftest.py`·`TODO_validation.md`—
+세션 시작 시점에 이미 병렬 validation 세션이 미커밋 상태로 수정 중이던 파일들, git status 로
+확인 후 손대지 않음) · K-ICS 레인.
+
 ## 2026-08-26 (47th pass) — PL 연결→별도 잔여 33개사 전수감사, 정정 0셀 (46th pass 잔여분)
 
 오케스트레이터가 46th pass의 "그 외 40개사는 미검증"을 이어받아 발주했다. 실측 모집단을 다시

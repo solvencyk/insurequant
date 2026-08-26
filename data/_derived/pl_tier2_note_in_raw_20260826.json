@@ -1,0 +1,178 @@
+[
+  {
+    "company": "삼성화재해상보험",
+    "quarter": "2023.1Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -3760.4,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "NH농협손해보험",
+    "quarter": "2023.1Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -604.6,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "롯데손해보험",
+    "quarter": "2023.1Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -392.84,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "케이디비생명보험",
+    "quarter": "2023.1Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -111.25,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "에이아이에이생명보험",
+    "quarter": "2023.4Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -1417.0,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "에이아이에이생명보험",
+    "quarter": "2024.4Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -1561.6,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "아이엠라이프생명보험",
+    "quarter": "2024.4Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -549.2,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "아이엠라이프생명보험",
+    "quarter": "2025.4Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -537.9,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "하나손해보험",
+    "quarter": "2023.4Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -157.0,
+    "raw_xml_count": 2,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "하나손해보험",
+    "quarter": "2024.4Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -199.7,
+    "raw_xml_count": 2,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "하나손해보험",
+    "quarter": "2025.4Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -218.9,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "교보라이프플래닛생명보험",
+    "quarter": "2023.4Q",
+    "pl_bucket": false,
+    "pl_amort": null,
+    "wf_amort_eok": -44.1,
+    "raw_xml_count": 2,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "악사손해보험",
+    "quarter": "2023.4Q",
+    "pl_bucket": true,
+    "pl_amort": null,
+    "wf_amort_eok": -222.7,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 4,
+    "tier2_caption": "(5) 보험손익 상세내역",
+    "file": "20240402002008_00760.xml"
+  },
+  {
+    "company": "악사손해보험",
+    "quarter": "2024.4Q",
+    "pl_bucket": true,
+    "pl_amort": 26340.86,
+    "wf_amort_eok": -263.4,
+    "raw_xml_count": 1,
+    "tier2_row_hits": 4,
+    "tier2_caption": "(6) 보험손익 상세내역",
+    "file": "20250407003441_00760.xml"
+  },
+  {
+    "company": "교보라이프플래닛생명보험",
+    "quarter": "2024.4Q",
+    "pl_bucket": true,
+    "pl_amort": 2155.876493,
+    "wf_amort_eok": -21.6,
+    "raw_xml_count": 2,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  },
+  {
+    "company": "에이아이에이생명보험",
+    "quarter": "2025.4Q",
+    "pl_bucket": true,
+    "pl_amort": 153100.0,
+    "wf_amort_eok": -1530.6,
+    "raw_xml_count": 2,
+    "tier2_row_hits": 0,
+    "tier2_caption": null,
+    "file": null
+  }
+]

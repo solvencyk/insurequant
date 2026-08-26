@@ -1,0 +1,72 @@
+{
+  "silent": [
+    {
+      "company": "NH농협손해보험",
+      "quarter": "2023.1Q",
+      "wf_amort_eok": 604.6
+    },
+    {
+      "company": "교보라이프플래닛생명보험",
+      "quarter": "2023.4Q",
+      "wf_amort_eok": 44.1
+    },
+    {
+      "company": "롯데손해보험",
+      "quarter": "2023.1Q",
+      "wf_amort_eok": 392.84
+    },
+    {
+      "company": "삼성화재해상보험",
+      "quarter": "2023.1Q",
+      "wf_amort_eok": 3760.4
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2024.4Q",
+      "wf_amort_eok": 549.2
+    },
+    {
+      "company": "아이엠라이프생명보험",
+      "quarter": "2025.4Q",
+      "wf_amort_eok": 537.9
+    },
+    {
+      "company": "에이아이에이생명보험",
+      "quarter": "2023.4Q",
+      "wf_amort_eok": 1417.0
+    },
+    {
+      "company": "에이아이에이생명보험",
+      "quarter": "2024.4Q",
+      "wf_amort_eok": 1561.6
+    },
+    {
+      "company": "케이디비생명보험",
+      "quarter": "2023.1Q",
+      "wf_amort_eok": 111.25
+    },
+    {
+      "company": "하나손해보험",
+      "quarter": "2023.4Q",
+      "wf_amort_eok": 157.0
+    },
+    {
+      "company": "하나손해보험",
+      "quarter": "2024.4Q",
+      "wf_amort_eok": 199.7
+    },
+    {
+      "company": "하나손해보험",
+      "quarter": "2025.4Q",
+      "wf_amort_eok": 218.9
+    }
+  ],
+  "half_filled": [
+    {
+      "company": "악사손해보험",
+      "quarter": "2023.4Q",
+      "wf_amort_eok": 222.7,
+      "tier2_filled": 0
+    }
+  ]
+}

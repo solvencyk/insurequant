@@ -93,6 +93,11 @@ CSM_AMORT_LEDGER_PATH = "data/_gold/csm_amort_identity_ledger.json"
 CSM_AMORT_PIN_TOL_ABS_EOK = 0.5
 CSM_AMORT_PIN_TOL_REL = 0.05
 
+# 커버리지 래칫 baseline — "워터폴 상각은 있는데 PL 버킷이 통째로 없다" 는 자리의 건별 열거.
+# 잔차 등재부(위)와는 다른 축이다: 저쪽은 **양쪽 값이 다 있는데 안 맞는** 것이고, 이쪽은
+# **한쪽이 순회 대상 자체가 아닌** 것이다. 후자는 게이트에 보고조차 안 됐다(2026-08-26 실측 12건).
+CSM_AMORT_COVERAGE_BASELINE_PATH = "data/_gold/pl_amort_coverage_baseline.json"
+
 # PL 쪽 발행계약 CSM 상각 leg. 출재/재보험은 **의도적으로 빠져 있다**(보유 재보험계약자산).
 CSM_AMORT_PL_LEGS = ("원수CSM상각", "수재CSM상각")
 
@@ -157,6 +162,17 @@ def csm_amort_ledger_verdict(entry: dict | None, residual: float) -> str:
         return "PIN_DRIFT"
     tol = max(CSM_AMORT_PIN_TOL_ABS_EOK, CSM_AMORT_PIN_TOL_REL * abs(pinned))
     return "PINNED" if abs(residual - pinned) <= tol else "PIN_DRIFT"
+
+
+def csm_amort_coverage_baseline() -> dict:
+    """PL 버킷 부재 커버리지 baseline. 없으면 빈 baseline(= 전부 신규 = 전부 차단).
+
+    빈 파일을 '전부 통과' 가 아니라 '전부 차단' 으로 읽는 것이 이 함수의 계약이다 —
+    등재부를 지우면 검사가 느슨해지는 형태는 면제로 위장한 무력화다."""
+    p = ROOT / CSM_AMORT_COVERAGE_BASELINE_PATH
+    if not p.exists():
+        return {"entries": {}}
+    return json.loads(p.read_text(encoding="utf-8"))
 
 
 def load_long(path: str) -> dict:

@@ -662,9 +662,27 @@ def f_div_unpublished():
 
 
 def f_csm_sign_convention():
-    """신계약 CSM 음수 = 부호역전 지문(예별 2023.4Q 실사례)."""
-    return base_inject(wf={("KR9001", LATEST): {"기초CSM": 6055.5, "신계약CSM": -509.7,
+    """신계약 CSM 음수 = 부호역전 지문(예별 2023.4Q 실사례).
+
+    PL 버킷을 같이 준다 — 안 그러면 2026-08-26 신설 `PL_BUCKET_ABSENT_VS_WATERFALL` 이
+    (정당하게) 같이 터져 이 케이스가 부호룰을 단독으로 못 재게 된다. 원수CSM상각 47,180백만원
+    = 471.8억 이라 상각 항등식은 잔차 0 으로 닫힌다."""
+    return base_inject(pl={("KR9001", LATEST): {"원수CSM상각": 47180.0}},
+                       wf={("KR9001", LATEST): {"기초CSM": 6055.5, "신계약CSM": -509.7,
                                                 "CSM상각": -471.8, "기말CSM": 6774.0}})
+
+
+def f_pl_bucket_absent_vs_waterfall():
+    """워터폴 상각은 큰데 PL 에 그 (회사,분기) 버킷이 **통째로 없다** = 룰 3z 가 방문조차
+    못 하던 사각(2026-08-26). 종전에는 완전 침묵이라 게이트 출력이 정상과 바이트 동일했다."""
+    return base_inject(wf={("KR9001", LATEST): {"기초CSM": 10000.0, "기말CSM": 9000.0,
+                                                "CSM상각": -3760.4}})
+
+
+def f_pl_bucket_absent_below_threshold_is_clean():
+    """상각이 임계(10억) 아래면 대조 의미가 없다 — 부재를 결함으로 보지 않는다."""
+    return base_inject(wf={("KR9001", LATEST): {"기초CSM": 100.0, "기말CSM": 95.0,
+                                                "CSM상각": -4.2}})
 
 
 def f_pl_csm_amort_vs_waterfall():
@@ -765,6 +783,13 @@ CASES = [
     # 마스터 2개가 같은 사건을 각자 들고 있으면서 서로를 안 보던 자리 — 라이브 사고(2026-08-15)의 탐지기.
     ("L2 PL_CSM_AMORT_VS_WATERFALL",              f_pl_csm_amort_vs_waterfall,
      {"PL_CSM_AMORT_VS_WATERFALL"}),
+    # L2 는 PL 버킷이 **있는데** 셀만 빈 자리를 잡는다. 버킷이 통째로 없으면 그 루프는
+    # 방문조차 못 했다 — 실측 12버킷이 그 사각에 있었고 그중 삼성화재 2023.1Q 는 워터폴
+    # 상각 3,760.4억이었다(이 룰이 태어난 사고와 같은 회사·같은 모양).
+    ("L3 PL_BUCKET_ABSENT_VS_WATERFALL (미순회 사각)", f_pl_bucket_absent_vs_waterfall,
+     {"PL_BUCKET_ABSENT_VS_WATERFALL"}),
+    ("L4 임계 아래 상각의 버킷 부재는 결함 아님 — finding 0",
+     f_pl_bucket_absent_below_threshold_is_clean, set()),
     # 폐쇄식이 잔차(조정)로 닫혀 부호역전을 통과시키는 자리 — 예별 2023.4Q 가 그 실사례였다.
     ("M1 CSM_SIGN_CONVENTION",                    f_csm_sign_convention,
      {"CSM_SIGN_CONVENTION"}),

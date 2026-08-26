@@ -1,5 +1,74 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-26 (49th pass) — 악사손해 2023.4Q RED 1건 마감(48th pass ④의 "원문 결손" 진단을
+> validation 이 뒤집었고 실측이 그것을 확인했다). `prepush_check.py` = gate-clear (RED=0).**
+>
+> **① 48th pass ④가 틀렸다.** "`raw/KR0049_.../`에 별도 감사보고서 첨부 하나뿐이고 사업보고서
+> 본문이 없다"는 원문 자체는 맞지만, PL 소스를 '계약유형별' 노트로 잘못 짚었다(그 회사엔 그
+> 라벨이 애초에 없다 — 2024.4Q 도 0회인데 그 분기는 성공). 실제 소스는 그 첨부 안에 있는
+> **'(5) 보험손익 상세내역'** 노트(2024.4Q 이후는 '(6) …', 절 번호만 다름) — `inbox/parser/
+> 20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md`가 근본원인까지
+> 특정해 발주했다.
+>
+> **② 근본원인 (2가지).** `extract_tier2_axa`가 캡션은 잡지만 `t.header==[]`이고
+> `[구분|자동차|일반|장기|합계]` 헤더행이 `t.rows[0]` 안에 들어와 있다(2024/2025 필링은
+> `t.header`에 정상 배치) → `col`을 못 만들어 `return {}`. 둘째, 2023 필링의 재보험 섹션
+> 라벨이 `재보험수익`/`재보험비용`인데 `_AXA_SEC`는 `출재보험수익`/`출재보험비용`
+> (2024/2025 표기)만 매핑해 item9-12가 못 채워진다.
+>
+> **③ 수정.** `scripts/pl_breakdown/companies.py::extract_tier2_axa` — `note.header`가 비면
+> `rows[0]`을 헤더 후보로 쓰고 그 행을 데이터에서 제외하는 폴백 추가(L2351-2357근방).
+> `_AXA_SEC`에 `재보험수익→re_rev`/`재보험비용→re_cost` 추가. 2024.4Q/2025.4Q 는 폴백
+> 미진입 확인 — 수정 전후 `extract_tier2_axa()` 반환 dict 가 byte-identical(2024.4Q probe
+> 재실행 + 2025.4Q 신규 확인, 둘 다 `note.header` 가 원래도 비어있지 않음).
+>
+> **④ 채워진 값(표에서 그대로, 파생 대입 없음)** — item4(원수CSM상각)=22,272.512백만원=
+> 222.7억=같은 분기 CSM_waterfall 상각(-222.7억) 절대값과 일치, RED 원인이 닫힘.
+> item2=-3,108.397 · 3=29.072 · 5=5,811.234 · 6=-14,846.912 · 7=-13,207.762 ·
+> 8=-3,137.469 · 9=-4,942.652 · 10=-123.165 · 11=2,246.259 · 12=-317.911 ·
+> 13=8,254.396 · 14=6,811.787. item2/3/7/8/12는 회사 무관 공통 파생식(`build_pl_breakdown.py`
+> assemble, `_jang_rev/_jang_cost/_jang_rerev/_jang_recost` 기반)이 자동 산출 — 손대지 않음.
+>
+> **⑤ combo-diff.** `build_pl_breakdown.py` 전체 재실행(8,698행 불변, 356 company-quarters
+> 불변) → 기존 `data/dart/viz/pl_breakdown_master.json` 대비 **KR0049 2023.4Q 13셀만
+> None→값, 다른 355 버킷 0건 변동**(cell-key 전수 대조). `build_root_masters.build_pl()`
+> **개별 호출**(`main()`·`build_csm()` 미실행) 후 루트 `PL_breakdown.json`도 동일 13셀만
+> 이동(8,698행/356버킷 불변, 손실 0). item16(기타사업비용)은 `_zero_other_expense`에 안
+> 걸림(item1-Σ 잔차 6,114.9 > 300 허용치라 널링 안 됨 — 15/16-adjusted RC 브리지가 그대로
+> 유지됨).
+>
+> **⑥ 골든.** `pl_breakdown_golden.json` `--update`(non_null_values 7829→7842, sha256 2종
+> 이동, master_rows/company_quarters/coverage_rows 불변 — 사유: 이번 수정). 재실행 PASS
+> 재확인(167초). `master_tables_golden.json`도 `--no-build` SUMMARY 가 같이 움직여
+> `--update`: `pl_bridge 2519P/317S → 2523P/313S`, `csm_amort_identity 340P/1S → 341P/0S`,
+> 다른 9개 필드(coverage_hole·closing·plausibility·zero_legs·impossible0·qoq_warn·sens)
+> 불변 — AXA 1버킷이 "데이터 없어 skip"에서 "검산 통과"로 바뀐 것과 정확히 일치.
+> viz 패널 5종(`viz_build_ifrs17_panels.py` 4개 + `viz_build_csm_waterfall.py`) 재실행 —
+> 둘 다 `PL_breakdown.json`을 프로그램적으로 안 읽는 별도 추출기(`data/dart/extracted/*.json`
+> 기반)라 실행 전/후 5개 파일 전부 byte-identical(diff 0, git status 에도 안 뜸) — 패널
+> mtime 만 갱신해 "패널 build 시각 > 마스터 build 시각" 순서를 복원. 마스터 xlsx는
+> `sync_master_xlsx_sheet.py "손익분해PL"` cherry-pick(13셀 EDIT, 삽입/삭제 0, 검증
+> "손익분해PL 8698행×9열 마스터와 완전 일치, 나머지 시트 값 동일").
+>
+> **⑦ 게이트.** `validate_data_contract.py` → `SUMMARY RED=0 YELLOW=92 provisional=False`
+> (전문 재검색해도 RED 라인 0개, KR0049/악사 잔여 언급은 전부 무관한 기존 YELLOW/면제뿐).
+> `prepush_check.py` → exit=0, `PRE-PUSH VERDICT: gate RED=0 · K-ICS rule gate=clear ·
+> domain gates=pass · DART raw 유실=0 · inbox 기계적위반=0 · offline tests=pass →
+> gate-clear`(offline tests 230 passed/1 skipped, 392초).
+>
+> **⑧ 재현.**
+> ```
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/build_pl_breakdown.py
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -c "import sys; sys.path.insert(0,'scripts'); import build_root_masters as brm; brm.build_pl()"
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py
+> ```
+> `inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md` →
+> `status: answered`(원 sender=validation 재확인 요청 — 자기완결로 resolved 처리 안 함).
+> 손대지 않음: `CSM_waterfall.json`·`NB_CSM_multiple.json`·`IFRS17_BS.json`·
+> `data/_gold/user_{pl,csm}_cells.json`·validation 소관 파일(`scripts/validate_data_contract.py`
+> 등 병렬 세션의 미커밋 변경, git status 로 세션 시작 시 확인함).
+>
 > **2026-08-26 (48th pass) — 별도 기준 판정을 휴리스틱에서 실제 섹션 경계로 교체(owner 지시).
 > PL 삼성생명 6분기·메리츠 3분기, CSM 4개사 6버킷 정정. CSM 상각 항등식 등재부 11 → 6건.
 > `prepush_check.py` = BLOCKED (RED 1건, 원문 결손 — 아래 ④).**

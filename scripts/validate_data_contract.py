@@ -83,9 +83,12 @@ from validate_kics_disclosure import (  # noqa: E402
 )
 from validate_master_tables import (  # noqa: E402
     CSM_AMORT_MIN_EOK,
+    CSM_AMORT_PIN_TOL_ABS_EOK,
+    CSM_AMORT_PIN_TOL_REL,
     CSM_AMORT_TOL_ABS_EOK,
     CSM_AMORT_TOL_REL,
     coverage_holes,
+    csm_amort_coverage_baseline,
     csm_amort_ledger,
     csm_amort_ledger_verdict,
     csm_amort_residual,
@@ -1399,6 +1402,62 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
                 company=_co, quarter=_q, rule="CSM_AMORT_IDENTITY_LEDGER_STALE",
                 message=f"등재부에 있으나 더는 벌어지지 않는다(또는 대조 대상이 아니다) — "
                         f"data/_gold/csm_amort_identity_ledger.json 에서 줄을 지워라")
+
+    # --- 3z-b. **미순회 사각**: 워터폴 상각은 있는데 PL 버킷이 통째로 없다 (2026-08-26) ---
+    # 위 3z 루프는 `for (co,q) in env.pl` 이다. PL 에 버킷이 없으면 루프가 **방문조차 못 해**
+    # 완전 침묵한다 — 악사손해 2023.4Q 가 RED 로 뜬 유일한 이유는 그 회사만 PL 버킷이
+    # 부분적으로 존재해서다. 더 나빠서가 아니라 **보여서**다. 그 사각에 삼성화재 2023.1Q
+    # (워터폴 상각 3,760.4억)이 들어 있었고, 이 룰이 태어난 사고(2026-08-15 삼성화재 2026.2Q
+    # PL 생명장기 분해가 통째 null 인 채 라이브 배포)와 같은 회사·같은 모양이다.
+    # → 대조 루프를 **워터폴 쪽에서도** 한 번 더 돌려 census 로 만든다.
+    #
+    # 기존 12건은 main(라이브)에도 이미 없는 선행 결함이라 건별 열거 baseline 으로 비차단,
+    # **열거되지 않은 새 결손은 RED**. baseline 은 매 실행 재검산된다(버킷이 생기면 INERT,
+    # 박제한 워터폴 상각이 움직이면 DRIFT RED) — L2334-2338 이 실격이라 적은 '버킷 통째
+    # 무조건 통과' 가 되지 않게 하는 장치다. 전 버킷 시뮬레이션 + 변이 6종:
+    # `scripts/_probes/probe_20260826_coverage_rule_simulation.py` (ALL PASS).
+    _cov = csm_amort_coverage_baseline().get("entries", {})
+    _cov_seen: set[str] = set()
+    for (co, q), wfm in sorted(env.wf.items()):
+        amort = wfm.get("CSM상각")
+        if not isinstance(amort, (int, float)) or abs(amort) < _XCHK_MIN_AMORT_EOK:
+            continue
+        if (co, q) in env.pl:
+            continue                       # 3z 가 이미 순회한다
+        key = f"{co}|{q}"
+        _cov_seen.add(key)
+        entry = _cov.get(key)
+        head = (f"CSM_waterfall 상각 {abs(amort):,.1f}억 인데 PL_breakdown 에 이 "
+                f"(회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다")
+        if entry is None:
+            res.add(check="cross_source", severity="RED", master="PL_breakdown",
+                    company=co, quarter=q, rule="PL_BUCKET_ABSENT_VS_WATERFALL",
+                    message=f"{head}. 커버리지 baseline 에 없다 — 신규 결손이다 "
+                            f"(data/_gold/pl_amort_coverage_baseline.json)")
+            continue
+        pinned = entry.get("wf_amort_eok")
+        tol = (max(CSM_AMORT_PIN_TOL_ABS_EOK, CSM_AMORT_PIN_TOL_REL * abs(pinned))
+               if isinstance(pinned, (int, float)) else 0.0)
+        if not isinstance(pinned, (int, float)) or abs(abs(amort) - pinned) > tol:
+            res.add(check="cross_source", severity="RED", master="PL_breakdown",
+                    company=co, quarter=q, rule="PL_BUCKET_ABSENT_BASELINE_DRIFT",
+                    message=f"{head}. baseline 박제 워터폴 상각 {pinned!s} 에서 벗어났다"
+                            f"(현재 {abs(amort):,.2f}억, 허용 {tol:,.2f}억) — 등재 근거를 다시 재라")
+            continue
+        res.add(check="cross_source", severity="YELLOW", master="PL_breakdown",
+                company=co, quarter=q, rule="PL_BUCKET_ABSENT_BASELINE",
+                message=f"{head}. 기존 결함으로 건별 등재됨 [{entry.get('status')}] — "
+                        f"{str(entry.get('note'))[:110]}")
+
+    # baseline 에만 남은 줄 = 버킷이 생겼거나 상각이 임계 아래로 내려간 것. 조용히 두면 죽은
+    # 면제가 영구 잔류한다(그 형태가 왜 실격인지는 L2334-2338).
+    for _k in sorted(k for k in _cov if k not in _cov_seen):
+        _co, _, _q = _k.partition("|")
+        res.add(check="cross_source", severity="YELLOW", master="PL_breakdown",
+                company=_co, quarter=_q, rule="PL_BUCKET_ABSENT_BASELINE_INERT",
+                message=f"커버리지 baseline 에 있으나 더는 결손이 아니다(PL 버킷이 생겼거나 "
+                        f"워터폴 상각이 {_XCHK_MIN_AMORT_EOK}억 아래로 내려갔다) — "
+                        f"data/_gold/pl_amort_coverage_baseline.json 에서 줄을 지워라")
 
     # --- 3a. comparable: DART↔IR CSM steps (active only when IR parsed JSON present) ---
     ir_dir = ROOT / "data" / "ir"

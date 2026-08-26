@@ -1,9 +1,116 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-26 (a) · Stage 3/5 — validation
+> Last updated: 2026-08-26 (b) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-08-26 (b) — 요청받은 면제를 거부하다: "원천에 없다"가 틀렸고, 사각 12건에 룰을 놨다
+
+오케스트레이터가 `inbox/validation/20260826T2000Z` 로 **documented exception 등재**를 요청했다
+(악사손해 2023.4Q `PL_CSM_AMORT_VS_WATERFALL`, "어느 DART 문서에도 그 값이 없다"). 등재하면
+그 한 건이 push 를 여는 자리였다. **등재하지 않았다 — 실측해 보니 값이 디스크에 있었다.**
+게이트는 여전히 `RED=1`, prepush `exit 2`. 이게 맞는 상태다.
+
+### 1) 면제 반려 — 판별 키워드가 성공 사례에서도 0회였다
+
+발주문과 그 앞 두 티켓(`_resolved/20260826T1200Z`)은 *"PL Tier-2 가 쓰는 '계약유형별 보험수익/
+보험서비스비용' 노트는 사업보고서 본문에만 있고, 악사는 비상장이라 사업보고서가 0건 → 값이
+존재하지 않는다"* 로 결론냈다. 사업보고서 0건은 사실이다. **틀린 것은 그 다음 고리다.**
+
+첫 반증: `계약유형별` 은 악사 필링에 **2023·2024 양쪽 다 0회**인데 **2024.4Q 는 추출에
+성공한다**(원수CSM상각 26,340.86백만원). 성공하는 필링에도 없는 단어를 부재의 근거로 쓴 것이다.
+
+악사의 실제 소스 표는 `'보험손익 상세내역'` 이고, 이미 받아 놓은 감사보고서 첨부 안에 있다:
+
+```
+data/dart/FY2023_Q4/raw/KR0049_악사손해보험_20240402002008/20240402002008_00760.xml
+  '(5) 보험손익 상세내역 (단위: 천원)1) 당기'    <- 2024.4Q 는 '(6) ...' (번호만 다르다)
+  구분 [자동차|일반|장기|합계] · 40행
+  당기손익으로 인식한 보험계약마진 금액 · 장기 = 22,272,512천원 = 222.7억
+```
+
+**222.7억 = 게이트가 인쇄하던 그 워터폴 상각액이다.** 그리고 그 표는 **마스터에 이미 있는**
+Tier-1 두 셀과 원 단위로 닫힌다 — `총 보험서비스결과 합계 11,957,786천원` vs
+`보험손익 5,842.899358 + 기타사업비용 6,114.887984 = 11,957.787342백만원`(Δ 1,300원).
+파생값 대입이 아니라 같은 표를 같은 핸들러로 읽는 것이다.
+
+근본원인까지 특정했다(`scripts/_probes/probe_20260826_axa_tier2_extract.py`):
+
+| | 2023.4Q(실패) | 2024.4Q(성공) |
+|---|---|---|
+| `t.header` | **`[]`** | `[['구 분','자동차','일반','장기','합계']]` |
+| `t.rows[0]` | **`['구 분','자동차','일반','장기','합계']`** | `['보험수익']` |
+| 반환 | **`{}`** | `{4: 26340.86, ...}` |
+
+`companies.py::extract_tier2_axa` 의 `for hr in note.header:` 가 한 바퀴도 안 돌아 `col` 이
+`None` 인 채 `if not col or "jang" not in col: return {}` 로 빠진다. 2차 결함: 섹션 라벨이
+2023 은 `재보험수익`/`재보험비용` 인데 `_AXA_SEC` 는 `출재보험수익`/`출재보험비용` 만 맵핑한다.
+→ `inbox/parser/20260826T2200Z`(lane ifrs17 · route reparse) 로 기대값 13셀 + 정합식 3개 첨부.
+
+> **이 저장소 관행에 남길 것: 키워드 0회는 원천 부재의 근거가 아니다.** 이미
+> `feedback_keyword_absence_is_not_source_absence` 로 3인 연속 오판 전례가 있고(흥국생명 스캔본),
+> 이번은 그 XML 판이다. **판별기는 성공 사례로 먼저 교정하고 세라** — 교정 안 된 탐지기의
+> 음성은 정보가 0 이다.
+
+### 2) 사각 12건 — 룰 `3z-b` 신설 (`PL_BUCKET_ABSENT_VS_WATERFALL`)
+
+룰 3z 는 `for (co,q), m in sorted(env.pl.items())` 로 돈다. **PL 에 버킷이 통째로 없으면
+루프가 방문조차 못 해 완전 침묵한다.** 악사가 RED 로 뜬 유일한 이유는 그 회사만 PL 버킷이
+부분적으로 존재해서다 — 더 나빠서가 아니라 **보여서**다. 실측: 워터폴 상각 ≥ 10억인데 PL
+버킷이 없는 자리 **12건**, 그중 **삼성화재 2023.1Q 는 3,760.4억**이다. 이 룰이 태어난 사고
+(2026-08-15 삼성화재 2026.2Q PL 생명장기 분해가 통째 null 인 채 라이브 배포)와 **같은 회사·
+같은 모양**인데 룰이 조용했다.
+
+`check_cross_source` 에 3z 바로 뒤로 **워터폴 쪽 census** 를 배선했다:
+
+| 룰 | 심각도 | 조건 |
+|---|---|---|
+| `PL_BUCKET_ABSENT_VS_WATERFALL` | RED | 상각 ≥ 10억 · PL 버킷 부재 · baseline 미등재 |
+| `PL_BUCKET_ABSENT_BASELINE_DRIFT` | RED | 박제한 워터폴 상각이 tol(0.5억/5%) 밖으로 이동 |
+| `PL_BUCKET_ABSENT_BASELINE` | YELLOW | 등재된 기존 결손 |
+| `PL_BUCKET_ABSENT_BASELINE_INERT` | YELLOW | 버킷이 생겼다/임계 아래 → 줄을 지워라 |
+
+등재부 `data/_gold/pl_amort_coverage_baseline.json`(신규) — 12건 건별 열거 + 워터폴 상각 박제
++ status + raw 경로 + 라우팅. 로더 `csm_amort_coverage_baseline()` 은 **파일이 없으면 빈
+등재부 = 전부 RED** 로 읽는다(등재부를 지우면 검사가 느슨해지는 형태를 막는다).
+
+기존 12건은 main(라이브)에도 이미 없는 선행 결함이라 비차단으로 뒀다 — 이번 브랜치 회귀가
+아니다(main PL 354버킷 → 브랜치 356, 사라진 버킷 0). **면제가 아니라 래칫이다**:
+`statutory_reserve_baseline.json` 과 같은 계약이고, `_CSM_CONTINUITY_EXCEPTIONS` 가
+2026-08-25 에 실격당한 '버킷 통째 무조건 통과' 형태가 되지 않도록 매 실행 재검산한다.
+
+전 버킷 시뮬레이션 + 변이 6종 **ALL PASS**
+(`scripts/_probes/probe_20260826_coverage_rule_simulation.py`):
+평시 RED 0 / YELLOW 12 · M1 등재 줄 삭제 → RED 1 부활 · M2 박제값 변조 → DRIFT RED ·
+M3 버킷 생김 → INERT · M4 새 결손 → RED 차단 · M5 스코프 누출 0.
+selftest 에 `L3`(사각 검출) · `L4`(임계 아래는 결함 아님) 신설 → **57/57**(종전 55).
+`M1 CSM_SIGN_CONVENTION` 픽스처는 PL 버킷이 없어 새 룰이 정당하게 같이 터지길래 PL 버킷을
+줘서 부호룰 단독 측정으로 되돌렸다.
+
+### 3) 판정을 확정한 것과 보류한 것
+
+**확정 — 삼성화재 2023.1Q 는 진짜 구멍.**
+`FY2023_Q1/raw/KR0008_삼성화재해상보험/xml/20230515002508.xml` 의
+`'(10) 당분기와 전분기 중 주요 보종별 보험수익 및 재보험비용의 내역 · 1) 제74(당)기 1분기'`
+에 `보험계약마진 상각 376,038백만원`(=3,760.38억)이 있다. 2023.2Q 이후는 같은 노트가
+`'당반기와 전반기 …/제74(당)기 반기'` 표기이고 그쪽은 성공한다 → 분기(1Q) 어미 변형 미탑재.
+
+**보류 — 나머지 11건은 `UNADJUDICATED` 로 등재.** 발주문은 감사보고서-only 4사(AIA·
+아이엠라이프·하나손해·교보라플)를 "악사와 같은 사유면 legit-absent" 로 제안했으나 그 사유가
+①에서 무너졌고, 내 노트 판별기는 **대조군 7건 중 5건이 위음성**이었다(추출에 성공한 버킷을
+"노트 없음"으로 셌다). 교정 안 된 판별기로 legit-absent 를 등재하는 것은 근거 없는 면제다.
+정황상 2023.1Q 축 결손 4사는 셋 다 같은 방향을 가리킨다 — raw 는 디스크에 있고, 2023.1Q 에
+PL 을 가진 **19사 전원**이 Tier-2 가 채워져 있으며, 그 4사도 2023.2Q 는 채워져 있다.
+
+### 측정치
+
+- 게이트 `SUMMARY RED=1 YELLOW=92`(종전 RED=1 YELLOW=80 — 사각 12건이 올라옴)
+- prepush **exit 2** · `gate RED=1 · K-ICS rule gate=clear · domain gates=pass ·
+  DART raw 유실=0 · inbox 기계적위반=0 · offline tests=pass → BLOCKED`
+- 오프라인 테스트 **230 passed · 1 skipped**. 골든 해시는 하나도 안 건드렸다(룰만 추가라
+  산출 불변). 마스터 JSON 은 **한 셀도 안 고쳤다** — 고친 것은 게이트 2파일 + selftest +
+  신규 등재부 1개다.
 
 ## 2026-08-26 (a) — answered 4건 전건 종결: 게이트 룰 갭 2곳을 실측으로 조이다
 

@@ -2320,7 +2320,11 @@ def extract_tier2_lotte(tables):
 
 # ----------------------------- 악사손해 (KR0049) ---------------------------- #
 _AXA_SEC = {"보험수익": "rev", "보험서비스비용": "cost",
-            "출재보험수익": "re_rev", "출재보험비용": "re_cost"}
+            "출재보험수익": "re_rev", "출재보험비용": "re_cost",
+            # 2023.4Q annual filing uses the shorter 재보험수익/재보험비용 labels for the
+            # same two sections; 2024.4Q/2025.4Q switch to 출재보험수익/출재보험비용. Both
+            # map to the same re_rev/re_cost bucket.
+            "재보험수익": "re_rev", "재보험비용": "re_cost"}
 
 
 def extract_tier2_axa(tables):
@@ -2333,6 +2337,11 @@ def extract_tier2_axa(tables):
     (비PAA vs PAA sub-blocks) — take the first row whose target-LOB cell is numeric (the PAA
     twin prints '-' in 장기 and vice versa).  FIRST captioned table = 당기 (IS-verified for
     both years; the twin is 전기).
+
+    2023.4Q ('(5) 보험손익 상세내역', same shape) folds the [구분|자동차|일반|장기|합계]
+    header into rows[0] instead of note.header (docling/DART table split quirk) — fall back
+    to treating rows[0] as the header candidate when note.header is empty, and drop it from
+    the data rows so it can't be mistaken for a section marker.
 
     악사's income statement nests 기타사업비용 INSIDE Ⅰ.보험손익 ('3) 기타사업비용' row, 원
     unit), and Tier-1 mis-reads it as ~0 (the '16,25' footnote-ref cell → 1625원).  Emit
@@ -2348,8 +2357,13 @@ def extract_tier2_axa(tables):
         return {}
     f = 1e-3 if "천원" in (note.caption or "") else 1.0
 
+    rows = note.rows
+    header_src = note.header
+    if not header_src and rows:
+        header_src, rows = [rows[0]], rows[1:]
+
     col = None
-    for hr in note.header:
+    for hr in header_src:
         cells = [_norm(c).replace(" ", "") for c in hr if _norm(c)]
         joined = "".join(cells)
         if "장기" not in joined or "자동차" not in joined:
@@ -2373,7 +2387,7 @@ def extract_tier2_axa(tables):
 
     def pick(sec_want, needle, lob="jang"):
         sec, nd = None, needle.replace(" ", "")
-        for r in note.rows:
+        for r in rows:
             lab = _norm(r[0]).replace(" ", "")
             vals = [to_num(_norm(c)) for c in r[1:]]
             if lab in _AXA_SEC and not any(v is not None for v in vals):

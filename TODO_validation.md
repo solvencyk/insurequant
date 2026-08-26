@@ -1,11 +1,56 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-26 (a) (answered 4건 전건 종결 — 룰 갭 2곳 조임 · 원장 stale 11건 정리) · Stage 3/5 — validation
+> Last updated: 2026-08-26 (b) (요청받은 면제를 **거부** — 원천에 값이 있었다 · 커버리지 룰 3z-b 신설) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-26 b) 🔴 prepush exit 2 · gate RED=1 YELLOW=92 — BLOCKED, 그리고 이게 맞는 상태다.**
+**오케스트레이터가 요청한 documented exception 을 등재하지 않았다. 등재했으면 거짓 면제였다.**
+
+> 처리: `inbox/validation/20260826T2000Z__orchestrator__MULTI__pl_amort_crosscheck_blindspot.md`
+> → `status: answered` (원 sender 재확인 필요 — 판정을 뒤집었다)
+> 신규 발주: `inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md`
+> (`lane: ifrs17` · `route: reparse`)
+>
+> ### ① 면제 요청을 반려했다 — "어느 DART 문서에도 없다" 가 틀렸다
+>
+> 악사손해 2023.4Q `PL_CSM_AMORT_VS_WATERFALL` RED 은 **진짜 추출불가가 아니다.** 값은 이미
+> 받아 놓은 감사보고서 첨부 안에 있다 — `20240402002008_00760.xml` 의
+> `'(5) 보험손익 상세내역'` 표, `당기손익으로 인식한 보험계약마진 금액 · 장기 = 22,272,512천원`
+> = **222.7억** = 게이트가 인쇄하던 그 워터폴 상각액. 2024.4Q 는 같은 표(`'(6) ...'`)로 추출에
+> **성공**한다. 선행 티켓들이 판별식으로 쓴 `계약유형별` 은 **양쪽 다 0회**라 애초에 아무것도
+> 증명하지 않는 키워드였다(성공하는 2024 필링에도 0회).
+>
+> 근본원인까지 특정 — `companies.py::extract_tier2_axa` 가 `for hr in note.header:` 로 도는데
+> 2023 필링은 `t.header == []` 이고 컬럼 헤더행이 `t.rows[0]` 안에 들어온다 → `col` 이 None →
+> `return {}`. 2차 결함: 섹션 라벨 `재보험수익`/`재보험비용`(2023) vs `_AXA_SEC` 의
+> `출재보험수익`/`출재보험비용`(2024). parser 티켓에 기대값 13셀 + 정합식 3개를 붙여 발주.
+>
+> **교훈: 키워드 0회는 원천 부재의 근거가 아니다.** 성공 사례에서 판별기를 먼저 교정하고 세라.
+>
+> ### ② 사각 12건 — 커버리지 룰 `3z-b` 신설
+>
+> 룰 3z 가 `for (co,q) in env.pl` 이라 **PL 버킷이 통째로 없으면 방문조차 못 해 완전 침묵**했다.
+> `env.wf` 쪽에서도 한 번 더 도는 census 를 배선(`check_cross_source` 3z 바로 뒤). 신규 결손은
+> RED, 기존 12건은 `data/_gold/pl_amort_coverage_baseline.json` 에 **건별 열거 + 워터폴 상각
+> 박제**로 비차단. 버킷이 생기면 `_INERT`, 박제가 흔들리면 `_DRIFT` RED — 매 실행 재검산한다.
+> 전 버킷 시뮬레이션 + 변이 6종 ALL PASS(`probe_20260826_coverage_rule_simulation.py`),
+> selftest 57/57(종전 55, `L3`/`L4` 신설 · `M1` 픽스처 격리 보정).
+>
+> **삼성화재 2023.1Q(워터폴 상각 3,760.4억)는 진짜 구멍으로 확정**했다 — raw 에
+> `'(10) … 주요 보종별 보험수익 및 재보험비용의 내역 · 1) 제74(당)기 1분기'` 의
+> `보험계약마진 상각 376,038백만원` 이 있다. 나머지 11건은 **판정 보류(`UNADJUDICATED`)** —
+> 내 노트 판별기가 대조군 7건 중 5건 위음성이라 "원천에 없다"고 말할 근거가 없다.
+>
+> ### 다음 행동
+>
+> parser(ifrs17)가 `extract_tier2_axa` 헤더 폴백을 넣고 PL 골든을 `--update` 로 재생성하면
+> RED 이 0 이 된다. 그 뒤 재검증 요청할 것. **그 전에는 push 하면 안 된다.**
+
+## Status (이전 라운드)
 
 **(2026-08-26 a, answered 4건 재확인) 🟢 4건 전부 종결(resolved) · prepush exit 0 ·
 RED=0. 마스터 JSON 은 한 셀도 안 고쳤다. 고친 것은 내 소유 게이트 2곳 + 등재부 2종이다.**
