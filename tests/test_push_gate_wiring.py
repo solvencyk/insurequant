@@ -290,7 +290,6 @@ LIVE_ARTIFACT_READERS = {
     "kics_tier2_utilization.json": ["validate_live_artifacts"],
     "NB_CSM_multiple.json": ["validate_live_artifacts"],
     "data/dart/viz/csm_amort_schedule.json": ["validate_live_artifacts"],
-    "data/dart/viz/csm_waterfall_history.json": ["validate_live_artifacts"],
     "data/dart/viz/insurance_pl_breakdown.json": ["validate_live_artifacts"],
     "data/dart/viz/csm_waterfall.json": ["validate_csm_waterfall", "validate_nb_csm_multiple"],
     "data/dart/viz/sensitivity_heatmap.json": ["validate_data_contract",
