@@ -10,11 +10,11 @@
     "abs_eok": 0.5,
     "rel": 0.05
   },
-  "_measured_at": "2026-08-26 (validation 재확인 — 8c1666b PL 별도 정정 반영, 11건 FIXED 삭제)",
+  "_measured_at": "2026-08-26 (parser-ifrs17, basis 필터 배선 — 삼성생명 5분기 종결. PL 이 연결을 물던 원인 2종을 고쳤다: 별도 경계 탐지가 ENG 속성에만 의존 / lxml HTMLParser sourceline 65,535 포화. inbox/parser/20260826T0500Z ② 참조)",
   "_population": {
     "compared_buckets": 346,
-    "within_identity": 335,
-    "ledgered": 11
+    "within_identity": 340,
+    "ledgered": 6
   },
   "entries": {
     "DB손해보험|2023.1Q": {
@@ -70,51 +70,6 @@
       "cause": "RESTATEMENT_BASIS",
       "note": "원인 미규명 — 처리 중 부작용 발견 후 원복. build_csm() 재실행 시 diag(더 최신, item5=-398.6=PL과 소수 첫째자리까지 일치)로 자동 동기화되는 것을 확인했으나, 그 값을 채택하면 2025.4Q 기초와의 FY경계 연속성이 새로 깨진다(Δ+57, 이전엔 없던 RED — 같은 (회사,분기)에 이미 등재된 CSM_CONTINUITY_FY_BOUNDARY_EXCEPTED 예외 노트가 정확히 이 +57 소재를 FY2025 필링 note 38 소급재작성으로 설명하고 있어, diag 쪽이 그 재작성 전(구) 기준일 가능성이 있다). 이 티켓 범위(CSM_AMORT_IDENTITY)에서 두 항등식(PL대조 vs FY경계연속성)을 동시에 못 닫아 원래 루트 값(item5=-403.7)으로 되돌리고 박제 잔차로 등재부에 남긴다 — '틀린 값을 싣느니 빈 칸' 원칙에 따라 추측 채택 안 함. diag 값을 쓰려면 FY경계 예외 노트(CSM_CONTINUITY_FY_BOUNDARY_EXCEPTED, 하나생명 2024.4Q)를 함께 재작성해야 하는데 raw 로 diag 쪽 소스(어느 노트/컬럼인지)를 확인하지 못했다. [2026-08-25 재분류, inbox/parser/20260825T1520Z iter2]: UNRESOLVED -> RESTATEMENT_BASIS 로 재분류(값은 그대로). validation 재확인: diag 블록(item5=-398.6, PL 과 일치)은 소급재작성 전(前) 기준이고 master item1(3,089.1)은 재작성 후 기준 -- 같은 (회사,분기)에 이미 등재된 CSM_CONTINUITY_FY_BOUNDARY_EXCEPTED 노트(Δ+73.0, FY2025 note 38 소급재작성)가 바로 그 재작성이다. 원인이 밝혀졌으므로 UNRESOLVED 라벨은 더 이상 정확하지 않다.",
       "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md (2차 처리 부작용 발견, 원복)"
-    },
-    "삼성생명보험|2024.1Q": {
-      "residual_eok": 56.94,
-      "pl_eok": 3565.74,
-      "waterfall_eok": 3508.8,
-      "rel": 0.016228,
-      "cause": "CONSOLIDATION_BASIS_MISMATCH",
-      "note": "연결 기준으로 잘못 닫았던 것을 별도로 복원. 2026-08-25 commit 8a3b930 이 build_csm_waterfall_master.py::pick_pattern2 의 65535 필터(오진 — lxml/libxml2 sourceline 이 65535 라인 이상인 파일에서 SATURATE 되는 값일 뿐, '손상 근접반복'이 아니다)와 pick_combined_agnostic 의 KR0069·KR0094 회사코드 하드코딩 2곳을 넣어 이 버킷을 강제로 닫았다 — 워터폴을 PL(원수+수재, 연결 기준)에 맞춰 연결로 옮긴 것이지 추출을 고친 것이 아니다. raw 재검증(파일분리: 삼성생명 FY2024 사업보고서 _00760.xml=별도 에만 1,369,541백만·_00761.xml=연결에만 1,393,380백만; 신한라이프 FY2025 _00760 에 6,969,672 4회/6,972,351 0회, 연결 효과가 분기 간 2,679백만으로 일정) 로 확정, 3개 diff revert(65535 필터 제거 + 하드코딩 2곳 제거) 후 전 회사·전 분기 시뮬레이션(2,178 셀)으로 이 84 셀(삼성생명 10분기×6항목 + 신한라이프 2025.1~4Q×6항목) 외 변화 0건 확인. 저장소 규약(gold basis)은 별도이고, PL_breakdown 은 이번 범위 밖(연결 기준 그대로) — 그래서 이 잔차는 정상이며 '연결로 맞춰 닫는' 방향으로 다시 손대면 안 된다. [2026-08-26 validation 재확인] 이 분기는 커밋 8c1666b(PL 별도 정정) 범위에 **안 들어갔다** — PL 쪽이 아직 연결이라 잔차가 남는다. 같은 회사의 2024.4Q·2025.1Q·2025.3Q·2025.4Q·2026.1Q 는 그 커밋으로 PL 이 별도가 되면서 잔차가 사라져 등재부에서 지웠다. 2026.2Q 는 IR 팩트시트로 독립 확증된다(data/ir/FY2026_Q2/parsed/KR0069.json: 별도 상각 -7,336.61억 = 마스터 워터폴, PL 의 7,524.20억은 그 파일이 '연결(after)' 로 기록한 값). 워터폴은 건드리지 말 것 — 고칠 대상은 PL 이다.",
-      "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md (iter2 반려 반영 — 연결 기준으로 잘못 닫았던 것을 별도로 복원)"
-    },
-    "삼성생명보험|2024.2Q": {
-      "residual_eok": 113.4,
-      "pl_eok": 7194.9,
-      "waterfall_eok": 7081.5,
-      "rel": 0.016014,
-      "cause": "CONSOLIDATION_BASIS_MISMATCH",
-      "note": "연결 기준으로 잘못 닫았던 것을 별도로 복원. 2026-08-25 commit 8a3b930 이 build_csm_waterfall_master.py::pick_pattern2 의 65535 필터(오진 — lxml/libxml2 sourceline 이 65535 라인 이상인 파일에서 SATURATE 되는 값일 뿐, '손상 근접반복'이 아니다)와 pick_combined_agnostic 의 KR0069·KR0094 회사코드 하드코딩 2곳을 넣어 이 버킷을 강제로 닫았다 — 워터폴을 PL(원수+수재, 연결 기준)에 맞춰 연결로 옮긴 것이지 추출을 고친 것이 아니다. raw 재검증(파일분리: 삼성생명 FY2024 사업보고서 _00760.xml=별도 에만 1,369,541백만·_00761.xml=연결에만 1,393,380백만; 신한라이프 FY2025 _00760 에 6,969,672 4회/6,972,351 0회, 연결 효과가 분기 간 2,679백만으로 일정) 로 확정, 3개 diff revert(65535 필터 제거 + 하드코딩 2곳 제거) 후 전 회사·전 분기 시뮬레이션(2,178 셀)으로 이 84 셀(삼성생명 10분기×6항목 + 신한라이프 2025.1~4Q×6항목) 외 변화 0건 확인. 저장소 규약(gold basis)은 별도이고, PL_breakdown 은 이번 범위 밖(연결 기준 그대로) — 그래서 이 잔차는 정상이며 '연결로 맞춰 닫는' 방향으로 다시 손대면 안 된다. [2026-08-26 validation 재확인] 이 분기는 커밋 8c1666b(PL 별도 정정) 범위에 **안 들어갔다** — PL 쪽이 아직 연결이라 잔차가 남는다. 같은 회사의 2024.4Q·2025.1Q·2025.3Q·2025.4Q·2026.1Q 는 그 커밋으로 PL 이 별도가 되면서 잔차가 사라져 등재부에서 지웠다. 2026.2Q 는 IR 팩트시트로 독립 확증된다(data/ir/FY2026_Q2/parsed/KR0069.json: 별도 상각 -7,336.61억 = 마스터 워터폴, PL 의 7,524.20억은 그 파일이 '연결(after)' 로 기록한 값). 워터폴은 건드리지 말 것 — 고칠 대상은 PL 이다.",
-      "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md (iter2 반려 반영 — 연결 기준으로 잘못 닫았던 것을 별도로 복원)"
-    },
-    "삼성생명보험|2024.3Q": {
-      "residual_eok": 171.41,
-      "pl_eok": 10859.01,
-      "waterfall_eok": 10687.6,
-      "rel": 0.016038,
-      "cause": "CONSOLIDATION_BASIS_MISMATCH",
-      "note": "연결 기준으로 잘못 닫았던 것을 별도로 복원. 2026-08-25 commit 8a3b930 이 build_csm_waterfall_master.py::pick_pattern2 의 65535 필터(오진 — lxml/libxml2 sourceline 이 65535 라인 이상인 파일에서 SATURATE 되는 값일 뿐, '손상 근접반복'이 아니다)와 pick_combined_agnostic 의 KR0069·KR0094 회사코드 하드코딩 2곳을 넣어 이 버킷을 강제로 닫았다 — 워터폴을 PL(원수+수재, 연결 기준)에 맞춰 연결로 옮긴 것이지 추출을 고친 것이 아니다. raw 재검증(파일분리: 삼성생명 FY2024 사업보고서 _00760.xml=별도 에만 1,369,541백만·_00761.xml=연결에만 1,393,380백만; 신한라이프 FY2025 _00760 에 6,969,672 4회/6,972,351 0회, 연결 효과가 분기 간 2,679백만으로 일정) 로 확정, 3개 diff revert(65535 필터 제거 + 하드코딩 2곳 제거) 후 전 회사·전 분기 시뮬레이션(2,178 셀)으로 이 84 셀(삼성생명 10분기×6항목 + 신한라이프 2025.1~4Q×6항목) 외 변화 0건 확인. 저장소 규약(gold basis)은 별도이고, PL_breakdown 은 이번 범위 밖(연결 기준 그대로) — 그래서 이 잔차는 정상이며 '연결로 맞춰 닫는' 방향으로 다시 손대면 안 된다. [2026-08-26 validation 재확인] 이 분기는 커밋 8c1666b(PL 별도 정정) 범위에 **안 들어갔다** — PL 쪽이 아직 연결이라 잔차가 남는다. 같은 회사의 2024.4Q·2025.1Q·2025.3Q·2025.4Q·2026.1Q 는 그 커밋으로 PL 이 별도가 되면서 잔차가 사라져 등재부에서 지웠다. 2026.2Q 는 IR 팩트시트로 독립 확증된다(data/ir/FY2026_Q2/parsed/KR0069.json: 별도 상각 -7,336.61억 = 마스터 워터폴, PL 의 7,524.20억은 그 파일이 '연결(after)' 로 기록한 값). 워터폴은 건드리지 말 것 — 고칠 대상은 PL 이다.",
-      "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md (iter2 반려 반영 — 연결 기준으로 잘못 닫았던 것을 별도로 복원)"
-    },
-    "삼성생명보험|2025.2Q": {
-      "residual_eok": 144.71,
-      "pl_eok": 7581.31,
-      "waterfall_eok": 7436.6,
-      "rel": 0.019459,
-      "cause": "CONSOLIDATION_BASIS_MISMATCH",
-      "note": "연결 기준으로 잘못 닫았던 것을 별도로 복원. 2026-08-25 commit 8a3b930 이 build_csm_waterfall_master.py::pick_pattern2 의 65535 필터(오진 — lxml/libxml2 sourceline 이 65535 라인 이상인 파일에서 SATURATE 되는 값일 뿐, '손상 근접반복'이 아니다)와 pick_combined_agnostic 의 KR0069·KR0094 회사코드 하드코딩 2곳을 넣어 이 버킷을 강제로 닫았다 — 워터폴을 PL(원수+수재, 연결 기준)에 맞춰 연결로 옮긴 것이지 추출을 고친 것이 아니다. raw 재검증(파일분리: 삼성생명 FY2024 사업보고서 _00760.xml=별도 에만 1,369,541백만·_00761.xml=연결에만 1,393,380백만; 신한라이프 FY2025 _00760 에 6,969,672 4회/6,972,351 0회, 연결 효과가 분기 간 2,679백만으로 일정) 로 확정, 3개 diff revert(65535 필터 제거 + 하드코딩 2곳 제거) 후 전 회사·전 분기 시뮬레이션(2,178 셀)으로 이 84 셀(삼성생명 10분기×6항목 + 신한라이프 2025.1~4Q×6항목) 외 변화 0건 확인. 저장소 규약(gold basis)은 별도이고, PL_breakdown 은 이번 범위 밖(연결 기준 그대로) — 그래서 이 잔차는 정상이며 '연결로 맞춰 닫는' 방향으로 다시 손대면 안 된다. [2026-08-26 validation 재확인] 이 분기는 커밋 8c1666b(PL 별도 정정) 범위에 **안 들어갔다** — PL 쪽이 아직 연결이라 잔차가 남는다. 같은 회사의 2024.4Q·2025.1Q·2025.3Q·2025.4Q·2026.1Q 는 그 커밋으로 PL 이 별도가 되면서 잔차가 사라져 등재부에서 지웠다. 2026.2Q 는 IR 팩트시트로 독립 확증된다(data/ir/FY2026_Q2/parsed/KR0069.json: 별도 상각 -7,336.61억 = 마스터 워터폴, PL 의 7,524.20억은 그 파일이 '연결(after)' 로 기록한 값). 워터폴은 건드리지 말 것 — 고칠 대상은 PL 이다.",
-      "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md (iter2 반려 반영 — 연결 기준으로 잘못 닫았던 것을 별도로 복원)"
-    },
-    "삼성생명보험|2026.2Q": {
-      "residual_eok": 187.6,
-      "pl_eok": 7524.2,
-      "waterfall_eok": 7336.6,
-      "rel": 0.02557,
-      "cause": "CONSOLIDATION_BASIS_MISMATCH",
-      "note": "연결 기준으로 잘못 닫았던 것을 별도로 복원. 2026-08-25 commit 8a3b930 이 build_csm_waterfall_master.py::pick_pattern2 의 65535 필터(오진 — lxml/libxml2 sourceline 이 65535 라인 이상인 파일에서 SATURATE 되는 값일 뿐, '손상 근접반복'이 아니다)와 pick_combined_agnostic 의 KR0069·KR0094 회사코드 하드코딩 2곳을 넣어 이 버킷을 강제로 닫았다 — 워터폴을 PL(원수+수재, 연결 기준)에 맞춰 연결로 옮긴 것이지 추출을 고친 것이 아니다. raw 재검증(파일분리: 삼성생명 FY2024 사업보고서 _00760.xml=별도 에만 1,369,541백만·_00761.xml=연결에만 1,393,380백만; 신한라이프 FY2025 _00760 에 6,969,672 4회/6,972,351 0회, 연결 효과가 분기 간 2,679백만으로 일정) 로 확정, 3개 diff revert(65535 필터 제거 + 하드코딩 2곳 제거) 후 전 회사·전 분기 시뮬레이션(2,178 셀)으로 이 84 셀(삼성생명 10분기×6항목 + 신한라이프 2025.1~4Q×6항목) 외 변화 0건 확인. 저장소 규약(gold basis)은 별도이고, PL_breakdown 은 이번 범위 밖(연결 기준 그대로) — 그래서 이 잔차는 정상이며 '연결로 맞춰 닫는' 방향으로 다시 손대면 안 된다. [2026-08-26 validation 재확인] 이 분기는 커밋 8c1666b(PL 별도 정정) 범위에 **안 들어갔다** — PL 쪽이 아직 연결이라 잔차가 남는다. 같은 회사의 2024.4Q·2025.1Q·2025.3Q·2025.4Q·2026.1Q 는 그 커밋으로 PL 이 별도가 되면서 잔차가 사라져 등재부에서 지웠다. 2026.2Q 는 IR 팩트시트로 독립 확증된다(data/ir/FY2026_Q2/parsed/KR0069.json: 별도 상각 -7,336.61억 = 마스터 워터폴, PL 의 7,524.20억은 그 파일이 '연결(after)' 로 기록한 값). 워터폴은 건드리지 말 것 — 고칠 대상은 PL 이다.",
-      "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md (iter2 반려 반영 — 연결 기준으로 잘못 닫았던 것을 별도로 복원)"
     }
   },
   "_round_20260826": "inbox/parser/20260825T1520Z iter2 재확인(validation, 2026-08-26). parser 의 84셀 별도 복원은 확인했으나 **그 답변이 보고한 `pinned=22 stale=0` 은 같은 레인의 다음 커밋(8c1666b, PL 을 별도로 정정)이 두 시간 뒤에 무효화했다** — 실측 `common=346 pass=335 pinned=11 stale=11`. 삼성생명 5분기·신한라이프 6분기가 PL 쪽이 별도가 되면서 저절로 닫혔고(등재부 삭제), 신한라이프 2026.1Q/2Q 는 iter2 반려문이 '연결·별도 차일 가능성이 매우 높다' 고 적은 가설이 그대로 확인된 것이다. 남은 11건 중 삼성생명 5분기는 PL 이 아직 연결인 분기들이다."

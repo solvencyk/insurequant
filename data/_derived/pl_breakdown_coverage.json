@@ -2,6 +2,30 @@
  {
   "code": "KR0001",
   "name": "메리츠화재해상보험",
+  "quarter": "2023.1Q",
+  "status": "partial",
+  "missing": [
+   16,
+   18,
+   19
+  ],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0001",
+  "name": "메리츠화재해상보험",
+  "quarter": "2023.2Q",
+  "status": "partial",
+  "missing": [
+   16,
+   18,
+   19
+  ],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0001",
+  "name": "메리츠화재해상보험",
   "quarter": "2023.3Q",
   "status": "ok",
   "missing": [],
@@ -27,6 +51,46 @@
   "code": "KR0001",
   "name": "메리츠화재해상보험",
   "quarter": "2024.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0001",
+  "name": "메리츠화재해상보험",
+  "quarter": "2024.3Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0001",
+  "name": "메리츠화재해상보험",
+  "quarter": "2024.4Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0001",
+  "name": "메리츠화재해상보험",
+  "quarter": "2025.1Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0001",
+  "name": "메리츠화재해상보험",
+  "quarter": "2025.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0001",
+  "name": "메리츠화재해상보험",
+  "quarter": "2025.3Q",
   "status": "ok",
   "missing": [],
   "tier2": "ok"
@@ -83,6 +147,31 @@
  {
   "code": "KR0002",
   "name": "한화손해보험",
+  "quarter": "2023.2Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   16,
+   17,
+   18
+  ],
+  "tier2": "suppressed"
+ },
+ {
+  "code": "KR0002",
+  "name": "한화손해보험",
   "quarter": "2023.3Q",
   "status": "ok",
   "missing": [],
@@ -108,6 +197,30 @@
   "code": "KR0002",
   "name": "한화손해보험",
   "quarter": "2024.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0002",
+  "name": "한화손해보험",
+  "quarter": "2024.3Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0002",
+  "name": "한화손해보험",
+  "quarter": "2024.4Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0002",
+  "name": "한화손해보험",
+  "quarter": "2025.1Q",
   "status": "ok",
   "missing": [],
   "tier2": "ok"
@@ -188,6 +301,29 @@
  {
   "code": "KR0003",
   "name": "롯데손해보험",
+  "quarter": "2023.2Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   16
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0003",
+  "name": "롯데손해보험",
   "quarter": "2023.3Q",
   "status": "partial",
   "missing": [
@@ -227,6 +363,30 @@
   "code": "KR0003",
   "name": "롯데손해보험",
   "quarter": "2024.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0003",
+  "name": "롯데손해보험",
+  "quarter": "2024.3Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0003",
+  "name": "롯데손해보험",
+  "quarter": "2024.4Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0003",
+  "name": "롯데손해보험",
+  "quarter": "2025.1Q",
   "status": "ok",
   "missing": [],
   "tier2": "ok"
@@ -423,6 +583,31 @@
  {
   "code": "KR0005",
   "name": "흥국화재",
+  "quarter": "2023.2Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   16,
+   17,
+   18
+  ],
+  "tier2": "suppressed"
+ },
+ {
+  "code": "KR0005",
+  "name": "흥국화재",
   "quarter": "2023.3Q",
   "status": "ok",
   "missing": [],
@@ -448,6 +633,30 @@
   "code": "KR0005",
   "name": "흥국화재",
   "quarter": "2024.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0005",
+  "name": "흥국화재",
+  "quarter": "2024.3Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0005",
+  "name": "흥국화재",
+  "quarter": "2024.4Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0005",
+  "name": "흥국화재",
+  "quarter": "2025.1Q",
   "status": "ok",
   "missing": [],
   "tier2": "ok"
@@ -542,6 +751,26 @@
  {
   "code": "KR0008",
   "name": "삼성화재해상보험",
+  "quarter": "2023.2Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "partial"
+ },
+ {
+  "code": "KR0008",
+  "name": "삼성화재해상보험",
   "quarter": "2023.3Q",
   "status": "ok",
   "missing": [],
@@ -567,6 +796,30 @@
   "code": "KR0008",
   "name": "삼성화재해상보험",
   "quarter": "2024.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0008",
+  "name": "삼성화재해상보험",
+  "quarter": "2024.3Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0008",
+  "name": "삼성화재해상보험",
+  "quarter": "2024.4Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0008",
+  "name": "삼성화재해상보험",
+  "quarter": "2025.1Q",
   "status": "ok",
   "missing": [],
   "tier2": "ok"
@@ -730,6 +983,51 @@
  {
   "code": "KR0009",
   "name": "현대해상",
+  "quarter": "2024.3Q",
+  "status": "partial",
+  "missing": [
+   3,
+   6,
+   7,
+   8,
+   11,
+   12
+  ],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0009",
+  "name": "현대해상",
+  "quarter": "2024.4Q",
+  "status": "partial",
+  "missing": [
+   3,
+   6,
+   7,
+   8,
+   11,
+   12
+  ],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0009",
+  "name": "현대해상",
+  "quarter": "2025.1Q",
+  "status": "partial",
+  "missing": [
+   3,
+   6,
+   7,
+   8,
+   11,
+   12
+  ],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0009",
+  "name": "현대해상",
   "quarter": "2025.2Q",
   "status": "partial",
   "missing": [
@@ -777,6 +1075,22 @@
  {
   "code": "KR0010",
   "name": "KB손해보험",
+  "quarter": "2023.1Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0010",
+  "name": "KB손해보험",
+  "quarter": "2023.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0010",
+  "name": "KB손해보험",
   "quarter": "2023.3Q",
   "status": "ok",
   "missing": [],
@@ -802,6 +1116,46 @@
   "code": "KR0010",
   "name": "KB손해보험",
   "quarter": "2024.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0010",
+  "name": "KB손해보험",
+  "quarter": "2024.3Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0010",
+  "name": "KB손해보험",
+  "quarter": "2024.4Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0010",
+  "name": "KB손해보험",
+  "quarter": "2025.1Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0010",
+  "name": "KB손해보험",
+  "quarter": "2025.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0010",
+  "name": "KB손해보험",
+  "quarter": "2025.3Q",
   "status": "ok",
   "missing": [],
   "tier2": "ok"
@@ -841,6 +1195,14 @@
  {
   "code": "KR0011",
   "name": "DB손해보험",
+  "quarter": "2023.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0011",
+  "name": "DB손해보험",
   "quarter": "2023.3Q",
   "status": "ok",
   "missing": [],
@@ -866,6 +1228,30 @@
   "code": "KR0011",
   "name": "DB손해보험",
   "quarter": "2024.2Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0011",
+  "name": "DB손해보험",
+  "quarter": "2024.3Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0011",
+  "name": "DB손해보험",
+  "quarter": "2024.4Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0011",
+  "name": "DB손해보험",
+  "quarter": "2025.1Q",
   "status": "ok",
   "missing": [],
   "tier2": "ok"
@@ -935,6 +1321,28 @@
  {
   "code": "KR0029",
   "name": "AIG손해보험",
+  "quarter": "2024.4Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0029",
+  "name": "AIG손해보험",
   "quarter": "2025.4Q",
   "status": "partial",
   "missing": [
@@ -953,6 +1361,61 @@
    14
   ],
   "tier2": "none"
+ },
+ {
+  "code": "KR0032",
+  "name": "NH농협손해보험",
+  "quarter": "2023.1Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0032",
+  "name": "NH농협손해보험",
+  "quarter": "2023.2Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "partial"
  },
  {
   "code": "KR0032",
@@ -1089,6 +1552,69 @@
  {
   "code": "KR0049",
   "name": "악사손해보험",
+  "quarter": "2022.4Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0049",
+  "name": "악사손해보험",
+  "quarter": "2023.4Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "tier2": "suppressed"
+ },
+ {
+  "code": "KR0049",
+  "name": "악사손해보험",
+  "quarter": "2024.4Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0049",
+  "name": "악사손해보험",
   "quarter": "2025.4Q",
   "status": "ok",
   "missing": [],
@@ -1132,6 +1658,105 @@
   "name": "악사손해보험",
   "quarter": "2026.2Q",
   "status": "raw_not_extracted",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0050",
+  "name": "하나손해보험",
+  "quarter": "2022.4Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0050",
+  "name": "하나손해보험",
+  "quarter": "2023.4Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0050",
+  "name": "하나손해보험",
+  "quarter": "2024.4Q",
+  "status": "no_income_statement",
   "missing": [
    1,
    2,
@@ -1262,6 +1887,83 @@
  {
   "code": "KR0051",
   "name": "신한이지손해보험",
+  "quarter": "2022.4Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0051",
+  "name": "신한이지손해보험",
+  "quarter": "2023.4Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0051",
+  "name": "신한이지손해보험",
+  "quarter": "2024.4Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0051",
+  "name": "신한이지손해보험",
   "quarter": "2025.4Q",
   "status": "partial",
   "missing": [
@@ -1351,6 +2053,21 @@
   "code": "KR0068",
   "name": "한화생명",
   "quarter": "2023.1Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   7,
+   17,
+   18,
+   19
+  ],
+  "tier2": "partial"
+ },
+ {
+  "code": "KR0068",
+  "name": "한화생명",
+  "quarter": "2023.2Q",
   "status": "partial",
   "missing": [
    2,
@@ -1457,6 +2174,56 @@
   "status": "ok",
   "missing": [],
   "tier2": "ok"
+ },
+ {
+  "code": "KR0069",
+  "name": "삼성생명보험",
+  "quarter": "2023.1Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   7,
+   8,
+   12,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "partial"
+ },
+ {
+  "code": "KR0069",
+  "name": "삼성생명보험",
+  "quarter": "2023.2Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   7,
+   8,
+   12,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "partial"
  },
  {
   "code": "KR0069",
@@ -1706,6 +2473,46 @@
  {
   "code": "KR0071",
   "name": "흥국생명보험",
+  "quarter": "2023.1Q",
+  "status": "partial",
+  "missing": [
+   2,
+   8,
+   9,
+   10,
+   12,
+   16
+  ],
+  "tier2": "partial"
+ },
+ {
+  "code": "KR0071",
+  "name": "흥국생명보험",
+  "quarter": "2023.2Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   7,
+   8,
+   12,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "partial"
+ },
+ {
+  "code": "KR0071",
+  "name": "흥국생명보험",
   "quarter": "2023.3Q",
   "status": "ok",
   "missing": [],
@@ -2376,6 +3183,105 @@
  {
   "code": "KR0076",
   "name": "아이엠라이프생명보험",
+  "quarter": "2022.4Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0076",
+  "name": "아이엠라이프생명보험",
+  "quarter": "2023.4Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0076",
+  "name": "아이엠라이프생명보험",
+  "quarter": "2024.4Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0076",
+  "name": "아이엠라이프생명보험",
   "quarter": "2025.4Q",
   "status": "no_income_statement",
   "missing": [
@@ -2476,6 +3382,14 @@
   "code": "KR0079",
   "name": "미래에셋생명보험",
   "quarter": "2023.1Q",
+  "status": "ok",
+  "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0079",
+  "name": "미래에셋생명보험",
+  "quarter": "2023.2Q",
   "status": "ok",
   "missing": [],
   "tier2": "ok"
@@ -2759,6 +3673,29 @@
  {
   "code": "KR0082",
   "name": "DB생명보험",
+  "quarter": "2023.1Q",
+  "status": "partial",
+  "missing": [
+   16,
+   18,
+   19
+  ],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0082",
+  "name": "DB생명보험",
+  "quarter": "2023.2Q",
+  "status": "partial",
+  "missing": [
+   18,
+   19
+  ],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0082",
+  "name": "DB생명보험",
   "quarter": "2023.3Q",
   "status": "ok",
   "missing": [],
@@ -2851,6 +3788,32 @@
   "status": "ok",
   "missing": [],
   "tier2": "ok"
+ },
+ {
+  "code": "KR0083",
+  "name": "푸본현대생명보험",
+  "quarter": "2023.1Q",
+  "status": "partial",
+  "missing": [
+   2,
+   8,
+   12,
+   16
+  ],
+  "tier2": "partial"
+ },
+ {
+  "code": "KR0083",
+  "name": "푸본현대생명보험",
+  "quarter": "2023.2Q",
+  "status": "partial",
+  "missing": [
+   2,
+   8,
+   12,
+   16
+  ],
+  "tier2": "partial"
  },
  {
   "code": "KR0083",
@@ -2954,6 +3917,19 @@
   "quarter": "2023.1Q",
   "status": "ok",
   "missing": [],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR0087",
+  "name": "동양생명",
+  "quarter": "2023.2Q",
+  "status": "partial",
+  "missing": [
+   9,
+   10,
+   11,
+   12
+  ],
   "tier2": "ok"
  },
  {
@@ -3084,6 +4060,40 @@
   "status": "ok",
   "missing": [],
   "tier2": "ok"
+ },
+ {
+  "code": "KR0094",
+  "name": "신한라이프생명보험",
+  "quarter": "2023.1Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   7,
+   8,
+   12,
+   16,
+   18,
+   19
+  ],
+  "tier2": "partial"
+ },
+ {
+  "code": "KR0094",
+  "name": "신한라이프생명보험",
+  "quarter": "2023.2Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   7,
+   8,
+   12,
+   16,
+   18,
+   19
+  ],
+  "tier2": "partial"
  },
  {
   "code": "KR0094",
@@ -3389,7 +4399,8 @@
   "status": "partial",
   "missing": [
    17,
-   18
+   18,
+   20
   ],
   "tier2": "ok"
  },
@@ -3466,6 +4477,46 @@
    24
   ],
   "tier2": "none"
+ },
+ {
+  "code": "KR0099",
+  "name": "KB라이프생명",
+  "quarter": "2023.1Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "partial"
+ },
+ {
+  "code": "KR0099",
+  "name": "KB라이프생명",
+  "quarter": "2023.2Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "partial"
  },
  {
   "code": "KR0099",
@@ -3698,6 +4749,56 @@
  {
   "code": "KR0104",
   "name": "농협생명보험",
+  "quarter": "2023.1Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   7,
+   8,
+   12,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "partial"
+ },
+ {
+  "code": "KR0104",
+  "name": "농협생명보험",
+  "quarter": "2023.2Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   7,
+   8,
+   12,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "partial"
+ },
+ {
+  "code": "KR0104",
+  "name": "농협생명보험",
   "quarter": "2023.3Q",
   "status": "ok",
   "missing": [],
@@ -3790,6 +4891,237 @@
   "status": "ok",
   "missing": [],
   "tier2": "ok"
+ },
+ {
+  "code": "KR0150",
+  "name": "서울보증보험",
+  "quarter": "2023.1Q",
+  "status": "raw_not_extracted",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0150",
+  "name": "서울보증보험",
+  "quarter": "2023.2Q",
+  "status": "raw_not_extracted",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0150",
+  "name": "서울보증보험",
+  "quarter": "2023.3Q",
+  "status": "raw_not_extracted",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0150",
+  "name": "서울보증보험",
+  "quarter": "2024.1Q",
+  "status": "raw_not_extracted",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0150",
+  "name": "서울보증보험",
+  "quarter": "2024.2Q",
+  "status": "raw_not_extracted",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0150",
+  "name": "서울보증보험",
+  "quarter": "2024.3Q",
+  "status": "raw_not_extracted",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR0150",
+  "name": "서울보증보험",
+  "quarter": "2024.4Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
  },
  {
   "code": "KR0150",
@@ -4028,6 +5360,16 @@
  {
   "code": "KR1000",
   "name": "코리안리재보험",
+  "quarter": "2025.1Q",
+  "status": "partial",
+  "missing": [
+   13
+  ],
+  "tier2": "ok"
+ },
+ {
+  "code": "KR1000",
+  "name": "코리안리재보험",
   "quarter": "2025.2Q",
   "status": "partial",
   "missing": [
@@ -4074,6 +5416,92 @@
    13
   ],
   "tier2": "ok"
+ },
+ {
+  "code": "KR1010",
+  "name": "교보라이프플래닛생명보험",
+  "quarter": "2022.4Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR1010",
+  "name": "교보라이프플래닛생명보험",
+  "quarter": "2023.4Q",
+  "status": "no_income_statement",
+  "missing": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "tier2": "none"
+ },
+ {
+  "code": "KR1010",
+  "name": "교보라이프플래닛생명보험",
+  "quarter": "2024.4Q",
+  "status": "partial",
+  "missing": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "tier2": "suppressed"
  },
  {
   "code": "KR1010",

@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "scripts"))
 sys.stdout.reconfigure(encoding="utf-8")
 from src.ifrs17.measurement_extractor import extract_measurement_tables, to_jsonable
+from scripts.pl_breakdown.common import _iter_tables_by_basis, _tag_basis
 from viz_build_csm_waterfall import normalize_block_header, deduplicate, find_product_segmented_csm_cols, row_value_start, parse_num, filter_current_period_rows, extract_stages, STAGE_PATTERNS
 
 def _ns(s):  # normalize: drop ALL whitespace incl. \xa0 (KB rows lead with \xa0)
@@ -1036,7 +1037,22 @@ def blocks_for_dir(rd, name):
     tables = []
     for x in sorted(xmls.values()):
         try:
-            for t in extract_measurement_tables(x, company_name=name):
+            # 2026-08-26: keep only the 별도(OFS) half of a both-basis main body.  Dropping
+            # _00761 above covers the annual filings' attachments, but a 분기/반기 main body
+            # carries BOTH bases in one file with 연결 first, and nothing here filtered on
+            # that -- the pick fell to _select(..., "min") ("별도 ≤ 연결 in practice"), a
+            # proxy that lands on 연결 whenever it is the smaller book.  Measured effect of
+            # this filter over all 426 company-quarters: 74 cells / 16 buckets / 8 companies
+            # change, 9 of those buckets move onto values the master already carried as gold
+            # (흥국생명 2023.1~3Q · 한화생명 2023.1/2Q · DB손해 2026.1/2Q · 미래에셋 2025.3Q ·
+            # 신한라이프 2024.4Q) -- i.e. the master was hand-corrected to 별도 while the code
+            # kept emitting 연결.  Coverage loss is zero: when the OFS side yields nothing
+            # (single-basis or older filings) the unfiltered pool is used unchanged.
+            picked = _tag_basis(
+                list(_iter_tables_by_basis(x, lambda p: extract_measurement_tables(
+                    p, company_name=name))), x)
+            ofs = [t for t in picked if getattr(t, "_basis", None) == "OFS"]
+            for t in (ofs or picked):
                 jt = to_jsonable(t)
                 jt["_src"] = x.name          # provenance: _00760 = 별도 주석 (gold basis)
                 tables.append(jt)

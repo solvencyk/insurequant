@@ -996,14 +996,6 @@
       "note": "owner xlsx fill (review-loop 2026-06-19/20)"
     },
     {
-      "원보험사코드": "KR0002",
-      "항목번호": 20,
-      "공시분기": "2023.1Q",
-      "값": 112735.190992,
-      "was": 26.27293,
-      "note": "parser adjudication 2026-08-15 (inbox/parser/20260814T1637Z): FS-API has status=013 (both OFS/CFS) for this cell, so item20 only ever comes from raw-XML HTML fallback -- 26.27백만 quarterly operating profit is implausible by orders of magnitude for 한화손보, HEAD's value kept as the plausible one. Root cause of the HTML-extractor producing the smaller figure not diagnosed."
-    },
-    {
       "원보험사코드": "KR0068",
       "항목번호": 20,
       "공시분기": "2023.1Q",
