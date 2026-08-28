@@ -256,6 +256,7 @@
       el("div", { class: "iq-field" }, [el("label", { text: "다운로드할 데이터 " }, [el("span", { class: "iq-hint", text: "(중복 선택 가능)" })]), sheetGrid]),
       el("div", { class: "iq-field" }, [el("label", { text: "사용 목적 " }, [el("span", { class: "iq-hint", text: "(선택)" })]), purposeSelect]),
       el("div", { class: "iq-disclaimer" }, [document.createTextNode(DISCLAIMER_TEXT)]),
+      el("div", { class: "iq-disclaimer" }, [document.createTextNode("제출 정보(보험사명·업권·부서 등)는 이용 현황 파악과 데이터 품질 개선 참고용으로만 사용하며, 외부에 제공하지 않습니다.")]),
       el("div", { class: "iq-field", style: "margin-bottom:12px" }, [
         el("label", { class: "iq-check-row", for: "iqdl-consent" }, [consentCb, document.createTextNode("위 안내사항을 확인했습니다")])
       ]),
