@@ -1,6 +1,36 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-08-29(3회차, 세션 인계) — (2회차) 세션이 커밋 직전에 중단돼 워킹트리에
+> Last updated: 2026-08-29(4회차) — inbox `20260829T2130Z`(downloader, 하나손해보험
+> KR0050 2026.2Q raw-ready 통지) 드레인: **추출·검증까지 끝냈으나 coverage census 충돌로
+> 마스터 삽입은 되돌림.** docling 변환(`run_harness.py --stage parse`, 162.5s conf=0.85)
+> 으로 `md_inbox/FY2026_Q2/KR0050_하나손해보험.md` 생성 → `fill_period`/`fill_subitems`/
+> `fill_market_subitems`/`fill_market_irr_from_pdf` 로 items 1-46 전량 추출(8_life·
+> 19_market·36_irr golden 재현 통과). item28(파생값) + item47-54(TFI표, 라벨매칭 오류로
+> item48 오염값 6065→2338.28 정정 + 47/49/50/51/53/54 신설, 자체검산 `item51==min(47,48)
+> +49+54` 정확히 닫힘) 은 신규 `scripts/fix_20260829_kr0050_2026q2_onboarding.py`(KR0050+
+> 2026.2Q 하드필터, `--dry-run` 지원)로 보강. `지급여력비율(경과조치 후)` 결측 판정: raw
+> "(1)/(2) 경과조치 관련: 해당사항 없음"×2 + 13분기 연속 `_TRANSITION_KIND` registry 전부
+> X + 회사 자신의 과거 관례(2025.4Q·2026.1Q 전 항목 값_적용후=값 미러링) 네 근거가 일치해
+> **진짜 미공시 확정, `값_적용후=값` 미러링**(0 채움 아님)으로 처리 — item27후=152.13.
+> `validate_kics_disclosure.py`: KR0050 2026.2Q 버킷 findings 29건 전부 GREEN/legit-SKIP,
+> RED 0(report 전체 재귀 스캔으로 4개 구조게이트까지 확인). **그런데 같은 실행에서
+> `Coverage census: MISSING_CELLS(RED)=36 collapsed_quarters=[('2026.2Q',1)]` 신규 발견**
+> — 39사 중 1사만 게시된 부분 분기를 마스터에 넣으면 나머지 38사가 "결측"으로 오검출된다
+> (`validate_data_contract.py` MISSING_FILER_CELL 38건으로 교차확인, 이 룰은 면제기제
+> 없음 — owner 2026-06-16 설계). 코디네이터가 동시에 `prepush_check.py`(BLOCKED, gate
+> RED=56)로 같은 문제 지적 → **`git checkout -- kics_disclosure.json`으로 되돌림**
+> (22742→22688행, 세션 시작 시점과 동일). 재검증: `validate_kics_disclosure.py`/
+> `validate_data_contract.py` 둘 다 exit 0·RED=0, `test_kics_rules_golden.py`(재생성
+> 불필요) 포함 golden 151개 전부 PASS. `validate_golden_input_fingerprints.py`는
+> `post_transition` 축만 새 MD 파일(md_inbox 496→497개)로 FAIL(INPUTS_MOVED) →
+> golden 자체는 byte-identical PASS 먼저 확인 후 `--update`(diff 1줄, 다른 5개 빌더
+> 지문 무변화 확인) → RED=0 clear. 디스크 산출물(PDF·MD)은 gitignore라 git과 무관하게
+> 영속, 재사용 가능. **2026.2Q는 39사 중 1사만 게시돼 마스터 삽입 보류, 다음 확인
+> 8/31(월).** status: answered(원 sender=downloader, 재게시 통지 대기). 상세:
+> `inbox/parser/20260829T2130Z__downloader__KR0050_2026.2Q__disclosure_raw_ready.md`
+> `## 답변` 절.
+>
+> Last updated (이전): 2026-08-29(3회차, 세션 인계) — (2회차) 세션이 커밋 직전에 중단돼 워킹트리에
 > 변경만 남아 있던 것을 이어받아 처리. **처음부터 다시 하지 않고**, 신규 세션에서 두 경로로
 > 독립 재검증만 수행: ① `probe_20260829c_tier1_note_check.py`(FLATTEN 함수 출력 기준) ②
 > 신규 `probe_20260829d_xlsx_disk_note_verify.py`(xlsx 실물 바이트를 openpyxl로 직접 읽어
@@ -272,6 +302,11 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-08-29(4회차) — 2026.2Q 첫 게시사 하나손해보험(KR0050) 온보딩: 추출·검증 RED=0
+확인했으나 coverage census(39사 중 1사=부분분기) 충돌로 마스터 삽입은 되돌림. 마스터
+22688행 원상 복구, docling MD·정정 스크립트는 보존. 다음 확인 8/31(월). status: answered.**
+상세는 최상단 참조, 티켓 `inbox/parser/20260829T2130Z...md` `## 답변` 절.
 
 **2026-08-29(3회차, 세션 인계) — (2회차)가 커밋 직전 세션 중단으로 멈춰 워킹트리에만 남아
 있던 것을 이어받아 독립 재검증(2경로: FLATTEN 함수 출력 + xlsx 실물 바이트 직접 읽기) 후

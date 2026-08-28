@@ -205,11 +205,11 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_dividend.py (관측 627개 = census 1 + 캐시 624 + kics_disclosure 1)"
   },
   "post_transition": {
-   "inputs_sha256": "86e4a2b86bdeee25cce5e3835e036a11b1c4208aa82e81f141ae1735c22499bb",
-   "input_files": 497,
-   "input_bytes": 30049598,
+   "inputs_sha256": "253f03622e20c5bf475ffdf7746e2bc4f09994f6fb526922896c29b26209f49c",
+   "input_files": 498,
+   "input_bytes": 30116099,
    "input_files_per_pattern": {
-    "md_inbox/FY*_Q?/*.md": 496,
+    "md_inbox/FY*_Q?/*.md": 497,
     "kics_disclosure.json": 1
    },
    "code_sha256": "ba9729523bae504726e11a4a3c2f0a57bfd849eefef611e97203dc9a32fbd29b",
