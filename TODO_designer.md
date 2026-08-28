@@ -9,6 +9,26 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28d, inbox 20260828T0300Z 반영 — 완료·배포됨):** owner가 "너 inbox 다
+drain한거 맞아?"로 지적 — 정곡. `inbox/designer/20260828T0300Z`(orchestrator, owner 결정
+포함)를 세션 시작 때 안 읽고 채팅 지시만으로 바로 빌드 시작했음(이번 세션 전체의 근본 원인).
+결과: 결함4(익명 2클릭 마찰)를 그 티켓이 이미 철회 결정했는데 모르고 그대로 구현 → owner가
+채팅에서 다시 지적하는 왕복 발생. **교훈: 세션 첫 동작 = `inbox/<내 stage>/` 드레인, owner
+채팅 지시가 있어도 생략하지 않는다.**
+- 티켓 반영: 익명 마찰 철회(체크박스로, 확인단계 없음) + 업권 select 신설(익명 시 필수).
+  다운로드마다 "요약" 표지 자동 첨부(출처·스냅샷일시·분기범위·면책, 파일명도
+  `insurequant_YYYYMMDD_<코드>_<코드>.xlsx`). xlsx 조립을 root JSON 라이브 fetch에서
+  `public_exports/` 스냅샷(JSON, `git show HEAD:`로 커밋된 상태만 — 공유 워킹트리에서 다른
+  세션의 미커밋 PL_breakdown 확장이 섞여 나갈 뻔한 걸 실측으로 확인)으로 되돌림. 오류 제보
+  프리필을 주 진입점으로(3페이지에 "이 데이터에 오류가 있나요?" 링크, `window.IQreport.open`
+  공개 API 신설, 우하단 버튼은 백업).
+- 부수 버그 2건 실측 발견·수정: ① 분기범위 계산이 CSM_amortization의 비표준 라벨("annual
+  (filings skim)")을 문자열정렬로 최댓값 오판 ② **`public_exports/_manifest.json`이 라이브에서
+  404** — 이 저장소 main에 `.nojekyll`이 없어 GitHub Pages 기본 Jekyll이 밑줄 시작 파일을
+  조용히 배포 제외. `manifest.json`으로 개명 + 재발방지로 `.nojekyll` 추가(사이트가 Jekyll
+  기능 전혀 안 써서 안전).
+- inbox 답변 작성 + `_resolved/`로 이동, main 배포 완료(로컬+라이브 둘 다 재검증).
+
 **Recent (2026-08-28c, owner 피드백 3건 — 완료·배포됨):** 위 2026-08-28b 배포 직후 owner 피드백:
 ① 다운로드 버튼이 footer라 안 보임 → header 우측(탭과 같은 높이)으로 이동, primary 파란색.
 ② "csv 여러개 zip 말고 xlsx로 만들라고 했잖아" → JSZip+CSV 폐기, SheetJS로 선택 시트를 시트 탭
