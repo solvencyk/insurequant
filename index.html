@@ -17,6 +17,14 @@
     /* Shared tokens + chrome (header/tabs/brand/container/select/utils) now live
        in common.css. Below: index-specific only. */
     *{box-sizing:border-box}
+    /* 헤더 우측 다운로드 CTA — 탭과 같은 줄, 같은 높이(owner 요청 2026-08-28) */
+    .header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .download-cta{padding:8px 16px;border:none;border-radius:8px 8px 0 0;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:background var(--t-fast, 0.2s)}
+    .download-cta:hover{background:var(--primary-hover)}
+    @media (max-width:640px){
+      .header-row{flex-direction:column;align-items:stretch;gap:8px}
+      .download-cta{border-radius:8px;font-size:13px;padding:8px 12px}
+    }
     .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
     .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:8px}
     .legend{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
@@ -104,10 +112,13 @@
 <body>
   <header>
     <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">보험사 공시 대시보드</span></a>
-    <div class="tabs">
-      <a href="K-ICS.html" class="tab">K-ICS</a>
-      <a href="IFRS17.html" class="tab">IFRS17</a>
-      <a href="공시보고서.html" class="tab">공시/보고서</a>
+    <div class="header-row">
+      <div class="tabs">
+        <a href="K-ICS.html" class="tab">K-ICS</a>
+        <a href="IFRS17.html" class="tab">IFRS17</a>
+        <a href="공시보고서.html" class="tab">공시/보고서</a>
+      </div>
+      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 마스터 데이터 다운로드</button>
     </div>
   </header>
   <div class="container">
@@ -1369,8 +1380,7 @@
   </script>
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
     자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">2026.1Q</span>)<br/>
-    본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant<br/>
-    <button id="downloadMasterBtn" type="button" class="iq-btn-ghost" style="width:auto;padding:6px 14px;margin-top:10px;font-size:12px">⬇ 마스터 데이터 다운로드</button>
+    본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
   </footer>
 <script>
 (function(){
@@ -1382,7 +1392,7 @@
   else observe();
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" integrity="sha384-+mbV2IY1Zk/X1p/nWllGySJSUN8uMs+gUAN10Or95UBH0fpj6GfKgPmgC5EXieXG" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 <script src="forms-config.js"></script>
 <script src="download-survey.js"></script>
 <script src="report-widget.js"></script>
