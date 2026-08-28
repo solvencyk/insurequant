@@ -53,10 +53,13 @@
   // 익명이어도 쓸모 있는 정보가 남게(오케스트레이터 결정 — 익명에 마찰을 주면 사람들이 익명을
   // 포기하는 게 아니라 아무 회사나 골라 소속 통계가 오염된다). 소속을 밝히든 안 밝히든 공통.
   var SECTORS = ["개인", "보험사", "증권·운용", "컨설팅·회계", "학계", "언론", "감독기관", "기타"];
+  // 주 타겟층(계리사) 감안 — 보험사 내 부서 구분. 선택 항목(필수 아님).
+  var DEPARTMENTS = ["결산(Valuation)", "리스크관리(RM)", "기획", "상품개발", "계리", "자산운용", "언더라이팅", "재무/회계", "기타"];
   var PURPOSES = ["리서치/애널리스트 업무", "투자 참고", "학업/논문", "개인 관심", "기타"];
   var DONE_KEY = "iqSurveyDone_v1";
   var AFFIL_KEY = "iqSurveyAffil_v1";
   var SECTOR_KEY = "iqSurveySector_v1";
+  var DEPT_KEY = "iqSurveyDept_v1";
   var DISCLAIMER_TEXT = "본 데이터는 공시자료를 자동으로 수집·가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다.";
   var SOURCE_URL = "https://www.insurequant.com";
 
@@ -86,9 +89,9 @@
     return grid;
   }
 
-  function sectorSelect(id) {
+  function optionSelect(id, options) {
     return el("select", { class: "iq-select", id: id },
-      [el("option", { value: "", text: "선택 안 함" })].concat(SECTORS.map(function (s) { return el("option", { value: s, text: s }); })));
+      [el("option", { value: "", text: "선택 안 함" })].concat(options.map(function (s) { return el("option", { value: s, text: s }); })));
   }
 
   function selectedSheets(grid) {
@@ -165,7 +168,8 @@
     // 마찰을 주면 사람들이 진짜 소속을 숨기는 대신 아무 회사나 골라버려 통계가 더 나빠진다).
     var anonCb = el("input", { type: "checkbox", id: "iqdl-anon" });
     var anonLabel = el("label", { class: "iq-check-row", for: "iqdl-anon", style: "margin-top:6px" }, [anonCb, document.createTextNode("회사명은 비공개로 할게요")]);
-    var sectorSel = sectorSelect("iqdl-sector");
+    var deptSel = optionSelect("iqdl-dept", DEPARTMENTS);
+    var sectorSel = optionSelect("iqdl-sector", SECTORS);
 
     anonCb.addEventListener("change", function () {
       affilInput.disabled = anonCb.checked;
@@ -182,6 +186,7 @@
 
     var form = el("form", { id: "iqdl-form" }, [
       el("div", { class: "iq-field" }, [el("label", { text: "소속" }), affilInput, datalist, anonLabel]),
+      el("div", { class: "iq-field" }, [el("label", { text: "부서 " }, [el("span", { class: "iq-hint", text: "(선택)" })]), deptSel]),
       el("div", { class: "iq-field" }, [el("label", { text: "업권 " }, [el("span", { class: "iq-hint", text: "(비공개 선택 시 필수)" })]), sectorSel]),
       el("div", { class: "iq-field" }, [el("label", { text: "다운로드할 데이터 " }, [el("span", { class: "iq-hint", text: "(중복 선택 가능)" })]), sheetGrid]),
       el("div", { class: "iq-field" }, [el("label", { text: "사용 목적 " }, [el("span", { class: "iq-hint", text: "(선택)" })]), purposeSelect]),
@@ -194,7 +199,7 @@
 
     var panel = el("div", { class: "iq-modal-panel", role: "dialog", "aria-modal": "true", "aria-labelledby": "iqdl-title" }, [
       el("div", { class: "iq-modal-head" }, [
-        el("div", { class: "iq-modal-title", id: "iqdl-title", text: "마스터 데이터 다운로드" }),
+        el("div", { class: "iq-modal-title", id: "iqdl-title", text: "테이블 다운로드(.xlsx)" }),
         el("button", { class: "iq-modal-close", type: "button", "aria-label": "닫기", text: "×" })
       ]),
       el("p", { class: "small-muted", style: "margin-top:0" }, [document.createTextNode("파일 자체엔 접근 제한이 없습니다 — 아래는 방명록입니다. 남겨주시면 바로 다운로드가 시작됩니다.")]),
@@ -225,12 +230,13 @@
       submitBtn.disabled = true;
       submitBtn.textContent = "처리 중…";
       window.IQ_FORMS.submit("download", {
-        affiliation: affilVal, sector: sectorSel.value, sheets: sheets.join(", "), purpose: purposeSelect.value, consent: "동의함"
+        affiliation: affilVal, department: deptSel.value, sector: sectorSel.value, sheets: sheets.join(", "), purpose: purposeSelect.value, consent: "동의함"
       }).then(function () {
         try {
           localStorage.setItem(DONE_KEY, "1");
           localStorage.setItem(AFFIL_KEY, affilVal);
           localStorage.setItem(SECTOR_KEY, sectorSel.value || "");
+          localStorage.setItem(DEPT_KEY, deptSel.value || "");
         } catch (e2) { /* private mode 등 — 다음에 다시 물어봄, 무시 */ }
         return downloadSheets(sheets);
       }).then(function () {
@@ -258,7 +264,7 @@
     ]);
     var panel = el("div", { class: "iq-modal-panel", role: "dialog", "aria-modal": "true", "aria-labelledby": "iqdl-title2" }, [
       el("div", { class: "iq-modal-head" }, [
-        el("div", { class: "iq-modal-title", id: "iqdl-title2", text: "마스터 데이터 다운로드" }),
+        el("div", { class: "iq-modal-title", id: "iqdl-title2", text: "테이블 다운로드(.xlsx)" }),
         el("button", { class: "iq-modal-close", type: "button", "aria-label": "닫기", text: "×" })
       ]),
       form
@@ -284,12 +290,13 @@
       errorMsg.classList.remove("show");
       submitBtn.disabled = true;
       submitBtn.textContent = "처리 중…";
-      var affilVal = "익명", sectorVal = "";
+      var affilVal = "익명", sectorVal = "", deptVal = "";
       try {
         affilVal = localStorage.getItem(AFFIL_KEY) || "익명";
         sectorVal = localStorage.getItem(SECTOR_KEY) || "";
+        deptVal = localStorage.getItem(DEPT_KEY) || "";
       } catch (e3) { /* ignore */ }
-      window.IQ_FORMS.submit("download", { affiliation: affilVal, sector: sectorVal, sheets: sheets.join(", "), purpose: "", consent: "재방문(방명록 생략)" });
+      window.IQ_FORMS.submit("download", { affiliation: affilVal, department: deptVal, sector: sectorVal, sheets: sheets.join(", "), purpose: "", consent: "재방문(방명록 생략)" });
       downloadSheets(sheets).then(function () {
         closeModal(backdrop, opener);
       }).catch(function (err) {

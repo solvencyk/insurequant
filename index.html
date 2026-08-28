@@ -17,13 +17,15 @@
     /* Shared tokens + chrome (header/tabs/brand/container/select/utils) now live
        in common.css. Below: index-specific only. */
     *{box-sizing:border-box}
-    /* 헤더 우측 다운로드 CTA — 탭과 같은 줄, 같은 높이(owner 요청 2026-08-28) */
+    /* 헤더 우측 다운로드 CTA — 데스크탑: 탭과 같은 줄·같은 높이(owner 요청 2026-08-28).
+       모바일: 탭 바로 옆에 붙는 작은 pill로(owner 요청 2026-08-28, 데스크탑 톤·위치는 유지). */
     .header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
     .download-cta{padding:8px 16px;border:none;border-radius:8px 8px 0 0;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:background var(--t-fast, 0.2s)}
     .download-cta:hover{background:var(--primary-hover)}
     @media (max-width:640px){
-      .header-row{flex-direction:column;align-items:stretch;gap:8px}
-      .download-cta{border-radius:8px;font-size:13px;padding:8px 12px}
+      .header-row{align-items:center;flex-wrap:nowrap;gap:8px}
+      .tabs{flex:1 1 auto;min-width:0}
+      .download-cta{flex:0 0 auto;border-radius:var(--r-pill);font-size:11px;font-weight:600;padding:6px 10px;white-space:nowrap}
     }
     .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
     .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:8px}
@@ -118,7 +120,7 @@
         <a href="IFRS17.html" class="tab">IFRS17</a>
         <a href="공시보고서.html" class="tab">공시/보고서</a>
       </div>
-      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 마스터 데이터 다운로드</button>
+      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 테이블 다운로드(.xlsx)</button>
     </div>
   </header>
   <div class="container">
