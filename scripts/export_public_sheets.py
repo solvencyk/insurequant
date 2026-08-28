@@ -30,6 +30,14 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
+# kics_tier1_utilization / kics_tier2_utilization / kics_forward_capital are the only
+# masters that are NOT already long-format on disk (per-company snapshots / per-year
+# projection nests). build_master_xlsx.py owns the reshape *and* the 비고 (known-limitation)
+# note text; re-typing either here would let the download and the official xlsx drift
+# apart on exactly the caveats that must travel with the numbers. Import instead —
+# build_master_xlsx.main() is __main__-guarded, so importing it writes nothing.
+from build_master_xlsx import FLATTEN  # noqa: E402  (same scripts/ dir → on sys.path)
+
 REPO = Path(__file__).resolve().parents[1]
 OUT_DIR = REPO / "public_exports"
 
@@ -65,6 +73,14 @@ MASTERS = [
     ("NB_CSM_multiple.json", "신계약CSM배수"),
     ("PL_breakdown.json", "손익분해PL"),
     ("dividend.json", "배당"),
+    # 2026-08-29 신설(inbox/designer/20260829T0700Z). 이 3개는 FLATTEN을 거쳐야 long-format이 되고,
+    # 다른 8시트에 없는 "비고" 열이 하나 더 붙는다 — 셀별 known limitation(tier1 분자 BS 대체,
+    # tier2 구 산식 폐기, 소진율 100% 초과가 정상인 이유, forward 콜일자 추정)이 거기 실린다.
+    # 화면에는 hover로 맥락이 있지만 xlsx만 받아 간 사람에게는 이 열이 유일한 맥락이라
+    # 절대 드롭하면 안 된다(_DROP_COLS에 넣지 말 것).
+    ("kics_tier1_utilization.json", "기본자본소진율"),
+    ("kics_tier2_utilization.json", "보완자본소진율"),
+    ("kics_forward_capital.json", "자본비율전망"),
 ]
 
 
@@ -73,6 +89,9 @@ def main():
     manifest = {"generated_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "sheets": {}}
     for json_name, sheet_name in MASTERS:
         rows = read_committed_json(json_name)
+        flatten = FLATTEN.get(json_name)
+        if flatten is not None:
+            rows = flatten(rows)
         rows = [{k: v for k, v in r.items() if k not in _DROP_COLS} for r in rows]
         out_path = OUT_DIR / f"{sheet_name}.json"
         out_path.write_text(json.dumps(rows, ensure_ascii=False), encoding="utf-8")

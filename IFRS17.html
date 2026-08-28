@@ -620,16 +620,24 @@
   // 손보/생보 공통 상세 분해 — 장기원수는 세부(4·5·6·7), 생명장기재보험(8)·자동차+일반(13+14)은 묶음:
   //   4 CSM상각 +5 위험조정 +6 예실차 +7 기타 +8 재보험 +(13+14) +(15−16 기타) = 보험손익(1)
   //   → 17 투자손익 → 21 영업외 → (−)23 법인세 → 24 당기순이익  (검산 OK 손보+생보)
-  //   → 26 FVOCI채무 + 27 보험계약금융(OCI) + 28 위험회피파생 + 30 재보험금융(OCI) + 29 FVOCI지분 → 31 총포괄손익
-  //   (25 기타포괄손익 총액은 막대로 안 그린다 — 26~30과 중복. 24+25=31은 전 회사·전 분기 정확히 성립.)
+  //   → 26 FVOCI채무 + 27 보험계약금융(OCI) + 28 위험회피파생 + 30 재보험금융(OCI) + 32 기타 포괄손익
+  //     + 29 FVOCI지분 → 31 총포괄손익
+  //   (25 기타포괄손익 총액은 막대로 안 그린다 — 26~30+32와 중복. 24+25=31은 전 회사·전 분기 정확히 성립.)
   // NOTE: PL company names differ from CSM/dropdown (삼성생명보험 vs 삼성생명) → plResolve() fuzzy-matches.
   const PL_NUM = {
     원수CSM상각:4, 원수RA:5, 원수예실차:6, 기타원수:7, 재보험:8,
     자동차:13, 일반:14, 기타수익:15, 기타비용:16,
     보험손익:1, 투자손익:17, 영업외:21, 법인세:23, 당기순이익:24,
     // 총포괄손익 구간(parser 4cca165 신설). 실데이터 항등식: 24 + 25 = 31 (전 36사 전 분기 오차 0).
-    // 25는 26~30의 합에 "가깝지만" 정확히 같지는 않다(미분류 잔차) → 아래 plOciResidual 참조.
+    // 항목32(parser d634492 신설)까지 넣으면 25 = 26+27+28+29+30+32 가 대조가능 273셀 전부에서 닫힌다
+    // (실측 2026-08-29: 이탈 0건, YTD 기준). 그 전에는 102개 회사-분기가 잔차 막대를 그렸다.
     기타포괄총액:25, FVOCI채무:26, 보험금융OCI:27, 위험회피:28, FVOCI지분:29, 재보험금융OCI:30, 총포괄손익:31,
+    // ⚠ 표시 라벨 매핑: 마스터 항목명은 "기타 포괄손익(미분류)"이지만 화면에는 "기타 포괄손익"으로 쓴다.
+    // 내용이 규명돼 있어("확정급여 재측정" 23사·"신용손실" 15사·"자산재평가" 14사·"해외사업환산" 6사·
+    // "관계기업 지분법 OCI" 6사 — data/_derived/pl_oci_item32_provenance.json, 24사·14종 계정)
+    // "미분류"가 사실과 다르고, 아래 잔차 막대(plOciResidual)와 이름이 겹친다. 마스터 항목명 자체는
+    // parser 소관이라 건드리지 않고 화면 라벨만 바꾼다(orchestrator 20260829T0700Z).
+    기타OCI:32,
   };
 
   // CSM 분리공시 미제공사 (owner 결정 2026-06-11): 목록 제외 대신 사유 표기 (PL 분해는 공시되므로 노출 유지)
@@ -675,7 +683,7 @@
   // g = (항목번호) => 값 for the period. optional:true rows are dropped when null/0 (e.g. 생보 자동차+일반).
   //
   // OCI 구간(oci:true)은 당기순이익 뒤에 붙는다. 순서가 설계의 전제 —
-  // 금리성(26·27·28·30) → 미분류 잔차 → FVOCI 지분증권(29) → 총포괄손익(31).
+  // 금리성(26·27·28·30) → 기타 포괄손익(32) → 미분류 잔차 → FVOCI 지분증권(29) → 총포괄손익(31).
   // 29를 맨 끝에 두는 이유: 삼성생명 2025.4Q는 순이익 1.70조인데 지분증권 평가손익이 +25.3조
   // (2026.2Q 반기누계는 +78.7조)라 같은 축에 두면 나머지 열넷이 전부 눌린다. 맨 끝에 두면
   // 축 범위를 "29 제외"로 고정했을 때 잘리는 막대가 29·31 둘뿐이고 앞 열넷은 정상 스케일로 남는다.
@@ -701,21 +709,27 @@
     { ko:"보험계약금융손익(OCI)", role:"flow", oci:true, get:g=> g(PL_NUM.보험금융OCI) },
     { ko:"위험회피 파생상품", role:"flow", oci:true, get:g=> g(PL_NUM.위험회피) },
     { ko:"재보험금융손익(OCI)", role:"flow", oci:true, get:g=> g(PL_NUM.재보험금융OCI) },
-    { ko:"기타 포괄손익(미분류)", role:"flow", oci:true, residual:true, get:plOciResidual },
+    // 항목32. 마스터 항목명은 "기타 포괄손익(미분류)"이나 화면 라벨은 "기타 포괄손익"(위 PL_NUM 주석 참조).
+    { ko:"기타 포괄손익", role:"flow", oci:true, get:g=> g(PL_NUM.기타OCI) },
+    { ko:"미분류 잔차", role:"flow", oci:true, residual:true, get:plOciResidual },
     { ko:"FVOCI 지분증권", role:"flow", oci:true, clip:true, get:g=> g(PL_NUM.FVOCI지분) },
     { ko:"총포괄손익", role:"end", oci:true, clip:true, get:g=> g(PL_NUM.총포괄손익) },
   ];
   function plMakeGetter(name, per){ return num => plVal(name, per.q, num, per.field); }
 
-  // 25(기타포괄손익 총액) − 세부 합. 티켓 전제("25는 26~30의 합")는 대부분 맞지만 정확히는 아니다:
-  // 실측 최신분기 기준 에이비엘생명 154,075백만(총액의 58%)·코리안리 75,903백만(63%)이 세부에
-  // 안 잡힌다(29 미태깅 or 해외사업환산 등 미분류). 이 잔차를 안 그리면 브리지가 31에 도달하지
-  // 못한 채 끊긴다 — 그래서 "25를 막대로 그리지 않는다"는 지키되(중복 방지) 잔차만 채운다.
+  // OCI 세부 항목번호 — 잔차 계산과 모드 판정이 같은 목록을 쓴다(둘이 어긋나면 브리지가 끊긴다).
+  const PL_OCI_PARTS = [PL_NUM.FVOCI채무, PL_NUM.보험금융OCI, PL_NUM.위험회피, PL_NUM.FVOCI지분, PL_NUM.재보험금융OCI, PL_NUM.기타OCI];
+
+  // 25(기타포괄손익 총액) − 세부 합. 항목32가 들어오기 전에는 이 잔차가 102개 회사-분기에서
+  // 실제로 그려졌다(에이비엘생명 154,075백만=총액의 58%·코리안리 75,903백만=63% 등) — 그 몫이
+  // 전부 32에 태깅되면서 YTD 기준 대조가능 273셀에서 잔차가 0이 됐다(실측 2026-08-29).
+  // 그래도 막대를 없애지 않는다: 남는 잔차는 이제 진짜 원천 불일치라서 의미가 더 분명하다
+  // (당분기 모드에 4건 잔존 — 교보생명 2025.2Q·3Q, KB라이프 2024.4Q, 푸본현대 2023.4Q).
   // 유의미할 때만(총액의 1% 이상, 최소 1억) 노출 → 반올림 오차 수준은 막대를 안 만든다.
   function plOciResidual(g){
     const tot = g(PL_NUM.기타포괄총액);
     if (tot == null) return null;
-    const parts = [PL_NUM.FVOCI채무, PL_NUM.보험금융OCI, PL_NUM.위험회피, PL_NUM.FVOCI지분, PL_NUM.재보험금융OCI].map(g);
+    const parts = PL_OCI_PARTS.map(g);
     if (!parts.some(v => v != null)) return null;   // 세부 전무 = ociAgg 모드 소관
     const sum = parts.reduce((a,v)=> a + (v||0), 0);
     const resid = tot - sum;
@@ -723,7 +737,7 @@
   }
   // OCI 구간 표시 모드. full=세부 하나라도 있음 / total=총액만 / none=총포괄손익 미공시(12개사 + 2023.1~2Q).
   function plOciMode(g){
-    if ([PL_NUM.FVOCI채무, PL_NUM.보험금융OCI, PL_NUM.위험회피, PL_NUM.FVOCI지분, PL_NUM.재보험금융OCI].some(n=> g(n)!=null)) return "full";
+    if (PL_OCI_PARTS.some(n=> g(n)!=null)) return "full";
     if (g(PL_NUM.기타포괄총액)!=null || g(PL_NUM.총포괄손익)!=null) return "total";
     return "none";
   }
@@ -761,8 +775,14 @@
     "영업외손익":"영업외", "법인세":"법인세", "당기순이익":"당기\n순이익",
     "기타포괄손익(세부 미공시)":"기타포괄\n(세부미공시)", "FVOCI 채무증권":"FVOCI\n채무증권",
     "보험계약금융손익(OCI)":"보험계약\n금융(OCI)", "위험회피 파생상품":"위험회피\n파생",
-    "재보험금융손익(OCI)":"재보험\n금융(OCI)", "기타 포괄손익(미분류)":"기타포괄\n(미분류)",
+    "재보험금융손익(OCI)":"재보험\n금융(OCI)", "기타 포괄손익":"기타\n포괄손익", "미분류 잔차":"미분류\n잔차",
     "FVOCI 지분증권":"FVOCI\n지분증권", "총포괄손익":"총포괄\n손익",
+  };
+  // 툴팁 보조 한 줄. 항목32는 "미분류"가 아니라 내용이 규명된 묶음이라 무엇이 들어 있는지 밝힌다
+  // (24사·14종 계정 실측 — data/_derived/pl_oci_item32_provenance.json, 읽기 전용 참고).
+  const PL_TIP_NOTE = {
+    "기타 포괄손익": "확정급여 재측정 · 신용손실충당금 · 자산재평가 · 해외사업환산 · 지분법 OCI 등",
+    "미분류 잔차": "기타포괄손익 총액(25) − 세부 합. 남아 있으면 원천 공시 자체의 불일치",
   };
 
   function renderPlWaterfall(host, name, per){
@@ -836,7 +856,8 @@
           if(bar.value==null) return `<b>${bar.ko}</b><br/>데이터 없음`;
           const jo=bar.value/1e6, eok=bar.value/100;
           const sign = bar.value<0 ? "△" : (bar.role==="flow" ? "+" : "");
-          return `<b>${bar.ko}</b><br/>${sign}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${sign}${Math.abs(eok).toLocaleString("ko-KR",{maximumFractionDigits:0})}억)`;
+          const note = PL_TIP_NOTE[bar.ko] ? `<br/><span style="color:#868e96;font-size:11px">${PL_TIP_NOTE[bar.ko]}</span>` : "";
+          return `<b>${bar.ko}</b><br/>${sign}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${sign}${Math.abs(eok).toLocaleString("ko-KR",{maximumFractionDigits:0})}억)${note}`;
         },
       },
       // x 라벨이 두 줄이라 슬라이더를 켜면 bottom을 더 줘야 한다(38이면 라벨 위에 슬라이더가 겹친다).
@@ -1592,7 +1613,9 @@
       // OCI 구간 3상태를 캡션에 명시 — 결측을 조용히 넘기지 않는다.
       const plOci = plOciModeOf(plName, plPer);
       const ociTail =
-        plOci === "full"  ? " → [기타포괄손익] FVOCI채무 → 보험계약금융(OCI) → 위험회피파생 → 재보험금융(OCI) → FVOCI지분 → 총포괄손익"
+        // 구간 머리표 "[기타포괄손익 구간]"에 "구간"을 붙인 이유: 항목32의 표시 라벨이 "기타 포괄손익"이라
+        // 머리표를 그냥 "[기타포괄손익]"으로 두면 같은 줄에 비슷한 말이 두 번 나와 헷갈린다.
+        plOci === "full"  ? " → [기타포괄손익 구간] FVOCI채무 → 보험계약금융(OCI) → 위험회피파생 → 재보험금융(OCI) → 기타 포괄손익 → FVOCI지분 → 총포괄손익"
       : plOci === "total" ? " → 기타포괄손익(총액만 공시·세부 미공시) → 총포괄손익"
       :                     " · 총포괄손익 미공시(원천 보고서에 총포괄손익계산서 미수록) — 당기순이익까지만 표시";
       q(host,"#plCap").textContent = "당기순이익 → 총포괄손익 워터폴 · " + plPer.label + " · 단위 백만원(축은 조원) · 장기원수[CSM상각·위험조정·예실차·기타] → 생명장기재보험 → 자동차+일반 → 기타 → 보험손익 → 투자손익 → 영업외 → (−)법인세 → 당기순이익" + ociTail

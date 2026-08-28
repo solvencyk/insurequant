@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-28T04:08:18Z",
+  "generated_at_utc": "2026-08-28T13:26:16Z",
   "sheets": {
     "17BS": {
       "rows": 6852,
@@ -32,7 +32,7 @@
       "quarter_max": "2026.1Q"
     },
     "손익분해PL": {
-      "rows": 11190,
+      "rows": 11546,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
@@ -40,6 +40,21 @@
       "rows": 2043,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
+    },
+    "기본자본소진율": {
+      "rows": 390,
+      "quarter_min": "2026.1Q",
+      "quarter_max": "2026.1Q"
+    },
+    "보완자본소진율": {
+      "rows": 546,
+      "quarter_min": "2026.1Q",
+      "quarter_max": "2026.1Q"
+    },
+    "자본비율전망": {
+      "rows": 2090,
+      "quarter_min": null,
+      "quarter_max": null
     }
   }
 }

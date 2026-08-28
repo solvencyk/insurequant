@@ -23,7 +23,15 @@
     { name: "CSM상각", file: "public_exports/CSM상각.json", code: "CSMAM", label: "CSM 상각 스케줄" },
     { name: "신계약CSM배수", file: "public_exports/신계약CSM배수.json", code: "NBCSM", label: "신계약 CSM 배수" },
     { name: "손익분해PL", file: "public_exports/손익분해PL.json", code: "PL", label: "손익분해 (PL)" },
-    { name: "배당", file: "public_exports/배당.json", code: "DIV", label: "배당에 관한 사항" }
+    { name: "배당", file: "public_exports/배당.json", code: "DIV", label: "배당에 관한 사항" },
+    // 2026-08-29 신설 3종. 다른 8시트와 달리 "비고" 열이 하나 더 있다 — 셀별 known limitation
+    // (tier1 발행잔액이 BS 대체값인 행, 소진율 100% 초과가 정상인 이유, 폐기된 tier2 구 산식,
+    //  forward 콜일자 추정)이 그 열에 실려 나간다. 화면에는 hover로 맥락이 있지만 xlsx만 받아 간
+    //  사람에게는 이 열이 유일한 맥락이라 컬럼을 임의로 추리면 안 된다(coerceRow는 모든 키를 보존,
+    //  SheetJS json_to_sheet는 전 행의 키 합집합으로 헤더를 만든다 — 실측 확인 2026-08-29).
+    { name: "기본자본소진율", file: "public_exports/기본자본소진율.json", code: "T1", label: "기본자본 소진율 (신종자본증권)" },
+    { name: "보완자본소진율", file: "public_exports/보완자본소진율.json", code: "T2", label: "보완자본 소진율 (후순위채)" },
+    { name: "자본비율전망", file: "public_exports/자본비율전망.json", code: "FWD", label: "자본비율 5년 전망 (2026~2030)" }
   ];
   var MANIFEST_FILE = "public_exports/manifest.json";
   // build_master_xlsx.py coerce()의 NUMERIC_COLS와 동일 — 공식 마스터 xlsx와 같은 컬럼만
