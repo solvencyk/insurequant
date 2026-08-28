@@ -1,11 +1,61 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-08-20 · Stage 5/5 — designer
+> Last updated: 2026-08-28 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-08-28 — 회사명 표시 정리 4페이지 확장 + main 배포 (owner 채팅 발주)
+
+owner가 라이브에서 "에이아이에이생명·에이비엘생명처럼 영문을 한글로 풀어쓴 회사명이 지저분하다,
+원천데이터는 안 건드리고 화면 표시만 정리해달라"고 요청 — 무엇을 어떻게 바꿀지 먼저 조사해서
+보고하라는 지시였다.
+
+**조사**: `index.html`에 이미 `NAME_ABBR`(명시 매핑 17개) + `shortName()`(접미사 정규식 fallback:
+`손해보험→손보`, `생명보험→생명`, `재보험→''`, `보증보험→보증` 등) 축약 로직이 있었다
+([index.html:540](../index.html)). 그런데 이 로직이 `index.html`에만 있고, `K-ICS.html`은
+`COMPANY_DISPLAY`로 AIA 한 곳만 부분 적용, `IFRS17.html`·`공시보고서.html`은 전혀 없어 드롭다운이
+원수사명(`원수사명`/`row.company`) 그대로 노출되고 있었다. `kics_disclosure.json` ·
+`CSM_waterfall.json` · `kics_tier1_utilization.json` 등에서 원보험사코드↔원수사명을 직접 뽑아
+전사 39개사 로스터를 확인 — 실제로 "영문을 letter-by-letter로 풀어쓴" 클러터는 6곳
+(에이비엘생명보험→ABL, 케이디비생명보험→KDB, 아이엠라이프생명보험→iM, 에이아이에이생명보험→AIA,
+신한이지손해보험→EZ, 비엔피파리바카디프생명보험→BNP)이고 나머지는 접미사 정규식으로 자동 처리됨을
+확인해 표로 보고. owner가 "BNP카디프생명"(BNP파리바카디프생명 대신 축약형)으로 확정하고 4개
+페이지 전체 적용 + main push까지 지시.
+
+**구현**: `index.html`의 `NAME_ABBR` 딕셔너리(BNP 값을 'BNP카디프생명'으로 갱신)를 그대로
+`K-ICS.html`·`IFRS17.html`·`공시보고서.html`에 이식.
+- `K-ICS.html`: `COMPANY_DISPLAY`(1개사)를 전체 `NAME_ABBR`+`shortName()`으로 교체하고 JS 폴백
+  경로(`fillMissingCompanies`)도 `shortName(nm)` 사용. **정적 `<select id="company">` 마크업의
+  `<option>` 28개**(L90-119)는 셀렉트 옵션이 JS로 생성되지 않고 하드코딩돼 있어, `value`(조회
+  키)는 그대로 두고 라벨 텍스트만 손으로 28개 전부 교체.
+- `IFRS17.html`: 신규로 `NAME_ABBR`+`shortName()` 삽입(codeToName 선언부 바로 뒤). **주의 —
+  `coName`(= `codeToName[company]`)이 `keyColorOf(coName)`(브랜드 컬러 매핑, `KEY_COLORS`가
+  원수사명 키)과 `PAA_ONLY.has(coName)`(신한이지손해보험 PAA 예외 Set) 두 곳의 **조회 키**로도
+  쓰이고 있어서, `coName` 자체를 줄이면 색상 매칭·예외 처리가 깨진다. 드롭다운 옵션 텍스트 +
+  차트 타이틀 2곳(NB CSM 배수, CSM 시계열) — **순수 표시 3곳만** `shortName(coName)`으로 감싸고
+  로직에서 쓰는 `coName` 원본은 손대지 않음.
+- `공시보고서.html`: 신규로 `NAME_ABBR`+`shortName()` 삽입, 드롭다운 옵션 텍스트 1곳만 감쌈(이
+  페이지는 이 사이트 전체 중 유일하게 표시 지점이 하나뿐이었음).
+
+**검증**: 로컬(`python -m http.server 8896`, `.claude/launch.json`의 "Dashboards (static)")에서
+4페이지 전부 드롭다운 확인 — 라벨은 축약형, `value`는 원수사명/코드 그대로. K-ICS AIA 선택 시
+시계열 표 정상 렌더(지급여력비율 234.8→192.9 등 실데이터), IFRS17 AIA 선택 시 BS·CSM 워터폴
+정상 렌더, 공시보고서 ABL 선택 시 배당 KPI 정상 렌더 — 4페이지 모두 콘솔 에러 0.
+
+**배포**: `python scripts/validate_data_contract.py` → `SUMMARY RED=0 YELLOW=92`(YELLOW는 전부
+이 변경과 무관한 기존 PL/CSM 교차대조 건). 작업 브랜치(`fix/csm-product-segmented-columns`)에
+4개 파일만 커밋(`ea51e7c`) → 격리 워크트리(`../insurequant-main-deploy`, main 기준) 생성 →
+동일 4개 파일만 cherry-checkout → `72ab093` 커밋 → owner 승인(채팅 "push까지 진행시켜") 하에
+`git push origin main`(5069966..72ab093) → 워크트리 정리, 작업 브랜치 복귀·`git status` 클린
+확인. 배포 후 GitHub Pages 캐시 갱신 대기(~1-2분) 후 캐시버스트 쿼리로 4페이지 전부 라이브
+재확인 — 새 축약명 노출·콘솔 에러 0.
+
+**(참고, 스코프 밖이라 안 건드림)**: `KR0097`(하나생명)이 데이터소스마다 원수사명 철자가
+"하나생명"/"하나생명보험" 둘로 갈려 있어 K-ICS 드롭다운에 같은 회사가 두 줄로 중복 표시됨 —
+이번 표시명 정리와는 별개의 기존 데이터 정합성 이슈. 고치지 않고 기록만 남김.
 
 ## 2026-08-20 — 준비금이 AOCI 하위처럼 보이는 오독 수정 (inbox `20260819T0620Z` + `20260820T0033Z`)
 

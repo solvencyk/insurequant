@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-08-20 · Stage 5/5 — designer
+> Last updated: 2026-08-28 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,15 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-08-28, 채팅 발주 — 회사명 표시 정리 4페이지 확장 + main 배포):**
+- owner: "영어 회사명들을 한글로 쓰다보니까 지저분해 보인다(에이아이에이생명·에이비엘생명 등), 원천데이터는 안 건드리고 표시만 정리해라. 뭘 어떻게 바꿀지 먼저 말해봐라." → 조사 후 표로 보고, owner가 "BNP카디프생명으로 모든 html에 적용 & push까지" 승인.
+- 진단: `index.html`에만 `NAME_ABBR`+`shortName()` 축약 로직이 있고([index.html:540](index.html)) `K-ICS.html`은 AIA 1개사만 부분 적용(`COMPANY_DISPLAY`), `IFRS17.html`·`공시보고서.html`은 전무 — 드롭다운이 원수사명 그대로 노출. `kics_disclosure.json`/`CSM_waterfall.json`/`kics_tier1_utilization.json` 등에서 전사 39개사 원수사명을 직접 뽑아 대조.
+- 4개 파일 전체에 동일 `NAME_ABBR`(17개 명시 매핑 + 접미사 정규식 fallback) 이식. `K-ICS.html`은 JS 폴백뿐 아니라 **정적 `<option>` 마크업 28개**(L90-119)도 손으로 텍스트만 교체(`value`는 원수사명 유지). BNP파리바카디프생명보험은 'BNP카디프생명'으로 확정.
+- **함정 회피**: `IFRS17.html`의 `coName`은 `keyColorOf(coName)`(브랜드 컬러맵, 원수사명 키)·`PAA_ONLY.has(coName)`(신한이지손해보험 예외 Set) 두 곳의 조회 키로도 쓰여서, `coName` 자체를 줄이면 안 됨 — 드롭다운/차트 타이틀 등 **순수 표시 3곳만** `shortName(coName)`으로 감싸고 로직에 쓰이는 `coName` 원본은 그대로 둠.
+- 브라우저 실측(로컬 `python -m http.server` + 라이브 둘 다): 4페이지 드롭다운 전부 짧은 표시명, `value`/코드 조회 정상(AIA·ABL 선택 시 데이터 정상 렌더), 콘솔 에러 0.
+- 격리 워크트리(`../insurequant-main-deploy`)로 main cherry-push, `validate_data_contract.py` RED=0 확인 후 owner 승인 하에 `git push origin main`(72ab093). 라이브 캐시버스트 재확인 완료.
+- (참고, 안 건드림) `KR0097 하나생명`이 데이터소스마다 "하나생명"/"하나생명보험" 두 철자로 갈려 드롭다운에 중복 표시됨 — 이번 표시명 정리와 무관한 기존 데이터 이슈, 스코프 밖이라 기록만.
 
 **Recent (2026-08-20, inbox 처리 — 준비금/AOCI 표기 오독 수정):**
 - `inbox/designer/20260819T0620Z`(owner, 악사손해보험 실사례) + `20260820T0033Z`(orchestrator 전체 상태 점검, 같은 건 재확인 + amort-schedule 경고문구 유지 지시) 2건 드레인. 이익잉여금(항목31) 앵커가 없는 회사에서 법정준비금 3~4항목이 시계열 표의 자본 세부 끝에 평행 배치되는데, 그 섹션에 AOCI 하나만 남아있으면 화면상 "AOCI의 하위 항목"처럼 오독됨(분류가 틀린 게 아니라 배치가 오해를 부름). T자 패널(L1090)엔 이미 있던 구분 라벨("법정준비금 — 이익잉여금 내부 적립, 자본총계 합계에는 미포함")을 표의 폴백 경로에도 `colspan` 전체폭 구분행으로 추가, 준비금이 없는 회사는 이 행 자체가 안 붙게 가드. 브라우저 실측(악사손해보험/KR0049): AOCI → 구분행 → 준비금 항목들 순으로 정상 분리 확인, 앵커 있는 회사(삼성화재)는 회귀 없음(기존처럼 이익잉여금 하위로만). `IFRS17_BS.json`은 parser가 재빌드 중이라던 경고대로 읽기만 함.
