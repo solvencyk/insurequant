@@ -119,6 +119,28 @@
 
   const ix = new Map();       // code -> quarter -> [{num,name,cls,value}]
   const codeToName = {};
+
+  // 표시용 회사명 정리 — 드롭다운 라벨에만 적용. codeToName 자체(조회 키)는 원래 이름 유지.
+  const NAME_ABBR = {
+    '케이비손해보험':'KB손보', '케이비라이프생명보험':'KB라이프', '신한이지손해보험':'신한EZ손해',
+    '에이비엘생명보험':'ABL생명', '케이디비생명보험':'KDB생명', '아이엠라이프생명보험':'iM라이프',
+    '디지비생명보험':'DGB생명', '엠지손해보험':'MG손보', '에이아이지손해보험':'AIG손보',
+    '에이아이에이생명보험':'AIA생명',
+    '비엔피파리바카디프생명보험':'BNP카디프생명', '교보라이프플래닛생명보험':'교보라이프플래닛',
+    '처브라이프생명보험':'처브라이프', '메트라이프생명보험':'메트라이프', '악사손해보험':'악사손보',
+    '신한라이프생명보험':'신한라이프', '푸본현대생명보험':'푸본현대',
+  };
+  function shortName(n){
+    if (!n) return n;
+    if (NAME_ABBR[n]) return NAME_ABBR[n];
+    return String(n)
+      .replace(/화재해상보험$/, '화재')   // 메리츠화재해상보험 → 메리츠화재
+      .replace(/해상화재보험$/, '해상')   // 현대해상화재보험 → 현대해상
+      .replace(/손해보험$/, '손보')
+      .replace(/생명보험$/, '생명')
+      .replace(/재보험$/, '')             // 코리안리재보험 → 코리안리
+      .replace(/보증보험$/, '보증');
+  }
   let GLOBAL_QUARTERS = [];   // D-5 20260818: 전사 공시분기 전체(desc) — boot()에서 1회 계산, 조회기간 선택의 기준
 
   const ITEM_DEFS = [
@@ -311,7 +333,7 @@
     const codes = Object.keys(codeToName).sort();
     const sel = document.getElementById("company");
     for (const code of codes){
-      const opt = document.createElement("option"); opt.value=code; opt.textContent=codeToName[code]; sel.appendChild(opt);
+      const opt = document.createElement("option"); opt.value=code; opt.textContent=shortName(codeToName[code]); sel.appendChild(opt);
     }
     sel.addEventListener("change", onSelect);
     const perSel = document.getElementById("period");
