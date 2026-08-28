@@ -43,8 +43,8 @@ ASSETS = [
      "https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"),
     ("pretendard@v1.3.9 (css)",
      "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"),
-    ("jszip@3.10.1",
-     "https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"),
+    ("xlsx@0.18.5",
+     "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"),
 ]
 
 
