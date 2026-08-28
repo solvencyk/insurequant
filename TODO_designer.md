@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-08-28 · Stage 5/5 — designer
+> Last updated: 2026-08-29 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,35 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-08-29, inbox 20260829T0700Z — 항목32 워터폴 + 신규 3시트, 완료·미배포 `0350570`):**
+- **Panel 5 스텝에 항목32 삽입**: `… 당기순이익 → 26 → 27 → 28 → 30 → **32** → 29 → 31`.
+- **이름 충돌 3층 정리.** 항목32의 마스터 항목명과 잔차 막대 이름이 둘 다 `기타 포괄손익(미분류)`
+  였다 → 항목32 화면 라벨 `기타 포괄손익` / 잔차 막대 `미분류 잔차` / 캡션 머리표 `[기타포괄손익 구간]`
+  (셋째는 스펙 밖 판단 — 안 바꾸면 캡션 한 줄에 비슷한 말이 두 번 나온다). **마스터 항목명 미변경**
+  (parser 소관), 매핑 근거를 `PL_NUM` 주석에 기록. `plOciResidual`·`plOciMode` 가 따로 들고 있던
+  세부 항목번호 목록을 `PL_OCI_PARTS` 하나로 합치고 32를 넣음(어긋나면 브리지가 끊긴다).
+- **잔차 막대는 유지**(0이면 안 그리는 동작 그대로). 연도(YTD) 기준 102개 회사-분기에서 그려지던
+  잔차가 **0건**이 됐고, 남는 잔차는 이제 진짜 원천 불일치다(당분기 4건: 교보 2025.2Q·3Q,
+  KB라이프 2024.4Q, 푸본현대 2023.4Q). 툴팁에 항목32 구성 한 줄 추가.
+- **다운로드 팝업에 3시트 추가**(기본자본소진율 390·보완자본소진율 546·자본비율전망 2,090).
+  `public_exports/*.csv` 는 이제 없다(2026-08-28c에 xlsx로 전환) → `export_public_sheets.py` 에
+  추가. 이 3개만 디스크에서 long-format 이 아니라 `build_master_xlsx.py` 의 `FLATTEN` 을 **import**
+  해서 편다 — 비고 문구를 베끼면 공식 xlsx 와 드리프트하는데, 하필 그게 "이 숫자를 믿지 말라"는
+  경고문이다. **`report-widget.js` 제보 시트 목록에도 같이 추가**(다운로드는 되는데 제보는 안 되는
+  시트를 만들지 않으려고).
+- **비고 열 전달을 4층 전부 실측**: 스냅샷 JSON 7열(비고 키 누락 행 0) → `coerceRow` 전 키 보존 →
+  `XLSX.writeFile` 가로채 실제 워크북 헤더 7번째 `비고` 확인 → `sheet_to_csv` 로 CSV 변환까지
+  헤더·따옴표 이스케이프 확인. 내용도 대조(tier1 100%초과 13행 문구·tier2 폐기 39행·forward 1,870행).
+  설문 POST 는 owner 수집기에 실데이터가 안 가게 stub 처리.
+- **실측 4경우**: (a) 삼성생명 1440px 18막대, 32가 30과 29 사이 정위치 / (b) **39사 × 2모드 전수
+  잔차 0건**, 32 막대 24사(Python census 일치), ABL·코리안리가 잔차→정상 라벨로 / (b') 과거 분기
+  서빙으로 교보 2025.3Q 에서 `기타 포괄손익`·`미분류 잔차` 두 막대 동시 렌더 확인 / (c) 클리핑 유지
+  (`+78.70조 ↑`·`82.40조 ↑` 둘만 톱니) / (d) 760px `0~10`·375px `0~11` 둘 다 **당기순이익에서 끊김**
+  (32가 당기순이익 뒤라 인덱스가 안 밀린다). 전수 **JS 에러 0**, `pytest tests/test_deploy_assets.py` 10/10.
+- 부수: 익스포터를 돌리면서 `17BS`·`손익분해PL`·`manifest` 스냅샷도 최신 **커밋** 상태로 갱신됨
+  (PL 11,190→11,546행 = item32 356 + ABL 예실차, 17BS 삼성생명 64셀). `git show HEAD:` 만 읽는
+  설계라 다른 세션 미커밋분은 안 섞임. **배포·push 안 함.**
 
 **Recent (2026-08-28o):** owner — 다운로드 설문 후속 라운드 4개, 전부 배포 완료.
 (1) 인트로 문구 "파일 자체엔 접근 제한이 없습니다"(자기부정 프레이밍) → "데이터 품질 향상을
