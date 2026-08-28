@@ -1089,7 +1089,26 @@ def extract_tier2_heungkuk(tables):
                 if _norm(r[c]) == label:
                     ns = _row_nums(r)
                     if ns:
-                        return ns
+                        # cum() below reads this list by FIXED [LOB x 3개월/누적] column
+                        # OFFSET (not label) -- so a cell DART rendered as a bare empty
+                        # string instead of "0" gets silently dropped by _row_nums() (which
+                        # only keeps cells where to_num() succeeds), shifting every later
+                        # index left by one and reading the wrong LOB's number entirely.
+                        # 2026.2Q 흥국화재: the "보험서비스비용" 총계 row has its 자동차보험
+                        # 비PAA/3개월 cell blank (siblings in the same row are literal "0"),
+                        # which pulled item13(자동차손익) to -620,653 -- 55x 2026.1Q's
+                        # -11,182 -- and tripped assemble()'s RC gate, nulling items 2-14
+                        # wholesale (inbox/parser/20260829T2010Z). Re-parse this ONE row
+                        # position-preserving (blank/dash -> 0.0 IN PLACE, label col r[0]
+                        # dropped) so the offsets stay valid; row SELECTION is unchanged
+                        # (still gated on the plain _row_nums(r) above) and the returned
+                        # values are IDENTICAL to _row_nums() whenever no cell is blank --
+                        # verified against the two gold-validated quarters this function
+                        # was built for (2025.2Q/2025.3Q: all four legs' total rows are
+                        # fully populated, len(r)==17 same 1-label+16-data shape, output
+                        # unchanged) and against every other on-disk KR0005 quarter (no
+                        # dispatch-visible change outside 2026.2Q).
+                        return [(to_num(c) if to_num(c) is not None else 0.0) for c in r[1:]]
         return None
 
     def find(totlabel, must):

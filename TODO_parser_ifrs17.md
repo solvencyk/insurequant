@@ -1,5 +1,72 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-29 (65th pass) — 흥국화재(KR0005) 2026.2Q PL LOB 다리 결측(MASTER_HOLE, push를
+> 막던 유일한 RED) 원인규명 + 수정.** `inbox/parser/20260829T2010Z`(validation 발주,
+> status: answered). 2026.2Q item2(생명장기손익)·8(재보험손익)·12(기타재보험손익)·
+> 13(자동차손익)·14(일반손익)가 통째 결측(2026.1Q는 5개 전부 정상 — 최신분기 회귀).
+>
+> **원인: 제시된 3부류(라벨변형/파일경로/`_prefer_ofs`류 중복표오염) 전부 기각, 4번째
+> 신규 부류.** `extract_tier2_heungkuk`(wide form, `scripts/pl_breakdown/companies.py`)의
+> `cum()`이 LOB×기간을 라벨이 아니라 고정 컬럼 오프셋으로 읽는데, "보험서비스비용" 총계
+> 행의 자동차보험 비PAA·3개월 칸 하나가 DART 원문에서 리터럴 "0"이 아니라 **빈 문자열**로
+> 렌더됐다(옆 15칸은 전부 정상, raw 직접 대조로 확정). 공용 `_row_nums()`가 빈칸을 건너뛰며
+> 그 뒤 모든 고정 인덱스가 한 칸씩 밀려 item13(자동차손익)이 -620,653(2026.1Q 대비 55배
+> 이상치)로 튀었고, `assemble()`의 Tier-2 RC 게이트(item1 vs ΣLOB 25%+2 허용오차)가 이
+> 이상치 때문에 실패해 item2-14 전체를 null 처리했다. item9-11이 그래도 살아있던 건
+> `_additive_merge()`가 라벨-재구성 이전 빌드의 재고값을 carry한 것뿐(fresh는 그 셀들도
+> None)이었고, item3-7이 살아있던 건 2026-08-16 gold override(같은 근본원인을 이미
+> 지목했지만 코드는 안 고쳤던 그 티켓) 때문 — 둘 다 근본수정은 아니었다.
+>
+> **수정**: `extract_tier2_heungkuk`의 `totrow()` 클로저 하나만, 매칭된 총계 행을
+> `_row_nums()`(빈칸 압축) 대신 위치보존 파서(`r[1:]`, 빈칸/대시→그 자리 0.0)로 재파싱 —
+> 행 선택 로직은 불변, 값만 정정. KR0005 전용 함수라 다른 회사 영향 없음. 회귀검증:
+> discover_filings 14개 분기 전수 스윕 — gold-validated 2025.2Q/2025.3Q(빈칸 0개, 총계행
+> 전부 len(r)=17)는 패치 전후 **바이트 단위로 무변화**, dispatch-visible 변화는 **2026.2Q
+> 하나뿐**(다른 분기는 wide-form 자체가 안 쓰이거나 애초에 안 뽑힘).
+>
+> **반영값**(백만원 YTD, `parse_filing()`+`assemble()` 실측·`_reconciled=True`):
+> item2=79,459.0 · item3=71,856.0(gold와 정확 일치, 이제 코드로도 재현) ·
+> item8=7,603.0 · item9=8,853.0(구 재고값 -3,901.0 교체) · item10=-1,138.0(구 -571.0) ·
+> item11=-7,900.0(구 -7,231.0) · item12=7,788.0 · item13=-16,656.0(버그값 -620,653.0
+> 교체) · item14=1,341.0. 폐쇄식 item1=item2+13+14+15-item16 잔차 0.000000 확인(RC게이트
+> `adj` 분기로 정확히 닫힘).
+>
+> **반영**: git-purge 브랜치 경고대로 `main()` 통짜 재실행 없이 서지컬 패치만 —
+> `pl_breakdown_master.json`(13셀, 전후 diff 정확히 13행) → `pl_breakdown_coverage.json`
+> (1레코드) → `build_root_masters.build_pl()`(개별함수, combo-diff: 루트 키셋 11546개
+> 완전동일, KR0005 8키 변경 · 그 외 35개사 diff 0건) → `sync_master_xlsx_sheet.py
+> "손익분해PL"`(16셀, 자체검증 통과). **전수 항등식 감사**: 항목32 356셀 생존 ·
+> KR0083 2024.3Q item27=-265226.939791 생존 · KR0032 2026.2Q item6=-10243.0 생존 ·
+> KR0070 item6 2024.4Q=586.0 생존 · KR0079 2025.4Q item6=None 유지(안 건드림) · 356개
+> (회사,분기) 전수 폐쇄식 스캔 신규 실패 0건.
+>
+> **`validate_data_contract.py` 재실행: SUMMARY RED=0 YELLOW=92 provisional=False, exit
+> 0**("MASTER_HOLE" 문자열 0건 — 수정 전엔 이 명령이 정확히 `RED [PL_breakdown]
+> MASTER_HOLE 흥국화재 2026.2Q`였다). `validate_master_tables.py --no-build`도 확인:
+> `coverage_hole:0CSM/1PL`→`0CSM/0PL`, `pl_bridge:...53F`→`...52F`(등재부 "FIXED?" 1건을
+> 그 파일 자신의 `_promote` 규칙대로 `data/_gold/pl_bridge_baseline.json`에서 삭제,
+> 53→52 entries) — 그 외 섹션 전부 무변화.
+>
+> **골든/지문 갱신**(빌더 재실행 없이 `--update`): `tests/fixtures/pl_breakdown_golden.json`
+> (sha256만 이동, rows/company_quarters/coverage_rows 불변 11546/356/426,
+> non_null_values 9993→10006) · `tests/fixtures/master_tables_golden.json`(SUMMARY 이동,
+> exit_code 불변=2) · `validate_golden_input_fingerprints.py --update`(실행 전 다른
+> 5개 spec 전부 ok 확인 → pl_breakdown만 이동 → 재실행 RED=0). 오프라인 pytest 전체
+> (`test_master_tables_golden`·`test_deploy_assets`·`test_rule_coverage_manifest`·
+> `test_identity_tautology`·viz golden 2종·`test_dividend_golden`·
+> `test_pl_breakdown_golden`(RUN_PL_GOLDEN 미설정, 정상 skip)·`test_push_gate_wiring`·
+> `tests/unit/`): **199 passed, 2 skipped, 0 failed.**
+>
+> 하지 않은 것: `index.html`/`IFRS17.html`/`public_exports/` 미수정,
+> `scripts/validate_*`/`prepush_check.py`/`_quarter_horizon.py` 읽기실행만(미수정),
+> `data/disclosure/`/`scripts/download_*` 미수정, 브랜치 그대로, `git push`/`git add -A`
+> 없음, `build_root_masters.py`/`build_pl_breakdown.py`의 `main()` 미실행, xlsx는
+> `sync_master_xlsx_sheet.py`로만.
+>
+> status: answered — validation 재확인 대기. 재현 명령 전부 위 로그 + 티켓 본문에 있음.
+>
+> 커밋: (다음 줄 참조 — 이 세션 커밋 해시로 갱신 예정)
+
 > **2026-08-29 (64th pass) — 미래에셋생명(KR0079) 2025.4Q "첨부 XML 구조 이상" 원인 규명
 > (조사 전용, 마스터 미수정).** `inbox/parser/20260829T1800Z`. 63rd pass가 "라벨-값 밀림 정황,
 > `_00760`/`_00761` 첨부 XML 고유 구조 이상으로 보임"이라 보고한 가설을 직접 raw XML로 검증.
