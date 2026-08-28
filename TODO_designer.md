@@ -9,6 +9,9 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28g):** 부서 옵션 "결산(Valuation)"→"계리(Valuation)"로 정정(계리=Valuation이
+맞는 대응, 결산은 회계 마감이라 다른 개념 — owner 지적), 중복이던 별도 "계리" 항목 제거. 배포 완료.
+
 **Recent (2026-08-28f):** disclaimer 문구 끝에 "오류 발견 시 화면의 우측 하단 버튼을 통해
 제보 부탁드립니다." 추가(`DISCLAIMER_TEXT` 단일 소스라 설문 모달·xlsx 표지 시트 둘 다 자동
 반영). 배포 완료.
