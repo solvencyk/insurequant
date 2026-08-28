@@ -98,6 +98,67 @@
     return Array.prototype.slice.call(grid.querySelectorAll("input:checked")).map(function (c) { return c.value; });
   }
 
+  // 커스텀 콤보박스 — 네이티브 <datalist>를 대체(owner 실측 지적: 부분일치가 브라우저마다
+  // 제멋대로고("코리안" 다 쳐야 겨우 나오거나 아예 안 나옴), 값이 있는 상태에서 다시 클릭해도
+  // 목록이 안 열림). 부분(substring) 매칭 + 값 유무 상관없이 focus/click마다 항상 재오픈,
+  // 화살표/Enter로도 고를 수 있게. 목록에 없으면 입력한 텍스트 그대로 값으로 쓴다(자유입력 유지).
+  function buildAffilCombo() {
+    var wrap = el("div", { class: "iq-combo" });
+    var input = el("input", {
+      class: "iq-input", id: "iqdl-affil", placeholder: "회사명을 입력하세요 (예: 코리안리)", autocomplete: "off",
+      role: "combobox", "aria-expanded": "false", "aria-autocomplete": "list"
+    });
+    var list = el("div", { class: "iq-combo-list", role: "listbox" });
+    wrap.appendChild(input);
+    wrap.appendChild(list);
+    var activeIdx = -1;
+    var currentMatches = [];
+
+    function close() { list.classList.remove("open"); input.setAttribute("aria-expanded", "false"); activeIdx = -1; }
+    function openList() { list.classList.add("open"); input.setAttribute("aria-expanded", "true"); }
+    function highlight(idx) {
+      Array.prototype.forEach.call(list.querySelectorAll(".iq-combo-opt"), function (o, i) { o.classList.toggle("active", i === idx); });
+      activeIdx = idx;
+    }
+    function render(query) {
+      var q = (query || "").trim().toLowerCase();
+      currentMatches = q ? AFFIL_OPTIONS.filter(function (n) { return n.toLowerCase().indexOf(q) !== -1; }) : AFFIL_OPTIONS.slice();
+      list.innerHTML = "";
+      activeIdx = -1;
+      if (!currentMatches.length) {
+        list.appendChild(el("div", { class: "iq-combo-empty", text: "일치하는 회사가 없습니다 — 입력하신 값 그대로 사용됩니다" }));
+        return;
+      }
+      currentMatches.forEach(function (n) {
+        var opt = el("div", { class: "iq-combo-opt", text: n, role: "option" });
+        opt.addEventListener("mousedown", function (e) { e.preventDefault(); input.value = n; close(); });
+        list.appendChild(opt);
+      });
+    }
+
+    input.addEventListener("input", function () { render(input.value); openList(); });
+    // focus는 검색이 아니라 "다시 고르고 싶다"는 의도로 본다 — 현재 값으로 필터링하지 않고
+    // 전체 목록을 보여주고 텍스트를 전체 선택해서, 바로 타이핑하면 새로 필터링되게.
+    input.addEventListener("focus", function () { if (!input.disabled) { render(""); openList(); input.select(); } });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (!list.classList.contains("open")) { render(input.value); openList(); return; }
+        highlight(Math.min(activeIdx + 1, currentMatches.length - 1));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        highlight(Math.max(activeIdx - 1, 0));
+      } else if (e.key === "Enter") {
+        if (activeIdx >= 0 && currentMatches[activeIdx]) { e.preventDefault(); input.value = currentMatches[activeIdx]; close(); }
+      } else if (e.key === "Escape") {
+        close();
+      }
+    });
+    document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) close(); });
+
+    return { wrap: wrap, input: input, close: close };
+  }
+
   function coerceRow(row) {
     var out = {};
     for (var k in row) {
@@ -162,8 +223,8 @@
   }
 
   function openFullSurvey(backdrop, opener) {
-    var affilInput = el("input", { class: "iq-input", id: "iqdl-affil", list: "iqdl-affil-list", placeholder: "회사명을 입력하세요 (예: 삼성화재)", autocomplete: "off" });
-    var datalist = el("datalist", { id: "iqdl-affil-list" }, AFFIL_OPTIONS.map(function (n) { return el("option", { value: n }); }));
+    var affilCombo = buildAffilCombo();
+    var affilInput = affilCombo.input;
     // 익명은 다른 선택지와 동등한 정상 옵션 — 확인 절차 없음(오케스트레이터 결정, 2026-08-28:
     // 마찰을 주면 사람들이 진짜 소속을 숨기는 대신 아무 회사나 골라버려 통계가 더 나빠진다).
     var anonCb = el("input", { type: "checkbox", id: "iqdl-anon" });
@@ -176,7 +237,7 @@
 
     anonCb.addEventListener("change", function () {
       affilInput.disabled = anonCb.checked;
-      if (anonCb.checked) affilInput.value = "";
+      if (anonCb.checked) { affilInput.value = ""; affilCombo.close(); }
       sectorField.style.display = anonCb.checked ? "" : "none";
     });
 
@@ -189,7 +250,7 @@
     var honeypot = el("input", { type: "text", name: "website", tabindex: "-1", autocomplete: "off", style: "position:absolute;left:-9999px;width:1px;height:1px;opacity:0" });
 
     var form = el("form", { id: "iqdl-form" }, [
-      el("div", { class: "iq-field" }, [el("label", { text: "소속" }), affilInput, datalist, anonLabel]),
+      el("div", { class: "iq-field" }, [el("label", { text: "소속" }), affilCombo.wrap, anonLabel]),
       el("div", { class: "iq-field" }, [el("label", { text: "부서 " }, [el("span", { class: "iq-hint", text: "(선택)" })]), deptSel]),
       sectorField,
       el("div", { class: "iq-field" }, [el("label", { text: "다운로드할 데이터 " }, [el("span", { class: "iq-hint", text: "(중복 선택 가능)" })]), sheetGrid]),
