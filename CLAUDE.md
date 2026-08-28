@@ -122,7 +122,7 @@ See `docs/agents/kics-json-validation-rules.md` for formulas, R4/R7 matrices, to
 | `tests/test_master_tables_golden.py` (오프라인, <1초) | `validate_master_tables` SUMMARY + exit code | 그 게이트 수정 후 |
 | `tests/test_viz_ifrs17_panels_golden.py` (오프라인, ~1.5초) | `viz_build_ifrs17_panels.py`가 쓰는 4개 패널 JSON 해시 | 그 빌더 수정 후 |
 | `tests/test_viz_csm_waterfall_golden.py` (오프라인, ~1.5초) | `viz_build_csm_waterfall.py` 산출 + 47사 status | 그 빌더 수정 후 |
-| `tests/test_ifrs17_bs_golden.py` (오프라인, ~2분) | `build_ifrs17_bs.py` 산출 마스터 바이트(해시 + row/company/quarter/item별 카운트), 17BS 유일 마스터(2026-08-14, equity_composition.json archive 이후) | 그 빌더(계정 매핑·OFS/AOCI 조건부·준비금) 수정 후 |
+| `tests/test_ifrs17_bs_golden.py` (오프라인, **~8분** — 2026-08-28 실측 492·514초. 종전 "~2분"은 4배 틀린 추정이었고, 그 추정 때문에 push 훅에서 빠져 있다가 08-26 드리프트가 이틀간 미검출됐다) | `build_ifrs17_bs.py` 산출 마스터 바이트(해시 + row/company/quarter/item별 카운트), 17BS 유일 마스터(2026-08-14, equity_composition.json archive 이후) | 그 빌더(계정 매핑·OFS/AOCI 조건부·준비금) 수정 후 |
 | `tests/test_dividend_golden.py` (오프라인, <1초) | `build_dividend.py` 산출 마스터 바이트(해시 + row/company/quarter/item별 카운트), 배당에 관한 사항(alotMatter) | 그 빌더(se 매핑·종류주 정규화·zero-vs-missing) 수정 후 |
 | `tests/test_deploy_assets.py` (오프라인) | keep-list·인라인금지·BOM·삭제경로 참조 + **이 표 자체의 동기화**(아래) | HTML fetch/삭제/인코딩 변경 후, **골든 신설·개명 시** |
 
