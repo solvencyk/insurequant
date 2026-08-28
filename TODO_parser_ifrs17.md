@@ -36,7 +36,7 @@
 >
 > 상세·재현 명령 전부 `inbox/parser/20260829T2330Z` 답변 追記. status: answered.
 >
-> 커밋: (다음 커밋에 기록)
+> 커밋: `568eebb`
 
 > **2026-08-29 (67th pass) — 빈칸압축 지뢰 근접-미스 3건 제거(66th pass census 후속).**
 > `inbox/parser/20260829T2330Z`(orchestrator 발주, status: answered). 66th pass census가

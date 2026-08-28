@@ -351,4 +351,4 @@ $ python -m pytest tests/ (heavy golden 2종 제외)
 status: answered — orchestrator 재확인 대기 (§1-4 재현 명령·수치 전부 위, KR0079 근본수정은
 별도 후속)
 
-커밋(이 후속): (다음 커밋에 기록)
+커밋(이 후속): `568eebb`
