@@ -449,41 +449,39 @@ def _abl_row(t, label, col):
     return None
 
 
-# item6 is suppressed for 2 of the 10 quarters this note exists, both because note37's MD&A
-# prose ("예상 보험금 대비 실제 보험금 차이가 N억원이며, 예상 사업비 대비 실제 사업비 차이는
-# M억원") does not reconcile with this note's own claim/사업비(손해조사비+계약유지비+투자관리비)
-# split -- the SAME split that matches note37 EXACTLY (to KRW 0-2억 rounding, both the claim AND
-# 사업비 sub-figures) in the other 8/10 quarters (2025.2Q/3Q/4Q, 2026.1Q/2Q measured directly;
-# 2024.1-3Q have no note37 paragraph to check against at all -- disclosure started 2024.4Q -- but
-# pass the independent item3/item8 cross-check to <1mm every quarter, including these two):
-#   - 2024.4Q: BOTH sub-figures are wildly off (prose -270억/-97억 vs this note's -11억/+17억,
-#     ~25x). The prose explicitly flags a one-off "장래손해조사비 반영 및 시행세칙 변경에 따른
-#     손해진전계수 산출방법론 변경" effect only this quarter -- a prospective cash-flow
-#     re-estimate is IFRS17 CSM territory (가정 및 경험조정, CSM_waterfall item4), not a note26
-#     P&L line, which is the likely source of the mismatch, but this is not confirmed.
-#   - 2025.1Q: the CLAIM sub-figure matches prose exactly (예상보험금-발생보험금 = -50억, prose
-#     "-50억원"), but the 사업비 sub-figure does not (this note gives 예상(1867+22304+2966)-
-#     발생(1877+20812+3064) = +14억, prose says "(-)17억원" -- no combination of this note's own
-#     rows (계약유지비-only, excluding 손해조사비, sign-flipped, etc.) reproduces -17억). Ruled
-#     out as a column/header-shape bug: 2026.1Q uses the IDENTICAL [당분기,전분기] 2-column
-#     header and matches prose EXACTLY on both sub-figures (63억/18억), so the note's own
-#     structure is read correctly here too -- the mismatch is specific to this one quarter's
-#     사업비 figure, unexplained, and item6 is a single combined cell (claim+사업비) with no
-#     separate slot for "the sub-figure I trust" vs "the one I don't".
-# item11 is NOT suppressed for either quarter: its own prose check ("재보험으로 인해 인식한
-# 손익은 ...") matches item8 in both (2024.4Q "-56억"; 2025.1Q "-39억", cross-checked against
-# item8 = 재보험수익 소계 − 재보험비용 소계 independently of item6/direct-leg issues), so the
-# reinsurance leg is unaffected by whatever the direct leg's anomaly is.
-# inbox/parser/20260828T2100Z__orchestrator__KR0070__abl_yesilcha_both_legs.md.  Do not
-# backfill without raw-filing / owner review of what these prose figures actually are.
-_ABL_ITEM6_SUPPRESS_QUARTERS = {"2024.4Q", "2025.1Q"}
+# item6 was suppressed for 2024.4Q/2025.1Q from 2026-08-28 to 2026-08-29 (see git history for
+# the old _ABL_ITEM6_SUPPRESS_QUARTERS) because note37's MD&A prose ("예상 보험금 대비 실제
+# 보험금 차이가 N억원이며, 예상 사업비 대비 실제 사업비 차이는 M억원") did not appear to
+# reconcile with this note's own claim/사업비(손해조사비+계약유지비+투자관리비) split. Re-review
+# (inbox/parser/20260829T1100Z__orchestrator__KR0070__fill_2024q4_2025q1_yesilcha.md, owner
+# directed) found the prose uses a BROADER concept than this repo's 4-item 예실차 definition in
+# both cases, not a genuine mismatch -- our narrower figure is correct, unsuppressed for all
+# 10/10 quarters this note exists:
+#   - 2024.4Q: 보험금 axis -- prose -270억 = our -11억 PLUS 발생사고요소조정 25,803백만원
+#     (=258억, already ruled "outside the 4-item boundary" for every other company,
+#     _resolved/20260828T1400Z §1(a)): -11 - 258 = -269 ~= -270. 사업비 axis (prose -97억 vs our
+#     +17억, ~114억 gap) stays UNEXPLAINED, but this alone doesn't warrant discarding item6:
+#     the claim-side reconciliation is exact, item3/item8's independent cross-checks close to
+#     <1mm, and item6 is a single combined cell with no way to keep only the trusted half.
+#   - 2025.1Q: 보험금 axis matches prose EXACTLY (예상보험금-발생보험금 = -50억, prose "-50억원").
+#     사업비 axis -- prose -17억 vs our +14억 -- reconciles via 기타사업비용 3,050백만원
+#     (=30.5억, this note's own item16 in the master, outside the 4-item boundary):
+#     +13.8 - 30.5 = -16.7 ~= -17.
+# item11 (재보험 예실차) was never suppressed for either quarter: its own prose check ("재보험으로
+# 인해 인식한 손익은 ...") matches item8 in both (2024.4Q "-56억"; 2025.1Q "-39억"), independent
+# of the direct-leg item6 question.
+_ABL_ITEM6_SUPPRESS_QUARTERS = set()
 
 
 def _abl_note26_yesilcha(tables, quarter=None):
     """item6 (원수 예실차) / item11 (재보험 예실차) from note 26/27.  item6 = 예상 4종(보험수익
     section: 예상보험금+예상손해조사비+예상계약유지비+예상투자관리비) − 발생 4종(보험서비스비용
-    section, same 4 concepts) -- population-verified against note37's MD&A prose sentence in
-    9/10 quarters (exact to KRW 0-2억 rounding; see _ABL_ITEM6_SUPPRESS_QUARTERS for the 10th).
+    section, same 4 concepts) -- population-verified against note37's MD&A prose sentence's
+    보험금 sub-figure in 9/10 quarters exactly (2024.1-3Q predate the prose paragraph entirely)
+    and the 사업비 sub-figure in 8/9; the two exceptions (2024.4Q/2025.1Q) reconcile once the
+    note's own 4-item-boundary-excluded rows (발생사고요소조정, 기타사업비용) are added back in
+    -- see the comment above _ABL_ITEM6_SUPPRESS_QUARTERS (now empty; kept as a marker/registry
+    for any future quarter that fails this note's own internal item3/item8 cross-check).
 
     item11 = 발생 2종(재보험수익 section: 발생재보험금+발생손해조사비) − 예상 2종(재보험비용
     section: 예상재보험금+예상손해조사비) -- note the token order is REVERSED from item6's

@@ -1,5 +1,66 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-29 (60th pass) — ABL생명(KR0070) 2024.4Q·2025.1Q item6(원수 예실차) 채움,
+> 저장소 유일 RED(`PL_YTD_COLLAPSE_TO_ZERO`) 해소 (orchestrator 티켓 `inbox/parser/
+> 20260829T1100Z__orchestrator__KR0070__fill_2024q4_2025q1_yesilcha.md`, status: answered —
+> gold override 재계산은 orchestrator 재확인 요청).** 직전 티켓(`b2fa4e0`, 2026-08-28)이
+> 주석37 산문 불일치를 이유로 두 분기만 비웠는데, owner 재검토로 "산문이 4종보다 넓은
+> 개념을 쓴다"는 것이 확인돼 다시 채우는 요청.
+>
+> **① 직접 재현 — orchestrator 실측과 정확히 일치.** `_ABL_ITEM6_SUPPRESS_QUARTERS`
+> (tier2.py)를 비운 뒤 두 개의 독립 경로(기존 `abl_yesilcha_full_probe.py` 재실행 + 실제
+> `extract_tier2_abl` 핸들러 직접 호출)로 raw XML에서 재계산: 2024.4Q +586백만원, 2025.1Q
+> −3,591백만원 — 티켓 수치와 정확히 일치. 다른 8개 분기(2024.1-3Q/2025.2-4Q/2026.1-2Q)는
+> handler 출력 old==new로 완전 불변(회귀 없음).
+>
+> **② gold override 함정이 실제로 있었다.** `data/_gold/user_pl_cells.json`의 KR0070 item7
+> 2025.1Q override(-5,947.368229)가 item6=0 가정으로 08-28에 계산된 채 남아 있었다(그때
+> item6이 아직 억제 상태라 그 스크립트가 의도적으로 스킵했다고 자기 docstring에 적혀
+> 있음). `item7_new = item7_old − item6_new = -5,947.368229 − (-3,591.0) = -2,356.368229`로
+> 재계산(신설 `abl_yesilcha_fix_gold_overlay_2025q1.py`, 08-28 선례와 동일 공식) — item3=
+> item4(override)+item5+item6+item7 폐쇄식이 정확히 닫힌다. 2024.4Q는 item7 override
+> 자체가 없어(census 확인) 손댈 것 없음.
+>
+> **③ 셀 손실 0 — 전후 combo-diff 두 단계.** `pl_breakdown_master.json` 패치: 딱 4키
+> (KR0070×{item6,item7}×{2024.4Q,2025.1Q}) 변경, 11546행 불변. `build_root_masters.build_pl()`
+> (개별호출, `main()` 미실행) 전후: 6키 변경(위 4개 + item6/item7 2025.2Q의 값_당분기만 —
+> Q1→Q2 flow-diff 리플, `_flow_dangi` 설계상 당연한 부수효과), 11546행 불변.
+> `validate_master_tables.py --no-build`: `pl_bridge:3025P/13F/522S/0NEW`(13건 전부 기지등록
+> 무관회사), 에이비엘생명보험 관련 PL_BRIDGE FAIL 0건.
+>
+> **④ 타깃 RED 해소 확인.** `validate_data_contract.py`: 반영 전 유일 RED이던
+> `PL_YTD_COLLAPSE_TO_ZERO`(에이비엘생명보험 2024.4Q)가 출력에서 완전히 사라짐 —
+> **SUMMARY RED=0 YELLOW=92 provisional=False**(YELLOW 갯수 반영 전과 동일, 새 RED 0건).
+>
+> **⑤ 골든 + 신설 지문 게이트 둘 다 갱신(오늘 신설 운영계약, `0ebb0ca`).**
+> `tests/test_pl_breakdown_golden.py --update`(빌더 재실행 없음 — 이 브랜치는 raw
+> git-purge로 전체 재실행이 파괴적, KR0032 선례와 동일하게 on-disk 아티팩트만 재해시):
+> sha256_master만 이동, sha256_coverage/master_rows(11546)/company_quarters(356)/
+> coverage_rows(426)/non_null_values(9994) 전부 불변. `scripts/validate_golden_input_
+> fingerprints.py`(로직 미수정, validation 소관, `--update`만 실행): 실행 전 다른 5개
+> spec(ifrs17_bs/viz_csm_waterfall/viz_ifrs17_panels/dividend/post_transition) 전부 clean
+> 확인(공유 워크트리에서 동시작업 중인 CSM상각 as-of 에이전트의 in-flight 상태를 지문에
+> 박제하지 않기 위해) → `--update` 후 pl_breakdown spec만 이동(code_sha256·fixture_sha256·
+> outputs.sha256_master), 나머지 5개 byte-identical → 재실행 RED=0 clear.
+>
+> **⑥ 회귀 확인.** 오프라인 pytest 전체 스위트: **468 passed / 2 skipped / 1 failed**(그 1
+> fail은 `archive/2026-08_equity_composition/test_equity_composition_golden.py` — 아카이브
+> 모듈의 fixture 파일 자체가 없는 FileNotFoundError, 내 변경과 무관, 종전 세션에도 동일
+> 패턴으로 기록). xlsx sync는 맨 마지막에 `sync_master_xlsx_sheet.py "손익분해PL"`로
+> 10셀 편집(행추가·삭제 0), 사후검증 "11546행×9열 마스터와 완전 일치, 나머지 시트 값
+> 동일"(동시작업 중인 CSM상각 시트 포함 다른 시트 전부 무변화 확인).
+>
+> **커밋**: `scripts/pl_breakdown/tier2.py`·`data/dart/viz/pl_breakdown_master.json`·
+> `PL_breakdown.json`·`data/_gold/user_pl_cells.json`·`insurequant_master_tables.xlsx`·
+> `tests/fixtures/pl_breakdown_golden.json`·`tests/fixtures/builder_input_fingerprints.json`·
+> 신설 probe 4개(`scripts/_probes/abl_2024q4_2025q1_{pre_state,build_pl_and_diff}.py`·
+> `abl_yesilcha_2024q4_2025q1_check_gold.py`·`abl_yesilcha_fix_gold_overlay_2025q1.py`)·
+> 이 티켓·`TODO_parser_ifrs17.md`.
+> 커밋 해시: (COMMIT_HASH_PLACEHOLDER)
+>
+> status: answered (gold override 재계산은 08-28 선례를 그대로 따랐으나 파생값 수정이라
+> orchestrator 재확인 요청 — 자기완결 아님).
+
 > **2026-08-28/29 (59th pass) — `CSM_amortization.json` 공시분기 placeholder 수정: 39개사
 > per-company as-of 채움 (orchestrator 티켓 `inbox/parser/20260829T0200Z__orchestrator__
 > MULTI__csm_amort_asof_placeholder.md`, status: answered — as_of 컬럼 미추가 판단 +

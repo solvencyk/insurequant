@@ -1,7 +1,87 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-08-28 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-08-29 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-08-29 (60th pass) — ABL생명(KR0070) 2024.4Q·2025.1Q item6 채움, 유일 RED 해소
+
+`inbox/parser/20260829T1100Z__orchestrator__KR0070__fill_2024q4_2025q1_yesilcha.md`
+(status: answered — gold override 재계산은 orchestrator 재확인 요청).
+
+직전 티켓(`b2fa4e0`, 2026-08-28)이 주석37 산문("예상 보험금 대비 실제 보험금 차이가
+N억원") 불일치를 이유로 2024.4Q·2025.1Q 두 분기만 item6(원수 예실차)를 비웠는데, owner
+재검토로 "산문이 이 저장소의 4종(보험금+손해조사비+계약유지비+투자관리비) 예실차보다
+넓은 개념을 쓴다"는 것이 두 분기 모두에서 확인됐다 — 2024.4Q는 발생사고요소조정
+25,803백만원(=258억, 이미 확정된 owner 결정으로 "4종 밖")이 보험금 축 차이(-270억)에
+포함, 2025.1Q는 item16 기타사업비용 3,050백만원(=30.5억)이 사업비 축 차이(-17억)에 포함.
+둘 다 raw 재확인 완료. 이 저장소가 쓰는 4종 정의 자체가 맞다는 뜻이라 값을 채운다.
+
+**직접 재현이 orchestrator 실측과 정확히 일치.** `_ABL_ITEM6_SUPPRESS_QUARTERS`
+(`scripts/pl_breakdown/tier2.py`)를 비운 뒤 두 개의 독립 경로로 raw XML을 재파싱해 대조했다
+— 기존 `abl_yesilcha_full_probe.py`(인라인 재구현, 08-28 선례에서 이미 검증)와
+`abl_yesilcha_verify_handler.py`(실제 `extract_tier2_abl` 핸들러 직접 호출). 결과:
+2024.4Q item6=+586백만원, 2025.1Q item6=−3,591백만원, 둘 다 티켓 수치와 정확히 일치.
+핸들러 재검증에서 다른 8개 분기(2024.1-3Q/2025.2-4Q/2026.1-2Q)의 item6/item11은
+old==new로 완전 불변 — 이번 수정이 이미 채워진 분기에 회귀를 만들지 않았다.
+
+**gold override 함정이 실제로 있었다.** `data/_gold/user_pl_cells.json`의 KR0070 item7
+2025.1Q override(-5,947.368229)가 item6=0 가정으로 08-28에 계산된 채 남아 있었다 — 그
+분기는 그때 item6이 아직 억제 상태라 `abl_yesilcha_fix_gold_overlay.py`가 의도적으로
+건드리지 않았다고 자기 docstring에 적혀 있다. 08-28과 동일한 공식으로 재계산(신설
+`abl_yesilcha_fix_gold_overlay_2025q1.py`, idempotent, `FOLLOW-UP 2026-08-29` 마커):
+`item7_new = item7_old − item6_new = -5,947.368229 − (-3,591.0) = -2,356.368229`. item3=
+item4(override)+item5+item6+item7 폐쇄식이 정확히 닫힌다(17,198.63 = 20,087+3,059-3,591
+-2,356.37, 원단위 이내). 2024.4Q는 item7 override 자체가 없어(전수 census 확인) 손댈
+것 없다.
+
+**전후 combo-diff 두 단계로 셀 손실 0 확인.** `pl_breakdown_master.json`
+(`abl_yesilcha_apply_patch.py` 재실행, idempotent): 딱 4키(KR0070×{item6,item7}×
+{2024.4Q,2025.1Q}) 변경, 11546행 불변, 스코프 체크(회사=KR0070, 항목⊆{6,7}) 통과.
+`build_root_masters.build_pl()` 개별호출(`main()` 미실행) 전후(신설
+`abl_2024q4_2025q1_build_pl_and_diff.py`): 6키 변경 — 위 4개 + item6/item7 **2025.2Q의
+값_당분기만**(YTD 값은 불변) — Q1→Q2 flow-diff 리플로 `_flow_dangi` 설계상 당연한
+부수효과. 11546행 불변. `validate_master_tables.py --no-build`:
+`pl_bridge:3025P/13F/522S/0NEW`(13건 전부 기지등록 무관회사), 에이비엘생명보험 관련
+PL_BRIDGE FAIL 0건.
+
+**타깃 RED 해소.** `validate_data_contract.py`: 반영 전 저장소 유일 RED이던
+`PL_YTD_COLLAPSE_TO_ZERO`(에이비엘생명보험 2024.4Q)가 출력에서 완전히 사라짐(grep 0건).
+4개 섹션 전부 RED=0, **SUMMARY RED=0 YELLOW=92 provisional=False**(YELLOW 갯수 반영 전과
+동일 — 새 YELLOW/RED 0건).
+
+**골든 + 신설 지문 게이트 둘 다 갱신(오늘 신설 운영계약, `0ebb0ca`).** PL 골든(빌더
+재실행 없음 — 이 브랜치는 raw git-purge로 `build_pl_breakdown.py` 전체 재실행이 파괴적,
+KR0032 선례와 동일하게 on-disk 아티팩트만 재해시): `sha256_master`만 이동, 나머지
+(`sha256_coverage`/`master_rows`=11546/`company_quarters`=356/`coverage_rows`=426/
+`non_null_values`=9994) 전부 불변 — item6이 0→값으로 바뀐 것이지 None→값이 아니라서
+coverage는 원래 안 움직이는 게 맞다. 신설 지문 게이트(`scripts/validate_golden_input_
+fingerprints.py`, 로직은 validation 소관이라 `--update`만 실행): 실행 전 다른 5개
+spec(ifrs17_bs/viz_csm_waterfall/viz_ifrs17_panels/dividend/post_transition)을 `git
+status`와 게이트 자체 출력 양쪽으로 clean 확인했다 — 공유 워크트리에서 동시작업 중인
+CSM상각 as-of 에이전트의 in-flight 상태를 지문에 박제하지 않기 위해서다. `--update` 전
+대조 RED=2(pl_breakdown만 CODE_MOVED+FIXTURE_MOVED) → `--update` 후 RED=0 clear, diff는
+pl_breakdown spec의 code_sha256(tier2.py 편집)·fixture_sha256(골든 갱신)·
+outputs.sha256_master 셋만 이동, 나머지 5개 spec은 byte-identical.
+
+**회귀 확인.** 오프라인 pytest 전체 스위트: 468 passed / 2 skipped / 1 failed(456.90s).
+그 1 fail은 `archive/2026-08_equity_composition/test_equity_composition_golden.py`
+(아카이브 모듈의 fixture 파일 자체가 없는 FileNotFoundError, 내 변경과 무관, 종전
+세션에도 동일 패턴으로 기록된 pre-existing 실패). 2 skip은 `RUN_PL_GOLDEN`/
+`RUN_IFRS17_BS_GOLDEN` opt-in 게이트(이 브랜치에서 의도적으로 미실행 — 라이브
+git-purge로 파괴적).
+
+**xlsx sync는 맨 마지막, 사후검증 통과.** 직전 `git status`로 워크북 clean 확인 후
+`sync_master_xlsx_sheet.py "손익분해PL"` 실행 — 10셀 편집(위 6키의 값/값_당분기,
+2025.2Q는 값_당분기만) · 행추가/삭제 0(11546행 불변). 스크립트 자체 사후검증:
+"손익분해PL 11546행 × 9열 마스터와 완전 일치, 나머지 시트 값 동일" — 동시작업 중인
+CSM상각 시트를 포함해 다른 모든 시트가 셀 단위로 무변화임을 확인했다.
+
+**후속 필요(orchestrator/owner 재확인).** gold override 재계산은 08-28 선례와 동일
+공식을 그대로 적용했지만 파생값 수정이라 재확인을 요청한다. 2024.4Q 사업비 축의
+미규명 잔차(주석37 산문 대비)는 여전히 미규명이다 — 티켓 지시대로 "이것만으로 값을
+버릴 이유가 없다"는 판단을 그대로 따랐고 추가 조사는 하지 않았다.
+
+commit: (COMMIT_HASH_PLACEHOLDER)
 
 ## 2026-08-28 (58th pass) — NH농협손해(KR0032) 재보험 예실차(item11) 채움, 11/11 분기
 
