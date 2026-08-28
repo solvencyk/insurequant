@@ -9,6 +9,30 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28o):** owner — 다운로드 설문 후속 라운드 4개, 전부 배포 완료.
+(1) 인트로 문구 "파일 자체엔 접근 제한이 없습니다"(자기부정 프레이밍) → "데이터 품질 향상을
+위해 협조 부탁드립니다"로. (2) "개인정보 수집 동의" 표현 제안했다가 owner가 정정(회사명/업권/
+부서는 개인정보 아님, 심리적 장벽만 유발) → "개인정보"/"동의" 단어 없이 사용방침만 고지하는
+문장으로 교체. (3) 사용목적 카테고리 5→7개 개편(업계동향·경쟁사비교·거래처발굴·투자판단·
+학술논문·기사리포트·개인관심), owner와 워딩 2라운드 조율 후 반영. (4) 팝업 UX: 제출버튼
+"남기고 다운로드"→"다운로드"(심리장벽 완화), 설문~주의사항만 내부스크롤 + 버튼은 스크롤 없이
+항상 하단 노출(`.iq-modal-split/.iq-modal-scroll/.iq-modal-footer` 신규, 슬림/제보 팝업은
+기존 `.iq-modal-panel` 그대로라 영향 없음). (5) 다운로드 팝업을 K-ICS/IFRS17/기타공시 3페이지로
+확장 — 헤더에 index.html과 동일한 `.header-row`+버튼, `data-default-sheet` 속성(report-widget.js의
+`data-sheet-hint`와 동일 패턴)으로 화면별 대표 데이터셋 1개 사전체크(K-ICS→지급여력공시,
+IFRS17→CSM워터폴, 기타공시→배당). `.header-row`/`.download-cta` CSS를 index.html 인라인 →
+common.css로 이관(4페이지 공통 소스).
+
+**공유 워킹트리 사고 2건 (이번 라운드, 둘 다 push 전 발견해 무손실 복구) — 습관화:**
+(a) `git add <내 파일>` 후 pathspec 없이 `git commit -m`을 써서 ifrs17 레인이 이미 staged
+해둔 8개 파일이 내 커밋에 흡수됨 → `git reset --soft HEAD~1`로 커밋만 취소(인덱스는 보존) →
+`git commit <pathspec>`으로 재커밋해 분리, 그쪽 staged 상태는 원래대로 복원. 상세 [[project_shared_tree_branch_switch]].
+(b) IFRS17.html을 `git checkout fix/csm... -- IFRS17.html`로 통째 cherry-pick 했다가 fix/csm
+브랜치에 있는 다른 세션의 미배포 OCI 기능(Panel5, ~190줄)까지 같이 딸려올 뻔함 → `git diff --cached --stat`으로
+라인수 이상 감지 → main 기준 파일로 리셋 후 내 변경 2곳만 직접 재적용. **교훈: 이 저장소에서
+`git checkout <branch> -- <file>`로 통째 가져오는 건 그 파일이 다른 세션과 안 겹칠 때만 안전.
+겹칠 가능성 있으면 커밋 전 diff --stat으로 예상 라인수와 대조.**
+
 **Recent (2026-08-28n):** owner — 다운로드 설문 라벨 정리: 업권에서 "개인" 제거(기타로 커버),
 "보험사" 밑에 "재보험사" 추가. "소속" 라벨을 "보험사명"으로(목록이 사실상 보험사뿐), placeholder·
 검증오류 문구도 동기화. 익명 체크박스 문구를 "회사명은 비공개로 할게요 / 보험사 소속이
