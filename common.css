@@ -104,6 +104,12 @@ header{
    (underline) so it doesn't rely solely on the background-color change. */
 .tab.active{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:3px; }
 
+/* 헤더 우측 다운로드 CTA — 데스크탑: 탭과 같은 줄·같은 높이(owner 요청 2026-08-28, 4페이지 공통 2026-08-28).
+   모바일: 탭 바로 옆에 붙는 작은 pill로(데스크탑 톤·위치는 유지). */
+.header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.download-cta{padding:8px 16px;border:none;border-radius:8px 8px 0 0;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:background var(--t-fast, 0.2s)}
+.download-cta:hover{background:var(--primary-hover)}
+
 /* — Layout container ——————————————————————————————————————————————— */
 .container{ max-width:var(--maxw); margin:0 auto; padding:16px; }
 
@@ -147,8 +153,10 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
    override these if it needs to.
    ========================================================================== */
 @media (max-width:640px){
-  .tabs{ overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; gap:6px; padding-bottom:2px; }
+  .tabs{ overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; gap:6px; padding-bottom:2px; flex:1 1 auto; min-width:0; }
   .tab{ flex:0 0 auto; padding:8px 12px; font-size:13px; }
+  .header-row{align-items:center;flex-wrap:nowrap;gap:8px}
+  .download-cta{flex:0 0 auto;border-radius:var(--r-pill);font-size:11px;font-weight:600;padding:6px 10px;white-space:nowrap}
 }
 
 /* ============================================================================

@@ -86,10 +86,13 @@
 <body>
   <header>
     <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">IFRS17 분석·시각화</span></a>
-    <div class="tabs">
-      <a href="K-ICS.html" class="tab">K-ICS</a>
-      <a href="IFRS17.html" class="tab active" aria-current="page">IFRS17</a>
-      <a href="공시보고서.html" class="tab">기타공시</a>
+    <div class="header-row">
+      <div class="tabs">
+        <a href="K-ICS.html" class="tab">K-ICS</a>
+        <a href="IFRS17.html" class="tab active" aria-current="page">IFRS17</a>
+        <a href="공시보고서.html" class="tab">기타공시</a>
+      </div>
+      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 테이블 다운로드(.xlsx)</button>
     </div>
   </header>
   <div class="container">
@@ -1835,7 +1838,9 @@
   window._revealPanels=observe;
 })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 <script src="forms-config.js"></script>
+<script src="download-survey.js" data-default-sheet="CSMWF"></script>
 <script src="report-widget.js"></script>
 </body>
 </html>
