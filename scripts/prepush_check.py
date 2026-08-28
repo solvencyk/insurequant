@@ -23,6 +23,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 import validate_data_contract as gate            # noqa: E402
+# 1e 절에서 호출한다. 여기서 import 하는 이유 두 가지: ① 이 머신의 파이썬 기동만 2.2초라
+# subprocess 로 부르면 실작업(3~4초)보다 시작 비용이 더 크다 ② `tests/test_push_gate_wiring.py`
+# 의 배선 검사가 줄머리(`^import <name>`)를 보므로 들여쓴 지역 import 는 "안 걸린 것"으로 읽힌다.
+import validate_golden_input_fingerprints as goldenfp   # noqa: E402
 
 
 def main() -> int:
@@ -109,6 +113,21 @@ def main() -> int:
     import check_dart_raw_coverage as rawcov       # noqa: E402
     n_raw = rawcov.main([])
 
+    # 1e) 골든 입력 지문 (2026-08-29 신설, `inbox/validation/20260829T0300Z`, owner 승인).
+    #     **빌더를 재실행하는 골든은 훅 예산에 안 들어간다** — `tests/test_ifrs17_bs_golden.py`
+    #     는 실측 492·514초라 아래 오프라인 묶음에서 빠져 있었고, 그 사각으로 2026-08-26
+    #     삼성생명 OFS 캐시 정정(8c1666b)이 BS 마스터에 반영 안 된 채 **이틀간 미검출**됐다.
+    #     `tests/test_pl_breakdown_golden.py`(~95초)는 아예 RUN_PL_GOLDEN=1 opt-in 이고,
+    #     dividend·viz 2종(각 1~2초)은 산출을 인플레이스로 덮어써서 역시 안 걸려 있었다 —
+    #     즉 **빌더를 재실행하는 골든 6개 중 훅이 돌리는 것은 0개**였다.
+    #     이 검사는 빌더를 **안 돌리고** 입력·코드·산출 3축 지문만 대조한다(수초).
+    #     지문은 무거운 골든의 **대체가 아니라 층**이다 — 골든은 그대로 둔다.
+    #     별도 프로세스가 아니라 import 로 부른다: 이 머신의 파이썬 기동만 2.2초라
+    #     subprocess 로 부르면 실작업(3~4초)보다 시작 비용이 더 크다.
+    print("\n" + "=" * 72)
+    print("GOLDEN INPUT FINGERPRINT (빌더 미실행 — scripts/validate_golden_input_fingerprints.py)")
+    n_fp = goldenfp.main([])
+
     # 2) 일반 이상치 발견 → 트리아지 — **2026-08-25 에 push 경로에서 뺐다** (owner: "씰데없는
     #    룰들은 좀 쳐내"). 지운 게 아니라 `scripts/scan_generic_anomalies.py` 로 내렸다.
     #
@@ -139,8 +158,10 @@ def main() -> int:
 
     # 4) 오프라인 테스트 묶음 (owner 2026-08-21). 골든과 룰-커버리지 매니페스트가 여기 있는데
     #    **pytest 를 자동으로 돌리는 것이 아무것도 없었다** — 게이트를 훅에 걸어놓고 정작 테스트는
-    #    또 honor-system 으로 남기면 같은 실수의 반복이다. 느린 것(ifrs17_bs ~2분,
-    #    pl_breakdown ~95초 opt-in)은 뺀다. 이 묶음 ~19초.
+    #    또 honor-system 으로 남기면 같은 실수의 반복이다. 빌더를 통째로 재실행하는 것은 여전히
+    #    뺀다 — ifrs17_bs **실측 492·514초**(2026-08-28. 종전 "~2분" 추정이 4배 이상 틀렸고,
+    #    그 틀린 추정이 이 제외 결정의 근거였다), pl_breakdown ~95초 opt-in. 그 사각은 위 1e
+    #    지문게이트가 메운다(빌더 미실행, 수초). 이 묶음 ~19초.
     print("\n" + "=" * 72)
     print("OFFLINE TESTS (goldens + 룰 커버리지 매니페스트)")
     fast = ["tests/test_kics_rules_golden.py", "tests/test_master_tables_golden.py",
@@ -159,6 +180,13 @@ def main() -> int:
             # 게이트가 훅에 실제로 걸려 있는지를 검사하는 매니페스트. 이게 없으면 "새 게이트를
             # 만들고 훅에 안 거는" 사고가 조용히 반복된다(2026-08-21 에 5개가 호출처 0 이었다).
             "tests/test_push_gate_wiring.py",
+            # 위 1e 지문게이트의 **매니페스트 + 변이시험**. 지문은 명세(SPECS)를 좁히기만 하면
+            # 조용히 무력화된다 — 입력 패턴 하나를 빼거나 새 골든을 등재 안 해도 게이트는 계속
+            # RED=0 을 찍는다. 그래서 ① 빌더를 재실행하는 골든이 전부 등재됐는지 ② 선언한 입력
+            # 패턴·코드 폐포가 **런타임 관측치**를 덮는지 ③ 네 축(입력·코드·산출·fixture)이
+            # 실제로 발화하는지를 매 push 마다 확인한다. 게이트만 걸고 이걸 빼면 1e 는 다시
+            # honor-system 이다 — 이 훅이 생긴 이유 그 자체. 3.5초.
+            "tests/test_golden_input_fingerprint.py",
             # CSM FY 경계 면제의 변이시험(2026-08-25 신설). `check_csm_continuity` 의 원칙은
             # "break = 무조건 RED, 면제 없음" 이고 그 첫 예외가 그날 들어왔다 — 면제는 이
             # 저장소에서 가장 위험한 코드라 "박제를 흔들면 RED 가 돌아온다"가 매 push 마다
@@ -183,10 +211,11 @@ def main() -> int:
     n_test = proc.returncode
 
     print("\n" + "#" * 72)
-    blocked = n_red or n_hyg or n_test or n_kics or n_dom or n_raw
+    blocked = n_red or n_hyg or n_test or n_kics or n_dom or n_raw or n_fp
     print(f"PRE-PUSH VERDICT: gate RED={n_red} · K-ICS rule gate={'BLOCK' if n_kics else 'clear'}"
           f" · domain gates={'FAIL' if n_dom else 'pass'}"
           f" · DART raw 유실={'있음' if n_raw else '0'}"
+          f" · 골든 입력지문={'FAIL' if n_fp else 'pass'}"
           f" · inbox 기계적위반={'있음' if n_hyg else '0'}"
           f" · offline tests={'FAIL' if n_test else 'pass'}"
           f" → {'BLOCKED (fix or owner-escalate)' if blocked else 'gate-clear'}"

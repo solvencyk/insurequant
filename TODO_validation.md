@@ -1,11 +1,48 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-26 (b) (요청받은 면제를 **거부** — 원천에 값이 있었다 · 커버리지 룰 3z-b 신설) · Stage 3/5 — validation
+> Last updated: 2026-08-29 (골든 입력지문 게이트 신설·훅 배선·push 차단 재현) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-29) 골든 입력지문 게이트 배선 완료 — 빌더 재실행 골든 6개 중 훅이 돌리던 것은 1개뿐이었다.**
+
+> 처리: `inbox/validation/20260829T0300Z__orchestrator__MULTI__golden_input_fingerprint_gate.md`
+> → `status: answered` (오케스트레이터 확인 필요 — 운영 계약 1건 전파 + 무관 RED 1건 보고)
+>
+> **사고 배경.** `tests/test_ifrs17_bs_golden.py` 는 빌더를 통째로 재실행해 **실측 492·514초**라
+> 훅 예산(~5분)을 넘어 오프라인 묶음에서 빠져 있었다. 그 사각으로 2026-08-26 삼성생명 OFS
+> 캐시 정정(8c1666b)이 BS 마스터에 반영 안 된 채 **이틀간 미검출**됐다. `CLAUDE.md` 골든 표의
+> "~2분" 추정이 4배 이상 틀렸던 것이 그 제외 결정의 근거였다 —
+> `prepush_check.py` 주석에도 같은 오추정이 남아 있어 실측치로 정정했다.
+>
+> **신설.** `scripts/validate_golden_input_fingerprints.py` — 빌더를 **안 돌리고**
+> 입력·코드·산출 3축(+fixture) 지문만 대조해 "마스터가 자기 입력보다 낡았는가"를 판정.
+> in-process **3.0~3.15초**. 입력 경로는 추정이 아니라 **런타임 트레이스**로 확정했고
+> (`scripts/_probes/probe_20260829_trace_builder_reads.py`, 박제:
+> `tests/fixtures/builder_read_traces/`), `tests/test_golden_input_fingerprint.py` 가
+> 선언이 관측치를 덮는지 매 push 마다 대조한다. 그 대조가 `src/__init__.py` 와
+> `data/ifrs17/table_scoring_keywords.yaml`(import 두 단계 아래 lru_cache) 누락을 실제로 잡았다.
+> **무거운 골든은 그대로 둔다 — 지문은 대체가 아니라 층이다.**
+>
+> **이번에 발견한 구멍.** 지문 게이트는 훅에 걸렸는데 그 **매니페스트 테스트가 오프라인
+> 묶음에 없었다.** 게이트만 걸고 매니페스트를 안 돌리면 SPECS 를 좁히는 변경이 무저항
+> 통과한다 — "배선했다 ≠ 강제된다"의 재발이다. 묶음에 추가하고,
+> `test_this_manifest_itself_runs_in_the_push_hook` 으로 자기 등재를 자기가 검사하게 했다.
+>
+> **재현.** `data/dart/extracted/` 에 스크래치 파일 1개를 넣어 입력을 현실측으로 흔들었더니
+> `git push --dry-run` 이 `골든 입력지문=FAIL` → `PUSH BLOCKED — exit=2` → `error: failed to
+> push some refs` 로 막혔다(448초). 삭제 후 `RED=0 → clear`.
+>
+> **운영 계약(두 파서 레인에 전파 요망).** 마스터를 정당하게 재빌드하면 골든 `--update` 뒤에
+> `validate_golden_input_fingerprints.py --update` 도 같이 돌려야 한다. 실제로 이번 세션에
+> ifrs17 레인의 동시 재빌드로 `[pl_breakdown] FIXTURE_MOVED` RED 이 났다(정상 동작).
+>
+> **미해결(내 작업과 무관).** `[PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO 에이비엘생명보험
+> 2024.4Q` RED 1건이 살아 있다 — `inbox/parser/20260828T2100Z...KR0070` 진행 중 건으로 보이며
+> **그것이 닫히기 전까지 push 는 계속 막힌다.**
 
 **(2026-08-26 b) 🔴 prepush exit 2 · gate RED=1 YELLOW=92 — BLOCKED, 그리고 이게 맞는 상태다.**
 **오케스트레이터가 요청한 documented exception 을 등재하지 않았다. 등재했으면 거짓 면제였다.**

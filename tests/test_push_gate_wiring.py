@@ -41,6 +41,13 @@ WIRED = {
         "NB_CSM_multiple · csm_amort_schedule · csm_waterfall_history · insurance_pl_breakdown · "
         "kics_tier{1,2}_utilization(값 축). 기지 결함은 data/_gold/live_artifact_baseline.json 에 "
         "건별 등재되어 매 실행 인쇄되고, 등재에 없는 신규 발견은 RED 로 push 를 막는다.",
+    "validate_golden_input_fingerprints":
+        "골든 입력지문 — 빌더를 재실행하는 골든 6개는 훅 예산 안에 못 들어간다"
+        "(ifrs17_bs 실측 492·514초 · pl_breakdown 95초 opt-in · dividend/viz 2종은 산출을 "
+        "인플레이스로 덮어써서 제외). 그 사각으로 2026-08-26 삼성생명 OFS 캐시 정정이 BS "
+        "마스터에 반영 안 된 채 이틀간 미검출됐다. 이 게이트는 빌더를 **안 돌리고** "
+        "입력·코드·산출 3축 지문만 대조해 '마스터가 자기 입력보다 낡았는가'를 수초에 "
+        "판정한다(2026-08-29 신설, owner 승인). 무거운 골든의 대체가 아니라 층이다.",
     "validate_csm_waterfall":
         "CSM 워터폴 항등식 + 단계 커버리지. 2026-08-21 에 18건 실패 상태로 발견됐고(호출처 0 이라 "
         "아무도 몰랐다) 같은 날 exit 0 까지 닫혀 WIRED 로 옮겼다. 구조적 제외 6건(IFRS17 시행 전 "
