@@ -777,7 +777,7 @@
           if (d.isOther) {
             cell.style.background = '#dde2e7';
             cell.title = `기타 ${d.count}사 (기준금액 소형) — ` + d.list.map(m =>
-              `${m.company} ${(ratioType === 'basicCapital' ? (m.basicCapitalRatio || 0) : (m.ratio || 0)).toFixed(0)}%`
+              `${shortName(m.company)} ${(ratioType === 'basicCapital' ? (m.basicCapitalRatio || 0) : (m.ratio || 0)).toFixed(0)}%`
             ).join(' · ');
             if (finalH >= 24 && finalW >= 40) {
               const nm = document.createElement('div');
@@ -797,12 +797,12 @@
             displayValue = d.basicCapitalRatio || 0;
             displayRatio = displayValue;
             cell.style.background = colorForRatio(displayValue, 'basicCapital');
-            cell.title = `${d.company} — 기본자본비율(경과조치 적용 후) ${displayValue.toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
+            cell.title = `${shortName(d.company)} — 기본자본비율(경과조치 적용 후) ${displayValue.toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
           } else {
             displayValue = d.ratio;
             displayRatio = d.ratio;
             cell.style.background = colorForRatio(d.ratio, 'kics');
-            cell.title = `${d.company} — K-ICS 지급여력비율(경과조치 적용 후) ${(d.ratio??0).toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
+            cell.title = `${shortName(d.company)} — K-ICS 지급여력비율(경과조치 적용 후) ${(d.ratio??0).toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
           }
 
           // Cell area already encodes 지급여력기준금액 (size ∝ required), so the
@@ -891,7 +891,7 @@
           total++;
           const row = document.createElement('div');
           row.className = 'li-row';
-          row.title = `${d.company} — ${v.toFixed(1)}%, 기준금액 ${Math.round(d.required || 0).toLocaleString()}`;
+          row.title = `${shortName(d.company)} — ${v.toFixed(1)}%, 기준금액 ${Math.round(d.required || 0).toLocaleString()}`;
           const name = document.createElement('div');
           name.className = 'li-name';
           name.textContent = shortName(d.company);
@@ -1009,7 +1009,7 @@
           formatter: p => {
             const d = p.data.d;
             const cq = d.closingK ? (Math.floor(d.closingK/10)+'.'+(d.closingK%10)+'Q') : '—';
-            const lines = [`<b>${d.name}</b> · ${d.sector === 'Life' ? '생명' : '손해'}`];
+            const lines = [`<b>${shortName(d.name)}</b> · ${d.sector === 'Life' ? '생명' : '손해'}`];
             // D-2 후속(20260818T0210Z): X(신계약CSM)와 Y(배수)의 기준 분기가 서로 달라질 수 있어
             // 각 줄이 자기 분기를 직접 표기 — 더는 하나의 if/else로 묶지 않는다.
             const xNote = d.estimated ? `${d.srcQ} 연누계 ÷2 추정` : `${d.srcQ} 연누계`;
@@ -1274,7 +1274,7 @@
           const row = document.createElement('div');
           row.className = 'li-row';
           const closingTxt = it.closing != null ? Math.round(it.closing).toLocaleString() + '억' : '—';
-          row.title = `${it.name} — 기말 CSM ${closingTxt} (${it.closingQ || '—'}), NB배수 ${it.multiple.toFixed(2)}× (${it.nbQ})`;
+          row.title = `${shortName(it.name)} — 기말 CSM ${closingTxt} (${it.closingQ || '—'}), NB배수 ${it.multiple.toFixed(2)}× (${it.nbQ})`;
           const name = document.createElement('div');
           name.className = 'li-name';
           const nm = document.createElement('span');   // 이름만 말줄임, 칩은 항상 노출
