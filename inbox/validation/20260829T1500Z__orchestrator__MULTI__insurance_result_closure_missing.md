@@ -232,4 +232,6 @@ $PY scripts/prepush_check.py                          # 전체 훅
 
 ### 커밋
 
-`{COMMIT}`
+`9fadad4` (13 files). 훅 실측: offline tests **253 passed / 1 skipped**, 골든 입력지문 pass,
+inbox 기계적 위반 0. `PRE-PUSH VERDICT ... BLOCKED` 는 유지되는데 그 사유는 **내 작업과 무관한
+진행중 건 1개**다 — `RED [PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO 미래에셋생명보험 2025.4Q`.
