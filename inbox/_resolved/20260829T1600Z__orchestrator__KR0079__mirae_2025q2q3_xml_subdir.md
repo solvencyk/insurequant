@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20260829T1600Z
-status: answered
+status: resolved
 route: reparse
 company: KR0079
 period: 2025.2Q,2025.3Q
@@ -269,16 +269,97 @@ KR0072(4개 분기)·KR0087(3건) — 61st pass가 기록한 것과 완전히 �
 `tests/unit/`·`test_push_gate_wiring`): **199 passed, 1 skipped, 0 failed**(`test_pl_
 breakdown_golden.py`는 RUN_PL_GOLDEN 미설정으로 정상 skip).
 
-### 하지 않은 것 (확인)
+### 4) 후속 — 2026.1Q 채움 + 2025.4Q 조사 (coordinator 지시, 스코프 확장)
+
+**2026.1Q 채움 완료. 2025.4Q는 조사 결과 안 닫혀서 미채움 유지 — 값 자체가 아니라 원인이 바뀌었다.**
+
+**2026.1Q — 그 분기에서 처음부터 다시 대사(앞 두 분기 결과 베끼지 않음),
+`scripts/_probes/mirae_2026q1_full_recon.py`:**
+
+```
+raw ACT 손실요소외 열: [0,0,0,0,0] (5개 상품 전부 리터럴 0, 대시 아님)
+후보A(LIC열단독)=164,883,669,880  후보B(합계−손실요소배분)=164,883,669,880  (A−B=0.000000)
+경계: 표3 손실요소열 합=−1,781,014,814  =  표2 손실요소배분액 합=−1,781,014,814  (원 단위 일치)
+내부검산: 표2 7성분 합=288,066,697,379  vs  표3 보험수익 lump=−288,066,697,379 (부호반전, diff=0)
+Tier-1 앵커: 별도 일반보험서비스수익=288,066,697,379 (7성분 합과 diff=0)
+exp(예상4종)=157,743,882,223 → item6 = (157,743,882,223 − 164,883,669,880)/1e6 = −7,139.787657백만원
+```
+
+세 검증(모집단·경계·발생측 손실요소외 리터럴0) 전부 원 단위로 닫힌다 — 2025.2Q/2025.3Q와
+동일 수준. `_ma_yesilcha_direct(tables)` 직접 호출로 재확인 = `-7139.787657`(하드코딩 아님).
+2025.2Q/2025.3Q/2026.2Q 회귀 재확인 — 전부 불변(`7920.282929`/`-2353.842208`/`-18120.139965`).
+
+**반영**: `pl_breakdown_master.json` item6(0→−7139.787657)/item7(−40510.874931→
+−33371.087274) 2셀 패치(백업 `.bak_20260829_mirae_2026q1`) → `build_root_masters.build_pl()`
+전후 diff: 4키 변경(패치 2개 + item6/7 2026.2Q **값_당분기만** — Q1→Q2 flow-diff 리플,
+`_flow_dangi` 부수효과, 2026.2Q의 값(YTD)은 불변) · non-KR0079 0건 · 회사/행 census 불변 →
+`sync_master_xlsx_sheet.py "손익분해PL"` 6셀 동기화, dry-run과 실행 결과 일치, "11546행×9열
+마스터와 완전 일치" 통과.
+
+**2025.4Q — 라벨은 있다. 하지만 값이 안 닫힌다, 채우지 않음.**
+
+`scripts/_probes/mirae_2025q4_investigate.py`로 재조사: 이 분기 raw dir엔 xml이 **3개**
+(본문 + `_00760`/`_00761` 첨부) 있는데, 이전 스윕은 본문 파일 하나만 봤었다. 실제 프로덕션
+`_xmls_in()`/`parse_filing()`처럼 3개 전부 합쳐서 다시 찾으니 — **ALT 라벨(`_MA_EXP4_ROW_ALT`)
+표가 실제로 존재한다**(당기/전기 2벌, `scripts/_probes/mirae_2025q4_dump_candidates.py`).
+문제는 그 다음:
+
+1. **표3(발생측)의 "보험수익" lump 행이 이 첨부표에서는 빈칸이다**(라벨은 있는데 값이 전부
+   `''`). 그래서 check A(표2 7성분 합 vs 표3 보험수익 lump)는 실패가 아니라 **계산 자체가
+   불가**(`rev_lump=None`) — production 코드는 이걸 실패와 동일하게 처리해 정상적으로
+   자기기권한다.
+2. **표2(예상측) 쪽은 오히려 Tier-1 앵커와 원 단위로 정확히 일치한다**
+   (당기 후보: total7=1,080,411,547,554 = 별도 일반보험서비스수익 1,080,411,547,554,
+   diff=0) — 즉 표2 데이터 자체의 신뢰도는 높다.
+3. **그런데 표3(발생측) "발생한 보험금 및 기타 보험서비스비용" 행 값이 이상하다.** 매 분기
+   손실요소외 열이 리터럴 0이었는데, 이 첨부표에서는 손실요소외 위치에 상품당 수백억이
+   찍혀 있고(사망 1,242억·건강 442억·연금 363억·저축 139억·기타 1.1억) LIC 위치가 0이다 —
+   다른 3개 분기와 정반대 패턴. 실제로 후보B를 그대로 계산하면 item6 =
+   **366,026.947308백만원**(3,660억)이 나오는데, 다른 4개 분기(7,920~18,120백만원대)와
+   **자릿수가 20~50배 차이** — 명백한 이상치다. 게다가 같은 표의 "자산인 보험계약의 기초
+   장부금액" 행 값(6,239,505,634,766)이 다른 분기의 "**부채**인 보험계약의 기초 장부금액"
+   값과 정확히 같다 — 자산/부채 라벨-값이 밀렸거나 첨부 XML 특유의 rowspan/병합셀 파싱
+   아티팩트로 보인다. **이 첨부표(_00760/_00761) 고유의 구조 이상**이지 라벨 매칭 실패가
+   아니다.
+
+**결론: 라벨은 ALT 튜플로 풀리지만 값을 신뢰할 수 없어 채우지 않았다.** item6=0 그대로,
+item7도 그대로(item3 폐쇄식은 이미 item6=0으로 닫혀 있었다 — 확인 완료, 손대지 않음).
+원인은 "라벨 상이"가 아니라 "첨부 XML 표의 값 정합성 이상"으로 정정 보고한다 — 원인 규명은
+이 티켓 범위 밖의 별도 조사가 필요하다(신규 확인).
+
+### 5) 전수 항등식 감사 (2026.1Q 반영 후 재실행)
+
+```
+항목32 356셀                                                          — 생존 ✓
+KR0083 2024.3Q item27 = -265,226.939791                              — 생존 ✓
+KR0032 2026.2Q item6  = -10,243.0                                     — 생존 ✓
+KR0070 item6 2024.4Q = 586.0 / 2025.1Q = -3,591.0                     — 생존 ✓
+KR0079 2025.2Q item6=7920.282929 / 2025.3Q item6=-2353.842208          — 생존 ✓
+KR0079 2026.1Q item6=-7139.787657 / item7=-33371.087274                — 신규 ✓
+KR0079 2026.2Q item6=-18120.139965(값 불변, 값_당분기만 리플)            — 생존 ✓
+KR0079 2025.4Q item6=0.0(미채움 유지) / 전 분기 item11=0.0(유지)        — 유지 ✓
+```
+
+356개 (회사,분기) 전수 폐쇄식 스캔: **여전히 7건, KR0072(4)·KR0087(3) — 동일 집합, 신규
+0건**(`scripts/_probes/mirae_all_quarters_final_audit.py`). `validate_master_tables.py
+--no-build` exit 2·RED 2건(동일 pre-existing `SENSITIVITY_UNIT_SANITY`), SUMMARY 라인
+2026.1Q 패치 전후 완전 동일(신규 이상 없음). 골든 `tests/test_pl_breakdown_golden.py
+--update`(sha256_master만 재이동, rows/company_quarters/coverage_rows/non_null_values
+불변) + `validate_golden_input_fingerprints.py --update`(실행 전 다른 5개 spec `ok` 확인
+→ pl_breakdown만 이동 → 재실행 RED=0). 오프라인 pytest(이번엔 `test_pl_breakdown_golden.py`
+포함): **199 passed, 2 skipped, 0 failed**.
+
+### 하지 않은 것 (확인, 갱신)
 
 `index.html`·`IFRS17.html`·`download-survey.js`·`report-widget.js`·`public_exports/` 미수정.
 브랜치 `fix/csm-product-segmented-columns` 그대로. `git push`·`git add -A` 없음.
 `build_root_masters.py`의 `main()` 미실행(`build_pl()` 개별함수만). `validate_master_
 tables.py`는 항상 `--no-build`. xlsx는 `sync_master_xlsx_sheet.py`로만 편집(openpyxl
-재저장 없음). item11 미터치(0 유지). 2026.1Q 마스터 미패치(§1 참조).
-`build_net_income_breakdown.py`/`build_equity_composition_tier2.py` 미수정(report only).
+재저장 없음). item11 미터치(0 유지, 전 분기). **2025.4Q는 조사 후 근거를 들어 미채움
+유지**(§4). `build_net_income_breakdown.py`/`build_equity_composition_tier2.py`
+미수정(coordinator 지시대로 이번 라운드에서도 손대지 않음).
 
-status: answered (2026.1Q 미패치 판단과 두 dormant 스크립트의 처리 방향은
-orchestrator/owner 재확인 필요 — 자기완결 아님).
+status: resolved (2026.1Q 채움 완료 + 2025.4Q 미채움 사유 규명, 두 dormant 스크립트는
+orchestrator가 별도 판단하기로 확정돼 이 티켓 범위에서 완전히 빠짐 — 자기완결).
 
-커밋: `2477b04`
+커밋: `2477b04`, `94533e3` (이전), (다음 커밋에 기록)

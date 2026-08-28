@@ -80,12 +80,12 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "1f66a2f6c438f181b8fe3ad9cff571b05bff973d9037386ab7f6b487826280c4",
+   "fixture_sha256": "ae2b7f2e7fd05e4a95610c672d105de52d51a83d091c526337773612790b5a5e",
    "outputs": {
     "sha256_master": {
      "path": "data/dart/viz/pl_breakdown_master.json",
-     "fixture_sha256": "7d4cc510b98376b6cf2d04e3338456701b50cc9ee7305e1b74e0947101a65f53",
-     "ondisk_sha256": "7d4cc510b98376b6cf2d04e3338456701b50cc9ee7305e1b74e0947101a65f53"
+     "fixture_sha256": "38051637c182837f18d2fa52c97ed0cd9c8f07850b90f2dc8c557a4ee79c8086",
+     "ondisk_sha256": "38051637c182837f18d2fa52c97ed0cd9c8f07850b90f2dc8c557a4ee79c8086"
     },
     "sha256_coverage": {
      "path": "data/_derived/pl_breakdown_coverage.json",

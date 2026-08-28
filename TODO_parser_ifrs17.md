@@ -1,5 +1,63 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-29 (63rd pass) — 미래에셋생명(KR0079) 2026.1Q item6 채움 + 2025.4Q 조사(안 채움,
+> 사유 규명) — coordinator 지시로 62nd pass 티켓의 스코프를 두 분기에서 확장
+> (`inbox/parser/20260829T1600Z`, status: resolved).** 62nd pass가 "2026.1Q도 같은 ALT
+> 라벨로 게이트를 통과하지만 스코프 밖이라 안 채웠다"고 보고한 것을 coordinator가
+> "이미 확인까지 해놓고 한 분기만 비워두는 게 더 이상하다"며 마저 채우라고 지시.
+>
+> **① 2026.1Q — 그 분기에서 처음부터 재대사(베끼지 않음), 삼중 대사·경계 규칙·발생측
+> 손실요소외 리터럴0 전부 원 단위로 재확인.** 후보A=후보B=164,883,669,880(diff=0),
+> 경계(표3 손실요소열 합=표2 손실요소배분액 합)=−1,781,014,814 원 단위 일치, 내부검산·
+> Tier-1 앵커(별도 일반보험서비스수익=288,066,697,379) 둘 다 diff=0. `_ma_yesilcha_direct`
+> 직접 호출로 item6=−7,139.787657백만원 재확인(하드코딩 아님). 2025.2Q/2025.3Q/2026.2Q
+> 회귀 0.
+>
+> **② 2025.4Q — coordinator가 "2026.1Q와 같은 튜플로 풀리는지, 안 풀리면 어떤 라벨인지"
+> 요청. 재조사 결과 원인이 "라벨 상이"가 아니라 "첨부 XML 표 값 이상"으로 정정된다.**
+> 이 분기 raw dir엔 xml이 3개(본문+`_00760`+`_00761` 첨부)인데 62nd pass의 스윕은 본문
+> 하나만 봤었다 — 실제 `_xmls_in()`대로 3개 다 합쳐 재검색하니 ALT 라벨 표가 실제로
+> 존재한다(당기/전기 2벌). 그런데: (a) 표3의 "보험수익" lump 행이 이 첨부표에서는 라벨만
+> 있고 값이 전부 빈칸이라 check A가 계산 불가(`rev_lump=None`, 실패와 동일 취급되어 정상
+> 자기기권). (b) 표2 쪽은 오히려 Tier-1 앵커와 원 단위로 정확히 일치(신뢰도 높음).
+> (c) 표3의 "발생한 보험금..." 행은 손실요소외/LIC 위치가 다른 4개 분기와 정반대라 후보B를
+> 강행 계산하면 item6=366,026.947308백만원(3,660억) — 다른 분기(7,920~18,120백만원대)
+> 대비 20~50배 이상치. 같은 표의 "자산인" 기초잔액 행 값이 다른 분기의 "부채인" 기초잔액과
+> 정확히 같아 라벨-값이 밀린 정황도 발견 — `_00760`/`_00761` 첨부 XML 고유의 구조 이상으로
+> 보이며 이 티켓 범위 밖의 별도 조사가 필요. **item6=0 미채움 유지, item7도 불변**(item3
+> 폐쇄식은 이미 item6=0으로 닫혀 있었음, 확인만 하고 손 안 댐).
+>
+> **③ 반영.** `pl_breakdown_master.json` 2026.1Q item6/item7 2셀 서지컬 패치(백업
+> `.bak_20260829_mirae_2026q1`) → `build_root_masters.build_pl()`(개별함수) 전후 diff:
+> 4키 변경(패치 2개 + item6/7 2026.2Q **값_당분기만** — Q1→Q2 flow-diff 리플, 값 자체는
+> 불변), non-KR0079 0건, 회사/행 census 불변 → `sync_master_xlsx_sheet.py "손익분해PL"`
+> 6셀 동기화, dry-run과 실행 일치.
+>
+> **④ 골든 + 지문 게이트 갱신.** `tests/test_pl_breakdown_golden.py --update`(sha256_master만
+> 이동, rows(11546)/company_quarters(356)/coverage_rows(426)/non_null_values(9994) 불변).
+> `validate_golden_input_fingerprints.py`: 실행 전 다른 5개 spec `ok` 확인 → `--update` 후
+> pl_breakdown만 이동 → 재실행 RED=0.
+>
+> **⑤ 전수 감사.** 체크포인트 4개 전부 생존(항목32=356·KR0083 2024.3Q item27·KR0032
+> 2026.2Q item6·KR0070 item6 2024.4Q/2025.1Q). KR0079 전 분기(2025.2Q~2026.2Q) item6
+> 생존/신규 확인, 2025.4Q는 미채움 유지 확인. 356개 (사,분기) 폐쇄식 스캔: 여전히 7건
+> (KR0072 4·KR0087 3, 62nd pass와 완전 동일 집합, 신규 0건). `validate_master_tables.py
+> --no-build` exit 2·RED 2건(동일 pre-existing `SENSITIVITY_UNIT_SANITY`), SUMMARY 라인
+> 패치 전후 완전 동일. 오프라인 pytest(`test_pl_breakdown_golden.py` 포함): **199 passed,
+> 2 skipped, 0 failed**.
+>
+> **⑥ dormant 스크립트 둘은 이번에도 손 안 댐** — coordinator가 별도 판단하기로 확정.
+>
+> **커밋**: `data/dart/viz/pl_breakdown_master.json`·`PL_breakdown.json`·
+> `insurequant_master_tables.xlsx`·`tests/fixtures/{pl_breakdown_golden,
+> builder_input_fingerprints}.json`·신설 probe(`scripts/_probes/mirae_2026q1_full_recon.py`·
+> `mirae_2025q4_investigate.py`·`mirae_2025q4_dump_candidates.py`·
+> `mirae_2026q1_apply_patch.py`·`mirae_2026q1_diff_census.py`·
+> `mirae_all_quarters_final_audit.py`) + 이 티켓(→`_resolved/`)·`TODO_parser_ifrs17.md`.
+> 커밋 해시: (다음 커밋에 기록)
+>
+> status: resolved.
+
 > **2026-08-29 (62nd pass) — 미래에셋생명(KR0079) 2025.2Q·2025.3Q item6(원수 예실차) 채움 +
 > `xml/` 서브디렉터리 glob 사각 census (orchestrator 티켓 `inbox/parser/20260829T1600Z__
 > orchestrator__KR0079__mirae_2025q2q3_xml_subdir.md`, status: answered — 2026.1Q 미패치
