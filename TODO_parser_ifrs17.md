@@ -1,5 +1,59 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-29 (67th pass) — 빈칸압축 지뢰 근접-미스 3건 제거(66th pass census 후속).**
+> `inbox/parser/20260829T2330Z`(orchestrator 발주, status: answered). 66th pass census가
+> 확정한 미수정 근접-미스 3건을 참조 구현(위치보존 raw 인덱싱) 그대로 복사해 제거:
+> `extract_tier2_heungkuk_single.totrow()`(KR0005, `extract_tier2_heungkuk.totrow()`의
+> fb9c9bf 패치를 오늘 안 받은 형제) · `_coreanre_old.val()`(KR1000, idx=5"일반"이 관측된
+> 대시 위치와 겹침) · `_nh_gmm_incurred4()`(KR0032 item6, 이미 raw-인덱싱인 형제
+> `_nh_gmm_re_incurred`의 미패치 쌍). `scripts/pl_breakdown/companies.py`만 수정(3개
+> 함수, `_row_nums()` 자체는 무수정 — 호출부만).
+>
+> **회귀검증(이 티켓의 핵심 산출)**: `discover_filings()`+`parse_filing()`으로 KR0005/
+> KR1000/KR0032 3사×14개 분기(2023.1Q~2026.2Q)=42 filing 전부의 `(t1,t2)`를 패치 전/후
+> 캡처해 `diff -q` — **바이트 단위 완전 무변화**(60,346 bytes 양쪽 동일). KR1000의
+> `_coreanre_old.val()`이 실제로 대시를 만난 2023.3Q/2024.2Q/2024.3Q, KR0032의
+> `_nh_gmm_incurred4`가 라이브인 2023.4Q~2026.2Q(11개 분기), KR0005의 census 관측
+> 빈칸 지점인 2026.1Q/2026.2Q 전부 개별 확인. 마스터 JSON 무변경 확인(`git status`상
+> 수정 파일은 `companies.py` 하나뿐) → 골든/지문 갱신 불요(발주 지시 §요청4 그대로),
+> 전체 재빌드 골든 게이트도 이 브랜치의 destructive-rebuild 트랩을 피해 의도적으로
+> 미실행(스코프가 세 함수로 닫혀 있고 42-filing 스윕이 그 유일 소비 경로를 이미
+> 전수 커버해 더 정밀한 증거).
+>
+> **census 재실행**: `census_row_nums_blank.py` + `analyze_census.py` 재구동 — total log
+> entries 9,664→9,448(-216), dense-candidate 434→362(-72), distinct call sites 13→12(-1).
+> **`KR1000 companies.val:1489`(72건) 완전 소거** — `_row_nums()` 호출 자체를 제거한
+> 유일한 케이스라 계측기가 더 이상 못 본다. `KR0005 companies.totrow:1356`은 패치 후에도
+> 여전히 잡힌다(값은 동일) — 참조 구현 `totrow:1090`(fb9c9bf)도 마찬가지로 계속 잡히는
+> 것과 같은 이유(행-선택 게이트가 `_row_nums(r)` truthy 체크를 그대로 남겨 계측기는
+> "호출됐다"만 보고 "위치기반으로 소비하는가"는 못 봄) — 실제 판정은 바이트 무변화
+> 스윕으로 했다. `KR0032`는 패치 전/후 둘 다 census 후보 0건(처음부터 노출 없던 구조적
+> 비대칭 제거).
+>
+> **스코프 결정**: `extract_tier2_heungkuk_single.jang()`(다중칸 라벨 SUBSTRING 매칭,
+> `comp()`와 동형)은 안 고침 — census가 지목한 콜사이트가 아니고, 참조 구현도 형제
+> `comp()`를 그대로 뒀고, 라벨이 몇 칸을 차지하는지 행마다 달라 고정 스킵값을 정할
+> 근거가 없어 고치려면 새 방식을 발명해야 한다(지시 위반). 후속 티켓 후보로 보고만.
+>
+> status: answered — orchestrator 재확인 대기. 재현 명령·수치 전부 티켓 `## 답변`에.
+>
+> 커밋: (다음 커밋에 기록)
+
+> **2026-08-29 (66th pass, 조사 전용) — `_row_nums()` 빈칸압축 전수 census.**
+> `inbox/parser/20260829T2200Z`(orchestrator 발주, status: answered — 마스터/`_row_nums()`
+> 둘 다 미수정, 조사만). 방금 fb9c9bf로 고친 흥국화재(KR0005) 2026.2Q 사고가 "위치(고정
+> 오프셋)로 `_row_nums()` 압축 결과를 읽는 모든 핸들러"에 구조적으로 열려 있는지 실측.
+>
+> **결과**: 코드로 확정된 노출 지점 30개+(손보 11사 중 9사·생보 15사 중 6사·tier1.py
+> fallback 전체). 383개 회사-분기 read-only census(몽키패치 하네스, 마스터 무변경)로
+> "그럴듯한 값 위장 가능한" 실제 밀림 5곳 확인, 그중 화면 숫자가 실제로 틀렸던 확정
+> 오염은 정확히 2건 — 흥국화재(오늘 수정) + 악사손해(KR0049, 이 티켓 이전에 이미 전용
+> 핸들러로 수정, `extract_tier2_axa` 자체 docstring이 원인 증언). 미수정 근접-미스 3건:
+> `extract_tier2_heungkuk_single`(흥국 KR0005, `heungkuk.totrow`의 미패치 형제) ·
+> `_coreanre_old.val`(코리안리 KR1000, idx=5 "일반"이 관측된 대시 위치와 정확히 겹침,
+> 아직 그 행엔 안 맞음) · `_nh_gmm_incurred4`(NH KR0032 item6, 이미 raw-인덱싱으로 고친
+> 형제 `_nh_gmm_re_incurred`의 미패치 쌍). 전부 §5(결론) 참고, 후속 수정은 발주 범위 밖.
+>
 > **2026-08-29 (65th pass) — 흥국화재(KR0005) 2026.2Q PL LOB 다리 결측(MASTER_HOLE, push를
 > 막던 유일한 RED) 원인규명 + 수정.** `inbox/parser/20260829T2010Z`(validation 발주,
 > status: answered). 2026.2Q item2(생명장기손익)·8(재보험손익)·12(기타재보험손익)·

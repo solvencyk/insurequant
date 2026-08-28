@@ -1355,7 +1355,23 @@ def extract_tier2_heungkuk_single(tables):
                 if _norm(r[c]) == label:
                     ns = _row_nums(r)
                     if ns:
-                        return ns
+                        # Sibling of extract_tier2_heungkuk.totrow() (fixed 2026-08-29,
+                        # fb9c9bf, same blank-cell hazard): this row's consumers
+                        # (jang_tot()/paa_lob() below) read it by FIXED offset (ns[0],
+                        # ns[-1]/-2/-3), so a cell DART renders as a bare empty string
+                        # instead of "0" silently drops out of _row_nums() and shifts every
+                        # later index.  Confirmed live in 2026.1Q: the "보험수익" totrow
+                        # prints ['보험수익','660,961','','0','660,961','0','39,692',
+                        # '33,824','73,516'] -- pos2 is a bare blank, not "0" -- the blank
+                        # happened to land away from the endpoints this quarter's readers
+                        # use, so the output was unaffected (inbox/parser/
+                        # 20260829T2200Z__orchestrator__MULTI__row_nums_blank_compression_census.md),
+                        # but the next quarter that blanks an endpoint reproduces the
+                        # 2026.2Q incident.  Re-parse position-preserving (blank/dash ->
+                        # 0.0 IN PLACE, label col r[0] dropped) so the fixed offsets stay
+                        # valid; row SELECTION is unchanged (still gated on the plain
+                        # _row_nums(r) truthy check above).
+                        return [(to_num(c) if to_num(c) is not None else 0.0) for c in r[1:]]
         return None
 
     def find(totlabel, must):
@@ -1486,9 +1502,18 @@ def _coreanre_old(tables):
         for r in secs[sec]:
             lab = _norm(r[0]).replace(" ", "")
             if any(n.replace(" ", "") in lab for n in needles):
-                ns = _row_nums(r)
-                if ns and len(ns) > idx:
-                    return ns[idx]
+                # Raw-indexed on r[1+idx] (NOT _row_nums(r), which drops '-'/blank cells and
+                # shifts every later column left) -- same fix as _nh_gmm_re_incurred /
+                # extract_tier2_heungkuk.totrow().  census (inbox/parser/
+                # 20260829T2200Z__orchestrator__MULTI__row_nums_blank_compression_census.md) found
+                # dashes fixed at raw position 5-6 in 2023.3Q/2024.2Q/2024.3Q -- exactly
+                # COL["일반"]=5 (the paired-quarter 일반 column).  No corruption observed
+                # yet because every call site so far reads idx 1/3 (장기/생명), never idx 5
+                # (일반), but a compacting read would silently misalign item14 the day a
+                # component/total row's 일반 column itself goes blank.
+                if len(r) > 1 + idx:
+                    v = to_num(r[1 + idx])
+                    return v if v is not None else 0.0
         return None
 
     def leg(lob):
@@ -1970,10 +1995,18 @@ def _nh_gmm_incurred4(tables):
     for r in note3.rows:
         if _norm(r[0]) != "발생보험금 및 기타보험서비스비용":
             continue
-        ns = _row_nums(r)
-        if len(ns) < 5:
+        # Raw-indexed on r[1:6] (NOT _row_nums, which SKIPS '-' cells) -- mirrors the fix
+        # already applied to _nh_gmm_re_incurred (item11, the reinsurance-leg twin of this
+        # function): a blank/dash in any of the 5 columns would otherwise silently shift
+        # this fixed [손실요소외, 손실요소, 소계, 발생사고부채, 합계] layout and misalign
+        # the remaining values.  '-' reads as 0.0.
+        if len(r) < 6:
             return None
-        excl_lc, _lc, _lrc_sub, lic, _total = ns[:5]
+        cells = []
+        for c in r[1:6]:
+            v = to_num(c)
+            cells.append(v if v is not None else 0.0)
+        excl_lc, _lc, _lrc_sub, lic, _total = cells
         return excl_lc + lic
     return None
 
