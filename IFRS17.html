@@ -1827,6 +1827,15 @@
 
     payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.sen=senx; payload.nb=nbx;
 
+    // ⚠ null을 0으로 바꾸지 않는다 — 아래 wfx/plx/eqx 세 인덱스 빌더가 전부 이걸 쓴다.
+    // Number(null)===0 이고 Number.isFinite(0)===true 라 그냥 Number()를 태우면
+    // **미공시 셀이 전부 진짜 0으로 둔갑한다.** 세 마스터 모두 진짜 0이 섞여 있어 둘은 반드시
+    // 구분돼야 한다 — 결측은 회색 "미공시" 막대/"—", 0은 높이 0인 실선/"0".
+    // 실측(2026-08-28): PL_breakdown 값 null 1,347셀·값_당분기 null 2,377셀(진짜 0은 836셀) /
+    // CSM_waterfall 값 null 2셀·값_당분기 null 200셀(진짜 0은 5셀) / IFRS17_BS 값 null 0셀
+    // (진짜 0은 135셀 — 지금은 잠재버그 가드지만 파서가 null을 내보내는 순간 발화한다).
+    const _num = v => (v==null || v==="") ? null : (Number.isFinite(Number(v)) ? Number(v) : null);
+
     // Panel 1/2 long-format index: CODE -> quarter -> 항목번호 -> 값  (+ 코드↔이름 등록부)
     if (Array.isArray(wfxRaw)){
       for (const r of wfxRaw){
@@ -1835,17 +1844,11 @@
         if(r["원수사명"]) codeToName[code]=r["원수사명"];
         let byQ=ix.wfx.get(code); if(!byQ){ byQ=new Map(); ix.wfx.set(code,byQ); }
         let byN=byQ.get(qq); if(!byN){ byN=new Map(); byQ.set(qq,byN); }
-        const y=Number(r["값"]); const dq=Number(r["값_당분기"]);
-        byN.set(num, { y: Number.isFinite(y)?y:null, q: Number.isFinite(dq)?dq:null });
+        byN.set(num, { y:_num(r["값"]), q:_num(r["값_당분기"]) });
       }
     }
 
     // Panel 5 long-format index: CODE -> quarter -> 항목번호(string) -> {y:값, q:값_당분기}
-    // ⚠ null을 0으로 바꾸지 않는다. Number(null)===0 이고 Number.isFinite(0)===true 라
-    // 그냥 Number()를 태우면 **미공시 셀이 전부 진짜 0으로 둔갑한다**(2026-08-28 실측: 값 null
-    // 1,347셀·값_당분기 null 2,377셀. 그중 OCI 616셀). 이 마스터엔 진짜 0도 836셀 있어서
-    // 0과 결측은 반드시 구분돼야 한다 — 결측은 회색 "미공시" 막대, 0은 높이 0인 실선.
-    const _num = v => (v==null || v==="") ? null : (Number.isFinite(Number(v)) ? Number(v) : null);
     if (Array.isArray(plxRaw)){
       for (const r of plxRaw){
         const code=r&&r["원보험사코드"], qq=r&&r["공시분기"], num=r&&r["항목번호"];
@@ -1866,13 +1869,12 @@
         const code=r&&r["원보험사코드"], qq=r&&r["공시분기"], num=r&&r["항목번호"];
         if(!code||!qq||num==null) continue;
         if(!codeToName[code] && r["원수사명"]) codeToName[code]=r["원수사명"];
-        const v=Number(r["값"]);
         const bridge = EQ_SECTION_LEVEL_BRIDGE[num];
         const section = r["섹션"] || (bridge ? bridge[0] : null);
         const level = r["레벨"]!=null ? Number(r["레벨"]) : (bridge ? bridge[1] : null);
         let byQ=ix.eqx.get(code); if(!byQ){ byQ=new Map(); ix.eqx.set(code,byQ); }
         let arr=byQ.get(qq); if(!arr){ arr=[]; byQ.set(qq,arr); }
-        arr.push({ num, name:r["항목명"], value: Number.isFinite(v)?v:null, section, level });
+        arr.push({ num, name:r["항목명"], value:_num(r["값"]), section, level });
       }
     }
 
