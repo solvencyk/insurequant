@@ -80,8 +80,10 @@ def main():
             "quarter_max": quarters[-1] if quarters else None,
         }
         print(f"  wrote {out_path.relative_to(REPO)}: {len(rows)} rows")
-    (OUT_DIR / "_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"  wrote _manifest.json (generated_at_utc={manifest['generated_at_utc']})")
+    # 밑줄로 시작하는 이름 금지 — GitHub Pages 기본 Jekyll이 _로 시작하는 파일/폴더를
+    # 조용히 배포에서 뺀다(.nojekyll 없음, 이 저장소 실측: _manifest.json 404였음 2026-08-28).
+    (OUT_DIR / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"  wrote manifest.json (generated_at_utc={manifest['generated_at_utc']})")
 
 
 if __name__ == "__main__":
