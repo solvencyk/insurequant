@@ -40,9 +40,19 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 > `validate_golden_input_fingerprints.py --update` 도 같이 돌려야 한다. 실제로 이번 세션에
 > ifrs17 레인의 동시 재빌드로 `[pl_breakdown] FIXTURE_MOVED` RED 이 났다(정상 동작).
 >
-> **미해결(내 작업과 무관).** `[PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO 에이비엘생명보험
-> 2024.4Q` RED 1건이 살아 있다 — `inbox/parser/20260828T2100Z...KR0070` 진행 중 건으로 보이며
-> **그것이 닫히기 전까지 push 는 계속 막힌다.**
+> **커밋 `0ebb0ca`** (14 files, +5,126/-4).
+>
+> **배선 직후 야생에서 첫 건을 잡았다.** 커밋 직후 재실행에서
+> `[viz_ifrs17_panels] CODE_MOVED + FIXTURE_MOVED` RED 2건 — 파서 레인이
+> `scripts/viz_build_ifrs17_panels.py` 를 고치는 중이다(`inbox/parser/20260829T0200Z...
+> csm_amort_asof_placeholder`). **빌더 코드가 움직이면 입력이 그대로여도 마스터는 낡는다** —
+> 종전에는 이 축을 보는 것이 8분짜리 골든뿐이라 훅에서 안 돌았다. 남의 in-flight 변경을
+> 내가 `--update` 로 축복하면 그게 false-green 이라 **RED 을 일부러 남겨 뒀다.**
+>
+> **미해결(내 작업과 무관) 2건 — 둘 다 push 를 계속 막는다.**
+> ① `[PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO 에이비엘생명보험 2024.4Q`
+>   (`inbox/parser/20260828T2100Z...KR0070` 진행 중)
+> ② 위 `viz_ifrs17_panels` 지문 RED (그 빌더 변경을 랜딩하는 쪽이 골든 통과 후 지문 `--update`)
 
 **(2026-08-26 b) 🔴 prepush exit 2 · gate RED=1 YELLOW=92 — BLOCKED, 그리고 이게 맞는 상태다.**
 **오케스트레이터가 요청한 documented exception 을 등재하지 않았다. 등재했으면 거짓 면제였다.**

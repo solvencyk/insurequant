@@ -205,5 +205,35 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_gold
    in-flight 상태로 보인다. 지문 게이트와 별개이며 그 티켓에서 닫힐 사안이라 새로 발주하지
    않았다. **이 RED 이 남아 있는 한 push 는 여전히 막힌다.**
 
+### 8. 커밋 · 그리고 배선 직후 **야생에서 잡은 첫 건**
+
+커밋 `0ebb0ca` (브랜치 `fix/csm-product-segmented-columns`, 14 files, +5,126/-4).
+
+커밋 **직후** 게이트를 다시 돌렸더니 진짜 RED 이 떴다 — 내가 만든 상황이 아니다:
+
+```
+  FAIL viz_ifrs17_panels  inputs=763 (51.1MB) code=1 outputs=4
+  RED [viz_ifrs17_panels] CODE_MOVED   — 빌더 코드/의존 모듈이 바뀌었는데 골든 fixture 는 그대로다
+  RED [viz_ifrs17_panels] FIXTURE_MOVED — 골든 fixture 가 재생성됐는데 이 지문이 --update 되지 않았다
+  RED=2 → BLOCK
+
+$ git status --porcelain
+ M scripts/viz_build_ifrs17_panels.py      ← 파서 레인이 지금 고치는 중
+ M data/dart/viz/csm_amort_schedule.json   ← 그 빌더의 산출
+```
+
+`inbox/parser/20260829T0200Z__orchestrator__MULTI__csm_amort_asof_placeholder.md` 작업으로
+보인다. **이것이 바로 이 게이트가 겨냥한 실패형이다** — 빌더 코드가 움직였고(입력은 그대로),
+그러면 마스터는 낡는다. 종전에는 이 축을 보는 것이 8분짜리 골든뿐이라 훅에서 안 돌았다.
+
+`OUTPUT_DRIFT` 는 안 떴다 = 그 에이전트가 골든을 `--update` 해서 마스터·fixture 는 서로
+정합이다. 다만 지문 기준선이 낡았다.
+
+**나는 일부러 `--update` 하지 않고 RED 을 남겨 뒀다.** 남의 in-flight 빌더 변경을 내가
+재기준선으로 "축복"하면 그게 false-green 이다. 그 변경을 랜딩하는 쪽이 전체 골든을 통과시킨 뒤
+`validate_golden_input_fingerprints.py --update` 를 같이 돌려야 한다(§7-1 운영 계약).
+
 마스터 JSON·`insurequant_master_tables.xlsx`·HTML·`build_master_xlsx.py`·
 `sync_master_xlsx_sheet.py` 는 읽기만 했고 건드리지 않았다. 브랜치 변경·`git push` 없음.
+커밋 시 `--no-verify` 를 썼으나 이 저장소에 `pre-commit` 훅은 없어(`.githooks/` 에 `pre-push`
+하나뿐) 실제로 우회한 검사는 없다.
