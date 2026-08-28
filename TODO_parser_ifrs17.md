@@ -79,7 +79,7 @@
 > 이 파일은 뺐다 — 디스크상 `17BS` 시트는 이미 올바른 상태이고, 그 세션이 다음에 이
 > 파일을 커밋하면 두 시트분이 함께 들어간다.
 >
-> **커밋:** `[COMMIT_HASH]`. 대상: `IFRS17_BS.json` · `scripts/build_ifrs17_bs.py` ·
+> **커밋:** `35bfc6d`. 대상: `IFRS17_BS.json` · `scripts/build_ifrs17_bs.py` ·
 > `tests/fixtures/ifrs17_bs_golden.json` 3개만.
 >
 > status: answered(⑤ 훅 제안은 owner/orchestrator 채택 여부 결정 필요, ⑥ 잔여 위험은

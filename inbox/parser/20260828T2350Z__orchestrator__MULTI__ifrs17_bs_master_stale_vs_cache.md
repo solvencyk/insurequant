@@ -203,7 +203,8 @@ item8의 Tier-2 코드경로(`build_ifrs17_bs.py` 라인 ~610-633, TIER2 15사 �
 - 미건드림 확인: `PL_breakdown.json`·`data/dart/viz/pl_breakdown_master.json`(git status
   로 diff 없음 확인), `index.html`·`IFRS17.html`, 브랜치(`fix/csm-product-segmented-
   columns` 유지), `git push` 없음, `git add -A` 없음(개별 파일만).
-- 커밋: `<커밋 해시는 이 답변 직후 별도로 기록>`.
+- 커밋: `35bfc6d` ("parser(ifrs17): IFRS17_BS.json 재동기화 -- KR0010 R-RSV-8 오탐 배제 +
+  KR0069 기준정정 반영").
 
 status: answered — ⑤(훅 대안 채택 여부)는 owner/orchestrator 결정이 필요해 자기완결로
 닫지 않았다. ⑥은 비차단 기록.
