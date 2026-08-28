@@ -107,6 +107,73 @@
 > raw대조는 생략(패턴 근거는 위 KR0032/KR0082 두 대표사례). **결론: KR0083 외 추가 수정 0건.**
 > data/_derived/dart_sign_reversal_census{,_summary}.json에 전 후보 원장.
 
+> **➕➕ 2026-08-28 — 항목32 `기타 포괄손익(미분류)` 신설 (owner 컨펌, ticket `inbox/parser/
+> 20260828T1600Z`, resolved).** 위 두 addendum이 규명만 하고 남겨둔 "항목25≠sum(26-30)의
+> 96%는 우리 5-슬롯이 원천 leaf 전체보다 좁아서"를 실제 항목으로 메웠다. **정의는 catch-all**
+> (특정 계정 하드코딩 아님): `fetch_dart_fs.py::_oci32_from_rows` — 그 필링의 CIS 섹션에서
+> item25(`ifrs-full_OtherComprehensiveIncome`) 행과 다음 `ifrs-full_ProfitLoss` 행 사이
+> (ord 기준 위치 윈도, census와 동일 경계) 모든 leaf를 스캔해, 2개 재분류/비재분류 소계 태그와
+> 항목26-30(+`ACCT_OCI_28_FALLBACK`·`OCI_NM_FALLBACK`가 이미 claim한 것)을 뺀 나머지를 합산.
+>
+> **TAGGED 행 vs UNTAGGED 행에 다른 필터**(구현 중 실측으로 확정, 셋 다 raw 대조 완료):
+> - TAGGED 행은 `"OtherComprehensiveIncome" in account_id`일 때만 포함 — 케이디비생명(KR0072)
+>   2025.4Q/2026.2Q에서 그 윈도 안에 `ifrs-full_OtherOperatingIncomeExpense` 계열(기타영업손익/
+>   비용/수익, OCI와 무관한 다른 주석표)이 ord 우연으로 같이 걸려 있어서 필요했다 — 이 필터
+>   없이는 item32가 이 무관한 행들까지 합산해 반올림 아닌 실질 오차를 냈다.
+> - UNTAGGED 행(`account_id == "-표준계정코드 미사용-"`)은 **윈도 위치만으로 신뢰**한다(census
+>   원안과 동일 — 태그 유무로 차별 안 함). 이유: 푸본현대(KR0083) 2023.4Q에 `기타포괄손익-
+>   공정가치측정금융자산관련손익`(389,702백만, item25 잔차의 거의 전부)이 UNTAGGED로 잡히는데,
+>   그 라벨이 `OCI_NM_FALLBACK[26]`의 정확 문자열("...평가손익")과 한 글자 그룹만 다르다
+>   ("...관련손익") — 정확일치 폴백만으로는 놓친다. 이 저장소가 이미 경고한 라벨-변형 함정의
+>   실물 사례. 단 소계 행이 UNTAGGED로 나올 가능성에 대비해 `OCI_SUBTOTAL_NM`(문자열 소계
+>   2종)도 별도로 배제한다.
+> - `OCI_NM_FALLBACK`의 nm-매칭은 **untagged 여부와 무관하게** 전체 행에 적용된다는 걸 재확인
+>   (기존 `_parse()` 동작 그대로) — 케이디비생명 2026.2Q의 item26이 REAL-하지만-비표준 태그
+>   (`dart_...ChangeInFairValueOf...`)를 이름으로 claim한 사례. item32도 이 규칙을 그대로
+>   따라야 이중계상을 피한다(처음엔 "untagged일 때만 nm-claim 인정"으로 짰다가 이 사례로
+>   깨짐 — item26이 이미 가져간 값을 item32가 또 더해 잔차가 item26 크기만큼 뜸).
+>
+> **검증(282개 item25-보유 셀, `scripts/_probes/validate_item32_from_saved_master.py`,
+> `data/dart/_fs_api_cache/`만 사용 — 오프라인): 282/282(100%) 설명됨** — 273개(96.8%)가
+> `항목25==26+27+28+29+30+32`를 1% 이내로 닫고(그중 132개는 반올림 없이 정확히 0.000), 9개
+> (삼성화재 KR0008, 이미 규명된 리프 결측 구간)는 item32도 정확히 `None`(오염 없음, 26-30도
+> 전부 None인 것과 정합). **결정론 항등 검증 221건 기준 top-2 잔차**: KR0032 2026.2Q
+> 175.14백만(0.06%, 반올림), 교보생명보험 2025.4Q 1283.9백만(0.72%) — 후자는 DART 이중
+> CF헤지 태그(아래 baseline 참고), 나머지 219건은 ≤0.000001(부동소수 잡음 수준).
+>
+> **Provenance**: `data/_derived/pl_oci_item32_provenance.json`(267 company-quarter, 회사·
+> 분기별 어떤 account_id가 합산됐는지). 전수 집계: 24개사·14종 account_id — 최다순
+> 확정급여재측정(247x·23사)·신용손실(164x·15사)·자산재평가(112x·14사)·untagged 각종(83x·18사)·
+> 해외사업환산(57x·6사)·**관계기업 기타포괄손익지분**(16x·6사, 티켓의 4예시엔 없던 5번째
+> 반복패턴)·유형자산재평가(7x·3사)·삼성화재 전용 공정가치헤지 태그(3x, item28이 명시적으로
+> 배제하는 바로 그 태그 — item32가 정확히 그 몫을 받는다, 설계대로)·특별계정/오버레이접근법
+> 등 소수 태그.
+>
+> **게이트**: `validate_master_tables.py::PL_EQS`에 9번째 등식(`기타포괄손익 =
+> FVOCI채무증권+보험계약금융(OCI)+위험회피파생상품+FVOCI지분증권+재보험금융(OCI)+기타(미분류)`)
+> 신설, DEFAULT_FLOOR(200백만) 그대로. 전 버킷 시뮬레이션(`--no-build` 전/후 diff): pass
+> 2805→3025(+220) fail 12→13(+1, 아래) skip 387→522(+135, 항 하나라도 None인 셀 — 대부분
+> 삼성화재+FVOCI지분증권 미보유사, 추측 대신 스킵). 신규 fail 1건(교보생명보험 2025.4Q)은
+> `data/_gold/pl_bridge_baseline.json`에 등재(원인: raw 확인 결과 이 필링만 CF헤지를 비표준
+> 태그 2개로 이중공시 — `dart_GainsValuationDerivativesCashFlowHedge`(item28이 실제로 쓰는
+> dominant 태그) vs `dart_LossesValuationDerivativesCashFlowHedge`(+1283.875백만, item28
+> fallback 리스트 4번째라 도달 못 함) — 둘 다 item32의 claimed set 안이라 item32에도 안 잡힘.
+> `ACCT_OCI_28_FALLBACK` 주석에 이미 문서화된 "dominant 태그만 취함" 설계의 그림자이지 item32
+> 결함이 아니다). `test_identity_registry.py::REGISTRY["pl_bridge"]`는 기존 `_check_pl_bridge`
+> 전체를 가리키는 항목이라 별도 등록 불요 — measured 텍스트만 갱신.
+>
+> **KR0083 override 갭도 같이 메움**: `build_pl_breakdown.py::_GOLD_CELL_OVERRIDE`에
+> `("KR0083","2024.3Q")` 항목27/28/30 추가(`user_pl_cells.json`과 동일 값) — 이전엔 이
+> override 딕셔너리에 항목25-31 슬롯을 쓴 사례가 없어서, 이 빌더를 통짜 재실행하면
+> `pl_breakdown_master.json`만 부호가 되돌아갈 잠재 위험이 있었다(루트는 `user_pl_cells.json`
+> gold-overlay가 항상 보호). `_reconciled=True` 부작용 확인: 이 셀은 items 2-14가 이미
+> non-null(override 이전에도 Tier-2 RC 게이트 통과 상태)이라 no-op.
+>
+> 마스터 반영: `pl_breakdown_master.json` 11190→11546행(+356, 항목32만 신규 — combo-diff로
+> 변경/삭제 0 확인), `PL_breakdown.json` 동일하게 전파(`build_root_masters.build_pl()` 개별
+> 호출, `main()` 미실행). 재현: `scripts/_probes/{apply_item32_to_pl_master,
+> validate_item32_from_saved_master,residual_distribution_item32}.py` (모두 오프라인).
+
 ## 0. 운영 환경 & 회사 매핑 규칙
 
 - **OpenDART API key**는 `.env`의 `OPENDART_API_KEY`에서 읽음 (코드에 박지 말 것, 로그에도 찍지 말 것).

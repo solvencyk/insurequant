@@ -5,7 +5,8 @@
     "lob_sum_gap": 2,
     "pre_existing": 9,
     "basis_dual_note_absent": 2,
-    "entries": 12
+    "dart_dual_tag": 1,
+    "entries": 13
   },
   "entries": {
     "DB손해보험|2023.1Q|보험손익(dual)": {
@@ -105,6 +106,14 @@
       "lhs": 822607.0,
       "diff": 825.4,
       "first_seen": "2026-08-26"
+    },
+    "교보생명보험|2025.4Q|기타포괄손익 = FVOCI채무증권+보험계약금융(OCI)+위험회피파생상품+FVOCI지분증권+재보험금융(OCI)+기타(미분류)": {
+      "class": "dart_dual_tag",
+      "reason": "2026-08-28 (item32 신설 티켓 inbox/parser/20260828T1600Z, 전 버킷 시뮬레이션 중 발견): raw 캐시(data/dart/_fs_api_cache/00112882_2025_11011_OFS.json) 직접대조 — 이 필링은 위험회피 파생상품평가손익(CF헤지) 개념을 표준 CashFlowHedges 태그 없이 두 개의 다른 비표준 태그로 이중공시한다: ord48 dart_GainsValuationDerivativesCashFlowHedge(-503,822,326,163원, item28이 실제로 취하는 dominant 태그, fetch_dart_fs.py::ACCT_OCI_28_FALLBACK 순서상 2번째)와 ord55 dart_LossesValuationDerivativesCashFlowHedge(+1,283,875,333원, 같은 fallback 리스트의 4번째 — item28에 도달하지 못하고 버려짐). 두 태그 다 item32의 claimed_aid(ACCT_OCI_28_FALLBACK 전체)에 포함돼 item32에도 안 잡힌다 — 어느 항목에도 안 실리는 게 아니라 '이미 다른 태그로 대표됐다'는 판단(ACCT_OCI_28_FALLBACK 주석 원문: '<0.3% of the Gains tag's magnitude, so the dominant tag is taken rather than netted against a tag whose sign convention here is unclear'). 잔차(1,283.875백만=item25의 0.72%)는 정확히 이 두 번째 태그의 크기 — item32 회귀가 아니라 기존 item28 설계 선택의 알려진 그림자. 넷팅하면 부호 불확실성을 감수해야 해 건드리지 않는다(같은 회사의 다른 12개 분기는 전부 잔차 정확히 0.000 — 이 태그 조합이 나타난 유일한 분기).",
+      "route": "parser/ifrs17",
+      "lhs": -178478.6,
+      "diff": 1283.9,
+      "first_seen": "2026-08-28"
     }
   },
   "_round_20260825b": "inbox/_resolved/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md 처리: 16건 중 10건 완전히 고쳐 등재 삭제(copied_cell 3 전부 + basis_mix_csm_amort 5 전부 + lob_sum_gap 중 메리츠화재 2건). 나머지 6건은 raw 로 재조사해 조사노트를 남기되 등식을 못 닫아 등재 유지(class 는 실태에 맞게 조정: DB생명 2023.1Q 는 item16 부분보강 후 잔차가 item8 과 정확일치해 issuer_structural_residual 로 재분류). pre_existing 10건은 이번 티켓 범위 밖(재조준과 무관, 발주문 '나머지 13건' 계산에서 제외됨)이라 손대지 않음.",

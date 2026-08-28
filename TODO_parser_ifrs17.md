@@ -1,5 +1,124 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-28 (55th pass) — PL_breakdown 항목32 `기타 포괄손익(미분류)` 신설 (owner 컨펌,
+> orchestrator 티켓 `inbox/parser/20260828T1600Z__orchestrator__MULTI__oci_other_components
+> _single_item.md`, status: resolved).** 51st pass 원인규명("항목25≠sum(26-30)의 96%는 5-슬롯
+> 스키마가 원천 leaf 전체보다 좁아서")을 실제 항목으로 메웠다.
+>
+> **① 정의 = catch-all, 특정 계정 하드코딩 안 함.** `fetch_dart_fs.py::_oci32_from_rows`(신설)
+> — item25 행과 다음 `ifrs-full_ProfitLoss` 행 사이 위치(ord) 윈도에서, 2개 소계 태그와
+> 항목26-30이 이미 claim한 것을 뺀 나머지 leaf 전부를 합산. 구현 중 raw 대조로 3가지 함정을
+> 실측 확정: (a) TAGGED 행은 `"OtherComprehensiveIncome" in account_id`일 때만 포함 —
+> 케이디비생명(KR0072) 2025.4Q/2026.2Q에서 무관한 주석표(`OtherOperatingIncomeExpense`류,
+> 기타영업손익/비용/수익)가 같은 ord 윈도에 우연히 걸려 있어 이 필터 없이는 실질 오차 발생.
+> (b) UNTAGGED 행(`-표준계정코드 미사용-`)은 census 원안대로 **윈도 위치만으로 신뢰** —
+> 푸본현대(KR0083) 2023.4Q의 389,702백만원짜리 leaf가 UNTAGGED인데 그 라벨이
+> `OCI_NM_FALLBACK[26]`과 한 글자 그룹만 달라("...관련손익" vs "...평가손익") 정확일치
+> 폴백만으로는 놓친다 — 이 저장소가 경고해 온 라벨-변형 함정의 실물 사례. (c) `OCI_NM_FALLBACK`
+> nm-매칭은 untagged 여부와 무관하게 전체 행에 적용된다(기존 `_parse()` 동작 재확인) — 처음엔
+> "untagged일 때만 인정"으로 짰다가 케이디비생명 2026.2Q(REAL-비표준 태그를 이름으로 claim한
+> 사례)에서 이중계상 발견, 수정.
+>
+> **② 검증 = 282개 item25-보유 셀 전수, 100% 설명됨.** 273개(96.8%, 티켓 목표 96%/270 초과
+> 달성)가 `25==26+27+28+29+30+32`를 1% 이내로 닫고(132개는 반올림 없이 정확히 0.000), 9개
+> (삼성화재, 이미 규명된 리프 결측)는 item32도 정확히 None(오염 없음). 결정론 항등 221건 중
+> top-2 잔차: KR0032 2026.2Q 0.06%(반올림), 교보생명보험 2025.4Q 0.72%(DART 이중 CF헤지 태그,
+> 아래 게이트 참고) — 나머지 219건은 ≤0.000001. 재현: `scripts/_probes/{test_oci32_smoke,
+> validate_item32_full_universe,validate_item32_coalesced,validate_item32_from_saved_master,
+> residual_distribution_item32}.py`(전부 오프라인, `_fs_api_cache/`만 사용).
+>
+> **③ Provenance.** `data/_derived/pl_oci_item32_provenance.json`(267 company-quarter). 전수
+> 집계 24개사·14종 account_id — 확정급여재측정(247x·23사)·신용손실(164x·15사)·
+> 자산재평가(112x·14사)·untagged 각종(83x·18사)·해외사업환산(57x·6사)·관계기업 기타포괄손익지분
+> (16x·6사, 티켓 4예시엔 없던 5번째 반복패턴)·유형자산재평가·삼성화재 전용 공정가치헤지 태그
+> (item28이 명시 배제하는 바로 그 태그 — item32가 정확히 그 몫을 흡수, 설계대로) 등.
+>
+> **④ 게이트: `validate_master_tables.py::PL_EQS`에 9번째 등식 신설**(`기타포괄손익=
+> 26+27+28+29+30+32`, DEFAULT_FLOOR 그대로). 전 버킷 시뮬레이션(`--no-build` 전/후 diff):
+> pass 2805→3025(+220) fail 12→13(+1) skip 387→522(+135, 항 하나 이상 None인 셀 — 전부
+> pre-existing 26-30 결측, 추측 대신 스킵). 신규 fail 1건(교보생명보험 2025.4Q, raw 확인 —
+> 이 필링만 CF헤지를 비표준 태그 2개로 이중공시, item28 fallback이 dominant만 취해 나머지
+> 태그값이 item28에도 item32에도 안 잡히는 기존 설계의 그림자)은 `data/_gold/
+> pl_bridge_baseline.json`에 등재. `test_identity_registry.py::REGISTRY["pl_bridge"]`는
+> `_check_pl_bridge` 전체를 가리키는 기존 항목이라 별도 등록 불요 — measured 텍스트만 갱신.
+>
+> **⑤ KR0083 override 갭도 메움**(티켓 잔여 요청). `build_pl_breakdown.py::_GOLD_CELL_OVERRIDE`
+> 에 `("KR0083","2024.3Q")` 항목27/28/30 추가 — `pl_breakdown_master.json`이 향후 이 빌더의
+> 통짜 재실행에도 (여전히 버그인 캐시로부터) 부호가 되돌아가지 않도록 하는 belt-and-suspenders
+> (루트는 `user_pl_cells.json` gold-overlay가 이미 보호 중이었음). `v["_reconciled"]=True`
+> 부작용 확인: 이 셀 items 2-14가 이미 non-null이라 no-op.
+>
+> **⑥ 마스터 반영 — 개별 빌더만, `main()` 미실행.** `pl_breakdown_master.json`을
+> `scripts/_probes/apply_item32_to_pl_master.py`(전 356개 item25-보유 (코드,분기)에
+> `tier1_for()` 재호출, `_fs_api_cache/`만 읽음, raw XML 무관)로 직접 패치 — 11190→11546행
+> (+356, combo-diff 확인 변경/삭제 0). `build_root_masters.build_pl()` **개별 호출**
+> (`scripts/_probes/run_build_pl_only.py`, `main()`·`build_csm()` 미실행)로 루트
+> `PL_breakdown.json` 동일 전파. `sync_master_xlsx_sheet.py "손익분해PL"`로 xlsx 동기화
+> (검증 OK, 11546행×9열 완전 일치). 골든 2종(`pl_breakdown_golden.json`·
+> `master_tables_golden.json`) `--update`(빌더 재실행 아님, 디스크 현재 파일 해싱만).
+>
+> **⑦ 전수 항등식 감사**(`scripts/_probes/full_identity_audit_item32.py`): 사전 백업 대비
+> combo-diff(추가 356·삭제 0·변경 0, 전부 item32), 티켓이 명시한 두 선행 수정 생존 확인
+> (KR0083 2024.3Q item27/28/30, KR0032 2026.2Q item6/7 — 5셀 전부 원 단위 일치), company-quarter
+> 그룹 수 불변(356), non-null 값 델타(+273)가 신규 item32 non-null 개수와 정확히 일치. 오프라인
+> 테스트 94개 중 93 passed·1 skipped(RUN_PL_GOLDEN 게이트, 의도적 미실행) — 유일한 1 FAIL은
+> `test_ifrs17_bs_golden.py`(다른 빌더 `build_ifrs17_bs.py`, fetch_dart_fs.py에서 그쪽이 쓰는
+> `resolve_corp`/`REPRT`는 이번 세션에서 미변경 확인, IFRS17_BS.json 자체는 clean — 무관한
+> 공유워크트리 드리프트로 판단, 별도 task로 분리 발주(task_d1a18657), 이 티켓 범위 밖).
+>
+> **⑧ 손대지 않음(범위 밖).** `index.html`·`IFRS17.html`(화면은 orchestrator 별도 발주 예정),
+> 삼성화재 9개 분기 raw XML 백필, item26/29의 다른 비표준 태그 변형 추가 인식(item32가 이미
+> catch-all로 흡수 중이라 급하지 않음).
+>
+> status: resolved(자기완결 — 검증·게이트·감사 전부 재현 가능한 실측으로 닫힘).
+
+> **2026-08-28 (54th pass) — 미래에셋생명(KR0079) 예실차(item6/11) XBRL 형식 조사, 구현은
+> 안 함 (orchestrator 티켓 `inbox/parser/20260828T2110Z__orchestrator__KR0079
+> __mirae_xbrl_format_survey.md`, status: answered — 조사 전용 지시, 마스터 미수정).**
+> 한국어 라벨(`예상보험금`/`발생보험금`) 0회의 원인은 회사가 DART XBRL 구조화 공시(주석
+> "18-1. 보험계약부채(자산) 변동분의 차이조정 공시", 단위:원)를 쓰기 때문 — PAA 구분이
+> 별도표가 아니라 컬럼헤더(`보험료배분접근법을 적용한 보험계약 외의 보험계약`, 24회 전부
+> "외의"부정형)였다는 티켓의 가설이 맞았다.
+>
+> **① 목차부터 뽑았다** (`<!-- ===== N: 제목 ===== -->` 마커, 131개 중 보험계약 관련 6개
+> 발췌) — 같은 캡션("18-1...") 아래 서로 다른 표 3종(CSM/RA/PV 조정내역 · 보험손익의
+> 변동내역>보험수익 · (배당여부별/상품별) LRC·LIC 롤포워드)이 섞여 있어 표 안 실제 헤더까지
+> 읽어야 구분됨을 확인. 이 저장소가 세 번 반복한 "목차 안 보고 계산" 함정을 피했다.
+>
+> **② item6(원수) = -18,120.139965백만원(2026.2Q 당반기누계), 고신뢰.** 예상측 = "보험손익의
+> 변동내역>보험수익" 노트 row1(4종 한줄, 15열=5상품×3전환구분). 발생측 = "(상품별구분)"
+> LRC/LIC 롤포워드의 같은 라벨 행에서 **LIC(발생사고부채)열만**(NH와 달리 LRC_손실요소외/
+> 손실요소/LIC가 애초에 별 컬럼이라 NH 3회차 논쟁이 구조적으로 없음). population 검증 3중
+> 독립 일치(전부 원단위까지 정확): 표2 7개 구성요소 합 = 표3 보험수익 lump(부호반대) =
+> Tier-1 별도 "일반보험서비스수익" 당반기누계, 전부 594,378,172,139원. 손실요소배분 경계도
+> 두 표에서 부호까지 정확 일치(-3,603,229,273 = -3,603,229,273, NH는 10/11분기만 근사일치
+> 했는데 여기는 정확). item7(잔차)은 item6과 정확히 같은 크기만큼 줄어듦(healthy split).
+>
+> **③ item11(재보험) = +1,775.344202백만원, 중간신뢰 — Tier-1 대사 한 단계 미해결.** 구조는
+> 동일(재보험비용의 변동내역 vs 재보험 LRC/LIC 롤포워드, 상품 2종만: 사망/기타)이나, 손실요소
+> 부호관례가 원수측과 반대(rollforward LRC_손실요소 합이 P&L노트 손실요소배분액과 크기는
+> 정확히 같고 부호만 반대 — 원문 셀 직접 확인, 가정 아님)이고, 예상측·발생측 어느 쪽도
+> Tier-1 "출재보험서비스수익"(19,415.25백만원)과 안 맞음(재보험은 "재보험수익" 대응노트가
+> 없어 원인 미규명). item6 수준 3중검증은 못 얻었고 손실요소 크기일치만 확보.
+>
+> **④ 4종 경계 = 합쳐진 한 줄**(손해조사비/유지비/재산관리비 개별 열 없음, NH와 동일 패턴).
+> **⑤ 스코프 미확인**: 이 XBRL 노트 자체는 2023.2Q 파일에도 라벨이 있으나(20회) 목차마커
+> 없이 구식 캡션("22.6 보험손익의 변동내역")+상품별 5개 개별표(단위:백만원) 구조라 2026.2Q와
+> 레이아웃이 다름 — 발생측(LIC분리) 대응표가 옛 형식에도 있는지 미확인. 반기(당반기/전반기)
+> 라벨만 확인, 분기보고서(당분기/전분기) 라벨 미확인.
+>
+> **⑥ 부수 관찰(미수정, 기록만).** 기존 item4(CSM)는 "CSM/RA/PV 조정내역" 표(Era2 `first_issue`
+> 소스)와 "보험손익의 변동내역" 표가 원단위까지 일치하지만, item5(RA)는 두 표가 다른 값을
+> 준다(18,752.48 vs 22,640.01백만원) — item6/11과 무관한 기존 동작이라 손대지 않음, 기록만.
+>
+> **⑦ 재현**: `scripts/_probes/mirae_yesilcha_survey.py`(오프라인, raw XML + 루트
+> `PL_breakdown.json` 읽기전용). 마스터·`companies.py`·HTML 전혀 미수정, 확인: 동시에 진행
+> 중인 항목32 에이전트의 `PL_breakdown.json`/`pl_breakdown_master.json`/xlsx 미커밋 diff는
+> 전부 신규 `항목번호:32` 행 추가뿐(KR0079 포함, `git diff` 로 확인) — 내 세션 기여 0.
+>
+> status: answered(item6 확신 높으나 item11 population 미검증 + 2023-2025 스코프 미확인
+> 남아 orchestrator 재확인 요청. 결론 (a) — 구현은 별도 티켓 발주 요망).
+
 > **2026-08-28 (53rd pass) — NH농협손해(KR0032) 원수 예실차(item6) 최초 충전, GMM 롤포워드
 > 손실요소 경계 확정 (orchestrator 티켓 `inbox/parser/20260828T1400Z__orchestrator__KR0032
 > __yesilcha_via_gmm_rollforward_total_column.md`, status: answered — 3회차, 앞 두 번은 오답

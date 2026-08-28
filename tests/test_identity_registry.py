@@ -194,18 +194,24 @@ REGISTRY: dict[str, dict] = {
         "mutation": "inline",
     },
     "pl_bridge": {
-        "statement": "PL 손익 다리 8식(2026-08-28: 총포괄손익 == 당기순이익 + 기타포괄손익 "
-                     "추가, ticket inbox/parser/20260828T0113Z) + 보험손익 dual-form. 예: "
-                     "영업이익 == 보험손익 + 투자손익, 당기순이익 == 세전이익 − 법인세 "
-                     "(백만원, 부호는 마스터 저장 부호 그대로)",
+        "statement": "PL 손익 다리 9식(2026-08-28: 총포괄손익 == 당기순이익 + 기타포괄손익 신설,"
+                     " ticket inbox/parser/20260828T0113Z; 2026-08-28 기타포괄손익 == "
+                     "26+27+28+29+30+32(item32=기타 포괄손익(미분류) catch-all) 추가, ticket "
+                     "inbox/parser/20260828T1600Z) + 보험손익 dual-form. 예: 영업이익 == "
+                     "보험손익 + 투자손익, 당기순이익 == 세전이익 − 법인세 (백만원, 부호는 "
+                     "마스터 저장 부호 그대로)",
         "impl": [("scripts/validate_master_tables.py", "_check_pl_bridge")],
         "kind": "IDENTITY",
         "tol": {"abs": 200.0, "rel": 0.001, "unit": "백만원"},
         "tol_from": [("validate_master_tables", "DEFAULT_FLOOR", 200.0)],
-        "measured": "2,805 통과 / 12 실패(전건 data/_gold/pl_bridge_baseline.json 등재) / 387 "
-                    "skip. 0.1% 는 백만원 정수 저장의 반올림 폭. 신설 8번째 식(총포괄손익=24+25)만 "
+        "measured": "3,025 통과 / 13 실패(전건 data/_gold/pl_bridge_baseline.json 등재) / 522 "
+                    "skip. 0.1% 는 백만원 정수 저장의 반올림 폭. 8번째 식(총포괄손익=24+25)만 "
                     "따로 보면 282개 CIS-보유 셀 전건 잔차 0.000(scripts/_probes/"
-                    "census_oci_labels_pass2.py) — 반올림조차 없이 정확히 닫힌다.",
+                    "census_oci_labels_pass2.py) — 반올림조차 없이 정확히 닫힌다. 9번째 식"
+                    "(기타포괄손익=26+27+28+29+30+32)은 221개 항 전부 존재 셀 중 220 통과·1 실패"
+                    "(교보생명보험 2025.4Q, DART 이중 CF헤지 태그 — item28이 dominant 태그만 "
+                    "취해 나머지 태그값이 어느 항등식에도 안 잡히는 기존 설계, baseline 등재), "
+                    "132건은 잔차 정확히 0.000(scripts/_probes/residual_distribution_item32.py).",
         "mutation": "inline",
     },
     "pl_oci_vs_bs_aoci": {

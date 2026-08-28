@@ -107,6 +107,140 @@ ACCT_OCI_28_FALLBACK = (
 OCI_NM_FALLBACK = {26: ("기타포괄손익-공정가치측정금융자산평가손익",),
                     28: ("위험회피목적파생상품평가손익", "위험회피파생상품평가손익")}
 
+# item32 (기타 포괄손익(미분류), owner ticket inbox/parser/20260828T1600Z) -- catch-all
+# residual: every CIS OCI leaf row NOT claimed by items 26-30, summed.  Deliberately NOT a
+# fixed set of account_ids (owner: "특정 4개를 하드코딩하지 마라") -- 확정급여재측정/해외사업
+# 환산/재평가잉여금/신용손실 recur across companies but는 예시일 뿐, 회사마다 조합이 다르다.
+# The window is POSITIONAL (row `ord`), not tag-pattern matching: every tagged row strictly
+# between the item25 (ifrs-full_OtherComprehensiveIncome, 기타포괄손익 총계) row and the next
+# ifrs-full_ProfitLoss row -- this is how the source's OWN CIS block delimits "OCI detail"
+# regardless of which leaf tags a given filer happens to use.  Validated by a 282-cell full
+# census (scripts/_probes/oci_full_universe_census.py, prior ticket inbox/parser/20260828T0700Z
+# resolved): summing literally everything in that window (minus the 2 reclass/non-reclass
+# subtotal tags) reconciles item25 to the exact 원 across 270/282 (96%) cells.  item32 is that
+# same residual, minus what items 26-30 already claim, formalized as a first-class item with
+# provenance (see build_pl_breakdown.py's per-cell _oci32_src collection) instead of a client-
+# side chart computation (IFRS17.html's plOciResidual, which this item is designed to replace).
+OCI_SUBTOTAL_TAGS = {
+    "ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+}
+# Name-only mirror of the two tags above, for the rare filing where the subtotal ROW itself
+# is untagged -- without this, an untagged subtotal could slip through the untagged-leaf
+# trust-by-position path below and double-count with its own children.
+OCI_SUBTOTAL_NM = {
+    "당기손익으로 재분류되는 세후기타포괄손익의 구성요소",
+    "당기손익으로 재분류되지 않는 세후기타포괄손익의 구성요소",
+}
+
+
+def _oci32_from_rows(all_rows, annual):
+    """item32 (기타 포괄손익(미분류)): residual sum of CIS OCI leaf rows strictly between the
+    item25 row and the next ifrs-full_ProfitLoss row, excluding subtotal tags and whatever
+    items 26-30 already claim (by account_id, the ACCT_OCI_28_FALLBACK alt-tags, and the
+    untagged-row OCI_NM_FALLBACK names).  Returns (value_백만원_or_None, provenance_list).
+    None (not 0.0) when the window can't be bounded at all, or every row inside it is blank --
+    that's a genuine source gap (e.g. 삼성화재 2023.3Q-2025.3Q, which gives only the total +
+    the 2 subtotals, no leaf tags whatsoever), not a disclosed zero.  0.0 with an EMPTY
+    provenance list is a real answer: the window had leaf rows, but all of them were already
+    claimed by items 26-30 (nothing left over for this filing)."""
+    rows = [r for r in all_rows if r.get("sj_div") == "CIS"]
+
+    def ordi(r):
+        try:
+            return int(r.get("ord"))
+        except (TypeError, ValueError):
+            return None
+
+    def field(r):
+        raw = r.get("thstrm_amount") if annual else \
+            (r.get("thstrm_add_amount") or r.get("thstrm_amount"))
+        return _to_num(raw)
+
+    ord25 = None
+    pl_ords = []
+    for r in rows:
+        aid = r.get("account_id") or ""
+        o = ordi(r)
+        if o is None:
+            continue
+        if aid == ACCT_OCI[25]:
+            ord25 = o                 # last occurrence wins, matches the census probe
+        if aid == "ifrs-full_ProfitLoss":
+            pl_ords.append(o)
+    if ord25 is None:
+        return None, []
+    after = [o for o in pl_ords if o > ord25]
+    if not after:
+        return None, []
+    ord_pl = min(after)
+
+    claimed_aid = {ACCT_OCI[n] for n in (26, 27, 28, 29, 30)} \
+        | set(ACCT_OCI_28_FALLBACK) | OCI_SUBTOTAL_TAGS | {ACCT_OCI[25], ACCT_OCI[31]}
+    claimed_nm = {nm for names in OCI_NM_FALLBACK.values() for nm in names}
+    UNTAGGED = ("", "-표준계정코드 미사용-")   # DART's literal placeholder, NOT an empty string
+
+    total = 0.0
+    prov = []
+    saw_any_leaf = False
+    for r in rows:
+        o = ordi(r)
+        if o is None or not (ord25 < o < ord_pl):
+            continue
+        aid = r.get("account_id") or ""
+        if aid in OCI_SUBTOTAL_TAGS or aid in (ACCT_OCI[25], ACCT_OCI[31]):
+            continue                  # subtotal / self -- never a leaf, would double-count
+        nm_stripped = (r.get("account_nm") or "").strip()
+        if nm_stripped in OCI_SUBTOTAL_NM:
+            continue                  # untagged subtotal -- name-only safety net (rare)
+        # Mirrors _parse()'s OWN nm-fallback exactly: it matches on account_nm for EVERY row,
+        # not only ones with an empty/untagged account_id (see OCI_NM_FALLBACK application
+        # above in _parse()).  A row can carry a REAL but NON-standard tag and still be the
+        # thing item26/28 grabs by name -- confirmed 케이디비생명 KR0072 2026.2Q: ord53 is
+        # tagged dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialAssets...
+        # (not the plain ACCT_OCI[26] id) but account_nm=="기타포괄손익-공정가치측정금융자산
+        # 평가손익" matches OCI_NM_FALLBACK[26], so _parse() already counts it as item26 via
+        # the nm path.  Gating this exclusion on "aid is the untagged sentinel" (like an
+        # earlier version of this function did) missed that and double-counted the same
+        # row into item32, producing a ~2x item26 residual.
+        nm_claimed = nm_stripped in claimed_nm
+        is_untagged = aid in UNTAGGED
+        if not is_untagged and "OtherComprehensiveIncome" not in aid and not nm_claimed:
+            # A TAGGED row outside the OtherComprehensiveIncome tag family is a different note
+            # table sharing this company's ord-sequence window by coincidence, not an OCI leaf.
+            # Confirmed via raw cache (케이디비생명 KR0072 2025.4Q/2026.2Q, inbox/parser/
+            # 20260828T1600Z validation): rows tagged ifrs-full_OtherOperatingIncomeExpense /
+            # dart_OtherOperatingExpense / dart_OtherOperatingIncome (기타영업손익/비용/수익 --
+            # an unrelated operating-income breakdown) sit inside the window purely by
+            # ord-sequence coincidence.  Every confirmed real OCI leaf TAG observed across
+            # companies contains "OtherComprehensiveIncome" -- DART's own naming convention.
+            #
+            # UNTAGGED rows get NO such filter -- they are trusted BY POSITION, matching the
+            # validated 282-cell census this window logic is built on (it doesn't discriminate
+            # on tag presence either).  Once a row is confirmed strictly inside the OCI bracket
+            # and isn't a subtotal, DART's own failure to attach a standard tag isn't grounds to
+            # drop real OCI content.  Confirmed real gap this would otherwise miss: 푸본현대
+            # 2023.4Q ord62 "기타포괄손익-공정가치측정금융자산관련손익" (389,702백만, this
+            # filing's FVOCI-debt-equivalent line) is untagged AND its account_nm doesn't
+            # exactly match OCI_NM_FALLBACK[26]'s "...평가손익" (this one says "...관련손익") --
+            # an exact-name safety net alone misses it: precisely the label-variant trap this
+            # ticket warns about ("account_id를 1차 키로, account_nm은 보조로").
+            continue
+        v = field(r)
+        if v is None:
+            continue                  # tag present, no value disclosed this filing
+        saw_any_leaf = True
+        if aid in claimed_aid or nm_claimed:
+            continue                  # already counted under item 26/27/28/29/30
+        v_mm = v / 1e6
+        total += v_mm
+        prov.append({"account_id": aid or None, "account_nm": r.get("account_nm"),
+                      "값": round(v_mm, 6)})
+    if not saw_any_leaf:
+        return None, []               # window bounded but empty -- source gap, not a zero
+    return round(total, 6), prov
+
+
 _client = None
 _corp_cache: dict[str, str | None] = {}
 
@@ -279,6 +413,13 @@ def _parse(d, annual):
                 break
     for oci_item, val in oci_nm_vals.items():
         t1.setdefault(oci_item, round(val, 6))
+    # item32 (기타 포괄손익(미분류)) -- see _oci32_from_rows docstring above.  Only ever
+    # computed when item25 itself was found (no OCI section at all -> no residual either).
+    if 25 in t1:
+        v32, prov32 = _oci32_from_rows(d.get("list", []), annual)
+        if v32 is not None:
+            t1[32] = v32
+            t1["_oci32_src"] = prov32
     return t1
 
 

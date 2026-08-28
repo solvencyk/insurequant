@@ -71,8 +71,16 @@ ITEM_NAMES = {
     25: "기타포괄손익", 26: "FVOCI 채무증권 평가손익", 27: "보험계약금융손익(OCI)",
     28: "위험회피 파생상품 평가손익", 29: "FVOCI 지분증권 평가손익",
     30: "재보험금융손익(OCI)", 31: "총포괄손익",
+    # 32: 기타 포괄손익(미분류) — catch-all residual (owner 티켓 inbox/parser/20260828T1600Z).
+    # 이름은 IFRS17.html의 기존 클라이언트측 잔차 막대 라벨과 동일(plOciResidual, "기타 포괄
+    # 손익(미분류)") — 일부러 맞췄다: item32는 그 잔차를 provenance 있는 서버측 필드로 정식화한
+    # 것이다. 주의: norm()(공백 제거, validate_master_tables.py)이 "기타포괄손익(미분류)"로
+    # 정규화되는데 item25("기타포괄손익")와 다른 문자열이라 충돌 없음 — "기타 포괄손익"(공백만
+    # 다르고 접미사 없음)을 썼다면 item25와 정규화 후 동일 키가 되어 PL_EQS 등이 깨졌을 것.
+    # fetch_dart_fs.py::_oci32_from_rows가 채운다 — 다른 25-31과 동일하게 FS-API 전용.
+    32: "기타 포괄손익(미분류)",
 }
-OCI_ITEMS = (25, 26, 27, 28, 29, 30, 31)
+OCI_ITEMS = (25, 26, 27, 28, 29, 30, 31, 32)
 
 
 # --------------------------------------------------------------------------- #
@@ -546,6 +554,21 @@ _GOLD_CELL_OVERRIDE = {
     #   Check: 65569.759732(item2)+0+0+0-5850.450986(item16 below) = 59719.308746 = item1
     #   below, diff 0.000.
     ("KR0082", "2023.2Q"): {1: 59719.308746, 16: 5850.450986},
+    # 푸본현대생명 KR0083 2024.3Q: DART API 부호반전 결함(원문·캐시 대조는 51st/52nd pass,
+    # orchestrator 티켓 inbox/_resolved/20260828T1200Z에서 확인·수정 완료). item27(보험계약
+    # 금융손익 OCI)·28(위험회피 파생상품평가손익)·30(재보험금융손익 OCI) 세 값 다 |캐시|=|raw|
+    # 이고 부호만 반대. 이 항목들은 24가 아니라 25-31(OCI 확장) 슬롯이라 이 override 루프의
+    # 원래 사용례(item1-24 결측 보정)와 다르지만, 적용 메커니즘 자체(아래 main()의
+    # `for _k, _val in ov.items(): v[_k] = _val`)는 항목번호에 무관하게 동작한다 — 검증
+    # 완료(inbox/parser/20260828T1600Z, item32 신설 작업의 부산물). 이 셀은 이미
+    # data/_gold/user_pl_cells.json(gold-overlay, build_root_masters.build_pl()이 최종
+    # UPSERT)로 루트 PL_breakdown.json이 보호되고 있었으나, pl_breakdown_master.json
+    # 자체는 그 보호 밖이었다(참고용 파일이라 "검사 대상 아님"으로 문서화돼 있었지만, 이
+    # 빌더를 향후 raw가 복구된 뒤 통짜 재실행하면 이 3셀만 다시 틀린 부호로 채워짐 — 그 잠재
+    # 불일치를 메우는 belt-and-suspenders). `v["_reconciled"] = True` 부작용 확인: 이 회사·
+    # 분기는 items 2-14가 이미 전부 non-null(Tier-2 RC 게이트 기존 통과, 이 override 이전에도
+    # True)이므로 이 대입은 상태를 바꾸지 않는 no-op — 순수 OCI 항목 3개만 영향받는다.
+    ("KR0083", "2024.3Q"): {27: -265226.939791, 28: -5322.135208, 30: -536.616012},
 }
 
 
@@ -554,6 +577,7 @@ def main():
     filings = discover_filings()
     rows = []
     coverage = []  # (code, name, quarter, status, missing_items)
+    oci32_prov = []  # item32 catch-all provenance: which account_id fed each (code, quarter)
     t1_src = {"api": 0, "html": 0}
 
     for code in sorted(filings):
@@ -603,6 +627,14 @@ def main():
                     "공시분기": q,
                     "값": (round(val, 6) if isinstance(val, float) else val),
                 })
+            # item32 provenance (owner ticket inbox/parser/20260828T1600Z): catch-all, so record
+            # which account_id/account_nm rows fed the sum for this (code, quarter) — otherwise
+            # "what's in 기타" is unanswerable later.  fetch_dart_fs._oci32_from_rows stashes
+            # this as a hidden t1 key; assemble() passes it through into v untouched.
+            prov32 = v.get("_oci32_src")
+            if prov32:
+                oci32_prov.append({"원보험사코드": code, "원수사명": name, "공시분기": q,
+                                    "구성": prov32})
             # extra sub-items for reinsurers with a parallel LOB schema (코리안리 장기재보험
             # 2-1…12-1).  Emitted only when the breakdown reconciled (RC gate not tripped).
             if v.get("_reconciled") is not False:
@@ -640,6 +672,13 @@ def main():
     cov_path.write_text(json.dumps(
         [{"code": c, "name": n, "quarter": q, "status": s, "missing": m, "tier2": t2s}
          for c, n, q, s, m, t2s in coverage], ensure_ascii=False, indent=1), encoding="utf-8")
+
+    # item32 (기타 포괄손익(미분류)) provenance — which account_id/account_nm rows were summed
+    # into each (code, quarter)'s catch-all, so "what's actually in 기타" stays answerable.
+    prov_path = Path("data/_derived/pl_oci_item32_provenance.json")
+    prov_path.parent.mkdir(parents=True, exist_ok=True)
+    prov_path.write_text(json.dumps(oci32_prov, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"item32 provenance: {len(oci32_prov)} company-quarters -> {prov_path}")
     return rows, coverage
 
 
