@@ -55,7 +55,7 @@
   var SECTORS = ["보험사", "재보험사", "증권·운용", "컨설팅·회계", "학계", "언론", "감독기관", "기타"];
   // 주 타겟층(계리사) 감안 — 보험사 내 부서 구분. 선택 항목(필수 아님).
   var DEPARTMENTS = ["계리(Valuation)", "리스크관리(RM)", "기획", "상품개발", "자산운용", "언더라이팅", "재무/회계", "기타"];
-  var PURPOSES = ["리서치/애널리스트 업무", "투자 참고", "학업/논문", "개인 관심", "기타"];
+  var PURPOSES = ["업계 동향·현안 파악", "경쟁사 비교·내부 보고", "거래처 발굴·선별", "투자 판단 참고", "학술논문 작성", "기사·리포트 작성", "개인 관심"];
   var DONE_KEY = "iqSurveyDone_v1";
   var AFFIL_KEY = "iqSurveyAffil_v1";
   var SECTOR_KEY = "iqSurveySector_v1";
