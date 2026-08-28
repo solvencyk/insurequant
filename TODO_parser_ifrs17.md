@@ -1,5 +1,90 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-28 (56th pass) — IFRS17_BS.json 재동기화: 회사 2곳, 서로 다른 원인·서로 다른
+> 결론 (orchestrator 티켓 `inbox/parser/20260828T2350Z__orchestrator__MULTI__
+> ifrs17_bs_master_stale_vs_cache.md`, status: answered — ⑤ 훅 제안은 owner 재확인
+> 필요).** 골든 실패(rows 6852→6859, item8 189→196)의 진짜 원인은 티켓이 지목한 `645d74c`
+> (fs_api_cache 30파일 추가)가 **아니었다** — 직접 검증(`scripts/_probes/probe_kr0069_
+> basis_flip.py`, `probe_kb_ofs_cfs_item8.py`): 그 30개 CFS 파일은 KR0010/KR0069 어느
+> 출력에도 영향 없음(두 회사 다 문제의 (회사,분기)에서 OFS가 이미 items 1/2/3을 갖고
+> 있어 CFS fallback 미발동, `dart_GuranteeReserve` 태그는 KB 어느 캐시 파일에도 없음).
+>
+> **① KR0010(KB손해보험) 7셀 — 있었지만 틀렸다, 반영 안 함.** 원문(`FY2024_Q4/raw/
+> KR0010_..._20250314001697.xml`)에 `보증준비금...0` 텍스트가 실재하고 `parse_filing()`이
+> 2024.4Q에 한해 item17=0.0으로 정확히 추출(`scripts/_probes/probe_kb_parse_filing_
+> item17.py` — 다른 분기는 같은 문구가 있어도 파서가 안 잡음, 2025.1Q부터는 그 줄 자체가
+> 필링에서 빠짐) → item5/6/7/8 공용 롤포워드가 2025.1Q~2026.2Q로 forward-fill(6칸) → 합
+> 7셀, 골든이 지목한 델타와 정확히 일치. 그런데 재빌드 직후 `validate_data_contract.py`를
+> 돌리니 **신규 RED 7건**(`R-RSV-8`, `scripts/validate_statutory_reserves.py:396`):
+> "보증준비금은 실측상 생명보험 전용(16사)인데 손해보험사에 값 0.0이 실렸다". 직접 census
+> (`scripts/_probes/probe_item8_holders_by_biztype.py`)로 확인: 이 마스터의 item8
+> nonzero 보유사 16/16이 전부 생명보험, 손해보험은 0사(서울보증보험조차 item8 행이 아예
+> 없음). 즉 KB손해보험 필링의 그 "0"은 **손보사 표준 서식이 법정준비금 4종을 보일러플레이트로
+> 나열하다 해당 없는 개념에 0을 찍은 것**이지 진짜 disclosure가 아니다. "틀린 값을 싣느니
+> 빈 칸" 원칙에 따라 **반영하지 않기로 결정** — `build_ifrs17_bs.py`의 Tier-1
+> notes-fallback(NOTE_ITEM_MAP 17→8)에 `sb != "생명보험"`이면 skip하는 가드 10줄 추가
+> (근거 코드 주석 포함, 손으로 지우면 다음 빌드에 되살아나므로 코드 가드로 고정). 재빌드 후
+> census 재확인: item8 zero-only 보유사 0사로 원복.
+>
+> **② KR0069(삼성생명보험) 64셀 — 티켓에 없던 진짜 드리프트, 반영함.** row-count 델타(+7)
+> 만 보는 자동진단이 **값만 바뀐 셀**을 놓쳤다(내 셀단위 diff 스크립트로 잡음). 2024년 4개
+> 분기 × 16항목(자산·부채·자본·AOCI·세부 12종: 현금/FVTPL/FVOCI/상각후원가/재보험자산/
+> 유형자산/보험부채/재보험부채/투자계약부채/차입부채/기타부채/이익잉여금)이 연결(CFS)
+> 값에서 별도(OFS) 값으로 바뀐다(예: 자산총계 2024.1Q 315,772억→280,470억, 차입부채
+> 2024.4Q 199,589억→0). 원인: `8c1666b`(2026-08-26 02:17, "PL을 별도 기준으로 — 회사별
+> 감사 369셀")이 삼성생명 2024년 OFS 캐시 파일 자체를 정정했는데(그 전엔 OFS에 1/2/3이
+> 없어 `extract_quarter()`가 CFS로 폴백하고 있었다) BS 마스터가 그 이후 한 번도
+> 재빌드되지 않았다. 검증: 신·구 값 모두 자산=부채+자본 항등식이 원 단위까지 닫힘(연결/
+> 별도 어느 쪽도 산수 버그 아님, 순수 기준 전환) + CFS/OFS 캐시 파일 원문 태그와 신·구
+> 값이 정확히 일치.
+>
+> **③ 재빌드 + 골든.** `build_ifrs17_bs.py` 재실행(①의 가드 포함) → `IFRS17_BS.json`
+> 6852행(순변화: +0/-0/64값변경, 전부 KR0069, item8=189로 원복) → 셀단위 combo-diff로
+> KR0069 64건 외 0건 확인(`scripts/_probes/diff_ifrs17_bs_rebuild.py`) →
+> `python tests/test_ifrs17_bs_golden.py --update` → `pytest tests/
+> test_ifrs17_bs_golden.py` **PASSED (514.02s)**, 재현 1회차 492.42s도 PASSED(가드
+> 추가 전 버전 대상, 참고용). `validate_data_contract.py` 전/후: RED 7(R-RSV-8, 전부 내
+> 셀)→0, 잔존 RED 1건은 `PL_YTD_COLLAPSE_TO_ZERO 에이비엘생명보험`(동시 세션 PL 작업,
+> `git status`로 무관 확인 — `PL_breakdown.json`은 내 손 안 댐).
+>
+> **④ 화면 영향.** IFRS17.html Panel 1(BS T자, `eqx` 소스): 삼성생명보험 2024.1Q~4Q 선택
+> 시 자산총계·부채총계·자본총계·AOCI 및 세부 12항목이 전부 하향 재조정(별도 기준, 최대
+> 차입부채 -99%)되어 표시된다 — owner가 볼 실측 변화. KB손해보험은 화면 변화 없음(item8
+> 행이 계속 부재, 세션 시작 전 상태와 동일 — 의도한 무변화).
+>
+> **⑤ prepush 훅 — 골든 미배선 확인, 제안만(훅 미수정, 지시대로).**
+> `scripts/prepush_check.py:142-143`에 이 골든이 `fast` 리스트에서 **명시적으로 제외**돼
+> 있다(주석: "느린 것(ifrs17_bs ~2분...)은 뺀다"). 실측: 이번 세션 두 차례 pytest 실행
+> 492.42초·514.02초(둘 다 ~8분대) — 주석의 "2분" 추정이 4배 이상 틀렸다.
+> `pl_breakdown_golden`과 같은 opt-in 패턴이라 "배선을 잊었다"가 아니라 **의도적
+> 제외**지만, 효과는 CLAUDE.md "배선했다 ≠ 강제된다" 항목과 동일하다(2일 드리프트
+> 무검출). `test_push_gate_wiring.py`는 `validate_*.py` 하드게이트 배선만 감시하고
+> golden opt-out 목록의 정확성(추정치가 틀렸는지)은 아무도 감시하지 않는다. **제안
+> (미적용)**: `tests/fixtures/ifrs17_bs_golden.json`에 입력 파일 지문(캐시 glob + raw
+> dir + `bs_manual_overrides.json`의 파일명+mtime+size 해시, 파싱 없이 수초)을 같이
+> 저장해 두고, 훅에 그 지문을 재계산해 최근 골든 갱신 시점과 비교하는 초저비용 staleness
+> sniff를 추가 — 불일치 시 "입력이 움직였으니 무거운 골든을 먼저 돌려라"로 RED/WARN.
+> `pl_breakdown_golden`도 같은 노출이라 같이 적용 후보.
+>
+> **⑥ 잔여 위험(미수정, 기록만).** item8의 Tier-2 코드경로(`build_ifrs17_bs.py` 라인
+> ~610-633, TIER2 15사 중 손보 6사: 예별·AIG·악사·하나·신한이지·카카오페이손보)는 같은
+> 매커니즘(parse_filing 경유)을 쓰지만 ①의 가드가 안 걸려 있다. census 확인상 현재는 6사
+> 전부 item8 행 0개(문제 미발현)라 손대지 않았다 — 향후 이 경로에서 같은 패턴(0-only
+> 손보 행)이 나타나면 같은 가드가 필요하다.
+>
+> **⑦ xlsx.** `scripts/sync_master_xlsx_sheet.py "17BS"` 2회 실행(①의 값이 뒤집히기 전
+> 임시로 한 번, 최종본으로 다시 한 번) — 매번 "나머지 시트 값 동일" 자체검증 통과. 최종
+> 상태: KR0069 64셀 EDIT만, insert/delete 0. **커밋 제외**: 동시 세션이 같은 파일에
+> `손익분해PL` 시트 변경을 이미 staged 중이라(`git status` "M " 상태로 확인) 내 커밋에서
+> 이 파일은 뺐다 — 디스크상 `17BS` 시트는 이미 올바른 상태이고, 그 세션이 다음에 이
+> 파일을 커밋하면 두 시트분이 함께 들어간다.
+>
+> **커밋:** `[COMMIT_HASH]`. 대상: `IFRS17_BS.json` · `scripts/build_ifrs17_bs.py` ·
+> `tests/fixtures/ifrs17_bs_golden.json` 3개만.
+>
+> status: answered(⑤ 훅 제안은 owner/orchestrator 채택 여부 결정 필요, ⑥ 잔여 위험은
+> 미발현이라 비차단 기록 — 자기완결 아님).
+
 > **2026-08-28 (55th pass) — PL_breakdown 항목32 `기타 포괄손익(미분류)` 신설 (owner 컨펌,
 > orchestrator 티켓 `inbox/parser/20260828T1600Z__orchestrator__MULTI__oci_other_components
 > _single_item.md`, status: resolved).** 51st pass 원인규명("항목25≠sum(26-30)의 96%는 5-슬롯

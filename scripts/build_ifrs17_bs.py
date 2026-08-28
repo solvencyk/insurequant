@@ -745,6 +745,16 @@ def main():
         for old_item, new_item in NOTE_ITEM_MAP.items():
             if new_item not in wanted or old_item not in vals:
                 continue
+            # item8(보증준비금)은 실측상 생명보험 전용 개념이다 (2026-08-28, validate_
+            # statutory_reserves.py R-RSV-8 파생 룰 + census: 이 마스터의 nonzero item8
+            # 보유사 16/16이 전부 생명보험, 손해보험은 0사 -- 서울보증보험조차 item8 행이
+            # 아예 없다). 손보사 필링에도 "보증준비금" 이름의 표 행이 boilerplate 로 찍혀
+            # 있고 값이 0인 경우가 있는데(KB손해보험 FY2024 사업보고서 실측), 이건 그
+            # 회사가 이 준비금을 '보유하되 0'이 아니라 개념 자체가 해당 없음(N/A)이다.
+            # 미공시를 0으로 채우면 업권 합계·census 가 오염된다(R-RSV-8 메시지 그대로) --
+            # 틀린 값(가짜 0)을 싣느니 빈 칸으로 둔다.
+            if new_item == 8 and sb != "생명보험":
+                continue
             section, level = _section_level(new_item)
             rows.append({
                 "원보험사코드": kr, "원수사명": name, "티커": ticker, "생손보여부": sb,

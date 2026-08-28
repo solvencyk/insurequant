@@ -3,6 +3,50 @@
 > Last updated: 2026-08-28 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-08-28 (56th pass) — IFRS17_BS.json 재동기화: KR0010 오탐 배제 + KR0069 기준정정 반영
+
+`inbox/parser/20260828T2350Z__orchestrator__MULTI__ifrs17_bs_master_stale_vs_cache.md`.
+골든 실패(rows 6852→6859, item8 189→196)를 조사한 결과 티켓이 지목한 원인(`645d74c`의
+fs_api_cache 30파일 추가)은 실제 메커니즘이 아니었다(직접 검증). 두 가지 독립된 원인이 있었다.
+
+**KR0010(KB손해보험) 7셀은 반영하지 않았다.** 원문에 `보증준비금...0` 텍스트가 실재해
+`parse_filing()`이 2024.4Q에 한해 정확히 추출하고 그 후 6분기가 forward-fill됐지만,
+`validate_data_contract.py` 재빌드 직후 신규 RED 7건(`R-RSV-8`)이 떴다 — "보증준비금은
+실측상 생명보험 전용(16사)인데 손해보험사에 값 0.0". census로 확인: 이 마스터의 item8
+nonzero 보유사 16/16이 전부 생명보험, 손해보험 0사(서울보증보험도 행 없음). 손보사 필링의
+"0"은 보일러플레이트 서식 잔재이지 진짜 disclosure가 아니라고 판단해 `build_ifrs17_bs.py`
+Tier-1 notes-fallback에 `생손보여부 != "생명보험"`이면 skip하는 가드를 추가했다(재발 방지).
+
+**KR0069(삼성생명보험) 64셀은 반영했다.** 티켓이 진단한 row-count 델타만으론 안 보이던
+값-only 변경을 셀단위 diff로 발견 — 2024년 4개 분기 × 16항목이 연결(CFS) 기준에서 별도
+(OFS) 기준으로 바뀐다. `8c1666b`(2026-08-26, "PL을 별도 기준으로")가 삼성생명 2024년
+OFS 캐시를 정정했는데(이전엔 OFS에 자산/부채/자본이 없어 CFS로 폴백 중이었다) BS
+마스터가 그 이후 재빌드되지 않아 생긴 드리프트. 신·구 값 모두 자산=부채+자본 항등식이
+원 단위까지 닫혀 순수 기준 전환임을 확인.
+
+**재빌드 결과**: `IFRS17_BS.json` 6852행 유지(순변화 0/0/64값변경, item8=189 원복),
+combo-diff KR0069 64건 외 0건. 골든 `--update` 후 `pytest tests/test_ifrs17_bs_golden.py`
+PASSED 514.02s(재현 492.42s). `validate_data_contract.py` RED 7(R-RSV-8, 전부 내 셀)→0,
+잔존 RED 1건(PL_YTD_COLLAPSE_TO_ZERO 에이비엘생명보험)은 동시 세션 PL 작업이라 무관.
+
+**화면 영향**: IFRS17.html Panel 1 BS T자에서 삼성생명보험 2024년 4개 분기의 자산/부채/
+자본/AOCI 및 세부 12항목이 하향 재조정(최대 차입부채 -99%)돼 보인다. KB손해보험은 화면
+변화 없음(의도한 결과).
+
+**prepush 훅 조사(제안만, 훅 미수정)**: `test_ifrs17_bs_golden.py`는 `prepush_check.py`의
+`fast` 리스트에서 명시적으로 제외돼 있다(주석 근거 "ifrs17_bs ~2분"). 실측 두 차례 모두
+~8분대(492.42s/514.02s)로 그 추정이 4배 이상 틀렸다 — 의도적 제외라 "배선을 잊음"은
+아니지만 2일 드리프트가 무검출된 결과는 같다. 입력 파일(캐시+raw+overrides) 지문을
+골든 fixture에 같이 저장하고 훅에서 재계산·대조하는 저비용 staleness sniff를 대안으로
+제안(적용은 owner/orchestrator 결정 대기).
+
+**잔여**: item8 Tier-2 코드경로(TIER2 15사 중 손보 6사)는 같은 가드가 없으나 현재 6사
+전부 item8 행 0개로 미발현 — 기록만, 미수정.
+
+커밋 대상: `IFRS17_BS.json` · `scripts/build_ifrs17_bs.py` · `tests/fixtures/
+ifrs17_bs_golden.json`. xlsx는 동시 세션이 같은 파일에 다른 시트를 staged 중이라 제외
+(디스크상 17BS 시트는 이미 반영·검증 완료).
+
 ## 2026-08-28 (52nd pass) — 푸본현대생명(KR0083) 2024.3Q DART API 부호반전 3셀 수정 + 전캐시 census
 
 `inbox/_resolved/20260828T1200Z__orchestrator__KR0083_2024.3Q__dart_api_sign_reversal_gold_override.md`.
