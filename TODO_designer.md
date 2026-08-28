@@ -9,6 +9,17 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28c, owner 피드백 3건 — 완료·배포됨):** 위 2026-08-28b 배포 직후 owner 피드백:
+① 다운로드 버튼이 footer라 안 보임 → header 우측(탭과 같은 높이)으로 이동, primary 파란색.
+② "csv 여러개 zip 말고 xlsx로 만들라고 했잖아" → JSZip+CSV 폐기, SheetJS로 선택 시트를 시트 탭
+여러 개짜리 xlsx 1개로 직접 생성(마스터 JSON 그대로 fetch, `build_master_xlsx.py`의
+NUMERIC_COLS와 동일 컬럼만 숫자 coerce). `public_exports/*.csv`·`export_public_sheets.py` 삭제.
+③ "AIA생명 검색해도 안 나와" → download-survey.js 소속 datalist·report-widget.js 오류대상회사
+체크박스 둘 다 NAME_ABBR 명시매핑이 빠져 원수사명 그대로 노출되던 버그(대시보드 페이지들과
+다른 코드경로라 그 매핑을 안 물려받았음) — 매핑 추가 + 회사 체크박스에 검색창 신설.
+로컬+라이브 둘 다 실측 재확인(버튼 높이 픽셀단위 일치, xlsx를 SheetJS로 역파싱해 시트/타입
+검증, "AIA" 검색 결과 1건). main 배포 완료(`caf0691`).
+
 **Recent (2026-08-28b, 채팅 발주 — 마스터 다운로드 설문게이트 + 오류제보 팝업, 완료·배포됨):**
 - **완결.** owner가 `insurequant_collector.gs` 배포 `/exec` URL 제공 → `forms-config.js` 배선 →
   브라우저로 download/report 두 kind 다 실제 엔드포인트에 POST해 `{ok:true}` + 실제 테스트 메일
