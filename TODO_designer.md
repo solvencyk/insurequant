@@ -9,6 +9,11 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28n):** owner — 다운로드 설문 라벨 정리: 업권에서 "개인" 제거(기타로 커버),
+"보험사" 밑에 "재보험사" 추가. "소속" 라벨을 "보험사명"으로(목록이 사실상 보험사뿐), placeholder·
+검증오류 문구도 동기화. 익명 체크박스 문구를 "회사명은 비공개로 할게요 / 보험사 소속이
+아니에요"로(프라이버시·비대상 둘 다 커버). 배포 완료.
+
 **Recent (2026-08-28m):** owner: IFRS17.html "장기재보험"→"생명장기재보험"(생보사만 있는 개념).
 찾아보니 라벨 문자열이 미니테이블의 세부토글 조건문(`d.ko==="장기 재보험"`)에도 그대로 쓰여서
 라벨만 바꾸면 토글이 안 뜰 뻔했음 — wrap dict 키·토글조건·토글라벨노드·안내문구까지 8곳 전부
