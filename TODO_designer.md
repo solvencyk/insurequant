@@ -9,6 +9,13 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28h):** 모바일 탭바 "공시/보고서" 잘림 → "기타공시"로 4페이지 전부 교체(제목/
+og:title/브랜드 힌트는 안 건드림, 탭 라벨만). **IFRS17.html은 같은 파일에 다른 세션의 미커밋
+Panel 5(OCI 확장) 작업이 섞여 있어 `git apply --cached`로 이 1줄 hunk만 스테이징**, 워킹트리의
+나머지 12-hunk는 그대로 둠 — 커밋 직후 그 세션이 자기 몫을 `eec64e0`으로 정상 커밋(내 커밋
+위에 깨끗하게 얹힘, 데이터 유실 없음). main에는 탭 라벨 4개만 배포, Panel 5 확장은 그쪽 소관이라
+안 건드림(배포 여부는 그 세션/owner 결정).
+
 **Recent (2026-08-28g):** 부서 옵션 "결산(Valuation)"→"계리(Valuation)"로 정정(계리=Valuation이
 맞는 대응, 결산은 회계 마감이라 다른 개념 — owner 지적), 중복이던 별도 "계리" 항목 제거. 배포 완료.
 
