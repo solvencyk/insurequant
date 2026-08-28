@@ -214,4 +214,4 @@ status: answered (item6은 이중 population-check로 자기완결 수준 확신
 2025.4Q/2026.1Q 미확장·KR0072/KR0087 pre-existing 잔차 3건을 orchestrator가 재확인해주기
 바란다.)
 
-커밋: (아래 기록)
+커밋: `0588181`
