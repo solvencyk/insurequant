@@ -33,6 +33,11 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 OUT_DIR = REPO / "public_exports"
 
+# owner 지시(2026-08-28): 이 필드는 코리안리 내부 코드라 공개 다운로드에 넣으면 안 된다.
+# 대시보드(K-ICS/IFRS17/공시보고서 .html)는 이 필드를 회사 선택 조회 키로 그대로 쓰므로
+# 루트 마스터 JSON에서는 빼지 않는다 — public_exports/ 스냅샷에서만 제외.
+_DROP_COLS = {"원보험사코드"}
+
 # 표준 "YYYY.NQ" 형태만 분기범위 계산에 쓴다 — 일부 소스(CSM_amortization 등)는
 # "annual (filings skim)" 같은 비표준 라벨을 공시분기 자리에 넣어 문자열 정렬 시
 # 알파벳이 숫자보다 뒤로 가면서('2'<'a') 최댓값처럼 오판되는 실측 버그가 있었다(2026-08-28).
@@ -68,6 +73,7 @@ def main():
     manifest = {"generated_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "sheets": {}}
     for json_name, sheet_name in MASTERS:
         rows = read_committed_json(json_name)
+        rows = [{k: v for k, v in r.items() if k not in _DROP_COLS} for r in rows]
         out_path = OUT_DIR / f"{sheet_name}.json"
         out_path.write_text(json.dumps(rows, ensure_ascii=False), encoding="utf-8")
         quarters = sorted(set(
