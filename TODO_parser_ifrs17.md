@@ -72,6 +72,8 @@
 >
 > status: answered — 남은 확인사항 둘: (1) 이 원인 정정(첨부 아님, 본문 내부 중복 렌더링),
 > (2) `test_master_tables_golden.py` fail을 validation 세션이 이어받는지.
+>
+> 커밋: `edb6b77`
 
 > **2026-08-29 (63rd pass) — 미래에셋생명(KR0079) 2026.1Q item6 채움 + 2025.4Q 조사(안 채움,
 > 사유 규명) — coordinator 지시로 62nd pass 티켓의 스코프를 두 분기에서 확장
