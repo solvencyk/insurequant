@@ -3557,17 +3557,32 @@ def _ma_block_val(t, keys, last_only):
 # 구성요소별 조정내역 note; confirmed by item4 matching both tables' CSM row but item5 NOT
 # matching the P&L-shaped table's RA row -- a pre-existing item4/5 quirk, left untouched).
 _MA_EXP4_ROW = "발생한 보험금 및 그 밖의 발생한 보험서비스비용을 통한 증가"
+# 2025.2Q/2025.3Q word the SAME row differently in DART's XBRL taxonomy (a longer paraphrase,
+# not a different concept) -- found + triple-reconciled to the 원 (boundary rule + both
+# population checks below, exact match) for those two quarters specifically, inbox/parser/
+# 20260829T1600Z `## 답변`.  A quick sanity check there also found 2026.1Q's t_exp matches
+# ONLY this ALT wording (original needle: 0 candidates) with both checks passing exactly --
+# reported as a follow-up candidate but its master cell was deliberately NOT patched in that
+# ticket (out of its explicit 2-quarter scope, and not hand-verified row-by-row like the two
+# quarters below); do not assume it's equivalent to a full re-check before filling it.
+_MA_EXP4_ROW_ALT = "발생한 보험금 및 그 밖의 발생한 보험서비스비용에 따른 증가분"
+_MA_EXP4_ROW_VARIANTS = (_MA_EXP4_ROW, _MA_EXP4_ROW_ALT)
 _MA_ACT4_ROW = "발생한 보험금 및 기타 보험서비스비용"
 # The 예상측 table's 7 P&L components (their SUM must equal the 발생측 table's own 보험수익
 # lump row -- population check A below).  손실요소배분액 sits OUTSIDE the 4-species boundary
 # (same NH ruling, inbox/_resolved/20260828T1400Z) -- excluded from `_MA_ACT4_ROW`'s full-row
-# sum via subtraction in `_ma_yesilcha_direct`, not by omitting it from this list.
+# sum via subtraction in `_ma_yesilcha_direct`, not by omitting it from this list.  Components
+# 1/3/5 carry a second (needle, alt) tuple for the 2025.2Q/2025.3Q wording; 2/4/6/7 use
+# wording that's a substring-match under BOTH label eras already (confirmed against the raw
+# 2025.2Q/2025.3Q dump), so they needed no second variant.
 _MA_7COMP_ROWS = (
-    _MA_EXP4_ROW,
+    _MA_EXP4_ROW_VARIANTS,
     "비금융위험에 대한 위험조정의 변동분",
-    "보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익",
+    ("보험계약서비스의 이전 때문에 당기손익으로 인식된 보험수익",
+     "서비스의 이전으로 당기손익에 인식한 보험계약마진"),
     "손실요소배분액",
-    "경험 조정을 통한 증가",
+    ("경험 조정을 통한 증가",
+     "경험조정에 따른 증가분(감소분), 보험계약부채(자산)"),
     "기타 변동에 의한 증가",
     "보험취득 현금흐름의 회수와 관련되는 보험료",
 )
@@ -3577,9 +3592,13 @@ def _ma_row_sum(t, needle):
     """Sum of numeric cells in the first row of `t` whose (구분 label + 하위 라벨) contains
     `needle` -- mirrors scripts/_probes/mirae_yesilcha_survey.py's row_sum() exactly (that
     probe's values were verified cell-by-cell against the raw 2026.2Q XML before this was
-    ported into the handler)."""
+    ported into the handler).  `needle` may be a str or a tuple of label variants (different
+    filing eras word the same row differently, inbox/parser/20260829T1600Z); the first variant
+    matched, in document row order, wins."""
+    needles = (needle,) if isinstance(needle, str) else needle
     for r in t.rows:
-        if needle in "".join(r[:2]):
+        joined = "".join(r[:2])
+        if any(n in joined for n in needles):
             nums = _row_nums(r)
             if nums:
                 return sum(nums)
@@ -3589,13 +3608,14 @@ def _ma_row_sum(t, needle):
 def _ma_find_product_table(ofs_tables, row_needle):
     """별도(OFS)-only table whose header carries the 5-product breakout (사망/건강보험 cue
     excludes the 2-category (배당여부별 구분) sibling table that shares the same row labels)
-    and whose rows contain `row_needle`.  Ties broken by lowest line_no = document order =
-    당반기/당분기 block (DART prints the current period before the comparative one, verified
-    against the raw 2026.2Q XML: 당반기 table precedes 전반기 by ~240-990 lines in every
-    (표2,표3) pair found there)."""
+    and whose rows contain `row_needle` (str or tuple of label variants -- see `_ma_row_sum`).
+    Ties broken by lowest line_no = document order = 당반기/당분기 block (DART prints the
+    current period before the comparative one, verified against the raw 2026.2Q XML: 당반기
+    table precedes 전반기 by ~240-990 lines in every (표2,표3) pair found there)."""
+    needles = (row_needle,) if isinstance(row_needle, str) else row_needle
     cands = [t for t in ofs_tables
               if "사망보험" in _header_blob(t) and "건강보험" in _header_blob(t)
-              and any(row_needle in "".join(r[:2]) for r in t.rows)]
+              and any(any(n in "".join(r[:2]) for n in needles) for r in t.rows)]
     cands.sort(key=lambda t: t.line_no)
     return cands[0] if cands else None
 
@@ -3617,21 +3637,24 @@ def _ma_tier1_ins_rev(ofs_tables):
 def _ma_yesilcha_direct(tables):
     """item6 (원수 예실차, 백만원) for the Era-2 XBRL note, gated on TWO independent
     population checks so a quarter whose note layout has drifted (confirmed to happen --
-    2025.4Q/2026.1Q already lack `_MA_EXP4_ROW` verbatim, 2023.2Q-2025.1Q lack the note
-    entirely, all empirically checked via scripts/_probes/mirae_item6_extract_test.py, not
-    assumed) silently returns None instead of shipping a wrong number on a closed-form axis
-    no gate can catch (PL_YESILCHA_ZERO_OTHER_PLUG).  Boundary rule (손실요소배분액 excluded
+    2025.4Q's cue match fails check A and self-aborts, 2023.2Q-2025.1Q lack the note entirely,
+    all empirically checked via scripts/_probes/mirae_item6_extract_test.py /
+    mirae_full_sweep_with_alt.py, not assumed) silently returns None instead of shipping a
+    wrong number on a closed-form axis no gate can catch (PL_YESILCHA_ZERO_OTHER_PLUG).  Two
+    label eras for the 예상측 EXP4 row are tried via `_MA_EXP4_ROW_VARIANTS` (2026.2Q: the
+    original wording; 2025.2Q/2025.3Q, and 2026.1Q too: the ALT paraphrase -- see that
+    constant's comment, inbox/parser/20260829T1600Z).  Boundary rule (손실요소배분액 excluded
     from the 4-species 발생 side, mirroring NH inbox/_resolved/20260828T1400Z): `act` = the
     발생 row's full sum (all LRC_손실요소외/손실요소/LIC cols) MINUS the 예상측 table's own
     손실요소배분액 row -- NOT a naive LIC-only column pick (that happened to equal this exact
-    formula for 2026.2Q because LRC_손실요소외 is 0 in every product column there, verified
-    cell-by-cell, not the general case)."""
+    formula for every quarter checked so far because LRC_손실요소외 is 0 in every product
+    column there, verified cell-by-cell, not the general case)."""
     ofs_tables = _prefer_ofs(tables)
-    t_exp = _ma_find_product_table(ofs_tables, _MA_EXP4_ROW)
+    t_exp = _ma_find_product_table(ofs_tables, _MA_EXP4_ROW_VARIANTS)
     t_act = _ma_find_product_table(ofs_tables, _MA_ACT4_ROW)
     if t_exp is None or t_act is None:
         return None
-    exp = _ma_row_sum(t_exp, _MA_EXP4_ROW)
+    exp = _ma_row_sum(t_exp, _MA_EXP4_ROW_VARIANTS)
     loss_alloc = _ma_row_sum(t_exp, "손실요소배분액")
     full_row = _ma_row_sum(t_act, _MA_ACT4_ROW)
     if exp is None or loss_alloc is None or full_row is None:
@@ -3657,8 +3680,10 @@ def extract_tier2_miraeasset(tables):
          carries values ONLY in CSM cols (PV/RA cols 0) → whole-row sum = item4; /1e6 → 백만원.
     Era-1 preferred.  item3/8 + RC come from the FS income-statement legs in assemble().
     item6 (원수 예실차): only when `_ma_yesilcha_direct`'s dual population-check gate passes
-    (currently just 2026.2Q, verified; other Era-2 quarters' note wording differs -- see that
-    function's docstring).  item11 (재보험 예실차): still data-absent -- the mirror-image
+    (verified for 2026.2Q and, via `_MA_EXP4_ROW_VARIANTS`, 2025.2Q/2025.3Q; the gate ALSO
+    passes for 2026.1Q under the same variant but that quarter's master cell was deliberately
+    left unpatched, inbox/parser/20260829T1600Z -- see that constant's docstring).  item11
+    (재보험 예실차): still data-absent -- the mirror-image
     재보험 note's Tier-1 population check ('출재보험서비스수익') would not close within the
     investigation ticket's scope (inbox/_resolved/20260828T2110Z §4), so no extraction is
     wired for it; do not add one without first closing that reconciliation."""

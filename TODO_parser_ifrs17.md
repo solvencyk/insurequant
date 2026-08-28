@@ -1,5 +1,140 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-29 (62nd pass) — 미래에셋생명(KR0079) 2025.2Q·2025.3Q item6(원수 예실차) 채움 +
+> `xml/` 서브디렉터리 glob 사각 census (orchestrator 티켓 `inbox/parser/20260829T1600Z__
+> orchestrator__KR0079__mirae_2025q2q3_xml_subdir.md`, status: answered — 2026.1Q 미패치
+> 판단 + `build_net_income_breakdown.py`/`build_equity_composition_tier2.py` 처리 여부는
+> orchestrator/owner 재확인 필요).** 앞 티켓(`0588181`, 61st pass)이 "2025.2Q/2025.3Q는
+> raw가 zip만 있어 확인 불가"로 남긴 것이 **틀렸다** — orchestrator가 `xml/` 하위에 실제
+> XML이 있음을 실측 지적. 정정.
+>
+> **① glob 오판 원인 재확인.** 그 결론을 냈던 이전 세션은 `mirae_item6_extract_test.py`에
+> 하드코딩된 경로 목록만 봤고, 2025.2Q/2025.3Q는 `raw/KR0079_미래에셋생명/xml/<rcept>.xml`
+> (분기보고서 규약)인데 목록에 없었다 — 즉 판단 자체가 안 됐던 것이지 라이브 파이프라인의
+> 버그는 아니었다. **`scripts/build_pl_breakdown.py`의 실제 `discover_filings()`+`_xmls_in()`
+> 은 처음부터 `xml/`을 정확히 훑고 있었다**(라인 289-291, 3-way glob) — 그 증거로 마스터를
+> 열어보니 KR0079 2025.2Q/2025.3Q는 이미 item4/5/9/10(CSM/RA 상각)이 정상 채워져 있었고
+> item6만 0이었다(`scripts/_probes/mirae_2025q2q3_check_master.py`). 항목6은 별도
+> population-check 게이트(`_ma_yesilcha_direct`)가 라벨 불일치로 자기기권 중이었을 뿐.
+>
+> **② 라벨 변형 발견 — 표2(예상측) 노트가 2026.2Q와 다른 문구를 쓴다.** 원문 직접 대조
+> (`scripts/_probes/mirae_2025q2q3_dump_texp_candidate.py`): 2026.2Q는
+> `"발생한 보험금 및 그 밖의 발생한 보험서비스비용을 통한 증가"`인데, 2025.2Q/2025.3Q는
+> `"발생한 보험금 및 그 밖의 발생한 보험서비스비용에 따른 증가분(감소분), 보험계약부채(자산)"`
+> — 같은 개념의 DART XBRL 택소노미 패러프레이즈(길이만 다름, 값 위치·표 구조 동일: 5상품×
+> 3전환유형=15열 wide table). 표3(발생측)의 라벨(`_MA_ACT4_ROW`)은 두 분기 모두 원래 상수와
+> 그대로 일치 — 발생측이 아니라 예상측 라벨만 바뀌었다.
+>
+> **③ 두 분기 다 삼중 대사 + 경계 규칙 원 단위 완전 일치 (베끼지 않고 각 분기 직접 재계산,
+> `scripts/_probes/mirae_2025q2q3_full_recon.py`).**
+> ```
+> 2025.2Q: 후보A(LIC열단독)=277,903,899,183  후보B(합계−손실요소배분)=277,903,899,183  (A=B, diff=0)
+>          경계: 표3 손실요소열 합=−1,746,487,144 = 표2 손실요소배분액 합=−1,746,487,144 (일치)
+>          내부검산: 표2 7성분 합=520,920,018,629 = 표3 보험수익 lump(부호반전) (일치)
+>          Tier-1 앵커: 별도 일반보험서비스수익=520,920,018,629 (7성분 합과 일치)
+>          item6 = (285,824,182,112 − 277,903,899,183)/1e6 = **7,920.282929백만원**
+> 2025.3Q: 후보A=후보B=437,835,809,466 (diff=0) · 경계 −2,882,700,242=−2,882,700,242(일치)
+>          내부검산·Tier-1앵커 전부 원 단위 일치 · item6 = **△2,353.842208백만원**
+> ```
+> 2026.2Q와 동일하게 두 분기 모두 LRC_손실요소외 열이 5개 상품 전부 리터럴 `0`이라 후보A=
+> 후보B(대수적으로 항상 그런 게 아니라 이 3개 분기 전부 우연히 그런 것 — 코드는 일반식
+> B를 쓴다).
+>
+> **④ 구현 — 라벨 상수를 튜플로 확장, 값을 하드코딩하지 않음.** `companies.py`에
+> `_MA_EXP4_ROW_ALT` + `_MA_EXP4_ROW_VARIANTS` 신설, `_MA_7COMP_ROWS`의 성분 1/3/5를
+> (원문, ALT) 튜플로 확장(2/4/6/7은 두 라벨 era 모두 substring match라 변경 불요),
+> `_ma_row_sum`/`_ma_find_product_table`가 str-or-tuple 둘 다 받도록 일반화.
+> `_ma_yesilcha_direct`는 `_MA_EXP4_ROW_VARIANTS`로 t_exp를 찾고 계산 — **하드코딩된 두
+> 숫자를 심은 게 아니라, 실제 프로덕션 함수가 raw XML에서 다시 뽑아 검산**
+> (`scripts/_probes/mirae_2025q2q3_verify_production.py`, `_ma_yesilcha_direct`/
+> `extract_tier2_miraeasset` 직접 호출 — item4/5/9/10 불변, item6 두 분기 모두 위 값과
+> 정확히 일치). **2026.2Q 회귀 0**(같은 스크립트로 재확인, −18120.139965 그대로).
+>
+> **⑤ 부수 발견 — 2026.1Q도 같은 ALT 라벨로 게이트를 통과하지만 이번 티켓 범위 밖이라
+> 마스터는 안 건드림.** 전 분기 스윕(`scripts/_probes/mirae_full_sweep_with_alt.py`)에서
+> 2026.1Q가 check_a/check_b 둘 다 원 단위로 통과(item6=△7,139.787657) — 원래 라벨로는
+> 후보 0개, ALT로만 매치함을 별도 확인(`mirae_2026q1_alt_sanity.py`). 코드는 분기별
+> allowlist가 없는 설계라(라벨/모양 게이트만) 이 값 자체는 이미 계산 가능하지만, **이
+> 티켓이 요구한 "각 분기 직접 원문 행 대조" 수준의 검증을 2026.1Q에는 아직 안 했고 티켓
+> 스코프도 두 분기로 명시**돼 있어 손대지 않음 — companies.py 주석에 근거 남기고
+> 후속 티켓 후보로 보고. 2025.4Q는 여전히 check_a 실패로 정상 자기기권(회귀 없음).
+>
+> **⑥ 반영 — item7(기타) 잔차 흡수, 61st pass와 동일 공식.** item7_new = item7_old −
+> item6_new: 2025.2Q `1165.706406→−6754.576523`, 2025.3Q `−12223.519936→−9869.677728`.
+> gold override(`data/_gold/user_pl_cells.json`) KR0079 grep 0건 — ABL 함정 재발 없음.
+> `pl_breakdown_master.json` 서지컬 패치(백업 `.bak_20260829_mirae_2025q2q3`) → 정확히
+> 4셀 변경, 11546행 불변 → `build_root_masters.build_pl()`(개별함수, `main()` 아님) →
+> 전후 전수 diff: 6키 변경(패치 4개 + item6/7 2025.4Q의 값_당분기만 — Q3→Q4 flow-diff
+> 리플, `_flow_dangi` 설계상 당연한 부수효과, 값 자체는 불변), non-KR0079 변경 0건,
+> 회사 census 36개 불변 → `sync_master_xlsx_sheet.py "손익분해PL"` 10셀 동기화("11546행×9열
+> 마스터와 완전 일치" 자체검증 통과).
+>
+> **⑦ 골든 + 신설 지문 게이트 둘 다 갱신.** `tests/test_pl_breakdown_golden.py --update`
+> (빌더 재실행 없음 — git-purge 브랜치 회피, 선례와 동일): sha256_master만 이동,
+> coverage/rows(11546)/company_quarters(356)/coverage_rows(426)/non_null_values(9994) 전부
+> 불변. `validate_golden_input_fingerprints.py`: 실행 전 다른 5개 spec 전부 `ok`(공유트리
+> 오염 없음 확인) → `--update` 후 pl_breakdown만 이동(code/fixture/master sha256), 재실행
+> RED 2(CODE_MOVED+FIXTURE_MOVED)→0.
+>
+> **⑧ 전수 감사.** 항목32=356셀 · KR0083 2024.3Q item27=△265,226.939791 · KR0032 2026.2Q
+> item6=△10,243 · KR0070 item6 2024.4Q=586.0/2025.1Q=△3,591.0 · KR0079 2026.2Q
+> item6=△18,120.139965(불변)/item11=0 — 전부 생존. 356개 (사,분기) 전수 폐쇄식(item3=
+> 4+5+6+7·item8=9+10+11+12) 스캔: **7건 미달, 전부 KR0072(4)·KR0087(3) 사전 존재
+> 잔차**(KR0079/이번 패치와 무관 확인, 61st pass와 동일 집합). `validate_master_tables.py
+> --no-build` exit 2·RED 2건(`SENSITIVITY_UNIT_SANITY`, 라이나생명·카카오페이손해,
+> pre-existing, PL_breakdown 무관). 오프라인 pytest: deploy_assets·rule_coverage_manifest·
+> identity_tautology·viz golden 2종·dividend golden·master_tables golden·tests/unit·
+> push_gate_wiring = **199 passed, 1 skipped, 0 failed**.
+>
+> **⑨ glob 사각 census (report-only, orchestrator 요청) — 별도 확인·수정 없음.**
+> `data/dart/FY*/raw/KR*` 재계산: **xml/ 하위만=64건, 최상위만=313건, 둘 다=18건,
+> 둘 다 없음(zip-only 등)=43건**(orchestrator 실측 64/18과 정확 일치,
+> `scripts/_probes/glob_blindspot_census.py`). `build_net_income_breakdown.py:550`의
+> `*.xml`+`extracted/*.xml`만 보는 glob은 **실제로 `xml/`을 빠뜨리는 버그가 맞지만,
+> 이 스크립트는 현재 라이브 파이프라인에서 쓰이지 않는다**(`main()`을 호출하는 곳이
+> 저장소 전체에 0건 — `if __name__=="__main__"`으로만 실행 가능. `pl_breakdown/{common,
+> companies}.py`가 임포트하는 건 `to_num` 헬퍼 하나뿐, `main()`과 무관. 산출물
+> `data/dart/viz/net_income_breakdown.json`의 마지막 git 커밋이 **2026-06-07**로 84일
+> 정체. 유일 소비자 `scripts/_build_lob_cross_check.py`도 자기 자신 외 어디서도 호출되지
+> 않고(2026-05-31 최초 커밋 이후 미변경) `docs/LESSONS_2026-06-07.md` 참조 1건뿐 — 사실상
+> dead-end 체인). 그래도 실측(`scripts/_probes/net_income_breakdown_glob_impact.py`,
+> SONBO 11사 기준): `_resolve_raw_dirs`가 149개 dir을 찾지만, **더 심각한 별개의
+> 사전존재 버그**(분기 dir 이름에 rcept suffix가 없어 `per_dir` dict key가 회사명 하나로
+> 충돌 → 최신 분기 1개만 남고 **101개가 glob 검사 전에 이미 조용히 버려짐**)로 48개만
+> 생존, 그중 4개가 현재 glob으로 xml 0건인데 **3개는 실제로 `xml/`에 XML이 있다**(현대해상
+> FY2023_Q4·코리안리 FY2023_Q4·FY2024_Q4 — 주의: 이 셋은 디렉터리명에 rcept suffix가 있는
+> "연차" 명명인데도 XML은 `xml/` 하위에 있는 예외 케이스, 나머지 1개(하나손해보험
+> FY2026_Q2)는 진짜 zip-only 결측). **같은 패턴이 `scripts/build_equity_composition_tier2.py:
+> 708-711`에도 있음**(top-level `*_00760.xml`→`*.xml`만, `xml/` 없음) — 단 이 스크립트도
+> 다운스트림 전체(`emit_equity_composition_provenance.py`·`fill_equity_item10_notes.py`·자체
+> 골든)가 2026-08-14에 `archive/2026-08_equity_composition/`로 옮겨졌고(`IFRS17_BS.json`이
+> 유일 17BS 마스터라는 기존 결정과 일치) 이 스크립트를 호출하는 곳도 0건 — 같은
+> "dormant" 분류. **다른 라이브 경로는 이 패턴이 아니다**: `build_csm_waterfall_master.py`·
+> `build_pl_breakdown.py`(`_xmls_in`, discover_filings의 실제 소스)·
+> `build_ifrs17_bs.py`(`**/*.xml` 재귀)·`check_csm_coverage.py`는 이미 `xml/`을 명시
+> 커버하거나 재귀 glob이라 안전. `ifrs17_batch_all.py`/`ifrs17_ingest_audit_annual.py`
+> (`annual_raw_dir` 헬퍼)·`ifrs17_batch_sensitivity_fy2025.py`·`emit_sensitivity_
+> provenance.py`(`_find_raw`)·`companies.py`의 `extract_tier2_aia`(KR0080 전용)는 설계상
+> 항상 rcept suffix 있는 "연차" 규약 dir만 다뤄서 top-level-only glob이 의도적으로 맞다
+> (단 위 3개 예외 케이스처럼 연차 dir이 실제로 `xml/`을 쓰는 사례가 있어 완전히 안전하다고
+> 단정은 안 함 — 지금까지 실제 매치된 사례는 0건). `ifrs17_batch_historical.py`·
+> `ifrs17_promote_history_to_measurement.py`는 애초에 `xml/`만 보도록 의도적으로 짜여
+> 있어 반대 방향이라 해당 없음. `ifrs17_batch_measurement.py`·`ifrs17_batch_sensitivity.py`
+> 는 `settings.raw_dir`(레거시 `data/dart/raw/`, 현재 `CORPCODE.xml` 하나만 존재하는 빈
+> 트리)를 봐서 이 패턴과 무관하게 이미 전량 `no_raw_cache`로 비활성 상태. **고칠지는
+> 다음 판단** — report only.
+>
+> **커밋**: `scripts/pl_breakdown/companies.py`·`data/dart/viz/pl_breakdown_master.json`·
+> `PL_breakdown.json`·`insurequant_master_tables.xlsx`·`tests/fixtures/{pl_breakdown_golden,
+> builder_input_fingerprints}.json`·신설 probe 다수(`scripts/_probes/mirae_2025q2q3_*.py`·
+> `mirae_full_sweep_with_alt.py`·`mirae_2026q1_alt_sanity.py`·`glob_blindspot_census.py`·
+> `net_income_breakdown_glob_impact.py`) + 이 티켓·`TODO_parser_ifrs17.md`.
+> 커밋 해시: (다음 커밋에 기록)
+>
+> status: answered (2026.1Q 미패치 판단 + build_net_income_breakdown.py/
+> build_equity_composition_tier2.py 처리여부는 orchestrator/owner 재확인 필요 — 자기완결
+> 아님).
+
 > **2026-08-29 (61st pass) — 미래에셋생명(KR0079) 2026.2Q item6(원수 예실차) 채움 (예실차
 > 3사 시리즈 마지막). item11(재보험)은 조건부 보류 유지.** 티켓
 > `inbox/parser/20260828T2300Z__orchestrator__KR0079__mirae_yesilcha_implement.md`,
