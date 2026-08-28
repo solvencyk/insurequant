@@ -1,5 +1,15 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
+> Last updated: 2026-08-29(3회차, 세션 인계) — (2회차) 세션이 커밋 직전에 중단돼 워킹트리에
+> 변경만 남아 있던 것을 이어받아 처리. **처음부터 다시 하지 않고**, 신규 세션에서 두 경로로
+> 독립 재검증만 수행: ① `probe_20260829c_tier1_note_check.py`(FLATTEN 함수 출력 기준) ②
+> 신규 `probe_20260829d_xlsx_disk_note_verify.py`(xlsx 실물 바이트를 openpyxl로 직접 읽어
+> 확인) — 둘 다 78행 비고 non-empty·13행 100%초과 문구·오탐 0 재확인. `sync_master_xlsx_sheet.py
+> --dry-run` 3개 신규 시트 전부 `변경 0`으로 이미 목표상태와 일치함도 재확인(추가 쓰기 없이
+> 재확인만). `git add`(내 파일 10개만, `git add -A` 안 씀) 후 커밋 **`4092a0a`**
+> (`fix/csm-product-segmented-columns`, push 안 함). 티켓 `inbox/parser/20260829T0100Z`를
+> `status: resolved`로 `inbox/_resolved/`로 이동. status: resolved(코드/xlsx/inbox 전부 종결).
+>
 > Last updated: 2026-08-29(2회차) — 같은 inbox `20260829T0100Z` 코디네이터 검토 후속: 스키마·
 > 검증 전부 통과 확인 + **`기본자본소진율` 시트 100%초과 13행 비고 보강**. census 재확인
 > (`probe_20260829b_tier1_strict_list.py`): `utilization_pct`>100 6개사(NH농협192.9·
@@ -263,8 +273,13 @@ Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/dom
 
 ## Status
 
+**2026-08-29(3회차, 세션 인계) — (2회차)가 커밋 직전 세션 중단으로 멈춰 워킹트리에만 남아
+있던 것을 이어받아 독립 재검증(2경로: FLATTEN 함수 출력 + xlsx 실물 바이트 직접 읽기) 후
+커밋 `4092a0a` 실행. 티켓 `inbox/_resolved/20260829T0100Z`로 이동, status: resolved 완결.**
+
 **2026-08-29(2회차) — 코디네이터 검토 통과 + 기본자본소진율 100%초과 13행 비고 보강 완료.
-git add(내 파일만)+커밋 완료. status: answered(owner 재확인은 대기, 코드/xlsx 작업은 종결).**
+(주: 이 항목이 적었던 "git add+커밋 완료"는 실제로는 미실행이었다 — 세션이 커밋 직전에
+중단됐다. 실제 커밋은 위 3회차에서 수행.) 코드/xlsx 작업 자체는 이 시점에 이미 종결.**
 
 **2026-08-29(1회차) — inbox `20260829T0100Z`(orchestrator, 자본 마스터 3종 xlsx 편입): 신규 시트 3개
 (기본자본소진율·보완자본소진율·자본비율전망, 3,026행) 추가 완료·검증 통과. "tier2 4개사 이상치"
