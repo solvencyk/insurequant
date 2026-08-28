@@ -246,10 +246,10 @@
       [el("option", { value: "", text: "선택 안 함" })].concat(PURPOSES.map(function (p) { return el("option", { value: p, text: p }); })));
     var consentCb = el("input", { type: "checkbox", id: "iqdl-consent" });
     var errorMsg = el("div", { class: "iq-form-error", id: "iqdl-error", text: "보험사명 또는 비공개 체크, 시트 1개 이상, 안내사항 확인이 필요합니다(비공개 선택 시 업권도 알려주세요)." });
-    var submitBtn = el("button", { class: "iq-btn", type: "submit", text: "남기고 다운로드" });
+    var submitBtn = el("button", { class: "iq-btn", type: "submit", text: "다운로드" });
     var honeypot = el("input", { type: "text", name: "website", tabindex: "-1", autocomplete: "off", style: "position:absolute;left:-9999px;width:1px;height:1px;opacity:0" });
 
-    var form = el("form", { id: "iqdl-form" }, [
+    var scrollWrap = el("div", { class: "iq-modal-scroll" }, [
       el("div", { class: "iq-field" }, [el("label", { text: "보험사명" }), affilCombo.wrap, anonLabel]),
       el("div", { class: "iq-field" }, [el("label", { text: "부서 " }, [el("span", { class: "iq-hint", text: "(선택)" })]), deptSel]),
       sectorField,
@@ -257,13 +257,15 @@
       el("div", { class: "iq-field" }, [el("label", { text: "사용 목적 " }, [el("span", { class: "iq-hint", text: "(선택)" })]), purposeSelect]),
       el("div", { class: "iq-disclaimer" }, [document.createTextNode(DISCLAIMER_TEXT)]),
       el("div", { class: "iq-disclaimer" }, [document.createTextNode("제출 정보(보험사명·업권·부서 등)는 이용 현황 파악과 데이터 품질 개선 참고용으로만 사용하며, 외부에 제공하지 않습니다.")]),
-      el("div", { class: "iq-field", style: "margin-bottom:12px" }, [
+      el("div", { class: "iq-field", style: "margin-bottom:0" }, [
         el("label", { class: "iq-check-row", for: "iqdl-consent" }, [consentCb, document.createTextNode("위 안내사항을 확인했습니다")])
-      ]),
-      honeypot, errorMsg, submitBtn
+      ])
     ]);
+    var footer = el("div", { class: "iq-modal-footer" }, [honeypot, errorMsg, submitBtn]);
 
-    var panel = el("div", { class: "iq-modal-panel", role: "dialog", "aria-modal": "true", "aria-labelledby": "iqdl-title" }, [
+    var form = el("form", { id: "iqdl-form" }, [scrollWrap, footer]);
+
+    var panel = el("div", { class: "iq-modal-panel iq-modal-split", role: "dialog", "aria-modal": "true", "aria-labelledby": "iqdl-title" }, [
       el("div", { class: "iq-modal-head" }, [
         el("div", { class: "iq-modal-title", id: "iqdl-title", text: "테이블 다운로드(.xlsx)" }),
         el("button", { class: "iq-modal-close", type: "button", "aria-label": "닫기", text: "×" })
@@ -310,7 +312,7 @@
       }).catch(function (err) {
         console.error("[download-survey] 다운로드 실패:", err);
         submitBtn.disabled = false;
-        submitBtn.textContent = "남기고 다운로드";
+        submitBtn.textContent = "다운로드";
         errorMsg.textContent = "다운로드 중 문제가 발생했습니다. 다시 시도해 주세요.";
         errorMsg.classList.add("show");
       });
