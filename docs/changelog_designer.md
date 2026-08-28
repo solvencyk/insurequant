@@ -7,6 +7,66 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-08-28b — 마스터 데이터 다운로드 설문게이트 + 4페이지 오류제보 팝업 (owner 채팅 발주)
+
+owner: index.html에 마스터 xlsx 다운로드 버튼, 짧은 설문(소속·데이터목록·목적·disclaimer) 제출해야
+다운로드 제공. 4페이지 공통 우하단 "오류 제보" 팝업(시트·회사·분기 중복선택+자유서술)도 owner
+Gmail로 도착하게. "그 외 아이디어 있으면 제안해봐라"도 포함된 발주.
+
+**전제 고지**: GitHub Pages는 서버 없는 정적 호스팅이라 이 게이트는 실접근제어가 아니라 소속을
+정중히 묻는 매너 절차 — `public_exports/*.csv`는 URL을 아는 누구나 접근 가능함을 owner에게
+명시.
+
+**빌드**:
+- `scripts/export_public_sheets.py` — 마스터 JSON 8개(`build_master_xlsx.py`의 MASTERS 리스트와
+  동일 소스, "요약" 시트 제외)를 `public_exports/*.csv`로 값-스냅샷 export. 마스터 xlsx는 아예
+  안 건드림(수식 캐시 wipe 리스크 원천 차단) — CSV는 JSON에서 직접 생성.
+- `common.css`에 모달/폼 디자인시스템 신설(`.iq-modal-*`, `.iq-field`, `.iq-check-grid`,
+  `.iq-report-fab` 등) — 기존 토큰(`--bg`/`--card`/`--border`/`--primary`/`--sp-*`/`--r-*`)만
+  사용, 새 색상값 없음.
+- `download-survey.js`(index.html 전용): 소속은 `<input list>` + `<datalist>` 네이티브
+  타이핑검색(커스텀 콤보 없이 무료 접근성 확보) + 자유입력 허용. "기타(익명)"은 목록 밖 별도
+  링크로 분리, 클릭 시 확인 단계 한 번 더(owner 요청 — 다른 항목보다 일부러 클릭 한 번 더 들게).
+  데이터 목록은 체크박스 8개, 전체선택 버튼 없음(owner 요청). 2개 이상 선택 시 JSZip으로 묶어
+  1개 파일 다운로드, 1개면 바로 다운로드. localStorage로 최초 방문자는 전체 설문, 재방문자는
+  시트 선택만(소속 재확인 안 함) — 재방문 다운로드도 매번 collector에 기록(이메일은 안 감,
+  다운로드 kind는 시트 기록만이라 비용 없음).
+- `report-widget.js`(4페이지 공통, `<script data-sheet-hint="...">`로 페이지별 시트 사전선택):
+  우하단 플로팅 버튼 → 시트(단일)·회사(다중, 39개사 체크그리드)·분기(다중, 13개 체크그리드)·
+  오류사항(자유서술) 모달. 허니팟 필드로 봇 방어.
+
+**중간 발견 — 백엔드 갈아탐**: 처음엔 Google Form에 커스텀 UI를 proxy-POST하는 방식으로
+설계(무료·가입만 필요·no-cors라 성공/실패를 못 읽는 한계 있음)했는데, git status에서 낯선
+파일(`scripts/appsscript/insurequant_collector.gs`)을 발견 — 같은 공유 워킹트리에서 **다른
+세션이 동시에** 이 정확히 같은 기능을 위한 Apps Script Web App을 만들어두고 있었다(스키마무관
+단일 엔드포인트, `kind`로 download/report 분기, report만 owner Gmail + 저장소 inbox 티켓
+포맷으로 자동 변환해 발송, `LockService`로 동시제출 경합 처리 — Google Form 방식보다 명백히
+우월). owner에게 확인받고 그쪽으로 전면 전환: `forms-config.js`를 Form 2개+entry ID 방식에서
+단일 `/exec` URL 방식으로 재작성, `report-widget.js`의 payload 키를 그 스크립트의 `_notify()`가
+찾는 `sheet`/`company`/`period` 이름에 맞춤.
+
+**owner가 Apps Script 배포 후 `/exec` URL 제공 → 실배선**:
+- `forms-config.js`의 `action`에 실제 URL 반영.
+- **CSP 함정 실측**: `connect-src`에 `https://script.google.com`만 넣었더니 브라우저 콘솔에
+  `script.googleusercontent.com`(Apps Script가 실행을 리다이렉트하는 실제 도메인) CSP violation —
+  `curl`로는 리다이렉트 처리가 꼬여(411/405) 진단이 안 됐고, 실제 `fetch()`를 쓰는 브라우저에서
+  콘솔 에러로 원인이 바로 잡혔다. `connect-src`에 `script.googleusercontent.com` 추가해 해결
+  (4페이지 전부).
+- **실전송 검증**: 브라우저에서 `IQ_FORMS.submit("download", ...)` / `submit("report", ...)`
+  둘 다 실제 엔드포인트로 POST해 `{ok:true}` 확인 — report는 owner Gmail로 실제 테스트 메일 1통
+  발송해 알림 경로까지 종단 확인(제목에 `[테스트]` 명시).
+- 로컬(`python -m http.server`)과 라이브(`www.insurequant.com`) 양쪽에서 전체 UI 흐름(버튼→폼
+  →제출→다운로드) 실클릭 재확인, 콘솔 에러 0.
+
+**배포**: `validate_data_contract.py` RED=0 확인 → 격리 워크트리로 main cherry-push(2회 —
+1차 UI+로컬 검증본, 2차 실배선본) → owner 승인("밀어붙여라") 하에 `git push origin main`
+(→`c9e707d`) → 라이브 재검증(`public_exports/17BS.csv` 200, `forms-config.js`에 실 URL 반영
+확인, 라이브에서 실제 POST `{ok:true}`).
+
+**(참고, 스코프 밖이라 안 건드림)**: 같은 세션에서 K-ICS `하나생명`/`하나생명보험` 원수사명
+오철자 정정 건도 처리·배포함 — 별도 항목이라 이 changelog 위 섹션(2026-08-28 표시명 정리)이
+아니라 `docs/changelog_parser_kics.md`에 기록.
+
 ## 2026-08-28 — 회사명 표시 정리 4페이지 확장 + main 배포 (owner 채팅 발주)
 
 owner가 라이브에서 "에이아이에이생명·에이비엘생명처럼 영문을 한글로 풀어쓴 회사명이 지저분하다,

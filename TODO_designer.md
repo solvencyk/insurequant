@@ -9,7 +9,13 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
-**Recent (2026-08-28b, 채팅 발주 — 마스터 다운로드 설문게이트 + 오류제보 팝업, 진행 중):**
+**Recent (2026-08-28b, 채팅 발주 — 마스터 다운로드 설문게이트 + 오류제보 팝업, 완료·배포됨):**
+- **완결.** owner가 `insurequant_collector.gs` 배포 `/exec` URL 제공 → `forms-config.js` 배선 →
+  브라우저로 download/report 두 kind 다 실제 엔드포인트에 POST해 `{ok:true}` + 실제 테스트 메일
+  1통 수신 확인 → **CSP가 `script.google.com`만 허용하고 `script.googleusercontent.com`(Apps
+  Script가 실행을 리다이렉트하는 실제 도메인)을 안 허용해서 막혔던 것 발견·수정**(콘솔 CSP
+  violation으로 실측) → main 배포(`c9e707d`) → 라이브(www.insurequant.com)에서도 실제 POST
+  재확인, `{ok:true}` + 콘솔 에러 0. 상세: [changelog_designer.md](docs/changelog_designer.md#2026-08-28b).
 - owner: index.html에 마스터 xlsx 다운로드 버튼 신설, 짧은 설문(소속/데이터목록/목적/disclaimer) 제출해야 다운로드. 4페이지 공통 우하단 "오류 제보" 팝업(시트/회사/분기 중복선택+자유서술)도 owner Gmail로 도착하게.
 - **GitHub Pages는 서버 없는 정적 호스팅이라 게이트는 실접근제어가 아니라 매너 절차** — public_exports/*.csv는 URL 아는 사람 누구나 접근 가능, owner에게 명시적으로 알림.
 - 빌드: `scripts/export_public_sheets.py`(마스터 JSON 8개 → `public_exports/*.csv`, 마스터 xlsx는 안 건드림 — 수식캐시 리스크 회피) · `common.css`에 모달 디자인시스템 추가 · `download-survey.js`(index.html 전용 — 소속 datalist 타이핑검색+"기타(익명)" 2클릭 마찰 설계, 시트 체크박스 전체선택버튼 없음, JSZip으로 복수시트 zip 다운로드, localStorage로 재방문자는 슬림 피커) · `report-widget.js`(4페이지 공통 플로팅 버튼, 페이지별 `data-sheet-hint`로 시트 사전선택) · JSZip 3.10.1 CDN(npm mode, SRI, `compute_sri.py`에 등재).
