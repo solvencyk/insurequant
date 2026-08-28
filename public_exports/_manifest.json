@@ -1,0 +1,45 @@
+{
+  "generated_at_utc": "2026-08-28T02:15:44Z",
+  "sheets": {
+    "17BS": {
+      "rows": 6852,
+      "quarter_min": "2021.4Q",
+      "quarter_max": "2026.2Q"
+    },
+    "K-ICS공시": {
+      "rows": 22688,
+      "quarter_min": "2023.1Q",
+      "quarter_max": "2026.1Q"
+    },
+    "금리민감도": {
+      "rows": 522,
+      "quarter_min": "2024.4Q",
+      "quarter_max": "2025.4Q"
+    },
+    "CSM워터폴": {
+      "rows": 2172,
+      "quarter_min": "2023.1Q",
+      "quarter_max": "2026.2Q"
+    },
+    "CSM상각": {
+      "rows": 390,
+      "quarter_min": null,
+      "quarter_max": null
+    },
+    "신계약CSM배수": {
+      "rows": 331,
+      "quarter_min": "2023.1Q",
+      "quarter_max": "2026.1Q"
+    },
+    "손익분해PL": {
+      "rows": 8698,
+      "quarter_min": "2023.1Q",
+      "quarter_max": "2026.2Q"
+    },
+    "배당": {
+      "rows": 2043,
+      "quarter_min": "2023.1Q",
+      "quarter_max": "2026.2Q"
+    }
+  }
+}
