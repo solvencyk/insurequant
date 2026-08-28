@@ -130,12 +130,15 @@
           </label>
         </div>
         <div>
-          <label>경과조치: 
+          <label>경과조치:
             <select id="transition-mode" class="select">
               <option value="적용전">적용 전</option>
               <option value="적용후">적용 후</option>
             </select>
           </label>
+        </div>
+        <div>
+          <button id="reportThisBtn" type="button" class="iq-anon-link" style="font-size:13px">⚑ 이 데이터에 오류가 있나요?</button>
         </div>
       </div>
       <div class="chart-container">
@@ -1470,6 +1473,11 @@
         companySelect.addEventListener('change', () => { updateTable(); refreshBottomPanels(); });
         periodSelect.addEventListener('change', updateTable);
         document.getElementById('transition-mode').addEventListener('change', updateTable);
+        // 오류 제보를 지금 보고 있는 회사로 프리필해서 연다(우하단 버튼은 백업).
+        const reportBtn = document.getElementById('reportThisBtn');
+        if (reportBtn) reportBtn.addEventListener('click', () => {
+          if (window.IQreport) window.IQreport.open({ sheet: 'K-ICS공시', company: companySelect.value || undefined });
+        });
 
         // 초기 업데이트
         updateTable();

@@ -116,11 +116,28 @@
     var closeBtn = panel.querySelector(".iq-modal-close");
     var lastFocused = null;
 
-    function open() {
+    // prefill = {sheet, company, period} — 차트/표에서 "이 값 오류 신고"로 열 때 현재 보고
+    // 있는 시트·회사·분기를 미리 채운다(inbox/designer/20260828T0300Z 추가요청: 우하단 버튼만
+    // 있으면 드롭다운 3개를 다시 채우다 이탈하니, 프리필 진입이 주 경로여야 한다).
+    function open(prefill) {
       lastFocused = document.activeElement;
       backdrop.style.display = "flex";
-      sheetSelect.focus();
       document.addEventListener("keydown", onKeydown);
+      if (!window.IQ_FORMS.isConfigured()) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "일시적으로 제출을 받을 수 없습니다";
+      }
+      if (prefill && prefill.sheet && SHEETS.indexOf(prefill.sheet) !== -1) sheetSelect.value = prefill.sheet;
+      if (prefill && prefill.company) {
+        var coCb = document.getElementById("iqrep-co-" + prefill.company);
+        if (coCb) coCb.checked = true;
+      }
+      if (prefill && prefill.period) {
+        var qCb = document.getElementById("iqrep-q-" + prefill.period);
+        if (qCb) qCb.checked = true;
+      }
+      if (prefill && (prefill.sheet || prefill.company || prefill.period)) detail.focus();
+      else sheetSelect.focus();
     }
     function close() {
       backdrop.style.display = "none";
@@ -134,6 +151,7 @@
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (!window.IQ_FORMS.isConfigured()) return;
       if (honeypot.value) return; // bot
       var sheet = sheetSelect.value;
       var companies = Array.prototype.slice.call(companyGrid.querySelectorAll("input:checked")).map(function (c) { return c.value; });
@@ -165,8 +183,10 @@
   function init() {
     var modal = buildModal();
     var fab = el("button", { class: "iq-report-fab", type: "button" }, [document.createTextNode("⚑ 오류 제보")]);
-    fab.addEventListener("click", modal.open);
+    fab.addEventListener("click", function () { modal.open(); });
     document.body.appendChild(fab);
+    // 페이지 스크립트가 표/차트에서 바로 프리필 호출하는 공개 API(백업 경로=우하단 버튼).
+    window.IQreport = { open: modal.open };
   }
 
   if (document.readyState === "loading") {

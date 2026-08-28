@@ -106,6 +106,7 @@
             <option value="year" selected>연도</option>
             <option value="quarter">분기</option>
           </select></label>
+          <button id="reportThisBtn" type="button" class="iq-anon-link" style="font-size:13px">⚑ 이 데이터에 오류가 있나요?</button>
         </div>
       </div>
       <div id="emptyHint" class="placeholder-empty">보험사를 선택해 주세요</div>
@@ -1781,6 +1782,12 @@
       const opt=document.createElement("option"); opt.value=code; opt.textContent=shortName(codeToName[code]); sel.appendChild(opt)
     }
     sel.addEventListener("change", onSelect);
+    // 오류 제보를 지금 보고 있는 회사로 프리필해서 연다(우하단 버튼은 백업). 이 페이지는
+    // BS·CSM워터폴·상각·NB배수를 함께 보여줘 시트 하나로 못 좁혀 회사만 채운다.
+    const reportBtn = document.getElementById("reportThisBtn");
+    if (reportBtn) reportBtn.addEventListener("click", () => {
+      if (window.IQreport) window.IQreport.open({ company: codeToName[sel.value] || undefined });
+    });
     const perSel=document.getElementById("wfPeriod");
     if (perSel) perSel.addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
     window.addEventListener("resize", ()=>{ if (charts.wf) charts.wf.resize(); if (charts.pl) charts.pl.resize(); });

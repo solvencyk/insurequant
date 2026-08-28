@@ -83,6 +83,7 @@
           <option value="quarter" selected>분기</option>
           <option value="year">연도</option>
         </select></label>
+        <button id="reportThisBtn" type="button" class="iq-anon-link" style="font-size:13px">⚑ 이 데이터에 오류가 있나요?</button>
       </div>
       <div id="emptyHint" class="coming-soon"><h3>보험사를 선택해 주세요</h3></div>
       <div id="dashHost" style="display:none">
@@ -338,6 +339,11 @@
       const opt = document.createElement("option"); opt.value=code; opt.textContent=shortName(codeToName[code]); sel.appendChild(opt);
     }
     sel.addEventListener("change", onSelect);
+    // 오류 제보를 지금 보고 있는 회사로 프리필해서 연다(우하단 버튼은 백업).
+    const reportBtn = document.getElementById("reportThisBtn");
+    if (reportBtn) reportBtn.addEventListener("click", () => {
+      if (window.IQreport) window.IQreport.open({ sheet: "배당", company: codeToName[sel.value] || undefined });
+    });
     const perSel = document.getElementById("period");
     if (perSel) perSel.addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
     const covEl = document.getElementById("divCoverageLine");
