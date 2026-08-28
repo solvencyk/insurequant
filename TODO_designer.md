@@ -9,6 +9,13 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28l):** owner 실측 지적 — 소속 검색(`<input list>`+`<datalist>`)이 ① 부분일치가
+부실(브라우저가 prefix 위주라 "코리안" 다 쳐야 겨우 나오거나 안 나옴) ② 값 있는 상태에서 재클릭해도
+목록 안 열림. 둘 다 네이티브 datalist의 알려진 한계 — 커스텀 콤보박스로 교체(`buildAffilCombo()`,
+common.css `.iq-combo-*`는 세션 초반에 준비만 해두고 안 쓰던 걸 이번에 씀): substring 매칭,
+focus/click마다 항상 재오픈(현재 값과 무관하게 전체 목록 + select), 화살표↑↓/Enter 키보드 선택,
+매치 없으면 자유입력 그대로 유지. 배포 완료.
+
 **Recent (2026-08-28k):** 업권 select — 익명 체크 전엔 `display:none`으로 숨기고 체크 시에만
 노출(익명일 때만 필수라 평소엔 안 보이는 게 맞다는 owner 제안). 배포 완료.
 
