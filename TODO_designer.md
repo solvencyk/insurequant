@@ -9,6 +9,12 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28i, [긴급] owner):** "원보험사코드가 코리안리 내부 코드라 공개하면 안 된다"
+— `export_public_sheets.py`가 스냅샷 생성 시 그 컬럼을 드롭하도록 수정, 8개 시트 전부
+재생성해 이미 배포됐던 값을 덮어씀(main 배포 완료, 라이브 curl로 8개 시트 전부 컬럼 목록에서
+빠진 것 확인). **루트 마스터 JSON은 안 건드림** — 대시보드 4페이지가 그 필드를 회사 선택
+조회 키로 쓰고 있어 거기서 빼면 사이트 기능이 깨진다(다운로드 스냅샷 레이어에서만 제외).
+
 **Recent (2026-08-28h):** 모바일 탭바 "공시/보고서" 잘림 → "기타공시"로 4페이지 전부 교체(제목/
 og:title/브랜드 힌트는 안 건드림, 탭 라벨만). **IFRS17.html은 같은 파일에 다른 세션의 미커밋
 Panel 5(OCI 확장) 작업이 섞여 있어 `git apply --cached`로 이 1줄 hunk만 스테이징**, 워킹트리의
