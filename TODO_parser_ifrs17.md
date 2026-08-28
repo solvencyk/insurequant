@@ -1,5 +1,48 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-28 (57th pass) — ABL생명(KR0070) 원수·재보험 예실차(item6/item11) 채움, 8+10/10
+> 분기 (orchestrator 티켓 `inbox/parser/20260828T2100Z__orchestrator__KR0070__
+> abl_yesilcha_both_legs.md`, status: answered — 2개 분기 owner 재확인 필요).** 이 회사는
+> 종전에 "막혔다"고 닫혔지만 그 결론은 NH(KR0032)의 PAA 오염 문제를 안 본 회사에 확대적용한
+> 실수였다 — ABL은 `보험료배분접근법` 0회로 그 문제가 아예 성립 안 함, 노트26
+> `보험영업수익과 보험영업비용`이 원수·재보험 양쪽에 예상/발생 4·2종 split을 이미 갖고 있었다.
+>
+> **① 1급 검증 = 주석37 MD&A 산문 대조.** "예상 보험금 대비 실제 보험금 차이가 N억원이며,
+> 예상 사업비 대비 실제 사업비 차이는 M억원" 문장이 2024.4Q 사업보고서부터 매 분기 실재.
+> 노트26이 존재하는 10개 분기(2024.1Q-2026.2Q) 전부 재현, 7개 분기(주석37이 있는 구간)
+> 대조 — 5개(2025.2Q/3Q/4Q, 2026.1Q/2Q)는 보험금·사업비 둘 다 원 단위 정확 일치, **2개
+> (2024.4Q, 2025.1Q)는 안 맞았다** — 뽑지 않고 item6만 보류(item11은 별도 검증으로 채움).
+> 2024.4Q는 25배 차이(주석이 "장래손해조사비...산출방법론 변경" 일회성 효과를 명시).
+> 2025.1Q는 보험금(-50=-50)은 맞는데 사업비(계산+14 vs 주석-17)만 안 맞음 — 동일
+> [당분기,전분기] 헤더를 쓰는 2026.1Q는 둘 다 맞아서 헤더/컬럼 버그가 아님을 확인, 원인
+> 미확인인 채 보류. 재현: `scripts/_probes/abl_yesilcha_full_probe.py`.
+>
+> **② 재보험 leg 부호는 item6과 어순 반대.** item11 = 발생2종(재보험수익, revenue) −
+> 예상2종(재보험비용, cost) — item6의 "예상−발생" 어순을 그대로 베끼면 부호가 뒤집힌다.
+> 재보험은 "예상"이 비용섹션, "발생"이 수익섹션(원수와 반대)이라, item8(=재보험수익합−
+> 재보험비용합, 이미 이 마스터가 쓰는 부호규칙)과 같은 규칙(수익행 +, 비용행 −)을 따른
+> 결과다. item8이 두 분기 다 주석37("재보험으로 인해 인식한 손익은 …억")과 정확히 일치해
+> item11은 2024.4Q·2025.1Q 포함 10/10 채웠다.
+>
+> **③ 함정 재확인: gold override가 item6=0 가정을 박제하고 있었다.** 2026-08-25 다른
+> 티켓(`20260825T1120Z`)이 KR0070 item7을 gold override로 고정했는데, 그 계산식이
+> item6=0을 전제로 했다(당시 item6의 유일한 값). `build_pl()`가 override를 무조건
+> UPSERT하는 순서라 내 item6이 들어가도 item7이 옛 값 그대로 남아 PL_BRIDGE가 실측으로
+> 깨졌다(FAIL 6건, diff가 전부 item6_new와 정확히 일치 — 진단 재현 쉬움). 5건 재계산
+> (`abl_yesilcha_fix_gold_overlay.py`, old−item6_new)으로 해결, PL_BRIDGE KR0070 관련
+> FAIL 0. **owner 수정 gold-overlay가 정본이라는 원칙 자체는 안 깨졌다** — override 값이
+> 스스로 stale해졌을 때는 override를 고치는 게 맞다(값을 지우거나 무시한 게 아님).
+>
+> **④ 회귀 확인.** 항목32(d634492)·KR0032 item6/7(72cc896)·KR0083 item27/28/30(ca827ed)
+> 전부 생존 확인(`abl_yesilcha_full_identity_audit.py`). offline pytest 443 passed/2
+> skipped(전체 스위트, 1 fail은 동시세션 IFRS17_BS 건, 무관).
+>
+> **⑤ 공유 워크트리 — HEAD가 세션 중 3회 이동.** designer 다운로드설문 2건 +
+> IFRS17_BS.json 재동기화 세션이 동시 진행 중이었다. `git add`를 파일 단위로만 하고
+> `IFRS17_BS.json`/`scripts/build_ifrs17_bs.py`/`TODO_downloader.md`/`docs/
+> changelog_downloader.md`/그쪽 `_probes/*.py` 전부 미터치 — 그 세션은 이미 자체 커밋
+> (`35bfc6d`/`83eca8e`)함.
+>
 > **2026-08-28 (56th pass) — IFRS17_BS.json 재동기화: 회사 2곳, 서로 다른 원인·서로 다른
 > 결론 (orchestrator 티켓 `inbox/parser/20260828T2350Z__orchestrator__MULTI__
 > ifrs17_bs_master_stale_vs_cache.md`, status: answered — ⑤ 훅 제안은 owner 재확인

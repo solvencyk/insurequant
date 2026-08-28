@@ -37,6 +37,7 @@ from scripts.pl_breakdown.common import (  # noqa: E402
 )
 from scripts.pl_breakdown.tier1 import extract_tier1  # noqa: E402
 from scripts.pl_breakdown.tier2 import (  # noqa: E402
+    extract_tier2_abl,
     extract_tier2_life,
     extract_tier2_sonbo,
     extract_tier2_sonbo_structured,
@@ -338,6 +339,11 @@ def parse_filing(dirs, is_life, code=None, name=None, quarter=None):
             # AIA has no table at all for this data (prose-only note) -- needs the raw
             # rcept dirs to re-read the XML text directly, not the parsed `tables`.
             t2 = handler(tables, dirs=dirs)
+        elif handler is extract_tier2_abl:
+            # note26 예실차 (item6) needs `quarter` to suppress ONE known-anomalous cell
+            # (2024.4Q) whose note37 MD&A prose contradicts its own note26 table -- see
+            # _ABL_ITEM6_SUPPRESS_QUARTERS in tier2.py.
+            t2 = handler(tables, quarter=quarter)
         else:
             t2 = handler(tables) if handler else {}
         if not t2 or all(t2.get(i) is None for i in (4, 5)):

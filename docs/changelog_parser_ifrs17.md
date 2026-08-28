@@ -3,6 +3,95 @@
 > Last updated: 2026-08-28 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-08-28 (57th pass) — ABL생명(KR0070) 원수·재보험 예실차(item6/item11) 채움, 8+10/10 분기
+
+`inbox/parser/20260828T2100Z__orchestrator__KR0070__abl_yesilcha_both_legs.md`.
+
+ABL생명(KR0070)의 item6(원수 예실차)·item11(재보험 예실차)이 항상 0/null이었다. 종전 종결
+경위는 두 단계 실수였다: 재보험 leg의 "발행/재보험 net 분리불가" 커버리지 코멘트가 회사
+전체로 일반화됐고, 그 위에 "NH(KR0032)처럼 또 가정이 틀렸을 것"이라는 유추로 세 회사가
+한꺼번에 닫혔다 — 안 본 회사의 결론을 확대적용한 것이고, 그 NH 결론 자체도 이후 뒤집혔다
+(`72cc896`).
+
+**소스 = 노트26 `보험영업수익과 보험영업비용`.** ABL의 IFRS17 노트가 원수(보험수익/
+보험서비스비용)·재보험(재보험수익/재보험비용) 양쪽에 예상-vs-발생 split을 이미 갖고
+있었다 — `extract_tier2_abl`(기존, item4/5/9/10만 다른 노트에서 읽음)이 이 노트 자체는
+한 번도 안 읽고 있었다. 신설 `_abl_note26_yesilcha`(scripts/pl_breakdown/tier2.py)가
+revenue/cost 두 테이블을 EXACT 행 라벨로 찾아(substring 아님 — 노트(5) 롤포워드의
+"발생보험금 및 기타보험서비스비용" 같은 유사행과 구분) item6/item11을 계산한다.
+
+**item6 = 예상4종(보험수익) − 발생4종(보험서비스비용).** 원수 쪽은 직관적 — 예상은 수익
+섹션, 발생은 비용섹션, 4종 = 보험금/손해조사비/계약유지비/투자관리비. "4종 밖"(손실부담
+계약관련비용·발생사고요소조정·취득CF상각·손실요소배분액·기타)은 item7로 흡수 — NH에서
+확정된 경계 규칙(`_resolved/20260828T1400Z`)과 동일 원칙.
+
+**item11 = 발생2종(재보험수익) − 예상2종(재보험비용) — item6과 어순이 반대다.** 재보험
+leg은 "예상"이 비용섹션(예상재보험금·예상손해조사비), "발생"이 수익섹션(발생재보험금·
+발생손해조사비)에 있다 — 원수와 정반대 배치. item6의 글자순서(예상−발생)를 그대로
+베꼈으면 부호가 뒤집혔을 것이다. item9(재보험CSM상각)·item10(재보험RA)이 이미 이
+마스터에서 쓰는 부호규칙(둘 다 재보험비용/비용섹션에서 -abs())과 일관되게, item11도
+"수익행은 +, 비용행은 −"로 item8(=재보험수익합−재보험비용합)이 스스로 쓰는 규칙을 그대로
+따른다. 2026.2Q 검산: 발생재보험금 20,220 − 예상재보험금 21,500 = −1,280백만원(티켓 원문
+검산과 일치).
+
+**1급 검증 = 주석37 MD&A 산문.** ABL은 사업/분기보고서 본문에 "보험손익의 주요 원인은
+예상 보험금 대비 실제 보험금 차이가 N억원이며, 예상 사업비 대비 실제 사업비 차이는
+M억원입니다"라는 문장을 2024.4Q부터 매 분기 직접 싣는다 — 이 저장소에서 드문 1차 확인
+재료. 노트26이 존재하는 10개 분기(2024.1Q-2026.2Q, 2023년은 노트 자체가 없음) 전부에서
+계산을 재현하고, 주석37이 있는 7개 분기(2024.4Q 이후) 전부 대조했다:
+
+- **5/7 정확 일치** (2025.2Q/3Q/4Q, 2026.1Q/2Q): 보험금·사업비 두 sub-figure 모두 원 단위
+  일치(0-2억 반올림 이내).
+- **2024.4Q 불일치** (25배): 산문 -270억/-97억 vs 계산 -11억/+17억. 노트26 자체 행의 여러
+  조합(발생사고요소조정 포함/제외, 부호반전 등)을 시도했으나 재현 못 함. 산문이 "장래
+  손해조사비 반영 및 시행세칙 변경에 따른 손해진전계수 산출방법론 변경 등으로 인한 효과가
+  포함되어 있고"라는 일회성 효과를 명시 — "장래" 현금흐름 재추정은 IFRS17상 CSM(가정 및
+  경험조정, CSM_waterfall item4) 영역일 가능성이 있으나 미확인.
+- **2025.1Q 부분 불일치**: 보험금 sub-figure는 정확(-50=-50)한데 사업비만 안 맞음(계산
+  +14억 vs 산문 -17억). 헤더/컬럼 버그 가설을 검증으로 배제 — 2026.1Q가 동일한
+  [당분기,전분기] 2열 헤더를 쓰는데 그쪽은 보험금·사업비 둘 다 정확히 맞는다. 원인
+  미확인인 채 보류.
+
+item6은 (보험금+사업비) 통합 단일 셀이라 부분 채움이 불가능해 두 분기 다 item6 전체를
+비웠다(item7도 원래 값 그대로, 손 안 댐) — "확신이 안 서면 채우지 마라"는 티켓 지시를
+문자 그대로 따른 것. item11은 이 두 분기 포함 10/10 채웠다 — item8(재보험 순손익, 다른
+소스에서 옴)이 두 분기 다 주석37의 "재보험으로 인해 인식한 손익은 …억"과 정확히
+일치해(2024.4Q "-56억", 2025.1Q "-39억") 독립적으로 검증됐기 때문이다.
+
+**함정: gold override가 item6=0 가정을 박제.** `data/_gold/user_pl_cells.json`에
+2024.1Q/2Q/3Q·2025.1Q/2Q/3Q item7 override가 있었다(2026-08-25,
+`20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md` — item4의
+2026-08-17 override가 item7 잔차에 반영 안 돼 있던 걸 고친 것). 그 계산식(item3-item4_
+override-item5-item6)은 item6=0을 전제했다 — 당시 item6의 유일한 값이었으므로. `build_pl()`
+가 override를 파이프라인 값 위에 무조건 UPSERT하는 순서라, 내 item6이 마스터에 들어가도
+override된 item7은 옛 값 그대로 남아 `validate_master_tables.py --no-build` PL_BRIDGE가
+실측으로 깨졌다(FAIL 6건, diff가 전부 그 분기의 item6_new와 정확히 일치 — 원인 진단이
+쉬웠다). `scripts/_probes/abl_yesilcha_fix_gold_overlay.py`(멱등 — 재실행 시 마커로 감지해
+skip)로 override 5건을 `old − item6_new`로 재계산해 해결(2025.1Q는 item6 보류라 그 override
+그대로 둠). "owner gold-overlay가 정본"이라는 원칙은 안 깨졌다 — override 자체가 스스로
+stale해졌을 때는 override를 고치는 것이 맞다.
+
+**적용**: `scripts/pl_breakdown/tier2.py`(`extract_tier2_abl` 확장, `_abl_note26_*` 헬퍼,
+`_ABL_ITEM6_SUPPRESS_QUARTERS`), `scripts/build_pl_breakdown.py`(LIFE_HANDLERS 디스패치에
+`extract_tier2_abl` 전용 `quarter=quarter` 전달 추가 — 향후 전체 재빌드에도 억제셋 반영).
+surgical patch(`build_root_masters.build_pl()` 개별호출, `main()` 미실행) — item6 8분기·
+item11 10분기, item7/item12는 설계식 재계산, 총 33셀. xlsx는
+`sync_master_xlsx_sheet.py "손익분해PL"`. `tests/fixtures/pl_breakdown_golden.json`
+`--update`(빌더 재실행 없음, on-disk 아티팩트 재해시 — KR0032 선례와 동일).
+
+**회귀 확인**: 항목32(`d634492`)·KR0032 item6/7(`72cc896`)·KR0083 item27/28/30(`ca827ed`)
+전부 생존(`abl_yesilcha_full_identity_audit.py`). `validate_master_tables.py --no-build`
+KR0070 관련 FAIL·NEW-FAIL 0건. offline pytest 443 passed/2 skipped(전체 스위트, 1건 실패는
+동시세션 IFRS17_BS 건이며 무관 — 그 세션 `35bfc6d`/`83eca8e`로 이미 커밋 완료).
+
+재현: `scripts/_probes/abl_yesilcha_full_probe.py`(주석37 대조),
+`abl_yesilcha_verify_handler.py`(핸들러 검증), `abl_yesilcha_apply_patch.py`(패치,
+idempotent), `abl_yesilcha_fix_gold_overlay.py`(override 수정, idempotent),
+`abl_yesilcha_full_identity_audit.py`(회귀 감사).
+
+**미해결**: 2024.4Q·2025.1Q의 item6. 원문 PDF(렌더링본, XML/XBRL 아님)를 봐야 -270억/-17억
+같은 숫자의 실제 근거를 확인할 수 있을 것으로 보인다.
+
 ## 2026-08-28 (56th pass) — IFRS17_BS.json 재동기화: KR0010 오탐 배제 + KR0069 기준정정 반영
 
 `inbox/parser/20260828T2350Z__orchestrator__MULTI__ifrs17_bs_master_stale_vs_cache.md`.

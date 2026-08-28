@@ -404,14 +404,140 @@ def _life_generic_core(tables):
     return out
 
 
-def extract_tier2_abl(tables):
+def _abl_note26_tables(tables):
+    """Locate KR0070's '26/27. 보험영업수익과 보험영업비용' note's TWO tables -- (1) 보험영업수익
+    (보험수익 + 재보험수익 sections) and (2) 보험영업비용 (보험서비스비용 + 재보험비용 sections)
+    -- by EXACT row label, not substring: '발생보험금' must not catch note(5)'s rollforward row
+    '발생보험금 및 기타보험서비스비용' (already excluded via _is_rollforward, kept anyway as a
+    second guard).  '예상재보험금' on the cost table's row set disambiguates it from any other
+    발생보험금-bearing table.  A 사업보고서(annual) filing carries this note TWICE (연결 then
+    별도, DART's standard ATOC order) with byte-identical values in every quarter checked
+    (2024.4Q/2025.4Q) -- _prefer_ofs is applied anyway for consistency with the rest of the
+    file and as a guard against a future quarter where they might not agree.  Returns
+    (rev_table, cost_table), either/both None if not found (note26 doesn't exist pre-2024.4Q --
+    FY2023 quarters predate this disclosure format entirely)."""
+    pool = _prefer_ofs(tables)
+    rev_t = cost_t = None
+    for t in pool:
+        if _is_rollforward(t):
+            continue
+        labs = {_norm(r[0]) for r in t.rows}
+        if rev_t is None and "예상보험금" in labs and "소계" in labs:
+            rev_t = t
+        if cost_t is None and "발생보험금" in labs and "예상재보험금" in labs:
+            cost_t = t
+    return rev_t, cost_t
+
+
+def _abl_ytd_col(t):
+    """당기 누적(YTD) column index: 4-col header ([3개월,누적]x2, 분기/반기 filings) uses the
+    same 3개월-precedes-누적 rule as tier1._ytd_col; a 2-col [당기,전기] header (annual
+    사업보고서, no 3개월/누적 split -- '당기' already means the full fiscal year) is column 0."""
+    hb = " ".join(" ".join(h) for h in t.header).replace(" ", "")
+    if "누적" in hb and "3개월" in hb:
+        return 1 if hb.find("3개월") < hb.find("누적") else 0
+    return 0
+
+
+def _abl_row(t, label, col):
+    for r in t.rows:
+        if _norm(r[0]) == label:
+            nums = _row_nums(r)
+            if not nums:
+                return None
+            return nums[col] if col < len(nums) else nums[0]
+    return None
+
+
+# item6 is suppressed for 2 of the 10 quarters this note exists, both because note37's MD&A
+# prose ("예상 보험금 대비 실제 보험금 차이가 N억원이며, 예상 사업비 대비 실제 사업비 차이는
+# M억원") does not reconcile with this note's own claim/사업비(손해조사비+계약유지비+투자관리비)
+# split -- the SAME split that matches note37 EXACTLY (to KRW 0-2억 rounding, both the claim AND
+# 사업비 sub-figures) in the other 8/10 quarters (2025.2Q/3Q/4Q, 2026.1Q/2Q measured directly;
+# 2024.1-3Q have no note37 paragraph to check against at all -- disclosure started 2024.4Q -- but
+# pass the independent item3/item8 cross-check to <1mm every quarter, including these two):
+#   - 2024.4Q: BOTH sub-figures are wildly off (prose -270억/-97억 vs this note's -11억/+17억,
+#     ~25x). The prose explicitly flags a one-off "장래손해조사비 반영 및 시행세칙 변경에 따른
+#     손해진전계수 산출방법론 변경" effect only this quarter -- a prospective cash-flow
+#     re-estimate is IFRS17 CSM territory (가정 및 경험조정, CSM_waterfall item4), not a note26
+#     P&L line, which is the likely source of the mismatch, but this is not confirmed.
+#   - 2025.1Q: the CLAIM sub-figure matches prose exactly (예상보험금-발생보험금 = -50억, prose
+#     "-50억원"), but the 사업비 sub-figure does not (this note gives 예상(1867+22304+2966)-
+#     발생(1877+20812+3064) = +14억, prose says "(-)17억원" -- no combination of this note's own
+#     rows (계약유지비-only, excluding 손해조사비, sign-flipped, etc.) reproduces -17억). Ruled
+#     out as a column/header-shape bug: 2026.1Q uses the IDENTICAL [당분기,전분기] 2-column
+#     header and matches prose EXACTLY on both sub-figures (63억/18억), so the note's own
+#     structure is read correctly here too -- the mismatch is specific to this one quarter's
+#     사업비 figure, unexplained, and item6 is a single combined cell (claim+사업비) with no
+#     separate slot for "the sub-figure I trust" vs "the one I don't".
+# item11 is NOT suppressed for either quarter: its own prose check ("재보험으로 인해 인식한
+# 손익은 ...") matches item8 in both (2024.4Q "-56억"; 2025.1Q "-39억", cross-checked against
+# item8 = 재보험수익 소계 − 재보험비용 소계 independently of item6/direct-leg issues), so the
+# reinsurance leg is unaffected by whatever the direct leg's anomaly is.
+# inbox/parser/20260828T2100Z__orchestrator__KR0070__abl_yesilcha_both_legs.md.  Do not
+# backfill without raw-filing / owner review of what these prose figures actually are.
+_ABL_ITEM6_SUPPRESS_QUARTERS = {"2024.4Q", "2025.1Q"}
+
+
+def _abl_note26_yesilcha(tables, quarter=None):
+    """item6 (원수 예실차) / item11 (재보험 예실차) from note 26/27.  item6 = 예상 4종(보험수익
+    section: 예상보험금+예상손해조사비+예상계약유지비+예상투자관리비) − 발생 4종(보험서비스비용
+    section, same 4 concepts) -- population-verified against note37's MD&A prose sentence in
+    9/10 quarters (exact to KRW 0-2억 rounding; see _ABL_ITEM6_SUPPRESS_QUARTERS for the 10th).
+
+    item11 = 발생 2종(재보험수익 section: 발생재보험금+발생손해조사비) − 예상 2종(재보험비용
+    section: 예상재보험금+예상손해조사비) -- note the token order is REVERSED from item6's
+    (발생 first, not 예상 first): for the reinsurance leg, '예상' sits in the COST section and
+    '발생' sits in the REVENUE section (the mirror image of the direct leg, where 예상 is
+    revenue and 발생 is cost), so item11 keeps the SAME sign rule item8 itself is built from
+    (item8 = 재보험수익 소계 − 재보험비용 소계: revenue rows enter positively, cost rows
+    negatively) rather than copying item6's literal '예상 − 발생' word order, which would flip
+    the sign.  This also matches how item9/item10 are already signed in this master (both
+    -abs()'d FROM the 재보험비용/cost section).  2026.2Q worked example: 발생재보험금 20,220 −
+    예상재보험금 21,500 = −1,280백만원 (계약자에게 유리했던 예상보다 회수가 덜 됨 = 손실).
+    Both legs' 4/2-item boundaries exclude the same "outside the core claim concept" family
+    every other company in this file excludes from item6/item7 (item9/10's own CSM/RA rows;
+    손실부담계약관련비용·발생사고요소조정·취득CF상각·손실요소배분액·기타 on the direct side;
+    손실회수요소관련수익·발생사고요소조정·손실회수요소배분액·기타재보험* on the reinsurance
+    side) -- symmetry with the already note37-verified direct-side boundary, not a fresh guess.
+    """
+    rev_t, cost_t = _abl_note26_tables(tables)
+    if rev_t is None or cost_t is None:
+        return {}
+    col_r, col_c = _abl_ytd_col(rev_t), _abl_ytd_col(cost_t)
+    out = {}
+
+    exp_claim = _abl_row(rev_t, "예상보험금", col_r)
+    inc_claim = _abl_row(cost_t, "발생보험금", col_c)
+    if exp_claim is not None and inc_claim is not None and quarter not in _ABL_ITEM6_SUPPRESS_QUARTERS:
+        exp4 = exp_claim + (_abl_row(rev_t, "예상손해조사비", col_r) or 0) \
+            + (_abl_row(rev_t, "예상계약유지비", col_r) or 0) + (_abl_row(rev_t, "예상투자관리비", col_r) or 0)
+        inc4 = inc_claim + (_abl_row(cost_t, "발생손해조사비", col_c) or 0) \
+            + (_abl_row(cost_t, "발생계약유지비", col_c) or 0) + (_abl_row(cost_t, "발생투자관리비", col_c) or 0)
+        out[6] = exp4 - inc4
+
+    re_inc_claim = _abl_row(rev_t, "발생재보험금", col_r)
+    re_exp_claim = _abl_row(cost_t, "예상재보험금", col_c)
+    if re_inc_claim is not None and re_exp_claim is not None:
+        re_inc2 = re_inc_claim + (_abl_row(rev_t, "발생손해조사비", col_r) or 0)
+        re_exp2 = re_exp_claim + (_abl_row(cost_t, "예상손해조사비", col_c) or 0)
+        out[11] = re_inc2 - re_exp2
+
+    return out
+
+
+def extract_tier2_abl(tables, quarter=None):
     """에이비엘생명 (KR0070).  Its IFRS17 보험수익/재보험비용 reconciliation note uses a
     [구분 | 당기 | 전기] TWO-PERIOD header, not a 계약유형별 합계 layout.  The generic
     extract_tier2_life reads each leg via _life_note_total = max(nums, key=abs), which picks
     the LARGER cell — and here 전기 > 당기 (2025.4Q CSM 88,926 > 82,804; RA 12,282 > 8,346),
     so the master published the PRIOR-period column (a 당기/전기 leg bug, audit 2026-06-08).
-    Fix: read the 당기 column EXPLICITLY (= first data cell).  item6/11(예실차) is only a
-    partial premium-side 경험조정 here → left to the generic closure (residual→기타)."""
+    Fix: read the 당기 column EXPLICITLY (= first data cell).
+
+    item6/item11 (예실차, 2026-08-28): a SEPARATE note (26/27. 보험영업수익과 보험영업비용) DOES
+    carry a real 예상-vs-발생 claim split for both legs — see _abl_note26_yesilcha.  Only
+    2024.4Q-2026.2Q carry this note (10 quarters); FY2023-FY2024.3Q predate it and item6/11
+    stay at the generic closure's default (residual→기타/기타재보험손익)."""
     out = {}
 
     def find(cap_needs, cap_excl=()):
@@ -452,6 +578,8 @@ def extract_tier2_abl(tables):
         out[9] = -abs(re_csm)
     if re_ra is not None:
         out[10] = -abs(re_ra)
+
+    out.update(_abl_note26_yesilcha(tables, quarter=quarter))
     return out
 
 

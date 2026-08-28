@@ -1399,25 +1399,25 @@
       "원보험사코드": "KR0070",
       "항목번호": 7,
       "공시분기": "2024.1Q",
-      "값": -3101.757812,
+      "값": -4442.757812,
       "was": 17032.242188,
-      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음."
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음. | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now 1341 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -3101.76 - 1341 = -4442.76."
     },
     {
       "원보험사코드": "KR0070",
       "항목번호": 7,
       "공시분기": "2024.2Q",
-      "값": -2329.139877,
+      "값": -3602.139877,
       "was": 38012.860123,
-      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음."
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음. | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now 1273 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -2329.14 - 1273 = -3602.14."
     },
     {
       "원보험사코드": "KR0070",
       "항목번호": 7,
       "공시분기": "2024.3Q",
-      "값": -17990.010136,
+      "값": -21693.010136,
       "was": 41616.989864,
-      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음."
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음. | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now 3703 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -17990 - 3703 = -21693."
     },
     {
       "원보험사코드": "KR0070",
@@ -1447,9 +1447,9 @@
       "원보험사코드": "KR0070",
       "항목번호": 7,
       "공시분기": "2025.2Q",
-      "값": -15683.46952,
+      "값": -6485.469520000001,
       "was": -20597.46952,
-      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py)."
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py). | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now -9198 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -15683.5 - -9198 = -6485.47."
     },
     {
       "원보험사코드": "KR0070",
@@ -1463,9 +1463,9 @@
       "원보험사코드": "KR0070",
       "항목번호": 7,
       "공시분기": "2025.3Q",
-      "값": -24184.492374,
+      "값": -11985.492374000001,
       "was": -29739.492374,
-      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py)."
+      "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py). | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now -12199 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -24184.5 - -12199 = -11985.5."
     },
     {
       "원보험사코드": "KR0087",
