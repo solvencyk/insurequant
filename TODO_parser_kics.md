@@ -1,5 +1,14 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
+> Last updated: 2026-08-28 — 채팅 발주(owner, designer 세션 경유): KR0097(하나생명보험)
+> 2024.2Q 원수사명 오철자 "하나생명" → "하나생명보험" 정정, 40셀. K-ICS 드롭다운에 같은
+> 회사가 두 줄로 뜨는 걸 owner가 지적 → 조사해보니 단순 표시 중복이 아니라
+> `K-ICS.html:getFilteredData()`의 `row['원수사명'] === company` **완전일치 필터** 때문에
+> 실제로 "하나생명보험"(13개 분기)을 선택하면 2024.2Q 한 분기가 화면에서 통째로 빠지는
+> 사일런트 결측이었음. 다른 12개 분기가 전부 "하나생명보험"이라 오탈자로 판단, raw 재대조
+> 없이 다수결로 정정(다른 12분기와 100% 동일 회사·형식이라 모호성 없음). 게이트 재확인
+> RED=0(blocking) 불변, main 배포 완료. 상세: [changelog_parser_kics.md](docs/changelog_parser_kics.md#2026-08-28).
+>
 > Last updated: 2026-08-25(20회차) — inbox `20260825T0400Z`(orchestrator, item52 적용후
 > 분기 미배선 주장) 드레인: **티켓의 가설은 틀렸다(코드는 이미 적용전·적용후 대칭이었다) —
 > 실제 원인은 item52 커버리지가 100%가 되며 item1[값_적용후]의 유일한 엔진 가드였던

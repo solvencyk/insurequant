@@ -1,11 +1,39 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-08-25 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-08-28 · Stage 2/5 — parser (kics lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
 금리민감도/rate-sensitivity). Code: `src/solvency/parser/`. Validators: `validate_kics_disclosure.py`, RS1-4,
 market census.
+
+## 2026-08-28 — KR0097 2024.2Q 원수사명 오철자 정정 (하나생명 → 하나생명보험, 40셀)
+
+owner가 라이브 K-ICS 드롭다운에서 "하나생명"과 "하나생명보험"이 별도 항목으로 중복 표시되는
+걸 지적(당시 세션은 designer 회사명 표시정리 작업 중 — 새 축약 로직이 두 원문 철자를 똑같은
+표시 텍스트로 접으면서 중복이 눈에 더 띄게 됨). 처음엔 단순 표시 중복으로 보고 스코프 밖이라
+기록만 했는데, owner가 "당연히 처리해야지"라고 재지적 → 재조사.
+
+**실제 원인**: `kics_disclosure.json`에서 KR0097(하나생명보험)은 13개 공시분기(2023.1Q~
+2026.1Q) 전부 원수사명="하나생명보험"인데, **2024.2Q 한 분기만** 원수사명="하나생명"(끝
+"보험" 누락)으로 파싱돼 있었다(항목 4~35, 40셀). `K-ICS.html`의 메인 테이블 필터
+(`getFilteredData()`)는 `row['원수사명'] === company` **완전일치**라 — 드롭다운에서
+"하나생명보험"(13분기 옵션)을 선택하면 2024.2Q가 필터를 안 지나 시계열에서 그냥 빠진다.
+단순 dropdown 중복이 아니라 **화면에 안 보이는 결측이 실제로 발생 중인 데이터 버그**였다.
+
+**수정**: `kics_disclosure.json`에서 `"원수사명": "하나생명",`(정확히 이 토큰, 40회 출현 —
+전부 KR0097 2024.2Q 블록 안, 다른 회사/분기와 충돌 없음) → `"하나생명보험"`으로 텍스트
+치환(JSON 전체 재직렬화 없이 문자열 치환만 — 다른 22,648행 바이트 그대로, `git diff`
+40줄 삭제/40줄 추가만 확인). 다른 12개 분기와 형식·회사가 100% 동일해 raw PDF 재대조 없이
+정정(모호성 없음 — 다수결이 아니라 유일하게 일관된 값).
+
+**검증**: `validate_kics_disclosure.py` 재실행 — `RED=36 YELLOW=1524 GREEN=10006 SKIP=2586`,
+documented exception 차감 후 blocking RED=0 불변(수정 전과 동일 — 원수사명은 수치 검산에
+안 쓰이는 필드라 예상대로 영향 없음). Python으로 KR0097 원수사명 distinct count 1개로 감소
+확인.
+
+**배포**: 격리 워크트리로 main cherry-push, `git push origin main` 완료(owner 채팅 승인,
+같은 세션에서 designer HTML 변경 배포 직후 이어서 처리).
 
 ## 2026-08-25 (20회차) — item1[값_적용후] 커버리지 소실 원인규명 + `7_post` 신설로 복원
 
