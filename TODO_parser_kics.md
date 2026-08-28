@@ -1,6 +1,46 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-08-28 — 채팅 발주(owner, designer 세션 경유): KR0097(하나생명보험)
+> Last updated: 2026-08-29(2회차) — 같은 inbox `20260829T0100Z` 코디네이터 검토 후속: 스키마·
+> 검증 전부 통과 확인 + **`기본자본소진율` 시트 100%초과 13행 비고 보강**. census 재확인
+> (`probe_20260829b_tier1_strict_list.py`): `utilization_pct`>100 6개사(NH농협192.9·
+> 하나생명187.0·하나손해144.1·코리안리139.8·한화생명138.5·KDB113.4) + `utilization_pct_strict`
+> >100 7개사(위 6개사+교보생명, primary=79.4인데 strict=119.1인 "엄격만 초과" 케이스) = 정확히
+> 13행. `_flatten_tier1`에 `_TIER1_BASIS_NOTE`(SCR×15%대SCR×10%로 엄격이 1.5배라는 상시 설명,
+> 소진율 관련 78행 전체) + `_TIER1_OVER100_NOTE`(파싱오류 아님·화면 100%+ 표기, 값>100인 13행에만
+> 조건부 부착) 신설 — 근거는 `docs/tier1_hybrid_utilization_definition.md`(owner 2026-06-14/
+> 2026-08-25 결정)를 그대로 인용, 하드코딩 회사목록 아니고 flatten 시점에 직접 판정. 검증
+> (`probe_20260829c_tier1_note_check.py`): 78행 빈 비고 0·13행 전부 문구 포함·오탐 0. xlsx sync
+> "기본자본소진율" 만 재실행(변경 셀 78·추가/삭제 0, EDIT만이라 항목명=행식별키 불변), 검증 OK·
+> 3시트 재-dry-run 전부 idempotent. `git add`(내 파일만)+커밋 완료(push 안 함). 상세는
+> `inbox/parser/20260829T0100Z...md` `## 답변 추가` 절.
+>
+> Last updated (이전): 2026-08-29 — inbox `20260829T0100Z`(orchestrator, 자본 마스터 3종
+> xlsx 편입) 드레인: 1단계 설계 보고 도중 코디네이터가 owner 승인 스키마를 전달하며
+> 2단계 구현까지 지시 — 같은 세션에서 이어 처리. **`insurequant_master_tables.xlsx`
+> 에 신규 시트 3개 추가**(`기본자본소진율` 390행·`보완자본소진율` 546행·`자본비율전망`
+> 2090행, 합계 49,570행) — `kics_tier1_utilization.json`/`kics_tier2_utilization.json`/
+> `kics_forward_capital.json` 을 기존 8시트와 동일한 long-format(원보험사코드·원수사명·
+> 티커·생손보여부·공시분기·항목명·값 + 신규 `비고`)으로 flatten. `build_master_xlsx.py`
+> 는 **실행 안 함**(MASTERS 에 3항목 추가 + flatten 함수만 정의) — 반영은
+> `sync_master_xlsx_sheet.py` 로만(신규 시트 생성 지원을 새로 추가: 이전엔 기존 시트
+> cherry-pick 전용이라 `wb[sheet]` 가 KeyError 났음). 3회 sync 전부 자체 사후검증
+> ("나머지 시트 값 동일") 통과 + 재실행 dry-run 0 drift 확인, 동시작업 중이던
+> `손익분해PL`(ifrs17 레인) 무손상.
+>
+> **중요 발견**: 원 티켓의 "tier2 4개사 이상치(분자 파서 추출 불안정)" 전제가 **stale**
+> 로 실측됨 — `output/tier2_utilization/outlier_report_20261Q.json`(2026-06-16)의
+> 5개사(동양240%/하나손해235%/KB218%/악사197%/미래126%)를 가리키는데, 이미
+> `inbox/_resolved/20260620T0238Z`(owner)에서 분자를 DART 채권별 발행잔액으로 교체해
+> 해소됨. 라이브 게이트(`validate_data_contract.py` CHECK4 도메인identity)·직접 census
+> 둘 다 현재 tier2 utilization_pct 이상치 **0건** 확인(39개사 전부 0~100% 안). 없는
+> 4개사를 지어내지 않고, 대신 census 로 실제 살아있는 한계(tier1 issued_source=missing
+> 7개사, forward 콜옵션미공시폴백 20개사·저신뢰 14개사·DART무자료 11개사, 서울보증보험
+> forward_capital 결측 신규발견)를 시트 `비고`열에 실었다. status: answered(owner/
+> orchestrator 가 "4개사" 전제·서울보증보험 갭 재확인 필요). 상세:
+> `inbox/parser/20260829T0100Z__orchestrator__MULTI__capital_masters_into_xlsx.md`
+> `## 답변` 절.
+>
+> Last updated (이전): 2026-08-28 — 채팅 발주(owner, designer 세션 경유): KR0097(하나생명보험)
 > 2024.2Q 원수사명 오철자 "하나생명" → "하나생명보험" 정정, 40셀. K-ICS 드롭다운에 같은
 > 회사가 두 줄로 뜨는 걸 owner가 지적 → 조사해보니 단순 표시 중복이 아니라
 > `K-ICS.html:getFilteredData()`의 `row['원수사명'] === company` **완전일치 필터** 때문에
@@ -222,6 +262,13 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-08-29(2회차) — 코디네이터 검토 통과 + 기본자본소진율 100%초과 13행 비고 보강 완료.
+git add(내 파일만)+커밋 완료. status: answered(owner 재확인은 대기, 코드/xlsx 작업은 종결).**
+
+**2026-08-29(1회차) — inbox `20260829T0100Z`(orchestrator, 자본 마스터 3종 xlsx 편입): 신규 시트 3개
+(기본자본소진율·보완자본소진율·자본비율전망, 3,026행) 추가 완료·검증 통과. "tier2 4개사 이상치"
+전제는 stale 로 실측(현재 0건) — 지어내지 않고 실제 census 결과로 대체. 상세는 최상단 참조.**
 
 **2026-08-24(18회차) — orchestrator 발주(재감사 보고서 파트 1-A 승계): KR0097 하나생명보험
 2024.4Q 생명장기 하위위험 값_적용후 4셀 정정. status: resolved.**

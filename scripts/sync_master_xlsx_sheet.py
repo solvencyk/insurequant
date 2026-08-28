@@ -40,13 +40,14 @@ from pathlib import Path
 import pandas as pd
 from copy import copy
 from openpyxl import load_workbook
+from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 
-from build_master_xlsx import MASTERS, NUMERIC_COLS, TEXT_COLS, coerce  # noqa: E402
+from build_master_xlsx import FLATTEN, FONT, MASTERS, NUMERIC_COLS, TEXT_COLS, coerce  # noqa: E402
 
 XLSX = REPO / "insurequant_master_tables.xlsx"
 SUMMARY_SHEET = "요약"
@@ -56,6 +57,8 @@ RISKY_PARTS = ("pivot", "chart", "drawing", "media", "/table", "vml", "queryTabl
 def target_rows(json_file: str) -> tuple[list[str], list[list]]:
     """Build the sheet's target state exactly as build_master_xlsx would write it."""
     data = json.loads((REPO / json_file).read_text(encoding="utf-8"))
+    if json_file in FLATTEN:  # tier1/tier2/forward_capital: reshape to long-format first
+        data = FLATTEN[json_file](data)
     df = coerce(pd.DataFrame(data))
     cols = list(df.columns)
     rows = []
@@ -139,9 +142,24 @@ def main() -> int:
     if n_formula:
         sys.exit(f"REFUSE: 수식 {n_formula}개 발견 — openpyxl 재저장은 캐시값을 날린다")
 
-    ws = wb[sheet]
-    cols = [c.value for c in ws[1]]
     tgt_cols, tgt = target_rows(json_file)
+
+    # 2026-08-29 (inbox/parser/20260829T0100Z): sync was built to cherry-pick an
+    # EXISTING sheet — it has no path for a sheet that isn't in the workbook yet
+    # (`wb[sheet]` would KeyError). Extend it minimally: create the sheet + header row
+    # now (in-memory only — nothing hits disk until wb.save() below, which the existing
+    # `if dry: return 0` further down already skips) so every downstream line
+    # (cols/cur/diff/insert) sees the same "existing sheet, 0 data rows" shape it
+    # already knows how to handle — SequenceMatcher(a=[], b=tgt_keys) naturally becomes
+    # one big insert block, same code path as adding rows to a populated sheet.
+    is_new_sheet = sheet not in wb.sheetnames
+    if is_new_sheet:
+        ws = wb.create_sheet(sheet)
+        ws.append(tgt_cols)
+    else:
+        ws = wb[sheet]
+
+    cols = [c.value for c in ws[1]]
     if cols != tgt_cols:
         sys.exit(f"REFUSE: 컬럼 불일치\n  시트: {cols}\n  마스터: {tgt_cols}")
 
@@ -219,10 +237,58 @@ def main() -> int:
     nrow = ws.max_row
     ws.auto_filter.ref = f"A1:{ws.cell(row=1, column=ncol).column_letter}{nrow}"
 
-    # --- 요약 행수만 실측으로 갱신 (설명 칸은 다른 레인이 손으로 고쳐 둬서 손대지 않는다)
+    if is_new_sheet:
+        # The insert loop above copies neighbor formatting per row (correct for
+        # cherry-picking a FEW rows into an already-styled sheet); on a brand-new sheet
+        # there is no real neighbor yet, so every row ends up copying the header's
+        # bold-white-on-blue look. Fix it up once here — same header/body/column-width/
+        # freeze-pane styling build_master_xlsx.py applies (kept in sync by eye; that
+        # script is never *run* per this ticket's constraints, so there is no import to
+        # share instead).
+        thin = Side(style="thin", color="D9D9D9")
+        for c in range(1, ncol + 1):
+            cell = ws.cell(row=1, column=c)
+            cell.font = Font(name=FONT, bold=True, color="FFFFFF")
+            cell.fill = PatternFill("solid", fgColor="305496")
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+            cell.border = Border(bottom=thin)
+        base_w = {"원수사명": 22, "항목명": 30, "비고": 60}
+        for c, name in enumerate(cols, start=1):
+            letter = ws.cell(row=1, column=c).column_letter
+            for r in range(2, nrow + 1):
+                cl = ws.cell(row=r, column=c)
+                cl.font = Font(name=FONT)
+                cl.alignment = Alignment()
+                cl.border = Border()
+                if name in NUMERIC_COLS and isinstance(cl.value, (int, float)):
+                    cl.number_format = "#,##0.##;(#,##0.##);-"
+                else:
+                    cl.number_format = "General"
+            ws.column_dimensions[letter].width = base_w.get(name, max(11, min(28, len(str(name)) + 6)))
+        ws.freeze_panes = "A2"
+
+    # --- 요약: 신규 시트면 '합계' 행 바로 위에 행을 추가(설명은 MASTERS 의 desc 로 최초 1회만
+    # 채운다 — 이후에는 기존 규칙대로 손대지 않는다), 그 다음 행수는 항상 실측으로 갱신
+    # (설명 칸은 다른 레인이 손으로 고쳐 둬서 손대지 않는다)
     fixed = []
+    added_summary_row = False
     if SUMMARY_SHEET in wb.sheetnames:
         idx = wb[SUMMARY_SHEET]
+        listed = {idx.cell(row=r, column=1).value for r in range(4, idx.max_row + 1)}
+        if sheet not in listed:
+            total_row = next((r for r in range(4, idx.max_row + 1)
+                               if idx.cell(row=r, column=1).value == "합계"), idx.max_row + 1)
+            idx.insert_rows(total_row, 1)
+            donor = total_row - 1
+            values = [sheet, json_file, len(tgt), spec[2]]
+            for c in range(1, 5):
+                cell = idx.cell(row=total_row, column=c)
+                cell.value = values[c - 1]
+                src = idx.cell(row=donor, column=c)
+                cell.font = copy(src.font)
+                cell.alignment = copy(src.alignment)
+                cell.number_format = src.number_format
+            added_summary_row = True
         total = 0
         for r in range(4, idx.max_row + 1):
             name = idx.cell(row=r, column=1).value
@@ -252,6 +318,8 @@ def main() -> int:
 
     wb.save(XLSX)
     print(f"  검증 OK — {sheet} {len(after)}행 × {ncol}열 마스터와 완전 일치, 나머지 시트 값 동일")
+    if added_summary_row:
+        print(f"  요약 시트에 신규 행 추가: {sheet}")
     if fixed:
         print("  요약 행수 실측 보정:")
         for name, old, new in fixed:
