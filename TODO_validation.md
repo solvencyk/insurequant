@@ -1,11 +1,65 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-29 (골든 입력지문 게이트 신설·훅 배선·push 차단 재현) · Stage 3/5 — validation
+> Last updated: 2026-08-29 (보험손익 leg-coverage 신설 — 결측 SKIP 71건을 판정으로 전환) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-29 b) 보험손익 leg-coverage 신설 — "등식이 없다"가 아니라 "등식이 결측을 만나면 도망갔다".**
+
+> 처리: `inbox/validation/20260829T1500Z__orchestrator__MULTI__insurance_result_closure_missing.md`
+> → `status: answered` (**발주 전제를 뒤집었다 — 오케스트레이터 재확인 필요**)
+> 신규 발주: `inbox/parser/20260829T1700Z__validation__MULTI__pl_item1_leg_coverage.md`
+> (`lane: ifrs17` · `route: reparse` · 40셀)
+>
+> **발주 전제는 틀렸다.** `1 = 2+13+14+15−16` 은 `PL_EQS` 밖 dual-form 블록에 **파일 최초
+> 커밋(`135e6ff`)부터 있었고**, 그 실패 10건은 이미 `pl_bridge_baseline.json` 에 등재돼 있다.
+> KB손해도 "item16 전 분기 None" 이 아니라 14분기 중 6분기만 None 이고, 2025.4Q 잔차는
+> 1억이 아니라 **정확히 0.0**(억원 반올림 착시).
+>
+> **그런데 결론은 맞았다 — 원인이 달랐다.** 진짜 사각은 **결측 시 통째 SKIP**:
+> `if bo is None or any(x is None for x in lob): pb_skip += 1` 이 356 버킷 중 **71(19.9%)**
+> 을 무검사로 넘겼다. 게다가 coverage census 의 `key_items` 는
+> `보험손익/생명장기손익/당기순이익` 셋뿐이라 **13(자동차)·14(일반) 결측은 세지도 않는다** —
+> 두 검사가 같은 구멍을 공유했다.
+>
+> **실측(전 버킷 356).** SKIP 71 을 0-fill 로 재판정: **13 닫힘 / 40 깨짐 / 18 좌변없음**.
+> 깨진 40건 잔차 median 43,415 · max 454,352 백만원, **합계 3.4조원이 어떤 룰의 시야에도
+> 없었다**(2024+ 22건). 그중 **30건은 coverage census 도 구조적으로 못 잡는다.**
+> 대표: **코리안리재보험이 13분기 내내 `item13` 없이 두 검사를 모두 통과**했고(형제 다리
+> `item14` 는 정상 추출), 0-fill 로 재보면 2024+ 10분기가 전부 안 닫힌다(최대 4,105억).
+>
+> **조치 — 새 등식이 아니라 결측 처리 확장.** 등식을 한 벌 더 만들면 같은 식이 두 개가 된다.
+> dual-form 의 결측 분기만 고쳐 **결측 LOB 다리를 0 으로 채워 판정**한다:
+> 닫히면 PASS(그 다리는 정말 0), 깨지면 FAIL(잔차 = 미검사 금액의 하한).
+> 라벨 `보험손익(leg-coverage)`. **결측을 SKIP 도 무조건 RED 도 아닌 "산수로 판정"으로 바꾼
+> 것**이 요점이다 — 13건은 실제로 정확히 닫히므로(NH농협손해 12분기 ±1.0 이내) 무조건 RED 는
+> 정당한 0 을 결함이라 부르는 두더지가 된다.
+> `item1`(좌변) 결측 18건은 등식 성립 불가라 FAIL 로 안 올리되 `NOLHS` 로 건별 인쇄하고,
+> 오늘 전건이 2023 분기이므로 **2024+ 가 뜨면 회귀 경고**를 찍는다.
+>
+> **적용 전 시뮬레이션 = 회귀 0건.** 오늘 검사받던 285 버킷 판정이 한 건도 안 바뀐다
+> (`scripts/_probes/probe_20260829_item1_legcoverage_final.py` 가 old/new 대조).
+> 0-fill 경로에 기타영업수익/기타사업비용 후보를 **추가하지 않았다**(masking 면 확대 방지,
+> 실측상 불필요 — 13건 전부 기존 adj 로 닫힘).
+>
+> **게이트 실측.** `pl_bridge:3025P/13F/522S/0NEW` → `3038P/53F/469S/0NEW`.
+> `exit=2` 는 전후 동일(기존 미종결 실패). 드러난 40건은 `pl_bridge_baseline.json` 에
+> **건별** 등재(13→53, 기한 2026-10-31) — 통째 skip 이 아니고 F 로 계속 계상된다.
+> 마스터 데이터는 한 셀도 안 건드렸다.
+>
+> **훅 배선 확인.** `prepush_check.py` 는 `validate_master_tables.py` 를 직접 안 부른다 —
+> 강제점은 `tests/test_master_tables_golden.py`(SUMMARY+exit 박제)이고 그것은 훅 `fast`
+> 묶음 **L167 에 실제로 있다**. `tests/test_identity_registry.py` 도 **L179 에 있다**(허용오차를
+> 몰래 넓히면 `tol_from` 대조에서 막힌다). `test_rule_coverage_manifest.py` 는 K-ICS 전용이라
+> PL 축이 없어 손대지 않았다. 지문 게이트는 빌더 전용이라 `--update` 불요(`RED=0 → clear` 확인).
+>
+> **남은 사각(별도 판단 요망).** `validate_master_tables.QS` 가 `2026.1Q` 에서 끝나 **2026.2Q
+> 24버킷**을 `QS` 기반 검사(coverage census · qoq_scan · net_quarterly)가 통째로 안 본다.
+> PL_BRIDGE 는 `pl.items()` 를 직접 돌아 무관(그래서 코리안리 2026.2Q 도 잡혔다). `QS` 확장은
+> 여러 룰 판정을 동시에 움직여 전 버킷 재시뮬이 필요하므로 이 티켓에서 손대지 않았다.
 
 **(2026-08-29) 골든 입력지문 게이트 배선 완료 — 빌더 재실행 골든 6개 중 훅이 돌리던 것은 1개뿐이었다.**
 

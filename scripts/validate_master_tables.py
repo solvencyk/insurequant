@@ -560,24 +560,60 @@ def _check_pl_bridge(pl: dict) -> tuple[int, list, int, list, list]:
     pb_pass = pb_skip = 0
     pb_fail = []
     eq_fail_count = defaultdict(int)
+    legcov_pass, legcov_fail, nolhs_rows = [], [], []
+    LOB_KEYS = ("생명장기손익", "자동차손익", "일반손익")
     for (co, q), m in sorted(pl.items()):
         # --- 보험손익 dual-form (bare ΣLOB / adj +기타영업수익-기타사업비용) ---
+        # `보험손익`(항목1)의 폐쇄식 `1 = 2+13+14(+15-16)` 은 **PL_EQS 밖의 이 블록**이
+        # 검사한다. 2026-08-29 재확인: 오케스트레이터 티켓
+        # (inbox/validation/20260829T1500Z__orchestrator__MULTI__insurance_result_closure_missing.md)
+        # 은 "PL_EQS 9식에 이 등식만 없다"고 봤지만, 실측하면 이 파일 최초 커밋(135e6ff)부터
+        # 있었고 그 실패 10건은 전부 pl_bridge_baseline.json 에 이미 등재돼 있다.
+        #
+        # 진짜 사각은 등식의 부재가 아니라 **결측 시 통째 SKIP** 이었다 — item1/2/13/14 중
+        # 하나라도 None 이면 그 버킷의 보험손익은 어떤 룰도 안 봤다(356 버킷 중 71 = 19.9%).
+        # 게다가 그 결측은 coverage census 도 못 봤다: 그쪽 key_items 는
+        # 보험손익/생명장기손익/당기순이익 셋뿐이라 **13(자동차)·14(일반)의 결측은 애초에
+        # 세지 않는다.** 코리안리재보험은 그렇게 13분기 내내 자동차 다리가 없는 채로
+        # 두 검사를 모두 통과했다(2024+ 10분기, 잔차 최대 41,051백만 = 4,105억).
+        #
+        # 2026-08-29 신설(leg-coverage): LOB 다리가 결측이면 **0 으로 채워 검산한다.**
+        #   닫히면 -> 그 다리는 정말 0 이다(발행사가 안 쓰는 LOB). SKIP 이 아니라 PASS 로 확정.
+        #   깨지면 -> 결측 다리가 진짜 돈을 싣고 있다는 뜻이고 잔차가 그 하한이다 -> FAIL.
+        # 즉 "결측이니 넘어간다"를 "결측이어도 산수로 판정한다"로 바꾼다. 생/손보 카테고리로
+        # 다리의 유무를 단정하지 않고 회사별 실데이터가 판정하게 두는 형태이기도 하다.
+        # 전 버킷 시뮬레이션(scripts/_probes/probe_20260829_item1_legcoverage_final.py):
+        # 오늘 검사받던 285 버킷의 판정은 **한 건도 안 바뀐다**(regression 0).
+        # SKIP 71 -> 18, PASS 275 -> 288(+13), FAIL 10 -> 50(+40).
+        # 기타영업수익·기타사업비용 adj 후보는 기존 규칙 그대로(둘 다 있을 때만) 만든다 —
+        # 0-fill 경로에 추가 후보를 붙이면 masking 면만 넓어지고, 실측상 그 후보가 필요한
+        # 버킷도 없었다(13건 전부 기존 adj 로 닫혔다).
         bo = m.get("보험손익")
-        lob = [m.get("생명장기손익"), m.get("자동차손익"), m.get("일반손익")]
-        if bo is None or any(x is None for x in lob):
+        if bo is None:
+            # 좌변 자체가 없으면 등식을 세울 수 없다. 이 축은 coverage census(key_items 에
+            # 보험손익 포함)의 몫이라 RED 로 올리지 않되, 조용히 사라지지 않게 건별로 인쇄한다.
+            # 오늘 18건 전부 2023 분기(사이트 비노출)다 — 2024+ 가 여기 뜨면 그건 회귀다.
             pb_skip += 1
+            nolhs_rows.append((co, q))
         else:
-            bare = sum(lob)
+            raw_lob = [m.get(k) for k in LOB_KEYS]
+            zf = [k for k, v in zip(LOB_KEYS, raw_lob) if v is None]
+            bare = sum(0.0 if v is None else v for v in raw_lob)
             cands = [bare]
             oi, oe = m.get("기타영업수익"), m.get("기타사업비용")
             if oi is not None and oe is not None:
                 cands.append(bare + oi - oe)
             diff = min((c - bo for c in cands), key=abs)
+            label = "보험손익(leg-coverage)" if zf else "보험손익(dual)"
             if abs(diff) > max(0.001 * abs(bo), DEFAULT_FLOOR):
-                pb_fail.append((co, q, "보험손익(dual)", round(bo, 1), round(diff, 1)))
-                eq_fail_count["보험손익(dual)"] += 1
+                pb_fail.append((co, q, label, round(bo, 1), round(diff, 1)))
+                eq_fail_count[label] += 1
+                if zf:
+                    legcov_fail.append((co, q, round(bo, 1), round(diff, 1), zf))
             else:
                 pb_pass += 1
+                if zf:
+                    legcov_pass.append((co, q, round(diff, 1), zf))
         # --- 나머지 등식 ---
         for label, lhs_key, terms in PL_EQS:
             lhs = m.get(lhs_key)
@@ -677,6 +713,21 @@ def _check_pl_bridge(pl: dict) -> tuple[int, list, int, list, list]:
     print("  -- IMPOSSIBLE-0: 생명장기 분해손익 0원 불가 (owner 확정) --")
     for co, q, item in zerolegs_rows[:40]:
         print(f"  ZERO0 {co:14s} {q}  {item}=0 (불가능 — 추출오류)")
+    # ---- 2e. 보험손익 leg-coverage (결측 LOB 다리 0-fill 판정, 2026-08-29 신설) ----
+    print(f"  -- 2e. LEG-COVERAGE (결측 LOB 다리를 0 으로 채워 판정)  "
+          f"닫힘={len(legcov_pass)} 깨짐={len(legcov_fail)} 좌변없음(item1 결측)={len(nolhs_rows)} --")
+    print("     닫힘 = 그 다리는 정말 0(발행사 미영위). 종전에는 이것도 SKIP 이라 무검사였다.")
+    for co, q, diff, zf in legcov_pass[:40]:
+        print(f"  LEGOK {co:14s} {q}  diff={diff:+.1f}  0-fill={'+'.join(zf)}")
+    print("     깨짐 = 결측 다리가 진짜 돈을 싣고 있다. |diff| 가 미검사 금액의 하한이다.")
+    for co, q, lhs, diff, zf in legcov_fail[:60]:
+        print(f"  LEGRED {co:14s} {q}  lhs={lhs:.1f} diff={diff:+.1f}  0-fill={'+'.join(zf)}")
+    print("     좌변없음 = item1 자체가 결측이라 등식 성립 불가(coverage census 소관).")
+    for co, q in nolhs_rows[:40]:
+        print(f"  NOLHS {co:14s} {q}  보험손익=None")
+    _nolhs_recent = [(co, q) for co, q in nolhs_rows if not q.startswith("2023.")]
+    if _nolhs_recent:
+        print(f"  !! 2024+ 에서 item1 결측 {len(_nolhs_recent)}건 — 2026-08-29 신설 시점엔 0 이었다(회귀 의심)")
     return pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows
 
 

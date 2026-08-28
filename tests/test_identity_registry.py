@@ -197,15 +197,26 @@ REGISTRY: dict[str, dict] = {
         "statement": "PL 손익 다리 9식(2026-08-28: 총포괄손익 == 당기순이익 + 기타포괄손익 신설,"
                      " ticket inbox/parser/20260828T0113Z; 2026-08-28 기타포괄손익 == "
                      "26+27+28+29+30+32(item32=기타 포괄손익(미분류) catch-all) 추가, ticket "
-                     "inbox/parser/20260828T1600Z) + 보험손익 dual-form. 예: 영업이익 == "
+                     "inbox/parser/20260828T1600Z) + 보험손익 dual-form"
+                     "(보험손익 == 생명장기 + 자동차 + 일반, 또는 그 합 + 기타영업수익 − "
+                     "기타사업비용; 2026-08-29 leg-coverage 확장 — 결측 LOB 다리를 0 으로 채워 "
+                     "판정하므로 다리가 빠진 버킷도 SKIP 이 아니라 PASS/FAIL 로 착지한다, "
+                     "ticket inbox/validation/20260829T1500Z). 예: 영업이익 == "
                      "보험손익 + 투자손익, 당기순이익 == 세전이익 − 법인세 (백만원, 부호는 "
                      "마스터 저장 부호 그대로)",
         "impl": [("scripts/validate_master_tables.py", "_check_pl_bridge")],
         "kind": "IDENTITY",
         "tol": {"abs": 200.0, "rel": 0.001, "unit": "백만원"},
         "tol_from": [("validate_master_tables", "DEFAULT_FLOOR", 200.0)],
-        "measured": "3,025 통과 / 13 실패(전건 data/_gold/pl_bridge_baseline.json 등재) / 522 "
-                    "skip. 0.1% 는 백만원 정수 저장의 반올림 폭. 8번째 식(총포괄손익=24+25)만 "
+        "measured": "3,038 통과 / 53 실패(전건 data/_gold/pl_bridge_baseline.json 등재) / 469 "
+                    "skip (2026-08-29 leg-coverage 신설 전: 3,025P/13F/522S). 보험손익 축만 "
+                    "떼어 보면 356 버킷 중 288 통과 · 50 실패 · 18 skip 이고, 그 18 은 전부 "
+                    "item1 자체가 결측이라 좌변이 없는 2023 분기다(NOLHS 로 건별 인쇄, coverage "
+                    "census 소관). 신설 전에는 결측 다리 때문에 71 버킷(19.9%)이 통째 SKIP "
+                    "이었고 coverage census 의 key_items 에도 13(자동차)·14(일반)이 없어 두 "
+                    "검사가 같은 구멍을 공유했다 — 코리안리재보험이 13분기 내내 item13 없이 "
+                    "양쪽을 통과했다(2024+ 10분기 전건 불일치, 잔차 1,456~41,051백만). "
+                    "0.1% 는 백만원 정수 저장의 반올림 폭. 8번째 식(총포괄손익=24+25)만 "
                     "따로 보면 282개 CIS-보유 셀 전건 잔차 0.000(scripts/_probes/"
                     "census_oci_labels_pass2.py) — 반올림조차 없이 정확히 닫힌다. 9번째 식"
                     "(기타포괄손익=26+27+28+29+30+32)은 221개 항 전부 존재 셀 중 220 통과·1 실패"
