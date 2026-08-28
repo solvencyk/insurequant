@@ -9,6 +9,18 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28e, owner 피드백 — 완료·배포됨):** owner가 "json은 계리사가 다룰줄 아냐"고
+지적 — 실제로는 다운로드 산출물이 처음부터 xlsx만이었고(public_exports/*.json은 서버 내부
+스냅샷일 뿐 사용자 노출 없음), 내가 "JSON 스냅샷"이라고 계속 언급한 설명 방식이 오해를 만든
+것으로 판단. 코드 변경은 불필요, 문구만 명확히: 버튼·모달 타이틀 "마스터 데이터 다운로드"→
+"테이블 다운로드(.xlsx)"로 xlsx임을 명시. 그 외 2건도 반영: 모바일에서 버튼이 풀폭으로 크게
+보이던 것 → 탭과 같은 줄 유지, 탭 바로 옆 pill(11px·999px 라운드)로(데스크탑은 그대로).
+소속 밑에 **부서** select 신설(결산(Valuation)/RM/기획/상품개발/계리/자산운용/언더라이팅/
+재무회계/기타, 선택). 라이브 재검증 중 이 Browser 세션 자체의 브라우저 캐시(GH Pages
+`Cache-Control: max-age=600`)로 새 탭에서도 구버전이 잠깐 보이는 현상 확인 — `fetch(...,
+{cache:'no-store'})`로 origin이 이미 최신임을 확인, 실사용자는 캐시가 없어 문제 없음(10분 내
+자연 해소, 배포 실패 아님).
+
 **Recent (2026-08-28d, inbox 20260828T0300Z 반영 — 완료·배포됨):** owner가 "너 inbox 다
 drain한거 맞아?"로 지적 — 정곡. `inbox/designer/20260828T0300Z`(orchestrator, owner 결정
 포함)를 세션 시작 때 안 읽고 채팅 지시만으로 바로 빌드 시작했음(이번 세션 전체의 근본 원인).
