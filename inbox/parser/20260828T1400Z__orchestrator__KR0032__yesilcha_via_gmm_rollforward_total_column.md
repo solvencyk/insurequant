@@ -241,4 +241,6 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/nh_ye
 (오프라인, raw XML만 읽음, 마스터 안 건드림 — 위 표를 그대로 재현한다)
 
 status: answered (경계 판단은 데이터로 확정했으나, 이 티켓이 두 번 오답 낸 이력을 감안해
-자기완결 대신 orchestrator/owner 재확인을 요청한다. 커밋 해시는 세션 최종 보고에.)
+자기완결 대신 orchestrator/owner 재확인을 요청한다.)
+
+커밋: `72cc896b845f210babd18e1076853980fa7ae997`
