@@ -288,6 +288,29 @@
   const codeToName = {};   // 'KR0001' → '메리츠화재해상보험'
   const nbByCode = {};     // 'KR0008' → NB spec (boot에서 NB_LOOKUP를 코드로 재키잉)
 
+  // 표시용 회사명 정리 — 드롭다운/차트 타이틀 등 텍스트 출력에만 적용. coName 자체(keyColorOf·
+  // PAA_ONLY 조회 키)는 원래 이름 유지 — 브랜드 컬러맵·PAA 예외 Set이 원수사명 기준이라 그대로 둬야 함.
+  const NAME_ABBR = {
+    '케이비손해보험':'KB손보', '케이비라이프생명보험':'KB라이프', '신한이지손해보험':'신한EZ손해',
+    '에이비엘생명보험':'ABL생명', '케이디비생명보험':'KDB생명', '아이엠라이프생명보험':'iM라이프',
+    '디지비생명보험':'DGB생명', '엠지손해보험':'MG손보', '에이아이지손해보험':'AIG손보',
+    '에이아이에이생명보험':'AIA생명',
+    '비엔피파리바카디프생명보험':'BNP카디프생명', '교보라이프플래닛생명보험':'교보라이프플래닛',
+    '처브라이프생명보험':'처브라이프', '메트라이프생명보험':'메트라이프', '악사손해보험':'악사손보',
+    '신한라이프생명보험':'신한라이프', '푸본현대생명보험':'푸본현대',
+  };
+  function shortName(n){
+    if (!n) return n;
+    if (NAME_ABBR[n]) return NAME_ABBR[n];
+    return String(n)
+      .replace(/화재해상보험$/, '화재')   // 메리츠화재해상보험 → 메리츠화재
+      .replace(/해상화재보험$/, '해상')   // 현대해상화재보험 → 현대해상
+      .replace(/손해보험$/, '손보')
+      .replace(/생명보험$/, '생명')
+      .replace(/재보험$/, '')             // 코리안리재보험 → 코리안리
+      .replace(/보증보험$/, '보증');
+  }
+
   function parseKoNum(x){
     if (x == null) return null;
     if (x === "" || x === "-") return null;
@@ -1472,7 +1495,7 @@
           responsive:true, maintainAspectRatio:false,
           plugins:{
             legend:{ display: true, position: window.innerWidth < 640 ? "bottom" : "top" },
-            title:{display:true,text:"NB CSM 배수 (신계약 CSM ÷ 월납월초, "+coName+")" },
+            title:{display:true,text:"NB CSM 배수 (신계약 CSM ÷ 월납월초, "+shortName(coName)+")" },
             tooltip:{ callbacks:{ label:(ctx)=> `${ctx.dataset.label}: ${ctx.parsed.y==null?"—":fmtNum(Number(ctx.parsed.y),2)+"×"}` } },
           },
           scales:{ y:{ ticks:{ callback:(vv)=> fmtNum(Number(vv),1) + "×" } } }
@@ -1583,7 +1606,7 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            title: { display: true, text: "CSM 시계열 · " + coName },
+            title: { display: true, text: "CSM 시계열 · " + shortName(coName) },
             legend: {
               display: true,
               position: window.innerWidth < 640 ? "bottom" : "top",
@@ -1755,7 +1778,7 @@
     const sel=document.getElementById("company");
     for (let i=sel.options.length-1;i>=1;i--) sel.remove(i);
     for (const code of codes){
-      const opt=document.createElement("option"); opt.value=code; opt.textContent=codeToName[code]; sel.appendChild(opt)
+      const opt=document.createElement("option"); opt.value=code; opt.textContent=shortName(codeToName[code]); sel.appendChild(opt)
     }
     sel.addEventListener("change", onSelect);
     const perSel=document.getElementById("wfPeriod");
