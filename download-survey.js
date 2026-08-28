@@ -52,7 +52,7 @@
   ].map(function (n) { return NAME_ABBR_EXTRA[n] || shortName(n); });
   // 익명이어도 쓸모 있는 정보가 남게(오케스트레이터 결정 — 익명에 마찰을 주면 사람들이 익명을
   // 포기하는 게 아니라 아무 회사나 골라 소속 통계가 오염된다). 소속을 밝히든 안 밝히든 공통.
-  var SECTORS = ["개인", "보험사", "증권·운용", "컨설팅·회계", "학계", "언론", "감독기관", "기타"];
+  var SECTORS = ["보험사", "재보험사", "증권·운용", "컨설팅·회계", "학계", "언론", "감독기관", "기타"];
   // 주 타겟층(계리사) 감안 — 보험사 내 부서 구분. 선택 항목(필수 아님).
   var DEPARTMENTS = ["계리(Valuation)", "리스크관리(RM)", "기획", "상품개발", "자산운용", "언더라이팅", "재무/회계", "기타"];
   var PURPOSES = ["리서치/애널리스트 업무", "투자 참고", "학업/논문", "개인 관심", "기타"];
@@ -105,7 +105,7 @@
   function buildAffilCombo() {
     var wrap = el("div", { class: "iq-combo" });
     var input = el("input", {
-      class: "iq-input", id: "iqdl-affil", placeholder: "회사명을 입력하세요 (예: 코리안리)", autocomplete: "off",
+      class: "iq-input", id: "iqdl-affil", placeholder: "보험사명을 입력하세요 (예: 코리안리)", autocomplete: "off",
       role: "combobox", "aria-expanded": "false", "aria-autocomplete": "list"
     });
     var list = el("div", { class: "iq-combo-list", role: "listbox" });
@@ -228,7 +228,7 @@
     // 익명은 다른 선택지와 동등한 정상 옵션 — 확인 절차 없음(오케스트레이터 결정, 2026-08-28:
     // 마찰을 주면 사람들이 진짜 소속을 숨기는 대신 아무 회사나 골라버려 통계가 더 나빠진다).
     var anonCb = el("input", { type: "checkbox", id: "iqdl-anon" });
-    var anonLabel = el("label", { class: "iq-check-row", for: "iqdl-anon", style: "margin-top:6px" }, [anonCb, document.createTextNode("회사명은 비공개로 할게요")]);
+    var anonLabel = el("label", { class: "iq-check-row", for: "iqdl-anon", style: "margin-top:6px" }, [anonCb, document.createTextNode("회사명은 비공개로 할게요 / 보험사 소속이 아니에요")]);
     var deptSel = optionSelect("iqdl-dept", DEPARTMENTS);
     var sectorSel = optionSelect("iqdl-sector", SECTORS);
     // 업권은 비공개(익명) 체크했을 때만 필수라, 그 전까진 숨겨서 "이게 왜 있지" 헷갈림을 없앤다.
@@ -245,12 +245,12 @@
     var purposeSelect = el("select", { class: "iq-select", id: "iqdl-purpose" },
       [el("option", { value: "", text: "선택 안 함" })].concat(PURPOSES.map(function (p) { return el("option", { value: p, text: p }); })));
     var consentCb = el("input", { type: "checkbox", id: "iqdl-consent" });
-    var errorMsg = el("div", { class: "iq-form-error", id: "iqdl-error", text: "소속 또는 익명 체크, 시트 1개 이상, 안내사항 확인이 필요합니다(비공개 선택 시 업권도 알려주세요)." });
+    var errorMsg = el("div", { class: "iq-form-error", id: "iqdl-error", text: "보험사명 또는 비공개 체크, 시트 1개 이상, 안내사항 확인이 필요합니다(비공개 선택 시 업권도 알려주세요)." });
     var submitBtn = el("button", { class: "iq-btn", type: "submit", text: "남기고 다운로드" });
     var honeypot = el("input", { type: "text", name: "website", tabindex: "-1", autocomplete: "off", style: "position:absolute;left:-9999px;width:1px;height:1px;opacity:0" });
 
     var form = el("form", { id: "iqdl-form" }, [
-      el("div", { class: "iq-field" }, [el("label", { text: "소속" }), affilCombo.wrap, anonLabel]),
+      el("div", { class: "iq-field" }, [el("label", { text: "보험사명" }), affilCombo.wrap, anonLabel]),
       el("div", { class: "iq-field" }, [el("label", { text: "부서 " }, [el("span", { class: "iq-hint", text: "(선택)" })]), deptSel]),
       sectorField,
       el("div", { class: "iq-field" }, [el("label", { text: "다운로드할 데이터 " }, [el("span", { class: "iq-hint", text: "(중복 선택 가능)" })]), sheetGrid]),
