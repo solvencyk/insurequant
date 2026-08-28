@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-28T13:26:16Z",
+  "generated_at_utc": "2026-08-28T14:32:17Z",
   "sheets": {
     "17BS": {
       "rows": 6852,
@@ -23,8 +23,8 @@
     },
     "CSM상각": {
       "rows": 390,
-      "quarter_min": null,
-      "quarter_max": null
+      "quarter_min": "2025.4Q",
+      "quarter_max": "2025.4Q"
     },
     "신계약CSM배수": {
       "rows": 331,
