@@ -20,7 +20,7 @@
     { name: "손익분해PL", file: "public_exports/손익분해PL.json", code: "PL", label: "손익분해 (PL)" },
     { name: "배당", file: "public_exports/배당.json", code: "DIV", label: "배당에 관한 사항" }
   ];
-  var MANIFEST_FILE = "public_exports/_manifest.json";
+  var MANIFEST_FILE = "public_exports/manifest.json";
   // build_master_xlsx.py coerce()의 NUMERIC_COLS와 동일 — 공식 마스터 xlsx와 같은 컬럼만
   // 숫자 셀로, 나머지(티커 등)는 텍스트 유지(안 그러면 "000060"의 앞자리 0이 날아감).
   var NUMERIC_COLS = { "값": 1, "-100bp": 1, "-50bp": 1, "base": 1, "+50bp": 1, "+100bp": 1,
