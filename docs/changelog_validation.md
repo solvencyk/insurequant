@@ -1,9 +1,94 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-29 (c) · Stage 3/5 — validation
+> Last updated: 2026-08-29 (d) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-08-29 (d) — 분기 지평이 하드코딩이라 게이트가 최신 분기를 순회조차 안 했다
+
+발주 `inbox/validation/20260829T1910Z`. **`RED=0` 이 "검사했더니 깨끗" 이 아니라 "안 봤다"
+였던 사고.** 2026.2Q 데이터를 라이브에 배포한 날, `validate_master_tables` 의 coverage
+census · qoq · spike · wfy · continuity 와 `validate_data_contract` 의 census RED 스코프가
+그 분기를 한 번도 방문하지 않았다.
+
+### 원인 — 손으로 적은 분기 목록, 세 곳 + 죽은 것 하나
+
+`validate_master_tables.QS` 는 이 파일 **최초 커밋 `9243445` 부터** `2026.1Q` 로 끝나는
+리터럴이었다(파생이 멈춘 게 아니라 처음부터 리터럴). 같은 병:
+
+| 위치 | 상수 | 가두고 있던 축 |
+|---|---|---|
+| `validate_master_tables.py` | `QS` | census · qoq · spike · wfy · continuity · `prev_quarter()`(→ OCI-vs-BS) |
+| `validate_master_tables.py` | `FY_Q` / `PREV_CLOSE` / wfy-year | **두 번째 지평** — `FY_Q["2026"]=["2026.1Q"]` 이라 `QS` 만 고쳐도 연속성은 여전히 사각 |
+| `validate_data_contract.py` | `_DISPLAY_QUARTERS` | census RED 의 **발화 스코프 전체**(`_emit` 24곳) |
+| `validate_data_contract.py` | `QS` | 참조 0 = 죽은 값. 지평처럼 보이는 자리라 제거 |
+| `validate_kics_rate_sensitivity.py` | `ALL_Q` | RS4 census. K-ICS 최신이 아직 2026.1Q 라 **미발현**(공시가 오면 조용히 건너뛸 자리) |
+
+**이 저장소에서 배울 것 두 가지.**
+
+1. **자물쇠가 직렬로 두 개일 수 있다.** `_DISPLAY_QUARTERS` 에만 2026.2Q 를 넣으면
+   **델타 0** 이다 — IFRS17 hole 이 `validate_master_tables.coverage_holes`(→ 그쪽 `QS`)를
+   거쳐 오기 때문. "게이트 A 의 스코프를 열었다" 는 "그 축이 검사된다" 가 아니다.
+2. **알고도 정본을 안 고치면 그게 재발 구조다.** `validate_data_contract` 안의 두 검사
+   (배당 L2275 · CSM 연속성 L2519)가 주석에 *"`_DISPLAY_QUARTERS` 는 2026.2Q 를 아직
+   포함하지 않는다"* 고 적어 놓고 **자기만 `_in_scope` 를 비켜갔다.** 개별 우회가 두 번
+   쌓이는 동안 정본은 그대로였다.
+
+### 실측 (지평 확장 전 → 후)
+
+```
+validate_master_tables --no-build (exit 2 불변)
+  coverage_hole 0CSM/0PL → 0CSM/1PL   ← HOLE-PL 흥국화재 2026.2Q (부분)
+  qoq_warn        211Y → 235Y  (+24, 전부 2026.2Q)
+  oci_vs_bs_aoci   13Y →  14Y  (+1, 에이비엘생명 2026.2Q)
+  plausibility(dup/spike/cont/wfy/zamort) · closing · pl_bridge · csm_amort · sens = 변화 0
+validate_data_contract   RED 0→1, YELLOW 92 불변 (exit 0→2)
+  RED [PL_breakdown] MASTER_HOLE  흥국화재 2026.2Q
+```
+
+RED 원인: 흥국화재 2026.2Q PL 항목 **2/8/12/13/14** 결측(직전 2026.1Q 는 전부 정상 = 최신
+분기 회귀). 자식 item9/10/11 은 살아 있고 부모 item8·item12 만 비어 산술로도 못 닫는다.
+raw 는 디스크에 있고 라벨 빈도도 2026.1Q 와 같다 → **추출 실패**, refetch 아님.
+`inbox/parser/20260829T2010Z` (`lane: ifrs17` · `route: reparse`) 발주. **push 는 이 RED 으로
+막혀 있다** — documented exception 감이 아니라 fixable 이다.
+
+서울보증보험도 같은 3항목 중 생명장기손익이 없지만 hole 이 아니다: 핵심항목 보유 분기 6개
+(<`active_min`=7)라 `struct` 로 분리되고, 보증보험이라 생명장기 leg 자체가 없다
+(`ZLEG_LEGIT["서울보증보험"]="ALL"`). 카테고리 추론이 아니라 회사별 실데이터로 확인.
+
+### 조치 — `scripts/_quarter_horizon.py` (파생 정본)
+
+- 하한 `2023.1Q` **고정**(데이터 파생하면 `IFRS17_BS` 의 2021.4Q 까지 끌려와 허수 hole).
+- 상한 = 마스터 **5개**의 `공시분기` high-water mark. **한 마스터에서만 파생하면 안 된다** —
+  그 마스터가 최신 분기를 통째로 빠뜨렸을 때 지평도 같이 줄어 결측이 안 보인다(자기참조 사각).
+- `"공시분기"` 필드만 읽는다(파일 전체 정규식은 `비고` 산문의 분기까지 주워 지평이 허수로 는다).
+  실측 81ms.
+- `display_quarters()` = owner 스코프의 **규칙**(연말 전부 + 2025.1Q 이후 전부)을 파생 →
+  종전 7개를 정확히 재현. 회귀 가드 테스트 있음.
+
+### 트립와이어 — 배선했고, 변이시험으로 확인했다
+
+`tests/test_quarter_horizon.py`(17 tests) → `prepush_check.py` `fast` 목록에 등록.
+① 파생 지평이 마스터 최신 분기를 품는가 ② 게이트 상수가 최신 분기를 담는가
+③ `_DISPLAY_QUARTERS` 가 최신 분기를 담는가 ④ 게이트가 리터럴 지평을 다시 심지 않았는가
+(AST — `QUARTER_FLOOR` 에서 시작하는 분기 컬렉션만 잡아 (회사,분기) 예외 등재부는 통과).
+**변이시험**: `QS` 를 옛 리터럴로 되돌리면 ②④가 FAIL, 되돌리면 17/17 통과.
+
+### 다른 게이트 census (AST, 주석·독스트링 제외)
+
+지평형 하드코딩은 위 3파일뿐. 나머지 8개 게이트 + `kics_json_rules` 는 데이터 파생이고 남은
+분기 리터럴은 전부 (회사,분기) 예외 등재부다. `validate_kics_disclosure.SPOT_QUARTER` 는
+단일 spot-check 앵커, `validate_nb_csm_multiple` 의 `2024.4Q` 는 FY2024 IR 앵커(고정이 맞다).
+재현: `scripts/_probes/probe_20260829_gate_horizon_audit.py`.
+**미조치(게이트 아님, 기록용)**: `scripts/_csm_goldmap.py` L20 · `_csm_status_matrix.py` L29 가
+`QS = [q for q in QS if q != "2026.2Q"][:13]` 로 2026.2Q 를 명시 배제한다 — 리포트 헬퍼라
+push 를 막지 않지만 그 리포트엔 최신 분기가 없다.
+
+### 골든 / 지문
+
+`tests/fixtures/master_tables_golden.json` `--update` 재생성(위 SUMMARY 3칸, exit_code 2 불변).
+`validate_golden_input_fingerprints.py` 는 **갱신 불요** — 빌더 미변경, 실행 결과 6/6 ok RED=0.
 
 ## 2026-08-29 (c) — 등식은 있었다. 도망간 것은 결측 처리였다 (보험손익 leg-coverage)
 

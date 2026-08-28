@@ -26,7 +26,10 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.stdout.reconfigure(encoding="utf-8")
+
+from _quarter_horizon import QUARTER_FLOOR, quarter_horizon  # noqa: E402
 
 # 2026-08-25: PL 축을 **배포본**으로 재조준했다. 그 전까지 이 게이트는 파서 중간산출물
 # `data/dart/viz/pl_breakdown_master.json` 을 읽었다 — CSM 축은 배포본(CSM_waterfall.json)을
@@ -273,8 +276,13 @@ PL_EQ_ADJ = {
     "생명장기손익 = 원수손익+재보험손익": [("기타사업비용", -1)],
 }
 
-QS = ["2023.1Q", "2023.2Q", "2023.3Q", "2023.4Q", "2024.1Q", "2024.2Q",
-      "2024.3Q", "2024.4Q", "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q"]
+# 분기 지평 — **마스터에서 파생한다** (`scripts/_quarter_horizon.py`, 근거는 그 독스트링).
+# 2026-08-29 까지 이 자리는 `2026.1Q` 로 끝나는 리터럴이었고 파일 최초 커밋(9243445) 이후
+# 아무도 안 늘렸다. 그래서 2026.2Q 를 배포한 날 아래 축이 전부 그 분기를 **순회조차 안 했다**:
+# coverage_holes · qoq_scan · spike · wfy · continuity. 실측으로 `HOLE-PL 흥국화재 2026.2Q`
+# 하나가 그 사각에 숨어 있었다. 여기에 분기를 손으로 다시 적지 말 것 —
+# `tests/test_quarter_horizon.py` 가 막는다.
+QS = quarter_horizon()
 
 
 def load_qoq_cfg():
@@ -470,13 +478,14 @@ def _check_plausibility(wf: dict) -> tuple[list, list, list, list, list]:
                 spike_rows.append((co, QS[i - 1], QS[i], p, c, (c - p) / p))
 
     # 연속성: FY[t] 각 분기 기초 CSM = FY[t-1].4Q 기말 (YTD 연초값 고정 방식).
-    # 작년 기말 = 올해 기시. 2023은 2022 데이터 없어 SKIP.
-    FY_Q = {
-        "2024": ["2024.1Q", "2024.2Q", "2024.3Q", "2024.4Q"],
-        "2025": ["2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q"],
-        "2026": ["2026.1Q"],
-    }
-    PREV_CLOSE = {"2024": "2023.4Q", "2025": "2024.4Q", "2026": "2025.4Q"}
+    # 작년 기말 = 올해 기시. 하한 FY(2023)는 전년 기말이 없어 SKIP.
+    # QS 에서 파생한다 — 2026-08-29 까지 여기도 리터럴이었고 FY2026 이 `["2026.1Q"]` 라
+    # **2026.2Q 는 연속성 검사 대상이 아니었다**(QS 와 별개의 두 번째 지평 하드코딩).
+    FY_Q: dict[str, list[str]] = defaultdict(list)
+    for _q in QS:
+        FY_Q[_q[:4]].append(_q)
+    FY_Q.pop(QUARTER_FLOOR[:4], None)
+    PREV_CLOSE = {fy: f"{int(fy) - 1}.4Q" for fy in FY_Q}
     # 연속성(continuity) break = 무조건 RED. 원천 "소급재작성"으로 보이는 케이스라도 raw 대조로
     # 확정되기 전에는 면제하지 않는다 (owner 2026-06-16: self-closing identity는 opening을 검증 못 함 —
     # 2026.1Q 5사 기시 misparse를 '재작성'으로 오판한 사건. 기시≠직전기말이면 그냥 RED). 메모리: continuity-break-is-red.
@@ -507,8 +516,9 @@ def _check_plausibility(wf: dict) -> tuple[list, list, list, list, list]:
     # 튀었다. 면제를 두 번 쓰지 않도록 **정본을 한 곳에 두고 import** 한다.
     wfy_rows = []   # (co, fy, {q: 기초})
     wfy_exc = []
+    ALL_FY = sorted({q[:4] for q in QS})    # QS 파생 (종전 ("2023".."2026") 리터럴)
     for co, qmap in sorted(wf_co.items()):
-        for fy in ("2023", "2024", "2025", "2026"):
+        for fy in ALL_FY:
             opens = [(q, qmap[q].get("기초CSM")) for q in QS
                      if q.startswith(fy + ".") and q in qmap and qmap[q].get("기초CSM") is not None]
             if len(opens) < 2:

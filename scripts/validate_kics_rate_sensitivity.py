@@ -22,7 +22,10 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.stdout.reconfigure(encoding="utf-8")
+
+from _quarter_horizon import quarter_horizon  # noqa: E402
 
 SHOCK_COLS = ["-100bp", "-50bp", "base", "+50bp", "+100bp"]
 # RS2 documented exceptions: (회사, 분기) basis 차이 (별도 vs 연결) — RED여도 게이트 블록 안 함.
@@ -30,8 +33,11 @@ RS2_EXCEPTIONS = {("DB손해보험", "2025.2Q")}
 
 # 비율행 정렬을 위한 회복 regime 시작 (이전 분기는 서식 도입 전이라 hole 정상)
 REGIME_START = "2024.4Q"
-ALL_Q = ["2023.1Q", "2023.2Q", "2023.3Q", "2023.4Q", "2024.1Q", "2024.2Q",
-         "2024.3Q", "2024.4Q", "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q"]
+# 지평은 마스터에서 파생한다(`scripts/_quarter_horizon.py`). 2026-08-29 까지 여기도
+# `2026.1Q` 로 끝나는 리터럴이었다 — K-ICS 2026.2Q 공시가 들어오는 순간 RS4 커버리지
+# census 가 그 분기를 **조용히 건너뛸** 자리였다(현재 kics 마스터 최신은 2026.1Q 라 아직
+# 발현 전. 발현하고 나서 고치면 늦다).
+ALL_Q = quarter_horizon()
 
 
 def load_rs():

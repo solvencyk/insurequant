@@ -81,6 +81,7 @@ from validate_kics_disclosure import (  # noqa: E402
     _transition_mmult_after,
     _transition_ratio_after_capture,
 )
+from _quarter_horizon import display_quarters  # noqa: E402
 from validate_master_tables import (  # noqa: E402
     CSM_AMORT_MIN_EOK,
     CSM_AMORT_PIN_TOL_ABS_EOK,
@@ -101,8 +102,9 @@ from solvency.validation.kics_json_rules import (  # noqa: E402
     run_validation as kics_run_validation,
 )
 
-QS = ["2023.1Q", "2023.2Q", "2023.3Q", "2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q",
-      "2024.4Q", "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q"]
+# 이 자리에는 `2026.1Q` 로 끝나는 QS 리터럴이 있었다. **어디서도 안 쓰이는 죽은 값**이었고
+# (2026-08-29 실측: 파일 전체에서 참조 0), 그런데도 다음 세션이 "분기 목록은 여기 있다"고
+# 읽을 만한 자리에 앉아 있었다. 지평은 `validate_master_tables.QS`(= 마스터 파생) 하나뿐이다.
 
 
 SOURCE_VISION_LEDGER = ROOT / "data" / "_gold" / "kics_source_vision_verified.json"
@@ -284,11 +286,25 @@ class GateResult:
 # ===========================================================================
 # CHECK 1 — Completeness census
 # ===========================================================================
-# owner scope (2026-06-20): the site displays only these 7 quarters. Census RED is scoped to
-# them on LIVE data — middle quarters (2023.1-3Q / 2024.1-3Q) are not displayed and their gaps
-# (git-purged raw, owner won't backfill) must not block push. NOTE: scope is applied only when
-# NOT env.inject, so --selftest keeps full-rigor census over synthetic quarters (7/7 invariant).
-_DISPLAY_QUARTERS = {"2023.4Q", "2024.4Q", "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q"}
+# owner scope (2026-06-20): the site displays FY-end quarters + everything from 2025.1Q on.
+# Census RED is scoped to them on LIVE data — middle quarters (2023.1-3Q / 2024.1-3Q) are not
+# displayed and their gaps (git-purged raw, owner won't backfill) must not block push. NOTE:
+# scope is applied only when NOT env.inject, so --selftest keeps full-rigor census over
+# synthetic quarters (7/7 invariant).
+#
+# 2026-08-29: 이 자리는 7개 분기가 박힌 리터럴 집합이었고 `2026.1Q` 에서 끝났다. 그래서
+# 최신 분기(2026.2Q)의 census RED 은 **발화 자체가 막혀 있었다** — 게다가 그 사실을 알고 있던
+# 검사가 이 파일 안에 둘 있었다(배당 `check_dividend`, CSM 연속성 `check_csm_continuity`:
+# 주석에 "`_DISPLAY_QUARTERS` 는 2026.2Q 를 아직 포함하지 않는다"고 적고 **자기만 스코프를
+# 비켜갔다**). 정본을 안 고치고 개별 검사가 우회한 것이 재발 구조였다. 이제 owner 의 규칙
+# 자체를 파생한다(`scripts/_quarter_horizon.display_quarters`) — 같은 지평에서 돌리면
+# 종전 7개를 정확히 재현하고, 새 분기는 저절로 들어온다.
+#
+# 자물쇠가 **두 개 직렬**이라는 점에 주의: 이 스코프를 열어도 `check_census` 의 IFRS17 hole 은
+# `validate_master_tables.coverage_holes`(→ 그쪽 QS)를 통해 오므로 **둘 다** 최신 분기를
+# 품어야 RED 이 나온다. 2026-08-29 실측: `_DISPLAY_QUARTERS` 만 열면 델타 0, QS 까지 열면
+# `MASTER_HOLE 흥국화재 2026.2Q` RED 1건.
+_DISPLAY_QUARTERS = display_quarters()
 
 
 def _in_scope(q) -> bool:

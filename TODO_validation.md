@@ -1,11 +1,62 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-29 (보험손익 leg-coverage 신설 — 결측 SKIP 71건을 판정으로 전환) · Stage 3/5 — validation
+> Last updated: 2026-08-29 (분기 지평 마스터 파생 — 게이트가 최신 분기를 순회조차 안 하던 사각) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-29 c) 분기 지평 하드코딩 — 게이트가 최신 분기(2026.2Q)를 순회조차 안 했다. `RED=0` 이 "안 봤다"였다.**
+
+> 처리: `inbox/validation/20260829T1910Z__orchestrator__MULTI__qs_ends_at_2026q1.md` → `status: answered`
+> 신규 발주: `inbox/parser/20260829T2010Z__validation__KR0005_2026.2Q__pl_lob_legs_missing.md`
+> (`lane: ifrs17` · `route: reparse`) — **현재 push BLOCKED (RED=1)**
+>
+> **원인 = 하드코딩, 그것도 세 곳.** `validate_master_tables.QS` 는 이 파일 **최초
+> 커밋(`9243445`)부터** `2026.1Q` 로 끝나는 리터럴이었고 아무도 안 늘렸다. 같은 병이
+> `validate_data_contract._DISPLAY_QUARTERS`(census RED 발화 스코프)와
+> `validate_kics_rate_sensitivity.ALL_Q`(RS4 census)에도 있었다. `validate_master_tables`
+> 안에는 **두 번째 지평**까지 따로 있었다 — `FY_Q["2026"] = ["2026.1Q"]` 라 연속성 검사도
+> 2026.2Q 를 안 봤다.
+>
+> **자물쇠가 직렬 두 개였다.** `_DISPLAY_QUARTERS` 만 열면 델타 **0** — IFRS17 hole 은
+> `validate_master_tables.coverage_holes`(→ 그쪽 QS)를 통해 오기 때문이다. 둘 다 열어야
+> RED 이 나온다. 게이트 하나만 보고 "열었다"고 하면 안 된다.
+>
+> **아는 사람이 있었는데 정본을 안 고쳤다.** `validate_data_contract` 안의 두 검사(배당·CSM
+> 연속성)는 주석에 "`_DISPLAY_QUARTERS` 는 2026.2Q 를 아직 포함하지 않는다"고 **적어 놓고
+> 자기만 스코프를 비켜갔다.** 개별 우회가 재발 구조 자체였다.
+>
+> **실측(지평에 2026.2Q 넣기 전/후).**
+> `validate_master_tables --no-build` SUMMARY: `coverage_hole 0PL→1PL` ·
+> `qoq_warn 211Y→235Y` · `oci_vs_bs_aoci 13Y→14Y`. `plausibility`(dup/spike/cont/wfy/zamort)는
+> 변화 0. `validate_data_contract` SUMMARY: `RED 0→1` (YELLOW 92 불변).
+> 유일한 RED = **`MASTER_HOLE 흥국화재 2026.2Q`** — PL 항목 2/8/12/13/14 결측인데 직전
+> 2026.1Q 는 다섯 항목 전부 정상 = 최신 분기 회귀. raw 는 디스크에 있고 라벨 빈도도 2026.1Q
+> 와 같다 → refetch 아님, parser(ifrs17) 발주.
+>
+> **조치 = 파생.** `scripts/_quarter_horizon.py` 신설(하한 `2023.1Q` 고정, 상한은 마스터 5개의
+> `공시분기` high-water mark). **여러 마스터의 max 를 쓰는 이유** — 한 마스터에서만 파생하면
+> 그 마스터가 최신 분기를 통째로 빠뜨렸을 때 지평도 같이 줄어 결측이 안 보인다(자기참조 사각).
+> `display_quarters()` 는 owner 스코프 규칙(연말 전부 + 2025.1Q 이후 전부)을 파생하며
+> 종전 7개를 정확히 재현한다(회귀 가드 테스트 있음).
+>
+> **트립와이어 배선.** `tests/test_quarter_horizon.py` 신설 → `prepush_check.py` 오프라인
+> 테스트 목록에 등록(배선 안 하면 또 honor-system). 변이시험 확인: QS 를 옛 리터럴로 되돌리면
+> 2건 FAIL(`test_gate_horizon_includes_latest_quarter` + `test_no_gate_retypes_the_quarter_horizon`).
+>
+> **다른 게이트 census(AST, 주석·독스트링 제외).** 지평형 하드코딩은 위 3곳뿐. 나머지 게이트
+> 8개는 데이터 파생(`validate_kics_disclosure` 의 `quarters = sorted(by_q)` 등)이고, 남은 분기
+> 리터럴은 전부 **(회사, 분기) 예외 등재부**라 지평이 아니다. `validate_kics_disclosure.SPOT_QUARTER`
+> 도 단일 spot-check 앵커. 재현: `scripts/_probes/probe_20260829_gate_horizon_audit.py`.
+> 미조치(게이트 아님, 기록용): `scripts/_csm_goldmap.py` L20 · `scripts/_csm_status_matrix.py` L29
+> 가 `QS = [q for q in QS if q != "2026.2Q"][:13]` 로 **2026.2Q 를 명시적으로 배제**한다 —
+> 리포트 헬퍼라 push 를 막지 않지만, 그 리포트를 근거로 판단할 때는 최신 분기가 빠져 있다.
+>
+> **골든/지문.** `tests/fixtures/master_tables_golden.json` `--update` 재생성(위 SUMMARY 3칸
+> 이동, exit_code 2 불변). `validate_golden_input_fingerprints.py` 는 **갱신 불요** — 빌더를
+> 안 건드렸고 실행 결과 RED=0.
 
 **(2026-08-29 b) 보험손익 leg-coverage 신설 — "등식이 없다"가 아니라 "등식이 결측을 만나면 도망갔다".**
 
