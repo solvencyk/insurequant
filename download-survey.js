@@ -60,7 +60,7 @@
   var AFFIL_KEY = "iqSurveyAffil_v1";
   var SECTOR_KEY = "iqSurveySector_v1";
   var DEPT_KEY = "iqSurveyDept_v1";
-  var DISCLAIMER_TEXT = "본 데이터는 공시자료를 자동으로 수집·가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다.";
+  var DISCLAIMER_TEXT = "본 데이터는 공시자료를 자동으로 수집·가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 오류 발견 시 화면의 우측 하단 버튼을 통해 제보 부탁드립니다.";
   var SOURCE_URL = "https://www.insurequant.com";
 
   function el(tag, attrs, children) {
