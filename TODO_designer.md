@@ -9,6 +9,11 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28j):** owner 재지적 — K-ICS 히트맵 호버 시 회사명이 abbr 안 됨. 원인: 트리맵
+칸의 시각 라벨(`name.textContent`)엔 `shortName()`이 있었는데 같은 칸의 `.title`(호버 툴팁)은
+원수사명 그대로였던 누락. 같은 페이지에서 CSM 버블맵도 동일 패턴(ECharts tooltip formatter +
+모바일 리스트)이라 같이 수정 — 트리맵 4곳 + 버블맵 2곳, 총 6곳. 배포 완료.
+
 **Recent (2026-08-28i, [긴급] owner):** "원보험사코드가 코리안리 내부 코드라 공개하면 안 된다"
 — `export_public_sheets.py`가 스냅샷 생성 시 그 컬럼을 드롭하도록 수정, 8개 시트 전부
 재생성해 이미 배포됐던 값을 덮어씀(main 배포 완료, 라이브 curl로 8개 시트 전부 컬럼 목록에서
