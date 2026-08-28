@@ -197,7 +197,13 @@ parser(ifrs17)가 흥국화재 2026.2Q 를 재추출하면 0 이 된다.
 - `scripts/validate_golden_input_fingerprints.py` → **갱신 불요.** 빌더를 하나도 안
   건드렸다(검증기만 수정). 실행 결과 6/6 `ok`, RED=0.
 
-### 6) 안 한 것
+### 6) 커밋
+
+`f45cef8` — `scripts/_quarter_horizon.py` 신설 · 게이트 3종 지평 파생 전환 ·
+`tests/test_quarter_horizon.py` + 훅 배선 · 골든 재생성 · parser 발주 · TODO/changelog.
+**push 안 함**(RED=1 로 훅이 BLOCK, 그리고 배포는 owner 승인 사항).
+
+### 7) 안 한 것
 
 마스터 JSON·xlsx 미수정(읽기 전용). `data/disclosure/`·`download_*`·`index.html`·
 `IFRS17.html`·`public_exports/` 미접근. 브랜치 유지(`fix/csm-product-segmented-columns`),
