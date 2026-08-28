@@ -9,6 +9,15 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28b, 채팅 발주 — 마스터 다운로드 설문게이트 + 오류제보 팝업, 진행 중):**
+- owner: index.html에 마스터 xlsx 다운로드 버튼 신설, 짧은 설문(소속/데이터목록/목적/disclaimer) 제출해야 다운로드. 4페이지 공통 우하단 "오류 제보" 팝업(시트/회사/분기 중복선택+자유서술)도 owner Gmail로 도착하게.
+- **GitHub Pages는 서버 없는 정적 호스팅이라 게이트는 실접근제어가 아니라 매너 절차** — public_exports/*.csv는 URL 아는 사람 누구나 접근 가능, owner에게 명시적으로 알림.
+- 빌드: `scripts/export_public_sheets.py`(마스터 JSON 8개 → `public_exports/*.csv`, 마스터 xlsx는 안 건드림 — 수식캐시 리스크 회피) · `common.css`에 모달 디자인시스템 추가 · `download-survey.js`(index.html 전용 — 소속 datalist 타이핑검색+"기타(익명)" 2클릭 마찰 설계, 시트 체크박스 전체선택버튼 없음, JSZip으로 복수시트 zip 다운로드, localStorage로 재방문자는 슬림 피커) · `report-widget.js`(4페이지 공통 플로팅 버튼, 페이지별 `data-sheet-hint`로 시트 사전선택) · JSZip 3.10.1 CDN(npm mode, SRI, `compute_sri.py`에 등재).
+- **중간에 발견**: 처음엔 Google Form proxy-POST로 설계했는데, 같은 공유 워킹트리에서 **다른 세션이 동시에** `scripts/appsscript/insurequant_collector.gs`(Apps Script Web App, 스키마무관 단일엔드포인트, kind로 download/report 분기, report만 owner Gmail+저장소 inbox 티켓 포맷 자동변환, 락 처리)를 만들어놓은 걸 발견 — owner 확인 후 그쪽으로 갈아탐(`forms-config.js`를 Form 2개 방식에서 단일 `/exec` URL 방식으로 재작성, payload 키를 그 스크립트의 `_notify()`가 찾는 `sheet/company/period` 이름에 맞춤, CSP `connect-src`도 `docs.google.com`→`script.google.com`).
+- 로컬 브라우저 실측(JS 직접 호출 — read_page/find 도구가 이 페이지의 동적 삽입 버튼을 못 찾는 이슈 있어 `javascript_tool`로 우회): 4페이지 오류제보 위젯 전부 정상, index.html 다운로드 설문 최초/재방문 양쪽 플로우+JSZip 번들링+localStorage 게이트 전부 실동작 확인, 모바일 375px 레이아웃 확인, 콘솔 에러 0. **주의**: 이 세션에서 로컬 static 서버 브라우저 미리보기가 여러 번 "denied/failed"·CSS 캐시 stale로 헤맴 — `preview_start`를 `url` 파라미터로(아닌 `name`으로) 부르면 우회됨, CSS 확인은 `fetch(...,{cache:'no-store'})`로.
+- **블로킹**: `insurequant_collector.gs`의 실제 배포 `/exec` URL 대기 중 — `forms-config.js`의 `action`이 아직 PLACEHOLDER라 제출은 콘솔 로그만 남고(다운로드 자체는 정상 동작) 실제 전송이 안 됨. URL 받으면 그 한 줄만 바꾸고 로컬 재확인 후 owner GO 받아 main 배포.
+- 아직 git commit 전(로컬만) — 공유 워킹트리에 다른 세션 미커밋 파일(OCI PL_breakdown 확장 관련, `inbox/parser/20260828T0113Z...`) 섞여있어 내 파일만 명시적으로 골라 커밋 예정.
+
 **Recent (2026-08-28, 채팅 발주 — 회사명 표시 정리 4페이지 확장 + main 배포):**
 - owner: "영어 회사명들을 한글로 쓰다보니까 지저분해 보인다(에이아이에이생명·에이비엘생명 등), 원천데이터는 안 건드리고 표시만 정리해라. 뭘 어떻게 바꿀지 먼저 말해봐라." → 조사 후 표로 보고, owner가 "BNP카디프생명으로 모든 html에 적용 & push까지" 승인.
 - 진단: `index.html`에만 `NAME_ABBR`+`shortName()` 축약 로직이 있고([index.html:540](index.html)) `K-ICS.html`은 AIA 1개사만 부분 적용(`COMPANY_DISPLAY`), `IFRS17.html`·`공시보고서.html`은 전무 — 드롭다운이 원수사명 그대로 노출. `kics_disclosure.json`/`CSM_waterfall.json`/`kics_tier1_utilization.json` 등에서 전사 39개사 원수사명을 직접 뽑아 대조.

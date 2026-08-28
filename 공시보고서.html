@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <!-- CSP: defense-in-depth, meta-delivered (GitHub Pages static — no HTTP headers). Must stay first in <head>, before CDN tags. frame-ancestors/report-uri are ignored in meta CSP. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self' https://script.google.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>InsureQuant — 공시/보고서</title>
   <meta name="description" content="보험사 정기경영공시·DART 공시 자료 모음 — 분기·반기·사업보고서"/>
@@ -109,6 +109,8 @@
     자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">2026.1Q</span>)<br/>
     본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
   </footer>
+<script src="forms-config.js"></script>
+<script src="report-widget.js" data-sheet-hint="배당"></script>
 <script>
 /* 배당현황 (2026-08-15, inbox designer 20260814T2230Z — dividend.json, DART alotMatter API)
    항목1-7=회사단위(종류주="-"), 항목8-10=종류주별(보통주/우선주). null=그 분기 공시 자체 없음
