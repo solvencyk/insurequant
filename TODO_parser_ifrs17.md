@@ -1,5 +1,42 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-28 (53rd pass) — NH농협손해(KR0032) 원수 예실차(item6) 최초 충전, GMM 롤포워드
+> 손실요소 경계 확정 (orchestrator 티켓 `inbox/parser/20260828T1400Z__orchestrator__KR0032
+> __yesilcha_via_gmm_rollforward_total_column.md`, status: answered — 3회차, 앞 두 번은 오답
+> 후 철회).** item6은 지금까지 항상 0(잔차가 전부 item7로 흡수)이었다 — 이번에 처음 채웠다.
+>
+> **① 경계 판단 — 데이터 3갈래로 확정, 추론 아님.** 미결이던 것: (3) GMM 전용 롤포워드
+> `발생보험금 및 기타보험서비스비용` 행이 `[손실요소외, 손실요소, 소계, 발생사고부채, 합계]`
+> 5열로 나뉘는데, `손실요소`(반기누적 -18,940, 2026.2Q)를 예실차의 "발생" 측에 포함할지가
+> 쟁점이었다. **제외하기로 확정** — 근거: (a) 기존에 이미 읽던 `(N) 보험영업이익의 내역`
+> 노트가 `손실요소배분`을 예상·발생 양측 모두 **별도 행**으로 갖고 있고(발생보험금 행과
+> 안 섞임), 그 값이 (3) 롤포워드의 손실요소 열과 **11개 분기 중 10개 정확히 일치**(2025.2Q만
+> 반올림 1백만 차) — 같은 거래가 두 표현으로 찍힌 population-wide 증거. (b) 기존 코드
+> `extract_tier2_aia`(KR0080)가 이미 손실요소 계열(전입/조정)을 item7로, 순수 예실차(claim/
+> exp diff)만 item6으로 분류하는 owner-검토 전례. (c) IFRS17 손실요소 메커니즘상 그 재분류는
+> 손익에 두 번째로 안 잡힌다. 판별식(롤포워드 보험수익 == 노트 소계−PAA수익)은 11/11 True.
+>
+> **② 반영 — 22셀(11개 분기 × item6/item7), 2023.2Q~3Q는 (3) 노트 형식 자체가 없어 그대로
+> 0 유지(미확정 방치 아니라 census로 확인 후 의도적 스킵).** `extract_tier2_nh`에 `예상 보험금
+> 및 기타서비스비용` 추출 추가 + 신설 `_nh_gmm_incurred4`(손실요소 열 제외 합산),
+> `scripts/pl_breakdown/companies.py`. item3=item4+item5+item6+item7 항등식 11개 분기 전부
+> 반영 전·후 close 확인. `pl_breakdown_master.json` 22셀 → `build_root_masters.build_pl()`
+> (개별함수)로 루트 `PL_breakdown.json` 44셀(값+값_당분기) → `sync_master_xlsx_sheet.py`로
+> xlsx 44셀. 전수 스냅샷 diff: 변경 키 정확히 저 22개, 전부 KR0032, 타사·타항목 0건.
+> `validate_master_tables.py --no-build` 출력 패치 전/후 바이트 단위 동일. 오프라인 pytest
+> 442 passed/1 skipped.
+>
+> **③ 골든 — `build_pl_breakdown.py` 통짜 재실행이 이 세션에서 5분+ CPU 0.2초로 행 걸려
+> 강제종료, KR0083 티켓(바로 아래 52nd pass)이 쓴 것과 같은 패턴으로 전환: 핸들러 직접호출
+> 값 셀단위 패치 + `python tests/test_pl_breakdown_golden.py --update`**(빌더 미실행, 디스크
+> 현재 파일 해싱만) — `sha256_master`만 이동, `sha256_coverage`·행수·`non_null_values` 불변
+> 확인. 공유 워킹트리 함정: 작업 시작 시 이 3파일이 이미 KR0083 티켓(그때 open)의 미커밋
+> 패치를 담고 있어서 처음엔 안 건드리고 홀드했는데, 세션 도중 그 티켓이 resolved·커밋됨
+> (`ca827ed`/`984e5b0`) — 이후 diff가 내 셀로만 좁혀진 것을 확인하고서야 커밋에 포함.
+>
+> status: answered(원 sender 재확인 요청 — 이 티켓 3회차라 자기완결 대신 확인 요청).
+> 재현: `scripts/_probes/nh_yesilcha_gmm_boundary_probe.py`(오프라인, raw XML만 읽음).
+
 > **2026-08-28 (52nd pass) — 푸본현대생명(KR0083) 2024.3Q DART API 부호반전 3셀 수정 + 동일결함
 > 전캐시 census (orchestrator 티켓 `inbox/_resolved/20260828T1200Z__orchestrator__KR0083_2024.3Q
 > __dart_api_sign_reversal_gold_override.md`, status: resolved).** 51st pass가 규명만 하고 미수정

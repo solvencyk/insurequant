@@ -1926,13 +1926,87 @@ def extract_tier2_old(tables):
 
 
 # ----------------------------- NH 손보 (KR0032) ---------------------------- #
+def _nh_gmm_incurred4(tables):
+    """Locate the (3) GMM-only (장기손해보험) '가. 잔여보장부채(자산) 및 발생사고부채(자산)의
+    변동내역' rollforward's CURRENT-period table (the caption also covers a following 전(반/분)
+    기 comparative table with identical row labels -- take the FIRST match, which document
+    order puts before the comparative one) and return its '발생보험금 및 기타보험서비스비용'
+    row's LC-EXCLUDED sum: 손실요소 외 column + 발생사고부채 column, i.e. dropping the row's
+    own 손실요소 column.  See extract_tier2_nh docstring for why that column is dropped rather
+    than kept.  Matched by exact label (not substring) so the '...등의 지급' cash-paid row
+    later in the same table is never picked up.  Returns None (never guesses) when the note,
+    row, or expected 5-column shape [손실요소외, 손실요소, 소계, 발생사고부채, 합계] isn't
+    found -- caller leaves item6 unset in that case."""
+    note3 = None
+    for t in tables:
+        cap = (t.caption or "").replace(" ", "")
+        if "보험료배분접근법을적용하지않는보험계약" not in cap or "장기손해보험" not in cap:
+            continue
+        if not any(_norm(r[0]) == "발생보험금 및 기타보험서비스비용" for r in t.rows):
+            continue
+        note3 = t
+        break
+    if note3 is None:
+        return None
+    for r in note3.rows:
+        if _norm(r[0]) != "발생보험금 및 기타보험서비스비용":
+            continue
+        ns = _row_nums(r)
+        if len(ns) < 5:
+            return None
+        excl_lc, _lc, _lrc_sub, lic, _total = ns[:5]
+        return excl_lc + lic
+    return None
+
+
 def extract_tier2_nh(tables):
-    """NH농협손해 (KR0032): 보험손익 only as a single whole-company note '(13) 보험영업이익의
-    내역' — NO 장기/일반/자동차 LOB columns and NO 예상-vs-발생 split.  Reads 누적(YTD) column
-    (분기/반기 note prints [당기 3개월, 당기 누적, 전기 …]; annual is single 당기).  재보험비용
-    section header drifts: annual '재보험비용' vs 분기/반기 '재보험서비스비용'.  Items 6/11 (예실차)
-    and 13/14 (자동차/일반) are data-absent — NH discloses no claim split nor LOB-split income
-    note, so item2 carries the WHOLE-company insurance result (this is what lets RC close)."""
+    """NH농협손해 (KR0032): 보험손익 only as a single whole-company note '(N) 보험영업이익의
+    내역' (note number drifts by year, matched on caption+row content, not the number) — NO
+    장기/일반/자동차 LOB columns.  Reads 누적(YTD) column (분기/반기 note prints [당기 3개월,
+    당기 누적, 전기 …]; annual is single 당기).  재보험비용 section header drifts: annual
+    '재보험비용' vs 분기/반기 '재보험서비스비용'.  Items 11 (재보험 예실차) and 13/14 (자동차/
+    일반) are data-absent — NH discloses no LOB-split income note, so item3 carries the
+    WHOLE-company insurance result (this is what lets RC close).
+
+    item6 (원수 예실차, GMM-only) IS separable — see `_nh_gmm_incurred4` above.  Settled by
+    DATA after two wrong closes (inbox/parser/
+    20260828T1400Z__orchestrator__KR0032__yesilcha_via_gmm_rollforward_total_column.md):
+    round 1 folded 4종-밖 items (취득CF상각/발생사고부채 이행현금흐름 변동/손실요소 인식및
+    환입) into 발생; round 2 used a LIABILITY BALANCE column (발생사고부채, 351,114) as if it
+    were a P&L incurred amount.  This note's own '예상 보험금 및 기타서비스비용' row (revenue
+    section) is already GMM-only — the note's 보험료배분접근법 보험수익 sits on its OWN row,
+    so the 5 rows above it (예상보험금/위험조정변동/CSM상각/취득CF상각/손실요소배분) sum to the
+    (3) rollforward's GMM-only 보험수익 (population identity, re-verified below).  The
+    matching GMM-only 발생(incurred) figure has no separate P&L-note home — it only exists
+    inside the (3) rollforward's '발생보험금 및 기타보험서비스비용' row, split across
+    [손실요소외, 손실요소, 소계, 발생사고부채, 합계] columns.
+
+    The row's 손실요소 (loss-component) column is EXCLUDED from item6 — i.e. item6 uses
+    (손실요소외 + 발생사고부채), NOT the row's 합계.  Both candidates close the row's own
+    arithmetic trivially (that's just algebra on a 5-column row, not evidence either way),
+    so the boundary was settled by three independent checks, each re-run across every
+    quarter this note format exists (2023.4Q-2026.2Q, 11 filings — 2023 Q1-3 predate this
+    note format entirely and are skipped, not guessed):
+      1. THIS note discloses '손실요소배분' as its OWN peer row — not nested inside either
+         예상 보험금 (revenue side) or 발생 보험금 (whole-company cost side) — on both the
+         revenue and cost sections.  Its value exactly equals the (3) rollforward's 손실요소
+         column entry for the 발생보험금 row in 10 of 11 quarters (2025.2Q off by KRW 1mm,
+         rounding) — the identical transaction, disclosed twice via two different
+         presentations (a peer line here, a column memo there).  Since this note already
+         keeps 예상 보험금 clean of it, symmetry requires 발생 to exclude it too.
+      2. Existing codebase precedent (extract_tier2_aia, same file): loss-component-family
+         rows (손실요소의 전입 / 손실요소 인식 및 환입 / 발생사고요소조정) are routed to
+         item7, never item6, everywhere this schema has met them before.
+      3. IFRS17 mechanics: a loss-component allocation draws down the pre-existing onerous-
+         contract loss component and is explicitly excluded from being recognised as
+         발생보험금/기타보험서비스비용 P&L expense a second time — the (3) rollforward row's
+         합계 column bundles it back in only because that table is a LIABILITY view combining
+         both movements under one row label; the P&L-comparable figure is the column subset
+         that excludes it.
+    Population identity (own probe, independently re-derived, not reused from the ticket):
+    (3) rollforward 보험수익 합계 == this note's 보험수익 소계 minus its 보험료배분접근법
+    보험수익 row, exact within KRW 2mm rounding in all 11 quarters — confirms the two notes
+    cover the same GMM population before combining their figures."""
     note = None
     for t in tables:
         labs = " ".join(_norm(r[0]) + (_norm(r[1]) if len(r) > 1 else "") for r in t.rows)
@@ -1969,6 +2043,8 @@ def extract_tier2_nh(tables):
                 vals["csm"] = v
             elif "위험조정변동" in lab:
                 vals["ra"] = v
+            elif "예상보험금및기타서비스비용" in lab:
+                vals["exp4"] = v
         elif section == "재보험비용":
             if "보험계약마진상각" in lab:
                 vals["recsm"] = v
@@ -1983,7 +2059,11 @@ def extract_tier2_nh(tables):
         out[9] = -abs(vals["recsm"])
     if "rera" in vals:
         out[10] = -abs(vals["rera"])
-    # item6/11 (예실차) and 13/14 (자동차/일반) data-absent — see docstring.
+    if "exp4" in vals:
+        inc4 = _nh_gmm_incurred4(tables)
+        if inc4 is not None:
+            out[6] = vals["exp4"] - inc4
+    # item11 (재보험 예실차) and 13/14 (자동차/일반) still data-absent — see docstring.
 
     def subtotal(after_section):
         sec = None
