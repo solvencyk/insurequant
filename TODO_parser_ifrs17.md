@@ -67,7 +67,7 @@
 > `data/dart/viz/csm_amort_schedule.json`·`CSM_amortization.json`·`tests/fixtures/
 > viz_ifrs17_panels_golden.json`·`tests/fixtures/builder_input_fingerprints.json`·
 > `insurequant_master_tables.xlsx`·이 티켓·`TODO_parser_ifrs17.md`.
-> 커밋 해시: (COMMIT_HASH_PLACEHOLDER)
+> 커밋 해시: `84e491d`
 >
 > status: answered (③ as_of 미추가 판단 + ⑥ public_exports/ 후속조치는 orchestrator/owner
 > 재확인 필요 — 자기완결 아님).

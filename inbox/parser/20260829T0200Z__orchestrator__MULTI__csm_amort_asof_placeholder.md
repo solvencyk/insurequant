@@ -224,7 +224,7 @@ viz_csm_waterfall/dividend/post_transition)의 입력·코드·산출 파일이 
 `scripts/viz_build_ifrs17_panels.py` · `scripts/build_tidy_exports.py` ·
 `data/dart/viz/csm_amort_schedule.json` · `CSM_amortization.json` ·
 `tests/fixtures/viz_ifrs17_panels_golden.json` · `tests/fixtures/builder_input_fingerprints.json` ·
-`insurequant_master_tables.xlsx` · 이 티켓 · `TODO_parser_ifrs17.md`. 커밋 해시: (COMMIT_HASH_PLACEHOLDER)
+`insurequant_master_tables.xlsx` · 이 티켓 · `TODO_parser_ifrs17.md`. 커밋 해시: `84e491d`
 
 status: answered — ③(as_of 컬럼 미추가 판단)과 ④의 `public_exports/` 후속 조치는 orchestrator/
 owner 재확인 필요.
