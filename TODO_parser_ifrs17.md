@@ -129,7 +129,7 @@
 > builder_input_fingerprints}.json`·신설 probe 다수(`scripts/_probes/mirae_2025q2q3_*.py`·
 > `mirae_full_sweep_with_alt.py`·`mirae_2026q1_alt_sanity.py`·`glob_blindspot_census.py`·
 > `net_income_breakdown_glob_impact.py`) + 이 티켓·`TODO_parser_ifrs17.md`.
-> 커밋 해시: (다음 커밋에 기록)
+> 커밋 해시: `2477b04`
 >
 > status: answered (2026.1Q 미패치 판단 + build_net_income_breakdown.py/
 > build_equity_composition_tier2.py 처리여부는 orchestrator/owner 재확인 필요 — 자기완결

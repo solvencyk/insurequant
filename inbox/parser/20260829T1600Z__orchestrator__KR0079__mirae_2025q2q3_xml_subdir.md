@@ -281,4 +281,4 @@ tables.py`는 항상 `--no-build`. xlsx는 `sync_master_xlsx_sheet.py`로만 편
 status: answered (2026.1Q 미패치 판단과 두 dormant 스크립트의 처리 방향은
 orchestrator/owner 재확인 필요 — 자기완결 아님).
 
-커밋: (다음 커밋에 기록)
+커밋: `2477b04`
