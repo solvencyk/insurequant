@@ -9,6 +9,9 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28k):** 업권 select — 익명 체크 전엔 `display:none`으로 숨기고 체크 시에만
+노출(익명일 때만 필수라 평소엔 안 보이는 게 맞다는 owner 제안). 배포 완료.
+
 **Recent (2026-08-28j):** owner 재지적 — K-ICS 히트맵 호버 시 회사명이 abbr 안 됨. 원인: 트리맵
 칸의 시각 라벨(`name.textContent`)엔 `shortName()`이 있었는데 같은 칸의 `.title`(호버 툴팁)은
 원수사명 그대로였던 누락. 같은 페이지에서 CSM 버블맵도 동일 패턴(ECharts tooltip formatter +
@@ -19,6 +22,26 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
 재생성해 이미 배포됐던 값을 덮어씀(main 배포 완료, 라이브 curl로 8개 시트 전부 컬럼 목록에서
 빠진 것 확인). **루트 마스터 JSON은 안 건드림** — 대시보드 4페이지가 그 필드를 회사 선택
 조회 키로 쓰고 있어 거기서 빼면 사이트 기능이 깨진다(다운로드 스냅샷 레이어에서만 제외).
+
+**Recent (2026-08-28i, inbox 20260828T0700Z — `wfx`·`eqx` null→0 제거, 완료·미배포):**
+- Panel 5 때 `plx` 에만 넣었던 `_num()` 을 `IFRS17.html` 의 `wfx`(CSM_waterfall)·`eqx`(IFRS17_BS)
+  빌더에도 적용. **선언 위치를 세 빌더 위로 올렸다** — `plx` 자리에 두면 `wfx` 에서 TDZ 라 부팅이 죽는다.
+- **화면 변화 2셀뿐.** `CSM_waterfall.json` null 은 `값` 2셀·`값_당분기` 200셀인데 200셀은 전부
+  **연1회 공시 14사** 것이고 그 회사들은 `IFRS17.html:1511` D5 게이트가 분기 모드 Panel 2 를 안 그린다
+  (게이트 무시하고 세면 176막대·202셀 — 사용자는 못 보는 숫자). 실제 변경 = **KR0050 하나손보 `이자 부리`,
+  KR0076 아이엠라이프 `상각`, 둘 다 연도 모드 2023 열**: 표 `0`→`—`, 초록 `+0.00` 막대 → 회색 미공시 막대.
+  진짜 0으로 남는 셀 5개.
+- **Panel 1(BS) 변화 0** — `IFRS17_BS.json` 에 null `값` 이 한 셀도 없다(진짜 0 135셀). 39사×2모드
+  스냅샷 해시가 수정 전후 동일(`1547995505`). `eqx` 수정은 잠재버그 가드.
+- **Panel 2 `missing` 회색 시리즈는 완전히 사문화돼 있었다** — 전수 0개 → 2개. zrender 로 실물 확인
+  (높이 3px). 얇아서 실질 신호는 표의 `—` 쪽이 강함(hint 공식은 기존 코드라 미변경).
+- **합계·항등식 안 깨짐**: 브리지 누적합 불변(hint 막대는 `running` 미이동), y축 범위 변화 0건, 당분기
+  항등식 깨짐 **46→7건**(새로 깨진 것 0 — 39건은 null 을 0으로 더하던 허위). 남은 7건은 기존 데이터 문제.
+- **parser 발주**: 그 2셀은 0을 넣으면 항등식이 정확히 닫힌다 → 진짜 0인지 파서 누락인지 원문 확인 요청
+  (`inbox/parser/20260828T0930Z__designer__MULTI_2023.4Q__csm_component_null_but_identity_closes.md`).
+- 검증 팁(재사용): pane 미compositing으로 rAF 가 멈춰 **모든 막대 높이가 0으로 읽힌다** — `echarts.init`
+  을 감싸 `animation:false` 주입해야 최종 geometry 가 나온다. KPI `countUp` 도 같은 이유로 0에 얼어붙고
+  `prefers-reduced-motion` 강제로 해소. `pytest tests/test_deploy_assets.py` 10/10, 콘솔 에러 0. **배포·push 안 함.**
 
 **Recent (2026-08-28h):** 모바일 탭바 "공시/보고서" 잘림 → "기타공시"로 4페이지 전부 교체(제목/
 og:title/브랜드 힌트는 안 건드림, 탭 라벨만). **IFRS17.html은 같은 파일에 다른 세션의 미커밋
