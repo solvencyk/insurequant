@@ -246,7 +246,7 @@ python scripts/sync_master_xlsx_sheet.py "손익분해PL"
   `abl_2024q4_2025q1_build_pl_and_diff.py`(build_pl() 전후 combo-diff, 신설),
   `abl_2024q4_2025q1_pre_state.py`(패치 전 스냅샷 덤프, 신설).
 
-commit: (COMMIT_HASH_PLACEHOLDER)
+commit: `d60bb83`
 
 ### 후속 필요 (orchestrator/owner 재확인)
 

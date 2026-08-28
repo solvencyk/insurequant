@@ -56,7 +56,7 @@
 > 신설 probe 4개(`scripts/_probes/abl_2024q4_2025q1_{pre_state,build_pl_and_diff}.py`·
 > `abl_yesilcha_2024q4_2025q1_check_gold.py`·`abl_yesilcha_fix_gold_overlay_2025q1.py`)·
 > 이 티켓·`TODO_parser_ifrs17.md`.
-> 커밋 해시: (COMMIT_HASH_PLACEHOLDER)
+> 커밋 해시: `d60bb83`
 >
 > status: answered (gold override 재계산은 08-28 선례를 그대로 따랐으나 파생값 수정이라
 > orchestrator 재확인 요청 — 자기완결 아님).
