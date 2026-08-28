@@ -80,17 +80,17 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "ae2b7f2e7fd05e4a95610c672d105de52d51a83d091c526337773612790b5a5e",
+   "fixture_sha256": "d6e583a7954334175c79bd9485cec871d7ed64d29ee7aac04e60c0cb853cd5c1",
    "outputs": {
     "sha256_master": {
      "path": "data/dart/viz/pl_breakdown_master.json",
-     "fixture_sha256": "38051637c182837f18d2fa52c97ed0cd9c8f07850b90f2dc8c557a4ee79c8086",
-     "ondisk_sha256": "38051637c182837f18d2fa52c97ed0cd9c8f07850b90f2dc8c557a4ee79c8086"
+     "fixture_sha256": "0a591208feebde7b222d7d1ccde2f7c91e137518099614658d19ef022eefe566",
+     "ondisk_sha256": "0a591208feebde7b222d7d1ccde2f7c91e137518099614658d19ef022eefe566"
     },
     "sha256_coverage": {
      "path": "data/_derived/pl_breakdown_coverage.json",
-     "fixture_sha256": "cddda1c3e675e4d391e9df30a80bc206dc35fddfdf50798313910a84b3cba715",
-     "ondisk_sha256": "cddda1c3e675e4d391e9df30a80bc206dc35fddfdf50798313910a84b3cba715"
+     "fixture_sha256": "1fa376d67b5f53f1b062a93f97d9789a8815b633e06e73a10b03f882e031a44c",
+     "ondisk_sha256": "1fa376d67b5f53f1b062a93f97d9789a8815b633e06e73a10b03f882e031a44c"
     }
    },
    "_golden": "tests/test_pl_breakdown_golden.py",

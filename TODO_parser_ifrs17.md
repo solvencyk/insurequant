@@ -1,5 +1,78 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-29 (64th pass) — 미래에셋생명(KR0079) 2025.4Q "첨부 XML 구조 이상" 원인 규명
+> (조사 전용, 마스터 미수정).** `inbox/parser/20260829T1800Z`. 63rd pass가 "라벨-값 밀림 정황,
+> `_00760`/`_00761` 첨부 XML 고유 구조 이상으로 보임"이라 보고한 가설을 직접 raw XML로 검증.
+>
+> **결론: (a) 이 제출분 고유 오류 — 단 가설 정정. 첨부와 무관, 본문 XML 자체의 결함.** 18-1
+> note(발생측 롤포워드 표)가 본문(`20260318001664.xml`) 안에서 **같은 내용으로 4번 등장**
+> (앞 절반 = 정상, 뒤 절반 = `_prefer_ofs`가 채택하는 사본, 각 행 라벨은 그대로인데 값이
+> **한 행씩 밀려** 들어감 — 예: "자산인 보험계약의 기초 장부금액" 행에 정상 사본의 "부채인
+> 보험계약의 기초 장부금액" 값이 그대로 들어있음, 8개 행 쌍에서 원 단위로 확인). COLSPAN/
+> ROWSPAN 속성은 두 사본 사이에서 행 단위로 완전 동일(파서의 rowspan 미처리 아티팩트 아님),
+> 파일-분할 워크어라운드(`_iter_tables_by_basis`)도 이 파일에서는 boundary(54680) <= cap
+> (65535)이라 애초에 발동 안 함(원본 통짜 재파싱으로도 동일 재현, 워크어라운드 무관 증명).
+> 노트 캡션("18-1. 보험계약부채") 자체가 본문·첨부 3개 파일 전부에서 grep 0건 — 이 노트는
+> 첨부에 없다(본문 24회, 첨부 0/0회).
+>
+> **열 반전 아님.** 헤더(THEAD 9행) 텍스트·순서가 2026.2Q "정상" 사본과 완전 일치(손실요소외→
+> 손실요소→발생사고부채[rs=2]). 20~50배 이상치의 실체는 컬럼 위치가 아니라 "발생한 보험금"
+> 행에 (같은 표 안) 다른 행의 값이 잘못 들어간 것.
+>
+> **오염 가능 셀 0개.** 이 표에서 값을 뽑는 함수는 `_ma_yesilcha_direct`(item6) 하나뿐이고
+> 그 게이트(check A, `rev_lump is None`)가 이미 정상 자기기권 중(item6=0 유지, 프로덕션
+> 코드로 재확인). item4/5/9/10은 완전히 다른 표(Era-1, "단위:백만원" 개별 상품 7개 표,
+> fingerprint 중복 0건)에서 나와 무관. ifrs17 레인의 다른 추출기 어디도 이 표의 로우 라벨을
+> 참조하지 않음(grep 0건) — CSM_waterfall/IFRS17_BS 쪽 오염 경로도 없음.
+>
+> **xml≥2 census (요청 산출물).** `data/dart/FY*/raw/*/` 438개 중 최상위 xml 2개 이상 = 63건,
+> **전부 FY\*\_Q4(사업보고서), Q1~Q3은 0건** — `<rcept>.xml`+`_00760`+`_00761` DART 감사보고서
+> 첨부 규약. `_xmls_in()`(top-level+`xml/`+`extracted*/` 3중 glob)이 이미 63건 전부 커버 —
+> 미커버 사각 없음. **단, 이 census 축과 본 결함은 서로 다른 축**(결함은 첨부가 아니라 본문
+> 내부 중복 렌더링 문제) — (b) 첨부 XML 일반 구조 차이는 기각.
+>
+> **후속 조치 없음 — 최초 결론 시점 기준.** (c) 아니므로 별도 티켓 미발주. 조사 자체는
+> item6=0 유지가 맞다는 확인이었고 마스터는 안 건드렸다(아래 iter2 전까지).
+>
+> **iter2 (같은 세션, coordinator 중간 지시) — item6 0→None 패치.** `validate_data_contract.py`에
+> 새 RED `PL_YTD_COLLAPSE_TO_ZERO`(미래에셋생명보험 2025.4Q, 시계열 +79.2억→△23.5억→**0.0**→
+> △71.4억→△181.2억)가 뜬 것을 coordinator가 지적 — 위 조사가 이미 "이 분기는 추출 불가"임을
+> 규명했으므로 `0`이 "진짜 0"이 아니라 "결측"임을 셀에 반영하라는 지시(2026-08-26 owner의
+> "회사 전체 추출 불가면 0 해도 됨" 결정과는 다른 상황 — 나머지 4분기가 이미 채워진 채
+> 가운데만 0이면 그 자체가 거짓 신호).
+>
+> `PL_breakdown.json`·`data/dart/viz/pl_breakdown_master.json` KR0079 2025.4Q item6 값(+
+> `PL_breakdown.json`만 값_당분기도) `0.0`→`None` 서지컬 패치(`mirae_2025q4_item6_nullify.py`,
+> read-modify-write 가드: 패치 전 0.0 assert + item7 불변 재확인) — 실제 파일 전후 diff로
+> **두 파일 다 정확히 1행만 변경, 11546행 불변** 확인. item7은 지시대로 그대로 둠(item3=4+5+6+7
+> 이 분기 평가 불가는 의도된 결과). `data/_derived/pl_breakdown_coverage.json`도 같은 레코드
+> `status:ok,missing:[]`→`status:partial,missing:[6]`로 동기화(빌더 자신의 coverage 로직과
+> 동일 기준, 1행만 변경).
+>
+> **RED 소멸 확인** — `_pl_ytd_collapse()`직접 호출: PRE-patch hits=1(정확히 이 셀),
+> POST-patch hits=0. `validate_data_contract.py` 전체 재실행: `RED=0 YELLOW=92
+> provisional=False`, exit 0. 새 RED 없음(로그 grep으로 재확인, 남은 미래에셋 항목은 전부
+> 사전 존재 YELLOW).
+>
+> **동기화** — `sync_master_xlsx_sheet.py "손익분해PL"`(변경 셀 2·자체검증 통과) →
+> `tests/test_pl_breakdown_golden.py --update`(non_null_values 9994→9993, 나머지 통계 불변) →
+> `validate_golden_input_fingerprints.py --update`(pl_breakdown만 이동, 나머지 5 spec `ok`
+> 유지 확인 후 갱신, 재실행 RED=0).
+>
+> **의도적으로 안 건드린 것 — `validate_master_tables.py`/`tests/fixtures/
+> master_tables_golden.json`/`data/_gold/pl_bridge_baseline.json`.** 오프라인 pytest 스윕에서
+> `test_master_tables_golden.py` 1건만 fail(`pl_bridge:3038P/53F/469S/0NEW`→
+> `3037P/53F/470S/0NEW`, 나머지 축 전부 불변) — item6 None화의 예상된 부수효과지만, 이
+> 레지스트리는 validation 세션이 오늘 활발히 갱신 중인 파일이라(AIG손해보험 leg-coverage
+> 항목 다수 추가, 이 작업과 무관함을 diff로 확인됨) 손대지 않고 "다른 RED이 생기면 보고하고
+> 멈춰라" 지시대로 보고만 함 — validation 세션이 이어받을 사안.
+>
+> 신설 probe 총 11개(위 8개 + `mirae_2025q4_{item6_nullify,coverage_sync,
+> ytd_collapse_check}.py`) — 전부 `scripts/_probes/`, 삭제하지 않음.
+>
+> status: answered — 남은 확인사항 둘: (1) 이 원인 정정(첨부 아님, 본문 내부 중복 렌더링),
+> (2) `test_master_tables_golden.py` fail을 validation 세션이 이어받는지.
+
 > **2026-08-29 (63rd pass) — 미래에셋생명(KR0079) 2026.1Q item6 채움 + 2025.4Q 조사(안 채움,
 > 사유 규명) — coordinator 지시로 62nd pass 티켓의 스코프를 두 분기에서 확장
 > (`inbox/parser/20260829T1600Z`, status: resolved).** 62nd pass가 "2026.1Q도 같은 ALT
