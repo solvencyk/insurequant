@@ -9,6 +9,15 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28m):** owner: IFRS17.html "장기재보험"→"생명장기재보험"(생보사만 있는 개념).
+찾아보니 라벨 문자열이 미니테이블의 세부토글 조건문(`d.ko==="장기 재보험"`)에도 그대로 쓰여서
+라벨만 바꾸면 토글이 안 뜰 뻔했음 — wrap dict 키·토글조건·토글라벨노드·안내문구까지 8곳 전부
+동일 문자열로 통일. **다른 세션의 Panel 5(OCI 확장, eec64e0/9c40674)는 아직 main에 미배포** —
+내 작업 브랜치엔 있지만 라이브엔 없어서, 라이브에 실제로 있는 (Panel5 확장 전) 코드에 이
+fix를 별도로 적용(격리 워크트리에서 직접 8곳 재현) — 그 세션의 미완성 기능을 대신 배포하지
+않기 위함. 로컬에서 생보(한화생명)·손보(메리츠화재) 둘 다, 그리고 라이브에 실제로 배포될
+버전(Panel5 없는 쪽)까지 토글 클릭 재현 실측. 배포 완료.
+
 **Recent (2026-08-28l):** owner 실측 지적 — 소속 검색(`<input list>`+`<datalist>`)이 ① 부분일치가
 부실(브라우저가 prefix 위주라 "코리안" 다 쳐야 겨우 나오거나 안 나옴) ② 값 있는 상태에서 재클릭해도
 목록 안 열림. 둘 다 네이티브 datalist의 알려진 한계 — 커스텀 콤보박스로 교체(`buildAffilCombo()`,
