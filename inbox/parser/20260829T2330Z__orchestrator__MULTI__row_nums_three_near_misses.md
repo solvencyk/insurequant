@@ -189,4 +189,4 @@ sync 대상 없음).
 
 status: answered — orchestrator 재확인 대기 (재현 명령·수치 전부 위에 있음)
 
-커밋: (다음 커밋에 기록)
+커밋: `de4e582`

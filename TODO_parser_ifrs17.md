@@ -37,7 +37,7 @@
 >
 > status: answered — orchestrator 재확인 대기. 재현 명령·수치 전부 티켓 `## 답변`에.
 >
-> 커밋: (다음 커밋에 기록)
+> 커밋: `de4e582`
 
 > **2026-08-29 (66th pass, 조사 전용) — `_row_nums()` 빈칸압축 전수 census.**
 > `inbox/parser/20260829T2200Z`(orchestrator 발주, status: answered — 마스터/`_row_nums()`
