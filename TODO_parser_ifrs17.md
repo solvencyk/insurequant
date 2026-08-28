@@ -1,5 +1,61 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-28 (58th pass) — NH농협손해(KR0032) 재보험 예실차(item11) 채움, 11/11 분기
+> (orchestrator 티켓 `inbox/parser/20260828T1900Z__orchestrator__KR0032__
+> reinsurance_yesilcha_item11.md`, status: answered — 부호는 새 파생이라 재확인 요청).**
+> 원수(item6)는 `72cc896`으로 이미 닫혔음. 재보험 leg 13개 분기 전부 0 → 기타(item12)가
+> 흡수 중이었던 것을 티켓이 지목.
+>
+> **① 경계 = item6과 동일(손실회수요소 컬럼 제외), 대칭이라고 베끼지 않고 대조로 확인.**
+> note8(보험영업이익 내역)의 `손실회수요소배분`(재보험수익·재보험비용 양쪽 peer row)이
+> note5(재보험 GMM 롤포워드)의 `발생재보험금 및 기타재보험수익` 행 손실회수요소 열과
+> 11/11분기(2023.4Q-2026.2Q) 전부 KRW 1백만 이내 일치 — item6과 같은 "이중계상 방지"
+> 결론. 신설 `_nh_gmm_re_incurred`(companies.py, `_nh_gmm_incurred4` 미러).
+>
+> **② 부호 = item6과 반대 어순 — item8의 섹션 역할로 도출.** item8=jang_rerev−jang_recost
+> (2026.2Q 778,370−663,256=115,114=1,151억, 실측 검증). `예상재보험비용`은 재보험비용
+> (SUBTRACTED, item9/10과 같은 섹션) 소속이지만 note5의 `발생재보험금...`은 note5 자체
+> 구조상 `재보험수익`(ADDED) 부모 아래 — item6의 `발생보험금`이 note3에서
+> `보험서비스비용`(SUBTRACTED) 아래 있던 것과 반대. **item11 = 발생(excl LC) − 예상**
+> (예상−발생 아님). orchestrator의 손계산(8,802−13,526=△4,724, 티켓이 "정답 아님"이라 명시)은
+> 뒤집히지 않은 버전이었음 — 맞는 부호는 그 음수 +4,724. **사후 대조**: 같은 세션의 ABL
+> 커밋(`b2fa4e0`)이 다른 회사·다른 근거로 독립 도달한 결론과 구조가 완전히 일치("item11 =
+> 발생2종−예상2종, item9/10 부호규칙을 따름") — 우연이 아니라 이 마스터 스키마의 불변
+> 규칙임을 뒷받침.
+>
+> **③ 모집단 판별식 11/11 True.** note8 재보험비용소계−PAA재보험서비스비용 == note5
+> 재보험서비스비용 행, 전 분기 KRW 2mm 이내. 2023.1-3Q는 note5 형식 부재로 제외(안 뽑음).
+>
+> **④ 함정 재확인 — 이번엔 없었다.** gold override(`user_pl_cells.json`·
+> `user_pl_confirmed_cells.json`·`pl_bridge_baseline.json`) KR0032 0건, ABL식 "item7=item6
+> 전제" 함정 없음. NH raw에 재보험 예실차 산문 자체가 없음(검색 0건) — 산문-vs-4종 범위차
+> 우려는 해당 없음.
+>
+> **⑤ 반영.** 22셀(11분기×item11/item12) → build_pl() 전파 44셀(값+값_당분기, 콤보-diff로
+> KR0032 외 0건) → `sync_master_xlsx_sheet.py "손익분해PL"`(자체검증 통과). 골든
+> `--update`(재해싱만).
+>
+> **⑥ 전수 항등식 감사 — 티켓 지정 5개 전부 + 신규 1개 생존.** 항목32(356행추가/0변경,
+> 282개 중 273개 96.8% 1%이내+9개 정당None=282/282 100%, `validate_item32_from_saved_
+> master.py` 재실행 바이트동일), KR0032 2026.2Q item6△102.4억·item7△796.9억, KR0083
+> 2024.3Q item27△2652.3억·item28△53.2억·item30△5.4억, KR0070 item6 8분기(2024.4Q·2025.1Q
+> 제외)·item11 10분기(그 두 분기 포함 — ABL 결론과 일치), 총 11,546행 — 전부 생존. 신규:
+> KR0032 item8=9+10+11+12 폐쇄식 13분기 전부 0 fail(전/후 동일). `validate_master_tables.py
+> --no-build` 패치 전/후 바이트 동일(diff exit 0). 오프라인 pytest 443 passed/2 skipped/
+> 2 failed(두 FAIL 전부 무관 — 아카이브 모듈·동시 validation세션 미등록 게이트).
+>
+> **⑦ 공유 워크트리 — xlsx 커밋 제외.** 동시 kics-lane 세션(`20260829T0100Z`)이 같은
+> xlsx에 K-ICS 자본 마스터 3종 시트 추가 중 — 내 44셀은 디스크상 이미 반영(자체검증 통과)
+> 했으나 커밋은 그 세션에 맡김(56th pass ⑦과 동일 판단).
+>
+> **커밋 대상**: `scripts/pl_breakdown/companies.py`·`data/dart/viz/pl_breakdown_master.json`·
+> `PL_breakdown.json`·`tests/fixtures/pl_breakdown_golden.json`·
+> `scripts/_probes/nh_yesilcha_reinsurance_{boundary_probe,apply_patch}.py`·이 티켓·
+> `TODO_parser_ifrs17.md`·`docs/changelog_parser_ifrs17.md`. xlsx·다른 세션 파일 미포함.
+>
+> status: answered (부호 도출이 이 세션의 새 논증이라 orchestrator/owner 재확인 요청 —
+> 자기완결 아님).
+
 > **2026-08-28 (57th pass) — ABL생명(KR0070) 원수·재보험 예실차(item6/item11) 채움, 8+10/10
 > 분기 (orchestrator 티켓 `inbox/parser/20260828T2100Z__orchestrator__KR0070__
 > abl_yesilcha_both_legs.md`, status: answered — 2개 분기 owner 재확인 필요).** 이 회사는

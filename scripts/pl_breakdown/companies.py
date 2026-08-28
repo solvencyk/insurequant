@@ -1959,14 +1959,64 @@ def _nh_gmm_incurred4(tables):
     return None
 
 
+def _nh_gmm_re_incurred(tables):
+    """Mirror of _nh_gmm_incurred4 for the REINSURANCE leg (item11).  Locates the (5) GMM-only
+    (장기비례재보험) '가. 잔여보장자산(부채) 및 발생사고자산(부채)의 변동내역' rollforward's
+    CURRENT-period table (same first-match-wins rule as note3: the caption also covers a
+    following 전(반/분)기 comparative table with identical row labels) and returns its '발생
+    재보험금 및 기타재보험수익' row's LC-EXCLUDED sum: 손실회수요소 외 column + 발생사고자산(부채)
+    column, dropping the row's own 손실회수요소 column.
+
+    Cells are read via to_num() directly on r[1:6] (NOT via _row_nums, which SKIPS '-' cells --
+    since 손실회수요소외 is '-' in every observed quarter, _row_nums would silently shift the
+    fixed 5-column layout and misalign the remaining values).  '-' reads as 0.0.
+
+    Same LC-exclusion boundary as _nh_gmm_incurred4, independently re-verified for THIS leg
+    (not assumed from symmetry) via inbox/parser/
+    20260828T1900Z__orchestrator__KR0032__reinsurance_yesilcha_item11.md: note8 (보험영업이익
+    내역)'s '손실회수요소배분' row -- shown as its own peer line on BOTH the 재보험수익 and
+    재보험비용 sections, never nested inside either -- matches this row's 손실회수요소 column
+    within KRW 1mm rounding in 11/11 quarters this note format exists (2023.4Q-2026.2Q; see
+    scripts/_probes/nh_yesilcha_reinsurance_boundary_probe.py, LCok column).  Same IFRS17
+    mechanics as the direct leg apply: a loss-recovery-component allocation draws down the
+    pre-existing loss-recovery component and would double-count if left inside the incurred
+    figure a second time.
+
+    Returns None (never guesses) when the note, row, or expected 5-column shape isn't found --
+    caller leaves item11 unset in that case."""
+    note5 = None
+    for t in tables:
+        cap = (t.caption or "").replace(" ", "")
+        if "보험료배분접근법을적용하지않는재보험계약" not in cap or "장기비례재보험" not in cap:
+            continue
+        if not any(_norm(r[0]) == "발생재보험금 및 기타재보험수익" for r in t.rows):
+            continue
+        note5 = t
+        break
+    if note5 is None:
+        return None
+    for r in note5.rows:
+        if _norm(r[0]) != "발생재보험금 및 기타재보험수익":
+            continue
+        if len(r) < 6:
+            return None
+        cells = []
+        for c in r[1:6]:
+            v = to_num(c)
+            cells.append(v if v is not None else 0.0)
+        excl_lc, _lc, _sub, incurred_asset, _total = cells
+        return excl_lc + incurred_asset
+    return None
+
+
 def extract_tier2_nh(tables):
     """NH농협손해 (KR0032): 보험손익 only as a single whole-company note '(N) 보험영업이익의
     내역' (note number drifts by year, matched on caption+row content, not the number) — NO
     장기/일반/자동차 LOB columns.  Reads 누적(YTD) column (분기/반기 note prints [당기 3개월,
     당기 누적, 전기 …]; annual is single 당기).  재보험비용 section header drifts: annual
-    '재보험비용' vs 분기/반기 '재보험서비스비용'.  Items 11 (재보험 예실차) and 13/14 (자동차/
-    일반) are data-absent — NH discloses no LOB-split income note, so item3 carries the
-    WHOLE-company insurance result (this is what lets RC close).
+    '재보험비용' vs 분기/반기 '재보험서비스비용'.  Items 13/14 (자동차/일반) are data-absent — NH
+    discloses no LOB-split income note, so item3/item8 carry the WHOLE-company insurance
+    result (this is what lets RC close).
 
     item6 (원수 예실차, GMM-only) IS separable — see `_nh_gmm_incurred4` above.  Settled by
     DATA after two wrong closes (inbox/parser/
@@ -2006,7 +2056,38 @@ def extract_tier2_nh(tables):
     Population identity (own probe, independently re-derived, not reused from the ticket):
     (3) rollforward 보험수익 합계 == this note's 보험수익 소계 minus its 보험료배분접근법
     보험수익 row, exact within KRW 2mm rounding in all 11 quarters — confirms the two notes
-    cover the same GMM population before combining their figures."""
+    cover the same GMM population before combining their figures.
+
+    item11 (재보험 예실차, GMM-only) is ALSO separable — see `_nh_gmm_re_incurred` above.  The
+    (5) reinsurance rollforward is structurally symmetric to (3) (same [손실회수요소외,
+    손실회수요소, 소계, 발생사고자산, 합계] 5-column row shape), but the boundary was NOT
+    copied from item6 on the strength of that symmetry alone — it was independently re-run
+    (inbox/parser/20260828T1900Z__orchestrator__KR0032__reinsurance_yesilcha_item11.md):
+    note8's '손실회수요소배분' row (again a peer line on both 재보험수익/재보험비용 sections,
+    never nested) matches the (5) rollforward's LC column for the '발생재보험금 및 기타재보험
+    수익' row within KRW 1mm in 11/11 quarters (2023.4Q-2026.2Q) — same identity, same
+    conclusion: exclude the LC column from the incurred-recovery figure.  The population
+    identity also re-verified independently: note's 재보험비용 소계 minus its 보험료배분접근법
+    재보험서비스비용 row == the (5) rollforward's '재보험서비스비용' row, exact within KRW 2mm
+    in all 11 quarters.
+
+    SIGN IS REVERSED FROM item6 — 출재(ceded) runs the opposite direction through this note's
+    OWN section layout, not just a business-direction intuition.  item8 (생명장기 재보험손익)
+    = jang_rerev(재보험수익 소계) − jang_recost(재보험비용 소계) [see assemble()], i.e. 재보험비용
+    is the SUBTRACTED role — the same role recsm/rera already occupy, which is why item9/item10
+    are stored NEGATED (out[9]=-abs(recsm)).  '예상재보험비용' (exp4_re) sits in that same
+    재보험비용/subtracted section.  The (5) rollforward's '발생재보험금 및 기타재보험수익' row,
+    by contrast, is nested under note (5)'s OWN '재보험수익' parent line — the ADDED role
+    (matching jang_rerev), mirroring how note3's '발생보험금' row for item6 was nested under
+    '보험서비스비용' (jang_cost's role, the SUBTRACTED side of item3=jang_rev−jang_cost).  So
+    item6's pattern is really "(rev-role term) − (cost-role term)"; for item6 that happens to
+    read 예상−발생 because 예상 IS the rev-role term there, but for item11 the rev-role term is
+    발생 (재보험수익-side) and the cost-role term is 예상 (재보험비용-side) — so item11 =
+    발생(excl LC) − 예상, REVERSED from item6's order.  Cross-checked against
+    orchestrator's own un-vetted hand calc (8,802−13,526=△4,724 for 2026.2Q, flagged in the
+    ticket as "reference only, don't trust — 3 wrong closes on item6 came from exactly this
+    kind of unverified arithmetic"): the correctly-signed value is the negation of that,
+    +4,724 — the naive copy-item6's-formula-literally sign is the wrong one."""
     note = None
     for t in tables:
         labs = " ".join(_norm(r[0]) + (_norm(r[1]) if len(r) > 1 else "") for r in t.rows)
@@ -2050,6 +2131,8 @@ def extract_tier2_nh(tables):
                 vals["recsm"] = v
             elif "위험조정변동" in lab:
                 vals["rera"] = v
+            elif "예상재보험비용" in lab:
+                vals["exp4_re"] = v
     out = {}
     if "csm" in vals:
         out[4] = abs(vals["csm"])
@@ -2063,7 +2146,13 @@ def extract_tier2_nh(tables):
         inc4 = _nh_gmm_incurred4(tables)
         if inc4 is not None:
             out[6] = vals["exp4"] - inc4
-    # item11 (재보험 예실차) and 13/14 (자동차/일반) still data-absent — see docstring.
+    if "exp4_re" in vals:
+        inc_re = _nh_gmm_re_incurred(tables)
+        if inc_re is not None:
+            # REVERSED order from item6 (발생 − 예상, not 예상 − 발생) — see docstring
+            # "SIGN IS REVERSED FROM item6" for why.
+            out[11] = inc_re - vals["exp4_re"]
+    # item 13/14 (자동차/일반) still data-absent — see docstring.
 
     def subtotal(after_section):
         sec = None

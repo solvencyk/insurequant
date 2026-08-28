@@ -3,6 +3,76 @@
 > Last updated: 2026-08-28 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-08-28 (58th pass) — NH농협손해(KR0032) 재보험 예실차(item11) 채움, 11/11 분기
+
+`inbox/parser/20260828T1900Z__orchestrator__KR0032__reinsurance_yesilcha_item11.md`
+(status: answered — 부호 도출은 새로 파생한 규칙이라 orchestrator 재확인 요청).
+
+원수(item6)는 3번의 오답 끝에 `72cc896`으로 이미 닫혔다. 재보험(item11)은 13개 분기 전부
+0이었고 기타(item12)가 흡수 중이었다. `(5) 보험료배분접근법을 적용하지 않는 재보험계약의
+변동내역 > 1) 장기비례재보험`이 `(3)`과 구조적으로 대칭이지만, **티켓이 명시적으로
+"대칭으로 보인다고 베끼지 말라"고 지시** — 경계 규칙(손실회수요소 컬럼 포함/제외)과
+부호를 둘 다 독립적으로 대조·재도출했다.
+
+**경계 = item6과 동일(손실회수요소 컬럼 제외), 대조로 확인.** note8(보험영업이익의 내역)의
+`손실회수요소배분` 행은 재보험수익·재보험비용 양쪽 섹션에 별도 peer row로 존재한다. 이 값을
+note5(재보험 GMM 롤포워드)의 `발생재보험금 및 기타재보험수익` 행의 손실회수요소 열과
+대조하면 **11/11분기(2023.4Q-2026.2Q) 전부 KRW 1백만 이내로 일치** — item6 때와 동일한
+패턴("같은 거래가 두 표에 두 번 찍혔다" → 이중계상 방지 위해 제외). 새 헬퍼
+`_nh_gmm_re_incurred`(companies.py, `_nh_gmm_incurred4`의 미러)가 이 열 제외 로직을 구현.
+
+**부호 = item6과 반대 어순, item8의 섹션 역할로 도출(추측 아님).** item8(생명장기
+재보험손익) = `jang_rerev(재보험수익 소계) − jang_recost(재보험비용 소계)`
+(`build_pl_breakdown.py::assemble()`) — 2026.2Q 실측 778,370−663,256=115,114로
+검증(ticket의 "1,151억"과 일치). `예상재보험비용`은 재보험비용(SUBTRACTED) 섹션에 있어
+item9/item10(-abs(recsm)/-abs(rera))과 같은 역할이지만, note5의 `발생재보험금 및 기타
+재보험수익` 행은 note5 자체 구조상 `재보험수익`(ADDED) 부모행 아래 있다 — item6의 `발생
+보험금`이 note3에서 `보험서비스비용`(SUBTRACTED) 부모 아래 있던 것과 반대. 따라서
+item11 = **발생(excl LC) − 예상**(item6의 예상−발생과 반대 어순). orchestrator가 티켓에
+남긴 손계산(8,802−13,526=△4,724, "참고값일 뿐 정답 아님"이라 명시)은 검증해보니 바로 이
+뒤집히지 않은 버전이었다 — 올바른 부호는 그 음수, +4,724. **사후 확인**: 같은 세션의
+ABL(KR0070) 커밋(`b2fa4e0`)이 독립적으로 동일 결론에 도달했다 — "item11 = 발생2종(재보험
+수익) − 예상2종(재보험비용) … item9/item10이 이미 쓰는 부호규칙과 일관되게 item8의
+부호규칙(수익행 +, 비용행 −)을 따른다." 회사가 다른데(ABL은 노트26에 예상/발생이 직접
+분리돼 있어 더 쉬운 케이스) 같은 구조적 규칙에 수렴 — 우연이 아니라 이 마스터 스키마의
+불변 규칙임을 뒷받침.
+
+**모집단 판별식 11/11 True.** note8 재보험비용 소계 − PAA재보험서비스비용 ==
+note5 재보험서비스비용 행, 2023.4Q-2026.2Q 전부 KRW 2mm 이내 일치. 2023.1Q-3Q는 note5
+형식 자체가 없어(item6의 note3와 동일 윈도) 제외 — 안 뽑은 것.
+
+**gold override 충돌 없음, 산문 검증 무관 확인.** `data/_gold/user_pl_cells.json`
+(set 199건)·`user_pl_confirmed_cells.json`·`pl_bridge_baseline.json` 전부 KR0032 0건 —
+ABL 때 걸렸던 "item7 override가 item6=0 전제"류 함정 없음. NH raw XML에서 "예상...실제"/
+재보험 손익 산문 패턴 검색 0건 — NH는 산문 근거 자체가 없는 회사(item6 3라운드 내내 확인된
+사실과 일치), 산문-vs-4종 범위차 우려는 애초에 해당 없음.
+
+**반영 = 22셀(11분기×item11/item12) → 44셀(값+값_당분기) 전파 → xlsx 44셀 동기화.**
+핸들러 직접호출(`extract_tier2_nh`)로 item11 11개 값을 얻어 `pl_breakdown_master.json`에
+셀단위 UPSERT, item12는 `item8−item9−item10−item11`로 재계산(13개 분기 폐쇄식 반영 전/후
+모두 0 fail 확인) → `build_root_masters.build_pl()`(개별 함수)로 루트 전파(44셀, 전부
+KR0032 item11/12만 — 콤보-diff로 다른 회사 0건 확인) → `sync_master_xlsx_sheet.py
+"손익분해PL"`(자체검증 통과). 골든은 `test_pl_breakdown_golden.py --update`(디스크 재해싱,
+빌더 재실행 아님).
+
+**전수 항등식 감사.** 항목32(356행 추가/0삭제/그 외 0변경, 282개 item25보유 셀 중
+273개(96.8%) 1%이내 closing+9개 정당 None=282/282 100% 설명 — `validate_item32_from_
+saved_master.py` 재실행으로 원 티켓과 바이트 동일 재현), KR0032 2026.2Q item6 △102.4억·
+item7 △796.9억, KR0083 2024.3Q item27 △2,652.3억·item28 △53.2억·item30 △5.4억, KR0070
+item6 8분기(2024.4Q·2025.1Q 제외)·item11 10분기(그 두 분기 포함 — ABL 자체 결론과 일치),
+총 11,546행 — 전부 생존. `validate_master_tables.py --no-build` 출력 패치 전/후 바이트
+동일(diff exit 0, exit code 2는 기존 PL_BRIDGE baseline 13건 등 무관 선행 이슈). 오프라인
+pytest 443 passed/2 skipped/2 failed — 두 FAIL 전부 무관(archive/2026-08_equity_composition
+는 8/14부터 미변경 아카이브, test_push_gate_wiring은 동시 validation-lane 세션이 아직
+등록 안 한 `validate_golden_input_fingerprints.py` 건).
+
+**공유 워크트리 — xlsx는 커밋 제외.** 동시 진행 중인 kics-lane 세션(`inbox/parser/
+20260829T0100Z`, status: answered)이 `insurequant_master_tables.xlsx`·
+`scripts/{build,sync}_master_xlsx_sheet.py`에 K-ICS 자본 마스터 3종 시트 추가 작업 중이라
+그 파일들은 diff에 섞여 있다. 내 손익분해PL 44셀은 디스크상 이미 올바르게 반영돼 있으나
+(sync 스크립트 자체검증 통과), xlsx 커밋은 그 세션에 맡기고 내 커밋에서 제외 — 56th
+pass(IFRS17_BS 재동기화 ⑦, 17BS 시트) 때와 동일한 판단.
+
 ## 2026-08-28 (57th pass) — ABL생명(KR0070) 원수·재보험 예실차(item6/item11) 채움, 8+10/10 분기
 
 `inbox/parser/20260828T2100Z__orchestrator__KR0070__abl_yesilcha_both_legs.md`.

@@ -2,7 +2,7 @@
   "_what": "Refactor safety net for scripts/build_pl_breakdown.py. Captured before the module split so any behaviour change shows up as a hash mismatch.",
   "_regenerate": "python scripts/build_pl_breakdown.py && python tests/test_pl_breakdown_golden.py --update",
   "captured_at": "20260721T152431Z",
-  "sha256_master": "2f9c11516608f4e5c066c4e6e964276eb407743a15387c579146e1c9fba5f2bc",
+  "sha256_master": "f8de5bd48fc82a5b471206cd4a88df0346b04d05501b4d47412a5f5fb9747f66",
   "sha256_coverage": "cddda1c3e675e4d391e9df30a80bc206dc35fddfdf50798313910a84b3cba715",
   "master_rows": 11546,
   "company_quarters": 356,
