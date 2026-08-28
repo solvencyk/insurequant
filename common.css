@@ -173,3 +173,79 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
 .panel.will-reveal { opacity:0; transform:translateY(12px); }
 .panel.revealed { animation:panelReveal .2s ease forwards; }
 @keyframes panelReveal { to { opacity:1; transform:none; } }
+
+/* ============================================================================
+   Modal + floating-report widget (2026-08-28) — shared by the index.html
+   설문 다운로드 게이트 and the site-wide 오류 제보 팝업 (report-widget.js).
+   Single definition here so both features + all 4 pages look identical.
+   ========================================================================== */
+.iq-modal-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,0.5);
+  display:flex; align-items:center; justify-content:center;
+  padding:var(--sp-4); z-index:2000;
+}
+.iq-modal-panel{
+  background:var(--bg); border-radius:var(--r-lg);
+  max-width:520px; width:100%; max-height:min(88vh, 720px);
+  overflow-y:auto; padding:var(--sp-5);
+  box-shadow:0 12px 40px rgba(0,0,0,0.25);
+}
+.iq-modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--sp-4); }
+.iq-modal-title{ font-size:18px; font-weight:700; color:var(--text); }
+.iq-modal-close{
+  border:none; background:none; color:var(--muted); font-size:20px;
+  line-height:1; cursor:pointer; padding:var(--sp-1) var(--sp-2); border-radius:var(--r-sm);
+}
+.iq-modal-close:hover{ background:var(--card); color:var(--text); }
+.iq-field{ margin-bottom:var(--sp-4); }
+.iq-field label{ display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:var(--sp-2); }
+.iq-field .iq-hint{ font-size:12px; color:var(--muted); font-weight:400; margin-left:4px; }
+.iq-input, .iq-select, .iq-textarea{
+  width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--r-md);
+  background:#fff; color:var(--text); font-family:var(--font-sans); font-size:14px;
+}
+.iq-textarea{ resize:vertical; min-height:80px; }
+.iq-combo{ position:relative; }
+.iq-combo-list{
+  position:absolute; left:0; right:0; top:calc(100% + 4px); z-index:2010;
+  background:#fff; border:1px solid var(--border); border-radius:var(--r-md);
+  max-height:220px; overflow-y:auto; box-shadow:0 8px 24px rgba(0,0,0,0.12);
+  display:none;
+}
+.iq-combo-list.open{ display:block; }
+.iq-combo-opt{ padding:8px 10px; font-size:14px; cursor:pointer; }
+.iq-combo-opt:hover, .iq-combo-opt.active{ background:var(--card); }
+.iq-combo-empty{ padding:8px 10px; font-size:13px; color:var(--muted); }
+.iq-anon{ margin-top:var(--sp-2); font-size:12px; color:var(--muted); }
+.iq-anon-link{ background:none; border:none; padding:0; color:var(--muted); text-decoration:underline; cursor:pointer; font-size:12px; }
+.iq-anon-link:hover{ color:var(--text); }
+.iq-anon-confirm{ margin-top:6px; padding:8px; border:1px dashed var(--border); border-radius:var(--r-sm); font-size:12px; }
+.iq-check-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:6px; }
+.iq-check-row{ display:flex; align-items:flex-start; gap:6px; font-size:13px; color:var(--text); }
+.iq-check-row input{ margin-top:2px; }
+.iq-disclaimer{ font-size:12px; color:var(--muted); line-height:1.6; background:var(--card); border-radius:var(--r-sm); padding:var(--sp-3); margin-bottom:var(--sp-3); }
+.iq-btn{
+  width:100%; padding:10px 16px; border:none; border-radius:var(--r-md);
+  background:var(--primary); color:#fff; font-size:14px; font-weight:700; cursor:pointer;
+  transition:background var(--t-fast);
+}
+.iq-btn:hover{ background:var(--primary-hover); }
+.iq-btn:disabled{ background:var(--border); color:var(--muted); cursor:not-allowed; }
+.iq-btn-ghost{ background:none; color:var(--muted); border:1px solid var(--border); font-weight:500; }
+.iq-btn-ghost:hover{ background:var(--card); color:var(--text); }
+.iq-form-error{ font-size:12px; color:var(--neg-strong); margin-top:6px; display:none; }
+.iq-form-error.show{ display:block; }
+
+/* Floating "오류 제보" button — bottom-right, all 4 pages via report-widget.js */
+.iq-report-fab{
+  position:fixed; right:var(--sp-4); bottom:var(--sp-4); z-index:1900;
+  padding:10px 16px; border-radius:var(--r-pill); border:1px solid var(--border);
+  background:#fff; color:var(--text); font-size:13px; font-weight:600;
+  box-shadow:0 4px 16px rgba(0,0,0,0.15); cursor:pointer;
+  display:flex; align-items:center; gap:6px;
+}
+.iq-report-fab:hover{ border-color:var(--primary); color:var(--primary); }
+@media (max-width:640px){
+  .iq-report-fab{ padding:10px 12px; font-size:12px; right:var(--sp-3); bottom:var(--sp-3); }
+  .iq-check-grid{ grid-template-columns:1fr; }
+}
