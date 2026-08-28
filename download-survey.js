@@ -267,7 +267,7 @@
         el("div", { class: "iq-modal-title", id: "iqdl-title", text: "테이블 다운로드(.xlsx)" }),
         el("button", { class: "iq-modal-close", type: "button", "aria-label": "닫기", text: "×" })
       ]),
-      el("p", { class: "small-muted", style: "margin-top:0" }, [document.createTextNode("파일 자체엔 접근 제한이 없습니다 — 아래는 방명록입니다. 남겨주시면 바로 다운로드가 시작됩니다.")]),
+      el("p", { class: "small-muted", style: "margin-top:0" }, [document.createTextNode("데이터 품질 향상을 위해 여러분의 소중한 협조를 부탁드립니다. 아래 몇 가지만 남겨주시면 바로 다운로드가 시작됩니다.")]),
       form
     ]);
     backdrop.appendChild(panel);
