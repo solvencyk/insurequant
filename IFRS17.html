@@ -614,7 +614,7 @@
 
   // ===== Panel 3: 당기순이익 detailed bridge waterfall (PL_breakdown.json) =====
   // Source rows: {원수사명, 공시분기, 항목번호, 항목명, 값(YTD), 값_당분기}. 단위 = 백만원.
-  // 손보/생보 공통 상세 분해 — 장기원수는 세부(4·5·6·7), 장기재보험(8)·자동차+일반(13+14)은 묶음:
+  // 손보/생보 공통 상세 분해 — 장기원수는 세부(4·5·6·7), 생명장기재보험(8)·자동차+일반(13+14)은 묶음:
   //   4 CSM상각 +5 위험조정 +6 예실차 +7 기타 +8 재보험 +(13+14) +(15−16 기타) = 보험손익(1)
   //   → 17 투자손익 → 21 영업외 → (−)23 법인세 → 24 당기순이익  (검산 OK 손보+생보)
   //   → 26 FVOCI채무 + 27 보험계약금융(OCI) + 28 위험회피파생 + 30 재보험금융(OCI) + 29 FVOCI지분 → 31 총포괄손익
@@ -683,7 +683,7 @@
     { ko:"원수 위험조정", role:"flow", get:g=> g(PL_NUM.원수RA) },
     { ko:"원수 예실차",  role:"flow", get:g=> g(PL_NUM.원수예실차) },
     { ko:"기타 원수손익", role:"flow", get:g=> g(PL_NUM.기타원수) },
-    { ko:"장기 재보험",  role:"flow", get:g=> g(PL_NUM.재보험) },
+    { ko:"생명장기재보험",  role:"flow", get:g=> g(PL_NUM.재보험) },
     { ko:"자동차+일반",  role:"flow", optional:true, get:g=>{ const a=g(PL_NUM.자동차),b=g(PL_NUM.일반); return (a==null&&b==null)?null:(a||0)+(b||0); } },
     { ko:"기타(사업비용)", role:"flow", optional:true, get:g=>{ const oi=g(PL_NUM.기타수익),oe=g(PL_NUM.기타비용); return (oi==null&&oe==null)?null:(oi||0)-(oe||0); } },
     { ko:"보험손익", role:"anchor", get:g=> g(PL_NUM.보험손익) },
@@ -753,7 +753,7 @@
   // x-axis label wrapping (full name kept in tooltip + table).
   const PL_WRAP = {
     "원수 CSM상각":"원수\nCSM상각", "원수 위험조정":"원수\n위험조정", "원수 예실차":"원수\n예실차",
-    "기타 원수손익":"기타\n원수", "장기 재보험":"장기\n재보험", "자동차+일반":"자동차\n+일반",
+    "기타 원수손익":"기타\n원수", "생명장기재보험":"생명장기\n재보험", "자동차+일반":"자동차\n+일반",
     "기타(사업비용)":"기타\n사업비", "보험손익":"보험손익", "투자손익":"투자손익",
     "영업외손익":"영업외", "법인세":"법인세", "당기순이익":"당기\n순이익",
     "기타포괄손익(세부 미공시)":"기타포괄\n(세부미공시)", "FVOCI 채무증권":"FVOCI\n채무증권",
@@ -992,7 +992,7 @@
     });
   }
 
-  // 장기 재보험(8) 세부 = 9 CSM상각 +10 위험조정 +11 예실차 +12 기타 (합 = 8).
+  // 생명장기재보험(8) 세부 = 9 CSM상각 +10 위험조정 +11 예실차 +12 기타 (합 = 8).
   const PL_RE_SUB = [
     { ko:"재보험 CSM상각", num:9 }, { ko:"재보험 위험조정", num:10 },
     { ko:"재보험 예실차", num:11 }, { ko:"기타 재보험손익", num:12 },
@@ -1013,12 +1013,12 @@
     const rows = [];
     let togNode = null;
     for(const d of defs){
-      if(d.ko==="장기 재보험" && reHasSub){
+      if(d.ko==="생명장기재보험" && reHasSub){
         const lab=document.createElement("span");
         const tog=document.createElement("button");  // G1: K-ICS .subtoggle 양식 미러(common.css)
         tog.type="button"; tog.className="subtoggle";
         tog.textContent="+"; tog.title="재보험 세부 펼치기"; tog.setAttribute("aria-expanded","false");
-        lab.appendChild(document.createTextNode("장기 재보험")); lab.appendChild(tog);
+        lab.appendChild(document.createTextNode("생명장기재보험")); lab.appendChild(tog);
         rows.push({ cells:[ lab, ...getters.map(g=> fmtEok(d.get(g))) ] });
         togNode = tog;
         for(const s of PL_RE_SUB){
@@ -1042,7 +1042,7 @@
     }
     const note=document.createElement("div"); note.className="small-muted"; note.style.marginTop="6px";
     note.textContent = "단위 억원(소수 반올림) · " + (mode==="quarter" ? "직전 4분기(당분기)" : "직전 3개년(연 누계)")
-      + " · 음수 △ · 장기 재보험 ＋ 클릭 시 세부 · 당기순이익 이후 행은 기타포괄손익(OCI) 구간 · —는 해당 항목 미공시";
+      + " · 음수 △ · 생명장기재보험 ＋ 클릭 시 세부 · 당기순이익 이후 행은 기타포괄손익(OCI) 구간 · —는 해당 항목 미공시";
     box.appendChild(note);
   }
 
@@ -1592,7 +1592,7 @@
         plOci === "full"  ? " → [기타포괄손익] FVOCI채무 → 보험계약금융(OCI) → 위험회피파생 → 재보험금융(OCI) → FVOCI지분 → 총포괄손익"
       : plOci === "total" ? " → 기타포괄손익(총액만 공시·세부 미공시) → 총포괄손익"
       :                     " · 총포괄손익 미공시(원천 보고서에 총포괄손익계산서 미수록) — 당기순이익까지만 표시";
-      q(host,"#plCap").textContent = "당기순이익 → 총포괄손익 워터폴 · " + plPer.label + " · 단위 백만원(축은 조원) · 장기원수[CSM상각·위험조정·예실차·기타] → 장기재보험 → 자동차+일반 → 기타 → 보험손익 → 투자손익 → 영업외 → (−)법인세 → 당기순이익" + ociTail
+      q(host,"#plCap").textContent = "당기순이익 → 총포괄손익 워터폴 · " + plPer.label + " · 단위 백만원(축은 조원) · 장기원수[CSM상각·위험조정·예실차·기타] → 생명장기재보험 → 자동차+일반 → 기타 → 보험손익 → 투자손익 → 영업외 → (−)법인세 → 당기순이익" + ociTail
         + (plOci === "none" ? "" : " · y축은 FVOCI 지분증권을 뺀 범위로 고정 — 넘치는 막대는 톱니로 잘라 값 라벨로 표기");
     } else {
       if (charts.pl){ try{ charts.pl.dispose(); }catch(e){} charts.pl=null; }
