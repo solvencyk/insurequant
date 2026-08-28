@@ -1,5 +1,110 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-28 (52nd pass) — 푸본현대생명(KR0083) 2024.3Q DART API 부호반전 3셀 수정 + 동일결함
+> 전캐시 census (orchestrator 티켓 `inbox/_resolved/20260828T1200Z__orchestrator__KR0083_2024.3Q
+> __dart_api_sign_reversal_gold_override.md`, status: resolved).** 51st pass가 규명만 하고 미수정
+> 남긴 건을 orchestrator가 원문 재확인 후 직접 발주 — 화면에 틀린 숫자가 나가는 데이터 오류라
+> 조사가 아니라 수정 작업.
+>
+> **① 수정.** 항목27(보험계약금융손익 OCI)·28(위험회피 파생상품평가손익)·30(재보험금융손익 OCI),
+> KR0083, 2024.3Q — `값`(누계) 부호만 반전. 원문·캐시 대조는 51st pass가 이미 정확했음(재확인
+> 완료, 근거는 도메인 문서 addendum 참고): raw XML(FY2024_Q3 KR0083 20241114000568.xml)의
+> 당3개월/당누적 둘 다 음수인데 캐시(`_fs_api_cache/00459844_2024_11014_OFS.json`)의
+> `thstrm_add_amount`(당누적)만 양수. 세 값 다 |캐시|=|raw| 확인(자릿수까지 일치, 부호만 다름).
+>
+> **② 셀 단위 패치, 마스터 통짜 재실행 안 함.** `data/dart/viz/pl_breakdown_master.json`을
+> `scripts/_probes/fix_kr0083_2024q3_oci_sign.py`로 3개 값만 직접 반전(git diff 3라인만).
+> `build_pl_breakdown.py::main()`은 이 브랜치에서 raw 전체를 재발견하는 통짜 재실행이라 미실행
+> (골든도 같은 이유로 `RUN_PL_GOLDEN=1` 미실행 — 아래 ④). 대신 `build_root_masters.build_pl()`
+> **개별 호출**(`scripts/_probes/run_build_pl_only.py`, `main()`·`build_csm()` 미실행)로 root
+> `PL_breakdown.json`을 재생성 — 이 과정에서 `값_당분기`가 YTD차분으로 **자동** 재계산되어 세
+> 항목 모두 raw의 당3개월 값과 소수 6자리까지 정확히 일치(예: 항목27 -139173.254688). 손으로
+> 값_당분기를 안 건드려도 정정된다는 뜻 — 티켓의 "값_당분기는 정상이니 건드리지 마라"는 "하류
+> 재계산에 맡겨라"로 해석, 확인됨. 2024.4Q의 값_당분기 3건도 기저(2024.3Q YTD) 정정에 따라
+> 올바르게 리플(정상 동작). combo-diff(`scripts/_probes/combo_diff_kr0083_fix.py`, cell-key=
+> (코드,항목,분기) 전수): 11190행→11190행 불변, 변경 정확히 6셀, 손실/추가 0, 타필드 변경 0.
+>
+> **③ Provenance + gold override.** `data/_gold/user_pl_cells.json`(PL_OVR, `build_root_masters.
+> build_pl()`이 `_apply_pl_overrides`로 마지막 단계 UPSERT — CSM/K-ICS와 같은 gold-overlay 패턴)
+> 에 3건 신설, `was`(정정 전 값)+`note`(raw 경로·캐시 경로·account_id·검산까지) 포함. **주의:**
+> `_GOLD_CELL_OVERRIDE`(build_pl_breakdown.py 쪽 override)는 항목1-24만 커버 — 25-31(OCI 확장)엔
+> 훅이 없어서 `pl_breakdown_master.json` 자체는 이 gold override로 보호되지 않는다. 즉 그 빌더를
+> 통짜 재실행하면 (여전히 버그인) FS-API 캐시에서 이 3셀이 다시 잘못된 부호로 채워진다 — root
+> `PL_breakdown.json`은 `user_pl_cells.json`이 그때도 마지막에 정정하므로 안전(실측 확인:
+> `build_pl()` 로그 "pl overrides: 199 set"). 다음 세션이 `build_pl_breakdown.py`를 통짜
+> 재실행했다면 반드시 이 3셀을 root에서 재확인할 것.
+>
+> **④ 골든/게이트.** `pl_breakdown_master.json`을 직접 패치했으므로(빌더 재실행 아님)
+> `python tests/test_pl_breakdown_golden.py --update`로 매니페스트만 갱신(`sha256_master`만
+> 이동, `sha256_coverage`·행수·`non_null_values` 불변 — 부호만 바꿔 null성 변화 없음).
+> `validate_master_tables.py --no-build`을 수정 전/후 두 번 실행해 SUMMARY가 **완전 동일**함을
+> 확인(diff 0줄, exit=2 불변) — 항목26-30 개별을 검사하는 배선된 룰이 없어 이번 수정이 어떤
+> 룰의 pass/fail도 안 건드림, 따라서 `test_master_tables_golden.py`는 `--update` 불요(재확인:
+> `pytest tests/test_master_tables_golden.py` PASS). prepush fast bundle(8개 파일, kics_rules·
+> master_tables·post_transition·deploy_assets·rule_coverage_manifest·identity_tautology·
+> identity_registry·push_gate_wiring) 92 passed/1 skipped, 회귀 0. `sync_master_xlsx_sheet.py
+> "손익분해PL"` cherry-pick — dry-run으로 "변경 셀 9(위 6셀의 값+값_당분기 조합)·추가 0·삭제 0"
+> 확인 후 실행, "검증 OK — 11190행×9열 마스터와 완전 일치".
+>
+> **⑤ Census — 같은 결함이 다른 셀에도 있는지.** 티켓의 판별식(캐시 thstrm_amount/
+> thstrm_add_amount 부호 반대)을 IS/CIS 전체(1040개 `_fs_api_cache/*.json`, 우리 스키마가 실제로
+> 쓰는 account_id 8,753 rows)에 `scripts/_probes/census_dart_sign_reversal.py`로 실행 — 티켓이
+> 적은 "|누적|>|3개월|" 조건은 KR0083 항목28 자신도 위반해(|누적|=53.2억<|3개월|=86.1억, Q1/Q2가
+> 반대방향으로 상쇄) 뺐다. `scripts/_probes/_census_summarize.py`로 같은-FY 직전분기 YTD연속성
+> 자동 교차검증(캐시값을 그대로 뒀을 때 vs 부호만 뒤집었을 때, 어느 쪽이 마스터의 직전분기 YTD와
+> 이어지는 3개월값에 더 가까운지) → **"SIGN-BUG-LIKELY" 정확히 6건**: 3건은 위 KR0083(확정),
+> 나머지 3건은 KR0082(DB생명보험) 2024.1Q 항목27/28/30 — raw XML(FY2024_Q1 20240514000901.xml)
+> 직접 대조 결과 **다른 현상으로 판명, 손대지 않음**: 이 회사는 Q1인데 원문 표 자체가 당기
+> 3개월≠당기누적(정확히 부호만 반대, 크기는 동일) — 상위 소계("후속적으로 당기손익으로 재분류될
+> 수 있는 항목" -142,381,181,792원)를 leaf 5개(항목26/27/28/30+신용손실)로 원 단위 검산하니
+> **음수 쪽이 정답이고 마스터는 이미 음수(정답)를 쓰고 있음** → 오탐, 수정하면 오히려 깨짐.
+> "?"(직전분기 YTD 없어 자동판정 불가, 대부분 2023.3Q — 기존 문서화된 2023.1Q/2Q 결측 여파) 44건
+> 중 `scripts/_probes/_census_shortlist_unresolved.py`로 상위 10건 shortlist, 대표로 KR0032(NH
+> 농협손해보험) 2023.3Q 항목1(보험손익, OCI 아닌 P&L 헤드라인 — 결함이 OCI 국한인지도 확인 겸)을
+> raw 직접대조 — 당3개월 -493.36억/당누적 +639.66억은 원문 자체가 그렇게 찍혀 있고 내부모순 없음
+> (Q3라 3개월≠누적이 정상) → 통상적 분기 변동성, 버그 아님. **결론: KR0083 외 추가 수정 0건.**
+> 전 후보 원장은 `data/_derived/dart_sign_reversal_census{,_summary}.json`.
+>
+> **⑥ 손대지 않음(범위 밖, 티켓 "후속" 절 = owner 판단 대기).** 누락 구성요소 4종(확정급여
+> 재측정·해외사업환산·재평가잉여금·신용손실) 항목화 여부, 삼성화재 9개 분기 raw XML 백필.
+> `index.html`·`IFRS17.html`·브랜치(`fix/csm-product-segmented-columns` 유지)·`git push`.
+>
+> **⑦ 재현.**
+> ```
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/fix_kr0083_2024q3_oci_sign.py
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/run_build_pl_only.py
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/combo_diff_kr0083_fix.py <backup> PL_breakdown.json
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe tests/test_pl_breakdown_golden.py --update
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_master_tables.py --no-build
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/sync_master_xlsx_sheet.py "손익분해PL"
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/census_dart_sign_reversal.py
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/_census_summarize.py
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_kics_rules_golden.py tests/test_master_tables_golden.py tests/test_post_transition_golden.py tests/test_deploy_assets.py tests/test_rule_coverage_manifest.py tests/test_identity_tautology.py tests/test_identity_registry.py tests/test_push_gate_wiring.py
+> ```
+
+> **2026-08-28 (51st pass) — OCI 소계-구성요소 불일치 원인 규명 (orchestrator 티켓
+> `inbox/parser/20260828T0700Z__orchestrator__MULTI__oci_subtotal_vs_components_mismatch.md`,
+> status: answered). 마스터 무수정 — 원인 규명만.** 50th pass(항목25-31 신설)에서 항목25 vs
+> sum(26-30) 잔차 대량 발견(273셀 중 103건 >1%)에 대한 후속 조사.
+>
+> **결론(혼합): 282셀(로컬 corp_code 해결 가능분) 전수 재구성 결과 270개(96%)는 원천이 스스로
+> 정합적** — `_fs_api_cache/*_OFS.json`의 CIS 섹션에서 항목25 행 ~ 다음 `ifrs-full_ProfitLoss`
+> 행 사이 **모든** 태깅 leaf row(우리 5-슬롯 아니라 원천이 실제로 가진 전부)를 합산하면 원 단위로
+> 닫힌다. 안 닫는 건 우리 스키마가 좁아서다 — `확정급여제도의재측정요소` ·`해외사업환산손익`·
+> `자산재평가잉여금`·`기타포괄손익-공정가치측정 신용손실` 4종 leaf가 여러 회사(DB손해보험·
+> 코리안리·신한라이프·메리츠·교보생명)에 걸쳐 반복 관측되나 항목26-30에 슬롯이 없다. **나머지
+> 10셀 중 9개는 삼성화재(KR0008) 2023.3Q~2025.3Q**로 FS-API가 leaf 태그를 아예 안 줌(소계만
+> 줌, 마스터 항목26-30은 오염 없이 정확히 None — 2025.4Q부터 API 쪽에서 자연 해소). **나머지
+> 1개가 푸본현대(KR0083) 2024.3Q**: raw XML(`FY2024_Q3/raw/KR0083.../20241114000568.xml`
+> L5670-5710)과 캐시를 대조하니 CF헤지·재보험금융손익·보험계약금융손익 3개 태그의
+> `thstrm_add_amount`(당기 누적)만 원문과 부호가 반대(`thstrm_amount`=당기3개월은 정상) —
+> DART API 자체의 부호반전 결함, 282셀 중 이 1건만 해당. 지시대로 손보정 안 함.
+>
+> 도메인 문서 `docs/domains/claude-agent-ifrs17.md`에 2026-08-28 콜아웃으로 계정ID 전부 포함해
+> 기록. 재현: `scripts/_probes/oci_full_universe_census.py`(오프라인). 후속 판단(owner) 3건 —
+> 4종 leaf 항목화 여부·삼성화재 raw XML 백필 여부·푸본현대 gold override 여부 — 티켓 `## 답변`에
+> 남김.
+
 > **2026-08-28 (50th pass) — PL_breakdown 총포괄손익 연장(항목25-31), owner 티켓
 > `inbox/_resolved/20260828T0113Z__owner__MULTI__oci_extension_pl_breakdown.md`(resolved).
 > 2,492셀 신설(356 company-quarter × 7항목), 손실 0 combo-diff 확인. 게이트 룰 2개 신설·

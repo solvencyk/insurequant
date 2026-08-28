@@ -36,6 +36,77 @@
 >   재생성 → 캐시+마스터+골든 함께 커밋. owner 정책: 캐시는 계속 커밋(정정공시 드묾).
 > - 상세 절차 = SKILL "경과조치 적용후" / "viz 빌더 골든" / "DART FS API 캐시" 절.
 
+> **⚠️ 2026-08-28 — PL_breakdown 항목25-31(기타포괄손익~총포괄손익) 소계-구성요소 불일치 원인 규명.**
+>
+> 항목25(기타포괄손익 총계, `ACCT_OCI[25]="ifrs-full_OtherComprehensiveIncome"`)와 항목26-30
+> (5개 세부: FVOCI채무증권/보험계약금융손익/CF헤지/FVOCI지분증권/재보험금융손익) 합이 대량으로
+> 안 맞는 티켓(`inbox/parser/20260828T0700Z`) 조사 결과. **파생값으로 갈아끼우지 않고** 원인만
+> 규명, 마스터는 무수정. 356개 (회사,분기) 셀 중 로컬 raw+FS-API 캐시로 대조 가능한 282개를
+> 전수 재구성(`_fs_api_cache/*_OFS.json`의 CIS 섹션에서 항목25 행과 다음 `ifrs-full_ProfitLoss`
+> 행 사이 **모든** 태깅된 leaf row를 합산 — 우리 5개 슬롯만이 아니라 원천이 실제로 가진 전부).
+>
+> - **270/282(96%) 는 원천이 스스로 정합적이다.** DART FS-API가 이미 태깅해 둔 leaf row를 전부
+>   더하면 항목25에 원 단위로 일치한다 — 다만 **그 leaf 중 다수가 우리 5-슬롯 스키마에 없다**:
+>   `ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans`
+>   (확정급여제도의 재측정요소), `...ExchangeDifferencesOnTranslation`(해외사업환산손익),
+>   `...GainsLossesOnRevaluation`(자산재평가잉여금),
+>   `dart_OtherComprehensiveIncomeNetOfTaxCreditLossesOfFinancialAssetsMeasuredAtFairValueThrough
+>   OtherComprehensiveIncome`(기타포괄손익-공정가치측정 신용손실) 4종이 여러 회사에 걸쳐 반복
+>   확인됐다(DB손해보험·코리안리·신한라이프·메리츠·교보생명 등). **즉 항목25≠sum(26-30)의 지배적
+>   원인은 "API가 본문보다 불완전"이 아니라 "우리가 뽑는 항목이 원천 leaf 전체보다 적다".** 4종을
+>   새 항목으로 추가할지는 별도 owner 판단 — 이미 FS-API 캐시에 태깅돼 있어 재다운로드 불요.
+> - **삼성화재(KR0008) 2023.3Q~2025.3Q(9개 분기)는 진짜 API 결측이다.** 이 구간은 FS-API가
+>   기타포괄손익 총계 + 재분류/비재분류 두 소계 행만 주고 **leaf row를 단 하나도 안 준다**
+>   (leaf 태그 자체가 없음 — 마스터 항목26-30은 정확히 None, 오염 아님). **2025.4Q부터는 DART
+>   쪽에서 자체적으로 leaf 태그가 나타나기 시작**해 정상 정합(항목25 vs sum(26-30) 잔차 <1%).
+>   즉 회사 고유가 아니라 **그 회사의 그 시기 제출분에 한정된 DART 태깅 관행**으로 보인다.
+>   9개 분기의 항목26-30을 채우려면 FS-API가 아니라 raw XML 본문표 직접 파싱이 필요 — 미착수,
+>   범위 밖.
+> - **푸본현대생명(KR0083) 2024.3Q는 유일하게 확인된 DART API 부호반전 결함이다.** raw XML
+>   (`data/dart/FY2024_Q3/raw/KR0083_푸본현대생명보험/20241114000568.xml` L5670-5710, 괄호=음수)
+>   과 캐시(`data/dart/_fs_api_cache/00459844_2024_11014_OFS.json`)를 직접 대조: CF헤지·
+>   재보험금융손익·보험계약금융손익 3개 태그의 `thstrm_add_amount`(당기 누적) 부호가 원문과
+>   반대(같은 태그의 `thstrm_amount`(당기 3개월)는 정상). 셋 다 손으로 부호만 뒤집으면 소계
+>   -149,010,393,849원과 원 단위로 일치. **282개 대조 가능 셀 중 이 1건만** 해당 — 전수census
+>   에서 다른 부호반전 사례 없음. DART 원천 결함으로 판단됐고, **2026-08-28 후속 티켓
+>   (`inbox/parser/20260828T1200Z`)에서 orchestrator 지시로 수정 완료** — 아래 addendum 참고.
+>
+> 재현: `scripts/_probes/oci_full_universe_census.py` (오프라인, `_fs_api_cache/` + 로컬
+> `data/dart/FY*/raw/*/meta.json`만 사용). 상세 = 티켓 `inbox/_resolved/` 이관본.
+>
+> **➕ 2026-08-28 addendum — 위 KR0083 건 수정 + 동일결함 전캐시 census (`inbox/parser/
+> 20260828T1200Z`, resolved).** 항목27/28/30 `값`(누계) 부호만 반전(값_당분기는 미손, 하류
+> 재계산으로 자연 정정 — 아래). 셀단위 패치 2곳: `data/dart/viz/pl_breakdown_master.json`
+> (`scripts/_probes/fix_kr0083_2024q3_oci_sign.py`, 3줄만 diff) + `data/_gold/user_pl_cells.json`
+> gold override 3건 신설(근거 전문 포함) — `build_root_masters.build_pl()`(개별 호출, `main()`
+> 아님) 재실행해 root `PL_breakdown.json`도 정정, 이때 항목27/28/30의 `값_당분기`가 YTD차분으로
+> **자동** 재계산되어 raw의 당3개월 열과 소수점까지 정확히 일치(예: 항목27 -139173.254688 =
+> raw "보험계약자산(부채)순금융손익" 당3개월 그대로) — 손으로 안 건드려도 정정됨을 확인.
+> 2024.4Q의 `값_당분기` 3건도 기저(2024.3Q YTD) 정정에 따라 올바르게 리플(정상 동작, 버그
+> 아님). combo-diff(cell-key=(코드,항목,분기) 전수, `scripts/_probes/combo_diff_kr0083_fix.py`):
+> 11190행→11190행 불변, 변경 정확히 6셀(위 3항목×2분기), 손실/추가 0, 원수사명 등 타필드 변경 0.
+> **`pl_breakdown_master.json`은 override로 보호 안 됨** — `_GOLD_CELL_OVERRIDE`(build_pl_
+> breakdown.py)는 항목1-24만 커버하고 25-31(OCI 확장)엔 override 훅이 없어서, 그 빌더를
+> 통짜 재실행하면 이 3셀은 (여전히 버그인) FS-API 캐시에서 다시 잘못된 부호로 채워진다 —
+> `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py`도 빌더를 재실행하므로 **이 세션에서
+> 의도적으로 미실행**. root `PL_breakdown.json`은 `user_pl_cells.json` override가 빌드 마지막
+> 단계에서 무조건 UPSERT하므로 안전(실측: `build_pl()` 재실행 로그 "pl overrides: 199 set").
+> **census(같은 결함 전캐시 재검색, `scripts/_probes/census_dart_sign_reversal.py` +
+> `_census_summarize.py`)**: 판별식(캐시 thstrm_amount/thstrm_add_amount 부호반대)을 IS/CIS
+> 전체(1040개 캐시파일, 8,753 rows in-scope) 돌리고 같은-FY 직전분기 YTD연속성으로 자동 교차검증
+> — "SIGN-BUG-LIKELY" 6건 중 3건은 위 KR0083(확정), 나머지 3건(KR0082 DB생명보험 2024.1Q
+> 항목27/28/30)은 raw XML 직접 대조 결과 **다른 현상**: 원문 표 자체가 당기 3개월=당기누적이어야
+>할 Q1인데 두 컬럼이 정확히 부호만 반대(같은 크기) — 상위 소계("후속적으로 당기손익으로
+> 재분류될 수 있는 항목" -142,381,181,792원)를 항목26/28/27/30/신용손실 leaf로 원 단위 검산하니
+> **음수 쪽이 맞고 마스터는 이미 그 값을 쓰고 있음** → 손대지 않음(오탐, 건드리면 오히려 깨짐).
+> "?"(직전분기 YTD 없어 자동판정 불가, 대부분 2023.3Q — 기존에 이미 문서화된 2023.1Q/2Q 결측의
+> 여파) 44건 중 상위후보 10건 shortlist, 대표로 KR0032(NH농협손해보험) 2023.3Q 항목1(보험손익,
+> P&L 헤드라인)을 raw 직접확인 — 당3개월 -493.36억/당누적 +639.66억은 원문 표 자체가 그렇게
+> 찍혀 있고(Q3라 3개월≠누적이 정상) 내부모순 없음 → 통상적 분기 변동성, 버그 아님. 나머지 shortlist·"neither-
+> close"(15건, 2%허용오차 미달)는 이 패턴(값이 원천과 자체정합)과 동일 소견으로 판단, 개별
+> raw대조는 생략(패턴 근거는 위 KR0032/KR0082 두 대표사례). **결론: KR0083 외 추가 수정 0건.**
+> data/_derived/dart_sign_reversal_census{,_summary}.json에 전 후보 원장.
+
 ## 0. 운영 환경 & 회사 매핑 규칙
 
 - **OpenDART API key**는 `.env`의 `OPENDART_API_KEY`에서 읽음 (코드에 박지 말 것, 로그에도 찍지 말 것).

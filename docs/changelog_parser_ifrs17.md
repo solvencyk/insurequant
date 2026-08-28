@@ -1,7 +1,44 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-08-26 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-08-28 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-08-28 (52nd pass) — 푸본현대생명(KR0083) 2024.3Q DART API 부호반전 3셀 수정 + 전캐시 census
+
+`inbox/_resolved/20260828T1200Z__orchestrator__KR0083_2024.3Q__dart_api_sign_reversal_gold_override.md`.
+51st pass가 규명한 DART FS-API 부호반전 결함(캐시의 `thstrm_add_amount`만 raw XML과 부호 반대,
+`thstrm_amount`는 정상)을 orchestrator 재확인 후 수정 발주. 화면에 틀린 숫자가 나가고 있던
+데이터 오류였다.
+
+**수정**: 항목27(보험계약금융손익 OCI)·28(위험회피 파생상품평가손익)·30(재보험금융손익 OCI),
+KR0083, 2024.3Q — `값`(누계) 부호만 반전. `data/dart/viz/pl_breakdown_master.json`을
+`scripts/_probes/fix_kr0083_2024q3_oci_sign.py`로 셀단위 패치(diff 3라인) + `data/_gold/
+user_pl_cells.json`에 gold override 3건(근거 전문 포함) 신설 + `build_root_masters.build_pl()`
+개별 호출로 root `PL_breakdown.json` 재생성. `값_당분기`는 YTD차분 자동 재계산으로 raw의
+당3개월 값과 소수 6자리까지 정확히 일치(예: 항목27 -139173.254688) — 손대지 않아도 정정됨.
+2024.4Q 값_당분기 3건은 기저 정정에 따른 정상 리플. combo-diff: 11190행 불변, 변경 정확히 6셀,
+손실/추가 0.
+
+**주의사항 기록**: `_GOLD_CELL_OVERRIDE`(build_pl_breakdown.py)는 항목1-24만 커버 — 25-31(OCI
+확장)엔 훅이 없어 `pl_breakdown_master.json` 자체는 그 빌더 통짜 재실행에 취약(캐시가 여전히
+버그이므로). root `PL_breakdown.json`은 `user_pl_cells.json` override가 매 `build_pl()`마다
+UPSERT하므로 안전(실측: "pl overrides: 199 set"). 이 이유로 `RUN_PL_GOLDEN=1 pytest tests/
+test_pl_breakdown_golden.py`(빌더 재실행)는 이번 세션에서 의도적으로 미실행, 대신 매니페스트만
+`--update`.
+
+**census**: 캐시 thstrm_amount/thstrm_add_amount 부호반대 판별식을 1040개 `_fs_api_cache/*.json`
+전체(우리 스키마 관련 8,753 rows)에 실행 + 같은-FY 직전분기 YTD연속성 자동 교차검증 →
+"SIGN-BUG-LIKELY" 6건 중 3건은 KR0083(수정), 나머지 3건(KR0082 2024.1Q 항목27/28/30)은 raw
+직접대조 결과 다른 현상(원문 표 자체가 Q1인데 당3개월≠당누적, 상위 소계 검산상 마스터가 이미
+정답인 음수를 쓰고 있음)으로 판명, 손대지 않음. "?"(직전분기 YTD 없음, 대부분 2023.3Q) 44건 중
+상위 10건 shortlist, KR0032 2023.3Q 항목1 대표 확인 — 통상적 분기 변동성, 버그 아님. **결론:
+KR0083 외 추가 수정 0건.** 상세 근거·재현 명령은 TODO_parser_ifrs17.md 52nd pass +
+`docs/domains/claude-agent-ifrs17.md` 2026-08-28 addendum.
+
+게이트: `validate_master_tables.py --no-build` 수정 전/후 SUMMARY 완전 동일(diff 0, 배선된 룰이
+항목26-30 개별을 안 봄), `test_master_tables_golden.py` PASS(update 불요). prepush fast bundle
+92 passed/1 skipped. xlsx `sync_master_xlsx_sheet.py "손익분해PL"` cherry-pick(변경 셀 9·추가/
+삭제 0) 완료.
 
 ## 2026-08-26 (49th pass) — 악사손해 2023.4Q PL 원수CSM상각 RED 마감 (`extract_tier2_axa` 헤더 폴백)
 

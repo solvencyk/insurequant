@@ -1594,6 +1594,30 @@
       "값": 71546.566619,
       "was": null,
       "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE lob_sum_gap): item16(기타사업비용) 결측 -> raw '(3) 기타사업비용' 행 71,546,566,619원=71,546.566619백만원(이 분기는 정상 양수 부호). adj=bare-item16=894,154-71,546.57=822,607.43 ≈ 보험손익 822,607.0(잔차 0.43, 허용오차 822.6 이내) — 닫힘 확인."
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 27,
+      "공시분기": "2024.3Q",
+      "값": -265226.939791,
+      "was": 265226.939791,
+      "note": "inbox/parser/20260828T1200Z__orchestrator__KR0083_2024.3Q__dart_api_sign_reversal_gold_override.md: DART FS-API 부호반전 결함(account_id ifrs-full_OtherComprehensiveIncomeNetOfTaxInsuranceFinanceIncomeExpensesFromInsuranceContractsIssuedExcludedFromProfitOrLossThatWillBeReclassifiedToProfitOrLoss, cache data/dart/_fs_api_cache/00459844_2024_11014_OFS.json: thstrm_add_amount(당누적)=+265,226,939,791 이지만 thstrm_amount(당3개월)=-139,173,254,688 — 같은 태그 안에서 부호만 반대). raw XML data/dart/FY2024_Q3/raw/KR0083_푸본현대생명보험/20241114000568.xml '보험계약자산(부채)순금융손익' 행: 당3개월 (139,173,254,688) · 당누적 (265,226,939,791) — 둘 다 음수(괄호), API 캐시만 당누적 부호가 뒤집힘. 부호 정정 후 항목25(기타포괄손익, -148,840.129361) vs 항목26+27+28+30 소계가 항목29(FVOCI지분증권, 이 회사는 미공시=None)를 빼고도 정확히 닫힌다(inbox/parser/20260828T0700Z census 재확인)."
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 28,
+      "공시분기": "2024.3Q",
+      "값": -5322.135208,
+      "was": 5322.135208,
+      "note": "inbox/parser/20260828T1200Z__orchestrator__KR0083_2024.3Q__dart_api_sign_reversal_gold_override.md: 위 항목27과 동일 결함, 동일 파일(account_id ifrs-full_OtherComprehensiveIncomeNetOfTaxCashFlowHedges). cache thstrm_add_amount(당누적)=+5,322,135,208, thstrm_amount(당3개월)=-8,612,492,159 — 부호만 반대. raw XML 같은 파일 '현금흐름위험회피파생상품평가손익' 행: 당3개월 (8,612,492,159) · 당누적 (5,322,135,208), 둘 다 음수."
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 30,
+      "공시분기": "2024.3Q",
+      "값": -536.616012,
+      "was": 536.616012,
+      "note": "inbox/parser/20260828T1200Z__orchestrator__KR0083_2024.3Q__dart_api_sign_reversal_gold_override.md: 위 항목27/28과 동일 결함, 동일 파일(account_id ifrs-full_OtherComprehensiveIncomeNetOfTaxFinanceIncomeExpensesFromReinsuranceContractsHeldExcludedFromProfitOrLoss). cache thstrm_add_amount(당누적)=+536,616,012, thstrm_amount(당3개월)=-269,036,876 — 부호만 반대. raw XML 같은 파일 '재보험계약자산(부채)순금융손익' 행: 당3개월 (269,036,876) · 당누적 (536,616,012), 둘 다 음수."
     }
   ]
 }
