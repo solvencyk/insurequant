@@ -1,20 +1,42 @@
 // InsureQuant — 마스터 데이터 다운로드 게이트 (index.html 전용).
-// 짧은 설문(소속/데이터 목록/사용목적/동의) 제출 시 선택한 시트만 다운로드.
-// 주의: GitHub Pages는 서버가 없는 정적 호스팅이라 public_exports/*.csv 파일 자체는
-// URL을 아는 사람 누구나 접근 가능 — 이 설문은 실제 접근제어가 아니라 정중한 소속 확인 절차.
+// 짧은 설문(소속/데이터 목록/사용목적/동의) 제출 시 선택한 시트를 담은 xlsx 1개를 다운로드.
+// 주의: GitHub Pages는 서버가 없는 정적 호스팅이라 마스터 JSON 자체는 URL을 아는 사람 누구나
+// 접근 가능(다른 페이지들도 이미 그대로 fetch함) — 이 설문은 실제 접근제어가 아니라 정중한
+// 소속 확인 절차.
 (function () {
   "use strict";
 
+  // name = 화면 표시·설문 응답용 라벨. file = 그 시트의 원천 마스터 JSON(루트, 이미 공개).
+  // build_master_xlsx.py MASTERS 리스트와 동일 소스 — 그게 바뀌면 이것도 같이 바꿀 것.
   var SHEETS = [
-    { name: "17BS", label: "재무상태표 (17BS)" },
-    { name: "K-ICS공시", label: "K-ICS 지급여력 공시" },
-    { name: "금리민감도", label: "K-ICS 금리민감도" },
-    { name: "CSM워터폴", label: "CSM 워터폴" },
-    { name: "CSM상각", label: "CSM 상각 스케줄" },
-    { name: "신계약CSM배수", label: "신계약 CSM 배수" },
-    { name: "손익분해PL", label: "손익분해 (PL)" },
-    { name: "배당", label: "배당에 관한 사항" }
+    { name: "17BS", file: "IFRS17_BS.json", label: "재무상태표 (17BS)" },
+    { name: "K-ICS공시", file: "kics_disclosure.json", label: "K-ICS 지급여력 공시" },
+    { name: "금리민감도", file: "kics_rate_sensitivity.json", label: "K-ICS 금리민감도" },
+    { name: "CSM워터폴", file: "CSM_waterfall.json", label: "CSM 워터폴" },
+    { name: "CSM상각", file: "CSM_amortization.json", label: "CSM 상각 스케줄" },
+    { name: "신계약CSM배수", file: "NB_CSM_multiple.json", label: "신계약 CSM 배수" },
+    { name: "손익분해PL", file: "PL_breakdown.json", label: "손익분해 (PL)" },
+    { name: "배당", file: "dividend.json", label: "배당에 관한 사항" }
   ];
+  // build_master_xlsx.py coerce()의 NUMERIC_COLS와 동일 — 그 파일 기준(공식 마스터 xlsx와
+  // 같은 컬럼만 숫자 셀로, 나머지는 텍스트 유지).
+  var NUMERIC_COLS = { "값": 1, "-100bp": 1, "-50bp": 1, "base": 1, "+50bp": 1, "+100bp": 1,
+    "상각액": 1, "신계약CSM_연누계": 1, "월납월초보험료_연누계": 1, "신계약CSM배수_연누계": 1 };
+
+  function shortName(n) {
+    if (!n) return n;
+    return String(n)
+      .replace(/화재해상보험$/, "화재").replace(/해상화재보험$/, "해상")
+      .replace(/손해보험$/, "손보").replace(/생명보험$/, "생명")
+      .replace(/재보험$/, "").replace(/보증보험$/, "보증");
+  }
+  var NAME_ABBR_EXTRA = {
+    "신한이지손해보험": "신한EZ손해", "에이비엘생명보험": "ABL생명", "케이디비생명보험": "KDB생명",
+    "아이엠라이프생명보험": "iM라이프", "에이아이에이생명보험": "AIA생명",
+    "비엔피파리바카디프생명보험": "BNP카디프생명", "교보라이프플래닛생명보험": "교보라이프플래닛",
+    "처브라이프생명보험": "처브라이프", "메트라이프생명보험": "메트라이프", "악사손해보험": "악사손보",
+    "신한라이프생명보험": "신한라이프", "푸본현대생명보험": "푸본현대"
+  };
   var AFFIL_OPTIONS = [
     "메리츠화재해상보험", "한화손해보험", "롯데손해보험", "예별손해보험", "흥국화재",
     "삼성화재해상보험", "현대해상", "KB손해보험", "DB손해보험", "AIG손해보험", "NH농협손해보험",
@@ -23,9 +45,10 @@
     "라이나생명보험", "비엔피파리바카디프생명보험", "아이엠라이프생명보험", "미래에셋생명보험",
     "에이아이에이생명보험", "DB생명보험", "푸본현대생명보험", "동양생명", "신한라이프생명보험",
     "메트라이프생명보험", "하나생명보험", "KB라이프생명", "처브라이프생명보험", "농협생명보험",
-    "교보라이프플래닛생명보험", "IBK연금보험",
-    "자산운용/증권", "컨설팅/회계법인", "학계/연구", "언론", "감독기관/공공", "기타 금융기관"
-  ];
+    "교보라이프플래닛생명보험", "IBK연금보험"
+  ].map(function (n) { return NAME_ABBR_EXTRA[n] || shortName(n); }).concat(
+    ["자산운용/증권", "컨설팅/회계법인", "학계/연구", "언론", "감독기관/공공", "기타 금융기관"]
+  );
   var PURPOSES = ["리서치/애널리스트 업무", "투자 참고", "학업/논문", "개인 관심", "기타"];
   var DONE_KEY = "iqSurveyDone_v1";
   var AFFIL_KEY = "iqSurveyAffil_v1";
@@ -60,23 +83,35 @@
     return Array.prototype.slice.call(grid.querySelectorAll("input:checked")).map(function (c) { return c.value; });
   }
 
-  async function downloadSheets(names) {
-    if (names.length === 1) {
-      var a1 = el("a", { href: "public_exports/" + encodeURIComponent(names[0]) + ".csv", download: names[0] + ".csv" });
-      document.body.appendChild(a1); a1.click(); a1.remove();
-      return;
+  function coerceRow(row) {
+    var out = {};
+    for (var k in row) {
+      var v = row[k];
+      if (v != null && NUMERIC_COLS[k]) {
+        var n = Number(v);
+        out[k] = Number.isFinite(n) ? n : v;
+      } else {
+        out[k] = v;
+      }
     }
-    var zip = new JSZip();
-    await Promise.all(names.map(async function (name) {
-      var res = await fetch("public_exports/" + encodeURIComponent(name) + ".csv");
-      var blob = await res.blob();
-      zip.file(name + ".csv", blob);
+    return out;
+  }
+
+  // 선택 시트를 시트 탭 여러 개짜리 xlsx 1개로 묶어 다운로드(zip 아님 — owner 요청).
+  // 각 시트는 그 마스터 JSON을 직접 fetch — 클라이언트에서 새로 만드는 값-스냅샷이라
+  // insurequant_master_tables.xlsx(수식 캐시 있는 원본)는 전혀 건드리지 않는다.
+  async function downloadSheets(names) {
+    var wb = XLSX.utils.book_new();
+    var dataList = await Promise.all(names.map(function (name) {
+      var meta = SHEETS.filter(function (s) { return s.name === name; })[0];
+      return fetch(meta.file).then(function (r) { return r.json(); });
     }));
-    var zipBlob = await zip.generateAsync({ type: "blob" });
-    var url = URL.createObjectURL(zipBlob);
-    var a = el("a", { href: url, download: "insurequant_data_" + todayStr() + ".zip" });
-    document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(url);
+    names.forEach(function (name, i) {
+      var rows = dataList[i].map(coerceRow);
+      var ws = XLSX.utils.json_to_sheet(rows);
+      XLSX.utils.book_append_sheet(wb, ws, name);
+    });
+    XLSX.writeFile(wb, "insurequant_data_" + todayStr() + ".xlsx");
   }
 
   function buildBackdrop() {

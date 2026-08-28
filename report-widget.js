@@ -19,9 +19,21 @@
   var scriptEl = document.currentScript;
   var sheetHint = scriptEl && scriptEl.dataset ? scriptEl.dataset.sheetHint || "" : "";
 
+  // index.html의 NAME_ABBR과 동일 — 영문을 한글로 풀어쓴 회사명(AIA/ABL/KDB 등)은 접미사
+  // 정규식만으론 안 잡혀서 명시 매핑이 꼭 필요함(2026-08-28: 이 매핑이 빠져서 "AIA생명"이
+  // 어디에도 안 뜨던 버그가 있었음).
+  var NAME_ABBR = {
+    '케이비손해보험': 'KB손보', '케이비라이프생명보험': 'KB라이프', '신한이지손해보험': '신한EZ손해',
+    '에이비엘생명보험': 'ABL생명', '케이디비생명보험': 'KDB생명', '아이엠라이프생명보험': 'iM라이프',
+    '디지비생명보험': 'DGB생명', '엠지손해보험': 'MG손보', '에이아이지손해보험': 'AIG손보',
+    '에이아이에이생명보험': 'AIA생명',
+    '비엔피파리바카디프생명보험': 'BNP카디프생명', '교보라이프플래닛생명보험': '교보라이프플래닛',
+    '처브라이프생명보험': '처브라이프', '메트라이프생명보험': '메트라이프', '악사손해보험': '악사손보',
+    '신한라이프생명보험': '신한라이프', '푸본현대생명보험': '푸본현대'
+  };
   function shortName(n) {
-    // index.html의 NAME_ABBR 표시 규칙과 동일 접미사만 — 이 위젯은 체크박스 라벨용 가벼운 버전.
     if (!n) return n;
+    if (NAME_ABBR[n]) return NAME_ABBR[n];
     return String(n)
       .replace(/화재해상보험$/, "화재").replace(/해상화재보험$/, "해상")
       .replace(/손해보험$/, "손보").replace(/생명보험$/, "생명")
@@ -43,11 +55,29 @@
     var grid = el("div", { class: "iq-check-grid", style: "max-height:160px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--r-sm);padding:8px" });
     items.forEach(function (val) {
       var id = name + "-" + val;
+      var label = labelFn ? labelFn(val) : val;
       var cb = el("input", { type: "checkbox", id: id, value: val });
-      var row = el("label", { class: "iq-check-row", for: id }, [cb, document.createTextNode(labelFn ? labelFn(val) : val)]);
+      var row = el("label", { class: "iq-check-row", for: id });
+      row.dataset.search = (val + " " + label).toLowerCase();
+      row.appendChild(cb);
+      row.appendChild(document.createTextNode(label));
       grid.appendChild(row);
     });
     return grid;
+  }
+
+  // 검색창 + checkGrid — 39개사처럼 목록이 길 때 스크롤 대신 타이핑으로 좁힌다(원본명·축약명
+  // 둘 다 매칭 — "AIA생명"이든 "에이아이에이"든 찾아짐).
+  function filterableCheckGrid(name, items, labelFn, placeholder) {
+    var grid = checkGrid(name, items, labelFn);
+    var filterInput = el("input", { class: "iq-input", type: "text", placeholder: placeholder, autocomplete: "off", style: "margin-bottom:6px" });
+    filterInput.addEventListener("input", function () {
+      var q = filterInput.value.trim().toLowerCase();
+      Array.prototype.forEach.call(grid.children, function (row) {
+        row.style.display = (!q || row.dataset.search.indexOf(q) !== -1) ? "" : "none";
+      });
+    });
+    return el("div", {}, [filterInput, grid]);
   }
 
   function buildModal() {
@@ -55,7 +85,7 @@
       SHEETS.map(function (s) { return el("option", { value: s, text: s }); }));
     if (sheetHint && SHEETS.indexOf(sheetHint) !== -1) sheetSelect.value = sheetHint;
 
-    var companyGrid = checkGrid("iqrep-co", COMPANIES, shortName);
+    var companyGrid = filterableCheckGrid("iqrep-co", COMPANIES, shortName, "회사명 검색 (예: AIA생명)");
     var quarterGrid = checkGrid("iqrep-q", QUARTERS);
     var detail = el("textarea", { class: "iq-textarea", id: "iqrep-detail", placeholder: "어떤 값이 왜 이상한지 적어주세요 (예: 2025.4Q 지급여력비율이 실제 공시보다 낮게 나옵니다)" });
     var honeypot = el("input", { type: "text", name: "website", tabindex: "-1", autocomplete: "off", style: "position:absolute;left:-9999px;width:1px;height:1px;opacity:0" });
