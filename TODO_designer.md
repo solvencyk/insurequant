@@ -9,6 +9,10 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-28f):** disclaimer 문구 끝에 "오류 발견 시 화면의 우측 하단 버튼을 통해
+제보 부탁드립니다." 추가(`DISCLAIMER_TEXT` 단일 소스라 설문 모달·xlsx 표지 시트 둘 다 자동
+반영). 배포 완료.
+
 **Recent (2026-08-28e, owner 피드백 — 완료·배포됨):** owner가 "json은 계리사가 다룰줄 아냐"고
 지적 — 실제로는 다운로드 산출물이 처음부터 xlsx만이었고(public_exports/*.json은 서버 내부
 스냅샷일 뿐 사용자 노출 없음), 내가 "JSON 스냅샷"이라고 계속 언급한 설명 방식이 오해를 만든
