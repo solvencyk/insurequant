@@ -170,10 +170,14 @@
     var anonLabel = el("label", { class: "iq-check-row", for: "iqdl-anon", style: "margin-top:6px" }, [anonCb, document.createTextNode("회사명은 비공개로 할게요")]);
     var deptSel = optionSelect("iqdl-dept", DEPARTMENTS);
     var sectorSel = optionSelect("iqdl-sector", SECTORS);
+    // 업권은 비공개(익명) 체크했을 때만 필수라, 그 전까진 숨겨서 "이게 왜 있지" 헷갈림을 없앤다.
+    var sectorField = el("div", { class: "iq-field" }, [el("label", { text: "업권 " }, [el("span", { class: "iq-hint", text: "(필수)" })]), sectorSel]);
+    sectorField.style.display = "none";
 
     anonCb.addEventListener("change", function () {
       affilInput.disabled = anonCb.checked;
       if (anonCb.checked) affilInput.value = "";
+      sectorField.style.display = anonCb.checked ? "" : "none";
     });
 
     var sheetGrid = sheetChecklist();
@@ -187,7 +191,7 @@
     var form = el("form", { id: "iqdl-form" }, [
       el("div", { class: "iq-field" }, [el("label", { text: "소속" }), affilInput, datalist, anonLabel]),
       el("div", { class: "iq-field" }, [el("label", { text: "부서 " }, [el("span", { class: "iq-hint", text: "(선택)" })]), deptSel]),
-      el("div", { class: "iq-field" }, [el("label", { text: "업권 " }, [el("span", { class: "iq-hint", text: "(비공개 선택 시 필수)" })]), sectorSel]),
+      sectorField,
       el("div", { class: "iq-field" }, [el("label", { text: "다운로드할 데이터 " }, [el("span", { class: "iq-hint", text: "(중복 선택 가능)" })]), sheetGrid]),
       el("div", { class: "iq-field" }, [el("label", { text: "사용 목적 " }, [el("span", { class: "iq-hint", text: "(선택)" })]), purposeSelect]),
       el("div", { class: "iq-disclaimer" }, [document.createTextNode(DISCLAIMER_TEXT)]),
