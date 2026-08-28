@@ -1,10 +1,15 @@
-// InsureQuant — 마스터 데이터 다운로드 방명록 (index.html 전용).
+// InsureQuant — 마스터 데이터 다운로드 방명록 (4페이지 공통, 2026-08-28부터).
 // GitHub Pages는 서버 없는 정적 호스팅이라 마스터 데이터 자체는 접근 제한이 없다(다른 페이지들도
 // 이미 fetch로 그대로 공개). 그래서 이 폼은 접근 통제가 아니라 방명록이다 — 정직하게 그렇게
 // 안내한다(inbox/designer/20260828T0300Z, orchestrator+owner).
 // 짧은 방명록(소속/업권/데이터 목록) 남기면 선택 시트 + 출처 표지가 담긴 xlsx 1개를 바로 받는다.
+// 사용: <script src="download-survey.js" data-default-sheet="KICS"></script>
+// data-default-sheet(선택) = 팝업 열릴 때 미리 체크해둘 SHEETS[].code — 화면별 대표 데이터셋.
 (function () {
   "use strict";
+
+  var _scriptEl = document.currentScript;
+  var DEFAULT_SHEET = (_scriptEl && _scriptEl.dataset) ? (_scriptEl.dataset.defaultSheet || "") : "";
 
   // name = 화면 표시·설문 응답용 라벨. file = public_exports/ 스냅샷(루트 마스터 JSON을 그대로
   // 읽지 않음 — 공유 워킹트리에서 다른 세션이 그 파일을 수정 중일 수 있어, 커밋된 상태로 미리
@@ -84,6 +89,7 @@
     SHEETS.forEach(function (s) {
       var id = "iqdl-sheet-" + s.name;
       var cb = el("input", { type: "checkbox", id: id, value: s.name });
+      if (DEFAULT_SHEET && s.code === DEFAULT_SHEET) cb.checked = true;
       grid.appendChild(el("label", { class: "iq-check-row", for: id }, [cb, document.createTextNode(s.label)]));
     });
     return grid;
