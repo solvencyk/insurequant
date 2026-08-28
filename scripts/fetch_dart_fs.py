@@ -68,6 +68,45 @@ IS_PREFIX = {
     "_is_recost": "ifrs-full_ExpensesFromAllocationOfPremiums",
 }
 
+# Items 25-31 (총포괄손익 extension, owner ticket inbox/parser/20260828T0113Z) — same sj_div
+# CIS rows already scanned into `vals` above, keyed by account_id (NOT account_nm: 삼성생명
+# alone spells item25 THREE different ways across FY2023-2026 -- "기타포괄손익" /
+# "법인세비용차감후기타포괄손익" / … -- while account_id stays ifrs-full_OtherComprehensiveIncome
+# throughout; an exact-nm-match census silently drops the whole company, see ticket §작업1).
+# Mapping chosen from a full-universe 356-cell census (scripts/_probes/census_oci_labels_pass{1,2}.py,
+# artifacts/parser/oci_label_census_pass{1,2}.json) and verified via the item24+25=31 identity,
+# which closes to EXACT 0.000 residual across all 282 CIS-bearing cells -- strong confirmation
+# these are the right tags, not a same-shape decoy.
+ACCT_OCI = {
+    25: "ifrs-full_OtherComprehensiveIncome",                     # 기타포괄손익
+    26: "ifrs-full_OtherComprehensiveIncomeNetOfTaxFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",  # FVOCI 채무증권 평가손익
+    27: "ifrs-full_OtherComprehensiveIncomeNetOfTaxInsuranceFinanceIncomeExpensesFromInsuranceContractsIssuedExcludedFromProfitOrLossThatWillBeReclassifiedToProfitOrLoss",  # 보험계약금융손익(OCI)
+    28: "ifrs-full_OtherComprehensiveIncomeNetOfTaxCashFlowHedges",  # 위험회피 파생상품 평가손익
+    29: "ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesFromInvestmentsInEquityInstruments",  # FVOCI 지분증권 평가손익
+    30: "ifrs-full_OtherComprehensiveIncomeNetOfTaxFinanceIncomeExpensesFromReinsuranceContractsHeldExcludedFromProfitOrLoss",  # 재보험금융손익(OCI)
+    31: "ifrs-full_ComprehensiveIncome",                           # 총포괄손익
+}
+# item28 fallback ids: 교보생명(KR0073) drops the standard CashFlowHedges tag from FY2025.1Q
+# onward and reuses a bare Gain/Loss-derivatives concept AS the signed net line (raw-confirmed:
+# dart_GainFromDerivativesHeldForHedging alone carries negative quarters, e.g. 2025.2Q
+# -139,938.33백만 -- a "Gain"-named tag holding a loss, read as-is; when a same-quarter
+# ...Losses... tag also appears (2025.4Q) it is <0.3% of the Gains tag's magnitude, so the
+# dominant tag is taken rather than netted against a tag whose sign convention here is unclear).
+# Deliberately EXCLUDES dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnHedgingInstrument
+# (삼성화재 KR0008) -- that is FAIR-VALUE hedge OCI, a different IFRS9 hedge type from cash-flow
+# hedge OCI, and every quarter it appears the primary CashFlowHedges tag is ALSO present (0
+# cells depend on it; folding it in would only conflate concepts, never fill a real gap).
+ACCT_OCI_28_FALLBACK = (
+    "dart_GainFromDerivativesHeldForHedging", "dart_GainsValuationDerivativesCashFlowHedge",
+    "dart_LossFromDerivativesHeldForHedging", "dart_LossesValuationDerivativesCashFlowHedge",
+)
+# account_nm fallback (exact match after stripping) for a row tagged "-표준계정코드 미사용-"
+# (no account_id at all) -- mirrors _FIN_NM/nm_vals below.  item26: 케이디비생명(KR0072)/
+# 푸본현대(KR0083)/코리안리(KR1000) untagged in a few quarters.  item28: 흥국화재(KR0011)/
+# KB라이프(KR0099) untagged.
+OCI_NM_FALLBACK = {26: ("기타포괄손익-공정가치측정금융자산평가손익",),
+                    28: ("위험회피목적파생상품평가손익", "위험회피파생상품평가손익")}
+
 _client = None
 _corp_cache: dict[str, str | None] = {}
 
@@ -149,7 +188,7 @@ def _parse(d, annual):
     """Parse a fnlttSinglAcntAll response → Tier-1 dict, or None if no income statement."""
     if d.get("status") not in ("000", "013"):
         return None
-    vals, is_vals, nm_vals = {}, {}, {}
+    vals, is_vals, nm_vals, oci_nm_vals = {}, {}, {}, {}
     # 보험금융 P&L lines some insurers report with '-표준계정코드 미사용-' (no account_id) →
     # collect by NAME for fallback.  OCI uses a distinct name (보험계약자산부채순금융손익), so
     # these exact P&L names don't collide.
@@ -168,6 +207,10 @@ def _parse(d, annual):
         nm = (a.get("account_nm") or "").replace(" ", "")
         if nm in _FIN_NM and nm not in nm_vals:
             nm_vals[nm] = v / 1e6
+        nm_stripped = (a.get("account_nm") or "").strip()
+        for oci_item, names in OCI_NM_FALLBACK.items():
+            if nm_stripped in names and oci_item not in oci_nm_vals:
+                oci_nm_vals[oci_item] = v / 1e6
         for key, pref in IS_PREFIX.items():
             if aid.startswith(pref) and key not in is_vals:
                 is_vals[key] = v / 1e6
@@ -223,6 +266,19 @@ def _parse(d, annual):
         t1[18] = round(t1[17] - t1[19], 6)
     for k, v in is_vals.items():
         t1[k] = round(v, 6)
+    # items 25-31 (기타포괄손익 ~ 총포괄손익) — see ACCT_OCI comment above.
+    for item, aid in ACCT_OCI.items():
+        v = g(aid)
+        if v is not None:
+            t1[item] = round(v, 6)
+    if 28 not in t1:
+        for fid in ACCT_OCI_28_FALLBACK:
+            v = g(fid)
+            if v is not None:
+                t1[28] = round(v, 6)
+                break
+    for oci_item, val in oci_nm_vals.items():
+        t1.setdefault(oci_item, round(val, 6))
     return t1
 
 

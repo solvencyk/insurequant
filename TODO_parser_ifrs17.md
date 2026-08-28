@@ -1,5 +1,141 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-28 (50th pass) — PL_breakdown 총포괄손익 연장(항목25-31), owner 티켓
+> `inbox/_resolved/20260828T0113Z__owner__MULTI__oci_extension_pl_breakdown.md`(resolved).
+> 2,492셀 신설(356 company-quarter × 7항목), 손실 0 combo-diff 확인. 게이트 룰 2개 신설·
+> 배선·재현 확인. `prepush_check.py` = **gate-clear**(RED=0, K-ICS/domain/DART raw/inbox
+> 전부 clear, offline tests 229 passed/1 skipped, 456.67초·`FULL_COVERAGE_SWEEP=1` 포함).**
+>
+> **① 왜.** 업권 피드백("이자율 헤지 손익이 OCI에 갇혀 당기손익에서 상쇄되지 않는다")을
+> 화면이 확증/반증할 수 있게, PL_breakdown을 당기순이익(24)에서 총포괄손익(31)까지 연장.
+> 항목25 기타포괄손익 · 26 FVOCI채무증권평가손익 · 27 보험계약금융손익(OCI) · 28 위험회피
+> 파생상품평가손익 · 29 FVOCI지분증권평가손익 · 30 재보험금융손익(OCI) · 31 총포괄손익.
+>
+> **② 라벨 census — 정확일치가 뚫린다는 실측을 재확인, account_id 매핑으로 해결.**
+> `scripts/_probes/census_oci_labels_pass{1,2}.py`(36사 × 356 company-quarter 전수,
+> `data/dart/_fs_api_cache/*_OFS.json`의 `sj_div=='CIS'`)로 라벨 census 선행. 삼성생명
+> account_nm이 2023년 `기타포괄손익` → 2024년부터 `법인세비용차감후기타포괄손익`으로 바뀌지만
+> account_id는 `ifrs-full_OtherComprehensiveIncome`로 불변 — account_id를 1차 키로 확정.
+> item28(위험회피)도 회사마다 `현금흐름위험회피파생상품평가손익`(24사) vs
+> `위험회피목적파생상품평가손익`(교보생명 등) 등 계정명 변형 다수, 전부 account_id로 흡수.
+> item26/29(FVOCI 채무/지분증권)는 표준 태그가 애초에 **분리**돼 있다 —
+> `...FinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome`(디폴트=채무, 지분
+> 전용 태그가 따로 있을 때) vs `...GainsLossesFromInvestmentsInEquityInstruments`(지분
+> 전용). 결과: `artifacts/parser/oci_label_census_pass{1,2}.json`(gitignore돼 로컬에만 있음
+> — 재현 명령으로 재생성).
+>
+> **③ 배선 — `scripts/fetch_dart_fs.py`(Tier-1 FS-API 경로) 한 곳.** `_parse()`가 이미
+> `sj_div in ("IS","CIS")` 전체를 account_id 키로 `vals`에 담고 있었으므로(IS만 쓰던 것),
+> `ACCT_OCI`(7개 account_id) + `ACCT_OCI_28_FALLBACK`(교보생명 KR0073가 FY2025.1Q부터
+> 표준 CashFlowHedges 태그 대신 `dart_GainFromDerivativesHeldForHedging`류를 **부호 있는
+> net 값으로 재사용** — raw 실측: 2025.2Q -139,938.33백만, "Gain" 태그인데 손실. 2025.4Q에
+> Losses류 태그가 같이 뜨지만 크기가 Gains류의 0.3%라 우세 태그만 채택, 삼성화재의
+> `...GainsLossesOnHedgingInstrument`(공정가치위험회피, 다른 IFRS9 헤지유형)는 **의도적
+> 제외** — 그 태그가 뜨는 모든 분기에 표준 CashFlowHedges 태그도 같이 있어 폴백이 필요한
+> 적이 0건, 섞으면 개념 오염만 생김) + `OCI_NM_FALLBACK`(무표준계정코드 rows, item26
+> 케이디비/푸본현대/코리안리·item28 흥국화재/KB라이프)를 추가하고 `_parse()` 끝에서
+> `t1[25..31]` 채움. `build_pl_breakdown.py`는 `ITEM_NAMES`에 25-31 추가 + `main()`에
+> `for n in OCI_ITEMS: rows.append(...)` 루프 신설(`v.get(n)` — assemble()이 1-24만
+> 사전초기화하므로 KeyError 방지, HTML fallback/Tier-2는 이 7항목에 관여 안 함).
+> **`값_당분기`는 새 코드 불요** — `build_root_masters.py::build_pl()`이 이미 "모든 PL
+> 항목은 유량"으로 일반화돼 있어(항목번호 하드코딩 없음) YTD-차분으로 자동 생성됨. 실측
+> 확인(삼성화재 KR0008 2024.2Q): DART thstrm_amount(3개월 단독) -181,067.079 = YTD차분
+> 값_당분기와 소수 6자리까지 정확히 일치 — 두 계산 경로가 산수적으로 항상 같다는 사전
+> 검증(2024.3Q도 재확인, -1,113,675.250 일치).
+>
+> **④ 빌드 + combo-diff.** `build_pl_breakdown.py` 전체 재실행 — 이 브랜치 raw는
+> 더 이상 git-purge 상태가 아님(FY2022_Q4~FY2026_Q2 전부 디스크에 실측, 11M~433MB) 확인 후
+> 실행, `data/dart/viz/pl_breakdown_master.json` 8,698→11,190행(+2,492=356×7, 정확히
+> 일치). `build_root_masters.build_pl()` **개별 호출**(`main()`·`build_csm()` 미실행,
+> `scripts/_probes/run_build_pl_only.py`)로 루트 `PL_breakdown.json`도 동일 +2,492.
+> combo-diff(`scripts/_probes/combo_diff_pl_master.py`, cell-key=(코드,항목번호,분기)
+> 전수): 두 마스터 다 **추가 2,492 · 삭제 0 · 항목1-24 변경 0**(byte-identical) — 손실 없음.
+>
+> **⑤ 게이트 룰 2개 신설(owner 티켓 §작업3).**
+>   **룰1 `PL_OCI_TOTAL_IDENTITY`**(항목24+25=31): `validate_master_tables.py::PL_EQS`에
+>   8번째 등식으로 추가(`"총포괄손익 = 당기순이익+기타포괄손익"`) — 기존 `_check_pl_bridge()`
+>   엔진을 그대로 탄다. 전 버킷 시뮬레이션(census pass2, 282개 CIS-보유 셀) 잔차
+>   min=median=p90=max=**0.000** — 반올림조차 없는 정확한 항등식이라 DEFAULT_FLOOR(200백만)
+>   그대로 사용. 실배선 확인: `pl_bridge:2523P/12F/313S/0NEW`(구) →
+>   `2805P/12F/387S/0NEW`(신) — P +282·S +74(항목25/31 결측 셀)·**F 불변(0건 신규 실패)**.
+>   **룰2 `PL_OCI_VS_BS_AOCI`**(항목25 값_당분기 ≈ IFRS17_BS 항목4 QoQ 증감): 룰 작성 **전**
+>   `scripts/_probes/simulate_pl_oci_vs_bs_aoci.py`로 259개 비교가능 셀 전수 시뮬레이션 —
+>   잔차 중앙값·p25=0.000(다수 완전히 닫혀 개념은 유효함을 확인)이지만 p90=13,770백만·
+>   p95=59,067백만·max=5,391,139백만(삼성생명 2025.4Q, 22.8%). 관대한 rel100%+10,000백만
+>   문턱조차 259건 중 2건을 못 닫는다. 최악 30건 중 17건(56.7%, 기저율 25% 대비 과다)이
+>   **4Q(연차) 분기에 쏠림** — 이 저장소에 이미 문서화된 별개 패턴(`build_root_masters.py`
+>   "신계약CSM 당분기가 음수(4Q 연차 재서술 artifact)")과 같은 계열. 재분류조정(FVOCI 매도
+>   시 누계OCI→P&L)·자본거래·법인세가 CIS 당기순액과 BS 잔액 증감을 구조적으로 갈라놓을 수
+>   있다는 게 실제 회계 메커니즘 → **owner 지시대로 RED 아닌 YELLOW**(exit code 미반영)로
+>   배선. 허용오차 = max(20%·|ΔBS|, 2,000백만) — 259건 중 245건(94.6%) 통과, 13건 flag
+>   (실배선 재현치. 시뮬 스크립트의 259/14는 소폭 다른 독립 재구현이라 근사 확인용).
+>   `_check_pl_oci_vs_bs_aoci()` 신설, `data/_derived/pl_oci_vs_bs_aoci_warn.json` 산출.
+>   SUMMARY에 `oci_vs_bs_aoci:13Y` 필드 추가.
+>   **배선 확인**: `scripts/prepush_check.py` L146 `fast` 리스트에
+>   `tests/test_master_tables_golden.py`가 있고 그 골든이 이 두 룰이 낀 SUMMARY 전체를
+>   pin — push마다 실행됨(honor-system 아님). 두 룰 다 `tests/test_identity_registry.py::
+>   REGISTRY`에 등재(룰1=기존 `pl_bridge` 항목 갱신, 룰2=신규 `pl_oci_vs_bs_aoci`,
+>   `kind=HEURISTIC`+`reason`+`tol_from`) — 등재 안 한 모듈 상수는
+>   `test_no_undeclared_threshold_constants`가 실제로 잡아냄(1차 시도에서 FAIL 재현 후
+>   등재해 해결, 무검사 아님을 실측).
+>
+> **⑥ 커버리지/결손(작업2, 결손 목록 — SKIP-on-missing 없음).** 프로덕션
+> `PL_breakdown.json` 기준(2,492셀 중 값 채워짐 1,876=75.3%, 결측 616=24.7%):
+>   item25=282/356 · 26=272/356 · 27=273/356 · 28=273/356 · 29=224/356 · 30=270/356 ·
+>   31=282/356 (populated/전체).
+>   **12개사 = 전 분기 결측**(캐시가 있어도 그 안에 CIS 섹션 자체가 없음 — FS-API 표준
+>   XBRL 미제출, 감사보고서-only): 예별손해(3q)·AIG손해(3q)·악사손해(3q)·신한이지손해(3q)·
+>   라이나생명(3q)·BNP카디프생명(2q)·AIA생명(1q)·메트라이프생명(3q)·하나생명(3q)·
+>   처브라이프생명(3q)·교보라이프플래닛(2q)·IBK연금보험(3q) — 기존
+>   `_GOLD_CELL_OVERRIDE`/도메인 문서의 "12개사 감사보고서-only" 목록과 정확히 겹친다.
+>   **23개사 = 2023.1Q/2Q(IFRS17 첫 시행 분기)만 결측**, 그 외 12-13개 분기는 전항목
+>   정상 — DART XBRL CIS 태깅이 그 시점엔 아직 안 갖춰졌던 것으로 보이는 전사적 패턴(회사
+>   특성 아님). **5개사(흥국화재·삼성화재·에이비엘생명·미래에셋생명·푸본현대생명) = 항목
+>   25/31(총계)은 전분기 있는데 26-30(세부 라인) 태그가 원천에 아예 없음** — 삼성화재는
+>   2025.4Q부터 세부 태그가 생기지만(raw 확인) 그 전(2023.3Q~2025.3Q)은 CIS 총계만
+>   XBRL화됐던 것으로 보임. **KR0150(서울보증)은 결측 0**. **작업2(본문XML fallback)는
+>   미착수** — FS-API 캐시 자체는 필요한 356셀 전부에 이미 있었다(`ofs_cache_missing=0`,
+>   새 다운로드 불필요라는 티켓 전제 확인됨). 캐시 커버리지가 걱정했던 것보다 훨씬 좋아서
+>   (23-24사가 아니라 사실상 24사가 CIS 有, 36사 전체가 356/356 캐시 有) 본문 XML 경로는
+>   "24개 결측 회사분기를 채우는" 좁은 스코프가 아니라 "12개사 전체를 처음부터 감사보고서
+>   XML에서 뽑는" **새 추출 경로**(items 1-24의 HTML-fallback급 작업량)가 필요해
+>   1차에서 캐시분만 반영 — 결손 목록은 위와 같이 명시.
+>
+> **⑦ 골든.** `pl_breakdown_golden.json` `--update`(master_rows 8698→11190,
+> non_null_values 7842→9718, sha256 이동 — 사유: 이번 확장). 재실행 PASS 재확인(239초).
+> `master_tables_golden.json` `--update`(SUMMARY 이동 — pl_bridge P+282/S+74/F±0,
+> oci_vs_bs_aoci 필드 신설 13Y, exit_code 2 불변 — 그 2는 기존 12건 pl_bridge
+> baseline·기존 6건 csm_amort pin 때문으로 이번 변경과 무관, 등재부 그대로).
+> 전체 오프라인 테스트 번들(`prepush_check.py` fast 목록 9개 파일 + `tests/unit/`)
+> 229 passed/1 skipped — 회귀 0.
+>
+> **⑧ 게이트.** `validate_data_contract.py` → `SUMMARY RED=0 YELLOW=92`(49th pass와 동일
+> — 이번 변경으로 새 YELLOW/RED 0). `prepush_check.py`(전체, `FULL_COVERAGE_SWEEP=1`) →
+> `PRE-PUSH VERDICT: gate RED=0 · K-ICS rule gate=clear · domain gates=pass · DART raw
+> 유실=0 · inbox 기계적위반=0 · offline tests=pass → gate-clear`(exit=0, 229 passed/1
+> skipped, 456.67초).
+>
+> **⑨ xlsx.** `sync_master_xlsx_sheet.py "손익분해PL"` cherry-pick — dry-run으로 먼저
+> "변경 셀 0 · 추가 행 2492 · 삭제 행 0" 확인 후 실행, 검증 "손익분해PL 11190행×9열 마스터와
+> 완전 일치, 나머지 시트 값 동일".
+>
+> **⑩ 재현.**
+> ```
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/build_pl_breakdown.py
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/run_build_pl_only.py
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_master_tables.py --no-build
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/sync_master_xlsx_sheet.py "손익분해PL"
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py
+> RUN_PL_GOLDEN=1 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_pl_breakdown_golden.py
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_master_tables_golden.py tests/test_identity_registry.py
+> ```
+> **손대지 않음**: `index.html`·`IFRS17.html`(다른 세션 작업 중, 화면은 designer 소관)·
+> `CSM_waterfall.json`·`NB_CSM_multiple.json`·`IFRS17_BS.json`(읽기만)·`data/_gold/user_
+> {pl,csm}_cells.json`(gold overlay에 25-31 항목 0건 확인, 간섭 없음)·`build_root_masters.
+> main()`(개별 build_pl()만 호출)·브랜치(`fix/csm-product-segmented-columns` 유지).
+>
+
 > **2026-08-26 (49th pass) — 악사손해 2023.4Q RED 1건 마감(48th pass ④의 "원문 결손" 진단을
 > validation 이 뒤집었고 실측이 그것을 확인했다). `prepush_check.py` = gate-clear (RED=0).**
 >

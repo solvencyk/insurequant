@@ -44,6 +44,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 PL_PATH = "PL_breakdown.json"
 PL_SRC_UPSTREAM = "data/dart/viz/pl_breakdown_master.json"   # 참고용(더 이상 검사 대상 아님)
 WF_PATH = "CSM_waterfall.json"
+BS_PATH = "IFRS17_BS.json"   # PL_OCI_VS_BS_AOCI (항목4 기타포괄손익 누계액) 대조용
 
 # 재조준으로 **처음 검사받게 된** 셀에서 드러난 기지(旣知) PL_BRIDGE 실패 등재부.
 # 통째 면제가 아니다 — 건별로 열거하고, 여기 없는 실패가 하나라도 생기면 `pl_new` 가 0 을
@@ -183,6 +184,15 @@ def load_long(path: str) -> dict:
     return idx
 
 
+def load_pl_dangi(path: str, item_no: int) -> dict:
+    """(원수사명, 공시분기) -> 값_당분기 for one 항목번호.  load_long()과 달리 값_당분기를
+    읽는다 — PL_OCI_VS_BS_AOCI가 대조하는 건 누계(YTD)가 아니라 그 분기의 순유량이라서다
+    (BS 항목4는 저량(point-in-time)이므로 QoQ delta 자체가 이미 그 분기의 유량)."""
+    d = json.loads((ROOT / path).read_text(encoding="utf-8"))
+    return {(r["원수사명"], r["공시분기"]): r.get("값_당분기")
+            for r in d if r["항목번호"] == item_no}
+
+
 # ---- PL bridge equations: (label, LHS_key, [(RHS_key, sign), ...]) ----
 # 보험손익은 dual-form(별도 처리): 회사마다 보험손익 = ΣLOB(bare) 또는 ΣLOB+기타영업수익-기타사업비용(adj).
 # 손보(DB/현대/흥국/메리츠 등)는 기타영업수익·기타사업비용이 보험손익 라인 밖(별도 영업비용)이라 bare.
@@ -209,6 +219,16 @@ PL_EQS = [
     ("당기순이익 = 세전-법인세",
      "당기순이익",
      [("세전이익", 1), ("법인세", -1)]),
+    # PL_OCI_TOTAL_IDENTITY (owner 티켓 inbox/parser/20260828T0113Z §작업3 룰1): 항목24+25=31.
+    # 자명해 보이지만 25/31은 각각 SEPARATE 표준계정(ifrs-full_OtherComprehensiveIncome /
+    # ifrs-full_ComprehensiveIncome)에서 독립적으로 뽑히므로, 이 등식은 "24+25로 31을 계산"이
+    # 아니라 "두 태그를 제대로 골랐는지"를 검산한다 — 태그를 잘못 짚으면(예: 총포괄손익 대신
+    # 지배기업귀속총포괄손익을 골랐다면) 여기서 걸린다. 전 버킷 시뮬레이션(scripts/_probes/
+    # census_oci_labels_pass2.py, 282 CIS-보유 셀): 잔차 분포 min=median=p90=max=0.000 —
+    # 반올림조차 없는 정확한 항등식이라 DEFAULT_FLOOR(200백만) 그대로 사용.
+    ("총포괄손익 = 당기순이익+기타포괄손익",
+     "총포괄손익",
+     [("당기순이익", 1), ("기타포괄손익", 1)]),
 ]
 
 # 등식별 abs floor (백만원). 영업이익은 0근처 회사(KDB 등) 과민 방지로 완화.
@@ -811,6 +831,77 @@ def _check_sensitivity() -> tuple[list, list, list]:
     return sens_red, sens_yellow, sens_dir
 
 
+# PL_OCI_VS_BS_AOCI (owner 티켓 inbox/parser/20260828T0113Z §작업3 룰2): PL 항목25(기타포괄손익,
+# 그 분기 순유량) 을 IFRS17_BS.json 항목4(기타포괄손익 누계액, 저량) 의 QoQ 증감과 대조한다.
+# **먼저 전 버킷 시뮬레이션**(scripts/_probes/simulate_pl_oci_vs_bs_aoci.py,
+# artifacts/parser/pl_oci_vs_bs_aoci_simulation.json, 259 비교가능 셀)을 돌려 실제 잔차
+# 분포를 본 뒤 결정했다 — 룰 수정 전 시뮬레이션 필수 원칙(1건 고치려다 129건 깨뜨릴 뻔한 전례).
+#   중앙값·p25 잔차 = 정확히 0.000 (다수 셀이 완전히 닫힘 — 개념 자체는 맞다는 근거).
+#   그런데 p90=13,770백만·p95=59,067백만·max=5,391,139백만(삼성생명 2025.4Q, 22.8%) — 관대한
+#   허용오차(rel100%+10,000백만)조차 259건 중 2건은 못 잡는다. 최악 30건 중 17건(56.7%,
+#   기저율 25% 대비 과다)이 **4Q(연차) 분기에 몰려 있다** — 이 저장소에 이미 같은 패턴이 문서화돼
+#   있다(build_root_masters.py: "신계약CSM 당분기가 음수(4Q 연차 재서술 artifact)"). 재분류조정
+#   (FVOCI 매도 시 OCI→P&L 재분류)·자본거래·법인세 조정이 CIS 당기 순액과 BS 잔액 증감을
+#   갈라놓을 수 있다는 게 회계상 실제 메커니즘이라 **등식이 아니다** — owner 지시대로 RED가
+#   아니라 YELLOW(다운스트림/exit code 미차단)로 배선한다.
+# 허용오차 = max(20%·|ΔBS|, 2,000백만) — 259건 중 245건(94.6%) 통과, 14건 flag.  ledger/baseline
+# 불요: RED 계열(pl_bridge/csm_amort_identity)만 exit code를 막아 "몰래 통과"를 막을 필요가
+# 있고, 이 룰은 처음부터 다운스트림을 막지 않는 진단성 YELLOW라 qoq_warn과 같은 패턴을 쓴다.
+OCI_AOCI_TOL_REL = 0.20
+OCI_AOCI_TOL_ABS_MN = 2000.0
+
+
+def _check_pl_oci_vs_bs_aoci() -> list:
+    """PL_OCI_VS_BS_AOCI: PL 항목25 값_당분기 vs BS 항목4 QoQ delta.  YELLOW만 — exit code
+    미반영.  Prints its own section, writes data/_derived/pl_oci_vs_bs_aoci_warn.json,
+    returns the flagged rows.  New 2026-08-28 (ticket inbox/parser/20260828T0113Z)."""
+    bs_path = ROOT / BS_PATH
+    if not bs_path.exists():
+        print()
+        print("=" * 78)
+        print("6. PL_OCI_VS_BS_AOCI  SKIPPED (IFRS17_BS.json not found)")
+        print("=" * 78)
+        return []
+    bs = load_long(BS_PATH)
+    pl_dangi = load_pl_dangi(PL_PATH, 25)
+    rows = []
+    n_skip = 0
+    for (co, q), dangi in sorted(pl_dangi.items()):
+        if dangi is None:
+            continue
+        cur = bs.get((co, q), {}).get("기타포괄손익누계액")
+        pq = prev_quarter(q)
+        prev = bs.get((co, pq), {}).get("기타포괄손익누계액") if pq else None
+        if cur is None or prev is None:
+            n_skip += 1
+            continue
+        delta_bs = cur - prev
+        resid = delta_bs - dangi
+        tol = max(OCI_AOCI_TOL_REL * abs(delta_bs), OCI_AOCI_TOL_ABS_MN)
+        if abs(resid) > tol:
+            rows.append((co, q, delta_bs, dangi, resid))
+    rows.sort(key=lambda r: -abs(r[4]))
+    print()
+    print("=" * 78)
+    print(f"6. PL_OCI_VS_BS_AOCI (PL 항목25 당분기 vs BS 항목4 QoQ delta, 백만원, YELLOW)  "
+          f"flagged={len(rows)} (비교가능 {len(pl_dangi) - n_skip - len(rows)}건은 tol 이내, "
+          f"BS 결측 skip={n_skip})")
+    print(f"   tol = max({OCI_AOCI_TOL_REL*100:.0f}%·|ΔBS|, {OCI_AOCI_TOL_ABS_MN:.0f}백만) — "
+          f"재분류조정·자본거래·법인세, 특히 4Q 연차재서술로 구조적 잔차 존재(owner 지시: RED 아님)")
+    print("=" * 78)
+    for co, q, dbs, dg, resid in rows[:30]:
+        print(f"  YEL {co:14s} {q}  ΔBS={dbs:>12.1f}  PL당분기={dg:>12.1f}  resid={resid:>+12.1f}")
+    if len(rows) > 30:
+        print(f"  ... +{len(rows) - 30} more")
+    out = ROOT / "data" / "_derived" / "pl_oci_vs_bs_aoci_warn.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(
+        [{"company": c, "quarter": q, "delta_bs_mn": round(dbs, 3), "pl_oci_dangi_mn": round(dg, 3),
+          "residual_mn": round(resid, 3)} for c, q, dbs, dg, resid in rows],
+        ensure_ascii=False, indent=2), encoding="utf-8")
+    return rows
+
+
 def _pl_bridge_baseline() -> dict:
     """기지 PL_BRIDGE 실패 등재부. 없으면 빈 등재부(= 전부 신규로 취급)."""
     p = ROOT / PL_BRIDGE_BASELINE_PATH
@@ -871,6 +962,8 @@ def main() -> int:
 
     sens_red, sens_yellow, sens_dir = _check_sensitivity()
 
+    oci_aoci_rows = _check_pl_oci_vs_bs_aoci()
+
     pb_base, pb_new, pb_stale = _report_pl_baseline(pb_fail)
 
     print()
@@ -891,7 +984,8 @@ def main() -> int:
           f"zero_legs:{len(zleg_rows)} | "
           f"impossible0:{len(zerolegs_rows)} | "
           f"csm_amort_identity:{cc_pass}P/{cc_pinned}PIN/{len(cc_fail)}F/{cc_skip}S | "
-          f"qoq_warn:{len(qoq_rows)}Y | sens:{len(sens_red)}R/{len(sens_yellow)}Y/{len(sens_dir)}dir")
+          f"qoq_warn:{len(qoq_rows)}Y | sens:{len(sens_red)}R/{len(sens_yellow)}Y/{len(sens_dir)}dir | "
+          f"oci_vs_bs_aoci:{len(oci_aoci_rows)}Y")
     print("#" * 78)
     # QOQ/sens_yellow는 YELLOW(anomaly)라 exit code에 반영 안 함. wfy/zamort/zleg/impossible0/sens_red은 데이터 오류라 반영.
     return 0 if not (ci_fail or pb_fail or cc_fail or dup_rows or spike_rows or cont_rows

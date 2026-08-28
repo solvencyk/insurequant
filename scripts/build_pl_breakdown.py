@@ -65,7 +65,14 @@ ITEM_NAMES = {
     15: "기타영업수익", 16: "기타사업비용", 17: "투자손익", 18: "투자이익",
     19: "보험금융손익", 20: "영업이익", 21: "영업외손익", 22: "세전이익",
     23: "법인세", 24: "당기순이익",
+    # 25-31: 총포괄손익 연장 (owner 티켓 inbox/parser/20260828T0113Z). sj_div=='CIS' 기반,
+    # fetch_dart_fs.py::ACCT_OCI/_parse()가 채운다 — Tier-1(FS-API)에서만 오고 HTML fallback·
+    # Tier-2 LOB 분해는 관여하지 않는다.
+    25: "기타포괄손익", 26: "FVOCI 채무증권 평가손익", 27: "보험계약금융손익(OCI)",
+    28: "위험회피 파생상품 평가손익", 29: "FVOCI 지분증권 평가손익",
+    30: "재보험금융손익(OCI)", 31: "총포괄손익",
 }
+OCI_ITEMS = (25, 26, 27, 28, 29, 30, 31)
 
 
 # --------------------------------------------------------------------------- #
@@ -580,6 +587,21 @@ def main():
                     "생손보여부": life_flag, "항목번호": n, "항목명": ITEM_NAMES[n],
                     "공시분기": q,
                     "값": (round(v[n], 6) if isinstance(v[n], float) else v[n]),
+                })
+            # items 25-31 (총포괄손익 연장): only ever come from t1 (FS-API CIS rows) — never
+            # pre-initialized by assemble() the way 1-24 are, so v.get(n) (not v[n]) and an
+            # explicit None row when the filing's CIS section lacks them (audit-only companies,
+            # or the pre-2025.4Q filings that disclose OCI totals but not the sub-line
+            # breakdown, e.g. 삼성화재 2023.3Q-2025.3Q) — an explicit null row keeps the gap
+            # visible to the coverage census instead of silently omitting it (SKIP-on-missing
+            # is forbidden; see artifacts/parser/oci_label_census_pass2.json for the full grid).
+            for n in OCI_ITEMS:
+                val = v.get(n)
+                rows.append({
+                    "원보험사코드": code, "원수사명": name, "티커": None,
+                    "생손보여부": life_flag, "항목번호": n, "항목명": ITEM_NAMES[n],
+                    "공시분기": q,
+                    "값": (round(val, 6) if isinstance(val, float) else val),
                 })
             # extra sub-items for reinsurers with a parallel LOB schema (코리안리 장기재보험
             # 2-1…12-1).  Emitted only when the breakdown reconciled (RC gate not tripped).

@@ -194,15 +194,43 @@ REGISTRY: dict[str, dict] = {
         "mutation": "inline",
     },
     "pl_bridge": {
-        "statement": "PL 손익 다리 7식 + 보험손익 dual-form. 예: 영업이익 == 보험손익 + 투자손익, "
-                     "당기순이익 == 세전이익 − 법인세 (백만원, 부호는 마스터 저장 부호 그대로)",
+        "statement": "PL 손익 다리 8식(2026-08-28: 총포괄손익 == 당기순이익 + 기타포괄손익 "
+                     "추가, ticket inbox/parser/20260828T0113Z) + 보험손익 dual-form. 예: "
+                     "영업이익 == 보험손익 + 투자손익, 당기순이익 == 세전이익 − 법인세 "
+                     "(백만원, 부호는 마스터 저장 부호 그대로)",
         "impl": [("scripts/validate_master_tables.py", "_check_pl_bridge")],
         "kind": "IDENTITY",
         "tol": {"abs": 200.0, "rel": 0.001, "unit": "백만원"},
         "tol_from": [("validate_master_tables", "DEFAULT_FLOOR", 200.0)],
-        "measured": "2,513 통과 / 16 실패(전건 data/_gold/pl_bridge_baseline.json 등재) / 319 skip. "
-                    "0.1% 는 백만원 정수 저장의 반올림 폭.",
+        "measured": "2,805 통과 / 12 실패(전건 data/_gold/pl_bridge_baseline.json 등재) / 387 "
+                    "skip. 0.1% 는 백만원 정수 저장의 반올림 폭. 신설 8번째 식(총포괄손익=24+25)만 "
+                    "따로 보면 282개 CIS-보유 셀 전건 잔차 0.000(scripts/_probes/"
+                    "census_oci_labels_pass2.py) — 반올림조차 없이 정확히 닫힌다.",
         "mutation": "inline",
+    },
+    "pl_oci_vs_bs_aoci": {
+        "statement": "PL 항목25(기타포괄손익) 값_당분기 ≈ IFRS17_BS 항목4(기타포괄손익 누계액) "
+                     "의 QoQ 증감(백만원). owner 티켓 inbox/parser/20260828T0113Z §작업3 룰2.",
+        "impl": [("scripts/validate_master_tables.py", "_check_pl_oci_vs_bs_aoci")],
+        "kind": "HEURISTIC",
+        "tol": {"abs": 2000.0, "rel": 0.20, "unit": "백만원 / 비율(|ΔBS| 기준)"},
+        "tol_from": [("validate_master_tables", "OCI_AOCI_TOL_ABS_MN", 2000.0),
+                     ("validate_master_tables", "OCI_AOCI_TOL_REL", 0.20)],
+        "measured": "scripts/_probes/simulate_pl_oci_vs_bs_aoci.py, 259개 비교가능 셀(양쪽 "
+                    "다 있는 (회사,분기)): 잔차 중앙값·p25 = 정확히 0.000(다수가 완전히 닫힘 — "
+                    "개념 자체는 맞다는 근거) 이지만 p90=13,770백만·p95=59,067백만·"
+                    "max=5,391,139백만(삼성생명 2025.4Q, 상대 22.8%). rel100%+abs10,000백만 "
+                    "관대한 문턱에서도 259건 중 2건은 못 닫힌다. 최악 30건 중 17건(56.7%, "
+                    "기저율 25% 대비 과다)이 4Q(연차) 분기에 몰려 있다 — 실제 배선(20%/2,000백만) "
+                    "기준 259건 중 13건 flag(94.6% 통과). 결과: artifacts/parser/"
+                    "pl_oci_vs_bs_aoci_simulation.json.",
+        "reason": "등식이 아니다 — 재분류조정(FVOCI 매도 시 누계 OCI가 P&L로 이동)·자본거래·"
+                  "법인세 조정이 그 분기 CIS 순유량과 BS 잔액 QoQ 증감을 회계상 구조적으로 "
+                  "갈라놓을 수 있다. 4Q 쏠림은 이 저장소에 이미 문서화된 별개 패턴(build_root_"
+                  "masters.py: '신계약CSM 당분기가 음수(4Q 연차 재서술 artifact)')과 같은 계열 "
+                  "— 4Q 연차보고서가 계리적 가정 개정 등을 자본에 직접 반영하는 사례. owner "
+                  "지시대로 RED 아닌 YELLOW(다운스트림/exit code 미차단)로 배선했다.",
+        "mutation": "tests/test_master_tables_golden.py",
     },
     "dividend_payout": {
         "statement": "배당성향 == 배당총액 / 당기순이익 × 100 (DART 공시 배당성향 대조)",

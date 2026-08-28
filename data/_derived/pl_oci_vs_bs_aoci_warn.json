@@ -1,0 +1,93 @@
+[
+  {
+    "company": "삼성생명보험",
+    "quarter": "2025.4Q",
+    "delta_bs_mn": 23622471.0,
+    "pl_oci_dangi_mn": 18231332.0,
+    "residual_mn": 5391139.0
+  },
+  {
+    "company": "교보생명보험",
+    "quarter": "2023.4Q",
+    "delta_bs_mn": -520626.885,
+    "pl_oci_dangi_mn": -390281.455,
+    "residual_mn": -130345.429
+  },
+  {
+    "company": "KB손해보험",
+    "quarter": "2024.4Q",
+    "delta_bs_mn": -114456.0,
+    "pl_oci_dangi_mn": -191813.0,
+    "residual_mn": 77357.0
+  },
+  {
+    "company": "롯데손해보험",
+    "quarter": "2024.4Q",
+    "delta_bs_mn": 5759.881,
+    "pl_oci_dangi_mn": -68794.259,
+    "residual_mn": 74554.14
+  },
+  {
+    "company": "에이비엘생명보험",
+    "quarter": "2023.4Q",
+    "delta_bs_mn": -96058.957,
+    "pl_oci_dangi_mn": -24600.353,
+    "residual_mn": -71458.604
+  },
+  {
+    "company": "KB라이프생명",
+    "quarter": "2024.4Q",
+    "delta_bs_mn": 117423.0,
+    "pl_oci_dangi_mn": 185340.0,
+    "residual_mn": -67917.0
+  },
+  {
+    "company": "흥국생명보험",
+    "quarter": "2025.4Q",
+    "delta_bs_mn": 75078.24,
+    "pl_oci_dangi_mn": 134145.294,
+    "residual_mn": -59067.055
+  },
+  {
+    "company": "삼성화재해상보험",
+    "quarter": "2025.1Q",
+    "delta_bs_mn": -61268.044,
+    "pl_oci_dangi_mn": -21063.449,
+    "residual_mn": -40204.595
+  },
+  {
+    "company": "NH농협손해보험",
+    "quarter": "2024.4Q",
+    "delta_bs_mn": -92274.845,
+    "pl_oci_dangi_mn": -132463.729,
+    "residual_mn": 40188.884
+  },
+  {
+    "company": "농협생명보험",
+    "quarter": "2025.4Q",
+    "delta_bs_mn": 78869.235,
+    "pl_oci_dangi_mn": 110420.077,
+    "residual_mn": -31550.842
+  },
+  {
+    "company": "흥국화재",
+    "quarter": "2024.3Q",
+    "delta_bs_mn": -27284.0,
+    "pl_oci_dangi_mn": -55747.0,
+    "residual_mn": 28463.0
+  },
+  {
+    "company": "에이비엘생명보험",
+    "quarter": "2024.4Q",
+    "delta_bs_mn": -40244.62,
+    "pl_oci_dangi_mn": -17285.265,
+    "residual_mn": -22959.355
+  },
+  {
+    "company": "푸본현대생명보험",
+    "quarter": "2025.1Q",
+    "delta_bs_mn": -45878.792,
+    "pl_oci_dangi_mn": -57861.035,
+    "residual_mn": 11982.243
+  }
+]
