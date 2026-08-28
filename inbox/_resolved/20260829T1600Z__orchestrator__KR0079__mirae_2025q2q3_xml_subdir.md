@@ -362,4 +362,4 @@ tables.py`는 항상 `--no-build`. xlsx는 `sync_master_xlsx_sheet.py`로만 편
 status: resolved (2026.1Q 채움 완료 + 2025.4Q 미채움 사유 규명, 두 dormant 스크립트는
 orchestrator가 별도 판단하기로 확정돼 이 티켓 범위에서 완전히 빠짐 — 자기완결).
 
-커밋: `2477b04`, `94533e3` (이전), (다음 커밋에 기록)
+커밋: `2477b04`, `94533e3` (이전), `1b958d7`

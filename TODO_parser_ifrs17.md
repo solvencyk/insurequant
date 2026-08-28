@@ -54,7 +54,7 @@
 > `mirae_2025q4_investigate.py`·`mirae_2025q4_dump_candidates.py`·
 > `mirae_2026q1_apply_patch.py`·`mirae_2026q1_diff_census.py`·
 > `mirae_all_quarters_final_audit.py`) + 이 티켓(→`_resolved/`)·`TODO_parser_ifrs17.md`.
-> 커밋 해시: (다음 커밋에 기록)
+> 커밋 해시: `1b958d7`
 >
 > status: resolved.
 
