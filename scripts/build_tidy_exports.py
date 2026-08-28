@@ -119,16 +119,22 @@ for c in hist.get("companies", []):
                             "값": num(v / 100) if v is not None else None})
 
 # === 2) CSM_amortization =====================================================
+# 공시분기 = per-company as-of (from build_panel's _period_asof_from_rcept, keyed off
+# each company's own best-filing rcept_no) — NOT am.get("period"), which is a panel-wide
+# constant ("annual (filings skim)") that used to land in every one of the 390 rows
+# unchanged, hiding which disclosure quarter each company's schedule actually came from
+# (orchestrator 20260829T0200Z). fy_to_q(None) is a safe no-op (returns None), so a
+# company whose rcept_no couldn't be parsed gets 공시분기=null rather than a guessed value.
 am = L("data/dart/viz/csm_amort_schedule.json")
-am_period = fy_to_q(am.get("period")) or am.get("period")
 am_rows = []
 for c in am.get("companies", []):
     nm = c.get("company")
     b = base(nm)
     yearly = (c.get("yearly") or {})
+    period = fy_to_q(c.get("period")) or c.get("period")
     for yr in range(1, 11):
         v = yearly.get(f"y{yr}")
-        am_rows.append({**b, "공시분기": am_period, "경과차년": yr, "상각액": num(v)})
+        am_rows.append({**b, "공시분기": period, "경과차년": yr, "상각액": num(v)})
 
 # === 3) PL_breakdown (17 items, 보험손익 breakdown.xlsx gold structure) =======
 ni = L("data/dart/viz/net_income_breakdown.json")

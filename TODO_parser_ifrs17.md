@@ -1,5 +1,77 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-28/29 (59th pass) — `CSM_amortization.json` 공시분기 placeholder 수정: 39개사
+> per-company as-of 채움 (orchestrator 티켓 `inbox/parser/20260829T0200Z__orchestrator__
+> MULTI__csm_amort_asof_placeholder.md`, status: answered — as_of 컬럼 미추가 판단 +
+> public_exports/ 후속조치는 orchestrator/owner 재확인 필요).** `공시분기`가 390행 전부
+> `'annual (filings skim)'` 상수였던 것을 실제 값으로 채움.
+>
+> **① 원인 = 2단.** `viz_build_ifrs17_panels.py`의 `build_panel()`이 상각 패널 회사별
+> 엔트리에 `period`/`as_of`를 안 붙이고 있었고(민감도 패널만 `add_as_of=True`), 그마저
+> `build_tidy_exports.py`가 패널 **전체**의 상수 필드(`am.get("period")`)를 읽어 390행에
+> 그대로 박고 있었다. 회사별 `rcept_no`는 이미 있었다(39개사 전부) — 파이프라인 중간에서
+> 안 쓰고 있었을 뿐.
+>
+> **② `add_as_of`와 `apply_overrides`를 분리해 `_period_asof_from_rcept()` 재사용, 재구현
+> 안 함.** 기존 `add_as_of` 하나를 상각 패널에도 그냥 켰다면 민감도 전용 FY2025 override
+> 치환 분기(`_sensitivity_overrides()`, 18개사)가 같이 발동해 override 대상사의
+> `buckets`/`yearly`가 시나리오 stub으로 통째 치환될 뻔했다(값 유실 사고). `apply_overrides`
+> 신설로 상각 패널은 override 없이 순수 `_period_asof_from_rcept()`만 타도록 분리 —
+> 민감도 패널 호출 경로는 인자만 늘고 동작 불변(3개 무관 패널 파일 `cmp` 바이트동일 확인).
+>
+> **③ 실측 as-of 분포 = 39/39 동일(`period="FY2025"`, `as_of="2025-12-31"`).** 전 39개사
+> `rcept_no`가 2026년 3-4월 접수 FY2025 사업보고서라 이질성 없음 — 티켓의 "실측 정정"과
+> 일치. status(34ok/4empty/1partial) 불변.
+>
+> **④ 부수 발견 — 삼성생명(KR0069) 상각액 10개 경과차년 값이 같이 교정됨.** 티켓이 요구한
+> `build_tidy_exports.py --only amort` 재생성의 기계적 부산물. 원인: 패널
+> (`csm_amort_schedule.json`)은 2026-08-26 `150661e`/`8c1666b`("viz 결함 3종"·"PL을 별도
+> 기준으로")로 이미 갱신됐는데 tidy export(`CSM_amortization.json`)는 그보다 앞선 `0c04537`
+> 이후 재생성된 적이 없어 **내가 손대기 전부터 이미 낡아 있었다**. 원본 추출 소스는 그
+> 기간 무변경(원문 정정 아님, 추출 로직 수정) — 확인 후 반영, 별도로 값을 손대지 않음.
+>
+> **⑤ as_of 컬럼은 지금 추가 안 함 — 제안 사유는 티켓 `## 답변` ③.** 핵심 요지: `as_of`와
+> `공시분기` 둘 다 같은 `rcept_no`를 같은 함수로 도출해 정보량이 중복(공시분기 수정만으로
+> "어느 분기인지 모른다"는 원 불만 해소), 이 워크북 12개 시트에 `as_of` 전례 0건. 필요해지면
+> 패널엔 이미 `as_of`가 있어 `build_tidy_exports.py` 한 줄+`TEXT_COLS` 등록으로 되돌리기 쉬움.
+>
+> **⑥ 화면 = Panel 4 무영향, xlsx는 바뀜, public_exports/는 후속 필요.** IFRS17.html
+> `#canvasAmort`는 `csm_amort_schedule.json`을 직접 fetch하고 `.period`/`.as_of`를 읽는
+> 코드가 없다(grep 0건) — 차트·캡션 불변. `insurequant_master_tables.xlsx`의 `CSM상각`
+> 시트는 공시분기 열이 실제값으로 바뀜(owner 리뷰 루프에서 유일하게 보이는 변화).
+> `public_exports/CSM상각.json`(다운로드 팝업)은 커밋된 `CSM_amortization.json`을
+> `export_public_sheets.py`로 재실행해야 반영 — `public_exports/`는 이 티켓 범위 밖이라
+> 안 건드림, designer/publishing 후속 요청. 부수 확인: 그 스크립트가 2026-08-28에 넣은
+> `_QUARTER_RE` 가드 때문에 `public_exports/manifest.json`의 CSM상각 `quarter_min/max`가
+> 현재 둘 다 null — 재실행되면 처음으로 채워짐.
+>
+> **⑦ 골든 + 신설 지문 게이트 둘 다 재생성.** `tests/test_viz_ifrs17_panels_golden.py`
+> `--update`(drift가 `csm_amort_schedule.json` 하나에만 격리됨, companies/status_counts
+> 불변 확인). 세션 도중 코디네이터가 알려온 신설 게이트
+> `scripts/validate_golden_input_fingerprints.py`(`0ebb0ca`, 로직은 validation 소관이라
+> 안 건드림)도 `--update` — 실행 전 다른 5개 spec(ifrs17_bs/pl_breakdown/
+> viz_csm_waterfall/dividend/post_transition) 입력·코드·산출 전부 clean 확인(공유
+> 워크트리에서 남의 in-flight 상태를 지문에 박제하지 않기 위해), 갱신 후 그 5개는
+> byte-identical·`viz_ifrs17_panels`만 변경 확인. 재실행 `RED=0 → clear`.
+>
+> **⑧ 회귀 확인.** `validate_master_tables.py --no-build` exit 2는 무관(RED=2가
+> `SENSITIVITY_UNIT_SANITY` 절 — 그 스크립트는 `CSM_amortization`/`csm_amort_schedule`를
+> grep 0건, 아예 안 읽음, 세션 이전부터 있던 상태). `validate_live_artifacts.py` RED=0(STALE
+> BASELINE 1건은 무관 파일 `csm_waterfall_history.json`). 오프라인 pytest 전체 스위트:
+> **468 passed/2 skipped/1 failed(571.58s)** — 그 1 fail은 archive된
+> `test_equity_composition_golden.py`(fixture 파일 자체가 없는 FileNotFoundError,
+> 2026-08-14 아카이브 모듈, 내 변경과 무관 — 종전 세션에도 "아카이브 모듈" fail로
+> 기록된 동일 패턴).
+>
+> **커밋**: `scripts/viz_build_ifrs17_panels.py`·`scripts/build_tidy_exports.py`·
+> `data/dart/viz/csm_amort_schedule.json`·`CSM_amortization.json`·`tests/fixtures/
+> viz_ifrs17_panels_golden.json`·`tests/fixtures/builder_input_fingerprints.json`·
+> `insurequant_master_tables.xlsx`·이 티켓·`TODO_parser_ifrs17.md`.
+> 커밋 해시: (COMMIT_HASH_PLACEHOLDER)
+>
+> status: answered (③ as_of 미추가 판단 + ⑥ public_exports/ 후속조치는 orchestrator/owner
+> 재확인 필요 — 자기완결 아님).
+
 > **2026-08-28 (58th pass) — NH농협손해(KR0032) 재보험 예실차(item11) 채움, 11/11 분기
 > (orchestrator 티켓 `inbox/parser/20260828T1900Z__orchestrator__KR0032__
 > reinsurance_yesilcha_item11.md`, status: answered — 부호는 새 파생이라 재확인 요청).**

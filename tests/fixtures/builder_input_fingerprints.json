@@ -138,11 +138,11 @@
     "CSM_waterfall.json": 1,
     "data/dart/viz/sensitivity_overrides.json": 1
    },
-   "code_sha256": "755bead4413c8e62901288458a36d986f297b964e903ab360b3671d2f04c3fdf",
+   "code_sha256": "313c4a75f0437bc033581419ee27e984c2157b652b74f8d9c8f73506a1b9d22b",
    "code_files": [
     "scripts/viz_build_ifrs17_panels.py"
    ],
-   "fixture_sha256": "77fe516ff76cd912c9134432b8d20f14221ce3a1ebdfc041a0df2f641202f973",
+   "fixture_sha256": "383e9449bab9a18c3fb5bc906bd2e35dae0b8122e7ac60302b3c4011321f902e",
    "outputs": {
     "files / bs_snapshot.json / sha256": {
      "path": "data/dart/viz/bs_snapshot.json",
@@ -151,8 +151,8 @@
     },
     "files / csm_amort_schedule.json / sha256": {
      "path": "data/dart/viz/csm_amort_schedule.json",
-     "fixture_sha256": "9f20d2890de1bcb09a0c99a1b105c3c441291f4985eaf3e7ae8ddccb8dfd32db",
-     "ondisk_sha256": "9f20d2890de1bcb09a0c99a1b105c3c441291f4985eaf3e7ae8ddccb8dfd32db"
+     "fixture_sha256": "aece0ccb3908243103710c85731bfa3eb36190d94325d2a6048810a83bf33c9e",
+     "ondisk_sha256": "aece0ccb3908243103710c85731bfa3eb36190d94325d2a6048810a83bf33c9e"
     },
     "files / insurance_pl_breakdown.json / sha256": {
      "path": "data/dart/viz/insurance_pl_breakdown.json",

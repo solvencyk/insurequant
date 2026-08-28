@@ -1514,7 +1514,9 @@ def _sensitivity_overrides() -> dict:
     return {k: v for k, v in d.items() if isinstance(v, dict) and not k.startswith("_")}
 
 
-def build_panel(glob_pat: str, extractor, add_as_of: bool = False) -> dict:
+def build_panel(
+    glob_pat: str, extractor, add_as_of: bool = False, apply_overrides: bool = False,
+) -> dict:
     # Per company, pick the BEST filing — a refreshed FY2025 extract (rcept 2026…)
     # supersedes the prior FY2024 one (rcept 2025…), BUT only when it actually yields
     # data: rank by (status: ok>partial>empty, then latest rcept), so an empty FY2025
@@ -1539,7 +1541,11 @@ def build_panel(glob_pat: str, extractor, add_as_of: bool = False) -> dict:
                 best_key, best_entry = key, {"company": company, "rcept_no": rcept, **panel}
         if best_entry is not None:
             if add_as_of:
-                ov = _sensitivity_overrides().get(company)
+                # apply_overrides is sensitivity-only: the override payload is
+                # scenario-shaped (table_kind=sensitivity_analysis), so applying it to a
+                # non-sensitivity panel (e.g. amort schedule) would replace that company's
+                # real buckets/yearly with unrelated stub data (orchestrator 20260829T0200Z).
+                ov = _sensitivity_overrides().get(company) if apply_overrides else None
                 if ov:
                     best_entry = {
                         "company": company, "rcept_no": ov.get("rcept_no"),
@@ -1571,9 +1577,15 @@ def main() -> None:
     }
 
     for fname, (pat, fn) in outputs.items():
-        # period/as_of enrichment is for the sensitivity heatmap (designer 20260616T0030Z);
-        # the other panels keep their existing shape.
-        payload = build_panel(pat, fn, add_as_of=(fname == "sensitivity_heatmap.json"))
+        # period/as_of enrichment: sensitivity heatmap (designer 20260616T0030Z) gets it
+        # WITH the FY2025 verified-override substitution; csm_amort_schedule (orchestrator
+        # 20260829T0200Z — 공시분기 downstream was a constant "annual (filings skim)"
+        # placeholder that hid per-company as-of heterogeneity) gets it WITHOUT the
+        # override (see build_panel's apply_overrides docstring). The other two panels
+        # keep their existing shape.
+        add_as_of = fname in ("sensitivity_heatmap.json", "csm_amort_schedule.json")
+        apply_overrides = fname == "sensitivity_heatmap.json"
+        payload = build_panel(pat, fn, add_as_of=add_as_of, apply_overrides=apply_overrides)
         out_path = OUT / fname
         out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
