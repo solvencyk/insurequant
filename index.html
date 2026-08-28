@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <!-- CSP: defense-in-depth, meta-delivered (GitHub Pages static — no HTTP headers). Must stay first in <head>, before CDN tags. frame-ancestors/report-uri are ignored in meta CSP. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>InsureQuant — 보험사 마켓맵</title>
   <meta name="description" content="국내 보험사 K-ICS·IFRS17 현황 한눈에 — 지급여력 마켓맵, CSM 버블맵, 신계약 배수 (분기 공시 기반)"/>
@@ -1369,7 +1369,8 @@
   </script>
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
     자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">2026.1Q</span>)<br/>
-    본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
+    본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant<br/>
+    <button id="downloadMasterBtn" type="button" class="iq-btn-ghost" style="width:auto;padding:6px 14px;margin-top:10px;font-size:12px">⬇ 마스터 데이터 다운로드</button>
   </footer>
 <script>
 (function(){
@@ -1381,5 +1382,9 @@
   else observe();
 })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" integrity="sha384-+mbV2IY1Zk/X1p/nWllGySJSUN8uMs+gUAN10Or95UBH0fpj6GfKgPmgC5EXieXG" crossorigin="anonymous"></script>
+<script src="forms-config.js"></script>
+<script src="download-survey.js"></script>
+<script src="report-widget.js"></script>
 </body>
 </html>
