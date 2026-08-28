@@ -1,5 +1,81 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-29 (61st pass) — 미래에셋생명(KR0079) 2026.2Q item6(원수 예실차) 채움 (예실차
+> 3사 시리즈 마지막). item11(재보험)은 조건부 보류 유지.** 티켓
+> `inbox/parser/20260828T2300Z__orchestrator__KR0079__mirae_yesilcha_implement.md`,
+> 선행 조사 `inbox/_resolved/20260828T2110Z`.
+>
+> **① 열 선택 리스크(이 티켓의 핵심) — 직접 셀 검증으로 해소.** 조사가 발생 4종을
+> "LIC열만"으로 잡은 것이 NH의 owner 지적 함정과 같은 형태인지 확인 요구받음. 2026.2Q
+> 원문 셀(표3, line 43595)을 직접 읽어 손실요소외 열이 **5개 상품 전부 리터럴 `0`**(대시
+> 아님, 진짜 공시된 0)임을 확인 — NH는 손실요소외=138(작지만 0 아님)이라 LIC-only가
+> 정답과 138 어긋났지만, 미래에셋은 손실요소외≡0이라 LIC-only(340,773.783421)와
+> NH식 정답(합계−손실요소배분=340,773.783421)이 **소수점까지 완전히 동일**. 두 후보
+> 모두 보고: item6 = 322,653.643456 − 340,773.783421 = **△18,120.139965백만원**.
+>
+> **② 경계 규칙 대조.** 표3 손실요소열 합(−3,603,229,273원) = 표2 손실요소배분액행 합
+> (−3,603,229,273원) — 원 단위까지 정확히 일치(NH는 11개 분기 중 10개만 일치, 미래에셋은
+> 이 분기 한정이지만 정확 일치). Tier-1 별도 `일반보험서비스수익` 594,378,172,139원과도
+> 3중 대사(표2 7성분 합 = 표3 보험수익 lump = Tier-1) 전부 원 단위 일치, 전부 직접 재도출
+> (조사 수치 재사용 아님).
+>
+> **③ 분기 스코프 — 8개 분기 전부 구조적으로 직접 검증.** 2023.2Q~2025.1Q(8개 분기 전부,
+> 그냥 라벨 검색이 아니라 `_iter_tables_with_context`로 실제 테이블 구조 파싱) — 전부
+> OLD 포맷(개별 5개 상품표, 전환유형별 컬럼, "해당 기간 동안 발생한 보험서비스비용 관련"
+> 이라는 다른 라벨) 확인, **예상측 7성분 분해 자체가 원천에 없음**(라벨만 다른 게 아니라
+> 구조가 없음) → 미추출, 스킵이 올바른 판단임을 재확인. 2025.4Q·2026.1Q(기존 docstring의
+> "Era 2")도 시도했으나 발생측 표는 찾아도 예상측 표의 정확한 라벨이 없어 **게이트가
+> 스스로 기권**(코드가 `None` 반환, 값 미기입) — 후속 확장 여지로 TODO 하단에 기록.
+>
+> **④ item11 재보험 — 보류 유지 + 부분 실마리 하나 발견(미해결).** 조사와 동일하게
+> Tier-1 `출재보험서비스수익`(19,415.252999) 대사가 안 닫힘. 추가로 확인한 것: 같은
+> 18-2 롤포워드의 "재보험자에게 지급된 보험료 배분액에서 생기는 비용" 행 합이 Tier-1
+> `출재보험서비스비용`(17,468.241529)과 **원 단위로 정확히 일치** — 이 노트가 대사되는
+> 것 자체는 확인했으나 item11이 필요로 하는 "출재보험서비스수익" 쪽 매칭은 못 찾음.
+> item11 = `0` 유지, 코드에도 미배선(추측 방지).
+>
+> **⑤ gold override 없음.** `data/_gold/user_pl_cells.json` KR0079 grep 0건 확인 — ABL
+> 함정(override가 item6=0 가정으로 계산돼 있던 것) 재발 없음.
+>
+> **⑥ 구현 = `_ma_yesilcha_direct`(companies.py), 이중 population-check 게이트.** OFS(별도)
+> 테이블만 사용(`_prefer_ofs`, 기존 basis-tagging 인프라 재사용 — 연결이 문서상 먼저 나와
+> naive "첫 매치" 채택이면 연결값이 섞였을 함정), 예상측·발생측 각각 5-product 헤더로
+> 구분(배당여부별 2-category 자매표와 구분), **내부 대사(표2 7성분=표3 보험수익 lump) +
+> Tier-1 별도 앵커 대사 둘 다 통과해야만** item6을 채움 — 어느 한쪽만 실패해도 조용히
+> `None`(기존 0 유지). `parse_filing`→`assemble()` 실제 프로덕션 dispatch로 종단 검증
+> (재현: `scripts/_probes/mirae_parse_filing_test.py`), item4/5/9/10 완전 불변 확인.
+>
+> **⑦ 반영.** `pl_breakdown_master.json` 2셀(item6/item7) 서지컬 패치 →
+> `build_root_masters.build_pl()`(개별함수, `main()` 아님) → 전후 전수 diff: 변경 2셀
+> 전부 KR0079, 나머지 11544행 완전 불변(0건 drift) → `sync_master_xlsx_sheet.py
+> "손익분해PL"` 4셀 동기화, 자체검증 OK. 골든 `--update`(sha256_master만 이동,
+> coverage/rows/company_quarters/non_null_values 불변) + 신설 지문 게이트
+> `validate_golden_input_fingerprints.py --update`(RED 2→0, 다른 5개 spec 무변화 확인
+> 후 실행 — 공유트리 동시작업 오염 없음).
+>
+> **⑧ 전수 감사.** 항목32=356셀 · KR0083 2024.3Q item27=△265,226.94(≈△2,652억) ·
+> KR0032 2026.2Q item6=△10,243(△102억)/item11=+4,724(+47억) · KR0070 item6
+> 2024.4Q=+586(5.9억)/2025.1Q=△3,591(△35.9억) — 전부 생존 확인. 356개 (사,분기)
+> 전수 폐쇄식(item3=4+5+6+7, item8=9+10+11+12) 스캔: **7건 미달**(KR0072 4건·KR0087
+> 3건, 전부 1백만원 미만 반올림 잔차) — pre-session 스냅샷에서 동일 값으로 이미 존재
+> 확인(내 세션 무관, KR0079와 무관, 별도 회사). validate_master_tables.py --no-build
+> exit 2 · RED 2건(`SENSITIVITY_UNIT_SANITY`, 라이나생명·카카오페이손해 — 민감도
+> 도메인, PL_breakdown과 무관, pre-existing). 오프라인 pytest 200 passed/1 skipped
+> (deploy_assets·rule_coverage_manifest·identity_tautology·viz golden 2종·dividend
+> golden·master_tables golden·tests/unit·push_gate_wiring 전부 통과).
+>
+> **커밋**: `PL_breakdown.json`·`data/dart/viz/pl_breakdown_master.json`·
+> `insurequant_master_tables.xlsx`·`scripts/pl_breakdown/companies.py`·
+> `tests/fixtures/{pl_breakdown_golden,builder_input_fingerprints}.json`·신설 probe 8개
+> (`scripts/_probes/mirae_{item6_extract_test,parse_filing_test,apply_patch,run_build_pl,
+> diff_census,final_audit,basis_check,yesilcha_{quarter_scan,structure_dump}}.py`) +
+> 기존 미커밋 `mirae_yesilcha_survey.py`(조사 티켓 산출물) · 이 티켓 · `TODO_parser_
+> ifrs17.md`.
+>
+> **후속 과제(이 티켓 범위 밖, 신규 티켓 필요)**: (a) item11 — 출재보험서비스수익 대사
+> 원인 규명, (b) 2025.4Q/2026.1Q — 예상측 표의 정확한 라벨 확인해 게이트 확장 여지,
+> (c) 2025.2Q/2025.3Q raw가 zip만 있고 xml 미추출이라 이번 스코프 확인 대상에서 제외.
+
 > **2026-08-29 (60th pass) — ABL생명(KR0070) 2024.4Q·2025.1Q item6(원수 예실차) 채움,
 > 저장소 유일 RED(`PL_YTD_COLLAPSE_TO_ZERO`) 해소 (orchestrator 티켓 `inbox/parser/
 > 20260829T1100Z__orchestrator__KR0070__fill_2024q4_2025q1_yesilcha.md`, status: answered —

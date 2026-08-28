@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20260828T2300Z
-status: open
+status: answered
 route: reparse
 company: KR0079
 period: MULTI
@@ -75,3 +75,143 @@ KR0032 2026.2Q  item6  △102억  · item7  △797억
 원문: `data/dart/FY2026_Q2/raw/KR0079_미래에셋생명/20260814004054.xml`
 
 ## 답변 (recipient 작성 — 처리 후)
+
+**item6 채움 완료(2026.2Q, △18,120.139965백만원). item11은 보류 유지.**
+
+### 1) 발생 측 열 선택 — 두 후보값과 판정
+
+원문(표3, `18-1` 노트의 "(상품별 구분)" LRC/LIC 롤포워드, line 43595)의 "발생한 보험금 및
+기타 보험서비스비용" 행을 상품별로 직접 읽었다(사망/건강/연금/저축/기타 5개, 각 [손실요소외,
+손실요소, 발생사고부채(LIC)] 3열):
+
+```
+사망 [0, -1,134,621,956, 110,949,258,119]   건강 [0, -545,158,716, 197,519,146,131]
+연금 [0, -2,331,931,453, 20,930,241,501]    저축 [0, 408,746,574, 11,294,746,958]
+기타 [0, -263,722, 80,390,712]
+```
+
+**LRC_손실요소외 열은 5개 상품 전부 리터럴 `0`이다(대시 "-"가 아니라 원문에 그대로 찍힌
+0 — 파싱 결측이 아니라 진짜 공시값).** NH는 이 열이 138(작지만 0이 아님)이라 LIC열
+단독이 정답과 138만큼 어긋났는데, 미래에셋은 이 열이 진짜 0이라 NH 원리를 그대로 적용해도
+같은 숫자가 나온다.
+
+- **후보 A (LIC열 단독)**: 110,949,258,119+197,519,146,131+20,930,241,501+11,294,746,958
+  +80,390,712 = **340,773,783,421원**
+- **후보 B (NH식 — 합계열에서 손실요소배분을 되돌린 값)**: 전체 열 합(337,170,554,148)
+  − 손실요소열 합(−3,603,229,273) = **340,773,783,421원**
+
+**두 값이 소수점까지 완전히 동일하다(차이 0.000000).** 후보 A가 우연히 맞은 게 아니라
+손실요소외≡0이라는 구조적 이유로 두 공식이 대수적으로 같아지기 때문이다(A = LIC,
+B = 전체합−손실요소 = (손실요소외+손실요소+LIC)−손실요소 = 손실요소외+LIC = 0+LIC = A).
+표2(예상측, line 48560)의 예상 4종 = 322,653,643,456원. **item6 = 322,653.643456 −
+340,773.783421 = △18,120.139965백만원.**
+
+### 2) 경계 규칙 대조
+
+노트의 손실요소배분액(표2, 7성분 중 하나) 합 = −3,603,229,273원. 표3 롤포워드의 손실요소열
+합도 **−3,603,229,273원 — 원 단위까지 정확히 일치**(부호도 동일, NH와 같은 방향). NH는
+11개 분기 중 10개만 정확 일치(2025.2Q만 반올림 1백만 차)했는데, 이번엔 이 분기 단독이지만
+완전 일치다. population 3중 대사(표2 7성분 합 = 표3 보험수익 lump 절대값 = Tier-1 별도
+`일반보험서비스수익` 594,378,172,139원)도 전부 원 단위로 직접 재도출해 확인했다(조사 티켓
+수치를 베끼지 않고 raw XML에서 직접 재추출).
+
+### 3) 분기 스코프 — 2023.2Q~2025.1Q 8개 분기 전부 구조 직접 확인
+
+`_iter_tables_with_context`로 실제 테이블 구조를 파싱해(라벨 grep이 아니라) 8개 분기
+(2023.2Q/3Q/4Q, 2024.1Q/2Q/3Q/4Q, 2025.1Q) 전부 확인했다. 전부 **동일한 OLD 포맷**: 상품별
+개별표 5개(단위 백만원), "보험료배분접근법 외 보험계약" 헤더, 예상측이 표2 같은 7성분
+분해가 아니라 **단일 lump 행("보험수익")**뿐이다. LRC/LIC 4열 구조(손실요소외·손실요소·
+발생사고부채·합계) 자체는 OLD 포맷에도 있지만(2024.1Q 직접 확인), 예상측 분해 노트가
+아예 없어서 item6을 계산할 분자가 없다 — 라벨 변형이 아니라 구조 부재다. **8/8 분기 전부
+미추출이 맞다.**
+
+기존 docstring의 "Era 2"(2025.2Q/3Q, 2026.1Q)도 확인했다: 2026.1Q는 발생측 표(표3 상당)는
+찾았지만 예상측 표의 정확한 행 라벨이 2026.2Q와 다르다(또는 부재) — 구현한 게이트가 스스로
+`None`을 반환해 미채움으로 남았다(2025.4Q도 동일 패턴). 2025.2Q/2025.3Q는 raw가 zip만
+있고 xml이 아직 추출 안 돼 있어 확인 자체가 불가 — 이번 스코프 밖으로 보고만 한다.
+
+### 4) item11 — 보류 유지, 이유
+
+조사와 동일 결과 재확인: Tier-1 별도 `출재보험서비스수익`(19,415.252999백만원)이 표2'
+(재보험비용의 변동내역, 예상4종 −12,754.036173 / 6성분 합 −8,039.830817) 어느 쪽과도
+안 닫힌다. 추가로 확인한 것 하나 — 같은 18-2 롤포워드(line 49079)의 "재보험자에게 지급된
+보험료 배분액에서 생기는 비용" 행 합이 Tier-1 `출재보험서비스비용`(17,468,241,529원)과
+**원 단위로 정확히 일치**한다. 이 노트가 Tier-1과 대사 가능하다는 증거는 하나 늘었지만,
+item11이 필요로 하는 "수익" 쪽 매칭은 이번에도 못 찾았다. **item11은 `0`으로 유지, 코드에도
+미배선**(추측 방지 — 반대 원리 대사로 값을 만들어내지 않았다).
+
+### 5) gold override 확인
+
+`data/_gold/user_pl_cells.json`에 `KR0079` grep 0건. ABL에서 있었던 함정(override가
+item6=0 가정으로 계산돼 있던 것)은 재발하지 않는다.
+
+### 6) 구현
+
+`scripts/pl_breakdown/companies.py`에 `_ma_yesilcha_direct` + 헬퍼 3개 신설, `extract_
+tier2_miraeasset`의 Era-2 분기 끝에서 호출. **이중 population-check 게이트**(내부: 표2
+7성분 합=표3 보험수익 lump / 외부: 표2 7성분 합=Tier-1 별도 `일반보험서비스수익`) 둘 다
+통과해야 item6을 채운다 — 어느 한쪽만 실패해도 조용히 기존 동작(0/미기입) 유지. 기존
+basis-tagging 인프라(`_prefer_ofs`)로 별도(OFS)만 검색해 연결(CFS)이 문서상 먼저 나와도
+안 섞인다(직접 확인: 연결 쪽엔 같은 라벨이 line 20392/20632에 별도로 존재, 별도 게이트
+없이 "첫 매치"를 썼다면 연결값이 섞였을 것). `parse_filing`→`assemble()` 실제 프로덕션
+dispatch로 종단 검증(재현: `scripts/_probes/mirae_parse_filing_test.py`), item4/5/9/10
+완전 불변 확인.
+
+전 분기 게이트 재현(재현 명령, offline, raw XML만 읽음, 마스터 미수정):
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/mirae_item6_extract_test.py
+```
+2026.2Q만 GATE=PASS, 나머지 전부 "table not found"(안전하게 기권).
+
+### 7) 반영
+
+`data/dart/viz/pl_breakdown_master.json` 2셀(item6: 0→−18120.139965, item7:
+−95601.079834→−77480.939869) 서지컬 패치(백업: `.bak_20260829_mirae_yesilcha`) →
+`build_root_masters.build_pl()`(개별함수, `main()` 미실행) → 전후 전수 diff
+(`scripts/_probes/mirae_diff_census.py`): 변경 정확히 2셀, 전부 KR0079/2026.2Q, 11544행
+완전 불변(0건 drift, 회사코드 census로 확인) → `sync_master_xlsx_sheet.py "손익분해PL"`
+4셀(값+값_당분기 × item6/7) 동기화, "11546행×9열 마스터와 완전 일치" 자체검증 통과.
+
+골든: `tests/test_pl_breakdown_golden.py --update`(빌더 재실행 없음 — 디스크 현재 산출물
+해싱만, git-purge 브랜치라 전체 재실행 회피는 KR0032 선례와 동일 근거) — sha256_master만
+이동, sha256_coverage/master_rows(11546)/company_quarters(356)/coverage_rows(426)/
+non_null_values(9994) 전부 불변. 신설 지문 게이트 `validate_golden_input_fingerprints.py
+--update`(로직 미수정 — validation 소관, 데이터 갱신만): 실행 전 RED=2
+(CODE_MOVED+FIXTURE_MOVED, pl_breakdown만) 확인 → `--update` 후 RED=0, 다른 5개 spec
+byte-identical(공유트리 오염 없음 확인).
+
+### 8) 전수 항등식 감사
+
+```
+항목32 356셀                                                          — 생존 ✓
+KR0083 2024.3Q item27 = -265,226.939791 (≈ △2,652억)                  — 생존 ✓
+KR0032 2026.2Q item6 = -10,243.0 (△102억) / item11 = 4,724.0 (+47억)  — 생존 ✓
+KR0070 item6 2024.4Q = 586.0 (5.9억) / 2025.1Q = -3,591.0 (△35.9억)   — 생존 ✓
+```
+
+**항목별 폐쇄식**: 356개 (회사,분기) 전수로 item3=4+5+6+7·item8=9+10+11+12를 스캔했다
+(`scripts/_probes/mirae_final_audit.py`). **7건 미달**(KR0072 4개 분기·KR0087 2개
+분기×각1~2건, 전부 1백만원 미만 반올림 잔차)을 발견했는데, **내 세션 시작 전 스냅샷에도
+동일한 값으로 이미 존재**함을 직접 대조 확인했다(`build_pl()` 실행 직전 저장한 root
+`PL_breakdown.json` 스냅샷과 비교) — KR0079/내 패치와 무관, 별도 회사, pre-existing.
+"깨짐 0"이 아니라 "깨짐 7건, 전부 사전 존재 확인·내 변경과 무관"이 정확한 보고다.
+
+부수 확인: `validate_master_tables.py --no-build` exit 2, RED 2건 —
+`SENSITIVITY_UNIT_SANITY`(라이나생명·카카오페이손해, 민감도 축, PL_breakdown과 무관,
+pre-existing). 오프라인 pytest: `test_deploy_assets`·`test_rule_coverage_manifest`·
+`test_identity_tautology`·viz golden 2종·`test_dividend_golden`(34 passed) +
+`tests/unit/`+`test_push_gate_wiring`(164 passed, 1 skipped) +
+`test_master_tables_golden`(1 passed) = **총 199 passed, 1 skipped, 0 failed**.
+
+### 하지 않은 것 (확인)
+
+`index.html`·`IFRS17.html` 미수정. 브랜치 `fix/csm-product-segmented-columns` 그대로.
+`git push`·`git add -A` 없음. `build_root_masters.py`의 `main()` 미실행(`build_pl()`
+개별함수만). `validate_master_tables.py`는 항상 `--no-build`. xlsx는 `sync_master_xlsx_
+sheet.py`로만 편집(openpyxl 재저장 없음). item4/5/9/10/item11 미터치.
+
+status: answered (item6은 이중 population-check로 자기완결 수준 확신이나, item11 보류·
+2025.4Q/2026.1Q 미확장·KR0072/KR0087 pre-existing 잔차 3건을 orchestrator가 재확인해주기
+바란다.)
+
+커밋: (아래 기록)
