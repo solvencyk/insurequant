@@ -1,5 +1,43 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-29 (68th pass) — 67th pass 골든 드리프트 후속: A/B로 무죄 입증 + KR0070 반올림
+> 반영 + KR0079 되돌림.** 코디네이터가 `RUN_PL_GOLDEN=1 pytest`로 non_null_values
+> 10006→10007 드리프트를 잡아 67th pass 패치를 의심했다. **A/B 재현(패치 있음/없음 각각
+> 전체 rebuild)으로 무죄 확정**: 67th pass의 3함수(KR0005/KR1000/KR0032 전용)를 빼고
+> 돌려도 정확히 같은 6셀 드리프트가 난다 — 원인은 완전히 다른 회사(KR0070 에이비엘·
+> KR0079 미래에셋)의 사전존재 드리프트였다.
+>
+> **KR0070(에이비엘) 5셀**: `round(committed,6)==fresh` 로 수학적 동일값(반올림 잔재만) —
+> gold-overlay(`data/_gold/user_pl_cells.json`) 충돌 0건 확인 후 반영(master+root+xlsx,
+> combo-diff LOST/NEW 0·diff 정확히 4건 — item7 2개는 gold override가 이미 덮어써서 root엔
+> 무영향).
+>
+> **KR0079(미래에셋) 2025.4Q item6**: `_ma_yesilcha_direct` 직접 계측으로 메커니즘 완전
+> 규명 — `_ma_find_product_table`의 line_no 동점처리가 "관계종속기업투자주식" 표(예실차
+> 노트 아님, line_no=65535 센티널)를 잘못 고름 → check A(rev_lump=None) self-abort →
+> None(1b958d7 결론과 일치, 회귀 아님) → **그런데 `assemble()`의 기존 owner 2026-06-08
+> 규칙("미공시 시 item6=0, 잔차는 item7로")이 이 None을 자동으로 0.0으로 바꿈**(item7은
+> 이미 이 값으로 커밋돼 있었음 — item6만 나중에 손으로 None 복구된 흔적, override 기록
+> 없음). `validate_data_contract.py` 재실행하니 **`RED [PL_breakdown]
+> PL_YTD_COLLAPSE_TO_ZERO 미래에셋생명보험 2025.4Q`**(직전분기 -2,353.8 → 정확히 0.0,
+> "재빌드 결손 의심") — 이 RED가 옳다고 판단(농협/교보/동양과 달리 KR0079는 다른 분기
+> 전부 실값을 뽑는 회사라 이 점프가 진짜 이상함) → **되돌림**. `_additive_merge`의 "fresh
+> None이면 기존 값 유지" 안전장치 때문에 마스터만 되돌려선 루트에 안 먹혀 루트도 직접
+> 패치. `build_pl_breakdown.py::assemble()` line 172 부근에 전말을 주석으로 남김(코드
+> 미수정 — 다음 전체 재빌드는 여전히 0.0을 재생산함, 근본수정은 `_ma_find_product_table`
+> 후속 티켓 필요).
+>
+> **게이트**: `validate_golden_input_fingerprints.py` RED=0(6스펙 전부 ok, --update 2회 —
+> KR0070 반영 시 1회 + `assemble()` 주석 추가로 code hash 재이동 시 1회) ·
+> `validate_data_contract.py` RED=0 YELLOW=92(베이스라인과 동일, 신규 YELLOW 0) ·
+> `pytest tests/`(heavy golden 2종 제외) 484 passed. `RUN_PL_GOLDEN=1` 무거운 골든은
+> KR0079 근본미수정 때문에 여전히 non_null_values 1건 드리프트로 FAIL — push 훅 안 걸림
+> (95초, 알려진 상태로 코드주석 기록).
+>
+> 상세·재현 명령 전부 `inbox/parser/20260829T2330Z` 답변 追記. status: answered.
+>
+> 커밋: (다음 커밋에 기록)
+
 > **2026-08-29 (67th pass) — 빈칸압축 지뢰 근접-미스 3건 제거(66th pass census 후속).**
 > `inbox/parser/20260829T2330Z`(orchestrator 발주, status: answered). 66th pass census가
 > 확정한 미수정 근접-미스 3건을 참조 구현(위치보존 raw 인덱싱) 그대로 복사해 제거:

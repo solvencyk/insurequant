@@ -172,6 +172,23 @@ def assemble(t1, t2, is_life):
     elif v[3] is not None and v[4] is not None and v[5] is not None and v[6] is None:
         v[6] = 0.0
         v[7] = v[3] - v[4] - v[5]
+    # KNOWN GAP (2026-08-29, inbox/parser/20260829T2330Z follow-up): this branch fires for
+    # 미래에셋생명(KR0079) 2025.4Q too -- _ma_yesilcha_direct's dual population-check gate
+    # self-aborts that quarter (wrong candidate table: 3 raw XMLs share a caption prefix and
+    # _ma_find_product_table's line_no tie-break picks an unrelated "관계종속기업투자주식"
+    # note over the real "18-1" note; verified live via direct instrumentation), so item6
+    # lands here as None -> this elif turns it into 0.0.  BUT the data-contract gate's
+    # PL_YTD_COLLAPSE_TO_ZERO rule correctly flags that as suspicious FOR THIS CELL SPECIFICALLY:
+    # unlike 농협/교보/동양 (which never disclose the split, so 0.0 is a consistent constant),
+    # KR0079 DOES disclose it most quarters (2025.2Q/3Q, 2026.1Q/2Q all resolve to real nonzero
+    # 예실차 via this same function) -- so a lone quarter reading exactly 0.0 mid-series looks
+    # like a rebuild dropping real data, not a genuine "not disclosed" fact.  Root cause is a
+    # find-the-right-table bug in _ma_find_product_table, not a value bug in this fallback.
+    # Per the RED, 2025.4Q's committed cell is kept at None (gold-overlay-free, no
+    # _GOLD_CELL_OVERRIDE entry -- this comment IS the only record) even though a fresh rebuild
+    # will deterministically regenerate 0.0 here every time; do not silence the RED without
+    # fixing _ma_find_product_table's table selection, or an explicit owner call that 0.0 is
+    # actually fine for this one quarter.
     # item 12 (residual) = 8 − (9+10+11)
     if v[8] is not None and None not in (v[9], v[10], v[11]):
         v[12] = v[8] - (v[9] + v[10] + v[11])
