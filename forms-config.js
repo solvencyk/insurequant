@@ -4,7 +4,7 @@
 // 아직 실제 URL을 안 넣어서 PLACEHOLDER — 이 값을 바꾸기 전까지 제출은 콘솔에 로그만
 // 남기고 조용히 실패합니다(방문자에게는 정상 제출된 것처럼 보임 — 다운로드는 그대로 동작).
 window.IQ_FORMS = {
-  action: "PLACEHOLDER_APPS_SCRIPT_EXEC_URL"
+  action: "https://script.google.com/macros/s/AKfycbzbJTCqusPZ-8i0CRuFhYxkbyrrxLyZQiV6DmuTeBK1eXtfTpyQF2F4b5Idjwf20Muw/exec"
 };
 
 window.IQ_FORMS.isConfigured = function () {
