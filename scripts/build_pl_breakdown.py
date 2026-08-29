@@ -87,8 +87,27 @@ OCI_ITEMS = (25, 26, 27, 28, 29, 30, 31, 32)
 # --------------------------------------------------------------------------- #
 # Assembly of the 24-item vector
 # --------------------------------------------------------------------------- #
-def assemble(t1, t2, is_life):
-    """Merge tier1 + tier2 and derive the identity items. Returns {item_no: value|None}."""
+# Items whose "not extracted" is turned into a disclosed 0 by the owner rule of 2026-06-08
+# ("미공시 시 0표시"): item6 원수 예실차 and item11 재보험 예실차.  See ZERO_FILL note below.
+ZERO_FILL_ITEMS = frozenset({6, 11})
+
+
+def assemble(t1, t2, is_life, zero_fill_ok=None):
+    """Merge tier1 + tier2 and derive the identity items. Returns {item_no: value|None}.
+
+    `zero_fill_ok` -- item numbers for which the owner's 2026-06-08 "미공시 시 0표시" rule may
+    fire.  `None` (default) means "all of them", i.e. the pre-2026-08-30 behaviour; callers
+    that know the company's whole time series pass the narrowed set (see main()).
+
+    WHY this parameter exists (owner decision 2026-08-30, option 1 of the three proposed in
+    inbox/parser/20260830T0000Z): the 0-fill branches below cannot tell "this company never
+    discloses this item" from "this one quarter's extraction failed" -- both arrive as
+    `v[n] is None`.  A single row proves they are different: 미래에셋생명 2025.4Q had item11
+    correctly 0 (no extraction is wired for it at all) and item6 wrongly 0 (the 예실차 note's
+    only 별도-basis rendering in that filing's raw XML is corrupted) at the same time.  A lone
+    0.0 wedged into a series of real values reads as a disclosed fact and is not.  That case
+    class showed up four times, and `PL_YTD_COLLAPSE_TO_ZERO` caught it only after the fact.
+    """
     v = {n: None for n in range(1, 25)}
     if t1:
         for k, val in t1.items():
@@ -169,7 +188,8 @@ def assemble(t1, t2, is_life):
     # 농협·미래에셋·교보·동양): the 원수손익 subtotal & CSM상각/RA ARE disclosed, so the combined
     # residual (item3 − 4 − 5) is the unsplittable 예실차+기타.  Owner decision 2026-06-08: push
     # it into 기타(item7) and show 예실차 as 0 — do NOT fabricate a 예실차 number.
-    elif v[3] is not None and v[4] is not None and v[5] is not None and v[6] is None:
+    elif v[3] is not None and v[4] is not None and v[5] is not None and v[6] is None \
+            and (zero_fill_ok is None or 6 in zero_fill_ok):
         v[6] = 0.0
         v[7] = v[3] - v[4] - v[5]
     # RESOLVED (2026-08-30, inbox/parser/20260830T0000Z; was a KNOWN GAP as of 2026-08-29,
@@ -197,7 +217,8 @@ def assemble(t1, t2, is_life):
     # item 12 (residual) = 8 − (9+10+11)
     if v[8] is not None and None not in (v[9], v[10], v[11]):
         v[12] = v[8] - (v[9] + v[10] + v[11])
-    elif v[8] is not None and v[9] is not None and v[10] is not None and v[11] is None:
+    elif v[8] is not None and v[9] is not None and v[10] is not None and v[11] is None \
+            and (zero_fill_ok is None or 11 in zero_fill_ok):
         v[11] = 0.0
         v[12] = v[8] - v[9] - v[10]
     # item 2 (생명장기 손익) = 3 + 8
@@ -597,26 +618,12 @@ _GOLD_CELL_OVERRIDE = {
     # 분기는 items 2-14가 이미 전부 non-null(Tier-2 RC 게이트 기존 통과, 이 override 이전에도
     # True)이므로 이 대입은 상태를 바꾸지 않는 no-op — 순수 OCI 항목 3개만 영향받는다.
     ("KR0083", "2024.3Q"): {27: -265226.939791, 28: -5322.135208, 30: -536.616012},
-    # 미래에셋(KR0079) 2025.4Q item6 -- divergent use of this loop (like KR0083 above:
-    # FORCING a null, not filling a gap).  `_ma_find_product_table`'s unresolvable-tie fix
-    # (2026-08-30, inbox/parser/20260830T0000Z) makes it correctly self-abort to None THIS
-    # quarter -- the 예실차 note's only 별도(OFS)-basis rendering in the raw DART XML is
-    # itself corrupted (row values shifted vs. its intact 연결(CFS)-basis twin, which
-    # `_prefer_ofs` rightly excludes; see that function's docstring) -- but the elif right
-    # above this dict (v[3]/v[4]/v[5] populated, v[6] is None -> 0-fill) does not distinguish
-    # THAT from 농협/교보/동양's every-quarter non-disclosure and 0-fills it anyway, exactly
-    # like it did before the tie-break fix (same 0.0, different route to it).  Unlike those
-    # 3 companies, KR0079's OWN pipeline resolves item6 to a real nonzero number in
-    # 2025.2Q/2025.3Q/2026.1Q/2026.2Q, so a lone 0.0 wedged between them reads as dropped
-    # data, not a fact -- validate_data_contract.py's PL_YTD_COLLAPSE_TO_ZERO agreed
-    # (2026-08-29/edb6b77: 직전분기 -2,353.8 -> 0.0, flagged and reverted by hand on disk).
-    # This entry makes that same call inside the deterministic build instead of a silent
-    # post-build JSON patch, so `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py`
-    # reproduces the committed None instead of drifting back to 0.0 every rebuild.  NOT a
-    # change to the elif's general rule -- that rule is still correct for every
-    # always-never-disclosed company; see this ticket's `assemble()`-rule review for the
-    # proposal to make the elif itself tell the two cases apart.
-    ("KR0079", "2025.4Q"): {6: None},
+    # 미래에셋(KR0079) 2025.4Q item6 은 여기 있던 `{6: None}` 박제로 버티고 있었는데,
+    # owner 가 2026-08-30 에 option 1 을 승인하면서 구조적으로 해결돼 **지웠다** — 이제
+    # assemble() 의 0-fill 억제가 그 칸을 스스로 None 으로 남긴다(이 회사는 2025.2Q·3Q·
+    # 2026.1Q·2Q 에서 item6 을 실제로 뽑는다). 박제를 남겨두면 그 규칙이 나중에 회귀해도
+    # 이 한 칸만은 계속 옳아 보여서 아무도 모른다 — 오늘 gold 오버레이 축에서 확인한 바로
+    # 그 false-green 형태다. 근거·raw 증거는 inbox/parser/20260830T0000Z 참조.
 }
 
 
@@ -626,6 +633,12 @@ def main():
     rows = []
     coverage = []  # (code, name, quarter, status, missing_items)
     oci32_prov = []  # item32 catch-all provenance: which account_id fed each (code, quarter)
+    # (code, quarter, item) whose null is a DELIBERATE judgement, not a missing source:
+    # the owner's 0-fill was suppressed because this company extracts the item for real in
+    # some other quarter (option 1, 2026-08-30).  build_root_masters._additive_merge must
+    # not resurrect the previously committed 0 over these -- it cannot tell the two kinds of
+    # null apart from the value alone, so the builder states which ones it meant.
+    intentional_nulls = []
     t1_src = {"api": 0, "html": 0}
 
     for code in sorted(filings):
@@ -634,6 +647,18 @@ def main():
             # unknown code (not in disclosure) — derive name from dir, skip 생손보
             name = code
         is_life = (life_flag == "생명보험")
+        # Two passes over this company's quarters (owner decision 2026-08-30, option 1).
+        # Pass A parses every quarter once and asks assemble() with the 0-fill switched off
+        # entirely: whatever comes back non-None for items 6/11 was genuinely EXTRACTED.
+        # Pass B then allows the 0-fill only for the items this company never extracts in
+        # ANY quarter -- 농협/교보/동양 keep their 0 exactly as before, while a company that
+        # normally reports the item keeps a null for the quarter whose source broke, instead
+        # of a 0 that reads as a disclosed fact.  Parsing (the expensive part: parse_filing +
+        # the FS API) happens once and is reused; the second assemble() call is pure dict
+        # arithmetic.  This is the "분기간 대조를 assemble() 안으로 당기기" option -- it moves
+        # the judgement PL_YTD_COLLAPSE_TO_ZERO already makes after the fact to before the
+        # value is written, so a rebuild reproduces it instead of drifting back to 0.0.
+        parsed = {}
         for q in sorted(filings[code], key=_quarter_sort_key):
             dirs = filings[code][q]
             has_xml = any(_xmls_in(d) for d in dirs)
@@ -641,13 +666,26 @@ def main():
             t1_api = _fs_tier1(name, q, code)          # Tier-1 from DART FS API (primary)
             t1 = t1_api if t1_api else t1_html         # HTML extractor = fallback only
             t1_src["api" if t1_api else "html"] += 1 if t1 is not None else 0
+            parsed[q] = (t1, t2, has_xml)
+        ever_extracted = set()
+        for q, (t1, t2, _hx) in parsed.items():
+            if t1 is None and t2 is None:
+                continue
+            probe = assemble(t1, t2, is_life, zero_fill_ok=frozenset())
+            for _n in ZERO_FILL_ITEMS:
+                if probe[_n] is not None:
+                    ever_extracted.add(_n)
+        zero_fill_ok = ZERO_FILL_ITEMS - ever_extracted
+
+        for q in sorted(parsed, key=_quarter_sort_key):
+            t1, t2, has_xml = parsed[q]
             if t1 is None and t2 is None:
                 # distinguish a download/extraction gap (only document.zip on disk) from a
                 # genuine statement-format mismatch (XML present but no 포괄손익계산서 matched)
                 st = "no_income_statement" if has_xml else "raw_not_extracted"
                 coverage.append((code, name, q, st, list(range(1, 25)), "none"))
                 continue
-            v = assemble(t1, t2, is_life)
+            v = assemble(t1, t2, is_life, zero_fill_ok=zero_fill_ok)
             ov = _GOLD_CELL_OVERRIDE.get((code, q))   # FS-API-absent owner-provided cell
             if ov:
                 for _k, _val in ov.items():
@@ -694,6 +732,19 @@ def main():
                         "항목명": ex["항목명"], "공시분기": q,
                         "값": (round(val, 6) if isinstance(val, float) else val),
                     })
+            # items 7/12 are the residuals of 6/11 (7 = 3-4-5-6, 12 = 8-9-10-11); when the
+            # 0-fill is suppressed they are unknowable too, and that null is equally deliberate.
+            # Record ONLY the nulls the suppression itself created -- i.e. the exact
+            # precondition of the 0-fill elif (its three inputs present, the item absent).
+            # A blanket "item is null" test would also cover cells that are null because
+            # their source is simply not on disk right now, and turning OFF the additive
+            # fallback for those is precisely the cell-loss bug that merge exists to prevent.
+            for _n, _dep, _pre in ((6, 7, (3, 4, 5)), (11, 12, (8, 9, 10))):
+                if (_n in ever_extracted and v[_n] is None
+                        and all(v[_p] is not None for _p in _pre)):
+                    intentional_nulls.append([code, q, _n])
+                    if v[_dep] is None:
+                        intentional_nulls.append([code, q, _dep])
             missing = [n for n in range(1, 25) if v[n] is None]
             if not missing:
                 status = "ok"
@@ -726,6 +777,18 @@ def main():
     prov_path = Path("data/_derived/pl_oci_item32_provenance.json")
     prov_path.parent.mkdir(parents=True, exist_ok=True)
     prov_path.write_text(json.dumps(oci32_prov, ensure_ascii=False, indent=1), encoding="utf-8")
+    nulls_path = Path("data/_derived/pl_intentional_nulls.json")
+    nulls_path.parent.mkdir(parents=True, exist_ok=True)
+    nulls_path.write_text(json.dumps(
+        {"_what": "0-fill 을 일부러 건너뛴 칸 (owner 결정 2026-08-30, option 1). "
+                  "이 회사가 다른 분기에서는 이 항목을 실제로 뽑으므로, 이번 분기의 0 은 "
+                  "공시된 사실이 아니라 유실이다. build_root_masters._additive_merge 가 "
+                  "예전 0 을 되살리지 못하게 하는 목록.",
+         "_items": {"6": "원수 예실차", "7": "기타 생명장기 원수손익(6의 잔차)",
+                    "11": "재보험 예실차", "12": "기타 생명장기 재보험손익(11의 잔차)"},
+         "cells": intentional_nulls}, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"intentional nulls (0-fill suppressed): {len(intentional_nulls)} cells "
+          f"-> {nulls_path}")
     print(f"item32 provenance: {len(oci32_prov)} company-quarters -> {prov_path}")
     return rows, coverage
 

@@ -70,7 +70,22 @@ def _flow_dangi(ytd_by_q, q):
     return None if prev is None else round(cur - prev, 6)
 
 
-def _additive_merge(fresh_rows, existing_path):
+# 의도적 null 목록 — build_pl_breakdown.py 가 쓴다. 없으면 빈 집합(구 동작 그대로).
+PL_INTENTIONAL_NULLS = ROOT / "data" / "_derived" / "pl_intentional_nulls.json"
+
+
+def _intentional_null_keys(path):
+    """(코드, 항목번호, 분기) 집합. `_additive_merge` 의 폴백을 이 칸에서만 끈다."""
+    if not path.exists():
+        return set()
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return set()
+    return {(c, int(i), q) for c, q, i in doc.get("cells", [])}
+
+
+def _additive_merge(fresh_rows, existing_path, keep_null=()):
     """Union-merge fresh SRC rows with whatever's already at existing_path (the root master
     being overwritten), keyed by (원보험사코드, 항목번호, 공시분기): fresh's non-null 값 wins;
     where fresh is missing a key entirely, or has it with 값=None, fall back to the value
@@ -79,7 +94,13 @@ def _additive_merge(fresh_rows, existing_path):
     one-off accident (inbox/parser/20260814T1637Z: 61 cells / 1,475 rows of PL_breakdown.json
     lost this exact way, restored by hand in 79b1f7d; this is the root-cause fix that commit
     left open). Call this FIRST, before any derived-field logic (_zero_other_expense etc.)
-    needs the complete picture, not just what fresh alone can currently reproduce."""
+    needs the complete picture, not just what fresh alone can currently reproduce.
+
+    `keep_null` -- keys whose null the BUILDER MEANT (owner option 1, 2026-08-30: the 0-fill
+    for 예실차 was deliberately suppressed because the company extracts that item for real in
+    other quarters).  Without this the fallback above resurrects the previously committed 0
+    and the decision is silently undone on every rebuild -- the two kinds of null are
+    indistinguishable by value, so the producer has to say which it meant."""
     if not existing_path.exists():
         return fresh_rows
     try:
@@ -91,7 +112,8 @@ def _additive_merge(fresh_rows, existing_path):
     merged = []
     for key, r in fresh_by_key.items():
         e = existing_by_key.get(key)
-        if r.get("값") is None and e is not None and e.get("값") is not None:
+        if r.get("값") is None and e is not None and e.get("값") is not None \
+                and key not in keep_null:
             r = {**r, "값": e["값"]}
         merged.append(r)
     for key, e in existing_by_key.items():
@@ -162,7 +184,9 @@ def _apply_pl_overrides(rows):
 
 def build_pl():
     rows = json.loads(PL_SRC.read_text(encoding="utf-8"))
-    rows = _additive_merge(rows, PL_OUT)
+    keep_null = _intentional_null_keys(PL_INTENTIONAL_NULLS)
+    rows = _additive_merge(rows, PL_OUT, keep_null=keep_null)
+    print(f"  pl 의도적 null (0-fill 억제): {len(keep_null)} cells — 폴백을 끈다")
     rows = _zero_other_expense(rows)
     rows = _apply_pl_overrides(rows)
     # YTD by (code, item) -> {quarter: 값}

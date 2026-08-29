@@ -1388,6 +1388,10 @@
   "status": "no_income_statement",
   "missing": [
    1,
+   6,
+   7,
+   11,
+   12,
    13,
    14,
    15,
@@ -1409,6 +1413,10 @@
   "quarter": "2023.3Q",
   "status": "partial",
   "missing": [
+   6,
+   7,
+   11,
+   12,
    13,
    14
   ],
@@ -2299,6 +2307,8 @@
   "quarter": "2023.1Q",
   "status": "partial",
   "missing": [
+   6,
+   7,
    9,
    10,
    11,
@@ -2316,6 +2326,8 @@
   "quarter": "2023.2Q",
   "status": "partial",
   "missing": [
+   6,
+   7,
    9,
    10,
    11,
@@ -2333,6 +2345,10 @@
   "quarter": "2023.3Q",
   "status": "partial",
   "missing": [
+   6,
+   7,
+   11,
+   12,
    16
   ],
   "tier2": "ok"
@@ -2343,6 +2359,10 @@
   "quarter": "2023.4Q",
   "status": "partial",
   "missing": [
+   6,
+   7,
+   11,
+   12,
    16
   ],
   "tier2": "ok"
@@ -2563,8 +2583,11 @@
   "code": "KR0071",
   "name": "흥국생명보험",
   "quarter": "2026.1Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   11,
+   12
+  ],
   "tier2": "ok"
  },
  {
@@ -2784,6 +2807,8 @@
   "quarter": "2023.3Q",
   "status": "partial",
   "missing": [
+   6,
+   7,
    9,
    10,
    11,
@@ -2827,16 +2852,22 @@
   "code": "KR0073",
   "name": "교보생명보험",
   "quarter": "2024.4Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
   "code": "KR0073",
   "name": "교보생명보험",
   "quarter": "2025.1Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
@@ -2859,16 +2890,22 @@
   "code": "KR0073",
   "name": "교보생명보험",
   "quarter": "2025.4Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
   "code": "KR0073",
   "name": "교보생명보험",
   "quarter": "2026.1Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
@@ -3367,56 +3404,77 @@
   "code": "KR0079",
   "name": "미래에셋생명보험",
   "quarter": "2023.3Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
   "code": "KR0079",
   "name": "미래에셋생명보험",
   "quarter": "2023.4Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
   "code": "KR0079",
   "name": "미래에셋생명보험",
   "quarter": "2024.1Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
   "code": "KR0079",
   "name": "미래에셋생명보험",
   "quarter": "2024.2Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
   "code": "KR0079",
   "name": "미래에셋생명보험",
   "quarter": "2024.3Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
   "code": "KR0079",
   "name": "미래에셋생명보험",
   "quarter": "2024.4Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
   "code": "KR0079",
   "name": "미래에셋생명보험",
   "quarter": "2025.1Q",
-  "status": "ok",
-  "missing": [],
+  "status": "partial",
+  "missing": [
+   6,
+   7
+  ],
   "tier2": "ok"
  },
  {
@@ -3441,7 +3499,8 @@
   "quarter": "2025.4Q",
   "status": "partial",
   "missing": [
-   6
+   6,
+   7
   ],
   "tier2": "ok"
  },
