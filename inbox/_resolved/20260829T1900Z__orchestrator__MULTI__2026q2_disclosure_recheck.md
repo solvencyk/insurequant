@@ -2,7 +2,7 @@
 from: orchestrator
 to: downloader
 created: 20260829T1900Z
-status: answered
+status: resolved
 route: refetch
 company: MULTI
 period: 2026.2Q
@@ -135,3 +135,11 @@ parser raw-ready: **`inbox/parser/20260829T2130Z`**(요약표
 `download_disclosure_2026q2_nonlife.py <KR>` → `verify_q2_disclosure_content.py`.
 코리안리 사이트 복구 여부도 같이 확인. **posted 인 회사는 XPath 가 행 인덱스면 텍스트
 앵커로 바꾼 뒤 받을 것**(하나손보에서 실제로 발동한 함정).
+
+### 재확인 (orchestrator, 2026-08-30)
+
+`scripts/_probes/census_q2_disclosure_listings.py` 재실행 — **결과 불변: posted 1 (하나손해),
+not_posted 17, unreachable 1 (코리안리, 사이트 여전히 다운).** 생보 일괄페이지도 2분기열 0/22.
+주말이라 예상대로다. 이 티켓의 질문("39사 전수 재확인")은 답을 받았으므로 **resolved** 하고,
+다음 확인(8/31 월)은 루트 `TODO.md` 에 상시 항목으로 옮긴다 — 반복 점검을 inbox 스레드로
+들고 있으면 매 세션 미결로 다시 읽힌다.

@@ -1,11 +1,37 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-30 (gold 오버레이 축 배선 — CHECK 6, 마스크 115칸 박제) · Stage 3/5 — validation
+> Last updated: 2026-08-30 (public_exports 축 배선 + wiring 테스트의 <script src> 사각 해소) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-30 c) 사용자가 내려받는 `public_exports/` 12개 파일을 어떤 검사기도 읽지 않았다 — 배선했다. 그리고 그 사각을 잡았어야 할 테스트 자신이 못 보고 있었다.**
+
+> 처리: `inbox/_resolved/20260830T1500Z__validation__MULTI__public_exports_uncovered.md` · commit `8c702fc`
+>
+> - `validate_live_artifacts.py` check 6 `check_public_exports` — 공개 스냅샷을 루트 마스터
+>   (`git show HEAD:`, exporter 자신과 같은 기준)와 셀 단위 대조. 룰 15개: DRIFT ·
+>   MISSING_CELL · EXTRA_CELL · INTERNAL_COL_LEAKED(`원보험사코드` 유출) · KEY_AMBIGUOUS ·
+>   FILE_MISSING · UNREADABLE · SOURCE_UNREADABLE · MANIFEST_* 5종 등.
+> - **시트 목록을 베껴 쓰지 않았다** — `export_public_sheets.MASTERS` 를 import 한다. 베끼면
+>   13번째 시트가 조용히 무검사가 된다(CLAUDE.md ①b "룰을 한 개씩 베껴 심는" 패턴).
+>   `test_rule_coverage_manifest.py` 가 시트 수 대조로 그 결합을 강제한다.
+> - **조인 키 함정**: public 쪽엔 `원보험사코드` 가 없다(owner 지시로 드롭). 키가 유일하지
+>   않으면 값 비교를 건너뛰지 않고 `KEY_AMBIGUOUS` 로 막는다 — 조용한 전건 미스 경로 제거.
+> - 요청받은 `PUBLIC_EXPORT_STALE`(mtime YELLOW)은 **안 넣었다**: exporter 가 워킹트리가 아니라
+>   HEAD 를 읽으므로 마스터 mtime 은 스냅샷 신선도와 무관하고(저장만 해도 움직인다) 오탐만
+>   만든다. 진짜 낡음은 값 대조가 잡는다.
+> - **더 깊은 구멍**: `test_push_gate_wiring._origin_main_fetches` 가 배포 HTML 만 훑고
+>   `<script src="download-survey.js">` 를 안 따라가 그 12개 경로를 **한 번도 본 적이 없었다** —
+>   "라이브가 fetch 하는 건 전부 검사기 선언이 있어야 한다" 는 테스트가 통과하는 채로 구멍이
+>   열려 있었다. 같은 저장소 JS 까지 따라가도록 고치고 접두 선언(`public_exports/`) 형식 도입.
+> - 변이시험 8/8 검출(값 1칸·행 삭제·행 추가·내부열 유출·manifest 거짓·파일 삭제·깨진 파일),
+>   원본 바이트 복원 확인. 역방향(선언 삭제 시 12개 undeclared) 확인. `prepush_check` L83-93 이
+>   이미 이 게이트를 부르므로 배선 즉시 강제된다.
+> - **첫 실사용**: 오늘 `PL_breakdown.json` 이 커밋된 뒤 스냅샷을 재생성하지 않았다면 그대로
+>   `PUBLIC_EXPORT_DRIFT` RED 였다. 재생성 후 RED=0.
 
 **(2026-08-30 b) gold 오버레이가 115칸을 아무 탐지기 없이 덮고 있었다 — 이제 게이트가 그 숫자를 인쇄하고, 마스크가 벗겨지면 막는다.**
 

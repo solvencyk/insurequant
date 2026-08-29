@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20260828T0500Z
-status: answered
+status: resolved
 route: backlog
 company: N/A
 period: N/A

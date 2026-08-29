@@ -1,7 +1,67 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-08-29 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-08-30 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-08-30 (76th pass) — `assemble()` 0-fill 억제: owner 가 option 1 승인
+
+`inbox/_resolved/20260830T0000Z__orchestrator__KR0079__ma_find_product_table_wrong_pick.md` §3
+이 제안한 3안 중 **owner 가 1안을 승인**(2026-08-30). commit `cd79127`.
+
+**무엇이 문제였나.** 2026-06-08 owner 규칙 "미공시 시 0표시" 는 item6(원수 예실차)·item11
+(재보험 예실차)이 `None` 이면 `0.0` 으로 채운다. 그런데 그 `None` 에는 성격이 다른 둘이
+섞여 있다 — ① 이 회사는 그 항목을 애초에 공시하지 않는다(농협·교보·동양), ② 이번 분기만
+추출이 실패했다. 미래에셋 2025.4Q 한 행이 그 둘을 동시에 보여줬다: item11 은 추출 배선
+자체가 없어 0 이 맞고, item6 은 다른 4개 분기에서 실값이 나오는데 그 분기의 별도(OFS) 표가
+raw XML 에서 깨져 있어 0 이 틀렸다. 실값 사이에 낀 0 은 공시된 사실로 읽힌다.
+
+**구현.** `assemble(t1, t2, is_life, zero_fill_ok=None)`. `zero_fill_ok=None` 은 종전 동작
+(전부 허용)이라 다른 호출자·테스트는 안 깨진다. `main()` 은 회사별로 2-pass:
+
+```
+pass A  분기별로 파싱(parse_filing + FS API)해 캐시 -> 0-fill 을 끈 채 조립
+        -> 그 회사가 "실제로 추출하는" item6/11 을 census (ever_extracted)
+pass B  zero_fill_ok = {6,11} - ever_extracted 로 본조립
+```
+
+파싱은 한 번만 하고 재사용하므로 빌드시간은 그대로다(실측 190초대, 종전과 동일 수준).
+
+**같이 막아야 했던 것 — `_additive_merge` 가 결정을 조용히 취소한다.**
+`build_root_masters._additive_merge` 는 "fresh 값=None 이면 커밋된 값으로 폴백" 한다(2026-08-14
+에 61칸이 유실된 사고의 근본 수정). 그 폴백은 값만 보므로 **의도적 null 과 소스 부재 null 을
+구별하지 못한다** — 그대로 두면 재빌드마다 예전 0 이 되살아난다. 그래서 빌더가
+`data/_derived/pl_intentional_nulls.json` 에 (회사,분기,항목)을 남기고
+`_additive_merge(keep_null=...)` 가 **그 칸에서만** 폴백을 끈다.
+목록 조건은 0-fill elif 의 전제와 정확히 같게 좁혔다(3/4/5 또는 8/9/10 이 다 있고 해당
+항목만 없음). 처음엔 "항목이 null 이면" 으로 넓게 잡아 132칸이 나왔는데, 그러면 진짜 유실
+칸의 보호까지 꺼진다 — 좁혀서 48칸.
+
+**`_GOLD_CELL_OVERRIDE` 박제 삭제.** `("KR0079","2025.4Q"): {6: None}` 은 이 규칙이 없던
+동안의 임시 조치였다. 이제 구조적으로 None 이 나오므로 지웠다(재빌드로 확인). 남겨두면
+규칙이 회귀해도 그 칸만 옳아 보여 아무도 모른다 — 같은 날 gold 오버레이 축에서 확인한
+false-green 형태 그대로다.
+
+**영향(실측).** 마스터 11,546행 유지, 유실·신규 키 0. `값` 38칸 + `값_당분기` 40칸이
+숫자 -> null:
+
+| 회사 | 칸 |
+|---|---:|
+| KR0032 농협생명 | 8 |
+| KR0070 에이비엘생명 | 11 |
+| KR0071 흥국생명 | 2 |
+| KR0073 | 2 |
+| KR0079 미래에셋생명 | 15 |
+
+전부 "0 으로 채워졌던 예실차" 와 그 잔차(item7/12)다. gold 오버레이가 덮은 칸(KR0073 의
+4개 분기 등)은 그대로 — 설계대로 gold 가 이긴다. `값_당분기` 가 더 많은 것은 YTD 가 null 이
+되면 그 다음 분기의 유량(당분기 = YTD − 직전 YTD)도 계산 불가가 되기 때문이다.
+
+**게이트.** `validate_data_contract` RED=0 exit 0 · `RUN_PL_GOLDEN=1 pytest
+tests/test_pl_breakdown_golden.py` PASS(non_null 10,016 → 9,969 = 억제 47칸,
+master_rows·company_quarters 불변 → 의도된 변화이므로 `--update` 로 재생성) ·
+xlsx `손익분해PL` 시트 cherry-pick 동기화(검증 OK, 나머지 시트 값 동일).
+`validate_master_tables` 의 exit 2 는 `SENSITIVITY_UNIT_SANITY`(라이나·카카오페이손해, 민감도
+단위 미정규화)로 기존 건이고 PL 과 무관하며 push 게이트가 아니다.
 
 ## 2026-08-29 (71st pass) — CSM 항목3/5 null-but-identity-closes: 결측이 잔차에 흡수되는 버그
 

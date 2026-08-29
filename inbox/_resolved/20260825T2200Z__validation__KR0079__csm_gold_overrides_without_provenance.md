@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260825T2200Z
-status: answered
+status: resolved
 route: reparse
 company: KR0079
 period: MULTI

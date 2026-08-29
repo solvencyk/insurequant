@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20260829T2200Z
-status: answered
+status: resolved
 route: blind_spot
 company: MULTI
 period: MULTI

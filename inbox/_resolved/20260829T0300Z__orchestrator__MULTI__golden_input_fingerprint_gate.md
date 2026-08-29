@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20260829T0300Z
-status: answered
+status: resolved
 route: blind_spot
 company: MULTI
 period: MULTI

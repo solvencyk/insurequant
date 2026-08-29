@@ -1,9 +1,61 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-30 (b) · Stage 3/5 — validation
+> Last updated: 2026-08-30 (c) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-08-30 (c) — public_exports 축 신설: 사용자가 내려받는 파일이 무검사였고, 그걸 잡을 테스트도 못 보고 있었다
+
+`inbox/_resolved/20260830T1500Z__validation__MULTI__public_exports_uncovered.md` · commit `8c702fc`.
+
+**측정.** `grep -rn "public_exports" scripts/validate_*.py` -> **0건.** 사이트의 다운로드
+버튼(`download-survey.js`)이 사용자에게 그대로 내려보내는 12개 파일(시트 11 + manifest)을
+어떤 검사기도 읽지 않았다. 화면 패널은 2026-08-25 에 배선했는데(불변식 1번), 정작 사용자가
+손에 쥐는 파일은 그 배선 밖이었다.
+
+**왜 안 잡혔나 — 이게 더 중요하다.** 그 사각을 잡아야 할
+`tests/test_push_gate_wiring.py::test_every_live_fetched_artifact_has_a_declared_reader` 의
+헬퍼 `_origin_main_fetches()` 가 **배포 HTML 4종만 훑고 `<script src="download-survey.js">` 를
+따라가지 않았다.** 12개 경로는 그 JS 안에만 리터럴로 있다. 그래서 그 테스트는 12개를
+**한 번도 본 적이 없고**, 통과하는 채로 구멍이 열려 있었다. "게이트를 배선했다" 와 "그
+게이트가 실제로 그 파일을 본다" 가 또 갈렸다.
+
+**배선.** `validate_live_artifacts.py` check 6 `check_public_exports`:
+
+- 비교 기준은 워킹트리가 아니라 **`git show HEAD:`** — exporter 자신이 그렇게 읽는다(다른
+  세션의 미커밋 편집을 공개 스냅샷에 싣지 않는 것이 그 스크립트의 설계). 워킹트리와
+  대조하면 남의 WIP 때문에 매번 거짓 RED 가 난다.
+- 시트 목록은 `export_public_sheets.MASTERS` 를 **import** 한다. 베껴 쓰면 13번째 시트가
+  조용히 무검사가 된다 — CLAUDE.md ①b 가 이름 붙인 "빠진 게이트를 눈치챌 때마다 룰을 한 개씩
+  베껴 심는" 패턴이다. `test_rule_coverage_manifest.py` 가 시트 수 대조로 그 결합을 강제한다.
+- **조인 키**: public 쪽엔 `원보험사코드` 가 없다(owner 지시 2026-08-28 로 드롭). 키를 잘못
+  잡으면 전건 미스로 조용히 통과하므로, 식별열 조합이 유일하지 않으면 값 비교를 건너뛰지
+  않고 `PUBLIC_EXPORT_KEY_AMBIGUOUS` 로 **막는다**.
+- 룰 15개: DRIFT · MISSING_CELL · EXTRA_CELL · INTERNAL_COL_LEAKED · KEY_AMBIGUOUS ·
+  FILE_MISSING · UNREADABLE · SOURCE_UNREADABLE · DIR_MISSING · EXPORTER_UNIMPORTABLE ·
+  MANIFEST_{MISSING,UNREADABLE,SHEET_MISSING,MISMATCH,GHOST_SHEET}.
+- 발견은 (시트, 룰) 단위로 1건씩 집계한다 — 스냅샷이 한 세대 밀리면 11,546건이 찍히는데 그
+  전부의 조치가 하나("exporter 재실행")다.
+
+**안 넣은 것.** 티켓이 요청한 `PUBLIC_EXPORT_STALE`(mtime YELLOW)은 배선하지 않았다.
+exporter 가 HEAD 를 읽으므로 마스터 파일의 mtime 은 스냅샷 신선도와 무관하고(저장만 해도
+움직인다) 오탐 발생기가 된다. 진짜 낡음은 값 대조가 그대로 잡는다. 대신 manifest 축을 넣어
+표지 시트가 인쇄하는 행수·분기범위가 실제 파일과 다르면 `MANIFEST_MISMATCH` 로 잡는다.
+
+**변이시험 8/8** (원본 바이트 복원 확인): 값 1칸 변조 -> DRIFT · 행 삭제 ->
+MISSING_CELL(+MANIFEST_MISMATCH) · 행 추가 -> EXTRA_CELL · `원보험사코드` 주입 ->
+INTERNAL_COL_LEAKED · manifest 행수 거짓 -> MANIFEST_MISMATCH · 파일 삭제 -> FILE_MISSING ·
+잘린 JSON -> UNREADABLE · 복원 후 -> 0건. 역방향(`LIVE_ARTIFACT_READERS` 에서 선언을 지우면
+12개가 undeclared 로 잡힘)도 확인.
+
+**강제 경로.** `prepush_check.py` L83-93 이 이미 `validate_live_artifacts` 를 부른다 — 이
+파일에 넣은 순간 push 를 막는다. 실측 RED=0 exit 0.
+
+**첫 실사용이 바로 나왔다.** 같은 날 `PL_breakdown.json` 이 커밋된 뒤 스냅샷을 재생성하지
+않았다면 그대로 `PUBLIC_EXPORT_DRIFT` RED 였다. 그리고 `public_exports/CSM워터폴.json` 은
+`origin/main` 기준으로 **어제의 CSM 정정이 반영되지 않은 상태**로 남아 있었다 — 라이브
+배포 대상에 포함시켰다.
 
 ## 2026-08-30 (b) — gold 오버레이 축 신설(CHECK 6): 115칸을 덮고 있던 마스크를 게이트가 세고, 벗겨지면 막는다
 

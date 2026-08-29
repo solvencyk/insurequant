@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20260830T0900Z
-status: answered
+status: resolved
 route: backlog
 company: KR1000
 period: MULTI

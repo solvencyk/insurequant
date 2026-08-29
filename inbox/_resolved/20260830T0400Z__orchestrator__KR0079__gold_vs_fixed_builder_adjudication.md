@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20260830T0400Z
-status: answered
+status: resolved
 route: verify
 company: KR0079
 period: MULTI

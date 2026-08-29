@@ -2,7 +2,7 @@
 from: orchestrator
 to: downloader
 created: 20260830T0400Z
-status: answered
+status: resolved
 route: refetch
 company: MULTI
 period: 2026.2Q

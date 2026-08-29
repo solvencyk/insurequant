@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20260829T1100Z
-status: answered
+status: resolved
 route: reparse
 company: KR0070
 period: 2024.4Q,2025.1Q

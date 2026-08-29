@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20260829T0200Z
-status: answered
+status: resolved
 route: reparse
 company: MULTI
 period: MULTI

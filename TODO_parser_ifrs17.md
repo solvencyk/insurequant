@@ -1,5 +1,35 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-30 (76th pass) — owner 가 `assemble()` "미공시 시 0표시" 규칙 재검토 3안 중
+> **1안을 승인**했다. 구현 완료(`cd79127`).**
+> 근거 티켓: `inbox/_resolved/20260830T0000Z__orchestrator__KR0079__ma_find_product_table_wrong_pick.md` §3.
+>
+> 그 규칙(2026-06-08)은 "이 회사가 원래 이 항목을 공시하지 않는다" 와 "이번 분기만 추출이
+> 실패했다" 를 `v[n] is None` 하나로 뭉뚱그려 둘 다 `0.0` 으로 채웠다. 같은 미래에셋 2025.4Q
+> 한 행에 반증 쌍이 있었다 — item11 은 추출 배선 자체가 없어 0 이 맞고, item6 은 다른 4개
+> 분기에서 실값이 나오는데 그 분기만 별도(OFS) 표가 깨진 경우라 0 이 틀렸다.
+>
+> **구현**: `assemble(..., zero_fill_ok=None)` 신설. `main()` 이 회사별 2-pass 를 돈다 —
+> pass A 는 0-fill 을 끈 채 조립해 **실제로 추출되는** item6/11 을 census 하고, pass B 는 그
+> 회사가 어느 분기에서도 못 뽑는 항목에만 0-fill 을 허용한다(농협·교보·동양은 종전 그대로 0).
+> 파싱은 한 번만 하고 재사용 — 두 번째 조립은 순수 dict 산수라 빌드시간 변화 없음(실측 190초대).
+>
+> **함정 하나 더 있었다**: `build_root_masters._additive_merge` 가 "fresh 값=None 이면 커밋된
+> 값으로 폴백" 하므로 그대로 두면 **재빌드마다 예전 0 이 되살아나 결정이 조용히 취소된다.**
+> 억제된 null 을 `data/_derived/pl_intentional_nulls.json` 에 (회사,분기,항목)으로 남기고
+> `_additive_merge(keep_null=...)` 가 그 칸에서만 폴백을 끈다. 목록 조건은 0-fill elif 의
+> 전제(3/4/5 또는 8/9/10 이 다 있고 해당 항목만 없음)와 **정확히 같게** 좁혔다 — 넓게 잡으면
+> 진짜 유실 칸의 보호까지 꺼진다(처음에 넓게 잡아 132칸이 나왔고, 좁혀서 48칸).
+>
+> **`_GOLD_CELL_OVERRIDE` 의 `("KR0079","2025.4Q"): {6: None}` 박제는 삭제했다** — 이제
+> 구조적으로 None 이 나온다(재빌드 확인). 남겨두면 규칙이 회귀해도 그 칸만 옳아 보인다.
+>
+> 실측: 마스터 11,546행 유지·유실/신규 키 0. 값 38칸 + 값_당분기 40칸이 숫자→null
+> (KR0032 농협 8 · KR0070 ABL 11 · KR0071 흥국생명 2 · KR0073 2 · KR0079 미래에셋 15).
+> gold 오버레이가 덮은 칸(KR0073 4분기 등)은 그대로 — 설계대로 gold 가 이긴다.
+> 게이트 `validate_data_contract` RED=0 exit 0 · `RUN_PL_GOLDEN=1` PASS(non_null 10,016→9,969,
+> master_rows/company_quarters 불변, `--update` 로 재생성) · xlsx 손익분해PL 시트 cherry-pick 동기화.
+
 > **2026-08-30 (75th pass) — KR0079 2025.2Q 항목4/5 gold를 raw 배분(-685.50/-992.07)으로
 > 교체, gold(-886.27/-791.3) 폐기 + CSM_AMORT 등재부 잔차 1건 해소.**
 > `inbox/parser/20260830T0700Z__validation__KR0079_2025.2Q__adopt_raw_item4_item5_split.md`

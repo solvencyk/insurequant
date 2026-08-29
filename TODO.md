@@ -1,11 +1,48 @@
 # Insurequant TODO
 
-> Last updated: 2026-08-19 · Stage: cross-stage
+> Last updated: 2026-08-30 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage; parser 2-lane since 2026-06-13) · Stage TODOs: TODO_<stage>.md
 
 Pipeline organized as **downloader / parser / validation / publishing / designer** — each stage has its own prompt (`docs/agents/claude-agent-<stage>.md`), TODO (`TODO_<stage>.md`), and changelog (`docs/changelog_<stage>.md`). See `CLAUDE.md` for the full index. This root file carries cross-stage items + project-wide policy only.
 
 ## Status
+
+**🟢 2026-08-30 현재 — 게이트 전부 통과, 라이브 배포 정상.** 실측:
+`validate_data_contract` RED=0 exit 0 · `validate_kics_disclosure` RED=0 exit 0 ·
+`validate_live_artifacts` RED=0 exit 0 · `prepush_check.py` exit 0 · inbox 활성 스레드 **0건**
+(위생 위반 0). 2026-08-29~30 에 브랜치 push 3회 + `main` 라이브 배포 1회가 실제로 나갔다.
+
+> **아래 2026-08-21 문단의 "현재 push 는 차단 상태" · "라이브(main) 배포도 이것 때문에 대기중"
+> 은 그 시점의 사실이고 지금은 아니다.** `R2_순자산합` IDENTITY_TAUTOLOGY 는 해소됐고,
+> main 의 `kics_disclosure.json` 은 브랜치와 **바이트 동일**(2026-08-30 실측: main 이 추적하는
+> 39개 파일 중 브랜치와 다른 것은 `.gitignore` · `PL_breakdown.json` · `public_exports/` 3개뿐).
+> 이 문단들은 이력으로 남겨 두되 현황으로 읽지 말 것.
+
+### 상시 점검 (날짜 걸린 것)
+
+- [ ] **2026.2Q 정기경영공시 — 8/31(월) 재확인.** 8/29·8/30 census 결과 **39사 중 1사(하나손해)만
+  게시**, 17사 미게시, 코리안리는 사이트 서버 다운으로 미확인. 생보 일괄페이지 2분기열 0/22.
+  KB손해 이력표상 8/29~31 이 1차 게시창이라 **8/31 이 그 창의 유일한 영업일**이다. 재실행:
+  `scripts/_probes/census_q2_disclosure_listings.py`(다운로드 전에 행 라벨로 판정 — 최신행
+  셀렉터의 침묵 실패를 구조적으로 회피). 하나손해 raw 는 준비됐고 온보딩 스크립트도 있으나
+  (`scripts/fix_20260829_kr0050_2026q2_onboarding.py`) **마스터 삽입은 보류** — 39사 중 1사만
+  넣으면 census 가 38 RED 가 된다. 종전 추적 스레드는 `inbox/_resolved/20260829T1900Z`.
+
+### 최근 종결 (2026-08-30)
+
+- [x] **`assemble()` "미공시 시 0표시" 규칙 — owner 가 option 1 승인, 구현 완료** (`cd79127`).
+  회사가 다른 분기에서 실제로 뽑는 항목이면 이번 분기의 0-fill 을 건너뛰고 null 을 남긴다.
+  마스터 38칸(+당분기 40칸)이 숫자→null(5사). 억제된 null 은 `data/_derived/pl_intentional_nulls.json`
+  로 `_additive_merge` 폴백에서 제외 — 안 그러면 재빌드마다 예전 0 이 되살아난다.
+- [x] **`public_exports/` 무검사 해소** (`8c702fc`). 사용자가 내려받는 12개 파일을 어떤 검사기도
+  안 읽고 있었다. `validate_live_artifacts` 에 축 신설(15룰, 변이시험 8/8). 같이 발견: 그
+  사각을 잡았어야 할 `test_push_gate_wiring` 이 `<script src>` 를 안 따라가서 그 12개를 한
+  번도 본 적이 없었다 — 그것도 닫았다.
+- [x] **gold 오버레이 무검사 해소** (`93c68db`). gold 를 빌더 소스와 대조하는 게이트·테스트가
+  저장소에 0건이었다 = gold 셀 밑에서 빌더가 회귀해도 전 게이트가 clean. 마스크 115칸 원장 등재,
+  drift 는 RED.
+- [x] **inbox 전건 종결** — answered 28 + open 3 을 검증 후 `_resolved/` 로 이동, 활성 0.
+
 
 **🔒 2026-08-21 — push 게이트가 이제 git 훅으로 강제된다. 새 클론/워크트리면 먼저 `git config core.hooksPath .githooks`.**
 그 전까지 `prepush_check.py` 를 부르는 코드가 0이었다(참조 11곳 전부 문서, CI 없음, 훅 없음) — "배선했다"와
@@ -63,8 +100,8 @@ Cross-stage focus (2026-08-20): K-ICS gate **RED=12**, all three offenders alrea
 - **Downloader** (Stage 1): `TODO_downloader.md` + `docs/changelog_downloader.md` + `docs/agents/claude-agent-downloader.md`
 - **Parser** (Stage 2, **2-lane since 2026-06-13**): `TODO_parser_kics.md` · `TODO_parser_ifrs17.md` + `docs/changelog_parser_{kics,ifrs17}.md` (pre-split frozen: `docs/changelog_parser.md`) + shared `docs/agents/claude-agent-parser.md` + domain `docs/domains/claude-agent-{kics,ifrs17}.md`
 - **Validation** (Stage 3): `TODO_validation.md` + `docs/changelog_validation.md` + `docs/agents/claude-agent-validation.md`
-- **Publishing** (Stage 4, **merged gathering + pushing**): `TODO_publishing.md` + `docs/changelog_publishing.md` + `docs/agents/claude-agent-publishing.md` (skeleton — created 2026-05-31)
-- **Designer** (Stage 5, **new — HTML/CSS/responsive**): `TODO_designer.md` + `docs/changelog_designer.md` + `docs/agents/claude-agent-designer.md` (skeleton — created 2026-05-31)
+- **Publishing** (Stage 4, **merged gathering + pushing**): `TODO_publishing.md` + `docs/changelog_publishing.md` + `docs/agents/claude-agent-publishing.md` (**complete** — §5/§9/§10 + launch-runbook skill, 2026-07-21)
+- **Designer** (Stage 5, **new — HTML/CSS/responsive**): `TODO_designer.md` + `docs/changelog_designer.md` + `docs/agents/claude-agent-designer.md` (**complete** — §5.1~5.5 design system, 2026-06-16)
 
 Items previously here that have moved out:
 
