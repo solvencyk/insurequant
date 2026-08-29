@@ -85,6 +85,7 @@ owner 제안이고, 지금 화면은 **장기보험 leg 이 통째로 빠져 브
 ## 답변 (recipient 작성 — 처리 후)
 
 **완료. `IFRS17.html` Panel 5 만 수정(1 파일). 마스터 JSON·xlsx·스키마 무수정, 미배포.**
+커밋 `2c87d18` (브랜치 `fix/csm-product-segmented-columns`). 후속 티켓 `20260830T0730Z`(y축 눈금 중복).
 
 ### 1. 코리안리 전 분기 스텝 합 vs 앵커 — 14분기 x 2모드 전부 닫힌다
 
