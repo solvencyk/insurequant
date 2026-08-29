@@ -481,3 +481,5 @@ LEGRED **22건**이 남아 있고 전건 `pl_bridge_baseline.json` 에 `route: p
 마스터를 재생성할 이유가 없다). 하이픈 부모-자식 3식은 **동어반복이라 일부러 배선하지 않았다.**
 
 status: resolved — §2 재현·수정 완료, 잔여 22건은 baseline 등재부가 계속 추적한다.
+
+커밋: `289fb79` (validation)
