@@ -1,9 +1,56 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-08-29 · Stage 5/5 — designer
+> Last updated: 2026-08-30 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-08-30b — Panel 5 표 토글 재검증: 요청 기능이 이미 있었다 (inbox 20260830T0900Z, 코드 수정 0)
+
+orchestrator 티켓 1건("`＋` 가 코리안리 네 축 중 생명 수재만 편다"). **실측으로 반증 — 네 축 전부
+이미 펴진다.** `IFRS17.html` 을 포함해 **코드는 한 줄도 안 고쳤다.**
+
+### 무엇을 확인했나
+
+| 확인 | 방법 | 결과 |
+|---|---|---|
+| 워킹트리 화면 | Playwright Chromium 1440x900 + 375, KR1000 | `＋` 4개(생명 수재/출재 · 장기 수재/출재), 전부 펼침 = 세부 16행 |
+| 브랜치 vs main | `git diff main HEAD -- IFRS17.html` | 차이 **0** (main `c01f6d1` == HEAD `70b07da`) |
+| main vs 라이브 | `curl https://www.insurequant.com/IFRS17.html` 후 diff | 줄바꿈(CRLF/LF) 외 **내용 동일** |
+
+`2c87d18` 의 `plLobHead()` 가 이미 `["", ...sufs]` x `[수재, 출재]` 루프에서 다리마다 `sub:` 를
+붙이고 있었다(L782-795). 관측 어긋남의 원인은 **배포 직전 화면 또는 브라우저 캐시**로 본다 —
+라이브 반영이 `f97aa9e`(08-29 22:39 KST)·`c01f6d1`(22:55)로 티켓 작성 직전이었다.
+
+> **교훈:** 티켓의 "현재 상태" 진술도 전제일 뿐이다. 고치기 전에 **그 증상이 지금 재현되는지**를
+> 먼저 실측한다. 안 그러면 이미 맞는 코드를 "고쳐서" 회귀를 만든다.
+
+### 검산 (읽기 전용)
+
+- **네 다리 세부합 == 소계: 112/112 조합 정확히 0.** 4다리 x 14분기(2023.1Q~2026.2Q) x 2필드
+  (`값`/`값_당분기`), 최대 |잔차| **0 백만원**(반올림 0.00 이 아니라 정확히 0), 결측 셀 0.
+  화면 잔차가 최대 1억으로 보이는 것은 **셀별 억 단위 반올림**이지 데이터가 아니다.
+- **39사 전수 census**: 토글 1개 = 31사(`생명장기재보험`) · 0개 = 4사(KR0004·KR0080·KR0150·KR1010,
+  세부 미공시) · **4개 = KR1000 하나** · PL표 없음 3사. 대조군 삼성화재·삼성생명 캡션까지 무변화.
+  전사 x 2모드 순회 **JS 에러 0**, 모바일 375 도 토글 4개 정상.
+
+### 라벨 판단 (티켓 §2) — 짧은 형 유지
+
+`PL_LOB_SUB = ["CSM상각","위험조정","예실차","기타"]` 그대로 둔다. 마스터 항목명(`원수 CSM상각`)을
+그대로 쓰면 **이 회사는 원수 = 수재**라 부모 `생명 수재` 와 충돌하고, 장기 다리는 `수재 CSM상각` 이라
+같은 말이 두 번 나온다. `위험조정` 을 마스터대로 `위험조정 변동` 으로 늘리는 것도 검토했으나
+형제(`CSM상각`·`예실차`)가 전부 유량이라 문맥으로 읽히고, 나머지 38개사가 쓰는 짧은 형과
+표기를 갈라 놓을 이유가 없어 안 늘렸다. **마스터 항목명·`ITEM_NAMES` 무수정.**
+
+증거: `data/_derived/panel5_toggle_verify_20260830/` (미추적 — 스크린샷 12장 + `report.json`).
+
+> **검증 팁 보강:** `.panel.revealed` 는 CSS **애니메이션**으로 opacity 를 올린다. Browser pane 은
+> 애니메이션을 안 돌려서 `revealed` 클래스를 붙여도 opacity 가 0 으로 남아 **스크린샷이 백지**가 된다.
+> `will-reveal` 클래스를 **제거**하거나(권장) 인라인 `opacity:1` 을 줘야 한다. 이번엔 아예
+> Playwright(실 Chromium)로 돌려 compositing 문제 자체를 피했다 —
+> `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe` 에 playwright 가 들어 있다.
 
 ---
 

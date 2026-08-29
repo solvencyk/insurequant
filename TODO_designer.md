@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-08-29 · Stage 5/5 — designer
+> Last updated: 2026-08-30 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,21 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-08-30b, inbox 20260830T0900Z — Panel 5 표 토글 재검증, 코드 수정 0):**
+- 티켓 전제("`＋` 가 코리안리 네 축 중 생명 수재만 편다")를 **실측으로 반증했다.** 네 축 전부 이미
+  펴진다 — `2c87d18` 의 `plLobHead()` 가 다리마다 `sub:` 를 붙이고 있었다. **`IFRS17.html` 무수정.**
+- **라이브까지 동일 확인**: `git diff main HEAD -- IFRS17.html` = 0, `curl` 로 받은
+  www.insurequant.com 페이지와 워킹트리가 줄바꿈 외 동일. 관측 어긋남은 배포 직전 화면 또는
+  브라우저 캐시로 추정(라이브 반영 `f97aa9e` 08-29 22:39 KST). sender 재확인 대기(`status: answered`).
+- **검산**: 네 다리 세부합 == 소계 **112/112 조합 정확히 0**(4다리 x 14분기 x 2필드, 결측 0).
+  화면에 최대 1억 잔차로 보이는 건 셀별 억 단위 **표시 반올림**이지 데이터가 아니다.
+- **회귀**: 39사 census — 토글 1개 31사 · 0개 4사 · **4개 = KR1000 하나** · PL표 없음 3사,
+  대조군 캡션까지 무변화, JS 에러 0, 모바일 375 정상.
+- **라벨 판단**: 짧은 형(`CSM상각·위험조정·예실차·기타`) 유지. 마스터 항목명(`원수 CSM상각`)은
+  이 회사에서 원수 = 수재라 부모 축과 충돌하고, `위험조정 변동`으로 늘리면 38개사 표기와 갈린다.
+- **교훈**: 티켓의 "현재 상태" 진술도 전제다. **증상이 지금 재현되는지 먼저 실측**하고 고친다.
+- 증거 `data/_derived/panel5_toggle_verify_20260830/`(미추적). 배포·push 안 함.
 
 **Recent (2026-08-30, inbox 20260830T0600Z — 코리안리 Panel 5 를 `LOB x 수재/출재` 로, 완료·미배포):**
 - **원인**: `PL_STEP_DEFS` 에 하이픈 항목(`2-1`·`3-1`·`8-1`)이 없어 코리안리재보험(KR1000)의
