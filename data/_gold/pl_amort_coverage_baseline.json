@@ -2,8 +2,14 @@
   "_what": "룰 `PL_BUCKET_ABSENT_VS_WATERFALL` 의 RATCHET BASELINE. 워터폴 CSM상각은 임계(10억) 이상인데 PL_breakdown 에 그 (회사,분기) 버킷이 **통째로 없어** 교차대조가 아예 못 도는 자리의 건별 열거다. 여기 열거된 12건은 이번 브랜치가 만든 결손이 아니라 main(라이브)에도 이미 없는 선행 결함이라 push 를 막지 않는다(비차단 BASELINE). **여기 없는 새 결손은 즉시 RED 로 차단한다.** 일괄 면제가 아니라 건별 열거이고, 각 줄은 워터폴 상각액을 박제하므로 데이터가 움직이면 박제가 깨진다. parser 가 한 건 고칠 때마다 이 줄을 지운다 — 목록이 비면 이 축은 완전 차단 모드가 된다.",
   "_why_this_rule_exists": "룰 3z(`PL_CSM_AMORT_VS_WATERFALL`)는 `for (co,q) in env.pl` 로 돌아서 **PL 에 버킷이 없으면 루프가 방문조차 못 해 완전 침묵**했다. 악사손해 2023.4Q 가 RED 로 뜬 유일한 이유는 그 회사만 PL 버킷이 부분적으로 존재해서다 — 더 나빠서가 아니라 보여서다. 그 사각에 삼성화재 2023.1Q(워터폴 상각 3,760.4억)가 들어 있었고, 이 룰이 태어난 사고(2026-08-15 삼성화재 2026.2Q PL 생명장기 분해가 통째 null 인 채 라이브 배포)와 같은 회사·같은 모양이다. 그래서 대조 루프를 **워터폴 쪽에서도** 한 번 더 돌린다.",
   "_scope_note": "이 baseline 은 '이 자리에 PL 버킷이 없다'는 사실 자체를 매 실행 재검산한다. ① 버킷이 생기면 BASELINE_INERT 로 인쇄해 줄을 지우게 하고(죽은 면제 영구잔류 방지), ② 박제한 워터폴 상각이 tol(max 0.5억, 5%) 밖으로 움직이면 BASELINE_DRIFT RED, ③ 열거되지 않은 새 자리는 RED. `validate_data_contract.py` L2334-2338 이 실격이라고 적은 '버킷 통째 무조건 통과' 형태가 되지 않도록 한 것이다.",
-  "_pin_tolerance": {"abs_eok": 0.5, "rel": 0.05},
-  "_threshold": {"min_amort_eok": 10.0, "basis": "룰 3z 와 같은 CSM_AMORT_MIN_EOK"},
+  "_pin_tolerance": {
+    "abs_eok": 0.5,
+    "rel": 0.05
+  },
+  "_threshold": {
+    "min_amort_eok": 10.0,
+    "basis": "룰 3z 와 같은 CSM_AMORT_MIN_EOK"
+  },
   "_measured_at": "2026-08-26 (validation, inbox/validation/20260826T2000Z 처리). 실측: PL 356버킷 / CSM_waterfall 362버킷, 워터폴 상각>=10억인데 PL 버킷 부재 = 12. main(라이브) 대비 사라진 버킷 0 — 선행 결함이지 이번 브랜치의 회귀가 아니다.",
   "_verdict_legend": {
     "PARSER_GAP_CONFIRMED": "원천에 노트가 실재함을 validation 이 raw 로 직접 확인했다. 진짜 구멍이고 parser 가 고칠 수 있다.",
@@ -80,6 +86,12 @@
       "wf_amort_eok": 44.1,
       "status": "UNADJUDICATED",
       "note": "PL 은 2024.4Q·2025.4Q 만 있고 워터폴은 2023.4Q 부터 셋이다. raw 있음 — data/dart/FY2023_Q4/raw/KR1010_교보라이프플래닛생명보험_20240328001011/(+_001012). 같은 회사 2024.4Q 는 추출 성공(원수CSM상각 2,155.876493백만원)이라 회사 특성으로 설명되지 않는다. 임계 10억을 갓 넘는 44.1억이라 화면 영향은 작다.",
+      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md"
+    },
+    "아이엠라이프생명보험|2023.4Q": {
+      "wf_amort_eok": 571.1,
+      "status": "UNADJUDICATED",
+      "note": "위 2024.4Q·2025.4Q 와 같다 — 이 회사는 PL 버킷이 한 분기도 없다. 2026-08-30 까지 이 분기는 워터폴 상각 자체가 null 이라 교차대조 룰이 발화하지 못했고, viz_build_csm_waterfall 의 라벨매칭 결함(원문 줄바꿈으로 \"보험계약마진\"이 \"보 험계약마진\"으로 깨짐)을 고치면서 값이 살아나 처음 드러났다(커밋 9a067dd). raw 있음 — data/dart/FY2023_Q4/raw/KR0076_아이엠라이프생명보험_20240405002220/.",
       "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md"
     }
   }
