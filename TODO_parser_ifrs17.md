@@ -66,7 +66,7 @@
 >
 > 상세는 위 inbox 답변. status: **answered**(재판정후보 2건 채택방향은 validation 판단).
 >
-> 커밋: (다음 커밋에 기록)
+> 커밋: `28ab7f8`
 
 > **2026-08-30 (73rd pass) — CSM gold override 44건(KR0079 27·KR0003 12·KR0072 5) 출처
 > 공란 전수 해소, 값 변경 0건.** `inbox/parser/20260825T2200Z__validation__KR0079__
