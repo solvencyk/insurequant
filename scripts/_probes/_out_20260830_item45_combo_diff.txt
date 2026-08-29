@@ -1,0 +1,17 @@
+before rows: 2172  after rows: 2172
+lost keys (in before, not after): 0
+gained keys (in after, not before): 0
+before: non-null 값=2172  non-null 값_당분기=1972
+after: non-null 값=2172  non-null 값_당분기=1972
+
+cell '값' changes: 2
+cell '값_당분기' changes: 4
+companies with ANY change: ['KR0079']
+
+=== KR0079 (4 cells) ===
+  2025.2Q item4: 값 -886.27->-685.5 당분기 122.23->323.0
+  2025.2Q item5: 값 -791.3->-992.07 당분기 -307.6->-508.37
+  2025.3Q item4: 당분기 553.1->352.33
+  2025.3Q item5: 당분기 -739.91->-539.14
+
+other-field drift (excluding 값/값_당분기): 0

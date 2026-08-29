@@ -1,5 +1,52 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-30 (75th pass) — KR0079 2025.2Q 항목4/5 gold를 raw 배분(-685.50/-992.07)으로
+> 교체, gold(-886.27/-791.3) 폐기 + CSM_AMORT 등재부 잔차 1건 해소.**
+> `inbox/parser/20260830T0700Z__validation__KR0079_2025.2Q__adopt_raw_item4_item5_split.md`
+> (validation 발주, status: answered).
+>
+> validation이 6개 독립 표(같은 필링의 연결·별도 CSM 측정요소표/보험수익표 + 1년 뒤 필링의
+> 전반기 비교열 2종, 행은 캡션이 아니라 IFRS 택소노미 ACODE로 식별)로 판정 완료한 값을
+> `data/_gold/user_csm_cells.json` 2셀에 그대로 적용(값+why, was는 기록으로 불변) +
+> `data/_gold/csm_amort_identity_ledger.json`의 `미래에셋생명보험|2025.2Q`
+> (WATERFALL_SUSPECT, 잔차 200.77억) 1줄 삭제 + `_population` 갱신(340/6 → 341/5).
+>
+> **재빌드는 `build_root_masters.build_csm()` 개별 호출만**(main()·
+> `build_csm_waterfall_master.py` 미실행). combo-diff 3중 확인(행수 2172=2172·non-null
+> 값/값_당분기 2172/1972 불변·다른 필드 drift 0) — **바뀐 셀 6개, 전부 KR0079**:
+> 2025.2Q 항목4 값(-886.27→-685.5)·항목4 당분기(122.23→323.0)·항목5 값(-791.3→-992.07)·
+> 항목5 당분기(-307.6→-508.37), 2025.3Q 항목4 당분기(553.1→352.33)·항목5 당분기
+> (-739.91→-539.14 — 유량 항목의 당분기가 직전분기 YTD로 재계산되는 파생연쇄, 값 자체는
+> gold로 고정돼 불변). 티켓 원문 "4개뿐"보다 2개 많지만 티켓 자신의 괄호 예측
+> (483.70/508.37/539.14억)과 절대값까지 정확히 일치 — 티켓 답변에 투명하게 기록.
+>
+> **CSM_AMORT 항등식 잔차를 게이트와 동일 함수로 직접 재검산 — 200.77억 → 0.00억**
+> (`csm_amort_residual()`: pl_eok=992.07, amort_eok=992.07, tol=0.496). 등재부 삭제
+> 이후 게이트가 조용히 통과(tol 이내라 등재부 조회 자체를 안 함).
+>
+> **게이트**: `validate_data_contract.py` → RED=0 YELLOW=93→**92**(정확히 예상대로,
+> CSM_AMORT_IDENTITY_PINNED 미래에셋 2025.2Q 소멸). `validate_master_tables.py
+> --no-build` → exit=2 불변, SUMMARY는 `csm_amort_identity:341P/6PIN→342P/5PIN`과
+> `qoq_warn:236Y→235Y`(부수효과 — 미래에셋 2025.2Q/2026.2Q YoY 경고 재계산, 진단성
+> YELLOW라 exit code 무관, `data/_derived/qoq_warn.json` diff로 확인) 두 필드만 이동.
+>
+> **골든**: `test_master_tables_golden.py`는 SUMMARY 이동으로 우선 FAILED(예상된 diff)
+> 확인 후 `--update` 재생성 → PASSED. `test_viz_csm_waterfall_golden.py`는 무관한
+> 빌더라 drift 0(update 불필요, 예상대로). `test_deploy_assets.py` 포함 3파일 12 passed.
+> xlsx는 `sync_master_xlsx_sheet.py "CSM워터폴"`로 6셀 cherry-pick(dry-run 사전 확인,
+> "검증 OK"). 전체 재생성 없음.
+>
+> 재현(순서대로): `scripts/_probes/apply_20260830_item45_gold_ledger_edit.py` →
+> `run_20260830_item45_build_csm_only.py` → `combo_diff_20260830_item45.py` →
+> `probe_20260830_item45_verify_amort_residual.py`. 백업: `{CSM_waterfall.json,
+> data/_gold/user_csm_cells.json,data/_gold/csm_amort_identity_ledger.json}.
+> bak_20260830_item45split`.
+>
+> 상세는 위 inbox 답변. status: **answered**(§3의 6-vs-4셀 카운트 차이와 §6의 qoq_warn
+> 부수효과는 validation 재확인 대상 — 값 채택 자체와 잔차 0.00 달성은 자기완결).
+>
+> 커밋: (다음 커밋에 기록)
+
 > **2026-08-30 (74th pass) — KR0079 미래에셋 상품별 CSM 결함 2건(라벨변형 #3 + "기타"
 > 상품 누락) 코드수정 + 전사 스윕 + 마스터 반영 완료.**
 > `inbox/parser/20260830T0200Z__orchestrator__KR0079__wide_product_label_variant_and_etc_

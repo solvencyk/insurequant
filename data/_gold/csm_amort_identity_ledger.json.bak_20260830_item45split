@@ -13,8 +13,8 @@
   "_measured_at": "2026-08-26 (parser-ifrs17, basis 필터 배선 — 삼성생명 5분기 종결. PL 이 연결을 물던 원인 2종을 고쳤다: 별도 경계 탐지가 ENG 속성에만 의존 / lxml HTMLParser sourceline 65,535 포화. inbox/parser/20260826T0500Z ② 참조)",
   "_population": {
     "compared_buckets": 346,
-    "within_identity": 341,
-    "ledgered": 5
+    "within_identity": 340,
+    "ledgered": 6
   },
   "entries": {
     "DB손해보험|2023.1Q": {
@@ -52,6 +52,15 @@
       "cause": "UNRESOLVED",
       "note": "원인 미규명(파고들었으나 확정 못함). raw 재확인(inbox/parser/20260825T1520Z): '17-5) 출재' 소블록 + <유배당계약>/<무배당계약>/<변액계약> 3-그룹 배당합산 표가 문서 안에 두 번 등장(같은 삼성생명·신한라이프 패턴) — 유배당·변액은 두 사본이 완전히 동일값, 무배당만 미세하게 다르다(5,731,141 vs 5,703,471 opening). 3그룹 합(첫 사본 우선)=1,541.73억으로 PL(1,537.34억)에 4.39억 차, 두번째 사본 합=1,587.95억으로 PL과 5.06억 차 — 어느 쪽도 허용오차(0.77억) 안에 안 들어온다. 코리안리/삼성생명/신한라이프처럼 '두 사본 중 하나가 정답'인 패턴이 아니라 둘 다 PL과 못 닫는다 — 3그룹 분해 자체가 PL이 보는 범위와 다르거나 '출재' 17-5) 소블록을 반영해야 닫히는 구조로 보이나 시간 내 확정 못함. **owner 는 '당연히 1' 입장이며 이 항목은 잔차 박제일 뿐 정당화가 아니다.**",
       "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md (2차 처리, 원인 미규명 유지)"
+    },
+    "미래에셋생명보험|2025.2Q": {
+      "residual_eok": 200.77,
+      "pl_eok": 992.07,
+      "waterfall_eok": 791.3,
+      "rel": 0.253722,
+      "cause": "WATERFALL_SUSPECT",
+      "note": "단일 분기 outlier. 루트 상각 시계열 483.6 / 791.3 / 1,531.21 인데 PL 은 483.7 / 992.07 / 1,531.20 — 1Q·3Q 는 소수 둘째자리까지 일치하고 2025.2Q 만 벌어진다. 누계 항목이라 2Q 만 200억 낮은 것은 시계열상 불가능 → 루트 2025.2Q 상각이 의심된다. history 는 이 분기 status=partial 이라 3자 대조 불가. [2026-08-25 추가, inbox/parser/20260825T1520Z iter2]: 루트값(item5=-791.3) 자체가 추출값이 아니라 data/_gold/user_csm_cells.json 의 why 공란 gold override 다(KR0079 2025.2Q item5, was=None -- 빌더 재현시 None). PL 쪽 992.07 도 소수 6자리 파생값. 양쪽 다 원천 미확정 -- 이 잔차를 '연결/별도' 문제로 보지 말 것(다른 원인, inbox/parser/20260825T2200Z 에서 별도 조사 중).",
+      "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
     },
     "하나생명보험|2024.4Q": {
       "residual_eok": -5.13,

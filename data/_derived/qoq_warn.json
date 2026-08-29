@@ -891,17 +891,6 @@
     "sign_flip": false
   },
   {
-    "company": "미래에셋생명보험",
-    "quarter": "2026.2Q",
-    "item": "CSM상각",
-    "delta_pct": -42.6,
-    "threshold_pct": 10.0,
-    "cur": -1128.3,
-    "ref": -791.3,
-    "basis": "yoy",
-    "sign_flip": false
-  },
-  {
     "company": "흥국생명보험",
     "quarter": "2024.1Q",
     "item": "신계약CSM",
@@ -2013,17 +2002,6 @@
     "sign_flip": false
   },
   {
-    "company": "미래에셋생명보험",
-    "quarter": "2025.2Q",
-    "item": "CSM상각",
-    "delta_pct": 21.4,
-    "threshold_pct": 10.0,
-    "cur": -791.3,
-    "ref": -1006.4,
-    "basis": "yoy",
-    "sign_flip": false
-  },
-  {
     "company": "푸본현대생명보험",
     "quarter": "2025.2Q",
     "item": "기말CSM",
@@ -2263,6 +2241,17 @@
     "cur": 9672.5,
     "ref": 8485.3,
     "basis": "qoq",
+    "sign_flip": false
+  },
+  {
+    "company": "미래에셋생명보험",
+    "quarter": "2026.2Q",
+    "item": "CSM상각",
+    "delta_pct": -13.7,
+    "threshold_pct": 10.0,
+    "cur": -1128.3,
+    "ref": -992.1,
+    "basis": "yoy",
     "sign_flip": false
   },
   {
