@@ -189,6 +189,12 @@ DATA_CONTRACT_CHECKS = {
     "check_as_of": "WIRED — as-of/stale/effective-list",
     "check_cross_source": "WIRED — 동일개념 tolerance + 다른개념 guard",
     "check_domain_identity": "WIRED — 보완자본 한도 분모=SCR×50% / 소진율",
+    "check_gold_overlay":
+        "WIRED 2026-08-30 — gold 오버레이가 빌더 소스를 덮은 칸의 census + 마스크 드리프트 RED. "
+        "이 검사 이전에는 gold(`data/_gold/user_{csm,pl}_cells.json`)를 빌더 소스와 대조하는 "
+        "게이트·테스트가 저장소에 **0건**이었다 — `_apply_*_overrides()` 가 비교 없이 UPSERT 만 "
+        "하므로 gold 밑에서 빌더가 회귀해도 화면은 옳고 모든 게이트가 clean 을 찍었다. "
+        "빼면 그 false-green 이 그대로 돌아온다. inbox/validation/20260830T0710Z",
     "check_generic_anomalies":
         "DEWIRED 2026-08-25 — owner 지시로 게이트에서 분리(scripts/scan_generic_anomalies.py). "
         "근거: YELLOW 전용이라 RED 를 한 건도 낸 적이 없어 `blocked` 에 들어간 적이 구조적으로 "

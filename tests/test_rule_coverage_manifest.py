@@ -841,3 +841,235 @@ def test_pl_constructive_map_matches_builder():
             "같이 고쳐라 — 안 고치면 변이시험이 실제보다 낙관적으로 나온다.")
     assert "t1[21] = round(t1[22] - t1[20], 6)" in fsrc
     assert "t1[18] = round(t1[17] - t1[19], 6)" in fsrc
+
+
+# ===========================================================================
+# gold 오버레이 축 (validate_data_contract CHECK 6) — 매니페스트 + 변이시험
+# ===========================================================================
+# ## 왜 이 절이 있나
+#
+# `build_root_masters._apply_csm_overrides()` / `_apply_pl_overrides()` 는 gold `set` 의 값을
+# **무조건 UPSERT** 하고 빌더 소스와 한 번도 비교하지 않는다. 2026-08-30 전 저장소 검색 결과
+# gold 를 소스와 대조하는 게이트·테스트가 **0건**이었다 — 즉 gold 셀 밑에서 빌더가 회귀해도
+# 화면은 옳고 모든 게이트가 clean 을 찍는다. 이 저장소가 두 달을 잃은 false-green 의 형태
+# 그 자체다("맞는 산수 · 틀린 소스").
+#
+# 이 절이 강제하는 것:
+#   1. 게이트 소스의 `GOLD_OVERLAY_*` 룰 id 전부가 아래 선언에 있는가 (룰이 조용히 늘거나
+#      사라지는 것을 막는다)
+#   2. **마스크 칸 수**가 선언과 같은가 — 허용오차를 몰래 넓히면 마스크 집합이 부풀고,
+#      부푼 만큼 `DRIFT` 가 안 터진다. 그 경로를 숫자로 막는다.
+#   3. 마스크 칸이 **빠짐없이 박제**됐는가 (박제 안 된 마스크 = 무방비)
+#   4. 변이시험 — 소스를 흔들면 RED 가 실제로 나오는가, 박제를 지우면 침묵하지 않는가
+GOLD_OVERLAY_RULES = {
+    "GOLD_OVERLAY_REDUNDANT":
+        "YELLOW census 한 줄/오버레이 — 몇 칸이 조용히 덮여 있는지를 게이트 출력의 숫자로 만든다",
+    "GOLD_OVERLAY_DRIFT":
+        "RED — 박제된 마스크 칸이 마스크를 벗었다. gold 가 없었다면 화면이 틀렸을 상태이고, "
+        "다른 어떤 게이트도 이걸 못 본다",
+    "GOLD_OVERLAY_PIN_MOVED":
+        "YELLOW — 여전히 마스크지만 소스가 박제값에서 움직였다(gold 와 소스가 함께 움직임)",
+    "GOLD_OVERLAY_NEWLY_REDUNDANT":
+        "YELLOW — 마스크인데 박제가 없다 = 회귀 탐지가 안 되는 칸. 마스크 집합이 조용히 "
+        "늘어나는 것을 막는다",
+    "GOLD_OVERLAY_LEDGER_STALE":
+        "YELLOW — 박제는 있는데 gold 에 그 셀이 없다(등재부 화석화 방지)",
+    "GOLD_OVERLAY_DUPLICATE_KEY":
+        "YELLOW — gold set 중복 키. 적용이 last-wins 라 정합성이 리스트 순서에 걸린다",
+    "GOLD_OVERLAY_SOURCE_UNREADABLE":
+        "RED — gold 는 있는데 빌더 소스를 못 읽는다. 조용히 넘어가면 이 축 전체가 무의미해진다",
+}
+
+# 실측 2026-08-30 (중복 키 7건 제거 후). 오버레이별 (gold 칸 수, 마스크 칸 수).
+GOLD_OVERLAY_CENSUS = {"CSM": (270, 86), "PL": (198, 29)}
+
+
+def _gate():
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import validate_data_contract as G
+    return G
+
+
+class _GoldEnv:
+    """`check_gold_overlay` 가 읽는 것은 이 두 필드뿐이다 — 변이 주입용 최소 스텁."""
+
+    def __init__(self, overlays, ledger):
+        self.gold_overlays = overlays
+        self.gold_overlay_ledger = ledger
+
+
+def _gold_run(overlays, ledger):
+    G = _gate()
+    res = G.GateResult()
+    G.check_gold_overlay(res, _GoldEnv(overlays, ledger))
+    return res
+
+
+@pytest.fixture(scope="module")
+def _gold_live():
+    G = _gate()
+    env = G.Env()
+    return G, copy.deepcopy(env.gold_overlays), copy.deepcopy(env.gold_overlay_ledger)
+
+
+def test_gold_overlay_rule_ids_match_manifest():
+    """게이트 소스의 `GOLD_OVERLAY_*` 룰 id 와 이 선언이 정확히 일치해야 한다."""
+    import re
+    src = (ROOT / "scripts" / "validate_data_contract.py").read_text(encoding="utf-8")
+    found = set(re.findall(r'rule="(GOLD_OVERLAY_\w+)"', src))
+    assert found == set(GOLD_OVERLAY_RULES), (
+        f"게이트 {sorted(found)} != 매니페스트 {sorted(GOLD_OVERLAY_RULES)} — "
+        "룰을 추가·개명·삭제했으면 이 선언도 같이 고쳐라")
+
+
+def test_gold_overlay_census_matches_manifest(_gold_live):
+    """마스크 칸 수가 선언과 같은가.
+
+    이 숫자가 커지는 경로는 둘뿐이다: gold 가 늘었거나, **허용오차를 넓혔거나.** 후자는
+    `DRIFT` 를 조용히 무력화한다(마스크로 분류되면 소스가 그만큼 벌어져도 RED 가 안 난다).
+    그래서 tol 을 만지면 여기서 막힌다."""
+    G, overlays, _ledger = _gold_live
+    got = {}
+    for oid, gold_doc, src_rows, _p, err in overlays:
+        assert not err, f"{oid}: 빌더 소스를 못 읽는다 — {err}"
+        rows = G.gold_overlay_census(oid, gold_doc.get("set", []), src_rows)
+        masked = [r for r in rows if r["verdict"] in G._GOLD_MASKED]
+        got[oid] = (len(rows), len(masked))
+    assert got == GOLD_OVERLAY_CENSUS, (
+        f"실측 {got} != 선언 {GOLD_OVERLAY_CENSUS}. gold 를 늘렸거나 허용오차를 바꿨다 — "
+        "어느 쪽인지 확인하고 선언을 고쳐라(마스크가 늘면 그만큼 박제도 늘려야 한다)")
+
+
+def test_gold_overlay_every_masked_cell_is_pinned(_gold_live):
+    """마스크 칸은 **빠짐없이** 박제돼 있어야 한다 — 박제 안 된 마스크는 무방비다.
+
+    게이트가 그걸 YELLOW(`NEWLY_REDUNDANT`)로 열거하지만, 열거만 하고 아무도 안 채우면
+    그 칸은 영원히 회귀 탐지 밖이다. 여기서 0 을 강제한다."""
+    G, overlays, ledger = _gold_live
+    pins = (ledger or {}).get("entries", {})
+    unpinned = []
+    for oid, gold_doc, src_rows, _p, _err in overlays:
+        for r in G.gold_overlay_census(oid, gold_doc.get("set", []), src_rows):
+            if r["verdict"] in G._GOLD_MASKED and r["key"] not in pins:
+                unpinned.append(r["key"])
+    assert not unpinned, (
+        f"박제 안 된 마스크 칸 {len(unpinned)}개: {unpinned[:10]} — "
+        "scripts/_probes/seed_20260830_gold_overlay_ledger.py --apply 로 재박제하거나 "
+        "그 gold 줄을 지워라")
+
+
+def test_gold_overlay_ledger_key_is_scoped_per_overlay(_gold_live):
+    """CSM 과 PL 은 (회사, 분기, 항목번호) 공간을 **공유한다** — 키에 overlay id 가 없으면
+    한쪽 박제가 다른 쪽 셀에 붙는다.
+
+    2026-08-30 실측: id 없는 키로 처음 박제했더니 `KR0072 2023.2Q 항목4` 등에서
+    RED 14건이 통째로 오탐이었다. 그 회귀를 여기서 막는다."""
+    G, overlays, _ledger = _gold_live
+    naked = {}          # (회사, 분기, 항목) -> {overlay}
+    keys = []
+    for oid, gold_doc, src_rows, _p, _err in overlays:
+        for r in G.gold_overlay_census(oid, gold_doc.get("set", []), src_rows):
+            naked.setdefault((r["company"], r["quarter"], str(r["item"])), set()).add(oid)
+            keys.append(r["key"])
+    shared = [k for k, v in naked.items() if len(v) > 1]
+    assert shared, ("두 오버레이가 공유하는 (회사,분기,항목)이 하나도 없다 — 이 회귀 테스트가 "
+                    "가짜가 됐다. 데이터가 바뀐 것인지 확인하라")
+    assert len(keys) == len(set(keys)), "등재부 키가 오버레이 간에 충돌한다"
+
+
+def test_gold_overlay_clean_baseline_has_no_red(_gold_live):
+    """실파일 그대로면 이 축의 RED 은 0 이어야 한다 (깨짐 방향 — 새 룰이 기존 상태를 안 깬다)."""
+    G, overlays, ledger = _gold_live
+    res = _gold_run(overlays, ledger)
+    reds = [(f.rule, f.company, f.quarter, f.message[:80]) for f in res.red]
+    assert not reds, f"기준선에서 RED 이 났다: {reds}"
+    census = [f for f in res.yellow if f.rule == "GOLD_OVERLAY_REDUNDANT"]
+    assert len(census) == len(GOLD_OVERLAY_CENSUS), (
+        "오버레이마다 census 한 줄이 나와야 한다 — 숫자가 게이트 출력에 안 찍히면 "
+        "이 축의 존재 이유가 사라진다")
+
+
+def test_mutation_gold_overlay_drift_fires(_gold_live):
+    """박제된 마스크 칸 밑에서 소스를 흔들면 `GOLD_OVERLAY_DRIFT` RED 가 나오는가.
+
+    **이것이 이 축의 전부다.** 안 터지면 gold 는 보호가 아니라 은폐로 남는다."""
+    G, overlays, ledger = _gold_live
+    pins = (ledger or {}).get("entries", {})
+    assert pins, "등재부가 비었다 — 박제가 사라졌는지 확인하라"
+
+    fired = 0
+    for i, (oid, gold_doc, src_rows, path, err) in enumerate(overlays):
+        rows = G.gold_overlay_census(oid, gold_doc.get("set", []), src_rows)
+        target = next((r for r in rows
+                       if r["key"] in pins and isinstance(r["src"], (int, float))), None)
+        assert target, f"{oid}: 박제된 수치형 마스크 칸이 없다 — 축이 죽었다"
+        idx = {(r.get("원보험사코드"), r.get("항목번호"), r.get("공시분기")): j
+               for j, r in enumerate(src_rows)}
+        j = idx[(target["company"], target["item"], target["quarter"])]
+        mutated = copy.deepcopy(src_rows)
+        # 주입 크기 max(10, |v|x30%) — TOL_ROUND(0.05)의 200배 이상. 임계 문제가 아님을 보장.
+        v = mutated[j]["값"]
+        mutated[j]["값"] = v + max(10.0, abs(v) * 0.30)
+        ovl = list(overlays)
+        ovl[i] = (oid, gold_doc, mutated, path, err)
+        res = _gold_run(ovl, ledger)
+        hit = [f for f in res.red if f.rule == "GOLD_OVERLAY_DRIFT"
+               and f.company == target["company"] and f.quarter == target["quarter"]]
+        assert hit, (f"{oid} {target['key']} 의 소스를 흔들었는데 DRIFT 가 안 난다 — "
+                     f"gold 마스크가 여전히 탐지 불가다")
+        fired += 1
+    assert fired == len(overlays), "오버레이 하나가 변이시험에서 빠졌다"
+
+
+def test_mutation_gold_overlay_unpinning_is_not_silent(_gold_live):
+    """박제를 지우면(=선언 삭제) 그 칸이 `NEWLY_REDUNDANT` YELLOW 로 돌아오는가.
+
+    지웠는데 아무 말도 안 하면 등재부는 '지우면 검사가 사라지는' 통로가 된다."""
+    G, overlays, ledger = _gold_live
+    pins = dict((ledger or {}).get("entries", {}))
+    victim = sorted(pins)[0]
+    stripped = {**(ledger or {}), "entries": {k: v for k, v in pins.items() if k != victim}}
+    res = _gold_run(overlays, stripped)
+    assert not res.red, "박제를 지웠는데 RED 이 났다 — 이 경로는 YELLOW 여야 한다"
+    yr = {(f.rule, f.company, f.quarter) for f in res.yellow}
+    _oid, co, q, _item = victim.split("|")
+    assert ("GOLD_OVERLAY_NEWLY_REDUNDANT", co, q) in yr, (
+        f"{victim} 박제를 지웠는데 게이트가 침묵한다")
+
+
+def test_mutation_gold_overlay_duplicate_key_fires(_gold_live):
+    """gold set 에 같은 키를 하나 더 넣으면 위생 룰이 발화하는가.
+
+    실제로 7건(CSM 6 · PL 1)이 있었고 아무도 몰랐다 — last-wins 라 결과가 리스트 순서에
+    걸려 있었다."""
+    _G, overlays, ledger = _gold_live
+    oid, gold_doc, src_rows, path, err = overlays[0]
+    dup_doc = copy.deepcopy(gold_doc)
+    dup_doc["set"] = dup_doc["set"] + [copy.deepcopy(dup_doc["set"][0])]
+    res = _gold_run([(oid, dup_doc, src_rows, path, err)], ledger)
+    assert any(f.rule == "GOLD_OVERLAY_DUPLICATE_KEY" for f in res.yellow), \
+        "중복 키를 넣었는데 게이트가 조용하다"
+
+
+def test_mutation_gold_overlay_unreadable_source_is_red(_gold_live):
+    """빌더 소스를 못 읽으면 조용히 통과하지 않고 RED 인가 (SKIP-on-missing 차단)."""
+    _G, overlays, ledger = _gold_live
+    oid, gold_doc, _src, path, _err = overlays[0]
+    res = _gold_run([(oid, gold_doc, [], path, "JSONDecodeError: broken")], ledger)
+    assert any(f.rule == "GOLD_OVERLAY_SOURCE_UNREADABLE" for f in res.red), \
+        "소스를 못 읽는데 이 축이 조용히 무의미해진다"
+
+
+def test_gold_overlay_is_wired_into_run_gate():
+    """`run_gate()` 가 실제로 이 검사를 부르는가 — '배선했다' 와 '강제된다' 는 다른 말이다.
+
+    `tests/test_push_gate_wiring.py` 가 선언 대조를 하지만, 여기서도 한 번 더 본다:
+    이 매니페스트는 축이 **살아 있다**고 주장하므로 그 전제를 스스로 확인해야 한다."""
+    import re
+    src = (ROOT / "scripts" / "validate_data_contract.py").read_text(encoding="utf-8")
+    body = re.search(r"^def run_gate\(.*?\n(.*?)^\S", src, re.M | re.S).group(1)
+    assert re.search(r"^\s*check_gold_overlay\(res, env\)", body, re.M), \
+        "check_gold_overlay 가 run_gate() 에서 빠졌다"
+    hook = (ROOT / "scripts" / "prepush_check.py").read_text(encoding="utf-8")
+    assert "gate.run_gate(env)" in hook, \
+        "훅이 run_gate 를 부르지 않는다 — 이 축이 push 를 막지 못한다"

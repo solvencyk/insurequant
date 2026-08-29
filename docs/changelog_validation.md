@@ -1,9 +1,150 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-29 (f) · Stage 3/5 — validation
+> Last updated: 2026-08-30 (b) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-08-30 (b) — gold 오버레이 축 신설(CHECK 6): 115칸을 덮고 있던 마스크를 게이트가 세고, 벗겨지면 막는다
+
+티켓 `inbox/_resolved/20260830T0710Z__validation__MULTI__gold_overlay_mask_undetected.md`
+(validation 자체 발주). **마스터 값 무변경 — 룰·등재부·매니페스트·gold 중복키 정리만.**
+
+### 무엇이 문제였나
+
+`scripts/build_root_masters.py` 의 `_apply_csm_overrides()`(L182-208) 와
+`_apply_pl_overrides()`(L144-160) 는 gold `set` 의 `값` 을 **무조건 UPSERT** 하고 빌더 소스와
+**한 번도 비교하지 않는다.** 전 저장소 검색 결과 `data/_gold/user_{csm,pl}_cells.json` 을 빌더
+소스와 대조하는 게이트·테스트가 **0건**이었다(소비처는 적용·공시·기입뿐).
+
+결과가 이 저장소가 두 달을 잃은 false-green 그 자체다 — **gold 셀 밑에서 빌더가 회귀해도 화면은
+옳고 모든 게이트가 clean 을 찍는다.** KR0079(미래에셋생명)가 이미 두 번 그렇게 회귀했고
+(항목5 라벨 변형 #3 · "기타" 상품블록 누락) 2025.2Q~2026.1Q 화면이 우연히 맞았던 이유가 정확히
+이 마스크다. gold 는 회귀를 **막는** 게 아니라 **가린다** — 화면만 지키고 코드는 깨진 채,
+gold 없는 다음 분기가 깨진 값을 싣는다.
+
+### 비교 기준을 어디로 잡느냐가 이 축의 전부다
+
+빌더의 실제 적용전 값은 `_additive_merge(fresh 소스, 루트 마스터)` 다. 그런데 그 폴백이 읽는
+**루트 마스터에는 직전 실행에서 gold 가 이미 박혀 있다.** 그걸 기준으로 삼으면 검사가 자기
+자신을 확인하게 되고, `ROW_ABSENT`/`NULL` 14칸이 전부 SAME 으로 보인다. 그래서 기준은
+**fresh 소스 파일 하나**로 못박았다(`csm_waterfall_master_diag.json` · `pl_breakdown_master.json`).
+PL 의 `_zero_other_expense`(item16→null)도 같은 이유로 재현하지 않는다 — 감시 대상은 파생 결과가
+아니라 "**파서가 아직 이 값을 원문에서 뽑는가**" 이기 때문이다.
+
+### 배선한 룰 (7개)
+
+`scripts/validate_data_contract.py` **CHECK 6 `check_gold_overlay`** →
+`run_gate()` → `scripts/prepush_check.py` 1) 단계가 그 `run_gate` 를 부른다 = **훅에 걸린다**.
+(`test_gold_overlay_is_wired_into_run_gate` 가 그 두 사실을 소스 문자열로 매 push 확인한다.)
+
+| 룰 | 심각도 | 무엇을 잡나 |
+|---|---|---|
+| `GOLD_OVERLAY_REDUNDANT` | YELLOW ×1/오버레이 | census 한 줄 — 몇 칸이 조용히 덮여 있는가 |
+| `GOLD_OVERLAY_DRIFT` | **RED** | 박제된 마스크 칸이 마스크를 벗었다 |
+| `GOLD_OVERLAY_PIN_MOVED` | YELLOW | 마스크는 유지, 소스가 박제값에서 이동(gold 와 함께 움직임) |
+| `GOLD_OVERLAY_NEWLY_REDUNDANT` | YELLOW | 마스크인데 박제가 없다 = 회귀 탐지 밖 |
+| `GOLD_OVERLAY_LEDGER_STALE` | YELLOW | 박제는 있는데 gold 에 그 셀이 없다 |
+| `GOLD_OVERLAY_DUPLICATE_KEY` | YELLOW | gold `set` 중복 키(적용이 last-wins) |
+| `GOLD_OVERLAY_SOURCE_UNREADABLE` | **RED** | gold 는 있는데 소스를 못 읽는다(SKIP-on-missing 차단) |
+
+**티켓이 요청한 CSM 하나가 아니라 CSM + PL 두 오버레이를 덮었다.** PL 도 똑같이 비교 없이
+UPSERT 하므로, CSM 만 배선하는 것은 `CLAUDE.md` ①b 절이 지목한 "빠진 게이트를 눈치챌 때마다
+룰을 한 개씩 베껴 심는" 패턴의 반복이 된다.
+
+### census 실측 (2026-08-30, 중복키 정리 후)
+
+| 오버레이 | gold 칸 | SAME_EXACT | SAME_AT_1DP | **마스크** | LOAD_BEARING | ROW_ABSENT | NULL_IN_SOURCE |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| CSM | 270 | 28 | 58 | **86** | 170 | 12 | 2 |
+| PL | 198 | 26 | 3 | **29** | 46 | 0 | 123 |
+
+마스크 **115칸**을 `data/_gold/gold_overlay_ledger.json` 에 **셀 단위 박제**
+(`csm_amort_identity_ledger.json` 형태 — 통째 skip 이 아니라 (판정, gold, 소스, 소스파일) 을
+박아 두고 매 실행 재검산).
+
+원 티켓의 83(28+55) → 86 의 경로 셋, 전부 실측:
+
+1. **+2** — KR0079 2025.2Q 항목4/5 가 parser 정정(-685.50/-992.07)으로 소스와 일치.
+2. **±0** — 중복키 6건 제거로 KR0076 2025.4Q stale 5칸이 LOAD_BEARING 에서 빠짐.
+3. **+2** — **경계를 float 잡음이 가르고 있었다.** `4727.25 vs 4727.2` 처럼 gold(2자리)를
+   소스(1자리)로 반올림한 **정확히 0.05** 짜리 2건이 `0.050000000000181` 로 계산돼 마스크에서
+   빠져 있었다. 판정이 아니라 사고라 `round(|Δ|, 9)` 로 접었다.
+
+### 전 버킷 양방향 시뮬레이션 — ALL PASS
+
+`scripts/_probes/probe_20260830_val_gold_overlay_simulation.py`
+
+| 축 | 실측 |
+|---|---|
+| A. 닫힘 — 박제 마스크 칸 전수 변이 | 시도 **115** · 탐지 **115 (100.0%)**, SKIP **0** |
+| B. tol 안 변이(잔여 여유의 절반, 108칸) | 신규 DRIFT RED **0** = 밴드가 아니라 반올림 폭 |
+| C. 깨짐 — 박제 안 된 216칸 전수 변이 | 신규 RED **0**(오탐 원천 없음) |
+| D. 깨짐 — 등재부 전삭제 | RED **0** · NEWLY_REDUNDANT **115**(침묵이 아니라 열거) |
+| E. 게이트 전체 | RED **0** · YELLOW **94** · 이 축을 뺀 나머지 **RED=0 YELLOW=92 = 종전 baseline 그대로** |
+
+A 에서 SKIP 을 0 으로 만든 것이 중요하다 — 소스가 null 인 박제 칸 1개(KR0087 PL item11,
+gold 도 null)를 "값이 없으니 건너뛴다" 로 두지 않고 **"소스가 값을 얻으면"** 을 변이로 삼아
+`GOLD_SUPPRESSES` → DRIFT 경로를 확인했다. SKIP-on-missing 이 이 저장소의 검증 무력화 패턴이다.
+
+B 에서 처음에 고정폭 0.004 로 재서 **RED 2건을 '과민'으로 오독할 뻔했다** — 이미 경계
+(|Δ|=0.05)에 붙어 있는 칸이 밖으로 밀려난 것이었다. 주입을 셀별 잔여 여유의 절반으로 바꿔
+0 을 확인했다.
+
+### 배선 중에 낸 오탐 14건 (기록으로 남긴다)
+
+등재부 키를 `회사|분기|항목` 으로 만들었더니 **CSM 과 PL 이 그 공간을 공유해서**
+(`KR0072 2023.2Q 항목4` 가 양쪽에 있고 값이 전혀 다르다) 한쪽 박제가 다른 쪽 셀에 붙어
+`GOLD_OVERLAY_DRIFT` RED 14건이 통째로 오탐이었다. 키에 overlay id 를 넣어 고쳤고
+`test_gold_overlay_ledger_key_is_scoped_per_overlay` 가 그 회귀를 막는다.
+
+### gold 중복 키 7건 제거 (값 변화 0)
+
+`scripts/_probes/fix_20260830_gold_overlay_dedup.py --apply`
+
+- `user_csm_cells.json` — KR0076(아이엠라이프) 2025.4Q 항목1~6, **6건**. 뒤(2026-08-25, `why`
+  있음)가 앞(2026-06-11, `note` 만)을 명시적으로 supersede 한다.
+- `user_pl_cells.json` — KR0087 2025.3Q 항목11, **1건**(티켓이 몰랐던 건). 앞(2026-06-19/20
+  owner xlsx fill, 값 0.0)을 뒤(2026-08-15 raw 재확인, 값 null)가 뒤집는다.
+
+적용은 last-wins 라 **정합성이 리스트 순서에 걸려 있었다** — 누가 정렬·dedup 하거나 diff 를
+잘못 머지하면 조용히 앞이 이긴다. 적용 전후로 `_apply_*_overrides` 와 같은 축약을 돌려
+(키→값) 사전이 완전히 동일함을 확인하고 앞 엔트리만 삭제했다(CSM 270키 · PL 198키, 값 변화 0,
+diff 는 삭제 56줄뿐). 지워진 값은 살아남는 엔트리의 `was` 에 이미 있다.
+
+### 매니페스트·레지스트리 (안 하면 테스트가 막는다 — 실제로 막았다)
+
+- `tests/test_rule_coverage_manifest.py` gold 오버레이 절 신설(10 테스트): 룰 id 대조 ·
+  **마스크 칸 수 박제**(`GOLD_OVERLAY_CENSUS = {"CSM": (270, 86), "PL": (198, 29)}` — 허용오차를
+  넓히면 마스크 집합이 부풀고 그만큼 DRIFT 가 안 터지므로, 그 경로를 숫자로 막는다) ·
+  **박제 완전성 0**(박제 안 된 마스크 금지) · 키 네임스페이스 회귀 · 변이시험 4종 · 훅 배선.
+- `tests/test_identity_registry.py` — `GOLD_OVERLAY_DRIFT` 를 `kind: IDENTITY`(abs 0.05 / rel 0.0)
+  로 등재. `test_no_undeclared_threshold_constants` 가 **설계대로 먼저 FAIL 해서**
+  `GOLD_OVERLAY_TOL_EXACT`/`_ROUND` 등재를 강제했다.
+  `test_mutation_delegation_is_real` 은 `DECLARED_RULES`(K-ICS 전용)만 봐서 이 축의 정당한 위임을
+  "회피" 로 오판 → 그 파일이 선언한 **두 계열**(`DECLARED_RULES | GOLD_OVERLAY_RULES`)을 보도록 고침.
+- `tests/test_push_gate_wiring.py` — `DATA_CONTRACT_CHECKS["check_gold_overlay"] = WIRED` + 사유.
+
+### 게이트·훅 착지
+
+- `validate_data_contract.py`: **RED=0 · YELLOW 92 → 94** (오버레이당 census 한 줄), exit 0.
+- `--selftest`: **57/57 pass**(inject 모드에서 축이 격리 — 합성 케이스를 오염시키지 않는다).
+- 오프라인 묶음: **288 → 299 passed / 1 skipped**(+10 축 테스트, +1 배선 파라미터).
+- 골든 재생성 **불요** — `validate_master_tables` SUMMARY·산출 무변동.
+- **`scripts/prepush_check.py` exit 0 · gate-clear**(RED=0 · K-ICS clear · 도메인 pass ·
+  DART raw 유실 0 · 골든 입력지문 pass · inbox 위반 0 · offline tests pass).
+
+### 남긴 사각 (명문화)
+
+- **LOAD_BEARING 216칸 밑에서 빌더가 움직이는 것.** 그 칸은 애초에 gold 가 정답이고 빌더는 이미
+  다르므로 박제하면 파서 개선마다 오탐이 난다(C 시뮬레이션이 그 전제를 실측으로 확인). 대신
+  census 줄이 매 실행 그 숫자를 인쇄한다.
+- **gold 가 유일 소스인 셀(CSM ROW_ABSENT 12 · NULL 2)의 원문 재확인 가능성.** 이 축은 "gold 가
+  유일 소스" 라고 정확히 말할 뿐, 그 값이 원문에서 재확인되는지는 안 본다.
+- **`public_exports/` 를 읽는 검증기가 0개**(`validate_live_artifacts.py` 포함 grep 0건).
+  `public_exports/CSM워터폴.json` 은 지금 루트와 완전 일치하지만(2,172행 · 값 불일치 0), 그게
+  닫혀 있는지를 아무도 안 본다 — 불변식 1번의 미배선 구멍. 후속 티켓
+  `inbox/validation/20260830T1500Z__validation__MULTI__public_exports_uncovered.md`.
 
 ## 2026-08-29 (f) — PL 등식의 절반이 구성상 참이었다: 판정을 상수로 선언 + item22 원천 대조 신설
 

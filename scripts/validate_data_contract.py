@@ -42,6 +42,7 @@ import json
 import re
 import statistics
 import sys
+from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -1818,6 +1819,14 @@ class Env:
         self.source_vision_ledger = self._get(
             "source_vision_ledger",
             (lambda: None) if self.inject else _load_source_vision_ledger)
+        # 2026-08-30 gold 오버레이 축(CHECK 6). selftest(inject 모드)는 합성데이터 격리 —
+        # None 이면 check_gold_overlay 가 통째로 비켜간다(17BS·dividend 와 같은 규칙).
+        # 주입하려면 inject["gold_overlays"] 에 아래 _load_gold_overlays 와 같은 모양의
+        # 리스트를, inject["gold_overlay_ledger"] 에 등재부 dict 를 넣는다.
+        self.gold_overlays = self._get(
+            "gold_overlays", (lambda: None) if self.inject else self._load_gold_overlays)
+        self.gold_overlay_ledger = self._get(
+            "gold_overlay_ledger", (lambda: None) if self.inject else gold_overlay_ledger)
 
         # derived
         self.code_name = {r["원보험사코드"]: r["원수사명"] for r in self.kics_records
@@ -2124,6 +2133,30 @@ class Env:
             except Exception:
                 continue
         return False
+
+    def _load_gold_overlays(self):
+        """[(overlay id, gold doc, fresh 소스 rows, 소스 경로, 읽기 오류)] — CHECK 6 입력.
+
+        gold 파일이 없으면 그 오버레이는 아예 적용되지 않으므로(빌더가 early-return) 축에서
+        빠진다. 반대로 **gold 는 있는데 소스를 못 읽는 경우는 err 로 올려 RED 를 내게 한다** —
+        그때 조용히 넘어가면 이 축 전체가 무의미해진다."""
+        out = []
+        for oid, gold_rel, src_rel, _fn in GOLD_OVERLAY_SPECS:
+            gp, sp = ROOT / gold_rel, ROOT / src_rel
+            if not gp.exists():
+                continue
+            try:
+                gold_doc = json.loads(gp.read_text(encoding="utf-8"))
+            except Exception as e:
+                out.append((oid, None, [], gold_rel, f"gold {type(e).__name__}: {e}"))
+                continue
+            try:
+                src_rows = json.loads(sp.read_text(encoding="utf-8"))
+            except Exception as e:
+                out.append((oid, gold_doc, [], src_rel, f"{type(e).__name__}: {e}"))
+                continue
+            out.append((oid, gold_doc, src_rows, src_rel, None))
+        return out
 
     def _snapshot_mtimes(self):
         out = {}
@@ -2661,6 +2694,203 @@ def check_statutory_reserves(res: GateResult, env: "Env") -> None:
                      f"baseline 이 0 이 되면 이 축은 완전 차단 모드가 된다"))
 
 
+# ===========================================================================
+# CHECK 6 — GOLD OVERLAY vs BUILDER SOURCE  (2026-08-30, inbox/validation/20260830T0710Z)
+# ===========================================================================
+# ## 왜 있나
+#
+# `scripts/build_root_masters.py` 의 `_apply_csm_overrides()` / `_apply_pl_overrides()` 는
+# gold `set` 의 `값` 을 **무조건 UPSERT** 하고 빌더 소스와 **한 번도 비교하지 않는다.**
+# 2026-08-30 전 저장소 검색: gold 를 빌더 소스와 대조하는 게이트·테스트 **0건**이었다
+# (소비처는 적용·공시·기입뿐). 결과는 이 저장소가 두 달을 잃은 false-green 그 자체다 —
+# **gold 셀 밑에서 빌더가 회귀해도 화면은 옳고 모든 게이트가 clean 을 찍는다.**
+# KR0079(미래에셋생명)가 이미 두 번 그렇게 회귀했고(항목5 라벨 변형 · "기타" 상품블록 누락)
+# 2025.2Q~2026.1Q 화면이 우연히 맞았던 이유가 정확히 이 마스크였다.
+#
+# ## 비교 기준 — **fresh 소스만** 본다 (여기가 함정이다)
+#
+# 빌더의 실제 적용 전 값은 `_additive_merge(fresh, 루트마스터)` 다. 그런데 그 폴백은
+# **루트 마스터를 읽는다 = 직전 실행에서 gold 가 이미 박혀 있는 파일**이다. 그것을 기준으로
+# 삼으면 검사가 자기 자신을 확인하게 된다(ROW_ABSENT/NULL 셀이 전부 SAME 으로 보인다).
+# 그래서 기준은 **fresh 소스 파일 하나**다. PL 의 `_zero_other_expense`(item16 → null)도
+# 같은 이유로 재현하지 않는다 — 그 단계는 파생이고, 우리가 감시하려는 것은 "파서가 아직
+# 이 값을 원문에서 뽑아내는가" 이기 때문이다.
+#
+# ## 판정과 심각도
+#
+#   SAME_EXACT / SAME_AT_1DP  = 소스가 이미 gold 를 재현한다 → **마스크**. 등재부에 박제하고,
+#       박제된 셀이 마스크를 벗으면(=소스가 갈라지면) `GOLD_OVERLAY_DRIFT` **RED**.
+#   LOAD_BEARING / ROW_ABSENT_IN_SOURCE / NULL_IN_SOURCE / GOLD_SUPPRESSES
+#       = 화면값이 gold 에서만 나온다. 마스크가 아니라 **대체**다(빌더는 이미 다르다).
+#
+# 등재부: `data/_gold/gold_overlay_ledger.json` (csm_amort_identity_ledger.json 과 같은 형태).
+# 통째 면제가 아니다 — 셀 단위로 판정과 소스값까지 박제하고 매 실행 재검산한다.
+GOLD_OVERLAY_TOL_EXACT = 0.005   # 소스와 gold 가 같은 값이라고 볼 폭 (두 마스터의 표기 단위)
+GOLD_OVERLAY_TOL_ROUND = 0.05    # 소스가 gold 를 한 자리 낮은 그리드로 반올림한 경우까지
+GOLD_OVERLAY_LEDGER = ROOT / "data" / "_gold" / "gold_overlay_ledger.json"
+
+# (overlay id, gold 파일, 빌더 fresh 소스, 적용 함수)
+GOLD_OVERLAY_SPECS = (
+    ("CSM", "data/_gold/user_csm_cells.json",
+     "data/dart/viz/csm_waterfall_master_diag.json", "_apply_csm_overrides"),
+    ("PL", "data/_gold/user_pl_cells.json",
+     "data/dart/viz/pl_breakdown_master.json", "_apply_pl_overrides"),
+)
+_GOLD_MASKED = ("SAME_EXACT", "SAME_AT_1DP")
+
+
+def gold_overlay_verdict(gold_value, src_row) -> str:
+    """한 gold 셀의 판정. `src_row` 는 fresh 소스의 행(없으면 None)."""
+    if src_row is None:
+        return "ROW_ABSENT_IN_SOURCE"
+    sv = src_row.get("값")
+    if sv is None and gold_value is None:
+        return "SAME_EXACT"                 # 둘 다 결측 = 오버레이가 아무것도 안 바꾼다
+    if sv is None:
+        return "NULL_IN_SOURCE"
+    if gold_value is None:
+        return "GOLD_SUPPRESSES"            # gold 가 소스의 값을 일부러 지운다
+    if not isinstance(sv, (int, float)) or not isinstance(gold_value, (int, float)):
+        return "LOAD_BEARING"
+    # 경계를 float 잡음이 가르지 않게 9자리로 접는다. 실측: `4727.25 vs 4727.2` 처럼 gold(2자리)를
+    # 소스(1자리)로 반올림한 **정확히 0.05** 짜리가 2건 있는데, 이진부동소수 오차 때문에 한쪽은
+    # 0.050000000000181 로 나와 마스크에서 빠졌다. 그건 판정이 아니라 사고다.
+    d = round(abs(sv - gold_value), 9)
+    if d <= GOLD_OVERLAY_TOL_EXACT:
+        return "SAME_EXACT"
+    if d <= GOLD_OVERLAY_TOL_ROUND:
+        return "SAME_AT_1DP"
+    return "LOAD_BEARING"
+
+
+def gold_overlay_census(overlay_id, gold_entries, src_rows) -> list[dict]:
+    """gold `set` 전건에 판정을 붙인다. **기대 그리드 = gold 엔트리 전부** — 소스에 행이
+    없다고 건너뛰지 않는다(SKIP-on-missing 은 이 축에서 특히 치명적이다: 행이 없다는 것이
+    바로 빌더가 아무것도 못 만든다는 뜻이므로 판정 대상 그 자체다).
+
+    등재부 키에 **overlay id 를 반드시 넣는다** — CSM 과 PL 은 (회사, 분기, 항목번호) 공간을
+    공유한다(실측: `KR0072 2023.2Q 항목4` 가 양쪽에 있고 값이 전혀 다르다). id 없이 키를
+    만들면 한쪽 박제가 다른 쪽 셀에 붙어 **RED 14건이 통째로 오탐**이었다(2026-08-30 실측)."""
+    idx = {}
+    for r in src_rows:
+        idx[(r.get("원보험사코드"), r.get("항목번호"), r.get("공시분기"))] = r
+    out = []
+    for e in gold_entries:
+        k = (e.get("원보험사코드"), e.get("항목번호"), e.get("공시분기"))
+        srow = idx.get(k)
+        out.append({
+            "key": f"{overlay_id}|{k[0]}|{k[2]}|{k[1]}",
+            "overlay": overlay_id,
+            "company": k[0], "quarter": k[2], "item": k[1],
+            "gold": e.get("값"),
+            "src": (srow or {}).get("값"),
+            "verdict": gold_overlay_verdict(e.get("값"), srow),
+        })
+    return out
+
+
+def gold_overlay_ledger() -> dict:
+    try:
+        return json.loads(GOLD_OVERLAY_LEDGER.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def check_gold_overlay(res: GateResult, env: "Env") -> None:
+    """gold 오버레이가 빌더 소스를 얼마나 덮고 있는지 세고, 박제된 마스크가 벗겨지면 RED.
+
+    RED 은 두 가지뿐이다:
+      · `GOLD_OVERLAY_DRIFT` — 등재부가 마스크(SAME_*)로 박제한 셀이 더는 마스크가 아니다.
+        **gold 가 없었다면 화면이 틀렸을 상태**이고, 다른 어떤 게이트도 이걸 못 본다.
+      · `GOLD_OVERLAY_SOURCE_UNREADABLE` — gold 는 있는데 빌더 소스를 못 읽는다. 그러면 이
+        축 전체가 조용히 무의미해진다(SKIP-on-missing = 검증 무력화).
+    """
+    overlays = env.gold_overlays
+    if overlays is None:                    # selftest(inject) 격리 — 합성데이터에 실파일을 섞지 않는다
+        return
+    ledger = env.gold_overlay_ledger if env.gold_overlay_ledger is not None else {}
+    pins = ledger.get("entries", {}) if isinstance(ledger, dict) else {}
+    seen_pins: set[str] = set()
+
+    for oid, gold_doc, src_rows, src_path, err in overlays:
+        if err:
+            res.add(check="gold_overlay", severity="RED", master=oid, company=None, quarter=None,
+                    rule="GOLD_OVERLAY_SOURCE_UNREADABLE",
+                    message=f"{oid} gold 오버레이의 빌더 소스 {src_path} 를 읽을 수 없다 ({err}) — "
+                            f"이 축이 통째로 무의미해진다. 없는 파일과 깨진 파일은 다르다")
+            continue
+        entries = (gold_doc or {}).get("set", [])
+        if not entries:
+            continue
+
+        # --- 위생: 중복 키 (last-wins 라 정합성이 리스트 순서에 걸린다) ---
+        cnt = Counter((e.get("원보험사코드"), e.get("항목번호"), e.get("공시분기"))
+                      for e in entries)
+        for k, n in sorted((k, n) for k, n in cnt.items() if n > 1):
+            res.add(check="gold_overlay", severity="YELLOW", master=oid,
+                    company=k[0], quarter=k[2], rule="GOLD_OVERLAY_DUPLICATE_KEY",
+                    message=f"gold `set` 에 항목{k[1]} 이 {n}번 있다 — 적용은 last-wins 라 "
+                            f"결과가 **리스트 순서에 걸려 있다**. 누가 정렬·dedup 하면 조용히 "
+                            f"뒤집힌다. 뒤 엔트리가 정본이면 앞 엔트리를 지워라")
+
+        rows = gold_overlay_census(oid, entries, src_rows)
+        tally = Counter(r["verdict"] for r in rows)
+        masked = [r for r in rows if r["verdict"] in _GOLD_MASKED]
+
+        for r in rows:
+            pin = pins.get(r["key"])
+            is_masked = r["verdict"] in _GOLD_MASKED
+            if pin is None:
+                if is_masked:
+                    res.add(check="gold_overlay", severity="YELLOW", master=oid,
+                            company=r["company"], quarter=r["quarter"],
+                            rule="GOLD_OVERLAY_NEWLY_REDUNDANT",
+                            message=f"항목{r['item']}: 소스가 이제 gold 를 재현한다 "
+                                    f"(gold={r['gold']} src={r['src']}, {r['verdict']}) — "
+                                    f"gold 줄을 지우거나 {GOLD_OVERLAY_LEDGER.name} 에 박제해라. "
+                                    f"박제 전까지 이 셀은 회귀해도 아무도 모른다")
+                continue
+            seen_pins.add(r["key"])
+            if not is_masked:
+                res.add(check="gold_overlay", severity="RED", master=oid,
+                        company=r["company"], quarter=r["quarter"],
+                        rule="GOLD_OVERLAY_DRIFT",
+                        message=f"항목{r['item']}: 박제 [{pin.get('verdict')}] src="
+                                f"{pin.get('src')!r} 였는데 지금 {r['verdict']} "
+                                f"src={r['src']!r} (gold={r['gold']!r}). gold 가 없었다면 화면이 "
+                                f"이 값이었다 — 빌더가 회귀했거나 gold 가 틀렸다. "
+                                f"{pin.get('note', '')}"[:400])
+            elif isinstance(r["src"], (int, float)) and isinstance(pin.get("src"), (int, float)) \
+                    and abs(r["src"] - pin["src"]) > GOLD_OVERLAY_TOL_EXACT:
+                res.add(check="gold_overlay", severity="YELLOW", master=oid,
+                        company=r["company"], quarter=r["quarter"],
+                        rule="GOLD_OVERLAY_PIN_MOVED",
+                        message=f"항목{r['item']}: 여전히 마스크지만 소스가 박제값에서 움직였다 "
+                                f"({pin.get('src')} → {r['src']}, gold={r['gold']}) — gold 와 "
+                                f"소스가 **함께** 움직였다는 뜻이다. 재박제하고 사유를 남겨라")
+
+        res.add(check="gold_overlay", severity="YELLOW", master=oid, company=None, quarter=None,
+                rule="GOLD_OVERLAY_REDUNDANT",
+                message=(f"{oid} gold 오버레이 {len(rows)}칸 중 **{len(masked)}칸이 소스와 같다"
+                         f"**(마스크: SAME_EXACT={tally['SAME_EXACT']} · "
+                         f"SAME_AT_1DP={tally['SAME_AT_1DP']}, {len({r['company'] for r in masked})}개사). "
+                         f"나머지 = LOAD_BEARING {tally['LOAD_BEARING']} · "
+                         f"ROW_ABSENT {tally['ROW_ABSENT_IN_SOURCE']} · "
+                         f"NULL_IN_SOURCE {tally['NULL_IN_SOURCE']} · "
+                         f"GOLD_SUPPRESSES {tally['GOLD_SUPPRESSES']}. "
+                         f"박제 {len([r for r in rows if r['key'] in pins])}칸 — "
+                         f"박제된 칸만 회귀 탐지가 된다"))
+
+    # 등재부에만 남은 줄 = gold 에서 지워졌거나 개명됐다. 조용히 두면 등재부가 화석이 된다.
+    for k in sorted(k for k in pins if k not in seen_pins):
+        parts = k.split("|")
+        oid, co, q, item = (parts + ["?"] * 4)[:4]
+        res.add(check="gold_overlay", severity="YELLOW", master=oid,
+                company=co, quarter=q, rule="GOLD_OVERLAY_LEDGER_STALE",
+                message=f"항목{item}: 등재부에 있으나 gold 에 그 셀이 없다 — "
+                        f"{GOLD_OVERLAY_LEDGER.name} 에서 줄을 지워라")
+
+
 def run_gate(env: Env) -> GateResult:
     res = GateResult()
     check_artifact_readable(res, env)
@@ -2672,6 +2902,7 @@ def run_gate(env: Env) -> GateResult:
     check_as_of(res, env)
     check_cross_source(res, env)
     check_domain_identity(res, env)
+    check_gold_overlay(res, env)
     # 2026-08-25 — CHECK 5(일반 이상치 스캐너)를 **게이트에서 뺐다**(owner: "씰데없는 룰들은
     # 좀 쳐내"). 지운 게 아니라 `scripts/scan_generic_anomalies.py` 로 내렸다.
     #
@@ -2697,7 +2928,8 @@ def print_report(res: GateResult) -> None:
         print("⚠️  PROVISIONAL: a master changed mtime during this run (concurrent backfill).")
     print("#" * 78)
 
-    by_check = {"census": [], "as_of": [], "cross_source": [], "domain": [], "anomaly": []}
+    by_check = {"census": [], "as_of": [], "cross_source": [], "domain": [], "anomaly": [],
+                "gold_overlay": []}
     for f in res.findings:
         by_check.setdefault(f.check, []).append(f)
 
@@ -2707,8 +2939,9 @@ def print_report(res: GateResult) -> None:
         "cross_source": "3. CROSS-SOURCE same-concept tolerance + different-concept guard",
         "domain": "4. DOMAIN IDENTITY (capital recognition-limit 분모=SCR×50% / 소진율≤100%)",
         "anomaly": "5. GENERIC ANOMALY DISCOVERY (metric-agnostic; learned from cohort)",
+        "gold_overlay": "6. GOLD OVERLAY vs BUILDER SOURCE (몇 칸이 조용히 덮여 있는가)",
     }
-    for check in ("census", "as_of", "cross_source", "domain", "anomaly"):
+    for check in ("census", "as_of", "cross_source", "domain", "anomaly", "gold_overlay"):
         items = by_check.get(check, [])
         # CHECK 5 는 2026-08-25 에 게이트에서 빠졌다. **조용히 사라지면 안 된다** — 다음 세션이
         # "이상치 검사가 원래 없었다" 로 읽으면 그게 이 저장소의 반복 사고다. 한 줄로 남긴다.

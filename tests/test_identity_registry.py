@@ -131,6 +131,27 @@ REGISTRY: dict[str, dict] = {
                     "종전 밴드(배수 0.4~2.5, 대조식 원수+재보험)가 잡은 것은 0건이었다.",
         "mutation": "inline",
     },
+    "GOLD_OVERLAY_DRIFT": {
+        "statement": "빌더 fresh 소스의 값 == gold 오버레이의 값. 같으면 gold 는 화면을 안 바꾸는 "
+                     "**마스크**이고(그래서 밑에서 빌더가 회귀해도 아무도 못 본다), 그 상태를 "
+                     "셀 단위로 박제해 두었다가 등식이 깨지면 RED. 단위·부호는 두 파일이 같은 "
+                     "표기를 쓴다(CSM 억원 · PL 백만원, 변환 없음).",
+        "impl": [("scripts/validate_data_contract.py", "gold_overlay_verdict"),
+                 ("scripts/validate_data_contract.py", "check_gold_overlay")],
+        "kind": "IDENTITY",
+        "tol": {"abs": 0.05, "rel": 0.0, "unit": "각 마스터 표기단위(CSM 억원 · PL 백만원)"},
+        "tol_from": [("validate_data_contract", "GOLD_OVERLAY_TOL_EXACT", 0.005),
+                     ("validate_data_contract", "GOLD_OVERLAY_TOL_ROUND", 0.05)],
+        "measured": "2026-08-30 전수(CSM 270칸 · PL 198칸). |소스−gold| 가 두 덩어리로 갈린다: "
+                    "CSM 은 소스(csm_waterfall_master_diag)가 소수 1자리, gold 가 2자리라 재현의 "
+                    "상한이 정확히 0.05 이고(28건 0.00 · 58건 0<d≤0.05), 그 위 첫 값은 0.30 이다. "
+                    "PL(백만원)은 26건 0.00 · 3건 ≤0.0317 이고 그 위 첫 값이 18.0 — 0.05 는 두 "
+                    "경우 모두 빈 구간 안이다. 넓히면 마스크 집합이 부풀어 그만큼 DRIFT 가 안 "
+                    "터지므로, tests/test_rule_coverage_manifest.GOLD_OVERLAY_CENSUS 가 마스크 "
+                    "칸 수(86/29)를 박제해 그 경로를 막는다. 마스크 115칸은 "
+                    "data/_gold/gold_overlay_ledger.json 에 셀 단위 박제.",
+        "mutation": "tests/test_rule_coverage_manifest.py",
+    },
     "csm_closing_identity_root": {
         "statement": "기초CSM + 신계약CSM + 이자부리 + 가정및경험조정 + CSM상각 == 기말CSM "
                      "(루트 CSM_waterfall.json, 억원. 상각은 음수로 저장돼 있어 그대로 더한다)",
@@ -731,12 +752,18 @@ def test_mutation_delegation_is_real():
     `mutation: "tests/x.py"` 라고 적어 놓고 그 파일이 이 룰을 모르면 위임이 아니라 회피다.
     """
     sys.path.insert(0, str(ROOT / "tests"))
-    from test_rule_coverage_manifest import DECLARED_RULES  # noqa: E402
+    # 그 파일은 **두 룰 계열**을 선언한다 — K-ICS 룰엔진 id(`DECLARED_RULES`)와 2026-08-30
+    # 신설 gold 오버레이 축(`GOLD_OVERLAY_RULES`). 한쪽만 보면 gold 축의 정당한 위임이
+    # "회피"로 오판된다. 위임이 진짜인지 = 그 파일이 이 축을 실제로 다루는지가 요점이므로
+    # 그 파일이 선언한 이름 전부를 본다.
+    from test_rule_coverage_manifest import (  # noqa: E402
+        DECLARED_RULES, GOLD_OVERLAY_RULES)
+    covered = set(DECLARED_RULES) | set(GOLD_OVERLAY_RULES)
     bad = []
     for rid, e in REGISTRY.items():
         if e.get("mutation") != "tests/test_rule_coverage_manifest.py":
             continue
-        if rid not in DECLARED_RULES:
+        if rid not in covered:
             bad.append(f"{rid}: 변이시험을 rule_coverage_manifest 에 위임했는데 "
                        f"그쪽 DECLARED_RULES 에 없다")
     assert not bad, "위임이 비어 있다:\n  " + "\n  ".join(bad)
