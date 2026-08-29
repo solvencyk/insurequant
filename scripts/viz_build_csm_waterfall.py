@@ -313,6 +313,18 @@ def rollforward_row_stub(row: list) -> str:
     return "".join(parts)
 
 
+def _ns(s: str) -> str:
+    """Normalize: drop ALL whitespace incl. \\xa0 (mirrors build_csm_waterfall_master._ns).
+    Some filings line-wrap a label mid-word in the source markup, which flattens to a
+    literal space inside a CJK compound (e.g. 아이엠라이프 2023.4Q: "당기손익으로 인식된
+    보 험계약마진" instead of "...보험계약마진") -- a plain substring check then misses
+    the row entirely, and its value silently falls into the item4 residual (inbox/parser/
+    20260828T0930Z). Whitespace-collapsed matching is immune to that artifact without
+    weakening the patterns themselves (word-boundary spaces are informational, not load-
+    bearing -- the patterns already vary in spacing across companies)."""
+    return re.sub(r"\s", "", s) if isinstance(s, str) else ""
+
+
 def deduplicate(blocks: list[dict]) -> list[dict]:
     seen: set = set()
     out: list[dict] = []
@@ -939,9 +951,12 @@ def extract_stages(blk: dict) -> dict:
             if not row or not isinstance(row[0], str):
                 continue
             stub_roll = rollforward_row_stub(row)
-            if not any(p in stub_roll for p in patterns):
+            # Whitespace-collapsed match (see _ns docstring): immune to mid-word line-wrap
+            # artifacts (아이엠라이프 "보 험계약마진") that a plain substring check misses.
+            stub_ns = _ns(stub_roll)
+            if not any(_ns(p) in stub_ns for p in patterns):
                 continue
-            if stage in CSM_LABEL_REQUIRED and "보험계약마진" not in stub_roll:
+            if stage in CSM_LABEL_REQUIRED and "보험계약마진" not in stub_ns:
                 continue
             # Skip a grand-total / aggregate row that only CONTAINS "보험금융손익"
             # as part of a whole-note total (2025 label form) — prefer the genuine
@@ -969,6 +984,43 @@ def extract_stages(blk: dict) -> dict:
             ]
             picked_label = " / ".join(label_parts) if label_parts else row[0].strip()
             candidates.append((abs(total), _nb_label_rank(picked_label), picked_label, total))
+        if not candidates and stage == "interest":
+            # Fallback ONLY (never a competing pattern): some filings label the P&L-
+            # recognized finance line as a bare "(1) 당기손익인식" child under a
+            # "N. 보험금융손익" PARENT section-header row that itself carries NO values
+            # (하나손해보험/KR0050 2023.4Q·2024.4Q: the parent row is just ['6. 보험금융
+            # 손익'], one cell, no data -- the primary-pattern loop above never sees
+            # "보험금융손익" text sitting next to a number, so item3 came back null and
+            # the true value silently absorbed into item4's residual -- inbox/parser/
+            # 20260828T0930Z). Engaged ONLY when the primary patterns found NOTHING at
+            # all for this stage. When a populated parent aggregate DOES exist
+            # (교보생명보험/KR0073 2024.1Q: parent "6."=85,930 vs child "(1)"=85,990),
+            # the PARENT is the correct CSM-waterfall interest figure -- it equals
+            # child(1) + child(2)기타포괄손익인식, and only the parent choice makes the
+            # closing-balance residual match the filing's own directly-observable
+            # "가정 추정치 변동" row (verified: parent choice residual off by 1 [rounding],
+            # child-only choice off by 61) -- so this fallback must never compete with an
+            # already-populated parent as an ordinary STAGE_PATTERNS entry would.
+            for row in rows:
+                if not row or not isinstance(row[0], str):
+                    continue
+                stub_roll = rollforward_row_stub(row)
+                if "당기손익인식" not in _ns(stub_roll):
+                    continue
+                vs = row_value_start(row)
+                data_cells = row[vs:]
+                vals = [parse_num(data_cells[i]) for i in csm_cols if 0 <= i < len(data_cells)]
+                vals = [v for v in vals if v is not None]
+                if not vals:
+                    continue
+                total = sum(vals)
+                label_parts = [
+                    str(row[i]).strip()
+                    for i in range(min(vs, len(row)))
+                    if isinstance(row[i], str)
+                ]
+                picked_label = " / ".join(label_parts) if label_parts else row[0].strip()
+                candidates.append((abs(total), _nb_label_rank(picked_label), picked_label, total))
         if not candidates:
             continue
         # Non-zero values beat empty parent rows (e.g. Samsung Fire §75 신계약효과).

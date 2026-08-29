@@ -1133,6 +1133,17 @@
     "sign_flip": false
   },
   {
+    "company": "하나손해보험",
+    "quarter": "2024.4Q",
+    "item": "이자부리",
+    "delta_pct": 37.6,
+    "threshold_pct": 20.0,
+    "cur": 85.3,
+    "ref": 62.0,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
     "company": "케이디비생명보험",
     "quarter": "2026.2Q",
     "item": "신계약CSM",

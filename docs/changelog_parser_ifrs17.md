@@ -3,6 +3,39 @@
 > Last updated: 2026-08-29 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-08-29 (71st pass) — CSM 항목3/5 null-but-identity-closes: 결측이 잔차에 흡수되는 버그
+
+`inbox/_resolved/20260828T0930Z__designer__MULTI_2023.4Q__csm_component_null_but_identity_closes.md`
+(designer 발주). designer 가 `CSM_waterfall.json` 에서 항목3(이자 부리)/항목5(CSM 상각)이
+`null` 인데도 4항목합=기말 항등식이 닫히는 셀 2개(KR0050·KR0076 2023.4Q)를 발견해 발주.
+
+**원인: `waterfall_for_dir()` 의 잔차 공식이 결측(`None`)을 `or 0` 으로 조용히 0 취급**해
+항목4(가정 및 경험 조정, 잔차)가 결측항을 통째로 흡수 — 항목 자체는 `None` 으로 남아 항등식만
+구성상 참으로 닫힌다(오늘 확인된 PL `pl_bridge` 축의 constructive-tautology 와 동일 계열).
+
+**근본원인 2종을 `scripts/viz_build_csm_waterfall.py::extract_stages()` 에서 고침.**
+(A) KR0050: "N. 보험금융손익" 부모 헤더 행(값 없음)의 자식 "(1) 당기손익인식" 행(실값)이
+부모 텍스트를 안 물려받아 어떤 interest 패턴도 안 걸림 — 부모행이 실값을 가진 다른 회사
+(교보생명·코리안리)와 안 부딪히게 **1차 패턴 전멸시에만 도는 폴백**으로 추가(부모=자식(1)+
+자식(2)기타포괄손익인식 임을 원문으로 확인, 부모값이 CSM 잔액 롤포워드용 정답). (B) KR0076/
+KR0072: 원문 줄바꿈으로 라벨 단어 중간에 공백이 끼는 렌더링 아티팩트("보험계약마진"→
+"보 험계약마진") — `_ns()`(공백 전부 제거) 신설해 패턴매칭 + `CSM_LABEL_REQUIRED` 게이트를
+공백무시로 전환.
+
+**census (363 회사×분기 전수, read-only, `main()` 미실행) — 같은 패턴 7버킷, 5개는 owner
+gold-overlay 로 이미 수기 정정된 이력(수정 후 재계산값이 그 수기값과 거의 정확히 일치,
+교차검증). KR0079 3분기는 다른 구조(`src=wide-product`)라 이번엔 미해결, override 로 화면
+영향 없음. 실제 라이브 마스터 변경은 4셀(KR0050·KR0076 2023.4Q)뿐.**
+
+KR0076 판정: 상각 진짜 값 존재(-571.1억, "보 험계약마진" 행에서 확인) — 0도 결측도 아님.
+조정(항목4) -1874.2→-1303.0(흡수분 제거), 이자(KR0050) null→62.0·조정 184.4→122.4.
+
+전수 감사: `CSM_waterfall.json` 2,172행 불변, 항목1~6 전부 362/362 non-null(수정 전 360/362).
+`build_csm()` 개별함수(overlay 그대로) combo-diff LOST0/NEW0/변경 정확히 4셀. diag 파일 동일
+패치(2,178행 불변). xlsx cherry-pick 4셀. `pytest tests/`(heavy golden 3종 제외) 501 passed.
+`test_master_tables_golden.py --update`(closing 2 SKIP→PASS 전환, qoq_warn +1).
+`validate_golden_input_fingerprints.py --update`(CODE_MOVED+INPUTS_MOVED→RED=0).
+
 ## 2026-08-29 (70th pass) — 보험손익 leg-coverage LEGRED 39→34
 
 `inbox/parser/20260829T1700Z__validation__MULTI__pl_item1_leg_coverage.md`(validation

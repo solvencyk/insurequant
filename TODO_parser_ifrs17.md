@@ -1,5 +1,60 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-29 (71st pass) — CSM 항목3/5 null-but-identity-closes: 이자/상각이 잔차(항목4)에
+> 흡수되는 일반 버그 발견 + 수정, KR0050·KR0076 2023.4Q 4셀 채움.**
+> `inbox/_resolved/20260828T0930Z__designer__MULTI_2023.4Q__csm_component_null_but_identity_closes.md`
+> (designer 발주, status: resolved).
+>
+> **재현.** `CSM_waterfall.json` 의 항목3(이자 부리)·항목5(CSM 상각) null 2셀(KR0050·KR0076
+> 2023.4Q) 을 raw XML 직접 재파싱으로 재확인 — designer 의 폐쇄식(4항목합=기말) 관찰은
+> 맞았지만 원인은 "진짜 0" 이 아니라 **파서가 결측 항을 조용히 잔차에 흡수**한 것이었다.
+> `build_csm_waterfall_master.py::waterfall_for_dir()` L1198 의 `assum = clo -
+> ((wf.get(1) or 0)+(wf.get(2) or 0)+(wf.get(3) or 0)+(wf.get(5) or 0))` 가 결측(`None`)을
+> `or 0` 으로 0 취급 — 항목4(가정 및 경험 조정, 잔차)가 결측항을 통째로 삼키고 그 항목
+> 자체는 `None` 으로 남는다. 오늘 이 저장소에서 확인된 "폐쇄식이 구성상 참이라 검증력이
+> 없다"(`inbox/_resolved/20260829T2130Z__validation__MULTI__pl_eqs_constructive_tautology.md`)
+> 의 CSM 축 버전.
+>
+> **근본원인 2종, `scripts/viz_build_csm_waterfall.py::extract_stages()` 수정.**
+> (A) KR0050: "6. 보험금융손익" 부모 헤더 행(값 없음) 아래 "(1) 당기손익인식" 자식 행(실값)
+> 으로만 표기돼 어떤 interest 패턴도 안 걸림 — 부모행이 실값을 갖는 경우(교보생명·코리안리)
+> 와 충돌하지 않게 **1차 패턴이 아무것도 못 찾았을 때만 도는 최후수단 폴백**으로 추가
+> (처음엔 일반 패턴으로 넣었다가 KR0073/KR1000 회귀를 검증 중 발견해 폴백으로 재설계 —
+> 부모="(1)당기손익인식"+"(2)기타포괄손익인식", 부모값이 CSM 잔액 롤포워드용 정답임을
+> 원문 재구성 대조로 확인). (B) KR0076/KR0072: 원문 라벨이 줄바꿈으로 단어 중간에 공백이
+> 끼는 렌더링 아티팩트("보험계약마진"→"보 험계약마진") — `_ns()`(공백 전부 제거, 기존
+> `build_csm_waterfall_master._ns()` 와 동일 개념) 신설해 패턴매칭 + `CSM_LABEL_REQUIRED`
+> 게이트를 공백무시로 전환, 일반적으로 해소.
+>
+> **census (363 회사×분기 전수, read-only `waterfall_for_dir()` 직접호출 — `main()` 통짜
+> 실행 없음).** 같은 결측-흡수 패턴 7버킷 발견(KR0050 2023.4Q·2024.4Q, KR0072 2023.1Q,
+> KR0076 2023.4Q, KR0079 2025.2Q·2025.3Q·2026.1Q) — 이 중 5개는 **owner 가 gold-overlay
+> 로 이미 수기 정정한 이력**이 있었고(예: KR0050 2024.4Q `was:ROW_NULLED`→85.30805, KR0072
+> `was:None`→-111.25), 코드 수정 후 재계산값이 그 수기값과 소수점 첫째자리까지 일치 —
+> 별개 두 방법(raw 직접대조 vs owner 수기)이 수렴해 교차검증. KR0079 3분기는 `src=
+> wide-product` 로 다른 구조라 이번엔 안 고쳐짐(gold-overlay 로 화면엔 이미 정답, 후속
+> 조사 과제로 남김). **실제 라이브 마스터가 바뀌는 건 KR0050·KR0076 2023.4Q 4셀뿐** —
+> 나머지는 override 가 이미 이겨서 무변화, 359버킷은 완전 동일(사라진/새 버킷 0).
+>
+> **KR0076 판정 = "0 아님, 원표에 값 있음."** "(1) 서비스 제공으로 당기손익으로 인식된
+> 보 험계약마진"(공백 아티팩트) 행 CSM합 = △571.15억 → 상각 -571.1억 확정, 조정(항목4)
+> -1874.2→-1303.0 로 정정(상각 흡수분 제거). 2024·2025 상각(-549.2/-537.9)과 동일 규모대.
+>
+> **전수 감사.** `CSM_waterfall.json` 2,172행 불변(추가/삭제 0), 항목1~6 전부 362/362
+> non-null(수정 전 360/362), 37개사 불변. `build_root_masters.py::build_csm()` 개별함수만
+> 호출(overlay 276 set 그대로), combo-diff LOST 0/NEW 0/변경 정확히 4셀.
+> `csm_waterfall_master_diag.json` 동일 4셀 서지컬 패치(2,178행 불변). xlsx
+> `sync_master_xlsx_sheet.py "CSM워터폴"` cherry-pick(4셀·검증 OK). `pytest tests/`(heavy
+> golden 3종 제외) 501 passed. `test_viz_csm_waterfall_golden.py`/`test_viz_ifrs17_panels_
+> golden.py` PASS(산출 바이트 불변). `test_master_tables_golden.py --update`(closing:
+> 360P/0F/2S→362P/0F/0S — null 2개가 SKIP였다가 계산 가능해져 PASS, qoq_warn 235→236Y).
+> `validate_golden_input_fingerprints.py --update`(CODE_MOVED+INPUTS_MOVED 2건→RED=0).
+> `validate_csm_continuity.py` red=0(YELLOW 2건은 KR0001/KR0073 기존 면제, 무관).
+>
+> 상세·재현 명령·원문 인용 전부 위 inbox 답변. status: resolved(`_resolved/`로 이동).
+>
+> 커밋: `<커밋 후 채움>`
+
 > **2026-08-29 (70th pass) — 보험손익 leg-coverage LEGRED 39→34: 서울보증(KR0150) 신규
 > 핸들러 + 코리안리 등식갭 규명.** `inbox/parser/20260829T1700Z`(validation 발주,
 > status: answered). 2026-08-29 leg-coverage 룰 신설로 처음 드러난 결측 LOB 다리
