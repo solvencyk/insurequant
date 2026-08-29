@@ -1,5 +1,50 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-30 (73rd pass) — CSM gold override 44건(KR0079 27·KR0003 12·KR0072 5) 출처
+> 공란 전수 해소, 값 변경 0건.** `inbox/parser/20260825T2200Z__validation__KR0079__
+> csm_gold_overrides_without_provenance.md`(validation 발주 §2, status: answered).
+>
+> **결과: 37건 원천 특정+gold 일치, 2건 원천 특정+gold 불일치(discrepancy, 값 미변경),
+> 5건 출처 불명으로 명기.** 재현 방법 3가지: (1) `waterfall_for_dir()`를 현재(71st pass
+> 수정후) 코드로 read-only 재실행(KR0072 5건, 71st pass가 "일치"라고만 적고 안 남긴 수치를
+> 직접 재현) — (2) raw XML의 상품별(사망/건강/연금/저축/기타) CSM 측정요소표를 5블록 수동
+> 합산(KR0079 25건 — 2023.1Q 로마숫자 5블록 표는 `extract_measurement_tables` 스코어링
+> 미달(score 3<5)로 자동추출기가 아예 못 찾았던 표, 2025.2Q~2026.1Q는 WIDE 상품열 표) —
+> (3) **차기연도 필링의 "전기 비교열"에서 복원**(KR0003 2023.2Q 6건 — 2024.2Q 필링의 "<제79
+> (전)기 반기>" 비교열이 gold와 완전 일치, 즉 2023.2Q 원 필링 자체 값은 그 이후 재작성돼
+> stale). KR0003 2023.1Q는 필링 자체에 CSM 노트 없음(162개 표 전수 스코어링, 관련 캡션
+> 0건 확인) — 항목1(FY상수)만 2023.4Q 연차로 교차확인, 항목2~6은 출처 불명으로 명기.
+>
+> **새 결함 변형 발견(값 미수정, 후속 과제).** KR0079 2025.2Q/3Q·2026.1Q의 WIDE 표에서
+> CSM상각(항목5) 행 라벨 "보험수익, 서비스의 이전으로 당기손익에 인식한 보험계약마진"이
+> `extract_stages()` 패턴에 없어 `None`→`waterfall_for_dir()` L1198 잔차식이 항목4로 흡수 —
+> 71st pass가 고친 두 변형(부모헤더 폴백/줄바꿈공백)과 다른 **세 번째** 라벨매칭 실패
+> 변형(미수정, WIDE 포맷 타사 영향 가능). 그리고 **KR0079 2025.2Q 항목4/5만** raw 재구성
+> (-685.50/-992.07)이 gold(-886.27/-791.3)와 200.77억씩 반대방향으로 어긋남 — 항목4+5
+> 합계는 일치(폐쇄식 안 깨짐)하지만 배분이 다름. `20260825T1520Z`의 WATERFALL_SUSPECT
+> 잔차 200.77억과 동일 크기라 같은 원인으로 추정. 같은 회사 2025.3Q·2026.1Q는 동일 방법으로
+> raw=gold 완전 일치라 2025.2Q만 이례적 — 티켓이 값 변경을 금지해 두 후보 중 채택 안 하고
+> validation에 재확인 요청만 기록.
+>
+> **§1(미래에셋 "기타" 상품라인 코드수정+전분기스윕)은 이번 세션 범위 밖(위임 프롬프트가
+> §2만 지정), 미착수.** 단 조사 중 §1의 결론이 항목1뿐 아니라 2025.4Q 전 항목(2~6)에 걸쳐
+> 있었음을 추가 확인(WIDE 표 5상품 합산이 6항목 전부 gold와 오차 0 일치, `was`=현재 코드가
+> 재현하는 "기타" 누락값).
+>
+> **전수 감사.** `git diff --stat data/_gold/user_csm_cells.json` = 88 insertions/44
+> deletions(44개 엔트리 각 1줄 콤마추가+1줄 why신설, 그 외 0). 삭제된 44줄 전부 `"was":`
+> 라인(콤마만 추가, 값 문자열 무변경) — grep으로 확인. 사전/사후 스크립트가 44건 각각의
+> (코드,항목,분기,값,was) 5-tuple을 패치 전 assert, 이미 why/note 있으면 abort. `set` 배열
+> 길이 276 불변, `_doc`/`exclude_companies` 무변경. `CSM_waterfall.json` 등 마스터 미접촉
+> (why는 `build_csm()` upsert 대상 값/was가 아님). `pytest tests/test_viz_csm_waterfall_
+> golden.py tests/test_master_tables_golden.py` 2 passed(3.98s, 무변경이라 당연).
+> `git status` 이 세션 수정 추적파일 = `data/_gold/user_csm_cells.json` 유일.
+>
+> 상세·재현 명령·전 셀 원문 인용 전부 위 inbox 답변. status: **answered**(2건 discrepancy
+> 처리방향 + 새 라벨변형 코드수정 필요여부는 validation 재확인 필요).
+>
+> 커밋: `<커밋 후 기입>`
+
 > **2026-08-30 (72nd pass) — KR0073 교보생명 "CSM 이자부리 누계 음수" 재조사: 버그 아님, 원문
 > 그대로임을 3중 교차검증(raw 인용/코드 자체추출/MD&A 산문)으로 확정. 별도로 진짜 버그(2026.1Q/2Q
 > 상품슬라이스 선택오류) 발견해 follow-up task 로 분리, 이번 세션은 미수정.**
