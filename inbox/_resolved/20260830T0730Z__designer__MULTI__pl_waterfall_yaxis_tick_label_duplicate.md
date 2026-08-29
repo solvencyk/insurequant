@@ -2,7 +2,7 @@
 from: designer
 to: designer
 created: 20260830T0730Z
-status: open
+status: resolved
 route: backlog
 company: MULTI
 period: MULTI
@@ -52,3 +52,32 @@ const plYDp = Math.min(2, Math.max(0, Math.ceil(-Math.log10(plYStep/1e6))));
 순회로 중복 0 확인 ③ y축 폭(`grid.left=56`)에 소수 2자리가 들어가는지.
 
 ## 답변 (recipient 작성 — 처리 후)
+
+
+## 답변 (orchestrator 처리 — owner 지시로 즉시 수정)
+
+**눈금 간격에서 소수 자릿수를 역산하도록 고쳤다.**
+
+원인: `IFRS17.html:964` 가 `interval: plYStep` 으로 간격을 직접 정하는데(1/2/2.5/5/10 x 10^n
+스냅), `966` 의 포매터는 `maximumFractionDigits:1` 로 고정이었다. 간격이 0.05조·0.25조로
+잡히는 회사에서 이웃 눈금이 같은 라벨이 됐다.
+
+수정: `plYStep/1e6`(조)을 정확히 표현하는 최소 자릿수를 구해 `min/maximumFractionDigits`
+양쪽에 넣는다. 0~3자리로 제한.
+
+```
+간격 0.05조 -> 2자리   0.05 · 0.10 · 0.15
+간격 0.25조 -> 2자리   0.25 · 0.50 · 0.75      <- 1자리면 0.3/0.5/0.8 로 왜곡
+간격  0.5조 -> 1자리   0.5 · 1.0 · 1.5
+간격  1.0조 -> 0자리   1 · 2 · 3
+간격  2.5조 -> 1자리   2.5 · 5.0 · 7.5
+간격  5.0조 -> 0자리   5 · 10 · 15
+```
+
+전 간격에서 중복이 사라지고, 2.5 계열의 반올림 왜곡(0.25->"0.3")도 같이 해소된다.
+
+검증: `pytest tests/test_deploy_assets.py` 10/10 · 인라인 script 2블록 JS 문법 통과 ·
+`validate_data_contract` RED=0.
+
+**분리 발주가 옳았다.** 이 수정은 213건 중 197건이 코리안리 밖이라, LOB 티켓의 "다른 회사
+회귀 0" 기준 안에서는 할 수 없었다. 티켓을 나눈 designer 판단이 정확했다.
