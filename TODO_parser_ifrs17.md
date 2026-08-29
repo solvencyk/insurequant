@@ -1,5 +1,63 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-29 (70th pass) — 보험손익 leg-coverage LEGRED 39→34: 서울보증(KR0150) 신규
+> 핸들러 + 코리안리 등식갭 규명.** `inbox/parser/20260829T1700Z`(validation 발주,
+> status: answered). 2026-08-29 leg-coverage 룰 신설로 처음 드러난 결측 LOB 다리
+> 39건(오늘 실측, 흥국화재 2026.2Q 는 fb9c9bf 로 이미 해소) 처리.
+>
+> **서울보증보험(KR0150) 5분기 채움.** 티켓 전제("보증보험 전문사라 LOB 분해 자체가
+> 없을 것")가 틀렸다 — 원문엔 있다, 다만 이 저장소 표준 3분류(장기/자동차/일반)가 아니라
+> SGI 고유 5분류(보증/해외/상해/자동차/기타)라 기존 범용 매처가 한 번도 안 걸렸을 뿐.
+> `extract_tier2_sgi` 신규(원수+수재+출재 3-flow 합산, `SONBO_HANDLERS["KR0150"]`
+> 등록). 흥국화재 2026.2Q와 같은 계열의 빈칸압축 함정(자동차/상해 칸이 "0" 대신
+> 빈 문자열)을 위치보존 파서(`_sgi_row`)로 우회. `parse_filing` 실주행 검증 —
+> item1=item13+14+15-16 잔차 5분기 전부 <2백만원(반올림 수준). 2026.2Q는 라벨
+> 재구성(원수/수재가 상위헤더로 재편, 다른 회사에서도 관측된 패턴)이라 의도적으로 미착수.
+> 마스터/커버리지/루트(`build_pl()` 개별함수)/xlsx 서지컬 반영, combo-diff LOST/NEW 0·
+> 정확히 10셀 변경(전부 KR0150) 확인.
+>
+> **코리안리(KR1000) item13 — 파서 결함 아님, 채우지 않음.** 원문 재확인: "자동차"가
+> 재무표에 0회(펀드명·임원이력 문장의 우연한 일치뿐), 기존 `extract_tier2_coreanre`
+> docstring("생명/장기/일반, NO 자동차")이 맞다. 실제 원인은 **검증 등식 자체의 결측
+> 항** — 코리안리는 재보험사라 표준 3-LOB이 아니라 4-LOB(생명/장기/일반)을 쓰고, "장기"
+> 레그는 마스터에 이미 `_extra_items`(항목 "2-1"~"12-1")로 정상 발행돼 있는데
+> `validate_master_tables.py`의 leg-coverage 등식(`LOB_KEYS` 3항)이 이 항을 모른다.
+> `item1 = item2+item"2-1"+item14+item15-item16`으로 12분기 전부 실측 재검산(코드
+> 미수정, 마스터에 이미 있는 값으로만) — 잔차 전부 |≤2.8|백만원. `build_pl_breakdown.py`
+> 의 Tier-2 RC 게이트(L251 `extra_lob`)는 이미 이 항을 더해서 검산하고 있어 애초에
+> RC게이트를 통과했던 것 — validate_master_tables.py 쪽만 이 항을 안 보고 있었다.
+> `scripts/validate_*` 편집 금지 규칙에 따라 직접 수정하지 않고 validation 에 등식
+> 수정(또는 baseline 등재)을 권고.
+>
+> **예별손해(KR0004) item2 2024.4Q/2025.4Q — 조사, 미확정.** 원문에서 "장기" LOB
+> GMM 후보 표 3개(원수 + 출재 비례/비비례) 특정(요약 잔액표와 대사해 "장기" 귀속 확정)
+> 했으나 셋을 더해도 item1과 부호부터 반대(예측 +34,159 대 실측 -59,536백만원) — 폐쇄식
+> 안 맞는 이유를 못 밝혀 **채우지 않음**(코드·데이터 미변경, 기존 핸들러 docstring의
+> "미확보 장기 GMM" 기록 갱신 불요 — 여전히 미해결).
+>
+> **AIG(KR0029)·신한이지(KR0051) — 원천 미공시 원문 재확인, 값 없음.** 둘 다 이미
+> `ZLEG_LEGIT="ALL"` 등재사. AIG 2025.4Q 원문: LOB 표 없음, 유일 수치는 prose 한 문장
+> "장기보험과 일반보험의 재보험손실 617억"(장기+일반 합산, 분리 불가). 신한이지 2024.4Q
+> 원문: "일반보험"·"장기보험" 0회, "자동차보험" 1회는 2004년 설립 연혁 문장뿐. leg-coverage
+> 관점에서도 `ALL` 등재가 타당함을 확인(등재 자체는 변경 안 함).
+>
+> **나머지(2023 다수, 우선순위4) 미착수** — 티켓이 명시한 대로 사이트 비노출이라 보류.
+>
+> **게이트**: 오프라인 `pytest tests/`(heavy golden 2종 제외) 484 passed(수정 전 483,
+> +1은 master_tables_golden 의 의도된 SUMMARY 이동 흡수). `test_master_tables_golden.py
+> --update`(pl_bridge:3040P/52F→3045P/47F). `test_pl_breakdown_golden.py --update`
+> (빌더 미재실행, non_null_values 10006→10016 [+10] 만 이동, rows/company_quarters/
+> coverage_rows 11546/356/426 불변). `validate_golden_input_fingerprints.py --update`
+> (pl_breakdown 만 CODE_MOVED+FIXTURE_MOVED → RED=0). `validate_data_contract.py`
+> RED=0 YELLOW=92(신규 0). `data/_gold/pl_bridge_baseline.json`에서 `FIXED?` 5건
+> (서울보증 2025.1Q~2026.1Q) 삭제(52→47, `_promote` 계약). 전수 항등식 감사(항목32
+> 356셀·11,546행·KR0083 2024.3Q item27=△2,652억·KR0079 2025.4Q item6=None 유지·
+> KR0005 2026.2Q item2=79459.0 전부 생존, item3/item8 356버킷 폐쇄식 실패 0건).
+>
+> 상세·재현 명령·원문 인용 전부 `inbox/parser/20260829T1700Z` 답변. status: answered.
+>
+> 커밋: (다음 커밋에서 기록)
+
 > **2026-08-30 (69th pass) — `_ma_find_product_table` 동점처리 근본수정 + 무거운 골든
 > 그린화.** `inbox/parser/20260830T0000Z`(orchestrator 발주, status: answered). 68th pass가
 > "관계종속기업투자주식 캡션이 붙은 corrupted 표를 잘못 고른다"로 남긴 KNOWN GAP을 raw

@@ -63,7 +63,7 @@
     "data/ifrs17/table_scoring_keywords.yaml": 1,
     "kics_disclosure.json": 1
    },
-   "code_sha256": "0fe839cc0d5d67f157542c7966d4770b1219c50af57d4211d7fe93a780d5183a",
+   "code_sha256": "956692f9f2bf13cd9a4d4f08d9b92572739fc5210905e24f7490b58835feffdd",
    "code_files": [
     "scripts/build_net_income_breakdown.py",
     "scripts/build_pl_breakdown.py",
@@ -80,17 +80,17 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "63bef03c403ff99ca6f2971c906b3ec70f79f7d6eca9f784265f225980892392",
+   "fixture_sha256": "e6cd4891354ba7de5beb78e1beb583f8b5a3b7e8b61007144749714d862ee70f",
    "outputs": {
     "sha256_master": {
      "path": "data/dart/viz/pl_breakdown_master.json",
-     "fixture_sha256": "3e9cf3cc6b2fad4fcbe4f7c9618894e2efc504e6d02990b14cd063ae052efce3",
-     "ondisk_sha256": "3e9cf3cc6b2fad4fcbe4f7c9618894e2efc504e6d02990b14cd063ae052efce3"
+     "fixture_sha256": "69a06d8979a442855c1e34e46542563df20a65a365bd106eee42239e9cd75bac",
+     "ondisk_sha256": "69a06d8979a442855c1e34e46542563df20a65a365bd106eee42239e9cd75bac"
     },
     "sha256_coverage": {
      "path": "data/_derived/pl_breakdown_coverage.json",
-     "fixture_sha256": "45733ef5a25291122c9f0b2d71e8bf87ad9717c3b3245317733f283b1a626bb4",
-     "ondisk_sha256": "45733ef5a25291122c9f0b2d71e8bf87ad9717c3b3245317733f283b1a626bb4"
+     "fixture_sha256": "34dd567815af431c694b141529efd63ec2f08561b65c60abaa9ead0c600b42f5",
+     "ondisk_sha256": "34dd567815af431c694b141529efd63ec2f08561b65c60abaa9ead0c600b42f5"
     }
    },
    "_golden": "tests/test_pl_breakdown_golden.py",

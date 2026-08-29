@@ -1681,6 +1681,154 @@ def extract_tier2_coreanre(tables):
     return out  # 백만원 already
 
 
+# ------------------------ 서울보증보험 (KR0150) ---------------------------- #
+_SGI_LOB5 = ("보증", "해외", "상해", "자동차", "기타")
+_SGI_LOB_IDX = {lob: i for i, lob in enumerate(_SGI_LOB5)}     # position within r[1:]
+
+
+def _sgi_row(r):
+    """r[1:] parsed POSITIONALLY -- blanks/dashes -> 0.0 IN PLACE, never skipped (unlike the
+    shared _row_nums(), which drops them and shifts every later cell left).  SGI's LOB notes
+    routinely render a true-zero LOB cell (원수 표의 상해/자동차, 수재 표의 보증) as '-'
+    sitting between populated columns -- exactly the compression trap that silently wiped
+    흥국화재 2026.2Q's LOB legs (fb9c9bf); this table has that shape in EVERY quarter, not
+    just as an occasional glitch, so positional parsing is mandatory here, not defensive
+    boilerplate."""
+    return [(to_num(c) or 0.0) for c in r[1:]]
+
+
+def _sgi_5col_header(t):
+    hb = " ".join(" ".join(h) for h in t.header)
+    return "항목" in hb and all(k in hb for k in _SGI_LOB5)
+
+
+def _sgi_totrow(t):
+    for r in t.rows:
+        if _norm(r[0]).replace(" ", "") == "합계":
+            vals = _sgi_row(r)
+            if len(vals) >= len(_SGI_LOB5) + 1:      # 5 LOB + 합계
+                return vals
+    return None
+
+
+def _sgi_re_legs(t):
+    """note '24.재보험수익 및 비용' (ceded/outward) -- ONE table, 4 columns [보증,해외,기타,
+    합계] (no 자동차/상해: SGI cedes no auto/injury risk out), with TWO '합계' rows under
+    section headers '재보험수익:' (ceded recoveries, income) and '재보험서비스비용:' (ceded
+    premium paid, cost).  Returns (rerev, recost) dicts keyed by LOB name, or (None, None)."""
+    cols = [_norm(c) for c in t.header[0][1:-1]]     # ['보증','해외','기타'] (drop 항목/합계)
+    section = None
+    out = {}
+    for r in t.rows:
+        lab = _norm(r[0])
+        if lab in ("재보험수익:", "재보험서비스비용:"):
+            section = lab[:-1]
+            continue
+        if section and lab.replace(" ", "") == "합계":
+            vals = _sgi_row(r)
+            if len(vals) >= len(cols) + 1:
+                out[section] = dict(zip(cols, vals))
+    return out.get("재보험수익"), out.get("재보험서비스비용")
+
+
+def extract_tier2_sgi(tables):
+    """서울보증보험 (KR0150) -- Korea's sole comprehensive guarantee-insurance company.  It
+    never had a dedicated handler (nor did the generic Format-A/B fallbacks match it), which
+    is why item2/13/14 were ALL None for every quarter -- this is the LEG-COVERAGE gap
+    inbox/parser ticket 20260829T1700Z asks to close for it.
+
+    SGI's LOB taxonomy is NOT the schema's default 장기/자동차/일반 -- it splits ALL THREE
+    flows (원수 direct / 수재 inward-assumed reinsurance / 재보험 ceded-outward) by product:
+    보증(surety, its core book)/해외(overseas)/상해(injury)/자동차(auto)/기타(other).  There is
+    NO 생명장기 leg at all (assemble() already sets item2=0.0 for a 손보 code).  item13
+    (자동차손익) = the 자동차 column alone; item14 (일반손익) = 보증+해외+상해+기타 summed
+    (이 저장소 컨벤션의 '일반' = non-auto/non-장기 P&C; SGI writes no 장기 book, so 일반
+    legitimately absorbs everything but 자동차).
+
+    Each LOB 손익 = 원수(rev−cost) + 수재(rev−cost) + 재보험(ceded rev−cost):
+      - note 23 (보험수익): ONE table carries both a '..._원수' row and a '..._수재' row plus
+        a 합계 row (원수+수재 COMBINED) -- only that 합계 row is read as the revenue side.
+      - note 25 (보험서비스비용): TWO SEPARATE tables, '(1)원수' and '(2)수재' (identical row
+        labels, so distinguished by 보증-column: SGI's own 보증 product is never reinsured
+        FROM anyone else, so 수재's 보증 cell is always '-'/0 while 원수's is always large --
+        confirmed every quarter 2025.1Q-2026.1Q).  BOTH totals must be summed: 수재 cost is a
+        real, large flow (e.g. 15.9억원 자동차 in 2025.1Q alone) -- dropping it is what would
+        leave item13 at roughly double its true (loss-making) magnitude, with the wrong sign.
+      - note 24 (재보험수익 및 비용, ceded/outward): see `_sgi_re_legs`; its missing
+        자동차/상해 columns contribute 0 to those two legs BY DESIGN (no ceded exposure), not
+        by omission -- confirmed against the note's own column header, not inferred.
+
+    Basis matters: note 25's 원수 손해조사비 sub-line genuinely differs 연결 vs 별도 (a
+    consolidation-level adjustment on a claims-handling subsidiary), unlike notes 23/24 which
+    are basis-invariant for this company -- `_prefer_ofs` is applied so the 별도(OFS) copy is
+    read, matching the master's basis convention.
+
+    Closure validated (2026-08-29, inbox/parser ticket 20260829T1700Z 답변) to <3백만원
+    residual against item1 = item13+item14+item15−item16 for ALL FIVE quarters this shape
+    covers (2025.1Q/2Q/3Q/4Q, 2026.1Q) via `parse_filing`+`assemble()` on the live pipeline,
+    not hand arithmetic.  2026.2Q is OUT OF SCOPE: that filing restructured this disclosure
+    into a deeper matrix note (원수/수재 grouped under '발행한 원보험계약'/'발행한
+    재보험계약' parent columns, single '보험수익' row instead of separate 원수/수재 rows) --
+    the same repo-wide 2026.2Q 반기 label-reconstruction other handlers' docstrings note (e.g.
+    코리안리, 흥국화재).  The row-label signatures this handler matches on
+    ('보험료배분접근법적용수익_원수' etc.) simply don't exist in that shape, so it falls
+    through to {} rather than guess a mapping onto the new columns -- left for a follow-up
+    ticket, not silently wrong."""
+    pool = _prefer_ofs(tables)
+
+    rev_t = None
+    for t in pool:
+        if not _sgi_5col_header(t):
+            continue
+        labs = [_norm(r[0]) if r else "" for r in t.rows]
+        if any("보험료배분접근법적용수익_원수" in l for l in labs) \
+                and any("보험료배분접근법적용수익_수재" in l for l in labs):
+            rev_t = t
+            break
+    rev_tot = _sgi_totrow(rev_t) if rev_t is not None else None
+
+    cost_cands = []
+    for t in pool:
+        if not _sgi_5col_header(t):
+            continue
+        labs = [_norm(r[0]) if r else "" for r in t.rows]
+        if any(l == "당기발생사고보험금" for l in labs) and any(l == "손실부담부채관련손실" for l in labs):
+            tot = _sgi_totrow(t)
+            if tot is not None:
+                cost_cands.append(tot)
+    won_tot = next((tot for tot in cost_cands if tot[_SGI_LOB_IDX["보증"]] != 0), None)
+    su_tot = next((tot for tot in cost_cands if tot[_SGI_LOB_IDX["보증"]] == 0), None)
+
+    re_t = None
+    for t in pool:
+        if _sgi_5col_header(t):
+            continue
+        hb = " ".join(" ".join(h) for h in t.header)
+        if not ("보증" in hb and "해외" in hb and "기타" in hb
+                and "자동차" not in hb and "상해" not in hb):
+            continue
+        labs = [_norm(r[0]) if r else "" for r in t.rows]
+        if any(l == "재보험수익:" for l in labs) and any(l == "재보험서비스비용:" for l in labs):
+            re_t = t
+            break
+    rerev, recost = _sgi_re_legs(re_t) if re_t is not None else (None, None)
+
+    if not (rev_tot and won_tot and su_tot and rerev is not None and recost is not None):
+        return {}
+
+    def lobval(lob):
+        i = _SGI_LOB_IDX[lob]
+        rev = rev_tot[i]
+        cost = won_tot[i] + su_tot[i]
+        rr = rerev.get(lob, 0.0) or 0.0
+        rc = recost.get(lob, 0.0) or 0.0
+        return rev - cost + rr - rc
+
+    out = {13: lobval("자동차") / 1000.0,                       # 천원 -> 백만원
+           14: sum(lobval(l) for l in ("보증", "해외", "상해", "기타")) / 1000.0}
+    return out
+
+
 # -------------------- 구형식 (pre-2025.2Q) 손보 OLD note --------------------- #
 # Before the standardized 2025.2Q disclosure, several insurers used a "구분=행 / LOB=열" note
 # (DB "6. 보험수익 및 비용"; 삼성·현대 "보험서비스결과" 구분-rows).  Two structural variants —
@@ -4240,6 +4388,7 @@ SONBO_HANDLERS = {
     "KR0003": extract_tier2_lotte,
     "KR0049": extract_tier2_axa,               # 악사손해 연차 '보험손익 상세내역' (자동차|일반|장기 columns)
     "KR1000": extract_tier2_coreanre,          # 코리안리 재보험 (gold-validated 2025.2Q; 생명/장기/일반)
+    "KR0150": extract_tier2_sgi,                # 서울보증보험 (보증/해외/상해/자동차/기타, 생명장기 無)
 }
 LIFE_HANDLERS = {
     "KR0070": extract_tier2_abl,               # 에이비엘 ([구분|당기|전기] 2-period note → pick 당기)

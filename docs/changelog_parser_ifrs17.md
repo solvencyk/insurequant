@@ -3,6 +3,31 @@
 > Last updated: 2026-08-29 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-08-29 (70th pass) — 보험손익 leg-coverage LEGRED 39→34
+
+`inbox/parser/20260829T1700Z__validation__MULTI__pl_item1_leg_coverage.md`(validation
+발주, status: answered). 2026-08-29 신설된 leg-coverage 룰(결측 LOB 다리를 0-fill 해
+`item1=item2+13+14(+15-16)` 폐쇄식을 검사)이 처음 드러낸 39건 처리.
+
+**서울보증보험(KR0150) 5분기(2025.1Q-2026.1Q) 채움.** 이 회사는 표준 3분류(장기/자동차/
+일반)가 아니라 고유 5분류(보증/해외/상해/자동차/기타)를 쓰는 데다 원수+수재(인수)+출재
+3-flow 구조라 기존 범용 매처가 한 번도 안 걸렸다 — 전용 핸들러(`extract_tier2_sgi`,
+`scripts/pl_breakdown/companies.py`) 신설. 흥국화재 2026.2Q(fb9c9bf)와 같은 계열의
+빈칸압축 함정(0을 리터럴 "0"이 아닌 빈 문자열로 렌더)을 위치보존 파서로 우회. 5분기 전부
+잔차 <2백만원으로 실주행 검증. 2026.2Q는 라벨 재구성으로 의도적 보류.
+
+**코리안리(KR1000) item13 — 파서 결함 아님.** 원문에 자동차 LOB 자체가 없다(기존
+docstring 확인). 등식이 안 닫히는 진짜 이유는 코리안리의 4번째 LOB("장기재보험",
+항목 "2-1"~"12-1")를 `validate_master_tables.py`의 leg-coverage 등식이 모르기 때문 —
+그 항을 더하면 12분기 전부 이미 정확히 닫힌다(코드 미수정, validation 에 등식 수정 권고).
+
+**예별손해(KR0004) item2 2024.4Q/2025.4Q — 후보 원문 표는 특정했으나 폐쇄식 불일치로
+미확정, 값 없음.** AIG·신한이지는 원천 미공시(prose-only/무표) 원문 재확인만.
+
+마스터/커버리지/루트/xlsx 서지컬 반영(combo-diff LOST/NEW 0, 정확히 10셀), baseline
+5건 삭제, 골든(`master_tables`·`pl_breakdown`)+지문 갱신, `validate_data_contract`
+RED=0 YELLOW=92(신규 0). 상세는 TODO_parser_ifrs17.md 70th pass + 티켓 답변.
+
 ## 2026-08-29 (60th pass) — ABL생명(KR0070) 2024.4Q·2025.1Q item6 채움, 유일 RED 해소
 
 `inbox/parser/20260829T1100Z__orchestrator__KR0070__fill_2024q4_2025q1_yesilcha.md`
