@@ -1,5 +1,73 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-30 (74th pass) — KR0079 미래에셋 상품별 CSM 결함 2건(라벨변형 #3 + "기타"
+> 상품 누락) 코드수정 + 전사 스윕 + 마스터 반영 완료.**
+> `inbox/parser/20260830T0200Z__orchestrator__KR0079__wide_product_label_variant_and_etc_
+> block.md`(status: answered).
+>
+> **A와 B는 다른 파일·다른 함수.** A(항목5 라벨 3번째 변형 "보험수익, 서비스의 이전으로
+> 당기손익에 인식한 보험계약마진" — 조사 "손익에" vs 기존 패턴 "손익으로" 한 글자 차이로
+> substring 불일치)는 `viz_build_csm_waterfall.py::STAGE_PATTERNS["amortization"]`(공유
+> 딕셔너리, `extract_stages()`/`find_csm_leaf_cols()`가 소비 — WIDE 표·상품별 SEPARATE
+> 블록 양쪽 경로에서 다 참조됨). B("기타" 상품 블록이 `pick_combined_agnostic()`의
+> `_PROD_KW` 캡션매칭에서 빠짐 — 사망/건강/연금/저축 4개만 하드코딩, "기타"는 배당축의
+> "ii)기타"(=무배당, 전체책의 97%)와 문자열이 겹쳐 단순 추가하면 배 이상 과대계상됨)는
+> `build_csm_waterfall_master.py::pick_combined_agnostic()`의 `prod` 리스트 산출부.
+> 픽스: `prod`를 document-order 인접성 게이트(하드키워드 캡션 cand 바로 다음 cand가
+> "기타"일 때만 편입)로 재작성.
+>
+> **스윕(SONBO 전체 25개사, FY2022_Q4~FY2026_Q2, 426 company-quarter, `waterfall_for_dir`
+> read-only 재실행 — `build_csm_waterfall_master.py`/`build_root_masters.py` 의 `main()`
+> 미실행)로 영향범위 확정: 12개 분기·50개 diag 셀, 전부 KR0079, 다른 24개사 0건.** git
+> stash로 수정전/후 두 스냅샷 비교(`scripts/_probes/_out_20260830_sweep_{PREFIX,POSTFIX}.
+> json`). 2023.1Q(스코어러 미포착, 항목C)·2026.2Q(2026.2Q+ 라벨 재구성 이미 정상매칭)는
+> 불변 확인. WIDE 포맷 사용사는 KR0069·KR0079·KR0087 3개사뿐(전사 스윕 확인)이나
+> KR0069·KR0087은 각자 이미 매칭되는 다른 라벨을 써서 실질 영향 없음 — A/B 둘 다 실질
+> 영향은 KR0079 전용.
+>
+> **마스터 반영: `csm_waterfall_master_diag.json` 50셀 수술적 패치(git diff 정확히
+> 50 insertions/50 deletions, 전부 `"값":` 라인) → `build_root_masters.build_csm()`
+> 개별호출(main() 미실행) → combo-diff.** `CSM_waterfall.json` before/after: 2172행=2172행
+> (유실 0), 41개 셀 변경(값 38 + 당분기연쇄 3), 전부 KR0079, 다른 회사 0. gold가 이미
+> 덮고 있는 셀(2025.2Q/3Q/4Q, 2026.1Q)은 화면 값 불변(gold가 여전히 이김) — **실제 화면
+> 반영은 2023.2Q~2025.1Q(8개 분기, gold 미부여 구간)에서만 발생.** `sync_master_xlsx_
+> sheet.py "CSM워터폴"`로 xlsx cherry-pick 동기화(75셀, "검증 OK" 자체확인 통과).
+>
+> **gold 후보 목록(제거·재판정, 이번 세션 값 미변경 — `data/_gold/user_csm_cells.json`
+> 손 안 댐):** ① 제거후보 19건 — 2025.2Q 항목1/2/3/6, 2025.3Q 항목1-6, 2025.4Q 항목1-6,
+> 2026.1Q 항목1/4/5(고친 코드가 gold와 오차 0 재현, raw-검증 완료 앵커와도 일치).
+> ② 재판정후보 2건(값 상충, **손대지 않음**) — 2025.2Q 항목4/5: 고친 코드 =
+> **항목4 −685.5억 / 항목5 −992.1억**(raw WIDE 표 직접값과 정확 일치), gold =
+> −886.27/−791.3(200.77억씩 반대방향, 합계는 raw=gold=−1677.57로 동일 폐쇄식 안 깨짐) —
+> 어느 쪽 채택할지 validation 판단. ③ 불변 6건 — 2023.1Q 항목1-6(항목C, 스코어러 미포착,
+> gold 계속 필요).
+>
+> **항목C(2023.1Q 스코어러 미포착) — 조사만, 미수정.** `_score_table()` 실측: 캡션
+> "i)사망"이 `_CAPTION_PRIMARY`/`_SECONDARY` 0건(측정요소 키워드가 부모/조상 캡션에만
+> 있고 이 회사는 서브테이블 캡션에 안 실림) → header:1 + rows:약1(weak stub) + slice:1 =
+> 3점(min_score=5 미달). `min_score`는 전사 공유 파라미터라 낮추면 25개사 전 분기 표
+> 스코어링에 영향 — 회사 1개·분기 1개 때문에 손대는 건 안전하지 않다고 판단, 미수정.
+> gold 6건이 계속 그 자리를 메운다(위 ③).
+>
+> **골든**: `tests/test_viz_csm_waterfall_golden.py` 실행 — **drift 없음**(builder가
+> 소비하는 `data/dart/extracted/*_measurement.json`은 KR0079 FY2024.4Q rcept
+> 20250318001228 하나뿐인데 그 파일의 항목5는 SEPARATE-블록 포맷이라 이미 기존 패턴으로
+> 매칭되고 있었음 — sha256 불변, `--update` 불필요). `tests/test_master_tables_golden.py`
+> (`--no-build` 내장) SUMMARY/exit code 불변. `tests/test_csm_continuity_exception.py`
+> 18/18 유지.
+>
+> **재현**: `scripts/_probes/probe_20260830_full_sonbo_sweep.py <out.json>`(전사 스윕),
+> `scripts/_probes/probe_20260830_diff_sweep.py`(전/후 비교), `scripts/_probes/
+> probe_20260830_kr0079_prod_cands_all_quarters.py`(cands 순서 재구성, "기타" 인접성
+> 증거), `scripts/_probes/probe_20260830_kr0079_2023q1_score_detail.py`(항목C 스코어
+> 분해). 백업: `data/dart/viz/csm_waterfall_master_diag.json.bak_20260830_
+> kr0079wideprod`, `CSM_waterfall.json.bak_20260830_kr0079wideprod`,
+> `insurequant_master_tables.xlsx.bak_20260830_kr0079wideprod`.
+>
+> 상세는 위 inbox 답변. status: **answered**(재판정후보 2건 채택방향은 validation 판단).
+>
+> 커밋: (다음 커밋에 기록)
+
 > **2026-08-30 (73rd pass) — CSM gold override 44건(KR0079 27·KR0003 12·KR0072 5) 출처
 > 공란 전수 해소, 값 변경 0건.** `inbox/parser/20260825T2200Z__validation__KR0079__
 > csm_gold_overrides_without_provenance.md`(validation 발주 §2, status: answered).

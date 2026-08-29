@@ -1991,17 +1991,6 @@
     "sign_flip": false
   },
   {
-    "company": "미래에셋생명보험",
-    "quarter": "2025.2Q",
-    "item": "이자부리",
-    "delta_pct": 21.7,
-    "threshold_pct": 20.0,
-    "cur": 295.8,
-    "ref": 243.1,
-    "basis": "yoy",
-    "sign_flip": false
-  },
-  {
     "company": "케이디비생명보험",
     "quarter": "2024.1Q",
     "item": "CSM상각",
@@ -2015,11 +2004,22 @@
   {
     "company": "미래에셋생명보험",
     "quarter": "2025.2Q",
+    "item": "이자부리",
+    "delta_pct": 21.6,
+    "threshold_pct": 20.0,
+    "cur": 295.8,
+    "ref": 243.2,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
+    "company": "미래에셋생명보험",
+    "quarter": "2025.2Q",
     "item": "CSM상각",
-    "delta_pct": 21.3,
+    "delta_pct": 21.4,
     "threshold_pct": 10.0,
     "cur": -791.3,
-    "ref": -1006.0,
+    "ref": -1006.4,
     "basis": "yoy",
     "sign_flip": false
   },
@@ -2478,10 +2478,10 @@
     "company": "미래에셋생명보험",
     "quarter": "2026.1Q",
     "item": "CSM상각",
-    "delta_pct": -11.1,
+    "delta_pct": -11.0,
     "threshold_pct": 10.0,
     "cur": -537.1,
-    "ref": -483.6,
+    "ref": -483.7,
     "basis": "yoy",
     "sign_flip": false
   },

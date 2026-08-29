@@ -619,6 +619,10 @@ def pick_combined_agnostic(blocks, anchor=None, code=None):
     # 미래에셋 triggers the ≥3-marker rule (손보/타 생보 use 배당 or 측정요소 axes, not
     # product lines), so this generalizes the former per-code KR0079 handler.
     _PROD_KW = ("사망", "건강", "연금", "저축", "종신", "보장", "상해")
+    # '기타' is deliberately NOT in _PROD_KW itself (see the 'prod' loop below for why a
+    # bare keyword match on it is unsafe) — it only counts toward the seg-detection
+    # threshold via the trailing-adjacency rule, which the >=3 hits from the other 4
+    # product markers already satisfy for 미래에셋, so omitting it here changes nothing.
     if any("상품라인" in cap for _st, cap in cands) or \
             sum(1 for kw in _PROD_KW if any(kw in cap for _st, cap in cands)) >= 3:
         seg = True
@@ -638,11 +642,30 @@ def pick_combined_agnostic(blocks, anchor=None, code=None):
             return {no: sum((p.get(no) or 0) for p in _picks0) for no in STAGE_KEYS}
     if seg:  # product-line segments → sum 별도 segments (anchor-independent)
         # Double-decomposition (미래에셋 every quarter: the book is disclosed BOTH on the
-        # 배당 axis 유배당+무배당 AND the 상품별 axis 사망/건강/연금/저축 — summing all axes
-        # double-counts). When per-product captions exist, sum ONLY the product-marked
+        # 배당 axis 유배당+무배당 AND the 상품별 axis 사망/건강/연금/저축/기타 — summing all
+        # axes double-counts). When per-product captions exist, sum ONLY the product-marked
         # segments (excluding the 배당-axis blocks). Caption-based → not code-scoped, fires
         # every quarter (fixes 미래에셋 Q1-3 + prior years, not just the annual gold point).
-        prod = [st for st, cap in cands if any(kw in cap for kw in _PROD_KW)]
+        #
+        # '기타' trailing-adjacency (2026-08-30, inbox/parser/20260830T0200Z): 미래에셋's
+        # 5-product breakdown always lists captions in DOCUMENT ORDER [사망, 건강, 연금,
+        # 저축, 기타] (raw-confirmed every 원수 quarter 2023.2Q-2025.1Q + 2025.4Q annual
+        # _00760 attachment) — '기타' is the trailing 5th product ONLY when its cand
+        # immediately follows a hard-_PROD_KW cand. A bare "'기타' in cap" match would ALSO
+        # catch the UNRELATED 배당 axis's 'ii) 기타' (= 무배당, the non-유배당 remainder,
+        # NOT a product) sitting right after 'i) 유배당' in the SAME cands list, whose value
+        # is ~ the WHOLE book (2025.4Q: 19,956.11억) — summing that alongside the 4 product
+        # segments (20,775.61억) would ~double the total, not fix the 6.49억-38.13억
+        # undercount this is meant to fix. Verified: dropping '기타' from every affected
+        # quarter previously undercounted ALL of items 1/3/5/6 (not just item1/opening —
+        # 2025.4Q item2 alone was off 38.18억) because the whole per-product cand (not just
+        # its opening) was excluded from the sum.
+        prod, _prev_hard = [], False
+        for _st, _cap in cands:  # _cap is already _ns()-normalized (no spaces)
+            _hard = any(kw in _cap for kw in _PROD_KW)
+            if _hard or (_prev_hard and "기타" in _cap):
+                prod.append(_st)
+            _prev_hard = _hard
         if len(prod) >= 2:
             picks = _opening_clusters(_drop_prior(prod))
             if len(picks) >= 2:

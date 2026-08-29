@@ -1,0 +1,89 @@
+line=11610 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'ⅰ) 사망'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x2', 'slice: whole_company_life policy']
+  header: 
+
+line=14062 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'i) 사망'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x2', 'slice: whole_company_life policy']
+  header: 
+
+line=14575 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'ii) 사망 외'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x2', 'slice: whole_company_life policy']
+  header: 
+
+line=15088 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'i) 사망'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x3', 'slice: whole_company_life policy']
+  header: 
+
+line=18419 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'i) 사망'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x3', 'slice: whole_company_life policy']
+  header: 
+
+line=19168 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'ii) 사망 외'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x3', 'slice: whole_company_life policy']
+  header: 
+
+line=21174 score=2 block_type=unknown slice=whole_company_life/whole_company_life
+  caption: 'i) 사망'
+  reasons: ['header: 1 measurement column', 'slice: whole_company_life policy']
+  header: 
+
+line=22414 score=2 block_type=unknown slice=whole_company_life/whole_company_life
+  caption: 'i)사망'
+  reasons: ['header: 1 measurement column', 'slice: whole_company_life policy']
+  header: 
+
+line=22620 score=2 block_type=unknown slice=whole_company_life/whole_company_life
+  caption: 'ii)사망 외'
+  reasons: ['header: 1 measurement column', 'slice: whole_company_life policy']
+  header: 
+
+line=35722 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'ⅰ) 사망'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x2', 'slice: whole_company_life policy']
+  header: 
+
+line=38174 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'i) 사망'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x2', 'slice: whole_company_life policy']
+  header: 
+
+line=38687 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'ii) 사망 외'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x2', 'slice: whole_company_life policy']
+  header: 
+
+line=39201 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'i) 사망'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x3', 'slice: whole_company_life policy']
+  header: 
+
+line=42533 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'i) 사망'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x3', 'slice: whole_company_life policy']
+  header: 
+
+line=43282 score=3 block_type=direct slice=whole_company_life/whole_company_life
+  caption: 'ii) 사망 외'
+  reasons: ['header: 1 measurement column', 'rows: weak stubs x3', 'slice: whole_company_life policy']
+  header: 
+
+line=45289 score=2 block_type=unknown slice=whole_company_life/whole_company_life
+  caption: 'i) 사망'
+  reasons: ['header: 1 measurement column', 'slice: whole_company_life policy']
+  header: 
+
+line=46529 score=2 block_type=unknown slice=whole_company_life/whole_company_life
+  caption: 'i)사망'
+  reasons: ['header: 1 measurement column', 'slice: whole_company_life policy']
+  header: 
+
+line=46735 score=2 block_type=unknown slice=whole_company_life/whole_company_life
+  caption: 'ii)사망 외'
+  reasons: ['header: 1 measurement column', 'slice: whole_company_life policy']
+  header: 
