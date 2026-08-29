@@ -739,6 +739,11 @@ def _pl_blocking_signature(rows, wf, extra_lob, unknown_hyphen):
         # coverage_holes -> (real, known, struct). 게이트가 RED 로 세는 것은 **real** 이다.
         pl_holes, _known, _struct = V.coverage_holes(
             pl, ["보험손익", "생명장기손익", "당기순이익"])
+        # 2g LOB_TAXONOMY_NA (2026-08-30) — 미해당 LOB 슬롯 등재부의 무결성.
+        # RED 로 세는 것은 stale(등재했는데 값이 있다) + dangle(등재사가 마스터에 없다)이다.
+        # 이 축을 여기 안 넣으면 매니페스트가 "PL 마스터를 읽는 차단성 룰 전부"라는
+        # 자기 선언을 어기고, 그만큼 실제보다 비관적으로(=무검사라고) 판정하게 된다.
+        _lob_na, lob_stale, lob_dangle = V._check_lob_taxonomy(pl, quiet=True)
         red = {(f.rule, f.company, f.quarter) for f in G.run_gate(G.Env(inject={"pl": pl})).red}
     return {
         "bridge": {(c, q, lab) for c, q, lab, _l, _d in pb_fail},
@@ -747,6 +752,7 @@ def _pl_blocking_signature(rows, wf, extra_lob, unknown_hyphen):
         "amort": {(c, q) for c, q, *_r in cc_fail},
         "tax22": {(c, q) for c, q, *_r in tax_fail},
         "holes": {(c, q) for c, q, _k in pl_holes},
+        "lob": {(c, q, leg) for c, q, leg, _v in lob_stale} | {(c, "", "") for c in lob_dangle},
         "contract_red": red,
     }
 

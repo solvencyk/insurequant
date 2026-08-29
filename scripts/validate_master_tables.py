@@ -448,6 +448,88 @@ PL_ITEMS_UNCHECKABLE_BY_EQUATION = {
     23: "법인세 — item23 = 22-24 plug 가 418/418 덮어씀(원천 계정은 2f 가 되살려 쓴다)",
 }
 
+# ===========================================================================
+# 회사별 LOB 택소노미 — **표준 3슬롯은 보편 분류가 아니다** (2026-08-30)
+# ===========================================================================
+# PL 스키마의 LOB 슬롯 세 개(item2 `생명장기손익` · item13 `자동차손익` · item14 `일반손익`)는
+# **국내 원수 손해보험사의 관행**을 그대로 옮긴 것이지 보험업 전체의 분류가 아니다.
+# 발행사가 그 슬롯에 해당하는 사업을 **아예 영위하지 않으면** 그 칸은 세 상태 중 하나가 아니라
+# 셋 다 다르다 —
+#
+#   결측(None, 못 뽑았다)   ≠   0.0(영위하는데 손익이 0)   ≠   미해당(N/A, 그 LOB 자체가 없다)
+#
+# 이 게이트는 지금까지 앞의 둘만 구별했다. 그래서 코리안리재보험의 item13 은 14분기 내내
+# `0-fill=자동차손익` 으로 인쇄됐고, 그것을 본 사람은 **추출 실패로 읽을 수밖에 없었다**
+# (실제로 2026-08-29 에 그렇게 읽혀 parser 레인으로 진단 요청이 나갔다, commit 15a61d1).
+# 아래 등재부가 그 셋째 상태를 명시한다.
+#
+# **0 으로 채우지 않는다.** 0 은 "영위하는데 이번 분기 손익이 없었다"는 주장이고, 미해당은
+# 그 주장을 하지 않는다. 마스터에 0 을 쓰면 화면·집계가 그 회사를 자동차 영위사로 센다.
+#
+# --- 회사별 실측 택소노미 (원문 컬럼 헤더 기준) ---
+#
+#   코리안리재보험(KR1000)  전업 재보험사.  `계약 유형` = **장기보험 · 생명보험 · 일반보험**
+#     자동차 컬럼이 원문에 없다. FY2026_Q2 raw `20260814003862.xml` 의 보험수익/보험비용 표
+#     헤더 실측: `계약 유형 | 합계 | 장기보험 | 생명보험 | 일반보험`.
+#     빌더 매핑(`pl_breakdown/companies.py::extract_tier2_coreanre`):
+#         생명보험 -> item2  (표준 슬롯, 라벨은 `생명장기손익`)
+#         장기보험 -> item2-1 (`장기재보험 손익`, `_extra_items` 로 발행)
+#         일반보험 -> item14
+#         자동차   -> **없음 = 미해당**
+#     >>> **leg-coverage 등식이 이 회사에서 `2-1` 을 왜 더해야 하는지가 여기서 나온다.**
+#     이 회사는 LOB 이 3개인데 그 3개가 표준 3슬롯에 1:1 로 안 들어간다 — 생명과 장기가
+#     별개 LOB 인데 표준 슬롯은 둘을 `생명장기` 한 칸으로 합쳐 놨다. 그래서 빌더가 장기를
+#     `2-1` 로 넘치게 발행했고, `item1 = item2 + item13 + item14` 만 보는 등식은 그 항을
+#     통째로 빠뜨려 12분기를 오탐했다(최대 잔차 41,051백만 = 4,105억).
+#     즉 `2-N` 가산은 임의 보정이 아니라 **이 회사의 LOB 분류가 스키마 슬롯과 어긋난다는
+#     사실의 직접적 귀결**이다. 다른 재보험사가 들어오면 같은 검토를 다시 해야 한다.
+#
+#   서울보증보험(KR0150)  국내 유일 종합 보증보험사.  `항목` = **보증 · 해외 · 상해 · 자동차 · 기타**
+#     생명장기 leg 자체가 없다(ZLEG_LEGIT "ALL"). 자동차 컬럼은 **존재하되 전량 수재**다 —
+#     FY2026_Q1 raw `20260515000688.xml` 보험수익 표 셀 실측:
+#         원수: 보증 587,072,949 · 해외 762,496 · 상해 - · **자동차 -** · 기타 991,185
+#         수재: 보증 -          · 해외 32,001,864 · 상해 5,786,143 · **자동차 12,516,475** · 기타 13,317,316
+#     그래서 이 회사의 item13 은 "자동차 원수 미영위" 인데도 **미해당이 아니다**(수재로 실재).
+#     등재부에 넣지 않는 이유가 이것이다 — 슬롯 이름만 보고 단정하면 정반대로 판정한다.
+#
+# 표 전체(38사)와 슬롯별 근거는 `docs/domains/claude-agent-ifrs17.md` §4.3.
+#
+# **이 등재부는 면제가 아니다.** 등재해도 leg-coverage 등식은 그대로 돌고 깨지면 그대로 RED 다.
+# 등재가 바꾸는 것은 **판정이 아니라 그 결측을 어떻게 읽어야 하는가** 뿐이다. 그리고 등재 자체가
+# `_check_lob_taxonomy()` 로 반증가능하다 — 마스터에 값이 생기면 등재부가 거짓이 되고 RED 다.
+LOB_KEYS = ("생명장기손익", "자동차손익", "일반손익")   # item2 / item13 / item14
+
+LOB_LEG_NA: dict[str, dict[str, str]] = {
+    "코리안리재보험": {
+        "자동차손익":
+            "전업 재보험사 — 원문 `계약 유형` 컬럼이 장기보험·생명보험·일반보험 3개뿐, "
+            "자동차 컬럼 부재(FY2026_Q2 raw 20260814003862.xml 헤더 실측 + 빌더 "
+            "extract_tier2_coreanre 독스트링 'NO 자동차'). owner 결정 2026-08-30, "
+            "ticket inbox/validation/20260830T0200Z__orchestrator__KR1000__lob_taxonomy_exception.md",
+    },
+}
+
+
+def _assert_lob_leg_na_wellformed() -> None:
+    """등재부의 슬롯 이름이 실제 LOB 슬롯인지, 근거 문장이 붙어 있는지.
+
+    오타난 슬롯 이름은 **아무 것도 덮지 않으면서 덮은 것처럼 보인다** — 이 저장소가
+    반복해서 당한 형태라 import 시점에 죽인다."""
+    for co, legs in LOB_LEG_NA.items():
+        bad = sorted(set(legs) - set(LOB_KEYS))
+        if bad:
+            raise SystemExit(
+                f"LOB_LEG_NA[{co!r}] 의 슬롯 이름이 LOB_KEYS 에 없다: {bad}\n"
+                f"  LOB_KEYS = {LOB_KEYS}. 오타난 이름은 아무 것도 덮지 않는다.")
+        for leg, why in legs.items():
+            if not (why or "").strip():
+                raise SystemExit(
+                    f"LOB_LEG_NA[{co!r}][{leg!r}] 에 근거가 없다 — "
+                    "원문 컬럼 헤더 실측과 결정 출처를 적어라. 근거 없는 등재는 면제다.")
+
+
+_assert_lob_leg_na_wellformed()
+
 # 분기 지평 — **마스터에서 파생한다** (`scripts/_quarter_horizon.py`, 근거는 그 독스트링).
 # 2026-08-29 까지 이 자리는 `2026.1Q` 로 끝나는 리터럴이었고 파일 최초 커밋(9243445) 이후
 # 아무도 안 늘렸다. 그래서 2026.2Q 를 배포한 날 아래 축이 전부 그 분기를 **순회조차 안 했다**:
@@ -746,6 +828,7 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     extra_lob = extra_lob or {}
     unknown_hyphen = unknown_hyphen or []
+    na_of = LOB_LEG_NA          # (co) -> {leg: 근거}; 결측을 "미해당"으로 읽게 하는 등재부
     ev = {EQ_REAL: 0, EQ_TAUTOLOGY: 0, EQ_PARTIAL: 0}
     eq_pass_count = defaultdict(int)
 
@@ -757,7 +840,6 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     pb_fail = []
     eq_fail_count = defaultdict(int)
     legcov_pass, legcov_fail, nolhs_rows = [], [], []
-    LOB_KEYS = ("생명장기손익", "자동차손익", "일반손익")
     for (co, q), m in sorted(pl.items()):
         # --- 보험손익 dual-form (bare ΣLOB / adj +기타영업수익-기타사업비용) ---
         # `보험손익`(항목1)의 폐쇄식 `1 = 2+13+14(+15-16)` 은 **PL_EQS 밖의 이 블록**이
@@ -794,14 +876,25 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
         else:
             raw_lob = [m.get(k) for k in LOB_KEYS]
             zf = [k for k, v in zip(LOB_KEYS, raw_lob) if v is None]
+            # 결측 다리를 **미해당(등재부에 있음)** 과 **설명되지 않은 결측** 으로 가른다.
+            # 판정에는 안 쓴다 — 등재는 면제가 아니므로 등식은 양쪽 다 똑같이 검산한다.
+            # 인쇄만 갈라서, 다음 사람이 `0-fill=자동차손익` 을 추출 실패로 오독하지 않게 한다.
+            na_legs = [k for k in zf if k in na_of.get(co, {})]
+            zf_unex = [k for k in zf if k not in na_of.get(co, {})]
             # 2026-08-29 b: **추가 LOB 다리를 더한다.** 표준 3슬롯이 LOB 의 전부라는 가정이
-            # 이 등식의 오탐 원인이었다 — 코리안리재보험은 LOB 이 4개(생명/장기/일반)라
-            # 네 번째가 `2-1`(장기재보험 손익)로 마스터에 정상 발행돼 있는데 등식만 몰랐다.
-            # 그래서 12분기 내내 "item13(자동차) 결측이 돈을 싣고 있다"고 찍혔지만, 실제로는
-            # 자동차 LOB 자체가 원문에 없고(parser 전 분기 원문 grep, commit 15a61d1)
+            # 이 등식의 오탐 원인이었다.
+            # **왜 코리안리재보험만 `2-N` 이 필요한가 = 그 회사의 LOB 택소노미 때문이다**
+            # (근거·원문 헤더 실측은 위 `LOB_LEG_NA` 주석, 표는 domains/claude-agent-ifrs17 §4.3).
+            # 요지: 그 회사의 LOB 은 장기/생명/일반 **3개**인데 표준 슬롯이 생명과 장기를
+            # `생명장기` 한 칸으로 합쳐 놔서 1:1 로 안 들어간다 → 빌더가 장기를 `2-1`
+            # (`장기재보험 손익`)로 넘치게 발행 → 표준 3슬롯만 보는 등식은 그 항을 통째로
+            # 빠뜨렸다. 12분기 내내 "item13(자동차) 결측이 돈을 싣고 있다"고 찍혔지만 실제로는
+            # 자동차 LOB 자체가 원문에 없고(원문 `계약 유형` 컬럼 3개, commit 15a61d1)
             # 잔차는 통째로 이 미포함 항이었다. 더하면 12분기 전부 |잔차| ≤ 2.8백만원.
             # 빌더의 Tier-2 RC 게이트는 이미 같은 항을 더하고 있었다(`_extra_lob`) — 즉
             # **빌더와 검증기가 서로 다른 등식을 쓰고 있었다**. 이제 같은 등식을 쓴다.
+            # 새 재보험사·특수 분류사가 들어오면 `2-N` 을 무조건 더하는 것이 맞는지 그 회사의
+            # 택소노미로 다시 확인해야 한다 — 슬롯 이름이 보편이라는 가정이 여기서 깨졌다.
             xlob = extra_lob.get((co, q), 0.0)
             bare = sum(0.0 if v is None else v for v in raw_lob) + xlob
             cands = [bare]
@@ -814,12 +907,13 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
                 pb_fail.append((co, q, label, round(bo, 1), round(diff, 1)))
                 eq_fail_count[label] += 1
                 if zf:
-                    legcov_fail.append((co, q, round(bo, 1), round(diff, 1), zf, xlob))
+                    legcov_fail.append((co, q, round(bo, 1), round(diff, 1),
+                                        zf_unex, xlob, na_legs))
             else:
                 pb_pass += 1
                 _credit(label)
                 if zf:
-                    legcov_pass.append((co, q, round(diff, 1), zf, xlob))
+                    legcov_pass.append((co, q, round(diff, 1), zf_unex, xlob, na_legs))
         # --- 나머지 등식 ---
         for label, lhs_key, terms in PL_EQS:
             lhs = m.get(lhs_key)
@@ -931,13 +1025,19 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     print(f"  -- 2e. LEG-COVERAGE (결측 LOB 다리를 0 으로 채워 판정)  "
           f"닫힘={len(legcov_pass)} 깨짐={len(legcov_fail)} 좌변없음(item1 결측)={len(nolhs_rows)} --")
     print("     닫힘 = 그 다리는 정말 0(발행사 미영위). 종전에는 이것도 SKIP 이라 무검사였다.")
-    for co, q, diff, zf, xl in legcov_pass[:40]:
+    print("     `N/A=` = LOB_LEG_NA 등재 = 그 LOB 이 원문에 아예 없다(미해당). 추출 실패가 아니다.")
+    for co, q, diff, zf, xl, na in legcov_pass[:40]:
         xs = f"  +extraLOB(2-N)={xl:+,.1f}" if xl else ""
-        print(f"  LEGOK {co:14s} {q}  diff={diff:+.1f}  0-fill={'+'.join(zf)}{xs}")
+        ns = f"  N/A={'+'.join(na)}" if na else ""
+        zs = f"  0-fill={'+'.join(zf)}" if zf else ""
+        print(f"  LEGOK {co:14s} {q}  diff={diff:+.1f}{zs}{ns}{xs}")
     print("     깨짐 = 결측 다리가 진짜 돈을 싣고 있다. |diff| 가 미검사 금액의 하한이다.")
-    for co, q, lhs, diff, zf, xl in legcov_fail[:60]:
+    print("     등재(N/A)는 면제가 아니다 — 등재사가 여기 뜨면 등재 근거가 잔차로 반박된 것이다.")
+    for co, q, lhs, diff, zf, xl, na in legcov_fail[:60]:
         xs = f"  +extraLOB(2-N)={xl:+,.1f}" if xl else ""
-        print(f"  LEGRED {co:14s} {q}  lhs={lhs:.1f} diff={diff:+.1f}  0-fill={'+'.join(zf)}{xs}")
+        ns = f"  N/A={'+'.join(na)}(!! 등재 반박)" if na else ""
+        zs = f"  0-fill={'+'.join(zf)}" if zf else ""
+        print(f"  LEGRED {co:14s} {q}  lhs={lhs:.1f} diff={diff:+.1f}{zs}{ns}{xs}")
     print("     좌변없음 = item1 자체가 결측이라 등식 성립 불가(coverage census 소관).")
     for co, q in nolhs_rows[:40]:
         print(f"  NOLHS {co:14s} {q}  보험손익=None")
@@ -959,6 +1059,55 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     if evidence_out is not None:
         evidence_out.update(ev)
     return pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows
+
+
+def _check_lob_taxonomy(pl: dict, quiet: bool = False) -> tuple[list, list, list]:
+    """2g. LOB 택소노미 등재부 무결성 (2026-08-30 신설).
+
+    `LOB_LEG_NA` 는 "이 회사에는 그 LOB 이 아예 없다"는 **주장**이다. 주장은 반증가능해야
+    등재부이고, 반증 못 하면 그냥 면제다. 여기서 마스터로 반증한다 —
+
+      · STALE  = 등재한 슬롯에 마스터가 값을 싣고 있다. 등재가 거짓이거나 파서가 잘못 채웠다.
+                 어느 쪽이든 게이트가 인쇄하는 문장이 거짓이 되므로 **RED**.
+      · DANGLE = 등재한 회사가 마스터에 아예 없다. 개명·철수로 등재부만 남은 것 → RED.
+      · N/A    = 정상. 그 셀이 결측인 것은 미해당이라서다(추출 실패 아님).
+
+    **왜 별도 룰인가.** `ZLEG_LEGIT` 를 넓히는 선택지가 있었지만 안 골랐다. 그 등재부는
+    `PL_LEG_ITEMS`(생명장기 sub-item 10종) 어휘로만 소비된다 — `items = [k for k in
+    PL_LEG_ITEMS if not (legit and k in legit)]`. `자동차손익` 을 거기 넣으면 이름이
+    교집합에 없어 **조용히 아무 것도 안 하면서 등재된 것처럼 보인다.** 이 저장소가 반복해서
+    당한 형태(=죽은 등재부)라, 소비되는 자리에 새로 만들고 무결성 검사를 붙였다.
+
+    Returns (na_cells, stale_rows, dangling). RED = stale + dangling."""
+    na_cells, stale_rows, dangling = [], [], []
+    cos_in_master = {co for co, _q in pl}
+    for co, legs in sorted(LOB_LEG_NA.items()):
+        if co not in cos_in_master:
+            dangling.append(co)
+            continue
+        for (c, q), m in sorted(pl.items()):
+            if c != co:
+                continue
+            for leg in sorted(legs):
+                v = m.get(leg)
+                if v is None:
+                    na_cells.append((co, q, leg))
+                else:
+                    stale_rows.append((co, q, leg, v))
+    if not quiet:
+        print(f"  -- 2g. LOB_TAXONOMY_NA (미해당 LOB 슬롯 등재부)  "
+              f"N/A확인={len(na_cells)} 등재반박(STALE)={len(stale_rows)} "
+              f"등재사부재(DANGLE)={len(dangling)} --")
+        print("     결측(못 뽑았다) · 0.0(영위하는데 0) · 미해당(그 LOB 자체가 없다)은 셋 다 다르다.")
+        for co, legs in sorted(LOB_LEG_NA.items()):
+            n = sum(1 for c, _q, _l in na_cells if c == co)
+            print(f"  LOBNA {co:14s} {'+'.join(sorted(legs))}  미해당확인={n}분기")
+        for co, q, leg, v in stale_rows[:40]:
+            print(f"  LOBSTALE {co:14s} {q}  {leg}={v} — 미해당이라 등재했는데 값이 있다. "
+                  f"등재부가 거짓이거나 파서가 잘못 채웠다.")
+        for co in dangling:
+            print(f"  LOBDANGLE {co} — 등재부에만 있고 PL 마스터에 없다(개명·철수?).")
+    return na_cells, stale_rows, dangling
 
 
 # ===========================================================================
@@ -1413,6 +1562,8 @@ def main() -> int:
     pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows = _check_pl_bridge(
         pl, pl_extra_lob, pl_unknown_hyphen, pl_evidence)
 
+    lob_na, lob_stale, lob_dangle = _check_lob_taxonomy(pl)
+
     tax_pass, tax_fail, tax_skip = _check_tax22_crosscheck()
 
     cc_pass, cc_fail, cc_pinned, cc_skip = _check_csm_crosscheck(pl, wf)
@@ -1445,14 +1596,17 @@ def main() -> int:
           f"tax22_src:{tax_pass}P/{len(tax_fail)}F/{sum(tax_skip.values())}S | "
           f"zero_legs:{len(zleg_rows)} | "
           f"impossible0:{len(zerolegs_rows)} | "
+          f"lob_na:{len(lob_na)}NA/{len(lob_stale) + len(lob_dangle)}BAD | "
           f"csm_amort_identity:{cc_pass}P/{cc_pinned}PIN/{len(cc_fail)}F/{cc_skip}S | "
           f"qoq_warn:{len(qoq_rows)}Y | sens:{len(sens_red)}R/{len(sens_yellow)}Y/{len(sens_dir)}dir | "
           f"oci_vs_bs_aoci:{len(oci_aoci_rows)}Y")
     print("#" * 78)
     # QOQ/sens_yellow는 YELLOW(anomaly)라 exit code에 반영 안 함. wfy/zamort/zleg/impossible0/sens_red은 데이터 오류라 반영.
+    # lob_stale/lob_dangle = 게이트 자신의 등재부가 마스터와 어긋난 것 → RED(인쇄되는 문장이 거짓).
     return 0 if not (ci_fail or pb_fail or cc_fail or dup_rows or spike_rows or cont_rows
                      or wf_holes or pl_holes or wfy_rows or zamort_rows or zleg_rows
-                     or zerolegs_rows or sens_red or tax_fail) else 2
+                     or zerolegs_rows or sens_red or tax_fail
+                     or lob_stale or lob_dangle) else 2
 
 
 if __name__ == "__main__":
