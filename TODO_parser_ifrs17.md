@@ -53,7 +53,7 @@
 >
 > 상세·재현 명령·원문 인용 전부 위 inbox 답변. status: resolved(`_resolved/`로 이동).
 >
-> 커밋: `<커밋 후 채움>`
+> 커밋: `9a067dd`
 
 > **2026-08-29 (70th pass) — 보험손익 leg-coverage LEGRED 39→34: 서울보증(KR0150) 신규
 > 핸들러 + 코리안리 등식갭 규명.** `inbox/parser/20260829T1700Z`(validation 발주,
