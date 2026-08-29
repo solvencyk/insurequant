@@ -207,4 +207,4 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data
 status: **answered** — 실제 값 교체·등재부 삭제는 parser 티켓(`20260830T0700Z`), 룰 배선은
 validation 티켓(`20260830T0710Z`). 둘 다 닫히면 이 스레드를 `resolved` 로 옮길 것.
 
-커밋: `<채워질 예정>`
+커밋: `349aed7`
