@@ -1103,7 +1103,7 @@
       "공시분기": "2023.3Q",
       "값": 46967.3,
       "was": 54216.7,
-      "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1/Q2 = 46967.3); Q3 source-restated to 54216.7. keep close 64694.3 (agent: genuine)"
+      "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1/Q2 = 46967.3); Q3 source-restated to 54216.7. keep close 64694.3 (agent: genuine) -- STALE as of 2026-08-26: item6 was subsequently moved 64,694.3->63,948.4 by the caption-boundary fix (inbox/parser/20260826T0730Z S3, see the item4=4188.86 entry's why for this quarter). 64,694.3 is NOT the deployed item6 anymore -- deployed item6=63,948.4. This entry's own item1=46967.3 value is unaffected and still correct. Flagged by inbox/parser/20260826T0930Z S3 (stale gold text vs deployed master); corrected 2026-08-30, no value changed."
     },
     {
       "원보험사코드": "KR0073",
@@ -2120,7 +2120,7 @@
       "공시분기": "2023.3Q",
       "값": -3217.86,
       "was": -3255.6,
-      "why": "교보생명 2023.3Q item5 raw 재확정(inbox/parser/20260825T1520Z): '22-4) 당분기와 전분기 중 보험료배분접근법을 적용한 보험계약 이외의 보험계약부채(자산)의 요소별 변동내역'(GMM 전용) 노트, line_no=50494, '(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계약마진' 행 CSM열=(321,786)천원=-3,217.86억. PL 원수CSM상각(321,786)과 정확히 일치(교보생명 2023.1Q/2Q도 같은 노트 재확인, 동일 이유). item1(=46967.3, FY2023 year-start 연속성)과 item6(=64694.3)은 기존 owner override(index 142-143, 'CSM continuity fix 2026-06-16')가 이미 확정한 값이라 손대지 않는다 -- 그 override는 '22-4)' 노트가 아닌 '1)당분기' 캡션 후보(item1=54216.7)를 46967.3 으로 재고정하고 item6=64694.3 을 'genuine'으로 유지하기로 이미 결정했다. item2/item3 도 그 결정을 따라 diag 원값(10292.2/5773.1, '1)당분기' 후보와 동일)을 그대로 둔다. item4 는 이 파이프라인 전체의 관례대로 잔차 플러그이므로 item5 정정에 맞춰 재계산: 64694.3-(46967.3+10292.2+5773.1-3217.86)=4879.56 (폐쇄식 검산: 46967.3+10292.2+5773.1+4879.56-3217.86=64694.30, 일치)."
+      "why": "교보생명 2023.3Q item5 raw 재확정(inbox/parser/20260825T1520Z): '22-4) 당분기와 전분기 중 보험료배분접근법을 적용한 보험계약 이외의 보험계약부채(자산)의 요소별 변동내역'(GMM 전용) 노트, line_no=50494, '(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계약마진' 행 CSM열=(321,786)천원=-3,217.86억. PL 원수CSM상각(321,786)과 정확히 일치(교보생명 2023.1Q/2Q도 같은 노트 재확인, 동일 이유). item1(=46967.3, FY2023 year-start 연속성)과 item6(=64694.3)은 기존 owner override(index 142-143, 'CSM continuity fix 2026-06-16')가 이미 확정한 값이라 손대지 않는다 -- 그 override는 '22-4)' 노트가 아닌 '1)당분기' 캡션 후보(item1=54216.7)를 46967.3 으로 재고정하고 item6=64694.3 을 'genuine'으로 유지하기로 이미 결정했다. item2/item3 도 그 결정을 따라 diag 원값(10292.2/5773.1, '1)당분기' 후보와 동일)을 그대로 둔다. item4 는 이 파이프라인 전체의 관례대로 잔차 플러그이므로 item5 정정에 맞춰 재계산: 64694.3-(46967.3+10292.2+5773.1-3217.86)=4879.56 (폐쇄식 검산: 46967.3+10292.2+5773.1+4879.56-3217.86=64694.30, 일치). -- STALE as of 2026-08-26: the caption-boundary fix (inbox/parser/20260826T0730Z S3) later moved item2/item3/item6 to 10255.1/5755.0/63948.4 (this entry's own item5=-3217.86 was NOT touched and is unaffected/still correct) and recomputed item4=4188.86 to close against the new item6 -- the item4=4879.56 figure computed in this entry's own text is superseded, and item6 is no longer 64694.3. Flagged by inbox/parser/20260826T0930Z S3; corrected 2026-08-30, no value in this entry changed."
     },
     {
       "원보험사코드": "KR0097",

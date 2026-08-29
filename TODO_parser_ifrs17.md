@@ -1,5 +1,70 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-30 (72nd pass) — KR0073 교보생명 "CSM 이자부리 누계 음수" 재조사: 버그 아님, 원문
+> 그대로임을 3중 교차검증(raw 인용/코드 자체추출/MD&A 산문)으로 확정. 별도로 진짜 버그(2026.1Q/2Q
+> 상품슬라이스 선택오류) 발견해 follow-up task 로 분리, 이번 세션은 미수정.**
+> `inbox/parser/20260826T0930Z__validation__KR0073_2025.3Q__csm_interest_ytd_backward.md`
+> (validation 발주, status: answered — validation 재확인 대기, `scripts/validate_*` 는 parser
+> 금지 파일이라 §2 룰 배선은 내가 못함).
+>
+> **① 신고된 증상(2025.3Q 이자=-5,289.6억, YTD 역행) — 재확인 결과 정답이었다.** raw
+> `data/dart/FY2025_Q3/raw/KR0073_교보생명보험/20251114002942.xml` note "17-4) ... 요소별
+> 변동내역"(PV/RA/CSM 분해표, 진짜 CSM 소스 — 티켓이 지목한 4열 행은 note "17-2) 보험계약부채의
+> 변동내역"[LRC+LIC 총액표, CSM 무관]이 같은 "6.보험금융손익" 라벨을 우연히 재사용한 오탐)
+> "6. 보험금융손익" 행 CSM 소계 = -528,958백만원 = -5,289.58억, `공정가치법을 적용한 보험계약`
+> 열 하나가 -624,435백만으로 사실상 전부 설명(공정가치 전환계약 CSM은 GMM lock-in 이자부리와
+> 달리 기초항목 공정가치 변동을 그대로 받아 부호가 바뀔 수 있음). 같은 필링 MD&A 산문(제3의
+> 소스, 파싱과 무관)이 그대로 확인: "보험계약마진은 전기말 대비 495억원 감소... 보험금융손익
+> 5,290억원(감소)" — 마스터 4항목 합(9303.5-5289.6-125.5-4383.5=-495.1억)과 일치. FY2025
+> 4개 분기(1Q~4Q, 4Q는 유+무+변 3블록 SUM 포함) 전부 같은 방식(raw 원문 직접 인용 + 코드의
+> `block_stages()` 를 raw dir 에 직접 호출)으로 재검증, 라이브 마스터와 완전 일치.
+>
+> **orchestrator 의 "기초 대비 상식적 범위(연 3.5%)" sanity 기준 자체가 틀렸다** — 매 분기를
+> FY2025 기초(64,380.6억)로 나눠 비교했는데 2023.4Q 의 실제 기초는 46,967.3억(FY2023 년초)이다.
+> 자기 기초 대비로 재계산하면 2023.4Q(연차) 14574.1/46967.3=31.0%(IFRS17 원년 공정가치 전환
+> 재보정 변동 포함이라 변동성 큰 첫해로 설명 가능), 2026.1Q(1분기분) 489.9/65109.6=0.75%(상식적).
+> "연 3.5%" 는 GMM lock-in 가정이라 공정가치 전환계약이 섞인 교보에는 애초에 안 맞는 기준.
+>
+> **다른 회사 census — 교보만 크기 이상치, 광범위 결함 근거 없음.** (a) 티켓이 지목한 9버킷 중
+> 4개사(한화생명KR0068·코리안리KR1000·삼성생명KR0069·동양생명KR0087) `waterfall_for_dir()` 전
+> 분기 재구성 + gold 대조 — 코리안리는 owner-verified/raw 재확정 gold 이력 있음(2026-06-16·
+> 2026-08-25), 나머지 3사는 미기록이나 src=`combined-agn`+`u:lit-conf`(단위 리터럴 확정) 단일
+> 블록이라 모호성 없음, 절대크기도 교보의 1/3 이하. (b) `CSM_waterfall.json` 전체
+> `|item3/item1|` 비율 census — 상위 5건 전부 교보(0.31/0.19/0.17/0.14/0.12), 교보 아닌 첫
+> 항목(메트라이프 2024.4Q)이 0.106로 교보 최댓값의 1/3, 나머지는 회사당 1-2건씩 흩어져 0.06
+> 이하(연차 몇%대 수익률, 정상범위) — "무작위 파싱결함이 여러 회사에 흩어진" 패턴이 아니라
+> "교보만 구조적으로 큰 공정가치법 전환 블록을 가져 원래 크다"는 패턴.
+>
+> **② 별도로 확인된 진짜 버그(이 티켓 범위 밖, 미수정) — 2026.1Q/2Q 상품슬라이스 테이블
+> 선택오류.** 교보·신한라이프(KR0094)가 2026.1Q부터 CSM 노트를 유배당/무배당/변액 3개 별도
+> 표로 포맷 변경했는데 `build_csm_waterfall_master.py::pick_combined_agnostic()` 의 3블록
+> 합산 선택이 신형식에서 틀린 값을 낸다(재현: `waterfall_for_dir(FY2026_Q1/raw/KR0073,...)`
+> → `{1:70768.8,...}` vs gold 정답 `{1:65109.6,...}`). **이미 2번 손으로 gold-overlay 패치된
+> 이력**이 `user_csm_cells.json` why-text 에 명시("자동추출은 2026.1Q와 동일한 상품슬라이스
+> 테이블 선택 버그를 반복") — 코드는 안 고쳐진 채 매 분기 땜질돼 왔다. 지금 화면엔 gold 가
+> 이겨서 안 보이지만, `pick_combined_agnostic` 이 여러 회사용으로 정교 튜닝된 휴리스틱(자체
+> 주석에 "이전 커밋 8a3b930 이 KR0069 전용 분기 넣었다가 다른 회사 깬" 회귀 이력 명시)이라
+> 이번 세션에서 손대지 않고 `spawn_task`(`task_4445fe45`)로 follow-up 분리했다.
+>
+> **§3 (부수) — gold why-텍스트 스테일 2건 정정, 값 변경 없음.** `user_csm_cells.json` 의
+> 2023.3Q item1/item5 `why` 필드가 옛 item6 값(64,694.3, 2026-08-26 fb 이전)을 "확정값"처럼
+> 서술 — 문구만 갱신(실제 `값`/`was` 불변, 46967.3/-3217.86 그대로 라이브와 일치).
+>
+> **전수 감사.** `CSM_waterfall.json` diff **0줄**(이 세션 값 변경 0건) — 변경된 유일한 파일은
+> `data/_gold/user_csm_cells.json`(why 텍스트 2줄만, `git diff --stat`="2 insertions/2
+> deletions", `set` 배열 길이 276 불변). `pytest tests/test_viz_csm_waterfall_golden.py
+> tests/test_master_tables_golden.py` 2 passed(3.70s, 코드·마스터 둘 다 무변경이라 당연).
+> `validate_golden_input_fingerprints.py` 의 어떤 엔트리도 `data/_gold/`를 추적 입력으로 안
+> 씀(직접 grep 확인) — 갱신 불요. `validate_master_tables.py --no-build` 정상 완주, SUMMARY
+> `closing:362P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | qoq_warn:236Y` 어제
+> 세션과 동일(회귀 없음) — plausibility 섹션 직접 확인 결과 item3 YTD 역행을 보는 룰은 **정말
+> 없음**(티켓 §2 확인, 실제 flag 2건은 케이디비 spike·하나생명 cont 뿐 무관).
+>
+> 상세·재현 명령·원문 인용 전부 위 inbox 답변. status: **answered**(validation 재확인 필요 —
+> ①은 자기완결이나 ②는 `scripts/validate_*` 가 parser 금지 파일이라 룰 배선은 validation 소관).
+>
+> 커밋: (아래 별도 커밋에서 기록)
+
 > **2026-08-29 (71st pass) — CSM 항목3/5 null-but-identity-closes: 이자/상각이 잔차(항목4)에
 > 흡수되는 일반 버그 발견 + 수정, KR0050·KR0076 2023.4Q 4셀 채움.**
 > `inbox/_resolved/20260828T0930Z__designer__MULTI_2023.4Q__csm_component_null_but_identity_closes.md`
