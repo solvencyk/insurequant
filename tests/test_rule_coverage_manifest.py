@@ -1073,3 +1073,142 @@ def test_gold_overlay_is_wired_into_run_gate():
     hook = (ROOT / "scripts" / "prepush_check.py").read_text(encoding="utf-8")
     assert "gate.run_gate(env)" in hook, \
         "훅이 run_gate 를 부르지 않는다 — 이 축이 push 를 막지 못한다"
+
+
+# ===========================================================================
+# public_exports 축 (validate_live_artifacts check 6) — 매니페스트 + 변이시험
+# ===========================================================================
+# ## 왜 이 절이 있나
+#
+# `public_exports/*.json` 은 사이트의 다운로드 버튼이 사용자에게 그대로 내려보내는 파일이다.
+# 2026-08-30 실측: `grep -rn "public_exports" scripts/validate_*.py` -> **0건**. 화면 패널은
+# 검사받는데 사용자가 실제로 손에 쥐는 파일은 무검사였다(불변식 1번의 두 번째 구멍).
+# 게다가 그 사각을 잡아야 할 `test_push_gate_wiring._origin_main_fetches` 는 HTML 만 훑고
+# `<script src="download-survey.js">` 를 안 따라가서, 12개 경로를 **한 번도 본 적이 없었다** —
+# 테스트가 통과하는 채로 구멍이 열려 있었다. 둘 다 같은 날 닫았다.
+#
+# 이 절이 강제하는 것:
+#   1. 게이트 소스의 `PUBLIC_EXPORT_*` 룰 id 전부가 아래 선언에 있는가
+#   2. 검사 대상 시트 수 = exporter 의 `MASTERS` 수 (게이트가 목록을 베껴 쓰지 않고 import
+#      하는지를 숫자로 확인 — 베끼는 순간 13번째 시트가 조용히 무검사가 된다)
+#   3. 변이시험 — 값 1칸/행 1개/내부열 유출/manifest 거짓 각각에서 실제로 발견이 나오는가
+PUBLIC_EXPORT_RULES = {
+    "PUBLIC_EXPORT_EXPORTER_UNIMPORTABLE":
+        "RED — 시트 목록을 exporter 에서 못 가져왔다. 조용히 넘어가면 이 축 전체가 무의미해진다",
+    "PUBLIC_EXPORT_DIR_MISSING": "RED — public_exports/ 자체가 없다(다운로드 전부 404)",
+    "PUBLIC_EXPORT_FILE_MISSING": "RED — 시트 하나가 통째로 빠졌다",
+    "PUBLIC_EXPORT_UNREADABLE": "RED — 있는데 파싱이 안 된다(깨진 파일 != 없는 파일)",
+    "PUBLIC_EXPORT_SOURCE_UNREADABLE": "RED — 대조할 루트 마스터를 HEAD 에서 못 읽는다",
+    "PUBLIC_EXPORT_INTERNAL_COL_LEAKED":
+        "RED — 내부 전용 열(원보험사코드)이 공개 스냅샷에 새어 나갔다(owner 지시 2026-08-28)",
+    "PUBLIC_EXPORT_KEY_AMBIGUOUS":
+        "RED — 조인 키가 유일하지 않아 셀 비교가 성립하지 않는다. 조용히 통과시키지 않는다"
+        "(키를 잘못 잡으면 전건 미스로 통과하는 것이 이 축의 대표 함정이다)",
+    "PUBLIC_EXPORT_MISSING_CELL": "RED — 마스터에 있는 행이 스냅샷에 없다(기대 그리드=마스터)",
+    "PUBLIC_EXPORT_EXTRA_CELL": "RED — 마스터에서 지워진 행이 공개본에 남아 있다",
+    "PUBLIC_EXPORT_DRIFT": "RED — 셀 값이 마스터(HEAD)와 다르다. 스냅샷 재생성이 밀렸다",
+    "PUBLIC_EXPORT_MANIFEST_MISSING": "RED — 다운로드 표지 시트가 빈칸으로 나간다",
+    "PUBLIC_EXPORT_MANIFEST_UNREADABLE": "RED — manifest 가 깨졌다",
+    "PUBLIC_EXPORT_MANIFEST_SHEET_MISSING": "RED — 파일은 있는데 manifest 에 없다",
+    "PUBLIC_EXPORT_MANIFEST_MISMATCH": "RED — 표지가 사실과 다른 행수·분기범위를 인쇄한다",
+    "PUBLIC_EXPORT_MANIFEST_GHOST_SHEET": "RED — manifest 에만 있고 exporter 목록에 없는 시트",
+}
+
+# 실측 2026-08-30. exporter 의 MASTERS 길이와 같아야 한다.
+PUBLIC_EXPORT_SHEETS = 11
+
+
+def _live_gate():
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import validate_live_artifacts as L
+    return L
+
+
+def _pe_run():
+    L = _live_gate()
+    fd = L.Findings()
+    L.check_public_exports(fd)
+    return fd.rows
+
+
+def test_public_export_rule_ids_match_manifest():
+    """게이트 소스의 `PUBLIC_EXPORT_*` 룰 id 와 이 선언이 정확히 일치해야 한다."""
+    import re
+    src = (ROOT / "scripts" / "validate_live_artifacts.py").read_text(encoding="utf-8")
+    found = set(re.findall(r'"(PUBLIC_EXPORT_\w+)"', src))
+    assert found == set(PUBLIC_EXPORT_RULES), (
+        f"게이트 {sorted(found - set(PUBLIC_EXPORT_RULES))} 가 선언에 없고 "
+        f"{sorted(set(PUBLIC_EXPORT_RULES) - found)} 는 선언에만 있다 — "
+        "룰을 추가·개명·삭제했으면 이 선언도 같이 고쳐라")
+
+
+def test_public_export_sheet_count_matches_exporter():
+    """검사 대상 시트 수 = exporter 의 MASTERS 수.
+
+    게이트가 목록을 베껴 쓰면 여기서부터 갈라진다. import 로 묶여 있는 한 이 수는 자동으로
+    같이 움직인다 — 시트가 늘었는데 이 수가 그대로면 그건 게이트가 목록을 놓쳤다는 뜻이다."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from export_public_sheets import MASTERS
+    assert len(MASTERS) == PUBLIC_EXPORT_SHEETS, (
+        f"exporter 시트 {len(MASTERS)}개 != 선언 {PUBLIC_EXPORT_SHEETS}개 — 시트를 "
+        "추가·삭제했으면 이 수를 고치고, 새 시트가 게이트에서 실제로 검사되는지 확인해라")
+    L = _live_gate()
+    fd = L.Findings()
+    stat = L.check_public_exports(fd)
+    assert stat.get("sheets_declared") == len(MASTERS)
+
+
+def test_public_export_clean_state_has_no_findings():
+    """지금 상태에서 발견 0건이어야 한다 — 아니면 스냅샷 재생성이 밀린 것이다."""
+    rows = _pe_run()
+    assert not rows, [f"{r['rule']}|{r['key']}: {r['detail'][:120]}" for r in rows]
+
+
+@pytest.mark.parametrize("mutation", ["drift", "missing_row", "extra_row",
+                                      "internal_col", "manifest_rows"])
+def test_mutation_public_export_fires(mutation):
+    """공개 스냅샷을 흔들면 실제로 발견이 나오는가 — 원본 바이트는 반드시 복원한다."""
+    import json as _json
+    pe = ROOT / "public_exports"
+    targets = ["CSM워터폴.json", "manifest.json"]
+    backup = {n: (pe / n).read_bytes() for n in targets}
+    try:
+        if mutation == "drift":
+            d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
+            d[0]["값"] = (d[0]["값"] or 0) + 1.0
+            (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
+                                             encoding="utf-8")
+            want = "PUBLIC_EXPORT_DRIFT"
+        elif mutation == "missing_row":
+            d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
+            d.pop(5)
+            (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
+                                             encoding="utf-8")
+            want = "PUBLIC_EXPORT_MISSING_CELL"
+        elif mutation == "extra_row":
+            d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
+            ghost = dict(d[0])
+            ghost["원수사명"] = "존재하지않는보험"
+            d.append(ghost)
+            (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
+                                             encoding="utf-8")
+            want = "PUBLIC_EXPORT_EXTRA_CELL"
+        elif mutation == "internal_col":
+            d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
+            d[0]["원보험사코드"] = "KR0001"
+            (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
+                                             encoding="utf-8")
+            want = "PUBLIC_EXPORT_INTERNAL_COL_LEAKED"
+        else:
+            m = _json.loads((pe / "manifest.json").read_text(encoding="utf-8"))
+            m["sheets"]["CSM워터폴"]["rows"] = 99999
+            (pe / "manifest.json").write_text(_json.dumps(m, ensure_ascii=False, indent=2),
+                                              encoding="utf-8")
+            want = "PUBLIC_EXPORT_MANIFEST_MISMATCH"
+        rules = {r["rule"] for r in _pe_run()}
+        assert want in rules, f"{mutation}: {want} 가 안 나왔다 (나온 것: {sorted(rules)})"
+    finally:
+        for n, b in backup.items():
+            (pe / n).write_bytes(b)
+        for n, b in backup.items():
+            assert (pe / n).read_bytes() == b, f"복원 실패: {n}"

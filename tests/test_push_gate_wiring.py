@@ -308,6 +308,12 @@ LIVE_ARTIFACT_READERS = {
     "data/dart/viz/sensitivity_heatmap.json": ["validate_data_contract",
                                                "validate_master_tables"],
     "data/ir/nb_csm_ratio.json": ["validate_nb_csm_multiple"],
+    # `/` 로 끝나면 **접두 선언**이다 — 그 폴더 아래 전부를 한 검사기가 덮는다는 뜻.
+    # `public_exports/` 는 사용자가 내려받는 12개 스냅샷인데(download-survey.js), 파일 목록이
+    # `export_public_sheets.MASTERS` 하나에서 나오고 `validate_live_artifacts` 도 그 목록을
+    # import 해서 돈다. 그래서 시트가 늘면 검사도 자동으로 는다 — 여기에 12줄을 손으로 베껴
+    # 두면 오히려 13번째 시트가 조용히 무검사로 통과한다(2026-08-30 배선).
+    "public_exports/": ["validate_live_artifacts"],
 }
 
 # (배포본, 중간산출물) 짝 — 같은 개념이 두 파일로 존재하는 자리. 검사기가 중간산출물 쪽만
@@ -323,21 +329,57 @@ DEPLOYED_VS_UPSTREAM = {
 _HTML = ["index.html", "K-ICS.html", "IFRS17.html", "공시보고서.html"]
 
 
+_JSON_LITERAL = re.compile(r"""['"`]([^'"`\s]+?\.json)['"`]""")
+
+
 def _origin_main_fetches() -> set[str] | None:
-    """`origin/main` 의 배포 HTML 이 참조하는 .json 경로. 못 읽으면 None(슬림/무리모트)."""
+    """`origin/main` 의 배포본이 참조하는 .json 경로. 못 읽으면 None(슬림/무리모트).
+
+    **HTML 만 훑으면 안 된다.** 2026-08-30 실측: 배포 HTML 4종이 전부
+    `<script src="download-survey.js">` 를 로드하고, 사용자가 실제로 내려받는
+    `public_exports/*.json` 12개는 그 JS 안에만 리터럴로 있다. HTML 만 보던 이 헬퍼는 그
+    12개를 한 번도 못 봤고, 그래서 "라이브가 fetch 하는 파일은 전부 검사기가 선언돼 있어야
+    한다" 는 아래 테스트가 통과하는 채로 **그 12개가 무검사였다**. 이 테스트 자신의 사각이었다
+    — 화면이 로드하는 같은 저장소의 JS 까지 따라가서 다시는 같은 식으로 새지 않게 한다.
+    """
     import subprocess
+
+    def _show(path: str):
+        p = subprocess.run(["git", "show", f"origin/main:{path}"], cwd=str(ROOT),
+                           capture_output=True)
+        return None if p.returncode != 0 else p.stdout.decode("utf-8", errors="replace")
+
     out: set[str] = set()
     any_ok = False
+    scripts: set[str] = set()
     for h in _HTML:
-        p = subprocess.run(["git", "show", f"origin/main:{h}"], cwd=str(ROOT),
-                           capture_output=True)
-        if p.returncode != 0:
+        body = _show(h)
+        if body is None:
             continue
         any_ok = True
-        src = p.stdout.decode("utf-8", errors="replace")
-        for m in re.finditer(r"""['"`]([^'"`\s]+?\.json)['"`]""", src):
+        for m in _JSON_LITERAL.finditer(body):
+            out.add(m.group(1).lstrip("./"))
+        # 같은 저장소의 JS 만 따라간다(CDN 은 우리 아티팩트가 아니다).
+        for m in re.finditer(r"""<script[^>]*\bsrc=['"]([^'":]+?\.js)['"]""", body):
+            scripts.add(m.group(1).lstrip("./"))
+    for js in sorted(scripts):
+        body = _show(js)
+        if body is None:
+            continue
+        for m in _JSON_LITERAL.finditer(body):
             out.add(m.group(1).lstrip("./"))
     return out if any_ok else None
+
+
+def _declared_readers(artifact: str) -> list[str] | None:
+    """정확 일치 선언, 없으면 가장 긴 접두(`.../`) 선언을 쓴다."""
+    if artifact in LIVE_ARTIFACT_READERS:
+        return LIVE_ARTIFACT_READERS[artifact]
+    pref = [k for k in LIVE_ARTIFACT_READERS
+            if k.endswith("/") and artifact.startswith(k)]
+    if not pref:
+        return None
+    return LIVE_ARTIFACT_READERS[max(pref, key=len)]
 
 
 def test_every_live_fetched_artifact_has_a_declared_reader():
@@ -348,12 +390,14 @@ def test_every_live_fetched_artifact_has_a_declared_reader():
     fetched = _origin_main_fetches()
     if fetched is None:
         pytest.skip("origin/main 의 배포 HTML 을 읽을 수 없다(슬림 워크트리/무리모트)")
-    undeclared = sorted(fetched - set(LIVE_ARTIFACT_READERS))
+    undeclared = sorted(a for a in fetched if _declared_readers(a) is None)
     assert not undeclared, (
         f"라이브가 fetch 하는데 선언이 없는 아티팩트 {undeclared} — 어떤 검사기가 읽을지 "
         f"정하고 LIVE_ARTIFACT_READERS 에 넣어라. 선언만 하고 안 읽으면 아래 테스트가 막는다."
     )
-    ghost = sorted(set(LIVE_ARTIFACT_READERS) - fetched)
+    ghost = sorted(k for k in LIVE_ARTIFACT_READERS
+                   if (k.endswith("/") and not any(a.startswith(k) for a in fetched))
+                   or (not k.endswith("/") and k not in fetched))
     assert not ghost, (
         f"선언에만 있고 라이브가 더는 fetch 하지 않는 아티팩트 {ghost} — 화면에서 빠졌다면 "
         f"선언도 지워라(죽은 사본을 계속 검사하게 된다)."
@@ -370,8 +414,10 @@ def test_declared_reader_actually_references_the_artifact(artifact):
         if not p.exists():
             pytest.skip(f"slim 워크트리: scripts/{name}.py 없음")
         src = p.read_text(encoding="utf-8")
-        # 경로 전체 또는 (동적 조립인 경우) 파일명 조각이 소스에 있어야 한다
-        base = artifact.rsplit("/", 1)[-1]
+        # 경로 전체 또는 (동적 조립인 경우) 파일명 조각이 소스에 있어야 한다.
+        # 접두 선언(`.../`)은 폴더 이름이 소스에 있으면 된다 — 그 아래 파일명은 목록에서
+        # 나오지 소스에 리터럴로 박혀 있지 않다(그게 접두 선언을 쓰는 이유다).
+        base = artifact.rstrip("/").rsplit("/", 1)[-1]
         assert artifact in src or f'"{base}"' in src or f"'{base}'" in src, (
             f"{name} 이 {artifact} 를 읽는다고 선언됐는데 소스에서 그 경로를 못 찾았다. "
             f"읽지 않는다면 선언에서 빼고, 다른 검사기가 읽는다면 그 이름을 적어라."

@@ -538,6 +538,188 @@ def check_tier_utilization(fd: Findings) -> dict:
     return stat
 
 
+# --------------------------------------------------------------------------- 6) public_exports
+# `public_exports/*.json` 은 사이트의 다운로드 기능(`download-survey.js`)이 그대로 사용자에게
+# 내려보내는 파일이다. 2026-08-30 실측: **어떤 검사기도 이 폴더를 읽지 않았다**
+# (`grep -rn "public_exports" scripts/validate_*.py` -> 0건). 화면 패널만 검사하고 사용자가
+# 실제로 내려받는 파일은 무검사였다 — 불변식 1번의 두 번째 구멍이다
+# (inbox/validation/20260830T1500Z).
+#
+# **파일 목록을 여기에 다시 타이핑하지 않는다.** `export_public_sheets.MASTERS` 를 그대로
+# import 한다. 베껴 쓰면 그 순간부터 두 목록이 갈라지고, 새 시트가 추가돼도 이 게이트는
+# 모르는 채로 통과한다 — 이 저장소가 반복해 온 "빠진 게이트를 눈치챌 때마다 룰을 한 개씩
+# 베껴 심는" 패턴(CLAUDE.md ①b)이다. import 하면 시트가 늘어나는 순간 자동으로 검사된다.
+#
+# **비교 기준은 워킹트리가 아니라 `git show HEAD:`** — exporter 자신이 그렇게 읽기 때문이다
+# (다른 세션의 미커밋 편집을 공개 스냅샷에 실으면 안 된다는 게 그 스크립트의 설계). 워킹트리와
+# 대조하면 남의 미커밋 편집 때문에 매번 거짓 RED 가 난다. HEAD 로 대조하면 "마스터는 커밋됐는데
+# 스냅샷 재생성을 안 했다" 만 정확히 걸린다.
+#
+# **조인 키를 잘못 잡으면 전건 미스로 조용히 통과한다** — public 쪽에는 `원보험사코드` 가 없다
+# (owner 지시로 드롭). 그래서 키는 아래 식별열 중 그 시트에 실재하는 것들로 만들고, 그 조합이
+# 유일하지 않으면 값 비교를 하지 않고 KEY_AMBIGUOUS 로 **막는다**(조용히 통과시키지 않는다).
+_PE_ID_COLS = ("원수사명", "티커", "생손보여부", "공시분기", "항목번호", "항목명",
+               "섹션", "레벨", "종류주", "경과차년", "measure구분", "경과조치여부")
+
+
+def check_public_exports(fd: Findings) -> dict:
+    """`public_exports/*.json` — 사용자가 내려받는 스냅샷을 루트 마스터(HEAD)와 대조한다.
+
+    축: ① 파일이 있고 파싱되는가 ② 루트 마스터(HEAD, exporter 와 동일 기준)와 **셀 단위로
+    같은가** ③ 기대 그리드는 마스터다(마스터에 있는 행이 스냅샷에 없으면 SKIP 이 아니라 RED)
+    ④ 내부 전용 열(`원보험사코드`)이 새어 나가지 않았는가 ⑤ manifest 가 실제 파일과 맞는가.
+
+    발견은 (시트, 룰) 단위로 1건씩 집계한다 — 스냅샷이 한 세대 밀리면 전 행이 어긋나서
+    11,546건이 찍히는데, 그 11,546건의 조치는 전부 하나("exporter 재실행")다.
+    """
+    stat = defaultdict(int)
+    try:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from export_public_sheets import (MASTERS, FLATTEN, _DROP_COLS, _QUARTER_RE,
+                                          read_committed_json)
+    except Exception as e:
+        fd.add("public_exports/", "PUBLIC_EXPORT_EXPORTER_UNIMPORTABLE", "-",
+               f"{type(e).__name__}: {e} — 시트 목록을 exporter 에서 가져오지 못했다")
+        return stat
+
+    out_dir = ROOT / "public_exports"
+    if not out_dir.exists():
+        fd.add("public_exports/", "PUBLIC_EXPORT_DIR_MISSING", "-",
+               "public_exports/ 가 없다 — 사이트 다운로드가 전부 404 다")
+        return stat
+
+    stat["sheets_declared"] = len(MASTERS)
+    seen_sheets = []
+    for json_name, sheet in MASTERS:
+        rel = f"public_exports/{sheet}.json"
+        seen_sheets.append(sheet)
+        path = out_dir / f"{sheet}.json"
+        if not path.exists():
+            fd.add(rel, "PUBLIC_EXPORT_FILE_MISSING", sheet,
+                   f"{json_name} 의 공개 스냅샷이 없다 — 다운로드 시 이 시트가 통째로 빈다")
+            continue
+        try:
+            pub = json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            fd.add(rel, "PUBLIC_EXPORT_UNREADABLE", sheet,
+                   f"{type(e).__name__}: {e} — 있는데 파싱이 안 된다(깨진 파일 != 없는 파일)")
+            continue
+
+        try:
+            exp = read_committed_json(json_name)
+        except Exception as e:
+            fd.add(rel, "PUBLIC_EXPORT_SOURCE_UNREADABLE", sheet,
+                   f"git show HEAD:{json_name} 실패 — {type(e).__name__}: {e}")
+            continue
+        flatten = FLATTEN.get(json_name)
+        if flatten is not None:
+            exp = flatten(exp)
+        exp = [{k: v for k, v in r.items() if k not in _DROP_COLS} for r in exp]
+
+        stat[f"rows_{sheet}"] = len(pub)
+
+        leaked = sorted({c for r in pub for c in r} & set(_DROP_COLS))
+        if leaked:
+            fd.add(rel, "PUBLIC_EXPORT_INTERNAL_COL_LEAKED", sheet,
+                   f"내부 전용 열 {leaked} 이 공개 스냅샷에 있다 "
+                   f"(owner 지시 2026-08-28: 공개 다운로드에서 제외)")
+
+        cols = sorted({k for r in exp for k in r})
+        key_cols = [c for c in _PE_ID_COLS if c in cols]
+        val_cols = [c for c in cols if c not in key_cols]
+        if not key_cols or not val_cols:
+            fd.add(rel, "PUBLIC_EXPORT_KEY_AMBIGUOUS", sheet,
+                   f"식별열/값열을 나누지 못했다(cols={cols}) — _PE_ID_COLS 를 갱신해라. "
+                   f"이대로 두면 값 비교가 통째로 건너뛰어진다")
+            continue
+
+        def _k(r):
+            return tuple(r.get(c) for c in key_cols)
+
+        ei: dict = {}
+        dup_e = 0
+        for r in exp:
+            k = _k(r)
+            if k in ei:
+                dup_e += 1
+            ei[k] = r
+        if dup_e:
+            fd.add(rel, "PUBLIC_EXPORT_KEY_AMBIGUOUS", sheet,
+                   f"마스터 쪽에서 키 {key_cols} 가 유일하지 않다(중복 {dup_e}행) — "
+                   f"셀 비교가 성립하지 않는다. 식별열을 늘려라")
+            continue
+        pi = {_k(r): r for r in pub}
+
+        miss = sorted(set(ei) - set(pi))
+        extra = sorted(set(pi) - set(ei))
+        if miss:
+            stat[f"missing_{sheet}"] = len(miss)
+            fd.add(rel, "PUBLIC_EXPORT_MISSING_CELL", sheet,
+                   f"마스터에 있는데 스냅샷에 없는 행 {len(miss)}건 "
+                   f"(예: {miss[:3]}) — 기대 그리드는 마스터다. exporter 를 재실행해라")
+        if extra:
+            stat[f"extra_{sheet}"] = len(extra)
+            fd.add(rel, "PUBLIC_EXPORT_EXTRA_CELL", sheet,
+                   f"스냅샷에만 있는 행 {len(extra)}건 (예: {extra[:3]}) — "
+                   f"마스터에서 지워진 행이 공개본에 남아 있다")
+
+        drift, examples = 0, []
+        for k in set(ei) & set(pi):
+            for c in val_cols:
+                a, b = pi[k].get(c), ei[k].get(c)
+                if a != b:
+                    drift += 1
+                    if len(examples) < 3:
+                        examples.append(f"{k}|{c}: 공개={a} vs 마스터={b}")
+        if drift:
+            stat[f"drift_{sheet}"] = drift
+            fd.add(rel, "PUBLIC_EXPORT_DRIFT", sheet,
+                   f"값이 다른 셀 {drift}건 — {' / '.join(examples)}. "
+                   f"마스터가 커밋됐는데 스냅샷 재생성이 밀렸다: "
+                   f"python scripts/export_public_sheets.py")
+
+    # manifest — 다운로드 xlsx 표지가 이 값을 그대로 인쇄한다(행수·분기범위·스냅샷 생성일시).
+    mpath = out_dir / "manifest.json"
+    if not mpath.exists():
+        fd.add("public_exports/manifest.json", "PUBLIC_EXPORT_MANIFEST_MISSING", "-",
+               "manifest 가 없다 — 다운로드 표지 시트가 빈칸으로 나간다")
+        return stat
+    try:
+        man = json.loads(mpath.read_text(encoding="utf-8"))
+    except Exception as e:
+        fd.add("public_exports/manifest.json", "PUBLIC_EXPORT_MANIFEST_UNREADABLE", "-",
+               f"{type(e).__name__}: {e}")
+        return stat
+    msheets = man.get("sheets", {})
+    for sheet in seen_sheets:
+        path = out_dir / f"{sheet}.json"
+        if not path.exists():
+            continue
+        if sheet not in msheets:
+            fd.add("public_exports/manifest.json", "PUBLIC_EXPORT_MANIFEST_SHEET_MISSING",
+                   sheet, "파일은 있는데 manifest 에 없다")
+            continue
+        try:
+            rows = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        qs = sorted({r.get("공시분기") for r in rows
+                     if r.get("공시분기") and _QUARTER_RE.match(str(r.get("공시분기")))})
+        want = {"rows": len(rows),
+                "quarter_min": qs[0] if qs else None,
+                "quarter_max": qs[-1] if qs else None}
+        got = {k: msheets[sheet].get(k) for k in want}
+        if got != want:
+            fd.add("public_exports/manifest.json", "PUBLIC_EXPORT_MANIFEST_MISMATCH", sheet,
+                   f"manifest={got} vs 실제 파일={want} — 표지 시트가 사실과 다른 수를 인쇄한다")
+    ghost = sorted(set(msheets) - set(seen_sheets))
+    if ghost:
+        fd.add("public_exports/manifest.json", "PUBLIC_EXPORT_MANIFEST_GHOST_SHEET",
+               ",".join(ghost), f"manifest 에만 있고 exporter 목록에 없는 시트 {ghost}")
+    stat["manifest_sheets"] = len(msheets)
+    return stat
+
+
 # --------------------------------------------------------------------------- baseline
 # 등재는 **건별**이지만 사유는 룰 단위로 관리한다(같은 원인의 933건을 933번 적는 것은 문서가
 # 아니라 소음이다). 사유 없는 등재는 이 게이트를 무력화하는 방법이므로 emit 시 강제한다.
@@ -640,6 +822,7 @@ def main() -> int:
         "csm_waterfall_history.json": check_csm_waterfall_history(fd),
         "insurance_pl_breakdown.json": check_insurance_pl_breakdown(fd),
         "kics_tier{1,2}_utilization.json": check_tier_utilization(fd),
+        "public_exports/*.json": check_public_exports(fd),
     }
 
     base = load_baseline()
