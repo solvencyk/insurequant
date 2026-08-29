@@ -664,6 +664,11 @@
     const v=rec[field];
     return (typeof v==="number" && Number.isFinite(v)) ? v : null;
   }
+  // 마스터 항목명(표시 라벨 폴백 전용 — 값 계산엔 안 쓴다).
+  function plItemName(name, qtr, num){
+    const m=ix.plx.get(name); const qm=m&&m.get(qtr); const rec=qm&&qm.get(String(num));
+    return (rec && rec.nm) ? rec.nm : null;
+  }
   // D-2 20260818(owner): 연도 모드 라벨 — 회기가 안 닫혔으면(4Q 아님) "N분기누계"로 명시(2Q="반기누계").
   function fyPartialLabel(qn){ return qn===2 ? "반기누계" : qn+"분기누계"; }
   function plPeriod(name, mode){
@@ -679,8 +684,19 @@
   }
   function plFmtJo(v, dp){ return (v/1e6).toLocaleString("ko-KR",{minimumFractionDigits:dp,maximumFractionDigits:dp}); }
 
+  // 생명장기재보험(8) 세부 = 9 CSM상각 +10 위험조정 +11 예실차 +12 기타 (합 = 8).
+  // ⚠ PL_HEAD_DEFAULT가 이 배열을 즉시 참조하므로 반드시 그 위에 있어야 한다(const TDZ).
+  const PL_RE_SUB = [
+    { ko:"재보험 CSM상각", num:9 }, { ko:"재보험 위험조정", num:10 },
+    { ko:"재보험 예실차", num:11 }, { ko:"기타 재보험손익", num:12 },
+  ];
+
   // Step definitions — each has a getter so chart (1 period) + table (N periods) share one source.
   // g = (항목번호) => 값 for the period. optional:true rows are dropped when null/0 (e.g. 생보 자동차+일반).
+  // sub:[{ko,num}] 이 있으면 표에서 그 행에 ＋ 토글이 붙어 세부가 한 겹 아래로 펼쳐진다(차트는 안 그림).
+  //
+  // 보험손익(anchor) **앞** 구간 = LOB 구간이라 회사 유형에 따라 갈린다(PL_HEAD_DEFAULT / plLobHead).
+  // 뒤 구간(PL_TAIL)은 전 회사 공통.
   //
   // OCI 구간(oci:true)은 당기순이익 뒤에 붙는다. 순서가 설계의 전제 —
   // 금리성(26·27·28·30) → 기타 포괄손익(32) → 미분류 잔차 → FVOCI 지분증권(29) → 총포괄손익(31).
@@ -689,14 +705,17 @@
   // 축 범위를 "29 제외"로 고정했을 때 잘리는 막대가 29·31 둘뿐이고 앞 열넷은 정상 스케일로 남는다.
   // (clip:true = y축 범위 계산에서 제외 + 넘치면 캔버스 끝에서 자름. axis break는 쓰지 않는다 —
   //  누적 브리지에서 축 중간을 압축하면 압축 구간 뒤 막대 위치가 전부 왜곡된다.)
-  const PL_STEP_DEFS = [
+  const PL_HEAD_ETC = { ko:"기타(사업비용)", role:"flow", optional:true, get:g=>{ const oi=g(PL_NUM.기타수익),oe=g(PL_NUM.기타비용); return (oi==null&&oe==null)?null:(oi||0)-(oe||0); } };
+  const PL_HEAD_DEFAULT = [
     { ko:"원수 CSM상각", role:"flow", get:g=> g(PL_NUM.원수CSM상각) },
     { ko:"원수 위험조정", role:"flow", get:g=> g(PL_NUM.원수RA) },
     { ko:"원수 예실차",  role:"flow", get:g=> g(PL_NUM.원수예실차) },
     { ko:"기타 원수손익", role:"flow", get:g=> g(PL_NUM.기타원수) },
-    { ko:"생명장기재보험",  role:"flow", get:g=> g(PL_NUM.재보험) },
+    { ko:"생명장기재보험",  role:"flow", sub:PL_RE_SUB, subTitle:"재보험 세부", get:g=> g(PL_NUM.재보험) },
     { ko:"자동차+일반",  role:"flow", optional:true, get:g=>{ const a=g(PL_NUM.자동차),b=g(PL_NUM.일반); return (a==null&&b==null)?null:(a||0)+(b||0); } },
-    { ko:"기타(사업비용)", role:"flow", optional:true, get:g=>{ const oi=g(PL_NUM.기타수익),oe=g(PL_NUM.기타비용); return (oi==null&&oe==null)?null:(oi||0)-(oe||0); } },
+    PL_HEAD_ETC,
+  ];
+  const PL_TAIL = [
     { ko:"보험손익", role:"anchor", get:g=> g(PL_NUM.보험손익) },
     { ko:"투자손익", role:"flow", get:g=> g(PL_NUM.투자손익) },
     { ko:"영업외손익", role:"flow", get:g=> g(PL_NUM.영업외) },
@@ -715,6 +734,77 @@
     { ko:"FVOCI 지분증권", role:"flow", oci:true, clip:true, get:g=> g(PL_NUM.FVOCI지분) },
     { ko:"총포괄손익", role:"end", oci:true, clip:true, get:g=> g(PL_NUM.총포괄손익) },
   ];
+  const PL_STEP_DEFS = PL_HEAD_DEFAULT.concat(PL_TAIL);   // 기본형(원수사) 전체 스텝
+
+  // ── 재보험사 LOB 축 (2026-08-30, inbox/designer/20260830T0600Z — owner 지시) ─────────────
+  // PL 스키마의 LOB 슬롯(item2 생명장기 · 13 자동차 · 14 일반)은 39사 공통 서식을 전제하지만 실제
+  // 공시는 회사마다 다르다. 코리안리재보험처럼 LOB이 하나 더 있는 회사는 파서가 **하이픈 항목**
+  // (`2-1`·`3-1`·`8-1`·`4-1`…)으로 두 번째 LOB 블록을 병렬로 실어 보낸다. 그 블록을 안 그리면
+  // 브리지가 앵커(보험손익)와 안 닫힌다 — 실측 2026.2Q 143.0억(= item2-1 전액)이 통째로 빠져 있었다.
+  //
+  // 분기 기준은 **회사코드가 아니라 하이픈 항목의 존재**다. 근거 셋:
+  //  (a) 하이픈 블록의 값은 이미 보험손익(item1)에 들어가 있다 — 안 그리면 산수가 틀린다. 즉 판단
+  //      근거가 "이 회사가 재보험사인가"(취향)가 아니라 "이 기간 그 슬롯에 값이 있는가"(사실)가 된다.
+  //  (b) 같은 규약을 쓰는 회사·블록이 더 들어와도(`-2`·`-3`) 코드 수정 없이 축이 늘어난다.
+  //  (c) 하이픈이 없는 회사는 스캔이 빈 배열이라 기존 경로를 그대로 탄다(회귀 0). 실측 2026-08-30:
+  //      PL_breakdown 36사 중 하이픈 보유 = KR1000 하나뿐, 나머지 35사는 접미사 0개.
+  // 회사코드가 남는 곳은 **화면 라벨 한 곳뿐**(PL_LOB_DISPLAY). 기본 블록의 마스터 항목명이
+  // "생명장기 …"(전 회사 공통 슬롯 이름)라서 이 회사의 실제 LOB(생명)을 데이터에서 읽을 방법이
+  // 없기 때문이다. **마스터 항목명은 검증 룰이 이름으로 매칭하므로 건드리지 않는다**
+  // (docs/domains/claude-agent-ifrs17.md §4.1b: "항목명은 스키마 전역이라 한 회사 때문에 바꾸면
+  //  나머지가 어긋난다 — 이 표가 그 간극을 메운다"). 매핑이 없는 회사는 아래 폴백 라벨로 뜬다.
+  const PL_LOB_DISPLAY = {
+    // 코리안리재보험 — 전업 재보험사라 스키마의 "원수"가 곧 **수재**다. 원문 LOB = 생명·장기·일반,
+    // **자동차는 컬럼 자체가 없다**(미해당 ≠ 결측 — 게이트 lob_na 축, b2f9660). item13이 null이라
+    // 아래 optional 규칙에 걸려 막대도, 회색 "미공시" 막대도 그리지 않는다.
+    KR1000: { "": "생명", "1": "장기" },
+  };
+  // LOB 다리 = 수재(3±)/출재(8±). 세부는 수재 4·5·6·7 / 출재 9·10·11·12 (하이픈 블록도 동형).
+  const PL_LOB_SUB = ["CSM상각", "위험조정", "예실차", "기타"];
+
+  // 이 (회사,기간)에 실제 값이 있는 하이픈 접미사 목록(오름차순). 없으면 [] → 기본 레이아웃.
+  function plLobSuffixes(name, per){
+    const m = ix.plx.get(name), qm = m && m.get(per.q);
+    if (!qm) return [];
+    const out = new Set();
+    for (const k of qm.keys()){
+      const mm = /^(?:3|8)-(\d+)$/.exec(k);
+      if (mm && plVal(name, per.q, k, per.field) != null) out.add(mm[1]);
+    }
+    return Array.from(out).sort((a,b)=> (+a)-(+b));
+  }
+  // LOB × 수재/출재 head. 하이픈이 없으면 null(=기본 레이아웃 유지).
+  function plLobHead(name, per){
+    const sufs = plLobSuffixes(name, per);
+    if (!sufs.length) return null;
+    const disp = PL_LOB_DISPLAY[name] || {};
+    const defs = [];
+    for (const suf of ["", ...sufs]){
+      const sx = suf ? "-"+suf : "";
+      // 폴백 라벨: 소계 항목명("장기재보험 손익")에서 꼬리 "손익"만 뗀다 — 마스터가 준 이름 그대로라
+      // 틀릴 수 없고, PL_LOB_DISPLAY에 없는 새 회사에서도 라벨이 비지 않는다.
+      const lob = (disp[suf] != null) ? disp[suf]
+        : String(plItemName(name, per.q, "2"+sx) || ("구분"+(suf ? (+suf+1) : 1))).replace(/\s*손익$/, "");
+      [["수재","3",4], ["출재","8",9]].forEach(([leg, base, head])=>{
+        defs.push({
+          ko: lob+" "+leg, wrap: lob+"\n"+leg, role:"flow", optional:true,
+          subTitle: lob+" "+leg+" 세부",
+          sub: PL_LOB_SUB.map((ko,i)=> ({ ko, num:String(head+i)+sx })),
+          get: g=> g(base+sx),
+        });
+      });
+    }
+    // 자동차·일반은 묶지 않고 각각 optional — 코리안리는 자동차가 미해당이라 묶으면 "자동차+일반"
+    // 이라는 틀린 라벨로 일반손익만 그리게 된다.
+    defs.push({ ko:"자동차", role:"flow", optional:true, get:g=> g(PL_NUM.자동차) });
+    defs.push({ ko:"일반",   role:"flow", optional:true, get:g=> g(PL_NUM.일반) });
+    defs.push(PL_HEAD_ETC);
+    return defs;
+  }
+  function plStepDefsFor(name, per){
+    const head = plLobHead(name, per);
+    return head ? head.concat(PL_TAIL) : PL_STEP_DEFS;
+  }
   function plMakeGetter(name, per){ return num => plVal(name, per.q, num, per.field); }
 
   // OCI 세부 항목번호 — 잔차 계산과 모드 판정이 같은 목록을 쓴다(둘이 어긋나면 브리지가 끊긴다).
@@ -747,7 +837,7 @@
     const g = plMakeGetter(name, per);
     const mode = plOciMode(g);
     const steps = [];
-    for (const d of PL_STEP_DEFS){
+    for (const d of plStepDefsFor(name, per)){
       if (d.oci){
         if (mode === "none") continue;                                  // OCI 구간 통째 생략
         if (mode === "total" && !(d.ociAgg || d.role === "end")) continue; // 총액 1막대 + 마감만
@@ -761,7 +851,7 @@
       const v = d.get(g);
       if (d.optional && (v==null || v===0)) continue;
       if (d.residual && v==null) continue;
-      steps.push({ ko:d.ko, role:d.role, value:v, clip:!!d.clip });
+      steps.push({ ko:d.ko, role:d.role, value:v, clip:!!d.clip, wrap:d.wrap });
     }
     return steps;
   }
@@ -799,7 +889,8 @@
     // 0 아래로 통과) → custom renderItem으로 [min,max] 사각형을 직접 그려 zero-crossing 정상 처리(부호=아래로).
     const xs=[]; const geo=[]; let running=0;
     bars.forEach(bar=>{
-      xs.push(PL_WRAP[bar.ko] || bar.ko);
+      // LOB 스텝은 라벨이 동적이라 자기 wrap을 들고 온다(PL_WRAP는 고정 라벨용 표).
+      xs.push(bar.wrap || PL_WRAP[bar.ko] || bar.ko);
       // 결측은 조용히 0으로 칠하지 않는다 — Panel 2의 missing 시리즈와 같은 회색 힌트 막대로 그린다.
       // running은 그대로 둔다(없는 값을 0으로 흘리면 뒤 막대가 전부 거짓 위치가 된다).
       if(bar.value==null){ geo.push({ missing:true, at:running }); return; }
@@ -962,7 +1053,10 @@
   // 한국 회계 표기: 정수 반올림 + 천단위 콤마 + 음수는 △(세모).
   function samo(n){
     if(n==null || !Number.isFinite(n)) return "—";
-    const r = Math.round(n);
+    // `|| 0`은 -0 정규화. Math.round(-0.4)는 -0이고 `-0 < 0`이 false라 △ 분기를 안 타서
+    // toLocaleString이 "-0"을 뱉는다(△ 표기 규칙 위반). 코리안리 장기 출재 위험조정 2026.2Q에서
+    // 실제로 노출돼 발견.
+    const r = Math.round(n) || 0;
     return r<0 ? "△"+Math.abs(r).toLocaleString("ko-KR") : r.toLocaleString("ko-KR");
   }
   function fmtEok(vMn){ return vMn==null ? "—" : samo(vMn/100); }
@@ -1016,12 +1110,6 @@
     });
   }
 
-  // 생명장기재보험(8) 세부 = 9 CSM상각 +10 위험조정 +11 예실차 +12 기타 (합 = 8).
-  const PL_RE_SUB = [
-    { ko:"재보험 CSM상각", num:9 }, { ko:"재보험 위험조정", num:10 },
-    { ko:"재보험 예실차", num:11 }, { ko:"기타 재보험손익", num:12 },
-  ];
-
   function renderPlTable(host, name, mode){
     const box=q(host,"#plTable"); if(!box) return; box.innerHTML="";
     const periods = plTablePeriods(name, mode);
@@ -1029,44 +1117,50 @@
     const getters = periods.map(p=> plMakeGetter(name,p));
     const latest = periods[periods.length-1];
     const present = new Set(plBuildSteps(name, latest).map(s=>s.ko));
-    const defs = PL_STEP_DEFS.filter(d=> present.has(d.ko));
+    const defs = plStepDefsFor(name, latest).filter(d=> present.has(d.ko));
     const gLast = getters[getters.length-1];
-    const reHasSub = PL_RE_SUB.some(s=> gLast(s.num)!=null);
 
     const headers = ["항목", ...periods.map(p=>p.label)];
     const rows = [];
-    let togNode = null;
+    // sub를 가진 스텝은 전부 ＋ 토글이 붙는다. 기본형은 생명장기재보험 하나, LOB형은 다리 수만큼
+    // (코리안리 = 생명 수재/출재 · 장기 수재/출재 넷) — 세부가 최신 기간에 하나도 없으면 안 만든다.
+    const togGroups = [];
     for(const d of defs){
-      if(d.ko==="생명장기재보험" && reHasSub){
+      if(d.sub && d.sub.some(s=> gLast(s.num)!=null)){
+        const cls = "pl-resub-"+togGroups.length;
         const lab=document.createElement("span");
         const tog=document.createElement("button");  // G1: K-ICS .subtoggle 양식 미러(common.css)
         tog.type="button"; tog.className="subtoggle";
-        tog.textContent="+"; tog.title="재보험 세부 펼치기"; tog.setAttribute("aria-expanded","false");
-        lab.appendChild(document.createTextNode("생명장기재보험")); lab.appendChild(tog);
+        tog.textContent="+"; tog.title=(d.subTitle||d.ko)+" 펼치기"; tog.setAttribute("aria-expanded","false");
+        lab.appendChild(document.createTextNode(d.ko)); lab.appendChild(tog);
         rows.push({ cells:[ lab, ...getters.map(g=> fmtEok(d.get(g))) ] });
-        togNode = tog;
-        for(const s of PL_RE_SUB){
-          rows.push({ cls:"pl-resub", hide:true, muted:true, cells:[ "　└ "+s.ko, ...getters.map(g=> fmtEok(g(s.num))) ] });
+        for(const s of d.sub){
+          rows.push({ cls:"pl-resub "+cls, hide:true, muted:true, cells:[ "　└ "+s.ko, ...getters.map(g=> fmtEok(g(s.num))) ] });
         }
+        togGroups.push({ tog, cls, label:d.ko, title:(d.subTitle||d.ko) });
       } else {
         rows.push({ cells:[ d.ko, ...getters.map(g=> fmtEok(d.get(g))) ], bold:(d.role==="anchor"||d.role==="end") });
       }
     }
     const tbl = buildMiniTable(headers, rows);
     box.appendChild(tbl);
-    if(togNode){
-      const subTrs = Array.from(tbl.querySelectorAll("tr.pl-resub"));
-      togNode.addEventListener("click", ()=>{
+    for(const grp of togGroups){
+      const subTrs = Array.from(tbl.querySelectorAll("tr."+grp.cls));
+      grp.tog.addEventListener("click", ()=>{
         const showing = subTrs.length && subTrs[0].style.display!=="none";
         subTrs.forEach(tr=> tr.style.display = showing ? "none" : "");
-        togNode.textContent = showing ? "+" : "−";
-        togNode.title = showing ? "재보험 세부 펼치기" : "재보험 세부 접기";
-        togNode.setAttribute("aria-expanded", showing ? "false" : "true");
+        grp.tog.textContent = showing ? "+" : "−";
+        grp.tog.title = grp.title + (showing ? " 펼치기" : " 접기");
+        grp.tog.setAttribute("aria-expanded", showing ? "false" : "true");
       });
     }
+    // 토글이 실제로 붙은 행만 안내한다(전엔 토글이 없는 4개사에서도 "생명장기재보험 ＋" 을 안내했다).
+    const subHint = togGroups.length
+      ? " · " + (togGroups.length>1 ? "LOB 각 행" : togGroups[0].label) + " ＋ 클릭 시 세부"
+      : "";
     const note=document.createElement("div"); note.className="small-muted"; note.style.marginTop="6px";
     note.textContent = "단위 억원(소수 반올림) · " + (mode==="quarter" ? "직전 4분기(당분기)" : "직전 3개년(연 누계)")
-      + " · 음수 △ · 생명장기재보험 ＋ 클릭 시 세부 · 당기순이익 이후 행은 기타포괄손익(OCI) 구간 · —는 해당 항목 미공시";
+      + " · 음수 △" + subHint + " · 당기순이익 이후 행은 기타포괄손익(OCI) 구간 · —는 해당 항목 미공시";
     box.appendChild(note);
   }
 
@@ -1608,8 +1702,19 @@
     stub(q(host,"#plStub"), !!plStubMsg, plStubMsg);
 
     if (!plStubMsg){
-      renderPlWaterfall(host, plName, plPer);
+      const plBars = renderPlWaterfall(host, plName, plPer);
       renderPlTable(host, plName, plMode);
+      // LOB형(하이픈 항목 보유)은 스텝 구성이 회사마다 달라 캡션을 실제 그려진 막대에서 만든다.
+      // 기본형은 손으로 쓴 기존 문장을 그대로 둔다(자동차+일반처럼 생략된 스텝까지 설명해야 해서).
+      const plLobOn = !!plLobHead(plName, plPer);
+      const _netAt = plBars.findIndex(b=> b.ko==="당기순이익");
+      const plSeq = plLobOn
+        ? plBars.slice(0, _netAt<0 ? plBars.length : _netAt+1).map(b=> b.ko).join(" → ")
+        : "장기원수[CSM상각·위험조정·예실차·기타] → 생명장기재보험 → 자동차+일반 → 기타 → 보험손익 → 투자손익 → 영업외 → (−)법인세 → 당기순이익";
+      const plAria = q(host,"#chartPl");
+      if (plAria) plAria.setAttribute("aria-label", plLobOn
+        ? "당기순이익에서 총포괄손익까지의 워터폴(보종별 수재·출재 분해·기타포괄손익) 차트"
+        : "당기순이익에서 총포괄손익까지의 워터폴(장기원수 세부 분해·기타포괄손익) 차트");
       // OCI 구간 3상태를 캡션에 명시 — 결측을 조용히 넘기지 않는다.
       const plOci = plOciModeOf(plName, plPer);
       const ociTail =
@@ -1618,7 +1723,7 @@
         plOci === "full"  ? " → [기타포괄손익 구간] FVOCI채무 → 보험계약금융(OCI) → 위험회피파생 → 재보험금융(OCI) → 기타 포괄손익 → FVOCI지분 → 총포괄손익"
       : plOci === "total" ? " → 기타포괄손익(총액만 공시·세부 미공시) → 총포괄손익"
       :                     " · 총포괄손익 미공시(원천 보고서에 총포괄손익계산서 미수록) — 당기순이익까지만 표시";
-      q(host,"#plCap").textContent = "당기순이익 → 총포괄손익 워터폴 · " + plPer.label + " · 단위 백만원(축은 조원) · 장기원수[CSM상각·위험조정·예실차·기타] → 생명장기재보험 → 자동차+일반 → 기타 → 보험손익 → 투자손익 → 영업외 → (−)법인세 → 당기순이익" + ociTail
+      q(host,"#plCap").textContent = "당기순이익 → 총포괄손익 워터폴 · " + plPer.label + " · 단위 백만원(축은 조원) · " + plSeq + ociTail
         + (plOci === "none" ? "" : " · y축은 FVOCI 지분증권을 뺀 범위로 고정 — 넘치는 막대는 톱니로 잘라 값 라벨로 표기");
     } else {
       if (charts.pl){ try{ charts.pl.dispose(); }catch(e){} charts.pl=null; }
@@ -1882,7 +1987,8 @@
         if(!codeToName[code] && r["원수사명"]) codeToName[code]=r["원수사명"];
         let byQ=ix.plx.get(code); if(!byQ){ byQ=new Map(); ix.plx.set(code,byQ); }
         byQ.get(qq) || byQ.set(qq, new Map());
-        byQ.get(qq).set(String(num), { y:_num(r["값"]), q:_num(r["값_당분기"]) });
+        // nm(항목명)은 LOB 라벨 폴백에서만 읽는다(plItemName) — 값 계산 경로는 안 쓴다.
+        byQ.get(qq).set(String(num), { y:_num(r["값"]), q:_num(r["값_당분기"]), nm:r["항목명"] });
       }
     }
 
