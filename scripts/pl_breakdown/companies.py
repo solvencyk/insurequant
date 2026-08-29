@@ -10,7 +10,7 @@ import re
 
 from scripts.build_net_income_breakdown import to_num
 
-from .common import _label, _norm, _prefer_ofs, _row_nums
+from .common import _SOURCELINE_CAP, _label, _norm, _prefer_ofs, _row_nums
 from .tier1 import _header_blob, _pick_line, _ytd_col
 from .tier2 import _is_rollforward, _lab0, _row_by_label, _scale, extract_tier2_abl
 
@@ -3663,13 +3663,37 @@ def _ma_find_product_table(ofs_tables, row_needle):
     and whose rows contain `row_needle` (str or tuple of label variants -- see `_ma_row_sum`).
     Ties broken by lowest line_no = document order = 당반기/당분기 block (DART prints the
     current period before the comparative one, verified against the raw 2026.2Q XML: 당반기
-    table precedes 전반기 by ~240-990 lines in every (표2,표3) pair found there)."""
+    table precedes 전반기 by ~240-990 lines in every (표2,표3) pair found there).
+
+    EXCEPTION -- an all-candidates-capped tie is UNRESOLVABLE, not just unbroken (2026-08-30,
+    inbox/parser/20260830T0000Z): lxml's HTMLParser saturates `.sourceline` at
+    `_SOURCELINE_CAP` (65535) for every element past that line (common.py), so "lowest
+    line_no" carries zero document-order information once every candidate reports the same
+    65535 -- `cands[0]` would then be whichever table `ofs_tables` happens to list first, not
+    "당기/당반기".  Root-caused on 미래에셋생명(KR0079) 2025.4Q by direct raw-XML inspection
+    (`scripts/_probes/mirae_2025q4_basis_check.py`): the note's 연결(CFS)-tagged rendering
+    sits at real, un-capped line numbers and is byte-verified intact (row labels line up with
+    their values), but `_prefer_ofs` correctly drops it as CFS per this project's 별도-only
+    convention -- and EVERY 별도(OFS)-tagged rendering of the SAME note sits past the cap
+    (reported line_no=65535) and is corrupted in the raw DART XML itself (row values shifted
+    one line down from their labels; confirmed cell-by-cell against the CFS copy, not a
+    parser artifact -- COLSPAN/ROWSPAN are identical between the two).  There is no clean OFS
+    candidate to prefer among such a tie, by construction: any tie surviving `_prefer_ofs`
+    with every member capped means every surviving candidate came from the same
+    (indistinguishable-by-position) tail region.  Returning None here closes that door
+    directly instead of relying on `_ma_yesilcha_direct`'s check A/B to catch a bad pick by
+    numeric luck -- important because a smaller row-shift than KR0079's could stay inside
+    check A's tolerance and ship silently wrong."""
     needles = (row_needle,) if isinstance(row_needle, str) else row_needle
     cands = [t for t in ofs_tables
               if "사망보험" in _header_blob(t) and "건강보험" in _header_blob(t)
               and any(any(n in "".join(r[:2]) for n in needles) for r in t.rows)]
+    if not cands:
+        return None
     cands.sort(key=lambda t: t.line_no)
-    return cands[0] if cands else None
+    if len(cands) > 1 and cands[0].line_no == _SOURCELINE_CAP:
+        return None                            # unresolvable tie -- see docstring EXCEPTION
+    return cands[0]
 
 
 def _ma_tier1_ins_rev(ofs_tables):

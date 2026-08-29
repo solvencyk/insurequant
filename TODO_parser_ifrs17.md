@@ -1,5 +1,44 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-08-30 (69th pass) — `_ma_find_product_table` 동점처리 근본수정 + 무거운 골든
+> 그린화.** `inbox/parser/20260830T0000Z`(orchestrator 발주, status: answered). 68th pass가
+> "관계종속기업투자주식 캡션이 붙은 corrupted 표를 잘못 고른다"로 남긴 KNOWN GAP을 raw
+> 증거로 재조사 — **캡션은 무관하다(그 노트 캡션 자체가 원문에 리터럴로 없어 CFS/OFS 양쪽
+> 사본 다 엉뚱한 근처 캡션을 주워 붙임, 후보 배제 기준으로 못 씀). 진짜 원인은 CFS/OFS 기준
+> 분리**: `_ofs_line_boundary=54680`가 `_SOURCELINE_CAP(65535)` 밑이라 분할 워크어라운드가
+> 미발동하고, 이 노트의 별도(OFS) 사본은 전부 물리적으로 65535 캡 너머에 있어 `t.line_no`가
+> 전부 포화 — `_prefer_ofs`가 CFS(라벨-값 정상)를 정확히 버리고 OFS(전부 corrupted, 라벨은
+> 그대로 값만 한 행 밀림)만 남긴다. **고를 수 있는 "맞는 표"가 애초에 없다.**
+>
+> **수정**: `_ma_find_product_table`에 "후보 2개 이상 + 정렬 최솟값 == `_SOURCELINE_CAP`"
+> 가드 추가 — 순서 정보가 없는 사포화 동점을 임의 pick하지 않고 `None` 반환(check A 이전
+> 단계에서 자기기권). 미래에셋 전용 헬퍼 안에만 있는 가드라 다른 회사 무영향 — KR0079
+> 14개 분기 전수 회귀(`mirae_tiebreak_regression.py`)로 2025.4Q 하나만 갈리고(65535→None,
+> 의도한 방향) 나머지 4개 실값 분기(2025.2Q/3Q, 2026.1Q/2Q)는 값까지 완전 동일 확인.
+>
+> **여전히 None이 맞다** — check A까지 가지도 않고 더 이른 단계에서 self-abort. 그런데
+> `assemble()`의 owner 2026-06-08 0표시 규칙은 None의 "이유"를 안 보므로 여전히 0.0으로
+> 채운다 → `_GOLD_CELL_OVERRIDE`에 `("KR0079","2025.4Q"): {6: None}` 서지컬 등재로 결정론적
+> 빌드 안에서 처리(코드 미수정 post-hoc JSON 패치를 대체). `assemble()` 규칙 자체는 owner
+> 결정이라 미수정, 대신 리뷰 정리해 제안만 티켓에 남김(item11이 같은 행에서 "진짜 0"의
+> 반증 사례 — 0 vs 결측 오분류가 오늘만 최소 2건: 이 건 + 검증 레인 9fadad4 SKIP→판정 전환).
+>
+> **무거운 골든**: 1차 시도에서 `sha256_master`만 이동(`non_null_values` 등 4개 필드는 이미
+> golden과 일치 — KR0079는 해결됐다는 신호), 셀 단위 대조 값 diff 0건인데 raw bytes만 다름
+> → 원인은 item32(기타 포괄손익 미분류) 356개 행이 커밋본에서는 파일 끝에 일괄 append돼
+> 있는데 현재 `main()`은 회사분기 블록 안에 자연 인터리브(내 수정과 무관한 기존 구조적
+> 아티팩트, 멀티셋 비교로 값 100% 동일 확정, coverage.json은 이 리오더링과도 무관하게
+> 완전 바이트동일). `--update`로 `sha256_master`만 재생성 후 `RUN_PL_GOLDEN=1 pytest`
+> **PASSED (211초)**. 지문 게이트(`validate_golden_input_fingerprints.py --update`) RED=0.
+>
+> **이 티켓은 `scripts/validate_*`·`prepush_check.py` 실행이 명시적으로 금지**돼 있어(선행
+> 패스들과 다른 제약) `validate_data_contract.py` 등은 미실행 — orchestrator/validation
+> 레인이 별도로 확인 필요.
+>
+> 상세·재현 명령 전부 `inbox/parser/20260830T0000Z` 답변. status: answered.
+>
+> 커밋: (커밋 후 기록)
+
 > **2026-08-29 (68th pass) — 67th pass 골든 드리프트 후속: A/B로 무죄 입증 + KR0070 반올림
 > 반영 + KR0079 되돌림.** 코디네이터가 `RUN_PL_GOLDEN=1 pytest`로 non_null_values
 > 10006→10007 드리프트를 잡아 67th pass 패치를 의심했다. **A/B 재현(패치 있음/없음 각각

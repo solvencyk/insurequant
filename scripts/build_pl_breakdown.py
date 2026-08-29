@@ -172,23 +172,28 @@ def assemble(t1, t2, is_life):
     elif v[3] is not None and v[4] is not None and v[5] is not None and v[6] is None:
         v[6] = 0.0
         v[7] = v[3] - v[4] - v[5]
-    # KNOWN GAP (2026-08-29, inbox/parser/20260829T2330Z follow-up): this branch fires for
-    # 미래에셋생명(KR0079) 2025.4Q too -- _ma_yesilcha_direct's dual population-check gate
-    # self-aborts that quarter (wrong candidate table: 3 raw XMLs share a caption prefix and
-    # _ma_find_product_table's line_no tie-break picks an unrelated "관계종속기업투자주식"
-    # note over the real "18-1" note; verified live via direct instrumentation), so item6
-    # lands here as None -> this elif turns it into 0.0.  BUT the data-contract gate's
-    # PL_YTD_COLLAPSE_TO_ZERO rule correctly flags that as suspicious FOR THIS CELL SPECIFICALLY:
-    # unlike 농협/교보/동양 (which never disclose the split, so 0.0 is a consistent constant),
-    # KR0079 DOES disclose it most quarters (2025.2Q/3Q, 2026.1Q/2Q all resolve to real nonzero
-    # 예실차 via this same function) -- so a lone quarter reading exactly 0.0 mid-series looks
-    # like a rebuild dropping real data, not a genuine "not disclosed" fact.  Root cause is a
-    # find-the-right-table bug in _ma_find_product_table, not a value bug in this fallback.
-    # Per the RED, 2025.4Q's committed cell is kept at None (gold-overlay-free, no
-    # _GOLD_CELL_OVERRIDE entry -- this comment IS the only record) even though a fresh rebuild
-    # will deterministically regenerate 0.0 here every time; do not silence the RED without
-    # fixing _ma_find_product_table's table selection, or an explicit owner call that 0.0 is
-    # actually fine for this one quarter.
+    # RESOLVED (2026-08-30, inbox/parser/20260830T0000Z; was a KNOWN GAP as of 2026-08-29,
+    # inbox/parser/20260829T2330Z follow-up): this branch ALSO fires for 미래에셋생명(KR0079)
+    # 2025.4Q, same as 농협/교보/동양, but for a different reason -- and the fix is a
+    # `_GOLD_CELL_OVERRIDE` entry below, not a change to this elif.  `_ma_yesilcha_direct`'s
+    # dual population-check gate self-aborts that quarter, but the root cause is one level
+    # deeper than "picks the wrong candidate table": `_ma_find_product_table` now (as of this
+    # fix) recognizes the tie is UNRESOLVABLE and returns None directly, because the 예실차
+    # note's raw DART XML carries an intact 연결(CFS)-basis rendering AND a row-value-shifted
+    # (corrupted) 별도(OFS)-basis rendering, and `_prefer_ofs` -- correctly, per this
+    # project's 별도-only convention -- keeps only the corrupted one.  There is no clean OFS
+    # table to prefer for this quarter; see that function's docstring for the raw-XML proof.
+    # So item6 still lands here as None -> this elif still turns it into 0.0, EXACTLY like
+    # 농협/교보/동양.  The difference from those 3 is that KR0079's OWN pipeline resolves
+    # item6 to a real nonzero number in 2025.2Q/2025.3Q/2026.1Q/2026.2Q (same function,
+    # confirmed unaffected by the tie-break fix via a 14-quarter regression sweep), so a lone
+    # 0.0 wedged mid-series reads as dropped data, not a disclosed fact -- exactly what
+    # validate_data_contract.py's PL_YTD_COLLAPSE_TO_ZERO flagged on 2026-08-29 (edb6b77).
+    # The `_GOLD_CELL_OVERRIDE` entry for ("KR0079", "2025.4Q") below forces v[6] back to
+    # None inside the deterministic build so a fresh rebuild reproduces the committed cell
+    # instead of drifting back to 0.0 -- see that entry for the full explanation, and this
+    # ticket's `assemble()`-rule review for why the elif itself still can't tell "genuinely
+    # never disclosed" apart from "this one quarter's extraction failed" without one.
     # item 12 (residual) = 8 − (9+10+11)
     if v[8] is not None and None not in (v[9], v[10], v[11]):
         v[12] = v[8] - (v[9] + v[10] + v[11])
@@ -592,6 +597,26 @@ _GOLD_CELL_OVERRIDE = {
     # 분기는 items 2-14가 이미 전부 non-null(Tier-2 RC 게이트 기존 통과, 이 override 이전에도
     # True)이므로 이 대입은 상태를 바꾸지 않는 no-op — 순수 OCI 항목 3개만 영향받는다.
     ("KR0083", "2024.3Q"): {27: -265226.939791, 28: -5322.135208, 30: -536.616012},
+    # 미래에셋(KR0079) 2025.4Q item6 -- divergent use of this loop (like KR0083 above:
+    # FORCING a null, not filling a gap).  `_ma_find_product_table`'s unresolvable-tie fix
+    # (2026-08-30, inbox/parser/20260830T0000Z) makes it correctly self-abort to None THIS
+    # quarter -- the 예실차 note's only 별도(OFS)-basis rendering in the raw DART XML is
+    # itself corrupted (row values shifted vs. its intact 연결(CFS)-basis twin, which
+    # `_prefer_ofs` rightly excludes; see that function's docstring) -- but the elif right
+    # above this dict (v[3]/v[4]/v[5] populated, v[6] is None -> 0-fill) does not distinguish
+    # THAT from 농협/교보/동양's every-quarter non-disclosure and 0-fills it anyway, exactly
+    # like it did before the tie-break fix (same 0.0, different route to it).  Unlike those
+    # 3 companies, KR0079's OWN pipeline resolves item6 to a real nonzero number in
+    # 2025.2Q/2025.3Q/2026.1Q/2026.2Q, so a lone 0.0 wedged between them reads as dropped
+    # data, not a fact -- validate_data_contract.py's PL_YTD_COLLAPSE_TO_ZERO agreed
+    # (2026-08-29/edb6b77: 직전분기 -2,353.8 -> 0.0, flagged and reverted by hand on disk).
+    # This entry makes that same call inside the deterministic build instead of a silent
+    # post-build JSON patch, so `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py`
+    # reproduces the committed None instead of drifting back to 0.0 every rebuild.  NOT a
+    # change to the elif's general rule -- that rule is still correct for every
+    # always-never-disclosed company; see this ticket's `assemble()`-rule review for the
+    # proposal to make the elif itself tell the two cases apart.
+    ("KR0079", "2025.4Q"): {6: None},
 }
 
 
