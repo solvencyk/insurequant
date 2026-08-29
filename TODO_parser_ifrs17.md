@@ -56,7 +56,7 @@
 >
 > 상세·재현 명령·원문 인용 전부 `inbox/parser/20260829T1700Z` 답변. status: answered.
 >
-> 커밋: (다음 커밋에서 기록)
+> 커밋: `15a61d1`
 
 > **2026-08-30 (69th pass) — `_ma_find_product_table` 동점처리 근본수정 + 무거운 골든
 > 그린화.** `inbox/parser/20260830T0000Z`(orchestrator 발주, status: answered). 68th pass가
