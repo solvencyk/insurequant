@@ -918,6 +918,11 @@
     const _base = _span>0 ? _span : Math.max(Math.abs(_hi)*0.2, 1000);
     const _rough=_base/5, _mag=Math.pow(10, Math.floor(Math.log10(Math.max(1,_rough)))), _n=_rough/_mag;
     const plYStep=(_n<=1?1:_n<=2?2:_n<=2.5?2.5:_n<=5?5:10)*_mag;
+    // y축 눈금 라벨의 소수 자릿수를 **눈금 간격에서 역산**한다. 종전엔 maximumFractionDigits:1
+    // 고정이라 간격이 0.05조·0.25조로 잡히는 회사에서 이웃 눈금이 같은 라벨로 찍혔다
+    // (예: 0.05·0.10 이 둘 다 "0.1"). 전수 213건 중 197건이 코리안리 밖이었다.
+    const plYDec=(x=>{ for(let d=0; d<=3; d++){ const m=x*Math.pow(10,d);
+      if(Math.abs(m-Math.round(m))<1e-9) return d; } return 3; })(plYStep/1e6);
     const plYMin=Math.floor((_lo-_base*0.06)/plYStep)*plYStep;
     const plYMax=Math.ceil((_hi+_base*0.06)/plYStep)*plYStep;
 
@@ -963,7 +968,7 @@
         type:"value", name:"조원",
         min: plYMin, max: plYMax, interval: plYStep,
         nameTextStyle:{ color:"#6c757d", fontSize:11 },
-        axisLabel:{ color:"#6c757d", formatter:v=> (v<0?"△":"")+Math.abs(v/1e6).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
+        axisLabel:{ color:"#6c757d", formatter:v=> (v<0?"△":"")+Math.abs(v/1e6).toLocaleString("ko-KR",{minimumFractionDigits:plYDec,maximumFractionDigits:plYDec}) },
         splitLine:{ lineStyle:{ color:"#e9ecef" } },
       },
       dataZoom,
