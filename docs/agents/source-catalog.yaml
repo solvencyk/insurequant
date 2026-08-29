@@ -1,6 +1,6 @@
 meta:
   version: 1
-  last_updated: '2026-08-03'
+  last_updated: '2026-08-30'
   scope: 4 data sources for ~28 Korean insurers
   notes:
     - All file I/O must use UTF-8 (no BOM).
@@ -160,6 +160,165 @@ sources:
       - KR1010 교보라이프플래닛
       - KR1011 IBK연금
       - non-KR AIA
+
+  - id: disclosure_life_own_sites
+    name: 정기경영공시 생보 자사 사이트 (22사)
+    probe: scripts/_probes/census_q2_life_own_sites.py
+    census_out: data/disclosure/_meta/FY2026_Q2/life_own_site_census.json
+    added: '2026-08-30'
+    why:
+      - 생보협회 일괄페이지(disclosure_life_bulk)는 협회 게시 여부만 답한다. 회사가 자사
+        사이트에 먼저 올리면 협회 갱신 전까지 거기서는 안 보인다 — 2026-08-27/29 스윕이
+        협회 그리드만 읽고 22사를 미게시로 판정한 것이 방법론 구멍이었다(owner 지적).
+      - 이 표는 그 나머지 절반. 회사별 경영공시 목록 URL + 접근 함정.
+    access_trap: |
+      여러 회사가 cold deep-link 를 거부한다(흥국생명은 '현재 잘못된 접근경로' 반환).
+      우회: 같은 브라우저 컨텍스트로 home 을 먼저 열고(세션/referer 확보) 목록 URL 로 이동.
+      probe 는 이 흐름을 22사 전원에 기본 적용한다(home_first).
+    label_dialects: |
+      2026-08-30 실측 라벨 형태가 회사마다 다르다 — 정규식 하나로는 못 잡는다.
+      '2026년 1분기 정기경영공시' / '2026년 회계연도(1분기)' / 'FY 2026년 1/4분기 경영공시'
+      / 'FY2026 1Q 경영공시' / 'FY2026 Q1 정기 경영공시' / 연도x분기 표(iM라이프).
+      probe --selftest 가 이 방언 21종에 대한 양성대조를 오프라인으로 돌린다.
+    entries:
+      - kr: KR0068
+        name: 한화생명
+        home: https://www.hanwhalife.com/index.jsp
+        url: https://www.hanwhalife.com/main/disclosure/management/occasionalmanagement/DF_MDRM000_P10000.do
+        notes: '공시실 > 경영공시실 > 정기경영공시. URL path says ''occasionalmanagement'' for BOTH 정기(DF_MDRM000) and 수시(DF_MDOM000) -- the discriminator is the DF_ code, not the folder.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0069
+        name: 삼성생명보험
+        home: https://www.samsunglife.com/
+        url: https://www.samsunglife.com/individual/products/disclosure/management/PDO-MAMAP010100M
+        wait_ms: 9000
+        notes: '정기경영공시 = PDO-MAMA**P**010100M. PDO-MAMAA010100M is 경영공시실 안내 (a guide page, no listing) and PDO-MAMAN010100M is 수시 -- one letter apart, easy to land on the wrong one. Vue SPA: any path under the app returns the same 3.6KB shell, so a 200 proves nothing; rows arrive from /gw/api/display/board/content/list. The route map is readable at /gw/api/display/menu/all (search the 정기 경영공시 entry''s linkTo) -- that is how this URL was found, and how to re-find it if it moves. Labels read ''2026년 회계연도(1분기)'' = trap 7.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0070
+        name: 에이비엘생명보험
+        home: https://www.abllife.co.kr/
+        url: https://www.abllife.co.kr/st/pban/admPban/fprdPban/2026
+        notes: 'YEAR IS IN THE PATH: /st/pban/admPban/fprdPban/<YYYY>. Bump the year each January. PDFs live under /cms/pban/admPban/fprdPban/<YYYY>/__icsFiles/afieldfile/...'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0071
+        name: 흥국생명보험
+        home: https://www.heungkuklife.co.kr/
+        url: https://www.heungkuklife.co.kr/front/public/manageList.do
+        notes: 'ACCESS TRAP ORIGIN (changelog 2026-08-21): direct entry without www., or as the first navigation, returns ''현재 잘못된 접근경로''. home_first + www. is the workaround. Separately: this company''s FY2024 결산 file is itself a wrong document at source (honest gap).'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0072
+        name: 케이디비생명보험
+        home: https://www.kdblife.co.kr/
+        url: https://www.kdblife.co.kr/ajax.do?scrId=HDLMA001M03P
+        notes: '정기공시 = /ajax.do?scrId=HDLMA001M03P (수시 M01P, 지배구조 M04P, 공시실 index HDLMA000M00P). The home page only exposes these as javascript:_KDB_.fn_link(...), and /scrId/<id>.do renders empty -- use the /ajax.do?scrId= form directly. Labels read ''FY 2026년 1/4분기 경영공시''.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0073
+        name: 교보생명보험
+        home: https://www.kyobo.com/dgt/web/main
+        url: https://www.kyobo.com/dgt/web/notice-management/fixed-term/last-year
+        wait_ms: 12000
+        notes: 'kyobo.com (NOT kyobo.co.kr = legacy portal). COUNTER-INTUITIVE: the live 정기경영공시 page is .../fixed-term/LAST-YEAR; plain .../fixed-term is a 404 (''페이지에 접근할 수 없습니다''). The period is a <select> with one option per published quarter, and the page <title> carries the selected period (e.g. ''2026년 1분기-정기경영공시-교보생명'') -- title alone answers the question. SPA, renders late; a 우수고객 modal covers <article>.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0074
+        name: 라이나생명보험
+        home: https://www.lina.co.kr/
+        url: https://www.lina.co.kr/disclosure/management-public-announcement/regular-announcement
+        notes: 'Nuxt SPA; the LNB items carry NO href, so the route cannot be read off the page -- it is in the _nuxt chunk (grep the bundles for ''/disclosure/''). 수시 = .../occasional-announcement, 지배구조 = .../governance-announcement. A wrong slug answers HTTP 500, a right one 200 -- that is a usable probe. Labels read ''FY2026 1Q 경영공시'' = trap 8. /disclosure/pa1.htm is a dead legacy path.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0075
+        name: 비엔피파리바카디프생명보험
+        home: https://www.cardif.co.kr/
+        url: https://www.cardif.co.kr/disclosure/papam001.do
+        notes: 'page <title> is the literal string ''화면명'' -- do not use the title to identify the page.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0076
+        name: 아이엠라이프생명보험
+        home: https://www.imlifeins.co.kr/BA/BA_A010.do
+        url: https://www.imlifeins.co.kr/BA/BA_F010.do
+        notes: '구 DGB생명. 정기공시/결산공고 = /BA/BA_F010.do (수시 F020, 지배구조 F030, 공시실 index BA_A010). GRID LAYOUT: a 연도 x 분기 table (rows 2026..2004, columns 1/4~4/4분기·결산·결산공고) whose cells say 공시자료 or are blank -- no row label ever pairs a year with a quarter, so only the grid reader can judge this site (trap 9).'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0079
+        name: 미래에셋생명
+        home: https://life.miraeasset.com/
+        url: https://life.miraeasset.com/micro/disclosure/management/PC-HO-082000-000000.do
+        notes: '정기공시 = PC-HO-082000-000000.do. PC-HO-081900-000000.do is 공시정보관리규정 (the policy text, no listing) -- an easy wrong-page mistake, they sit next to each other in the menu. 공시실 index = /micro/disclosure/index.do.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0082
+        name: DB생명보험
+        home: https://www.idblife.com/
+        url: https://www.idblife.com/notice/business/fxpd_mgm_pban
+        notes: 'idblife.com (NOT dblife.co.kr). 수시 = /notice/business/cnt_tm_mgm_pban.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0083
+        name: 푸본현대생명보험
+        home: https://www.fubonhyundai.com/index.jsp
+        url: https://www.fubonhyundai.com/index.jsp
+        click_path: ["경영공시실"]
+        js_eval_first: 'goMenu(''CUSI150413010000'')'
+        notes: 'no deep link: every screen is goMenu(''<CODE>''). 경영공시실 = CUSI150413010000. /comm/notice/managementList.jsp is a guess that lands on #ERROR0100000000.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0087
+        name: 동양생명
+        home: https://www.myangel.co.kr/
+        url: https://pbano.myangel.co.kr/notice/product/WE_PA_AP_01_00_00.jsp
+        click_path: ["경영공시", "정기경영공시"]
+        notes: '공시 lives on a SEPARATE SUBDOMAIN pbano.myangel.co.kr (www.myangel.co.kr/paging/WE_AC_* 404s to /comm/notFound). The 경영공시 menu is href=javascript:void(0) -> must be clicked, no deep link exists.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0094
+        name: 신한라이프생명보험
+        home: https://www.shinhanlife.co.kr/hp/cdhi0310.do
+        url: https://www.shinhanlife.co.kr/hp/cdhi0310.do
+        click_path: ["정기경영공시"]
+        notes: '공시실 nav items all carry href=''#'' -> click, no deep link. cdhi0250t01=상품공시, cdhi0520=입찰공시 for reference.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0095
+        name: 메트라이프생명보험
+        home: https://brand.metlife.co.kr/
+        url: https://brand.metlife.co.kr/pn/fxtrmMnnt/retrieveFxtrmMnntMain.do
+        notes: 'brand.metlife.co.kr, not www.metlife.co.kr.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0097
+        name: 하나생명보험
+        home: https://www.hanalife.co.kr/
+        url: https://www.hanalife.co.kr/home/publicAnn/listPublicAnn.do?gubun=F
+        notes: 'gubun=F selects 정기공시 in the 경영공시실 list.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0099
+        name: KB라이프생명
+        home: https://www.kblife.co.kr/
+        url: https://www.kblife.co.kr/customer-common/managementPublicNoticeOffice.do
+        notes: 'single 경영공시실 page holding both 정기 and 수시.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0100
+        name: 처브라이프생명보험
+        home: https://www.chubblife.co.kr/
+        url: https://www.chubblife.co.kr/front/official/management/list.do
+        notes: 'front/official/* is the whole 공시실 tree (sale/, equityLinked/, management/).'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0104
+        name: 농협생명보험
+        home: https://www.nhlife.co.kr/
+        url: https://www.nhlife.co.kr/ho/on/HOON0001M00.nhl
+        notes: '정기공시 > 경영공시 > 공시실. Site takes scheduled maintenance windows -- a maintenance page must score not_observed, never not_posted.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR1010
+        name: 교보라이프플래닛생명보험
+        home: https://www.lifeplanet.co.kr/
+        url: https://www.lifeplanet.co.kr/disclosure/admi/HPDC21S0.dev
+        notes: '.dev is the site''s own screen extension, not a TLD.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR1011
+        name: IBK연금보험
+        home: https://www.ibki.co.kr/
+        url: https://www.ibki.co.kr/process/HP_PBANO_MGMT_FIXTERM_LIST
+        notes: '공시실 index = /process/HP_PBANO_LIST; 정기경영공시 = /process/HP_PBANO_MGMT_FIXTERM_LIST (found 2026-08-30 by crawling the index). WAF prefers plain requests over headless Chromium -- the static fallback carries this one.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
+      - kr: KR0080
+        name: 에이아이에이생명보험
+        home: https://www.aia.co.kr/ko.html
+        url: https://www.aia.co.kr/ko/disclosure/management-information/regular.html
+        notes: 'static .html tree; 수시 = .../irregular.html.'
+        verified_2026_08_30: not_posted (latest = 2026 1Q)
 
   - id: dart
     name: DART 공시 OpenDART

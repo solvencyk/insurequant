@@ -1,11 +1,90 @@
 # Insurequant TODO — Downloader Stage
 
-> Last updated: 2026-08-25 · Stage 1/5 — downloader
+> Last updated: 2026-08-30 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md (+ docs/agents/source-catalog.yaml) · Changelog: docs/changelog_downloader.md
 
 **Cross-stage TODO:** `TODO.md` (root). **This file:** active + done items scoped to data collection only.
 
 ## Status
+
+**🟢 2026-08-30 인박스 처리 — 생보 22사 **자사 사이트** 직접 스윕: 0/22 게시,
+경로자산 22개 신규 확보 (`inbox/downloader/20260830T0400Z`).** 상세: `docs/changelog_downloader.md` 2026-08-30.
+
+- **owner 지적 수용**: 08-27/08-29 스윕은 생보를 **생보협회 일괄페이지만 보고** 판정했다.
+  그건 "협회에 올라왔나" 이지 "회사가 냈나" 가 아니다. **22사 자사 경영공시 페이지를 직접 훑음.**
+- **결과 = posted 0 / not_posted 22 / not_observed 0 / unreachable 0.** 22사 전원에서
+  **그 회사의 2026 1분기 행을 실제로 읽어낸** 뒤 2분기 부재를 확인했다(양성대조 성립 —
+  "탐지기가 아무것도 못 봄" 이 아니라 "볼 수 있는데 없음"). 같은 날 협회 그리드도 재확인
+  (2026년, 1분기=22, 2분기=0) — 두 독립 경로 일치.
+- **코리안리(KR1000) owner 확인 반영 → 손보 17사 전원 판정 완료.** 08-29 UNKNOWN 이던 건을
+  owner 가 직접 확인해 미게시 확정(2026-08-30). `listing_census.json` 에 `verdict=not_posted`
+  + `verdict_source=owner_manual_check` + `probe_verdict=unreachable` 병기(관측 vs owner 확인
+  구분). **39사 전체 = 1 게시(하나손보) + 38 미게시, 미관측 0.**
+- **신규 `scripts/_probes/census_q2_life_own_sites.py`** — 08-29 프로브를 **import** 해서 쓰고
+  (함정 4종 그대로 상속) 그 위에 **함정 5종을 추가로 막았다. 4종은 조용히 틀린 판정을 낸다**:
+  ⑤ 상시 네비 메뉴가 "관측됨" 을 만족시켜 **6개사가 자기 홈페이지에 선 채로 not_posted** 를
+  받음 → 판정에 **연도 붙은 기간 행** 요구 ⑥ 수시공시 등록일 `2026.06.30` 이 기간 라벨로
+  읽혀 **KB라이프 거짓 posted** → Q2 히트는 기간을 이름으로 불러야 함 ⑦ `2026년
+  회계연도(1분기)`(삼성생명)처럼 연도-분기 사이 글자 삽입 → 간격 14자 허용하되 **사이에
+  숫자 금지** ⑧ `FY2026 1Q`(라이나)·`FY2026 Q1`(BNP) 라틴 분기 + 연도 선행 → 세 어순 커버
+  ⑨ **연도×분기 표**인 회사(iM라이프)는 라벨에 2026·2분기가 같이 안 나옴 → **칸을 직접 읽음**.
+- **`--selftest`(오프라인 1초) 를 상설로 넣었다.** 오늘 실측한 라벨 방언을 Q2 로 바꾼
+  **양성대조 21건** + **음성대조 7건**. **정규식을 고치면 반드시 돌릴 것 — 아무것도 매칭
+  안 하는 탐지기도 "2분기 없음" 이라고 보고한다.** 현재 21/21·오탐 0/7. `--rescan` 은
+  저장된 라벨 덤프로 네트워크 없이 22사 판정을 재계산한다.
+- **접근 함정과 우회**: 흥국생명식 `home_first`(홈 먼저 방문해 session/referer 확보)를 22사
+  전원 기본 적용. 더 큰 장벽은 **딥링크가 없는 사이트** — JS 메뉴(동양·라이나·신한라이프·
+  KDB·삼성·iM라이프)는 접힌 드롭다운이라 Playwright 클릭이 타임아웃 → **페이지 안에서
+  `element.click()` 디스패치**. 그래도 안 되면 원본에서 라우트를 캐냈다: 삼성생명
+  `/gw/api/display/menu/all` 메뉴 API(기존에 쓰던 `PDO-MAMAA010100M` 은 **안내 페이지**,
+  정본은 `PDO-MAMAP010100M`), 라이나는 Nuxt 청크 grep. **교보는 URL 이 반직관적** —
+  `.../fixed-term/**last-year**` 가 현행이고 `.../fixed-term` 은 404, 기간은 `<title>` 에 있음.
+  **동양생명 공시는 별도 서브도메인** `pbano.myangel.co.kr`.
+- **경로자산 위치**: `docs/agents/source-catalog.yaml` 신규 `disclosure_life_own_sites`
+  (22 entries: home·url·click_path·함정 notes) + 프로브의 `LIFE_SITES`(운영 정본).
+- **받은 파일 0개** → `data/disclosure/FY2026_Q2/` 변화 없음, parser 통지 없음, docling 없음.
+- **다음 확인 = 2026-08-31(월)** 유지. 순서: 생보 자사 census → 손보/협회 census →
+  posted 인 회사만 다운로드 → `verify_q2_disclosure_content.py` 내용검증.
+
+**🟡 2026-08-29 인박스 처리 — 2026.2Q 정기경영공시 재스윕: 1/39 확보, 침묵실패 함정 구조적 해소
+(`inbox/downloader/20260829T1900Z`).** 상세: `docs/changelog_downloader.md` 2026-08-29.
+
+- **하나손해보험(KR0050) 2026년 상반기 경영공시 확보** — 39사 중 유일. 60p·1,620,955B,
+  1페이지 `[기간 : 2026. 1. 1 ~ 2026. 6. 30]`·보험업감독규정 제7-44조·2026-1Q 마커 0건으로
+  **내용 검증** 통과. `data/disclosure/FY2026_Q2/pdf/`. docling 변환 안 함(parser 소관).
+  parser raw-ready: `inbox/parser/20260829T2130Z`.
+- **미게시 확정 37사**(생보 22 + 손보 15) · **미확인 1사 = 코리안리(KR1000)**, 전 transport
+  `Empty reply from server`(서버측 다운, 2026-08-17 과 동일). **미확인을 미게시로 세지 말 것.**
+- **함정 대응이 사후대조 → 사전판정으로 바뀌었다.** 신규 `scripts/_probes/
+  census_q2_disclosure_listings.py` 가 다운로드 전에 listing 라벨을 전량 덤프해
+  `posted/not_posted/not_observed/unreachable` 4-값 판정을 낸다(행 인덱스 미사용).
+  신규 `scripts/_probes/verify_q2_disclosure_content.py` 가 받은 파일을 freshness+period+
+  doctype 3중 검사(기존 `check_q2_disclosure_freshness.py` 의 해시대조만으론 불충분 —
+  해시가 달라도 틀린 분기일 수 있다). **다음 세션은 이 두 개를 앞뒤로 끼고 돌릴 것.**
+- **KR0050 XPath 를 행 인덱스 → 텍스트 앵커로 교체**(`download_disclosure_2026q2_nonlife.py`).
+  이 사이트는 1/4분기를 2/4분기 **위에** 나열해서 `tr[1]` 이 Q1 을 집었다(실제 발동, Q1 파일과
+  SHA256 동일한 파일을 받아옴). 다른 회사도 게시되면 같은 방식으로 앵커링할 것.
+- **다음 확인 = 2026-08-31(월).** 근거: 마감 = 분기말+2개월 = 8/31, KB손해 24년치 등록일에
+  요일을 붙이면 **마감일 또는 직전 마지막 영업일**에 내고 주말 게시는 0회. 올해 8/29=토·
+  8/30=일이라 "8/29~31 창"의 영업일은 **8/31 월 하루뿐**이다. 9/1(화) 낙오사 1회 추가.
+
+**🟢 2026-08-27 owner 직접 지시 — 2026.2Q 정기경영공시 스카우팅(39개사) + KIDI premium_summary.json
+재구축.** 상세: `docs/changelog_downloader.md` 2026-08-27.
+
+- **정기경영공시 = 17 손보 + 22 생보 전원 미게시 확정.** 생보 일괄페이지 22사 "-", 손보는 3사
+  직접확인 + 나머지 14사 신규 `scripts/download_disclosure_2026q2_nonlife.py` 실행으로 전수 시도.
+  **함정 발견·수정: 12사가 "ok"로 나왔지만 전부 FY2026_Q1 파일과 SHA256 동일한 스테일
+  재다운로드**(auto-latest XPath가 아직 갱신 안 된 1Q 행을 가리킴) — `scripts/_probes/
+  check_q2_disclosure_freshness.py` 신규(재사용 가능), 오염 파일은 `data/_archive/`로 이동,
+  manifest 정정. **다음 세션 주의: 이 스크립트를 다시 돌릴 때도 "ok" 자체를 믿지 말고 반드시
+  freshness 스크립트로 이전 분기와 해시 대조할 것.** 재확인 권장 시점: **8/29 이후**(KB손해
+  자체 이력상 `-2/4분기 경영통일공시`가 2015년부터 매년 8/29~31 등록).
+- **KIDI `premium_summary.json`** — 2026-08-06부터 owner 승인 대기이던 전체 재구축(39사×13분기,
+  507건) 완료, 에러 0, 검증참조값 완전 일치. 최신 게시월 202605(5월), 분기말 202606(6월,
+  2026.2Q 소스값)은 아직 미게시 — 게시되면 `python scripts/ingest_kidi_monthly_premium.py
+  --periods 202606`만 추가 실행하면 됨(전체 재실행 불필요, entries는 키 병합이 아니라 매회
+  덮어쓰기이므로 **반드시 기존 DEFAULT_PERIODS와 합쳐서** 넘길 것 — 스크립트 수정 없이 하려면
+  `--periods 202303 202306 ... 202603 202606`로 전체 나열).
 
 **🟢 2026-08-25 인박스 처리 — DART raw 유실 45칸 복구 + 유실 탐지기 신설·배선
 (`inbox/downloader/20260825T0001Z`):** parser(ifrs17)가 KB손해보험 2024.3Q~2025.3Q PL 5개 분기
