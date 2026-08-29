@@ -18,6 +18,7 @@ Pass --no-build to skip the rebuild and validate the existing root masters as-is
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 from collections import defaultdict
@@ -185,6 +186,48 @@ def load_long(path: str) -> dict:
     for r in d:
         idx[(r["원수사명"], r["공시분기"])][norm(r["항목명"])] = r["값"]
     return idx
+
+
+# 표준 3슬롯(2 생명장기 / 13 자동차 / 14 일반) 밖에 앉는 **추가 LOB 다리**의 항목번호.
+# 재보험사가 표준 분류를 안 쓸 때 파서가 여기에 발행한다 — 오늘은 코리안리재보험의
+# `2-1`(장기재보험 손익) 하나뿐이지만, 룰은 회사명이 아니라 **번호 패턴**으로 잡는다.
+# 회사로 하드코딩하면 다음 재보험사가 들어올 때 같은 사각이 조용히 재발한다
+# (`build_pl_breakdown.py` L249-252 의 `_extra_lob` 계약과 같은 형태로 맞춘 것).
+# `2-N` 만 더한다: `3-N`~`12-N` 은 그 다리의 **자식**이라(2-1 = 3-1 + 8-1) 같이 더하면 이중계상.
+EXTRA_LOB_ITEM_NO = re.compile(r"^2-\d+$")
+HYPHEN_ITEM_NO = re.compile(r"^(\d+)-\d+$")
+# `2-N` = 추가 LOB **부모**(등식에 가산) · `3-N`~`12-N` = 그 부모의 **자식** 분해(가산하면 이중계상).
+# 이 둘 밖의 하이픈 번호(예: 언젠가 나올 `13-1`)는 **이 등식이 아예 모르는 형태**다 — 조용히
+# 빠지면 오늘 코리안리에서 난 사고가 그대로 재발하므로 2e 블록에서 건별로 인쇄한다.
+KNOWN_HYPHEN_PARENTS = {str(i) for i in range(2, 13)}
+
+
+def load_pl_extra_lob(path: str) -> tuple[dict, list]:
+    """((원수사명, 공시분기) -> Σ 추가 LOB 다리(항목번호 `2-N`) 값, 미지 하이픈 항목 목록).
+
+    `load_long()` 은 **항목명**으로 색인하므로 항목번호를 볼 수 없다 — 그래서 이 축만
+    번호로 따로 읽는다. 항목명으로 잡지 않는 이유: 발행사마다 이름이 달라질 수 있고
+    (`장기재보험 손익`), 이름 매칭은 새 재보험사가 다른 라벨을 쓰는 순간 다시 무검사가 된다.
+
+    두 번째 반환값은 **커버리지 census** 다. 등식이 아는 하이픈 형태(`2-N` 가산 / `3-N`~`12-N`
+    자식)를 벗어난 항목번호를 세어 둔다 — "검사에서 빠졌다"와 "검사 대상이 아니었다"는 다르고,
+    후자는 잔차로도 안 드러나므로 따로 세지 않으면 게이트에 보고조차 안 된다."""
+    d = json.loads((ROOT / path).read_text(encoding="utf-8"))
+    out: dict = defaultdict(float)
+    unknown: list = []
+    for r in d:
+        no = r.get("항목번호")
+        if not isinstance(no, str):
+            continue
+        m = HYPHEN_ITEM_NO.match(no)
+        if not m:
+            continue
+        if EXTRA_LOB_ITEM_NO.match(no):
+            if r.get("값") is not None:
+                out[(r["원수사명"], r["공시분기"])] += r["값"]
+        elif m.group(1) not in KNOWN_HYPHEN_PARENTS:
+            unknown.append((r["원수사명"], r["공시분기"], no, r.get("항목명")))
+    return dict(out), unknown
 
 
 def load_pl_dangi(path: str, item_no: int) -> dict:
@@ -561,11 +604,16 @@ def _check_plausibility(wf: dict) -> tuple[list, list, list, list, list]:
     return dup_rows, spike_rows, cont_rows, wfy_rows, zamort_rows
 
 
-def _check_pl_bridge(pl: dict) -> tuple[int, list, int, list, list]:
+def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
+                     unknown_hyphen: list | None = None) -> tuple[int, list, int, list, list]:
     """PL bridge identity (2) + 생명장기 zero-legs (2b) + impossible-zero legs (2c).
     All three read pl_breakdown and share one print block, so they stay together.
+    `extra_lob` = load_pl_extra_lob() 첫 반환값((co,q) -> Σ 항목번호 `2-N`); 생략하면 추가 LOB
+    다리 없이 종전 3항 등식으로 돈다. `unknown_hyphen` = 그 두 번째 반환값(커버리지 census).
     Returns (pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows). Split out of
     main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
+    extra_lob = extra_lob or {}
+    unknown_hyphen = unknown_hyphen or []
     # ===== 2. PL_BRIDGE (pl_breakdown_master, 백만원) =====
     pb_pass = pb_skip = 0
     pb_fail = []
@@ -608,7 +656,16 @@ def _check_pl_bridge(pl: dict) -> tuple[int, list, int, list, list]:
         else:
             raw_lob = [m.get(k) for k in LOB_KEYS]
             zf = [k for k, v in zip(LOB_KEYS, raw_lob) if v is None]
-            bare = sum(0.0 if v is None else v for v in raw_lob)
+            # 2026-08-29 b: **추가 LOB 다리를 더한다.** 표준 3슬롯이 LOB 의 전부라는 가정이
+            # 이 등식의 오탐 원인이었다 — 코리안리재보험은 LOB 이 4개(생명/장기/일반)라
+            # 네 번째가 `2-1`(장기재보험 손익)로 마스터에 정상 발행돼 있는데 등식만 몰랐다.
+            # 그래서 12분기 내내 "item13(자동차) 결측이 돈을 싣고 있다"고 찍혔지만, 실제로는
+            # 자동차 LOB 자체가 원문에 없고(parser 전 분기 원문 grep, commit 15a61d1)
+            # 잔차는 통째로 이 미포함 항이었다. 더하면 12분기 전부 |잔차| ≤ 2.8백만원.
+            # 빌더의 Tier-2 RC 게이트는 이미 같은 항을 더하고 있었다(`_extra_lob`) — 즉
+            # **빌더와 검증기가 서로 다른 등식을 쓰고 있었다**. 이제 같은 등식을 쓴다.
+            xlob = extra_lob.get((co, q), 0.0)
+            bare = sum(0.0 if v is None else v for v in raw_lob) + xlob
             cands = [bare]
             oi, oe = m.get("기타영업수익"), m.get("기타사업비용")
             if oi is not None and oe is not None:
@@ -619,11 +676,11 @@ def _check_pl_bridge(pl: dict) -> tuple[int, list, int, list, list]:
                 pb_fail.append((co, q, label, round(bo, 1), round(diff, 1)))
                 eq_fail_count[label] += 1
                 if zf:
-                    legcov_fail.append((co, q, round(bo, 1), round(diff, 1), zf))
+                    legcov_fail.append((co, q, round(bo, 1), round(diff, 1), zf, xlob))
             else:
                 pb_pass += 1
                 if zf:
-                    legcov_pass.append((co, q, round(diff, 1), zf))
+                    legcov_pass.append((co, q, round(diff, 1), zf, xlob))
         # --- 나머지 등식 ---
         for label, lhs_key, terms in PL_EQS:
             lhs = m.get(lhs_key)
@@ -727,14 +784,24 @@ def _check_pl_bridge(pl: dict) -> tuple[int, list, int, list, list]:
     print(f"  -- 2e. LEG-COVERAGE (결측 LOB 다리를 0 으로 채워 판정)  "
           f"닫힘={len(legcov_pass)} 깨짐={len(legcov_fail)} 좌변없음(item1 결측)={len(nolhs_rows)} --")
     print("     닫힘 = 그 다리는 정말 0(발행사 미영위). 종전에는 이것도 SKIP 이라 무검사였다.")
-    for co, q, diff, zf in legcov_pass[:40]:
-        print(f"  LEGOK {co:14s} {q}  diff={diff:+.1f}  0-fill={'+'.join(zf)}")
+    for co, q, diff, zf, xl in legcov_pass[:40]:
+        xs = f"  +extraLOB(2-N)={xl:+,.1f}" if xl else ""
+        print(f"  LEGOK {co:14s} {q}  diff={diff:+.1f}  0-fill={'+'.join(zf)}{xs}")
     print("     깨짐 = 결측 다리가 진짜 돈을 싣고 있다. |diff| 가 미검사 금액의 하한이다.")
-    for co, q, lhs, diff, zf in legcov_fail[:60]:
-        print(f"  LEGRED {co:14s} {q}  lhs={lhs:.1f} diff={diff:+.1f}  0-fill={'+'.join(zf)}")
+    for co, q, lhs, diff, zf, xl in legcov_fail[:60]:
+        xs = f"  +extraLOB(2-N)={xl:+,.1f}" if xl else ""
+        print(f"  LEGRED {co:14s} {q}  lhs={lhs:.1f} diff={diff:+.1f}  0-fill={'+'.join(zf)}{xs}")
     print("     좌변없음 = item1 자체가 결측이라 등식 성립 불가(coverage census 소관).")
     for co, q in nolhs_rows[:40]:
         print(f"  NOLHS {co:14s} {q}  보험손익=None")
+    # 추가 LOB 커버리지 census — 등식이 **모르는 형태**의 하이픈 항목이 있으면 여기서 운다.
+    # 오늘 0 건이다(하이픈 항목은 코리안리재보험의 2-1~12-1 뿐). 0 이 아니게 되는 날은
+    # 새 재보험사가 다른 슬롯에 LOB 을 냈다는 뜻이고, 그때 이 등식은 그 회사를 또 오탐한다.
+    if unknown_hyphen:
+        print(f"     !! 등식이 모르는 하이픈 항목 {len(unknown_hyphen)}건 — 추가 LOB 슬롯일 수 있다"
+              f"(`2-N` 만 가산 대상). 확인 전까지 그 회사의 보험손익 판정은 신뢰할 수 없다.")
+        for co, q, no, nm in unknown_hyphen[:20]:
+            print(f"  LEGUNK {co:14s} {q}  항목번호={no} 항목명={nm}")
     _nolhs_recent = [(co, q) for co, q in nolhs_rows if not q.startswith("2023.")]
     if _nolhs_recent:
         print(f"  !! 2024+ 에서 item1 결측 {len(_nolhs_recent)}건 — 2026-08-29 신설 시점엔 0 이었다(회귀 의심)")
@@ -1030,7 +1097,9 @@ def main() -> int:
 
     dup_rows, spike_rows, cont_rows, wfy_rows, zamort_rows = _check_plausibility(wf)
 
-    pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows = _check_pl_bridge(pl)
+    pl_extra_lob, pl_unknown_hyphen = load_pl_extra_lob(PL_PATH)
+    pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows = _check_pl_bridge(
+        pl, pl_extra_lob, pl_unknown_hyphen)
 
     cc_pass, cc_fail, cc_pinned, cc_skip = _check_csm_crosscheck(pl, wf)
 

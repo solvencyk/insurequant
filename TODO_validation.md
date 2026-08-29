@@ -1,11 +1,77 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-29 (분기 지평 마스터 파생 — 게이트가 최신 분기를 순회조차 안 하던 사각) · Stage 3/5 — validation
+> Last updated: 2026-08-29 d (leg-coverage 오탐 정정 — 등식이 재보험사의 4번째 LOB 다리를 몰랐다) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-29 d) 어제 신설한 leg-coverage 룰이 코리안리재보험 12분기를 오탐했다 — 데이터가 아니라 **등식**이 틀렸다.**
+
+> 처리: `inbox/_resolved/20260829T1700Z__validation__MULTI__pl_item1_leg_coverage.md` → `status: resolved`
+>
+> **오탐 구조.** 룰은 "item13(자동차) 결측이 1,456~53,464백만원을 싣고 있다"고 12분기 내내
+> 찍었다. parser 가 전 분기 원문 XML 을 grep 한 결과 **자동차 LOB 자체가 없다**(재무제표 표
+> 안에 "자동차" 0회 — 걸린 것은 전부 관계기업 펀드명·임원 이력 문장). 코리안리는 재보험사라
+> LOB 이 생명/장기/일반이고, 네 번째 다리인 item`2-1`(장기재보험 손익)이 마스터에 정상
+> 발행돼 있는데 **검증 등식만 표준 3슬롯(2/13/14)이 LOB 의 전부라고 가정**했다.
+> **빌더의 Tier-2 RC 게이트는 같은 항을 이미 `_extra_lob` 으로 더하고 있었다**
+> (`build_pl_breakdown.py` L249-252) — 즉 빌더와 검증기가 서로 다른 등식을 쓰고 있었다.
+> 이 저장소의 "게이트가 검사하는 것 ≠ 실제 계약" 사고의 한 변종이다.
+>
+> **조치(회사 하드코딩 아님).** `load_pl_extra_lob()` 신설 → 항목번호 패턴 `^2-\d+$` 를 ΣLOB
+> 에 가산. 회사명으로 박으면 다음 재보험사에서 같은 사각이 조용히 재발한다. 자식
+> `3-N`~`12-N` 은 그 다리의 하위 분해라 미가산(이중계상 방지).
+>
+> **실측(코드 수정 전 356 버킷 전수 시뮬레이션 → 수정 후 게이트, 정확히 일치).**
+> `2e LEG-COVERAGE 닫힘 18→30 · 깨짐 34→22 · 좌변없음 18 불변`,
+> `pl_bridge 3045P/47F → 3057P/35F` (468S·0NEW 불변). **새로 깨지는 버킷 0건.**
+> 코리안리 12분기 잔차 |≤2.8|백만원(lhs 5만~24만 백만원 → 상대 ~0.001%).
+> 재현: `scripts/_probes/probe_20260829_extra_lob_simulation.py`.
+>
+> **하이픈 서브 LOB census (이 라운드의 최대 산출).** 마스터의 하이픈 항목번호는
+> **코리안리재보험 단독**, 11종(`2-1`~`12-1`) × 14분기 = **154셀**(루트·viz 동일, 항목명
+> 충돌 0). 그런데 **그중 어떤 룰이라도 읽던 것은 `4-1`(수재 CSM상각, `CSM_AMORT_PL_LEGS`)
+> 14셀뿐이었다 — 나머지 10종 140셀은 어떤 룰도 순회하지 않았다.** `2-1` 배선 후 남은
+> 무검사는 9종 126셀. 재현: `scripts/_probes/probe_20260829_hyphen_lob_census.py`.
+>
+> **그 126셀의 부모-자식 3식은 일부러 배선하지 않았다 — 동어반복이다.**
+> `2-1=3-1+8-1` · `3-1=4-1+5-1+6-1+7-1` · `8-1=9-1+10-1+11-1+12-1` 은 14/14 통과지만
+> **잔차가 전건 정확히 0.000000000** 이다. `pl_breakdown/companies.py::leg()` 가 item7·12 를
+> plug 로, item2 를 합으로 만들기 때문에 구성상 참이라 영원히 발화하지 않는다. 배선했으면
+> 126셀이 GUARDED 로 보이면서 실제로는 아무것도 검증하지 않는 **false-green 을 내 손으로
+> 만드는 것**이었다. 무검사로 두되 무검사임을 기록하는 쪽을 택했다(아래 census + 등재부).
+> 재현: `scripts/_probes/probe_20260829_hyphen_tautology.py`.
+>
+> **미지 하이픈 census 배선 + 변이시험.** 등식이 아는 형태(`2-N` 가산 / `3-N`~`12-N` 자식)
+> **밖의** 항목번호가 나타나면 2e 가 `LEGUNK` 로 건별 인쇄한다(오늘 0건). "0건" 이 "검사가
+> 죽었다"가 아님을 보이려고 변이시험을 붙였다 —
+> `scripts/_probes/probe_20260829_legunk_mutation.py` 5케이스 전부 PASS(`2-1` 가산 / 자식
+> 미가산 / 가짜 `13-1` 발화 / `2-1`+`2-2` 복수 부모 / 정수 항목번호 무영향).
+>
+> **baseline.** `data/_gold/pl_bridge_baseline.json` 에서 코리안리 12건 삭제(`_promote` (1),
+> 게이트가 `FIXED?` 로 인쇄). entries **47→35**, `등재부에만 남은 것 0`. `_counts` 도 실제
+> entries 로 재계산(선언 52 vs 실제 47 로 이미 드리프트해 있었다). 데이터 결함이 아니었으므로
+> documented exception 승격이 아니라 **삭제**다.
+>
+> **골든/지문.** `tests/fixtures/master_tables_golden.json` `--update`(SUMMARY 한 칸,
+> exit_code 2 불변). 오프라인 484 passed/1 skipped. `validate_data_contract` RED=0 YELLOW=92
+> (불변). **`validate_golden_input_fingerprints.py` 는 갱신 불요** — RED=0, 6 spec 전부 ok.
+> 그 게이트의 SPECS 는 **빌더**만 `code_entries` 로 추적하는데 이번에 고친 것은 게이트
+> (`validate_master_tables.py`)이고, `test_master_tables_golden.py` 는 매 실행 게이트를
+> 서브프로세스로 재실행하므로 구조적으로 stale 해질 수 없다(그래서 SPECS 에 없는 게 맞다).
+>
+> **잔여 LEGRED 22건** — 전건 baseline 등재(`route: parser/ifrs17`, `deadline: 2026-10-31`,
+> 신규 0). 예별손해 2024.4Q·2025.4Q item2(후보 표까지 특정했으나 폐쇄식 불일치로 미확정) ·
+> AIG 3분기 · 신한이지 2분기(원문에 LOB 분해 표 자체가 없음, parser 재확인) · 2023 다수
+> (사이트 비노출, 미착수).
+>
+> **곁가지(미조치, 기록용).** 같은 두 식을 **전 회사**로 돌리면 `3=4+5+6+7` 315건 중
+> 284건(90.2%) · `8=9+10+11+12` 300건 중 258건(86.0%)이 잔차 정확히 0 이고 최대 잔차가
+> 0.35·0.49백만원 = floor(200백만)의 1/400 이다. 이 두 식은 코리안리만이 아니라 저장소
+> 전반에서 **거의 동어반복**으로 보인다. `2=3+8` 은 최대 잔차 10,169백만원이라 내용이 있다.
+> 별도 조사 대상.
 
 **(2026-08-29 c) 분기 지평 하드코딩 — 게이트가 최신 분기(2026.2Q)를 순회조차 안 했다. `RED=0` 이 "안 봤다"였다.**
 
