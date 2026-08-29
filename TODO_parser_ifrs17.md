@@ -37,7 +37,7 @@
 >
 > 상세·재현 명령 전부 `inbox/parser/20260830T0000Z` 답변. status: answered.
 >
-> 커밋: (커밋 후 기록)
+> 커밋: `84fa61e`
 
 > **2026-08-29 (68th pass) — 67th pass 골든 드리프트 후속: A/B로 무죄 입증 + KR0070 반올림
 > 반영 + KR0079 되돌림.** 코디네이터가 `RUN_PL_GOLDEN=1 pytest`로 non_null_values

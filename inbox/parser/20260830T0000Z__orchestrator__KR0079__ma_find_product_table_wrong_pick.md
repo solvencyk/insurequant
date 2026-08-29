@@ -241,4 +241,4 @@ master_dump_items3}.py` · `mirae_tiebreak_regression.py` · `pl_master_diff_aft
 status: answered — orchestrator 재확인 대기(특히 §3 제안 옵션 중 택1, §4 item32 리오더링
 반영 여부).
 
-커밋: (커밋 후 기록)
+커밋: `84fa61e`
