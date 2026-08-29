@@ -63,7 +63,7 @@
 > 상세·재현 명령·원문 인용 전부 위 inbox 답변. status: **answered**(validation 재확인 필요 —
 > ①은 자기완결이나 ②는 `scripts/validate_*` 가 parser 금지 파일이라 룰 배선은 validation 소관).
 >
-> 커밋: (아래 별도 커밋에서 기록)
+> 커밋: `df9334b`
 
 > **2026-08-29 (71st pass) — CSM 항목3/5 null-but-identity-closes: 이자/상각이 잔차(항목4)에
 > 흡수되는 일반 버그 발견 + 수정, KR0050·KR0076 2023.4Q 4셀 채움.**
