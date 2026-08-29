@@ -1,11 +1,57 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-29 e (PL 등식 증거력 명문화 + item22 원천 법인세 교차대조 신설) · Stage 3/5 — validation
+> Last updated: 2026-08-30 (KR0079 2025.2Q CSM 배분 판정 + gold 오버레이 마스크 census) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-30) 폐쇄식이 양쪽 후보를 다 통과시킨 자리를 원문으로 갈랐다. 그리고 gold 오버레이가
+83칸을 아무 탐지기 없이 덮고 있다는 걸 census 로 세웠다.**
+
+> 처리: `inbox/validation/20260830T0400Z__orchestrator__KR0079__gold_vs_fixed_builder_adjudication.md`
+> → `status: answered`
+>
+> **① KR0079 2025.2Q 항목4/5 = raw 채택(-685.50 / -992.07), gold(-886.27/-791.3) 폐기.**
+> 두 후보의 **합계가 같아** 폐쇄식(항목6=Σ1~5)은 어느 쪽이든 `+0.00` 으로 닫힌다 — 산수로는
+> 판별 불가인 자리다. 원문으로 갈랐다: 같은 필링 안에서 **네 표**(연결/별도 CSM 측정요소표 ×2,
+> 연결/별도 보험수익표 ×2), 그리고 **1년 뒤 필링(2026.2Q 반기, rcept 20260814004054)의 전반기
+> 비교열 두 표** — 총 **6개 독립 표**가 -685.50/-992.07 을 인쇄한다(소급재작성 없음).
+> 행 식별은 캡션이 아니라 **IFRS ACODE** 로 했다(라벨 변형에 안 흔들린다).
+> gold 값은 원문 어디에도 없다 — 문자열 0회, 상품별·CSM 하위열별 부분합 전수 조합 불일치,
+> 연결/별도 동일, 출재 차감(-38.42억)도 아님. owner 답지(`gold/CSM waterfall_미래에셋생명*.xlsx`)는
+> **2025.1Q·2025.4Q 만 있고 2025.2Q 는 없다**(두 답지는 raw 와 완전 일치 재현 확인).
+> 소수자리 지문: KR0079 gold 27건 중 **-791.3 만 1자리**, `-1677.57 - (-886.27) = -791.30` —
+> 구코드 잔차흡수값을 손으로 가른 **plug** 였다.
+> **폐쇄식이 못 보는 축 = 개연성**: raw 채택 시 분기 상각 483.70/508.37/539.14억(완만 상승),
+> gold 유지 시 483.70/**307.60**/**739.91**억(급락 후 급등). 게이트 귀결: `CSM_AMORT` 잔차
+> `+200.77억(25.372%)` → `0.00억`, 등재부 `미래에셋생명보험|2025.2Q`(WATERFALL_SUSPECT) **삭제 대상**.
+> 발주 → `inbox/parser/20260830T0700Z` (소수 **2자리** 유지 필수 — 1자리면 폐쇄식 0.1억 어긋남).
+>
+> **② gold 19건 = 존치, 단 조건부.** 원 티켓의 "코드가 gold 와 오차 0 재현" 은 부정확하다:
+> `csm_waterfall_master_diag.json` 은 소수 1자리, gold 는 2자리라 19건 전부 `SAME_AT_1DP`
+> (±0.05억)이고 `SAME_EXACT` 는 0건이다. 제거해도 폐쇄식 게이트는 안 깨진다(허용 max(0.1%, 2.0억)) —
+> 즉 정밀도 문제가 아니라 **마스크 대 보호** 문제다.
+> **`_apply_csm_overrides()`(build_root_masters.py L198-207)는 무조건 UPSERT 만 하고 소스와
+> 비교하지 않는다. 전 저장소에서 gold 를 빌더 소스와 대조하는 게이트·테스트는 0건.**
+> 전수 census(276): `SAME_EXACT` 28 · `SAME_AT_1DP` 55 · `LOAD_BEARING` 179 ·
+> `ROW_ABSENT_IN_SOURCE` 12 · `NULL_IN_SOURCE` 2 → **마스크 후보 83건 / 9개사**(19건이 아니다).
+> "지우면 방어막이 사라진다" 는 절반만 맞다 — gold 는 회귀를 막는 게 아니라 **가린다**(화면만
+> 지키고 코드는 깨진 채, gold 없는 다음 분기가 깨진 값을 싣는다). 실제로 KR0079 두 결함이
+> 2025.2Q~2026.1Q 화면에서 안 보였던 이유가 이것이다.
+> 발주 → `inbox/validation/20260830T0710Z` (`GOLD_OVERLAY_REDUNDANT` census YELLOW +
+> `GOLD_OVERLAY_DRIFT` RED 배선). **배선이 거부되면 그때는 제거가 옳다.**
+>
+> **③ 곁가지 2건.** gold `set` **중복 키 6건**(KR0076 2025.4Q 항목1~6) — 의도된 supersession
+> 이지만 last-wins 라 **리스트 순서에 정합성이 걸려 있다**(앞 6건은 `why` 공란, `note` 만).
+> `public_exports/CSM워터폴.json` 이 루트 마스터보다 **뒤처짐**(KR0079 2025.2Q 항목1 `값_당분기`
+> public 20840.7 vs 루트 20847.3) — 지금 **게이트가 보는 파일 ≠ 사용자가 보는 파일**이다.
+>
+> **baseline 재현**: `validate_data_contract.py` → **RED=0 YELLOW=93 exit 0**.
+> 마스터·gold·등재부 바이트 무변경(판정만, 실행은 발주).
+> 재현 스크립트 4종: `scripts/_probes/probe_20260830_val_{raw_csm_table_scan,raw_csm_html_scan,
+> kr0079_2025q2_adjudication_sim,gold_vs_source_census}.py`
 
 **(2026-08-29 e) `PL_BRIDGE` 의 pass 절반 이상이 구성상 참이었다 — 이제 게이트가 그 사실을 인쇄한다. item22 는 메웠다.**
 
