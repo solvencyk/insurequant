@@ -258,6 +258,78 @@ POST_GUARDED = {1, 2, 3, 4, 12, 13, 14, 27, 28, 47, 48, 49, 50, 51, 52, 53, 54}
 # 빈 dict 가 목표 상태이고, 지금 그 상태다. 새로 사각이 생기면 아래 테스트가 막는다.
 GATE_BLIND: dict[int, str] = {}
 
+# ===========================================================================
+# PL_breakdown 축 (IFRS17 레인) — **무검사라는 사실을 박제한다** (2026-08-29)
+# ===========================================================================
+# 위 K-ICS 매니페스트가 "선언이 없으면 빠진 것을 셀 수 없다"를 말한다면, 여기는 그 반대편이다:
+# **무검사인 것이 조용히 잊히는 것**을 막는다.
+#
+# 발단. `PL_BRIDGE` 의 `pass=3057` 중 1,608(52.6%)이 **구성상 참**이다. 빌더가 우변의 한 항을
+# 좌변에서 빼서 만들기 때문에(`item7 = 3-(4+5+6)`, `item12 = 8-(9+10+11)`,
+# `item18 = 17-19`, `item21 = 22-20`, `item23 = 22-24`) 그 등식은 산수상 깨질 수가 없다.
+# 결과적으로 아래 항목들은 상류에서 잘못 뽑혀도 **push 를 막는 어떤 룰에도 안 걸린다.**
+#
+# 왜 여기 박아 두나. 세 가지를 동시에 얻는다 —
+#   ① 무검사라는 사실이 코드에 남는다(다음 세션이 pass 수를 보고 "깨끗하다"로 오독하지 않는다)
+#   ② 나중에 누가 커버리지를 늘리면 이 테스트가 **매니페스트 갱신을 강제**한다
+#   ③ 반대로 지금 있는 커버리지(item22 의 2f, item4 의 CSM 상각 항등식 등)가 사라지면 막는다
+#
+# 측정 방식은 K-ICS 축과 같은 **변이시험**이되, 모드가 하나 더 있다. `CONSTRUCTIVE` =
+# 그 칸을 흔들고 **빌더가 그 칸으로부터 계산하는 하류 항을 빌더와 똑같이 다시 계산한다**
+# (파서가 상류에서 틀리면 실제로 일어나는 형태). `NAIVE`(마스터 한 칸만 흔들기)로 재면
+# 대부분 94~100% 로 잡히는 것처럼 보이지만 그건 **잔차 plug 를 안 따라간 착시**다.
+#
+# 검사 대상 = PL 마스터를 읽는 **차단성 룰 전부**:
+#   validate_master_tables : PL_BRIDGE(+2b/2c) · TAX22_SOURCE_CROSSCHECK ·
+#                            CSM_AMORT_IDENTITY · COVERAGE hole
+#   validate_data_contract : run_gate().red 전량
+PL_CONSTRUCTIVE_BLIND = {
+    5:  "원수위험조정변동 — item7 = 3-(4+5+6) plug 가 흡수. 등식으로는 영원히 못 본다",
+    6:  "원수예실차 — 같음. **2026-08-29 에 3개사 50분기를 채웠지만 폐쇄식은 그 값을 "
+        "전혀 검증하지 못했다**; 실제 검증은 전부 독립 앵커였다(농협 보험수익 510,001 · "
+        "미래에셋 3중 대사 594,378,172,139 · ABL 산문 50억/3억 · 서울보증 소계 검산). "
+        "다음 사람이 '폐쇄식이 닫혔으니 맞다'로 판단하지 않게 여기 박아 둔다",
+    9:  "재보험CSM상각 — item12 = 8-(9+10+11) plug 가 흡수. CSM 워터폴에 **출재 축이 없어** "
+        "(build_csm_waterfall_master 가 _EXCLUDE_KW 로 전 단계에서 배제, 마스터 6항목 단일축) "
+        "CSM_AMORT_PL_LEGS 를 넓히는 대안 축이 존재하지 않는다",
+    10: "재보험위험조정변동 — item12 plug 가 흡수",
+    11: "재보험예실차 — item12 plug 가 흡수",
+    19: "보험금융손익 — item18 = 17-19 plug 가 2층(fetch_dart_fs._parse + assemble) 모두 흡수",
+    23: "법인세 — assemble 이 22-24 로 418/418 무조건 덮어써서 주입 자체가 사라진다. "
+        "원천 법인세 계정은 2f 가 되살려 쓰지만 그건 item22 를 보는 것이지 item23 이 아니다",
+}
+
+# 반대 방향 — **검사되고 있어야 하는** PL 항목과 그 룰. 사라지면 이 테스트가 막는다.
+PL_CONSTRUCTIVE_GUARDED = {
+    3:  "생명장기원수손익 — 보험손익 dual/leg-coverage bridge(ΣLOB 대 item1)",
+    4:  "원수CSM상각 — CSM_AMORT_IDENTITY (PL 원수+수재 == 워터폴 상각)",
+    8:  "생명장기재보험손익 — 보험손익 dual/leg-coverage bridge",
+    17: "투자손익 — EQ5 `영업이익 = 보험손익+투자손익`(1·17·20 독립 표준계정)",
+    20: "영업이익 — EQ5",
+    22: "세전이익 — **2f TAX22_SOURCE_CROSSCHECK** (2026-08-29 신설). 그 전에는 "
+        "CONSTRUCTIVE 탐지율 0.0% 였다 — 이 항목이 이 매니페스트의 존재 증명이다",
+    24: "당기순이익 — EQ8 `총포괄손익 = 당기순이익+기타포괄손익`(독립 3태그)",
+    25: "기타포괄손익 — EQ8 · EQ9(item32 leaf 카탈로그 합)",
+}
+
+# CONSTRUCTIVE 모드에서 그 항목을 흔들 때 **빌더가 다시 계산하는 하류 항**.
+# 근거는 `scripts/build_pl_breakdown.py::assemble()` 과 `scripts/fetch_dart_fs.py::_parse()`.
+# 이 표가 틀리면 변이시험이 실제보다 낙관적으로 나온다 — 아래
+# `test_pl_constructive_map_matches_builder` 가 빌더 소스와 대조한다.
+PL_DOWNSTREAM = {
+    3: (7, 2), 4: (7,), 5: (7,), 6: (7,), 8: (12, 2), 9: (12,), 10: (12,), 11: (12,),
+    17: (18,), 19: (18,), 20: (21,), 22: (21, 23), 23: (23,), 24: (23,), 25: (),
+}
+
+PL_ITEM_NAME = {
+    1: "보험손익", 2: "생명장기손익", 3: "생명장기원수손익", 4: "원수CSM상각",
+    5: "원수위험조정변동", 6: "원수예실차", 7: "기타생명장기원수손익",
+    8: "생명장기재보험손익", 9: "재보험CSM상각", 10: "재보험위험조정변동",
+    11: "재보험예실차", 12: "기타생명장기재보험손익", 17: "투자손익", 18: "투자이익",
+    19: "보험금융손익", 20: "영업이익", 21: "영업외손익", 22: "세전이익",
+    23: "법인세", 24: "당기순이익", 25: "기타포괄손익",
+}
+
 
 def _tfi_map():
     """게이트와 **같은 로더**로 적용여부 사이드카를 읽는다.
@@ -576,3 +648,190 @@ def test_full_gate_coverage_matches_manifest(rows, tmp_path):
     assert not now_covered, (
         f"item{now_covered} 가 이제 검사된다. GATE_BLIND 에서 지워라 — "
         "안 지우면 다시 사각이 될 때 이 테스트가 못 잡는다.")
+
+
+# ===========================================================================
+# PL_breakdown 변이시험
+# ===========================================================================
+
+PL_MASTER = ROOT / "PL_breakdown.json"
+
+
+def _vmt():
+    sys.path.insert(0, str(ROOT / "scripts"))
+    sys.path.insert(0, str(ROOT))
+    import validate_master_tables as V
+    return V
+
+
+def _pl_rows():
+    if not PL_MASTER.exists():
+        pytest.skip(f"PL 마스터 없음: {PL_MASTER}")
+    return json.loads(PL_MASTER.read_text(encoding="utf-8"))
+
+
+def _pl_perturb(v):
+    """주입 크기 max(10,000백만, |v|x30%) — floor(200백만)의 50배 이상.
+    탐지 실패가 임계 문제가 아님을 보장한다."""
+    return v + max(10000.0, 0.30 * abs(v))
+
+
+def _pl_mutate_constructive(rows, item):
+    """(변이된 rows 사본, 주입 셀 수). 빌더가 그 칸으로부터 계산하는 하류 항도 같이 다시 만든다."""
+    V = _vmt()
+    out = copy.deepcopy(rows)
+    idx = {}
+    for i, r in enumerate(out):
+        idx.setdefault((r["원수사명"], r["공시분기"]), {})[V.norm(r["항목명"])] = i
+
+    def val(names, no):
+        i = names.get(PL_ITEM_NAME[no])
+        return None if i is None else out[i]["값"]
+
+    def put(names, no, v):
+        i = names.get(PL_ITEM_NAME[no])
+        if i is not None:
+            out[i]["값"] = v
+
+    n = 0
+    for names in idx.values():
+        if val(names, item) is None:
+            continue
+        put(names, item, _pl_perturb(val(names, item)))
+        n += 1
+        down = PL_DOWNSTREAM[item]
+        # 순서는 assemble() 과 같다: 18 -> 7 -> 12 -> 2 -> 21 -> 23
+        if 18 in down and None not in (val(names, 17), val(names, 19)):
+            put(names, 18, round(val(names, 17) - val(names, 19), 6))
+        if 7 in down and None not in (val(names, 3), val(names, 4),
+                                      val(names, 5), val(names, 6)):
+            put(names, 7, val(names, 3) - (val(names, 4) + val(names, 5) + val(names, 6)))
+        if 12 in down and None not in (val(names, 8), val(names, 9),
+                                       val(names, 10), val(names, 11)):
+            put(names, 12, val(names, 8) - (val(names, 9) + val(names, 10) + val(names, 11)))
+        if 2 in down and None not in (val(names, 3), val(names, 8)):
+            put(names, 2, val(names, 3) + val(names, 8))
+        if 21 in down and None not in (val(names, 22), val(names, 20)):
+            put(names, 21, round(val(names, 22) - val(names, 20), 6))
+        if 23 in down and None not in (val(names, 22), val(names, 24)):
+            put(names, 23, round(val(names, 22) - val(names, 24), 6))
+    return out, n
+
+
+def _pl_blocking_signature(rows, wf, extra_lob, unknown_hyphen):
+    """PL 마스터를 읽는 **push 를 막는 룰 전부**의 출력 지문.
+
+    한 축이라도 빠지면 이 매니페스트가 실제보다 비관적으로(=무검사라고) 선언하게 된다."""
+    import contextlib
+    import io
+
+    V = _vmt()
+    import validate_data_contract as G
+
+    pl = {}
+    for r in rows:
+        pl.setdefault((r["원수사명"], r["공시분기"]), {})[V.norm(r["항목명"])] = r["값"]
+
+    with contextlib.redirect_stdout(io.StringIO()):
+        _p, pb_fail, _s, zleg, zero0 = V._check_pl_bridge(pl, extra_lob, unknown_hyphen)
+        _cp, cc_fail, _pin, _cs = V._check_csm_crosscheck(pl, wf)
+        _tp, tax_fail, _ts = V._check_tax22_crosscheck(rows, quiet=True)
+        # coverage_holes -> (real, known, struct). 게이트가 RED 로 세는 것은 **real** 이다.
+        pl_holes, _known, _struct = V.coverage_holes(
+            pl, ["보험손익", "생명장기손익", "당기순이익"])
+        red = {(f.rule, f.company, f.quarter) for f in G.run_gate(G.Env(inject={"pl": pl})).red}
+    return {
+        "bridge": {(c, q, lab) for c, q, lab, _l, _d in pb_fail},
+        "zleg": {(c, q) for c, q, *_r in zleg},
+        "zero0": {(c, q, i) for c, q, i in zero0},
+        "amort": {(c, q) for c, q, *_r in cc_fail},
+        "tax22": {(c, q) for c, q, *_r in tax_fail},
+        "holes": {(c, q) for c, q, _k in pl_holes},
+        "contract_red": red,
+    }
+
+
+@pytest.fixture(scope="module")
+def _pl_baseline():
+    V = _vmt()
+    rows = _pl_rows()
+    wf = V.load_long(V.WF_PATH)
+    extra_lob, unknown_hyphen = V.load_pl_extra_lob(V.PL_PATH)
+    return rows, wf, extra_lob, unknown_hyphen, _pl_blocking_signature(
+        rows, wf, extra_lob, unknown_hyphen)
+
+
+@pytest.mark.parametrize(
+    "item", sorted(set(PL_CONSTRUCTIVE_BLIND) | set(PL_CONSTRUCTIVE_GUARDED)))
+def test_pl_constructive_coverage_matches_manifest(_pl_baseline, item):
+    """상류 오추출(CONSTRUCTIVE)을 주입하고 차단성 룰이 알아채는지 대조한다.
+
+    - **GUARDED 로 선언했는데 무방비** = 룰이 사라졌거나 약해졌다. 심각.
+    - **BLIND 로 선언했는데 잡힌다** = 커버리지가 늘었다. 좋은 일이니 매니페스트에서 지워라
+      (안 지우면 다시 없어질 때 이 테스트가 못 잡는다).
+    """
+    rows, wf, extra_lob, unknown_hyphen, base = _pl_baseline
+    mutated, n = _pl_mutate_constructive(rows, item)
+    assert n, f"item{item}({PL_ITEM_NAME[item]}) 셀을 하나도 못 찾았다 — 항목명이 바뀌었나"
+    after = _pl_blocking_signature(mutated, wf, extra_lob, unknown_hyphen)
+    new = {axis: sorted(after[axis] - base[axis]) for axis in base}
+    detected = any(new.values())
+
+    if item in PL_CONSTRUCTIVE_BLIND:
+        assert not detected, (
+            f"item{item}({PL_ITEM_NAME[item]}) 이 이제 검사된다: "
+            f"{ {k: len(v) for k, v in new.items() if v} }\n"
+            "PL_CONSTRUCTIVE_BLIND 에서 지우고 PL_CONSTRUCTIVE_GUARDED 로 옮겨라 — "
+            "안 옮기면 그 커버리지가 다시 사라질 때 아무도 모른다.")
+    else:
+        assert detected, (
+            f"item{item}({PL_ITEM_NAME[item]}) 이 무방비다 — "
+            f"{PL_CONSTRUCTIVE_GUARDED[item]} 이 사라졌거나 약해졌다. "
+            f"주입 {n}셀, 크기 max(10,000백만, |v|x30%).")
+
+
+def test_pl_blind_items_are_declared_in_the_gate():
+    """게이트의 `PL_ITEMS_UNCHECKABLE_BY_EQUATION` 과 이 매니페스트가 어긋나지 않게 한다.
+
+    게이트는 매 실행 그 목록을 인쇄하고, 이 테스트는 그것이 변이시험 실측과 같은지 본다.
+    둘이 갈리면 **인쇄되는 사실이 거짓**이 된다 — 문서만 고치고 룰은 안 고친 상태."""
+    V = _vmt()
+    printed = set(V.PL_ITEMS_UNCHECKABLE_BY_EQUATION)
+    measured = set(PL_CONSTRUCTIVE_BLIND)
+    assert printed == measured, (
+        f"게이트 인쇄 목록 {sorted(printed)} != 변이시험 선언 {sorted(measured)}. "
+        "한쪽만 고쳤다 — 둘 다 고쳐라.")
+
+
+def test_pl_equation_evidence_is_declared_for_every_equation():
+    """모든 PL 등식이 TAUTOLOGY/REAL/PARTIAL 판정을 갖는지.
+
+    게이트 import 시점에 `_assert_pl_eq_evidence_declared()` 가 이미 죽이지만, 그 자기검사
+    자체가 사라지는 것을 막는다(선언 없는 pass 는 무력한 줄 모르고 세어진다)."""
+    V = _vmt()
+    labels = {lab for lab, _l, _t in V.PL_EQS} | set(V.PL_DUAL_LABELS)
+    assert labels == set(V.PL_EQ_EVIDENCE), (
+        "PL_EQ_EVIDENCE 와 PL_EQS 가 어긋난다 — 등식을 추가·개명하고 판정을 안 붙였다")
+    for lab, (verdict, why) in V.PL_EQ_EVIDENCE.items():
+        assert verdict in (V.EQ_REAL, V.EQ_TAUTOLOGY, V.EQ_PARTIAL), f"{lab}: {verdict}"
+        assert why.strip(), f"{lab}: 판정 근거가 비었다"
+
+
+def test_pl_constructive_map_matches_builder():
+    """CONSTRUCTIVE 하류 재계산 표가 빌더 소스와 일치하는지 (소스 문자열 대조).
+
+    이 표가 낡으면 변이시험이 **실제보다 낙관적으로** 나온다 — plug 를 안 따라가면
+    잔차가 남아 룰이 잡은 것처럼 보인다. 빌더의 plug 식이 바뀌면 여기서 막는다."""
+    src = (ROOT / "scripts" / "build_pl_breakdown.py").read_text(encoding="utf-8")
+    fsrc = (ROOT / "scripts" / "fetch_dart_fs.py").read_text(encoding="utf-8")
+    for needle in ("v[7] = v[3] - (v[4] + v[5] + v[6])",
+                   "v[12] = v[8] - (v[9] + v[10] + v[11])",
+                   "v[2] = s(3, 8)",
+                   "v[18] = v[17] - v[19]",
+                   "v[23] = round(v[22] - v[24], 6)",
+                   "v[21] = v[22] - v[20]"):
+        assert needle in src, (
+            f"빌더에서 plug 식을 못 찾았다: {needle!r}. 식이 바뀌었으면 PL_DOWNSTREAM 도 "
+            "같이 고쳐라 — 안 고치면 변이시험이 실제보다 낙관적으로 나온다.")
+    assert "t1[21] = round(t1[22] - t1[20], 6)" in fsrc
+    assert "t1[18] = round(t1[17] - t1[19], 6)" in fsrc

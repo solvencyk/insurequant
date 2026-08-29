@@ -1,11 +1,73 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-29 d (leg-coverage 오탐 정정 — 등식이 재보험사의 4번째 LOB 다리를 몰랐다) · Stage 3/5 — validation
+> Last updated: 2026-08-29 e (PL 등식 증거력 명문화 + item22 원천 법인세 교차대조 신설) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-08-29 e) `PL_BRIDGE` 의 pass 절반 이상이 구성상 참이었다 — 이제 게이트가 그 사실을 인쇄한다. item22 는 메웠다.**
+
+> 처리: `inbox/_resolved/20260829T2130Z__validation__MULTI__pl_eqs_constructive_tautology.md`
+> → `status: resolved` (owner 가 제안 1·2·3·4 승인)
+>
+> **문제.** 빌더가 우변의 한 항을 좌변에서 빼서 만들기 때문에(`item7 = 3−(4+5+6)` ·
+> `item12 = 8−(9+10+11)` · `item18 = 17−19` · `item21 = 22−20` · `item23 = 22−24`) 그 등식들은
+> **산수상 깨질 수가 없다.** `pass=3057` 중 **1,608(52.6%)이 그런 pass** 다. CONSTRUCTIVE
+> 변이시험(그 칸을 흔들고 빌더가 계산하는 하류 항을 빌더와 똑같이 재계산) 실측 탐지율:
+> item5·6·9·10·11·19·22·23 **전부 0.0%** — `validate_master_tables` + `validate_data_contract`
+> 를 다 물려도 신규 RED 0 건이었다.
+>
+> **① 명문화.** `PL_EQ_EVIDENCE`(등식별 `REAL`/`TAUTOLOGY`/`PARTIAL` **상수** — 주석이 아니라
+> 게이트가 읽는 값) 신설 + `_assert_pl_eq_evidence_declared()` 가 import 시점에 판정 없는 등식을
+> 죽인다. SUMMARY 인쇄 `pl_bridge:3057P/…` → **`pl_bridge:3057P(진짜1135·구성상1608·부분314)/…`**.
+> 본문에 등식×증거력 pass 표와 `NOEQ`(등식으로 영원히 못 보는 항목) 건별 인쇄 추가.
+>
+> **② item22 배선.** 게이트 2f `TAX22_SOURCE_CROSSCHECK` = `|item22−item24| == |원천 법인세
+> 계정|`(`ifrs-full_IncomeTaxExpenseContinuingOperations`). 그 값이 418/418 FS-API 캐시에
+> 있는데 `assemble()` 이 곧바로 잔차로 덮어써서 버려지고 있었다. 부호는 안 본다(발행사 관행이
+> 갈리고 그게 애초에 plug 를 도입한 이유). **전 버킷 시뮬레이션 선행**: 대조가능 282 · PASS 282 ·
+> FAIL 0, 잔차 median=p90=max **0.000백만원**. 배선 후 게이트 `tax22_src:282P/0F/74S` 로 동일.
+> 변이시험 탐지율 **0.0% → 100.0%**(282/282).
+> **오프라인·결정적**으로 만든 것이 핵심이다 — `resolve_corp()` 는 gitignore 된 30MB
+> `CORPCODE.xml` 을 읽고 없으면 **네트워크로 받아** 환경마다 커버리지가 갈린다. 그래서 추적
+> 파일만 쓴다(`data/_derived/alotmatter_fetch_census.json` 39/39 + 추적된 `_fs_api_cache/`),
+> 두 매핑이 **36/36 일치 · 불일치 0** 임을 실측했다. 캐시 파싱은 `fetch_dart_fs._parse` 를
+> **그대로 호출**한다(재구현하면 게이트가 빌더와 다른 값을 본다).
+>
+> **③ 매니페스트 박제.** `tests/test_rule_coverage_manifest.py` 에 PL 축 신설 —
+> `PL_CONSTRUCTIVE_BLIND`(5·6·9·10·11·19·23 무검사) · `PL_CONSTRUCTIVE_GUARDED`(3·4·8·17·20·
+> 22·24·25) · `PL_DOWNSTREAM`(빌더 plug 재계산 표, 소스 문자열로 대조). 검사면 = PL 을 읽는
+> 차단성 룰 전부(PL_BRIDGE·TAX22·CSM_AMORT·COVERAGE·data-contract RED). **매니페스트 자신의
+> 변이시험 3종 전부 발화 확인**(`probe_20260829_pl_manifest_falsifiability.py`) — 선언이 면제가
+> 아님을 기계가 증명한다. `-k pl_` 18 passed / 19.5초.
+>
+> **④ item9 판정 = 대안 축 없음.** `CSM_waterfall.json` 은 2,172행 **6항목 단일 축**이고
+> **출재 항목 0** 이다. `build_csm_waterfall_master.py` 가 `_EXCLUDE_KW`·캡션 필터·소수 클러스터
+> drop 으로 전 단계에서 배제하고, **그 배제는 옳다**(출재는 보유 재보험계약자산의 별도 워터폴 —
+> `원수+재보험` 식은 346버킷 중 245건이 ±1% 밖, `원수+수재`는 20건). 즉 `CSM_AMORT_PL_LEGS` 를
+> 넓히는 방식은 답이 아니다. 원문에는 있으므로(캡션 "원수 및 출재 …") **파서가 출재
+> rollforward 를 별도 마스터로 추출**해야 하고, 그건 신규 과제라 발주하지 않고 명문화만 했다.
+>
+> **⑤ `test_identity_tautology.py` 를 PL 에 배선하지 않는다 — 그 결론도 명문화.** 귀무모형이
+> 각 항이 등식 단위로 반올림됐다고 가정하는데 PL 마스터는 원÷1e6 이라 **건전한 항등식도 잔차가
+> 정확히 0** 이다. 실측 9축 전부 RED 이고 excess 1위(1.93)가 하필 진짜 검산 축인 EQ9 였다.
+> "배선을 잊었다"가 아니라 **"이 탐지기는 이 마스터에서 작동하지 않는다"** 가 결론이고, 그 파일
+> docstring 에 절로 남겼다.
+>
+> **골든/게이트.** `master_tables_golden.json` `--update`(SUMMARY 한 줄, exit_code 2 불변).
+> `test_identity_registry.py` 에 `tax22_source_crosscheck` 등재 — 그 파일의
+> `test_no_undeclared_threshold_constants` 가 **설계대로 즉시 실패해서** 등재를 강제했다.
+> `validate_golden_input_fingerprints` **갱신 불요**(RED=0, 6 spec ok — SPECS 의 `code_entries`
+> 는 빌더만 추적하고 게이트는 골든이 매 실행 서브프로세스로 재실행해 stale 불가).
+> `validate_data_contract` RED=0 YELLOW=92 **불변**. 훅 경로 확인: `validate_master_tables` 는
+> `test_master_tables_golden.py` 경유(NOT_A_PUSH_GATE 선언대로), `test_rule_coverage_manifest.py`
+> 는 이미 훅 목록 L169.
+>
+> **잔여(이 티켓 밖).** ⓐ item5·6·9·10·11·19·23 은 여전히 무검사 — plug 제거는 owner 결정
+> (2026-06-08) 사안이라 제안까지만. ⓑ 출재 CSM rollforward 추출(parser/ifrs17 신규 과제).
+> ⓒ tax22 SKIP 74버킷(FS-API 캐시 없음 56 + 22/24 결측 18)의 item22 무검사.
 
 **(2026-08-29 d) 어제 신설한 leg-coverage 룰이 코리안리재보험 12분기를 오탐했다 — 데이터가 아니라 **등식**이 틀렸다.**
 

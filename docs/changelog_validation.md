@@ -1,9 +1,91 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-29 (e) · Stage 3/5 — validation
+> Last updated: 2026-08-29 (f) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-08-29 (f) — PL 등식의 절반이 구성상 참이었다: 판정을 상수로 선언 + item22 원천 대조 신설
+
+티켓 `inbox/_resolved/20260829T2130Z__validation__MULTI__pl_eqs_constructive_tautology.md`
+(owner 가 제안 1·2·3·4 승인). **마스터 값 무변경 — 룰·문서·매니페스트만.**
+
+### 무엇이 문제였나
+
+빌더가 우변의 한 항을 좌변에서 빼서 만든다(`build_pl_breakdown.assemble` ·
+`fetch_dart_fs._parse`): `item7 = 3−(4+5+6)` · `item12 = 8−(9+10+11)` · `item18 = 17−19` ·
+`item21 = 22−20`(410/418) · `item23 = 22−24`(418/418 무조건). 그래서 그 등식들은 **산수상 깨질
+수가 없고**, `PL_BRIDGE` 의 `pass=3057` 중 **1,608(52.6%)이 그런 pass** 다.
+
+CONSTRUCTIVE 변이시험(그 칸을 흔들고 빌더가 그 칸으로부터 계산하는 하류 항을 빌더와 똑같이
+다시 계산 — 파서가 틀리면 실제로 일어나는 형태) 실측:
+
+| 주입 | 버킷 | NAIVE | CONSTRUCTIVE | 잡은 룰 |
+|---|---|---|---|---|
+| item5 원수RA | 334 | 94.3% | **0.0%** | 없음 |
+| item6 원수예실차 | 324 | 97.2% | **0.0%** | 없음 |
+| item9 재보험CSM상각 | 321 | 93.5% | **0.0%** | 없음 |
+| item10 재보험RA | 317 | 94.6% | **0.0%** | 없음 |
+| item11 재보험예실차 | 318 | 94.3% | **0.0%** | 없음 |
+| item19 보험금융손익 | 326 | 97.9% | **0.0%** | 없음 |
+| item22 세전이익 | 338 | 100.0% | **0.0%** | 없음 |
+| item23 법인세 | 338 | 100.0% | **0.0%** | 없음(빌더가 덮음) |
+
+`validate_data_contract.run_gate()` 를 같이 물려도 신규 RED **0 건**이다. 즉 `RED=0` 이
+"검사했더니 깨끗"이 아니라 **"검사 대상이 아니었다"** 인 항목이 8개였다.
+
+### 무엇을 했나
+
+1. **판정을 상수로 선언.** `validate_master_tables.PL_EQ_EVIDENCE` — 11개 라벨(PL_EQS 9 +
+   dual 2)마다 `(REAL|TAUTOLOGY|PARTIAL, 근거)`. 주석이 아니라 게이트가 읽는 값이고,
+   `_assert_pl_eq_evidence_declared()` 가 **import 시점에** 판정 없는 등식을 죽인다.
+   SUMMARY: `pl_bridge:3057P/35F/468S/0NEW` → **`pl_bridge:3057P(진짜1135·구성상1608·부분314)/…`**.
+   본문에 등식×증거력 pass 표 + `NOEQ`(등식으로 영원히 못 보는 항목) 건별 인쇄 추가.
+2. **게이트 2f `TAX22_SOURCE_CROSSCHECK` 신설** — `|item22−item24| == |원천 법인세 계정|`.
+   `ifrs-full_IncomeTaxExpenseContinuingOperations` 가 418/418 FS-API 캐시에 있는데
+   `assemble()` 이 곧바로 잔차로 덮어써서 버려지고 있었다. 부호는 안 본다(발행사 관행이 갈리는
+   것이 애초에 plug 를 도입한 이유). **전 버킷 시뮬레이션 선행**: 대조가능 282 · PASS 282 ·
+   FAIL 0, 잔차 median=p90=max **0.000백만원**. 배선 후 게이트 `tax22_src:282P/0F/74S`.
+   변이시험 탐지율 **0.0% → 100.0%**.
+   - **오프라인·결정성이 이 배선의 어려운 부분이었다.** `resolve_corp()` 는 gitignore 된 30MB
+     `CORPCODE.xml` 을 읽고 없으면 네트워크로 받아 환경마다 커버리지가 갈린다 → 골든이 흔들린다.
+     추적 파일만 쓴다: `data/_derived/alotmatter_fetch_census.json`(KR→corp_code 39/39) +
+     추적된 `data/dart/_fs_api_cache/`. 두 매핑 **36/36 일치 · 불일치 0** 실측.
+     캐시 파싱은 `fetch_dart_fs._parse` 를 **그대로 호출**(재구현하면 게이트가 빌더와 다른 값을
+     본다). `BASIS_CFS` 가 비어 있다는 전제도 코드로 확인한다.
+   - **증명하지 못하는 것도 적었다**: 22·24·23 을 일관되게 잘못된 기준(연결 vs 별도)에서
+     골랐다면 셋 다 같이 틀려 등식이 닫힌다. SKIP 74버킷의 item22 도 여전히 무검사.
+3. **매니페스트 박제.** `tests/test_rule_coverage_manifest.py` PL 축 —
+   `PL_CONSTRUCTIVE_BLIND`(5·6·9·10·11·19·23) · `PL_CONSTRUCTIVE_GUARDED`(3·4·8·17·20·22·24·25) ·
+   `PL_DOWNSTREAM`(빌더 plug 재계산 표, 소스 문자열 대조). 검사면 = PL 을 읽는 차단성 룰 전부.
+   **매니페스트 자신의 변이시험 3종 전부 발화**(`probe_20260829_pl_manifest_falsifiability.py`).
+4. **item9 판정 = 대안 축 없음.** `CSM_waterfall.json` 2,172행 **6항목 단일 축, 출재 0**.
+   `build_csm_waterfall_master.py` 가 전 단계에서 의도적 배제(`_EXCLUDE_KW`·캡션 필터·소수
+   클러스터 drop)하고 **그 배제는 옳다** — 출재는 보유 재보험계약자산의 별도 워터폴이라
+   `원수+재보험` 식은 346버킷 중 245건이 ±1% 밖, `원수+수재`는 20건. 원문에는 있으므로(캡션
+   "원수 및 출재 …") 파서가 별도 마스터로 추출해야 하고, 그건 신규 과제라 명문화만 했다.
+5. **`test_identity_tautology.py` 를 PL 에 배선하지 않는다 — 그것도 명문화.** 귀무모형이 각 항의
+   등식 단위 반올림을 가정하는데 PL 은 원÷1e6 이라 **건전한 항등식도 잔차가 정확히 0** 이다.
+   9축 전부 RED 이고 excess 1위(1.93)가 하필 진짜 검산 축 EQ9 였다. 판별자는 통계가 아니라
+   **write-path 추적 + 변이시험**이다.
+
+### 왜 이 형태로 남겼나
+
+"무력한 줄 모르고 pass 를 세는 것"이 이 저장소가 반복해서 당한 false-green 의 정확한 형태다.
+등식을 지우면 커버리지가 줄고, 그대로 두면 3,057 이라는 숫자가 계속 오독된다. **선언 + 인쇄 +
+변이시험 박제**가 그 사이의 답이다 — 무검사라는 사실이 코드에 남고, 나중에 커버리지가 생기면
+매니페스트가 갱신을 강제하고, 있던 커버리지가 사라지면 막는다.
+
+### 골든/게이트
+
+`master_tables_golden.json` `--update`(SUMMARY 한 줄, exit_code 2 불변). `test_identity_registry`
+에 `tax22_source_crosscheck` 등재 — 그 파일의 `test_no_undeclared_threshold_constants` 가
+**설계대로 즉시 실패해서** 등재를 강제했다(`EQ_TAUTOLOGY` 는 임계가 아니라 라벨이라 allowlist).
+`validate_golden_input_fingerprints` **갱신 불요**(RED=0, 6 spec ok — SPECS `code_entries` 는
+빌더만 추적하고 게이트는 골든이 매 실행 서브프로세스로 재실행해 stale 불가).
+`validate_data_contract` RED=0 YELLOW=92 불변. 훅 경로: `validate_master_tables` 는
+`test_master_tables_golden.py` 경유(`NOT_A_PUSH_GATE` 선언대로), `test_rule_coverage_manifest.py`
+는 이미 훅 목록에 있다.
 
 ## 2026-08-29 (e) — leg-coverage 오탐: 등식이 재보험사의 4번째 LOB 다리를 몰랐다
 

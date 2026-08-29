@@ -19,6 +19,33 @@
 
 `_taut_null_p0` 가 조용히 바뀌면 excess 의 분모가 바뀌어 임계가 의미를 잃는다. 닫힌형
 Irwin–Hall 값을 손으로 검산 가능한 상수와 대조해 못 박는다(k=2 → 정확히 3/4).
+
+## ⚠️ 이 탐지기를 PL_breakdown 에 배선하지 마라 (2026-08-29 실측)
+
+이 파일의 우주는 `kics_disclosure.json` 하나다(`_taut_axes()` 실측 5축, 전부 K-ICS 항목번호
+축). PL 마스터에 같은 사각이 훨씬 크게 있다는 것이 2026-08-29 에 확인됐지만
+(`PL_BRIDGE` pass 3,057 중 1,608 이 구성상 참), **이 탐지기를 그대로 옮기면 안 된다.**
+
+`_taut_null_p0(k)` 는 각 항이 **등식 자신의 단위로 반올림**됐다고 가정한다(K-ICS 는 백만원
+정수). PL 마스터 값은 원 ÷ 1e6 후 `round(6)` 이라 **원 단위 정밀도가 살아 있어서, 발행사가
+제대로 공시한 건전한 항등식도 잔차가 정확히 0** 이 된다. 실측:
+
+```
+eq                            n   zeros   rate   null  excess     z   RED?  실제판정
+EQ1 3=4+5+6+7               315     313  0.994  0.602    1.65  14.2   RED   TAUTOLOGY
+EQ5 20=1+17                 327     320  0.979  0.750    1.30   9.5   RED   REAL   <- 오탐
+EQ8 31=24+25                282     282  1.000  0.750    1.33   9.7   RED   REAL   <- 오탐
+EQ9 25=26+..+32             221     219  0.991  0.513    1.93  14.2   RED   REAL   <- 오탐, 최고 excess
+```
+
+**9축 전부 RED 이고 excess 1위(1.93)가 하필 진짜 검산 축인 EQ9 다** — 통계가 두 부류를
+분리하지 못한다(`_TAUT_MIN_CELLS=30` 도 문제가 아니다, n≈300). 즉 "탐지기를 PL 에 배선하는
+것을 잊었다"가 아니라 **"이 탐지기는 그 마스터에서 작동하지 않는다"** 가 결론이다.
+재현: `scripts/_probes/probe_20260829_taut_detector_on_pl.py`.
+
+PL 쪽 판별자는 통계가 아니라 **write-path 추적 + CONSTRUCTIVE 변이시험**이고, 그 결과는
+`validate_master_tables.PL_EQ_EVIDENCE`(등식별 REAL/TAUTOLOGY/PARTIAL 상수, SUMMARY 가 인쇄)
+와 `tests/test_rule_coverage_manifest.py::PL_CONSTRUCTIVE_BLIND`(변이시험 박제)에 있다.
 """
 from __future__ import annotations
 

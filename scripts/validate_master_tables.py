@@ -319,6 +319,135 @@ PL_EQ_ADJ = {
     "생명장기손익 = 원수손익+재보험손익": [("기타사업비용", -1)],
 }
 
+# ===========================================================================
+# 등식별 증거력 — **주석이 아니라 코드가 읽는 상수다** (2026-08-29)
+# ===========================================================================
+# `pass=3057` 중 1,608(52.6%)이 **구성상 참**이다. 빌더가 우변의 한 항을 좌변에서 빼서
+# 만들기 때문에 그 등식은 산수상 깨질 수가 없다 — 상류에서 잘못 뽑혀도 잔차는 항상 0 이다.
+# 실측(변이시험, scripts/_probes/probe_20260829_pl_eqs_mutation.py, 주입 크기
+# max(10,000백만, |v|×30%) = floor 의 50배 이상):
+#
+#   mutation            NAIVE det%   CONSTRUCTIVE det%   잡은 룰
+#   item5  원수RA           94.3%          0.0%          없음
+#   item6  원수예실차        97.2%          0.0%          없음
+#   item9  재보험CSM상각     93.5%          0.0%          없음
+#   item10 재보험RA         94.6%          0.0%          없음
+#   item11 재보험예실차      94.3%          0.0%          없음
+#   item19 보험금융손익      97.9%          0.0%          없음
+#   item22 세전이익        100.0%          0.0%          없음  ← 2f 가 이것만 메운다
+#   item23 법인세         100.0%          0.0%          없음 (빌더가 22-24 로 덮음)
+#
+# NAIVE = 마스터의 그 칸만 흔든다. CONSTRUCTIVE = 같은 칸을 흔들고 **빌더가 그 칸으로부터
+# 계산하는 하류 항을 빌더와 똑같이 다시 계산한다**(파서가 틀리면 실제로 일어나는 형태).
+#
+# **왜 상수로 두나.** 무력한 줄 모르고 pass 를 세는 것이 이 저장소가 반복해서 당한
+# false-green 의 정확한 형태다. 아래 판정을 SUMMARY 가 인쇄하므로 "3057 통과"가 아니라
+# "진짜 1,135 · 구성상 1,608 · 부분 314" 로 읽힌다. 새 등식을 PL_EQS 에 추가하면서 여기
+# 등재하지 않으면 `_assert_pl_eq_evidence_declared()` 가 즉시 죽는다(선언 없는 등식 금지).
+#
+# **동어반복 탐지기(tests/test_identity_tautology.py)를 그대로 못 쓴다.** 그 귀무모형
+# `_taut_null_p0(k)` 는 각 항이 등식 자신의 단위로 반올림됐다고 가정하는데(K-ICS 는 백만원
+# 정수) PL 마스터는 원÷1e6 이라 원 단위 정밀도가 살아 있어 **건전한 항등식도 잔차가 정확히
+# 0** 이다. 실측 9축 전부 RED 이고 excess 1위(1.93)가 하필 진짜 검산 축인 EQ9 였다 —
+# 통계가 두 부류를 분리하지 못한다. 판별자는 통계가 아니라 **write-path 추적 + 변이시험**이다.
+# 재현: scripts/_probes/probe_20260829_taut_detector_on_pl.py
+EQ_REAL = "REAL"            # 좌·우변이 서로 다른 원천에서 독립적으로 온다 → 깨질 수 있다
+EQ_TAUTOLOGY = "TAUTOLOGY"  # 빌더가 우변 한 항을 좌변에서 빼 만든다 → 구성상 참, 영원히 통과
+EQ_PARTIAL = "PARTIAL"      # 이 등식만 보면 동어반복이지만 같은 항을 보는 다른 축이 있다
+
+# 보험손익 dual-form / leg-coverage 블록(PL_EQS 밖, `_check_pl_bridge` 안에서 직접 검산)의 라벨.
+PL_DUAL_LABELS = ("보험손익(dual)", "보험손익(leg-coverage)")
+
+PL_EQ_EVIDENCE = {
+    "보험손익(dual)":
+        (EQ_REAL, "item1 은 FS-API 표준계정, ΣLOB 은 주석 분해 — 서로 다른 원천"),
+    "보험손익(leg-coverage)":
+        (EQ_REAL, "위와 같음. 결측 다리를 0 으로 채워 판정하므로 SKIP 으로 숨지 않는다"),
+    "생명장기원수손익 = 원수CSM상각+원수RA+원수예실차+기타원수":
+        (EQ_TAUTOLOGY, "item7 = 3-(4+5+6) plug (build_pl_breakdown.py assemble). "
+                       "item7 은 저장소 전체에 다른 write-path 가 없다 — "
+                       "**자기를 검사하는 등식의 잔차로만 존재하는 항목**이다. "
+                       "결과: item5·item6 은 어떤 룰의 입력도 아니다"),
+    "생명장기재보험손익 = 재보험CSM상각+재보험RA+재보험예실차+기타재보험":
+        (EQ_TAUTOLOGY, "item12 = 8-(9+10+11) plug (같은 함수). "
+                       "결과: item9·item10·item11 은 어떤 룰의 입력도 아니다"),
+    "생명장기손익 = 원수손익+재보험손익":
+        (EQ_PARTIAL, "item2 = 3+8 plug 지만 item2 는 보험손익 dual/leg-coverage 등식의 "
+                     "ΣLOB 항이라 그쪽에서 독립 대조된다"),
+    "투자손익 = 투자이익+보험금융손익":
+        (EQ_TAUTOLOGY, "item18 = 17-19 plug 가 2층(fetch_dart_fs._parse L403-404 + "
+                       "build_pl_breakdown.assemble L213-215) 전부 무조건. "
+                       "결과: item19 는 어떤 룰의 입력도 아니다"),
+    "영업이익 = 보험손익+투자손익":
+        (EQ_REAL, "1·17·20 이 각각 독립 표준계정. 되맞춤(item17 += item19)은 410 중 3건뿐"),
+    "세전이익 = 영업이익+영업외손익":
+        (EQ_TAUTOLOGY, "item21 = 22-20 plug 410/418 (fetch_dart_fs._parse L392-394). "
+                       "그 중 380 건은 독립 영업외수익/비용 계정이 있었는데 안 썼다. "
+                       "item21 이 독립소스인 8/418 에서만 진짜 검산"),
+    "당기순이익 = 세전-법인세":
+        (EQ_TAUTOLOGY, "item23 = 22-24 plug 418/418 무조건 (assemble L226-228). "
+                       "원천 법인세 계정은 418/418 존재하는데 버려진다 — "
+                       "**그 버려지는 값을 되살려 대조하는 것이 아래 2f** 다"),
+    "총포괄손익 = 당기순이익+기타포괄손익":
+        (EQ_REAL, "24·25·31 이 각각 독립 표준계정(ifrs-full_ProfitLoss / "
+                  "OtherComprehensiveIncome / ComprehensiveIncome) — 태그 오선택을 잡는다"),
+    "기타포괄손익 = FVOCI채무증권+보험계약금융(OCI)+위험회피파생상품+FVOCI지분증권+재보험금융(OCI)+기타(미분류)":
+        (EQ_REAL, "item32 는 25 의 잔차가 아니라 CIS leaf **카탈로그 합** "
+                  "(fetch_dart_fs._oci32_from_rows) — 카탈로그가 틀리면 깨진다(실 FAIL 1건)"),
+}
+
+
+def _assert_pl_eq_evidence_declared() -> None:
+    """모든 등식이 증거력 판정을 갖는지. **선언 없는 등식을 금지한다.**
+
+    새 등식을 `PL_EQS` 에 추가하면서 판정을 안 붙이면 그 pass 는 아무 표시 없이 총합에
+    섞인다 — 동어반복이면 그때부터 조용한 false-green 이다. 여기서 즉시 죽인다."""
+    declared = set(PL_EQ_EVIDENCE)
+    labels = {lab for lab, _l, _t in PL_EQS} | set(PL_DUAL_LABELS)
+    missing = sorted(labels - declared)
+    ghost = sorted(declared - labels)
+    if missing:
+        raise SystemExit(
+            f"PL_EQ_EVIDENCE 에 판정이 없는 등식: {missing}\n"
+            "  등식을 추가했으면 TAUTOLOGY/REAL/PARTIAL 중 하나를 근거와 함께 선언하라. "
+            "판정 없는 pass 는 무력한 줄 모르고 세어진다.")
+    if ghost:
+        raise SystemExit(
+            f"PL_EQ_EVIDENCE 에만 있고 실제 등식이 아닌 라벨: {ghost} — 개명/삭제됐다면 같이 고쳐라")
+
+
+_assert_pl_eq_evidence_declared()
+
+# **등식으로는 영원히 못 보는 항목** — plug 를 없애지 않는 한 원천 재대조가 유일한 수단이다.
+# 이건 실패가 아니라 **결론**이다. 위 CONSTRUCTIVE 변이시험이 그것을 실측으로 보였다.
+#
+# 특히 item6(원수예실차)에 주의하라. 2026-08-29 에 3개사 50분기를 채웠는데,
+# **폐쇄식(`3 = 4+5+6+7`)은 그 값을 전혀 검증하지 못한다** — item7 이 잔차라 무엇을 넣어도
+# 닫힌다. 그날 실제로 쓴 검증은 전부 **독립 앵커**였다:
+#   · 농협생명   보험수익 510,001 이 원문 표와 일치
+#   · 미래에셋생명 3중 대사 594,378,172,139 (원 단위)
+#   · 에이비엘생명 산문 공시 50억/3억
+#   · 서울보증보험 소계 검산
+# 다음 사람이 "폐쇄식이 닫혔으니 맞다" 로 판단하지 않도록 여기 못 박는다.
+#
+# item9(재보험CSM상각)도 같다. 유일한 독립 대조원 후보였던 CSM 워터폴에 **출재 축이 없다** —
+# `build_csm_waterfall_master.py` 가 `_EXCLUDE_KW = ("재보험","출재",…)` 로 전 단계에서
+# 의도적으로 배제하고, 마스터 `CSM_waterfall.json` 은 6항목(기초·신계약·이자·가정·상각·기말)
+# 단일 축이다(2,172행 전수 확인, 출재 항목 0). 그 배제는 옳다 — 출재는 **보유 재보험계약자산**의
+# 별도 워터폴이라 발행계약 워터폴에 더하면 안 된다(실측: 원수+재보험 식은 346버킷 중 245건이
+# ±1% 밖, 원수+수재는 20건). 따라서 `CSM_AMORT_PL_LEGS` 를 넓히는 방식의 대안 축은 **없다**.
+# 만들려면 파서가 출재 rollforward 를 별도 마스터로 추출해야 한다(원문에는 있다 — 캡션
+# "원수 및 출재 …" 다수). 그것은 parser/ifrs17 레인의 신규 과제이고 이 게이트의 몫이 아니다.
+PL_ITEMS_UNCHECKABLE_BY_EQUATION = {
+    5:  "원수위험조정변동 — item7 plug 가 흡수. 원천 주석 재대조만이 수단",
+    6:  "원수예실차 — 같음. **독립 앵커로만 검증됨**(위 주석의 4개사 사례)",
+    9:  "재보험CSM상각 — item12 plug 가 흡수. CSM 워터폴에 출재 축이 없어 교차대조 불가",
+    10: "재보험위험조정변동 — item12 plug 가 흡수",
+    11: "재보험예실차 — item12 plug 가 흡수",
+    19: "보험금융손익 — item18 = 17-19 plug 가 2층 모두 흡수",
+    23: "법인세 — item23 = 22-24 plug 가 418/418 덮어씀(원천 계정은 2f 가 되살려 쓴다)",
+}
+
 # 분기 지평 — **마스터에서 파생한다** (`scripts/_quarter_horizon.py`, 근거는 그 독스트링).
 # 2026-08-29 까지 이 자리는 `2026.1Q` 로 끝나는 리터럴이었고 파일 최초 커밋(9243445) 이후
 # 아무도 안 늘렸다. 그래서 2026.2Q 를 배포한 날 아래 축이 전부 그 분기를 **순회조차 안 했다**:
@@ -605,15 +734,24 @@ def _check_plausibility(wf: dict) -> tuple[list, list, list, list, list]:
 
 
 def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
-                     unknown_hyphen: list | None = None) -> tuple[int, list, int, list, list]:
+                     unknown_hyphen: list | None = None,
+                     evidence_out: dict | None = None) -> tuple[int, list, int, list, list]:
     """PL bridge identity (2) + 생명장기 zero-legs (2b) + impossible-zero legs (2c).
     All three read pl_breakdown and share one print block, so they stay together.
     `extra_lob` = load_pl_extra_lob() 첫 반환값((co,q) -> Σ 항목번호 `2-N`); 생략하면 추가 LOB
     다리 없이 종전 3항 등식으로 돈다. `unknown_hyphen` = 그 두 번째 반환값(커버리지 census).
+    `evidence_out` = 넘기면 `{REAL/TAUTOLOGY/PARTIAL: pass 수}` 로 채운다 — pass 를 증거력별로
+    갈라 SUMMARY 에 인쇄하기 위한 것이고, **반환 arity 는 유지**한다(기존 호출부 보호).
     Returns (pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows). Split out of
     main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     extra_lob = extra_lob or {}
     unknown_hyphen = unknown_hyphen or []
+    ev = {EQ_REAL: 0, EQ_TAUTOLOGY: 0, EQ_PARTIAL: 0}
+    eq_pass_count = defaultdict(int)
+
+    def _credit(label: str) -> None:
+        ev[PL_EQ_EVIDENCE[label][0]] += 1
+        eq_pass_count[label] += 1
     # ===== 2. PL_BRIDGE (pl_breakdown_master, 백만원) =====
     pb_pass = pb_skip = 0
     pb_fail = []
@@ -679,6 +817,7 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
                     legcov_fail.append((co, q, round(bo, 1), round(diff, 1), zf, xlob))
             else:
                 pb_pass += 1
+                _credit(label)
                 if zf:
                     legcov_pass.append((co, q, round(diff, 1), zf, xlob))
         # --- 나머지 등식 ---
@@ -699,6 +838,7 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
                 eq_fail_count[label] += 1
             else:
                 pb_pass += 1
+                _credit(label)
 
     # ===== 2b. PL_ZERO_LEGS (생명장기 sub-item 0/None 무더기 = 추출실패) =====
     # 사용자 적발(2026-06-10): 현대해상 등 생명장기 sub-item이 xlsx에서 전부 0으로 보임.
@@ -766,7 +906,14 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     print("=" * 78)
     print(f"2. PL_BRIDGE (PL_breakdown.json 배포본, 백만원)  pass={pb_pass} fail={len(pb_fail)} skip={pb_skip}  "
           f"| 2b. ZERO_LEGS flag={len(zleg_rows)} | 2c. IMPOSSIBLE-0 leg={len(zerolegs_rows)}")
+    print(f"   pass 내역: 진짜 {ev[EQ_REAL]} · 구성상 {ev[EQ_TAUTOLOGY]} · 부분 {ev[EQ_PARTIAL]}"
+          f"  (구성상 = 빌더가 우변 한 항을 좌변에서 빼 만들어 **깨질 수 없는** 등식)")
     print("=" * 78)
+    print("  -- pass by equation × 증거력 (판정 근거는 PL_EQ_EVIDENCE 상수 주석) --")
+    print("     구성상(TAUTOLOGY) 의 pass 는 '검사했더니 깨끗' 이 아니라 '검사 대상이 아니었다' 로 읽어라.")
+    for label in list(PL_DUAL_LABELS) + [lab for lab, _l, _t in PL_EQS]:
+        verdict = PL_EQ_EVIDENCE[label][0]
+        print(f"    [{verdict:<9s}] {eq_pass_count[label]:>4d}P  {label[:58]}")
     print("  -- fail count by equation --")
     for label, n in sorted(eq_fail_count.items(), key=lambda x: -x[1]):
         print(f"    {n:>3d}  {label}")
@@ -805,7 +952,171 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     _nolhs_recent = [(co, q) for co, q in nolhs_rows if not q.startswith("2023.")]
     if _nolhs_recent:
         print(f"  !! 2024+ 에서 item1 결측 {len(_nolhs_recent)}건 — 2026-08-29 신설 시점엔 0 이었다(회귀 의심)")
+    print("  -- 등식으로는 영원히 못 보는 항목 (PL_ITEMS_UNCHECKABLE_BY_EQUATION) --")
+    print("     plug 를 없애지 않는 한 원천 재대조만이 수단이다. 실패가 아니라 결론이다.")
+    for no, why in sorted(PL_ITEMS_UNCHECKABLE_BY_EQUATION.items()):
+        print(f"  NOEQ  item{no:<3d} {why}")
+    if evidence_out is not None:
+        evidence_out.update(ev)
     return pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows
+
+
+# ===========================================================================
+# 2f. TAX22_SOURCE_CROSSCHECK — item22(세전이익)의 **유일한** 진짜 검산 (2026-08-29 신설)
+# ===========================================================================
+# 왜 필요한가. `당기순이익 = 세전 - 법인세` 는 빌더가 `item23 = 22 - 24` 로 **무조건** 덮기
+# 때문에(418/418, build_pl_breakdown.assemble L226-228) 구성상 참이다. 그래서 item22 를
+# 30% 흔들어도 게이트 전체에서 신규 RED 가 **0 건**이었다(CONSTRUCTIVE 변이시험).
+#
+# 그런데 **원천 법인세 계정은 418/418 디스크에 있다** — `ifrs-full_IncomeTaxExpense
+# ContinuingOperations`(fetch_dart_fs.ACCT[23]). `_parse()` 가 그 값을 t1[23] 에 담아
+# 돌려주는데 `assemble()` 이 곧바로 잔차로 덮어써서 버려진다. 그 버려지는 값을 되살려
+# 마스터의 `|22 - 24|` 와 대조하면 item22 가 처음으로 검사 대상이 된다.
+#
+# **부호는 대조하지 않는다.** 빌더 주석이 명시하듯 발행사마다 법인세비용의 부호 관행이
+# 다르다(양수 금액 vs 괄호 차감) — 그것이 애초에 잔차 plug 를 도입한 이유다. 그래서 크기로만
+# 본다. 크기 대조만으로도 item22 오추출은 잡힌다(잔차 크기가 원천 세액과 어긋난다).
+#
+# **이 룰이 증명하는 것과 못 하는 것.**
+#   증명한다 : ① 마스터가 자기 원천(FS-API 캐시)에서 드리프트했다(lost update·수기편집·
+#              핸들러 오버라이드) ② 발행사 손익계산서의 바닥이 자기 안에서 안 닫힌다
+#              (빌더 주석이 말하는 "법인세 라인을 통째로 오파싱" 케이스) ③ 마스터 item22
+#              가 손상됐다.
+#   못 한다   : `_parse` 가 22·24·23 을 **일관되게** 잘못된 기준(연결 vs 별도)에서 골랐다면
+#              셋 다 같이 틀려 이 등식은 닫힌다. 기준 오선택은 다른 축의 몫이다.
+#
+# **오프라인·결정적이어야 한다.** `fetch_dart_fs.tier1_for()` 는 `resolve_corp()` 를 거치는데
+# 그건 `data/dart/raw/CORPCODE.xml`(30MB, **gitignore**)을 읽고 없으면 **네트워크로 받는다**.
+# 게이트가 그걸 쓰면 새 클론·CI 에서 커버리지가 달라져 골든이 환경마다 흔들린다. 그래서
+# **git 추적 파일만** 쓴다: `data/_derived/alotmatter_fetch_census.json` 의 KR코드→corp_code
+# (39/39 resolved) + 추적된 `data/dart/_fs_api_cache/`(1,040 파일). 실측으로 두 매핑이
+# 36/36 동일하고 불일치 0 임을 확인했다
+# (scripts/_probes/probe_20260829_offline_corpcode_join2.py).
+# 캐시 파싱은 `fetch_dart_fs._parse` 를 **그대로 호출**한다 — 재구현하면 게이트가 빌더와 다른
+# 값을 보게 된다(이 저장소의 반복 사고 형태).
+TAX22_CENSUS_PATH = "data/_derived/alotmatter_fetch_census.json"
+TAX22_CACHE_DIR = "data/dart/_fs_api_cache"
+TAX22_FLOOR = 200.0        # 백만원 — 다른 PL 등식과 같은 floor
+TAX22_REL = 0.001
+
+
+def _tax22_corp_codes() -> dict:
+    """KR코드 -> DART corp_code (추적 파일에서만, 네트워크 없음)."""
+    p = ROOT / TAX22_CENSUS_PATH
+    if not p.exists():
+        return {}
+    out = {}
+    for c in json.loads(p.read_text(encoding="utf-8")).get("cells", []) or []:
+        if c.get("kr") and c.get("corp_code"):
+            out.setdefault(c["kr"], c["corp_code"])
+    return out
+
+
+def _tax22_tier1(fdf, cc: str, quarter: str):
+    """FS-API 캐시 한 버킷을 빌더와 **같은 함수**(`fetch_dart_fs._parse`)로 읽는다.
+
+    basis 우선순위도 `tier1_for` 와 같다 — OFS 우선, 손익계산서가 아예 없을 때만 CFS 폴백.
+    `BASIS_CFS` 가 비어 있다는 전제를 코드로 확인한다(비면 빌더와 순서가 갈린다)."""
+    if fdf.BASIS_CFS:
+        raise SystemExit(
+            "fetch_dart_fs.BASIS_CFS 가 비어 있지 않다 — 2f 의 basis 순서가 빌더와 갈린다. "
+            "이 함수를 그 집합에 맞춰 고쳐라.")
+    reprt = fdf.REPRT.get(quarter[5:])
+    if not reprt:
+        return None
+    annual = quarter[5:] == "4Q"
+    for fs_div in ("OFS", "CFS"):
+        p = ROOT / TAX22_CACHE_DIR / f"{cc}_{quarter[:4]}_{reprt}_{fs_div}.json"
+        if not p.exists():
+            continue
+        try:
+            t1 = fdf._parse(json.loads(p.read_text(encoding="utf-8")), annual)
+        except Exception:
+            t1 = None
+        if t1:
+            return t1
+    return None
+
+
+def _check_tax22_crosscheck(rows: list | None = None,
+                            quiet: bool = False) -> tuple[int, list, dict]:
+    """item22 vs (item24 + 원천 법인세). Returns (pass, fail_rows, skip_counts).
+
+    결측은 SKIP 이지만 **사유별로 세어 인쇄한다** — 조용히 사라지면 이 룰도 false-green 이 된다.
+    `rows` 를 넘기면 그 마스터 사본으로 돈다(변이시험용 —
+    tests/test_rule_coverage_manifest.py::test_pl_item_coverage_matches_manifest).
+    """
+    if rows is None:
+        rows = json.loads((ROOT / PL_PATH).read_text(encoding="utf-8"))
+    master, code_of = defaultdict(dict), {}
+    for r in rows:
+        master[(r["원수사명"], r["공시분기"])][norm(r["항목명"])] = r["값"]
+        code_of[r["원수사명"]] = r["원보험사코드"]
+
+    skips = defaultdict(int)
+    unresolved_names, fails = set(), []
+    n_pass = 0
+    try:
+        sys.path.insert(0, str(ROOT))
+        import fetch_dart_fs as fdf
+    except Exception as e:                       # noqa: BLE001 — 조용히 죽으면 축이 사라진다
+        if not quiet:
+            print()
+            print("=" * 78)
+            print(f"2f. TAX22_SOURCE_CROSSCHECK  **UNAVAILABLE** ({type(e).__name__}: {e})")
+            print("    fetch_dart_fs 를 import 못 했다. item22 는 다시 무검사다 — 고치기 전엔")
+            print("    이 게이트의 pass 를 item22 의 증거로 쓰지 마라.")
+            print("=" * 78)
+        return 0, [], {"IMPORT_FAILED": len(master)}
+
+    kr2cc = _tax22_corp_codes()
+    for (co, q) in sorted(master):
+        m = master[(co, q)]
+        m22, m24 = m.get("세전이익"), m.get("당기순이익")
+        if m22 is None or m24 is None:
+            skips["MASTER_22_OR_24_MISSING"] += 1
+            continue
+        cc = kr2cc.get(code_of.get(co, ""))
+        if not cc:
+            skips["CORP_CODE_UNRESOLVED"] += 1
+            unresolved_names.add(co)
+            continue
+        t1 = _tax22_tier1(fdf, cc, q)
+        if not t1:
+            skips["NO_FS_API_CACHE"] += 1
+            continue
+        raw_tax = t1.get(23)
+        if raw_tax is None:
+            skips["SOURCE_TAX_ACCOUNT_ABSENT"] += 1
+            continue
+        lhs = abs(m22 - m24)          # 마스터가 법인세로 쓰는 잔차의 크기
+        rhs = abs(raw_tax)            # 원천 법인세 계정의 크기
+        tol = max(TAX22_REL * max(abs(m22), lhs), TAX22_FLOOR)
+        if abs(rhs - lhs) > tol:
+            fails.append((co, q, round(m22, 1), round(lhs, 1), round(rhs, 1),
+                          round(rhs - lhs, 1), round(tol, 1)))
+        else:
+            n_pass += 1
+
+    if not quiet:
+        print()
+        print("=" * 78)
+        print(f"2f. TAX22_SOURCE_CROSSCHECK (|item22-item24| == |원천 법인세 계정|, 백만원)  "
+              f"pass={n_pass} fail={len(fails)} skip={sum(skips.values())}")
+        print("    item22 를 보는 **유일한** 룰이다. `당기순이익 = 세전-법인세` 는 빌더가")
+        print("    item23 을 22-24 로 덮어 구성상 참이라 item22 오추출을 영원히 못 본다.")
+        print("=" * 78)
+        for co, q, m22, lhs, rhs, d, tol in fails[:40]:
+            print(f"  FAIL {co:14s} {q}  22={m22:>+14,.1f}  |22-24|={lhs:>13,.1f}  "
+                  f"|원천세|={rhs:>13,.1f}  diff={d:>+12,.1f}  tol={tol:,.1f}")
+        for k, v in sorted(skips.items()):
+            print(f"  SKIP {v:>4d}  {k}")
+        if unresolved_names:
+            print(f"  !! corp_code 미해결 회사 {len(unresolved_names)}개 — {TAX22_CENSUS_PATH} 가")
+            print(f"     새 회사를 아직 모른다: {sorted(unresolved_names)}")
+        print("  주의: SKIP 버킷의 item22 는 여전히 **어떤 룰도 안 본다**(원천이 FS-API 가 아닌")
+        print("        핸들러/HTML 경로). 그 자리는 '검사했더니 깨끗'이 아니라 '검사 대상 아님'이다.")
+    return n_pass, fails, dict(skips)
 
 
 def _check_closing_identity(wf: dict) -> tuple[int, list, int]:
@@ -1098,8 +1409,11 @@ def main() -> int:
     dup_rows, spike_rows, cont_rows, wfy_rows, zamort_rows = _check_plausibility(wf)
 
     pl_extra_lob, pl_unknown_hyphen = load_pl_extra_lob(PL_PATH)
+    pl_evidence: dict = {}
     pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows = _check_pl_bridge(
-        pl, pl_extra_lob, pl_unknown_hyphen)
+        pl, pl_extra_lob, pl_unknown_hyphen, pl_evidence)
+
+    tax_pass, tax_fail, tax_skip = _check_tax22_crosscheck()
 
     cc_pass, cc_fail, cc_pinned, cc_skip = _check_csm_crosscheck(pl, wf)
 
@@ -1125,7 +1439,10 @@ def main() -> int:
           f"closing:{ci_pass}P/{len(ci_fail)}F/{ci_skip}S | "
           f"plausibility:{len(dup_rows)}dup/{len(spike_rows)}spike/{len(cont_rows)}cont/"
           f"{len(wfy_rows)}wfy/{len(zamort_rows)}zamort | "
-          f"pl_bridge:{pb_pass}P/{len(pb_fail)}F/{pb_skip}S/{pb_new}NEW | "
+          f"pl_bridge:{pb_pass}P(진짜{pl_evidence.get(EQ_REAL, 0)}"
+          f"·구성상{pl_evidence.get(EQ_TAUTOLOGY, 0)}"
+          f"·부분{pl_evidence.get(EQ_PARTIAL, 0)})/{len(pb_fail)}F/{pb_skip}S/{pb_new}NEW | "
+          f"tax22_src:{tax_pass}P/{len(tax_fail)}F/{sum(tax_skip.values())}S | "
           f"zero_legs:{len(zleg_rows)} | "
           f"impossible0:{len(zerolegs_rows)} | "
           f"csm_amort_identity:{cc_pass}P/{cc_pinned}PIN/{len(cc_fail)}F/{cc_skip}S | "
@@ -1135,7 +1452,7 @@ def main() -> int:
     # QOQ/sens_yellow는 YELLOW(anomaly)라 exit code에 반영 안 함. wfy/zamort/zleg/impossible0/sens_red은 데이터 오류라 반영.
     return 0 if not (ci_fail or pb_fail or cc_fail or dup_rows or spike_rows or cont_rows
                      or wf_holes or pl_holes or wfy_rows or zamort_rows or zleg_rows
-                     or zerolegs_rows or sens_red) else 2
+                     or zerolegs_rows or sens_red or tax_fail) else 2
 
 
 if __name__ == "__main__":

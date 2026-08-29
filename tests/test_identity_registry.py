@@ -242,6 +242,37 @@ REGISTRY: dict[str, dict] = {
                     "132건은 잔차 정확히 0.000(scripts/_probes/residual_distribution_item32.py).",
         "mutation": "inline",
     },
+    "tax22_source_crosscheck": {
+        "statement": "|PL 항목22(세전이익) − 항목24(당기순이익)| == |DART FS-API 원천 법인세 "
+                     "계정(ifrs-full_IncomeTaxExpenseContinuingOperations)| (백만원). "
+                     "부호는 대조하지 않는다 — 발행사마다 법인세비용의 부호 관행이 다르고"
+                     "(양수 금액 vs 괄호 차감) 그것이 애초에 빌더가 item23 을 잔차로 덮은 "
+                     "이유다(build_pl_breakdown.assemble L226-228 주석). "
+                     "2026-08-29 신설, ticket inbox/validation/20260829T2130Z.",
+        "impl": [("scripts/validate_master_tables.py", "_check_tax22_crosscheck")],
+        "kind": "IDENTITY",
+        "tol": {"abs": 200.0, "rel": 0.001, "unit": "백만원"},
+        "tol_from": [("validate_master_tables", "TAX22_FLOOR", 200.0),
+                     ("validate_master_tables", "TAX22_REL", 0.001)],
+        "measured": "**item22 를 보는 유일한 룰이다.** `당기순이익 = 세전 − 법인세` 는 빌더가 "
+                    "item23 을 22−24 로 418/418 무조건 덮어써서 구성상 참이고, 그래서 item22 를 "
+                    "max(10,000백만, |v|×30%) 흔들어도 게이트 전체(validate_master_tables + "
+                    "validate_data_contract)에서 신규 RED 이 **0 건**이었다"
+                    "(scripts/_probes/probe_20260829_pl_eqs_mutation.py · "
+                    "probe_20260829_pl_eqs_datacontract_mutation.py). 원천 법인세 계정은 그 "
+                    "418/418 에 실재하는데 assemble() 이 곧바로 버린다. "
+                    "전 버킷 시뮬레이션(scripts/_probes/probe_20260829_item22_tax_crosscheck_sim.py, "
+                    "356 버킷): 대조가능 **282 · PASS 282 · FAIL 0**, 잔차 |원천세|−|22−24| 는 "
+                    "median=p90=max=**0.000백만원**(127건은 정확히 0, 282건 전부 ≤1). "
+                    "SKIP 74 = FS-API 캐시 없음 56(핸들러/HTML 경로 회사) + 마스터 22/24 결측 18. "
+                    "**그 74 버킷의 item22 는 여전히 무검사다** — 게이트가 사유별로 세어 인쇄한다. "
+                    "변이시험(scripts/_probes/probe_20260829_tax22_rule_mutation.py): 같은 주입에 "
+                    "NAIVE·CONSTRUCTIVE 둘 다 **탐지율 100.0%**(282/282 신규 FAIL) — 배선 전 "
+                    "0.0% 에서 바뀐 지점이다. "
+                    "**증명하지 못하는 것**: _parse 가 22·24·23 을 일관되게 잘못된 기준(연결 vs "
+                    "별도)에서 골랐다면 셋 다 같이 틀려 이 등식은 닫힌다. 기준 오선택은 다른 축 소관.",
+        "mutation": "inline",
+    },
     "pl_oci_vs_bs_aoci": {
         "statement": "PL 항목25(기타포괄손익) 값_당분기 ≈ IFRS17_BS 항목4(기타포괄손익 누계액) "
                      "의 QoQ 증감(백만원). owner 티켓 inbox/parser/20260828T0113Z §작업3 룰2.",
@@ -772,6 +803,10 @@ _NOT_A_COMPARISON_THRESHOLD = {
     "_TIER2_PIN_TOL": "tier2/다리 발행사 자기모순 면제의 박제 잔차 재검산 폭 0.01억 — 위와 같은 성격이며 등식 허용오차가 아니다.",
     "_ROW_ANCHOR_BAND": "원문에서 행 앵커를 찾을 때의 탐색 폭(파싱 보조) — 두 값을 비교하는 임계가 아니다.",
     "ANCHOR_TOL": "법정준비금 앵커 대조 폭 — validate_statutory_reserves 소관이며 그 게이트를 data-contract 가 import 해 돌린다. 별도 축이라 여기서 재등재하지 않는다.",
+    "EQ_TAUTOLOGY": "임계가 아니라 **문자열 라벨**이다(값 \"TAUTOLOGY\"). "
+                    "PL_EQ_EVIDENCE 가 등식별로 REAL/TAUTOLOGY/PARTIAL 중 하나를 선언하고 "
+                    "SUMMARY 가 pass 를 그 셋으로 갈라 인쇄한다 — 구성상 참인 등식의 pass 를 "
+                    "'검사했더니 깨끗' 으로 오독하지 않게 하는 장치이지 두 값을 비교하는 폭이 아니다.",
     "DIVERSIFIED_SQRT_TOL_REL": "8_life / 19_market 두 항목이 tol_from 으로 참조한다.",
     "IRR_DERIVED_TOL_REL": "36_irr 항목이 tol_from 으로 참조한다(documented_widening 포함).",
 }

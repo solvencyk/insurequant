@@ -213,6 +213,29 @@
 
 **🚫 dual-form 정당성 — 과잉 진단 금지 (2026-06-07 철회, 다시 시도 말 것)**: 보험손익은 회사·분기에 따라 `ΣLOB`(**bare**) 또는 `ΣLOB + 기타영업수익 − 기타사업비용`(**adj**) 중 하나로 닫힌다 — 일부 회사·분기는 종목별 합산에 기타사업비가 이미 녹아 있어 bare로 닫힌다. **둘 중 하나만 닫혀도 PASS.** 특히 **bare-close는 정상이지 "숨은 LOB 결손/dual-form 허점"이 아니다 — flag 금지** (흥국 2024.4Q를 그렇게 오진했다 철회). **"회사별 form 고정 flag" 제안도 철회** (분기마다 form이 갈리므로 고정 불가). dual-form은 이 케이스를 통과시키려는 **의도된 설계**.
 
+**🔴 등식이 닫히는 것과 값이 맞는 것은 다르다 — PL 9식 중 5식은 구성상 참이다 (2026-08-29).**
+빌더(`build_pl_breakdown.assemble` · `fetch_dart_fs._parse`)가 우변의 한 항을 좌변에서 빼서
+만들기 때문에(`item7 = 3−(4+5+6)` · `item12 = 8−(9+10+11)` · `item18 = 17−19` ·
+`item21 = 22−20` · `item23 = 22−24`) 그 등식들은 **산수상 깨질 수가 없다.** `PL_BRIDGE` 의
+`pass=3057` 중 **1,608(52.6%)이 그런 pass** 다. 그래서 게이트 SUMMARY 는 이제
+`pl_bridge:3057P(진짜1135·구성상1608·부분314)` 로 인쇄한다 — **`구성상` 쪽 숫자를 근거로
+"검사했더니 깨끗" 이라고 쓰지 마라.** 그 자리는 "검사 대상이 아니었다" 다.
+
+- 판정은 `validate_master_tables.PL_EQ_EVIDENCE`(등식별 `REAL`/`TAUTOLOGY`/`PARTIAL` 상수)에
+  있고, 무검사 항목 목록은 `PL_ITEMS_UNCHECKABLE_BY_EQUATION` 이 매 실행 인쇄한다.
+- **item5·6·9·10·11·19·23 은 등식으로 영원히 못 본다** — 원문 재대조만이 수단이다.
+  특히 **item6(예실차)**: 폐쇄식이 닫히는 것은 아무 증거도 아니고, 실제 검증은 독립 앵커
+  (원문 표의 보험수익·소계 재판독)로만 성립한다.
+- **item22 는 2026-08-29 에 메웠다** — 게이트 2f `TAX22_SOURCE_CROSSCHECK`
+  (`|22−24| == |원천 법인세 계정|`, FS-API 캐시). 그 룰이 안 보는 74버킷은 여전히 무검사이고
+  게이트가 사유별로 세어 인쇄한다.
+- 이 사실들은 `tests/test_rule_coverage_manifest.py::PL_CONSTRUCTIVE_BLIND` /
+  `PL_CONSTRUCTIVE_GUARDED` 가 **CONSTRUCTIVE 변이시험**으로 매 push 강제한다. 커버리지를
+  늘리면 그 매니페스트가 갱신을 강제하고, 줄면 막는다.
+- **`tests/test_identity_tautology.py` 를 PL 에 그대로 배선하지 마라.** 그 귀무모형은 항이
+  등식 단위로 반올림됐다고 가정하는데 PL 마스터는 원÷1e6 이라 건전한 항등식도 잔차가 정확히
+  0 이다 — 실측 9축 전부 RED, excess 1위가 하필 진짜 검산 축(EQ9)이었다. 그 파일 docstring 참조.
+
 ### 1.5.1 마스터테이블 입력 계약 (`PL_breakdown` / `CSM_waterfall` / `CSM_amortization`)
 
 사용자가 회사별 수기 모델을 **long-format JSON 마스터테이블** 3종으로 정형화하여 관리. `PL_BRIDGE_DART_INTERNAL`·`CSM_CROSSCHECK_WATERFALL_VS_PL`·`CSM_WATERFALL_CLOSING_IDENTITY`의 입력.
