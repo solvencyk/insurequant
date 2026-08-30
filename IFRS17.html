@@ -1144,6 +1144,41 @@
     el.style.display = show ? "block" : "none";
   }
 
+  // 표 전용: 당기순이익 뒤의 OCI 세부를 '기타포괄손익' 한 줄 + (＋) 토글로 접는다
+  // (owner 2026-08-30). 차트는 이 함수를 타지 않는다 — 워터폴은 스텝을 다 그려야 다리가 이어진다.
+  //
+  // 총포괄손익(role=end)은 합계 행이라 그룹에 넣지 않고 그대로 남긴다.
+  // 그룹 합계는 회사가 공시한 **항목25(기타포괄손익 총액)** 를 쓴다(24+25=31 이 전 36사 전 분기
+  // 오차 0). 25가 없는 분기에서만 세부 합으로 대체하고 그 사실을 title 로 밝힌다.
+  function plOciGroupDefs(defs){
+    const parts = defs.filter(d=> d.oci && d.role !== "end" && !d.ociAgg);
+    if (parts.length <= 1) return defs;          // 접을 게 없으면 그대로
+    const out = [];
+    let placed = false;
+    for (const d of defs){
+      if (d.oci && d.role !== "end"){
+        if (d.ociAgg) continue;                  // 총액 1막대 전용 def — 그룹 행이 그 자리를 대신한다
+        if (placed) continue;
+        out.push({
+          ko: "기타포괄손익", role: "flow", ociGroup: true,
+          subTitle: "기타포괄손익 세부",
+          sub: parts.map(p=> ({ ko: p.ko, num: p.num, get: p.get })),
+          get: g => {
+            const tot = g(PL_NUM.기타포괄총액);
+            if (tot != null) return tot;
+            let s = null;
+            for (const p of parts){ const v = p.get(g); if (v != null) s = (s || 0) + v; }
+            return s;
+          },
+        });
+        placed = true;
+        continue;
+      }
+      out.push(d);
+    }
+    return out;
+  }
+
   function renderPlTable(host, name, mode){
     const box=q(host,"#plTable"); if(!box) return; box.innerHTML="";
     const periods = plTablePeriods(name, mode);
@@ -1151,7 +1186,7 @@
     const getters = periods.map(p=> plMakeGetter(name,p));
     const latest = periods[periods.length-1];
     const present = new Set(plBuildSteps(name, latest).map(s=>s.ko));
-    const defs = plStepDefsFor(name, latest).filter(d=> present.has(d.ko));
+    const defs = plOciGroupDefs(plStepDefsFor(name, latest).filter(d=> present.has(d.ko)));
     const gLast = getters[getters.length-1];
 
     const headers = ["항목", ...periods.map(p=>p.label)];
@@ -1160,7 +1195,8 @@
     // (코리안리 = 생명 수재/출재 · 장기 수재/출재 넷) — 세부가 최신 기간에 하나도 없으면 안 만든다.
     const togGroups = [];
     for(const d of defs){
-      if(d.sub && d.sub.some(s=> gLast(s.num)!=null)){
+      // 세부 존재 판정도 num/get 양쪽을 본다 — OCI 그룹의 '미분류 잔차'는 num 이 없다.
+      if(d.sub && d.sub.some(s=> ((s.get || (g=> g(s.num)))(gLast))!=null)){
         const cls = "pl-resub-"+togGroups.length;
         const lab=document.createElement("span");
         const tog=document.createElement("button");  // G1: K-ICS .subtoggle 양식 미러(common.css)
@@ -1169,7 +1205,9 @@
         lab.appendChild(document.createTextNode(d.ko)); lab.appendChild(tog);
         rows.push({ cells:[ lab, ...getters.map(g=> fmtEok(d.get(g))) ] });
         for(const s of d.sub){
-          rows.push({ cls:"pl-resub "+cls, hide:true, muted:true, cells:[ "　└ "+s.ko, ...getters.map(g=> fmtEok(g(s.num))) ] });
+          // 세부 행의 값: 보통은 항목번호(num) 하나지만, 미분류 잔차처럼 계산식인 것도 있다.
+          const sGet = s.get || (g=> g(s.num));
+          rows.push({ cls:"pl-resub "+cls, hide:true, muted:true, cells:[ "　└ "+s.ko, ...getters.map(g=> fmtEok(sGet(g))) ] });
         }
         togGroups.push({ tog, cls, label:d.ko, title:(d.subTitle||d.ko) });
       } else {
