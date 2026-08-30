@@ -47,6 +47,15 @@
       table{font-size:12px}
       th,td{padding:6px 8px}
       td.num,th.num{white-space:nowrap;word-break:keep-all}
+      /* 가로 스크롤 시 항목명이 화면 밖으로 나가면 숫자만 남는다 — 첫 열을 붙잡아 둔다.
+         (열을 지우지 않고 고정하는 쪽을 택했다. 기간 열을 줄이면 데이터가 사라진다.) */
+      .table-wrap th:first-child,
+      .table-wrap td:first-child{
+        position:sticky; left:0; z-index:2;
+        background:#ffffff; box-shadow:1px 0 0 var(--border);
+        white-space:nowrap; max-width:44vw; overflow:hidden; text-overflow:ellipsis;
+      }
+      .table-wrap thead th:first-child{z-index:3}
     }
 .kpi7-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .kpi7-card{background:var(--card);border:var(--bd);border-radius:var(--r-md);padding:12px 14px}
@@ -833,9 +842,11 @@
   }
 
   // Build ordered waterfall steps for one period (손보/생보 공통). Drops optional rows that are null/0.
-  function plBuildSteps(name, per){
+  // opts.noOci=true 면 OCI 구간을 통째로 빼고 당기순이익을 종착 막대로 만든다.
+  // (모바일 차트 전용 — 표는 옵션 없이 불러 전 구간을 유지한다.)
+  function plBuildSteps(name, per, opts){
     const g = plMakeGetter(name, per);
-    const mode = plOciMode(g);
+    const mode = (opts && opts.noOci) ? "none" : plOciMode(g);
     const steps = [];
     for (const d of plStepDefsFor(name, per)){
       if (d.oci){
@@ -881,8 +892,10 @@
     if (charts.pl){ try{ charts.pl.dispose(); }catch(e){} }
     charts.pl = echarts.init(el, null, { renderer:"canvas" });
 
-    const bars = plBuildSteps(name, per);
     const isMobile = window.matchMedia("(max-width:640px)").matches;
+    // 모바일: OCI 구간을 빼 축을 당기순이익 스케일로 되돌린다(owner 2026-08-30).
+    const bars = plBuildSteps(name, per, { noOci: isMobile });
+    const plHasOci = isMobile && plBuildSteps(name, per).length > bars.length;
 
     // 각 막대의 [시작,끝] 값좌표. flow=running에서 step, anchor/end=0 기준.
     // 스택+투명 placeholder 방식은 0선을 넘는 step에서 막대가 0 위로 떠버림(롯데 투자손익: 보험손익 +0.03 → 투자손익이
@@ -1113,6 +1126,22 @@
                field: (mode==="quarter") ? "q" : "y",
                label: (mode==="quarter") ? qq : (is4Q ? String(wfParseQ(qq)[0]) : (qq+"("+fyPartialLabel(wfParseQ(qq)[1])+")")) };
     });
+  }
+
+  // 모바일에서 차트가 당기순이익에서 끊겼다는 사실을 표 위에 명시한다(조용히 감추지 않는다).
+  function plMobileNote(host, show){
+    let el = q(host, "#plMobileNote");
+    if(!el){
+      const tbl = q(host, "#plTable"); if(!tbl) return;
+      el = document.createElement("div");
+      el.id = "plMobileNote";
+      el.style.cssText = "font-size:11.5px;color:var(--muted);margin:6px 0 0;line-height:1.5";
+      tbl.parentNode.insertBefore(el, tbl);
+    }
+    el.textContent = show
+      ? "좁은 화면에서는 그래프를 당기순이익까지만 그립니다 — 기타포괄손익 항목은 당기순이익보다 자릿수가 커서 함께 그리면 순이익까지의 흐름이 눌립니다. 총포괄손익까지의 전 구간은 아래 표에 그대로 있습니다."
+      : "";
+    el.style.display = show ? "block" : "none";
   }
 
   function renderPlTable(host, name, mode){
@@ -1709,6 +1738,8 @@
     if (!plStubMsg){
       const plBars = renderPlWaterfall(host, plName, plPer);
       renderPlTable(host, plName, plMode);
+      plMobileNote(host, window.matchMedia("(max-width:640px)").matches
+                         && plOciModeOf(plName, plPer) !== "none");
       // LOB형(하이픈 항목 보유)은 스텝 구성이 회사마다 달라 캡션을 실제 그려진 막대에서 만든다.
       // 기본형은 손으로 쓴 기존 문장을 그대로 둔다(자동차+일반처럼 생략된 스텝까지 설명해야 해서).
       const plLobOn = !!plLobHead(plName, plPer);
