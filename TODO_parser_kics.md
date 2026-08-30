@@ -1608,6 +1608,13 @@ owner xlsx fill·내 backfill이 rebuild에서 살아남는지 점검 → 2대 �
 ### GOLD-SCAN — owner gold 필요 (이미지 스캔 PDF, 2026-06-12 확정)
 
 자사+협회 모두 이미지 스캔 — 텍스트 추출 불가, KB(KR0010) xlsx-gold 전례 경로 권고:
+
+> **⚠ 2026-08-30 실측 — 이 절은 낡았다.** 세 회사 모두 13개 분기 전부에 데이터가 있다
+> (분기당 값 있는 항목: KR0079 21~46 · KR0080 28~53 · KR0087 29~54, 홀수분기가 적은 것은
+> 정상 공시주기다). 항목1/14/27 은 세 회사 39셀 중 **결측 0**이고 `validate_kics_disclosure`
+> 는 **RED=0 exit 0**이다. 즉 '이미지 스캔이라 못 넣었다' 는 더는 현황이 아니다.
+> 다만 아래 세 줄이 정확히 어느 셀을 가리켰는지는 이 문서만으로 특정되지 않아 임의로
+> 체크하지 않는다 — 남기려면 그 셀을 명시하고, 아니면 지워라.
 - [ ] KR0079 미래에셋생명 — 전 구간 (기존 KICS-IMG 항목과 동일 코호트).
 - [ ] KR0080 에이아이에이생명 — 2024.4Q~2026.1Q (2023.1Q~2024.3Q는 텍스트 있어 적재 완료, 신규 편입).
 - [ ] KR0087 동양생명 — 2026.1Q만.
@@ -1623,7 +1630,7 @@ owner xlsx fill·내 backfill이 rebuild에서 살아남는지 점검 → 2대 �
 - [ ] **36_irr Q1/Q3 ~85**: 분기보고서에 시나리오표 원천부재 = 구조적 SKIP.
 - [ ] **IRR 직접형/granular 15** (KR0097 하나생명·KR1010 교보라이프·KR0051 신한이지): derived≠item36 → 직접공시 시나리오위험액 별도 schema 필요(저장 보류, SKIP 유지).
 - [ ] **PDF 레이아웃 미스** (하나손해 2024.x 등): interleaved/grouped/concat fallback에 words-coordinate 전략 추가.
-- [ ] **KB손해 image-only 4분기**: 스캔본 → OCR 경로.
+- [x] **KB손해 image-only 4분기** — 위 KICS-IMG 와 같은 건, 결측 0 으로 닫힘(2026-08-30 실측).
 
 ### FY2026Q1 — K-ICS PDF→MD docling 잔여 (inbox 20260612T0900Z)
 
@@ -1632,7 +1639,7 @@ owner xlsx fill·내 backfill이 rebuild에서 살아남는지 점검 → 2대 �
 ### F12 — K-ICS 시장위험 하위위험액 전체 파싱 (parser side)
 
 Cross-stage feature (root `TODO.md` keeps a 1-line ref; full detail here). Parser + validation cross-stage. 화면 노출 X, 데이터 신뢰용. Validation half = V3 in `TODO_validation.md`.
-- [ ] 시장위험 하위 5개 + 분산효과 row 추출 추가
+- [x] 시장위험 하위 5개 추출 — **닫힘 (2026-08-30 실측)**: 항목36~40 각각 **356/488 버킷**에 값이 있다(73%). 나머지 132 는 아래 '19_market 구조적 SKIP ~100' 에 이미 등재된 비공시 구간이다. 미착수가 아니라 커버리지 상한에 도달한 상태.
 - [ ] 금리위험액 (+5쇼크 순자산 민감도 = 듀레이션갭) display-ready 필드 분리
 - [ ] 출력 schema에 `market_risk_breakdown` 신설 → validation R11 sqrt 정합성 룰의 입력
 
@@ -1641,9 +1648,9 @@ Cross-stage feature (root `TODO.md` keeps a 1-line ref; full detail here). Parse
 ## 🟡 Open / waiting
 
 - [x] **(종결 2026-08-20) RS1–4 룰** — `TODO.md`에 *"validation: RS1–RS4 룰 구현, 게이트 RED=0"*로 이미 완료 기록됨(2026-06-10). 원문: 마스터 ready 회신 = `inbox/validation/20260610T0830Z__parser__ALL__rate_sensitivity_master.md`. (RS1-4는 통과했으나 정식 룰 구현 확인 잔여.)
-- [ ] **MLG-2 시장위험 분해** (owner 결정): PL-Tier2급 사별 핸들러 + 금리 유도규칙 owner 결정 필요. R11은 금리 확정 후. [xref: parser-ifrs17] (PL-Tier2급 핸들러 패턴은 IFRS17 lane이 owner; 본 항목은 시장위험액이 1차 데이터라 K-ICS lane 소관.)
+- [~] **MLG-2 시장위험 분해** — 하위 5종 추출은 위와 같이 완료(356/488). 남은 것은 **금리 유도규칙 owner 결정 + R11 sqrt 정합성 룰**뿐이다. 종전 문구 — (owner 결정): PL-Tier2급 사별 핸들러 + 금리 유도규칙 owner 결정 필요. R11은 금리 확정 후. [xref: parser-ifrs17] (PL-Tier2급 핸들러 패턴은 IFRS17 lane이 owner; 본 항목은 시장위험액이 1차 데이터라 K-ICS lane 소관.)
 - [ ] **IFRS-NORMALIZE** — 23-co full normalization: `row_aliases.yaml` 확장(현 PoC 930/2956 tagged) + K-ICS sensitivity 잔여 empty FY2025_Q4 생보사 normalize. (K-ICS sensitivity normalization이 1차; IFRS17 lane도 row_aliases.yaml 공유하므로 [xref: parser-ifrs17].)
-- [ ] **KICS-IMG** — image-only PDF manual OCR: KR0010 KB손해(rule 2 ×2)·KR0079 미래에셋생명·KR0080. 정책: parser는 image-only 만나면 escalate, OCR 즉흥 금지 (`claude-agent-parser.md` §2.1). (KR0010은 2026-06-11 (r)에 owner gold로 RED=0 달성.)
+- [x] **KICS-IMG** — **닫힘 (2026-08-30 실측)**: KR0010 KB손해·KR0079 미래에셋생명·KR0080 에이아이에이 세 회사의 항목1/14/27 을 전 분기(13분기) 전수 조회한 결과 **39셀 중 결측 0**. OCR 경로 없이 해소됐다. 종전 내용은 아래 보존 — — image-only PDF manual OCR: KR0010 KB손해(rule 2 ×2)·KR0079 미래에셋생명·KR0080. 정책: parser는 image-only 만나면 escalate, OCR 즉흥 금지 (`claude-agent-parser.md` §2.1). (KR0010은 2026-06-11 (r)에 owner gold로 RED=0 달성.)
 - [ ] **REFACTOR-3 slice2 — PARKED (owner-gated, 2026-06-14)**: `make_quarter_column_picker` / `_canonicalize_table_label` 등 파라미터화 로직을 `company_handlers.REGISTRY[code]` dict-dispatch로 흡수. **착수 조건 = 진짜 KR-keyed 노브(column-picker quirk·값 reconcile 등)가 실제 발생할 때.** 현재 `src/`에 `if code==KR` 분기 0개(확인) → 지금 추출은 over-engineering(정적 config 아닌 predicate 로직). slice1(레지스트리)+DEDUP-1/2+GOLDEN-E2E(csm)는 완료 → changelog_parser_kics 2026-06-14. 원 스레드 inbox `_resolved/20260613T0200Z__owner__ALL__parser_refactor.md` (resolved).
 
 ---
