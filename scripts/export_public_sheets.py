@@ -70,6 +70,7 @@ MASTERS = [
     ("kics_rate_sensitivity.json", "금리민감도"),
     ("CSM_waterfall.json", "CSM워터폴"),
     ("CSM_amortization.json", "CSM상각"),
+    ("CSM_sensitivity.json", "가정민감도"),   # 2026-08-30 신설 (IFRS17 가정민감도 ΔCSM)
     ("NB_CSM_multiple.json", "신계약CSM배수"),
     ("PL_breakdown.json", "손익분해PL"),
     ("dividend.json", "배당"),

@@ -1115,7 +1115,7 @@ PUBLIC_EXPORT_RULES = {
 }
 
 # 실측 2026-08-30. exporter 의 MASTERS 길이와 같아야 한다.
-PUBLIC_EXPORT_SHEETS = 11
+PUBLIC_EXPORT_SHEETS = 12
 
 
 def _live_gate():
