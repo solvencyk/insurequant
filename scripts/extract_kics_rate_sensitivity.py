@@ -182,13 +182,43 @@ def resolve_block(d):
     return d, ("rs1_fail" if abs_ok is False else "unverified")
 
 
+# 듀레이션·컨벡서티가 의미를 갖는 것은 **금액** 계열뿐이다. 지급여력비율은 두 금액의
+# 나눗셈이라 그 1·2차 미분을 '듀레이션/컨벡서티'라 부르면 잘못된 이름이 된다 -> null 로 둔다.
+_DC_MEASURES = ("지급여력금액", "지급여력기준금액")
+
+
+def duration_convexity(measure, base, dn100, up100):
+    """±100bp 평행이동에서 유효듀레이션(년)·유효컨벡서티. (owner 2026-08-30)
+
+        D = -(V₊ - V₋) / (2 · V₀ · Δy)
+        C =  (V₊ + V₋ - 2·V₀) / (V₀ · Δy²)
+
+    부호 규약: **D 양수 = 금리 상승 시 가치 감소**(자산 듀레이션이 부채보다 김).
+    보험사 순자산(가용자본)은 해지옵션·최저보증 때문에 금리에 오목한 경우가 많아
+    C 가 음수로 나오는 것이 정상이다.
+
+    ±50bp 로도 같은 계산이 가능하지만 컬럼은 owner 지시대로 2개만 둔다 — 주값은
+    바깥 충격(±100bp)이다. 두 벌의 괴리는 `validate_kics_rate_sensitivity.py` 가 본다.
+    """
+    if measure not in _DC_MEASURES:
+        return None, None
+    if base in (None, 0) or dn100 is None or up100 is None:
+        return None, None
+    dy = 0.01
+    d = -(up100 - dn100) / (2.0 * base * dy)
+    c = (up100 + dn100 - 2.0 * base) / (base * dy * dy)
+    return round(d, 4), round(c, 2)
+
+
 def emit_rows(meta, quarter, phase, d):
     rows = []
     for m, vals in d.items():
+        dur, conv = duration_convexity(m, vals[0], vals[1], vals[4])
         rows.append({
             **meta, "공시분기": quarter, "경과조치여부": phase, "measure구분": m,
             "-100bp": vals[1], "-50bp": vals[2], "base": vals[0],
             "+50bp": vals[3], "+100bp": vals[4],
+            "듀레이션": dur, "컨벡서티": conv,
         })
     return rows
 

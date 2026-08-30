@@ -24,6 +24,9 @@ REPO = Path(__file__).resolve().parents[1]
 RS_JSON = REPO / "kics_rate_sensitivity.json"
 GOLD = REPO / "data" / "_gold" / "user_rate_sensitivity_rows.json"
 COLS = ["-100bp", "-50bp", "base", "+50bp", "+100bp"]
+# 듀레이션·컨벡서티는 추출기와 **같은 함수**를 쓴다(산식을 여기 베껴 쓰면 두 경로가 갈라진다).
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from extract_kics_rate_sensitivity import duration_convexity  # noqa: E402
 KEYF = ("원보험사코드", "공시분기", "경과조치여부", "measure구분")
 
 
@@ -81,8 +84,19 @@ def apply() -> int:
             rs.append(g)
             idx[k] = g
             n_add += 1
+    # 듀레이션·컨벡서티는 **모든 행**에 대해 여기서 다시 계산한다(idempotent).
+    # gold 로 새로 들어온 행은 물론, 추출기 시대의 옛 행에도 컬럼이 붙는다 —
+    # 즉 이 명령이 두 컬럼을 보장하는 단일 재실행 경로다.
+    n_dc = 0
+    for r in rs:
+        d, c = duration_convexity(r.get("measure구분"), r.get("base"),
+                                  r.get("-100bp"), r.get("+100bp"))
+        if r.get("듀레이션") != d or r.get("컨벡서티") != c:
+            n_dc += 1
+        r["듀레이션"], r["컨벡서티"] = d, c
     RS_JSON.write_text(json.dumps(rs, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"rate-sens gold applied: {n_add} added, {n_upd} updated ({len(rs)} rows)")
+    print(f"  듀레이션/컨벡서티 갱신: {n_dc}행")
     return 0
 
 

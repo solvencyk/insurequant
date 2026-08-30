@@ -1,6 +1,6 @@
 {
   "master": "kics_rate_sensitivity",
-  "generated_at": "20260820T1410Z",
+  "generated_at": "20260830T0625Z",
   "emitter": "parser",
   "cells": [
     {
@@ -162,6 +162,14 @@
       "source_id": "DISCLOSURE_MD",
       "as_of_date": "2025-06-30",
       "source_file": "md_inbox/FY2025_Q2/KR0010_KB손해보험.md"
+    },
+    {
+      "company_code": "KR0010",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR0010_KB손해보험.md"
     },
     {
       "company_code": "KR0011",
