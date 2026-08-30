@@ -42,7 +42,7 @@
     .sens-kpis{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
     /* 순자산 듀레이션·컨벡서티 (owner 2026-08-30) — IFRS17.html 의 kpi7 스트립과 같은 결.
        금리민감도 표에서 나오는 파생값이라 표 위에 크게 둔다. */
-    .dur-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 4px}
+    .dur-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0 4px}
     .dur-card{background:var(--card);border:var(--bd);border-radius:var(--r-md);padding:14px 16px}
     .dur-card.lead{border-color:#0d6efd33;background:linear-gradient(180deg,#0d6efd0a,transparent)}
     .dur-val{font-size:26px;font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--text)}
@@ -50,7 +50,7 @@
     .dur-lab{font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
     .dur-sub{font-size:11px;color:var(--muted);margin-top:3px}
     .dur-note{font-size:11.5px;color:var(--muted);margin:2px 0 6px;line-height:1.5}
-    @media(max-width:640px){.dur-strip{grid-template-columns:repeat(2,1fr)}.dur-val{font-size:22px}}
+    @media(max-width:640px){.dur-strip{grid-template-columns:1fr}.dur-val{font-size:24px}}
     .sens-kpi{display:inline-block;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:8px 14px;font-size:13px}
     .sens-kpi-delta{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;margin-left:4px}
     .sens-kpi .sub{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:2px}
@@ -1232,36 +1232,23 @@
       // 표와 같은 우선순위: 적용후 우선, 없으면 적용전
       const mode = rows.some(r => r['경과조치여부'] === '적용후') ? '적용후' : '적용전';
       const cap = pick(mode, '지급여력금액');
-      const req = pick(mode, '지급여력기준금액');
       const has = cap && (cap['듀레이션'] != null || cap['컨벡서티'] != null);
       if (!has) { strip.style.display = 'none'; note.style.display = 'none'; return; }
 
       const num = (v, dg) => v == null ? '—'
         : (Number(v) < 0 ? '△' : '') + Math.abs(Number(v)).toFixed(dg);
-      // 듀레이션에서 곧바로 읽히는 것: 금리 1%p 상승 시 순자산 변동 (2차항까지)
-      let eff = '—';
-      if (cap && cap['듀레이션'] != null && cap['base']) {
-        const d = Number(cap['듀레이션']), c = Number(cap['컨벡서티'] || 0);
-        const pct = -d * 0.01 + 0.5 * c * 0.0001;          // ΔV/V
-        const amt = pct * Number(cap['base']);
-        eff = (pct < 0 ? '△' : '+') + Math.abs(pct * 100).toFixed(2) + '%'
-            + ' (' + (amt < 0 ? '△' : '+') + Math.abs(amt).toLocaleString('ko-KR', {maximumFractionDigits: 0}) + '억)';
-      }
       const card = (v, unit, lab, sub, lead) =>
         '<div class="dur-card' + (lead ? ' lead' : '') + '">'
         + '<div class="dur-val">' + v + (unit ? '<span class="u">' + unit + '</span>' : '') + '</div>'
         + '<div class="dur-lab">' + lab + '</div>'
         + '<div class="dur-sub">' + sub + '</div></div>';
 
+      // owner 2026-08-30: 요구자본 듀레이션·금리 1%p 순자산 증감은 뺀다. 두 칸만 남긴다.
       strip.innerHTML = [
         card(num(cap['듀레이션'], 2), '년', '순자산 듀레이션',
              '가용자본 기준 · ' + mode, true),
         card(num(cap['컨벡서티'], 0), '', '순자산 컨벡서티',
-             '음수 = 금리에 오목(해지옵션·최저보증)', true),
-        card(eff, '', '금리 +1%p 시 순자산',
-             '듀레이션·컨벡서티로 환산한 근사'),
-        card(num(req && req['듀레이션'], 2), '년', '요구자본 듀레이션',
-             '지급여력기준금액 기준 (참고)')
+             '음수 = 금리에 오목(해지옵션·최저보증)', true)
       ].join('');
       strip.style.display = 'grid';
       note.innerHTML = '순자산 = 지급여력금액(가용자본). '
