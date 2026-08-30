@@ -9,6 +9,28 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-30c, owner 직접 지시 6건 — 라이브 배포 완료 `bfb8f8b`/`8634783`/`98337f6`):**
+- **K-ICS 순자산 듀레이션·컨벡서티 카드 2칸**(`K-ICS.html`). 별도 마스터 없이 기존
+  `kics_rate_sensitivity.json` 에 **열 2개만** 추가(owner 지시). 정의는
+  `extract_kics_rate_sensitivity.py::duration_convexity()` **한 곳뿐** — gold 재적용은 import 해서 쓴다.
+  처음 4칸으로 냈다가 owner 가 "요구자본 듀레이션·금리 1%p시 증감은 빼라" 해서 2칸으로 줄였다.
+  음수 듀레이션 = 금리 상승 시 순자산 증가 설명도 owner 지시로 추가.
+- **KB손해 2025.4Q 재추출** — OCR 시점 이미지 PDF. 마스터 값을 앵커로 페이지 특정 후 200dpi 렌더,
+  **RS1 항등식을 5개 열 전부** + 본문 서술로 3중 검산. 522->528행, gold 60->66행.
+- **IFRS17 Panel 5 모바일**: OCI 자릿수가 당기순이익보다 커서(삼성생명 1.70조 vs 25.32조) 축이
+  끌려가던 것을 **모바일 차트만 당기순이익에서 끊어** 해결(기존 `mode === "none"` 경로 재사용,
+  새 분기 없음). **표는 전 구간 유지** + 잘렸음을 화면에 명시 + **첫 열 sticky**.
+  OCI 세부는 `기타포괄손익` 한 줄 + `＋` 토글(기존 `d.sub` 장치). 그룹 합계 = 공시 항목25.
+- **index 모바일 CSM 목록** 막대를 신계약CSM 배수 비례로(종전엔 숫자에만 들어가 있었다).
+- **K-ICS 트리맵 색 스케일**: 램프 끝점이 데이터 한복판(200%)이라 **190%+ 23개사가 한 색**이었다.
+  p90(300%/250%)으로 옮기고 밝기 폭 10.5->38 포인트. 칸 글자색을 **배경 휘도에서 계산**(회색
+  잉크로는 AA 를 못 넘는 구간이 있어 순검정). 39사 전수: 뭉침 23->3사(기본자본 19->4사),
+  최소 대비 4.59/4.65:1 **AA 통과**. 검증 스크립트 `scripts/_probes/probe_20260830_ratio_color_scale.js`.
+- **철회**: 업권색(생보 파랑)은 owner 가 직접 취소. push 전이라 `reset --hard` 로 흔적 없이 제거.
+- **미확인 1건 — owner 눈 필요**: 이 환경에서 preview 서버가 안 떠(연결 거부) 화면을 못 봤다.
+  대신 인라인 `<script>` 를 `node --check` 하고 순수 함수를 실마스터로 실행해 검증했다.
+  라이브는 sha256 바이트 동일 확인(`6ee6b93c…`, 76,916 바이트). **색과 모바일 레이아웃은 육안 확인 대기.**
+
 **Recent (2026-08-30b, inbox 20260830T0900Z — Panel 5 표 토글 재검증, 코드 수정 0):**
 - 티켓 전제("`＋` 가 코리안리 네 축 중 생명 수재만 편다")를 **실측으로 반증했다.** 네 축 전부 이미
   펴진다 — `2c87d18` 의 `plLobHead()` 가 다리마다 `sub:` 를 붙이고 있었다. **`IFRS17.html` 무수정.**
