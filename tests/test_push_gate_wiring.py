@@ -451,3 +451,64 @@ def test_gate_reads_the_deployed_artifact_not_the_upstream_copy(deployed):
                 f"{name} 이 상류 사본을 직접 로드하는 줄이 남아 있다: {s[:120]}\n"
                 f"배포본({deployed})을 읽어야 한다."
             )
+
+
+# ---------------------------------------------------------------------------
+# owner 상시 규칙: **화면에 있는 그래프는 전부 마스터 테이블에 담는다.**
+#
+# 2026-08-30 실측: 이 규칙이 문서에만 있었고 검사하는 것이 없어서, `IFRS17.html`
+# "7) 민감도(ΔCSM)" 패널이 **마스터 시트 없이** 오래 방치돼 있었다. 하필 마스터에
+# `금리민감도` 라는 비슷한 이름의 시트(K-ICS 지급여력비율의 금리 ±bp 민감도)가 있어서
+# 같은 것으로 오인되기 딱 좋았다 — 사람이 눈으로 보는 방식으로는 이 종류를 못 잡는다.
+#
+# 그래서 기계로 건다. 화면이 fetch 하는 .json 은 전부
+#   (a) 그 자체가 마스터 JSON 이거나
+#   (b) 아래 `PANEL_DERIVED_FROM` 이 어느 마스터의 파생인지 선언하고 있어야 한다.
+# 새 패널이 화면에 붙는 순간 여기서 막히고, 그때 "이 그래프는 어느 시트에 담기나?" 를
+# 한 번은 답해야 한다. `public_exports/` 는 마스터의 공개 사본이라 이 검사에서 뺀다.
+#
+# `bs_snapshot.json` · `csm_waterfall_history.json` 은 여기 없다 — 패널 빌더가 만들지만
+# **배포 HTML/JS 가 더는 fetch 하지 않는다**(2026-08-30 실측, 아래 ghost 검사로 확인).
+# 화면에 없으니 이 규칙의 대상이 아니다. 다시 붙으면 ghost 검사가 아니라 위 gap 검사에
+# 걸리므로 그때 선언하면 된다.
+PANEL_DERIVED_FROM = {
+    "data/dart/viz/csm_amort_schedule.json":     "CSM_amortization.json",
+    "data/dart/viz/csm_waterfall.json":          "CSM_waterfall.json",
+    "data/dart/viz/insurance_pl_breakdown.json": "PL_breakdown.json",
+    "data/dart/viz/sensitivity_heatmap.json":    "CSM_sensitivity.json",
+    "data/ir/nb_csm_ratio.json":                 "NB_CSM_multiple.json",
+}
+
+
+def test_every_live_fetched_artifact_lands_in_a_master_sheet():
+    """화면이 그리는 데이터는 전부 마스터 xlsx 의 어느 시트에 담겨야 한다(owner 상시 규칙)."""
+    import sys
+    fetched = _origin_main_fetches()
+    if fetched is None:
+        pytest.skip("origin/main 의 배포본을 읽을 수 없다(슬림 워크트리/무리모트)")
+    if not (ROOT / "scripts" / "build_master_xlsx.py").exists():
+        pytest.skip("slim 워크트리: scripts/build_master_xlsx.py 없음")
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from build_master_xlsx import MASTERS
+    sheet_of = {j: s for j, s, *_ in MASTERS}
+
+    gaps = []
+    for f in sorted(fetched):
+        base = f.lstrip("./")
+        if base.startswith("public_exports/"):
+            continue          # 마스터의 공개 사본 — 원본이 이미 검사된다
+        master = base if base in sheet_of else PANEL_DERIVED_FROM.get(base)
+        if not master or master not in sheet_of:
+            gaps.append(base)
+    assert not gaps, (
+        f"화면이 그리는데 마스터 시트가 없는 데이터 {gaps} — owner 상시 규칙 위반. "
+        f"그 데이터를 담을 마스터를 만들어 `build_master_xlsx.MASTERS` 에 등재하고, "
+        f"패널 JSON 이면 PANEL_DERIVED_FROM 에 어느 마스터의 파생인지 선언해라."
+    )
+
+    # 선언만 하고 실제로는 화면이 더는 안 읽는 항목도 막는다(죽은 선언 방지).
+    ghost = sorted(k for k in PANEL_DERIVED_FROM
+                   if k not in {f.lstrip("./") for f in fetched})
+    assert not ghost, (
+        f"PANEL_DERIVED_FROM 에만 있고 화면이 더는 fetch 하지 않는 것 {ghost} — 선언을 지워라."
+    )
