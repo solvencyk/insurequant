@@ -105,6 +105,13 @@ Parser는 데이터 추출 + reconciliation gate. Publishing은 그 결과를 pa
 ### F18 viz — IR factsheet integration (gathering side; parser body in `TODO_parser.md` F18)
 
 - [ ] `data/ir/<period>/parsed/<KR>.json` 도착 후 disclosed_csm_multiple.json + nb_premium_wolnap.json + segment_insurance_income 통합 ⚠️ **2026-08-20 실측: 1년째 미도착** — `data/ir/**/parsed/`에 파일 1개뿐(KR0087 동양생명 FY2026_Q2). 9사 cohort 미도착. 재개하려면 IR 파서 레인 별도 발주 필요.
+
+> **⚠ 2026-08-30 실측 정정 — "미도착"이 아니라 "미파싱"이다.** `data/ir/` 에 raw IR
+> 자료가 **130개 파일** 있다: 현대해상 13분기 · 한화생명 13분기 · 미래에셋생명 13분기 ·
+> DB손해 11분기 · KB금융(_groups) 14분기 + 삼성화재·삼성생명·롯데손해·코리안리·동양생명
+> 각 1분기. 없는 것은 **`parsed/<KR>.json` 산출물**뿐이고(2개 분기 6개 파일만 존재),
+> 즉 수집이 안 된 게 아니라 파싱 단계를 아무도 돌리지 않았다. owner 2026-08-30: IR 은
+> 파싱 검증용 보조 소스이니 **꼭 필요할 때만** 착수할 것.
 - [ ] DART↔IR cross-source 룰 validation pass 확인 → 통합 어셈블 진행
 
 ### ~~INDEX-IFRS17-BUBBLE / INDEX-BUBBLE-V2~~ — 완결됨 (2026-06-14)
