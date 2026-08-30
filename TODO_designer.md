@@ -9,7 +9,7 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
-**Recent (2026-08-30d, owner 후속 지시 — 브랜치 커밋, 라이브 미반영):**
+**Recent (2026-08-30d, owner 후속 지시 — 라이브 배포 완료 `2a7c51b`):**
 - **IFRS17 Panel 5 모바일 x축 라벨 겹침 해소.** 375px 에서 막대 하나에 16.9px 인데 두 줄 라벨이
   30px 를 먹어 글자가 겹쳤다. **45도 회전 + 모바일 전용 한 줄 라벨표(`PL_WRAP_M`)** 로 해결하고,
   낭비되던 y축 여백(`GRID_L` 56→38)을 막대 폭으로 돌렸다. 전체 이름은 툴팁·표에 그대로 남는다.

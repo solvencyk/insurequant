@@ -7,7 +7,7 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
-## 2026-08-30d — Panel 5 모바일 x축 라벨 겹침 해소 (owner 후속 지시)
+## 2026-08-30d — Panel 5 모바일 x축 라벨 겹침 해소 (owner 후속 지시 · 라이브 배포)
 
 owner: "당기순이익까지 보이긴 한데 글씨가 오지게 겹쳐, 모바일은 어쩔수없나?"
 
@@ -30,6 +30,9 @@ owner: "당기순이익까지 보이긴 한데 글씨가 오지게 겹쳐, 모�
 삼성생명(11개), 코리안리(11개, LOB 라벨이 동적인 축). 겹침 0. 데스크톱은 ECharts `getOption()`
 으로 grid 56/18/24/58 · fontSize 10 · rotate 0 · 두 줄 라벨까지 종전과 같음을 확인했다(회귀 0).
 `pytest tests/test_deploy_assets.py` 10 passed.
+
+**배포.** 브랜치 `3891752` → 격리 워크트리로 main `2a7c51b`. 라이브 sha256 이 로컬과
+동일(`d575821f…`, 132,836 bytes), 새 표식 3종 존재 · 옛 표식 0.
 
 > 세션 메모: 이 환경에서 `preview_start` 는 시작에 성공했다고 보고하고도 실제로는 연결이 안 된다
 > (curl exit 7). 대신 이전 세션이 남긴 정적 서버(포트 8896, 저장소 루트)가 살아 있어 그걸 그대로 썼다.
