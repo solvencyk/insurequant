@@ -9,6 +9,13 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-08-30d, owner 후속 지시 — 브랜치 커밋, 라이브 미반영):**
+- **IFRS17 Panel 5 모바일 x축 라벨 겹침 해소.** 375px 에서 막대 하나에 16.9px 인데 두 줄 라벨이
+  30px 를 먹어 글자가 겹쳤다. **45도 회전 + 모바일 전용 한 줄 라벨표(`PL_WRAP_M`)** 로 해결하고,
+  낭비되던 y축 여백(`GRID_L` 56→38)을 막대 폭으로 돌렸다. 전체 이름은 툴팁·표에 그대로 남는다.
+  375·320px 실화면 3사(메리츠화재·삼성생명·코리안리) 캡처로 겹침 0 확인, 데스크톱은 `getOption()`
+  대조로 회귀 0. 상세는 changelog 2026-08-30d.
+
 **Recent (2026-08-30c, owner 직접 지시 6건 — 라이브 배포 완료 `bfb8f8b`/`8634783`/`98337f6`):**
 - **K-ICS 순자산 듀레이션·컨벡서티 카드 2칸**(`K-ICS.html`). 별도 마스터 없이 기존
   `kics_rate_sensitivity.json` 에 **열 2개만** 추가(owner 지시). 정의는
@@ -27,7 +34,9 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
   잉크로는 AA 를 못 넘는 구간이 있어 순검정). 39사 전수: 뭉침 23->3사(기본자본 19->4사),
   최소 대비 4.59/4.65:1 **AA 통과**. 검증 스크립트 `scripts/_probes/probe_20260830_ratio_color_scale.js`.
 - **철회**: 업권색(생보 파랑)은 owner 가 직접 취소. push 전이라 `reset --hard` 로 흔적 없이 제거.
-- **미확인 1건 — owner 눈 필요**: 이 환경에서 preview 서버가 안 떠(연결 거부) 화면을 못 봤다.
+- **화면 확인 경로 확보(2026-08-30d).** `preview_start` 는 이 환경에서 연결이 안 되지만, 남아 있는
+  정적 서버(포트 8896, 저장소 루트)로 실화면 캡처가 된다. 캐시가 강해 `?v=N` 필요.
+  색 스케일은 owner 확인이 아직 남아 있다.
   대신 인라인 `<script>` 를 `node --check` 하고 순수 함수를 실마스터로 실행해 검증했다.
   라이브는 sha256 바이트 동일 확인(`6ee6b93c…`, 76,916 바이트). **색과 모바일 레이아웃은 육안 확인 대기.**
 
