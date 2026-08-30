@@ -1023,7 +1023,44 @@ def _has_shock_rows(block: dict) -> bool:
     return False
 
 
-def _pick_sensitivity_block(sens_blocks: list[dict]) -> dict | None:
+def _base_csm_anchor_score(blk: dict, company: str) -> float:
+    """표의 기준 보험계약마진이 그 회사의 실제 기말 CSM 과 얼마나 맞는가 (클수록 좋음).
+
+    이 저장소가 실측한 함정(2026-08-30, 라이나생명): 한 필링 안에 **캡션·헤더·행수가
+    완전히 같은** 민감도 표가 여러 벌 들어 있다 — ① 유배당 / ② 무배당, 그리고 각각의
+    별도·연결 사본. 위 정렬 키가 전부 동점이 되면 마지막 `-line_no` 가 승부를 갈라
+    **문서에 먼저 나오는 표**가 뽑힌다. 라이나는 유배당(기준 CSM 16.9억)이 먼저 나오고
+    무배당(23,743.7억, 마스터 23,760.6억과 0.07% 일치)이 나중에 나온다 — 그래서 회사
+    전체 장부의 0.004% 짜리 민감도가 히트맵에 실려 있었다.
+
+    문서 순서 대신 **마스터의 기말 CSM** 을 앵커로 쓴다. 이 앵커는 별도(OFS) 기준이므로
+    연결 사본보다 별도 사본이 자연히 이긴다(라이나 실측: 별도 23,743.7 Δ0.07% vs 연결
+    27,638.3 Δ16.4%) — 이 프로젝트의 별도-only 컨벤션과도 맞는다.
+
+    앵커나 기준값이 없으면 0.0 을 돌려 **기존 순서 규칙을 그대로 둔다**(판정에 개입하지
+    않는다). 단위 큐가 없는 블록도 마찬가지 — 단위를 모르면 크기 비교가 성립하지 않는다.
+    """
+    master = _csm_anchor(company)
+    base = _first_base_csm(blk)
+    if not master or not base or base <= 0:
+        return 0.0
+    cue = _unit_cue(blk)
+    if not cue:
+        return 0.0
+    norm = base * _UNIT_TO_EOKWON[cue]
+    if norm <= 0:
+        return 0.0
+    dev = abs(math.log10(norm / master))
+    # **자릿수 차이에서만 작동시킨다.** 0.5 decade(약 3배) 안이면 전부 0.0 으로 동점 처리해
+    # 기존 순서 규칙에 손대지 않는다. 이 가드가 없으면 몇 % 차이로 별도/연결이 뒤집힌다 —
+    # 실측(교보생명 2026): 별도 65,110억(마스터 대비 -6.0%) vs 연결 65,387억(-5.6%) 이라
+    # 연결이 근소하게 이겨 버렸다. 이 저장소가 반복해서 데인 연결/별도 혼용을 이 룰이
+    # 새로 만들면 안 된다. 라이나의 유배당(16.9억 vs 23,760억 = 3.1 decade)처럼 **자릿수가
+    # 통째로 다른** 경우에만 개입한다.
+    return 0.0 if dev <= 0.5 else -dev
+
+
+def _pick_sensitivity_block(sens_blocks: list[dict], company: str = "") -> dict | None:
     eligible = [b for b in sens_blocks if not _is_rollforward_sensitivity_caption(str(b.get("caption") or ""))]
     pool = eligible or sens_blocks
     return max(
@@ -1034,6 +1071,7 @@ def _pick_sensitivity_block(sens_blocks: list[dict]) -> dict | None:
             _sensitivity_caption_score(str(b.get("caption") or "")),
             b.get("score", 0),
             len(b.get("rows") or []),
+            _base_csm_anchor_score(b, company),   # 동점이면 문서 순서가 아니라 마스터 CSM 앵커
             -int(b.get("line_no") or 0),
         ),
     )
@@ -1047,6 +1085,29 @@ def _pick_sensitivity_block(sens_blocks: list[dict]) -> dict | None:
 #      closing CSM in CSM_waterfall.json (값 is 억원) → factor → snap to power of 10.
 # (Owner-asserted 삼성=만원/현대=원 were both wrong vs the data; user chose 'data 판정'.)
 _UNIT_TO_EOKWON = {"억원": 1.0, "백만원": 1e-2, "만원": 1e-4, "천원": 1e-5, "원": 1e-8}
+
+
+# 민감도 표 쪽 회사명과 CSM 마스터의 `원수사명` 이 다른 7건. 이 표기 차이 때문에
+# `_csm_totals_eokwon().get(company)` 가 조용히 None 을 돌려주고, 그러면 **단위 xref 도
+# 3배 sanity 가드도 둘 다 꺼진다**(둘 다 master 가 있어야 동작한다). 실측 결과 에이아이지가
+# 정확히 그 경로로 자기 CSM 의 343배(318,643억)를 그대로 실어 보내고 있었다 — 가드가 없는
+# 것이 아니라 **가드가 이 회사들에서만 조용히 비활성**이었다. 같은 별칭 집합이
+# `validate_live_artifacts.COMPANY_ALIAS` 에도 이미 실측으로 등재돼 있다.
+_CSM_NAME_ALIAS = {
+    "미래에셋생명": "미래에셋생명보험",
+    "삼성생명": "삼성생명보험",
+    "코리안리": "코리안리재보험",
+    "아이비케이연금보험": "IBK연금보험",
+    "케이비라이프생명보험": "KB라이프생명",
+    "에이아이지손해보험": "AIG손해보험",
+    "엠지손해보험": "예별손해보험",
+}
+
+
+def _csm_anchor(company: str) -> float | None:
+    """회사의 최신 기말 CSM(억원). 표기 차이를 흡수한다."""
+    tot = _csm_totals_eokwon()
+    return tot.get(company) or tot.get(_CSM_NAME_ALIAS.get(company, company))
 
 
 @lru_cache(maxsize=1)
@@ -1103,7 +1164,7 @@ def _detect_unit(blk: dict, company: str) -> tuple[float, str, str]:
     if cue:
         return _UNIT_TO_EOKWON[cue], cue, "cue"
     base = _first_base_csm(blk)
-    master = _csm_totals_eokwon().get(company)
+    master = _csm_anchor(company)
     if base and master and base > 0:
         ratio = master / base
         unit, factor = min(
@@ -1184,7 +1245,7 @@ _AMORT_XREF_MAX_LOG10_GAP = 0.3
 
 def _amort_unit_xref(total_raw: float, company: str):
     """(factor, unit) or None -- 상각표 총계와 기말 CSM 의 비율로 단위를 스냅."""
-    master = _csm_totals_eokwon().get(company)
+    master = _csm_anchor(company)
     if not master or not total_raw or total_raw <= 0 or master <= 0:
         return None
     ratio = master / total_raw
@@ -1319,7 +1380,7 @@ def _finalize_sensitivity(blk: dict, scenarios: list[dict], company: str, sa_kin
     # unit is almost certainly wrong (e.g. 메트라이프 default 백만원 → -59조) — flag
     # suspect and null the values rather than ship a garbage magnitude.
     warning = None
-    master = _csm_totals_eokwon().get(company)
+    master = _csm_anchor(company)
     if master:
         csms = [abs(s["csm_delta"]) for s in scenarios if s.get("csm_delta") is not None]
         if csms and max(csms) > 3 * master:
@@ -1349,7 +1410,7 @@ def extract_sensitivity(blocks: list[dict], company: str = "") -> dict | None:
     if not sens_blocks:
         return {"status": "unavailable", "note": "No sensitivity_analysis block in MVP extract"}
 
-    blk = _pick_sensitivity_block(sens_blocks)
+    blk = _pick_sensitivity_block(sens_blocks, company)
 
     # Reject a mis-tagged rollforward/balance table (no ± shock rows) — emitting its
     # rollforward columns as csm/pl produces garbage (푸본현대 csm 9.86 vs pl 1164.85,

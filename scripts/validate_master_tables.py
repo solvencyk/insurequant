@@ -649,30 +649,82 @@ def rebuild_root_masters() -> None:
 SENS_PATH = "data/dart/viz/sensitivity_heatmap.json"
 
 
+# 민감도 표 쪽 회사명 -> CSM 마스터의 `원수사명`. 앵커를 못 찾으면 이 룰이 조용히 또래비교로
+# 떨어지므로 별칭이 곧 판정력이다(같은 집합이 validate_live_artifacts.COMPANY_ALIAS 에도 있다).
+_SENS_NAME_ALIAS = {
+    "미래에셋생명": "미래에셋생명보험", "삼성생명": "삼성생명보험", "코리안리": "코리안리재보험",
+    "아이비케이연금보험": "IBK연금보험", "케이비라이프생명보험": "KB라이프생명",
+    "에이아이지손해보험": "AIG손해보험", "엠지손해보험": "예별손해보험",
+}
+
+
+def _sens_csm_anchor() -> dict:
+    """{원수사명: 최신 기말 CSM(억원)} — 민감도 크기의 유일한 정당한 잣대."""
+    out, seen = {}, {}
+    try:
+        rows = json.loads((ROOT / "CSM_waterfall.json").read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return out
+    for e in rows:
+        if e.get("항목번호") != 6:
+            continue
+        n, q, v = str(e.get("원수사명") or ""), str(e.get("공시분기") or ""), e.get("값")
+        if n and isinstance(v, (int, float)) and q >= seen.get(n, ""):
+            seen[n], out[n] = q, float(v)
+    return out
+
+
 def sensitivity_unit_sanity():
-    """Owner 2026-06-14 claim 2: CSM 민감도 단위 미정규화(원/만원/억원 혼재) sanity.
-    회사별 max|csm_delta| vs 또래 median 규모비. 정규화 후엔 동일단위(억원) 가정이므로 또래 대비
-    거대 outlier = 미정규화 시그니처(현대해상=원 단위라 삼성화재의 ~640배였던 케이스의 회귀가드).
-      RED   : ratio>1000x or <1/1000x (clean 단위오류 — gate 차단)
-      YELLOW: ratio>100x or <1/100x  (의심 — 보고만, 또래보다 100배+ 작은 미정규화 ÷ 누락 등)."""
+    """CSM 민감도 단위/블록 sanity — **또래 중앙값이 아니라 그 회사 자신의 기말 CSM** 대비.
+
+    2026-06-14 owner claim 2 로 만들 때는 또래 median 규모비를 썼다(현대해상=원 단위라
+    삼성화재의 ~640배였던 케이스의 회귀가드). 그 잣대는 **큰 쪽에는 맞지만 작은 쪽에서는
+    회사 규모와 단위오류를 구별하지 못한다** — 어떤 보험사도 또래의 1000배일 수는 없지만,
+    또래의 1/1000 인 회사는 얼마든지 실재한다. 실측(2026-08-30): 카카오페이손해는 기말
+    CSM 이 3.4억인 진짜 소형사인데 민감도 0.69억(자기 CSM 의 20.3% = 정상 밴드 한복판)을
+    두고 두 달 넘게 RED 였다. 반대로 라이나생명은 유배당 소블록을 집어 자기 CSM 의
+    0.004% 짜리 값을 싣고 있었는데 같은 잣대로는 카카오페이와 구별되지 않았다.
+
+    그래서 잣대를 **자기 CSM 대비**로 바꾼다. 전 회사 실측 분포(앵커 확보 30/32)는
+    0.77% ~ 34.3% 한 덩어리이고, 고장난 두 건만 그 밖에 있었다(라이나 0.004%,
+    에이아이지 34,334%). 임계는 그 관측 분포에서 잡았다:
+
+      RED   : rel < 0.05%  (관측 최소 0.77% 의 1/15 — 100배+ 단위오류·소블록 오선택)
+              rel > 300%   (빌더의 3배 가드가 앵커 부재로 안 걸린 경우의 이중망)
+      YELLOW: rel < 0.5% 또는 rel > 100%
+
+    앵커가 없으면(마스터에 그 회사 CSM 이 없음) 종전 또래비교로 떨어지되 **작은 쪽은
+    YELLOW 로만** 낸다 — 앵커 없이 소형사와 단위오류를 가르는 것은 불가능하고, 그걸
+    RED 로 내는 것이 바로 위 오탐의 원인이었다. 큰 쪽(>1000배)은 앵커 없이도 RED 다.
+    """
     sp = ROOT / SENS_PATH
     sens_red, sens_yellow = [], []
     if not sp.exists():
         return sens_red, sens_yellow
     sdoc = json.loads(sp.read_text(encoding="utf-8"))
+    anchor = _sens_csm_anchor()
     scales = []
     for c in sdoc.get("companies", []) or []:
         ds = [abs(s["csm_delta"]) for s in (c.get("scenarios") or [])
               if isinstance(s.get("csm_delta"), (int, float))]
         if ds:
-            scales.append((c.get("company"), max(ds), c.get("unit"), c.get("unit_detected")))
+            n = c.get("company")
+            own = anchor.get(n) or anchor.get(_SENS_NAME_ALIAS.get(n, n))
+            scales.append((n, max(ds), c.get("unit"), c.get("unit_detected"), own))
     if len(scales) < 5:
         return sens_red, sens_yellow
-    vals = sorted(v for _, v, _, _ in scales)
+    vals = sorted(v for _, v, _, _, _ in scales)
     med = vals[len(vals) // 2] or 1.0
-    for name, mx, unit, ud in scales:
-        ratio = mx / med
-        if ratio > 1000 or ratio < 1e-3:
+    for name, mx, unit, ud, own in scales:
+        if own and own > 0:
+            rel = mx / own
+            if rel < 5e-4 or rel > 3.0:
+                sens_red.append((name, mx, rel, unit, ud))
+            elif rel < 5e-3 or rel > 1.0:
+                sens_yellow.append((name, mx, rel, unit, ud))
+            continue
+        ratio = mx / med                       # 앵커 없음 — 또래비교로 폴백
+        if ratio > 1000:
             sens_red.append((name, mx, ratio, unit, ud))
         elif ratio > 100 or ratio < 1e-2:
             sens_yellow.append((name, mx, ratio, unit, ud))
@@ -1415,14 +1467,16 @@ def _check_sensitivity() -> tuple[list, list, list]:
     sens_dir = sensitivity_direction_sanity()
     print()
     print("=" * 78)
-    print(f"5. SENSITIVITY_UNIT_SANITY (csm_delta 또래-median 규모비, 억원)  "
+    print(f"5. SENSITIVITY_UNIT_SANITY (max|csm_delta| / 그 회사 자신의 기말 CSM)  "
           f"RED={len(sens_red)} YELLOW={len(sens_yellow)}")
-    print("   RED: ratio>1000x or <1/1000x (단위 미정규화) / YELLOW: >100x or <1/100x")
+    print("   RED: rel<0.05% or >300% (단위오류·소블록 오선택) / YELLOW: <0.5% or >100%")
+    print("   앵커(마스터 CSM) 없으면 또래비교 폴백 — 그때 작은 쪽은 YELLOW 까지만"
+          "(소형사와 단위오류를 가를 수 없다)")
     print("=" * 78)
     for name, mx, ratio, unit, ud in sens_red:
-        print(f"  RED  {str(name):18s} max|Δ|={mx:>12.2f} ×med={ratio:>8.3g}  unit={unit}/det={ud}")
+        print(f"  RED  {str(name):18s} max|Δ|={mx:>12.2f} rel={ratio:>10.4%}  unit={unit}/det={ud}")
     for name, mx, ratio, unit, ud in sens_yellow:
-        print(f"  YEL  {str(name):18s} max|Δ|={mx:>12.2f} ×med={ratio:>8.3g}  unit={unit}/det={ud}")
+        print(f"  YEL  {str(name):18s} max|Δ|={mx:>12.2f} rel={ratio:>10.4%}  unit={unit}/det={ud}")
 
     print()
     print("=" * 78)

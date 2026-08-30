@@ -138,11 +138,11 @@
     "CSM_waterfall.json": 1,
     "data/dart/viz/sensitivity_overrides.json": 1
    },
-   "code_sha256": "313c4a75f0437bc033581419ee27e984c2157b652b74f8d9c8f73506a1b9d22b",
+   "code_sha256": "b6354a0dca026c825d1e85af69bb8bef15a1e5498e353cdbd99caf6f56403c5b",
    "code_files": [
     "scripts/viz_build_ifrs17_panels.py"
    ],
-   "fixture_sha256": "383e9449bab9a18c3fb5bc906bd2e35dae0b8122e7ac60302b3c4011321f902e",
+   "fixture_sha256": "2765eafff835cd2481abc220a356f01248313d301e1cf614d8707071f403ce36",
    "outputs": {
     "files / bs_snapshot.json / sha256": {
      "path": "data/dart/viz/bs_snapshot.json",
@@ -151,8 +151,8 @@
     },
     "files / csm_amort_schedule.json / sha256": {
      "path": "data/dart/viz/csm_amort_schedule.json",
-     "fixture_sha256": "aece0ccb3908243103710c85731bfa3eb36190d94325d2a6048810a83bf33c9e",
-     "ondisk_sha256": "aece0ccb3908243103710c85731bfa3eb36190d94325d2a6048810a83bf33c9e"
+     "fixture_sha256": "1807d69df451700070b0cf0c5b3a95616c2c73e5a3ceba45a4de7460d0a92834",
+     "ondisk_sha256": "1807d69df451700070b0cf0c5b3a95616c2c73e5a3ceba45a4de7460d0a92834"
     },
     "files / insurance_pl_breakdown.json / sha256": {
      "path": "data/dart/viz/insurance_pl_breakdown.json",
@@ -161,8 +161,8 @@
     },
     "files / sensitivity_heatmap.json / sha256": {
      "path": "data/dart/viz/sensitivity_heatmap.json",
-     "fixture_sha256": "3309a03e80fcd03fbd4eebd8ee43df9a70f24d4b569db49911a7361b8d97525c",
-     "ondisk_sha256": "3309a03e80fcd03fbd4eebd8ee43df9a70f24d4b569db49911a7361b8d97525c"
+     "fixture_sha256": "fd489cc093ea1239f890fc0682579f4878646b140a0e25f6541c2430777fd1c3",
+     "ondisk_sha256": "fd489cc093ea1239f890fc0682579f4878646b140a0e25f6541c2430777fd1c3"
     }
    },
    "_golden": "tests/test_viz_ifrs17_panels_golden.py",
