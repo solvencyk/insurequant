@@ -40,6 +40,17 @@
     .forward-chart{position:relative;height:420px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
     .sens-chart{position:relative;height:340px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
     .sens-kpis{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+    /* 순자산 듀레이션·컨벡서티 (owner 2026-08-30) — IFRS17.html 의 kpi7 스트립과 같은 결.
+       금리민감도 표에서 나오는 파생값이라 표 위에 크게 둔다. */
+    .dur-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 4px}
+    .dur-card{background:var(--card);border:var(--bd);border-radius:var(--r-md);padding:14px 16px}
+    .dur-card.lead{border-color:#0d6efd33;background:linear-gradient(180deg,#0d6efd0a,transparent)}
+    .dur-val{font-size:26px;font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--text)}
+    .dur-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:3px}
+    .dur-lab{font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
+    .dur-sub{font-size:11px;color:var(--muted);margin-top:3px}
+    .dur-note{font-size:11.5px;color:var(--muted);margin:2px 0 6px;line-height:1.5}
+    @media(max-width:640px){.dur-strip{grid-template-columns:repeat(2,1fr)}.dur-val{font-size:22px}}
     .sens-kpi{display:inline-block;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:8px 14px;font-size:13px}
     .sens-kpi-delta{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;margin-left:4px}
     .sens-kpi .sub{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:2px}
@@ -175,11 +186,13 @@
     </div>
 
     <div class="panel">
-      <h2>금리 민감도 <span style="color:var(--muted);font-size:13px;font-weight:400">(시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향)</span></h2>
+      <h2>금리 민감도 <span style="color:var(--muted);font-size:13px;font-weight:400">(시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향 · 순자산 듀레이션/컨벡서티)</span></h2>
       <div class="controls" style="justify-content:flex-start">
         <label id="sens-quarter-label" style="display:none">기준 분기: <select id="sens-quarter" class="select"></select></label>
       </div>
       <div id="sens-placeholder" class="no-data">상단의 보험사를 선택하면 금리 민감도 분석이 표시됩니다.</div>
+      <div id="dur-strip" class="dur-strip" style="display:none"></div>
+      <div id="dur-note" class="dur-note" style="display:none"></div>
       <div class="sens-chart" id="sens-chart-wrap" style="display:none"><canvas id="sens-chart" role="img" aria-label="시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향 차트"></canvas></div>
       <div id="sens-kpis" class="sens-kpis" style="display:none"></div>
       <div class="table-container" id="sens-table" style="display:none"></div>
@@ -1178,6 +1191,8 @@
       tbl.style.display = 'none';
       tbl.innerHTML = '';
       document.getElementById('sens-note').innerHTML = '';
+      document.getElementById('dur-strip').style.display = 'none';
+      document.getElementById('dur-note').style.display = 'none';
       if (sensChart) { sensChart.destroy(); sensChart = null; }
     }
 
@@ -1206,6 +1221,57 @@
       renderSensDetail();
     }
 
+    // 순자산(가용자본) 듀레이션·컨벡서티 카드 — 마스터 `금리민감도` 의 컬럼을 그대로 표시한다.
+    // 산식(마스터 쪽 정의): D = -(V₊ - V₋)/(2·V₀·Δy), C = (V₊ + V₋ - 2·V₀)/(V₀·Δy²), Δy=1%p.
+    // 부호: D 양수 = 금리 상승 시 가치 감소(자산 듀레이션이 부채보다 김).
+    function renderDurationCards(rows) {
+      const strip = document.getElementById('dur-strip');
+      const note = document.getElementById('dur-note');
+      const pick = (mode, measure) =>
+        rows.find(r => r['경과조치여부'] === mode && r['measure구분'] === measure) || null;
+      // 표와 같은 우선순위: 적용후 우선, 없으면 적용전
+      const mode = rows.some(r => r['경과조치여부'] === '적용후') ? '적용후' : '적용전';
+      const cap = pick(mode, '지급여력금액');
+      const req = pick(mode, '지급여력기준금액');
+      const has = cap && (cap['듀레이션'] != null || cap['컨벡서티'] != null);
+      if (!has) { strip.style.display = 'none'; note.style.display = 'none'; return; }
+
+      const num = (v, dg) => v == null ? '—'
+        : (Number(v) < 0 ? '△' : '') + Math.abs(Number(v)).toFixed(dg);
+      // 듀레이션에서 곧바로 읽히는 것: 금리 1%p 상승 시 순자산 변동 (2차항까지)
+      let eff = '—';
+      if (cap && cap['듀레이션'] != null && cap['base']) {
+        const d = Number(cap['듀레이션']), c = Number(cap['컨벡서티'] || 0);
+        const pct = -d * 0.01 + 0.5 * c * 0.0001;          // ΔV/V
+        const amt = pct * Number(cap['base']);
+        eff = (pct < 0 ? '△' : '+') + Math.abs(pct * 100).toFixed(2) + '%'
+            + ' (' + (amt < 0 ? '△' : '+') + Math.abs(amt).toLocaleString('ko-KR', {maximumFractionDigits: 0}) + '억)';
+      }
+      const card = (v, unit, lab, sub, lead) =>
+        '<div class="dur-card' + (lead ? ' lead' : '') + '">'
+        + '<div class="dur-val">' + v + (unit ? '<span class="u">' + unit + '</span>' : '') + '</div>'
+        + '<div class="dur-lab">' + lab + '</div>'
+        + '<div class="dur-sub">' + sub + '</div></div>';
+
+      strip.innerHTML = [
+        card(num(cap['듀레이션'], 2), '년', '순자산 듀레이션',
+             '가용자본 기준 · ' + mode, true),
+        card(num(cap['컨벡서티'], 0), '', '순자산 컨벡서티',
+             '음수 = 금리에 오목(해지옵션·최저보증)', true),
+        card(eff, '', '금리 +1%p 시 순자산',
+             '듀레이션·컨벡서티로 환산한 근사'),
+        card(num(req && req['듀레이션'], 2), '년', '요구자본 듀레이션',
+             '지급여력기준금액 기준 (참고)')
+      ].join('');
+      strip.style.display = 'grid';
+      note.innerHTML = '순자산 = 지급여력금액(가용자본). '
+        + '듀레이션 D = −(V<sub>+100bp</sub> − V<sub>−100bp</sub>) ÷ (2·V<sub>기준</sub>·0.01), '
+        + '컨벡서티 C = (V<sub>+100bp</sub> + V<sub>−100bp</sub> − 2·V<sub>기준</sub>) ÷ (V<sub>기준</sub>·0.01²). '
+        + '<strong>양수 듀레이션 = 금리 상승 시 순자산 감소</strong>(자산 듀레이션이 부채보다 김). '
+        + '아래 표의 5개 충격값에서 그대로 유도되며 마스터 「금리민감도」 시트에 같은 컬럼으로 실려 있다.';
+      note.style.display = 'block';
+    }
+
     // 분기 변경: 차트/KPI/테이블/주석만 재렌더
     function renderSensDetail() {
       const company = document.getElementById('company').value;
@@ -1221,6 +1287,7 @@
           });
         }
       });
+      renderDurationCards(rows);
       const postRatio = byMode['적용후'] ? byMode['적용후']['지급여력비율'] : null;
       const preRatio = byMode['적용전'] ? byMode['적용전']['지급여력비율'] : null;
 
