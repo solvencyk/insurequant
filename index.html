@@ -1209,7 +1209,10 @@
 
     // M3: mobile list mirror of the bubble map (CSS @media <=640px에서만 표시).
     // 데스크톱과 달리 2026.1Q 고정 아님 — 배수가 있는 회사별 최신 분기 사용, 기준분기 미충족이면 칩 표기.
-    // 정렬: 그룹(생보→손보) 내 기말 CSM 잔액 desc · 막대 ∝ 기말 잔액 · 값 = NB 배수.
+    // 정렬: 그룹(생보→손보) 내 **기말 CSM 잔액 desc** · 막대 ∝ **NB CSM 배수** · 값 = NB 배수.
+    // owner 2026-08-30: 막대가 기말 잔액에 비례하던 것을 배수로 바꿨다 — 숫자(배수)와 막대가
+    // 서로 다른 것을 가리키면 한 줄 안에서 눈이 두 축을 오간다. 정렬만 잔액 기준으로 남긴다
+    // (큰 회사부터 보되, 막대 길이는 '한 건당 얼마나 남기나'를 비교하게 한다).
     // MOB: 생보 top5 + 더보기, 손보 top5 + 더보기 (FOLD=5, K-ICS 리스트와 동일).
     let bubbleLifeExpanded = false, bubbleNonlifeExpanded = false;
     function renderBubbleList() {
@@ -1253,8 +1256,9 @@
         if (!allRows.length) continue;
         const expanded = sec === 'Life' ? bubbleLifeExpanded : bubbleNonlifeExpanded;
         const rows = (isMob && !expanded) ? allRows.slice(0, FOLD) : allRows;
-        // 막대 스케일: 표시 그룹 내 최대 기말 잔액 기준 (섹터·fold 독립 → outlier 무압축)
-        const maxClosing = Math.max(1, ...rows.map(it => it.closing || 0));
+        // 막대 스케일: 표시 그룹 내 최대 **NB 배수** 기준 (섹터·fold 독립 → outlier 무압축).
+        // 실측 배수 범위 0.01~22.85, 음수 0건이라 그대로 폭에 쓴다.
+        const maxMult = Math.max(0.01, ...rows.map(it => Number(it.multiple) || 0));
         const head = document.createElement('div');
         head.className = 'li-sector';
         head.textContent = sec === 'Life' ? '생명보험' : '손해보험';
@@ -1264,7 +1268,7 @@
           const row = document.createElement('div');
           row.className = 'li-row';
           const closingTxt = it.closing != null ? Math.round(it.closing).toLocaleString() + '억' : '—';
-          row.title = `${shortName(it.name)} — 기말 CSM ${closingTxt} (${it.closingQ || '—'}), NB배수 ${it.multiple.toFixed(2)}× (${it.nbQ})`;
+          row.title = `${shortName(it.name)} — NB배수 ${it.multiple.toFixed(2)}× (${it.nbQ}, 막대 길이), 기말 CSM ${closingTxt} (${it.closingQ || '—'}, 정렬 기준)`;
           const name = document.createElement('div');
           name.className = 'li-name';
           const nm = document.createElement('span');   // 이름만 말줄임, 칩은 항상 노출
@@ -1282,7 +1286,7 @@
           track.className = 'li-bar-track';
           const bar = document.createElement('div');
           bar.className = 'li-bar';
-          bar.style.width = Math.max(2, ((it.closing || 0) / maxClosing) * 100) + '%';
+          bar.style.width = Math.max(2, ((Number(it.multiple) || 0) / maxMult) * 100) + '%';
           bar.style.background = SECTOR_COLOR[sec];
           track.appendChild(bar);
           const val = document.createElement('div');
