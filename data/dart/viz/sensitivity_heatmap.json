@@ -454,32 +454,38 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -0.9546,
-          "pl_impact": 1.6058
+          "csm_delta": -139.4052,
+          "pl_impact": -273.083
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": -0.1878,
-          "pl_impact": -0.1657
+          "csm_delta": -1885.7472,
+          "pl_impact": -444.9852
+        },
+        {
+          "risk": "장해질병(실손보상)",
+          "shock": "2.62% 증가",
+          "csm_delta": -4.1864,
+          "pl_impact": 0.0072
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": 0.2874,
-          "pl_impact": 1.4585
+          "csm_delta": -4182.3496,
+          "pl_impact": -578.0374
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": -0.2934,
-          "pl_impact": -1.4791
+          "csm_delta": 4713.8607,
+          "pl_impact": 604.0831
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": -0.4041,
-          "pl_impact": -0.2178
+          "csm_delta": -592.0056,
+          "pl_impact": -175.0863
         }
       ],
       "period": "FY2025",
@@ -1057,8 +1063,8 @@
       "caption": "38-4 가정민감도가. 보험위험",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "unit_detected": "백만원",
-      "unit_source": "default",
+      "unit_detected": "천원",
+      "unit_source": "xref",
       "header": [
         [
           "구분",
@@ -1080,38 +1086,38 @@
         {
           "risk": "사망률",
           "shock": "3.27% 증가",
-          "csm_delta": -32004.82,
-          "pl_impact": -18909.42
+          "csm_delta": -32.0048,
+          "pl_impact": -18.9094
         },
         {
           "risk": "장해질병(정액보상)",
           "shock": "3.40% 증가",
-          "csm_delta": -282358.93,
-          "pl_impact": -291677.44
+          "csm_delta": -282.3589,
+          "pl_impact": -291.6774
         },
         {
           "risk": "장기재물기타",
           "shock": "4.19% 증가",
-          "csm_delta": -135.32,
-          "pl_impact": -583.03
+          "csm_delta": -0.1353,
+          "pl_impact": -0.583
         },
         {
           "risk": "해지율(상승)",
           "shock": "9.16% 증가",
-          "csm_delta": -233906.5,
-          "pl_impact": -144578.32
+          "csm_delta": -233.9065,
+          "pl_impact": -144.5783
         },
         {
           "risk": "해지율(하락)",
           "shock": "9.16% 감소",
-          "csm_delta": 318643.29,
-          "pl_impact": 99989.9
+          "csm_delta": 318.6433,
+          "pl_impact": 99.9899
         },
         {
           "risk": "사업비(수준)",
           "shock": "2.62% 증가",
-          "csm_delta": -63679.11,
-          "pl_impact": -69618.87
+          "csm_delta": -63.6791,
+          "pl_impact": -69.6189
         }
       ],
       "period": "FY2025",
@@ -1329,7 +1335,7 @@
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
       "unit_detected": "백만원",
-      "unit_source": "default",
+      "unit_source": "xref",
       "header": [
         [
           "구분",
