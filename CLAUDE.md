@@ -37,6 +37,25 @@ Domain reference docs (K-ICS / IFRS17 / Misc IR) sit under `docs/domains/` and p
 
 **갱신 규칙은 유지:** 변경·실행 후 **해당 stage TODO 맨 위 갱신 필수**, 그리고 완결 항목은 **해당 stage changelog에 계속 기록**(이력은 쌓되 읽기는 필요 시). cross-stage 변경이면 root `TODO.md` + `docs/claude-changelog.md` 갱신.
 
+## 📏 "뭐가 남았냐" 는 **재서** 답한다 (2026-08-30 신설, 필수)
+
+```bash
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/status_report.py --fast
+```
+
+**상태 질문에 TODO·changelog 를 읽어서 답하지 마라.** 이 스크립트를 돌려 그 숫자로 답한다.
+`--fast` 는 수 초(데이터 census 만), 옵션 없이 돌리면 게이트 4종까지 실행한다.
+
+**왜 규칙이 됐나 — 2026-08-30 하루에 같은 사고가 세 번 났다.** owner 가 "남은 일 뭐냐" 고
+물을 때마다 `TODO_*.md` 를 읽어서 답했고, 그때마다 owner 가 "이미 끝낸 것들이잖아" 라고
+잡아냈다: KICS-IMG/OCR 3사(실측 결측 **0**) · 시장위험 분해(실측 **356/488**, 유도식은 이미
+구현돼 불일치 0) · designer P1(실측 **3/4 이미 배포**). 원인은 "문서가 낡았다" 가 아니라
+**잴 수 있는데 읽어서 답한 것**이다. 이 저장소는 마스터 JSON·게이트·테스트로 현재 상태를
+수십 초 만에 잰다.
+
+**TODO 는 의도의 기록이고 status_report 는 사실의 측정이다. 둘이 어긋나면 TODO 를 고친다.**
+TODO 항목을 인용해야 하면 그 항목이 주장하는 사실을 먼저 기계로 확인하고 인용할 것.
+
 ## 🐍 실행 환경 — venv는 트리 밖에 있다 (필수)
 
 **저장소 안에 `.venv`가 없다.** 2026-06-14에 트리 밖으로 옮겼다(Cowork 로딩 가속):
