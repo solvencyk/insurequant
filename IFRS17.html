@@ -1816,7 +1816,9 @@
     }
 
     // ===== Panel 6: CSM 시계열 — Panel 1과 동일 소스(CSM_waterfall.json / ix.wfx) =====
-    // 기존 csm_waterfall_history.json은 stale(2025.3Q·2026.1Q 결측, 초기 2023 미교정)이라 폐기.
+    // 기존 이력 스냅샷(정적 파일)은 stale(2025.3Q·2026.1Q 결측, 초기 2023 미교정)이라 폐기했고,
+    // 2026-08-30 owner 지시로 파일 자체를 저장소에서 삭제했다 — 재생성 빌더가 이미 아카이브돼
+    // 되살릴 경로가 없고, 게이트가 그 죽은 사본을 검사해 YELLOW 976건을 만들고 있었다.
     const wfHistName = ix.wfx.has(company) ? company : null;
     stub(q(host,"#histStub"), !wfHistName, (PAA_ONLY.has(company) || PAA_ONLY.has(coName)) ? PAA_NOTE : "신규 CSM waterfall 데이터 미수록 보험사입니다.");
     if (wfHistName){
