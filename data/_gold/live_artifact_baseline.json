@@ -3,7 +3,7 @@
   "_emitted": "2026-08-25",
   "_promote": "승격 조건 — 아래를 충족하면 그 줄을 지우고 RED 로 되돌린다.\n  (1) 담당 stage 가 고쳐서 더는 실패하지 않으면 게이트가 BASELINE STALE 로 인쇄한다. 그때 그 줄을 지운다(지우지 않으면 등재부가 거짓말을 시작한다).\n  (2) 등재에 없는 새 발견은 이미 RED 다 — exit 2 로 push 를 막는다. 초기 착지만 YELLOW 이고 신규는 처음부터 RED 다.\n  (3) 기한 2026-10-31. 그때까지 남은 줄은 (a) 정당하면 legit 레지스트리로 승격, (b) 아니면 RED 로 되돌린다. 무기한 방치 금지.\n  (4) csm_waterfall_history.json 은 예외적으로 **파일 자체의 처분**이 승격 조건이다 — 빌더 재생성 또는 마스터 파생으로 교체(=drift 구조적으로 0). 그 전까지 drift 등재는 '스냅샷이 낡았다'는 사실의 박제이지 값의 승인이 아니다.\n라우팅: parser/ifrs17 (history·amort·insurance_pl·NB 부호), publishing (tier1/tier2 배포본 == 빌더 산출물 동기화, NB 배포본 분기 갱신).",
   "_counts": {
-    "csm_waterfall_history.json|HIST_MASTER_DRIFT": 919,
+    "csm_waterfall_history.json|HIST_MASTER_DRIFT": 918,
     "csm_waterfall_history.json|HIST_STAGE_IDENTITY": 41,
     "NB_CSM_multiple.json|NB_CENSUS_MISSING": 31,
     "csm_waterfall_history.json|HIST_CENSUS_MISSING": 14,
@@ -2681,11 +2681,6 @@
     },
     "csm_waterfall_history.json|HIST_MASTER_DRIFT|미래에셋생명보험|2025.4Q|closing": {
       "detail": "snapshot=19,721.5 vs master=20,584.2 (Δ=-862.7 억원)",
-      "reason": "정적 스냅샷 drift. 이 파일의 선언 빌더(scripts/ifrs17_batch_historical.py, 파일 source 필드)는 2026-06 에 아카이브돼 **아무도 재생성하지 않는다**. 마스터가 백필·정정될 때마다 이 파일은 그 자리에 남는다. 2026-08-25 실측: 대조 1,581셀 중 933건(59.0%) drift, 최대 Δ 43,852억(삼성화재 2023.3Q closing). **화면에는 안 나간다** — IFRS17.html 이 이 파일을 fetch 하지만 렌더 코드는 다른 소스를 쓴다(2026-08-25 origin/main 배포본 직접 대조로 확인, 종전 사유의 \"이력 패널이 그린다\" 는 오기라 정정). 따라서 사용자 피해는 없고, 파일의 거취(재생성 경로 복구 / 루트 마스터 파생 / 화면 fetch 제거)가 designer·owner 결정 대기 중이다. 마스터가 정정될 때마다 이 drift 는 **늘어난다** — 2026-08-25 삼성생명·교보생명 정정으로 11건 증가(917건으로 emit). 2026-08-25(2차, inbox/parser/20260825T1520Z iter2 반영): 그 11건 증가는 실은 **CSM_waterfall 을 연결(consolidated) 기준으로 잘못 되돌린 결과**였다 — 이 스냅샷 자체가 삼성생명 한정으로 연결 기준(raw 확인: opening 12,392,570 백만은 _00761 연결에만 존재)이라, 마스터가 연결로 틀어지자 우연히 이 스냅샷과 더 가까워져 STALE 이 늘고 RED 가 준 것이었다. 삼성생명 CSM 을 별도(separate, gold basis)로 재복원하자 12건 RED(신규 drift) + 10건 STALE(더는 안 벌어짐) = 순증 2건, 919건으로 재emit. 이 스냅샷은 회사별로 기준이 혼재돼 있어(삼성생명=연결 확인, 신한라이프 opening 은 별도 쪽 문자열이 우세하게 일치 — 회사마다 다른, 이제는 아카이브된 파이프라인의 개별 버그) '전체가 연결'도 '전체가 별도'도 아니다 — drift 증감을 기준 판정의 근거로 쓰지 말 것.",
-      "first_seen": "2026-08-25"
-    },
-    "csm_waterfall_history.json|HIST_MASTER_DRIFT|삼성생명보험|2023.2Q|assumption": {
-      "detail": "snapshot=-821.4 vs master=-799.9 (Δ=-21.5 억원)",
       "reason": "정적 스냅샷 drift. 이 파일의 선언 빌더(scripts/ifrs17_batch_historical.py, 파일 source 필드)는 2026-06 에 아카이브돼 **아무도 재생성하지 않는다**. 마스터가 백필·정정될 때마다 이 파일은 그 자리에 남는다. 2026-08-25 실측: 대조 1,581셀 중 933건(59.0%) drift, 최대 Δ 43,852억(삼성화재 2023.3Q closing). **화면에는 안 나간다** — IFRS17.html 이 이 파일을 fetch 하지만 렌더 코드는 다른 소스를 쓴다(2026-08-25 origin/main 배포본 직접 대조로 확인, 종전 사유의 \"이력 패널이 그린다\" 는 오기라 정정). 따라서 사용자 피해는 없고, 파일의 거취(재생성 경로 복구 / 루트 마스터 파생 / 화면 fetch 제거)가 designer·owner 결정 대기 중이다. 마스터가 정정될 때마다 이 drift 는 **늘어난다** — 2026-08-25 삼성생명·교보생명 정정으로 11건 증가(917건으로 emit). 2026-08-25(2차, inbox/parser/20260825T1520Z iter2 반영): 그 11건 증가는 실은 **CSM_waterfall 을 연결(consolidated) 기준으로 잘못 되돌린 결과**였다 — 이 스냅샷 자체가 삼성생명 한정으로 연결 기준(raw 확인: opening 12,392,570 백만은 _00761 연결에만 존재)이라, 마스터가 연결로 틀어지자 우연히 이 스냅샷과 더 가까워져 STALE 이 늘고 RED 가 준 것이었다. 삼성생명 CSM 을 별도(separate, gold basis)로 재복원하자 12건 RED(신규 drift) + 10건 STALE(더는 안 벌어짐) = 순증 2건, 919건으로 재emit. 이 스냅샷은 회사별로 기준이 혼재돼 있어(삼성생명=연결 확인, 신한라이프 opening 은 별도 쪽 문자열이 우세하게 일치 — 회사마다 다른, 이제는 아카이브된 파이프라인의 개별 버그) '전체가 연결'도 '전체가 별도'도 아니다 — drift 증감을 기준 판정의 근거로 쓰지 말 것.",
       "first_seen": "2026-08-25"
     },
