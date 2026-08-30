@@ -886,6 +886,16 @@
     "미분류 잔차": "기타포괄손익 총액(25) − 세부 합. 남아 있으면 원천 공시 자체의 불일치",
   };
 
+  // 모바일 x축 전용 라벨(한 줄 · 45도 회전). 좁은 화면에서는 막대 하나에 20px 남짓이라 두 줄
+  // 라벨이 서로 겹쳤다(owner 2026-08-30). 회전만으로는 긴 이름이 아래로 40px 넘게 내려와 그림이
+  // 눌리므로 이름도 같이 줄인다. "원수" 접두는 패널 제목·캡션에 이미 있고, 전체 이름은 툴팁과
+  // 아래 표에 그대로 남는다. 재보험사 축(생명 수재 …)은 이 표에 없어 bar.ko가 그대로 쓰인다.
+  const PL_WRAP_M = {
+    "원수 CSM상각":"CSM상각", "원수 위험조정":"위험조정", "원수 예실차":"예실차",
+    "기타 원수손익":"기타원수", "생명장기재보험":"재보험", "기타(사업비용)":"사업비",
+    "영업외손익":"영업외",
+  };
+
   function renderPlWaterfall(host, name, per){
     const el = q(host, "#chartPl");
     if (!el || typeof echarts === "undefined") return [];
@@ -903,7 +913,8 @@
     const xs=[]; const geo=[]; let running=0;
     bars.forEach(bar=>{
       // LOB 스텝은 라벨이 동적이라 자기 wrap을 들고 온다(PL_WRAP는 고정 라벨용 표).
-      xs.push(bar.wrap || PL_WRAP[bar.ko] || bar.ko);
+      xs.push(isMobile ? (PL_WRAP_M[bar.ko] || bar.ko)
+                       : (bar.wrap || PL_WRAP[bar.ko] || bar.ko));
       // 결측은 조용히 0으로 칠하지 않는다 — Panel 2의 missing 시리즈와 같은 회색 힌트 막대로 그린다.
       // running은 그대로 둔다(없는 값을 0으로 흘리면 뒤 막대가 전부 거짓 위치가 된다).
       if(bar.value==null){ geo.push({ missing:true, at:running }); return; }
@@ -944,7 +955,7 @@
     // 오른쪽 끝은 최소한 당기순이익까지 무조건 포함(PL 브리지가 첫 화면에서 끊기면 안 된다).
     // 리사이즈는 renderPlWaterfall을 다시 부르지 않고 charts.pl.resize()만 하므로(하단 resize 리스너)
     // 이 계산은 렌더당 1회 = 사용자가 밀어둔 위치가 리사이즈로 리셋되지 않는다.
-    const GRID_L=56, GRID_R=18, STEP_PX=56;
+    const GRID_L=isMobile?38:56, GRID_R=isMobile?8:18, STEP_PX=56;
     const _usable = Math.max(120, (el.clientWidth||0) - GRID_L - GRID_R);
     const _fit = Math.max(3, Math.floor(_usable / STEP_PX));
     const _netIdx = bars.findIndex(b=> b.ko==="당기순이익");
@@ -970,10 +981,12 @@
         },
       },
       // x 라벨이 두 줄이라 슬라이더를 켜면 bottom을 더 줘야 한다(38이면 라벨 위에 슬라이더가 겹친다).
-      grid:{ left:GRID_L, right:GRID_R, top:24, bottom: dataZoom?58:46 },
+      grid:{ left:GRID_L, right:GRID_R, top:24,
+             bottom: dataZoom ? (isMobile?72:58) : (isMobile?60:46) },
       xAxis:{
         type:"category", data:xs,
-        axisLabel:{ color:"#495057", fontSize:isMobile?8:10, lineHeight:12, interval:0 },
+        axisLabel:{ color:"#495057", fontSize:isMobile?9:10, lineHeight:12, interval:0,
+                    rotate:isMobile?45:0, margin:isMobile?6:8 },
         axisLine:{ lineStyle:{ color:"#dee2e6" } },
         axisTick:{ show:false },
       },
@@ -981,7 +994,7 @@
         type:"value", name:"조원",
         min: plYMin, max: plYMax, interval: plYStep,
         nameTextStyle:{ color:"#6c757d", fontSize:11 },
-        axisLabel:{ color:"#6c757d", formatter:v=> (v<0?"△":"")+Math.abs(v/1e6).toLocaleString("ko-KR",{minimumFractionDigits:plYDec,maximumFractionDigits:plYDec}) },
+        axisLabel:{ color:"#6c757d", fontSize:isMobile?9:12, formatter:v=> (v<0?"△":"")+Math.abs(v/1e6).toLocaleString("ko-KR",{minimumFractionDigits:plYDec,maximumFractionDigits:plYDec}) },
         splitLine:{ lineStyle:{ color:"#e9ecef" } },
       },
       dataZoom,
