@@ -10,7 +10,6 @@ probe_20260825_trace_validator_reads.py`) `origin/main` 의 배포 HTML 4종이 
 
   · `NB_CSM_multiple.json`                     index.html·IFRS17.html 의 CSM 버블맵 원천
   · `data/dart/viz/csm_amort_schedule.json`     CSM 상각 스케줄 패널
-  · `data/dart/viz/csm_waterfall_history.json`  CSM 워터폴 이력 패널 (정적 스냅샷)
   · `data/dart/viz/insurance_pl_breakdown.json` 보험손익 원표 패널
 
 나머지 둘(`kics_tier1_utilization.json`·`kics_tier2_utilization.json`)은 `check_as_of` 의
@@ -282,71 +281,6 @@ def check_csm_amort_schedule(fd: Findings) -> dict:
                "CSM_waterfall 마스터에 있는 회사인데 상각스케줄에 없다")
         stat["census_missing"] += 1
     stat["companies"] = len(a["companies"])
-    return stat
-
-
-# --------------------------------------------------------------------------- 3) history
-def check_csm_waterfall_history(fd: Findings) -> dict:
-    """`data/dart/viz/csm_waterfall_history.json` — CSM 워터폴 이력 패널.
-
-    **아무도 재생성하지 않는 정적 스냅샷이다.** 선언된 빌더
-    (`scripts/ifrs17_batch_historical.py`, 파일의 `source` 필드)는 2026-06 에 아카이브됐다.
-    그래서 마스터가 백필·정정될 때마다 이 파일은 그 자리에 남아 벌어진다 — 화면은 그 벌어진
-    값을 그린다. 벌어진 규모를 **지금 재고**, 정합화(재생성 또는 마스터 파생으로 교체)는
-    parser 발주로 넘긴다. 검사는 지금 건다 — 안 걸면 영원히 안 걸린다.
-
-    세 축: ① 파일 안 단계 항등식 ② 마스터 셀 대조(백만원→억원 /100) ③ census.
-    """
-    h = load("data/dart/viz/csm_waterfall_history.json")
-    wf = wf_by_name()
-    stat = defaultdict(int)
-
-    for c in h["companies"]:
-        co = canon(c["company"])
-        for q, p in (c.get("periods") or {}).items():
-            stages = p.get("stages") or {}
-            vals = {k: (stages.get(k) or {}).get("value_mn_krw") for k in STAGE2ITEM}
-
-            if all(vals[k] is not None for k in STAGE2ITEM):
-                lhs = vals["closing"]
-                rhs = sum(vals[k] for k in ("opening", "new_business", "interest",
-                                            "assumption", "amortization"))
-                if abs(lhs - rhs) > max(1.0, 0.001 * abs(lhs)):
-                    fd.add("csm_waterfall_history.json", "HIST_STAGE_IDENTITY", f"{co}|{q}",
-                           f"closing={lhs:,.0f} vs Σ(단계)={rhs:,.0f} (Δ={lhs - rhs:,.0f} 백만원)")
-                    stat["identity_fail"] += 1
-                else:
-                    stat["identity_pass"] += 1
-            else:
-                stat["identity_skip"] += 1
-
-            m = wf.get((co, q))
-            if m is None:
-                fd.add("csm_waterfall_history.json", "HIST_NOT_IN_MASTER", f"{co}|{q}",
-                       "이력 스냅샷에는 있는데 CSM_waterfall 마스터에 그 (회사,분기)가 없다")
-                stat["not_in_master"] += 1
-                continue
-            for stage, item in STAGE2ITEM.items():
-                hv, mv = vals[stage], m.get(item)
-                if hv is None or mv is None:
-                    stat["drift_skip"] += 1
-                    continue
-                hv_eok = hv / 100.0                     # 백만원 → 억원
-                if abs(hv_eok - mv) > max(2.0, 0.01 * abs(mv)):
-                    fd.add("csm_waterfall_history.json", "HIST_MASTER_DRIFT",
-                           f"{co}|{q}|{stage}",
-                           f"snapshot={hv_eok:,.1f} vs master={mv:,.1f} (Δ={hv_eok - mv:+,.1f} 억원)")
-                    stat["drift_fail"] += 1
-                else:
-                    stat["drift_pass"] += 1
-
-    have = {canon(c["company"]) for c in h["companies"]}
-    allco = {co for co, _ in wf}
-    for co in sorted(allco - have):
-        fd.add("csm_waterfall_history.json", "HIST_CENSUS_MISSING", co,
-               "마스터에 있는 회사인데 이력 스냅샷에 없다 — 패널에서 통째로 빠진다")
-        stat["census_missing"] += 1
-    stat["companies"] = len(h["companies"])
     return stat
 
 
@@ -729,20 +663,6 @@ def check_public_exports(fd: Findings) -> dict:
 # 등재는 **건별**이지만 사유는 룰 단위로 관리한다(같은 원인의 933건을 933번 적는 것은 문서가
 # 아니라 소음이다). 사유 없는 등재는 이 게이트를 무력화하는 방법이므로 emit 시 강제한다.
 RULE_REASON = {
-    "csm_waterfall_history.json|HIST_MASTER_DRIFT":
-        "정적 스냅샷 drift. 이 파일의 선언 빌더(scripts/ifrs17_batch_historical.py, 파일 "
-        "source 필드)는 2026-06 에 아카이브돼 **아무도 재생성하지 않는다**. 마스터가 백필·"
-        "정정될 때마다 이 파일은 그 자리에 남는다. 2026-08-25 실측: 대조 1,581셀 중 933건"
-        "(59.0%) drift, 최대 Δ 43,852억(삼성화재 2023.3Q closing). **화면에는 안 나간다** — IFRS17.html 이 이 파일을 fetch 하지만 렌더 코드는 다른 소스를 쓴다(2026-08-25 origin/main 배포본 직접 대조로 확인, 종전 사유의 \"이력 패널이 그린다\" 는 오기라 정정). 따라서 사용자 피해는 없고, 파일의 거취(재생성 경로 복구 / 루트 마스터 파생 / 화면 fetch 제거)가 designer·owner 결정 대기 중이다. 마스터가 정정될 때마다 이 drift 는 **늘어난다** — 2026-08-25 삼성생명·교보생명 정정으로 11건 증가(917건으로 emit). "
-        "2026-08-25(2차, inbox/parser/20260825T1520Z iter2 반영): 그 11건 증가는 실은 **CSM_waterfall 을 연결(consolidated) 기준으로 잘못 되돌린 결과**였다 — 이 스냅샷 자체가 삼성생명 한정으로 연결 기준(raw 확인: opening 12,392,570 백만은 _00761 연결에만 존재)이라, 마스터가 연결로 틀어지자 우연히 이 스냅샷과 더 가까워져 STALE 이 늘고 RED 가 준 것이었다. 삼성생명 CSM 을 별도(separate, gold basis)로 재복원하자 12건 RED(신규 drift) + 10건 STALE(더는 안 벌어짐) = 순증 2건, 919건으로 재emit. 이 스냅샷은 회사별로 기준이 혼재돼 있어(삼성생명=연결 확인, 신한라이프 opening 은 별도 쪽 문자열이 우세하게 일치 — 회사마다 다른, 이제는 아카이브된 파이프라인의 개별 버그) '전체가 연결'도 '전체가 별도'도 아니다 — drift 증감을 기준 판정의 근거로 쓰지 말 것.",
-    "csm_waterfall_history.json|HIST_STAGE_IDENTITY":
-        "스냅샷 자체의 단계 항등식 파탄 41건(opening+nb+int+assum+amort ≠ closing). 위와 같은 "
-        "정적 스냅샷 결함 — 마스터 쪽 동일 (회사,분기) 는 closing identity 358P/0F 로 닫힌다.",
-    "csm_waterfall_history.json|HIST_CENSUS_MISSING":
-        "마스터 37사 중 스냅샷에 23사만 있어 14사가 패널에서 통째로 빠진다. 스냅샷이 만들어진 "
-        "시점 이후 온보딩된 회사들이다.",
-    "csm_waterfall_history.json|HIST_NOT_IN_MASTER":
-        "스냅샷에는 있는데 마스터에 없는 (회사,분기). 회사명 별칭 정규화 후 잔여분.",
     "NB_CSM_multiple.json|NB_CENSUS_MISSING":
         "배포본이 **한 분기 뒤처져 있다**. 31건 중 28건이 2026.2Q — 마스터 CSM_waterfall 은 "
         "2026.2Q 를 갖는데 NB 배포본의 최신 분기는 2026.1Q 다. 나머지 3건은 연차공시사 "
@@ -805,10 +725,7 @@ PROMOTE = (
     "YELLOW 이고 신규는 처음부터 RED 다.\n"
     "  (3) 기한 2026-10-31. 그때까지 남은 줄은 (a) 정당하면 legit 레지스트리로 승격, "
     "(b) 아니면 RED 로 되돌린다. 무기한 방치 금지.\n"
-    "  (4) csm_waterfall_history.json 은 예외적으로 **파일 자체의 처분**이 승격 조건이다 — "
-    "빌더 재생성 또는 마스터 파생으로 교체(=drift 구조적으로 0). 그 전까지 drift 등재는 "
-    "'스냅샷이 낡았다'는 사실의 박제이지 값의 승인이 아니다.\n"
-    "라우팅: parser/ifrs17 (history·amort·insurance_pl·NB 부호), "
+    "라우팅: parser/ifrs17 (amort·insurance_pl·NB 부호), "
     "publishing (tier1/tier2 배포본 == 빌더 산출물 동기화, NB 배포본 분기 갱신)."
 )
 
@@ -824,7 +741,6 @@ def main() -> int:
     stats = {
         "NB_CSM_multiple.json": check_nb_csm_multiple(fd),
         "csm_amort_schedule.json": check_csm_amort_schedule(fd),
-        "csm_waterfall_history.json": check_csm_waterfall_history(fd),
         "insurance_pl_breakdown.json": check_insurance_pl_breakdown(fd),
         "kics_tier{1,2}_utilization.json": check_tier_utilization(fd),
         "public_exports/*.json": check_public_exports(fd),
