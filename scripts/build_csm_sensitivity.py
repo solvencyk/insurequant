@@ -12,7 +12,7 @@ owner 상시 규칙: **화면에 있는 그래프는 전부 마스터 테이블�
 사용자가 보는 파일). 별도 재추출 경로를 만들면 화면과 마스터가 갈라진다.
 
 스키마(다른 시트와 같은 long-format):
-    원보험사코드 · 원수사명 · 티커 · 생손보여부 · 공시분기 · 기준일 ·
+    원보험사코드 · 원수사명 · 티커 · 생손보여부 · 공시분기 · 기준일 · 순번 ·
     위험구분 · 충격수준 · CSM변동 · 당기손익영향 · 자본영향 · 비고
 단위는 다른 마스터와 같은 **억원**(패널이 이미 억원으로 정규화해 싣는다).
 
@@ -94,19 +94,31 @@ def main() -> int:
         }
         scens = c.get("scenarios") or []
         if not scens:
-            rows.append({**base, "위험구분": None, "충격수준": None,
+            rows.append({**base, "순번": 1, "위험구분": None, "충격수준": None,
                          "CSM변동": None, "당기손익영향": None, "자본영향": None,
                          "비고": f"민감도표 미수록 (status={c.get('status')}"
                                  f"{'; ' + str(c.get('note')) if c.get('note') else ''})"})
             n_stub += 1
             continue
-        for s in scens:
+        # (위험구분, 충격수준)이 회사 안에서 유일하지 않은 경우가 있다 -- 실측 2026-08-30:
+        # 에이아이에이생명이 같은 충격을 **두 벌** 싣는다(값이 서로 다르다). 표 헤더 형식상
+        # `재보험 경감 전 / 경감 후` 두 컬럼일 가능성이 높지만 패널 데이터가 그 라벨을
+        # 싣지 않아 **어느 쪽이 어느 쪽인지 확정할 수 없다.** 임의로 하나를 고르면 그 순간
+        # 화면과 마스터가 갈라지고 근거 없는 선택이 박제된다 -- 그래서 둘 다 남기고
+        # `순번`(회사 안 등장 순서)으로 식별하며, 중복된 쌍에는 사유를 적어 파서 레인이
+        # 라벨을 규명할 수 있게 한다.
+        from collections import Counter
+        pair_count = Counter((x.get("risk"), x.get("shock")) for x in scens)
+        for i, s in enumerate(scens, 1):
             note = None
             if c.get("unit_source") == "suspect":
                 note = "단위 미해결로 값 보류 (빌더 sanity 가드)"
             elif s.get("disclosed_as"):
                 note = f"원문 표기: {s['disclosed_as']}"
-            rows.append({**base,
+            elif pair_count[(s.get("risk"), s.get("shock"))] > 1:
+                note = ("같은 충격이 이 회사 표에 2벌 있다(재보험 경감 전/후로 추정, "
+                        "원문 라벨 미확인) — 순번으로 구분")
+            rows.append({**base, "순번": i,
                          "위험구분": s.get("risk"), "충격수준": s.get("shock"),
                          "CSM변동": s.get("csm_delta"),
                          "당기손익영향": s.get("pl_impact"),
