@@ -21,6 +21,9 @@
     { name: "금리민감도", file: "public_exports/금리민감도.json", code: "RATE", label: "K-ICS 금리민감도" },
     { name: "CSM워터폴", file: "public_exports/CSM워터폴.json", code: "CSMWF", label: "CSM 워터폴" },
     { name: "CSM상각", file: "public_exports/CSM상각.json", code: "CSMAM", label: "CSM 상각 스케줄" },
+    // 2026-08-30 신설. IFRS17.html "7) 민감도(ΔCSM)" 패널의 원천 — 위 "금리민감도"(K-ICS
+    // 지급여력비율의 금리 ±bp 민감도)와 이름이 비슷하지만 다른 표다(보험가정 충격의 ΔCSM).
+    { name: "가정민감도", file: "public_exports/가정민감도.json", code: "SENS", label: "IFRS17 가정민감도 (ΔCSM)" },
     { name: "신계약CSM배수", file: "public_exports/신계약CSM배수.json", code: "NBCSM", label: "신계약 CSM 배수" },
     { name: "손익분해PL", file: "public_exports/손익분해PL.json", code: "PL", label: "손익분해 (PL)" },
     { name: "배당", file: "public_exports/배당.json", code: "DIV", label: "배당에 관한 사항" },
