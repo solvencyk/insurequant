@@ -1023,6 +1023,53 @@ def main():
                 })
                 ov_added += 1
 
+    # 오버라이드가 **새로 만든** 기준값을 그 뒤 분기로 이월한다 (2026-08-30).
+    #
+    # 계측으로 확인한 순서 버그: 오버라이드는 롤포워드가 끝난 뒤에 적용되므로, 오버라이드가
+    # 없던 칸을 새로 만들면(`ov_added`) 그 값은 **이월될 기회가 없다.** 실측 —
+    # 에이아이에이생명(KR0080, 연1회 공시사)의 item5 는 롤포워드 시점에 2024.4Q·2025.4Q 뿐이라
+    # 2025·2026 중간분기만 채워졌고, 오버라이드가 그 뒤에 넣은 2023.4Q(761,784)는 2024.1Q~3Q 로
+    # 넘어가지 못했다. 같은 회사 item7 은 원래 2023.4Q 가 있어서 정상 이월됐다 — 항목마다
+    # 결과가 갈린 이유가 이것이다.
+    #
+    # 오버라이드를 롤포워드 앞으로 옮기는 방식은 쓰지 않는다: Q4 fold-in(그 FY 적립예정액을
+    # Q4 값에 얹는 단계)이 오버라이드 값 위에 또 더해 **이중계상**이 된다. 그래서 뒤에서
+    # 같은 규칙으로 한 번 더 돌리되 **빈 칸만** 채운다(기존 값은 건드리지 않는다).
+    ov_carried: list[tuple[str, int, str]] = []
+    if ov_added:
+        have = {(r["원보험사코드"], r["항목번호"], r["공시분기"]) for r in rows}
+        by_ci: dict[tuple[str, int], dict[tuple[int, int], float]] = {}
+        for r in rows:
+            if r["항목번호"] in (5, 6, 7, 8) and r["값"] is not None:
+                y, qn = r["공시분기"].split(".")
+                by_ci.setdefault((r["원보험사코드"], r["항목번호"]), {})[(int(y), int(qn[0]))] = r["값"]
+        for (kr, item), s in sorted(by_ci.items()):
+            if (kr, item) in NO_FORWARD_FILL_CELLS or kr not in META:
+                continue
+            for (y, qn) in sorted(quarters_by_co.get(kr, [])):
+                if (y, qn) in s:
+                    continue
+                prev = (y, qn - 1) if qn > 1 else (y - 1, 4)
+                if prev not in s:
+                    continue
+                val = s[prev]
+                s[(y, qn)] = val
+                quarter = f"{y}.{qn}Q"
+                if (kr, item, quarter) in have:
+                    continue
+                name, ticker, sb = META[kr]
+                section, level = _section_level(item)
+                rows.append({
+                    "원보험사코드": kr, "원수사명": name, "티커": ticker, "생손보여부": sb,
+                    "항목번호": item, "항목명": LABELS[item], "섹션": section, "레벨": level,
+                    "공시분기": quarter, "값": round(val, 6),
+                })
+                ov_carried.append((kr, item, quarter))
+        if ov_carried:
+            print(f"  오버라이드 후속 이월: {len(ov_carried)}칸 "
+                  f"({', '.join(f'{k} item{i} {q}' for k, i, q in ov_carried[:6])}"
+                  f"{' ...' if len(ov_carried) > 6 else ''})")
+
     rows.sort(key=lambda r: (r["원보험사코드"], r["항목번호"], r["공시분기"]))
     OUT.write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
     # 이월로 생긴 (회사,분기)를 기계가 읽을 수 있게 남긴다. 이 칸들은 **준비금만 있고 코어
@@ -1036,6 +1083,12 @@ def main():
     for _it in (5, 6, 7, 8):
         for kr, q in reserve_stats[_it].get("filled_cells", []):
             rollfilled.setdefault(kr, {}).setdefault(str(_it), []).append(q)
+    # 오버라이드 후속 이월분도 같은 성격(빌더가 복제한 칸)이라 같이 남긴다 — 검증이
+    # "연속 동일값" 을 결함으로 세지 않도록 하는 것이 이 사이드카의 목적이다.
+    for kr, _it, q in ov_carried:
+        lst = rollfilled.setdefault(kr, {}).setdefault(str(_it), [])
+        if q not in lst:
+            lst.append(q)
     CARRY_OUT.write_text(json.dumps({
         "_readme": [
             "IFRS17_BS.json 에서 '연1회 공시사 기말 준비금 이월'로 생긴 (회사, 분기) 목록.",

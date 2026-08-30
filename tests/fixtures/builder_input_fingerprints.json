@@ -13,7 +13,7 @@
     "data/dart/viz/bs_manual_overrides.json": 1,
     "data/ifrs17/table_scoring_keywords.yaml": 1
    },
-   "code_sha256": "e7554759e5151741f8dab99a4b9f872f70c9471eae9913e3704cb11b9e84f3c8",
+   "code_sha256": "0240746870aa2154dcaf162589f1c47357db0c8a325f788500f14f64425dec07",
    "code_files": [
     "scripts/build_equity_composition_tier2.py",
     "scripts/build_ifrs17_bs.py",
@@ -34,12 +34,12 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "72cac82ce25f1437086b5b574da7dcba44b1b60b6f14a28b4a5921c2aa1ed738",
+   "fixture_sha256": "5691699985a7bea26d61ce3f936419ed26e9b134f6df9537d74fafca6be6bff1",
    "outputs": {
     "sha256": {
      "path": "IFRS17_BS.json",
-     "fixture_sha256": "5e9e5d88eaa2ce6785d90a28082b3a780746b08f9311fcd2680c930ed2798270",
-     "ondisk_sha256": "5e9e5d88eaa2ce6785d90a28082b3a780746b08f9311fcd2680c930ed2798270"
+     "fixture_sha256": "a5440c84a124634a6355bcc3583c7df7f55a3268ed8eef2f3a7e12949e2e9caa",
+     "ondisk_sha256": "a5440c84a124634a6355bcc3583c7df7f55a3268ed8eef2f3a7e12949e2e9caa"
     }
    },
    "_golden": "tests/test_ifrs17_bs_golden.py",
