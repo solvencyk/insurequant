@@ -213,6 +213,20 @@
     </div>
   </div>
   <script>
+    // 푸터 "최신 공시 분기" — 데이터에서 도출한다. 2026-09-01 이전에는 `(2026.1Q)` 가
+    // 마크업에 리터럴로 박혀 있어 배포본을 갈아도 화면만 옛 분기에 머물렀다(owner 지적).
+    // index.html 의 refreshFooterQuarter 와 같은 규약.
+    function _setFooterQuarter(rows) {
+      let max = null;
+      for (const r of rows || []) {
+        const q = r['공시분기']; if (!q) continue;
+        const k = s => { const m = String(s).match(/^(\d{4})\.(\d)Q$/); return m ? +m[1]*10 + +m[2] : 0; };
+        if (max == null || k(q) > k(max)) max = q;
+      }
+      const el = document.getElementById('footerQ');
+      if (el && max) el.textContent = max;
+    }
+
     const jsonPath = 'kics_disclosure.json';
     /* Chart common theme (DESIGN-V2 P2) */
     (function(){
@@ -1140,7 +1154,7 @@
         ? fmtDrop(lastProj.ratio_pct - baseline.ratio_post_pct) : '-';
       const dropBasic = (baseline.basic_ratio_post_pct != null && lastProj.basic_ratio_pct != null)
         ? fmtDrop(lastProj.basic_ratio_pct - baseline.basic_ratio_post_pct) : '-';
-      note.innerHTML = `Baseline (2026.1Q 적용후): 지급여력 <b>${baseline.ratio_post_pct != null ? baseline.ratio_post_pct.toFixed(1) : '-'}%</b>, 기본자본 <b>${baseline.basic_ratio_post_pct != null ? baseline.basic_ratio_post_pct.toFixed(1) : '-'}%</b> &nbsp;|&nbsp; 2030 변화: 지급여력 ${dropRatio}%p, 기본자본 ${dropBasic}%p &nbsp;|&nbsp; 잔액(콜 차감 대상): ${fmtEokInt(row.outstanding_bonds_total_eok)}억원`;
+      note.innerHTML = `Baseline (${row.baseline_quarter || '최신'} 적용후): 지급여력 <b>${baseline.ratio_post_pct != null ? baseline.ratio_post_pct.toFixed(1) : '-'}%</b>, 기본자본 <b>${baseline.basic_ratio_post_pct != null ? baseline.basic_ratio_post_pct.toFixed(1) : '-'}%</b> &nbsp;|&nbsp; 2030 변화: 지급여력 ${dropRatio}%p, 기본자본 ${dropBasic}%p &nbsp;|&nbsp; 잔액(콜 차감 대상): ${fmtEokInt(row.outstanding_bonds_total_eok)}억원`;
     }
 
     // ===== 금리 민감도 패널 (시장금리 평행이동 충격) =====
@@ -1478,6 +1492,7 @@
       .then(response => response.json())
       .then(data => {
         allData = data;
+      _setFooterQuarter(data);
 
         // 드롭다운 누락사 보강: 하드코딩 옵션에 없는 json 원수사명 추가(코리안리·예별손보·AIG·카카오페이손해 등).
         // JS 선택 로직이 select.options를 검색하므로 옵션 추가만으로 URL/수동 선택 가능. (전면 데이터화는 후속 P2.)
@@ -1560,7 +1575,7 @@
       });
   </script>
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
-    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (2026.1Q)<br/>
+    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">—</span>)<br/>
     본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
   </footer>
 <script>
