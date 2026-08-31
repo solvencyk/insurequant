@@ -1,20 +1,20 @@
 {
-  "generated_at_utc": "2026-08-30T06:36:17Z",
+  "generated_at_utc": "2026-08-31T19:59:53Z",
   "sheets": {
     "17BS": {
-      "rows": 6858,
+      "rows": 6993,
       "quarter_min": "2021.4Q",
       "quarter_max": "2026.2Q"
     },
     "K-ICS공시": {
-      "rows": 22688,
+      "rows": 25202,
       "quarter_min": "2023.1Q",
-      "quarter_max": "2026.1Q"
+      "quarter_max": "2026.2Q"
     },
     "금리민감도": {
-      "rows": 528,
+      "rows": 627,
       "quarter_min": "2024.4Q",
-      "quarter_max": "2025.4Q"
+      "quarter_max": "2026.2Q"
     },
     "CSM워터폴": {
       "rows": 2172,
@@ -48,13 +48,13 @@
     },
     "기본자본소진율": {
       "rows": 390,
-      "quarter_min": "2026.1Q",
-      "quarter_max": "2026.1Q"
+      "quarter_min": "2026.2Q",
+      "quarter_max": "2026.2Q"
     },
     "보완자본소진율": {
       "rows": 546,
-      "quarter_min": "2026.1Q",
-      "quarter_max": "2026.1Q"
+      "quarter_min": "2026.2Q",
+      "quarter_max": "2026.2Q"
     },
     "자본비율전망": {
       "rows": 2090,
