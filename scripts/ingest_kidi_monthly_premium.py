@@ -106,15 +106,44 @@ def fetch_one(client: KidiClient, table: str, comp_type: str, data_year: str) ->
     )
 
 
-def top_row(rows: list[dict], table: str) -> dict | None:
-    """Pick the top aggregate row.
+def latest_ym(client: KidiClient, table: str) -> str | None:
+    """Newest YYYYMM KIDI actually publishes for this table (get<table>LastYM).
 
-    ML01: LVL=1 / LINE=47 / ITEM_NM=합계 / etc. -- first row is reliably the topline.
-    MN07: LVL=2 / LINE=99111 / ITEM_NM=원리금보장형장기손해보험 합계 -- also first row.
+    Needed because an unposted month is not an empty answer: MN07 returns its
+    aggregate row with zeros in it, so the row anchor alone cannot tell
+    'not published yet' from a genuine zero. This endpoint can.
     """
-    if not rows:
+    referer = BASE + f"/insMonth/detail/{table}.do?stattbl_id={table}"
+    try:
+        resp = client.query(f"get{table}LastYM", referer)
+    except Exception as exc:  # noqa: BLE001
+        print(f"WARN: {table} LastYM lookup failed ({exc}); not filtering periods", file=sys.stderr)
         return None
-    return rows[0]
+    rows = ((resp.get("result") or {}).get("result")) or []
+    return str(rows[0].get("DATA_YEAR")) if rows else None
+
+
+# Documented aggregate-row anchor per table (source-catalog.yaml response_row_anchor).
+ROW_ANCHOR = {"ML01": ("47", "1"), "MN07": ("99111", "2")}
+
+
+def top_row(rows: list[dict], table: str) -> dict | None:
+    """Pick the top aggregate row by its documented LINE/LVL anchor.
+
+    ML01: LVL=1 / LINE=47 / ITEM_NM=합계
+    MN07: LVL=2 / LINE=99111 / ITEM_NM=원리금보장형장기손해보험 합계
+
+    Anchored rather than rows[0] because an *unposted* month still answers with a
+    short all-zero skeleton (4-6 rows) whose first row is a different line
+    (ML01 -> '1. 개인보험'), which rows[0] would have summarized as a real 0.
+    Measured 2026-08-31 over all 39 insurers: for a posted month the anchor
+    exists everywhere and is rows[0] everywhere, so this only removes the hole.
+    """
+    line, lvl = ROW_ANCHOR[table]
+    for r in rows:
+        if str(r.get("LINE")) == line and str(r.get("LVL")) == lvl:
+            return r
+    return None
 
 
 def summarize(row: dict | None) -> dict:
@@ -189,11 +218,21 @@ def main() -> int:
     total = len(insurers) * len(periods)
     print(f"[ingest] {len(insurers)} insurer(s) × {len(periods)} period(s) = {total} fetch", flush=True)
 
+    last_ym: dict[str, str | None] = {t: latest_ym(client, t) for t in ("ML01", "MN07")}
+    print(f"[ingest] KIDI latest published: {last_ym}", flush=True)
+
     n = 0
     for kr in insurers:
         comp_type, table = MAPPING[kr]
         for ym in periods:
             n += 1
+            cutoff = last_ym.get(table)
+            if cutoff and ym > cutoff:
+                print(f"  [{n}/{total}] {kr} {ym} NOT_POSTED (KIDI {table} latest={cutoff})",
+                      flush=True)
+                errors.append({"kr": kr, "period": ym, "error": "not_posted_yet",
+                               "table_latest_ym": cutoff})
+                continue
             try:
                 resp = fetch_one(client, table, comp_type, ym)
             except Exception as exc:  # noqa: BLE001
@@ -202,6 +241,15 @@ def main() -> int:
                 continue
             rows = ((resp.get("result") or {}).get("result")) or []
             top = top_row(rows, table)
+            if top is None:
+                # Unposted month: KIDI answers with a zero skeleton, not an empty
+                # list. Recording it would write a false 0 into the NB CSM
+                # denominator, so keep it out of entries and report it instead.
+                print(f"  [{n}/{total}] {kr} {ym} NOT_POSTED (rows={len(rows)}, no aggregate row)",
+                      flush=True)
+                errors.append({"kr": kr, "period": ym, "error": "not_posted_yet",
+                               "row_count": len(rows)})
+                continue
             summary = summarize(top)
 
             key = f"{kr}|{ym}"
@@ -224,13 +272,24 @@ def main() -> int:
             print(f"  [{n}/{total}] {kr} {ym} rows={len(rows)} 분모={deno}억", flush=True)
 
     summary_path = OUT_DIR / "premium_summary.json"
+    # Merge into whatever is already on disk. A partial run (--insurers/--periods)
+    # used to rewrite the whole file from just what it fetched, so one
+    # `--periods 202606` would have dropped every other (insurer, period) cell.
+    merged = dict(entries)
+    if summary_path.exists():
+        prior = json.loads(summary_path.read_text(encoding="utf-8")).get("entries") or {}
+        kept = {k: v for k, v in prior.items() if k not in entries}
+        merged = {**kept, **entries}
+        print(f"[ingest] merge: {len(kept)} kept + {len(entries)} fetched = {len(merged)}")
+    entries = dict(sorted(merged.items()))
+
     payload = {
         "_meta": {
             "source": "KIDI INCOS getML01List + getMN07List",
             "endpoint": BASE + "/insMonth/getQueryResult.do",
             "stamp_utc": stamp,
-            "insurer_count": len(insurers),
-            "period_count": len(periods),
+            "insurer_count": len({v["kr_code"] for v in entries.values()}),
+            "period_count": len({v["period_yyyymm"] for v in entries.values()}),
             "ok_count": len(entries),
             "error_count": len(errors),
             "definition": "denominator = ITEM_VAL4 (월납 초회) + ITEM_VAL8 (기타 초회), 일시납 제외",

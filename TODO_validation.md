@@ -1,11 +1,40 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-08-30 (public_exports 축 배선 + wiring 테스트의 <script src> 사각 해소) · Stage 3/5 — validation
+> Last updated: 2026-09-01 (KR0071·KR0104 결합 경과조치 적용후 체인 정정 — mmult15 RED 4건 0) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-09-01) `TRANSITION_AFTER_MMULT_MISMATCH` 흥국생명(KR0071)·농협생명(KR0104) 4건 = 우리 유도 오류. 원문 정정 완료, 해당 축 RED 0.**
+
+> 처리: `scripts/_probes/fix_20260901_kr0071_kr0104_combined_transition.py --apply` ·
+> 라우팅 `inbox/parser/20260901T0500Z__validation__MULTI_2026.2Q__combined_transition_rebuild_skips_pdf_dir.md`
+>
+> - **판정 = 발행사 자기모순 아님.** 원문은 결합(②+③) 시나리오의 `item15/16/22/23후` 를
+>   **인쇄하지 않는다**. 인쇄된 건 헤드라인(1·14·27후)·②표(17후+29~35후)·③표(19후+36~40후)와
+>   ②·③ **각각의** 15/22/23후(단일 시나리오)뿐이다. 마스터는 결합 헤드라인 `14후` 에 **②단독**
+>   `22후/23후` 를 붙여 `15후` 를 역산해 뒀다 — 22후/23후는 시나리오마다 다르므로(흥국 ② 4,764.60
+>   vs ③ 5,930.51) 그 가정이 거짓이고, 그래서 R4 재조합과 어긋났다.
+> - **R4 가 발행사 산식이라는 증거**: 같은 문서의 **인쇄된 기본요구자본 8개 컬럼 전부**
+>   (2사 × 2분기 × {적용전, ②후, ③후})를 잔차 ≤0.01억 으로 재현한다.
+> - 정정은 정본 methodology(`scripts/rebuild_combined_transition_after.py` docstring) 그대로 —
+>   `15후=R4(17~20후)+21후` · `14후`는 원문 헤드라인 앵커라 불변 · `23후`는 KR0071 관계회사
+>   (KR0005) 환산(비율 0.400607, 14분기 실측 스팬 0.400568~0.400628) / KR0104 0 · `22후`는 잔차 ·
+>   `16후=sum(17..21)후−15후`. 정본 검사 4종(적용전 재현·R7/M 재현·단조성·잔차범위) 전부 통과.
+> - 실측: 게이트 `validate_data_contract.py` RED **75 → 69**. 이 축 REDs 흥국생명 2건·농협생명
+>   2건 소멸, 덤으로 `TRANSITION_AFTER_IDENTITY` 3건(흥국생명 R5·R6, 농협생명 R6)도 소멸.
+>   셀 14개만 변경, 범위 밖 변경 0, 행수 25,202 불변, 중복 콤보 0.
+> - **남은 사각(보고용, 미배선)**: `mmult15` 축이 **유도값을 검사하는 동어반복**인 버킷이 12개다
+>   (`15후`가 R4로 쓰이고 `22후`가 잔차라 두 식이 구성상 닫힌다). 그 12개에서 "적용후 mmult
+>   불일치 0" 은 증거가 아니다: KR0032 2024.1Q · KR0068 2026.2Q · KR0071 2023.2Q/2024.4Q/2025.3Q/
+>   2026.1Q/2026.2Q · KR0082 2023.1Q · KR0097 2024.4Q · KR0104 2025.3Q/2026.2Q · KR1011 2026.2Q.
+>   진짜 독립 검사로 남는 건 `mmult17`(R7×인쇄된 29~35후)·`mmult19`(M×인쇄된 36~40후)·
+>   `27후=1후/14후×100`(양쪽 인쇄)·②③ 단일표 대비 단조성 넷이다. 룰 신설은 발주 대기.
+> - 골든 2건(`test_kics_rules_golden` · `test_post_transition_golden`) 실패는 **내 변경과 무관**
+>   함을 실측 확인: 룰엔진 골든 해시는 정정 전 백업과 **바이트 동일**(84705b8486fd66ec),
+>   post_transition 골든은 `값`(적용전)만 읽는다. 둘 다 2026.2Q 데이터 적재로 이미 드리프트 상태.
 
 **(2026-08-30 c) 사용자가 내려받는 `public_exports/` 12개 파일을 어떤 검사기도 읽지 않았다 — 배선했다. 그리고 그 사각을 잡았어야 할 테스트 자신이 못 보고 있었다.**
 

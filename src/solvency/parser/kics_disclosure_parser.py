@@ -103,6 +103,11 @@ def make_quarter_column_picker(quarter: str) -> Callable[[list[str]], int | None
                 return True
             if f"{q_num}/4\ubd84\uae30" in c and y_full in c:
                 return True
+            # '23\ub144\ub3c4 1/4\ubd84\uae30' (AIG 2023Q1-era template: 2-digit year +
+            # \ub144\ub3c4 + N/4\ubd84\uae30, no 4-digit year anywhere in the cell) --
+            # distinct from the y_full-gated check above which requires "2023".
+            if f"{y_short}\ub144\ub3c4{q_num}/4\ubd84\uae30" in c:
+                return True
             # OCR-scrambled headers ("2026\ub144 1\ubd84\uae30" -> "\ub144 \ubd84\uae30 2026 1"): generalize to the
             # target year instead of the 2025 literals these patterns were first seen on.
             if c.startswith("\ub144\ubd84\uae30" + y_full + q_num) or c == f"{y_full}{q_num}":

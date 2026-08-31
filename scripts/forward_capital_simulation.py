@@ -34,6 +34,7 @@ deductions), same as any genuinely bond-free insurer.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from datetime import datetime, timezone
@@ -50,13 +51,23 @@ OUT_DIR = REPO / "output" / "kics_forward_capital"
 # DART per-bond tier labels -> internal tier labels the simulation/confidence
 # logic below already keys off of (kept unchanged from the FSC-era schema).
 _TIER_MAP = {"hybrid": "tier1_hybrid", "subordinated": "tier2_subordinated"}
-TIER1_JSON = REPO / "output" / "tier1_utilization" / "tier1_utilization_20261Q.json"
-TIER2_JSON = REPO / "output" / "tier2_utilization" / "tier2_utilization_20261Q.json"
+# 분기는 인자로 받는다 (2026-08-31). 그 전에는 20261Q 와 "2026.1Q" 가 리터럴로 박혀 있어
+# 새 분기를 돌리려면 파일을 고쳐야 했다. 기본값은 종전 동작 그대로다.
+_ap = argparse.ArgumentParser(description="K-ICS forward capital simulation")
+_ap.add_argument("--baseline-quarter", default="2026.1Q", help="예: 2026.2Q")
+_ap.add_argument("--tier-quarter", default=None,
+                 help="confidence 대조용 tier{1,2}_utilization 분기 (기본: --baseline-quarter)")
+_args = _ap.parse_args()
 
-BASELINE_QUARTER = "2026.1Q"
+BASELINE_QUARTER = _args.baseline_quarter
+_ty, _tq = (_args.tier_quarter or BASELINE_QUARTER).split(".")
+_TIER_TAG = f"{_ty}{_tq}"
+TIER1_JSON = REPO / "output" / "tier1_utilization" / f"tier1_utilization_{_TIER_TAG}.json"
+TIER2_JSON = REPO / "output" / "tier2_utilization" / f"tier2_utilization_{_TIER_TAG}.json"
+
 SIM_YEARS = [2026, 2027, 2028, 2029, 2030]
 TRANSITION_END_YEAR = 2032
-BASELINE_YEAR = 2026  # baseline taken as 2026-03-31 (2026.1Q). Anchors the 경과조치
+BASELINE_YEAR = int(_ty)  # baseline as-of year. Anchors the 경과조치
 # phase-out ramp (post→pre over BASELINE_YEAR→2032) at the as-of date, so the ~1yr of
 # transitional run-off already baked into the 2026.1Q post values is not double-counted.
 # 신종자본증권(hybrid) 기본자본 인정한도 비율 = SCR × 15% (「보험업법」 조건부자본증권;

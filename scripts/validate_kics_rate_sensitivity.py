@@ -30,6 +30,13 @@ from _quarter_horizon import quarter_horizon  # noqa: E402
 SHOCK_COLS = ["-100bp", "-50bp", "base", "+50bp", "+100bp"]
 # RS2 documented exceptions: (회사, 분기) basis 차이 (별도 vs 연결) — RED여도 게이트 블록 안 함.
 RS2_EXCEPTIONS = {("DB손해보험", "2025.2Q")}
+# RS1 documented exceptions: (회사, 분기, 경과조치, 컬럼) — 원문 PDF 자체의 오류(파싱 결함 아님).
+# 예별손해보험 2024.4Q: raw p.75 "6-8-2) 금리 민감도 분석" 표에서 경과조치 후 지급여력기준금액
+# 행의 △100bp/△50bp 두 칸이 모두 "9,170"으로 인쇄돼 있다(fitz word-bbox로 좌표까지 대조 —
+# 두 값이 각자의 열 헤더 위치에 정확히 위치, docling 오독이 아니라 원문 자체 중복/오타).
+# 역산한 참값(비율 -30.98, 금액 -3,022 기준)은 약 9,754.7이지만 원문에 그 숫자가 없어 추측
+# 주입 대신 원문 그대로 두고 예외 처리 (2026-08-31, scripts/_probes/probe_20260831_yebyeol_pdf_page.py).
+RS1_EXCEPTIONS = {("예별손해보험", "2024.4Q", "적용후", "-100bp")}
 
 # 비율행 정렬을 위한 회복 regime 시작 (이전 분기는 서식 도입 전이라 hole 정상)
 REGIME_START = "2024.4Q"
@@ -62,7 +69,7 @@ def main() -> int:
     g, rows = load_rs()
     kics = load_kics()
 
-    rs1, rs2, rs2_exc, rs3, rs4 = [], [], [], [], []
+    rs1, rs1_exc, rs2, rs2_exc, rs3, rs4 = [], [], [], [], [], []
 
     # ---- RS1: 비율 ≈ 금액/기준금액 ×100 ----
     for (co, q, gj), m in g.items():
@@ -76,7 +83,8 @@ def main() -> int:
             expected = av / bv * 100.0
             tol = max(0.5, 0.005 * abs(rv))
             if abs(expected - rv) > tol:
-                rs1.append((co, q, gj, c, round(rv, 2), round(expected, 2)))
+                rec = (co, q, gj, c, round(rv, 2), round(expected, 2))
+                (rs1_exc if (co, q, gj, c) in RS1_EXCEPTIONS else rs1).append(rec)
 
     # ---- RS2: 적용전 base vs kics_disclosure item1/14/27 ----
     CHK = [("지급여력금액", 1, 2.0), ("지급여력기준금액", 14, 2.0), ("지급여력비율", 27, 0.5)]
@@ -128,9 +136,11 @@ def main() -> int:
     print("=" * 74)
     print(f"K-ICS 금리민감도 검증  (cohort {len(have)}사, {len(g)} 사·분기·경과조치 그룹)")
     print("=" * 74)
-    print(f"RS1_RATIO_IDENTITY (RED):  fail={len(rs1)}")
+    print(f"RS1_RATIO_IDENTITY (RED):  fail={len(rs1)}  (+exception {len(rs1_exc)})")
     for co, q, gj, c, rv, ev in rs1[:20]:
         print(f"   RED {co:14s} {q} {gj} [{c}] 비율={rv} ≠ 금액/기준={ev}")
+    for co, q, gj, c, rv, ev in rs1_exc:
+        print(f"   EXC {co:14s} {q} {gj} [{c}] 비율={rv} ≠ 금액/기준={ev} — 원문 자체 오류(중복인쇄), documented")
     print(f"RS2_BASE_ANCHOR (RED):  fail={len(rs2)}  (+exception {len(rs2_exc)})")
     for co, q, meas, bv, kv, df in rs2:
         print(f"   RED {co:14s} {q} {meas}: base={bv} vs disclosure={kv} (Δ{df:+})")
@@ -146,7 +156,7 @@ def main() -> int:
     red_total = len(rs1) + len(rs2)  # exception 제외
     print()
     print("#" * 74)
-    print(f"SUMMARY  RS1:{len(rs1)}RED | RS2:{len(rs2)}RED(+{len(rs2_exc)}exc) | "
+    print(f"SUMMARY  RS1:{len(rs1)}RED(+{len(rs1_exc)}exc) | RS2:{len(rs2)}RED(+{len(rs2_exc)}exc) | "
           f"RS3:{len(rs3)}Y | RS4:{len(rs4)}Y | gate RED={red_total}")
     print("#" * 74)
 
@@ -155,6 +165,7 @@ def main() -> int:
     out.write_text(json.dumps({
         "_meta": {"groups": len(g), "companies": len(have), "gate_red": red_total},
         "RS1_ratio_identity": [dict(zip(["회사", "분기", "경과조치", "컬럼", "비율", "expected"], r)) for r in rs1],
+        "RS1_exceptions": [dict(zip(["회사", "분기", "경과조치", "컬럼", "비율", "expected"], r)) for r in rs1_exc],
         "RS2_base_anchor": [dict(zip(["회사", "분기", "measure", "base", "disclosure", "diff"], r)) for r in rs2],
         "RS2_exceptions": [dict(zip(["회사", "분기", "measure", "base", "disclosure", "diff"], r)) for r in rs2_exc],
         "RS3_direction": [dict(zip(["회사", "분기", "경과조치", "m100bp", "base"], r)) for r in rs3],

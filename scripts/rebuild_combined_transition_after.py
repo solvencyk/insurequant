@@ -114,8 +114,14 @@ def _num(tok):
 
 
 def _pdf(period: str, code: str):
-    raw = DISCLOSURE / period / "raw"
-    pdfs = sorted(raw.glob(f"{code}_*.pdf"))
+    # raw/ 와 pdf/ 를 **둘 다** 본다. 종전에는 raw/ 만 봤는데, FY2026_Q2 는 원문이
+    # `pdf/` 에 40개 있고 `raw/` 에는 1개뿐이라 **39개사를 조용히 건너뛰고 exit 0 으로
+    # 나갔다** — 호출자에게는 "재구성할 게 없었다" 로 읽힌다. 2026-09-01 에 KR0071·KR0104
+    # 의 결합 경과조치 적용후가 잘못 역산된 채 남아 있던 것이 이 침묵 때문이었다
+    # (validation 발주 `inbox/parser/20260901T0500Z`). 없는 것과 안 본 것은 다르다.
+    pdfs = []
+    for sub in ("raw", "pdf"):
+        pdfs += sorted((DISCLOSURE / period / sub).glob(f"{code}_*.pdf"))
     if not pdfs:
         return None
     am = [p for p in pdfs if "_amended" in p.name]

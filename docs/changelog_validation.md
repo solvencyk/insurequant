@@ -1,9 +1,70 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-08-30 (c) · Stage 3/5 — validation
+> Last updated: 2026-09-01 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-09-01 — KR0094 신한라이프 2026.2Q `36_irr` 면제 등재 + 41-46 적용후가 순회조차 안 되던 사각 폐쇄
+
+owner 2026-09-01 승인. 2026-08-21 최초 5건 승인의 연장(등재 5 -> 6건).
+
+**등재.** `IRR_DERIVE_ISSUER_INCONSISTENT[("KR0094","2026.2Q")] = {"적용전": 2979.8030762296203,
+"적용후": 2979.8030762296203}`. 잔차 = item36(공시 10655.45) − `irr_derive_expected(41~46)`
+(7675.64692377038), 잔차/item36 **+27.97%** 로 기존 대역(+5.25%~+25.62%)을 처음 넘었다.
+**대역을 넘었는데도 등재한 근거는 '같은 성질' 이지 '크기' 가 아니다**: ① item36 은 이번에도
+시장위험 축에서 닫힌다(item19 27,807.00 vs sqrt(item36~40·MARKET_M) 27,807.2756, rel
+**−0.00099%**, 기존 대역 −0.00157%~+0.00222% 안, 적용전·적용후 동일) ② 41-46 은 raw p28
+자기완결 표와 소수점까지 일치(순자산가치 6,319,163/6,448,867/5,427,499/7,105,796/6,348,177/
+6,219,031 · 금리위험액 1,065,545 백만원). 후속 세션은 이 확장을 선례로 삼지 말 것 — 잔차
+크기는 등재 사유가 아니고 위 두 조건을 매 건 실측해야 한다.
+
+**진짜 발견은 따로 있다 — 적용후 축이 이 버킷을 순회조차 안 하고 있었다.** 등재 전 실측:
+`_transition_irr_after` fails **0**, 그 대신 `POST_SCENARIO_ABSENT(짝수Q·적용전완비)` **142**.
+41-46 적용후가 결측이라 검사 대상에서 아예 빠져 있었던 것이고, 게이트는 그걸 RED 로도
+SKIP-사유로도 보고하지 않았다. **"룰이 0이라고 말한다" 와 "그 축이 깨끗하다" 가 갈린 자리다.**
+
+원인은 데이터가 아니라 **커버리지 상수**였다: `scripts/fix_20260716_nonapplier_requirement_mirror.py`
+의 `TIER3_ITEMS = list(range(36, 41))` — 36~40 에서 끊긴다. **41-46 은 어느 tier 에도 없어서**
+비적용사 미러가 한 번도 그 6칸을 건드린 적이 없다. 그래서 KR0094 2026.2Q 는 36-40 에는 미러가
+있고 41-46 만 비어 있었다.
+
+**미러를 채운 근거는 추론이 아니라 발행사 명시다.** raw `data/disclosure/FY2026_Q2/pdf/
+KR0094_신한라이프생명보험.pdf` — p19 경과조치 적용여부 O/X 표가 **전 항목 X**(TFI·TAC·TIR·TER·
+**TIRR**·적기시정조치 유예), p21 ②-iii "당사는 주식위험 경과조치 또는 금리위험 경과조치를
+적용하지 않아 경과조치 전·후 금액 및 비율이 동일함"(이 축을 직접 지목), p22 주2 동일 취지.
+KR0094 는 `_TRANSITION_APPLIERS` 밖이고 owner 상시룰은 "비적용사 적용후는 미러 가능, 적용사인데
+미공시면 공란 유지"다(`scripts/fix_20260821_kr0097_2024q2_irr_post_denull.py`). p28 표의
+컬럼축은 충격 전/충격 후 = **시나리오 축이지 경과조치 축이 아니다**.
+채운 스크립트: `scripts/fix_20260901_kr0094_2026q2_irr_post_mirror.py` (6칸 UPSERT, 전후 지문
+대조로 범위 밖 변경 0 단언). **채우는 것이 검사를 넓힌다**: fails 0->1 · ABSENT 142->141 이 되고
+그 잔차를 박제한다. 빈칸으로 뒀으면 적용후 축은 영구 사각이었다.
+
+**실측 전/후.** `validate_kics_disclosure.py` 36_irr RED **1 -> 0**(다른 룰 불변, 면제 12축 전부
+MATCH) · `validate_data_contract.py` RED **67 -> 62** 중 내 몫은 `KICS_36_irr 신한라이프 2026.2Q`
+**1건**(나머지 4건은 병행 흥국화재 세션). 신규 RED 0.
+`tests/unit/test_irr_pin_exemption.py` **3 failed/6 passed -> 9 passed**.
+근거 원장 `data/_gold/kics_exemption_provenance.json` +1(40->41), `EXEMPTION_*` 소견 12 -> 12 무변
+(신규 항목이 provenance·pin-ledger 검사를 그대로 통과). 원장 마커는 `present_markers` 14개 +
+`present_rows` 3개(행 귀속 Δ 0.00~0.37pt, 밴드 3.0pt)로 **행 귀속까지** 건다.
+
+**2026.1Q 는 면제 대상이 아니다 — 추출갭도 아니다.** 41-46 결측은 **서식 부재**다. 실측: 2026.1Q
+filing 은 36쪽 축약본으로 `6-4. 시장위험 관리`·`② 금리위험액 현황` 이 통째로 없고(36쪽 전수 fitz
+스캔, 텍스트레이어 정상 — 최저 59자는 섹션 구분면), 산업 전체로도 item41 보유 회사가 2026.1Q
+**0/39** · 2025.1Q **0/39** · 2025.3Q **0/38** 이다(시나리오표는 2Q/4Q 전용 서식). 룰이 이미
+`홀수분기 서식부재` 로 정확히 SKIP 하고 있어 손댈 것이 없다. 파서 발주 불요.
+
+**미결(내 범위 밖).** ① `tests/fixtures/kics_rules_golden.json` 은 재생성하지 않았다 — 내 기여는
+`36_irr` RED->SKIP **1행뿐**임을 통제실험으로 확인했으나(내 변경을 뺀 대조군 해시가 픽스처와도
+불일치), 픽스처가 병행 세션 때문에 이미 stale 이라 지금 `--update` 하면 남의 미완 상태를 박제한다.
+그 세션이 정착한 뒤 재생성해야 하고, 그때 내 1행도 같이 들어간다. ②
+`tests/fixtures/post_transition_golden.json` 드리프트(6574->6632셀)는 **내 것이 아니다** — 내
+변경 유무로 해시가 동일하고(`b1581fe2…`) KR0094|2026.2Q 는 그 도출에 등장조차 안 한다. ③
+`src/solvency/validation/kics_json_rules.py` 주석과 `validate_kics_disclosure.py` 가 가리키는
+`tests/test_exemption_pin_ledger.py` 는 **실존하지 않는 파일**이다(dangling 참조). ④ 41-46
+적용후 결측은 저장소 전체로 144 (회사,분기) 남아 있다(적용전 완비·적용후 전무, 부분결측 0).
+다수는 경과조치 적용사라 공란이 정답이지만, 비적용사 몫은 위 `TIER3_ITEMS` 갭이 원인이라 같은
+사각이 그대로 열려 있다.
 
 ## 2026-08-30 (c) — public_exports 축 신설: 사용자가 내려받는 파일이 무검사였고, 그걸 잡을 테스트도 못 보고 있었다
 

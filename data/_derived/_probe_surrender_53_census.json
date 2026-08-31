@@ -1,0 +1,4797 @@
+[
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0001_메리츠화재해상보험.md",
+    "kr": "KR0001",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0003_롯데손해보험.md",
+    "kr": "KR0003",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      656.0
+    ],
+    "row": "| 해약환급금준비금 | 656           | -              |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 |               |              |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0005_흥국화재_amended.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0008_삼성화재해상보험_amended.md",
+    "kr": "KR0008",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0009_현대해상.md",
+    "kr": "KR0009",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      43916.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |      43,916 |           0 |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0010_KB손해보험.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0011_DB손해보험.md",
+    "kr": "KR0011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0032_NH농협손해보험_amended.md",
+    "kr": "KR0032",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 | -                | -      |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0050_하나손해보험_amended.md",
+    "kr": "KR0050",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 | -             | -              |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0070_에이비엘생명보험_amended.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0071_흥국생명보험_amended.md",
+    "kr": "KR0071",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 0     | 0               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |             0 |             0 |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0074_라이나생명보험_amended.md",
+    "kr": "KR0074",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      17066.0
+    ],
+    "row": "| 해약환급금준비금 | 17,066          | -               |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0075_비엔피파리바카디프생명보험.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0079_미래에셋생명_amended.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      5832.0
+    ],
+    "row": "|  5,832 | -               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0082_DB생명보험_amended.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0097_하나생명보험_amended.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0099_케이비라이프생명보험.md",
+    "kr": "KR0099",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR0104_농협생명보험.md",
+    "kr": "KR0104",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      1398.0
+    ],
+    "row": "| 해약환급금준비금 | 1,398         | -              |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR1010_교보라이프플래닛생명보험.md",
+    "kr": "KR1010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      1833.0,
+      0.0
+    ],
+    "row": "| 1,833 | 0               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR1059_캐롯손해보험.md",
+    "kr": "KR1059",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q1",
+    "file": "KR1098_카카오페이손해보험_amended2.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0001_메리츠화재해상보험_amended.md",
+    "kr": "KR0001",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0003_롯데손해보험.md",
+    "kr": "KR0003",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 |               |              |"
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0005_흥국화재_amended.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0008_삼성화재해상보험_amended.md",
+    "kr": "KR0008",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0009_현대해상.md",
+    "kr": "KR0009",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0010_KB손해보험_amended.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0011_DB손해보험.md",
+    "kr": "KR0011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0032_NH농협손해보험_amended.md",
+    "kr": "KR0032",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0050_하나손해보험_amended.md",
+    "kr": "KR0050",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 | -             | -              |"
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0070_에이비엘생명보험_amended.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0074_라이나생명보험_amended.md",
+    "kr": "KR0074",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      17355.0,
+      17066.0
+    ],
+    "row": "| 해약환급금준비금 | 17,355          | 17,066          |"
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0075_비엔피파리바카디프생명보험_amended.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0076_아이엠라이프생명보험_amended.md",
+    "kr": "KR0076",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "|     0 |               0 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0082_DB생명보험_amended.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0097_하나생명보험_amended.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0099_케이비라이프생명보험.md",
+    "kr": "KR0099",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "|      0 |               0 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR0104_농협생명보험_amended.md",
+    "kr": "KR0104",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR1010_교보라이프플래닛생명보험.md",
+    "kr": "KR1010",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "|      0 |               0 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q2",
+    "file": "KR1098_카카오페이손해보험_amended.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0001_메리츠화재해상보험_amended_amended2.md",
+    "kr": "KR0001",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      17003.0,
+      16350.0
+    ],
+    "row": "| 해약환급금준비금 |        17,003 |         16,350 |"
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0003_롯데손해보험_amended.md",
+    "kr": "KR0003",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      2690.0,
+      890.0
+    ],
+    "row": "| 해약환급금준비금 | 2,690         | 890            |"
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0005_흥국화재_amended.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0008_삼성화재해상보험_amended.md",
+    "kr": "KR0008",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0009_현대해상_amended.md",
+    "kr": "KR0009",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0010_KB손해보험_amended.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0011_DB손해보험_amended2.md",
+    "kr": "KR0011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0032_NH농협손해보험_amended.md",
+    "kr": "KR0032",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0050_하나손해보험_amended.md",
+    "kr": "KR0050",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 | 0                   | 0                    |"
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0070_에이비엘생명보험_amended.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |             0 |                0 |"
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0074_라이나생명보험_amended.md",
+    "kr": "KR0074",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0075_비엔피파리바카디프생명보험_amended.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0079_미래에셋생명.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      5628.0,
+      5858.0
+    ],
+    "row": "|  5,628 |           5,858 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0082_DB생명보험_amended.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0097_하나생명보험_amended.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0099_케이비라이프생명보험.md",
+    "kr": "KR0099",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "|      0 |               0 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR0104_농협생명보험.md",
+    "kr": "KR0104",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      1368.0,
+      1378.0
+    ],
+    "row": "| 해약환급금준비금 | 1,368         | 1,378          |"
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR1010_교보라이프플래닛생명보험.md",
+    "kr": "KR1010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      1837.0,
+      1832.0
+    ],
+    "row": "| 1,837 | 1,832           | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR1059_캐롯손해보험.md",
+    "kr": "KR1059",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q3",
+    "file": "KR1098_카카오페이손해보험_amended.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0001_메리츠화재해상보험_amended_amended3.md",
+    "kr": "KR0001",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      10313.0,
+      10101.0
+    ],
+    "row": "| 해약환급금준비금 | 10,313        | 10,101         |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      17900.0,
+      17003.0
+    ],
+    "row": "| 해약환급금준비금 |        17,900 |         17,003 |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0003_롯데손해보험_amended.md",
+    "kr": "KR0003",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      3040.0,
+      2690.0
+    ],
+    "row": "| 해약환급금준비금 | 3,040          | 2,690           |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 | 0             | 0       |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0005_흥국화재_amended.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0008_삼성화재해상보험_amended.md",
+    "kr": "KR0008",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      11800.0,
+      9168.0
+    ],
+    "row": "| 해약환급금준비금 | 11,800        | 9,168         |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0009_현대해상_amended.md",
+    "kr": "KR0009",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      34224.0,
+      36039.0
+    ],
+    "row": "| 해약환급금준비금 | 34,224      | 36,039      |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0011_DB손해보험.md",
+    "kr": "KR0011",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      26458.0,
+      23735.0
+    ],
+    "row": "| 해약환급금준비금 | 26,458        | 23,735         |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0032_NH농협손해보험_amended.md",
+    "kr": "KR0032",
+    "has_section": true,
+    "unit": null,
+    "values": [
+      6836.0,
+      6463.0
+    ],
+    "row": "| 해약환급금준비금 | 6,836       | 6,463       |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      794.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |   794 |      0 |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0050_하나손해보험_amended.md",
+    "kr": "KR0050",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 | 0                   | 0                   |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0070_에이비엘생명보험_amended.md",
+    "kr": "KR0070",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| -      | -               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 | -               | -               |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| -      | -               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0074_라이나생명보험.md",
+    "kr": "KR0074",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0075_비엔피파리바카디프생명보험_amended.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0079_미래에셋생명_amended.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      7618.0,
+      6512.0
+    ],
+    "row": "|  7,618 |          6,512 | 해약환급금준비금       |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0082_DB생명보험.md",
+    "kr": "KR0082",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      16331.0,
+      15904.0
+    ],
+    "row": "| 해약환급금준비금 주) |          16,331 |          15,904 |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "|      0 |               0 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      6402.0,
+      6063.0
+    ],
+    "row": "| 해약환급금준비금 |     6,402 |     6,063 |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      20914.0,
+      22255.0
+    ],
+    "row": "| 20,914 |          22,255 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0097_하나생명보험_amended.md",
+    "kr": "KR0097",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| -    | -              | 해약환급금준비금       |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0099_케이비라이프생명보험_amended.md",
+    "kr": "KR0099",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      7904.0,
+      7521.0
+    ],
+    "row": "| 해약환급금준비금 |           7,904 |           7,521 |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "|      0 |               0 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0104_농협생명보험.md",
+    "kr": "KR0104",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      19544.0,
+      17678.0
+    ],
+    "row": "| 19,544 | 17,678          | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR0150_서울보증보험.md",
+    "kr": "KR0150",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      1020.0,
+      1368.0
+    ],
+    "row": "| 해약환급금준비금 | 1,020         | 1,368          |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR1010_교보라이프플래닛생명보험_amended.md",
+    "kr": "KR1010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      1857.0,
+      1837.0
+    ],
+    "row": "| 1,857 |           1,837 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR1059_캐롯손해보험_amended.md",
+    "kr": "KR1059",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 | -             | -              |"
+  },
+  {
+    "period": "FY2023_Q4",
+    "file": "KR1098_카카오페이손해보험.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0001_메리츠화재해상보험_amended.md",
+    "kr": "KR0001",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0003_롯데손해보험.md",
+    "kr": "KR0003",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0005_흥국화재_amended.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0008_삼성화재해상보험_amended.md",
+    "kr": "KR0008",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0009_현대해상_amended.md",
+    "kr": "KR0009",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0010_KB손해보험_amended.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0011_DB손해보험_amended2.md",
+    "kr": "KR0011",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      30844.0,
+      26458.0
+    ],
+    "row": "| 해약환급금준비금 | 30,844        | 26,458         |"
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0032_NH농협손해보험_amended.md",
+    "kr": "KR0032",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      7380.0,
+      6836.0
+    ],
+    "row": "| 해약환급금준비금 | 7,380       | 6,836       |"
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0050_하나손해보험_amended.md",
+    "kr": "KR0050",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 | -             | -              |"
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0070_에이비엘생명보험_amended.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |             0 |             0 |"
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0074_라이나생명보험_amended.md",
+    "kr": "KR0074",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      45184.0,
+      22513.0
+    ],
+    "row": "| 45,184 |          22,513 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0075_비엔피파리바카디프생명보험_amended.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0079_미래에셋생명_amended.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0082_DB생명보험_amended.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0083_푸본현대생명보험_amended.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      7642.0,
+      6402.0
+    ],
+    "row": "| 해약환급금준비금 |       7,642 |       6,402 |"
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0097_하나생명보험_amended.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0099_케이비라이프생명보험_amended.md",
+    "kr": "KR0099",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0100_처브라이프생명보험_amended.md",
+    "kr": "KR0100",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "|      0 |               0 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR0104_농협생명보험_amended.md",
+    "kr": "KR0104",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      1024.0,
+      1020.0
+    ],
+    "row": "| 해약환급금준비금 | 1,024         | 1,020          |"
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR1010_교보라이프플래닛생명보험_amended.md",
+    "kr": "KR1010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      1878.0,
+      1857.0
+    ],
+    "row": "| 1,878 |           1,857 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR1059_캐롯손해보험.md",
+    "kr": "KR1059",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q1",
+    "file": "KR1098_카카오페이손해보험.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0001_메리츠화재해상보험_amended_amended2.md",
+    "kr": "KR0001",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0003_롯데손해보험_amended.md",
+    "kr": "KR0003",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0005_흥국화재_amended.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0008_삼성화재해상보험_amended.md",
+    "kr": "KR0008",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0009_현대해상_amended.md",
+    "kr": "KR0009",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0010_KB손해보험_amended.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0011_DB손해보험.md",
+    "kr": "KR0011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0032_NH농협손해보험_amended.md",
+    "kr": "KR0032",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0050_하나손해보험_amended.md",
+    "kr": "KR0050",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0070_에이비엘생명보험_amended.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0074_라이나생명보험_amended.md",
+    "kr": "KR0074",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0075_비엔피파리바카디프생명보험_amended.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0079_미래에셋생명_amended.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0082_DB생명보험_amended.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0097_하나생명보험_amended.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0099_케이비라이프생명보험.md",
+    "kr": "KR0099",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR0104_농협생명보험.md",
+    "kr": "KR0104",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR1010_교보라이프플래닛생명보험_amended.md",
+    "kr": "KR1010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR1059_캐롯손해보험.md",
+    "kr": "KR1059",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q2",
+    "file": "KR1098_카카오페이손해보험.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0001_메리츠화재해상보험_amended_amended3.md",
+    "kr": "KR0001",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0003_롯데손해보험_amended.md",
+    "kr": "KR0003",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0005_흥국화재.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0008_삼성화재해상보험_amended.md",
+    "kr": "KR0008",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0009_현대해상_amended.md",
+    "kr": "KR0009",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0010_KB손해보험_amended.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0011_DB손해보험_amended2.md",
+    "kr": "KR0011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0032_NH농협손해보험_amended.md",
+    "kr": "KR0032",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      794.0,
+      794.0
+    ],
+    "row": "| 해약환급금준비금 기적립액    |   794 |    794 |"
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0050_하나손해보험_amended.md",
+    "kr": "KR0050",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0070_에이비엘생명보험.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |             0 |             0 |"
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0074_라이나생명보험.md",
+    "kr": "KR0074",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      46687.0,
+      45792.0
+    ],
+    "row": "| 46,687 |          45,792 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0075_비엔피파리바카디프생명보험_amended.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0079_미래에셋생명_amended.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0082_DB생명보험_amended.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0083_푸본현대생명보험_amended.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0097_하나생명보험_amended.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0099_케이비라이프생명보험_amended.md",
+    "kr": "KR0099",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0100_처브라이프생명보험_amended.md",
+    "kr": "KR0100",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR0104_농협생명보험_amended.md",
+    "kr": "KR0104",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": null,
+    "values": [
+      1060.0,
+      1042.0
+    ],
+    "row": "| 해약환급금준비금 | 1,060         | 1,042          |"
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR1010_교보라이프플래닛생명보험.md",
+    "kr": "KR1010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR1059_캐롯손해보험.md",
+    "kr": "KR1059",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q3",
+    "file": "KR1098_카카오페이손해보험.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0001_메리츠화재해상보험.md",
+    "kr": "KR0001",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      17931.0,
+      20157.0
+    ],
+    "row": "| 해약환급금준비금 | 17,931        | 20,157         |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      20343.0,
+      21230.0
+    ],
+    "row": "| 해약환급금준비금 |        20,343 |         21,230 |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0003_롯데손해보험.md",
+    "kr": "KR0003",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      2968.0,
+      3837.0
+    ],
+    "row": "| 해약환급금준비금 | 2,968         | 3,837          |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0005_흥국화재.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0008_삼성화재해상보험.md",
+    "kr": "KR0008",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      22131.0,
+      22840.0
+    ],
+    "row": "| 해약환급금준비금 | 22,131        | 22,840        |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0009_현대해상.md",
+    "kr": "KR0009",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      40183.0,
+      44315.0
+    ],
+    "row": "| 해약환급금준비금 | 40,183      | 44,315      |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0010_KB손해보험.md",
+    "kr": "KR0010",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      28380.0,
+      33779.0
+    ],
+    "row": "| 해약환급금준비금 |        28,380 |         33,779 |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0011_DB손해보험.md",
+    "kr": "KR0011",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      32392.0,
+      37241.0
+    ],
+    "row": "| 해약환급금준비금 | 32,392        | 37,241         |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0032_NH농협손해보험.md",
+    "kr": "KR0032",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      7277.0,
+      8210.0
+    ],
+    "row": "| 해약환급금준비금 | 7,277       | 8,210       |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      773.0,
+      794.0
+    ],
+    "row": "| 해약환급금준비금 |   773 |       794 |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0050_하나손해보험.md",
+    "kr": "KR0050",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 | 0               | 0                 |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      36312.0,
+      36646.0
+    ],
+    "row": "| 36,312 |          36,646 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 | -                        | -                       |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0070_에이비엘생명보험.md",
+    "kr": "KR0070",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| -     | -               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |             0 |             0 |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0074_라이나생명보험.md",
+    "kr": "KR0074",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      37206.0,
+      46687.0
+    ],
+    "row": "| 37,206 |          46,687 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0075_비엔피파리바카디프생명보험.md",
+    "kr": "KR0075",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| -     | -               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0079_미래에셋생명.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0082_DB생명보험.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| -      | -               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      13334.0,
+      17944.0
+    ],
+    "row": "| 13,334 |          17,944 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0097_하나생명보험.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0099_케이비라이프생명보험.md",
+    "kr": "KR0099",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      9383.0,
+      10227.0
+    ],
+    "row": "| 해약환급금준비금 |           9,383 |       10,227 |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| -      | -               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0104_농협생명보험.md",
+    "kr": "KR0104",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      21298.0,
+      21395.0
+    ],
+    "row": "| 21,298 | 21,395          | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR0150_서울보증보험.md",
+    "kr": "KR0150",
+    "has_section": true,
+    "unit": null,
+    "values": [],
+    "row": "| 해약환급금준비금 | -             | -              |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      934.0,
+      1060.0
+    ],
+    "row": "| 해약환급금준비금 | 934           | 1,060          |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR1010_교보라이프플래닛생명보험.md",
+    "kr": "KR1010",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| -      | -               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR1059_캐롯손해보험.md",
+    "kr": "KR1059",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 | -             | -              |"
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR1098_카카오페이손해보험.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2024_Q4",
+    "file": "KR1098_카카오페이손해보험_amended2.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0001_메리츠화재해상보험.md",
+    "kr": "KR0001",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0003_롯데손해보험.md",
+    "kr": "KR0003",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0005_흥국화재.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0008_삼성화재해상보험.md",
+    "kr": "KR0008",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0009_현대해상.md",
+    "kr": "KR0009",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      41610.0,
+      40183.0
+    ],
+    "row": "| 해약환급금준비금 | 41,610      | 40,183      |"
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0010_KB손해보험.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0011_DB손해보험_amended2.md",
+    "kr": "KR0011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0032_NH농협손해보험.md",
+    "kr": "KR0032",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      7314.0,
+      7277.0
+    ],
+    "row": "| 해약환급금준비금 | 7,314       | 7,277       |"
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0050_하나손해보험.md",
+    "kr": "KR0050",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0070_에이비엘생명보험.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |             0 |             0 |"
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0074_라이나생명보험.md",
+    "kr": "KR0074",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      37712.0,
+      37206.0
+    ],
+    "row": "| 37,712 |          37,206 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0075_비엔피파리바카디프생명보험.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0079_미래에셋생명.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0082_DB생명보험.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      9576.0,
+      9188.0
+    ],
+    "row": "| 해약환급금준비금 |       9,576 |       9,188 |"
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0097_하나생명보험.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0099_케이비라이프생명보험.md",
+    "kr": "KR0099",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0104_농협생명보험.md",
+    "kr": "KR0104",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR0150_서울보증보험.md",
+    "kr": "KR0150",
+    "has_section": true,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      939.0,
+      934.0
+    ],
+    "row": "| 해약환급금준비금 | 939           | 934            |"
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR1010_교보라이프플래닛생명보험.md",
+    "kr": "KR1010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR1059_캐롯손해보험.md",
+    "kr": "KR1059",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q1",
+    "file": "KR1098_카카오페이손해보험.md",
+    "kr": "KR1098",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금      | -             | -             |"
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0001_메리츠화재해상보험_amended2.md",
+    "kr": "KR0001",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0003_롯데손해보험.md",
+    "kr": "KR0003",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0005_흥국화재.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0008_삼성화재해상보험.md",
+    "kr": "KR0008",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0009_현대해상_amended.md",
+    "kr": "KR0009",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0010_KB손해보험.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0011_DB손해보험.md",
+    "kr": "KR0011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0032_NH농협손해보험.md",
+    "kr": "KR0032",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0050_하나손해보험.md",
+    "kr": "KR0050",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 | -             | -              |"
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0070_에이비엘생명보험.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |             0 |             0 |"
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0074_라이나생명보험.md",
+    "kr": "KR0074",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0075_비엔피파리바카디프생명보험.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0079_미래에셋생명.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0082_DB생명보험.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      11468.0,
+      9576.0
+    ],
+    "row": "| 해약환급금준비금 |      11,468 |       9,576 |"
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0097_하나생명보험.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0099_케이비라이프생명보험.md",
+    "kr": "KR0099",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR0104_농협생명보험.md",
+    "kr": "KR0104",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": null,
+    "values": [
+      841.0,
+      939.0
+    ],
+    "row": "| 해약환급금준비금 |           841 |            939 |"
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR1010_교보라이프플래닛생명보험.md",
+    "kr": "KR1010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      2435.0,
+      2315.0
+    ],
+    "row": "| 2,435 |           2,315 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q2",
+    "file": "KR1098_카카오페이손해보험.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0001_메리츠화재해상보험_amended3.md",
+    "kr": "KR0001",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0003_롯데손해보험.md",
+    "kr": "KR0003",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0005_흥국화재.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0008_삼성화재해상보험.md",
+    "kr": "KR0008",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0009_현대해상.md",
+    "kr": "KR0009",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      40495.0,
+      43265.0
+    ],
+    "row": "| 해약환급금준비금 | 40,495      | 43,265      |"
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0010_KB손해보험.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0011_DB손해보험.md",
+    "kr": "KR0011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0011_DB손해보험_amended2.md",
+    "kr": "KR0011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0032_NH농협손해보험.md",
+    "kr": "KR0032",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0050_하나손해보험.md",
+    "kr": "KR0050",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0070_에이비엘생명보험.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      4485.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |         4,485 |             0 |"
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0074_라이나생명보험.md",
+    "kr": "KR0074",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      39248.0,
+      38318.0
+    ],
+    "row": "| 39,248 | 38,318          | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0075_비엔피파리바카디프생명보험.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0079_미래에셋생명.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0082_DB생명보험.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0097_하나생명보험.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0099_케이비라이프생명보험.md",
+    "kr": "KR0099",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR0104_농협생명보험.md",
+    "kr": "KR0104",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      854.0,
+      841.0
+    ],
+    "row": "| 해약환급금준비금 |           854 |            841 |"
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR1010_교보라이프플래닛생명보험.md",
+    "kr": "KR1010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q3",
+    "file": "KR1098_카카오페이손해보험.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0001_메리츠화재해상보험.md",
+    "kr": "KR0001",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      29766.0,
+      24900.0
+    ],
+    "row": "| 해약환급금준비금 | 29,766        | 24,900         |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      24163.0,
+      22494.0
+    ],
+    "row": "| 해약환급금준비금 |        24,163 |         22,494 |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0003_롯데손해보험.md",
+    "kr": "KR0003",
+    "has_section": true,
+    "unit": null,
+    "values": [
+      3445.0,
+      3893.0
+    ],
+    "row": "| 해약환급금준비금 | 3,445         | 3,893          |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0004_예별손해보험.md",
+    "kr": "KR0004",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 | 0             |              0 |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0005_흥국화재.md",
+    "kr": "KR0005",
+    "has_section": true,
+    "unit": null,
+    "values": [
+      4426.0,
+      3751.0
+    ],
+    "row": "| 해약환급금준비금 |         4,426 |          3,751 |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0008_삼성화재해상보험.md",
+    "kr": "KR0008",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      41301.0,
+      36682.0
+    ],
+    "row": "| 해약환급금준비금 | 41,301        | 36,682        |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0009_현대해상.md",
+    "kr": "KR0009",
+    "has_section": true,
+    "unit": null,
+    "values": [
+      39166.0,
+      40495.0
+    ],
+    "row": "| 해약환급금준비금 | 39,166        | 40,495        |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0010_KB손해보험.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0011_DB손해보험.md",
+    "kr": "KR0011",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      45413.0,
+      41053.0
+    ],
+    "row": "| 해약환급금준비금 | 45,413        | 41,053         |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0029_AIG손해보험.md",
+    "kr": "KR0029",
+    "has_section": true,
+    "unit": null,
+    "values": [
+      3154.0,
+      3004.0
+    ],
+    "row": "| 해약환급금준비금 |        3,154 |        3,004 |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0032_NH농협손해보험.md",
+    "kr": "KR0032",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      7631.0,
+      8093.0
+    ],
+    "row": "| 해약환급금준비금 | 7,631       | 8,093       |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      414.0,
+      773.0
+    ],
+    "row": "| 해약환급금준비금 |        414 |         773 |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0050_하나손해보험.md",
+    "kr": "KR0050",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |               0 |                 0 |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": true,
+    "unit": null,
+    "values": [],
+    "row": "| 해약환급금준비금 | -       | -       |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      65078.0,
+      52791.0
+    ],
+    "row": "| 65,078 |          52,791 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0069_삼성생명.md",
+    "kr": "KR0069",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      8324.0
+    ],
+    "row": "| 해약환급금준비금 | 8,324                    | -                       |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0070_에이비엘생명보험.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      3466.0,
+      2292.0
+    ],
+    "row": "|  3,466 |           2,292 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      12560.0,
+      4485.0
+    ],
+    "row": "| 해약환급금준비금 |        12,560 |         4,485 |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0074_라이나생명보험.md",
+    "kr": "KR0074",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0075_비엔피파리바카디프생명보험.md",
+    "kr": "KR0075",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| -     | -               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      1859.0,
+      1675.0
+    ],
+    "row": "| 1,859 | 1,675           | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0079_미래에셋생명.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0082_DB생명보험.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      49184.0,
+      45726.0
+    ],
+    "row": "| 해약환급금준비금 |      49,184 | 45,726 |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      20212.0,
+      16045.0
+    ],
+    "row": "| 20,212 |          16,045 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0097_하나생명보험.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0099_케이비라이프생명보험.md",
+    "kr": "KR0099",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      13612.0,
+      13017.0
+    ],
+    "row": "| 해약환급금준비금 |          13,612 |          13,017 |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0104_농협생명보험.md",
+    "kr": "KR0104",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      23147.0,
+      23177.0
+    ],
+    "row": "| 23,147 | 23,177          | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR0150_서울보증보험.md",
+    "kr": "KR0150",
+    "has_section": true,
+    "unit": null,
+    "values": [
+      0.0,
+      0.0
+    ],
+    "row": "| 해약환급금준비금 |             0 |              0 |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR1000_코리안리.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      718.0,
+      854.0
+    ],
+    "row": "| 해약환급금준비금 | 718           | 854            |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR1010_교보라이프플래닛생명보험.md",
+    "kr": "KR1010",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| -      | -               | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      2392.0,
+      2288.0
+    ],
+    "row": "| 2,392 |           2,288 | 해약환급금준비금        |"
+  },
+  {
+    "period": "FY2025_Q4",
+    "file": "KR1098_카카오페이손해보험.md",
+    "kr": "KR1098",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0001_메리츠화재해상보험.md",
+    "kr": "KR0001",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0002_한화손해보험.md",
+    "kr": "KR0002",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0003_롯데손해보험.md",
+    "kr": "KR0003",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0004_MG_MG손해보험.md",
+    "kr": "KR0004_MG",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0005_흥국화재.md",
+    "kr": "KR0005",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0008_삼성화재해상보험.md",
+    "kr": "KR0008",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0009_현대해상.md",
+    "kr": "KR0009",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      41150.0,
+      39166.0
+    ],
+    "row": "| 해약환급금준비금 | 41,150        | 39,166        |"
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0010_KB손해보험.md",
+    "kr": "KR0010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0011_DB손해보험.md",
+    "kr": "KR0011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0029_AIG손해보험.md",
+    "kr": "KR0029",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0032_NH농협손해보험.md",
+    "kr": "KR0032",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0049_악사손해보험.md",
+    "kr": "KR0049",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0050_하나손해보험.md",
+    "kr": "KR0050",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0051_신한이지손해보험.md",
+    "kr": "KR0051",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0068_한화생명.md",
+    "kr": "KR0068",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0069_삼성생명보험.md",
+    "kr": "KR0069",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0070_에이비엘생명보험.md",
+    "kr": "KR0070",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0071_흥국생명보험.md",
+    "kr": "KR0071",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0072_케이디비생명보험.md",
+    "kr": "KR0072",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0073_교보생명보험.md",
+    "kr": "KR0073",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0074_라이나생명보험.md",
+    "kr": "KR0074",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0075_비엔피파리바카디프생명보험.md",
+    "kr": "KR0075",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0076_아이엠라이프생명보험.md",
+    "kr": "KR0076",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0079_미래에셋생명보험.md",
+    "kr": "KR0079",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0080_에이아이에이생명보험.md",
+    "kr": "KR0080",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0082_DB생명보험.md",
+    "kr": "KR0082",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0083_푸본현대생명보험.md",
+    "kr": "KR0083",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0087_동양생명.md",
+    "kr": "KR0087",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0094_신한라이프생명보험.md",
+    "kr": "KR0094",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0095_메트라이프생명보험.md",
+    "kr": "KR0095",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0097_하나생명보험.md",
+    "kr": "KR0097",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0099_KB라이프생명.md",
+    "kr": "KR0099",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0100_처브라이프생명보험.md",
+    "kr": "KR0100",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0104_농협생명보험.md",
+    "kr": "KR0104",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR0150_서울보증보험.md",
+    "kr": "KR0150",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR1000_코리안리재보험.md",
+    "kr": "KR1000",
+    "has_section": true,
+    "unit": "억원",
+    "values": [
+      735.0,
+      718.0
+    ],
+    "row": "| 해약환급금준비금 | 735           | 718            |"
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR1010_교보라이프플래닛생명보험.md",
+    "kr": "KR1010",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR1011_IBK연금보험.md",
+    "kr": "KR1011",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  },
+  {
+    "period": "FY2026_Q1",
+    "file": "KR1098_카카오페이손해보험.md",
+    "kr": "KR1098",
+    "has_section": true,
+    "unit": "억원",
+    "values": [],
+    "row": "| 해약환급금준비금 | -           | -             |"
+  },
+  {
+    "period": "FY2026_Q2",
+    "file": "KR0050_하나손해보험.md",
+    "kr": "KR0050",
+    "has_section": false,
+    "unit": null,
+    "values": [],
+    "row": null
+  }
+]

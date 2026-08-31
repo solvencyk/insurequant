@@ -1,0 +1,357 @@
+{
+  "AIG손해보험|2023.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 93233.646695,
+    "diff": -93233.6
+  },
+  "AIG손해보험|2024.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 54251.566556,
+    "diff": -54251.6
+  },
+  "AIG손해보험|2025.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 39760.90519,
+    "diff": -39760.9
+  },
+  "롯데손해보험|2023.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 102897.623102,
+    "diff": -102897.6
+  },
+  "롯데손해보험|2023.3Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 454351.967156,
+    "diff": -454352.0
+  },
+  "서울보증보험|2025.1Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 2709.513001,
+    "diff": -2709.5
+  },
+  "서울보증보험|2025.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 45779.845188,
+    "diff": -45779.8
+  },
+  "서울보증보험|2025.3Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 101122.270579,
+    "diff": -101122.3
+  },
+  "서울보증보험|2025.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 251088.13241,
+    "diff": -251088.1
+  },
+  "서울보증보험|2026.1Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 62503.982901,
+    "diff": -62504.0
+  },
+  "서울보증보험|2026.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 113549.258166,
+    "diff": -113549.3
+  },
+  "신한라이프생명보험|2023.1Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익"
+    ],
+    "lhs": 133713.0,
+    "diff": -133713.0
+  },
+  "신한라이프생명보험|2023.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익"
+    ],
+    "lhs": 312509.0,
+    "diff": -312509.0
+  },
+  "신한이지손해보험|2023.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": -12630.351404,
+    "diff": 11307.7
+  },
+  "신한이지손해보험|2024.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": -15133.931784,
+    "diff": 13479.8
+  },
+  "예별손해보험|2024.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익"
+    ],
+    "lhs": -59535.8318,
+    "diff": 48771.4
+  },
+  "예별손해보험|2025.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익"
+    ],
+    "lhs": -22136.117075,
+    "diff": -6087.2
+  },
+  "코리안리재보험|2023.3Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 194858.506221,
+    "diff": 16453.5
+  },
+  "코리안리재보험|2023.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 209200.464579,
+    "diff": 27448.5
+  },
+  "코리안리재보험|2024.1Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 49801.338981,
+    "diff": -8685.2
+  },
+  "코리안리재보험|2024.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 92357.434192,
+    "diff": -19015.6
+  },
+  "코리안리재보험|2024.3Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 141508.924399,
+    "diff": -21818.5
+  },
+  "코리안리재보험|2024.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 198221.788394,
+    "diff": -15797.4
+  },
+  "코리안리재보험|2025.1Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 70580.635996,
+    "diff": 3538.8
+  },
+  "코리안리재보험|2025.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 159686.803902,
+    "diff": -2722.3
+  },
+  "코리안리재보험|2025.3Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 236751.14187,
+    "diff": 14058.5
+  },
+  "코리안리재보험|2025.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 223754.155145,
+    "diff": 41050.8
+  },
+  "코리안리재보험|2026.1Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 177720.403527,
+    "diff": -1455.9
+  },
+  "코리안리재보험|2026.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익"
+    ],
+    "lhs": 161518.347336,
+    "diff": -14303.9
+  },
+  "푸본현대생명보험|2023.1Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익"
+    ],
+    "lhs": -16542.397553,
+    "diff": 16542.4
+  },
+  "푸본현대생명보험|2023.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익"
+    ],
+    "lhs": -12880.495514,
+    "diff": 12880.5
+  },
+  "하나생명보험|2023.4Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익"
+    ],
+    "lhs": 9657.010426,
+    "diff": -9657.0
+  },
+  "한화생명|2023.1Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익"
+    ],
+    "lhs": 152373.037962,
+    "diff": -152373.0
+  },
+  "한화생명|2023.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익"
+    ],
+    "lhs": 396755.963459,
+    "diff": -396756.0
+  },
+  "한화손해보험|2023.1Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 81588.036782,
+    "diff": -81588.0
+  },
+  "한화손해보험|2023.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 180995.358284,
+    "diff": -180995.4
+  },
+  "현대해상|2023.3Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 754479.376712,
+    "diff": -278340.1
+  },
+  "흥국생명보험|2023.1Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익"
+    ],
+    "lhs": 128318.0,
+    "diff": -128318.0
+  },
+  "흥국화재|2023.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 103053.0,
+    "diff": -103053.0
+  },
+  "흥국화재|2026.2Q|보험손익(leg-coverage)": {
+    "class": "leg_coverage_newly_exposed",
+    "missing_legs": [
+      "생명장기손익",
+      "자동차손익",
+      "일반손익"
+    ],
+    "lhs": 49782.0,
+    "diff": -49782.0
+  }
+}

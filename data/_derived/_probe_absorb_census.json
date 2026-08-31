@@ -1,0 +1,26 @@
+[
+  {
+    "kr": "KR0079",
+    "name": "미래에셋생명보험",
+    "q": "2025.2Q",
+    "missing_item": 5,
+    "item4": -1677.6,
+    "src": "combined-agn+b:sep-unavail+u:lit-conf"
+  },
+  {
+    "kr": "KR0079",
+    "name": "미래에셋생명보험",
+    "q": "2025.3Q",
+    "missing_item": 5,
+    "item4": -1864.4,
+    "src": "wide-product+b:sep-unavail+u:lit-conf"
+  },
+  {
+    "kr": "KR0079",
+    "name": "미래에셋생명보험",
+    "q": "2026.1Q",
+    "missing_item": 5,
+    "item4": -711.4,
+    "src": "wide-product+b:sep-unavail+u:lit-conf"
+  }
+]

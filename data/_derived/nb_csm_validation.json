@@ -7,7 +7,7 @@
       "rel": 0.25,
       "abs": 3.0
     },
-    "built_at": "2026-08-24T19:52:10Z",
+    "built_at": "2026-08-31T19:43:50Z",
     "build_script": "scripts/validate_nb_csm_multiple.py",
     "cohort_tested": 5,
     "cohort_pass": 5,

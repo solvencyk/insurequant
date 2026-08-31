@@ -1,0 +1,430 @@
+{
+  "KR0068": {
+    "18": {
+      "value": 5757.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "20": {
+      "value": 26140.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "21": {
+      "value": 16523.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "17": {
+      "value": 110158.0,
+      "reason": "mirror(TIR=X confirmed 2026.2Q)"
+    },
+    "22": {
+      "value": 35242.0,
+      "reason": "mirror(TIR=TER=TIRR=X, no requirement-side axis active)"
+    },
+    "23": {
+      "value": 4696.0,
+      "reason": "mirror(TIR=TER=TIRR=X, no requirement-side axis active)"
+    },
+    "2": {
+      "value": 85208.67,
+      "reason": "copy(item50_post from TFI table, same concept)"
+    },
+    "3": {
+      "value": 166945.49,
+      "reason": "copy(item51_post from TFI table, same concept)"
+    },
+    "15": {
+      "value": 180656.74515010617,
+      "reason": "derive(R4 sqrt formula, same as gate rule 4)"
+    },
+    "16": {
+      "value": 60029.25484989383,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    },
+    "1": {
+      "value": 252154.15999999997,
+      "reason": "derive(rule 1: item2+item3)"
+    },
+    "14": {
+      "value": 150110.74515010617,
+      "reason": "derive(rule 5: 15-22+23)"
+    },
+    "27": {
+      "value": 167.97875445082462,
+      "reason": "derive(rule 7: item1/item14*100)"
+    },
+    "28": {
+      "value": 56.7638711771059,
+      "reason": "derive(rule 8: item2/item14*100)"
+    },
+    "29": {
+      "value": 12320.62,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "30": {
+      "value": 5235.64,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "31": {
+      "value": 50021.7,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "32": {
+      "value": 1384.37,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "33": {
+      "value": 74302.85,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "34": {
+      "value": 20708.94,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "35": {
+      "value": 2989.81,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    }
+  },
+  "KR0069": {
+    "1": {
+      "value": 1295525.0,
+      "reason": "derive(rule 1: item2+item3)"
+    },
+    "14": {
+      "value": 622351.0,
+      "reason": "derive(rule 5: 15-22+23)"
+    },
+    "27": {
+      "value": 208.16629201206393,
+      "reason": "derive(rule 7: item1/item14*100)"
+    },
+    "28": {
+      "value": 177.16561875854623,
+      "reason": "derive(rule 8: item2/item14*100)"
+    }
+  },
+  "KR0070": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "20": {
+      "value": 3883.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "21": {
+      "value": 1038.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    }
+  },
+  "KR0071": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "16": {
+      "value": 6121.049999999996,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0072": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "20": {
+      "value": 2635.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "21": {
+      "value": 609.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "22": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 3904.2700000000004,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0080": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "20": {
+      "value": 4058.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "21": {
+      "value": 1972.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "17": {
+      "value": 14219.0,
+      "reason": "mirror(TIR=X confirmed 2026.2Q)"
+    },
+    "22": {
+      "value": 5189.0,
+      "reason": "mirror(TIR=TER=TIRR=X, no requirement-side axis active)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 6686.709999999999,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    },
+    "29": {
+      "value": 988.13,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "30": {
+      "value": 11.57,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "31": {
+      "value": 6835.56,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "32": {
+      "value": 0.0,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "33": {
+      "value": 8623.63,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "34": {
+      "value": 3710.14,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    },
+    "35": {
+      "value": 355.21,
+      "reason": "mirror(parent item17 mirrored, child follows)"
+    }
+  },
+  "KR0082": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    }
+  },
+  "KR0083": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "22": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 4189.16,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0087": {
+    "20": {
+      "value": 6005.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "21": {
+      "value": 3328.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    }
+  },
+  "KR0094": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "20": {
+      "value": 7555.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "21": {
+      "value": 5820.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "17": {
+      "value": 52371.0,
+      "reason": "mirror(TIR=X confirmed 2026.2Q)"
+    },
+    "22": {
+      "value": 19912.0,
+      "reason": "mirror(TIR=TER=TIRR=X, no requirement-side axis active)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "2": {
+      "value": 53729.0,
+      "reason": "mirror(TFI=X,TAC=X confirmed 2026.2Q, no capital-side axis active)"
+    },
+    "3": {
+      "value": 59367.0,
+      "reason": "mirror(TFI=X,TAC=X confirmed 2026.2Q, no capital-side axis active)"
+    },
+    "15": {
+      "value": 73673.0876858231,
+      "reason": "derive(R4 sqrt formula, same as gate rule 4)"
+    },
+    "16": {
+      "value": 19879.912314176894,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    },
+    "1": {
+      "value": 113096.0,
+      "reason": "derive(rule 1: item2+item3)"
+    },
+    "14": {
+      "value": 53761.087685823106,
+      "reason": "derive(rule 5: 15-22+23)"
+    },
+    "27": {
+      "value": 210.36776759601094,
+      "reason": "derive(rule 7: item1/item14*100)"
+    },
+    "28": {
+      "value": 99.94031429198266,
+      "reason": "derive(rule 8: item2/item14*100)"
+    }
+  },
+  "KR0097": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 1553.2700000000004,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0099": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "20": {
+      "value": 3186.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "21": {
+      "value": 2142.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    }
+  },
+  "KR0100": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "21": {
+      "value": 79.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "22": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 307.1600000000001,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0104": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "20": {
+      "value": 7381.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "21": {
+      "value": 2884.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 8112.7800000000025,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR1010": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "22": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 127.66000000000008,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR1011": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "20": {
+      "value": 1868.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "21": {
+      "value": 413.0,
+      "reason": "mirror(universal, no transition axis targets this leg)"
+    },
+    "22": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    }
+  }
+}

@@ -69,11 +69,23 @@ DEFAULT_RATIO_KEYWORDS: tuple[str, ...] = (
     # sub-items of 생명장기손해보험위험액
     "사망위험",
     "장수위험",
-    "장해",       # 장해·질병위험 / 장해질병위험 variants
-    "장기재물",   # 장기재물·기타위험 / 장기재물기타위험 variants
+    "장해",       # 장해·질병위험 / 장해질병위험 변형
+    "장기재물",   # 장기재물·기타위험 / 장기재물기타위험 변형
     "해지위험",
     "사업비위험",
     "대재해위험",
+    # sub-items of 시장위험액 (36-40) — each disclosed under its own "N) OOO위험액
+    # 현황" heading that does NOT repeat the parent string "시장위험액" verbatim
+    # (삼성생명 2026.2Q p.31 "3) 주식위험액현황": literal "시장위험액" occurs 0 times
+    # on that page). Without these, a sub-risk page can fall in the gap between two
+    # unrelated hits' +-window and get silently excluded from source_page_ranges —
+    # confirmed real for 주식위험액 (Samsung 2026.2Q; item37 695,426억, ~94% of
+    # item19, entirely missing pre-fix). inbox 20260831T0700Z reports the same
+    # class of gap (whole 6-4 section dropped) on 5 other 2026.2Q filers.
+    "주식위험액",
+    "부동산위험액",
+    "외환위험액",
+    "자산집중위험액",
     # IFRS 17 assumption-sensitivity / LIC–CSM grid cues (narrow window parse)
     "가정민감도",
     "IFRS17",

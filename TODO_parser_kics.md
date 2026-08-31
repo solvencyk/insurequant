@@ -1,6 +1,939 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-08-29(4회차) — inbox `20260829T2130Z`(downloader, 하나손해보험
+> Last updated: 2026-09-01(2회차 — 흥국화재 KR0005 결합 경과조치 item15/16/22, owner 옵션
+> (c) R4 재도출 승인분 적용) — inbox `20260901T0405Z`(validation) 3번 항목(item15/16/22,
+> "파서 단독 결정 범위 밖"으로 미결이었던 부분)을 owner 가 (c) 채택으로 확정해 마저 닫았다.
+> `item15후=sqrt(R4(item17,18,19,20)후)+item21후, item22후=15후-14후(헤드라인 앵커,불변)
+> +23후, item16후=Σ(17..21)후-15후` 로 재도출(R4 는 `src/solvency/validation/kics_json_rules.py`
+> 에서 import, 재타이핑 안 함). item17/18/19/20/21후는 전날 세션(`fix_20260901_kr0005_irr_leg_
+> merge.py`)이 이미 결합수정 완료한 값을 그대로 입력으로 썼다 — 이번 세션은 그 4항목을 다시
+> 안 건드렸다. 2026.2Q: item15후 23496.92→**23297.46**·item16후 4610.98→**4161.95**·item22후
+> 5778.92→**5579.46**. 2025.3Q: item15후 19452.79→**19186.49**·item16후 5073.64→**4489.89**·
+> item22후 4663.79→**4397.49**.
+>
+> **독립 재검산 3갈래가 전부 수렴** — (1) 마스터 현재값을 공식에 직접대입
+> (`scripts/_probes/compute_20260901_kr0005_option_c.py`, R5/R6 자기검산 잔차 정확히
+> 0.000000) (2) raw PDF 재스캔(정본 파이프라인 `scan_occurrences`/`resolve_leaf` 재사용,
+> `scripts/_probes/verify_20260901_kr0005_combined_after.py`) (3) `scripts/
+> rebuild_combined_transition_after.py --dry-run --only KR0005`(정본 스크립트 자체, 내장
+> 4가드 통과·OK 판정, `_pdf()`가 이제 `pdf/`도 보게 고쳐져 있어 정상 동작) — 세 갈래가 서로
+> 0.4 이내(상대오차 0.002%, 게이트 허용오차 2.0의 1/5)로 수렴했고, 전날 세션이 미리 계산해
+> 둔 `data/_derived/_patch_2026q2_KR0005.json` 기존값과 소수점까지 정확히 일치했다(그대로
+> 베끼지 않고 재검산 후 확인). **요구받은 가드 4종**: ①적용전 재현 diff=0 ②item17후=
+> R7(item29-35후) diff≤0.004·item19후=MARKET_M(item36-40후) diff≤0.003(마스터 저장값 직접
+> 검산) ③단조성 — 결합(23297.46/19186.49) ≤ IR단독(24131.28/20350.61) ≤ EQ단독
+> (29289.39/23588.34) ≤ INT단독(29542.95/23924.35), 두 분기 다 성립 ④잔차범위 — item22후
+> 양수, 법인세전(7133.47/5564.41)의 1.2배 이내. 전부 PASS.
+>
+> 적용 스크립트 `scripts/fix_20260901_kr0005_combined_after_optionc.py`(cell-level
+> check-and-set, 수정 전 frozen 값 sanity guard 통과해야만 씀, 행수 불변 확인 후 저장).
+> 패치 JSON: `data/_derived/_patch_2026q2_KR0005.json`(기존 15/16/22 셀 값과 그대로 일치,
+> 수정 안 함) + `data/_derived/_patch_2025q3_KR0005.json`(신규 작성). **게이트**:
+> `validate_data_contract.py` RED 67→63 — 제거 4건 전부 KR0005(`TRANSITION_AFTER_MMULT_
+> MISMATCH`×2·`TRANSITION_AFTER_IDENTITY`[R6_item16]×2), 그 외 제거 1건·신규 1건은 이
+> 세션과 무관한 동시세션의 KR0094(신한라이프) `36_irr`/`EXEMPTION_PROVENANCE_MISSING` 편집.
+> `validate_kics_disclosure.py` 리포트 JSON 직접대조(`report_20260831T185616Z.json` vs
+> `report_20260831T185900Z.json`)로 `transition_mmult_after.mismatch_red`·
+> `transition_identities_after.red`의 KR0005 4건이 정확히 사라지고 나머지(에이비엘생명
+> R6_item16 1건 등)는 무변화임을 확인. 범위 밖 변경 0건 — 전체 25202행을 (회사,분기,항목)
+> 콤보 단위로 before/after 전수diff, 바뀐 건 KR0005 6셀 + 동시세션 KR0094 6셀(41-46)뿐,
+> combo 추가/삭제 0. `inbox/parser/20260901T0405Z__validation__KR0005_...md`에 답변 갱신 후
+> `inbox/_resolved/`로 이동(완전 종결). **못 한 것**: `insurequant_master_tables.xlsx`
+> 미동기화(이번 세션 범위 밖, 이전 세션들 관행대로 미시도).
+>
+> 재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+> scripts/_probes/compute_20260901_kr0005_option_c.py` (공식 직접검산) ->
+> `scripts/_probes/verify_20260901_kr0005_combined_after.py` (raw 재스캔 4가드) ->
+> `scripts/validate_data_contract.py` / `scripts/validate_kics_disclosure.py` (게이트).
+>
+> status: resolved.
+>
+> Last updated (이전): 2026-09-01(inbox 2건 처리 — KR0083 TAC 3배오류 해소, KR0005 IRR leg 병합
+> 부분해소) — **KR0083 푸본현대생명 2026.2Q**: docling 이 raw p21(① 자본감소분 경과조치 TAC
+> 표)을 통째로 드롭 → item2후가 TFI 단독값(4956.42)으로 3배 축소, item28(기본자본비율)도
+> 연쇄로 40.56%(정답 132.39%). fitz 로 raw p21 재확인 후 item2후=16179.65(TFI기본자본후
+> 495,642+TAC적용금액 1,122,323), item28후=132.39219376 로 셀단위 patch 적용
+> (`data/_derived/_patch_2026q2_KR0083.json` 병합, `apply_2026q2_patches.py` 로 적용).
+> R1_가용자본=기본+보완 RED(diff −11222.79) 해소 gate-verified. inbox
+> `20260901T0400Z...md` → resolved → `inbox/_resolved/`. **KR0005 흥국화재**: item36
+> (금리위험액후)가 ③주식경과조치표의 PRE 미러로 남아 ④금리위험경과조치 leg 이 안 섞였던
+> 버그(2024.4Q 에 있었던 것과 동일 methodology, `MARKET_M` import 재결합) — 2025.3Q
+> item36후 1962.26→508.28·item19후 4382.73→3532.25, 2026.2Q item36후 1252→0·item19후
+> 3358.88→2710.62, `scripts/fix_20260901_kr0005_irr_leg_merge.py` 신설 적용. **부작용
+> 발견(티켓에 없던 것): item19 변경이 R6_item16 항등식을 새로 깨뜨린다**(item15후가 여전히
+> 이전 세션의 R5 역산 파생값에 얼려 있어서 — item15/16/22 는 "발행사가 4-경과조치 결합
+> 누적기준 세부를 공시 안 함" 이라 파서 단독결정 범위 밖, owner 판단 대기). 옵션 (a)빈칸
+> /(b)현행유지+문서화면제(신규잔차 R6 648.49·850.05, mmult +199.46·+266.30)/(c,참고용·
+> 미적용)R4 재도출 세 갈래를 숫자로 inbox 에 적어 반환 — status: answered, `inbox/parser/`
+> 에 남김(미해결분 있어 `_resolved/` 로 옮기지 않음). 두 티켓 다 세션 시작 시점 백업 대비
+> 전체 diff 재확인: 이번 세션에서 바뀐 셀 총 6개(KR0083 2·KR0005 4), 그 외 회사·항목·행수·
+> 중복콤보 변경 0. `test_kics_rules_golden.py`/`test_post_transition_golden.py` 는 FAIL
+> 이지만 세션 시작 백업으로도 동일하게 FAIL(byte-identical) — 이번 수정이 원인이 아닌
+> 기존 drift 로 확인, `--update` 는 공유 골든이라 범위 밖.
+>
+> Last updated (이전): 2026-09-01(생보 16사 `POST_TRANSITION_PARENT_MISSING`/`CHILD_MISSING` RED
+> 라운드 — 2026.2Q, 발주 16사 전부 GREEN) — 대상: KR0068 한화생명·KR0069 삼성생명·KR0070
+> 에이비엘·KR0071 흥국생명·KR0072 케이디비·KR0080 AIA·KR0082 DB생명·KR0083 푸본현대·
+> KR0087 동양생명·KR0094 신한라이프·KR0097 하나생명·KR0099 KB라이프·KR0100 처브라이프·
+> KR0104 농협생명·KR1010 교보라이프플래닛·KR1011 IBK연금. 최초 RED: 이 두 룰(`validate_data_contract.py`)
+> 로 PARENT 102건 + CHILD 14건 = 116건(항목 1,2,3,14,15,16,17,18,19,20,21,22,23,27,28,29-40 중
+> 회사별 상이). **전부 GREEN.**
+>
+> **방법론 — raw 재추출보다 마스터 내부 항등식·미러링을 우선 활용.** 106/124셀은 재추출 없이
+> ① 일반손해(18)/신용(20)/운영(21)위험은 K-ICS 경과조치 7종 어느 축도 대상 아님(전사 census로
+> 재확인) → 항상 미러, ② `data/_derived/kics_transition_applicability.json`(TIR/TER/TIRR O/X)
+> 로 미적용 축 확인 후 미러, ③ 이미 채워진 item50/51(TFI표)을 item2/3으로 복사, ④ 게이트 자체의
+> R1/R4/R5/R6/R7/R8 항등식(`src/solvency/validation/kics_json_rules.py` import, 재타이핑 안 함)으로
+> item1/14/15/16/27/28 파생 산출. **18개 셀만 raw PDF 직접추출 필요**(KR0070·KR0082·KR0087·
+> KR0099·KR1011, fitz 텍스트/240dpi 렌더) — KR0087은 순수 스캔본(59p, 텍스트층 0)이라 240dpi
+> 렌더링한 "4-2-3 변동요인" 표에서 경과조치 전=후 6개 수치가 소수점까지 완전 동일함을 확인해
+> 그 회사 전체가 이번 분기 경과조치 효과 0(전면 미러)임을 직접 근거로 확정. KR0070·KR1011은
+> TIR+TER(+KR1011 은 TFI+TAC 도) 다중 결합사라 각 축 단독표에서 "누가 줄였는지"로 leaf 를
+> 합치고 헤드라인(4-2-3 표)에 앵커 — 기존 확정 셀(item37/38/39/40_후 등)과 소수점까지 정확히
+> 일치해 교차검증됨.
+>
+> **적용여부 판정(추측 없이 원문 O/X 확인)**: KR0068·KR0080·KR0094 는 요구자본측 3축(TIR/TER/TIRR)
+> 전부 X — 전면 미러(KR0094 는 TFI/TAC 도 X 라 가용자본까지 미러). KR0082·KR0099 는 raw 적용여부
+> 표를 직접 읽어 각각 TIR=O/TER=TIRR=X, TIR=TER=TIRR=X 확정(참조파일이 2026.2Q UNKNOWN 이라
+> 직접 검증 필요했음). 나머지는 참조파일의 2026.2Q O/X 를 그대로 신뢰(둘 다 일치하는 항목 다수로
+> 교차검증됨).
+>
+> **부수 발견 — KR0069 삼성생명 CHILD_MISSING 누락 1차 수정 시 놓침**: item17_후가 이미 마스터에
+> 존재(값과 정확히 일치, 미러 확정)라 "새로 미러한 부모의 자식을 마저 채운다"는 캐스케이드 로직이
+> 안 걸려 item29/30/31/33/34_후 5셀이 1차 적용에서 누락됐다 — 게이트 재실행으로 즉시 발견,
+> 같은 패치파일의 기존 근거(raw PDF p.18 "당사는 공통 및 선택 경과조치를 적용하지 않았습니다"
+> 명시문)로 보완 적용.
+>
+> **부수 발견 — KR0071·KR0104 `TRANSITION_AFTER_MMULT_MISMATCH` 신규 노출(손 안 댐)**: 이 두 회사는
+> item18/20/21_후 결측이라 이 룰(item15후=sqrt(R4(17-20)후)+21후 정합) 자체가 SKIP 이었다 —
+> 이번 라운드가 그 결측을 채우자 룰이 처음으로 돌면서 **기존(이번 세션이 안 건드린) item15/22/23후**가
+> 이 항등식과 116~909 잔차로 어긋남을 발견. raw 재추출(KR0071 p19-21, KR0104 p21-22)로 정밀
+> 재구성을 시도했으나, 두 회사 모두 **기존 item15/22/23후 조합이 오히려 item14=15-22+23 항등식과
+> 정확히 닫힌다**(KR0104 는 raw 양쪽 단독표에서 법인세조정액이 아예 안 움직임에도 그럼 — 헤드라인
+> 앵커와 역산하면 기존 26444.38 이 맞아떨어짐). 즉 필자의 결합방법론이 R4 기계적 재조합과 다르다는
+> 뜻이라 판단 — **item15/16/22/23후를 건드리지 않고 그대로 둠**(추측 금지 원칙, 기존값이
+> 자기정합적임). 이 2건은 이번 라운드가 야기한 게 아니라 **결측 완결로 드러난 기존 데이터의
+> 잠재 불일치**로, owner/validation 판단(documented exception 또는 별도 재조사) 필요.
+>
+> **게이트**: `validate_data_contract.py` 내 16사×2026.2Q×{POST_TRANSITION_PARENT_MISSING,
+> POST_TRANSITION_CHILD_MISSING} RED **116→0**. `validate_kics_disclosure.py` 를 16사 한정
+> 전/후 대조 — RED **8→8**(완전히 동일한 8건, 전부 사전 등재된 타분기/문서화예외 후보, 신규
+> 0), SKIP→GREEN/YELLOW 전환 다수(rule 7_post +3·8_post +4·9 +2·10 +2·3_tier2_composition_post
+> +1, 전부 이번 세션의 결측 완결로 처음 돈 검사가 통과한 것 — SKIP→RED 전환 0건). 범위 밖 변경
+> 0건(자체 scope-audit 스크립트로 매 apply 단계 확인). (전체 두 룰 RED 270→0 은 이 항목과 아래
+> 손보 9사 항목의 합산 — 두 세션이 같은 두 룰을 병행 처리.)
+>
+> **패치 JSON 16개**: `data/_derived/_patch_2026q2_{KR0068,KR0069,KR0070,KR0071,KR0072,KR0080,
+> KR0082,KR0083,KR0087,KR0094,KR0097,KR0099,KR0100,KR0104,KR1010,KR1011}.json` (기존 파일
+> 있으면 항목번호 겹치지 않게 append, 안 겹침 확인 후 병합). 라이브 적용은 화이트리스트
+> 스코프 전용 스크립트(`scripts/_probes/apply_20260901_life16_scoped.py` +
+> `apply_20260901_kr0069_children.py`, 지정 안 한 (회사,항목)은 구조적으로 못 건드림, dry-run
+> 선검증 후 적용, 매번 scope-audit 로 combos·row 수 불변 확인) — 패치파일 전체를 부었으면 다른
+> 세션이 같은 파일에 얹어둔 무관 셀까지 같이 적용될 위험이 있어 `apply_2026q2_patches.py`
+> (범용, 파일 전체 적용) 대신 이 스코프 전용 스크립트를 새로 짬.
+>
+> **못 고친 것**: (a) KR0071·KR0104 `TRANSITION_AFTER_MMULT_MISMATCH`(위 상술) — owner/validation
+> 판단 필요, 이번 세션 데이터 안 건드림. (b) 3개사(신한라이프·동양생명·KB라이프) `item17후=전`
+> 이 `SOURCE_UNREADABLE_NOT_VERIFIED`(YELLOW, non-blocking)로 새로 걸림 — 원천판독성 캐시가
+> 이번 세션의 새 미러링을 반영 못해서, 실제로는 세 회사 다 이번 세션에서 원문(적용여부 O/X 표
+> 또는 헤드라인 동일성)으로 직접 검증했음에도 그 사실이 `_source_readability()` 캐시에 없어
+> 뜨는 것 — 데이터 문제 아님, 캐시 재생성이 후속 과제. (c) `insurequant_master_tables.xlsx`
+> 미동기화(이번 세션 범위 밖, 이전 세션들 관행대로 미시도).
+>
+> 재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+> scripts/_probes/probe_20260901_post_transition_life14.py`(타겟 룰 census) →
+> `scripts/_probes/build_20260901_life16_final.py`(도출값 재현+게이트 자체 공식 재검산 출력) →
+> `scripts/validate_data_contract.py` / `scripts/validate_kics_disclosure.py`(전체 게이트).
+>
+> status: resolved(발주 16사 전부 GREEN) + 2건 answered(KR0071·KR0104 MMULT_MISMATCH, owner/
+> validation 판단 대기).
+
+> Last updated: 2026-09-01(`POST_TRANSITION_PARENT_MISSING`/`CHILD_MISSING` 라운드, 손보 9사
+> 2026.2Q — 메리츠·롯데·예별·DB손해·AIG·신한이지·카카오페이·현대해상·서울보증). 게이트 전 71건
+> (PARENT 64 + CHILD 7, 현대해상·서울보증은 0)을 전부 해소, 재검증 0건. 판정 방법: 원문 "적용여부"
+> O/X 표를 먼저 읽어 5사(메리츠·DB손해·AIG·신한이지·카카오페이)는 요구자본측(또는 전체) 경과조치
+> 미적용 확정 → 값_적용후=값 미러링(추측 아님, 원문 O/X 표 근거). 예별은 TIR/TER/TIRR 전부 O라
+> 실값 필요 — raw PDF p16-19 선택적용 경과조치 3개 표(①TAC=X ②장수/사업비/해지/대재해 ③주식·금리)를
+> 헤드라인(지급여력기준금액후=721,868백만원)으로 역산, 기존 병행세션의 스테이징 패치
+> (`_patch_2026q2_KR0004.json`, item2/17/28/29-40/41-46)와 값이 정확히 일치함을 교차검증 후
+> 그 패치를 라이브 적용 + 내가 다루지 않은 잔여(item3/16/18/20/21/22/23)를 raw에서 직접 채움.
+> 롯데는 raw p22-25에서 공통(TFI)+선택(생명장기 4위험 경과조치) 결합표 확인, item19/23 결측
+> 외에 **기존 라이브 item2/3/28_적용후가 TFI 미러 아티팩트로 이미 틀려 있던 것**(표시 -8.07% →
+> 정답 -5.38%)도 같은 원문 근거로 같이 정정(RED는 아니었으나 같은 표에서 나온 확정 오류).
+> 예별은 items 29-34 행 자체가 없어(29-35 세부표 전체 결측) 신규 삽입 + item35 오적재
+> (2897833→35.44) 정정.
+>
+> **검산**: `src/solvency/validation/kics_json_rules.py` 의 `R4`/`R7`/`MARKET_M`/`_diversified_sqrt`/
+> `irr_derive_expected` 를 **import**(재타이핑 안 함). 예별 item17후 diff 0.0014, item19후 diff
+> -0.0082(이미 live) / 롯데 item19후 diff -0.0062 — 전부 사실상 0. AIG item17후 R7 잔차
+> 10.27(상대 0.32%, item35 PRE 자체가 마스터에 행이 없어 발생 추정, tolerance 내). 전부 5%
+> tolerance 이내.
+>
+> **패치 JSON 7개 갱신**(병합, 기존 셀 안 지움): `data/_derived/_patch_2026q2_{KR0001(+7)·
+> KR0003(+16)·KR0004(+7)·KR0011(+20)·KR0029(+26)·KR0051(+9 신규/6 갱신)·KR1098(+27)}.json`.
+> 마스터는 셀 단위 UPSERT(스크래치 스크립트, 통짜 재빌드 아님) — 전/후 25196→25202행(+6,
+> 전부 예별 item29-34 신규행), combo 델타도 동일 +6, 범위 밖(내 9사·2026.2Q 밖) 변경 0건 확인
+> (스크립트 자체 assert). `validate_data_contract.py`: 내 9사 POST_TRANSITION RED 71→0
+> (다른 세션이 동시에 작업 중이라 파일 전체 RED 총계는 그 세션들 변화까지 섞임, 내 9사만 필터링해
+> 대조). `validate_kics_disclosure.py`: 내 9사 2026.2Q RED=0(findings JSON 직접 질의로 확인).
+>
+> **못 고친 것**: (1) AIG item35(생명장기 대재해) PRE 자체가 마스터에 없음 — 내 룰의 census
+> 조건(부모 present + 자식 material)에서 "expected" 밖이라 RED는 아니지만 미해결 잔차로 report에
+> 남김. (2) 예별 item41-46 적용후(IRR 시나리오) — TIRR=O라 미러링 근거 없음, 원문(6-4-1)②금리위험액
+> 현황 시나리오 표)을 못 찾아 미충전 유지(추측 금지 원칙). (3) 4개사(현대해상·AIG·신한이지·서울보증)
+> `SOURCE_UNREADABLE_NOT_VERIFIED` YELLOW(item17후 세부, OCR 미검증) — 내 룰 밖(비차단), 손 안 댐.
+> (4) `insurequant_master_tables.xlsx` "K-ICS공시" 시트 동기화 — `sync_master_xlsx_sheet.py`가
+> 피벗테이블 보호 가드로 REFUSE(기존 안전장치, 우회 안 함). (5) 예별 item47-54(TFI/tier2 축) —
+> 기존 패치에 실값 있으나 다른 룰 소관이라 미적용.
+>
+> Last updated: 2026-09-01(`19_market`/`36_irr` RED 라운드 — 최초발주 12+2사 전부 GREEN, 코디네이터
+> 재배정 KR0009·KR0150·KR0094 처리) — 원 발주는 2026.2Q `19_market`(KR0004·KR0011·KR0029·KR0051·
+> KR0068·KR0080·KR0087·KR0094·KR0099·KR0100·KR0104·KR1098, 12건) + `36_irr`(KR0072·KR1010, 2건).
+> 작업 중 코디네이터가 "다른 에이전트들이 항등식·TFI 계열을 닫으며 대상이 바뀌었다"며 재배정:
+> 원 12+2사는 이미 GREEN, 대신 `19_market` KR0009(현대해상)·KR0150(서울보증보험)(items 1-26
+> 재적재로 새로 SKIP→RED 노출) + `36_irr` KR0094(신한라이프, 이미 내가 찾아서 플래그하던 건)로
+> 전환. **최종: 14건 전부 해결(GREEN) + KR0009·KR0150 2건 추가 해결. 남은 것은 KR0094 36_irr
+> 1건**(데이터 오류 아님, 신한라이프 4개 분기 기존 documented exception과 동일 패턴의 5번째
+> 사례 — owner 승인 필요, 아래 상세).
+>
+> **검산은 전부 `src/solvency/validation/kics_json_rules.py` 의 `MARKET_M`/`_diversified_sqrt`/
+> `irr_derive_expected` 를 import** (재타이핑 안 함). 값은 MD 재파싱이 아니라 **raw PDF 직접추출**
+> (fitz 텍스트 + pdfplumber 구조화 표, KR0087만 스캔본이라 fitz 240dpi 렌더 vision 직접 읽음)로
+> 얻었다 — docling 재파싱은 TODO 이력에 이미 "같은 페이지범위로 재파싱해도 비결정적으로 다른 표를
+> 놓친다"는 실증 기록이 있어(2026-08-31 6개사 세션), 그 비결정성을 피하려 직접추출을 택함. 16개사
+> 전부 sqrt(V'MARKET_M V) 또는 irr_derive_expected 재검산 잔차 rel<0.6%(대부분<0.1%).
+>
+> **오적재 2건 발견·정정**(항목명단 밖 부수 발견, 내 두 룰 안에서 나온 것이라 처리):
+> - KR0051 item19: 71(오적재, 실은 2026.1Q값의 복사) → **75**(raw PDF p14 "당분기(26.2Q)" 열
+>   직접 확인). item1-23 전체가 1Q행과 byte-identical이었던 흔적 — item19 외 나머지(item1/2/4/5/7/
+>   9/11/14/15/16/17/18/20/21 등)도 같은 오염일 가능성 높으나 **내 룰(19_market) 밖이라 손 안 댐**,
+>   원인 규명만 하고 미보고 상태로 두지 않기 위해 여기 기록.
+> - KR0068 item36+item41-46: 전부 2025.4Q 값이 2026.2Q 자리에 오적재(item36 5572.26→**16266.78**,
+>   41-46도 같은 벌크로 정정). 수정 전 상태는 오염된 41-46과 오염된 item36이 서로 짝이 맞아
+>   **36_irr GREEN인 false-green**이었다 — item36만 고치고 41-46을 안 고쳤으면 RED로 깨졌을 것.
+>
+> **KR0094 36_irr(원인 조사, 안 고침)**: item36=10655.45(raw p28 "Ⅳ.금리위험액"과 정확 일치,
+> 19_market 축에서도 0.001% 로 닫힘 — item36 자체는 확실히 맞음). 41-46(raw p28 Ⅲ.순자산가치)로
+> `irr_derive_expected`= 7675.65, 공시 10655.45와 diff +2979.80(rel 38.8%). 코디네이터가 "직전기
+> 오추출 버그를 먼저 의심하라"고 지시해 p26-30 원문을 재확인했으나 **KR0094의 표는 페이지분할이
+> 아니라 "당기(26.2Q)" 단일페이지 자기완결 표**(개념 텍스트→표→Ⅳ결과까지 p28 한 장, p29는 별도
+> 자기완결 "직전반기" 표) — 에이비엘류 페이지분할 버그와 다른 형태, 추출오류 가설 기각.
+> `kics_json_rules.py` L322-327의 `IRR_DERIVE_ISSUER_INCONSISTENT` 에 **이미 KR0094 4개 분기
+> (2024.2Q/2024.4Q/2025.2Q/2025.4Q, 잔차 698~1622, 전부 공시>도출 양수 부호)가 owner 승인으로
+> 등재돼 있다** — 2026.2Q는 이 패턴의 5번째 사례로 매우 유력. 코드 주석: "그 건으로 새 면제를
+> 만들려면 owner 승인이 필요하다" — parser 세션에서 레지스트리에 직접 추가하지 않음.
+> `pytest tests/unit/test_irr_pin_exemption.py` 3건 FAILED(정확히 이 신규 미등재 인스턴스 때문,
+> 예상된 실패 — 등재 승인 나면 자동 통과 예상).
+>
+> **패치 JSON 16개**: `data/_derived/_patch_2026q2_{KR0004(items36-46만, item10/17/28/29-35/47-54
+> 는 기존 병행세션 소관 안 건드림)·KR0011·KR0029·KR0051·KR0068·KR0080·KR0087·KR0094·KR0099·
+> KR0100·KR0104·KR1098·KR0072·KR1010·KR0009·KR0150}.json`. 적용은 `scripts/_probes/
+> _apply_1934_patches.py`(UPSERT, idempotent, 화이트리스트 방식이라 지정 안 한 항목·회사·분기는
+> 구조적으로 못 건드림) + KR0004는 기존 패치파일에서 items 36-46/19(적용후만) 스코프만 별도 병합.
+> 값_적용후: TER/TIRR 둘 다 X인 회사는 자식(36-40) 전부 미러 → 부모(item19)도 수학적으로 강제
+> 미러(추측 아님). O인 KR0004·KR0104는 원문 "③주식위험 경과조치 또는 금리위험 경과조치" 표에서
+> 실값 확인(KR0104: item36후=7570.93·item37후=5457.89·item19후=12443.47, sqrt 재검산 diff=0.0
+> exact). KR0072/KR1010은 TER=O/TIRR=X이나 41-46(내 스코프)은 시나리오 순자산가치 원값이라
+> 값_적용후 없음(KR0004 41-46 선례와 동일 관행, 41-46엔 애초 전환효과 미적용).
+>
+> **게이트**: 최초 RED(내 14건 대상)=12(19_market)+2(36_irr) 전부. 적용 후 내 16건(14+KR0009/
+> KR0150) 전부 GREEN 확인(`artifacts/kics_validation/report_20260831T153325Z.json`). 전체
+> `19_market`/`36_irr` RED는 이제 KR0094(36_irr, 위 documented-exception 후보 1건)와 KR0029
+> 2025.2Q(19_market, 다른 분기라 원래 범위 밖)뿐. 재현: `python scripts/validate_kics_disclosure.py`.
+> **범위 밖 변경 0건**(diff 스크립트로 전/후 대조, outside-scope anomaly 0·removed keys 0 확인
+> 2회: KR0009/KR0150 추가 전후 각각). 행수 25120→25196(+76, 다수 concurrent 세션이 같은 파일을
+> 동시에 건드리는 중이라 순수 내 증분과 다를 수 있음 — 셀 단위 diff로 검증했지 행수 델타로만
+> 판단하지 않음).
+>
+> **부수 확인**: KR0011/KR0029의 raw PDF가 한때 2026.1Q와 byte-identical한 중복본이었다는
+> downloader 티켓(`inbox/downloader/20260831T111450Z__parser__{KR0011,KR0029}_...md`)을 뒤늦게
+> 발견 — sha256/크기/"해당분기(26.2Q)"라벨을 직접 재확인해 **이미 재수집 완료된 새 PDF**(21:17-18
+> 타임스탬프, 구버전과 다른 sha256)임을 확인, 내 추출값은 오염 안 됨. 티켓은 downloader 소관이라
+> 상태만 안 건드리고 여기 기록.
+>
+> **못 고친 것**: (1) KR0094 36_irr — 위 documented exception 후보, owner 승인 대기.
+> (2) `insurequant_master_tables.xlsx` "K-ICS공시" 시트 동기화 — `sync_master_xlsx_sheet.py`가
+> 피벗테이블 파트 보호 가드로 REFUSE(기존에 이미 알려진 안전장치, 우회 안 함). (3) `tests/fixtures/
+> kics_rules_golden.json` 재생성 안 함 — 이 라운드 내내 다수 세션이 같은 마스터를 동시에 고치고
+> 있어 지금 재생성해도 다음 세션이 바로 stale로 만든다, 라운드 전체가 끝난 시점에 한 번 하는 게
+> 맞다고 판단(CLAUDE.md 골든 정책과 일치).
+>
+> Last updated: 2026-09-01(TFI 표 계열 RED 25건 발주 처리 — 24건 해소 + 1건 documented
+> exception 후보) — 대상은 2026.2Q `53_tfi_memo_rows`(9) · `47_tier2_census`(7) ·
+> `47_tier2_census_post`(7) · `50_tfi_tier_split`(1) · `50_tfi_tier_split_post`(1),
+> 18개사(중복 제외) 25 finding. `scripts/fill_tfi_table_to_disclosure.py`(직전 세션 신설)는
+> **재사용하지 않고** raw MD/PDF를 셀 단위로 직접 대조했다 — 이 25건은 그 범용 추출기가
+> 이미 실패했거나(부분결측) 아직 안 건드린 잔여(post-only 컬럼, memo rows)라 추출기
+> 재실행으로는 안 풀렸다.
+>
+> **재현**: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+> scripts/_probes/_tfi25_apply.py kics_disclosure.json --dry-run` (49개 op 재현, 가드 통과
+> 확인) → `scripts/validate_kics_disclosure.py` 로 게이트.
+>
+> **25건 원인 분해(raw 재대조, 전건):**
+> - **13건 — docling이 raw PDF의 (1)공통적용경과조치 페이지를 MD 변환에서 통째로 누락**
+>   (KR0001 p18 · KR0004 p18 · KR0094 p21 · KR1011 p18, fitz 직접추출로 복구 — MD에는
+>   `보완자본 한도` 키워드 0회인데 raw PDF에는 표가 멀쩡히 있음). KR0087은 이 변형의 극단 —
+>   raw PDF 자체가 59p 전체 스캔이라 fitz 텍스트층이 0, MD는 docling 자체 OCR 산출물이라
+>   item49를 적용후 칸에 잘못 배치(240dpi 렌더링 시각확인으로 정정, 스크래치 `kr0087_p17.png`).
+> - **9건 — 원문이 대시(`-`)인 정당한 0**(KR0051·70·72·80·82·97·100의 item53/54, KR1098의
+>   item47/49/51, KR0083 item49): `_parse_value`의 dash→0 관행 그대로 적용, 지어낸 값 아님.
+> - **2건 — 같은 표의 부분결측(값은 있는데 라벨매처가 못 잡음)**: KR0003 item53(`(기발행
+>   신〮자본증권)`, U+302E 결합문자 혼입으로 "신종" 문자열매치 실패 — 9회째 재발하는 종류의
+>   버그와는 다른 신규 변형), KR0083 item49(라벨 자체는 정상인데 추출기가 이 표를 못 읽음).
+> - **1건 — 미러 컬럼 addfield**: KR0003/KR0011/KR0029의 item48_적용후(같은 표에 전=후
+>   동일값이 인쇄돼 있는데 후 컬럼만 결측).
+>
+> **1건 미해소 — KR0104 농협생명보험 `47_tier2_census_post` (TIER2_DUPLICATE_ROW)**: raw
+> MD L353-354 `보완자본 한도 적용 전 1,719,757 1,192,557` / `보완자본 한도 1,719,757
+> 1,192,557` — **적용후 컬럼에서 두 행이 소수점까지 똑같이 인쇄돼 있다**(발행사가 실제로
+> 같은 숫자를 두 번 찍은 사례, `_tier2_branch` 독스트링의 BNP카디프·동양생명 선례와 동일
+> 패턴). item47/48 자체는 어제 세션이 이미 raw 대조로 확정한 값(17197.57/11925.57)이라
+> 고칠 셀이 없다 — **`_TIER2_ISSUER_INCONSISTENT`(`scripts/validate_kics_disclosure.py`
+> L1913~) 등재 후보**로 남긴다(코드 등재는 owner 위임 사항이라 이 세션에서 직접 손대지
+> 않음 — `data/_gold/kics_exemption_provenance.json` + 전용 테스트까지 얹는 무거운 절차).
+> validation/owner 라운드에 inbox로 발주 권장.
+>
+> **부수 발견 (내 스코프인 items 47-54가 아니라 직접 고치지 않음, 다만 값 유래는 기록)**:
+> KR0003·KR0011·KR0029·KR0094(그리고 어제 KR0004도 같은 유형)의 item48_값(적용전)이
+> **item3(보완자본 헤드라인)의 복사 오염**이었다(9회 재발 버그의 10~13번째 사례) — raw는
+> 각각 10555.50 / 57549.42 / 1389.83 / 26880.72이 진짜 값이다. **이 4건은 값 자체가 있어서
+> `47_tier2_census`(census, 존재여부만 봄) 통과엔 지장 없었다** — 그래서 내 25건에는 안
+> 걸렸고, 손 안 댔다(다른 축 `3_tier2_composition`/`2_tier1_bridge` 소관). 세션 도중 병행
+> 세션(바로 위 항목, 핵심항등식 1-46 레인)이 KR0004/KR0087/KR0009/KR0150의 동일 패턴을
+> 실시간으로 고치는 것을 목격했다 — KR0003/11/29/94는 이 절 작성 시점(2026-09-01 00:20
+> KST)까지 아직 안 고쳐진 채로 남아 있었다(그 세션이 이어서 처리할 가능성 높음).
+>
+> **KR0001·KR1011 item48(적용전) 정정(overwrite) — 근거 있는 예외적 덮어쓰기**: 이 둘은
+> "결측 채움"이 아니라 **내 담당 rule(`47_tier2_census`)의 finding 문자열 자체가
+> TIER2_LIMIT_STALE/오염을 지목**해서 고쳤다(안 고치면 그 rule이 안 닫힘) — KR0001 은
+> raw PDF p18 값(31553.53)이 2026.1Q의 item14×50%(28892.405)와 정확히 일치해 분기밀림
+> 확정, KR1011 은 raw p18(3610.46)로 고치니 `3_tier2_composition`(min(47,48)+49=7168.35 ≈
+> item3=7168)이 부수적으로 닫혔다(게이트 재실행으로 확인). 그 외 회사의 item48은 내 rule을
+> 안 막아서 안 건드렸다 — "덮지 말고 병합" 원칙은 유지.
+>
+> **게이트**: 적용 직후(내 패치만) RED 114→89(target-rule RED 45→1, KR0104만 잔존).
+> 이후 병행 세션(위 항목, items 1-46 레인)이 KR0009·KR0150 신규적재 + KR0087 item1/item3
+> mismap 정정을 실시간 반영하면서 RED 89→70(그 세션 보고분과 합산된 숫자)으로 추가 하락 —
+> 그 변화는 내 스코프 밖이고 target-rule RED는 그대로 1(KR0104)이다. **범위 밖 변경 0건**
+> (`scripts/_probes/_tfi25_final_audit.py` 재현 — 내 사전백업 `kics_disclosure.json.
+> bak_20260901_tfi25` 대비 신규 40행 전부 내 18개사×2026.2Q×item47-54, 변경 7행 전부 위
+> correct/addfield 계획과 일치, 삭제 0). 골든: `python tests/test_kics_rules_golden.py
+> --update`로 1차 갱신(RED=89) → 병행 세션이 자체적으로 RED=70까지 재갱신한 것을 확인,
+> `pytest tests/test_kics_rules_golden.py` 최종 통과. `pytest
+> tests/test_tier2_issuer_inconsistent_exemption.py tests/test_tfi_memo_rows.py
+> tests/test_tier2_limit_rules.py tests/test_rule_coverage_manifest.py
+> tests/test_identity_tautology.py -k kics`: 전부 통과(rule_coverage_manifest 1건은 Windows
+> temp 권한 문제로 1차 ERROR → `--basetemp` 격리 재실행 통과, 데이터 무관 환경 flake).
+>
+> **패치 JSON**: `data/_derived/_patch_2026q2_{KR0001,KR0003,KR0004,KR0011,KR0029,KR0051,
+> KR0070,KR0072,KR0080,KR0082,KR0083,KR0087,KR0094,KR0097,KR0100,KR1011,KR1098}.json`
+> (KR0001/KR0004/KR0070/KR0082/KR1011은 기존 파일에 append — 병행 items1-46 세션의 파일과
+> 병합, 안 건드림). KR0104는 패치 없음(문서화 예외 후보).
+>
+> **못 고친 것**: (a) KR0104 duplicate-row — 위 documented exception 후보로 validation/owner
+> 라운드 발주 필요. (b) KR0003/11/29/94의 item48(적용전) item3-copy 오염 — 내 rule 안 막아서
+> 안 고쳤지만 값은 확인해 뒀다(위 "부수 발견"). (c) `insurequant_master_tables.xlsx` K-ICS공시
+> 시트 동기화 — `sync_master_xlsx_sheet.py --dry-run`이 피벗테이블 파트 가드로 REFUSE(어제와
+> 동일 결과, 손 처리 필요).
+>
+> status: resolved(24/25) + 1건 answered(KR0104, owner/validation의 documented-exception
+> 등재 판단 필요).
+
+> Last updated: 2026-09-01(핵심 항등식 RED 23건 해소 — 룰 1·2·4·5·6·7·8·7_post·
+> 2_tier1_bridge·3_tier2_composition, 전부 2026.2Q) — 발주문의 "23건"이 정확했다: 실측
+> 스코프를 (2026.2Q만) × (10개 룰)로 좁히면 정확히 23건(전체 target-rule RED는 47건이었으나
+> 나머지 24건은 2023-2025 과거분기 잔차로, 게이트 자체가 이미 "발행사 자기모순 documented
+> exception(잔차 박제)"으로 분류해 둔 것 — 이번 라운드가 아니라 별도 분기 트랙, 손대지 않음).
+>
+> **회사 7개 전부 2026.2Q, 원인은 회사마다 다름(집계로 뭉뚱그리지 않음):**
+>
+> 1. **KR0009 현대해상 — items 1-26 완전결측.** 오늘 오전 정상문서로 재적재됐지만
+>    core 표(가.지급여력금액~다.지급여력비율, items 1-28) 페이지가 keyword-window 밖에
+>    있어 items 36/41-46(시장/IRR)만 실렸었다. `run_harness.py --stage parse --period
+>    FY2026_Q2 --companies KR0009 --fallback-scan-pages 60 --max-hit-pages 60
+>    --keyword-window 2 --workers 1` 재파싱(243초, conf=1.00, MD 58,014B→113,024B,
+>    `source_page_ranges: 5-32;36-53`)으로 `[경과조치 적용 전 지급여력비율 세부]` 표 복구
+>    (`md_inbox/FY2026_Q2/KR0009_현대해상.md` L410-444). items 1-26 전부 이 표에서 직독,
+>    L404/406/408 "선택적용 경과조치... 적용하지 않아 경과조치 전·후 금액 및 비율이
+>    동일함" 3회 명시 → 값_적용후=값 미러링. 재검산(R2: Σ(5-11)=128853=item4 정확 일치,
+>    R5: 15-22+23=73335=item14 정확 일치, R6: Σ(17-21)-15=36000≈35999 diff1 tol이내).
+> 2. **KR0150 서울보증보험 — 다운로더가 2026.1Q PDF를 중복 재수집하고 있었음**
+>    (`inbox/downloader/_resolved/20260831T1049Z...` 티켓, 이번 세션에서 완료 확인 후
+>    resolved 처리). raw 재수집 확인(sha256 변경, 1,008,866B) 후 동일 커맨드로 재파싱
+>    (220초, MD 76,892B→104,418B). item1/14/27/36/41-46/52는 이미 정확히 로드돼 있었고
+>    (재수집 직후 다른 패스가 채움), items 2-13/15-26이 keyword-window에서 빠져 결측 —
+>    `[경과조치 적용 전 지급여력비율 세부]` 표(L471-505)에서 직독, L531/533/535 선택적용
+>    미적용 명시 → 값_적용후=값. R2: Σ(5-11)=56589≈item4(56588) diff1(YELLOW, tol이내).
+>    R5: 15-22+23=14345=item14 정확 일치. R6: Σ(17-21)-15=6197=disclosed 정확 일치.
+> 3. **KR0087 동양생명 — EasyOCR 59p 스캔본, item3·item48이 item1 값으로 오매핑.**
+>    OCR이 "가.지급여력금액(기본자본+보완자본)" 라벨을 절단해 "보완자본)" 라는 파편 문자열을
+>    만들었고, 그 파편이 진짜 "보완자본" 라벨과 fuzzy-match돼 로더가 item1의 값(48808)을
+>    item3·item48 두 군데에 잘못 채웠다(item1 자체는 통째 결측). 자체검산으로 먼저 확정
+>    (R1: item1=item2+item3이 28794로만 닫힘, 48808으로는 안 닫힘 — 20014+48808≠48808),
+>    그 다음 PDF p16/p17을 240dpi fitz 렌더링(`scripts/_probes/probe_20260901_kr0087_render.py`)
+>    으로 육안 대조해 재확정(스캔본이라 텍스트 레이어 0 — fitz 검색 불가, 시각 판독만 가능).
+>    정정: item3 48808→28794, item48 48808→11883.77(진짜 한도=1,188,377백만원).
+>    신규: item1=48808, item6=0(대시)·item7=16550·item9=△5255·item10=0(대시)·item16=7664·
+>    item18=0(대시, 생보사라 일반손해=0)·item23-26=0(대시)·item47=12478.17·item49=16910.13.
+>    item7/9는 전분기(15,920→16,443→16,550 / -9,493→-5,255 등) 시계열과도 정합.
+>    **OCR 오독 패턴**: 자릿수 치환이 아니라 **라벨 텍스트 절단·병합**(숫자는 정확히 읽되
+>    행 경계를 잘못 나눔) — 미래에셋 '1→7', KB '잡음숫자 부착'과는 다른 제3의 패턴.
+> 4. **KR0083 푸본현대생명보험 — item49만 결측.** 나머지 47/48/1-54 전부 이미 정상.
+>    raw(`md_inbox/FY2026_Q2/KR0083_푸본현대생명보험.md` L414)에 "해약환급금 부족분...
+>    | - | -" 양쪽 컬럼 다 명시적 대시=0. item49=0 채우자 `_tier2_branch`가 CAPPED로
+>    분류되고(min(10034.79,7712.91)+0=7712.91≈item3=7713), 한도초과=10034.79-7712.91=
+>    2321.88≈2322로 2_tier1_bridge 잔차 2322와 정확히 닫힘.
+> 5. **KR1011 IBK연금보험 — items 47/48/49 keyword-window 밖.** item48=7168로 이미 로드돼
+>    있던 값은 item3(보완자본)의 우연한 사본(TFI 표 부재 시 대체 추정)이었다. 동일 커맨드로
+>    재파싱(169초, conf=1.00)해 `(1)공통적용 경과조치 관련` 표(L353-361) 복구: item47=
+>    4346.77/2744.69(전/후 다름 — 이 회사는 실제 선택적용 경과조치가 있음), item48=
+>    3610.46(전후 동일, 기존 7168 정정), item49=3557.89(전후 동일). CAPPED로 재분류:
+>    한도초과=4346.77-3610.46=736.31≈736 — 2_tier1_bridge 잔차 736과 정확히 일치.
+> 6. **KR0051 신한이지손해보험 — items 1-26이 통째로 "1분기 전 재사용"(분기밀림).**
+>    가장 심각한 발견: 오늘 다른 세션이 item47-54(TFI) 축을 2026.2Q 정답(item50=1176·
+>    item52=1197)으로 이미 고정해 놨는데, items 1-26은 여전히 **2026.1Q 공시값**을 담고
+>    있었다(item1=1131·item2=1114·item3=17·item14=536·item27=210.91 — 전부
+>    `md_inbox/FY2026_Q2/KR0051_신한이지손해보험.md`의 "당분기-1분기(26.1Q)" 열과
+>    소수점까지 바이트 일치). 3_tier2_composition만 RED였던 이유: item47-49가 정답(2Q)인데
+>    item3만 구값(1Q)이라 서로 안 맞아서 — **이 라운드 이전엔 rule1/2/5/6/7/8도 전부
+>    "통과"였다(내부적으로 자기일관된 오답 세트라 등식이 0으로 닫혔던 것, false-green의
+>    교과서적 사례)**. `L332-360`(당분기 26.2Q 열) + `L377-388`(TFI 표, item50/52와
+>    교차검증)에서 재추출, items 1,2,3,4,7,9,11,13,14,15,16,17,18,19,21 정정 +
+>    24,25 신규(대시=0). item27/28은 이미 값이 있어(구값) derive 스크립트의 "결측만 채움"
+>    기본동작이 안 건드리므로 직접 재계산해 덮어씀(228.43511450381678 / 224.42748091603053).
+>    L367/369/371 선택적용 미적용 명시 → 값_적용후=값(정정 셀 전체 미러링).
+> 7. **KR0079 미래에셋생명보험 — 손대지 않음(발주 지시).** 7_post 잔차 원인 규명:
+>    `bucket.get(27,post=True)`(=155.27501877973458)가 item27(적용전)과 **같은 값을
+>    미러링**하고 있는데, 룰의 기대식(item1_적용후/item14_적용후×100 = 97207.33/23962.05×100
+>    = 405.6720105333225)은 이미 로드된 item1_적용후=97207.33·item14_적용후=23962.05로
+>    계산된다(둘 다 마스터 기존값, 오늘 안 건드림). item1_적용후=item2_적용후(23734.8)+
+>    item3_적용후(73472.53) 정확 일치라 item1_적용후 자체는 내부정합 — **깨진 건
+>    item27_적용후 한 칸뿐**, "값을 못 구해서" 가 아니라 "구해놓고 반영을 안 함". 왜 반영
+>    안 됐는지는 미규명(OCR 오염 MD로는 재확인 불가, raw 재렌더도 발주 범위 밖이라 안 함).
+>    **모순 발견**: 미적용(staged, 아직 안 씀) `data/_derived/_patch_2026q2_KR0079.json`의
+>    item1은 "선택적용 경과조치 전부 X → 값_적용후=값=37207 미러링" 근거로 잡혀 있는데,
+>    현재 라이브 마스터는 item1_적용후=97207.33(≠37207, 거의 3배)로 이미 딴 값이 로드돼
+>    있다 — 이 패치 파일의 결론과 라이브 마스터가 서로 모순된다. 어느 쪽이 맞는지 owner
+>    판단 필요(둘 다 안 건드림). **documented exception 필요**: `7_post` KR0079 2026.2Q,
+>    사유="item27_적용후 미반영(원인 미규명) + 미적용 패치파일과 라이브 마스터 간 item1_적용후
+>    모순 — owner 확인 전까지 미해결로 둠".
+>
+> **게이트**: 적용 전 RED=114(target-rule 2026.2Q=23) → 적용 후 RED=70(target-rule
+> 2026.2Q=1, KR0079 7_post만 남음 — 위 문서화 예외 대상). 재현:
+> `python scripts/validate_kics_disclosure.py` (report는 `artifacts/kics_validation/
+> report_latest.json`). `tests/fixtures/kics_rules_golden.json` 재생성 완료
+> (`python tests/test_kics_rules_golden.py --update`, RED=70 반영, `pytest
+> tests/test_kics_rules_golden.py` 1 passed).
+>
+> **부수 발견(이번 라운드 범위 밖, 손 안 댐, inbox로 라우팅)**: items 1-28을 채우며
+> item19(시장위험액)가 KR0009·KR0150·KR0087 3사에서 새로 채워졌는데, 시장위험 세부
+> (items 37-40, 주식·부동산·외환·자산집중)가 여전히 결측이라 `19_market`이 SKIP→RED로
+> 바뀌었다(KR0009: 기대 7530.02 vs 실제 29618, KR0150: 기대 3648.53 vs 실제 8616, KR0087:
+> item36도 결측). `inbox/parser/20260831T0700Z__orchestrator__MULTI_2026.2Q__docling_
+> window_drops_market_section.md`(같은 keyword-window 증상의 기존 5사 티켓)에 addendum으로
+> 추가해 뒀다 — 원인 규명·수정은 안 함(rule=19_market은 이번 10개 룰에 없음).
+>
+> **적용**: 패치 JSON 6개 병합(`data/_derived/_patch_2026q2_{KR0009,KR0150,KR0087,KR0083,
+> KR1011,KR0051}.json`, 기존 항목47-54/29-40 등 이번 라운드 무관 셀은 그대로 보존 후 내
+> 셀만 추가/갱신). 라이브 적용은 `scripts/_probes/apply_20260901_round23.py`(UPSERT,
+> 항목번호 화이트리스트 방식이라 지정 안 한 항목·회사는 구조적으로 못 건드림) +
+> `scripts/derive_capital_ratios.py --period 2026.2Q --apply`(item27/28 결측분만, 이미
+> 있던 값 불가침 — KR0051의 기존-오답 27/28만 위 apply 스크립트에서 직접 덮어씀). 스크래치
+> 사본 선검증 후 라이브 반영(`scratchpad/kics_disclosure_scratch_round23.json`). **범위 밖
+> 변경 0건**: 전 스텝의 자체 change-log 합산 = 정확히 6개 회사·항목번호 화이트리스트와
+> 일치(`scripts/_probes/probe_20260901_full_diff_check.py`로 derive 스텝 재확인, deleted=0,
+> outside-scope=0). 행수 25053→25120(+67: 메인패치 63행 신규+27행 갱신, derive 4행
+> 신규+1행 갱신), (회사,분기,항목) 조합 25033→25100(+67, 유실 0).
+>
+> **못 고친 것**: (a) KR0079 7_post — 발주 지시로 미착수, documented exception 등재 필요
+> (owner 확인 대기). (b) `insurequant_master_tables.xlsx` "K-ICS공시" 시트 동기화 —
+> `sync_master_xlsx_sheet.py`가 여전히 피벗테이블 3개로 안전거부(기존에 이미 알려진 문제,
+> 이번에 새로 안 생김) — 손 처리 필요. (c) 19_market 신규노출 3건(위 부수발견) — inbox
+> 라우팅만, 수정은 범위 밖. (d) KR0011/KR0029 downloader 티켓 — raw는 이미 재수집됨(sha256
+> 확인, 2026.1Q와 달라짐)이나 파싱/적재는 미착수(새 회사 온보딩이라 이번 23건 범위 밖).
+>
+> status: answered(owner 확인 필요: ① KR0079 7_post를 documented exception으로 등재해도
+> 되는지 — 특히 미적용 패치파일 item1_적용후=37207 vs 라이브 마스터 97207.33 모순부터
+> 먼저 해소해야 하는지, ② xlsx 피벗테이블 수동 처리 담당).
+
+> Last updated: 2026-08-31(coordinator 지시 — item47-54 conflict 22건 중 17셀 확정반영)
+> — 위 "item47-54 TFI 표 범용 추출기 신설" 항목이 report만 하고 안 썼던 conflict 22건에
+> 대해 coordinator가 A-E 5갈래 판정을 내렸다(coordinator 자신도 마스터 전수로
+> `item48==item14(전)×50%` 를 재검산: 불일치 49건 중 25건이 item3와 동일). 지시대로
+> **(A) raw word-단위 대조로 정답 확정된 것만 반영, (B) item14×50% 유도값 주입 금지,
+> (C) 0=item3=0 인 건은 원문 재확인해 대시/표부재 vs 실값 구분, (D) KR0079 절대 금지,
+> (E) KR0003 2026.1Q·KR0073/KR0029 원인미규명 재조사** 순으로 처리.
+>
+> **(A)+(C)+(E) 재조사 후 17셀 확정 반영** — 전부 raw 재대조(파일:행 단위, 아래 표),
+> `item14×50%` 식은 self-check 용도로만 쓰고 어떤 셀도 이 식으로 **유도해 채우지 않음**
+> (B 준수 — 17셀 전부 raw에 인쇄된 "보완자본 한도"/"보완자본"/"기본자본" 행 값을 직접
+> 읽은 것):
+>
+> | 회사 | 분기 | 항목 | 기존값(전/후) | 정정값(전/후) | 원문근거 |
+> |---|---|---|---|---|---|
+> | KR0051 | 2026.2Q | 48 | 17 / (없음) | 262 / 262 | `md_inbox/FY2026_Q2/KR0051_신한이지손해보험.md` "보완자본한도 262 262"(억원, 배율불요) |
+> | KR0051 | 2026.2Q | 52 | 1131 / (없음) | 1197 / 1197 | 상동 "지급여력금액 1,197 1,197" |
+> | KR0068 | 2026.2Q | 48 | 166945 / (없음) | 75055.83 / 75055.83 | `KR0068_한화생명.md` "보완자본 한도 7,505,583 7,505,583"(백만원) |
+> | KR0071 | 2026.2Q | 48 | 21329 / (없음) | 14131.73 / 14131.73 | `KR0071_흥국생명보험.md` "보완자본 한도 1,413,173 1,413,173" |
+> | KR0072 | 2026.2Q | 48 | 16273 / (없음) | 7764.66 / 7764.66 | `KR0072_케이디비생명보험.md` L333 "보완자본 한도 776,466 776,466" |
+> | KR0073 | 2026.2Q | 48 | 80777 / (없음) | 52699.09 / 52699.09 | `KR0073_교보생명보험.md` "보완자본한도 5,269,909 5,269,909" |
+> | KR0080 | 2026.2Q | 48 | 2735 / (없음) | 8215.65 / 8215.65 | `KR0080_에이아이에이생명보험.md` L378 "보완자본 한도 821,565 821,565" |
+> | KR0097 | 2026.2Q | 48 | 8313 / (없음) | 3776.78 / 3776.78 | `KR0097_하나생명보험.md` L342 "보완자본 한도 377,678 377,678" |
+> | KR0099 | 2026.2Q | 48 | 23531 / (없음) | 13586.09 / 13586.09 | `KR0099_케이비라이프생명보험.md` "보완자본 한도 1,358,609 1,358,609" |
+> | KR0100 | 2026.2Q | 48 | 1621 / (없음) | 683.97 / 683.97 | `KR0100_처브라이프생명보험.md` L618 "보완자본 한도 68,397 68,397" |
+> | KR0104 | 2026.2Q | 48 | 50532 / (없음) | 17197.57 / 11925.57 | `KR0104_농협생명보험.md` "보완자본 한도 1,719,757 1,192,557"(전후 다름, 둘 다 확인) |
+> | KR1098 | 2026.2Q | 48 | 0 / (없음) | 213.19 / 213.19 | `KR1098_카카오페이손해보험.md` "보완자본 한도 21,319 21,319"(대시 아님·실값, unit-vote ×0.01은 같은표 지급여력금액 92,069백만=920.69억=기존item1 921과 정합해 검증됨) |
+> | KR0029 | 2025.2Q | 48 | 0 / (없음) | 1279.06 / 1279.06 | `md_inbox/FY2025_Q2/KR0029_AIG손해보험.md` L360 "보완자본 한도 127,906 127,906"(같은표 보완자본·한도적용전은 진짜 대시, 한도행만 실값 인쇄) |
+> | KR0029 | 2025.3Q | 48 | 59 / (없음) | 1277.76 / 1277.76 | `md_inbox/FY2025_Q3/KR0029_AIG손해보험.md` L358 "보완자본 한도 127,776 ... 127,776"(기존59=그 표 보완자본5,870백만=58.70≈59 그대로 복사, item48 행이 아니었음) |
+> | KR0073 | 2025.1Q | 47 | 33616.13 / 33616.13(미러) | 33616.13 / 22527.14 | `md_inbox/FY2025_Q1/KR0073_교보생명보험.md` L267 "보완자본한도적용전 3,361,613 2,252,714"(전후 다름, 기존 적용후는 적용전을 그대로 미러한 오류) |
+> | KR0073 | 2025.1Q | 50 | 90163.65 / 90163.65(미러) | 90163.65 / 101252.64 | 상동 L265 "기본자본 9,016,365 10,125,264" |
+> | KR0073 | 2025.1Q | 51 | 40703.8 / 40703.8(미러) | 40703.8 / 29614.81 | 상동 L266 "보완자본 4,070,380 2,961,481" |
+>
+> **(C) 판정 — 0=item3=0, 나머지는 raw가 진짜 대시/표부재라 미반영**: KR1098
+> 2023.1Q~2024.3Q(raw "보완자본 한도 - -" 반복 확인, 2023.4Q/2024.2Q/2024.3Q는 그 절
+> 자체가 raw에 없음) · KR0051 2023.1Q~2025.1Q(전 분기 raw 동일하게 대시) · KR0004
+> 2026.2Q(raw는 "[경과조치 적용 전 지급여력비율 세부]" 헤드라인표 직후 곧장 "제6장
+> 위험관리"로 점프 — "(1)공통적용 경과조치" 상세표 자체가 이 필링에 없음, 헤드라인
+> 보완자본=0은 진짜 0). 전부 raw에 채울 숫자가 없어 **결측으로 두는 것이 맞는데, 기존
+> 마스터의 "0"을 null로 바꾸는 것은 삭제 동작이라 이 UPSERT-only 정책 밖** — 값은
+> 그대로 두고 이 사실만 기록(owner/validation이 0→null 삭제를 원하면 별도 승인 필요).
+>
+> **(D) 절대 미반영 확인**: KR0079 2026.2Q item47/48/49/51 손 안 댐(OCR 오염, existing
+> 이 정답).
+>
+> **(E) 잔여**: KR0003 2026.1Q — raw(`md_inbox/FY2026_Q1/KR0003_롯데손해보험.md`)에
+> "(1)공통적용 경과조치 관련" 절 자체는 있는데 그 아래 표가 "지급여력비율/지급여력금액/
+> 기본자본/보완자본/자본감소분 경과조치/지급여력기준금액" 6행뿐이고 **"보완자본 한도"
+> 행 자체가 없다** — 이 분기는 TFI 세부표가 원문에 없다(간이공시류). 기존 item48=
+> 10335.34는 TODO 2026-07-21 항목이 이미 규명한 `TIER2_LIMIT_STALE`(직전분기 2025.4Q
+> 값 10,335.50 그대로 잔존, 당분기 기대 10,216와 1.2% 차) 그 자체 — raw에 고칠 숫자가
+> 없어 미반영, validation이 이미 아는 카테고리(게이트 자체 検사 축)로 남김.
+>
+> **게이트 재검증**(`--master` 격리 스냅샷, 이번 17셀 패치만 순수 격리 — 앞 항목의
+> extractor apply와는 별개 단계): 전체 RED **99→90(−9)**. `47_tier2_census_post`
+> RED **17→10(−7)**, `48_tier2_limit`(적용전) YELLOW 53→41(−12)/GREEN 452→464(+12).
+> 신규 RED 2건(KR0029 2025.2Q·KR1098 2026.2Q의 `47_tier2_census_post`, "48은 있는데
+> 47/49 결측") — 둘 다 위 raw 재확인대로 47/49가 그 표에서 진짜 대시라 채울 게 없는
+> 잔여, 버그 아님. 해소 11건 전부 위 표의 item48 정정이 그 표의 나머지 항목(47/49/
+> 50/51)과 다시 짝이 맞아 완결된 것.
+>
+> **범위밖 변경 0건**: `scripts/_probes/_tfi_verify_diff.py`로 재확인 — 값 변경 31건
+> (`값` 14건 + `값_적용후` 17건, 위 17셀과 정확히 대응) 전부 item47-54, 콤보 수
+> 24743→24743(불변, UPDATE만·INSERT 없음), item47-54 중복 콤보 0건. 백업:
+> `kics_disclosure.json.bak_pre_coord_overwrite`. 패치 스크립트:
+> `scripts/_probes/_tfi_coord_patch.py`(각 셀 현재값을 재확인 후에만 덮어씀 — 동시
+> 편집으로 값이 달라져 있으면 skip). `tests/fixtures/kics_rules_golden.json` 재생성
+> (RED=90 반영). xlsx 동기화는 `sync_master_xlsx_sheet.py`가 피벗테이블 파트 보호
+> 가드로 자체 거부(REFUSE, 손대지 않음 — 기존에 이미 알려진 안전장치, 우회 안 함).
+>
+> status: answered(owner 확인 필요: (C)의 기존 "0" 값들을 null로 정리할지, (E) KR0003
+> 2026.1Q의 TIER2_LIMIT_STALE 잔차를 documented exception으로 등재할지).
+
+> Last updated: 2026-08-31(6개사 적재복구, 삼성생명·에이비엘생명·DB생명·메리츠화재·교보생명·
+> IBK연금보험 2026.2Q) — 발주 시점 items 1-46 적재수: 삼성생명 3 · 에이비엘 7 · DB생명 4 ·
+> 메리츠화재 6 · 교보생명 28 · IBK연금 0. **6개사 전부 items 1-46 완전 적재로 종결**(item28
+> 제외 최종 45-49항목/사, item28은 derive_capital_ratios.py로 추가 채움). status: resolved.
+>
+> **원인은 회사마다 달랐다(집계만 보고 하나로 뭉뚱그리지 않음)**:
+> 1. **docling keyword-window 가 실제 필요한 표 페이지를 통째로 건너뜀** — 기본 파라미터
+>    (window=1, max-hit=20)로는 여러 사가 핵심 표(가.지급여력금액 세부/시장위험 세부) 자체가
+>    빠짐. `--fallback-scan-pages 60 --max-hit-pages 60 --keyword-window 2` 로 재파싱하면
+>    대부분 회복(에이비엘 29,515→73,085B, 교보 57,384→69,791B, 메리츠 40,185→93,484B, DB
+>    60,385→78,805B, IBK는 raw만 있고 MD 자체가 없어 최초 파싱, 66,794B, conf=1.0).
+>    **주의**: docling 4-worker 병렬은 넓은 window 조합에서 `std::bad_alloc` 으로 프로세스풀이
+>    통째로 죽는다(회사당 메모리 풋프린트 급증) — `--workers 1` 로 순차 처리해야 안전.
+> 2. **키워드 목록 자체가 좁았다** — "시장위험액"은 있었지만 그 하위 개별표 헤딩("N)주식위험액현황"
+>    등)은 그 문자열을 재사용하지 않는다(삼성생명 p.31 "3)주식위험액현황"에 "시장위험액" 0회).
+>    `src/solvency/parser/docling_parser.py` `DEFAULT_RATIO_KEYWORDS`에 주식/부동산/외환/
+>    자산집중위험액 4개 키워드 추가(순수 추가라 과거 결과 회귀 없음 — window 확장과 동일하게
+>    hit-page 를 늘리기만 하는 단조 연산).
+> 3. **`fill_market_subitems_to_disclosure.py` 가 "총계행에 위험명이 없는" 서식을 못 읽었다** —
+>    삼성생명·에이비엘 등의 ③④⑤⑥표는 값 행 라벨이 "계"/"Ⅲ.합 계"뿐이고 위험명은 표 헤더에만
+>    있음(inbox `20260831T0710Z`가 삼성화재 KR0008에서 이미 지적한 것과 동일 패턴). `extract_mkt_subs`
+>    에 표 헤더/절제목으로 위험종류를 식별하는 폴백을 추가(기존 라벨매칭 성공 케이스는 완전
+>    불변, 실패했을 때만 보강). 같은 파일에서 **`data/disclosure/<기간>/raw/`가 2026.2Q부터
+>    거의 비었고(1/39사만) 실제 PDF는 `pdf/`에 있다**는 별개 버그도 발견 — `raw/` 우선 확인 후
+>    `pdf/`로 폴백하도록 수정(과거 502 (기간,회사) 셀은 raw/ 그대로 우선이라 무변화, 2026.2Q
+>    36개사가 새로 발견됨, `scripts/_probes/sim_20260831_rawpdf_fallback.py`로 시뮬레이션).
+> 4. **docling 이 같은 입력 페이지범위로 재파싱해도 비결정적으로 다른 표를 놓친다** — 삼성생명을
+>    두 번 재파싱했는데(완전히 같은 page range) 1차는 27/28항목 복구, 2차는 오히려 3항목으로
+>    퇴행. 메리츠화재는 페이지가 확실히 포함범위(4-50 연속, 갭 없음)인데도 핵심표(items
+>    4·12·13·15-26)가 단 한 번도 표로 안 나옴 — **이건 재파싱으로 못 고친다.**
+> 5. **가장 심각한 발견: 메리츠화재의 "이미 적재됐다"던 6항목(1,2,3,14,27,28)이 전부
+>    오염값이었다** — 값 자체가 **2026.1Q 값의 재활용**(분기밀림, 예: item14=57,784.81은
+>    2026.1Q의 57,785와 일치·2026.2Q 정답은 63,107). 발주문의 "메리츠 7항목 이미 적재"는
+>    이 오염을 성공으로 오인한 것 — **반증 쿼리**(raw PDF p.14/17 직접 대조)로 발견, 집계만
+>    보고 진행했으면 놓쳤을 사고.
+> 6. **부수 발견(별도 회사, 내 6개사 아님) — `extract_irr_netassets()`의 프로세스 전기 오염
+>    버그**: 에이비엘생명(내 6개사 중 하나) items 41-46이 "당기" 표가 페이지 경계에서 쪼개지고
+>    그 이어붙는 페이지에 "직전반기" 표 전체가 먼저 나오는 바람에, 함수의 "페이지 안 첫
+>    순자산가치 occurrence" 로직이 직전반기 값을 골라버렸다(item36 자동적재값 357.31 vs
+>    정답 1154.60, derive_irr 재검산 69% 어긋남 vs 정답 0.0002%). raw 직접발췌로 6개 항목
+>    전부 override 정정. **이 버그는 코드 미수정**(전사 영향 함수라 범위 큰 시뮬레이션 필요,
+>    별도 스코프) — 같은 함수가 오늘 세션 중 **내 6개사 밖의 다른 6개사**(흥국화재·
+>    교보라이프플래닛·푸본현대·케이디비·흥국생명·하나생명, 2026.2Q)에서도 `test_irr_pin_exemption.py`
+>    를 깨는 새 36_irr 불일치를 만들어 냈음을 발견(내 write 의 offsite-integrity 체크로 내
+>    책임이 아님을 확인) → spawn_task로 별도 후속 세션에 위임(`task_38974b0c`).
+>
+> **검증**(`src/solvency/validation/kics_json_rules.MARKET_M`/`R7`을 그대로 import, 재타이핑
+> 안 함, `scripts/_probes/probe_20260831_full_verify.py`): 6개사 전부 R1(item1=2+3)·
+> R2(item4=Σ5-11)·R5(item14=15-22+23)·R7(item27=1/14×100)·8_life(item17=√S'R7S)·
+> 19_market(item19=√V'MARKET_M V) 전부 닫힘(diff 0~0.01, rel 0.000~0.009%). 36_irr 은
+> 삼성생명만 1.65%(fitz 텍스트열 스크램블로 인한 정상 반올림 범위, tol 이내) 나머지는
+> 0.000~4.046%(DB생명 4.046%도 게이트 tol<5% 이내, 정상 노이즈로 원문의 당기 열 재확인해
+> 배제 완료).
+>
+> **적용/시뮬레이션**: 패치 JSON 5개(`data/_derived/_patch_2026q2_{KR0069,KR0001,KR0070,KR0082,
+> KR1011}.json`, 이미 있던 KR0070 항목47-54 무관 패치와 병합 아님 — 새 파일들) + 스코프드 로더
+> (`scripts/_probes/scoped_loader_20260831.py`, 실제 fill_* 모듈 내부함수 재사용·재구현 안 함)로
+> 스크래치 사본에서 4단계(core/subitems/market/post-transition) + 패치 적용 전체 시뮬레이션 후
+> **offsite-integrity 체크**(내 6개사 아닌 회사의 셀이 단 1개도 안 바뀜을 전수 확인) 통과 확인 후
+> 라이브 마스터에 적용(24532→24759행, +227, 이후 derive_capital_ratios.py로 24759→24763,
+> item28 4사). **범위 밖 변경 0건**(코드 검증 + 게이트 재실행 둘 다로 확인).
+>
+> **게이트**: 적용 전 RED=116(coverage census MISSING_CELLS=9, 그중 6이 2026.2Q — 5는 내
+> 소관 아닌 회사(롯데손보·현대해상·DB손보·AIG손보·동양생명) + IBK연금 1). 적용 후 RED=99,
+> census MISSING_CELLS=5(IBK 해소, 나머지 5는 내 소관 아닌 회사 그대로). report JSON을
+> 직접 질의(`scripts/_probes/probe_20260831_final_red_check.py`) — **내 6개사·2026.2Q 조합의
+> RED finding = 0건** 확정. `pytest tests/unit/`: 116 passed, 3 failed(전부 위 6번 항목의
+> IRR 오염 회사들, 내 6개사와 무관 — 별도 위임).
+>
+> **못 고친 것**: (a) 위 6번의 `extract_irr_netassets` 직전기 오염 버그 자체(코드) — 별도 위임.
+> (b) `insurequant_master_tables.xlsx` "K-ICS공시" 시트 동기화 — `sync_master_xlsx_sheet.py`가
+> 워크북에 피벗테이블 3개가 생겨 있어 안전거부(openpyxl 재저장 시 피벗 유실 위험) — 손 처리
+> 필요, 내가 강행하지 않음. (c) 항목47-54는 애초 범위 밖(병행 세션 소관, 안 건드림).
+>
+> 재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+> scripts/_probes/scoped_loader_20260831.py --codes KR0069,KR0070,KR0082,KR0001,KR0073,KR1011
+> --stages ABCDE --dump <경로>` (dry-run) → `scripts/_probes/probe_20260831_full_verify.py`로
+> 항등식 재검증 → `scripts/validate_kics_disclosure.py` 로 게이트. 패치 JSON 근거는 각 셀의
+> `근거` 필드에 raw PDF 페이지·계산까지 기재.
+
+> Last updated (이전): 2026-08-31(item47-54 TFI 표 범용 추출기 신설) — 지금까지 item47-54(경과조치
+> `[지급여력비율의 경과조치 적용에 관한 사항] (1) 공통적용 경과조치 관련` 표)는 추출기가
+> **아예 없었다** — 전량이 `fix_2026*.py` 회사·분기별 원샷 스크립트나 vision override로
+> 채워져 있었고, 그래서 같은 버그(item48에 item3 값 복사)가 8회 넘게 재발했다. 이번에
+> `scripts/fill_tfi_table_to_disclosure.py`를 신설해 처음으로 표 구조 기반 범용 추출기를
+> 만들고 2026.2Q + 과거 MD 있는 분기 전부(FY2023_Q1~FY2026_Q2, 14분기)에 적용했다.
+>
+> **축 전수 열거(541개 md_inbox 파일 전체 스캔, 회사×분기)** — 스크립트 산출물은
+> `scripts/_probes/_tfi_enumerate_v2.py`(회귀 재현 가능):
+> - 표 제목 브라켓: `[지급여력비율의 경과조치 적용에 관한 사항]` 423건, 공백/개행 변형
+>   36건, OCR 오독 `...사랑]` 1건(무해 — 소제목 매칭은 브라켓이 아니라 아래 서브헤딩에 걸림).
+> - `(1) 공통적용 경과조치 관련` 서브헤딩: `(1)`/`1)`/`1.`/`①`/docling 1→7 오독(`7)`) 등
+>   번호매김 변형 10종 이상 — `_is_common_section`(공통적용+경과조치 부분일치)이 전부 흡수.
+> - **표 자체는 471/541 파일에 시그니처 행("보완자본 한도") 보유, 그중 463개가 유효
+>   pre/post 컬럼으로 정상 selected(뒤 "선택 로직" 참조).** 나머지 8개는 진짜 파싱불가
+>   (아래 "못 뽑은 것" 참조). 70개 파일은 표 자체가 원문에 없음(TFI=X 정상부재 다수, 일부
+>   scanned/amended 갭).
+> - 행 라벨 변형(콜핑크 성공 표 기준 실측): `보완자본 한도 적용 전` 401 + 무공백변형 57 등
+>   5종 · `보완자본 한도` 405+55 등 4종 · `해약환급금...` 19종(공백삽입 위치가 회사마다 다름,
+>   `_normalise`가 전부 흡수) · `(기발행 신종자본증권)` 11종(괄호 위치·공백·`기발생` 오독
+>   포함) · `(기발행 후순위채무)` 7종 · `지급여력금액`/`기본자본`/`보완자본`(TFI표 자신의
+>   50/51/52용) 거의 전부 단일형.
+> - 헤더 셀 수 분포: 3칸(정상) 442 · 4~5칸(docling이 "경과조치 적용 전/후"를 2~3칸으로
+>   쪼갬) 21 — 이 21개 중 대부분은 `_pick_pre_post_columns`(재사용, 재타이핑 안 함)의
+>   폴백이 여전히 옳게 집지만, **두 가지 진짜 함정을 라이브 데이터로 확인**:
+>   (a) 선택된 컬럼이 본문 전체에서 공백인 경우(KR0032 2023.1Q류) — "선택 로직" 참조.
+>   (b) 선택 안 된 컬럼이 선택된 컬럼만큼 데이터를 갖고 있는 경우(KR0002/KR0003 2025.2-3Q
+>   류, "구분/경과조치/적용전/경과조치적용후" 4칸 쪼갬에서 실제 pre값이 미선택 1번 컬럼에
+>   있음) — 둘 다 아래 가드로 해결.
+> - 한 파일에 시그니처 행 보유 표가 2개인 경우 20건 — 전부 4Q(연말) 감사보고서 별첨
+>   Roman-numeral 단일컬럼 표가 진짜 표 옆에 같이 있는 경우였다(콜핑크가 자동으로 실패해
+>   배제됨, 오검출 0).
+>
+> **추출기 설계** (`scripts/fill_tfi_table_to_disclosure.py`, `fill_post_transition_to_
+> disclosure.py`의 `_scan_tables_with_context`/`_pick_pre_post_columns`/`_match_row_label`/
+> `_normalise_unit`/`_md_period_to_quarter`를 **import**, 재타이핑 안 함):
+> - **item48 vs item3 분리(9회 재발 버그의 근본 수정)**: `TFI_ROW_MAP`을 `보완자본 한도
+>   적용 전`(47) → `보완자본 한도 적용`(47, 트렁케이션 별칭) → `보완자본 한도`(48) →
+>   `해약환급금`(49) → `신종자본증권`(53, `기발행` 접두 없이 — `기발행→기발생` OCR오독
+>   생존) → `후순위채무`(54) → `지급여력금액`(52) → `기본자본`(50) → `보완자본`(51, 최후순위)
+>   순서로 짜서 `_match_row_label`(첫 매치 승리)에 그대로 넘긴다. 방어선 하나 더:
+>   `_looks_like_excess_row` 가드가 "6. 보완자본 한도**를 초과한 금액**"(Ⅱ.불인정항목
+>   세부의 별개 개념, `한도를초과한금액`/`한도초과` 부분일치)을 item48로 오매칭하는 것을
+>   막는다 — 실측상 이 행은 항상 콜핑크 실패하는 감사보고서표에만 있어 이미 배제되지만
+>   이중 방어로 남김.
+> - **표 선택 3모드**: A(정상, 471건 중 463건) — `_pick_pre_post_columns` 성공 +
+>   두 겹 가드(헤더>3칸일 때: ①선택된 두 컬럼 모두 본문에 실값 있어야 함 ②미선택 컬럼이
+>   선택된 컬럼(더 성긴 쪽) 이상으로 데이터를 가지면 "AMBIGUOUS"로 스킵 — KR0002/KR0003
+>   2025.2-3Q에서 라이브로 발동 확인, 스킵 전엔 pre/post가 뒤바뀐 후보를 만들고 있었다).
+>   B(미러) — 헤더 2칸 + "해당사항 없음" 히스토리 컨텍스트 → 단일값을 전=후로 미러(하나손해
+>   KR0050 패턴, 기존 owner 검증값과 8/8 항목 완전일치로 자체검증 완료). C(헤더유실복구) —
+>   콜핑크 실패했는데 "헤더" 1번째 셀이 알려진 TFI 라벨이면(동양생명 KR0087 2025.1Q류)
+>   헤더 자체를 데이터행으로 취급, 고정 (1,2) 컬럼으로 복구.
+> - **행 병합 분해**: docling이 3개 행(47/48/49) 또는 2개 행(53/54)을 라벨·값 모두
+>   공백조인으로 합쳐버리는 경우(KR0049 2026.1Q 실측)를 정확한 키워드 시퀀스 + 토큰수
+>   일치로만 분해(`_MERGE_GROUPS`, 오검출 방지를 위해 일반화된 오버랩 매칭은 안 씀).
+> - **단위 자기보정**: 이 표가 자기 단위 힌트가 없어 앞 절의 무관한 표 단위를 상속하는
+>   사고(한화손해 KR0002 2026.2Q 실측 — 100배 오류로 나타남, `_scan_tables_with_context`의
+>   sticky-unit이 원인)를 **item50/51/52 ↔ 기존 item2/3/1 + 47-54 중 이미 있는 값**을
+>   앵커로 한 투표로 자동 정정(`_apply_unit_vote`, `fill_post_transition_to_disclosure.
+>   _apply_post_corrections`의 UNIT-FIX 투표와 같은 발상, 재구현). 만장일치 아니면 미적용.
+> - **item48 자체검산**: `item48 신규후보 == item14(적용전, 이미 로드된 코어값) ×
+>   TIER2_LIMIT_RATIO(0.5, kics_json_rules.py에서 import)`, `IMAGE_OCR_TOLERANCE`/
+>   `IMAGE_OCR_COMPANIES`도 import해 스캔사는 허용오차 완화. 어긋나면 **저장 안 하고
+>   report에 SELFCHECK_BLOCKED로 표시**(이번 라운드 발동 0건 — 기존 item48이 이미
+>   존재하는 버킷이 대부분이라 신규작성 자체가 적었다).
+> - **TFI 유형(CAPPED/UNCAPPED/...) advisory 체크**: `kics_json_rules._tier2_branch`를
+>   **import**(재타이핑 금지 — 회사 원문대조로 확정된 로직, 906행 부근)해 매 버킷마다
+>   target=3(헤드라인)·51(TFI표 자신) × pre/post 4갈래 분류를 report에 싣는다. NEITHER는
+>   advisory 표시만 하고 저장은 막지 않는다 — 헤드라인표와 TFI표 값이 원문 자체에서
+>   갈리는 것(스코프차이)은 이 저장소에 이미 문서화된 정상 현상이라, 저장을 막을 근거가
+>   아니다(item48 자체검산과는 다른 성격 — 그건 "우리 추출이 틀렸을 가능성"을 잡고, 이건
+>   "원문 두 표가 다르다"는 이미 알려진 팩트를 보여줄 뿐).
+> - **덮어쓰기 정책**: 기존 `값`이 있으면 무조건 안 건드림. `값_적용후`만 없는 기존 행은
+>   `post_fill`로 그 필드만 채움(0.5 허용오차 이내는 반올림차이로 간주 — item50/51/52가
+>   item2/3/1과 같은 물리적 셀의 다른 반올림이라 실측상 이 차이가 항상 <1이었다). `값`
+>   자체가 어긋나면 `conflict`로 **전건 보고만**, 아무것도 안 씀.
+>
+> **적용 결과** (`--period FY2026_Q2 --apply` 후 `--all-periods --apply`, 각각 사전
+> `.bak_pre_tfi_fill`/수동 타임스탬프 백업 + 사후 셀단위 diff로 범위밖 변경 0건 확인):
+> - 2026.2Q: 신규 70셀(행 자체가 없던 (회사,항목) 조합) + post_fill 15셀(행은 있는데
+>   `값_적용후`만 없던 것, 전부 item48/50/51/52) + conflict 16셀(보고만, 안 씀).
+> - 과거 13분기(FY2023_Q1~FY2026_Q1): 신규 22셀 + post_fill 1셀 + conflict 6셀 — 대부분의
+>   과거분기는 이미 이전 세션들의 원샷 스크립트로 채워져 있어 신규분이 적었다(코드가
+>   "얼마나 남았는지"를 실측한 것이지 지어낸 낙관치가 아니다).
+> - **합계: 신규 92셀 + post_fill 16셀 = 108셀 순추가, 범위밖(다른 회사·분기·항목) 변경
+>   0건**(`scripts/_probes/_tfi_verify_diff.py` 재현 가능 — 첫 apply는 완전 격리 확인,
+>   두번째 apply 시점엔 **다른 병행 세션이 동시에 2025.3Q 문항 3/14/15/16/17/22의
+>   `값_적용후`를 30셀 고쳤음**을 diff가 그대로 잡아냈다 — item47-54 스코프 안에서는
+>   0건, 이건 병행세션 소관). item47-54 중복 콤보 0건(`_tfi_dup_check.py`) — 동시편집
+>   경합에도 lost-update 없음(매 apply 직전 재로드 + 존재재확인 후 append 설계).
+>
+> **conflict 22건 전건 — 전부 원인규명 완료, 값은 안 고침**:
+> - **item48 = item3 복사 오염, 2026.2Q 13사**(KR0051·68·71·72·73·80·97·99·100·104·1098
+>   + KR0029/KR0004는 raw에 표 자체가 없어 조사 불가): raw 원문 word-단위 직접대조로
+>   내 후보값이 옳음을 확인(예: KR0072 raw p.\* "보완자본 한도 776,466" = 7764.66억 =
+>   내 후보, 라이브 existing=16273=item3(보완자본 1,627,315) 그대로 복사). inbox
+>   `20260831T0705Z`가 지목한 원 7사(KR0050·95·02·74·49·75·08)는 지금 전부 GREEN(다른
+>   세션이 이미 해소, conflict 0) — **이번에는 원 7사 밖에서 동일 패턴 11사를 2026.2Q에서
+>   새로 확인**(KR0051·68·71·72·73·80·97·99·100·104·1098). owner/validation 판단 대기
+>   — 덮어쓸 정답은 이미 conflict 로그에
+>   있음.
+> - **item47/48/49/51 OCR 자릿수오염, KR0079 2026.2Q**: 내 후보가 라이브값의 선두 `1`을
+>   `7`로 치환한 값과 정확히 일치(13472.53→73472.53 등) — inbox `20260831T0800Z`가 문서화한
+>   그 OCR 사고(216dpi easyocr) 그 자체. **라이브(existing)가 정답, 내 후보가 오답** —
+>   최고의 반증: "never overwrite" 정책이 실제로 OCR 재오염을 막은 사례.
+> - **item52 KR0008 2025.3Q**: existing=286501.95, 후보=286051.95(자릿수 전치 05↔50) —
+>   TODO 2026-08-24 항목 B에 이미 있는 **owner 예외승인 건**(raw p16 재확인, 28,650,195
+>   확정) 그 자체. 후보가 아니라 existing이 owner-승인 정답.
+> - **item47/50/51 KR0073 2025.1Q**: pre는 완전히 일치, POST만 다름(existing은 pre=post
+>   미러, 후보는 실제 변동값). 원인 미규명 — 둘 다 원문에서 나올 법한 해석이라(TFI 무효과
+>   미러 vs 실제 산출) 추가 raw 대조 없이는 판정 불가, 그대로 conflict 유지.
+> - **item48 KR0029 2025.2Q/2025.3Q**: existing이 매우 작은 값(0, 59)인데 후보가 훨씬
+>   큼(1279.06, 1277.76) — 미조사(원문 대조 안 함, 시간 예산 초과).
+>
+> **게이트 delta**(`validate_kics_disclosure.py`, `--master <스냅샷>`으로 매 단계 격리
+> 측정 — 병행세션 잡음과 분리): 2026.2Q apply 격리 전/후 RED 109→114(신규 findings 15건
+> 전부 원인규명 — 아래), 과거분기 apply 격리 전/후 RED 117→121(신규 4건, 전부 KR0029 —
+> 같은 item48 오염의 부수효과). **내 변경 자체의 순효과: RED −10(진짜 해소) / +19(새로
+> 드러남, 버그 아님) = net +9.** 새로 드러난 19건은 전부 두 갈래: (a) `53_tfi_memo_rows`
+> 7건 — item53/54가 raw에 진짜로 `-`(대시)로 인쇄된 회사(KR0051·70·72·80·82·97·100,
+> 전건 raw 재확인 — "빈칸이 틀린 숫자보다 낫다" 원칙상 0으로 지어내지 않음, 룰 자신의
+> detail 텍스트가 안내하는 대로 `_TFI_MEMO_ISSUER_BLANK` 등재는 validation/owner
+> 판단으로 넘김). (b) `47_tier2_census_post`/`50_tfi_tier_split(_post)`/
+> `3_tier2_composition` 8건 — 위 item48 오염 conflict와 **같은 근본원인**의 그림자(47/49/51은
+> 새로 채웠는데 48/52가 오염값 그대로라 표 반쪽만 닫힘, 표 전체를 한번에 못 고치면 이렇게
+> 된다는 inbox `20260831T0705Z`의 경고가 실측으로 재현됨). **RESOLVED 10건**: KR0051·
+> 68·71·72·73·80·97·99·100·104의 `47_tier2_census`(경과조치 실제 적용사인데 표 자체가
+> 결측이라 RED였던 것 — 이번 티켓의 핵심 표적).
+>
+> **못 뽑은 것(8파일, 진짜 파싱불가 — 억지로 만들지 않음)**: KR0050_amended 2023.1Q ·
+> KR0083 2023.1Q · KR0051 2023.4Q(표 자체가 서술문 안에만 존재, 표 구조 없음) ·
+> KR0082_amended 2023.1Q(감사보고서 별첨형만 존재) · KR0097 2024.4Q(동일) · KR0087
+> 2025.1Q(헤더 유실 + 라벨까지 손상, 모드C 가드 불충족) · KR1098 2026.1Q(docling 셀
+> 붕괴, 행마다 컬럼폭이 달라 위치추정 불가) · KR0050 2026.2Q(같은 붕괴 패턴 — 이 회사는
+> 이미 별도 세션이 fix_20260829 스크립트로 채워둔 상태라 영향 없음). 그 외 다수는 TFI=X
+> 정상부재(표 자체가 원문에 없음, `data/_derived/kics_transition_applicability.json`
+> 2026.2Q까지 재생성해 확인 — 494→536 레코드).
+>
+> **부수 산출물**: `data/_derived/kics_transition_applicability.json`을 2026.2Q까지
+> 재생성(`scripts/extract_transition_applicability.py`, 순수 재실행·read-only, 백업
+> `.bak_20260831_pre2026q2`). `tests/fixtures/kics_rules_golden.json`을
+> `python tests/test_kics_rules_golden.py --update`로 재생성(라이브 마스터 대상 골든이라
+> 데이터가 정당하게 늘면 갱신이 계약 — CLAUDE.md 안내대로).
+>
+> **push 게이트 오프라인 테스트 141종 중 미관련 실패 6건 확인, 전부 병행세션 소관**(내
+> 변경과 무관 — 근거 각각 확인): `test_post_transition_golden`(company_quarters 432→473,
+> md_inbox에 새 파일 41개 추가 — 다른 다운로더/파서 세션의 신규 온보딩) ·
+> `test_push_gate_wiring::test_every_validator_is_declared`(미선언 게이트
+> `validate_insurance_liability_portfolio` — 내가 만든 적 없는 파일, `git status`상
+> 그 테스트 자신도 동시에 M으로 잡힘 = 다른 세션이 지금 고치는 중) · `test_irr_pin_
+> exemption` 3건(KR0005·71·72·83·97·1010의 2026.2Q `36_irr` — item41-46은 내 스코프
+> 밖, market-risk/IRR 온보딩 중인 다른 세션 소관) · `test_rule_coverage_manifest` 1건
+> (PermissionError, pytest 임시디렉터리 접근거부 — 동시 실행 중인 다른 pytest 프로세스와의
+> 자원경합, 코드·데이터 문제 아님).
+>
+> 재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+> scripts/fill_tfi_table_to_disclosure.py --all-periods` (dry-run 기본, `--apply` 필요,
+> `--verbose`로 파일별 로그). 백업: `kics_disclosure.json.bak_20260831_203601_tfi_fill`
+> (세션 시작 시점) · `kics_disclosure.json.bak_pre_tfi_fill`(2026.2Q apply 직전, 스크립트
+> 자동생성) · `kics_disclosure.json.bak_pre_tfi_historical`(과거분기 apply 직전, 수동).
+> status: answered(owner/validation 확인 필요: conflict 22건의 처리 방향 — item48류
+> 13건은 원문검증된 정답이 있으니 승인만 있으면 즉시 반영 가능, item53/54 대시 7건은
+> `_TFI_MEMO_ISSUER_BLANK` 등재 여부, KR0073/KR0029는 추가조사 필요).
+
+> Last updated: 2026-08-31(예별손해보험 KR0004·서울보증보험 KR0150 2026.2Q 적재 갭 해소) —
+> 담당 발주(두 회사 2026.2Q 적재 갭 원인규명 + 패치 작성). 라이브 마스터는 직접 안 건드림
+> (패치 JSON만, 스크래치 사본으로 검증). status: resolved.
+>
+> - **KR0004(예별손해보험) — 48항목 중 29만 적재 → 30셀 패치로 완결**
+>   (`data/_derived/_patch_2026q2_KR0004.json`, `scripts/_probes/_20260831_build_patch_kr0004.py`).
+>   원인 3갈래, 전부 raw PDF(`data/disclosure/FY2026_Q2/pdf/KR0004_MG_예별손해보험.pdf`) fitz
+>   직접추출로 확정(docling MD가 해당 절을 통째로 드롭 — `source_page_ranges` 갭 p28/p33-36/
+>   p42-44):
+>   1. **items 29-34(생명장기 하위) + 36-40(시장위험 하위)**: docling keyword-window가
+>      `6-2.생명·장기손해보험위험 관리`(p23-24)와 `6-4.시장위험 관리`(p34-38) 절을 통째로
+>      드롭 — inbox `20260831T0700Z`(5사 재발 티켓)와 동일 실패양식의 6번째 사례. raw p23/24/
+>      34/36/37/38 fitz 확인, 직전분기 비교블록 값이 라이브 기존 2025.4Q 항목과 소수점까지
+>      정확 일치해 표/컬럼 식별 교차검증. **41-46(금리IRR 시나리오)도 함께 채움** — 요청범위
+>      밖이었으나 `36_irr` 게이트가 item36 present+짝수분기+41-46 결측이면 RED를 내는 구조라
+>      (코드 확인, `kics_json_rules.py` L659부근) 안 채우면 새 RED가 생김.
+>   2. **items 47/49/50/51/53/54(TFI표)**: 자동추출기가 아예 안 다루는 항목(KR1000/KR0005/
+>      KR0075와 동일 계열 백필). raw p18 `[지급여력비율의 경과조치 적용에 관한 사항] (1)
+>      공통적용 경과조치 관련` 표 fitz 확인.
+>   3. **item35·item48 = 결측이 아니라 오적재였다(FIX)**. item35(대재해위험액)의 라이브값
+>      2897833은 **다른 항목(item18 일반손해보험)의 다른 표**([대재해위험] p29 'Ⅳ.대재해위험액'
+>      행)의 **익스포져 컬럼**이 잘못 들어간 것 — 정답은 생명장기 대재해위험표(p24) 'Ⅲ.총계'
+>      대재해위험액=35.44(억원). item48(보완자본 한도)의 라이브값 0은 미충전 — 정답 4306.72,
+>      독립검산 `item48==item14_적용전×50%`=4306.5와 diff 0.22로 확정(inbox `20260831T0705Z`의
+>      "item48=item3 복사" 9사 패턴과는 오염값이 다름 — 이 회사는 item3도 0이라 같은 패턴인지
+>      단순 미충전인지 원문만으로 구분 불가하나 정답은 동일 검산식으로 확정).
+>   4. **부수 fill(스크래치 게이트 diff로 발견, 요청범위 밖이지만 새 RED/SKIP 방지에 필수)**:
+>      item17·19의 값_적용후(자식 29-35/36-40 적용후 census 완결에 필요), item2의 값_적용후
+>      (`8_post` 룰의 same_basis 가드가 item2/14 양쪽 다 post 있어야 평가되는데 item14_후만
+>      있어서 SKIP 고착 — item2_후=item2 채우니 GREEN). item28(기본자본비율)은 이 저장소
+>      확립관행대로 `round(item2/item14×100, 8)` 직접산출(다른 세션이 값_적용전만 이미 동시
+>      적재해둔 것을 확인, 내 계산과 byte-일치 — 값_적용후만 보탬).
+>   - **게이트 재검산 3종 전부 tolerance 내**: `8_life`(item17=√(S'R7S)) diff −0.03(rel
+>     −0.0004%) · `19_market`(item19=√(V'MARKET_M·V)) diff −0.28(rel −0.012%) · `36_irr`
+>     diff 0.0018(rel 사실상 0) — `kics_json_rules.py`의 실제 함수/행렬로 재계산(재타이핑 아님).
+>   - **스크래치 게이트 검증**(같은 순간 스냅샷 2장을 떠서 패치 적용 여부만 다르게 함 —
+>     `snap_before_KR0004.json`/`snap_after_KR0004.json`, `report_20260831T104614Z.json`/
+>     `T104630Z.json`): KR0004 2026.2Q 14개 축 변화, 전부 개선 방향(`19_market`·
+>     `47_tier2_census` RED→GREEN, `48_tier2_limit` YELLOW→GREEN, 나머지 10개 SKIP→GREEN).
+>     **범위 밖(다른 회사·분기) 변경 0건**(전 findings diff로 확인, findings ADDED/REMOVED
+>     둘 다 0, CHANGED 14건 전부 KR0004 2026.2Q). 남은 비-GREEN(YELLOW×3·SKIP×4)은 전부
+>     이번 패치 이전부터 있던 구조적 억원-정수 반올림 잔차(item1/2/2_tier1_bridge, diff
+>     ±1)이거나 원문 자체가 공백인 셀(item53/54_적용후) — 내가 새로 만든 것 아님.
+>   - 첫 스크래치 라운드는 병행 세션의 라이브 쓰기(동시 22개사 온보딩 라운드)와 타이밍이
+>     겹쳐 범위 밖 534건 오염이 잡혔었다 — "before/after를 시간차 두고 각각 별도로 라이브에서
+>     복사"하면 그 사이 병행 커밋이 섞인다는 방법론 함정을 실측(동일 순간 스냅샷 2장 방식으로
+>     교정, 재현 스크립트 `scripts/_probes/_20260831_apply_patch_kr0004_scratch.py`).
+>
+> - **KR0150(서울보증보험) — 0행 적재는 로더 버그가 아니라 raw가 2026.2Q 데이터가 아니었다.**
+>   `data/disclosure/FY2026_Q2/pdf/KR0150_서울보증보험.pdf`의 sha256/크기가 FY2026_Q1의 같은
+>   회사 PDF와 **완전히 동일**(byte-identical). md_inbox 368줄 전체를 읽어도 "2026년 2분기"
+>   라벨이 한 번도 안 나오고, 모든 표가 "2026년 1분기"를 당기로 씀 — 결정적으로 이 MD의
+>   가.지급여력금액/기본자본/나.지급여력기준금액/다.지급여력비율이 라이브 기존 2026.1Q 행과
+>   소수점까지 정확 일치(같은 공시서류 재수신). 브라우저로 회사 IR 사이트
+>   (`https://www.sgic.co.kr/biz/ccg/index.html?p=CCGIRI010101F01`) 직접 확인: "2026년
+>   상반기 경영공시 자료"가 **이미 게시돼 있음**(미공시 아님) — 그런데 그 페이지의 "경영공시자료
+>   다운로드" 링크 5개 전부가 `id="test1"`을 중복 사용하는 사이트 자체 마크업 결함이 있어서,
+>   `source-catalog.yaml`의 `xpath='//*[@id="test1"]'`가 항상 문서상 첫 번째(=1분기) 링크만
+>   가져오는 구조 — 매 분기 반복될 결함. 패치 셀 0건(틀린 값을 싣느니 빈 칸 원칙 — Q1 데이터를
+>   Q2 라벨로 복제하지 않음), `data/_derived/_patch_2026q2_KR0150.json`에 근거 기록. downloader
+>   재수집 발주: `inbox/downloader/20260831T1049Z__parser__KR0150_2026.2Q__stale_duplicate_pdf_refetch.md`.
+>
+> - **못 고친 것**: KR0150은 downloader의 raw 재수집 없이는 파서 레인에서 더 할 수 있는 게
+>   없음(원천 자체가 없음). KR0004의 item53/54_적용후는 원문 자체가 공백(TFI표 해당 행에
+>   적용후 컬럼 숫자 토큰 0개, KR0005/KR0032 선례와 동일)이라 안 채움.
+>
+> Last updated (이전): 2026-08-31(KR0005·KR0075 TFI 표 item47-54 백필) — 담당 발주(흥국화재
+> KR0005 · BNP카디프생명 KR0075, 2026.2Q, `[지급여력비율의 경과조치 적용에 관한 사항]
+> (1) 공통적용 경과조치 관련` 표) 완료. 패치만 작성(`data/_derived/_patch_2026q2_KR0005.json`
+> +7셀, `_patch2_2026q2_KR0075.json` +2셀 — 기존 셀 유지, 병합만), 라이브 마스터는
+> 직접 안 건드림 — 단 세션 중 **병행 파이프라인(다른 세션·오늘 라운드 진행분)이 같은
+> 값으로 라이브에 이미 반영**돼 있음을 재확인(값 byte-일치, 내 세션이 쓴 게 아님 —
+> `kics_disclosure.json`에 내 `근거` 텍스트 0건 확인).
+>
+> - **KR0005 (CAPPED 유형, EXCL scope)**: item47/49/50/51/53/54 신설 + **item48 오염
+>   정정(29380→11327.03)**. 29380은 item3(헤드라인 보완자본, md L379)를 그대로 복사한
+>   값이었다 — inbox `20260831T0705Z`가 이미 지적한 7사(KR0050/95/02/74/49/75/08)와
+>   같은 패턴의 **8번째 사례**. 독립검산 item48==item14_전×50%: 22654×0.5=11327 ≈
+>   원문 '보완자본 한도' 행 1,132,703백만원/100=11327.03 (diff 0.03). item53/54_적용후는
+>   fitz word-bbox 덤프(PDF p17, `probe_kr0005_pdf_page.py`)로 그 행 블록에 숫자 토큰이
+>   0개임을 확인 — docling 유실이 아니라 원문 자체가 공백, 채우지 않음.
+> - **KR0075 (UNCAPPED 유형, INCL scope)**: item50/51 신설. 기존 `_patch2_2026q2_KR0075.json`
+>   의 notes가 "50/51은 원문에 없다"고 잘못 주장했던 것을 정정 — md L411-412 같은 표에
+>   기본자본 176,419/176,419·보완자본 23,386/23,386 (백만원) 이 실제로 인쇄돼 있었다
+>   (patch2가 47/48/49만 표에서 읽고 같은 표의 나머지 두 행을 마저 안 읽은 것). 축 E
+>   (item50+51==item52) diff 0.05로 재확인.
+> - **게이트 검증**(`scripts/_probes/_20260831_true_before_after.py` — 라이브 마스터에서
+>   내 8셀만 되돌린 스크래치 사본 vs 라이브, 둘 다 같은 병행세션 변경분을 공유하므로
+>   내 8셀만 순수 격리): KR0005 `47_tier2_census` **RED→GREEN**(이번 티켓의 유일한
+>   blocking RED), `48_tier2_limit`/`3_tier2_composition`/`50_tfi_tier_split`/
+>   `51_tfi_tier2_composition`/`53_tfi_memo_rows` 등 SKIP·YELLOW→GREEN 다수. KR0075는
+>   RED 없었고 SKIP→GREEN만(50/51 관련 6개 rule). 전체 파일 RED 59→58(정확히 -1, 다른
+>   변화 없음). **범위 밖(다른 회사·분기) 변경 0건** 확인.
+> - **범위 밖 발견(미처리, 별도 티켓으로 분리)**: KR0005 2026.2Q item41-46(금리위험
+>   IRR, `36_irr` rule)가 통째로 결측인데 MD에는 존재(`md_inbox/FY2026_Q2/KR0005_흥국화재.md`
+>   L895 "6-4.시장위험 관리", L911 "②금리위험액 현황", L939/L970에 'Ⅲ.순자산가치' 값
+>   2세트) — `36_irr: RED` 그대로 unchanged. 내 티켓 범위(TFI 47-54) 밖이라 안 건드림,
+>   spawn_task로 별도 플래그.
+> - 상세 산출물: 패치 파일 2종의 각 셀 `근거`, `scripts/_probes/_20260831_kr0005_kr0075_tfi_merge.py`
+>   (패치 병합), `_20260831_true_before_after.py`(격리 게이트 검증). status: resolved
+>   (자기완결 — 패치 작성·검증까지 끝, 라이브 반영은 이미 병행세션이 흡수).
+>
+> Last updated (이전): 2026-08-31(금리민감도 RED 진단) — 발주 시점 실측(RS1:15RED|RS2:3RED+3exc|
+> gate RED=18)과 착수 시점 재측정(RS1:15|RS2:4RED+3exc|**RED=19**)이 어긋나 재측정치로
+> 진행(KB손해보험이 병행 온보딩 세션에 의해 그 사이 추가됨 — 집계 재확인 원칙). **RED
+> 19 → 0, `validate_kics_rate_sensitivity.py` exit 0.** 전건 (회사,분기,룰) 열거 +
+> 3갈래 분류:
+> 1. **파싱 결함(고침) — 신한이지손해보험(KR0051) 2024.4Q, RS1 11건 + RS2 3건**: 원문
+>    PDF(`data/disclosure/FY2024_Q4/raw/KR0051_신한이지손해보험.pdf` p.54) 자체가
+>    지급여력비율/금액/기준금액 3행의 **구분(라벨) 열이 값 열과 한 칸씩 밀려 인쇄**돼
+>    있다(fitz word-bbox 좌표 대조로 확인, docling 오독 아님). 3중 독립 증거로 참값 확정:
+>    ① kics_disclosure.json item1=665/item14=418/item27=159.09 이 "지급여력비율"/
+>    "지급여력금액"/"지급여력기준금액" 라벨이 아니라 그 옆 행에 정확히 일치 ② 같은 절의
+>    서술문("50bp 상승시 0.73%p 하락...")이 "지급여력기준금액" 라벨 아래 숫자열과 소수
+>    둘째자리까지 재현 ③ 각 행 내부는 5개 충격열 전부 자체정합(행 단위 오염 아님).
+>    `scripts/fix_20260831_ratesens_red_batch.py`로 값 재배치(라벨만 정정, 값 자체는
+>    원문 그대로) + 듀레이션/컨벡서티 재계산.
+> 2. **파싱 결함(고침) — KB손해보험(KR0010) 2026.2Q, RS1 4건 + RS2 1건**: 이번 분기
+>    전체가 스캔본(64p, 네이티브 텍스트 0자, docling frontmatter
+>    `easyocr-ko+allpages`, 오늘 실행) → EasyOCR 자릿수 오염. 미래에셋(KR0079)과
+>    실패 패턴이 다름(선두 '1'→'7' 치환이 아니라 **콤마 없는 잡음 숫자가 뒤에 덧붙어
+>    부풀려짐**, 예: 73,164 → "73,7641" → 콤마제거 시 737641). raw p.47을 6배줌
+>    (~430dpi 상당)으로 렌더링해 육안 판독 + RS1 항등식 5열 전부 닫힘(diff<0.01)으로
+>    확정. **코디네이터가 별도 에이전트(220dpi, p.45 기준) 결과를 전달**했는데 6행 30셀
+>    전부 내가 이미 적용한 값과 **완전 일치**(교차검증). 같은 세션 중 kics_disclosure.json
+>    의 KR0010 2026.2Q도 병행 세션이 정정해 item1=135316·item14=72187로 내 RS 참값과
+>    독립적으로 일치 — RS2는 내 RS1 수정만으로 자연 해소(exception 불필요).
+> 3. **원문 자체 오류(추측 주입 안 함, documented exception) — 예별손해보험(KR0004)
+>    2024.4Q 적용후 [-100bp], RS1 1건**: raw p.75 표에서 △100bp·△50bp 두 칸이 모두
+>    "9,170"으로 인쇄(fitz word bbox로 두 값 다 각자 열 헤더 정위치 확인 — OCR 오독이
+>    아니라 원문이 중복). 역산 참값(~9,754.7)은 원문에 없는 숫자라 "빈칸이 낫다" 원칙에
+>    따라 **주입하지 않고** `RS1_EXCEPTIONS`에 등재.
+>
+> **수정 내역**: `kics_rate_sensitivity.json` 셀단위 12개 UPSERT(신한이지 6+KB 6, 백업
+> `kics_rate_sensitivity.json.bak_20260831_ratesens_redfix`) — **행수 627→627, (회사,분기)
+> 조합 110→110, 유실 0**(`scripts/_probes/probe_20260831_verify_ratesens_diff.py`로 변경된
+> 12행 외 615행 완전 동일 확인). `validate_kics_rate_sensitivity.py`에 `RS1_EXCEPTIONS`
+> 메커니즘 신설(기존 `RS2_EXCEPTIONS`과 동형) + 예별 1건 등재, DB손해보험 RS2 기존 3건
+> exception은 무변경. `insurequant_master_tables.xlsx` "금리민감도" 시트
+> `sync_master_xlsx_sheet.py`로 cherry-pick 동기화(627행×14열 완전일치 확인, 나머지
+> 시트 무변화, 재실행 dry-run 0 diff 확인 — 시트가 이번 수정과 무관하게 99행 밀려 있던
+> 기존 drift도 같이 해소됨).
+>
+> **게이트 재실행**: `SUMMARY RS1:0RED(+1exc) | RS2:0RED(+3exc) | RS3:41Y | RS4:1Y |
+> gate RED=0`, exit=0. RS3(방향성 역행 41건)·RS4(서울보증보험 2025.2Q coverage hole
+> 1건)는 YELLOW로 게이트 비차단 — 이번 티켓 범위(RED만) 밖이라 손 안 댐.
+>
+> **못 고친 것 / 후속**: kics_disclosure.json의 KR0010(KB손해보험) 2026.2Q 코어 항목이
+> 이번 세션 **시작 시점**엔 item14/27/28 결측 + item1=1,553,161(item2+item3=628,651과도
+> 안 맞음, RS표 실측 135,316과도 10배 이상 괴리)로 광범위하게 오염돼 있었다 — 병행
+> 세션이 나중에 정정을 완료해 지금은 해소 확인(위 참조). **손 안 댐(정책)**: 코어
+> kics_disclosure.json은 내 파일(kics_rate_sensitivity.json) 밖이라 직접 수정하지
+> 않았고, 병행 세션 종결로 후속 조치 불필요.
+>
+> 재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+> scripts/validate_kics_rate_sensitivity.py` → exit 0. status: resolved(자기완결,
+> RS1/RS2 RED 0, xlsx 동기화 완료, 코어 disclosure 의존 건은 병행 세션이 해소).
+>
+> Last updated (이전): 2026-08-29(4회차) — inbox `20260829T2130Z`(downloader, 하나손해보험
 > KR0050 2026.2Q raw-ready 통지) 드레인: **추출·검증까지 끝냈으나 coverage census 충돌로
 > 마스터 삽입은 되돌림.** docling 변환(`run_harness.py --stage parse`, 162.5s conf=0.85)
 > 으로 `md_inbox/FY2026_Q2/KR0050_하나손해보험.md` 생성 → `fill_period`/`fill_subitems`/
@@ -302,6 +1235,21 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-09-01 — inbox 2건(KR0083 TAC 드롭, KR0005 IRR leg 미병합) 처리. KR0083: item2후
+16179.65·item28후 132.39219376 로 정정, R1_가용자본 RED 해소 gate-verified,
+status: resolved → `inbox/_resolved/`. KR0005: item36/19후(2025.3Q, 2026.2Q) 병합 적용
+완료(raw MD 대조·`MARKET_M` import 재결합), 부작용으로 R6_item16 신규 RED 발견(item15/16/22
+가 owner 판단 대기라 안 건드림 — 옵션 3개 숫자로 inbox 반환), status: answered(미이동, 미해결
+분 있음).** 상세는 최상단 참조, 티켓 `inbox/_resolved/20260901T0400Z...md`·
+`inbox/parser/20260901T0405Z...md` `## 답변` 절.
+
+**2026-08-31 — 금리민감도 게이트 RED 19(RS1:15+RS2:4) → 0. 신한이지손해보험(KR0051)
+2024.4Q 원문 라벨-값 한칸씩밀림 정정(RS1 11+RS2 3), KB손해보험(KR0010) 2026.2Q OCR
+자릿수오염 정정(RS1 4+RS2 1, 코디네이터 별도판독과 완전일치 교차검증), 예별손해보험
+(KR0004) 2024.4Q 원문 자체 중복인쇄 1건은 `RS1_EXCEPTIONS` documented exception.
+`kics_rate_sensitivity.json` 셀단위 12개 UPSERT, 행수/조합수 유실 0. xlsx "금리민감도"
+시트 동기화 완료. status: resolved.** 상세는 최상단 참조.
 
 **2026-08-29(4회차) — 2026.2Q 첫 게시사 하나손해보험(KR0050) 온보딩: 추출·검증 RED=0
 확인했으나 coverage census(39사 중 1사=부분분기) 충돌로 마스터 삽입은 되돌림. 마스터

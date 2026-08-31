@@ -1,0 +1,510 @@
+{
+  "KR0068": {
+    "18": {
+      "value": 5757.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "20": {
+      "value": 26140.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "21": {
+      "value": 16523.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "17": {
+      "value": 110158.0,
+      "reason": "mirror(TIR=X confirmed 2026.2Q)"
+    },
+    "22": {
+      "value": 35242.0,
+      "reason": "mirror(TIR=TER=TIRR=X)"
+    },
+    "23": {
+      "value": 4696.0,
+      "reason": "mirror(TIR=TER=TIRR=X)"
+    },
+    "2": {
+      "value": 85208.67,
+      "reason": "copy(item50_post TFI table)"
+    },
+    "3": {
+      "value": 166945.49,
+      "reason": "copy(item51_post TFI table)"
+    },
+    "15": {
+      "value": 180656.74515010617,
+      "reason": "derive(R4 sqrt, gate rule 4)"
+    },
+    "16": {
+      "value": 60029.25484989383,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    },
+    "14": {
+      "value": 150110.74515010617,
+      "reason": "derive(rule 5: 15-22+23)"
+    },
+    "1": {
+      "value": 252154.15999999997,
+      "reason": "derive(rule 1: item2+item3)"
+    },
+    "27": {
+      "value": 167.97875445082462,
+      "reason": "derive(rule 7)"
+    },
+    "28": {
+      "value": 56.7638711771059,
+      "reason": "derive(rule 8)"
+    },
+    "29": {
+      "value": 12320.62,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "30": {
+      "value": 5235.64,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "31": {
+      "value": 50021.7,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "32": {
+      "value": 1384.37,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "33": {
+      "value": 74302.85,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "34": {
+      "value": 20708.94,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "35": {
+      "value": 2989.81,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    }
+  },
+  "KR0069": {
+    "14": {
+      "value": 622351.0,
+      "reason": "derive(rule 5: 15-22+23)"
+    },
+    "1": {
+      "value": 1295525.0,
+      "reason": "derive(rule 1: item2+item3)"
+    },
+    "27": {
+      "value": 208.16629201206393,
+      "reason": "derive(rule 7)"
+    },
+    "28": {
+      "value": 177.16561875854623,
+      "reason": "derive(rule 8)"
+    }
+  },
+  "KR0070": {
+    "17": {
+      "value": 7821.18,
+      "reason": "RAW:raw PDF p23 '② 장수·사업비·해지·대재해 경과조치' 표: 생명·장기손해보험위험액 적용후=782,118백만원 (TIR축 단독표, item19은 이 표에서 696,176→696,176 불변으로 TER 미반영 확인)"
+    },
+    "19": {
+      "value": 5735.77,
+      "reason": "RAW:raw PDF p24 '③ 주식위험 경과조치 또는 금리위험 경과조치' 표: 시장위험액 적용후=573,577백만원 (TER축 단독표, item17은 이 표에서 1,122,310→1,122,310 불변으로 TIR 미반영 확인, 즉 금리위험 115,460→115,460 불변·주식위험만 596,195→449,401 변동 = TIRR=X 재확인)"
+    },
+    "20": {
+      "value": 3882.95,
+      "reason": "RAW:raw PDF p23/p24 두 표 모두 신용위험액 388,295백만원 불변(적용전=적용후) — 어느 경과조치도 신용위험을 건드리지 않음"
+    },
+    "21": {
+      "value": 1038.28,
+      "reason": "RAW:raw PDF p23/p24 두 표 모두 운영위험액 103,828백만원 불변(적용전=적용후)"
+    },
+    "22": {
+      "value": 4.0,
+      "reason": "RAW:raw PDF p23/p24 두 표 모두 법인세조정액 364백만원(=3.64억, 두 축 단독표 공통 불변값) — 기존 마스터에 이미 있는 item14_적용후(13600)·item15_적용후(13604, 둘 다 이 세션이 안 건드린 기존값)와 rule5(14=15-22+23, item23=0)를 정확히 닫으려면 4(=13604-13600)여야 함. raw 364백만원=3.64억은 억원단위 반올림 컨벤션(기존 item14/15가 정수로 저장된 것과 동일)으로 4와 사실상 동일값 — 두 표 다 법인세조정액이 불변이라는 사실 자체가 검증 포인트이지 정밀소수점이 아니므로, 이미 검증된 앵커(14/15)와 정확히 닫히는 정수 표기를 채택"
+    },
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 4874.18,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0071": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "16": {
+      "value": 6121.049999999996,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0072": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "20": {
+      "value": 2635.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "21": {
+      "value": 609.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "22": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 3904.2700000000004,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0080": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "20": {
+      "value": 4058.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "21": {
+      "value": 1972.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "17": {
+      "value": 14219.0,
+      "reason": "mirror(TIR=X confirmed 2026.2Q)"
+    },
+    "22": {
+      "value": 5189.0,
+      "reason": "mirror(TIR=TER=TIRR=X)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 6686.709999999999,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    },
+    "29": {
+      "value": 988.13,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "30": {
+      "value": 11.57,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "31": {
+      "value": 6835.56,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "32": {
+      "value": 0.0,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "33": {
+      "value": 8623.63,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "34": {
+      "value": 3710.14,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    },
+    "35": {
+      "value": 355.21,
+      "reason": "mirror(parent item17 resolved as mirror, child follows)"
+    }
+  },
+  "KR0082": {
+    "19": {
+      "value": 4362.0,
+      "reason": "RAW:raw PDF p19 확인: TER=X, TIRR=X (적용여부 표 명시) → item19는 두 축 모두 미적용, mirror. item17(TIR=O)은 p20 ②표에서 994,777백만원=9947.77억(이미 마스터 존재, 일치 확인)"
+    },
+    "36": {
+      "value": 910.49,
+      "reason": "RAW:raw PDF p19 적용여부 표 TIRR=X → item36(금리위험) mirror(전값)"
+    },
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 4394.24,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0083": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "22": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 4189.16,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0087": {
+    "17": {
+      "value": 21711.0,
+      "reason": "RAW:raw PDF p18(240dpi 렌더, 스캔본 텍스트층 0) '4-2-3 최근 3개 사업연도 변동요인' 표: 경과조치 전/후 6개 수치(지급여력비율 205.4/205.4·지급여력금액 48,808/48,808·지급여력기준금액 23,768/23,768) 전부 소수점까지 동일 = 이번 분기 경과조치 효과 0 확정 → item17 mirror(21711)"
+    },
+    "22": {
+      "value": 6109.0,
+      "reason": "RAW:상동 근거(헤드라인 전=후 완전동일) → item22 mirror(6109)"
+    },
+    "35": {
+      "value": 889.83,
+      "reason": "RAW:item17 mirror에 따른 하위 census 연쇄(대재해위험액, item17 유일한 material child) mirror"
+    },
+    "20": {
+      "value": 6005.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "21": {
+      "value": 3328.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    }
+  },
+  "KR0094": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "20": {
+      "value": 7555.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "21": {
+      "value": 5820.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "17": {
+      "value": 52371.0,
+      "reason": "mirror(TIR=X confirmed 2026.2Q)"
+    },
+    "22": {
+      "value": 19912.0,
+      "reason": "mirror(TIR=TER=TIRR=X)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "2": {
+      "value": 53729.0,
+      "reason": "mirror(TFI=X,TAC=X)"
+    },
+    "3": {
+      "value": 59367.0,
+      "reason": "mirror(TFI=X,TAC=X)"
+    },
+    "15": {
+      "value": 73673.0876858231,
+      "reason": "derive(R4 sqrt, gate rule 4)"
+    },
+    "16": {
+      "value": 19879.912314176894,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    },
+    "14": {
+      "value": 53761.087685823106,
+      "reason": "derive(rule 5: 15-22+23)"
+    },
+    "1": {
+      "value": 113096.0,
+      "reason": "derive(rule 1: item2+item3)"
+    },
+    "27": {
+      "value": 210.36776759601094,
+      "reason": "derive(rule 7)"
+    },
+    "28": {
+      "value": 99.94031429198266,
+      "reason": "derive(rule 8)"
+    }
+  },
+  "KR0097": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 1553.2700000000004,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0099": {
+    "17": {
+      "value": 27648.0,
+      "reason": "RAW:raw PDF p19 적용여부 표: TIR=X,TER=X,TIRR=X,TAC=X(선택적용 전부 X) 명시 + p21 '②...적용하지 않아 경과조치 전∙후 금액 및 비율이 동일함' 문장 확인 → mirror(27648)"
+    },
+    "22": {
+      "value": 10188.0,
+      "reason": "RAW:상동 근거 → item22 mirror(10188)"
+    },
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "20": {
+      "value": 3186.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "21": {
+      "value": 2142.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 9841.830000000002,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0100": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "21": {
+      "value": 79.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "22": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 307.1600000000001,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR0104": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "20": {
+      "value": 7381.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "21": {
+      "value": 2884.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 8112.7800000000025,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR1010": {
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "22": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 127.66000000000008,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    }
+  },
+  "KR1011": {
+    "2": {
+      "value": 1630.15,
+      "reason": "RAW:raw PDF p18(TFI표)+p19(TAC표) 둘 다 기본자본=163,015백만원 불변(적용전=적용후) → 1630.15억"
+    },
+    "3": {
+      "value": 9043.85,
+      "reason": "RAW:leaf-combine: baseline 716,835 + TFI증분(790,466-716,835=73,631, p18) + TAC증분(추정, item1_후 앵커 역산) = item1_후(기존마스터10674) - item2_후(1630.15) = 9043.85. item1_후는 기존 마스터 값(headline p22 4-2-3표와 일치) 불변 사용"
+    },
+    "17": {
+      "value": 2485.32,
+      "reason": "RAW:raw PDF p20 '② 장수·사업비·해지·대재해 경과조치' 표(TIR축 단독): 생명·장기손해보험위험액 적용후=248,532백만원. 시장위험액 이 표에서 393,164->393,164 불변 확인(TER/TIRR 미반영 재확인)"
+    },
+    "19": {
+      "value": 2675.55,
+      "reason": "RAW:raw PDF p21 '③ 주식위험 경과조치 또는 금리위험 경과조치' 표(TER+TIRR축, 이 회사는 둘 다 O라 하나의 결합표로 인쇄): 시장위험액 적용후=267,555백만원. 생명장기 이 표에서 363,221->363,221 불변 확인(TIR 미반영 재확인)"
+    },
+    "36": {
+      "value": 1965.93,
+      "reason": "RAW:동일표 금리위험 적용후=196,593백만원 (주식위험 적용후=126,074=12.6074억은 이미 마스터 item37_후=1260.74와 정확 일치로 교차검증됨, 부동산/외환/자산집중도 기존 마스터 값과 전부 정확 일치 확인)"
+    },
+    "18": {
+      "value": 0.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "20": {
+      "value": 1868.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "21": {
+      "value": 413.0,
+      "reason": "mirror(universal, no axis targets this leg)"
+    },
+    "22": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "23": {
+      "value": 0.0,
+      "reason": "mirror(pre=0)"
+    },
+    "16": {
+      "value": 2031.8700000000008,
+      "reason": "derive(rule 6: sum(17:21)-15)"
+    },
+    "28": {
+      "value": 30.132162661737528,
+      "reason": "derive(rule 8)"
+    }
+  }
+}

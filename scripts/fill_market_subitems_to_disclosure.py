@@ -107,6 +107,41 @@ def _bare_subrisk_item(label):
 
 _UNIT_HINT_RE = re.compile(r"\(\s*단위\s*[:：]?\s*[^)]*?(억원|백만원|만원|천원|원)[^)]*\)")
 
+# ---- total-row-only layout fallback (inbox 20260831T0710Z, KR0008 삼성화재 2026.2Q;
+# same layout confirmed on KR0069 삼성생명 2026.2Q) ----------------------------
+# Some companies' ③④⑤⑥ (주식/부동산/외환/자산집중) 세부표 print the risk name ONLY in
+# the table's own header/section heading ("4) 부동산위험액 현황") — every DATA row's
+# label is a bare total-marker ('계' / '합 계' / 'Ⅲ. 합 계2)'), never the risk name
+# itself. `_bare_subrisk_item` (needs the risk name literally in the row) misses every
+# row in these tables, so items 37-40 (whichever aren't 우연히 self-named, e.g. item36's
+# 'Ⅳ.금리위험액' total row happens to self-name and already works) silently vanish.
+# This adds a second pass PER TABLE: identify the table's risk type from its own header
+# row or the nearest preceding "N) OOO위험액 현황" heading, then take the LAST numeric
+# cell of its first 총계 row (당기/current-period total always printed before any
+# 직전(prior)-period block in this corpus) as that item's value. Only fires when the
+# existing bare-label scan found nothing for that item in that table — every previously
+# -working extraction (item36 등) is byte-identical/unaffected.
+_HEADING_RISK_MAP = {"금리": 36, "주식": 37, "부동산": 38, "외환": 39, "자산집중": 40}
+_HEADING_RISK_RE = re.compile(r"(금리|주식|부동산|외환|자산집중)\s*위험액?\s*현황")
+_TOTAL_ROW_CORE_RE = re.compile(r"^[ⅠⅡⅢⅣⅤⅥ0-9]*[\.\s]*(합\s*계|계)$")
+
+
+def _is_total_row_label(cell: str) -> bool:
+    stripped = (cell or "").strip()
+    if not stripped:
+        return False
+    stripped = re.sub(r"\d*\)?\s*$", "", stripped).strip()  # trailing footnote e.g. '합 계2)'
+    return bool(_TOTAL_ROW_CORE_RE.match(stripped))
+
+
+def _table_risk_item_from_header(header_cells, heading_ctx: str) -> int | None:
+    for cell in reversed(header_cells):
+        cand = _bare_subrisk_item(cell)
+        if cand is not None:
+            return cand
+    m = _HEADING_RISK_RE.search(heading_ctx)
+    return _HEADING_RISK_MAP[m.group(1)] if m else None
+
 
 def extract_mkt_subs(md_text):
     """Return {item_no: (value_string, unit)} for items 36-40.
@@ -126,38 +161,57 @@ def extract_mkt_subs(md_text):
     reconciliation gate below correctly rejected but then left items 36-40 unset."""
     out = {}
     unit = "백만원"
+    heading_ctx = ""
+    prev_was_table = False
+    table_risk_item: int | None = None
     for ln in md_text.splitlines():
         s = ln.strip()
         if not s.startswith("|"):
             m = _UNIT_HINT_RE.search(s)
             if m:
                 unit = m.group(1)
+            if s.startswith("#") or re.match(r"^\d+\)", s):
+                heading_ctx = s
+            prev_was_table = False
             continue
         cells = [c.strip() for c in s.strip("|").split("|")]
         if len(cells) < 2:
+            prev_was_table = False
             continue
+        if not prev_was_table:
+            table_risk_item = _table_risk_item_from_header(cells, heading_ctx)
+        prev_was_table = True
         item_no = _bare_subrisk_item(cells[0])
-        if item_no is None or item_no in out:
+        if item_no is not None and item_no not in out:
+            for c in cells[1:]:
+                v = _parse_value(c)
+                if v is not None:
+                    out[item_no] = (v, unit)
+                    break
+            else:
+                # Every value cell was a bare dash, not just unparseable —
+                # same convention as items 29-35's leaf sub-risks: a dash in a
+                # leaf market sub-risk row means the company discloses zero
+                # exposure to that specific risk, not "no data" (e.g. KR0004/
+                # KR0072 자산집중위험 '-'/'-' — genuinely zero concentration
+                # risk, not a missing table). Without this, item40's row never
+                # gets created at all and the parent(item19)-has-children-
+                # missing review flag never clears.
+                value_cells = cells[1:]
+                if value_cells and all(
+                    c.strip().replace(",", "") in ("-", "─", "–", "—") for c in value_cells
+                ):
+                    out[item_no] = ("0", unit)
             continue
-        for c in cells[1:]:
-            v = _parse_value(c)
-            if v is not None:
-                out[item_no] = (v, unit)
-                break
-        else:
-            # Every value cell was a bare dash, not just unparseable —
-            # same convention as items 29-35's leaf sub-risks: a dash in a
-            # leaf market sub-risk row means the company discloses zero
-            # exposure to that specific risk, not "no data" (e.g. KR0004/
-            # KR0072 자산집중위험 '-'/'-' — genuinely zero concentration
-            # risk, not a missing table). Without this, item40's row never
-            # gets created at all and the parent(item19)-has-children-
-            # missing review flag never clears.
-            value_cells = cells[1:]
-            if value_cells and all(
-                c.strip().replace(",", "") in ("-", "─", "–", "—") for c in value_cells
-            ):
-                out[item_no] = ("0", unit)
+        # fallback: total-row-only layout (risk name only in header/heading, see above)
+        if table_risk_item is not None and table_risk_item not in out:
+            if any(_is_total_row_label(c) for c in cells):
+                for c in reversed(cells):
+                    v = _parse_value(c)
+                    if v is not None:
+                        out[table_risk_item] = (v, unit)
+                        table_risk_item = None  # this table's job is done
+                        break
     return out  # values are (raw_string, unit) pairs; caller converts to 억원
 
 
@@ -270,7 +324,15 @@ def main(argv):
     for period in periods:
         quarter = _md_period_to_quarter(period)
         md_dir = MD_INBOX / period
+        # 2026.2Q onward: the downloader started landing new PDFs under
+        # <period>/pdf/ instead of <period>/raw/ (raw/ has just 1 of 39
+        # 2026.2Q filers) -- try raw/ first (unchanged historical behaviour,
+        # 502 period-company cells across FY2023_Q1..FY2026_Q1 all keep
+        # resolving exactly as before), fall back to pdf/ only when raw/ has
+        # no match for that company (36 2026.2Q filers recovered, 0 cells
+        # regressed -- simulated in scripts/_probes/sim_20260831_rawpdf_fallback.py).
         pdf_dir = DISCLOSURE / period / "raw"
+        pdf_dir_fallback = DISCLOSURE / period / "pdf"
         if not md_dir.is_dir():
             print(f"  {period}: no md_inbox, skip"); continue
         n36 = n41 = 0
@@ -314,6 +376,8 @@ def main(argv):
                     bad_detail.append(f"  MKT-SKIP {code} {quarter}: no item19 anchor (not stored)")
             # --- 41-46 from PDF ---
             pdfs = sorted(glob.glob(str(pdf_dir / f"{code}_*.pdf"))) if pdf_dir.is_dir() else []
+            if not pdfs and pdf_dir_fallback.is_dir():
+                pdfs = sorted(glob.glob(str(pdf_dir_fallback / f"{code}_*.pdf")))
             if pdfs:
                 try:
                     vals, total = extract_irr_netassets(pdfs[0])

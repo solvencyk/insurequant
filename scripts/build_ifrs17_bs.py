@@ -151,7 +151,12 @@ ACCOUNT_IDS = {
     10: ("ifrs-full_CashAndCashEquivalents", "dart_CashAndDuefromBanks",
          "dart_DueFromBanksAtAmortisedCost"),
     11: ("ifrs-full_FinancialAssetsAtFairValueThroughProfitOrLoss",),
-    12: ("ifrs-full_FinancialAssetsAtFairValueThroughOtherComprehensiveIncome",),
+    # item12(FVOCI), 신한라이프생명 대안 태그(2026-08-31 실측: 표준 ifrs-full_ 태그가 아예
+    # 없고 이 dart_ 확장태그만 낸다, account_nm "기타포괄손익공정가치측정유가증권" 35.29조).
+    # item14 재보험계약자산처럼 회사가 아예 개념이 없는 게 아니라 태그만 갈아탄 것이라 name
+    # census로도 확인(census 2026-08-31: 이 태그 쓰는 회사가 표준태그와 동시출현 0건).
+    12: ("ifrs-full_FinancialAssetsAtFairValueThroughOtherComprehensiveIncome",
+         "dart_SecuritiesAtFairValueThroughOtherComprehensiveIncome"),
     14: ("ifrs-full_ReinsuranceContractsHeldThatAreAssets",),
     15: ("ifrs-full_PropertyPlantAndEquipment",),
     20: ("ifrs-full_InsuranceContractsIssuedThatAreLiabilities",),

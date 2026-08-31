@@ -73,7 +73,7 @@ def main() -> int:
     #     다음 세션이 "이 diff 는 뭐지"로 시간을 쓴다(2026-08-21 실측).
     print("\n" + "=" * 72)
     print("DOMAIN GATES (csm_continuity · kics_rate_sensitivity · nb_csm_multiple · csm_waterfall"
-          " · live_artifacts)")
+          " · live_artifacts · disclosure_freshness)")
     _dom_outputs = [ROOT / "data" / "dart" / "viz" / "csm_waterfall_validation.json",
                     ROOT / "data" / "dart" / "viz" / "csm_continuity_validation.json",
                     ROOT / "data" / "_derived" / "kics_rate_sensitivity_validation.json",
@@ -83,9 +83,15 @@ def main() -> int:
     # `validate_live_artifacts` 는 2026-08-25 신설. 라이브 HTML 이 fetch 하는 .json 16개 중
     # **6개를 어떤 검사기도 읽지 않고 있었다**(런타임 추적으로 확인:
     # scripts/_probes/probe_20260825_trace_validator_reads.py). 불변식 1번의 집행자다.
+    # `validate_disclosure_freshness` 는 2026-08-31 신설. 2026.2Q 라운드에서 세 회사가
+    # 직전 분기 PDF 를 그대로 받아왔고(KR0011·KR0029·KR0150, 바이트 동일) 그 상태로
+    # 파싱·적재가 통과했다 — 마스터의 "2026.2Q" 30항목 중 27개가 2026.1Q 와 값이 같았다.
+    # 산수는 다 맞으니 룰 게이트는 GREEN 이었다. 불변식 1번(게이트가 보는 파일 = 사용자가
+    # 보는 파일)의 원천 쪽 집행자다. 다운로더 헤더에 이 함정이 문장으로만 적혀 있었고
+    # 검사하는 코드는 없었다.
     for _name in ("validate_csm_continuity", "validate_kics_rate_sensitivity",
                   "validate_nb_csm_multiple", "validate_csm_waterfall",
-                  "validate_live_artifacts"):
+                  "validate_live_artifacts", "validate_disclosure_freshness"):
         # 자식 스크립트 일부가 stdout 을 utf-8 로 reconfigure 하지 않아 한글이 깨진 채 올라온다
         # (`validate_nb_csm_multiple` 실측). 훅이 그 출력을 사람에게 보여주므로 여기서 강제한다.
         _p = subprocess.run([sys.executable, str(ROOT / "scripts" / (_name + ".py"))],

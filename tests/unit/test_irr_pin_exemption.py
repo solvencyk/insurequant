@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """36_irr documented exception (IRR_DERIVE_ISSUER_INCONSISTENT) 변이시험.
 
-owner 2026-08-21 승인 면제 5건(KR0073 2025.2Q · KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q).
+owner 승인 면제 6건: 2026-08-21 5건(KR0073 2025.2Q · KR0094 2024.2Q·2024.4Q·2025.2Q·2025.4Q)
++ 2026-09-01 1건(KR0094 2026.2Q — 잔차/item36 +27.97% 로 기존 대역 +5.25~25.62% 밖이지만
+item36 이 시장위험 축에서 rel −0.00099% 로 닫히고 41-46 이 raw p28 과 정확 일치).
 면제는 **통째 skip 이 아니라 잔차 박제**다 — 이 테스트가 그 계약을 기계로 잡아둔다.
 
 왜 골든이 아니라 변이시험인가: 골든은 '지금 무엇이 나오는지'를 박제하므로, 면제가 조용히
@@ -31,7 +33,7 @@ from solvency.validation.kics_json_rules import run_validation   # noqa: E402
 import validate_kics_disclosure as gate                          # noqa: E402
 
 PINNED = {("KR0073", "2025.2Q"), ("KR0094", "2024.2Q"), ("KR0094", "2024.4Q"),
-          ("KR0094", "2025.2Q"), ("KR0094", "2025.4Q")}
+          ("KR0094", "2025.2Q"), ("KR0094", "2025.4Q"), ("KR0094", "2026.2Q")}
 IRR_INPUTS = (36, 41, 42, 43, 44, 45, 46)
 
 
@@ -90,8 +92,8 @@ def _mutate_cell(records, cq, item, factor=None):
 
 
 # --------------------------------------------------------------------------- 범위
-def test_registry_is_exactly_the_five_owner_approved_pairs():
-    """면제를 이 5건 밖으로 넓히지 않는다 (owner 2026-08-21). 두 컬럼 모두 박제돼야 한다."""
+def test_registry_is_exactly_the_six_owner_approved_pairs():
+    """면제를 이 6건 밖으로 넓히지 않는다 (owner 2026-08-21 · 2026-09-01). 두 컬럼 모두 박제돼야 한다."""
     assert set(K.IRR_DERIVE_ISSUER_INCONSISTENT) == PINNED
     for cq, pins in K.IRR_DERIVE_ISSUER_INCONSISTENT.items():
         assert set(pins) == {"적용전", "적용후"}, (
@@ -130,7 +132,7 @@ def test_exemption_on_means_no_irr_red(rows):
 
 
 def test_disabling_exemption_restores_the_reds(rows):
-    """면제를 끄면 적용전 5건 + 적용후 5건이 되살아난다 (게이트 lift 후 표시분기 8건)."""
+    """면제를 끄면 적용전 6건 + 적용후 6건이 되살아난다."""
     saved = K.IRR_DERIVE_ISSUER_INCONSISTENT
     K.IRR_DERIVE_ISSUER_INCONSISTENT = {}
     try:
@@ -181,7 +183,7 @@ def test_perturbing_a_live_input_breaks_the_pin(rows):
                 f"{cq} item{item} 을 흔들었는데 면제가 적용전 RED 를 삼켰다")
             assert cq in _irr_after_red(mut), (
                 f"{cq} item{item} 을 흔들었는데 면제가 적용후 RED 를 삼켰다")
-    assert live_inputs >= 5 * 5, f"민감 입력이 너무 적다({live_inputs}) — 시험이 무력해졌다"
+    assert live_inputs >= 6 * 5, f"민감 입력이 너무 적다({live_inputs}) — 시험이 무력해졌다"
 
 
 def test_pin_registry_is_provenance_checked():

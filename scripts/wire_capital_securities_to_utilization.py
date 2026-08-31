@@ -13,6 +13,7 @@ recognized regardless of the new limit → EXCLUDED from 한도소진 numerator,
 Also fixes denom bug (신한이지 tier2_limit 2.68 → SCR×50%). Backs up the live JSONs to .bak.
 Updates existing records' fields in place (preserves schema for HTML/gate); companies w/o bonds → 0.
 """
+import argparse
 import io
 import json
 import shutil
@@ -22,12 +23,24 @@ from pathlib import Path
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 ROOT = Path(__file__).resolve().parents[1]
-AS_OF = date(2026, 3, 31)
 KICS_START = date(2023, 1, 1)
 
+# 분기는 인자로 받는다 (2026-08-31). 그 전에는 20261Q 와 2026-03-31 이 리터럴로 박혀 있어
+# 새 분기를 돌리려면 파일을 고쳐야 했다. 기본값은 종전 동작 그대로다.
+_QEND = {"1Q": (3, 31), "2Q": (6, 30), "3Q": (9, 30), "4Q": (12, 31)}
+_ap = argparse.ArgumentParser(description=__doc__)
+_ap.add_argument("--quarter", default="2026.1Q", help="예: 2026.2Q")
+_ap.add_argument("--as-of", default=None,
+                 help="후순위 잔존만기 상각 기준일 (기본: --quarter 의 분기말)")
+_args = _ap.parse_args()
+_y, _q = _args.quarter.split(".")
+_tag = f"{_y}{_q}"
+AS_OF = (date.fromisoformat(_args.as_of) if _args.as_of
+         else date(int(_y), *_QEND[_q]))
+
 BONDS = {c["code"]: c for c in json.loads((ROOT / "data" / "bonds" / "capital_securities_fy2025.json").read_text("utf-8"))["companies"]}
-T1F = ROOT / "output" / "tier1_utilization" / "tier1_utilization_20261Q.json"
-T2F = ROOT / "output" / "tier2_utilization" / "tier2_utilization_20261Q.json"
+T1F = ROOT / "output" / "tier1_utilization" / f"tier1_utilization_{_tag}.json"
+T2F = ROOT / "output" / "tier2_utilization" / f"tier2_utilization_{_tag}.json"
 t1doc = json.loads(T1F.read_text("utf-8"))
 t2doc = json.loads(T2F.read_text("utf-8"))
 SCR = {r["code"]: r.get("scr_eok") for r in t1doc["results"]}

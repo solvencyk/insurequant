@@ -1,0 +1,280 @@
+K-ICS validation report: C:\Users\sangwook.cho\Desktop\insurequant\artifacts\kics_validation\report_20260831T082253Z.json
+Status counts: RED=58 YELLOW=1571 GREEN=10328 SKIP=2717 ERROR=0
+  documented exception (발행사 자기모순, 잔차 박제): blocking RED=22 (= 58 − 8_life 1건 − tier2 RED 35건; tier2 YELLOW 박제 2건은 차감 대상 아님) · 적용후 mmult item17 면제 1건
+    2023.2Q KR0079 미래에셋생명보험 [적용전] 박제잔차=1367.405 실측=1367.405 Δ=+0.0 (tol 0.01) → 일치
+    2023.2Q KR0079 미래에셋생명보험 [적용후] 박제잔차=1367.405 실측=1367.405 Δ=+0.0 (tol 0.01) → 일치
+  tier2/다리 발행사 자기모순 documented exception (잔차 박제, 두 겹): 18버킷 · finding 37건 재검산(그중 RED 면제 35건)
+    2023.1Q KR0003 롯데손해보험 [2_tier1_bridge] 박제잔차=19.0 실측=19.0 Δ=+0.0 (tol 0.01) → 일치
+    2023.1Q KR0003 롯데손해보험 [3_tier2_composition] 박제잔차=-19.0 실측=-19.0 Δ=+0.0 (tol 0.01) → 일치
+    2023.1Q KR0003 롯데손해보험 [50_tfi_tier_split] 박제잔차=-18.0 실측=-18.0 Δ=+0.0 (tol 0.01) → 일치
+    2024.4Q KR0003 롯데손해보험 [3_tier2_composition] 박제잔차=-3.39 실측=-3.389999999999418 Δ=+0.0 (tol 0.01) → 일치
+    2024.4Q KR0003 롯데손해보험 [51_tfi_tier2_composition] 박제잔차=-3.01 실측=-3.0099999999983993 Δ=+0.0 (tol 0.01) → 일치
+    2025.1Q KR0003 롯데손해보험 [2_tier1_bridge] 박제잔차=1205.0 실측=1205.0 Δ=+0.0 (tol 0.01) → 일치
+    2026.1Q KR0003 롯데손해보험 [3_tier2_composition] 박제잔차=984.36 실측=984.3600000000006 Δ=+0.0 (tol 0.01) → 일치
+    2026.1Q KR0003 롯데손해보험 [47_tier2_census] census flag(잔차 없음) (tol 0.01) → 일치
+    2026.1Q KR0003 롯데손해보험 [47_tier2_census_post] census flag(잔차 없음) (tol 0.01) → 일치
+    2025.1Q KR0004 예별손해보험 [3_tier2_composition] 박제잔차=997.0 실측=997.0 Δ=+0.0 (tol 0.01) → 일치
+    2024.3Q KR0032 NH농협손해보험 [2_tier1_bridge] 박제잔차=-522.0 실측=-522.0 Δ=+0.0 (tol 0.01) → 일치
+    2025.4Q KR0032 NH농협손해보험 [3_tier2_composition] 박제잔차=949.47 실측=949.4700000000012 Δ=+0.0 (tol 0.01) → 일치
+    2025.4Q KR0032 NH농협손해보험 [3_tier2_composition_post] 박제잔차=1899.06 실측=1899.0600000000013 Δ=+0.0 (tol 0.01) → 일치
+    2025.4Q KR0032 NH농협손해보험 [51_tfi_tier2_composition] 박제잔차=949.59 실측=949.590000000002 Δ=+0.0 (tol 0.01) → 일치
+    2025.4Q KR0032 NH농협손해보험 [51_tfi_tier2_composition_post] 박제잔차=1899.18 실측=1899.180000000002 Δ=+0.0 (tol 0.01) → 일치
+    2024.3Q KR0075 비엔피파리바카디프생명보험 [2_tier1_bridge] 박제잔차=15.0 실측=15.0 Δ=+0.0 (tol 0.01) → 일치
+    2024.3Q KR0075 비엔피파리바카디프생명보험 [3_tier2_composition] 박제잔차=14.86 실측=14.860000000000014 Δ=+0.0 (tol 0.01) → 일치
+    2024.3Q KR0075 비엔피파리바카디프생명보험 [47_tier2_census] census flag(잔차 없음) (tol 0.01) → 일치
+    2024.3Q KR0075 비엔피파리바카디프생명보험 [47_tier2_census_post] census flag(잔차 없음) (tol 0.01) → 일치
+    2024.3Q KR0075 비엔피파리바카디프생명보험 [51_tfi_tier2_composition] 박제잔차=14.53 실측=14.53000000000003 Δ=+0.0 (tol 0.01) → 일치
+    2024.4Q KR0075 비엔피파리바카디프생명보험 [2_tier1_bridge] 박제잔차=87.0 실측=87.0 Δ=+0.0 (tol 0.01) → 일치
+    2024.4Q KR0075 비엔피파리바카디프생명보험 [3_tier2_composition] 박제잔차=87.22 실측=87.22000000000003 Δ=+0.0 (tol 0.01) → 일치
+    2024.4Q KR0075 비엔피파리바카디프생명보험 [47_tier2_census] census flag(잔차 없음) (tol 0.01) → 일치
+    2024.4Q KR0075 비엔피파리바카디프생명보험 [47_tier2_census_post] census flag(잔차 없음) (tol 0.01) → 일치
+    2024.4Q KR0075 비엔피파리바카디프생명보험 [51_tfi_tier2_composition] 박제잔차=86.75 실측=86.75 Δ=+0.0 (tol 0.01) → 일치
+    2025.1Q KR0075 비엔피파리바카디프생명보험 [3_tier2_composition] 박제잔차=61.41 실측=61.410000000000025 Δ=+0.0 (tol 0.01) → 일치
+    2025.1Q KR0075 비엔피파리바카디프생명보험 [47_tier2_census] census flag(잔차 없음) (tol 0.01) → 일치
+    2025.1Q KR0075 비엔피파리바카디프생명보험 [47_tier2_census_post] census flag(잔차 없음) (tol 0.01) → 일치
+    2025.1Q KR0075 비엔피파리바카디프생명보험 [51_tfi_tier2_composition] 박제잔차=61.19 실측=61.19 Δ=+0.0 (tol 0.01) → 일치
+    2025.2Q KR0087 동양생명 [47_tier2_census] census flag(잔차 없음) (tol 0.01) → 일치
+    2023.2Q KR1000 코리안리재보험 [3_tier2_composition] 박제잔차=-983.43 실측=-983.4299999999994 Δ=+0.0 (tol 0.01) → 일치
+    2023.3Q KR1000 코리안리재보험 [3_tier2_composition] 박제잔차=-988.72 실측=-988.7200000000003 Δ=-0.0 (tol 0.01) → 일치
+    2023.4Q KR1000 코리안리재보험 [3_tier2_composition] 박제잔차=-999.44 실측=-999.4399999999996 Δ=+0.0 (tol 0.01) → 일치
+    2024.1Q KR1000 코리안리재보험 [3_tier2_composition] 박제잔차=-1026.23 실측=-1026.2300000000005 Δ=-0.0 (tol 0.01) → 일치
+    2024.2Q KR1000 코리안리재보험 [3_tier2_composition] 박제잔차=-1059.96 실측=-1059.9599999999991 Δ=+0.0 (tol 0.01) → 일치
+    2024.3Q KR1000 코리안리재보험 [3_tier2_composition] 박제잔차=-1080.92 실측=-1080.92 Δ=+0.0 (tol 0.01) → 일치
+    2024.4Q KR1000 코리안리재보험 [2_tier1_bridge] 박제잔차=-1090.0 실측=-1090.0 Δ=+0.0 (tol 0.01) → 일치
+Coverage census: regular_filers=37 median/q=37 MISSING_CELLS(RED)=20 collapsed_quarters=[]
+  missing filers by quarter:
+    2026.2Q: 20 missing — 롯데손해보험, 현대해상, 한화생명, 삼성생명보험, 에이비엘생명보험, 흥국생명보험, 케이디비생명보험, 교보생명보험, 에이아이에이생명보험, DB생명보험, 푸본현대생명보험, 동양생명, 신한라이프생명보험, 하나생명보험, KB라이프생명, 처브라이프생명보험, 농협생명보험, 교보라이프플래닛생명보험,
+Market localizer TOOLING_FAIL: 0 (nonok 셀 전부 백필됨 또는 비-갭)
+Parent-zero / nonzero-child: 0
+Parent-present / child-incomplete PARTIAL (material misparse, RED): 1
+    2026.2Q KR0004 예별손해보험: 부모 item17>0 인데 평소보고 자식 item29, item31, item32, item33, item34 결측 → 행 누락
+Parent-present / child FULL-ABSENT even-Q (source-check review, non-blocking): 5
+    2026.2Q KR0004 예별손해보험: 부모 item19>0·자식 전부결측 → 원천표 확인 필요
+    2026.2Q KR0011 DB손해보험: 부모 item17>0·자식 전부결측 → 원천표 확인 필요
+    2026.2Q KR0011 DB손해보험: 부모 item19>0·자식 전부결측 → 원천표 확인 필요
+    2026.2Q KR0051 신한이지손해보험: 부모 item19>0·자식 전부결측 → 원천표 확인 필요
+    2023.2Q KR0104 농협생명보험: 부모 item17>0·자식 전부결측 → 원천표 확인 필요
+지급여력비율(item27) series spikes: 0
+선택경과조치 적용후 유실/부정합 (item27·28): 0
+item12=item1 셀밀림: 0
+적용후 mmult 불일치 (item15/17/19, 전사 39사): 0
+    [적용후 mmult 미판정 내역] {'item15:부모후결측': 6, 'item15:세부후결측(추출갭)': 1, 'item15:세부후결측(후=전)·원천UNMEASURED(판정불가)': 1, 'item17:부모후결측': 8, 'item17:세부후결측(추출갭)': 2, 'item17:세부후결측(후=전)·원천BORDERLINE(판정불가)': 3, 'item17:세부후결측(후=전)·원천UNMEASURED(판정불가)': 3, 'item17:세부후결측(후=전)·원천UNREADABLE(판정불가)': 13, 'item17:세부후결측(후=전)·원천판독가능': 102, 'item19:SOURCE_ABSENT_PINNED(36후,37후,38후,39후,40후)': 1, 'item19:부모후결측': 8, 'item19:세부후결측(후=전)·원천BORDERLINE(판정불가)': 3, 'item19:세부후결측(후=전)·원천UNMEASURED(판정불가)': 1, 'item19:세부후결측(후=전)·원천UNREADABLE(판정불가)': 13, 'item19:세부후결측(후=전)·원천판독가능': 114}
+적용후 부모결측·세부present (mmult 미가동): 0
+적용후 '후=전' 중 **원천 판독불가라 정당하다고 말할 수 없는** 칸: 37칸 / 20(회사,분기) {'UNREADABLE': 26, 'UNMEASURED': 5, 'BORDERLINE': 6}
+    (종전엔 이 칸들이 '구조적으로 정당' 버킷에 섞여 있었다 — 확인한 게 아니라 못 읽은 것)
+    2024.1Q KR0010 KB손해보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2024.3Q KR0010 KB손해보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2025.1Q KR0010 KB손해보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2025.3Q KR0010 KB손해보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2026.1Q KR0010 KB손해보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2026.2Q KR0010 KB손해보험 [UNMEASURED] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2026.2Q KR0011 DB손해보험 [UNMEASURED] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2023.1Q KR0079 미래에셋생명보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2023.3Q KR0079 미래에셋생명보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2024.1Q KR0079 미래에셋생명보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2024.3Q KR0079 미래에셋생명보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2025.1Q KR0079 미래에셋생명보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2025.3Q KR0079 미래에셋생명보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2026.1Q KR0079 미래에셋생명보험 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2025.1Q KR0080 에이아이에이생명보험 [BORDERLINE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2025.3Q KR0080 에이아이에이생명보험 [BORDERLINE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2026.1Q KR0080 에이아이에이생명보험 [BORDERLINE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2026.1Q KR0087 동양생명 [UNREADABLE] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2024.2Q KR1098 카카오페이손해보험 [UNMEASURED] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+    2024.3Q KR1098 카카오페이손해보험 [UNMEASURED] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음
+적용후 세부위험 추출갭 (부모후≠전인데 세부후 결측, review): 3
+적용후 36_irr 불일치 (전사 39사): 0
+    [적용후 36_irr 미판정 내역] {'DOCUMENTED_EXEMPT_PINNED(적용후 잔차 박제 일치)': 5, 'POST_SCENARIO_ABSENT(짝수Q·적용전완비)': 121, '부모(item36)후_결측': 139, '적용전도_시나리오_불완전': 1, '홀수분기_시나리오표_서식부재': 129}
+36_irr documented exception (재현식 미적용, 잔차 박제) 5건 — 적용전·적용후 각각 재검산 (tol 0.01):
+    2025.2Q KR0073 교보생명보험 [적용전] 박제잔차=241.4374 실측=241.4374 Δ=+0.0 → MATCH
+    2025.2Q KR0073 교보생명보험 [적용후] 박제잔차=241.4374 실측=241.4374 Δ=+0.0 → MATCH
+    2024.2Q KR0094 신한라이프생명보험 [적용전] 박제잔차=1287.8296 실측=1287.8296 Δ=+0.0 → MATCH
+    2024.2Q KR0094 신한라이프생명보험 [적용후] 박제잔차=1287.8296 실측=1287.8296 Δ=+0.0 → MATCH
+    2024.4Q KR0094 신한라이프생명보험 [적용전] 박제잔차=1622.0506 실측=1622.0506 Δ=+0.0 → MATCH
+    2024.4Q KR0094 신한라이프생명보험 [적용후] 박제잔차=1622.0506 실측=1622.0506 Δ=+0.0 → MATCH
+    2025.2Q KR0094 신한라이프생명보험 [적용전] 박제잔차=698.184 실측=698.184 Δ=+0.0 → MATCH
+    2025.2Q KR0094 신한라이프생명보험 [적용후] 박제잔차=698.184 실측=698.184 Δ=+0.0 → MATCH
+    2025.4Q KR0094 신한라이프생명보험 [적용전] 박제잔차=863.8221 실측=863.8221 Δ=+0.0 → MATCH
+    2025.4Q KR0094 신한라이프생명보험 [적용후] 박제잔차=863.8221 실측=863.8221 Δ=+0.0 → MATCH
+적용후 항등식 위반 (전사 39사): 0
+    [적용후 항등식 미판정 내역] {'R1_가용자본=기본+보완:적용후입력결측': 4, 'R2_순자산합:적용후입력결측': 319, 'R5_기준금액:적용후입력결측': 32, 'R6_item16:적용후입력결측': 8, 'R7_지급여력비율:적용후입력결측': 3, 'R8_기본자본비율:적용후입력결측': 5}
+    ⚠ 위 '위반 0' 중 **동어반복으로 판정된 축은 증거가 아니다**: ['R2_순자산합[적용전]', 'R2_순자산합[적용후]'] — 아래 동어반복 검사 참조
+기타요구자본 분해 위반 (item23 = item24+25+26, 전·후 양컬럼): 0
+    [기타요구자본 미판정 내역] {'적용전:부모(item23)결측': 22, '적용전:자식일부결측': 61, '적용전:자식전부결측·부모≈0': 4, '적용후:부모(item23)결측': 32, '적용후:자식일부결측': 39, '적용후:자식전부결측·부모>0(추출갭 후보)': 27, '적용후:자식전부결측·부모≈0': 197}
+적용후 하위 census 결측 (부모후 present·기대자식후 결측, RED): 2 {요구자본(16~21):2}
+    2026.2Q KR0004 예별손해보험: 부모item15후 present인데 item16, item17, item18, item19, item20, item21후 결측 → 적용후 부분충전
+    2026.2Q KR0011 DB손해보험: 부모item15후 present인데 item16, item17, item18, item19, item20, item21후 결측 → 적용후 부분충전
+    [부재 박제로 기대목록에서 제외된 자식후 셀] {'KR0097 2024.4Q item19': 4}
+분산효과(item16) 음수: 0
+적용후 요구자본 부모 continuity break (적용후 공시하다 갑자기 결측=추출갭, RED): 47셀 / 4(회사,분기) [TRAILING=47 SANDWICHED=0]
+    2026.2Q KR0004 예별손해보험 [TRAILING]: item[2, 3, 16, 17, 18, 19, 20, 21, 22, 23]후 결측 (인접분기 적용후 present → 표 유실)
+    2026.2Q KR0011 DB손해보험 [TRAILING]: item[2, 16, 17, 18, 19, 20, 21, 22, 23]후 결측 (인접분기 적용후 present → 표 유실)
+    2026.2Q KR0029 AIG손해보험 [TRAILING]: item[1, 2, 3, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 27]후 결측 (인접분기 적용후 present → 표 유실)
+    2026.2Q KR0051 신한이지손해보험 [TRAILING]: item[1, 2, 3, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 27]후 결측 (인접분기 적용후 present → 표 유실)
+    [부재 박제로 continuity 에서 제외된 셀] {'KR0049 2024.3Q item15후': 1, 'KR0049 2024.3Q item16후': 1, 'KR0049 2024.3Q item17후': 1, 'KR0049 2024.3Q item18후': 1, 'KR0049 2024.3Q item19후': 1, 'KR0049 2024.3Q item20후': 1, 'KR0049 2024.3Q item21후': 1, 'KR0049 2024.3Q item22후': 1, 'KR0049 2024.3Q item23후': 1}
+적용후 조정항목(22법인세·23기타요구자본) 단독 continuity break (종속회사/법인세 legit-absent 가능, 비차단 review): 3
+    2024.3Q KR0002 한화손해보험 item23후 결측 [SANDWICHED] → 원천확인(단독=코어 break 없음)
+    2024.4Q KR0005 흥국화재 item23후 결측 [SANDWICHED] → 원천확인(단독=코어 break 없음)
+    2023.3Q KR0082 DB생명보험 item23후 결측 [SANDWICHED] → 원천확인(단독=코어 break 없음)
+축별 평가율 — 미러 3분류: 미적용사=정의상 동일(정상) / 적용사·해당종류 미신청=정상 / 적용사·신청=오염의심. 실질=평가−오염의심.
+    분모 '범위' = 그 축이 구조적으로 적용되는 (회사,분기) — `*` 표시는 전 버킷(506)보다 좁혀졌다는 뜻이다(36_irr=짝수분기 한정 · 적용후 순자산/시나리오=경과조치 비적용사 한정). 좁힌 범위 안의 미평가 칸은 아래에 이름으로 인쇄된다:
+      · R2_순자산합 [적용후] 범위 266 중 미평가 79건 — KR0001 2026.2Q, KR0008 2026.2Q, KR0010 2025.4Q, KR0011 2023.1Q, KR0011 2023.2Q, KR0011 2026.2Q, KR0029 2026.2Q, KR0050 2023.2Q, KR0051 2026.2Q, KR0068 2024.3Q, KR0068 2025.2Q, KR0068 2025.3Q ...
+      · 36_irr [적용전] 범위 244 중 미평가 6건 — KR0001 2026.2Q, KR0004 2026.2Q, KR0005 2026.2Q, KR0011 2026.2Q, KR0029 2026.2Q, KR0051 2026.2Q
+      · 36_irr [적용후] 범위 130 중 미평가 15건 — KR0001 2026.2Q, KR0011 2023.2Q, KR0011 2026.2Q, KR0029 2026.2Q, KR0050 2023.2Q, KR0051 2026.2Q, KR0068 2025.2Q, KR0087 2023.2Q, KR0087 2023.4Q, KR0087 2024.2Q, KR0087 2024.4Q, KR0087 2025.2Q ...
+    mmult15                적용전  grid=505/506   평가=505(grid 100.0% · 범위  99.8%)  미러[정의상   0 · 정상   0 · 의심  0]  면제= 0  실질=505(100.0%) 독립=505(100.0%)
+    mmult15                적용후  grid=505/506   평가=498(grid  98.6% · 범위  98.4%)  미러[정의상 173 · 정상   0 · 의심  0]  면제= 0  실질=498( 98.6%) 독립=325( 64.4%)
+    mmult17                적용전  grid=382/506   평가=375(grid  98.2% · 범위  74.1%)  미러[정의상   0 · 정상   0 · 의심  0]  면제= 1  실질=375( 98.2%) 독립=375( 98.2%)
+    mmult17                적용후  grid=382/506   평가=374(grid  97.9% · 범위  73.9%)  미러[정의상 141 · 정상   0 · 의심  0]  면제= 1  실질=374( 97.9%) 독립=233( 61.0%)
+    mmult19                적용전  grid=369/506   평가=368(grid  99.7% · 범위  72.7%)  미러[정의상   0 · 정상   0 · 의심  0]  면제= 1  실질=368( 99.7%) 독립=368( 99.7%)
+    mmult19                적용후  grid=369/506   평가=366(grid  99.2% · 범위  72.3%)  미러[정의상 157 · 정상   1 · 의심  0]  면제= 1  실질=366( 99.2%) 독립=208( 56.4%)
+    R1_가용자본=기본+보완          적용전  grid=506/506   평가=506(grid 100.0% · 범위 100.0%)  미러[정의상   0 · 정상   0 · 의심  0]  면제= 0  실질=506(100.0%) 독립=506(100.0%)
+    R1_가용자본=기본+보완          적용후  grid=506/506   평가=502(grid  99.2% · 범위  99.2%)  미러[정의상 163 · 정상  64 · 의심  0]  면제= 0  실질=502( 99.2%) 독립=275( 54.3%)
+    R2_순자산합                적용전  grid=505/506   평가=409(grid  81.0% · 범위  80.8%)  미러[정의상   0 · 정상   0 · 의심  0]  면제= 0  실질=409( 81.0%) 독립=409( 81.0%)  <<< 동어반복 (평가율과 무관하게 증거 아님)
+    R2_순자산합                적용후  grid=265/266*  평가=187(grid  70.6% · 범위  70.3%)  미러[정의상 187 · 정상   0 · 의심  0]  면제= 0  실질=187( 70.6%) 독립=  0(  0.0%)  <<< 동어반복 (평가율과 무관하게 증거 아님)
+    R5_기준금액                적용전  grid=505/506   평가=484(grid  95.8% · 범위  95.7%)  미러[정의상   0 · 정상   0 · 의심  0]  면제= 0  실질=484( 95.8%) 독립=484( 95.8%)
+    R5_기준금액                적용후  grid=505/506   평가=474(grid  93.9% · 범위  93.7%)  미러[정의상 156 · 정상   0 · 의심  0]  면제= 0  실질=474( 93.9%) 독립=318( 63.0%)
+    R6_item16              적용전  grid=505/506   평가=505(grid 100.0% · 범위  99.8%)  미러[정의상   0 · 정상   0 · 의심  0]  면제= 0  실질=505(100.0%) 독립=505(100.0%)
+    R6_item16              적용후  grid=505/506   평가=498(grid  98.6% · 범위  98.4%)  미러[정의상 173 · 정상   0 · 의심  0]  면제= 0  실질=498( 98.6%) 독립=325( 64.4%)
+    R7_지급여력비율              적용전  grid=505/506   평가=505(grid 100.0% · 범위  99.8%)  미러[정의상   0 · 정상   0 · 의심  0]  면제= 0  실질=505(100.0%) 독립=505(100.0%)
+    R7_지급여력비율              적용후  grid=505/506   평가=503(grid  99.6% · 범위  99.4%)  미러[정의상 217 · 정상   0 · 의심  0]  면제= 0  실질=503( 99.6%) 독립=286( 56.6%)
+    R8_기본자본비율              적용전  grid=501/506   평가=501(grid 100.0% · 범위  99.0%)  미러[정의상   0 · 정상   0 · 의심  0]  면제= 0  실질=501(100.0%) 독립=501(100.0%)
+    R8_기본자본비율              적용후  grid=501/506   평가=501(grid 100.0% · 범위  99.0%)  미러[정의상 181 · 정상   0 · 의심  0]  면제= 0  실질=501(100.0%) 독립=320( 63.9%)
+    36_irr                 적용전  grid=238/244*  평가=238(grid 100.0% · 범위  97.5%)  미러[정의상   0 · 정상   0 · 의심  0]  면제= 0  실질=238(100.0%) 독립=238(100.0%)
+    36_irr                 적용후  grid=126/130*  평가=115(grid  91.3% · 범위  88.5%)  미러[정의상 115 · 정상   0 · 의심  0]  면제= 0  실질=115( 91.3%) 독립=  0(  0.0%)
+적용사 미러링 오염 (AXIS_SELF_MIRRORED_APPLIER): 0 — 비적용사·비신청 적용사의 후=전은 정의/정상이라 세지 않는다
+축 평가율 RED (AXIS_NOT_EVALUATED): 0
+항등식 동어반복 검사 — 잔차 '정확히 0' 비율 vs 반올림 귀무(Irwin–Hall). 임계 excess≥1.2 및 z≥5.0 (둘 다, 실측 보정):
+    R2_순자산합                적용후  n=187  정확0=146( 78.1%)  귀무= 54.7%  excess=1.43  z=   6.5  k_eff={4: 65, 5: 47, 6: 48, 7: 27}  <<< RED 동어반복 — 이 축의 'FAIL 0' 은 증거가 아니다
+    R2_순자산합                적용전  n=409  정확0=278( 68.0%)  귀무= 54.4%  excess=1.25  z=   5.5  k_eff={4: 112, 5: 130, 6: 117, 7: 50}  <<< RED 동어반복 — 이 축의 'FAIL 0' 은 증거가 아니다
+    R6_item16              적용전  n=505  정확0=299( 59.2%)  귀무= 53.4%  excess=1.11  z=   2.6  k_eff={3: 1, 4: 1, 5: 287, 6: 216}
+    R23_기타요구자본             적용후  n= 39  정확0= 30( 76.9%)  귀무= 69.7%  excess=1.10  z=   1.0  k_eff={2: 14, 3: 25}
+    R1_가용자본=기본+보완          적용전  n=493  정확0=402( 81.5%)  귀무= 75.0%  excess=1.09  z=   3.4  k_eff={2: 493}
+    R5_기준금액                적용전  n=334  정확0=253( 75.7%)  귀무= 71.7%  excess=1.06  z=   1.7  k_eff={2: 201, 3: 133}
+    R23_기타요구자본             적용전  n= 53  정확0= 36( 67.9%)  귀무= 70.9%  excess=0.96  z=  -0.5  k_eff={2: 27, 3: 26}
+    R5_기준금액                적용후  n=328  정확0=201( 61.3%)  귀무= 71.7%  excess=0.86  z=  -4.2  k_eff={2: 197, 3: 131}
+    R6_item16              적용후  n=498  정확0=203( 40.8%)  귀무= 53.4%  excess=0.76  z=  -5.7  k_eff={3: 1, 4: 2, 5: 285, 6: 210}
+    R1_가용자본=기본+보완          적용후  n=490  정확0=275( 56.1%)  귀무= 75.0%  excess=0.75  z=  -9.7  k_eff={2: 490}
+동어반복 documented exception (owner 2026-08-21, 상한 박제): 2  — **경고는 유지, push 차단만 면제**
+    R2_순자산합 [적용전] — 409칸 중 278칸 잔차 정확히 0 (68.0%, 귀무 54.4%, excess 1.25, z 5.5). owner 승인 documented exception (2026-08-21). 박제 excess 1.25 · 실측 1.25 (Δ+0.00, 허용 +0.1)
+      해제조건: R2 되맞춤 원인 규명 (inbox/validation/20260821T1830Z). 이 축이 통과해도 증거가 아니라는 사실은 그대로다.
+    R2_순자산합 [적용후] — 187칸 중 146칸 잔차 정확히 0 (78.1%, 귀무 54.7%, excess 1.43, z 6.5). owner 승인 documented exception (2026-08-21). 박제 excess 1.43 · 실측 1.43 (Δ-0.00, 허용 +0.1)
+      해제조건: R2 되맞춤 원인 규명 (inbox/validation/20260821T1830Z). 이 축이 통과해도 증거가 아니라는 사실은 그대로다.
+동어반복 RED (IDENTITY_TAUTOLOGY): 0
+부재형 면제 — 셀단위 부재 박제 census: 21셀 (결측 14 · 값존재 7) / 2버킷
+    2024.4Q KR0097 item29후 [_AFTER_SUBRISK_NOT_DISCLOSED] 값존재=230.82 → 파생값, 해당 축 검산 라이브
+    2024.4Q KR0097 item30후 [_AFTER_SUBRISK_NOT_DISCLOSED] 값존재=0 → 파생값, 해당 축 검산 라이브
+    2024.4Q KR0097 item31후 [_AFTER_SUBRISK_NOT_DISCLOSED] 값존재=391.46 → 파생값, 해당 축 검산 라이브
+    2024.4Q KR0097 item32후 [_AFTER_SUBRISK_NOT_DISCLOSED] 값존재=0 → 파생값, 해당 축 검산 라이브
+    2024.4Q KR0097 item33후 [_AFTER_SUBRISK_NOT_DISCLOSED] 값존재=1377.71 → 파생값, 해당 축 검산 라이브
+    2024.4Q KR0097 item34후 [_AFTER_SUBRISK_NOT_DISCLOSED] 값존재=714.73 → 파생값, 해당 축 검산 라이브
+    2024.4Q KR0097 item35후 [_AFTER_SUBRISK_NOT_DISCLOSED] 값존재=0 → 파생값, 해당 축 검산 라이브
+    2024.4Q KR0097 item36후 [_AFTER_SUBRISK_NOT_DISCLOSED] 결측
+    2024.4Q KR0097 item37후 [_AFTER_SUBRISK_NOT_DISCLOSED] 결측
+    2024.4Q KR0097 item38후 [_AFTER_SUBRISK_NOT_DISCLOSED] 결측
+    2024.4Q KR0097 item39후 [_AFTER_SUBRISK_NOT_DISCLOSED] 결측
+    2024.4Q KR0097 item40후 [_AFTER_SUBRISK_NOT_DISCLOSED] 결측
+    2024.3Q KR0049 item15후 [_POST_PARENT_NOT_DISCLOSED] 결측
+    2024.3Q KR0049 item16후 [_POST_PARENT_NOT_DISCLOSED] 결측
+    2024.3Q KR0049 item17후 [_POST_PARENT_NOT_DISCLOSED] 결측
+    2024.3Q KR0049 item18후 [_POST_PARENT_NOT_DISCLOSED] 결측
+    2024.3Q KR0049 item19후 [_POST_PARENT_NOT_DISCLOSED] 결측
+    2024.3Q KR0049 item20후 [_POST_PARENT_NOT_DISCLOSED] 결측
+    2024.3Q KR0049 item21후 [_POST_PARENT_NOT_DISCLOSED] 결측
+    2024.3Q KR0049 item22후 [_POST_PARENT_NOT_DISCLOSED] 결측
+    2024.3Q KR0049 item23후 [_POST_PARENT_NOT_DISCLOSED] 결측
+면제 근거 마커 신뢰도 등급: {'ANCHORED': 51, 'LABELLED': 23, 'UNIQUE': 75, 'AMBIGUOUS': 11} (AMBIGUOUS = 숫자만·인용페이지 2회 이상 → 행 귀속 미검사)
+    2024.4Q KR0075: ANCHORED=5 잔여 AMBIGUOUS ['32,949(×2)']
+    2025.1Q KR0075: ANCHORED=5 잔여 AMBIGUOUS ['30,450(×4)']
+    2025.2Q KR0087: ANCHORED=2 잔여 AMBIGUOUS ['1,543,723(×2)']
+    2024.4Q KR0003: ANCHORED=3 잔여 AMBIGUOUS ['1,933,391(×2)']
+    2025.1Q KR0003: ANCHORED=4 잔여 AMBIGUOUS ['1,753,563(×2)']
+    2025.4Q KR0032: ANCHORED=2 잔여 AMBIGUOUS ['447,254(×2)']
+    2023.1Q KR0003: ANCHORED=4 잔여 AMBIGUOUS ['13,746(×2)']
+    2024.3Q KR0075: ANCHORED=6 잔여 AMBIGUOUS ['23,584(×4)', '2,069(×2)', '2,098(×2)']
+    2024.3Q KR0032: ANCHORED=3 잔여 AMBIGUOUS ['886,613(×2)']
+면제 근거(provenance) 검사: RED=0 {} REVIEW=11
+    REVIEW [EXEMPTION_VERIFIED_BY_IMAGE_ONLY] _LIFE8_ISSUER_INCONSISTENT KR0079 2023.2Q: 판독방식=PyMuPDF(fitz) 200dpi 렌더링 후 육안 판독 판독자=validation 2026-08-21 p[11, 12, 15, 16] — 기계검증 불가 사유: 이 PDF는 텍스트레이어가 존재하지만 행 단위로 잘려 있다 — p11 360자 / p15 76자 / p16 323자(58페이지 전체 4,773자)이고, 추출되는 문자열이 '3. 시장위험액9,53' 처럼 값 중간에서 끊긴다. 따라서 absent_markers 부분문자열 검사는 마커를 절대 찾지 못하고 항상 '주장 확인'으로 끝난다(검사처럼 보이는 무검사). 게이트는 대신 인용 페이지 텍스트밀도를 매 실행 재측정해 이 사유 자체를 검증한다. (인용페이지 텍스트 810자/4p 로 확인)
+    REVIEW [EXEMPTION_ABSENCE_PIN_VALUE_PRESENT] _AFTER_SUBRISK_NOT_DISCLOSED KR0097 2024.4Q: 원장은 '원천 부재' 인데 값이 있다 → 파생값이다. 이 셀들의 면제는 무효이고 해당 축은 정상 검산 중이다: item29후=230.82, item30후=0, item31후=391.46, item32후=0, item33후=1377.71, item34후=714.73, item35후=0
+    REVIEW [EXEMPTION_MARKER_UNANCHORED] _TIER2_ISSUER_INCONSISTENT KR0075 2024.4Q: 숫자만인 마커가 인용 페이지에서 2회 이상 등장하는데 행 귀속(`present_rows`)이 없다 — '값이 어딘가 있다' 만 검사한다: 32,949(×2) (같은 항목의 행 귀속 마커 5개는 검사 중)
+    REVIEW [EXEMPTION_MARKER_UNANCHORED] _TIER2_ISSUER_INCONSISTENT KR0075 2025.1Q: 숫자만인 마커가 인용 페이지에서 2회 이상 등장하는데 행 귀속(`present_rows`)이 없다 — '값이 어딘가 있다' 만 검사한다: 30,450(×4) (같은 항목의 행 귀속 마커 5개는 검사 중)
+    REVIEW [EXEMPTION_MARKER_UNANCHORED] _TIER2_ISSUER_INCONSISTENT KR0087 2025.2Q: 숫자만인 마커가 인용 페이지에서 2회 이상 등장하는데 행 귀속(`present_rows`)이 없다 — '값이 어딘가 있다' 만 검사한다: 1,543,723(×2) (같은 항목의 행 귀속 마커 2개는 검사 중)
+    REVIEW [EXEMPTION_MARKER_UNANCHORED] _TIER2_ISSUER_INCONSISTENT KR0003 2024.4Q: 숫자만인 마커가 인용 페이지에서 2회 이상 등장하는데 행 귀속(`present_rows`)이 없다 — '값이 어딘가 있다' 만 검사한다: 1,933,391(×2) (같은 항목의 행 귀속 마커 3개는 검사 중)
+    REVIEW [EXEMPTION_MARKER_UNANCHORED] _TIER2_ISSUER_INCONSISTENT KR0003 2025.1Q: 숫자만인 마커가 인용 페이지에서 2회 이상 등장하는데 행 귀속(`present_rows`)이 없다 — '값이 어딘가 있다' 만 검사한다: 1,753,563(×2) (같은 항목의 행 귀속 마커 4개는 검사 중)
+    REVIEW [EXEMPTION_MARKER_UNANCHORED] _TIER2_ISSUER_INCONSISTENT KR0032 2025.4Q: 숫자만인 마커가 인용 페이지에서 2회 이상 등장하는데 행 귀속(`present_rows`)이 없다 — '값이 어딘가 있다' 만 검사한다: 447,254(×2) (같은 항목의 행 귀속 마커 2개는 검사 중)
+    REVIEW [EXEMPTION_MARKER_UNANCHORED] _TIER2_ISSUER_INCONSISTENT KR0003 2023.1Q: 숫자만인 마커가 인용 페이지에서 2회 이상 등장하는데 행 귀속(`present_rows`)이 없다 — '값이 어딘가 있다' 만 검사한다: 13,746(×2) (같은 항목의 행 귀속 마커 4개는 검사 중)
+    REVIEW [EXEMPTION_MARKER_UNANCHORED] _TIER2_ISSUER_INCONSISTENT KR0075 2024.3Q: 숫자만인 마커가 인용 페이지에서 2회 이상 등장하는데 행 귀속(`present_rows`)이 없다 — '값이 어딘가 있다' 만 검사한다: 23,584(×4), 2,069(×2), 2,098(×2) (같은 항목의 행 귀속 마커 6개는 검사 중)
+    REVIEW [EXEMPTION_MARKER_UNANCHORED] _TIER2_ISSUER_INCONSISTENT KR0032 2024.3Q: 숫자만인 마커가 인용 페이지에서 2회 이상 등장하는데 행 귀속(`present_rows`)이 없다 — '값이 어딘가 있다' 만 검사한다: 886,613(×2) (같은 항목의 행 귀속 마커 3개는 검사 중)
+RED failures by rule:
+  rule 3_tier2_composition: 14
+  rule 47_tier2_census: 10
+  rule 2_tier1_bridge: 6
+  rule 51_tfi_tier2_composition: 5
+  rule 8: 5
+  rule 19_market: 4
+  rule 47_tier2_census_post: 4
+  rule 2: 1
+  rule 36_irr: 1
+  rule 4: 1
+  rule 5: 1
+  rule 50_tfi_tier_split: 1
+  rule 6: 1
+  rule 7: 1
+  rule 7_post: 1
+  rule 8_life: 1
+  rule 8_post: 1
+보완자본 한도 축 (항목 47/48/49):
+  [적용전] 기본자본 다리 item2=item4−(item12−한도초과)−item13, 한도초과≤item12
+        RED=6 YELLOW=135 GREEN=353 SKIP=12
+          사유 SKIP BRIDGE_INPUT_MISSING: 12
+          ※ 한도초과 클램프 발동 10칸 — 그 칸에서는 item12 가 식에서 상쇄돼 item12 오류를 못 본다
+  [적용후] 기본자본 다리 item2=item4−(item12−한도초과)−item13, 한도초과≤item12
+        RED=0 YELLOW=100 GREEN=125 SKIP=281  ※ 적용후 관계식 미확립 → review(YELLOW), blocking 아님
+          사유 SKIP BRIDGE_INPUT_MISSING: 281
+  [적용전] 보완자본 구성 item3=min(47,48)+49 | =47 | =item13(TFI 미기재)
+        RED=14 YELLOW=0 GREEN=459 SKIP=33
+          사유 SKIP COMPOSITION_INPUT_MISSING: 33
+  [적용후] 보완자본 구성 item3=min(47,48)+49 | =47 | =item13(TFI 미기재)
+        RED=0 YELLOW=217 GREEN=256 SKIP=33  ※ 적용후 관계식 미확립 → review(YELLOW), blocking 아님
+          사유 SKIP COMPOSITION_INPUT_MISSING: 33
+  [적용전] 47/48/49 완전성·부호·자릿수·중복행·전기한도잔존
+        RED=10 YELLOW=14 GREEN=468 SKIP=14
+          사유 SKIP TIER2_TABLE_ABSENT_TFI_NOT_APPLIED: 14
+          사유 YELLOW TIER2_TABLE_ABSENT_APPLICABILITY_UNKNOWN: 12
+          사유 YELLOW TIER2_TABLE_ABSENT_TFI_X_INCONSISTENT: 2
+  [적용후] 47/48/49 완전성·부호·자릿수·중복행·전기한도잔존
+        RED=4 YELLOW=19 GREEN=469 SKIP=14
+          사유 YELLOW TIER2_TABLE_ABSENT_APPLICABILITY_UNKNOWN: 17
+          사유 SKIP TIER2_TABLE_ABSENT_TFI_NOT_APPLIED: 14
+          사유 YELLOW TIER2_TABLE_ABSENT_TFI_X_INCONSISTENT: 2
+  [적용전] 한도 item48=item14_적용전×50%
+        RED=0 YELLOW=37 GREEN=441 SKIP=28  ※ LOADER_ENFORCED — 로더가 이 식으로 배율을 골랐다. 통과는 증거가 아니다
+          사유 SKIP TIER2_TABLE_ABSENT: 28
+  [적용후] 한도 item48=item14_적용전×50%
+        RED=0 YELLOW=34 GREEN=439 SKIP=33  ※ LOADER_ENFORCED — 로더가 이 식으로 배율을 골랐다. 통과는 증거가 아니다
+          사유 SKIP TIER2_TABLE_ABSENT: 33
+  [적용전] TFI표 tier 분할 item50+item51 (item52 있으면 등식 · 없으면 적용전=item1 폴백/적용후=범위검사)
+        RED=1 YELLOW=1 GREEN=461 SKIP=43
+          사유 SKIP TFI_TIER_ROWS_ABSENT_NO_TABLE: 28
+          사유 SKIP TFI_TIER_ROWS_ABSENT_BACKLOG: 15
+  [적용후] TFI표 tier 분할 item50+item51 (item52 있으면 등식 · 없으면 적용전=item1 폴백/적용후=범위검사)
+        RED=0 YELLOW=1 GREEN=462 SKIP=43  ※ 3칸은 등식 아님 — item52(TFI표 자신의 지급여력금액 행) 결측이라 범위검사(폴백). 나머지는 item52 로 등식 검사됨. YELLOW = 약한 검사만 통과, parser 발주 대기
+          사유 SKIP TFI_TIER_ROWS_ABSENT_NO_TABLE: 33
+          사유 SKIP TFI_TIER_ROWS_ABSENT_BACKLOG: 10
+  [적용전] TFI표 안 보완자본 구성 item51 (축B와 같은 갈래, 동일표·동일컬럼)
+        RED=5 YELLOW=0 GREEN=458 SKIP=43
+          사유 SKIP TFI_COMPOSITION_INPUT_MISSING: 43
+  [적용후] TFI표 안 보완자본 구성 item51 (축B와 같은 갈래, 동일표·동일컬럼)
+        RED=0 YELLOW=212 GREEN=251 SKIP=43  ※ 적용후 관계식 미확립 → review(YELLOW), blocking 아님
+          사유 SKIP TFI_COMPOSITION_INPUT_MISSING: 43
+Top RED offenders:
+  rule 8_life KR0079 2023.2Q diff=1367.4049866571877
+  rule 2_tier1_bridge KR0003 2025.1Q diff=1205.0
+  rule 2_tier1_bridge KR1000 2024.4Q diff=-1090.0
+  rule 3_tier2_composition KR1000 2024.3Q diff=-1080.92
+  rule 3_tier2_composition KR1000 2024.2Q diff=-1059.9599999999991
+  rule 3_tier2_composition KR1000 2024.1Q diff=-1026.2300000000005
+  rule 3_tier2_composition KR1000 2023.4Q diff=-999.4399999999996
+  rule 3_tier2_composition KR0004 2025.1Q diff=997.0
+  rule 3_tier2_composition KR1000 2023.3Q diff=-988.7200000000003
+  rule 3_tier2_composition KR0003 2026.1Q diff=984.3600000000006
+Spot-check KR0005 2025.4Q (헕국화재): 29 results, RED=0

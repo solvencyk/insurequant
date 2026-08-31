@@ -1,11 +1,84 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-08-28 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-09-01 · Stage 2/5 — parser (kics lane)
+
+## 2026-09-01 — TFI 표 계열(item47-54) RED 25건(2026.2Q) → 24건 해소 + 1건 documented exception 후보
+
+`53_tfi_memo_rows`(9) · `47_tier2_census`(7) · `47_tier2_census_post`(7) ·
+`50_tfi_tier_split`/`_post`(1+1), 18개사. 범용 추출기(`fill_tfi_table_to_disclosure.py`,
+직전 세션 신설)를 재실행하지 않고 raw MD/PDF 셀 단위 직접 대조로 처리. 원인: docling이
+`(1)공통적용경과조치` 페이지를 MD 변환에서 통째로 누락 13건(KR0001·KR0004·KR0094·KR1011은
+fitz로 raw PDF 직접복구, KR0087은 raw PDF 자체가 전면 스캔이라 240dpi 렌더링 시각확인) ·
+원문이 진짜 대시(-)=0인데 결측 취급 9건 · U+302E 결합문자로 라벨매치 실패 등 부분결측 2건 ·
+미러 컬럼(전=후 동일 인쇄) addfield 1건. 게이트 RED 114→89(내 패치 단독), 이후 병행 세션의
+KR0009/KR0150/KR0087 items1-46 수정이 겹쳐 89→70(target-rule RED는 처음부터 1로 유지).
+KR0104 농협생명 `47_tier2_census_post`(TIER2_DUPLICATE_ROW)만 raw로 진짜 발행사 중복인쇄가
+확인돼 미해소 — `_TIER2_ISSUER_INCONSISTENT` 등재는 owner 위임 사항이라 손대지 않고 validation
+라운드에 후속 발주. 부수 발견: KR0003·KR0011·KR0029·KR0094의 item48(적용전)이 item3 복사
+오염(9회 재발 버그의 연장) — census(존재여부만 검사)는 안 막아서 내 25건엔 없었지만 진짜
+값(10555.50/57549.42/1389.83/26880.72)은 raw로 확인해 TODO에 남김. 상세: `TODO_parser_kics.md`
+2026-09-01 최상단.
+
+## 2026-09-01 — 핵심 항등식 RED 23건(2026.2Q, 룰 1·2·4·5·6·7·8·7_post·2_tier1_bridge·3_tier2_composition) → 1건
+
+7개사(KR0009 현대해상·KR0150 서울보증보험·KR0087 동양생명·KR0083 푸본현대생명·KR1011 IBK연금·
+KR0051 신한이지손해보험·KR0079 미래에셋생명) 전부 2026.2Q. 원인 4가지, 회사마다 다름:
+keyword-window가 core 표(items 1-28) 페이지를 통째로 놓침(KR0009·KR1011, 넓은 window로
+재파싱해 복구) · OCR 라벨절단으로 item1 값이 item3/item48에 오매핑(KR0087, 240dpi 렌더로
+재확인) · TFI 세부표의 항목 하나가 진짜 대시=0인데 결측 취급(KR0083) · **items 1-26이 통째로
+전분기(2026.1Q) 값을 담고 있던 분기밀림**(KR0051 — item47-54는 이미 2Q 정답인데 items 1-26만
+1Q 잔존, 내부적으로 자기일관돼 있어서 이번 라운드 전엔 rule1/2/5/6/7/8도 전부 통과하던
+false-green). KR0079는 발주 지시로 미착수(7_post 잔차 원인만 규명 — item27_적용후가 계산된
+기대값 대신 item27(적용전)을 미러링, 원인 미규명 + 미적용 패치파일과 라이브값 모순 발견,
+documented exception 등재는 owner 확인 대기).
+
+게이트 RED 114→70(target-rule 2026.2Q 23→1). `tests/fixtures/kics_rules_golden.json` 재생성.
+xlsx sync는 기존에 이미 알려진 피벗테이블 안전거부로 미반영(신규 아님). 상세: `TODO_parser_kics.md`
+2026-09-01 항목.
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-kics.md · TODO: TODO_parser_kics.md
 
 K-ICS solvency extraction history: Docling MD → `kics_disclosure.json` (capital items, 시장위험 subs 36-46,
 금리민감도/rate-sensitivity). Code: `src/solvency/parser/`. Validators: `validate_kics_disclosure.py`, RS1-4,
 market census.
+
+## 2026-08-31 — 금리민감도 게이트 RED 19 → 0 (신한이지 라벨정정 · KB손해 OCR정정 · 예별 documented exception)
+
+발주: 금리민감도(`kics_rate_sensitivity.json`) 게이트 RED=18(발주 시점 실측) 진단·해소.
+착수 시점 재측정하니 RED=19(RS1:15 | RS2:4+3exc) — 병행 온보딩 세션이 그 사이 KB손해보험을
+추가했다. 전건 (회사,분기,룰) 열거 후 3갈래로 분류·처리.
+
+**① 파싱 결함(고침) — 신한이지손해보험(KR0051) 2024.4Q, RS1 11건 + RS2 3건.** 원문 PDF
+(`data/disclosure/FY2024_Q4/raw/KR0051_신한이지손해보험.pdf` p.54)가 지급여력비율/금액/
+기준금액 3행의 **구분(라벨) 열을 값 열과 한 칸 밀어 인쇄**했다(fitz word-bbox 좌표 대조로
+확인 — docling 오독이 아니라 원문 자체). 3중 독립 증거로 참값 확정: kics_disclosure.json
+item1/14/27 앵커, 절 내 서술문("50bp 상승시 0.73%p 하락...")이 소수 둘째자리까지 재현,
+각 행 내부 5개 충격열 자체정합. 값 자체는 정확해 라벨만 재배치.
+
+**② 파싱 결함(고침) — KB손해보험(KR0010) 2026.2Q, RS1 4건 + RS2 1건.** 이번 분기가
+전체 스캔본(64p, 텍스트 0자, `easyocr-ko+allpages`)이라 EasyOCR 자릿수 오염 — 미래에셋
+(KR0079)의 선두 '1'→'7' 치환과 달리 **콤마 없는 잡음 숫자가 뒤에 덧붙는 패턴**(73,164 →
+"73,7641" → 콤마제거 후 737641). raw p.47을 6배줌(~430dpi)으로 렌더링해 육안 판독,
+RS1 항등식 5열 전부 닫힘(diff<0.01)으로 확정. 코디네이터가 별도 에이전트(220dpi, p.45
+기준) 결과를 전달했는데 6행 30셀 전부 독립적으로 일치(교차검증). kics_disclosure.json의
+KR0010 2026.2Q 코어 항목(item1/14/27/28)도 병행 세션이 같은 세션 중 정정 완료 —
+item1=135316·item14=72187이 이쪽 RS 참값과 정확히 일치, RS2는 exception 없이 자연 해소.
+
+**③ 원문 자체 오류(주입 안 함, documented exception) — 예별손해보험(KR0004) 2024.4Q
+적용후 [-100bp], RS1 1건.** raw p.75 표에서 △100bp·△50bp 두 칸이 모두 "9,170"으로
+인쇄(fitz word bbox로 두 값 다 각자 열 헤더 정위치 확인 — 원문 중복, OCR 오독 아님).
+역산 참값(~9,754.7)은 원문에 없어 "빈칸이 낫다" 원칙에 따라 주입하지 않고
+`RS1_EXCEPTIONS`(신설, 기존 `RS2_EXCEPTIONS`와 동형)에 등재.
+
+**수정**: `scripts/fix_20260831_ratesens_red_batch.py`(신규)로 `kics_rate_sensitivity.json`
+셀단위 12개 UPSERT — 행수 627→627·(회사,분기) 조합 110→110, 유실 0
+(`scripts/_probes/probe_20260831_verify_ratesens_diff.py`). 백업
+`kics_rate_sensitivity.json.bak_20260831_ratesens_redfix`. `insurequant_master_tables.xlsx`
+"금리민감도" 시트 `sync_master_xlsx_sheet.py`로 cherry-pick 동기화(이번 수정과 무관하게
+99행 밀려 있던 기존 drift도 같이 해소, 627행×14열 완전일치·나머지 시트 무변화 확인).
+
+**게이트**: `SUMMARY RS1:0RED(+1exc) | RS2:0RED(+3exc) | RS3:41Y | RS4:1Y | gate RED=0`,
+exit=0. RS3(방향성 역행 41건 YELLOW)·RS4(서울보증보험 2025.2Q coverage hole 1건 YELLOW)는
+비차단이라 범위 밖(손 안 댐). 상세: `TODO_parser_kics.md` 최상단.
 
 ## 2026-08-28 — KR0097 2024.2Q 원수사명 오철자 정정 (하나생명 → 하나생명보험, 40셀)
 

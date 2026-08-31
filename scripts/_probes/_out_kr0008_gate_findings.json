@@ -1,0 +1,408 @@
+[
+  {
+    "path": ".findings[14326]",
+    "obj": {
+      "rule": "1",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 439879.0,
+      "actual": 439879.0,
+      "diff": 0.0,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14327]",
+    "obj": {
+      "rule": "2",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 440932.0,
+      "actual": 440932.0,
+      "diff": 0.0,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14328]",
+    "obj": {
+      "rule": "3",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "SKIP",
+      "expected": null,
+      "actual": 439879.0,
+      "diff": null,
+      "detail": "deferred: item4-item12+item13 bridge unreliable vs disclosure; rule 1 is authoritative for item1"
+    }
+  },
+  {
+    "path": ".findings[14329]",
+    "obj": {
+      "rule": "4",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "YELLOW",
+      "expected": 212078.49153513237,
+      "actual": 212079.0,
+      "diff": 0.508464867627481,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14330]",
+    "obj": {
+      "rule": "5",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "YELLOW",
+      "expected": 155556.0,
+      "actual": 155555.0,
+      "diff": -1.0,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14331]",
+    "obj": {
+      "rule": "6",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "YELLOW",
+      "expected": 71627.0,
+      "actual": 71628.0,
+      "diff": 1.0,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14332]",
+    "obj": {
+      "rule": "7",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 282.7803670727395,
+      "actual": 282.78036707,
+      "diff": -2.7395117285777815e-09,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14333]",
+    "obj": {
+      "rule": "8",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 220.1562148436244,
+      "actual": 220.15621484,
+      "diff": -3.6244216516934102e-09,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14334]",
+    "obj": {
+      "rule": "7_post",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 282.7803670727395,
+      "actual": 282.78036707,
+      "diff": -2.7395117285777815e-09,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14335]",
+    "obj": {
+      "rule": "8_post",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 220.1562148436244,
+      "actual": 220.15621484,
+      "diff": -3.6244216516934102e-09,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14336]",
+    "obj": {
+      "rule": "8_life",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 73280.72586714497,
+      "actual": 73281.0,
+      "diff": 0.2741328550328035,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14337]",
+    "obj": {
+      "rule": "19_market",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 157702.03213529938,
+      "actual": 157702.0,
+      "diff": -0.032135299377841875,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14338]",
+    "obj": {
+      "rule": "36_irr",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 13833.008099437826,
+      "actual": 13833.02,
+      "diff": 0.011900562174560037,
+      "detail": ""
+    }
+  },
+  {
+    "path": ".findings[14339]",
+    "obj": {
+      "rule": "9",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "SKIP",
+      "expected": null,
+      "actual": 342464.0,
+      "diff": null,
+      "detail": "no post-transition item2 (or equal to pre)"
+    }
+  },
+  {
+    "path": ".findings[14340]",
+    "obj": {
+      "rule": "10",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "SKIP",
+      "expected": null,
+      "actual": 155555.0,
+      "diff": null,
+      "detail": "no post-transition item14 (or equal to pre)"
+    }
+  },
+  {
+    "path": ".findings[14341]",
+    "obj": {
+      "rule": "2_tier1_bridge",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 342464.0,
+      "actual": 342464.0,
+      "diff": 0.0,
+      "detail": "item2 == item4 − (item12 − 한도초과) − item13 [값] branch=CAPPED scope=EXCL 한도초과=0"
+    }
+  },
+  {
+    "path": ".findings[14342]",
+    "obj": {
+      "rule": "3_tier2_composition",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": null,
+      "actual": 97415.0,
+      "diff": null,
+      "detail": "보완자본 구성 재현 [값] branch=CAPPED (로더가 강제하지 않는 축 — 배율 선택의 독립 검증)"
+    }
+  },
+  {
+    "path": ".findings[14343]",
+    "obj": {
+      "rule": "47_tier2_census",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 3,
+      "actual": 3,
+      "diff": null,
+      "detail": "47/48/49 완비 · 부호·자릿수 정상 [값]"
+    }
+  },
+  {
+    "path": ".findings[14344]",
+    "obj": {
+      "rule": "48_tier2_limit",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 77777.5,
+      "actual": 77777.7,
+      "diff": 0.19999999999708962,
+      "detail": "item48 == item14_적용전 × 0.5 [값] ※ LOADER_ENFORCED(동어반복): parser 가 이 식으로 스케일 배율을 골라 저장한다 — 통과는 추출 정확성의 증거가 아니다. 회귀 감시용."
+    }
+  },
+  {
+    "path": ".findings[14345]",
+    "obj": {
+      "rule": "2_tier1_bridge_post",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "SKIP",
+      "expected": null,
+      "actual": 342464.0,
+      "diff": null,
+      "detail": "BRIDGE_INPUT_MISSING: [값_적용후] item[4, 12, 13] 결측 (폴백 금지 — 적용전 값으로 메우면 혼합기준 무의미값이 된다)"
+    }
+  },
+  {
+    "path": ".findings[14346]",
+    "obj": {
+      "rule": "3_tier2_composition_post",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": null,
+      "actual": 97415.0,
+      "diff": null,
+      "detail": "보완자본 구성 재현 [값_적용후] branch=CAPPED (로더가 강제하지 않는 축 — 배율 선택의 독립 검증)"
+    }
+  },
+  {
+    "path": ".findings[14347]",
+    "obj": {
+      "rule": "47_tier2_census_post",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 3,
+      "actual": 3,
+      "diff": null,
+      "detail": "47/48/49 완비 · 부호·자릿수 정상 [값_적용후]"
+    }
+  },
+  {
+    "path": ".findings[14348]",
+    "obj": {
+      "rule": "48_tier2_limit_post",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 77777.5,
+      "actual": 77777.7,
+      "diff": 0.19999999999708962,
+      "detail": "item48 == item14_적용전 × 0.5 [값_적용후] ※ LOADER_ENFORCED(동어반복): parser 가 이 식으로 스케일 배율을 골라 저장한다 — 통과는 추출 정확성의 증거가 아니다. 회귀 감시용."
+    }
+  },
+  {
+    "path": ".findings[14349]",
+    "obj": {
+      "rule": "50_tfi_tier_split",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 439879.36,
+      "actual": 439879.36,
+      "diff": 0.0,
+      "detail": "item50 + item51 == item52 [값] — **같은 표·같은 컬럼**의 지급여력금액 행과 대조한다(2026-08-24 등식 승격, 종전 적용전=item1 대조 / 적용후=범위검사). 50=342464 + 51=97415.2 = 439879 vs item52=439879. 비순환 축이다 — item52 는 로더가 47/48/49/51 배율 선택에 쓰지 않는 독립 행이고, 그래서 카카오페이 5버킷의 item52 100배(ALL_ZERO_TRIVIAL 스케일 단축이 만든 구멍)를 이 축이 처음 잡았다"
+    }
+  },
+  {
+    "path": ".findings[14350]",
+    "obj": {
+      "rule": "51_tfi_tier2_composition",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 97415.18000000001,
+      "actual": 97415.18,
+      "diff": -1.4551915228366852e-11,
+      "detail": "보완자본 구성 재현 [값] branch=CAPPED — 네 항목 전부 같은 표·같은 컬럼이라 두 표 사이 스코프 차이가 개입할 수 없다"
+    }
+  },
+  {
+    "path": ".findings[14351]",
+    "obj": {
+      "rule": "53_tfi_memo_rows",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 97415.18,
+      "actual": 0.0,
+      "diff": -97415.18,
+      "detail": "53/54 census OK · 부호 OK · item53(0) + item54(0) ≤ item51(97415.2) [값]. 관계식(등식)은 걸지 않는다 — `item51 == min(47,48)+49+item54` 는 전사 공식이 아니다(전수 시뮬: 새로 닫힘 1 · 새로 깨짐 218)"
+    }
+  },
+  {
+    "path": ".findings[14352]",
+    "obj": {
+      "rule": "50_tfi_tier_split_post",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 439879.36,
+      "actual": 439879.36,
+      "diff": 0.0,
+      "detail": "item50 + item51 == item52 [값_적용후] — **같은 표·같은 컬럼**의 지급여력금액 행과 대조한다(2026-08-24 등식 승격, 종전 적용전=item1 대조 / 적용후=범위검사). 50=342464 + 51=97415.2 = 439879 vs item52=439879. 비순환 축이다 — item52 는 로더가 47/48/49/51 배율 선택에 쓰지 않는 독립 행이고, 그래서 카카오페이 5버킷의 item52 100배(ALL_ZERO_TRIVIAL 스케일 단축이 만든 구멍)를 이 축이 처음 잡았다"
+    }
+  },
+  {
+    "path": ".findings[14353]",
+    "obj": {
+      "rule": "51_tfi_tier2_composition_post",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "GREEN",
+      "expected": 97415.18000000001,
+      "actual": 97415.18,
+      "diff": -1.4551915228366852e-11,
+      "detail": "보완자본 구성 재현 [값_적용후] branch=CAPPED — 네 항목 전부 같은 표·같은 컬럼이라 두 표 사이 스코프 차이가 개입할 수 없다"
+    }
+  },
+  {
+    "path": ".findings[14354]",
+    "obj": {
+      "rule": "53_tfi_memo_rows_post",
+      "원보험사코드": "KR0008",
+      "원수사명": "삼성화재해상보험",
+      "공시분기": "2026.2Q",
+      "status": "SKIP",
+      "expected": 2,
+      "actual": 0,
+      "diff": null,
+      "detail": "TFI_MEMO_POST_COLUMN_ABSENT: [값_적용후] item53(기발행 신종자본증권), item54(기발행 후순위채무) 결측 (본문 47/48/49 = [47, 48, 49]) — 대다수 필링이 메모행을 적용전 칸에만 인쇄한다(관측 12개사, 유일 반례 신한라이프 2023.1Q). 적용후 결측을 RED 로 세면 376칸이 오탐이라 **적용후 census 는 안 건다** — 적용후 미러는 부호·포함관계로 돈다"
+    }
+  }
+]

@@ -1,26 +1,51 @@
-"""Dump raw fitz text for specific 1-indexed pages of a company's 2026.1Q PDF."""
-from __future__ import annotations
-
+"""Dump fitz-extracted text of a page range (or pages containing a keyword) from a raw PDF.
+Usage:
+  python dump_pdf_pages.py <pdf_path> --pages 10-15
+  python dump_pdf_pages.py <pdf_path> --find "키워드" [--context 1]
+"""
+import argparse
 import io
 import sys
-from pathlib import Path
+
+import fitz  # PyMuPDF
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
-import fitz
 
-REPO = Path(__file__).resolve().parent.parent.parent
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("pdf_path")
+    ap.add_argument("--pages", help="e.g. 10-15 (1-indexed, inclusive)")
+    ap.add_argument("--find", help="keyword to locate pages")
+    ap.add_argument("--context", type=int, default=0, help="pages of context around find hits")
+    args = ap.parse_args()
 
-if len(sys.argv) < 3:
-    print("usage: dump_pdf_pages.py <PDF_NAME> <page1,page2,...>")
-    sys.exit(1)
+    doc = fitz.open(args.pdf_path)
+    print(f"PDF: {args.pdf_path}  pages={doc.page_count}")
 
-pdf_name = sys.argv[1]
-pages = [int(p) for p in sys.argv[2].split(",")]
+    if args.pages:
+        a, b = args.pages.split("-")
+        pages = range(int(a) - 1, int(b))
+    elif args.find:
+        hits = []
+        for i in range(doc.page_count):
+            t = doc[i].get_text()
+            if args.find in t:
+                hits.append(i)
+        print(f"'{args.find}' found on pages (1-indexed): {[h+1 for h in hits]}")
+        pages = set()
+        for h in hits:
+            for p in range(max(0, h - args.context), min(doc.page_count, h + args.context + 1)):
+                pages.add(p)
+        pages = sorted(pages)
+    else:
+        print("need --pages or --find")
+        return
 
-pdf_path = REPO / "data" / "disclosure" / "FY2026_Q1" / "raw" / pdf_name
-doc = fitz.open(pdf_path)
-for p in pages:
-    print(f"\n{'='*20} PAGE {p} {'='*20}")
-    print(doc[p - 1].get_text())
-doc.close()
+    for i in pages:
+        print(f"\n===== PAGE {i+1} =====")
+        print(doc[i].get_text())
+
+
+if __name__ == "__main__":
+    main()
