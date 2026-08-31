@@ -166,7 +166,7 @@
     </div>
 
     <div class="panel" id="donut-section-panel">
-      <h2>자본성증권 인정 한도 소진율 <span style="color:var(--muted);font-size:13px;font-weight:400">(2025.4Q)</span></h2>
+      <h2>자본성증권 인정 한도 소진율 <span id="capsecQuarter" style="color:var(--muted);font-size:13px;font-weight:400"></span></h2>
       <ul class="subtitle">
         <li>기본자본(신종자본증권): 발행잔액 / (SCR &times; 15%)</li>
         <li>보완자본(후순위채): 인정 보완자본 / 보완자본 한도</li>
@@ -956,6 +956,14 @@
       } else {
         notes.push('보완자본: 데이터 없음');
       }
+      // 분자(발행잔액) 기준일은 회사마다 다르다 — 14사는 반기/분기보고서를 제출하지
+      // 않아 직전 연간(FY2025, 2025-12-31) 잔액이 최신이다. 분모(SCR·한도)는 패널
+      // 헤더 분기 기준이라, 둘이 어긋나는 회사는 그 사실을 여기서 밝힌다.
+      const asOfs = [t1 && t1.numerator_as_of, t2 && t2.numerator_as_of].filter(Boolean);
+      if (asOfs.length) {
+        const oldest = asOfs.sort()[0];
+        notes.push(`발행잔액 기준일 ${oldest}`);
+      }
       note.innerHTML = notes.join(' &nbsp;|&nbsp; ');
     }
 
@@ -1430,6 +1438,12 @@
       .then(r => r.json())
       .then(d => {
         tier1UtilData = Array.isArray(d && d.results) ? d.results : [];
+        // 패널 분기는 데이터에서 읽는다. 2026-09-01 이전에는 `(2025.4Q)` 가 마크업에
+        // 리터럴로 박혀 있어 배포본을 2026.1Q·2026.2Q 로 갈아도 화면 라벨만 옛 분기에
+        // 머물렀다(owner 지적). 분모(SCR·한도) 기준분기다 — 분자 기준일은 회사마다
+        // 다를 수 있어 아래 note 에 따로 적는다.
+        const qEl = document.getElementById('capsecQuarter');
+        if (qEl && d && d.quarter) qEl.textContent = '(' + d.quarter + ' 기준)';
         updateDonutPanel(); // 회사 선택 이후 도착한 경우 1회 재렌더
       })
       .catch(() => {});
