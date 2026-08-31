@@ -32,13 +32,20 @@ _ap = argparse.ArgumentParser(description=__doc__)
 _ap.add_argument("--quarter", default="2026.1Q", help="예: 2026.2Q")
 _ap.add_argument("--as-of", default=None,
                  help="후순위 잔존만기 상각 기준일 (기본: --quarter 의 분기말)")
+_ap.add_argument("--bonds-source", default="data/bonds/capital_securities_fy2025.json",
+                 help="per-bond 발행잔액 소스 (repo-relative). 기본은 종전 동작 그대로 FY2025 "
+                      "연간(2025-12-31). 회사별로 더 최신 반기/분기 데이터가 섞인 파일(예: "
+                      "data/bonds/capital_securities_fy2026h1.json)을 넘기면 그걸 쓴다 — 단 "
+                      "그 파일도 회사별/채권별 as_of 를 정직하게 달고 있어야 한다(추측 금지, "
+                      "2026-09-01 owner 티켓: 분모=2026.2Q인데 분자가 2025.4Q였던 사고).")
 _args = _ap.parse_args()
 _y, _q = _args.quarter.split(".")
 _tag = f"{_y}{_q}"
 AS_OF = (date.fromisoformat(_args.as_of) if _args.as_of
          else date(int(_y), *_QEND[_q]))
 
-BONDS = {c["code"]: c for c in json.loads((ROOT / "data" / "bonds" / "capital_securities_fy2025.json").read_text("utf-8"))["companies"]}
+BONDS_SOURCE_REL = _args.bonds_source
+BONDS = {c["code"]: c for c in json.loads((ROOT / BONDS_SOURCE_REL).read_text("utf-8"))["companies"]}
 T1F = ROOT / "output" / "tier1_utilization" / f"tier1_utilization_{_tag}.json"
 T2F = ROOT / "output" / "tier2_utilization" / f"tier2_utilization_{_tag}.json"
 t1doc = json.loads(T1F.read_text("utf-8"))
@@ -95,31 +102,49 @@ def comp(code):
     if not c or not (c.get("bonds")):
         return dict(scr=scr, t1lim=t1lim, t1lim_strict=t1lim_strict, t2lim=t2lim,
                     new_hyb=0.0, gf_hyb=0.0, new_sub_recog=0.0, new_sub_gross=0.0, gf_sub=0.0,
-                    overflow=0.0, t1_util=0.0, t2_num=0.0, t2_util=0.0, n=0)
+                    overflow=0.0, t1_util=0.0, t2_num=0.0, t2_util=0.0, n=0,
+                    hyb_as_of=None, sub_as_of=None)
     new_hyb = gf_hyb = new_sub_recog = new_sub_gross = gf_sub = 0.0
+    hyb_as_ofs, sub_as_ofs = [], []  # as_of of every bond that actually feeds a numerator > 0
     for b in c["bonds"]:
         out = (b.get("outstanding_mn") or 0) / 100.0
         gf = is_grandfathered(b)
+        b_as_of = b.get("as_of") or c.get("as_of")
         if b.get("tier") == "hybrid":
             if gf:
                 gf_hyb += out
             else:
                 new_hyb += out
+                if out and b_as_of:
+                    hyb_as_ofs.append(b_as_of)
         else:
             if gf:
                 gf_sub += out
             else:
                 new_sub_gross += out
                 new_sub_recog += out * amort(b)
+                if out and b_as_of:
+                    sub_as_ofs.append(b_as_of)
     overflow = max(0.0, new_hyb - t1lim) if t1lim is not None else 0.0
     t1_util = round(new_hyb / t1lim * 100, 1) if t1lim else None
     t2_num = new_sub_recog + overflow
     t2_util = round(t2_num / t2lim * 100, 1) if t2lim else None
+    # 분자 as_of = 실제로 그 분자에 기여한 채권들의 가장 오래된(=제일 보수적인) as_of.
+    # tier2 분자는 후순위 인정액 + 신종 초과분(overflow) 두 소스가 섞일 수 있어 두 as_of 중
+    # 더 오래된 쪽을 쓴다 — "숫자는 제일 stale 한 구성요소만큼만 fresh 하다".
+    hyb_as_of = min(hyb_as_ofs) if hyb_as_ofs else None
+    sub_as_of = min(sub_as_ofs) if sub_as_ofs else None
+    if overflow > 0 and hyb_as_of:
+        t2_as_of_candidates = [d for d in (sub_as_of, hyb_as_of) if d]
+        t2_as_of = min(t2_as_of_candidates) if t2_as_of_candidates else None
+    else:
+        t2_as_of = sub_as_of
     return dict(scr=scr, t1lim=t1lim, t1lim_strict=t1lim_strict, t2lim=t2lim,
                 new_hyb=round(new_hyb, 1), gf_hyb=round(gf_hyb, 1),
                 new_sub_recog=round(new_sub_recog, 1), new_sub_gross=round(new_sub_gross, 1),
                 gf_sub=round(gf_sub, 1), overflow=round(overflow, 1),
-                t1_util=t1_util, t2_num=round(t2_num, 1), t2_util=t2_util, n=len(c["bonds"]))
+                t1_util=t1_util, t2_num=round(t2_num, 1), t2_util=t2_util, n=len(c["bonds"]),
+                hyb_as_of=hyb_as_of, sub_as_of=t2_as_of)
 
 
 # ---- update tier1 ----
@@ -139,13 +164,19 @@ for r in t1doc["results"]:
     r["utilization_pct"] = x["t1_util"]
     r["utilization_pct_raw"] = x["t1_util"]   # 하위호환 별칭(캡 제거 후 utilization_pct 와 항상 동일)
     r["utilization_pct_strict"] = round(x["new_hyb"] / x["t1lim_strict"] * 100, 1) if x["t1lim_strict"] else None
-    r["data_source"] = "dart_bonds_fy2025_경과조치"
+    # 분자(발행잔액) 기준일은 회사마다 다를 수 있다(2026-09-01 owner 티켓: 분모=2026.2Q인데
+    # 분자가 2025.4Q 였던 사고) — 화면 라벨(quarter=denominator 기준)과 절대 혼동하지 말 것.
+    r["numerator_as_of"] = x["hyb_as_of"]
+    r["data_source"] = f"dart_bonds_asof_{x['hyb_as_of']}_경과조치" if x["hyb_as_of"] else "no_bonds"
     r["quality_flag"] = "ok"
 t1doc["definition"] = {
     "limit_primary": "SCR×15% (KIRI 2024-14 common-transition)", "limit_strict": "SCR×10%",
     "numerator": "신종자본증권 신규(2023~) 발행 인정액; 경과조치(pre-2023)는 별도 제외",
-    "source": "DART FY2025 annual per-bond (data/bonds/capital_securities_fy2025.json)",
-    "as_of": AS_OF.isoformat()}
+    "source": f"DART per-bond ({BONDS_SOURCE_REL})",
+    "as_of": AS_OF.isoformat(),
+    "as_of_note": "as_of 는 분모(SCR·한도, item14 기준 분기말)의 기준일이다. 분자(발행잔액)의 "
+                  "실제 기준일은 회사마다 다르며 각 결과행의 numerator_as_of 를 봐야 한다 — "
+                  "분모와 같다고 가정하지 말 것."}
 T1F.write_text(json.dumps(t1doc, ensure_ascii=False, indent=2), "utf-8")
 
 # ---- update tier2 ----
@@ -155,7 +186,8 @@ for r in t2doc["results"]:
     r["tier2_limit_eok"] = x["t2lim"]
     r["numerator_eok"] = x["t2_num"]
     r["utilization_pct"] = x["t2_util"]
-    r["data_source"] = "dart_bonds_fy2025_경과조치"
+    r["numerator_as_of"] = x["sub_as_of"]
+    r["data_source"] = f"dart_bonds_asof_{x['sub_as_of']}_경과조치" if x["sub_as_of"] else "no_bonds"
     r["new_subordinated_recognized_eok"] = x["new_sub_recog"]
     r["new_subordinated_gross_eok"] = x["new_sub_gross"]
     r["tier1_overflow_into_tier2_eok"] = x["overflow"]
@@ -167,9 +199,12 @@ for r in t2doc["results"]:
 t2doc["definition"] = {
     "limit": "SCR×50% (K-ICS 해설서 Ⅲ.2.마)",
     "numerator": "후순위 신규(2023~) 인정금액(잔존만기 to CALL straight-line) + 신종 한도초과분; 경과조치(pre-2023)는 별도 제외",
-    "source": "DART FY2025 annual per-bond (data/bonds/capital_securities_fy2025.json)",
+    "source": f"DART per-bond ({BONDS_SOURCE_REL})",
     "replaces": "broken proxy(item3 보완자본 − 면제) — 총보완자본 혼동(삼성생명 자본증권0인데 7.76조), 동양240%/KB218% artifact",
-    "as_of": AS_OF.isoformat()}
+    "as_of": AS_OF.isoformat(),
+    "as_of_note": "as_of 는 분모(SCR·한도, item14 기준 분기말)의 기준일이다. 분자(발행잔액)의 "
+                  "실제 기준일은 회사마다 다르며 각 결과행의 numerator_as_of 를 봐야 한다 — "
+                  "분모와 같다고 가정하지 말 것."}
 T2F.write_text(json.dumps(t2doc, ensure_ascii=False, indent=2), "utf-8")
 
 # ---- report ----

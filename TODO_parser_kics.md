@@ -1,6 +1,170 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-01(2회차 — 흥국화재 KR0005 결합 경과조치 item15/16/22, owner 옵션
+> Last updated: 2026-09-01(4회차 — 금리민감도 2026.2Q 결측 28사 채우기 + 게이트 커버리지
+> census 신설) — owner가 AIA생명(KR0080) 26.2Q 금리민감도 결측을 직접 잡아낸 걸 계기로
+> `kics_rate_sensitivity.json`(627행) 전수 재서: 2026.2Q 는 39사 중 **11사만** 있었다(28사
+> 결측 — KR0001·0003·0004·0009·0011·0029·0032·0051·0068·0069·0070·0071·0072·0073·0079·
+> 0080·0082·0083·0087·0094·0097·0099·0100·0104·0150·1010·1011·1098). `validate_kics_rate_
+> sensitivity.py`(RS1-4)는 이 상태로 RED=0 이었다 — 있는 값의 정합만 보고 "있어야 할 셀이
+> 있는가"는 애초에 안 봤다(coverage-census-mandatory 원칙의 정확한 재발).
+>
+> **28사 원인 3갈래(전수 진단, `scripts/_probes/probe_20260901_ratesens_2026q2_diag.py` +
+> `_pdf_locate.py`)**: (1) **23사 — 단순 미실행**. `find_section_table`이 MD를 그대로도
+> 정상 파싱했다(즉 결함 아님) — 이전 세션이 39사 온보딩 도중 11사까지만 이 추출기를 돌리고
+> 나머지를 이어 돌리지 않았다. (2) **KR0087 동양생명(OCR) — 파서 버그, 고침**.
+> `find_section_table`이 "# " 로 시작하면 무조건 다음 섹션으로 판단해 멈췄는데, OCR MD 는
+> 표 앞에 "## 수호천사동양생명"/"## 우리금융그룹" 같은 페이지 러닝헤더가 "#" 로 끼어든다 —
+> 표를 한 줄도 못 모으고 끊겼다. 수정: 행을 하나도 못 모은 채 만난 "#" 은 furniture 로 보고
+> 계속 스캔(60줄 예산), 표를 이미 모은 뒤의 "#" 만 진짜 절 경계로 인정. (3) **KR0001·KR0051·
+> KR0100 — docling이 페이지를 윈도 안에 선택하고도(`source_page_ranges`/`keyword_hit_pages`
+> 둘 다 포함) 표 내용 자체를 MD로 못 넘김**(inbox `20260831T0700Q` 와 같은 계열이지만 그
+> 티켓의 "페이지가 윈도 밖으로 잘림"과 원인이 다르다 — 이건 페이지는 골랐는데 변환이 샌
+> 케이스, docling 내부 문제라 이 스크립트 범위 밖). 대응: `extract_from_raw_pdf()` 신설 —
+> fitz word-bbox 로 해당 페이지를 직접 읽어 (라벨,측정치,5값) 을 복원(열 배정은 헤더 x좌표
+> 최근접이 아니라 **행 내 왼→오 순서 고정**으로 함 — 오른쪽정렬 숫자는 자릿수에 따라 x0 가
+> 흔들려서 최근접 매칭이 KR0100 기준금액 후행의 "844" 를 옆 컬럼으로 오배정하는 실측 버그를
+> 냄, 고정순서로 전환 후 재검증 통과). KR0079(미래에셋)는 순수 스캔 페이지(fitz 텍스트 87자,
+> "이를대비하여당"에서 끊김)라 word-bbox 도 못 읽어 300dpi 렌더링을 육안 판독(`MANUAL_OVERRIDE`
+> 딕셔너리에 근거와 함께 상주) — RS1 5열 전부 tol이내, 서술문 4문장(50bp/100bp 상승/하락)
+> 소수점까지 일치로 확정.
+>
+> **28사 전건 RS2(kics_disclosure item1/14/27) 대조 — 27사 정확일치, 1사(KR0009 현대해상)
+> 만 원문 자체 표간 불일치**: 같은 필링 안 "6-8-2)금리민감도" 표(기준금액=73,338)와
+> "6-8-3)환율민감도" 표(기준금액=73,335)가 서로 다른 값을 인쇄(Δ3, 0.004%) — RS1 자기검산은
+> 두 표 각각 완전히 닫혀(153284/73338×100=209.00=인쇄값과 정확히 일치) 파싱오류가 아니라
+> 발행사 반올림 불일치. "issuer-inconsistent keep as disclosed" 원칙대로 금리민감도표 인쇄값
+> 그대로 보존 + `RS2_EXCEPTIONS`에 `("현대해상","2026.2Q")` 등재.
+>
+> **쓰기**: `extract_kics_rate_sensitivity.py`에 `--period`/`--only` 스코프 플래그 신설 —
+> 기존 `main()`은 전체 재생성(전분기×전사)이라 그대로 돌리면 owner gold(66행) 와 8/31 세션의
+> 셀단위 패치(신한이지 2024.4Q 라벨회전·KB손해 2026.2Q OCR)가 통째로 날아간다. 스코프 지정
+> 시 대상 (회사,분기) 콤보만 골라 지우고 새로 낸 행으로 교체, 나머지는 그대로 두는 머지쓰기로
+> 전환(`touched_combos` 로 범위 밖 콤보 불변 assert). `--period FY2026_Q2 --only <28코드>`
+> 로 실행 — **627행/110콤보 → 789행/138콤보, 범위 밖 615행(11사 기존 2026.2Q 포함) 완전
+> byte-identical 확인**(`scripts/_probes/probe_20260901_verify_28fill_diff.py`).
+> `build_apply_user_ratesens_gold.py apply` 재실행 — **0 added/0 updated, gold 66행 생존**.
+> `emit_rate_sensitivity_provenance.py` 재실행 — 138콤보/138셀, unresolved 0.
+> `sync_master_xlsx_sheet.py "금리민감도"` — 변경 셀 0·추가 행 162·삭제 0, 나머지 시트 무변화.
+>
+> **게이트 커버리지 census 신설 — `RS5_DISCLOSURE_COVERAGE`**: 기대 모집단 = `kics_disclosure.
+> json`의 같은 분기 회사 코호트(그쪽은 자체 census 게이트가 완전성을 보장하므로 안전한 정본).
+> REGIME_START(2024.4Q) 이후 짝수분기(2Q/4Q)에서 disclosure엔 있는데 rate_sensitivity에
+> 통째로 없는 (코드,분기) 는 RED. **홀수분기는 census 자체에서 제외** — 전수측정
+> (`probe_20260901_ratesens_census_survey.py`) 으로 2023.1Q~2026.1Q **7개 홀수분기 전체,
+> 전사 0/268** 확인(간이공시 cadence, 36-40/41-46과 동일계열, 개별확인 아닌 강한 정황증거로
+> 문서화). REGIME_START 이전 짝수분기도 제외(표 서식 자체가 그 전엔 없음, 기존 RS4 관례와
+> 동일). **양방향 시뮬레이션 결과**: 이 룰이 없었다면 지금 RED=17 이 새로 열렸을 것(2024.4Q
+> 13사 + 2025.2Q 4사 — 전부 이번 세션 **이전부터** 있던 결손, 2026.2Q 는 이번 세션이 이미
+> 다 메꿔서 0). 이번 세션 범위(2026.2Q)가 아니라 원인 미규명 상태라 `RS5_EXCEPTIONS`에 17건
+> 그대로 문서화(추측 주입 금지, 향후 백필 세션 후보로 남김) — **억지로 RED=0 을 만들지
+> 않았다**, 예외로 명시적으로 등재해 통과.
+>
+> **최종 게이트**: `validate_kics_rate_sensitivity.py` SUMMARY
+> `RS1:0RED(+1exc)|RS2:0RED(+4exc)|RS3:64Y|RS4:1Y|RS5:0RED(+17exc)|gate RED=0`.
+> `validate_data_contract.py` 전체 리포트에 `kics_rate_sensitivity`/`금리민감도` 문자열
+> 매치 **0건**(내 파일발 RED·YELLOW 없음 — MISSING_PROVENANCE 포함) 확인, RED=51 은 전부
+> 동시세션이 만지고 있는 CSM/PL_breakdown/IFRS17_BS(ifrs17 레인, 내 소관 아님). **오프라인
+> pytest 87개(test_identity_registry·test_push_gate_wiring·test_quarter_horizon, 이 세
+> 파일이 금리민감도 스크립트를 참조) 전부 통과.** 전체 스위트에서 별도로 뜬 2 fail+7 error
+> (test_kics_rules_golden 해시드리프트·test_capsec_provenance_source_id_matches_lineage·
+> 나머지는 pytest 임시폴더 PermissionError)는 **내가 안 건드린 파일**(kics_disclosure.json
+> 은 git status 상 동시세션이 이미 수정 중`M` 확인, capsec/tier2 는 별개 파이프라인, 임시폴더
+> 잠금은 병행 프로세스 경합) — 재현: 이 두 테스트를 내 변경 전 상태로 되돌려도 동일하게
+> 실패함(kics_disclosure.json mtime 이 테스트 실행 8분 전, 내 파일 어디에도 없음).
+>
+> **코드 변경**: `scripts/extract_kics_rate_sensitivity.py`(furniture-skip fix, `extract_
+> from_raw_pdf`, `MANUAL_OVERRIDE`, `--period`/`--only` 스코프 머지쓰기) · `scripts/validate_
+> kics_rate_sensitivity.py`(RS5 신설, RS2_EXCEPTIONS +1). 진단/검증 probe 5종은
+> `scripts/_probes/probe_20260901_ratesens_*.py`.
+>
+> 재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+> scripts/extract_kics_rate_sensitivity.py --period FY2026_Q2 --only <28코드 콤마구분>` →
+> `scripts/build_apply_user_ratesens_gold.py apply` → `scripts/emit_rate_sensitivity_
+> provenance.py` → `scripts/sync_master_xlsx_sheet.py "금리민감도"` →
+> `scripts/validate_kics_rate_sensitivity.py`(게이트, exit 0).
+>
+> status: resolved(자기완결 — 28사 전건 로드+검증, census 신설+시뮬레이션+예외문서화,
+> gold/provenance/xlsx 동기화까지 끝. 잔여는 2024.4Q 13사·2025.2Q 4사 pre-existing gap —
+> 범위 밖, RS5_EXCEPTIONS 로 문서화해 후속 세션에 넘김).
+>
+> Last updated (이전): 2026-09-01(3회차 — AIG손해보험 KR0029 2025.2Q/2025.3Q RED 11건 발주 처리) —
+> 어제 백필된 AIG(11개 분기 신규 적재)가 남긴 미완성분. **10/11 raw 재확인으로 해소, 1건은
+> issuer 자기모순으로 남겨 `inbox/validation/`에 에스컬레이션.**
+>
+> **원인 3갈래, 전부 raw 재확인**: (1) `19_market`(2025.2Q) — docling MD가 `6-4.시장위험 관리`
+> 절 헤더 + `①금리위험액 현황`/`②주식위험액 현황` 소제목을 통째로 드롭(같은 실패양식이
+> `inbox/parser/20260831T0700Z` 5사 재발 사례와 동일). raw PDF p28-30 fitz 직접추출로 item37=
+> 12.3(③주식위험액 현황 Ⅲ.합계=1,230백만)·38=0(④부동산 해당사항없음)·39=40.55(⑤외환 계)·
+> 40=282.32(⑥자산집중 계) 확보, item36=147.24(기존값, ②금리위험액 현황 Ⅳ행과 소수점까지
+> 일치 재확인) 포함 sqrt(V'·MARKET_M·V)=326.83 vs item19=327(diff 0.17, rel 0.05%) 정합.
+> (2) `47_tier2_census`/`_post`·`50_tfi_tier_split`/`_post`(양쪽 분기) — TFI 표(47~54)
+> 부분결측. 2025.2Q는 md_inbox 그대로(L358-363, 대시=0) 47/49/51/53/54 전부 dash-as-zero로
+> 확보. 2025.3Q는 docling이 실제 2컬럼(`경과조치 적용 전`/`적용 후`) 표를 "경과조치" 유령
+> 중간컬럼이 낀 3컬럼으로 오분절(값이 col1/col3에 번갈아 나타나 언뜻 결측처럼 보임) —
+> raw PDF p15 word좌표(fitz `get_text("words")`)로 우회해 item47=0/0(진짜 대시), item50후=
+> 6303.56(기존 전값과 동일, 오분절로 빈칸 처리됐던 것) 확보. (3) `8`(양쪽 분기) — item28
+> 미산출, `derive_capital_ratios.py --period 2025.2Q/2025.3Q --apply`로 해소(item1/2/14는
+> 이미 있었음, item28만 신규 1행씩).
+>
+> **부수효과 1건 발견 후 해소**: 47/48/49를 채우자 `53_tfi_memo_rows`(2025.2Q)가 SKIP
+> (TFI_MEMO_NO_TABLE, 종전엔 47/48/49 자체가 불완전해 도달 못 하던 분기)에서 RED로
+> 활성화됨. raw p16 재확인 결과 item53/54 둘 다 전=대시(-)·후=진짜 미인쇄(대시조차 없음) —
+> 같은 회사 2025.3Q/2025.4Q의 기존 item53=0/item54=0(값_적용후 없음) 선례와 동일 패턴이라
+> 같은 원칙(대시=0)으로 채워 해소. 원 11건 목록 밖이었지만 내 패치가 만든 부작용이라 같은
+> 세션에서 닫았다.
+>
+> **못 고친 것 — `2_tier1_bridge` KR0029 2025.3Q(적용전)**: item2(기본자본, raw p14=6,304)
+> ≠ item4−item12−item13(6,362−0−0=6,362, 잔차 −58.0). 넷 다 raw에 애매함 없이 인쇄(대시
+> 아님, 숫자 그대로), item47=0(한도 미구속, CAPPED 이지만 한도초과=0)이라 "한도초과" 보정
+> 메커니즘으로도 설명 안 됨. item49(58.70, 해약환급금 초과분)가 이 분기엔 item13(재분류
+> 항목)에 반영 안 된 채 item2가 이미 그만큼 깎여 공시된 것으로 보임(같은 회사 2026.2Q는
+> item13=754가 item49=754.39와 사실상 같아 다리가 닫힘 — 분기마다 반영 여부가 다름).
+> TODO.md L319 "Tier2/기본자본다리 issuer self-inconsistency" documented exception 표
+> (계열①/②)와 동일 패턴 — 파생값으로 원문 숫자를 갈아끼우지 않고 그대로 두고
+> `inbox/validation/20260831T203021Z__parser__KR0029_2025.3Q__2_tier1_bridge_issuer_
+> inconsistency.md`(route: escalate)로 owner 위임 등재 여부 판단 요청.
+>
+> **부수 발견(범위 밖, 후속 티켓으로 분리)**: `validate_data_contract.py`가 KR0029
+> 2025.2Q/2025.3Q에서만 `POST_TRANSITION_PARENT_MISSING`(15항목)·`POST_TRANSITION_
+> CHILD_MISSING`(6항목) 16건을 별도로 잡는다 — 핵심 1-27번대 항목의 `값_적용후`가
+> 통째로 비어 있는 사전 존재 갭(내가 만든 게 아님, item28만 예외). AIG는 경과조치 전면
+> 미적용이라 단순 미러(값→값_적용후)면 될 것 같지만, 2025.3Q item15후=3297.52가 이미
+> item15=3297과 다른 정밀값이라 무작정 복사가 아니라 원문 재확인이 필요 — spawn_task로
+> 분리(`AIG KR0029 2025.2Q/3Q 값_적용후 미러 결측 채우기`, task_589ab0ba). 원 11건 rule
+> 목록(`validate_kics_disclosure.py`)엔 없어 이번 세션 범위 밖으로 판단.
+>
+> **패치**: `data/_derived/_patch_2025q2_KR0029.json`(9셀: 37/38/39/40/47/49/51/53/54)·
+> `_patch_2025q3_KR0029.json`(2셀: 47/50후) — 전부 `scripts/apply_2026q2_patches.py`(범용,
+> quarter는 patch 내부에서 읽음)로 dry-run 후 적용, 스코프-오디트 내장(항목명 불일치·범위밖
+> 변경 시 저장 거부). `derive_capital_ratios.py`는 백업 자동생성. **범위 밖 변경 0건** —
+> 세션 시작 백업(`kics_disclosure.json.bak_20260901_052135_patch`, 다른 동시세션 마지막
+> 쓰기 직후 시점) 대비 전체 25202→25214행(+12) 전수 diff, 추가 12행·수정 1행(item50후만)
+> 전부 (KR0029, 2025.2Q/2025.3Q) 스코프 안, 삭제 0, 스코프 밖 변경 0
+> (`scripts/_probes/full_diff_check.py` 재현 가능).
+>
+> **게이트**: `validate_kics_disclosure.py` RED 44→43(순-1: 원10건 해소−side-effect1건
+> +그 side-effect도 같은 세션에 해소 = 최종 KR0029 RED 11→1). KR0029 전용 findings
+> 58건 중 RED는 `2_tier1_bridge`(2025.3Q) 1건만 남음(`scripts/_probes/final_kr0029_check.py`
+> 재현 가능). `validate_data_contract.py`도 KR0029 `47_tier2_census`류 재확인 — 동일하게
+> `2_tier1_bridge`만 잔존. **`insurequant_master_tables.xlsx`의 "K-ICS공시" 시트도
+> `sync_master_xlsx_sheet.py "K-ICS공시"`로 동기화 완료**(25202→25214행, 셀단위 검증 통과,
+> 나머지 시트 무변화 — 과거 TODO의 "피벗테이블로 안전거부" 기록과 달리 이번엔 정상 동기화됨).
+> `tests/test_kics_rules_golden.py`는 이번 세션의 정당한 데이터 증가로 해시가 옮겨가
+> `--update`로 재생성(15602 findings/538 buckets, RED 43). `test_post_transition_golden`·
+> `test_master_tables_golden`·`test_identity_tautology`는 영향 없이 그대로 통과.
+> `test_deploy_assets.py::test_capsec_provenance_source_id_matches_lineage`·
+> `test_rule_coverage_manifest.py`(PermissionError, 동시 pytest 자원경합) 실패 2건은 git
+> status로 무관련 확인(내가 안 건드린 파일, 기존에 이미 알려진 동시세션 잡음 카테고리).
+>
+> 재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+> scripts/apply_2026q2_patches.py data/_derived/_patch_2025q2_KR0029.json
+> data/_derived/_patch_2025q3_KR0029.json --dry-run` → `scripts/derive_capital_ratios.py
+> --period 2025.2Q/2025.3Q --apply` → `scripts/validate_kics_disclosure.py`.
+>
+> status: answered(validation 확인 필요: `2_tier1_bridge` KR0029 2025.3Q owner 위임 등재
+> 여부 — inbox 참조).
+>
+> Last updated (이전): 2026-09-01(2회차 — 흥국화재 KR0005 결합 경과조치 item15/16/22, owner 옵션
 > (c) R4 재도출 승인분 적용) — inbox `20260901T0405Z`(validation) 3번 항목(item15/16/22,
 > "파서 단독 결정 범위 밖"으로 미결이었던 부분)을 owner 가 (c) 채택으로 확정해 마저 닫았다.
 > `item15후=sqrt(R4(item17,18,19,20)후)+item21후, item22후=15후-14후(헤드라인 앵커,불변)
@@ -1235,6 +1399,34 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-09-01 — 자본성증권 tier1/tier2 한도소진율 분자 기준일 혼재 해소(owner: DB손보가
+25.4Q 기준으로 보인다는 지적). 실측: 분모(SCR·한도)는 그 분기 K-ICS 공시로 최신화됐는데
+분자(발행잔액)는 `quarter: 2026.2Q` 라벨만 붙고 소스는 FY2025 사업보고서(2025-12-31)
+그대로였다. 39사 census: 2026.2Q 반기/분기보고서 실제 필자 24사(14사는 구조상 미제출 —
+비공개 자회사 다수, 자본시장법상 제출의무 없음. +KR0029 AIG는 타 세션 소관이라 미포함),
+자본성증권 보유 21사 중 "자본으로 인정되는 채무증권의 발행" 상세표가 있는 9사만 raw 대조로
+검증해 H1 갱신(`data/bonds/capital_securities_fy2026h1.json` 신설, 회사별·채권별
+`as_of`/`source_file` 개별 표기). DB손보(KR0011)는 라벨링 문제가 아니라 실제로 자재했다 —
+하이브리드 8,670억→17,490억(제3~5회 신규발행 2026.2/6/6월, raw `20260814003682.xml`
+L94849-95023 확인) · 후순위 14,690억→9,700억(제2회 조기상환, 원문 각주 "당반기 중
+조기상환하였습니다" L81645 확인) → 소진율 50.2%→101.3%(tier1) · 10.1%→10.5%(tier2).
+나머지 30사(14 미제출 + 12 상세표 없음[집계표만] + KR0071/KR0099 전액 경과조치 제외분)는
+FY2025 유지, 대신 `kics_tier{1,2}_utilization.json` 각 결과행에 `numerator_as_of` 필드
+신설(회사·tier별 실제 기여 채권의 최고참(=가장 보수적) as_of, 승격 없음 — min() 사용).
+`definition.as_of_note` 로 "as_of는 분모 기준, 분자는 행별 numerator_as_of를 볼 것"
+명시. `validate_data_contract.py`에 `CAPSEC_NUMERATOR_ASOF_MISMATCH`(YELLOW, RED
+아님) 신설 — 시뮬레이션 확인(RED 51 불변·전부 타 세션 소관, YELLOW 170→199=+29 정확히
+어긋나는 29행). xlsx 기본자본/보완자본소진율 시트 `sync_master_xlsx_sheet.py` cherry-pick
+동기화 완료(검증 OK). `emit_capsec_provenance.py`는 tier1/2 사이드카만 갱신(forward_capital
+사이드카는 의도적으로 미변경 — 그 마스터는 이 티켓 범위 밖, 다른 마스터 손대지 말라는 지시).
+부작용으로 `CAPSEC_AMOUNT_MISMATCH` YELLOW 다수 신규 발생(forward_capital이 여전히
+fy2025.json 선언 중이라 게이트의 소스 census가 두 파일을 합산 — 원인 확인·설계상 예상됨,
+forward_capital 갱신 시 자동 해소). designer 티켓(`inbox/designer/20260831T210725Z__
+parser__MULTI_2026.2Q__capsec_numerator_as_of_display.md`) 발행 — K-ICS.html 자본증권
+도넛 툴팁(L928-960)이 기준일을 전혀 안 보여줌. `validate_live_artifacts.py`/
+`validate_data_contract.py` 전후 RED=0 확인(tier1/tier2 기여분 0건). forward_capital·
+kics_disclosure·kics_rate_sensitivity(타 세션 소관)는 미변경. status: resolved.**
 
 **2026-09-01 — inbox 2건(KR0083 TAC 드롭, KR0005 IRR leg 미병합) 처리. KR0083: item2후
 16179.65·item28후 132.39219376 로 정정, R1_가용자본 RED 해소 gate-verified,

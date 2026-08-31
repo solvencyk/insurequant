@@ -8,6 +8,13 @@ Rules (owner spec: docs/agents/kics-rate-sensitivity-spec.md §5):
       base 금액≈item1, base 기준금액≈item14, base 비율≈item27.  tol 금액 2억 / 비율 0.5%p.
   RS3_DIRECTION_SANITY (YELLOW) — 생보: 금리하락(−100bp) 시 비율 하락이 통상; 역방향 flag.
   RS4_COVERAGE_CENSUS (YELLOW) — 회사가 인접 분기 보유한데 사이 hole. FY2023~2024.Q3 부재는 정상.
+  RS5_DISCLOSURE_COVERAGE (RED, 2026-09-01 신설) — kics_disclosure.json을 정본 코호트로 삼는
+      census: REGIME_START 이후 짝수분기(2Q/4Q)에서 kics_disclosure에 있는 (회사,분기)가
+      kics_rate_sensitivity에 통째로 없으면 RED. 2026.2Q 28개사 결측(RS1-4 어느 룰도 못 잡음 —
+      "없는 셀"은 SKIP되지 findings 자체가 안 생김, coverage-census-mandatory 원칙)을 계기로 신설.
+      홀수분기(1Q/3Q)는 census에서 제외 — 실측 0/268(2023.1Q~2026.1Q 7개 홀수분기 전체, 전사)로
+      간이공시 cadence 확정(36-40/41-46과 동일 계열), 개별 회사 확인 아님. REGIME_START 이전
+      짝수분기(~2024.2Q)도 제외 — 표 서식 자체가 그 전엔 없었음(스펙 §4).
 
 Documented exception: KR0011 DB손해 2025.2Q RS2 — 금리민감도표가 별도재무제표 기준,
   헤드라인 item1/14/27은 연결 기준 → basis 차이(파싱오류 아님), 게이트 블록 안 함.
@@ -29,7 +36,13 @@ from _quarter_horizon import quarter_horizon  # noqa: E402
 
 SHOCK_COLS = ["-100bp", "-50bp", "base", "+50bp", "+100bp"]
 # RS2 documented exceptions: (회사, 분기) basis 차이 (별도 vs 연결) — RED여도 게이트 블록 안 함.
-RS2_EXCEPTIONS = {("DB손해보험", "2025.2Q")}
+# 현대해상 2026.2Q: 원문 자체가 같은 필링 안 두 표에서 지급여력기준금액 base를 다르게 인쇄
+# (md_inbox/FY2026_Q2/KR0009_현대해상.md L1245 "6-8-2) 금리 민감도 분석" 표=73,338 vs L1268
+# "6-8-3) 환율 민감도 분석" 표=73,335, kics_disclosure item14=73335는 후자와 일치) — Δ3(0.004%),
+# RS1은 두 표 각자 내부적으로 자기정합(153284/73338*100=209.00=인쇄값과 정확히 일치이므로
+# 파싱오류 아님, 발행사 표간 반올림 불일치. "issuer-inconsistent keep as disclosed" 원칙에
+# 따라 금리민감도표에 실제 인쇄된 값(73,338)을 그대로 보존 (2026-09-01).
+RS2_EXCEPTIONS = {("DB손해보험", "2025.2Q"), ("현대해상", "2026.2Q")}
 # RS1 documented exceptions: (회사, 분기, 경과조치, 컬럼) — 원문 PDF 자체의 오류(파싱 결함 아님).
 # 예별손해보험 2024.4Q: raw p.75 "6-8-2) 금리 민감도 분석" 표에서 경과조치 후 지급여력기준금액
 # 행의 △100bp/△50bp 두 칸이 모두 "9,170"으로 인쇄돼 있다(fitz word-bbox로 좌표까지 대조 —
@@ -46,6 +59,19 @@ REGIME_START = "2024.4Q"
 # 발현 전. 발현하고 나서 고치면 늦다).
 ALL_Q = quarter_horizon()
 
+# RS5 documented exceptions: (원보험사코드, 공시분기) — kics_disclosure엔 있는데 kics_rate_
+# sensitivity에 통째로 없는 REGIME 내 짝수분기 결손. 전부 2026-09-01 세션 **이전부터** 있던
+# 결손이고, 이번 세션 범위는 2026.2Q뿐이라 원인 미규명 상태로 문서화만 한다(추측 주입 금지 —
+# "빈 칸이 낫다"). 2024.4Q 13사 + 2025.2Q 4사, 전수측정
+# scripts/_probes/probe_20260901_ratesens_census_survey.py 재현. 향후 백필 세션 후보.
+RS5_EXCEPTIONS = {
+    ("KR0005", "2024.4Q"), ("KR0029", "2024.4Q"), ("KR0070", "2024.4Q"), ("KR0071", "2024.4Q"),
+    ("KR0072", "2024.4Q"), ("KR0076", "2024.4Q"), ("KR0079", "2024.4Q"), ("KR0080", "2024.4Q"),
+    ("KR0094", "2024.4Q"), ("KR0097", "2024.4Q"), ("KR0099", "2024.4Q"), ("KR1010", "2024.4Q"),
+    ("KR1098", "2024.4Q"),
+    ("KR0029", "2025.2Q"), ("KR0079", "2025.2Q"), ("KR0080", "2025.2Q"), ("KR1098", "2025.2Q"),
+}
+
 
 def load_rs():
     d = json.loads((ROOT / "kics_rate_sensitivity.json").read_text(encoding="utf-8"))
@@ -53,6 +79,17 @@ def load_rs():
     for r in d:
         g[(r["원수사명"], r["공시분기"], r["경과조치여부"])][r["measure구분"]] = r
     return g, d
+
+
+def load_disclosure_cohort():
+    """(원보험사코드, 공시분기) -> 원수사명, for every row in kics_disclosure.json — the
+    RS5 census's expected population (that master's coverage census already guarantees
+    this is complete per quarter, so it's the right cohort to anchor against)."""
+    d = json.loads((ROOT / "kics_disclosure.json").read_text(encoding="utf-8"))
+    cohort = {}
+    for r in d:
+        cohort[(r["원보험사코드"], r["공시분기"])] = r["원수사명"]
+    return cohort
 
 
 def load_kics():
@@ -68,8 +105,9 @@ def load_kics():
 def main() -> int:
     g, rows = load_rs()
     kics = load_kics()
+    cohort = load_disclosure_cohort()
 
-    rs1, rs1_exc, rs2, rs2_exc, rs3, rs4 = [], [], [], [], [], []
+    rs1, rs1_exc, rs2, rs2_exc, rs3, rs4, rs5, rs5_exc = [], [], [], [], [], [], [], []
 
     # ---- RS1: 비율 ≈ 금액/기준금액 ×100 ----
     for (co, q, gj), m in g.items():
@@ -132,6 +170,21 @@ def main() -> int:
             if expected_q[i] not in qs:
                 rs4.append((co, expected_q[i]))
 
+    # ---- RS5: kics_disclosure를 정본 코호트로 삼는 census (2026-09-01) ----
+    # SKIP-on-missing은 검증 무력화다 — RS1-4는 "있는 값이 맞는가"만 보고 "있어야 할 값이
+    # 있는가"는 안 본다. kics_disclosure는 자체 coverage census 게이트가 있어(같은 분기
+    # 회사수 완전성 보장) 정본 코호트로 쓰기 안전하다. 홀수분기 제외 근거는 모듈 docstring.
+    rs_codes_by_q = defaultdict(set)
+    for r in rows:
+        rs_codes_by_q[r["공시분기"]].add(r["원보험사코드"])
+    for (code, q), name in sorted(cohort.items()):
+        if q < REGIME_START or not q.endswith(("2Q", "4Q")):
+            continue
+        if code in rs_codes_by_q.get(q, set()):
+            continue
+        rec = (code, name, q)
+        (rs5_exc if (code, q) in RS5_EXCEPTIONS else rs5).append(rec)
+
     # ---- report ----
     print("=" * 74)
     print(f"K-ICS 금리민감도 검증  (cohort {len(have)}사, {len(g)} 사·분기·경과조치 그룹)")
@@ -152,12 +205,17 @@ def main() -> int:
     print(f"RS4_COVERAGE_CENSUS (YELLOW):  hole={len(rs4)}")
     for co, q in rs4[:20]:
         print(f"   YEL {co:14s} {q} (regime 내 hole)")
+    print(f"RS5_DISCLOSURE_COVERAGE (RED):  missing={len(rs5)}  (+exception {len(rs5_exc)})")
+    for code, name, q in rs5:
+        print(f"   RED {code:8s} {name:16s} {q}  in kics_disclosure but absent from rate_sensitivity")
+    for code, name, q in rs5_exc:
+        print(f"   EXC {code:8s} {name:16s} {q}  pre-existing gap, not this session's scope, documented")
 
-    red_total = len(rs1) + len(rs2)  # exception 제외
+    red_total = len(rs1) + len(rs2) + len(rs5)  # exception 제외
     print()
     print("#" * 74)
     print(f"SUMMARY  RS1:{len(rs1)}RED(+{len(rs1_exc)}exc) | RS2:{len(rs2)}RED(+{len(rs2_exc)}exc) | "
-          f"RS3:{len(rs3)}Y | RS4:{len(rs4)}Y | gate RED={red_total}")
+          f"RS3:{len(rs3)}Y | RS4:{len(rs4)}Y | RS5:{len(rs5)}RED(+{len(rs5_exc)}exc) | gate RED={red_total}")
     print("#" * 74)
 
     out = ROOT / "data" / "_derived" / "kics_rate_sensitivity_validation.json"
@@ -170,6 +228,8 @@ def main() -> int:
         "RS2_exceptions": [dict(zip(["회사", "분기", "measure", "base", "disclosure", "diff"], r)) for r in rs2_exc],
         "RS3_direction": [dict(zip(["회사", "분기", "경과조치", "m100bp", "base"], r)) for r in rs3],
         "RS4_coverage_hole": [dict(zip(["회사", "분기"], r)) for r in rs4],
+        "RS5_disclosure_coverage_missing": [dict(zip(["코드", "회사", "분기"], r)) for r in rs5],
+        "RS5_exceptions": [dict(zip(["코드", "회사", "분기"], r)) for r in rs5_exc],
     }, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Wrote {out}")
     return 0 if red_total == 0 else 2

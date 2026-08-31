@@ -1234,6 +1234,36 @@ def check_as_of(res: GateResult, env: "Env") -> None:
                     rule="STALE_AS_OF",
                     message=f"{label} latest is {tq} but latest K-ICS quarter is {latest_q} — stale")
 
+    # --- 2a(iii-b). tier utilization NUMERATOR as_of vs its own quarter's denominator basis
+    # (owner 2026-09-01 티켓 — DB손보 tier1 이 "2026.2Q" 라벨로 표시됐는데 분자[발행잔액]는
+    # 2025.4Q DART 사업보고서 기준이었다). 2a(iii) 위 블록은 **파일 전체의** quarter 필드만
+    # 보고(그 분기 파일이 맞는지), 분자가 실제로 그 분기 기준인지는 아무도 안 봤다 — 이 블록이
+    # 그 축이다. 분자(발행잔액)는 회사마다 DART 반기/분기보고서 캐던스가 달라(39사 중 일부만
+    # 그 분기 실제 갱신, 나머지는 직전 사업보고서 그대로) 어긋나는 게 **정상**이므로 RED 아니라
+    # YELLOW — "숨어있던 걸 보이게" 하는 관찰용 신호다(wire_capital_securities_to_utilization.py
+    # 가 각 결과행에 쓰는 numerator_as_of 필드를 근거로 쓴다; 필드가 없는 구버전 산출물은 스킵).
+    for label, doc in (("tier1_utilization", env.tier1_latest),
+                       ("tier2_utilization", env.tier2_latest)):
+        if not doc:
+            continue
+        denom_q = doc.get("quarter")
+        denom_end = _quarter_end_date(denom_q)
+        if denom_end is None:
+            continue
+        denom_iso = denom_end.isoformat()
+        for row in doc.get("results") or []:
+            num_asof = row.get("numerator_as_of")
+            if not num_asof:
+                continue  # 그 회사 그 tier 분자에 기여하는 채권이 없다(0) — 어긋날 기준일이 없음
+            if num_asof != denom_iso:
+                res.add(check="as_of", severity="YELLOW", master=label,
+                        company=row.get("company") or row.get("code"), quarter=denom_q,
+                        rule="CAPSEC_NUMERATOR_ASOF_MISMATCH",
+                        message=f"{row.get('company')}({row.get('code')}): 분자(발행잔액) 기준일="
+                                f"{num_asof} ≠ 분모(SCR·한도) 기준분기말={denom_iso} — DART 반기/"
+                                f"분기보고서 캐던스상 회사별로 정상 발생(RED 아님). 화면은 아직 "
+                                f"기준일을 안 보여준다(inbox/designer capsec_numerator_as_of_display).")
+
     # --- 2a(iv). kics_rate_sensitivity provenance (2026-08-21 배선, UH-8) ---
     # 배경: 이 마스터는 `Env.MASTER_FILES` 에 등재돼 mtime 감시만 받고 **as-of·계보 축은 아무도
     # 보지 않았다**(inbox/parser/20260803T0520Z). 값 정합은 validate_kics_rate_sensitivity.py 가

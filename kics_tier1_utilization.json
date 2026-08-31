@@ -5,8 +5,9 @@
   "limit_primary": "SCR×15% (KIRI 2024-14 common-transition)",
   "limit_strict": "SCR×10%",
   "numerator": "신종자본증권 신규(2023~) 발행 인정액; 경과조치(pre-2023)는 별도 제외",
-  "source": "DART FY2025 annual per-bond (data/bonds/capital_securities_fy2025.json)",
-  "as_of": "2026-06-30"
+  "source": "DART per-bond (data/bonds/capital_securities_fy2026h1.json)",
+  "as_of": "2026-06-30",
+  "as_of_note": "as_of 는 분모(SCR·한도, item14 기준 분기말)의 기준일이다. 분자(발행잔액)의 실제 기준일은 회사마다 다르며 각 결과행의 numerator_as_of 를 봐야 한다 — 분모와 같다고 가정하지 말 것."
  },
  "results": [
   {
@@ -22,13 +23,14 @@
    "tier1_hybrid_overflow_eok": 298.5,
    "utilization_pct": 142.5,
    "utilization_pct_strict": 213.8,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "dart_bonds_asof_2025-12-31_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 142.5
+   "utilization_pct_raw": 142.5,
+   "numerator_as_of": "2025-12-31"
   },
   {
    "company": "코리안리재보험",
@@ -43,13 +45,14 @@
    "tier1_hybrid_overflow_eok": 1297.1,
    "utilization_pct": 137.0,
    "utilization_pct_strict": 205.5,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "dart_bonds_asof_2025-12-31_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 3291.97,
    "tier1_grandfathered_hybrid_eok": 3300.0,
-   "utilization_pct_raw": 137.0
+   "utilization_pct_raw": 137.0,
+   "numerator_as_of": "2025-12-31"
   },
   {
    "company": "하나생명보험",
@@ -64,13 +67,14 @@
    "tier1_hybrid_overflow_eok": 665.7,
    "utilization_pct": 158.7,
    "utilization_pct_strict": 238.1,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "dart_bonds_asof_2025-12-31_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 158.7
+   "utilization_pct_raw": 158.7,
+   "numerator_as_of": "2025-12-31"
   },
   {
    "company": "교보생명보험",
@@ -85,13 +89,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 69.6,
    "utilization_pct_strict": 104.4,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "dart_bonds_asof_2025-12-31_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 11088.99,
    "tier1_grandfathered_hybrid_eok": 11148.5,
-   "utilization_pct_raw": 69.6
+   "utilization_pct_raw": 69.6,
+   "numerator_as_of": "2025-12-31"
   },
   {
    "company": "한화생명",
@@ -106,13 +111,14 @@
    "tier1_hybrid_overflow_eok": 8302.2,
    "utilization_pct": 136.9,
    "utilization_pct_strict": 205.3,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "dart_bonds_asof_2026-06-30_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 136.9
+   "utilization_pct_raw": 136.9,
+   "numerator_as_of": "2026-06-30"
   },
   {
    "company": "흥국화재",
@@ -127,13 +133,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 58.9,
    "utilization_pct_strict": 88.3,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "dart_bonds_asof_2025-12-31_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 2120.0,
    "tier1_grandfathered_hybrid_eok": 2120.0,
-   "utilization_pct_raw": 58.9
+   "utilization_pct_raw": 58.9,
+   "numerator_as_of": "2025-12-31"
   },
   {
    "company": "케이디비생명보험",
@@ -148,13 +155,14 @@
    "tier1_hybrid_overflow_eok": 80.7,
    "utilization_pct": 103.5,
    "utilization_pct_strict": 155.2,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "dart_bonds_asof_2026-06-30_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 103.5
+   "utilization_pct_raw": 103.5,
+   "numerator_as_of": "2026-06-30"
   },
   {
    "company": "DB손해보험",
@@ -163,19 +171,20 @@
    "scr_eok": 115099.0,
    "tier1_hybrid_limit_eok": 17264.85,
    "tier1_hybrid_limit_strict_eok": 11509.9,
-   "tier1_hybrid_issued_eok": 8670.0,
+   "tier1_hybrid_issued_eok": 17490.0,
    "tier1_hybrid_excess_eok": null,
-   "tier1_hybrid_recognized_eok": 8670.0,
-   "tier1_hybrid_overflow_eok": 0.0,
-   "utilization_pct": 50.2,
-   "utilization_pct_strict": 75.3,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "tier1_hybrid_recognized_eok": 17490.0,
+   "tier1_hybrid_overflow_eok": 225.2,
+   "utilization_pct": 101.3,
+   "utilization_pct_strict": 152.0,
+   "data_source": "dart_bonds_asof_2026-06-30_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 50.2
+   "utilization_pct_raw": 101.3,
+   "numerator_as_of": "2026-06-30"
   },
   {
    "company": "농협생명보험",
@@ -190,13 +199,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 48.5,
    "utilization_pct_strict": 72.7,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "dart_bonds_asof_2026-06-30_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 2500.0,
    "tier1_grandfathered_hybrid_eok": 2500.0,
-   "utilization_pct_raw": 48.5
+   "utilization_pct_raw": 48.5,
+   "numerator_as_of": "2026-06-30"
   },
   {
    "company": "아이엠라이프생명보험",
@@ -211,13 +221,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 2465.98,
    "tier1_grandfathered_hybrid_eok": 948.8,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "한화손해보험",
@@ -232,13 +243,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 2341.05,
    "tier1_grandfathered_hybrid_eok": 2350.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "푸본현대생명보험",
@@ -253,13 +265,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 25.9,
    "utilization_pct_strict": 38.9,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "dart_bonds_asof_2025-12-31_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 400.0,
-   "utilization_pct_raw": 25.9
+   "utilization_pct_raw": 25.9,
+   "numerator_as_of": "2025-12-31"
   },
   {
    "company": "메리츠화재해상보험",
@@ -274,13 +287,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 1800.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "케이비라이프생명보험",
@@ -295,13 +309,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 498.0,
-   "tier1_grandfathered_hybrid_eok": 498.0,
-   "utilization_pct_raw": 0.0
+   "tier1_grandfathered_hybrid_eok": 500.0,
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "흥국생명보험",
@@ -316,13 +331,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 496.5,
    "tier1_grandfathered_hybrid_eok": 500.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "MG_예별손해보험",
@@ -337,13 +353,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "삼성화재해상보험",
@@ -358,13 +375,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "현대해상",
@@ -379,13 +397,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "KB손해보험",
@@ -400,13 +419,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "AIG손해보험",
@@ -421,13 +441,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "악사손해보험",
@@ -442,13 +463,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "신한이지손해보험",
@@ -463,13 +485,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "에이비엘생명보험",
@@ -484,13 +507,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "라이나생명보험",
@@ -505,13 +529,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "비엔피파리바카디프생명보험",
@@ -526,13 +551,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "미래에셋생명",
@@ -547,13 +573,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "에이아이에이생명보험",
@@ -568,13 +595,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "DB생명보험",
@@ -589,13 +617,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "동양생명",
@@ -610,13 +639,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_transposed",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "메트라이프생명보험",
@@ -631,13 +661,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "처브라이프생명보험",
@@ -652,13 +683,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "서울보증보험",
@@ -673,13 +705,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "교보라이프플래닛생명보험",
@@ -694,13 +727,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "IBK연금보험",
@@ -715,13 +749,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 0.0,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "카카오페이손해보험",
@@ -736,13 +771,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "롯데손해보험",
@@ -757,13 +793,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "missing",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 460.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "NH농협손해보험",
@@ -778,13 +815,14 @@
    "tier1_hybrid_overflow_eok": 2483.6,
    "utilization_pct": 223.2,
    "utilization_pct_strict": 334.7,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "dart_bonds_asof_2026-06-30_경과조치",
    "quality_flag": "ok",
    "issued_source": "missing",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 223.2
+   "utilization_pct_raw": 223.2,
+   "numerator_as_of": "2026-06-30"
   },
   {
    "company": "삼성생명",
@@ -799,13 +837,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "missing",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   },
   {
    "company": "신한라이프생명보험",
@@ -820,13 +859,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 0.0,
    "utilization_pct_strict": 0.0,
-   "data_source": "dart_bonds_fy2025_경과조치",
+   "data_source": "no_bonds",
    "quality_flag": "ok",
    "issued_source": "missing",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 0.0,
-   "utilization_pct_raw": 0.0
+   "utilization_pct_raw": 0.0,
+   "numerator_as_of": null
   }
  ]
 }

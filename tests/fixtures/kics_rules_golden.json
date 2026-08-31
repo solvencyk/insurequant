@@ -1,13 +1,13 @@
 {
-  "sha256": "6b250bd8c467d17e69e6e7a4d9f3ef2f749bbb2dd11dc8a782293017e5421367",
+  "sha256": "846771ae280bfd311f9bc76c235b8f25fc37cec31925138a50a5af93375cce0d",
   "buckets": 538,
   "findings": 15602,
   "by_status": {
-    "YELLOW": 1684,
-    "GREEN": 11051,
-    "SKIP": 2814,
+    "YELLOW": 1659,
+    "GREEN": 11069,
+    "SKIP": 2836,
     "ERROR": 0,
-    "RED": 53
+    "RED": 38
   },
   "by_rule": {
     "1": {
@@ -37,8 +37,7 @@
       "GREEN": 538
     },
     "8": {
-      "GREEN": 536,
-      "RED": 2
+      "GREEN": 538
     },
     "7_post": {
       "GREEN": 530,
@@ -51,15 +50,14 @@
     },
     "8_life": {
       "SKIP": 138,
-      "GREEN": 383,
+      "GREEN": 384,
       "YELLOW": 15,
-      "RED": 2
+      "RED": 1
     },
     "19_market": {
       "SKIP": 138,
-      "GREEN": 392,
-      "YELLOW": 7,
-      "RED": 1
+      "GREEN": 393,
+      "YELLOW": 7
     },
     "36_irr": {
       "SKIP": 274,
@@ -75,26 +73,26 @@
       "GREEN": 258
     },
     "2_tier1_bridge": {
-      "YELLOW": 145,
+      "YELLOW": 146,
       "GREEN": 376,
-      "RED": 8,
+      "RED": 7,
       "SKIP": 9
     },
     "3_tier2_composition": {
-      "GREEN": 490,
+      "GREEN": 492,
       "RED": 14,
-      "SKIP": 34
+      "SKIP": 32
     },
     "47_tier2_census": {
-      "GREEN": 499,
-      "YELLOW": 27,
-      "RED": 10,
-      "SKIP": 2
+      "GREEN": 501,
+      "YELLOW": 17,
+      "RED": 5,
+      "SKIP": 15
     },
     "48_tier2_limit": {
       "GREEN": 469,
-      "SKIP": 29,
-      "YELLOW": 40
+      "SKIP": 32,
+      "YELLOW": 37
     },
     "2_tier1_bridge_post": {
       "YELLOW": 101,
@@ -102,15 +100,15 @@
       "GREEN": 137
     },
     "3_tier2_composition_post": {
-      "GREEN": 279,
+      "GREEN": 280,
       "YELLOW": 223,
-      "SKIP": 36
+      "SKIP": 35
     },
     "47_tier2_census_post": {
-      "GREEN": 497,
-      "YELLOW": 32,
-      "RED": 7,
-      "SKIP": 2
+      "GREEN": 499,
+      "YELLOW": 19,
+      "RED": 5,
+      "SKIP": 15
     },
     "48_tier2_limit_post": {
       "GREEN": 469,
@@ -118,30 +116,29 @@
       "YELLOW": 35
     },
     "50_tfi_tier_split": {
-      "GREEN": 495,
-      "RED": 2,
+      "GREEN": 496,
+      "RED": 1,
       "SKIP": 39,
       "YELLOW": 2
     },
     "51_tfi_tier2_composition": {
-      "GREEN": 492,
-      "SKIP": 41,
+      "GREEN": 494,
+      "SKIP": 39,
       "RED": 5
     },
     "53_tfi_memo_rows": {
-      "GREEN": 472,
-      "SKIP": 66
+      "GREEN": 473,
+      "SKIP": 65
     },
     "50_tfi_tier_split_post": {
-      "GREEN": 495,
-      "SKIP": 39,
-      "YELLOW": 2,
-      "RED": 2
+      "GREEN": 496,
+      "SKIP": 40,
+      "YELLOW": 2
     },
     "51_tfi_tier2_composition_post": {
-      "GREEN": 279,
+      "GREEN": 281,
       "YELLOW": 218,
-      "SKIP": 41
+      "SKIP": 39
     },
     "53_tfi_memo_rows_post": {
       "SKIP": 476,

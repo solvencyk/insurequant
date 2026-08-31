@@ -1,0 +1,382 @@
+{
+  "KR0001": {
+    "pdf": "KR0001_메리츠화재해상보험.pdf",
+    "npages": 66,
+    "source_page_ranges": "4-50",
+    "hit_pages_narrow": [
+      47
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      47
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0003": {
+    "pdf": "KR0003_롯데손해보험.pdf",
+    "npages": 96,
+    "source_page_ranges": "1-44;47-58;60-69;92-96",
+    "hit_pages_narrow": [
+      66
+    ],
+    "hit_pages_broad_6-8": [
+      67
+    ],
+    "in_window": [
+      66,
+      67
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0004": {
+    "pdf": "KR0004_MG_예별손해보험.pdf",
+    "npages": 67,
+    "source_page_ranges": "5-9;12-27;29-32;37-41;45-48",
+    "hit_pages_narrow": [
+      46
+    ],
+    "hit_pages_broad_6-8": [
+      47
+    ],
+    "in_window": [
+      46,
+      47
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0009": {
+    "pdf": "KR0009_현대해상.pdf",
+    "npages": 69,
+    "source_page_ranges": "5-32;36-53",
+    "hit_pages_narrow": [
+      50
+    ],
+    "hit_pages_broad_6-8": [
+      51
+    ],
+    "in_window": [
+      50,
+      51
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0011": {
+    "pdf": "KR0011_DB손해보험.pdf",
+    "npages": 68,
+    "source_page_ranges": "2-9;11-25;27-31;33-40;42-48",
+    "hit_pages_narrow": [
+      46
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      46
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0029": {
+    "pdf": "KR0029_AIG손해보험.pdf",
+    "npages": 59,
+    "source_page_ranges": "5-10;12-35;39-42",
+    "hit_pages_narrow": [
+      40
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      40
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0032": {
+    "pdf": "KR0032_NH농협손해보험.pdf",
+    "npages": 60,
+    "source_page_ranges": "5-30;40-45",
+    "hit_pages_narrow": [
+      43,
+      44
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      43,
+      44
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0051": {
+    "pdf": "KR0051_신한이지손해보험.pdf",
+    "npages": 47,
+    "source_page_ranges": "5-35",
+    "hit_pages_narrow": [
+      34
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      34
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0068": {
+    "pdf": "KR0068_한화생명.pdf",
+    "npages": 72,
+    "source_page_ranges": "6-8;12-33;40-42;44-50",
+    "hit_pages_narrow": [
+      48
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      48
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0069": {
+    "pdf": "KR0069_삼성생명.pdf",
+    "npages": 69,
+    "source_page_ranges": "1-4;6-29;32-47",
+    "hit_pages_narrow": [
+      2,
+      44,
+      45
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      2,
+      44,
+      45
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0070": {
+    "pdf": "KR0070_에이비엘생명보험.pdf",
+    "npages": 66,
+    "source_page_ranges": "7-49",
+    "hit_pages_narrow": [
+      46
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      46
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0071": {
+    "pdf": "KR0071_흥국생명보험.pdf",
+    "npages": 66,
+    "source_page_ranges": "6-9;12-30;36-39;41-47",
+    "hit_pages_narrow": [
+      45
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      45
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0072": {
+    "pdf": "KR0072_케이디비생명보험.pdf",
+    "npages": 66,
+    "source_page_ranges": "7-11;14-30;41-47",
+    "hit_pages_narrow": [
+      45
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      45
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0073": {
+    "pdf": "KR0073_교보생명보험.pdf",
+    "npages": 45,
+    "source_page_ranges": "1-33",
+    "hit_pages_narrow": [
+      31
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      31
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0079": {
+    "pdf": "KR0079_미래에셋생명.pdf",
+    "npages": 65,
+    "source_page_ranges": "1-20",
+    "hit_pages_narrow": [
+      40
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [],
+    "OUT_OF_WINDOW": [
+      40
+    ]
+  },
+  "KR0080": {
+    "pdf": "KR0080_에이아이에이생명보험.pdf",
+    "npages": 61,
+    "source_page_ranges": "7-11;14-17;19-26;30-32;38-41;53-61",
+    "hit_pages_narrow": [
+      3,
+      31,
+      39
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      31,
+      39
+    ],
+    "OUT_OF_WINDOW": [
+      3
+    ]
+  },
+  "KR0082": {
+    "pdf": "KR0082_DB생명보험.pdf",
+    "npages": 63,
+    "source_page_ranges": "5-28;30-45",
+    "hit_pages_narrow": [
+      42
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      42
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0083": {
+    "pdf": "KR0083_푸본현대생명보험.pdf",
+    "npages": 70,
+    "source_page_ranges": "2-4;6-10;13-29;35-38;40-46",
+    "hit_pages_narrow": [
+      44
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      44
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0087": {
+    "pdf": "KR0087_동양생명.pdf",
+    "npages": 59,
+    "source_page_ranges": "1-59",
+    "hit_pages_narrow": [],
+    "hit_pages_broad_6-8": [],
+    "in_window": [],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0094": {
+    "pdf": "KR0094_신한라이프생명보험.pdf",
+    "npages": 62,
+    "source_page_ranges": "6-12;14-29;31-35;37-41",
+    "hit_pages_narrow": [
+      40
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      40
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0097": {
+    "pdf": "KR0097_하나생명보험.pdf",
+    "npages": 66,
+    "source_page_ranges": "6-10;13-29;36-40;42-44;46-49",
+    "hit_pages_narrow": [
+      47
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      47
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0099": {
+    "pdf": "KR0099_케이비라이프생명보험.pdf",
+    "npages": 71,
+    "source_page_ranges": "2-4;6-8;15-28;34-39;42-47",
+    "hit_pages_narrow": [
+      46
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      46
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0100": {
+    "pdf": "KR0100_처브라이프생명보험.pdf",
+    "npages": 59,
+    "source_page_ranges": "2-4;6-10;12-25;29-41",
+    "hit_pages_narrow": [
+      39
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      39
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0104": {
+    "pdf": "KR0104_농협생명보험.pdf",
+    "npages": 63,
+    "source_page_ranges": "6-10;13-28;34-37;40-46",
+    "hit_pages_narrow": [
+      44
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      44
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR0150": {
+    "pdf": "KR0150_서울보증보험.pdf",
+    "npages": 56,
+    "source_page_ranges": "1-26;29-45",
+    "hit_pages_narrow": [
+      42
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      42
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR1010": {
+    "pdf": "KR1010_교보라이프플래닛생명보험.pdf",
+    "npages": 64,
+    "source_page_ranges": "6-10;13-29;36-38;40-47",
+    "hit_pages_narrow": [
+      45
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      45
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR1011": {
+    "pdf": "KR1011_IBK연금보험.pdf",
+    "npages": 48,
+    "source_page_ranges": "5-42",
+    "hit_pages_narrow": [
+      39
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      39
+    ],
+    "OUT_OF_WINDOW": []
+  },
+  "KR1098": {
+    "pdf": "KR1098_카카오페이손해보험.pdf",
+    "npages": 48,
+    "source_page_ranges": "1-48",
+    "hit_pages_narrow": [
+      33
+    ],
+    "hit_pages_broad_6-8": [],
+    "in_window": [
+      33
+    ],
+    "OUT_OF_WINDOW": []
+  }
+}
