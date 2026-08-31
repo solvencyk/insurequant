@@ -2184,7 +2184,7 @@
 
 </script>
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
-    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">2026.1Q</span>)<br/>
+    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">—</span>)<br/>
     본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
   </footer>
 <script>
@@ -2202,5 +2202,20 @@
 <script src="forms-config.js"></script>
 <script src="download-survey.js" data-default-sheet="CSMWF"></script>
 <script src="report-widget.js"></script>
+
+<script>
+  // 푸터 분기는 마스터에서 읽는다 (2026-09-01, owner 지적). 종전에는 span 안에
+  // `2026.1Q` 가 리터럴로 있었고 그것을 갱신하는 코드가 **아무 데도 없었다**.
+  fetch('kics_disclosure.json').then(r => r.json()).then(rows => {
+    const k = s => { const m = String(s).match(/^(\d{4})\.(\d)Q$/); return m ? +m[1]*10 + +m[2] : 0; };
+    let max = null;
+    for (const r of (Array.isArray(rows) ? rows : [])) {
+      const qq = r['공시분기']; if (!qq) continue;
+      if (max == null || k(qq) > k(max)) max = qq;
+    }
+    const el = document.getElementById('footerQ');
+    if (el && max) el.textContent = max;
+  }).catch(() => {});
+</script>
 </body>
 </html>
