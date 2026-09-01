@@ -81,6 +81,9 @@ MASTERS = [
     # 절대 드롭하면 안 된다(_DROP_COLS에 넣지 말 것).
     ("kics_tier1_utilization.json", "기본자본소진율"),
     ("kics_tier2_utilization.json", "보완자본소진율"),
+    # 2026-09-01 신설(owner 설계). 자본성증권을 **한 건 단위**로 관리하는 정본 —
+    # 소진율·forward outlook 이 이 위에서 산출된다.
+    ("kics_capital_securities.json", "자본성증권발행현황"),
     ("kics_forward_capital.json", "자본비율전망"),
 ]
 

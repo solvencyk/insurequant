@@ -47,12 +47,20 @@ MASTERS = [
      "보완자본(후순위채) 인정한도 소진율 — SCR×50% 한도 대비 신규발행 인정액 "
      "(DART 사채발행현황 기준, 2026.1Q 스냅샷; 2026-06-20 폐기된 구산식은 참고용 별도 항목명 행) "
      "long-format. 비고열=known limitation"),
+    ("kics_capital_securities.json", "자본성증권발행현황",
+     "자본성증권 한 건 단위 인정액 — 회사·구분·발행일·콜만기도래일·액면가·공시분기별 "
+     "기본자본인정액/보완자본인정액. 종전에는 회사 단위 집계값만 있어 어느 증권이 얼마를 "
+     "인정받는지 되짚을 수 없었다(owner 2026-09-01 설계). 신종은 SCR×15% 한도를 "
+     "경과조치분·신규분이 공유하며 발행일 순으로 채우고 초과분은 보완자본으로 분류, "
+     "후순위는 잔존만기 5년 미만부터 매년 20%p 계단식 차감"),
     ("kics_forward_capital.json", "자본비율전망",
      "자본비율 5년 전망(2026~2030 연도말) — 콜옵션 도래 채무성자본 차감 + SCR 선형보간 시뮬레이션 "
      "(baseline 2026.1Q, status!=ok 회사 제외) long-format, 공시분기 칸에 전망연도. 비고열=known limitation"),
 ]
 
 NUMERIC_COLS = {"값", "-100bp", "-50bp", "base", "+50bp", "+100bp",
+                "액면가_억", "잔액_억", "기본자본인정액_억", "보완자본인정액_억",
+                "기본자본한도_억", "SCR_억", "보완자본인정율",
                 "상각액", "신계약CSM_연누계", "월납월초보험료_연누계", "신계약CSM배수_연누계",
                 "CSM변동", "당기손익영향", "자본영향",
                 "듀레이션", "컨벡서티"}
@@ -313,7 +321,21 @@ def _flatten_forward_capital(raw: list) -> list:
     return rows
 
 
+def _flatten_capital_securities(doc):
+    """이미 한 건 = 한 행이라 rows 만 꺼내면 된다(집계 해체가 필요 없다)."""
+    rows = doc.get("rows", []) if isinstance(doc, dict) else (doc or [])
+    out = []
+    for r in rows:
+        row = {k: v for k, v in r.items() if k != "flags_missing"}
+        miss = r.get("flags_missing") or []
+        row["비고"] = ("원천에 " + "·".join(miss) + " 플래그가 없어 신규분 10%/15% 판정과 "
+                       "상환촉진 유인 콜 판정은 미확정") if miss else ""
+        out.append(row)
+    return out
+
+
 FLATTEN = {
+    "kics_capital_securities.json": _flatten_capital_securities,
     "kics_tier1_utilization.json": _flatten_tier1,
     "kics_tier2_utilization.json": _flatten_tier2,
     "kics_forward_capital.json": _flatten_forward_capital,
