@@ -89,14 +89,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 69.6,
    "utilization_pct_strict": 104.4,
-   "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+   "data_source": "dart_bonds_asof_2026-06-30_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": 11088.99,
    "tier1_grandfathered_hybrid_eok": 11148.5,
    "utilization_pct_raw": 69.6,
-   "numerator_as_of": "2025-12-31"
+   "numerator_as_of": "2026-06-30"
   },
   {
    "company": "한화생명",
@@ -265,14 +265,14 @@
    "tier1_hybrid_overflow_eok": 0.0,
    "utilization_pct": 25.9,
    "utilization_pct_strict": 38.9,
-   "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+   "data_source": "dart_bonds_asof_2026-06-30_경과조치",
    "quality_flag": "ok",
    "issued_source": "bs_normal",
    "excess_source": "missing",
    "legacy_hybrid_transition_eok": null,
    "tier1_grandfathered_hybrid_eok": 400.0,
    "utilization_pct_raw": 25.9,
-   "numerator_as_of": "2025-12-31"
+   "numerator_as_of": "2026-06-30"
   },
   {
    "company": "메리츠화재해상보험",

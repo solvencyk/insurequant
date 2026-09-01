@@ -168,10 +168,19 @@
       "status": "CONTRADICTED",
       "citation": null,
       "verify": null,
-      "note": "등재사유 'image-only PDF'가 거짓이다. 실측 538p / 286,634자 = 533자/p 이고 K-ICS 인접 페이지(p249·p253·p302·p304)는 전부 선택 가능한 조밀한 본문이다. 그리고 '경과조치'가 538p 전체에서 0회 — 이 파일도 정기경영공시가 아니라 DART 사업보고서(연결 IFRS17 주석, 쪽번호 '- 135 -')다. 원천부재가 아니라 downloader 가 다른 문서를 받아 둔 것이므로 문서화 면제 대상이 아니다. '우리가 가진 파일이 틀린 문서다'를 '발행사가 공시하지 않았다'로 등재하면 downloader 갭이 영구 사각으로 굳는다.",
+      "note": "등재사유 'image-only PDF' 는 **참이다**. 2026-08-21 validation 이 이 항목을 '538p / 286,634자 = 533자/p 이므로 거짓' 이라며 뒤집었으나 그 반증이 틀렸다 — 전체 평균이 앞부분을 가리는 혼합본이다. 실측(orchestrator 2026-09-01, fitz): p1-112 는 텍스트 0자 · 페이지당 이미지 1개(정기경영공시 본문, 스캔), p113-450 이 텍스트(감사보고서·주석, p113 이 그 표지). 반증이 근거로 든 인접 페이지 p249·p253·p302·p304 는 전부 감사보고서 구간이었다. '경과조치 538p 전체에서 0회' 도 같은 원인이다 — p3 을 170dpi 로 렌더링하면 'Ⅰ. 주요 경영현황 요약 / 1-1. 주요 경영 지표' 표에 '지급여력비율(경과조치 전) 156.9' · '지급여력비율(경과조치 후) 207.0' 이 그대로 인쇄돼 있다. 다른 문서를 받은 것이 아니다. 그럼에도 면제는 여전히 부당하다: 원문에 값이 있으므로 '발행사가 공시하지 않았다' 가 성립하지 않는다. **바뀐 것은 처방이다 — downloader 재수집이 아니라 OCR 이다(다시 받아도 같은 스캔본이 온다).**",
       "registered_by": "owner 2026-07-16",
-      "refuted_by": "validation 2026-08-21 (raw fitz 텍스트 + 240dpi 렌더링 육안, docling MD 아님)",
-      "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다."
+      "refuted_by": "validation 2026-08-21 — **그 반증 자체가 2026-09-01 에 반증됐다**(문서 전체 평균 chars/page 로 판독성을 재서 앞스캔·뒤텍스트 혼합본을 오판). 면제 부당 판정은 다른 근거로 유지된다(위 note).",
+      "resolved_note": "2026-08-21 validation 이 이 항목을 레지스트리에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 같은 (회사,분기)가 다시 면제로 등재되면 status=CONTRADICTED 가 즉시 RED 를 다시 띄운다 — 반증된 근거가 조용히 되살아나는 경로를 막는다.",
+      "correction": {
+        "date": "2026-09-01",
+        "by": "orchestrator",
+        "what": "판독성 반증 근거를 정정. status=CONTRADICTED 는 유지(사유 교체).",
+        "evidence": "fitz per-page: p1-112 chars=0/images=1each, p113+ text, whole-doc avg 532.8; p3 170dpi render shows 지급여력비율 경과조치 전 156.9 / 후 207.0",
+        "prescription": "OCR (not refetch)",
+        "ticket": "inbox/parser/20260901T0420Z__validation__MULTI__scanned_section_needs_ocr_not_refetch.md",
+        "metric_fixed_in": "scripts/build_kics_source_textlayer.py (status SCANNED_SECTION)"
+      }
     },
     {
       "registry": "_POST_PARENT_NOT_DISCLOSED",

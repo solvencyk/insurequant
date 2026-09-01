@@ -90,9 +90,16 @@ def main() -> int:
     # 산수는 다 맞으니 룰 게이트는 GREEN 이었다. 불변식 1번(게이트가 보는 파일 = 사용자가
     # 보는 파일)의 원천 쪽 집행자다. 다운로더 헤더에 이 함정이 문장으로만 적혀 있었고
     # 검사하는 코드는 없었다.
+    # `validate_stale_quarter_tables` 는 2026-09-01 신설. 롯데손해 2026.1Q 의 TFI 표가 통째로
+    # 직전 분기 기준값으로 인쇄돼 있었는데 **그것을 잡는 룰이 없었다** — `48_tier2_limit` 이
+    # 잔차를 냈고 사람이 손으로 파고들어서야 원인을 알았다. `TIER2_LIMIT_STALE` 은 그 뒤에
+    # 예외 등재부에 붙인 라벨이지 탐지기가 아니다. 같은 잔차가 발행사 총괄표/세부표 불일치로도
+    # 나므로, 탐지기가 없으면 다음 스테일 표는 "발행사 불일치" 로 등재되고 원인이 묻힌다.
+    # 스테일 표는 발행사 불일치와 달리 **고칠 수 있는 결함**(원천 선택·파싱)이라 구분이 필요하다.
     for _name in ("validate_csm_continuity", "validate_kics_rate_sensitivity",
                   "validate_nb_csm_multiple", "validate_csm_waterfall",
-                  "validate_live_artifacts", "validate_disclosure_freshness"):
+                  "validate_live_artifacts", "validate_disclosure_freshness",
+                  "validate_stale_quarter_tables"):
         # 자식 스크립트 일부가 stdout 을 utf-8 로 reconfigure 하지 않아 한글이 깨진 채 올라온다
         # (`validate_nb_csm_multiple` 실측). 훅이 그 출력을 사람에게 보여주므로 여기서 강제한다.
         _p = subprocess.run([sys.executable, str(ROOT / "scripts" / (_name + ".py"))],

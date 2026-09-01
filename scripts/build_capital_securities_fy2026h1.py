@@ -51,7 +51,10 @@ H1_AS_OF = "2026-06-30"
 HYBRID_REFRESH_CODES = {"KR0011", "KR0032", "KR0068", "KR0070", "KR0071", "KR0072", "KR0094", "KR0099", "KR0104"}
 # Company where the 차입금-note 후순위사채 column-group table was found & parsed (only one
 # template variant recognized so far — see module docstring).
-SUBORDINATED_REFRESH_CODES = {"KR0011"}
+# KR0003 추가(2026-09-01): 열그룹 colspan 대소문자/폭, 금액 라벨(액면금액), 회차 표기(제N차)
+# 세 가지 템플릿 가정 때문에 안 잡히고 있었다. 전기말 합계가 FY2025 기준선(806,732)을
+# 그대로 재현해 **기준(장부금액)이 확정**됐고, 10개 트랜치 전량이 고아 없이 대조된다.
+SUBORDINATED_REFRESH_CODES = {"KR0011", "KR0003"}
 
 TAG = r"T[A-Za-z]{1,2}"
 
@@ -166,12 +169,28 @@ def extract_hybrid_blocks(text: str, start_idx: int):
     return blocks
 
 
-def extract_subordinated_current(text: str):
-    for m in re.finditer(r"<TH[^>]*colspan=['\"]3['\"][^>]*>\s*후순위사채\s*</TH>", text):
+def extract_subordinated_current(text: str, period: str = "current"):
+    """차입금 주석의 후순위사채 열그룹 표를 읽는다.
+
+    `period="prior"` 는 같은 표의 **전기말** 판을 돌려준다 — 금액 행 라벨이 템플릿마다
+    달라(`사채, 명목금액` / `액면금액` / `장부금액`) 어느 것이 우리 FY2025 기준과 같은
+    개념인지 알 수 없기 때문이다. 전기말 합계를 FY2025 기준선에 대고 맞춰 보면 그 회사가
+    쓰던 기준(액면이냐 장부냐)이 확정되고, 같은 행의 당반기말 값을 쓰면 **기준을 바꾸지 않고
+    시점만 갱신**할 수 있다. 이 대조 없이 라벨을 골라 잡으면 롯데손해의 경우 장부 806,732 를
+    액면 810,000 으로 조용히 바꿔치기하게 된다(개념 절단).
+    """
+    CUR = ("당반기말", "당분기말", "당기말", "당기")
+    want = CUR if period == "current" else ("전기말", "전분기말", "전반기말", "전기")
+    # 2026-09-01: colspan 을 **소문자 + 폭 3 고정**으로 찾고 있었다. DART XML 은 필러 템플릿마다
+    # 속성 대소문자가 갈리고(KR0011 은 `colspan`, KR0003 은 `COLSPAN`), 열 폭은 그 회사의
+    # 후순위사채 차수 개수다(롯데 = 제8~17차 = 10). 그래서 이 표를 가진 회사가 여럿인데
+    # DB손해 하나만 매치됐다 — 템플릿이 하나뿐이라서가 아니라 정규식이 하나만 봤기 때문이다.
+    for m in re.finditer(r"<TH[^>]*\bcolspan=['\"]\d+['\"][^>]*>\s*후순위사채\s*</TH>",
+                         text, re.IGNORECASE):
         group_start = m.start()
         back = text[max(0, group_start - 3000):group_start]
         pm = list(re.finditer(r"(당반기말|당분기말|당기말|당기|전기말|전분기말|전반기말|전기)", back))
-        if not pm or pm[-1].group(1) not in ("당반기말", "당분기말", "당기말", "당기"):
+        if not pm or pm[-1].group(1) not in want:
             continue
         header_end = text.find("</THEAD>", group_start)
         if header_end == -1:
@@ -185,7 +204,11 @@ def extract_subordinated_current(text: str):
             continue
         body = text[body_start:body_end]
         rows = {}
-        for label in ("차입금, 발행일", "차입금, 만기", "차입금, 이자율", "사채, 명목금액"):
+        # 2026-09-01: 금액 행 라벨이 템플릿마다 다르다. KR0011 은 `사채, 명목금액`,
+        # KR0003 은 `액면금액`(+`장부금액`). 하나만 보고 있어서 롯데 표는 헤더까지 읽어 놓고
+        # 금액을 못 찾아 통째로 버려졌다. 셋 다 걷고 소비 측에서 우선순위로 고른다.
+        for label in ("차입금, 발행일", "차입금, 만기", "차입금, 이자율",
+                      "사채, 명목금액", "액면금액", "장부금액"):
             rm = re.search(
                 rf"<T[DEH][^>]*>\s*{re.escape(label)}\s*</T[DEH]>((?:\s*<T[DEH][^>]*>.*?</T[DEH]>)+)",
                 body, re.DOTALL)
@@ -201,6 +224,75 @@ def load_h1_xml(code):
     if xml is None:
         return None, None
     return xml, xml.read_text(encoding="utf-8", errors="replace")
+
+
+
+def _issuance_rows(text: str):
+    """반기보고서 표준 절 `[채무증권의 발행 등과 관련된 사항] 가. 채무증권 발행실적` 의 행.
+
+    이 표는 **잔액 전량이 아니라 보고창(최근 사업연도들) 안의 발행실적**이고, 각 행이
+    상환/미상환 상태를 달고 있다. 그래서 합계를 잔액으로 쓰면 안 되지만(창 밖 발행분이
+    빠진다), **개별 채권이 기준일 현재 여전히 미상환인지 확인**하는 데는 정확하다.
+
+    행 배열: [발행회사, 종류, 공모/사모, 발행일, 발행금액, 이자율, 등급, 만기일, 상환여부, 주관사]
+    """
+    out = []
+    for tr in re.finditer(r"<TR[^>]*>.*?(?=<TR[^>]*>|</TABLE>)", text, re.DOTALL):
+        cells = [re.sub(r"\s+", " ", t).replace("&nbsp;", " ").strip()
+                 for t in re.findall(r">([^<]+)", tr.group(0))]
+        cells = [c for c in cells if c]
+        if len(cells) < 9 or "미상환" not in cells:
+            continue
+        kind = next((c for c in cells[:4] if "신종자본증권" in c), None)
+        if not kind:
+            continue
+        issue = next((parse_kdate(c) for c in cells if re.fullmatch(r"\d{4}\.\d{2}\.\d{2}", c)), None)
+        amt = next((float(c.replace(",", "")) for c in cells
+                    if re.fullmatch(r"[\d,]+", c) and float(c.replace(",", "")) >= 100), None)
+        if issue and amt:
+            out.append({"issue_date": issue, "face_amount_mn": amt})
+    return out
+
+
+def _issuance_as_of(text: str):
+    flat = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", text))
+    m = re.search(r"채무증권\s*발행실적[^가-힣]{0,80}?기준일[^0-9]{0,10}(\d{4})\s*년\s*(\d{1,2})\s*월\s*(\d{1,2})", flat)
+    return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}" if m else None
+
+
+def confirm_hybrids_still_outstanding(code, fy25_hybrid_bonds, report):
+    """기존 신종자본증권이 기준일 현재 여전히 미상환인지 **확인만** 한다 — 값은 안 바꾼다.
+
+    `자본으로 인정되는 채무증권의 발행` 개별 주석은 24개 제출사 중 9곳에만 있다. 나머지는
+    FY2025 를 그대로 이월했는데, 그 결과 화면에 "발행잔액 기준일 2025-12-31" 이 반기 내내
+    남았다(owner 지적, 2026-09-01). 그런데 표준 절 `채무증권 발행실적` 은 24곳 전부에 있고
+    기준일이 2026-06-30 이다. 기존 채권이 (발행일, 발행금액) 으로 그 표에 **미상환**으로
+    그대로 있으면, 값은 한 칸도 안 바꾸고 **시점만** 정직하게 갱신할 수 있다.
+
+    전량 확인된 경우에만 기준일을 돌려준다. 한 건이라도 확인 못 하면 None — 부분 확인을
+    전량 확인처럼 보이게 하지 않는다(company as_of 는 bond as_of 의 min 이라 조용히 최신으로
+    보이게 만들 수 있다).
+    """
+    if not fy25_hybrid_bonds:
+        return None, None
+    xml_path, text = load_h1_xml(code)
+    if text is None:
+        return None, None
+    as_of = _issuance_as_of(text)
+    if not as_of:
+        return None, None
+    rows = _issuance_rows(text)
+    unmatched = []
+    for b in fy25_hybrid_bonds:
+        hit = any(r["issue_date"] == b.get("issue_date")
+                  and abs(r["face_amount_mn"] - (b.get("face_amount_mn") or -1)) < 1
+                  for r in rows)
+        if not hit:
+            unmatched.append(b.get("name"))
+    if unmatched:
+        report.setdefault("hybrid_confirm_partial", {})[code] = unmatched
+        return None, None
+    return as_of, xml_path.relative_to(ROOT).as_posix()
 
 
 def merge_hybrid(code, fy25_hybrid_bonds, report):
@@ -274,10 +366,43 @@ def merge_subordinated(code, fy25_sub_bonds, report):
     xml_path, text = load_h1_xml(code)
     names, rows = extract_subordinated_current(text)
     src_rel = xml_path.relative_to(ROOT).as_posix()
-    if not names or not rows.get("사채, 명목금액"):
+    # 금액 행 라벨은 템플릿마다 다르다. **어느 것을 쓸지는 전기말 합계가 FY2025 기준선을
+    # 재현하는지로 정한다** — 그래야 기준(액면/장부)을 바꾸지 않고 시점만 갱신한다.
+    _, prior_rows = extract_subordinated_current(text, period="prior")
+    fy25_total = sum(x.get("outstanding_mn") or 0 for x in fy25_sub_bonds)
+
+    def _sum(vals):
+        t = 0.0
+        for v in vals or []:
+            v = (v or "").replace(",", "").strip()
+            if re.fullmatch(r"-?\d+(\.\d+)?", v):
+                t += float(v)
+        return t
+
+    # 값 블록이 표 안에서 두 번 반복되는 템플릿이 있다(KR0011·KR0003 실측: 합계가 정확히 2배).
+    # 기존 소비 코드가 `amounts[i] for i in range(len(names))` 로 **앞 N개만** 쓰므로,
+    # 대조도 같은 슬라이스로 해야 한다. 전체를 더하면 어떤 라벨도 기준선과 안 맞는다.
+    n = len(names or [])
+    CANDIDATES = ("사채, 명목금액", "액면금액", "장부금액")
+    amount_label = None
+    if rows and prior_rows and fy25_total and n:
+        for k in CANDIDATES:
+            if rows.get(k) and prior_rows.get(k) and abs(_sum(prior_rows[k][:n]) - fy25_total) <= 1.0:
+                amount_label = k
+                break
+    if amount_label is None:
+        # 대조 실패 = 어떤 기준인지 모른다. 추측해서 갈아끼우지 않고 FY2025 를 유지한다.
+        report.setdefault("sub_basis_unreconciled", {})[code] = {
+            "fy2025_total_mn": fy25_total,
+            "prior_sums": {k: _sum((prior_rows.get(k) or [])[:n]) for k in CANDIDATES
+                           if prior_rows and prior_rows.get(k)},
+        }
         report.setdefault("sub_extract_failed", []).append(code)
         return None
-    amounts = rows["사채, 명목금액"]
+    if not names:
+        report.setdefault("sub_extract_failed", []).append(code)
+        return None
+    amounts = rows[amount_label]
     issue_dates = rows.get("차입금, 발행일", [])
     maturities = rows.get("차입금, 만기", [])
     rates = rows.get("차입금, 이자율", [])
@@ -295,14 +420,26 @@ def merge_subordinated(code, fy25_sub_bonds, report):
             except ValueError:
                 pass
         # match against fy2025 by 회차 fragment inside the name (e.g. '제1-2회','제2회','제3회')
-        key_m = re.search(r"제\s*[\d\-]+\s*회", nm)
-        key = re.sub(r"\s+", "", key_m.group(0)) if key_m else None
+        # 2026-09-01: 짝짓기는 **발행일 우선**이다. 회차 표기가 `제3회`(KR0011) · `제 8차`(KR0003)
+        # 로 갈릴 뿐 아니라, FY2025 이름이 `08차 무보증 후순위사채` 처럼 `제` 없이 시작하는
+        # 사모 건이 있어 회차만 보면 10건 중 4건이 짝을 잃는다. 짝을 잃으면 `call_date` 가
+        # 상속되지 않고 `발행일+5년` 으로 유도돼 **인정금액이 조용히 155억 움직였다**(실측).
         fy_match = None
-        if key:
-            for b in fy25_sub_bonds:
-                if key in re.sub(r"\s+", "", b["name"]):
-                    fy_match = b
-                    break
+        if iss:
+            cands = [b for b in fy25_sub_bonds if b.get("issue_date") == iss]
+            if len(cands) == 1:
+                fy_match = cands[0]
+        if fy_match is None:
+            key_m2 = re.search(r"제?\s*[\d\-]+\s*[회차]", nm)
+            key = re.sub(r"[제회차\s]", "", key_m2.group(0)) if key_m2 else None
+            if key:
+                for b in fy25_sub_bonds:
+                    bk = re.search(r"제?\s*[\d\-]+\s*[회차]", b["name"])
+                    if bk and re.sub(r"[제회차\s]", "", bk.group(0)) == key:
+                        fy_match = b
+                        break
+        if fy_match is None:
+            report.setdefault("sub_unmatched_bond", {}).setdefault(code, []).append(nm)
         base = dict(fy_match) if fy_match else {}
         if amt_mn == 0:
             report.setdefault("sub_redeemed", {}).setdefault(code, []).append(nm)
@@ -315,16 +452,24 @@ def merge_subordinated(code, fy25_sub_bonds, report):
             "call_date": base.get("call_date"),  # derived issue+5y methodology unchanged, inherit
             "call_source": base.get("call_source", "derived_issue_plus_5y"),
             "coupon_pct": rate_pct if rate_pct is not None else base.get("coupon_pct"),
-            "face_amount_mn": amt_mn or base.get("face_amount_mn"),
+            # 대조로 고른 행이 `장부금액` 이면 그 값은 **잔액**이지 액면이 아니다.
+            # 액면까지 덮어쓰면 90,000 이 89,863 이 되는 개념 절단이 된다 — FY2025 액면을 남긴다.
+            "face_amount_mn": (base.get("face_amount_mn")
+                               if amount_label == "장부금액" and base.get("face_amount_mn")
+                               else (amt_mn or base.get("face_amount_mn"))),
             "outstanding_mn": amt_mn,
             "past_call_outstanding": base.get("past_call_outstanding", False),
             "as_of": H1_AS_OF,
             "source_file": src_rel,
         })
-    fy_keys = {re.sub(r"\s+", "", re.search(r"제\s*[\d\-]+\s*회", b["name"]).group(0))
-               for b in fy25_sub_bonds if re.search(r"제\s*[\d\-]+\s*회", b["name"])}
-    h1_keys = {re.sub(r"\s+", "", re.search(r"제\s*[\d\-]+\s*회", n).group(0))
-               for n in names if re.search(r"제\s*[\d\-]+\s*회", n)}
+    _K = r"제\s*[\d\-]+\s*[회차]"
+    def _norm(x):
+        # `제 8차` 와 `제8회` 가 같은 채권을 가리킬 수 있어 차/회 를 지우고 번호로만 비교한다.
+        return re.sub(r"[회차\s]", "", x)
+    fy_keys = {_norm(re.search(_K, b["name"]).group(0))
+               for b in fy25_sub_bonds if re.search(_K, b["name"])}
+    h1_keys = {_norm(re.search(_K, n).group(0))
+               for n in names if re.search(_K, n)}
     if fy_keys - h1_keys:
         report.setdefault("sub_orphans", {})[code] = sorted(fy_keys - h1_keys)
     return merged
@@ -334,7 +479,7 @@ def main():
     fy25 = json.loads(FY25_PATH.read_text(encoding="utf-8"))
     report = {}
     out_companies = []
-    n_hybrid_refreshed = n_sub_refreshed = 0
+    n_hybrid_refreshed = n_sub_refreshed = n_hybrid_confirmed = 0
 
     for c in fy25["companies"]:
         code = c["code"]
@@ -355,6 +500,16 @@ def main():
                 notes_extra.append("HYBRID refresh attempted but left an unmatched FY2025 bond "
                                     "(orphan) -> kept FY2025 values for safety, see hybrid_orphans in report")
         else:
+            # 개별 주석이 없는 회사 — 값은 FY2025 그대로 두되, 표준 발행실적 표로 전량
+            # '여전히 미상환' 이 확인되면 시점만 갱신한다(숫자 변경 없음).
+            conf_as_of, conf_src = confirm_hybrids_still_outstanding(code, fy25_hybrid, report)
+            if conf_as_of:
+                fy25_hybrid = [dict(b, as_of=conf_as_of,
+                                    source_file=f"{conf_src} (채무증권 발행실적: 미상환 확인, 금액 불변)")
+                               for b in fy25_hybrid]
+                n_hybrid_confirmed += 1
+                notes_extra.append(f"HYBRID unchanged but confirmed still outstanding at {conf_as_of} "
+                                   f"via 채무증권 발행실적 ({len(fy25_hybrid)} bond(s))")
             new_bonds.extend(fy25_hybrid)
 
         if code in SUBORDINATED_REFRESH_CODES:
@@ -406,6 +561,7 @@ def main():
     print(f"[wrote] {OUT_PATH.relative_to(ROOT)}  n_companies={len(out_companies)}")
     print(f"hybrid refreshed: {n_hybrid_refreshed}/{len(HYBRID_REFRESH_CODES)} target companies")
     print(f"subordinated refreshed: {n_sub_refreshed}/{len(SUBORDINATED_REFRESH_CODES)} target companies")
+    print(f"hybrid confirmed-unchanged (as_of only): {n_hybrid_confirmed} companies")
     if report:
         print("\n[report / anomalies]")
         print(json.dumps(report, ensure_ascii=False, indent=2))

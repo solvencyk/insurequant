@@ -341,8 +341,8 @@
           "face_amount_mn": 644850,
           "outstanding_mn": 644850,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0073_교보생명보험_20260331004015/20260331004015.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "원화신종자본증권 (지속가능채권, 2021)",
@@ -355,8 +355,8 @@
           "face_amount_mn": 470000,
           "outstanding_mn": 470000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0073_교보생명보험_20260331004015/20260331004015.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "원화신종자본증권 (지속가능채권, 2023)",
@@ -369,8 +369,8 @@
           "face_amount_mn": 500000,
           "outstanding_mn": 500000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0073_교보생명보험_20260331004015/20260331004015.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "원화신종자본증권 (2024)",
@@ -383,8 +383,8 @@
           "face_amount_mn": 600000,
           "outstanding_mn": 600000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0073_교보생명보험_20260331004015/20260331004015.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "무보증후순위사채 (2024)",
@@ -401,7 +401,7 @@
           "source_file": "data/dart/FY2025_Q4/raw/KR0073_교보생명보험_20260331004015/20260331004015.xml"
         }
       ],
-      "notes": "Separate-entity (별도) basis — the K-ICS-relevant 교보생명보험 entity. Latest rcept 20260331004015 (only KR0073 raw dir; no 정정).\n\nHYBRID (신종자본증권) — 4 outstanding, all 미상환 confirmed in the '회계상 자본으로 인정되는 미상환 채무증권' disclosure register (기준일 2025-12-31, Tables #9/#15) and the 별도 note 25-3 (Table #6). Per-bond outstanding = full face (미상환잔액 = 권면총액 for each). Face total = 2,214,850 백만원. BS recognized 신종자본증권 capital line (별도) = 2,205,726 백만원 (= 2,214,850 face minus 9,124 발행비용: USD bond −4,567 and 원화 group −4,557). USD bond 권면 644,850 = USD 500M at issue-date FX (per filing).\n\nCALL DATES — all DISCLOSED as explicit calendar dates in the 미상환 채무증권 register '만기 및 조기상환 가능일': 2022 USD→2027-06-15; 2021 원화→2026-09-10; 2023 원화→2028-05-12; 2024 원화→2029-11-12. All calls are AFTER 2025-12-31, so past_call_outstanding=false for every hybrid (the 2021 bond's first call 2026-09-10 is ~9 months after the reporting date — NOT yet past). Hybrid legal maturities are 30yr with 5yr first call + 5yr base-rate reset + step-up at 10yr; issuer may extend at maturity (perpetual character).\n\nSUBORDINATED (후순위) — 1 bond: 무보증후순위사채 issued 2024-08-06, legal mat 2034-08-06 (10yr), coupon 4.30%, face/outstanding 700,000 백만원, 미상환. 별도 차입부채 note 20 prose: '발행 후 5년이 되는 시점부터 당사가 후순위사채의 전부를 상환' → 5yr call = 2029-08-06 (call_source='disclosed' from the 5yr-call prose, no calendar date in register where it appears as a '회사채'). BS recognized (별도, net of 할인발행차금 −1,755) = 698,245 백만원. In the issuance register it is listed as 증권종류 '회사채' (NH투자증권), 미상환.\n\nCONSOLIDATED vs SEPARATE: the 연결 statements (note 20/26, Tables #1-#4) additionally carry subsidiary bonds (교보증권 무보증회사채, 교보자산신탁 무보증사모/회사채 — totaling 600,800 face) and the same 700,000 후순위 + identical 4 hybrids. Those subsidiary 일반 회사채 are NOT capital securities of the insurer and are excluded. Reported figures here are the insurer's own (별도) hybrids + subordinated only."
+      "notes": "Separate-entity (별도) basis — the K-ICS-relevant 교보생명보험 entity. Latest rcept 20260331004015 (only KR0073 raw dir; no 정정).\n\nHYBRID (신종자본증권) — 4 outstanding, all 미상환 confirmed in the '회계상 자본으로 인정되는 미상환 채무증권' disclosure register (기준일 2025-12-31, Tables #9/#15) and the 별도 note 25-3 (Table #6). Per-bond outstanding = full face (미상환잔액 = 권면총액 for each). Face total = 2,214,850 백만원. BS recognized 신종자본증권 capital line (별도) = 2,205,726 백만원 (= 2,214,850 face minus 9,124 발행비용: USD bond −4,567 and 원화 group −4,557). USD bond 권면 644,850 = USD 500M at issue-date FX (per filing).\n\nCALL DATES — all DISCLOSED as explicit calendar dates in the 미상환 채무증권 register '만기 및 조기상환 가능일': 2022 USD→2027-06-15; 2021 원화→2026-09-10; 2023 원화→2028-05-12; 2024 원화→2029-11-12. All calls are AFTER 2025-12-31, so past_call_outstanding=false for every hybrid (the 2021 bond's first call 2026-09-10 is ~9 months after the reporting date — NOT yet past). Hybrid legal maturities are 30yr with 5yr first call + 5yr base-rate reset + step-up at 10yr; issuer may extend at maturity (perpetual character).\n\nSUBORDINATED (후순위) — 1 bond: 무보증후순위사채 issued 2024-08-06, legal mat 2034-08-06 (10yr), coupon 4.30%, face/outstanding 700,000 백만원, 미상환. 별도 차입부채 note 20 prose: '발행 후 5년이 되는 시점부터 당사가 후순위사채의 전부를 상환' → 5yr call = 2029-08-06 (call_source='disclosed' from the 5yr-call prose, no calendar date in register where it appears as a '회사채'). BS recognized (별도, net of 할인발행차금 −1,755) = 698,245 백만원. In the issuance register it is listed as 증권종류 '회사채' (NH투자증권), 미상환.\n\nCONSOLIDATED vs SEPARATE: the 연결 statements (note 20/26, Tables #1-#4) additionally carry subsidiary bonds (교보증권 무보증회사채, 교보자산신탁 무보증사모/회사채 — totaling 600,800 face) and the same 700,000 후순위 + identical 4 hybrids. Those subsidiary 일반 회사채 are NOT capital securities of the insurer and are excluded. Reported figures here are the insurer's own (별도) hybrids + subordinated only. | HYBRID unchanged but confirmed still outstanding at 2026-06-30 via 채무증권 발행실적 (4 bond(s))"
     },
     {
       "code": "KR0002",
@@ -426,8 +426,8 @@
           "face_amount_mn": 150000,
           "outstanding_mn": 150000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0002_한화손해보험_20260310003000/20260310003000.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0002_한화손해보험/20260813001433.xml (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "제14회 사모 채권형 신종자본증권",
@@ -440,8 +440,8 @@
           "face_amount_mn": 85000,
           "outstanding_mn": 85000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0002_한화손해보험_20260310003000/20260310003000.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0002_한화손해보험/20260813001433.xml (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "제12회 무보증후순위사채",
@@ -486,7 +486,7 @@
           "source_file": "data/dart/FY2025_Q4/raw/KR0002_한화손해보험_20260310003000/20260310003000.xml"
         }
       ],
-      "notes": "Source: latest (only) raw dir KR0002_한화손해보험_20260310003000 (rcept 20260310003000), main XML 20260310003000.xml; notes files _00760/_00761 confirm the same hybrid detail. As-of 2025-12-31 (FY2025 사업보고서, 제81기).\n\nHYBRIDS (신종자본증권) — 2 outstanding:\n- Confirmed in 3 independent tables: (a) 증권발행현황 register \"(기준일 2025-12-31, 단위 백만원)\" — both 미상환; (b) BS note \"(4) 자본으로 분류된 채권형 신종자본증권의 내역\" (separate XML _00760/_00761) listing 제13회/제14회 with 당기말 150,000,000/85,000,000 천원; (c) \"자본으로 인정되는 미상환 채무증권\" detail blocks with 미상환잔액 150,000/85,000 백만원.\n- Call dates DISCLOSED (call_source=disclosed): 제13회 → \"발행일로부터 5년이 경과된 2027년 5월 31일 이후 금융감독원의 승인이 있을 시 중도상환 가능\"; 제14회 → \"...2027년 9월 29일 이후...\". Both = 발행일+5yr exactly. Legal maturity 30yr (2052). Step-up: 5yr 금리재조정 then +1.00%p at 10yr (2032). Neither is past call as of 2025-12-31.\n- 회차 회수 quirk: in the 증권발행현황 register the 2022-09-29 issue is 공모, but elsewhere both 신종자본증권 are labeled 사모 채권형 in the BS note (제13회=2022-05-31, 제14회=2022-09-29). I used the BS-note 회차/labels for the name since that is the authoritative recognized-hybrid note.\n\nBS RECOGNIZED HYBRID TOTAL bs_hybrid_mn=234,105 백만원 = 234,105,435 천원 (= 150,000 + 85,000 − 894.565 발행비용). Gross face/outstanding = 235,000 백만원 (total_hybrid_outstanding_mn). Difference is the 발행비용 894,565 천원 netted in equity.\n\nSUBORDINATED (무보증후순위사채) — 3 outstanding (from 사채관리계약 현황 table \"(작성기준일 2025-12-31, 단위 백만원)\"):\n- 제12회 2022-03-07/2032-03-07 250,000 (coupon 4.90%); 제15회 2024-08-29/2034-08-29 350,000 (4.78%); 제16회 2025-01-31/2035-01-31 500,000 (4.79%). Coupons cross-checked from the 채무증권 발행현황 register (제16회 shown as '4,79%' typo = 4.79%).\n- These appear as 회사채 in the 증권발행현황 register (DART register labels subordinated bonds 회사채), but the 사채관리 table and 신용평가 history explicitly name them 무보증후순위사채 → tier=subordinated.\n- No disclosed call date for the subordinated bonds, so call_source=derived_issue_plus_5y (issue+5yr; legal maturity = issue+10yr). None past call as of 2025-12-31.\n- Earlier 제11회 무보증후순위사채 (2018) and 2018-07-31 신종자본증권 190,000 appear in 채무증권 발행현황 with 비고='조기상환' → already redeemed, NOT outstanding (excluded).\n- bs_subordinated_mn=null: subordinated 후순위사채 are debt (사채) not equity; no single BS 'subordinated' equity line. Outstanding total_subordinated_outstanding_mn=1,100,000 백만원 (=250,000+350,000+500,000), reconciles with the 사채관리 table sum.\n\nUNIT: all 백만원. past_call_outstanding=false for all 5 bonds."
+      "notes": "Source: latest (only) raw dir KR0002_한화손해보험_20260310003000 (rcept 20260310003000), main XML 20260310003000.xml; notes files _00760/_00761 confirm the same hybrid detail. As-of 2025-12-31 (FY2025 사업보고서, 제81기).\n\nHYBRIDS (신종자본증권) — 2 outstanding:\n- Confirmed in 3 independent tables: (a) 증권발행현황 register \"(기준일 2025-12-31, 단위 백만원)\" — both 미상환; (b) BS note \"(4) 자본으로 분류된 채권형 신종자본증권의 내역\" (separate XML _00760/_00761) listing 제13회/제14회 with 당기말 150,000,000/85,000,000 천원; (c) \"자본으로 인정되는 미상환 채무증권\" detail blocks with 미상환잔액 150,000/85,000 백만원.\n- Call dates DISCLOSED (call_source=disclosed): 제13회 → \"발행일로부터 5년이 경과된 2027년 5월 31일 이후 금융감독원의 승인이 있을 시 중도상환 가능\"; 제14회 → \"...2027년 9월 29일 이후...\". Both = 발행일+5yr exactly. Legal maturity 30yr (2052). Step-up: 5yr 금리재조정 then +1.00%p at 10yr (2032). Neither is past call as of 2025-12-31.\n- 회차 회수 quirk: in the 증권발행현황 register the 2022-09-29 issue is 공모, but elsewhere both 신종자본증권 are labeled 사모 채권형 in the BS note (제13회=2022-05-31, 제14회=2022-09-29). I used the BS-note 회차/labels for the name since that is the authoritative recognized-hybrid note.\n\nBS RECOGNIZED HYBRID TOTAL bs_hybrid_mn=234,105 백만원 = 234,105,435 천원 (= 150,000 + 85,000 − 894.565 발행비용). Gross face/outstanding = 235,000 백만원 (total_hybrid_outstanding_mn). Difference is the 발행비용 894,565 천원 netted in equity.\n\nSUBORDINATED (무보증후순위사채) — 3 outstanding (from 사채관리계약 현황 table \"(작성기준일 2025-12-31, 단위 백만원)\"):\n- 제12회 2022-03-07/2032-03-07 250,000 (coupon 4.90%); 제15회 2024-08-29/2034-08-29 350,000 (4.78%); 제16회 2025-01-31/2035-01-31 500,000 (4.79%). Coupons cross-checked from the 채무증권 발행현황 register (제16회 shown as '4,79%' typo = 4.79%).\n- These appear as 회사채 in the 증권발행현황 register (DART register labels subordinated bonds 회사채), but the 사채관리 table and 신용평가 history explicitly name them 무보증후순위사채 → tier=subordinated.\n- No disclosed call date for the subordinated bonds, so call_source=derived_issue_plus_5y (issue+5yr; legal maturity = issue+10yr). None past call as of 2025-12-31.\n- Earlier 제11회 무보증후순위사채 (2018) and 2018-07-31 신종자본증권 190,000 appear in 채무증권 발행현황 with 비고='조기상환' → already redeemed, NOT outstanding (excluded).\n- bs_subordinated_mn=null: subordinated 후순위사채 are debt (사채) not equity; no single BS 'subordinated' equity line. Outstanding total_subordinated_outstanding_mn=1,100,000 백만원 (=250,000+350,000+500,000), reconciles with the 사채관리 table sum.\n\nUNIT: all 백만원. past_call_outstanding=false for all 5 bonds. | HYBRID unchanged but confirmed still outstanding at 2026-06-30 via 채무증권 발행실적 (2 bond(s))"
     },
     {
       "code": "KR0083",
@@ -511,8 +511,8 @@
           "face_amount_mn": 40000,
           "outstanding_mn": 40000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0083_푸본현대생명보험_20260331002089/20260331002089.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0083_푸본현대생명보험/20260814004204.xml (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "사모채권형 신종자본증권 (2023-02-28 발행, 6.20%)",
@@ -525,8 +525,8 @@
           "face_amount_mn": 60000,
           "outstanding_mn": 60000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0083_푸본현대생명보험_20260331002089/20260331002089.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0083_푸본현대생명보험/20260814004204.xml (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "후순위사채17호 (4.60%)",
@@ -664,7 +664,7 @@
           "source_file": "data/dart/FY2025_Q4/raw/KR0083_푸본현대생명보험_20260331002089/20260331002089.xml"
         }
       ],
-      "notes": "Source: KR0083 푸본현대생명 FY2025 사업보고서 main XML (20260331002089.xml; single raw dir, no 정정). All figures 기준일 2025-12-31, 단위 백만원.\n\nHYBRIDS (신종자본증권): note (3) 신종자본증권 table lists 2 bonds, gross face 100,000 (40,000 @7.95% + 60,000 @6.20%), net of 발행비용 (234) = BS recognized 99,766. CALL is DISCLOSED in prose: \"상기 신종자본증권은 발행 후 5년 시점부터 회사가 조기상환을 할 수 있으며, 발행일로부터 10년 경과 후 1회에 한하여 이자율이 조정됩니다. 만기일이 도래한 경우 회사 선택에 따라 만기를 계속 연장할 수 있습니다.\" So call_source='disclosed', call_date = issue+5y = 2027-11-30 / 2028-02-28 (both AFTER 2025-12-31, no past-call). Legal maturity 30yr (2052/2053).\n\nSUBORDINATED (후순위사채): note 24 차입부채 table gives per-bond 이자율 + 당기말/전기말 balance only — NO per-bond 발행일/만기일 columns anywhere in this filing. 호17~27 are outstanding (727,500 face sum). 후순위사채15호(4.30%) and 16호(4.49%) show 당기말 '-' (redeemed during FY2025; 전기말 15,000 / 50,000) so EXCLUDED from outstanding. Issue/maturity/call dates are NULL for all subordinated bonds: the III-7 미상환사채 발행현황 / 사채관리계약 현황 / 채무증권 발행실적 tables (채권명/발행일/만기일/발행액 columns) are present but ALL DATA ROWS ARE BLANK (only '합계 -' or empty), and there is no dated subordinated issuance table — so derived call could not be computed and call_source='none'. Funding history table (단위 억원): 후순위채권 issued 2,080(2023)/1,700(2024)/0(2025); 신종자본증권 600(2023)/0(2024)/0(2025).\n\nRECONCILIATION: bs_hybrid_mn=99,766 (note-3 합계, = BS 자본 '3. 신종자본증권 99,766'). Subordinated: note-24 차입부채 합계 1,125,413 = 후순위 9건 face 727,500 − 할인발행차금 2,087(= 84+222+133+390+270+300+75+182+431) + REPO 차입금 400,000. So subordinated carrying (net of 할인발행차금) = 727,500 − 2,087 = 725,413 (≈ bs_subordinated_mn; reported here as 725,613 derived from listed 할인차금 — minor rounding from individual 할인발행차금 lines, face=727,500 is the reliable outstanding figure). face_amount_mn set equal to outstanding for subordinated since 권면=당기말 balance (no partial amortization shown). | 후순위 발행일 ESTIMATE(2026-06-20): 상세표 발행일컬럼 부재, 회차(17~20호 pre-2023/23호+ 2023+)+신용평가이력으로 grandfathering 추정."
+      "notes": "Source: KR0083 푸본현대생명 FY2025 사업보고서 main XML (20260331002089.xml; single raw dir, no 정정). All figures 기준일 2025-12-31, 단위 백만원.\n\nHYBRIDS (신종자본증권): note (3) 신종자본증권 table lists 2 bonds, gross face 100,000 (40,000 @7.95% + 60,000 @6.20%), net of 발행비용 (234) = BS recognized 99,766. CALL is DISCLOSED in prose: \"상기 신종자본증권은 발행 후 5년 시점부터 회사가 조기상환을 할 수 있으며, 발행일로부터 10년 경과 후 1회에 한하여 이자율이 조정됩니다. 만기일이 도래한 경우 회사 선택에 따라 만기를 계속 연장할 수 있습니다.\" So call_source='disclosed', call_date = issue+5y = 2027-11-30 / 2028-02-28 (both AFTER 2025-12-31, no past-call). Legal maturity 30yr (2052/2053).\n\nSUBORDINATED (후순위사채): note 24 차입부채 table gives per-bond 이자율 + 당기말/전기말 balance only — NO per-bond 발행일/만기일 columns anywhere in this filing. 호17~27 are outstanding (727,500 face sum). 후순위사채15호(4.30%) and 16호(4.49%) show 당기말 '-' (redeemed during FY2025; 전기말 15,000 / 50,000) so EXCLUDED from outstanding. Issue/maturity/call dates are NULL for all subordinated bonds: the III-7 미상환사채 발행현황 / 사채관리계약 현황 / 채무증권 발행실적 tables (채권명/발행일/만기일/발행액 columns) are present but ALL DATA ROWS ARE BLANK (only '합계 -' or empty), and there is no dated subordinated issuance table — so derived call could not be computed and call_source='none'. Funding history table (단위 억원): 후순위채권 issued 2,080(2023)/1,700(2024)/0(2025); 신종자본증권 600(2023)/0(2024)/0(2025).\n\nRECONCILIATION: bs_hybrid_mn=99,766 (note-3 합계, = BS 자본 '3. 신종자본증권 99,766'). Subordinated: note-24 차입부채 합계 1,125,413 = 후순위 9건 face 727,500 − 할인발행차금 2,087(= 84+222+133+390+270+300+75+182+431) + REPO 차입금 400,000. So subordinated carrying (net of 할인발행차금) = 727,500 − 2,087 = 725,413 (≈ bs_subordinated_mn; reported here as 725,613 derived from listed 할인차금 — minor rounding from individual 할인발행차금 lines, face=727,500 is the reliable outstanding figure). face_amount_mn set equal to outstanding for subordinated since 권면=당기말 balance (no partial amortization shown). | 후순위 발행일 ESTIMATE(2026-06-20): 상세표 발행일컬럼 부재, 회차(17~20호 pre-2023/23호+ 2023+)+신용평가이력으로 grandfathering 추정. | HYBRID unchanged but confirmed still outstanding at 2026-06-30 via 채무증권 발행실적 (2 bond(s))"
     },
     {
       "code": "KR0087",
@@ -1065,13 +1065,13 @@
     {
       "code": "KR0003",
       "company": "롯데손해보험",
-      "as_of": "2025-12-31",
+      "as_of": "2026-06-30",
       "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)",
       "has_capital_securities": true,
       "bs_hybrid_mn": 45370,
       "bs_subordinated_mn": 806732,
       "total_hybrid_outstanding_mn": 46000,
-      "total_subordinated_outstanding_mn": 806732,
+      "total_subordinated_outstanding_mn": 806951,
       "confidence": "high",
       "bonds": [
         {
@@ -1085,8 +1085,8 @@
           "face_amount_mn": 40000,
           "outstanding_mn": 40000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "제4회 사모 채권형 신종자본증권",
@@ -1099,8 +1099,8 @@
           "face_amount_mn": 6000,
           "outstanding_mn": 6000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "08차 무보증 후순위사채 (회사채 2020.05.07)",
@@ -1111,10 +1111,10 @@
           "call_source": "derived_issue_plus_5y",
           "coupon_pct": 6.08,
           "face_amount_mn": 90000,
-          "outstanding_mn": 89846,
+          "outstanding_mn": 89863,
           "past_call_outstanding": true,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml"
         },
         {
           "name": "제9회 무보증 후순위사채 (09차)",
@@ -1125,10 +1125,10 @@
           "call_source": "derived_issue_plus_5y",
           "coupon_pct": 6.9,
           "face_amount_mn": 140000,
-          "outstanding_mn": 138978,
+          "outstanding_mn": 139055,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml"
         },
         {
           "name": "10차 무보증 후순위사채 (사모 2023.06.29)",
@@ -1139,10 +1139,10 @@
           "call_source": "derived_issue_plus_5y",
           "coupon_pct": 7.5,
           "face_amount_mn": 10000,
-          "outstanding_mn": 9969,
+          "outstanding_mn": 9971,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml"
         },
         {
           "name": "제11회 무보증 후순위사채 (11차)",
@@ -1153,10 +1153,10 @@
           "call_source": "derived_issue_plus_5y",
           "coupon_pct": 7.5,
           "face_amount_mn": 60000,
-          "outstanding_mn": 59858,
+          "outstanding_mn": 59867,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml"
         },
         {
           "name": "12차 무보증 후순위사채 (사모 2023.07.31)",
@@ -1167,10 +1167,10 @@
           "call_source": "derived_issue_plus_5y",
           "coupon_pct": 7.5,
           "face_amount_mn": 10000,
-          "outstanding_mn": 9956,
+          "outstanding_mn": 9959,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml"
         },
         {
           "name": "제13회 무보증 후순위사채 (13차)",
@@ -1181,10 +1181,10 @@
           "call_source": "derived_issue_plus_5y",
           "coupon_pct": 7.29,
           "face_amount_mn": 70000,
-          "outstanding_mn": 69683,
+          "outstanding_mn": 69703,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml"
         },
         {
           "name": "제14회 무보증 후순위사채 (14차)",
@@ -1195,10 +1195,10 @@
           "call_source": "derived_issue_plus_5y",
           "coupon_pct": 6.8,
           "face_amount_mn": 80000,
-          "outstanding_mn": 79704,
+          "outstanding_mn": 79722,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml"
         },
         {
           "name": "제15회 무보증 후순위사채 (15차)",
@@ -1209,10 +1209,10 @@
           "call_source": "derived_issue_plus_5y",
           "coupon_pct": 6.8,
           "face_amount_mn": 140000,
-          "outstanding_mn": 139506,
+          "outstanding_mn": 139535,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml"
         },
         {
           "name": "16차 무보증 후순위사채 (사모 2024.08.29)",
@@ -1223,10 +1223,10 @@
           "call_source": "derived_issue_plus_5y",
           "coupon_pct": 6.4,
           "face_amount_mn": 10000,
-          "outstanding_mn": 9953,
+          "outstanding_mn": 9956,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml"
         },
         {
           "name": "제17회 무보증 후순위사채 (17차)",
@@ -1237,13 +1237,13 @@
           "call_source": "derived_issue_plus_5y",
           "coupon_pct": 6.2,
           "face_amount_mn": 200000,
-          "outstanding_mn": 199279,
+          "outstanding_mn": 199320,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml (main report; 채무증권 발행/사채관리계약/신종자본증권 현황) and 20260319001293_00760.xml (audited notes 24 후순위채권 + 27 신종자본증권)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0003_롯데손해보험/20260814002802.xml"
         }
       ],
-      "notes": "UNIT = 백만원 (KRW mn), 기준일 2025-12-31 (제81기말).\n\nHYBRIDS (신종자본증권), 2 bonds, both 자본 분류:\n- Per audited note 27 (file _00760.xml): 제3회 공모 40,000 + 제4회 사모 6,000, 발행일 2021.12.17 / 2021.12.29, 만기 2051.12.17 / 2051.12.29 (30yr, 만기 시 30yr 추가연장 가능), 이자율 6.8% fixed to 2026.12.x then reset.\n- CALL = DISCLOSED. Both bonds' 발행조건 + main-report '신종자본증권 현황' state 최초중도상환일 = 발행일로부터 5년 경과한 날 (issuer-discretion call, 원금 100% 상환). So call_source='disclosed': 제3회 2026-12-17, 제4회 2026-12-29. Neither is past call as of 2025-12-31.\n- outstanding_mn = face (no amortization on the per-bond face). gross face/outstanding total = 46,000. BS-recognized hybrid (자본 component) = 45,370 = 46,000 − 630 발행비용 (bs_hybrid_mn). total_hybrid_outstanding_mn reported as gross 46,000 (sum of per-bond outstanding).\n\nSUBORDINATED (후순위채권), 10 bonds, per audited note 24 (file _00760.xml). face_amount_mn = 액면금액; outstanding_mn = 장부금액 당기말(제81기) — these are amortized-cost book values (face less unamortized issue cost), summing to 806,732 = BS 차입부채/후순위채권 line (bs_subordinated_mn). Face total = 810,000.\n  Note naming: notes call them 08차~17차 후순위채권; main-report 사채관리계약 (사-2..사-8) names the public ones 제9/11/13/14/15/17회 무보증 후순위사채; 10차/12차/16차 are 사모. (제3회/제5회/제7회 series of 신종/older 후순위 already redeemed — not on books.)\n\nCALL for subordinated = NOT DISCLOSED in this filing (사채관리계약 tables disclose only 발행일/만기일/발행액/사채관리회사; no 조기상환/콜옵션 date). Per rule, DERIVED call = issue + 5y, call_source='derived_issue_plus_5y' for all 10.\n  PAST-CALL FLAG: 08차 후순위 (issued 2020-05-07) → derived call 2025-05-07 < 2025-12-31, yet still on the books at 89,846 → past_call_outstanding=true (not auto-redeemed; loses K-ICS 자본인정 step-down treatment). All other subs issued 2022+ → derived call 2027+ → false.\n\nCONTEXT: 롯데손해보험 is under 금융위 경영개선요구/적기시정조치 (2025.11) with very high 부채비율 (2,249%→2,413% per disclosure) — relevant to call-exercise likelihood (issuer may NOT call at first call to preserve capital, mirroring the 흥국 past-call pattern). 회사채 (senior, e.g. 2020.05.07 90,000 @6.08% etc. in '채무증권 발행' table) are NOT capital securities and are excluded; only 신종자본증권 + 후순위(사채/채권) included here."
+      "notes": "UNIT = 백만원 (KRW mn), 기준일 2025-12-31 (제81기말).\n\nHYBRIDS (신종자본증권), 2 bonds, both 자본 분류:\n- Per audited note 27 (file _00760.xml): 제3회 공모 40,000 + 제4회 사모 6,000, 발행일 2021.12.17 / 2021.12.29, 만기 2051.12.17 / 2051.12.29 (30yr, 만기 시 30yr 추가연장 가능), 이자율 6.8% fixed to 2026.12.x then reset.\n- CALL = DISCLOSED. Both bonds' 발행조건 + main-report '신종자본증권 현황' state 최초중도상환일 = 발행일로부터 5년 경과한 날 (issuer-discretion call, 원금 100% 상환). So call_source='disclosed': 제3회 2026-12-17, 제4회 2026-12-29. Neither is past call as of 2025-12-31.\n- outstanding_mn = face (no amortization on the per-bond face). gross face/outstanding total = 46,000. BS-recognized hybrid (자본 component) = 45,370 = 46,000 − 630 발행비용 (bs_hybrid_mn). total_hybrid_outstanding_mn reported as gross 46,000 (sum of per-bond outstanding).\n\nSUBORDINATED (후순위채권), 10 bonds, per audited note 24 (file _00760.xml). face_amount_mn = 액면금액; outstanding_mn = 장부금액 당기말(제81기) — these are amortized-cost book values (face less unamortized issue cost), summing to 806,732 = BS 차입부채/후순위채권 line (bs_subordinated_mn). Face total = 810,000.\n  Note naming: notes call them 08차~17차 후순위채권; main-report 사채관리계약 (사-2..사-8) names the public ones 제9/11/13/14/15/17회 무보증 후순위사채; 10차/12차/16차 are 사모. (제3회/제5회/제7회 series of 신종/older 후순위 already redeemed — not on books.)\n\nCALL for subordinated = NOT DISCLOSED in this filing (사채관리계약 tables disclose only 발행일/만기일/발행액/사채관리회사; no 조기상환/콜옵션 date). Per rule, DERIVED call = issue + 5y, call_source='derived_issue_plus_5y' for all 10.\n  PAST-CALL FLAG: 08차 후순위 (issued 2020-05-07) → derived call 2025-05-07 < 2025-12-31, yet still on the books at 89,846 → past_call_outstanding=true (not auto-redeemed; loses K-ICS 자본인정 step-down treatment). All other subs issued 2022+ → derived call 2027+ → false.\n\nCONTEXT: 롯데손해보험 is under 금융위 경영개선요구/적기시정조치 (2025.11) with very high 부채비율 (2,249%→2,413% per disclosure) — relevant to call-exercise likelihood (issuer may NOT call at first call to preserve capital, mirroring the 흥국 past-call pattern). 회사채 (senior, e.g. 2020.05.07 90,000 @6.08% etc. in '채무증권 발행' table) are NOT capital securities and are excluded; only 신종자본증권 + 후순위(사채/채권) included here. | HYBRID unchanged but confirmed still outstanding at 2026-06-30 via 채무증권 발행실적 (2 bond(s)); SUBORDINATED refreshed to H1 2026, 10 bond(s) (1 redeemed bond confirmed & dropped, see sub_redeemed in report)"
     },
     {
       "code": "KR0005",
