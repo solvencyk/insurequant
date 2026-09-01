@@ -867,6 +867,10 @@ _SOURCE_LINEAGE = (
     ("data/dart/", "DART"),
     ("data/bonds/normalized/", "FSC_BONDS"),      # FSC data.go.kr 채권등록 크롤 정규화
     ("data/bonds/raw/", "FSC_BONDS"),
+    # 2026-09-01: 자본증권 소진율 분자·분모가 채권 파일에서 **경영공시 마스터**로 바뀌었다
+    # (owner 결정 — 한도는 증권 종류별이 아니라 계정 전체에 걸린다. [별표22] Ⅲ.2.다.(1)②·Ⅲ.2.마).
+    # 그 마스터 자체가 FSS 정기경영공시 PDF 파생물이라 계보는 DISCLOSURE 다.
+    ("kics_disclosure.json", "DISCLOSURE"),
 )
 
 
@@ -1004,6 +1008,18 @@ def _capsec_coverage_findings(env: "Env"):
                        message=f"{master}: 회사 {len(rows)}행을 발행하면서 per-bond 소스를 선언하지 "
                                f"않았다(사이드카 source_file 부재) — 커버리지 census를 수행할 축이 "
                                f"없음(검증 불가 = RED)")
+            continue
+        # 2026-09-01: 이 축은 "**per-bond 소스**에 채권이 있는데 마스터가 0" 인 어댑터 버그를
+        # 잡는 것이다. tier1/tier2 소진율이 경영공시(item6/item47)로 옮겨가면서 그 마스터의
+        # 선언 소스가 per-bond 파일이 아니게 됐고, 채권 잔액을 마스터의 존재신호 필드
+        # (new_subordinated_gross_eok 등)와 대조하는 것 자체가 성립하지 않는다.
+        # **축이 사라지는 것은 아니다** — 공시 항목의 결측·0 은 CHECK 1 census 가 그대로 본다.
+        if all(str(f).replace("\\", "/").endswith("kics_disclosure.json") for f in files):
+            yield dict(severity="YELLOW", master=master, company=None, quarter=rows[0][3],
+                       rule="CAPSEC_COVERAGE_AXIS_MOVED",
+                       message=f"{master}: 소스가 경영공시(item6/item47)로 바뀌어 per-bond "
+                               f"커버리지 대조가 성립하지 않는다 — 결측·0 검사는 CHECK 1 census 가 "
+                               f"담당한다. 채권 커버리지 축은 forward_capital 이 계속 진다.")
             continue
         slice_key, presence_fields = _CAPSEC_SLICE_FIELDS[master]
         for code, name, row, quarter in rows:
@@ -1363,6 +1379,16 @@ def check_as_of(res: GateResult, env: "Env") -> None:
     #   RED(통과 아님, owner 원칙 0).
     evid = env.bond_effective_evidence
     for lineage in sorted(evid):
+        # 2026-09-01: DISCLOSURE 계보는 per-bond 파일이 아니라 경영공시 마스터라, "채권별
+        # effective(call/maturity) 필터를 적용했는가" 라는 검사 축 자체가 성립하지 않는다.
+        # 그 축은 채권을 실제로 쓰는 forward_capital(DART 계보)이 계속 지고 있으므로 사각이
+        # 생기지 않는다 — 소진율만 채권을 안 쓰게 된 것이다.
+        if lineage == "DISCLOSURE":
+            res.add(check="as_of", severity="YELLOW", master="capital_securities_effective_list",
+                    company=None, quarter=None, rule="EFFECTIVE_LIST_NA_DISCLOSURE",
+                    message="DISCLOSURE 계보(소진율 분자=경영공시 item6/item47)는 채권별 "
+                            "effective 필터 개념이 없다 — 이 축은 forward_capital(DART)이 진다.")
+            continue
         ev = evid.get(lineage) or {}
         if not ev.get("snapshot_present"):
             res.add(check="as_of", severity="RED", master="capital_securities_effective_list",
@@ -1722,8 +1748,23 @@ def check_domain_identity(res: GateResult, env: "Env") -> None:
                                 f"(item14 SCR={scr}억). K-ICS 분모=SCR×50% (해설서 Ⅲ.2.마); "
                                 f"기본자본×100%는 RBC 구제도(p288), K-ICS 아님.")
         # R-T2-UTIL: 소진율 >100% only trustworthy if the 면제표 was parsed
+        #
+        # 2026-09-01: 분자가 **발행사가 스스로 산출한 공시 항목 item47**(보완자본 한도 적용 전)
+        # 이 되면서 이 룰의 전제가 바뀌었다. 종전에는 우리가 채권을 모아 분자를 만들었기에
+        # "면제분을 못 빼서 부풀었다" 는 의심이 성립했지만, item47 은 발행사가 [별표22]
+        # Ⅵ.1.가.(3) 조정까지 적용해 낸 값이다(DB생명 실측: item47 2,563.95 < item54
+        # 기발행후순위 3,135.91 — 총액이라면 있을 수 없다). 따라서 공시 기반일 때
+        # >100% 는 artifact 가 아니라 **실제 한도 초과 상태**이고, 초과분은 1.라.(6)
+        # ("2.마.에서 정한 보완자본 한도를 초과한 금액")으로 가용자본에서 차감된다.
+        _disclosure_based = str(row.get("data_source") or "").startswith("kics_disclosure")
         if util is not None and util > 100.0:
-            if row.get("data_source") != "table":
+            if _disclosure_based:
+                res.add(check="domain", severity="YELLOW", master="tier2_utilization",
+                        company=name, quarter=tq, rule="T2_UTIL_OVER_100_DISCLOSED",
+                        message=f"보완자본 인정한도 소진율 {util}% >100% — 분자가 발행사 공시값"
+                                f"(item47)이라 artifact 가 아니라 실제 한도초과다. 초과분은 "
+                                f"[별표22] 1.라.(6)으로 가용자본에서 차감된다. 화면 표기 '100%+'.")
+            elif row.get("data_source") != "table":
                 res.add(check="domain", severity="RED", master="tier2_utilization",
                         company=name, quarter=tq, rule="T2_UTIL_OVER_100_NO_EXEMPTION",
                         message=f"보완자본 인정한도 소진율 {util}% >100% 이나 경과조치 면제표(기발행 "
@@ -2061,6 +2102,13 @@ class Env:
                 out[lineage] = self._merge_bond_evidence(
                     [self._load_dart_bond_evidence(f) for f in sorted(files)] or
                     [self._blank_bond_evidence()])
+            elif lineage == "DISCLOSURE":
+                # 2026-09-01: 소진율 분자·분모가 경영공시 항목(item6/14/47/48)이 되면서 원천이
+                # per-bond 파일이 아니게 됐다. 채권별 effective 필터라는 검사 축 자체가 성립하지
+                # 않으므로 빈 증거를 넣는다. **검사를 없앤 것이 아니다** — 그 축은 K-ICS 룰
+                # 게이트(`48_tier2_limit` 등)와 census 가 원래 담당하고, 여기서 FSC 파서를
+                # 억지로 태우면 `kics_disclosure.json`(list)에서 터진다.
+                out[lineage] = self._blank_bond_evidence()
             else:
                 out[lineage] = self._merge_bond_evidence(
                     [self._load_fsc_bond_evidence(f) for f in sorted(files)] or

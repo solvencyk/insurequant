@@ -1114,8 +1114,9 @@ PUBLIC_EXPORT_RULES = {
     "PUBLIC_EXPORT_MANIFEST_GHOST_SHEET": "RED — manifest 에만 있고 exporter 목록에 없는 시트",
 }
 
-# 실측 2026-08-30. exporter 의 MASTERS 길이와 같아야 한다.
-PUBLIC_EXPORT_SHEETS = 12
+# 실측 2026-09-01. exporter 의 MASTERS 길이와 같아야 한다.
+# 12 -> 13: `자본성증권발행현황`(증권 한 건 단위 인정액) 신설.
+PUBLIC_EXPORT_SHEETS = 13
 
 
 def _live_gate():

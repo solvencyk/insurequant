@@ -1,15 +1,15 @@
 {
   "master": "tier2_utilization",
-  "generated_at": "20260831T210130Z",
+  "generated_at": "20260901T082440Z",
   "cells": [
     {
       "quarter": "2026.2Q",
       "item_block": "tier2_utilization",
-      "source_id": "DART",
+      "source_id": "DISCLOSURE",
       "as_of_date": "2026-06-30",
-      "source_file": "data/bonds/capital_securities_fy2026h1.json",
+      "source_file": "kics_disclosure.json",
       "effective_filtered": true,
-      "_note": "source_id derived from source_file lineage by emit_capsec_provenance.py (20260831T210130Z); as_of_date = 발행 분기말 (per-bond 스냅샷 자체의 as-of는 그보다 이를 수 있고, effective 필터는 게이트 CHECK2 2c가 계보별로 검사한다)"
+      "_note": "source_id derived from source_file lineage by emit_capsec_provenance.py (20260901T082440Z); as_of_date = 발행 분기말 (per-bond 스냅샷 자체의 as-of는 그보다 이를 수 있고, effective 필터는 게이트 CHECK2 2c가 계보별로 검사한다)"
     }
   ]
 }

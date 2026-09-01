@@ -70,6 +70,12 @@ def _source_file_from_definition(doc: dict) -> str | None:
     """Pull the per-bond source path out of a tier master's own `definition.source` string,
     e.g. 'DART FY2025 annual per-bond (data/bonds/capital_securities_fy2025.json)'."""
     src = ((doc.get("definition") or {}).get("source") or "")
+    # 2026-09-01: 소진율 분자·분모가 채권 파일이 아니라 **경영공시 마스터**로 바뀌었다
+    # (owner 결정, scripts/apply_disclosure_utilization.py). definition.source 가
+    # 'kics_disclosure.json (2026.2Q 경영공시)' 형태라 기존 정규식(괄호 안 .json /
+    # data/ 하위 경로)에 안 걸려 두 시트가 통째로 SKIP 됐다.
+    if "kics_disclosure.json" in src:
+        return "kics_disclosure.json"
     m = re.search(r"\(([^()]*\.json)\)", src) or re.search(r"(data/[^\s()]+\.json)", src)
     return m.group(1) if m else None
 
