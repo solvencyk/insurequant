@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-01T08:52:04Z",
+  "generated_at_utc": "2026-09-01T12:37:48Z",
   "sheets": {
     "17BS": {
       "rows": 6993,
@@ -37,7 +37,7 @@
       "quarter_max": "2026.1Q"
     },
     "손익분해PL": {
-      "rows": 11546,
+      "rows": 11866,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
