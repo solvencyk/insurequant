@@ -17,6 +17,7 @@ try:
 except Exception:
     pass
 import os
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -213,6 +214,16 @@ def main() -> int:
     # **한 칸이 조용히 사각이 되는 것**은 못 잡는다 — 그게 이 테스트의 존재 이유다.
     # 대가: 이 묶음이 ~40초에서 ~4분으로 늘어난다. push 는 드물고 되돌리기 어려운 동작이라 감수한다.
     env = dict(os.environ, FULL_COVERAGE_SWEEP="1")
+    # pytest 의 tmp 루트(`%TEMP%/pytest-of-<user>`)를 **매 실행 새 디렉토리로 격리한다.**
+    # 그 공용 디렉토리가 한 번 잠기면(ACL 손상·다른 프로세스 점유) `tmp_path` 를 쓰는
+    # 테스트가 전부 ERROR 가 되고, 게이트는 그 이유를 못 보여준 채 BLOCKED 를 찍는다 —
+    # 2026-09-01 에 실제로 났다: `PermissionError [WinError 5]` 로 os.scandir 이 죽어
+    # `test_full_gate_coverage_matches_manifest` 만 ERROR, 나머지 335건은 통과. 코드
+    # 결함이 아닌데 push 가 막혔고, 원인이 게이트 출력에 안 보였다.
+    # 격리 디렉토리는 재사용하지 않는다(잠긴 디렉토리를 물려받으면 같은 사고가 반복된다).
+    _tmproot = ROOT / "artifacts" / "pytest_tmp" / time.strftime("%Y%m%dT%H%M%S")
+    _tmproot.mkdir(parents=True, exist_ok=True)
+    env["PYTEST_DEBUG_TEMPROOT"] = str(_tmproot)
     proc = subprocess.run([sys.executable, "-m", "pytest", "-q", *fast],
                           cwd=str(ROOT), capture_output=True, text=True,
                           # errors="replace" 는 필수다. pytest 가 **실패할 때만** 한국어
