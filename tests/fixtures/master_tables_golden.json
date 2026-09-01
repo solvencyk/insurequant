@@ -1,5 +1,5 @@
 {
   "exit_code": 2,
-  "summary": "SUMMARY coverage_hole:0CSM/0PL | closing:362P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3049P(진짜1139·구성상1594·부분316)/35F/496S/0NEW | tax22_src:282P/0F/76S | zero_legs:4 | impossible0:0 | lob_na:14NA/0BAD | csm_amort_identity:343P/5PIN/0F/1S | qoq_warn:235Y | sens:0R/0Y/20dir | oci_vs_bs_aoci:14Y",
+  "summary": "SUMMARY coverage_hole:0CSM/0PL | closing:362P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3100P(진짜1155·구성상1621·부분324)/35F/525S/0NEW | tax22_src:282P/0F/84S | zero_legs:10 | impossible0:0 | lob_na:14NA/0BAD | csm_amort_identity:349P/5PIN/0F/3S | qoq_warn:235Y | sens:0R/0Y/20dir | oci_vs_bs_aoci:14Y",
   "_what": "Refactor safety net for validate_master_tables.main(). Captured before the 374-line function was split into per-check functions. Asserts the SUMMARY count matrix + exit code (--no-build)."
 }
