@@ -314,18 +314,18 @@
       "pre_limit_eok": 5128.75,
       "lapse_excess_eok": 21940.32,
       "hybrid_eok": 2120.0,
-      "subordinated_eok": 650.0,
+      "subordinated_eok": 200.0,
       "proxy_utilization_pct": 45.28,
       "quality_flag": "ok",
-      "new_subordinated_recognized_eok": 1296.6,
-      "new_subordinated_gross_eok": 2000.0,
+      "new_subordinated_recognized_eok": 2296.6,
+      "new_subordinated_gross_eok": 3000.0,
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 2120.0,
       "grandfathered_subordinated_eok": 190.57,
       "numerator_as_of": "2026-06-30",
       "hybrid_outstanding_eok": 4120.0,
-      "subordinated_outstanding_eok": 2650.0,
-      "bond_balance_as_of": "2025-12-31"
+      "subordinated_outstanding_eok": 3200.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "푸본현대생명보험",
@@ -650,7 +650,7 @@
       "numerator_as_of": "2026-06-30",
       "hybrid_outstanding_eok": 0.0,
       "subordinated_outstanding_eok": 11956.6,
-      "bond_balance_as_of": "2025-12-31"
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "악사손해보험",
