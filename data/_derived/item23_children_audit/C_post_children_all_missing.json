@@ -1,0 +1,560 @@
+[
+  {
+    "code": "KR0008",
+    "name": "삼성화재해상보험",
+    "quarter": "2026.2Q",
+    "item23_pre": 381.0,
+    "item23_post": 381.0,
+    "children_pre": {
+      "24": 0.0,
+      "25": 381.0,
+      "26": 0.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0011",
+    "name": "DB손해보험",
+    "quarter": "2026.2Q",
+    "item23_pre": 1357.0,
+    "item23_post": 1357.0,
+    "children_pre": {
+      "24": 555.0,
+      "25": 433.0,
+      "26": 369.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0068",
+    "name": "한화생명",
+    "quarter": "2026.2Q",
+    "item23_pre": 4696.0,
+    "item23_post": 4696.0,
+    "children_pre": {
+      "24": 3480.0,
+      "25": 1216.0,
+      "26": 0.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2023.2Q",
+    "item23_pre": 8313.0,
+    "item23_post": 5198.88,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 8313.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2023.3Q",
+    "item23_pre": 8313.0,
+    "item23_post": 4907.07,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 8313.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2023.4Q",
+    "item23_pre": 7976.0,
+    "item23_post": 5497.95,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 7976.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2024.1Q",
+    "item23_pre": 7454.0,
+    "item23_post": 5652.35,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 7454.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2024.2Q",
+    "item23_pre": 7340.0,
+    "item23_post": 5682.41,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 7340.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2024.3Q",
+    "item23_pre": 7395.0,
+    "item23_post": 5902.86,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 7395.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2024.4Q",
+    "item23_pre": 7256.0,
+    "item23_post": 5599.84,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 7256.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2025.1Q",
+    "item23_pre": 7214.0,
+    "item23_post": 5794.25,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 7214.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2025.2Q",
+    "item23_pre": 7273.0,
+    "item23_post": 5790.68,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 7273.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2025.3Q",
+    "item23_pre": 7498.0,
+    "item23_post": 5924.58,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 7498.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2025.4Q",
+    "item23_pre": 7869.0,
+    "item23_post": 6281.63,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 7869.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2026.1Q",
+    "item23_pre": 8424.0,
+    "item23_post": 6773.61,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 8424.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2026.2Q",
+    "item23_pre": 9075.0,
+    "item23_post": 7097.95,
+    "children_pre": {
+      "24": 0.0,
+      "25": 0.0,
+      "26": 9075.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2023.1Q",
+    "item23_pre": 1899.0,
+    "item23_post": 1899.0,
+    "children_pre": {
+      "24": 1789.0,
+      "25": 0.0,
+      "26": 110.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2023.2Q",
+    "item23_pre": 1941.0,
+    "item23_post": 1941.0,
+    "children_pre": {
+      "24": 1799.0,
+      "25": 0.0,
+      "26": 141.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2023.3Q",
+    "item23_pre": 1938.0,
+    "item23_post": 1938.0,
+    "children_pre": {
+      "24": 1820.0,
+      "25": 0.0,
+      "26": 118.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2023.4Q",
+    "item23_pre": 1884.0,
+    "item23_post": 1884.0,
+    "children_pre": {
+      "24": 1765.0,
+      "25": 0.0,
+      "26": 118.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2024.1Q",
+    "item23_pre": 1894.0,
+    "item23_post": 1894.0,
+    "children_pre": {
+      "24": 1773.0,
+      "25": 0.0,
+      "26": 122.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2024.2Q",
+    "item23_pre": 1895.0,
+    "item23_post": 1895.0,
+    "children_pre": {
+      "24": 1775.0,
+      "25": 0.0,
+      "26": 120.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2024.3Q",
+    "item23_pre": 1914.0,
+    "item23_post": 1914.0,
+    "children_pre": {
+      "24": 1792.0,
+      "25": 0.0,
+      "26": 121.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2024.4Q",
+    "item23_pre": 1869.0,
+    "item23_post": 1869.0,
+    "children_pre": {
+      "24": 1751.0,
+      "25": 0.0,
+      "26": 118.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2025.1Q",
+    "item23_pre": 1875.0,
+    "item23_post": 1875.0,
+    "children_pre": {
+      "24": 1749.0,
+      "25": 0.0,
+      "26": 125.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2025.2Q",
+    "item23_pre": 1875.0,
+    "item23_post": 1875.0,
+    "children_pre": {
+      "24": 1745.0,
+      "25": 0.0,
+      "26": 131.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2025.3Q",
+    "item23_pre": 1868.0,
+    "item23_post": 1868.0,
+    "children_pre": {
+      "24": 1737.0,
+      "25": 0.0,
+      "26": 132.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2025.4Q",
+    "item23_pre": 1895.0,
+    "item23_post": 1895.0,
+    "children_pre": {
+      "24": 1761.0,
+      "25": 0.0,
+      "26": 134.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2026.1Q",
+    "item23_pre": 1888.0,
+    "item23_post": 1887.89,
+    "children_pre": {
+      "24": 1751.0,
+      "25": 0.0,
+      "26": 136.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR0073",
+    "name": "교보생명보험",
+    "quarter": "2026.2Q",
+    "item23_pre": 10810.0,
+    "item23_post": 10810.0,
+    "children_pre": {
+      "24": 10649.0,
+      "25": 0.0,
+      "26": 161.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  },
+  {
+    "code": "KR1000",
+    "name": "코리안리재보험",
+    "quarter": "2026.2Q",
+    "item23_pre": 184.0,
+    "item23_post": 184.0,
+    "children_pre": {
+      "24": 0.0,
+      "25": 184.0,
+      "26": 0.0
+    },
+    "children_post": {
+      "24": null,
+      "25": null,
+      "26": null
+    },
+    "absent_rows": []
+  }
+]
