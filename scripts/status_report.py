@@ -182,9 +182,20 @@ def axis_coverage() -> None:
         print(f"  K-ICS         {len(names)}사 × {len(qs)}분기 ({qs[0]}~{qs[-1]})")
         print(f"    금리시나리오 41~46  완비 {full}/{len(names) * len(even)} "
               f"({full / (len(names) * len(even)):.1%})  [짝수분기만 공시]")
+        # 2026-09-01c: 항목36-40도 41-46과 같은 공시주기(짝수분기 완전공시·홀수분기
+        # 간이공시=구조적 결측)를 따른다 — 분모를 전체 버킷(idx, 홀수분기 포함)으로 잡으면
+        # "138칸 결측"처럼 보이지만 실은 짝수분기 결측 0건이다(scripts/_probes/
+        # probe_20260901c_market_bucket_census.py 실측). 41-46과 동일하게 짝수분기만
+        # 분모로 삼고, 홀수분기는 회사 재량 자율공시분을 별도 표기(전량 결측이 아님을
+        # 같이 보여줌 — 25사가 자율공시, 그중 138칸은 raw PDF 대조로도 원문 자체에
+        # 세부표가 없는 정상 간이공시임을 확인).
+        even_keys = [k for k in idx if k[1] in even]
+        odd_keys = [k for k in idx if k[1] not in even]
         for it in (36, 37, 38, 39, 40):
-            have = sum(1 for m in idx.values() if m.get(it) is not None)
-            print(f"    시장위험 항목{it}      {have}/{len(idx)} 버킷")
+            have_even = sum(1 for k in even_keys if idx[k].get(it) is not None)
+            have_odd = sum(1 for k in odd_keys if idx[k].get(it) is not None)
+            print(f"    시장위험 항목{it}      완비 {have_even}/{len(even_keys)} "
+                  f"({have_even / len(even_keys):.1%})  [짝수분기만 공시; 홀수분기 자율공시 {have_odd}/{len(odd_keys)}]")
 
     bs = load("IFRS17_BS.json")
     if bs:
