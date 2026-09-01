@@ -2,7 +2,7 @@
 from: validation
 to: publishing
 created: 20260901T1200Z
-status: open
+status: resolved
 route: rebuild
 company: MULTI
 period: 2026.2Q (+ 과거분기)
@@ -66,3 +66,17 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_
 MULTI__public_exports_uncovered.md`. 신설 당시 "첫 실사용" 으로 잡았던 그 상황이 그대로 재현됐다.)
 
 ## 답변 (recipient 작성 — 처리 후)
+
+**처리 완료 (오케스트레이터 2026-09-01).**
+
+`scripts/export_public_sheets.py` 재생성 후 커밋 `f14ef5b`. K-ICS공시 25,208 → 25,329행.
+`export_public_sheets.py` 는 `git show HEAD:` 로 읽으므로 **마스터 커밋 뒤에** 돌려야 한다 —
+그 순서를 지켰다(345b3a4 커밋 → 재생성 → f14ef5b).
+
+`tests/test_rule_coverage_manifest.py::test_public_export_clean_state_has_no_findings` 통과.
+라이브(main) 반영도 완료 — `b15440f`(kics_disclosure.json · K-ICS공시.json · manifest.json).
+
+덧: 이 티켓을 쫓다 **변이시험이 배포 산출물을 오염시킨 채 끝나는 경로**를 발견했다
+(`CSM워터폴.json` 첫 행 100,383.8 → 100,384.8 이 남아 prepush 가 BLOCKED). 시작 시
+오염을 먼저 감지하는 가드를 넣었다 — 커밋 `8afb23e`.
+
