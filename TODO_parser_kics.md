@@ -1,6 +1,98 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-01(5회차 — `2_tier1_bridge` KR0029 2025.3Q 원문 재확인, owner
+> Last updated: 2026-09-01(6회차 — push 를 막던 과거분기 RED 18건 정정: AIG손해보험·
+> 에이비엘생명·흥국생명) — orchestrator 발주. `scripts/validate_data_contract.py` RED
+> 49 → **31**(전부 sensitivity_heatmap=ifrs17 레인, `kics_disclosure` 잔여 0).
+>
+> **A) AIG손해보험(KR0029) 2025.2Q·2025.3Q — 값_적용후 추출갭(16건, POST_TRANSITION_
+> PARENT/CHILD_MISSING).** raw(md_inbox) 가 두 분기 다 "당사는 경과조치를 적용하지 않아
+> 경과조치 전·후 금액 및 비율이 동일함" 을 4회 이상 반복 명시하고, TFI·보고연장·TAC·TIR·
+> TER·TIRR·적기시정조치유예 7종 적용여부가 전부 X 다(md_inbox/FY2025_Q2·FY2025_Q3/
+> KR0029_AIG손해보험.md). 즉 값_적용후 는 정의상 값(적용전)과 같아야 하는데 두 분기 다
+> 필드 자체가 안 쓰인 추출갭이었다 — 같은 회사 2024.4Q·2025.1Q·2026.1Q(값==값_적용후 이미
+> 정상 적재)가 대조군. **2025.2Q** 는 "[지급여력비율의 경과조치 적용에 관한 사항] (1)공통
+> 적용 경과조치 관련" 표(md L347-361)가 지급여력비율·지급여력금액·기본자본·보완자본·
+> 보완자본한도·지급여력기준금액 적용전=적용후 를 백만원 단위로 명시(636,284=636,284 등).
+> 15개 항목(1,2,3,14,15,16,17,18,19,20,21,22,23,27,28) 값을 값_적용후 에 그대로 미러 +
+> **부수 5건**(item36-40): item19 를 채우면 `_parent_present_child_incomplete_after`
+> (parent=19→children 36-40)가 활성화되는데 2025.2Q 는 36-40 적용전이 이미 있어(147.24/
+> 12.3/0/40.55/282.32) 안 채우면 새 RED 4건이 열린다 — 같은 "경과조치 미적용" 근거로 같이
+> 미러. **2025.3Q** 는 item3(보완자본)=59 가 비영이라 item2≠item1 인 유일 분기(별개 축
+> `2_tier1_bridge` 는 5회차가 이미 원문 자기모순으로 재확인 종결). "(1)공통적용" 표가
+> 3컬럼(적용전|경과조치|적용후)으로 오분절 돼 있지만 보완자본(5,870=5,870)·보완자본한도
+> (127,776=127,776)·해약환급금초과분(5,870=5,870)·지급여력기준금액(255,552=255,552)
+> 넷 다 두 숫자가 일치해 "전=후" 결론은 컬럼 배정과 무관. 원 RED 는 item16-21 만 지목했지만
+> **부수 6건**(1,2,27,28,22,23): 안 채우면 2025.2Q 를 고친 뒤 그 자체가 SANDWICHED 로 새
+> RED 가 된다(직전 2025.2Q 존재+다음 2026.1Q 존재=이 분기만 비면 break). item3·14·15후는
+> 이미 마스터에 있어 안 건드림. item17→29-35·item19→36-40 하위 census 는 두 분기 다
+> 29-35·36-40 적용전 행 자체가 없어(간이공시 아닌데도 이 회사가 그 세부표를 못 잡은 기존
+> 갭, 이 라운드 범위 밖) collateral 불필요(전수 확인:
+> `scripts/_probes/probe_20260901_aig_grandchildren.py`).
+>
+> **B) 에이비엘생명(KR0070) 2025.3Q — item16(분산효과) 값_적용후 계산오류(1건,
+> TRANSITION_AFTER_IDENTITY R6_item16, 공시후=5639.87 계산후=4203.15 diff=1436.72).**
+> 당분기부터 TAC·TIR·TER 를 신규 적용한 진짜 적용사. item15·17·18·19·20·21_적용후는 서로
+> 다른 세부표(①②③, md L268-350)에서 각각 채워졌는데, 정식 상관행렬 공식(kics_json_rules.
+> R4 를 import, 재타이핑 안 함)으로 교차검산하면 item15=sqrt(V'R4V)+item21 잔차가 -0.15
+> (반올림 수준)로 닫힌다 — 15/17-21 은 전부 맞다는 뜻. 분산효과는 원문 자신이 "- 분산효과:
+> (1+2+3+4+5) - Ⅰ" 라 라벨 붙인 정의값(md L251)이라 그 정의 그대로 Σ(17-21)-15 를 다시
+> 계산: 7471.13+0+4391.01+3499+1302-12459.99 = **4203.15**(부동소수 오차 없이 정확히
+> 떨어짐). 기존값 5639.87 은 item19 를 적용후(4391.01) 대신 적용전(5828)으로 잘못 섞어
+> 계산한 결과와 -0.27 차이로 거의 일치해 오염 경로까지 특정(발행사 총괄표 대 세부표 불일치
+> 사안이 아니라, 원문이 정의한 항등식을 원문이 확정한 다른 5개 입력으로 재계산한 것).
+> 재현: `scripts/_probes/probe_20260901_abl_mmult_check.py`.
+>
+> **C) 흥국생명(KR0071) 2023.4Q — item24 값(적용전) 오염(1건, OTHER_CAPITAL_CHILDREN_SUM,
+> item23=7976 ≠ 24+25+26=15952 [7976,0,7976]).** md_inbox/FY2023_Q4/KR0071_흥국생명보험.md
+> L366-369, [경과조치 적용 전 지급여력비율 세부] 표(당분기 23.4Q/직전 23.3Q/전전 23.2Q):
+> "Ⅲ.기타요구자본(1+2+3) | 7,976 | 8,313 | 8,313" / "1.종속회사요구자본환산치 | - | - | -" /
+> "2.비례성원칙대응치 | - | - | -" / "3.관계회사요구자본환산치 | 7,976 | 8,313 | 8,313". 당분기
+> (1열) item24="-"=0 인데 마스터엔 7976(=item23·26 복사)이 들어가 있었다. 같은 회사
+> 2023.3Q 에 있었던 **동일 패턴**이 이미 `fix_20260821_kr0071_item24_fabricated_dash.py`
+> 로 수정된 바 있음(그 전수 스윕이 못 잡은 인접분기의 같은 버그). item25(0)·item26(7976)은
+> 원문과 이미 일치, 안 건드림. **잔여(범위 밖, 손대지 않음)**: 같은 회사 2023.1Q 도 같은
+> 패턴(item23=8534≠24+25+26=17068)이 `validate_kics_disclosure.py` 리포트에 남아 있다 —
+> 이 라운드 18건에 없었고 `validate_data_contract.py` 의 display-scope 밖(과거분기라 push
+> 비차단)이라 그대로 두고 여기 기록만 한다. 후속 라운드 후보.
+>
+> **셀단위 패치**: `scripts/fix_20260901_kics_18red_abc.py` — SET_VALUES 아님, MIRROR_POST
+> (같은 레코드의 값→값_적용후 문자열 그대로 복사, 재계산 없음) + SET_EXPLICIT(B/C, guard 로
+> 이전값 확인 후만 적용). census: rows 25208→25208(불변) · 콤보 변화 0 · 신규 콤보 0 · 중복
+> 콤보 0(전부 기존 행의 필드 추가/수정, 신규 행 0). 총 34셀(2025.2Q 20 + 2025.3Q 12 + ABL 1
+> + 흥국생명 1).
+>
+> **게이트**: `validate_data_contract.py` RED 49→31(kics_disclosure 0, 잔여 31 전부
+> sensitivity_heatmap=ifrs17). `validate_kics_disclosure.py` 는 원래도 push 비차단
+> 백로그(RED=38, 이번 라운드로 불변 — 내가 고친 4개 finding 카테고리는 전부 이 RED=38 카운트
+> 밖의 별도 구조축이었음): "적용후 항등식 위반" 1→0(B) · "기타요구자본 분해위반" 2→1(C, 잔여
+> 1건은 위 2023.1Q) · "적용후 하위census결측" 1→0(A) · "적용후 부모continuity break"
+> 15셀→0(A). base rule engine(`run_validation`, RED=38 그대로)은 SKIP 6→GREEN 6 만 이동
+> (3_tier2_composition_post·50_tfi_tier_split_post·7_post·8_post, 전부 AIG 2025.2Q/3Q,
+> 전부 GREEN·잔차<0.06). before/after 재현: `git show HEAD~1:kics_disclosure.json` 스냅샷
+> 대비 `scripts/_probes/probe_20260901_golden_diff.py`.
+>
+> **골든**: `tests/test_kics_rules_golden.py` 해시 이동(SKIP 6→GREEN 6, findings/buckets
+> 불변) → `--update` 로 재생성 + `_what` 필드에 2026-09-01 단락 추가(사유·수치 명시).
+> `tests/test_post_transition_golden.py` 는 영향 없음(별도 함수, 안 건드림) — 그대로 통과.
+> 둘 다 `pytest tests/test_kics_rules_golden.py tests/test_post_transition_golden.py -q`
+> 2 passed.
+>
+> **xlsx**: `sync_master_xlsx_sheet.py "K-ICS공시"` — 변경 47셀(내 34 + 이전 미동기화 5회차
+> 이전 세션분 13) · 추가 0 · 삭제 6(교보라이프플래닛·하나생명 TFI 근거없는 행, 이전 세션이
+> 이미 kics_disclosure.json 에서 지운 것의 밀린 동기화) · 검증 OK(K-ICS공시 25208행×9열
+> 마스터와 완전일치, 나머지 시트 값 동일).
+>
+> **다른 3건 추가 확인**: 별개로 `inbox/parser/`에 열려 있는 lane:kics 티켓 4건(2026.2Q
+> docling window 절 드롭·삼성화재 총계행 라벨·OCR 배율/tier2 MD-vs-마스터 이중경로·
+> rebuild_combined_transition_after.py 의 raw/pdf 디렉토리 버그)은 전부 2026.2Q 스코프라
+> 이번 18건과 무관 확인(특히 마지막 건은 `_pdf()`가 `pdf/`를 못 봐 2026.2Q 39/40사를
+> 스킵하는 버그인데, FY2025_Q3·FY2023_Q4 는 애초에 `raw/`만 있고 `pdf/` 디렉토리 자체가
+> 없어 이번 A/B/C 분기엔 해당 안 됨 — 디렉토리 확인으로 배제). 손대지 않고 열어 둠(다른
+> 라운드 소관).
+>
+> status: resolved(자기완결 — 18/18 해소, census·골든·xlsx 전부 갱신·검증 완료).
+>
+> Last updated (이전): 2026-09-01(5회차 — `2_tier1_bridge` KR0029 2025.3Q 원문 재확인, owner
 > 옵션 (c) 지시) — 4회차 세션이 남긴 미해결 1건(잔차 −58.0, `inbox/validation/
 > 20260831T203021Z__parser__KR0029_2025.3Q__2_tier1_bridge_issuer_inconsistency.md`
 > 로 escalate)을 owner가 (a)면제 즉시등재 대신 (c)원문 재확인으로 지정해 별도 세션이 독립

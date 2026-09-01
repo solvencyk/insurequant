@@ -208,7 +208,25 @@ def _update() -> int:
                     "'카카오 2023.4Q item14후=20 → 974/20=4870 vs 공시4777' 사례와 정확히 일치) "
                     "· GREEN 482. 부수: `POST_GUARDED` 에 27 추가(item27후가 7_post 의 대조 "
                     "대상이라 부수적으로 엔진 커버리지에 들어옴 — item1 은 이미 있었다). "
-                    "blocking RED 0 · 게이트 exit 0(불변) · findings 13,664 → 14,152.")
+                    "blocking RED 0 · 게이트 exit 0(불변) · findings 13,664 → 14,152. "
+                    "2026-09-01 (kics 레인, 과거분기 blocking RED 18건 정정) 재생성 사유 — "
+                    "RED 38 은 그대로다(0 변경). by_status 는 SKIP 6 -> GREEN 6 만 움직였다"
+                    "(findings 총계 15,602 불변, buckets 538 불변). AIG손해보험(KR0029) "
+                    "2025.2Q·2025.3Q 의 값_적용후 결측(POST_TRANSITION_PARENT/CHILD_MISSING, "
+                    "validate_data_contract.py 소관)을 원문(md_inbox: '경과조치 전·후 금액 및 "
+                    "비율이 동일함' 4회 이상 반복 + TFI/TAC/TIR/TER/TIRR 7종 적용여부 전부 X)에 "
+                    "따라 값(적용전)으로 미러했다. 그전엔 부모후 결측으로 SKIP 이던 "
+                    "3_tier2_composition_post·50_tfi_tier_split_post·7_post·8_post 6칸이 "
+                    "비로소 평가돼 전부 GREEN(잔차 |diff|<0.06, 반올림 수준). 에이비엘생명"
+                    "(KR0070) 2025.3Q item16_적용후(분산효과, 상관행렬 mmult 로 15/17-21후 "
+                    "자기정합 확인 후 Σ(17-21)-15 재계산=4203.15)·흥국생명(KR0071) 2023.4Q "
+                    "item24(값, 원문 '-' 인데 7976 오염 — 형제분기 2023.3Q 와 동일한 대시오독, "
+                    "fix_20260821_kr0071_item24_fabricated_dash.py 참조)도 같은 라운드에서 "
+                    "고쳤지만 이 골든이 고정하는 run_validation 14룰에는 해당 항목(R6_item16· "
+                    "기타요구자본 24/25/26)이 없어 이 골든엔 영향 없음(validate_data_contract.py "
+                    "별도 재확인: RED 49 -> 31, kics_disclosure RED 0, 잔여 31 은 전부 "
+                    "sensitivity_heatmap=ifrs17 레인). 데이터만 고쳤고 룰은 안 건드렸다. 전후 "
+                    "대조: scripts/_probes/probe_20260901_golden_diff.py.")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

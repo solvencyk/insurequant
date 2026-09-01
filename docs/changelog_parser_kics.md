@@ -2,6 +2,24 @@
 
 > Last updated: 2026-09-01 · Stage 2/5 — parser (kics lane)
 
+## 2026-09-01 — push 를 막던 과거분기 RED 18건(AIG·에이비엘생명·흥국생명) → 0
+
+`validate_data_contract.py` RED 49→31(kics_disclosure 잔여 0, 남은 31은 전부 ifrs17 레인
+sensitivity_heatmap). A) AIG손해보험(KR0029) 2025.2Q·2025.3Q: 경과조치 전면 미적용사(raw
+7종 적용여부 전부 X, "전후 동일함" 반복 명시)의 값_적용후 필드 자체가 안 쓰인 추출갭 —
+값(적용전)을 그대로 미러(2025.2Q 15항목+부수 36-40, 2025.3Q 6항목+부수 1/2/27/28/22/23,
+POST_TRANSITION_PARENT/CHILD_MISSING 16건). B) 에이비엘생명(KR0070) 2025.3Q: item16(분산
+효과) 값_적용후 계산오류 — 상관행렬 mmult 로 15/17-21후 자기정합 확인(잔차-0.15) 후 원문
+정의(Σ17-21-15) 그대로 재계산 5639.87→4203.15(TRANSITION_AFTER_IDENTITY 1건). C) 흥국생명
+(KR0071) 2023.4Q: item24 값(적용전) 이 원문 "-"(=0)인데 7976(item23·26 복사) 오염 — 형제
+분기 2023.3Q 와 동일 패턴(`fix_20260821_kr0071_item24_fabricated_dash.py`가 못 잡은 인접
+분기 재발, OTHER_CAPITAL_CHILDREN_SUM 1건). 셀단위 패치 `scripts/fix_20260901_kics_18red_
+abc.py`(mirror+explicit set, guard, census 불변 rows 25208→25208). `tests/test_kics_rules_
+golden.py` 재생성(SKIP 6→GREEN 6, RED/findings/buckets 불변) + `sync_master_xlsx_sheet.py
+"K-ICS공시"` 동기화. 잔여(범위 밖, 후속 후보): 흥국생명 2023.1Q 도 같은 item24 패턴이 raw
+확인 없이 `validate_kics_disclosure.py` 리포트에 남아 있음(push 비차단, display-scope 밖).
+상세: `TODO_parser_kics.md` 2026-09-01 최상단(6회차).
+
 ## 2026-09-01 — TFI 표 계열(item47-54) RED 25건(2026.2Q) → 24건 해소 + 1건 documented exception 후보
 
 `53_tfi_memo_rows`(9) · `47_tier2_census`(7) · `47_tier2_census_post`(7) ·
