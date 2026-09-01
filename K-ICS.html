@@ -988,11 +988,14 @@
         notes.push('보완자본: 데이터 없음');
       }
       // 참고 — 자본성증권 발행잔액. 소진율 분자가 아니다(한도가 계정 단위라서).
+      // 회사별 기준일은 **안 적는다**(owner 2026-09-01): 소진율이 패널 헤더의 공시분기
+      // 하나로 닫히는데 참고 줄에만 회사마다 다른 날짜가 붙으면, 이 패널 숫자가 여러
+      // 기준일에 걸쳐 있다는 오해를 준다. 채권 잔액의 회사별 기준일이 필요하면
+      // `자본성증권발행현황` 시트의 `잔액기준일` 열을 본다.
       const bh = (t1 && t1.hybrid_outstanding_eok) || 0;
       const bs = (t1 && t1.subordinated_outstanding_eok) || 0;
       if (bh > 0 || bs > 0) {
-        const ba = (t1 && t1.bond_balance_as_of) ? ` (${t1.bond_balance_as_of} 기준)` : '';
-        notes.push(`<span class="capsec-gf">참고 — 자본성증권 발행잔액: 신종 ${fmtEokInt(bh)}억원 · 후순위 ${fmtEokInt(bs)}억원${ba}</span>`);
+        notes.push(`<span class="capsec-gf">참고 — 자본성증권 발행잔액: 신종 ${fmtEokInt(bh)}억원 · 후순위 ${fmtEokInt(bs)}억원</span>`);
       }
       // 2026-09-01: 여기 있던 '발행잔액 기준일 …' 경고를 걷었다. 분자가 채권 발행현황일 때는
       // 회사마다 기준일이 달라(반기보고서를 안 내는 회사는 직전 연간) 분모와 어긋나는 사실을
