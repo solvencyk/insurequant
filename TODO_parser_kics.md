@@ -1,6 +1,50 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-01(9회차 — 시장위험 항목36-40 "400/538"(138칸 결측) 재census) —
+> Last updated: 2026-09-01(10회차 — 자본성증권 발행잔액 기준일 H1 갱신, 14→17/21사) —
+> inbox `20260901T1400Z` 발주(잔여 22개사 중 실측 7개사만 진짜 손봐야 함, 6사는 무공시 정당·
+> 12사는 무증권·1사는 이미 fresh, 시작 census로 재확인).
+>
+> **`confirm_bonds_still_outstanding` 을 전량-게이트→채권별 부분확인으로 재설계**(동양생명
+> KR0087: 후순위 3건 중 2건은 매치되는데 USD채 1건의 환산액면 드리프트로 3건 다 FY2025에
+> 묶여 있었다). **이미 잔액 0인 채권은 확인 대상에서 제외**하고 시점만 올린다(신한라이프·
+> DB생명·동양생명 각 1건, 레거시 완제 채권이 tier 전체를 인질로 잡던 패턴). 이 과정에서
+> **직접 낸 회귀를 직접 잡았다** — 채권별 확인이 "뭔가 확인됨"으로 판정되면 예전에 구제하던
+> 집계-불변 폴백이 통째로 스킵돼 메리츠(KR0001)가 일시 회귀; `confirm_tier_asof` 로 통합해
+> 1차가 놓친 채권엔 항상 2차를 마저 시도하도록 고쳐 최종 산출물엔 회귀 반영 안 됨(대조 확인).
+>
+> **새로 잡은 상환**: 흥국화재(KR0005) 이사회 2026-02-06 "후순위사채 조기상환 및 신규
+> 발행의 건" — 제20회(450억) 상환 + 제23회(1,000억) 신규발행이 같은 반기에 겹쳐 기존
+> `detect_redeemed`(순수 상환만 시험)가 영원히 실패하던 걸 "신규발행 후보 하나 추가 시험"
+> 으로 확장해 해결(BS 재현 오차 0.3%). 이 확장에 처음엔 가드가 없어 무관한 회사(교보·KDB
+> 생명)에 노이즈를 냈다가 즉시 원인 잡아 되돌림(absent 채권 있을 때만 2차 진입).
+>
+> **결과**: 기준일 2026-06-30 확인 14→**17**/21사(무공시 6사·무증권 12사 제외). 남은
+> 4사(한화생명·푸본현대·신한라이프·KB라이프)는 서식 조사 결과 진짜 이유가 있음(한화생명은
+> 열그룹 표 구조까지 진단 완료·미구현, TODO 항목 참조; 나머지 3사는 근거 부족/오차한도
+> 초과로 documented exception). 무결성: 39사 중 금액 델타는 KR0005(의도한 변경) 1건뿐,
+> 나머지 38사는 시점/출처만 이동. 소진율(`utilization_pct`)은 체인 마지막에
+> `apply_disclosure_utilization.py` 로 39사 0건 변경 재확인(공시 산식 불변 유지).
+> `validate_live_artifacts.py` RED=4(public_exports 스냅샷 지연)→`export_public_sheets.py`
+> 재실행 후 **RED=0**. xlsx 3개 시트(`자본성증권발행현황`·`기본자본소진율`·`보완자본소진율`)
+> `sync_master_xlsx_sheet.py` 로 동기화, 검증 OK.
+>
+> **잔여 (다음 세션 인계)**: 한화생명(KR0068, 후순위 2.77조원, 최대) — `차입금에 대한 세부
+> 정보 공시` 열그룹 표가 있고 15개 물리컬럼 중 4개가 후순위(회사 자체 4건과 발행일 매치
+> 확인됨)인데, 컬럼헤더가 `<TH>후순위사채</TH>` 단독이 아니라 인수단명이 접두되고, 금액행이
+> **장부가**(액면 아님)라 `confirm_bonds_still_outstanding` 의 "표는 액면만 보증" 가드에
+> 걸린다. 표 제목이 문서에 2회 등장(연결/별도 추정, 미확정) — 잘못 짚으면 컬럼 인덱스가
+> 밀린다. `merge_subordinated_detail` 처럼 전기말 대조 후 리프레시하는 별도 경로 필요.
+>
+> **재현**: `python scripts/build_capital_securities_fy2026h1.py` (콘솔에 회사별 리포트) →
+> `wire_capital_securities_to_utilization.py --quarter 2026.2Q --bonds-source
+> data/bonds/capital_securities_fy2026h1.json` → `build_capital_securities_recognition.py`
+> (동일 인자) → `sync_tier_utilization_to_deploy.py --apply` →
+> `apply_disclosure_utilization.py --quarter 2026.2Q` → `emit_capsec_provenance.py` →
+> `validate_live_artifacts.py`. 진단 스크립트는 `scripts/_probes/capsec_*.py`(이 세션 신설,
+> 저장소에 남김). 티켓: `inbox/parser/20260901T1400Z__...capsec_h1_refresh_22_companies_
+> stale.md`(status: answered — 잔여 1사분 구현은 orchestrator 판단 대기).
+>
+> Last updated (이전): 2026-09-01(9회차 — 시장위험 항목36-40 "400/538"(138칸 결측) 재census) —
 > orchestrator 발주(8회차가 고친 총계행 라벨 정규식이 과거 분기 결측에도 적용되는지 재라).
 > **결론: 진짜 결측은 0칸 — 538이라는 분모 자체가 공시주기(cadence)를 안 반영한 버그였다.**
 > 옆의 항목41-46(금리시나리오)은 이미 짝수분기만 분모로 쓰는데(`완비 270/273`) 항목36-40은

@@ -104,11 +104,11 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_pl_breakdown.py"
   },
   "viz_csm_waterfall": {
-   "inputs_sha256": "8c877698f6b22354b6fb22620133e1414326a15894bda8dd30c84d39e946b8b3",
-   "input_files": 761,
-   "input_bytes": 50461730,
+   "inputs_sha256": "9e9f2d1628f7c95ab6f8c3794500f7e9e66a471026c55b237096d546c26233e9",
+   "input_files": 767,
+   "input_bytes": 50655298,
    "input_files_per_pattern": {
-    "data/dart/extracted/*.json": 761
+    "data/dart/extracted/*.json": 767
    },
    "code_sha256": "87ee715e3167dec21f3553a023105ebef0664b8d5de17dac91719009e93e6a72",
    "code_files": [
@@ -130,19 +130,19 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/viz_build_csm_waterfall.py (관측 47개 = *_measurement.json; 패턴은 넉넉히 extracted/*.json 전체)"
   },
   "viz_ifrs17_panels": {
-   "inputs_sha256": "4c09e8b4b9f9baa79a6a896354e2eda2df12a723069fddc08a515ee63985a36f",
-   "input_files": 763,
-   "input_bytes": 51119411,
+   "inputs_sha256": "8e0699fb858aeffca074c2f2f832a702ad275492857e5e077ff4e7b4549d2202",
+   "input_files": 769,
+   "input_bytes": 51312979,
    "input_files_per_pattern": {
-    "data/dart/extracted/*.json": 761,
+    "data/dart/extracted/*.json": 767,
     "CSM_waterfall.json": 1,
     "data/dart/viz/sensitivity_overrides.json": 1
    },
-   "code_sha256": "b6354a0dca026c825d1e85af69bb8bef15a1e5498e353cdbd99caf6f56403c5b",
+   "code_sha256": "40babe0fef8fe8d246531241dfaca238c060f364d7b877d57b55f1d7e34ab4e3",
    "code_files": [
     "scripts/viz_build_ifrs17_panels.py"
    ],
-   "fixture_sha256": "2765eafff835cd2481abc220a356f01248313d301e1cf614d8707071f403ce36",
+   "fixture_sha256": "92da756acaf9f5e41ba0ebfb09cbbc66b9bbda4f66882c14fac2edcb4089b619",
    "outputs": {
     "files / bs_snapshot.json / sha256": {
      "path": "data/dart/viz/bs_snapshot.json",
@@ -156,8 +156,8 @@
     },
     "files / insurance_pl_breakdown.json / sha256": {
      "path": "data/dart/viz/insurance_pl_breakdown.json",
-     "fixture_sha256": "ae41bc46100d2ef91319a2cd92cf81344d0edd5e970c5df4d36641a0a4d10660",
-     "ondisk_sha256": "ae41bc46100d2ef91319a2cd92cf81344d0edd5e970c5df4d36641a0a4d10660"
+     "fixture_sha256": "f8bc1473ffba9e86b283eb122be1ba615f82d8e97b0d9a2766f4fbfd59475cba",
+     "ondisk_sha256": "f8bc1473ffba9e86b283eb122be1ba615f82d8e97b0d9a2766f4fbfd59475cba"
     },
     "files / sensitivity_heatmap.json / sha256": {
      "path": "data/dart/viz/sensitivity_heatmap.json",
