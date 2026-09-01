@@ -67,18 +67,29 @@ sources:
         mode: direct_href
       - kr: KR0011
         name: DB손해보험
-        url1: https://www.idbins.com/pc/bizxpress/contentTemplet/pb/mp/rg/list.jsp
-        url2: https://www.idbins.com/pc/bizxpress/contentTemplet/pb/mp/rg/view.jsp?i=4c3187cc8627450a93bc&tp=T&tx=&ct=1
-        xpath: '//*[@id="content"]/div[2]/div/div/div[1]/div[2]/dl/dd/ul/li[1]/a'
-        mode: two_step_direct_url + direct_href
-        notes: view.jsp 'i=' detail-id varies per quarter
+        url: https://www.idbins.com/pc/bizxpress/contentTemplet/pb/mp/rg/list.jsp
+        step1_xpath: '//table//tbody//a[contains(., "2026") and (contains(., "상반기") or contains(., "2분기")) and not(contains(., "1분기"))]'
+        step2_xpath: '//*[@id="content"]/div[2]/div/div/div[1]/div[2]/dl/dd/ul/li[1]/a'
+        mode: two_step (step2 direct_href)
+        notes: |
+          2026-09-01 fix (was two_step_direct_url + hardcoded url2 'i=' detail-id,
+          which never advances on its own -> silently re-fetched FY2026_Q1, see
+          inbox/downloader/20260901T0140Z). Site's list.jsp is now a table; click
+          the row whose own link text names the quarter so 'i=' resolves itself
+          every period. step2 (li[1] on the detail page) is unchanged/safe -- each
+          detail page only lists that quarter's own attachments. Verified live.
       - kr: KR0029
         name: AIG손해보험
-        url1: https://m.aig.co.kr/wo/dpwom012.html?menuId=MS709
-        url2: https://m.aig.co.kr/wo/dpwom021.html?menuId=MS709&pancId=15467&searchWord=&curPage=1
-        xpath: '//*[@id="aigContent"]/div[1]/div[1]/span/a/em'
-        mode: two_step_direct_url + click_dl
-        notes: pancId varies per quarter
+        url: https://m.aig.co.kr/wo/dpwom012.html?menuId=MS709
+        xpath: '//div[contains(@class,"conBox")][.//strong[contains(., "2026") and (contains(., "상반기") or contains(., "2분기")) and not(contains(., "1분기"))]]//a[contains(@href,"downLoadFiles")]'
+        mode: direct_href
+        notes: |
+          2026-09-01 fix (was two_step_direct_url + hardcoded url2 'pancId=15467',
+          notes said "varies per quarter" but the value never did -> silently
+          re-fetched FY2026_Q1, see inbox/downloader/20260901T0140Z). Live check
+          found the PDF download href now sits directly on this list page inside
+          the same <div class="conBox"> as the quarter's own label -- no second
+          page/pancId needed at all. Match on the label text. Verified live.
       - kr: KR0032
         name: NH농협손해보험
         url: https://www.nhfire.co.kr/announce/managementAnnounce/retrievePeriodicManagementAnnounce.nhfire
@@ -104,10 +115,17 @@ sources:
       - kr: KR0150
         name: 서울보증보험
         url: https://www.sgic.co.kr/biz/ccg/index.html?p=CCGIRI010101F01
-        xpath: '//*[@id="test1"]'
+        xpath: '//a[@id="test1" and contains(., "2026") and (contains(., "상반기") or contains(., "2분기")) and not(contains(., "1분기"))]'
         mode: click_dl
         wait_networkidle: true
         wait_ms: 5000
+        notes: |
+          2026-09-01 fix (was '//*[@id="test1"]' -- this SPA reuses id="test1" on
+          all 5 quarterly download links, so .first always grabbed whichever one
+          the site lists first, i.e. re-fetched FY2026_Q1 silently, see
+          inbox/downloader/20260901T0140Z). Each link's own visible text names
+          the quarter ('2026년 상반기 경영공시 자료' etc.) -- match on that
+          instead of the duplicated id. Verified live.
         notes: SPA
       - kr: KR1000
         name: 코리안리재보험

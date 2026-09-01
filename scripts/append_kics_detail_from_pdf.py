@@ -38,6 +38,9 @@ logging.disable(logging.CRITICAL)
 sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "scripts"))
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+
 MARKER = "<!-- kics-detail appended from pdf text layer by append_kics_detail_from_pdf.py -->"
 HEADING = "## [경과조치 적용 전 지급여력비율 세부]"
 
@@ -209,11 +212,10 @@ def main() -> int:
         return 1
     period = sys.argv[1]
     codes = sys.argv[2:]
-    raw = REPO / "data" / "disclosure" / period / "raw"
     inbox = REPO / "md_inbox" / period
     n_ok = 0
     for code in codes:
-        pdfs = sorted(raw.glob(f"{code}_*.pdf"))
+        pdfs = disclosure_pdfs(period, code)
         mds = sorted(inbox.glob(f"{code}_*.md"))
         if not pdfs or not mds:
             print(f"{code}: missing pdf or md (pdf={len(pdfs)}, md={len(mds)})")

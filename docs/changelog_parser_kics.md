@@ -2,6 +2,91 @@
 
 > Last updated: 2026-09-01 · Stage 2/5 — parser (kics lane)
 
+## 2026-09-01 — docling 이 절을 잃는 방식은 셋이고 원인이 다 다르다 (inbox `20260831T0700Z`)
+
+티켓이 "같은 증상"으로 묶어 놓은 세 가지를 39사 전수 실측으로 분리했다.
+
+**A. 절이 윈도 밖 — 원인은 키워드 목록도 window 폭도 아니고 top-N cap 이다.**
+`_find_keyword_pages` 가 페이지를 `matched_count` 로 줄세우면 요약·총괄 페이지(비율 키워드
+5~8개)가 상위를 독식하고, `6-4. 시장위험 관리` 여는 페이지는 자기 위험명을 한 번 써서 score 1 이라
+21~36위로 밀려 cap(20)에 잘린다. FORM_A 91칸 = 이미 커밋된 키워드 추가로 해소되나 **MD 를
+재변환 안 해서 남아 있던 것 57칸** + **진짜 cap eviction 8칸**(KR0002 p33 31/62위, KR0032 p32
+22/24, KR0049 p35·p36 26/26, KR0050 p34 31/35, KR0074 p25 36/47, KR0083 p30 21/26, KR0150 p28)
++ 스캔·목차 오탐 2칸, **window 폭 0칸**. 수정 = `PRIORITY_KEYWORDS` 9개(절 앵커)에 걸린
+페이지는 cap 면제. 사전 시뮬레이션 35사에서 추가 페이지 32장(사당 0.9장)·앵커갭 15건 전원
+해소·잔여 0, range 조각 수는 오히려 감소.
+
+**B. "item36 만 있고 37-40 없음" 은 네 번째 기전이 아니다.** A·C 가 세부표 페이지에만 걸리고
+총괄행 페이지가 살아남은 합성이다. KR0009 = 금리위험액현황 p35 미선택(A) + 주식위험액현황 p37
+선택됐는데 증발(C). KR0150 은 다섯 표가 이미 MD 에 다 있고 마스터와 소수점까지 일치(티켓
+스냅샷이 낡음). KR0087 은 시장위험 텍스트 0자짜리 진짜 스캔본(OCR 레인).
+
+**C. docling 이 페이지를 조용히 버린다 — 이게 제일 위험하다.** preprocess 단계가
+`std::bad_alloc` 을 내면 docling 은 로그만 남기고 문서를 `PARTIAL_SUCCESS` 로 반환하는데,
+그 페이지는 **`document.pages` 색인에는 그대로 있고 항목만 0개**다. `_convert_one()` 이
+`conversion.status`·`errors` 를 한 번도 안 읽어서 MD 가 완결본처럼 쓰였다. KR0051
+page_range=(5,35) 재현: 29·30·33·34 가 0자, 그중 p34 가 티켓이 지목한 `6-8. 위험민감도` 다.
+페이지 자체 문제가 아니다 — 단독 변환하면 5/5 SUCCESS 이고, 버려지는 페이지는 연속 구간이며
+실행마다 달라진다(누적 메모리 압력). 페이지 크기·이미지·벡터 수 차이 없음. 수정 = 상태가
+SUCCESS 가 아니면 페이지별 provenance 를 감사해 0자 페이지를 한 장씩 재변환하고 제자리에 끼워
+넣는다(`export_to_markdown(page_no=...)` 재조립 무손실 확인: KR0051 5-35 51,124자 대 51,124자,
+천단위 숫자 276/276). SUCCESS 경로는 종전과 바이트 동일. **workers=2 면 bad_alloc 이 폭증한다**
+(KR0032 33장 중 25장) — 재변환은 `--workers 1` 권장.
+
+**가드(요청 2).** `quality_check.page_selection_flags()` 신설 — `source_page_ranges` 를 읽는
+코드가 이 저장소에 처음 생겼다. 플래그 6종(`SECTION_LOST_UNSELECTED` / `SECTION_LOST_DROPPED`
+/ `DOCLING_PAGES_LOST` / `SECTION_MISSING` / `PAGE_COVERAGE_LOW` / `PAGE_SELECTION_THIN`),
+`--stage quality` 가 review 라우팅 + CSV `page_flags` 열. 임계값은 546개 md_inbox 전수
+base rate 로 정함(6-8 위험민감도는 2024.4Q 이전 서식에 아예 없어 그 이전 분기 면제, 홀수분기는
+간이공시라 THIN 면제). 블라스트 반경 351→374(신규 23건), 티켓 11사 중 10사 검출(미검출 1사는
+텍스트 0자 스캔본이라 의도적 침묵). `--stage parse` 도 잃은 페이지를 즉시 출력한다.
+**라우팅이지 push 차단은 아니다** — `prepush_check.py` 는 `--stage quality` 를 부르지 않는다.
+`tests/unit/test_docling_page_guard.py` 12개가 박제. frontmatter 신규 필드:
+`source_total_pages`·`docling_status`·`docling_{dropped,recovered,unrecovered}_pages`,
+프로파일 `docling_partial_v4` → `v5`.
+
+## 2026-09-01 — raw/pdf 디렉토리 가정 두더지잡기 종결 (inbox 2건: `20260901T0430Z`·`20260901T0500Z`)
+
+`data/disclosure/<period>/raw/`만 glob해 2026.2Q 39사를 조용히 스킵하던(이 저장소에서 세 번째
+발생한 같은 버그) 스크립트 11개를 전부 `scripts/_disclosure_pdf_paths.py::disclosure_pdfs()`
+공유 해석기로 교체: `append_kics_detail_from_pdf`·`audit_all_periods`·
+`backfill_life_subrisk_from_pdf`·`emit_rate_sensitivity_provenance`·
+`extract_market_section_pages`·`fill_market_irr_from_pdf`·`fill_market_subs_from_pdf`·
+`fill_post_transition_adjust_items`·`market_subrisk_pdf_recover`·
+`recover_market_subs_parallel`·`report_collection_status`. 기계적 치환이 아니라 파일마다
+glob 결과 소비 방식(단일 vs 리스트, amended/largest 선택, alias 루프)을 확인해 개별 처리.
+회귀는 실측(추정 아님) — 핵심 해석기: 13분기(legacy 12Q + FY2026_Q1) 509쌍 flip 0, FY2026_Q2
+39쌍 flip 0·recovered 38(실회사; 1건은 downloader 쪽 파일명 미규격 잔재로 무관). 별도 로직이
+있는 두 래퍼 함수(`has_disclosure_file`·`check_disclosure`)는 alias/디렉토리존재분기까지
+포함해 39사×13분기=507쌍씩 개별 재현, flip 0. `rebuild_combined_transition_after.py::_pdf()`
+도 재교체(validation 중간판은 raw+pdf 매치를 합쳐 크기로 골라 "raw 우선" 계약을 실제로는
+어겼음 — KR0050/FY2026_Q2 양쪽 사본 md5 동일이라 지금은 무해했으나 잠재위험이었다) +
+"raw 없음" 거부가 그 분기 타깃 대비 50% 초과 시 exit non-zero 신설(스킵을 성공으로 보고하던
+구조 폐기, `_pdf`를 강제로 None만 돌려주게 해 구버전 버그를 시뮬레이션 → exit 1 확인).
+재발방지로 `tests/test_disclosure_raw_pdf_wiring.py` 신설 — `scripts/*.py`(최상위) 전수를
+AST로 스캔해 disclosure-rooted `raw/` 경로를 `.glob()`/`.iterdir()` 대상으로 쓰는 패턴을
+잡는다(255개 스크립트 위반 0, self-test 8종으로 탐지·오탐 둘 다 검증, 허용목록은
+`fix_20260821_tier2_limit_lines.py`·`fix_20260824_register_source_vision.py` 2개뿐이고
+그 둘이 실제로 패턴을 갖고 있는지도 자체 검사). `20260901T0430Z` status: resolved(`_resolved/`
+이동).
+
+`20260901T0500Q`의 4버킷(KR0071·KR0104 결합경과조치 적용후) 재현 대조는 스크래치 사본에서
+실행(라이브 `kics_disclosure.json`은 읽기전용 — validation이 이미 손으로 정정해 axis-C 실패가
+0건이라 라이브 dry-run만으로는 대조 불가). 결과는 방향·자릿수 일치하나 상대오차<0.1% 수준의
+완전일치 아님 — 원인을 item1/14/27후 트리플의 기존 0.017% 미세 자체불일치까지 추적(KR0071
+2025.3Q: 저장된 item1후=39184/item14후=18781/item27후=208.6인데 39184/18781×100=208.6364,
+39184/208.6×100=18784.28 — 둘 다 저장값과 어긋남, 이번 수정과 무관한 선재 반올림). `main()`이
+raw PDF에서 17-21후·14후를 전부 재계산하기 때문에 자기모순 없는 새 값(= 어긋남 해소)이 나오는
+반면 지금 저장된 값은 validation의 수기 fix(기존 17-21후를 입력으로 신뢰, 15/16/22/23후만
+재조합)로 만들어졌다 — 둘 다 자체 검산(단조성·항등식)은 통과하는 설계 선택의 차이라 데이터
+정정이 아니고, `kics_disclosure.json`을 건드리지 말라는 이번 지시 범위 밖이라 `main()`의
+재구성 산식은 바꾸지 않고 사실만 보고. `20260901T0500Z` status: answered(설계 선택은
+validation/owner 결정 대기, 4버킷 자체는 GREEN이라 급하지 않음).
+
+`kics_disclosure.json` 미접촉. `git commit` 없음(오케스트레이터 일괄 예정). 상세:
+`TODO_parser_kics.md` 2026-09-01 최상단(9회차), 재현 확인용 `scripts/_probes/verify_20260901_
+disclosure_pdfs_no_regression.py` · `verify_20260901_wrapper_functions_no_regression.py` 신설.
+
 ## 2026-09-01 — push 를 막던 과거분기 RED 18건(AIG·에이비엘생명·흥국생명) → 0
 
 `validate_data_contract.py` RED 49→31(kics_disclosure 잔여 0, 남은 31은 전부 ifrs17 레인

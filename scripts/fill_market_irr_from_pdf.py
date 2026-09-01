@@ -12,7 +12,7 @@ Spec: docs/agents/kics-market-risk-decomposition.md §7.
 Usage: PYTHONIOENCODING=utf-8 python scripts/fill_market_irr_from_pdf.py [--dry-run]
 """
 from __future__ import annotations
-import argparse, io, json, re, sys, glob
+import argparse, io, json, re, sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -20,9 +20,9 @@ sys.path.insert(0, str(REPO / "scripts"))
 from fill_market_subitems_to_disclosure import (  # noqa: E402
     extract_irr_netassets, derive_irr, _parse_value, _to_eok, _meta_for, IRR_SCEN,
 )
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 JSON_PATH = REPO / "kics_disclosure.json"
-DISCLOSURE = REPO / "data" / "disclosure"
 
 
 def quarter_to_period(q):
@@ -54,7 +54,7 @@ def main(argv):
 
     new_rows, ok, fail = [], [], []
     for code, q in worklist:
-        pdfs = sorted(glob.glob(str(DISCLOSURE / quarter_to_period(q) / "raw" / f"{code}_*.pdf")))
+        pdfs = disclosure_pdfs(quarter_to_period(q), code)
         if not pdfs:
             continue
         try:

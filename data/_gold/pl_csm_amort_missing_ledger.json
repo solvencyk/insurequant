@@ -1,0 +1,21 @@
+{
+  "_what": "룰 `PL_CSM_AMORT_VS_WATERFALL` 의 건별 등재부. PL_breakdown 의 item4(원수CSM상각)가 None/0 인데 같은 (회사,분기) 의 CSM_waterfall 상각은 임계(10억) 이상인 자리 -- '한쪽만 비었다' 패턴. csm_amort_identity_ledger.json(양쪽 값이 다 있는데 잔차가 안 맞는 축) 및 pl_amort_coverage_baseline.json(PL 버킷 자체가 통째로 없는 축) 과는 다른 세 번째 축이다. 통째 면제가 아니라 건별 등재이고, 워터폴 상각액까지 박제하므로 데이터가 움직이면(또는 item4 가 채워지면) 박제가 깨진다 -- 채워지면 PL_CSM_AMORT_MISSING_LEDGER_INERT 로 뜨고, 값이 달라지면 PL_CSM_AMORT_MISSING_LEDGER_DRIFT RED 로 뜬다. 2026-09-01 신설: 그 전까지 이 룰은 등재부 경로 자체가 없어 원문에 정말로 값이 없는 경우까지 무조건 RED 였다(TODO_parser_ifrs17.md 79th pass ③ 에서 AIA 2023.4Q 를 raw 로 확인해 '근거를 갖춰 닫는다' 고 문서에 적었으나, 게이트가 읽는 자리가 없어 RED 로 계속 떴다 -- 이 파일 + validate_data_contract.py 의 룰 코드가 그 자리다).",
+  "_pin_tolerance": {
+    "abs_eok": 0.5,
+    "rel": 0.05,
+    "basis": "csm_amort_identity_ledger / pl_amort_coverage_baseline 과 동일 폭(CSM_AMORT_PIN_TOL_*)"
+  },
+  "_threshold": {
+    "min_amort_eok": 10.0,
+    "basis": "룰 3z 와 같은 CSM_AMORT_MIN_EOK"
+  },
+  "_measured_at": "2026-09-01 (parser-ifrs17)",
+  "entries": {
+    "에이아이에이생명보험|2023.4Q": {
+      "wf_amort_eok": 1417.0,
+      "cause": "NOT_DISCLOSED_SOURCE",
+      "note": "raw data/dart/FY2023_Q4/raw/KR0080_에이아이에이생명보험_20240409002583/20240409002583_00760.xml 전체를 훑어 확인(TODO_parser_ifrs17.md 79th pass ③): (a) FY2024/FY2025 필링에 있는 '당사의 금년도 영업이익은...' 요약 산문 자체가 이 해엔 없다 -- '당사의' 로 시작하는 문장 22개 전수 확인, 전부 회계정책 상용구일 뿐 손익 요약이 아니다. (b) '보험계약마진' 15개 언급이 전부 IFRS17 정의/회계정책 설명뿐, 그 해 상각액을 공시하는 롤포워드 표·문장이 없다. (c) '기초잔액' 전문서 1회뿐, CSM 과 무관. 다른 두 신규 회사(하나손해/아이엠라이프)는 같은 조사에서 실제로 표가 있어 채웠지만(주석29류, extract_tier2_hana_sonbo/_hana_sonbo_csm_amort, extract_tier2_imelife/_imelife_csm_amort 참조) AIA 2023.4Q 는 표·산문 둘 다 원문에 없다 -- 추측·보간 없이 빈 칸 유지. AIA 의 다른 두 분기(2024.4Q=1561.6억, 2025.4Q=1530.6억)는 `_aia_statement()` 가 산문에서 정상 추출한다(_GOLD_CELL_OVERRIDE 없이 통과) -- '감사보고서라서 노트가 없다'는 카테고리 설명이 이 회사 자체엔 성립하지 않고, 2023.4Q 한 분기만 진짜로 원문 부재다.",
+      "routed": "inbox/parser/20260901T1900Z__orchestrator__MULTI__pl_csm_amort_vs_waterfall_red7.md"
+    }
+  }
+}

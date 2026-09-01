@@ -25,8 +25,8 @@
   "total_records": 544,
   "counts_by_kind": {
    "TFI": {
-    "O": 379,
-    "X": 123,
+    "O": 373,
+    "X": 129,
     "NA": 8,
     "UNKNOWN": 34
    },
@@ -4490,7 +4490,7 @@
    "format": "subsection_format1_2",
    "evidence": {
     "subsection": {
-     "TFI": "format2_negative: ' : 해당사항 없음\\n\\n※ 당사는 공통'",
+     "TFI": "doc_level_common_negative: 공통(기발행자본증권의 가용자본 인정범위 확대) 및 이외 선택적용 경과조치를 적용하지 않",
      "TAC": "format2_negative: '를 적용하지 않아 경과조치 전·후 '",
      "TIR": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
      "TER": "format2_negative: ...'식위험 경과조치를 적용하지 않아 경과조치 전·후 '",
@@ -5819,7 +5819,7 @@
    "name": "삼성생명",
    "quarter": "2025.1Q",
    "md_path": "md_inbox\\FY2025_Q1\\KR0069_삼성생명.md",
-   "TFI": "O",
+   "TFI": "X",
    "RPT": "UNKNOWN",
    "TAC": "X",
    "TIR": "UNKNOWN",
@@ -5829,7 +5829,7 @@
    "format": "subsection_format1_2",
    "evidence": {
     "subsection": {
-     "TFI": "format1_breakdown_table_present: | 구 분                      | 경과조치적용전    |    경과조치적용후 |",
+     "TFI": "doc_level_common_negative: 공통및선택경과조치를적용하지않",
      "TAC": "format2_negative: '를적용하지않아경과조치전·후금액및'",
      "TIR": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
      "TER": "format2_negative: ...'는주식위험경과조치를적용하지않아경과조치전·후금액및'",
@@ -5844,7 +5844,7 @@
    "name": "삼성생명",
    "quarter": "2025.2Q",
    "md_path": "md_inbox\\FY2025_Q2\\KR0069_삼성생명.md",
-   "TFI": "O",
+   "TFI": "X",
    "RPT": "UNKNOWN",
    "TAC": "X",
    "TIR": "UNKNOWN",
@@ -5854,7 +5854,7 @@
    "format": "subsection_format1_2",
    "evidence": {
     "subsection": {
-     "TFI": "format1_breakdown_table_present: | 구 분                      | 경과조치적용전    | 경과조치적용후    |",
+     "TFI": "doc_level_common_negative: 공통및선택경과조치를적용하지않",
      "TAC": "format2_negative: '를적용하지않아경과조치전·후금액및'",
      "TIR": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
      "TER": "format2_negative: ...'는주식위험경과조치를적용하지않아경과조치전·후금액및'",
@@ -5869,7 +5869,7 @@
    "name": "삼성생명",
    "quarter": "2025.3Q",
    "md_path": "md_inbox\\FY2025_Q3\\KR0069_삼성생명.md",
-   "TFI": "O",
+   "TFI": "X",
    "RPT": "UNKNOWN",
    "TAC": "X",
    "TIR": "UNKNOWN",
@@ -5879,7 +5879,7 @@
    "format": "subsection_format1_2",
    "evidence": {
     "subsection": {
-     "TFI": "format1_breakdown_table_present: | 구 분                      | 경과조치적용전    | 경과조치적용후    |",
+     "TFI": "doc_level_common_negative: 공통 및 선택 경과조치를 적용하지 않",
      "TAC": "format2_negative: '를 적용하지 않아 경과조치 전·후 '",
      "TIR": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
      "TER": "format2_negative: ...'식위험 경과조치를 적용하지 않아 경과조치 전·후 '",
@@ -5894,7 +5894,7 @@
    "name": "삼성생명",
    "quarter": "2025.4Q",
    "md_path": "md_inbox\\FY2025_Q4\\KR0069_삼성생명.md",
-   "TFI": "O",
+   "TFI": "X",
    "RPT": "UNKNOWN",
    "TAC": "X",
    "TIR": "UNKNOWN",
@@ -5904,7 +5904,7 @@
    "format": "subsection_format1_2",
    "evidence": {
     "subsection": {
-     "TFI": "format1_breakdown_table_present: | 구 분                      | 경과조치적용전    | 경과조치적용후    |",
+     "TFI": "doc_level_common_negative: 공통및선택경과조치를적용하지않",
      "TAC": "format2_negative: '를적용하지않아경과조치전·후금액및'",
      "TIR": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
      "TER": "format2_negative: ...'·금리위험경과조치를적용하지않아경과조치전·후금액및'",
@@ -5919,7 +5919,7 @@
    "name": "삼성생명보험",
    "quarter": "2026.1Q",
    "md_path": "md_inbox\\FY2026_Q1\\KR0069_삼성생명보험.md",
-   "TFI": "O",
+   "TFI": "X",
    "RPT": "UNKNOWN",
    "TAC": "X",
    "TIR": "UNKNOWN",
@@ -5929,7 +5929,7 @@
    "format": "subsection_format1_2",
    "evidence": {
     "subsection": {
-     "TFI": "format1_breakdown_table_present: | 구 분                      | 경과조치적용전    |    경과조치적용후 |",
+     "TFI": "doc_level_common_negative: 공통 및 선택 경과조치를 적용하지 않",
      "TAC": "format2_negative: '를 적용하지 않아 경과조치 전·후 '",
      "TIR": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
      "TER": "format2_negative: ...'식위험 경과조치를 적용하지 않아 경과조치 전·후 '",
@@ -5944,7 +5944,7 @@
    "name": "삼성생명",
    "quarter": "2026.2Q",
    "md_path": "md_inbox\\FY2026_Q2\\KR0069_삼성생명.md",
-   "TFI": "O",
+   "TFI": "X",
    "RPT": "UNKNOWN",
    "TAC": "X",
    "TIR": "UNKNOWN",
@@ -5954,7 +5954,7 @@
    "format": "subsection_format1_2",
    "evidence": {
     "subsection": {
-     "TFI": "format1_breakdown_table_present: | 구 분                      | 경과조치적용전     |     경과조치적용후 |",
+     "TFI": "doc_level_common_negative: 공통및선택경과조치를적용하지않",
      "TAC": "format2_negative: '를적용하지않아경과조치전·후금액및'",
      "TIR": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
      "TER": "format2_negative: ...'는주식위험경과조치를적용하지않아경과조치전·후금액및'",

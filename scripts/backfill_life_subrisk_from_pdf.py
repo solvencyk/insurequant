@@ -16,8 +16,10 @@ logging.getLogger("pypdf").setLevel(logging.ERROR)
 from pypdf import PdfReader
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "scripts"))
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+
 JSON_PATH = REPO / "kics_disclosure.json"
-DISC = REPO / "data" / "disclosure"
 
 SUBMAP = [("사망위험", 29), ("장수위험", 30), ("장해", 31), ("장기재물", 32),
           ("해지위험", 33), ("사업비위험", 34), ("대재해", 35)]
@@ -112,8 +114,7 @@ def main():
     div = 100.0 if a.unit == "백만원" else 1.0
     new = []; summ = []; scanned = 0; nofile = 0
     for (code, q), miss in sorted(resid):
-        pdir = DISC / _period_dir(q) / "raw"
-        pdfs = sorted(pdir.glob(f"{code}_*.pdf")) if pdir.is_dir() else []
+        pdfs = disclosure_pdfs(_period_dir(q), code)
         if not pdfs:
             nofile += 1; continue
         scanned += 1

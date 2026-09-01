@@ -79,11 +79,39 @@ def _quality_stage(args: argparse.Namespace) -> dict:
     review_path = quality_check.write_review_queue(reports, _now())
     review_count = sum(1 for r in reports if r.decision == "review")
 
-    print(
-        f"\n=== MD quality gate ({md_root}) ===\n"
+    # Page-selection guard (inbox 20260831T0700Z request 2). Until 2026-09-01
+    # nothing read source_page_ranges, so a docling window that skipped the
+    # 6-4 시장위험 / 6-8 위험민감도 pages produced a markdown that simply looked
+    # like a filer who had not disclosed them.
+    flag_counts: dict[str, int] = {}
+    flagged: list[dict] = []
+    for r in reports:
+        if not r.page_flags:
+            continue
+        flagged.append(
+            {
+                "md_path": str(r.md_path),
+                "company_code": r.company_code,
+                "page_flags": r.page_flags,
+            }
+        )
+        for f in r.page_flags:
+            key = f.split("=", 1)[0]
+            flag_counts[key] = flag_counts.get(key, 0) + 1
+
+    lines = [
+        "",
+        f"=== MD quality gate ({md_root}) ===",
         f"  total={len(md_paths)}  accepted={len(md_paths) - review_count}"
-        f"  review={review_count}\n  queue={review_path}\n"
-    )
+        f"  review={review_count}",
+        f"  page-selection flags: {len(flagged)} file(s)",
+    ]
+    for key, n in sorted(flag_counts.items(), key=lambda kv: -kv[1]):
+        lines.append(f"    {key:<26} {n}")
+    lines.append(f"  queue={review_path}")
+    lines.append("")
+    print("\n".join(lines))
+
     return {
         "ok": True,
         "stage": "quality",
@@ -91,6 +119,8 @@ def _quality_stage(args: argparse.Namespace) -> dict:
         "total_md": len(md_paths),
         "review_md": review_count,
         "review_queue": str(review_path),
+        "page_flag_counts": flag_counts,
+        "page_flagged_files": flagged,
     }
 
 
@@ -244,6 +274,7 @@ def _parse_stage(args: argparse.Namespace) -> dict:
         f"  fail={len(failed)}  elapsed_s={elapsed:.1f}",
         "",
     ]
+    lost = [r for r in results if getattr(r, "unrecovered_pages", ())]
     for r in sorted(results, key=lambda x: x.company_code):
         st = r.status
         conf = r.parse_confidence
@@ -253,6 +284,27 @@ def _parse_stage(args: argparse.Namespace) -> dict:
         )
         if st == "failed" and r.error_message:
             lines.append(f"       {r.error_message}")
+        # Docling drops pages it was asked to convert (std::bad_alloc in its
+        # preprocess stage) and reports only PARTIAL_SUCCESS. Say so here, at
+        # the moment it happens, rather than leaving it for the quality gate.
+        if getattr(r, "dropped_pages", ()):
+            lines.append(
+                f"       docling={r.docling_status} dropped={list(r.dropped_pages)}"
+                f" recovered={list(r.recovered_pages)}"
+                f" STILL-LOST={list(r.unrecovered_pages)}"
+            )
+    if lost:
+        lines.append("")
+        lines.append(
+            f"  !! {len(lost)} file(s) still missing pages after single-page retry: "
+            + ", ".join(f"{r.company_code}{list(r.unrecovered_pages)}" for r in lost)
+        )
+        lines.append(
+            "     Those pages are absent from the markdown. Check them against the raw PDF"
+        )
+        lines.append(
+            "     before trusting any 'the filer did not disclose it' conclusion."
+        )
     print("\n".join(lines))
 
     return {
@@ -281,6 +333,10 @@ def _parse_stage(args: argparse.Namespace) -> dict:
                 "parse_confidence": r.parse_confidence,
                 "elapsed_seconds": r.elapsed_seconds,
                 "error_message": r.error_message,
+                "docling_status": getattr(r, "docling_status", ""),
+                "dropped_pages": list(getattr(r, "dropped_pages", ())),
+                "recovered_pages": list(getattr(r, "recovered_pages", ())),
+                "unrecovered_pages": list(getattr(r, "unrecovered_pages", ())),
             }
             for r in results
         ],

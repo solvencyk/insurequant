@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260901T0410Z
-status: open
+status: answered
 route: reparse
 company: KR0069
 period: 2025.1Q,2025.2Q,2025.3Q,2025.4Q,2026.1Q,2026.2Q
@@ -69,3 +69,53 @@ TFI=X 로 바로잡아도 **KR0069 2026.2Q 의 47~54 결측은 정당해지지 �
 **진짜 추출갭이 숨는다.** 두 티켓을 같이 처리해 주기 바란다.
 
 ## 답변 (recipient 작성 — 처리 후)
+
+**2026-09-01 (parser/kics): 권고안 그대로 반영, 전 544버킷 실측으로 검증 완료.**
+
+`scripts/extract_transition_applicability.py`에 `COMMON_NEG_RE`/`CONJ_RE`/`EXCL_RE` +
+`_common_transition_not_applied()`을 티켓에 적힌 정규식 그대로 추가하고, `find_subsection_format()`의
+단일종목 갈래(TFI/TAC/TIR) 중 `kind == "TFI"`일 때만 문서 전체에서 이 문서수준 부정문을 먼저 검사해
+표 존재 여부보다 우선시키도록 배선했다(TAC/TIR/TER_TIRR은 손대지 않음 — 기각된 일반화는 적용 안 함).
+
+**전 544버킷 재실행 결과** (`python scripts/extract_transition_applicability.py`):
+- `_common_transition_not_applied()`가 실제로 매치하는 버킷 = **정확히 10개** — KR0050 2023.1Q,
+  KR0069 2025.1Q~2026.2Q(6개), KR0095 2025.4Q·2026.1Q·2026.2Q. 티켓이 예고한 숫자와 정확히 일치.
+- TFI 값이 실제로 바뀐 셀 = **정확히 6개**, 전부 KR0069(2025.1Q/2025.2Q/2025.3Q/2025.4Q/2026.1Q/2026.2Q,
+  O→X). 나머지 4버킷은 이미 X라 무변화(대조군). **다른 kind(RPT/TAC/TIR/TER/TIRR/PCA_DEFER)·다른 회사는
+  0건 변화** — 셀 단위 전수 diff로 확인(`before._meta.counts_by_kind` vs `after`: TFI만
+  O=379→373/X=123→129, 나머지 6개 kind 카운트 바이트까지 동일).
+- **`EXCL_RE` 반증 통과**: KR1000 2023.2Q는 매치 10개 목록에 없음 — "공통 경과 조치 외에 선택적
+  경과조치를 적용하지 않고"에서 `외에`가 매치 스팬 안에 들어가 CONJ(`과\s`가 "경과 조치"의 공백에
+  우연히 걸림)를 상쇄해 정상적으로 O 유지. `이외`(KR0050 "및 이외 선택적용")와 `외에`가 다른 토큰이라는
+  전제도 실제 텍스트로 확인.
+- **대조군 4버킷**(KR0050 2023.1Q, KR0095 2025.4Q/2026.1Q/2026.2Q) 무변화 확인.
+- **KR0069 2023.1Q/2023.2Q는 의도적으로 미포함**됨을 원문으로 확인 — 그 두 분기 원문은
+  "「(공통적용 경과조치)」를 **적용하더라도** 경과조치 전·후비율이 동일하며"로 문장 구조 자체가
+  다름(`적용하지 않` 매치 대상 아님). 2025.1Q부터 원문이 "당사는공통및선택경과조치를적용하지
+  않았습니다"로 바뀐 것으로 보임 — 새 정규식이 시기별 실제 원문 차이를 정확히 반영한다.
+
+**"진짜 추출갭이 SKIP으로 숨지 않는지" 검증**: KR0069 2026.2Q뿐 아니라 TFI가 바뀐 6개 분기
+전부에서 `kics_disclosure.json`의 item47/48/49가 **이미 전부 적재**돼 있음을 직접 확인(6개 분기 x
+3항목 = 18/18 present). `kics_json_rules.py`의 `47_tier2_census`는 `if not present:`(47/48/49가
+**전부 결측**일 때만) TFI 값으로 RED/YELLOW/SKIP을 가르므로, 이 6버킷은 애초에 그 분기 자체를
+타지 않는다 — TFI 플립이 census 판정에 영향 0.
+
+**게이트 실측**(`python scripts/validate_kics_disclosure.py`, sidecar 교체 전/후 각각 1회 풀런):
+전/후 콘솔 출력이 **리포트 타임스탬프 파일명 한 줄 빼고 완전히 동일**(`diff` 결과), blocking
+RED=0 양쪽 다 유지(`documented exception ...: blocking RED=0 (= 39 − 8_life 1건 − tier2 RED
+37건 ...)`). `pytest tests/test_kics_rules_golden.py` 통과(1 passed, 1.72s).
+
+**재현**:
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/extract_transition_applicability.py
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_kics_rules_golden.py -q
+```
+
+**수정 파일**: `scripts/extract_transition_applicability.py`(+44줄), `data/_derived/kics_transition_applicability.json`(재생성, 544레코드 동일·6셀만 TFI 변경). `kics_disclosure.json`은 건드리지 않음.
+
+별건 티켓 `20260901T0400Z`(items 47-54 결측 관련, `inbox/_resolved/`에서 확인)는 이미 validation이
+자체 종결했음(`status: resolved`, "티켓을 쓰는 사이 kics 레인이 47~54 를 적재했다") — 위에서 확인한
+KR0069 6분기 47/48/49 완비 상태와 부합, 이 세션은 손대지 않았다.
+
+status: answered (validation 재확인 요청 — 이 세션은 파서 관점 검증만 완료, RED=0 유지를 원 sender가 재확인해줄 것)

@@ -4131,26 +4131,230 @@ def _eok(m):
     return sign * float(m.group(2).replace(",", ""))
 
 
+_AIA_UNIT_TO_MILLION = {"원": 1e-6, "천원": 1e-3, "백만원": 1.0, "억원": 100.0}
+
+
+def _aia_ofs_text(dirs):
+    """Raw text of AIA's 별도(OFS) audit attachment, tags stripped.  `_00760.xml` is DART's
+    별도 attachment and `_00761.xml` the 연결 one (see common._tag_basis); AIA files BOTH from
+    FY2025 on, so keying on the filename is what keeps the 연결 statement -- whose 포괄손익
+    계산서 is headed '...주식회사와 그 종속기업' -- out of every figure below."""
+    for d in dirs or []:
+        for x in sorted(glob.glob(d + "/*.xml")):
+            if not x.endswith("_00760.xml"):
+                continue
+            try:
+                raw = open(x, "rb").read().decode("utf-8")
+            except (UnicodeDecodeError, OSError):
+                continue
+            return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", raw))
+    return None
+
+
+def _aia_statement_unit(ofs_text):
+    """단위 cue printed in the 포괄손익계산서 heading block of the 별도 attachment -> 백만원
+    multiplier.  Cue-first (never a default): AIA prints 천원 in every filed year, but an
+    assumed factor is exactly how a 1000x error ships silently, so `None` (-> caller emits
+    nothing) is the answer when the cue is absent."""
+    if not ofs_text:
+        return None
+    for m in re.finditer(r"포\s*괄\s*손\s*익\s*계\s*산\s*서", ofs_text):
+        seg = ofs_text[m.start():m.start() + 300]
+        um = re.search(r"\(\s*단위\s*[:：]\s*(원|천원|백만원|억원)\s*\)", seg)
+        if um:
+            return _AIA_UNIT_TO_MILLION[um.group(1)]
+    return None
+
+
+def _aia_statement(tables, f):
+    """에이아이에이생명보험 audited 포괄손익계산서(별도) -> {item_no: 백만원}, or {}.
+
+    Layout (identical in FY2023/FY2024/FY2025, 단위 천원) is a FOUR-block 영업수익/영업비용
+    form that `extract_tier1` does not recognise -- which is the whole reason this company
+    had no Tier-1 at all:
+
+        Ⅰ. 보험영업수익      = 1.보험서비스수익 + 2.재보험수익
+        Ⅱ. 보험영업비용      = 1.보험서비스비용 + 2.재보험비용 + 3.기타사업비용
+        Ⅲ. 투자영업수익  Ⅳ. 투자영업비용 = 1.보험금융비용 + 2.재보험금융비용 + (이자비용 등)
+        Ⅴ. 영업이익  Ⅵ. 영업외손익  Ⅶ. 법인세비용차감전순이익  Ⅷ. 법인세비용  Ⅸ. 당기순이익
+
+    so item1(보험손익) = Ⅰ − Ⅱ and item17(투자손익) = Ⅲ − Ⅳ, i.e. item1 is NET of 기타사업비용
+    (which item16 then reports separately -- the same 악사손해/처브라이프 filer-family
+    convention `extract_tier2_aia` already documents, and what makes assemble()'s RC-gate
+    'adj' bridge close to ±1백만원 here).
+
+    Every parent row prints 당기 then 전기, and so does every child row, so the FIRST numeric
+    cell is always 당기 (`_row_nums` skips the blank spacer columns).
+
+    Verified 2026-09-01 against two independent sources:
+      * FY2024's own prose (주석 1.일반사항) -- 영업이익 2,294억 / 보험이익 766억 /
+        투자이익 1,528억 / 영업외손실 15억 / 법인세 541억 / 당기순이익 1,738억, all SIX
+        reproduced exactly by this reader.
+      * the committed FY2025 cells (which came from the prose path below) -- item1 39,225
+        vs 39,200, item8 −78,607 vs −78,600, item17 185,574 vs 185,600: the prose is the
+        억-rounded form of these very lines.
+
+    item19(보험금융손익) 2026-09-01 -- Ⅳ.투자영업비용의 자식행 1.보험금융비용 +
+    2.재보험금융비용 (both COST lines; there is no matching income-side row anywhere in Ⅲ --
+    this company's insurance liabilities structurally net to a finance COST every year, which
+    is the domain-standard shape, not a parse error).  Guarded by `0 <= fin_cost <= inv_cost`
+    (a genuine cost sub-line of Ⅳ cannot exceed Ⅳ's own total) instead of folding into the
+    all-or-nothing gate below, so a future filing that drops or renames just these two rows
+    degrades to item19=None rather than losing item1/3/8/16/17/20-24 too.  item18(투자이익)
+    is NOT computed here -- assemble() derives it as item17 − item19, which is the correct
+    value by construction (Ⅲ minus Ⅳ excluding the two 보험금융 rows).
+
+    item23(법인세) and item7 are deliberately NOT returned -- assemble() derives them
+    (23 = 22 − 24, 7 = 3 − 4 − 5 − 6), and letting it do so keeps this company on the same
+    identity path as every other."""
+    cand = None
+    for t in _prefer_ofs(tables):
+        if getattr(t, "_basis", None) == "CFS":
+            continue
+        labs = [_lab0(r) for r in (t.rows or [])]
+        if (any("보험영업수익" in l for l in labs)
+                and any("보험영업비용" in l for l in labs)
+                and any("당기순이익" in l for l in labs)):
+            cand = t
+            break
+    if cand is None:
+        return {}
+
+    def cur(*subs):
+        """당기 (first numeric) of the first row whose col0 contains one of `subs`."""
+        r = _row_by_label(cand, *subs)
+        n = _row_nums(r) if r is not None else []
+        return n[0] if n else None
+
+    ins_rev, ins_cost = cur("보험영업수익"), cur("보험영업비용")
+    svc_rev, svc_cost = cur("보험서비스수익"), cur("보험서비스비용")
+    re_rev, re_cost = cur("재보험수익"), cur("재보험비용")
+    oth_cost = cur("기타사업비용")
+    inv_rev, inv_cost = cur("투자영업수익"), cur("투자영업비용")
+    op = cur("영업이익")
+    oth_op = cur("영업외손익")
+    pretax = cur("법인세비용차감전순이익")
+    ni = cur("당기순이익")
+    if any(x is None for x in (ins_rev, ins_cost, svc_rev, svc_cost, re_rev, re_cost,
+                                oth_cost, inv_rev, inv_cost, op, oth_op, pretax, ni)):
+        return {}
+
+    item1 = (ins_rev - ins_cost) * f
+    item17 = (inv_rev - inv_cost) * f
+    item3 = (svc_rev - svc_cost) * f
+    item8 = (re_rev - re_cost) * f
+    item16 = oth_cost * f
+    # Sanity gates -- both are statement identities, so a mis-picked row cannot pass them.
+    # Tolerance 2백만원 absorbs the statement's own rounding only.
+    if abs(item1 + item17 - op * f) > 2:
+        return {}
+    if abs(item3 + item8 - item16 - item1) > 2:
+        return {}
+    if abs((op + oth_op) * f - pretax * f) > 2:
+        return {}
+
+    out = {
+        1: item1, 3: item3, 8: item8, 15: 0.0, 16: item16, 17: item17,
+        20: op * f, 21: oth_op * f, 22: pretax * f, 24: ni * f,
+    }
+    ins_fin_cost, re_fin_cost = cur("보험금융비용"), cur("재보험금융비용")
+    if ins_fin_cost is not None and re_fin_cost is not None:
+        fin_cost = ins_fin_cost + re_fin_cost
+        if 0 <= fin_cost <= inv_cost:
+            out[19] = -fin_cost * f
+    return out
+
+
+def _aia_prose_fy2024(ofs_text, stmt):
+    """FY2024-template 주석 1.일반사항 prose -> the CSM/RA/예실차 decomposition (items 4/5/6)
+    that the 포괄손익계산서 does not carry.  Returns {} unless the paragraph's own headline
+    figures agree with `stmt` (the audited statement) -- that cross-check is what proves the
+    paragraph belongs to THIS filing and THIS (별도) basis before any of it is believed.
+
+    FY2024 words the same disclosure differently from FY2025 (which `extract_tier2_aia`'s
+    main path handles): '보험이익/투자이익' instead of '보험손익/투자손익', '억' instead of
+    '억원', and the 예실차 signs are carried by a trailing 이익/손실 word rather than a
+    leading '(-)'.  It also omits 재보험손익 / 손실요소전입 / 발생사고요소조정 / 기타사업비용
+    entirely, which is why this returns only 4/5/6 and leaves item7 to assemble()'s residual."""
+    if not ofs_text or not stmt:
+        return {}
+    m0 = re.search(r"당사의\s*금년도\s*영업이익은.{0,1200}?상각되어\s*수익으로\s*인식하였습니다\.",
+                   ofs_text)
+    if not m0:
+        return {}
+    para = m0.group(0)
+    op = _eok(re.search(r"당사의\s*금년도\s*영업이익은\s*(\(-\))?\s*([\d,]+)억원", para))
+    ins = _eok(re.search(r"보험이익은\s*(\(-\))?\s*([\d,]+)억원", para))
+    inv = _eok(re.search(r"투자이익은\s*(\(-\))?\s*([\d,]+)억원", para))
+    if any(x is None for x in (op, ins, inv)):
+        return {}
+    # Headline cross-check against the audited statement (prose is 억-rounded -> 50백만 band).
+    for prose_eok, stmt_item in ((op, 20), (ins, 1), (inv, 17)):
+        if abs(prose_eok * 100.0 - stmt[stmt_item]) > 50:
+            return {}
+
+    def diff(kind):
+        m = re.search(r"예정\s*" + kind + r"\s*대비\s*실제\s*" + kind
+                      + r"\s*차이\s*(\(-\))?\s*([\d,]+)억원\s*(이익|손실)", para)
+        v = _eok(m)
+        if v is None:
+            return None
+        return -abs(v) if m.group(3) == "손실" else abs(v)
+
+    csm = _eok(re.search(r"보험계약마진은\s*총.+?%인\s*(\(-\))?\s*([\d,]+)억원?이\s*상각되어", para))
+    ra = _eok(re.search(r"위험조정은\s*총.+?%인\s*(\(-\))?\s*([\d,]+)억원?이\s*상각되어", para))
+    claim_diff, exp_diff = diff("보험금"), diff("사업비")
+    if any(x is None for x in (csm, ra, claim_diff, exp_diff)):
+        return {}
+    return {4: csm * 100.0, 5: ra * 100.0, 6: (claim_diff + exp_diff) * 100.0}
+
+
+def _aia_from_statement(tables, dirs):
+    """Fallback used for every AIA year whose 주석 1.일반사항 prose does NOT match the
+    FY2025 template: read the audited 포괄손익계산서(별도) instead, then enrich it with the
+    FY2024-template prose decomposition when that is present.
+
+    This is the path that fills 2023.4Q and 2024.4Q.  It is a FALLBACK, not the primary,
+    purely so the already-committed FY2025 cells stay byte-identical -- where the FY2025
+    prose parses, nothing here runs at all."""
+    ofs_text = _aia_ofs_text(dirs)
+    f = _aia_statement_unit(ofs_text)
+    if f is None:
+        return {}
+    stmt = _aia_statement(tables, f)
+    if not stmt:
+        return {}
+    return {**stmt, **_aia_prose_fy2024(ofs_text, stmt)}
+
+
 def extract_tier2_aia(tables, dirs=None):
     """에이아이에이생명보험(KR0080): the ENTIRE PL breakdown -- including the top-level
     보험손익/투자손익/영업외손익/법인세/당기순이익 that every other company gets from Tier-1
     (extract_tier1 / the DART FS-API) -- is disclosed ONLY as a prose paragraph in 주석 '1.
     일반사항' (raw: data/dart/FY2025_Q4/raw/KR0080_에이아이에이생명보험_20260407002100/
     20260407002100_00760.xml, verified 2026-08-19 byte-for-byte against the owner's ticket
-    transcription). There is no table anywhere in the filing carrying this data (Tier-1 AND
-    every Tier-2 note-table path already returned None for every filed year -- pre-fix
-    data/_derived/pl_breakdown_coverage.json showed status=no_income_statement, all 24
-    items missing, for 2022.4Q/2023.4Q/2024.4Q/2025.4Q), so this reads the raw XML directly
-    via `dirs` (parse_filing() in build_pl_breakdown.py special-cases this handler to pass
-    dirs=dirs) rather than `tables` (_iter_tables_with_context only ever yields <TABLE>
-    elements, never bare <P> prose -- this company's income statement has no such table).
+    transcription), so this reads the raw XML directly via `dirs` (parse_filing() in
+    build_pl_breakdown.py special-cases this handler to pass dirs=dirs) rather than `tables`
+    (_iter_tables_with_context only ever yields <TABLE> elements, never bare <P> prose).
 
-    Company files ONLY a 사업보고서 (annual) -- no quarterly filings exist (confirmed:
-    data/dart/FY2026_Q{1,2}/raw/KR0080_.../meta.json says "no_filing":true) -- so this
+    CORRECTION 2026-09-01 -- this docstring used to assert "There is no table anywhere in
+    the filing carrying this data".  That is FALSE, and believing it is what left 2023.4Q
+    and 2024.4Q empty for a year: every AIA filing DOES carry a full audited
+    포괄손익계산서(별도), in a four-block 영업수익/영업비용 form that `extract_tier1` happens
+    not to recognise.  What the pre-fix coverage file actually showed was
+    status=no_income_statement -- i.e. "Tier-1 returned None", which is a statement about
+    the EXTRACTOR, not about the source.  See `_aia_statement` for the layout and the
+    two-source verification; `_aia_from_statement` is now the fallback for every year whose
+    prose does not match the FY2025 template.
+
+    Company files ONLY a 사업보고서/감사보고서 (annual) -- no quarterly filings exist
+    (confirmed: data/dart/FY2026_Q{1,2}/raw/KR0080_.../meta.json says "no_filing":true), and
+    the DART FS-API carries nothing for it either (no 정기공시 -> no data/dart/_fs_api_cache
+    entry), which is why Tier-1 is empty for this company in the first place.  So this
     naturally only ever fires on a 4Q raw dir; no quarterly grid is fabricated.  It is
     written as a genuine regex parser (not a hardcoded per-quarter override) so a future
-    year's 사업보고서, if it repeats the same sentence template, backfills automatically;
-    if the wording changes it safely returns {} (see sanity gate below) rather than mis-fire.
+    year's filing, if it repeats the same sentence template, backfills automatically; if the
+    wording changes it falls through to the statement reader rather than mis-firing.
 
     3 figures from the prose the owner's ticket left unmapped -- 손실요소의 전입 (-)65억,
     발생사고요소조정 +258억, 기타사업비용 (-)591억:
@@ -4176,13 +4380,20 @@ def extract_tier2_aia(tables, dirs=None):
         see extract_tier2_chubb, confirms the SAME filer-family convention: its own
         '3.기타사업비용' line is what closes ITS 보험손익 identity too.)
 
-    item18/19 (투자이익/보험금융손익) are deliberately NOT populated even though the same
-    paragraph also states "보험계약에서 발생하는 보험금융비용은 (-)7,446억원입니다" (which
-    would cleanly close item18=item17-item19, the same way KR0100/처브라이프's independently
-    confirmed 보험금융수익-보험금융비용 table split validates the analogous figure there --
-    see extract_tier2_chubb) -- held back because for THIS company there is only the one
-    already-netted prose sentence and no second, independent citation (structured table) to
-    confirm the netting convention, unlike 처브.  Flagged for the owner rather than guessed.
+    item19(보험금융손익) 2026-09-01 -- now filled for ALL three years, owner-approved
+    (inbox/parser/20260901T1630Z, Q2).  Previously held back with the reasoning "only the
+    one already-netted prose sentence [the paragraph below also states '보험계약에서
+    발생하는 보험금융비용은 (-)7,446억원입니다'], no independent citation to confirm the
+    netting convention" -- that premise was wrong: the same figure is ALSO a face-of-
+    statement line, Ⅳ.투자영업비용의 1.보험금융비용 + 2.재보험금융비용 = 735,954+8,603=
+    744,557백만원 (matching the prose 7,446억 to the nearest 억) -- exactly the independent
+    structured-table citation the old docstring said was missing.  Pulled via `_aia_statement`
+    below for THIS year too (not re-derived from the prose a second time), so 2023/2024/
+    2025.4Q all get item19 from the identical mechanism and 2025.4Q gets the statement's
+    full precision rather than the prose's 억-rounding.  item18(투자이익) is not extracted
+    anywhere in this file -- assemble() derives it as item17 − item19 for every year that
+    has both, which is correct by definition (Ⅲ.투자영업수익 minus Ⅳ.투자영업비용 excluding
+    the two 보험금융 rows).
 
     Sanity gate before returning anything: 영업이익 must equal 보험손익+투자손익, and
     당기순이익 must equal 영업이익+영업외손익-법인세, both within 2억원 (matches the owner's
@@ -4201,7 +4412,7 @@ def extract_tier2_aia(tables, dirs=None):
         if text:
             break
     if text is None:
-        return {}
+        return _aia_from_statement(tables, dirs)
 
     # Bound the search window to just this one paragraph -- re.search on the full ~900KB
     # document with loose per-figure patterns could otherwise cross-match an unrelated note
@@ -4210,7 +4421,7 @@ def extract_tier2_aia(tables, dirs=None):
         r"당사의\s*금년도\s*영업이익은.+?재보험손익은\s*(\(-\))?\s*[\d,]+억원입니다\.",
         text, re.S)
     if not m0:
-        return {}
+        return _aia_from_statement(tables, dirs)
     para = m0.group(0)
 
     def find(pat):
@@ -4233,20 +4444,29 @@ def extract_tier2_aia(tables, dirs=None):
 
     if any(x is None for x in (op, ins, inv, oth_op, tax, ni, csm, ra, claim_diff,
                                 exp_diff, loss_comp, incurred_adj, oth_cost, reins)):
-        return {}
+        return _aia_from_statement(tables, dirs)
     if abs((ins + inv) - op) > 2 or abs((op + oth_op - tax) - ni) > 2:
-        return {}
+        return _aia_from_statement(tables, dirs)
 
     f = 100.0  # 억원 -> 백만원
     item4, item5 = csm * f, ra * f
     item6 = (claim_diff + exp_diff) * f
     item7 = (loss_comp + incurred_adj) * f
     item3 = item4 + item5 + item6 + item7
-    return {
+    out = {
         1: ins * f, 3: item3, 4: item4, 5: item5, 6: item6, 7: item7,
         8: reins * f, 15: 0.0, 16: oth_cost * f, 17: inv * f,
         21: oth_op * f, 23: tax * f, 24: ni * f,
     }
+    # item19 -- read from the SAME audited statement `_aia_statement` uses for 2023/2024.4Q
+    # (not re-derived from this prose a second time), so all three years share one mechanism
+    # and 2025.4Q gets the statement's full precision instead of the prose's 억-rounding.
+    stmt_f = _aia_statement_unit(_aia_ofs_text(dirs))
+    if stmt_f is not None:
+        stmt19 = _aia_statement(tables, stmt_f).get(19)
+        if stmt19 is not None:
+            out[19] = stmt19
+    return out
 
 
 # ----------------------------- 처브라이프생명보험 (KR0100) ------------------- #
@@ -4375,6 +4595,356 @@ def extract_tier2_chubb(tables):
     return out
 
 
+# --------------------------- 하나손해보험 (KR0050) -------------------------- #
+def _hana_sonbo_csm_amort(tables):
+    """item4(원수 CSM상각): a SEPARATE note from the 4-block income statement
+    `extract_tier2_hana_sonbo` reads below -- '보험손익 상세내역'-style table (주석29,
+    단위 천원), one combined table (NOT split by note like 삼성화재's
+    `extract_tier2_sonbo_component`) holding all four legs (보험수익/보험서비스비용/
+    재보험수익/재보험서비스비용) stacked vertically, LOB on columns [장기,일반,자동차,합계]:
+
+        보험료배분접근법미적용계약  예상보험금 및 기타 예상 보험서비스비용
+                                    위험조정변동액
+                                    보험계약마진 상각액       <- 원수 CSM상각 (item4), 장기 컬럼
+                                    보험취득현금흐름의 회수
+                                    기타
+                                    소 계
+        보험료배분접근법 적용계약
+        보험수익 소계
+        ... (보험서비스비용 section, no CSM row -- release only hits revenue)
+        ... (재보험수익 section, its OWN '보험계약마진 상각액' row = item9, ignored here --
+             `_row_by_label` returns the FIRST match, i.e. this one, in document order)
+        ... (재보험서비스비용 section)
+        순보험손익 합계
+
+    Selected by caption '- 당기' (current-period column set; '- 전기' is the same note's
+    prior-year comparative and is skipped) + a 3-needle row-content gate, since `.caption`
+    alone is generic across every 당기/전기 table pair in the filing. Verified 2026-09-01
+    against CSM_waterfall.json's CSM상각 for all 3 available quarters (raw / 1000, 천원 ->
+    백만원): 2023.4Q 15,704,909천원=157.049억 (target 157.0억), 2024.4Q 19,971,594천원=
+    199.716억 (target 199.7억), 2025.4Q 21,885,413천원=218.854억 (target 218.9억) -- all
+    within the gate's 0.1억 rounding tolerance. Single-XML filings (_00760.xml only, no
+    연결 counterpart on disk for any of the 3 years) so `_prefer_ofs` is a no-op safety net,
+    not load-bearing. Deliberately item4-only (not 5/6/7): this handler's existing item3
+    is the WHOLE-COMPANY 원수손익 (장기+자동차+일반 combined, since 하나손해 also writes
+    자동차/일반 -- see 순보험손익 합계 columns above), not 장기-only, so a 장기-scoped
+    item5/6 would make item7's plug (item3-4-5-6, `build_pl_breakdown.assemble`) absorb the
+    LOB mismatch -- out of scope for this ticket (PL_CSM_AMORT_VS_WATERFALL, item4 only)."""
+    for t in _prefer_ofs(tables):
+        if getattr(t, "_basis", None) == "CFS":
+            continue
+        if _norm(t.caption or "") != "- 당기":
+            continue
+        labs = [_lab0(r) for r in (t.rows or [])]
+        if not (any("보험료배분접근법미적용계약" in l for l in labs)
+                and any("보험계약마진상각액" in l for l in labs)
+                and any("보험수익소계" in l for l in labs)):
+            continue
+        r = _row_by_label(t, "보험계약마진 상각액")
+        n = _row_nums(r) if r is not None else []
+        if n:
+            return n[0] * 1e-3         # 천원 -> 백만원
+    return None
+
+
+def extract_tier2_hana_sonbo(tables):
+    """하나손해보험(KR0050): audited 포괄손익계산서(별도), 단위 원, FOUR-block 보험서비스/
+    투자서비스 form -- the same shape as KR0080/에이아이에이's `_aia_statement` (see there),
+    different block labels, that `extract_tier1` does not recognise:
+
+        Ⅰ. 보험서비스수익  = 1.보험수익 + 2.재보험수익
+        Ⅱ. 보험서비스비용  = 1.보험서비스비용 + 2.재보험비용 + 3.기타사업비용
+        Ⅲ. 투자서비스수익  Ⅳ. 투자서비스비용
+        Ⅴ. 영업이익(손실)  Ⅵ. 영업외수익  Ⅶ. 영업외비용
+        Ⅷ. 법인세비용차감전순이익(손실)  Ⅸ. 법인세비용  Ⅹ. 당기순이익(손실)
+
+    Ⅱ's child row 1 repeats the PARENT's own text verbatim ('보험서비스비용'), unlike AIA
+    where the parent/child wording differs -- so `ins_cost` is picked with the '1.' prefix to
+    avoid matching Ⅱ's own total instead of its first child.
+
+    Verified 2026-09-01 (FY2025 raw, 20260325000538_00760.xml): item1(-50,775,467,861)+
+    item17(-890,203,036) = Ⅴ(-51,665,670,897) exactly; Ⅴ+item21(Ⅵ-Ⅶ=3,719,834,226) =
+    Ⅷ(-47,945,836,671) exactly; also cross-checked against the SAME filing's own 주석1 prose
+    ('이번 연도 영업이익은 (517)억원...보험손익은 (508)억원...투자손익은 (9)억원...
+    당기순손익은 (350)억원') -- all round to the prose's 억-figures.
+
+    item19(보험금융손익): Ⅲ carries ONLY 1.재보험금융수익 (no 보험금융수익 line at all) while
+    Ⅳ carries BOTH 1.보험금융비용 and 2.재보험금융비용 -- i.e. 보험금융 nets to a pure cost
+    here (매 분기 discount-unwind, same domain shape as AIA/처브), netted against the one
+    income-side row that does exist. item18 is left to assemble()'s item17-item19 derivation."""
+    cand = None
+    for t in _prefer_ofs(tables):
+        if getattr(t, "_basis", None) == "CFS":
+            continue
+        labs = [_lab0(r) for r in (t.rows or [])]
+        if (any("보험서비스수익" in l for l in labs)
+                and any("보험서비스비용" in l for l in labs)
+                and any("당기순이익" in l or "당기순손실" in l for l in labs)):
+            cand = t
+            break
+    if cand is None:
+        return {}
+
+    def cur(*subs):
+        """당기 of the first row whose col0 contains one of `subs`.  Unlike every other
+        handler's `cur()` in this file, this table prints a THIRD leading numeric cell --
+        a bare 주석(footnote) number -- on every child row that has one (parent/total rows
+        don't), so the layout alternates [당기,전기] (2 cells) vs [주석,당기,전기] (3 cells).
+        `n[-2]` is 당기 in both shapes; `n[0]` (every other handler's convention) would silently
+        read the 주석 number as 당기 for any row that has one -- verified against the raw cell
+        arrays 2026-09-01 (e.g. '1. 보험수익' -> ['1. 보험수익','29','499,658,083,124','',
+        '484,432,584,116','']) before relying on it, not assumed."""
+        r = _row_by_label(cand, *subs)
+        n = _row_nums(r) if r is not None else []
+        return n[-2] if len(n) >= 2 else None
+
+    ins_rev = cur("보험수익")
+    ins_cost = cur("1.보험서비스비용", "1. 보험서비스비용")
+    re_rev, re_cost = cur("재보험수익"), cur("재보험비용")
+    oth_cost = cur("기타사업비용")
+    inv_rev, inv_cost = cur("투자서비스수익"), cur("투자서비스비용")
+    op = cur("영업이익", "영업손실")
+    oth_rev, oth_exp = cur("영업외수익"), cur("영업외비용")
+    pretax = cur("법인세비용차감전순이익", "법인세비용차감전순손실")
+    ni = cur("당기순이익", "당기순손실")
+    if any(x is None for x in (ins_rev, ins_cost, re_rev, re_cost, oth_cost,
+                                inv_rev, inv_cost, op, oth_rev, oth_exp, pretax, ni)):
+        return {}
+
+    f = 1e-6  # 원 -> 백만원
+    item3 = (ins_rev - ins_cost) * f
+    item8 = (re_rev - re_cost) * f
+    item16 = oth_cost * f
+    item1 = item3 + item8 - item16
+    item17 = (inv_rev - inv_cost) * f
+    oth_op = (oth_rev - oth_exp) * f
+    # Sanity gates -- statement identities; tolerance 2백만원 absorbs rounding only.
+    if abs(item1 + item17 - op * f) > 2:
+        return {}
+    if abs((op * f + oth_op) - pretax * f) > 2:
+        return {}
+
+    out = {
+        1: item1, 3: item3, 8: item8, 15: 0.0, 16: item16, 17: item17,
+        20: op * f, 21: oth_op, 22: pretax * f, 24: ni * f,
+    }
+    ins_fin_cost, re_fin_cost = cur("보험금융비용"), cur("재보험금융비용")
+    re_fin_rev = cur("재보험금융수익")
+    if None not in (ins_fin_cost, re_fin_cost, re_fin_rev):
+        fin_cost_net = ins_fin_cost + re_fin_cost - re_fin_rev
+        if 0 <= fin_cost_net <= inv_cost:
+            out[19] = -fin_cost_net * f
+    csm_amort = _hana_sonbo_csm_amort(tables)
+    if csm_amort is not None:
+        out[4] = csm_amort
+    return out
+
+
+# -------------------------- 아이엠라이프생명보험 (KR0076) -------------------- #
+def _imelife_csm_amort(tables):
+    """item4(원수 CSM상각): a SEPARATE note from the Ⅰ/Ⅱ income-statement table
+    `extract_tier2_imelife` reads below -- '1) 보험영업수익의 내역' (주석29-style, 단위
+    백만원 -- the table itself declares '(단위: 백만원)', unlike 하나손해's 천원 note), a
+    simple 2-column [제NN(당)기, 제NN-1(전)기] breakdown of insurance revenue:
+
+        기초 예상 당기 발생보험금 및 기타 보험서비스비용
+        당기서비스의 이전으로 당기손익에 인식된 보험계약마진   <- 원수 CSM상각 (item4), 당기 col
+        비금융위험에 대한 위험조정 변동
+        손실요소 배분액
+        보험취득현금흐름의 상각
+        기타
+        합계
+
+    Caption varies by filing year -- FY2023 prefixes it with the parent note number
+    ('(3) 보험손익 및 재보험손익 1) 보험영업수익의 내역은 다음과 같습니다.'), FY2024/2025
+    drop the prefix ('1) 보험영업수익의 내역은 다음과 같습니다.') -- matched by substring so
+    both forms hit. Column order [당기,전기] confirmed two ways: (a) cross-year overlap --
+    each filing's 전기(prior) column reproduces the PRECEDING filing's own 당기 column
+    exactly (e.g. FY2025's 전기 합계=251,364 == FY2024's 당기 합계=251,364; same for the CSM
+    row, 54,918 both places), and (b) the picked 당기 value matches CSM_waterfall.json's
+    CSM상각 for all 3 available quarters: 2023.4Q 57,116백만원=571.16억 (target 571.1억),
+    2024.4Q 54,918백만원=549.18억 (target 549.2억), 2025.4Q 53,794백만원=537.94억 (target
+    537.9억) -- all within the gate's 0.1억 rounding tolerance. Single-XML filings
+    (_00760.xml only) so `_prefer_ofs` is a no-op safety net. item4-only (not 5/6/7) to
+    match this ticket's scope (PL_CSM_AMORT_VS_WATERFALL) -- unlike 하나손해, this company
+    IS life-only (no 자동차/일반 book) so item3 (whole-company) is already 장기-scoped and a
+    5/6 fill would be safe, but is left for a separate ticket to keep this change surgical."""
+    for t in _prefer_ofs(tables):
+        if getattr(t, "_basis", None) == "CFS":
+            continue
+        if "보험영업수익의내역" not in _norm(t.caption or "").replace(" ", ""):
+            continue
+        r = _row_by_label(t, "당기서비스의 이전으로 당기손익에 인식된 보험계약마진")
+        n = _row_nums(r) if r is not None else []
+        if n:
+            return n[0]                # 단위 백만원, no scaling needed
+    return None
+
+
+def extract_tier2_imelife(tables):
+    """아이엠라이프생명보험(KR0076): audited 포괄손익계산서(별도), 단위 원, FLAT two-block
+    Ⅰ.영업수익/Ⅱ.영업비용 form mixing insurance AND investment sub-items at the SAME level
+    (unlike KR0080/KR0050's clean 4-block split) -- `extract_tier1` does not recognise it:
+
+        Ⅰ. 영업수익 = 1.보험영업수익 + 2.재보험수익 + 3.보험금융수익 + 4.이자수익 +
+                       5.배당수익 + 6.금융상품관련이익 + 7.위험회피수단관련이익 +
+                       8.위험회피대상관련이익 + 9.외환거래이익 + 10.기타영업수익
+        Ⅱ. 영업비용 = 1.보험영업비용 + 2.재보험비용 + 3.기타사업비용 + 4.보험금융비용 +
+                       5.이자비용 + 6.금융상품관련손실 + 7.위험회피수단관련손실 +
+                       8.위험회피대상관련손실 + 9.외환거래손실 + 10.기타영업비용
+        Ⅲ. 영업이익  Ⅳ. 영업외수익  Ⅴ. 영업외비용  Ⅵ. 법인세비용차감전순이익
+        Ⅶ. 법인세비용  Ⅷ. 당기순이익
+
+    item1(보험손익) = (1.보험영업수익+2.재보험수익) − (1.보험영업비용+2.재보험비용+
+    3.기타사업비용) -- NET of 기타사업비용, matching the AIA/악사/처브 filer-family
+    convention (item16 reported separately; assemble()'s RC bridge absorbs the gap).
+    item17(투자손익) = Ⅲ − item1, i.e. everything in Ⅰ/Ⅱ that ISN'T insurance -- reading it
+    as the residual against the independently-read Ⅲ avoids re-picking all 7 remaining
+    revenue + 6 remaining cost sub-items one at a time, and is exactly as precise since
+    Ⅲ = Ⅰ−Ⅱ is itself a face-of-statement total (checked below, not assumed).
+
+    Verified 2026-09-01 (FY2025 raw, 20260406004393_00760.xml): Ⅰ−Ⅱ (independently-read
+    totals) = Ⅲ(20,806,981,785) exactly; item1(42,665,633,736)+item17(-21,858,651,951) = Ⅲ
+    by construction; Ⅲ+item21(Ⅳ-Ⅴ=6,185,950,494) = Ⅵ(26,992,932,279) exactly; Ⅵ-Ⅶ
+    (6,083,622,993) = Ⅷ(20,909,309,286) exactly. item19(보험금융손익) = 3.보험금융수익 −
+    4.보험금융비용 (20,905,872,066 − 326,949,818,803 = -306,043,946,737); item18 left to
+    assemble()'s item17-item19 derivation, as everywhere else in this file."""
+    cand = None
+    for t in _prefer_ofs(tables):
+        if getattr(t, "_basis", None) == "CFS":
+            continue
+        labs = [_lab0(r) for r in (t.rows or [])]
+        if (any("영업수익" in l for l in labs) and any("영업비용" in l for l in labs)
+                and any("당기순이익" in l for l in labs)):
+            cand = t
+            break
+    if cand is None:
+        return {}
+
+    def cur(*subs):
+        r = _row_by_label(cand, *subs)
+        n = _row_nums(r) if r is not None else []
+        return n[0] if n else None
+
+    ins_rev, ins_cost = cur("보험영업수익"), cur("보험영업비용")
+    re_rev, re_cost = cur("재보험수익"), cur("재보험비용")
+    oth_cost = cur("기타사업비용")
+    total_rev, total_cost = cur("영업수익"), cur("영업비용")
+    op = cur("영업이익", "영업손실")
+    oth_rev, oth_exp = cur("영업외수익"), cur("영업외비용")
+    pretax = cur("법인세비용차감전순이익", "법인세비용차감전순손실")
+    ni = cur("당기순이익", "당기순손실")
+    if any(x is None for x in (ins_rev, ins_cost, re_rev, re_cost, oth_cost, total_rev,
+                                total_cost, op, oth_rev, oth_exp, pretax, ni)):
+        return {}
+
+    f = 1e-6  # 원 -> 백만원
+    item3 = (ins_rev - ins_cost) * f
+    item8 = (re_rev - re_cost) * f
+    item16 = oth_cost * f
+    item1 = item3 + item8 - item16
+    # Gate -- Ⅰ−Ⅱ (independently-read PARENT totals) must equal Ⅲ(영업이익): proves
+    # total_rev/total_cost picked the section headers, not a stray same-named child.
+    if abs((total_rev - total_cost) * f - op * f) > 2:
+        return {}
+    item17 = op * f - item1
+    oth_op = (oth_rev - oth_exp) * f
+    if abs((op * f + oth_op) - pretax * f) > 2:
+        return {}
+
+    out = {
+        1: item1, 3: item3, 8: item8, 15: 0.0, 16: item16, 17: item17,
+        20: op * f, 21: oth_op, 22: pretax * f, 24: ni * f,
+    }
+    ins_fin_rev, ins_fin_cost = cur("보험금융수익"), cur("보험금융비용")
+    if ins_fin_rev is not None and ins_fin_cost is not None:
+        out[19] = (ins_fin_rev - ins_fin_cost) * f
+    csm_amort = _imelife_csm_amort(tables)
+    if csm_amort is not None:
+        out[4] = csm_amort
+    return out
+
+
+# -------------------------- 카카오페이손해보험 (KR1098) ---------------------- #
+def extract_tier2_kakaopay_sonbo(tables):
+    """카카오페이손해보험(KR1098): audited 포괄손익계산서(별도), 단위 원, with 보험손익/
+    투자손익 given DIRECTLY as headline rows -- `extract_tier1` does not recognise this form
+    (Tier-1 empty), but Tier-2 barely needs derivation here, the cleanest of the three 2026-
+    09-01 additions (KR0080/KR0050/KR0076):
+
+        Ⅰ. 보험손익 = 1.보험영업수익(1)보험수익+2)재보험수익) − 2.보험서비스비용
+                       (1)보험비용+2)재보험비용+3)기타사업비용)
+        Ⅱ. 투자손익 = 1.투자영업수익(1)보험금융수익+2)재보험금융수익+3)이자수익+
+                       4)기타투자수익) − 2.투자영업비용(1)보험금융비용+2)재보험금융비용+
+                       3)이자비용+4)재산관리비용+5)기타투자비용)
+        Ⅲ. 영업이익(손실)  Ⅳ. 영업외손익(주28, ALREADY combined 수익−비용, unlike
+        KR0050/KR0076's separate Ⅳ/Ⅴ)  Ⅴ. 법인세비용차감전순손실  Ⅵ. 법인세비용  Ⅶ. 당기순손실
+
+    Verified 2026-09-01 (FY2025 raw, 20260323001537_00760.xml): item1(headline, Ⅰ) matches
+    its own sub-components item3+item8-item16 to the 원 (57,104,326,081+2,717,992,098-
+    96,201,209,697-4,423,586,546-5,979,728,616 = -46,782,206,680 = Ⅰ exactly); Ⅰ+Ⅱ = Ⅲ
+    (-46,782,206,680-5,476,157,750 = -52,258,364,430 = Ⅲ exactly). 법인세비용은 매 확인분기
+    문자 그대로 '-' (0) -- 이익을 낸 적이 없는 신생 손보사라 세무상 결손이지 파싱 갭이 아니다;
+    assemble()이 item22-item24 로 파생하므로 별도 추출 불필요.
+
+    item19(보험금융손익)은 이 파일의 다른 두 신규 회사(KR0050/KR0076)보다도 근거가 강하다:
+    Ⅱ가 보험금융의 수익측·비용측을 (1)보험금융수익/2)재보험금융수익 그리고 1)보험금융비용/
+    2)재보험금융비용 로) 양쪽 다 별도 행으로 찍어 준다 -- AIA/하나손해처럼 비용측만 있는 게
+    아니라 네 행 전부를 독립적으로 읽어 순계한 값이다."""
+    cand = None
+    for t in _prefer_ofs(tables):
+        if getattr(t, "_basis", None) == "CFS":
+            continue
+        labs = [_lab0(r) for r in (t.rows or [])]
+        if (any("보험손익" in l for l in labs) and any("투자손익" in l for l in labs)
+                and any("당기순이익" in l or "당기순손실" in l for l in labs)):
+            cand = t
+            break
+    if cand is None:
+        return {}
+
+    def cur(*subs):
+        r = _row_by_label(cand, *subs)
+        n = _row_nums(r) if r is not None else []
+        return n[0] if n else None
+
+    item1_direct = cur("보험손익")
+    ins_rev, ins_cost = cur("보험수익"), cur("보험비용")
+    re_rev, re_cost = cur("재보험수익"), cur("재보험비용")
+    oth_cost = cur("기타사업비용")
+    item17_direct = cur("투자손익")
+    op = cur("영업이익", "영업손실")
+    oth_op = cur("영업외손익")
+    pretax = cur("법인세비용차감전순이익", "법인세비용차감전순손실")
+    ni = cur("당기순이익", "당기순손실")
+    if any(x is None for x in (item1_direct, ins_rev, ins_cost, re_rev, re_cost, oth_cost,
+                                item17_direct, op, oth_op, pretax, ni)):
+        return {}
+
+    f = 1e-6  # 원 -> 백만원
+    item3 = (ins_rev - ins_cost) * f
+    item8 = (re_rev - re_cost) * f
+    item16 = oth_cost * f
+    item1 = item1_direct * f
+    # Gate -- item1 (headline) must equal its own sub-components (proves the picks, not
+    # a stray row elsewhere in the note carrying similar labels).
+    if abs(item1 - (item3 + item8 - item16)) > 2:
+        return {}
+    item17 = item17_direct * f
+    if abs((item1_direct + item17_direct) * f - op * f) > 2:
+        return {}
+
+    out = {
+        1: item1, 3: item3, 8: item8, 15: 0.0, 16: item16, 17: item17,
+        20: op * f, 21: oth_op * f, 22: pretax * f, 24: ni * f,
+    }
+    ins_fin_rev, re_fin_rev = cur("보험금융수익"), cur("재보험금융수익")
+    ins_fin_cost, re_fin_cost = cur("보험금융비용"), cur("재보험금융비용")
+    if None not in (ins_fin_rev, re_fin_rev, ins_fin_cost, re_fin_cost):
+        out[19] = (ins_fin_rev + re_fin_rev - ins_fin_cost - re_fin_cost) * f
+    return out
+
+
 # Per-company routing tables (FY2025+ annual Tier-2 handlers).
 SONBO_HANDLERS = {
     "KR0010": extract_tier2_kb,
@@ -4389,6 +4959,8 @@ SONBO_HANDLERS = {
     "KR0049": extract_tier2_axa,               # 악사손해 연차 '보험손익 상세내역' (자동차|일반|장기 columns)
     "KR1000": extract_tier2_coreanre,          # 코리안리 재보험 (gold-validated 2025.2Q; 생명/장기/일반)
     "KR0150": extract_tier2_sgi,                # 서울보증보험 (보증/해외/상해/자동차/기타, 생명장기 無)
+    "KR0050": extract_tier2_hana_sonbo,        # 하나손해보험 (4블록 보험서비스/투자서비스, 2026-09-01 신규)
+    "KR1098": extract_tier2_kakaopay_sonbo,    # 카카오페이손해보험 (보험손익/투자손익 명시형, 2026-09-01 신규)
 }
 LIFE_HANDLERS = {
     "KR0070": extract_tier2_abl,               # 에이비엘 ([구분|당기|전기] 2-period note → pick 당기)
@@ -4406,4 +4978,5 @@ LIFE_HANDLERS = {
     "KR0097": extract_tier2_hana,              # 하나생명 (disaggregated 보험수익/비용 notes)
     "KR0080": extract_tier2_aia,               # 에이아이에이생명보험 (prose-only, 주석 1.일반사항)
     "KR0100": extract_tier2_chubb,             # 처브라이프생명보험 ('(4) 보험손익 및 재보험손익' note)
+    "KR0076": extract_tier2_imelife,           # 아이엠라이프생명보험 (평면 영업수익/영업비용, 2026-09-01 신규)
 }

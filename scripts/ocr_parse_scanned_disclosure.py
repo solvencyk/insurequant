@@ -16,6 +16,24 @@ page-range selection) and only swaps in an OCR-enabled converter (EasyOCR, ko+en
 > figures against the rendered page (240dpi) and against rule-engine identities before
 > writing them into a master.
 
+> [!decision] 2026-09-01 -- do NOT promote --ocr-scale to a pipeline default; prefer
+> direct render + vision reading over this script for SCANNED_SECTION cells.
+> Measured (inbox `20260901T0420Z`): docling-routed EasyOCR tops out at **5/9** correct
+> even at its least-bad scale (2=144dpi; scale 1=3/9, 3=2/9, 4=2/9 -- see
+> `_ocr_converter` docstring below). No scale is good enough to trust unattended.
+> The 6 newly-flagged `SCANNED_SECTION` cells (KR0071 2024.4Q, KR0079 2023.4Q/2024.4Q/
+> 2025.4Q, KR0010 2025.4Q, KR0080 2025.2Q) were resolved WITHOUT running this script at
+> all: `fitz.Matrix(dpi/72, dpi/72)` page renders at 150-200dpi, read directly (Claude
+> vision, no OCR-engine text pass), cross-checked against K-ICS identities. Measured
+> accuracy across ~150 cross-checked cells: 0 mismatches vs the existing master (one
+> single-digit misread on the *reader's* side, caught and corrected by the item48==
+> item14x50% identity check -- not a scan-quality problem). See
+> `scripts/fix_20260901_kr0079_scanned_section_tier2.py` docstring for the full
+> per-cell page/render/identity provenance. Keep this script for bulk/unattended
+> conversion where nobody will manually verify every page; for a *specific* small cohort
+> of scanned cells, direct render+read is both more accurate and faster (no docling
+> layout/table-model overhead, no torch inference).
+
 usage:
   python scripts/ocr_parse_scanned_disclosure.py --period FY2026_Q2 --company KR0010
 """

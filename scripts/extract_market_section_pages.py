@@ -22,7 +22,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import glob
 import json
 import re
 import sys
@@ -37,13 +36,13 @@ logging.disable(logging.CRITICAL)
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
     pass
 
 JSON_PATH = REPO / "kics_disclosure.json"
-DISCLOSURE = REPO / "data" / "disclosure"
 OUTDIR = REPO / "artifacts" / "kics_validation" / "market_pages"
 
 # page-localization signal: a per-risk 현황 section, the 5-way list, the IRR table,
@@ -186,7 +185,7 @@ def build_worklist(only=None):
         work = [k for k in work if k in sel]
     targets = []
     for code, quarter in work:
-        pdfs = sorted(glob.glob(str(DISCLOSURE / quarter_to_period(quarter) / "raw" / f"{code}_*.pdf")))
+        pdfs = disclosure_pdfs(quarter_to_period(quarter), code)
         if pdfs:
             targets.append((code, quarter, pdfs[0]))
     return targets, item19, name

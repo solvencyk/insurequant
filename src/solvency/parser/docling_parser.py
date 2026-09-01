@@ -54,7 +54,14 @@ _NUMERIC_RE = re.compile(r"\d")
 # v4: added 위험/금리/환율 민감도 keywords + hit-page cap 16→20 — the 6-8 위험민감도
 # page only scores ~3 on ratio keywords and fell outside the top-16 cap
 # (KR0075 FY2025_Q4: rank 18), dropping the 금리민감도 table from the MD.
-_PARSE_PROFILE_VERSION = "docling_partial_v4"
+# v5 (2026-09-01, inbox 20260831T0700Z): (a) PRIORITY_KEYWORDS pages are exempt
+# from the top-N cap — measured, the 6-4 시장위험 opening page scores only 1 and
+# was evicted at ranks 21-36 on 8 pages across KR0002/0032/0049/0050/0074/0083/
+# 0150; (b) docling PARTIAL_SUCCESS is now inspected and pages it silently
+# dropped (std::bad_alloc in the preprocess stage) are re-converted one page at
+# a time; (c) source_total_pages / docling_status / docling_*_pages recorded in
+# the front matter so the quality gate can see a truncated parse.
+_PARSE_PROFILE_VERSION = "docling_partial_v5"
 
 DEFAULT_RATIO_KEYWORDS: tuple[str, ...] = (
     "지급여력비율",
@@ -130,6 +137,37 @@ DEFAULT_RATIO_KEYWORDS: tuple[str, ...] = (
     "환율민감도",
 )
 
+# Section anchors that must never lose their page to the top-N cap.
+#
+# ``_select_page_ranges`` ranks candidate pages by ``matched_count`` and keeps
+# only the best ``max_keyword_hit_pages``. That ordering systematically punishes
+# exactly the pages this lane needs most: the 요약/총괄 pages repeat five or six
+# ratio keywords each and score 5-8, while a 시장위험/민감도 *detail* page names
+# its own risk once and scores 1-2. Measured over md_inbox/FY2026_Q2 (39 filers,
+# scripts/_probes/probe_20260901_formA_rootcause.py): 8 pages that carry
+# "6-4. 시장위험 관리" and/or "금리위험액 현황" were genuine keyword hits but were
+# ranked 21-36 out of 22-62 candidates and fell outside the cap of 20 —
+# KR0002 p33 (rank 31/62), KR0032 p32 (22/24), KR0049 p35+p36 (26/26),
+# KR0050 p34 (31/35), KR0074 p25 (36/47), KR0083 p30 (21/26), KR0150 p28.
+# Raising the cap for everyone widens every conversion (and docling's memory
+# use with it, see ``_pages_missing_content``); exempting the handful of pages
+# that carry a required section costs 1-3 extra pages per filer instead.
+#
+# Keep this list to *section-defining* terms. A term that also appears in the
+# high-scoring summary tables (e.g. bare "시장위험액", a row label in the 요구자본
+# breakdown) would mark half the document priority and defeat the cap entirely.
+PRIORITY_KEYWORDS: tuple[str, ...] = (
+    "시장위험관리",   # "6-4. 시장위험 관리" — whitespace-normalized before matching
+    "금리위험액현황",
+    "주식위험액현황",
+    "부동산위험액현황",
+    "외환위험액현황",
+    "자산집중위험액현황",
+    "위험민감도",
+    "금리민감도",
+    "환율민감도",
+)
+
 
 def _mp_worker_init() -> None:
     """Ensure spawned workers can import ``solvency`` (Windows ``spawn``)."""
@@ -180,6 +218,12 @@ class ParseResult:
     elapsed_seconds: float
     peak_rss_mb: float | None
     error_message: str | None = None
+    # Page-loss bookkeeping so the operator sees a truncated parse in the
+    # harness output, not only later in the quality gate.
+    docling_status: str = ""
+    dropped_pages: tuple[int, ...] = ()
+    recovered_pages: tuple[int, ...] = ()
+    unrecovered_pages: tuple[int, ...] = ()
 
 
 def _sha256_of(path: Path) -> str:
@@ -215,8 +259,14 @@ def _parse_spec_hash(item: PdfInput) -> str:
 
 def _find_keyword_pages(
     pdf_path: Path, keyword_terms: tuple[str, ...]
-) -> tuple[list[tuple[int, int]], int | None]:
-    """Return (1-based hit pages, total pages) using a cheap text scan."""
+) -> tuple[list[tuple[int, int, bool]], int | None]:
+    """Return (1-based hit pages, total pages) using a cheap text scan.
+
+    Each hit is ``(page_no, matched_count, is_priority)``. ``is_priority`` marks
+    a page that names one of ``PRIORITY_KEYWORDS`` (a required section anchor);
+    such a page is kept even when ``matched_count`` is 0, because several filers
+    open "6-4. 시장위험 관리" on a page whose only other content is prose.
+    """
     try:
         from pypdf import PdfReader
 
@@ -225,13 +275,15 @@ def _find_keyword_pages(
         if total <= 0:
             return [], 0
         terms = tuple("".join(t.split()) for t in keyword_terms if t.strip())
-        hits: list[tuple[int, int]] = []
+        prio_terms = tuple("".join(t.split()) for t in PRIORITY_KEYWORDS)
+        hits: list[tuple[int, int, bool]] = []
         for i, page in enumerate(reader.pages, start=1):
             text = page.extract_text() or ""
             normalized = "".join(text.split())
             matched_count = sum(1 for term in terms if term and term in normalized)
-            if matched_count >= 2:
-                hits.append((i, matched_count))
+            is_priority = any(t in normalized for t in prio_terms)
+            if matched_count >= 2 or is_priority:
+                hits.append((i, matched_count, is_priority))
                 continue
             # Weak single-keyword page still accepted only when it looks table-like.
             if (
@@ -239,7 +291,7 @@ def _find_keyword_pages(
                 and _NUMERIC_RE.search(text)
                 and any(tok in text for tok in ("가.", "나.", "다.", "|"))
             ):
-                hits.append((i, 1))
+                hits.append((i, 1, False))
         return hits, total
     except Exception:
         return [], None
@@ -280,6 +332,10 @@ def _select_page_ranges(item: PdfInput) -> tuple[list[tuple[int, int]], str, lis
     Priority:
     1) keyword hit pages expanded by +-``keyword_window``
     2) first ``fallback_scan_pages`` pages
+
+    Pages flagged ``is_priority`` by ``_find_keyword_pages`` bypass the top-N
+    cap (see ``PRIORITY_KEYWORDS``); everything else competes for the cap by
+    ``matched_count`` as before.
     """
     scored_hits, total = _find_keyword_pages(item.pdf_path, item.keyword_terms)
     if total is None:
@@ -287,11 +343,12 @@ def _select_page_ranges(item: PdfInput) -> tuple[list[tuple[int, int]], str, lis
         return [(1, sys.maxsize)], "pypdf_unavailable_full_fallback", []
     if scored_hits:
         ranked = sorted(scored_hits, key=lambda x: (-x[1], x[0]))
-        top_pages = sorted(
-            p for p, _ in ranked[: max(1, int(item.max_keyword_hit_pages))]
-        )
+        capped = {p for p, _, _ in ranked[: max(1, int(item.max_keyword_hit_pages))]}
+        forced = {p for p, _, prio in scored_hits if prio}
+        top_pages = sorted(capped | forced)
+        mode = "keyword_window_priority" if (forced - capped) else "keyword_window"
         pages = _expand_pages(top_pages, total, item.keyword_window)
-        return _pages_to_ranges(pages), "keyword_window", top_pages
+        return _pages_to_ranges(pages), mode, top_pages
     if total <= 0:
         return [(1, 1)], "empty_pdf_guard", []
     last = min(total, max(1, int(item.fallback_scan_pages)))
@@ -466,6 +523,28 @@ def _peak_rss_mb() -> float | None:
         return None
 
 
+def _total_pages(pdf_path: Path) -> int:
+    """Page count of the source PDF, or 0 when it cannot be read.
+
+    Written into the front matter so the quality gate can compute the
+    selected/total coverage ratio without reopening the PDF (inbox
+    20260831T0700Z request 2).
+    """
+
+    try:
+        from pypdf import PdfReader
+
+        return len(PdfReader(str(pdf_path)).pages)
+    except Exception:  # noqa: BLE001
+        try:
+            import fitz
+
+            with fitz.open(str(pdf_path)) as doc:
+                return int(doc.page_count)
+        except Exception:  # noqa: BLE001
+            return 0
+
+
 def _front_matter(
     item: PdfInput,
     fingerprint: dict[str, str],
@@ -475,6 +554,11 @@ def _front_matter(
     selected_ranges: list[tuple[int, int]],
     selection_mode: str,
     hit_pages: list[int],
+    total_pages: int = 0,
+    docling_status: str = "",
+    dropped_pages: list[int] | None = None,
+    recovered_pages: list[int] | None = None,
+    unrecovered_pages: list[int] | None = None,
 ) -> str:
     payload = {
         "run_id": run_id,
@@ -495,7 +579,13 @@ def _front_matter(
         "parse_confidence": parse_confidence if parse_confidence is not None else "",
         "parse_scope": selection_mode,
         "source_page_ranges": _format_ranges(selected_ranges),
+        "source_total_pages": str(total_pages or ""),
         "keyword_hit_pages": ",".join(str(p) for p in hit_pages),
+        # Recovery bookkeeping for the quality gate — see _pages_missing_content.
+        "docling_status": docling_status,
+        "docling_dropped_pages": ",".join(str(p) for p in (dropped_pages or [])),
+        "docling_recovered_pages": ",".join(str(p) for p in (recovered_pages or [])),
+        "docling_unrecovered_pages": ",".join(str(p) for p in (unrecovered_pages or [])),
     }
     lines = ["---"]
     for key, value in payload.items():
@@ -543,6 +633,137 @@ def _get_docling_converter():
     return _DOCLING_CONVERTER
 
 
+def _conversion_status(conversion: object) -> str:
+    """``ConversionStatus.PARTIAL_SUCCESS`` -> ``"PARTIAL_SUCCESS"``."""
+
+    status = getattr(conversion, "status", None)
+    if status is None:
+        return ""
+    return str(getattr(status, "name", status)).rsplit(".", 1)[-1]
+
+
+def _pages_missing_content(document: object) -> list[int]:
+    """Pages docling kept in the page index but produced no content for.
+
+    Docling converts a page range in batches; when a batch raises it logs the
+    failure, marks the document ``PARTIAL_SUCCESS`` and returns the document
+    *without that page's items*. The page number still appears in
+    ``document.pages``, so the drop is invisible unless you compare the page
+    index against the provenance of the exported items.
+
+    Measured 2026-09-01 on ``KR0051_신한이지손해보험.pdf`` page_range=(5,35):
+
+        ERROR docling.pipeline.standard_pdf_pipeline:
+              Stage preprocess failed for run 1, pages [29]: std::bad_alloc
+              ... pages [30] ... pages [33] ... pages [34]
+        status = ConversionStatus.PARTIAL_SUCCESS
+        MISSING from document.pages: []          <- page index looks complete
+        p29 0  p30 0  p33 0  p34 0               <- but four pages export nothing
+
+    Page 34 is that filer's "6-8. 위험민감도" table, i.e. this silent drop is the
+    third failure form reported in inbox 20260831T0700Z (page inside
+    ``source_page_ranges`` *and* inside ``keyword_hit_pages``, content absent
+    from the MD, fitz reads the table fine).
+    """
+
+    pages = getattr(document, "pages", None)
+    try:
+        page_nos = sorted(int(p) for p in (pages or {}))
+    except (TypeError, ValueError):
+        return []
+    if not page_nos:
+        return []
+    with_content: set[int] = set()
+    for attr in ("texts", "tables", "pictures"):
+        for element in getattr(document, attr, []) or []:
+            for prov in getattr(element, "prov", []) or []:
+                page_no = getattr(prov, "page_no", None)
+                if page_no is not None:
+                    with_content.add(int(page_no))
+    return [p for p in page_nos if p not in with_content]
+
+
+def _single_page_markdown(converter: object, pdf_path: Path, page_no: int) -> str:
+    """Re-convert one page on its own; returns "" when it fails again.
+
+    A one-page conversion has a far smaller peak footprint than the enclosing
+    range, so the ``std::bad_alloc`` pages come back. Measured on KR0051
+    pages 25/29/30/33/34: 5/5 returned ``ConversionStatus.SUCCESS`` with the
+    full table (p34 = "6-8. 위험민감도 / 6-8-1) 민감도 분석 개요", 1,049 chars).
+    """
+
+    # The retry runs inside the same worker whose heap just triggered the
+    # bad_alloc, so reclaim first — KR0004 FY2026_Q2 p.46-47 (its whole
+    # 6-8 위험민감도 section) failed the retry too on the 2026-09-01 run.
+    gc.collect()
+    try:
+        conversion = converter.convert(str(pdf_path), page_range=(page_no, page_no))
+        markdown = conversion.document.export_to_markdown()
+        del conversion
+        return markdown or ""
+    except Exception:  # noqa: BLE001 - a failed retry must not kill the file
+        logger.warning("single-page retry failed: %s p%s", pdf_path.name, page_no)
+        return ""
+
+
+def _markdown_with_recovery(
+    converter: object,
+    document: object,
+    pdf_path: Path,
+    missing_pages: list[int],
+) -> tuple[str, list[int], list[int]]:
+    """Rebuild a range's markdown, substituting re-converted pages in order.
+
+    Returns ``(markdown, recovered_pages, unrecovered_pages)``. Page order is
+    preserved by exporting the surviving pages one at a time
+    (``export_to_markdown(page_no=...)``) and splicing the retried pages into
+    their slot — verified lossless against the plain whole-range export on
+    KR0051 5-35 (both 51,124 chars, 276/276 grouped numbers retained,
+    ``scripts/_probes/probe_20260901_pagewise_export_check.py``). If the
+    page-wise reassembly ever comes out *shorter* than the plain export we keep
+    the plain export and append the recovered pages, so this can never lose
+    content relative to the previous behaviour.
+    """
+
+    plain = document.export_to_markdown()
+    recovered: list[int] = []
+    unrecovered: list[int] = []
+    retried: dict[int, str] = {}
+    for page_no in missing_pages:
+        markdown = _single_page_markdown(converter, pdf_path, page_no)
+        if markdown.strip():
+            retried[page_no] = markdown
+            recovered.append(page_no)
+        else:
+            unrecovered.append(page_no)
+
+    if not retried:
+        return plain, recovered, unrecovered
+
+    parts: list[str] = []
+    try:
+        page_nos = sorted(int(p) for p in (getattr(document, "pages", None) or {}))
+        for page_no in page_nos:
+            if page_no in retried:
+                parts.append(retried[page_no])
+                continue
+            segment = document.export_to_markdown(page_no=page_no)
+            if segment and segment.strip():
+                parts.append(segment)
+    except Exception:  # noqa: BLE001
+        logger.warning("page-wise reassembly failed for %s; appending instead", pdf_path.name)
+        parts = []
+
+    reassembled = "\n\n".join(parts)
+    if len(reassembled) >= len(plain):
+        return reassembled, recovered, unrecovered
+    return (
+        "\n\n".join([plain] + [retried[p] for p in sorted(retried)]),
+        recovered,
+        unrecovered,
+    )
+
+
 def _convert_one(item: PdfInput, run_id: str) -> ParseResult:
     """Run Docling on a single PDF and write the markdown output.
 
@@ -579,10 +800,37 @@ def _convert_one(item: PdfInput, run_id: str) -> ParseResult:
         selected_ranges, selection_mode, hit_pages = _select_page_ranges(item)
         markdown_parts: list[str] = []
         confidences: list[float] = []
+        statuses: list[str] = []
+        dropped_pages: list[int] = []
+        recovered_pages: list[int] = []
+        unrecovered_pages: list[int] = []
         for r_start, r_end in selected_ranges:
             conversion = converter.convert(str(item.pdf_path), page_range=(r_start, r_end))
             document = conversion.document
-            markdown_parts.append(document.export_to_markdown())
+            status = _conversion_status(conversion)
+            if status:
+                statuses.append(status)
+            # Only pay for the page-by-page audit when docling itself admits a
+            # problem; a clean SUCCESS keeps the previous export path verbatim.
+            missing = _pages_missing_content(document) if status and status != "SUCCESS" else []
+            if missing:
+                dropped_pages.extend(missing)
+                logger.warning(
+                    "docling %s dropped pages %s from %s (range %s-%s); retrying one page at a time",
+                    status,
+                    missing,
+                    item.pdf_path.name,
+                    r_start,
+                    r_end,
+                )
+                markdown, recovered, unrecovered = _markdown_with_recovery(
+                    converter, document, item.pdf_path, missing
+                )
+                recovered_pages.extend(recovered)
+                unrecovered_pages.extend(unrecovered)
+                markdown_parts.append(markdown)
+            else:
+                markdown_parts.append(document.export_to_markdown())
             confidences.append(_estimate_confidence(document))
             del document
             del conversion
@@ -593,6 +841,19 @@ def _convert_one(item: PdfInput, run_id: str) -> ParseResult:
         markdown_body = "\n\n".join(markdown_parts)
         confidence = sum(confidences) / len(confidences) if confidences else None
 
+        # Worst status wins, then the recovery outcome refines it:
+        #   SUCCESS   nothing was dropped
+        #   RECOVERED docling dropped pages, every one came back on retry
+        #   PARTIAL_SUCCESS  at least one dropped page is still missing
+        if unrecovered_pages:
+            docling_status = "PARTIAL_SUCCESS"
+        elif recovered_pages:
+            docling_status = "RECOVERED"
+        elif any(s != "SUCCESS" for s in statuses):
+            docling_status = next(s for s in statuses if s != "SUCCESS")
+        else:
+            docling_status = statuses[0] if statuses else ""
+
         front_matter = _front_matter(
             item,
             fingerprint,
@@ -602,6 +863,11 @@ def _convert_one(item: PdfInput, run_id: str) -> ParseResult:
             selected_ranges=selected_ranges,
             selection_mode=selection_mode,
             hit_pages=hit_pages,
+            total_pages=_total_pages(item.pdf_path),
+            docling_status=docling_status,
+            dropped_pages=sorted(set(dropped_pages)),
+            recovered_pages=sorted(set(recovered_pages)),
+            unrecovered_pages=sorted(set(unrecovered_pages)),
         )
         md_path.write_text(front_matter + markdown_body, encoding="utf-8")
 
@@ -621,6 +887,10 @@ def _convert_one(item: PdfInput, run_id: str) -> ParseResult:
             parse_confidence=confidence,
             elapsed_seconds=time.perf_counter() - start,
             peak_rss_mb=_peak_rss_mb(),
+            docling_status=docling_status,
+            dropped_pages=tuple(sorted(set(dropped_pages))),
+            recovered_pages=tuple(sorted(set(recovered_pages))),
+            unrecovered_pages=tuple(sorted(set(unrecovered_pages))),
         )
     except Exception as exc:
         logger.exception("docling convert failed: %s", item.pdf_path)

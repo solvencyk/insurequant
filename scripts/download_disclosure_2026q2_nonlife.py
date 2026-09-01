@@ -16,6 +16,15 @@ new quarter without changes. 5 insurers hard-code the period label in the
 XPath itself and were bumped 1분기->2분기 for this run: KR0002, KR0003,
 KR0004_MG, KR0009, KR0032.
 
+2026-09-01 update: KR0011/KR0029/KR0150 were the 3 companies that silently
+re-fetched FY2026_Q1 that round (position-fixed li[1]/hardcoded pancId/
+duplicated id="test1" -- see per-entry comments below). All 3 are now
+text-anchored the same way as the 5 above, and additionally declare
+period_include_regex/period_exclude_regex; _verify_period() re-checks the
+picked element's own text against those patterns right before the
+click/GET and raises (loud fail, not a silent save) on any mismatch. Any
+entry can opt into this same guard by adding those two keys.
+
 CAUTION (2026-08-27): manual site checks before this run (생보 22사 일괄,
 한화손보, 삼성화재, KB손해보험) all showed 2026.2Q not yet posted (KB손보's own
 historical listing shows -2/4분기 경영통일공시 registers 8/29~31 every year
@@ -32,6 +41,7 @@ Manifest: data/disclosure/_meta/FY2026_Q2/manifest.json
 from __future__ import annotations
 
 import json
+import re
 import sys
 import time
 from datetime import datetime, timezone
@@ -120,19 +130,51 @@ INSURERS = {
         "url": "https://www.kbinsure.co.kr/CG801010001.ec",
         "xpath": '//*[@id="contents"]/div[3]/table/tbody/tr[3]/td[3]/a',
     },
-    "KR0011": {  # DB손보 (2-step, second URL known)
-        "name": "DB손해보험", "mode": "two_step_direct_url",
-        "url1": "https://www.idbins.com/pc/bizxpress/contentTemplet/pb/mp/rg/list.jsp",
-        "url2": "https://www.idbins.com/pc/bizxpress/contentTemplet/pb/mp/rg/view.jsp?i=4c3187cc8627450a93bc&tp=T&tx=&ct=1",
-        "xpath": '//*[@id="content"]/div[2]/div/div/div[1]/div[2]/dl/dd/ul/li[1]/a',
+    "KR0011": {  # DB손보 — TEXT-ANCHORED list click, hardcoded detail-id retired (2026-09-01)
+        # The old 'two_step_direct_url' mode skipped url1 (list.jsp) entirely and
+        # navigated straight to url2, a full URL with a hardcoded 'i=' detail-page
+        # id ('4c3187cc8627450a93bc' == the 2026.1Q record, confirmed live
+        # 2026-09-01). That id is assigned per-posting, so it never advances on
+        # its own -- this silently kept re-fetching the same 1Q document
+        # (2026-08-31 incident: byte-identical to FY2026_Q1). The site's list.jsp
+        # has also been redesigned into a table since this entry was last written
+        # (row 105 "2026년 상반기 DB손해보험 현황(경영공시)", row 104 "...1분기...",
+        # verified live). Click the list row whose own link text names the
+        # quarter so the 'i=' id resolves itself every period. step2_xpath is
+        # unchanged and still safe: each detail page only lists that quarter's
+        # own attachments (li[1] is the sole PDF there).
+        "name": "DB손해보험", "mode": "two_step",
+        "url": "https://www.idbins.com/pc/bizxpress/contentTemplet/pb/mp/rg/list.jsp",
+        "step1_xpath": ('//table//tbody//a[contains(., "2026") and '
+                         '(contains(., "상반기") or contains(., "2분기")) and '
+                         'not(contains(., "1분기"))]'),
+        "step2_xpath": '//*[@id="content"]/div[2]/div/div/div[1]/div[2]/dl/dd/ul/li[1]/a',
         "step2_mode": "direct_href",
+        "period_include_regex": r"2026년\s*(상반기|2\s*분기)",
+        "period_exclude_regex": r"2026년\s*1\s*분기",
     },
-    "KR0029": {  # AIG (2-step, second URL known)
-        "name": "AIG손해보험", "mode": "two_step_direct_url",
-        "url1": "https://m.aig.co.kr/wo/dpwom012.html?menuId=MS709",
-        "url2": "https://m.aig.co.kr/wo/dpwom021.html?menuId=MS709&pancId=15467&searchWord=&curPage=1",
-        "xpath": '//*[@id="aigContent"]/div[1]/div[1]/span/a/em',
-        "step2_mode": "click_dl",
+    "KR0029": {  # AIG — TEXT-ANCHORED direct download, pancId hardcode retired (2026-09-01)
+        # The old 'two_step_direct_url' mode hardcoded url2's pancId=15467 (a
+        # per-posting detail-page id -- the notes already said "varies per
+        # quarter" but the literal value never moved past 2026.1Q, confirmed
+        # live 2026-09-01). Live check found the site no longer needs a second
+        # page at all: the PDF download href (fileId=...) sits directly on the
+        # list page (dpwom012.html), inside the same '<div class="conBox">' as
+        # the quarter's own label ('2026년 상반기 경영공시'). Match on that label
+        # text instead of a fixed pancId, and there is no step2 left to drift.
+        "name": "AIG손해보험", "mode": "direct_href",
+        "url": "https://m.aig.co.kr/wo/dpwom012.html?menuId=MS709",
+        "xpath": ('//div[contains(@class,"conBox")]'
+                  '[.//strong[contains(., "2026") and '
+                  '(contains(., "상반기") or contains(., "2분기")) and '
+                  'not(contains(., "1분기"))]]'
+                  '//a[contains(@href,"downLoadFiles")]'),
+        "period_include_regex": r"2026년\s*(상반기|2\s*분기)",
+        "period_exclude_regex": r"2026년\s*1\s*분기",
+        "period_verify_xpath": ('//div[contains(@class,"conBox")]'
+                                 '[.//strong[contains(., "2026") and '
+                                 '(contains(., "상반기") or contains(., "2분기")) and '
+                                 'not(contains(., "1분기"))]]//strong'),
     },
     "KR0032": {  # NH농협 — onclick="fnFileDownload(...)"
         # This site does NOT use a uniform quarter label: 1Q is '2026년 1/4분기' but the
@@ -171,12 +213,23 @@ INSURERS = {
         "url": "https://www.shinhanez.co.kr/static/pub/PUB10000T01.html",
         "xpath": '//*[@id="tabFPanel1"]/div/div/div[1]/ul[2]/li[1]/div[3]',
     },
-    "KR0150": {  # 서울보증 — SPA, requires networkidle wait
+    "KR0150": {  # 서울보증 — TEXT-ANCHORED, id="test1" is duplicated 5x (2026-09-01)
+        # This SPA reuses id="test1" on EVERY quarter's download link (5 links
+        # share one id, verified live 2026-09-01) -- the old '//*[@id="test1"]'
+        # always resolved to whichever one Playwright's .first happened to pick
+        # in DOM order, i.e. the site's own listing order, not "the requested
+        # quarter" (2026-08-31 incident: silently re-fetched 2026.1Q). The
+        # link's own visible text names the quarter ('2026년 상반기 경영공시
+        # 자료' vs '...1분기...') so match on that instead of the id.
         "name": "서울보증보험", "mode": "click_dl",
         "url": "https://www.sgic.co.kr/biz/ccg/index.html?p=CCGIRI010101F01",
-        "xpath": '//*[@id="test1"]',
+        "xpath": ('//a[@id="test1" and contains(., "2026") and '
+                  '(contains(., "상반기") or contains(., "2분기")) and '
+                  'not(contains(., "1분기"))]'),
         "wait_networkidle": True,
         "wait_ms": 5000,
+        "period_include_regex": r"2026년\s*(상반기|2\s*분기)",
+        "period_exclude_regex": r"2026년\s*1\s*분기",
     },
     "KR1000": {  # 코리안리 — HREF-ANCHORED, not row-indexed (2026-08-31)
         # The old '.../tbody/tr[2]/td[2]/a' was a fixed row index and returned the 1분기
@@ -261,6 +314,39 @@ def _try_xpaths(page, xpaths: list[str]) -> str | None:
     return None
 
 
+def _verify_period(page, cfg: dict, default_xpath: str) -> str | None:
+    """Assert the element the selector just picked actually names the
+    requested quarter, before we spend a click/GET downloading it.
+
+    2026-08-31 incident: KR0011/KR0029/KR0150 selectors resolved to a *some*
+    element (no exception raised) that happened to be last quarter's --
+    a config that "ran clean" is not proof it picked the right period. Any
+    entry that declares 'period_include_regex' gets checked here; entries
+    that don't declare it are unaffected (opt-in, no behavior change).
+    Mismatch is a loud RuntimeError (caught by _run_one same as any other
+    failure), never a silent save of the wrong quarter.
+    """
+    inc = cfg.get("period_include_regex")
+    if not inc:
+        return None
+    verify_xpath = cfg.get("period_verify_xpath", default_xpath)
+    el = page.locator(_xpath(verify_xpath)).first
+    text = re.sub(r"\s+", " ", el.inner_text()).strip()
+    if not re.search(inc, text):
+        raise RuntimeError(
+            f"period verify FAILED: picked label {text!r} does not match "
+            f"expected /{inc}/ (xpath={verify_xpath})"
+        )
+    exc = cfg.get("period_exclude_regex")
+    if exc and re.search(exc, text):
+        raise RuntimeError(
+            f"period verify FAILED: picked label {text!r} matches excluded "
+            f"/{exc}/ -- this is the wrong quarter (xpath={verify_xpath})"
+        )
+    print(f"  period verify OK: {text!r}", flush=True)
+    return text
+
+
 def _run_one(p, kr: str, cfg: dict) -> dict:
     name = cfg["name"]
     mode = cfg["mode"]
@@ -292,6 +378,7 @@ def _run_one(p, kr: str, cfg: dict) -> dict:
         if mode == "direct_href":
             page.goto(cfg["url"], wait_until="domcontentloaded")
             _common_wait()
+            result["matched_label"] = _verify_period(page, cfg, cfg["xpath"])
             body, src = _resolve_href(page, cfg["xpath"], cfg["url"])
         elif mode == "click_dl":
             page.goto(cfg["url"], wait_until="domcontentloaded")
@@ -300,6 +387,7 @@ def _run_one(p, kr: str, cfg: dict) -> dict:
             picked = _try_xpaths(page, xpaths)
             if not picked:
                 raise RuntimeError(f"no visible element found among {xpaths}")
+            result["matched_label"] = _verify_period(page, cfg, picked)
             body, src = _click_with_download(page, picked)
         elif mode == "two_step":
             page.goto(cfg["url"], wait_until="domcontentloaded")
@@ -311,6 +399,7 @@ def _run_one(p, kr: str, cfg: dict) -> dict:
                     page.wait_for_timeout(2500)
                 except Exception as e:
                     print(f'  WARN js_eval_first failed: {e}', flush=True)
+            result["matched_label"] = _verify_period(page, cfg, cfg["step1_xpath"])
             # click step1 — may navigate, submit form, or rerender in-page
             try:
                 with page.expect_navigation(wait_until="domcontentloaded", timeout=8_000):
@@ -324,16 +413,6 @@ def _run_one(p, kr: str, cfg: dict) -> dict:
                 body, src = _resolve_href(page, cfg["step2_xpath"], cfg["url"])
             else:
                 body, src = _click_with_download(page, cfg["step2_xpath"])
-        elif mode == "two_step_direct_url":
-            page.goto(cfg["url1"], wait_until="domcontentloaded")
-            page.wait_for_timeout(800)
-            page.goto(cfg["url2"], wait_until="domcontentloaded")
-            page.wait_for_timeout(1500)
-            sm = cfg.get("step2_mode", "direct_href")
-            if sm == "direct_href":
-                body, src = _resolve_href(page, cfg["xpath"], cfg["url2"])
-            else:
-                body, src = _click_with_download(page, cfg["xpath"])
         else:
             raise RuntimeError(f"unknown mode {mode!r}")
         # Verify PDF signature

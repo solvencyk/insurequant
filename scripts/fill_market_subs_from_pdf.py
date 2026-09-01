@@ -12,7 +12,7 @@ Spec: docs/agents/kics-market-risk-decomposition.md §3, §5.
 Usage: PYTHONIOENCODING=utf-8 python scripts/fill_market_subs_from_pdf.py [--dry-run] [--limit N]
 """
 from __future__ import annotations
-import argparse, io, json, re, sys, glob
+import argparse, io, json, re, sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -20,9 +20,9 @@ sys.path.insert(0, str(REPO / "scripts"))
 from fill_market_subitems_to_disclosure import (  # noqa: E402
     _parse_value, _to_eok, mkt_est, _meta_for, MKT_SUBS,
 )
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 JSON_PATH = REPO / "kics_disclosure.json"
-DISCLOSURE = REPO / "data" / "disclosure"
 
 LBL = {36: ["금리위험"], 37: ["주식위험"], 38: ["부동산위험"], 39: ["외환위험"],
        40: ["자산집중위험", "자산집중"]}
@@ -219,7 +219,7 @@ def main(argv):
     new_rows, ok, fail, nopdf = [], [], [], 0
     for code, quarter in worklist:
         period = quarter_to_period(quarter)
-        pdfs = sorted(glob.glob(str(DISCLOSURE / period / "raw" / f"{code}_*.pdf")))
+        pdfs = disclosure_pdfs(period, code)
         if not pdfs:
             nopdf += 1
             continue

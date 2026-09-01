@@ -1,11 +1,26 @@
 # Insurequant TODO — Downloader Stage
 
-> Last updated: 2026-08-30 · Stage 1/5 — downloader
+> Last updated: 2026-09-01 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md (+ docs/agents/source-catalog.yaml) · Changelog: docs/changelog_downloader.md
 
 **Cross-stage TODO:** `TODO.md` (root). **This file:** active + done items scoped to data collection only.
 
 ## Status
+
+**🟢 2026-09-01 인박스 처리 — KR0011/KR0029/KR0150 정기경영공시 셀렉터 하드닝
+(`inbox/_resolved/20260901T0140Z`).** 2026.2Q 라운드에서 세 회사가 위치고정 xpath(`li[1]`)/
+duplicate id(`id="test1"` ×5)/하드코딩 파라미터(`pancId=15467`)로 직전 분기(1분기) PDF를 조용히
+재수집한 것의 재발 방지. 세 사이트를 실제로 열어 현재 마크업으로 확인 후(추정 없음)
+`docs/agents/source-catalog.yaml` + `scripts/download_disclosure_2026q2_nonlife.py`를 분기 라벨
+텍스트 매칭(`contains(., "상반기"/"2분기")`)으로 교체 — KR0011은 `url2` 하드코딩 제거하고
+`two_step`으로 매 실행 목록에서 상세 URL 해석, KR0029는 사이트가 2단계 자체를 없애 `pancId` 코드
+전체 삭제(`direct_href`로 단순화), KR0150은 id 대신 링크 자신의 텍스트로 매칭. `_run_one`에
+`_verify_period()` 신설 — 집은 요소의 텍스트를 다운로드 직전 정규식으로 재검사해 기대 분기가
+아니면 즉시 실패(조용한 오탐 재발 차단). 스크래치에서 실제 엔진으로 재수집해 대상분기(2026.2Q)·
+회귀(2026.1Q) 양방향 검증 — 셋 다 기존 repo 파일과 sha256 완전 일치. `validate_disclosure_
+freshness.py` RED=0 유지 확인. 신규 `tests/test_disclosure_selector_hardcoding.py`(12 tests,
+mutation-tested against 원본) — **단, `scripts/prepush_check.py`의 fast 리스트에는 미배선**(동시
+편집 중인 공용 파일이라 충돌 회피, validation/orchestrator 후속 필요). 상세: 티켓 `## 답변`.
 
 **🟢 2026-08-30 인박스 처리 — 생보 22사 **자사 사이트** 직접 스윕: 0/22 게시,
 경로자산 22개 신규 확보 (`inbox/downloader/20260830T0400Z`).** 상세: `docs/changelog_downloader.md` 2026-08-30.

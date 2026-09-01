@@ -1,5 +1,176 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-09-01 (80th pass) — `PL_CSM_AMORT_VS_WATERFALL` RED 7건 → 0. 메인 트리, 회사
+> 스코프 재빌드 + 룰에 ledger 예외경로 신설.**
+>
+> 79th pass 가 남긴 잔여 RED 7건(하나손해보험 KR0050 3분기·아이엠라이프생명보험 KR0076
+> 3분기·에이아이에이생명보험 KR0080 2023.4Q)을 raw 로 전수 재확인해 6칸은 채우고 1칸은
+> 근거를 갖춰 등재했다. 상세: `inbox/_resolved/20260901T1215Z__orchestrator__MULTI__
+> pl_csm_amort_vs_waterfall_red7.md`.
+>
+> **하나손해·아이엠라이프(6칸)**: 둘 다 raw 에 CSM상각(item4) 표가 실제로 있었다 — 하나손해는
+> `주석29` 류 "보험손익 상세내역"(단위 천원, `_hana_sonbo_csm_amort()` 신설), 아이엠라이프는
+> "1) 보험영업수익의 내역"(단위 백만원, `_imelife_csm_amort()` 신설) — 둘 다
+> `scripts/pl_breakdown/companies.py`에 추가해 기존 핸들러(`extract_tier2_hana_sonbo`/
+> `extract_tier2_imelife`)에 병합. 6칸 전부 raw 손계산이 워터폴과 0.05억 이내로 일치.
+> item4 단건만 채웠다 — item5/6/7 은 이번 스코프 밖(하나손해는 item3 가 이미 전사합산이라
+> 장기전용 5/6을 새로 채우면 item7 plug 가 LOB 혼합값을 흡수하게 됨).
+>
+> **AIA 2023.4Q(1칸)**: 79th pass 가 "raw 에 없다"고 TODO 에 적었지만 게이트에 그 사실을
+> 등재할 자리가 없어(=룰이 ledger 경로를 아예 안 봄) 계속 RED 였다. `PL_CSM_AMORT_VS_WATERFALL`
+> 룰에 `CSM_AMORT_IDENTITY_PINNED` 패턴을 본떠 ledger-lookup 분기 신설(신규 등재부
+> `data/_gold/pl_csm_amort_missing_ledger.json` + `validate_master_tables.csm_amort_
+> missing_ledger()` + `validate_data_contract.py`의 PINNED/DRIFT/신규/INERT 4분기) —
+> 이제 PINNED 면 YELLOW `PL_CSM_AMORT_MISSING_DOCUMENTED`, 값이 움직이면 RED
+> `PL_CSM_AMORT_MISSING_LEDGER_DRIFT`, 등재부에 없으면 기존 RED 그대로.
+>
+> **빌드**: 메인 트리(격리 워크트리 아님), `build_pl_breakdown.py`의 discover_filings/
+> parse_filing/assemble 을 KR0050/KR0076 만 스코프로 재호출하는
+> `scripts/_probes/probe_20260901_pl_csm_amort_scoped_build.py` 신설 → union-merge →
+> `build_root_masters.build_pl()`(개별함수, `main()` 아님)로 루트 전파. combo-diff(양쪽
+> 마스터): **LOST=0 ADDED=0 NULLED=0 CHANGED=0 FILLED=6**(정확히 목표 6칸). 부산물:
+> `pl_amort_coverage_baseline.json`(다른 축)의 이 3사 관련 8개 항목이 INERT 로 확인돼
+> 삭제(그 파일 자신의 관리규칙).
+>
+> **게이트**: `validate_data_contract.py` RED 7→0(YELLOW 104→96, INERT 정리분 순감).
+> `scripts/_data_contract_selftest.py` 57/57 PASS(합성회사 KR9001 픽스처라 신설 ledger와
+> 무관 확인). `validate_master_tables.py --no-build` exit 2→2 불변(원인 무관 baseline,
+> PL_breakdown.json 을 BEFORE 로 스왑해 동일조건 재확인 — csm_amort_identity 축만
+> 343P/9S→349P/3S 이동, 0F 불변). `pytest tests/test_rule_coverage_manifest.py
+> tests/test_identity_tautology.py tests/test_pl_breakdown_golden.py
+> tests/test_deploy_assets.py` 85 passed 1 skipped(RUN_PL_GOLDEN 미설정, 의도) — 1건
+> 환경성 PermissionError(시스템 임시폴더 잠금)는 격리 basetemp 로 재실행해 진짜 PASS 확인.
+>
+> **골든/지문**: `tests/fixtures/pl_breakdown_golden.json` `pl_breakdown` spec 만
+> `--update`(디스크 스냅샷, subprocess 재빌드 아님). `builder_input_fingerprints.json` 도
+> `pl_breakdown` spec 만 갱신, 나머지 5개(dividend/ifrs17_bs/post_transition/
+> viz_csm_waterfall/viz_ifrs17_panels) UNCHANGED 확인. `sync_master_xlsx_sheet.py
+> "손익분해PL"` 검증 OK(11866→11866행, EDIT 6·나머지는 KR1098 위치재기록 — 79th pass 와
+> 동일 패턴, "나머지 시트 값 동일" 확인).
+>
+> 커밋 안 함(오케스트레이터 일괄 처리). K-ICS 레인 파일 무변경.
+
+> **2026-09-01 (79th pass) — KR0080 item18/19 owner 승인 처리 + 신규 3사(KR0050/KR0076/
+> KR1098) 온보딩. 격리 워크트리 실행이라 raw(`data/dart/FY*/raw`, gitignored)를 main 트리에서
+> robocopy 로 미러링, 이 과정에서 이 샌드박스에 **OPENDART_API_KEY/네트워크가 없어
+> `build_pl_breakdown.main()`을 무편집 실행하면 22개 무관 회사 2,715셀이 조용히 nulled 되는
+> 사고**를 실측으로 발견·회피(아래 참조) — 후속 세션을 위해 반드시 읽을 것.**
+>
+> **선행 세션 인수인계**: `inbox/_resolved/20260901T1600Z__orchestrator__KR0080_MULTI__
+> pl_coverage_census_and_aia_backfill.md` (census + AIA 2023/2024.4Q 백필, item18/19 미결)와
+> `inbox/parser/20260901T1630Z__parser__MULTI__pl_gap14_remaining_and_owner_scope.md`
+> (owner 결정 대기 2건)는 이번 세션이 이어받은 **격리 워크트리**엔 커밋된 게 없어(main 트리
+> 미커밋 상태) `scripts/pl_breakdown/companies.py`의 AIA 4함수부터 다시 포팅해 시작했다 —
+> 최종 코드는 main 트리가 갖고 있던 것과 동일(diff 로 확인).
+>
+> ### ① 환경 함정 — 네트워크 없는 격리 워크트리에서 `build_pl_breakdown.main()` 금지
+>
+> `data/dart/FY*/raw/`는 `.gitignore`(L41)라 새 워크트리엔 아무것도 없다. robocopy 로 15개
+> `FY*/raw` 폴더(1.93GB) 전체를 main 트리에서 미러링했다. 그 다음 `build_pl_breakdown.py`를
+> **무편집으로 한 번 실행**해봤더니: `_fs_tier1()`→`resolve_corp()`→DART API 조회가 이
+> 샌드박스에 네트워크가 없어 **전량 조용히 실패**(예외를 삼킴, `OPENDART_API_KEY` 미설정),
+> 306개 회사 전부 FS-API 대신 archived HTML 폴백으로 떨어졌다. combo-diff 실측:
+> **22개 무관 회사(KR0001/0002/0003/0005/0008/0009/0010/0011/0068/0069/0070/0071/0072/0073/
+> 0079/0082/0083/0087/0094/0104/0150/1000)에서 2,715셀 nulled + 1,374셀 변경** — 이 티켓과
+> 무관한 회사들이 전부 정밀도 낮은 HTML 경로로 재계산됐기 때문. **즉시 백업으로 원복.**
+>
+> 해결: `discover_filings()`/`parse_filing()`/`assemble()`을 직접 불러 **KR0080/KR0050/
+> KR0076/KR1098 4개사로만 스코프**한 스크립트(`scripts/_probes/probe_20260901_
+> pl_scoped_build.py`)로 추출 후, `pl_breakdown_master.json`/`pl_breakdown_coverage.json`에
+> **회사 키로 union 머지**(이 4사 행만 교체, 나머지는 read 조차 안 함). 이 4사는 애초에
+> FS-API 데이터가 없어(census가 이미 `extract_tier1`=14/14 None 확인) 스코프를 좁혀도 이
+> 4사 자체 정확도엔 영향 없음 — 네트워크 유무와 무관하게 항상 커스텀 Tier-2 핸들러 경로.
+> **후속 세션 주의: 이 샌드박스에서 `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py`
+> 를 그대로 돌리면 같은 사고가 재현된다**(그 테스트가 내부적으로 무편집
+> `build_pl_breakdown.py` 서브프로세스를 부른다) — `python tests/test_pl_breakdown_golden.py
+> --update`(디스크 현재 상태를 스냅샷만 함, 재빌드 안 함)로 우회했다.
+>
+> ### ② AIA(KR0080) item18/19(투자이익/보험금융손익) — owner 승인 사항, 채움
+>
+> `scripts/pl_breakdown/companies.py`의 `_aia_statement()`에 항목19 추출 추가(Ⅳ.투자영업
+> 비용의 자식행 1.보험금융비용+2.재보험금융비용을 순부호반전 — AIA는 보험금융 수익측 행이
+> 없어 순수 비용). `extract_tier2_aia`의 FY2025 산문 경로(2025.4Q)는 **손대지 않고** 성공 후
+> `_aia_statement()`를 한 번 더 불러 item19만 뽑아 병합 — 항목1/3/4/5/6/7/8/16/17/20/21/22/
+> 23/24는 그대로. item18은 `build_pl_breakdown.py`의 기존 파생식(`item18=item17-item19`,
+> 조건 없이 항상 재계산)이 자동으로 채운다 — 핸들러가 따로 만들 필요 없음.
+>
+> **2025.4Q before/after (owner 승인 필요 영역, 실측 전량 열거 — 이 2칸만 움직였다):**
+>
+> | 항목 | before | after |
+> |---|---|---|
+> | item18 투자이익 | None | 930,157.729 |
+> | item19 보험금융손익 | None | -744,557.729 |
+> | (그 외 1/3/4/5/6/7/8/16/17/20/21/22/23/24 전부) | 무변화 | 무변화 |
+>
+> `scripts/_probes/probe_20260901_aia_item19_verify.py`로 24항목 전체를 커밋값과 대조해
+> 2025.4Q는 정확히 이 2칸만 움직였음을 확인(그 외 회귀 0). 2023.4Q/2024.4Q도 같은
+> `_aia_statement()` 경로로 item19를 얻는다(각 -544,582.349 / -832,130.467) — raw XML의
+> Ⅳ.투자영업비용 자식행을 직접 손으로도 재계산해 셋 다(2023/2024/2025.4Q) 일치 확인.
+>
+> ### ① 신규 3사(KR0050 하나손해·KR0076 아이엠라이프·KR1098 카카오페이손보) — owner 승인,
+> 8칸(회사-분기) 채움. **PL 마스터 회사수 36→39, 사이트에 신규 3사 등장.**
+>
+> 회사별 신규 핸들러(`extract_tier2_hana_sonbo`/`extract_tier2_imelife`/
+> `extract_tier2_kakaopay_sonbo`, `SONBO_HANDLERS`/`LIFE_HANDLERS`에 등록) — 셋 다 audited
+> 포괄손익계산서(별도)에서 직접 읽는다, 표 형태가 셋 다 다르다:
+> - **KR0050 하나손해**: AIA와 같은 4블록(보험서비스수익/비용·투자서비스수익/비용, 단위 원).
+>   Ⅱ의 자식행 1이 부모와 **문자열이 완전히 같아서**(`보험서비스비용`) `1.`로 접두 disambiguate.
+>   함정 하나 더: 이 표는 각주(주석) 번호가 **별도 숫자 셀**로 들어가(`['1. 보험수익','29',
+>   '499,658,083,124','','484,432,584,116','']`) 자식행에서 `_row_nums()[0]`이 당기값이
+>   아니라 주석번호를 줍는다 — `[-2]` 인덱싱으로 교정(부모행엔 이 셀이 없어 `[-2]`가
+>   양쪽 모두에서 옳다, 실측 확인).
+> - **KR0076 아이엠라이프**: 평면 Ⅰ.영업수익/Ⅱ.영업비용 10개 자식행(보험+투자 섞임), 단위 원.
+>   item1=보험 자식행만 순계, item17=Ⅲ(영업이익, 독립 재확인)-item1(잔차 방식 — 투자쪽 7/6개
+>   자식행을 낱개로 다시 안 뽑음).
+> - **KR1098 카카오페이손보**: Ⅰ.보험손익/Ⅱ.투자손익 **헤드라인 직접 제공**(가장 쉬움), 단위
+>   원. item19는 유일하게 수익·비용 양측(보험금융수익/재보험금융수익 vs 보험금융비용/
+>   재보험금융비용) 4행을 전부 독립적으로 읽어 순계 — 다른 두 회사는 비용측만 있음.
+>
+> 8칸 = 하나손해 2023/2024/2025.4Q(3) + 아이엠라이프 2023/2024/2025.4Q(3) +
+> 카카오페이손보 2024/2025.4Q(2). 각 회사 FY2025.4Q raw XML을 손으로 재계산해 빌더 산출과
+> **항목 단위로 전부 일치**(예: 하나손해 item19 -17,279.514백만, 아이엠라이프 item19
+> -306,043.947백만, 카카오페이손보 item1 -46,782.207백만 — 전부 raw 대조 ±0).
+>
+> **게이트 실측 (전부 이번 세션 격리 워크트리에서):**
+>
+> | 게이트 | 결과 |
+> |---|---|
+> | combo-diff (`pl_breakdown_master.json`, viz 중간산출, 전후) | LOST 0 · NULLED 0 · CHANGED 0 · ADDED 320(신규 10 company-quarter) · filled-in 2(AIA 2025.4Q item18/19만) |
+> | combo-diff (root `PL_breakdown.json`, 전후) | 동일 |
+> | `python tests/test_pl_breakdown_golden.py --update` | master_rows 11546→11866 · company_quarters 356→366 · non_null 값 갱신 (①의 위 이유로 subprocess 재빌드 아닌 스냅샷) |
+> | `scripts/validate_master_tables.py --no-build` (전/후 비교) | exit code 2→2(불변), `pl_bridge`/`35F`/`0NEW` 불변(35=기존 baseline, 신규 실패 0), `csm_amort_identity` 0F 불변 |
+> | `scripts/_probes/probe_20260901_fingerprint_update_pl_only.py pl_breakdown` | `pl_breakdown` 만 code/fixture sha 갱신, 나머지 5개 spec(`ifrs17_bs`/`viz_csm_waterfall`/`viz_ifrs17_panels`/`dividend`/`post_transition`) 바이트 불변 확인 |
+> | `scripts/validate_data_contract.py` | exit 2, SUMMARY RED=174 — **K-ICS 레인 소관 138건**(`kics_rate_sensitivity MISSING_PROVENANCE`, 이 워크트리에 `md_inbox/` 자체가 없어 전사 공통 발생, 내 4사 국한 아님) + `post_transition` 계열은 손대지 않음. PL 축 RED는 아래 ③ 참조 |
+> | `sync_master_xlsx_sheet.py "손익분해PL"` | 검증 OK, 11546→11866행, 변경 0·추가 352·삭제 32(AIA 2025.4Q 32행이 같은 키로 재기록됨), 나머지 시트 값 동일 |
+>
+> ### ③ `PL_CSM_AMORT_VS_WATERFALL` 재측정 — AIA 2023.4Q는 닫음, 신규 3사는 **새로 열림**(후속 필요)
+>
+> ②는 item18/19만 건드려 item4(CSM상각)와 무관 — 재측정해도 그대로 RED. **AIA 2023.4Q는
+> 근거를 갖춰 닫는다**: `data/dart/FY2023_Q4/raw/KR0080_.../20240409002583_00760.xml`
+> 전체를 훑어 (a) FY2024/FY2025식 "당사의 금년도 영업이익은..." 요약 산문 자체가 없음(22개
+> "당사의" 문장 전수 확인, 전부 회계정책 상용구) (b) "보험계약마진" 15개 언급 전부 IFRS17
+> 정의/정책 설명뿐, 그 해 상각액을 공시하는 롤포워드 표·문장이 없음(c) "기초잔액" 전문서
+> 1회뿐, CSM 무관. **원문에 그 해 상각액이 없다 — 추측·보간 없이 빈 칸 유지, 문서화로 종결.**
+>
+> **그런데 ①로 새로 들어온 하나손해·아이엠라이프도 같은 RED를 새로 만든다**(각 3개 분기,
+> 도합 6건 — `validate_data_contract.py` 실측: 하나손해 157.0/199.7/218.9억, 아이엠라이프
+> 571.1/549.2/537.9억, 전부 워터폴엔 있고 PL엔 item4 없음). **AIA와 달리 이 둘은 "진짜
+> 없음"이 아니라 "안 뽑았음"일 가능성이 높다** — 하나손해 FY2025 raw에서 `주석29. 보험손익
+> 및 재보험손익`의 "보험료배분접근법미적용계약" 표에 **"보험계약마진 상각액" 행이 장기
+> 컬럼 21,885,413천원 = 218.85억**으로 존재 — 워터폴의 218.9억과 반올림 내 정확히 일치.
+> 이미 있는 `extract_tier2_sonbo_component`(삼성화재용 컴포넌트노트 리더)를 이 표에 돌려
+> 봤으나 **빈 `{}`** — 이 캡션·컬럼 형태를 인식 못 함. **owner 승인 범위 밖이라 이번 세션엔
+> 새 핸들러를 안 썼다** — 8칸 채우기(①)와 item4 확장(전혀 다른 표·별도 회사별 검증)은
+> 별개 작업이라 분리한다. 아이엠라이프도 유사 표가 있을 가능성이 높지만 미확인.
+>
+> **후속 필요(다음 세션/owner 결정)**: 하나손해·아이엠라이프의 `주석29`류 CSM 상각 표를
+> 읽는 전용 핸들러 작성 — 재현: raw
+> `data/dart/FY2025_Q4/raw/KR0050_하나손해보험_20260325000538/20260325000538_00760.xml`에서
+> `"보험계약마진 상각액"` 검색.
+>
+> 커밋은 하지 않았다(오케스트레이터 일괄 처리). 격리 워크트리 관례상 `data/dart/FY*/raw`는
+> 어차피 gitignore라 커밋 대상도 아니다.
+
 > **2026-09-01 (78th pass) — 가정민감도 STALE_AS_OF RED 31건: 원인은 데이터가 아니라 게이트
 > 기준정책이었다. `scripts/validate_data_contract.py` 만 고쳤고 마스터 3종은 무수정.**
 >

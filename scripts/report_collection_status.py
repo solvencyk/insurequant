@@ -21,6 +21,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from _disclosure_pdf_paths import disclosure_pdfs, disclosure_pdf_dirs  # noqa: E402
 sys.stdout.reconfigure(encoding="utf-8")
 
 # Full universe (37 K-ICS + MG손보 + AIA — 39 total)
@@ -167,11 +169,11 @@ PERIOD_TO_RANGE = {
 
 
 def check_disclosure(period: str, kr: str) -> tuple[str, str]:
-    """Return (O/X, note)."""
-    raw_dir = ROOT / "data" / "disclosure" / period / "raw"
-    if not raw_dir.exists():
+    """Return (O/X, note). raw/ 우선, 없으면 pdf/ (2026.2Q부터 다운로더가 pdf/ 에 저장 —
+    상세: scripts/_disclosure_pdf_paths.py)."""
+    if not disclosure_pdf_dirs(period):
         return ("X", "디렉토리 없음")
-    matches = list(raw_dir.glob(f"{kr}_*"))
+    matches = disclosure_pdfs(period, kr)
     if matches:
         return ("O", "")
     return ("X", "미수집")

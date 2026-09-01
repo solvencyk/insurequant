@@ -214,6 +214,40 @@ def find_summary_table(text: str):
 
 
 _NEGATIVE_RE = re.compile(r"해당\s*사항\s*없음|적용하지\s*않아|적용받지\s*않")
+# Document-level (not per-subsection-window) explicit statement that COMMON
+# transition measures were not applied. Ticket 20260901T0410Z (validation):
+# 삼성생명(KR0069) prints "당사는공통및선택경과조치를적용하지않았습니다." once, early
+# in the filing overview -- well before the "1) 공통적용 경과조치 관련" heading -- so
+# the per-subsection window (`segment` in find_subsection_format, which starts
+# AFTER that heading) never sees it, and the subsection's breakdown TABLE
+# (printed per format-spec boilerplate regardless of applicability) gets
+# misread as O. This is intentionally narrow: it only feeds the TFI kind (the
+# subsection this "공통" declaration is about) and requires a conjunction
+# marker inside the negation span as evidence 공통 was bundled into it, with
+# no exclusion marker carving 공통 back out.
+#
+# REJECTED alternative (do not reintroduce): "적용전==적용후 in the table ->
+# X" flips 198/544 buckets (TFI 153 / TIR 29 / TAC 16) because printing a
+# mirrored-value table is normal *even when a company DID apply* a measure
+# that happens not to move the ratio -- that would turn 47_tier2_census
+# blocking RED into false SKIP at scale. This doc-level sentence check is
+# the narrow substitute: same kind of direct textual evidence _NEGATIVE_RE
+# already uses for 선택 (optional) measures, just also covering 공통.
+COMMON_NEG_RE = re.compile(r"공통[^.\n]{0,40}경과조치[^.\n]{0,20}적용하지\s*않")
+CONJ_RE = re.compile(r"및|과\s|와\s|모두")     # 공통도 부정에 포함됐다는 표지
+EXCL_RE = re.compile(r"외에|제외")             # 공통을 부정에서 제외하는 표지(KR1000 2023.2Q:
+# "공통 경과 조치 외에 선택적 경과조치를 적용하지 않고" = 공통은 적용했다, 선택만 미적용)
+
+
+def _common_transition_not_applied(text: str):
+    """Returns the first regex Match where COMMON_NEG_RE fires with a CONJ
+    marker in-span and no EXCL marker in-span, or None. Scans the whole
+    document text (not a subsection window) by design -- see comment above."""
+    for m in COMMON_NEG_RE.finditer(text):
+        span = m.group(0)
+        if CONJ_RE.search(span) and not EXCL_RE.search(span):
+            return m
+    return None
 # 지급여력비율(%) / 지급여력비율: (4-2-2 style, KR1010/롯데손해/삼성화재) OR bare
 # 가용자본+요구자본+지급여력비율 3-row delta table (하나생명-style 감사보고서 주석 C.3.1
 # — no '(%)' suffix, values carry '%' inline instead: '131.1%').
@@ -453,6 +487,7 @@ def find_subsection_format(text: str):
     anchors.sort()
     result: dict[str, str] = {}
     evidence: dict[str, str] = {}
+    common_neg_match = _common_transition_not_applied(text)
     for i, (pos, kind, endpos) in enumerate(anchors):
         # Bound strictly by the next subsection anchor (or a generous flat cap for
         # the last one). Do NOT cap at the next markdown H2 heading: docling
@@ -494,7 +529,15 @@ def find_subsection_format(text: str):
                 evidence["TER"] = evidence["TIRR"] = "FORMAT1_2_AMBIGUOUS(no table, no negative text)"
             continue
         # single-kind subsections (TFI/TAC/TIR)
-        if table is not None:
+        if kind == "TFI" and common_neg_match is not None:
+            # Document-level "공통 및 선택 경과조치를 적용하지 않았습니다" beats a
+            # present-but-uninformative breakdown table (see _common_transition_
+            # not_applied docstring) -- takes priority over the table-presence
+            # heuristic below, same way `neg` already beats it when the negative
+            # text is found *inside* this subsection's own window.
+            result[kind] = "X"
+            evidence[kind] = "doc_level_common_negative: " + common_neg_match.group(0)
+        elif table is not None:
             # table found; treat as O unless a negative statement appears *before* the table start
             table_pos_in_segment = segment.find(table[0])
             if neg is not None and table_pos_in_segment != -1 and neg.start() < table_pos_in_segment:

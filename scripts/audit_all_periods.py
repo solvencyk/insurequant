@@ -14,9 +14,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
 sys.stdout.reconfigure(encoding="utf-8")
 
 from scripts.report_collection_status import LOSS, LIFE, DART_NONLISTED, IR_NOT_AVAILABLE, KIDI_MAPPING, PERIOD_TO_YYYYMM, check_dart, check_kidi, check_ir
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 ALL = LOSS + LIFE
 PERIODS = list(PERIOD_TO_YYYYMM.keys())  # FY2023_Q1 .. FY2026_Q1 (13)
@@ -72,14 +74,10 @@ FILE_PREFIX_ALIAS = {
 }
 
 def has_disclosure_file(period: str, kr: str) -> bool:
-    raw = ROOT / "data" / "disclosure" / period / "raw"
-    if not raw.exists():
-        return False
+    # raw/ 우선, 없으면 pdf/ (2026.2Q부터 다운로더가 pdf/ 로 저장).
+    # 상세: scripts/_disclosure_pdf_paths.py
     prefixes = FILE_PREFIX_ALIAS.get(kr, [kr])
-    for f in raw.iterdir():
-        if f.is_file() and any(f.name.startswith(pfx + "_") for pfx in prefixes):
-            return True
-    return False
+    return any(disclosure_pdfs(period, pfx) for pfx in prefixes)
 
 
 def audit_disclosure():

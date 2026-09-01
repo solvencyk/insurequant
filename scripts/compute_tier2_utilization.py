@@ -10,6 +10,13 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+# ticket 20260831T0800Z SS2 (candidate a): items 47-54 in kics_disclosure.json
+# are the SAME TFI/\uacf5\ud1b5\uc801\uc6a9\uacbd\uacfc\uc870\uce58 table this script re-parses from MD, and
+# validate_kics_disclosure.py's 47_tier2_census / 48_tier2_limit rules already
+# gate them -- prefer that already-validated source over the MD table.
+sys.path.insert(0, str(REPO / "src"))
+from solvency.validation.kics_json_rules import TIER2_LIMIT_RATIO  # noqa: E402
+
 MD_DIR = REPO / "md_inbox" / "FY2025_Q4"
 JSON_PATH = REPO / "kics_disclosure.json"
 DEFAULT_QUARTER = "2025.4Q"
@@ -20,6 +27,15 @@ KEY_NAME = "\uc6d0\uc218\uc0ac\uba85"
 KEY_ITEM = "\ud56d\ubaa9\ubc88\ud638"
 KEY_Q = "\uacf5\uc2dc\ubd84\uae30"
 KEY_VAL = "\uac12"
+KEY_VAL_POST = "\uac12_\uc801\uc6a9\ud6c4"  # "\uac12_\uc801\uc6a9\ud6c4" (post-transition column)
+
+# Same TFI table's own rows (see kics_json_rules.py's item47-54 comment block):
+# 47=pre_limit 48=limit 49=lapse_excess 50=tier1(unused here) 51=tier2
+# 52=total(unused here) 53=hybrid 54=subordinated.
+_TIER2_MASTER_ITEMS = (47, 48, 49, 50, 51, 52, 53, 54)
+# Mirrors kics_json_rules.evaluate(..., tolerance=2.0)'s default absolute
+# tolerance (\uc5b5\uc6d0) -- there is no named constant to import for this one.
+TIER2_LIMIT_TOL_EOK = 2.0
 
 ROW_PATTERNS: dict[str, re.Pattern[str]] = {
     "tier2": re.compile(r"^\s*(\uBCF4\s*\uC644\s*\uC790\s*\uBCF8)\s*$"),
@@ -89,6 +105,9 @@ class UtilizationResult:
     subordinated_eok: float | None = None
     proxy_utilization_pct: float | None = None
     quality_flag: str = "ok"
+    # provenance (ticket 20260831T0800Z SS2, candidate a): which source fed
+    # `tv` -- "master_items_47_54" | "md_table" | "none".
+    table_source: str = "none"
 
 
 def _normalize_label(text: str) -> str:
@@ -340,6 +359,9 @@ def _compute_proxy_numerator(
 
 
 def _load_json_proxy(quarter: str) -> dict[str, dict[str, float]]:
+    """items 3/14 behave exactly as before (unchanged branch). items 47-54
+    (candidate a) are captured separately under both "itemN" (pre-transition
+    "값") and "itemN_post" (post-transition "값_적용후", when present)."""
     data = json.loads(JSON_PATH.read_text(encoding="utf-8"))
     out: dict[str, dict[str, float]] = {}
     for row in data:
@@ -347,15 +369,92 @@ def _load_json_proxy(quarter: str) -> dict[str, dict[str, float]]:
             continue
         code = row[KEY_CODE]
         item = row[KEY_ITEM]
-        if item not in (3, 14):
-            continue
-        val = _parse_amount(str(row.get(KEY_VAL, "")))
-        if val is None:
-            continue
-        out.setdefault(code, {})[f"item{item}"] = val
-        if KEY_NAME in row:
-            out[code]["name"] = row[KEY_NAME]
+        if item in (3, 14):
+            val = _parse_amount(str(row.get(KEY_VAL, "")))
+            if val is None:
+                continue
+            out.setdefault(code, {})[f"item{item}"] = val
+            if KEY_NAME in row:
+                out[code]["name"] = row[KEY_NAME]
+        elif item in _TIER2_MASTER_ITEMS:
+            val = _parse_amount(str(row.get(KEY_VAL, "")))
+            if val is not None:
+                out.setdefault(code, {})[f"item{item}"] = val
+            val_post = _parse_amount(str(row.get(KEY_VAL_POST, "")))
+            if val_post is not None:
+                out.setdefault(code, {})[f"item{item}_post"] = val_post
     return out
+
+
+def _tv_from_master_proxy(proxy: dict[str, float] | None) -> TableValues | None:
+    """Candidate (a): build a TableValues straight from kics_disclosure.json
+    items 47-54 instead of the MD table compute_one() otherwise falls back
+    to. Requires pre_limit/limit/lapse_excess (47/48/49, post-transition
+    column) to ALL be present; a partial hit returns None so compute_one()
+    falls through to the existing MD path unchanged.
+
+    Units: kics_disclosure.json items are 억원; TableValues (and the rest of
+    this module) is 백만원 -- matches _compute_proxy_numerator's existing
+    `item3 * 100.0  # 억원 -> 백만원` convention, so every field is x100 here
+    too.
+
+    Column choice mirrors this module's OWN pre-existing MD convention (not
+    the gate's): _pick_column already treats "last MD column" as
+    post-transition for tier2/pre_limit/limit/lapse_excess, and
+    _pick_grandfathered_column already treats "first MD column"
+    (pre-transition) as authoritative for hybrid/subordinated -- so pull the
+    same columns here. `scr` is deliberately left unset: it is only ever
+    used as a fallback when `limit` (item48) itself is missing, which cannot
+    happen on this path since limit is one of the three required fields.
+    """
+    if not proxy:
+        return None
+
+    def post(item: int) -> float | None:
+        v = proxy.get(f"item{item}_post")
+        return v * 100.0 if v is not None else None
+
+    def pre(item: int) -> float | None:
+        v = proxy.get(f"item{item}")
+        return v * 100.0 if v is not None else None
+
+    pre_limit, limit, lapse_excess = post(47), post(48), post(49)
+    if pre_limit is None or limit is None or lapse_excess is None:
+        return None
+    return TableValues(
+        tier2=post(51),
+        pre_limit=pre_limit,
+        limit=limit,
+        lapse_excess=lapse_excess,
+        hybrid=pre(53),
+        subordinated=pre(54),
+    )
+
+
+def _check_md_limit_vs_scr(
+    tv: TableValues | None, proxy: dict[str, float] | None
+) -> str | None:
+    """Candidate (b): mirror the gate's 48_tier2_limit formula (item48 ==
+    item14_pre x TIER2_LIMIT_RATIO) against the limit **this script actually
+    read from MD** -- the one path the gate itself never sees, since it only
+    ever reads kics_disclosure.json. Only meaningful when compute_one() fell
+    back to the MD table (candidate a's master path already has its own
+    gate-side check on the exact same formula). Returns a mismatch
+    description, or None if the check passed or couldn't run."""
+    if tv is None or tv.limit is None or not proxy:
+        return None
+    item14 = proxy.get("item14")
+    if item14 is None:
+        return None
+    limit_eok = tv.limit / 100.0
+    expected_eok = item14 * TIER2_LIMIT_RATIO
+    diff = limit_eok - expected_eok
+    if abs(diff) > TIER2_LIMIT_TOL_EOK:
+        return (
+            f"MD tier2-limit {limit_eok:.2f}eok vs item14x{TIER2_LIMIT_RATIO:g}="
+            f"{expected_eok:.2f}eok (diff {diff:+.2f}eok, tol {TIER2_LIMIT_TOL_EOK:g}eok)"
+        )
+    return None
 
 
 def _parse_company_from_filename(path: Path) -> tuple[str, str]:
@@ -369,7 +468,15 @@ def compute_one(
     proxy: dict[str, float] | None,
 ) -> UtilizationResult:
     code, company = _parse_company_from_filename(md_path)
-    tv = _extract_common_table(md_path.read_text(encoding="utf-8"))
+    tv_master = _tv_from_master_proxy(proxy)
+    if tv_master is not None:
+        tv = tv_master
+        table_source = "master_items_47_54"
+        limit_md_mismatch = None
+    else:
+        tv = _extract_common_table(md_path.read_text(encoding="utf-8"))
+        table_source = "md_table" if tv is not None else "none"
+        limit_md_mismatch = _check_md_limit_vs_scr(tv, proxy)
 
     proxy_item3 = proxy.get("item3") if proxy else None
     proxy_item14 = proxy.get("item14") if proxy else None
@@ -408,6 +515,7 @@ def compute_one(
                 tier2_eok=round(proxy_item3, 2) if proxy_item3 is not None else None,
                 proxy_utilization_pct=round(proxy_util, 2),
                 quality_flag=flag,
+                table_source=table_source,
             )
         return UtilizationResult(
             company=company,
@@ -418,6 +526,7 @@ def compute_one(
             utilization_pct=None,
             data_source="missing",
             quality_flag="missing",
+            table_source=table_source,
         )
 
     limit_m = tv.limit
@@ -447,6 +556,7 @@ def compute_one(
         hybrid_eok=_million_to_eok(tv.hybrid),
         subordinated_eok=_million_to_eok(tv.subordinated),
         proxy_utilization_pct=round(proxy_util, 2) if proxy_util is not None else None,
+        table_source=table_source,
     )
 
     if util is None:
@@ -473,10 +583,19 @@ def compute_one(
         elif num_method != "pre_limit_gross_minus_exemptions":
             result.quality_flag = num_method
 
+    # Candidate (b): a bad MD-sourced limit outranks whatever symptom
+    # (util_negative etc.) it produced downstream -- this is the root cause,
+    # not just another outlier shape. Only reachable when table_source ==
+    # "md_table" (see limit_md_mismatch's assignment above); the master
+    # path's own item48 is already gated by the real 48_tier2_limit rule.
+    if limit_md_mismatch:
+        result.quality_flag = "tier2_limit_md_mismatch"
+
     return result
 
 
 _OUTLIER_INTERPRETATIONS: dict[str, str] = {
+    "tier2_limit_md_mismatch": "MD-sourced tier2 limit fails the gate's own 48_tier2_limit formula (item48 == item14_pre x 50%) by more than tolerance — the MD table is likely contaminated (ticket 20260831T0800Z SS2 candidate b); prefer items 47-54 once loaded to the master.",
     "util_over_100": "Numerator exceeds SCRx50% limit — may reflect pre-clamp disclosure or proxy without exemption rows.",
     "util_negative": "Negative numerator after reconciliation — check MD table row semantics.",
     "no_table": "No 5-2-2 transitional table in MD; proxy uses gross item3/item14.",

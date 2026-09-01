@@ -9,7 +9,7 @@
   "NO_RAW": "그 (회사,분기)에 raw/ · pdf/ 어디에도 PDF 가 없음",
   "ERROR": "PDF 를 열지 못함"
  },
- "generated_at": "20260901T030501Z",
+ "generated_at": "20260901T060623Z",
  "unreadable_floor_chars_per_page": 100.0,
  "borderline_floor_chars_per_page": 400.0,
  "page_scan_floor_chars": 50,

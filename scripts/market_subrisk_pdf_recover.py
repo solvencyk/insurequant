@@ -22,7 +22,6 @@ Usage: PYTHONIOENCODING=utf-8 python scripts/market_subrisk_pdf_recover.py [--dr
 """
 from __future__ import annotations
 import argparse
-import glob
 import json
 import logging
 import re
@@ -39,9 +38,9 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 sys.stdout.reconfigure(encoding="utf-8")
 from fill_market_subitems_to_disclosure import _bare_subrisk_item, _parse_value, _to_eok, mkt_est, _meta_for
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 JSON_PATH = REPO / "kics_disclosure.json"
-DISCLOSURE = REPO / "data" / "disclosure"
 NAMES = {36: "3-1. 금리위험액", 37: "3-2. 주식위험액", 38: "3-3. 부동산위험액",
          39: "3-4. 외환위험액", 40: "3-5. 자산집중위험액"}
 
@@ -110,7 +109,7 @@ def main(argv):
     buckets = defaultdict(list)
     new_rows = []
     for code, quarter in worklist:
-        pdfs = sorted(glob.glob(str(DISCLOSURE / quarter_to_period(quarter) / "raw" / f"{code}_*.pdf")))
+        pdfs = disclosure_pdfs(quarter_to_period(quarter), code)
         if not pdfs:
             buckets["NO_PDF"].append((code, quarter)); continue
         try:

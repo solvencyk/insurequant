@@ -55,9 +55,10 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 from solvency.validation.kics_json_rules import R4, R7, MARKET_M  # noqa: E402
+sys.path.insert(0, str(REPO / "scripts"))
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 TARGET = REPO / "kics_disclosure.json"
-DISCLOSURE = REPO / "data" / "disclosure"
 
 # keep in sync with _TRANSITION_APPLIERS in scripts/validate_kics_disclosure.py
 # 기타요구자본(Ⅲ) = "업권별 자본규제를 활용한 관계회사의 요구자본 환산치". 그 회사의 결합
@@ -114,14 +115,14 @@ def _num(tok):
 
 
 def _pdf(period: str, code: str):
-    # raw/ 와 pdf/ 를 **둘 다** 본다. 종전에는 raw/ 만 봤는데, FY2026_Q2 는 원문이
-    # `pdf/` 에 40개 있고 `raw/` 에는 1개뿐이라 **39개사를 조용히 건너뛰고 exit 0 으로
-    # 나갔다** — 호출자에게는 "재구성할 게 없었다" 로 읽힌다. 2026-09-01 에 KR0071·KR0104
-    # 의 결합 경과조치 적용후가 잘못 역산된 채 남아 있던 것이 이 침묵 때문이었다
-    # (validation 발주 `inbox/parser/20260901T0500Z`). 없는 것과 안 본 것은 다르다.
-    pdfs = []
-    for sub in ("raw", "pdf"):
-        pdfs += sorted((DISCLOSURE / period / sub).glob(f"{code}_*.pdf"))
+    # raw/ 우선, 없을 때만 pdf/ (공유 해석기 계약 — scripts/_disclosure_pdf_paths.py).
+    # 종전에는 raw/ 만 봤는데, FY2026_Q2 는 원문이 `pdf/` 에 40개 있고 `raw/` 에는 1개뿐이라
+    # **39개사를 조용히 건너뛰고 exit 0 으로 나갔다** — 호출자에게는 "재구성할 게 없었다" 로
+    # 읽힌다. 2026-09-01 에 KR0071·KR0104 의 결합 경과조치 적용후가 잘못 역산된 채 남아 있던
+    # 것이 이 침묵 때문이었다(validation 발주 `inbox/parser/20260901T0500Z`). 없는 것과 안 본
+    # 것은 다르다. (중간판은 raw+pdf 매치를 합쳐 파일크기로 골라 raw 우선 계약을 깰 수 있었다
+    # — KR0050/FY2026_Q2 는 두 사본이 우연히 바이트까지 동일해 지금은 안 드러났을 뿐이다.)
+    pdfs = disclosure_pdfs(period, code)
     if not pdfs:
         return None
     am = [p for p in pdfs if "_amended" in p.name]
@@ -577,11 +578,32 @@ def main() -> int:
     for c, q, why in rejects:
         print(f"  HOLD {c} {name.get(c,c):<12} {q}  {why}")
 
+    # 스킵률: "raw 없음" 거부가 그 분기 타깃(축-C 실패) 수 대비 몇 %인지. 스킵은 성공이
+    # 아니다 — raw/pdf 경로 계약이 다시 깨지면(inbox 20260901T0500Z 가 잡은 사고) 조용히
+    # exit 0 으로 안 나가고 호출자가 알아채게 한다.
+    targets_by_q: dict[str, int] = defaultdict(int)
+    for c, q in targets:
+        targets_by_q[q] += 1
+    raw_missing_by_q: dict[str, int] = defaultdict(int)
+    for c, q, why in rejects:
+        if why == "raw 없음":
+            raw_missing_by_q[q] += 1
+    skip_breach = []
+    for q in sorted(targets_by_q):
+        n_t, n_m = targets_by_q[q], raw_missing_by_q.get(q, 0)
+        pct = 100.0 * n_m / n_t if n_t else 0.0
+        print(f"  스킵률 {q}: raw 없음 {n_m}/{n_t} ({pct:.0f}%)")
+        if pct > 50.0:
+            skip_breach.append((q, n_m, n_t, pct))
+    for q, n_m, n_t, pct in skip_breach:
+        print(f"  ABORT {q}: raw 없음 {n_m}/{n_t} ({pct:.0f}%) — 50% 초과, 원천 경로 자체를 "
+              f"의심할 것 (스킵은 성공이 아니다)")
+
     if dry:
         print("(dry-run; 파일 안 씀)")
-        return 0
+        return 1 if skip_breach else 0
     if not writes:
-        return 0
+        return 1 if skip_breach else 0
 
     def fmt(x):
         return str(int(round(x))) if abs(x - round(x)) < 1e-6 else f"{x:.2f}".rstrip("0").rstrip(".")
@@ -599,7 +621,7 @@ def main() -> int:
                 n += 1
     TARGET.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"{n}셀 갱신, wrote {TARGET.name}")
-    return 0
+    return 1 if skip_breach else 0
 
 
 if __name__ == "__main__":

@@ -21,7 +21,6 @@ Usage: PYTHONIOENCODING=utf-8 python scripts/recover_market_subs_parallel.py [--
 from __future__ import annotations
 
 import argparse
-import glob
 import json
 import sys
 from collections import defaultdict
@@ -36,9 +35,9 @@ from market_subrisk_pdf_recover import (  # noqa: E402
     extract_from_pdf, quarter_to_period, NAMES,
 )
 from fill_market_subitems_to_disclosure import _parse_value, _to_eok, mkt_est
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 JSON_PATH = REPO / "kics_disclosure.json"
-DISCLOSURE = REPO / "data" / "disclosure"
 ART = REPO / "artifacts" / "kics_validation"
 
 
@@ -69,7 +68,7 @@ def main(argv):
     # map (co,q) -> first disclosure PDF
     targets, buckets = [], defaultdict(list)
     for code, quarter in work:
-        pdfs = sorted(glob.glob(str(DISCLOSURE / quarter_to_period(quarter) / "raw" / f"{code}_*.pdf")))
+        pdfs = disclosure_pdfs(quarter_to_period(quarter), code)
         if not pdfs:
             buckets["NO_PDF"].append((code, quarter)); continue
         targets.append((code, quarter, pdfs[0]))

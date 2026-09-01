@@ -103,6 +103,13 @@ CSM_AMORT_PIN_TOL_REL = 0.05
 # **한쪽이 순회 대상 자체가 아닌** 것이다. 후자는 게이트에 보고조차 안 됐다(2026-08-26 실측 12건).
 CSM_AMORT_COVERAGE_BASELINE_PATH = "data/_gold/pl_amort_coverage_baseline.json"
 
+# PL 쪽 원수CSM상각(item4)이 결측(None/0)인데 워터폴 상각은 있는 자리의 건별 등재부. 위 두
+# 축과도 다르다: csm_amort_identity_ledger(위)는 양쪽 값이 다 있는데 잔차가 안 맞는 경우,
+# csm_amort_coverage_baseline(아래)는 PL 버킷 자체가 통째로 없는 경우, 이쪽은 **버킷은
+# 있는데 item4 한 칸만 없는** 경우다(rule PL_CSM_AMORT_VS_WATERFALL). 2026-09-01 신설 —
+# 그 전까지 이 축은 등재부 자체가 없어 무조건 RED 였다(면제 경로가 룰에 없었다).
+CSM_AMORT_MISSING_LEDGER_PATH = "data/_gold/pl_csm_amort_missing_ledger.json"
+
 # PL 쪽 발행계약 CSM 상각 leg. 출재/재보험은 **의도적으로 빠져 있다**(보유 재보험계약자산).
 CSM_AMORT_PL_LEGS = ("원수CSM상각", "수재CSM상각")
 
@@ -167,6 +174,16 @@ def csm_amort_ledger_verdict(entry: dict | None, residual: float) -> str:
         return "PIN_DRIFT"
     tol = max(CSM_AMORT_PIN_TOL_ABS_EOK, CSM_AMORT_PIN_TOL_REL * abs(pinned))
     return "PINNED" if abs(residual - pinned) <= tol else "PIN_DRIFT"
+
+
+def csm_amort_missing_ledger() -> dict:
+    """item4(원수CSM상각) 결측 vs 워터폴 상각 有 축의 건별 등재부. 없으면 빈 등재부(=전부
+    신규=전부 차단) -- 빈 파일을 '전부 통과'가 아니라 '전부 차단'으로 읽는 계약은
+    csm_amort_coverage_baseline()과 동일."""
+    p = ROOT / CSM_AMORT_MISSING_LEDGER_PATH
+    if not p.exists():
+        return {"entries": {}}
+    return json.loads(p.read_text(encoding="utf-8"))
 
 
 def csm_amort_coverage_baseline() -> dict:

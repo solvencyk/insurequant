@@ -94,6 +94,7 @@ from validate_master_tables import (  # noqa: E402
     csm_amort_coverage_baseline,
     csm_amort_ledger,
     csm_amort_ledger_verdict,
+    csm_amort_missing_ledger,
     csm_amort_residual,
     csm_amort_tol,
     load_long,
@@ -1467,6 +1468,12 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
     # 안에서 닫힌다. 느슨했던 것은 개념차가 아니라 **틀린 식**이었다.
     _ledger = csm_amort_ledger().get("entries", {})
     _seen_ledger_keys = set()
+    # 결측측(item4 자체가 None/0, 워터폴 상각은 有) 등재부 -- _ledger(위)와는 다른 축이다:
+    # 저쪽은 양쪽 값이 다 있는데 잔차가 안 맞는 것, 이쪽은 한쪽이 아예 없는 것. 2026-09-01,
+    # inbox/parser/20260901T1900Z (AIA 2023.4Q raw 확인: 요약 산문·CSM 표 둘 다 원문에 없음 --
+    # 추측·보간 없이 등재).
+    _missing_ledger = csm_amort_missing_ledger().get("entries", {})
+    _missing_seen: set[str] = set()
     for (co, q), m in sorted(env.pl.items()):
         wfm = env.wf.get((co, q))
         if not wfm:
@@ -1487,10 +1494,30 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
         if not isinstance(amort, (int, float)) or abs(amort) < _XCHK_MIN_AMORT_EOK:
             continue                       # 워터폴 상각 자체가 미미하면 대조 의미 없음
         if direct is None or direct == 0:
-            res.add(check="cross_source", severity="RED", master="PL_breakdown",
-                    company=co, quarter=q, rule="PL_CSM_AMORT_VS_WATERFALL",
-                    message=f"PL 원수CSM상각={direct!s} 인데 같은 분기 CSM_waterfall 상각은 "
-                            f"{abs(amort):,.1f}억 — 한쪽만 비었다(생명장기 분해 결측 지문)")
+            mkey = f"{co}|{q}"
+            _missing_seen.add(mkey)
+            mentry = _missing_ledger.get(mkey)
+            mhead = (f"PL 원수CSM상각={direct!s} 인데 같은 분기 CSM_waterfall 상각은 "
+                     f"{abs(amort):,.1f}억 — 한쪽만 비었다(생명장기 분해 결측 지문)")
+            if mentry is None:
+                res.add(check="cross_source", severity="RED", master="PL_breakdown",
+                        company=co, quarter=q, rule="PL_CSM_AMORT_VS_WATERFALL",
+                        message=f"{mhead}. 등재부에 없다 — 신규 결손이다 "
+                                f"(data/_gold/pl_csm_amort_missing_ledger.json)")
+                continue
+            mpinned = mentry.get("wf_amort_eok")
+            mtol = (max(CSM_AMORT_PIN_TOL_ABS_EOK, CSM_AMORT_PIN_TOL_REL * abs(mpinned))
+                    if isinstance(mpinned, (int, float)) else 0.0)
+            if not isinstance(mpinned, (int, float)) or abs(abs(amort) - mpinned) > mtol:
+                res.add(check="cross_source", severity="RED", master="PL_breakdown",
+                        company=co, quarter=q, rule="PL_CSM_AMORT_MISSING_LEDGER_DRIFT",
+                        message=f"{mhead}. 등재부 박제 워터폴 상각 {mpinned!s} 에서 벗어났다"
+                                f"(현재 {abs(amort):,.2f}억, 허용 {mtol:,.2f}억) — 등재 근거를 다시 재라")
+                continue
+            res.add(check="cross_source", severity="YELLOW", master="PL_breakdown",
+                    company=co, quarter=q, rule="PL_CSM_AMORT_MISSING_DOCUMENTED",
+                    message=f"{mhead}. 등재된 예외 [{mentry.get('cause')}] — "
+                            f"{str(mentry.get('note'))[:110]}")
             continue
         rr = csm_amort_residual(m, wfm)
         if rr is None:
@@ -1529,6 +1556,15 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
                 company=_co, quarter=_q, rule="CSM_AMORT_IDENTITY_LEDGER_STALE",
                 message=f"등재부에 있으나 더는 벌어지지 않는다(또는 대조 대상이 아니다) — "
                         f"data/_gold/csm_amort_identity_ledger.json 에서 줄을 지워라")
+
+    # 결측 등재부에만 남은 줄 = item4 가 채워졌거나(파서가 고쳤다) 대조 대상에서 빠진 것.
+    # 조용히 두면 죽은 면제가 영구 잔류한다 -- pl_amort_coverage_baseline 의 INERT 패턴과 동일.
+    for _k in sorted(k for k in _missing_ledger if k not in _missing_seen):
+        _co, _, _q = _k.partition("|")
+        res.add(check="cross_source", severity="YELLOW", master="PL_breakdown",
+                company=_co, quarter=_q, rule="PL_CSM_AMORT_MISSING_LEDGER_INERT",
+                message=f"결측 등재부에 있으나 더는 결손이 아니다(item4 가 채워졌거나 대조 대상이 "
+                        f"아니다) — data/_gold/pl_csm_amort_missing_ledger.json 에서 줄을 지워라")
 
     # --- 3z-b. **미순회 사각**: 워터폴 상각은 있는데 PL 버킷이 통째로 없다 (2026-08-26) ---
     # 위 3z 루프는 `for (co,q) in env.pl` 이다. PL 에 버킷이 없으면 루프가 **방문조차 못 해**

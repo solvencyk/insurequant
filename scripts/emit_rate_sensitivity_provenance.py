@@ -14,9 +14,9 @@ trap like sensitivity_heatmap) and `quarter` is `공시분기` verbatim ("2025.4
 source_file: the Docling MD the extractor actually read. Resolved by importing
 extract_kics_rate_sensitivity.pick_md rather than re-implementing the glob — the picker has
 real logic (prefers `_amended`, then largest file) and a copy here would drift the moment the
-extractor changes. Falls back to the raw PDF (data/disclosure/<period>/raw/) when no MD is on
-disk, which happens for cells loaded from the owner gold sheet
-(scripts/build_apply_user_ratesens_gold.py) rather than from a converted MD.
+extractor changes. Falls back to the raw PDF (data/disclosure/<period>/{raw,pdf}/ — see
+scripts/_disclosure_pdf_paths.py) when no MD is on disk, which happens for cells loaded from
+the owner gold sheet (scripts/build_apply_user_ratesens_gold.py) rather than from a converted MD.
 
 Both md_inbox/ and data/disclosure/ are gitignored, so source_file resolves on the machine that
 runs the pipeline — same convention as the sensitivity_heatmap sidecar's DART raw XML paths.
@@ -38,10 +38,10 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 
 from extract_kics_rate_sensitivity import pick_md  # noqa: E402  (needs REPO on sys.path)
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 SRC = REPO / "kics_rate_sensitivity.json"
 OUT = REPO / "kics_rate_sensitivity_provenance.json"
-DISCLOSURE = REPO / "data" / "disclosure"
 
 _QUARTER_END = {1: "-03-31", 2: "-06-30", 3: "-09-30", 4: "-12-31"}
 
@@ -65,7 +65,7 @@ def resolve_source(code: str, quarter: str):
     md = pick_md(code, period)
     if md:
         return Path(md).relative_to(REPO).as_posix(), "md"
-    pdfs = sorted((DISCLOSURE / period / "raw").glob(f"{code}_*.pdf"))
+    pdfs = disclosure_pdfs(period, code)
     if pdfs:
         amended = [p for p in pdfs if "_amended" in p.name]
         pdf = max(amended or pdfs, key=lambda p: p.stat().st_size)

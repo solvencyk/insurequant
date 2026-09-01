@@ -63,7 +63,7 @@
     "data/ifrs17/table_scoring_keywords.yaml": 1,
     "kics_disclosure.json": 1
    },
-   "code_sha256": "a4aee2a5de2766ff34caaca0ee8dba1136f68092d3929978143076862afe0444",
+   "code_sha256": "7d098e2bd53d3b264ba49a4e1d13ba3eb569e02829043a5405dd2ad95a6d0e66",
    "code_files": [
     "scripts/build_net_income_breakdown.py",
     "scripts/build_pl_breakdown.py",
@@ -80,17 +80,17 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "089f02ca30f0e8f4eb76c48d3897a2a733b31afffdb0b38b883c27bc615f3af3",
+   "fixture_sha256": "6b6c0fa1096be9c90c55e6e034c9c8af5071aa7b94fd4d980dc118ae9cf3cd82",
    "outputs": {
     "sha256_master": {
      "path": "data/dart/viz/pl_breakdown_master.json",
-     "fixture_sha256": "f2d2703a5dac95de7469d3f773c2ce0e6f5f60153f052c188ce7ae2148858712",
-     "ondisk_sha256": "f2d2703a5dac95de7469d3f773c2ce0e6f5f60153f052c188ce7ae2148858712"
+     "fixture_sha256": "aa6bbde3cd47c169264b81254f94bad1e7e53dd3ab26949f0d3f84367875c57d",
+     "ondisk_sha256": "aa6bbde3cd47c169264b81254f94bad1e7e53dd3ab26949f0d3f84367875c57d"
     },
     "sha256_coverage": {
      "path": "data/_derived/pl_breakdown_coverage.json",
-     "fixture_sha256": "6e9d4ab91b4a6f32c8ce4ea2b73a794b32013ef40fee61dc2807bd41ea1144b3",
-     "ondisk_sha256": "6e9d4ab91b4a6f32c8ce4ea2b73a794b32013ef40fee61dc2807bd41ea1144b3"
+     "fixture_sha256": "4ad45bf2baee5ef5b28771ecaef0daf3e04346c41976fcff5f1f3737b223d04c",
+     "ondisk_sha256": "4ad45bf2baee5ef5b28771ecaef0daf3e04346c41976fcff5f1f3737b223d04c"
     }
    },
    "_golden": "tests/test_pl_breakdown_golden.py",
@@ -205,9 +205,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_dividend.py (관측 627개 = census 1 + 캐시 624 + kics_disclosure 1)"
   },
   "post_transition": {
-   "inputs_sha256": "64a5bf1348442105b729c9103e8e795971b9e1aded894291de6fc1526ba0fdb4",
+   "inputs_sha256": "9c381dfcc7075f18fec684c9cb1fc9b28f9c0204c451838d1824f7ff1577d54f",
    "input_files": 547,
-   "input_bytes": 34561082,
+   "input_bytes": 34682083,
    "input_files_per_pattern": {
     "md_inbox/FY*_Q?/*.md": 546,
     "kics_disclosure.json": 1
@@ -216,7 +216,7 @@
    "code_files": [
     "scripts/fill_post_transition_to_disclosure.py"
    ],
-   "fixture_sha256": "31c497a6e0d7305b1ffffadd1d3b7070552a15a3e1af7bede5e7f602ee563734",
+   "fixture_sha256": "de41c08a86fd8746b212582b87db68bdc4260f8d2116cffa29d6248c815b95f2",
    "outputs": {},
    "_golden": "tests/test_post_transition_golden.py",
    "_why_not_in_hook": "훅의 오프라인 묶음에 이미 있다(~8초). 지문은 중복 방어이자 '입력이 움직였는데 fixture 가 안 움직였다'를 축별로 지목해 준다",

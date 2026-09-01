@@ -45,8 +45,10 @@ import fitz
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "scripts"))
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+
 TARGET = REPO / "kics_disclosure.json"
-DISCLOSURE = REPO / "data" / "disclosure"
 
 # Keep in sync with _TRANSITION_APPLIERS in scripts/validate_kics_disclosure.py
 _TRANSITION_APPLIERS = frozenset({
@@ -98,8 +100,7 @@ def quarter_to_period(q: str) -> str:
 
 
 def find_pdf(code: str, quarter: str):
-    raw = DISCLOSURE / quarter_to_period(quarter) / "raw"
-    hits = sorted(raw.glob(f"{code}_*.pdf"))
+    hits = disclosure_pdfs(quarter_to_period(quarter), code)
     if not hits:
         return None
     amended = [p for p in hits if "_amended" in p.name]
