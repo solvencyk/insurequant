@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-01T07:35:38Z",
+  "generated_at_utc": "2026-09-01T07:45:39Z",
   "sheets": {
     "17BS": {
       "rows": 6993,
@@ -53,6 +53,11 @@
     },
     "보완자본소진율": {
       "rows": 546,
+      "quarter_min": "2026.2Q",
+      "quarter_max": "2026.2Q"
+    },
+    "자본성증권발행현황": {
+      "rows": 123,
       "quarter_min": "2026.2Q",
       "quarter_max": "2026.2Q"
     },
