@@ -1,13 +1,13 @@
 {
-  "sha256": "2dac7a3ea931ad35b1e165368ef737830c2cf95ba70ad4c01a13d756e14b68a7",
+  "sha256": "a8928f9ce7abff28dbca5605b5fb4fd1f6f24fcd31cca485e61de7c9516d6072",
   "buckets": 538,
   "findings": 15602,
   "by_status": {
-    "YELLOW": 1659,
-    "GREEN": 11075,
+    "YELLOW": 1664,
+    "GREEN": 11069,
     "SKIP": 2830,
     "ERROR": 0,
-    "RED": 38
+    "RED": 39
   },
   "by_rule": {
     "1": {
@@ -22,16 +22,16 @@
       "SKIP": 538
     },
     "4": {
-      "GREEN": 342,
-      "YELLOW": 196
+      "GREEN": 341,
+      "YELLOW": 197
     },
     "5": {
-      "GREEN": 449,
-      "YELLOW": 89
+      "GREEN": 448,
+      "YELLOW": 90
     },
     "6": {
-      "GREEN": 324,
-      "YELLOW": 214
+      "GREEN": 323,
+      "YELLOW": 215
     },
     "7": {
       "GREEN": 538
@@ -54,8 +54,9 @@
     },
     "19_market": {
       "SKIP": 138,
-      "GREEN": 393,
-      "YELLOW": 7
+      "GREEN": 392,
+      "YELLOW": 7,
+      "RED": 1
     },
     "36_irr": {
       "SKIP": 274,
@@ -88,9 +89,9 @@
       "SKIP": 15
     },
     "48_tier2_limit": {
-      "GREEN": 469,
+      "GREEN": 468,
       "SKIP": 32,
-      "YELLOW": 37
+      "YELLOW": 38
     },
     "2_tier1_bridge_post": {
       "YELLOW": 101,
@@ -109,9 +110,9 @@
       "SKIP": 15
     },
     "48_tier2_limit_post": {
-      "GREEN": 469,
+      "GREEN": 468,
       "SKIP": 34,
-      "YELLOW": 35
+      "YELLOW": 36
     },
     "50_tfi_tier_split": {
       "GREEN": 496,

@@ -3,9 +3,9 @@
  "_contract": "입력 불변 ∧ 코드 불변 ∧ 산출 불변 ⟹ 지금 다시 빌드해도 같은 바이트. 하나라도 어긋나면 전체 골든을 돌려 확인한 뒤 --update 한다. 지문은 무거운 골든의 대체가 아니라 층이다.",
  "specs": {
   "ifrs17_bs": {
-   "inputs_sha256": "771f04bf2ec1a8b34b0e1102080ad4b52d787a3c8308d3eed9af707f7acced93",
+   "inputs_sha256": "07fb9bb8bcc76a1544ea00ed4e64207ff1c6033b548adfe40d7c2657a45759d5",
    "input_files": 1585,
-   "input_bytes": 2009597021,
+   "input_bytes": 2009598341,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
     "data/dart/FY*_Q*/raw/**/*.xml": 542,
@@ -54,9 +54,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_ifrs17_bs.py"
   },
   "pl_breakdown": {
-   "inputs_sha256": "364013151d2c4b7d32b4e757251995e345b27ec3335e0f19eb236f675cd23811",
+   "inputs_sha256": "ed7b5e6d46f2ca84ecefa642614601f7bd7bb4abc45cf90b5900fff1b45223e6",
    "input_files": 1584,
-   "input_bytes": 2009480130,
+   "input_bytes": 2009481450,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
     "data/dart/FY*_Q*/raw/**/*.xml": 542,
@@ -175,9 +175,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/viz_build_ifrs17_panels.py — 트레이스는 첫 패널 쓰기에서 멈추므로 나머지 3패널의 glob (*_insurance_pl_mvp/*_bs_snapshot_mvp/*_sensitivity)은 main() 의 outputs 표에서 확인해 extracted/*.json 로 통합했다"
   },
   "dividend": {
-   "inputs_sha256": "c4dc2eec3cb33a6c7bd0b5ffb250b30cb0ca8b99efbc31e6905c0fcd536945f0",
+   "inputs_sha256": "784c332df83b8506ac453e69a43fbd9d7083682d75b8d321e42f918c9747f4c7",
    "input_files": 626,
-   "input_bytes": 9636336,
+   "input_bytes": 9637656,
    "input_files_per_pattern": {
     "data/dart/_alotmatter_cache/*.json": 624,
     "data/_derived/alotmatter_fetch_census.json": 1,
@@ -205,9 +205,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_dividend.py (관측 627개 = census 1 + 캐시 624 + kics_disclosure 1)"
   },
   "post_transition": {
-   "inputs_sha256": "2ec159007ad776fef54582fdb8a7f2fb064ef9c759fb9fa642be3b82a5cd1c00",
+   "inputs_sha256": "84395e159e25b462e3562768a35de23b411a51d2da8fabd5af0637f16cc8c369",
    "input_files": 547,
-   "input_bytes": 34520303,
+   "input_bytes": 34519497,
    "input_files_per_pattern": {
     "md_inbox/FY*_Q?/*.md": 546,
     "kics_disclosure.json": 1
@@ -216,7 +216,7 @@
    "code_files": [
     "scripts/fill_post_transition_to_disclosure.py"
    ],
-   "fixture_sha256": "661a19d114da396a4489dd1bb52c0ea72ce3838c92f10e7884370709ddac6420",
+   "fixture_sha256": "31c497a6e0d7305b1ffffadd1d3b7070552a15a3e1af7bede5e7f602ee563734",
    "outputs": {},
    "_golden": "tests/test_post_transition_golden.py",
    "_why_not_in_hook": "훅의 오프라인 묶음에 이미 있다(~8초). 지문은 중복 방어이자 '입력이 움직였는데 fixture 가 안 움직였다'를 축별로 지목해 준다",

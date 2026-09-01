@@ -1212,3 +1212,235 @@ def test_mutation_public_export_fires(mutation):
             (pe / n).write_bytes(b)
         for n, b in backup.items():
             assert (pe / n).read_bytes() == b, f"복원 실패: {n}"
+
+
+# ===========================================================================
+# K-ICS 소급재작성(restatement) 축   (2026-09-01, validation)
+# ===========================================================================
+# ## 왜 이 축이 여기 있나
+#
+# 정기경영공시의 `[경과조치 적용 전 지급여력비율 세부]` 표는 **해당·직전·전전분기 3열**을
+# 인쇄한다. 그래서 같은 (회사,분기) 값이 두 번 인쇄되고, 발행사가 그걸 다르게 인쇄하면
+# 소급재작성이다. **그 축을 재는 검사기가 저장소에 0건이었고** 교보생명 2026.1Q 재작성이
+# 분기 변동 분석 중 손으로 발견됐다(2026-09-01).
+#
+# 이 절이 강제하는 것:
+#   1. 게이트 소스의 `KICS_RESTATEMENT_*` 룰 id 전부가 아래 선언에 있는가
+#   2. 등재부의 **셀 수**가 선언과 같은가 — 재작성이 늘거나 줄면 여기서 갱신을 강제한다
+#   3. 등재 셀이 마스터에서 실제로 원공시본 값을 유지하는가(깨끗한 기준선에 RED 0)
+#   4. 변이시험 — 기준이 갈라지면 실제로 RED 이 나오는가, 등재부를 지우면 침묵하지 않는가
+#   5. **탐지기와 게이트가 같은 등재부를 본다** — 경로를 베껴 쓰면 그 파일이 조용히
+#      갈라지는 그 패턴(CLAUDE.md 1b)을 막는다
+KICS_RESTATEMENT_RULES = {
+    "KICS_RESTATEMENT_CENSUS":
+        "YELLOW census 한 줄 — 몇 개사가 재작성했고 몇 칸이 박제됐는지를 게이트 출력의 숫자로",
+    "KICS_RESTATEMENT_PINNED":
+        "YELLOW — 등재된 재작성 버킷. 재작성은 발행사의 정당한 행위라 RED 이 아니다. "
+        "다만 마스터가 원공시본 값을 유지한다는 사실을 매 실행 재검산한다",
+    "KICS_RESTATEMENT_MASTER_ADOPTED_RESTATED":
+        "RED — adopted_basis=as_filed 인 셀인데 마스터가 재작성값으로 갈아끼워졌다. "
+        "한 축만 바꾸면 축이 갈라진다",
+    "KICS_RESTATEMENT_MASTER_REVERTED_TO_FILED":
+        "RED — owner 가 as_restated 를 채택한 셀인데 마스터가 원공시값으로 돌아갔다. "
+        "빌더 재실행이나 소급 백필이 owner 결정을 덮어쓰는 경로를 막는다",
+    "KICS_RESTATEMENT_BASIS_INVALID":
+        "RED — adopted_basis 가 as_filed|as_restated 가 아니다. 오타 하나로 검사 방향이 "
+        "조용히 바뀌면 안 된다",
+    "KICS_RESTATEMENT_CASCADE_INERT":
+        "YELLOW — 채택 연쇄(_adoption_cascades) 등재가 대응하는 RED 을 못 찾았다. "
+        "면제가 무용해졌다는 신호(죽은 면제 방지)",
+    "KICS_RESTATEMENT_PIN_DRIFT":
+        "RED — 마스터가 원공시본도 재작성값도 아닌 제3의 값이다(파서가 고쳤거나 등재가 틀렸다)",
+    "KICS_RESTATEMENT_CELL_MISSING":
+        "RED — 등재 셀이 마스터에서 결측. 결측은 SKIP 이 아니라 검산되지 않은 것이다",
+    "KICS_RESTATEMENT_FIELD_MISSING":
+        "RED — 등재부 필수 필드 누락. 근거 없는 등재는 면제가 아니라 무검사다",
+    "KICS_RESTATEMENT_KEY_MISMATCH":
+        "RED — 등재 키와 본문 필드가 다르다(박제가 엉뚱한 셀에 붙는 경로)",
+    "KICS_RESTATEMENT_LEDGER_UNREADABLE":
+        "RED — 등재부가 있는데 파싱 불가. 없는 파일과 깨진 파일은 다르다",
+    "KICS_RESTATEMENT_LEDGER_ABSENT":
+        "YELLOW — 등재부 파일 자체가 없다. 이 축이 말없이 꺼지는 것을 막는다",
+    "KICS_RESTATEMENT_SCAN_STALE":
+        "YELLOW — 마스터에 스캔보다 새 분기가 있다. 분기마다 다시 재라는 신호",
+    "KICS_RESTATEMENT_COVERAGE_GAP":
+        "YELLOW — 스캔이 못 읽은 회사가 있다. 그 회사들의 CLEAN 은 측정이 아니라 부재다",
+}
+
+# 실측 2026-09-01 (FY2026_Q1 -> FY2026_Q2 라운드).
+# (등재 셀 수, 재작성 회사 수, 스캔 대상 회사 수, 미판독 회사 수)
+KICS_RESTATEMENT_CENSUS = (10, 1, 39, 0)
+
+
+@pytest.fixture(scope="module")
+def _restatement_live():
+    G = _gate()
+    env = G.Env()
+    return G, copy.deepcopy(env.kics_records), copy.deepcopy(env.restatement_ledger)
+
+
+def _rs_run(G, records, ledger):
+    class _E:
+        pass
+    e = _E()
+    e.kics_records = records
+    e.restatement_ledger = ledger
+    e.inject = {}
+    res = G.GateResult()
+    G.check_kics_restatement(res, e)
+    return res
+
+
+def test_kics_restatement_rule_ids_match_manifest():
+    import re
+    src = (ROOT / "scripts" / "validate_data_contract.py").read_text(encoding="utf-8")
+    found = set(re.findall(r'rule="(KICS_RESTATEMENT_\w+)"', src))
+    assert found == set(KICS_RESTATEMENT_RULES), (
+        f"게이트 {sorted(found)} != 매니페스트 {sorted(KICS_RESTATEMENT_RULES)} — "
+        "룰을 추가·개명·삭제했으면 이 선언도 같이 고쳐라")
+
+
+def test_kics_restatement_census_matches_manifest(_restatement_live):
+    """등재 셀 수·재작성 회사 수가 선언과 같은가.
+
+    새 분기에서 재작성이 발견되면 등재부가 늘고 여기서 막힌다 — 그때 이 숫자를 갱신하면서
+    무엇이 늘었는지 커밋에 남기게 된다(조용히 늘어나는 것을 막는 장치)."""
+    _G, _rec, led = _restatement_live
+    assert led, "등재부를 못 읽었다 — data/_gold/kics_restatement_ledger.json 확인"
+    sc = led.get("_scanned") or {}
+    got = (len(led.get("entries") or {}), sc.get("restated"),
+           sc.get("companies_total"), len(sc.get("uncovered") or []))
+    assert got == KICS_RESTATEMENT_CENSUS, (
+        f"실측 {got} != 선언 {KICS_RESTATEMENT_CENSUS}. 새 분기를 스캔했거나 재작성이 "
+        f"늘었다면 이 선언을 갱신하고 커밋에 사유를 남겨라")
+
+
+def test_kics_restatement_clean_baseline_has_no_red(_restatement_live):
+    """깨끗한 상태에서 RED 이 나오면 안 된다 — 이 축은 push 를 막는 축이 아니다."""
+    G, rec, led = _restatement_live
+    res = _rs_run(G, rec, led)
+    reds = [f.rule for f in res.findings if f.severity == "RED"]
+    assert not reds, f"기준선에서 RED 이 났다: {reds}"
+    yel = {f.rule for f in res.findings if f.severity == "YELLOW"}
+    assert "KICS_RESTATEMENT_CENSUS" in yel, "census 한 줄이 사라지면 축이 조용해진다"
+
+
+def test_kics_restatement_every_entry_has_provenance(_restatement_live):
+    """등재 셀 전부가 **양쪽 원문 출처**를 갖고 있어야 한다. 근거 없는 등재는 무검사다."""
+    _G, _rec, led = _restatement_live
+    bad = []
+    for k, e in (led.get("entries") or {}).items():
+        for f in ("as_filed_source", "restated_source", "as_filed", "restated", "method"):
+            if e.get(f) in (None, ""):
+                bad.append((k, f))
+    assert not bad, f"근거 없는 등재 {bad}"
+
+
+@pytest.mark.parametrize("mutation", [
+    "adopt_restated", "basis_typo", "third_value", "cell_deleted", "cell_null",
+    "field_removed", "key_mismatch", "ledger_broken", "ledger_absent",
+    "scan_stale", "uncovered",
+])
+def test_mutation_kics_restatement_fires(_restatement_live, mutation):
+    """잡아야 할 것을 실제로 잡는가. 변이는 전부 메모리 안에서 한다."""
+    G, rec, led = _restatement_live
+    records = copy.deepcopy(rec)
+    ledger = copy.deepcopy(led)
+    key = sorted(ledger["entries"])[0]
+    e = ledger["entries"][key]
+    tgt = None
+    for r in records:
+        if (r.get("원보험사코드"), r.get("공시분기"), r.get("항목번호")) == \
+                (e["company"], e["quarter"], int(e["item"])):
+            tgt = r
+            break
+    assert tgt is not None, f"등재 셀 {key} 가 마스터에 없다"
+
+    # 기준은 건별이다(entry.adopted_basis). 변이는 **반대 기준으로 뒤집는 것**이고,
+    # 기대 룰도 그에 따라 갈린다 — as_filed 셀이 재작성값이 되면 ADOPTED_RESTATED,
+    # owner 가 채택한 as_restated 셀이 원공시로 돌아가면 REVERTED_TO_FILED.
+    _basis = str(e.get("adopted_basis") or "as_filed")
+    if mutation == "adopt_restated":
+        if _basis == "as_filed":
+            tgt["값"] = str(int(e["restated"]))
+            want = "KICS_RESTATEMENT_MASTER_ADOPTED_RESTATED"
+        else:
+            tgt["값"] = str(int(e["as_filed"]))
+            want = "KICS_RESTATEMENT_MASTER_REVERTED_TO_FILED"
+    elif mutation == "basis_typo":
+        e["adopted_basis"] = "as-restated"
+        want = "KICS_RESTATEMENT_BASIS_INVALID"
+    elif mutation == "third_value":
+        tgt["값"] = "999999"
+        want = "KICS_RESTATEMENT_PIN_DRIFT"
+    elif mutation == "cell_deleted":
+        records = [r for r in records if r is not tgt]
+        want = "KICS_RESTATEMENT_CELL_MISSING"
+    elif mutation == "cell_null":
+        tgt["값"] = None
+        want = "KICS_RESTATEMENT_CELL_MISSING"
+    elif mutation == "field_removed":
+        del e["as_filed_source"]
+        want = "KICS_RESTATEMENT_FIELD_MISSING"
+    elif mutation == "key_mismatch":
+        e["item"] = 99
+        want = "KICS_RESTATEMENT_KEY_MISMATCH"
+    elif mutation == "ledger_broken":
+        ledger = {"_unreadable": "JSONDecodeError"}
+        want = "KICS_RESTATEMENT_LEDGER_UNREADABLE"
+    elif mutation == "ledger_absent":
+        ledger = None
+        want = "KICS_RESTATEMENT_LEDGER_ABSENT"
+    elif mutation == "scan_stale":
+        ledger["_scanned"]["restating_period"] = "FY2023_Q1"
+        want = "KICS_RESTATEMENT_SCAN_STALE"
+    else:
+        ledger["_scanned"]["uncovered"] = ["KR0010"]
+        want = "KICS_RESTATEMENT_COVERAGE_GAP"
+
+    rules = {f.rule for f in _rs_run(G, records, ledger).findings}
+    assert want in rules, f"{mutation}: {want} 가 안 나왔다 (나온 것: {sorted(rules)})"
+
+
+def test_kics_restatement_tolerance_is_rounding_not_a_band(_restatement_live):
+    """허용오차는 **반올림 폭**이지 밴드가 아니다 — tol 안 변이는 조용해야 하고
+    tol 밖 변이는 RED 여야 한다. 둘이 같이 확인돼야 임계가 의미를 갖는다."""
+    G, rec, led = _restatement_live
+    key = sorted(led["entries"])[0]
+    e = led["entries"][key]
+    # 임계는 **그 셀의 채택 기준값** 주변에서 재야 한다. as_filed 로 고정하면
+    # owner 가 as_restated 를 채택한 셀에서 0.4 변이가 이미 RED 로 나와 임계를 못 잰다.
+    base = float(e["restated"] if str(e.get("adopted_basis") or "as_filed") == "as_restated"
+                 else e["as_filed"])
+    for delta, expect_red in ((0.4, False), (0.6, True)):
+        records = copy.deepcopy(rec)
+        for r in records:
+            if (r.get("원보험사코드"), r.get("공시분기"), r.get("항목번호")) == \
+                    (e["company"], e["quarter"], int(e["item"])):
+                r["값"] = str(base + delta)
+                break
+        reds = [f.rule for f in _rs_run(G, records, led).findings if f.severity == "RED"]
+        assert bool(reds) is expect_red, (
+            f"delta {delta}: RED={reds} (기대 {expect_red})")
+
+
+def test_kics_restatement_detector_and_gate_share_one_ledger_path():
+    """탐지기와 게이트가 **같은 파일**을 본다. 경로를 베껴 쓰면 갈라져도 아무도 모른다."""
+    import re
+    det = (ROOT / "scripts" / "detect_kics_restatement.py").read_text(encoding="utf-8")
+    gate_src = (ROOT / "scripts" / "validate_data_contract.py").read_text(encoding="utf-8")
+    pat = r'"_gold"\s*/\s*"(kics_restatement_ledger\.json)"'
+    assert re.search(pat, det), "탐지기가 등재부 경로를 선언하지 않는다"
+    assert re.search(pat, gate_src), "게이트가 등재부 경로를 선언하지 않는다"
+    G = _gate()
+    import detect_kics_restatement as D
+    assert G.RESTATEMENT_LEDGER == D.LEDGER, (
+        f"게이트 {G.RESTATEMENT_LEDGER} != 탐지기 {D.LEDGER} — 두 경로가 갈라졌다")
+
+
+def test_kics_restatement_is_wired_into_run_gate():
+    import re
+    src = (ROOT / "scripts" / "validate_data_contract.py").read_text(encoding="utf-8")
+    body = re.search(r"^def run_gate\(.*?\n(.*?)^\S", src, re.M | re.S).group(1)
+    assert re.search(r"^\s*check_kics_restatement\(res, env\)", body, re.M), (
+        "check_kics_restatement 가 run_gate() 에 없다 — 배선했다고 쓰기 전에 여기서 막는다")

@@ -252,6 +252,18 @@ def _quarter_end_date(q: str | None) -> _dt.date | None:
     return _dt.date(y, mo, {3: 31, 6: 30, 9: 30, 12: 31}[mo])
 
 
+def _quarters_between(q_from: str | None, q_to: str | None) -> int | None:
+    """Linear quarter-count from q_from to q_to (e.g. '2025.4Q' -> '2026.2Q' = 2).
+
+    q_to_num() ('2025.4Q' -> 20254) is only *sortable*, not linear across a year boundary
+    (20261 - 20254 = 7, not 1) — do not subtract q_to_num values to get an elapsed-quarter
+    count. This goes through _quarter_end_date's real calendar dates instead."""
+    d1, d2 = _quarter_end_date(q_from), _quarter_end_date(q_to)
+    if d1 is None or d2 is None:
+        return None
+    return (d2.year * 12 + d2.month - (d1.year * 12 + d1.month)) // 3
+
+
 # ---------------------------------------------------------------------------
 # Finding model
 # ---------------------------------------------------------------------------
@@ -364,11 +376,22 @@ def check_census(res: GateResult, env: "Env") -> None:
         tier2_exempt, tier2_exempt_red, _t2_review, _t2_detail = _tier2_issuer_inconsistent(
             kd_records, kics_findings)
         life8_ok, life8_exempt_red, _l8_review, _l8_detail = _life8_issuer_inconsistent(kd_records)
+        # 재작성 **채택의 연쇄**(합계만 재작성되고 세부는 미재공시) — 등재부가 잔차를 박제하고
+        # 매 실행 재검산한다. 통째 skip 이 아니다.
+        casc_exempt, casc_red, casc_inert = _restatement_cascade_exempt(
+            kics_findings, env.restatement_ledger)
         exempt_ids = {id(f) for f in tier2_exempt}
+        exempt_ids |= {id(f) for f in casc_exempt}
         exempt_ids |= {id(f) for f in kics_findings
                        if f.get("status") == "RED" and str(f.get("rule")) == "8_life"
                        and (f.get(KEY_CODE), f.get(KEY_QUARTER)) in life8_ok}
-        for f in tier2_exempt_red + life8_exempt_red:
+        for c in casc_inert:
+            res.add(check="census", severity="YELLOW", master="kics_disclosure",
+                    company=env.code_name.get(c.get("company"), c.get("company")),
+                    quarter=c.get("quarter"), rule="KICS_RESTATEMENT_CASCADE_INERT",
+                    message=f"채택 연쇄 등재({c.get('rule')})가 대응하는 RED 을 못 찾았다 — "
+                            f"면제가 무용해졌다. 등재를 풀어라")
+        for f in tier2_exempt_red + life8_exempt_red + casc_red:
             res.add(check="census", severity="RED", master="kics_disclosure",
                     company=env.code_name.get(f.get("code"), f.get("code")),
                     quarter=f.get("quarter"), rule=f"KICS_{f.get('rule')}",
@@ -1050,13 +1073,16 @@ def _sidecar_quarter(as_of_date: str | None) -> str | None:
 
 
 def verify_provenance_sidecar(res: GateResult, master: str, sidecar: dict,
-                              published_cells: list, target_q: str | None) -> None:
+                              published_cells: list, target_q: str | None,
+                              max_lag_quarters: int = 0) -> None:
     """Strict Phase-2 verification of a master against its provenance sidecar (contract per
     --print-provenance-contract). `published_cells` = the (company, quarter, item_block) tuples
     actually published by this master. Emits:
       - MISSING_PROVENANCE: a published cell has no matching provenance cell, OR a cell's
         source_file does not exist on disk.
-      - STALE_AS_OF: as_of_date's quarter != the cell's quarter (or older than target basis).
+      - STALE_AS_OF: as_of_date's quarter != the cell's quarter (or older than target basis,
+        beyond `max_lag_quarters` of forward-hold grace — see call-site comments; default 0
+        keeps the original strict "must equal or exceed the basis" behavior).
       - EFFECTIVE_LIST_NOT_FILTERED: capital-securities cell not source_id==FSC_BONDS with
         effective_filtered==true (authoritative-source requirement)."""
     prov = sidecar.get("cells") or []
@@ -1084,10 +1110,13 @@ def verify_provenance_sidecar(res: GateResult, master: str, sidecar: dict,
                     message=f"{company or '-'}: provenance as_of_date={cell.get('as_of_date')} "
                             f"(={aq}) != cell quarter {quarter} — stale as-of")
         elif target_q and aq and q_to_num(aq) < q_to_num(target_q):
-            res.add(check="as_of", severity="RED", master=master, company=company, quarter=aq,
-                    rule="STALE_AS_OF",
-                    message=f"{company or '-'}: provenance as_of_date={cell.get('as_of_date')} "
-                            f"(={aq}) older than required basis {target_q} — stale baseline")
+            lag = _quarters_between(aq, target_q) or 0
+            if lag > max_lag_quarters:
+                res.add(check="as_of", severity="RED", master=master, company=company, quarter=aq,
+                        rule="STALE_AS_OF",
+                        message=f"{company or '-'}: provenance as_of_date={cell.get('as_of_date')} "
+                                f"(={aq}) is {lag}Q behind required basis {target_q} "
+                                f"(hold grace {max_lag_quarters}Q) — stale baseline")
         # source_file must exist on disk
         sf = cell.get("source_file")
         if not sf or not (ROOT / sf).exists():
@@ -1156,6 +1185,27 @@ def check_as_of(res: GateResult, env: "Env") -> None:
     # --- 2a(i). sensitivity_heatmap as_of vs disclosure basis ---
     # Owner V12: heatmap must be on 25.4Q 경영공시 basis. A company still stamped FY2024
     # (as_of 2024-12-31) while the latest disclosure is 2025.4Q is a stale baseline (= RED).
+    #
+    # 2026-09-01 (parser-ifrs17, inbox/parser 2026.2Q sensitivity STALE_AS_OF ticket):
+    # target_q here is K-ICS's quarterly cadence (_sensitivity_target(), max of
+    # kics_rate_sensitivity.json 공시분기), but 가정민감도(assumption-shock ΔCSM) is an
+    # ANNUAL-only DART disclosure across the WHOLE universe, not a per-company quirk — verified
+    # by (a) real extraction (extract_sensitivity_tables) against every one of the 24 FY2026_Q2
+    # 반기보고서 raw filings that exist for the 31 companies this rule flagged: zero contain a
+    # 사망률/장해질병/해지율/사업비 shock table (half-year risk notes carry only IFRS9 FV
+    # Level-3 sensitivity — a different topic — and/or point-in-time assumption *levels*, not
+    # shock deltas); (b) live DART API filing-list checks for the remaining 8 companies (no raw
+    # dir / dir with meta.json "no_filing":true) confirming they filed zero periodic (사업/반기/
+    # 분기, pblntf_ty=A) disclosures in 2026 — several (AIA/AIG) only ever file an annual
+    # 감사보고서, never a periodic report of any kind. So "older than target_q" alone is the
+    # wrong freshness test for this master: it would perpetually RED every non-4Q quarter no
+    # matter how current the data is. Mirrors the owner-approved annual-cadence forward-hold cap
+    # used for TIER2 statutory-reserve filers (build_ifrs17_bs.py, "뒤로는 최대 3분기만 늘린다"
+    # — one full annual cycle) instead of inventing a new policy: hold up to 3 quarters past the
+    # as_of's own quarter before calling it stale, so the *next* annual filing (~Q1 following the
+    # as_of FY) is expected to have landed. Scoped to sensitivity_heatmap only — every other
+    # verify_provenance_sidecar call below keeps max_lag_quarters=0 (quarterly-cadence masters
+    # must still equal/exceed target_q exactly).
     sh = env.sensitivity_heatmap
     target_q = env.sensitivity_target_quarter  # expected disclosure quarter for the heatmap
     if sidecars.get("sensitivity_heatmap") is not None:
@@ -1165,7 +1215,8 @@ def check_as_of(res: GateResult, env: "Env") -> None:
                       "sensitivity")
                      for comp in (sh.get("companies", []) if sh else []) if comp.get("scenarios")]
         verify_provenance_sidecar(res, "sensitivity_heatmap",
-                                  sidecars["sensitivity_heatmap"], published, target_q)
+                                  sidecars["sensitivity_heatmap"], published, target_q,
+                                  max_lag_quarters=3)
     elif sh is None:
         res.add(check="as_of", severity="RED", master="sensitivity_heatmap", company=None,
                 quarter=None, rule="MISSING_PROVENANCE",
@@ -1857,6 +1908,11 @@ class Env:
             "gold_overlays", (lambda: None) if self.inject else self._load_gold_overlays)
         self.gold_overlay_ledger = self._get(
             "gold_overlay_ledger", (lambda: None) if self.inject else gold_overlay_ledger)
+        # 소급재작성 등재부(2026-09-01). selftest(inject) 는 합성데이터 격리 — 실등재부를
+        # 섞으면 합성 케이스 전부에 교보 10칸이 딸려 들어간다(gold_overlay 와 같은 규칙).
+        self.restatement_ledger = self._get(
+            "restatement_ledger",
+            (lambda: None) if self.inject else restatement_ledger)
 
         # derived
         self.code_name = {r["원보험사코드"]: r["원수사명"] for r in self.kics_records
@@ -2921,6 +2977,256 @@ def check_gold_overlay(res: GateResult, env: "Env") -> None:
                         f"{GOLD_OVERLAY_LEDGER.name} 에서 줄을 지워라")
 
 
+# ===========================================================================
+# CHECK 7 — K-ICS 소급재작성(restatement) 축   (2026-09-01, validation)
+# ===========================================================================
+# ## 왜 있나
+#
+# 정기경영공시의 `[경과조치 적용 전 지급여력비율 세부]` 표는 **해당분기·직전분기·전전분기**
+# 3열을 인쇄한다. 그래서 같은 (회사,분기) 값이 두 번 인쇄되고, **발행사가 이미 공시한 분기를
+# 다음 분기 공시본에서 다르게 인쇄**하면 그게 소급재작성이다. 2026-09-01 이전까지 이 축을
+# 재는 검사기는 저장소에 **0개**였다 — 교보생명 2026.1Q 재작성(10칸)이 손으로 발견됐다.
+#
+# 재작성 자체는 발행사의 정당한 행위이므로 **RED 이 아니다.** 이 검사가 막는 것은 그 다음이다:
+#
+#   **마스터가 조용히 재작성 기준으로 갈아끼워지는 것.** 이 저장소는 이미 그 사고를 겪었다 —
+#   `data/_gold/csm_amort_identity_ledger.json` 의 `RESTATEMENT_BASIS` 3건(DB손해 2023.1~3Q):
+#   루트 `CSM_waterfall` 은 2024년 필링의 비교컬럼(=재작성값)인데 `PL_breakdown` 은 2023년
+#   원 필링값이라 두 마스터가 서로 안 닫힌다. 한 축만 갈아끼우면 축이 갈라진다.
+#
+# ## 무엇이 정본이고 무엇이 대역인가
+#
+# 판정 축은 **필링 대 필링**(1Q 공시본의 '해당분기' 열 vs 2Q 공시본의 '직전분기' 열)이고,
+# 그건 PDF 를 읽어야 하므로 여기가 아니라 `scripts/detect_kics_restatement.py` 가 한다
+# (`data/disclosure/` 는 .gitignore 대상이라 slim 클론엔 PDF 가 없다 — 게이트가 매번 PDF 를
+# 읽으면 클론마다 결과가 달라진다). 이 게이트는 그 탐지 결과를 **등재부로 받아** 라이브
+# 마스터에 대고 매 실행 재검산한다. 결정적이고, 어디서 돌려도 같은 답을 낸다.
+#
+# ## 심각도
+#
+#   · 등재된 재작성 자체            → YELLOW (정보. 발행사의 정당한 행위)
+#   · 마스터가 as_filed 를 벗어남   → **RED** (기준이 갈라졌다. 다른 어떤 게이트도 이걸 못 본다)
+#   · 등재 셀이 마스터에서 결측     → **RED** (SKIP-on-missing = 검증 무력화)
+#   · 등재부 자체가 깨짐/필드 누락  → **RED**
+#   · 새 분기가 아직 안 스캔됨      → YELLOW (분기마다 다시 재라는 신호)
+RESTATEMENT_LEDGER = ROOT / "data" / "_gold" / "kics_restatement_ledger.json"
+RESTATEMENT_TOL = 0.5           # 억원 정수 인쇄 그리드의 반올림 폭
+_RESTATEMENT_REQUIRED = ("company", "quarter", "item", "as_filed", "restated",
+                         "as_filed_source", "restated_source")
+
+
+def restatement_ledger() -> dict | None:
+    """없으면 None, 깨졌으면 {'_unreadable': ...} — 둘은 다르다(ARTIFACT_UNREADABLE 관례)."""
+    if not RESTATEMENT_LEDGER.exists():
+        return None
+    try:
+        return json.loads(RESTATEMENT_LEDGER.read_text(encoding="utf-8"))
+    except Exception as e:                      # noqa: BLE001
+        return {"_unreadable": f"{type(e).__name__}: {e}"}
+
+
+def _restatement_cascade_exempt(kics_findings: list, led: dict | None):
+    """재작성 **채택의 연쇄**로 설명되는 룰엔진 RED 을 면제한다 — 잔차 박제형.
+
+    발행사가 합계만 재작성하고 세부를 재공시하지 않는 경우가 있다. 교보 2026.1Q 가 그렇다:
+    item19(시장위험액)를 54,674 → 55,453 으로 고쳐 인쇄했지만, 그 세부(36~40 금리·주식·
+    부동산·외환·자산집중)는 2026.2Q 공시본 어디에도 직전분기 칸이 없다(`② 금리위험액 현황`
+    표는 당분기 단일 컬럼). owner 가 합계 재작성을 채택하면 `19_market`(= sqrt(V'MV) vs
+    item19) 이 **정확히 채택 델타만큼** 벌어진다 — 우리 데이터 결함이 아니라 채택의 산술적
+    귀결이다.
+
+    통째 skip 하지 않는다. 등재부 `_adoption_cascades` 가 잔차를 박제하고 여기서 매 실행
+    재검산한다 — 잔차가 움직이면 RED(`..._CASCADE_RESIDUAL_DRIFT`), RED 이 사라지면
+    등재가 무용해진 것이므로 그것도 알린다(`..._CASCADE_INERT`).
+
+    반환: (면제된 finding 리스트, 새로 낼 RED 사유 리스트, inert 등재 리스트)
+    """
+    casc = (led or {}).get("_adoption_cascades") or []
+    if not casc:
+        return [], [], []
+    want = {}
+    for c in casc:
+        try:
+            want[(str(c["company"]), str(c["quarter"]), str(c["rule"]))] = c
+        except KeyError:
+            return [], [{"detail": f"_adoption_cascades 엔트리에 필수 키가 없다: {c}",
+                         "rule": "RESTATEMENT_CASCADE_MALFORMED"}], []
+    exempt, reds, seen = [], [], set()
+    for f in kics_findings:
+        if f.get("status") != "RED":
+            continue
+        key = (str(f.get(KEY_CODE)), str(f.get(KEY_QUARTER)), str(f.get("rule")))
+        c = want.get(key)
+        if c is None:
+            continue
+        seen.add(key)
+        diff = _num(f.get("diff"))
+        exp = _num(c.get("expected_residual"))
+        tol = float(c.get("tol") or 0.5)
+        if diff is None or exp is None or abs(diff - exp) > tol:
+            reds.append({"detail": f"{key[0]} {key[1]} {key[2]}: 채택 연쇄 박제잔차 {exp} 인데 "
+                                   f"실측 {diff} (tol {tol}) — 등재가 틀렸거나 데이터가 움직였다",
+                         "rule": "RESTATEMENT_CASCADE_RESIDUAL_DRIFT",
+                         "code": key[0], "quarter": key[1]})
+            continue
+        exempt.append(f)
+    inert = [want[k] for k in want if k not in seen]
+    return exempt, reds, inert
+
+
+def check_kics_restatement(res: GateResult, env: "Env") -> None:
+    M = "kics_disclosure"
+    led = env.restatement_ledger
+    if led is None:
+        if env.inject or not env.kics_records:
+            return                              # selftest 격리 / 마스터 자체가 없는 환경
+        # 등재부 파일이 사라지면 이 축이 **말없이** 꺼진다. `data/_gold/` 는 추적되므로
+        # 부재는 사고다 — 조용히 통과시키지 않는다(죽은 면제의 반대 방향 사각).
+        res.add(check="restatement", severity="YELLOW", master=M, company=None, quarter=None,
+                rule="KICS_RESTATEMENT_LEDGER_ABSENT",
+                message=f"{RESTATEMENT_LEDGER.relative_to(ROOT).as_posix()} 가 없다 — "
+                        f"소급재작성 축이 통째로 꺼진 상태다. `python "
+                        f"scripts/detect_kics_restatement.py --write` 로 재생성할 것")
+        return
+    if led.get("_unreadable"):
+        res.add(check="restatement", severity="RED", master=M, company=None, quarter=None,
+                rule="KICS_RESTATEMENT_LEDGER_UNREADABLE",
+                message=f"{RESTATEMENT_LEDGER.name} 가 존재하지만 파싱 불가 "
+                        f"({led['_unreadable']}) — 이 축이 통째로 조용해진다. "
+                        f"없는 파일과 깨진 파일은 다르다")
+        return
+
+    entries = led.get("entries") or {}
+    scanned = led.get("_scanned") or {}
+
+    # --- 마스터를 (코드, 분기, 항목) -> 값 으로 색인 ---
+    mv: dict[tuple, object] = {}
+    for r in env.kics_records:
+        it = r.get("항목번호")
+        if isinstance(it, int):
+            mv[(r.get("원보험사코드"), r.get("공시분기"), it)] = r.get("값")
+
+    by_bucket: dict[tuple, list] = {}
+    for key, e in sorted(entries.items()):
+        missing = [f for f in _RESTATEMENT_REQUIRED if e.get(f) in (None, "")]
+        if missing:
+            res.add(check="restatement", severity="RED", master=M,
+                    company=e.get("company"), quarter=e.get("quarter"),
+                    rule="KICS_RESTATEMENT_FIELD_MISSING",
+                    message=f"등재 {key}: 필수 필드 {missing} 가 비었다 — 근거 없는 등재는 "
+                            f"면제가 아니라 무검사다")
+            continue
+        if key != f"{e['company']}|{e['quarter']}|{e['item']}":
+            res.add(check="restatement", severity="RED", master=M,
+                    company=e.get("company"), quarter=e.get("quarter"),
+                    rule="KICS_RESTATEMENT_KEY_MISMATCH",
+                    message=f"등재 키 {key} 가 본문 필드"
+                            f"({e['company']}|{e['quarter']}|{e['item']})와 다르다")
+            continue
+
+        co, q, it = e["company"], e["quarter"], int(e["item"])
+        mval = _num(mv.get((co, q, it)))
+        as_filed, restated = _num(e["as_filed"]), _num(e["restated"])
+        if (co, q, it) not in mv or mval is None:
+            res.add(check="restatement", severity="RED", master=M, company=co, quarter=q,
+                    rule="KICS_RESTATEMENT_CELL_MISSING",
+                    message=f"항목{it}: 재작성 등재 셀인데 마스터에 값이 없다 — 이 셀은 "
+                            f"통과한 게 아니라 **검산되지 않았다**. 원공시 {as_filed}")
+            continue
+        # 기준은 **건별**로 정한다. 기본값은 이 등재부의 `_policy`(as_filed)이고,
+        # owner 가 특정 버킷에 한해 재작성값 채택을 결정하면 그 엔트리에
+        # `adopted_basis="as_restated"` 를 적는다 — 그 순간 이 게이트가 검사하는 방향이
+        # 뒤집힌다(재작성값이 정답이고, 원공시로 되돌아가면 RED). 기본을 뒤집지 않는
+        # 이유는 `_severity_rationale` 참조 — 재작성은 매 분기 1~5개사로 상시 발생하고,
+        # 전면 채택은 매 라운드 전 항목 재대조를 요구한다.
+        basis = str(e.get("adopted_basis") or "as_filed")
+        if basis not in ("as_filed", "as_restated"):
+            res.add(check="restatement", severity="RED", master=M, company=co, quarter=q,
+                    rule="KICS_RESTATEMENT_BASIS_INVALID",
+                    message=f"항목{it}: adopted_basis={basis!r} 는 알 수 없는 값이다 "
+                            f"(as_filed | as_restated). 오타 하나로 검사 방향이 조용히 "
+                            f"바뀌면 안 된다")
+            continue
+        expected, other = ((as_filed, restated) if basis == "as_filed"
+                           else (restated, as_filed))
+        if expected is not None and abs(mval - expected) <= RESTATEMENT_TOL:
+            by_bucket.setdefault((co, q, e.get("company_name")), []).append(e)
+            continue
+        if other is not None and abs(mval - other) <= RESTATEMENT_TOL:
+            if basis == "as_filed":
+                res.add(check="restatement", severity="RED", master=M, company=co, quarter=q,
+                        rule="KICS_RESTATEMENT_MASTER_ADOPTED_RESTATED",
+                        message=f"항목{it}: 마스터가 **재작성값 {restated:,.0f} 로 바뀌었다**"
+                                f"(원공시 {as_filed:,.0f}). 이 셀의 기준은 as_filed 다. "
+                                f"한 축만 갈아끼우면 축이 갈라진다(csm_amort_identity_ledger 의 "
+                                f"RESTATEMENT_BASIS 3건이 그 사고다). 기준을 바꾸려면 owner "
+                                f"결정 + 그 엔트리에 adopted_basis=\"as_restated\" 를 적는 것이 "
+                                f"먼저다({RESTATEMENT_LEDGER.name})")
+            else:
+                res.add(check="restatement", severity="RED", master=M, company=co, quarter=q,
+                        rule="KICS_RESTATEMENT_MASTER_REVERTED_TO_FILED",
+                        message=f"항목{it}: 이 셀은 owner 결정으로 **재작성값 {restated:,.0f} 을 "
+                                f"채택**한 버킷인데 마스터가 원공시 {as_filed:,.0f} 로 돌아가 "
+                                f"있다. 빌더 재실행이나 소급 백필이 owner 결정을 덮어썼을 "
+                                f"가능성이 높다. 채택 근거: {str(e.get('adopted_reason') or '')[:160]}")
+            continue
+        res.add(check="restatement", severity="RED", master=M, company=co, quarter=q,
+                rule="KICS_RESTATEMENT_PIN_DRIFT",
+                message=f"항목{it}: 박제 원공시 {as_filed:,.0f} / 재작성 "
+                        f"{restated:,.0f} 인데 마스터는 {mval:,.0f} — 어느 쪽도 아니다. "
+                        f"파서가 이 셀을 고쳤거나 등재가 틀렸다. 근거: "
+                        f"{e.get('as_filed_source')}")
+
+    for (co, q, name), es in sorted(by_bucket.items()):
+        items = sorted(int(x["item"]) for x in es)
+        worst = max(es, key=lambda x: abs(_num(x["delta"]) or 0))
+        bases = {str(x.get("adopted_basis") or "as_filed") for x in es}
+        held = ("**원공시본(as_filed) 값을 유지**" if bases == {"as_filed"}
+                else "**재작성값(as_restated) 을 채택**" if bases == {"as_restated"}
+                else f"**셀마다 기준이 섞여 있다** {sorted(bases)}")
+        res.add(check="restatement", severity="YELLOW", master=M, company=co, quarter=q,
+                rule="KICS_RESTATEMENT_PINNED",
+                message=f"{name or co} {q}: 발행사가 이 분기를 소급재작성했다 — 항목 {items} "
+                        f"{len(items)}칸(최대 Δ 항목{worst['item']} "
+                        f"{_num(worst['as_filed']):,.0f}→{_num(worst['restated']):,.0f}). "
+                        f"마스터는 {held} 하며 그 사실을 방금 재검산했다. "
+                        f"사유: {str(es[0].get('issuer_reason') or '')[:200]}")
+
+    # --- 커버리지: 못 읽은 회사는 조용히 빠지지 않는다 ---
+    unc = scanned.get("uncovered") or []
+    if unc:
+        res.add(check="restatement", severity="YELLOW", master=M, company=None, quarter=None,
+                rule="KICS_RESTATEMENT_COVERAGE_GAP",
+                message=f"재작성 스캔에서 {len(unc)}개사를 못 읽었다 {unc} — 그 회사들의 "
+                        f"'CLEAN' 은 측정이 아니라 부재다. 스캔 PDF 면 렌더링 판독 후 "
+                        f"detect_kics_restatement.VISION_ANCHORS 에 등재할 것")
+
+    # --- 스캔 신선도: 새 분기가 오면 이 축을 다시 재라 ---
+    qs = sorted({str(r.get("공시분기")) for r in env.kics_records
+                 if re.match(r"\d{4}\.\dQ", str(r.get("공시분기") or ""))}, key=q_to_num)
+    newest = qs[-1] if qs else None
+    # ⚠️ `period_label_to_quarter` 를 쓰면 안 된다 — 그건 bare `FYyyyy` 를 그 해 4Q 로 보는
+    # 아티팩트용 변환이라 `FY2026_Q2` 를 `2026.4Q` 로 만들어 버린다(그러면 STALE 이 영원히
+    # 안 켜진다). 여기 형식은 `FY<년>_Q<분기>` 이므로 직접 판다.
+    m = re.match(r"FY(\d{4})_Q(\d)$", str(scanned.get("restating_period") or ""))
+    scanned_restating = f"{m.group(1)}.{m.group(2)}Q" if m else None
+    if newest and scanned_restating and q_to_num(newest) > q_to_num(scanned_restating):
+        res.add(check="restatement", severity="YELLOW", master=M, company=None, quarter=newest,
+                rule="KICS_RESTATEMENT_SCAN_STALE",
+                message=f"마스터에 {newest} 가 있는데 재작성 스캔은 {scanned_restating} 까지만 "
+                        f"돌았다 — 그 분기가 직전 분기를 재작성했는지 **아무도 재지 않았다**. "
+                        f"`python scripts/detect_kics_restatement.py --period "
+                        f"FY{newest[:4]}_Q{newest[5]} --prior <직전> --write`")
+
+    res.add(check="restatement", severity="YELLOW", master=M, company=None, quarter=None,
+            rule="KICS_RESTATEMENT_CENSUS",
+            message=f"소급재작성 축 census({scanned.get('restated_quarter')}): "
+                    f"{scanned.get('companies_total')}사 중 재작성 "
+                    f"{scanned.get('restated')}사 · 무변동 {scanned.get('clean')}사 · "
+                    f"미판독 {len(unc)}사. 등재 {len(entries)}칸을 매 실행 마스터에 대고 "
+                    f"재검산한다 — 등재된 칸만 기준이탈 탐지가 된다")
+
+
 def run_gate(env: Env) -> GateResult:
     res = GateResult()
     check_artifact_readable(res, env)
@@ -2933,6 +3239,7 @@ def run_gate(env: Env) -> GateResult:
     check_cross_source(res, env)
     check_domain_identity(res, env)
     check_gold_overlay(res, env)
+    check_kics_restatement(res, env)
     # 2026-08-25 — CHECK 5(일반 이상치 스캐너)를 **게이트에서 뺐다**(owner: "씰데없는 룰들은
     # 좀 쳐내"). 지운 게 아니라 `scripts/scan_generic_anomalies.py` 로 내렸다.
     #
@@ -2959,7 +3266,7 @@ def print_report(res: GateResult) -> None:
     print("#" * 78)
 
     by_check = {"census": [], "as_of": [], "cross_source": [], "domain": [], "anomaly": [],
-                "gold_overlay": []}
+                "gold_overlay": [], "restatement": []}
     for f in res.findings:
         by_check.setdefault(f.check, []).append(f)
 
@@ -2970,8 +3277,10 @@ def print_report(res: GateResult) -> None:
         "domain": "4. DOMAIN IDENTITY (capital recognition-limit 분모=SCR×50% / 소진율≤100%)",
         "anomaly": "5. GENERIC ANOMALY DISCOVERY (metric-agnostic; learned from cohort)",
         "gold_overlay": "6. GOLD OVERLAY vs BUILDER SOURCE (몇 칸이 조용히 덮여 있는가)",
+        "restatement": "7. K-ICS RESTATEMENT (발행사 소급재작성 / 마스터 기준이탈)",
     }
-    for check in ("census", "as_of", "cross_source", "domain", "anomaly", "gold_overlay"):
+    for check in ("census", "as_of", "cross_source", "domain", "anomaly", "gold_overlay",
+                  "restatement"):
         items = by_check.get(check, [])
         # CHECK 5 는 2026-08-25 에 게이트에서 빠졌다. **조용히 사라지면 안 된다** — 다음 세션이
         # "이상치 검사가 원래 없었다" 로 읽으면 그게 이 저장소의 반복 사고다. 한 줄로 남긴다.

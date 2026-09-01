@@ -1,0 +1,603 @@
+{
+  "_what": "K-ICS 소급재작성 등재부. 발행사가 **이미 공시한 분기의 값을 다음 분기 공시본의 '직전분기' 칸에서 다르게 인쇄**한 셀의 건별 기록이다. 재작성 자체는 발행사의 정당한 행위라 RED 이 아니다 — 이 등재부의 목적은 (1) 다음 라운드가 같은 조사를 반복하지 않게 하고 (2) **마스터가 조용히 재작성 기준으로 갈아끼워지는 것을 잡는 것**이다.",
+  "_policy": "이 저장소의 K-ICS 마스터는 기본적으로 각 분기의 **원공시본(as_filed)** 을 담는다. 다만 기준은 **건별**로 정할 수 있다 — 엔트리에 `adopted_basis: \"as_restated\"` 가 있으면 그 셀은 재작성값이 정답이고, 게이트가 검사하는 방향이 뒤집힌다(원공시로 되돌아가면 KICS_RESTATEMENT_MASTER_REVERTED_TO_FILED = RED). 전면 채택하지 않는 이유는 `_severity_rationale` 참조.",
+  "_policy_note": "2026-09-01 실측: 이 정책은 그때까지 저장소 어디에도 **선언돼 있지 않았다.** 가장 가까운 서술은 `data/_gold/kics_exemption_provenance.json` 의 KR0032 2024.3Q 엔트리(‘as-disclosed 를 그대로 두는 것이 이 저장소의 발행사 기재대로 원칙과 일치한다’)인데, 같은 엔트리가 **‘as-disclosed 를 유지할지 as-restated 를 채택할지는 owner/parser 정책 결정이고 이 세션은 정하지 않았다’** 라고 명시한다. 즉 관행일 뿐 결정이 아니었다. 그리고 **IFRS17 CSM 축에서는 owner 가 반대로 결정했다** — 2026-06-20 교보/라이나 건에서 '후속 분기 공시의 전기(비교) 테이블에서 재작성값을 pull 해 마스터를 재작성 기준으로 통일' 을 채택했다(`scripts/validate_master_tables.py` L797-799 주석 · `inbox/_resolved/20260620T0600Z__validation__KR0073__kyobo_csm_priorperiod_pull_from_comparative.md` · `data/_gold/user_csm_cells.json` 의 '교보 재작성 기준 통일 58,249.2'). 따라서 **저장소 전체가 as-filed 로 정렬돼 있다는 서술은 사실이 아니다** — K-ICS 는 as-filed, CSM_waterfall 은 일부 셀이 as-restated 다. 이 등재부가 선언하는 것은 **K-ICS 마스터의 기준**이며, 바꾸려면 owner 결정이 필요하다.",
+  "_severity": "등재된 재작성 셀 자체 = YELLOW(정보). 마스터가 그 셀에서 as_filed 를 벗어나면 = RED(기준이 갈라진다). 결측 = RED(SKIP 아님).",
+  "_scanned": {
+    "restating_period": "FY2026_Q2",
+    "restated_period": "FY2026_Q1",
+    "restated_quarter": "2026.1Q",
+    "companies_total": 39,
+    "clean": 38,
+    "restated": 1,
+    "uncovered": [],
+    "per_company_status": {
+      "KR0001": "CLEAN",
+      "KR0002": "CLEAN",
+      "KR0003": "CLEAN",
+      "KR0004": "CLEAN",
+      "KR0005": "CLEAN",
+      "KR0008": "CLEAN",
+      "KR0009": "CLEAN",
+      "KR0010": "CLEAN",
+      "KR0011": "CLEAN",
+      "KR0029": "CLEAN",
+      "KR0032": "CLEAN",
+      "KR0049": "CLEAN",
+      "KR0050": "CLEAN",
+      "KR0051": "CLEAN",
+      "KR0068": "CLEAN",
+      "KR0069": "CLEAN",
+      "KR0070": "CLEAN",
+      "KR0071": "CLEAN",
+      "KR0072": "CLEAN",
+      "KR0073": "RESTATED",
+      "KR0074": "CLEAN",
+      "KR0075": "CLEAN",
+      "KR0076": "CLEAN",
+      "KR0079": "CLEAN",
+      "KR0080": "CLEAN",
+      "KR0082": "CLEAN",
+      "KR0083": "CLEAN",
+      "KR0087": "CLEAN",
+      "KR0094": "CLEAN",
+      "KR0095": "CLEAN",
+      "KR0097": "CLEAN",
+      "KR0099": "CLEAN",
+      "KR0100": "CLEAN",
+      "KR0104": "CLEAN",
+      "KR0150": "CLEAN",
+      "KR1000": "CLEAN",
+      "KR1010": "CLEAN",
+      "KR1011": "CLEAN",
+      "KR1098": "CLEAN"
+    }
+  },
+  "entries": {
+    "KR0073|2026.1Q|1": {
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "item": 1,
+      "as_filed": 149556.0,
+      "restated": 149557.0,
+      "delta": 1.0,
+      "as_filed_source": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf p14",
+      "restated_source": "data/disclosure/FY2026_Q2/pdf/KR0073_교보생명보험.pdf p15",
+      "method": "pdf_text/pdf_text",
+      "issuer_reason": "발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): \"지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가\". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.",
+      "detected_by": "scripts/detect_kics_restatement.py (validation 2026-09-01)",
+      "adopted_basis": "as_restated",
+      "adopted_by": "owner 2026-09-01",
+      "adopted_reason": "owner 결정 2026-09-01: \"매번 덮어쓰라는 건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된 거면 안 고칠 이유가 없다\". 39사 전수 스캔에서 2026.1Q→2Q 구간의 재작성사는 교보 한 곳뿐이고(830칸 비교·미비교 0칸), 발행사가 2026.2Q 공시본에 사유까지 직접 적었다. 반영 스크립트: scripts/fix_20260901_kyobo_2026q1_adopt_restated.py",
+      "adopted_scope": "적용전(`값`) 컬럼만. 2026.2Q 공시본의 경과조치 표(공통TFI·②·③)에는 직전분기 칸이 없어 발행사가 **재작성된 적용후 수치를 공시하지 않았다** (parsed MD L463-540 실측). `값_적용후` 는 원공시본 그대로 둔다 — 없는 숫자를 유도해 채우지 않는다."
+    },
+    "KR0073|2026.1Q|2": {
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "item": 2,
+      "as_filed": 67581.0,
+      "restated": 67582.0,
+      "delta": 1.0,
+      "as_filed_source": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf p14",
+      "restated_source": "data/disclosure/FY2026_Q2/pdf/KR0073_교보생명보험.pdf p15",
+      "method": "pdf_text/pdf_text",
+      "issuer_reason": "발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): \"지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가\". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.",
+      "detected_by": "scripts/detect_kics_restatement.py (validation 2026-09-01)",
+      "adopted_basis": "as_restated",
+      "adopted_by": "owner 2026-09-01",
+      "adopted_reason": "owner 결정 2026-09-01: \"매번 덮어쓰라는 건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된 거면 안 고칠 이유가 없다\". 39사 전수 스캔에서 2026.1Q→2Q 구간의 재작성사는 교보 한 곳뿐이고(830칸 비교·미비교 0칸), 발행사가 2026.2Q 공시본에 사유까지 직접 적었다. 반영 스크립트: scripts/fix_20260901_kyobo_2026q1_adopt_restated.py",
+      "adopted_scope": "적용전(`값`) 컬럼만. 2026.2Q 공시본의 경과조치 표(공통TFI·②·③)에는 직전분기 칸이 없어 발행사가 **재작성된 적용후 수치를 공시하지 않았다** (parsed MD L463-540 실측). `값_적용후` 는 원공시본 그대로 둔다 — 없는 숫자를 유도해 채우지 않는다."
+    },
+    "KR0073|2026.1Q|4": {
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "item": 4,
+      "as_filed": 146041.0,
+      "restated": 146042.0,
+      "delta": 1.0,
+      "as_filed_source": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf p14",
+      "restated_source": "data/disclosure/FY2026_Q2/pdf/KR0073_교보생명보험.pdf p15",
+      "method": "pdf_text/pdf_text",
+      "issuer_reason": "발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): \"지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가\". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.",
+      "detected_by": "scripts/detect_kics_restatement.py (validation 2026-09-01)",
+      "adopted_basis": "as_restated",
+      "adopted_by": "owner 2026-09-01",
+      "adopted_reason": "owner 결정 2026-09-01: \"매번 덮어쓰라는 건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된 거면 안 고칠 이유가 없다\". 39사 전수 스캔에서 2026.1Q→2Q 구간의 재작성사는 교보 한 곳뿐이고(830칸 비교·미비교 0칸), 발행사가 2026.2Q 공시본에 사유까지 직접 적었다. 반영 스크립트: scripts/fix_20260901_kyobo_2026q1_adopt_restated.py",
+      "adopted_scope": "적용전(`값`) 컬럼만. 2026.2Q 공시본의 경과조치 표(공통TFI·②·③)에는 직전분기 칸이 없어 발행사가 **재작성된 적용후 수치를 공시하지 않았다** (parsed MD L463-540 실측). `값_적용후` 는 원공시본 그대로 둔다 — 없는 숫자를 유도해 채우지 않는다."
+    },
+    "KR0073|2026.1Q|11": {
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "item": 11,
+      "as_filed": 51169.0,
+      "restated": 51170.0,
+      "delta": 1.0,
+      "as_filed_source": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf p14",
+      "restated_source": "data/disclosure/FY2026_Q2/pdf/KR0073_교보생명보험.pdf p15",
+      "method": "pdf_text/pdf_text",
+      "issuer_reason": "발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): \"지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가\". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.",
+      "detected_by": "scripts/detect_kics_restatement.py (validation 2026-09-01)",
+      "adopted_basis": "as_restated",
+      "adopted_by": "owner 2026-09-01",
+      "adopted_reason": "owner 결정 2026-09-01: \"매번 덮어쓰라는 건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된 거면 안 고칠 이유가 없다\". 39사 전수 스캔에서 2026.1Q→2Q 구간의 재작성사는 교보 한 곳뿐이고(830칸 비교·미비교 0칸), 발행사가 2026.2Q 공시본에 사유까지 직접 적었다. 반영 스크립트: scripts/fix_20260901_kyobo_2026q1_adopt_restated.py",
+      "adopted_scope": "적용전(`값`) 컬럼만. 2026.2Q 공시본의 경과조치 표(공통TFI·②·③)에는 직전분기 칸이 없어 발행사가 **재작성된 적용후 수치를 공시하지 않았다** (parsed MD L463-540 실측). `값_적용후` 는 원공시본 그대로 둔다 — 없는 숫자를 유도해 채우지 않는다."
+    },
+    "KR0073|2026.1Q|14": {
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "item": 14,
+      "as_filed": 92362.0,
+      "restated": 93233.0,
+      "delta": 871.0,
+      "as_filed_source": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf p14",
+      "restated_source": "data/disclosure/FY2026_Q2/pdf/KR0073_교보생명보험.pdf p15",
+      "method": "pdf_text/pdf_text",
+      "issuer_reason": "발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): \"지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가\". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.",
+      "detected_by": "scripts/detect_kics_restatement.py (validation 2026-09-01)",
+      "adopted_basis": "as_restated",
+      "adopted_by": "owner 2026-09-01",
+      "adopted_reason": "owner 결정 2026-09-01: \"매번 덮어쓰라는 건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된 거면 안 고칠 이유가 없다\". 39사 전수 스캔에서 2026.1Q→2Q 구간의 재작성사는 교보 한 곳뿐이고(830칸 비교·미비교 0칸), 발행사가 2026.2Q 공시본에 사유까지 직접 적었다. 반영 스크립트: scripts/fix_20260901_kyobo_2026q1_adopt_restated.py",
+      "adopted_scope": "적용전(`값`) 컬럼만. 2026.2Q 공시본의 경과조치 표(공통TFI·②·③)에는 직전분기 칸이 없어 발행사가 **재작성된 적용후 수치를 공시하지 않았다** (parsed MD L463-540 실측). `값_적용후` 는 원공시본 그대로 둔다 — 없는 숫자를 유도해 채우지 않는다."
+    },
+    "KR0073|2026.1Q|15": {
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "item": 15,
+      "as_filed": 105171.0,
+      "restated": 106059.0,
+      "delta": 888.0,
+      "as_filed_source": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf p14",
+      "restated_source": "data/disclosure/FY2026_Q2/pdf/KR0073_교보생명보험.pdf p15",
+      "method": "pdf_text/pdf_text",
+      "issuer_reason": "발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): \"지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가\". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.",
+      "detected_by": "scripts/detect_kics_restatement.py (validation 2026-09-01)",
+      "adopted_basis": "as_restated",
+      "adopted_by": "owner 2026-09-01",
+      "adopted_reason": "owner 결정 2026-09-01: \"매번 덮어쓰라는 건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된 거면 안 고칠 이유가 없다\". 39사 전수 스캔에서 2026.1Q→2Q 구간의 재작성사는 교보 한 곳뿐이고(830칸 비교·미비교 0칸), 발행사가 2026.2Q 공시본에 사유까지 직접 적었다. 반영 스크립트: scripts/fix_20260901_kyobo_2026q1_adopt_restated.py",
+      "adopted_scope": "적용전(`값`) 컬럼만. 2026.2Q 공시본의 경과조치 표(공통TFI·②·③)에는 직전분기 칸이 없어 발행사가 **재작성된 적용후 수치를 공시하지 않았다** (parsed MD L463-540 실측). `값_적용후` 는 원공시본 그대로 둔다 — 없는 숫자를 유도해 채우지 않는다."
+    },
+    "KR0073|2026.1Q|16": {
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "item": 16,
+      "as_filed": 38077.0,
+      "restated": 38522.0,
+      "delta": 445.0,
+      "as_filed_source": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf p14",
+      "restated_source": "data/disclosure/FY2026_Q2/pdf/KR0073_교보생명보험.pdf p15",
+      "method": "pdf_text/pdf_text",
+      "issuer_reason": "발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): \"지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가\". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.",
+      "detected_by": "scripts/detect_kics_restatement.py (validation 2026-09-01)",
+      "adopted_basis": "as_restated",
+      "adopted_by": "owner 2026-09-01",
+      "adopted_reason": "owner 결정 2026-09-01: \"매번 덮어쓰라는 건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된 거면 안 고칠 이유가 없다\". 39사 전수 스캔에서 2026.1Q→2Q 구간의 재작성사는 교보 한 곳뿐이고(830칸 비교·미비교 0칸), 발행사가 2026.2Q 공시본에 사유까지 직접 적었다. 반영 스크립트: scripts/fix_20260901_kyobo_2026q1_adopt_restated.py",
+      "adopted_scope": "적용전(`값`) 컬럼만. 2026.2Q 공시본의 경과조치 표(공통TFI·②·③)에는 직전분기 칸이 없어 발행사가 **재작성된 적용후 수치를 공시하지 않았다** (parsed MD L463-540 실측). `값_적용후` 는 원공시본 그대로 둔다 — 없는 숫자를 유도해 채우지 않는다."
+    },
+    "KR0073|2026.1Q|19": {
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "item": 19,
+      "as_filed": 54674.0,
+      "restated": 55453.0,
+      "delta": 779.0,
+      "as_filed_source": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf p14",
+      "restated_source": "data/disclosure/FY2026_Q2/pdf/KR0073_교보생명보험.pdf p15",
+      "method": "pdf_text/pdf_text",
+      "issuer_reason": "발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): \"지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가\". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.",
+      "detected_by": "scripts/detect_kics_restatement.py (validation 2026-09-01)",
+      "adopted_basis": "as_restated",
+      "adopted_by": "owner 2026-09-01",
+      "adopted_reason": "owner 결정 2026-09-01: \"매번 덮어쓰라는 건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된 거면 안 고칠 이유가 없다\". 39사 전수 스캔에서 2026.1Q→2Q 구간의 재작성사는 교보 한 곳뿐이고(830칸 비교·미비교 0칸), 발행사가 2026.2Q 공시본에 사유까지 직접 적었다. 반영 스크립트: scripts/fix_20260901_kyobo_2026q1_adopt_restated.py",
+      "adopted_scope": "적용전(`값`) 컬럼만. 2026.2Q 공시본의 경과조치 표(공통TFI·②·③)에는 직전분기 칸이 없어 발행사가 **재작성된 적용후 수치를 공시하지 않았다** (parsed MD L463-540 실측). `값_적용후` 는 원공시본 그대로 둔다 — 없는 숫자를 유도해 채우지 않는다."
+    },
+    "KR0073|2026.1Q|20": {
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "item": 20,
+      "as_filed": 25686.0,
+      "restated": 26239.0,
+      "delta": 553.0,
+      "as_filed_source": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf p14",
+      "restated_source": "data/disclosure/FY2026_Q2/pdf/KR0073_교보생명보험.pdf p15",
+      "method": "pdf_text/pdf_text",
+      "issuer_reason": "발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): \"지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가\". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.",
+      "detected_by": "scripts/detect_kics_restatement.py (validation 2026-09-01)",
+      "adopted_basis": "as_restated",
+      "adopted_by": "owner 2026-09-01",
+      "adopted_reason": "owner 결정 2026-09-01: \"매번 덮어쓰라는 건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된 거면 안 고칠 이유가 없다\". 39사 전수 스캔에서 2026.1Q→2Q 구간의 재작성사는 교보 한 곳뿐이고(830칸 비교·미비교 0칸), 발행사가 2026.2Q 공시본에 사유까지 직접 적었다. 반영 스크립트: scripts/fix_20260901_kyobo_2026q1_adopt_restated.py",
+      "adopted_scope": "적용전(`값`) 컬럼만. 2026.2Q 공시본의 경과조치 표(공통TFI·②·③)에는 직전분기 칸이 없어 발행사가 **재작성된 적용후 수치를 공시하지 않았다** (parsed MD L463-540 실측). `값_적용후` 는 원공시본 그대로 둔다 — 없는 숫자를 유도해 채우지 않는다."
+    },
+    "KR0073|2026.1Q|22": {
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "item": 22,
+      "as_filed": 14697.0,
+      "restated": 14713.0,
+      "delta": 16.0,
+      "as_filed_source": "data/disclosure/FY2026_Q1/raw/KR0073_교보생명보험.pdf p14",
+      "restated_source": "data/disclosure/FY2026_Q2/pdf/KR0073_교보생명보험.pdf p15",
+      "method": "pdf_text/pdf_text",
+      "issuer_reason": "발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): \"지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가\". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.",
+      "detected_by": "scripts/detect_kics_restatement.py (validation 2026-09-01)",
+      "adopted_basis": "as_restated",
+      "adopted_by": "owner 2026-09-01",
+      "adopted_reason": "owner 결정 2026-09-01: \"매번 덮어쓰라는 건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된 거면 안 고칠 이유가 없다\". 39사 전수 스캔에서 2026.1Q→2Q 구간의 재작성사는 교보 한 곳뿐이고(830칸 비교·미비교 0칸), 발행사가 2026.2Q 공시본에 사유까지 직접 적었다. 반영 스크립트: scripts/fix_20260901_kyobo_2026q1_adopt_restated.py",
+      "adopted_scope": "적용전(`값`) 컬럼만. 2026.2Q 공시본의 경과조치 표(공통TFI·②·③)에는 직전분기 칸이 없어 발행사가 **재작성된 적용후 수치를 공시하지 않았다** (parsed MD L463-540 실측). `값_적용후` 는 원공시본 그대로 둔다 — 없는 숫자를 유도해 채우지 않는다."
+    }
+  },
+  "_severity_rationale": "**왜 YELLOW 인가 — 과거 13개 분기쌍 전수 시뮬레이션(2026-09-01) 근거.** 재작성은 드문 사고가 아니라 상시 현상이다: 13쌍에서 (회사,분기) 재작성 버킷 37개 · 셀 122칸이 나왔고, raw 가 갖춰진 2023.4Q 이후로는 **매 분기 1~5개사**가 걸린다. 이 축을 RED 로 내면 거의 매 라운드 push 가 막히는데, 막아서 고칠 것이 없다 — 발행사가 자기 과거 분기를 정정하는 것은 정당한 행위이고 우리 데이터의 결함이 아니다. 그래서 재작성 발견은 YELLOW(등재부 박제)로 두고, RED 은 **마스터가 원공시본 기준을 벗어날 때**로 좁혔다. 그 경우만이 우리 쪽 결함이고, 다른 어떤 게이트도 그걸 못 본다.",
+  "_history_probe": {
+    "_what": "과거 분기쌍 전수 시뮬레이션 결과 요약. **미검증이다** — 2026.1Q 라운드와 달리 컨트롤 컬럼 대조·잔여셀 육안 판독을 하지 않았다. 심각도 판단(YELLOW)의 노이즈 하한 추정으로만 쓴다. 등재부 `entries` 에 넣지 않은 이유가 이것이다: 검증 안 된 건을 박제하면 그 박제 자체가 무검사가 된다.",
+    "_tool": "scripts/_probes/probe_20260901_restatement_history_sim.py",
+    "_caveat": "옛 분기일수록 미판독(스캔 PDF·raw 부재)이 많다 — 쌍당 3~9개사. VISION_ANCHORS 가 FY2026_Q1/Q2 만 덮기 때문이다. 그 회사들의 'CLEAN' 은 측정이 아니라 부재다.",
+    "totals": {
+      "pairs": 13,
+      "restated_buckets": 37,
+      "restated_cells": 122,
+      "uncovered_company_slots": 132,
+      "blind_cells": 78
+    },
+    "per_pair": {
+      "FY2023_Q1->FY2023_Q2": {
+        "restated_co": 0,
+        "cells": 0,
+        "clean": 0,
+        "uncovered": 39,
+        "compared": 0,
+        "blind": 0,
+        "who": {}
+      },
+      "FY2023_Q2->FY2023_Q3": {
+        "restated_co": 0,
+        "cells": 0,
+        "clean": 1,
+        "uncovered": 38,
+        "compared": 22,
+        "blind": 1,
+        "who": {}
+      },
+      "FY2023_Q3->FY2023_Q4": {
+        "restated_co": 5,
+        "cells": 29,
+        "clean": 31,
+        "uncovered": 3,
+        "compared": 781,
+        "blind": 14,
+        "who": {
+          "KR0051": [
+            7,
+            11
+          ],
+          "KR0080": [
+            1,
+            2,
+            3,
+            4,
+            7,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            19,
+            20,
+            22
+          ],
+          "KR0083": [
+            3
+          ],
+          "KR0087": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            19,
+            20,
+            21,
+            22
+          ],
+          "KR0094": [
+            22
+          ]
+        }
+      },
+      "FY2023_Q4->FY2024_Q1": {
+        "restated_co": 3,
+        "cells": 5,
+        "clean": 33,
+        "uncovered": 3,
+        "compared": 776,
+        "blind": 13,
+        "who": {
+          "KR0003": [
+            4
+          ],
+          "KR0080": [
+            14
+          ],
+          "KR0100": [
+            7,
+            8,
+            11
+          ]
+        }
+      },
+      "FY2024_Q1->FY2024_Q2": {
+        "restated_co": 5,
+        "cells": 12,
+        "clean": 29,
+        "uncovered": 5,
+        "compared": 729,
+        "blind": 10,
+        "who": {
+          "KR0004": [
+            7,
+            11
+          ],
+          "KR0008": [
+            10,
+            11
+          ],
+          "KR0051": [
+            5,
+            11
+          ],
+          "KR0087": [
+            1,
+            2,
+            12
+          ],
+          "KR0100": [
+            7,
+            8,
+            11
+          ]
+        }
+      },
+      "FY2024_Q2->FY2024_Q3": {
+        "restated_co": 5,
+        "cells": 24,
+        "clean": 28,
+        "uncovered": 6,
+        "compared": 731,
+        "blind": 6,
+        "who": {
+          "KR0004": [
+            2,
+            3
+          ],
+          "KR0005": [
+            1,
+            2,
+            4,
+            7,
+            9,
+            14,
+            22
+          ],
+          "KR0051": [
+            7,
+            11
+          ],
+          "KR0069": [
+            1,
+            2,
+            10,
+            11,
+            16,
+            24
+          ],
+          "KR0071": [
+            1,
+            2,
+            4,
+            11,
+            14,
+            23,
+            26
+          ]
+        }
+      },
+      "FY2024_Q3->FY2024_Q4": {
+        "restated_co": 4,
+        "cells": 6,
+        "clean": 26,
+        "uncovered": 9,
+        "compared": 669,
+        "blind": 7,
+        "who": {
+          "KR0032": [
+            13
+          ],
+          "KR0051": [
+            7,
+            11
+          ],
+          "KR0099": [
+            11
+          ],
+          "KR1000": [
+            2,
+            3
+          ]
+        }
+      },
+      "FY2024_Q4->FY2025_Q1": {
+        "restated_co": 2,
+        "cells": 5,
+        "clean": 29,
+        "uncovered": 8,
+        "compared": 683,
+        "blind": 6,
+        "who": {
+          "KR0095": [
+            2,
+            17
+          ],
+          "KR0100": [
+            2,
+            3,
+            13
+          ]
+        }
+      },
+      "FY2025_Q1->FY2025_Q2": {
+        "restated_co": 4,
+        "cells": 10,
+        "clean": 30,
+        "uncovered": 5,
+        "compared": 751,
+        "blind": 4,
+        "who": {
+          "KR0003": [
+            13
+          ],
+          "KR0032": [
+            2,
+            3,
+            13
+          ],
+          "KR0071": [
+            2,
+            3,
+            13
+          ],
+          "KR1000": [
+            2,
+            3,
+            13
+          ]
+        }
+      },
+      "FY2025_Q2->FY2025_Q3": {
+        "restated_co": 3,
+        "cells": 4,
+        "clean": 31,
+        "uncovered": 5,
+        "compared": 746,
+        "blind": 5,
+        "who": {
+          "KR0050": [
+            8,
+            9
+          ],
+          "KR0072": [
+            12
+          ],
+          "KR0083": [
+            16
+          ]
+        }
+      },
+      "FY2025_Q3->FY2025_Q4": {
+        "restated_co": 4,
+        "cells": 12,
+        "clean": 30,
+        "uncovered": 5,
+        "compared": 732,
+        "blind": 5,
+        "who": {
+          "KR0032": [
+            4,
+            7,
+            14,
+            15,
+            17
+          ],
+          "KR0073": [
+            2,
+            3,
+            13
+          ],
+          "KR0083": [
+            9,
+            11
+          ],
+          "KR0100": [
+            5,
+            11
+          ]
+        }
+      },
+      "FY2025_Q4->FY2026_Q1": {
+        "restated_co": 1,
+        "cells": 5,
+        "clean": 32,
+        "uncovered": 6,
+        "compared": 694,
+        "blind": 7,
+        "who": {
+          "KR0029": [
+            1,
+            2,
+            4,
+            11,
+            14
+          ]
+        }
+      },
+      "FY2026_Q1->FY2026_Q2": {
+        "restated_co": 1,
+        "cells": 10,
+        "clean": 38,
+        "uncovered": 0,
+        "compared": 830,
+        "blind": 0,
+        "who": {
+          "KR0073": [
+            1,
+            2,
+            4,
+            11,
+            14,
+            15,
+            16,
+            19,
+            20,
+            22
+          ]
+        }
+      }
+    }
+  },
+  "_derived_note_item27": "item27(지급여력비율)은 마스터에서 item1/item14x100 파생값(소수 8자리)이라 공시본 인쇄값(1~2자리)과 항상 어긋난다 → 재작성 축에서 제외했다. 참고로 교보 2026.1Q 의 인쇄 비율은 원공시 161.92 → 재작성 160.41 (Δ -1.51%p)로 같이 움직였고, 그건 부모 item1/item14 재작성이 이미 말해 준다.",
+  "_policy_decisions": [
+    {
+      "date": "2026-09-01",
+      "by": "owner",
+      "scope": "KR0073 2026.1Q · 적용전 10칸 + 파생 item27/28",
+      "decision": "as_restated 채택",
+      "quote": "매번 덮어쓰라는건 아니지만 이번처럼 교보생명 틀린 부분이 딱 명확히 발견된거면 안고칠 이유가 없지",
+      "note": "전면 정책 변경이 아니다. '명확히 확인된 건은 고친다'는 건별 판단이며, 기본값은 as_filed 그대로다. 과거 122칸(_history_probe)은 육안 대조를 안 한 미검증 census 라 채택 대상이 아니다."
+    }
+  ],
+  "_adoption_cascades": [
+    {
+      "_what": "재작성 **채택의 연쇄**로 설명되는 룰엔진 RED 의 기대잔차 박제. 통째 skip 이 아니다 — 게이트가 매 실행 실측 잔차와 대조하고, 어긋나면 RED, RED 이 사라지면 등재가 무용해졌다고 알린다.",
+      "company": "KR0073",
+      "company_name": "교보생명보험",
+      "quarter": "2026.1Q",
+      "rule": "19_market",
+      "expected_residual": 779.1579604734579,
+      "tol": 0.5,
+      "why": "발행사가 item19(시장위험액)를 54,674 → 55,453 으로 재작성해 인쇄했지만, 그 세부 36~40(금리·주식·부동산·외환·자산집중)의 2026.1Q 값은 **재공시하지 않았다** — 2026.2Q 공시본의 `② 금리위험액 현황` 표(parsed MD L608-634)는 당분기 단일 컬럼이고, 경과조치 ②③ 표(L463-540)에도 직전분기 칸이 없다. 즉 마스터의 36~40 은 2026.1Q 원공시본 값이고 item19 만 재작성값이라, sqrt(V'·MARKET_M·V)=54,673.84 vs item19=55,453 로 **정확히 채택 델타(+779)만큼** 벌어진다. 우리 데이터 결함이 아니라 owner 채택 결정의 산술적 귀결이다.",
+      "alternative_rejected": "item19 만 원공시로 되돌리는 안은 더 나쁘다 — item15 = (17+18+19+20+21) - 16 이 -779 만큼 깨지고, item14 = item15 - item22 + item23 까지 연쇄로 깨진다. 세부를 비례배분해 채우는 안은 '원문에 없는 숫자를 지어내는 것'이라 금지다.",
+      "adopted_by": "owner 2026-09-01",
+      "clears_when": "발행사가 36~40 의 재작성값을 공시하거나, 이 버킷의 adopted_basis 를 as_filed 로 되돌리면 이 등재를 풀어야 한다."
+    }
+  ]
+}
