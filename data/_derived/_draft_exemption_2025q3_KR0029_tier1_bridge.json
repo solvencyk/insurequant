@@ -1,0 +1,42 @@
+{
+  "_doc": "DRAFT ONLY — NOT applied to data/_gold/kics_exemption_provenance.json. Produced 2026-09-01 by a parser (kics lane) session dispatched to re-verify the 2_tier1_bridge RED for KR0029 2025.3Q against raw (owner option (c): 원문 재확인 대신 면제 등재). This file exists so a validation/owner round can review-and-paste this single entry into the live ledger's `entries` array if they approve registration — it is not consumed by any gate or script as-is.",
+  "entry": {
+    "registry": "_TIER2_ISSUER_INCONSISTENT",
+    "company": "KR0029",
+    "quarter": "2025.3Q",
+    "claim": "item2(기본자본)=6,304 는 item4(순자산)=6,362 에서 이미 약 58.70 만큼 깎여 인쇄돼 있는데, 같은 페이지(p14)의 Ⅲ.보완자본으로재분류하는항목(item13) 행은 0으로 인쇄돼 그 차감의 근거를 담지 않는다(Ⅱ.불인정하는항목 item12도 0). 그 58.70 은 다른 표(p15, TFI표/공통적용경과조치)의 해약환급금부족분초과분(item49=58.70)과 정확히 일치하고, item3(보완자본 헤드라인=59)·item50/51/52(TFI표 기본자본/보완자본/지급여력금액)가 전부 그 58.70을 재현한다 — TFI표는 자기 안에서 완전히 닫힌다(게이트 축 3_tier2_composition·51_tfi_tier2_composition·50_tfi_tier_split·47_tier2_census·48_tier2_limit 전부 GREEN). 깨지는 것은 item4−item12−item13 으로 item2를 재현하는 축(2_tier1_bridge) 하나뿐이다 — 이 회사는 item49-경로 재분류를 item2에는 반영하고 item13에는 반영하지 않은 채 공시했다.",
+    "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
+    "status": "VERIFIED",
+    "citation": {
+      "file": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "pages": [14, 15]
+    },
+    "verify": {
+      "file": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "pages": [14, 15],
+      "present_markers": ["6,362", "6,304", "59", "127,776", "5,870", "630,356", "255,552"],
+      "present_rows": [
+        {"row": "가. 지급여력금액(기본자본+보완자본) [p14, 25.3Q열]", "value": "6,362"},
+        {"row": "기본자본 주2) [p14, 25.3Q열]", "value": "6,304"},
+        {"row": "보완자본 [p14, 25.3Q열]", "value": "59"},
+        {"row": "Ⅰ. 건전성감독기준 재무상태표 상의 순자산 (1+2+3+4+5+6) [p14, 25.3Q열]", "value": "6,362"},
+        {"row": "Ⅱ. 지급여력금액으로 불인정하는 항목 (지급이 예정된 주주배당액 등) [p14, 25.3Q열]", "value": "0"},
+        {"row": "Ⅲ. 보완자본으로 재분류하는 항목 (기본자본 자본증권의 인정한도를 초과한 금액 등) [p14, 25.3Q열]", "value": "0"},
+        {"row": "보완자본 한도 적용 전 [p15, TFI표 적용전/적용후]", "value": "- / -"},
+        {"row": "보완자본 한도 [p15, TFI표 적용전/적용후]", "value": "127,776 / 127,776"},
+        {"row": "해약환급금 부족분 상당액 중 해약환급금 상당액 초과분 [p15, TFI표 적용전/적용후]", "value": "5,870 / 5,870"},
+        {"row": "기본자본 [p15, TFI표 적용전/적용후]", "value": "630,356 / 630,356"},
+        {"row": "보완자본 [p15, TFI표 적용전/적용후]", "value": "5,870 / 5,870"},
+        {"row": "지급여력기준금액 [p15, TFI표 적용전/적용후]", "value": "255,552 / 255,552"}
+      ]
+    },
+    "note": "parser(kics lane) 2026-09-01, owner 옵션 (c) 지시로 raw 재확인(직전 4회차 세션이 같은 결론을 냈고 이 세션은 별도 fitz word-bbox 재추출 + 240dpi 크롭 렌더링 육안 확인으로 독립 재검증). p14 word좌표: Ⅱ행 값(y=290.9, x=344/436/528)=0/0/0, Ⅲ행 값(y=318.7, x=344/436/528)=0/0/0 — 셋 다 명백한 숫자 '0'(대시 아님, 공백 아님), 라벨은 각 행의 연속 좌표(y=286.0/295.9, y=308.7/318.7/328.8)와 정확히 정렬. item1-14 전 항목(item5-11 소구성 포함)이 마스터와 소수점까지 정확히 일치 — 컬럼 오분절·라벨 오매칭·대시오독 등 이 발행사의 기존 함정(공백낀 라벨, 대시셀 앵커오류) 전부 배제됨. p15 TFI표도 동일 방식으로 전 행 재확인, 마스터와 일치(item47=대시→0, item48=1277.76, item49=58.70, item50=6303.56, item51=58.70). 대조군: 같은 발행사 2026.2Q p16 (raw data/disclosure/FY2026_Q2/pdf/KR0029_AIG손해보험.pdf, 행 구성 100% 동일한 표) 는 당분기(26.2Q)열 item12=300·item13=754 로 **채워서** 공시하고, item49=754.39 와 사실상 일치해 다리가 잔차 −1로 닫힌다(item4 7,070−item12 300−item13 754=6,016≈item2 6,015) — 같은 회사가 분기에 따라 item49-경로 재분류를 item13에 반영하기도, 안 하기도 함을 원문으로 직접 대조 확인. 게이트 자체 findings(2026-09-01 report_latest.json)도 이 갈래를 뒷받침: `2_tier1_bridge`=RED(expected 6362.0, actual 6304.0, diff -58.0, branch=CAPPED, 한도초과=0)이지만 `3_tier2_composition`=GREEN(actual 59.0)·`51_tfi_tier2_composition`=GREEN(expected 58.7, actual 58.7, diff 0.0)·`50_tfi_tier_split`=GREEN(expected 6362.26, actual 6362.0, diff -0.26)·`47_tier2_census`=GREEN·`48_tier2_limit`=GREEN(YELLOW-class, 로더 앵커라 blocking 아님) — 다섯(+한도류 하나) 축이 전부 같은 58.70을 독립적으로 재현한다.",
+    "expected_residual": {
+      "2_tier1_bridge|적용전": -58.0
+    },
+    "pin_tolerance": 0.01,
+    "not_a_blanket_skip": "게이트는 매 실행 두 겹을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
+    "registered_by": "DRAFT — 미적용. parser(kics lane) 2026-09-01, owner 옵션 (c)(면제 등재 대신 원문 재확인) 지시로 재검증만 수행. 최종 등재 승인은 validation/owner 라운드 몫으로 남긴다 — 이 파일 자체는 살아있는 원장(kics_exemption_provenance.json)에 아직 반영되지 않았다.",
+    "scope": "KR0029 2025.3Q 의 2_tier1_bridge(적용전) 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 2_tier1_bridge_post 는 이 분기 item[2,4,12,13]_적용후가 전부 결측이라 SKIP 상태(해당사항 없음) — 이 등재의 대상이 아니다."
+  }
+}

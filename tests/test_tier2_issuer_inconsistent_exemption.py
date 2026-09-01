@@ -153,8 +153,20 @@ def test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets(records, fi
     # CAPPED 항등식이 두 컬럼 다 잔차 0.0000 으로 닫히지만 **그것만으로는 근거가 못 된다** —
     # min() 은 한도가 11,925.57 이든 17,197.57 이든 같은 값을 주므로 두 읽기를 구분하지 못한다.
     # 구분해 주는 것은 행 좌표와 위 SCR×50% 불일치다. 원장 기록은 같은 날 추가했다.
-    assert len(registered) == 19, (
-        f"면제 레지스트리 크기가 19 -> {len(registered)} 로 바뀌었다. 등재를 늘렸다면 "
+    # 2026-09-01: 19 -> 20. AIG손해 KR0029 2025.3Q (`2_tier1_bridge`, 잔차 -58.0) 1버킷 추가.
+    # owner 가 "면제 등재" 대신 **원문 재확인(옵션 c)** 을 먼저 지시해 raw 를 다시 읽은 결과다.
+    # p14 다리표의 `Ⅱ.불인정하는 항목`(item12)·`Ⅲ.보완자본으로 재분류하는 항목`(item13)이
+    # **진짜 숫자 0** 으로 인쇄돼 있다(대시·공백 아님) — fitz word-bbox 좌표(y=290.9 / y=318.7,
+    # x=344)와 240dpi 크롭 렌더링 2방법으로 확인했고, 그 표의 item1~14 전 항목이 마스터와
+    # 소수점까지 일치해 추출 오류가 아님을 확정했다.
+    # 58.70 의 출처는 p15 TFI표 item49 이고 **그 표는 자기 안에서 완전히 닫힌다** — 같은
+    # 58.70 을 보는 다른 다섯 축(3_tier2_composition · 51_tfi_tier2_composition ·
+    # 50_tfi_tier_split · 47_tier2_census · 48_tier2_limit)이 전부 GREEN 이다. 깨지는 것은
+    # `item4 − item12 − item13` 으로 item2 를 재현하는 축 하나뿐이다.
+    # 같은 회사 2026.2Q 는 **행 구성이 100% 동일한 표**에서 item12=300 · item13=754 로 채워
+    # 다리가 잔차 -1 로 닫힌다 — 표 구조가 아니라 분기별 기재 관행 차이다.
+    assert len(registered) == 20, (
+        f"면제 레지스트리 크기가 20 -> {len(registered)} 로 바뀌었다. 등재를 늘렸다면 "
         f"원장(`data/_gold/kics_exemption_provenance.json`)의 근거와 이 숫자를 같이 고쳐라. "
         f"현재 키: {sorted(registered)}"
     )
@@ -188,6 +200,10 @@ def test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets(records, fi
     # 농협생명 2026.2Q 는 **적용후 컬럼에서만** 중복행이 나므로 적용후 셀을 흔든다.
     # 적용전을 흔들면 이 면제가 지키는 축(`47_tier2_census_post`)과 다른 축을 시험하게 된다.
     ("KR0104", "2026.2Q", 48, "값_적용후"),  # 적용후에서만 47==48 로 인쇄되는 계열
+    # AIG 2025.3Q: 다리가 깨지는 자리를 직접 흔든다. item13 이 0 이 아니게 되는 순간
+    # (발행사 정정 또는 우리 재추출) 면제의 전제가 사라진다.
+    ("KR0029", "2025.3Q", 13, "값"),
+    ("KR0029", "2025.3Q", 2, "값"),
     # 한화생명 2025.2Q 4칸은 2026-08-24 iter-3 에 **면제 해제와 함께 빠졌다.** 그 축은 이제
     # 면제가 아니라 진짜로 닫힌다(다리 잔차 0.26) — 면제가 없으니 흔들 핀도 없다. 같은 데이터를
     # 지키는 시험은 `tests/test_tier2_limit_rules.py::

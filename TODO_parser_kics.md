@@ -1,6 +1,49 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-01(4회차 — 금리민감도 2026.2Q 결측 28사 채우기 + 게이트 커버리지
+> Last updated: 2026-09-01(5회차 — `2_tier1_bridge` KR0029 2025.3Q 원문 재확인, owner
+> 옵션 (c) 지시) — 4회차 세션이 남긴 미해결 1건(잔차 −58.0, `inbox/validation/
+> 20260831T203021Z__parser__KR0029_2025.3Q__2_tier1_bridge_issuer_inconsistency.md`
+> 로 escalate)을 owner가 (a)면제 즉시등재 대신 (c)원문 재확인으로 지정해 별도 세션이 독립
+> 재검증.
+>
+> **결론: 오독 아님 — 원문 자기모순 재확인(더 강한 증거로).** raw PDF p14를 fitz
+> `get_text("words")`로 재추출(직전 세션과 별개로 좌표 독립 재계산) + 240dpi×2 크롭 렌더링
+> 육안 확인까지 이중검증. item1(6,362)/item2(6,304)/item3(59)/item4(6,362)/item5-11(1,776·
+> 0·5,027·0·88·0·−529)/item12(0)/item13(0)/item14(2,556) 전 항목이 마스터와 소수점까지
+> 정확히 일치 — 컬럼 오분절·라벨 오매칭·대시오독 등 이 발행사의 기존 함정 전부 배제. item12·
+> item13 값 셀은 육안으로도 명백한 숫자 "0"(대시 아님): y=290.9(item12)·y=318.7(item13),
+> x=344(25.3Q열) — 스크린샷 근거 `kr0029_2025q3_p14_item12_13_zoom.png`(스크래치).
+>
+> **58.70의 실제 소재를 특정**: p15 TFI표(경과조치 적용에 관한 사항, 백만원)에서 기본자본
+> 630,356·보완자본 5,870·보완자본한도 127,776·해약환급금초과분(item49) 5,870 전부 마스터와
+> 일치. 게이트 findings 자체가 이 갈래를 이미 GREEN 5축으로 뒷받침: `3_tier2_composition`
+> (branch=CAPPED, item3=59≈min(47,48)+49=58.7)·`51_tfi_tier2_composition`(58.7=58.7 정확)·
+> `50_tfi_tier_split`(6362.26≈6362)·`47_tier2_census`·`48_tier2_limit`(로더앵커, YELLOW급).
+> **깨지는 건 `2_tier1_bridge`(item4−item12−item13) 축 하나뿐** — item49 경로 재분류가
+> item2엔 이미 반영, item13엔 미반영. 같은 회사 2026.2Q p16 동일 표(행 구성 100% 동일)는
+> 당분기열 item12=300·item13=754로 **채워서** 공시(item49=754.39와 사실상 일치, 다리가
+> −1로 닫힘) — 같은 발행사가 분기마다 item49-경로 재분류의 item13 반영 여부를 다르게
+> 공시함을 원문 대조로 직접 확인.
+>
+> **면제 등재 초안만 작성, 미적용**: `data/_gold/kics_exemption_provenance.json`의
+> `_TIER2_ISSUER_INCONSISTENT` 스키마(KR0075/KR0003 기존 항목과 동일 형식)로
+> `data/_derived/_draft_exemption_2025q3_KR0029_tier1_bridge.json`에 초안 작성 — 라이브
+> 원장에는 안 씀(등재 승인은 validation/owner 몫). `expected_residual`
+> `{"2_tier1_bridge|적용전": -58.0}`, `pin_tolerance=0.01`. **마스터 JSON 변경 0건**(고칠
+> 오독이 없었음 — item2/4/12/13 넷 다 원문 그대로 정확). 게이트 재실행 불필요(값을 안
+> 건드렸으므로 RED 카운트 불변). 원 에스컬레이션 inbox는 그대로 둔다(status: open,
+> route: escalate) — 이번 세션은 재검증만, 등재 여부 최종 승인은 여전히 validation/owner
+> 라운드 몫.
+>
+> 재현: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/
+> _probe_kr0029_worddump.py "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf" 14`
+> (그리고 `15`) → 좌표·값 재현. `scripts/_probes/_render_kr0029_p14_zoom.py` → 육안 확인용
+> 렌더. `scripts/_probes/_probe_kr0029_2025q3_findings.py` → 게이트 findings(GREEN 5축 +
+> RED 1축) 재현.
+>
+> status: answered(validation/owner 재확인 필요 — 등재 여부 최종 승인).
+>
+> Last updated (이전): 2026-09-01(4회차 — 금리민감도 2026.2Q 결측 28사 채우기 + 게이트 커버리지
 > census 신설) — owner가 AIA생명(KR0080) 26.2Q 금리민감도 결측을 직접 잡아낸 걸 계기로
 > `kics_rate_sensitivity.json`(627행) 전수 재서: 2026.2Q 는 39사 중 **11사만** 있었다(28사
 > 결측 — KR0001·0003·0004·0009·0011·0029·0032·0051·0068·0069·0070·0071·0072·0073·0079·
