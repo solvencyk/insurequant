@@ -35,6 +35,7 @@
     .donut-caption{margin-top:8px;color:var(--text);font-size:14px;font-weight:600}
     .donut-caption .sub{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:2px}
     .donut-note{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.5}
+    .donut-note .capsec-gf{font-size:11.5px;opacity:.85}
     .no-data{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
     td.no-disclosure{color:var(--muted);font-size:12px;font-style:italic}
     .forward-chart{position:relative;height:420px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
@@ -960,13 +961,30 @@
       donutTier1Chart = renderDonut('donut-tier1', donutTier1Chart, t1Pct);
       donutTier2Chart = renderDonut('donut-tier2', donutTier2Chart, t2Pct);
       const notes = [];
+      // 한도 소진율의 분자는 **2023년 이후 발행분**뿐이다 — 경과조치 대상(2023년 전 발행)은
+      // K-ICS 한도 산정에서 빠진다. 그런데 그 값만 '발행'이라고 찍으면, 신종자본증권을
+      // 실제로 들고 있는 회사가 '발행 0억원'으로 표시된다. 2026.2Q 기준 6개사가 그랬다
+      // (메리츠화재 1,800억 · 한화손해 2,350억 · 아이엠라이프 949억 · 흥국생명 500억 ·
+      // KB라이프 500억 · 롯데손해 460억, 합 6,559억). owner 지적 2026-09-01.
+      // 분모(한도)는 방법론대로 두고, **발행잔액은 경과조치분까지 합쳐** 보여준다.
       if (t1) {
-        notes.push(`기본자본: 발행 ${fmtEokInt(t1.tier1_hybrid_issued_eok)}억원 / 한도 ${fmtEokInt(t1.tier1_hybrid_limit_eok)}억원 (SCR×15%)`);
+        const t1New = t1.tier1_hybrid_issued_eok || 0;
+        const t1Gf = t1.tier1_grandfathered_hybrid_eok || 0;
+        let line = `기본자본: 발행 ${fmtEokInt(t1New + t1Gf)}억원 / 한도 ${fmtEokInt(t1.tier1_hybrid_limit_eok)}억원 (SCR×15%)`;
+        if (t1Gf > 0) {
+          line += ` &nbsp;<span class="capsec-gf">경과조치 ${fmtEokInt(t1Gf)}억원은 한도 산정 제외${t1New === 0 ? ' (전액)' : ''}</span>`;
+        }
+        notes.push(line);
       } else {
         notes.push('기본자본: 데이터 없음');
       }
       if (t2) {
-        notes.push(`보완자본: 인정 ${fmtEokInt(t2.numerator_eok)}억원 / 한도 ${fmtEokInt(t2.tier2_limit_eok)}억원`);
+        const t2Gf = (t2.grandfathered_hybrid_eok || 0) + (t2.grandfathered_subordinated_eok || 0);
+        let line = `보완자본: 인정 ${fmtEokInt(t2.numerator_eok)}억원 / 한도 ${fmtEokInt(t2.tier2_limit_eok)}억원`;
+        if (t2Gf > 0) {
+          line += ` &nbsp;<span class="capsec-gf">경과조치 ${fmtEokInt(t2Gf)}억원 별도</span>`;
+        }
+        notes.push(line);
       } else {
         notes.push('보완자본: 데이터 없음');
       }

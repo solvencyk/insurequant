@@ -896,7 +896,7 @@
     {
       "code": "KR0001",
       "company": "메리츠화재해상보험",
-      "as_of": "2025-12-31",
+      "as_of": "2026-06-30",
       "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml",
       "has_capital_securities": true,
       "bs_hybrid_mn": 179195,
@@ -916,8 +916,8 @@
           "face_amount_mn": 105000,
           "outstanding_mn": 0,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml (BS 신종자본증권 총액 당반기말==전기말==FY2025) (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "메리츠화재 제2회 신종자본증권(사모)",
@@ -930,8 +930,8 @@
           "face_amount_mn": 70000,
           "outstanding_mn": 70000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml (BS 신종자본증권 총액 당반기말==전기말==FY2025) (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "메리츠화재 제3회 신종자본증권(사모)",
@@ -944,22 +944,8 @@
           "face_amount_mn": 110000,
           "outstanding_mn": 110000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
-        },
-        {
-          "name": "메리츠화재해상보험6 무보증 후순위사채(사모)",
-          "tier": "subordinated",
-          "issue_date": "2020-02-14",
-          "legal_maturity": "2030-02-14",
-          "call_date": "2025-02-14",
-          "call_source": "derived_issue_plus_5y",
-          "coupon_pct": 3.2,
-          "face_amount_mn": 150000,
-          "outstanding_mn": 0,
-          "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml (BS 신종자본증권 총액 당반기말==전기말==FY2025) (채무증권 발행실적: 미상환 확인, 금액 불변)"
         },
         {
           "name": "메리츠화재해상보험7 / 제7회 무보증 후순위사채",
@@ -972,8 +958,8 @@
           "face_amount_mn": 210000,
           "outstanding_mn": 210000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml (H1 전 증거원 부재 + BS 당반기말 1,797,155 재현으로 잔존 확인)"
         },
         {
           "name": "메리츠화재해상보험8 / 제8회 무보증 후순위사채",
@@ -986,8 +972,8 @@
           "face_amount_mn": 296000,
           "outstanding_mn": 296000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml (H1 전 증거원 부재 + BS 당반기말 1,797,155 재현으로 잔존 확인)"
         },
         {
           "name": "메리츠화재해상보험9 무보증 후순위사채(사모)",
@@ -1000,8 +986,8 @@
           "face_amount_mn": 90000,
           "outstanding_mn": 90000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml (H1 전 증거원 부재 + BS 당반기말 1,797,155 재현으로 잔존 확인)"
         },
         {
           "name": "메리츠화재해상보험10 무보증 후순위사채(사모)",
@@ -1014,8 +1000,8 @@
           "face_amount_mn": 150000,
           "outstanding_mn": 150000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml (H1 전 증거원 부재 + BS 당반기말 1,797,155 재현으로 잔존 확인)"
         },
         {
           "name": "메리츠화재해상보험11 / 제11회 무보증 후순위사채",
@@ -1028,8 +1014,8 @@
           "face_amount_mn": 650000,
           "outstanding_mn": 650000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml (H1 전 증거원 부재 + BS 당반기말 1,797,155 재현으로 잔존 확인)"
         },
         {
           "name": "메리츠화재해상보험12 / 제12회 무보증 후순위사채",
@@ -1042,8 +1028,8 @@
           "face_amount_mn": 300000,
           "outstanding_mn": 300000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml (H1 전 증거원 부재 + BS 당반기말 1,797,155 재현으로 잔존 확인)"
         },
         {
           "name": "메리츠화재해상보험13 / 제13회 무보증 후순위사채",
@@ -1056,11 +1042,11 @@
           "face_amount_mn": 105000,
           "outstanding_mn": 105000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0001_메리츠화재해상보험_20260331003916/20260331003916.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0001_메리츠화재해상보험/20260814002253.xml (H1 전 증거원 부재 + BS 당반기말 1,797,155 재현으로 잔존 확인)"
         }
       ],
-      "notes": "SOURCE: main annual XML (사업보고서 rcept 20260331003916; single raw dir, no 정정). Consolidated (연결) and separate (별도) figures are identical for all capital securities, so values are unambiguous.\n\nHYBRID (신종자본증권), 주석 20.3/20.4: 3 perpetual bonds (사모). 제1회 (105,000, 3.90%) was REDEEMED during FY2025 — 당기말 잔액=0 (전기말=105,000); its 5yr call fell on 2025-11-24 and the company called it (call_source derived; legal mat 2050.11.24). 제2회 (70,000, 4.60%) and 제3회 (110,000, 5.30%) outstanding. 발행조건 note discloses the rate step-up / 5yr call dates explicitly: 제2회 2027-04-07, 제3회 2027-06-30 → call_source='disclosed'. Sum of outstanding face 180,000; BS 자본 [신종자본증권]=179,195 = 180,000 − 805 발행비용 (reconciles). face_amount_mn for 제1회=105,000 is its original issue size though now 0 outstanding.\n\nSUBORDINATED (후순위사채), 차입부채 주석: 8 bonds (메리츠화재해상보험6~13). Bond 6 (150,000, 3.20%, issued 2020-02-14) was REDEEMED at its 2025-02-14 5yr call — 당기말=0 (전기말=150,000). Bonds 7~13 outstanding: face 1,801,000. Carried 차입부채 후순위사채 total = 1,797,155 = 1,801,000 − 3,845 사채할인발행차금 (reconciles; this is the recognized BS amount in [차입부채] 1,797,155, which here is entirely 후순위사채). \n\nCALL DATES (후순위): the disclosure note states '상기 후순위사채는 발행 후 5년이 경과한 시점부터 당사가 조기상환을 할 수 있다 ... 발행일로부터 5년이 경과한 시점에 1회에 한하여 이자율이 조정' (5yr call + step-up explicitly disclosed in prose, but no per-bond call date tabulated) → call_date = issue_date + 5y, call_source='derived_issue_plus_5y'.\n\n사채관리계약 table (작성기준일 2025-12-31) lists only the publicly-managed 무보증 후순위사채: 제7/8/11/12/13 (matches bonds 7,8,11,12,13). Bonds 6, 9, 10 are 사모(private) without 사채관리계약 — consistent with absence from that table. The 제N회 numbering equals the suffix (해상보험N = 제N회). 제9, 제10회 numbers were used for private placements (해상보험9, 해상보험10); the gap between 제8 and 제11 in the public list is filled by these 사모 issues.\n\npast_call_outstanding=false for every bond: bond 6 and hybrid 제1회 both hit their call and were redeemed to 0 (not held past call); all other bonds' calls are still in the future relative to 2025-12-31. No 흥국-style past-call-but-still-outstanding case here.\n\nUNIT: 백만원 (KRW millions) throughout. 사채할인발행차금 / 발행비용 shown as negatives in source (괄호)."
+      "notes": "SOURCE: main annual XML (사업보고서 rcept 20260331003916; single raw dir, no 정정). Consolidated (연결) and separate (별도) figures are identical for all capital securities, so values are unambiguous.\n\nHYBRID (신종자본증권), 주석 20.3/20.4: 3 perpetual bonds (사모). 제1회 (105,000, 3.90%) was REDEEMED during FY2025 — 당기말 잔액=0 (전기말=105,000); its 5yr call fell on 2025-11-24 and the company called it (call_source derived; legal mat 2050.11.24). 제2회 (70,000, 4.60%) and 제3회 (110,000, 5.30%) outstanding. 발행조건 note discloses the rate step-up / 5yr call dates explicitly: 제2회 2027-04-07, 제3회 2027-06-30 → call_source='disclosed'. Sum of outstanding face 180,000; BS 자본 [신종자본증권]=179,195 = 180,000 − 805 발행비용 (reconciles). face_amount_mn for 제1회=105,000 is its original issue size though now 0 outstanding.\n\nSUBORDINATED (후순위사채), 차입부채 주석: 8 bonds (메리츠화재해상보험6~13). Bond 6 (150,000, 3.20%, issued 2020-02-14) was REDEEMED at its 2025-02-14 5yr call — 당기말=0 (전기말=150,000). Bonds 7~13 outstanding: face 1,801,000. Carried 차입부채 후순위사채 total = 1,797,155 = 1,801,000 − 3,845 사채할인발행차금 (reconciles; this is the recognized BS amount in [차입부채] 1,797,155, which here is entirely 후순위사채). \n\nCALL DATES (후순위): the disclosure note states '상기 후순위사채는 발행 후 5년이 경과한 시점부터 당사가 조기상환을 할 수 있다 ... 발행일로부터 5년이 경과한 시점에 1회에 한하여 이자율이 조정' (5yr call + step-up explicitly disclosed in prose, but no per-bond call date tabulated) → call_date = issue_date + 5y, call_source='derived_issue_plus_5y'.\n\n사채관리계약 table (작성기준일 2025-12-31) lists only the publicly-managed 무보증 후순위사채: 제7/8/11/12/13 (matches bonds 7,8,11,12,13). Bonds 6, 9, 10 are 사모(private) without 사채관리계약 — consistent with absence from that table. The 제N회 numbering equals the suffix (해상보험N = 제N회). 제9, 제10회 numbers were used for private placements (해상보험9, 해상보험10); the gap between 제8 and 제11 in the public list is filled by these 사모 issues.\n\npast_call_outstanding=false for every bond: bond 6 and hybrid 제1회 both hit their call and were redeemed to 0 (not held past call); all other bonds' calls are still in the future relative to 2025-12-31. No 흥국-style past-call-but-still-outstanding case here.\n\nUNIT: 백만원 (KRW millions) throughout. 사채할인발행차금 / 발행비용 shown as negatives in source (괄호). | HYBRID unchanged but confirmed still outstanding at 2026-06-30 via 채무증권 발행실적 (3 bond(s)); SUBORDINATED: 반기 중 상환 1건 제거 (H1 증거 부재 + BS 당반기말 재현 이중확인)"
     },
     {
       "code": "KR0003",
@@ -1531,13 +1517,13 @@
     {
       "code": "KR0009",
       "company": "현대해상화재보험",
-      "as_of": "2025-12-31",
+      "as_of": "2026-06-30",
       "source_file": "data/dart/FY2025_Q4/raw/KR0009_현대해상_20260312001448/20260312001448.xml (+ notes _00760.xml/_00761.xml, 주석 23 차입부채·사채 내역)",
       "has_capital_securities": true,
       "bs_hybrid_mn": 0,
       "bs_subordinated_mn": 3175339,
       "total_hybrid_outstanding_mn": 0,
-      "total_subordinated_outstanding_mn": 3183000,
+      "total_subordinated_outstanding_mn": 2833000,
       "confidence": "high",
       "bonds": [
         {
@@ -1551,22 +1537,8 @@
           "face_amount_mn": 233000,
           "outstanding_mn": 233000,
           "past_call_outstanding": true,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0009_현대해상_20260312001448/20260312001448.xml (+ notes _00760.xml/_00761.xml, 주석 23 차입부채·사채 내역)"
-        },
-        {
-          "name": "무보증후순위사채3",
-          "tier": "subordinated",
-          "issue_date": "2021-05-04",
-          "legal_maturity": "2031-05-04",
-          "call_date": "2026-05-04",
-          "call_source": "derived_issue_plus_5y",
-          "coupon_pct": 3.4,
-          "face_amount_mn": 350000,
-          "outstanding_mn": 350000,
-          "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0009_현대해상_20260312001448/20260312001448.xml (+ notes _00760.xml/_00761.xml, 주석 23 차입부채·사채 내역)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0009_현대해상/20260814003474.xml (H1 전 증거원 부재 + BS 당반기말 2,826,294 재현으로 잔존 확인)"
         },
         {
           "name": "무보증후순위사채4",
@@ -1579,8 +1551,8 @@
           "face_amount_mn": 500000,
           "outstanding_mn": 500000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0009_현대해상_20260312001448/20260312001448.xml (+ notes _00760.xml/_00761.xml, 주석 23 차입부채·사채 내역)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0009_현대해상/20260814003474.xml (H1 전 증거원 부재 + BS 당반기말 2,826,294 재현으로 잔존 확인)"
         },
         {
           "name": "무보증후순위사채5",
@@ -1593,8 +1565,8 @@
           "face_amount_mn": 400000,
           "outstanding_mn": 400000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0009_현대해상_20260312001448/20260312001448.xml (+ notes _00760.xml/_00761.xml, 주석 23 차입부채·사채 내역)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0009_현대해상/20260814003474.xml (H1 전 증거원 부재 + BS 당반기말 2,826,294 재현으로 잔존 확인)"
         },
         {
           "name": "무보증후순위사채6",
@@ -1607,8 +1579,8 @@
           "face_amount_mn": 900000,
           "outstanding_mn": 900000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0009_현대해상_20260312001448/20260312001448.xml (+ notes _00760.xml/_00761.xml, 주석 23 차입부채·사채 내역)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0009_현대해상/20260814003474.xml (H1 전 증거원 부재 + BS 당반기말 2,826,294 재현으로 잔존 확인)"
         },
         {
           "name": "무보증후순위사채7",
@@ -1621,11 +1593,11 @@
           "face_amount_mn": 800000,
           "outstanding_mn": 800000,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0009_현대해상_20260312001448/20260312001448.xml (+ notes _00760.xml/_00761.xml, 주석 23 차입부채·사채 내역)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0009_현대해상/20260814003474.xml (H1 전 증거원 부재 + BS 당반기말 2,826,294 재현으로 잔존 확인)"
         }
       ],
-      "notes": "현대해상 capital securities as of 2025-12-31.\n\nHYBRID (신종자본증권): NONE outstanding. The 신종자본증권 미상환 잔액 table (기준일 2025-12-31) is all dashes/zero. Evidence in the FY2023 statement-of-changes-in-equity rollforward (HybridBond ACODE cells): opening hybrid carrying ~498,287,637,141원 was fully redeemed in FY2023 — 신종자본증권상환 (500,000,000,000)원 with 상환손실/소각 1,712,362,859원. No hybrid movement in FY2024/FY2025 (all cells 0); the 신종자본증권 equity column ending balance is 0. So bs_hybrid_mn=0, total_hybrid_outstanding_mn=0.\n\nSUBORDINATED (후순위채): 6 bonds outstanding, all labeled '무보증후순위사채' (unsecured subordinated) in 주석 23 차입부채 사채 내역. In the 채무증권 발행실적 / 미상환 잔액 disclosure they are summarized under '회사채' but the financial-statement note explicitly names each as 무보증후순위사채. One additional bond — 무보증후순위사채1-2 (2015.10.21 issue / 2025.10.21 maturity, 170,000,000,000원) — MATURED and was redeemed on 2025-10-21, so its 2025-12-31 balance is 0 and it is excluded.\n\nFace total of the 6 outstanding = 3,183,000 백만원 (matches 채무증권 발행실적 합계 3,183,000). Carrying/BS balance = 3,175,339 백만원 (face 3,183,000 less 사채할인발행차금 7,661; BS 사채 3,175,338,699,077원). bs_subordinated_mn reported as carrying 3,175,339; total_subordinated_outstanding_mn reported as face 3,183,000 (per-bond outstanding_mn=face per bond, as face=outstanding at par for these). Per-bond outstanding_mn set to face since the note carries them at face less a single aggregate discount.\n\nCALL DATES: 콜옵션 keyword count = 0 in the filing; no explicit 콜옵션/조기상환 행사가능일 disclosed for these bonds (조기상환 hits are all DCF-model prepayment-rate language, unrelated). All call dates DERIVED as issue_date + 5y (call_source=derived_issue_plus_5y). 사채2-2 (issue 2017.05.26, 10yr legal to 2027.05.26) has a derived first-call 2022.05.26, already past 2025-12-31 yet still on the books → past_call_outstanding=true. The other five issued 2021/2024/2025 have derived calls in 2026-2030.\n\nForward outlook: nearest call 2026-05-04 (사채3, 350,000), then 2029-06-03 (사채4), 2029-11-04 (사채5), 2029-12-30 (사채6), 2030-03-27 (사채7). 사채2-2 already past its conventional 5yr call but is a 10yr-legal bond maturing 2027-05-26.\n\nSource dirs: only one raw dir exists for KR0009 (rcept 20260312001448), no 정정. Unit 백만원."
+      "notes": "현대해상 capital securities as of 2025-12-31.\n\nHYBRID (신종자본증권): NONE outstanding. The 신종자본증권 미상환 잔액 table (기준일 2025-12-31) is all dashes/zero. Evidence in the FY2023 statement-of-changes-in-equity rollforward (HybridBond ACODE cells): opening hybrid carrying ~498,287,637,141원 was fully redeemed in FY2023 — 신종자본증권상환 (500,000,000,000)원 with 상환손실/소각 1,712,362,859원. No hybrid movement in FY2024/FY2025 (all cells 0); the 신종자본증권 equity column ending balance is 0. So bs_hybrid_mn=0, total_hybrid_outstanding_mn=0.\n\nSUBORDINATED (후순위채): 6 bonds outstanding, all labeled '무보증후순위사채' (unsecured subordinated) in 주석 23 차입부채 사채 내역. In the 채무증권 발행실적 / 미상환 잔액 disclosure they are summarized under '회사채' but the financial-statement note explicitly names each as 무보증후순위사채. One additional bond — 무보증후순위사채1-2 (2015.10.21 issue / 2025.10.21 maturity, 170,000,000,000원) — MATURED and was redeemed on 2025-10-21, so its 2025-12-31 balance is 0 and it is excluded.\n\nFace total of the 6 outstanding = 3,183,000 백만원 (matches 채무증권 발행실적 합계 3,183,000). Carrying/BS balance = 3,175,339 백만원 (face 3,183,000 less 사채할인발행차금 7,661; BS 사채 3,175,338,699,077원). bs_subordinated_mn reported as carrying 3,175,339; total_subordinated_outstanding_mn reported as face 3,183,000 (per-bond outstanding_mn=face per bond, as face=outstanding at par for these). Per-bond outstanding_mn set to face since the note carries them at face less a single aggregate discount.\n\nCALL DATES: 콜옵션 keyword count = 0 in the filing; no explicit 콜옵션/조기상환 행사가능일 disclosed for these bonds (조기상환 hits are all DCF-model prepayment-rate language, unrelated). All call dates DERIVED as issue_date + 5y (call_source=derived_issue_plus_5y). 사채2-2 (issue 2017.05.26, 10yr legal to 2027.05.26) has a derived first-call 2022.05.26, already past 2025-12-31 yet still on the books → past_call_outstanding=true. The other five issued 2021/2024/2025 have derived calls in 2026-2030.\n\nForward outlook: nearest call 2026-05-04 (사채3, 350,000), then 2029-06-03 (사채4), 2029-11-04 (사채5), 2029-12-30 (사채6), 2030-03-27 (사채7). 사채2-2 already past its conventional 5yr call but is a 10yr-legal bond maturing 2027-05-26.\n\nSource dirs: only one raw dir exists for KR0009 (rcept 20260312001448), no 정정. Unit 백만원. | SUBORDINATED: 반기 중 상환 1건 제거 (H1 증거 부재 + BS 당반기말 재현 이중확인)"
     },
     {
       "code": "KR0032",
@@ -1900,29 +1872,15 @@
     {
       "code": "KR0079",
       "company": "미래에셋생명",
-      "as_of": "2025-12-31",
+      "as_of": "2026-06-30",
       "source_file": "data/dart/FY2025_Q4/raw/KR0079_미래에셋생명_20260318001664/20260318001664_00760.xml",
       "has_capital_securities": true,
       "bs_hybrid_mn": 0,
       "bs_subordinated_mn": 598649,
       "total_hybrid_outstanding_mn": 0,
-      "total_subordinated_outstanding_mn": 598649,
+      "total_subordinated_outstanding_mn": 299139,
       "confidence": "high",
       "bonds": [
-        {
-          "name": "제2회 후순위채권(공모채, 무보증)",
-          "tier": "subordinated",
-          "issue_date": "2021-04-29",
-          "legal_maturity": "2031-04-29",
-          "call_date": "2026-04-29",
-          "call_source": "disclosed",
-          "coupon_pct": 3.9,
-          "face_amount_mn": 300000,
-          "outstanding_mn": 299510,
-          "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0079_미래에셋생명_20260318001664/20260318001664_00760.xml"
-        },
         {
           "name": "제3회 후순위채권(공모채, 무보증)",
           "tier": "subordinated",
@@ -1934,38 +1892,24 @@
           "face_amount_mn": 300000,
           "outstanding_mn": 299139,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0079_미래에셋생명_20260318001664/20260318001664_00760.xml"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0079_미래에셋생명/20260814004054.xml (H1 전 증거원 부재 + BS 당반기말 299,180 재현으로 잔존 확인)"
         }
       ],
-      "notes": "미래에셋생명 has NO 신종자본증권 (hybrid). The '(5)신종자본증권 미상환 잔액' disclosure table (main XML, 기준일 2025-12-31) is entirely dashes across all maturity buckets, and the only '신종자본증권' string occurrence is that empty template header; 0 occurrences in the financial-statement notes (00760). Two subordinated public bonds only (무보증 후순위사채). Outstanding (잔액) from 22.차입부채 note (00760.xml, 별도 단위 백만원): 제2회 총장부 300,000 할인차금 △490 → 299,510 (이자율 3.9%); 제3회 총장부 300,000 할인차금 △861 → 299,139 (이자율 3.8%). face_amount_mn = 권면(전자등록)총액 300,000 each (회사채 미상환 발행현황 합계 600,000 = sum of 권면). Issue dates from prose: '2021년 4월 29일 제2회 공모후순위채권, 2025년 10월 24일 제3회 공모후순위채권을 발행'. Call is DISCLOSED in prose: '제2회 및 제3회 무보증 후순위 사채 만기는 발행일로부터 10년이며, 사채 발행일로부터 5년째되는 날과 이후 매 이자지급기일에 후순위사채의 전부를 중도 상환할 수 있습니다' → legal_maturity = issue+10y, call = issue+5y (제2회 2026-04-29, 제3회 2030-10-24). Both calls are AFTER 2025-12-31 → neither past_call. bs_subordinated_mn 598,649 = 별도 차입부채 후순위 합계 (299,510+299,139); 연결 매칭 (00761 합계 598,649). No prior 제1회 후순위 on books at FY2025 (전기말 showed 제2회 + RP매도 200,000 only; RP매도 is repo, not a bond). 신종자본증권 BS line absent → bs_hybrid_mn = 0."
+      "notes": "미래에셋생명 has NO 신종자본증권 (hybrid). The '(5)신종자본증권 미상환 잔액' disclosure table (main XML, 기준일 2025-12-31) is entirely dashes across all maturity buckets, and the only '신종자본증권' string occurrence is that empty template header; 0 occurrences in the financial-statement notes (00760). Two subordinated public bonds only (무보증 후순위사채). Outstanding (잔액) from 22.차입부채 note (00760.xml, 별도 단위 백만원): 제2회 총장부 300,000 할인차금 △490 → 299,510 (이자율 3.9%); 제3회 총장부 300,000 할인차금 △861 → 299,139 (이자율 3.8%). face_amount_mn = 권면(전자등록)총액 300,000 each (회사채 미상환 발행현황 합계 600,000 = sum of 권면). Issue dates from prose: '2021년 4월 29일 제2회 공모후순위채권, 2025년 10월 24일 제3회 공모후순위채권을 발행'. Call is DISCLOSED in prose: '제2회 및 제3회 무보증 후순위 사채 만기는 발행일로부터 10년이며, 사채 발행일로부터 5년째되는 날과 이후 매 이자지급기일에 후순위사채의 전부를 중도 상환할 수 있습니다' → legal_maturity = issue+10y, call = issue+5y (제2회 2026-04-29, 제3회 2030-10-24). Both calls are AFTER 2025-12-31 → neither past_call. bs_subordinated_mn 598,649 = 별도 차입부채 후순위 합계 (299,510+299,139); 연결 매칭 (00761 합계 598,649). No prior 제1회 후순위 on books at FY2025 (전기말 showed 제2회 + RP매도 200,000 only; RP매도 is repo, not a bond). 신종자본증권 BS line absent → bs_hybrid_mn = 0. | SUBORDINATED: 반기 중 상환 1건 제거 (H1 증거 부재 + BS 당반기말 재현 이중확인)"
     },
     {
       "code": "KR0010",
       "company": "KB손해보험",
-      "as_of": "2025-12-31",
+      "as_of": "2026-06-30",
       "source_file": "data/dart/FY2025_Q4/raw/KR0010_KB손해보험_20260313001064/20260313001064.xml (사채 발행내역 + 사채관리계약; inline after workflow session-limit fail)",
       "has_capital_securities": true,
       "bs_hybrid_mn": 0,
       "bs_subordinated_mn": 1263292,
       "total_hybrid_outstanding_mn": 0,
-      "total_subordinated_outstanding_mn": 1265000,
+      "total_subordinated_outstanding_mn": 886000,
       "confidence": "high",
       "bonds": [
-        {
-          "name": "제1회 무보증 후순위채권",
-          "tier": "subordinated",
-          "issue_date": "2021-05-13",
-          "legal_maturity": "2031-05-13",
-          "call_date": "2026-05-13",
-          "call_source": "derived_issue_plus_5y",
-          "face_amount_mn": 379000,
-          "outstanding_mn": 379000,
-          "coupon_pct": 3.4,
-          "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0010_KB손해보험_20260313001064/20260313001064.xml (사채 발행내역 + 사채관리계약; inline after workflow session-limit fail)"
-        },
         {
           "name": "제2회 무보증 후순위채권",
           "tier": "subordinated",
@@ -1977,8 +1921,8 @@
           "outstanding_mn": 286000,
           "coupon_pct": 4.9,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0010_KB손해보험_20260313001064/20260313001064.xml (사채 발행내역 + 사채관리계약; inline after workflow session-limit fail)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0010_KB손해보험/20260814002234.xml (H1 전 증거원 부재 + BS 당반기말 884,615 재현으로 잔존 확인)"
         },
         {
           "name": "제3회 무보증 후순위채권",
@@ -1991,11 +1935,11 @@
           "outstanding_mn": 600000,
           "coupon_pct": 4.2,
           "past_call_outstanding": false,
-          "as_of": "2025-12-31",
-          "source_file": "data/dart/FY2025_Q4/raw/KR0010_KB손해보험_20260313001064/20260313001064.xml (사채 발행내역 + 사채관리계약; inline after workflow session-limit fail)"
+          "as_of": "2026-06-30",
+          "source_file": "data/dart/FY2026_Q2/raw/KR0010_KB손해보험/20260814002234.xml (H1 전 증거원 부재 + BS 당반기말 884,615 재현으로 잔존 확인)"
         }
       ],
-      "notes": "신종자본증권 0 (no 신종 issuance; census 신종=1 = incidental). 후순위채권 3회. 합계 carrying 1,263,292 (face 1,265,000 − 사채할인발행차금 1,708). call = issue+5y (관행)."
+      "notes": "신종자본증권 0 (no 신종 issuance; census 신종=1 = incidental). 후순위채권 3회. 합계 carrying 1,263,292 (face 1,265,000 − 사채할인발행차금 1,708). call = issue+5y (관행). | SUBORDINATED: 반기 중 상환 1건 제거 (H1 증거 부재 + BS 당반기말 재현 이중확인)"
     },
     {
       "code": "KR0097",

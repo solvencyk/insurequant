@@ -430,6 +430,141 @@ def _bond_manager_as_of(text: str):
     return None
 
 
+_DATEISH = re.compile(r"\d{4}[.\-]\d{2}")
+_HYB_LAB = re.compile(r"^[\dIVXⅠ-Ⅹ.\s\[\]]*신종자본증권[\]\s]*$")
+_SUB_LAB = re.compile(r"^[\dIVXⅠ-Ⅹ.\s\[\]]*(사채|차입부채|후순위사채|후순위채권)[\]\s]*(\(주[\d,\s]+\))?$")
+
+
+def bs_current_balance(text: str, fy25_bs_mn, kind: str):
+    """재무상태표 총액의 **당반기말** 값. 행 선택은 `전기말 == FY2025 BS` 로 자체 검증한다.
+
+    2026-09-01: 라벨을 조이지 않으면 자본변동표의 `2025.01.01 (기초자본)` 같은 행이 우연히
+    같은 값을 갖고 걸린다(실측 4건). 날짜형 라벨은 배제하고 BS 계정명만 받는다.
+    후순위 총액은 회사마다 `사채` · `차입부채` · `후순위채권` 으로 라벨이 갈린다.
+    """
+    if not fy25_bs_mn:
+        return None
+    labre = _HYB_LAB if kind == "hybrid" else _SUB_LAB
+    tol = max(1.0, abs(fy25_bs_mn) * 2e-6)
+    hits = []
+    for tr in re.finditer(r"<TR[^>]*>.*?(?=<TR[^>]*>|</TABLE>)", text, re.DOTALL):
+        cells = [re.sub(r"\s+", " ", t).replace("&nbsp;", " ").strip()
+                 for t in re.findall(r">([^<]+)", tr.group(0))]
+        cells = [c for c in cells if c]
+        if len(cells) < 3:
+            continue
+        lab = cells[0]
+        if _DATEISH.search(lab) or not labre.match(lab):
+            continue
+        nums = []
+        for c in cells[1:]:
+            v = c.replace(",", "").strip()
+            if re.fullmatch(r"\d+(\.\d+)?", v):
+                n = float(v)
+                nums.append(n / 1e6 if n >= 1e9 else n)
+        if len(nums) >= 2 and abs(nums[1] - fy25_bs_mn) <= tol:
+            hits.append(round(nums[0], 0))
+    if not hits:
+        return None
+    from collections import Counter
+    return Counter(hits).most_common(1)[0][0]
+
+
+def detect_redeemed(code, fy25_sub_bonds, bs_prior_mn, report):
+    """반기 중 **상환된** 후순위채를 찾는다. 잠금 두 개를 모두 통과해야 인정한다.
+
+    ① 그 채권이 H1 반기보고서의 **어느 증거원에도 없다**
+       (채무증권 발행실적 · 사채관리계약 현황 · 후순위 상세표)
+    ② 그것을 뺀 나머지 합이 **BS 당반기말 총액을 재현한다**(0.5% 이내)
+
+    ①만으로는 안 된다 — 세 표 다 부분 커버리지라 사모채는 원래 안 나온다. ②만으로도 안 된다 —
+    잔액 차이는 상각·환율로도 난다. 둘이 같은 채권을 가리킬 때만 상환으로 판정한다.
+
+    2026-09-01 owner 지적으로 발견: KB손해 제1회(3,790억) · 미래에셋 제2회(3,000억) ·
+    현대해상 제3회(3,500억) · KB라이프 제1회(1,300억) 가 반기 중 상환됐는데 마스터가 계속
+    계상하고 있었다. 보완자본 소진율 분자가 그만큼 부풀어 있었다.
+    """
+    if not fy25_sub_bonds or not bs_prior_mn:
+        return None
+    xml_path, text = load_h1_xml(code)
+    if text is None:
+        return None
+    cur = bs_current_balance(text, bs_prior_mn, "subordinated")
+    if cur is None:
+        return None
+    evidence = {r["issue_date"] for r in
+                (_issuance_rows(text) + _bond_manager_rows(text) + extract_subordinated_detail(text))}
+    absent = [b for b in fy25_sub_bonds if b.get("issue_date") not in evidence]
+    if not absent:
+        return None
+    # 증거원은 셋 다 **부분 커버리지**라(사모채는 원래 안 나온다) '증거에 없다' 가 곧 상환은
+    # 아니다. 그래서 증거 없는 채권들의 **부분집합**을 전부 시험해, BS 당반기말을 재현하는
+    # 조합이 **정확히 하나**일 때만 채택한다. 둘 이상이면 어느 것이 상환됐는지 알 수 없으므로
+    # 채택하지 않는다 — 추측으로 채권을 지우면 소진율 분자가 조용히 틀린다.
+    # (현대해상 실측: 증거 없는 3건 중 실제 상환은 1건 = 무보증후순위사채3.)
+    total = sum((b.get("outstanding_mn") or 0) for b in fy25_sub_bonds)
+    tol = max(1.0, cur * 0.005)
+    solutions = []
+    n = len(absent)
+    if n > 12:
+        return None
+    for mask in range(1, 1 << n):
+        drop = [absent[i] for i in range(n) if mask & (1 << i)]
+        if abs(total - sum((b.get("outstanding_mn") or 0) for b in drop) - cur) <= tol:
+            solutions.append(drop)
+    if len(solutions) != 1:
+        report.setdefault("redeem_candidate_unreconciled", {})[code] = {
+            "bs_current_mn": cur, "fy2025_total_mn": total,
+            "absent": [b.get("name") for b in absent],
+            "reconciling_subsets": len(solutions)}
+        return None
+    absent = solutions[0]
+    kept = [b for b in fy25_sub_bonds if b not in absent]
+    report.setdefault("sub_redeemed_detected", {})[code] = [
+        {"name": b.get("name"), "issue_date": b.get("issue_date"),
+         "outstanding_mn": b.get("outstanding_mn")} for b in absent]
+    src = xml_path.relative_to(ROOT).as_posix()
+    return [dict(b, as_of=H1_AS_OF,
+                 source_file=f"{src} (H1 전 증거원 부재 + BS 당반기말 {cur:,.0f} 재현으로 잔존 확인)")
+            for b in kept]
+
+
+def confirm_aggregate_unchanged(text: str, fy25_bs_mn, keyword: str):
+    """재무상태표 **총액**으로 "이 스택은 반기 동안 안 변했다" 를 확인한다 (네 번째 경로).
+
+    2026-09-01: 채권 단위 표(발행실적·사채관리계약·상세표) 어느 것도 못 뚫는 회사가 남는다.
+    그런데 그 회사들도 BS 에는 `신종자본증권` / `후순위사채` 총액을 당반기말·전기말 두 열로
+    싣는다. **전기말 값이 우리 FY2025 BS 값을 그대로 재현하면** 그 행이 맞는 행이라는 것이
+    자체 검증되고, 당반기말이 전기말과 같으면 그 스택은 반기 동안 변하지 않았다는 뜻이다.
+    변하지 않았으면 값은 그대로 두고 **시점만** 정직하게 옮길 수 있다.
+
+    당반기말 != 전기말 이면 뭔가 발행·상환된 것이므로 확인하지 않는다(채권 단위 경로 필요).
+    단위가 원인 표(179,195,320,000)와 백만인 표(179,195)가 섞여 있어 둘 다 본다.
+    """
+    if not fy25_bs_mn:
+        return None
+    tol = max(1.0, abs(fy25_bs_mn) * 1e-6)
+    for tr in re.finditer(r"<TR[^>]*>.*?(?=<TR[^>]*>|</TABLE>)", text, re.DOTALL):
+        cells = [re.sub(r"\s+", " ", t).replace("&nbsp;", " ").strip()
+                 for t in re.findall(r">([^<]+)", tr.group(0))]
+        cells = [c for c in cells if c]
+        if not cells or keyword not in cells[0] or len(cells[0]) > 20:
+            continue
+        nums = []
+        for c in cells[1:]:
+            v = c.replace(",", "").strip()
+            if re.fullmatch(r"\d+", v):
+                n = float(v)
+                nums.append(n / 1_000_000 if n >= 1e9 else n)
+        if len(nums) < 2:
+            continue
+        # 전기말 = 두 번째 열이 관행이지만, 열 순서가 뒤집힌 표도 있어 둘 다 시험한다.
+        for cur, prior in ((nums[0], nums[1]), (nums[1], nums[0])):
+            if abs(prior - fy25_bs_mn) <= tol and abs(cur - prior) <= tol:
+                return H1_AS_OF
+    return None
+
+
 def confirm_bonds_still_outstanding(code, fy25_bonds, report, tier_label):
     """기존 신종자본증권이 기준일 현재 여전히 미상환인지 **확인만** 한다 — 값은 안 바꾼다.
 
@@ -662,7 +797,7 @@ def main():
     fy25 = json.loads(FY25_PATH.read_text(encoding="utf-8"))
     report = {}
     out_companies = []
-    n_hybrid_refreshed = n_sub_refreshed = n_hybrid_confirmed = n_sub_confirmed = n_sub_detail = 0
+    n_hybrid_refreshed = n_sub_refreshed = n_hybrid_confirmed = n_sub_confirmed = n_sub_detail = n_sub_redeem = 0
 
     for c in fy25["companies"]:
         code = c["code"]
@@ -686,6 +821,14 @@ def main():
             # 개별 주석이 없는 회사 — 값은 FY2025 그대로 두되, 표준 발행실적 표로 전량
             # '여전히 미상환' 이 확인되면 시점만 갱신한다(숫자 변경 없음).
             conf_as_of, conf_src = confirm_bonds_still_outstanding(code, fy25_hybrid, report, "hybrid")
+            if not conf_as_of:
+                xml_p, _txt = load_h1_xml(code)
+                agg = (confirm_aggregate_unchanged(_txt, c.get("bs_hybrid_mn"), "신종자본증권")
+                       if _txt else None)
+                if agg:
+                    conf_as_of = agg
+                    conf_src = f"{xml_p.relative_to(ROOT).as_posix()} (BS 신종자본증권 총액 당반기말==전기말==FY2025)"
+                    report.setdefault("hybrid_confirm_by_aggregate", []).append(code)
             if conf_as_of:
                 fy25_hybrid = [dict(b, as_of=conf_as_of,
                                     source_file=f"{conf_src} (채무증권 발행실적: 미상환 확인, 금액 불변)")
@@ -705,7 +848,14 @@ def main():
             else:
                 new_bonds.extend(fy25_sub)
         else:
-            det = merge_subordinated_detail(code, fy25_sub, report)
+            red = detect_redeemed(code, fy25_sub, c.get("bs_subordinated_mn"), report)
+            if red is not None:
+                new_bonds.extend(red)
+                n_sub_redeem += 1
+                notes_extra.append(f"SUBORDINATED: 반기 중 상환 {len(fy25_sub) - len(red)}건 제거 "
+                                   f"(H1 증거 부재 + BS 당반기말 재현 이중확인)")
+                fy25_sub = []
+            det = merge_subordinated_detail(code, fy25_sub, report) if fy25_sub else None
             if det is not None:
                 new_bonds.extend(det)
                 n_sub_detail += 1
@@ -713,6 +863,18 @@ def main():
                 fy25_sub = []
             conf_as_of, conf_src = (confirm_bonds_still_outstanding(code, fy25_sub, report, "sub")
                                     if fy25_sub else (None, None))
+            if fy25_sub and not conf_as_of:
+                xml_p, _txt = load_h1_xml(code)
+                agg = None
+                if _txt:
+                    for kw in ("후순위사채", "후순위채권", "후순위"):
+                        agg = confirm_aggregate_unchanged(_txt, c.get("bs_subordinated_mn"), kw)
+                        if agg:
+                            break
+                if agg:
+                    conf_as_of = agg
+                    conf_src = f"{xml_p.relative_to(ROOT).as_posix()} (BS 후순위 총액 당반기말==전기말==FY2025)"
+                    report.setdefault("sub_confirm_by_aggregate", []).append(code)
             if conf_as_of:
                 fy25_sub = [dict(b, as_of=conf_as_of,
                                  source_file=f"{conf_src} (채무증권 발행실적: 미상환 확인, 금액 불변)")
@@ -762,6 +924,7 @@ def main():
     print(f"hybrid confirmed-unchanged (as_of only): {n_hybrid_confirmed} companies")
     print(f"subordinated confirmed-unchanged (as_of only): {n_sub_confirmed} companies")
     print(f"subordinated refreshed from 상세표: {n_sub_detail} companies")
+    print(f"subordinated 상환검출: {n_sub_redeem} companies")
     if report:
         print("\n[report / anomalies]")
         print(json.dumps(report, ensure_ascii=False, indent=2))
