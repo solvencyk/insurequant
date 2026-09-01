@@ -1167,10 +1167,25 @@ def test_public_export_clean_state_has_no_findings():
 @pytest.mark.parametrize("mutation", ["drift", "missing_row", "extra_row",
                                       "internal_col", "manifest_rows"])
 def test_mutation_public_export_fires(mutation):
-    """공개 스냅샷을 흔들면 실제로 발견이 나오는가 — 원본 바이트는 반드시 복원한다."""
+    """공개 스냅샷을 흔들면 실제로 발견이 나오는가 — 원본 바이트는 반드시 복원한다.
+
+    ⚠️ 이 테스트는 **추적되는 배포 산출물을 디스크에서 직접 흔든다.** 실행이 중간에 끊기면
+    (타임아웃·SIGKILL) `finally` 가 안 돌아 `public_exports/` 가 오염된 채 남고, 다음 전체
+    실행에서 이 4개가 통째로 실패한다 — 2026-09-01 에 두 번 났다(한 번은 다른 세션이 손으로
+    원복). 그래서 ① 시작 시 이미 오염돼 있으면 **먼저 그 사실로 실패**하고(엉뚱한 원인을
+    쫓지 않게) ② 끝에 복원이 실제로 됐는지 바이트로 확인한다.
+    끊긴 실행의 잔해는 `git checkout -- public_exports/` 로 되돌린다.
+    """
     import json as _json
+    import subprocess as _sp
     pe = ROOT / "public_exports"
     targets = ["CSM워터폴.json", "manifest.json"]
+    dirty = _sp.run(["git", "status", "--porcelain", "--", "public_exports/"],
+                    cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    assert not dirty, (
+        f"public_exports/ 가 이미 워킹트리에서 변경돼 있다 — 이 변이시험의 끊긴 실행이 남긴 "
+        f"잔해이거나 스냅샷 재생성이 커밋 안 된 것이다. 이 상태로는 변이시험이 무엇을 재는지 "
+        f"알 수 없다.\n{dirty}\n되돌리려면: git checkout -- public_exports/")
     backup = {n: (pe / n).read_bytes() for n in targets}
     try:
         if mutation == "drift":
