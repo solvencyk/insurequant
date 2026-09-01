@@ -45,7 +45,7 @@ sys.path.insert(0, str(REPO))
 sys.stdout.reconfigure(encoding="utf-8")
 
 KICS_JSON = REPO / "kics_disclosure.json"
-BONDS_FY2025_JSON = REPO / "data" / "bonds" / "capital_securities_fy2025.json"
+BONDS_FY2025_JSON = REPO / "data" / "bonds" / "capital_securities_fy2025.json"  # 기본값(하위호환)
 OUT_DIR = REPO / "output" / "kics_forward_capital"
 
 # DART per-bond tier labels -> internal tier labels the simulation/confidence
@@ -57,6 +57,14 @@ _ap = argparse.ArgumentParser(description="K-ICS forward capital simulation")
 _ap.add_argument("--baseline-quarter", default="2026.1Q", help="예: 2026.2Q")
 _ap.add_argument("--tier-quarter", default=None,
                  help="confidence 대조용 tier{1,2}_utilization 분기 (기본: --baseline-quarter)")
+# 2026-09-01 (owner): 채권 소스가 FY2025 로 **박혀** 있었다. 그 사이 반기 중 상환된 채권이
+# 그대로 남아 있어, 이미 사라진 채권을 미래 시점에 또 한 번 가용자본에서 차감하고 있었다
+# (docstring "Residual limitations" 가 예고했던 그 결함). 실측 상환 4건 = KB손해 제1회
+# 3,790억 · 미래에셋 제2회 2,995억 · 현대해상 후순위3 3,500억 · DB손해 제2회 4,990억.
+_ap.add_argument("--bonds-source", default="data/bonds/capital_securities_fy2025.json",
+                 help="per-bond 잔액 소스 (repo-relative). 기본은 종전 동작(FY2025 연간). "
+                      "반기 갱신본(data/bonds/capital_securities_fy2026h1.json)을 넘기면 "
+                      "상환·신규발행이 반영된 잔액으로 전망한다.")
 _args = _ap.parse_args()
 
 BASELINE_QUARTER = _args.baseline_quarter
@@ -145,7 +153,8 @@ def load_outstanding_bonds() -> tuple[dict[str, list[dict]], str]:
     outstanding past its own call rule) was handled: the simulation's existing
     call-date-based deduction logic already accounts for this, unchanged.
     """
-    doc = json.loads(BONDS_FY2025_JSON.read_text(encoding="utf-8"))
+    src = REPO / _args.bonds_source
+    doc = json.loads(src.read_text(encoding="utf-8"))
     out: dict[str, list[dict]] = {}
     for c in doc["companies"]:
         bonds = []
@@ -162,7 +171,7 @@ def load_outstanding_bonds() -> tuple[dict[str, list[dict]], str]:
                 "status": "outstanding",
             })
         out[c["code"]] = bonds
-    return out, BONDS_FY2025_JSON.relative_to(REPO).as_posix()
+    return out, src.relative_to(REPO).as_posix()
 
 
 def load_utilization() -> tuple[dict, dict]:
