@@ -169,18 +169,19 @@
     <div class="panel" id="donut-section-panel">
       <h2>자본성증권 인정 한도 소진율 <span id="capsecQuarter" style="color:var(--muted);font-size:13px;font-weight:400"></span></h2>
       <ul class="subtitle">
-        <li>기본자본(신종자본증권): 발행잔액 / (SCR &times; 15%)</li>
-        <li>보완자본(후순위채): 인정 보완자본 / 보완자본 한도</li>
+        <li>기본자본 자본증권(보통주 제외): 공시 인정액 / (SCR &times; 15%)</li>
+        <li>보완자본(전체): 한도 적용 전 보완자본 / (SCR &times; 50%)</li>
+        <li style="opacity:.8">한도는 증권 종류가 아니라 <b>계정 단위</b>로 걸린다 — 신종자본증권·후순위채만의 한도는 없다(보험업감독업무시행세칙 [별표22] Ⅲ.2.다·마).</li>
       </ul>
       <div id="donut-placeholder" class="no-data">상단의 보험사를 선택하면 해당 보험사의 소진율이 표시됩니다.</div>
       <div id="donut-row" class="donut-row" style="display:none">
         <div class="donut-cell">
-          <div class="donut-wrap"><canvas id="donut-tier1" role="img" aria-label="기본자본(신종자본증권) 인정 한도 소진율 도넛 차트"></canvas></div>
-          <div class="donut-caption">기본자본<span class="sub">(신종자본증권)</span></div>
+          <div class="donut-wrap"><canvas id="donut-tier1" role="img" aria-label="기본자본 자본증권(보통주 제외) 인정 한도 소진율 도넛 차트"></canvas></div>
+          <div class="donut-caption">기본자본 자본증권<span class="sub">(보통주 제외)</span></div>
         </div>
         <div class="donut-cell">
-          <div class="donut-wrap"><canvas id="donut-tier2" role="img" aria-label="보완자본(후순위채) 인정 한도 소진율 도넛 차트"></canvas></div>
-          <div class="donut-caption">보완자본<span class="sub">(후순위채)</span></div>
+          <div class="donut-wrap"><canvas id="donut-tier2" role="img" aria-label="보완자본 인정 한도 소진율 도넛 차트"></canvas></div>
+          <div class="donut-caption">보완자본<span class="sub">(전체)</span></div>
         </div>
       </div>
       <div class="donut-note" id="donut-note"></div>
@@ -961,41 +962,42 @@
       donutTier1Chart = renderDonut('donut-tier1', donutTier1Chart, t1Pct);
       donutTier2Chart = renderDonut('donut-tier2', donutTier2Chart, t2Pct);
       const notes = [];
-      // 한도 소진율의 분자는 **2023년 이후 발행분**뿐이다 — 경과조치 대상(2023년 전 발행)은
-      // K-ICS 한도 산정에서 빠진다. 그런데 그 값만 '발행'이라고 찍으면, 신종자본증권을
-      // 실제로 들고 있는 회사가 '발행 0억원'으로 표시된다. 2026.2Q 기준 6개사가 그랬다
-      // (메리츠화재 1,800억 · 한화손해 2,350억 · 아이엠라이프 949억 · 흥국생명 500억 ·
-      // KB라이프 500억 · 롯데손해 460억, 합 6,559억). owner 지적 2026-09-01.
-      // 분모(한도)는 방법론대로 두고, **발행잔액은 경과조치분까지 합쳐** 보여준다.
+      // 2026-09-01 (owner): 분자를 경영공시 항목으로 바꾸면서 문구도 계정 단위로 고쳤다.
+      // 기본자본 한도(SCR×15%)의 대상은 `자본항목 중 보통주 이외의 자본증권`(item6) **전체**이지
+      // 신종자본증권이 아니고, 보완자본 한도(SCR×50%)의 대상도 보완자본 전체다. 종전 라벨은
+      // 신종 아닌 기본자본 자본증권을 가진 6개사와, 후순위채가 아닌 보완자본(34사 354,926억)을
+      // 화면에서 지워 버렸다. 신종·후순위 발행잔액은 아래 참고 줄로 내린다.
       if (t1) {
-        const t1New = t1.tier1_hybrid_issued_eok || 0;
         const t1Gf = t1.tier1_grandfathered_hybrid_eok || 0;
-        let line = `기본자본: 발행 ${fmtEokInt(t1New + t1Gf)}억원 / 한도 ${fmtEokInt(t1.tier1_hybrid_limit_eok)}억원 (SCR×15%)`;
+        let line = `기본자본 자본증권: 인정 ${fmtEokInt(t1.tier1_hybrid_issued_eok)}억원 / 한도 ${fmtEokInt(t1.tier1_hybrid_limit_eok)}억원 (SCR×15%)`;
         if (t1Gf > 0) {
-          line += ` &nbsp;<span class="capsec-gf">경과조치 ${fmtEokInt(t1Gf)}억원은 한도 산정 제외${t1New === 0 ? ' (전액)' : ''}</span>`;
+          line += ` &nbsp;<span class="capsec-gf">경과조치 기발행분 ${fmtEokInt(t1Gf)}억원 포함</span>`;
         }
         notes.push(line);
       } else {
-        notes.push('기본자본: 데이터 없음');
+        notes.push('기본자본 자본증권: 데이터 없음');
       }
       if (t2) {
-        const t2Gf = (t2.grandfathered_hybrid_eok || 0) + (t2.grandfathered_subordinated_eok || 0);
-        let line = `보완자본: 인정 ${fmtEokInt(t2.numerator_eok)}억원 / 한도 ${fmtEokInt(t2.tier2_limit_eok)}억원`;
+        const t2Gf = t2.grandfathered_subordinated_eok || 0;
+        let line = `보완자본: 한도적용전 ${fmtEokInt(t2.numerator_eok)}억원 / 한도 ${fmtEokInt(t2.tier2_limit_eok)}억원 (SCR×50%)`;
         if (t2Gf > 0) {
-          line += ` &nbsp;<span class="capsec-gf">경과조치 ${fmtEokInt(t2Gf)}억원 별도</span>`;
+          line += ` &nbsp;<span class="capsec-gf">경과조치 기발행 후순위 ${fmtEokInt(t2Gf)}억원</span>`;
         }
         notes.push(line);
       } else {
         notes.push('보완자본: 데이터 없음');
       }
-      // 분자(발행잔액) 기준일은 회사마다 다르다 — 14사는 반기/분기보고서를 제출하지
-      // 않아 직전 연간(FY2025, 2025-12-31) 잔액이 최신이다. 분모(SCR·한도)는 패널
-      // 헤더 분기 기준이라, 둘이 어긋나는 회사는 그 사실을 여기서 밝힌다.
-      const asOfs = [t1 && t1.numerator_as_of, t2 && t2.numerator_as_of].filter(Boolean);
-      if (asOfs.length) {
-        const oldest = asOfs.sort()[0];
-        notes.push(`발행잔액 기준일 ${oldest}`);
+      // 참고 — 자본성증권 발행잔액. 소진율 분자가 아니다(한도가 계정 단위라서).
+      const bh = (t1 && t1.hybrid_outstanding_eok) || 0;
+      const bs = (t1 && t1.subordinated_outstanding_eok) || 0;
+      if (bh > 0 || bs > 0) {
+        const ba = (t1 && t1.bond_balance_as_of) ? ` (${t1.bond_balance_as_of} 기준)` : '';
+        notes.push(`<span class="capsec-gf">참고 — 자본성증권 발행잔액: 신종 ${fmtEokInt(bh)}억원 · 후순위 ${fmtEokInt(bs)}억원${ba}</span>`);
       }
+      // 2026-09-01: 여기 있던 '발행잔액 기준일 …' 경고를 걷었다. 분자가 채권 발행현황일 때는
+      // 회사마다 기준일이 달라(반기보고서를 안 내는 회사는 직전 연간) 분모와 어긋나는 사실을
+      // 밝혀야 했지만, 이제 분자·분모가 **같은 분기말 경영공시 항목**이라 항상 같은 날짜만
+      // 찍힌다 — 정보가 없는 줄이 된다. 채권 잔액의 기준일은 위 '참고' 줄이 회사별로 말한다.
       note.innerHTML = notes.join(' &nbsp;|&nbsp; ');
     }
 

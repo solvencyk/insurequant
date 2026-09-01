@@ -22,7 +22,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 1791.95,
       "grandfathered_subordinated_eok": 15630.85,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 1800.0,
+      "subordinated_outstanding_eok": 18010.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "NH농협손해보험",
@@ -44,7 +47,10 @@
       "tier1_overflow_into_tier2_eok": 2483.6,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 926.58,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 4500.0,
+      "subordinated_outstanding_eok": 3000.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "하나손해보험",
@@ -66,7 +72,10 @@
       "tier1_overflow_into_tier2_eok": 298.5,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 1000.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "케이디비생명보험",
@@ -88,7 +97,10 @@
       "tier1_overflow_into_tier2_eok": 80.7,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 2410.0,
+      "subordinated_outstanding_eok": 3888.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "IBK연금보험",
@@ -110,7 +122,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 1602.09,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 3593.1,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "한화생명",
@@ -132,7 +147,10 @@
       "tier1_overflow_into_tier2_eok": 8302.2,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 17932.09,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 30819.0,
+      "subordinated_outstanding_eok": 27678.9,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "현대해상",
@@ -154,7 +172,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 28330.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "에이비엘생명보험",
@@ -176,7 +197,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 632.85,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 6430.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "삼성생명",
@@ -198,7 +222,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     },
     {
       "company": "롯데손해보험",
@@ -220,7 +247,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 453.7,
       "grandfathered_subordinated_eok": 1933.86,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 460.0,
+      "subordinated_outstanding_eok": 8069.5,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "아이엠라이프생명보험",
@@ -242,7 +272,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 2465.98,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 948.8,
+      "subordinated_outstanding_eok": 2250.0,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "한화손해보험",
@@ -264,7 +297,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 2341.05,
       "grandfathered_subordinated_eok": 2482.02,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 2350.0,
+      "subordinated_outstanding_eok": 11000.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "흥국화재",
@@ -286,7 +322,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 2120.0,
       "grandfathered_subordinated_eok": 190.57,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 4120.0,
+      "subordinated_outstanding_eok": 2650.0,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "푸본현대생명보험",
@@ -308,7 +347,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 400.0,
       "grandfathered_subordinated_eok": 2951.86,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 1000.0,
+      "subordinated_outstanding_eok": 7275.0,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "DB손해보험",
@@ -330,7 +372,10 @@
       "tier1_overflow_into_tier2_eok": 225.2,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 17490.0,
+      "subordinated_outstanding_eok": 9700.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "하나생명보험",
@@ -352,7 +397,10 @@
       "tier1_overflow_into_tier2_eok": 665.7,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 1798.8,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "코리안리재보험",
@@ -374,7 +422,10 @@
       "tier1_overflow_into_tier2_eok": 1297.1,
       "grandfathered_hybrid_eok": 3291.97,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 8100.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "DB생명보험",
@@ -396,7 +447,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 3135.91,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 3000.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "교보생명보험",
@@ -418,7 +472,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 11088.99,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 22148.5,
+      "subordinated_outstanding_eok": 7000.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "비엔피파리바카디프생명보험",
@@ -440,7 +497,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     },
     {
       "company": "KB손해보험",
@@ -462,7 +522,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 2901.11,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 8860.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "처브라이프생명보험",
@@ -484,7 +547,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     },
     {
       "company": "흥국생명보험",
@@ -506,7 +572,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 496.5,
       "grandfathered_subordinated_eok": 4132.49,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 500.0,
+      "subordinated_outstanding_eok": 4084.6,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "농협생명보험",
@@ -528,7 +597,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 2500.0,
       "grandfathered_subordinated_eok": 8700.42,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 5000.0,
+      "subordinated_outstanding_eok": 11100.0,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "삼성화재해상보험",
@@ -550,7 +622,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     },
     {
       "company": "동양생명",
@@ -572,7 +647,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 11956.6,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "악사손해보험",
@@ -594,7 +672,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 344.66,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 458.8,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "신한라이프생명보험",
@@ -616,7 +697,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 7983.9,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "교보라이프플래닛생명보험",
@@ -660,7 +744,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 498.0,
       "grandfathered_subordinated_eok": 701.95,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 500.0,
+      "subordinated_outstanding_eok": 1999.5,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "서울보증보험",
@@ -682,7 +769,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     },
     {
       "company": "에이아이에이생명보험",
@@ -704,7 +794,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     },
     {
       "company": "미래에셋생명",
@@ -726,7 +819,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 2930.94,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 2991.4,
+      "bond_balance_as_of": "2026-06-30"
     },
     {
       "company": "MG_예별손해보험",
@@ -748,7 +844,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 680.0,
+      "bond_balance_as_of": "2025-12-31"
     },
     {
       "company": "AIG손해보험",
@@ -770,7 +869,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     },
     {
       "company": "신한이지손해보험",
@@ -792,7 +894,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     },
     {
       "company": "라이나생명보험",
@@ -814,7 +919,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     },
     {
       "company": "메트라이프생명보험",
@@ -836,7 +944,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     },
     {
       "company": "카카오페이손해보험",
@@ -858,7 +969,10 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2026-06-30"
+      "numerator_as_of": "2026-06-30",
+      "hybrid_outstanding_eok": 0.0,
+      "subordinated_outstanding_eok": 0.0,
+      "bond_balance_as_of": null
     }
   ],
   "definition": {

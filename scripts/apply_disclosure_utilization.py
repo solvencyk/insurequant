@@ -65,6 +65,7 @@ ROOT = Path(__file__).resolve().parents[1]
 KICS = ROOT / "kics_disclosure.json"
 T1F = ROOT / "kics_tier1_utilization.json"
 T2F = ROOT / "kics_tier2_utilization.json"
+CAPSEC = ROOT / "kics_capital_securities.json"   # 증권 한 건 단위 정본(코멘트용 발행잔액)
 # 배포본만 고치면 `validate_live_artifacts` 가 "배포본 != 빌더 산출" 로 RED 를 낸다.
 # 불변식 1번(게이트가 검사하는 파일 = 사용자가 보는 파일)의 반대편이라 같은 값을 둘 다 쓴다.
 OUT_T1 = ROOT / "output" / "tier1_utilization"
@@ -115,6 +116,18 @@ def main() -> int:
     t1doc = json.loads(T1F.read_text(encoding="utf-8"))
     t2doc = json.loads(T2F.read_text(encoding="utf-8"))
 
+    # 신종·후순위 **발행잔액**은 더 이상 소진율 분자가 아니지만(한도는 계정 단위다),
+    # 화면 코멘트로는 계속 쓸모가 있다 — owner 2026-09-01: "발행잔액은 코멘트 정도로".
+    # 증권 한 건 단위 정본(kics_capital_securities.json)에서 회사별로 합산해 실어 둔다.
+    bonds = {}
+    if CAPSEC.exists():
+        for r in json.loads(CAPSEC.read_text(encoding="utf-8")).get("rows", []):
+            e = bonds.setdefault(r["원보험사코드"], {"hybrid": 0.0, "sub": 0.0, "as_of": None})
+            e["hybrid" if r.get("종류") == "신종자본증권" else "sub"] += r.get("잔액_억") or 0.0
+            ao = r.get("잔액기준일")
+            if ao and (e["as_of"] is None or ao < e["as_of"]):
+                e["as_of"] = ao   # 가장 오래된 기준일 = 그 회사 코멘트가 정직할 수 있는 한계
+
     changed = []
     missing = {"item6": [], "item47": [], "item48_mismatch": [], "item14": []}
 
@@ -144,6 +157,10 @@ def main() -> int:
         row["numerator_as_of"] = as_of
         row["data_source"] = f"kics_disclosure item6 / (item14 x {TIER1_RATE:.0%})"
         row["issued_source"] = "disclosure_item6"
+        _b = bonds.get(row["code"]) or {}
+        row["hybrid_outstanding_eok"] = round(_b.get("hybrid", 0.0), 1)
+        row["subordinated_outstanding_eok"] = round(_b.get("sub", 0.0), 1)
+        row["bond_balance_as_of"] = _b.get("as_of")
         if before != (row["tier1_hybrid_issued_eok"], row["utilization_pct"]):
             changed.append(("t1", row["code"], row["company"], before,
                             (row["tier1_hybrid_issued_eok"], row["utilization_pct"])))
@@ -176,6 +193,10 @@ def main() -> int:
         row["grandfathered_hybrid_eok"] = d.get(ITEM_GF_HYBRID)
         row["numerator_as_of"] = as_of
         row["data_source"] = "kics_disclosure item47 / (item14 x 50%)"
+        _b = bonds.get(row["code"]) or {}
+        row["hybrid_outstanding_eok"] = round(_b.get("hybrid", 0.0), 1)
+        row["subordinated_outstanding_eok"] = round(_b.get("sub", 0.0), 1)
+        row["bond_balance_as_of"] = _b.get("as_of")
         if before != (row["numerator_eok"], row["utilization_pct"]):
             changed.append(("t2", row["code"], row["company"], before,
                             (row["numerator_eok"], row["utilization_pct"])))
