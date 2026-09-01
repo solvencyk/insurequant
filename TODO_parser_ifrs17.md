@@ -1,5 +1,77 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-09-01 (78th pass) — 가정민감도 STALE_AS_OF RED 31건: 원인은 데이터가 아니라 게이트
+> 기준정책이었다. `scripts/validate_data_contract.py` 만 고쳤고 마스터 3종은 무수정.**
+>
+> 발단: 2026.2Q 적재로 게이트의 `sensitivity_target_quarter`(K-ICS 분기공시 최신치 추종)가
+> 2026.2Q 로 올라가면서 `sensitivity_heatmap`(2025.4Q 단일 스냅샷, 32사)이 통째로
+> `STALE_AS_OF` RED 31건이 됐다. "2026.2Q 를 적재하라"는 발주를 받았지만, **전수 census 결과
+> 적재할 진짜 값이 없었다.**
+>
+> **census (재현: `scripts/_probes/probe_20260901_sensitivity_fy2026q2_census.py`,
+> `probe_20260901_sensitivity_nofiling_dart_verify.py` — 둘 다 오프라인/네트워크 각각):**
+>
+> - `data/dart/FY2026_Q2/raw/` 38사 중 **14사는 `meta.json` 이 `no_filing:true`**(비상장
+>   감사보고서 전용). live DART `list_filings` 로 15사(이 14 + AIG) 전부 대조 —
+>   전원 `pblntf_ty=A`(사업/반기/분기 정기공시) **0건**, 확인된 감사보고서(연 1회)만 존재.
+>   기존 문서의 "12개사" 목록에 **에이아이에이생명보험(AIA)·에이아이지손해보험(AIG)** 2사가
+>   빠져 있었다 — 둘 다 sensitivity_heatmap 에 rcept 로 등재돼 있어 "ok"처럼 보이지만, 그
+>   rcept 는 실제로는 **연결감사보고서**였다(정기공시 아님). AIG(KR0029)는 `FY2026_Q2/raw/`
+>   에 디렉터리 자체가 없어 처음엔 "다운로더 누락"으로 의심했으나 live 조회로 무공시가 맞음을
+>   확인 — downloader 발주 불필요.
+> - 나머지 **24사는 반기보고서를 실제로 제출**했다. `extract_sensitivity_tables`(실제
+>   추출기, FY2025 배치와 동일 함수)를 그대로 돌려 원문 대조 — **가정민감도(사망률·장해질병·
+>   해지율·사업비 충격 → ΔCSM/손익) 표는 0건.** 반기 위험관리주석에 있는 건 별개 주제인
+>   IFRS9 공정가치 수준3 민감도(관측불가 투입변수 민감도, 회사 대부분)와/또는 §14(2) 현행
+>   추정 가정 "값"(해약률·위험률 range, 충격 아님, 흥국생명·신한라이프·농협생명). 추출기가
+>   `min_score=4` 로 `sensitivity_analysis` 로 오분류한 4사(한화손해·KB손해·DB손해·
+>   푸본현대생명)를 전수 눈으로 확인한 결과 전부 오탐 — 한화손해/KB손해/DB손해는 손해율·
+>   합산비율 추세표(민감도와 무관), 푸본현대는 **CSM 측정요소 롤포워드의 "해지율/위험률/
+>   사업비율 가정 변경" 하위행**(이번 분기 실현된 가정변경 금액이지 가상 충격 시나리오가
+>   아님 — 별개 개념). 삼성생명·동양생명은 IFRS17 §128 위험익스포저 노트가 있었지만
+>   **금융위험(이자율) 한 줄뿐**(사망보험/건강보험/연금저축 상품별 금액은 있음) — 사망률·
+>   해지율·사업비 항목 자체가 반기 노트에서 빠진다.
+> - 31건 RED 대상 회사 = 위 두 그룹(무공시 8사 + 반기표없음 23사)과 정확히 일치. 정당한
+>   부재 100%, 추출 실패로 판정한 회사 0.
+>
+> **적재 안 함.** 뽑을 진짜 값이 없어 `sensitivity_heatmap.json` ·
+> `sensitivity_heatmap_provenance.json` · `CSM_sensitivity.json` **3종 모두 무수정**(기존
+> 2025.4Q 195행 그대로). 이 지표는 **전 업권이 연 1회(사업보고서)만 공시**하는 구조라는 게
+> 이번 census 의 핵심 발견 — 개별 회사 사정이 아니라 지표 자체의 공시 주기다.
+>
+> **고친 것은 게이트 정책.** `verify_provenance_sidecar()` 에 `max_lag_quarters` 파라미터
+> 신설(기본 0 = 기존 동작 그대로 — `forward_capital`·`tier1/2_utilization`·
+> `kics_rate_sensitivity` 등 나머지 4개 호출처 전부 무영향), `sensitivity_heatmap` 호출에만
+> `max_lag_quarters=3` 적용 — `build_ifrs17_bs.py` 의 TIER2(비상장 연1회 공시사) 앞채움과
+> 같은 근거(연간 주기 한 바퀴, "뒤로는 최대 3분기만 늘린다"). 새 헬퍼 `_quarters_between()`
+> (달력월 기준 정수 분기차 — `q_to_num` 은 정렬 전용이라 연도 경계에서 산술이 깨진다:
+> `q_to_num("2026.1Q")-q_to_num("2025.4Q")=7`, 실제 분기차는 1). 단위검증: 2025.4Q→
+> 2026.{1,2,3,4}Q = {1,2,3,4}Q, 자기자신=0 — 전부 일치.
+>
+> **검증**: `python scripts/validate_data_contract.py` → RED 0(이번 세션 시작 시점 49 —
+> 그중 18은 동시 진행 중이던 K-ICS 레인 커밋 `523002e`(RED 49→31, 커밋 메시지 자체가 명시)로
+> 해소, 나머지 31(=sensitivity 전량)은 이번 수정으로 해소 — 두 변경 서로 무관·비중복).
+> `pytest tests/test_deploy_assets.py tests/test_quarter_horizon.py` 31 passed.
+> 오프라인 풀세트(`test_rule_coverage_manifest.py` 등 362개) 중 무관한 실패 2건은 내 변경과
+> 무관하다고 판정: ① `test_mutation_public_export_fires[extra_row]` — Windows 콘솔 인코딩이
+> `public_exports/CSM워터폴.json` 복원 경로를 깨뜨리는 기존 결함(`validate_data_contract.py`
+> 미참조), `git checkout` 으로 원복 완료 ② `test_push_gate_wiring.py::
+> test_every_data_contract_check_is_declared` — 동시 진행 중인 K-ICS/validation 세션이 같은
+> 파일에 미완성 상태로 얹어 둔 `check_kics_restatement`(CHECK 7, 소급재작성 축)가 아직
+> `DATA_CONTRACT_CHECKS` 에 미등재라 발화, 내가 추가한 함수 0개 — 그 세션이 마무리할 사안.
+>
+> **공유 워크트리 주의(사고 없이 종결)**: `scripts/validate_data_contract.py` 에 검증
+> 레인이 이 세션 도중 실시간으로 CHECK 7 을 얹고 있었다. 내 변경만 분리하려고 `git stash`
+> 를 시도하다 index 충돌("does not match index")을 만났는데, diff 로 stash 내용이 working
+> tree 의 부분집합(더 오래된 스냅샷)임을 확인 후 안전하게 drop, `git reset --`(index 만
+> unstage, 작업트리 무변경)로 정리 — **파일 유실 없음**. 지금 그 파일은 unstaged 상태로 내
+> 수정 + 그 세션의 진행 중인 CHECK 7 이 같이 들어 있고, **커밋 안 함**(요청받지 않았고 남의
+> 미완성 작업과 섞인 채 커밋하면 안 됨 — owner 가 두 변경을 확인 후 각자 커밋할 것).
+>
+> 다음 자연 갱신 시점은 FY2026 사업보고서(~2027-03, K-ICS 기준 "2026.4Q"). 그 전까지 이
+> 31사가 2025.4Q 값을 그대로 보여주는 게 **맞는 동작**이다(원천이 그렇게 공시함). 잔여 작업
+> 없음.
+
 > **2026-08-30 (77th pass) — 민감도 2건 정정 + `가정민감도` 마스터 신설.**
 > 라이나생명은 **유배당 소블록**(기준 CSM 16.9억)을 집고 있었고, 에이아이지는 회사명 표기
 > 차이로 **단위 가드가 조용히 꺼져** 자기 CSM 의 343배(318,643억)가 화면에 나가고 있었다.

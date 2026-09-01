@@ -82,10 +82,40 @@ DEFAULT_RATIO_KEYWORDS: tuple[str, ...] = (
     # confirmed real for 주식위험액 (Samsung 2026.2Q; item37 695,426억, ~94% of
     # item19, entirely missing pre-fix). inbox 20260831T0700Z reports the same
     # class of gap (whole 6-4 section dropped) on 5 other 2026.2Q filers.
+    # 2026-09-01: "금리위험액" (item36's own sibling term) was missing from this
+    # very list — the previous fix added the other 4 but not this one, so p.29-30
+    # ("2) 금리위험액현황") never became a hit page in their own right and stayed
+    # dependent on window-bleed from the neighboring 생명장기 (p.27) and 자산집중
+    # (p.34) hits, which left a real 2-page hole (p.30-31) that swallowed both
+    # 금리위험액 AND 주식위험액 in the same MD run (source_page_ranges "...6-29;
+    # 32-47" — the md/master gap the inbox 20260831T0700Z follow-up flagged for
+    # KR0069). Confirmed via raw-PDF fitz dump: p.29-30 "Ⅳ.금리위험액" =
+    # 1,037,118백만 = item36 exactly; p.31 "3)주식위험액현황 Ⅲ.합계"=69,542,621백만
+    # = item37 exactly. Adding this term (plus its own 가./나./다. sub-item labels
+    # already on p.29-30) makes p.29 AND p.30 genuine hits at the CLI default
+    # keyword_window=1, and p.30's own +-1 window reaches p.31 without p.31 needing
+    # its own hit (it uses "(1)(2)(3)" parenthesized numbering, not 가./나./다., so
+    # it still can't self-qualify under the weak-single-hit heuristic).
+    "금리위험액",
     "주식위험액",
     "부동산위험액",
     "외환위험액",
     "자산집중위험액",
+    # 2026-09-01: closing the KR0069 gap above (금리위험액+window=1) still dropped
+    # p.32 (③④OOO위험액현황 표의 부동산 leg) — that table's rows are "1.직접소유/
+    # 2.간접소유/3.의무보유부동산" (plain Arabic-dot numbering, not 가./나./다.), so
+    # even with "부동산위험액" already listed, the page only ever gets matched_count
+    # ==1 and fails the weak-single-hit 가/나/다 check, staying dependent on window-
+    # bleed from a neighboring hit. Raising keyword_window to bridge it instead
+    # (tried 2) pulled docling into a much wider single-page-range and triggered
+    # `std::bad_alloc` on 3 unrelated pages, losing MORE items than it recovered
+    # (see this session's KR0069 probes). "의무보유부동산" is this table's own
+    # 3rd row label and — confirmed via raw-PDF fitz scan — the SAME regulatory
+    # template phrase on the 부동산위험액 page for KR0002/KR0032/KR0068/KR0104 too
+    # (all 4 independently hit the identical gap in this session's 2026.2Q census),
+    # so it crosses the matched_count>=2 hit threshold directly, at keyword_window=1,
+    # without widening the window or risking the bad_alloc pages.
+    "의무보유부동산",
     # IFRS 17 assumption-sensitivity / LIC–CSM grid cues (narrow window parse)
     "가정민감도",
     "IFRS17",

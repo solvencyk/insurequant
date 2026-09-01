@@ -215,6 +215,15 @@ DATA_CONTRACT_CHECKS = {
         "게이트·테스트가 저장소에 **0건**이었다 — `_apply_*_overrides()` 가 비교 없이 UPSERT 만 "
         "하므로 gold 밑에서 빌더가 회귀해도 화면은 옳고 모든 게이트가 clean 을 찍었다. "
         "빼면 그 false-green 이 그대로 돌아온다. inbox/validation/20260830T0710Z",
+    "check_kics_restatement":
+        "WIRED 2026-09-01 — K-ICS 소급재작성 축. 공시본의 3열 표(해당/직전/전전분기) 때문에 같은 "
+        "(회사,분기) 값이 두 번 인쇄되는데, 발행사가 그걸 다르게 인쇄하면 소급재작성이다. "
+        "이 검사 이전에 그 축을 재는 검사기는 저장소에 **0건**이었고 교보생명 2026.1Q 재작성 "
+        "10칸이 손으로 발견됐다. 재작성 자체는 YELLOW(발행사의 정당한 행위)이고, RED 은 "
+        "**마스터가 원공시본 기준을 벗어날 때**만 낸다 — 한 마스터만 재작성값으로 갈아끼우면 "
+        "축이 갈라진다(csm_amort_identity_ledger 의 RESTATEMENT_BASIS 3건이 그 사고다). "
+        "탐지기는 scripts/detect_kics_restatement.py, 등재부는 "
+        "data/_gold/kics_restatement_ledger.json.",
     "check_generic_anomalies":
         "DEWIRED 2026-08-25 — owner 지시로 게이트에서 분리(scripts/scan_generic_anomalies.py). "
         "근거: YELLOW 전용이라 RED 를 한 건도 낸 적이 없어 `blocked` 에 들어간 적이 구조적으로 "

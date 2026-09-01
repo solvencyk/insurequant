@@ -603,8 +603,21 @@ def extract_kics_detail_rows(md: str, quarter: str) -> list[tuple[str, str]]:
                     continue
                 label = row[0]
                 value = row[active_col_idx]
-                if not label or not value or label in seen:
+                if not label or label in seen:
                     continue
+                if not value or not value.strip():
+                    # A genuinely blank cell (no dash, no digit) for a row whose
+                    # label otherwise passes _looks_like_kics_row below is how
+                    # some companies print "N/A this quarter" for optional K-ICS
+                    # template rows (e.g. item25/26 종속회사/관계회사 요구자본 when
+                    # a company has none) -- Docling preserves the blank rather
+                    # than a dash. Previously this dropped the row from `pairs`
+                    # entirely, so the item never got a baseline template and the
+                    # row silently never existed anywhere in the master (item23
+                    # 자식 칸 행-자체-결측 audit, 2026-09-01). Treat it the same as
+                    # an explicit "-" so match_baseline_value_or_zero's existing
+                    # dash->0 fallback can resolve it instead.
+                    value = "-"
                 if not _looks_like_kics_row(label):
                     continue
                 _register_label_pairs(label, value, seen, pairs)
@@ -751,17 +764,26 @@ def normalise_item_value(item_no: int, item_name: str, value: str) -> str:
 
 
 def labels_compatible(baseline_name: str, table_label: str) -> bool:
-    if "\uc704\ud5d8\uc561" in baseline_name and "\uc704\ud5d8\uc561" not in table_label:
+    # Compare on whitespace-stripped copies: Docling occasionally inserts a
+    # stray space mid-word when a long label wraps across two PDF lines
+    # (e.g. a "요구자본" label rendering as "요구자 본" / "요 구자본") — a raw
+    # substring check below would then wrongly reject an otherwise-identical
+    # label even though normalise_label() already treats the two as equal
+    # (item24-26 종속회사/관계회사 요구자본 rows going row-absent in the master,
+    # 2026-09-01 item23 자식 칸 감사 — KR0051 2023.1Q's own "요구자 본"/"요 구자본").
+    bn = baseline_name.replace(" ", "")
+    tl = table_label.replace(" ", "")
+    if "\uc704\ud5d8\uc561" in bn and "\uc704\ud5d8\uc561" not in tl:
         return False
-    if "\uc694\uad6c\uc790\ubcf8" in baseline_name and "\uc694\uad6c\uc790\ubcf8" not in table_label:
+    if "\uc694\uad6c\uc790\ubcf8" in bn and "\uc694\uad6c\uc790\ubcf8" not in tl:
         return False
-    if "\ube44\uc728" in baseline_name and "\ube44\uc728" not in table_label:
+    if "\ube44\uc728" in bn and "\ube44\uc728" not in tl:
         return False
-    if "\ube44\uc728" in table_label and "\ube44\uc728" not in baseline_name:
+    if "\ube44\uc728" in tl and "\ube44\uc728" not in bn:
         return False
-    if "\uc21c\uc790\uc0b0" in baseline_name and "\uc21c\uc790\uc0b0" not in table_label:
+    if "\uc21c\uc790\uc0b0" in bn and "\uc21c\uc790\uc0b0" not in tl:
         return False
-    if "\uc21c\uc790\uc0b0" in baseline_name and "\uc9c0\uae09\uc5ec\ub825\uae08\uc561" in table_label:
+    if "\uc21c\uc790\uc0b0" in bn and "\uc9c0\uae09\uc5ec\ub825\uae08\uc561" in tl:
         return False
     # item12(\uc9c0\uae09\uc5ec\ub825\uae08\uc561\uc73c\ub85c "\ubd88\uc778\uc815"\ud558\ub294 \ud56d\ubaa9) starts with item1's bare label
     # "\uc9c0\uae09\uc5ec\ub825\uae08\uc561", so when item12's own row is unmatched/dropped (e.g. a
@@ -771,9 +793,9 @@ def labels_compatible(baseline_name: str, table_label: str) -> bool:
     # ~15 companies, e.g. KR0004 2023.1Q, KR0005 2023.3Q). Likewise item13
     # (\ubcf4\uc644\uc790\ubcf8\uc73c\ub85c "\uc7ac\ubd84\ub958"\ud558\ub294 \ud56d\ubaa9) starts with item3's bare "\ubcf4\uc644\uc790\ubcf8" \u2014
     # same latent defect, not yet observed to fire but closed here too.
-    if "\ubd88\uc778\uc815" in baseline_name and "\ubd88\uc778\uc815" not in table_label:
+    if "\ubd88\uc778\uc815" in bn and "\ubd88\uc778\uc815" not in tl:
         return False
-    if "\uc7ac\ubd84\ub958" in baseline_name and "\uc7ac\ubd84\ub958" not in table_label:
+    if "\uc7ac\ubd84\ub958" in bn and "\uc7ac\ubd84\ub958" not in tl:
         return False
     # Reverse direction, mirroring the \uc21c\uc790\uc0b0/\ube44\uc728 guards above: some companies'
     # OWN stored baseline name for item1 is a bare "\uc9c0\uae09\uc5ec\ub825\uae08\uc561" (missing the "\uac00."
@@ -782,9 +804,9 @@ def labels_compatible(baseline_name: str, table_label: str) -> bool:
     # baseline_name.startswith() the item12 table row ("\uc9c0\uae09\uc5ec\ub825\uae08\uc561\uc73c\ub85c \ubd88\uc778\uc815\ud558\ub294 ...")
     # and wrongly returns item12's value (usually 0) AS item1's \u2014 the same
     # collision as above but triggered from the opposite side.
-    if "\ubd88\uc778\uc815" in table_label and "\ubd88\uc778\uc815" not in baseline_name:
+    if "\ubd88\uc778\uc815" in tl and "\ubd88\uc778\uc815" not in bn:
         return False
-    if "\uc7ac\ubd84\ub958" in table_label and "\uc7ac\ubd84\ub958" not in baseline_name:
+    if "\uc7ac\ubd84\ub958" in tl and "\uc7ac\ubd84\ub958" not in bn:
         return False
     return True
 

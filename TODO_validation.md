@@ -1,11 +1,129 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-09-01 (KR0071·KR0104 결합 경과조치 적용후 체인 정정 — mmult15 RED 4건 0) · Stage 3/5 — validation
+> Last updated: 2026-09-01 (소급재작성 축 신설 — 39사 전수 830칸, 교보생명 1사 10칸 등재) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-09-01) 판정 사이드카 2종이 2026.2Q 전체에 대해 스테일이었다 — 게이트가 39사를 조용히 "판정 불가"로 흘리며 exit 0 이었다. 경로·지표·스테일 검사 셋 다 고쳤다.**
+
+> 수정: `scripts/_disclosure_pdf_paths.py`(신설, raw//pdf/ 단일 해석기) ·
+> `scripts/build_kics_source_textlayer.py` · `scripts/extract_transition_applicability.py` ·
+> `scripts/validate_kics_disclosure.py`(freshness 경로 + 신규 룰 `SIDECAR_STALE_LATEST_QUARTER`)
+>
+> - **원인 ① 디렉토리 축.** 13분기 동안 공시 PDF 는 `data/disclosure/<period>/raw/` 에 있었는데
+>   **2026.2Q 부터 `pdf/` 로 바뀌었다**(실측 `FY2026_Q2: raw=1 · pdf=39`, 그 전 분기는 전부
+>   `raw=38~40 · pdf=0`). `raw/` 만 glob 하던 두 생성기가 2026.2Q 를 통째로 스킵했다. 같은 버그가
+>   이 저장소에서 **세 번째**다(`rebuild_combined_transition_after._pdf` · `fill_market_subitems`
+>   에 이어). 그래서 개별 패치 대신 해석기 하나로 모았다.
+> - **원인 ② 판정 지표(owner 지적).** 판독성을 **문서 전체 평균 chars/page** 로 쟀다. 그 지표는
+>   "앞은 스캔·뒤는 감사보고서 텍스트" 문서를 영원히 READABLE 로 부른다(흥국생명 FY2024_Q4:
+>   p1-112 이미지인데 전체평균 532.8 → READABLE). 이 오판이 owner 의 옳은 `image-only` 등재를
+>   2026-08-21 에 뒤집게 만들었고 처방을 OCR 대신 재수집으로 오라우팅했다. 이제 페이지별 분포 +
+>   K-ICS 절 밀도로 재고, 신규 상태 **`SCANNED_SECTION`**(문서는 맞고 절만 이미지 → 처방=OCR)을
+>   가른다. 두 판정 중 **엄한 쪽**을 써서 이 지표가 절대 느슨해지지 않게 했다.
+> - **원인 ③ 스테일 자체가 무검사.** 사이드카가 최신 분기를 안 담아도 게이트가 통과했다 →
+>   신규 RED `SIDECAR_STALE_LATEST_QUARTER` + YELLOW `SIDECAR_COVERAGE_GAP` 배선.
+>   역방향 검증: 구 사이드카를 되돌리면 **RED 2건(2026.2Q 39 + 3 버킷)** 으로 정확히 터진다.
+>   `prepush_check.py` 는 이미 이 게이트를 부르고 `blocked = ... or n_kics` 로 강제한다(확인함).
+> - **실측 이동.** textlayer 486→538셀(2026.2Q 39사 신규) · applicability `NO_RAW_PDF` 8→0 ·
+>   게이트 "판정 불가" **57칸/34버킷 → 37칸/20버킷**, `UNMEASURED` **25→0**.
+>   사이드카만 A/B 한 결과 blocking RED **1→7**(+6). 값 flip 은 전부 `UNKNOWN→known` 이고
+>   기존 판정을 뒤집은 것은 0건.
+> - **새 RED 6건은 진짜 결함이었고 같은 라운드에 닫혔다** (KR0009·KR0069·KR0150 2026.2Q ×
+>   값/값_적용후): 항목 47~54 가 마스터에 없는데 **원문 MD 에는 숫자가 있고 2026.1Q 에는 적재돼
+>   있었다**(커버리지 회귀 `item47` 37/39 → 35/39). parser/kics 발주 → 적재 완료 →
+>   **셀 단위로 원문과 대조 확인**(예 KR0069 item47 118,528.22억 = 원문 11,852,822백만 ✅).
+>   `item47` 보유 **38/39**, 그 RED **6→0**, blocking RED **7→1**.
+>   티켓은 `inbox/_resolved/20260901T0400Z__validation__MULTI_2026.2Q__tier2_tfi_rows_47_54_absent.md`.
+> - **잔여 blocking RED 1건은 `19_market` 이고 내 변경과 무관하다** — 사이드카 A/B 양쪽에 똑같이
+>   있었다(구 사이드카로 돌려도 나온다). 이 세션에서 원인 규명 안 함.
+> - **골든:** `tests/test_kics_rules_golden.py` 는 사이드카 교체 직후 해시가 어긋났으나
+>   (구 사이드카로는 PASS 확인 = 내 변경이 원인, 의도된 산출 변경) **손으로 고치지 않았고**,
+>   parser 백필 라운드가 재생성하면서 현재 **PASS**. 오프라인 74개 전부 통과.
+> - **경고:** `extract_transition_applicability` 의 "표가 있으면 TFI=O" 휴리스틱이 삼성생명 6분기를
+>   오판한다(원문은 "공통 및 선택 경과조치를 적용하지 않았습니다"). 일반화 수정("전=후면 X")은
+>   **198칸을 O→X 로 뒤집어** blocking RED 을 SKIP 으로 바꾸므로 **기각**했다. 좁은 대안(문서수준
+>   부정문 + `외에` 배제)을 시뮬(10버킷 매치 / 6칸 정정 / 대조군 4칸 일치)해 parser 에 발주함.
+
+**(2026-09-01) 소급재작성(restatement) 축을 등재·배선했다 — 그때까지 이 축을 재는 검사기가 저장소에 0개였다.**
+
+> 신설: `scripts/detect_kics_restatement.py`(탐지기) · `data/_gold/kics_restatement_ledger.json`(등재부) ·
+> `validate_data_contract.py` CHECK 7 `check_kics_restatement`(게이트, `run_gate` → 훅) ·
+> `tests/test_push_gate_wiring.py` WIRED 선언 · `tests/test_rule_coverage_manifest.py` 17개 테스트
+>
+> - **무엇이 사각이었나.** 공시본 `[경과조치 적용 전 지급여력비율 세부]` 표는 **해당·직전·전전분기
+>   3열**을 인쇄한다 → 같은 (회사,분기) 값이 두 번 인쇄된다. 발행사가 그걸 다르게 인쇄하면
+>   소급재작성인데, **그 두 인쇄값을 대조하는 검사기가 하나도 없었다.** 교보생명(KR0073)
+>   2026.1Q 재작성이 분기 변동 분석 중 **손으로** 발견됐다.
+> - **39사 전수 재스캔(실측).** 필링 대 필링(1Q본 해당분기 열 vs 2Q본 직전분기 열)으로
+>   **830칸 비교 · 미비교 0칸 · 미판독 0개사**. 결과: **재작성 1개사(교보생명) 10칸**,
+>   나머지 38사 무변동. 오케스트레이터 1차 손스캔의 오탐(기타포괄손익누계액·신종자본증권)은
+>   재현되지 않았다 — 원인 3가지를 전부 막았다(표 특정 / 소수자리를 원 토큰에서 셈 /
+>   item27 파생값 제외).
+> - **교보 10칸**: item1·2·4·11 각 +1 · item14 +871 · item15 +888 · item16 +445 ·
+>   item19 +779 · item20 +553 · item22 +16. 발행사 사유가 원문에 있다(“종속회사 인수에 따른
+>   기타요구자본 증가, 감독원 계리적가정 가이드라인 반영”). 파생 item27 은 161.92→160.41.
+> - **마스터는 안 건드렸다.** 등재·탐지만 했다. 마스터 2026.1Q 는 34개사 전부에서 1Q
+>   원공시본과 **셀 단위로 일치**(`m!=1Q본 = 0`) — K-ICS 마스터가 as-filed 기준이라는 것을
+>   추정이 아니라 실측으로 확인했다.
+> - **심각도 = YELLOW.** 과거 13개 분기쌍 전수 시뮬레이션: (회사,분기) 재작성 버킷 **37개 ·
+>   셀 122칸**, raw 가 갖춰진 2023.4Q 이후로는 **매 분기 1~5개사**. RED 로 내면 거의 매
+>   라운드 push 가 막히는데 막아서 고칠 것이 없다. **RED 은 마스터가 원공시본 기준을 벗어날
+>   때만** — `MASTER_ADOPTED_RESTATED` / `PIN_DRIFT` / `CELL_MISSING` / 등재부 위생 3종.
+> - 게이트 실측: **RED 0 유지**, YELLOW 201 → 203(버킷 1줄 + census 1줄), exit 0.
+> - 변이시험 **15/15 검출**(재작성값 채택·제3값·행삭제·값null·근거필드삭제·키불일치·
+>   등재부깨짐·등재부부재·스캔stale·미판독), tol 안(+0.4) 변이는 침묵, **등재 밖 200칸 변이
+>   신규 RED 0**(오탐 없음). `scripts/_probes/probe_20260901_restatement_rule_simulation.py`
+> - **⚠️ 정책이 저장소 어디에도 선언돼 있지 않았다** — 아래 “미결”의 첫 항목.
+
+**(2026-09-01) 미결 — owner 판단이 필요한 것 2건**
+
+> 1. **“분기별 원공시본 기준” 정책이 선언된 적이 없다.** 실측: 가장 가까운 서술은
+>    `data/_gold/kics_exemption_provenance.json` KR0032 2024.3Q 엔트리의 “as-disclosed 를
+>    그대로 두는 것이 이 저장소의 ‘발행사 기재대로’ 원칙과 일치한다” 인데, **같은 엔트리가
+>    ‘as-disclosed 를 유지할지 as-restated 를 채택할지는 owner/parser 정책 결정이고 이
+>    세션은 정하지 않았다’ 라고 명시**한다. 관행일 뿐 결정이 아니었다. 게다가 **IFRS17 CSM
+>    축에서는 owner 가 반대로 결정했다**(2026-06-20: 후속 분기 비교표에서 재작성값을 pull 해
+>    마스터를 재작성 기준으로 통일 — `validate_master_tables.py` L797-799 ·
+>    `inbox/_resolved/20260620T0600Z__validation__KR0073__kyobo_csm_priorperiod_pull_from_comparative.md` ·
+>    `data/_gold/user_csm_cells.json` “교보 재작성 기준 통일 58,249.2”). 즉 **저장소가 전부
+>    as-filed 로 정렬돼 있다는 말은 사실이 아니다** — K-ICS 는 as-filed, CSM 은 일부 셀이
+>    as-restated. 새 등재부가 선언하는 것은 **K-ICS 마스터의 기준**이며, 바꾸려면 owner 결정이
+>    필요하다.
+> 2. **과거 122칸을 등재부에 백필할지.** 지금 등재부는 검증된 2026.1Q 라운드 10칸뿐이다.
+>    과거 시뮬레이션 결과는 `_history_probe` 에 **미검증 표시로** 넣어 뒀다(컨트롤 컬럼 대조·
+>    잔여셀 육안 판독 안 함, 쌍당 3~9개사 미판독). 검증 없이 박제하면 그 박제 자체가
+>    무검사가 된다.
+
+
+**(2026-09-01 10:16~10:30 KST) 미종결 inbox 8건 전수 재검증 — 5건 실측 종결, 3건 open 확정.**
+
+> 종결(`_resolved/` 이동, 각 티켓에 명령·수치 기록): downloader `KR0011`·`KR0029` 2026.2Q 재탕 PDF
+> (재수집 확인 — sha 교체·MD "26.2Q" 라벨·`validate_disclosure_freshness --period FY2026_Q2`
+> RED=0/GREEN=39·게이트 두 회사 RED 0) · validation `KR0029 2025.3Q 2_tier1_bridge`
+> (`kics_exemption_provenance.json` L1826~1891 등재 + `validate_kics_disclosure.py` L2442 배선,
+> 박제잔차 −58.0 = 실측 −58.0, blocking RED 0) · designer `capsec_numerator_as_of`
+> (커밋 `a4bfddf`, `K-ICS.html` L971-979 이 행별 `numerator_as_of` 를 찍음; 둘 다 null 인 14사는
+> 전부 발행 0) · parser `KR0008 market_subitem_total_row_labels`
+> (`_TOTAL_ROW_CORE_RE`/`_table_risk_item_from_header` 신설, `extract_mkt_subs` 재현 36-40 5건 전부,
+> `19_market` 2026.2Q GREEN 38·YELLOW 1·RED 0, 36-40·41-46 결측사 0/39).
+>
+> **open 확정 3건 (전부 parser/kics lane)** — 각 티켓에 "남은 것 한 줄" 로 명시:
+> ① `20260831T0700Z` docling window: 데이터 증상은 소멸했으나 **요청 2(`source_page_ranges` 가드)
+> 배선 0** (`grep -rn source_page_ranges --include=*.py scripts/ src/ tests/` = probe 뿐), 세 번째
+> 실패양식 원인 미규명, **신규 실측 반례** KR0069 2026.2Q MD 에 금리·주식위험액 절이 여전히 없어
+> 마스터와 MD 가 갈라짐. ② `20260831T0800Z`: `compute_tier2_utilization.py` 가 아직 마스터
+> item47~54 를 안 읽고(MD_DIR 기본값도 FY2025_Q4) 한도 대조 검산도 없음, `--ocr-scale` 정식화 미답.
+> ③ `20260901T0500Z`: `_pdf()` 는 고쳐졌고(39/39 해석) 4버킷도 보존됐으나 **요청 2(스킵 비율 인쇄 +
+> 50% 초과 시 non-zero exit) 미반영** — 지금도 스킵이 exit 0 이다.
+>
+> 신규 발주: `inbox/downloader/20260901T0140Z__validation__MULTI__disclosure_selector_hardening.md`
+> (KR0011 위치고정 xpath · KR0029 하드코딩 `pancId` · KR0150 중복 `id="test1"` — 재발 자체는
+> `validate_disclosure_freshness` 가 `prepush_check.py` L94·L228 로 push 를 막는다).
+> `scripts/check_inbox_hygiene.py` = 활성 5 · 종결보관 369 · **위반 0**.
 
 **(2026-09-01) `TRANSITION_AFTER_MMULT_MISMATCH` 흥국생명(KR0071)·농협생명(KR0104) 4건 = 우리 유도 오류. 원문 정정 완료, 해당 축 RED 0.**
 

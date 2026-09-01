@@ -69,3 +69,36 @@ T1 0.0% / T2 21.6% 로 정상화 확인). 그래서 화면에 나갈 숫자는 �
 경로가 생기면 바로 새는 구조라 남겨둔다.
 
 ## 처리 (receiver 작성)
+
+## 검증 메모 (validation, 2026-09-01 10:16~10:26 KST — **티켓은 open 유지**)
+
+**두 결함 다 코드 상태가 티켓 작성 시점 그대로다. 아무것도 바뀌지 않았다.**
+
+### 1. OCR 배율 — 여전히 로컬 우회
+
+`scripts/ocr_parse_scanned_disclosure.py` L37-66·L94-98 에 `--ocr-scale`(기본 2)과
+`EasyOcrModel.__init__` 몽키패치가 그대로 있다. 이것은 티켓이 "이미 해뒀다"고 적은 완화책
+자체이고, 파서에게 물은 판단(**정식 옵션으로 승격할지 / 스캔본을 다른 엔진으로 보낼지**)은
+아직 답이 없다. `grep -rn "ocr_scale|EasyOcrModel" scripts/ src/` 결과가 이 파일 한 곳뿐 —
+정규 파이프라인(`src/solvency/parser/docling_parser.py`)에는 손잡이가 없다.
+144dpi 에서도 **5/9** 라는 티켓의 실측이 그대로 유효하다면, 스캔본 MD 는 여전히 거짓말을 한다.
+
+### 2. tier2 빌더가 마스터 대신 MD 를 읽는 문제 — (a)·(b) 둘 다 미반영
+
+`scripts/compute_tier2_utilization.py` 실측:
+
+- L13 `MD_DIR = REPO / "md_inbox" / "FY2025_Q4"` — 기본 MD 디렉터리가 아직 **FY2025_Q4** 다.
+- 값의 1차 소스는 여전히 MD 표(`_extract_common_table(md_path.read_text(...))`, L371).
+- 마스터는 `proxy` 로만 쓰이는데 그것도 **item3·item14 뿐**이다(L373-376:
+  `proxy_limit = proxy_item14 * 0.5`). 티켓이 지목한 **item47~54 를 읽는 코드가 없다**
+  (`grep -n "'47'|\"47\"" scripts/compute_tier2_utilization.py` 무출력).
+- 제안 (b)의 검산(MD 의 `보완자본 한도` vs `item14 x 50%` 대조 후 RED)도 없다 — `proxy_limit`
+  은 MD 값과 대조되지 않고, MD 표가 있으면 MD 쪽이 그대로 쓰인다.
+
+티켓이 지적한 대로 지금은 `wire_capital_securities_to_utilization.py` 가 뒤에서 분모·분자를
+갈아끼워 화면 숫자는 안전하다(2026.2Q 산출 39행 모두 `numerator_as_of` 포함 정상). 그래서
+**차단 사유는 아니지만**, wire 를 거치지 않는 경로가 생기면 바로 새는 구조가 그대로 남아 있다.
+
+**남은 것 한 줄**: `--ocr-scale` 의 정식화 여부 판단이 미답이고,
+`compute_tier2_utilization.py` 는 아직 마스터 item47~54 를 안 읽으며(제안 a) MD 한도와
+`item14x50%` 대조 검산도 없다(제안 b). **담당: parser (kics lane).**

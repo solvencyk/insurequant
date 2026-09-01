@@ -22,75 +22,71 @@
    "quarter"
   ],
   "values": "O | X | NA | UNKNOWN (UNKNOWN은 절대 X로 추정하지 않음; NA=원문이 '-'를 직접 인쇄한 3번째 실측값, UNKNOWN=우리가 못 읽음)",
-  "total_records": 536,
+  "total_records": 544,
   "counts_by_kind": {
    "TFI": {
-    "O": 370,
-    "X": 118,
+    "O": 379,
+    "X": 123,
     "NA": 8,
-    "UNKNOWN": 40
+    "UNKNOWN": 34
    },
    "RPT": {
-    "O": 197,
-    "X": 68,
-    "NA": 14,
-    "UNKNOWN": 257
+    "O": 200,
+    "X": 73,
+    "NA": 15,
+    "UNKNOWN": 256
    },
    "TAC": {
-    "O": 67,
-    "X": 407,
+    "O": 69,
+    "X": 418,
     "NA": 2,
-    "UNKNOWN": 60
+    "UNKNOWN": 55
    },
    "TIR": {
-    "O": 257,
-    "X": 180,
+    "O": 261,
+    "X": 188,
     "NA": 0,
-    "UNKNOWN": 99
+    "UNKNOWN": 95
    },
    "TER": {
-    "O": 159,
-    "X": 291,
+    "O": 161,
+    "X": 302,
     "NA": 0,
-    "UNKNOWN": 86
+    "UNKNOWN": 81
    },
    "TIRR": {
-    "O": 63,
-    "X": 386,
+    "O": 64,
+    "X": 398,
     "NA": 0,
-    "UNKNOWN": 87
+    "UNKNOWN": 82
    },
    "PCA_DEFER": {
     "O": 22,
-    "X": 324,
+    "X": 335,
     "NA": 0,
-    "UNKNOWN": 190
+    "UNKNOWN": 187
    }
   },
   "format_counts": {
    "subsection_format1_2": 124,
-   "summary_table_format3": 344,
-   "subsection_format1_2+pdf_fallback": 20,
-   "NONE": 34,
-   "NONE+pdf_fallback": 14
+   "summary_table_format3": 353,
+   "subsection_format1_2+pdf_fallback": 22,
+   "NONE": 29,
+   "NONE+pdf_fallback": 16
   },
   "unknown_reason_counts": {
    "SECTION_NOT_FOUND(no 경과조치 keyword at all) | pdf_fallback:RAW_PDF_NO_경과조치_KEYWORD": 15,
    "TABLE_UNPARSED(경과조치 keyword present but no recognizable table/sentence) | pdf_fallback:RAW_PDF_TABLE_UNPARSED": 2,
    "SECTION_NOT_FOUND(no 경과조치 keyword at all) | pdf_fallback:SCANNED_NO_TEXT_RAW_PDF": 5,
-   " | pdf_fallback:NO_RAW_PDF": 1,
-   "TABLE_UNPARSED(경과조치 keyword present but no recognizable table/sentence) | pdf_fallback:NO_RAW_PDF": 3,
-   "TFI_SUBSECTION_FORMAT1_2_AMBIGUOUS(no table, no negative text) | pdf_fallback:NO_RAW_PDF": 2,
+   " | pdf_fallback:SCANNED_NO_TEXT_RAW_PDF": 2,
    "SECTION_NOT_FOUND(no 경과조치 keyword at all)": 1,
    "SECTION_NOT_FOUND(no 경과조치 keyword at all) | pdf_fallback:RAW_PDF_TABLE_UNPARSED": 2,
    "SCANNED_HEAD_FALLBACK | pdf_fallback:RAW_PDF_NO_경과조치_KEYWORD": 4,
-   "SECTION_NOT_FOUND(no 경과조치 keyword at all) | pdf_fallback:NO_RAW_PDF": 1,
    "SCANNED_HEAD_FALLBACK | pdf_fallback:SCANNED_NO_TEXT_RAW_PDF": 1,
-   "SCANNED_HEAD_FALLBACK | pdf_fallback:NO_RAW_PDF": 1,
    "TFI_SUBSECTION_ANCHOR_NOT_FOUND": 1,
    "TFI_SUBSECTION_FORMAT1_2_AMBIGUOUS(no table, no negative text)": 1
   },
-  "pdf_fallback_used_count": 34
+  "pdf_fallback_used_count": 38
  },
  "records": [
   {
@@ -1166,6 +1162,40 @@
     "subsection": {
      "TFI": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
      "TAC": "FORMAT1_2_AMBIGUOUS(no table, no negative text)"
+    },
+    "pdf_fallback": {
+     "subsection_rawtext": {
+      "TFI": "rawtext_breakdown_table_present",
+      "TAC": "rawtext_negative: '감소분 경과조치를 적용하지 않아 경과조치 전·후 '",
+      "TIR": "rawtext_breakdown_table_present",
+      "TER": "RAWTEXT_ROW_NOT_FOUND(주식위험)",
+      "TIRR": "RAWTEXT_ROW_NOT_FOUND(금리위험)"
+     }
+    }
+   },
+   "unknown_reason": null,
+   "pdf_fallback_used": true
+  },
+  {
+   "code": "KR0003",
+   "name": "롯데손해보험",
+   "quarter": "2026.2Q",
+   "md_path": "md_inbox\\FY2026_Q2\\KR0003_롯데손해보험.md",
+   "TFI": "O",
+   "RPT": "UNKNOWN",
+   "TAC": "X",
+   "TIR": "O",
+   "TER": "UNKNOWN",
+   "TIRR": "UNKNOWN",
+   "PCA_DEFER": "UNKNOWN",
+   "format": "subsection_format1_2+pdf_fallback",
+   "evidence": {
+    "subsection": {
+     "TFI": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
+     "TAC": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
+     "TIR": "format1_breakdown_table_present: | 구분            | 경과조치 적용 전   | 경과조치 적용 후   |",
+     "TER": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
+     "TIRR": "FORMAT1_2_AMBIGUOUS(no table, no negative text)"
     },
     "pdf_fallback": {
      "subsection_rawtext": {
@@ -2614,6 +2644,33 @@
    "pdf_fallback_used": false
   },
   {
+   "code": "KR0009",
+   "name": "현대해상",
+   "quarter": "2026.2Q",
+   "md_path": "md_inbox\\FY2026_Q2\\KR0009_현대해상.md",
+   "TFI": "O",
+   "RPT": "O",
+   "TAC": "X",
+   "TIR": "X",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
+   "evidence": {
+    "summary_table_rows": [
+     "| 공통적용  | 가용자본     | 제도시행前 기발행자본증권가용자본 인정범위 확대 (TFI) | O      |",
+     "| 공통적용  | 업무보고서    | 보고 및 공시기한 연장                    | O      |",
+     "| 선택적용  | 가용자본     | 시가평가로 인한 자본감소분 점진적 인식 (TAC)     | X      |",
+     "| 선택적용  | 요구자본     | 신규도입 위험 신규 보험위험 전진적 인식 (TIR)    | X      |",
+     "| 선택적용  | 요구자본     | 기존측정 위험 주식위험액 증가분 점진적 인식 (TER)  | X      |",
+     "| 선택적용  | 요구자본     | 금리위험액 증가분 점진적 인식 (TIRR)         | X      |",
+     "| 선택적용  | K-ICS 비율 | 적기시정조치 적용 유예                    | X      |"
+    ]
+   },
+   "unknown_reason": null,
+   "pdf_fallback_used": false
+  },
+  {
    "code": "KR0010",
    "name": "KB손해보험",
    "quarter": "2023.1Q",
@@ -2895,7 +2952,7 @@
      "| 선택적용 | KICS비율 |                            | 적기시정조치 적용 유예               | X      |"
     ]
    },
-   "unknown_reason": " | pdf_fallback:NO_RAW_PDF",
+   "unknown_reason": " | pdf_fallback:SCANNED_NO_TEXT_RAW_PDF",
    "pdf_fallback_used": false
   },
   {
@@ -3422,6 +3479,141 @@
   {
    "code": "KR0029",
    "name": "AIG손해보험",
+   "quarter": "2024.3Q",
+   "md_path": "md_inbox\\FY2024_Q3\\KR0029_AIG손해보험.md",
+   "TFI": "X",
+   "RPT": "O",
+   "TAC": "X",
+   "TIR": "X",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
+   "evidence": {
+    "summary_table_rows": [
+     "| 공통적용  | 가용자본    | 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI)                       | X      |",
+     "| 공통적용  | 업무보고서   | 보고 및 공시기한 연장                                         | O      |",
+     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC)                           | X      |",
+     "| 선택적용  | 요구자본    | 신규도입 위험 신규 보험위험 전진적 인식(TIR)                          | X      |",
+     "[merged-rowspan-artifact -> TER] | 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER) 금리위험액 증가분 점진적 인식(TIRR) | X      |",
+     "[merged-rowspan-artifact -> TIRR] | 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER) 금리위험액 증가분 점진적 인식(TIRR) | X      |",
+     "| 선택적용  | K-ICS비율 | 적기시정조치 적용 유예                                         | X      |"
+    ]
+   },
+   "unknown_reason": null,
+   "pdf_fallback_used": false
+  },
+  {
+   "code": "KR0029",
+   "name": "AIG손해보험",
+   "quarter": "2024.4Q",
+   "md_path": "md_inbox\\FY2024_Q4\\KR0029_AIG손해보험.md",
+   "TFI": "X",
+   "RPT": "X",
+   "TAC": "X",
+   "TIR": "X",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
+   "evidence": {
+    "summary_table_rows": [
+     "| 공통적용  | 가용자본    | 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI) | X      |",
+     "| 공통적용  | 업무보고서   | 보고 및 공시기한 연장                   | X      |",
+     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC)     | X      |",
+     "| 선택적용  | 요구자본    | 신규도입 위험 신규 보험위험 전진적 인식(TIR)    | X      |",
+     "| 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER)  | X      |",
+     "| 선택적용  | 요구자본    | 금리위험액 증가분 점진적 인식(TIRR)         | X      |",
+     "| 선택적용  | K-ICS비율 | 적기시정조치 적용 유예                   | X      |"
+    ]
+   },
+   "unknown_reason": null,
+   "pdf_fallback_used": false
+  },
+  {
+   "code": "KR0029",
+   "name": "AIG손해보험",
+   "quarter": "2025.1Q",
+   "md_path": "md_inbox\\FY2025_Q1\\KR0029_AIG손해보험.md",
+   "TFI": "X",
+   "RPT": "X",
+   "TAC": "X",
+   "TIR": "X",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "NONE+pdf_fallback",
+   "evidence": {
+    "pdf_fallback": [
+     "[pNone] 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI) -> X",
+     "[pNone] 보고 및 공시기한 연장 -> X",
+     "[pNone] 시가평가로 인한 자본감소분 점진적 인식(TAC) -> X",
+     "[pNone] 신규 보험위험 전진적 인식(TIR) -> X",
+     "[pNone] 주식위험액 증가분 점진적 인식(TER) -> X",
+     "[pNone] 금리위험액 증가분 점진적 인식(TIRR) -> X",
+     "[pNone] 적기시정조치 적용 유예 -> X"
+    ]
+   },
+   "unknown_reason": null,
+   "pdf_fallback_used": true
+  },
+  {
+   "code": "KR0029",
+   "name": "AIG손해보험",
+   "quarter": "2025.2Q",
+   "md_path": "md_inbox\\FY2025_Q2\\KR0029_AIG손해보험.md",
+   "TFI": "X",
+   "RPT": "X",
+   "TAC": "X",
+   "TIR": "X",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
+   "evidence": {
+    "summary_table_rows": [
+     "| 공통적용  | 가용자본    | 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI) | X      |",
+     "| 공통적용  | 업무보고서   | 보고 및 공시기한 연장                   | X      |",
+     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC)     | X      |",
+     "| 선택적용  | 요구자본    | 신규도입 위험 신규 보험위험 전진적 인식(TIR)    | X      |",
+     "| 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER)  | X      |",
+     "| 선택적용  | 요구자본    | 금리위험액 증가분 점진적 인식(TIRR)         | X      |",
+     "| 선택적용  | K-ICS비율 | 적기시정조치 적용 유예                   | X      |"
+    ]
+   },
+   "unknown_reason": null,
+   "pdf_fallback_used": false
+  },
+  {
+   "code": "KR0029",
+   "name": "AIG손해보험",
+   "quarter": "2025.3Q",
+   "md_path": "md_inbox\\FY2025_Q3\\KR0029_AIG손해보험.md",
+   "TFI": "X",
+   "RPT": "X",
+   "TAC": "X",
+   "TIR": "X",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
+   "evidence": {
+    "summary_table_rows": [
+     "| 공통적용  | 가용자본    | 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI)                       | X      |",
+     "| 공통적용  | 업무보고서   | 보고 및 공시기한 연장                                         | X      |",
+     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC)                           | X      |",
+     "| 선택적용  | 요구자본    | 신규도입 위험 신규 보험위험 전진적 인식(TIR)                          | X      |",
+     "[merged-rowspan-artifact -> TER] | 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER) 금리위험액 증가분 점진적 인식(TIRR) | X      |",
+     "[merged-rowspan-artifact -> TIRR] | 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER) 금리위험액 증가분 점진적 인식(TIRR) | X      |",
+     "| 선택적용  | K-ICS비율 | 적기시정조치 적용 유예                                         | X      |"
+    ]
+   },
+   "unknown_reason": null,
+   "pdf_fallback_used": false
+  },
+  {
+   "code": "KR0029",
+   "name": "AIG손해보험",
    "quarter": "2025.4Q",
    "md_path": "md_inbox\\FY2025_Q4\\KR0029_AIG손해보험.md",
    "TFI": "X",
@@ -3488,13 +3680,13 @@
    "format": "summary_table_format3",
    "evidence": {
     "summary_table_rows": [
-     "| 공통적용  | 가용자본    | 제도시행 기발행자본증권가용자본 인정범위 확대(TFI) 前 | X      |",
-     "| 공통적용  | 업무보고서   | 보고 및 공시기한 연장                    | X      |",
-     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC)      | X      |",
-     "| 선택적용  | 요구자본    | 신규도입 위험 신규 보험위험 전진적 인식(TIR)     | X      |",
-     "| 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER)   | X      |",
-     "| 선택적용  | 요구자본    | 금리위험액 증가분 점진적 인식(TIRR)          | X      |",
-     "| 선택적용  | K-ICS비율 | 적기시정조치 적용 유예                    | X      |"
+     "| 공통적용  | 가용자본    | 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI)                       | X      |",
+     "| 공통적용  | 업무보고서   | 보고 및 공시기한 연장                                         | X      |",
+     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC)                           | X      |",
+     "| 선택적용  | 요구자본    | 신규도입 위험 신규 보험위험 전진적 인식(TIR)                          | X      |",
+     "[merged-rowspan-artifact -> TER] | 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER) 금리위험액 증가분 점진적 인식(TIRR) | X      |",
+     "[merged-rowspan-artifact -> TIRR] | 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER) 금리위험액 증가분 점진적 인식(TIRR) | X      |",
+     "| 선택적용  | K-ICS비율 | 적기시정조치 적용 유예                                         | X      |"
     ]
    },
    "unknown_reason": null,
@@ -3854,17 +4046,27 @@
    "name": "NH농협손해보험",
    "quarter": "2026.2Q",
    "md_path": "md_inbox\\FY2026_Q2\\KR0032_NH농협손해보험.md",
-   "TFI": "UNKNOWN",
-   "RPT": "UNKNOWN",
-   "TAC": "UNKNOWN",
-   "TIR": "UNKNOWN",
-   "TER": "UNKNOWN",
-   "TIRR": "UNKNOWN",
-   "PCA_DEFER": "UNKNOWN",
-   "format": null,
-   "evidence": {},
-   "unknown_reason": "TABLE_UNPARSED(경과조치 keyword present but no recognizable table/sentence) | pdf_fallback:NO_RAW_PDF",
-   "pdf_fallback_used": false
+   "TFI": "O",
+   "RPT": "O",
+   "TAC": "X",
+   "TIR": "O",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "NONE+pdf_fallback",
+   "evidence": {
+    "pdf_fallback": [
+     "[pNone] 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI) -> O",
+     "[pNone] 보고 및 공시기한 연장 -> O",
+     "[pNone] 시가평가로 인한 자본감소분 점진적 인식(TAC) -> X",
+     "[pNone] 신규 보험위험 전진적 인식(TIR) -> O",
+     "[pNone] 주식위험액 증가분 점진적 인식(TER) -> X",
+     "[pNone] 금리위험액 증가분 점진적 인식(TIRR) -> X",
+     "[pNone] 적기시정조치 적용 유예 -> X"
+    ]
+   },
+   "unknown_reason": null,
+   "pdf_fallback_used": true
   },
   {
    "code": "KR0049",
@@ -4244,14 +4446,14 @@
    "name": "악사손해보험",
    "quarter": "2026.2Q",
    "md_path": "md_inbox\\FY2026_Q2\\KR0049_악사손해보험.md",
-   "TFI": "UNKNOWN",
+   "TFI": "O",
    "RPT": "UNKNOWN",
    "TAC": "X",
    "TIR": "O",
    "TER": "X",
    "TIRR": "X",
    "PCA_DEFER": "UNKNOWN",
-   "format": "subsection_format1_2",
+   "format": "subsection_format1_2+pdf_fallback",
    "evidence": {
     "subsection": {
      "TFI": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
@@ -4259,10 +4461,19 @@
      "TIR": "format1_breakdown_table_present: | 구분            |   경과조치 적용 전 |   경과조치 적용 후 |",
      "TER": "format2_negative: ...'험 ) 경과조치를 적용하지 않아 경과조치 전·후 '",
      "TIRR": "format2_negative: ...'험 ) 경과조치를 적용하지 않아 경과조치 전·후 '"
+    },
+    "pdf_fallback": {
+     "subsection_rawtext": {
+      "TFI": "rawtext_breakdown_table_present",
+      "TAC": "rawtext_negative: '를 적용하지 않아 경과조치 전·후 '",
+      "TIR": "rawtext_breakdown_table_present",
+      "TER": "RAWTEXT_ROW_NOT_FOUND(주식위험)",
+      "TIRR": "RAWTEXT_ROW_NOT_FOUND(금리위험)"
+     }
     }
    },
-   "unknown_reason": "TFI_SUBSECTION_FORMAT1_2_AMBIGUOUS(no table, no negative text) | pdf_fallback:NO_RAW_PDF",
-   "pdf_fallback_used": false
+   "unknown_reason": null,
+   "pdf_fallback_used": true
   },
   {
    "code": "KR0050",
@@ -5733,16 +5944,24 @@
    "name": "삼성생명",
    "quarter": "2026.2Q",
    "md_path": "md_inbox\\FY2026_Q2\\KR0069_삼성생명.md",
-   "TFI": "UNKNOWN",
+   "TFI": "O",
    "RPT": "UNKNOWN",
-   "TAC": "UNKNOWN",
+   "TAC": "X",
    "TIR": "UNKNOWN",
-   "TER": "UNKNOWN",
-   "TIRR": "UNKNOWN",
+   "TER": "X",
+   "TIRR": "X",
    "PCA_DEFER": "UNKNOWN",
-   "format": null,
-   "evidence": {},
-   "unknown_reason": "TABLE_UNPARSED(경과조치 keyword present but no recognizable table/sentence) | pdf_fallback:NO_RAW_PDF",
+   "format": "subsection_format1_2",
+   "evidence": {
+    "subsection": {
+     "TFI": "format1_breakdown_table_present: | 구 분                      | 경과조치적용전     |     경과조치적용후 |",
+     "TAC": "format2_negative: '를적용하지않아경과조치전·후금액및'",
+     "TIR": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
+     "TER": "format2_negative: ...'는주식위험경과조치를적용하지않아경과조치전·후금액및'",
+     "TIRR": "format2_negative: ...'는주식위험경과조치를적용하지않아경과조치전·후금액및'"
+    }
+   },
+   "unknown_reason": null,
    "pdf_fallback_used": false
   },
   {
@@ -6101,21 +6320,26 @@
    "name": "에이비엘생명보험",
    "quarter": "2026.2Q",
    "md_path": "md_inbox\\FY2026_Q2\\KR0070_에이비엘생명보험.md",
-   "TFI": "UNKNOWN",
-   "RPT": "UNKNOWN",
-   "TAC": "UNKNOWN",
+   "TFI": "O",
+   "RPT": "NA",
+   "TAC": "O",
    "TIR": "O",
-   "TER": "UNKNOWN",
-   "TIRR": "UNKNOWN",
-   "PCA_DEFER": "UNKNOWN",
-   "format": "subsection_format1_2",
+   "TER": "O",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
    "evidence": {
-    "subsection": {
-     "TFI": "FORMAT1_2_AMBIGUOUS(no table, no negative text)",
-     "TIR": "format1_breakdown_table_present: | 구 분                             | 적용 전      | 경과조치 적용 후   |"
-    }
+    "summary_table_rows": [
+     "| 공통적용  | 가용자본    | 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI) | O      |",
+     "| 공통적용  | 업무보고서   | 보고 및 공시기한 연장                   | -      |",
+     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC)     | O      |",
+     "| 선택적용  | 요구자본    | 신규도입 위험 신규 보험위험 전진적 인식(TIR)    | O      |",
+     "| 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER)  | O      |",
+     "| 선택적용  | 요구자본    | 금리위험액 증가분 점진적 인식(TIRR)         | X      |",
+     "| 선택적용  | K-ICS비율 | 적기시정조치 적용 유예                   | X      |"
+    ]
    },
-   "unknown_reason": "TFI_SUBSECTION_FORMAT1_2_AMBIGUOUS(no table, no negative text) | pdf_fallback:NO_RAW_PDF",
+   "unknown_reason": null,
    "pdf_fallback_used": false
   },
   {
@@ -9230,16 +9454,25 @@
    "name": "DB생명보험",
    "quarter": "2026.2Q",
    "md_path": "md_inbox\\FY2026_Q2\\KR0082_DB생명보험.md",
-   "TFI": "UNKNOWN",
+   "TFI": "O",
    "RPT": "UNKNOWN",
-   "TAC": "UNKNOWN",
-   "TIR": "UNKNOWN",
-   "TER": "UNKNOWN",
-   "TIRR": "UNKNOWN",
-   "PCA_DEFER": "UNKNOWN",
-   "format": null,
-   "evidence": {},
-   "unknown_reason": "SECTION_NOT_FOUND(no 경과조치 keyword at all) | pdf_fallback:NO_RAW_PDF",
+   "TAC": "X",
+   "TIR": "O",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
+   "evidence": {
+    "summary_table_rows": [
+     "| 공통적용  | 가용자본    | 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI) | O      |",
+     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC)     | X      |",
+     "| 선택적용  | 요구자본    | 신규도입 위험 신규 보험위험 점진적 인식(TIR)    | O      |",
+     "| 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER)  | X      |",
+     "| 선택적용  | 요구자본    | 금리위험액 증가분 점진적 인식(TIRR)         | X      |",
+     "| 선택적용  | K-ICS비율 | 적기시정조치 적용 유예                   | X      |"
+    ]
+   },
+   "unknown_reason": null,
    "pdf_fallback_used": false
   },
   {
@@ -9956,13 +10189,20 @@
    "TFI": "UNKNOWN",
    "RPT": "UNKNOWN",
    "TAC": "UNKNOWN",
-   "TIR": "UNKNOWN",
-   "TER": "UNKNOWN",
-   "TIRR": "UNKNOWN",
-   "PCA_DEFER": "UNKNOWN",
-   "format": null,
-   "evidence": {},
-   "unknown_reason": "SCANNED_HEAD_FALLBACK | pdf_fallback:NO_RAW_PDF",
+   "TIR": "X",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
+   "evidence": {
+    "summary_table_rows": [
+     "| 선택적용   | 요구자본    | 신규도입 위험 신규 보험위험 점진적 인식(TIR) | X      |",
+     "| 선택적용   |         | 주식위임액 증각분 점진적 인식(TER)       | X      |",
+     "| 선택적용   |         | 금리워험액 증가분 점진적 인식(TIRR)      | X      |",
+     "| 선택적용   | K-ICS비율 | 적기시정조치 적용 유예                | X      |"
+    ]
+   },
+   "unknown_reason": " | pdf_fallback:SCANNED_NO_TEXT_RAW_PDF",
    "pdf_fallback_used": false
   },
   {
@@ -12300,16 +12540,24 @@
    "name": "서울보증보험",
    "quarter": "2026.2Q",
    "md_path": "md_inbox\\FY2026_Q2\\KR0150_서울보증보험.md",
-   "TFI": "UNKNOWN",
+   "TFI": "O",
    "RPT": "UNKNOWN",
-   "TAC": "UNKNOWN",
-   "TIR": "UNKNOWN",
-   "TER": "UNKNOWN",
-   "TIRR": "UNKNOWN",
+   "TAC": "X",
+   "TIR": "X",
+   "TER": "X",
+   "TIRR": "X",
    "PCA_DEFER": "UNKNOWN",
-   "format": null,
-   "evidence": {},
-   "unknown_reason": "TABLE_UNPARSED(경과조치 keyword present but no recognizable table/sentence) | pdf_fallback:NO_RAW_PDF",
+   "format": "subsection_format1_2",
+   "evidence": {
+    "subsection": {
+     "TFI": "format1_breakdown_table_present: | 구 분                           |   경과조치 적용 전 |   경과조치 적용 후 |",
+     "TAC": "format2_negative: '를  적용하지  않아  경과조치  전·'",
+     "TIR": "format2_negative: '  적용하지 않아  경과조치  전·'",
+     "TER": "format2_negative: ...'험  경과조치를  적용하지  않아  경과조치  전·'",
+     "TIRR": "format2_negative: ...'험  경과조치를  적용하지  않아  경과조치  전·'"
+    }
+   },
+   "unknown_reason": null,
    "pdf_fallback_used": false
   },
   {
@@ -13385,6 +13633,33 @@
    "name": "IBK연금보험",
    "quarter": "2026.1Q",
    "md_path": "md_inbox\\FY2026_Q1\\KR1011_IBK연금보험.md",
+   "TFI": "O",
+   "RPT": "X",
+   "TAC": "O",
+   "TIR": "O",
+   "TER": "O",
+   "TIRR": "O",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
+   "evidence": {
+    "summary_table_rows": [
+     "| 공통적용  | 가용자본    | 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI)                       | O      |",
+     "| 공통적용  | 업무보고서   | 보고 및 공시기한 연장                                         | X      |",
+     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC)                           | O      |",
+     "| 선택적용  | 요구자본    | 신규도입 위험 신규 보험위험 전진적 인식(TIR)                          | O      |",
+     "[merged-rowspan-artifact -> TER] | 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER) 금리위험액 증가분 점진적 인식(TIRR) | O      |",
+     "[merged-rowspan-artifact -> TIRR] | 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER) 금리위험액 증가분 점진적 인식(TIRR) | O      |",
+     "| 선택적용  | K-ICS비율 | 적기시정조치 적용 유예                                         | X      |"
+    ]
+   },
+   "unknown_reason": null,
+   "pdf_fallback_used": false
+  },
+  {
+   "code": "KR1011",
+   "name": "IBK연금보험",
+   "quarter": "2026.2Q",
+   "md_path": "md_inbox\\FY2026_Q2\\KR1011_IBK연금보험.md",
    "TFI": "O",
    "RPT": "X",
    "TAC": "O",

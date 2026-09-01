@@ -39,7 +39,6 @@ kics_disclosure.json, validate_kics_disclosure.py, or any registry.
 from __future__ import annotations
 
 import argparse
-import glob
 import json
 import re
 import sys
@@ -51,6 +50,9 @@ except Exception:
     pass
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "scripts"))
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+
 MD_INBOX = REPO / "md_inbox"
 DISCLOSURE = REPO / "data" / "disclosure"
 DEFAULT_OUT = REPO / "data" / "_derived" / "kics_transition_applicability.json"
@@ -592,7 +594,10 @@ def find_summary_table_rawtext(pages: list[tuple[int, str]]):
 
 def pdf_fallback(period: str, code: str):
     """Returns (result_dict, evidence, reason_if_nothing) using the raw PDF."""
-    pdfs = sorted(glob.glob(str(DISCLOSURE / period / "raw" / f"{code}_*.pdf")))
+    # raw/ 우선, 없으면 pdf/ — 2026.2Q 부터 다운로더가 pdf/ 로 떨군다(39사 중 raw 는 1개뿐).
+    # raw/ 만 보던 종전 코드는 2026.2Q 8사를 NO_RAW_PDF 로 흘렸다(KR0069 삼성생명 포함).
+    # 상세: scripts/_disclosure_pdf_paths.py
+    pdfs = [str(p) for p in disclosure_pdfs(period, code)]
     if not pdfs:
         return None, None, "NO_RAW_PDF"
     try:

@@ -67,6 +67,7 @@ from validate_kics_disclosure import (  # noqa: E402
     _exemption_registries,
     _item12_equals_item1,
     _life8_issuer_inconsistent,
+    restatement_cascade_exempt,
     _load_exemption_ledger,
     _other_capital_children_sum,
     _parent_present_child_incomplete_after,
@@ -378,7 +379,9 @@ def check_census(res: GateResult, env: "Env") -> None:
         life8_ok, life8_exempt_red, _l8_review, _l8_detail = _life8_issuer_inconsistent(kd_records)
         # 재작성 **채택의 연쇄**(합계만 재작성되고 세부는 미재공시) — 등재부가 잔차를 박제하고
         # 매 실행 재검산한다. 통째 skip 이 아니다.
-        casc_exempt, casc_red, casc_inert = _restatement_cascade_exempt(
+        # **정본은 validate_kics_disclosure.restatement_cascade_exempt 다.** 여기서
+        # 재구현하면 두 게이트가 같은 finding 에 다른 대답을 한다(§1b(ii)).
+        casc_exempt, casc_red, casc_inert = restatement_cascade_exempt(
             kics_findings, env.restatement_ledger)
         exempt_ids = {id(f) for f in tier2_exempt}
         exempt_ids |= {id(f) for f in casc_exempt}
@@ -3023,55 +3026,6 @@ def restatement_ledger() -> dict | None:
         return json.loads(RESTATEMENT_LEDGER.read_text(encoding="utf-8"))
     except Exception as e:                      # noqa: BLE001
         return {"_unreadable": f"{type(e).__name__}: {e}"}
-
-
-def _restatement_cascade_exempt(kics_findings: list, led: dict | None):
-    """재작성 **채택의 연쇄**로 설명되는 룰엔진 RED 을 면제한다 — 잔차 박제형.
-
-    발행사가 합계만 재작성하고 세부를 재공시하지 않는 경우가 있다. 교보 2026.1Q 가 그렇다:
-    item19(시장위험액)를 54,674 → 55,453 으로 고쳐 인쇄했지만, 그 세부(36~40 금리·주식·
-    부동산·외환·자산집중)는 2026.2Q 공시본 어디에도 직전분기 칸이 없다(`② 금리위험액 현황`
-    표는 당분기 단일 컬럼). owner 가 합계 재작성을 채택하면 `19_market`(= sqrt(V'MV) vs
-    item19) 이 **정확히 채택 델타만큼** 벌어진다 — 우리 데이터 결함이 아니라 채택의 산술적
-    귀결이다.
-
-    통째 skip 하지 않는다. 등재부 `_adoption_cascades` 가 잔차를 박제하고 여기서 매 실행
-    재검산한다 — 잔차가 움직이면 RED(`..._CASCADE_RESIDUAL_DRIFT`), RED 이 사라지면
-    등재가 무용해진 것이므로 그것도 알린다(`..._CASCADE_INERT`).
-
-    반환: (면제된 finding 리스트, 새로 낼 RED 사유 리스트, inert 등재 리스트)
-    """
-    casc = (led or {}).get("_adoption_cascades") or []
-    if not casc:
-        return [], [], []
-    want = {}
-    for c in casc:
-        try:
-            want[(str(c["company"]), str(c["quarter"]), str(c["rule"]))] = c
-        except KeyError:
-            return [], [{"detail": f"_adoption_cascades 엔트리에 필수 키가 없다: {c}",
-                         "rule": "RESTATEMENT_CASCADE_MALFORMED"}], []
-    exempt, reds, seen = [], [], set()
-    for f in kics_findings:
-        if f.get("status") != "RED":
-            continue
-        key = (str(f.get(KEY_CODE)), str(f.get(KEY_QUARTER)), str(f.get("rule")))
-        c = want.get(key)
-        if c is None:
-            continue
-        seen.add(key)
-        diff = _num(f.get("diff"))
-        exp = _num(c.get("expected_residual"))
-        tol = float(c.get("tol") or 0.5)
-        if diff is None or exp is None or abs(diff - exp) > tol:
-            reds.append({"detail": f"{key[0]} {key[1]} {key[2]}: 채택 연쇄 박제잔차 {exp} 인데 "
-                                   f"실측 {diff} (tol {tol}) — 등재가 틀렸거나 데이터가 움직였다",
-                         "rule": "RESTATEMENT_CASCADE_RESIDUAL_DRIFT",
-                         "code": key[0], "quarter": key[1]})
-            continue
-        exempt.append(f)
-    inert = [want[k] for k in want if k not in seen]
-    return exempt, reds, inert
 
 
 def check_kics_restatement(res: GateResult, env: "Env") -> None:

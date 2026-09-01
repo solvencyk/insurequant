@@ -141,6 +141,20 @@ LABEL_FIXES: tuple[tuple[str, str, str], ...] = (
     ("장기손액보헨", "장기손해보험", "ocr_장기손액보헨->장기손해보험"),
     # OCR: 장기손액보험 -> 장기손해보험
     ("장기손액보험", "장기손해보험", "ocr_장기손액보험->장기손해보험"),
+    # item25 wording variant: many companies' template prints "대용치"
+    # (substitute value) where the stored baseline label uses "대응치"
+    # (corresponding value) -- e.g. 한화손해보험 전 분기(2023.4Q~), 하나생명보험
+    # 2024.4Q. Bare substring (not "요구자본 대용치") so it survives the
+    # "요구 자본" mid-word-space variant and cross-line-wrap concatenations
+    # too. Scoped to label matching only (normalise_label/core_words), never
+    # touches value cells or prose, so collision risk with unrelated uses of
+    # "대용치" (e.g. "공정가치의 대용치로") elsewhere in the filing is nil --
+    # verified across all 86 md_inbox files containing "대용치"
+    # (2026-09-01 item23-children audit, group2, 10사).
+    ("대용치", "대응치", "item25_대용치->대응치_group2audit"),
+    # item25 wording variant: erroneous mid-word space "요구 자본" (vs
+    # "요구자본") seen in 악사손해보험/하나손해보험/AIA 2024.1Q raw tables.
+    ("요구 자본 대응치", "요구자본 대응치", "item25_요구공백->요구자본_group2audit"),
 )
 
 # ---------------------------------------------------------------------------

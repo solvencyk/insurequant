@@ -1,7 +1,29 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-08-31 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-09-01 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-09-01 — sensitivity_heatmap STALE_AS_OF RED 31건: 게이트 기준정책 수정 (데이터 무변경)
+
+`validate_data_contract.py` 가 2026.2Q 적재로 `sensitivity_heatmap` 의 요구기준을 K-ICS
+분기공시 최신치(2026.2Q)로 올렸는데, 가정민감도(사망률·장해질병·해지율·사업비 충격→ΔCSM/
+손익)는 **전 업권이 연 1회(사업보고서)만 공시**해서 32사 전원이 STALE_AS_OF RED 가 됐다.
+
+**census 결론 (재현: `scripts/_probes/probe_20260901_sensitivity_fy2026q2_census.py` ·
+`probe_20260901_sensitivity_nofiling_dart_verify.py`)**: `data/dart/FY2026_Q2/raw/` 38사
+중 14사는 비상장 감사보고서 전용(정기공시 0건, live DART API 로 확인), 나머지 24사는
+반기보고서를 냈지만 `extract_sensitivity_tables` 실제 추출 + 원문 대조 결과 가정민감도
+표는 0건(있는 건 IFRS9 공정가치 수준3 민감도·§14(2) 현행가정 값 등 별개 항목). RED 31건
+전원이 이 두 그룹과 정확히 대응 — 적재할 진짜 값이 없어 `sensitivity_heatmap.json` ·
+`sensitivity_heatmap_provenance.json` · `CSM_sensitivity.json` 3종 **무수정**.
+
+고친 것은 게이트뿐이다. `verify_provenance_sidecar()` 에 `max_lag_quarters` 파라미터 신설
+(기본 0=기존 동작, 다른 4개 호출처 무영향), `sensitivity_heatmap` 호출에만 `=3` 적용 —
+`build_ifrs17_bs.py` TIER2 앞채움과 동일 근거(연간 주기 한 바퀴). 신규 헬퍼
+`_quarters_between()`(달력월 기준 정수 분기차; `q_to_num` 은 정렬 전용이라 연도 경계 산술이
+깨진다). 검증: RED 49→0(18은 동시 진행 K-ICS 커밋 `523002e` 로 무관하게 해소, 31은 이번
+수정), `pytest tests/test_deploy_assets.py tests/test_quarter_horizon.py` 31 passed,
+`_quarters_between` 단위검증 전부 일치. 상세 = `TODO_parser_ifrs17.md` 2026-09-01 (78th pass).
 
 ## 2026-08-31 (2) — 2026.2Q 라운드 2회차 + item5 신규 24칸 등재 (owner 승인)
 

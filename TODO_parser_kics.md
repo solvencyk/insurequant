@@ -1,6 +1,79 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-01(6회차 — push 를 막던 과거분기 RED 18건 정정: AIG손해보험·
+> Last updated: 2026-09-01(7회차 — 삼성생명 KR0069 2026.2Q 시장위험 MD-마스터 출처 단절 복구 +
+> 2026.2Q 39사 전수 census) — orchestrator 발주(inbox `20260831T0700Z` 검증메모가 남긴 잔여 3번
+> 항목: "KR0069 는 MD 재변환이 안 돼 마스터와 갈라져 있다"). **다른 서브에이전트가 동시에
+> kics_disclosure.json 을 쓰고 있어 이번 세션은 마스터를 절대 쓰지 않음** — 읽기 전용 대조만.
+>
+> **원인**: docling 키워드 리스트(`src/solvency/parser/docling_parser.py`
+> `DEFAULT_RATIO_KEYWORDS`)에 "금리위험액" 자체가 없었다 — 형제 항목 4개(주식/부동산/외환/
+> 자산집중위험액)는 이전 세션(commit `8f5e3b8`)에 추가됐지만 정작 항목36 은 빠짐. 그 결과
+> p29-30(금리위험액현황)이 자체 hit 를 못 얻고 이웃 hit(p27)의 window bleed 에만 의존하다
+> p30-31 구간이 통째로 구멍남(p31=주식위험액현황도 같이 증발). 부동산위험액(p32)은 키워드가
+> 이미 있었는데도 표가 "가./나./다." 대신 "1.직접소유/2.간접소유/3.의무보유부동산"(아라비아
+> 숫자)를 써서 약한-단일-히트 휴리스틱(가/나/다 마커 요구)을 통과 못 함.
+>
+> **PDF 원문 확인**: 스캔 아님, 미공시 아님 — 텍스트레이어 정상(p29-32, 500-1,500자/페이지).
+> fitz 로 p29 "Ⅳ.금리위험액"=1,037,118백만=item36(10,371.18억)과 소수점까지 정확 일치, p31
+> "3)주식위험액현황 Ⅲ.합계"=69,542,621백만=item37(695,426.21억)과 정확 일치 직접 확인.
+>
+> **수정**: `DEFAULT_RATIO_KEYWORDS`에 "금리위험액"·"의무보유부동산"(부동산위험액 표 3번째 행
+> 라벨 — K-ICS 규정서식이라 회사 공통, KR0002/KR0032/KR0068/KR0104 raw PDF에서도 같은 문구
+> 확인) 추가. `--keyword-window 2` 로 30-31 구멍을 우회 시도했으나 docling 이 p31/33/34에서
+> `std::bad_alloc` 을 내며 오히려 item37/39/40 을 잃어(2/5 만 남음, window=1 결과 4/5보다 나쁨)
+> 폐기 — 최종은 키워드 2개 추가 + window=1(기본값) 유지, bad_alloc 없이 5/5 전부 회수.
+>
+> **재변환**: `--companies KR0069` 로 스코프(다른 회사 파일 0건 터치, mtime 으로 확인).
+> `source_page_ranges` "1-4;6-29;32-47"(30-31 구멍) → "1-3;7-11;13-35;43-46"(연속, 구멍 없음).
+> 재추출 항목36-40 = [10371.18, 695426.21, 29099.33, 37715.52, 254184.3] — **마스터와 5개
+> 전부 소수점까지 정확 일치**, sqrt(V'·MARKET_M·V)=743040.73 vs item19=743041 rel=0.0000%.
+> IRR 41-46 도 derive_irr() vs item36 rel=1.652%(기존 `IRR_DERIVED_TOL_REL=0.05` 톨러런스
+> 내, GREEN). **마스터 수정 불필요 — MD 재변환만으로 출처 복구 완료, 갈라진 칸 0개.** 부수효과
+> (허용): 신용위험/운영위험/재보험 절이 top-20 hit-page 경쟁에서 밀려 이번 MD 밖으로 밀림
+> (item20/21 은 훨씬 이전 세션에 이미 적재된 값이라 이번엔 안 건드림 — 후속 세션이 그 항목을
+> MD 로 재검증할 때 참고할 것).
+>
+> **적용후 판정**: 게이트가 찍는 `[UNMEASURED]` 는 오독 신호가 아니다 — 재변환된 MD 에서
+> 삼성생명 자신의 명시 문장을 확보: **"당사는 공통 및 선택 경과조치를 적용하지 않았습니다."**
+> 즉 값=값_적용후 미러링(item19: 743041=743041 등)은 AIA 선례와 같은 정당한 비적용사 패턴이지
+> 판정불가가 아니다. `[UNMEASURED]` 태그의 실제 원인은 `data/_derived/kics_source_textlayer.
+> json` 이 8/21 이후 갱신이 안 돼 **2026.2Q 39개사 전원 항목 0건**(구조적, 삼성생명 국한 아님)
+> — `kics_transition_applicability.json` 도 KR0069 2026.2Q 를 `pdf_fallback:NO_RAW_PDF` 로
+> UNKNOWN 처리해 같은 raw/pdf 디렉토리 계열 버그로 보인다(inbox 미해결 티켓 4번과 동일 축으로
+> 추정, 이 세션은 사이드카 재생성에 손대지 않음 — 범위 밖).
+>
+> **2026.2Q 39사 전수 census(같은 실패양식 규모 측정)**: `extract_mkt_subs()`를 각사 현재
+> md_inbox MD 에 돌려 마스터 항목36-40 재현 여부 대조 + heading-regex 로 "MD 에 그 절 헤더가
+> 아예 없다"(윈도-드롭, 삼성생명과 동일계열) vs "헤더는 있는데 추출기가 못 뽑는다"(다른 버그)를
+> 구분. **윈도-드롭 계열 = 20개사**(삼성생명 포함, 55칸) — raw PDF fitz 텍스트로 18개사(KR0069
+> 포함)는 진짜 텍스트가 있는데 드롭됐음을 확인, 2개사(KR0010 KB손해·KR0087 동양생명)는 평균
+> 0~4자/페이지라 진짜 스캔본(윈도 문제 아님, 기존 KICS-IMG 계열), KR0079(미래에셋생명)는 혼재
+> (항목36·38 은 텍스트 존재/37·39·40 은 저밀도). **마스터 값 자체는 39사 전원 sqrt(V'MV)≈
+> item19 rel<0.5%(대부분 <0.05%)로 자체정합** — 화면 숫자는 지금 안 틀림, provenance 단절만
+> 존재. "헤더는 있는데 추출 실패" 계열 = 11개사(18칸, 대부분 item40=0 엣지케이스 + KR0051
+> 컬럼뒤섞임 기존 quirk + KR1098 마이크로값) — 다른 실패양식이라 이 census 범위 밖, 손대지 않음.
+>
+> **잔여**: 삼성생명 1건만 이 세션에서 재변환·검증 완료. 나머지 17개사(KR0079 부분 포함)는
+> 같은 코드 수정으로 재변환하면 닫힐 것으로 강하게 추정되나 미실행(동시성 안전상 이번 세션은
+> KR0069 파일만 쓰기 허용됐음) — `task_6dd1268d`(spawn_task)로 후속 세션 발주해 둠. 스캔
+> 2개사(KR0010/KR0087)는 별도 OCR 경로 대상. 사이드카 재생성(`build_kics_source_textlayer.py`
+> 2026.2Q, raw/pdf 버그 추정)도 미착수. 원 inbox 티켓의 요청2(source_page_ranges 품질게이트
+> 가드)는 여전히 미배선 — 진행상황만 inbox `## 답변`에 추가하고 티켓은 open 유지.
+>
+> **재현**: 백업 `md_inbox/FY2026_Q2/KR0069_삼성생명.md.bak_20260901_marketgap` (+ 동일명
+> `data/disclosure/FY2026_Q2/parsed/`) = 수정 전 스냅샷. 재변환:
+> `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage
+> parse --period FY2026_Q2 --pdf-root data/disclosure/FY2026_Q2/pdf --companies KR0069`. 검증
+> 스크립트 `scripts/_probes/probe_20260901_kr0069_*.py`(대조·PDF페이지·MD diff·IRR·경과조치)
+> + `probe_20260901_2026q2_market_census{,2,3,4_rawpdf}.py`(39사 census) +
+> `probe_20260901_market_identity_check_all39.py`(항등식 자체정합 검사). 게이트 재확인:
+> `validate_kics_disclosure.py` exit 0 그대로(RED=0, 19_market 38GREEN/1YELLOW/0RED, KR0069
+> UNMEASURED 메시지는 사이드카 미갱신으로 문구 자체는 불변 — 원인 규명만 추가됨).
+>
+> status: answered(orchestrator 재확인 필요 — KR0069 자체는 자기완결이나, 원 티켓이 지목한
+> MULTI 범위 중 17개사·요청2 방어책이 남아 inbox 원 티켓은 open 유지가 맞음).
+>
+> Last updated (이전): 2026-09-01(6회차 — push 를 막던 과거분기 RED 18건 정정: AIG손해보험·
 > 에이비엘생명·흥국생명) — orchestrator 발주. `scripts/validate_data_contract.py` RED
 > 49 → **31**(전부 sensitivity_heatmap=ifrs17 레인, `kics_disclosure` 잔여 0).
 >

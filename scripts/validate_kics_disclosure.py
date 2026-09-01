@@ -14,6 +14,11 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from _disclosure_pdf_paths import (  # noqa: E402
+    find_disclosure_pdf as _find_disclosure_pdf,
+)
 
 from solvency.validation.kics_json_rules import (
     IMAGE_OCR_COMPANIES,
@@ -1672,12 +1677,17 @@ def _source_readability(path: Path | None = None) -> dict:
             continue
         code, q = key.split("|", 1)
         raw, st = rec.get("raw"), rec.get("status")
-        if not raw or st not in ("READABLE", "BORDERLINE", "UNREADABLE"):
+        # SCANNED_SECTION = 문서는 맞는데 K-ICS 절만 이미지(2026-09-01 신설). READABLE 이 아니므로
+        # 아래 소비처에서 자동으로 '판정 불가' 로 흘러간다 — 다만 UNMEASURED 로 뭉개면 처방이
+        # 사라진다(OCR vs 재수집). 그래서 값을 그대로 살려 보낸다.
+        if not raw or st not in ("READABLE", "BORDERLINE", "UNREADABLE", "SCANNED_SECTION"):
             out[(code, q)] = "UNMEASURED"
             continue
-        f = ROOT / "data" / "disclosure" / f"FY{q[:4]}_Q{q[5]}" / "raw" / raw
+        # raw/ 와 pdf/ 둘 다 본다 — 2026.2Q 부터 다운로더가 pdf/ 로 떨구는데 여기서 raw/ 만
+        # 보면 파일이 멀쩡히 있는데도 stale 로 강등돼 그 칸이 통째로 판정 불가가 된다.
+        f = _find_disclosure_pdf(f"FY{q[:4]}_Q{q[5]}", raw)
         try:
-            fresh = f.stat().st_size == rec.get("bytes")
+            fresh = f is not None and f.stat().st_size == rec.get("bytes")
         except OSError:
             fresh = False
         out[(code, q)] = st if fresh else "UNMEASURED"
@@ -1687,6 +1697,66 @@ def _source_readability(path: Path | None = None) -> dict:
 _TFI_APPLICABILITY_SIDECAR = (
     ROOT / "data" / "_derived" / "kics_transition_applicability.json"
 )
+
+
+def _sidecar_coverage_findings(records: list[dict]) -> tuple[list, list]:
+    """판정 사이드카 2종이 **현재 데이터를 담고 있는지** → (red, yellow).
+
+    왜 필요한가 (2026-09-01, 이 룰이 없어서 난 사고).
+    `kics_source_textlayer.json` 이 2026-08-20 이후 갱신되지 않아 **2026.2Q 39사 전원이
+    사이드카에 아예 없었다.** 게이트는 그걸 조용히 `UNMEASURED` 로 흘렸고, 화면에는
+    `[UNMEASURED] → OCR/재수집 없이는 적용후 세부를 판정할 수 없음` 이 39줄 찍혔다.
+    **그건 '판정했더니 정당' 도 '판정했더니 RED' 도 아니고 판정 자체를 안 한 것인데,
+    exit code 는 0 이었다.** 결측을 SKIP 으로 흘리면 검증이 무력화된다는 이 저장소의
+    반복 사고형태가 사이드카 층에서 재현된 것이다.
+
+    원인은 사이드카 생성기가 `data/disclosure/<period>/raw/` 만 glob 했기 때문이다 —
+    2026.2Q 부터 다운로더가 `pdf/` 로 떨군다(raw=1 · pdf=39). 경로는 고쳤지만, **경로를
+    고친 것과 다음 분기에 또 안 도는 것을 막는 것은 다른 일이다.** 그래서 커버리지를 센다.
+
+      RED     최신 분기 버킷이 사이드카에 없음 = 새 분기가 들어왔는데 사이드카를 안 돌린 것.
+      RED     사이드카 파일 자체가 없거나 파싱 불가 (깨진 파일 ≠ 없는 파일).
+      YELLOW  과거 분기 버킷 누락 — 재수집 이력 때문에 생길 수 있어 blocking 아님.
+
+    재생성: scripts/build_kics_source_textlayer.py · scripts/extract_transition_applicability.py
+    """
+    buckets = sorted({(r.get(KEY_CODE), r.get(KEY_QUARTER)) for r in records
+                      if r.get(KEY_CODE) and r.get(KEY_QUARTER)})
+    red, yellow = [], []
+    if not buckets:
+        return red, yellow
+    latest = max(q for _, q in buckets)
+
+    for label, path, extract in (
+        ("kics_source_textlayer",
+         _TEXTLAYER_SIDECAR,
+         lambda d: {tuple(k.split("|", 1)) for k in (d.get("cells") or {})}),
+        ("kics_transition_applicability",
+         _TFI_APPLICABILITY_SIDECAR,
+         lambda d: {(r.get("code"), r.get("quarter")) for r in (d.get("records") or [])}),
+    ):
+        try:
+            have = extract(json.loads(path.read_text(encoding="utf-8")))
+        except Exception as exc:  # noqa: BLE001
+            red.append({"rule": "SIDECAR_UNREADABLE", "sidecar": label,
+                        "detail": f"{path.name} 없음/파싱불가 ({type(exc).__name__}) — "
+                                  f"이 사이드카에 의존하는 판정축이 통째로 죽는다"})
+            continue
+        missing = [b for b in buckets if b not in have]
+        late = sorted(c for c, q in missing if q == latest)
+        if late:
+            red.append({"rule": "SIDECAR_STALE_LATEST_QUARTER", "sidecar": label,
+                        "quarter": latest, "n": len(late), "codes": late,
+                        "detail": f"{path.name} 에 {latest} 버킷 {len(late)}개가 없다 — "
+                                  f"사이드카를 최신 분기에 대해 돌리지 않았다. 그 칸은 "
+                                  f"'판정 불가'로 흘러 검증이 조용히 꺼진다"})
+        old = [b for b in missing if b[1] != latest]
+        if old:
+            yellow.append({"rule": "SIDECAR_COVERAGE_GAP", "sidecar": label,
+                           "n": len(old),
+                           "buckets": [f"{c} {q}" for c, q in sorted(old, key=lambda x: (x[1], x[0]))],
+                           "detail": f"{path.name} 에 과거 분기 버킷 {len(old)}개 누락 (non-blocking)"})
+    return red, yellow
 
 
 def _load_tfi_applicability(path: Path | None = None) -> dict:
@@ -2448,6 +2518,72 @@ _TIER2_ISSUER_INCONSISTENT: dict[tuple[str, str], dict] = {
         },
     },
 }
+
+
+# documented exception 4번째 — **재작성 채택의 연쇄** (owner 2026-09-01).
+# 발행사가 합계만 소급재작성하고 세부를 재공시하지 않는 경우가 있다. 교보 2026.1Q 가 그렇다:
+# item19(시장위험액)를 54,674 → 55,453 으로 고쳐 인쇄했지만 세부 36~40 의 그 분기 값은
+# 어디에도 없다(`② 금리위험액 현황` 표는 당분기 단일 컬럼). owner 가 합계 재작성을 채택하면
+# `19_market`(sqrt(V'MV) vs item19)이 **정확히 채택 델타만큼** 벌어진다 — 데이터 결함이 아니라
+# 채택의 산술적 귀결이다.
+#
+# **이 함수가 정본이고 `validate_data_contract.py` 가 이것을 import 해서 쓴다.** 두 게이트가
+# 같은 finding 을 놓고 다른 대답을 하면 등재가 조용히 무효가 된다(§1b(ii) duplicate-and-drift).
+# 실제로 2026-09-01 에 그 상태가 잠깐 있었다 — 데이터계약은 면제하고 K-ICS 게이트는 차단해서
+# `blocking RED=1` 이 남아 push 를 막았다.
+RESTATEMENT_LEDGER_PATH = ROOT / "data" / "_gold" / "kics_restatement_ledger.json"
+RESTATEMENT_CASCADE_TOL_DEFAULT = 0.5
+
+
+def restatement_cascade_exempt(findings: list[dict], ledger: dict | None = None):
+    """등재부 `_adoption_cascades` 의 기대잔차를 라이브 finding 에 대고 재검산한다.
+
+    통째 skip 이 아니다 — 잔차가 박제와 다르면 RED 사유를 돌려주고, 대응 RED 이 아예 없으면
+    '면제가 무용해졌다'(inert)로 돌려준다. 반환: (면제 findings, RED 사유, inert 등재).
+    """
+    if ledger is None:
+        try:
+            ledger = json.loads(RESTATEMENT_LEDGER_PATH.read_text(encoding="utf-8"))
+        except FileNotFoundError:
+            return [], [], []
+        except Exception as e:                                      # noqa: BLE001
+            return [], [{"rule": "RESTATEMENT_CASCADE_LEDGER_UNREADABLE",
+                         "detail": f"{RESTATEMENT_LEDGER_PATH.name}: {type(e).__name__}: {e}"}], []
+    want, reds = {}, []
+    for c in (ledger.get("_adoption_cascades") or []):
+        try:
+            want[(str(c["company"]), str(c["quarter"]), str(c["rule"]))] = c
+        except KeyError:
+            reds.append({"rule": "RESTATEMENT_CASCADE_MALFORMED",
+                         "detail": f"_adoption_cascades 엔트리에 필수 키가 없다: {c}"})
+    exempt, seen = [], set()
+    for f in findings:
+        if f.get("status") != "RED":
+            continue
+        key = (str(f.get(KEY_CODE)), str(f.get(KEY_QUARTER)), str(f.get("rule")))
+        c = want.get(key)
+        if c is None:
+            continue
+        seen.add(key)
+        try:
+            diff = float(f.get("diff"))
+            exp = float(c.get("expected_residual"))
+        except (TypeError, ValueError):
+            reds.append({"rule": "RESTATEMENT_CASCADE_RESIDUAL_DRIFT", "code": key[0],
+                         "quarter": key[1],
+                         "detail": f"{key}: 잔차를 읽을 수 없다 (실측 {f.get('diff')!r} / "
+                                   f"박제 {c.get('expected_residual')!r})"})
+            continue
+        tol = float(c.get("tol") or RESTATEMENT_CASCADE_TOL_DEFAULT)
+        if abs(diff - exp) > tol:
+            reds.append({"rule": "RESTATEMENT_CASCADE_RESIDUAL_DRIFT", "code": key[0],
+                         "quarter": key[1],
+                         "detail": f"{key}: 채택 연쇄 박제잔차 {exp} 인데 실측 {diff} "
+                                   f"(tol {tol}) — 등재가 틀렸거나 데이터가 움직였다"})
+            continue
+        exempt.append(f)
+    inert = [want[k] for k in want if k not in seen]
+    return exempt, reds, inert
 
 
 def _tier2_issuer_inconsistent(records: list[dict], findings: list[dict]):
@@ -3756,6 +3892,11 @@ def main() -> int:
                     "excess": r["excess"], "z": r["z"], "pin": r["pin"], "why": r["why"]}
                    for r in taut_exempt],
     }
+    # 판정 사이드카가 최신 분기를 담고 있는지(2026-09-01). 안 담고 있으면 그 칸들이 조용히
+    # '판정 불가'로 흘러 검증이 꺼진다 — exit 0 으로 통과하던 구멍을 닫는다.
+    sidecar_red, sidecar_yellow = _sidecar_coverage_findings(records)
+    report["sidecar_coverage"] = {"red": sidecar_red, "yellow": sidecar_yellow}
+
     exempt_red, exempt_review = _exemption_provenance_findings()
     # 원장 ↔ 코드 박제 대조(2026-08-24). 어긋나면 RED — 원장 숫자를 아무도 안 읽던 구멍을 닫는다.
     pin_ledger_red = _pin_ledger_agreement_findings()
@@ -3835,7 +3976,21 @@ def main() -> int:
     # 그것까지 빼면 blocking RED 가 음수가 된다 — 2026-08-24 에 실제로 -2 가 찍혔다.
     # 면제는 등급을 바꾸지 않는다: YELLOW 박제는 '매 실행 재검산' 만 켜고 차단집계는 안 건드린다.
     tier2_accept_red = [f for f in tier2_accept if f.get("status") == "RED"]
-    red_blocking = red - len(life8_exempt_findings) - len(tier2_accept_red)
+    # documented exception 4번째 — 재작성 채택의 연쇄(owner 2026-09-01). 같은 층에서 뺀다.
+    # 이 면제가 데이터계약 게이트에만 있고 여기엔 없어서 `blocking RED=1` 이 남아 push 를
+    # 막던 상태가 2026-09-01 에 실제로 있었다. 같은 함수를 두 게이트가 부른다.
+    casc_accept, casc_red, casc_inert = restatement_cascade_exempt(findings)
+    casc_accept_red = [f for f in casc_accept if f.get("status") == "RED"]
+    report["restatement_cascade_exception"] = {
+        "doc": ("재작성 채택 연쇄 documented exception — blanket skip 이 아니라 기대잔차 박제. "
+                "정본은 data/_gold/kics_restatement_ledger.json 의 `_adoption_cascades` 이고 "
+                "매 실행 라이브 finding 에 대고 재검산한다"),
+        "exempted": len(casc_accept_red),
+        "residual_drift_red": casc_red,
+        "inert": [f"{c.get('company')} {c.get('quarter')} {c.get('rule')}" for c in casc_inert],
+    }
+    red_blocking = (red - len(life8_exempt_findings) - len(tier2_accept_red)
+                    - len(casc_accept_red) + len(casc_red))
     report["tier2_issuer_inconsistent_exception"] = {
         "doc": ("tier2/다리 축 발행사 자기모순 documented exception — blanket skip 이 아니라 "
                 "**두 겹 박제**다. ① raw 로 판독한 마스터 셀을 매 실행 재확인(INPUT_DRIFT/"
@@ -4224,6 +4379,20 @@ def main() -> int:
                   f"0 아닌 잔차 표본: {ex}")
     else:
         print("동어반복 RED (IDENTITY_TAUTOLOGY): 0")
+    if sidecar_red:
+        print(f"판정 사이드카 스테일 RED — SIDECAR (blocking): {len(sidecar_red)}")
+        for r in sidecar_red:
+            print(f"    [{r['rule']}] {r['sidecar']}: {r['detail']}")
+            if r.get("codes"):
+                print(f"      해당 회사({r['n']}): {', '.join(r['codes'][:45])}")
+            print("      재생성: scripts/build_kics_source_textlayer.py · "
+                  "scripts/extract_transition_applicability.py")
+    else:
+        print("판정 사이드카 스테일 RED (SIDECAR_STALE_LATEST_QUARTER): 0 "
+              "— 두 사이드카 모두 최신 분기 전 버킷을 담고 있다")
+    for r in sidecar_yellow:
+        print(f"    REVIEW [{r['rule']}] {r['sidecar']}: {r['detail']} "
+              f"— {', '.join(r['buckets'][:10])}")
     for r in taut_review:
         print(f"    REVIEW [{r['rule']}] {r['axis']} [{r['column']}]: {r['why']} "
               f"(n={r['n']}, excess={r['excess'] if r['excess'] is None else round(r['excess'], 2)}, "
@@ -4288,6 +4457,8 @@ def main() -> int:
                  or after_incomplete or div_negative or post_parent_red
                  # 메타룰(2026-08-21): 판정하지 않은 축·적용사 미러링 오염·근거 없는 면제는 '통과'가 아니다.
                  or axis_red or axis_mirror_red or exempt_red or life8_red or tier2_red
+                 # 사이드카가 최신 분기를 안 담으면 그 축은 '통과'가 아니라 '미판정'이다.
+                 or sidecar_red
                  # 동어반복 축의 'FAIL 0' 도 통과가 아니다 — 되맞춘 값은 룰을 영원히 통과시킨다.
                  or taut_red or taut_drift) else 0
 

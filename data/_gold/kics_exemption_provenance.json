@@ -1887,7 +1887,7 @@
       },
       "pin_tolerance": 0.01,
       "not_a_blanket_skip": "게이트는 매 실행 두 겹을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
-      "registered_by": "DRAFT — 미적용. parser(kics lane) 2026-09-01, owner 옵션 (c)(면제 등재 대신 원문 재확인) 지시로 재검증만 수행. 최종 등재 승인은 validation/owner 라운드 몫으로 남긴다 — 이 파일 자체는 살아있는 원장(kics_exemption_provenance.json)에 아직 반영되지 않았다.",
+      "registered_by": "validation 2026-09-01 (commit 17286e0 로 등재 확정). parser(kics lane) 가 raw 재확인만 하고 판단을 validation 으로 넘긴 건이다(inbox 20260831T203021Z). 게이트가 박제잔차 -58.0 을 실측 -58.0(Δ 0.00, tol 0.01)으로 매 실행 재검산한다. [2026-09-01 정정] 종전 이 필드는 'DRAFT — 미적용 ... 살아있는 원장에 아직 반영되지 않았다' 였는데, 이 파일이 곧 그 살아있는 원장이므로 사실과 달랐다. 다음 세션이 '이 면제는 아직 안 걸렸다' 로 오독할 문장이라 고친다 — 판정·잔차·인용은 불변.",
       "scope": "KR0029 2025.3Q 의 2_tier1_bridge(적용전) 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다. 2_tier1_bridge_post 는 이 분기 item[2,4,12,13]_적용후가 전부 결측이라 SKIP 상태(해당사항 없음) — 이 등재의 대상이 아니다."
     }
   ],
