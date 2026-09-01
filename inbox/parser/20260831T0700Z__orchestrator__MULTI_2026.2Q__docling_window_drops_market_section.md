@@ -2,13 +2,13 @@
 from: orchestrator
 to: parser
 created: 20260831T0700Z
-status: open
+status: answered
 route: reparse
 company: MULTI
 period: 2026.2Q
 rule: 19_market / 36_irr / parent_present_child_incomplete
 lane: kics
-iter: 2
+iter: 3
 ---
 
 ## 미결 (sender 작성)
@@ -151,3 +151,139 @@ KR0087 36-40=[2578.34,3722.19,1344.2,3246.58,0.0]            item19=6,497   est=
 **남은 것 한 줄**: `source_page_ranges` 를 읽는 품질 게이트 가드가 아직 없고(요청 2 미배선),
 세 번째 실패양식의 원인이 미규명이며, KR0069 2026.2Q 는 MD 재변환이 안 돼 마스터와 MD 가 갈라져 있다.
 **담당: parser (kics lane).**
+
+## 답변 (parser 2026-09-01, iter 3 — 세 양식 원인 분리 + 가드 배선 + 재변환 + 39사 재census)
+
+**환경 메모**: 이번 세션이 배정받은 격리 워크트리(`.claude/worktrees/agent-a780e1e7e5719a3f6`)가
+`scripts/`·`src/`·`TODO*.md`·`inbox/` 없는 slim 스냅숏(main 계열)으로 프로비저닝돼 있었다 —
+`fix/csm-product-segmented-columns`(정식 dev 브랜치, 커밋 `9cd889b`)에서 새 로컬 브랜치
+`parser-kics-session` 을 만들어 전체 트리를 확보했다. `md_inbox/`·`data/disclosure/`·PDF 는
+gitignored 라 메인 트리(`C:/Users/sangwook.cho/Desktop/insurequant`)에서 **읽기 전용으로 복사**해
+작업했고(쓰기는 전부 내 워크트리 안에서만), 메인 트리 자체는 손대지 않았다.
+
+**중요 발견 — 메인 트리가 이미 v5 로 앞서 있다.** 복사해 온 `md_inbox` 의 front matter 를 보면
+`parse_profile: "docling_partial_v5"` 에 `source_total_pages`/`docling_status`/
+`docling_dropped_pages`/`docling_recovered_pages`/`docling_unrecovered_pages` 필드가 있다 —
+내 브랜치의 커밋된 `docling_parser.py`(v4, 이 필드들 없음)보다 앞서 있고, **다른 동시 세션이
+지금 이 티켓과 거의 같은 문제(docling 이 선택된 페이지의 내용을 조용히 떨어뜨리는 것)를
+실시간으로 고치고 있다는 뜻**이다. 아래 양식 C 결론이 이걸 반영한다.
+
+### 양식 A — "절 자체가 윈도 밖" (5건 헤드라인 + 확장 census)
+
+**코드 위치**: `src/solvency/parser/docling_parser.py` `_find_keyword_pages()`(L216-245)
++ `_select_page_ranges()`(L277-298). 페이지가 선택되려면 키워드 2개 이상 매치, 또는 1개 매치 +
+숫자 + 표마커(가./나./다./`|`) 조건을 통과해야 한다 — 이 조건을 못 넘는 페이지는
+`source_page_ranges` 에 아예 안 들어간다(도큐먼트 자체가 docling 에 전달 안 됨).
+**이 원인 자체는 이전 라운드(iter 1-2)가 이미 고쳤다**(`DEFAULT_RATIO_KEYWORDS` 에 금리위험액·
+의무보유부동산 추가, 커밋 `8f5e3b8` 계열) — 내가 재확인만 했다. 재측정(신규 스크립트
+`scripts/_probes/probe_20260901b_market_window_census.py`, `extract_mkt_subs()` 를 현재
+md_inbox 에 직접 돌려 마스터 재현 여부 판정): 세션 시작 시점 **18개사가 "마스터는 있는데 현재
+MD 로는 재현 안 됨"(landmine) 상태**였다(이전 세션이 "17개사 잔여"로 추정한 것과 정합).
+
+### 양식 B — "표가 반쪽만" — **원인이 docling 이 아니라 추출기였다**
+
+18개사를 항목별로 "헤딩이 body 에 있는가"로 재분류(`probe_20260901b_landmine_subcause.py`)한
+결과, **대다수가 헤딩·표 내용 다 있는데 `extract_mkt_subs()`(`scripts/
+fill_market_subitems_to_disclosure.py`)가 그 표를 못 읽는 경우**였다. K-ICS 서식의 "총계" 행
+라벨이 회사마다 로마자·각주·괄호 순서가 다 달랐다(`Ⅲ. 합 계 주2)` 한화손해/DB손해/농협손해/
+코리안리/카카오페이, `Ⅲ . 합계 ( 주 2)` 악사손해, `합 계 Ⅲ. 주2)` 한화생명 — 로마자가 라벨
+*뒤*에 옴). 기존 `_is_total_row_label()`(구 `_TOTAL_ROW_CORE_RE` 정규식)은 접두 고정이라
+이 변형들을 다 놓쳤다. 다섯 가지를 고쳤다(전부 `scripts/fill_market_subitems_to_disclosure.py`,
+주석에 근거·영향회사 명시):
+1. `_is_total_row_label()`— 순서와 무관하게 공백/로마자/숫자/점/괄호/각주자'주' 를 전부 제거하고
+   남는 게 정확히 '합계'/'계' 인지만 검사(order-independent).
+2. total-row 폴백 분기에 "행 전체가 대시(-)면 0 으로 disclosed" 처리 추가(기존엔 라벨행 분기에만
+   있었음) — item40(자산집중위험액) 이 진짜 0인데 총계행이 대시뿐이면 통째로 빠지던 문제.
+3. `heading_ctx` 추적이 `##`/`N)` 헤딩만 인식하고 불릿(`- ⑤ 자산집중위험액 현황`, 카카오페이)은
+   놓쳐 그 표의 위험종류를 못 알아내던 문제 — risk+현황 이 실제로 들어있는 불릿 줄만 갱신하도록
+   확장.
+4. "해당사항 없음"(N/A) 명시 공시를 아예 기록 안 하던 문제 — 카카오페이 2026.2Q 는 주식/부동산/
+   외환위험액을 표 대신 "- 주식위험액 현황 ②\n\n: 해당사항 없음" 산문으로 공시한다. 새 정규식
+   `_NA_SECTION_RE` 로 위험 헤딩 직후 40자 이내에 "해당사항 없음" 이 오면 0 으로 기록.
+5. (부수 발견) `unit` 전역 변수가 섹션 경계를 넘어 오염 — KR0080 자산집중위험액(단위 힌트 없는
+   표)이 앞쪽 섹션의 "억원" 힌트를 잘못 물려받아 100배(24,378 vs 정답 243.78) 틀리게 나옴,
+   KR1098 금리위험액도 동일 계열(178 vs 정답 1.78). 위험 헤딩(`_HEADING_RISK_RE` 매치) 진입
+   시점에 `unit` 을 기본값(백만원)으로 리셋하도록 수정 — 이후 그 섹션 자체 단위 힌트는 정상 적용.
+
+**측정된 효과**(`probe_20260901b_market_window_census.py`, 매 수정 후 39사 재실행):
+MD 가 마스터 36-40 을 그대로 재현하는 회사 수 **21/39 → 32/39**(다섯 수정 누적, 회귀 0건 —
+매 스텝 39사 전체 재측정으로 확인). 새 코드가 기존 동작을 축소가 아니라 확장만 하므로(더
+많은 라벨 변형을 인정할 뿐 기존 매치는 그대로) 다른 분기 회귀 위험은 낮다고 판단했다.
+
+### 양식 C — "윈도·hit_pages 는 정상인데 표만 증발" — **메인 트리에서 이미 해소된 것으로 보임**
+
+KR0001(p.47)·KR0051(p.34)·KR0100(p.39) 의 **현재(오늘, 메인 트리에서 복사한) md_inbox** 를
+직접 확인 — 셋 다 `6-8. 위험 민감도` 절이 body 에 정상적으로 들어 있다(예:
+`KR0001_메리츠화재해상보험.md` L941 `## 6-8. 위험 민감도`, L947 `## 2) 금리 민감도 분석`).
+위 "환경 메모"의 v5 필드(`docling_status`/`docling_dropped_pages`/`docling_recovered_pages`)가
+바로 이 문제를 잡으려는 메커니즘으로 보인다 — KR0001 front matter 의
+`docling_dropped_pages: "20,21,22,23,25"` / `docling_recovered_pages: "20,21,22,23,25"` 가
+"선택은 됐는데 변환이 비는 페이지"를 탐지·복구하는 필드다(단, 이번 건의 진원지였던 p.47 은 그
+목록에 없다 — 애초에 이번엔 안 떨어졌거나, 그 탐지기가 못 잡는 다른 서브케이스였을 수 있다).
+**이 메커니즘의 내부 로직은 다른 세션의 미커밋 작업이라 읽지 않았다**(내 몫이 아니고, 커밋되면
+충돌 소지) — orchestrator 가 그 세션과 조율해 병합할 때 재확인 바란다. 내가 검증한 것은
+딱 하나: "세 회사 다 현재 MD 에 6-8 절이 있다"는 사실뿐이다.
+
+### 요청 2 — 가드 배선 완료
+
+`src/solvency/parser/quality_check.py::score()`. 짝수분기(Q2/Q4)에 한해 `_RE_REQUIRED_MARKET`
+(금리·주식·부동산·외환·자산집중위험액 5종) + `_RE_REQUIRED_SENSITIVITY`(위험민감도/금리민감도/
+환율민감도) 가 **변환된 MD body** 에 있는지 검사 — 홀수분기(간이공시)는 검사 자체를 skip
+(cadence, RED 아님). 이건 원인(윈도 드롭이든 변환 드롭이든)과 무관하게 **최종 산출물**을 보는
+검사라 양식 A 든 C 든 다 잡는다. `source_page_ranges` 기반 커버리지 비율도 시도했으나
+**39사 실측 캘리브레이션에서 판별력이 없었다**(`probe_20260901b_ratio_calibration.py`: 정상군
+중앙값 51.6%(18.8-79.2%) vs landmine 군 중앙값 57.6%(11.7-100%) — 스캔 전용사가 오히려
+100%로 가장 높게 나옴, 키워드 매치 실패 시 전체회귀 폴백이라). 블랭킷 임계값 대신 **10% 미만
+파국적 실패만 잡는 낮은 보조 넷**으로 남기고, 근거는 코드 주석에 그대로 남겼다(향후 세션이
+같은 계산을 반복하지 않도록).
+
+**가드 효과 실측**(`probe_20260901b_guard_delta.py`): 이번 39사 코퍼스에서 신규 가드가
+accept→review 로 뒤집은 파일은 **0건** — 기존 `missing_core`/`score<0.7` 로직이 이미 30/39를
+review 로 보내고 있어서다(이건 이 티켓과 무관한 기존 게이트의 별도 이슈, 손대지 않음). 대신
+review 사유 문자열에 `missing_window=[...]` 가 항상 추가돼, 이제 review 사유가 "점수 낮음"이
+아니라 "6-4/6-8 의 이 항목이 없음"으로 구체화된다 — 향후 기존 점수 임계값이 느슨해지거나
+바뀌어도 이 가드는 독립적으로 계속 작동한다.
+
+### 요청 3 — 재변환 + census
+
+`artifacts/kics_validation/md_backup_20260901b/` 에 백업 후 텍스트레이어 확인된 6개사
+(KR0079/80/82/94/99/104, fitz 문자밀도 728-983자/페이지로 진짜 스캔사와 구분 —
+`probe_20260901b_scan_check.py`) 를 재변환(`run_harness.py --stage parse --companies ...`,
+620초). 결과(`probe_20260901b_final_reconvert_diff.py`, 재추출값 vs 마스터 대조):
+
+| 회사 | 결과 |
+|---|---|
+| KR0104 | 5/5 전부 재현+마스터와 정확 일치 |
+| KR0082 | 2/5(36,37) 재현+일치, 3개(38-40) 여전히 없음 |
+| KR0080 | 1/5(40) 재현+일치(위 unit 리셋 수정 전엔 100배 틀렸었음) |
+| KR0094 | 2/5(39,40) 재현+일치, item36 재현은 됐으나 **마스터와 45.66% 불일치**(5789.99 vs 10655.45억원) — 원인 미규명, **패치 안 함** |
+| KR0079 | 0/5, 재변환해도 불변(`source_page_ranges`가 여전히 "1-20") — 원인이 다르다: fitz 로 평균 76자/페이지(저밀도), p.28/32 에 실텍스트는 있으나(121/178자) `_find_keyword_pages` 매치 임계값을 못 넘어 head_fallback(1-20페이지)에 갇힘. 스캔 계열(KR0010/KR0087, 0/4자 평균)과 다른 원인이지만 처방은 같다(OCR 경로 필요, `documented exception` 후보) |
+| KR0099 | 재변환이 오히려 후퇴(2/5→0/5) — **백업에서 복원**, 세션 시작 시점 상태로 롤백 |
+
+**39사 최종 census**: MD 재현 가능 21/39 → **32/39**(landmine 18→7: KR0010·KR0087·KR0079·
+KR0080·KR0082·KR0094·KR0099). `REAL GAP`(마스터 자체 결측)은 세션 시작·종료 시점 둘 다
+**0/39** — 화면 숫자는 처음부터 끝까지 안 틀렸다.
+
+### 패치 스크립트 — **만들지 않았다**
+
+이유: 마스터가 세션 시작 전부터 39사 전원 items 36-40 완비 상태였다(`REAL GAP: 0`, 매 census
+재확인). 이번 세션이 새로 재현에 성공한 값들은 전부 마스터와 **정확히 일치**하거나(위 표
+MATCH), 여전히 못 찾거나(STILL_MISSING) 둘 중 하나였고, 유일한 예외(KR0094 item36, 45.66%
+불일치)는 어느 쪽이 맞는지 원문 재대조 없이는 판정 불가라 **UPSERT 하지 않고 그대로 보고만
+한다** — "틀린 값을 싣느니 빈 칸" 원칙. `scripts/fix_20260901_*.py` 형태 패치는 UPSERT 할
+"새로 살아난 값"이 없어 불필요했다.
+
+### 잔여 (orchestrator 재확인 필요 항목)
+
+1. KR0010·KR0087·KR0079 — 텍스트레이어 없음/저밀도, OCR 경로 필요(기존 KICS-IMG 계열과 동일
+   처방). `documented exception` 등재는 이 세 회사가 실제 RED 를 만드는지부터 확인 후(현재는
+   마스터가 이미 정답이라 RED 없음으로 추정, `validate_kics_disclosure.py` 미실행 확인).
+2. KR0080·KR0082·KR0094 — 부분 landmine 잔존, 추가 키워드/윈도 튜닝 여지 있음(이 라운드 범위
+   밖, 시간 예산상 미착수).
+3. KR0094 item36 45.66% 불일치 — raw PDF 재대조 필요(이 세션은 안 함).
+4. 양식 C 의 메인 트리 v5 메커니즘 — 커밋되면 이 티켓 결론과 조율 필요.
+
+**수정 파일**: `scripts/fill_market_subitems_to_disclosure.py`(5건 수정) ·
+`src/solvency/parser/quality_check.py`(가드 신설). **건드리지 않음**: `docling_parser.py`(다른
+세션 소유), `kics_disclosure.json`(마스터, 쓰기 금지 지시 준수). 재현 스크립트 전부
+`scripts/_probes/probe_20260901b_*.py`.

@@ -123,15 +123,35 @@ _UNIT_HINT_RE = re.compile(r"\(\s*단위\s*[:：]?\s*[^)]*?(억원|백만원|만
 # -working extraction (item36 등) is byte-identical/unaffected.
 _HEADING_RISK_MAP = {"금리": 36, "주식": 37, "부동산": 38, "외환": 39, "자산집중": 40}
 _HEADING_RISK_RE = re.compile(r"(금리|주식|부동산|외환|자산집중)\s*위험액?\s*현황")
-_TOTAL_ROW_CORE_RE = re.compile(r"^[ⅠⅡⅢⅣⅤⅥ0-9]*[\.\s]*(합\s*계|계)$")
+# A risk section heading immediately (within a short prose gap, no table in
+# between) followed by "해당사항 없음" ("not applicable") -- e.g. KR1098
+# 카카오페이손해보험 2026.2Q: "- 주식위험액 현황 ②\n\n: 해당사항 없음" for 37/38/39.
+# This is the company's own explicit "zero exposure" disclosure (no table at
+# all, unlike the dash-filled-table convention handled above) and must NOT be
+# left unset -- an unset item37-40 with item19 present trips the parent-
+# present-child-missing gate the same as a genuine parser drop.
+_NA_SECTION_RE = re.compile(
+    r"(금리|주식|부동산|외환|자산집중)\s*위험액?\s*현황.{0,40}?해당\s*사항\s*없음",
+    re.DOTALL,
+)
 
 
 def _is_total_row_label(cell: str) -> bool:
     stripped = (cell or "").strip()
     if not stripped:
         return False
-    stripped = re.sub(r"\d*\)?\s*$", "", stripped).strip()  # trailing footnote e.g. '합 계2)'
-    return bool(_TOTAL_ROW_CORE_RE.match(stripped))
+    # K-ICS 표준서식 총계 행 라벨은 회사마다 로마자/각주 마커의 순서·괄호·공백이
+    # 다 다르다— 'Ⅲ. 합 계 주2)' (한화손해/DB손해/농협손해/코리안리/카카오페이),
+    # 'Ⅲ . 합계 ( 주 2)' (악사손해, 괄호로 감싸고 글자 사이 공백까지), 'Ⅲ.합계'
+    # (각주 없음), '합 계 Ⅲ. 주2)' (한화생명 — 로마자가 '합계' *뒤*에 옴, 접두
+    # 고정 규칙으로는 아예 못 잡음). 2026-09-01: 순서에 관계없이 로마자/숫자/점/
+    # 괄호/공백/각주자 '주' 를 전부 제거하고 남는 게 정확히 '합계' 또는 '계' 인지만
+    # 본다 — 이 말뭉치의 다른 행 라벨(기본법/간편법/의무보유부동산/…)은 이 문자들을
+    # 다 떼어내도 '합계'/'계' 로 붕괴하지 않으므로 오탐 위험은 낮고, 설령 잘못
+    # 집히더라도 하류 19_market sqrt(V'MV) 재구성 게이트가 걸러낸다(모듈 docstring
+    # 참조). 원인·영향회사: inbox 20260831T0700Z 후속.
+    core = re.sub(r"[\sⅠⅡⅢⅣⅤⅥ0-9\.\(\)주]+", "", stripped)
+    return core in ("합계", "계")
 
 
 def _table_risk_item_from_header(header_cells, heading_ctx: str) -> int | None:
@@ -167,10 +187,38 @@ def extract_mkt_subs(md_text):
     for ln in md_text.splitlines():
         s = ln.strip()
         if not s.startswith("|"):
+            if (
+                s.startswith("#") or s.startswith("-") or re.match(r"^\d+\)", s)
+            ) and _HEADING_RISK_RE.search(s):
+                # 2026-09-01 (KR0080/KR1098): the running 'unit' hint can leak
+                # across an unrelated section boundary into a market-risk
+                # sub-table that carries no unit hint of its own -- e.g.
+                # KR0080's ⑥자산집중위험액현황 has no '(단위:...)' line at all
+                # and inherited a stale '억원' hint from much earlier in the
+                # document, producing a value 100x too large (raw 24,378 read
+                # as 24,378억원 instead of the correct 243.78억원 =
+                # 24,378백만원 -- confirmed against the PDF table, no unit
+                # line precedes it). Resetting to the module default at the
+                # start of each numbered risk-table section (same heading
+                # match _table_risk_item_from_header already uses to identify
+                # the table's own risk) means a genuine unit hint immediately
+                # below this heading still applies as before -- it just can't
+                # survive past the section boundary uninvited.
+                unit = "백만원"
             m = _UNIT_HINT_RE.search(s)
             if m:
                 unit = m.group(1)
             if s.startswith("#") or re.match(r"^\d+\)", s):
+                heading_ctx = s
+            elif s.startswith("-") and _HEADING_RISK_RE.search(s):
+                # 2026-09-01 (KR1098 카카오페이): some companies' 시장위험 하위
+                # 절 제목이 '## ' 헤딩이 아니라 불릿 '- 자산집중위험액 현황 ⑤'
+                # 로만 나온다 — 원래 조건(# 또는 'N)')은 이걸 못 잡아 heading_ctx
+                # 가 갱신 안 되고, 그 절의 표가 자기 헤더 셀에 위험명을 안 담고
+                # 있으면(예: '구분|구분|한도초과익스포져|위험액') 어느 위험인지
+                # 끝내 못 알아내 통째로 드롭됐다. risk+현황 이 실제로 들어있는
+                # 불릿 줄만 골라 갱신하므로 무관한 불릿 서술문이 heading_ctx 를
+                # 덮어쓸 위험은 없다.
                 heading_ctx = s
             prev_was_table = False
             continue
@@ -212,6 +260,29 @@ def extract_mkt_subs(md_text):
                         out[table_risk_item] = (v, unit)
                         table_risk_item = None  # this table's job is done
                         break
+                else:
+                    # Same "all-dash total row = disclosed zero" convention as the
+                    # bare-label branch above (2026-09-01), applied here too: the
+                    # label cell isn't necessarily col0 in this layout (e.g. KR0002
+                    # 자산집중위험액 당기/직전 total rows are ['', '계', '-', '-']), so
+                    # exclude whichever cell(s) matched _is_total_row_label and
+                    # require an explicit '-' among what's left (not just blanks) —
+                    # a wholly-blank row still means "no data", only an explicit
+                    # dash means "discloses zero". Without this, item40 silently
+                    # dropped for every company whose 자산집중위험액 table only has
+                    # a bare '계'/'Ⅲ.합계' row (no self-naming label row) AND is
+                    # genuinely zero for both periods.
+                    dash_tokens = ("-", "─", "–", "—")
+                    candidates = [c.strip().replace(",", "") for c in cells if not _is_total_row_label(c)]
+                    if candidates and any(c in dash_tokens for c in candidates) and all(
+                        c in dash_tokens or c == "" for c in candidates
+                    ):
+                        out[table_risk_item] = ("0", unit)
+                        table_risk_item = None
+    for m in _NA_SECTION_RE.finditer(md_text):
+        item_no = _HEADING_RISK_MAP[m.group(1)]
+        if item_no not in out:
+            out[item_no] = ("0", unit)
     return out  # values are (raw_string, unit) pairs; caller converts to 억원
 
 

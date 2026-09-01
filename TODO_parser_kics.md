@@ -1,6 +1,28 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-01(7회차 — 삼성생명 KR0069 2026.2Q 시장위험 MD-마스터 출처 단절 복구 +
+> Last updated: 2026-09-01(8회차 — inbox `20260831T0700Z` 세 실패양식 원인분리 + 품질게이트
+> 가드 신설 + 39사 재census, 격리 워크트리) — orchestrator 발주. **원인은 셋이 아니라
+> 사실상 넷이었다**: (A) docling 윈도가 6-4 절 자체를 못 잡음(기존 세션이 이미 수정,
+> `DEFAULT_RATIO_KEYWORDS`) — 재확인만 함. (B) **표가 반쪽만**은 docling 문제가 아니라
+> `scripts/fill_market_subitems_to_disclosure.py::extract_mkt_subs()` 의 총계행 라벨
+> 정규식이 K-ICS 서식의 각주 마커 순서 변형(`Ⅲ.합계 주2)`/`Ⅲ.합계(주2)`/`합계 Ⅲ.주2)`)을
+> 못 잡던 버그였다 — 5건 수정(순서무관 정규식, 대시=0 폴백 확장, 불릿 헤딩 인식, "해당사항
+> 없음"=0 신규처리, 섹션경계 unit 오염 리셋). (C) 페이지가 윈도·hit_pages 안에 있는데
+> 내용만 증발하는 건 — **메인 트리(다른 동시 세션)가 이미 v5 docling_parser.py 로 해소한
+> 것으로 보임**(`docling_status`/`docling_dropped_pages`/`docling_recovered_pages` 필드
+> 확인, KR0001/KR0051/KR0100 현재 MD 에 6-8 절 정상 존재) — 내 브랜치는 안 건드림(남의
+> 미커밋 작업). **품질게이트 가드는 배선 완료**: `quality_check.py::score()` 가 짝수분기
+> 한정 6-4/6-8 필수 섹션 마커를 body 에서 검사, 없으면 review(원인 무관, 최종산출물 기준이라
+> A·C 둘 다 잡음). **효과 실측**: MD 가 마스터 36-40 을 재현하는 회사 39사 중 **21→32**
+> (`scripts/_probes/probe_20260901b_market_window_census.py`, 스텝별 회귀 0 확인).
+> `REAL GAP`(마스터 자체 결측)은 시작·종료 둘 다 0/39 — **패치 스크립트 불필요**(UPSERT 할
+> "새로 살아난 값" 자체가 없었음, 재추출값은 전부 마스터와 일치하거나 여전히 못 찾음).
+> 유일한 예외 KR0094 item36 이 45.66% 불일치로 남아있으나 원문 재대조 없이 판정 불가라
+> 패치 안 하고 보고만 함. 잔여 7개사(KR0010·KR0087·KR0079 스캔/저밀도 OCR 필요,
+> KR0080·KR0082·KR0094 부분 landmine, KR0099 재변환 역효과로 백업 복원)는 inbox
+> `## 답변` 참조. status: answered(orchestrator 재확인 필요).
+>
+> Last updated (이전): 2026-09-01(7회차 — 삼성생명 KR0069 2026.2Q 시장위험 MD-마스터 출처 단절 복구 +
 > 2026.2Q 39사 전수 census) — orchestrator 발주(inbox `20260831T0700Z` 검증메모가 남긴 잔여 3번
 > 항목: "KR0069 는 MD 재변환이 안 돼 마스터와 갈라져 있다"). **다른 서브에이전트가 동시에
 > kics_disclosure.json 을 쓰고 있어 이번 세션은 마스터를 절대 쓰지 않음** — 읽기 전용 대조만.
