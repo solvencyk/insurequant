@@ -31,7 +31,7 @@
       "tier2_limit_eok": 6721.5,
       "numerator_eok": 3965.3,
       "utilization_pct": 59.0,
-      "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+      "data_source": "dart_bonds_asof_2026-06-30_경과조치",
       "tier2_eok": 15538.0,
       "pre_limit_eok": null,
       "lapse_excess_eok": null,
@@ -44,7 +44,7 @@
       "tier1_overflow_into_tier2_eok": 2483.6,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 1000.0,
-      "numerator_as_of": "2025-12-31"
+      "numerator_as_of": "2026-06-30"
     },
     {
       "company": "하나손해보험",
@@ -73,9 +73,9 @@
       "code": "KR0072",
       "quarter": "2026.2Q",
       "tier2_limit_eok": 7764.5,
-      "numerator_eok": 2148.9,
+      "numerator_eok": 2153.5,
       "utilization_pct": 27.7,
-      "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+      "data_source": "dart_bonds_asof_2026-06-30_경과조치",
       "tier2_eok": 16273.15,
       "pre_limit_eok": 6452.28,
       "lapse_excess_eok": 9820.87,
@@ -83,12 +83,12 @@
       "subordinated_eok": 0.0,
       "proxy_utilization_pct": 83.1,
       "quality_flag": "ok",
-      "new_subordinated_recognized_eok": 2068.2,
-      "new_subordinated_gross_eok": 3877.1,
+      "new_subordinated_recognized_eok": 2072.9,
+      "new_subordinated_gross_eok": 3888.0,
       "tier1_overflow_into_tier2_eok": 80.7,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2025-12-31"
+      "numerator_as_of": "2026-06-30"
     },
     {
       "company": "IBK연금보험",
@@ -163,7 +163,7 @@
       "tier2_limit_eok": 8639.5,
       "numerator_eok": 3552.9,
       "utilization_pct": 41.1,
-      "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+      "data_source": "dart_bonds_asof_2026-06-30_경과조치",
       "tier2_eok": 11256.08,
       "pre_limit_eok": 6078.44,
       "lapse_excess_eok": 4544.79,
@@ -176,7 +176,7 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 630.0,
-      "numerator_as_of": "2025-12-31"
+      "numerator_as_of": "2026-06-30"
     },
     {
       "company": "삼성생명",
@@ -251,7 +251,7 @@
       "tier2_limit_eok": 17798.5,
       "numerator_eok": 5804.8,
       "utilization_pct": 32.6,
-      "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+      "data_source": "dart_bonds_asof_2026-06-30_경과조치",
       "tier2_eok": 39508.01,
       "pre_limit_eok": 8315.18,
       "lapse_excess_eok": 28710.81,
@@ -264,7 +264,7 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 2350.0,
       "grandfathered_subordinated_eok": 2500.0,
-      "numerator_as_of": "2025-12-31"
+      "numerator_as_of": "2026-06-30"
     },
     {
       "company": "흥국화재",
@@ -361,7 +361,7 @@
       "tier2_limit_eok": 11676.5,
       "numerator_eok": 1297.1,
       "utilization_pct": 11.1,
-      "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+      "data_source": "dart_bonds_asof_2026-06-30_경과조치",
       "tier2_eok": 8182.88,
       "pre_limit_eok": 7113.21,
       "lapse_excess_eok": 1069.67,
@@ -374,7 +374,7 @@
       "tier1_overflow_into_tier2_eok": 1297.1,
       "grandfathered_hybrid_eok": 3300.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2025-12-31"
+      "numerator_as_of": "2026-06-30"
     },
     {
       "company": "DB생명보험",
@@ -383,7 +383,7 @@
       "tier2_limit_eok": 8124.0,
       "numerator_eok": 2176.6,
       "utilization_pct": 26.8,
-      "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+      "data_source": "dart_bonds_asof_2026-06-30_경과조치",
       "tier2_eok": 20469.35,
       "pre_limit_eok": 2563.95,
       "lapse_excess_eok": 17905.4,
@@ -396,7 +396,7 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 0.0,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2025-12-31"
+      "numerator_as_of": "2026-06-30"
     },
     {
       "company": "교보생명보험",
@@ -405,7 +405,7 @@
       "tier2_limit_eok": 52699.0,
       "numerator_eok": 4342.8,
       "utilization_pct": 8.2,
-      "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+      "data_source": "dart_bonds_asof_2026-06-30_경과조치",
       "tier2_eok": 69687.73,
       "pre_limit_eok": 27197.5,
       "lapse_excess_eok": 42490.24,
@@ -418,7 +418,7 @@
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 11148.5,
       "grandfathered_subordinated_eok": 0.0,
-      "numerator_as_of": "2025-12-31"
+      "numerator_as_of": "2026-06-30"
     },
     {
       "company": "비엔피파리바카디프생명보험",
@@ -491,22 +491,22 @@
       "code": "KR0071",
       "quarter": "2026.2Q",
       "tier2_limit_eok": 14131.5,
-      "numerator_eok": 2975.7,
+      "numerator_eok": 2976.2,
       "utilization_pct": 21.1,
-      "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+      "data_source": "dart_bonds_asof_2026-06-30_경과조치",
       "tier2_eok": 20832.26,
       "pre_limit_eok": 1492.99,
       "lapse_excess_eok": 15206.78,
       "hybrid_eok": 500.0,
-      "subordinated_eok": 394.4,
+      "subordinated_eok": 394.8,
       "proxy_utilization_pct": 10.56,
       "quality_flag": "ok",
-      "new_subordinated_recognized_eok": 2975.7,
-      "new_subordinated_gross_eok": 3689.3,
+      "new_subordinated_recognized_eok": 2976.2,
+      "new_subordinated_gross_eok": 3689.8,
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 500.0,
-      "grandfathered_subordinated_eok": 394.4,
-      "numerator_as_of": "2025-12-31"
+      "grandfathered_subordinated_eok": 394.8,
+      "numerator_as_of": "2026-06-30"
     },
     {
       "company": "농협생명보험",

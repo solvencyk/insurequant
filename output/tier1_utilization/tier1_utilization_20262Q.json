@@ -45,14 +45,14 @@
       "tier1_hybrid_overflow_eok": 1297.1,
       "utilization_pct": 137.0,
       "utilization_pct_strict": 205.5,
-      "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+      "data_source": "dart_bonds_asof_2026-06-30_경과조치",
       "quality_flag": "ok",
       "issued_source": "bs_normal",
       "excess_source": "missing",
       "legacy_hybrid_transition_eok": 3291.97,
       "tier1_grandfathered_hybrid_eok": 3300.0,
       "utilization_pct_raw": 137.0,
-      "numerator_as_of": "2025-12-31"
+      "numerator_as_of": "2026-06-30"
     },
     {
       "company": "하나생명보험",
@@ -133,14 +133,14 @@
       "tier1_hybrid_overflow_eok": 0.0,
       "utilization_pct": 58.9,
       "utilization_pct_strict": 88.3,
-      "data_source": "dart_bonds_asof_2025-12-31_경과조치",
+      "data_source": "dart_bonds_asof_2026-06-30_경과조치",
       "quality_flag": "ok",
       "issued_source": "bs_normal",
       "excess_source": "missing",
       "legacy_hybrid_transition_eok": 2120.0,
       "tier1_grandfathered_hybrid_eok": 2120.0,
       "utilization_pct_raw": 58.9,
-      "numerator_as_of": "2025-12-31"
+      "numerator_as_of": "2026-06-30"
     },
     {
       "company": "케이디비생명보험",

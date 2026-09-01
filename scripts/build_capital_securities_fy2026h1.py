@@ -228,39 +228,209 @@ def load_h1_xml(code):
 
 
 def _issuance_rows(text: str):
-    """반기보고서 표준 절 `[채무증권의 발행 등과 관련된 사항] 가. 채무증권 발행실적` 의 행.
+    """반기보고서 표준 절 `[채무증권의 발행 등과 관련된 사항] 채무증권 발행실적` 의 행.
 
-    이 표는 **잔액 전량이 아니라 보고창(최근 사업연도들) 안의 발행실적**이고, 각 행이
-    상환/미상환 상태를 달고 있다. 그래서 합계를 잔액으로 쓰면 안 되지만(창 밖 발행분이
-    빠진다), **개별 채권이 기준일 현재 여전히 미상환인지 확인**하는 데는 정확하다.
+    이 표는 **잔액 전량이 아니라 보고창 안의 발행실적**이고 각 행이 상환/미상환을 달고 있다.
+    합계를 잔액으로 쓰면 안 되지만(창 밖 발행분이 빠진다), **개별 채권이 기준일 현재 여전히
+    미상환인지 확인**하는 데는 정확하다.
 
-    행 배열: [발행회사, 종류, 공모/사모, 발행일, 발행금액, 이자율, 등급, 만기일, 상환여부, 주관사]
+    행 배열: [발행회사, 증권종류, 발행방법, 발행일자, 권면총액, 이자율, 평가등급, 만기일,
+             상환여부, 주관회사]
+
+    2026-09-01: 처음엔 `증권종류` 에 `신종자본증권` 이 든 행만 걷었는데, **후순위사채는 이
+    컬럼에 `회사채` 로 찍힌다.** 그래서 후순위 확인이 전사 0/N 이었다. 종류로 거르지 않고
+    전부 걷은 뒤 (발행일자, 권면총액) 으로 짝짓는다 — 날짜+금액 쌍은 충분히 강한 키다.
     """
     out = []
     for tr in re.finditer(r"<TR[^>]*>.*?(?=<TR[^>]*>|</TABLE>)", text, re.DOTALL):
         cells = [re.sub(r"\s+", " ", t).replace("&nbsp;", " ").strip()
                  for t in re.findall(r">([^<]+)", tr.group(0))]
         cells = [c for c in cells if c]
-        if len(cells) < 9 or "미상환" not in cells:
+        if len(cells) < 8 or not any("미상환" in c for c in cells):
             continue
-        kind = next((c for c in cells[:4] if "신종자본증권" in c), None)
-        if not kind:
+        di = next((i for i, c in enumerate(cells)
+                   if re.fullmatch(r"\d{4}[.\-]\d{1,2}[.\-]\d{1,2}", c)), None)
+        if di is None:
             continue
-        issue = next((parse_kdate(c) for c in cells if re.fullmatch(r"\d{4}\.\d{2}\.\d{2}", c)), None)
-        amt = next((float(c.replace(",", "")) for c in cells
-                    if re.fullmatch(r"[\d,]+", c) and float(c.replace(",", "")) >= 100), None)
+        issue = parse_kdate(cells[di].replace("-", "."))
+        # 권면총액 = 발행일자 **다음** 의 첫 숫자. 아무 데서나 큰 수를 집으면 이자율·등급·
+        # 만기일이 섞인다.
+        amt = None
+        for c in cells[di + 1:]:
+            v = c.replace(",", "").strip()
+            if re.fullmatch(r"\d+(\.\d+)?", v) and float(v) >= 100:
+                amt = float(v)
+                break
         if issue and amt:
-            out.append({"issue_date": issue, "face_amount_mn": amt})
+            out.append({"issue_date": issue, "face_amount_mn": amt,
+                        "kind": " ".join(cells[:4])})
     return out
 
 
 def _issuance_as_of(text: str):
-    flat = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", text))
-    m = re.search(r"채무증권\s*발행실적[^가-힣]{0,80}?기준일[^0-9]{0,10}(\d{4})\s*년\s*(\d{1,2})\s*월\s*(\d{1,2})", flat)
-    return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}" if m else None
+    """`채무증권 발행실적 … (기준일 : …)` 의 기준일.
+
+    2026-09-01: 서식이 두 갈래다 — `2026년 06월 30일`(KR0011·KR0005) 과 `2026.06.30`
+    (KR1000·KR0104). 게다가 제목과 기준일 사이에 `등(연결기준) (1) 채무증권 발행실적(연결기준)`
+    처럼 한글이 끼는 회사가 있어, 종전 정규식(`[^가-힣]{0,80}`)이 **코리안리를 포함해 8개사에서
+    기준일을 못 읽었다**. 못 읽으면 그 회사는 통째로 갱신 대상에서 빠져 화면에 옛 기준일이
+    남는다(owner 지적 2026-09-01).
+    """
+    flat = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", text)).replace("&nbsp;", " ")
+    for m in re.finditer(r"채무증권\s*발행실적", flat):
+        win = flat[m.start():m.start() + 260]
+        d = re.search(r"기준일[^0-9]{0,12}(\d{4})\s*[년.]\s*(\d{1,2})\s*[월.]\s*(\d{1,2})", win)
+        if d:
+            return f"{d.group(1)}-{int(d.group(2)):02d}-{int(d.group(3)):02d}"
+    return None
 
 
-def confirm_hybrids_still_outstanding(code, fy25_hybrid_bonds, report):
+def extract_subordinated_detail(text: str):
+    """후순위사채 **상세표** 행 — 회사별 서식 차이를 뚫는 세 번째 경로.
+
+    2026-09-01: 열그룹(`<TH colspan>후순위사채</TH>`) 서식은 KR0011·KR0003 둘뿐이다. 나머지
+    회사들은 주석에 **행 단위 상세표**로 싣는다:
+
+        [명칭, 발행일, 만기일, 이자율, 당반기말, 전기말, 상환방법]
+
+        흥국생명  후순위무보증공모사채 2022년 09월 29일 2032년 09월 29일 6.20% 39,481 39,440 만기일시상환
+        KDB생명   ...제10회 보증부후순위사채 2023-06-30 2033-06-30 4.76 72,056 71,121 ...
+
+    두 숫자 열이 무엇인지(당반기말/전기말인지, 액면/장부인지)는 **읽어서 정하지 않는다** —
+    호출측에서 `전기말 합계 == FY2025 기준선` 으로 대조해 확정한다. 이자율은 100 미만이라
+    금액 필터에 안 걸린다.
+    """
+    rows = []
+    for tr in re.finditer(r"<TR[^>]*>.*?(?=<TR[^>]*>|</TABLE>)", text, re.DOTALL):
+        cells = [re.sub(r"\s+", " ", t).replace("&nbsp;", " ").strip()
+                 for t in re.findall(r">([^<]+)", tr.group(0))]
+        cells = [c for c in cells if c]
+        if not any("후순위" in c for c in cells):
+            continue
+        dates = [(i, c) for i, c in enumerate(cells)
+                 if re.fullmatch(r"\d{4}\s*[년.\-]\s*\d{1,2}\s*[월.\-]\s*\d{1,2}\s*일?", c)]
+        if len(dates) < 2:
+            continue
+        nums = [(i, float(c.replace(",", "")))
+                for i, c in enumerate(cells)
+                if i > dates[-1][0] and re.fullmatch(r"[\d,]+", c) and float(c.replace(",", "")) >= 100]
+        if len(nums) < 2:
+            continue
+        name = next((c for c in cells if "후순위" in c and not re.fullmatch(r"[\d,.]+", c)), cells[0])
+        rows.append({
+            "name": name,
+            # parse_kdate 는 `2022년 09월 29일` 도 그대로 읽는다. 앞에서 손대면 `2022. 09. 29`
+            # 처럼 공백이 낀 문자열이 돼 파싱이 실패하고, 그 행이 조용히 버려진다(실측).
+            "issue_date": parse_kdate(dates[0][1].replace("-", ".")),
+            "legal_maturity": parse_kdate(dates[1][1].replace("-", ".")),
+            "col1": nums[0][1],
+            "col2": nums[1][1],
+        })
+    # 같은 채권이 문서에 두 번 실린다 — 당반기말 표와 전기말 표에 각각(신한라이프 실측:
+    # 300,000/299,710 과 300,000/299,636). **발행일 하나당 한 행**만 남기고 먼저 나온 것을
+    # 취한다(당반기말 표가 앞에 온다). 둘 다 남기면 합계가 2배가 돼 대조가 영원히 실패한다.
+    seen, out = set(), []
+    for r in rows:
+        if not r["issue_date"] or r["issue_date"] in seen:
+            continue
+        seen.add(r["issue_date"])
+        out.append(r)
+    return out
+
+
+def merge_subordinated_detail(code, fy25_sub_bonds, report):
+    """상세표에서 후순위 잔액을 갱신한다. **전기말 대조로 열 뜻을 확정한 뒤에만** 쓴다."""
+    if not fy25_sub_bonds:
+        return None
+    xml_path, text = load_h1_xml(code)
+    if text is None:
+        return None
+    rows = extract_subordinated_detail(text)
+    if not rows:
+        return None
+    fy_by_date = {}
+    for b in fy25_sub_bonds:
+        fy_by_date.setdefault(b.get("issue_date"), []).append(b)
+    matched = [r for r in rows if len(fy_by_date.get(r["issue_date"], [])) == 1]
+    if len(matched) != len(fy25_sub_bonds):
+        report.setdefault("sub_detail_incomplete", {})[code] = {
+            "fy2025_bonds": len(fy25_sub_bonds), "matched_rows": len(matched)}
+        return None
+    fy_total = sum(b.get("outstanding_mn") or 0 for b in fy25_sub_bonds)
+    for cur_key, prior_key in (("col1", "col2"), ("col2", "col1")):
+        if abs(sum(r[prior_key] for r in matched) - fy_total) <= 1.0:
+            break
+    else:
+        report.setdefault("sub_detail_unreconciled", {})[code] = {
+            "fy2025_total_mn": fy_total,
+            "col1_sum": sum(r["col1"] for r in matched),
+            "col2_sum": sum(r["col2"] for r in matched)}
+        return None
+    src_rel = xml_path.relative_to(ROOT).as_posix()
+    merged = []
+    for r in matched:
+        base = fy_by_date[r["issue_date"]][0]
+        merged.append(dict(base,
+                           outstanding_mn=r[cur_key],
+                           legal_maturity=r["legal_maturity"] or base.get("legal_maturity"),
+                           as_of=H1_AS_OF,
+                           source_file=f"{src_rel} (후순위 상세표 {cur_key}, 전기말 대조 확인)"))
+    return merged
+
+
+def _bond_manager_rows(text: str):
+    """`사채관리계약 현황` 표의 행 — 두 번째 미상환 근거원.
+
+    2026-09-01: `채무증권 발행실적` 만 보면 현대해상·KB손해·NH농협손해 등은 0행이 나온다.
+    그 회사들의 후순위사채는 대신 **사채관리계약 현황**(`작성기준일 : 2026년 06월 30일`,
+    열 = 채권명·발행일·만기일·발행액·사채관리계약체결일·사채관리회사)에 실려 있다.
+    이 표는 계약이 살아 있는 **미상환 공모사채**만 싣기 때문에, 그 기준일 현재 등재되어
+    있다는 사실 자체가 미상환의 증거다. 사모사채는 사채관리회사가 없어 여기 안 나온다 —
+    그래서 발행실적 표와 **합집합**으로 쓴다(둘 다 부분 커버리지다).
+    """
+    out = []
+    for m in re.finditer(r"사채관리", text):
+        #  라는 말은 표 **헤더 안**에 있다(열 이름 '사채관리 계약체결일').
+        # 앞으로 찾으면 엉뚱하게 다음 표를 잡는다 — 뒤로 찾아 그 표를 연다.
+        tstart = text.rfind("<TABLE", 0, m.start())
+        if tstart == -1 or m.start() - tstart > 4000:
+            continue
+        tend = text.find("</TABLE>", tstart)
+        if tend == -1:
+            continue
+        for tr in re.finditer(r"<TR[^>]*>.*?(?=<TR[^>]*>|</TABLE>)", text[tstart:tend], re.DOTALL):
+            cells = [re.sub(r"\s+", " ", t).replace("&nbsp;", " ").strip()
+                     for t in re.findall(r">([^<]+)", tr.group(0))]
+            cells = [c for c in cells if c]
+            di = next((i for i, c in enumerate(cells)
+                       if re.fullmatch(r"\d{4}[.\-]\d{1,2}[.\-]\d{1,2}", c)), None)
+            if di is None:
+                continue
+            issue = parse_kdate(cells[di].replace("-", "."))
+            amt = None
+            for c in cells[di + 1:]:
+                v = c.replace(",", "").strip()
+                if re.fullmatch(r"\d+(\.\d+)?", v) and float(v) >= 100:
+                    amt = float(v)
+                    break
+            if issue and amt:
+                out.append({"issue_date": issue, "face_amount_mn": amt,
+                            "kind": cells[0][:60]})
+    return out
+
+
+def _bond_manager_as_of(text: str):
+    flat = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", text)).replace("&nbsp;", " ")
+    for m in re.finditer(r"사채관리", flat):
+        # 작성기준일은 헤더의  **앞**에 온다. 양쪽으로 창을 연다.
+        win = flat[max(0, m.start() - 400):m.start() + 400]
+        d = re.search(r"작성기준일[^0-9]{0,12}(\d{4})\s*[년.]\s*(\d{1,2})\s*[월.]\s*(\d{1,2})", win)
+        if d:
+            return f"{d.group(1)}-{int(d.group(2)):02d}-{int(d.group(3)):02d}"
+    return None
+
+
+def confirm_bonds_still_outstanding(code, fy25_bonds, report, tier_label):
     """기존 신종자본증권이 기준일 현재 여전히 미상환인지 **확인만** 한다 — 값은 안 바꾼다.
 
     `자본으로 인정되는 채무증권의 발행` 개별 주석은 24개 제출사 중 9곳에만 있다. 나머지는
@@ -273,24 +443,37 @@ def confirm_hybrids_still_outstanding(code, fy25_hybrid_bonds, report):
     전량 확인처럼 보이게 하지 않는다(company as_of 는 bond as_of 의 min 이라 조용히 최신으로
     보이게 만들 수 있다).
     """
-    if not fy25_hybrid_bonds:
+    if not fy25_bonds:
         return None, None
     xml_path, text = load_h1_xml(code)
     if text is None:
         return None, None
-    as_of = _issuance_as_of(text)
-    if not as_of:
-        return None, None
+    # 근거원 둘의 합집합. 어느 하나도 전량을 담지 못한다(발행실적 = 보고창 안 발행분,
+    # 사채관리계약 = 공모 only). 기준일은 둘 중 실제로 근거를 준 쪽에서 가져온다.
     rows = _issuance_rows(text)
+    mgr_rows = _bond_manager_rows(text)
+    as_of = _issuance_as_of(text) or _bond_manager_as_of(text)
+    mgr_as_of = _bond_manager_as_of(text) or as_of
+    if not as_of and not mgr_as_of:
+        return None, None
+    rows = rows + mgr_rows
+    as_of = as_of or mgr_as_of
     unmatched = []
-    for b in fy25_hybrid_bonds:
+    for b in fy25_bonds:
         hit = any(r["issue_date"] == b.get("issue_date")
                   and abs(r["face_amount_mn"] - (b.get("face_amount_mn") or -1)) < 1
                   for r in rows)
+        # 이 표가 보증하는 것은 **권면(액면)총액**이다. 우리가 싣는 `outstanding_mn` 이
+        # 액면과 다르면(상각된 장부금액) 그 값까지 새 기준일로 보증되지는 않는다 —
+        # 시점만 옮기면 "확인했다" 는 거짓 진술이 된다.
+        if hit and (b.get("outstanding_mn") is not None
+                    and abs((b.get("outstanding_mn") or 0) - (b.get("face_amount_mn") or 0)) >= 1):
+            hit = False
+            b = dict(b, name=f"{b.get('name')} (장부≠액면, 액면만 확인됨)")
         if not hit:
             unmatched.append(b.get("name"))
     if unmatched:
-        report.setdefault("hybrid_confirm_partial", {})[code] = unmatched
+        report.setdefault(f"{tier_label}_confirm_partial", {})[code] = unmatched
         return None, None
     return as_of, xml_path.relative_to(ROOT).as_posix()
 
@@ -479,7 +662,7 @@ def main():
     fy25 = json.loads(FY25_PATH.read_text(encoding="utf-8"))
     report = {}
     out_companies = []
-    n_hybrid_refreshed = n_sub_refreshed = n_hybrid_confirmed = 0
+    n_hybrid_refreshed = n_sub_refreshed = n_hybrid_confirmed = n_sub_confirmed = n_sub_detail = 0
 
     for c in fy25["companies"]:
         code = c["code"]
@@ -502,7 +685,7 @@ def main():
         else:
             # 개별 주석이 없는 회사 — 값은 FY2025 그대로 두되, 표준 발행실적 표로 전량
             # '여전히 미상환' 이 확인되면 시점만 갱신한다(숫자 변경 없음).
-            conf_as_of, conf_src = confirm_hybrids_still_outstanding(code, fy25_hybrid, report)
+            conf_as_of, conf_src = confirm_bonds_still_outstanding(code, fy25_hybrid, report, "hybrid")
             if conf_as_of:
                 fy25_hybrid = [dict(b, as_of=conf_as_of,
                                     source_file=f"{conf_src} (채무증권 발행실적: 미상환 확인, 금액 불변)")
@@ -522,6 +705,21 @@ def main():
             else:
                 new_bonds.extend(fy25_sub)
         else:
+            det = merge_subordinated_detail(code, fy25_sub, report)
+            if det is not None:
+                new_bonds.extend(det)
+                n_sub_detail += 1
+                notes_extra.append(f"SUBORDINATED refreshed from 상세표 to H1 2026, {len(det)} bond(s)")
+                fy25_sub = []
+            conf_as_of, conf_src = (confirm_bonds_still_outstanding(code, fy25_sub, report, "sub")
+                                    if fy25_sub else (None, None))
+            if conf_as_of:
+                fy25_sub = [dict(b, as_of=conf_as_of,
+                                 source_file=f"{conf_src} (채무증권 발행실적: 미상환 확인, 금액 불변)")
+                            for b in fy25_sub]
+                n_sub_confirmed += 1
+                notes_extra.append(f"SUBORDINATED unchanged but confirmed still outstanding at "
+                                   f"{conf_as_of} via 채무증권 발행실적 ({len(fy25_sub)} bond(s))")
             new_bonds.extend(fy25_sub)
 
         # MIN (oldest), not max: a company is only as fresh as its STALEST bond -- e.g. hybrid
@@ -562,6 +760,8 @@ def main():
     print(f"hybrid refreshed: {n_hybrid_refreshed}/{len(HYBRID_REFRESH_CODES)} target companies")
     print(f"subordinated refreshed: {n_sub_refreshed}/{len(SUBORDINATED_REFRESH_CODES)} target companies")
     print(f"hybrid confirmed-unchanged (as_of only): {n_hybrid_confirmed} companies")
+    print(f"subordinated confirmed-unchanged (as_of only): {n_sub_confirmed} companies")
+    print(f"subordinated refreshed from 상세표: {n_sub_detail} companies")
     if report:
         print("\n[report / anomalies]")
         print(json.dumps(report, ensure_ascii=False, indent=2))
