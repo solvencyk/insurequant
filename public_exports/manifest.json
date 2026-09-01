@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-31T23:21:43Z",
+  "generated_at_utc": "2026-09-01T03:27:16Z",
   "sheets": {
     "17BS": {
       "rows": 6993,
@@ -7,7 +7,7 @@
       "quarter_max": "2026.2Q"
     },
     "K-ICS공시": {
-      "rows": 25208,
+      "rows": 25329,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
