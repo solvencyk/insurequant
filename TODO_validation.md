@@ -1,13 +1,34 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-09-01 (소급재작성 축 신설 — 39사 전수 830칸, 교보생명 1사 10칸 등재) · Stage 3/5 — validation
+> Last updated: 2026-09-01 (item23 자식 227버킷 등재부 신설 — 31버킷 STABLE 등재, 나머지 196은 부모≈0로 자명) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
 
-**(2026-09-01) 판정 사이드카 2종이 2026.2Q 전체에 대해 스테일이었다 — 게이트가 39사를 조용히 "판정 불가"로 흘리며 exit 0 이었다. 경로·지표·스테일 검사 셋 다 고쳤다.**
+**(2026-09-01) item23(기타요구자본) 자식 24/25/26 적용후 결측 227버킷 판정 완료 — 등재부 신설로 SKIP-on-missing 사각을 닫았다.**
+
+> 티켓: `inbox/validation/20260901T1200Z__orchestrator__MULTI__post_transition_item23_children_227_buckets.md`.
+> 227버킷 = 196(부모≈0, 등식 0=0+0+0 자명, 원장 불요) + 31(부모 material, 원문대조 필요 —
+> 교보생명 18·흥국생명 12·삼성화재/DB손해/한화생명/코리안리 각 1). 이미 오늘 오전 두 커밋
+> (`e684f69`·`345b3a4`)이 227의 대부분(196+실제 채운 106칸 등)을 처리했고 `data/_derived/
+> item23_children_audit/verdict_group3.json`에 31버킷×3칸=93셀 건별 판정(POST_EQUALS_PRE_LEGIT
+> 54·SOURCE_ABSENT 36·UNMEASURED 3)까지 남겨 뒀는데 **게이트가 읽는 자리가 없어** 매 실행
+> 미분화 SKIP("추출갭 후보")으로 재발할 상태였다. 이 세션이 KR0071 raw PDF(fitz) 직접 재확인으로
+> 독립 검증(2023.2Q 사례 일치) 후 `data/_gold/kics_item23_children_post_absent.json`(31버킷,
+> verdict+pin) 신설 + `scripts/validate_kics_disclosure.py::_other_capital_children_sum`(3-tuple
+> 반환으로 확장, ledger lookup)·`scripts/validate_data_contract.py`(호출부 동기화 + 등재값 이탈시
+> `OTHER_CAPITAL_CHILDREN_LEDGER_DRIFT` RED) 배선. **원장은 finding을 지우지 않는다** — skip
+> 집계는 그대로고 태그에 판정만 붙는다, 등재값에서 벗어나면 RED로 승격.
+> 검증: gate 전/후 상태카운트 바이트동일(RED=39/YELLOW=1658/GREEN=11102/SKIP=2803, 요구자본 축만
+> 재태깅), `validate_data_contract.py` RED=0 유지, pytest 842 passed(BS golden 제외) +
+> `_data_contract_selftest.py` 57/57.
+> KR0071 2024.4Q(UNMEASURED)는 raw PDF가 정기경영공시가 아니라 DART 사업보고서(538p, K-ICS
+> 수치표 0회) — 스캔이 아니라 **잘못된 파일**이라 OCR로 안 풀린다. `inbox/downloader/
+> 20260901T1329Z__validation__KR0071_2024.4Q__wrong_document_not_periodic_disclosure.md`로 라우팅.
+
+**(2026-09-01, 이전) 판정 사이드카 2종이 2026.2Q 전체에 대해 스테일이었다 — 게이트가 39사를 조용히 "판정 불가"로 흘리며 exit 0 이었다. 경로·지표·스테일 검사 셋 다 고쳤다.**
 
 > 수정: `scripts/_disclosure_pdf_paths.py`(신설, raw//pdf/ 단일 해석기) ·
 > `scripts/build_kics_source_textlayer.py` · `scripts/extract_transition_applicability.py` ·

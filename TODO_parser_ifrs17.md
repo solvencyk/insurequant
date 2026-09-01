@@ -1,5 +1,67 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-09-01 (82nd pass) — 보험손익 원표 패널이 신규 3사(하나손해·아이엠라이프·카카오페이손보)를
+> 몰랐던 문제 해소 + 당기/전기 오선택 버그 발견·수정. 패널 회사수 29→32, RED=0.**
+>
+> 발주: `inbox/parser/20260901T2000Z__orchestrator__MULTI__inspl_mvp_missing_3_new_companies.md`.
+> PL 마스터에 신규 3사가 owner 승인으로 들어왔지만(회사수 36→39, `09b4b26`), 보험손익 원표
+> 패널(`data/dart/viz/insurance_pl_breakdown.json`)은 PL 마스터가 아니라
+> `data/dart/extracted/*_insurance_pl_mvp.json`에서 만들어져 신규 3사가 안 보였다.
+>
+> **mvp 생성**: `scripts/_probes/probe_20260901_insurance_pl_mvp_3new.py` 신설 —
+> `src.ifrs17.insurance_pl_extractor.extract_insurance_pl_tables`를 FY2025 raw XML(각사
+> rcept 1건)에 직접 호출, `ifrs17_ingest_audit_annual.py`가 5개 감사보고서 전용사에 쓰는
+> 패턴을 그대로 따름(universe 게이트 우회). 하나손해보험은 실제 "보험손익 상세내역"
+> 표(주석29, `_hana_sonbo_csm_amort`가 이미 검증한 표와 동일)가 기본 `min_score=5` 임계값
+> 바로 아래(4점)라 0건이었음 — `min_score=0` 스캔 + 기존 `is_mvp_table()` 구조 게이트로
+> 해결(전 47사 재검증 결과 노이즈 0, 하나손해만 실제로 2건 추가).
+>
+> **당기/전기 오선택 버그 (부수 발견, 별도 수정)**: mvp 생성 후 `extract_pl_breakdown`이
+> 하나손해·아이엠라이프 둘 다 **전기(과거분기) 데이터를 골랐다** — 캡션/헤더가 회사마다 다른
+> 방식으로 "- 당기"/"- 전기" 또는 "제NN(당/전)기"를 담아 `pick_best_block`의 line_no
+> 동점처리가 항상 뒤(전기)를 선택하는, 2026-08-25에 한화손해보험에서 이미 한 번 잡혔던
+> 것과 같은 버그의 재발(다른 표현형). `scripts/viz_build_ifrs17_panels.py`의
+> `_dedupe_prefer_current_period`를 (1) candidates 필터 전에 적용(하나손해처럼 후보가
+> score<6이라 필터를 통과 못 하는 경우 대비) (2) 캡션이 "- 당기"/"- 전기" 그 자체인
+> 경우까지 정규화(`_normalize_caption_for_dedup`) (3) 헤더에 박힌 "제NN(당/전)기" 태그
+> 정규화(`_normalize_header_for_dedup`) (4) 행 라벨 공백 노이즈 흡수("소 계" vs "소계")로
+> 확장, `_PL_PREFER_CURRENT_PERIOD`에 하나손해·아이엠라이프 추가(한화손해와 동일한
+> allowlist 게이트 — 2026-08-25에 무조건 적용을 시도했다가 15개사 오선택으로 되돌린 전례가
+> 있어 그 패턴을 지킴). 회귀검증: 기존 47사 전원 `extract_pl_breakdown` 출력 바이트 동일
+> (0 diff), 한화손해보험 단독 재확인도 동일. 하나손해 CSM상각 21,885,413천원(당기, 2025.4Q)
+> 확인 — companies.py `_hana_sonbo_csm_amort`가 이미 검증한 값과 일치.
+>
+> **결과**: `insurance_pl_breakdown.json` 29→32사(ok/ok). 골든 `--update`(companies
+> 29→32, sha 변경, 나머지 3패널 무변경). `data/_gold/live_artifact_baseline.json`의 임시
+> 등재 3줄 삭제(게이트가 `BASELINE STALE` 확인) + 남은 7사(AIG 등, 별개 사유) reason 문구의
+> "36사 중 29사" stale 수치를 "39사 중 32사"로 교정. `validate_live_artifacts.py`:
+> RED=0 STALE_BASELINE=3→0 YELLOW=48(불변, 내용만 3줄 이동). `pytest
+> tests/test_viz_ifrs17_panels_golden.py tests/test_push_gate_wiring.py` 55 passed
+> 1 skipped. bs_snapshot.json/csm_amort_schedule.json/sensitivity_heatmap.json은
+> 재실행해도 diff 0(csm_amort·sensitivity는 이미 이 3사를 알고 있었음 — `ifrs17_batch_all.py`
+> 계열은 universe 게이트가 없어서 처음부터 안 막혔던 것으로 확인, bs_snapshot은 아예 이
+> 3사의 `_bs_snapshot_mvp.json`이 없어 손댈 게 없었음).
+>
+> **근본원인 판단(티켓 3번 요청) — 고치지 않고 기록만**: PL 마스터(`build_pl_breakdown.py`
+> `discover_filings`, raw 디렉토리 직접 스캔, 게이트 없음)와 각 패널의 mvp 추출 경로가
+> **패널마다 제각각 다른 회사 유니버스**를 쓴다 — CSM 패널(`ifrs17_batch_all.py`)은
+> `kics_disclosure.json` 전체를 무필터로 돌지만, P&L(오늘 고친 것)/measurement/
+> sensitivity/historical 배치 스크립트 4개는 전부 `src/ifrs17/universe.py`의
+> `is_excluded()`(`NON_LISTED_SKIP`, 2026-05-24 "무정기공시" 가정)로 걸러진다 — 이
+> frozenset에 신규 3사 이름이 이미 박혀 있었고(하나손해/아이엠라이프/카카오페이손해), 그
+> 가정은 최소 FY2022 사업보고서 raw가 실재해 지금은 틀렸다. P&L 배치는 게다가 2026-07-22에
+> archive로 옮겨져 아무도 재실행 안 함 + pre-Reorg#2 구경로까지 이중으로 낡음(이번엔 archive
+> 스크립트를 안 살리고 독립 probe로 우회). measurement/sensitivity/historical 3개는 아직
+> 살아있는 진입점이라 같은 stale 가정이 여전히 그 3사(+과거 유사사례)를 막고 있을 수
+> 있음 — **미검증, 미수정**(이 티켓 범위 밖, universe.py 수정은 3개 live 스크립트 전체
+> 회귀검증이 필요해 별도 작업). 게이트 쪽도 균일하지 않음 — `validate_live_artifacts.py`에
+> `*_CENSUS_MISSING`류 체크가 NB_CSM_multiple/csm_amort_schedule/insurance_pl_breakdown엔
+> 있는데 **bs_snapshot.json·sensitivity_heatmap.json엔 전무**(grep 0건) — 저 둘에서 같은
+> 사고가 나면 지금은 조용히 통과한다. 권고: (a) 싼 안전망 — sensitivity_heatmap용
+> CENSUS_MISSING 체크 신설(ifrs17 소관), bs_snapshot은 17BS 에이전트에 같은 패턴 전달
+> (b) 근본 — 4개 mvp 배치의 회사선정을 `build_pl_breakdown.py`식 raw self-census로 통일
+> 하거나 최소 universe.py의 stale 3줄부터 고치고 3개 live 스크립트 재검증.
+
 > **2026-09-01 (81st pass) — 17BS 항목5(해약환급금준비금) "구멍 8~10사" census: 전부 (b),
 > 마스터 무변경, gold 레지스트리만 갱신.**
 >

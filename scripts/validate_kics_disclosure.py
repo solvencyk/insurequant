@@ -1002,8 +1002,26 @@ def _transition_irr_after(records: list[dict]) -> tuple[list, Counter]:
 _OTHER_CAPITAL_PARENT = 23
 _OTHER_CAPITAL_CHILDREN = (24, 25, 26)
 
+# 적용후 자식(24/25/26) 이 통째로 결측인데 부모(item23)가 material 한 버킷의 건별 판정 등재부.
+# 2026-09-01 orchestrator 티켓(inbox/validation/20260901T1200Z, item23 자식 227버킷)의 후속:
+# 그 227 중 196 은 부모≈0 라 등식이 0=0+0+0 으로 자명하게 닫혀 원장이 필요 없다(아래 skip 태그가
+# 매 실행 재확인). 나머지 31 버킷(교보 18·흥국생명 12·1)은 부모가 실제로 움직이거나 원본 대조가
+# 필요했던 case 라 원문(md_inbox/raw PDF fitz) 대조 판정을 등재한다 — `verify_replays 없이 등재`
+# 는 이 저장소가 반복해서 데인 함정(2026-08-21 owner 적대적 재검증)이므로, **원장은 finding 을
+# 지우지 않는다**: 등재됐다고 skip 태그가 사라지지 않고, 다만 태그에 판정(verdict)이 붙고 값이
+# 등재 당시(pin)에서 벗어나면 fails 로 승격된다(드리프트 = 원장이 화석이 됐다는 신호).
+_ITEM23_CHILDREN_LEDGER_PATH = ROOT / "data" / "_gold" / "kics_item23_children_post_absent.json"
 
-def _other_capital_children_sum(records: list[dict]) -> tuple[list, Counter]:
+
+def _item23_children_ledger() -> dict:
+    """등재부 로드. 없으면 빈 등재부(=전부 미등재로 취급, skip 태그 뒤에 등재 정보만 안 붙는다)."""
+    if not _ITEM23_CHILDREN_LEDGER_PATH.exists():
+        return {"entries": {}}
+    return json.loads(_ITEM23_CHILDREN_LEDGER_PATH.read_text(encoding="utf-8"))
+
+
+def _other_capital_children_sum(records: list[dict], ledger: dict | None = None
+                                ) -> tuple[list, Counter, list]:
     """`item23 = item24 + item25 + item26` (기타 요구자본 = 종속회사 환산치 + 비례성원칙 대응치
     + 관계회사 환산치) 를 **적용전(값)·적용후(값_적용후) 양쪽**에서 검산한다. RED(blocking).
 
@@ -1013,12 +1031,25 @@ def _other_capital_children_sum(records: list[dict]) -> tuple[list, Counter]:
     **결측은 결함으로 세지 않는다**(이 저장소 원칙: 결측과 결함을 섞지 말 것). 다만 조용히
     넘기지도 않는다 — `skipped` 로 사유별 명시 집계하고, 그중 `부모>0·자식전부결측` 은
     '값은 있는데 분해가 통째로 없는' 추출갭 후보라 따로 센다.
-    반환: (fails, skipped). fails = (code, quarter, name, column, disclosed, expected, kids)."""
+
+    2026-09-01: 적용후·부모material·자식전부결측 갈래(추출갭 후보)를 등재부
+    (`data/_gold/kics_item23_children_post_absent.json`)와 대조한다. **원장은 finding 을
+    지우지 않는다** — 등재됐다고 skip 집계가 사라지는 게 아니라 태그에 판정이 붙을 뿐이고,
+    등재 당시 박제한 item23 전·후 값에서 벗어나면(DRIFT) `fails` 로 승격돼 RED 가 된다.
+    반환: (fails, skipped, registry). fails = (code, quarter, name, column, disclosed, expected,
+    kids). registry = (code, quarter, name, verdict, status, current, pinned) — status는
+    'STABLE'(등재값과 일치, 비차단) 또는 'INERT'(등재부에 있으나 이번 실행엔 이 조건이 없다,
+    청소 대상)."""
     def _num(v):
         try:
             return float(str(v).replace(",", ""))
         except (TypeError, ValueError):
             return None
+
+    if ledger is None:
+        ledger = _item23_children_ledger()
+    entries = ledger.get("entries", {})
+    seen_ledger_keys: set[str] = set()
 
     byq: dict[tuple, dict] = {}
     name: dict[str, str] = {}
@@ -1033,6 +1064,7 @@ def _other_capital_children_sum(records: list[dict]) -> tuple[list, Counter]:
             byq.setdefault((c, q), {})[it] = (_num(r.get(KEY_VALUE)), _num(r.get(KEY_VALUE_POST)))
     fails: list[tuple] = []
     skipped: Counter = Counter()
+    registry: list[tuple] = []
     for (c, q), m in sorted(byq.items()):
         for col, idx in (("적용전", 0), ("적용후", 1)):
             tgt = m.get(_OTHER_CAPITAL_PARENT, (None, None))[idx]
@@ -1042,8 +1074,38 @@ def _other_capital_children_sum(records: list[dict]) -> tuple[list, Counter]:
                 continue
             if any(k is None for k in kids):
                 if all(k is None for k in kids):
-                    # 부모가 material 한데 분해가 통째로 없으면 '미공시'가 아니라 추출갭 후보.
-                    tag = "자식전부결측·부모>0(추출갭 후보)" if abs(tgt) >= 1.0 else "자식전부결측·부모≈0"
+                    material = abs(tgt) >= 1.0
+                    if col == "적용후" and material:
+                        lk = f"{c}|{q}"
+                        entry = entries.get(lk)
+                        if entry is not None:
+                            seen_ledger_keys.add(lk)
+                            pin_post = entry.get("item23_post")
+                            pin_pre = entry.get("item23_pre")
+                            cur_pre = m.get(_OTHER_CAPITAL_PARENT, (None, None))[0]
+                            tol = _eff_tol(c)
+                            post_ok = isinstance(pin_post, (int, float)) and abs(tgt - pin_post) <= tol
+                            pre_ok = (pin_pre is None or cur_pre is None
+                                      or abs(cur_pre - pin_pre) <= tol)
+                            verdict = entry.get("verdict", "?")
+                            if post_ok and pre_ok:
+                                tag = f"자식전부결측·부모>0·등재[{verdict}]"
+                                registry.append((c, q, name.get(c, c), verdict, "STABLE",
+                                                  round(tgt, 2), round(pin_post, 2)))
+                            else:
+                                tag = "자식전부결측·부모>0·등재값이탈(재확인필요)"
+                                fails.append((c, q, name.get(c, c), "적용후(등재드리프트)",
+                                              round(tgt, 2),
+                                              round(pin_post, 2) if isinstance(pin_post, (int, float))
+                                              else pin_post,
+                                              (round(cur_pre, 2) if isinstance(cur_pre, (int, float))
+                                               else cur_pre,
+                                               round(pin_pre, 2) if isinstance(pin_pre, (int, float))
+                                               else pin_pre)))
+                        else:
+                            tag = "자식전부결측·부모>0(추출갭 후보·미등재)"
+                    else:
+                        tag = "자식전부결측·부모>0(추출갭 후보)" if material else "자식전부결측·부모≈0"
                 else:
                     tag = "자식일부결측"
                 skipped[f"{col}:{tag}"] += 1
@@ -1052,7 +1114,11 @@ def _other_capital_children_sum(records: list[dict]) -> tuple[list, Counter]:
             if abs(exp - tgt) > _eff_tol(c):
                 fails.append((c, q, name.get(c, c), col, round(tgt, 2), round(exp, 2),
                               tuple(round(k, 2) for k in kids)))
-    return fails, skipped
+    for lk in sorted(set(entries) - seen_ledger_keys):
+        co, _, qq = lk.partition("|")
+        registry.append((co, qq, name.get(co, co), entries[lk].get("verdict", "?"), "INERT",
+                          None, None))
+    return fails, skipped, registry
 
 
 # ===========================================================================
@@ -3848,7 +3914,7 @@ def main() -> int:
         ],
         "review": irr_pin_review,
     }
-    other_cap_fails, other_cap_skipped = _other_capital_children_sum(records)
+    other_cap_fails, other_cap_skipped, other_cap_registry = _other_capital_children_sum(records)
     report["other_capital_children_sum"] = {
         "scope": "all filers x both columns (값 / 값_적용후) — 2026-08-21 new wiring; "
                  "items 24/25/26 were referenced by no identity at all",
@@ -3859,6 +3925,20 @@ def main() -> int:
             for c, q, n, col, tv, ev, kids in other_cap_fails
         ],
         "not_evaluated": dict(sorted(other_cap_skipped.items())),
+        "registry": {
+            "doc": ("적용후·부모material·자식전부결측(추출갭 후보) 버킷의 건별 원문대조 등재부 "
+                    "— data/_gold/kics_item23_children_post_absent.json. 2026-09-01 "
+                    "inbox/validation/20260901T1200Z 조사(93셀=31버킷 md_inbox/raw 대조)."),
+            "stable": [
+                {"code": c, "quarter": q, "name": n, "verdict": v, "current_post": cur,
+                 "pinned_post": pin}
+                for c, q, n, v, status, cur, pin in other_cap_registry if status == "STABLE"
+            ],
+            "inert": [
+                {"code": c, "quarter": q, "name": n, "verdict": v}
+                for c, q, n, v, status, _cur, _pin in other_cap_registry if status == "INERT"
+            ],
+        },
     }
     after_incomplete, after_pinned_absent = _parent_present_child_incomplete_after(records)
     report["parent_present_child_incomplete_after"] = [
@@ -4255,12 +4335,25 @@ def main() -> int:
         print(f"기타요구자본 분해 위반 (item23 ≠ item24+25+26, 전·후 양컬럼, RED): "
               f"{len(other_cap_fails)} {dict(cc)}")
         for c, q, n, col, tv, ev, kids in other_cap_fails[:25]:
-            print(f"    {q} {c} {n} [{col}] item23={tv} ≠ 24+25+26={ev} {list(kids)}")
+            if col == "적용후(등재드리프트)":
+                print(f"    {q} {c} {n} [{col}] 등재부 박제 item23후={ev} 에서 벗어났다 "
+                      f"(현재 item23후={tv}, 현재/박제 item23전={kids}) — "
+                      f"data/_gold/kics_item23_children_post_absent.json 재확인 필요")
+            else:
+                print(f"    {q} {c} {n} [{col}] item23={tv} ≠ 24+25+26={ev} {list(kids)}")
         if len(other_cap_fails) > 25:
             print(f"    ... +{len(other_cap_fails) - 25} more")
     else:
         print("기타요구자본 분해 위반 (item23 = item24+25+26, 전·후 양컬럼): 0")
     print(f"    [기타요구자본 미판정 내역] {dict(sorted(other_cap_skipped.items()))}")
+    _reg_stable = [x for x in other_cap_registry if x[4] == "STABLE"]
+    _reg_inert = [x for x in other_cap_registry if x[4] == "INERT"]
+    if _reg_stable or _reg_inert:
+        print(f"    [기타요구자본 등재부] STABLE(등재값과 일치·비차단) {len(_reg_stable)}건 "
+              f"· INERT(등재부에 있으나 이번 실행엔 해당 없음·청소 대상) {len(_reg_inert)}건")
+        for co, q, n, v, _s, _cur, _pin in _reg_inert:
+            print(f"      INERT {q} {co} {n} [{v}] — "
+                  f"data/_gold/kics_item23_children_post_absent.json 에서 이 줄을 재확인해라")
     if after_incomplete:
         pc = Counter(p for _, _, p, _, _ in after_incomplete)
         PLBL = {15: "요구자본(16~21)", 17: "생명장기(29~35)", 19: "시장(36~40)"}

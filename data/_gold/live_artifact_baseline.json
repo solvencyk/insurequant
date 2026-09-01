@@ -218,41 +218,38 @@
     },
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|AIG손해보험": {
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
-      "reason": "PL 마스터 36사 중 29사만 있어 7사가 원표 패널에서 빠진다.",
+      "reason": "PL 마스터 39사 중 32사만 있어 7사가 원표 패널에서 빠진다. (2026-09-01: 하나손해/아이엠라이프/카카오페이손보 3사 추가로 회사수 36→39, 이 3사의 mvp 추출 완료로 패널도 29→32 — inbox 20260901T2000Z 처리, 남은 7사는 별개 사유)",
       "first_seen": "2026-08-25"
     },
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|교보라이프플래닛생명보험": {
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
-      "reason": "PL 마스터 36사 중 29사만 있어 7사가 원표 패널에서 빠진다.",
+      "reason": "PL 마스터 39사 중 32사만 있어 7사가 원표 패널에서 빠진다. (2026-09-01: 하나손해/아이엠라이프/카카오페이손보 3사 추가로 회사수 36→39, 이 3사의 mvp 추출 완료로 패널도 29→32 — inbox 20260901T2000Z 처리, 남은 7사는 별개 사유)",
       "first_seen": "2026-08-25"
     },
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|비엔피파리바카디프생명보험": {
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
-      "reason": "PL 마스터 36사 중 29사만 있어 7사가 원표 패널에서 빠진다.",
+      "reason": "PL 마스터 39사 중 32사만 있어 7사가 원표 패널에서 빠진다. (2026-09-01: 하나손해/아이엠라이프/카카오페이손보 3사 추가로 회사수 36→39, 이 3사의 mvp 추출 완료로 패널도 29→32 — inbox 20260901T2000Z 처리, 남은 7사는 별개 사유)",
       "first_seen": "2026-08-25"
     },
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|서울보증보험": {
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
-      "reason": "PL 마스터 36사 중 29사만 있어 7사가 원표 패널에서 빠진다.",
+      "reason": "PL 마스터 39사 중 32사만 있어 7사가 원표 패널에서 빠진다. (2026-09-01: 하나손해/아이엠라이프/카카오페이손보 3사 추가로 회사수 36→39, 이 3사의 mvp 추출 완료로 패널도 29→32 — inbox 20260901T2000Z 처리, 남은 7사는 별개 사유)",
       "first_seen": "2026-08-25"
     },
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|신한이지손해보험": {
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
-      "reason": "PL 마스터 36사 중 29사만 있어 7사가 원표 패널에서 빠진다.",
+      "reason": "PL 마스터 39사 중 32사만 있어 7사가 원표 패널에서 빠진다. (2026-09-01: 하나손해/아이엠라이프/카카오페이손보 3사 추가로 회사수 36→39, 이 3사의 mvp 추출 완료로 패널도 29→32 — inbox 20260901T2000Z 처리, 남은 7사는 별개 사유)",
       "first_seen": "2026-08-25"
     },
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|악사손해보험": {
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
-      "reason": "PL 마스터 36사 중 29사만 있어 7사가 원표 패널에서 빠진다.",
+      "reason": "PL 마스터 39사 중 32사만 있어 7사가 원표 패널에서 빠진다. (2026-09-01: 하나손해/아이엠라이프/카카오페이손보 3사 추가로 회사수 36→39, 이 3사의 mvp 추출 완료로 패널도 29→32 — inbox 20260901T2000Z 처리, 남은 7사는 별개 사유)",
       "first_seen": "2026-08-25"
     },
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|예별손해보험": {
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
-      "reason": "PL 마스터 36사 중 29사만 있어 7사가 원표 패널에서 빠진다.",
+      "reason": "PL 마스터 39사 중 32사만 있어 7사가 원표 패널에서 빠진다. (2026-09-01: 하나손해/아이엠라이프/카카오페이손보 3사 추가로 회사수 36→39, 이 3사의 mvp 추출 완료로 패널도 29→32 — inbox 20260901T2000Z 처리, 남은 7사는 별개 사유)",
       "first_seen": "2026-08-25"
-    },
-    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|아이엠라이프생명보험": "owner 승인(2026-09-01)으로 PL 마스터에 새로 들어온 3사다(회사수 36→39). 보험손익 원표 패널은 PL 마스터가 아니라 `data/dart/extracted/*_insurance_pl_mvp.json`(scripts/ifrs17_ingest_audit_annual.py 산출) 이라는 **별도 추출 경로**를 쓰는데 이 3사 추출물이 아직 없다. 값이 틀린 것이 아니라 패널 쪽 커버리지가 아직 안 따라온 상태다 — inbox/parser 20260901T2000Z 로 발주했고, mvp 추출이 생기면 이 줄을 지운다(게이트가 BASELINE STALE 로 알려준다).",
-    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|카카오페이손해보험": "owner 승인(2026-09-01)으로 PL 마스터에 새로 들어온 3사다(회사수 36→39). 보험손익 원표 패널은 PL 마스터가 아니라 `data/dart/extracted/*_insurance_pl_mvp.json`(scripts/ifrs17_ingest_audit_annual.py 산출) 이라는 **별도 추출 경로**를 쓰는데 이 3사 추출물이 아직 없다. 값이 틀린 것이 아니라 패널 쪽 커버리지가 아직 안 따라온 상태다 — inbox/parser 20260901T2000Z 로 발주했고, mvp 추출이 생기면 이 줄을 지운다(게이트가 BASELINE STALE 로 알려준다).",
-    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|하나손해보험": "owner 승인(2026-09-01)으로 PL 마스터에 새로 들어온 3사다(회사수 36→39). 보험손익 원표 패널은 PL 마스터가 아니라 `data/dart/extracted/*_insurance_pl_mvp.json`(scripts/ifrs17_ingest_audit_annual.py 산출) 이라는 **별도 추출 경로**를 쓰는데 이 3사 추출물이 아직 없다. 값이 틀린 것이 아니라 패널 쪽 커버리지가 아직 안 따라온 상태다 — inbox/parser 20260901T2000Z 로 발주했고, mvp 추출이 생기면 이 줄을 지운다(게이트가 BASELINE STALE 로 알려준다)."
+    }
   }
 }

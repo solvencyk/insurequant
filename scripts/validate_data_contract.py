@@ -512,14 +512,34 @@ def check_census(res: GateResult, env: "Env") -> None:
     # 않던 항목**이라 셀이 있어도 값은 아무도 안 봤다. K-ICS 게이트에만 걸면 prepush 경로 밖이라
     # (prepush_check.py 는 validate_kics_disclosure.py 를 호출하지 않는다) 여기서 같이 건다.
     # 적용전·적용후 양 컬럼을 한 함수가 본다 — 적용후가 검증사각이었던 전례(PM-2026-07-07).
-    _other_cap, _other_cap_skipped = _other_capital_children_sum(kd_records)
+    # 2026-09-01: 세 번째 반환값(등재부 대조) 추가 — 적용후·부모material·자식전부결측(추출갭
+    # 후보) 31버킷을 data/_gold/kics_item23_children_post_absent.json 과 대조한 결과.
+    # 등재값과 일치하면 STABLE(비차단, 여기선 안 올린다), 등재값에서 벗어나면 이미 위
+    # `_other_cap`(=fails)에 "적용후(등재드리프트)" col 로 실려 아래 루프가 그대로 RED 로 올린다
+    # — 원장은 finding 을 지우지 않는다는 원칙대로, 등재됐다고 검사가 느슨해지지 않는다.
+    _other_cap, _other_cap_skipped, _other_cap_registry = _other_capital_children_sum(kd_records)
     for c, q, n, col, disclosed, expected, kids in _other_cap:
         if not _emit(q):
+            continue
+        if col == "적용후(등재드리프트)":
+            res.add(check="census", severity="RED", master="kics_disclosure", company=n, quarter=q,
+                    rule="OTHER_CAPITAL_CHILDREN_LEDGER_DRIFT",
+                    message=f"item23후={disclosed} 가 등재부 박제값 {expected} 에서 벗어났다 "
+                            f"(현재/박제 item23전={list(kids)}) — "
+                            f"data/_gold/kics_item23_children_post_absent.json 재확인 필요")
             continue
         res.add(check="census", severity="RED", master="kics_disclosure", company=n, quarter=q,
                 rule="OTHER_CAPITAL_CHILDREN_SUM",
                 message=f"[{col}] item23(기타 요구자본)={disclosed} ≠ item24+25+26={expected} "
                         f"{list(kids)} — 원문 라벨이 선언한 합(1+2+3)이 안 닫힘")
+    for c, q, n, v, _status in ((c, q, n, v, s) for c, q, n, v, s, _cur, _pin in _other_cap_registry
+                                 if s == "INERT"):
+        if not _emit(q):
+            continue
+        res.add(check="census", severity="YELLOW", master="kics_disclosure", company=n, quarter=q,
+                rule="OTHER_CAPITAL_CHILDREN_LEDGER_INERT",
+                message=f"등재부[{v}]에 있으나 이번 실행엔 '적용후 자식전부결측·부모material' "
+                        f"조건이 없다 — data/_gold/kics_item23_children_post_absent.json 정리 대상")
     _after_incomplete, _after_pinned_absent = _parent_present_child_incomplete_after(kd_records)
     for c, q, parent, n, missing in _after_incomplete:
         if not _emit(q):

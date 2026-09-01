@@ -651,7 +651,46 @@ def extract_amort_schedule(blocks: list[dict], company: str = "") -> dict | None
 # not a period pair at all, just label noise -- dedup demoted the
 # checker-recognized label). Scoping to an explicit allowlist keeps every other
 # company's selection byte-identical to pre-fix output.
-_PL_PREFER_CURRENT_PERIOD = {"\uD55C\uD654\uC190\uD574\uBCF4\uD5D8"}
+_PL_PREFER_CURRENT_PERIOD = {"\uD55C\uD654\uC190\uD574\uBCF4\uD5D8", "\uD558\uB098\uC190\uD574\uBCF4\uD5D8", "\uC544\uC774\uC5E0\uB77C\uC774\uD504\uC0DD\uBA85\uBCF4\uD5D8"}
+
+
+_PERIOD_TAG_RE = re.compile(r"\uC81C\d+\((?:\uB2F9|\uC804)\)\uAE30")
+_BARE_PERIOD_CAPTION_RE = re.compile(r"^-\s*(?:\uB2F9\uAE30|\uC804\uAE30)$")
+
+
+def _normalize_caption_for_dedup(caption: str | None) -> str:
+    """Collapse a caption that is ONLY a bare period marker ('- \uB2F9\uAE30' / '- \uC804\uAE30',
+    \uD558\uB098\uC190\uD574\uBCF4\uD5D8's shape -- the descriptive note title is a separate paragraph the
+    upstream extractor doesn't attach as .caption, see _dedupe_prefer_current_period's
+    docstring) to one placeholder so both halves of a twin pair hash the same way.
+
+    Anchored to the WHOLE (stripped) caption string on purpose -- do not loosen to a
+    substring strip. '\uB2F9\uAE30'/'\uC804\uAE30' are common substrings of ordinary caption prose
+    (\uB2F9\uAE30\uC190\uC775, \uB2F9\uAE30\uC640 \uC804\uAE30 \uC911 ...), and a substring strip would merge genuinely
+    different notes -- exactly the ~15-company regression the 2026-08-25 unconditional
+    dedup attempt hit (see comment above _PL_PREFER_CURRENT_PERIOD).
+    """
+    c = (caption or "").strip()
+    return "<PERIOD_CAPTION>" if _BARE_PERIOD_CAPTION_RE.match(c) else (caption or "")
+
+
+def _normalize_header_for_dedup(header: list[list[str]]) -> str:
+    """Strip an embedded '\uC81CNN(\uB2F9)\uAE30'/'\uC81CNN(\uC804)\uAE30' fiscal-year tag from header cells
+    before hashing for _dedupe_prefer_current_period's grouping key.
+
+    \uC544\uC774\uC5E0\uB77C\uC774\uD504\uC0DD\uBA85\uBCF4\uD5D8's twin tables print the period marker INSIDE a header cell
+    (['\uAD6C \uBD84', '\uC81C39(\uB2F9)\uAE30'] vs ['\uAD6C \uBD84', '\uC81C38(\uC804)\uAE30']) rather than only in the
+    caption/sibling-text this function's docstring otherwise describes -- and the
+    fiscal-year NUMBER also differs (39 vs 38), so comparing raw header JSON would
+    hash true twins to two different groups and defeat the dedup entirely. Only
+    this specific tag is stripped; any other header difference still keeps blocks
+    in separate groups.
+    """
+    cleaned = [
+        [_PERIOD_TAG_RE.sub("", c) if isinstance(c, str) else c for c in row]
+        for row in (header or [])
+    ]
+    return json.dumps(cleaned, ensure_ascii=False, sort_keys=True)
 
 
 def _dedupe_prefer_current_period(blocks: list[dict]) -> list[dict]:
@@ -689,9 +728,14 @@ def _dedupe_prefer_current_period(blocks: list[dict]) -> list[dict]:
     order: list[tuple] = []
     for b in blocks:
         key = (
-            b.get("caption"),
-            json.dumps(b.get("header") or [], ensure_ascii=False, sort_keys=True),
-            tuple(str((r or [None])[0]) for r in (b.get("rows") or [])),
+            _normalize_caption_for_dedup(b.get("caption")),
+            _normalize_header_for_dedup(b.get("header") or []),
+            # Whitespace-only stripped, e.g. 하나손해보험's twin pair spells the SAME
+            # row "재보험서비스비용 소 계" (당기) vs "재보험서비스비용 소계" (전기) --
+            # a raw-table spacing inconsistency, not a different label. Genuinely
+            # different labels (the KB손해보험 near-miss above) still differ after
+            # stripping whitespace, so this doesn't loosen the KB-case guard.
+            tuple(re.sub(r"\s+", "", str((r or [None])[0])) for r in (b.get("rows") or [])),
         )
         if key not in groups:
             groups[key] = []
@@ -739,13 +783,19 @@ def extract_pl_breakdown(blocks: list[dict], company: str = "") -> dict | None:
         "\uBCF4\uD5D8\uC218\uC775",
         "\uBCF4\uD5D8\uC190\uC775",
     )
+    # Dedup BEFORE the candidate filter (not after): a twin pair can both fail the
+    # kw/score>=6 gate (\uD558\uB098\uC190\uD574\uBCF4\uD5D8's real table scores 4 -- see
+    # scripts/_probes/probe_20260901_insurance_pl_mvp_3new.py), in which case
+    # extract_pl_breakdown would fall through to pick_best_block(blocks) on the
+    # UNDEDUPED list and hit the same \uC804\uAE30-wins-the-line_no-tiebreak bug this dedup
+    # exists to prevent. Applying it to `blocks` first covers both paths.
+    if company in _PL_PREFER_CURRENT_PERIOD:
+        blocks = _dedupe_prefer_current_period(blocks)
     candidates = [
         b
         for b in blocks
         if any(k in str(b.get("caption") or "") for k in kw_caption) or int(b.get("score", 0)) >= 6
     ]
-    if company in _PL_PREFER_CURRENT_PERIOD:
-        candidates = _dedupe_prefer_current_period(candidates)
     blk = pick_best_block(candidates) or pick_best_block(blocks)
     if not blk:
         return None

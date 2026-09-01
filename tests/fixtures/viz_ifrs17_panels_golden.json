@@ -10,10 +10,10 @@
       }
     },
     "insurance_pl_breakdown.json": {
-      "sha256": "ae41bc46100d2ef91319a2cd92cf81344d0edd5e970c5df4d36641a0a4d10660",
-      "companies": 29,
+      "sha256": "f8bc1473ffba9e86b283eb122be1ba615f82d8e97b0d9a2766f4fbfd59475cba",
+      "companies": 32,
       "status_counts": {
-        "ok": 29
+        "ok": 32
       }
     },
     "bs_snapshot.json": {

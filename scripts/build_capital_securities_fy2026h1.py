@@ -483,6 +483,12 @@ def detect_redeemed(code, fy25_sub_bonds, bs_prior_mn, report):
     2026-09-01 owner 지적으로 발견: KB손해 제1회(3,790억) · 미래에셋 제2회(3,000억) ·
     현대해상 제3회(3,500억) · KB라이프 제1회(1,300억) 가 반기 중 상환됐는데 마스터가 계속
     계상하고 있었다. 보완자본 소진율 분자가 그만큼 부풀어 있었다.
+
+    2026-09-01 2차: **상환과 신규발행이 같은 반기에 겹치면** 순수 상환-부분집합 탐색은
+    영원히 실패한다(뺄셈만 하니 총액이 안 맞는다). 실측(흥국화재 KR0005): 이사회
+    2026-02-06 "후순위사채 조기상환 및 신규 발행의 건" — 제20회(450억) 상환 + 제23회
+    (1,000억) 신규발행이 같은 반기. 1차(순수 상환)가 실패하면, 증거원 중 **우리 FY2025
+    목록에 없는** (발행일,액면) 후보를 하나 얹어 "상환 부분집합 + 신규 후보 하나"로 재시험한다.
     """
     if not fy25_sub_bonds or not bs_prior_mn:
         return None
@@ -492,11 +498,23 @@ def detect_redeemed(code, fy25_sub_bonds, bs_prior_mn, report):
     cur = bs_current_balance(text, bs_prior_mn, "subordinated")
     if cur is None:
         return None
-    evidence = {r["issue_date"] for r in
-                (_issuance_rows(text) + _bond_manager_rows(text) + extract_subordinated_detail(text))}
+    evidence_rows = _issuance_rows(text) + _bond_manager_rows(text) + extract_subordinated_detail(text)
+    evidence = {r["issue_date"] for r in evidence_rows}
     absent = [b for b in fy25_sub_bonds if b.get("issue_date") not in evidence]
+    # absent 가 비면(=fy2025 채권 전부 증거원에 있음) 상환 후보 자체가 없다 -- 이 함수가 할
+    # 일이 없다(값은 confirm_bonds_still_outstanding/merge_subordinated_detail 이 처리한다).
+    # 신규발행 후보 탐색은 **상환 후보가 있을 때만** 2차로 시험한다 -- 안 그러면 absent=[]
+    # 인 (실제로는 아무 문제 없는) 회사들까지 이 회사 소유의 무관한 채무증권 발행분(교보
+    # KR0073 실측: 회사채 등 35건)을 "신규발행 후보"로 끌어와 억지 재현을 시도하게 된다.
     if not absent:
         return None
+    fy25_dates = {b.get("issue_date") for b in fy25_sub_bonds}
+    # H1 증거엔 있는데 우리 FY2025 목록엔 없는 (발행일,액면) -> 신규발행 후보. 노이즈(작은
+    # 이자율/등급 오분류) 배제용으로 최소액(100억=10,000백만) 이상만 후보로 삼는다.
+    new_candidates = {}
+    for r in evidence_rows:
+        if r["issue_date"] not in fy25_dates and (r.get("face_amount_mn") or 0) >= 10000:
+            new_candidates.setdefault(r["issue_date"], r["face_amount_mn"])
     # 증거원은 셋 다 **부분 커버리지**라(사모채는 원래 안 나온다) '증거에 없다' 가 곧 상환은
     # 아니다. 그래서 증거 없는 채권들의 **부분집합**을 전부 시험해, BS 당반기말을 재현하는
     # 조합이 **정확히 하나**일 때만 채택한다. 둘 이상이면 어느 것이 상환됐는지 알 수 없으므로
@@ -504,29 +522,64 @@ def detect_redeemed(code, fy25_sub_bonds, bs_prior_mn, report):
     # (현대해상 실측: 증거 없는 3건 중 실제 상환은 1건 = 무보증후순위사채3.)
     total = sum((b.get("outstanding_mn") or 0) for b in fy25_sub_bonds)
     tol = max(1.0, cur * 0.005)
-    solutions = []
     n = len(absent)
     if n > 12:
         return None
-    for mask in range(1, 1 << n):
+
+    def _drop_sum(drop):
+        return sum((b.get("outstanding_mn") or 0) for b in drop)
+
+    solutions = []  # each: (drop_list, new_issue_date_or_None, new_face_amount)
+    for mask in range(1, 1 << n) if n else []:
         drop = [absent[i] for i in range(n) if mask & (1 << i)]
-        if abs(total - sum((b.get("outstanding_mn") or 0) for b in drop) - cur) <= tol:
-            solutions.append(drop)
+        if abs(total - _drop_sum(drop) - cur) <= tol:
+            solutions.append((drop, None, 0.0))
+    if not solutions and new_candidates:
+        # 순수 상환으로 안 풀림 -> 신규발행 후보 하나를 더해 재시험(상환 0건 포함, mask=0부터
+        # — 신규발행만으로 총액이 늘어난 경우도 있을 수 있다).
+        for add_date, add_amt in new_candidates.items():
+            for mask in range(0, 1 << n):
+                drop = [absent[i] for i in range(n) if mask & (1 << i)]
+                if abs(total - _drop_sum(drop) + add_amt - cur) <= tol:
+                    solutions.append((drop, add_date, add_amt))
     if len(solutions) != 1:
         report.setdefault("redeem_candidate_unreconciled", {})[code] = {
             "bs_current_mn": cur, "fy2025_total_mn": total,
             "absent": [b.get("name") for b in absent],
+            "new_candidates": new_candidates,
             "reconciling_subsets": len(solutions)}
         return None
-    absent = solutions[0]
-    kept = [b for b in fy25_sub_bonds if b not in absent]
+    drop, add_date, add_amt = solutions[0]
+    kept = [b for b in fy25_sub_bonds if b not in drop]
     report.setdefault("sub_redeemed_detected", {})[code] = [
         {"name": b.get("name"), "issue_date": b.get("issue_date"),
-         "outstanding_mn": b.get("outstanding_mn")} for b in absent]
+         "outstanding_mn": b.get("outstanding_mn")} for b in drop]
     src = xml_path.relative_to(ROOT).as_posix()
-    return [dict(b, as_of=H1_AS_OF,
+    kept = [dict(b, as_of=H1_AS_OF,
                  source_file=f"{src} (H1 전 증거원 부재 + BS 당반기말 {cur:,.0f} 재현으로 잔존 확인)")
             for b in kept]
+    if add_date:
+        report.setdefault("sub_new_issuance_detected", {})[code] = {
+            "issue_date": add_date, "face_amount_mn": add_amt}
+        kept.append({
+            "name": f"{code} 후순위사채 (발행 {add_date}, H1 2026 신규확인, 상환분과 짝지어 BS 재현)",
+            "tier": "subordinated",
+            "issue_date": add_date,
+            "legal_maturity": None,  # 증거 행에 만기 컬럼 없음 -- economic_maturity 는 None 허용
+            "call_date": None,
+            "call_source": "derived_issue_plus_5y",
+            "coupon_pct": None,
+            "face_amount_mn": add_amt,
+            "outstanding_mn": add_amt,
+            "past_call_outstanding": False,
+            "as_of": H1_AS_OF,
+            "source_file": f"{src} (채무증권 발행실적/사채관리계약: H1 2026 신규 발행 확인, "
+                           f"상환분과 짝지어 BS 당반기말 재현)",
+            "notes": "H1 2026 신규 발행 확인 -- FY2025 baseline에 대응 채권 없음, 같은 반기 "
+                     "상환분과 짝지어 BS 당반기말 재현. legal_maturity 미확보(증거 행에 만기 "
+                     "컬럼 없음) -- 필요시 원문 확인 후 보완.",
+        })
+    return kept
 
 
 def confirm_aggregate_unchanged(text: str, fy25_bs_mn, keyword: str):
@@ -566,7 +619,7 @@ def confirm_aggregate_unchanged(text: str, fy25_bs_mn, keyword: str):
 
 
 def confirm_bonds_still_outstanding(code, fy25_bonds, report, tier_label):
-    """기존 신종자본증권이 기준일 현재 여전히 미상환인지 **확인만** 한다 — 값은 안 바꾼다.
+    """기존 채권이 기준일 현재 여전히 미상환인지 **채권별로** 확인한다 — 값은 안 바꾸고 시점만.
 
     `자본으로 인정되는 채무증권의 발행` 개별 주석은 24개 제출사 중 9곳에만 있다. 나머지는
     FY2025 를 그대로 이월했는데, 그 결과 화면에 "발행잔액 기준일 2025-12-31" 이 반기 내내
@@ -574,43 +627,107 @@ def confirm_bonds_still_outstanding(code, fy25_bonds, report, tier_label):
     기준일이 2026-06-30 이다. 기존 채권이 (발행일, 발행금액) 으로 그 표에 **미상환**으로
     그대로 있으면, 값은 한 칸도 안 바꾸고 **시점만** 정직하게 갱신할 수 있다.
 
-    전량 확인된 경우에만 기준일을 돌려준다. 한 건이라도 확인 못 하면 None — 부분 확인을
-    전량 확인처럼 보이게 하지 않는다(company as_of 는 bond as_of 의 min 이라 조용히 최신으로
-    보이게 만들 수 있다).
+    2026-09-01 2차 라운드: 원래는 **전량 확인돼야만** 기준일을 돌려줬다 — 한 건이라도
+    실패하면 그 tier 전체가 FY2025 에 묶였다. 실측(동양생명 KR0087)에서 후순위 3건 중 2건은
+    깨끗이 확인되는데 나머지 1건(USD 후순위채 — 발행실적 표의 권면은 매 보고서 환산환율로
+    다시 계산돼 액면이 미세하게 어긋난다) 때문에 3건 다 FY2025 에 묶여 있었다. 이제
+    **채권 단위로** 갱신한다 — 확인된 채권만 시점을 옮기고, 확인 안 된 채권은 그 이름과
+    함께 개별적으로 FY2025 에 남는다.
+
+    매칭: 발행일 일치가 1차. **우리 FY2025 목록 안에서 그 발행일이 유일하면** 발행일만으로
+    충분(액면은 대조만, 필수 아님 — 외화채 환산액면 드리프트 대응). 같은 발행일 트랜치가
+    우리 쪽에 여럿이면 액면까지 맞아야 어느 트랜치인지 구분된다.
+
+    이미 잔액이 0인 채권(FY2025 시점에 이미 전액 상환, 예: KR0094 2025-08-12 조기상환)은
+    확인할 대상이 없다 — 시점이 무엇이든 기여액은 0. 미상환 표에서 못 찾았다고 "미확인"
+    취급하면(당연히 못 찾는다, 이미 상환됐으니) 같은 tier의 살아있는 다른 채권까지 예전
+    전량-게이트에 걸려 같이 묶였다. 시점만 정직하게 새 기준일로 올려 둔다(금액은 0 그대로).
+
+    반환: fy25_bonds 와 같은 길이의 새 리스트(채권마다 개별 as_of/source_file). 표준 절
+    자체가 안 열리면(as_of 를 못 찾으면) None — 호출측이 집계-불변 경로로 폴백한다.
     """
     if not fy25_bonds:
-        return None, None
+        return None
     xml_path, text = load_h1_xml(code)
     if text is None:
-        return None, None
+        return None
     # 근거원 둘의 합집합. 어느 하나도 전량을 담지 못한다(발행실적 = 보고창 안 발행분,
     # 사채관리계약 = 공모 only). 기준일은 둘 중 실제로 근거를 준 쪽에서 가져온다.
-    rows = _issuance_rows(text)
-    mgr_rows = _bond_manager_rows(text)
+    rows = _issuance_rows(text) + _bond_manager_rows(text)
     as_of = _issuance_as_of(text) or _bond_manager_as_of(text)
-    mgr_as_of = _bond_manager_as_of(text) or as_of
-    if not as_of and not mgr_as_of:
-        return None, None
-    rows = rows + mgr_rows
-    as_of = as_of or mgr_as_of
-    unmatched = []
+    if not as_of:
+        return None
+    src_rel = xml_path.relative_to(ROOT).as_posix()
+    date_counts = {}
     for b in fy25_bonds:
-        hit = any(r["issue_date"] == b.get("issue_date")
-                  and abs(r["face_amount_mn"] - (b.get("face_amount_mn") or -1)) < 1
-                  for r in rows)
+        date_counts[b.get("issue_date")] = date_counts.get(b.get("issue_date"), 0) + 1
+
+    out, unmatched = [], []
+    for b in fy25_bonds:
+        if not (b.get("outstanding_mn") or 0):
+            out.append(dict(b, as_of=as_of,
+                             source_file=f"{src_rel} (H1 2026 기준 잔액 0 유지, 채권별 확인 불요)"))
+            continue
+        cands = [r for r in rows if r["issue_date"] == b.get("issue_date")]
+        if not cands:
+            hit = False
+        elif date_counts.get(b.get("issue_date"), 0) == 1:
+            hit = True
+        else:
+            hit = any(abs(r["face_amount_mn"] - (b.get("face_amount_mn") or -1)) < 1 for r in cands)
         # 이 표가 보증하는 것은 **권면(액면)총액**이다. 우리가 싣는 `outstanding_mn` 이
         # 액면과 다르면(상각된 장부금액) 그 값까지 새 기준일로 보증되지는 않는다 —
         # 시점만 옮기면 "확인했다" 는 거짓 진술이 된다.
-        if hit and (b.get("outstanding_mn") is not None
-                    and abs((b.get("outstanding_mn") or 0) - (b.get("face_amount_mn") or 0)) >= 1):
+        if hit and abs((b.get("outstanding_mn") or 0) - (b.get("face_amount_mn") or 0)) >= 1:
             hit = False
             b = dict(b, name=f"{b.get('name')} (장부≠액면, 액면만 확인됨)")
-        if not hit:
+        if hit:
+            out.append(dict(b, as_of=as_of,
+                             source_file=f"{src_rel} (채무증권 발행실적: 미상환 확인, 금액 불변)"))
+        else:
+            out.append(b)
             unmatched.append(b.get("name"))
     if unmatched:
         report.setdefault(f"{tier_label}_confirm_partial", {})[code] = unmatched
-        return None, None
-    return as_of, xml_path.relative_to(ROOT).as_posix()
+    return out
+
+
+def confirm_tier_asof(code, fy25_bonds, report, tier_label, bs_mn, agg_keywords, orig_as_of):
+    """`confirm_bonds_still_outstanding` (채권별) 을 1차로 시도하고, 그래도 원래 as_of 그대로
+    남은 채권에는 `confirm_aggregate_unchanged` (BS 총액 불변) 을 2차로 적용한다.
+
+    2026-09-01: 채권별 확인을 도입하면서 처음엔 "1차가 뭐라도 돌려주면 2차(집계)는 안 본다"
+    로 짰다가 메리츠(KR0001) 에서 회귀를 냈다 — 신종자본증권 3건 중 1건만 채권별로 확인되고
+    나머지 2건은 (구식 전량-게이트 시절엔 집계-불변이 셋 다 구제했었는데) 채권별 경로가
+    "뭔가 돌려줬다"는 이유로 집계 폴백이 아예 스킵돼 2건이 부당하게 FY2025 에 눌러앉았다.
+    **1차가 놓친 채권에는 항상 2차를 마저 시도한다** — 둘 다 실패해야 진짜로 FY2025 유지.
+
+    반환: (bonds, n_confirmed) — bonds 는 fy25_bonds 와 같은 길이(채권마다 개별 as_of),
+    n_confirmed 는 이번 호출로 실제 시점이 갱신된 채권 수(회사 단위 카운터 집계용).
+    """
+    if not fy25_bonds:
+        return fy25_bonds, 0
+    bonds = confirm_bonds_still_outstanding(code, fy25_bonds, report, tier_label)
+    if bonds is None:
+        bonds = list(fy25_bonds)
+    stale = [b for b in bonds if b.get("as_of") == orig_as_of]
+    if stale:
+        xml_p, txt = load_h1_xml(code)
+        agg = None
+        if txt:
+            for kw in agg_keywords:
+                agg = confirm_aggregate_unchanged(txt, bs_mn, kw)
+                if agg:
+                    break
+        if agg:
+            src = f"{xml_p.relative_to(ROOT).as_posix()} (BS {tier_label} 총액 당반기말==전기말==FY2025)"
+            report.setdefault(f"{tier_label}_confirm_by_aggregate", []).append(code)
+            bonds = [dict(b, as_of=agg,
+                          source_file=f"{src} (채무증권 발행실적: 미상환 확인, 금액 불변)")
+                     if b.get("as_of") == orig_as_of else b
+                     for b in bonds]
+    n_confirmed = sum(1 for b in bonds if b.get("as_of") != orig_as_of)
+    return bonds, n_confirmed
 
 
 def merge_hybrid(code, fy25_hybrid_bonds, report):
@@ -666,9 +783,15 @@ def merge_hybrid(code, fy25_hybrid_bonds, report):
             })
     # an fy2025 bond already recorded at outstanding_mn==0 (i.e. already fully redeemed as of
     # 2025-12-31, e.g. KR0094's 2025-08-12 조기상환) has nothing to match in H1's per-bond
-    # table by construction (a zero-balance bond isn't listed) -- that's not a data-loss orphan;
-    # carry it forward unchanged (contributes 0 either way, preserves the historical record).
-    zero_bonds = [remaining_fy25[i] for i in range(len(remaining_fy25))
+    # table by construction (a zero-balance bond isn't listed) -- that's not a data-loss orphan.
+    # 2026-09-01: carry the NAME/amounts forward unchanged (still 0), but bump as_of to H1 --
+    # there's nothing to "confirm" for an already-zero bond (it contributes 0 regardless of
+    # timestamp), so leaving it stamped 2025-12-31 only drags the company-level as_of (a MIN
+    # over all bonds) down to stale for no real reason (KR0094: its ONLY hybrid bond is this
+    # kind, so the whole company looked stale despite full hybrid refresh underneath).
+    zero_bonds = [dict(remaining_fy25[i], as_of=H1_AS_OF,
+                        source_file=f"{src_rel} (H1 2026 기준 잔액 0 유지, 확인 불요)")
+                  for i in range(len(remaining_fy25))
                   if i not in used_fy25_idx and not remaining_fy25[i].get("outstanding_mn")]
     orphans = [remaining_fy25[i] for i in range(len(remaining_fy25))
                if i not in used_fy25_idx and remaining_fy25[i].get("outstanding_mn")]
@@ -818,24 +941,15 @@ def main():
                 notes_extra.append("HYBRID refresh attempted but left an unmatched FY2025 bond "
                                     "(orphan) -> kept FY2025 values for safety, see hybrid_orphans in report")
         else:
-            # 개별 주석이 없는 회사 — 값은 FY2025 그대로 두되, 표준 발행실적 표로 전량
-            # '여전히 미상환' 이 확인되면 시점만 갱신한다(숫자 변경 없음).
-            conf_as_of, conf_src = confirm_bonds_still_outstanding(code, fy25_hybrid, report, "hybrid")
-            if not conf_as_of:
-                xml_p, _txt = load_h1_xml(code)
-                agg = (confirm_aggregate_unchanged(_txt, c.get("bs_hybrid_mn"), "신종자본증권")
-                       if _txt else None)
-                if agg:
-                    conf_as_of = agg
-                    conf_src = f"{xml_p.relative_to(ROOT).as_posix()} (BS 신종자본증권 총액 당반기말==전기말==FY2025)"
-                    report.setdefault("hybrid_confirm_by_aggregate", []).append(code)
-            if conf_as_of:
-                fy25_hybrid = [dict(b, as_of=conf_as_of,
-                                    source_file=f"{conf_src} (채무증권 발행실적: 미상환 확인, 금액 불변)")
-                               for b in fy25_hybrid]
+            # 개별 주석이 없는 회사 — 값은 FY2025 그대로 두되, 채권별 확인(표준 발행실적 표)
+            # 또는 집계-불변(BS 총액) 으로 '여전히 미상환' 이 확인되는 채권만 시점을 갱신한다
+            # (숫자 변경 없음).
+            fy25_hybrid, n_now = confirm_tier_asof(code, fy25_hybrid, report, "hybrid",
+                                                    c.get("bs_hybrid_mn"), ("신종자본증권",), c["as_of"])
+            if n_now:
                 n_hybrid_confirmed += 1
-                notes_extra.append(f"HYBRID unchanged but confirmed still outstanding at {conf_as_of} "
-                                   f"via 채무증권 발행실적 ({len(fy25_hybrid)} bond(s))")
+                notes_extra.append(f"HYBRID: {n_now}/{len(fy25_hybrid)} bond(s) confirmed still "
+                                   f"outstanding (채권별 확인 또는 BS 총액 불변, 금액 불변/시점만 갱신)")
             new_bonds.extend(fy25_hybrid)
 
         if code in SUBORDINATED_REFRESH_CODES:
@@ -861,27 +975,16 @@ def main():
                 n_sub_detail += 1
                 notes_extra.append(f"SUBORDINATED refreshed from 상세표 to H1 2026, {len(det)} bond(s)")
                 fy25_sub = []
-            conf_as_of, conf_src = (confirm_bonds_still_outstanding(code, fy25_sub, report, "sub")
-                                    if fy25_sub else (None, None))
-            if fy25_sub and not conf_as_of:
-                xml_p, _txt = load_h1_xml(code)
-                agg = None
-                if _txt:
-                    for kw in ("후순위사채", "후순위채권", "후순위"):
-                        agg = confirm_aggregate_unchanged(_txt, c.get("bs_subordinated_mn"), kw)
-                        if agg:
-                            break
-                if agg:
-                    conf_as_of = agg
-                    conf_src = f"{xml_p.relative_to(ROOT).as_posix()} (BS 후순위 총액 당반기말==전기말==FY2025)"
-                    report.setdefault("sub_confirm_by_aggregate", []).append(code)
-            if conf_as_of:
-                fy25_sub = [dict(b, as_of=conf_as_of,
-                                 source_file=f"{conf_src} (채무증권 발행실적: 미상환 확인, 금액 불변)")
-                            for b in fy25_sub]
+            # 채권별 확인(표준 발행실적 표) 또는 집계-불변(BS 총액) 으로 '여전히 미상환' 이
+            # 확인되는 채권만 시점을 갱신한다(숫자 변경 없음). fy25_sub 가 이미 [] 이면(위
+            # redeem/상세표 경로가 전량 소비) 그대로 no-op.
+            fy25_sub, n_now = confirm_tier_asof(code, fy25_sub, report, "sub",
+                                                 c.get("bs_subordinated_mn"),
+                                                 ("후순위사채", "후순위채권", "후순위"), c["as_of"])
+            if n_now:
                 n_sub_confirmed += 1
-                notes_extra.append(f"SUBORDINATED unchanged but confirmed still outstanding at "
-                                   f"{conf_as_of} via 채무증권 발행실적 ({len(fy25_sub)} bond(s))")
+                notes_extra.append(f"SUBORDINATED: {n_now}/{len(fy25_sub)} bond(s) confirmed still "
+                                   f"outstanding (채권별 확인 또는 BS 총액 불변, 금액 불변/시점만 갱신)")
             new_bonds.extend(fy25_sub)
 
         # MIN (oldest), not max: a company is only as fresh as its STALEST bond -- e.g. hybrid
