@@ -122,7 +122,7 @@
   function buildAffilCombo() {
     var wrap = el("div", { class: "iq-combo" });
     var input = el("input", {
-      class: "iq-input", id: "iqdl-affil", placeholder: "보험사명을 입력하세요 (예: 코리안리)", autocomplete: "off",
+      class: "iq-input", id: "iqdl-affil", placeholder: "회사명을 입력하세요 (예: 코리안리)", autocomplete: "off",
       role: "combobox", "aria-expanded": "false", "aria-autocomplete": "list"
     });
     var list = el("div", { class: "iq-combo-list", role: "listbox" });
@@ -244,30 +244,66 @@
     var affilInput = affilCombo.input;
     // 익명은 다른 선택지와 동등한 정상 옵션 — 확인 절차 없음(오케스트레이터 결정, 2026-08-28:
     // 마찰을 주면 사람들이 진짜 소속을 숨기는 대신 아무 회사나 골라버려 통계가 더 나빠진다).
+    // 그 결정은 유지한다. 2026-09-01(owner)에 바꾼 것은 **마찰이 아니라 위계**다.
+    //
+    // 종전 체크박스 하나가 성격이 다른 둘을 합쳐놨다 —
+    //   "회사명은 비공개로 할게요 / 보험사 소속이 아니에요"
+    //         ↑ 숨기고 싶다            ↑ 해당이 없다
+    // 증권·컨설팅·학계 이용자는 숨기고 싶은 게 아니라 목록에 자기가 없어서 이걸 눌렀다.
+    // SECTORS 에 이미 그 업권들이 다 있는데도 비보험 이용자를 전부 "익명" 으로 몰아넣던
+    // 셈이라 옵트아웃 비율이 높을 수밖에 없었다. 둘로 가르면 비보험 이용자는 회사명을
+    // 그대로 남길 수 있고("보험업계가 아니에요" 는 숨김이 아니다), 집계도 익명 덩어리가
+    // 아니라 업권별로 갈린다.
+    var nonInsCb = el("input", { type: "checkbox", id: "iqdl-noninsurance" });
+    var nonInsLabel = el("label", { class: "iq-check-row", for: "iqdl-noninsurance", style: "margin-top:8px" },
+      [nonInsCb, document.createTextNode("보험업계가 아니에요 "),
+       el("span", { class: "iq-hint", text: "(회사명은 그대로 남겨주세요)" })]);
     var anonCb = el("input", { type: "checkbox", id: "iqdl-anon" });
-    var anonLabel = el("label", { class: "iq-check-row", for: "iqdl-anon", style: "margin-top:6px" }, [anonCb, document.createTextNode("회사명은 비공개로 할게요 / 보험사 소속이 아니에요")]);
+    // 옵트아웃은 정상 선택지로 남기되 시각 위계를 낮춘다(owner 2026-09-01). 막지 않는다.
+    var anonLabel = el("label", { class: "iq-check-row", for: "iqdl-anon", style: "margin-top:4px;opacity:.62;font-size:12px" },
+      [anonCb, document.createTextNode("회사명은 밝히지 않을게요")]);
     var deptSel = optionSelect("iqdl-dept", DEPARTMENTS);
     var sectorSel = optionSelect("iqdl-sector", SECTORS);
     // 업권은 비공개(익명) 체크했을 때만 필수라, 그 전까진 숨겨서 "이게 왜 있지" 헷갈림을 없앤다.
     var sectorField = el("div", { class: "iq-field" }, [el("label", { text: "업권 " }, [el("span", { class: "iq-hint", text: "(필수)" })]), sectorSel]);
     sectorField.style.display = "none";
 
-    anonCb.addEventListener("change", function () {
+    function syncAffilState() {
+      // 업권은 "보험업계 아님" 이거나 "회사명 비공개" 일 때 필수 — 그 전까진 숨긴다.
+      sectorField.style.display = (anonCb.checked || nonInsCb.checked) ? "" : "none";
+      // 회사명 입력을 막는 것은 **비공개를 택했을 때뿐**이다. 보험업계가 아니어도 회사명은
+      // 받는다(그게 이 분리의 요점이다).
       affilInput.disabled = anonCb.checked;
       if (anonCb.checked) { affilInput.value = ""; affilCombo.close(); }
-      sectorField.style.display = anonCb.checked ? "" : "none";
+      affilInput.placeholder = nonInsCb.checked
+        ? "회사·기관명을 입력하세요 (예: 삼정KPMG, 서울대학교)"
+        : "회사명을 입력하세요 (예: 코리안리)";
+    }
+    anonCb.addEventListener("change", function () {
+      if (anonCb.checked) { nonInsCb.checked = false; }   // 비공개가 이기게 — 이름을 안 받으므로
+      syncAffilState();
+    });
+    nonInsCb.addEventListener("change", function () {
+      if (nonInsCb.checked) { anonCb.checked = false; }
+      syncAffilState();
     });
 
     var sheetGrid = sheetChecklist();
     var purposeSelect = el("select", { class: "iq-select", id: "iqdl-purpose" },
       [el("option", { value: "", text: "선택 안 함" })].concat(PURPOSES.map(function (p) { return el("option", { value: p, text: p }); })));
     var consentCb = el("input", { type: "checkbox", id: "iqdl-consent" });
-    var errorMsg = el("div", { class: "iq-form-error", id: "iqdl-error", text: "보험사명 또는 비공개 체크, 시트 1개 이상, 안내사항 확인이 필요합니다(비공개 선택 시 업권도 알려주세요)." });
+    var errorMsg = el("div", { class: "iq-form-error", id: "iqdl-error", text: "회사명(또는 비공개 체크), 시트 1개 이상, 안내사항 확인이 필요합니다. 보험업계가 아니거나 비공개를 택하셨다면 업권도 알려주세요." });
     var submitBtn = el("button", { class: "iq-btn", type: "submit", text: "다운로드" });
     var honeypot = el("input", { type: "text", name: "website", tabindex: "-1", autocomplete: "off", style: "position:absolute;left:-9999px;width:1px;height:1px;opacity:0" });
 
     var scrollWrap = el("div", { class: "iq-modal-scroll" }, [
-      el("div", { class: "iq-field" }, [el("label", { text: "보험사명" }), affilCombo.wrap, anonLabel]),
+      el("div", { class: "iq-field" }, [
+        el("label", { text: "회사명 " }, [el("span", { class: "iq-hint", text: "(목록에 없어도 자유롭게 입력하세요)" })]),
+        affilCombo.wrap,
+        // ③ 왜 받는지 한 줄 — 옵트아웃의 실제 동력은 프라이버시 불안이다.
+        el("div", { class: "iq-hint", style: "margin-top:6px;line-height:1.5" },
+          [document.createTextNode("어느 업계에서 많이 보시는지만 집계합니다. 이름·연락처는 받지 않습니다.")]),
+        nonInsLabel, anonLabel]),
       el("div", { class: "iq-field" }, [el("label", { text: "부서 " }, [el("span", { class: "iq-hint", text: "(선택)" })]), deptSel]),
       sectorField,
       el("div", { class: "iq-field" }, [el("label", { text: "다운로드할 데이터 " }, [el("span", { class: "iq-hint", text: "(중복 선택 가능)" })]), sheetGrid]),
@@ -290,9 +326,31 @@
       el("p", { class: "small-muted", style: "margin-top:0" }, [document.createTextNode("데이터 품질 향상을 위해 여러분의 소중한 협조를 부탁드립니다. 아래 몇 가지만 남겨주시면 바로 다운로드가 시작됩니다.")]),
       form
     ]);
+    // ⑤ 재방문이면 지난번 입력을 채워둔다(owner 2026-09-01). 매번 처음부터 치게 하면
+    // 그 귀찮음이 옵트아웃으로 샌다. 값은 이 브라우저의 localStorage 에만 있고 서버로
+    // 미리 보내지 않는다 — 사용자가 그대로 두면 그때 제출된다.
+    try {
+      var prevAffil = localStorage.getItem(AFFIL_KEY) || "";
+      var prevSector = localStorage.getItem(SECTOR_KEY) || "";
+      var prevDept = localStorage.getItem(DEPT_KEY) || "";
+      if (prevAffil && prevAffil !== "익명") {
+        affilInput.value = prevAffil;
+        // 보험사 목록에 없던 이름이었다면 지난번에 "보험업계 아님" 을 택한 것이다.
+        if (prevSector && prevSector !== "보험사" && prevSector !== "재보험사") {
+          nonInsCb.checked = true;
+        }
+      } else if (prevAffil === "익명") {
+        anonCb.checked = true;
+      }
+      if (prevSector) sectorSel.value = prevSector;
+      if (prevDept) deptSel.value = prevDept;
+      syncAffilState();
+    } catch (e0) { /* private mode — 프리필 없이 진행 */ }
+
     backdrop.appendChild(panel);
     backdrop.style.display = "flex";
     affilInput.focus();
+    if (affilInput.value) affilInput.select();   // 프리필이면 바로 덮어쓸 수 있게
 
     if (!window.IQ_FORMS.isConfigured()) {
       submitBtn.disabled = true;
@@ -307,9 +365,12 @@
       if (!window.IQ_FORMS.isConfigured()) return;
       if (honeypot.value) return; // bot
       var isAnon = anonCb.checked;
+      var isNonIns = nonInsCb.checked;
       var affilVal = isAnon ? "익명" : affilInput.value.trim();
       var sheets = selectedSheets(sheetGrid);
-      var ok = (affilVal !== "") && sheets.length > 0 && consentCb.checked && (!isAnon || sectorSel.value !== "");
+      // 업권은 둘 중 하나라도 켜지면 필수(보험사면 자명하므로 안 묻는다).
+      var needSector = isAnon || isNonIns;
+      var ok = (affilVal !== "") && sheets.length > 0 && consentCb.checked && (!needSector || sectorSel.value !== "");
       if (!ok) { errorMsg.classList.add("show"); return; }
       errorMsg.classList.remove("show");
       submitBtn.disabled = true;
