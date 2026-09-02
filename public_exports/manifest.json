@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-01T13:34:31Z",
+  "generated_at_utc": "2026-09-02T00:58:57Z",
   "sheets": {
     "17BS": {
       "rows": 6993,
@@ -32,9 +32,9 @@
       "quarter_max": "2025.4Q"
     },
     "신계약CSM배수": {
-      "rows": 331,
+      "rows": 362,
       "quarter_min": "2023.1Q",
-      "quarter_max": "2026.1Q"
+      "quarter_max": "2026.2Q"
     },
     "손익분해PL": {
       "rows": 11866,
