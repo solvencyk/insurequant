@@ -3,12 +3,12 @@
  "_contract": "입력 불변 ∧ 코드 불변 ∧ 산출 불변 ⟹ 지금 다시 빌드해도 같은 바이트. 하나라도 어긋나면 전체 골든을 돌려 확인한 뒤 --update 한다. 지문은 무거운 골든의 대체가 아니라 층이다.",
  "specs": {
   "ifrs17_bs": {
-   "inputs_sha256": "57deb5a8ec8cca7de2a53e951e643d378b3c087bd612ed8168d0cf950409d5e8",
-   "input_files": 1585,
-   "input_bytes": 2009639926,
+   "inputs_sha256": "c7fdfea916605d82a7a70bf550a16fefced48927411115491649b71afdb1263e",
+   "input_files": 1588,
+   "input_bytes": 2011769685,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
-    "data/dart/FY*_Q*/raw/**/*.xml": 542,
+    "data/dart/FY*_Q*/raw/**/*.xml": 545,
     "kics_disclosure.json": 1,
     "data/dart/viz/bs_manual_overrides.json": 1,
     "data/ifrs17/table_scoring_keywords.yaml": 1
@@ -34,12 +34,12 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "e8625f89f74fcc1215ab80817ce26f03c737db559eb1cb5a80592b8b19f657e3",
+   "fixture_sha256": "d3bdf6bbf9077c378a5d11e0d956357dd4559146b9cd6cb2437f51599d58c791",
    "outputs": {
     "sha256": {
      "path": "IFRS17_BS.json",
-     "fixture_sha256": "01f6dfadb34577438c5859653d3cbfa3e3e0fbc61fbecc91194467a8500516bc",
-     "ondisk_sha256": "01f6dfadb34577438c5859653d3cbfa3e3e0fbc61fbecc91194467a8500516bc"
+     "fixture_sha256": "146d0fc2a019ed7f5933927789726e562b52325884ddf161bb8d697152134b0c",
+     "ondisk_sha256": "146d0fc2a019ed7f5933927789726e562b52325884ddf161bb8d697152134b0c"
     }
    },
    "_golden": "tests/test_ifrs17_bs_golden.py",
@@ -54,12 +54,12 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_ifrs17_bs.py"
   },
   "pl_breakdown": {
-   "inputs_sha256": "c68936fb42e9205c04c8d1c8931290ca4cf499f2d10dac0e90150a1ee8cd017a",
-   "input_files": 1584,
-   "input_bytes": 2009523035,
+   "inputs_sha256": "1d4109494f3642c1af7757c2f3cb08bef08ccdea16242ffa9305e46a7aeb379f",
+   "input_files": 1587,
+   "input_bytes": 2011641380,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
-    "data/dart/FY*_Q*/raw/**/*.xml": 542,
+    "data/dart/FY*_Q*/raw/**/*.xml": 545,
     "data/ifrs17/table_scoring_keywords.yaml": 1,
     "kics_disclosure.json": 1
    },
@@ -80,17 +80,17 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "6b6c0fa1096be9c90c55e6e034c9c8af5071aa7b94fd4d980dc118ae9cf3cd82",
+   "fixture_sha256": "9a68947f88dbf68425ecd10a192f578a01cbc375db10c0473227800fd67cf24e",
    "outputs": {
     "sha256_master": {
      "path": "data/dart/viz/pl_breakdown_master.json",
-     "fixture_sha256": "aa6bbde3cd47c169264b81254f94bad1e7e53dd3ab26949f0d3f84367875c57d",
-     "ondisk_sha256": "aa6bbde3cd47c169264b81254f94bad1e7e53dd3ab26949f0d3f84367875c57d"
+     "fixture_sha256": "95ead99a84588d9931ef85ad5f71d84bbc9d69113d4d4e1b43aadee8e999fc19",
+     "ondisk_sha256": "95ead99a84588d9931ef85ad5f71d84bbc9d69113d4d4e1b43aadee8e999fc19"
     },
     "sha256_coverage": {
      "path": "data/_derived/pl_breakdown_coverage.json",
-     "fixture_sha256": "4ad45bf2baee5ef5b28771ecaef0daf3e04346c41976fcff5f1f3737b223d04c",
-     "ondisk_sha256": "4ad45bf2baee5ef5b28771ecaef0daf3e04346c41976fcff5f1f3737b223d04c"
+     "fixture_sha256": "a019ba963d4e50e9a19405e6790b5480b1cb36fd775c01c495edd3fe4b21e436",
+     "ondisk_sha256": "a019ba963d4e50e9a19405e6790b5480b1cb36fd775c01c495edd3fe4b21e436"
     }
    },
    "_golden": "tests/test_pl_breakdown_golden.py",
