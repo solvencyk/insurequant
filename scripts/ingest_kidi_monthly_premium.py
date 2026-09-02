@@ -14,8 +14,8 @@ Top row (LINE=47 for ML01, LINE=99111 for MN07):
 User decisions (2026-05-30):
   - Excluded: 일시납 (저축성 일시납 mostly; not NB CSM source).
   - Included: 월납 초회 + 기타 초회.
-  - Cardinality: 28-co (23 listed + 5 foreign-affiliate). 2023.1Q ~ 2026.1Q quarter-ends
-    (KIDI updates 2026.1Q in April 2026; missing periods are honest gaps).
+  - Cardinality: 28-co (23 listed + 5 foreign-affiliate). 2023.1Q ~ 2026.2Q quarter-ends
+    (KIDI updates each quarter ~3 months after quarter-end; missing periods are honest gaps).
 
 Output:
   data/kidi/FY<year>_Q<q>/raw/<KR>_<YYYYMM>.json  -- raw response per (insurer, period)
@@ -90,12 +90,12 @@ MAPPING: dict[str, tuple[str, str]] = {
     "KR1059": ("N76", "MN07"),   # 캐롯손해보험
 }
 
-# Default quarter-ends to ingest (2023.1Q ~ 2026.1Q).
+# Default quarter-ends to ingest (2023.1Q ~ 2026.2Q).
 DEFAULT_PERIODS = [
     "202303", "202306", "202309", "202312",
     "202403", "202406", "202409", "202412",
     "202503", "202506", "202509", "202512",
-    "202603",
+    "202603", "202606",
 ]
 
 

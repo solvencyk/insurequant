@@ -1,7 +1,47 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-09-01 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-09-02 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-09-02 — KIDI 2026.2Q(202606) 월납환산 신계약보험료 반영 + 신계약CSM배수 갱신
+
+owner: "KIDI 2026.6월(202606) 월납환산 신계약보험료 통계가 새로 게시됐다, 신계약CSM배수
+갱신 + push 준비."
+
+게시 여부부터 확인(과거 함정 — 미게시월은 0-스켈레톤으로 와서 실값처럼 보인다):
+`scripts/ingest_kidi_monthly_premium.py`의 `get{ML01,MN07}LastYM` 조회가
+`{'ML01': '202606', 'MN07': '202606'}`을 반환 — 생보·손보 두 테이블 다 실제 게시 확인 후
+진행. `--periods 202606`(39사×1분기=39 fetch, 에러 0) → `data/kidi/premium_summary.json`
+(gitignore) 507→546 entries. `DEFAULT_PERIODS`에 `"202606"` 추가.
+
+`scripts/build_nb_csm_multiple.py` 재실행(독립 스코프 빌더, `build_root_masters.py`와 무관해
+안전) → `NB_CSM_multiple.json` 331→**362행**(0 삭제). +23행은 2026.2Q 신규(CSM_waterfall.json
+항목2 가 있는 23개사 전원, KIDI 매칭 37/37=100%, 배수_당분기 8.9~20.5x 정상범위, flags 0건).
++8행은 과거분기 백로그(KR0074/KR0080×3/KR0095/KR0097×2/KR0100 2023~2025년 4Q) — CSM 값은
+무변, premium_summary.json 이 이제 그 분기들 KIDI 데이터를 갖고 있어 월납 조인만 처음
+성사된 것. 연속성 점검 23개사 중 22개사 완만, 농협생명보험만 11.2→20.5x(분자·분모 둘 다
+raw 재계산 일치, 2025년에도 3.9~13.5x 진폭 전력 있어 범위 내로 판단). 예별손해보험 2024~
+2025년 일부 분기의 기존 월납=0 패턴은 이번 세션과 무관한 과거 적재분이라 미수정(범위 밖,
+raw 상 "미게시"는 아님 — 해당 분기만 축약 응답).
+
+`sync_master_xlsx_sheet.py "신계약CSM배수"`: 변경 16·추가 35·삭제 4(net 331→362), 검증 OK.
+
+`data/_gold/live_artifact_baseline.json` 정리: `validate_live_artifacts.py`가
+`NB_CSM_multiple.json|NB_CENSUS_MISSING` 31건을 BASELINE STALE로 보고(위 +23+8 과 1:1 일치).
+전체 `--emit-baseline` 대신 그 31건만 지우는 1회성 스크립트(`scripts/_probes/
+probe_20260902_clean_nb_census_missing_baseline.py`)로 처리 — 공유 baseline 파일이라
+kics 레인 등재분까지 휩쓸릴 위험을 피함(diff로 제거 31건=NB_CSM_multiple.json 뿐, 추가 0·
+변경 0 확인). 재검증: STALE_BASELINE 31→0, RED=0 불변.
+
+게이트: `validate_data_contract.py` RED=0 YELLOW=96 exit=0 · `validate_nb_csm_multiple.py`
+tested=5 pass=5 fail=0 exit=0 · `validate_live_artifacts.py` RED=0 exit=0 ·
+`validate_master_tables.py --no-build` exit=2 이나 이 작업과 무관 확인(소스에 NB_CSM/kidi
+참조 0건, CSM_waterfall.json/PL_breakdown.json 이번 세션 무변경 — `git status` 로 재확인;
+exit=2 를 만드는 내역은 전부 사전 존재하는 pl_bridge baseline 35건 + spike 1건 + 하나생명
+2024.4Q cont 1건이며 후자는 데이터계약 게이트에 이미 같은 근거로 등재된 것과 동일 건).
+`scripts/prepush_check.py` 결과는 `TODO_parser_ifrs17.md` 2026-09-02 (83rd pass) 참조.
+
+상세: `TODO_parser_ifrs17.md` 2026-09-02 (83rd pass).
 
 ## 2026-09-01 — sensitivity_heatmap STALE_AS_OF RED 31건: 게이트 기준정책 수정 (데이터 무변경)
 

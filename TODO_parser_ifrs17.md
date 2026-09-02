@@ -1,5 +1,104 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
+> **2026-09-02 (83rd pass) — KIDI 2026.2Q(202606) 월납환산 신계약보험료 반영, 신계약CSM배수
+> 202606 신규 23사 + 백로그 8칸 채움, live-artifact baseline stale 31건 정리.**
+>
+> 발주: owner "KIDI 2026.6월(202606) 통계 새로 게시됐다, 신계약CSM배수 갱신+push 준비".
+>
+> **1) 게시 여부 먼저 확인**(memory `reference_kidi_premium_summary_gap` 함정 — 미게시월은
+> 0-스켈레톤으로 와서 실값처럼 보인다). `scripts/ingest_kidi_monthly_premium.py`가 이미
+> `get{ML01,MN07}LastYM`으로 이 판정을 자동화해 두고 있어, 그 응답을 그대로 신뢰:
+> `[ingest] KIDI latest published: {'ML01': '202606', 'MN07': '202606'}` — 생보·손보 두
+> 테이블 다 202606 이 실제 최신 게시월. **정본 스크립트 재확인**: `crawl_kidi_{longterm,life}_
+> premium.py` 2종은 `data/_derived/kidi_{longterm,life}_premium.json`으로 나가는 초기
+> reverse-engineering 스크립트이고, `ingest_kidi_monthly_premium.py`(ML01+MN07 통합, 병합
+> 기반 쓰기)가 `data/kidi/premium_summary.json`(=NB_CSM_multiple 의 실제 입력)을 만드는
+> 현행 정본 — 이걸로 진행.
+>
+> **2) fetch**: `--periods 202606` (39사 × 1분기 = 39 fetch, **에러 0**). `data/kidi/
+> premium_summary.json`(gitignore) 507→546 entries, insurer_count=39·period_count=13→14·
+> ok_count=546·error_count=0. `scripts/ingest_kidi_monthly_premium.py`의 `DEFAULT_PERIODS`에
+> `"202606"` 추가(다음 무인자 재실행도 이 분기를 포함하도록) — docstring 날짜 범위도
+> 2026.1Q→2026.2Q 로 갱신.
+>
+> **3) CSM_waterfall.json 선행 확인**: 202606 신계약CSM(항목번호2) 이 이미 23개사 파싱돼
+> 있음(다른 세션 완료, 이번 세션 미수정) — `build_nb_csm_multiple.py` 의존성 충족 확인 후 진행.
+>
+> **4) `build_nb_csm_multiple.py` 재실행**(전체 재작성이지만 `build_root_masters.py` 와
+> 무관한 독립 스코프 빌더 — CSM_waterfall.json 항목2 + premium_summary.json 만 읽어
+> NB_CSM_multiple.json 만 쓴다, 안전): 331→**362행**(0 삭제, 기존 331행 전부 보존).
+> before/after 키 단위 diff(`(원보험사코드,공시분기)`)로 검증 — 재현:
+> `scripts/_probes/diff_nb_csm.py` 패턴(스크래치패드, 커밋 안 함).
+>   - **+23행 = 2026.2Q 신규**(CSM item2 가 있는 23개사 전원, KIDI 매칭 37/37=100%). 전부
+>     CSM_당분기·월납_당분기 양수, 배수_당분기 8.9~20.5x(기존 정상범위 "≈5-22" 안), flags 0건.
+>   - **+8행 = 과거분기 백로그**(KR0074 2023.4Q · KR0080 2023.4Q/2024.4Q/2025.4Q · KR0095
+>     2023.4Q · KR0097 2023.4Q/2025.4Q · KR0100 2023.4Q) — CSM 값은 무변(다른 세션이 이미
+>     넣어 둔 값), 이번에 처음으로 premium_summary.json 이 그 분기들 KIDI 데이터를 갖고 있어
+>     월납 조인이 성사됐을 뿐(과거 세션이 "KIDI 파일이 디스크에 없어 월납=null 로 남긴다"고
+>     명시했던 자리, `TODO_parser_ifrs17.md` 2026-07-30 2차 항목). KR0004·KR0049·KR0050·
+>     KR0076·KR1010·KR1011 기존 6행도 같은 이유로 월납 필드만 None→실값 채워짐(CSM 값 무변,
+>     4건은 difflib 위치상 delete+insert 로 잡혔으나 키 동일 — replace 가 아니라 정렬 재배치).
+>   - **연속성 점검**: 2026.1Q→2026.2Q 배수_당분기 23개사 중 22개사는 완만(|Δ|≤3), **농협생명
+>     보험만 11.2→20.5**(Δ+9.3) — raw 로 분해: CSM_당분기 는 오히려 3597.5→2421.3(-33%) 로
+>     줄었는데 월납_당분기 가 321.1→117.8(-63%) 로 더 급격히 줄어 배수가 오른 것(분자·분모
+>     모두 202606 raw cheonwon 값과 소수 4자리까지 재계산 일치 확인). 이 회사는 2025년에도
+>     당분기 배수가 3.9~13.5 로 이미 3.4배 진폭을 보였던 전력이 있어 이번 1.8배 진폭은 그
+>     범위 안(계절적 Q1 집중 판매 패턴, 매년 반복).
+>   - **확인만 하고 미수정(범위 밖)**: 예별손해보험(KR0004) 2024.4Q/2025.3Q/2025.4Q 는
+>     KIDI 원본 자체가 row_count=5·월납=0 인 축약 응답(202412/202509/202512) — 8/31 이전
+>     세션이 이미 적재해 둔 과거 분기라 이번 202606 작업과 무관, raw 재확인 결과 "미게시"가
+>     아니라(같은 회사 202603/202606 은 정상 36행) 이 distressed 사가 해당 분기 신규판매를
+>     쉬었을 가능성이 높음(같은 회사 KICS 자본잠식 이력, memory `MG/예별 KICS history`) —
+>     추측 확정은 금지 원칙상 다음 세션 근거 있을 때 재조사, 화면상 배수는 이미 null 로 안전.
+>
+> **5) xlsx 동기화** `sync_master_xlsx_sheet.py "신계약CSM배수"`: 변경 셀 16 · 추가 행 35 ·
+> 삭제 행 4(net 331→362) — **검증 OK, 나머지 시트 값 동일**, 요약 행수 331→362 보정. 전체
+> 재생성 안 함(`build_master_xlsx.py` 미실행).
+>
+> **6) `data/_gold/live_artifact_baseline.json` 정리**: `validate_live_artifacts.py` 가
+> `NB_CSM_multiple.json|NB_CENSUS_MISSING` 31건을 BASELINE STALE(등재됐는데 더는 안 실패)로
+> 보고 — 정확히 위 4)의 +23(2026.2Q)+8(백로그) 키와 1:1 일치. "고쳐졌으면 줄을 지워라"는
+> 스크립트 자신의 안내에 따라 **전체 `--emit-baseline` 대신** 그 31개 키만 골라 지우는 1회성
+> 스크립트(`scripts/_probes/probe_20260902_clean_nb_census_missing_baseline.py`, 커밋)로
+> 처리 — kics 레인이 같은 시간에 건드릴 수 있는 `kics_tier{1,2}_utilization` 등재분까지
+> 전체 재박제로 휩쓸리는 걸 피하기 위해서다(공유 파일이라 memory `project_master_json_lost_
+> update` 급 위험, 실제로는 이 baseline 에 kics tier1/2 등재분 자체가 현재 0건이었음을 diff
+> 로 확인). before/after 전수 diff: **제거 31건 = artifact 전부 NB_CSM_multiple.json, 추가
+> 0 · 변경 0 · `_what`/`_emitted`/`_promote` 불변**, `_counts`에서 해당 룰 카운트만 삭제.
+> 재실행 확인: `validate_live_artifacts.py` RED=0 YELLOW(baselined)=17(불변)
+> **STALE_BASELINE 31→0**.
+>
+> **게이트**: `validate_data_contract.py` RED=0 YELLOW=96 exit=0 ·
+> `validate_nb_csm_multiple.py` tested=5 pass=5 fail=0 exit=0(현대해상 fallback 주석 1건은
+> 기존·무관) · `validate_live_artifacts.py` RED=0 exit=0(정리 전후 둘 다) ·
+> `validate_master_tables.py --no-build` exit=2 이지만 **이 작업과 무관 확인** — 소스를 읽어
+> `NB_CSM`/`kidi`/`premium_summary` 참조 0건 확인(오직 `CSM_waterfall.json`·
+> `PL_breakdown.json`만 읽음), `git status` 로 그 두 파일이 이번 세션 내내 무변경임을 재확인.
+> exit=2 를 만드는 내역(pl_bridge 35건 = 전부 baseline 등재·신규 0 / spike 1건 케이디비생명
+> 2024.1Q→2Q / cont 1건 하나생명보험 2024.4Q)은 전부 사전 존재하며, cont 1건은
+> `validate_data_contract.py`의 `CSM_CONTINUITY_FY_BOUNDARY_EXCEPTED` 등재부에 이미 같은
+> 건이 사유와 함께 RED=0 으로 반영돼 있는 건과 동일(재작성 근거 raw 인용 포함). ·
+> `validate_master_tables.py --no-build`·`validate_data_contract.py` 는 owner 재확인 요청으로
+> baseline 정리 이후 **재실행**(둘 다 앞의 수치와 완전 동일, 안정적임을 확인) ·
+> `scripts/prepush_check.py` baseline 정리 **이후** 신선 재실행(11분 짜리라 이전 1회는
+> 정리 전 상태로 stale, 최종본만 신뢰): `349 passed, 1 skipped, 1 warning in 1011.67s
+> (0:16:51)` → `PRE-PUSH VERDICT: gate RED=0 · K-ICS rule gate=clear · domain gates=pass ·
+> DART raw 유실=0 · 골든 입력지문=pass · inbox 기계적위반=0 · offline tests=pass →
+> gate-clear`(exit=0).
+>
+> **파일**: `NB_CSM_multiple.json`(331→362행) · `insurequant_master_tables.xlsx`
+> ("신계약CSM배수" 시트만) · `scripts/ingest_kidi_monthly_premium.py`(DEFAULT_PERIODS
+> +202606) · `data/_gold/live_artifact_baseline.json`(31건 삭제) ·
+> `data/_derived/nb_csm_validation.json`(검증기 재실행 sidecar) ·
+> `scripts/_probes/probe_20260902_clean_nb_census_missing_baseline.py`(신규, 재현용) ·
+> **커밋 안 됨(gitignore)**: `data/kidi/premium_summary.json`·`data/kidi/FY2026_Q2/raw/
+> KR*_202606.json`(39개).
+>
+> **건드리지 않음**: `CSM_waterfall.json`·`PL_breakdown.json`·`IFRS17_BS.json`(K-ICS 레인
+> 병행 세션과 무관하게 미접촉) · `kics_disclosure.json` 등 K-ICS 레인 파일(미접촉) ·
+> `build_root_masters.py`(미실행) · `crawl_kidi_{longterm,life}_premium.py`/
+> `crawl_assoc_nb_premium.py`(구경로, 미실행).
+
 > **2026-09-01 (82nd pass) — 보험손익 원표 패널이 신규 3사(하나손해·아이엠라이프·카카오페이손보)를
 > 몰랐던 문제 해소 + 당기/전기 오선택 버그 발견·수정. 패널 회사수 29→32, RED=0.**
 >
