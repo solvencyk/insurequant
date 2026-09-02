@@ -165,7 +165,7 @@
     </div>
     <div class="panel" style="margin-top:16px">
       <div class="section-title">IFRS17 — CSM Bubble Map</div>
-      <p class="section-desc">X: 신계약 CSM 규모 (CSM_waterfall 기준, 회사별 최신 공시 — 2026.1Q·2026.2Q 혼재) · Y: NB CSM 배수 (2026.1Q 연누계 고정 — 배수 분모인 월납초회보험료가 2026.1Q까지만 수집됨) · 크기: 기말 CSM 잔액 (회사별 최신 공시 — 2026.1Q·2026.2Q 혼재) · 회색(*)=연1회 공시사 추정치(직전 마감연도 연누계 ÷2, 배수는 이월)</p>
+      <p class="section-desc" id="bubble-desc">X: 신계약 CSM 규모 · Y: NB CSM 배수 · 크기: 기말 CSM 잔액 · 회색(*)=연1회 공시사 추정치(직전 마감연도 연누계 ÷2, 배수는 이월)</p>
       <div class="controls" style="margin-bottom:10px">
         <label>업권:
           <select id="bubble-sector" class="select">
@@ -964,6 +964,25 @@
       return Math.max(10, Math.min(72, 10 + t * 62));
     }
 
+    // 캡션의 분기 표기는 데이터에서 도출한다 — 정적 리터럴로 두면 분기마다 stale 해진다
+    // (2026-09-02 실사고: NB_TARGET_Q 를 2026.2Q 로 올렸는데 이 문구만 "2026.1Q 고정 · 월납초회
+    // 보험료가 2026.1Q까지만 수집됨" 으로 남아 owner 가 라이브에서 발견). 모바일도 같은 캡션을
+    // 쓰므로 renderBubble(데스크톱 전용, 모바일에서 early-return) 이 아니라 여기서 갱신한다.
+    function renderBubbleDesc() {
+      const el = document.getElementById('bubble-desc');
+      if (!el || !bubbleRows) return;
+      const rows = bubbleRows.filter(r => Number.isFinite(r.nbCsm) && r.nbCsm > 0 && Number.isFinite(r.multiple));
+      const maxXQ = qlabel(Math.max(0, ...rows.map(r => qkey(r.srcQ)))) || NB_TARGET_Q;
+      const maxClosingQ = qlabel(Math.max(0, ...rows.map(r => r.closingK || 0))) || NB_TARGET_Q;
+      const xQs = [...new Set(rows.map(r => r.srcQ).filter(Boolean))].sort();
+      const cQs = [...new Set(rows.map(r => qlabel(r.closingK)).filter(Boolean))].sort();
+      const span = (qs, maxQ) => qs.length > 1 ? `회사별 최신 공시 — ${qs[qs.length - 2]}·${maxQ} 혼재` : `${maxQ}`;
+      el.textContent = `X: 신계약 CSM 규모 (CSM_waterfall 기준, ${span(xQs, maxXQ)}) · `
+        + `Y: NB CSM 배수 (${NB_TARGET_Q} 연누계 고정 — 배수 분모인 월납초회보험료 수집분 기준) · `
+        + `크기: 기말 CSM 잔액 (${span(cQs, maxClosingQ)}) · `
+        + `회색(*)=연1회 공시사 추정치(직전 마감연도 연누계 ÷2, 배수는 이월)`;
+    }
+
     function renderBubble(sectorFilter) {
       const el = document.getElementById('csm-bubble-chart');
       const metaEl = document.getElementById('bubble-meta');
@@ -1099,7 +1118,7 @@
     function qkey(q){ const m=/^(\d{4})\.(\d)Q$/.exec(String(q)); return m ? (+m[1])*10 + (+m[2]) : 0; }
 
     // 진짜 마스터: 루트 NB_CSM_multiple.json (코드·분기·신계약CSM_연누계·배수_연누계). CSM워터폴(기말)과 코드로 조인.
-    // 연1회(회기) 공시사는 2026.1Q 행이 없음(inbox 20260730T0035Z):
+    // 연1회(회기) 공시사는 기준분기(NB_TARGET_Q) 행이 없음(inbox 20260730T0035Z):
     //   Group A(배수 carry 가능) — 같은 code의 직전 회기 값을 fallback으로 채택, nbCsm만 ÷4 추정(배수는 스케일 불변이라 이월).
     //   Group B(배수 구조적 부재: 재보험/연금 월납초회보험료 0, 단위오류 검증대기) — multiple=null인 채로 census에 남겨 보조표(전 35사)에서만 노출, 버블에는 안 나감.
     function buildBubbleData(nbRows, wfRows) {
@@ -1222,7 +1241,7 @@
     }
 
     // M3: mobile list mirror of the bubble map (CSS @media <=640px에서만 표시).
-    // 데스크톱과 달리 2026.1Q 고정 아님 — 배수가 있는 회사별 최신 분기 사용, 기준분기 미충족이면 칩 표기.
+    // 데스크톱과 달리 NB_TARGET_Q 고정 아님 — 배수가 있는 회사별 최신 분기 사용, 기준분기 미충족이면 칩 표기.
     // 정렬: 그룹(생보→손보) 내 **기말 CSM 잔액 desc** · 막대 ∝ **NB CSM 배수** · 값 = NB 배수.
     // owner 2026-08-30: 막대가 기말 잔액에 비례하던 것을 배수로 바꿨다 — 숫자(배수)와 막대가
     // 서로 다른 것을 가리키면 한 줄 안에서 눈이 두 축을 오간다. 정렬만 잔액 기준으로 남긴다
@@ -1289,7 +1308,7 @@
           nm.className = 'li-nm';
           nm.textContent = shortName(it.name);
           name.appendChild(nm);
-          if (it.nbQ !== '2026.1Q') {                  // 기준분기 미공시(연1회 공시사) → 추정 칩 + 회색 텍스트로 정리(칩 중복 방지)
+          if (it.nbQ !== NB_TARGET_Q) {                // 기준분기 미공시(연1회 공시사) → 추정 칩 + 회색 텍스트로 정리(칩 중복 방지)
             nm.style.color = 'var(--muted)';
             const chip = document.createElement('span');
             chip.className = 'li-chip';
@@ -1348,6 +1367,7 @@
         wfRowsRaw = wfRows;
         _footerWfQ = globalMaxQuarter(wfRows); refreshFooterQuarter();
         bubbleRows = buildBubbleData(nbRows, wfRows);
+        renderBubbleDesc();
         renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
         renderBubbleList();
         renderCsmCoverageTable();
