@@ -233,6 +233,17 @@ DATA_CONTRACT_CHECKS = {
         "축이 갈라진다(csm_amort_identity_ledger 의 RESTATEMENT_BASIS 3건이 그 사고다). "
         "탐지기는 scripts/detect_kics_restatement.py, 등재부는 "
         "data/_gold/kics_restatement_ledger.json.",
+    "check_master_xlsx":
+        "WIRED 2026-09-02 — 루트 마스터 JSON ↔ insurequant_master_tables.xlsx 13개 시트 전수 "
+        "셀 단위 대조. 이 검사 이전에는 **마스터와 xlsx 를 대조하는 룰이 저장소에 0건**이었다 "
+        "(`PUBLIC_EXPORT_DRIFT` 는 마스터 ↔ public_exports/ 스냅샷만 본다) — xlsx 만 조용히 "
+        "뒤처져도 RED 이 안 떴다. 2026-09-02 owner 라이브 QA 로 발견: `자본비율전망` 시트가 "
+        "2026.1Q 베이스라인에 멈춰 38개사 2090칸 중 1219칸 stale, 그 조사에서 `K-ICS공시` 도 "
+        "stale(33셀 변경 · 121행 누락). owner 는 이 워크북을 직접 받아 검토하고 그 손질이 "
+        "gold 리뷰 루프의 입력이 되므로, 틀린 xlsx 는 다음 라운드 데이터까지 오염시킨다. "
+        "비교기는 scripts/check_master_xlsx_drift.py (스키마·정규화·행식별키를 "
+        "build_master_xlsx/sync_master_xlsx_sheet 에서 import — 재타이핑 금지). "
+        "워크북은 읽기 전용으로만 연다(load+save 는 수식 캐시를 날린다). 실측 +11.9초.",
     "check_generic_anomalies":
         "DEWIRED 2026-08-25 — owner 지시로 게이트에서 분리(scripts/scan_generic_anomalies.py). "
         "근거: YELLOW 전용이라 RED 를 한 건도 낸 적이 없어 `blocked` 에 들어간 적이 구조적으로 "

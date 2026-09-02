@@ -42,8 +42,6 @@ from copy import copy
 from openpyxl import load_workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 
@@ -120,6 +118,11 @@ def preflight() -> None:
 
 
 def main() -> int:
+    # 2026-09-02: 이 줄은 모듈 최상위에 있었다. `scripts/check_master_xlsx_drift.py` 가
+    # `target_rows`/`norm`/`key_of` 를 **import 해서** 쓰는데(스키마 재타이핑 금지), import
+    # 만으로 호출자의 stdout 이 통째로 바뀌면 안 된다 — pytest 캡처·게이트 출력에 부작용이
+    # 생긴다. CLI 로 돌 때만 적용되도록 main() 안으로 옮겼다(동작 동일).
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
     dry = "--dry-run" in sys.argv
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if len(args) != 1:

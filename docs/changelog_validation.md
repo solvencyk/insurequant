@@ -1,9 +1,80 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-09-01 · Stage 3/5 — validation
+> Last updated: 2026-09-02 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-09-02 — `MASTER_XLSX_*` 축 신설: 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조 (CHECK 8)
+
+**무엇이 통과하고 있었나.** 루트 마스터 JSON 의 하류 사본은 **둘**이다 — `public_exports/`
+스냅샷과 `insurequant_master_tables.xlsx`. 그런데 검사기는 하나뿐이었다:
+`PUBLIC_EXPORT_*`(`validate_live_artifacts.py` check 6)가 스냅샷만 본다. **마스터 ↔ xlsx 를
+대조하는 룰은 저장소에 0건이었고**, xlsx 만 조용히 뒤처져도 RED 가 구조적으로 나올 수 없었다.
+`sync_master_xlsx_sheet.py` 는 요청받은 시트 하나만 동기화하고 스스로 뒤처짐을 탐지하지 않는다
+— 정합성이 "누가 어느 시트를 동기화할지 기억하는 것"에 걸려 있었다.
+
+**사고 2건(2026-09-02).** ① owner 라이브 QA: NH농협손해 2026 기본자본비율 전망이 라이브·마스터
+102.77 인데 xlsx `자본비율전망` 만 79.8(= 그 회사 **2026.1Q** 값). 마스터가 baseline 을 2026.2Q
+로 옮겼는데 시트만 1Q 기준 옛 산출이었다 — 38개사 전부, 2090칸 중 **1219칸 stale**.
+② owner 가 "소진율 2종도 stale 하겠네" 라고 지적해 13시트를 전수 측정했더니 **가설과 결과가
+달랐다**: 소진율 2종은 깨끗했고 아무도 안 보던 `K-ICS공시` 가 stale(33셀·121행). 교훈은
+**"어느 시트가 stale 한지 추측하지 말고 전수로 재라"**. 데이터 수정은 `d1f1e7f`·`ee11c1d`.
+
+### 신설
+
+- `scripts/check_master_xlsx_drift.py` — 13시트 전수 셀 단위 비교기. 시트목록·평탄화·타입강제는
+  `build_master_xlsx`(`MASTERS`/`FLATTEN`/`coerce`/`TEXT_COLS`)에서, 목표행·비교정규화·행식별키는
+  `sync_master_xlsx_sheet`(`target_rows`/`norm`/`key_of`)에서 **import** 한다. 재타이핑하면
+  빌더가 바뀌는 순간 검증기가 검증 대상과 다른 스키마를 쓰게 된다(상관행렬 재타이핑 금지와 같은 이유).
+- `validate_data_contract.py` CHECK 8 `check_master_xlsx` → `run_gate` → `prepush_check.py` §1
+  → `.githooks/pre-push`. **훅이 실제로 부르는 것을 소스에서 확인함**(L39 `gate.run_gate(env)`,
+  L246 `blocked = n_red or ...`).
+- 룰 14종: `MASTER_XLSX_DRIFT`·`ROW_MISSING`·`ROW_EXTRA`·`SHEET_MISSING`·`COLUMN_MISMATCH`·
+  `KEY_AMBIGUOUS`·`FILE_MISSING`·`UNREADABLE`·`FORMULA_PRESENT`·`MASTER_UNREADABLE`·
+  `SUMMARY_ROWCOUNT`·`SUMMARY_SHEET_MISSING` (RED) + `UNTRACKED_SHEET`·`CENSUS` (YELLOW).
+
+### 판단 3개와 근거
+
+- **비교 기준은 동기화 스크립트와 정확히 같다**(`norm()` 을 import). 느슨하면 값 차이를 놓치고,
+  **엄하면 더 나쁘다** — 어떤 도구도 만들 수 없는 상태를 요구해 영원히 못 고치는 RED 이 된다.
+  그래서 `'154'`(문자열) vs `154.0`(실수)는 **드리프트가 아니다**(셀 타입 차이일 뿐. `coerce()` 가
+  값 아닌 열을 문자열로 만드는데 Excel 로 열어 저장하면 숫자로 되돌아간다). float 는 `%.15g`
+  (xlsx 가 실제로 저장하는 정밀도)로 접는다. 그 위에 **추가 tolerance 는 두지 않는다**.
+- **행 식별키 = `TEXT_COLS` ∪ `{항목번호}`** — 동기화와 같은 규칙. `비고` 도 여기 들어가므로
+  비고 문구 변경은 EDIT 이 아니라 ROW_MISSING+ROW_EXTRA 쌍으로 나온다(자본비율전망 169행이 그랬다).
+  키를 다르게 잡으면 동기화가 방금 만든 상태를 게이트가 계속 드리프트라고 부르게 된다.
+- **`요약` 은 행수만 검사한다.** 행수는 기계가 유지하지만(sync L292-303) **설명 열은 다른 레인이
+  손으로 관리한다**(sync L21-22·L271-272 가 "손대지 않는다"고 명시). 기계가 정본을 갖고 있지
+  않은 열을 검사하면 정당한 손질이 매번 RED 이 된다. `MASTERS` 밖 수기 시트는 허용된 설계라
+  RED 이 아니라 YELLOW census(무검사 축의 가시화).
+
+### 검증
+
+- **배선 전 시뮬레이션(규율)**: 전 시트에 먼저 돌려 **RED=0 · YELLOW=0** 확인
+  (13시트 · 53,288행 — 워크북의 전 데이터 행과 정확히 일치).
+- **되돌려 재본 실측**(`scripts/_probes/probe_20260902_master_xlsx_retrodiction.py`): 두 수정
+  커밋이 xlsx 만 건드렸으므로 그때 워크북을 꺼내 오늘 마스터로 대조 →
+  `d1f1e7f~1` **RED=5**(자본비율전망 DRIFT 1111 / ROW_MISSING 169 / ROW_EXTRA 169 ·
+  K-ICS공시 DRIFT 33 / ROW_MISSING 121) · `ee11c1d~1` **RED=2** · `HEAD` **RED=0**.
+  숫자가 두 커밋의 자체 기록과 **셀 단위로 일치**한다 — 이 룰이었으면 사람이 발견하기 전에 막았다.
+- **변이시험**: `tests/test_rule_coverage_manifest.py` 신규 18개 — 변이 8종(값·행누락·행잉여·**행복제**·헤더·
+  요약행수·요약행소실·미등재시트) + **2026-09-02 사고 값 그대로 재생**(79.8) + 타입변경
+  비드리프트(양방향) + import-대신-재타이핑 금지 + 읽기전용 정적검사 + run_gate 배선.
+  ⚠️ **변이는 전부 메모리 안에서 한다 — 워크북을 재저장하지 않는다.** openpyxl load+save 한 번에
+  다른 시트 수식 캐시가 날아가고 실행이 끊기면 복원도 안 된다(memory
+  `project_master_xlsx_formula_cache`). 그래서 `compare_sheet`/`scan(sheets=...)` 을 순수 함수로
+  분리했다. 픽스처가 읽기 전후 **바이트 해시 대조**로 무변경을 실측한다.
+- 회귀: `--selftest` **57/57 유지** · `test_push_gate_wiring` 55 passed · `test_deploy_assets` 등
+  오프라인 묶음 통과 · 게이트 **RED=0 유지**(YELLOW 96→97, census 한 줄 추가).
+- **실행 비용**: 게이트 안에서 **+11.9초**(15.2 → 27.1초). 훅 전체 17분 33초 대비 **+1.1%**.
+
+### 잔여
+
+**UH-15**(하류 사본 매니페스트 부재 — 세 사본이 전부 사고 후에야 검사 대상이 됐다.
+PM-2026-08-25 의 UH-14 와 같은 뿌리라 합류) · **UH-16**(`sync` 가 시트 무변경 시 `요약` 행수를
+안 고친다 — 현재 무해, 발화하면 그때 `--summary-only` 추가) · **UH-17**(워킹트리 기준 대조라 sync 후 커밋 없이 push 하면 안 잡힌다 — `PUBLIC_EXPORT_*` 와 달리 마스터 쪽을 `git show HEAD:` 로 읽지 않는다. 커밋 기준은 정상 sync 중 상시 발화라 미배선). 포스트모템
+`docs/postmortems/PM-2026-09-02_master_xlsx_stale_unchecked.md`.
 
 ## 2026-09-01 — 소급재작성(restatement) 축 신설: 탐지기 + 등재부 + 게이트 CHECK 7
 

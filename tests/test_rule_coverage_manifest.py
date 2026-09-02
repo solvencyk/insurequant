@@ -1460,3 +1460,321 @@ def test_kics_restatement_is_wired_into_run_gate():
     body = re.search(r"^def run_gate\(.*?\n(.*?)^\S", src, re.M | re.S).group(1)
     assert re.search(r"^\s*check_kics_restatement\(res, env\)", body, re.M), (
         "check_kics_restatement 가 run_gate() 에 없다 — 배선했다고 쓰기 전에 여기서 막는다")
+
+
+# ===========================================================================
+# 마스터 JSON ↔ insurequant_master_tables.xlsx 축   (2026-09-02, validation)
+# ===========================================================================
+# ## 왜 이 축이 여기 있나
+#
+# owner 는 `insurequant_master_tables.xlsx` 를 직접 받아 검토하고, 그 손질이 gold 리뷰
+# 루프의 입력이 된다. 그런데 2026-09-02 까지 **마스터 JSON 과 이 워크북을 대조하는 룰이
+# 저장소에 0건**이었다 — `PUBLIC_EXPORT_DRIFT` 는 마스터 ↔ `public_exports/` 스냅샷만 본다.
+# 그래서 xlsx 만 조용히 뒤처져도 게이트는 RED=0 이었다.
+#
+# 그날 사고 2건: ① owner 라이브 QA 로 `자본비율전망` 시트가 2026.1Q 베이스라인에 멈춰 있는
+# 것이 발견됐다(38개사 2090칸 중 **1219칸 stale**). ② owner 가 "그럼 소진율 2종도 stale
+# 하겠네" 라고 지적해 13개 시트를 전수 측정했더니 **가설과 결과가 달랐다** — 소진율 2종은
+# 깨끗했고 아무도 안 보던 `K-ICS공시` 가 stale 이었다(33셀 변경 · 121행 누락).
+#
+# 이 절이 강제하는 것:
+#   1. 비교기 소스의 `MASTER_XLSX_*` 룰 id 전부가 아래 선언에 있는가
+#   2. 검사 대상 시트 수 = `build_master_xlsx.MASTERS` 수, 그리고 **전부 실제로 대조됐는가**
+#      (선언만 하고 비교를 건너뛰는 것이 이 저장소의 대표 사각이다)
+#   3. 비교기가 스키마·정규화·행식별키를 **import 하는가**(베끼면 빌더가 바뀔 때 갈라진다)
+#   4. 비교기가 워크북을 **절대 쓰지 않는가** — 정적 + 실측 양쪽으로
+#   5. 변이시험 — 값 1칸 / 행 1개 / 헤더 / 요약 행수 / 미등재 시트에서 실제로 발화하는가
+#   6. `'154'` vs `154.0` 은 드리프트가 **아니어야** 한다(판단을 박제한다. 아래 근거)
+MASTER_XLSX_RULES = {
+    "MASTER_XLSX_FILE_MISSING": "RED — 워크북 자체가 없다(owner 가 받아 보는 산출물이 사라졌다)",
+    "MASTER_XLSX_UNREADABLE": "RED — 있는데 못 읽는다(깨진 파일 != 없는 파일)",
+    "MASTER_XLSX_FORMULA_PRESENT":
+        "RED — 워크북에 수식이 생겼다. data_only 읽기는 **캐시값**을 보므로 이 축의 비교가 "
+        "조용히 무의미해진다. sync_master_xlsx_sheet.py 도 같은 이유로 실행을 거부한다",
+    "MASTER_XLSX_SHEET_MISSING": "RED — 마스터 하나의 시트가 워크북에서 통째로 빠졌다",
+    "MASTER_XLSX_COLUMN_MISMATCH": "RED — 시트 헤더가 빌더 스키마와 다르다",
+    "MASTER_XLSX_MASTER_UNREADABLE":
+        "RED — 대조 기준(마스터 JSON)을 못 읽는다. 기준이 없으면 그 시트는 조용히 무검사다",
+    "MASTER_XLSX_KEY_AMBIGUOUS":
+        "RED — 행 식별키가 유일하지 않아 셀 비교가 성립하지 않는다. 조용히 통과시키지 않는다 "
+        "(2026-09-01 자본성증권발행현황이 그랬다: 증권명이 키에서 빠져 있었다)",
+    "MASTER_XLSX_ROW_MISSING": "RED — 마스터에 있는 행이 시트에 없다(기대 그리드=마스터)",
+    "MASTER_XLSX_ROW_EXTRA": "RED — 마스터에서 사라진 행이 시트에 남아 있다",
+    "MASTER_XLSX_DRIFT":
+        "RED — 셀 값이 마스터와 다르다. 2026-09-02 사고 본체(자본비율전망 1219칸 stale)",
+    "MASTER_XLSX_SUMMARY_ROWCOUNT": "RED — 요약 색인이 틀린 행수를 인쇄한다",
+    "MASTER_XLSX_SUMMARY_SHEET_MISSING": "RED — 요약 색인에 시트 줄이 없다",
+    "MASTER_XLSX_UNTRACKED_SHEET":
+        "YELLOW — MASTERS 밖 시트. 수기 시트는 허용된 설계지만 어떤 검사도 안 받으므로 센다",
+    "MASTER_XLSX_CENSUS":
+        "YELLOW census 한 줄 — 선언 시트 / 대조 시트 / 대조 행 / 드리프트 셀. 대조 시트 수가 "
+        "선언보다 적으면 그만큼이 무검사다(게이트 출력의 숫자로 남긴다)",
+}
+
+# 실측 2026-09-02. build_master_xlsx.MASTERS 길이와 같아야 한다(요약은 파생 시트라 별도).
+MASTER_XLSX_SHEETS = 13
+
+
+@pytest.fixture(scope="module")
+def _mx_live():
+    """워크북을 **한 번만** 읽고 그 결과를 모든 테스트가 공유한다.
+
+    읽기 자체가 ~10초라 테스트마다 다시 읽으면 훅 예산을 갉아먹는다. 그리고 읽기 전후
+    바이트를 대조해 **비교기가 워크북을 건드리지 않는다**는 것을 실측으로 남긴다
+    (memory `project_master_xlsx_formula_cache`: openpyxl load+save 는 다른 시트의 수식
+    캐시를 통째로 날린다 — 이 축에서 가장 위험한 실패 양식이다).
+    """
+    import hashlib
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import check_master_xlsx_drift as D
+    before = hashlib.sha256(D.XLSX.read_bytes()).hexdigest()
+    sheets, fatal = D.read_workbook()
+    after = hashlib.sha256(D.XLSX.read_bytes()).hexdigest()
+    assert before == after, (
+        "read_workbook() 이 워크북 바이트를 바꿨다 — 이 게이트는 읽기 전용이어야 한다")
+    assert not fatal, f"워크북을 정상적으로 못 읽었다: {fatal}"
+    targets = {sheet: D.target_rows(jf) for jf, sheet, _d in D.MASTERS}
+    return D, sheets, targets
+
+
+def _mx_sheet(D, sheets, targets, name):
+    cols, tgt = targets[name]
+    header, cur = sheets[name]
+    return cols, tgt, header, [list(r) for r in cur]
+
+
+def test_master_xlsx_rule_ids_match_manifest():
+    """비교기·게이트 소스의 `MASTER_XLSX_*` 룰 id 와 이 선언이 정확히 일치해야 한다."""
+    import re
+    src = (ROOT / "scripts" / "check_master_xlsx_drift.py").read_text(encoding="utf-8")
+    src += (ROOT / "scripts" / "validate_data_contract.py").read_text(encoding="utf-8")
+    found = set(re.findall(r'"(MASTER_XLSX_\w+)"', src))
+    assert found == set(MASTER_XLSX_RULES), (
+        f"소스 {sorted(found - set(MASTER_XLSX_RULES))} 가 선언에 없고 "
+        f"{sorted(set(MASTER_XLSX_RULES) - found)} 는 선언에만 있다 — "
+        "룰을 추가·개명·삭제했으면 이 선언도 같이 고쳐라")
+
+
+def test_master_xlsx_rule_ids_are_declared_in_the_comparator():
+    """`RULES` 튜플이 실제 발화 id 전량을 담는가 — 비교기 안에서도 목록이 닫혀 있어야 한다."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import check_master_xlsx_drift as D
+    assert set(D.RULES) | {"MASTER_XLSX_CENSUS"} == set(MASTER_XLSX_RULES), (
+        f"check_master_xlsx_drift.RULES {sorted(D.RULES)} 가 매니페스트와 다르다")
+
+
+def test_master_xlsx_sheet_count_matches_builder(_mx_live):
+    """검사 대상 시트 수 = 빌더의 MASTERS 수, 그리고 **전부 실제로 대조**돼야 한다.
+
+    선언만 늘고 비교가 안 따라가는 것이 이 저장소의 대표 사각이다(CLAUDE.md 1b: "배선했다"와
+    "강제된다"는 다른 말). 그래서 `sheets_declared` 뿐 아니라 `sheets_compared` 도 본다."""
+    D, sheets, _t = _mx_live
+    from build_master_xlsx import MASTERS as BM
+    assert len(BM) == MASTER_XLSX_SHEETS, (
+        f"빌더 시트 {len(BM)}개 != 선언 {MASTER_XLSX_SHEETS}개 — 시트를 추가·삭제했으면 이 수를 "
+        "고치고, 새 시트가 실제로 대조되는지 확인해라")
+    _f, stat = D.scan(sheets=sheets)
+    assert stat["sheets_declared"] == len(BM)
+    assert stat["sheets_compared"] == len(BM), (
+        f"선언 {stat['sheets_declared']}개 중 {stat['sheets_compared']}개만 대조됐다 — "
+        f"나머지는 무검사다")
+
+
+def test_master_xlsx_imports_schema_instead_of_retyping_it():
+    """스키마·정규화·행식별키를 **import** 해야 한다. 베끼면 빌더가 바뀔 때 조용히 갈라진다.
+
+    상관행렬 재타이핑 금지와 같은 이유다 — 검증기가 검증 대상과 다른 정의를 쓰게 된다."""
+    import re
+    src = (ROOT / "scripts" / "check_master_xlsx_drift.py").read_text(encoding="utf-8")
+    assert re.search(r"^from build_master_xlsx import .*\bMASTERS\b", src, re.M), \
+        "MASTERS 를 build_master_xlsx 에서 import 하지 않는다"
+    assert re.search(r"^from build_master_xlsx import .*\bTEXT_COLS\b", src, re.M), \
+        "TEXT_COLS(행 식별키) 를 build_master_xlsx 에서 import 하지 않는다"
+    assert re.search(r"^from sync_master_xlsx_sheet import .*\bnorm\b", src, re.M), \
+        "norm(비교 정규화) 을 sync_master_xlsx_sheet 에서 import 하지 않는다"
+    assert re.search(r"^from sync_master_xlsx_sheet import .*\btarget_rows\b", src, re.M), \
+        "target_rows 를 sync_master_xlsx_sheet 에서 import 하지 않는다"
+    for banned in (r"^MASTERS\s*=", r"^TEXT_COLS\s*=", r"^def norm\(", r"^def target_rows\("):
+        assert not re.search(banned, src, re.M), \
+            f"비교기가 {banned!r} 로 스키마를 다시 정의한다 — import 로 묶어라"
+
+
+def test_master_xlsx_never_opens_the_workbook_for_writing():
+    """워크북을 여는 경로가 **읽기 전용 하나뿐**이어야 한다(정적 검사).
+
+    openpyxl 로 load+save 하면 다른 시트의 수식 캐시가 통째로 날아간다
+    (memory `project_master_xlsx_formula_cache`). 이 게이트는 절대 쓰지 않는다 —
+    `_mx_live` 픽스처가 바이트 대조로 실측까지 한다."""
+    import re
+    src = (ROOT / "scripts" / "check_master_xlsx_drift.py").read_text(encoding="utf-8")
+    calls = re.findall(r"load_workbook\((.*?)\)", src, re.S)
+    assert calls, "load_workbook 호출을 못 찾았다 — 이 테스트가 무의미해졌다"
+    for c in calls:
+        assert "read_only=True" in c and "data_only=True" in c, \
+            f"읽기 전용이 아닌 load_workbook 호출: {c!r}"
+    assert not re.search(r"\.save\(", src), "비교기에 .save( 가 있다 — 워크북을 쓰면 안 된다"
+
+
+def test_master_xlsx_clean_state_has_no_red(_mx_live):
+    """지금 상태에서 RED 0 이어야 한다 — 아니면 시트 동기화가 밀린 것이다.
+
+    2026-09-02 실측: 13개 시트 53,288행 대조, 드리프트 0. (그 직전까지 1219+33칸이
+    stale 이었고 어떤 게이트도 그것을 못 봤다.)"""
+    D, sheets, _t = _mx_live
+    findings, stat = D.scan(sheets=sheets)
+    red = [f"{f['rule']}|{f['sheet']}: {f['message'][:160]}"
+           for f in findings if f["severity"] == "RED"]
+    assert not red, red
+    assert stat["cells_drifted"] == 0
+    assert stat["rows_compared"] > 50000, \
+        f"대조 행이 {stat['rows_compared']} 밖에 안 된다 — 시트가 통째로 빠졌는지 확인해라"
+
+
+@pytest.mark.parametrize("mutation", ["drift", "row_missing", "row_extra", "row_duplicated",
+                                      "column_mismatch", "summary_rowcount", "summary_row_gone",
+                                      "untracked_sheet"])
+def test_mutation_master_xlsx_fires(_mx_live, mutation):
+    """잡아야 할 것을 실제로 잡는가.
+
+    ⚠️ **변이는 전부 메모리 안에서 한다 — 디스크의 워크북은 건드리지 않는다.**
+    `test_mutation_public_export_fires` 는 추적 산출물을 디스크에서 흔들고 finally 로
+    복원하는데, xlsx 는 그 방식이 훨씬 위험하다(openpyxl 재저장 한 번에 다른 시트의 수식
+    캐시가 날아가고, 실행이 끊기면 복원도 안 된다). 그래서 `compare_sheet`/`scan(sheets=...)`
+    을 순수 함수로 만들어 두고 **읽어 온 행 리스트만** 흔든다. 그래서 dirty-tree 사전검사도
+    필요 없다 — 이 테스트는 파일을 쓸 수단 자체가 없다."""
+    D, sheets, targets = _mx_live
+    SHEET = "자본비율전망"          # 2026-09-02 사고가 난 그 시트
+
+    if mutation in ("summary_rowcount", "summary_row_gone", "untracked_sheet"):
+        mut = {k: (list(v[0]), [list(r) for r in v[1]]) for k, v in sheets.items()}
+        if mutation == "summary_rowcount":
+            for r in mut[D.SUMMARY_SHEET][1]:
+                if r and r[0] == SHEET:
+                    r[2] = 1
+            want = "MASTER_XLSX_SUMMARY_ROWCOUNT"
+        elif mutation == "summary_row_gone":
+            mut[D.SUMMARY_SHEET] = (mut[D.SUMMARY_SHEET][0],
+                                    [r for r in mut[D.SUMMARY_SHEET][1]
+                                     if not (r and r[0] == SHEET)])
+            want = "MASTER_XLSX_SUMMARY_SHEET_MISSING"
+        else:
+            mut["손으로만든피벗"] = (["a"], [["x"]])
+            want = "MASTER_XLSX_UNTRACKED_SHEET"
+        rules = {f["rule"] for f in D.scan(sheets=mut)[0]}
+        assert want in rules, f"{mutation}: {want} 가 안 나왔다 (나온 것: {sorted(rules)})"
+        return
+
+    cols, tgt, header, cur = _mx_sheet(D, sheets, targets, SHEET)
+    val_idx = [i for i, c in enumerate(cols) if not (c in D.TEXT_COLS or c == "항목번호")]
+    assert val_idx, "값 컬럼이 하나도 없다 — 변이시험이 무의미해진다"
+    if mutation == "drift":
+        cur[0][val_idx[0]] = (cur[0][val_idx[0]] or 0) + 1.0
+        want = "MASTER_XLSX_DRIFT"
+    elif mutation == "row_missing":
+        cur.pop(5)
+        want = "MASTER_XLSX_ROW_MISSING"
+    elif mutation == "row_extra":
+        ghost = list(cur[0])
+        ghost[0] = "KR9999"
+        cur.append(ghost)
+        want = "MASTER_XLSX_ROW_EXTRA"
+    elif mutation == "row_duplicated":
+        # 조용히 새기 가장 쉬운 형태 — 행을 **그대로** 복제하면 그 키는 마스터에 있으므로
+        # missing 에도 (키 기준) extra 에도 안 걸리고, 값 비교는 첫 행만 보므로 전부 일치다.
+        # 중복 초과분을 따로 세지 않으면 owner 워크북에 중복 행이 있는 채로 초록이 된다.
+        cur.append(list(cur[0]))
+        want = "MASTER_XLSX_ROW_EXTRA"
+    else:
+        header = header[:-1]
+        want = "MASTER_XLSX_COLUMN_MISMATCH"
+    rules = {f["rule"] for f in D.compare_sheet(SHEET, cols, tgt, header, cur)}
+    assert want in rules, f"{mutation}: {want} 가 안 나왔다 (나온 것: {sorted(rules)})"
+
+
+def test_master_xlsx_replays_the_2026_09_02_incident(_mx_live):
+    """실제 사고를 그대로 되돌리면 RED 이 나오는가 — 변이시험의 진짜 시험지.
+
+    owner 라이브 QA 가 발견한 것: NH농협손해보험 2026 `기본자본비율 전망` 이 라이브·마스터는
+    102.77 인데 xlsx 만 79.8(= 그 회사 **2026.1Q** 기본자본비율)이었다. 마스터가 baseline 을
+    2026.2Q 로 옮겼는데 시트만 1Q 기준 옛 산출로 남은 것이다. 합성 변이가 아니라 **그날 그
+    값**으로 재생한다 — 임의의 +1.0 은 잡으면서 이 사고는 못 잡는 룰이면 소용이 없다."""
+    D, sheets, targets = _mx_live
+    SHEET = "자본비율전망"
+    cols, tgt, header, cur = _mx_sheet(D, sheets, targets, SHEET)
+    ci = {c: i for i, c in enumerate(cols)}
+    hit = 0
+    for r in cur:
+        if ("농협손해" in str(r[ci["원수사명"]]) and str(r[ci["공시분기"]]) == "2026"
+                and r[ci["항목명"]] == "기본자본비율 전망"):
+            r[ci["값"]] = 79.8          # 2026.1Q 기본자본비율 (사고 당시 시트에 있던 값)
+            hit += 1
+    assert hit == 1, f"사고 셀을 {hit}개 찾았다 — 시트 스키마가 바뀌었으면 이 테스트를 고쳐라"
+    got = D.compare_sheet(SHEET, cols, tgt, header, cur)
+    assert {f["rule"] for f in got} == {"MASTER_XLSX_DRIFT"}, \
+        f"사고 재생에서 MASTER_XLSX_DRIFT 가 안 나왔다: {got}"
+    assert got[0]["count"] == 1
+
+
+def test_master_xlsx_cell_type_change_is_not_drift(_mx_live):
+    """`'154'`(문자열) vs `154.0`(실수) 는 드리프트가 **아니다** — 이 판단을 박제한다.
+
+    근거: `coerce()` 가 값이 아닌 열을 전부 문자열로 만드는데, owner 가 워크북을 Excel 로 열어
+    저장하면 숫자처럼 보이는 그 텍스트가 숫자로 바뀐다. 어느 쪽도 값을 바꾸지 않는다.
+    이걸 드리프트로 세면 **동기화 스크립트가 만들 수 없는 상태**를 게이트가 요구하게 되어
+    영원히 못 고치는 RED 이 된다(게이트는 동기화와 정확히 같은 `norm()` 을 쓴다).
+    2026-09-02 `K-ICS공시` 시트에 실제로 있던 형태다.
+
+    반대 방향도 같이 못박는다 — 값이 진짜로 다르면(154 vs 155) 반드시 잡아야 한다.
+    둘이 같이 확인돼야 임계가 의미를 갖는다."""
+    D, sheets, targets = _mx_live
+    SHEET = "자본비율전망"
+    cols, tgt, header, cur = _mx_sheet(D, sheets, targets, SHEET)
+    vi = next(i for i, c in enumerate(cols) if not (c in D.TEXT_COLS or c == "항목번호"))
+    row = next((r for r in cur
+                if isinstance(r[vi], (int, float)) and float(r[vi]).is_integer()), None)
+    assert row is not None, (
+        f"{SHEET} 의 '{cols[vi]}' 열에 정수형 값이 하나도 없다 — 이 시트로는 타입변경 "
+        f"시나리오를 만들 수 없으니 다른 시트를 골라라")
+    whole = int(row[vi])
+
+    row[vi] = str(whole)                       # 같은 값, 셀 타입만 다름
+    assert not D.compare_sheet(SHEET, cols, tgt, header, cur), \
+        f"'{whole}'(문자열) 을 드리프트로 셌다 — 동기화가 만들 수 없는 상태를 요구하게 된다"
+
+    row[vi] = str(whole + 1)                   # 진짜 값 차이는 반드시 잡는다
+    assert {f["rule"] for f in D.compare_sheet(SHEET, cols, tgt, header, cur)} == \
+        {"MASTER_XLSX_DRIFT"}, "문자열로 쓴 진짜 값 차이를 놓쳤다"
+
+
+def test_master_xlsx_summary_description_column_is_not_checked(_mx_live):
+    """`요약` 의 **설명** 열은 검사하지 않는다 — 다른 레인이 손으로 고쳐 둔 문구다.
+
+    `sync_master_xlsx_sheet.py` L21-22 / L271-272 가 "설명 칸은 손대지 않는다"고 명시한다.
+    기계가 정본을 갖고 있지 않은 열을 검사하면 정당한 손질이 매번 RED 이 된다.
+    행수는 반대로 기계가 유지하므로 검사한다(위 변이시험)."""
+    D, sheets, _t = _mx_live
+    mut = {k: (list(v[0]), [list(r) for r in v[1]]) for k, v in sheets.items()}
+    touched = 0
+    for r in mut[D.SUMMARY_SHEET][1]:
+        if r and r[0] and r[0] != D.SUMMARY_TOTAL_LABEL and len(r) > 3:
+            r[3] = "설명을 손으로 고쳤다"
+            touched += 1
+    assert touched, "요약 시트에 설명 행이 없다 — 이 테스트가 무의미해졌다"
+    assert not D.compare_summary(mut, list(D.MASTERS)), \
+        "설명 열 변경을 finding 으로 냈다 — 손으로 관리하는 열이다"
+
+
+def test_master_xlsx_is_wired_into_run_gate():
+    """`run_gate()` 가 실제로 부르고, 훅이 그 `run_gate` 를 부르는가.
+
+    '배선했다' 와 '강제된다' 는 다른 말이다(CLAUDE.md 1b: `validate_kics_disclosure` 가
+    mandatory 라고 문서에만 적힌 채 호출처 0 이었던 전례)."""
+    import re
+    src = (ROOT / "scripts" / "validate_data_contract.py").read_text(encoding="utf-8")
+    body = re.search(r"^def run_gate\(.*?\n(.*?)^\S", src, re.M | re.S).group(1)
+    assert re.search(r"^\s*check_master_xlsx\(res, env\)", body, re.M), \
+        "check_master_xlsx 가 run_gate() 에 없다 — 배선했다고 쓰기 전에 여기서 막는다"
+    hook = (ROOT / "scripts" / "prepush_check.py").read_text(encoding="utf-8")
+    assert "gate.run_gate(env)" in hook, \
+        "훅이 run_gate 를 부르지 않는다 — 이 축이 push 를 막지 못한다"
+    assert "res.red" in src, "RED 이 exit code 로 이어지지 않으면 push 를 못 막는다"

@@ -1,11 +1,51 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-09-01 (item23 자식 227버킷 등재부 신설 — 31버킷 STABLE 등재, 나머지 196은 부모≈0로 자명) · Stage 3/5 — validation
+> Last updated: 2026-09-02 (MASTER_XLSX_* 축 신설 — 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조를 CHECK 8 로 배선) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-09-02) 마스터 JSON 의 하류 사본이 둘인데 검사기는 하나였다 — `MASTER_XLSX_*` 축을 신설해 닫았다.**
+
+> owner 승인(2026-09-02 "신설한다 — 14개 시트 전수"). 신설:
+> `scripts/check_master_xlsx_drift.py`(비교기) · `validate_data_contract.py` CHECK 8
+> `check_master_xlsx`(게이트, `run_gate` → `prepush_check.py` §1 → 훅) ·
+> `tests/test_push_gate_wiring.py` WIRED 선언 · `tests/test_rule_coverage_manifest.py` 18개 테스트 ·
+> `scripts/_probes/probe_20260902_master_xlsx_retrodiction.py`(되돌려 재보기).
+>
+> - **무엇이 사각이었나.** 루트 마스터의 하류 사본은 둘(`public_exports/` 스냅샷 ·
+>   `insurequant_master_tables.xlsx`)인데 검사기는 `PUBLIC_EXPORT_*` 하나뿐이었다 —
+>   **마스터 ↔ xlsx 를 대조하는 룰이 0건.** xlsx 만 뒤처져도 RED 가 구조적으로 나올 수 없었다.
+>   `sync_master_xlsx_sheet.py` 는 요청받은 시트만 동기화하고 스스로 뒤처짐을 탐지하지 않으므로,
+>   정합성이 **"누가 어느 시트를 동기화할지 기억하는 것"** 에 걸려 있었다.
+> - **사고 2건.** ① owner 라이브 QA — NH농협손해 2026 기본자본비율 전망이 라이브·마스터 102.77
+>   인데 xlsx 만 79.8(그 회사 2026.1Q 값). 38개사 전부 2090칸 중 **1219칸 stale**.
+>   ② owner 반문("소진율 2종도 stale 하겠네")으로 13시트 전수 측정 → **가설과 결과가 달랐다**:
+>   소진율 2종은 깨끗, 아무도 안 보던 `K-ICS공시` 가 stale(33셀·121행).
+>   **어느 시트가 stale 한지 추측하지 말고 전수로 재라.** 데이터 수정은 `d1f1e7f`·`ee11c1d`.
+> - **배선 전 시뮬레이션(규율)**: RED=0 · YELLOW=0 확인(13시트 **53,288행** = 워크북 전 데이터 행).
+> - **되돌려 재본 실측**: 두 수정 커밋이 xlsx 만 건드렸으므로 그때 워크북을 꺼내 오늘 마스터로
+>   대조 → `d1f1e7f~1` **RED=5** · `ee11c1d~1` **RED=2** · `HEAD` **RED=0**. 셀 수가 두 커밋의
+>   자체 기록과 **정확히 일치**(1111/169/33/121) — 이 룰이었으면 사람보다 먼저 막았다.
+> - **스키마는 import 한다.** 시트목록·평탄화·타입강제는 `build_master_xlsx`, 목표행·비교정규화·
+>   행식별키는 `sync_master_xlsx_sheet` 에서 가져온다. 베끼면 빌더가 바뀌는 순간 갈라진다.
+>   비교 기준은 동기화와 **정확히 같다** — 느슨하면 값 차이를 놓치고 **엄하면 어떤 도구도 만들 수
+>   없는 상태를 요구**해 영원히 못 고치는 RED 이 된다. `'154'` vs `154.0` 은 셀 타입 차이라
+>   드리프트가 아니다(양방향으로 테스트에 박아 뒀다).
+> - **`요약` 은 행수만 검사한다** — 설명 열은 다른 레인이 손으로 관리하는 문구다(sync L21-22).
+>   `MASTERS` 밖 수기 시트는 허용된 설계라 RED 이 아니라 YELLOW census.
+> - **변이시험은 워크북을 재저장하지 않는다.** `compare_sheet`/`scan(sheets=...)` 을 순수 함수로
+>   분리해 메모리 안에서만 흔든다(openpyxl load+save 는 다른 시트 수식 캐시를 날린다). 픽스처가
+>   읽기 전후 바이트 해시로 무변경을 실측한다. 변이 8종 + 사고 재생 1종 전부 발화.
+> - 회귀: `--selftest` **57/57 유지** · 게이트 **RED=0 유지**(YELLOW 96→97) · 오프라인 묶음 통과.
+>   **실행 비용 +11.9초**(게이트 15.2→27.1초, 훅 17분 33초 대비 +1.1%).
+> - 잔여 **UH-15**(하류 사본 매니페스트 부재 — 세 사본이 전부 사고 후에야 검사 대상이 됐다.
+>   UH-14 와 같은 뿌리라 합류) · **UH-16**(sync 가 시트 무변경 시 `요약` 행수 미갱신, 현재 무해) ·
+>   **UH-17**(워킹트리 기준 대조라 sync 후 커밋 없이 push 하면 안 잡힌다 — 커밋 기준으로 바꾸면
+>   정상 sync 중 상시 발화라 오탐억제 설계 전까지 배선 안 함).
+>   포스트모템 `docs/postmortems/PM-2026-09-02_master_xlsx_stale_unchecked.md`.
 
 **(2026-09-01) item23(기타요구자본) 자식 24/25/26 적용후 결측 227버킷 판정 완료 — 등재부 신설로 SKIP-on-missing 사각을 닫았다.**
 
@@ -73,7 +113,7 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 
 > 신설: `scripts/detect_kics_restatement.py`(탐지기) · `data/_gold/kics_restatement_ledger.json`(등재부) ·
 > `validate_data_contract.py` CHECK 7 `check_kics_restatement`(게이트, `run_gate` → 훅) ·
-> `tests/test_push_gate_wiring.py` WIRED 선언 · `tests/test_rule_coverage_manifest.py` 17개 테스트
+> `tests/test_push_gate_wiring.py` WIRED 선언 · `tests/test_rule_coverage_manifest.py` 18개 테스트
 >
 > - **무엇이 사각이었나.** 공시본 `[경과조치 적용 전 지급여력비율 세부]` 표는 **해당·직전·전전분기
 >   3열**을 인쇄한다 → 같은 (회사,분기) 값이 두 번 인쇄된다. 발행사가 그걸 다르게 인쇄하면

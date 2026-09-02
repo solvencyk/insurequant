@@ -26,16 +26,24 @@
 
 ## 두 게이트의 차이 (3번 칸을 채울 때 반드시 구분)
 
+> ⚠️ **아래 표는 2026-08-21 에 바뀌었다.** 그전까지 `prepush_check.py` 는
+> `validate_data_contract.py` **하나만** 불렀고, 그래서 K-ICS 게이트·마스터테이블 게이트에만
+> 배선한 룰은 push 를 못 막았다(그 사실이 UH-1 이었다). 지금은 훅이 여러 게이트를 부른다 —
+> **2026-08-21 이전 포스트모템의 "K-ICS 게이트에만 배선 = push 못 막음" 서술은 stale 로 읽어라.**
+
 | 게이트 | 파일 | 언제 도나 | 무엇을 막나 |
 |---|---|---|---|
-| K-ICS 게이트 | `scripts/validate_kics_disclosure.py` | CLAUDE.md 규정상 수동 실행 | 자기 exit code(2)만. **push를 자동으로 막지 않는다** |
-| 마스터테이블 게이트 | `scripts/validate_master_tables.py` | 수동 실행(**`--no-build` 필수**) | 자기 exit code(2)만. **push를 자동으로 막지 않는다** |
-| **push 게이트** | `scripts/validate_data_contract.py` (← `prepush_check.py`) | publishing이 push 직전 | **실제 push 차단.** display 7분기 scope |
+| K-ICS 게이트 | `scripts/validate_kics_disclosure.py` | **훅 단계 1b** (2026-08-21부터) | ✅ **push 차단** (`n_kics` → `blocked`) |
+| 도메인 게이트 7종 | `validate_{csm_continuity,kics_rate_sensitivity,nb_csm_multiple,csm_waterfall,live_artifacts,disclosure_freshness,stale_quarter_tables}.py` | **훅 단계 1c** (2026-08-21부터) | ✅ **push 차단** (`n_dom` → `blocked`) |
+| 마스터테이블 게이트 | `scripts/validate_master_tables.py` | 수동 실행(**`--no-build` 필수**) | ❌ 자기 exit code(2)만. **push를 자동으로 막지 않는다** (골든 `tests/test_master_tables_golden.py` 는 훅 묶음에 있다) |
+| 일반 이상치 발견 | `scripts/scan_generic_anomalies.py` | 수동 (2026-08-25 게이트 밖으로 분리) | ❌ YELLOW 전용 — 원래 막은 적 없다 |
+| **push 게이트** | `scripts/validate_data_contract.py` (← `prepush_check.py` 단계 1) | 훅이 push 직전 | ✅ **실제 push 차단.** display 7분기 scope |
 
-⚠️ **`prepush_check.py`는 `validate_data_contract.py` 하나만 호출한다.**
-→ K-ICS 게이트 **또는 마스터테이블 게이트에만** 배선한 룰은 **push를 못 막는다.** 3번 칸에
-"K-ICS 게이트에 배선"이라고만 적으면 그건 절반만 굳은 것이다. 반드시 push 게이트 배선 여부를
-따로 적을 것. (이 사실 자체가 PM-2/PM-3의 미배선 잔여 = UH-1.)
+⚠️ **여전히 "배선했다" 와 "실제로 push 를 막는다" 는 다른 말이다.** 바뀐 것은 답이지 확인
+의무가 아니다 — 3번 칸을 채울 때 룰을 어느 스크립트에 넣었는지만 적지 말고 **그 스크립트가
+`prepush_check.py` 에서 실제로 호출되고 그 exit code 가 `blocked` 계산에 들어가는지**를
+소스에서 확인해라. `tests/test_push_gate_wiring.py` 가 그 선언을 매니페스트로 강제한다
+(새 `validate_*.py` 나 새 `check_*` 를 추가하면 선언 없이는 테스트가 막는다).
 
 > **실제 발화 사례 (2026-08-15)**: CSM 연속성(`CONT`)이 `validate_master_tables.py` 에만 있어서,
 > 파서가 5사 기초를 override 해 FY 경계를 새로 깬 뒤에도 push 경로는 초록이었다. 게다가 그
@@ -64,6 +72,8 @@
 
 | [PM-2026-08-25](PM-2026-08-25_gate_read_the_wrong_file.md) | **게이트가 배포본이 아닌 파일을 검사했다 (불변식 1번 위반)** — 라이브 HTML 이 fetch 하는 .json 16개 중 **6개를 어떤 검사기도 안 읽었고**, `validate_master_tables` 의 PL 축은 파서 중간산출물을 읽어 배포본 1,307셀이 항등식 미검사 + `HOLE-PL` 24건이 24/24 phantom. tier1/tier2 는 배포본을 **등록만** 하고 값은 상류를 읽어 **라이브 4사가 0% 로 오표시** | ✅ `scripts/validate_live_artifacts.py` 신설(prepush 1c) + PL 축 배포본 재조준 + `tests/test_push_gate_wiring.py::LIVE_ARTIFACT_READERS`·`DEPLOYED_VS_UPSTREAM` 매트릭스(변이 5/5 발화) + baseline 2종(pl_bridge 26 · live_artifact 1,086) | `closed` (잔여 UH-13·UH-14) |
 
+| [PM-2026-09-02](PM-2026-09-02_master_xlsx_stale_unchecked.md) | **마스터 JSON 의 하류 사본이 둘인데 검사기는 하나였다** — `PUBLIC_EXPORT_*` 는 `public_exports/` 스냅샷만 보고 **마스터 ↔ `insurequant_master_tables.xlsx` 를 대조하는 룰이 0건**. owner 라이브 QA 로 `자본비율전망` 이 2026.1Q 베이스라인에 멈춘 것이 발견됐고(38개사 2090칸 중 1219칸), 전수 재측정에서 `K-ICS공시` 도 stale(33셀·121행). 모든 게이트가 RED=0 이었다 | ✅ push 게이트 `check_master_xlsx` (CHECK 8, `scripts/check_master_xlsx_drift.py` 13시트 전수) + 매니페스트·변이시험 18종. **되돌려 재본 실측**: 수정 전 워크북에서 RED=5(두 수정 커밋의 자체 기록과 셀 단위 일치) | `closed` (잔여 UH-15·UH-16·UH-17) |
+
 ## ✅ 2026-07-21 해소 (owner 승인)
 
 | ID | 조치 |
@@ -91,6 +101,9 @@
 | **UH-12** | 부재 박제 셀 집합이 `_absence_pin_census` 에서는 주입 가능한데 `_transition_mmult_after` · `_parent_present_child_incomplete_after` 는 **모듈 상수를 직접 참조**한다. 라이브에서는 셋이 같은 상수를 보므로 무해하지만, 합성 selftest 주입이 세 축에 고르게 닿지 않는다 | 세 함수에 같은 `pins` override 인자를 붙이면 해소. 지금은 `tests/test_exemption_absence_pin.py` 가 **라이브 마스터 변이**로 그 축들을 덮는다(합성보다 강한 증거라 측정된 이득이 작다). PM-2026-08-24(b) §5 / P3 |
 | **UH-13** | **`data/dart/viz/csm_waterfall_history.json` 은 아무도 재생성하지 않는 정적 스냅샷이다.** 선언 빌더 `scripts/ifrs17_batch_historical.py` 가 2026-06 에 아카이브된 뒤 마스터만 백필·정정을 받아 벌어졌다. 실측 2026-08-25: 대조 1,581셀 중 **933건(59.0%) drift**, 최대 Δ 43,852억(삼성화재 2023.3Q closing) · 스냅샷 자체 단계 항등식 파탄 41건 · 마스터에 있는데 스냅샷에 없는 회사 14사. IFRS17.html 워터폴 이력 패널이 그 값을 그린다 | **검사는 배선됐다**(`HIST_MASTER_DRIFT`·`HIST_STAGE_IDENTITY`·`HIST_CENSUS_MISSING`, baseline 등재 YELLOW). **파일의 처분이 미결** — 발주 `inbox/parser/20260825T1125Z__validation__MULTI__live_viz_artifacts_unchecked.md` §A. 권고: 마스터 파생으로 교체(drift 가 구조적으로 0 이 된다). PM-2026-08-25 §5 |
 | **UH-14** | **배선 매트릭스(R-1/R-2)가 소스 문자열 검사다.** 정본 증거는 런타임 추적(`scripts/_probes/probe_20260825_trace_validator_reads.py`)인데 `validate_data_contract` 한 번 도는 데만 수십 초라 push 묶음에 넣지 않았다. 경로 리터럴이 소스에 있으면 통과하므로, 리터럴은 남았는데 코드경로가 죽은 경우를 못 잡는다 | 변이시험 M2b(상류를 직접 로드)가 가장 흔한 회귀형을 덮는다. 검토 방향: 추적 프로브를 릴리스 전 수동 실행으로 규정하거나 검사기별 read-manifest 를 산출물로 남겨 대조. PM-2026-08-25 §5 |
+| **UH-15** | **루트 마스터의 하류 사본을 열거하는 매니페스트가 없다.** 지금까지 세 개(라이브 HTML 이 fetch 하는 .json · `public_exports/` · `insurequant_master_tables.xlsx`)가 **전부 사고가 난 뒤에** 하나씩 검사 대상이 됐다. 네 번째 사본이 생기면 같은 순서를 또 밟는다 — 사본이 느는 것을 탐지하는 장치가 없고 **사람의 기억**에 걸려 있다 | **PM-2026-08-25 의 UH-14 와 같은 뿌리**(정본 증거인 런타임 추적 프로브가 push 묶음 밖에 있다)라 그쪽에 합류시킨다. 먼저 실측이 선행돼야 한다 — 누가 루트 마스터를 읽어 파일을 쓰는지 추적. 추측으로 매니페스트를 만들면 그 자체가 또 다른 honor-system 이다. PM-2026-09-02 §5 / P2 |
+| **UH-16** | `sync_master_xlsx_sheet.py` 는 **시트에 변경이 있을 때만** `요약` 행수를 고친다(L210-212 조기반환이 L273 요약 블록보다 앞). 데이터 시트는 전부 동기인데 `요약` 만 틀어지면 `MASTER_XLSX_SUMMARY_ROWCOUNT` RED 을 그 스크립트로 못 고친다 | 현재 무해(실측: 요약 전 행 일치). 발생하려면 워크북을 손으로 편집해야 하는데 그것 자체가 금지된 동작이다. 발화하면 그때 `--summary-only` 를 추가한다 — **미리 만들지 않는다**(측정된 이득 0. UH-5·UH-9 선례: 필요가 확인되기 전에 배선하지 않는다). PM-2026-09-02 §5 / P3 |
+| **UH-17** | `check_master_xlsx` 는 **워킹트리 xlsx ↔ 워킹트리 마스터**를 대조한다. `PUBLIC_EXPORT_*` 는 마스터 쪽을 `git show HEAD:` 로 읽는데(`read_committed_json`) 이쪽은 아니다 → xlsx 를 sync 하고 **커밋 없이** push 하면 게이트는 깨끗한데 커밋된 상태는 어긋난다 | 새 클론에서는 즉시 RED 이라 자기치유되고, 더러운 워킹트리는 `git status` 에 보인다. 커밋 기준으로 바꾸면 워크북 재읽기(+10초) + **정상 sync 중 상시 발화** — 오탐 억제를 설계하기 전에는 배선하지 않는다(UH-5·UH-9 선례). PM-2026-09-02 §5 / P3 |
 | **UH-9** | **회사 단위 `item47` 스코프 투표는 관행이 시간에 따라 바뀌는 발행사를 못 담는다.** KB손해(KR0010)는 2023.1Q~2025.1Q 가 INCL, 2025.2Q부터 EXCL 로 깨끗하게 갈리는데(item47 66,275 → 14,398) 지금은 CONFLICT 로 묶여 종전 관행 EXCL 로 처리된다. **현재는 무해** — CONFLICT 4사(KR0010·KR0050·KR0051·KR0069) 전 버킷이 한도 미구속이라 어느 읽기로 읽든 한도초과액이 0 이고, INCL 로 뒤집는 전수 시뮬(V3)에서도 status 전이 0건이었다 | 분기 단위 판정은 **측정된 이득이 0 이라 만들지 않았다**(오탐억제를 설계할 수 없으면 배선하지 않는다는 UH-5 선례). 발화 조건과 감지 경로를 대신 박아 둔다: CONFLICT 회사에 한도가 구속하는 버킷이 생기면 `3_tier2_composition` 이 먼저 RED 를 낸다. 재현 `scripts/_probes/probe_20260824_kr0075_scope_evidence.py` (CODES 에 CONFLICT 4사 투입) / P3 |
 
 ## ✅ 2026-07-21 (3차) — UH-5 종결 (owner 승인, premise-refined)

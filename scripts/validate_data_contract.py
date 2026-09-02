@@ -3285,6 +3285,52 @@ def check_kics_restatement(res: GateResult, env: "Env") -> None:
                     f"재검산한다 — 등재된 칸만 기준이탈 탐지가 된다")
 
 
+# ===========================================================================
+# CHECK 8 — 마스터 JSON ↔ insurequant_master_tables.xlsx   (2026-09-02, validation)
+# ===========================================================================
+# ## 왜 있나 — 같은 날 사고 2건 (owner 승인 "신설한다 — 14개 시트 전수")
+#
+# **사고 1.** owner 라이브 QA: NH농협손해보험 2026 기본자본비율 전망이 라이브·마스터는 102.77
+# 인데 xlsx `자본비율전망` 시트만 79.8 이었다(= 그 회사 **2026.1Q** 기본자본비율). 마스터
+# `kics_forward_capital.json` 은 baseline 을 2026.2Q 로 갱신했는데 시트만 1Q 기준 옛 산출로
+# 남아 있었다. 전수 재측정: **38개사 전부, 2090칸 중 1219칸 stale.**
+#
+# **사고 2.** owner 가 "그럼 소진율 2종도 stale 하겠네" 라고 지적해 13개 시트를 전수 측정했더니
+# **가설과 결과가 달랐다** — 소진율 2종은 드리프트 0 이었고, 아무도 안 보던 `K-ICS공시` 가
+# stale 이었다(변경 33셀 · 추가 121행). 어느 시트가 stale 한지는 추측할 수 없다. 전수로 잰다.
+#
+# ## 왜 기존 게이트가 못 잡았나
+#
+# `PUBLIC_EXPORT_DRIFT`(validate_live_artifacts CHECK 6) 는 마스터 ↔ `public_exports/`
+# 스냅샷만 대조한다. **마스터 ↔ xlsx 를 대조하는 룰이 저장소에 하나도 없었다.** xlsx 는 owner 가
+# 직접 받아 보고 손으로 검토하는 산출물인데(gold 리뷰 루프의 입력이기도 하다) 그 축이 무검사였다 —
+# 불변식 1번("게이트가 검사하는 파일 = 사용자가 보는 파일")의 세 번째 구멍이다.
+#
+# ## 계약
+#
+#   · 대조는 **셀 단위**, 13개 시트 **전수**(오늘 실측 53,288행). 스키마·평탄화·비교 정규화·
+#     행 식별키는 전부 `build_master_xlsx` / `sync_master_xlsx_sheet` 에서 **import** 한다 —
+#     여기서 다시 적으면 빌더가 바뀌는 순간 검증기가 검증 대상과 다른 스키마를 쓰게 된다.
+#   · 워크북은 **읽기만** 한다(`data_only=True, read_only=True`). openpyxl 로 load+save 하면
+#     다른 시트의 수식 캐시가 통째로 날아간다(memory `project_master_xlsx_formula_cache`).
+#   · 판정과 근거의 나머지 전부는 `scripts/check_master_xlsx_drift.py` 모듈 docstring 에 있다
+#     (`요약` 시트를 왜 행수만 보는지, `'154'` vs `154.0` 을 왜 드리프트로 안 보는지 포함).
+def check_master_xlsx(res: GateResult, env: "Env") -> None:
+    if env.inject:            # selftest 격리 — 합성데이터에 실파일을 섞지 않는다
+        return
+    import check_master_xlsx_drift as MX
+    findings, stat = MX.scan()
+    for f in findings:
+        res.add(check="master_xlsx", severity=f["severity"], master="master_tables.xlsx",
+                company=None, quarter=f["sheet"], rule=f["rule"], message=f["message"])
+    res.add(check="master_xlsx", severity="YELLOW", master="master_tables.xlsx",
+            company=None, quarter=None, rule="MASTER_XLSX_CENSUS",
+            message=f"insurequant_master_tables.xlsx census: 선언 시트 "
+                    f"{stat['sheets_declared']} · 대조 시트 {stat['sheets_compared']} · "
+                    f"대조 행 {stat['rows_compared']} · 드리프트 셀 {stat['cells_drifted']}. "
+                    f"대조 시트 수가 선언보다 적으면 그만큼이 무검사다")
+
+
 def run_gate(env: Env) -> GateResult:
     res = GateResult()
     check_artifact_readable(res, env)
@@ -3298,6 +3344,7 @@ def run_gate(env: Env) -> GateResult:
     check_domain_identity(res, env)
     check_gold_overlay(res, env)
     check_kics_restatement(res, env)
+    check_master_xlsx(res, env)
     # 2026-08-25 — CHECK 5(일반 이상치 스캐너)를 **게이트에서 뺐다**(owner: "씰데없는 룰들은
     # 좀 쳐내"). 지운 게 아니라 `scripts/scan_generic_anomalies.py` 로 내렸다.
     #
@@ -3324,7 +3371,7 @@ def print_report(res: GateResult) -> None:
     print("#" * 78)
 
     by_check = {"census": [], "as_of": [], "cross_source": [], "domain": [], "anomaly": [],
-                "gold_overlay": [], "restatement": []}
+                "gold_overlay": [], "restatement": [], "master_xlsx": []}
     for f in res.findings:
         by_check.setdefault(f.check, []).append(f)
 
@@ -3336,9 +3383,10 @@ def print_report(res: GateResult) -> None:
         "anomaly": "5. GENERIC ANOMALY DISCOVERY (metric-agnostic; learned from cohort)",
         "gold_overlay": "6. GOLD OVERLAY vs BUILDER SOURCE (몇 칸이 조용히 덮여 있는가)",
         "restatement": "7. K-ICS RESTATEMENT (발행사 소급재작성 / 마스터 기준이탈)",
+        "master_xlsx": "8. MASTER XLSX (마스터 JSON ↔ insurequant_master_tables.xlsx 셀 단위)",
     }
     for check in ("census", "as_of", "cross_source", "domain", "anomaly", "gold_overlay",
-                  "restatement"):
+                  "restatement", "master_xlsx"):
         items = by_check.get(check, [])
         # CHECK 5 는 2026-08-25 에 게이트에서 빠졌다. **조용히 사라지면 안 된다** — 다음 세션이
         # "이상치 검사가 원래 없었다" 로 읽으면 그게 이 저장소의 반복 사고다. 한 줄로 남긴다.
