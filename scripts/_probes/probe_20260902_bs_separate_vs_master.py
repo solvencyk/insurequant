@@ -17,6 +17,10 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.stdout.reconfigure(encoding="utf-8")
 
 WANT = {1: "자산총계", 2: "부채총계", 3: "자본총계", 31: "이익잉여금"}
+# owner 2026-09-02: 소급재작성본을 최종 채택한다. 마스터는 DART FS-API 의 후속 재작성본을
+# 담으므로 '원 필링 당시본'과 다른 셀이 구조적으로 생긴다. 그 셀들은 여기 등재돼 있어야
+# 하고, 등재된 것만 통과시킨다 -- 등재부에 적어두기만 하고 룰이 안 읽으면 소용이 없다.
+RESTATED = ROOT / "data" / "_gold" / "bs_restated_cells.json"
 TOL_REL = 0.005
 SCALE = {"천원": 1e-3, "백만원": 1.0, "억원": 100.0, "원": 1e-6}
 
@@ -74,8 +78,12 @@ def sep_bs(text):
 def main():
     master = json.loads((ROOT / "IFRS17_BS.json").read_text(encoding="utf-8"))
     mi = {(r["원수사명"], r["공시분기"], r["항목번호"]): r["값"] for r in master}
+    ledger = {}
+    if RESTATED.exists():
+        ledger = json.loads(RESTATED.read_text(encoding="utf-8")).get("cells", {})
     checked = 0
     mism = []
+    adopted = []
     skipped = 0
     for xml in sorted((ROOT / "data" / "dart").glob("FY*/raw/*/*.xml")):
         qdir = xml.parts[-4]
@@ -98,9 +106,19 @@ def main():
             checked += 1
             rv = raw_v * scale
             if abs(rv - mv) / max(abs(rv), abs(mv), 1.0) > TOL_REL:
-                mism.append((company, quarter, item, mv, rv))
+                key = f"{company}|{item}|{quarter}"
+                ent = ledger.get(key)
+                # 등재된 재작성 셀이면 통과 -- 단 등재된 '원 필링 당시본'과도 맞아야 한다.
+                # (등재부가 낡으면 진짜 회귀를 가려버리므로 원본 값까지 대조한다.)
+                if ent and abs(ent.get("원_필링_당시본", 0) - rv) / max(abs(rv), 1.0) <= TOL_REL:
+                    adopted.append((company, quarter, item, mv, rv))
+                else:
+                    mism.append((company, quarter, item, mv, rv))
     print(f"별도 BS 표를 못 찾아 건너뛴 필링: {skipped}")
-    print(f"대조한 셀 {checked}개 · 불일치 {len(mism)}개 (허용 {TOL_REL:.1%})")
+    print(f"대조한 셀 {checked}개 · 불일치 {len(mism)}개 · "
+          f"소급재작성 채택(등재됨) {len(adopted)}개 (허용 {TOL_REL:.1%})")
+    for c, q, i, mv, rv in sorted(adopted):
+        print(f"  [재작성채택] {c} {q} item{i}({WANT[i]}): 마스터={mv:,.0f} 원필링={rv:,.0f}")
     for c, q, i, mv, rv in sorted(mism, key=lambda x: -abs(x[3] - x[4]) / max(abs(x[4]), 1)):
         print(f"  {c} {q} item{i}({WANT[i]}): 마스터={mv:,.0f} 원문별도={rv:,.0f} "
               f"차이={abs(mv - rv) / max(abs(rv), 1):.1%}")
