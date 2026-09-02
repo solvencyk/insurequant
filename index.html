@@ -219,12 +219,16 @@
     let nbRowsRaw = null, wfRowsRaw = null; // M3: 모바일 버블 리스트용 원본 마스터 행
     let allData = [];
     let GROUPED = {};
-    // D-2 20260818(owner): NB 배수(Y축) 분모(월납초회)가 재수집 보류돼 2026.1Q에 고정 — owner 지시로
-    // 값 자체는 유지, 대신 "2026.1Q" 리터럴이 여러 곳에 복붙돼 있던 걸 여기 하나로 모음.
+    // D-2 20260818(owner): NB 배수(Y축) 분모(월납초회)가 재수집 보류돼 2026.1Q에 고정돼 있었다 —
+    // 그때 "2026.1Q" 리터럴이 여러 곳에 복붙돼 있던 걸 이 상수 하나로 모았다.
+    // 2026-09-02(owner): 보류 해제 — 보험개발원(KIDI) 2026.6월(202606) 월납환산 신계약보험료가
+    // 게시돼 분모를 수집했고 NB_CSM_multiple.json 이 331->362행(2026.2Q 23사)으로 갱신됐다.
+    // 따라서 이 상수를 2026.2Q 로 올린다. 2026.2Q 행이 없는 회사는 buildBubbleData() 의 기존
+    // fallback 이 직전 분기 배수를 이월하고 multEstimated=true 로 "추정" 표시한다.
     // D-2 후속(20260818T0210Z, owner): X축(신계약CSM)은 이 상수와 분리됐다 — CSM_waterfall
     // 항목2(wfNbItem)가 소스라 이 배수 마스터보다 최신(2026.2Q)이라서다. NB_TARGET_Q는 이제 Y축
     // (배수) 전용 — X축 기준은 buildBubbleData()가 wfNbItem에서 회사별 최신으로 자동 도출한다.
-    const NB_TARGET_Q = '2026.1Q';
+    const NB_TARGET_Q = '2026.2Q';
     // 푸터 "최신 공시 분기" — 이 페이지가 쓰는 두 마스터(K-ICS 트리맵 · CSM 버블) 중 더 최신 쪽으로
     // 데이터에서 도출(하드코딩 금지). 둘은 독립 로드라 각자 끝나는 대로 갱신.
     let _footerKicsQ = null, _footerWfQ = null;
