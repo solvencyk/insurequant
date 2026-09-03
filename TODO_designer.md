@@ -9,13 +9,17 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
-**Recent (2026-09-03, owner 직접 지시 — 커밋만, 라이브 미배포):**
+**Recent (2026-09-03, owner 직접 지시 — 라이브 배포 완료 `cda3c1e`):**
 - **섹션 스크롤 스냅("쫀득") 4개 페이지 공통.** `common.css` 한 곳(`html{scroll-snap-type:y
   proximity}` + `.panel{align:start}` + `.container{start}`/`footer{end}` + `scroll-padding-top:88px`).
   HTML 무수정. 4개 페이지 × 데스크톱 1280×900 · 모바일 375×812 실측: 제목 가림 0, 맨 위·바닥
   도달 O, 섹션 중간 끌림 0. 양 끝 스냅 트랩(최상단 못 감 · 푸터 못 봄)은 재현해서 잡았다.
   `prefers-reduced-motion` 에서 스냅 해제. 상세·근거는 changelog 2026-09-03.
-- **다음 행동: 안드로이드(Termux)에서 push + main 배포.** 배포 대상은 `common.css` 1개.
+- **배포 경로: 안드로이드(Termux) 얕은 main 클론.** 작업 PC 는 읽기(fetch/ls-remote)는 통하지만
+  **push 는 여전히 막혀 있다** — `git push --dry-run` 이 3분 무응답으로 걸린다. 읽기가 되는 것을
+  보고 "열렸다"고 판단하면 안 된다.
+- **잔여: 브랜치 4커밋이 이 PC 에만 있다**(`4d73826`·`374c7f9`·`3ce1672`·`8f05c19`).
+  라이브에는 영향 없으나 백업이 없다. 폰으로 브랜치를 올리려면 316MB 를 받아야 해서 보류.
 
 **Recent (2026-08-30d, owner 후속 지시 — 라이브 배포 완료 `2a7c51b`):**
 - **IFRS17 Panel 5 모바일 x축 라벨 겹침 해소.** 375px 에서 막대 하나에 16.9px 인데 두 줄 라벨이

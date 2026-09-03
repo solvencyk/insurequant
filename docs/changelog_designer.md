@@ -7,7 +7,7 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
-## 2026-09-03 — 섹션 스크롤 스냅("쫀득") 4개 페이지 공통 (owner 직접 지시)
+## 2026-09-03 — 섹션 스크롤 스냅("쫀득") 4개 페이지 공통 (owner 직접 지시 · 라이브 배포 `cda3c1e`)
 
 owner: "지금 모든 html들에서 스크롤 내릴때 좀 쫀득하게 내려가면 좋겠는데 / 각 섹션 안에서는
 평소대로 스크롤되다가 끝에서 살짝 멈추고, 다음 섹션으로 넘어갈땐 휘리릭 넘어가게"
@@ -64,6 +64,27 @@ jsdelivr 를 막아 차트가 안 그려지고 패널이 `will-reveal`(opacity 0
 | 공시보고서 | 1280×900 | 0 (88px) | O | O | 0 |
 
 모달 내부 스크롤러(`.iq-modal-panel`)는 별도 스크롤 컨테이너라 영향 없음(`scroll-snap-type:none` 실측).
+
+**배포 (2026-09-03, main `e1c2ad9..cda3c1e`).** 배포 대상은 `common.css` 1개뿐이었다
+(`git ls-tree origin/main` 전수 대조 결과 다른 파일은 전부 동일).
+
+작업 PC 에서 push 가 막혀 안드로이드(Termux)의 **얕은 main 클론**에서 올렸다. 여기서 배운 것 셋:
+
+1. **읽기가 통하는 것은 push 가 통한다는 뜻이 아니다.** `git ls-remote` · `git fetch` 는 정상
+   동작하는데 `git push --dry-run` 은 3분 무응답으로 걸렸다. 그 차이를 확인하지 않고 "깃허브가
+   다시 열렸다"고 보고했다가 owner 에게 잡혔다. **연결 판정은 읽기가 아니라 쓰기 경로로 한다.**
+2. **`git hash-object` 값을 기계 간에 비교하면 안 된다.** 작업 PC 작업본은 줄끝이 CRLF 인데
+   git 이 LF 로 정규화해 `147c421b` 를 뱉고, 폰(autocrlf 없음)에서는 원본 바이트 그대로
+   `e674363` 이 나왔다. 파일은 바이트가 같았는데 "깨졌다"고 오판할 뻔했다. 폰에서
+   `sed -i 's/$//'` 로 LF 로 맞춘 뒤 해시가 일치했고, 그래야 저장소 관례(LF)와도 맞고
+   diff 도 36줄 추가로 깔끔하게 남는다.
+3. **커밋 전 게이트 두 개를 명령줄에 박아 두면 사고를 막는다.** 스테이지된 블롭 해시 대조 +
+   `git diff --cached --stat`. 이번엔 `1 file changed, 36 insertions(+)` 이 찍혔다 —
+   2026-09-03 오전에 라이브를 깨뜨린 그 사고의 신호가 `274,765 insertions` 였는데 그때는
+   그걸 보고도 넘겼다.
+
+라이브 검산: `curl -sk https://www.insurequant.com/common.css?cb=...` 로 받은 파일의 블롭 해시가
+`147c421b`(배포 대상과 동일), 크기 18,110B, 스냅 룰 5개 전부 존재.
 
 ---
 
