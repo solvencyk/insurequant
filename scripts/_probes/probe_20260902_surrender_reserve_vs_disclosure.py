@@ -1,87 +1,76 @@
 # -*- coding: utf-8 -*-
-"""IFRS17_BS.json item5(해약환급금준비금)를 **경영공시 PDF**의 '해약환급금준비금 등의 적립'
-표(생보 대개 7-2/7-3 또는 5-3, 손보 5-3 -- 절 번호는 회사·생손보 불문 다 섞여 나온다, 절
-번호로 찾지 않는다)와 전수 대조한다.
+"""법정준비금 4종(item5 해약환급금준비금·item6 비상위험준비금·item7 대손준비금·item8
+보증준비금)을 **경영공시 PDF**의 '~등의 적립' 표(생보 대개 7-2/7-3 또는 5-3, 손보 5-3 --
+절 번호로 찾지 않는다)와 전수 대조한다.
 
 동기(owner 2026-09-02): "해약환급금준비금을 경영공시 PDF 기준으로 비교해서 DART랑 차이 큰
-애들은 갈아끼우라고 했는데 하나도 안 고쳐져 있다. 삼성생명·한화생명이 특히 1~3분기 오차가
-크다." 마스터의 item5 는 DART 주석(기적립액+예정액)에서 오는데, 경영공시 표는 그 분기의
-**잔액**을 직접 싣는다 -- 개념이 어긋나면 경영공시가 정본이다.
+애들은 갈아끼우라고 했는데 하나도 안 고쳐져 있다." 마스터의 item5-8 은 DART 주석(기적립액+
+예정액)에서 오는데, 경영공시 표는 그 분기의 **잔액**을 직접 싣는다 -- 개념이 어긋나면
+경영공시가 정본이다.
+
+[2026-09-03 3차 수정 -- owner 판정 반영: "기적립액 + 적립예정액 = 잔액" 통일]
+
+2차 수정(find_tables() 구조 기반)까지도 **개념이 여전히 섞여 있었다**. 실측(악사손해
+KR0049): 같은 회사 안에서도 분기마다 "적립예정액"이 실리는 자리가 다르다 --
+  - 2024.2Q~2024.3Q: 표에 "기적립액"과 "(적립예정액)" 이 **별개 행**으로 있다(둘을 더해야
+    잔액). 이건 이미 대응돼 있었다(pair-sum 클러스터 경로).
+  - 2025.1Q: 표엔 "해약환급금준비금 773"(기적립액, 단독행)뿐이고, "적립예정액"은 **각주
+    문장**에만 있다("당분기 적립예정액은 해약환급금준비금 72억원") -- 최종 합계는 문장이
+    안 알려주므로 **우리가 773+72=845억을 계산**해야 한다.
+  - 2025.2Q/2025.3Q: 표는 여전히 "773"(기적립액) 단독행인데, 각주가 증분에 이어 **최종
+    잔액까지 직접 말해준다**("이를 적립할 경우 당분기 해약환급금준비금은 839억원") --
+    이 경우는 **문장이 준 최종값을 그대로 채택**해야 한다(우리가 더하다 반올림오차를
+    만들 위험이 없다).
+  - 2024.4Q: 각주에 "적립예정액" 언급 자체가 없다 -- 이 분기는 표값(773)이 그대로 잔액.
+같은 회사, 같은 표 캡션인데 분기마다 이 넷 중 뭐가 나올지 다르다. 그래서 "요약표에서 라벨
+단독행을 찾으면 그게 잔액"이라는 2차 수정의 전제 자체가 틀렸었다 -- **단독행은 기적립액일
+수도 잔액일 수도 있고, 페이지의 각주 문장을 봐야 구분된다.**
+
+새로 추가한 것: `_narrative_totals()` -- 페이지 전체 텍스트에서
+  1. "이를 적립(환입)?할 경우 ... 입니다" 문장 -- 회사가 **직접 계산한 최종 잔액**
+     (항목별로 "~은/는 NNN억원" 나열). 있으면 최우선으로 채택(문장 값을 그대로 씀,
+     우리가 손으로 더하지 않는다 -- 발행사 계산이 반올림까지 반영돼 있다).
+  2. "적립(환입)?예정액은 ... 입니다" 문장(위 1이 없을 때) -- **증분만** 준다. 표의
+     기적립액(단독행) 값에 이 증분을 더해 잔액을 만든다. 부호는 그대로 지킨다(환입은
+     음수 -- 실측: 악사손해 2025.3Q "해약환급금준비금 -15억원").
+항목 4종(대손준비금·비상위험준비금·해약환급금준비금·보증준비금)이 **같은 구조**를 공유한다
+(같은 문장 안에 여러 항목이 같이 나온다, 예: "해약환급금준비금 66억원, 비상위험준비금
+20억원"). 그래서 LABEL_PREFIXES 를 항목별 딕셔너리로 바꾸고, 표/문장 스캔을 페이지당 한 번만
+돌려 4개 항목을 동시에 뽑는다(4배 재스캔 낭비 방지).
+
+**허용오차도 이번에 절대값으로 바꿨다.** 경영공시는 억원 단위 반올림이라 공시값×100(백만)과
+마스터의 정당한 차이는 최대 ±50백만(0.5억)뿐이다 -- 그보다 크면 항목 규모와 무관하게 전부
+실오차다. owner 실측: 삼성생명 2026.1Q 대손준비금이 경영공시 2,999억(299,900백만)인데
+마스터는 299,321백만 -- 579백만 차이인데 예전 기준(상대 1%)으론 299,900의 0.5%=1,497백만
+안에 들어가 통과했었다. `ABS_TOL_MILLION = 50.0` 로 교체.
 
 [2026-09-02 2차 수정 -- v1(라인기반 exact-match)의 결함과 교체 이유]
 
-v1 은 `페이지 텍스트를 줄 단위로 쪼개 "해약환급금준비금"과 정확히 일치하는 줄을 찾고, 그
-다음 몇 줄에서 숫자를 줍는다`는 방식이었다. 이게 깨지는 이유는 전부 **한국 경영공시 PDF가
-표를 세로쓰기/열 분리 렌더링**하기 때문이다:
+v1 은 `페이지 텍스트를 줄 단위로 쪼개 라벨과 정확히 일치하는 줄을 찾고, 그 다음 몇 줄에서
+숫자를 줍는다`는 방식이었다. 이게 깨지는 이유는 전부 **한국 경영공시 PDF가 표를 세로쓰기/열
+분리 렌더링**하기 때문이다: (1) 캡션("7-2. ~등의 적립")이 붙은 진짜 표는 "줄 전체가 라벨과
+정확히 같아야 함" 조건을 통과 못 하는데, 같은 페이지 세로쓰기 라벨열에 라벨만 홀로 찍히는
+자리가 생겨 각주성 잡음을 숫자로 읽었다(신한라이프 2025.1Q "24"). (2) 4Q/연차 공시는 같은
+라벨이 이연법인세 롤포워드·처분계산서·구성내역 노트 등 **개념이 다른 표**에도 나와 첫 매치를
+집었다(하나생명 2024.4Q "6,213,693,900"). (3) 삼성생명은 생보인데도 "7-2/7-3"이 아니라
+"5-3"을 쓴다(절 번호로 표를 찾으면 안 되는 이유).
 
-1. **분기공시(짧은 PDF)도 라벨이 다른 무관 표에 다시 등장한다.** 신한라이프 2025.1Q/2026.1Q
-   는 실제 5-3(7-2) 표가 캡션("7-2. 해약환급금준비금 등의 적립")을 달고 있어 v1의 "줄 전체가
-   LABEL과 정확히 같아야 함" 조건을 통과 못 하는데(캡션엔 "등의 적립"이 붙어 있다), 같은
-   페이지 안에 세로쓰기 라벨열이 뒤섞이며 라벨만 홀로 한 줄에 찍히는 자리가 생겨("...구분/
-   이/익/잉/여/금/대/손/준/비/금/해약환급금준비금/24") 거기 걸려 "24"라는 각주성 잡음을
-   숫자로 읽었다. **find_tables() 로 표 구조를 복원하면 진짜 표(캡션이 있는 page)가 정확히
-   당분기=39,046억/직전분기=36,381억(2025.1Q 기준)으로 나오고, 마스터(3,904,563)와 39,046
-   백만원 단위 환산치가 0.001% 이내로 맞는다** -- 즉 마스터는 원래 옳았고 v1 프로브가
-   틀렸다.
-2. **4Q(연차) 공시는 같은 라벨이 여러 완전히 다른 표에 나온다.** 이연법인세 롤포워드
-   (기초/손익계산서/자본/기말, 값은 세금영향액), 이익잉여금 처분계산서(당기/전기, 값은
-   그 회계연도의 **증분**, 괄호=차감), 이익잉여금 구성내역(당기말/전기말, 값은 **기적립액
-   단독** -- 예정액이 빠짐), 그리고 우리가 원하는 "기적립액/적립예정액/잔액(또는 예정액)"
-   3행 노트 -- 넷 다 "해약환급금준비금"을 라벨로 쓴다. v1 은 페이지의 **첫** 정확일치 줄을
-   그냥 집어 이연법인세나 처분계산서 값을 잔액인 양 반환했다(하나생명 2024.4Q "공시=
-   6,213,693,900"처럼 자릿수가 완전히 깨진 값이 나온 것도 여러 표의 숫자가 줄 단위로
-   잘못 이어붙은 결과). **AIA 2024.4Q 실측**: 이연법인세 표(p233)엔 `해약환급금준비금 |
-   (175,972) | 34,152 | - | (141,820)`(무관, 세금효과)가 있고, 우리가 원하는 표는 p240
-   `해약환급금준비금 예정액 | 613,943 | 761,784`(당기말/전기말) -- 이게 곧 현재 마스터값
-   613,943 과 정확히 일치한다. **하나생명 2024.4Q**도 마찬가지로 p55 요약표(억원,
-   `해약환급금준비금 | 809 | 1,082`)와 p199 노트(`해약환급준비금 잔액 | 80,882,732 |
-   62,136,939`, 천원)가 서로 검산되고 809억원=80,900백만원≈80,883(마스터, 오차는 표시
-   단위의 반올림)으로 일치한다. **즉 4Q "큰 차이"로 찍힌 사례들은 거의 다 v1의 페이지
-   오선택이었지 마스터 오류가 아니었다.**
-3. **삼성생명은 생보인데도 "7-2/7-3"이 아니라 "5-3"을 쓴다**(목차 실측, FY2025_Q4 p3)
-   -- 절 번호로 표를 찾으면 안 되는 이유의 실측 근거.
+`find_tables()` 표 구조 기반 알고리즘(2차 수정, 지금도 유효):
+1. "준비금" 부분문자열이 있는 페이지만 후보로 삼는다(4개 항목 라벨 전부 이 글자를 포함).
+2. 표마다 헤더 행에서 **당기열/전기열**을 키워드(당기말/당분기/해당분기/전기말/전분기/
+   직전분기, 열0 라벨열은 절대 제외)로 찾는다. 못 찾으면 날짜 패턴("YYYY년MM월"/
+   "YYYY년Q/4분기"/"YY.QQ"/"YYYY년 상반기·하반기")을 파싱해 최근값=당기로 판정.
+3. 라벨 뒤 접미사가 ""(단독)/"잔액"/"예정액"이면 잔액개념 후보, "기적립액"/"적립(환입)
+   예정액"/"처분액" 등은 버린다. 세로쓰기 병합셀(신한라이프/코리안리 유형)·2차원 그리드
+   (미래에셋류, 구분×기간이 열 방향)·기적립액+적립예정액 별행 합산(악사손해 2024.2Q류)
+   전용 경로가 있다.
+4. 단위는 표 바로 위 텍스트 블록의 "단위: 억원/백만원/천원/원"으로 백만원 환산.
+5. 우선순위: (P1=NARRATIVE) 각주 문장이 준 최종 잔액 또는 3행노트 잔액/예정액 행 >
+   (P2=COMPUTED) 표의 기적립액 + 각주 증분을 합산 > (P3=SUMMARY) 요약표 단독라벨(단위=억원,
+   각주에 증분 신호 없음 -- 표값 그대로 잔액) > (P4=CLUSTER) 세로쓰기 병합셀 위치대응 >
+   (P5=LOW) 단위 불명 등.
 
-새 알고리즘(라인기반 완전 폐기, `find_tables()` 표 구조 기반으로 교체):
-
-1. "해약환급" 부분문자열이 있는 페이지만 후보로 삼는다(더 넓게 -- 일부 회사는 중간 "금"자를
-   빼고 "해약환급준비금"이라 쓴다, 아래 3항).
-2. 그 페이지의 각 표에서 헤더 행을 스캔해 **당기열/전기열**을 키워드
-   (당기말/당분기/해당분기/당기 vs 전기말/전분기/직전분기/전기)로 찾는다. 못 찾으면
-   "YYYY년MM월"/"YYYY년Q/4분기"/"YY.QQ" 류 날짜 패턴을 파싱해 **더 최근 날짜 = 당기**로
-   판정한다(삼성생명 요약표처럼 헤더가 "2025년4/4분기(2025년12월)" 식으로 당/전 단어가 아예
-   없는 경우 대응). 열0(라벨열)은 절대 값열 후보에서 제외한다 -- 이게 이연법인세표의
-   `당기\n기초\n손익계산서\n자본\n기말` 같은 열0 헤더 오탐(열0="당기"는 "이 표 전체가
-   당기 데이터"라는 제목이지 값열이 아니다)을 걸러낸다.
-3. 각 행의 라벨열 텍스트에서 "해약환급금준비금" 또는 "해약환급준비금"을 찾는다. 라벨 뒤
-   접미사로 채택 여부를 가른다:
-     - 접미사가 ""(라벨 단독, 5-3/7-2 요약표 행) 또는 "잔액" 또는 "예정액"(3행 노트의
-       마지막 행) -> **채택**(잔액 개념).
-     - 접미사가 "기적립액"/"적립예정액"/"환입예정액"/"적립액"/"적립(환입)" 등 -> **버림**
-       (구성요소 단독값 또는 처분계산서 증분 -- 잔액이 아니다).
-   한 표 안에서 라벨이 여러 개 개행으로 뭉친 셀(세로쓰기 병합, 신한라이프/코리안리 유형)도
-   대응: 코리안리처럼 후속 행이 라벨을 열1에 다시 찍어주면 그 "직접 매치" 행을 최우선
-   사용하고, 신한라이프처럼 재언급이 전혀 없으면 뭉친 셀의 개행분리 순번과 값열의 개행분리
-   (또는 후속 물리행 시퀀스)를 같은 순서로 대응시킨다.
-4. 단위는 표 바로 위(같은 페이지, 표 bbox보다 위쪽) 텍스트 블록에서 최근접
-   "단위 : 억원/백만원/천원/원"을 찾아 백만원으로 환산한다. 단위를 못 찾으면 그 후보는
-   낮은 신뢰도로 강등한다(추측 금지 원칙 -- "틀린 값을 싣느니 빈 칸").
-5. 우선순위: (P1) 3행 노트의 잔액/예정액 행 > (P2) 요약표의 단독 라벨 행(단위=억원 확인) >
-   (P3) 세로쓰기 병합 셀에서 위치 대응으로 복원한 값 > (P4) 단위 미확인 또는 단독 라벨인데
-   단위가 억원이 아닌 행(구성내역 노트처럼 기적립액만 담은 표일 위험 -- 최후수단, 표시에
-   경고를 남긴다). 페이지 전체에서 후보를 다 모아 최고 우선순위를 취하고, 같은 우선순위에서
-   값이 서로 다르면(드묾) 전부 표시해 수동 확인을 요구한다(자동으로 아무거나 고르지 않는다).
-6. **2차원 그리드 표**(미래에셋생명류): 구분(대손준비금/해약환급금준비금/보증준비금) ×
-   기간(당기말/전기말)이 **열 방향으로 나란히** 놓이고, 행은 "준비금 기적립액/적립(환입)
-   예정액/잔액" 3개뿐이라 행 라벨엔 개별 준비금 이름이 없다(예: 미래에셋 2025.4Q p340,
-   `준비금 잔액 | 8,123 | 1,219,968 | 201,039 | 13,211 | 992,343 | 183,597`). 이 표를 4)의
-   "직접매치"로 잡으면 행 라벨이 "준비금 잔액"뿐이라 LABEL_PREFIXES 매치가 안 돼 통째로
-   놓친다 -- 놓치면 P4(같은 페이지의 note 31 "이익잉여금 구성내역", 기적립액 단독값
-   992,343)로 떨어져 **개념이 절단된 값을 저신뢰로 보고**하게 된다(실측: 이 경로로 여기
-   992,343 이 나왔었는데, p340 의 진짜 잔액은 1,219,968 -- 마스터가 그동안 옳았던 이유).
-   전용 경로(`_wide_grid_candidates`)로 구분 행에서 LABEL 열을 찾고, 그 열이 당기말/전기말
-   중 어느 그룹에 속하는지 상위 헤더 행에서 판정해 P_BREAKDOWN 급으로 채택한다.
-
-각주 처리(v1과 동일): 값이 '-'/'–'/'—' 면 그 분기 **미적립**이라는 뜻이지 결측이 아니다.
+각주 처리: 값이 '-'/'–'/'—' 면 그 분기 **미적립**이라는 뜻이지 결측이 아니다.
 """
 from __future__ import annotations
 import contextlib
@@ -97,8 +86,29 @@ import fitz  # noqa: E402
 sys.path.insert(0, str(ROOT / "scripts"))
 from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
-LABEL_PREFIXES = ("해약환급금준비금", "해약환급준비금")
-PAGE_FILTER = "해약환급"  # 페이지를 후보로 볼지 말지 -- LABEL_PREFIXES보다 넓게 잡는다
+# 항목번호 -> 라벨 변형들(긴 것부터 매치되도록 등록 순서 유지, _match_item_label 이 처리)
+ITEM_LABELS = {
+    5: ("해약환급금준비금", "해약환급준비금"),
+    6: ("비상위험준비금",),
+    7: ("대손준비금",),
+    8: ("보증준비금",),
+}
+ITEM_NAMES = {n: 5 for n in ITEM_LABELS[5]}
+for _item, _prefixes in ITEM_LABELS.items():
+    for _p in _prefixes:
+        ITEM_NAMES[_p] = _item
+# 매치용 (라벨, 항목번호) 목록, 긴 라벨 우선(부분문자열 충돌 방지 -- 지금은 겹치는 라벨이
+# 없지만 안전하게 정렬해 둔다)
+_ALL_LABELS = sorted(ITEM_NAMES.items(), key=lambda kv: -len(kv[0]))
+
+PAGE_FILTER = "준비금"  # 4개 항목 라벨이 전부 이 글자를 포함 -- 페이지 후보 필터는 넓게
+
+# 4Q/연차 필링은 같은 노트를 별도(standalone)/연결(consolidated) 두 번 싣는다(실측: 교보생명·
+# 삼성생명 -- 대손준비금 3행노트가 두 페이지에 따로 있고 값도 다르다, 연결 쪽 노트 텍스트가
+# "연결법인은.../연결실체는..."으로 자기 신원을 밝힌다). 마스터는 전사 OFS(별도) 고정 관례라
+# (memory reference_dart_fs_api_bs_basis) 연결 쪽은 감점해 같은 우선순위 안에서도 별도가
+# 먼저 온다 -- 우연한 페이지 순서에 기대지 않는다.
+CONSOLIDATED_MARKERS = ("연결법인", "연결실체")
 
 CUR_KW = ("당기말", "당분기", "해당분기", "당기")
 PRIOR_KW = ("전기말", "전분기", "직전분기", "전기")
@@ -119,7 +129,13 @@ def _kw_hit(text: str, keywords) -> bool:
             return True
     return False
 
-TARGET_SUFFIXES = {"", "잔액", "예정액"}  # 접미사가 이 중 하나여야 "잔액 개념" 채택
+
+FINAL_SUFFIXES = {"잔액", "예정액", "예정잔액"}  # "이미 최종 잔액이 명시된 행"의 접미사들.
+TARGET_SUFFIXES = {""} | FINAL_SUFFIXES  # 접미사가 이 중 하나여야 "잔액 개념" 채택.
+# "예정잔액"은 "예정 잔액"(어순이 반대, 실측: AIA 대손준비금 3행노트 마지막행 "대손준비금
+# 예정 잔액" -- 해약환급금준비금/보증준비금은 같은 회사·같은 노트에서 "~예정액"으로 쓰는데
+# 대손준비금만 어순이 다르다). 못 잡으면 이 행이 P5(단독라벨, 저신뢰)로 떨어져 구성내역
+# 노트의 기적립액과 혼동될 위험이 있다.
 
 UNIT_RE = re.compile(r"단위[:：]?\(?\s*(억원|백만원|천원|원)\)?")
 UNIT_MULT = {"억원": 100.0, "백만원": 1.0, "천원": 0.001, "원": 0.000001}
@@ -127,10 +143,17 @@ UNIT_MULT = {"억원": 100.0, "백만원": 1.0, "천원": 0.001, "원": 0.000001
 NUM_TOKEN = re.compile(r"^\(?-?[\d,]+\)?$")
 
 # 신뢰도(우선순위) 등급 -- 작을수록 우선
-P_BREAKDOWN = 1     # 3행 노트(기적립액/적립예정액/잔액|예정액)의 마지막 행
-P_SUMMARY = 2        # 5-3/7-2 요약표, 단독 라벨, 단위=억원 확인
-P_CLUSTER = 3         # 세로쓰기 병합 셀에서 위치 대응으로 복원
-P_LOW = 4            # 단위 불명 또는 단독 라벨인데 단위!=억원(구성내역 오염 위험)
+P_NARRATIVE = 1   # 각주 문장이 직접 준 최종 잔액, 또는 3행노트의 잔액/예정액 행(둘 다 회사가
+                   # 명시한 최종값)
+P_COMPUTED = 2      # 표의 기적립액(단독행) + 각주 문장의 증분을 우리가 합산
+P_SUMMARY = 3        # 요약표 단독 라벨, 단위=억원, 이 페이지에 증분 신호(각주) 없음 -- 표값을
+                     # 그대로 잔액으로 채택
+P_CLUSTER = 4          # 세로쓰기 병합 셀에서 위치 대응으로 복원
+P_LOW = 5               # 단위 불명 또는 단독 라벨인데 단위!=억원(구성내역 오염 위험)
+
+ABS_TOL_MILLION = 50.0  # 경영공시 억원 반올림의 정당한 오차 한계(=0.5억원). owner 실측
+                        # (삼성생명 2026.1Q 대손준비금 579백만 차이가 옛 상대오차 1%에 삼켜짐)
+                        # 이후 절대값 기준으로 교체. 상대오차(%)는 더 이상 판정에 안 쓴다.
 
 
 def _cell(c) -> str:
@@ -217,22 +240,30 @@ def _pick_columns(rows):
     return None, None
 
 
+def _match_item_label(text_norm: str):
+    """정규화된 텍스트 안에서 4개 항목 라벨 중 가장 먼저(그리고 가장 길게) 매치하는 것을
+    찾는다. 반환 (item_no, label, start_idx) 또는 None."""
+    best = None
+    for label, item in _ALL_LABELS:
+        i = text_norm.find(label)
+        if i == -1:
+            continue
+        if best is None or i < best[2] or (i == best[2] and len(label) > len(best[1])):
+            best = (item, label, i)
+    return best
+
+
 def _suffix_after_label(text: str):
-    """라벨 텍스트에서 LABEL_PREFIXES 이후 남는 접미사. 라벨이 없으면 None."""
+    """라벨 텍스트에서 매치한 항목번호와 그 이후 남는 접미사. 라벨이 없으면 (None, None)."""
     norm = _norm(text)
-    idx = -1
-    matched_len = 0
-    for p in LABEL_PREFIXES:
-        i = norm.find(p)
-        if i != -1 and (idx == -1 or i < idx):
-            idx = i
-            matched_len = len(p)
-    if idx == -1:
-        return None
-    suffix = norm[idx + matched_len:]
+    m = _match_item_label(norm)
+    if m is None:
+        return None, None
+    item, label, idx = m
+    suffix = norm[idx + len(label):]
     suffix = re.sub(r"\(\*?\d*\)$", "", suffix)  # 각주표시 (*1) 등 제거
     suffix = suffix.strip(")")  # "(해약환급금준비금 적립예정액)"처럼 라벨 전체가 괄호에 싸인 경우의 잔여 ")"
-    return suffix
+    return item, suffix
 
 
 def _unit_before(page, table_bbox):
@@ -288,8 +319,52 @@ def _cell_near(row, idx, min_idx, num_ok=True, max_window=3):
     return None
 
 
-def _candidates_from_table(page, page_no, rows, table_bbox):
-    """표 하나에서 (priority, value_million, unit, header_cur_text, row_label, method) 후보들."""
+def _parse_signed_eok(tok: str):
+    """'-15'/'△15'/'15' 등 각주 문장에서 뽑은 숫자 토큰(억원 단위) -> signed int. 실패시 None."""
+    t = (tok or "").strip()
+    neg = t.startswith("-") or t.startswith("△") or t.startswith("(")
+    core = t.lstrip("-△(").rstrip(")").replace(",", "")
+    if not core.isdigit():
+        return None
+    v = int(core)
+    return -v if neg else v
+
+
+_NARR_NUM = r"([△\-(]?[\d,]+)\)?억원"
+
+
+def _narrative_totals(page_text: str):
+    """페이지 전체 텍스트에서 각주 문장의 항목별 적립예정액을 뽑는다(단위 억원, 부호 유지).
+    반환: {item_no: {"stated": int_or_None, "increment": int_or_None}}.
+
+    두 문형을 각각 스캔한다(실측: 악사손해 KR0049, 같은 회사 안에서도 분기마다 어느 쪽이
+    나오는지 다르다):
+      1. "이를 적립(환입)?할 경우 ... 해약환급금준비금은 839억원 ... 입니다" -- 회사가 직접
+         계산한 **최종 잔액**. 있으면 이 값을 그대로 쓴다(우리가 손으로 더하지 않는다).
+      2. "적립(환입)?예정액은 해약환급금준비금 72억원 ... 입니다" -- **증분만**. 표의
+         기적립액(단독행)에 이 증분을 더해야 잔액이 나온다(_candidates_from_table 에서 처리).
+    """
+    norm = _norm(page_text)
+    out: dict[int, dict[str, int]] = {}
+
+    def _scan(clause: str, key: str):
+        for label, item in _ALL_LABELS:
+            for m in re.finditer(re.escape(label) + r"(?:은|는)?" + _NARR_NUM, clause):
+                v = _parse_signed_eok(m.group(1))
+                if v is not None:
+                    out.setdefault(item, {})[key] = v
+
+    for m in re.finditer(r"적립(?:\(환입\))?할경우(.{0,200}?)(?:입니다|\.|$)", norm):
+        _scan(m.group(1), "stated")
+    for m in re.finditer(r"적립(?:\(환입\))?예정액은(.{0,200}?)(?:입니다|\.|$)", norm):
+        _scan(m.group(1), "increment")
+    return out
+
+
+def _candidates_from_table(page, page_no, rows, table_bbox, narrative):
+    """표 하나에서 (item_no, priority, value_million, unit, header_cur_text, row_label,
+    method, page_no) 후보들. narrative 는 _narrative_totals() 의 반환값(이 페이지 전체 공용,
+    표마다 새로 안 만든다)."""
     cur_idx, prior_idx = _pick_columns(rows)
     if cur_idx is None:
         return []
@@ -314,6 +389,39 @@ def _candidates_from_table(page, page_no, rows, table_bbox):
             any("처분" in _norm(_cell(c)) for r in rows[:4] for c in r):
         return []
 
+    def _emit_bare(item, val, label_text, method):
+        """단독행(접미사="") 값 하나 -- 각주에 그 항목의 증분/최종잔액 신호가 있으면 그걸
+        우선 채택하고, 없으면 표값을 그대로 잔액으로 채택(P_SUMMARY)."""
+        narr = narrative.get(item, {})
+        vm_raw = None if val == "none" else (val * mult if mult else None)
+        if narr.get("stated") is not None:
+            sv = narr["stated"]
+            svm = sv * 100.0  # 각주 문장은 항상 억원 단위
+            out.append((item, P_NARRATIVE, svm, unit, header_cur_text, label_text,
+                        f"{method}+narrative_stated", page_no))
+        elif narr.get("increment") is not None and val != "none" and mult:
+            base_eok = val if unit == "억원" else val / mult * (1 / 100.0) if mult else None
+            # unit 이 억원이 아니면 표값 기준으로 억원 환산이 불명확해질 수 있어 안전하게
+            # "표값(백만원) + 증분(백만원)"으로 바로 합산한다(억원 왕복 없이).
+            comb = vm_raw + narr["increment"] * 100.0 if vm_raw is not None else None
+            if comb is not None:
+                out.append((item, P_COMPUTED, comb, unit, header_cur_text, label_text,
+                            f"{method}+narrative_increment({narr['increment']}억)", page_no))
+            if vm_raw is not None:
+                out.append((item, P_SUMMARY if unit == "억원" else P_LOW, vm_raw, unit,
+                            header_cur_text, label_text, method, page_no))
+        else:
+            if val == "none":
+                out.append((item, P_SUMMARY, "none", unit, header_cur_text, label_text,
+                            method, page_no))
+            elif vm_raw is not None:
+                prio = P_SUMMARY if unit == "억원" else P_LOW
+                out.append((item, prio, vm_raw, unit, header_cur_text, label_text, method,
+                            page_no))
+            elif val is not None:
+                out.append((item, P_LOW, val, unit, header_cur_text, label_text, method,
+                            page_no))
+
     # 1) 직접매치: 라벨이 '한 셀'에 단독으로 들어있는 행(그 셀 안에 개행으로 다른 라벨과
     #    뭉쳐있지 않음). 값은 그 라벨 셀의 인덱스보다 뒤에서, cur_idx 근처를 허용오차 내로
     #    찾는다(절대 인덱스를 그대로 믿지 않음 -- 위 _cell_near 사유 참조).
@@ -321,34 +429,40 @@ def _candidates_from_table(page, page_no, rows, table_bbox):
     for ri, row in enumerate(rows):
         label_col = None
         label_cell_text = None
+        item_found = None
         for ci, c in enumerate(row):
             ct = _cell(c)
-            if ct and any(p in _norm(ct) for p in LABEL_PREFIXES):
-                label_col = ci
-                label_cell_text = ct
+            if not ct:
+                continue
+            it, _lbl, _idx = _match_item_label(_norm(ct)) or (None, None, None)
+            if it is not None:
+                label_col, label_cell_text, item_found = ci, ct, it
                 break
         if label_col is None:
             continue
         n_lines = len([s for s in label_cell_text.split("\n") if s.strip()])
         if n_lines > 1:
             continue  # 병합셀은 아래 cluster 처리로
-        sub = _suffix_after_label(label_cell_text)
-        if sub is None or sub not in TARGET_SUFFIXES:
+        item, sub = _suffix_after_label(label_cell_text)
+        if item is None or sub not in TARGET_SUFFIXES:
             continue
         val = _cell_near(row, cur_idx, label_col)
         if val is None:
             continue
-        if sub in ("잔액", "예정액"):
-            prio = P_BREAKDOWN
-        elif unit == "억원":
-            prio = P_SUMMARY
-        else:
-            prio = P_LOW
-        vm = None if val == "none" else (val * mult if mult else None)
-        if val != "none" and vm is None:
-            prio = P_LOW  # 단위 불명 -- 값은 있지만 신뢰도 강등, 원값 그대로 보고(변환불가 표시)
-        direct_hits.append((prio, vm if vm is not None else val, unit, header_cur_text,
-                             label_cell_text.replace("\n", "/"), f"direct:{sub or '(bare)'}", page_no))
+        label_disp = label_cell_text.replace("\n", "/")
+        if sub in FINAL_SUFFIXES:
+            vm = None if val == "none" else (val * mult if mult else None)
+            if val != "none" and vm is None:
+                direct_hits.append((item, P_LOW, val, unit, header_cur_text, label_disp,
+                                     f"direct:{sub}", page_no))
+            else:
+                direct_hits.append((item, P_NARRATIVE, vm if vm is not None else val, unit,
+                                     header_cur_text, label_disp, f"direct:{sub}", page_no))
+        else:  # sub == "" (bare) -- 각주 확인 필요
+            saved_len = len(out)
+            _emit_bare(item, val, label_disp, "direct:(bare)")
+            direct_hits.extend(out[saved_len:])
+            del out[saved_len:]
     if direct_hits:
         out.extend(direct_hits)
         return out  # 직접매치가 있으면 병합셀 추정은 안 씀(더 신뢰도 높음)
@@ -362,7 +476,7 @@ def _candidates_from_table(page, page_no, rows, table_bbox):
     for ri, row in enumerate(rows):
         label_text = " ".join(_cell(c) for c in row[:label_end] if _cell(c))
         norm_label = _norm(label_text)
-        if not any(p in norm_label for p in LABEL_PREFIXES):
+        if _match_item_label(norm_label) is None:
             continue
         sublabels = []
         for c in row[:label_end]:
@@ -383,24 +497,32 @@ def _candidates_from_table(page, page_no, rows, table_bbox):
         # ""/잔액/예정액이면 그 자리 값을 그대로 쓰고, "기적립액"이면 바로 다음 자리가
         # "적립예정액"/"환입예정액"인지 확인해 둘을 더한다 -- 그 외 접미사(적립액/적립(환입)
         # 등, 처분계산서류)는 버린다.
-        target_pos = pair_pos = None
-        for pi, sl in enumerate(sublabels):
-            if not any(p in _norm(sl) for p in LABEL_PREFIXES):
+        # 한 뭉친 셀에 항목이 **여러 개** 들어있을 수 있다(실측: 악사손해 2024.2Q -- 대손/
+        # 비상위험/해약환급금/보증준비금 기적립액이 전부 한 셀에 나열, 각각 자기 적립예정액
+        # 짝을 갖는다). 첫 매치에서 멈추면 뒤쪽 항목을 놓친다 -- 전부 스캔한다.
+        found = []  # [(item, target_pos, pair_pos), ...]
+        pi = 0
+        while pi < len(sublabels):
+            it, sfx = _suffix_after_label(sublabels[pi])
+            if it is None:
+                pi += 1
                 continue
-            sfx = _suffix_after_label(sl)
             if sfx in TARGET_SUFFIXES:
-                target_pos = pi
-                break
+                found.append((it, pi, None))
+                pi += 1
+                continue
             if sfx == "기적립액" and pi + 1 < len(sublabels):
-                nxt_sfx = _suffix_after_label(sublabels[pi + 1]) or _norm(sublabels[pi + 1])
-                if "적립예정액" in nxt_sfx or "환입예정액" in nxt_sfx:
-                    target_pos, pair_pos = pi, pi + 1
-                    break
-        if target_pos is None:
+                _it2, nxt_sfx = _suffix_after_label(sublabels[pi + 1])
+                nxt_norm = nxt_sfx if nxt_sfx is not None else _norm(sublabels[pi + 1])
+                if "적립예정액" in nxt_norm or "환입예정액" in nxt_norm:
+                    found.append((it, pi, pi + 1))
+                    pi += 2
+                    continue
+            pi += 1
+        if not found:
             continue
         cur_cell = _cell(row[cur_idx]) if cur_idx < len(row) else ""
         parts = [p.strip() for p in cur_cell.split("\n") if p.strip()] if cur_cell else []
-        need_pos = max(target_pos, pair_pos) if pair_pos is not None else target_pos
         if len(parts) == len(sublabels):
             resolved = [_num(p) for p in parts]
         else:
@@ -414,51 +536,66 @@ def _candidates_from_table(page, page_no, rows, table_bbox):
             resolved = [_cell_near(row, cur_idx, label_end - 1)]
             for rj in range(ri + 1, min(ri + len(sublabels), len(rows))):
                 resolved.append(_cell_near(rows[rj], cur_idx, label_end - 1))
-        if need_pos >= len(resolved):
-            continue
-        val = resolved[target_pos]
-        if pair_pos is not None:
-            pv = resolved[pair_pos]
-            # 기적립액+적립예정액을 더해 잔액을 만든다 -- 둘 중 하나라도 못 찾으면(None) 포기,
-            # "none"(미적립, 대시)은 0으로 취급해 더한다.
-            if val is None or pv is None:
+        label_note = "/".join(sublabels)
+        for target_item, target_pos, pair_pos in found:
+            need_pos = max(target_pos, pair_pos) if pair_pos is not None else target_pos
+            if need_pos >= len(resolved):
                 continue
-            v0 = 0 if val == "none" else val
-            v1 = 0 if pv == "none" else pv
-            val = v0 + v1 if not (val == "none" and pv == "none") else "none"
-        if val is None:
-            continue
-        vm = None if val == "none" else (val * mult if mult else None)
-        prio = P_CLUSTER if vm is not None or val == "none" else P_LOW
-        label_note = "/".join(sublabels) + (f"[{target_pos}+{pair_pos}]" if pair_pos is not None
-                                             else f"[{target_pos}]")
-        out.append((prio, vm if vm is not None else val, unit, header_cur_text,
-                     label_note, "cluster", page_no))
+            val = resolved[target_pos]
+            if pair_pos is not None:
+                pv = resolved[pair_pos]
+                # 기적립액+적립예정액을 더해 잔액을 만든다 -- 둘 중 하나라도 못 찾으면(None)
+                # 포기, "none"(미적립, 대시)은 0으로 취급해 더한다.
+                if val is None or pv is None:
+                    continue
+                v0 = 0 if val == "none" else val
+                v1 = 0 if pv == "none" else pv
+                val = v0 + v1 if not (val == "none" and pv == "none") else "none"
+                if val is None:
+                    continue
+                vm = None if val == "none" else (val * mult if mult else None)
+                prio = P_CLUSTER if vm is not None or val == "none" else P_LOW
+                out.append((target_item, prio, vm if vm is not None else val, unit,
+                            header_cur_text, label_note + f"[{target_pos}+{pair_pos}]",
+                            "cluster", page_no))
+            else:
+                if val is None:
+                    continue
+                saved_len = len(out)
+                _emit_bare(target_item, val, label_note + f"[{target_pos}]", "cluster")
+                # _emit_bare 는 P_SUMMARY/P_LOW/P_NARRATIVE/P_COMPUTED 로 이미 넣었지만, 각주
+                # 신호가 전혀 없는 기본 케이스는 P_SUMMARY 가 아니라 P_CLUSTER 로 강등한다
+                # (클러스터 위치대응 자체의 불확실성이 남아 있으므로).
+                for k in range(saved_len, len(out)):
+                    if out[k][1] == P_SUMMARY:
+                        out[k] = (out[k][0], P_CLUSTER, *out[k][2:])
     return out
 
 
-RESERVE_SIBLING_LABELS = ("대손준비금", "비상위험준비금", "보증준비금")
-
-
-def _wide_grid_candidates(page, page_no, rows, table_bbox):
-    """구분(대손준비금/해약환급금준비금/보증준비금) x 기간(당기말/전기말)이 열 방향으로
-    나란히 놓이는 2차원 그리드 표 전용 경로(미래에셋생명류, docstring 6항 참조). 이런 표는
-    데이터 행 라벨이 "준비금 잔액"처럼 준비금 종류를 안 담고 있어 직접매치가 못 잡는다."""
+def _wide_grid_candidates(page, page_no, rows, table_bbox, narrative):
+    """구분(대손준비금/해약환급금준비금/보증준비금 등) x 기간(당기말/전기말)이 열 방향으로
+    나란히 놓이는 2차원 그리드 표 전용 경로(미래에셋생명류). 이런 표는 데이터 행 라벨이
+    "준비금 잔액"처럼 준비금 종류를 안 담고 있어 직접매치가 못 잡는다. 이 표는 이미 행이
+    기적립액/적립예정액/잔액 3개로 명시돼 있어(합산까지 자체적으로 함) 각주 문장을 또
+    확인할 필요가 없다 -- 있어도 같은 개념일 뿐이라 무시한다."""
     out = []
     unit = _unit_before(page, table_bbox)
     mult = UNIT_MULT.get(unit)
     for hi, hrow in enumerate(rows):
-        label_cols = []
-        sibling_hits = 0
+        label_cols = {}  # ci -> item_no
         for ci, c in enumerate(hrow):
             ct = _norm(_cell(c))
             if not ct:
                 continue
-            if any(p in ct for p in LABEL_PREFIXES):
-                label_cols.append(ci)
-            elif any(p in ct for p in RESERVE_SIBLING_LABELS):
-                sibling_hits += 1
-        if not label_cols or sibling_hits < 1:
+            m = _match_item_label(ct)
+            if m is not None:
+                label_cols[ci] = m[0]
+        # 이 표가 "구분 x 기간" 2차원 그리드라는 신호 = 한 행에 서로 다른 준비금 종류가
+        # 2개 이상 나열됨(실측: 대손/해약환급금/보증준비금이 같은 행에 반복). 예전엔 항목이
+        # 하나뿐이라(item5만) "해약환급금준비금 외에 다른 준비금 이름이 있는가"로 이 신호를
+        # 잡았는데, 지금은 4개 항목을 전부 label_cols 로 잡아버려 "다른" 이름이 안 남는다 --
+        # distinct 항목 수 자체로 판정한다.
+        if len(set(label_cols.values())) < 2:
             continue
         # 위쪽 몇 줄에서 기간(당기말/전기말) 그룹 헤더 행을 찾는다.
         group_row = None
@@ -476,15 +613,14 @@ def _wide_grid_candidates(page, page_no, rows, table_bbox):
                     return _norm(_cell(group_row[j]))
             return None
 
-        cur_col = None
-        for lc in label_cols:
-            g = _group_label_of(lc)
-            if g and _kw_hit(g, CUR_KW):
-                cur_col = lc
-                break
-        if cur_col is None:
+        cur_cols = {}  # item_no -> col_idx (당기 그룹에 속한 것만)
+        for ci, item in label_cols.items():
+            g = _group_label_of(ci)
+            if g and _kw_hit(g, CUR_KW) and item not in cur_cols:
+                cur_cols[item] = ci
+        if not cur_cols:
             continue
-        header_cur_text = _group_label_of(cur_col)
+        header_cur_text = _group_label_of(next(iter(cur_cols.values())))
 
         for ri in range(hi + 1, len(rows)):
             row = rows[ri]
@@ -494,30 +630,33 @@ def _wide_grid_candidates(page, page_no, rows, table_bbox):
             norm_rl = _norm(row_label)
             if not norm_rl.endswith("잔액"):
                 continue  # "기적립액"/"적립(환입)예정액" 행은 건너뛰고 마지막 "잔액" 행만
-            val = _cell_near(row, cur_col, 0)
-            if val is None:
-                continue
-            vm = None if val == "none" else (val * mult if mult else None)
-            prio = P_BREAKDOWN if (vm is not None or val == "none") else P_LOW
-            out.append((prio, vm if vm is not None else val, unit, header_cur_text,
-                         row_label, "wide-grid", page_no))
+            for item, col in cur_cols.items():
+                val = _cell_near(row, col, 0)
+                if val is None:
+                    continue
+                vm = None if val == "none" else (val * mult if mult else None)
+                prio = P_NARRATIVE if (vm is not None or val == "none") else P_LOW
+                out.append((item, prio, vm if vm is not None else val, unit, header_cur_text,
+                            row_label, "wide-grid", page_no))
             break  # 표 하나당 "잔액" 행 하나만 채택
     return out
 
 
 def parse_pdf(path: Path):
-    """최고 우선순위 후보 하나를 (value_million_or_'none', page_no, method, note) 로 반환.
-    후보가 전혀 없으면 None."""
+    """항목번호(5/6/7/8) -> (최고우선순위 후보 리스트, distinct_vals) 또는 결측이면 키 자체가
+    없음. 페이지 전체가 무관하면(라벨 자체가 없음) 4개 항목 다 없음."""
     try:
         doc = fitz.open(path)
     except Exception:
         return None
     try:
-        all_candidates = []
+        all_candidates: dict[int, list] = {}
         for i, pg in enumerate(doc):
             t = pg.get_text()
             if PAGE_FILTER not in t:
                 continue
+            narrative = _narrative_totals(t)
+            is_consol = any(m in t for m in CONSOLIDATED_MARKERS)
             with contextlib.redirect_stdout(io.StringIO()):
                 try:
                     tabs = pg.find_tables()
@@ -528,26 +667,38 @@ def parse_pdf(path: Path):
                     rows = tbl.extract()
                 except Exception:
                     continue
-                cands = _candidates_from_table(pg, i + 1, rows, tbl.bbox)
+                cands = _candidates_from_table(pg, i + 1, rows, tbl.bbox, narrative)
                 if not cands:
-                    cands = _wide_grid_candidates(pg, i + 1, rows, tbl.bbox)
-                all_candidates.extend(cands)
+                    cands = _wide_grid_candidates(pg, i + 1, rows, tbl.bbox, narrative)
+                for c in cands:
+                    # c = (item, priority, value, unit, hdr, label, method, page_no) -- 연결
+                    # 표시(is_consol)를 끝에 덧붙여 같은 우선순위 안에서 별도를 먼저 오게 한다.
+                    all_candidates.setdefault(c[0], []).append(c[1:] + (is_consol,))
         if not all_candidates:
             return None
-        all_candidates.sort(key=lambda c: c[0])
-        best_prio = all_candidates[0][0]
-        best = [c for c in all_candidates if c[0] == best_prio]
-        # 동일 우선순위에서 값이 갈리면(단위 다른 표끼리 우연히 같은 접미사) 전부 보고
-        distinct_vals = {c[1] for c in best}
-        return best, distinct_vals
+        result = {}
+        for item, cands in all_candidates.items():
+            cands.sort(key=lambda c: (c[0], c[-1]))  # (priority, is_consol) -- 별도(False) 먼저
+            best_prio, best_consol = cands[0][0], cands[0][-1]
+            # "같은 우선순위 안에서도 별도가 있으면 연결은 아예 비교 대상에서 뺀다" -- 별도/
+            # 연결 차이만으로 값이 갈리는 건 이제 "충돌"이 아니라 결정론적으로 별도를 채택한다
+            # (실측: 교보생명·삼성생명 대손준비금 3행노트가 두 기준으로 각각 실려 값이 달랐다).
+            best = [c for c in cands if c[0] == best_prio and c[-1] == best_consol]
+            distinct_vals = {c[1] for c in best}
+            result[item] = (best, distinct_vals)
+        return result
     finally:
         doc.close()
 
 
+ITEM_REPORT_NAME = {5: "해약환급금준비금", 6: "비상위험준비금", 7: "대손준비금", 8: "보증준비금"}
+
+
 def main():
     master = json.loads((ROOT / "IFRS17_BS.json").read_text(encoding="utf-8"))
-    mi = {(r["원보험사코드"], r["공시분기"]): r["값"]
-          for r in master if r["항목번호"] == 5}
+    mi_by_item = {item: {(r["원보험사코드"], r["공시분기"]): r["값"]
+                          for r in master if r["항목번호"] == item}
+                  for item in ITEM_REPORT_NAME}
     name = {r["원보험사코드"]: r["원수사명"] for r in master}
 
     # period -> [(code, pdf_path)]. raw/ 우선, 없으면 pdf/ 폴백은 disclosure_pdfs()가 알아서
@@ -556,8 +707,10 @@ def main():
     # 조용히 건너뛴다).
     DISCLOSURE = ROOT / "data" / "disclosure"
     periods = sorted(p.name for p in DISCLOSURE.glob("FY*_Q*") if p.is_dir())
-    rows_out = []
-    conflicts = []
+
+    rows_out = {item: [] for item in ITEM_REPORT_NAME}
+    conflicts = {item: [] for item in ITEM_REPORT_NAME}
+
     for period in periods:
         quarter = f"{period[2:6]}.{period[-1]}Q"
         codes = set()
@@ -573,71 +726,84 @@ def main():
                 continue
             pdf = paths[0]
             got = parse_pdf(pdf)
-            if got is None:
-                rows_out.append((code, quarter, None, mi.get((code, quarter)), "표없음", None))
-                continue
-            best, distinct_vals = got
-            if len(distinct_vals) > 1:
-                conflicts.append((code, quarter, best))
-                # 충돌 시엔 첫 후보를 대표값으로 쓰되 표시에 conflict 플래그
-            c0 = best[0]
-            prio, val, unit, hdr, label, method, page_no = c0
-            mv = mi.get((code, quarter))
-            provenance = f"p{page_no}[{method}]{'col=' + hdr if hdr else ''}"
-            if val == "none":
-                rows_out.append((code, quarter, "미적립", mv, "미적립", provenance))
-                continue
-            if prio == P_LOW and unit is None:
-                rows_out.append((code, quarter, val, mv, "단위불명(저신뢰)", provenance))
-                continue
-            disc = val
-            if mv is None:
-                rows_out.append((code, quarter, disc, None, "마스터결측", provenance))
-            else:
-                diff = abs(disc - mv) / max(abs(disc), 1.0)
-                tag = f"{diff:.1%}"
+            for item in ITEM_REPORT_NAME:
+                mv = mi_by_item[item].get((code, quarter))
+                if got is None or item not in got:
+                    rows_out[item].append((code, quarter, None, mv, "표없음", None))
+                    continue
+                best, distinct_vals = got[item]
                 if len(distinct_vals) > 1:
-                    tag += "*충돌"
-                rows_out.append((code, quarter, disc, mv, tag, provenance))
+                    conflicts[item].append((code, quarter, best))
+                c0 = best[0]
+                prio, val, unit, hdr, label, method, page_no = c0
+                provenance = f"p{page_no}[{method}]{'col=' + hdr if hdr else ''}"
+                if val == "none":
+                    rows_out[item].append((code, quarter, "미적립", mv, "미적립", provenance))
+                    continue
+                if prio == P_LOW and unit is None:
+                    rows_out[item].append((code, quarter, val, mv, "단위불명(저신뢰)", provenance))
+                    continue
+                disc = val
+                if mv is None:
+                    rows_out[item].append((code, quarter, disc, None, "마스터결측", provenance))
+                else:
+                    absdiff = abs(disc - mv)
+                    tag = f"{absdiff:,.0f}백만"
+                    if len(distinct_vals) > 1:
+                        tag += "*충돌"
+                    rows_out[item].append((code, quarter, disc, mv, tag, provenance))
 
-    def diff_pct(tag):
-        m = re.match(r"([\d.]+)%", tag)
-        return float(m.group(1)) if m else -1
+    def abs_diff(tag):
+        m = re.match(r"([\d,]+)백만", tag)
+        return float(m.group(1).replace(",", "")) if m else -1
 
-    big = [r for r in rows_out if r[4] not in ("표없음", "미적립", "마스터결측", "단위불명(저신뢰)")
-           and diff_pct(r[4]) > 1.0]
-    miss = [r for r in rows_out if r[4] == "마스터결측"]
-    nonacc = [r for r in rows_out if r[4] == "미적립"]
-    notab = [r for r in rows_out if r[4] == "표없음"]
-    lowconf = [r for r in rows_out if r[4] == "단위불명(저신뢰)"]
+    grand_total_scanned = 0
+    grand_total_big = 0
+    for item in (5, 6, 7, 8):
+        rows = rows_out[item]
+        grand_total_scanned += len(rows)
+        big = [r for r in rows if r[4] not in ("표없음", "미적립", "마스터결측", "단위불명(저신뢰)")
+               and abs_diff(r[4]) > ABS_TOL_MILLION]
+        grand_total_big += len(big)
+        miss = [r for r in rows if r[4] == "마스터결측"]
+        nonacc = [r for r in rows if r[4] == "미적립"]
+        notab = [r for r in rows if r[4] == "표없음"]
+        lowconf = [r for r in rows if r[4] == "단위불명(저신뢰)"]
+        comparable = len(rows) - len(notab) - len(nonacc) - len(miss) - len(lowconf)
 
-    print(f"PDF 스캔 {len(rows_out)}개 (회사-분기)")
-    print(f"  표 인식 실패 {len(notab)} · 경영공시 미적립('-') {len(nonacc)} · 마스터 결측 {len(miss)}"
-          f" · 저신뢰(단위불명) {len(lowconf)}")
-    print(f"  대조 가능 {len(rows_out) - len(notab) - len(nonacc) - len(miss) - len(lowconf)}"
-          f" · **차이 1% 초과 {len(big)}건** · 충돌(동순위 값 불일치) {len(conflicts)}건")
-    print()
-    for code, q, disc, mv, tag, prov in sorted(big, key=lambda r: -diff_pct(r[4])):
-        print(f"  {name.get(code, code):<12} {q}  공시={disc:>12,.0f}  마스터={mv:>12,.0f}"
-              f"  차이={tag:<10} {prov}")
-    if lowconf:
-        print("\n-- 저신뢰(단위 확인 못함, 자동교체 금지) --")
-        for code, q, disc, mv, tag, prov in sorted(lowconf):
-            print(f"  {name.get(code, code):<12} {q}  원값={disc}  마스터={mv}  {prov}")
-    if conflicts:
-        print("\n-- 충돌(동일 우선순위인데 값이 갈림, 수동확인 필요) --")
-        for code, q, best in conflicts:
-            print(f"  {name.get(code, code):<12} {q}")
-            for c in best:
-                print(f"      후보: val={c[1]} unit={c[2]} p{c[6]} {c[5]} label={c[4]}")
-    if miss:
-        print("\n-- 경영공시엔 값이 있는데 마스터가 비어 있는 칸 --")
-        for code, q, disc, mv, tag, prov in sorted(miss):
-            print(f"  {name.get(code, code):<12} {q}  공시={disc:,.0f}  {prov}")
-    if notab:
-        print(f"\n-- 표 인식 실패 {len(notab)}건 --")
-        for code, q, disc, mv, tag, prov in sorted(notab):
-            print(f"  {name.get(code, code):<12} {q}  (마스터={mv})")
+        print(f"=== item{item} {ITEM_REPORT_NAME[item]} ===")
+        print(f"PDF 스캔 {len(rows)}개 (회사-분기)")
+        print(f"  표 인식 실패 {len(notab)} · 경영공시 미적립('-') {len(nonacc)} · 마스터 결측 {len(miss)}"
+              f" · 저신뢰(단위불명) {len(lowconf)}")
+        print(f"  대조 가능 {comparable}"
+              f" · **절대차 {ABS_TOL_MILLION:.0f}백만 초과 {len(big)}건** ·"
+              f" 충돌(동순위 값 불일치) {len(conflicts[item])}건")
+        print()
+        for code, q, disc, mv, tag, prov in sorted(big, key=lambda r: -abs_diff(r[4])):
+            print(f"  {name.get(code, code):<12} {q}  공시={disc:>12,.0f}  마스터={mv:>12,.0f}"
+                  f"  차이={tag:<12} {prov}")
+        if lowconf:
+            print("\n-- 저신뢰(단위 확인 못함, 자동교체 금지) --")
+            for code, q, disc, mv, tag, prov in sorted(lowconf):
+                print(f"  {name.get(code, code):<12} {q}  원값={disc}  마스터={mv}  {prov}")
+        if conflicts[item]:
+            print("\n-- 충돌(동일 우선순위인데 값이 갈림, 수동확인 필요) --")
+            for code, q, best in conflicts[item]:
+                print(f"  {name.get(code, code):<12} {q}")
+                for c in best:
+                    print(f"      후보: val={c[1]} unit={c[2]} p{c[6]} {c[5]} label={c[4]}")
+        if miss:
+            print(f"\n-- 경영공시엔 값이 있는데 마스터가 비어 있는 칸 ({len(miss)}) --")
+            for code, q, disc, mv, tag, prov in sorted(miss):
+                print(f"  {name.get(code, code):<12} {q}  공시={disc:,.0f}  {prov}")
+        if notab:
+            print(f"\n-- 표 인식 실패 {len(notab)}건 --")
+            for code, q, disc, mv, tag, prov in sorted(notab):
+                print(f"  {name.get(code, code):<12} {q}  (마스터={mv})")
+        print()
+
+    print(f"=== 총계: {grand_total_scanned}개 셀(4항목 합산) 스캔, 절대차{ABS_TOL_MILLION:.0f}백만"
+          f" 초과 {grand_total_big}건 ===")
     return 0
 
 
