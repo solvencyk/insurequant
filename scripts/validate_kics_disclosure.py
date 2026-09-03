@@ -1868,6 +1868,87 @@ def _load_tfi_applicability(path: Path | None = None) -> dict:
     return out
 
 
+# 생명·장기손해보험 하위위험(item29-35)의 "선택적용/요구자본" 경과조치 4종. owner 도메인 확인
+# (2026-09-03): "TIR = 선택적용/요구자본 — 신규 보험위험 = 장수·사업비·해지·대재해 경과조치라
+# 이 축과 직결된다" — TAC/TER/TIRR 도 요구자본 축의 선택적용이라 함께 본다. TFI(공통적용/
+# 가용자본)·RPT(보고기한)·PCA_DEFER(적기시정조치 유예)는 이 축과 무관하므로 제외.
+_LIFE_SUBRISK_TRANSITION_KINDS: tuple[str, ...] = ("TIR", "TER", "TIRR", "TAC")
+
+
+_SUBRISK_SOURCE_ABSENT_REGISTRY = ROOT / "data" / "_gold" / "kics_subrisk_source_absent.json"
+
+
+def _load_life_subrisk_source_absent(path: Path | None = None) -> dict:
+    """(code, quarter) -> 등재 레코드 — **원문에 4-2-2 ②표 자체가 없는** 칸의 등재부.
+
+    owner 판정 2026-09-03: item29~35 는 그 표에서만 공시되고, 경과조치 비적용사는 표를 통째로
+    생략해도 된다. AIG손해가 결정적 반례다 — 같은 비적용사인데 2023.3Q 는 표를 넣고 2023.1Q 는
+    안 넣었다. 즉 **연도·적용사 여부만으로는 판정이 안 되고** 원문 확인 결과가 필요하다.
+
+    **이 로더가 없으면 등재부는 장식이다.** 이 저장소는 "판정을 등재부에 적어도 룰에 lookup
+    분기가 없어 다음 라운드에 또 새는" 사고를 반복했다(2026-09-01 하루 네 번). 그래서 게이트가
+    실제로 읽어 `8_life_census` 에 실어 준다.
+
+    파일이 없거나 깨지면 **빈 맵**을 돌려준다 — 그 순간 등재분이 전부 RED 로 올라오지, 조용히
+    통과하지 않는다(면제 발급기가 되지 않게).
+    """
+    p = path or _SUBRISK_SOURCE_ABSENT_REGISTRY
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    out: dict[tuple, dict] = {}
+    for rec in (data.get("table_absent") or []):
+        if not isinstance(rec, dict):
+            continue
+        code, q = rec.get("code"), rec.get("quarter")
+        if code and q:
+            out[(code, q)] = rec
+    return out
+
+
+def _load_life_subrisk_applicability(path: Path | None = None) -> dict:
+    """(code, quarter) -> 'O'|'X'|'UNKNOWN' — item29-35 후보 사가 선택적용 경과조치 중
+    하나라도 신청했는지(TIR/TER/TIRR/TAC 중 하나라도 'O').
+
+    `8_life_census`(kics_json_rules.py) 가 "부모(item17>0)는 있는데 자식(29-35)이 통째로
+    없다"를 판정할 때, 2024년 이후 홀수분기에 한해 이 맵으로 정당한 미공시(비적용사)와
+    파싱 결손을 가른다(owner 도메인 규칙, 2026-09-03: "2023년=전사 필수 / 2024년~=경과조치
+    적용사만 홀수분기 필수 + 짝수분기는 전사 필수"). `_load_tfi_applicability`와 같은 사이드카
+    (`kics_transition_applicability.json`)를 읽되 다른 키(TIR/TER/TIRR/TAC 4종 OR)를 뽑는다
+    — 같은 방어(파일 없음/레코드 깨짐/md_path 소실 전부 UNKNOWN 강등)를 그대로 적용한다.
+    **UNKNOWN은 X로 추정하지 않는다** — 그 순간 이 룰이 면제 발급기가 된다.
+    """
+    p = path or _TFI_APPLICABILITY_SIDECAR
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    out: dict[tuple, str] = {}
+    for rec in (data.get("records") or []):
+        if not isinstance(rec, dict):
+            continue
+        code, q = rec.get("code"), rec.get("quarter")
+        if not code or not q:
+            continue
+        md = rec.get("md_path")
+        try:
+            fresh = bool(md) and (ROOT / str(md).replace("\\", "/")).exists()
+        except OSError:
+            fresh = False
+        if not fresh:
+            out[(code, q)] = "UNKNOWN"
+            continue
+        vals = [rec.get(k) for k in _LIFE_SUBRISK_TRANSITION_KINDS]
+        if any(v == "O" for v in vals):
+            out[(code, q)] = "O"
+        elif all(v in ("X", "NA") for v in vals):
+            out[(code, q)] = "X"
+        else:
+            out[(code, q)] = "UNKNOWN"
+    return out
+
+
 # ---------------------------------------------------------------------------
 # 메타룰 — 면제 근거(provenance). "raw 확인" 이라고 쓰기만 하면 되던 자리를 닫는다.
 # ---------------------------------------------------------------------------
@@ -3759,7 +3840,9 @@ def main() -> int:
     records = _load_records(src)
     report = run_validation(records,
                             source_has_breakdown=_scan_breakdown_presence(records),
-                            tfi_applicability=_load_tfi_applicability())
+                            tfi_applicability=_load_tfi_applicability(),
+                            life_subrisk_applicability=_load_life_subrisk_applicability(),
+                            life_subrisk_source_absent=_load_life_subrisk_source_absent())
     findings = report.get("findings", [])
 
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")

@@ -8,6 +8,7 @@ R7 (7x7 sub-risk matrix from K-ICS standard, items 29-35):
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from typing import Any, Iterable, Mapping, Optional
 
@@ -888,6 +889,146 @@ def _validate_transition_basic(
                 detail="missing item17 or any of items 29-35",
             )
         )
+
+
+_LIFE_SUBRISK_ITEMS: tuple[int, ...] = tuple(range(29, 36))
+
+
+def _validate_life_subrisk_census(
+    bucket: QuarterBucket,
+    findings: list[dict[str, Any]],
+    life_subrisk_applicability: Optional[Mapping[tuple[str, str], str]] = None,
+    life_subrisk_source_absent: Optional[Mapping[tuple[str, str], Mapping]] = None,
+) -> None:
+    """8_life_census: item17(생명장기손해보험위험액)>0 인데 item29-35(하위위험) 이 전부 또는
+    일부 결측이면 그 자체를 판정한다.
+
+    **왜 신설했나 (2026-09-03, owner 제보).** `8_life`(바로 위 함수)는 항등식
+    item17=sqrt(S'R7S) 검산이라 29-35 가 **전부** 있어야 돌고, 하나라도 없으면 SKIP 한다
+    — 항등식은 입력이 없으면 계산 불가하다는 점에서 그 자체는 올바른 설계다. 문제는 그
+    SKIP 뒤에 "정말 결측이어도 되는지"를 보는 별도 축이 없었다는 것이다: item17(부모)이
+    있는 538칸 중 131칸이 29-35(자식) 전부 결측이었는데, 8_life는 전부 SKIP 으로 흘려보내
+    조용히 통과했다(RED 0). 이 룰이 그 사각을 메운다 — "부모가 있으면 자식도 있어야
+    한다"는 census 를 8_life 와 별도 rule_id 로 검사해, 기존 항등식 축의 골든/의미를
+    안 건드리면서 결손을 RED 로 잡는다.
+
+    판정 (owner 도메인 규칙, 2026-09-03, 138칸 실측 후 owner 가 두 차례 정정):
+      · item17 이 없거나 <=0        -> SKIP  (생명장기 사업 없음, 29-35 존재 불가 — 기존
+                                              parent-gate 와 동일 전제. `fill_subitems_
+                                              to_disclosure.py`의 parent17<=0 guard,
+                                              `reference-kics-company-quirks` 참조)
+      · 짝수분기(2Q/4Q, 전체공시)    -> 예외 없이 필수. 없으면 RED.
+      · 홀수분기(1Q/3Q, 간이공시):
+          · 2023년                  -> 필수(K-ICS 시행 첫 해는 전사 매분기 하위위험 공시 —
+                                        owner 실측: 2023.1Q 18사·2023.3Q 11사 전원 공시).
+                                        없으면 RED.
+          · 2024년 이후              -> 선택적용 요구자본 경과조치(TIR/TER/TIRR/TAC, "신규
+                                        보험위험"=장수·사업비·해지·대재해) 중 하나라도
+                                        'O'(적용사)면 필수 -> RED. 전부 'X'/'NA'(비적용사
+                                        확정)면 정당한 미공시 -> SKIP. 사이드카에 레코드가
+                                        없거나 'UNKNOWN'이면 적용여부 미상 -> YELLOW(raw
+                                        확인 필요, RED로 단정하지 않는다).
+
+    `life_subrisk_applicability` 는 `validate_kics_disclosure._load_life_subrisk_
+    applicability()`가 싣는다(룰엔진은 파일 I/O 를 하지 않는다 — `tfi_applicability`와
+    동일 계약). None/키없음은 'UNKNOWN'과 동치(YELLOW로 내려간다 — 결측을 비적용으로
+    추정하면 면제 발급기가 된다)."""
+    item17 = bucket.get(17)
+    n_present = sum(1 for i in _LIFE_SUBRISK_ITEMS if bucket.get(i) is not None)
+    n_total = len(_LIFE_SUBRISK_ITEMS)
+
+    if item17 is None:
+        findings.append(_finding(
+            bucket, "8_life_census", status=STATUS_SKIP,
+            expected=None, actual=None, diff=None,
+            detail="item17 자체가 없음 (8_life 와 동일 사유로 판정 불가)",
+        ))
+        return
+    if item17 <= 0:
+        findings.append(_finding(
+            bucket, "8_life_census", status=STATUS_SKIP,
+            expected=None, actual=n_present, diff=None,
+            detail=f"item17={item17:g} <= 0 — 생명장기 사업 없음, 29-35 부재가 정상",
+        ))
+        return
+    if n_present == n_total:
+        findings.append(_finding(
+            bucket, "8_life_census", status=STATUS_GREEN,
+            expected=n_total, actual=n_present, diff=0,
+            detail="29-35 전부 존재",
+        ))
+        return
+
+    # owner 판정 2026-09-03 (실측이 기억을 반증): item29~35 는 Ch.Ⅳ 4-2-2 "②장수·사업비·
+    # 해지·대재해 경과조치" 표에서만 공시되고, **그 경과조치 비적용사는 표를 통째로 생략해도
+    # 된다.** AIG손해가 결정적 반례 — 같은 비적용사인데 2023.3Q 는 표를 넣고 2023.1Q 는 안
+    # 넣었다(같은 회사가 분기별로 갈린다). 따라서 연도 규칙만으로는 판정이 안 되고, 원문에
+    # 표가 있었는지를 등재부로 확인해야 한다.
+    #   `data/_gold/kics_subrisk_source_absent.json` (table_absent) = 원문 확인 완료분.
+    # **등재부에 적어 두고 룰이 안 읽으면 소용이 없다** — 이 저장소가 반복해서 당한 사고라
+    # 여기서 실제로 lookup 한다.
+    absent = (life_subrisk_source_absent or {}).get((bucket.code, bucket.quarter))
+    if absent:
+        findings.append(_finding(
+            bucket, "8_life_census", status=STATUS_SKIP,
+            expected=n_total, actual=n_present, diff=None,
+            detail=("원문에 4-2-2 ②표 자체가 없음(등재부 확인) — "
+                    f"신뢰도={absent.get('confidence')} 근거={absent.get('citation')}"),
+        ))
+        return
+
+    m = re.match(r"^(\d{4})\.([1-4])Q$", bucket.quarter)
+    if not m:
+        findings.append(_finding(
+            bucket, "8_life_census", status=STATUS_YELLOW,
+            expected=n_total, actual=n_present, diff=None,
+            detail=f"분기 문자열 파싱 불가: {bucket.quarter!r}",
+        ))
+        return
+    year, q_num = int(m.group(1)), int(m.group(2))
+
+    if q_num in (2, 4):
+        findings.append(_finding(
+            bucket, "8_life_census", status=STATUS_RED,
+            expected=n_total, actual=n_present, diff=n_present - n_total,
+            detail=(f"짝수분기(전체공시)인데 item17={item17:g}>0, 29-35 는 {n_present}/{n_total}"
+                    f"만 존재 — 전체공시는 예외 없이 하위위험 공시 대상"),
+        ))
+        return
+
+    # 홀수분기(간이공시)
+    if year <= 2023:
+        findings.append(_finding(
+            bucket, "8_life_census", status=STATUS_RED,
+            expected=n_total, actual=n_present, diff=n_present - n_total,
+            detail=(f"2023년은 홀수분기도 전사 필수 공시(제도시행 첫해), item17={item17:g}>0, "
+                    f"29-35 는 {n_present}/{n_total}만 존재"),
+        ))
+        return
+
+    applic = (None if life_subrisk_applicability is None
+              else life_subrisk_applicability.get((bucket.code, bucket.quarter)))
+    if applic == "O":
+        findings.append(_finding(
+            bucket, "8_life_census", status=STATUS_RED,
+            expected=n_total, actual=n_present, diff=n_present - n_total,
+            detail=(f"선택적용 경과조치(TIR/TER/TIRR/TAC) 적용사인데 item17={item17:g}>0, "
+                    f"29-35 는 {n_present}/{n_total}만 존재 — 홀수분기라도 적용사는 필수 공시"),
+        ))
+    elif applic == "X":
+        findings.append(_finding(
+            bucket, "8_life_census", status=STATUS_SKIP,
+            expected=None, actual=n_present, diff=None,
+            detail=("선택적용 경과조치(TIR/TER/TIRR/TAC) 비적용사, 2024년 이후 홀수분기 — "
+                    "정당한 미공시(kics_transition_applicability.json 확인)"),
+        ))
+    else:
+        findings.append(_finding(
+            bucket, "8_life_census", status=STATUS_YELLOW,
+            expected=n_total, actual=n_present, diff=None,
+            detail=(f"2024년 이후 홀수분기, item17={item17:g}>0, 29-35 는 {n_present}/{n_total}"
+                    f"만 존재, 경과조치 적용여부 사이드카에 없음/미상 — raw 확인 필요"),
+        ))
 
 
 # --------------------------------------------------------------------------
@@ -2139,6 +2280,8 @@ def _validate_bucket(
     tfi_applicability: Optional[Mapping[tuple[str, str], str]] = None,
     tier2_x_present_codes: Optional[frozenset] = None,
     tier2_i47_scope: Optional[Mapping[str, str]] = None,
+    life_subrisk_applicability: Optional[Mapping[tuple[str, str], str]] = None,
+    life_subrisk_source_absent: Optional[Mapping[tuple[str, str], Mapping]] = None,
 ) -> None:
     """Apply all 14 rules to one (company, quarter) bucket, appending to `findings`.
 
@@ -2299,6 +2442,9 @@ def _validate_bucket(
 
     _validate_transition_basic(bucket, findings, eff_tol)
 
+    _validate_life_subrisk_census(bucket, findings, life_subrisk_applicability,
+                                  life_subrisk_source_absent)
+
     _validate_market_irr(bucket, findings, source_has_breakdown, eff_tol)
 
     _validate_transition_capital(bucket, findings, eff_tol)
@@ -2317,6 +2463,8 @@ def run_validation(
     records: Iterable[Mapping[str, Any]], *, tolerance: float = 2.0,
     source_has_breakdown: Optional[frozenset] = None,
     tfi_applicability: Optional[Mapping[tuple[str, str], str]] = None,
+    life_subrisk_applicability: Optional[Mapping[tuple[str, str], str]] = None,
+    life_subrisk_source_absent: Optional[Mapping[tuple[str, str], Mapping]] = None,
 ) -> dict[str, Any]:
     """`tfi_applicability` = (원보험사코드, 공시분기) -> 'O'|'X'|'NA'|'UNKNOWN'.
 
@@ -2327,7 +2475,11 @@ def run_validation(
 
     **None(또는 키 없음)은 통과가 아니다.** 근거가 없으면 부재를 정상이라고 말할 수 없으므로
     review(YELLOW)로 내려간다 — 사이드카가 사라지면 RED 가 조용히 0 이 되는 게 아니라
-    review 카운트가 튄다."""
+    review 카운트가 튄다.
+
+    `life_subrisk_applicability` = (원보험사코드, 공시분기) -> 'O'|'X'|'UNKNOWN', 같은 계약의
+    별도 사이드카 뷰(`validate_kics_disclosure._load_life_subrisk_applicability()`) —
+    `8_life_census`(item29-35 완전성)가 2024년 이후 홀수분기의 정당한 미공시를 가른다."""
     buckets = _group_records(records)
     findings: list[dict[str, Any]] = []
     (tier2_seen_codes, tier2_stale_limit, tier2_x_present_codes,
@@ -2339,7 +2491,8 @@ def run_validation(
         _validate_bucket(bucket, findings, tolerance, source_has_breakdown,
                          tier2_seen_codes, tier2_stale_limit,
                          tfi_applicability, tier2_x_present_codes,
-                         tier2_i47_scope)
+                         tier2_i47_scope, life_subrisk_applicability,
+                         life_subrisk_source_absent)
 
     summary_status: dict[str, int] = {
         STATUS_YELLOW: 0,

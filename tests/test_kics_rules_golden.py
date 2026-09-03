@@ -34,15 +34,23 @@ MASTER = REPO / "kics_disclosure.json"
 
 def _run() -> dict:
     from solvency.validation.kics_json_rules import run_validation
-    from validate_kics_disclosure import _load_tfi_applicability, _scan_breakdown_presence
+    from validate_kics_disclosure import (
+        _load_life_subrisk_applicability,
+        _load_tfi_applicability,
+        _scan_breakdown_presence,
+    )
 
     records = json.loads(MASTER.read_text(encoding="utf-8"))
     # 게이트와 **같은 부수입력**을 실어야 골든이 게이트를 박제한다. `tfi_applicability` 를
     # 빼면 `47_tier2_census` 의 부재 판정이 전부 UNKNOWN review 로 떨어져, 골든은 게이트가
-    # 실제로 내는 RED 를 한 건도 고정하지 못한다(2026-08-22 iter-5 신설).
+    # 실제로 내는 RED 를 한 건도 고정하지 못한다(2026-08-22 iter-5 신설). `life_subrisk_
+    # applicability` 도 같은 이유로 필요하다(2026-09-03 신설 `8_life_census` 축) — 빼면
+    # 2024년 이후 홀수분기의 적용사/비적용사 구분이 전부 UNKNOWN(YELLOW) 으로 뭉개져
+    # 골든이 실제 게이트의 RED/SKIP 갈림을 못 박는다.
     report = run_validation(records,
                             source_has_breakdown=_scan_breakdown_presence(records),
-                            tfi_applicability=_load_tfi_applicability())
+                            tfi_applicability=_load_tfi_applicability(),
+                            life_subrisk_applicability=_load_life_subrisk_applicability())
     return report
 
 

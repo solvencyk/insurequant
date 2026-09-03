@@ -67,6 +67,7 @@ from validate_kics_disclosure import (  # noqa: E402
     _exemption_registries,
     _item12_equals_item1,
     _life8_issuer_inconsistent,
+    _load_life_subrisk_applicability,
     restatement_cascade_exempt,
     _load_exemption_ledger,
     _other_capital_children_sum,
@@ -366,7 +367,8 @@ def check_census(res: GateResult, env: "Env") -> None:
     # deriving with a blanket "children all missing" rule (which over-fires on cadence-legit cells).
     if env.delegate_kics:
         kics_report = kics_run_validation(
-            kd_records, source_has_breakdown=_scan_breakdown_presence(kd_records))
+            kd_records, source_has_breakdown=_scan_breakdown_presence(kd_records),
+            life_subrisk_applicability=_load_life_subrisk_applicability())
         kics_findings = kics_report.get("findings", [])
         # documented exception 도 **같이 위임한다.** 룰만 위임하고 면제를 안 위임하면 두 게이트가
         # 같은 finding 을 놓고 서로 다른 대답을 한다 — K-ICS 게이트는 '차단 안 함', 여기서는

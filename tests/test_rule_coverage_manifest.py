@@ -81,6 +81,9 @@ DECLARED_RULES = {
                   #   8_post의 대칭짝 — 아래 이유로 없으면 item1_적용후가 완전 무방비)
     "8",          # item28 = item2 / item14 * 100
     "8_life",     # item17 = sqrt(R7[29-35])
+    "8_life_census",  # item17>0인데 29-35 완전성(2026-09-03 신설) — 2023년/짝수분기 전사
+                  #   필수, 2024년~ 홀수분기는 TIR/TER/TIRR/TAC 적용사만 필수(비적용사 SKIP,
+                  #   미상 YELLOW). owner 제보: 538칸 중 131칸이 8_life SKIP 뒤에 숨어 있었음
     "8_post",     # item28 적용후
     "9",          # 경과조치 방향성 (item2 적용후)
     "10",         # 경과조치 방향성 (item14 적용후)
