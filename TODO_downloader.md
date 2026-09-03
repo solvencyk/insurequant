@@ -1,11 +1,48 @@
 # Insurequant TODO — Downloader Stage
 
-> Last updated: 2026-09-02 · Stage 1/5 — downloader
+> Last updated: 2026-09-03 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md (+ docs/agents/source-catalog.yaml) · Changelog: docs/changelog_downloader.md
 
 **Cross-stage TODO:** `TODO.md` (root). **This file:** active + done items scoped to data collection only.
 
 ## Status
+
+**🟢 2026-09-03 owner 직접 지시 — FY2026_Q2 정기경영공시 raw/ 정본화(1→39) + 항목5(해약환급금
+준비금) 3분기 이월버그 4사 발견, parser(ifrs17) 발주.** 상세: `docs/changelog_downloader.md`
+2026-09-03.
+
+- **owner가 "PDF가 거의 통째로 빠졌다"고 지적한 근거**(`raw/*.pdf` count=1)**는 관찰은 맞았지만
+  원인 진단은 틀렸다 — 39사 전부 이미 원문이 있었다, 단 다른 폴더(`pdf/`)에.** 2026-09-01
+  04:56 커밋 `8f5e3b8`("39사 전원 적재+검증 RED 0")가 그 라운드를 이미 완주했는데, 그 시점
+  `download_disclosure_2026q2_{nonlife,life_sites}.py`의 `OUT_DIR`이 `raw/`가 아니라 `pdf/`로
+  바뀌어 있었다(원인 미상 — 이 사실이 `TODO_downloader.md`에 기록되지 않아 이번 세션까지
+  아무도 몰랐다). validation이 같은 날 `disclosure_pdfs()` 공유 해석기를 배선해 `raw/` 우선·
+  `pdf/` 폴백으로 두 위치를 다 읽게 만들어 놔서 K-ICS 파싱·검증(RED 0)은 이미 정상 동작 중
+  이었다 — 그래서 **파이프라인은 안 깨졌는데 owner가 보는 위치(raw/)는 비어 보이는** 상태.
+- **세션 도중 `pdf/`→`raw/` 39개 파일이 동시 세션에 의해 이동됐다**(mtime 8/31 보존 확인,
+  내가 만든 것 아님 — 셔플 순간을 실측: 확인 시점 A=pdf 39/raw 1, 직후 B=pdf 0/raw 39).
+  결과적으로 raw/ 가 정본 위치로 정리됨(레거시 13분기·FY2026_Q1과 동일 관례로 통일).
+  `source-catalog.yaml`(`output: raw/`)과도 다시 일치.
+- **39사 전원 내용검증**(신규 `scripts/_probes/probe_20260903_verify_2026q2_disclosure_pdfs.py`):
+  회사코드 39/39 = source-catalog 기대 집합과 정확히 일치(과부족 0). 기간마커("2026년2/4분기"·
+  "2026.1.1~6.30") 36/39 전자검출 + 스캔본 3사(KR0010·KR0079·KR0087)는 240dpi 렌더로 육안
+  확인(전부 진짜 그 회사·그 분기, 텍스트레이어만 없음 — OCR 필요, parser 소관).
+  `validate_disclosure_freshness.py --period FY2026_Q2`: RED=0 YELLOW=0 GREEN=39(직전분기와
+  전부 다른 파일 — 재탕 없음).
+- **"7-2/7-3.해약환급금준비금등의적립" 절 39/39 보유 확인** — owner 원 지시의 "손보는 5-3"은
+  실측과 다르다(정정): 생손보 공통으로 "7-3"(일부사 7-2 표기)을 쓴다, KR0049·KR0051(손보 2사)
+  raw에서 직접 확인. 37사는 전자 텍스트로, 2사(KR0010·KR0087, 완전 스캔본)는 절 유무 자체가
+  OCR 전엔 미확정 — 그 2사만 대조 불가 사유로 명시.
+- **owner 지적이 맞았다 — KR0069(삼성생명) 항목5가 3분기(2025.4Q~2026.2Q) 완전 동일값(832,412
+  백만) 고정.** raw p48 실측: 2026.1Q=1,651,800백만·2026.2Q=3,126,000백만(마스터의 3.76배).
+  같은 3분기-플랫 패턴을 IFRS17_BS.json 전수 스캔(항목5)으로 찾으니 6개사 — **KR0049·KR0097·
+  KR0080 3사 추가로 버그 확정**(raw 대조 완료), **KR0004·KR0075는 원문도 0이라 정상**(대조
+  없이 넘기면 오탐이었을 케이스). 값 산출은 parser 소관이라 고치지 않고 근거와 함께
+  `inbox/parser/20260903T0048Z__downloader__MULTI_2026.2Q__item5_surrender_reserve_frozen_3q.md`
+  로 발주. **더 이전 분기까지 얼어있을 가능성·같은 표의 다른 항목(대손준비금 등) 전이 여부는
+  미확인 — parser 후속 필요.**
+- **census: FY2026_Q2 raw/ 1 → 39.** 미게시/실패 구분 불필요 — 39/39 전원 이미 posted+fetched
+  상태였음(원래 우려였던 "일부 미게시"는 해당 없음).
 
 **🟢 2026-09-02 DART 본문 XML 전수 census — 발주된 "결측" 은 오탐, 진짜 결손 3칸 회수해 0으로.**
 상세: `docs/changelog_downloader.md` 2026-09-02.
