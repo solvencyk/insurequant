@@ -1,9 +1,69 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-08-30 · Stage 5/5 — designer
+> Last updated: 2026-09-03 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-09-03 — 섹션 스크롤 스냅("쫀득") 4개 페이지 공통 (owner 직접 지시)
+
+owner: "지금 모든 html들에서 스크롤 내릴때 좀 쫀득하게 내려가면 좋겠는데 / 각 섹션 안에서는
+평소대로 스크롤되다가 끝에서 살짝 멈추고, 다음 섹션으로 넘어갈땐 휘리릭 넘어가게"
+
+`common.css` 한 곳만 고쳐 4개 페이지(index · K-ICS · IFRS17 · 공시보고서)에 동시 적용했다.
+HTML 은 건드리지 않았다 — 네 페이지가 `header` / `.container` / `.panel` / `footer` 구조를
+공유하기 때문이다.
+
+```css
+:root{ --header-h:76px; }
+html{ scroll-snap-type:y proximity; scroll-padding-top:calc(var(--header-h) + 12px); }
+.panel{ scroll-snap-align:start; scroll-snap-stop:normal; }
+.container{ scroll-snap-align:start; }   /* 맨 위 도달 보장 */
+footer{ scroll-snap-align:end; }         /* 바닥·푸터 도달 보장 */
+```
+
+**설계 결정 4개와 그 근거(전부 실측):**
+
+1. **`proximity`, `mandatory` 아님.** 패널이 뷰포트보다 크다. mandatory 면 섹션 중간에서도
+   계속 끌려 긴 표를 못 읽는다. proximity 는 경계 근처에서만 당긴다 — 섹션 내부 오프셋
+   200/400/600px 에서 끌림 **0px**(4개 페이지 · 데스크톱 1280×900 · 모바일 375×812).
+2. **`scroll-padding-top` 88px.** header 가 `position:sticky; top:0` 이라 이걸 안 주면 스냅된
+   섹션 제목이 헤더에 가린다. 헤더 실측은 4개 페이지 전부 **데스크톱 76px / 모바일 71px** —
+   큰 쪽 + 12px. 검산: 모든 패널을 `scrollIntoView()` 했을 때 제목 top 이 전부 **88px**
+   (헤더 76px 아래, 가림 0).
+3. **양 끝 트랩 방지 — 실제로 재현해서 잡은 회귀다.** 패널에만 스냅 지점을 두면 첫 지점 위와
+   마지막 지점 아래가 통째로 못 가는 영역이 된다. index 실측: `scrollTo(0)` 이 **160** 으로
+   끌려가 페이지 최상단에 못 갔고, 최대 스크롤 2,678 에서 **2,564** 로 되돌아가 푸터가 화면
+   밖에 남았다. `.container`(레이아웃 top = sticky header 높이 76px → padding 88 을 빼면 음수
+   → 0 으로 clamp)와 `footer{end}` 로 양 끝을 정식 스냅 지점으로 만들어 해소.
+   `header{scroll-snap-align:start}` 는 **실패했다** — sticky 라 스냅 위치가 안 잡힌다(실측 160 그대로).
+4. **`prefers-reduced-motion` 에서 스냅을 끈다.** 움직임을 줄여 달라는 사용자에게 자석 스크롤은
+   정확히 그 반대다.
+
+**섹션 끝의 "살짝 멈춤"은 브라우저 동작 그 자체다.** 패널이 스냅포트보다 크면 Chrome 은 스냅
+가능 범위를 `[패널시작-88, 패널끝-스냅포트-88]` 로 제한한다(IFRS17 실측 상한 704). 프로그램적
+`scrollTo` 는 그 벽에 걸리지만 **실제 휠 입력은 넘어간다**(704 에서 휠 3틱 → 992). 즉 못 가는
+영역은 없고, 경계 ~110px 안에서 다음 섹션 시작으로 스냅한다(K-ICS 실측: 다음 섹션 70px 전
+요청 → 다음 섹션 시작으로 이동).
+
+**검증 방법(재현 가능):** 로컬 `python -m http.server` + 헤드리스. 이 PC 는 보안 에이전트가
+jsdelivr 를 막아 차트가 안 그려지고 패널이 `will-reveal`(opacity 0)에 멈춘다 — **내 CSS 변경과
+무관한 네트워크 artifact** 다. 실콘텐츠 높이를 흉내내려고 각 패널 `minHeight` 를 1,300~1,600px
+로 부풀려 기하를 실측했다. 초기 측정에서 나온 "중간 끌림 -212px" 은 레이아웃 정착 전에 잰
+잡음이었고, 같은 구간(2,300~2,700)을 재측정하니 전부 끌림 0 이었다.
+
+측정 결과 요약(최종 CSS):
+
+| 페이지 | 뷰포트 | 제목 가림 | 맨 위 도달 | 바닥 도달 | 섹션 중간 끌림 |
+|---|---|---|---|---|---|
+| index | 1280×900 / 375×812 | 0 (88px) | O | O | 0 |
+| K-ICS | 1280×900 / 375×812 | 0 (88px) | O | O | 0 |
+| IFRS17 | 1280×900 | 0 (88px) | O | O | 0 |
+| 공시보고서 | 1280×900 | 0 (88px) | O | O | 0 |
+
+모달 내부 스크롤러(`.iq-modal-panel`)는 별도 스크롤 컨테이너라 영향 없음(`scroll-snap-type:none` 실측).
 
 ---
 
