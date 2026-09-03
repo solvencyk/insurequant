@@ -1,4 +1,4 @@
-﻿{
+{
   "generated_at_utc": "2026-09-03T10:54:47Z",
   "sheets": {
     "17BS": {
@@ -6,62 +6,62 @@
       "quarter_min": "2021.4Q",
       "quarter_max": "2026.2Q"
     },
-    "K-ICS怨듭떆": {
+    "K-ICS공시": {
       "rows": 25458,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
-    "湲덈━誘쇨컧??: {
+    "금리민감도": {
       "rows": 789,
       "quarter_min": "2024.4Q",
       "quarter_max": "2026.2Q"
     },
-    "CSM?뚰꽣??: {
+    "CSM워터폴": {
       "rows": 2172,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
-    "CSM?곴컖": {
+    "CSM상각": {
       "rows": 390,
       "quarter_min": "2025.4Q",
       "quarter_max": "2025.4Q"
     },
-    "媛?뺣?媛먮룄": {
+    "가정민감도": {
       "rows": 195,
       "quarter_min": "2025.4Q",
       "quarter_max": "2025.4Q"
     },
-    "?좉퀎?폚SM諛곗닔": {
+    "신계약CSM배수": {
       "rows": 362,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
-    "?먯씡遺꾪빐PL": {
+    "손익분해PL": {
       "rows": 11930,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
-    "諛곕떦": {
+    "배당": {
       "rows": 2043,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
-    "湲곕낯?먮낯?뚯쭊??: {
+    "기본자본소진율": {
       "rows": 390,
       "quarter_min": "2026.2Q",
       "quarter_max": "2026.2Q"
     },
-    "蹂댁셿?먮낯?뚯쭊??: {
+    "보완자본소진율": {
       "rows": 546,
       "quarter_min": "2026.2Q",
       "quarter_max": "2026.2Q"
     },
-    "?먮낯?깆쬆沅뚮컻?됲쁽??: {
+    "자본성증권발행현황": {
       "rows": 123,
       "quarter_min": "2026.2Q",
       "quarter_max": "2026.2Q"
     },
-    "?먮낯鍮꾩쑉?꾨쭩": {
+    "자본비율전망": {
       "rows": 2090,
       "quarter_min": null,
       "quarter_max": null
