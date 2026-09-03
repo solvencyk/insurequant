@@ -3,9 +3,9 @@
  "_contract": "입력 불변 ∧ 코드 불변 ∧ 산출 불변 ⟹ 지금 다시 빌드해도 같은 바이트. 하나라도 어긋나면 전체 골든을 돌려 확인한 뒤 --update 한다. 지문은 무거운 골든의 대체가 아니라 층이다.",
  "specs": {
   "ifrs17_bs": {
-   "inputs_sha256": "c7fdfea916605d82a7a70bf550a16fefced48927411115491649b71afdb1263e",
+   "inputs_sha256": "0a3261cbda7c33f9cd2e2f8e8501db1d7eb325d9a114afdbf37756e528a8e198",
    "input_files": 1588,
-   "input_bytes": 2011769685,
+   "input_bytes": 2011789288,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
     "data/dart/FY*_Q*/raw/**/*.xml": 545,
@@ -34,12 +34,12 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "d3bdf6bbf9077c378a5d11e0d956357dd4559146b9cd6cb2437f51599d58c791",
+   "fixture_sha256": "2123ef3a3ef5949cd37ac8b4d9a6578bc56f8be9f4a13674b2bc05c19620e206",
    "outputs": {
     "sha256": {
      "path": "IFRS17_BS.json",
-     "fixture_sha256": "146d0fc2a019ed7f5933927789726e562b52325884ddf161bb8d697152134b0c",
-     "ondisk_sha256": "146d0fc2a019ed7f5933927789726e562b52325884ddf161bb8d697152134b0c"
+     "fixture_sha256": "f17e0795b5deadf047012e12826ab6e761d0c765481ee3a1206d40cf9ad5a4b5",
+     "ondisk_sha256": "f17e0795b5deadf047012e12826ab6e761d0c765481ee3a1206d40cf9ad5a4b5"
     }
    },
    "_golden": "tests/test_ifrs17_bs_golden.py",
