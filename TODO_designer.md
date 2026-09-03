@@ -9,6 +9,14 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-09-03b, owner 직접 지시 — 커밋만, 라이브 미배포):**
+- **IFRS17 Panel 5 보험손익 구성 접기.** 보험손익 행에 ＋ 를 붙여 구성 항목(원수 CSM상각·
+  위험조정·예실차·기타 원수·생명장기재보험·자동차+일반·기타 사업비)을 그 아래로 내리고
+  평시 숨김. 표(`renderPlTable`)만 변경 — 워터폴 차트는 그대로. 한 행이 그룹 둘에 속하게
+  되어 `style.display` 직접 토글을 버리고 `openState` + `applyVis()` 재계산으로 바꿨다.
+  실측 4개 회사 유형(손보·생보·LOB형·PAA) × 데스크톱·모바일 통과. 상세는 changelog 2026-09-03b.
+- **배포 대상: `IFRS17.html` 1개.** 안드로이드 얕은 main 클론에서 올린다(작업 PC push 불가).
+
 **Recent (2026-09-03, owner 직접 지시 — 라이브 배포 완료 `cda3c1e`):**
 - **섹션 스크롤 스냅("쫀득") 4개 페이지 공통.** `common.css` 한 곳(`html{scroll-snap-type:y
   proximity}` + `.panel{align:start}` + `.container{start}`/`footer{end}` + `scroll-padding-top:88px`).
