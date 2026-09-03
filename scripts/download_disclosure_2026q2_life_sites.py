@@ -28,7 +28,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_DIR = ROOT / "data" / "disclosure" / "FY2026_Q2" / "pdf"
+OUT_DIR = ROOT / "data" / "disclosure" / "FY2026_Q2" / "raw"
 META_DIR = ROOT / "data" / "disclosure" / "_meta" / "FY2026_Q2"
 CENSUS = META_DIR / "life_own_site_census.json"
 OUT_DIR.mkdir(parents=True, exist_ok=True)

@@ -34,7 +34,7 @@ still-current 1Q row. Caller MUST hash-compare each output against the
 existing FY2026_Q1 file for the same KR code and treat an identical hash as
 an honest not-yet-posted gap, not a real 2Q collection.
 
-Output: data/disclosure/FY2026_Q2/pdf/KR####_<name>.pdf
+Output: data/disclosure/FY2026_Q2/raw/KR####_<name>.pdf
 Manifest: data/disclosure/_meta/FY2026_Q2/manifest.json
 """
 
@@ -52,7 +52,7 @@ import requests
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_DIR = ROOT / "data" / "disclosure" / "FY2026_Q2" / "pdf"
+OUT_DIR = ROOT / "data" / "disclosure" / "FY2026_Q2" / "raw"
 META_DIR = ROOT / "data" / "disclosure" / "_meta" / "FY2026_Q2"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 META_DIR.mkdir(parents=True, exist_ok=True)

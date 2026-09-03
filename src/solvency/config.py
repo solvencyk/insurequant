@@ -46,8 +46,16 @@ class Settings:
     def disclosure_pdf_path(
         self, period: str, company_dirname: str, ext: str = ".pdf"
     ) -> Path:
-        """Resolve the canonical PDF path for one (period, company)."""
-        return self.disclosure_dir / period / "pdf" / f"{company_dirname}{ext}"
+        """Resolve the canonical PDF path for one (period, company).
+
+        정본은 `raw/` 다 (owner 2026-09-02 "폴더 통일"). 이 함수는 원래 `pdf/` 를 돌려줬고
+        13개 분기는 `raw/` 에 쌓여 있어서 2026.2Q 부터 디렉터리가 갈렸다 — `raw/` 만 glob 하는
+        코드가 39사를 **예외도 로그도 없이** 스킵했고, 같은 버그가 최소 네 번 났다
+        (`scripts/_disclosure_pdf_paths.py` 의 사고 목록 참조). 2026-09-02 에 `pdf/` 를
+        `raw/` 로 합치면서 이 선언도 맞췄다. 읽기는 계속 그 헬퍼(`disclosure_pdfs()`)를 써라 —
+        과거 워크트리에 남아 있을 `pdf/` 를 폴백으로 본다.
+        """
+        return self.disclosure_dir / period / "raw" / f"{company_dirname}{ext}"
 
     def disclosure_parsed_path(
         self, period: str, company_dirname: str, ext: str = ".xlsx"
