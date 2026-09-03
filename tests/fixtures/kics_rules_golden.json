@@ -1,13 +1,13 @@
 {
-  "sha256": "398816b11d69b878af5d308277d203b24dcbbbf0df0a2d2ee4c509ff3a57a7fe",
+  "sha256": "fbba8c18fa253b27b0dc4e290f7568aa3b9106d8880ea8e7c8f1e633428278b7",
   "buckets": 538,
-  "findings": 15602,
+  "findings": 16140,
   "by_status": {
-    "YELLOW": 1656,
-    "GREEN": 11107,
-    "SKIP": 2803,
+    "YELLOW": 1686,
+    "GREEN": 11548,
+    "SKIP": 2844,
     "ERROR": 0,
-    "RED": 36
+    "RED": 62
   },
   "by_rule": {
     "1": {
@@ -47,10 +47,16 @@
       "GREEN": 538
     },
     "8_life": {
-      "SKIP": 138,
-      "GREEN": 384,
+      "SKIP": 115,
+      "GREEN": 405,
       "YELLOW": 15,
-      "RED": 1
+      "RED": 3
+    },
+    "8_life_census": {
+      "RED": 24,
+      "GREEN": 420,
+      "SKIP": 64,
+      "YELLOW": 30
     },
     "19_market": {
       "SKIP": 138,
