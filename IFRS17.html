@@ -1207,42 +1207,78 @@
     // sub를 가진 스텝은 전부 ＋ 토글이 붙는다. 기본형은 생명장기재보험 하나, LOB형은 다리 수만큼
     // (코리안리 = 생명 수재/출재 · 장기 수재/출재 넷) — 세부가 최신 기간에 하나도 없으면 안 만든다.
     const togGroups = [];
-    for(const d of defs){
+    // 가시성은 **그룹 상태에서 다시 계산한다**(style.display 직접 토글 아님). 보험손익 구성이
+    // 접히면 그 안의 세부(재보험 세부 등)까지 같이 숨어야 하므로 한 행이 그룹 두 개에 속한다 —
+    // 직접 토글 방식이면 두 토글이 서로의 display 를 덮어써서 "접었는데 세부만 남는" 상태가 된다.
+    const openState = new Map();   // 그룹키 -> 열림 여부. 행은 소속 그룹이 전부 열려야 보인다.
+
+    // owner 2026-09-03: 보험손익 구성(원수 CSM상각·위험조정·예실차·기타 원수·생명장기재보험·
+    // 자동차+일반·기타 사업비)은 평시에 숨기고 보험손익 행의 ＋ 로 펼친다. **표 순서만 바꾼다** —
+    // 워터폴 차트는 브리지라 "구성 → 앵커" 순서가 그 자체로 의미이므로 그대로 둔다.
+    const OI_G = "pl-oi";
+    const oiIdx = defs.findIndex(d=> d.ko==="보험손익");
+    const oiHead = oiIdx > 0 ? defs.slice(0, oiIdx) : [];
+    const oiMember = new Set(oiHead);
+    const ordered = oiHead.length ? [ defs[oiIdx], ...oiHead, ...defs.slice(oiIdx+1) ] : defs;
+    if(oiHead.length) openState.set(OI_G, false);
+
+    for(const d of ordered){
+      const inOi = oiMember.has(d);
+      const base = inOi ? [OI_G] : [];
+      const isOiTog = oiHead.length>0 && d===defs[oiIdx];
       // 세부 존재 판정도 num/get 양쪽을 본다 — OCI 그룹의 '미분류 잔차'는 num 이 없다.
-      if(d.sub && d.sub.some(s=> ((s.get || (g=> g(s.num)))(gLast))!=null)){
+      const hasSub = !!(d.sub && d.sub.some(s=> ((s.get || (g=> g(s.num)))(gLast))!=null));
+      if(hasSub || isOiTog){
         const cls = "pl-resub-"+togGroups.length;
+        const gk  = isOiTog ? OI_G : cls;
+        if(!isOiTog) openState.set(gk, false);
+        const title = isOiTog ? "보험손익 구성" : (d.subTitle||d.ko);
         const lab=document.createElement("span");
         const tog=document.createElement("button");  // G1: K-ICS .subtoggle 양식 미러(common.css)
         tog.type="button"; tog.className="subtoggle";
-        tog.textContent="+"; tog.title=(d.subTitle||d.ko)+" 펼치기"; tog.setAttribute("aria-expanded","false");
-        lab.appendChild(document.createTextNode(d.ko)); lab.appendChild(tog);
-        rows.push({ cells:[ lab, ...getters.map(g=> fmtEok(d.get(g))) ] });
-        for(const s of d.sub){
+        tog.textContent="+"; tog.title=title+" 펼치기"; tog.setAttribute("aria-expanded","false");
+        lab.appendChild(document.createTextNode((inOi?"　└ ":"")+d.ko)); lab.appendChild(tog);
+        rows.push({ groups:base, muted:inOi, bold:(d.role==="anchor"||d.role==="end"),
+                    cells:[ lab, ...getters.map(g=> fmtEok(d.get(g))) ] });
+        if(hasSub) for(const s of d.sub){
           // 세부 행의 값: 보통은 항목번호(num) 하나지만, 미분류 잔차처럼 계산식인 것도 있다.
           const sGet = s.get || (g=> g(s.num));
-          rows.push({ cls:"pl-resub "+cls, hide:true, muted:true, cells:[ "　└ "+s.ko, ...getters.map(g=> fmtEok(sGet(g))) ] });
+          rows.push({ cls:"pl-resub "+cls, groups:base.concat([gk]), muted:true,
+                      cells:[ (inOi?"　　└ ":"　└ ")+s.ko, ...getters.map(g=> fmtEok(sGet(g))) ] });
         }
-        togGroups.push({ tog, cls, label:d.ko, title:(d.subTitle||d.ko) });
+        togGroups.push({ tog, gk, label:d.ko, title });
       } else {
-        rows.push({ cells:[ d.ko, ...getters.map(g=> fmtEok(d.get(g))) ], bold:(d.role==="anchor"||d.role==="end") });
+        rows.push({ groups:base, muted:inOi, bold:(d.role==="anchor"||d.role==="end"),
+                    cells:[ (inOi?"　└ ":"")+d.ko, ...getters.map(g=> fmtEok(d.get(g))) ] });
       }
     }
     const tbl = buildMiniTable(headers, rows);
     box.appendChild(tbl);
+    // rows 와 tbody 행은 순서가 1:1 이다(buildMiniTable 이 받은 순서대로 append).
+    const bodyTrs = Array.from(tbl.tBodies[0].rows);
+    function applyVis(){
+      bodyTrs.forEach((tr,i)=>{
+        const gs = rows[i].groups || [];
+        tr.style.display = gs.every(k=> openState.get(k)===true) ? "" : "none";
+      });
+    }
+    applyVis();
     for(const grp of togGroups){
-      const subTrs = Array.from(tbl.querySelectorAll("tr."+grp.cls));
       grp.tog.addEventListener("click", ()=>{
-        const showing = subTrs.length && subTrs[0].style.display!=="none";
-        subTrs.forEach(tr=> tr.style.display = showing ? "none" : "");
-        grp.tog.textContent = showing ? "+" : "−";
-        grp.tog.title = grp.title + (showing ? " 펼치기" : " 접기");
-        grp.tog.setAttribute("aria-expanded", showing ? "false" : "true");
+        const open = openState.get(grp.gk)!==true;
+        openState.set(grp.gk, open);
+        grp.tog.textContent = open ? "−" : "+";
+        grp.tog.title = grp.title + (open ? " 접기" : " 펼치기");
+        grp.tog.setAttribute("aria-expanded", open ? "true" : "false");
+        applyVis();
       });
     }
     // 토글이 실제로 붙은 행만 안내한다(전엔 토글이 없는 4개사에서도 "생명장기재보험 ＋" 을 안내했다).
-    const subHint = togGroups.length
-      ? " · " + (togGroups.length>1 ? "LOB 각 행" : togGroups[0].label) + " ＋ 클릭 시 세부"
-      : "";
+    const subHint = oiHead.length
+      ? " · 보험손익 ＋ 클릭 시 구성 항목(그 안의 ＋ 는 한 겹 더)"
+      : (togGroups.length
+          ? " · " + (togGroups.length>1 ? "LOB 각 행" : togGroups[0].label) + " ＋ 클릭 시 세부"
+          : "");
     const note=document.createElement("div"); note.className="small-muted"; note.style.marginTop="6px";
     note.textContent = "단위 억원(소수 반올림) · " + (mode==="quarter" ? "직전 4분기(당분기)" : "직전 3개년(연 누계)")
       + " · 음수 △" + subHint + " · 당기순이익 이후 행은 기타포괄손익(OCI) 구간 · —는 해당 항목 미공시";
