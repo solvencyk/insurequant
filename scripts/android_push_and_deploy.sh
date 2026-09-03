@@ -86,24 +86,31 @@ cleanup() { cd "$(git rev-parse --show-toplevel 2>/dev/null || echo .)" 2>/dev/n
             git worktree remove --force "$WT" >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 
+# 루프를 파이프에 넣지 마라 — 파이프 오른쪽은 서브셸이라 bad=1 도 exit 1 도 바깥으로
+# 전달되지 않는다(2026-09-03 발견). BOM 사고를 막아 준 해시 검증이 그래서 무력했다.
+# here-string 으로 돌려 같은 셸에서 실행한다.
 ( cd "$WT"
   git checkout -B main origin/main >/dev/null 2>&1
-  printf '%s' "$CHANGED" | while IFS= read -r f; do
+  while IFS= read -r f; do
     [ -n "$f" ] || continue
     git checkout "$BRANCH" -- "$f" || exit 1      # 리다이렉션 금지 — 블롭 그대로
-  done
+  done <<< "$CHANGED"
   git add -A
 
   # 커밋 전에 blob 해시 대조 — 하나라도 다르면 중단
   bad=0
-  printf '%s' "$CHANGED" | while IFS= read -r f; do
+  while IFS= read -r f; do
     [ -n "$f" ] || continue
     want=$(git rev-parse "$BRANCH:$f")
     got=$(git ls-files -s -- "$f" | awk '{print $2}')
-    [ "$want" = "$got" ] || { printf '  불일치 %s (기대 %s / 실제 %s)\n' "$f" "$want" "$got"; bad=1; }
-  done
+    if [ "$want" != "$got" ]; then
+      printf '  불일치 %s (기대 %s / 실제 %s)
+' "$f" "$want" "$got"; bad=1
+    fi
+  done <<< "$CHANGED"
   [ "$bad" -eq 0 ] || exit 1
-  printf '  전 파일 블롭 일치\n'
+  printf '  전 파일 블롭 일치
+'
 
   git commit -m "deploy: $(printf '%s' "$CHANGED" | tr '\n' ' ' | sed 's/ *$//') 갱신" >/dev/null
   git push origin main
@@ -111,6 +118,10 @@ trap cleanup EXIT
 ) || die "배포 실패 — main 은 건드려지지 않았다."
 
 step "라이브 확인 (몇 분 뒤)"
-printf '%s' "$CHANGED" | while IFS= read -r f; do
-  case "$f" in *.json) printf '  https://www.insurequant.com/%s?cb=%s\n' "$f" "$RANDOM";; esac
-done
+while IFS= read -r f; do
+  [ -n "$f" ] || continue
+  case "$f" in
+    *.json|*.css|*.js) printf '  https://www.insurequant.com/%s?cb=%s
+' "$f" "$RANDOM";;
+  esac
+done <<< "$CHANGED"
