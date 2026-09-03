@@ -1,6 +1,59 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-01 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-09-03 · Stage 2/5 — parser (kics lane)
+
+## 2026-09-03 — 롯데손해 KR0003 2026.1Q 원문 재제출 반영 (orchestrator 발주)
+
+오케스트레이터가 `data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf` 를 구본
+(`...최종 제출_20260528.pdf`, 886,240B, zip 기록 2026-05-29 16:41)에서 신본
+(`...재제출.pdf`, 1,927,066B, zip 기록 2026-06-02 17:09 — 파일명은 "최종"인데 신본보다
+4일 이르다)으로 교체했다. `_TIER2_ISSUER_INCONSISTENT[("KR0003","2026.1Q")]` 면제는
+구본의 실측(TFI 표가 전기 2025.4Q 열을 소수점까지 재게시)을 근거로 등재돼 있었는데, 그
+전제가 사라졌다 — `scripts/prepush_check.py` 가 `EXEMPTION_CITATION_CONTRADICTED`(인용
+숫자를 원문에서 못 찾음)로 정확히 잡아냈다.
+
+**재파싱**: `run_harness.py --stage parse --pdf-root data/disclosure/FY2026_Q1/raw
+--companies KR0003`(docling conf=0.85)로 `md_inbox/FY2026_Q1/KR0003_롯데손해보험.md`
+재생성, raw p22 `(1) 공통적용 경과조치 관련` 표를 fitz 직접판독으로 독립 재확인(완전 일치).
+item47~52 6칸 정정(`scripts/fix_20260903_lotte_kr0003_2026q1_tfi_resubmission.py --apply`) —
+item52(TFI표 지급여력금액) 26,058.50→26,955.32 로, 이제 헤드라인 item1=26,955 와 소수점까지
+일치한다(구본에서 안 맞던 바로 그 항등식). item53/54 는 신·구본이 같은 값이라 무변경.
+
+**면제 정리**: 코드 예외 버킷(`scripts/validate_kics_disclosure.py`)과 원장 기록
+(`data/_gold/kics_exemption_provenance.json`, registry=`_TIER2_ISSUER_INCONSISTENT`)을
+함께 제거(한쪽만 지우면 `EXEMPTION_PROVENANCE_MISSING` 이 뜨는 것을 재현 후 확인). 코드
+주석은 "구본 기준 서술이었다"로 재작성해 이력을 남기고, 2026-09-01 owner 재검토("현행
+유지")의 전제가 무너졌음을 명시.
+
+**재검산**: KR0003/2026.1Q 는 적용전 축 전부 GREEN(잔차 0.01 이내). 적용후 축의
+`3_tier2_composition_post`(3548.44)·`51_tfi_tier2_composition_post`(3095.35)만 YELLOW로
+남지만, 이 두 룰은 `kics_json_rules.py`에 명문화된 대로 **전사 모든 회사·분기에서 구조적으로
+RED 상한이 YELLOW**(POST_IDENTITY_UNESTABLISHED)라 이 회사만의 잔차가 아니고 documented
+exception 대상도 아니다. 전체 게이트: RED=36 YELLOW=1656 GREEN=11107, blocking RED=0(KR0003
+기여분 0). `scripts/prepush_check.py`의 K-ICS RULE GATE 섹션 exit=0(clear).
+
+**재제출/정정 census** (`scripts/_probes/probe_20260903_resubmission_census.py` +
+`probe_20260903_fingerprint_check.py`, 저장소에 남김): 전체 14분기·549개 raw PDF를 md_inbox
+docling front-matter(`source_sha256`)와 대조. mtime상 "pdf가 md보다 늦다" 17건 중 실제
+콘텐츠 드리프트는 1건(KR0005 흥국화재 2024.4Q)뿐 — 이미 2026-08-21 세션에서 종결된 티켓
+(wrong-document 367p 합본→96p 정본 교체, item19후 등 재계산 완료), 신규 조치 불요. 잔여
+16건은 재저장/재다운로드에 의한 mtime 노이즈(sha256 동일). 디스크에 남은 zip 8개 중
+재제출/정정 마커는 KR0003 FY2026_Q1 zip 1건뿐(본 건). `_amended*` 접미 파일(100여개)은
+표본 확인 결과 같은 회사·분기에 비-amended 짝이 없는 단독 파일 — downloader 매칭 단계의
+명명 관행이지 발행사 재제출 신호가 아니다. **KR0003 2026.1Q 외에 구본을 정본으로 들고
+있는 곳은 census 범위 안에서 없음.**
+
+**의도적으로 손대지 않은 것** (이번 티켓이 명시적으로 오케스트레이터 소관으로 스코프함):
+`insurequant_master_tables.xlsx`(`K-ICS공시` 시트 12칸 drift — `sync_master_xlsx_sheet.py
+"K-ICS공시"` 로 해소 가능하나 미실행), `tests/test_kics_rules_golden.py` +
+`tests/test_post_transition_golden.py`(둘 다 이번 변경으로 sha256 이동 — 의도된 변경이라
+`--update` 대상이나 미실행), `tests/test_rule_coverage_manifest.py::test_master_xlsx_
+clean_state_has_no_red`(위 xlsx drift 의 하류 실패). `prepush_check.py` 전체 PRE-PUSH
+VERDICT 는 이 셋 때문에 BLOCKED — K-ICS RULE GATE 자체는 clear. `IFRS17_BS.json`/
+`bs_manual_overrides.json`/`17BS` 시트 drift 1칸은 동시 세션(ifrs17 레인) 소관, 미접촉.
+
+재현: `validate_kics_disclosure.py`(인자 없음) · `prepush_check.py`(~5분, offline tests
+포함 ~10분) · 위 두 probe 스크립트.
 
 ## 2026-09-01 — docling 이 절을 잃는 방식은 셋이고 원인이 다 다르다 (inbox `20260831T0700Z`)
 

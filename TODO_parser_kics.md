@@ -1,6 +1,78 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-01(10회차 — 자본성증권 발행잔액 기준일 H1 갱신, 14→17/21사) —
+> Last updated: 2026-09-03(11회차 — 롯데손해 KR0003 2026.1Q 원문 재제출 반영, orchestrator 발주) —
+> `data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf` 를 2026-09-03 오케스트레이터가 정정본
+> (`...재제출.pdf`, 1,927,066B, zip 기록시각 2026-06-02 17:09)으로 교체했다. 구본
+> (`...최종 제출_20260528.pdf`, 886,240B, zip 기록시각 2026-05-29 16:41 — 파일명은 "최종"인데
+> 신본보다 4일 이르다)은 `data/_archive/20260903T015112Z/disclosure_superseded_20260528/`
+> 로 격리돼 있다.
+>
+> **① 재파싱.** `run_harness.py --stage parse --pdf-root data/disclosure/FY2026_Q1/raw
+> --companies KR0003 --workers 1`(docling, conf=0.85, dropped_pages=0)로 `md_inbox/
+> FY2026_Q1/KR0003_롯데손해보험.md` 재생성. raw p22 `(1) 공통적용 경과조치 관련` 표를
+> fitz 직접 판독으로 독립 재확인(docling MD와 완전 일치) 후 item47~52 6칸 갱신
+> (`scripts/fix_20260903_lotte_kr0003_2026q1_tfi_resubmission.py --apply`, 실행 전 기존값
+> assert·백업 `kics_disclosure.json.bak_pre_lotte_tfi_resubmission_fix`, git diff로
+> 딱 6칸만 바뀐 것 확인):
+>   item47(보완자본 한도 적용 전)  8366.25/5801.18   → 8247.18/4698.14
+>   item48(보완자본 한도)         10335.34/10335.34  → 10216.14/10216.14
+>   item49(해약환급금...초과분)   21567.39/21567.39  → 22670.42/22670.42
+>   item50(TFI표 기본자본)        -3875.14/-3421.44  → -3962.29/-3508.58
+>   item51(TFI표 보완자본)        29933.63/29479.93  → 30917.61/30463.91
+>   item52(TFI표 지급여력금액)    26058.50/26058.50  → 26955.32/26955.32 (이제 item1=26,955 와
+>   소수점까지 일치 — 구본에서 직전분기 열과 일치했던 바로 그 증상이 사라졌다)
+> item53/54(기발행 신종자본증권 453.70·후순위채무 2111.36)는 신·구본이 같은 값이라 무변경
+> (2026-09-01 owner 재검토가 이미 item53의 채권 콜일정으로 독립 확증한 값과 동일).
+>
+> **② 면제 정리.** `scripts/validate_kics_disclosure.py`의
+> `_TIER2_ISSUER_INCONSISTENT[("KR0003","2026.1Q")]` 버킷(구본 근거)과
+> `data/_gold/kics_exemption_provenance.json`의 대응 원장 기록(registry=
+> `_TIER2_ISSUER_INCONSISTENT`)을 함께 제거했다 — 한쪽만 지우면 `EXEMPTION_PROVENANCE_MISSING`
+> RED 가 뜨는 것을 실제로 재현해 확인 후 원복. 코드 주석은 삭제하지 않고 "구본 기준 서술이었다"
+> 로 재작성해 이력을 남겼고, 2026-09-01 owner 재검토("현행 유지") 결론의 전제(구본이 정본)가
+> 무너졌다는 사실을 명시했다.
+>
+> **③ 재검산(실측).** `validate_kics_disclosure.py` 재실행 결과 KR0003/2026.1Q 는
+> **적용전 축 전부 GREEN**(`3_tier2_composition`·`47_tier2_census`·`47_tier2_census_post`·
+> `48_tier2_limit`·`50_tfi_tier_split`·`51_tfi_tier2_composition`·`53_tfi_memo_rows`,
+> 잔차 전부 0.01 이내 반올림). 적용후 축의 `3_tier2_composition_post`(잔차 3548.44)·
+> `51_tfi_tier2_composition_post`(잔차 3095.35)만 YELLOW 로 남는데, 이 둘은
+> `kics_json_rules.py`(축 F 주석 "적용전 RED·적용후 YELLOW", `POST_IDENTITY_UNESTABLISHED`)에
+> 명문화된 대로 **전사 모든 회사·분기에서 구조적으로 RED 상한이 YELLOW인 룰**이라 KR0003 만의
+> 잔차가 아니고 documented exception 대상도 아니다(반증 사례로 한화손해 2023.2Q가 룰 주석에
+> 이미 인용돼 있음). 전체 게이트: `Status counts: RED=36 YELLOW=1656 GREEN=11107 SKIP=2803`
+> · **blocking RED=0**(전부 기존 문서화 예외 — KR0003 신규 RED 0건). 재현:
+> `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py`
+> (인자 없음, `EXEMPTION_CITATION_CONTRADICTED`/`EXEMPTION_PROVENANCE_MISSING` 0건 확인됨).
+>
+> **④ 재제출/정정 census** (`scripts/_probes/probe_20260903_resubmission_census.py` +
+> `probe_20260903_fingerprint_check.py`, 저장소에 남김). 전체 14분기 × raw pdf 549개를
+> md_inbox 지문(docling front-matter `source_sha256`)과 대조 — "raw pdf 가 대응 md 보다
+> 1시간 이상 늦게 손댐" 17건 중 **실제 콘텐츠 드리프트(sha256 불일치)는 1건뿐**(나머지 16건은
+> 재저장/재다운로드로 mtime만 바뀐 노이즈, 예: KR1011 10개 분기가 전부 같은 ~35h 델타로
+> 일괄 터치된 흔적 — sha256 동일 확인). 그 1건 KR0005(흥국화재) 2024.4Q 는 **이미 2026-08-21
+> 세션에서 종결된 티켓**(본 파일 "5회차 C" 항목) — downloader가 wrong-document(367p 합본,
+> 사실상 image-only)를 96p 정본(마찬가지 image-only)으로 교체했고 item19후 등을 R4/MARKET_M
+> 재계산으로 이미 반영 완료. 신규 조치 불요, 재확인만. 디스크에 남아있는 zip 8개(대부분
+> 정기공시+검토/감사보고서 정상 동봉, 표 라벨에 "재제출/정정/수정" 없음) 중 재제출 마커가
+> 뜬 것은 KR0003 FY2026_Q1 zip 1건뿐(=본 티켓, 이미 처리). `KR0003_롯데손해보험_amended2.zip`
+> (FY2025_Q3)은 내부가 2025.**2Q** 문서라 오분류 흔적이지만, 현재 활성 raw pdf(751,155B)는
+> 같은 폴더의 정상 zip 첫 엔트리(2025.**3Q**, 751,155B)와 정확히 일치해 실사용 중이 아님 —
+> 정확성 영향 없는 downloader 쪽 정리 후보로만 메모. `_amended`/`_amended2`류 접미 파일(100여
+> 개)은 표본 확인(KR0005 2023.1Q, KR0001 2023.4Q 등) 결과 같은 회사·분기에 비-amended 짝이
+> 아예 없는 **단독 파일** — 발행사 재제출과 무관한 downloader 매칭 단계 명명 관행으로 판단,
+> 컨텐츠 버저닝 신호 아님. **결론: 이 census 범위 안에서 KR0003 2026.1Q 외에 구본을 정본으로
+> 들고 있는 곳은 없다.**
+>
+> **잔여**: `scripts/prepush_check.py`의 GOLDEN INPUT FINGERPRINT 단계가 `post_transition`
+> 골든(입력 = md_inbox 전체, 이번 재파싱으로 정당하게 1개 파일이 바뀜)을 `INPUTS_MOVED` 로
+> 플래그한다 — 골든 갱신은 오케스트레이터 소관이라 `--update` 를 실행하지 않았다. 실제
+> `pytest tests/test_post_transition_golden.py` 산출이 움직였는지 확인 후 필요시 `--update`
+> 는 다음 라운드(orchestrator 판단). 같은 단계의 `ifrs17_bs`/`pl_breakdown`/`dividend`
+> `INPUTS_MOVED`/`OUTPUT_DRIFT` 는 공유 워킹트리의 동시 세션(ifrs17 레인, `IFRS17_BS.json`·
+> `bs_manual_overrides.json` 미커밋 변경) 소관 — 이 티켓과 무관, 손대지 않았다.
+>
+> Last updated (이전): 2026-09-01(10회차 — 자본성증권 발행잔액 기준일 H1 갱신, 14→17/21사) —
 > inbox `20260901T1400Z` 발주(잔여 22개사 중 실측 7개사만 진짜 손봐야 함, 6사는 무공시 정당·
 > 12사는 무증권·1사는 이미 fresh, 시작 census로 재확인).
 >
@@ -1704,6 +1776,22 @@ Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Doc
 Session start: read this file + `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-kics.md`. English where Korean encoding is fragile (see `CLAUDE.md`).
 
 ## Status
+
+**2026-09-03 — 롯데손해 KR0003 2026.1Q 원문 재제출 반영.** orchestrator 발주: 오케스트레이터가
+당일 `data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf` 를 구본(886,240B, "최종
+제출_20260528")에서 신본(1,927,066B, "재제출", zip 기록 2026-06-02 17:09 — 구본보다 4일
+늦다)으로 교체했다. 구본 기준으로는 `_TIER2_ISSUER_INCONSISTENT[("KR0003","2026.1Q")]` 의
+"발행사가 전기 TFI 표를 재게시했다" 면제가 사실이었으나, 신본에서는 그 표가 당분기 헤드라인과
+소수점까지 일치해 면제 전제가 무너졌다. 재파싱(docling, conf=0.85) + raw p22 fitz 직접판독
+독립대조로 item47~52 6칸 정정(`scripts/fix_20260903_lotte_kr0003_2026q1_tfi_resubmission.py`,
+combo-diff로 6칸 외 무변경 확인) 후 코드 예외(`validate_kics_disclosure.py`)와 원장
+(`data/_gold/kics_exemption_provenance.json`)에서 해당 버킷을 함께 제거. 재검산 결과 KR0003/
+2026.1Q 는 RED 0(적용전 축 전부 GREEN), 적용후 축 2개만 YELLOW인데 이 룰들은 전사 구조적으로
+RED 상한이 YELLOW라 documented exception 대상이 아니다. 전체 게이트 `RED=36 blocking=0`
+(KR0003 기여분 0, 나머지는 기존 문서화 예외) 로 확인. 재제출/정정 유사사례 census(549개 raw
+pdf 전수, sha256 지문 대조)는 KR0003 외 미해결 사례 0건 — 유일한 콘텐츠 드리프트(KR0005
+흥국화재 2024.4Q)는 2026-08-21 세션에서 이미 종결된 티켓. status: resolved. 상세·재현 명령은
+최상단 "Last updated: 2026-09-03(11회차)" 참조.**
 
 **2026-09-01 — 자본성증권 tier1/tier2 한도소진율 분자 기준일 혼재 해소(owner: DB손보가
 25.4Q 기준으로 보인다는 지적). 실측: 분모(SCR·한도)는 그 분기 K-ICS 공시로 최신화됐는데

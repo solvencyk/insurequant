@@ -1,0 +1,486 @@
+{
+  "mtime_staleness": [
+    {
+      "period": "FY2023_Q1",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 35.1,
+      "pdf_mtime": 1783209846.4091492,
+      "md_mtime": 1783083642.5152583
+    },
+    {
+      "period": "FY2023_Q2",
+      "code": "KR0079",
+      "pdf": "KR0079_미래에셋생명.pdf",
+      "status": "NO_MD_YET"
+    },
+    {
+      "period": "FY2023_Q2",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 35.0,
+      "pdf_mtime": 1783209846.974384,
+      "md_mtime": 1783083797.8840232
+    },
+    {
+      "period": "FY2023_Q2",
+      "code": "KR1059",
+      "pdf": "KR1059_캐롯손해보험.pdf",
+      "status": "NO_MD_YET"
+    },
+    {
+      "period": "FY2023_Q3",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 35.0,
+      "pdf_mtime": 1783209847.578475,
+      "md_mtime": 1783083889.4860947
+    },
+    {
+      "period": "FY2023_Q4",
+      "code": "KR0010",
+      "pdf": "KR0010_KB손해보험.pdf",
+      "status": "NO_MD_YET"
+    },
+    {
+      "period": "FY2023_Q4",
+      "code": "KR0080",
+      "pdf": "KR0080_에이아이에이생명보험.pdf",
+      "md": "KR0080_에이아이에이생명보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 552.1,
+      "pdf_mtime": 1783209861.4299393,
+      "md_mtime": 1781222435.3825462
+    },
+    {
+      "period": "FY2023_Q4",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 34.9,
+      "pdf_mtime": 1783209848.7254727,
+      "md_mtime": 1783084073.002807
+    },
+    {
+      "period": "FY2024_Q1",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 34.9,
+      "pdf_mtime": 1783209851.3541756,
+      "md_mtime": 1783084175.1354039
+    },
+    {
+      "period": "FY2024_Q2",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 34.9,
+      "pdf_mtime": 1783209851.977988,
+      "md_mtime": 1783084317.68591
+    },
+    {
+      "period": "FY2024_Q2",
+      "code": "KR1098_카카오페이손해보험",
+      "pdf": "KR1098_카카오페이손해보험_amended2.pdf",
+      "status": "NO_MD_YET"
+    },
+    {
+      "period": "FY2024_Q3",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 34.9,
+      "pdf_mtime": 1783209852.5892253,
+      "md_mtime": 1783084379.2373042
+    },
+    {
+      "period": "FY2024_Q4",
+      "code": "KR0005",
+      "pdf": "KR0005_흥국화재.pdf",
+      "md": "KR0005_흥국화재.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 2133.5,
+      "pdf_mtime": 1787287508.2577841,
+      "md_mtime": 1779606949.6757941
+    },
+    {
+      "period": "FY2024_Q4",
+      "code": "KR0080",
+      "pdf": "KR0080_에이아이에이생명보험.pdf",
+      "md": "KR0080_에이아이에이생명보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 551.9,
+      "pdf_mtime": 1783209866.0762568,
+      "md_mtime": 1781222932.5959418
+    },
+    {
+      "period": "FY2024_Q4",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 34.8,
+      "pdf_mtime": 1783209854.189853,
+      "md_mtime": 1783084563.3818831
+    },
+    {
+      "period": "FY2025_Q1",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 34.8,
+      "pdf_mtime": 1783209856.797472,
+      "md_mtime": 1783084640.4991345
+    },
+    {
+      "period": "FY2025_Q2",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 34.7,
+      "pdf_mtime": 1783209857.3683212,
+      "md_mtime": 1783084773.6439824
+    },
+    {
+      "period": "FY2025_Q3",
+      "code": "KR1011",
+      "pdf": "KR1011_IBK연금보험.pdf",
+      "md": "KR1011_IBK연금보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 34.7,
+      "pdf_mtime": 1783209857.8669443,
+      "md_mtime": 1783084849.407495
+    },
+    {
+      "period": "FY2026_Q1",
+      "code": "KR0079",
+      "pdf": "KR0079_미래에셋생명.pdf",
+      "md": "KR0079_미래에셋생명보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 554.1,
+      "pdf_mtime": 1783209869.0140283,
+      "md_mtime": 1781215005.9547377
+    },
+    {
+      "period": "FY2026_Q2",
+      "code": "KR0010",
+      "pdf": "KR0010_KB손해보험.pdf",
+      "md": "KR0010_KB손해보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 3.0,
+      "pdf_mtime": 1788171681.3581216,
+      "md_mtime": 1788160733.7246728
+    },
+    {
+      "period": "FY2026_Q2",
+      "code": "KR0095",
+      "pdf": "KR0095_메트라이프생명보험.pdf",
+      "md": "KR0095_메트라이프생명보험.md",
+      "status": "PDF_NEWER_THAN_MD",
+      "delta_hours": 5.4,
+      "pdf_mtime": 1788169722.1072106,
+      "md_mtime": 1788150170.0561903
+    }
+  ],
+  "zip_inner_names": [
+    {
+      "zip": "data\\disclosure\\FY2025_Q2\\raw\\KR0008_삼성화재해상보험.zip",
+      "n_entries": 3,
+      "entries": [
+        {
+          "name": "[삼성화재] 2025년 상반기 경영공시_최종.pdf",
+          "size": 1120248,
+          "date_time": [
+            2025,
+            8,
+            28,
+            17,
+            22,
+            48
+          ]
+        },
+        {
+          "name": "[삼성화재] 2025년 상반기 별도 검토보고서.pdf",
+          "size": 2814639,
+          "date_time": [
+            2025,
+            8,
+            28,
+            17,
+            22,
+            44
+          ]
+        },
+        {
+          "name": "[삼성화재] 2025년 상반기 연결 검토보고서.pdf",
+          "size": 2870091,
+          "date_time": [
+            2025,
+            8,
+            28,
+            17,
+            22,
+            42
+          ]
+        }
+      ],
+      "reissue_marker_hits": []
+    },
+    {
+      "zip": "data\\disclosure\\FY2025_Q2\\raw\\KR0032_NH농협손해보험.zip",
+      "n_entries": 2,
+      "entries": [
+        {
+          "name": "[│≤╟∙╝╒╟╪║╕╟Φ┴╓╜─╚╕╗τ] 2025│Γ ╗≤╣▌▒Γ ░¿╗τ║╕░φ╝¡.pdf",
+          "size": 2132780,
+          "date_time": [
+            2025,
+            8,
+            18,
+            16,
+            0,
+            8
+          ]
+        },
+        {
+          "name": "[│≤╟∙╝╒╟╪║╕╟Φ┴╓╜─╚╕╗τ] 2025│Γ ╗≤╣▌▒Γ ┴ñ▒Γ░µ┐╡░°╜├ ├╓┴╛.pdf",
+          "size": 1440433,
+          "date_time": [
+            2025,
+            8,
+            29,
+            14,
+            0,
+            16
+          ]
+        }
+      ],
+      "reissue_marker_hits": []
+    },
+    {
+      "zip": "data\\disclosure\\FY2025_Q3\\raw\\KR0003_롯데손해보험.zip",
+      "n_entries": 2,
+      "entries": [
+        {
+          "name": "[╖╘╡Ñ╝╒╟╪║╕╟Φ]2025.3Q ░µ┐╡░°╜├└┌╖ß_├╓┴╛ ┴ª├Γ.pdf",
+          "size": 751155,
+          "date_time": [
+            2025,
+            11,
+            28,
+            13,
+            26,
+            40
+          ]
+        },
+        {
+          "name": "[╖╘╡Ñ╝╒╟╪║╕╟Φ]║╨▒Γ░╦┼Σ║╕░φ╝¡(2025.11.14).pdf",
+          "size": 530806,
+          "date_time": [
+            2025,
+            11,
+            28,
+            13,
+            28,
+            30
+          ]
+        }
+      ],
+      "reissue_marker_hits": []
+    },
+    {
+      "zip": "data\\disclosure\\FY2025_Q3\\raw\\KR0003_롯데손해보험_amended2.zip",
+      "n_entries": 2,
+      "entries": [
+        {
+          "name": "[롯데손해보험]2025.2Q 경영공시자료_최종 제출.pdf",
+          "size": 1446959,
+          "date_time": [
+            2025,
+            8,
+            29,
+            11,
+            8,
+            58
+          ]
+        },
+        {
+          "name": "[롯데손해보험]반기검토보고서(2025.08.14).pdf",
+          "size": 526702,
+          "date_time": [
+            2025,
+            8,
+            29,
+            10,
+            55,
+            2
+          ]
+        }
+      ],
+      "reissue_marker_hits": []
+    },
+    {
+      "zip": "data\\disclosure\\FY2025_Q3\\raw\\KR0008_삼성화재해상보험.zip",
+      "n_entries": 3,
+      "entries": [
+        {
+          "name": "[삼성화재] 2025년 3분기 연결 검토보고서.pdf",
+          "size": 657817,
+          "date_time": [
+            2025,
+            11,
+            27,
+            12,
+            52,
+            16
+          ]
+        },
+        {
+          "name": "[삼성화재] 2025년 3분기 별도 검토보고서.pdf",
+          "size": 641591,
+          "date_time": [
+            2025,
+            11,
+            27,
+            12,
+            52,
+            16
+          ]
+        },
+        {
+          "name": "[삼성화재] 2025년 3분기 경영공시_F.pdf",
+          "size": 566553,
+          "date_time": [
+            2025,
+            11,
+            27,
+            12,
+            52,
+            16
+          ]
+        }
+      ],
+      "reissue_marker_hits": []
+    },
+    {
+      "zip": "data\\disclosure\\FY2025_Q3\\raw\\KR0032_NH농협손해보험.zip",
+      "n_entries": 2,
+      "entries": [
+        {
+          "name": "[농협손해보험주식회사] 2025년 3분기 정기경영공시.pdf",
+          "size": 604850,
+          "date_time": [
+            2025,
+            11,
+            28,
+            13,
+            2,
+            58
+          ]
+        },
+        {
+          "name": "[농협손해보험주식회사] 2025년 3분기 감사보고서.pdf",
+          "size": 1570207,
+          "date_time": [
+            2025,
+            11,
+            28,
+            13,
+            3,
+            0
+          ]
+        }
+      ],
+      "reissue_marker_hits": []
+    },
+    {
+      "zip": "data\\disclosure\\FY2026_Q1\\raw\\KR0003_롯데손해보험.zip",
+      "n_entries": 2,
+      "entries": [
+        {
+          "name": "[롯데손해보험]2026.1Q 경영공시자료_재제출.pdf",
+          "size": 1927066,
+          "date_time": [
+            2026,
+            6,
+            2,
+            17,
+            9,
+            14
+          ]
+        },
+        {
+          "name": "[롯데손해보험]분기검토보고서(2026.05.15).pdf",
+          "size": 530609,
+          "date_time": [
+            2026,
+            6,
+            2,
+            15,
+            40,
+            28
+          ]
+        }
+      ],
+      "reissue_marker_hits": [
+        "[롯데손해보험]2026.1Q 경영공시자료_재제출.pdf"
+      ]
+    },
+    {
+      "zip": "data\\disclosure\\FY2026_Q1\\raw\\KR0008_삼성화재해상보험.zip",
+      "n_entries": 3,
+      "entries": [
+        {
+          "name": "[삼성화재] 2026년 1분기 연결 검토보고서.pdf",
+          "size": 796383,
+          "date_time": [
+            2026,
+            5,
+            28,
+            10,
+            42,
+            40
+          ]
+        },
+        {
+          "name": "[삼성화재] 2026년 1분기 경영공시_최종.pdf",
+          "size": 570173,
+          "date_time": [
+            2026,
+            5,
+            28,
+            10,
+            42,
+            38
+          ]
+        },
+        {
+          "name": "[삼성화재] 2026년 1분기 별도 검토보고서.pdf",
+          "size": 769988,
+          "date_time": [
+            2026,
+            5,
+            28,
+            10,
+            42,
+            40
+          ]
+        }
+      ],
+      "reissue_marker_hits": []
+    }
+  ]
+}

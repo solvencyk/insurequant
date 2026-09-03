@@ -1,0 +1,172 @@
+[
+  {
+    "period": "FY2024_Q4",
+    "code": "KR0005",
+    "recorded_sha256": "4c0fd741b283538b09137d43e90222983620a194f6ebd23c2684a5bf60225e11",
+    "actual_sha256": "822c367384cf1b414f5ff77adaef26f625ac6c43a17de445f5c6c343fb2fef0f",
+    "recorded_size": "28358329",
+    "actual_size": "38960137",
+    "has_frontmatter": true,
+    "status": "CONTENT_DRIFT"
+  },
+  {
+    "period": "FY2026_Q1",
+    "code": "KR0079",
+    "recorded_sha256": "3d9f941e6b481d257586453e97d67c7f1a80250589ef761d762b9dea8cbe8e8d",
+    "actual_sha256": "3d9f941e6b481d257586453e97d67c7f1a80250589ef761d762b9dea8cbe8e8d",
+    "recorded_size": "3405143",
+    "actual_size": "3405143",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2023_Q4",
+    "code": "KR0080",
+    "recorded_sha256": "f59c25fc4d7979422be3e60148e59653455f2f4b40f9a2016a0d0f507c0f222e",
+    "actual_sha256": "f59c25fc4d7979422be3e60148e59653455f2f4b40f9a2016a0d0f507c0f222e",
+    "recorded_size": "3591856",
+    "actual_size": "3591856",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2024_Q4",
+    "code": "KR0080",
+    "recorded_sha256": "0261b4e8d904f39e458e322bc3d660100b84000318698c5f9eba3e6804fcd798",
+    "actual_sha256": "0261b4e8d904f39e458e322bc3d660100b84000318698c5f9eba3e6804fcd798",
+    "recorded_size": "15101689",
+    "actual_size": "15101689",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2023_Q1",
+    "code": "KR1011",
+    "recorded_sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+    "actual_sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+    "recorded_size": "307915",
+    "actual_size": "307915",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2023_Q2",
+    "code": "KR1011",
+    "recorded_sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+    "actual_sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+    "recorded_size": "633204",
+    "actual_size": "633204",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2023_Q3",
+    "code": "KR1011",
+    "recorded_sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+    "actual_sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+    "recorded_size": "311734",
+    "actual_size": "311734",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2023_Q4",
+    "code": "KR1011",
+    "recorded_sha256": "5bbe1c4837ceba46be1d62e9ef4c9b3859352be4587915e7de7e9dddb189f704",
+    "actual_sha256": "5bbe1c4837ceba46be1d62e9ef4c9b3859352be4587915e7de7e9dddb189f704",
+    "recorded_size": "2680913",
+    "actual_size": "2680913",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2024_Q1",
+    "code": "KR1011",
+    "recorded_sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+    "actual_sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+    "recorded_size": "337651",
+    "actual_size": "337651",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2024_Q2",
+    "code": "KR1011",
+    "recorded_sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+    "actual_sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+    "recorded_size": "703259",
+    "actual_size": "703259",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2024_Q3",
+    "code": "KR1011",
+    "recorded_sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+    "actual_sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+    "recorded_size": "396570",
+    "actual_size": "396570",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2024_Q4",
+    "code": "KR1011",
+    "recorded_sha256": "0b8c58342cd210fdb063041049a5a890a793e7669c1ead49fb37f1dec3baa04f",
+    "actual_sha256": "0b8c58342cd210fdb063041049a5a890a793e7669c1ead49fb37f1dec3baa04f",
+    "recorded_size": "7868002",
+    "actual_size": "7868002",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2025_Q1",
+    "code": "KR1011",
+    "recorded_sha256": "9d009dd6ec0744065c6264fe8fe64f12a6fc7ea6b8b13de76c17242b4cf478af",
+    "actual_sha256": "9d009dd6ec0744065c6264fe8fe64f12a6fc7ea6b8b13de76c17242b4cf478af",
+    "recorded_size": "359859",
+    "actual_size": "359859",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2025_Q2",
+    "code": "KR1011",
+    "recorded_sha256": "977564efdc5e6895cc423de9dfaccaf450f676a6cde7da6229903b0d87236f7b",
+    "actual_sha256": "977564efdc5e6895cc423de9dfaccaf450f676a6cde7da6229903b0d87236f7b",
+    "recorded_size": "662393",
+    "actual_size": "662393",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2025_Q3",
+    "code": "KR1011",
+    "recorded_sha256": "9eb5d13fa10bc7145f93d5bb9327008ba9a7f1a20708a696d7c9eae399bdadcd",
+    "actual_sha256": "9eb5d13fa10bc7145f93d5bb9327008ba9a7f1a20708a696d7c9eae399bdadcd",
+    "recorded_size": "323141",
+    "actual_size": "323141",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2026_Q2",
+    "code": "KR0095",
+    "recorded_sha256": "5aa239b7693083cb5b68934f0889dfe62f3790a41183c78eeeda5345ca41b1de",
+    "actual_sha256": "5aa239b7693083cb5b68934f0889dfe62f3790a41183c78eeeda5345ca41b1de",
+    "recorded_size": "758190",
+    "actual_size": "758190",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  },
+  {
+    "period": "FY2026_Q2",
+    "code": "KR0010",
+    "recorded_sha256": "095afd9395df4b2f837131e0204e401e00959f576634bea0c94a7093ccfa8094",
+    "actual_sha256": "095afd9395df4b2f837131e0204e401e00959f576634bea0c94a7093ccfa8094",
+    "recorded_size": "14619118",
+    "actual_size": "14619118",
+    "has_frontmatter": true,
+    "status": "NO_DRIFT_MTIME_NOISE"
+  }
+]

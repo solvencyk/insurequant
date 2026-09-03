@@ -1271,60 +1271,6 @@
     },
     {
       "registry": "_TIER2_ISSUER_INCONSISTENT",
-      "company": "KR0003",
-      "quarter": "2026.1Q",
-      "claim": "발행사가 **전기(2025.4Q) TFI 표를 그대로 재게시했다.** 같은 필링 안에서 TFI 표가 헤드라인의 직전분기 열과 소수점까지 일치하고 당분기 열과는 다르다. 이 버킷의 RED 5건은 전부 이 한 원인이다.",
-      "claim_kind": "ISSUER_STALE_REPUBLISHED_TABLE",
-      "status": "VERIFIED",
-      "citation": {
-        "file": "data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf",
-        "pages": [
-          21,
-          22
-        ]
-      },
-      "verify": {
-        "file": "data/disclosure/FY2026_Q1/raw/KR0003_롯데손해보험.pdf",
-        "pages": [
-          21,
-          22
-        ],
-        "present_markers": [
-          "2,605,850",
-          "(387,514)",
-          "2,993,363",
-          "836,625",
-          "1,033,534",
-          "2,067,069"
-        ],
-        "present_rows": [
-          {
-            "row": "지급여력금액",
-            "value": "2,605,850"
-          },
-          {
-            "row": "보완자본 한도",
-            "value": "1,033,534"
-          },
-          {
-            "row": "지급여력기준금액",
-            "value": "2,067,069"
-          }
-        ]
-      },
-      "note": "validation 2026-08-24 fitz word-좌표 직접 판독. 헤드라인 p21(억원) 당분기(2026.1Q): 지급여력금액 26,955 · 기본자본 (3,962) · 보완자본 30,918 · 지급여력기준금액 20,432. 직전분기(2025.4Q): 26,058 · (3,875) · 29,934 · 20,671. TFI 표 p22(백만원): 2,605,850 · (387,514) · 2,993,363 · 2,067,069 = 26,058.50 / −3,875.14 / 29,933.63 / 20,670.69 — **직전분기 열과 일치**한다. 그래서 `TIER2_LIMIT_STALE` 도 같은 뿌리다: item48 = 10,335.34 = **직전분기** item14 20,671 × 50% 이고 당분기 20,432 × 50% = 10,216 이 아니다. parser iter-8 이 2025.4Q p77 표와의 전면 대조로 같은 결론을 냈고(전 항목 동일, 바뀐 건 헤드라인 비율 126.06%→131.93% 뿐) 이번에 독립 재확인했다. 마스터는 raw 와 정확히 일치한다. || 2026-08-24 (iter-7) 핀 2개 제거(50_tfi_tier_split|적용전 896.51 · 50_tfi_tier_split_post|적용후 −896.51). 축 E 의 comparand 가 item1(헤드라인)에서 item52(TFI 표 자신의 지급여력금액 행)로 승격되면서 이 버킷은 그 축에서 정확히 닫힌다 — 재게시된 전기 표는 자기 안에서 일관되기 때문이다(item52 26,058.50 = item50 −3,875.14 + item51 29,933.63). 게이트가 TIER2_EXEMPTION_INERT review 로 먼저 알려 줬고, 재게시 사실 자체는 3_tier2_composition·TIER2_LIMIT_STALE 이 그대로 잡으므로 사각이 생기지 않는다. 죽은 핀을 남기면 다음 세션이 '그 축도 면제돼 있다'고 잘못 읽는다.",
-      "expected_residual": {
-        "3_tier2_composition|적용전": 984.36,
-        "47_tier2_census|적용전": null,
-        "47_tier2_census_post|적용후": null
-      },
-      "pin_tolerance": 0.01,
-      "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
-      "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
-      "scope": "KR0003 2026.1Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
-    },
-    {
-      "registry": "_TIER2_ISSUER_INCONSISTENT",
       "company": "KR0032",
       "quarter": "2025.4Q",
       "claim": "이 발행사의 2025.4Q TFI 표에서 `보완자본 한도 적용 전` **행 하나가 기발행 후순위채무(item54 = 94,959백만) 한 스텝만큼 밀려 인쇄됐다.** 관행대로면 적용전 한도적용전은 보완자본 1,240,112 − 해약환급금 447,254 = 792,858 인데 인쇄값은 792,858 − 94,959 = 697,899 이고, 적용후는 거기서 또 − 94,959 = 602,940 이다. 그래서 우리 공통식 min(47,48)+49 가 적용전에서 item54 만큼(949.59억), 적용후에서 **정확히 그 2배**(1,899.18억) 모자란다. 양쪽 다 원문 그대로이며 추출 오류가 아니다.",
