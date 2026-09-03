@@ -94,6 +94,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.stdout.reconfigure(encoding="utf-8")
 import fitz  # noqa: E402
+sys.path.insert(0, str(ROOT / "scripts"))
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 LABEL_PREFIXES = ("해약환급금준비금", "해약환급준비금")
 PAGE_FILTER = "해약환급"  # 페이지를 후보로 볼지 말지 -- LABEL_PREFIXES보다 넓게 잡는다
@@ -108,10 +110,12 @@ def _kw_hit(text: str, keywords) -> bool:
     '당기손익반영'/'전기'가 '전기이월'의 일부인 경우) 매치로 안 본다 -- 짧은 키워드(당기/전기)가
     복합어 일부로 걸려 무관한 열을 기간열로 오판하는 것을 막는다(실측: 신한라이프 2023.4Q
     이연법인세 롤포워드 표의 '당기손익반영' 열이 '당기'로 오매치돼 그 표를 기간비교표로
-    오인, 세금효과 값을 잔액인 양 반환했었다)."""
+    오인, 세금효과 값을 잔액인 양 반환했었다). 단 뒤에 오는 게 "주1)" 류 각주표시(악사손해
+    "당분기주1)")면 예외로 매치를 인정한다 -- 각주표시는 한글이 섞여 있지만 복합어가 아니다."""
     t = text or ""
     for k in keywords:
-        if re.search(re.escape(k) + f"(?![{_HANGUL}])", t):
+        pat = re.escape(k) + f"(?:(?![{_HANGUL}])|(?=주\\d))"
+        if re.search(pat, t):
             return True
     return False
 
@@ -160,6 +164,16 @@ def _date_key(text: str):
     m = re.search(r"(\d{4})년.{0,3}?(\d)\s*/\s*4?\s*분기", t)
     if m:
         return (int(m.group(1)), int(m.group(2)) * 3)
+    # "2024년 상반기"(6월 말) / "하반기"(12월 말) -- 숫자 분기가 아닌 반기 표기(실측: 삼성화재
+    # 2024.2Q가 "2024년 상반기"(당분기) vs "2024년 1/4분기"(직전분기) 헤더를 쓰는데, 이 패턴이
+    # 없으면 상반기가 (연도,0)으로 떨어져 1/4분기((연도,3))보다 더 오래된 것처럼 보여 직전분기
+    # 열을 당분기로 오판했었다).
+    m = re.search(r"(\d{4})년\s*상반기", t)
+    if m:
+        return (int(m.group(1)), 6)
+    m = re.search(r"(\d{4})년\s*하반기", t)
+    if m:
+        return (int(m.group(1)), 12)
     m = re.search(r"(\d{2,4})[.](\d)\s*[Qq분]", t)
     if m:
         y = int(m.group(1))
@@ -183,9 +197,9 @@ def _pick_columns(rows):
             c = _norm(_cell(r[ci]))
             if not c:
                 continue
-            if cur_idx is None and any(k in c for k in CUR_KW):
+            if cur_idx is None and _kw_hit(c, CUR_KW):
                 cur_idx = ci
-            if prior_idx is None and any(k in c for k in PRIOR_KW):
+            if prior_idx is None and _kw_hit(c, PRIOR_KW):
                 prior_idx = ci
     if cur_idx is not None:
         return cur_idx, prior_idx
@@ -217,6 +231,7 @@ def _suffix_after_label(text: str):
         return None
     suffix = norm[idx + matched_len:]
     suffix = re.sub(r"\(\*?\d*\)$", "", suffix)  # 각주표시 (*1) 등 제거
+    suffix = suffix.strip(")")  # "(해약환급금준비금 적립예정액)"처럼 라벨 전체가 괄호에 싸인 경우의 잔여 ")"
     return suffix
 
 
@@ -283,11 +298,21 @@ def _candidates_from_table(page, page_no, rows, table_bbox):
     for r in rows:
         c = _cell(r[cur_idx]) if cur_idx < len(r) else ""
         cn = _norm(c)
-        if c and (any(k in cn for k in CUR_KW) or _date_key(c)):
+        if c and (_kw_hit(cn, CUR_KW) or _date_key(c)):
             header_cur_text = c.replace("\n", " ")
             break
     unit = _unit_before(page, table_bbox)
     mult = UNIT_MULT.get(unit)
+
+    # 이익잉여금**처분**계산서류 표는 구분 나열이 요약표/3행노트와 판박이라 그 회계연도의
+    # **전입액**(플로우)을 잔액인 양 집어낼 위험이 있다(실측: 신한라이프 2023.4Q p501·
+    # 2024.4Q p184 둘 다 "처분예정일/처분확정일"이 박힌 이익잉여금처분계산서인데, 라벨은
+    # "3. 해약환급금준비금"처럼 접미사 없이 깨끗해 직접매치/클러스터 둘 다 통과해 버린다).
+    # 당기열 헤더나 표 앞머리에 "처분"이 보이면 이 표는 잔액/요약표가 아니라고 보고 통째로
+    # 건너뛴다 -- "예정액"/"잔액" 접미사가 명시된 진짜 3행노트는 그런 헤더를 쓰지 않는다.
+    if (header_cur_text and "처분" in header_cur_text) or \
+            any("처분" in _norm(_cell(c)) for r in rows[:4] for c in r):
+        return []
 
     # 1) 직접매치: 라벨이 '한 셀'에 단독으로 들어있는 행(그 셀 안에 개행으로 다른 라벨과
     #    뭉쳐있지 않음). 값은 그 라벨 셀의 인덱스보다 뒤에서, cur_idx 근처를 허용오차 내로
@@ -328,6 +353,8 @@ def _candidates_from_table(page, page_no, rows, table_bbox):
         out.extend(direct_hits)
         return out  # 직접매치가 있으면 병합셀 추정은 안 씀(더 신뢰도 높음)
 
+    # (처분계산서 배제는 위에서 표 전체에 이미 적용됨 -- 여기 도달했다는 건 통과했다는 뜻)
+
     # 2) 병합셀(세로쓰기 라벨 여러 개가 한 셀에 개행으로 뭉친 경우, 또는 라벨이 col0에
     #    뭉쳐있고 값행이 뒤따르는 경우). 라벨 열 인덱스는 label_end 이내로 근사한다.
     label_end = cur_idx if prior_idx is None else min(cur_idx, prior_idx)
@@ -344,37 +371,69 @@ def _candidates_from_table(page, page_no, rows, table_bbox):
                 sublabels.extend([s.strip() for s in ct.split("\n") if s.strip()])
         if len(sublabels) <= 1:
             continue
-        target_pos = None
+        # 개행이 "서로 다른 준비금 종류의 나열"이 아니라 긴 라벨 하나가 줄바꿈된 것일 수
+        # 있다(실측: 신한라이프 처분계산서의 "보증준비금 및\n해약환급금준비금"은 두 준비금을
+        # **합산**한 한 줄짜리 항목인데 개행 때문에 별개 항목처럼 보였다 -- "및/와/과"로
+        # 끝나는 조각이 있으면 그건 나열이 아니라 줄바꿈이니 클러스터로 다루지 않는다).
+        if any(re.search(r"(및|와|과)$", _norm(s)) for s in sublabels):
+            continue
+        # 이 사업연도부터 표 형식이 바뀌어 "기적립액"과 "(적립예정액)"을 별개 줄로 쪼개는
+        # 회사가 있다(실측: 악사손해 2024.2Q부터 -- "해약환급금준비금 기적립액"(794)과
+        # "(해약환급금준비금 적립예정액)"(189)이 따로 있고 둘을 더해야 잔액 983이다). 접미사가
+        # ""/잔액/예정액이면 그 자리 값을 그대로 쓰고, "기적립액"이면 바로 다음 자리가
+        # "적립예정액"/"환입예정액"인지 확인해 둘을 더한다 -- 그 외 접미사(적립액/적립(환입)
+        # 등, 처분계산서류)는 버린다.
+        target_pos = pair_pos = None
         for pi, sl in enumerate(sublabels):
-            if any(p in _norm(sl) for p in LABEL_PREFIXES):
+            if not any(p in _norm(sl) for p in LABEL_PREFIXES):
+                continue
+            sfx = _suffix_after_label(sl)
+            if sfx in TARGET_SUFFIXES:
                 target_pos = pi
                 break
+            if sfx == "기적립액" and pi + 1 < len(sublabels):
+                nxt_sfx = _suffix_after_label(sublabels[pi + 1]) or _norm(sublabels[pi + 1])
+                if "적립예정액" in nxt_sfx or "환입예정액" in nxt_sfx:
+                    target_pos, pair_pos = pi, pi + 1
+                    break
         if target_pos is None:
             continue
         cur_cell = _cell(row[cur_idx]) if cur_idx < len(row) else ""
         parts = [p.strip() for p in cur_cell.split("\n") if p.strip()] if cur_cell else []
-        val = None
+        need_pos = max(target_pos, pair_pos) if pair_pos is not None else target_pos
         if len(parts) == len(sublabels):
-            val = _num(parts[target_pos])
+            resolved = [_num(p) for p in parts]
         else:
             # 클러스터 행 자신의 값(허용오차 탐색) + 곧바로 뒤따르는 (len(sublabels)-1)개
             # 물리행을 "라벨 순서와 1:1 대응"으로 모은다(신한라이프처럼 회사가 값을 라벨당
             # 한 물리행씩 흩어놓는 레이아웃 대응, 값이 빈칸인 라벨도 자리를 지켜야 순번이 안
             # 밀린다 -- 실측: 대손준비금 당분기값이 빈칸인데 이걸 건너뛰면 그 다음
             # 해약환급금준비금 값이 한 칸씩 당겨져 대손준비금 자리 값(엉뚱한 숫자)을 집는다).
-            # 빈 칸은 _cell_near 가 None 을 돌려주므로 그대로 자리만 차지한다. collected 는
+            # 빈 칸은 _cell_near 가 None 을 돌려주므로 그대로 자리만 차지한다. resolved 는
             # 이미 파싱된 값(int/"none"/None)을 담는다 -- 문자열로 왕복시키면 "none" 이 깨진다.
-            collected = [_cell_near(row, cur_idx, label_end - 1)]
+            resolved = [_cell_near(row, cur_idx, label_end - 1)]
             for rj in range(ri + 1, min(ri + len(sublabels), len(rows))):
-                collected.append(_cell_near(rows[rj], cur_idx, label_end - 1))
-            if target_pos < len(collected):
-                val = collected[target_pos]
+                resolved.append(_cell_near(rows[rj], cur_idx, label_end - 1))
+        if need_pos >= len(resolved):
+            continue
+        val = resolved[target_pos]
+        if pair_pos is not None:
+            pv = resolved[pair_pos]
+            # 기적립액+적립예정액을 더해 잔액을 만든다 -- 둘 중 하나라도 못 찾으면(None) 포기,
+            # "none"(미적립, 대시)은 0으로 취급해 더한다.
+            if val is None or pv is None:
+                continue
+            v0 = 0 if val == "none" else val
+            v1 = 0 if pv == "none" else pv
+            val = v0 + v1 if not (val == "none" and pv == "none") else "none"
         if val is None:
             continue
         vm = None if val == "none" else (val * mult if mult else None)
         prio = P_CLUSTER if vm is not None or val == "none" else P_LOW
+        label_note = "/".join(sublabels) + (f"[{target_pos}+{pair_pos}]" if pair_pos is not None
+                                             else f"[{target_pos}]")
         out.append((prio, vm if vm is not None else val, unit, header_cur_text,
-                     "/".join(sublabels) + f"[{target_pos}]", "cluster", page_no))
+                     label_note, "cluster", page_no))
     return out
 
 
@@ -405,7 +464,7 @@ def _wide_grid_candidates(page, page_no, rows, table_bbox):
         group_row = None
         for gi in range(hi - 1, max(hi - 3, -1), -1):
             grow = rows[gi]
-            if any(any(k in _norm(_cell(c)) for k in CUR_KW + PRIOR_KW) for c in grow):
+            if any(_kw_hit(_norm(_cell(c)), CUR_KW + PRIOR_KW) for c in grow):
                 group_row = grow
                 break
         if group_row is None:
@@ -420,7 +479,7 @@ def _wide_grid_candidates(page, page_no, rows, table_bbox):
         cur_col = None
         for lc in label_cols:
             g = _group_label_of(lc)
-            if g and any(k in g for k in CUR_KW):
+            if g and _kw_hit(g, CUR_KW):
                 cur_col = lc
                 break
         if cur_col is None:
@@ -491,41 +550,55 @@ def main():
           for r in master if r["항목번호"] == 5}
     name = {r["원보험사코드"]: r["원수사명"] for r in master}
 
+    # period -> [(code, pdf_path)]. raw/ 우선, 없으면 pdf/ 폴백은 disclosure_pdfs()가 알아서
+    # 처리한다(2026.2Q가 한동안 pdf/ 에만 있었던 사고 -- scripts/_disclosure_pdf_paths.py
+    # 참조. 여기서 직접 "FY*/raw/*.pdf"만 globbing하면 raw/ 가 비고 pdf/ 만 있는 분기를
+    # 조용히 건너뛴다).
+    DISCLOSURE = ROOT / "data" / "disclosure"
+    periods = sorted(p.name for p in DISCLOSURE.glob("FY*_Q*") if p.is_dir())
     rows_out = []
     conflicts = []
-    for pdf in sorted((ROOT / "data" / "disclosure").glob("FY*/raw/*.pdf")):
-        qdir = pdf.parts[-3]
-        quarter = f"{qdir[2:6]}.{qdir[-1]}Q"
-        code = pdf.stem.split("_", 1)[0]
-        if not re.fullmatch(r"KR\d{4}", code):
-            continue
-        got = parse_pdf(pdf)
-        if got is None:
-            rows_out.append((code, quarter, None, mi.get((code, quarter)), "표없음", None))
-            continue
-        best, distinct_vals = got
-        if len(distinct_vals) > 1:
-            conflicts.append((code, quarter, best))
-            # 충돌 시엔 첫 후보를 대표값으로 쓰되 표시에 conflict 플래그
-        c0 = best[0]
-        prio, val, unit, hdr, label, method, page_no = c0
-        mv = mi.get((code, quarter))
-        provenance = f"p{page_no}[{method}]{'col=' + hdr if hdr else ''}"
-        if val == "none":
-            rows_out.append((code, quarter, "미적립", mv, "미적립", provenance))
-            continue
-        if prio == P_LOW and unit is None:
-            rows_out.append((code, quarter, val, mv, "단위불명(저신뢰)", provenance))
-            continue
-        disc = val
-        if mv is None:
-            rows_out.append((code, quarter, disc, None, "마스터결측", provenance))
-        else:
-            diff = abs(disc - mv) / max(abs(disc), 1.0)
-            tag = f"{diff:.1%}"
+    for period in periods:
+        quarter = f"{period[2:6]}.{period[-1]}Q"
+        codes = set()
+        for sub in ("raw", "pdf"):
+            d = DISCLOSURE / period / sub
+            if d.is_dir():
+                codes.update(f.stem.split("_", 1)[0] for f in d.glob("*.pdf"))
+        for code in sorted(codes):
+            if not re.fullmatch(r"KR\d{4}", code):
+                continue
+            paths = disclosure_pdfs(period, code, root=DISCLOSURE)
+            if not paths:
+                continue
+            pdf = paths[0]
+            got = parse_pdf(pdf)
+            if got is None:
+                rows_out.append((code, quarter, None, mi.get((code, quarter)), "표없음", None))
+                continue
+            best, distinct_vals = got
             if len(distinct_vals) > 1:
-                tag += "*충돌"
-            rows_out.append((code, quarter, disc, mv, tag, provenance))
+                conflicts.append((code, quarter, best))
+                # 충돌 시엔 첫 후보를 대표값으로 쓰되 표시에 conflict 플래그
+            c0 = best[0]
+            prio, val, unit, hdr, label, method, page_no = c0
+            mv = mi.get((code, quarter))
+            provenance = f"p{page_no}[{method}]{'col=' + hdr if hdr else ''}"
+            if val == "none":
+                rows_out.append((code, quarter, "미적립", mv, "미적립", provenance))
+                continue
+            if prio == P_LOW and unit is None:
+                rows_out.append((code, quarter, val, mv, "단위불명(저신뢰)", provenance))
+                continue
+            disc = val
+            if mv is None:
+                rows_out.append((code, quarter, disc, None, "마스터결측", provenance))
+            else:
+                diff = abs(disc - mv) / max(abs(disc), 1.0)
+                tag = f"{diff:.1%}"
+                if len(distinct_vals) > 1:
+                    tag += "*충돌"
+                rows_out.append((code, quarter, disc, mv, tag, provenance))
 
     def diff_pct(tag):
         m = re.match(r"([\d.]+)%", tag)

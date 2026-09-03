@@ -1,7 +1,31 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-09-02 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-09-03 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-09-03 — 해약환급금준비금(item5) 경영공시 재대조 프로브 재작성 + 8사 23칸 정정
+
+owner: "해약환급금준비금을 경영공시 PDF 기준으로 정정하라고 시켰는데 하나도 안 고쳐져
+있다" (재지시).
+
+기존 커밋된 프로브(`scripts/_probes/probe_20260902_surrender_reserve_vs_disclosure.py`)가
+줄 단위 exact-match 방식이라 4Q/연차 필링에서 무관한 표(이연법인세 롤포워드·처분계산서·
+구성내역 노트)를 잘못 짚는 결함이 여럿이라 `fitz.find_tables()` 구조 기반으로 전면
+재작성했다. 알려진 정답 20여 건으로 매 수정마다 회귀 확인, 세션 중 잡은 회귀 버그 6종은
+파일 상단 docstring에 실측 기록.
+
+최종 배치(PDF 548개, FY2026_Q2 39사 raw/ 정본화 반영): 대조가능 308 · 차이1%초과 23건 ·
+충돌 0건. 그중 owner 지시("삼성생명·한화생명 전 분기 채우고 나머지는 오차 큰 것만")에 따라
+downloader 티켓(inbox/parser/_resolved/20260903T0048Z)이 짚은 3사(악사손해·하나생명·AIA)
+16칸 + 서베이 중 발견한 무관 6사 7칸 = 총 23칸을 `data/dart/viz/bs_manual_overrides.json`에
+등재하고 `build_ifrs17_bs.py` 재실행으로 반영(7,042행 무변, `git diff --stat` = 딱 23줄
+insert+23줄 delete만 발생 확인). 악사손해는 2023.4Q~2025.3Q 8개 분기가 두 값으로 얼어
+있었던 것으로 드러나 downloader 티켓의 3분기 윈도우보다 훨씬 깊은 문제였다. 삼성생명·
+한화생명(KR0069/KR0068)은 오케스트레이터가 같은 세션 중 별도로 이미 처리(커밋 `d75a941`,
+법정준비금 3종 37칸) — 겹쳐 쓰지 않음. 골든·xlsx·public_exports는 오케스트레이터 지시로
+이 세션에서 건드리지 않음(다음 세션에서 골든 재생성 필요).
+
+상세: `TODO_parser_ifrs17.md` 2026-09-03(84th pass) 항목.
 
 ## 2026-09-02 — KIDI 2026.2Q(202606) 월납환산 신계약보험료 반영 + 신계약CSM배수 갱신
 
