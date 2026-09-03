@@ -504,6 +504,28 @@ REGISTRY: dict[str, dict] = {
                     "있었지만 실측 누적폭이 그 1/50 이었다.",
         "mutation": "tests/test_rule_coverage_manifest.py",
     },
+    "8_life_census": {
+        "statement": "item17(생명장기손해보험위험액) > 0 이면 item29~35 가 전부 존재해야 한다 "
+                     "— 값의 일치가 아니라 **존재**를 보는 census 룰",
+        "impl": [("src/solvency/validation/kics_json_rules.py", "_validate_life_subrisk_census")],
+        "kind": "HEURISTIC",
+        "reason": "등식이 아니다 — 값끼리의 관계가 아니라 **셀의 존재 여부**를 본다. "
+                  "값의 정합은 `8_life`(item17 == sqrt(S'·R7·S))가 이미 IDENTITY 로 검사하며, "
+                  "그 룰은 29~35 가 전부 있어야만 성립하므로 하나라도 없으면 SKIP 한다. "
+                  "이 룰은 바로 그 SKIP 구간을 덮는다. 게다가 '있어야 하는가' 자체가 수식이 "
+                  "아니라 제도(짝수분기 전체공시 / 홀수분기는 경과조치 적용사만)와 원문 표 "
+                  "게재 여부로 정해지므로, 등식으로 환원할 수 없고 등재부 lookup 이 필요하다.",
+        "tol": {"abs": None, "rel": None, "unit": "존재 여부(수치 비교 없음)"},
+        "tol_from": [],
+        "measured": "2026-09-03 신설. 기존 `8_life` 는 항등식이라 29~35 가 **하나라도 없으면 "
+                    "SKIP** 했고, 그래서 '부모는 있는데 자식이 통째로 없다' 가 RED=0 으로 "
+                    "통과했다 — 실측 131칸. owner 제보(현대해상·KB손해 2026.2Q, 하나손해 "
+                    "2026.1Q)로 드러나 이 룰로 사각을 메웠다. 판정은 짝수분기=전사 필수, "
+                    "홀수분기 2024년~=경과조치 적용사만 필수, 원문에 4-2-2 ②표가 없는 칸은 "
+                    "등재부(data/_gold/kics_subrisk_source_absent.json) lookup 으로 SKIP. "
+                    "등재부를 비우면 RED 24건이 뜨는 것을 반증으로 확인했다.",
+        "mutation": "tests/test_rule_coverage_manifest.py",
+    },
     "19_market": {
         "statement": "item19(시장위험액) == sqrt(V'·MARKET_M·V), V = item36..item40",
         "impl": [("src/solvency/validation/kics_json_rules.py", "_validate_market_irr"),
