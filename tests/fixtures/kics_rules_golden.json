@@ -1,13 +1,13 @@
 {
-  "sha256": "229cc0b3f5431069fb5f584fe56637b130a4a77a932299410f7cb32a4d57c581",
+  "sha256": "51b911d1dbbfe71ec96f3d93e21549573fdb74a25490c38cfc3507e2477684a3",
   "buckets": 538,
   "findings": 16140,
   "by_status": {
     "YELLOW": 1686,
-    "GREEN": 11549,
+    "GREEN": 11550,
     "SKIP": 2844,
     "ERROR": 0,
-    "RED": 61
+    "RED": 60
   },
   "by_rule": {
     "1": {
@@ -48,9 +48,9 @@
     },
     "8_life": {
       "SKIP": 115,
-      "GREEN": 406,
+      "GREEN": 407,
       "YELLOW": 15,
-      "RED": 2
+      "RED": 1
     },
     "8_life_census": {
       "RED": 24,
