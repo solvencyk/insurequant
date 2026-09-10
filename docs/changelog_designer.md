@@ -1,9 +1,103 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-03 · Stage 5/5 — designer
+> Last updated: 2026-09-10 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-09-10 — GA4 방문 통계 태그 + 개인정보처리방침 (owner 요청)
+
+owner: "우리사이트 접속 트래픽 확인하려면 어캐?"
+
+**출발점이 된 사실 하나.** GitHub Pages 는 Pages 사이트의 방문자 통계를 주지 않는다.
+저장소 Insights 의 Traffic 은 **github.com 저장소 조회수**이지 배포된 사이트 방문자가
+아니다. 즉 태그를 심기 전까지 이 사이트의 트래픽은 아무 데도 기록되지 않고 있었다.
+(같은 오해를 다음 세션이 반복하지 않도록 여기 남긴다.)
+
+### 넣은 것
+
+측정 ID `G-F8NSCQZBZK` (owner 제공). 4 페이지 `<head>` line 9-19 에 Google 표준 gtag
+스니펫, line 6 CSP 교체. `privacy.html` 신설 + 4 페이지 footer 링크 1 줄.
+
+**ID 가 살아 있는 속성인지 기계로 확인했다** — 실제 ID 로 `gtag/js` 를 받으면 520,223 B,
+존재하지 않는 대조군 ID 로 받으면 428,379 B 다. 그 92 KB 차이가 이 속성의 설정 payload 다.
+오타나 죽은 ID 였다면 이 차이가 안 난다. 새 ID 를 받을 때 쓸 수 있는 검사다.
+
+### 함정 세 개 (전부 실측으로만 잡혔다)
+
+1. **CSP 를 같이 안 고치면 태그를 붙여도 수집량이 0 이다.** 이 저장소의 meta CSP 는
+   `script-src` 에 `cdn.jsdelivr.net` 만 허용했다. gtag.js 는 `<head>` 어디에 넣든 차단된다.
+   추가 토큰은 정확히 6 개 — `script-src += www.googletagmanager.com`,
+   `img-src += *.google-analytics.com www.googletagmanager.com`,
+   `connect-src += *.google-analytics.com analytics.google.com *.analytics.google.com
+   www.googletagmanager.com`. 기존 지시자·호스트는 제거 0 건(적대적 검토로 토큰 단위 대조).
+   특히 `script.google.com`(다운로드 설문)과 `cdn.jsdelivr.net`(Pretendard)이 살아 있어야 한다.
+
+2. **`*.analytics.google.com` 은 apex 를 포함하지 않는다.** CSP 와일드카드의 정의상
+   `analytics.google.com` 자체는 매치되지 않아 차단된다. 정책 문자열만 읽으면 허용된 것처럼
+   보이는 자리다. 브라우저에 `securitypolicyviolation` 리스너를 걸고 실제로 쏴 봐서 잡았고,
+   apex 를 따로 등재했다.
+
+3. **gtag 는 CSP meta *뒤*에 둔다.** Google 문서는 "여는 `<head>` 바로 다음"이라고 하지만,
+   meta CSP 는 파싱 시점 이후의 자원에만 적용되므로 앞에 두면 그 태그만 CSP 를 우회한다.
+   동작은 하지만 하드닝이 조용히 무력화된다 — 그래서 line 8 `<title>` 뒤로 보냈다.
+
+### 검증 방법 (다음에도 이렇게)
+
+CSP 가 GA 를 막지 않는다는 것을 **역증명**했다. 차단돼야 마땅한 대조 호스트를 먼저 쏴서
+`securitypolicyviolation` 리스너가 실제로 걸리는지 확인한 뒤(connect·script·img 3 방향 전부
+enforce 로 잡힘), 그 작동하는 탐지기 앞에서 구글 호스트는 4 페이지 전부 위반 0 건이었다.
+"에러가 안 났다"와 "탐지기가 죽어 있었다"를 가르는 절차다.
+
+인라인 스니펫도 4 페이지 전부 실행된다(`gtag` = function, dataLayer 에 config 들어감) —
+기존 `'unsafe-inline'` 이 덮어 준다. **nonce 를 넣으면 안 된다.** nonce 가 있으면
+`'unsafe-inline'` 이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다.
+
+### SRI 예외 (owner 승인 2026-09-10)
+
+이 저장소는 외부 `<script src>` 에 `integrity`+`crossorigin` 을 요구하고
+`scripts/compute_sri.py` 가 관리한다. gtag.js 는 Google 이 수시로 갱신하는 가변 파일이라
+해시 고정이 불가능하다. owner 승인 아래 **명시적 예외**로 두고, 사유를 태그 옆 주석에
+박았다. `compute_sri.py` 에 등재하지 않는다 — 등재하면 해시가 매번 깨진다.
+
+### 개인정보처리방침
+
+GA 이용약관 7 조가 쿠키 고지를 담은 처리방침 게시를 요구한다. 방문 통계뿐 아니라 이미
+운영 중이던 **다운로드 방명록**(소속·부서·업권·용도)과 **오류 제보**(내용)도 같이 고지한다 —
+그 둘은 그동안 고지 없이 수집되고 있었다.
+
+**동의 배너는 두지 않는다(owner 결정).** 한국 개인정보보호법 제30조의 "공개"는 홈페이지
+지속 게재로 충족되고, 사전동의 배너는 행태정보를 맞춤형 광고에 활용할 때의 요건이다.
+그래서 footer 의 © 줄 끝에 `· 개인정보처리방침` 링크 한 줄만 붙였다.
+
+광고 계열 호스트(doubleclick·google.com)는 CSP 에서 **의도적으로 뺐다.** 처리방침의
+"맞춤형 광고 기능 미사용" 문구와 설정을 일치시키기 위해서다. Google Ads·Signals 를 켜면
+CSP 추가와 처리방침 수정이 **같이** 필요하다.
+
+owner 결정 2 건: 연락처는 사이트 제보 폼으로 안내(이메일 비공개), 운영주체는
+"InsureQuant (개인 운영)".
+
+### keep-list
+
+`privacy.html` 은 4 페이지가 `href` 로 참조하고 자신도 4 페이지를 참조한다. 배포 keep-list 는
+HTML 의 `fetch(`/`src=`/`href=` 를 grep 해서 도출하므로 살아남는다. **서치 콘솔 인증을
+`google<token>.html` 파일 업로드 방식으로 하면 안 되는 이유가 이것이다** — 아무 HTML 도
+참조하지 않아 다음 배포에서 `git rm` 되고 인증이 조용히 풀린다. DNS TXT 로 할 것.
+
+### 미검증 (배포 후 owner 확인 필요)
+
+실제 `/g/collect` 전송은 확인하지 못했다. 개발 PC 는 사내 정책상 **VPN 이 꺼지면 외부
+TCP 443 이 전부 `WSAEACCES`(WinError 10013)로 거부되고**, VPN 을 켜면 회사 관문을 통과한다
+(owner 는 반대로 알고 있었다). VPN 을 켠 뒤 구글 호스트 도달과 ID 유효성까지는 확인했으나,
+회사망을 거친 접속은 통계도 지저분해지므로 **owner 가 사외 기기로 GA 실시간 보고서에서**
+확인해야 종결이다.
+
+### 잔여
+
+서치 콘솔 미착수 — 도메인 DNS 는 **가비아**이고 TXT 레코드가 현재 0 개다(= 과거 시도 흔적
+없음). `robots.txt`·`sitemap.xml` 도 없다.
 
 ---
 
