@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <!-- CSP: defense-in-depth, meta-delivered (GitHub Pages static — no HTTP headers). Must stay first in <head>, before CDN tags. frame-ancestors/report-uri are ignored in meta CSP. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>InsureQuant — 개인정보처리방침</title>
+  <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
+       integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
+       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
+       인라인 블록은 script-src의 기존 'unsafe-inline'으로 실행된다 — nonce를 넣으면 'unsafe-inline'이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8NSCQZBZK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-F8NSCQZBZK');
+  </script>
+  <meta name="description" content="InsureQuant 개인정보처리방침 — 수집 항목, 보유 기간, 처리 위탁 및 국외 이전, 쿠키와 거부 방법 안내"/>
+  <meta property="og:title" content="InsureQuant — 개인정보처리방침"/>
+  <meta property="og:description" content="InsureQuant 개인정보처리방침 — 수집 항목, 보유 기간, 처리 위탁 및 국외 이전, 쿠키와 거부 방법 안내"/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="common.css"/>
+  <style>
+    /* Shared tokens + chrome (header/tabs/brand/container) live in common.css.
+       Below: privacy.html-specific only. This is a long-form reading page, not
+       a dashboard, so body copy uses --text (not the sitewide .panel p default
+       of --muted) and gets a comfortable line-height + a narrow reading column. */
+    .panel{box-sizing:border-box;max-width:760px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px}
+    .panel h1{margin:0 0 14px 0;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.01em}
+    .panel h2{margin-top:32px}
+    .panel h3{margin:20px 0 8px 0;font-size:15px;font-weight:700;color:var(--text)}
+    .panel p{color:var(--text);line-height:1.8;font-size:15px;margin:0 0 14px 0}
+    .panel ul{margin:0 0 14px 0;padding-left:22px;color:var(--text);line-height:1.8;font-size:15px}
+    .panel li{margin-bottom:6px}
+    /* --primary on --card measures 4.27:1 (below the 4.5:1 AA floor for normal
+       text, scripts/a11y_contrast_check.py) -- use --primary-hover here
+       instead, which clears 5.54:1 on --card. */
+    .panel a{color:var(--primary-hover);text-decoration:underline}
+    .panel a:hover, .panel a:focus-visible{color:var(--text)}
+    .policy-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:8px;background:var(--bg);margin:0 0 16px 0}
+    .policy-table{min-width:640px;font-size:14px}
+    .policy-table th:nth-child(n+2), .policy-table td:nth-child(n+2){text-align:left}
+    @media (max-width:640px){
+      .panel{padding:18px}
+      .panel h1{font-size:21px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">개인정보처리방침</span></a>
+    <div class="tabs">
+      <a href="K-ICS.html" class="tab">K-ICS</a>
+      <a href="IFRS17.html" class="tab">IFRS17</a>
+      <a href="공시보고서.html" class="tab">기타공시</a>
+    </div>
+  </header>
+  <div class="container">
+    <div class="panel">
+      <h1>개인정보처리방침</h1>
+      <p>InsureQuant(이하 "사이트")는 개인이 운영하는 사이트이며, 방문자의 개인정보를 최소한으로만 처리합니다. 이 방침은 사이트가 무엇을 수집하고, 왜 수집하며, 어떻게 거부할 수 있는지를 알려드립니다. 회원가입 절차는 없으며, 이름·주민등록번호·전화번호를 요구하지 않습니다.</p>
+
+      <h2>1. 수집하는 항목과 방법</h2>
+
+      <h3>(1) 방문 통계 — Google Analytics 4</h3>
+      <ul>
+        <li>수집 항목: 방문한 페이지 주소, 방문 일시와 체류 시간, 유입 경로(검색어·링크 등), 브라우저·운영체제·기기 종류, 대략적인 접속 지역(도시 수준), 쿠키에 저장되는 임의의 방문자 식별자</li>
+        <li>수집 방법: 방문 시 자동 수집</li>
+        <li>IP 주소는 저장되지 않습니다. Google은 Analytics에서 IP 주소를 기록·저장하지 않는다고 명시하고 있습니다.</li>
+        <li>이용 목적: 어떤 자료가 얼마나 이용되는지 파악하여 사이트를 개선</li>
+      </ul>
+
+      <h3>(2) 데이터 다운로드 방명록</h3>
+      <ul>
+        <li>수집 항목: 소속(회사명, "기타(익명)" 선택 가능), 부서, 업권, 내려받은 데이터 목록, 이용 목적</li>
+        <li>수집 방법: 방문자가 직접 입력하여 제출할 때만</li>
+        <li>이용 목적: 어떤 자료가 어떤 실무에 쓰이는지 파악</li>
+        <li>소속은 익명으로 남기실 수 있습니다.</li>
+      </ul>
+
+      <h3>(3) 오류 제보</h3>
+      <ul>
+        <li>수집 항목: 제보 대상 데이터·회사·기간, 제보 내용(자유 서술)</li>
+        <li>수집 방법: 방문자가 직접 입력하여 제출할 때만</li>
+        <li>이용 목적: 데이터 오류 확인 및 수정</li>
+        <li>이름과 이메일을 묻지 않습니다. 다만 제보 내용에 본인 정보를 적으시면 그대로 저장되니 유의해 주십시오.</li>
+      </ul>
+
+      <h2>2. 보유 및 이용 기간</h2>
+      <ul>
+        <li>방문 통계: Google Analytics에 설정된 이벤트 데이터 보존 기간(기본 2개월, 최대 14개월) 경과 후 자동 삭제</li>
+        <li>방명록·오류 제보: 사이트 운영 기간 동안 보관하며, 이용 목적을 달성한 후에는 삭제</li>
+      </ul>
+
+      <h2>3. 처리 위탁 및 국외 이전</h2>
+      <p>아래 사업자의 서비스를 통해 처리되며, 데이터는 국외 서버에 저장됩니다. 이 외 제3자에게 개인정보를 제공하거나 판매하지 않습니다.</p>
+
+      <div class="policy-table-wrap">
+        <table class="policy-table">
+          <thead>
+            <tr>
+              <th scope="col">이전받는 자</th>
+              <th scope="col">이전되는 국가</th>
+              <th scope="col">이전 항목</th>
+              <th scope="col">이전 목적</th>
+              <th scope="col">보유 기간</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Google LLC (Google Analytics)</td>
+              <td>미국</td>
+              <td>위 1-(1)의 항목</td>
+              <td>방문 통계 분석</td>
+              <td>최대 14개월</td>
+            </tr>
+            <tr>
+              <td>Google LLC (Google Sheets · Apps Script)</td>
+              <td>미국</td>
+              <td>위 1-(2), 1-(3)의 항목</td>
+              <td>제출 내용 저장</td>
+              <td>사이트 운영 기간</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>4. 쿠키와 거부 방법</h2>
+      <p>사이트는 방문자를 구분하기 위해 브라우저에 쿠키(_ga 등)를 저장합니다. 광고 목적으로는 사용하지 않으며, Google Ads·Google Signals 등 맞춤형 광고 기능은 사용하지 않습니다.</p>
+      <p>거부 방법은 다음과 같습니다.</p>
+      <ul>
+        <li>브라우저 설정에서 쿠키를 차단하거나 삭제하실 수 있습니다.</li>
+        <li>Google이 제공하는 차단 부가기능을 설치하시면 수집 자체를 막을 수 있습니다. (<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>)</li>
+        <li>쿠키를 차단하셔도 사이트 이용에는 지장이 없습니다.</li>
+      </ul>
+      <p>또한 다운로드 방명록은 재방문 시 다시 묻지 않기 위해 입력값을 방문자 기기의 브라우저 저장소(localStorage)에 남깁니다. 이 값은 기기 밖으로 전송되지 않으며, 브라우저 데이터 삭제로 지우실 수 있습니다.</p>
+
+      <h2>5. 정보주체의 권리</h2>
+      <p>방문자는 자신의 정보에 대해 열람·정정·삭제·처리정지를 요구하실 수 있습니다. 아래 문의 창구로 요청하시면 지체 없이 처리합니다.</p>
+
+      <h2>6. 안전조치</h2>
+      <p>사이트는 정적 페이지로만 제공되며 자체 서버나 데이터베이스를 두지 않습니다. 모든 페이지는 HTTPS로 전송되고, 외부 스크립트의 실행 범위를 제한하는 보안 정책(CSP)을 적용하고 있습니다.</p>
+
+      <h2>7. 문의</h2>
+      <p>개인정보 관련 문의는 사이트 화면의 "오류 제보" 버튼을 통해 남겨 주십시오. 별도의 이메일 주소는 운영하지 않습니다.</p>
+      <p>운영 주체: InsureQuant (개인 운영)</p>
+
+      <h2>8. 시행일</h2>
+      <p>이 방침은 2026년 9월 10일부터 시행합니다. 내용이 변경되면 이 페이지에 변경 내용과 시행일을 게시합니다.</p>
+    </div>
+  </div>
+  <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
+    본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
+  </footer>
+</body>
+</html>
