@@ -1,9 +1,86 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-10 · Stage 5/5 — designer
+> Last updated: 2026-09-11 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-09-11 — 검색 유입: sitemap.xml · robots.txt · canonical · 네이버 (owner 요청)
+
+owner: "서치 콘솔 ㄱㄱ" — [[2026-09-10]] GA4 도입에 이어 검색 쪽을 붙였다.
+
+### 구글 (라이브 완료 `e2c1ab6`)
+
+소유확인은 **도메인 속성 + 가비아 DNS TXT**로 owner 가 직접 했다. 저장소가 공급한 것은
+`sitemap.xml`(정본 URL 5 개)과 `robots.txt`(전체 허용 + Sitemap 절대 URL)다.
+
+### 조사 중 발견한 진짜 결함 — 중복 주소
+
+**이 호스트는 확장자 없는 주소도 200 을 반환한다.** `/K-ICS`, `/IFRS17`, `/privacy`,
+한글 경로 전부. 그런데 배포 페이지에 `canonical` 이 **하나도 없었다.** 구글이 같은 페이지를
+두 주소로 색인해 순위를 나눠 먹을 수 있는 상태였다. **사이트맵만 넣었으면 반쪽짜리**였다 —
+사이트맵은 "이걸 봐라"이지 "저건 같은 것이다"가 아니다. 5 페이지에 자기참조 canonical 을
+넣고, 사이트맵의 `<loc>` 5 개와 canonical 5 개가 완전히 일치함을 기계 대조(diff 0)로 확인했다.
+
+### 함정 세 개
+
+1. **`rel="sitemap"` 의 href 는 상대경로여야 한다.** `href="/sitemap.xml"` 처럼 선행 슬래시를
+   붙이면 `tests/test_deploy_assets.py` 가 Windows 경로 결합으로 `C:\sitemap.xml` 을 찾다
+   실패해 **push 훅 전체를 막는다.** 게이트를 통과시키려다 게이트를 깨는 형태라 원인 파악이
+   오래 걸린다.
+
+2. **이 한 줄이 keep-list 강제 장치다.** 배포 keep-list 는 HTML 의 `fetch(`/`src=`/`href=`
+   grep 으로 도출된다. HTML 이 참조하지 않는 루트 파일은 keep-list 에 안 들어가고 slim-ify
+   절차에서 지워진다. `<link rel="sitemap">` 이 있으면 sitemap.xml 이 자동 포함되고
+   `test_referenced_files_exist` 가 부재를 기계적으로 막는다. **`robots.txt` 는 HTML 이
+   참조할 방법이 없어 이 보호를 못 받는다** — 미배선 잔여다(현재 배포 경로로는 안 지워지지만
+   문서·테스트에 "상시 유지" 항목으로 못 박아야 한다).
+
+3. **폰 배포 스크립트는 신규 파일을 못 올린다.** `scripts/android_push_and_deploy.sh` 는
+   배포 대상을 `git ls-tree origin/main` 으로 도출해서 **main 에 이미 있는 파일만** 순회한다.
+   브랜치에만 있는 `sitemap.xml`·`robots.txt` 는 순회 대상이 아니라 **"배포할 변경 없음"으로
+   조용히 끝나고 라이브는 계속 404 인데 스크립트는 성공으로 보고한다.** 신규 파일의 첫 배포는
+   반드시 런북 §3 워크트리 경로로 해야 한다(이번에 그렇게 했다).
+
+### 사이트맵 작성 규칙 (다음 분기에도)
+
+- 한글 파일명은 **대문자 헥사 퍼센트 인코딩**. 원문 한글을 그대로 적으면 색인 도구에 따라 실패.
+- 경로 대소문자가 엄격히 구분된다. 소문자 변형은 전부 404 — `K-ICS`·`IFRS17` 표기 그대로.
+- 중복 주소는 넣지 않는다: `/index.html`(루트와 동일 ETag), 확장자 없는 형태, 소문자 인코딩.
+- `changefreq`·`priority` 는 Google 이 무시하므로 넣지 않는다.
+- `lastmod` 는 **근거 있는 날짜만.** 배포 커밋 시각을 쓰거나 아예 생략한다. 지어내면
+  크롤러를 적극적으로 오도한다.
+
+### 네이버 (커밋 `58af5fa`, 배포 대기)
+
+owner 가 서치어드바이저에 `https://www.insurequant.com/` 을 등록하고 'HTML 태그' 방식으로
+받은 `naver-site-verification` meta 를 5 페이지에 넣었다. name/content meta 라 CSP 와 무관하다.
+
+**루트 페이지만으로 충분할 가능성이 높지만 5 개 전부에 넣었다** — 이 저장소는 배포가 폰 경유
+수동이라 **재시도 1 회 비용이 meta 4 줄보다 훨씬 크다.** 파일 업로드 방식은 위 함정 2 번
+때문에 쓰지 않았다(구글을 DNS TXT 로 한 것과 같은 이유).
+
+네이버는 `http`/`https` 와 `www` 유무를 **서로 다른 사이트로 취급**한다. 실제 서비스 형태
+하나만 등록하면 되고, 나머지는 301 로 모인다. `robots.txt` 는 네이버에 제출할 필요가 없다 —
+루트에 있으면 크롤러가 알아서 읽는다(그 메뉴는 확인용 도구다).
+
+### 작업 중 사고 — 서브에이전트 범위 이탈
+
+canonical 삽입을 designer 서브에이전트에 발주했는데 `index.html` 에 **요청하지 않은 접근성
+코드**(표 행 `tabIndex`·`role=link`·keydown 핸들러)를 같이 넣었다. 프롬프트에 "두 줄만,
+차트 코드 금지"를 명시했는데도 그랬다. `git checkout -- index.html` 로 되돌리고 필요한
+두 줄만 손으로 다시 넣었다. **diff 규모를 먼저 세서(5 파일 × 2 줄 = 10 인데 17 이 나왔다)
+잡았다** — 발주 후에는 diff 줄 수부터 확인할 것.
+
+### 미배선 잔여
+
+- `robots.txt` 상시 유지 배선(publishing 소관): `claude-agent-publishing.md` keep-list 절과
+  `docs/launch_runbook.md` 에 "HTML 무참조 상시 유지 파일"(robots.txt·`.nojekyll`·CNAME) 절을
+  신설하고, `tests/test_deploy_assets.py` 에 존재 단언을 추가. 문서에만 적으면
+  "배선했다 ≠ 강제된다" 상태로 남는다.
+- 네이버 소유확인·사이트맵 제출(owner), 빙 import(선택).
 
 ---
 

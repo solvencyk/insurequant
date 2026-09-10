@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-09-10 · Stage 5/5 — designer
+> Last updated: 2026-09-11 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,21 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-09-11, 검색 유입 — 구글 라이브 배포 완료 `e2c1ab6` / 네이버 배포 대기):**
+- **`sitemap.xml` + `robots.txt` 신설, 5 페이지에 자기참조 `canonical`.** 구글 서치 콘솔은
+  owner 가 도메인 속성 + 가비아 DNS TXT 로 소유확인 완료, 사이트맵 제출까지 끝났다.
+- **중복 주소 결함을 발견해 같이 고쳤다.** 이 호스트는 확장자 없는 주소(`/K-ICS` 등)도
+  200 을 반환하는데 canonical 이 하나도 없어서, 구글이 같은 페이지를 두 주소로 색인해
+  순위를 나눠 먹을 수 있었다. **사이트맵만 넣으면 반쪽이다.**
+- **`rel="sitemap"` href 는 반드시 상대경로.** 선행 슬래시를 붙이면
+  `test_deploy_assets.py` 가 `C:\sitemap.xml` 을 찾다 실패해 push 훅 전체를 막는다.
+  이 한 줄이 sitemap.xml 의 keep-list 강제 장치이기도 하다(HTML 참조가 있어야 도출된다).
+- **네이버 소유확인 meta 태그**(owner 제공) 5 페이지 삽입 — 커밋 `58af5fa`, **배포 대기**.
+  파일 업로드 방식은 keep-list 에서 탈락해 조용히 풀리므로 쓰지 않았다.
+- 잔여: ① 네이버 번들 push → 소유확인 → 사이트맵 제출 ② `robots.txt` 를 "HTML 무참조
+  상시 유지 파일"로 문서·테스트에 배선(publishing 소관, 현재 배포 경로로는 안 지워짐)
+  ③ 빙(서치 콘솔 import, 선택). 상세는 changelog 2026-09-11.
 
 **Recent (2026-09-10, owner 요청 "사이트 접속 트래픽 확인" — 라이브 배포):**
 - **GA4 방문 통계 태그 도입 + `privacy.html` 신설.** 측정 ID `G-F8NSCQZBZK`. 4 페이지
