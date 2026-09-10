@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  InsureQuant sitemap. 정본 호스트는 https://www.insurequant.com 하나다
+  (apex insurequant.com 과 http 는 전부 301 로 여기 모인다).
+
+  넣지 말 것 — 전부 200 을 반환하지만 중복 주소다:
+    /index.html                  (루트 / 와 동일 ETag)
+    확장자 없는 형태 (/K-ICS, /IFRS17, /privacy, /공시보고서)
+    소문자 퍼센트 인코딩 형태     (%ea%b3%b5... — 대문자 헥사만 쓴다)
+  경로 대소문자는 엄격히 구분된다. K-ICS · IFRS17 표기를 그대로 복사할 것.
+
+  한글 파일명은 반드시 퍼센트 인코딩(대문자 헥사)으로 넣는다. 원문 한글을 그대로
+  적으면 색인 도구에 따라 실패한다.
+
+  lastmod = 배포 커밋 be58627 (2026-09-11T00:00:15+09:00) 시각이다. 5 개 파일 모두
+  그 커밋에서 마지막으로 바뀌었으므로 실제와 일치한다. 근거 없는 날짜는 적지 않는다.
+  changefreq · priority 는 넣지 않는다 — Google 은 둘 다 무시한다.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.insurequant.com/</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://www.insurequant.com/K-ICS.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://www.insurequant.com/IFRS17.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://www.insurequant.com/%EA%B3%B5%EC%8B%9C%EB%B3%B4%EA%B3%A0%EC%84%9C.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://www.insurequant.com/privacy.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+</urlset>
