@@ -7,6 +7,8 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 
 ## Status
 
+**(2026-09-11) `public_exports/` 변이시험이 실제 배포 파일을 제자리에서 흔들다 끊긴 잔해(가짜 회사 행 1건)가 워킹트리에 남아 prepush 오프라인 테스트를 막았다 — 3번째 재발이라 구조를 바꿨다.** `check_public_exports(fd, out_dir=None)` 로 검사 폴더를 주입 가능하게 하고, `test_mutation_public_export_fires` 는 pytest 임시 폴더에 복사한 사본만 훼손한다. dirty-check·백업·`finally` 복원 코드 삭제(필요 없어짐). 실측: 관련 테스트 149 passed, 변이시험 후 `git status public_exports/` 깨끗, `validate_live_artifacts.py` RED=0. 밀려난 Status 항목(09-01 소급재작성 축)은 `docs/todo_archive_validation.md` 로.
+
 **(2026-09-02) 마스터 JSON 의 하류 사본이 둘인데 검사기는 하나였다 — `MASTER_XLSX_*` 축을 신설해 닫았다.**
 
 > owner 승인(2026-09-02 "신설한다 — 14개 시트 전수"). 신설:
@@ -108,37 +110,6 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 >   오판한다(원문은 "공통 및 선택 경과조치를 적용하지 않았습니다"). 일반화 수정("전=후면 X")은
 >   **198칸을 O→X 로 뒤집어** blocking RED 을 SKIP 으로 바꾸므로 **기각**했다. 좁은 대안(문서수준
 >   부정문 + `외에` 배제)을 시뮬(10버킷 매치 / 6칸 정정 / 대조군 4칸 일치)해 parser 에 발주함.
-
-**(2026-09-01) 소급재작성(restatement) 축을 등재·배선했다 — 그때까지 이 축을 재는 검사기가 저장소에 0개였다.**
-
-> 신설: `scripts/detect_kics_restatement.py`(탐지기) · `data/_gold/kics_restatement_ledger.json`(등재부) ·
-> `validate_data_contract.py` CHECK 7 `check_kics_restatement`(게이트, `run_gate` → 훅) ·
-> `tests/test_push_gate_wiring.py` WIRED 선언 · `tests/test_rule_coverage_manifest.py` 18개 테스트
->
-> - **무엇이 사각이었나.** 공시본 `[경과조치 적용 전 지급여력비율 세부]` 표는 **해당·직전·전전분기
->   3열**을 인쇄한다 → 같은 (회사,분기) 값이 두 번 인쇄된다. 발행사가 그걸 다르게 인쇄하면
->   소급재작성인데, **그 두 인쇄값을 대조하는 검사기가 하나도 없었다.** 교보생명(KR0073)
->   2026.1Q 재작성이 분기 변동 분석 중 **손으로** 발견됐다.
-> - **39사 전수 재스캔(실측).** 필링 대 필링(1Q본 해당분기 열 vs 2Q본 직전분기 열)으로
->   **830칸 비교 · 미비교 0칸 · 미판독 0개사**. 결과: **재작성 1개사(교보생명) 10칸**,
->   나머지 38사 무변동. 오케스트레이터 1차 손스캔의 오탐(기타포괄손익누계액·신종자본증권)은
->   재현되지 않았다 — 원인 3가지를 전부 막았다(표 특정 / 소수자리를 원 토큰에서 셈 /
->   item27 파생값 제외).
-> - **교보 10칸**: item1·2·4·11 각 +1 · item14 +871 · item15 +888 · item16 +445 ·
->   item19 +779 · item20 +553 · item22 +16. 발행사 사유가 원문에 있다(“종속회사 인수에 따른
->   기타요구자본 증가, 감독원 계리적가정 가이드라인 반영”). 파생 item27 은 161.92→160.41.
-> - **마스터는 안 건드렸다.** 등재·탐지만 했다. 마스터 2026.1Q 는 34개사 전부에서 1Q
->   원공시본과 **셀 단위로 일치**(`m!=1Q본 = 0`) — K-ICS 마스터가 as-filed 기준이라는 것을
->   추정이 아니라 실측으로 확인했다.
-> - **심각도 = YELLOW.** 과거 13개 분기쌍 전수 시뮬레이션: (회사,분기) 재작성 버킷 **37개 ·
->   셀 122칸**, raw 가 갖춰진 2023.4Q 이후로는 **매 분기 1~5개사**. RED 로 내면 거의 매
->   라운드 push 가 막히는데 막아서 고칠 것이 없다. **RED 은 마스터가 원공시본 기준을 벗어날
->   때만** — `MASTER_ADOPTED_RESTATED` / `PIN_DRIFT` / `CELL_MISSING` / 등재부 위생 3종.
-> - 게이트 실측: **RED 0 유지**, YELLOW 201 → 203(버킷 1줄 + census 1줄), exit 0.
-> - 변이시험 **15/15 검출**(재작성값 채택·제3값·행삭제·값null·근거필드삭제·키불일치·
->   등재부깨짐·등재부부재·스캔stale·미판독), tol 안(+0.4) 변이는 침묵, **등재 밖 200칸 변이
->   신규 RED 0**(오탐 없음). `scripts/_probes/probe_20260901_restatement_rule_simulation.py`
-> - **⚠️ 정책이 저장소 어디에도 선언돼 있지 않았다** — 아래 “미결”의 첫 항목.
 
 **(2026-09-01) 미결 — owner 판단이 필요한 것 2건**
 

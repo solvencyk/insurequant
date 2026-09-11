@@ -506,7 +506,7 @@ _PE_ID_COLS = ("원수사명", "티커", "생손보여부", "공시분기", "항
                "회사명", "구분", "종류")
 
 
-def check_public_exports(fd: Findings) -> dict:
+def check_public_exports(fd: Findings, out_dir: Path | None = None) -> dict:
     """`public_exports/*.json` — 사용자가 내려받는 스냅샷을 루트 마스터(HEAD)와 대조한다.
 
     축: ① 파일이 있고 파싱되는가 ② 루트 마스터(HEAD, exporter 와 동일 기준)와 **셀 단위로
@@ -515,6 +515,9 @@ def check_public_exports(fd: Findings) -> dict:
 
     발견은 (시트, 룰) 단위로 1건씩 집계한다 — 스냅샷이 한 세대 밀리면 전 행이 어긋나서
     11,546건이 찍히는데, 그 11,546건의 조치는 전부 하나("exporter 재실행")다.
+
+    `out_dir` 는 테스트용 — 변이시험이 추적되는 배포 산출물 대신 임시 복사본을 검사하게 한다
+    (2026-09-11: 끊긴 실행이 `public_exports/` 에 가짜 행을 남긴 사고 3번째). 기본은 실제 폴더.
     """
     stat = defaultdict(int)
     try:
@@ -526,7 +529,7 @@ def check_public_exports(fd: Findings) -> dict:
                f"{type(e).__name__}: {e} — 시트 목록을 exporter 에서 가져오지 못했다")
         return stat
 
-    out_dir = ROOT / "public_exports"
+    out_dir = Path(out_dir) if out_dir is not None else ROOT / "public_exports"
     if not out_dir.exists():
         fd.add("public_exports/", "PUBLIC_EXPORT_DIR_MISSING", "-",
                "public_exports/ 가 없다 — 사이트 다운로드가 전부 404 다")

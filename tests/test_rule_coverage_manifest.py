@@ -1128,10 +1128,10 @@ def _live_gate():
     return L
 
 
-def _pe_run():
+def _pe_run(out_dir=None):
     L = _live_gate()
     fd = L.Findings()
-    L.check_public_exports(fd)
+    L.check_public_exports(fd, out_dir=out_dir)
     return fd.rows
 
 
@@ -1170,67 +1170,53 @@ def test_public_export_clean_state_has_no_findings():
 
 @pytest.mark.parametrize("mutation", ["drift", "missing_row", "extra_row",
                                       "internal_col", "manifest_rows"])
-def test_mutation_public_export_fires(mutation):
-    """공개 스냅샷을 흔들면 실제로 발견이 나오는가 — 원본 바이트는 반드시 복원한다.
+def test_mutation_public_export_fires(mutation, tmp_path):
+    """공개 스냅샷을 흔들면 실제로 발견이 나오는가 — **임시 복사본**을 흔든다.
 
-    ⚠️ 이 테스트는 **추적되는 배포 산출물을 디스크에서 직접 흔든다.** 실행이 중간에 끊기면
-    (타임아웃·SIGKILL) `finally` 가 안 돌아 `public_exports/` 가 오염된 채 남고, 다음 전체
-    실행에서 이 4개가 통째로 실패한다 — 2026-09-01 에 두 번 났다(한 번은 다른 세션이 손으로
-    원복). 그래서 ① 시작 시 이미 오염돼 있으면 **먼저 그 사실로 실패**하고(엉뚱한 원인을
-    쫓지 않게) ② 끝에 복원이 실제로 됐는지 바이트로 확인한다.
-    끊긴 실행의 잔해는 `git checkout -- public_exports/` 로 되돌린다.
+    2026-09-11 이전에는 추적되는 배포 산출물 `public_exports/` 를 제자리에서 흔들고 `finally` 로
+    되돌렸다. 실행이 중간에 끊기면(타임아웃·SIGKILL·세션 인터럽트) 복원이 안 돌아 가짜 행이
+    워킹트리에 남았고, 다음 전체 실행의 clean-state 테스트가 엉뚱하게 실패했다 — 2026-09-01 두 번,
+    2026-09-11 세 번째. 이제 `check_public_exports(out_dir=...)` 로 복사본만 검사하므로 실제 파일은
+    바이트 하나도 건드리지 않고, 복원 코드도 없다.
     """
     import json as _json
-    import subprocess as _sp
-    pe = ROOT / "public_exports"
-    targets = ["CSM워터폴.json", "manifest.json"]
-    dirty = _sp.run(["git", "status", "--porcelain", "--", "public_exports/"],
-                    cwd=ROOT, capture_output=True, text=True).stdout.strip()
-    assert not dirty, (
-        f"public_exports/ 가 이미 워킹트리에서 변경돼 있다 — 이 변이시험의 끊긴 실행이 남긴 "
-        f"잔해이거나 스냅샷 재생성이 커밋 안 된 것이다. 이 상태로는 변이시험이 무엇을 재는지 "
-        f"알 수 없다.\n{dirty}\n되돌리려면: git checkout -- public_exports/")
-    backup = {n: (pe / n).read_bytes() for n in targets}
-    try:
-        if mutation == "drift":
-            d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
-            d[0]["값"] = (d[0]["값"] or 0) + 1.0
-            (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
-                                             encoding="utf-8")
-            want = "PUBLIC_EXPORT_DRIFT"
-        elif mutation == "missing_row":
-            d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
-            d.pop(5)
-            (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
-                                             encoding="utf-8")
-            want = "PUBLIC_EXPORT_MISSING_CELL"
-        elif mutation == "extra_row":
-            d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
-            ghost = dict(d[0])
-            ghost["원수사명"] = "존재하지않는보험"
-            d.append(ghost)
-            (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
-                                             encoding="utf-8")
-            want = "PUBLIC_EXPORT_EXTRA_CELL"
-        elif mutation == "internal_col":
-            d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
-            d[0]["원보험사코드"] = "KR0001"
-            (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
-                                             encoding="utf-8")
-            want = "PUBLIC_EXPORT_INTERNAL_COL_LEAKED"
-        else:
-            m = _json.loads((pe / "manifest.json").read_text(encoding="utf-8"))
-            m["sheets"]["CSM워터폴"]["rows"] = 99999
-            (pe / "manifest.json").write_text(_json.dumps(m, ensure_ascii=False, indent=2),
-                                              encoding="utf-8")
-            want = "PUBLIC_EXPORT_MANIFEST_MISMATCH"
-        rules = {r["rule"] for r in _pe_run()}
-        assert want in rules, f"{mutation}: {want} 가 안 나왔다 (나온 것: {sorted(rules)})"
-    finally:
-        for n, b in backup.items():
-            (pe / n).write_bytes(b)
-        for n, b in backup.items():
-            assert (pe / n).read_bytes() == b, f"복원 실패: {n}"
+    import shutil as _sh
+    pe = tmp_path / "public_exports"
+    _sh.copytree(ROOT / "public_exports", pe)
+    if mutation == "drift":
+        d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
+        d[0]["값"] = (d[0]["값"] or 0) + 1.0
+        (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
+                                         encoding="utf-8")
+        want = "PUBLIC_EXPORT_DRIFT"
+    elif mutation == "missing_row":
+        d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
+        d.pop(5)
+        (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
+                                         encoding="utf-8")
+        want = "PUBLIC_EXPORT_MISSING_CELL"
+    elif mutation == "extra_row":
+        d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
+        ghost = dict(d[0])
+        ghost["원수사명"] = "존재하지않는보험"
+        d.append(ghost)
+        (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
+                                         encoding="utf-8")
+        want = "PUBLIC_EXPORT_EXTRA_CELL"
+    elif mutation == "internal_col":
+        d = _json.loads((pe / "CSM워터폴.json").read_text(encoding="utf-8"))
+        d[0]["원보험사코드"] = "KR0001"
+        (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
+                                         encoding="utf-8")
+        want = "PUBLIC_EXPORT_INTERNAL_COL_LEAKED"
+    else:
+        m = _json.loads((pe / "manifest.json").read_text(encoding="utf-8"))
+        m["sheets"]["CSM워터폴"]["rows"] = 99999
+        (pe / "manifest.json").write_text(_json.dumps(m, ensure_ascii=False, indent=2),
+                                          encoding="utf-8")
+        want = "PUBLIC_EXPORT_MANIFEST_MISMATCH"
+    rules = {r["rule"] for r in _pe_run(pe)}
+    assert want in rules, f"{mutation}: {want} 가 안 나왔다 (나온 것: {sorted(rules)})"
 
 
 # ===========================================================================

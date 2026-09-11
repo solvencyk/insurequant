@@ -5,6 +5,10 @@
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
+## 2026-09-11 — `public_exports/` 변이시험을 임시 복사본으로 (제자리 훼손 폐지)
+
+> 끊긴 실행이 남긴 가짜 행 1건(`존재하지않는보험`)이 워킹트리 `public_exports/CSM워터폴.json` 에 남아 prepush 오프라인 테스트(`test_public_export_clean_state_has_no_findings`)를 막았다 — 2026-09-01 두 번에 이어 세 번째. 커밋·라이브는 무관(HEAD 깨끗). 구조 수정: `validate_live_artifacts.check_public_exports(fd, out_dir=None)` 폴더 주입, `test_mutation_public_export_fires(mutation, tmp_path)` 는 `shutil.copytree` 사본만 훼손. dirty-check·백업·`finally` 복원 삭제. 실측 149 passed · 변이시험 후 워킹트리 깨끗 · 게이트 RED=0.
+
 ## 2026-09-02 — `MASTER_XLSX_*` 축 신설: 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조 (CHECK 8)
 
 **무엇이 통과하고 있었나.** 루트 마스터 JSON 의 하류 사본은 **둘**이다 — `public_exports/`
