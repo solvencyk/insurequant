@@ -814,13 +814,13 @@
             displayRatio = displayValue;
             cell.style.background = colorForRatio(displayValue, 'basicCapital');
             cell.style.color = textOnRatio(displayValue, 'basicCapital');
-            cell.title = `${shortName(d.company)} — 기본자본비율(경과조치 적용 후) ${displayValue.toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
+            cell.title = `${shortName(d.company)} — 기본자본비율(경과조치 적용 후) ${samoNum(displayValue,1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
           } else {
             displayValue = d.ratio;
             displayRatio = d.ratio;
             cell.style.background = colorForRatio(d.ratio, 'kics');
             cell.style.color = textOnRatio(d.ratio, 'kics');
-            cell.title = `${shortName(d.company)} — K-ICS 지급여력비율(경과조치 적용 후) ${(d.ratio??0).toFixed(1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
+            cell.title = `${shortName(d.company)} — K-ICS 지급여력비율(경과조치 적용 후) ${samoNum(d.ratio??0,1)}%, 기준금액 ${Math.round(d.required).toLocaleString()}`;
           }
 
           // Cell area already encodes 지급여력기준금액 (size ∝ required), so the
@@ -839,7 +839,7 @@
           if (showRatio) {
             const ratio = document.createElement("div");
             ratio.className = "ratio";
-            ratio.textContent = (Number.isFinite(displayRatio) ? displayRatio.toFixed(1) : "-") + "%";
+            ratio.textContent = (Number.isFinite(displayRatio) ? samoNum(displayRatio,1) : "-") + "%";
             ratio.style.pointerEvents = 'none';
             cell.appendChild(ratio);
           }
@@ -909,7 +909,7 @@
           total++;
           const row = document.createElement('div');
           row.className = 'li-row';
-          row.title = `${shortName(d.company)} — ${v.toFixed(1)}%, 기준금액 ${Math.round(d.required || 0).toLocaleString()}`;
+          row.title = `${shortName(d.company)} — ${samoNum(v,1)}%, 기준금액 ${Math.round(d.required || 0).toLocaleString()}`;
           const name = document.createElement('div');
           name.className = 'li-name';
           name.textContent = shortName(d.company);
@@ -922,7 +922,7 @@
           track.appendChild(bar);
           const val = document.createElement('div');
           val.className = 'li-val';
-          val.textContent = (Number.isFinite(v) ? v.toFixed(1) : '-') + '%';
+          val.textContent = (Number.isFinite(v) ? samoNum(v,1) : '-') + '%';
           row.appendChild(name); row.appendChild(track); row.appendChild(val);
           row.tabIndex = 0;
           row.setAttribute('role', 'link');
