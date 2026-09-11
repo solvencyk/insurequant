@@ -9,6 +9,31 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-09-11b, 이용안내 — owner 지시, 커밋·배포 대기):**
+- **`privacy.html` 에 "이용안내" 절을 추가했다(새 HTML 파일 없음, owner 지시 1).** `<h1 id="terms">`
+  아래 h2 5개(무엇인가 / 이렇게 쓰셔도 됩니다 / 이것만은 피해주세요 / 데이터 출처 / 운영자·문의·준거법).
+  보고서 `artifacts/legal/ip_protection_report_20260911.md` §6-2 의 9개 조를 owner 지시 3번대로
+  압축 — "제N조" 없음, 자유인 이용을 먼저 말하고 금지는 두 가지(통째 크롤링·대량 재배포)만.
+  운영자 실명 조상욱 표기(owner OK).
+  **검수(2026-09-11c):** 3절 금지 목록이 4개(출처표시 제거·AI 학습 수집 별도 항목)로 늘어 owner 지시
+  "딱 두 가지만"과 어긋나 2개로 압축(AI 학습 수집은 크롤링 항목 괄호로 흡수, 출처표시 제거는 2절의
+  "출처를 밝히고 인용"에 이미 담겨 삭제). 출처표의 "보험업법 제124조" 인용 삭제(법조문 벽 금지).
+  이용안내 글자수 1,117 < 개인정보 절 1,532.
+  title·og·description·brand hint 를 "개인정보처리방침 · 이용안내" 로. 신규 CSS 2줄(`h1.section-break`,
+  `.policy-table.src-table{min-width:0}` — 2열 출처표가 모바일에서 가로스크롤 나지 않게).
+- **푸터 5페이지(4 대시보드 + privacy) 한 문장 + 링크 2개.** "화면·데이터베이스는 저작권법으로 보호되며
+  이용 조건은 이용안내를 따릅니다." + "© 2026 InsureQuant · 운영자 조상욱 · 개인정보처리방침 · 이용안내".
+- **`download-survey.js` 동의 라벨만 손봄 — 체크박스 개수 1개·필수 여부·에러 문구 불변(owner 지시 3).**
+  "위 안내사항과 [이용안내](데이터 이용 조건)를 확인했습니다", 링크는 `privacy.html#terms` 새 탭.
+  xlsx 표지 시트에 "이용 조건" 행 + `build_id` 가 manifest 에 있을 때만 "빌드 ID" 행(지문).
+- **검증:** `pytest tests/test_deploy_assets.py` 10 passed · 5 HTML html.parser 태그균형 0 오류·BOM 0 ·
+  브라우저 1280/375 실측(가로스크롤 0, 출처표 303px < 305px 래퍼, 모달 라벨 링크 렌더, consent 1개).
+  콘솔 오류는 외부 CDN(Pretendard·gtag) `ERR_NETWORK_ACCESS_DENIED` 뿐 — 개발 PC 망 차단, 기존.
+- **같은 시각 publishing 에이전트가 저장소 쪽 0원 조치(robots.txt AI 크롤러·LICENSE·`.gitignore`·IR xlsx
+  11개 `git rm --cached`·manifest license/build_id)를 병행했다** — 내가 먼저 쓴 robots.txt/LICENSE 를
+  그쪽이 덮었고 내용이 더 낫길래 그대로 뒀다. `export_public_sheets.py` 의 build_id 블록은 내 것,
+  license/terms_url/copyright 키는 그쪽 추가. 상세는 changelog 2026-09-11b.
+
 **Recent (2026-09-11, 검색 유입 — 구글 라이브 배포 완료 `e2c1ab6` / 네이버 배포 대기):**
 - **`sitemap.xml` + `robots.txt` 신설, 5 페이지에 자기참조 `canonical`.** 구글 서치 콘솔은
   owner 가 도메인 속성 + 가비아 DNS TXT 로 소유확인 완료, 사이트맵 제출까지 끝났다.

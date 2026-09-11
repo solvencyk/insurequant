@@ -175,6 +175,40 @@ def test_docs_agree_with_what_pages_fetch():
     )
 
 
+# Files that must ship to public `main` but that NO HTML references, so the grep-derived
+# keep-list can never produce them. Each one fails silently if dropped: CNAME (custom domain
+# unbinds), .nojekyll (GitHub Pages' default Jekyll hides `_`-prefixed paths), robots.txt
+# (crawler policy / AI-training opt-out vanishes), LICENSE (the public repo and
+# https://www.insurequant.com/LICENSE lose the stated terms), .gitignore. Wired 2026-09-11 —
+# until then this class existed only as a comment inside robots.txt ("배선했다 ≠ 강제된다").
+ALWAYS_KEEP = [".gitignore", ".nojekyll", "CNAME", "LICENSE", "robots.txt"]
+
+
+def test_always_keep_files_exist_and_are_documented():
+    """HTML-unreferenced deploy files must exist and be named in both keep-list docs."""
+    missing = [f for f in ALWAYS_KEEP if not (REPO / f).exists()]
+    assert not missing, f"HTML-unreferenced deploy files missing from the tree: {missing}"
+    for f in ALWAYS_KEEP:
+        raw = (REPO / f).read_bytes()
+        assert not raw.startswith(b"\xef\xbb\xbf"), f"{f} has a UTF-8 BOM"
+    docs = {
+        "docs/agents/claude-agent-publishing.md": REPO / "docs/agents/claude-agent-publishing.md",
+        "docs/launch_runbook.md": REPO / "docs/launch_runbook.md",
+    }
+    undocumented = []
+    for rel, doc in docs.items():
+        if not doc.exists():
+            continue
+        text = doc.read_text(encoding="utf-8")
+        for f in ALWAYS_KEEP:
+            if f not in text:
+                undocumented.append(f"{rel} never names {f}")
+    assert not undocumented, (
+        "HTML-unreferenced deploy files must be listed in the keep-list docs "
+        "(section 'HTML 무참조 상시 유지 파일'):\n  " + "\n  ".join(undocumented)
+    )
+
+
 def test_golden_table_docs_agree_with_tests():
     """The docs that tabulate the golden tests must stay in sync with tests/.
 

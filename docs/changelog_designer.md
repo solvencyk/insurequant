@@ -1,9 +1,72 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-11 · Stage 5/5 — designer
+> Last updated: 2026-09-11 (b) · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-09-11b — 이용안내: privacy.html 절 추가 · 푸터 · 다운로드 동의 라벨 (owner 지시)
+
+배경은 `artifacts/legal/ip_protection_report_20260911.md`(지식재산 보호 현황). 그 보고서 §4 구간 0 의
+0원 조치 중 화면 쪽(HTML 4개·privacy.html·download-survey.js)을 designer 가 맡았다. owner 가 같은 날
+네 가지를 못박았다: ① 약관 페이지를 따로 만들지 말고 privacy.html 에 붙일 것 ② 운영자 실명 조상욱 OK
+③ 진입장벽 낮게 — 새 동의 절차·팝업 금지, 체크박스 1개 유지, 조문식 금지, 자유인 이용을 먼저 말하고
+금지는 두 가지만 ④ 이 세션에서 할 수 있는 0원 조치는 전부.
+
+### 무엇을 바꿨나
+
+- **`privacy.html`**: 기존 1~8절 뒤에 `<h1 id="terms" class="section-break">이용안내</h1>` + h2 5개.
+  보고서 §6-2 의 9개 조를 다음 5절로 압축했다 — 1. 이 사이트는 무엇인가 / 2. 이렇게 쓰셔도 됩니다
+  (열람·캡처·출처표기 인용·사내 분석·다운로드 파일 내부 이용) / 3. 이것만은 피해주세요(통째 반복
+  크롤링(AI 학습용 수집 포함), 대량 재배포·재판매·유사서비스 — **검수 2026-09-11c 에서 4개→2개로 압축**,
+  owner 지시 "금지는 딱 두 가지만": 출처표시 제거 항목은 2절에 이미 담겨 삭제, AI 학습은 크롤링 괄호로 흡수)
+  + 이유 한 줄(저작권법 보호, 법률 용어 최소화) / 4. 데이터 출처(보고서 §6-3 을 2열 표로, 최종 반영
+  분기는 하드코딩 대신 "각 페이지 하단 표기 기준") / 5. 운영자·문의·준거법(조상욱 / 제보 버튼 /
+  대한민국 법·서울중앙지방법원, 적용일 2026-09-11). title·og:title·description·상단 brand hint 를
+  "개인정보처리방침 · 이용안내" 로, h1 도입문에 "아래쪽에 데이터 이용안내도 함께 둡니다" 한 줄(#terms 링크).
+- **CSS 2줄(페이지 inline, common.css 무변경)**: `.panel h1.section-break` 는 같은 panel 안 두 번째
+  문서의 구분선(margin-top 48 / padding-top 32 / border-top). `.policy-table.src-table{min-width:0}` 는
+  출처표가 2열뿐이라 기존 `.policy-table` 의 640px 강제폭을 풀어 모바일 가로스크롤을 없앤 것 —
+  375px 실측 표 303px < 래퍼 305px, `document.documentElement.scrollWidth` 375.
+- **푸터 — 4 대시보드 + privacy.html 동일**: 기존 문장 뒤에 "화면·데이터베이스는 저작권법으로
+  보호되며 이용 조건은 이용안내를 따릅니다." 한 문장, "© 2026 InsureQuant · 운영자 조상욱 ·
+  개인정보처리방침 · 이용안내(`privacy.html#terms`)". 링크는 기존 `.iq-anon-link`(common.css) 그대로.
+  그 이상 늘리지 않았다(owner 지시).
+- **`download-survey.js`**: 동의 라벨 "위 안내사항과 이용안내(데이터 이용 조건)를 확인했습니다",
+  "이용안내" 는 `<a href="privacy.html#terms" target="_blank" rel="noopener">`. `<a>` 는 label 안의
+  interactive content 라 클릭해도 체크박스가 토글되지 않는다. 체크박스 개수(consent 1개)·필수 여부·
+  `#iqdl-error` 문구 불변. 패널 본문의 안내문(DISCLAIMER_TEXT)엔 이용조건 문장을 넣지 않았다 —
+  라벨의 링크 하나로 충분하고 본문이 길어지면 진입장벽이 올라간다. xlsx 표지 시트(`buildCoverSheet`)에
+  "이용 조건" 행을 상시, "빌드 ID" 행은 manifest 에 `build_id` 가 있을 때만 추가(구 스냅샷 호환).
+- **`scripts/export_public_sheets.py`**: manifest 에 `build_id`(`git rev-parse --short HEAD`, 실패 시 null)
+  블록을 넣었다. 같은 시각 publishing 에이전트가 그 위에 `license`/`terms_url`/`copyright` 키를 얹었다.
+
+### 검증
+
+`pytest tests/test_deploy_assets.py -q` 10 passed. privacy·index·K-ICS·IFRS17·공시보고서 5 파일을
+html.parser 로 돌려 미닫힘 태그 0·중복 id 0·BOM 0 확인(`#terms` 는 privacy 에만). 브라우저 실측:
+privacy 1280×900 에서 h1 2개·h2 13개 순서 정상, 375×812 에서 가로스크롤 없음·`.tabs` overflow-x auto·
+h1 21px. index.html 모달을 열어 라벨 텍스트·링크 href/target/rel·consent 1개·에러 문구 불변 확인.
+콘솔 오류는 외부 CDN(Pretendard css·gtag.js) `ERR_NETWORK_ACCESS_DENIED` 뿐 — 개발 PC 의 외부 443
+차단(기존, 코드와 무관).
+
+### 병행 작업과 경계
+
+publishing 에이전트가 같은 워킹트리에서 저장소 쪽 0원 조치를 동시에 진행했다: robots.txt(AI 학습
+크롤러 차단 + `/public_exports/` Disallow, keep-list 주석 보존), 루트 LICENSE, `.gitignore`
+`data/ir/**/*.xlsx`, IR xlsx 11개 `git rm --cached`, manifest 재생성. 내가 먼저 쓴 robots.txt·LICENSE 를
+그쪽이 몇 초 뒤 덮었는데 내용이 더 낫길래(ChatGPT-User·PerplexityBot 은 AI 검색 유입을 받기 위해 허용)
+그대로 뒀다. **공유 워킹트리에서 같은 파일을 두 에이전트가 쓰면 나중 쓴 쪽이 이긴다** — 저장소 파일은
+publishing, 화면 파일은 designer 로 경계를 지키는 편이 안전하다. 아직 아무도 안 한 것:
+`docs/ip/investment_record.md`(보고서 §6-7, 투자 기록 1장) — 저장소 문서라 publishing 소관.
+
+### 배포
+
+변경 파일: `privacy.html` · `index.html` · `K-ICS.html` · `IFRS17.html` · `공시보고서.html` ·
+`download-survey.js`(전부 keep-list 기존 항목). 커밋·push 는 orchestrator/owner 승인 뒤, 작업 PC 는
+push 불가라 폰 번들 경로.
 
 ---
 

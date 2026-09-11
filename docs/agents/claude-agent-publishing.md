@@ -71,6 +71,25 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 
 여기에 `common.css` + `CNAME` + `.gitignore` + 4개 HTML을 더한 것이 keep-list다.
 
+> ### HTML 무참조 상시 유지 파일 (2026-09-11 배선)
+>
+> 아래 파일은 **어떤 HTML 도 참조하지 않아 위 grep 으로 도출되지 않지만** 공개 `main` 에 반드시
+> 있어야 한다. 빠져도 에러가 안 나고 조용히 풀린다. `tests/test_deploy_assets.py::
+> test_always_keep_files_exist_and_are_documented` 가 존재 + 이 절·`docs/launch_runbook.md` 에
+> 이름이 있는지 강제한다(`ALWAYS_KEEP` 상수가 정본 — 새 항목은 거기와 두 문서를 같이 고칠 것).
+>
+> | 파일 | 빠지면 |
+> |---|---|
+> | `CNAME` | 커스텀 도메인 해제 |
+> | `.nojekyll` | GitHub Pages 기본 Jekyll 이 `_` 로 시작하는 경로를 배포에서 뺌 |
+> | `.gitignore` | slim 워크트리 위생 |
+> | `robots.txt` | 크롤러 정책(AI 학습 크롤러 차단·`/public_exports/` 색인 제외) 소멸 |
+> | `LICENSE` | 공개 저장소·`https://www.insurequant.com/LICENSE` 의 이용 조건 사라짐. 2026-09-11 신설 — 데이터베이스제작자권 고지 + 허용/금지 범위(`artifacts/legal/ip_protection_report_20260911.md` §6-5) |
+>
+> `sitemap.xml` 은 각 HTML 의 `<link rel="sitemap">` 으로 참조돼 grep 으로 도출되므로 이 표에
+> 없다. `download-survey.js`·`report-widget.js`·`forms-config.js`·`privacy.html`·`public_exports/*`
+> 는 HTML `<script src>`/`href` 또는 그 JS 의 fetch 로 도출된다.
+
 > **`dividend.json`(신규, 2026-08-15)** — DART alotMatter(배당에 관한 사항) 기반, 39개사 중
 > 24개사(Tier-1) 커버, 1,924행. `공시보고서.html`이 fetch(`inbox/publishing/20260814T2230Z`).
 > 게이트 배선 완료(`DIV_PAYOUT_IDENTITY`·`DIV_CENSUS_MISSING`·`DIV_ZERO_CONTRADICTION` 3룰,
@@ -303,7 +322,11 @@ The §9 slim-publish dance is **too heavy to repeat every update** and the user 
 
 ```
 .gitignore
+.nojekyll                                  # HTML 무참조 상시 유지 (§1 표) — Jekyll 의 `_` 경로 숨김 방지
 CNAME
+LICENSE                                    # HTML 무참조 상시 유지 (§1 표) — 2026-09-11 신설, 이용 조건 + DB제작자권 고지
+robots.txt                                 # HTML 무참조 상시 유지 (§1 표) — 크롤러 정책
+sitemap.xml                                # HTML <link rel="sitemap"> 으로 도출됨
 common.css                                 # shared design system — referenced by all 3 HTML (<link>); MUST ship with them
 index.html
 K-ICS.html

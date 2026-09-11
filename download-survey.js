@@ -200,8 +200,12 @@
       { 항목: "다운로드 생성일시(로컬)", 내용: new Date().toLocaleString("ko-KR") },
       { 항목: "포함 시트", 내용: names.join(", ") },
       { 항목: "커버 분기 범위", 내용: (mins[0] && maxs[maxs.length - 1]) ? (mins[0] + " ~ " + maxs[maxs.length - 1]) : "" },
-      { 항목: "안내", 내용: DISCLAIMER_TEXT }
+      { 항목: "안내", 내용: DISCLAIMER_TEXT },
+      // 지문(fingerprint) 행 — 파일이 돌아다닐 때 출처·이용조건이 같이 간다(2026-09-11).
+      { 항목: "이용 조건", 내용: "출처 표시 인용·사내 분석 가능, 자동수집·재배포·재판매 금지. " + SOURCE_URL + "/privacy.html#terms" }
     ];
+    // build_id 는 export_public_sheets.py 가 manifest 에 넣는다 — 구 스냅샷엔 없으므로 있을 때만.
+    if (manifest && manifest.build_id) rows.push({ 항목: "빌드 ID", 내용: String(manifest.build_id) });
     var ws = XLSX.utils.json_to_sheet(rows, { skipHeader: true });
     ws["!cols"] = [{ wch: 20 }, { wch: 70 }];
     return ws;
@@ -311,7 +315,14 @@
       el("div", { class: "iq-disclaimer" }, [document.createTextNode(DISCLAIMER_TEXT)]),
       el("div", { class: "iq-disclaimer" }, [document.createTextNode("제출 정보(보험사명·업권·부서 등)는 이용 현황 파악과 데이터 품질 개선 참고용으로만 사용하며, 외부에 제공하지 않습니다.")]),
       el("div", { class: "iq-field", style: "margin-bottom:0" }, [
-        el("label", { class: "iq-check-row", for: "iqdl-consent" }, [consentCb, document.createTextNode("위 안내사항을 확인했습니다")])
+        // 이용안내 링크: 체크박스는 기존 1개 그대로(owner 2026-09-11, 진입장벽 낮게). 라벨 문구와 링크만 손봤다.
+        // <a> 는 label 안의 interactive content 라 클릭해도 체크박스가 토글되지 않고 링크만 열린다.
+        el("label", { class: "iq-check-row", for: "iqdl-consent" }, [
+          consentCb,
+          document.createTextNode("위 안내사항과 "),
+          el("a", { href: "privacy.html#terms", target: "_blank", rel: "noopener", text: "이용안내" }),
+          document.createTextNode("(데이터 이용 조건)를 확인했습니다")
+        ])
       ])
     ]);
     var footer = el("div", { class: "iq-modal-footer" }, [honeypot, errorMsg, submitBtn]);

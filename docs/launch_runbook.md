@@ -65,6 +65,22 @@ python scripts/prepush_check.py
 grep해서 파생. 최근 스냅샷은 `claude-agent-publishing.md` §9 참조(2026-06-16 확인 목록, 변동 시 그
 문서를 갱신).
 
+### HTML 무참조 상시 유지 파일
+
+grep 으로는 **절대 도출되지 않지만** `main` 에 항상 있어야 하는 파일. 빠져도 에러 없이 조용히
+풀린다. 정본 상수는 `tests/test_deploy_assets.py::ALWAYS_KEEP`, 테스트가 존재와 문서 등재를 강제한다
+(2026-09-11 배선 — 그 전에는 robots.txt 안의 주석 한 줄이 유일한 기록이었다).
+
+| 파일 | 역할 |
+|---|---|
+| `CNAME` | 커스텀 도메인 바인딩 |
+| `.nojekyll` | GitHub Pages 기본 Jekyll 이 `_` 로 시작하는 경로를 숨기는 것을 막음 |
+| `.gitignore` | slim 워크트리 위생 |
+| `robots.txt` | 크롤러 정책 — 검색 전체 허용, `/public_exports/` 색인 제외, AI 학습용 크롤러(GPTBot·CCBot·ClaudeBot 등) 차단. 사용자 대행 fetcher(ChatGPT-User·PerplexityBot)는 막지 않음(owner 2026-09-11) |
+| `LICENSE` | 이용 조건 + 데이터베이스제작자권 고지(2026-09-11 신설). `https://www.insurequant.com/LICENSE` 로도 열람됨 |
+
+§3 절차 2) 에서 keep-list 파일을 교체할 때 이 표의 파일도 같이 `git checkout <branch> -- …` 한다.
+
 ## 3. 격리 워크트리 cherry-push 절차
 
 ```bash

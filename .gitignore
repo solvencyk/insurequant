@@ -45,6 +45,11 @@ data/dart/**/*.zip
 data/dart/**/*.xml
 data/kidi/
 data/ir/**/raw/
+# IR factsheet xlsx (third-party IR material — each insurer's own copyrighted
+# deck). Untracked 2026-09-11 (artifacts/legal/ip_protection_report_20260911.md
+# §6-8): pipeline reads them from disk, never from git. History NOT purged
+# (owner decision). Parsed JSON next to them stays tracked.
+data/ir/**/*.xlsx
 
 # J-ESR (Japan ESR) pipeline — EDINET subscription key + raw XBRL pulls (HUGE, regenerable)
 J-ESR/edinet_key.txt

@@ -90,7 +90,25 @@ MASTERS = [
 
 def main():
     OUT_DIR.mkdir(exist_ok=True)
-    manifest = {"generated_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "sheets": {}}
+    # license / build_id: 지문(fingerprint) 키 — 스냅샷이 돌아다닐 때 이용조건·빌드 시점이 같이 간다
+    # (artifacts/legal/ip_protection_report_20260911.md §6-6). download-survey.js 는 sheets ·
+    # generated_at_utc 만 읽고 build_id 는 있을 때만 표지 시트에 적으므로 구 스냅샷과 호환된다.
+    try:
+        build_id = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=REPO,
+                                  capture_output=True, text=True, check=True).stdout.strip()
+    except (subprocess.CalledProcessError, OSError):
+        build_id = None
+    # validate_live_artifacts CHECK 6 은 manifest 의 `sheets` 만 대조하므로 top-level 지문 키를
+    # 늘려도 게이트는 깨지지 않는다(2026-09-11 실측, L636-663). 문구 정본은 루트 LICENSE.
+    manifest = {
+        "generated_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "license": ("All rights reserved. 열람·출처표기 인용·사내 분석은 자유, "
+                    "자동수집(크롤링)으로 통째 긁어가기·대량 재배포·재판매는 금지."),
+        "terms_url": "https://www.insurequant.com/privacy.html#terms",
+        "copyright": "(c) 2026 InsureQuant (운영자 조상욱). 원천 수치의 권리는 각 공시 주체에게 있음.",
+        "build_id": build_id,
+        "sheets": {},
+    }
     for json_name, sheet_name in MASTERS:
         rows = read_committed_json(json_name)
         flatten = FLATTEN.get(json_name)

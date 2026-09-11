@@ -1,6 +1,6 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-08-25 · Stage 4/5 — publishing
+> Last updated: 2026-09-11 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
@@ -9,6 +9,68 @@
 **This file:** entries scoped to publishing work only.
 
 ---
+
+## 2026-09-11 — 지식재산 보호 0원 조치, 저장소 쪽 (LICENSE · robots.txt · manifest 지문 · 투자기록 · IR xlsx 추적해제 · 상시유지 파일 배선)
+
+배경: `artifacts/legal/ip_protection_report_20260911.md`(등록권리 없는 개인 운영 사이트가 지금
+자동으로 가진 권리 = 저작권 + 데이터베이스제작자권 + 도메인, 그 중 0원으로 강화되는 것들).
+owner 지시 3개: 약관 페이지 따로 만들지 말 것(privacy.html 에 추가, designer), 실명 조상욱 OK,
+**진입장벽 낮게**(동의 절차·팝업 추가 금지, 금지 항목은 자동수집·대량재배포 둘만). 화면·JS 는
+designer 가 같은 시간에 작업했고 이 항목은 publishing 소관 파일만 다룬다. commit/push 없음.
+
+**① `LICENSE`(루트, 신설).** 19줄, 한국어 본문 + 영어 요약. All rights reserved 이되 허용 범위를
+먼저 적었다(열람·캡처, 출처 표기 인용, 사내 분석). 금지는 둘 — 자동화 수단으로 통째 수집, 대량
+재배포·재판매·유사 서비스 구축. 저작권법 제4장의2 데이터베이스제작자권 고지("개별 수치가 공개
+사실이라는 점은 DB 전체·상당부분 권리에 영향 없음"), 원천 권리는 각 공시 주체, 전문 링크
+`privacy.html#terms`, 운영자 조상욱 2026. 조문식 "제N조" 안 씀.
+
+**② `robots.txt`.** 기존 상단 주석(keep-list 는 HTML grep 도출이라 이 파일은 상시 유지) 살림.
+`User-agent: *` 는 `Allow: /` 유지 + `Disallow: /public_exports/`(다운로드 방명록 스냅샷 —
+렌더링에 안 쓰여 색인 불필요; 루트 `*.json` 은 렌더링 리소스라 **일부러 안 막음**). AI **학습용**
+크롤러 8종(GPTBot·CCBot·ClaudeBot·anthropic-ai·Google-Extended·Bytespider·meta-externalagent·
+Applebot-Extended)만 `Disallow: /`. 보고서 초안에 있던 ChatGPT-User·PerplexityBot 은 **뺐다** —
+사용자가 질문할 때 대신 읽어 오는 fetcher 라 막으면 AI 검색 유입이 끊긴다(owner 편의 원칙).
+
+**③ `public_exports/manifest.json` 지문.** 생성 스크립트는 `scripts/export_public_sheets.py`
+(`grep manifest.json scripts/` 로 확인). designer 가 먼저 `license`(URL)·`build_id`(HEAD short
+sha) 를 넣어 두어 그 위에 얹었다: `license` 는 조건 문장으로, `terms_url`·`copyright` 추가.
+안전 근거 두 개를 코드 주석으로 남김 — download-survey.js 는 `sheets`·`generated_at_utc`
+(+`build_id` 있을 때만) 만 읽고, `validate_live_artifacts.py` CHECK 6(L636-663) 은
+`man["sheets"]` 만 대조하므로 top-level 키 추가는 둘 다 안 깨진다. 재실행 결과: 13개 시트
+스냅샷 **바이트 동일**(HEAD 대비 드리프트 0), `manifest.json` 만 +5줄. xlsx 표지 "이용 조건"
+행은 **클라이언트**(`download-survey.js buildCoverSheet`) 가 만들고 designer 가 이미 넣었으므로
+publishing 은 손대지 않았다. 이 경로엔 마스터 xlsx 가 없어 수식 캐시 위험 0.
+
+**④ `docs/ip/investment_record.md` + `scripts/measure_investment_record.py`.** "상당한 투자"
+증거 1장. 추정치 없이 전부 잰다(git log/rev-list, os.walk 줄 수, 골든 fixture `by_rule`,
+`rule="…"` 리터럴, 마스터는 `git show HEAD:` 로 읽어 동시 세션 반쯤 쓴 파일 배제, 원천 파일은
+디스크 census). 첫 실행에서 회사 수가 전부 0 으로 나왔다 — 회사 키가 `회사명` 이 아니라 13개
+공통 `원보험사코드` 였다(export 단계에서 드롭되는 키라 눈에 안 띔). 고쳐서 39사 확인. 실측 요약:
+첫 커밋 2025-09-15 · 561 커밋 · 57 작업일 · scripts 278파일 84,175줄(+probes 1,295파일) ·
+src 33/8,822 · tests 41/10,392 · K-ICS 룰 id 30, findings 16,140 · validator rule id 123 ·
+골든 8 · 테스트 함수 266 · 마스터 13개 53,530행 · 39사 · 16분기 · 공시 PDF 550 · DART raw 1,297 ·
+KIDI 548 · gold xlsx 44 · `_gold` 22 · resolved 티켓 386 · 포스트모템 10. 갱신 명령을 문서 맨 위에
+박아 분기마다 같은 축으로 다시 잰다.
+
+**⑤ IR xlsx 추적 해제.** `git ls-files 'data/ir/**/*.xlsx'` = 11(전부 FY2026_Q2 팩트시트, 각
+보험사 저작물). 읽는 코드 전수 grep: `crawl_ir_db.py`·`_build_lob_cross_check.py`·
+`check_data_file_integrity.py`·`download_ir_*.py` 전부 **디스크 경로**, `git show` 로 data/ir 를
+읽는 곳 0 → `git rm --cached` 11건(디스크 잔존 확인 11), `.gitignore` 에 `data/ir/**/*.xlsx` +
+사유 주석. 이력 purge 는 하지 않음(owner 결정, 현 PC push 불가 사정도). main 에는 원래 없음.
+
+**⑥ "HTML 무참조 상시 유지 파일" 배선 — LICENSE 의 keep-list 등록 근거.** §1 keep-list 는
+HTML grep 으로 도출되는데 `LICENSE` 는 아무 HTML 도 참조하지 않는다. 그러나 공개 `main` 이 곧
+GitHub 공개 저장소이고 `https://www.insurequant.com/LICENSE` 로도 열리므로 거기 없으면 의미가
+없다 → robots.txt·`.nojekyll`·CNAME 과 같은 부류. designer changelog 2026-09-11 "미배선 잔여"
+(robots.txt 상시 유지를 문서·테스트에 배선, publishing 소관)가 정확히 이 작업이라 같이 처리:
+`claude-agent-publishing.md` §1 에 표 신설 + §9 스냅샷에 `.nojekyll`·`LICENSE`·`robots.txt`·
+`sitemap.xml` 5줄, `docs/launch_runbook.md` §2 에 소절 신설(robots.txt 주석이 가리키던 절이
+실제로는 없었다), `tests/test_deploy_assets.py::test_always_keep_files_exist_and_are_documented`
+— `ALWAYS_KEEP` 5개의 존재·BOM 없음·두 문서 등재를 강제. "배선했다 ≠ 강제된다" 원칙대로 테스트가
+정본이고 문서는 테스트가 검사하는 대상이다. `pytest tests/test_deploy_assets.py` **11 passed**.
+
+**다음 배포 주의.** §3 절차 2) 의 `git checkout <branch> -- …` 목록에 `LICENSE`·`robots.txt` 를
+넣을 것 — 둘 다 grep 으로는 안 나온다.
 
 ## 2026-08-25 — 소진율 100% 캡을 데이터에서 걷어냈다 — owner 2026-06-14 결정 이행 (`20260825T1130Z` iter2)
 

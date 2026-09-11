@@ -76,6 +76,17 @@ done <<EOF
 $(git ls-tree -r --name-only origin/main)
 EOF
 
+# main 에 아직 없는 신규 배포 파일 (HTML 이 참조하지 않아 위 순회에 안 걸린다 — 2026-09-11 발견:
+# 위 루프는 origin/main 에 이미 있는 파일만 돌기 때문에 LICENSE 같은 신규 파일이 영원히 빠졌다).
+# 여기 적힌 파일은 브랜치에 있고 main 에 없으면 배포 목록에 넣는다.
+NEW_FILES="LICENSE"
+for f in $NEW_FILES; do
+  git rev-parse "origin/main:$f" >/dev/null 2>&1 && continue
+  git rev-parse "$BRANCH:$f" >/dev/null 2>&1 || continue
+  CHANGED="$CHANGED$f
+"
+done
+
 [ -n "$CHANGED" ] || { printf '배포할 변경 없음 — main 이 이미 최신이다.\n'; exit 0; }
 printf '%s' "$CHANGED" | sed 's/^/  /'
 
