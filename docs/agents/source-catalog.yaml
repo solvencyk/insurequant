@@ -558,6 +558,7 @@ validation:
     hwp_cfb: '\xd0\xcf\x11\xe0 + "HWP Document" in head 4KB'
   encoding: UTF-8 (no BOM)
   zip_korean_filenames: cp437 -> decode('cp437').encode('cp437').decode('cp949') if garbled
+  versioning: 'amended re-postings for an already-fetched (period,company) coexist as KR####_<name>_v<YYYYMMDD>.<ext> (see scripts/_disclosure_pdf_paths.py::save_versioned_pdf) -- never overwrite the original raw file'
 
 future_sources_planned:
   - id: F7

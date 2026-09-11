@@ -52,6 +52,9 @@ import requests
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from _disclosure_pdf_paths import save_versioned_pdf  # noqa: E402
+
 OUT_DIR = ROOT / "data" / "disclosure" / "FY2026_Q2" / "raw"
 META_DIR = ROOT / "data" / "disclosure" / "_meta" / "FY2026_Q2"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -257,8 +260,12 @@ def _xpath(loc):
 def _save(kr: str, name: str, content: bytes, ext: str = "pdf") -> Path:
     safe_name = name.replace("/", "_")
     target = OUT_DIR / f"{kr}_{safe_name}.{ext}"
-    target.write_bytes(content)
-    return target
+    saved, status = save_versioned_pdf(target, content)
+    if status == "versioned":
+        print(f"  NOTE {kr}: 기존 raw 와 바이트가 달라 정정본으로 병존 저장 -> {saved.name}", flush=True)
+    elif status == "unchanged":
+        print(f"  NOTE {kr}: 기존 raw 와 바이트 동일 — 재저장 skip", flush=True)
+    return saved
 
 
 def _http_get_pdf(url: str, referer: str) -> bytes:

@@ -7,6 +7,41 @@
 
 ## Status
 
+**🟢 2026-09-12 (2) 정정본 병존 저장 구현 + KR0075 2023.4Q 0.08% 차 정정공시 조사 — 정정 없음 확정.**
+상세: `docs/changelog_downloader.md` 2026-09-12.
+
+- **정정본 병존**: `scripts/_disclosure_pdf_paths.py::save_versioned_pdf` 신규(stdlib만,
+  new/unchanged/versioned/idempotent 4분기) — 기존 raw 와 새 바이트 sha256 이 같으면 재저장
+  skip, 다르면 원본은 그대로 두고 `KR####_회사명_v<YYYYMMDD>.pdf` 로 병존 저장 +
+  `_versions.json` 사이드카(`{기본파일명: [{file,sha256,posted,title,url,fetched_at}]}`).
+  `download_disclosure_2026q2_nonlife.py::_save()` · `download_disclosure_2026q2_life_sites.py`
+  저장 호출부를 이걸로 교체(다음 분기 스크립트 복제 시 이 호출을 그대로 가져갈 것). 소급
+  복원 안 함(과거 `_amended` 110개 중 원본 병존 1건뿐이고 그나마 바이트 동일 — 애초에 병존
+  구조가 없었을 뿐 이번 수정으로 되살릴 대상이 아님). 공유 해석기 `disclosure_pdfs()` 는
+  실측 결과 이미 안전(회사코드 prefix 로 anchor 된 glob 이라 `_v*` 가 별개 회사로 안 잡힘) —
+  회귀 고정 테스트 `tests/unit/test_disclosure_pdf_versioning.py` 6개 신규(회사수 불변 케이스
+  포함), `pytest tests/unit/ tests/test_disclosure_raw_pdf_wiring.py` 405 passed. 문서:
+  `claude-agent-downloader.md`(Canonical Folder Layout 아래 새 절) · `source-catalog.yaml`
+  (`validation.versioning`).
+- **KR0075(비엔피파리바카디프생명) 2023.4Q 자산·부채총계 0.08% 차 — 정정공시 없음 확정.**
+  DART list.json 전수(corp_code `00460798`, 2024-01-01~2026-09-12, pblntf_ty 전체) = 3건
+  전부 평범한 연간 감사보고서(2023/2024/2025 결산 각 1건, rcept `20240403001384`/
+  `20250404003021`/`20260406004430`), `report_nm` 대괄호(`[기재정정]`) 없음·`rm` 필드 전부
+  공백 — **정정 0건.** ifrs17 레인이 남긴 0.08%(2,411.95백만원) 차이는 DART 측 정정으로는
+  설명되지 않는다. 지침대로(정정본 없으면 티켓 없이 보고) `inbox/parser/` 티켓 미생성 —
+  이 결과는 이 Status 항목이 기록.
+- **이 PC 네트워크가 작업 도중 다시 끊겼다** — curl 로 list.json 2회 성공 직후부터
+  document.xml(FY2024 비교열 확인 시도) 이 exit 56 → 재시도 exit 7 → opendart·github 재확인도
+  전부 exit 7/000. 어제(`01:10 KST` 전면차단) 와 같은 패턴으로 판단, 100분 무산출 재발 방지
+  위해 루프 재시도 안 하고 여기서 중단. **별도 관찰**: 이번 세션에서 `curl` 은 살아있는데
+  python venv 의 `requests`(`OpenDARTClient._get`) 는 같은 시각 같은 호스트에 WinError 10013
+  (WSAEACCES, 방화벽/보안에이전트성 거부)로 실패한 구간이 있었다 — `dangerouslyDisableSandbox`
+  로도 동일 에러. 표본 1회라 확정 아니지만, "curl 200 = 네트워크 정상" 을 python 기반 DART
+  스크립트(`ifrs17_batch_historical.py` 등, 전부 `requests` 사용)의 신호로 곧이곧대로 믿지
+  말 것 — 다음 세션이 재현되면 기록.
+- 재현: `curl -s -m 30 "https://opendart.fss.or.kr/api/list.json?crtfc_key=$OPENDART_API_KEY&corp_code=00460798&bgn_de=20240101&end_de=20260912&page_count=100"`
+  (`.env` 의 `OPENDART_API_KEY` 사용, status=000/total_count=3 나오면 재현 성공).
+
 **🟢 2026-09-12 inbox `20260911T0115Z`(서울보증 6분기 PDF) 종결 — owner 직접 확인: 서울보증은 과거 연도(2023·2024) 분기 경영공시를 자체 게시하지 않음 → KR0150 2023.1Q~2024.3Q 6분기 원문 부재 확정(정당 결측).** 미래에셋 2023.2Q MD 미변환은 parser 티켓 `20260912T0115Z` 로 이관. 이 PC 는 01:10 KST 부터 외부 443 전면 차단(sgic·github 6회 연속 000)이라 downloader 에이전트가 100분 무산출로 kill 됨 — 네트워크 확인을 첫 동작으로 둘 것. 정정본 병존 구조는 아래 Active follow-ups.
 
 **🟢 2026-09-03 owner 직접 지시 — FY2026_Q2 정기경영공시 raw/ 정본화(1→39) + 항목5(해약환급금
@@ -91,48 +126,13 @@ freshness.py` RED=0 유지 확인. 신규 `tests/test_disclosure_selector_hardco
 mutation-tested against 원본) — **단, `scripts/prepush_check.py`의 fast 리스트에는 미배선**(동시
 편집 중인 공용 파일이라 충돌 회피, validation/orchestrator 후속 필요). 상세: 티켓 `## 답변`.
 
-**🟢 2026-08-30 인박스 처리 — 생보 22사 **자사 사이트** 직접 스윕: 0/22 게시,
-경로자산 22개 신규 확보 (`inbox/downloader/20260830T0400Z`).** 상세: `docs/changelog_downloader.md` 2026-08-30.
-
-- **owner 지적 수용**: 08-27/08-29 스윕은 생보를 **생보협회 일괄페이지만 보고** 판정했다.
-  그건 "협회에 올라왔나" 이지 "회사가 냈나" 가 아니다. **22사 자사 경영공시 페이지를 직접 훑음.**
-- **결과 = posted 0 / not_posted 22 / not_observed 0 / unreachable 0.** 22사 전원에서
-  **그 회사의 2026 1분기 행을 실제로 읽어낸** 뒤 2분기 부재를 확인했다(양성대조 성립 —
-  "탐지기가 아무것도 못 봄" 이 아니라 "볼 수 있는데 없음"). 같은 날 협회 그리드도 재확인
-  (2026년, 1분기=22, 2분기=0) — 두 독립 경로 일치.
-- **코리안리(KR1000) owner 확인 반영 → 손보 17사 전원 판정 완료.** 08-29 UNKNOWN 이던 건을
-  owner 가 직접 확인해 미게시 확정(2026-08-30). `listing_census.json` 에 `verdict=not_posted`
-  + `verdict_source=owner_manual_check` + `probe_verdict=unreachable` 병기(관측 vs owner 확인
-  구분). **39사 전체 = 1 게시(하나손보) + 38 미게시, 미관측 0.**
-- **신규 `scripts/_probes/census_q2_life_own_sites.py`** — 08-29 프로브를 **import** 해서 쓰고
-  (함정 4종 그대로 상속) 그 위에 **함정 5종을 추가로 막았다. 4종은 조용히 틀린 판정을 낸다**:
-  ⑤ 상시 네비 메뉴가 "관측됨" 을 만족시켜 **6개사가 자기 홈페이지에 선 채로 not_posted** 를
-  받음 → 판정에 **연도 붙은 기간 행** 요구 ⑥ 수시공시 등록일 `2026.06.30` 이 기간 라벨로
-  읽혀 **KB라이프 거짓 posted** → Q2 히트는 기간을 이름으로 불러야 함 ⑦ `2026년
-  회계연도(1분기)`(삼성생명)처럼 연도-분기 사이 글자 삽입 → 간격 14자 허용하되 **사이에
-  숫자 금지** ⑧ `FY2026 1Q`(라이나)·`FY2026 Q1`(BNP) 라틴 분기 + 연도 선행 → 세 어순 커버
-  ⑨ **연도×분기 표**인 회사(iM라이프)는 라벨에 2026·2분기가 같이 안 나옴 → **칸을 직접 읽음**.
-- **`--selftest`(오프라인 1초) 를 상설로 넣었다.** 오늘 실측한 라벨 방언을 Q2 로 바꾼
-  **양성대조 21건** + **음성대조 7건**. **정규식을 고치면 반드시 돌릴 것 — 아무것도 매칭
-  안 하는 탐지기도 "2분기 없음" 이라고 보고한다.** 현재 21/21·오탐 0/7. `--rescan` 은
-  저장된 라벨 덤프로 네트워크 없이 22사 판정을 재계산한다.
-- **접근 함정과 우회**: 흥국생명식 `home_first`(홈 먼저 방문해 session/referer 확보)를 22사
-  전원 기본 적용. 더 큰 장벽은 **딥링크가 없는 사이트** — JS 메뉴(동양·라이나·신한라이프·
-  KDB·삼성·iM라이프)는 접힌 드롭다운이라 Playwright 클릭이 타임아웃 → **페이지 안에서
-  `element.click()` 디스패치**. 그래도 안 되면 원본에서 라우트를 캐냈다: 삼성생명
-  `/gw/api/display/menu/all` 메뉴 API(기존에 쓰던 `PDO-MAMAA010100M` 은 **안내 페이지**,
-  정본은 `PDO-MAMAP010100M`), 라이나는 Nuxt 청크 grep. **교보는 URL 이 반직관적** —
-  `.../fixed-term/**last-year**` 가 현행이고 `.../fixed-term` 은 404, 기간은 `<title>` 에 있음.
-  **동양생명 공시는 별도 서브도메인** `pbano.myangel.co.kr`.
-- **경로자산 위치**: `docs/agents/source-catalog.yaml` 신규 `disclosure_life_own_sites`
-  (22 entries: home·url·click_path·함정 notes) + 프로브의 `LIFE_SITES`(운영 정본).
-- **받은 파일 0개** → `data/disclosure/FY2026_Q2/` 변화 없음, parser 통지 없음, docling 없음.
-- **다음 확인 = 2026-08-31(월)** 유지. 순서: 생보 자사 census → 손보/협회 census →
-  posted 인 회사만 다운로드 → `verify_q2_disclosure_content.py` 내용검증.
+> 📦 2026-08-30 이전 Status 항목은 `docs/todo_archive_downloader.md` 로 이동(2026-09-12, 내용
+> 무수정). 세션 시작 시 읽지 않는다.
 
 ## Active follow-ups (next sessions)
 
-- **정정본 병존(2026-09-11 발주, 미착수)**: 같은 (분기,회사) 새 게시물이 기존 raw 와 바이트가 다르면 덮어쓰지 말고 `KR####_회사명_v<게시일>.pdf` 로 병존 + `_versions.json` 사이드카(게시일·제목·URL·sha256). 공유 해석기 `disclosure_pdfs()` 가 `_v*` 를 중복 회사로 오인하지 않게 '기본 파일 우선' 규칙 필요. 소급 복원 불가.
+- ~~**정정본 병존(2026-09-11 발주)**~~ ✅ **2026-09-12 완료** — `save_versioned_pdf` 구현 +
+  nonlife/life_sites 저장부 교체 + 회귀 테스트. 상세는 위 Status.
 | # | Task | Priority | Notes |
 |---|------|----------|-------|
 | Q2-2026-SWEEP | **2026.2Q 정기경영공시 8/31 탐색 루프 (2시간 간격) + 수집** | 🔴 **P0 (내일)** | owner 지시(2026-08-30): 호출받으면 2시간 간격으로 게시 여부 census -> `posted` 로 뒤집힌 회사만 수집 -> 파싱부터 끝까지. **실행 순서 정본은 루트 `TODO.md` 「상시 점검」의 2026.2Q 항목**(1~5단계 명령어 포함). 여기에 복사하지 말 것. 요점만: 프로브 2종을 매 회차 다 돌리고(`census_q2_disclosure_listings.py` 손보 + `census_q2_life_own_sites.py` 생보), `unreachable` 은 미게시가 아니며, 생보 2Q 다운로더는 아직 없어 `download_disclosure_2026q1_life.py` 복제로 만들어야 하고, 수집분은 반드시 `verify_q2_disclosure_content.py` 3종 검사(freshness/period/doctype)를 통과해야 한다. |

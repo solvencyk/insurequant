@@ -3,9 +3,9 @@
  "_contract": "입력 불변 ∧ 코드 불변 ∧ 산출 불변 ⟹ 지금 다시 빌드해도 같은 바이트. 하나라도 어긋나면 전체 골든을 돌려 확인한 뒤 --update 한다. 지문은 무거운 골든의 대체가 아니라 층이다.",
  "specs": {
   "ifrs17_bs": {
-   "inputs_sha256": "df278f146613ef1a2e25cc18e85bfdf4500eeacc12c0219882bdad3df2b252fb",
+   "inputs_sha256": "716a640b4328f5690b74b774a5a54da59e4e71d8a9240c3116e0f4b01f3df0c8",
    "input_files": 2138,
-   "input_bytes": 3369228398,
+   "input_bytes": 3369240890,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
     "data/dart/FY*_Q*/raw/**/*.xml": 545,
@@ -60,16 +60,16 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_ifrs17_bs.py + inbox/parser/20260911T0109Z(계보 완결성 목적 추가, 빌더가 직접 읽진 않음)"
   },
   "pl_breakdown": {
-   "inputs_sha256": "5b01c97eb5095967c84a7ae44c70d0ff828660a106d6781ebee6b6bbb284efc4",
+   "inputs_sha256": "29d6faa22a9f57fb9fdc4e3b2b68c9d0a2e26b64d445a4650c63f9da03619d42",
    "input_files": 1587,
-   "input_bytes": 2011690400,
+   "input_bytes": 2011702892,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
     "data/dart/FY*_Q*/raw/**/*.xml": 545,
     "data/ifrs17/table_scoring_keywords.yaml": 1,
     "kics_disclosure.json": 1
    },
-   "code_sha256": "f916e076aa688a22d5e3f71ca2b558d0f261a67876c854e8d7a30533fa14098a",
+   "code_sha256": "732730df20922e77ad56230b864650cd27d0f43aeaa7b44826522b73ad23a76a",
    "code_files": [
     "scripts/build_net_income_breakdown.py",
     "scripts/build_pl_breakdown.py",
@@ -86,17 +86,17 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "29ec2163569ce44ee1c3dc8b4f1b215a2c372d41cdbc611434f8cd0264855e8d",
+   "fixture_sha256": "2db28c9137e41488477158ae8c39728bd73245471d06bfb01f92c625d6d42db6",
    "outputs": {
     "sha256_master": {
      "path": "data/dart/viz/pl_breakdown_master.json",
-     "fixture_sha256": "9f053f8658276bfc6f464a920393aeeec23fd4d57209759c7b7394c4c1ff9b62",
-     "ondisk_sha256": "9f053f8658276bfc6f464a920393aeeec23fd4d57209759c7b7394c4c1ff9b62"
+     "fixture_sha256": "8b7322d9f643e55ac749f708325d325045d6a1452e1af310204638e6cc689cc4",
+     "ondisk_sha256": "8b7322d9f643e55ac749f708325d325045d6a1452e1af310204638e6cc689cc4"
     },
     "sha256_coverage": {
      "path": "data/_derived/pl_breakdown_coverage.json",
-     "fixture_sha256": "a2fa97efb2db8c7cafa56db2a8ef3f3f6f73b983517793f01dfffe6b8088c2dd",
-     "ondisk_sha256": "a2fa97efb2db8c7cafa56db2a8ef3f3f6f73b983517793f01dfffe6b8088c2dd"
+     "fixture_sha256": "48ebac9f9642f8c0718e1d8f08939e25b37fc2da588b17162af265c484b67de8",
+     "ondisk_sha256": "48ebac9f9642f8c0718e1d8f08939e25b37fc2da588b17162af265c484b67de8"
     }
    },
    "_golden": "tests/test_pl_breakdown_golden.py",
@@ -181,9 +181,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/viz_build_ifrs17_panels.py — 트레이스는 첫 패널 쓰기에서 멈추므로 나머지 3패널의 glob (*_insurance_pl_mvp/*_bs_snapshot_mvp/*_sensitivity)은 main() 의 outputs 표에서 확인해 extracted/*.json 로 통합했다"
   },
   "dividend": {
-   "inputs_sha256": "87b6f6d2935c19b68d9867cd969b4ed2f237ddba445e300b6fe6cf047e6b4974",
+   "inputs_sha256": "c5c394a86df45030ced46da7ff8ee9d539136a79fb74e5ba82d913711c42fa0b",
    "input_files": 626,
-   "input_bytes": 9728261,
+   "input_bytes": 9740753,
    "input_files_per_pattern": {
     "data/dart/_alotmatter_cache/*.json": 624,
     "data/_derived/alotmatter_fetch_census.json": 1,
@@ -211,11 +211,11 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_dividend.py (관측 627개 = census 1 + 캐시 624 + kics_disclosure 1)"
   },
   "post_transition": {
-   "inputs_sha256": "8962cd919e93a2ec2441cb19ff2a2b9dc6107dc3c47fb060c6d122e7f523f45c",
-   "input_files": 548,
-   "input_bytes": 34818240,
+   "inputs_sha256": "b78c68f8527eb971032e9730f8163cbc9b76844388b422e795b5fb8c08acaa2d",
+   "input_files": 549,
+   "input_bytes": 34929330,
    "input_files_per_pattern": {
-    "md_inbox/FY*_Q?/*.md": 547,
+    "md_inbox/FY*_Q?/*.md": 548,
     "kics_disclosure.json": 1
    },
    "code_sha256": "ba9729523bae504726e11a4a3c2f0a57bfd849eefef611e97203dc9a32fbd29b",

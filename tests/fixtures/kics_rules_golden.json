@@ -1,11 +1,11 @@
 {
-  "sha256": "110543e875ea3738d21126461bc1fe2c2beb099a329449c5e176d078a2b98dfa",
+  "sha256": "5a1aaadacd4c871eb1e5fecd8327e006470a5e8f8322610d9686569ac885d966",
   "buckets": 538,
   "findings": 16140,
   "by_status": {
-    "YELLOW": 1676,
-    "GREEN": 11589,
-    "SKIP": 2839,
+    "YELLOW": 1674,
+    "GREEN": 11600,
+    "SKIP": 2830,
     "ERROR": 0,
     "RED": 36
   },
@@ -83,19 +83,19 @@
       "SKIP": 9
     },
     "3_tier2_composition": {
-      "GREEN": 499,
+      "GREEN": 500,
       "RED": 13,
-      "SKIP": 26
+      "SKIP": 25
     },
     "47_tier2_census": {
-      "GREEN": 508,
-      "YELLOW": 11,
+      "GREEN": 509,
+      "YELLOW": 10,
       "RED": 4,
       "SKIP": 15
     },
     "48_tier2_limit": {
-      "GREEN": 479,
-      "SKIP": 26,
+      "GREEN": 480,
+      "SKIP": 25,
       "YELLOW": 33
     },
     "2_tier1_bridge_post": {
@@ -104,45 +104,45 @@
       "GREEN": 137
     },
     "3_tier2_composition_post": {
-      "GREEN": 287,
+      "GREEN": 288,
       "YELLOW": 223,
-      "SKIP": 28
+      "SKIP": 27
     },
     "47_tier2_census_post": {
-      "GREEN": 506,
-      "YELLOW": 13,
+      "GREEN": 507,
+      "YELLOW": 12,
       "RED": 4,
       "SKIP": 15
     },
     "48_tier2_limit_post": {
-      "GREEN": 475,
-      "SKIP": 28,
+      "GREEN": 476,
+      "SKIP": 27,
       "YELLOW": 35
     },
     "50_tfi_tier_split": {
-      "GREEN": 502,
+      "GREEN": 503,
       "RED": 1,
-      "SKIP": 33,
+      "SKIP": 32,
       "YELLOW": 2
     },
     "51_tfi_tier2_composition": {
-      "GREEN": 500,
-      "SKIP": 33,
+      "GREEN": 501,
+      "SKIP": 32,
       "RED": 5
     },
     "53_tfi_memo_rows": {
-      "GREEN": 481,
-      "SKIP": 57
+      "GREEN": 482,
+      "SKIP": 56
     },
     "50_tfi_tier_split_post": {
-      "GREEN": 503,
-      "SKIP": 33,
+      "GREEN": 504,
+      "SKIP": 32,
       "YELLOW": 2
     },
     "51_tfi_tier2_composition_post": {
-      "GREEN": 287,
+      "GREEN": 288,
       "YELLOW": 218,
-      "SKIP": 33
+      "SKIP": 32
     },
     "53_tfi_memo_rows_post": {
       "SKIP": 476,

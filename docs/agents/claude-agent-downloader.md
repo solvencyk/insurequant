@@ -166,6 +166,26 @@ Known IR gaps (사용자 확인 2026-05-30):
 - `data/kidi/<period>/raw/<KR>_<YYYYMM>.json + data/kidi/premium_summary.json`
 - `data/_archive/<UTC-stamp>/<original-relative-path>` (obsolete intermediate, recoverable)
 
+### Amended filings coexist, never overwrite (2026-09-12)
+
+A company sometimes re-posts a 정정 (amended) file for a (period, company) cell that was
+already fetched. The save path (`scripts/_disclosure_pdf_paths.py::save_versioned_pdf`,
+wired into `download_disclosure_2026q2_nonlife.py::_save()` and
+`download_disclosure_2026q2_life_sites.py`) checks the new bytes' sha256 against the existing
+`raw/KR####_<name>.<ext>` before writing: identical bytes → no-op (one log line, file
+untouched); different bytes → the original is **left in place** and the new one is saved
+alongside as `KR####_<name>_v<YYYYMMDD>.<ext>` (posted date if known, else fetch date), with an
+entry appended to a `_versions.json` sidecar in the same folder
+(`{base_filename: [{file, sha256, posted, title, url, fetched_at}, ...]}`). Copy this call
+pattern into next quarter's script when you clone the template — don't reintroduce a bare
+`target.write_bytes(...)`. The reader side (`disclosure_pdfs()`) already tolerates multiple
+files per company (glob is anchored on `KR####_`, so a `_v*` suffix cannot collide with another
+company's prefix) — parser/validation read the base filename by default; nothing currently
+auto-selects the latest `_v*` version, so route a genuine amendment to the owning parser lane
+via inbox rather than assuming it gets picked up. Retroactive backfill of missing "original"
+copies for already-overwritten historical cells is out of scope — this only protects filings
+collected from now on.
+
 ## Workflow for New Quarter (PRIMARY USE CASE)
 
 When user requests '다음 분기 받아' (or invokes this prompt for, say, 2026.2Q):

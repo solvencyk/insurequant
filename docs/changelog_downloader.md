@@ -3,6 +3,96 @@
 > Last updated: 2026-09-03 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
 
+## 2026-09-12 (2) — 정정본 병존 저장 구현 + KR0075 2023.4Q 0.08% 차 정정공시 조사(정정 없음)
+
+오케스트레이터 발주 2건(직접 처리, 하위 에이전트 미사용). 첫 동작 네트워크 확인
+(`curl opendart.fss.or.kr` → 200) 후 작업 1(코드, 네트워크 무관) → 작업 2(DART 조회) 순서로 진행.
+
+### 작업 1 — 정정본 병존 구조
+
+**문제**: 같은 (분기,회사) 로 새 게시물이 오면 기존 raw 를 조용히 덮어썼다. 착수 전 실측
+census(`data/disclosure/*/raw/*_amended*.pdf`) — 110개 중 원본과 실제로 병존한 건 **1건뿐**
+(`FY2025_Q3/raw/KR0011_DB손해보험_amended2.pdf` ↔ `KR0011_DB손해보험.pdf`)이고 그나마 바이트가
+동일했다. 나머지 109개는 애초에 원본이 저장된 적이 없는 "정정본만 단독 저장"이었다 — 과거
+백필 스크립트들이 최신본 하나만 받아 `_amended` 라는 이름만 붙인 것으로, 병존 메커니즘 자체가
+없었다. 이번 수정은 **호출 시점부터**만 적용된다(과거분 소급 복원 없음, 이미 덮어써진 원본은
+복구 불가).
+
+**구현**: `scripts/_disclosure_pdf_paths.py`(기존 raw/pdf 해석기 모듈)에 `save_versioned_pdf()`
+신규 — stdlib(`hashlib`/`json`/`datetime`)만 사용, 새 의존성 없음.
+
+- 대상 파일 없음 → 그냥 저장, `"new"`.
+- 있고 새 바이트 sha256 이 기존과 동일 → 재저장 skip(로그 1줄), `"unchanged"`.
+- 있고 sha256 이 다름(정정본 추정) → 원본은 그대로 두고 `<stem>_v<YYYYMMDD><ext>` 로 병존
+  저장 + 같은 폴더 `_versions.json` 사이드카에
+  `{기본파일명: [{file, sha256, posted, title, url, fetched_at}, ...]}` append, `"versioned"`.
+  날짜는 `posted`(게시일, YYYYMMDD)가 있으면 그걸 쓰고 없으면 다운로드 시각(UTC) 날짜.
+  같은 날짜로 같은 바이트를 또 받으면(재실행) 중복 파일 없이 idempotent, 같은 날짜에 세
+  번째로 다른 바이트가 오면 `_v<날짜>_2` 로 추가 분기.
+
+**배선**: `download_disclosure_2026q2_nonlife.py::_save()`(회사별 정기경영공시 저장 단일
+지점)와 `download_disclosure_2026q2_life_sites.py`(생보 자사 사이트 직접 수집, 2026-08-30
+신설분)의 저장 호출부를 이 함수로 교체. 둘 다 `sys.path.insert(0, str(ROOT/"scripts"))` +
+`from _disclosure_pdf_paths import save_versioned_pdf` 패턴(`report_collection_status.py`
+기존 관례와 동일). Import-only 스모크(모듈을 `importlib` 로 직접 로드, `main()` 미호출)로
+sys.path 배선 확인. **생보 일괄 zip 다운로더(`download_disclosure_2026q2_life.py`)는 건드리지
+않았다** — 회사별 고정 파일명이 아니라 협회 페이지의 `suggested_filename` 을 그대로 쓰는
+단일 아카이브라 이 정정-병존 모델과 모양이 달라 범위를 넓히지 않음(알려진 한계로 기록).
+
+**공유 해석기 안전성 확인(발주 원문의 명시 요구)**: `disclosure_pdfs()` 가 `_v*` 파일을 별개
+회사로 오인하는지 실측 확인 — 오인하지 않는다. glob 패턴이 `f"{code}_*.pdf"` 로 회사코드 +
+언더스코어를 정확히 앵커링하고, 이 저장소의 KR 코드는 전부 고정폭(KR + 4자리)이라 한 코드가
+다른 코드의 prefix 가 될 수 없다(예: `KR0150_...` 는 `KR0015_*.pdf` 패턴과 매칭 불가). 호출부
+`report_collection_status.py::check_disclosure()` 도 `bool(matches)` 판정이라 파일 개수와
+무관. 회귀로 고정: `tests/unit/test_disclosure_pdf_versioning.py` 신규 6개 — `save_versioned_pdf`
+4분기(new/unchanged/versioned/idempotent) + `disclosure_pdfs()` 회사-수 불변 케이스(KR0150 에
+`_v20260912` 파일을 추가해도 그 기간의 distinct 회사코드 집합이 3 그대로임을 검증, 발주가 예시로
+든 파일명 그대로 사용). `pytest tests/unit/ tests/test_disclosure_raw_pdf_wiring.py` — 405 passed
+(기존 399 + 신규 6, 회귀 0).
+
+**문서**: `docs/agents/claude-agent-downloader.md` "Canonical Folder Layout" 아래 새 절
+"Amended filings coexist, never overwrite" 추가(다음 분기 스크립트 복제 시 이 저장 호출
+패턴을 그대로 가져가라는 지시 포함) · `docs/agents/source-catalog.yaml` `validation.versioning`
+한 줄 추가.
+
+### 작업 2 — KR0075(비엔피파리바카디프생명보험) 2023.4Q 0.08% 차 조사
+
+**배경**: `inbox/_resolved/20260902T1200Z`(ifrs17 레인 답변, 2026-09-11)이 남긴 미해결 —
+2023.4Q 감사보고서 원문(rcept `20240403001384`, 비정정)의 자산총계·부채총계가 마스터
+(`IFRS17_BS.json`, vision-read + 2024.1Q/2024.3Q 비교열 3중교차확인)보다 2,411.95백만원(0.08%)
+작았다. ifrs17 레인의 가설: 정정공시(기재정정)가 나중에 제출돼 마스터가 정정본을 반영했을
+가능성.
+
+**결과 = 정정공시 없음, 확정.** `find_corp_codes_by_name("비엔피파리바카디프")` → corp_code
+`00460798`(1건, 모호성 없음). `list.json`(corp_code=00460798, bgn_de=20240101, end_de=20260912,
+pblntf_ty 미지정=전체 유형) → **총 3건**, 전부 평범한 연간 감사보고서 1건씩(2023/2024/2025
+결산): `20240403001384`(2024-04-03) / `20250404003021`(2025-04-04) / `20260406004430`
+(2026-04-06). `report_nm` 어느 것도 `[기재정정]`/`[첨부정정]` 대괄호 접두 없음, `rm` 필드
+3건 전부 공백. **KR0075 는 FY2023 실적에 대해 단 한 번도 정정 제출을 하지 않았다** — ifrs17
+레인의 가설은 반증됨. 지침대로(정정본 없으면 티켓 없이 보고) `inbox/parser/` 티켓은 만들지
+않았고, 이 결과는 이 changelog 항목과 `TODO_downloader.md` Status 로 기록만 한다.
+
+0.08% 차이의 실제 원인(마스터 vision-read 오독인지, 정정 없이 이뤄진 비-DART 소급 재작성인지)은
+**여전히 미확정**이다 — 파싱/마스터는 downloader 소관이 아니라 손대지 않았다. 추가 진단으로
+FY2024 감사보고서(`20250404003021`, 2023.12.31 비교열을 담고 있어 마스터 수치와 대조 가능)
+본문을 받으려 시도했으나 아래 네트워크 단절로 착수만 하고 완료하지 못함 — 다음 세션이 필요시
+이어받을 수 있는 지점(rcept_no 확보 완료)만 남겨 둔다.
+
+**네트워크**: list.json 2회 성공 직후 document.xml 요청부터 `curl` exit 56(recv error) →
+재시도 exit 7(connect fail) → opendart·github 순수 reachability 재확인도 exit 7/`000`. 어제
+기록된 "01:10 KST 외부 443 전면 차단"과 같은 패턴으로 판단해 루프 재시도 없이 중단(100분
+무산출 kill 재발 방지, 발주 지시 그대로). **추가 관찰(미확정, 표본 1회)**: 이 단절 이전에
+`curl` 은 살아있는 채로 python venv 의 `requests`(`OpenDARTClient._get`)만 같은 호스트에서
+`WinError 10013`(WSAEACCES)로 실패한 구간이 있었다 — `dangerouslyDisableSandbox=true` 로도
+동일. 재현 안 해 확정은 아니지만, 다음 세션이 "curl 200 = python 기반 DART 스크립트도 정상"
+으로 곧장 등치하지 않도록 기록해 둔다.
+
+**재현**:
+```
+curl -s -m 30 "https://opendart.fss.or.kr/api/list.json?crtfc_key=$OPENDART_API_KEY&corp_code=00460798&bgn_de=20240101&end_de=20260912&page_count=100"
+# status":"000" · total_count":3 · 세 rcept 모두 report_nm에 대괄호 없음/rm 공백이면 재현 성공
+```
+
 ## 2026-09-12 — 서울보증 과거 분기 경영공시 = 원문 부재 (owner 확정)
 
 > inbox `20260911T0115Z` 종결. 서울보증은 2023·2024 분기 경영공시를 자체 게시하지 않아 KR0150 6분기(2023.1Q~2024.3Q)는 정당 결측. 미래에셋 2023.2Q MD 갭은 parser 티켓 `20260912T0115Z`. 정정본 병존 구조는 TODO follow-up 으로 이월. 부수: PC 외부 443 차단으로 downloader 에이전트 100분 무산출 → kill(네트워크 사전 확인 규칙).

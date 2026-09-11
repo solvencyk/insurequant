@@ -4275,6 +4275,132 @@ def _aia_statement(tables, f):
     return out
 
 
+def _aia_note_pair(tables, cap_needle, exclude_needle, beg_label, end_label):
+    """Pair the OFS-basis note table whose caption contains `cap_needle` into (당기, 전기) by
+    기초/기말 CONTINUITY, not caption text: AIA's own caption-capture prints the SAME string
+    ('...1) 당기') on both the 당기 and 전기 sub-tables of note 18(4)/19(3) -- the real '2) 전기'
+    heading apparently doesn't reset `_iter_tables_with_context`'s last_caption, the identical
+    caption-inheritance artifact already documented for 처브 in `_chubb_note_table` above.
+    Verified 2026-09-12 (probe_20260911_aia_2025q4_csm_note_dump.py, KR0080 FY2025.4Q filing):
+    table #117's 기말 합계(14,909,822) == table #116's 기초 합계(14,909,822) -- #117 is FY2024
+    (전기), #116 is FY2025 (당기); same pattern confirmed for the reinsurance note (#133/#134).
+    Returns (cur_table, prior_table), or (None, None) if continuity doesn't resolve to exactly
+    one pair (a future filing whose layout changes silently disables this path instead of
+    guessing which table is which)."""
+    cands = []
+    for t in tables:
+        if getattr(t, "_basis", None) != "OFS":
+            continue
+        cap = (t.caption or "").replace(" ", "")
+        if cap_needle not in cap or exclude_needle in cap:
+            continue
+        beg = _row_by_label(t, beg_label, exact=True)
+        end = _row_by_label(t, end_label, exact=True)
+        bn = _row_nums(beg) if beg is not None else []
+        en = _row_nums(end) if end is not None else []
+        if not bn or not en:
+            continue
+        cands.append((t, bn[-1], en[-1]))
+    pairs = []
+    for a_t, _a_beg, a_end in cands:
+        for b_t, b_beg, _b_end in cands:
+            if a_t is b_t:
+                continue
+            if abs(a_end - b_beg) < 1:
+                pairs.append((b_t, a_t))  # (당기, 전기)
+    return pairs[0] if len(pairs) == 1 else (None, None)
+
+
+def _aia_note_csm_ra_exp(t, csm_label):
+    """(csm, ra, exp) 합계(rightmost) column values from ONE 측정요소별 변동내역 table's THREE
+    현행서비스 rows -- shared reader for note 18(4)(원수, csm_label='제공한서비스로...') and
+    19(3)(재보험, csm_label='서비스의이전을반영하여...'); the RA/경험조정 row labels are
+    identical in both notes.  Cross-checked against the table's OWN 소계 row (immediately after
+    경험조정 -- position-based lookup, because the label '소계' repeats 3x in this table and
+    `_row_by_label` alone would find the wrong one) before being trusted: returns None unless
+    csm+ra+exp matches that 소계 to within 1백만원, so a mis-picked table/row can't silently
+    ship a wrong number."""
+    rows = t.rows or []
+
+    def last(lab):
+        r = _row_by_label(t, lab, exact=True)
+        n = _row_nums(r) if r is not None else []
+        return n[-1] if n else None
+
+    csm, ra, exp = last(csm_label), last("위험해제로인한비금융위험에대한위험조정의변동"), last("경험조정")
+    if csm is None or ra is None or exp is None:
+        return None
+    idx = next((i for i, r in enumerate(rows) if _lab0(r) == "경험조정"), None)
+    if idx is None or idx + 1 >= len(rows) or _lab0(rows[idx + 1]) != "소계":
+        return None
+    sub = _row_nums(rows[idx + 1])
+    if not sub or abs((csm + ra + exp) - sub[-1]) > 1:
+        return None
+    return csm, ra, exp
+
+
+def _aia_note18_4_items(tables):
+    """item4/5/6(원수 CSM/RA 상각, 경험조정) from AIA(KR0080) 주석18(4) '...보험계약부채의
+    측정요소별 변동내역' 당기 table -- precision source, replacing the 주석1.일반사항 문단의
+    억원-rounded csm/ra/claim_diff+exp_diff sentence for whichever year this resolves for (see
+    `_aia_note_pair` -- currently 2025.4Q only; 2023/2024.4Q fall through `_aia_from_statement`,
+    a separate code path this function is never called from).  Verified 2026-09-12 against the
+    owner's ticket (inbox/parser/20260901T1630Z Q1, `docs/parser/pl_gap14_subagent_findings_
+    20260912.md` KR0080 section): note 합계 -153,059/-30,499/+25,069 사인반전 -> +153,059/
+    +30,499/-25,069, cross-checked two ways -- (a) applying the SAME mapping to this table's
+    전기(FY2024) column gives 156,162/23,485, matching the already-committed 2024.4Q master
+    (156,200/23,500) to the nearest 억-rounding (methodology confirmed, NOT used to overwrite
+    2024.4Q -- see the pairing 당기/전기 tables aren't both read here, only 당기's); (b) item3
+    (계산서 기준, kept as-is -- see `extract_tier2_aia`) minus this table's OWN '보험서비스결과'
+    합계 leaves the same ~848백만원 gap as item8 vs the reinsurance note's '재보험서비스결과'
+    (~339백만원) -- a small, consistent statement-vs-note scope difference, not a sign error.
+    Sign: the table is a LIABILITY rollforward, so P&L recognition prints as a DECREASE
+    (negative); this schema's item4/5 are revenue-oriented (positive = CSM/RA amortised INTO
+    income, matching the pre-existing prose convention) and item6 is cost-oriented for an
+    adverse experience variance, so all three are negated uniformly from the raw column."""
+    cur, _prior = _aia_note_pair(
+        tables, "측정요소별변동내역", "재보험", "보험계약부채(기초)", "보험계약부채(기말)")
+    if cur is None:
+        return None
+    got = _aia_note_csm_ra_exp(cur, "제공한서비스로당기손익으로인식한보험계약마진")
+    if got is None:
+        return None
+    csm, ra, exp = got
+    return {4: -csm, 5: -ra, 6: -exp}
+
+
+def _aia_note19_3_items(tables, item8):
+    """item9/10/11(재보험 CSM/RA 상각, 경험조정) from AIA(KR0080) 주석19(3) '...재보험계약자산의
+    측정요소별 변동내역' 당기 table.  Sign is the OPPOSITE convention from `_aia_note18_4_items`
+    -- raw column values are used AS-IS, NOT negated.  Verified 2026-09-12 two independent ways
+    (docs/parser/pl_gap14_subagent_findings_20260912.md AIA section, Q1 'item9~12' follow-up):
+    (a) uniformly negating (매칭 the 원수 convention) flips the sign relative to item8's
+    statement value (raw 현행서비스 소계 = -143,882 -> negated +143,882, opposite sign from
+    item8 = -78,606.794) and leaves an implausible residual (item12 = item8-(9+10+11) =
+    -222,488.794, LARGER in magnitude than item8 itself); the un-negated reading agrees in sign
+    with item8 and leaves item12 ~= +65,275, matching this SAME table's 미래서비스+과거서비스
+    rows (~64,936, computed independently of any sign choice) to within the same ~339백만원
+    statement-vs-note gap seen elsewhere in this file -- not circular, since those two rows were
+    not used to derive csm/ra/exp.  (b) economically, CSM release on a HELD reinsurance asset is
+    a COST to the cedant (opposite of the direct side, where release is revenue) -- consistent
+    with the un-negated reading.  `item8` (already-resolved, from `_aia_statement`) drives a
+    same-sign gate: if raw (csm+ra+exp) doesn't share item8's sign, this returns None rather
+    than guess which convention a future filing wants."""
+    if item8 is None or item8 == 0:
+        return None
+    cur, _prior = _aia_note_pair(
+        tables, "측정요소별변동내역", "__none__", "재보험계약부채(기초)", "재보험계약부채(기말)")
+    if cur is None or "재보험계약자산" not in (cur.caption or "").replace(" ", ""):
+        return None
+    got = _aia_note_csm_ra_exp(cur, "서비스의이전을반영하여당기손익으로인식한보험계약마진")
+    if got is None:
+        return None
+    csm, ra, exp = got
+    if (csm + ra + exp < 0) != (item8 < 0):
+        return None
+    return {9: csm, 10: ra, 11: exp}
+
+
 def _aia_prose_fy2024(ofs_text, stmt):
     """FY2024-template 주석 1.일반사항 prose -> the CSM/RA/예실차 decomposition (items 4/5/6)
     that the 포괄손익계산서 does not carry.  Returns {} unless the paragraph's own headline
@@ -4497,6 +4623,20 @@ def extract_tier2_aia(tables, dirs=None):
     stmt = _aia_statement(tables, stmt_f) if stmt_f is not None else {}
     if stmt:
         out = {**stmt, 4: item4, 5: item5, 6: item6}
+        # 2026-09-12 round 2 (AIA-456, inbox/parser/20260901T1630Z Q1) -- 4/5/6 을 이 문단
+        # (억원 반올림)이 아니라 주석18(4) 측정요소별 변동내역 표(천원 정밀)에서 직접 읽도록
+        # 한 번 더 갈아탄다. 표를 못 찾거나 자체 소계 검산이 안 맞으면(향후 필링이 이 구조를
+        # 바꾸는 경우) 조용히 위 문단값을 그대로 둔다 -- 틀린 값을 싣느니 문단 폴백.
+        note18 = _aia_note18_4_items(tables)
+        if note18 is not None:
+            out.update(note18)
+        # item9-12(재보험 CSM/RA/경험조정)는 이 회사 스키마에 지금까지 한 번도 채워진 적이
+        # 없다 -- 주석19(3)에서 뽑히고 item8(이미 위 stmt 에서 계산서 기준으로 확정)과 부호가
+        # 맞을 때만 채운다(자세한 근거는 _aia_note19_3_items 참조). item12 는 assemble() 이
+        # item8-(9+10+11) 로 자동 유도.
+        note19 = _aia_note19_3_items(tables, out.get(8))
+        if note19 is not None:
+            out.update(note19)
     else:
         item7 = (loss_comp + incurred_adj) * f
         item3 = item4 + item5 + item6 + item7

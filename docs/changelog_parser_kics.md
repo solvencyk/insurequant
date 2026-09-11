@@ -1,6 +1,64 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-11 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-09-12 · Stage 2/5 — parser (kics lane)
+
+## 2026-09-12 — KR0079 2023.2Q MD 결측(1칸) 복구 + KR0080 item23-26 7분기 28셀 disclosed-zero 적재 (orchestrator 발주 2건)
+
+**① KR0079(미래에셋생명) 2023.2Q — docling MD 결측** (inbox `20260912T0115Z__downloader`).
+raw PDF(58p, 텍스트 83자/p, 이미지/벡터 렌더)는 있는데 md_inbox 에 MD 가 없었다. census 결과
+1-9·11-28·29-46(45칸)은 **이미 마스터에 적재**돼 있었고(출처 불명 — md_inbox gitignore 라 git
+blame 불가, 과거 세션 fitz 직접판독 추정), 45칸 전부 raw p10/p11/p15/p18/p19/p21/p23 을
+200-230dpi 로 렌더링해 재대조 — **불일치 0건**. item10(6.비지배지분)은 이 분기 원문에 행 자체가
+없음을 확인(마스터 전체 91/538 버킷이 이미 이 패턴이라 정상). **item47-54(TFI표) 8칸만 순수
+결측**이었고 raw p12 [공통적용경과조치] 표를 신규 판독해 적재(`scripts/fix_20260912_kr0079_
+2023q2_tfi.py --apply`, INSERT 8행). 항등식 4종(item51==item47 UNCAPPED·item50+51==item52·
+item52~=item1·item48~=item14×50%) 전부 GREEN.
+
+⚠ **사고 후 즉시 복구**: 재변환 1차 시도에서 `run_harness.py --stage parse` 에 `--period` 를
+빠뜨려 기본값 FY2025_Q4 로 떨어지는 바람에 `md_inbox/FY2025_Q4/KR0079_미래에셋생명.md` 가
+FY2023_Q2 PDF 내용으로 일시 덮어써졌다 — 즉시 발견해 `--period FY2025_Q4 --pdf-root
+data/disclosure/FY2025_Q4/raw` 로 정본 재생성(frontmatter/sha256 확인) 후 올바른 명령을
+재실행. mtime 스캔으로 이 두 파일 외 피해 없음 확인. **교훈: `--pdf-root` 만 주고 `--period`
+를 생략하면 출력 라벨이 기본값(FY2025_Q4)으로 새는 하네스 함정 — 항상 둘 다 명시할 것.**
+
+**② KR0080(에이아이에이생명) item23-26(기타요구자본 세부) — 8분기×4항목=32셀 결측 재조사**
+(`TODO_parser_kics.md` KR0080-2326). raw PDF 를 fitz 200-600dpi 로 직접 렌더링해(이 회사는
+텍스트 레이어를 신뢰할 수 없는 BORDERLINE 이력사) 분기별 원문 인쇄값을 확인한 결과:
+- **7분기 disclosed-zero 확정** (2023.2Q·2024.4Q·2025.1Q·2025.2Q·2025.3Q·2025.4Q·2026.1Q):
+  item23("Ⅲ.기타요구자본(1+2+3)")+하위 24/25/26 전부 원문에 "-" 또는 "0" 으로 명시 disclosed.
+  **2025.4Q 는 발행사 템플릿 결함 발견** — 부모행(item23)이 "가.지급여력금액" 값(30,382백만원
+  등)을 잘못 복제 인쇄하는데, 같은 표의 자식행(24/25/26)은 3열 전부 깨끗한 "-" — 부모 자신의
+  라벨 산식 "(1+2+3)" 으로 역산해 0 을 확정(결함 그대로 신지 않음, 26.1Q 보고서의 과거분기
+  참조열에서도 동일 결함 재현돼 단발 오탈자가 아님을 확인). `scripts/fix_20260912_kr0080_2326_
+  other_capital.py --apply`, INSERT 28행(7분기×4항목), 경과조치 미적용사라 전=후 미러링.
+- **1분기 SKIP** (2024.2Q): raw p14 에서 item23-26 행의 "해당분기" 열만 완전 공백(대시도 숫자도
+  없음) — 같은 행의 과거분기 열과 같은 페이지의 다른 0값 행(item2/4/6)은 해당분기 열도 정상
+  인쇄돼 이 행에만 있는 국지적 결함. 3분기 롤링 이력창 밖이라 어떤 후속 보고서로도 교차검증
+  불가 — 0 추정 대신 미착수(`틀린 값을 싣느니 빈칸`).
+- 게이트 `other_capital_children_sum.not_evaluated`(item23=24+25+26 항등식 축) **적용전:부모
+  결측 21→14(-7) · 적용후:부모결측 27→20(-7)**, 다른 회사 버킷·red count(0) 무변동 — 의도한
+  7버킷만 정확히 이동. `parent_present_child_incomplete`/`POST_TRANSITION_*` YELLOW 축은
+  애초에 이 결측을 추적하지 않는 축이었음(그쪽 카운트 불변, 대신 위 전용 축이 정확히 반응).
+
+**게이트 실측**: `validate_kics_disclosure.py` RED=36(불변, 전부 documented exception) ·
+**blocking RED=0** · exit 0. `sync_master_xlsx_sheet.py "K-ICS공시"` 전 `validate_data_contract.py`
+RED=1(`MASTER_XLSX_ROW_MISSING` 36행, xlsx 미동기화 — 예상된 일시상태) → sync 후 **RED=0**
+(25522행×9열 완전 일치). `pytest tests/test_kics_rules_golden.py tests/test_post_transition_
+golden.py tests/test_rule_coverage_manifest.py` 1건 실패(골든 sha256 drift, 36셀 신규 적재로
+당연히 움직임) → `tests/test_kics_rules_golden.py --update` 재생성(RED=36 불변 확인 후) →
+**85 passed**. `scripts/validate_golden_input_fingerprints.py --update` 실행.
+
+변경 파일: `kics_disclosure.json`(+36행: KR0079 8 + KR0080 28) · `insurequant_master_tables.xlsx`
+(K-ICS공시 시트 25486→25522행) · 신규 `scripts/fix_20260912_kr0079_2023q2_tfi.py`·`scripts/
+fix_20260912_kr0080_2326_other_capital.py` · `tests/fixtures/kics_rules_golden.json`(재생성) ·
+`tests/fixtures/builder_input_fingerprints.json`(재생성) · `md_inbox/FY2023_Q2/KR0079_
+미래에셋생명.md`(신규, head_fallback·값추출 무용) · `md_inbox/FY2025_Q4/KR0079_미래에셋생명.md`
+(사고 복구 재생성) · `data/disclosure/{FY2023_Q2,FY2025_Q4}/parsed/KR0079_미래에셋생명.md`(동상).
+
+재현: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/fix_20260912_kr0079_
+2023q2_tfi.py` · `scripts/fix_20260912_kr0080_2326_other_capital.py` (둘 다 `--apply` 로 재적용
+가능, idempotent). 진단 스크립트 `scripts/_probes/probe_20260912_*.py` 다수(렌더 위치 탐색·
+줌·census), 저장소에 남김.
 
 ## 2026-09-11 — inbox 3건 직렬 처리: item48/item3 오염 잔여 4셀 + KR0079 TFI 24셀 백필 + stale-quarter 테스트 6건 회귀 판정 (orchestrator 발주)
 

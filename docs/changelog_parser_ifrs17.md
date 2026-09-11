@@ -3,6 +3,61 @@
 > Last updated: 2026-09-12 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-09-12 (90th pass) — AIA-456(주석18(4)/19(3) 정밀 전환 + 재보험 신규) + KR1010 2023.4Q item2/16 근본원인 정정
+
+오케스트레이터 후속 2건, 둘 다 어제 하위 에이전트 조사(`docs/parser/
+pl_gap14_subagent_findings_20260912.md`) 근거. 하위 에이전트 없이 직접 처리(전날 7개
+동시 실행 429 사고 회피).
+
+**AIA-456**: KR0080(에이아이에이생명보험) 2025.4Q item4/5/6 을 주석1.일반사항 산문(억원
+반올림)에서 주석18(4) "...보험계약부채의 측정요소별 변동내역" 원수 표(천원 정밀)로 전환 —
+153,100/30,500/−25,000 → 153,059/30,499/−25,069(합계열 부호반전), item7 은 assemble()
+잔차가 자동 재계산(18,354.203→18,465.203). 부수로 item9-12(재보험 CSM/RA/경험조정)도
+주석19(3)에서 신규 등재 — 이 표는 원수표와 반대로 부호를 반전하지 않는다(uniform 반전 시
+item12 가 |item8|의 2.8배로 폭주해 즉시 기각, 무반전이면 이 표 자체의 "미래서비스+과거서비스"
+독립 합계와 근접해 정합 + 재보험 HELD CSM 상각은 원수사 입장에서 비용이라는 경제적 근거와도
+일치). 신규 함수 4개(`_aia_note_pair`/`_aia_note_csm_ra_exp`/`_aia_note18_4_items`/
+`_aia_note19_3_items`, companies.py) — 당기/전기 표 판별은 캡션이 아니라 기초/기말 합계
+연속성(처브와 동일한 캡션-상속 아티팩트로 두 표 캡션이 동일 문자열). **2023.4Q·2024.4Q 는
+dry-run 만**(그 두 분기는 `_aia_from_statement` 경로라 이번 배선이 애초에 안 닿음; 2024.4Q
+매핑 결과 156,162/23,485/7,708 이 기존 산문값 156,200/23,500/7,500 과 억원 반올림 수준
+일치해 방법론만 재검증, 미적용).
+
+**KR1010 근본원인**: 2023.4Q item2(−19,236.64) 대 item3+item8(−14,538.66) 4,698백만원
+불일치를 raw 연결포괄손익계산서(20240328001012_00761.xml, 제11(당)기)로 규명 — 그 해만
+Ⅱ.영업비용 하위행이 7개(1~7)인데 "7.기타영업비용"(4,691.303769백만원)이 "3.기타사업비용"
+(1,933.610508)과 별개 행으로 존재, 기존 item16 추출이 후자만 잡았다. item16=3+7 합산
+(6,624.914277)으로 고치면 item1(=item20−item17, 불변)=item2(=item3+item8, canonical
+공식)+item15−item16 이 잔차 0.000000 으로 정확히 닫힌다 — item2 도 임시값(=item1 복사,
+89th pass 가 "원인 미규명"으로 병기)에서 canonical 공식으로 정정. `pl_bridge_baseline.json`
+의 lob_sum_gap 등재 삭제(자연히 닫혀 예외 불요). **2024.4Q 의 겉보기 동일 패턴(item2=item1)
+은 손대지 않음** — owner xlsx fill 이고 그 해는 raw 자체가 "기타사업비용이 보험손익 라인
+안의 세 번째 다리"인 다른 구조(`_round_20260826b` 가 이미 독립 확인, 2026-08-26).
+
+**검증**: 회사스코프 재실행(TARGET_CODES={KR0080,KR1010}) + combo-diff(LOST=0/GAINED=0/
+CHANGED=10) → `build_root_masters.build_pl()`(개별 호출). 골든 갱신 안전성 재확인 —
+`scripts/build_pl_breakdown.py` bare 실행(SKILL 문서가 명시한 골든 갱신 절차, `build_root_
+masters.py::main()`과는 다른 스크립트) 결과가 스코프 빌드와 cell-level 완전 동일(LOST=0/
+GAINED=0/CHANGED=0) — git-purge 붕괴 없음을 실측 재확인. `validate_data_contract.py`
+**RED=0**(PL/CSM 축; K-ICS공시 xlsx RED 1건은 kics 레인이 동시 수정 중인 kics_disclosure.
+json 소관, 무관). `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py`
+(non_null_values 10253→10257, +4=신규 item9-12) + `test_master_tables_golden.py`
+(pl_bridge 3144P/35F/561S→3146P/34F/560S, zero_legs 10→9) 둘 다 `--update`. `test_rule_
+coverage_manifest.py` 92 PASS/1 FAIL(K-ICS공시 RED, 무관). `validate_golden_input_
+fingerprints.py` 는 pl_breakdown 항목만 수술적으로 갱신(전용 스크립트로, all-or-nothing
+`--update`가 kics 레인 concurrent 로 아직 FAIL 인 ifrs17_bs/dividend/post_transition
+3그룹을 얼렁뚱땅 통과시키지 않도록). `sync_master_xlsx_sheet.py "손익분해PL"` 검증 OK.
+
+**파일**: `scripts/pl_breakdown/companies.py`(AIA 주석리더 4함수+배선) ·
+`scripts/build_pl_breakdown.py`(`_GOLD_CELL_OVERRIDE[("KR1010","2023.4Q")]` item2/16) ·
+`data/_gold/pl_bridge_baseline.json`(KR1010 항목 삭제) · `PL_breakdown.json`(12,122행
+불변, 10칸 변경) · `data/dart/viz/pl_breakdown_master.json` ·
+`data/_derived/pl_breakdown_coverage.json` · `insurequant_master_tables.xlsx` ·
+`tests/fixtures/{pl_breakdown,master_tables}_golden.json`(`--update`) ·
+`tests/fixtures/builder_input_fingerprints.json`(pl_breakdown 만) ·
+`scripts/_probes/probe_20260912_kr1010_2023q4_bridge_verify.py`(신규) ·
+`scripts/_probes/probe_20260912_pl_scoped_build_aia_kr1010.py`(신규).
+
 ## 2026-09-12 — 3사 raw 원문 대조 + PL gap14 잔여 6칸 신규 등재 + AIA 계산서 기준 전환
 
 티켓 2건 병행: `inbox/parser/20260902T1200Z`(KR1098/KR0075/KR0150 2023.4Q 감사보고서

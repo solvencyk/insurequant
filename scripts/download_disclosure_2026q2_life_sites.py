@@ -22,12 +22,16 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from _disclosure_pdf_paths import save_versioned_pdf  # noqa: E402
+
 OUT_DIR = ROOT / "data" / "disclosure" / "FY2026_Q2" / "raw"
 META_DIR = ROOT / "data" / "disclosure" / "_meta" / "FY2026_Q2"
 CENSUS = META_DIR / "life_own_site_census.json"
@@ -143,11 +147,16 @@ def main() -> int:
                     page.close()
                     continue
                 target = OUT_DIR / f"{kr}_{cfg['name']}.pdf"
-                target.write_bytes(data)
-                print(f"  OK {kr} {cfg['name']} -> {target.name} "
+                saved, save_status = save_versioned_pdf(target, data, url=cfg["url"])
+                if save_status == "versioned":
+                    print(f"  NOTE {kr}: 기존 raw 와 바이트가 달라 정정본으로 병존 저장 -> {saved.name}", flush=True)
+                elif save_status == "unchanged":
+                    print(f"  NOTE {kr}: 기존 raw 와 바이트 동일 — 재저장 skip", flush=True)
+                print(f"  OK {kr} {cfg['name']} -> {saved.name} "
                       f"({len(data):,} bytes) [{suggested}]", flush=True)
-                results[kr] = {"status": "ok", "path": str(target.relative_to(ROOT)).replace("\\", "/"),
-                               "bytes": len(data), "suggested_filename": suggested}
+                results[kr] = {"status": "ok", "path": str(saved.relative_to(ROOT)).replace("\\", "/"),
+                               "bytes": len(data), "suggested_filename": suggested,
+                               "save_status": save_status}
             except Exception as exc:  # noqa: BLE001
                 print(f"  FAIL {kr}: {type(exc).__name__}: {exc}", flush=True)
                 results[kr] = {"status": "fail", "error": f"{type(exc).__name__}: {exc}"[:200]}

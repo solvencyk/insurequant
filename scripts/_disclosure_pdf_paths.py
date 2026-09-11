@@ -26,9 +26,20 @@ PDF 를 떨궈 왔는데, **2026.2Q 부터 다운로더가 `<period>/pdf/` 로 �
 pdf/ 로 떨어진다.
 
 이 모듈은 stdlib 만 쓰고 부작용이 없다 — 게이트에서 import 해도 안전하다.
+
+**2026-09-12 추가 (`save_versioned_pdf`)**: 같은 (분기,회사) 로 새 게시물이 오면 기존 raw 를
+조용히 덮어쓰던 문제의 수정. 실측(`data/disclosure/*/raw/*_amended*.pdf` 110개 census) —
+원본+정정본이 실제로 병존하는 건 1건뿐이고 그나마 바이트가 같았다. 나머지 109개는 애초에
+원본이 저장된 적이 없는 "정정본만 단독 저장" 상태였다(과거 백필 스크립트들이 최신본 하나만
+받아 `_amended` 로 이름 붙인 것 — 병존 매커니즘 자체가 없었다). 이 함수는 **호출 시점부터**
+저장 직전에 기존 파일과 새 바이트를 비교해 다르면 원본을 그대로 둔 채 `_v<날짜>` 로 병존
+저장한다. 과거분 소급 복원은 하지 않는다.
 """
 from __future__ import annotations
 
+import hashlib
+import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,6 +75,73 @@ def disclosure_pdf_dirs(period: str, root: Path | None = None) -> list[Path]:
     """(period) -> 존재하는 PDF 디렉토리들. raw/ 먼저, 그다음 pdf/."""
     base = (root or DISCLOSURE)
     return [base / period / sub for sub in SUBDIRS if (base / period / sub).is_dir()]
+
+
+def save_versioned_pdf(
+    dest: Path,
+    content: bytes,
+    *,
+    title: str = "",
+    url: str = "",
+    posted: str | None = None,
+) -> tuple[Path, str]:
+    """``dest`` 에 ``content`` 를 저장하되 기존 파일을 절대 덮어쓰지 않는다.
+
+    - ``dest`` 가 없으면 그냥 새로 쓴다 -> ``(dest, "new")``.
+    - ``dest`` 가 있고 새 바이트의 sha256 이 기존과 같으면 아무것도 안 한다(로그 1줄만) ->
+      ``(dest, "unchanged")``.
+    - ``dest`` 가 있고 sha256 이 다르면(정정본 추정) 기존 파일은 그대로 두고
+      ``<stem>_v<YYYYMMDD><ext>`` 로 병존 저장 + 같은 폴더 ``_versions.json`` 사이드카에
+      ``{기본파일명: [{file, sha256, posted, title, url, fetched_at}, ...]}`` 형태로 append
+      한다 -> ``(versioned_path, "versioned")``. 날짜는 ``posted``(YYYYMMDD 문자열, 게시일)가
+      있으면 그걸 쓰고 없으면 다운로드 시각(UTC) 날짜를 쓴다. 같은 날짜로 이미 병존시킨
+      바이트와 또 같으면(같은 정정본 재실행) 그 파일도 다시 쓰지 않는다(idempotent).
+
+    stdlib(hashlib/json/datetime)만 쓴다 — 새 의존성 없음. 소급 복원은 하지 않는다 — 이미
+    덮어써진 과거분은 이 함수로 되살릴 수 없다.
+    """
+    new_sha = hashlib.sha256(content).hexdigest()
+    dest.parent.mkdir(parents=True, exist_ok=True)
+
+    if not dest.exists():
+        dest.write_bytes(content)
+        return dest, "new"
+
+    old_sha = hashlib.sha256(dest.read_bytes()).hexdigest()
+    if old_sha == new_sha:
+        print(f"  [disclosure_pdf_paths] UNCHANGED {dest.name} (sha256 동일 — 재저장 skip)")
+        return dest, "unchanged"
+
+    date_str = posted or datetime.now(timezone.utc).strftime("%Y%m%d")
+    versioned = dest.with_name(f"{dest.stem}_v{date_str}{dest.suffix}")
+    n = 2
+    while versioned.exists():
+        if hashlib.sha256(versioned.read_bytes()).hexdigest() == new_sha:
+            return versioned, "unchanged"  # 이미 이 버전을 받아 둔 상태
+        versioned = dest.with_name(f"{dest.stem}_v{date_str}_{n}{dest.suffix}")
+        n += 1
+    versioned.write_bytes(content)
+
+    sidecar = dest.parent / "_versions.json"
+    registry: dict = {}
+    if sidecar.exists():
+        try:
+            registry = json.loads(sidecar.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            registry = {}
+    registry.setdefault(dest.name, []).append({
+        "file": versioned.name,
+        "sha256": new_sha,
+        "posted": posted,
+        "title": title,
+        "url": url,
+        "fetched_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    })
+    sidecar.write_text(json.dumps(registry, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    print(f"  [disclosure_pdf_paths] VERSIONED {dest.name}: 새 바이트가 기존과 다름 -> "
+          f"{versioned.name} 로 병존 저장(원본 유지)")
+    return versioned, "versioned"
 
 
 def find_disclosure_pdf(period: str, filename: str, root: Path | None = None) -> Path | None:

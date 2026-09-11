@@ -1,6 +1,36 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-11(14회차 — inbox 3건 직렬 처리: `20260831T0705Z`(item48/item3 오염
+> Last updated: 2026-09-12(15회차 — inbox `20260912T0115Z`(KR0079 2023.2Q MD 결측) + KR0080-2326
+> (item23-26 8분기 결측) 2건 직렬 처리, orchestrator 발주) — 둘 다 완료.
+>
+> **① KR0079 2023.2Q MD 결측**: census 결과 45칸(1-9·11-28·29-46)은 이미 적재돼 있었고 fitz
+> 200-230dpi 렌더 9장 대조로 전부 일치 확인(불일치 0). item10(비지배지분)은 원문에 행 자체가
+> 없어 미착수(마스터 전체 91/538 버킷이 이미 이 패턴, 정상). item47-54(TFI표) 8칸만 순수
+> 결측이라 raw p12 신규 판독 적재(`fix_20260912_kr0079_2023q2_tfi.py`, INSERT 8행, 항등식
+> 4종 GREEN). 재변환 1차 시도에서 `--period` 누락으로 `md_inbox/FY2025_Q4/KR0079` 를 일시
+> 오염시켰으나 즉시 발견해 정본 재생성으로 복구(다른 파일 피해 없음 mtime 확인).
+>
+> **② KR0080-2326**: item23-26 8분기 결측 중 **7분기 disclosed-zero 확정**(fitz 200-600dpi
+> 렌더 직접판독, 2025.4Q 는 발행사 템플릿 결함 발견 — 부모행이 가.지급여력금액을 오복제,
+> 자식행은 깨끗해 부모 자신의 산식(1+2+3)으로 0 역산). **1분기(2024.2Q)는 원문 자체가 해당
+> 분기 열만 완전 공백**이고 어떤 후속 보고서 이력창에도 재등장 안 해 교차검증 불가 —
+> 0 추정 대신 미착수. `fix_20260912_kr0080_2326_other_capital.py`, INSERT 28행. 게이트
+> `other_capital_children_sum` 축 적용전:부모결측 21→14(-7)·적용후 27→20(-7), 다른 축 무변동.
+>
+> **게이트/테스트 실측**: `validate_kics_disclosure.py` RED=36(불변, 전부 documented
+> exception)·**blocking RED=0**. `validate_data_contract.py` xlsx sync 전 RED=1(MASTER_XLSX_
+> ROW_MISSING, 예상된 일시상태) → `sync_master_xlsx_sheet.py "K-ICS공시"`(25486→25522행) 후
+> **RED=0**. `pytest tests/test_kics_rules_golden.py tests/test_post_transition_golden.py
+> tests/test_rule_coverage_manifest.py` 1건 실패(골든 sha256, 36셀 신규 적재로 당연히 이동)
+> → `--update` 재생성(RED=36 불변 확인 후) → **85 passed**. `validate_golden_input_
+> fingerprints.py --update` 실행.
+>
+> 변경 파일: `kics_disclosure.json`(+36행) · `insurequant_master_tables.xlsx` · 신규
+> `scripts/fix_20260912_kr0079_2023q2_tfi.py`·`scripts/fix_20260912_kr0080_2326_other_
+> capital.py` · `tests/fixtures/{kics_rules_golden,builder_input_fingerprints}.json`(재생성) ·
+> `md_inbox/{FY2023_Q2,FY2025_Q4}/KR0079_미래에셋생명.md`(신규/복구).
+>
+> Last updated (이전): 2026-09-11(14회차 — inbox 3건 직렬 처리: `20260831T0705Z`(item48/item3 오염
 > REOPEN) → `20260901T0420Z`(SCANNED_SECTION 부수관찰 REOPEN) → `20260911T1407Z`(stale-quarter
 > 테스트 파손), orchestrator 발주) — 전부 `status: answered`, 원 sender 재확인 대기.
 >
@@ -211,50 +241,6 @@
 > `INPUTS_MOVED`/`OUTPUT_DRIFT` 는 공유 워킹트리의 동시 세션(ifrs17 레인, `IFRS17_BS.json`·
 > `bs_manual_overrides.json` 미커밋 변경) 소관 — 이 티켓과 무관, 손대지 않았다.
 >
-> Last updated (이전): 2026-09-01(10회차 — 자본성증권 발행잔액 기준일 H1 갱신, 14→17/21사) —
-> inbox `20260901T1400Z` 발주(잔여 22개사 중 실측 7개사만 진짜 손봐야 함, 6사는 무공시 정당·
-> 12사는 무증권·1사는 이미 fresh, 시작 census로 재확인).
->
-> **`confirm_bonds_still_outstanding` 을 전량-게이트→채권별 부분확인으로 재설계**(동양생명
-> KR0087: 후순위 3건 중 2건은 매치되는데 USD채 1건의 환산액면 드리프트로 3건 다 FY2025에
-> 묶여 있었다). **이미 잔액 0인 채권은 확인 대상에서 제외**하고 시점만 올린다(신한라이프·
-> DB생명·동양생명 각 1건, 레거시 완제 채권이 tier 전체를 인질로 잡던 패턴). 이 과정에서
-> **직접 낸 회귀를 직접 잡았다** — 채권별 확인이 "뭔가 확인됨"으로 판정되면 예전에 구제하던
-> 집계-불변 폴백이 통째로 스킵돼 메리츠(KR0001)가 일시 회귀; `confirm_tier_asof` 로 통합해
-> 1차가 놓친 채권엔 항상 2차를 마저 시도하도록 고쳐 최종 산출물엔 회귀 반영 안 됨(대조 확인).
->
-> **새로 잡은 상환**: 흥국화재(KR0005) 이사회 2026-02-06 "후순위사채 조기상환 및 신규
-> 발행의 건" — 제20회(450억) 상환 + 제23회(1,000억) 신규발행이 같은 반기에 겹쳐 기존
-> `detect_redeemed`(순수 상환만 시험)가 영원히 실패하던 걸 "신규발행 후보 하나 추가 시험"
-> 으로 확장해 해결(BS 재현 오차 0.3%). 이 확장에 처음엔 가드가 없어 무관한 회사(교보·KDB
-> 생명)에 노이즈를 냈다가 즉시 원인 잡아 되돌림(absent 채권 있을 때만 2차 진입).
->
-> **결과**: 기준일 2026-06-30 확인 14→**17**/21사(무공시 6사·무증권 12사 제외). 남은
-> 4사(한화생명·푸본현대·신한라이프·KB라이프)는 서식 조사 결과 진짜 이유가 있음(한화생명은
-> 열그룹 표 구조까지 진단 완료·미구현, TODO 항목 참조; 나머지 3사는 근거 부족/오차한도
-> 초과로 documented exception). 무결성: 39사 중 금액 델타는 KR0005(의도한 변경) 1건뿐,
-> 나머지 38사는 시점/출처만 이동. 소진율(`utilization_pct`)은 체인 마지막에
-> `apply_disclosure_utilization.py` 로 39사 0건 변경 재확인(공시 산식 불변 유지).
-> `validate_live_artifacts.py` RED=4(public_exports 스냅샷 지연)→`export_public_sheets.py`
-> 재실행 후 **RED=0**. xlsx 3개 시트(`자본성증권발행현황`·`기본자본소진율`·`보완자본소진율`)
-> `sync_master_xlsx_sheet.py` 로 동기화, 검증 OK.
->
-> **잔여 (다음 세션 인계)**: 한화생명(KR0068, 후순위 2.77조원, 최대) — `차입금에 대한 세부
-> 정보 공시` 열그룹 표가 있고 15개 물리컬럼 중 4개가 후순위(회사 자체 4건과 발행일 매치
-> 확인됨)인데, 컬럼헤더가 `<TH>후순위사채</TH>` 단독이 아니라 인수단명이 접두되고, 금액행이
-> **장부가**(액면 아님)라 `confirm_bonds_still_outstanding` 의 "표는 액면만 보증" 가드에
-> 걸린다. 표 제목이 문서에 2회 등장(연결/별도 추정, 미확정) — 잘못 짚으면 컬럼 인덱스가
-> 밀린다. `merge_subordinated_detail` 처럼 전기말 대조 후 리프레시하는 별도 경로 필요.
->
-> **재현**: `python scripts/build_capital_securities_fy2026h1.py` (콘솔에 회사별 리포트) →
-> `wire_capital_securities_to_utilization.py --quarter 2026.2Q --bonds-source
-> data/bonds/capital_securities_fy2026h1.json` → `build_capital_securities_recognition.py`
-> (동일 인자) → `sync_tier_utilization_to_deploy.py --apply` →
-> `apply_disclosure_utilization.py --quarter 2026.2Q` → `emit_capsec_provenance.py` →
-> `validate_live_artifacts.py`. 진단 스크립트는 `scripts/_probes/capsec_*.py`(이 세션 신설,
-> 저장소에 남김). 티켓: `inbox/parser/20260901T1400Z__...capsec_h1_refresh_22_companies_
-> stale.md`(status: answered — 잔여 1사분 구현은 orchestrator 판단 대기).
->
 > 📦 **Status 이력은 `docs/todo_archive_parser_kics.md` 로 이동했다** (2026-09-11, 내용 무수정 — 2026-09-01(9회차) 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 
 
@@ -351,15 +337,14 @@ owner xlsx fill·내 backfill이 rebuild에서 살아남는지 점검 → 2대 �
 - [ ] **PDF 레이아웃 미스** (하나손해 2024.x 등): interleaved/grouped/concat fallback에 words-coordinate 전략 추가.
 - [x] **KB손해 image-only 4분기** — 위 KICS-IMG 와 같은 건, 결측 0 으로 닫힘(2026-08-30 실측).
 
-### KR0080-2326 — 에이아이에이생명 item23-26 8분기 결측 (2026-09-11 재스코프, inbox 20260901T0420Z 부수관찰)
+### KR0080-2326 — 에이아이에이생명 item23-26 8분기 결측 (종결 2026-09-12)
 
-- [ ] **KR0080 item23-26(기타요구자본 세부) 8분기×4항목=32셀 결측**: 2023.2Q·2024.2Q·2024.4Q·
-  2025.1Q·2025.2Q·2025.3Q·2025.4Q·2026.1Q — census로 정확히 확인됨(item17은 8분기 전부
-  있음, 순수 item23-26 행 결측). 2025.2Q 는 raw p18 190dpi 렌더로 "0/0/0/0" disclosed 확인
-  됐다(값을 넣을 근거 있음, legit-zero 후보) — 나머지 7분기는 미확인. 이 회사는 BORDERLINE/
-  SCANNED_SECTION 이력이 있어(`data/_derived/kics_source_textlayer.json`) 텍스트 신뢰 불가,
-  분기별 raw 직접 렌더 필요(fitz 190-220dpi). 8분기 전부 "0/0/0/0" 확인되면 legit-zero
-  UPSERT, 아니면 값 있는 만큼만.
+- [x] **KR0080 item23-26(기타요구자본 세부) 8분기×4항목=32셀 결측** — fitz 200-600dpi 렌더
+  직접판독으로 **7분기 disclosed-zero 확정**(2023.2Q·2024.4Q·2025.1Q·2025.2Q·2025.3Q·
+  2025.4Q·2026.1Q, `fix_20260912_kr0080_2326_other_capital.py --apply`, INSERT 28행) +
+  **1분기(2024.2Q) 원문 자체 해당분기 열 공백이라 SKIP**(교차검증 불가, 추정 미적재). 상세
+  근거·페이지·2025.4Q 발행사 템플릿 결함(부모=가.지급여력금액 오복제, 자식은 깨끗해 산식
+  역산) → `docs/changelog_parser_kics.md` 2026-09-12.
 
 ### FY2026Q1 — K-ICS PDF→MD docling 잔여 (inbox 20260612T0900Z)
 
