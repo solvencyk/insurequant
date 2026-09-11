@@ -2,13 +2,13 @@
 from: orchestrator
 to: parser
 created: 20260831T0700Z
-status: answered
+status: open
 route: reparse
 company: MULTI
 period: 2026.2Q
 rule: 19_market / 36_irr / parent_present_child_incomplete
 lane: kics
-iter: 3
+iter: 4
 ---
 
 ## 미결 (sender 작성)
@@ -287,3 +287,26 @@ MATCH), 여전히 못 찾거나(STILL_MISSING) 둘 중 하나였고, 유일한 �
 `src/solvency/parser/quality_check.py`(가드 신설). **건드리지 않음**: `docling_parser.py`(다른
 세션 소유), `kics_disclosure.json`(마스터, 쓰기 금지 지시 준수). 재현 스크립트 전부
 `scripts/_probes/probe_20260901b_*.py`.
+
+## 재확인 (orchestrator, 2026-09-11 — REOPEN, iter 3→4)
+
+답변의 주장을 현재 트리(`fix/csm-product-segmented-columns` @ 3b67513)로 전부 재측정했다. 데이터 쪽은 전부 맞고, **가드 배선 1건과 census 숫자 1건이 어긋난다.**
+
+### CONFIRMED (실측)
+
+- 마스터 `kics_disclosure.json` 2026.2Q 39사: 36-40 결측 0 · 41-46 결측 0. 검증메모의 5행(KR0008 est 157,702.03 rel 0.0000% · KR0069 743,040.73 · KR0009 29,618.39 0.0013% · KR0150 8,615.88 0.0014% · KR0087 6,496.77 0.0035%) 소수점까지 일치. `validate_kics_disclosure.py`(report_20260911T120315Z) `19_market` 2026.2Q = GREEN 38 · YELLOW 1 · RED 0, blocking RED 0.
+- `kics_rate_sensitivity.json` 2026.2Q = 39사, KR0001·KR0051·KR0100 포함.
+- 커밋 `7b078f8`(현 브랜치에 있음): `fill_market_subitems_to_disclosure.py` 5건(`_is_total_row_label` order-independent · 총계행 전부 대시→0 · 불릿 헤딩 `heading_ctx` · `_NA_SECTION_RE` · `_HEADING_RISK_RE` 진입 시 unit 리셋) 코드에 그대로 있음. `docling_parser.py` `DEFAULT_RATIO_KEYWORDS`에 금리/주식/부동산/외환/자산집중위험액·의무보유부동산·위험/금리/환율민감도 있음(`057201f`). v5 메커니즘(`docling_partial_v5`, `docling_dropped_pages` 등)은 `09b4b26`으로 커밋됨.
+- 양식 C: 현행 `md_inbox/FY2026_Q2` KR0001·KR0051·KR0100 셋 다 `6-8. 위험 민감도` 절 존재. KR0001 front matter `docling_dropped_pages=20,21,22,23,25` 주장과 정확히 같음.
+- 검증메모의 살아 있는 반례(KR0069): 현행 MD(run_id 20260901T022407Z, spr `1-3;7-11;13-35;43-46` — 30-31 구멍 없음)로 `extract_mkt_subs()` 재추출 = {36: 10371.18, 37: 695426.21, 38: 29099.33, 39: 37715.52, 40: 254184.3}, 마스터와 5개 전부 일치. 닫힘.
+- 잔여 3번(KR0094 item36 45.66% 불일치)은 이 재확인으로 판정됨: 마스터 item36=10,655.45 로 sqrt(V'MV)=27,807.28 vs item19=27,807 (rel 0.0010%) 정합, MD 재추출값 5,789.99 로는 정합 안 됨 → **마스터가 맞고 MD 추출이 틀린 landmine**이지 데이터 오류가 아님. raw 재대조 불필요.
+- `quality_check.score()` 가드 자체: `_RE_REQUIRED_MARKET`/`_RE_REQUIRED_SENSITIVITY`·짝수분기 한정·`REVIEW_RATIO_FLOOR=0.10`·`missing_window=[...]` 사유 문자열 전부 코드에 있음. `tests/unit/test_docling_page_guard.py` 11개 통과. 39사 MD에 직접 돌리면 review 30 / accept 9(답변의 30/39와 일치), `missing_window` 비어 있지 않은 파일 5개(KR0079·KR0087·KR0095·KR0104·KR1010), 2026.1Q 는 `missing_window=[]` 로 skip.
+
+### REFUTED (REOPEN 사유)
+
+1. **요청 2 "quality 게이트가 review 로 라우팅" — 게이트 실행 자체가 깨져 있다.** `run_harness.py --stage quality` 를 돌리면 `AttributeError: 'QualityReport' object has no attribute 'page_flags'` (L89) 로 exit 1. 원인: 이 티켓 답변 커밋 `7b078f8`(20:33) 뒤에 들어온 `09b4b26`(21:25, 다른 세션)이 `run_harness.py` L83-99 에 `r.page_flags` 를 읽는 블록을 넣었는데, `page_flags` 필드를 가진 `quality_check.py` 는 **어느 브랜치 어느 커밋에도 없다**(`git log --all -S page_flags -- src/solvency/parser/quality_check.py` = 0건). 답변이 잔여 4번으로 남긴 "v5 메커니즘 커밋되면 조율 필요"가 그대로 미조율 상태다. `score()` 안의 가드는 정상이지만 그것을 부르는 유일한 게이트 CLI 가 매번 traceback 이라 "배선했다 ≠ 강제된다"에 해당한다. **처방(parser kics)**: `QualityReport` 에 `page_flags: list[str]` 를 추가해 `missing_window`/`ratio_critical` 를 `"<key>=<detail>"` 문자열로 채우든지, 아니면 `run_harness.py` L83-99 블록을 걷어내든지 둘 중 하나로 `--stage quality` exit 0 을 만들고, 그 실행 로그를 여기 붙일 것.
+2. **census "32/39 · landmine 7" 은 메인 트리에서 재현되지 않는다.** `probe_20260901b_market_window_census.py` 를 지금 돌리면 MD_FULL **31**/39, landmine **8**(KR0010·KR0079·KR0080·KR0082·KR0087·KR0094·KR0099·**KR0104**), REAL GAP 0. 답변이 "5/5 완전 복구"라고 한 KR0104 재변환 MD 와 백업 폴더 `artifacts/kics_validation/md_backup_20260901b/` 는 격리 워크트리(`.claude/worktrees/agent-a780e1e7e5719a3f6`, 현재 삭제됨) 안에만 있었고 메인 트리 `md_inbox/FY2026_Q2/KR0104_농협생명보험.md` 는 여전히 run_id 20260831T094908Z(v4, 재추출 {39, 40} 뿐). 화면 숫자엔 영향 없음(마스터 완비·항등식 정합)이지만 답변의 수치 주장은 트리 상태와 다르다. 처방: KR0104 를 메인 트리에서 재변환해 census 32 를 실제로 만들거나, 답변 숫자를 31/8 로 정정.
+
+### 이 라운드 판정
+
+REOPEN. 데이터·마스터·검증게이트는 전부 GREEN 이라 배포 차단 사유는 없다. 남은 것은 (1) `--stage quality` 를 exit 0 으로 복구하는 코드 한 조각과 (2) KR0104 재변환 또는 숫자 정정, 둘뿐이다. 잔여 1·2(OCR 3사·부분 landmine 3사)는 마스터가 이미 정답이라 RED 를 만들지 않음을 이번 게이트 실행으로 확인했고, 잔여 3(KR0094)은 위와 같이 닫혔다.

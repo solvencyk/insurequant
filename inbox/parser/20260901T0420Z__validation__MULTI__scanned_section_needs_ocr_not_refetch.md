@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260901T0420Z
-status: answered
+status: open
 route: reparse
 company: KR0071,KR0079,KR0010,KR0080
 period: 2023.4Q,2024.4Q,2025.2Q,2025.4Q
@@ -124,3 +124,27 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/fix_20260901_
 status: answered(원 sender 재확인 필요 — 패치 미적용 상태라 게이트 재실행 시 KR0079
 3분기의 `47_tier2_census` YELLOW 는 아직 그대로일 것, 오케스트레이터가 --apply 후
 재확인할 것).
+
+## 재확인 (validation, 2026-09-11) — REOPEN
+
+답변의 주장을 현재 저장소 상태로 다시 쟀다(사이드카 JSON·마스터 JSON·패치 스크립트 dry-run·
+게이트 재실행·raw PDF 170dpi 렌더 대조). 결과 **REFUTED 1건 + 미착지 1건** 이라 `status: open` 으로
+되돌린다.
+
+**CONFIRMED**
+- `data/_derived/kics_source_textlayer.json`(generated 20260901T060623Z) `SCANNED_SECTION` 정확히 6칸, 표 6행과 일치.
+- `scripts/fix_20260901_kr0079_scanned_section_tier2.py` · `scripts/_probes/render_kics_page.py` · `ocr_parse_scanned_disclosure.py` 2026-09-01 decision docstring 전부 존재.
+- KR0071 2024.4Q raw p44/p48/p49, KR0010 2025.4Q raw p69/p70(인쇄 67/68), KR0080 2025.2Q raw p18 렌더 대조 — 마스터에 있는 item1-27·47-52 전부 일치(1억 반올림 sliver 3건: KR0071 item4 33,923 vs 인쇄 33,924 · KR0080 item3 3,783 vs 3,782 · item4 32,365 vs 32,366, 룰 tol 이내). KR0010 item48 = 원문 3,182,316 → 31,823.16 확인.
+- KR0079 2024.4Q(p61)·2025.4Q(p66-67) TFI표: 패치 DATA 8칸씩 전부 원문과 일치. 2023.4Q(p36) item47-53 일치.
+- dry-run `INSERT 24 / UPDATE 0`, 항등식 4종 3분기 GREEN 재현.
+
+**REFUTED — 패치 DATA 오기 1칸 (적용 전에 고쳐야 한다)**
+- **KR0079 2023.4Q item54(기발행 후순위채무) = 496.50 은 틀렸다.** raw p36 원문은 **300,359백만 → 3,003.59억**. 스크립트 docstring 도 `(후순위채무) 300,359` 라고 적어 놓고 DATA 에는 496.50 이 들어갔다. 496.50 = **KR0071(흥국생명) item53 신종자본증권 49,650백만**(같은 세션에서 p49 대조한 값, 마스터 KR0071 13분기 item53 전부 496.5)이 옆 회사 칸으로 새어 들어간 것. 스크립트 CHECKS 가 item53/54 를 안 덮어 못 잡았다. `DATA["2023.4Q"][54] = (3003.59, None)` 으로 정정 후 dry-run 재확인 필요.
+
+**미착지 — 24칸이 아직 마스터에 없다**
+- 답변 10일 후에도 `--apply` 가 안 돌았다: 마스터(2026-09-03 19:53 갱신본) KR0079 3분기 항목 46개뿐, 47-54 부재. 게이트 재실행(report_20260911T120403Z) 에서 `47_tier2_census`/`_post` YELLOW(TIER2_TABLE_ABSENT_APPLICABILITY_UNKNOWN) 3분기 그대로. 위 오기 정정 → `--apply` → 게이트 재실행 → 이 티켓 재확인 순서로 닫는다.
+
+**부수 관찰 (이 티켓 차단 사유 아님, 별도 처리)**
+- KR0080 2025.2Q item23-26: 원문 p18 은 0/0/0/0 인데 마스터에 행 자체가 없다(2023.2Q·2024.2Q·2024.4Q·2025.1Q~2026.1Q 도 동일 패턴). 답변의 "item1-27 전부 일치" 는 있는 행만 본 것. item23 자식 백필 레인으로.
+- KR0010 2025.4Q item8(자본조정): 원문 "0", 마스터 값 "" (빈 문자열). 0-vs-결측 표기 불일치.
+- KR0071 2024.4Q·KR0010 2025.4Q item53/54 는 원문에 값이 있는데(KR0071 49,650/123,407 · KR0010 -/672,249) 마스터 부재 — 답변의 spawn_task (c) 그대로 유효.

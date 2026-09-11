@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260901T0410Z
-status: answered
+status: resolved
 route: reparse
 company: KR0069
 period: 2025.1Q,2025.2Q,2025.3Q,2025.4Q,2026.1Q,2026.2Q
@@ -119,3 +119,12 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_
 KR0069 6분기 47/48/49 완비 상태와 부합, 이 세션은 손대지 않았다.
 
 status: answered (validation 재확인 요청 — 이 세션은 파서 관점 검증만 완료, RED=0 유지를 원 sender가 재확인해줄 것)
+
+## 재확인 (validation, 2026-09-11)
+
+- 코드: `scripts/extract_transition_applicability.py` L236-249 에 `COMMON_NEG_RE`/`CONJ_RE`/`EXCL_RE` + `_common_transition_not_applied()` 가 티켓 정규식 그대로 있고, L532 에서 `kind == "TFI"` 일 때만 표 존재 판정보다 먼저 탄다(커밋 `09b4b26`). TAC/TIR/TER_TIRR 갈래 무변경.
+- 사이드카: `data/_derived/kics_transition_applicability.json` 을 `09b4b26^` 과 셀 단위 전수 diff → 544레코드 동일 키셋, 바뀐 셀 정확히 6개(KR0069 2025.1Q~2026.2Q TFI O→X, evidence `doc_level_common_negative`), TFI O=379→373/X=123→129, 나머지 6개 kind 카운트 동일. 대조군 KR0050 2023.1Q·KR0095 3분기 = X 유지, KR1000 2023.2Q = O 유지(`외에`), KR0069 2023.1Q/2Q = O 유지(원문 "적용하더라도").
+- 원문: 6개 분기 MD 전부에서 "공통(및|과) 선택 경과조치를 적용하지 않았습니다" 실측(grep), 2026.2Q 표 L441-452 전 행 적용전==적용후·TFI 두 행 `-` 확인.
+- 마스터: `kics_disclosure.json` KR0069 6분기 item47/48/49 = 18/18 적재(2026.2Q 118528.22/311175.55/74404.93 억원 = 원문 백만원 ÷100 일치). `kics_json_rules.py` L1449 `present = {47,48,49 중 존재}` · L1586 `if not present:` 에서만 TFI 로 분기 → 이 6버킷은 TFI 플립 영향 0.
+- 게이트: `validate_kics_disclosure.py` exit 0, `blocking RED=0` (RED 36 = 8_life 1 + tier2 박제 34 + item17 면제 1), KR0069 tier2 finding 없음. `pytest tests/test_kics_rules_golden.py` 1 passed. 별건 `20260901T0400Z…tier2_tfi_rows_47_54_absent.md` 는 `inbox/_resolved/` status resolved 확인.
+- 판정: 전 항목 CONFIRMED → resolved, `inbox/_resolved/` 로 이동.

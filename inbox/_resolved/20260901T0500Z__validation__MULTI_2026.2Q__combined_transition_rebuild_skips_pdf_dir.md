@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20260901T0500Z
-status: answered
+status: resolved
 route: reparse
 company: MULTI
 period: 2026.2Q
@@ -208,3 +208,15 @@ raw leaf에서 재조합하기 때문).
 **status: answered** — 위 "원인을 끝까지 추적했다" 절의 설계 선택(전부 재계산 vs 저장값 신뢰)을
 validation/owner가 검토해 결정할 사안이라 open이 아니라 answered로 남긴다. 4버킷 자체는
 지금 상태로 GREEN이라 급하지 않음.
+
+## 재확인 (validation, 2026-09-11)
+
+답변의 주장을 전부 현재 저장소에서 다시 쟀다(라이브 `kics_disclosure.json` 은 읽기만, md5 `2ab6b780…` 전후 동일).
+
+- **요청 1** `_pdf()` 가 `scripts/_disclosure_pdf_paths.py::disclosure_pdfs()` 를 호출한다(L58-61 import, L116-129 함수, amended 우선 → 최대크기 선택 유지). 헬퍼 파일 존재 확인. 참고: 2026-09-03 downloader 가 `FY2026_Q2/pdf/` 39개를 `raw/` 로 정규화해 지금은 `pdf/` 폴더 자체가 없다(raw=39) — 원래 사고 조건은 디스크에서 사라졌고 해석기는 양쪽을 다 보므로 재발 방지도 유지된다.
+- **요청 2** L581-600 이 분기별 `스킵률 raw 없음 n/N (%)` 을 인쇄하고 50% 초과 시 `skip_breach` 를 채우며, `return` 3곳(dry-run·writes 없음·정상종료) 전부 `1 if skip_breach else 0`. 스크래치 사본에서 `_pdf` 를 `None` 으로 강제해 `--dry-run` 을 돌리니 `스킵률 2025.3Q 2/2 (100%)` · `ABORT` 2줄 · **exit 1** — 답변 L137-141 과 동일.
+- **요청 3** 라이브 `--dry-run` = `FAIL 대상 0 · 성공 0 · 거부 0 · exit 0`(답변 L149-152 동일). 4버킷의 15/16/22/23후는 마스터에 validation 값 그대로(전부 소수점까지 일치)이고 axis-C 잔차 0.00. 스크래치 사본에 item15후 +1000 을 넣고 `TARGET` 을 사본으로 돌려 `main()` 을 실행하니 4버킷 재구성 성공·거부 0, 결과가 답변 L169-172 의 숫자와 **소수 둘째 자리까지 전부 일치**(최대 상대차 0.09%, KR0071 2026.2Q 22후 -4.24). item14후 재계산값 18784.28 = 저장 item1후 39184 / item27후 208.6 × 100 이라, 잔차 원인이 "저장 트리플의 반올림 자체불일치" 라는 추적도 확인됐다.
+
+**설계 판단(validation 결정):** 저장된 item14후(18781)는 원문이 직접 공시한 기준금액후이고 item27후(208.6)는 소수 1자리 공시비율이다. 재구성 산식은 그 1자리 비율에서 14후를 역산하므로 저장값보다 **덜** 정밀한 쪽이 스크립트다. 따라서 잔차는 데이터 결함이 아니고, 4버킷은 지금 값(axis-C 정확히 닫힘)을 유지한다. 스크립트가 원문 기준금액후를 직접 앵커하도록 바꾸는 것은 선택 개선이며 이 티켓 범위 밖 — 필요하면 별도 티켓. 화면 숫자 변경 없음이라 owner 승인 불요.
+
+요청 1·2·3 전부 CONFIRMED → **resolved**, `inbox/_resolved/` 로 이동(inbox/README.md 정본 위치; 위생 게이트가 `parser/_resolved/` 는 활성 폴더로 보고 E2 로 막는다).

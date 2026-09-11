@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20260901T1400Z
-status: answered
+status: resolved
 route: reparse
 company: MULTI
 period: 2026.2Q
@@ -200,3 +200,10 @@ stale 13사 중 6사는 정당(무공시 6사), 실제 손대야 할 회사는 *
 함께 쓸어 담은 것으로 보인다(diff 0, 커밋 메시지는 무관한 validation 내용). git commit/push
 는 이 세션 지시사항상 금지라 손대지 않았다 — 데이터는 디스크상 최종적으로 올바름을
 재확인했다(census·RED=0 재검증 완료). 커밋 귀속만 뒤섞였을 뿐 유실은 없다.
+
+## 재확인 (orchestrator, 2026-09-11)
+
+- `capsec_asof_census.py` 직접 재실행: 39사 = fresh 17 · stale 10(무공시 6 + KR0068/KR0083/KR0094/KR0099 4) · no_bonds 12 — 답변 §5 "17/21" 과 일치. `kics_tier{1,2}_utilization.json` 의 `bond_balance_as_of` 도 같은 17/10/12 census, 롯데 KR0003·교보 KR0073 은 두 티어 모두 2026-06-30, 메리츠 KR0001 tier1 18.9% 복원 확인.
+- 빌더를 스크래치 경로로 재실행(마스터 미접촉)한 산출이 `data/bonds/capital_securities_fy2026h1.json` 과 **완전 동일**. 보고서에 `sub_new_issuance_detected` KR0005(2026-03-31, 100,000)·`sub_redeemed_detected` KR0005 제20회(45,000)·`hybrid_confirm_partial` KR0001 제2·3회 + `hybrid_confirm_by_aggregate` KR0001·`sub_confirm_partial` 4사·`sub_detail_unreconciled` KR0099(199,966 vs 199,951) 전부 답변 그대로. `confirm_tier_asof`/채권별 확인/잔액0 제외/`if not absent` 가드가 코드에 실존.
+- `validate_live_artifacts.py` 재실행 RED=0(exit 0). `insurequant_master_tables.xlsx` `자본성증권발행현황` 123행(KR0005 제23회 신규행 포함) 읽기전용 확인. 프로브 5종 전부 `scripts/_probes/` 에 존재, 커밋 00ff110(validation) 에 capsec 파일이 함께 들어간 것도 git log 로 확인.
+- 비차단 관찰: 빌더 무결성 체크가 `report["sub_redeemed"]` 를 읽는데 상환 경로는 `sub_redeemed_detected` 에 쓰므로 KR0001/0009/0079/0010 에 `[CHECK]` 안내줄이 헛돈다(데이터 영향 없음). 종결.
