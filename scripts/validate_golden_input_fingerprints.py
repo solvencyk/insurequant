@@ -95,10 +95,20 @@ SPECS: dict[str, dict] = {
             # build_equity_composition_tier2 → src.ifrs17.csm_extractor → scoring 이 읽는다.
             # **빌더 소스만 읽었으면 놓쳤을 입력**이다(import 두 단계 아래, lru_cache).
             "data/ifrs17/table_scoring_keywords.yaml",
+            # 2026-09-11 (inbox/parser/20260911T0109Z 백필) -- 빌더 자신은 이 파일들을 안
+            # 읽는다(overrides 만 읽는다). 그래도 계보 완결성을 위해 넣는다: 이 overrides 셀
+            # 637개의 **원천**이 이 PDF/사이드카고, 원천이 바뀌었는데 overrides 를 아직
+            # 재생성 안 했으면(예: 정정공시) 이 축이 "지문 불일치 → 무거운 골든 확인 필요"로
+            # 사람 주의를 끈다 -- PDF 는 대용량이라 내용해시 대신 stat(경로+크기)만 본다
+            # (아래 STAT_ONLY, data/dart raw XML 과 같은 근거: 추가/소실/교체는 크기로 잡힌다).
+            "data/_derived/bs_from_disclosure.json",
+            "data/disclosure/FY*_Q*/raw/*.pdf",
+            "data/disclosure/FY*_Q*/pdf/*.pdf",
         ],
         # fixture 의 이 키 -> 그 해시가 가리키는 산출 파일
         "outputs": {"sha256": "IFRS17_BS.json"},
-        "evidence": "probe_20260829_trace_builder_reads.py scripts/build_ifrs17_bs.py",
+        "evidence": "probe_20260829_trace_builder_reads.py scripts/build_ifrs17_bs.py"
+                    " + inbox/parser/20260911T0109Z(계보 완결성 목적 추가, 빌더가 직접 읽진 않음)",
     },
     "pl_breakdown": {
         "golden": "tests/test_pl_breakdown_golden.py",
@@ -249,7 +259,11 @@ def _match(pattern: str) -> list[Path]:
 # (2026-05~08 에 KB손해보험 등 8개사 raw 가 조용히 사라진 사고의 탐지기).
 # **FS API 캐시·extracted·alotmatter·MD·YAML·루트 마스터는 전부 내용해시다** — 2026-08-26
 # 드리프트의 진원지가 `data/dart/_fs_api_cache` 였으므로 거기를 약하게 만들면 안 된다.
-STAT_ONLY = {"data/dart/FY*_Q*/raw/**/*.xml"}
+STAT_ONLY = {
+    "data/dart/FY*_Q*/raw/**/*.xml",
+    "data/disclosure/FY*_Q*/raw/*.pdf",
+    "data/disclosure/FY*_Q*/pdf/*.pdf",
+}
 
 
 # ---------------------------------------------------------------------------

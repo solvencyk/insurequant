@@ -1,0 +1,475 @@
+{
+  "cells": {
+    "KR0080|1|2024.1Q": {
+      "값": 16956225.834586,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|2|2024.1Q": {
+      "값": 13951028.139895,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|3|2024.1Q": {
+      "값": 3005197.694691,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|10|2024.1Q": {
+      "값": 342779.906405,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|11|2024.1Q": {
+      "값": 1612071.079557,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|12|2024.1Q": {
+      "값": 14404581.856787,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|13|2024.1Q": {
+      "값": 126267.534967,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(children_sum)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(children_sum) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|20|2024.1Q": {
+      "값": 13141192.500395,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|21|2024.1Q": {
+      "값": 253786.694458,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|30|2024.1Q": {
+      "값": 603289.32,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|31|2024.1Q": {
+      "값": 1249066.174369,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 21,
+      "sha256": "13982ce6347ccf4dea3d3fc619f6380b98580bcdbd4ef813693cee1a96f4986a",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|1|2024.2Q": {
+      "값": 17503658.629256,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 50,
+      "sha256": "15fbdaa5ed378b5c353d8ae38efb220e1f3b1ff6fae4bb928522697326233cf7",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|2|2024.2Q": {
+      "값": 14692569.057318,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 50,
+      "sha256": "15fbdaa5ed378b5c353d8ae38efb220e1f3b1ff6fae4bb928522697326233cf7",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|3|2024.2Q": {
+      "값": 2811089.571938,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 50,
+      "sha256": "15fbdaa5ed378b5c353d8ae38efb220e1f3b1ff6fae4bb928522697326233cf7",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|10|2024.2Q": {
+      "값": 381551.634341,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 50,
+      "sha256": "15fbdaa5ed378b5c353d8ae38efb220e1f3b1ff6fae4bb928522697326233cf7",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|11|2024.2Q": {
+      "값": 1640898.823642,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 50,
+      "sha256": "15fbdaa5ed378b5c353d8ae38efb220e1f3b1ff6fae4bb928522697326233cf7",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|12|2024.2Q": {
+      "값": 14938064.840019,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 50,
+      "sha256": "15fbdaa5ed378b5c353d8ae38efb220e1f3b1ff6fae4bb928522697326233cf7",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|20|2024.2Q": {
+      "값": 13783581.913332,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 50,
+      "sha256": "15fbdaa5ed378b5c353d8ae38efb220e1f3b1ff6fae4bb928522697326233cf7",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|21|2024.2Q": {
+      "값": 283134.56827,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 50,
+      "sha256": "15fbdaa5ed378b5c353d8ae38efb220e1f3b1ff6fae4bb928522697326233cf7",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|30|2024.2Q": {
+      "값": 603289.32,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 50,
+      "sha256": "15fbdaa5ed378b5c353d8ae38efb220e1f3b1ff6fae4bb928522697326233cf7",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|31|2024.2Q": {
+      "값": 1287651.09787,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 50,
+      "sha256": "15fbdaa5ed378b5c353d8ae38efb220e1f3b1ff6fae4bb928522697326233cf7",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|1|2024.3Q": {
+      "값": 18316238.896078,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 22,
+      "sha256": "1633b041028d7f68ff2f4e65dc24f8f34933e603d346578a3f600b42b2cf39d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|2|2024.3Q": {
+      "값": 15486318.541905,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 22,
+      "sha256": "1633b041028d7f68ff2f4e65dc24f8f34933e603d346578a3f600b42b2cf39d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|3|2024.3Q": {
+      "값": 2829920.354173,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 22,
+      "sha256": "1633b041028d7f68ff2f4e65dc24f8f34933e603d346578a3f600b42b2cf39d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|10|2024.3Q": {
+      "값": 484585.736431,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 22,
+      "sha256": "1633b041028d7f68ff2f4e65dc24f8f34933e603d346578a3f600b42b2cf39d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|11|2024.3Q": {
+      "값": 1605713.010869,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 22,
+      "sha256": "1633b041028d7f68ff2f4e65dc24f8f34933e603d346578a3f600b42b2cf39d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|12|2024.3Q": {
+      "값": 15626707.672441,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 22,
+      "sha256": "1633b041028d7f68ff2f4e65dc24f8f34933e603d346578a3f600b42b2cf39d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|20|2024.3Q": {
+      "값": 14450051.699565,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 22,
+      "sha256": "1633b041028d7f68ff2f4e65dc24f8f34933e603d346578a3f600b42b2cf39d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|21|2024.3Q": {
+      "값": 305486.807437,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 22,
+      "sha256": "1633b041028d7f68ff2f4e65dc24f8f34933e603d346578a3f600b42b2cf39d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|30|2024.3Q": {
+      "값": 603289.32,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 22,
+      "sha256": "1633b041028d7f68ff2f4e65dc24f8f34933e603d346578a3f600b42b2cf39d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|31|2024.3Q": {
+      "값": 1262687.31681,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 22,
+      "sha256": "1633b041028d7f68ff2f4e65dc24f8f34933e603d346578a3f600b42b2cf39d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|1|2025.3Q": {
+      "값": 19812440.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 24,
+      "sha256": "ce898be897ad650fa0fb4b5e34091677e018466159b3c0131c3181d8179b7077",
+      "축척": "백만원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|2|2025.3Q": {
+      "값": 17003438.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 24,
+      "sha256": "ce898be897ad650fa0fb4b5e34091677e018466159b3c0131c3181d8179b7077",
+      "축척": "백만원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|3|2025.3Q": {
+      "값": 2809002.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 24,
+      "sha256": "ce898be897ad650fa0fb4b5e34091677e018466159b3c0131c3181d8179b7077",
+      "축척": "백만원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|10|2025.3Q": {
+      "값": 473856.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 24,
+      "sha256": "ce898be897ad650fa0fb4b5e34091677e018466159b3c0131c3181d8179b7077",
+      "축척": "백만원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|11|2025.3Q": {
+      "값": 2173232.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 24,
+      "sha256": "ce898be897ad650fa0fb4b5e34091677e018466159b3c0131c3181d8179b7077",
+      "축척": "백만원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|12|2025.3Q": {
+      "값": 16450155.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 24,
+      "sha256": "ce898be897ad650fa0fb4b5e34091677e018466159b3c0131c3181d8179b7077",
+      "축척": "백만원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|20|2025.3Q": {
+      "값": 16109882.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 24,
+      "sha256": "ce898be897ad650fa0fb4b5e34091677e018466159b3c0131c3181d8179b7077",
+      "축척": "백만원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|21|2025.3Q": {
+      "값": 326348.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 24,
+      "sha256": "ce898be897ad650fa0fb4b5e34091677e018466159b3c0131c3181d8179b7077",
+      "축척": "백만원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|30|2025.3Q": {
+      "값": 603289.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 24,
+      "sha256": "ce898be897ad650fa0fb4b5e34091677e018466159b3c0131c3181d8179b7077",
+      "축척": "백만원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0080|31|2025.3Q": {
+      "값": 1376565.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "page": 24,
+      "sha256": "ce898be897ad650fa0fb4b5e34091677e018466159b3c0131c3181d8179b7077",
+      "축척": "백만원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    }
+  },
+  "skips": {
+    "KR0080|_calibration|*": {
+      "skip_reason": "Q4 보정 실패(마스터 앵커는 있었는데 후보가 안 맞음) 또는 위험항목이라 미검증 통과 불가 -- 항목 [14, 15, 22, 23, 24] 는 전 분기 스킵"
+    },
+    "KR0080|4|2024.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 247928.925523 vs 이전 388165.036(2023.4Q) / 이후 131568.963(2024.4Q)"
+    },
+    "KR0080|4|2024.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 15210.913663 vs 이전 388165.036(2023.4Q) / 이후 131568.963(2024.4Q)"
+    },
+    "KR0080|13|2024.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 299498.919661 vs 이전 126267.534967(2024.1Q) / 이후 158143.264(2024.4Q)"
+    },
+    "KR0080|4|2024.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 59009.740233 vs 이전 388165.036(2023.4Q) / 이후 131568.963(2024.4Q)"
+    },
+    "KR0080|13|2024.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 290232.156759 vs 이전 126267.534967(2024.1Q) / 이후 158143.264(2024.4Q)"
+    },
+    "KR0080|*|2025.1Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0080|*|2025.2Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0080|4|2025.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -75786.0 vs 이전 131568.963(2024.4Q) / 이후 -231187.57(2025.4Q)"
+    },
+    "KR0080|13|2025.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 332681.0 vs 이전 158143.264(2024.4Q) / 이후 200199.223(2025.4Q)"
+    },
+    "KR0080|*|2026.1Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    }
+  },
+  "stats": {
+    "targets": 7,
+    "cells": 41,
+    "skips": 11,
+    "calibrated_items": [
+      2,
+      3,
+      4,
+      10,
+      11,
+      12,
+      13,
+      20,
+      21,
+      30,
+      31
+    ],
+    "untested_but_safe_items": [],
+    "blocked_items": [
+      14,
+      15,
+      22,
+      23,
+      24
+    ]
+  }
+}

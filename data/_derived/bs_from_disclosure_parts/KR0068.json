@@ -1,0 +1,29 @@
+{
+  "cells": {},
+  "skips": {},
+  "stats": {
+    "targets": 0,
+    "cells": 0,
+    "skips": 0,
+    "calibrated_items": [
+      2,
+      3,
+      4,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      20,
+      21,
+      22,
+      23,
+      24,
+      30,
+      31
+    ],
+    "untested_but_safe_items": [],
+    "blocked_items": []
+  }
+}

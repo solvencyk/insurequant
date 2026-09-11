@@ -1,0 +1,686 @@
+{
+  "cells": {
+    "KR0049|1|2023.1Q": {
+      "값": 922800.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 20,
+      "sha256": "893ca34ec193c14179e9e72e967e8f31a73519fa6d9a6e14e4bdcd40c3d240ce",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|2|2023.1Q": {
+      "값": 577600.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 20,
+      "sha256": "893ca34ec193c14179e9e72e967e8f31a73519fa6d9a6e14e4bdcd40c3d240ce",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|3|2023.1Q": {
+      "값": 345200.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 20,
+      "sha256": "893ca34ec193c14179e9e72e967e8f31a73519fa6d9a6e14e4bdcd40c3d240ce",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|14|2023.1Q": {
+      "값": 118800.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 20,
+      "sha256": "893ca34ec193c14179e9e72e967e8f31a73519fa6d9a6e14e4bdcd40c3d240ce",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|30|2023.1Q": {
+      "값": 250900.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 20,
+      "sha256": "893ca34ec193c14179e9e72e967e8f31a73519fa6d9a6e14e4bdcd40c3d240ce",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|1|2023.2Q": {
+      "값": 920200.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 58,
+      "sha256": "1c6be0d8f1bf0b4f08b65d353882149b20db5e8451020cf9a389c7c06191a456",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|2|2023.2Q": {
+      "값": 565400.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 58,
+      "sha256": "1c6be0d8f1bf0b4f08b65d353882149b20db5e8451020cf9a389c7c06191a456",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|3|2023.2Q": {
+      "값": 354800.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 58,
+      "sha256": "1c6be0d8f1bf0b4f08b65d353882149b20db5e8451020cf9a389c7c06191a456",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|14|2023.2Q": {
+      "값": 108200.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 58,
+      "sha256": "1c6be0d8f1bf0b4f08b65d353882149b20db5e8451020cf9a389c7c06191a456",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|30|2023.2Q": {
+      "값": 250900.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 58,
+      "sha256": "1c6be0d8f1bf0b4f08b65d353882149b20db5e8451020cf9a389c7c06191a456",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|1|2023.3Q": {
+      "값": 911100.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 23,
+      "sha256": "dc09b90cd6bc93c726ce3587f4d71aba33cb0202c00687b797bc0c036a1ea698",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|2|2023.3Q": {
+      "값": 555200.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 23,
+      "sha256": "dc09b90cd6bc93c726ce3587f4d71aba33cb0202c00687b797bc0c036a1ea698",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|3|2023.3Q": {
+      "값": 355900.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 23,
+      "sha256": "dc09b90cd6bc93c726ce3587f4d71aba33cb0202c00687b797bc0c036a1ea698",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|14|2023.3Q": {
+      "값": 108000.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 23,
+      "sha256": "dc09b90cd6bc93c726ce3587f4d71aba33cb0202c00687b797bc0c036a1ea698",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|30|2023.3Q": {
+      "값": 250900.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 23,
+      "sha256": "dc09b90cd6bc93c726ce3587f4d71aba33cb0202c00687b797bc0c036a1ea698",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|1|2024.1Q": {
+      "값": 962100.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 25,
+      "sha256": "bc7d0e42bcc5943469963a568a2c07243915ed928ea967a6cbe7253a5fde3620",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|2|2024.1Q": {
+      "값": 600300.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 25,
+      "sha256": "bc7d0e42bcc5943469963a568a2c07243915ed928ea967a6cbe7253a5fde3620",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|3|2024.1Q": {
+      "값": 361800.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 25,
+      "sha256": "bc7d0e42bcc5943469963a568a2c07243915ed928ea967a6cbe7253a5fde3620",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|4|2024.1Q": {
+      "값": 8300.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 25,
+      "sha256": "bc7d0e42bcc5943469963a568a2c07243915ed928ea967a6cbe7253a5fde3620",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|14|2024.1Q": {
+      "값": 87000.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 25,
+      "sha256": "bc7d0e42bcc5943469963a568a2c07243915ed928ea967a6cbe7253a5fde3620",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|30|2024.1Q": {
+      "값": 250900.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 25,
+      "sha256": "bc7d0e42bcc5943469963a568a2c07243915ed928ea967a6cbe7253a5fde3620",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|31|2024.1Q": {
+      "값": 93900.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 25,
+      "sha256": "bc7d0e42bcc5943469963a568a2c07243915ed928ea967a6cbe7253a5fde3620",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|1|2024.2Q": {
+      "값": 977700.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 66,
+      "sha256": "d8144b8b3e40186fdbbdfb20823d78fc3e4cda71e1680986101c8e54c2f1ca97",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|2|2024.2Q": {
+      "값": 603800.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 66,
+      "sha256": "d8144b8b3e40186fdbbdfb20823d78fc3e4cda71e1680986101c8e54c2f1ca97",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|3|2024.2Q": {
+      "값": 373900.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 66,
+      "sha256": "d8144b8b3e40186fdbbdfb20823d78fc3e4cda71e1680986101c8e54c2f1ca97",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|4|2024.2Q": {
+      "값": 9900.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 66,
+      "sha256": "d8144b8b3e40186fdbbdfb20823d78fc3e4cda71e1680986101c8e54c2f1ca97",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|11|2024.2Q": {
+      "값": 167500.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 66,
+      "sha256": "d8144b8b3e40186fdbbdfb20823d78fc3e4cda71e1680986101c8e54c2f1ca97",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|12|2024.2Q": {
+      "값": 495800.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 66,
+      "sha256": "d8144b8b3e40186fdbbdfb20823d78fc3e4cda71e1680986101c8e54c2f1ca97",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|14|2024.2Q": {
+      "값": 80600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 66,
+      "sha256": "d8144b8b3e40186fdbbdfb20823d78fc3e4cda71e1680986101c8e54c2f1ca97",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|15|2024.2Q": {
+      "값": 21600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 66,
+      "sha256": "d8144b8b3e40186fdbbdfb20823d78fc3e4cda71e1680986101c8e54c2f1ca97",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|30|2024.2Q": {
+      "값": 250900.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 66,
+      "sha256": "d8144b8b3e40186fdbbdfb20823d78fc3e4cda71e1680986101c8e54c2f1ca97",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|31|2024.2Q": {
+      "값": 104200.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 66,
+      "sha256": "d8144b8b3e40186fdbbdfb20823d78fc3e4cda71e1680986101c8e54c2f1ca97",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|1|2025.2Q": {
+      "값": 988500.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|2|2025.2Q": {
+      "값": 613600.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|3|2025.2Q": {
+      "값": 374900.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|11|2025.2Q": {
+      "값": 112700.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|12|2025.2Q": {
+      "값": 504100.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|14|2025.2Q": {
+      "값": 64900.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|15|2025.2Q": {
+      "값": 28200.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|30|2025.2Q": {
+      "값": 250900.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|31|2025.2Q": {
+      "값": 93800.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|1|2025.3Q": {
+      "값": 949600.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|2|2025.3Q": {
+      "값": 585300.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|3|2025.3Q": {
+      "값": 364200.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|4|2025.3Q": {
+      "값": 16400.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|11|2025.3Q": {
+      "값": 67000.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|12|2025.3Q": {
+      "값": 484600.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|14|2025.3Q": {
+      "값": 66400.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|15|2025.3Q": {
+      "값": 27500.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|30|2025.3Q": {
+      "값": 250900.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|31|2025.3Q": {
+      "값": 86700.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|1|2026.2Q": {
+      "값": 849400.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|2|2026.2Q": {
+      "값": 561300.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|3|2026.2Q": {
+      "값": 288100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|11|2026.2Q": {
+      "값": 67800.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|12|2026.2Q": {
+      "값": 416600.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|14|2026.2Q": {
+      "값": 59600.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|15|2026.2Q": {
+      "값": 26900.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|30|2026.2Q": {
+      "값": 250900.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0049|31|2026.2Q": {
+      "값": 46100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    }
+  },
+  "skips": {
+    "KR0049|_calibration|*": {
+      "skip_reason": "Q4 보정 실패(마스터 앵커는 있었는데 후보가 안 맞음) 또는 위험항목이라 미검증 통과 불가 -- 항목 [13, 20, 21, 22, 23, 24] 는 전 분기 스킵"
+    },
+    "KR0049|_calibration_untested|*": {
+      "skip_reason": "항목 [2, 3, 4, 10, 11, 12, 14, 15, 30, 31] 는 마스터에 Q4 앵커가 없거나(q4_table_found=False) 재현검사를 못 했다 -- 단일개념 라벨이라(또는 이 회사는 Q4 경영공시 자체에 BS 가 없어) 미검증으로 통과시키되 '방법'에 unverified 로 표시함(owner 리뷰 권장)"
+    },
+    "KR0049|4|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 3700.0 vs 이후 9361.047856(2023.4Q)"
+    },
+    "KR0049|10|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 4500.0 vs 이후 9151.971889(2023.4Q)"
+    },
+    "KR0049|4|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 1500.0 vs 이후 9361.047856(2023.4Q)"
+    },
+    "KR0049|10|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 4700.0 vs 이후 9151.971889(2023.4Q)"
+    },
+    "KR0049|4|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -200.0 vs 이후 9361.047856(2023.4Q)"
+    },
+    "KR0049|10|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 3700.0 vs 이후 9151.971889(2023.4Q)"
+    },
+    "KR0049|10|2024.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 5300.0 vs 이전 9151.971889(2023.4Q) / 이후 35733.550148(2024.4Q)"
+    },
+    "KR0049|10|2024.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 4000.0 vs 이전 9151.971889(2023.4Q) / 이후 35733.550148(2024.4Q)"
+    },
+    "KR0049|*|2024.3Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0049|*|2025.1Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0049|4|2025.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 19900.0 vs 이전 15158.705053(2024.4Q) / 이후 2593.523927(2025.4Q)"
+    },
+    "KR0049|10|2025.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 10400.0 vs 이전 35733.550148(2024.4Q) / 이후 7981.919187(2025.4Q)"
+    },
+    "KR0049|10|2025.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 14300.0 vs 이전 35733.550148(2024.4Q) / 이후 7981.919187(2025.4Q)"
+    },
+    "KR0049|*|2026.1Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0049|4|2026.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -21000.0 vs 이전 2593.523927(2025.4Q)"
+    },
+    "KR0049|10|2026.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 11900.0 vs 이전 7981.919187(2025.4Q)"
+    }
+  },
+  "stats": {
+    "targets": 11,
+    "cells": 60,
+    "skips": 18,
+    "calibrated_items": [],
+    "untested_but_safe_items": [
+      2,
+      3,
+      4,
+      10,
+      11,
+      12,
+      14,
+      15,
+      30,
+      31
+    ],
+    "blocked_items": [
+      13,
+      20,
+      21,
+      22,
+      23,
+      24
+    ]
+  }
+}

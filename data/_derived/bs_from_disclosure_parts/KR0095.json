@@ -1,0 +1,37 @@
+{
+  "cells": {},
+  "skips": {
+    "KR0095|_calibration|*": {
+      "skip_reason": "Q4 보정 실패(마스터 앵커는 있었는데 후보가 안 맞음) 또는 위험항목이라 미검증 통과 불가 -- 항목 [13, 20, 21, 22, 23, 24] 는 전 분기 스킵"
+    },
+    "KR0095|_calibration_untested|*": {
+      "skip_reason": "항목 [2, 3, 4, 10, 11, 12, 14, 15, 30, 31] 는 마스터에 Q4 앵커가 없거나(q4_table_found=False) 재현검사를 못 했다 -- 단일개념 라벨이라(또는 이 회사는 Q4 경영공시 자체에 BS 가 없어) 미검증으로 통과시키되 '방법'에 unverified 로 표시함(owner 리뷰 권장)"
+    }
+  },
+  "stats": {
+    "targets": 0,
+    "cells": 0,
+    "skips": 2,
+    "calibrated_items": [],
+    "untested_but_safe_items": [
+      2,
+      3,
+      4,
+      10,
+      11,
+      12,
+      14,
+      15,
+      30,
+      31
+    ],
+    "blocked_items": [
+      13,
+      20,
+      21,
+      22,
+      23,
+      24
+    ]
+  }
+}

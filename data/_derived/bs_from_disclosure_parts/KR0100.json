@@ -1,0 +1,690 @@
+{
+  "cells": {
+    "KR0100|1|2023.1Q": {
+      "값": 1496531.953013,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "79b52f724b6a98e94d20a951b6dfe43e2e54915613e1c1cf8f1a6e32741d6af2",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|2|2023.1Q": {
+      "값": 1213809.634347,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "79b52f724b6a98e94d20a951b6dfe43e2e54915613e1c1cf8f1a6e32741d6af2",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|3|2023.1Q": {
+      "값": 282722.318661,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "79b52f724b6a98e94d20a951b6dfe43e2e54915613e1c1cf8f1a6e32741d6af2",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|21|2023.1Q": {
+      "값": 24749.278441,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "79b52f724b6a98e94d20a951b6dfe43e2e54915613e1c1cf8f1a6e32741d6af2",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|30|2023.1Q": {
+      "값": 285085.5,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "79b52f724b6a98e94d20a951b6dfe43e2e54915613e1c1cf8f1a6e32741d6af2",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|1|2023.2Q": {
+      "값": 1501612.342648,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 44,
+      "sha256": "12dce50f01c90e46fcf39d172bf52e5ec5282204ff72440f6474c824241387bf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|2|2023.2Q": {
+      "값": 1206894.647007,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 44,
+      "sha256": "12dce50f01c90e46fcf39d172bf52e5ec5282204ff72440f6474c824241387bf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|3|2023.2Q": {
+      "값": 294717.695641,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 44,
+      "sha256": "12dce50f01c90e46fcf39d172bf52e5ec5282204ff72440f6474c824241387bf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|21|2023.2Q": {
+      "값": 22514.438585,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 44,
+      "sha256": "12dce50f01c90e46fcf39d172bf52e5ec5282204ff72440f6474c824241387bf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|30|2023.2Q": {
+      "값": 285215.5,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 44,
+      "sha256": "12dce50f01c90e46fcf39d172bf52e5ec5282204ff72440f6474c824241387bf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|31|2023.2Q": {
+      "값": -302222.726366,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 44,
+      "sha256": "12dce50f01c90e46fcf39d172bf52e5ec5282204ff72440f6474c824241387bf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|1|2023.3Q": {
+      "값": 1468011.980631,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "1ce2d002053fb403a7236997eac5d91a3322748cebd9cce632c6d1aeb6b0063d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|2|2023.3Q": {
+      "값": 1168148.174947,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "1ce2d002053fb403a7236997eac5d91a3322748cebd9cce632c6d1aeb6b0063d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|3|2023.3Q": {
+      "값": 299863.805684,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "1ce2d002053fb403a7236997eac5d91a3322748cebd9cce632c6d1aeb6b0063d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|21|2023.3Q": {
+      "값": 19296.735902,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "1ce2d002053fb403a7236997eac5d91a3322748cebd9cce632c6d1aeb6b0063d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|30|2023.3Q": {
+      "값": 285215.5,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "1ce2d002053fb403a7236997eac5d91a3322748cebd9cce632c6d1aeb6b0063d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|31|2023.3Q": {
+      "값": -295170.164437,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 10,
+      "sha256": "1ce2d002053fb403a7236997eac5d91a3322748cebd9cce632c6d1aeb6b0063d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|1|2024.1Q": {
+      "값": 1535716.365106,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 11,
+      "sha256": "77e1d1f30c1082ff13ff652d5d297deedd42caf3b300ebc4672e90f2496c0361",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|2|2024.1Q": {
+      "값": 1302337.553506,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 11,
+      "sha256": "77e1d1f30c1082ff13ff652d5d297deedd42caf3b300ebc4672e90f2496c0361",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|3|2024.1Q": {
+      "값": 233378.8116,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 11,
+      "sha256": "77e1d1f30c1082ff13ff652d5d297deedd42caf3b300ebc4672e90f2496c0361",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|10|2024.1Q": {
+      "값": 26081.80453,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 11,
+      "sha256": "77e1d1f30c1082ff13ff652d5d297deedd42caf3b300ebc4672e90f2496c0361",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|20|2024.1Q": {
+      "값": 921654.878542,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 11,
+      "sha256": "77e1d1f30c1082ff13ff652d5d297deedd42caf3b300ebc4672e90f2496c0361",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|21|2024.1Q": {
+      "값": 25546.409977,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 11,
+      "sha256": "77e1d1f30c1082ff13ff652d5d297deedd42caf3b300ebc4672e90f2496c0361",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|30|2024.1Q": {
+      "값": 285215.5,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 11,
+      "sha256": "77e1d1f30c1082ff13ff652d5d297deedd42caf3b300ebc4672e90f2496c0361",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|1|2024.3Q": {
+      "값": 1546370.172144,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 25,
+      "sha256": "7548eb6838ae721c8c8957c8929989b991960875ae0beffc6d2272aa0b17aacf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|2|2024.3Q": {
+      "값": 1344029.34895,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 25,
+      "sha256": "7548eb6838ae721c8c8957c8929989b991960875ae0beffc6d2272aa0b17aacf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|3|2024.3Q": {
+      "값": 202340.823194,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 25,
+      "sha256": "7548eb6838ae721c8c8957c8929989b991960875ae0beffc6d2272aa0b17aacf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|20|2024.3Q": {
+      "값": 1001261.488868,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 25,
+      "sha256": "7548eb6838ae721c8c8957c8929989b991960875ae0beffc6d2272aa0b17aacf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|21|2024.3Q": {
+      "값": 27094.732035,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 25,
+      "sha256": "7548eb6838ae721c8c8957c8929989b991960875ae0beffc6d2272aa0b17aacf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|30|2024.3Q": {
+      "값": 285215.5,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 25,
+      "sha256": "7548eb6838ae721c8c8957c8929989b991960875ae0beffc6d2272aa0b17aacf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|31|2024.3Q": {
+      "값": -281817.442784,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "page": 25,
+      "sha256": "7548eb6838ae721c8c8957c8929989b991960875ae0beffc6d2272aa0b17aacf",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|1|2025.1Q": {
+      "값": 1592805.819252,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "773e7542ec1fd04ad42e67f9f7f95ad2743db444f7f4d9cd10b1b343d5b6df05",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|2|2025.1Q": {
+      "값": 1447286.017989,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "773e7542ec1fd04ad42e67f9f7f95ad2743db444f7f4d9cd10b1b343d5b6df05",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|3|2025.1Q": {
+      "값": 145519.801263,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "773e7542ec1fd04ad42e67f9f7f95ad2743db444f7f4d9cd10b1b343d5b6df05",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|14|2025.1Q": {
+      "값": 384.529505,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "773e7542ec1fd04ad42e67f9f7f95ad2743db444f7f4d9cd10b1b343d5b6df05",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|20|2025.1Q": {
+      "값": 1071724.928099,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "773e7542ec1fd04ad42e67f9f7f95ad2743db444f7f4d9cd10b1b343d5b6df05",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|21|2025.1Q": {
+      "값": 28938.439281,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "773e7542ec1fd04ad42e67f9f7f95ad2743db444f7f4d9cd10b1b343d5b6df05",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|30|2025.1Q": {
+      "값": 285215.5,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "773e7542ec1fd04ad42e67f9f7f95ad2743db444f7f4d9cd10b1b343d5b6df05",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|31|2025.1Q": {
+      "값": -279728.784354,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "773e7542ec1fd04ad42e67f9f7f95ad2743db444f7f4d9cd10b1b343d5b6df05",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|1|2025.2Q": {
+      "값": 1586868.424326,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "9a267e037f3c526cedea834a9b8aadfc7b97de32f2814ff05b640d22fcf73426",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|2|2025.2Q": {
+      "값": 1432548.72951,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "9a267e037f3c526cedea834a9b8aadfc7b97de32f2814ff05b640d22fcf73426",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|3|2025.2Q": {
+      "값": 154319.694816,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "9a267e037f3c526cedea834a9b8aadfc7b97de32f2814ff05b640d22fcf73426",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|4|2025.2Q": {
+      "값": -63407.129221,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "9a267e037f3c526cedea834a9b8aadfc7b97de32f2814ff05b640d22fcf73426",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|14|2025.2Q": {
+      "값": 777.846889,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "9a267e037f3c526cedea834a9b8aadfc7b97de32f2814ff05b640d22fcf73426",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|20|2025.2Q": {
+      "값": 1056278.1353,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "9a267e037f3c526cedea834a9b8aadfc7b97de32f2814ff05b640d22fcf73426",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|21|2025.2Q": {
+      "값": 28421.292991,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "9a267e037f3c526cedea834a9b8aadfc7b97de32f2814ff05b640d22fcf73426",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|30|2025.2Q": {
+      "값": 285215.5,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "9a267e037f3c526cedea834a9b8aadfc7b97de32f2814ff05b640d22fcf73426",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|31|2025.2Q": {
+      "값": -275891.943278,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "9a267e037f3c526cedea834a9b8aadfc7b97de32f2814ff05b640d22fcf73426",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|1|2025.3Q": {
+      "값": 1600048.655065,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "2414e2f0ddc0136a144aca10e6e946b4769344eb5383159301b761e8a4ff2fa6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|2|2025.3Q": {
+      "값": 1438830.172926,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "2414e2f0ddc0136a144aca10e6e946b4769344eb5383159301b761e8a4ff2fa6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|3|2025.3Q": {
+      "값": 161218.482139,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "2414e2f0ddc0136a144aca10e6e946b4769344eb5383159301b761e8a4ff2fa6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|4|2025.3Q": {
+      "값": -60347.653583,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "2414e2f0ddc0136a144aca10e6e946b4769344eb5383159301b761e8a4ff2fa6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|14|2025.3Q": {
+      "값": 1236.700065,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "2414e2f0ddc0136a144aca10e6e946b4769344eb5383159301b761e8a4ff2fa6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|20|2025.3Q": {
+      "값": 1055839.071905,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "2414e2f0ddc0136a144aca10e6e946b4769344eb5383159301b761e8a4ff2fa6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|21|2025.3Q": {
+      "값": 27034.996189,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "2414e2f0ddc0136a144aca10e6e946b4769344eb5383159301b761e8a4ff2fa6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|30|2025.3Q": {
+      "값": 285215.5,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "2414e2f0ddc0136a144aca10e6e946b4769344eb5383159301b761e8a4ff2fa6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0100|31|2025.3Q": {
+      "값": -272052.631593,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "page": 28,
+      "sha256": "2414e2f0ddc0136a144aca10e6e946b4769344eb5383159301b761e8a4ff2fa6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    }
+  },
+  "skips": {
+    "KR0100|_calibration|*": {
+      "skip_reason": "Q4 보정 실패(마스터 앵커는 있었는데 후보가 안 맞음) 또는 위험항목이라 미검증 통과 불가 -- 항목 [22, 23] 는 전 분기 스킵"
+    },
+    "KR0100|_calibration_untested|*": {
+      "skip_reason": "항목 [31] 는 마스터에 Q4 앵커가 없거나(q4_table_found=True) 재현검사를 못 했다 -- 단일개념 라벨이라(또는 이 회사는 Q4 경영공시 자체에 BS 가 없어) 미검증으로 통과시키되 '방법'에 unverified 로 표시함(owner 리뷰 권장)"
+    },
+    "KR0100|4|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 105058.487714 vs 이후 52355.015836(2023.4Q)"
+    },
+    "KR0100|10|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 27134.95581 vs 이후 55212.67087(2023.4Q)"
+    },
+    "KR0100|20|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 846016.693679 vs 이후 1222488.069199(2023.4Q)"
+    },
+    "KR0100|24|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 24856.48953 vs 이후 1312.704409(2023.4Q)"
+    },
+    "KR0100|4|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 103424.690263 vs 이후 52355.015836(2023.4Q)"
+    },
+    "KR0100|10|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 28032.341249 vs 이후 55212.67087(2023.4Q)"
+    },
+    "KR0100|14|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 0.0 vs 이후 303.421374(2024.4Q)"
+    },
+    "KR0100|20|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 836476.647018 vs 이후 1222488.069199(2023.4Q)"
+    },
+    "KR0100|24|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 29349.747673 vs 이후 1312.704409(2023.4Q)"
+    },
+    "KR0100|4|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 101518.238377 vs 이후 52355.015836(2023.4Q)"
+    },
+    "KR0100|10|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 24221.541529 vs 이후 55212.67087(2023.4Q)"
+    },
+    "KR0100|14|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 0.0 vs 이후 303.421374(2024.4Q)"
+    },
+    "KR0100|20|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 815336.273433 vs 이후 1222488.069199(2023.4Q)"
+    },
+    "KR0100|24|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 27247.793189 vs 이후 1312.704409(2023.4Q)"
+    },
+    "KR0100|4|2024.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 22618.813979 vs 이전 52355.015836(2023.4Q) / 이후 -35794.96326(2024.4Q)"
+    },
+    "KR0100|24|2024.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 37796.527431 vs 이전 1312.704409(2023.4Q) / 이후 1890.648318(2024.4Q)"
+    },
+    "KR0100|*|2024.2Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0100|4|2024.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -9412.864225 vs 이전 52355.015836(2023.4Q) / 이후 -35794.96326(2024.4Q)"
+    },
+    "KR0100|10|2024.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 17866.557837 vs 이전 26081.80453(2024.1Q) / 이후 28728.845047(2024.4Q)"
+    },
+    "KR0100|24|2024.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 16876.427361 vs 이전 1312.704409(2023.4Q) / 이후 1890.648318(2024.4Q)"
+    },
+    "KR0100|4|2025.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -68370.181698 vs 이전 -35794.96326(2024.4Q) / 이후 -51796.608023(2025.4Q)"
+    },
+    "KR0100|10|2025.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 9160.079291 vs 이전 28728.845047(2024.4Q) / 이후 26897.346463(2025.4Q)"
+    },
+    "KR0100|24|2025.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 57728.410413 vs 이전 1890.648318(2024.4Q) / 이후 3144.980231(2025.4Q)"
+    },
+    "KR0100|10|2025.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 10673.187662 vs 이전 28728.845047(2024.4Q) / 이후 26897.346463(2025.4Q)"
+    },
+    "KR0100|24|2025.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 32165.524835 vs 이전 1890.648318(2024.4Q) / 이후 3144.980231(2025.4Q)"
+    },
+    "KR0100|10|2025.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 8531.566478 vs 이전 28728.845047(2024.4Q) / 이후 26897.346463(2025.4Q)"
+    },
+    "KR0100|24|2025.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 30143.849059 vs 이전 1890.648318(2024.4Q) / 이후 3144.980231(2025.4Q)"
+    }
+  },
+  "stats": {
+    "targets": 9,
+    "cells": 57,
+    "skips": 29,
+    "calibrated_items": [
+      2,
+      3,
+      4,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      20,
+      21,
+      24,
+      30
+    ],
+    "untested_but_safe_items": [
+      31
+    ],
+    "blocked_items": [
+      22,
+      23
+    ]
+  }
+}

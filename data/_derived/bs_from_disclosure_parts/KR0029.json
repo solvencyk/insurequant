@@ -1,0 +1,1016 @@
+{
+  "cells": {
+    "KR0029|1|2023.1Q": {
+      "값": 940383.848,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2023.1Q": {
+      "값": 388678.913,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2023.1Q": {
+      "값": 551704.935,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|10|2023.1Q": {
+      "값": 75082.967,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2023.1Q": {
+      "값": 240170.155,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2023.1Q": {
+      "값": 288077.741,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2023.1Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2023.1Q": {
+      "값": 389082.232,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|1|2023.2Q": {
+      "값": 937934.23,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2023.2Q": {
+      "값": 366674.587,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2023.2Q": {
+      "값": 571259.643,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|10|2023.2Q": {
+      "값": 57984.869,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2023.2Q": {
+      "값": 232023.482,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2023.2Q": {
+      "값": 263048.811,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2023.2Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2023.2Q": {
+      "값": 413026.646,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|1|2023.3Q": {
+      "값": 951025.657,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2023.3Q": {
+      "값": 369350.944,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2023.3Q": {
+      "값": 581674.713,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|10|2023.3Q": {
+      "값": 79183.404,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2023.3Q": {
+      "값": 206002.863,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2023.3Q": {
+      "값": 263317.715,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|21|2023.3Q": {
+      "값": 2149.504,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2023.3Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2023.3Q": {
+      "값": 424750.562,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|1|2024.1Q": {
+      "값": 1028688.736,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2024.1Q": {
+      "값": 402446.134,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2024.1Q": {
+      "값": 626242.602,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|10|2024.1Q": {
+      "값": 80179.192,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2024.1Q": {
+      "값": 191610.866,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2024.1Q": {
+      "값": 280882.281,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2024.1Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2024.1Q": {
+      "값": 445176.06,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|1|2024.2Q": {
+      "값": 1048405.888,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 45,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2024.2Q": {
+      "값": 394185.113,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 45,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2024.2Q": {
+      "값": 654220.775,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 45,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|4|2024.2Q": {
+      "값": 7119.961,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 45,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|10|2024.2Q": {
+      "값": 78098.465,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 45,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2024.2Q": {
+      "값": 180871.209,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 45,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2024.2Q": {
+      "값": 266453.879,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 45,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2024.2Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 45,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2024.2Q": {
+      "값": 468333.093,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 45,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|1|2024.3Q": {
+      "값": 1067886.831,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2024.3Q": {
+      "값": 408455.651,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2024.3Q": {
+      "값": 659431.18,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|4|2024.3Q": {
+      "값": 12619.601,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|10|2024.3Q": {
+      "값": 75659.495,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2024.3Q": {
+      "값": 172352.109,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2024.3Q": {
+      "값": 255258.326,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2024.3Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2024.3Q": {
+      "값": 468043.858,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|1|2025.1Q": {
+      "값": 1086206.447,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2025.1Q": {
+      "값": 420962.308,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2025.1Q": {
+      "값": 665244.139,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|4|2025.1Q": {
+      "값": 11466.115,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2025.1Q": {
+      "값": 202600.204,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2025.1Q": {
+      "값": 288063.975,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2025.1Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2025.1Q": {
+      "값": 475010.303,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|1|2025.2Q": {
+      "값": 1089912.022,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 52,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2025.2Q": {
+      "값": 398851.466,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 52,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2025.2Q": {
+      "값": 691060.556,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 52,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|4|2025.2Q": {
+      "값": 12364.176,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 52,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|10|2025.2Q": {
+      "값": 61947.866,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 52,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2025.2Q": {
+      "값": 195466.153,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 52,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2025.2Q": {
+      "값": 267626.677,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 52,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2025.2Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 52,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2025.2Q": {
+      "값": 499928.659,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 52,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|1|2025.3Q": {
+      "값": 1044834.09,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2025.3Q": {
+      "값": 357300.682,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2025.3Q": {
+      "값": 687533.408,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|10|2025.3Q": {
+      "값": 44704.898,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2025.3Q": {
+      "값": 147669.668,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2025.3Q": {
+      "값": 226593.569,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|21|2025.3Q": {
+      "값": 5667.757,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2025.3Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2025.3Q": {
+      "값": 500122.27,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2025.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|1|2026.1Q": {
+      "값": 1060843.269,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 24,
+      "sha256": "8e73068589b6272070c9094513c22b55858596d23b22e9fd1dfa186aa59c28ab",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2026.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2026.1Q": {
+      "값": 363898.519,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 24,
+      "sha256": "8e73068589b6272070c9094513c22b55858596d23b22e9fd1dfa186aa59c28ab",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2026.1Q": {
+      "값": 696944.75,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 24,
+      "sha256": "8e73068589b6272070c9094513c22b55858596d23b22e9fd1dfa186aa59c28ab",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|10|2026.1Q": {
+      "값": 56589.197,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 24,
+      "sha256": "8e73068589b6272070c9094513c22b55858596d23b22e9fd1dfa186aa59c28ab",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2026.1Q": {
+      "값": 142298.009,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 24,
+      "sha256": "8e73068589b6272070c9094513c22b55858596d23b22e9fd1dfa186aa59c28ab",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2026.1Q": {
+      "값": 229453.285,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 24,
+      "sha256": "8e73068589b6272070c9094513c22b55858596d23b22e9fd1dfa186aa59c28ab",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2026.1Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 24,
+      "sha256": "8e73068589b6272070c9094513c22b55858596d23b22e9fd1dfa186aa59c28ab",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2026.1Q": {
+      "값": 534145.872,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 24,
+      "sha256": "8e73068589b6272070c9094513c22b55858596d23b22e9fd1dfa186aa59c28ab",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|1|2026.2Q": {
+      "값": 1067234.07,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 55,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|2|2026.2Q": {
+      "값": 360241.943,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 55,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|3|2026.2Q": {
+      "값": 706992.127,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 55,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|10|2026.2Q": {
+      "값": 52505.741,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 55,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|14|2026.2Q": {
+      "값": 141407.005,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 55,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|20|2026.2Q": {
+      "값": 236332.226,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 55,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|30|2026.2Q": {
+      "값": 61757.915,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 55,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0029|31|2026.2Q": {
+      "값": 571256.283,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 55,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "천원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2026.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    }
+  },
+  "skips": {
+    "KR0029|_calibration|*": {
+      "skip_reason": "Q4 보정 실패(마스터 앵커는 있었는데 후보가 안 맞음) 또는 위험항목이라 미검증 통과 불가 -- 항목 [11, 12, 13, 15, 22, 23, 24] 는 전 분기 스킵"
+    },
+    "KR0029|4|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -16145.018 vs 이후 84.670631(2023.4Q)"
+    },
+    "KR0029|21|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 4710.575 vs 이후 1685.84006(2023.4Q)"
+    },
+    "KR0029|4|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -20534.724 vs 이후 84.670631(2023.4Q)"
+    },
+    "KR0029|21|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 4051.82 vs 이후 1685.84006(2023.4Q)"
+    },
+    "KR0029|4|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -21843.57 vs 이후 84.670631(2023.4Q)"
+    },
+    "KR0029|4|2024.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 2298.821 vs 이전 84.670631(2023.4Q) / 이후 10117.001683(2024.4Q)"
+    },
+    "KR0029|21|2024.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 6388.965 vs 이전 1685.84006(2023.4Q) / 이후 132.860299(2024.4Q)"
+    },
+    "KR0029|21|2024.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 4375.341 vs 이전 1685.84006(2023.4Q) / 이후 132.860299(2024.4Q)"
+    },
+    "KR0029|21|2024.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 328.06 vs 이전 1685.84006(2023.4Q) / 이후 132.860299(2024.4Q)"
+    },
+    "KR0029|10|2025.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 40319.923 vs 이전 83479.185411(2024.4Q) / 이후 60588.944409(2025.4Q)"
+    },
+    "KR0029|21|2025.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 457.478 vs 이전 132.860299(2024.4Q) / 이후 6036.356818(2025.4Q)"
+    },
+    "KR0029|21|2025.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 3710.417 vs 이전 132.860299(2024.4Q) / 이후 6036.356818(2025.4Q)"
+    },
+    "KR0029|4|2025.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 8643.417 vs 이전 12364.176(2025.2Q) / 이후 -3516.937265(2025.4Q)"
+    },
+    "KR0029|4|2026.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -15968.843 vs 이전 -3516.937265(2025.4Q)"
+    },
+    "KR0029|21|2026.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 3694.934 vs 이전 6036.356818(2025.4Q)"
+    },
+    "KR0029|4|2026.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -43031.877 vs 이전 -3516.937265(2025.4Q)"
+    },
+    "KR0029|21|2026.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 290.439 vs 이전 6036.356818(2025.4Q)"
+    }
+  },
+  "stats": {
+    "targets": 11,
+    "cells": 93,
+    "skips": 18,
+    "calibrated_items": [
+      2,
+      3,
+      4,
+      10,
+      14,
+      20,
+      21,
+      30,
+      31
+    ],
+    "untested_but_safe_items": [],
+    "blocked_items": [
+      11,
+      12,
+      13,
+      15,
+      22,
+      23,
+      24
+    ]
+  }
+}

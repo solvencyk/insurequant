@@ -1,7 +1,43 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-09-03 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-09-11 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-09-11 — 17BS 경영공시 백필 round2: 엔진 버그 6종 수정 + 비전 서브에이전트 4개, 코어결측 117→29
+
+발주 `inbox/parser/20260911T0920Z`. 상세는 TODO_parser_ifrs17.md 88th pass 참조. 1라운드
+(86th/87th pass) 후 남은 코어(항목1·2·3) 결측 117 (회사,분기) 중 88건을 닫았다(75%). sender 가
+짚은 3가지 가설(표고정 과엄격/QoQ 단방향/4Q앵커없음)을 실측 재현한 결과 실제 근본원인은
+6가지 엔진 버그였다: ①헤더 마커 사각(`당분기`류 미인식) ②헤더-데이터 열 오프셋(`_pad_shift`
+신설) ③"(별도)"괄호수식어 텍스트런 분리로 인한 표제순서반전 ④"6-4" 마커 숫자조판 오탐
+⑤**△(세모) 음수 미인식 — 파급력 최대, 음수 항목이 있는 셀을 스킵사유도 없이 조용히
+유실시킴** ⑥표 하나가 페이지/표객체 여러 개로 쪼개짐(최대 8페이지 이어짐 확장 +
+`_reconcile_two_blob_span` 신설). 코드는 전부 `scripts/bs_disclosure/common.py` +
+`scripts/extract_bs_from_disclosure.py`(target_quarters_for 를 항목1만→코어3항목 전부
+기준으로 확장 + 기존값 재기록 방지 가드 추가). 서브에이전트 4개(세션 한도) 병렬로 이미지
+기반 5개사(KR0074·KR0075·KR0097·KR0076·KR1098) 렌더링+비전 백필, 전부 4Q 정답지 교차확인.
+QoQ hold 4칸(KR1010 3·KR0004 1)은 DART/뉴스 공시이력으로 사람이 확인 후 수동 승격
+(`*_agent_note.json`). 산출: `bs_manual_overrides.json` 1,208→2,081칸(873 순증),
+`IFRS17_BS.json` 7,967→8,840행 — **기존 7,967행 전부 값 불변 확인(스냅샷 대조)**. 게이트
+`validate_data_contract.py` **RED=0**, `test_master_tables_golden.py`/`test_deploy_assets.py`
+PASS, 골든·지문·xlsx 전부 갱신. 잔여 29건 전부 skip_reason 기록(이미지 미착수 12·경영공시
+첨부파일 미수집 9·원문 데이터결함 1·QoQ 원문재확인필요 7). owner 재확인 2건: KR0004
+2026.1Q/2Q 항목1 48배 점프(스케일 오판 의심), KR0004 2024.1Q~3Q 항목3(근거 약함). push 안 함.
+
+## 2026-09-11 — 17BS 경영공시(정기경영공시 raw PDF) 백필: 신규 엔진, TIER2 15개사 21항목
+
+발주 `inbox/parser/20260911T0109Z`. 상세는 TODO_parser_ifrs17.md 86th pass 항목 참조(전문이
+길어 여기서는 결과만 요약). 신규 코드 `scripts/bs_disclosure/`(common.py·reserve.py) +
+`scripts/extract_bs_from_disclosure.py` + `scripts/merge_bs_disclosure_parts.py`
+(합 1,199줄). 산출: `data/dart/viz/bs_manual_overrides.json` 363→1,032칸(669칸 순증),
+`IFRS17_BS.json` 7,042→7,772행. 게이트 `validate_data_contract.py` RED=12(TODO 에 사유
+등재, push 안 함), `validate_golden_input_fingerprints.py`/`test_ifrs17_bs_golden.py --update`/
+`sync_master_xlsx_sheet.py "17BS"` 전부 완료. 비순환 검증(TIER-1 24사) match=143/mismatch=59/
+skip=147 — mismatch 는 하이브리드자본 분류차이(KR0070/71/KR0003, calibration gate 로 방어)와
+소액노이즈(KR1000/KR0094)로 분류 완료. 이미지 BS 4개사 중 3개사(KR0074/97/75) 렌더링+비전
+판독으로 4Q 정답지 교차확인 후 적재, KR1011(IBK연금)은 fitz 표추출이 BS 전체를 한 셀에
+뭉쳐 구조적으로 미해결(천장 3칸), KR0080(AIA)도 순수 IFRS BS 부재로 천장 낮음(13칸) —
+둘 다 후속 세션 몫으로 TODO 에 등재. 세션 도중 API 세션한도(429)로 1회 중단·재개.
 
 ## 2026-09-03 (2차) — 법정준비금 4종 잔액 정의 통일("기적립액+적립예정액=잔액") + 절대오차 재대조, 135칸 정정
 

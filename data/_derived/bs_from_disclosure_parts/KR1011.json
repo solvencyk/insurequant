@@ -1,0 +1,687 @@
+{
+  "cells": {
+    "KR1011|1|2023.1Q": {
+      "값": 11050772.722037,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|2|2023.1Q": {
+      "값": 10506605.418856,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|3|2023.1Q": {
+      "값": 544167.303181,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|4|2023.1Q": {
+      "값": -243614.360408,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|10|2023.1Q": {
+      "값": 454436.830603,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|15|2023.1Q": {
+      "값": 8573.04105,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|20|2023.1Q": {
+      "값": 6904290.300593,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|22|2023.1Q": {
+      "값": 3139291.590183,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|23|2023.1Q": {
+      "값": 359112.474097,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|31|2023.1Q": {
+      "값": 447781.663589,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|1|2023.2Q": {
+      "값": 11049332.586957,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 36,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|2|2023.2Q": {
+      "값": 10411986.182615,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 36,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|3|2023.2Q": {
+      "값": 637346.404342,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 36,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|15|2023.2Q": {
+      "값": 8279.083344,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 36,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|20|2023.2Q": {
+      "값": 6786320.901074,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 36,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|22|2023.2Q": {
+      "값": 3177727.318604,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 36,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|23|2023.2Q": {
+      "값": 359129.294926,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 36,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|31|2023.2Q": {
+      "값": 433889.603938,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 36,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|1|2023.3Q": {
+      "값": 11023202.016402,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|2|2023.3Q": {
+      "값": 10451687.783838,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|3|2023.3Q": {
+      "값": 571514.232564,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|4|2023.3Q": {
+      "값": -183681.34479,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|15|2023.3Q": {
+      "값": 8215.882575,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|20|2023.3Q": {
+      "값": 6847340.574356,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|22|2023.3Q": {
+      "값": 3142476.552218,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|23|2023.3Q": {
+      "값": 359146.522978,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|31|2023.3Q": {
+      "값": 415195.577354,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|1|2024.1Q": {
+      "값": 11284781.81699,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|2|2024.1Q": {
+      "값": 10658310.383901,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|3|2024.1Q": {
+      "값": 626471.433089,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|4|2024.1Q": {
+      "값": -276087.48717,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|15|2024.1Q": {
+      "값": 7155.745604,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|20|2024.1Q": {
+      "값": 7216261.227106,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|22|2024.1Q": {
+      "값": 2980184.853012,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|23|2024.1Q": {
+      "값": 359181.919761,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|24|2024.1Q": {
+      "값": 18737.341205,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|30|2024.1Q": {
+      "값": 490000.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|31|2024.1Q": {
+      "값": 412558.920259,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|1|2024.2Q": {
+      "값": 11582587.676937,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|2|2024.2Q": {
+      "값": 11014858.335547,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|3|2024.2Q": {
+      "값": 567729.34139,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|4|2024.2Q": {
+      "값": -345354.030828,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|15|2024.2Q": {
+      "값": 8450.095175,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|20|2024.2Q": {
+      "값": 7470895.908352,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|22|2024.2Q": {
+      "값": 3046230.613139,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|23|2024.2Q": {
+      "값": 359199.780426,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|24|2024.2Q": {
+      "값": 15417.980542,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|30|2024.2Q": {
+      "값": 490000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|31|2024.2Q": {
+      "값": 423083.372218,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|1|2024.3Q": {
+      "값": 11814875.200161,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|2|2024.3Q": {
+      "값": 11221574.177106,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|3|2024.3Q": {
+      "값": 593301.023055,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|4|2024.3Q": {
+      "값": -334509.400793,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|15|2024.3Q": {
+      "값": 12569.855076,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|20|2024.3Q": {
+      "값": 7710612.466102,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|22|2024.3Q": {
+      "값": 3059775.353748,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|23|2024.3Q": {
+      "값": 359218.073375,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|24|2024.3Q": {
+      "값": 14608.465809,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|30|2024.3Q": {
+      "값": 490000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1011|31|2024.3Q": {
+      "값": 437810.423848,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.3Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    }
+  },
+  "skips": {
+    "KR1011|_calibration|*": {
+      "skip_reason": "Q4 보정 실패(마스터 앵커는 있었는데 후보가 안 맞음) 또는 위험항목이라 미검증 통과 불가 -- 항목 [13, 21] 는 전 분기 스킵"
+    },
+    "KR1011|_calibration_untested|*": {
+      "skip_reason": "항목 [14] 는 마스터에 Q4 앵커가 없거나(q4_table_found=True) 재현검사를 못 했다 -- 단일개념 라벨이라(또는 이 회사는 Q4 경영공시 자체에 BS 가 없어) 미검증으로 통과시키되 '방법'에 unverified 로 표시함(owner 리뷰 권장)"
+    },
+    "KR1011|24|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 10657.136894 vs 이후 20946.080991(2023.4Q)"
+    },
+    "KR1011|30|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 340000.0 vs 이후 490000.0(2023.4Q)"
+    },
+    "KR1011|4|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -136543.199596 vs 이전 -243614.360408(2023.1Q) / 이후 -338371.546501(2023.4Q)"
+    },
+    "KR1011|10|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 143861.207763 vs 이전 454436.830603(2023.1Q) / 이후 574147.355741(2023.4Q)"
+    },
+    "KR1011|24|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 6817.660645 vs 이후 20946.080991(2023.4Q)"
+    },
+    "KR1011|30|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 340000.0 vs 이후 490000.0(2023.4Q)"
+    },
+    "KR1011|10|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 188471.835211 vs 이전 454436.830603(2023.1Q) / 이후 574147.355741(2023.4Q)"
+    },
+    "KR1011|24|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 13223.70335 vs 이후 20946.080991(2023.4Q)"
+    },
+    "KR1011|30|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 340000.0 vs 이후 490000.0(2023.4Q)"
+    },
+    "KR1011|10|2024.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 326803.335883 vs 이전 574147.355741(2023.4Q) / 이후 494128.543854(2024.4Q)"
+    },
+    "KR1011|10|2024.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 261348.660455 vs 이전 574147.355741(2023.4Q) / 이후 494128.543854(2024.4Q)"
+    },
+    "KR1011|10|2024.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 287424.845944 vs 이전 574147.355741(2023.4Q) / 이후 494128.543854(2024.4Q)"
+    },
+    "KR1011|*|2025.1Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR1011|*|2025.2Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR1011|*|2025.3Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR1011|*|2026.1Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    }
+  },
+  "stats": {
+    "targets": 10,
+    "cells": 60,
+    "skips": 18,
+    "calibrated_items": [
+      2,
+      3,
+      4,
+      10,
+      11,
+      12,
+      15,
+      20,
+      22,
+      23,
+      24,
+      30,
+      31
+    ],
+    "untested_but_safe_items": [
+      14
+    ],
+    "blocked_items": [
+      13,
+      21
+    ]
+  }
+}

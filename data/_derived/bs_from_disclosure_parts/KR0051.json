@@ -1,0 +1,182 @@
+{
+  "cells": {
+    "KR0051|1|2025.1Q": {
+      "값": 381410.923064,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|3|2025.1Q": {
+      "값": 206336.62659,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|11|2025.1Q": {
+      "값": 55278.454752,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|14|2025.1Q": {
+      "값": 83171.853131,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|15|2025.1Q": {
+      "값": 4525.029469,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|30|2025.1Q": {
+      "값": 191125.29,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|31|2025.1Q": {
+      "값": -41569.437977,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.1Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|3|2025.2Q": {
+      "값": 195098.876842,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "4871db39411b5b92b302ccf92d94b74aa146afaec060b8a58a32610a71df42e6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|14|2025.2Q": {
+      "값": 91650.396657,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "4871db39411b5b92b302ccf92d94b74aa146afaec060b8a58a32610a71df42e6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|15|2025.2Q": {
+      "값": 4059.898552,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "4871db39411b5b92b302ccf92d94b74aa146afaec060b8a58a32610a71df42e6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|30|2025.2Q": {
+      "값": 191125.29,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "4871db39411b5b92b302ccf92d94b74aa146afaec060b8a58a32610a71df42e6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0051|31|2025.2Q": {
+      "값": -52686.702852,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "4871db39411b5b92b302ccf92d94b74aa146afaec060b8a58a32610a71df42e6",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2025.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    }
+  },
+  "skips": {
+    "KR0051|_calibration|*": {
+      "skip_reason": "Q4 보정 실패(마스터 앵커는 있었는데 후보가 안 맞음) 또는 위험항목이라 미검증 통과 불가 -- 항목 [13, 20, 21, 22, 23, 24] 는 전 분기 스킵"
+    },
+    "KR0051|_calibration_untested|*": {
+      "skip_reason": "항목 [2, 3, 4, 10, 11, 12, 14, 15, 30, 31] 는 마스터에 Q4 앵커가 없거나(q4_table_found=False) 재현검사를 못 했다 -- 단일개념 라벨이라(또는 이 회사는 Q4 경영공시 자체에 BS 가 없어) 미검증으로 통과시키되 '방법'에 unverified 로 표시함(owner 리뷰 권장)"
+    },
+    "KR0051|4|2025.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 205.551649 vs 이전 129.666302(2024.4Q) / 이후 -2703.8507(2025.4Q)"
+    },
+    "KR0051|10|2025.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 111538.371403 vs 이전 19101.715054(2024.4Q) / 이후 5337.181112(2025.4Q)"
+    },
+    "KR0051|12|2025.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 5163.641429 vs 이후 91033.323199(2025.4Q)"
+    },
+    "KR0051|4|2025.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 85.066776 vs 이전 129.666302(2024.4Q) / 이후 -2703.8507(2025.4Q)"
+    },
+    "KR0051|10|2025.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 10939.413368 vs 이전 19101.715054(2024.4Q) / 이후 5337.181112(2025.4Q)"
+    },
+    "KR0051|11|2025.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 125557.854911 vs 이전 55278.454752(2025.1Q) / 이후 76054.146246(2025.4Q)"
+    },
+    "KR0051|12|2025.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 35536.209891 vs 이후 91033.323199(2025.4Q)"
+    },
+    "KR0051|*|2025.3Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    }
+  },
+  "stats": {
+    "targets": 3,
+    "cells": 12,
+    "skips": 10,
+    "calibrated_items": [],
+    "untested_but_safe_items": [
+      2,
+      3,
+      4,
+      10,
+      11,
+      12,
+      14,
+      15,
+      30,
+      31
+    ],
+    "blocked_items": [
+      13,
+      20,
+      21,
+      22,
+      23,
+      24
+    ]
+  }
+}

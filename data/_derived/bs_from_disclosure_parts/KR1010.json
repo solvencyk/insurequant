@@ -1,0 +1,191 @@
+{
+  "cells": {
+    "KR1010|10|2023.1Q": {
+      "값": 8529.219819,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 22,
+      "sha256": "98f086afaa4cdd7322964d73f83681d59edb12cd8e05450fcb84d5ea573b043d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1010|14|2023.1Q": {
+      "값": 2828.35375,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 22,
+      "sha256": "98f086afaa4cdd7322964d73f83681d59edb12cd8e05450fcb84d5ea573b043d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1010|24|2023.1Q": {
+      "값": 332.593188,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 22,
+      "sha256": "98f086afaa4cdd7322964d73f83681d59edb12cd8e05450fcb84d5ea573b043d",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1010|14|2023.2Q": {
+      "값": 3258.871352,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 54,
+      "sha256": "a014e76ac26f6f8b8cb9ee419cb1a30c06203a2c04457b9d44a7e20448f4d224",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1010|24|2023.2Q": {
+      "값": 349.276621,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 54,
+      "sha256": "a014e76ac26f6f8b8cb9ee419cb1a30c06203a2c04457b9d44a7e20448f4d224",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1010|3|2024.1Q": {
+      "값": 178516.645442,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "page": 26,
+      "sha256": "d7de15dbf25bf340c3a5c9a711415e3c22b7b6a598b265d172a0103d9420fc2e",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1010|11|2024.1Q": {
+      "값": 152843.309654,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "page": 26,
+      "sha256": "d7de15dbf25bf340c3a5c9a711415e3c22b7b6a598b265d172a0103d9420fc2e",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1010|30|2024.1Q": {
+      "값": 369000.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "page": 26,
+      "sha256": "d7de15dbf25bf340c3a5c9a711415e3c22b7b6a598b265d172a0103d9420fc2e",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.1Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1010|3|2024.2Q": {
+      "값": 172681.06949,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "page": 53,
+      "sha256": "b29d76fe903ef22cbf8cc1675557faa4bf5ee32f35a1c5a8f0b05cf84089109f",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1010|11|2024.2Q": {
+      "값": 198464.618657,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "page": 53,
+      "sha256": "b29d76fe903ef22cbf8cc1675557faa4bf5ee32f35a1c5a8f0b05cf84089109f",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR1010|30|2024.2Q": {
+      "값": 369000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "page": 53,
+      "sha256": "b29d76fe903ef22cbf8cc1675557faa4bf5ee32f35a1c5a8f0b05cf84089109f",
+      "축척": "원",
+      "앵커항목": 1,
+      "방법": "detail(direct)",
+      "근거": "정기경영공시 2024.2Q raw PDF 별도재무상태표, detail(direct) 추출(inbox/parser/20260911T0109Z 백필)"
+    }
+  },
+  "skips": {
+    "KR1010|_calibration|*": {
+      "skip_reason": "Q4 보정 실패(마스터 앵커는 있었는데 후보가 안 맞음) 또는 위험항목이라 미검증 통과 불가 -- 항목 [22, 23] 는 전 분기 스킵"
+    },
+    "KR1010|_calibration_untested|*": {
+      "skip_reason": "항목 [31] 는 마스터에 Q4 앵커가 없거나(q4_table_found=True) 재현검사를 못 했다 -- 단일개념 라벨이라(또는 이 회사는 Q4 경영공시 자체에 BS 가 없어) 미검증으로 통과시키되 '방법'에 unverified 로 표시함(owner 리뷰 권장)"
+    },
+    "KR1010|3|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 103768.507885 vs 이후 61432.49081(2023.4Q)"
+    },
+    "KR1010|4|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -20206.913034 vs 이후 -46890.873692(2023.4Q)"
+    },
+    "KR1010|11|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 79548.426561 vs 이후 54333.194845(2023.2Q)"
+    },
+    "KR1010|12|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 234360.554991 vs 이후 550577.065495(2023.4Q)"
+    },
+    "KR1010|13|2023.1Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 342802.754112 vs 이후 27352.28952(2023.4Q)"
+    },
+    "KR1010|3|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 125904.416707 vs 이후 61432.49081(2023.4Q)"
+    },
+    "KR1010|4|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 4910.42403 vs 이후 -46890.873692(2023.4Q)"
+    },
+    "KR1010|10|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 11671.202725 vs 이전 8529.219819(2023.1Q) / 이후 7707.769127(2023.3Q)"
+    },
+    "KR1010|12|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 253214.91419 vs 이후 550577.065495(2023.4Q)"
+    },
+    "KR1010|13|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 342041.18991 vs 이후 27352.28952(2023.4Q)"
+    },
+    "KR1010|3|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 131097.46093 vs 이후 61432.49081(2023.4Q)"
+    },
+    "KR1010|4|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 14038.42612 vs 이후 -46890.873692(2023.4Q)"
+    },
+    "KR1010|12|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 266883.590968 vs 이후 550577.065495(2023.4Q)"
+    },
+    "KR1010|13|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 342465.434195 vs 이후 27352.28952(2023.4Q)"
+    }
+  },
+  "stats": {
+    "targets": 5,
+    "cells": 11,
+    "skips": 16,
+    "calibrated_items": [
+      2,
+      3,
+      4,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      20,
+      21,
+      24,
+      30
+    ],
+    "untested_but_safe_items": [
+      31
+    ],
+    "blocked_items": [
+      22,
+      23
+    ]
+  }
+}

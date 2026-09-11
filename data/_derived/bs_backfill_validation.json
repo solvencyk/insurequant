@@ -1,0 +1,539 @@
+{
+  "companies": 24,
+  "match": 143,
+  "mismatch": 59,
+  "skip": 147,
+  "mismatches": [
+    {
+      "kr": "KR0003",
+      "item": 2,
+      "q": "2023.1Q",
+      "predicted": 13522662.442425,
+      "actual": 13201404.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0003_롯데손해보험.pdf",
+      "page": 15
+    },
+    {
+      "kr": "KR0003",
+      "item": 3,
+      "q": "2023.1Q",
+      "predicted": 1154892.3458,
+      "actual": 1417967.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0003_롯데손해보험.pdf",
+      "page": 15
+    },
+    {
+      "kr": "KR0003",
+      "item": 2,
+      "q": "2023.2Q",
+      "predicted": 12522436.767409999,
+      "actual": 12150235.464583,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0003_롯데손해보험.pdf",
+      "page": 58
+    },
+    {
+      "kr": "KR0003",
+      "item": 3,
+      "q": "2023.2Q",
+      "predicted": 1198716.19334,
+      "actual": 1451130.485008,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0003_롯데손해보험.pdf",
+      "page": 58
+    },
+    {
+      "kr": "KR0070",
+      "item": 2,
+      "q": "2023.1Q",
+      "predicted": 15901502.0,
+      "actual": 16096704.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0070_에이비엘생명보험_amended.pdf",
+      "page": 27
+    },
+    {
+      "kr": "KR0070",
+      "item": 3,
+      "q": "2023.1Q",
+      "predicted": 1045052.0,
+      "actual": 890288.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0070_에이비엘생명보험_amended.pdf",
+      "page": 27
+    },
+    {
+      "kr": "KR0070",
+      "item": 2,
+      "q": "2023.2Q",
+      "predicted": 15869362.0,
+      "actual": 16081336.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0070_에이비엘생명보험_amended.pdf",
+      "page": 58
+    },
+    {
+      "kr": "KR0070",
+      "item": 3,
+      "q": "2023.2Q",
+      "predicted": 1078773.0,
+      "actual": 921122.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0070_에이비엘생명보험_amended.pdf",
+      "page": 58
+    },
+    {
+      "kr": "KR0070",
+      "item": 2,
+      "q": "2023.3Q",
+      "predicted": 15299216.0,
+      "actual": 15520377.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0070_에이비엘생명보험_amended.pdf",
+      "page": 27
+    },
+    {
+      "kr": "KR0070",
+      "item": 3,
+      "q": "2023.3Q",
+      "predicted": 1151274.0,
+      "actual": 976673.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0070_에이비엘생명보험_amended.pdf",
+      "page": 27
+    },
+    {
+      "kr": "KR0070",
+      "item": 2,
+      "q": "2024.2Q",
+      "predicted": 17019582.062707998,
+      "actual": 16956457.066793,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0070_에이비엘생명보험_amended.pdf",
+      "page": 57
+    },
+    {
+      "kr": "KR0070",
+      "item": 3,
+      "q": "2024.2Q",
+      "predicted": 739564.083722,
+      "actual": 750449.521321,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0070_에이비엘생명보험_amended.pdf",
+      "page": 57
+    },
+    {
+      "kr": "KR0070",
+      "item": 2,
+      "q": "2024.3Q",
+      "predicted": 17778261.438823998,
+      "actual": 17727472.644627,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0070_에이비엘생명보험.pdf",
+      "page": 27
+    },
+    {
+      "kr": "KR0070",
+      "item": 3,
+      "q": "2024.3Q",
+      "predicted": 675962.876867,
+      "actual": 685167.112827,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0070_에이비엘생명보험.pdf",
+      "page": 27
+    },
+    {
+      "kr": "KR0070",
+      "item": 2,
+      "q": "2025.2Q",
+      "predicted": 18969850.424549,
+      "actual": 18909631.790052,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0070_에이비엘생명보험.pdf",
+      "page": 63
+    },
+    {
+      "kr": "KR0070",
+      "item": 3,
+      "q": "2025.2Q",
+      "predicted": 576077.812518,
+      "actual": 583005.142313,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0070_에이비엘생명보험.pdf",
+      "page": 63
+    },
+    {
+      "kr": "KR0070",
+      "item": 2,
+      "q": "2025.3Q",
+      "predicted": 19192723.698739998,
+      "actual": 19102144.938417,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0070_에이비엘생명보험.pdf",
+      "page": 30
+    },
+    {
+      "kr": "KR0070",
+      "item": 3,
+      "q": "2025.3Q",
+      "predicted": 636204.425219,
+      "actual": 641411.332787,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0070_에이비엘생명보험.pdf",
+      "page": 30
+    },
+    {
+      "kr": "KR0071",
+      "item": 2,
+      "q": "2024.1Q",
+      "predicted": 22217395.504320998,
+      "actual": 22164935.008517,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0071_흥국생명보험.pdf",
+      "page": 25
+    },
+    {
+      "kr": "KR0071",
+      "item": 3,
+      "q": "2024.1Q",
+      "predicted": 1546156.0335849999,
+      "actual": 1302253.830289,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0071_흥국생명보험.pdf",
+      "page": 25
+    },
+    {
+      "kr": "KR0071",
+      "item": 2,
+      "q": "2024.2Q",
+      "predicted": 22712403.873591,
+      "actual": 22460966.093016,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0071_흥국생명보험.pdf",
+      "page": 57
+    },
+    {
+      "kr": "KR0071",
+      "item": 3,
+      "q": "2024.2Q",
+      "predicted": 1261040.4215489998,
+      "actual": 1094721.428691,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0071_흥국생명보험.pdf",
+      "page": 57
+    },
+    {
+      "kr": "KR0071",
+      "item": 2,
+      "q": "2024.3Q",
+      "predicted": 22710874.775355,
+      "actual": 22445565.588318,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0071_흥국생명보험.pdf",
+      "page": 25
+    },
+    {
+      "kr": "KR0071",
+      "item": 3,
+      "q": "2024.3Q",
+      "predicted": 1187709.919921,
+      "actual": 1006937.071503,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0071_흥국생명보험.pdf",
+      "page": 25
+    },
+    {
+      "kr": "KR0071",
+      "item": 2,
+      "q": "2025.1Q",
+      "predicted": 23643680.298838,
+      "actual": 23212144.986422,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0071_흥국생명보험.pdf",
+      "page": 29
+    },
+    {
+      "kr": "KR0071",
+      "item": 3,
+      "q": "2025.1Q",
+      "predicted": 817595.6141649999,
+      "actual": 666450.83398,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0071_흥국생명보험.pdf",
+      "page": 29
+    },
+    {
+      "kr": "KR0071",
+      "item": 2,
+      "q": "2025.2Q",
+      "predicted": 23096521.323501,
+      "actual": 22628439.421394,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0071_흥국생명보험.pdf",
+      "page": 64
+    },
+    {
+      "kr": "KR0071",
+      "item": 3,
+      "q": "2025.2Q",
+      "predicted": 967669.4388,
+      "actual": 818618.454463,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0071_흥국생명보험.pdf",
+      "page": 64
+    },
+    {
+      "kr": "KR0071",
+      "item": 2,
+      "q": "2025.3Q",
+      "predicted": 22973979.230481,
+      "actual": 22416650.482504,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0071_흥국생명보험.pdf",
+      "page": 30
+    },
+    {
+      "kr": "KR0071",
+      "item": 3,
+      "q": "2025.3Q",
+      "predicted": 994793.625241,
+      "actual": 847713.040087,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0071_흥국생명보험.pdf",
+      "page": 30
+    },
+    {
+      "kr": "KR0071",
+      "item": 2,
+      "q": "2026.1Q",
+      "predicted": 22353081.709576998,
+      "actual": 21947434.263084,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0071_흥국생명보험.pdf",
+      "page": 29
+    },
+    {
+      "kr": "KR0071",
+      "item": 3,
+      "q": "2026.1Q",
+      "predicted": 1463059.516793,
+      "actual": 1343723.651791,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0071_흥국생명보험.pdf",
+      "page": 29
+    },
+    {
+      "kr": "KR0071",
+      "item": 2,
+      "q": "2026.2Q",
+      "predicted": 22188797.714019,
+      "actual": 21879746.108544,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0071_흥국생명보험.pdf",
+      "page": 61
+    },
+    {
+      "kr": "KR0071",
+      "item": 3,
+      "q": "2026.2Q",
+      "predicted": 1891464.15911,
+      "actual": 1680656.760105,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0071_흥국생명보험.pdf",
+      "page": 61
+    },
+    {
+      "kr": "KR0094",
+      "item": 2,
+      "q": "2024.1Q",
+      "predicted": 50116379.0,
+      "actual": 49927391.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0094_신한라이프생명보험.pdf",
+      "page": 22
+    },
+    {
+      "kr": "KR0094",
+      "item": 3,
+      "q": "2024.1Q",
+      "predicted": 7642659.0,
+      "actual": 7667834.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0094_신한라이프생명보험.pdf",
+      "page": 22
+    },
+    {
+      "kr": "KR0094",
+      "item": 2,
+      "q": "2024.2Q",
+      "predicted": 51346683.0,
+      "actual": 51151593.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf",
+      "page": 45
+    },
+    {
+      "kr": "KR0094",
+      "item": 3,
+      "q": "2024.2Q",
+      "predicted": 7273924.0,
+      "actual": 7305803.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf",
+      "page": 45
+    },
+    {
+      "kr": "KR0094",
+      "item": 2,
+      "q": "2024.3Q",
+      "predicted": 52930511.0,
+      "actual": 52740799.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0094_신한라이프생명보험.pdf",
+      "page": 22
+    },
+    {
+      "kr": "KR0094",
+      "item": 3,
+      "q": "2024.3Q",
+      "predicted": 7238792.0,
+      "actual": 7280046.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0094_신한라이프생명보험.pdf",
+      "page": 22
+    },
+    {
+      "kr": "KR0094",
+      "item": 3,
+      "q": "2026.1Q",
+      "predicted": 6518194.0,
+      "actual": 6551603.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0094_신한라이프생명보험.pdf",
+      "page": 29
+    },
+    {
+      "kr": "KR1000",
+      "item": 2,
+      "q": "2023.1Q",
+      "predicted": 7911404.642840999,
+      "actual": 8301593.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13
+    },
+    {
+      "kr": "KR1000",
+      "item": 3,
+      "q": "2023.1Q",
+      "predicted": 3094392.193228,
+      "actual": 2715630.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13
+    },
+    {
+      "kr": "KR1000",
+      "item": 2,
+      "q": "2023.3Q",
+      "predicted": 8030318.781183,
+      "actual": 7897936.569534,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1000_코리안리.pdf",
+      "page": 15
+    },
+    {
+      "kr": "KR1000",
+      "item": 3,
+      "q": "2023.3Q",
+      "predicted": 3177242.358003,
+      "actual": 3244573.675526,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1000_코리안리.pdf",
+      "page": 15
+    },
+    {
+      "kr": "KR1000",
+      "item": 2,
+      "q": "2024.1Q",
+      "predicted": 8742469.792046,
+      "actual": 8621544.525252,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1000_코리안리.pdf",
+      "page": 14
+    },
+    {
+      "kr": "KR1000",
+      "item": 3,
+      "q": "2024.1Q",
+      "predicted": 3167161.631877,
+      "actual": 3217641.395088,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1000_코리안리.pdf",
+      "page": 14
+    },
+    {
+      "kr": "KR1000",
+      "item": 2,
+      "q": "2024.2Q",
+      "predicted": 9043173.102346,
+      "actual": 8938602.742306,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1000_코리안리.pdf",
+      "page": 28
+    },
+    {
+      "kr": "KR1000",
+      "item": 3,
+      "q": "2024.2Q",
+      "predicted": 3270321.708253,
+      "actual": 3310942.378343,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1000_코리안리.pdf",
+      "page": 28
+    },
+    {
+      "kr": "KR1000",
+      "item": 2,
+      "q": "2024.3Q",
+      "predicted": 9436249.72104,
+      "actual": 9318463.807183,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1000_코리안리.pdf",
+      "page": 14
+    },
+    {
+      "kr": "KR1000",
+      "item": 3,
+      "q": "2024.3Q",
+      "predicted": 3377271.3021239997,
+      "actual": 3380857.070983,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1000_코리안리.pdf",
+      "page": 14
+    },
+    {
+      "kr": "KR1000",
+      "item": 2,
+      "q": "2025.1Q",
+      "predicted": 9716561.995683,
+      "actual": 9493512.698379,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1000_코리안리.pdf",
+      "page": 17
+    },
+    {
+      "kr": "KR1000",
+      "item": 3,
+      "q": "2025.1Q",
+      "predicted": 3407427.3327309997,
+      "actual": 3396118.055517,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1000_코리안리.pdf",
+      "page": 17
+    },
+    {
+      "kr": "KR1000",
+      "item": 2,
+      "q": "2025.3Q",
+      "predicted": 10017452.94079,
+      "actual": 9864127.65697,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1000_코리안리.pdf",
+      "page": 17
+    },
+    {
+      "kr": "KR1000",
+      "item": 3,
+      "q": "2025.3Q",
+      "predicted": 3610281.915432,
+      "actual": 3583103.171819,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1000_코리안리.pdf",
+      "page": 17
+    },
+    {
+      "kr": "KR1000",
+      "item": 2,
+      "q": "2026.1Q",
+      "predicted": 10563772.131785,
+      "actual": 10278160.046594,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1000_코리안리재보험.pdf",
+      "page": 16
+    },
+    {
+      "kr": "KR1000",
+      "item": 3,
+      "q": "2026.1Q",
+      "predicted": 3797304.6107599996,
+      "actual": 3763894.332708,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1000_코리안리재보험.pdf",
+      "page": 16
+    },
+    {
+      "kr": "KR1000",
+      "item": 2,
+      "q": "2026.2Q",
+      "predicted": 10708307.542777,
+      "actual": 10344817.821535,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1000_코리안리재보험.pdf",
+      "page": 32
+    },
+    {
+      "kr": "KR1000",
+      "item": 3,
+      "q": "2026.2Q",
+      "predicted": 4019799.9299629997,
+      "actual": 3985122.665589,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1000_코리안리재보험.pdf",
+      "page": 32
+    }
+  ]
+}

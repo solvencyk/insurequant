@@ -84,7 +84,7 @@ from validate_kics_disclosure import (  # noqa: E402
     _transition_mmult_after,
     _transition_ratio_after_capture,
 )
-from _quarter_horizon import display_quarters  # noqa: E402
+from _quarter_horizon import display_quarters, quarter_horizon  # noqa: E402
 from validate_master_tables import (  # noqa: E402
     CSM_AMORT_MIN_EOK,
     CSM_AMORT_PIN_TOL_ABS_EOK,
@@ -2402,7 +2402,38 @@ IFRS17_BS_NO_SOURCE = {
     "KR1011",  # IBK연금보험
 }
 
+# check_ifrs17_bs 전용 스코프 확장 (2026-09-11, inbox/parser/20260911T0109Z 백필 수용기준 8번).
+# 전 게이트 공유인 `_in_scope`/`_DISPLAY_QUARTERS`(화면 노출 분기)는 건드리지 않는다 -- 배당·
+# CSM연속성 등 다른 검사의 스코프까지 같이 넓어지면 그쪽 raw 는 git-purge 로 재확인이 안 되는
+# 중간분기까지 검사 대상이 돼 버린다(그게 애초에 _DISPLAY_QUARTERS 가 좁게 파생된 이유).
+#
+# **회사 축으로도 좁힌다 -- 2026-09-11 실측으로 발견한 함정.** 처음엔 전 회사·전 분기로
+# 넓혔더니 이 백필과 무관한 TIER-1 9개사(한화손해보험·흥국화재·DB손해보험·한화생명·
+# 삼성생명보험·에이비엘생명보험·흥국생명보험·푸본현대생명보험·서울보증보험)의 2023.1~2Q(+
+# 서울보증 2024.1~3Q) 기존 결측이 무더기로 RED 51건 떴다 -- 그 중 5개사(한화손해·흥국화재·
+# 삼성생명·푸본현대·한화생명)는 이 티켓이 **명시적으로 범위 밖이라고 못박은 분기공시사**다
+# (DART FS-API 전사 013 무응답이 원인이라 disclosure PDF 백필 축이 아니다, 티켓 "이 티켓에서
+# 하지 말 것" 절). 이 백필로 새로 검증 가능해진 것은 **TIER2 15개사**(연1회 공시사, disclosure
+# PDF 로 셀 단위 계보까지 남기며 채웠다) 뿐이므로, 스코프 확장도 그 15개사로 한정한다 -- 무관한
+# 회사의 기존 결측을 이 백필 게이트가 떠안지 않는다(그 결측은 별도 티켓 몫).
+BS_BACKFILL_TIER2 = frozenset({
+    "KR0004", "KR0029", "KR0049", "KR0050", "KR0051", "KR0074", "KR0075", "KR0076",
+    "KR0080", "KR0095", "KR0097", "KR0100", "KR1010", "KR1011", "KR1098",
+    # 2026-09-11 범위 확대(owner 정정 -- 애초 발주는 이 5개사도 포함이었는데 티켓이 한 번
+    # 잘못 좁혔었다): 분기공시사 5개사, 2023.1Q~2Q 만 DART FS-API 무응답 구간이라 그 두
+    # 분기만 이 방법으로 채운다. 나머지 분기는 이미 DART 원천이라 원래도 스코프 안이었다.
+    "KR0002", "KR0005", "KR0068", "KR0069", "KR0083",
+})
+_BS_FULL_HORIZON = frozenset(quarter_horizon())
 
+
+def _bs_in_scope(code, q) -> bool:
+    s = str(q or "")
+    if re.match(r"\d{4}\.\dQ", s) is None:
+        return True
+    if s in _DISPLAY_QUARTERS:
+        return True
+    return code in BS_BACKFILL_TIER2 and s in _BS_FULL_HORIZON
 
 
 def check_ifrs17_bs(res: GateResult, env: "Env") -> None:
@@ -2445,7 +2476,7 @@ def check_ifrs17_bs(res: GateResult, env: "Env") -> None:
                 message=f"이월 면제 로더 사용 불가 — 면제 없이 검사한다: {_e}")
     carry_skipped: list[str] = []
     for (code, q), cell in sorted(cells.items()):
-        if not (env.inject or _in_scope(q)):   # live: 화면에 뜨는 분기만, selftest: 전수
+        if not (env.inject or _bs_in_scope(code, q)):   # 17BS 전용: TIER2 15개사만 전체 지평
             continue
         nm = names.get(code, code)
         # census 면제(BS_IDENTITY 는 계속 검사한다 — 값이 들어오면 구조검사는 공짜다)

@@ -1,0 +1,183 @@
+{
+  "cells": {
+    "KR0050|1|2023.2Q": {
+      "값": 1510600.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 46,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0050|2|2023.2Q": {
+      "값": 1112200.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 46,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0050|3|2023.2Q": {
+      "값": 398400.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 46,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0050|14|2023.2Q": {
+      "값": 35100.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 46,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0050|30|2023.2Q": {
+      "값": 461100.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 46,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.2Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0050|1|2023.3Q": {
+      "값": 1465000.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 19,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "core",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, core 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0050|2|2023.3Q": {
+      "값": 1080900.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 19,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0050|3|2023.3Q": {
+      "값": 384100.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 19,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0050|14|2023.3Q": {
+      "값": 33400.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 19,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    },
+    "KR0050|30|2023.3Q": {
+      "값": 461100.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 19,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원",
+      "앵커항목": 1,
+      "방법": "detail(unverified:no-master-anchor)",
+      "근거": "정기경영공시 2023.3Q raw PDF 별도재무상태표, detail(unverified:no-master-anchor) 추출(inbox/parser/20260911T0109Z 백필)"
+    }
+  },
+  "skips": {
+    "KR0050|_calibration|*": {
+      "skip_reason": "Q4 보정 실패(마스터 앵커는 있었는데 후보가 안 맞음) 또는 위험항목이라 미검증 통과 불가 -- 항목 [13, 20, 21, 22, 23, 24] 는 전 분기 스킵"
+    },
+    "KR0050|_calibration_untested|*": {
+      "skip_reason": "항목 [2, 3, 4, 10, 11, 12, 14, 15, 30, 31] 는 마스터에 Q4 앵커가 없거나(q4_table_found=False) 재현검사를 못 했다 -- 단일개념 라벨이라(또는 이 회사는 Q4 경영공시 자체에 BS 가 없어) 미검증으로 통과시키되 '방법'에 unverified 로 표시함(owner 리뷰 권장)"
+    },
+    "KR0050|*|2023.1Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0050|4|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 25100.0 vs 이후 5433.690669(2023.4Q)"
+    },
+    "KR0050|15|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 23000.0 vs 이후 10340.34798(2023.4Q)"
+    },
+    "KR0050|31|2023.2Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -60600.0 vs 이후 -130488.360604(2023.4Q)"
+    },
+    "KR0050|4|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 29600.0 vs 이후 5433.690669(2023.4Q)"
+    },
+    "KR0050|15|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): 23800.0 vs 이후 10340.34798(2023.4Q)"
+    },
+    "KR0050|31|2023.3Q": {
+      "skip_reason": "QoQ ±30% 초과(hold, 양방향 다 이탈): -79400.0 vs 이후 -130488.360604(2023.4Q)"
+    },
+    "KR0050|*|2024.1Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0050|*|2024.2Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0050|*|2024.3Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0050|*|2025.1Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0050|*|2025.2Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0050|*|2025.3Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0050|*|2026.1Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    },
+    "KR0050|*|2026.2Q": {
+      "skip_reason": "적격 별도재무상태표 표를 찾지 못함 (별도표제/비지배지분부재/운용자산부재 3조건 불충족)"
+    }
+  },
+  "stats": {
+    "targets": 11,
+    "cells": 10,
+    "skips": 17,
+    "calibrated_items": [],
+    "untested_but_safe_items": [
+      2,
+      3,
+      4,
+      10,
+      11,
+      12,
+      14,
+      15,
+      30,
+      31
+    ],
+    "blocked_items": [
+      13,
+      20,
+      21,
+      22,
+      23,
+      24
+    ]
+  }
+}
