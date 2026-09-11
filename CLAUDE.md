@@ -35,6 +35,8 @@ Domain reference docs (K-ICS / IFRS17 / Misc IR) sit under `docs/domains/` and p
 
 > **changelog는 읽는 순서에서 뺐다 (deferred, 2026-07-27).** `docs/claude-changelog.md`·`docs/changelog_<stage>.md`는 **이력 저장소** — 특정 과거 결정의 배경·근거가 필요할 때만 연다(대부분 세션은 안 열어도 됨). **현황은 TODO에**, 커밋레벨 상세는 **git log**(첫 push 2026-05-25 이후)에 있다. 이유: changelog가 매 세션 강제 로드되면 kics 세션 기준 ~1,900줄 중 868줄이 이력이라 컨텍스트 낭비(클로드 컨텍스트 엔지니어링 원칙: 필요시점 로드).
 
+> **TODO 의 Status 이력도 같은 원칙으로 분리했다 (2026-09-11).** 각 `TODO*.md` 의 Status 는 **최신 5개 항목만** 유지하고, 밀려난 항목은 `docs/todo_archive_<이름>.md` 헤더 바로 아래에 **한 글자도 고치지 않고** 잘라 붙인다(최신이 위). 아카이브는 changelog 처럼 필요할 때만 연다. 이유: 실측 stage TODO 7개 합계 ~288k 토큰 중 parser ifrs17 하나가 128k(pass 로그 88개)였고, 매 세션·매 서브에이전트가 그걸 통째로 읽고 있었다.
+
 **갱신 규칙은 유지:** 변경·실행 후 **해당 stage TODO 맨 위 갱신 필수**, 그리고 완결 항목은 **해당 stage changelog에 계속 기록**(이력은 쌓되 읽기는 필요 시). cross-stage 변경이면 root `TODO.md` + `docs/claude-changelog.md` 갱신.
 
 ## 📏 "뭐가 남았냐" 는 **재서** 답한다 (2026-08-30 신설, 필수)

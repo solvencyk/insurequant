@@ -1,11 +1,19 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-08-06 · Stage: cross-stage
+> Last updated: 2026-09-11 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
 
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
+
+---
+
+## 2026-09-11 — 지침 부채 정리 1차: TODO Status 이력 아카이브 분리
+
+> 근거 기사(owner 공유): 앤트로픽 내부 비용 절감 — '지침 부채'(행동을 바꾸지 않는데 매 호출 실리는 지시·이력) 제거 + 캐싱. 이 저장소에서 매 세션·매 서브에이전트가 강제로 읽는 것은 코드가 아니라 `CLAUDE.md`+`TODO*.md`+stage 프롬프트다. 실측(토큰 근사): stage TODO 7개 288k(그중 `TODO_parser_ifrs17.md` 128k = 88개 pass 로그가 H1 아래 그대로 쌓임), stage 프롬프트 42k, changelog 344k(이미 deferred).
+>
+> **한 일:** `TODO.md`·`TODO_parser_ifrs17.md`·`TODO_parser_kics.md`·`TODO_validation.md`·`TODO_designer.md`·`TODO_downloader.md` 의 Status 이력(최신 5개 제외)을 `docs/todo_archive_{root,parser_ifrs17,parser_kics,validation,designer,downloader}.md` 로 이동. 순수 이동 — 줄 범위 타일링 검사 + 활성·아카이브를 원래 순서로 재조립해 HEAD 와 바이트 일치 확인(6/6). 각 활성 파일에 포인터 1블록, `CLAUDE.md` 핸드오프 절에 규칙 1문단. 결과 288k → 64k(−78%). `TODO_publishing.md`(178줄)는 손대지 않음. 코드는 매 세션 로드되지 않으므로 이 정리의 대상이 아님(별건).
 
 ---
 
