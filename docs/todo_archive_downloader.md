@@ -4,6 +4,30 @@
 
 ---
 
+**🟡 2026-08-29 인박스 처리 — 2026.2Q 정기경영공시 재스윕: 1/39 확보, 침묵실패 함정 구조적 해소
+(`inbox/downloader/20260829T1900Z`).** 상세: `docs/changelog_downloader.md` 2026-08-29.
+
+- **하나손해보험(KR0050) 2026년 상반기 경영공시 확보** — 39사 중 유일. 60p·1,620,955B,
+  1페이지 `[기간 : 2026. 1. 1 ~ 2026. 6. 30]`·보험업감독규정 제7-44조·2026-1Q 마커 0건으로
+  **내용 검증** 통과. `data/disclosure/FY2026_Q2/pdf/`. docling 변환 안 함(parser 소관).
+  parser raw-ready: `inbox/parser/20260829T2130Z`.
+- **미게시 확정 37사**(생보 22 + 손보 15) · **미확인 1사 = 코리안리(KR1000)**, 전 transport
+  `Empty reply from server`(서버측 다운, 2026-08-17 과 동일). **미확인을 미게시로 세지 말 것.**
+- **함정 대응이 사후대조 → 사전판정으로 바뀌었다.** 신규 `scripts/_probes/
+  census_q2_disclosure_listings.py` 가 다운로드 전에 listing 라벨을 전량 덤프해
+  `posted/not_posted/not_observed/unreachable` 4-값 판정을 낸다(행 인덱스 미사용).
+  신규 `scripts/_probes/verify_q2_disclosure_content.py` 가 받은 파일을 freshness+period+
+  doctype 3중 검사(기존 `check_q2_disclosure_freshness.py` 의 해시대조만으론 불충분 —
+  해시가 달라도 틀린 분기일 수 있다). **다음 세션은 이 두 개를 앞뒤로 끼고 돌릴 것.**
+- **KR0050 XPath 를 행 인덱스 → 텍스트 앵커로 교체**(`download_disclosure_2026q2_nonlife.py`).
+  이 사이트는 1/4분기를 2/4분기 **위에** 나열해서 `tr[1]` 이 Q1 을 집었다(실제 발동, Q1 파일과
+  SHA256 동일한 파일을 받아옴). 다른 회사도 게시되면 같은 방식으로 앵커링할 것.
+- **다음 확인 = 2026-08-31(월).** 근거: 마감 = 분기말+2개월 = 8/31, KB손해 24년치 등록일에
+  요일을 붙이면 **마감일 또는 직전 마지막 영업일**에 내고 주말 게시는 0회. 올해 8/29=토·
+  8/30=일이라 "8/29~31 창"의 영업일은 **8/31 월 하루뿐**이다. 9/1(화) 낙오사 1회 추가.
+
+> 📦 **Status 이력은 `docs/todo_archive_downloader.md` 로 이동했다** (2026-09-11, 내용 무수정 — 2026-08-29 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
+
 **🟢 2026-08-27 owner 직접 지시 — 2026.2Q 정기경영공시 스카우팅(39개사) + KIDI premium_summary.json
 재구축.** 상세: `docs/changelog_downloader.md` 2026-08-27.
 

@@ -462,7 +462,12 @@ PL_ITEMS_UNCHECKABLE_BY_EQUATION = {
     10: "재보험위험조정변동 — item12 plug 가 흡수",
     11: "재보험예실차 — item12 plug 가 흡수",
     19: "보험금융손익 — item18 = 17-19 plug 가 2층 모두 흡수",
-    23: "법인세 — item23 = 22-24 plug 가 418/418 덮어씀(원천 계정은 2f 가 되살려 쓴다)",
+    # item23(법인세)은 2026-09-12(inbox/parser/20260901T1630Z) 에 여기서 빠졌다 -- item23 =
+    # 22-24 plug 로 무조건 덮어쓰는 동작 자체는 안 바뀌었으니 "폐쇄식이 검증한다"는 뜻은
+    # 아니다. 다만 validate_data_contract.PL_YTD_COLLAPSE_TO_ZERO(같은 FY 인접분기, 직전값
+    # non-zero -> 이번값 정확히 0.0)가 "덮어쓴 값이 우연히 0.0"인 경우를 잡을 수 있게 됐다
+    # (KDB생명 2023.1Q 를 신규로 채워 2023.2Q 에 처음으로 '직전분기'가 생기면서 실측).
+    # 상세 근거는 tests/test_rule_coverage_manifest.py::PL_CONSTRUCTIVE_GUARDED[23].
 }
 
 # ===========================================================================
@@ -523,6 +528,18 @@ LOB_LEG_NA: dict[str, dict[str, str]] = {
             "자동차 컬럼 부재(FY2026_Q2 raw 20260814003862.xml 헤더 실측 + 빌더 "
             "extract_tier2_coreanre 독스트링 'NO 자동차'). owner 결정 2026-08-30, "
             "ticket inbox/validation/20260830T0200Z__orchestrator__KR1000__lob_taxonomy_exception.md",
+    },
+    # 위 §4.3 주석에 "생명장기 leg 자체가 없다(ZLEG_LEGIT 'ALL')"고 이미 적혀 있었는데 이
+    # 등재부에는 빠져 있었다(문서화만 되고 안 걸린 상태) — 2024.4Q 를 채우다가(2026-09-12,
+    # inbox/parser/20260901T1630Z) coverage_holes() 의 MASTER_HOLE 이 이 회사를 "active
+    # filer"로 처음 인식하면서(item1/item24 가 7분기 이상 채워짐, active_min=7) item2 없는
+    # 모든 분기가 일제히 "부분 hole" RED 로 뜬 것을 계기로 등재를 완성한다.
+    "서울보증보험": {
+        "생명장기손익":
+            "국내 유일 종합 보증보험사 — LOB 택소노미가 보증·해외·상해·자동차·기타뿐이고 "
+            "'장기'(생명장기) 보장 상품 자체를 판매하지 않는다. extract_tier2_sgi 독스트링과 "
+            "위 §4.3 주석이 이미 이 사실을 적어 뒀으나 이 등재부에는 빠져 있었다. "
+            "(inbox/parser/20260901T1630Z, 2026-09-12 parser/ifrs17)",
     },
 }
 
@@ -617,11 +634,19 @@ def qoq_scan(idx, items, floor, cfg):
     return rows
 
 
-def coverage_holes(idx, key_items, active_min=7):
+def coverage_holes(idx, key_items, active_min=7, na_registry=None):
     """데이터 누락(hole) census. SKIP으로 숨기지 말고 명시.
     active 회사(핵심항목 보유 분기 >= active_min)의 빈 분기 = hole.
     그 미만(외국계·소형 = 애초에 미공시)은 structural로 분리(검증 제외).
-    2023 분기는 사이트 비노출(사용자 결정)이라 known으로 분리 — real hole은 2024+."""
+    2023 분기는 사이트 비노출(사용자 결정)이라 known으로 분리 — real hole은 2024+.
+
+    `na_registry` -- optional {co: {key_item: 근거}} (예: LOB_LEG_NA). "부분" hole 인데
+    비어 있는 key_item 전부가 등재부에 있으면(그 회사엔 그 개념 자체가 없다) real hole 이
+    아니다 -- 추출 실패가 아니라 원문에 그 라인이 없는 것. 등재 안 된 항목이 같이 비거나
+    kind=="통째" 면 그대로 hole. 2026-09-12(inbox/parser/20260901T1630Z): 서울보증보험이
+    item1/24(보험손익/당기순이익)을 채우다 active_min=7 문턱을 처음 넘기면서, 원래부터
+    구조적으로 없는 item2(생명장기손익, 이 회사는 장기 LOB 자체가 없다)가 전 분기 일제히
+    '부분' hole 로 드러난 것이 계기 -- 등재 없이 default(None)면 기존 동작과 완전히 같다."""
     cos = sorted({co for (co, _) in idx})
     real, known, struct = [], [], []
     for co in cos:
@@ -631,12 +656,17 @@ def coverage_holes(idx, key_items, active_min=7):
         if len(present) < active_min:
             struct.append((co, len(present)))
             continue
+        na_legs = (na_registry or {}).get(co, {})
         for q in QS:
             m = idx.get((co, q), {})
             vals = [m.get(k) for k in key_items]
             if all(v is None for v in vals):
                 kind = "통째"
             elif any(v is None for v in vals):
+                if na_legs:
+                    missing = [k for k in key_items if m.get(k) is None]
+                    if missing and all(k in na_legs for k in missing):
+                        continue
                 kind = "부분"
             else:
                 continue
@@ -1371,7 +1401,7 @@ def _check_coverage(wf: dict, pl: dict) -> tuple[list, list]:
     main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     # ===== 0. COVERAGE (데이터 누락 hole — SKIP으로 숨기지 않음) =====
     wf_holes, wf_known, wf_struct = coverage_holes(wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"])
-    pl_holes, pl_known, pl_struct = coverage_holes(pl, ["보험손익", "생명장기손익", "당기순이익"])
+    pl_holes, pl_known, pl_struct = coverage_holes(pl, ["보험손익", "생명장기손익", "당기순이익"], na_registry=LOB_LEG_NA)
     print("=" * 78)
     print(f"0. COVERAGE real hole(2024+)  CSM={len(wf_holes)} PL={len(pl_holes)}  | "
           f"2023 known(비노출)={len(wf_known)+len(pl_known)} | struct(미공시)제외={len(wf_struct)+len(pl_struct)}")

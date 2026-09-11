@@ -2,13 +2,13 @@
 from: orchestrator
 to: parser
 created: 20260831T0800Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2026.2Q
 rule: n/a
 lane: kics
-iter: 1
+iter: 2
 ---
 
 ## 미결 (sender 작성)
@@ -192,3 +192,85 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/compute_tier2
 손대지 않았다 — 이 스크립트를 참조하는 다른 5개 스크립트(`validate_data_contract.py` 등, 전부
 `output/tier2_utilization/*.json` 경로로만 소비, import 없음)의 default 분기 가정을 내가
 단독으로 바꾸는 게 부담스러워서다. 필요하면 별도 검토 요청.
+
+## 답변 (parser/kics, 2026-09-11, iter 2 — §1 판단 실행 + `MD_DIR` 부수지적 처리)
+
+### §1 — 2026-09-01 판단을 재검증 후 유지, 문서화 갭을 메웠다
+
+**판단은 바꾸지 않는다: `--ocr-scale`을 `docling_parser.py`/`run_harness.py --stage parse`
+정규 옵션으로 승격하지 않고, fitz+EasyOCR 우회 파이프라인도 만들지 않는다.** 09-01 세션이 이미
+이 판단을 실행까지 마쳤고(`scripts/ocr_parse_scanned_disclosure.py`의 `[!decision]` 독스트링에
+근거·수치와 함께 명문화, `scripts/_probes/render_kics_page.py` 헬퍼 신설), 이번 세션은 그
+판단이 여전히 맞는지 재검증만 했다 — 바뀐 사실이 없다:
+
+- 스케일 1~4 실측(미래에셋 KR0079 2026.2Q p19, 9개 판독)은 `_ocr_converter()` 독스트링에
+  그대로 남아 있다: 1=3/9, **2=5/9(최선)**, 3(docling 기본)=2/9, 4=2/9. 216dpi에서 선두
+  '1'을 '7'로 읽는 지문(`155.3→755.3`, `13,473→73,473`)도 재현 코드 변경 없음.
+  `PdfPipelineOptions.images_scale`이 OCR 경로에 안 닿는다는 확인(1.0/2.0/3.0 바이트 동일
+  출력)도 유효.
+  - **정식화하지 않는 이유를 다시 명시적으로 계산했다**: 최선의 스케일도 5/9=56% — 절반을
+    겨우 넘는 수준이라, 이걸 "정식 옵션"으로 승격해 무인 실행 기본값으로 쓰면 44%가 틀린
+    산출을 공식 경로로 만드는 셈이다. 게다가 오독이 '1→7'처럼 **그럴듯하게 틀린** 값이라
+    "숫자가 나왔으니 맞겠지"로 새는 위험이 랜덤 노이즈보다 크다. 반대로 fitz 렌더+직독
+    방식은 실측 ~150셀에서 **0건 불일치**(유일한 예외 1건도 렌더 문제가 아니라 판독자
+    본인의 오독이었고, `item48==item14×50%` 항등식이 즉시 잡아냈다). "정식 옵션 승격"이
+    실제로 더 나은 결과를 주지 못하는데 파이프라인 복잡도만 늘리므로 기각을 유지한다.
+
+**실제로 실행한 것 — 이번 세션이 추가한 부분**: 이 판단이 왜 두 번(검증메모, 이번 티켓)
+재론됐는지 원인을 짚었다 — **판단은 스크립트 독스트링에만 있었고, 세션이 항상 먼저 읽는
+운영 정본(SKILL)에는 한 줄도 없었다.** `.claude/skills/kics-parser/references/
+quirks-and-traps.md`에 "Scanned PDFs: OCR is a lead, not a source" 절을 신설해 위 표·근거·
+`render_kics_page.py` 안내·"MD 텍스트만으로 마스터에 쓰지 말고 반드시 렌더 검증"규칙을
+한 곳에 정리했다. `data/_derived/kics_source_textlayer.json`의 실제 상태값(`SCANNED_SECTION`
+= 절만 이미지, `UNREADABLE` = 문서 전체 스캔 — 티켓의 "IMAGE_ONLY"는 이 파일의 실제 enum이
+아니라 둘을 아우르는 구어적 표현이었음을 문서에 명시)과 연결했다. 같은 파일의 "Docling loses
+pages" 가드 절이 2026-09-01 리라이트 이전 설계(`page_selection_flags()` 함수 +
+`SECTION_LOST_*` 등 6종 enum 플래그)를 그대로 서술하고 있던 것도 정정(실제로는
+`quality_check.score()`가 `QualityReport.page_flags`에 `missing_window=`/`ratio_critical=`
+문자열로 채운다 — 상세는 inbox `20260831T0700Z` 답변 참조). 이 드리프트가 그 티켓의
+`AttributeError` 10일 방치를 아무도 못 알아챈 배경 중 하나로 보여 근거를 남겼다.
+
+`docs/domains/claude-agent-kics.md`가 아니라 SKILL 쪽에 적었다 — 그 도메인 문서 자체가
+머리말에 "2026-05 설계 stub(부분 stale, owner 결정으로 동결)... durable한 건 [4개 항목]뿐"
+이라 못박혀 있고 이 내용은 그 4개 항목에 안 든다. `docs/agents/claude-agent-parser.md`도
+"운영 정본(자동로드 트리거)은 `.claude/skills/{kics,ifrs17}-parser/` SKILL"이라 명시한다.
+단, `.claude/`는 `.gitignore`(L91)로 전체 제외라 이 문서는 **이 머신에만** 있다 — 다른
+머신/워크트리에서 여는 세션은 이 절을 못 본다(SKILL 설계상 원래 그런 것이지, 이번에 새로
+생긴 제약은 아니다).
+
+### `MD_DIR` 부수지적 — 실측 후 latest-quarter 자동탐지로 교체했다
+
+09-01 §2 답변이 "손대지 않음"으로 남긴 항목을 이번 티켓이 다시 판단하라고 해서 처리했다.
+**실측**: `grep -rn "compute_tier2_utilization" --include=*.py scripts/ src/ tests/ docs/
+.githooks/` (자기 파일 제외) = **무출력** — import도 subprocess 호출도 0건, 09-01 답변의
+"5개 스크립트는 output JSON만 소비"라는 주장이 맞았다(오히려 5개보다 많은 12개 스크립트/
+테스트가 참조하지만 전부 산출 파일 경로 상수일 뿐 이 모듈을 부르지 않는다). 즉 하드코딩된
+기본값은 "바로 실행하면 항상 `--quarter`/`--md-dir` 를 넘긴다"는 문서화된 재현 경로 밖에서,
+사람이 인자 없이 맨으로 돌릴 때만 조용히 FY2025_Q4를 주는 함정이었다 — 죽은 경로는 아니지만
+위험은 낮은 채로 방치돼 있었다.
+
+`_latest_md_period()`를 신설해 `md_inbox/FY*_Q?` 중 최댓값(다른 스크립트들과 동일한
+`sorted(glob)[-1]` 관용구)을 골라 `MD_DIR`/`DEFAULT_QUARTER`를 자동 유도하도록 바꿨다:
+
+```
+MD_DIR (bare 실행)        FY2025_Q4  ->  FY2026_Q2
+DEFAULT_QUARTER (bare)    2025.4Q    ->  2026.2Q
+```
+
+**회귀 확인**: git stash로 이 파일만 원복한 뒤 `--quarter 2026.2Q --md-dir md_inbox/FY2026_Q2
+--out-dir <A>`를 실행, stash pop 후 같은 인자로 `--out-dir <B>` 재실행 — `diff -rq <A> <B>`
+무출력(산출 JSON 바이트 동일). 명시 인자 경로(=문서화된 유일한 재현 경로)는 이번 변경으로
+전혀 영향받지 않는다.
+
+수정 파일: `scripts/compute_tier2_utilization.py`(+18줄, MD_DIR/DEFAULT_QUARTER 유도부만).
+`kics_disclosure.json`은 이 섹션에서도 건드리지 않음.
+
+### 이번 라운드 판정
+
+§1 판단은 유지(2026-09-01과 동일 결론, 근거 재검증 완료) + 문서화 갭 해소. `MD_DIR` 부수지적은
+해소. `route: fix`가 요구한 실행 가능한 항목은 이걸로 소진됐다고 본다 — 다만 §1의 "판단해달라"
+요청에 대한 최종 승인은 orchestrator 몫으로 보고 `status: answered`로 둔다.
+
+## 종결 재확인
+
+재확인(orchestrator, 2026-09-12): §2 는 09-01 반영분 그대로, §1 은 '정식화 안 함 + fitz 렌더 직독 유지' 판단을 kics SKILL quirks 문서에 정본화 · `compute_tier2_utilization.py` MD_DIR 최신분기 자동탐지로 교체, `--quarter 2026.2Q` 실행 정상. **resolved.**

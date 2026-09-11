@@ -2,13 +2,13 @@
 from: orchestrator
 to: parser
 created: 20260831T0705Z
-status: open
+status: resolved
 route: reparse
 company: MULTI
 period: 2026.2Q
 rule: 47_tier2_census / 48_tier2_limit
 lane: kics
-iter: 1
+iter: 2
 ---
 
 ## 미결 (sender 작성)
@@ -136,3 +136,48 @@ status: resolved
 item14×50%=7713 과 일치해 정당한 우연 일치이므로 대상이 아니다.
 (참고: 본문 끝의 `status: resolved` 한 줄은 답변 3 의 본문 텍스트이고 정본은 frontmatter 다. iter 는 규약상
 sender 가 올려야 하나 이번 재확인은 status 줄만 손대는 범위라 그대로 두었다 — 파서가 받을 때 iter: 2 로 볼 것.)
+
+## 답변 (parser/kics, 2026-09-11, iter 2)
+
+**(a) 4셀 정정 완료.** `scripts/fix_20260911_item48_item3_contamination.py --apply`
+(신설, 세션 로컬). 값(적용전)만 교체, 값_적용후는 이미 정답이라 무변경:
+- KR0003 28741 → **10555.5** · KR0011 124792 → **57549.42** · KR0029 754 → **1389.83**
+  · KR0094 59367 → **26880.72**
+
+두 독립 경로로 재확인(둘 다 raw PDF 직접판독, MD 경유 아님) — 둘 다 오케스트레이터가 제시한
+값과 정확히 일치:
+1. `scripts/fix_20260821_tier2_limit_lines.py::extract_tier2()`(fitz 라벨 EXACT-match)를
+   각 사 2026.2Q raw PDF 에 직접 호출 → `found[48]` 이 넷 다 pre==post(예: KR0003
+   (1055550.0, 1055550.0))로 나왔다 — 이게 정확히 `item14×50%` 검산과도 맞는다.
+2. `md_inbox/FY2026_Q2/<KR>_*.md` "(1)공통적용경과조치" 표 grep(KR0094 는 MD 에 표 자체가
+   없어 fitz 만으로 확인).
+
+git diff 로 딱 4줄만 바뀐 것 확인(`kics_disclosure.json` 라인 269184/257132/269751/270046
+등). KR0083(item48=item3=7713, item14×50%=7713 과 우연히 일치)은 대상 아니라 손대지 않았다.
+
+**(b) 오염 주입점 — 부분 특정.** `git blame` 으로 4셀 전부 커밋 `8f5e3b8`("정기경영공시 39사
+전원 적재", 2026-09-01, 단일 커밋)에서 도입된 것을 확인했다. 그런데 **그 커밋 시점의 정확한
+스크립트는 특정하지 못했다** — 지금 저장소의 두 정본 추출기(`fill_tfi_table_to_disclosure.py`
+의 MD 표 추출, `fix_20260821_tier2_limit_lines.py::extract_tier2()`의 fitz 추출) 둘 다 이
+4셀을 **다시 돌리면 정답을 낸다**(위 (a) 의 재확인 자체가 그 증거). 즉 원래 값을 쓴 스크립트는
+그 세션 안에서 이미 코드가 고쳐졌거나 세션 로컬 수기 patch였을 가능성이 높고, `8f5e3b8` 은
+그 세션의 여러 실행을 묶은 단일 커밋이라 blame 이상으로는 특정이 불가능했다.
+
+대신 **현재 활성 경로의 재발 방지**로 대응했다: `fill_tfi_table_to_disclosure.py` 의 item48
+자체검산이 `item14_pre_f is not None` 조건에서만 발동하고 **item14 가 아직 안 실려 있으면
+무검증으로 통과**시키는 fail-open 구멍이 있었다(코드 592-604행). 이제 item14 결측도
+`selfcheck_blocked` 로 막는다(값을 안 쓰고 사유만 남김) — `kics_disclosure_parser.py` 에는
+애초에 "보완자본 한도" 문자열이 없다는 원 티켓의 grep 도 재확인(0건), 그쪽엔 손댈 코드가 없다.
+
+**(c) 게이트 재검증.** `validate_kics_disclosure.py` 재실행 → 4버킷 전부
+`48_tier2_limit`/`48_tier2_limit_post` **GREEN**(KR0094_post 는 원문 자체에 적용후 칸이
+없어 정상 SKIP). 전체 `RED=36`(불변, 전부 documented exception) · **blocking RED=0**.
+
+**변경 파일**: `kics_disclosure.json`(4셀) · `scripts/fill_tfi_table_to_disclosure.py`(자체검산
+강화) · 신규 `scripts/fix_20260911_item48_item3_contamination.py`.
+
+status: answered (원 sender 재확인 필요)
+
+## 종결 재확인
+
+재확인(orchestrator, 2026-09-12): 마스터 실측 KR0003 10555.5 · KR0011 57549.42 · KR0029 1389.83 · KR0094 26880.72(2026.2Q item48 적용전) · `validate_kics_disclosure.py` 에서 해당 4건 `48_tier2_limit` YELLOW 소멸, 차단 RED 0 · `fill_tfi_table_to_disclosure.py` 검산 fail-closed 반영. 주입점은 커밋 8f5e3b8 까지만 특정(현행 추출기 재실행은 정답) — 재발 차단은 fail-closed 검산으로 갈음. **resolved.**

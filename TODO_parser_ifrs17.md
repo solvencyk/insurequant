@@ -1,8 +1,121 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
-> **Status (top, 2026-09-11 88th pass 직후): 17BS 경영공시 백필 round2 완료 — 코어(1·2·3)
-> 결측 117→29(88건 닫음), 게이트 RED=0, push 안 함.** 티켓 `inbox/parser/
-> 20260911T0920Z` 상태는 `answered`(owner 재확인 2건 — 아래 88th pass 참조).
+> **Status (top, 2026-09-12 89th pass 직후): 티켓 2건 종결 — (1) KR1098/KR0075/KR0150
+> 2023.4Q 3사×3마스터 raw 원문 대조 완료(BS 전수 대조 63칸 중 41 EXACT+6신규+1정밀도교체,
+> CSM 6신규, PL 5신규) (2) PL gap14 잔여 6칸(KR1010·KR0150·KR0003·KR0008·KR0032·KR0072)
+> 전부 신규 등재 + AIA 2025.4Q 13칸 계산서 기준 전환.** 게이트 RED=0, push 안 함. 두 티켓
+> 모두 `status: answered`(원 sender 재확인 대기).
+
+> **2026-09-12 (89th pass) — 티켓 2건 병행 처리: 3사 원문 대조(ticket 20260902T1200Z) +
+> PL gap14 잔여 6칸 신규 등재 + AIA 재원 전환(ticket 20260901T1630Z).**
+>
+> ### ① `inbox/parser/20260902T1200Z` — KR1098/KR0075/KR0150 2023.4Q raw 대조
+>
+> downloader가 회수한 감사보고서 3건을 IFRS17_BS/CSM_waterfall/PL_breakdown 21항목/6항목/
+> 24항목 스키마로 전수 대조. **IFRS17_BS**: 21항목×3사=63칸 대조 가능 셀 중 KR1098
+> 12/13(1개 라벨변형 있었으나 값 확인), KR0075 9/9(480원 이내 반올림 1건), KR0150
+> 17/17 **EXACT MATCH** — 특히 KR0150은 항목 전부 원 단위까지 일치해 기존 경영공시 백필
+> (86th~88th pass) 품질을 raw 로 독립 재확인한 셈. 신규 채움 6칸(KR1098 item21=0,
+> KR0075 item10/11/13/20/24) + 정밀도 교체 1칸(KR0150 item6, 경영공시 억원반올림→감사
+> 보고서 천원단위, 억원 반올림 시 두 값 동일 수렴). **KR0075 item1/2(자산·부채총계)만
+> raw(비정정 rcept)와 마스터(3필링 교차확인 vision-read) 사이 0.08%(2,412백만원) 불일치
+> — item3/4는 정확히 일치해 정정공시 존재를 의심, 마스터 유지 + downloader 후속 확인
+> 필요.** **CSM_waterfall**: KR1098/KR0150은 `보험계약마진` raw 키워드 0회/2회(전부
+> 회계정책 서술문)로 기존 구조적 무 판정 재확인. **KR0075는 신규 6칸**(§14(4) 측정요소별
+> 변동내역 원수 표에서 기초 257.511·신계약 18.131·이자부리 4.939·조정 148.174·상각
+> -86.846·기말 341.909억원, 폐쇄검증 잔차 0, 2024.4Q 기초와 EXACT 연속성). **PL_breakdown**
+> 은 이미 fe3a20f(09-02)가 KR1098/KR0075 2023.4Q 스켈레톤을 채워 뒀으나 item3-7(생명장기
+> 원수손익 분해)이 비어 있었음 — CSM 갱신으로 새로 뜬 RED `PL_CSM_AMORT_VS_WATERFALL`을
+> 계기로 같은 §14(4) 표에서 5칸 채움(item3=-10596.067·item4=-8684.565[CSM_waterfall과
+> 원단위 일치]·item5=-2624.504·item6=-41152.756·item7=41865.758).
+>
+> ### ② `inbox/parser/20260901T1630Z` — PL gap14 잔여 6칸 + AIA Q2
+>
+> owner 결정(코디네이터 전달): Q1(6칸 신규 등재) + Q2(AIA 계산서 전환) 둘 다 승인. KR0050·
+> KR0076·KR1098 8칸은 이미 이전 세션(09b4b26)이 처리해 검증만. 남은 6칸을 하위 에이전트
+> 6개+AIA 조사 1개(총 7개, 병렬, 파일쓰기 없이 값·근거만 조사)로 원문 확보 후 이 세션이
+> 직접 적재:
+>   - **KR1010(교보라이프플래닛) 2023.4Q**: 24항목(연결 기준 — 기존 2024.4Q 마스터가 연결
+>     값과 일치해 시계열 일관성 채택). item2(-19236.64) 대 item3+item8(-14538.66) 사이
+>     4,698백만원 불일치 발견 — 둘 다 원문 근거 있으나 통합 안 됨, `pl_bridge_baseline.json`
+>     에 `lob_sum_gap`으로 등재(원인 미규명, 후속 필요).
+>   - **KR0150(서울보증) 2024.4Q**: `extract_tier2_sgi`/`_sgi_re_legs`가 이 필링 특유
+>     라벨변형("재보험영업수익:" — 기존 코드는 "재보험수익:"만 인식)을 놓쳐 item13/14가
+>     구조적으로 안 나오던 핸들러 버그를 **코드 수정**(companies.py)으로 해결 + item1/15-24는
+>     `_GOLD_CELL_OVERRIDE`로 11칸 채움(13항목). 항등식 item1≈13+14+15-16 잔차 0.000346.
+>     item2(생명장기손익) 구조적 N/A를 `LOB_LEG_NA` 등재부에 신규 등록(코리안리 옆에 서울
+>     보증 추가) — 이 회사가 item1/24를 채워 `coverage_holes()`의 active_min=7 문턱을 처음
+>     넘기면서 원래부터 구조적이던 item2 결측이 전 분기(2024.4Q~2026.2Q, 7분기) 일제히
+>     "MASTER_HOLE 부분" RED로 터진 것을 `coverage_holes()`에 `na_registry` 파라미터
+>     신설(양쪽 게이트 파일 공유)로 근본 해결.
+>   - **KR0003(롯데손해) 2023.1Q**: IFRS17 최초도입분기, "4.재무제표"~"5.주석" 섹션이 원문
+>     자체 공백(raw 직접 확인) — item20-24(요약손익표) 5칸만, 1-19는 억지로 채우지 않음.
+>     CSM_waterfall엔 이 분기 데이터가 있어(item5 -392.84억) `PL_CSM_AMORT_VS_WATERFALL`
+>     신규 RED 1건 발생 → `pl_csm_amort_missing_ledger.json`에 `NOT_DISCLOSED_SOURCE`로
+>     등재(AIA 2023.4Q와 동일 카테고리).
+>   - **KR0008(삼성화재) 2023.1Q**: `pl_breakdown_coverage.json`에 이미 no_income_statement
+>     기록됐던 최초도입분기 전용 표 구조를 주석20 직접판독으로 24항목 채움(item1=2+13+14-16
+>     원 단위 1 이내 정합). item15(기타영업수익)를 처음엔 N/A로 뒀다가 `보험손익(dual)`
+>     leg-coverage 검사가 item15/16 둘 다 필요함을 실측하고 0.0으로 정정(assemble()의
+>     기존 관례 "t1 있으면 item15 기본 0"과 정합).
+>   - **KR0032(NH농협손보) 2023.1Q**: `extract_tier2_nh`의 캡션 매칭이 이 분기 전용 라벨
+>     변형("보험손익" vs "보험영업이익", "적용하지않는" vs "을적용하지않는")을 못 잡던 것을
+>     주석14+MD&A 직접판독으로 22항목 채움(item2=3+8·item20=1+17·item22=20+21·
+>     item24=22-23 전부 EXACT). CSM_waterfall item5(-604.6억)와 item4(60459백만원)
+>     억원단위 교차확인 일치.
+>   - **KR0072(KDB생명) 2023.1Q**: 2023.2Q와 동일 원인(FS-API 013 + 구양식) — 기존
+>     `_GOLD_CELL_OVERRIDE[("KR0072","2023.2Q")]`와 같은 메커니즘으로 18항목(13직접+5파생)
+>     신규 등재. **부수 발견**: `build_pl_breakdown.py::main()`이 t1=t2=None이면 override
+>     존재 여부와 무관하게 무조건 skip하는 버그가 있어 이 셀의 override가 애초에 적용
+>     불가능했다 — override 존재 시 skip을 우회하도록 수정(다른 회사 영향 0, 전 회사 재빌드
+>     row/company_quarter 카운트 불변으로 확인).
+>   - **AIA(KR0080) 2025.4Q**: item18/19는 이미 정확(2023/2024.4Q도 재확인, 무변경).
+>     item1/3/7/8/16/17/18/20/21/22/23/24 13칸을 산문(억원 반올림) 기준에서 감사받은
+>     포괄손익계산서(`_aia_statement`, 천원 정밀) 기준으로 전환(`extract_tier2_aia` 수정 —
+>     item4/5/6는 계산서에 측정요소 분해가 없어 계속 산문 소스, item7은 잔차로 전환).
+>     `pl_bridge_baseline.json`의 `보험손익(dual) diff=+1000.0` 항목이 실제로 0.000으로
+>     닫혀 등재 제거.
+>
+> ### 공통 검증·게이트
+>
+> 전부 `scripts/build_pl_breakdown.py::_GOLD_CELL_OVERRIDE`(신규 5개사) + companies.py
+> 코드수정(KR0150) + `data/dart/viz/{bs_manual_overrides,pl_bridge_baseline,
+> pl_csm_amort_missing_ledger}.json`/`data/_gold/{user_csm_cells,user_pl_cells}.json`
+> gold-overlay로 반영, **회사 스코프 재실행**(`build_pl_breakdown.py::discover_filings`
+> 결과를 TARGET_CODES로 필터링하는 전용 스크립트, `build_root_masters.py main()` 미실행)
+> + **combo-diff 2층**(cell-key 전수 LOST/GAINED/CHANGED + 예상 밖 회사 터치 여부)로 매
+> 단계 확인. 최종: `IFRS17_BS.json` 8,840→8,846행 · `CSM_waterfall.json` 2,172→2,178행 ·
+> `PL_breakdown.json` 11,930→12,122행(LOST=0 전 구간). `RUN_PL_GOLDEN=1 pytest
+> tests/test_pl_breakdown_golden.py`가 전체 39사 재빌드로 회사스코프 결과와 **바이트
+> 동일**함을 재확인(로우/회사분기/논널 카운트 일치) — 별건 회귀 없음 증명. `validate_data_
+> contract.py` **RED=0**(작업 중 신규 RED 3종 전부 fix 또는 등재로 해소: PL_CSM_AMORT_VS_
+> WATERFALL 2건[KR0075→fix, KR0003→등재], MASTER_HOLE 7건[KR0150 item2→LOB_LEG_NA
+> 등재로 구조적 해소]). `test_master_tables_golden.py`/`test_rule_coverage_manifest.py`
+> (83개 전부 통과 — item23 법인세를 PL_CONSTRUCTIVE_BLIND→GUARDED로 이동, PL_YTD_
+> COLLAPSE_TO_ZERO가 KR0072 2023.1Q 신규로 인접분기 비교가 가능해지며 새로 포착됨을
+> 실측 확인) 전부 `--update` 재생성+PASS. `sync_master_xlsx_sheet.py`로 "17BS"·"CSM워터폴"·
+> "손익분해PL" 3시트 cherry-pick(전부 "검증 OK"). 골든 입력지문(ifrs17_bs·pl_breakdown·
+> viz_ifrs17_panels 3그룹) surgical 갱신 — **dividend·post_transition 2그룹은 여전히
+> FAIL, kics 레인이 병행 수정 중인 `kics_disclosure.json`이 원인이라 손대지 않음**
+> (spawn_task로 후속 티켓 등록, kics 레인 작업 완료 후 그쪽에서 재검증 필요).
+>
+> **파일**: `scripts/build_pl_breakdown.py`(`_GOLD_CELL_OVERRIDE` 6개사 신규/보강 +
+> None/None skip 버그 fix) · `scripts/pl_breakdown/companies.py`(`_sgi_re_legs`/
+> `extract_tier2_sgi` 라벨변형 + `extract_tier2_aia` 계산서기준 전환) ·
+> `scripts/validate_master_tables.py`(`coverage_holes(na_registry=)` 신설, `LOB_LEG_NA`
+> 에 서울보증 추가, `PL_ITEMS_UNCHECKABLE_BY_EQUATION`에서 item23 제거) ·
+> `scripts/validate_data_contract.py`(MASTER_HOLE 호출부 na_registry 배선) ·
+> `tests/test_rule_coverage_manifest.py`(item23 BLIND→GUARDED, GOLD_OVERLAY_CENSUS 갱신) ·
+> `data/dart/viz/bs_manual_overrides.json`(2081→2087) · `data/_gold/user_csm_cells.json`
+> (270→276) · `data/_gold/user_pl_cells.json`(198→203) · `data/_gold/pl_bridge_baseline.json`
+> (+1 KR1010, -1 AIA) · `data/_gold/pl_csm_amort_missing_ledger.json`(+1 KR0003) ·
+> 골든 4종(ifrs17_bs·master_tables·pl_breakdown 전부 `--update`) · 지문·xlsx 동기화.
+> `scripts/_probes/probe_20260911_*.py`·`probe_20260912_*.py`(신규 조사/적용 스크립트 다수).
+>
+> **잔여**: KR1010 item2 vs item3+item8 불일치 원인 미규명(등재만 완료) · KR0075 item1/2
+> 0.08% 불일치(정정공시 여부 downloader 확인 필요) · KR0080 item4/5/6은 여전히 산문 소스
+> (계산서에 측정요소 분해 없음, 더 정밀한 별도 주석표가 있다면 후속) · dividend/post_
+> transition 지문 FAIL은 kics 레인 몫.
 
 > **2026-09-11 (88th pass) — round2 백필: 엔진 버그 6종 수정 + 서브에이전트 4개(≤4 한도)
 > 병렬 비전 백필, 코어 결측 117→29(88건 닫음, 75%).**
@@ -400,88 +513,6 @@
 > 형식이 악사손해 외 다른 회사에도 있는지는 이번 전수스캔으로 커버됐으나(전체 6건뿐로 확인)
 > 문구 변형이 다른 회사에서 새로 나타나면 `_narrative_totals()` 앵커 정규식 확장 필요.
 
-> **2026-09-03 (84th pass) — 해약환급금준비금(item5) 경영공시 재대조 프로브를 전면 재작성,
-> 악사손해·하나생명·AIA 등 8사 23칸 정정. 삼성생명·한화생명은 오케스트레이터가 별도 처리.**
->
-> 발주: owner "해약환급금준비금을 경영공시 PDF 기준으로 정정하라고 시켰는데 하나도 안
-> 고쳐져 있다"(재지시). 출발점은 커밋된 프로브
-> `scripts/_probes/probe_20260902_surrender_reserve_vs_disclosure.py`(v1, 라인기반
-> exact-match) — 1차 실행 PDF 510개·대조가능 272·차이1%초과 22건.
->
-> **1) v1 결함 진단 및 전면 재작성(라인기반 완전 폐기 → `fitz.find_tables()` 구조 기반)**.
-> v1은 "줄이 라벨과 정확히 같아야 매치"라 캡션("7-2. ~등의 적립")이 붙은 진짜 표는 놓치고,
-> 같은 페이지의 세로쓰기 라벨열에 붙은 각주성 숫자를 잘못 주웠다(신한라이프 2025.1Q "24"→
-> 실제 39,046억). 4Q/연차 필링(수백 쪽)에서는 "해약환급금준비금"이 이연법인세 롤포워드·
-> 이익잉여금 처분계산서·구성내역 노트 등 **개념이 다른 표 여러 곳**에 등장해 첫 매치를
-> 아무거나 집었다(하나생명 2024.4Q "6,213,693,900"처럼 자릿수가 깨진 값도 나왔다). 실측
-> 결과 **4Q "큰 차이" 사례 대부분은 마스터가 아니라 v1이 틀렸다**(AIA 2024.4Q p240 노트
-> 613,943=마스터 그대로, 하나생명 2024.4Q p199 노트 80,882.732=마스터 80,883과 일치 등).
->
-> 재작성 알고리즘: 페이지 필터를 "해약환급"(넓게)으로, 표마다 당기/전기 열을 키워드
-> (당기말/당분기/해당분기/전기말/전분기/직전분기, 열0 라벨열은 항상 제외)로 찾고 못 찾으면
-> 날짜 패턴("YYYY년MM월"/"YYYY년Q/4분기"/"YY.QQ"/"YYYY년 상반기·하반기")을 파싱해 최근값을
-> 당기로 판정. 행 접미사(라벨에서 "해약환급금준비금" 뗀 나머지)가 `""`/`잔액`/`예정액`이면
-> 잔액개념으로 채택, `기적립액`/`적립(환입)예정액`/`처분액` 등은 버린다(구성요소·플로우값
-> 배제). 우선순위: (P1)3행노트 잔액/예정액행 > (P2)요약표 단독라벨(단위=억원) >
-> (P3)세로쓰기 병합셀 위치대응 > (P4)단위불명/구성내역 노트(저신뢰, 자동교체 후보에서 제외).
-> 신설 경로 2개: **2차원 그리드**(미래에셋류, 구분×기간이 열 방향 나열 — `_wide_grid_
-> candidates`) · **기적립액+적립예정액 합산**(악사손해 2024.2Q부터 이 형식으로 바뀜, 둘을
-> 더해야 잔액). 세션 중 잡은 회귀 버그 6종(문서화는 파일 상단 docstring): 열 인덱스가
-> 행마다 ±1 흔들리는 문제(`_cell_near` 허용오차 탐색으로 해결) · 빈칸(None)과 명시적 대시
-> `-`(미적립)를 구분 못해 탐색이 조기종료되던 버그 · "당기"가 "당기손익반영" 같은 복합어
-> 일부로 오매치(음수 세금효과값을 잔액인 양 반환) · "당분기주1)" 각주표시 뒤 한글 때문에
-> 역으로 매치를 놓치던 문제 · "보증준비금 및\n해약환급금준비금"처럼 두 준비금을 합산한 줄이
-> 개행 때문에 별개 라벨 나열로 오인된 문제 · 이익잉여금**처분**계산서 표(구분 나열이
-> 요약표와 판박이라 그 회계연도 **전입액**을 잔액인 양 집어냄, 헤더/앞머리 "처분" 키워드로
-> 표 전체 배제).
->
-> **2) 검증**: 알려진 정답 20여 건(삼성생명 2025.4Q·2026.1Q, 한화생명 13분기, 하나생명 2024/
-> 2025.4Q, AIA 2024/2025.4Q, 신한라이프 2025.1Q/2026.1Q, 미래에셋 2025.4Q, 코리안리
-> 2023.1Q 등)으로 각 수정마다 회귀 확인. 최종 배치: PDF 스캔 **548개**(FY2026_Q2 39사
-> raw/ 정본화 반영) · 표인식실패 55(대부분 진짜 스캔본 — KB손해·동양생명 2026.2Q 텍스트
-> 0/258자 확인, AIA 2025.1~3Q·2026.1Q도 스캔 확인 — OCR 없이 대조불가로 정직하게 분류) ·
-> 미적립('-') 121 · 마스터결측 64 · **대조가능 308 · 차이1%초과 23건 · 충돌 0건**.
->
-> **3) 정정 적용(23칸, `data/dart/viz/bs_manual_overrides.json`)**: downloader 티켓
-> (`inbox/parser/_resolved/20260903T0048Z`)이 짚은 3사 이월버그부터 처리 —
-> **KR0049 악사손해 10칸**(2023.4Q~2026.2Q, 이 회사가 가장 심각: 2023.4Q~2025.3Q 8분기가
-> 두 블록 158,849.26×4 / 79,424.63×4 로 얼어 있었는데 실제는 매분기 다른값) ·
-> **KR0097 하나생명 3칸**(2025.2Q는 티켓 밖의 국소 이상치 — 2024.4Q값이 그 한 분기에만
-> 낌 · 2026.1~2Q는 티켓대로) · **KR0080 AIA 3칸**(2024.1Q도 티켓 밖의 동일계열 발견 ·
-> 2026.1Q는 그 분기 필링 자체가 완전 스캔본이라 FY2026_Q2 필링 p42의 "직전분기" 열로
-> 교차확인). 나머지 **6사 7칸**은 owner 지시("나머지는 현황파악, 오차 크지 않으면 패스")에
-> 따라 서베이 중 발견한 확정 오차만 추가: 아이엠라이프 2026.2Q(24.8%) · AIG 2025.2Q(8.9%)·
-> 2026.2Q(18.4%) · IBK연금 2026.2Q(15.8%) · 동양생명 2023.2Q(4.9%) · DB손해 2023.3Q(4.7%) ·
-> 농협생명 2024.1Q(1.4%, 절대차 27.5억원). **손대지 않은 것**: DB생명(KR0082) 2026.2Q —
-> 기존 오버라이드(2,400,123)가 표값(2,204,300)에 재무제표 주석 서술문의 적립예정액
-> (195,846)까지 더한 owner 검증치라 내 표 전용 프로브보다 정확함(2026-08-19 근거 유지) ·
-> 케이디비생명 2025.1Q — 절대차 38백만원(1% 미만 규모)로 면제.
->
-> **4) 빌드 검증**: `python scripts/build_ifrs17_bs.py` 재실행 →
-> `owner 오버라이드: 168 교체 + 62 신규`, **7,042행**(재실행 전과 동일, 삼성생명·한화생명
-> 37칸 포함 전량 유지 확인) · `git diff --stat IFRS17_BS.json` = **23 insertions(+) 23
-> deletions(-)**, 딱 23칸만 바뀌고 나머지 전부 무변경(diff 내용 육안 확인 — 바뀐 키가
-> 정확히 위 23개 (회사,분기) 조합과 일치).
->
-> **손대지 않음(오케스트레이터가 이미 처리했거나 별도 처리 중이라 회피)**: KR0069(삼성생명)·
-> KR0068(한화생명) — 커밋 `d75a941`(법정준비금 3종 37칸, 좌표기반 재추출기)로 이미 반영됨,
-> 이 세션은 재확인만 하고 겹쳐 쓰지 않음. **골든**(`tests/fixtures/ifrs17_bs_golden.json`) ·
-> **xlsx 동기화** · **public_exports** — 오케스트레이터가 "너는 커밋까지만" 이라고 명시
-> 지시해 이 세션은 건드리지 않았다. 즉 이 세션 커밋 이후 골든은 stale 상태이니 다음
-> 세션/오케스트레이터가 `python tests/test_ifrs17_bs_golden.py --update` 로 재생성할 것.
->
-> **파일**: `scripts/_probes/probe_20260902_surrender_reserve_vs_disclosure.py`(전면 재작성,
-> ~450줄) · `data/dart/viz/bs_manual_overrides.json`(+23칸, cells 207→230) ·
-> `IFRS17_BS.json`(23칸 재빌드 반영, 7042행 무변) ·
-> `inbox/parser/_resolved/20260903T0048Z__downloader__...`(resolved 처리).
->
-> **잔여(후속 세션 몫)**: 표인식실패 55건 중 스캔이 아닌 것(메리츠화재 4Q류·미래에셋
-> 2023~2024년 다수 — 큰 연차 필링이라 표 위치가 다를 가능성, 이번엔 시간예산상 미조사) ·
-> "경영공시엔 값 있는데 마스터가 비어있는 칸" 약 50건(대부분 회사가 '0'/미적립을 명시
-> 공시한 케이스 — 삼성생명처럼 owner 승인 있으면 신규 등재 가능하나 이번 라운드는 범위 밖) ·
-> item5 외 항목(6/7/8 대손·비상위험·보증준비금)도 같은 이월버그 경로를 타는지는 미확인
-> (downloader 티켓이 명시적으로 범위 밖이라 표기).
-
 > 📦 **Status 이력은 `docs/todo_archive_parser_ifrs17.md` 로 이동했다** (2026-09-11, 내용 무수정 — 2026-09-03 (84th pass) 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 
 ## 🔴 Open — P1
@@ -498,6 +529,9 @@
 ---
 
 ## 🟠 Open — P2
+
+### AIA-456 — KR0080 2025.4Q item4/5/6 을 주석18(4) 측정요소 표 기준으로 교체 (2026-09-12 오케스트레이터)
+하위 조사가 주석18(4)(원수)·19(3)(재보험) 변동내역 표(단위 백만원)를 확인: item4 153,059 · item5 30,499 · item6 −25,069(부호반전). 현재는 산문 153,100/30,500/−25,000. 전기(FY2024) 열에 같은 매핑을 적용하면 2024.4Q 마스터와 일치해 방법론 검증됨. `extract_tier2_aia` 에 주석 경로 추가 후 item7 잔차 재계산(18,465.203). 근거: `docs/parser/pl_gap14_subagent_findings_20260912.md` AIA 절.
 
 ### PL-T2 — PL Tier-2 residual gaps (after 2026-06-08 census, changelog (m))
 

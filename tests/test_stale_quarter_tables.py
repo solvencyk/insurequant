@@ -42,14 +42,40 @@ def test_live_master_has_only_known_hits():
     assert not unknown, f"미등재 스테일 표: {unknown}"
 
 
-def test_known_hit_still_fires():
-    """등재부가 박제한 KR0003 2026.1Q 를 탐지기가 여전히 잡는가.
+def test_the_kr0003_2026q1_regression_pattern_would_still_be_caught():
+    """KR0003 2026.1Q 는 더 이상 `_KNOWN` 에 없다 — 2026-09-11 REOPEN 조사
+    (inbox 20260911T1407Z) 로 회귀가 아니라 데이터가 실제로 고쳐진 것임을 확인했다:
+    발행사가 2026-09-03 원문을 재제출해(commit 66cfa0b) TFI 표가 더는 전기(2025.4Q)
+    재게시가 아니다. `detect()` 를 재제출 직전 스냅샷(git show 7c33aae:kics_disclosure.json)
+    에 돌리면 지금도 fingerprint A 가 잡힌다 — 탐지기는 살아 있다, 다만 그 스냅샷은
+    이력일 뿐 라이브 마스터가 아니라 이 테스트 스위트가 직접 참조할 수 없다.
 
-    잡히지 않게 되면 탐지기가 죽었거나 데이터가 바뀐 것이다 — 둘 다 알아야 한다.
+    그래서 "탐지기가 여전히 잡는다"를 **라이브 히트가 아니라 그 정확한 옛 패턴의 합성
+    재현**으로 증명한다: KR0003 2026.1Q 의 item48 을 2025.4Q(직전분기) SCR x 50% 로
+    되돌리면(2026-09-03 이전 실제 값과 동일한 오염) 지문 A 가 다시 잡혀야 한다. 잡히지
+    않으면 탐지기가 죽은 것이다.
     """
     m = _mod()
-    hits = {(h["code"], h["quarter"], h["column"]) for h in m.detect(_records())}
-    assert ("KR0003", "2026.1Q", "값") in hits
+    recs = _records()
+    prev14 = _find(recs, "KR0003", "2025.4Q", 14)
+    cur14 = _find(recs, "KR0003", "2026.1Q", 14)
+    r48 = _find(recs, "KR0003", "2026.1Q", 48)
+    assert prev14 and cur14 and r48, "KR0003 2025.4Q/2026.1Q 입력이 마스터에 없다"
+    p, c = m._f(prev14["값"]), m._f(cur14["값"])
+    assert p is not None and c is not None and abs(c - p) > m.TOL, (
+        "KR0003 의 SCR 이 분기 간 안 바뀐다 — 이 회귀 재현의 전제(판별 가능 구간)가 깨졌다"
+    )
+
+    baseline = {(h["code"], h["quarter"], h["column"], h["fingerprint"])
+                for h in m.detect(recs)}
+    r48["값"] = f"{p * 0.5:.2f}"  # 2026-09-03 이전 실제로 관측됐던 것과 동일한 오염
+    mutated = {(h["code"], h["quarter"], h["column"], h["fingerprint"])
+               for h in m.detect(recs)}
+
+    assert ("KR0003", "2026.1Q", "값", "A") in mutated - baseline, (
+        "KR0003 2026.1Q 의 2026-09-03 이전 실제 결함 패턴(item48 = 직전분기 SCR x 50%)을 "
+        "재현했는데 지문 A 가 못 잡았다 — 탐지기 회귀"
+    )
 
 
 def _find(recs, code, q, item):

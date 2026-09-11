@@ -113,7 +113,12 @@ DATA: dict[str, dict[int, tuple[float, float | None]]] = {
     "2023.4Q": {
         47: (8696.69, 8696.69), 48: (9031.22, 9031.22), 49: (5693.07, 5693.07),
         50: (29459.26, 29459.26), 51: (8696.69, 8696.69), 52: (38155.94, 38155.94),
-        53: (0.0, None), 54: (496.50, None),
+        # 2026-09-11 (inbox 20260901T0420Z__validation REOPEN, 재확인): 496.50 was a
+        # copy/paste bleed from KR0071(흥국생명) item53 신종자본증권 49,650백만 (same
+        # session, different company) -- raw p36 fitz-rendered 190dpi (re-verified this
+        # session, scripts/_probes/probe_20260911_kr0079_2023q4_p36_render.py) prints
+        # "(기발행 후순위채무) 300,359" plainly, i.e. 3,003.59억, not 496.50.
+        53: (0.0, None), 54: (3003.59, None),
     },
     "2024.4Q": {
         47: (11106.89, 11106.89), 48: (9302.86, 9302.86), 49: (8082.47, 8082.47),

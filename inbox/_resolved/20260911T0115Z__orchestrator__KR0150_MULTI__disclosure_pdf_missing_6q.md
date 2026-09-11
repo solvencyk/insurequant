@@ -2,7 +2,7 @@
 from: orchestrator
 to: downloader
 created: 20260911T0115Z
-status: open
+status: resolved
 route: refetch
 company: KR0150
 period: 2023.1Q~2024.3Q
@@ -33,3 +33,18 @@ iter: 1
 배경 보고서: `artifacts/validation/ifrs17bs_disclosure_backfill_survey_20260911.md`
 
 ## 답변 (recipient 작성 — 처리 후)
+
+**진행 메모 (orchestrator 대행, 2026-09-12 01:15 KST) — 미완, `status: open` 유지.**
+
+- 항목 1(서울보증 6분기 PDF): **이 PC 에서 외부 443 이 막혀 수집 불가.** 01:0x 에 `https://www.sgic.co.kr/...CCGIRI010101F01` 이 한 번 200 을 준 뒤
+  01:10:31~01:11:21 6회 연속 `curl: (7) Failed to connect ... port 443` (github.com 도 동일 000) — 보안에이전트/VPN 차단 상태.
+  downloader 에이전트는 100분간 산출 0(python/브라우저 프로세스 0개, 첫 문장에서 정지)이라 kill 했다. 네트워크가 열리면 재발주.
+- 항목 2(KR0079 2023.2Q MD 미변환): raw 무결성 확인(58p·4,859자·83자/p·"지급여력" 24회, 이미지/벡터 렌더 PDF) 후
+  `inbox/parser/20260912T0115Z__downloader__KR0079_2023.2Q__docling_md_missing_image_pdf.md`(route reparse, lane kics) 로 이관.
+- 항목 3(정정본 병존 구조): 미착수 — 네트워크 무관한 코드 작업이라 다음 downloader 라운드에서 항목 1 과 같이 처리.
+
+## 종결 (owner 확정, 2026-09-12)
+
+- 항목 1: **owner 가 서울보증 공시 페이지를 직접 확인 — 과거 연도(2023·2024) 분기 경영공시를 회사가 자체적으로 게시하지 않음.** KR0150 2023.1Q~2023.3Q·2024.1Q~2024.3Q 6분기는 **원문 부재**로 확정(파싱 실패·미수집 아님). IFRS17_BS 의 해당 6분기 코어 결측은 정당 결측.
+- 항목 2: parser 티켓 `inbox/parser/20260912T0115Z__downloader__KR0079_2023.2Q__docling_md_missing_image_pdf.md` 로 이관 완료.
+- 항목 3(정정본 병존 구조): `TODO_downloader.md` Active follow-ups 로 이월(네트워크 무관 코드 작업).

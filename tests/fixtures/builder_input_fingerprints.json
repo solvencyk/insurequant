@@ -3,9 +3,9 @@
  "_contract": "입력 불변 ∧ 코드 불변 ∧ 산출 불변 ⟹ 지금 다시 빌드해도 같은 바이트. 하나라도 어긋나면 전체 골든을 돌려 확인한 뒤 --update 한다. 지문은 무거운 골든의 대체가 아니라 층이다.",
  "specs": {
   "ifrs17_bs": {
-   "inputs_sha256": "3d22976200c62fa061016bd87253b6aa3330e5d1c52ce622e00ce842bd4d5676",
+   "inputs_sha256": "df278f146613ef1a2e25cc18e85bfdf4500eeacc12c0219882bdad3df2b252fb",
    "input_files": 2138,
-   "input_bytes": 3369214269,
+   "input_bytes": 3369228398,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
     "data/dart/FY*_Q*/raw/**/*.xml": 545,
@@ -37,12 +37,12 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "8e7786373f09e11fb0fbbacc31165136a2dfc76914efcd9244d897ffd5ea2860",
+   "fixture_sha256": "886ba5f46c8db6ec762604a8c6f3bd860a10e9a04cb97d197825abb6fd55043d",
    "outputs": {
     "sha256": {
      "path": "IFRS17_BS.json",
-     "fixture_sha256": "4cc83ecaf7f0517483658137bc09e6a0f2378bfbd9f8aeb0507e8b7c9e1eeb94",
-     "ondisk_sha256": "4cc83ecaf7f0517483658137bc09e6a0f2378bfbd9f8aeb0507e8b7c9e1eeb94"
+     "fixture_sha256": "18059e5ecd2c4ae6b09f62288debd195a804c48aad3df1533b9890686db95db5",
+     "ondisk_sha256": "18059e5ecd2c4ae6b09f62288debd195a804c48aad3df1533b9890686db95db5"
     }
    },
    "_golden": "tests/test_ifrs17_bs_golden.py",
@@ -60,16 +60,16 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_ifrs17_bs.py + inbox/parser/20260911T0109Z(계보 완결성 목적 추가, 빌더가 직접 읽진 않음)"
   },
   "pl_breakdown": {
-   "inputs_sha256": "d566b6116bef2f54a48bf49c06c843d52ead1c26f5e1e88faf7b71f67e7f0482",
+   "inputs_sha256": "5b01c97eb5095967c84a7ae44c70d0ff828660a106d6781ebee6b6bbb284efc4",
    "input_files": 1587,
-   "input_bytes": 2011680958,
+   "input_bytes": 2011690400,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
     "data/dart/FY*_Q*/raw/**/*.xml": 545,
     "data/ifrs17/table_scoring_keywords.yaml": 1,
     "kics_disclosure.json": 1
    },
-   "code_sha256": "7d098e2bd53d3b264ba49a4e1d13ba3eb569e02829043a5405dd2ad95a6d0e66",
+   "code_sha256": "f916e076aa688a22d5e3f71ca2b558d0f261a67876c854e8d7a30533fa14098a",
    "code_files": [
     "scripts/build_net_income_breakdown.py",
     "scripts/build_pl_breakdown.py",
@@ -86,17 +86,17 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "9a68947f88dbf68425ecd10a192f578a01cbc375db10c0473227800fd67cf24e",
+   "fixture_sha256": "29ec2163569ce44ee1c3dc8b4f1b215a2c372d41cdbc611434f8cd0264855e8d",
    "outputs": {
     "sha256_master": {
      "path": "data/dart/viz/pl_breakdown_master.json",
-     "fixture_sha256": "95ead99a84588d9931ef85ad5f71d84bbc9d69113d4d4e1b43aadee8e999fc19",
-     "ondisk_sha256": "95ead99a84588d9931ef85ad5f71d84bbc9d69113d4d4e1b43aadee8e999fc19"
+     "fixture_sha256": "9f053f8658276bfc6f464a920393aeeec23fd4d57209759c7b7394c4c1ff9b62",
+     "ondisk_sha256": "9f053f8658276bfc6f464a920393aeeec23fd4d57209759c7b7394c4c1ff9b62"
     },
     "sha256_coverage": {
      "path": "data/_derived/pl_breakdown_coverage.json",
-     "fixture_sha256": "a019ba963d4e50e9a19405e6790b5480b1cb36fd775c01c495edd3fe4b21e436",
-     "ondisk_sha256": "a019ba963d4e50e9a19405e6790b5480b1cb36fd775c01c495edd3fe4b21e436"
+     "fixture_sha256": "a2fa97efb2db8c7cafa56db2a8ef3f3f6f73b983517793f01dfffe6b8088c2dd",
+     "ondisk_sha256": "a2fa97efb2db8c7cafa56db2a8ef3f3f6f73b983517793f01dfffe6b8088c2dd"
     }
    },
    "_golden": "tests/test_pl_breakdown_golden.py",
@@ -136,9 +136,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/viz_build_csm_waterfall.py (관측 47개 = *_measurement.json; 패턴은 넉넉히 extracted/*.json 전체)"
   },
   "viz_ifrs17_panels": {
-   "inputs_sha256": "8e0699fb858aeffca074c2f2f832a702ad275492857e5e077ff4e7b4549d2202",
+   "inputs_sha256": "bbb30c76cc46d0b4e05dcf37944e4b9953c901f08ac093003d1edce8fcb3afac",
    "input_files": 769,
-   "input_bytes": 51312979,
+   "input_bytes": 51314859,
    "input_files_per_pattern": {
     "data/dart/extracted/*.json": 767,
     "CSM_waterfall.json": 1,
@@ -181,9 +181,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/viz_build_ifrs17_panels.py — 트레이스는 첫 패널 쓰기에서 멈추므로 나머지 3패널의 glob (*_insurance_pl_mvp/*_bs_snapshot_mvp/*_sensitivity)은 main() 의 outputs 표에서 확인해 extracted/*.json 로 통합했다"
   },
   "dividend": {
-   "inputs_sha256": "52e5d2ec2ebbb581e8d147ceba919500cb4d08639d1767f6fad0fbe8f974e7e7",
+   "inputs_sha256": "87b6f6d2935c19b68d9867cd969b4ed2f237ddba445e300b6fe6cf047e6b4974",
    "input_files": 626,
-   "input_bytes": 9718819,
+   "input_bytes": 9728261,
    "input_files_per_pattern": {
     "data/dart/_alotmatter_cache/*.json": 624,
     "data/_derived/alotmatter_fetch_census.json": 1,
@@ -211,9 +211,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_dividend.py (관측 627개 = census 1 + 캐시 624 + kics_disclosure 1)"
   },
   "post_transition": {
-   "inputs_sha256": "32a2ac8e9e033df9f96bfe840d19c8744a81661082c1766b303d8d7f7c77b44e",
+   "inputs_sha256": "8962cd919e93a2ec2441cb19ff2a2b9dc6107dc3c47fb060c6d122e7f523f45c",
    "input_files": 548,
-   "input_bytes": 34793612,
+   "input_bytes": 34818240,
    "input_files_per_pattern": {
     "md_inbox/FY*_Q?/*.md": 547,
     "kics_disclosure.json": 1
@@ -222,7 +222,7 @@
    "code_files": [
     "scripts/fill_post_transition_to_disclosure.py"
    ],
-   "fixture_sha256": "71870fbda752599db54baa54586999bd8c79f207ef3a8c1dbd7a0a7e2096ad80",
+   "fixture_sha256": "5c04533a30f4df2f1369fa0729ac2efc115519e2d73768b299f7491c68a4a837",
    "outputs": {},
    "_golden": "tests/test_post_transition_golden.py",
    "_why_not_in_hook": "훅의 오프라인 묶음에 이미 있다(~8초). 지문은 중복 방어이자 '입력이 움직였는데 fixture 가 안 움직였다'를 축별로 지목해 준다",

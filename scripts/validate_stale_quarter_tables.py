@@ -47,14 +47,25 @@ TOL = 0.5
 TFI_ITEMS = range(47, 55)
 
 # 알려진 히트 = 이미 조사가 끝나 owner 결정이 붙은 것. 여기 없는 히트는 blocking.
-_KNOWN: dict[tuple[str, str, str], str] = {
-    ("KR0003", "2026.1Q", "값"): (
-        "2026-09-01 owner 결정 = 현행 유지(원공시 그대로). 발행사가 TFI 표 전체를 직전분기"
-        " 기준으로 인쇄했고, item47/49 는 산식이 없어 역산이 불가능하며 item48 은 검산식이라"
-        " 채워 넣으면 안 된다. 부분 정정을 시도하면 잔차가 오히려 늘어난다"
-        " (`_TIER2_ISSUER_INCONSISTENT[('KR0003','2026.1Q')]` 주석에 경위 기록)."
-    ),
-}
+#
+# 2026-09-11 (inbox 20260911T1407Z__ifrs17-session, REOPEN 조사): KR0003 2026.1Q 항목이
+# 빠졌다 -- 새 세션이 "왜 없지"로 헤매지 않도록 이력을 남긴다. 이 파일을 만든
+# 2026-09-01 census 시점엔 이 히트가 실재했다(owner 결정 = 원공시 그대로 유지). 그런데
+# 2026-09-03 발행사가 원문을 재제출했다(구본 886,240B "최종 제출_20260528" -> 신본
+# 1,927,066B "재제출", commit 66cfa0b) -- TFI 표(item47~52) 6칸을 재파싱해 정정한 결과
+# 더 이상 전기(2025.4Q) 재게시가 아니게 됐고, 같은 커밋이
+# `kics_json_rules._TIER2_ISSUER_INCONSISTENT[('KR0003','2026.1Q')]` 등재도 함께 뺐다.
+#
+# 회귀(탐지기가 죽음)가 아니라 데이터가 정말 바뀐 것이라는 증거 두 가지:
+#   1) `detect()` 를 재제출 직전 스냅샷(git show 7c33aae:kics_disclosure.json, 66cfa0b 의
+#      부모 커밋)에 돌리면 **지금도** fingerprint A 가 그대로 잡힌다
+#      (scripts/_probes/probe_20260911_ticket3_stale_detector_proof.py, 세션 로컬).
+#   2) 현재 마스터는 이 히트를 포함해 전사 히트가 **0건**이다 -- 대체 등재할 "다른 살아있는
+#      히트"가 없다.
+# 그래서 "탐지기가 여전히 잡는다"는 이제 라이브 데이터가 아니라
+# `tests/test_stale_quarter_tables.py::test_the_kr0003_2026q1_regression_pattern_would_still_be_caught`
+# 가 이 정확한 과거 패턴(item48 = 직전분기 SCR x 50%)을 사본에 합성 주입해 증명한다.
+_KNOWN: dict[tuple[str, str, str], str] = {}
 
 
 def _f(v):

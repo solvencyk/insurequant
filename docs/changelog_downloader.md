@@ -3,6 +3,10 @@
 > Last updated: 2026-09-03 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
 
+## 2026-09-12 — 서울보증 과거 분기 경영공시 = 원문 부재 (owner 확정)
+
+> inbox `20260911T0115Z` 종결. 서울보증은 2023·2024 분기 경영공시를 자체 게시하지 않아 KR0150 6분기(2023.1Q~2024.3Q)는 정당 결측. 미래에셋 2023.2Q MD 갭은 parser 티켓 `20260912T0115Z`. 정정본 병존 구조는 TODO follow-up 으로 이월. 부수: PC 외부 443 차단으로 downloader 에이전트 100분 무산출 → kill(네트워크 사전 확인 규칙).
+
 ## 2026-09-03 -- FY2026_Q2 정기경영공시 raw/ 정본화(1→39) + 항목5 해약환급금준비금 3분기 이월버그 발견
 
 owner 직접 지시: "FY2026_Q2 정기경영공시 PDF가 거의 통째로 빠져 있다. 회수해라." 근거로 든

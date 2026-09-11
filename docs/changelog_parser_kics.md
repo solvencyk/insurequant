@@ -1,6 +1,143 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-03 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-09-11 · Stage 2/5 — parser (kics lane)
+
+## 2026-09-11 — inbox 3건 직렬 처리: item48/item3 오염 잔여 4셀 + KR0079 TFI 24셀 백필 + stale-quarter 테스트 6건 회귀 판정 (orchestrator 발주)
+
+세 티켓을 `kics_disclosure.json` 순서대로 처리(전부 그 파일 또는 픽스처를 건드려 직렬 필요).
+동시 세션(코드 에이전트)이 `quality_check.py`/`run_harness.py`/`docling_parser.py`/
+`ocr_parse_scanned_disclosure.py`/`md_inbox/FY2026_Q2/KR0104_*.md`를 만지는 동안 이 세션은
+데이터 쓰기 + `data/_derived/_patch*` + `validate_stale_quarter_tables.py` + 관련 테스트 3종 +
+tier2 적재 스크립트를 소유.
+
+**① item48(보완자본 한도, 2026.2Q)의 item3 복사 오염 잔여 4셀 정정** (`inbox/parser/
+20260831T0705Z`, REOPEN iter2). KR0003 28741→10555.5 · KR0011 124792→57549.42 · KR0029
+754→1389.83 · KR0094 59367→26880.72(값_적용후는 이미 정답이었다). 두 독립 경로로 재확인 —
+`fix_20260821_tier2_limit_lines.py::extract_tier2()`(fitz 라벨 EXACT-match, 페이지 텍스트
+직접판독)와 md_inbox grep. 오염 주입점은 `git blame` 으로 커밋 `8f5e3b8`(09-01, "정기경영공시
+39사 전원 적재")까지만 좁혔다 — 그 이상은 특정 불가: 현재 저장소의 두 정본 추출기
+(`fill_tfi_table_to_disclosure.py`, `fix_20260821_tier2_limit_lines.py`) 모두 이 4셀을 다시
+돌리면 **정답을 낸다**(위 재확인 자체가 증거), 즉 당시 코드가 이미 고쳐졌거나 세션 로컬
+수기 patch였던 것으로 보이고 `8f5e3b8`은 한 세션의 여러 실행을 묶은 단일 커밋이라 blame
+이상의 특정이 불가능했다. 대신 현재 활성 경로를 강화했다: `fill_tfi_table_to_disclosure.py`
+의 item48 자체검산이 `item14_pre_f is not None` 조건에서만 발동하고 item14 미로드 시
+무검증 통과하는 fail-open 구멍이 있었다 — 이제 item14 결측도 `selfcheck_blocked`로 막는다
+(신설 `scripts/fix_20260911_item48_item3_contamination.py`).
+
+**② KR0079(미래에셋생명) TFI 3분기 24셀 백필 적용 + DATA 오기 1건 정정** (`inbox/parser/
+20260901T0420Z`, REOPEN). 2026-09-01 답변이 만들어 둔 `fix_20260901_kr0079_scanned_section_
+tier2.py`를 실행하기 전, 검증 재확인이 지적한 item54(2023.4Q) DATA 오기(496.50)를 raw p36
+190dpi 재렌더로 직접 확인 — 원문은 "(기발행 후순위채무) 300,359"(=3003.59억), 496.50은
+KR0071(흥국생명) item53 신종자본증권 49,650백만이 같은 세션에서 옆 회사 칸으로 새어든
+값이었다. 정정 후 `--apply`(INSERT 24, UPDATE 0) — 항등식 4종(item51==item47 UNCAPPED ·
+item50+item51==item52 · item48==item14×50% · item52==item1) 3분기 전부 GREEN. 게이트
+재검증: `47_tier2_census`/`_post`·`53_tfi_memo_rows` 전부 GREEN(`_post`만 원문 자체 결측으로
+정상 SKIP). 부수 관찰 3건 중 2건도 같은 세션에서 처리(둘 다 SCANNED_SECTION이라 fitz
+get_text()가 0자 — 190dpi 렌더 직접판독만이 경로): KR0010 2025.4Q item8(자본조정) "" → "0"
+(원문 3분기 다 "0" 확인, 이웃 항목 7·9와 동일한 미적용사 미러링 패턴) + KR0071 2024.4Q·
+KR0010 2025.4Q item53/54 신규 4셀(KR0010 은 같은 표의 47/48/49가 기존 마스터값과 소수점까지
+일치해 판독법 자체가 교차검증됨). 신설 `scripts/fix_20260911_side_observations_tier2_item8.py`.
+남은 1건(KR0080 item23-26)은 census로 8분기×4항목=32셀 규모임을 정확히 재고 이번 라운드는
+보류 — `TODO_parser_kics.md` KR0080-2326 항목 참조.
+
+**③ stale-quarter 탐지기 테스트 6건 파손 — 원인 규명 결과 회귀 아님** (`inbox/parser/
+20260911T1407Z`, ifrs17-session 발주). `tests/test_stale_quarter_tables.py::
+test_known_hit_still_fires` + `tests/test_tier2_issuer_inconsistent_exemption.py` 5건이
+KR0003 2026.1Q 축에서 실패한 원인을 판정 순서대로 확인: ① `git log`로 커밋 `66cfa0b`
+(2026-09-03, "롯데손해 KR0003 2026.1Q 원문 재제출 반영 — TFI 6칸 정정 + 면제 해제") 확인 —
+발행사가 원문을 재제출해(구본 886,240B → 신본 1,927,066B) item47~52가 당분기 자기 SCR
+기준으로 재파싱됐고, 같은 커밋이 `_TIER2_ISSUER_INCONSISTENT[("KR0003","2026.1Q")]` 등재와
+원장 기록을 함께 제거했다. ② `git show 7c33aae:kics_disclosure.json`(66cfa0b 부모, 재제출
+직전 스냅샷)에 `validate_stale_quarter_tables.detect()`를 돌려 **그때는 지문 A가 실제로
+잡히는 것**을 확인(item48=10335.34가 직전분기 SCR×50%=10335.5와 일치, 당분기=10216.0과는
+불일치) — 탐지기가 살아 있다는 증거. 현재 마스터에 같은 탐지기를 돌리면 **전사 히트 0건**
+(대체 등재할 다른 살아있는 히트가 없음). ③ 데이터가 진짜 바뀐 것으로 확정하고 등재부·시험을
+현재 사실로 갱신: `_KNOWN`을 비움(경위는 주석으로 영구 보존) + `test_known_hit_still_fires`
+를 `test_the_kr0003_2026q1_regression_pattern_would_still_be_caught`(옛 오염 패턴을 사본에
+합성 주입하는 변이시험)로 교체 + `test_tier2_issuer_inconsistent_exemption.py`의 죽은 핀 4개
+(parametrize 2건 삭제·2건은 KR1000/2023.4Q·KR0087/2025.2Q로 대상 이동) + 레지스트리 카운트
+20→19(실측 `len(gate._TIER2_ISSUER_INCONSISTENT)`로 확인) 정정. 48건 전부 통과.
+
+**부수 발견**: `tests/test_kics_rules_golden.py::_run()`이 `validate_kics_disclosure.py::
+main()`(L3841-3845)이 넘기는 4개 부수입력 중 `life_subrisk_source_absent`를 빠뜨리고 있었다
+— 발견 경위: ①·② 데이터 변경 후 골든을 그냥 `--update`했더니 RED=60(2023.1Q/2023.3Q
+`8_life_census` 24버킷)이 나왔는데, 같은 순간 라이브 게이트의 `report_latest.json`은
+RED=36이었다. 두 계산을 직접 대조(`scripts/_probes/probe_20260911_red_count_diagnose.py`)
+해 누락 인자를 찾아 고치고 재생성 — 지금은 RED=36으로 게이트와 완전히 일치.
+
+**게이트/테스트 최종**: `validate_kics_disclosure.py` RED=36(불변, 전부 documented
+exception) · blocking RED=0. `validate_data_contract.py` RED=0 YELLOW=88. `pytest
+tests/test_stale_quarter_tables.py tests/test_tier2_issuer_inconsistent_exemption.py
+tests/test_kics_rules_golden.py tests/test_rule_coverage_manifest.py -q` → 179 passed /
+1 failed. 실패 1건(`test_gold_overlay_census_matches_manifest`, CSM/PL gold overlay
+census)은 ifrs17 레인 소관 — `git status`로 `CSM_waterfall.json`·`IFRS17_BS.json`·
+`data/_gold/user_csm_cells.json`가 이 세션 시작 전부터 이미 수정 중이었음을 확인했고, 두
+재실행 사이 PL 버킷 수(198→203)가 더 늘어 활성 편집임이 재확인됐다 — K-ICS 코드/데이터는
+원인이 아니고 건드리지 않았다. `sync_master_xlsx_sheet.py "K-ICS공시"` 실행, 검증 OK
+(25486행×9열 마스터와 완전 일치, 드리프트 0).
+
+## 2026-09-11 — quality-gate AttributeError 복구 + KR0104 census 재현 + OCR 배율 판단 문서화 (orchestrator 발주, inbox 20260831T0700Z iter4 / 20260831T0800Z iter2)
+
+`kics_disclosure.json`을 읽기 전용으로 유지(동시 세션이 셀 패치 적재 중)한 채 코드·MD·SKILL
+문서만 수정. 세 갈래.
+
+**① `--stage quality` exit 1 → exit 0.** `run_harness.py`가 L89에서 읽는 `r.page_flags`를
+`quality_check.QualityReport`가 가진 적이 없었다 — 원인은 다른 레인 커밋 `09b4b26`("fix(ifrs17):
+PL 회사수 36→39...")이 "같이 담긴 것" 절에 kics 작업(tier2 소진율 정리·downloader 셀렉터 등)을
+함께 실어나르며 `run_harness.py`에 그 블록을 얹었는데, `page_flags`를 실제로 채우는 쪽
+(`quality_check.py`)은 어느 브랜치에도 커밋된 적이 없었기 때문(`git log --all -S page_flags --
+quality_check.py` = 0건). `QualityReport`에 `page_flags: list[str] = field(default_factory=list)`
+필드를 추가하고 `score()`가 `missing_window=<label,label,...>` / `ratio_critical=<ratio>` 형식
+문자열로 채우도록 수정 — `run_harness.py`의 `f.split("=",1)[0]`로 그룹핑하는 기존 로직과 그대로
+맞물린다. 실측: `--stage quality --md-root md_inbox/FY2026_Q2` exit 0, total=39 accepted=9
+review=30, `page_flag_counts={missing_window: 5}`(KR0079·KR0087·KR0095·KR0104·KR1010) —
+orchestrator 재확인 티켓의 수치와 완전 일치. 전체 md_inbox(547개, 14분기) exit 0(review=407,
+flags 213건=missing_window 211 + ratio_critical 7). `tests/unit/test_docling_page_guard.py`
+11개는 애초에 `score()` 내부 헬퍼만 테스트해 이 필드를 몰랐으므로 무변화로 통과.
+`pytest tests/unit/ tests/test_deploy_assets.py -q` 141 passed.
+
+**② census "32/39 landmine 7" 메인 트리 재현.** REOPEN 재확인이 지적한 대로 메인 트리에서
+`probe_20260901b_market_window_census.py`를 돌리면 31/8이었다 — 9-01 iter3 답변의 "5/5 KR0104
+완전 복구"가 이미 삭제된 격리 워크트리(`.claude/worktrees/agent-a780e1e7e5719a3f6`)에서만
+유효했던 재변환 MD를 근거로 했기 때문. `md_inbox/FY2026_Q2/KR0104_농협생명보험.md`를 메인
+트리에서 재변환(`run_harness.py --stage parse --pdf-root data/disclosure/FY2026_Q2/raw
+--companies KR0104 --workers 1`, 187.3s, docling_status=SUCCESS, dropped/recovered/
+unrecovered_pages 전부 빈 리스트) — 재변환 전 mtime 스냅샷과 사후 대조로 md_inbox/FY2026_Q2
+39개 파일 중 KR0104 1개만 변경됐음을 확인(다른 회사 0건 오염). `source_page_ranges`가
+`6-10;13-28;34-37;40-46` → `6-10;13-36;43-46`으로 바뀌며 29-33p가 새로 편입됐고, 재추출한
+item36-40이 마스터와 소수점까지 정확히 일치(13866.27/7712.89/2818.93/3487.39/0), sqrt(V'MV)=
+19271.87 vs item19=19272(rel 0.0007%). census 재실행 결과 **MD_FULL 32/39, landmine 7**
+(KR0010·KR0079·KR0080·KR0082·KR0087·KR0094·KR0099) — REAL GAP은 재변환 전후 모두 0/39(마스터는
+처음부터 끝까지 정답이었음). 구 MD는 `artifacts/kics_validation/md_backup_20260911/`에 백업.
+`kics_disclosure.json`은 읽기만 함(값 대조 스크립트가 로드만, 쓰기 없음).
+
+**③ OCR 렌더 배율 — 2026-09-01 결정 재확인 후 문서화 갭만 메움.** 판단 자체(정식 옵션 승격도
+fitz+EasyOCR 우회 구축도 안 하고, fitz 직접 렌더 + 육안/비전 직독으로 대체)는 이미
+`scripts/ocr_parse_scanned_disclosure.py`의 `[!decision]` 독스트링에 근거(스케일 1~4 실측
+3/9·5/9·2/9·2/9, 216dpi에서 선두 '1'→'7' 오독, render+read 방식 150개 셀 0건 불일치)와 함께
+있었다 — 재론이 반복된 이유는 이 결정이 **SKILL 문서(운영 정본)에는 한 줄도 없었기 때문**.
+`.claude/skills/kics-parser/references/quirks-and-traps.md`에 "Scanned PDFs: OCR is a lead,
+not a source" 절을 신설(배율표 + 결정근거 + `render_kics_page.py` 안내 + "MD 텍스트만으로
+마스터에 쓰지 말 것" 규칙, `data/_derived/kics_source_textlayer.json`의 `SCANNED_SECTION`/
+`UNREADABLE` 상태값과 연결 — 티켓의 "IMAGE_ONLY"는 이 파일의 실제 enum명이 아니라 두 상태를
+아우르는 구어적 표현이라 문서에 그렇게 명시). 같은 파일의 "Docling loses pages" 가드 절이
+2026-09-01 리라이트 이전 설계(`page_selection_flags()` 함수 + `SECTION_LOST_*` 등 6종 enum
+플래그)를 그대로 서술하고 있어 ①에서 고친 실제 필드명(`QualityReport.page_flags`,
+`missing_window=`/`ratio_critical=` 문자열)으로 정정 — 이 드리프트가 10일간 `AttributeError`를
+아무도 못 알아챈 원인 중 하나로 보여 근거를 남겼다. `compute_tier2_utilization.py`의
+`MD_DIR`/`DEFAULT_QUARTER` 하드코딩(FY2025_Q4/2025.4Q)은 `grep -rn compute_tier2_utilization`
+전체 무출력(import·subprocess 호출 0건, 문서화된 재현 경로는 전부 `--quarter`/`--md-dir` 명시)을
+재확인 후 `md_inbox/FY*_Q?` 최댓값 자동탐지(`_latest_md_period()`)로 교체 — git stash로 원본과
+`--quarter 2026.2Q --md-dir md_inbox/FY2026_Q2` 명시 실행 결과를 대조해 산출 diff 0(바이트
+동일) 확인, bare 실행 시 기본값만 FY2025_Q4→FY2026_Q2로 개선.
+
+재현: `run_harness.py --stage quality --md-root md_inbox/FY2026_Q2` ·
+`scripts/_probes/probe_20260901b_market_window_census.py` · `pytest tests/unit/
+tests/test_deploy_assets.py -q`. 수정 파일: `src/solvency/parser/quality_check.py` ·
+`scripts/compute_tier2_utilization.py` · `.claude/skills/kics-parser/references/
+quirks-and-traps.md`(gitignored, 머신 로컬) · `md_inbox/FY2026_Q2/KR0104_농협생명보험.md`
+(재변환, gitignored). 티켓: `inbox/parser/20260831T0700Z__...`(status: answered, iter4) ·
+`inbox/parser/20260831T0800Z__...`(status: answered, iter2).
 
 ## 2026-09-03 — 롯데손해 KR0003 2026.1Q 원문 재제출 반영 (orchestrator 발주)
 

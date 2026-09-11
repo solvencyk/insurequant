@@ -1,6 +1,6 @@
 {
-  "sha256": "8138abf7e4fb20121d2ca7de08fb489945e4e07fef4d5cab485a42dea4ecc8a5",
+  "sha256": "b848036a9947adfc3e3e9f51aa033c7eca6574732b3f76cf740ecac8c00b9bdf",
   "company_quarters": 478,
-  "cells": 6715,
+  "cells": 6721,
   "_what": "Refactor safety net for _extract_post_values. Captured before the 569-line function was split. Hash covers every (code, quarter, item) → (pre, post, source) it would write into kics_disclosure.json."
 }

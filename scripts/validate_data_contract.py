@@ -91,6 +91,7 @@ from validate_master_tables import (  # noqa: E402
     CSM_AMORT_PIN_TOL_REL,
     CSM_AMORT_TOL_ABS_EOK,
     CSM_AMORT_TOL_REL,
+    LOB_LEG_NA,
     coverage_holes,
     csm_amort_coverage_baseline,
     csm_amort_ledger,
@@ -649,11 +650,17 @@ def check_census(res: GateResult, env: "Env") -> None:
         res.add(check="census", **kw)
 
     # --- 1c. IFRS17 long-master holes (reuse validate_master_tables.coverage_holes) ---
-    for master, idx, key_items in (
-        ("CSM_waterfall", env.wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"]),
-        ("PL_breakdown", env.pl, ["보험손익", "생명장기손익", "당기순이익"]),
+    # PL_breakdown 만 na_registry=LOB_LEG_NA 를 넘긴다(예: 서울보증보험은 item2=생명장기손익
+    # 이 될 LOB 자체가 없다) — CSM_waterfall 의 key_items 엔 LOB 슬롯이 없어 no-op.
+    # 2026-09-12, inbox/parser/20260901T1630Z: KR0150 2024.4Q 를 채우다가 active_min=7
+    # 문턱을 처음 넘기면서 원래부터 구조적인 item2 결측이 전 분기 "부분" hole 로 드러난 것이
+    # 계기 — 필터는 coverage_holes() 안에 있다(단일 구현, validate_master_tables.py 의
+    # _check_coverage 도 동일 registry 를 쓰도록 같이 맞췄다).
+    for master, idx, key_items, na_reg in (
+        ("CSM_waterfall", env.wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"], None),
+        ("PL_breakdown", env.pl, ["보험손익", "생명장기손익", "당기순이익"], LOB_LEG_NA),
     ):
-        real, _known, _struct = coverage_holes(idx, key_items)
+        real, _known, _struct = coverage_holes(idx, key_items, na_registry=na_reg)
         for co, q, kind in real:
             if not _emit(q):
                 continue

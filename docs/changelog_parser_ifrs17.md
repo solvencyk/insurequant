@@ -1,7 +1,45 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-09-11 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-09-12 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-09-12 — 3사 raw 원문 대조 + PL gap14 잔여 6칸 신규 등재 + AIA 계산서 기준 전환
+
+티켓 2건 병행: `inbox/parser/20260902T1200Z`(KR1098/KR0075/KR0150 2023.4Q 감사보고서
+원문을 IFRS17_BS/CSM_waterfall/PL_breakdown 3마스터에 대조) + `inbox/parser/
+20260901T1630Z`(PL gap14 잔여 6칸 + AIA Q2, owner 승인 후 재개). 상세는
+TODO_parser_ifrs17.md 89th pass 참조.
+
+**① 3사 raw 대조**: IFRS17_BS 21항목×3사 대조 — KR0150 17/17 EXACT(경영공시 백필 품질을
+raw로 독립 재확인), KR1098/KR0075도 라벨변형·반올림 수준 외엔 EXACT. 신규 6칸+정밀도
+교체 1칸(bs_manual_overrides.json). CSM_waterfall: KR1098/KR0150 구조적 무 재확인,
+KR0075 신규 6칸(§14(4) 측정요소 표, 폐쇄검증 잔차 0, 인접분기 연속성 EXACT).
+PL_breakdown: KR0075 item3-7 신규 5칸(CSM_waterfall과 item4/item5 원단위 일치, 새로 뜬
+PL_CSM_AMORT_VS_WATERFALL RED 해소).
+
+**② PL gap14 잔여 6칸**: KR1010(24항목, 연결기준) · KR0150(13항목, `_sgi_re_legs` 라벨
+변형 코드수정+override) · KR0003(5항목, 원문 자체 공백이라 그 이상 못 채움) ·
+KR0008(24항목) · KR0032(22항목) · KR0072(18항목, `_GOLD_CELL_OVERRIDE` None/None skip
+버그 fix). AIA(KR0080) 2025.4Q 13칸을 산문(억원 반올림)에서 감사받은 포괄손익계산서
+(천원 정밀) 기준으로 전환 — `pl_bridge_baseline.json`의 diff=+1000.0 항목이 0.000으로
+닫혀 제거.
+
+**게이트 인프라 개선(부수)**: `coverage_holes()`에 `na_registry` 파라미터 신설(서울보증의
+구조적 item2 결측을 LOB_LEG_NA 등재로 흡수 — KR0150이 active_min=7 문턱을 넘으며 터진
+MASTER_HOLE 7건의 근본 해결) · `PL_CONSTRUCTIVE_BLIND`에서 item23(법인세) 제거(KR0072
+2023.1Q 신규 등재로 PL_YTD_COLLAPSE_TO_ZERO가 처음으로 이 항목을 포착할 수 있게 됨,
+변이시험 실측 확인) · `pl_csm_amort_missing_ledger.json`/`pl_bridge_baseline.json`에
+KR0003/KR1010 documented exception 등재.
+
+**검증**: 회사 스코프 재실행(TARGET_CODES 필터) + combo-diff 2층(LOST=0 전 구간) 매
+단계 확인, `RUN_PL_GOLDEN=1 pytest`가 39사 전체 재빌드로 바이트 동일 재확인.
+`validate_data_contract.py` RED=0(작업 중 신규 RED 3종 전부 fix/등재로 해소) ·
+`test_master_tables_golden.py`/`test_rule_coverage_manifest.py`(83개) 전부 PASS.
+`IFRS17_BS.json` 8,840→8,846행 · `CSM_waterfall.json` 2,172→2,178행 ·
+`PL_breakdown.json` 11,930→12,122행. xlsx 3시트(17BS/CSM워터폴/손익분해PL) cherry-pick.
+지문 3그룹(ifrs17_bs/pl_breakdown/viz_ifrs17_panels) surgical 갱신 — dividend/
+post_transition 2그룹은 kics 레인이 병행 수정 중인 kics_disclosure.json 때문에 여전히
+FAIL, 손대지 않고 후속 티켓으로 넘김.
 
 ## 2026-09-11 — 17BS 경영공시 백필 round2: 엔진 버그 6종 수정 + 비전 서브에이전트 4개, 코어결측 117→29
 

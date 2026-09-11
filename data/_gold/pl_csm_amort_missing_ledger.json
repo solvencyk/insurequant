@@ -16,6 +16,12 @@
       "cause": "NOT_DISCLOSED_SOURCE",
       "note": "raw data/dart/FY2023_Q4/raw/KR0080_에이아이에이생명보험_20240409002583/20240409002583_00760.xml 전체를 훑어 확인(TODO_parser_ifrs17.md 79th pass ③): (a) FY2024/FY2025 필링에 있는 '당사의 금년도 영업이익은...' 요약 산문 자체가 이 해엔 없다 -- '당사의' 로 시작하는 문장 22개 전수 확인, 전부 회계정책 상용구일 뿐 손익 요약이 아니다. (b) '보험계약마진' 15개 언급이 전부 IFRS17 정의/회계정책 설명뿐, 그 해 상각액을 공시하는 롤포워드 표·문장이 없다. (c) '기초잔액' 전문서 1회뿐, CSM 과 무관. 다른 두 신규 회사(하나손해/아이엠라이프)는 같은 조사에서 실제로 표가 있어 채웠지만(주석29류, extract_tier2_hana_sonbo/_hana_sonbo_csm_amort, extract_tier2_imelife/_imelife_csm_amort 참조) AIA 2023.4Q 는 표·산문 둘 다 원문에 없다 -- 추측·보간 없이 빈 칸 유지. AIA 의 다른 두 분기(2024.4Q=1561.6억, 2025.4Q=1530.6억)는 `_aia_statement()` 가 산문에서 정상 추출한다(_GOLD_CELL_OVERRIDE 없이 통과) -- '감사보고서라서 노트가 없다'는 카테고리 설명이 이 회사 자체엔 성립하지 않고, 2023.4Q 한 분기만 진짜로 원문 부재다.",
       "routed": "inbox/parser/20260901T1900Z__orchestrator__MULTI__pl_csm_amort_vs_waterfall_red7.md"
+    },
+    "롯데손해보험|2023.1Q": {
+      "wf_amort_eok": 392.84,
+      "cause": "NOT_DISCLOSED_SOURCE",
+      "note": "data/dart/FY2023_Q1/raw/KR0003_롯데손해보험/xml/20230515002687.xml (rcept 20230515002687) L4816-5242 확인: '4.재무제표'~'5.주석' 섹션이 <P></P> 완전 공백(IFRS17 최초도입분기 전용 간이서식, FS-API 00113562_2023_11013 도 013). §14(4) 측정요소별 변동내역 표 자체가 원문에 없어 item4(원수CSM상각)를 추출할 수 없다 -- 이 회사의 2023.2Q부터는 정상 필링(80,785백만원 등 Tier-2 값 존재)이라 이 분기만 진짜 원문 부재다. CSM_waterfall의 item5(CSM상각 -392.84억)는 2023.4Q(연차, rcept 20240321001822)가 독립적으로 보고하는 FY2023 결산치에서 온 것으로(기존 user_csm_cells.json 등재 근거 'raw 교차확인' 참조), 같은 필링에 없는 PL 세부 노트와는 원천이 다르다 -- '한쪽만 비었다'는 게이트 판정 그대로가 맞다.",
+      "routed": "inbox/parser/20260901T1630Z__parser__MULTI__pl_gap14_remaining_and_owner_scope.md"
     }
   }
 }

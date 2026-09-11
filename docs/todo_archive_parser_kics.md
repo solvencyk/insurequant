@@ -4,6 +4,61 @@
 
 ---
 
+> Last updated (이전): 2026-09-01(9회차 — 시장위험 항목36-40 "400/538"(138칸 결측) 재census) —
+> orchestrator 발주(8회차가 고친 총계행 라벨 정규식이 과거 분기 결측에도 적용되는지 재라).
+> **결론: 진짜 결측은 0칸 — 538이라는 분모 자체가 공시주기(cadence)를 안 반영한 버그였다.**
+> 옆의 항목41-46(금리시나리오)은 이미 짝수분기만 분모로 쓰는데(`완비 270/273`) 항목36-40은
+> 홀수분기까지 분모에 섞어 538(=270짝수+268홀수)을 썼다. 짝수분기 270/270 결측 0, 138칸은
+> 전부 홀수분기(1Q/3Q 간이공시)분. 홀수분기 268칸 중 130칸은 이미 채워져 있음(25개사가
+> 재량으로 홀수분기에도 세부표 공시) — 나머지 138칸만 결측.
+>
+> **138칸 전수 (a)/(b)/(c) 판정**(MD+raw PDF 둘 다 fitz로 직접 열어 "OO위험액 현황" 헤딩
+> 유무 검사, `scripts/_probes/probe_20260901c_full_classify.py`): **(c) 원문에도 없음
+> 137칸**(11개사는 홀수분기 이력 전체에 세부표 자체가 없는 회사군 — 삼성생명·삼성화재·
+> 한화생명·신한라이프·서울보증·DB생명·KB라이프·동양생명·라이나생명·미래에셋생명·AIG손해;
+> 14개사는 대부분 "2023.3Q만 있고 나머지는 없음"). 표본(삼성생명 2024.1Q raw PDF 34p)
+> 직접 확인 — p15에 item19 총계 한 줄만 있고 36-40 분해표는 문서 전체에 없음. **(a) 1칸**
+> (하나손해 KR0050 2026.1Q — `extract_mkt_subs()`가 다른 표("③경과조치" 절의 "금리위험"
+> 행)를 오매칭했으나 19_market 게이트(rel<2%)가 이미 차단, 저장 안 됨·오염 없음). **(b) 0칸.**
+> 독립검증으로 `fill_market_subitems_to_disclosure.py --dry-run --all-periods`(오늘 고친
+> 정규식으로 14개 분기 전체 재실행)도 `TOTAL new rows: 0`으로 같은 결론.
+>
+> **채운 칸 0개, 패치 스크립트 없음**(UPSERT할 값 자체가 없음 — "틀린 값을 싣느니 빈 칸"과
+> 정확히 일치). **고친 것은 데이터가 아니라 지표**: `scripts/status_report.py::axis_coverage()`
+> 의 항목36-40 분모를 41-46과 동일하게 짝수분기로 맞추고 홀수분기 자율공시 카운트를 병기
+> (`완비 270/270 (100.0%) [짝수분기만 공시; 홀수분기 자율공시 130/268]`). `kics_disclosure.json`
+> 무변경(동시세션 lost-update 리스크 없음), 게이트 재실행 불필요(RED=0 그대로).
+>
+> **재현**: `status_report.py --fast` §5 / `fill_market_subitems_to_disclosure.py --dry-run
+> --all-periods` / `scripts/_probes/probe_20260901c_market_bucket_census{,2}.py`(cadence 분해)
+> + `probe_20260901c_full_classify.py`(a/b/c 판정, 상세는 `_out_20260901c_classify.json`).
+> 티켓: `inbox/_resolved/20260901T1314Z__orchestrator__MULTI__market_36to40_538gap_is_
+> cadence_denominator_bug.md`(자기완결, status: resolved).
+>
+
+> Last updated (이전): 2026-09-01(8회차 — inbox `20260831T0700Z` 세 실패양식 원인분리 + 품질게이트
+> 가드 신설 + 39사 재census, 격리 워크트리) — orchestrator 발주. **원인은 셋이 아니라
+> 사실상 넷이었다**: (A) docling 윈도가 6-4 절 자체를 못 잡음(기존 세션이 이미 수정,
+> `DEFAULT_RATIO_KEYWORDS`) — 재확인만 함. (B) **표가 반쪽만**은 docling 문제가 아니라
+> `scripts/fill_market_subitems_to_disclosure.py::extract_mkt_subs()` 의 총계행 라벨
+> 정규식이 K-ICS 서식의 각주 마커 순서 변형(`Ⅲ.합계 주2)`/`Ⅲ.합계(주2)`/`합계 Ⅲ.주2)`)을
+> 못 잡던 버그였다 — 5건 수정(순서무관 정규식, 대시=0 폴백 확장, 불릿 헤딩 인식, "해당사항
+> 없음"=0 신규처리, 섹션경계 unit 오염 리셋). (C) 페이지가 윈도·hit_pages 안에 있는데
+> 내용만 증발하는 건 — **메인 트리(다른 동시 세션)가 이미 v5 docling_parser.py 로 해소한
+> 것으로 보임**(`docling_status`/`docling_dropped_pages`/`docling_recovered_pages` 필드
+> 확인, KR0001/KR0051/KR0100 현재 MD 에 6-8 절 정상 존재) — 내 브랜치는 안 건드림(남의
+> 미커밋 작업). **품질게이트 가드는 배선 완료**: `quality_check.py::score()` 가 짝수분기
+> 한정 6-4/6-8 필수 섹션 마커를 body 에서 검사, 없으면 review(원인 무관, 최종산출물 기준이라
+> A·C 둘 다 잡음). **효과 실측**: MD 가 마스터 36-40 을 재현하는 회사 39사 중 **21→32**
+> (`scripts/_probes/probe_20260901b_market_window_census.py`, 스텝별 회귀 0 확인).
+> `REAL GAP`(마스터 자체 결측)은 시작·종료 둘 다 0/39 — **패치 스크립트 불필요**(UPSERT 할
+> "새로 살아난 값" 자체가 없었음, 재추출값은 전부 마스터와 일치하거나 여전히 못 찾음).
+> 유일한 예외 KR0094 item36 이 45.66% 불일치로 남아있으나 원문 재대조 없이 판정 불가라
+> 패치 안 하고 보고만 함. 잔여 7개사(KR0010·KR0087·KR0079 스캔/저밀도 OCR 필요,
+> KR0080·KR0082·KR0094 부분 landmine, KR0099 재변환 역효과로 백업 복원)는 inbox
+> `## 답변` 참조. status: answered(orchestrator 재확인 필요).
+>
+
 > Last updated (이전): 2026-09-01(7회차 — 삼성생명 KR0069 2026.2Q 시장위험 MD-마스터 출처 단절 복구 +
 > 2026.2Q 39사 전수 census) — orchestrator 발주(inbox `20260831T0700Z` 검증메모가 남긴 잔여 3번
 > 항목: "KR0069 는 MD 재변환이 안 돼 마스터와 갈라져 있다"). **다른 서브에이전트가 동시에

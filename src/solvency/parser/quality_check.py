@@ -139,6 +139,13 @@ class QualityReport:
     numeric_normalisation_rate: float
     decision: str  # "accept" | "review"
     reason: str
+    # Page-selection guard (inbox 20260831T0700Z request 2). Populated by
+    # score() as "<key>=<detail>" strings -- "missing_window=<label,label,...>"
+    # and/or "ratio_critical=<ratio>" -- so run_harness.py's --stage quality
+    # can group/count them without re-deriving missing_window/ratio_critical
+    # itself. Defaults to [] so callers that only need the older fields are
+    # unaffected.
+    page_flags: list[str] = dataclasses.field(default_factory=list)
 
 
 def _read_md(md_path: Path) -> tuple[dict[str, str], str]:
@@ -226,6 +233,14 @@ def score(md_path: Path) -> QualityReport:
     page_ratio = _page_coverage_ratio(meta)
     ratio_critical = page_ratio is not None and page_ratio < REVIEW_RATIO_FLOOR
 
+    page_flags: list[str] = []
+    if missing_window:
+        page_flags.append(f"missing_window={','.join(missing_window)}")
+    if ratio_critical:
+        page_flags.append(
+            f"ratio_critical={'n/a' if page_ratio is None else f'{page_ratio:.2f}'}"
+        )
+
     score_value = 1.0
     score_value -= 0.2 * len(missing_core)
     score_value -= 0.1 * len(missing_extended)
@@ -267,6 +282,7 @@ def score(md_path: Path) -> QualityReport:
         numeric_normalisation_rate=rate,
         decision=decision,
         reason=reason,
+        page_flags=page_flags,
     )
 
 

@@ -589,19 +589,35 @@ def _process_period(
         for item_no, (pre_v, post_v) in candidate.items():
             existing_row = existing.get(item_no)
 
-            if item_no == 48 and existing_row is None and item14_pre_f is not None and pre_v is not None:
-                try:
-                    pre_f = float(pre_v)
-                except ValueError:
-                    pre_f = None
-                if pre_f is not None:
-                    expected = item14_pre_f * TIER2_LIMIT_RATIO
-                    if abs(pre_f - expected) > tol:
-                        report["selfcheck_blocked"].append(
-                            f"item48 candidate {pre_f:g} != item14전x{TIER2_LIMIT_RATIO:g}="
-                            f"{expected:g} (diff {pre_f - expected:g}, tol {tol:g}) -- NOT written"
-                        )
-                        continue
+            if item_no == 48 and existing_row is None:
+                # 2026-09-11 (inbox 20260831T0705Z REOPEN): this used to only run the
+                # check when item14_pre_f was already available, and silently fell
+                # through to an UNCHECKED write otherwise (fail-open). That gap is
+                # exactly how KR0003/KR0011/KR0029/KR0094's 2026.2Q item48 ended up
+                # holding item3's value pre-fix -- item14 for those buckets wasn't
+                # loaded into `core` yet when whatever onboarding pass wrote item48.
+                # Now: no verifiable item14_pre (not loaded yet) or an unparseable
+                # candidate is ALSO a block, not a free pass.
+                pre_f = None
+                if pre_v is not None:
+                    try:
+                        pre_f = float(pre_v)
+                    except ValueError:
+                        pre_f = None
+                if item14_pre_f is None or pre_f is None:
+                    report["selfcheck_blocked"].append(
+                        f"item48 candidate {pre_v!r} could not be self-checked "
+                        f"(item14_pre={item14_pre!r} not loaded for this bucket yet, or "
+                        "candidate unparseable) -- NOT written"
+                    )
+                    continue
+                expected = item14_pre_f * TIER2_LIMIT_RATIO
+                if abs(pre_f - expected) > tol:
+                    report["selfcheck_blocked"].append(
+                        f"item48 candidate {pre_f:g} != item14전x{TIER2_LIMIT_RATIO:g}="
+                        f"{expected:g} (diff {pre_f - expected:g}, tol {tol:g}) -- NOT written"
+                    )
+                    continue
 
             if existing_row is None:
                 new_row = {

@@ -1715,12 +1715,21 @@ def _sgi_re_legs(t):
     """note '24.재보험수익 및 비용' (ceded/outward) -- ONE table, 4 columns [보증,해외,기타,
     합계] (no 자동차/상해: SGI cedes no auto/injury risk out), with TWO '합계' rows under
     section headers '재보험수익:' (ceded recoveries, income) and '재보험서비스비용:' (ceded
-    premium paid, cost).  Returns (rerev, recost) dicts keyed by LOB name, or (None, None)."""
+    premium paid, cost).  Returns (rerev, recost) dicts keyed by LOB name, or (None, None).
+
+    2024.4Q(rcept 20250324000440) writes the revenue-side header as '재보험영업수익:'
+    (영업 inserted) instead of '재보험수익:' -- cost-side stays '재보험서비스비용:' unchanged.
+    Confirmed inbox/parser/20260901T1630Z (2026-09-12 처리): same table shape, same column
+    order, only this one label differs; mapped to the same '재보험수익' section key so
+    downstream lobval() doesn't need to know about the variant."""
     cols = [_norm(c) for c in t.header[0][1:-1]]     # ['보증','해외','기타'] (drop 항목/합계)
     section = None
     out = {}
     for r in t.rows:
         lab = _norm(r[0])
+        if lab == "재보험영업수익:":
+            section = "재보험수익"
+            continue
         if lab in ("재보험수익:", "재보험서비스비용:"):
             section = lab[:-1]
             continue
@@ -1808,7 +1817,8 @@ def extract_tier2_sgi(tables):
                 and "자동차" not in hb and "상해" not in hb):
             continue
         labs = [_norm(r[0]) if r else "" for r in t.rows]
-        if any(l == "재보험수익:" for l in labs) and any(l == "재보험서비스비용:" for l in labs):
+        if (any(l in ("재보험수익:", "재보험영업수익:") for l in labs)
+                and any(l == "재보험서비스비용:" for l in labs)):
             re_t = t
             break
     rerev, recost = _sgi_re_legs(re_t) if re_t is not None else (None, None)
@@ -4390,7 +4400,29 @@ def extract_tier2_aia(tables, dirs=None):
     structured-table citation the old docstring said was missing.  Pulled via `_aia_statement`
     below for THIS year too (not re-derived from the prose a second time), so 2023/2024/
     2025.4Q all get item19 from the identical mechanism and 2025.4Q gets the statement's
-    full precision rather than the prose's 억-rounding.  item18(투자이익) is not extracted
+    full precision rather than the prose's 억-rounding.
+
+    2026-09-12 (inbox/parser/20260901T1630Z, Q2 owner 결정, round 2) -- item19 alone wasn't
+    enough: 2025.4Q's 1/3/8/16/17/20-24 were still coming from THIS prose's 억-rounded
+    sentences while 2023/2024.4Q (which fall through to `_aia_from_statement` below because
+    their prose doesn't match this template at all) got the audited statement's 천원-precise
+    figures -- the same company reporting two different precisions depending on which year's
+    wording happened to parse.  Now: if `_aia_statement` returns a non-empty dict for THIS
+    year too, its 1/3/8/15/16/17/19/20/21/22/24 REPLACE the prose-derived ones (item3 in
+    particular changes meaning -- from "4+5+6+7 prose sum" to "Ⅰ.1 보험서비스수익 −
+    Ⅱ.1 보험서비스비용" statement line); only 4/5/6 (CSM/RA/예실차 상각) still come from this
+    paragraph, since the audited statement carries no measurement-component breakdown at all
+    (that note is not part of this filing) and this prose is the only source for it once
+    2025 hits an annual filing.  item7 is no longer set here -- letting assemble() derive it
+    as item3(statement) − (4+5+6)(prose) keeps it consistent with the new item3 instead of
+    silently reusing the old prose-only item7 against a changed item3.  Confirmed
+    2026-09-12: switching removes the `pl_bridge_baseline.json` 보험손익(dual) diff=+1000.0
+    entry for 에이아이에이생명보험|2025.4Q (bare=98,347.409 vs new item1=39,225.455,
+    diff=0.000) -- the statement basis is what the bridge check was implicitly expecting all
+    along.  If a future filing's statement table doesn't match (`stmt` comes back empty), this
+    falls back to the pre-2026-09-12 prose-only behaviour unchanged (see below).
+
+    item18(투자이익) is not extracted
     anywhere in this file -- assemble() derives it as item17 − item19 for every year that
     has both, which is correct by definition (Ⅲ.투자영업수익 minus Ⅳ.투자영업비용 excluding
     the two 보험금융 rows).
@@ -4451,21 +4483,28 @@ def extract_tier2_aia(tables, dirs=None):
     f = 100.0  # 억원 -> 백만원
     item4, item5 = csm * f, ra * f
     item6 = (claim_diff + exp_diff) * f
-    item7 = (loss_comp + incurred_adj) * f
-    item3 = item4 + item5 + item6 + item7
-    out = {
-        1: ins * f, 3: item3, 4: item4, 5: item5, 6: item6, 7: item7,
-        8: reins * f, 15: 0.0, 16: oth_cost * f, 17: inv * f,
-        21: oth_op * f, 23: tax * f, 24: ni * f,
-    }
-    # item19 -- read from the SAME audited statement `_aia_statement` uses for 2023/2024.4Q
-    # (not re-derived from this prose a second time), so all three years share one mechanism
-    # and 2025.4Q gets the statement's full precision instead of the prose's 억-rounding.
+
+    # 2026-09-12 (inbox/parser/20260901T1630Z, Q2 owner 결정) -- 1/3/8/16/17/20-24 를 이
+    # 문단(억원 반올림)이 아니라 감사받은 포괄손익계산서(_aia_statement, 천원 정밀)에서
+    # 가져오도록 전환한다. 이 문단에서는 4/5/6(CSM/RA/예실차 상각)만 쓴다 -- 계산서에는
+    # 그 세 항목이 없다(측정요소별 변동내역 주석에만 있음, 이 문단이 유일한 소스). item7은
+    # 더 이상 문단의 손실요소전입+발생사고요소조정으로 안 채우고 assemble()의 잔차
+    # (item3(계산서)-(4+5+6)(문단))로 넘긴다 -- item3 이 바뀌었으니 예전 문단 기반 item7
+    # (=item4+5+6+7 로 역산되던 값)을 그대로 두면 새 item3 과 안 맞는다.
+    # 계산서를 못 읽으면(향후 필링이 이 표 구조를 바꾸는 경우) 예전처럼 문단 전용으로 전부
+    # 채운다 -- 손실요소전입/발생사고요소조정을 item7 에 직접 넣는 구관례를 그대로 유지.
     stmt_f = _aia_statement_unit(_aia_ofs_text(dirs))
-    if stmt_f is not None:
-        stmt19 = _aia_statement(tables, stmt_f).get(19)
-        if stmt19 is not None:
-            out[19] = stmt19
+    stmt = _aia_statement(tables, stmt_f) if stmt_f is not None else {}
+    if stmt:
+        out = {**stmt, 4: item4, 5: item5, 6: item6}
+    else:
+        item7 = (loss_comp + incurred_adj) * f
+        item3 = item4 + item5 + item6 + item7
+        out = {
+            1: ins * f, 3: item3, 4: item4, 5: item5, 6: item6, 7: item7,
+            8: reins * f, 15: 0.0, 16: oth_cost * f, 17: inv * f,
+            21: oth_op * f, 23: tax * f, 24: ni * f,
+        }
     return out
 
 

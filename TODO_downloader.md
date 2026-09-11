@@ -7,6 +7,8 @@
 
 ## Status
 
+**🟢 2026-09-12 inbox `20260911T0115Z`(서울보증 6분기 PDF) 종결 — owner 직접 확인: 서울보증은 과거 연도(2023·2024) 분기 경영공시를 자체 게시하지 않음 → KR0150 2023.1Q~2024.3Q 6분기 원문 부재 확정(정당 결측).** 미래에셋 2023.2Q MD 미변환은 parser 티켓 `20260912T0115Z` 로 이관. 이 PC 는 01:10 KST 부터 외부 443 전면 차단(sgic·github 6회 연속 000)이라 downloader 에이전트가 100분 무산출로 kill 됨 — 네트워크 확인을 첫 동작으로 둘 것. 정정본 병존 구조는 아래 Active follow-ups.
+
 **🟢 2026-09-03 owner 직접 지시 — FY2026_Q2 정기경영공시 raw/ 정본화(1→39) + 항목5(해약환급금
 준비금) 3분기 이월버그 4사 발견, parser(ifrs17) 발주.** 상세: `docs/changelog_downloader.md`
 2026-09-03.
@@ -128,32 +130,9 @@ mutation-tested against 원본) — **단, `scripts/prepush_check.py`의 fast �
 - **다음 확인 = 2026-08-31(월)** 유지. 순서: 생보 자사 census → 손보/협회 census →
   posted 인 회사만 다운로드 → `verify_q2_disclosure_content.py` 내용검증.
 
-**🟡 2026-08-29 인박스 처리 — 2026.2Q 정기경영공시 재스윕: 1/39 확보, 침묵실패 함정 구조적 해소
-(`inbox/downloader/20260829T1900Z`).** 상세: `docs/changelog_downloader.md` 2026-08-29.
-
-- **하나손해보험(KR0050) 2026년 상반기 경영공시 확보** — 39사 중 유일. 60p·1,620,955B,
-  1페이지 `[기간 : 2026. 1. 1 ~ 2026. 6. 30]`·보험업감독규정 제7-44조·2026-1Q 마커 0건으로
-  **내용 검증** 통과. `data/disclosure/FY2026_Q2/pdf/`. docling 변환 안 함(parser 소관).
-  parser raw-ready: `inbox/parser/20260829T2130Z`.
-- **미게시 확정 37사**(생보 22 + 손보 15) · **미확인 1사 = 코리안리(KR1000)**, 전 transport
-  `Empty reply from server`(서버측 다운, 2026-08-17 과 동일). **미확인을 미게시로 세지 말 것.**
-- **함정 대응이 사후대조 → 사전판정으로 바뀌었다.** 신규 `scripts/_probes/
-  census_q2_disclosure_listings.py` 가 다운로드 전에 listing 라벨을 전량 덤프해
-  `posted/not_posted/not_observed/unreachable` 4-값 판정을 낸다(행 인덱스 미사용).
-  신규 `scripts/_probes/verify_q2_disclosure_content.py` 가 받은 파일을 freshness+period+
-  doctype 3중 검사(기존 `check_q2_disclosure_freshness.py` 의 해시대조만으론 불충분 —
-  해시가 달라도 틀린 분기일 수 있다). **다음 세션은 이 두 개를 앞뒤로 끼고 돌릴 것.**
-- **KR0050 XPath 를 행 인덱스 → 텍스트 앵커로 교체**(`download_disclosure_2026q2_nonlife.py`).
-  이 사이트는 1/4분기를 2/4분기 **위에** 나열해서 `tr[1]` 이 Q1 을 집었다(실제 발동, Q1 파일과
-  SHA256 동일한 파일을 받아옴). 다른 회사도 게시되면 같은 방식으로 앵커링할 것.
-- **다음 확인 = 2026-08-31(월).** 근거: 마감 = 분기말+2개월 = 8/31, KB손해 24년치 등록일에
-  요일을 붙이면 **마감일 또는 직전 마지막 영업일**에 내고 주말 게시는 0회. 올해 8/29=토·
-  8/30=일이라 "8/29~31 창"의 영업일은 **8/31 월 하루뿐**이다. 9/1(화) 낙오사 1회 추가.
-
-> 📦 **Status 이력은 `docs/todo_archive_downloader.md` 로 이동했다** (2026-09-11, 내용 무수정 — 2026-08-29 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
-
 ## Active follow-ups (next sessions)
 
+- **정정본 병존(2026-09-11 발주, 미착수)**: 같은 (분기,회사) 새 게시물이 기존 raw 와 바이트가 다르면 덮어쓰지 말고 `KR####_회사명_v<게시일>.pdf` 로 병존 + `_versions.json` 사이드카(게시일·제목·URL·sha256). 공유 해석기 `disclosure_pdfs()` 가 `_v*` 를 중복 회사로 오인하지 않게 '기본 파일 우선' 규칙 필요. 소급 복원 불가.
 | # | Task | Priority | Notes |
 |---|------|----------|-------|
 | Q2-2026-SWEEP | **2026.2Q 정기경영공시 8/31 탐색 루프 (2시간 간격) + 수집** | 🔴 **P0 (내일)** | owner 지시(2026-08-30): 호출받으면 2시간 간격으로 게시 여부 census -> `posted` 로 뒤집힌 회사만 수집 -> 파싱부터 끝까지. **실행 순서 정본은 루트 `TODO.md` 「상시 점검」의 2026.2Q 항목**(1~5단계 명령어 포함). 여기에 복사하지 말 것. 요점만: 프로브 2종을 매 회차 다 돌리고(`census_q2_disclosure_listings.py` 손보 + `census_q2_life_own_sites.py` 생보), `unreachable` 은 미게시가 아니며, 생보 2Q 다운로더는 아직 없어 `download_disclosure_2026q1_life.py` 복제로 만들어야 하고, 수집분은 반드시 `verify_q2_disclosure_content.py` 3종 검사(freshness/period/doctype)를 통과해야 한다. |

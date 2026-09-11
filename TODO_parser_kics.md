@@ -1,6 +1,100 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-03(12회차 — 2023 홀수분기 item29-35 결측 29개(회사x분기) 조사, orchestrator 발주,
+> Last updated: 2026-09-11(14회차 — inbox 3건 직렬 처리: `20260831T0705Z`(item48/item3 오염
+> REOPEN) → `20260901T0420Z`(SCANNED_SECTION 부수관찰 REOPEN) → `20260911T1407Z`(stale-quarter
+> 테스트 파손), orchestrator 발주) — 전부 `status: answered`, 원 sender 재확인 대기.
+>
+> **① item48/item3 오염 잔여 4셀 정정** (2026.2Q). KR0003 28741→10555.5 · KR0011 124792→
+> 57549.42 · KR0029 754→1389.83 · KR0094 59367→26880.72(값_적용후는 이미 정답이라 무변경).
+> `scripts/fix_20260821_tier2_limit_lines.py::extract_tier2()`(fitz)와 MD grep 두 독립경로로
+> 재확인, 둘 다 오케스트레이터 제시값과 일치. 오염 주입점은 커밋 `8f5e3b8`(09-01, 39사 전원
+> 적재)까지만 blame 으로 좁혔고 정확한 스크립트는 특정 못 함(현재 정본 추출기 둘 다 재실행하면
+> 정답을 낸다 — 당시 코드가 이미 고쳐졌거나 세션 로컬 patch였던 것으로 추정). 대신
+> `fill_tfi_table_to_disclosure.py`의 item48 자체검산이 item14 미로드 시 무검증 통과하던
+> fail-open 구멍을 fail-closed 로 고침(`scripts/fix_20260911_item48_item3_contamination.py`).
+>
+> **② KR0079 TFI 3분기 24셀 백필 적용 + DATA 오기 1건 정정**. 2026-09-01 답변이 만들어 둔
+> `scripts/fix_20260901_kr0079_scanned_section_tier2.py`를 `--apply`하기 전, item54
+> 2023.4Q DATA 값 496.50 이 옆 회사(KR0071) item53 값이 새어든 오기임을 raw p36 재렌더로
+> 확인 → 3003.59 로 정정 후 적용(INSERT 24, 항등식 4종 3분기 전부 GREEN). 부수 관찰 3건 중
+> 2건 처리(KR0010 2025.4Q item8 "" →"0", KR0071·KR0010 item53/54 신규 4셀 — 전부 190dpi
+> 렌더 직접판독, 신규 스크립트 `scripts/fix_20260911_side_observations_tier2_item8.py`).
+> KR0080 item23-26 는 8분기×4항목=32셀 규모로 재스코프만 하고 미착수(아래 KR0080-2326 항목).
+>
+> **③ stale-quarter 테스트 6건 파손 — 회귀 아님, 데이터가 진짜 고쳐진 것.** `git show
+> 7c33aae:kics_disclosure.json`(09-03 재제출 반영 직전 스냅샷)에 `validate_stale_quarter_
+> tables.detect()`를 돌려 그때는 지문 A가 실제로 잡히는 것을 확인(탐지기 생존 증명) — 현재
+> 마스터는 전사 히트 0건(대체 등재 불가). `_KNOWN`을 비우고 `test_stale_quarter_tables.py`의
+> 라이브-히트 시험을 KR0003 2026.1Q 의 옛 오염 패턴을 사본에 합성 주입하는 변이시험으로 전환.
+> `test_tier2_issuer_inconsistent_exemption.py` 의 죽은 핀 4개(파라미터 2건 삭제·2건은
+> KR1000/2023.4Q·KR0087/2025.2Q 로 대상 이동) + 레지스트리 카운트 20→19(실측 확인) 정정.
+> **부수로 `test_kics_rules_golden.py::_run()` 자체 버그도 발견·수정**했다 —
+> `validate_kics_disclosure.py::main()`이 넘기는 4개 부수입력 중 `life_subrisk_source_absent`
+> 가 누락돼 있어, 그냥 `--update`만 했으면 골든이 실제 게이트 산출(RED=36)과 다른 값(RED=60,
+> `8_life_census` 2023 홀수분기 24버킷)으로 잘못 고정될 뻔했다 — 인자 추가 후 재생성해 RED=36
+> 으로 게이트와 완전히 일치.
+>
+> **게이트/테스트 실측**: `validate_kics_disclosure.py` RED=36(불변, 전부 documented
+> exception)·**blocking RED=0**. `validate_data_contract.py` **RED=0** YELLOW=88.
+> `pytest tests/test_stale_quarter_tables.py tests/test_tier2_issuer_inconsistent_exemption.py
+> tests/test_kics_rules_golden.py tests/test_rule_coverage_manifest.py -q` → **179 passed,
+> 1 failed**. 실패 1건(`test_gold_overlay_census_matches_manifest`, CSM/PL gold overlay
+> census)은 **ifrs17 레인 소관 — 이 세션이 시작하기 전부터 `CSM_waterfall.json`·
+> `IFRS17_BS.json`·`data/_gold/user_csm_cells.json` 가 이미 수정 중이었다**(`git status`로
+> 확인, 동시 ifrs17 세션의 미커밋 작업) — 두 번 재실행 사이에 PL 버킷 수(198→203)가 더
+> 늘어난 것으로 활성 편집 중임을 재확인, K-ICS 코드/데이터는 원인이 아니고 건드리지 않았다.
+> `sync_master_xlsx_sheet.py "K-ICS공시"` 실행, 검증 OK(25486행×9열 마스터와 완전 일치).
+>
+> 변경 파일: `kics_disclosure.json`(6셀 수정+28행 신규) · `scripts/fill_tfi_table_to_
+> disclosure.py`(자체검산 강화) · `scripts/fix_20260901_kr0079_scanned_section_tier2.py`
+> (DATA 오기 정정) · `scripts/validate_stale_quarter_tables.py`(`_KNOWN` 비움) ·
+> `tests/test_stale_quarter_tables.py`·`tests/test_tier2_issuer_inconsistent_exemption.py`·
+> `tests/test_kics_rules_golden.py`(+골든 재생성) · 신규 `scripts/fix_20260911_
+> item48_item3_contamination.py`·`scripts/fix_20260911_side_observations_tier2_item8.py`.
+>
+> Last updated (이전): 2026-09-11(13회차 — inbox `20260831T0700Z`(REOPEN iter4) + `20260831T0800Z`
+> §1 잔여 코드 처리, orchestrator 발주) — `kics_disclosure.json`은 읽기 전용(동시 세션이 셀
+> 패치 적재 중)으로 유지, 코드·MD·SKILL 문서만 수정.
+>
+> **A. `--stage quality` AttributeError 복구.** `run_harness.py` L89가 읽는 `r.page_flags`를
+> `QualityReport`(`src/solvency/parser/quality_check.py`)가 가진 적이 없어(다른 레인 커밋
+> `09b4b26`이 kics 코드를 같이 실어나르며 추가한 블록) 모든 실행이 exit 1이었다. `QualityReport`에
+> `page_flags: list[str]` 필드를 신설하고 `score()`가 `missing_window=<label,...>`/
+> `ratio_critical=<ratio>` 형식으로 채우도록 수정. 실측: `run_harness.py --stage quality
+> --md-root md_inbox/FY2026_Q2` exit 0, total=39 accepted=9 review=30, `page_flag_counts:
+> {missing_window: 5}`(KR0079·KR0087·KR0095·KR0104·KR1010 — orchestrator 재확인 수치와 정확
+> 일치). 전체 md_inbox(547개) 대상도 exit 0(review=407, flags 213건=missing_window 211+
+> ratio_critical 7). `pytest tests/unit/ tests/test_deploy_assets.py` 141 passed.
+>
+> **B. census "32/39" 재현.** `probe_20260901b_market_window_census.py` 메인 트리 재실행 결과
+> 재확인 티켓의 지적대로 31/8(REAL GAP 0)이었다 — KR0104 재변환 MD가 이미 삭제된 격리
+> 워크트리에만 있었기 때문. `run_harness.py --stage parse --pdf-root data/disclosure/
+> FY2026_Q2/raw --companies KR0104`로 메인 트리에서 재변환(187s, docling_status=SUCCESS,
+> dropped_pages=[]) — mtime 대조로 md_inbox/FY2026_Q2 39개 파일 중 KR0104 1개만 변경 확인.
+> source_page_ranges "6-10;13-28;34-37;40-46"→"6-10;13-36;43-46"으로 29-33p 편입, 재추출
+> item36-40 5개 전부 마스터와 정확 일치(13866.27/7712.89/2818.93/3487.39/0), sqrt(V'MV)=
+> 19271.87 vs item19=19272 rel 0.0007%. census 재실행 결과 **32/39 MD_FULL, landmine 7**
+> (KR0010·KR0079·KR0080·KR0082·KR0087·KR0094·KR0099) — 답변 주장과 일치, 정정 불요. 구MD는
+> `artifacts/kics_validation/md_backup_20260911/`에 백업. `kics_disclosure.json` 미접촉.
+>
+> **C. OCR 배율 판단 재확인 + 실행.** 2026-09-01 결정(정식 옵션 승격도 fitz+EasyOCR 우회도
+> 안 함, fitz 렌더+직독으로 완전 대체)을 재검증 후 유지 — 이유는 스캔본 코드 트레일에 이미
+> 있었으나 SKILL 문서에는 없었다(재론 2회 원인). `.claude/skills/kics-parser/references/
+> quirks-and-traps.md`에 "Scanned PDFs: OCR is a lead, not a source" 절 신설(5/9 배율표 +
+> 결정근거 + render_kics_page.py 안내 + "MD 텍스트만으로 마스터에 쓰지 말 것" 규칙) +
+> "Docling loses pages" 가드 절의 stale 서술(`page_selection_flags()`/6종 enum 플래그 —
+> 09-01 리라이트로 이미 소멸된 이름들) 정정. `compute_tier2_utilization.py`의 `MD_DIR`
+> 하드코딩(FY2025_Q4)은 실측 0곳 import·subprocess(grep 전체 무출력) 확인 후 latest-quarter
+> 자동탐지로 교체(`_latest_md_period()`, `md_inbox/FY*_Q?` 최댓값) — 명시 `--quarter`/
+> `--md-dir` 경로는 git stash 전후 산출 diff 0으로 무영향 확인, bare 실행만 FY2025_Q4→
+> FY2026_Q2로 개선.
+>
+> 재현: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py
+> --stage quality --md-root md_inbox/FY2026_Q2` · `scripts/_probes/
+> probe_20260901b_market_window_census.py`. 상세 답변: inbox `20260831T0700Z`(iter4) ·
+> `20260831T0800Z`(iter2).
+>
+> Last updated (이전): 2026-09-03(12회차 — 2023 홀수분기 item29-35 결측 29개(회사x분기) 조사, orchestrator 발주,
 > 패치 파일만 커밋) — 대상은 2023.1Q 18사 + 2023.3Q 11사(원문 census로 orchestrator 목록과 정확히
 > 일치 확인). **5개 조합(35칸) 실값 확보, 24개 조합은 원문 자체 부재로 확인(파싱 실패 아님).**
 >
@@ -161,60 +255,7 @@
 > 저장소에 남김). 티켓: `inbox/parser/20260901T1400Z__...capsec_h1_refresh_22_companies_
 > stale.md`(status: answered — 잔여 1사분 구현은 orchestrator 판단 대기).
 >
-> Last updated (이전): 2026-09-01(9회차 — 시장위험 항목36-40 "400/538"(138칸 결측) 재census) —
-> orchestrator 발주(8회차가 고친 총계행 라벨 정규식이 과거 분기 결측에도 적용되는지 재라).
-> **결론: 진짜 결측은 0칸 — 538이라는 분모 자체가 공시주기(cadence)를 안 반영한 버그였다.**
-> 옆의 항목41-46(금리시나리오)은 이미 짝수분기만 분모로 쓰는데(`완비 270/273`) 항목36-40은
-> 홀수분기까지 분모에 섞어 538(=270짝수+268홀수)을 썼다. 짝수분기 270/270 결측 0, 138칸은
-> 전부 홀수분기(1Q/3Q 간이공시)분. 홀수분기 268칸 중 130칸은 이미 채워져 있음(25개사가
-> 재량으로 홀수분기에도 세부표 공시) — 나머지 138칸만 결측.
->
-> **138칸 전수 (a)/(b)/(c) 판정**(MD+raw PDF 둘 다 fitz로 직접 열어 "OO위험액 현황" 헤딩
-> 유무 검사, `scripts/_probes/probe_20260901c_full_classify.py`): **(c) 원문에도 없음
-> 137칸**(11개사는 홀수분기 이력 전체에 세부표 자체가 없는 회사군 — 삼성생명·삼성화재·
-> 한화생명·신한라이프·서울보증·DB생명·KB라이프·동양생명·라이나생명·미래에셋생명·AIG손해;
-> 14개사는 대부분 "2023.3Q만 있고 나머지는 없음"). 표본(삼성생명 2024.1Q raw PDF 34p)
-> 직접 확인 — p15에 item19 총계 한 줄만 있고 36-40 분해표는 문서 전체에 없음. **(a) 1칸**
-> (하나손해 KR0050 2026.1Q — `extract_mkt_subs()`가 다른 표("③경과조치" 절의 "금리위험"
-> 행)를 오매칭했으나 19_market 게이트(rel<2%)가 이미 차단, 저장 안 됨·오염 없음). **(b) 0칸.**
-> 독립검증으로 `fill_market_subitems_to_disclosure.py --dry-run --all-periods`(오늘 고친
-> 정규식으로 14개 분기 전체 재실행)도 `TOTAL new rows: 0`으로 같은 결론.
->
-> **채운 칸 0개, 패치 스크립트 없음**(UPSERT할 값 자체가 없음 — "틀린 값을 싣느니 빈 칸"과
-> 정확히 일치). **고친 것은 데이터가 아니라 지표**: `scripts/status_report.py::axis_coverage()`
-> 의 항목36-40 분모를 41-46과 동일하게 짝수분기로 맞추고 홀수분기 자율공시 카운트를 병기
-> (`완비 270/270 (100.0%) [짝수분기만 공시; 홀수분기 자율공시 130/268]`). `kics_disclosure.json`
-> 무변경(동시세션 lost-update 리스크 없음), 게이트 재실행 불필요(RED=0 그대로).
->
-> **재현**: `status_report.py --fast` §5 / `fill_market_subitems_to_disclosure.py --dry-run
-> --all-periods` / `scripts/_probes/probe_20260901c_market_bucket_census{,2}.py`(cadence 분해)
-> + `probe_20260901c_full_classify.py`(a/b/c 판정, 상세는 `_out_20260901c_classify.json`).
-> 티켓: `inbox/_resolved/20260901T1314Z__orchestrator__MULTI__market_36to40_538gap_is_
-> cadence_denominator_bug.md`(자기완결, status: resolved).
->
-> Last updated (이전): 2026-09-01(8회차 — inbox `20260831T0700Z` 세 실패양식 원인분리 + 품질게이트
-> 가드 신설 + 39사 재census, 격리 워크트리) — orchestrator 발주. **원인은 셋이 아니라
-> 사실상 넷이었다**: (A) docling 윈도가 6-4 절 자체를 못 잡음(기존 세션이 이미 수정,
-> `DEFAULT_RATIO_KEYWORDS`) — 재확인만 함. (B) **표가 반쪽만**은 docling 문제가 아니라
-> `scripts/fill_market_subitems_to_disclosure.py::extract_mkt_subs()` 의 총계행 라벨
-> 정규식이 K-ICS 서식의 각주 마커 순서 변형(`Ⅲ.합계 주2)`/`Ⅲ.합계(주2)`/`합계 Ⅲ.주2)`)을
-> 못 잡던 버그였다 — 5건 수정(순서무관 정규식, 대시=0 폴백 확장, 불릿 헤딩 인식, "해당사항
-> 없음"=0 신규처리, 섹션경계 unit 오염 리셋). (C) 페이지가 윈도·hit_pages 안에 있는데
-> 내용만 증발하는 건 — **메인 트리(다른 동시 세션)가 이미 v5 docling_parser.py 로 해소한
-> 것으로 보임**(`docling_status`/`docling_dropped_pages`/`docling_recovered_pages` 필드
-> 확인, KR0001/KR0051/KR0100 현재 MD 에 6-8 절 정상 존재) — 내 브랜치는 안 건드림(남의
-> 미커밋 작업). **품질게이트 가드는 배선 완료**: `quality_check.py::score()` 가 짝수분기
-> 한정 6-4/6-8 필수 섹션 마커를 body 에서 검사, 없으면 review(원인 무관, 최종산출물 기준이라
-> A·C 둘 다 잡음). **효과 실측**: MD 가 마스터 36-40 을 재현하는 회사 39사 중 **21→32**
-> (`scripts/_probes/probe_20260901b_market_window_census.py`, 스텝별 회귀 0 확인).
-> `REAL GAP`(마스터 자체 결측)은 시작·종료 둘 다 0/39 — **패치 스크립트 불필요**(UPSERT 할
-> "새로 살아난 값" 자체가 없었음, 재추출값은 전부 마스터와 일치하거나 여전히 못 찾음).
-> 유일한 예외 KR0094 item36 이 45.66% 불일치로 남아있으나 원문 재대조 없이 판정 불가라
-> 패치 안 하고 보고만 함. 잔여 7개사(KR0010·KR0087·KR0079 스캔/저밀도 OCR 필요,
-> KR0080·KR0082·KR0094 부분 landmine, KR0099 재변환 역효과로 백업 복원)는 inbox
-> `## 답변` 참조. status: answered(orchestrator 재확인 필요).
->
-> 📦 **Status 이력은 `docs/todo_archive_parser_kics.md` 로 이동했다** (2026-09-11, 내용 무수정 — 2026-09-01(8회차) 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
+> 📦 **Status 이력은 `docs/todo_archive_parser_kics.md` 로 이동했다** (2026-09-11, 내용 무수정 — 2026-09-01(9회차) 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 
 
 Stage 2 — **parser, K-ICS lane**: solvency disclosure extraction. Source = Docling MD; output = `kics_disclosure.json`; validators = `validate_kics_disclosure.py` / RS1–4 / market census. The IFRS17 lane (CSM/PL extraction off DART XML) lives in `TODO_parser_ifrs17.md` and runs as a separate session.
@@ -309,6 +350,16 @@ owner xlsx fill·내 backfill이 rebuild에서 살아남는지 점검 → 2대 �
 - [ ] **IRR 직접형/granular 15** (KR0097 하나생명·KR1010 교보라이프·KR0051 신한이지): derived≠item36 → 직접공시 시나리오위험액 별도 schema 필요(저장 보류, SKIP 유지).
 - [ ] **PDF 레이아웃 미스** (하나손해 2024.x 등): interleaved/grouped/concat fallback에 words-coordinate 전략 추가.
 - [x] **KB손해 image-only 4분기** — 위 KICS-IMG 와 같은 건, 결측 0 으로 닫힘(2026-08-30 실측).
+
+### KR0080-2326 — 에이아이에이생명 item23-26 8분기 결측 (2026-09-11 재스코프, inbox 20260901T0420Z 부수관찰)
+
+- [ ] **KR0080 item23-26(기타요구자본 세부) 8분기×4항목=32셀 결측**: 2023.2Q·2024.2Q·2024.4Q·
+  2025.1Q·2025.2Q·2025.3Q·2025.4Q·2026.1Q — census로 정확히 확인됨(item17은 8분기 전부
+  있음, 순수 item23-26 행 결측). 2025.2Q 는 raw p18 190dpi 렌더로 "0/0/0/0" disclosed 확인
+  됐다(값을 넣을 근거 있음, legit-zero 후보) — 나머지 7분기는 미확인. 이 회사는 BORDERLINE/
+  SCANNED_SECTION 이력이 있어(`data/_derived/kics_source_textlayer.json`) 텍스트 신뢰 불가,
+  분기별 raw 직접 렌더 필요(fitz 190-220dpi). 8분기 전부 "0/0/0/0" 확인되면 legit-zero
+  UPSERT, 아니면 값 있는 만큼만.
 
 ### FY2026Q1 — K-ICS PDF→MD docling 잔여 (inbox 20260612T0900Z)
 

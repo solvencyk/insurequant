@@ -153,6 +153,18 @@ def test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets(records, fi
     # CAPPED 항등식이 두 컬럼 다 잔차 0.0000 으로 닫히지만 **그것만으로는 근거가 못 된다** —
     # min() 은 한도가 11,925.57 이든 17,197.57 이든 같은 값을 주므로 두 읽기를 구분하지 못한다.
     # 구분해 주는 것은 행 좌표와 위 SCR×50% 불일치다. 원장 기록은 같은 날 추가했다.
+    # 2026-09-11: 20 -> 19. **줄었다** — ("KR0003","2026.1Q") 가 레지스트리에서 빠졌다.
+    # 2026-09-03 발행사가 원문을 재제출해(구본 886,240B -> 신본 1,927,066B, commit 66cfa0b)
+    # TFI 표(item47-52) 를 재파싱하니 더 이상 전기(2025.4Q) 재게시가 아니었다 — 발행사
+    # 자기모순이 아니라 그냥 정정된 값이라 면제 자체가 무의미해졌다(코드 등재 + 원장 기록을
+    # 커밋에서 함께 제거). 2026-09-11 REOPEN 조사(inbox 20260911T1407Z)로 확인:
+    # `_TIER2_ISSUER_INCONSISTENT` 에 그 키가 없고, 재제출 직전 스냅샷(git show
+    # 7c33aae:kics_disclosure.json)에 스테일 표 탐지기(validate_stale_quarter_tables.detect)
+    # 를 돌리면 지금도 그 패턴을 잡는다 — 탐지기 회귀가 아니라 데이터가 진짜 바뀐 것.
+    # 흔들 핀을 잃은 4개 시험은 다른 등재 버킷(KR1000 2023.4Q · KR0087 2025.2Q)으로
+    # 대상을 옮겼고, "탐지기가 여전히 잡는다"는
+    # tests/test_stale_quarter_tables.py::test_the_kr0003_2026q1_regression_pattern_would_still_be_caught
+    # 로 옮겨 갔다.
     # 2026-09-01: 19 -> 20. AIG손해 KR0029 2025.3Q (`2_tier1_bridge`, 잔차 -58.0) 1버킷 추가.
     # owner 가 "면제 등재" 대신 **원문 재확인(옵션 c)** 을 먼저 지시해 raw 를 다시 읽은 결과다.
     # p14 다리표의 `Ⅱ.불인정하는 항목`(item12)·`Ⅲ.보완자본으로 재분류하는 항목`(item13)이
@@ -165,8 +177,8 @@ def test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets(records, fi
     # `item4 − item12 − item13` 으로 item2 를 재현하는 축 하나뿐이다.
     # 같은 회사 2026.2Q 는 **행 구성이 100% 동일한 표**에서 item12=300 · item13=754 로 채워
     # 다리가 잔차 -1 로 닫힌다 — 표 구조가 아니라 분기별 기재 관행 차이다.
-    assert len(registered) == 20, (
-        f"면제 레지스트리 크기가 20 -> {len(registered)} 로 바뀌었다. 등재를 늘렸다면 "
+    assert len(registered) == 19, (
+        f"면제 레지스트리 크기가 19 -> {len(registered)} 로 바뀌었다. 등재를 늘렸다면 "
         f"원장(`data/_gold/kics_exemption_provenance.json`)의 근거와 이 숫자를 같이 고쳐라. "
         f"현재 키: {sorted(registered)}"
     )
@@ -185,7 +197,13 @@ def test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets(records, fi
 @pytest.mark.parametrize("code,quarter,item,col", [
     ("KR1000", "2023.4Q", 47, "값"),     # 두 표가 다른 값 계열
     ("KR1000", "2024.4Q", 13, "값"),     # 다리 계열
-    ("KR0003", "2026.1Q", 48, "값"),     # 전기 표 재게시 계열
+    # ("KR0003", "2026.1Q", 48, "값") -- "전기 표 재게시" 계열의 유일한 등재분이었다. 2026-09-11
+    # (inbox 20260911T1407Z REOPEN): 발행사가 2026-09-03 원문을 재제출해(commit 66cfa0b) 이
+    # 버킷 자체가 레지스트리에서 빠졌다(더 이상 발행사 자기모순이 아니라 그냥 정정된 값).
+    # 흔들 핀이 없다 -- 이 계열을 지키는 시험은
+    # tests/test_stale_quarter_tables.py::test_the_kr0003_2026q1_regression_pattern_would_still_be_caught
+    # 로 옮겨 갔다(그쪽은 "면제 대상"이 아니라 "스테일 표 탐지기"를 직접 흔든다, 성격이 더
+    # 정확하다 -- 이 축의 진짜 결함은 처음부터 발행사 모순이 아니라 스테일 재게시였다).
     ("KR0075", "2024.4Q", 49, "값"),     # 표가 자기 안에서 안 닫힘 계열
     ("KR0087", "2025.2Q", 12, "값"),     # 각주 위반 계열
     # iter-7 신규. **이게 NH농협 면제의 해제조건 그 자체다** — orchestrator 발주가
@@ -248,8 +266,13 @@ def test_a_missing_input_is_red_not_skip(records, findings, code, quarter, item)
 
 def test_a_drifted_bucket_loses_its_exemption_entirely(records, findings):
     """전제가 깨진 버킷은 그 버킷의 finding 이 **하나도** 면제되지 않는다 — 일부만 남기면
-    그 셀이 반쯤 사각지대가 된다."""
-    code, quarter = "KR0003", "2026.1Q"
+    그 셀이 반쯤 사각지대가 된다.
+
+    2026-09-11: 종전 대상 ("KR0003","2026.1Q") 은 레지스트리에서 빠졌다(2026-09-03 발행사
+    원문 재제출, commit 66cfa0b — 더는 발행사 자기모순이 아니다). 이 시험의 취지는 특정
+    회사가 아니라 "부분 오염이 버킷 전체를 무효화한다"는 구조 자체라 다른 등재 버킷
+    (KR1000 2023.4Q, item48 이 박혀 있다)으로 대상만 옮긴다."""
+    code, quarter = "KR1000", "2023.4Q"
     pin = gate._TIER2_ISSUER_INCONSISTENT[(code, quarter)]["cells"][48]["값"]
     mutated = _mutate_cell(records, code, quarter, 48, "값", pin + 5.0)
     accepted, _red, _rev, _det = _run(mutated, findings)
@@ -272,12 +295,13 @@ def test_the_whole_bucket_vanishing_is_red(records, findings):
 @pytest.mark.parametrize("code,quarter,rule", [
     ("KR1000", "2023.4Q", "3_tier2_composition"),
     ("KR1000", "2024.4Q", "2_tier1_bridge"),
-    # 2026-08-24 (iter-7): 종전 ("KR0003","2026.1Q","50_tfi_tier_split") 을 이 자리로 교체했다.
-    # 축 E 의 comparand 가 item1(헤드라인)에서 item52(같은 표 지급여력금액 행)로 승격되면서
-    # 그 버킷은 그 축에서 정확히 닫힌다 — 재게시된 전기 표는 자기 안에서는 일관되기 때문이다.
-    # 죽은 핀은 원장에서 뺐고(게이트가 TIER2_EXEMPTION_INERT 로 먼저 알려 줬다), 재게시라는
-    # 사실 자체는 같은 버킷의 `3_tier2_composition` 이 그대로 잡으므로 사각이 생기지 않는다.
-    ("KR0003", "2026.1Q", "3_tier2_composition"),
+    # 2026-08-24 (iter-7): 종전 ("KR0003","2026.1Q","50_tfi_tier_split") 을 이 자리로 교체했었다
+    # (축 E 의 comparand 가 item1(헤드라인)에서 item52(같은 표 지급여력금액 행)로 승격되면서
+    # 그 버킷이 그 축에서 정확히 닫혔기 때문).
+    # 2026-09-11 (inbox 20260911T1407Z REOPEN): 그 뒤 ("KR0003","2026.1Q") 버킷 자체가
+    # 레지스트리에서 빠졌다 — 2026-09-03 발행사 원문 재제출(commit 66cfa0b)로 재게시라는
+    # 전제 자체가 사라졌다(더는 발행사 자기모순이 아니라 정정된 값). 흔들 핀이 없다 — 대체는
+    # tests/test_stale_quarter_tables.py::test_the_kr0003_2026q1_regression_pattern_would_still_be_caught.
     ("KR0075", "2024.4Q", "51_tfi_tier2_composition"),
     # 2026-08-24 재감사: ("KR0087","2025.2Q","2_tier1_bridge") 는 **면제가 해제됐다.**
     # 잔차 1,188.0 은 발행사 결함이 아니라 우리 룰 결함이었다(인쇄된 item47 이 이미 한도
@@ -315,15 +339,20 @@ def test_residual_drift_revives_the_red(records, findings, code, quarter, rule):
 
 def test_a_different_failure_reason_on_the_same_axis_is_red(records, findings):
     """같은 축이 **다른 사유**로 깨지면 면제가 안 된다. 잔차만 보면 사유가 바뀐 것을 못 본다 —
-    `TIER2_LIMIT_STALE` 로 박제한 자리에 `TIER2_DUPLICATE_ROW` 가 와도 통과해 버린다."""
+    `TIER2_LIMIT_STALE` 로 박제한 자리에 `TIER2_DUPLICATE_ROW` 가 와도 통과해 버린다.
+
+    2026-09-11: 종전 대상 ("KR0003","2026.1Q") 은 레지스트리에서 빠졌다(2026-09-03 발행사
+    원문 재제출, commit 66cfa0b). `47_tier2_census` 를 `TIER2_DUPLICATE_ROW` 로 박은 다른
+    등재 버킷(KR0087 2025.2Q)으로 대상만 옮긴다 — 이 시험이 지키는 건 "사유 치환 탐지"라는
+    구조지 특정 회사가 아니다."""
     finds = copy.deepcopy(findings)
     for f in finds:
         if (f.get("status") == "RED" and f.get("rule") == "47_tier2_census"
-                and f.get(KEY_CODE) == "KR0003" and f.get(KEY_QUARTER) == "2026.1Q"):
+                and f.get(KEY_CODE) == "KR0087" and f.get(KEY_QUARTER) == "2025.2Q"):
             f["detail"] = "TIER2_NEGATIVE: 전혀 다른 사유"
             break
     else:
-        pytest.fail("KR0003 2026.1Q 47_tier2_census RED 가 없다")
+        pytest.fail("KR0087 2025.2Q 47_tier2_census RED 가 없다")
     _acc, red, _rev, _det = _run(records, finds)
     assert any(r["rule"] == "TIER2_EXEMPTION_RESIDUAL_DRIFT"
                and r.get("axis") == "47_tier2_census" for r in red)

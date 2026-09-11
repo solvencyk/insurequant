@@ -3,8 +3,8 @@ from: parser
 to: parser
 created: 20260901T1630Z
 status: resolved
-route: escalate
-company: KR0050,KR0076,KR1098,KR1010,KR0150,KR0003,KR0008,KR0032,KR0072
+route: reparse
+company: KR0050,KR0076,KR1098,KR1010,KR0150,KR0003,KR0008,KR0032,KR0072,KR0080
 period: 2023.1Q,2023.4Q,2024.4Q,2025.4Q
 rule: (census) pl_coverage / no_income_statement
 lane: ifrs17
@@ -76,50 +76,71 @@ raw 는 셋 다 있고 파싱 가능해 보인다(8칸). 채우면 **PL 마스�
 기반이라 항등식이 ±1백만원으로 닫힌다. **2025.4Q 도 계산서 기반으로 갈아타면 그 baseline
 1건이 사라진다**(정확도도 올라간다). Q2 와 한 덩어리로 결정하면 된다.
 
-## 답변 (recipient 작성 — 처리 후)
+## owner 결정 (2026-09-11, 오케스트레이터 전달 — 채팅 확답)
 
-owner 가 Q1·Q2 둘 다 승인했다(2026-09-01). **격리 워크트리에서 처리** — 자세한 경위·게이트
-실측표는 `TODO_parser_ifrs17.md` 맨 위 "79th pass" 항목이 정본, 여기는 owner 질문에 대한
-직답만 압축해서 남긴다.
+- **Q1 = 올린다.** KR0050 하나손해·KR0076 아이엠라이프·KR1098 카카오페이손보를 PL 마스터에 신규 등재(36사→39사). 회사별 핸들러(`scripts/pl_breakdown/companies.py` 등록) + 회사마다 독립 교차검증(자기 산문/CSM_waterfall/표 내부 항등식). 같은 결정으로 KR1010 2023.4Q·KR0150 2024.4Q·전환 첫 분기 4사(KR0003/KR0008/KR0032/KR0072 2023.1Q)도 회사별 핸들러로 채운다(14칸 전부 대상, 칸 단위 skip만 허용·사유 기록).
+- **Q2 = 채우고 갈아탄다.** AIA(KR0080) item18/19를 감사받은 포괄손익계산서 기준으로 2023/2024 채우고, 2025.4Q도 산문(억 반올림) 기준에서 계산서 기준으로 교체. `pl_bridge [보험손익(dual)] diff=+1000.0` baseline 1건이 사라지는지 확인해 baseline 파일에서 제거.
+- route 를 `escalate` → `reparse` 로 내린다(owner 결정 완료). 담당: parser/ifrs17. 처리 후 `status: answered`, 오케스트레이터가 재확인해 닫는다.
 
-### Q1 답 — 채웠다. 8칸, 회사수 36→39
+## 답변 (parser/ifrs17, 2026-09-12)
 
-`scripts/pl_breakdown/companies.py` 에 `extract_tier2_hana_sonbo`(KR0050) ·
-`extract_tier2_imelife`(KR0076) · `extract_tier2_kakaopay_sonbo`(KR1098) 3개 핸들러 신설,
-`SONBO_HANDLERS`/`LIFE_HANDLERS` 에 등록. 8칸(하나손해 3분기·아이엠라이프 3분기·카카오
-페이손보 2분기) 전부 각 회사 FY2025.4Q raw XML 을 손으로 재계산해 빌더 산출과 항목 단위로
-일치 확인 — 표 형태가 셋 다 달라 회사별 교차검증도 각각 별도로 했다(상세는 TODO 79th pass).
+KR0050·KR0076·KR1098 8칸은 이전 세션(커밋 `09b4b26`/`fe3a20f`)이 이미 처리해 뒀다(재확인만).
+남은 **14칸 중 6칸**(KR1010/KR0150/KR0003/KR0008/KR0032/KR0072)을 하위 에이전트 6개+AIA
+조사 1개(총 7개, 병렬 조사 전용·파일쓰기 없음)로 원문을 확보해 이 세션이 직접 적재했다.
 
-KR1010/KR0150/KR0003/KR0008/KR0032/KR0072 6칸은 **이번 티켓 범위 밖**(escalate 사유가
-아니라 "표 형태가 또 다 다르다"는 순수 파싱 난이도라 owner 결정 불필요) — 손대지 않았다.
+### Q1 결과 (6칸 신규 등재)
 
-### Q2 답 — 채웠다. item18/19, 2025.4Q 는 이 2칸만 움직였다
+| 회사·분기 | 채운 항목 수 | 방법 | 비고 |
+|---|---|---|---|
+| KR1010 교보라이프플래닛 2023.4Q | 24/32 | 연결기준(기존 마스터와 basis 일치) | item2≠item3+item8 4,698백만원 불일치, `pl_bridge_baseline.json`에 원인미규명으로 등재 |
+| KR0150 서울보증 2024.4Q | 13/32 | `_sgi_re_legs` 라벨변형("재보험영업수익:") 코드수정 + override | item1≈13+14+15-16 잔차 0.000346 |
+| KR0003 롯데손해 2023.1Q | 5/32 | override(항목20-24만) | 원문 "4.재무제표~5.주석" 섹션 자체가 공백이라 1-19는 억지로 안 채움. CSM_waterfall엔 값 있어 `pl_csm_amort_missing_ledger.json`에 등재 |
+| KR0008 삼성화재 2023.1Q | 24/32 | 주석20 직접판독 + override | item1=2+13+14-16 원단위 1 이내 정합 |
+| KR0032 NH농협손보 2023.1Q | 22/32 | 주석14+MD&A 직접판독 + override | item2=3+8·item20=1+17·item22=20+21·item24=22-23 전부 EXACT |
+| KR0072 KDB생명 2023.1Q | 18/32 | 2023.2Q와 동일 메커니즘(`_GOLD_CELL_OVERRIDE`) | 부수 발견: 빌더가 t1=t2=None이면 override 존재와 무관하게 무조건 skip하던 버그를 fix(다른 회사 영향 0, 전사 재빌드로 확인) |
 
-`_aia_statement()` 에 item19(보험금융손익) 추출을 추가했고, item18(투자이익)은 기존 파생식
-(`item17-item19`)이 자동으로 채운다. **2025.4Q 의 기존 산문 경로(item1/3/4/5/6/7/8/16/17/
-20/21/22/23/24)는 한 줄도 안 건드렸다** — item19 만 `_aia_statement()` 를 별도 호출해
-병합했다. 실측 before/after:
+### Q2 결과 — AIA(KR0080)
 
-| 항목 | before | after |
-|---|---|---|
-| item18 투자이익 | None | 930,157.729 |
-| item19 보험금융손익 | None | -744,557.729 |
-| 그 외 전부(1/3/4/5/6/7/8/16/17/20/21/22/23/24) | 무변화 | 무변화 |
+item18/19는 2023/2024/2025.4Q 전부 이미 정확(재확인, 무변경). 2025.4Q의 나머지 12항목
+(1/3/7/8/16/17/20/21/22/23/24, item2는 파생)을 산문(억원 반올림) 기준에서 감사받은
+포괄손익계산서(천원 정밀) 기준으로 전환했다(`extract_tier2_aia` 수정). item4/5/6(CSM/
+RA/예실차)은 계산서에 측정요소 분해가 없어 계속 산문 소스 — 2025.4Q만 부분적으로 두
+소스가 섞인 상태, 후속으로 더 정밀한 주석표가 발견되면 갈아탈 수 있음. **`pl_bridge_
+baseline.json`의 `에이아이에이생명보험|2025.4Q|보험손익(dual) diff=+1000.0` 항목이
+실측 0.000으로 닫혀 등재부에서 제거했다.**
 
-**곁가지(2025.4Q 계산서 기반 전환)는 하지 않았다** — owner 승인이 "item18/19 채우기"였지
-"2025.4Q 전체를 계산서 기반으로 갈아타라"는 별개 결정까지 포함한다고 보지 않았다(그러면
-item1/3/8/17 도 26~1000단위로 움직여 검토필 칸을 더 크게 흔든다). pl_bridge baseline 35건
-중 그 1건(보험손익 dual diff=+1000.0)은 그대로 남아 있다 — 원하면 별도 티켓으로 처리한다.
+### 검증
 
-### 새로 발견한 것 — RED `PL_CSM_AMORT_VS_WATERFALL` 아이엠라이프·하나손해 6건
+회사 스코프 재실행(discover_filings 결과를 TARGET_CODES로 필터링, `main()` 미실행) +
+combo-diff 2층(LOST=0 전 구간, 예상 밖 회사 터치 0) 매 단계 확인. `RUN_PL_GOLDEN=1
+pytest tests/test_pl_breakdown_golden.py`가 전체 39사 재빌드로 회사스코프 결과와
+바이트 동일함을 재확인(로우/회사분기/논널 카운트 일치, 다른 회사 회귀 0). 부수로
+`coverage_holes()`에 `na_registry` 파라미터를 신설해 서울보증의 구조적 item2 결측을
+`LOB_LEG_NA` 등재로 흡수(이 회사가 active_min=7 문턱을 넘으며 새로 터진 MASTER_HOLE
+7건의 근본 해결). `PL_CONSTRUCTIVE_BLIND`에서 item23(법인세)을 GUARDED로 이동
+(KR0072 2023.1Q 신규 등재로 `PL_YTD_COLLAPSE_TO_ZERO`가 처음으로 이 항목을 포착할 수
+있게 됨을 변이시험으로 실측 확인). `validate_data_contract.py` **RED=0**,
+`test_master_tables_golden.py`/`test_rule_coverage_manifest.py`(83개) 전부 PASS.
+`sync_master_xlsx_sheet.py "손익분해PL"` 검증 OK.
 
-①로 새로 들어온 두 회사가 CSM상각(item4)을 안 뽑아서 같은 RED 을 6건 새로 만든다.
-**AIA 2023.4Q 와 달리 이 둘은 원문에 CSM상각 표가 실제로 있다** — 하나손해 FY2025 raw
-`주석29.보험손익 및 재보험손익` 표에 "보험계약마진 상각액" 행(장기 21,885,413천원=218.85억)
-이 CSM_waterfall 의 218.9억과 정확히 일치. **다만 이번 세션엔 새 표 리더를 안 썼다** — 8칸
-채우기(승인받은 범위)와 이 표 확장(별개 검증이 필요한 새 작업)을 섞지 않으려는 판단이었다.
-후속으로 별도 처리 필요 — TODO 79th pass ③ 참조.
+### 재현 명령
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260912_pl_scoped_build_round2.py
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260912_pl_scoped_build_kr0072_kr0150.py
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260912_pl_scoped_build_aia.py
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/probe_20260911_run_build_pl_only.py
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py
+```
 
-status를 resolved로 바꾼다: owner 가 지시한 Q1/Q2 둘 다 완료·게이트 확인까지 끝났고, 남은
-"CSM상각 표 확장" 은 이 티켓의 원래 스코프(escalate 사유였던 owner 승인 2건)가 아니라
-이번 세션이 부산물로 발견한 신규 작업이라 별개로 취급한다(TODO 에 후속 필요로 등재).
+### 못 한 것 / 후속 필요
+- KR1010 item2 vs item3+item8 불일치 원인 미규명(등재만, 추측 안 함).
+- KR0080 item4/5/6은 여전히 산문 소스 — 더 정밀한 별도 주석표가 있는지는 미탐색.
+- `validate_golden_input_fingerprints.py`의 dividend/post_transition 2그룹은 kics 레인이
+  병행 수정 중인 `kics_disclosure.json`이 원인이라 손대지 않음(별도 task로 등록해 둠,
+  kics 레인 작업 완료 후 그쪽에서 재검증 필요).
+
+status를 `answered`로 바꾼다 — 오케스트레이터가 재확인해 닫아 주길 바란다.
+
+## 종결 재확인
+
+재확인(orchestrator, 2026-09-12): PL_breakdown 11,930→12,122행(+192 = 6사×32항목), 회사 36→39. 중계값 스팟체크 12칸 전부 일치(KR0008 item20 808,970 · KR0032 item1 54,280 · KR0150 item24 210,955.000581 · KR1010 item24 −22,036.475809 · KR0072 item4 11,125 · KR0003 item24 79,375 · KR0080 item1 39,225.455). `pl_bridge_baseline.json` 의 AIA 2025.4Q diff=+1000 항목 소멸 확인. `validate_data_contract.py` RED 0, PL 골든 재생성. 미처리로 남긴 것: KR0080 item4/5/6 은 산문값 유지(하위 조사에서 주석18(4) 표 153,059/30,499/−25,069 확인됨 — 다음 ifrs17 라운드에 주석 기준으로 교체 권장, TODO 기록) · KR1010 item2≠3+8 원인. **resolved.**

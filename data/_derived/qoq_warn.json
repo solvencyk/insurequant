@@ -1672,6 +1672,17 @@
     "sign_flip": false
   },
   {
+    "company": "비엔피파리바카디프생명보험",
+    "quarter": "2024.4Q",
+    "item": "CSM상각",
+    "delta_pct": 27.6,
+    "threshold_pct": 10.0,
+    "cur": -62.9,
+    "ref": -86.8,
+    "basis": "yoy",
+    "sign_flip": false
+  },
+  {
     "company": "하나손해보험",
     "quarter": "2024.4Q",
     "item": "CSM상각",

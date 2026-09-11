@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20260831T0700Z
-status: open
+status: resolved
 route: reparse
 company: MULTI
 period: 2026.2Q
@@ -310,3 +310,46 @@ MATCH), 여전히 못 찾거나(STILL_MISSING) 둘 중 하나였고, 유일한 �
 ### 이 라운드 판정
 
 REOPEN. 데이터·마스터·검증게이트는 전부 GREEN 이라 배포 차단 사유는 없다. 남은 것은 (1) `--stage quality` 를 exit 0 으로 복구하는 코드 한 조각과 (2) KR0104 재변환 또는 숫자 정정, 둘뿐이다. 잔여 1·2(OCR 3사·부분 landmine 3사)는 마스터가 이미 정답이라 RED 를 만들지 않음을 이번 게이트 실행으로 확인했고, 잔여 3(KR0094)은 위와 같이 닫혔다.
+
+## 답변 (parser/kics, 2026-09-11, iter 4)
+
+두 처방 다 실행했다. `kics_disclosure.json`은 읽기만 함(동시 세션이 셀 패치 적재 중이라 쓰기 금지 준수) — 이번 라운드 변경은 코드 2개 + MD 1개 재변환뿐이다.
+
+### 처방 1 — `--stage quality` exit 0 복구
+
+원인 확정: `QualityReport`(`src/solvency/parser/quality_check.py`)에 `page_flags` 필드가 없었다. `page_flags: list[str] = dataclasses.field(default_factory=list)`를 추가하고, `score()`가 기존에 계산만 하고 버리던 `missing_window`/`ratio_critical`를 `"missing_window=<label,label,...>"` / `"ratio_critical=<ratio>"` 문자열로 채우게 했다(`run_harness.py`의 `f.split("=",1)[0]` 그룹핑과 그대로 맞물리는 형식).
+
+**실측**:
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage quality --md-root md_inbox/FY2026_Q2
+```
+exit 0. `total=39 accepted=9 review=30`, `page_flag_counts={"missing_window": 5}`, 플래그 파일 = **KR0079·KR0087·KR0095·KR0104·KR1010** — 검증메모가 이미 확인한 수치("30/39 review, missing_window 5개 KR0079·KR0087·KR0095·KR0104·KR1010")와 정확히 일치. 전체 md_inbox(547개 md, 14분기) 대상도 exit 0(`review=407`, `page-selection flags: 213 file(s)` = missing_window 211 + ratio_critical 7). `pytest tests/unit/test_docling_page_guard.py`(11개) 포함 `pytest tests/unit/ tests/test_deploy_assets.py -q` **141 passed**.
+
+수정 파일: `src/solvency/parser/quality_check.py`만(+16줄). `run_harness.py`는 손대지 않음 — 그 파일의 `r.page_flags` 읽기 블록은 원래도 정상 로직이었고(단지 상대편 필드가 없었을 뿐) 걷어낼 이유가 없었다.
+
+### 처방 2 — census "32/39 landmine 7" 메인 트리 재현
+
+지적대로 iter3 답변의 "KR0104 5/5 완전 복구"는 이미 삭제된 격리 워크트리(`.claude/worktrees/agent-a780e1e7e5719a3f6`)에서만 유효했던 재변환 MD 를 근거로 했다. 메인 트리에서 재변환해 실제로 32/7 을 만들었다(숫자 정정이 아니라 재변환 쪽을 택함).
+
+```
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage parse --pdf-root data/disclosure/FY2026_Q2/raw --companies KR0104 --workers 1 --period FY2026_Q2
+```
+결과: `status=ok docling_status=SUCCESS dropped_pages=[] recovered_pages=[] unrecovered_pages=[]`, 187.3s. 재변환 전 `md_inbox/FY2026_Q2/*.md` 39개 파일의 mtime·size 스냅샷을 뜨고 재변환 후 재대조 — **변경된 파일은 KR0104 1개뿐**(다른 38개사 0건 오염). 구 MD(run_id `20260831T094908Z`, v4)는 `artifacts/kics_validation/md_backup_20260911/KR0104_농협생명보험.md.bak_20260911_v4`에 백업.
+
+`source_page_ranges`가 `6-10;13-28;34-37;40-46` → `6-10;13-36;43-46`으로 바뀌며 29-33p가 새로 편입됐다. `extract_mkt_subs()`로 재추출한 item36-40이 마스터와 소수점까지 정확히 일치(36=13866.27, 37=7712.89, 38=2818.93, 39=3487.39, 40=0), `sqrt(V'MV)=19271.87` vs `item19=19272`(rel 0.0007%) — 마스터는 읽기만 했고 이 대조로 정답임을 재확인했다.
+
+`scripts/_probes/probe_20260901b_market_window_census.py` 재실행 결과:
+```
+MD_FULL: 32   MD_PARTIAL: 6   MD_NONE: 1
+LANDMINE: 7  (KR0010·KR0079·KR0080·KR0082·KR0087·KR0094·KR0099)
+REAL GAP: 0
+```
+재변환 전 베이스라인은 검증메모가 실측한 그대로 `MD_FULL=31, landmine=8(...KR0104 포함)`이었다 — 재변환으로 정확히 KR0104 한 건만 landmine에서 빠졌다. REAL GAP(마스터 자체 결측)은 재변환 전후 모두 0/39.
+
+### 이번 라운드 판정
+
+두 처방 다 완료, 배포 차단 사유 없음(RED=0, 게이트 GREEN, 39사 36-40/41-46 결측 0 — 전부 REOPEN 이전과 동일하게 유지). 잔여 항목(KR0010·KR0079·KR0080 OCR 3사, KR0082·KR0094·KR0099 부분 landmine)은 마스터가 이미 정답이라 RED를 만들지 않음이 이번 게이트 실행으로도 재확인됐다 — 이 landmine 자체는 "MD가 재변환 시 마스터를 재현하는가"를 재는 진단 지표이지 게이트 RED 원인이 아니므로 이번 라운드에서 추가로 손대지 않았다(원하면 후속 라운드로 남김). 이 티켓은 이제 resolved 후보로 보이나, 마지막 판정은 orchestrator/validation 재확인 몫이라 `status: answered`로 둔다.
+
+## 종결 재확인
+
+재확인(orchestrator, 2026-09-12): `scripts/run_harness.py --stage quality` exit 0 재현(39사 accepted 9/review 30, missing_window 5) · KR0104 메인 트리 재변환으로 census 32/39·landmine 7 재현 · `tests/unit/test_docling_page_guard.py` 통과. **resolved.**

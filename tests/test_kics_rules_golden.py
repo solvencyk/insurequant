@@ -36,6 +36,7 @@ def _run() -> dict:
     from solvency.validation.kics_json_rules import run_validation
     from validate_kics_disclosure import (
         _load_life_subrisk_applicability,
+        _load_life_subrisk_source_absent,
         _load_tfi_applicability,
         _scan_breakdown_presence,
     )
@@ -47,10 +48,17 @@ def _run() -> dict:
     # applicability` 도 같은 이유로 필요하다(2026-09-03 신설 `8_life_census` 축) — 빼면
     # 2024년 이후 홀수분기의 적용사/비적용사 구분이 전부 UNKNOWN(YELLOW) 으로 뭉개져
     # 골든이 실제 게이트의 RED/SKIP 갈림을 못 박는다.
+    # `life_subrisk_source_absent` (2026-09-11 추가, inbox 20260911T1407Z 조사 중 발견) 는
+    # `main()`(L3841-3845) 이 네 번째 인자로 넘기는데 이 함수엔 누락돼 있었다 — 그 결과
+    # 이 골든이 2023.1Q/2023.3Q `8_life_census` 24버킷을 SKIP 대신 RED 로 잘못 고정할 뻔했다
+    # (report_latest.json RED=36 vs 이 함수만으로 계산한 RED=60, 24건 전부 이 인자 누락이
+    # 원인 — scripts/_probes/probe_20260911_red_count_diagnose.py 로 확인). 게이트와 인자
+    # 목록이 다르면 애초에 "게이트를 박제"하는 게 아니다.
     report = run_validation(records,
                             source_has_breakdown=_scan_breakdown_presence(records),
                             tfi_applicability=_load_tfi_applicability(),
-                            life_subrisk_applicability=_load_life_subrisk_applicability())
+                            life_subrisk_applicability=_load_life_subrisk_applicability(),
+                            life_subrisk_source_absent=_load_life_subrisk_source_absent())
     return report
 
 
@@ -234,7 +242,35 @@ def _update() -> int:
                     "기타요구자본 24/25/26)이 없어 이 골든엔 영향 없음(validate_data_contract.py "
                     "별도 재확인: RED 49 -> 31, kics_disclosure RED 0, 잔여 31 은 전부 "
                     "sensitivity_heatmap=ifrs17 레인). 데이터만 고쳤고 룰은 안 건드렸다. 전후 "
-                    "대조: scripts/_probes/probe_20260901_golden_diff.py.")
+                    "대조: scripts/_probes/probe_20260901_golden_diff.py. "
+                    "2026-09-11 (parser/kics, inbox 3건 드레인) 재생성 사유 — 데이터만 고쳤고 "
+                    "룰은 안 건드렸다(kics_disclosure.json 읽기만 했다). 셀단위 UPSERT 3건: "
+                    "① item48(보완자본 한도, 2026.2Q) 이 같은 분기 item3(보완자본) 값으로 "
+                    "오염된 4셀 정정(KR0003 28741→10555.5 · KR0011 124792→57549.42 · "
+                    "KR0029 754→1389.83 · KR0094 59367→26880.72, 값_적용후 는 이미 정답이라 "
+                    "무변경) — fitz 직접판독(scripts/fix_20260821_tier2_limit_lines.py의 "
+                    "extract_tier2) 재확인, inbox 20260831T0705Z REOPEN. "
+                    "② KR0079(미래에셋생명) 2023.4Q/2024.4Q/2025.4Q 의 TFI 메모/분할행 "
+                    "(item47-54) 24셀 신규 적재 — scripts/fix_20260901_kr0079_scanned_"
+                    "section_tier2.py --apply(이번 세션에 item54 2023.4Q 오기 496.50→"
+                    "3003.59 정정 후 실행, 200dpi 렌더 재확인 — 496.50 은 옆 회사 KR0071 "
+                    "item53 이 새어든 값이었다). ③ 부수 관찰 3건 중 2건: KR0010 2025.4Q "
+                    "item8(자본조정) 0-vs-결측 표기 통일('' → '0', 원문 '0' 확인) + "
+                    "KR0071 2024.4Q·KR0010 2025.4Q item53/54 신규 4셀(둘 다 raw 190dpi 렌더 "
+                    "직접판독, KR0010 은 item47-49 기존값과 소수점까지 일치해 판독법 교차검증됨) "
+                    "— inbox 20260901T0420Z REOPEN. KR0080 2025.2Q item23-26(0/0/0/0, 8분기 x "
+                    "4항목=32셀 규모로 재스코프만 하고 미착수, TODO_parser_kics.md 참조)는 "
+                    "이번 라운드에 포함 안 함. 룰 코드는 안 건드렸다 — sha256/by_status 이동은 "
+                    "전부 위 28셀 데이터 변경 때문이며, 이 세션이 시작하기 전 동시 커밋들"
+                    "(2165664 생명장기 29-35 · 6309b64 legit-zero dedup · a656568 동양생명 "
+                    "기간혼입 · 5de442e 라이나 사업비위험)도 같은 라이브 마스터에 이미 반영돼 "
+                    "있어 이 골든의 직전 스냅샷 이후 누적분을 함께 포함한다(그 커밋들은 이 "
+                    "세션 소관이 아니다). 부수로 이 파일의 `_run()` 자체 버그도 같이 고쳤다 — "
+                    "`life_subrisk_source_absent` 인자가 `main()`(validate_kics_disclosure.py "
+                    "L3841-3845)에는 있는데 여기엔 없어서, 처음 --update 를 돌렸을 때 "
+                    "2023.1Q/2023.3Q `8_life_census` 24버킷이 report_latest.json(RED=36)과 "
+                    "달리 RED=60 으로 잘못 고정될 뻔했다(둘 다 고쳐진 지금은 RED=36 으로 "
+                    "일치, scripts/_probes/probe_20260911_red_count_diagnose.py 로 확진).")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

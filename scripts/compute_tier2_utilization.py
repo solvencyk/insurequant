@@ -17,9 +17,30 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 from solvency.validation.kics_json_rules import TIER2_LIMIT_RATIO  # noqa: E402
 
-MD_DIR = REPO / "md_inbox" / "FY2025_Q4"
+
+def _latest_md_period(fallback: str = "FY2025_Q4") -> str:
+    """Newest "FY????_Q?" dir under md_inbox/ (lexicographic sort works: year
+    is 4 digits, quarter is 1 digit -- same idiom as fill_period_to_disclosure.py
+    et al.). Only affects the bare `python compute_tier2_utilization.py`
+    invocation with no --quarter/--md-dir: inbox 20260831T0800Z SS1 follow-up
+    (2026-09-11) confirmed nothing in scripts/src/tests imports this module or
+    subprocesses it, so the previous hardcoded FY2025_Q4 default was stale but
+    dead in practice. Falls back to `fallback` if md_inbox/ is missing/empty.
+    """
+    periods = sorted(p.name for p in (REPO / "md_inbox").glob("FY*_Q?") if p.is_dir())
+    return periods[-1] if periods else fallback
+
+
+_LATEST_PERIOD = _latest_md_period()
+_LATEST_PERIOD_MATCH = re.match(r"FY(\d{4})_Q(\d)", _LATEST_PERIOD)
+
+MD_DIR = REPO / "md_inbox" / _LATEST_PERIOD
 JSON_PATH = REPO / "kics_disclosure.json"
-DEFAULT_QUARTER = "2025.4Q"
+DEFAULT_QUARTER = (
+    f"{_LATEST_PERIOD_MATCH.group(1)}.{_LATEST_PERIOD_MATCH.group(2)}Q"
+    if _LATEST_PERIOD_MATCH
+    else "2025.4Q"
+)
 DEFAULT_OUT_DIR = REPO / "output" / "tier2_utilization"
 
 KEY_CODE = "\uc6d0\ubcf4\ud5d8\uc0ac\ucf54\ub4dc"
