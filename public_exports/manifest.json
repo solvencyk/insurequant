@@ -1,17 +1,17 @@
 {
-  "generated_at_utc": "2026-09-11T11:49:03Z",
+  "generated_at_utc": "2026-09-11T17:47:20Z",
   "license": "All rights reserved. 열람·출처표기 인용·사내 분석은 자유, 자동수집(크롤링)으로 통째 긁어가기·대량 재배포·재판매는 금지.",
   "terms_url": "https://www.insurequant.com/privacy.html#terms",
   "copyright": "(c) 2026 InsureQuant (운영자 조상욱). 원천 수치의 권리는 각 공시 주체에게 있음.",
-  "build_id": "0d72f96",
+  "build_id": "814b3b7",
   "sheets": {
     "17BS": {
-      "rows": 8840,
+      "rows": 8846,
       "quarter_min": "2021.4Q",
       "quarter_max": "2026.2Q"
     },
     "K-ICS공시": {
-      "rows": 25458,
+      "rows": 25486,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
@@ -21,7 +21,7 @@
       "quarter_max": "2026.2Q"
     },
     "CSM워터폴": {
-      "rows": 2172,
+      "rows": 2178,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
@@ -36,12 +36,12 @@
       "quarter_max": "2025.4Q"
     },
     "신계약CSM배수": {
-      "rows": 362,
+      "rows": 363,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
     "손익분해PL": {
-      "rows": 11930,
+      "rows": 12122,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
