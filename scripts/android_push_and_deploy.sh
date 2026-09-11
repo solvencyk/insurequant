@@ -73,7 +73,7 @@ while IFS= read -r f; do
   [ "$a" = "$b" ] || CHANGED="$CHANGED$f
 "
 done <<EOF
-$(git ls-tree -r --name-only origin/main)
+$(git -c core.quotePath=false ls-tree -r --name-only origin/main)
 EOF
 
 # main 에 아직 없는 신규 배포 파일 (HTML 이 참조하지 않아 위 순회에 안 걸린다 — 2026-09-11 발견:
