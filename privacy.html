@@ -5,7 +5,7 @@
   <!-- CSP: defense-in-depth, meta-delivered (GitHub Pages static — no HTTP headers). Must stay first in <head>, before CDN tags. frame-ancestors/report-uri are ignored in meta CSP. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>InsureQuant — 개인정보처리방침</title>
+  <title>InsureQuant — 개인정보처리방침 · 이용안내</title>
   <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
        integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
        이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
@@ -17,9 +17,9 @@
     gtag('js', new Date());
     gtag('config', 'G-F8NSCQZBZK');
   </script>
-  <meta name="description" content="InsureQuant 개인정보처리방침 — 수집 항목, 보유 기간, 처리 위탁 및 국외 이전, 쿠키와 거부 방법 안내"/>
-  <meta property="og:title" content="InsureQuant — 개인정보처리방침"/>
-  <meta property="og:description" content="InsureQuant 개인정보처리방침 — 수집 항목, 보유 기간, 처리 위탁 및 국외 이전, 쿠키와 거부 방법 안내"/>
+  <meta name="description" content="InsureQuant 개인정보처리방침 · 이용안내 — 수집 항목, 보유 기간, 처리 위탁 및 국외 이전, 쿠키와 거부 방법, 그리고 화면·데이터의 이용 조건과 출처 안내"/>
+  <meta property="og:title" content="InsureQuant — 개인정보처리방침 · 이용안내"/>
+  <meta property="og:description" content="InsureQuant 개인정보처리방침 · 이용안내 — 수집 항목, 보유 기간, 처리 위탁 및 국외 이전, 쿠키와 거부 방법, 그리고 화면·데이터의 이용 조건과 출처 안내"/>
   <meta property="og:type" content="website"/>
   <link rel="canonical" href="https://www.insurequant.com/privacy.html"/>
   <link rel="sitemap" type="application/xml" href="sitemap.xml"/>
@@ -47,6 +47,10 @@
     .policy-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:8px;background:var(--bg);margin:0 0 16px 0}
     .policy-table{min-width:640px;font-size:14px}
     .policy-table th:nth-child(n+2), .policy-table td:nth-child(n+2){text-align:left}
+    /* 두 번째 문서(이용안내)는 같은 panel 안에서 h1 으로 시작 — 구분선만 하나 긋는다. */
+    .panel h1.section-break{margin-top:48px;padding-top:32px;border-top:1px solid var(--border)}
+    /* 데이터 출처 표는 2열뿐이라 640px 강제폭이 필요 없다(모바일 가로스크롤 방지). */
+    .policy-table.src-table{min-width:0}
     @media (max-width:640px){
       .panel{padding:18px}
       .panel h1{font-size:21px}
@@ -55,7 +59,7 @@
 </head>
 <body>
   <header>
-    <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">개인정보처리방침</span></a>
+    <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">개인정보처리방침 · 이용안내</span></a>
     <div class="tabs">
       <a href="K-ICS.html" class="tab">K-ICS</a>
       <a href="IFRS17.html" class="tab">IFRS17</a>
@@ -65,7 +69,7 @@
   <div class="container">
     <div class="panel">
       <h1>개인정보처리방침</h1>
-      <p>InsureQuant(이하 "사이트")는 개인이 운영하는 사이트이며, 방문자의 개인정보를 최소한으로만 처리합니다. 이 방침은 사이트가 무엇을 수집하고, 왜 수집하며, 어떻게 거부할 수 있는지를 알려드립니다. 회원가입 절차는 없으며, 이름·주민등록번호·전화번호를 요구하지 않습니다.</p>
+      <p>InsureQuant(이하 "사이트")는 개인이 운영하는 사이트이며, 방문자의 개인정보를 최소한으로만 처리합니다. 이 방침은 사이트가 무엇을 수집하고, 왜 수집하며, 어떻게 거부할 수 있는지를 알려드립니다. 회원가입 절차는 없으며, 이름·주민등록번호·전화번호를 요구하지 않습니다. 아래쪽에 데이터 <a href="#terms">이용안내</a>도 함께 둡니다.</p>
 
       <h2>1. 수집하는 항목과 방법</h2>
 
@@ -154,10 +158,71 @@
 
       <h2>8. 시행일</h2>
       <p>이 방침은 2026년 9월 10일부터 시행합니다. 내용이 변경되면 이 페이지에 변경 내용과 시행일을 게시합니다.</p>
+
+      <h1 id="terms" class="section-break">이용안내</h1>
+      <p>InsureQuant의 화면과 데이터를 어떻게 쓰시면 되는지 짧게 안내합니다. 대부분의 이용은 자유이고, 피해 주셨으면 하는 것은 두 가지뿐입니다.</p>
+
+      <h2>1. 이 사이트는 무엇인가</h2>
+      <ul>
+        <li>개인이 무료로 운영하는 정보 사이트입니다. 회원가입이나 결제는 없습니다.</li>
+        <li>각 보험사의 정기경영공시, 금융감독원 전자공시(DART), 보험개발원 통계 등 공개 자료를 자동으로 수집·정규화·검증하여 보여 드립니다.</li>
+        <li>수집·가공 과정에서 오류가 있을 수 있습니다. 투자·계약·규제 대응 등 의사결정의 근거로 쓰실 수 없으며, 정확한 수치는 각 공시 원문에서 확인해 주십시오.</li>
+        <li>원천 수치의 권리는 각 공시 주체(보험사·금융감독원·보험개발원)에게 있습니다. 이 사이트는 원천 자료를 대체하지 않습니다.</li>
+      </ul>
+
+      <h2>2. 이렇게 쓰셔도 됩니다</h2>
+      <p>아래는 따로 허락을 구하지 않으셔도 됩니다.</p>
+      <ul>
+        <li>화면을 열람하고 캡처하는 것</li>
+        <li>출처(InsureQuant, www.insurequant.com, 조회일)를 밝히고 일부 수치·차트를 인용하는 것 — 보도·연구·교육·사내 보고 모두 포함</li>
+        <li>다운로드 화면에서 받은 파일을 소속 조직 안에서 분석에 쓰는 것</li>
+      </ul>
+
+      <h2>3. 이것만은 피해주세요</h2>
+      <ul>
+        <li>크롤러·스크립트 같은 자동화 수단으로 데이터 파일(JSON·xlsx)이나 화면을 통째로, 반복해서 긁어가는 것 (AI 학습용 수집도 여기에 포함됩니다)</li>
+        <li>데이터의 전부나 상당 부분을 재배포·재판매하거나, 그것으로 같은·비슷한 서비스를 만드는 것</li>
+      </ul>
+      <p>이유는 하나입니다. 개별 수치는 공개된 사실이지만, 그것을 회사·분기·항목별로 정리한 이 사이트의 화면과 데이터베이스는 저작권법으로 보호됩니다. 위 범위를 넘는 이용이 필요하시면 먼저 문의해 주십시오.</p>
+
+      <h2>4. 데이터 출처</h2>
+      <div class="policy-table-wrap">
+        <table class="policy-table src-table">
+          <thead>
+            <tr>
+              <th scope="col">항목</th>
+              <th scope="col">출처</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>K-ICS 지급여력·시장위험·금리민감도</td>
+              <td>각 보험사 정기경영공시 보고서(생명보험협회·손해보험협회 공시실 및 각사 홈페이지)</td>
+            </tr>
+            <tr>
+              <td>IFRS17 CSM·손익·재무상태표·배당·자본성증권</td>
+              <td>금융감독원 전자공시시스템(DART) 사업·반기·분기보고서</td>
+            </tr>
+            <tr>
+              <td>보험료 통계</td>
+              <td>보험개발원(KIDI) 공개 통계</td>
+            </tr>
+            <tr>
+              <td>경과조치 적용 여부</td>
+              <td>금융감독원 보도자료(2023-03-20 붙임)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>모든 수치는 위 자료에서 자동 추출·정규화·검증한 것이며, 원천 기관은 이 사이트와 무관합니다. 최종 반영 분기는 각 페이지 하단 표기를 기준으로 합니다. 보험개발원 통계처럼 원천 기관이 별도의 이용 조건을 두는 자료는 그 조건이 이용자에게도 적용됩니다.</p>
+
+      <h2>5. 운영자·문의·준거법</h2>
+      <p>운영자: 조상욱 (InsureQuant, 개인 운영). 문의와 오류 제보는 사이트 화면의 "오류 제보" 버튼으로 남겨 주십시오. 확인 후 정정하며, 정정 이력은 사이트 또는 저장소에 남깁니다.</p>
+      <p>이 안내는 2026년 9월 11일부터 적용하며, 내용이 바뀌면 이 페이지에 게시합니다. 사이트 이용에 관한 분쟁에는 대한민국 법이 적용되고, 서울중앙지방법원을 제1심 관할법원으로 합니다.</p>
     </div>
   </div>
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
-    본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. © 2026 InsureQuant
+    본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. 화면·데이터베이스는 저작권법으로 보호되며 이용 조건은 이용안내를 따릅니다. © 2026 InsureQuant · 운영자 조상욱 · <a href="privacy.html" class="iq-anon-link">개인정보처리방침</a> · <a href="privacy.html#terms" class="iq-anon-link">이용안내</a>
   </footer>
 </body>
 </html>
