@@ -74,6 +74,21 @@ def to_val(tok):
     return -v if neg else v
 
 
+# layer "history" helpers — 主要な経営指標等の推移 5개년표 rows sometimes wrap a value in full/half-width
+# parens (Meiji Yasuda: 対前期増減率 % next to each amount, and the pre-FY2025 旧基準 SMR figures) while
+# au's version of the same table never uses parens. strip_paren() lets one row-walker handle both.
+PAREN_NUM_RE = re.compile(r"^[（(]([△▲]?[\d,]+\.?\d*%?)[）)]$")
+PAREN_DASH_RE = re.compile(r"^[（(](?:" + "|".join(re.escape(d) for d in DASHES) + r")[）)]$")
+
+
+def strip_paren(tok: str):
+    """(bare_token, was_paren_wrapped). Only unwraps a NUMBER inside parens (not a dash — those are
+    handled separately by PAREN_DASH_RE as pure noise to skip, since 決算 tables use them for a
+    zeroed-out sub-item like 積立勘定 rather than a real prior-year figure)."""
+    m = PAREN_NUM_RE.match(tok)
+    return (m.group(1), True) if m else (tok, False)
+
+
 # --------------------------------------------------------------------------------------
 # layer "esr" item spec.  One list drives the schema (B), the extraction (C) and the doc table (A).
 #   col: "cur" = 2nd token (当年度; 1st token is 前年度 '－' in FY2025), "ev" = last token (EBS 経済価値ベースの額),
@@ -345,6 +360,31 @@ PROFIT_META_ITEMS = [
     dict(id="profit_source_doc", ko="손익 표가 있는 문서(별책만 있는 회사는 본편 URL) / NOT_ACQUIRED 사유", unit="text", labels=[]),
 ]
 
+# --------------------------------------------------------------------------------------
+# layer "history" (2026-09-12, ticket 20260912T1440Z) — 「主要な経営指標等の推移」 5개년표.
+# Both au and Meiji Yasuda Non-Life print this table with the same 5 fiscal-year columns
+# (oldest -> newest); position in the row = fiscal year, regardless of company.
+HIST_FISCAL_YEARS = ["FY2021", "FY2022", "FY2023", "FY2024", "FY2025"]
+
+HISTORY_ITEMS = [
+    dict(id="hist_net_premiums_written", scope="nonlife", labels=[r"^正味収入保険料$"], ko="정미수입보험료 5개년", unit=M,
+         skip=[r"対前期増減率"], drop_paren=True, pl="pl_net_premiums_written"),
+    dict(id="hist_ordinary_profit", scope="both", labels=[r"^経常利益$"], ko="경상이익 5개년", unit=M, skip=[], drop_paren=False, pl="pl_ordinary_profit"),
+    dict(id="hist_net_income", scope="both", labels=[r"^当期純利益$", r"^当期純剰余$"], ko="당기순이익 5개년", unit=M, skip=[], drop_paren=False, pl="pl_net_income"),
+    dict(id="hist_loss_ratio_pct", scope="nonlife", labels=[r"^正味損害率$"], ko="정미손해율 5개년 %", unit=P, skip=[], drop_paren=False, pl="pl_loss_ratio_pct"),
+    dict(id="hist_expense_ratio_pct", scope="nonlife", labels=[r"^正味事業費率$"], ko="정미사업비율 5개년 %", unit=P, skip=[], drop_paren=False, pl="pl_expense_ratio_pct"),
+    dict(id="hist_combined_ratio_pct", scope="nonlife", labels=None, ko="합산비율 5개년 % (파생 = 손해율+사업비율, 있으면 표 직접값 우선)", unit=P, skip=[], drop_paren=False, pl="pl_combined_ratio_pct"),
+    dict(id="hist_total_assets", scope="both", labels=[r"^総資産額$"], ko="총자산 5개년", unit=M, skip=[r"うち積立勘定"], drop_paren=False, pl=None),
+    dict(id="hist_net_assets", scope="both", labels=[r"^純資産額$"], ko="순자산 5개년", unit=M, skip=[], drop_paren=False, pl=None),
+    dict(id="hist_smr_old_pct", scope="both", labels="smr", ko="구기준 단체 SMR 5개년 %(신제도 시행 전, 괄호로 병기된 회사만)", unit=P, skip=[], drop_paren=False, pl=None),
+    dict(id="hist_esr_pct", scope="both", labels="smr", ko="신기준 ESR(경제가치기준 지급여력비율) 5개년 % — FY2025 부터 공표", unit=P, skip=[], drop_paren=False, pl=None),
+    # 생보용 — 표본 2사(손보)엔 적용 없음. id·라벨만 정의(owner 지시).
+    dict(id="hist_core_profit", scope="life", labels=[r"^基礎利益$", r"^基礎利益\s*A$"], ko="기초이익 5개년(생보)", unit=M, skip=[], drop_paren=False, pl=None),
+    dict(id="hist_premium_income", scope="life", labels=[r"^保険料等収入$"], ko="보험료등수입 5개년(생보)", unit=M, skip=[], drop_paren=False, pl=None),
+    dict(id="hist_policy_reserves", scope="life", labels=[r"^責任準備金残高$"], ko="책임준비금잔고 5개년(생보)", unit=M, skip=[], drop_paren=False, pl=None),
+]
+HIST_SMR_LABEL_RE = r"ソルベンシー.{0,3}マージン比率"
+
 # Meiji Yasuda Non-Life main volume (別冊 has no P&L) — 損益計算書 p42 renders EVERY row label
 # vertically (one glyph per line) AND groups ALL labels of a section before ALL its values
 # (12-item 経常収益 block → 36 values in 3 year-major chunks; 15-item 経常費用 block → 45 values;
@@ -365,12 +405,12 @@ MEIJI_PL_FLAT_MAP = {
 
 COMPANIES = [
     dict(key="au_nonlife", company_jp="au損害保険", company_en="au Non-Life", sector="nonlife", pdf="au_nonlife_disclo_260730_4of5.pdf",
-         layers=["esr", "article_axes", "profit"],
+         layers=["esr", "article_axes", "profit", "history"],
          pages=dict(T1=[22], T1_combined=[22], T2=[23], T3=[24], T4=[25], T6=[28], T7=[29], T8=[26, 27, 29]),
          headline_5yr_page=2, axes_pages=dict(reins=[6], reserves=[8]),
          profit_pages=dict(pl=[17], uw=[5], ratio=[5], inv=[11], summary5=[2], basis=[15, 17, 31]), pl_layout="prev_cur_diff"),
     dict(key="meijiyasuda_nonlife", company_jp="明治安田損害保険", company_en="Meiji Yasuda Non-Life", sector="nonlife", pdf="meijiyasuda_nonlife_20260904_performance_data.pdf",
-         layers=["esr", "article_axes", "profit"],
+         layers=["esr", "article_axes", "profit", "history"],
          pages=dict(T1=[2], T2=[3], T3=[4], T4=[5, 6, 7], T6=[11], T7=[12], T8=[8, 13]),
          headline_5yr_page=None, axes_pages=dict(),
          # 別冊 業績データ has no P&L. Profit layer reads the MAIN VOLUME (separate PDF, owner-supplied
@@ -961,6 +1001,135 @@ def run_profit_axes_xref(comp, pf, ax):
 
 
 # --------------------------------------------------------------------------------------
+def extract_history(comp, doc, ratio_raw_tokens=None):
+    """layer history (ticket 20260912T1440Z) — 主要な経営指標等の推移 5개년표. Reads the same
+    profit_pages["summary5"] page already used by extract_profit's P10 cross-check, but keeps
+    all 5 fiscal-year columns instead of just {prev,cur}.
+    ratio_raw_tokens: pf["raw_tokens"]["pl_loss_ratio_pct"] etc from extract_profit — the 3-fiscal-year
+    正味損害率/事業費率/合算率 table's raw 9-token row, used to backfill FY2023-2025 for companies
+    (Meiji Yasuda) whose 5개년표 has no ratio rows at all."""
+    ids = [it["id"] for it in HISTORY_ITEMS]
+    v, pg, raw = {i: None for i in ids}, {}, {}
+    pp = comp.get("profit_pages") or {}
+    sp = pp.get("summary5")
+    if not sp:
+        for i in ids:
+            raw[i] = "NO_PAGE"
+        return dict(values=v, pages=pg, raw_tokens=raw, fiscal_years=HIST_FISCAL_YEARS)
+    lines = merge_vertical(page_lines(doc, sp))
+
+    def row(label_res, skip_res=(), drop_paren=False):
+        idx = next((i for i in range(len(lines)) if any(re.search(r, lines[i][1]) for r in label_res)), None)
+        if idx is None:
+            return None, None
+        j = idx + 1
+        vals, parens = [], []
+        while j < len(lines) and len(vals) < 5:
+            ln = lines[j][1]
+            if PAREN_DASH_RE.match(ln) or any(re.search(r, ln) for r in skip_res):
+                j += 1
+                continue
+            raw_t, is_p = strip_paren(ln)
+            if is_p and drop_paren:
+                j += 1
+                continue
+            if is_val(raw_t):
+                vals.append(to_val(raw_t))
+                parens.append(is_p)
+                j += 1
+                continue
+            break
+        return vals, parens
+
+    smr_cache = None
+    for it in HISTORY_ITEMS:
+        iid = it["id"]
+        if it["scope"] not in ("both", comp["sector"]):
+            raw[iid] = "N/A_SECTOR"
+            continue
+        if iid == "hist_combined_ratio_pct":
+            continue  # derived below (table rarely prints 合算率 in the 5개년표 itself)
+        if it["labels"] is None:
+            raw[iid] = "NOT_IMPLEMENTED_id_only"  # life-only ids, no sample company to extract from
+            continue
+        if it["labels"] == "smr":
+            if smr_cache is None:
+                smr_cache = row([HIST_SMR_LABEL_RE])
+            vals, parens = smr_cache
+        else:
+            vals, parens = row(it["labels"], it.get("skip", []), it.get("drop_paren", False))
+        if vals is None:
+            raw[iid] = "NOT_FOUND"
+            continue
+        if len(vals) < 5:
+            vals = vals + [None] * (5 - len(vals))
+            parens = parens + [False] * (5 - len(parens))
+        if iid == "hist_smr_old_pct":
+            series = {y: (vals[i] if parens[i] else None) for i, y in enumerate(HIST_FISCAL_YEARS)}
+        elif iid == "hist_esr_pct":
+            series = {y: (vals[i] if not parens[i] else None) for i, y in enumerate(HIST_FISCAL_YEARS)}
+        else:
+            series = {y: vals[i] for i, y in enumerate(HIST_FISCAL_YEARS)}
+        v[iid] = series
+        pg[iid] = sp[0]
+        raw[iid] = vals
+
+    if comp["sector"] == "nonlife":
+        loss, exp = v.get("hist_loss_ratio_pct"), v.get("hist_expense_ratio_pct")
+        # backfill FY2023-2025 from the profit:ratio 3-year table when the 5개년표 itself has no
+        # 損害率/事業費率 rows (Meiji Yasuda) — same 合計 row P08/P09 already anchor on.
+        if (not loss or all(x is None for x in loss.values())) and ratio_raw_tokens and isinstance(ratio_raw_tokens, list) and len(ratio_raw_tokens) >= 9:
+            rl = ratio_raw_tokens
+            loss = {"FY2021": None, "FY2022": None, "FY2023": to_val(rl[0]), "FY2024": to_val(rl[3]), "FY2025": to_val(rl[6])}
+            exp = {"FY2021": None, "FY2022": None, "FY2023": to_val(rl[1]), "FY2024": to_val(rl[4]), "FY2025": to_val(rl[7])}
+            v["hist_loss_ratio_pct"], v["hist_expense_ratio_pct"] = loss, exp
+            comb_direct = {"FY2021": None, "FY2022": None, "FY2023": to_val(rl[2]), "FY2024": to_val(rl[5]), "FY2025": to_val(rl[8])}
+            v["hist_combined_ratio_pct"] = comb_direct
+            for iid in ("hist_loss_ratio_pct", "hist_expense_ratio_pct", "hist_combined_ratio_pct"):
+                raw[iid] = "BACKFILL from profit:ratio 3yr table (5개년표 has no ratio rows for this company)"
+                pg[iid] = pp.get("ratio", [None])[0]
+        elif loss and exp:
+            comb = {y: (round(loss[y] + exp[y], 1) if loss.get(y) is not None and exp.get(y) is not None else None) for y in HIST_FISCAL_YEARS}
+            if any(x is not None for x in comb.values()):
+                v["hist_combined_ratio_pct"] = comb
+                raw["hist_combined_ratio_pct"] = "DERIVED = hist_loss_ratio_pct + hist_expense_ratio_pct"
+    return dict(values=v, pages=pg, raw_tokens=raw, fiscal_years=HIST_FISCAL_YEARS)
+
+
+def run_history_checks(comp, pf, hist):
+    """H01 — FY2025 == profit.cur / FY2024 == profit.prev (5개년표 vs 손익 층, 같은 회사 두 표).
+    H02 — 合算率 = 損害率+事業費率 항등식, 연도별."""
+    checks = []
+    v, pfv = hist["values"], pf["values"]
+    for it in HISTORY_ITEMS:
+        iid, pid = it["id"], it.get("pl")
+        if pid is None or it["scope"] not in ("both", comp["sector"]):
+            continue
+        hs, pv = v.get(iid), pfv.get(pid)
+        if not hs or not pv:
+            continue
+        tol = 0.1 if it["unit"] == P else 1
+        for fy, col in (("FY2025", "cur"), ("FY2024", "prev")):
+            lhs, rhs = hs.get(fy), pv.get(col)
+            if lhs is None or rhs is None:
+                continue  # not disclosed on one side — informational absence, not a mismatch
+            ok = abs(lhs - rhs) <= tol
+            checks.append(dict(id=f"H01_{iid}_{fy}", formula=f"history.{iid}.{fy} == profit.{pid}.{col} (±{tol})",
+                               lhs=lhs, rhs=rhs, tol=tol, **{"pass": ok}, gate=True, note=""))
+    if comp["sector"] == "nonlife":
+        loss, exp, comb = v.get("hist_loss_ratio_pct"), v.get("hist_expense_ratio_pct"), v.get("hist_combined_ratio_pct")
+        if loss and exp and comb:
+            for fy in HIST_FISCAL_YEARS:
+                l, e, c = loss.get(fy), exp.get(fy), comb.get(fy)
+                if l is None or e is None or c is None:
+                    continue
+                ok = abs(c - (l + e)) <= 0.1
+                checks.append(dict(id=f"H02_combined_identity_{fy}", formula="hist_combined_ratio_pct == hist_loss_ratio_pct + hist_expense_ratio_pct (±0.1)",
+                                   lhs=c, rhs=round(l + e, 1), tol=0.1, **{"pass": ok}, gate=True, note=""))
+    return checks
+
+
+# --------------------------------------------------------------------------------------
 def write_lf(path: Path, text: str) -> None:
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write(text)
@@ -1209,14 +1378,28 @@ def build_schema():
     for mi in PROFIT_META_ITEMS:
         items.append(dict(id=mi["id"], layer="profit", table="profit:meta", labels_ja=mi["labels"], ko=mi["ko"], unit=mi["unit"], parent=None, formula=None,
                           required=(mi["id"] in ("accounting_basis", "ifrs17_applied")), column="text", sector_scope="both", kics_item_ref=None, pl_item_ref=None))
+    for it in HISTORY_ITEMS:
+        if it["labels"] is None:
+            labels_ja = []
+        elif it["labels"] == "smr":
+            labels_ja = ["単体ベースのソルベンシー・マージン比率"]
+        else:
+            labels_ja = [clean_label(l) for l in it["labels"]]
+        formula = "= hist_loss_ratio_pct + hist_expense_ratio_pct (표 직접값이 있으면 그 값 우선, 없으면 파생)" if it["id"] == "hist_combined_ratio_pct" else (
+            "괄호(旧基準) 값만 — 신제도 시행 전 연도" if it["id"] == "hist_smr_old_pct" else (
+            "괄호 없는(新基準) 값만 — FY2025 부터" if it["id"] == "hist_esr_pct" else None))
+        items.append(dict(id=it["id"], layer="history", table="history:summary5", labels_ja=labels_ja, ko=it["ko"], unit=it["unit"], parent=None,
+                          formula=formula, required=(it["id"] in ("hist_ordinary_profit", "hist_net_income")), column="fiscal_years", sector_scope=it["scope"],
+                          kics_item_ref=None, pl_item_ref=None))
     return dict(
         schema_version="2026-09-12",
         regulation="保険業法施行規則 59条の2 / 令和7年金融庁告示第74号(SMR告示)·第75号(EBS) — FY2025 첫 적용",
         layers={"esr": "regulatory ESR tables (T1~T8)", "article_axes": "FSA monitoring-report axes from other sections (docs/domains/claude-agent-jp.md §4b): catastrophe_reserve_adequacy / air_used / interest_margin_sign + ESR placeholder skeleton",
-                "profit": "J-GAAP statutory P&L layer (ticket 20260912T1150Z): 損益計算書 spine + 損保 保険引受利益·資産運用損益·損害率/事業費率/合算率 + 生保 基礎利益·キャピタル/臨時·三利源 + accounting-basis meta. Values are {prev, cur} pairs."},
+                "profit": "J-GAAP statutory P&L layer (ticket 20260912T1150Z): 損益計算書 spine + 損保 保険引受利益·資産運用損益·損害率/事業費率/合算率 + 生保 基礎利益·キャピタル/臨時·三利源 + accounting-basis meta. Values are {prev, cur} pairs.",
+                "history": "5개년 시계열 층 (ticket 20260912T1440Z): 「主要な経営指標等の推移」 표에서 정미수입보険料/経常利益/当期純利益/損害率/事業費率/合算率/総資産/純資産/(旧基準SMR·新基準ESR) 를 FY2021~FY2025 5개 사업연도로 뽑는다. 生保 id 3개(hist_core_profit/hist_premium_income/hist_policy_reserves)는 id만 정의, 표본 손보 2사엔 미적용."},
         unit_note="amounts as disclosed (JPY_million = 百万円) unless the item unit says otherwise (negative_spread_* are 億円 in the life summary box). census/master converts to 億円 (÷100). Record unit_disclosed per row — large life insurers may print 億円.",
         null_note="dash (－ / ー) = not applicable; stored as null, treated as 0 in formulas.",
-        column_note="FY2025 tables carry two value columns (イ=前年度 '－', ロ=当年度); column='cur' takes the 2nd token. EBS tables: 'ev' = last token (経済価値ベースの額), 'first' = 財務会計ベースの額 (only when all 4 columns are printed). profit layer: column='prev+cur' = both fiscal years of the 損益計算書 (前年度 / 当年度), stored as {\"prev\":…, \"cur\":…}.",
+        column_note="FY2025 tables carry two value columns (イ=前年度 '－', ロ=当年度); column='cur' takes the 2nd token. EBS tables: 'ev' = last token (経済価値ベースの額), 'first' = 財務会計ベースの額 (only when all 4 columns are printed). profit layer: column='prev+cur' = both fiscal years of the 損益計算書 (前年度 / 当年度), stored as {\"prev\":…, \"cur\":…}. history layer: column='fiscal_years' = {\"FY2021\":…,…,\"FY2025\":…}, position in the disclosed row = fiscal year (oldest -> newest) regardless of company; hist_smr_old_pct/hist_esr_pct 는 같은 SMR/ESR 행을 괄호 유무로 나눈 것(괄호=旧基準, 없으면=新基準・FY2025 부터).",
         kics_ref_note="kics_item_ref = docs/agents/kics-json-validation-rules.md item number. Approximate mappings (different aggregation/scope) are documented in docs/domains/jp_esr_disclosure_template.md §6; null = no K-ICS counterpart (e.g. 巨大災害 C, スプレッド, MOCE, EBS rows).",
         pl_ref_note="pl_item_ref (profit layer only) = root PL_breakdown.json 항목번호 1~32 (docs/domains/claude-agent-ifrs17.md). Strict counterparts only: 24 당기순이익 / 22 세전이익 / 23 법인세 exact; 20 영업이익 ≈ 経常利益 (J 特別損益 ≈ K 영업외 — approximate); 1 보험손익 ≈ 損保 保険引受利益 and 17 투자손익 ≈ 資産運用損益 are J-GAAP-cost vs IFRS17 concepts (approximate, sign/scope differ). 基礎利益·三利源·正味収入保険料·損害率 등은 null (no IFRS17 analogue).",
         accounting_basis_note="accounting_basis: jgaap when (A) 会計方針 절이 企業会計基準/標準責任準備金(大蔵省告示第48号) 을 인용하거나 (B) 법정 損益計算書 양식(責任準備金繰入額 등) + 会社法第436条/保険業法第111条 감사 문구가 같이 있고 IFRS 언급이 없을 때; ifrs when 連結財務諸表の作成基準 이 国際財務報告基準/IFRS 를 명시. ifrs17_applied: true 는 IFRS第17号 명시, false 는 accounting_basis=jgaap 인 単体 법정재무제표(保険業法 상 J-GAAP 강제)에서만, 그 외 unstated. 추정 금지.",
@@ -1241,11 +1424,12 @@ def build_schema():
             "profit:core": "生保 経常利益等の明細(基礎利益) 표 (基礎利益 A / キャピタル損益 B / 臨時損益 C / 経常利益 A+B+C)",
             "profit:three": "生保 三利源 표 (利差損益/危険差損益/費差損益) — 대형사만, NN Life 는 없음",
             "profit:meta": "회계방침 절(会計方針に関する事項)·감사 문구·損益計算書 양식에서 회계기준 판정",
+            "history:summary5": "主要な経営指標等の推移 5개년표 (au 業績データ 편 p2 / Meiji Yasuda 본편 p9) — 정미수입보험료·経常利益·当期純利益·(손보만)損害率·事業費率·総資産額·純資産額·単体ベースのソルベンシー・マージン比率(旧基準 괄호/신기준 ESR 비괄호)",
         },
         sensitivity=dict(scenarios=[dict(id=a, label_ja=b, ko=c) for a, b, c in SENS_SCENARIOS],
                          rows=[dict(id=a, label_ja=re.sub(r"[\^\$]", "", b), ko=c, unit=d, kics_item_ref=e) for a, b, c, d, e in SENS_ROWS]),
         items=items,
-        checks="C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) + P01..P13 (profit, cur & prev) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks / run_profit_checks / run_profit_axes_xref",
+        checks="C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) + P01..P13 (profit, cur & prev) + H01..H02 (history: FY2025==profit.cur, FY2024==profit.prev, 合算率 항등식) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks / run_profit_checks / run_profit_axes_xref / run_history_checks",
         aggregation_rules_ref="J-ESR/esr_aggregation_rules.json (告示74 第八十一条·第八十九条·第百条·第百二十七条·第百五十四条~第百五十六条 + 告示75 別紙様式第三号 注; matrices in id order)",
     )
 
@@ -1340,10 +1524,18 @@ def main():
         pf = extract_profit(pf_comp, pf_doc)
         pf["checks"] = run_profit_checks(pf_comp, pf) + run_profit_axes_xref(pf_comp, pf, ax)
         r["profit"] = pf
+        # history layer (ticket 20260912T1440Z) — same summary5 page profit already reads for its
+        # P10 cross-check, and the same doc (au: single pdf; Meiji: main-volume pf_doc/pf_comp) since
+        # the 5개년표 lives next to 損益計算書, not in the 別冊.
+        hist = None
+        if "history" in comp["layers"]:
+            hist = extract_history(pf_comp, pf_doc, ratio_raw_tokens=pf["raw_tokens"].get("pl_loss_ratio_pct"))
+            hist["checks"] = run_history_checks(pf_comp, pf, hist)
+            r["history"] = hist
         cz = census_headline(comp["company_jp"])
         r["census"] = dict(**cz, match=(cz["esr_pct"] == esr["values"]["esr_pct"]) if esr else (cz["status"] == ax["values"]["esr_status"]))
         results[comp["key"]] = r
-        all_checks = (esr["checks"] if esr else []) + ax["checks"] + pf["checks"]
+        all_checks = (esr["checks"] if esr else []) + ax["checks"] + pf["checks"] + (hist["checks"] if hist else [])
         summary[comp["key"]] = dict(
             company_en=comp["company_en"], sector=comp["sector"], layers=comp["layers"],
             esr_pct=esr["values"]["esr_pct"] if esr else None, eligible=esr["values"]["eligible_capital"] if esr else None, required=esr["values"]["required_capital"] if esr else None,
@@ -1356,6 +1548,8 @@ def main():
             profit_items_total=len(pf["values"]),
             profit_checks_pass=sum(1 for c in pf["checks"] if c["pass"]), profit_checks_total=len(pf["checks"]),
             accounting_basis=pf["meta"]["accounting_basis"], ifrs17_applied=pf["meta"]["ifrs17_applied"],
+            history_items_nonnull=(sum(1 for x in hist["values"].values() if x is not None) if hist else 0),
+            history_checks_pass=(sum(1 for c in hist["checks"] if c["pass"]) if hist else 0), history_checks_total=(len(hist["checks"]) if hist else 0),
             checks_pass=sum(1 for c in all_checks if c["pass"]), checks_total=len(all_checks),
             checks_failed=[c["id"] for c in all_checks if not c["pass"] and c.get("gate", True)],
             checks_info_failed=[c["id"] for c in all_checks if not c["pass"] and not c.get("gate", True)],
@@ -1367,13 +1561,13 @@ def main():
     write_lf(SCHEMA_OUT, json.dumps(schema, ensure_ascii=False, indent=2) + "\n")
     out = dict(schema_ref="J-ESR/esr_disclosure_schema.json", generated_at=str(date.today()), generator="J-ESR/extract_esr_template_samples.py",
                n_schema_items=dict(esr=sum(1 for i in schema["items"] if i["layer"] == "esr"), article_axes=sum(1 for i in schema["items"] if i["layer"] == "article_axes"),
-                                   profit=sum(1 for i in schema["items"] if i["layer"] == "profit")),
+                                   profit=sum(1 for i in schema["items"] if i["layer"] == "profit"), history=sum(1 for i in schema["items"] if i["layer"] == "history")),
                summary=summary, companies=results)
     write_lf(VALUES_OUT, json.dumps(out, ensure_ascii=False, indent=2) + "\n")
     write_lf(MD_FRAGMENT_OUT, md_fragment(results, schema) + "\n")
     print(json.dumps(dict(n_schema_items=out["n_schema_items"], summary=summary), ensure_ascii=False, indent=2))
     for k, r in results.items():
-        for c in (r.get("esr", {}).get("checks", []) + r["axes"]["checks"] + r["profit"]["checks"]):
+        for c in (r.get("esr", {}).get("checks", []) + r["axes"]["checks"] + r["profit"]["checks"] + r.get("history", {}).get("checks", [])):
             if not c["pass"]:
                 print("FAIL" if c.get("gate", True) else "INFO", k, c)
         for iid, tk in r.get("esr", {}).get("raw_tokens", {}).items():
@@ -1382,6 +1576,9 @@ def main():
         for iid, tk in r["profit"]["raw_tokens"].items():
             if tk in ("NOT_FOUND", "NO_PAGE"):
                 print("PROFIT_NOT_FOUND", k, iid, tk)
+        for iid, tk in r.get("history", {}).get("raw_tokens", {}).items():
+            if tk in ("NOT_FOUND", "NO_PAGE"):
+                print("HISTORY_NOT_FOUND", k, iid, tk)
     ok = all(s["checks_failed"] == [] and s["census_match"] for s in summary.values())
     return 0 if ok else 1
 

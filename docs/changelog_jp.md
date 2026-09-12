@@ -2,6 +2,43 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 (14) -- 시계열 층 `layer:"history"` 신설 + 손보 2사 5개년(FY2021~FY2025) 추출
+
+티켓 `inbox/jp/20260912T1440Z__owner__JP_MULTI__pl_history_5y.md`. owner: "손해율·사업비율·합산비율 시계열을 쭉 보여줘도 좋겠다. 당기/전기만
+있어 허전하다." profit 층({prev,cur} 2개년)이 이미 읽던 「主要な経営指標等の推移」 5개년표(au 業績データ편 p2 / Meiji Yasuda 본편 p9, profit
+층의 `profit_pages["summary5"]` 재사용, 문서를 새로 열지 않음)를 5개 사업연도 전부 뽑도록 확장했다.
+
+**스키마**: `J-ESR/esr_disclosure_schema.json` `layer:"history"` 13항목 — `hist_net_premiums_written`/`hist_ordinary_profit`/`hist_net_income`/
+`hist_loss_ratio_pct`/`hist_expense_ratio_pct`/`hist_combined_ratio_pct`/`hist_total_assets`/`hist_net_assets`/`hist_smr_old_pct`/`hist_esr_pct`
+(값 10) + 생보용 `hist_core_profit`/`hist_premium_income`/`hist_policy_reserves`(id 만 정의, 표본 손보 2사엔 미적용). 값은
+`{"FY2021": v, ..., "FY2025": v}` 사업연도 키 dict.
+
+**추출** (`extract_esr_template_samples.py::extract_history`): 새 헬퍼 `strip_paren`/`PAREN_NUM_RE`/`PAREN_DASH_RE` 로 괄호 안 실제 숫자(구기준
+SMR)와 괄호 안 대시(적립계정 0 등 노이즈)를 구분. 회사별 함정 2건: ① Meiji 正味収入保険料 행은 값 뒤에 `（対前期増減率）` 가 같은 줄 스트림에
+끼어 있어 `drop_paren=True` 로 통째 스킵. ② Meiji 단체SMR 라벨을 세로쓰기로 찍을 때 "ソルベンシー" 안의 장음부호 "ー" 가 대시 문자와 코드포인트가
+같아 `merge_vertical` 이 라벨을 "単体ベ"/"ー"/"スの"/"ソルベンシー・マージン比率" 로 쪼갬 → 느슨한 부분일치 `HIST_SMR_LABEL_RE` 로 우회(au 무회귀).
+③ Meiji 는 손해율/사업비율이 5개년표 자체엔 없어 profit 층이 이미 읽는 3개년표(p35 `(6)正味損害率…`)에서 FY2023~2025 만 백필, FY2021~2022 는
+null 로 남김(억지 채움 없음, raw_tokens 에 "BACKFILL" 문자열로 구분 가능).
+
+**旧基準 SMR ↔ 新基準 ESR**: 두 회사 다 한 행에 같이 있고 괄호 유무로 나뉜다 — 괄호 있는 토큰(구기준 실측) → `hist_smr_old_pct`, 괄호 없는
+토큰(신기준) → `hist_esr_pct`(공통 파서, 회사별 분기 없음). au 는 구기준 자리가 전부 대시(각주: 신제도 시행으로 구기준 기재 생략)라
+`hist_smr_old_pct` 5개 다 null 이 정상. Meiji 는 4개 non-null(2,847.6/2,940.4/2,814.7/2,642.5%). 둘 다 `hist_esr_pct` FY2025 한 칸만 채워짐.
+
+**검산** (`run_history_checks`): H01(FY2025==profit 층 동일 id 의 cur, FY2024==prev, 금액 ±1·비율 ±0.1) + H02(연도별 合算率=損害率+事業費率
+±0.1). 결과 **au 17/17, Meiji Yasuda Non-Life 15/15** — `extract_esr_template_samples.py` 전체 gate(`all_checks`)에 합류, exit 0.
+
+**publishing 블록**: `J-ESR/build_jesr_detail_json.py::build_history_block()` 신설 — 같은 값을 `{"fiscal_years":[...], "unit":"JPY_million",
+"series":{"<hist_id>":[v,...]}}` (연도 배열, ticket 지정 형태)로 재편, `companies_out[].history` 로 노출. `self_check()` 에도 같은 검산(구조
+정합·FY2025/2024 교차·合算率 항등식) 추가 — exit 0, SELF-CHECK OK.
+
+**부작용**: `aggregation.checks_pass/checks_total` 이 (11) 항목과 같은 이유로 자연 증가(au 62→79, Meiji 66/70→81/85) — 새 H01/H02 가 같은
+summary gate 에 합류했을 뿐, 기존 esr/article_axes/profit 블록·키는 바이트 무변경(스키마 diff = 신규 항목 + layers/tables/column_note 설명문
+추가뿐).
+
+문서: `docs/domains/jp_esr_disclosure_template.md` §0(한 줄 요약에 4번째 층 추가)·§10(표 위치·연도 수·라벨 렌더링 특이점·SMR/ESR 괄호 분리·
+검산·회사별 편차·중간기(中間期) 공시 메모 — 일본은 연차+9월말 中間期만 법정, 분기는 상장 지주 決算短信 헤드라인뿐이라 history 층은 연 1회만
+갱신). `TODO_jp.md` (14) 갱신, (10) 항목은 `docs/todo_archive_jp.md` 로 이동. `jp/*.html`·서브에이전트·커밋 없음.
+
 ## 2026-09-12 (12) -- jp/jesr.html 損益の内訳 패널 (designer, orchestrator 종결)
 
 티켓 `inbox/_resolved/20260912T1330Z__owner__JP_MULTI__jesr_profit_panel.md`. `jp/jesr_detail.json` profit 블록(2사 extracted, J-GAAP)으로 会計基準 한 줄·

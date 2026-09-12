@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-12T12:17:18.507046Z",
+    "generated_at": "2026-09-12T14:40:39.504748Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -1217,6 +1217,97 @@
         "unit": "text",
         "kics_item_ref": null,
         "pl_item_ref": null
+      },
+      "hist_net_premiums_written": {
+        "ja": "正味収入保険料",
+        "ko": "정미수입보험료 5개년",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_ordinary_profit": {
+        "ja": "経常利益",
+        "ko": "경상이익 5개년",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_net_income": {
+        "ja": "当期純利益",
+        "ko": "당기순이익 5개년",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_loss_ratio_pct": {
+        "ja": "正味損害率",
+        "ko": "정미손해율 5개년 %",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_expense_ratio_pct": {
+        "ja": "正味事業費率",
+        "ko": "정미사업비율 5개년 %",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_combined_ratio_pct": {
+        "ja": null,
+        "ko": "합산비율 5개년 % (파생 = 손해율+사업비율, 있으면 표 직접값 우선)",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_total_assets": {
+        "ja": "総資産額",
+        "ko": "총자산 5개년",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_net_assets": {
+        "ja": "純資産額",
+        "ko": "순자산 5개년",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_smr_old_pct": {
+        "ja": "単体ベースのソルベンシー・マージン比率",
+        "ko": "구기준 단체 SMR 5개년 %(신제도 시행 전, 괄호로 병기된 회사만)",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_esr_pct": {
+        "ja": "単体ベースのソルベンシー・マージン比率",
+        "ko": "신기준 ESR(경제가치기준 지급여력비율) 5개년 % — FY2025 부터 공표",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_core_profit": {
+        "ja": "基礎利益",
+        "ko": "기초이익 5개년(생보)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_premium_income": {
+        "ja": "保険料等収入",
+        "ko": "보험료등수입 5개년(생보)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_policy_reserves": {
+        "ja": "責任準備金残高",
+        "ko": "책임준비금잔고 5개년(생보)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
       }
     },
     "next_update": "2026-10-31",
@@ -1284,8 +1375,8 @@
         "top_sqrt": 1257.4,
         "simple_sum": 1531,
         "reproduced": true,
-        "checks_pass": 62,
-        "checks_total": 62,
+        "checks_pass": 79,
+        "checks_total": 79,
         "deviations": []
       },
       "axes": {
@@ -1496,6 +1587,81 @@
         },
         "core": {},
         "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_million",
+        "series": {
+          "hist_net_premiums_written": [
+            5582,
+            6470,
+            7358,
+            7976,
+            8137
+          ],
+          "hist_ordinary_profit": [
+            1334,
+            1128,
+            1637,
+            1451,
+            1654
+          ],
+          "hist_net_income": [
+            1273,
+            728,
+            1111,
+            961,
+            1171
+          ],
+          "hist_loss_ratio_pct": [
+            30.9,
+            36.4,
+            26.9,
+            29.4,
+            31.8
+          ],
+          "hist_expense_ratio_pct": [
+            46.7,
+            38.9,
+            49.5,
+            42.7,
+            39.2
+          ],
+          "hist_combined_ratio_pct": [
+            77.6,
+            75.3,
+            76.4,
+            72.1,
+            71.0
+          ],
+          "hist_total_assets": [
+            15060,
+            16357,
+            17629,
+            19390,
+            21524
+          ],
+          "hist_net_assets": [
+            5805,
+            6533,
+            7644,
+            8605,
+            9776
+          ],
+          "hist_esr_pct": [
+            null,
+            null,
+            null,
+            null,
+            791.7
+          ]
+        }
       }
     },
     {
@@ -1599,8 +1765,8 @@
         "top_sqrt": 6519.5,
         "simple_sum": 9049,
         "reproduced": true,
-        "checks_pass": 66,
-        "checks_total": 70,
+        "checks_pass": 81,
+        "checks_total": 85,
         "deviations": [
           {
             "id": "G06_nonlife",
@@ -1829,6 +1995,88 @@
         },
         "core": {},
         "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_million",
+        "series": {
+          "hist_net_premiums_written": [
+            14822,
+            14724,
+            14862,
+            15327,
+            15692
+          ],
+          "hist_ordinary_profit": [
+            1947,
+            866,
+            1078,
+            1216,
+            1594
+          ],
+          "hist_net_income": [
+            1147,
+            450,
+            709,
+            777,
+            1003
+          ],
+          "hist_loss_ratio_pct": [
+            null,
+            null,
+            40.2,
+            38.3,
+            37.7
+          ],
+          "hist_expense_ratio_pct": [
+            null,
+            null,
+            52.6,
+            51.5,
+            51.7
+          ],
+          "hist_combined_ratio_pct": [
+            null,
+            null,
+            92.8,
+            89.8,
+            89.5
+          ],
+          "hist_total_assets": [
+            67732,
+            66368,
+            67909,
+            62769,
+            63763
+          ],
+          "hist_net_assets": [
+            26060,
+            25104,
+            26445,
+            21895,
+            23367
+          ],
+          "hist_smr_old_pct": [
+            2847.6,
+            2940.4,
+            2814.7,
+            2642.5,
+            null
+          ],
+          "hist_esr_pct": [
+            null,
+            null,
+            null,
+            null,
+            743.2
+          ]
+        }
       }
     }
   ]

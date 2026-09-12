@@ -31,6 +31,12 @@ view pattern already used above for capital/risk/market_sub. meijiyasuda_nonlife
 profit tables in its excerpt volume (main volume blocked, see extract_esr_template_samples.py)
 so its profit.status is "not_obtained" and items/ratios/core are all empty.
 
+Each included company also gets a "history" block (layer:"history" in the schema, added
+2026-09-12 per inbox/jp/20260912T1440Z__owner__JP_MULTI__pl_history_5y.md) -- 5 fiscal years
+(FY2021..FY2025) of 主要な経営指標等の推移 from the same 5개년표 the profit layer already
+cross-checks its FY2024/FY2025 pair against. "series" holds one value array per non-null hist_
+id, index-aligned with "fiscal_years" (oldest -> newest).
+
 Output: jp/jesr_detail.json (UTF-8, no BOM, ensure_ascii=False).
 Self-check runs after the file is written; on failure the script exits 1 (file is still
 written so a human can inspect it, but the caller must not treat exit 1 as success).
@@ -94,6 +100,23 @@ def load_json(path):
 
 def r1(x):
     return round(x, 1) if isinstance(x, (int, float)) else x
+
+
+def build_history_block(history_raw):
+    """Assemble the history block (2026-09-12 ticket 20260912T1440Z) — 主要な経営指標等の推移
+    5개년표. Extraction stores each id as a {fiscal_year: value} dict (schema/self-describing);
+    the published block re-shapes to a fiscal_years array + parallel value arrays per the ticket's
+    contract (`{"unit":..., "fiscal_years":[...], "series":{"<hist_id>":[v,...]}}`)."""
+    values = history_raw.get("values") or {}
+    years = history_raw.get("fiscal_years") or ["FY2021", "FY2022", "FY2023", "FY2024", "FY2025"]
+    series = {}
+    for hid, per_year in values.items():
+        if not isinstance(per_year, dict):
+            continue  # N/A_SECTOR (life-only ids) or not extracted
+        if all(per_year.get(y) is None for y in years):
+            continue  # non-null 만 (profit 블록과 같은 관례)
+        series[hid] = [per_year.get(y) for y in years]
+    return {"fiscal_years": years, "unit": "JPY_million", "series": series}
 
 
 def build_profit_block(profit_raw, items_by_id):
@@ -238,6 +261,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
         }
 
         profit = build_profit_block(comp.get("profit") or {}, items_by_id)
+        history = build_history_block(comp.get("history") or {})
 
         companies_out.append({
             "id": cid,
@@ -258,6 +282,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "axes": axes,
             "items": items,
             "profit": profit,
+            "history": history,
         })
 
     meta_src = jesr_esr.get("_meta", {})
@@ -368,6 +393,39 @@ def self_check(out, jesr_esr):
                         errors.append(f"{cen}: profit.ratios[{period}] 合算率 mismatch -- {loss}+{expense} vs {combined}")
             else:
                 errors.append(f"{cen}: profit.status unexpected {profit.get('status')!r}")
+
+        # history layer (2026-09-12 ticket 20260912T1440Z)
+        history = c.get("history") or {}
+        years = history.get("fiscal_years", [])
+        series = history.get("series", {})
+        missing_hist_labels = [k for k in series if k not in labels]
+        if missing_hist_labels:
+            errors.append(f"{cen}: history ids missing from _meta.labels: {missing_hist_labels}")
+        for hid, arr in series.items():
+            if len(arr) != len(years):
+                errors.append(f"{cen}: history.series[{hid}] length {len(arr)} != fiscal_years length {len(years)}")
+        if "FY2025" in years and "FY2024" in years:
+            i25, i24 = years.index("FY2025"), years.index("FY2024")
+            xref = [("hist_net_premiums_written", "pl_net_premiums_written"), ("hist_net_income", "pl_net_income"),
+                    ("hist_ordinary_profit", "pl_ordinary_profit"), ("hist_loss_ratio_pct", "pl_loss_ratio_pct"),
+                    ("hist_expense_ratio_pct", "pl_expense_ratio_pct")]
+            pitems = profit.get("items", {})
+            for hid, pid in xref:
+                harr = series.get(hid)
+                pv = pitems.get(pid)
+                if not harr or not pv:
+                    continue
+                tol = 0.1 if hid.endswith("_pct") else 1
+                if harr[i25] is not None and pv.get("cur") is not None and abs(harr[i25] - pv["cur"]) > tol:
+                    errors.append(f"{cen}: history.series[{hid}][FY2025] {harr[i25]} != profit.items[{pid}].cur {pv.get('cur')}")
+                if harr[i24] is not None and pv.get("prev") is not None and abs(harr[i24] - pv["prev"]) > tol:
+                    errors.append(f"{cen}: history.series[{hid}][FY2024] {harr[i24]} != profit.items[{pid}].prev {pv.get('prev')}")
+        loss, exp, comb = series.get("hist_loss_ratio_pct"), series.get("hist_expense_ratio_pct"), series.get("hist_combined_ratio_pct")
+        if loss and exp and comb:
+            for i, y in enumerate(years):
+                l, e, cv = loss[i], exp[i], comb[i]
+                if l is not None and e is not None and cv is not None and abs(cv - (l + e)) > 0.1 + 1e-9:
+                    errors.append(f"{cen}: history.series 合算率 mismatch at {y} -- loss {l} + expense {e} = {l + e} vs combined {cv} (tol 0.1)")
 
     return errors
 

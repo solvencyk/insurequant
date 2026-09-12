@@ -4,11 +4,12 @@
   "layers": {
     "esr": "regulatory ESR tables (T1~T8)",
     "article_axes": "FSA monitoring-report axes from other sections (docs/domains/claude-agent-jp.md §4b): catastrophe_reserve_adequacy / air_used / interest_margin_sign + ESR placeholder skeleton",
-    "profit": "J-GAAP statutory P&L layer (ticket 20260912T1150Z): 損益計算書 spine + 損保 保険引受利益·資産運用損益·損害率/事業費率/合算率 + 生保 基礎利益·キャピタル/臨時·三利源 + accounting-basis meta. Values are {prev, cur} pairs."
+    "profit": "J-GAAP statutory P&L layer (ticket 20260912T1150Z): 損益計算書 spine + 損保 保険引受利益·資産運用損益·損害率/事業費率/合算率 + 生保 基礎利益·キャピタル/臨時·三利源 + accounting-basis meta. Values are {prev, cur} pairs.",
+    "history": "5개년 시계열 층 (ticket 20260912T1440Z): 「主要な経営指標等の推移」 표에서 정미수입보険料/経常利益/当期純利益/損害率/事業費率/合算率/総資産/純資産/(旧基準SMR·新基準ESR) 를 FY2021~FY2025 5개 사업연도로 뽑는다. 生保 id 3개(hist_core_profit/hist_premium_income/hist_policy_reserves)는 id만 정의, 표본 손보 2사엔 미적용."
   },
   "unit_note": "amounts as disclosed (JPY_million = 百万円) unless the item unit says otherwise (negative_spread_* are 億円 in the life summary box). census/master converts to 億円 (÷100). Record unit_disclosed per row — large life insurers may print 億円.",
   "null_note": "dash (－ / ー) = not applicable; stored as null, treated as 0 in formulas.",
-  "column_note": "FY2025 tables carry two value columns (イ=前年度 '－', ロ=当年度); column='cur' takes the 2nd token. EBS tables: 'ev' = last token (経済価値ベースの額), 'first' = 財務会計ベースの額 (only when all 4 columns are printed). profit layer: column='prev+cur' = both fiscal years of the 損益計算書 (前年度 / 当年度), stored as {\"prev\":…, \"cur\":…}.",
+  "column_note": "FY2025 tables carry two value columns (イ=前年度 '－', ロ=当年度); column='cur' takes the 2nd token. EBS tables: 'ev' = last token (経済価値ベースの額), 'first' = 財務会計ベースの額 (only when all 4 columns are printed). profit layer: column='prev+cur' = both fiscal years of the 損益計算書 (前年度 / 当年度), stored as {\"prev\":…, \"cur\":…}. history layer: column='fiscal_years' = {\"FY2021\":…,…,\"FY2025\":…}, position in the disclosed row = fiscal year (oldest -> newest) regardless of company; hist_smr_old_pct/hist_esr_pct 는 같은 SMR/ESR 행을 괄호 유무로 나눈 것(괄호=旧基準, 없으면=新基準・FY2025 부터).",
   "kics_ref_note": "kics_item_ref = docs/agents/kics-json-validation-rules.md item number. Approximate mappings (different aggregation/scope) are documented in docs/domains/jp_esr_disclosure_template.md §6; null = no K-ICS counterpart (e.g. 巨大災害 C, スプレッド, MOCE, EBS rows).",
   "pl_ref_note": "pl_item_ref (profit layer only) = root PL_breakdown.json 항목번호 1~32 (docs/domains/claude-agent-ifrs17.md). Strict counterparts only: 24 당기순이익 / 22 세전이익 / 23 법인세 exact; 20 영업이익 ≈ 経常利益 (J 特別損益 ≈ K 영업외 — approximate); 1 보험손익 ≈ 損保 保険引受利益 and 17 투자손익 ≈ 資産運用損益 are J-GAAP-cost vs IFRS17 concepts (approximate, sign/scope differ). 基礎利益·三利源·正味収入保険料·損害率 등은 null (no IFRS17 analogue).",
   "accounting_basis_note": "accounting_basis: jgaap when (A) 会計方針 절이 企業会計基準/標準責任準備金(大蔵省告示第48号) 을 인용하거나 (B) 법정 損益計算書 양식(責任準備金繰入額 등) + 会社法第436条/保険業法第111条 감사 문구가 같이 있고 IFRS 언급이 없을 때; ifrs when 連結財務諸表の作成基準 이 国際財務報告基準/IFRS 를 명시. ifrs17_applied: true 는 IFRS第17号 명시, false 는 accounting_basis=jgaap 인 単体 법정재무제표(保険業法 상 J-GAAP 강제)에서만, 그 외 unstated. 추정 금지.",
@@ -32,7 +33,8 @@
     "profit:inv": "損保 資産運用利回り(実現利回り) 표 合計행 = 資産運用損益(実現ベース)",
     "profit:core": "生保 経常利益等の明細(基礎利益) 표 (基礎利益 A / キャピタル損益 B / 臨時損益 C / 経常利益 A+B+C)",
     "profit:three": "生保 三利源 표 (利差損益/危険差損益/費差損益) — 대형사만, NN Life 는 없음",
-    "profit:meta": "회계방침 절(会計方針に関する事項)·감사 문구·損益計算書 양식에서 회계기준 판정"
+    "profit:meta": "회계방침 절(会計方針に関する事項)·감사 문구·損益計算書 양식에서 회계기준 판정",
+    "history:summary5": "主要な経営指標等の推移 5개년표 (au 業績データ 편 p2 / Meiji Yasuda 본편 p9) — 정미수입보험료·経常利益·当期純利益·(손보만)損害率·事業費率·総資産額·純資産額·単体ベースのソルベンシー・マージン比率(旧基準 괄호/신기준 ESR 비괄호)"
   },
   "sensitivity": {
     "scenarios": [
@@ -2886,8 +2888,229 @@
       "sector_scope": "both",
       "kics_item_ref": null,
       "pl_item_ref": null
+    },
+    {
+      "id": "hist_net_premiums_written",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "正味収入保険料"
+      ],
+      "ko": "정미수입보험료 5개년",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_ordinary_profit",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "経常利益"
+      ],
+      "ko": "경상이익 5개년",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": true,
+      "column": "fiscal_years",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_net_income",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "当期純利益",
+        "当期純剰余"
+      ],
+      "ko": "당기순이익 5개년",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": true,
+      "column": "fiscal_years",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_loss_ratio_pct",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "正味損害率"
+      ],
+      "ko": "정미손해율 5개년 %",
+      "unit": "pct",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_expense_ratio_pct",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "正味事業費率"
+      ],
+      "ko": "정미사업비율 5개년 %",
+      "unit": "pct",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_combined_ratio_pct",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [],
+      "ko": "합산비율 5개년 % (파생 = 손해율+사업비율, 있으면 표 직접값 우선)",
+      "unit": "pct",
+      "parent": null,
+      "formula": "= hist_loss_ratio_pct + hist_expense_ratio_pct (표 직접값이 있으면 그 값 우선, 없으면 파생)",
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_total_assets",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "総資産額"
+      ],
+      "ko": "총자산 5개년",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_net_assets",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "純資産額"
+      ],
+      "ko": "순자산 5개년",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_smr_old_pct",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "単体ベースのソルベンシー・マージン比率"
+      ],
+      "ko": "구기준 단체 SMR 5개년 %(신제도 시행 전, 괄호로 병기된 회사만)",
+      "unit": "pct",
+      "parent": null,
+      "formula": "괄호(旧基準) 값만 — 신제도 시행 전 연도",
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_esr_pct",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "単体ベースのソルベンシー・マージン比率"
+      ],
+      "ko": "신기준 ESR(경제가치기준 지급여력비율) 5개년 % — FY2025 부터 공표",
+      "unit": "pct",
+      "parent": null,
+      "formula": "괄호 없는(新基準) 값만 — FY2025 부터",
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_core_profit",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "基礎利益",
+        "基礎利益A"
+      ],
+      "ko": "기초이익 5개년(생보)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_premium_income",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "保険料等収入"
+      ],
+      "ko": "보험료등수입 5개년(생보)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "hist_policy_reserves",
+      "layer": "history",
+      "table": "history:summary5",
+      "labels_ja": [
+        "責任準備金残高"
+      ],
+      "ko": "책임준비금잔고 5개년(생보)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "fiscal_years",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
     }
   ],
-  "checks": "C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) + P01..P13 (profit, cur & prev) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks / run_profit_checks / run_profit_axes_xref",
+  "checks": "C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) + P01..P13 (profit, cur & prev) + H01..H02 (history: FY2025==profit.cur, FY2024==profit.prev, 合算率 항등식) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks / run_profit_checks / run_profit_axes_xref / run_history_checks",
   "aggregation_rules_ref": "J-ESR/esr_aggregation_rules.json (告示74 第八十一条·第八十九条·第百条·第百二十七条·第百五十四条~第百五十六条 + 告示75 別紙様式第三号 注; matrices in id order)"
 }
