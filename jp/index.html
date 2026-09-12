@@ -68,11 +68,12 @@
        복사 + jp 전용 id 로 스코프 조정(원본은 #bubble-list 스코프의 flex 버전을 li-name 기본값으로
        씀 — 速報 칩이 항상 붙을 수 있어야 해서). 2026-09-12 owner 지적으로 ECharts 가로막대
        폐기 → 순수 HTML/CSS 리스트로 교체(inbox 20260912T0810Z).
-       cursor:pointer/:active 는 뺐다 — jp 에는 상세 페이지가 없어 행 클릭이 없으므로(티켓 지시),
-       포인터 커서를 남기면 클릭 가능해 보이는 오탐 어포던스가 된다. */
+       cursor:pointer/:active 는 jesr.html 신설(inbox 20260912T1420Z)로 다시 넣었다 — 행 클릭
+       → jesr.html?company= 이동(루트 index.html 877~948행 goToDetailRow 패턴과 동일). */
     .map-list{display:block}
     .li-sector{font-size:12px;color:var(--muted);font-weight:700;margin:14px 0 6px;padding-left:2px}
-    .li-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;background:#fff}
+    .li-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;background:#fff;cursor:pointer}
+    .li-row:active{background:var(--card)}
     .li-name{flex:0 0 36%;display:flex;align-items:center;min-width:0;font-size:13px;font-weight:600}
     .li-nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
     .li-bar-track{flex:1 1 auto;height:14px;background:#eef0f2;border-radius:7px;overflow:hidden}
@@ -177,6 +178,7 @@
         <span><span class="jp-badge">速報</span>&nbsp;速報値</span>
       </div>
       <p class="chart-caveat">※ 算定基準(標準式・内部モデル・VaR水準等)は各社で異なる場合があり、単純比較にはご注意ください。詳細は各社開示資料をご確認ください。</p>
+      <p class="chart-caveat" id="detailLinks" hidden></p>
     </section>
 
     <section class="panel" aria-labelledby="secCoverage">
@@ -336,6 +338,16 @@
           (d.companies||[]).forEach(function(c){ if(c.company_en) map[c.company_en] = c.id; });
           detailMap = map;
           renderGroup('life'); renderGroup('nonlife');
+          // 会社別詳細 진입점: 랭킹에서 부모-자회사 중복으로 빠진 회사(예: 明治安田損保)도 상세는 있으므로
+          // 랭킹 소속과 무관하게 detail 보유 회사 전부를 여기서 링크한다(owner 2026-09-12 지적).
+          var dl = document.getElementById('detailLinks');
+          var cs = (d.companies||[]);
+          if(dl && cs.length){
+            dl.innerHTML = '会社別詳細（規制様式で開示済み ' + cs.length + '社）: ' + cs.map(function(c){
+              return '<a href="jesr.html?company=' + esc(c.id) + '">' + esc(c.company_jp) + '</a>';
+            }).join(' · ');
+            dl.hidden = false;
+          }
         })
         .catch(function(){ detailMap = {}; });
     }
@@ -423,9 +435,11 @@
 
     // 2026-09-12: ECharts 가로막대 폐기, 루트 index.html 877~948행 renderList() 패턴으로 교체
     // (inbox 20260912T0810Z). 바 색은 GROUP_COLOR(業態별)가 아니라 colorForRatio(ESR 값, 監督基準
-    // 기준 발산 스케일)로 바뀐다. jp 에는 상세 페이지가 없어 행 클릭/role="link"/keydown 은 넣지
-    // 않는다 — title/aria-label 요약 텍스트만 유지(이전 툴팁 내용을 옮김). ▲目標水準 마커는 표
-    // 備考 열의 텍스트(目標 190%+ 등)로 옮겼다(renderTable).
+    // 기준 발산 스케일)로 바뀐다. ▲目標水準 마커는 표 備考 열의 텍스트(目標 190%+ 등)로 옮겼다
+    // (renderTable). 2026-09-12(inbox 20260912T1420Z): jesr.html 신설로 행 클릭/role="link"/keydown
+    // 을 다시 추가 — key 는 detailMap(company_en 매칭)에 있으면 그 id, 없으면 company_jp 를
+    // encodeURIComponent. detailMap 이 아직 로딩중(null)이면 이 시점의 renderGroup 은 로딩완료 후
+    // loadDetailMap() 콜백에서 다시 불린다(325~349행) — 그때는 detailMap 이 채워져 있다.
     function renderList(key){
       var el = document.getElementById('esrList'+cap(key));
       if(!el) return;
@@ -448,6 +462,14 @@
         ];
         row.title = titleParts.join(' / ');
         row.setAttribute('aria-label', row.title);
+        row.tabIndex = 0;
+        row.setAttribute('role', 'link');
+        var detailKey = (detailMap && r.company_en && detailMap[r.company_en]) ? detailMap[r.company_en] : encodeURIComponent(r.company_jp);
+        var goToDetailRow = function(){ window.location.href = 'jesr.html?company=' + detailKey; };
+        row.addEventListener('click', goToDetailRow);
+        row.addEventListener('keydown', function(e){
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToDetailRow(); }
+        });
 
         var name = document.createElement('div');
         name.className = 'li-name';
@@ -539,11 +561,11 @@
         if(bn) remarks.push('<span class="small-muted">'+esc(bn)+'</span>');
         // 2026-09-12: ▲目標水準 마커가 리스트 레이아웃에서 빠지면서(자리 없음) 表 備考로 이동.
         if(r.target_pct) remarks.push('<span class="small-muted">目標 '+esc(r.target_pct)+'</span>');
-        // 상세 페이지(jesr.html) 가 있는 회사만 링크(jesr_detail.json companies id 로 판정).
+        // 一覧表 회사명은 전사 링크(inbox 20260912T1420Z) — jesr_detail.json 에 있으면 그 id,
+        // 없으면 company_jp 를 encodeURIComponent(jesr.html 에서 헤드라인 전용 기본 페이지로 처리).
         var detailId = (detailMap && r.company_en) ? detailMap[r.company_en] : null;
-        var nameCell = detailId
-          ? '<a href="jesr.html?company='+esc(detailId)+'">'+esc(r.company_jp)+'</a>'
-          : esc(r.company_jp);
+        var tableKey = detailId || encodeURIComponent(r.company_jp);
+        var nameCell = '<a href="jesr.html?company='+esc(tableKey)+'">'+esc(r.company_jp)+'</a>';
         // owner 2026-09-12: 業態(生保/損保 섹션분리로 중복)·基準日(전 행 동일, 上の基準時点
         // 한 줄로 대체) 열 제거. 남는 열 = 会社名/範囲/ESR/公表日/備考.
         return '<tr>'

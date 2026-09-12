@@ -167,7 +167,13 @@
       <p class="meta-line" id="metaLine">読み込み中…</p>
     </section>
 
-    <section class="panel" aria-labelledby="secHeadline">
+    <!-- 존재하지 않는 ?company= key. 드롭다운(위 secPicker)은 그대로 두고 이 패널만 보인다.
+         inbox 20260912T1420Z. -->
+    <section class="panel" id="notFoundPanelWrap" hidden>
+      <p class="jp-err">該当する会社がありません。上の「会社」から選択してください。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="secHeadline" id="secHeadlineWrap">
       <h2 id="secHeadline">主要指標</h2>
       <div class="card-row">
         <div class="jcard">
@@ -188,7 +194,14 @@
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="secCapital">
+    <!-- 상세(규제양식) 없이 헤드라인만 있는 회사용 안내 패널. secCapital/secRisk/secMarket/secSens/
+         secProfit/secAxes 는 전부 숨기고 이것만 보인다. inbox 20260912T1420Z. -->
+    <section class="panel" id="noticePanelWrap" hidden>
+      <h2 id="secNotice">詳細開示について</h2>
+      <p class="empty-note">規制様式(告示)に基づく詳細開示は、2026年10月末までに順次追加する予定です。現在は決算説明資料等の速報値のみ掲載しています。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="secCapital" id="secCapitalWrap">
       <h2 id="secCapital">適格資本の構成</h2>
       <div class="stackbar-track" id="stackBar" role="img" aria-label="適格資本構成、読み込み中"></div>
       <div class="stackbar-legend">
@@ -204,7 +217,7 @@
       <p class="small-muted" style="margin-top:6px">※構成比は適格資本総額に対する割合で、Tier1適格資本・Tier2適格資本・適格資本の額の各行のみ表示します。内訳項目は金額のみです。</p>
     </section>
 
-    <section class="panel" aria-labelledby="secRisk">
+    <section class="panel" aria-labelledby="secRisk" id="secRiskWrap">
       <h2 id="secRisk">所要資本の内訳 <span class="repro-badge" id="reproBadge" style="display:none"></span></h2>
       <div id="chartWaterfall" role="img" aria-label="所要資本の内訳、読み込み中"></div>
     </section>
@@ -214,7 +227,7 @@
       <div id="marketSubList"></div>
     </section>
 
-    <section class="panel" aria-labelledby="secSens">
+    <section class="panel" aria-labelledby="secSens" id="secSensWrap">
       <h2 id="secSens">感応度</h2>
       <div id="sensWrap">
         <div class="table-container">
@@ -268,6 +281,17 @@
     var FIXTURE_URL = '_fixture_jesr_detail.json';
 
     var SCOPE_LABEL = {group:'連結', solo:'単体'};
+
+    // jp/index.html 313~320행과 동일한 2단 버킷 정렬(inbox 20260912T1420Z, 공유 JS 파일 없음 —
+    // §5.2 관례대로 각 파일에 복사). 드롭다운(ENTRIES) 정렬에 쓴다.
+    function isBucketA(category){ return /^(HD上場|相互会社|上場)/.test(category||''); }
+    function sortBucketed(list){
+      return list.slice().sort(function(a,b){
+        var ba = isBucketA(a.category) ? 0 : 1, bb = isBucketA(b.category) ? 0 : 1;
+        if(ba !== bb) return ba - bb;
+        return (b.esr_pct||0) - (a.esr_pct||0);
+      });
+    }
 
     // jp/index.html 217~235행과 동일한 발산색상 스케일(base=100 감독기준, strong=300).
     var RATIO_SCALE = { esr: { base: 100, strong: 300 } };
@@ -365,29 +389,67 @@
             .then(function(r){ if(!r.ok) throw new Error('fixture http '+r.status); return r.json(); });
         });
     }
+    // jp/index.html 이 쓰는 헤드라인 13사(jesr_esr.json) — 여기서는 드롭다운 확장(상세 없는
+    // 회사의 기본 페이지)에 쓴다. publishing 산출물, 읽기 전용(inbox 20260912T1420Z).
+    var ESR_URL = 'jesr_esr.json';
+    function loadEsr(){
+      return fetch(ESR_URL, {cache:'no-store'})
+        .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
+        .catch(function(err){ console.error('jesr_esr.json load failed', err); return {records:[]}; });
+    }
 
-    var DATA = null, META = null, waterfallChart = null, profitWaterfallChart = null;
+    var DATA = null, META = null, ENTRIES = [], waterfallChart = null, profitWaterfallChart = null;
+    var TOGGLE_IDS = ['secCapitalWrap','secRiskWrap','secMarketWrap','secSensWrap','secProfitWrap','secAxesWrap'];
 
-    loadDetail().then(boot).catch(function(err){
+    Promise.all([loadDetail(), loadEsr()]).then(function(res){ boot(res[0], res[1]); }).catch(function(err){
       document.getElementById('mainRoot').innerHTML =
         '<div class="jp-err">データを読み込めませんでした。時間をおいて再度お試しください。</div>';
       console.error('jesr_detail.json load failed', err);
     });
 
-    function boot(data){
-      DATA = data; META = data._meta || {};
+    // ENTRIES = 드롭다운 14사(헤드라인13 + 상세만 있는 明治安田損保). key = 상세(jesr_detail.json)
+    // 가 있으면 그 id, 없으면 company_jp 그대로(옵션 value 는 URLSearchParams 가 자동 인코딩/
+    // 디코딩하므로 encodeURIComponent 를 여기서 또 하지 않는다 — jp/index.html 쪽 링크는 href
+    // 문자열 조립이라 거기서만 encodeURIComponent 한다). 정렬 = jp/index.html 과 동일 2단 버킷 +
+    // ESR desc, 상세만 있는 회사는 맨 뒤(inbox 20260912T1420Z).
+    function boot(detailData, esrData){
+      DATA = detailData; META = detailData._meta || {};
+      var detailCompanies = detailData.companies || [];
+      var esrRecords = Array.isArray(esrData.records) ? esrData.records : [];
+      var detailByEn = {};
+      detailCompanies.forEach(function(d){ if(d.company_en) detailByEn[d.company_en] = d; });
+      var usedIds = {};
+      var entries = sortBucketed(esrRecords).map(function(r){
+        var d = r.company_en ? detailByEn[r.company_en] : null;
+        if(d) usedIds[d.id] = true;
+        return { key: d ? d.id : r.company_jp, company_jp: r.company_jp, company_en: r.company_en,
+          mode: d ? 'detail' : 'headline', detail: d || null, headlineRec: r };
+      });
+      detailCompanies.forEach(function(d){
+        if(!usedIds[d.id]){
+          entries.push({ key: d.id, company_jp: d.company_jp, company_en: d.company_en, mode: 'detail', detail: d, headlineRec: null });
+        }
+      });
+      ENTRIES = entries;
+
       var sel = document.getElementById('companySelect');
       sel.disabled = false;
-      sel.innerHTML = (data.companies||[]).map(function(c){
-        return '<option value="'+esc(c.id)+'">'+esc(c.company_jp)+(c.company_en?'（'+esc(c.company_en)+'）':'')+'</option>';
+      sel.innerHTML = entries.map(function(e){
+        return '<option value="'+esc(e.key)+'">'+esc(e.company_jp)+(e.company_en?'（'+esc(e.company_en)+'）':'')+'</option>';
       }).join('');
-      sel.addEventListener('change', function(){ selectCompany(sel.value, true); });
+      sel.addEventListener('change', function(){
+        var e = findEntry(sel.value);
+        if(e) selectEntry(e, true); else showNotFound();
+      });
 
       var params = new URLSearchParams(location.search);
       var wanted = params.get('company');
-      var ids = (data.companies||[]).map(function(c){ return c.id; });
-      var initial = (wanted && ids.indexOf(wanted)>=0) ? wanted : ids[0];
-      if(initial){ sel.value = initial; selectCompany(initial, false); }
+      if(wanted){
+        var found = findEntry(wanted);
+        if(found) selectEntry(found, false); else showNotFound();
+      } else if(entries.length){
+        selectEntry(entries[0], false);
+      }
 
       window.addEventListener('resize', function(){
         if(waterfallChart) waterfallChart.resize();
@@ -395,23 +457,61 @@
       });
     }
 
-    function selectCompany(id, pushUrl){
-      var c = (DATA.companies||[]).filter(function(x){ return x.id===id; })[0];
-      if(!c) return;
+    // id(상세) 또는 company_jp(URL 디코드) 둘 다 해석 — jp/index.html 이 회사에 따라 둘 중 하나로
+    // 링크하므로, 어느 쪽이 와도 같은 회사를 찾아야 한다.
+    function findEntry(wanted){
+      if(!wanted) return null;
+      return ENTRIES.filter(function(e){
+        return e.key === wanted || e.company_jp === wanted || (e.detail && e.detail.company_jp === wanted);
+      })[0] || null;
+    }
+
+    function showNotFound(){
+      document.getElementById('notFoundPanelWrap').hidden = false;
+      document.getElementById('secHeadlineWrap').hidden = true;
+      document.getElementById('noticePanelWrap').hidden = true;
+      TOGGLE_IDS.forEach(function(id){ document.getElementById(id).hidden = true; });
+      document.title = '会社別ESR詳細 | InsureQuant';
+    }
+
+    function selectEntry(e, pushUrl){
+      document.getElementById('notFoundPanelWrap').hidden = true;
+      document.getElementById('secHeadlineWrap').hidden = false;
+      var sel = document.getElementById('companySelect');
+      sel.value = e.key;
       if(pushUrl && history.replaceState){
         var url = new URL(location.href);
-        url.searchParams.set('company', id);
+        url.searchParams.set('company', e.key);
         history.replaceState(null, '', url);
       }
-      document.title = c.company_jp + ' ESR詳細 | InsureQuant';
-      renderMeta(c);
-      renderHeadline(c);
-      renderCapital(c);
-      renderWaterfall(c);
-      renderMarketSub(c);
-      renderSensitivity(c);
-      renderProfit(c);
-      renderAxes(c);
+      document.title = e.company_jp + ' ESR詳細 | InsureQuant';
+
+      if(e.mode === 'detail'){
+        document.getElementById('noticePanelWrap').hidden = true;
+        ['secCapitalWrap','secRiskWrap','secSensWrap','secProfitWrap'].forEach(function(id){
+          document.getElementById(id).hidden = false;
+        });
+        var c = e.detail;
+        renderMeta(c);
+        renderHeadline(c);
+        renderCapital(c);
+        renderWaterfall(c);
+        renderMarketSub(c);
+        renderSensitivity(c);
+        renderProfit(c);
+        renderAxes(c);
+      } else {
+        document.getElementById('noticePanelWrap').hidden = false;
+        TOGGLE_IDS.forEach(function(id){ document.getElementById(id).hidden = true; });
+        var r = e.headlineRec;
+        var hc = {
+          company_jp: r.company_jp, company_en: r.company_en, scope: r.scope,
+          source_url: r.source_url, doc_date: r.doc_date, doc_type: r.doc_type, as_of: r.as_of,
+          headline: { eligible_capital: null, required_capital: null, esr_pct: r.esr_pct, preliminary: r.preliminary }
+        };
+        renderMeta(hc);
+        renderHeadline(hc);
+      }
     }
 
     function renderMeta(c){
