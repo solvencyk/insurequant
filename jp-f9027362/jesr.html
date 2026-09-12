@@ -89,6 +89,9 @@
     .esr-table th,.esr-table td{vertical-align:top}
     .esr-table td.subitem,.esr-table th.subitem{padding-left:22px;color:var(--muted);font-size:12px}
     .esr-table tr.total-row td{font-weight:700}
+    .esr-table td.sign,.esr-table th.sign{text-align:center;width:44px;color:var(--muted);font-variant-numeric:tabular-nums}
+    .esr-table tr.block-head td{background:var(--card);font-size:13px;letter-spacing:.02em}
+    #capReqTable td .subtoggle{margin-left:6px}
 
     /* 워터폴 */
     #chartWaterfall{width:100%;height:320px}
@@ -167,7 +170,13 @@
       <p class="meta-line" id="metaLine">読み込み中…</p>
     </section>
 
-    <section class="panel" aria-labelledby="secHeadline">
+    <!-- 존재하지 않는 ?company= key. 드롭다운(위 secPicker)은 그대로 두고 이 패널만 보인다.
+         inbox 20260912T1420Z. -->
+    <section class="panel" id="notFoundPanelWrap" hidden>
+      <p class="jp-err">該当する会社がありません。上の「会社」から選択してください。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="secHeadline" id="secHeadlineWrap">
       <h2 id="secHeadline">主要指標</h2>
       <div class="card-row">
         <div class="jcard">
@@ -188,33 +197,37 @@
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="secCapital">
-      <h2 id="secCapital">適格資本の構成</h2>
+    <!-- 상세(규제양식) 없이 헤드라인만 있는 회사용 안내 패널. secCapital/secRisk/secMarket/secSens/
+         secProfit/secAxes 는 전부 숨기고 이것만 보인다. inbox 20260912T1420Z. -->
+    <section class="panel" id="noticePanelWrap" hidden>
+      <h2 id="secNotice">詳細開示について</h2>
+      <p class="empty-note">規制様式(告示)に基づく詳細開示は、2026年10月末までに順次追加する予定です。現在は決算説明資料等の速報値のみ掲載しています。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="secCapital" id="secCapitalWrap">
+      <h2 id="secCapital">適格資本・所要資本</h2>
       <div class="stackbar-track" id="stackBar" role="img" aria-label="適格資本構成、読み込み中"></div>
       <div class="stackbar-legend">
         <span><span class="sw" style="background:var(--primary)"></span>Tier1</span>
         <span><span class="sw" style="background:var(--warn)"></span>Tier2</span>
       </div>
+      <!-- owner 2026-09-13: K-ICS.html 방식 — 適格資本(Tier 트리)과 所要資本(리스크 트리)을 한 표에, [+] 로 하위 항목 펼침.
+           符号: ＝ 합계 / ＋ 가산 / － 차감(값 앞 △). 備考: 합계 행 재현 ✓·差, 상관 통합 노드는 단순합계 병기. -->
       <div class="table-container" style="margin-top:14px">
-        <table class="esr-table" id="capitalTable">
-          <thead><tr><th scope="col">項目</th><th scope="col" class="num">金額(億円)</th><th scope="col" class="num">構成比</th></tr></thead>
-          <tbody id="capitalTableBody"><tr><td colspan="3" class="small-muted">読み込み中…</td></tr></tbody>
+        <table class="esr-table" id="capReqTable">
+          <thead><tr><th scope="col">項目</th><th scope="col" class="sign">符号</th><th scope="col" class="num">金額(億円)</th><th scope="col">備考</th></tr></thead>
+          <tbody id="capReqBody"><tr><td colspan="4" class="small-muted">読み込み中…</td></tr></tbody>
         </table>
       </div>
-      <p class="small-muted" style="margin-top:6px">※構成比は適格資本総額に対する割合で、Tier1適格資本・Tier2適格資本・適格資本の額の各行のみ表示します。内訳項目は金額のみです。</p>
+      <p class="small-muted" style="margin-top:6px">※［＋］で内訳を展開。符号は上位項目に対する加算（＋）・減算（－）、＝は合計。所要資本の各リスクは相関統合のため内訳の単純合計と一致しません（備考に単純合計を併記）。</p>
     </section>
 
-    <section class="panel" aria-labelledby="secRisk">
+    <section class="panel" aria-labelledby="secRisk" id="secRiskWrap">
       <h2 id="secRisk">所要資本の内訳 <span class="repro-badge" id="reproBadge" style="display:none"></span></h2>
       <div id="chartWaterfall" role="img" aria-label="所要資本の内訳、読み込み中"></div>
     </section>
 
-    <section class="panel" aria-labelledby="secMarket" id="secMarketWrap">
-      <h2 id="secMarket">市場リスクの内訳</h2>
-      <div id="marketSubList"></div>
-    </section>
-
-    <section class="panel" aria-labelledby="secSens">
+    <section class="panel" aria-labelledby="secSens" id="secSensWrap">
       <h2 id="secSens">感応度</h2>
       <div id="sensWrap">
         <div class="table-container">
@@ -227,19 +240,43 @@
     </section>
 
     <section class="panel" aria-labelledby="secProfit" id="secProfitWrap">
-      <h2 id="secProfit">損益の内訳 <span class="repro-badge" id="combinedBadge" style="display:none"></span></h2>
+      <h2 id="secProfit">損益の内訳</h2>
       <div id="profitNotExtracted" class="empty-note" hidden>本編未取得のため、損益の内訳はまだ表示できません。</div>
       <div id="profitBody" hidden>
         <p class="axes-note" id="profitBasisNote"></p>
         <div id="chartProfitWaterfall" role="img" aria-label="当期純利益の内訳、読み込み中"></div>
         <p class="small-muted" id="profitFootnote" style="margin-top:4px"></p>
+        <!-- owner 2026-09-13: 총계 행 남발 대신 선별 흐름(profit_flow)만. 正味収入保険料·正味支払保険金 은 [+] 로
+             元受→受再→出再(回収) 재보험 다리 전개. 전 항목은 details 로 접어 둠. 손해율 3행은 収益性指標 패널로 이관. -->
         <div class="table-container" style="margin-top:14px">
           <table class="esr-table" id="profitTable">
-            <thead><tr><th scope="col">項目</th><th scope="col" class="num">当期</th><th scope="col" class="num">前期</th><th scope="col" class="num">増減</th></tr></thead>
+            <thead><tr><th scope="col">項目</th><th scope="col" class="sign">符号</th><th scope="col" class="num">当期</th><th scope="col" class="num">前期</th><th scope="col" class="num">増減</th></tr></thead>
             <tbody id="profitTableBody"></tbody>
           </table>
         </div>
+        <details style="margin-top:10px">
+          <summary class="small-muted" style="cursor:pointer">全項目を表示</summary>
+          <div class="table-container" style="margin-top:8px">
+            <table class="esr-table" id="profitAllTable">
+              <thead><tr><th scope="col">項目</th><th scope="col" class="num">当期</th><th scope="col" class="num">前期</th><th scope="col" class="num">増減</th></tr></thead>
+              <tbody id="profitAllTableBody"></tbody>
+            </table>
+          </div>
+        </details>
       </div>
+    </section>
+
+    <section class="panel" aria-labelledby="secProfitability" id="secProfitabilityWrap" hidden>
+      <h2 id="secProfitability">収益性指標 <span class="repro-badge" id="combinedBadge" style="display:none"></span></h2>
+      <div class="card-row" id="ratioCards"></div>
+      <div id="historyChartWrap" style="margin-top:14px"></div>
+      <div class="table-container" style="margin-top:14px">
+        <table class="esr-table" id="historyTable">
+          <thead id="historyTableHead"></thead>
+          <tbody id="historyTableBody"></tbody>
+        </table>
+      </div>
+      <p class="small-muted" id="historyNote" style="margin-top:6px"></p>
     </section>
 
     <section class="panel" aria-labelledby="secAxes" id="secAxesWrap" hidden>
@@ -268,6 +305,17 @@
     var FIXTURE_URL = '_fixture_jesr_detail.json';
 
     var SCOPE_LABEL = {group:'連結', solo:'単体'};
+
+    // jp/index.html 313~320행과 동일한 2단 버킷 정렬(inbox 20260912T1420Z, 공유 JS 파일 없음 —
+    // §5.2 관례대로 각 파일에 복사). 드롭다운(ENTRIES) 정렬에 쓴다.
+    function isBucketA(category){ return /^(HD上場|相互会社|上場)/.test(category||''); }
+    function sortBucketed(list){
+      return list.slice().sort(function(a,b){
+        var ba = isBucketA(a.category) ? 0 : 1, bb = isBucketA(b.category) ? 0 : 1;
+        if(ba !== bb) return ba - bb;
+        return (b.esr_pct||0) - (a.esr_pct||0);
+      });
+    }
 
     // jp/index.html 217~235행과 동일한 발산색상 스케일(base=100 감독기준, strong=300).
     var RATIO_SCALE = { esr: { base: 100, strong: 300 } };
@@ -365,29 +413,67 @@
             .then(function(r){ if(!r.ok) throw new Error('fixture http '+r.status); return r.json(); });
         });
     }
+    // jp/index.html 이 쓰는 헤드라인 13사(jesr_esr.json) — 여기서는 드롭다운 확장(상세 없는
+    // 회사의 기본 페이지)에 쓴다. publishing 산출물, 읽기 전용(inbox 20260912T1420Z).
+    var ESR_URL = 'jesr_esr.json';
+    function loadEsr(){
+      return fetch(ESR_URL, {cache:'no-store'})
+        .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
+        .catch(function(err){ console.error('jesr_esr.json load failed', err); return {records:[]}; });
+    }
 
-    var DATA = null, META = null, waterfallChart = null, profitWaterfallChart = null;
+    var DATA = null, META = null, ENTRIES = [], waterfallChart = null, profitWaterfallChart = null;
+    var TOGGLE_IDS = ['secCapitalWrap','secRiskWrap','secSensWrap','secProfitWrap','secProfitabilityWrap','secAxesWrap'];
 
-    loadDetail().then(boot).catch(function(err){
+    Promise.all([loadDetail(), loadEsr()]).then(function(res){ boot(res[0], res[1]); }).catch(function(err){
       document.getElementById('mainRoot').innerHTML =
         '<div class="jp-err">データを読み込めませんでした。時間をおいて再度お試しください。</div>';
       console.error('jesr_detail.json load failed', err);
     });
 
-    function boot(data){
-      DATA = data; META = data._meta || {};
+    // ENTRIES = 드롭다운 14사(헤드라인13 + 상세만 있는 明治安田損保). key = 상세(jesr_detail.json)
+    // 가 있으면 그 id, 없으면 company_jp 그대로(옵션 value 는 URLSearchParams 가 자동 인코딩/
+    // 디코딩하므로 encodeURIComponent 를 여기서 또 하지 않는다 — jp/index.html 쪽 링크는 href
+    // 문자열 조립이라 거기서만 encodeURIComponent 한다). 정렬 = jp/index.html 과 동일 2단 버킷 +
+    // ESR desc, 상세만 있는 회사는 맨 뒤(inbox 20260912T1420Z).
+    function boot(detailData, esrData){
+      DATA = detailData; META = detailData._meta || {};
+      var detailCompanies = detailData.companies || [];
+      var esrRecords = Array.isArray(esrData.records) ? esrData.records : [];
+      var detailByEn = {};
+      detailCompanies.forEach(function(d){ if(d.company_en) detailByEn[d.company_en] = d; });
+      var usedIds = {};
+      var entries = sortBucketed(esrRecords).map(function(r){
+        var d = r.company_en ? detailByEn[r.company_en] : null;
+        if(d) usedIds[d.id] = true;
+        return { key: d ? d.id : r.company_jp, company_jp: r.company_jp, company_en: r.company_en,
+          mode: d ? 'detail' : 'headline', detail: d || null, headlineRec: r };
+      });
+      detailCompanies.forEach(function(d){
+        if(!usedIds[d.id]){
+          entries.push({ key: d.id, company_jp: d.company_jp, company_en: d.company_en, mode: 'detail', detail: d, headlineRec: null });
+        }
+      });
+      ENTRIES = entries;
+
       var sel = document.getElementById('companySelect');
       sel.disabled = false;
-      sel.innerHTML = (data.companies||[]).map(function(c){
-        return '<option value="'+esc(c.id)+'">'+esc(c.company_jp)+(c.company_en?'（'+esc(c.company_en)+'）':'')+'</option>';
+      sel.innerHTML = entries.map(function(e){
+        return '<option value="'+esc(e.key)+'">'+esc(e.company_jp)+(e.company_en?'（'+esc(e.company_en)+'）':'')+'</option>';
       }).join('');
-      sel.addEventListener('change', function(){ selectCompany(sel.value, true); });
+      sel.addEventListener('change', function(){
+        var e = findEntry(sel.value);
+        if(e) selectEntry(e, true); else showNotFound();
+      });
 
       var params = new URLSearchParams(location.search);
       var wanted = params.get('company');
-      var ids = (data.companies||[]).map(function(c){ return c.id; });
-      var initial = (wanted && ids.indexOf(wanted)>=0) ? wanted : ids[0];
-      if(initial){ sel.value = initial; selectCompany(initial, false); }
+      if(wanted){
+        var found = findEntry(wanted);
+        if(found) selectEntry(found, false); else showNotFound();
+      } else if(entries.length){
+        selectEntry(entries[0], false);
+      }
 
       window.addEventListener('resize', function(){
         if(waterfallChart) waterfallChart.resize();
@@ -395,23 +481,62 @@
       });
     }
 
-    function selectCompany(id, pushUrl){
-      var c = (DATA.companies||[]).filter(function(x){ return x.id===id; })[0];
-      if(!c) return;
+    // id(상세) 또는 company_jp(URL 디코드) 둘 다 해석 — jp/index.html 이 회사에 따라 둘 중 하나로
+    // 링크하므로, 어느 쪽이 와도 같은 회사를 찾아야 한다.
+    function findEntry(wanted){
+      if(!wanted) return null;
+      return ENTRIES.filter(function(e){
+        return e.key === wanted || e.company_jp === wanted || (e.detail && e.detail.company_jp === wanted);
+      })[0] || null;
+    }
+
+    function showNotFound(){
+      document.getElementById('notFoundPanelWrap').hidden = false;
+      document.getElementById('secHeadlineWrap').hidden = true;
+      document.getElementById('noticePanelWrap').hidden = true;
+      TOGGLE_IDS.forEach(function(id){ document.getElementById(id).hidden = true; });
+      document.title = '会社別ESR詳細 | InsureQuant';
+    }
+
+    function selectEntry(e, pushUrl){
+      document.getElementById('notFoundPanelWrap').hidden = true;
+      document.getElementById('secHeadlineWrap').hidden = false;
+      var sel = document.getElementById('companySelect');
+      sel.value = e.key;
       if(pushUrl && history.replaceState){
         var url = new URL(location.href);
-        url.searchParams.set('company', id);
+        url.searchParams.set('company', e.key);
         history.replaceState(null, '', url);
       }
-      document.title = c.company_jp + ' ESR詳細 | InsureQuant';
-      renderMeta(c);
-      renderHeadline(c);
-      renderCapital(c);
-      renderWaterfall(c);
-      renderMarketSub(c);
-      renderSensitivity(c);
-      renderProfit(c);
-      renderAxes(c);
+      document.title = e.company_jp + ' ESR詳細 | InsureQuant';
+
+      if(e.mode === 'detail'){
+        document.getElementById('noticePanelWrap').hidden = true;
+        ['secCapitalWrap','secRiskWrap','secSensWrap','secProfitWrap'].forEach(function(id){
+          document.getElementById(id).hidden = false;
+        });
+        var c = e.detail;
+        renderMeta(c);
+        renderHeadline(c);
+        renderCapital(c);
+        renderCapReqTable(c);
+        renderWaterfall(c);
+        renderSensitivity(c);
+        renderProfit(c);
+        renderProfitability(c);
+        renderAxes(c);
+      } else {
+        document.getElementById('noticePanelWrap').hidden = false;
+        TOGGLE_IDS.forEach(function(id){ document.getElementById(id).hidden = true; });
+        var r = e.headlineRec;
+        var hc = {
+          company_jp: r.company_jp, company_en: r.company_en, scope: r.scope,
+          source_url: r.source_url, doc_date: r.doc_date, doc_type: r.doc_type, as_of: r.as_of,
+          headline: { eligible_capital: null, required_capital: null, esr_pct: r.esr_pct, preliminary: r.preliminary }
+        };
+        renderMeta(hc);
+        renderHeadline(hc);
+      }
     }
 
     function renderMeta(c){
@@ -458,23 +583,69 @@
         '適格資本構成。Tier1 '+fmtEok(t1)+'億円('+fmtPct1(total>0?(t1||0)/total*100:null)+')、'+
         'Tier2 '+fmtEok(t2)+'億円('+fmtPct1(total>0?(t2||0)/total*100:null)+')。');
 
-      var grandTotal = (h.eligible_capital!=null) ? h.eligible_capital : total;
-      // 構成比(비중)는 최상위 3행(Tier1/Tier2 적격자본·적격자본 합계)에만 적격자본 총액 대비로 표시하고
-      // 세부항목은 비워 둔다(nit② 2026-09-12). 종전에는 세부항목을 자기 tier 의 basic 대비로 냈는데
-      // 기초항목 138.8억(>총액 91.0억)이 100.0% 로 찍혀 "총액 대비" 로 오독됐다. 총액 대비로 통일하면
-      // 조정 전 기초항목이 149.6% 가 되어 마찬가지로 혼란 — 세부항목은 금액만 보여주는 것이 가장 명확하다.
-      var TOP_KEYS = {tier1_eligible:1, tier2_eligible:1, eligible_capital_total:1};
-      var rows = Object.keys(cap).filter(function(k){ return cap[k]!=null; }).map(function(k){
-        var v = cap[k];
-        var isTop = !!TOP_KEYS[k];
-        return '<tr'+(isTop?' class="total-row"':'')+'>'
-          + '<td'+(isTop?'':' class="subitem"')+'>'+esc(labelOf(META, k, k))+'</td>'
-          + '<td class="num" title="'+esc(fmtMillionTip(v))+'">'+esc(fmtEok(v))+'</td>'
-          + '<td class="num">'+(isTop ? esc(fmtPct1(grandTotal?(v/grandTotal*100):null)) : '')+'</td>'
-          + '</tr>';
-      }).join('');
-      document.getElementById('capitalTableBody').innerHTML = rows ||
-        '<tr><td colspan="3" class="small-muted">データがありません。</td></tr>';
+    }
+
+    // ── 適格資本・所要資本 한 표 (owner 2026-09-13, K-ICS.html 430~470행 subtoggle 방식) ───────────────
+    // 입력: c.capital_tree / c.risk_tree — builder 가 스키마 parent/formula 로 만든 전위 순회 리스트
+    //   [{id,label_ja,depth,sign:"="|"+"|"-",value,is_total,check?,aggregation?}]. 여기서는 산식을 해석하지 않는다.
+    // 펼침 상태는 subOpen[nodeId] (기본: depth 0 노드만 열림 → depth 1 행 보임, depth ≥2 는 [+] 로).
+    var subOpen = {};
+    function treeRows(tree, blockLabel, blockId){
+      if(!tree || !tree.length) return '';
+      // 각 노드의 조상 id 목록(다단 접기: 조상 중 하나라도 닫히면 숨김)
+      var stack = [], html = '';
+      html += '<tr class="total-row block-head"><td colspan="4">'+esc(blockLabel)+'</td></tr>';
+      for(var i=0;i<tree.length;i++){
+        var n = tree[i];
+        while(stack.length && stack[stack.length-1].depth >= n.depth) stack.pop();
+        var ancestors = stack.map(function(a){ return a.id; });
+        var hasChild = (i+1 < tree.length) && tree[i+1].depth > n.depth;
+        if(subOpen[n.id] === undefined) subOpen[n.id] = (n.depth === 0);
+        var hiddenByAncestor = ancestors.some(function(a){ return !subOpen[a]; });
+        var cls = ancestors.map(function(a){ return 'subrow-'+a; }).join(' ');
+        if(n.is_total) cls += ' total-row';
+        var signTxt = n.sign === '=' ? '＝' : (n.sign === '-' ? '－' : '＋');
+        var val = fmtEok(n.value);
+        if(n.sign === '-' && n.value != null && n.value !== 0) val = '△' + val;
+        var note = '';
+        if(n.check && n.check.ok === true) note = '<span class="repro-badge ok" title="表示行の合計で再現">✓</span>';
+        else if(n.check && n.check.ok === false) note = '<span class="repro-badge warn" title="表示行の合計との差">差 '+esc(fmtEok(Math.abs((n.check.lhs||0)-(n.check.rhs||0))))+'</span>';
+        if(n.aggregation === 'correlated' && n.check && n.check.simple_sum != null)
+          note = '<span class="small-muted">相関統合（単純合計 '+esc(fmtEok(n.check.simple_sum))+'）</span>';
+        var toggle = hasChild
+          ? ' <button type="button" class="subtoggle" data-group="'+esc(n.id)+'" aria-expanded="'+subOpen[n.id]+'" title="内訳を'+(subOpen[n.id]?'閉じる':'展開')+'">'+(subOpen[n.id]?'−':'+')+'</button>'
+          : '';
+        html += '<tr class="'+cls+'"'+(hiddenByAncestor?' style="display:none"':'')+' data-node="'+esc(n.id)+'" data-depth="'+n.depth+'">'
+          + '<td style="padding-left:'+(8 + n.depth*16)+'px">'+esc(n.label_ja || labelOf(META, n.id, n.id))+toggle+'</td>'
+          + '<td class="sign">'+signTxt+'</td>'
+          + '<td class="num" title="'+esc(fmtMillionTip(n.value))+'">'+esc(val)+'</td>'
+          + '<td>'+note+'</td></tr>';
+        stack.push(n);
+      }
+      return html;
+    }
+    function renderCapReqTable(c){
+      var body = document.getElementById('capReqBody');
+      var html = treeRows(c.capital_tree, '適格資本', 'cap') + treeRows(c.risk_tree, '所要資本（税効果調整前）', 'req');
+      // 税効果 → 所要資本 마무리 행 (risk_tree 뿌리는 rc_pre_tax)
+      var r = c.risk || {};
+      if(r.tax_effect != null) html += '<tr data-node="rc_tax_effect"><td style="padding-left:24px">'+esc(labelOf(META,'rc_tax_effect','税効果'))+'</td><td class="sign">－</td><td class="num" title="'+esc(fmtMillionTip(r.tax_effect))+'">△'+esc(fmtEok(r.tax_effect))+'</td><td></td></tr>';
+      if(r.rc_post_tax != null) html += '<tr class="total-row" data-node="rc_post_tax"><td style="padding-left:8px">'+esc(labelOf(META,'rc_post_tax','所要資本の額'))+'</td><td class="sign">＝</td><td class="num" title="'+esc(fmtMillionTip(r.rc_post_tax))+'">'+esc(fmtEok(r.rc_post_tax))+'</td><td></td></tr>';
+      body.innerHTML = html || '<tr><td colspan="4" class="small-muted">データがありません。</td></tr>';
+      // 토글 바인딩 — 닫으면 자손 전부 숨김, 열면 "열린 조상만" 기준으로 자식 행을 다시 계산
+      body.querySelectorAll('.subtoggle').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var g = btn.dataset.group;
+          subOpen[g] = !subOpen[g];
+          btn.textContent = subOpen[g] ? '−' : '+';
+          btn.setAttribute('aria-expanded', String(subOpen[g]));
+          btn.title = '内訳を' + (subOpen[g] ? '閉じる' : '展開');
+          body.querySelectorAll('tr[class*="subrow-"]').forEach(function(tr){
+            var anc = (tr.className.match(/subrow-([^\s]+)/g) || []).map(function(s){ return s.slice(7); });
+            tr.style.display = anc.every(function(a){ return subOpen[a]; }) ? '' : 'none';
+          });
+        });
+      });
     }
 
     // 所要資本の内訳: 5大分類(生保・損保・巨大災害・市場・信用) + 運営 → 分散効果(-) → 税効果(-) → 所要資本。
@@ -624,24 +795,7 @@
       {key:'rc_mkt_fx', ja:'為替リスク'},
       {key:'rc_mkt_concentration', ja:'資産集中リスク'},
     ];
-    function renderMarketSub(c){
-      var ms = c.market_sub || {};
-      var wrap = document.getElementById('secMarketWrap');
-      var list = document.getElementById('marketSubList');
-      var rows = MKT_SUB.filter(function(r){ return ms[r.key]!=null; });
-      if(!rows.length){ wrap.hidden = true; return; }
-      wrap.hidden = false;
-      var maxV = Math.max.apply(null, rows.map(function(r){ return Math.abs(ms[r.key]); }).concat([1]));
-      list.innerHTML = rows.map(function(r){
-        var v = ms[r.key];
-        var row = document.createElement('div');
-        return '<div class="mini-row">'
-          + '<div class="mini-name">'+esc(r.ja)+'</div>'
-          + '<div class="mini-track"><div class="mini-bar" style="width:'+Math.max(2, Math.abs(v)/maxV*100)+'%"></div></div>'
-          + '<div class="mini-val" title="'+esc(fmtMillionTip(v))+'">'+esc(fmtEok(v))+'億円</div>'
-          + '</div>';
-      }).join('');
-    }
+    // 市場リスク 별도 패널은 2026-09-13 owner 지시로 폐지 — 하위 리스크는 適格資本・所要資本 표의 [+] 로 전개된다.
 
     function renderSensitivity(c){
       var body = document.getElementById('sensTableBody');
@@ -847,33 +1001,130 @@
       requestAnimationFrame(function(){ if(profitWaterfallChart){ try{ profitWaterfallChart.resize(); }catch(e){} } });
     }
 
-    function renderProfitTable(p){
+    // 損益 표 = profit_flow 선별 흐름만(owner 2026-09-13). 正味収入保険料 / 正味支払保険金 은 [+] 로 재보험 다리
+    // (元受 → ＋受再 → －出再(回収) ＝ 正味) 전개 — profit.items 에 해당 id 가 있을 때만. 전 항목은 details 표.
+    var BRIDGE = {
+      pl_net_premiums_written: [['pl_gross_premiums_written','+'], ['pl_assumed_premiums','+'], ['pl_ceded_premiums','-']],
+      pl_net_claims_paid:      [['pl_gross_claims_paid','+'], ['pl_assumed_claims','+'], ['pl_recovered_reinsurance_claims','-']]
+    };
+    function flowCells(cur, prev, sign){
+      var c = fmtEok(cur), p = fmtEok(prev);
+      if(sign === '-'){ if(cur!=null && cur!==0) c = '△'+c; if(prev!=null && prev!==0) p = '△'+p; }
+      return '<td class="num" title="'+esc(fmtMillionTip(cur))+'">'+esc(c)+'</td>'
+           + '<td class="num" title="'+esc(fmtMillionTip(prev))+'">'+esc(p)+'</td>'
+           + '<td class="num">'+esc(fmtEokDelta(cur, prev))+'</td>';
+    }
+    function renderProfitTable(p, pfBlock){
       var items = p.items || {};
-      var rows = Object.keys(items).filter(function(k){ return !PL_PCT_KEYS[k]; }).map(function(k){
+      // profit_flow 는 회사 레벨 블록 {sector, rows[], missing[], checks} (builder 계약)
+      var flow = (pfBlock && pfBlock.rows) || [];
+      var rows = [];
+      flow.forEach(function(f){
+        var signTxt = f.sign === '=' ? '＝' : (f.sign === '-' ? '－' : (f.sign === '+' ? '＋' : '±'));
+        var bridge = (BRIDGE[f.id] || []).filter(function(b){ return items[b[0]]; });
+        var has = bridge.length > 0;
+        if(has && subOpen['pf_'+f.id] === undefined) subOpen['pf_'+f.id] = false;
+        var toggle = has ? ' <button type="button" class="subtoggle" data-group="pf_'+esc(f.id)+'" aria-expanded="'+subOpen['pf_'+f.id]+'" title="再保険の内訳">'+(subOpen['pf_'+f.id]?'−':'+')+'</button>' : '';
+        // 라벨은 스키마(_meta.labels) 우선 — 추출 원문 라벨은 "合計" 같은 표 안 행 이름이 섞여 온다(pl_investment_pl).
+        var lab = labelOf(META, f.id, null) || f.label_ja || f.id;
+        rows.push('<tr'+(f.sign==='='?' class="total-row"':'')+'><td>'+esc(lab)+(f.derived?' <span class="small-muted">(差引)</span>':'')+toggle+'</td>'
+          + '<td class="sign">'+signTxt+'</td>' + flowCells(f.cur, f.prev, f.sign) + '</tr>');
+        bridge.forEach(function(b){
+          var e = items[b[0]];
+          rows.push('<tr class="subrow-pf_'+esc(f.id)+'"'+(subOpen['pf_'+f.id]?'':' style="display:none"')+'><td class="subitem" style="padding-left:28px">'+esc(labelOf(META, b[0], b[0]))+'</td>'
+            + '<td class="sign">'+(b[1]==='-'?'－':'＋')+'</td>' + flowCells(e.cur, e.prev, b[1]) + '</tr>');
+        });
+      });
+      var body = document.getElementById('profitTableBody');
+      body.innerHTML = rows.join('') || '<tr><td colspan="5" class="small-muted">データがありません。</td></tr>';
+      body.querySelectorAll('.subtoggle').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var g = btn.dataset.group; subOpen[g] = !subOpen[g];
+          btn.textContent = subOpen[g] ? '−' : '+'; btn.setAttribute('aria-expanded', String(subOpen[g]));
+          body.querySelectorAll('tr.subrow-'+g).forEach(function(tr){ tr.style.display = subOpen[g] ? '' : 'none'; });
+        });
+      });
+      // 전 항목(접힘)
+      var all = Object.keys(items).filter(function(k){ return !PL_PCT_KEYS[k]; }).map(function(k){
         var e = items[k];
-        return '<tr>'
-          + '<td>'+esc(labelOf(META, k, k))+'</td>'
-          + '<td class="num" title="'+esc(fmtMillionTip(e.cur))+'">'+esc(fmtEok(e.cur))+'</td>'
-          + '<td class="num" title="'+esc(fmtMillionTip(e.prev))+'">'+esc(fmtEok(e.prev))+'</td>'
-          + '<td class="num">'+esc(fmtEokDelta(e.cur, e.prev))+'</td>'
-          + '</tr>';
-      });
+        return '<tr><td>'+esc(labelOf(META, k, k))+'</td>' + flowCells(e.cur, e.prev, '+') + '</tr>';
+      }).join('');
+      document.getElementById('profitAllTableBody').innerHTML = all || '<tr><td colspan="4" class="small-muted">—</td></tr>';
+    }
 
-      var ratios = p.ratios || {};
-      Object.keys(PL_RATIO_JA).forEach(function(k){
-        var e = ratios[k];
-        if(!e) return;
-        var delta = (e.cur!=null && e.prev!=null) ? (e.cur - e.prev) : null;
-        rows.push('<tr class="profit-ratio-row total-row">'
-          + '<td>'+esc(PL_RATIO_JA[k])+'</td>'
-          + '<td class="num">'+esc(fmtPct1(e.cur))+'</td>'
-          + '<td class="num">'+esc(fmtPct1(e.prev))+'</td>'
-          + '<td class="num">'+esc(fmtPP(delta))+'</td>'
-          + '</tr>');
+    // ── 収益性指標 패널 (owner 2026-09-13: 손해율은 손익표 밖 별도 패널, 5개년 시계열은 ECharts 없이 SVG) ───
+    var HIST_RATIO = [
+      {key:'hist_loss_ratio_pct', ja:'損害率', color:'#2f6fed'},
+      {key:'hist_expense_ratio_pct', ja:'事業費率', color:'#f59e0b'},
+      {key:'hist_combined_ratio_pct', ja:'合算率', color:'#1a7f37'}
+    ];
+    var HIST_TABLE = ['hist_net_premiums_written','hist_ordinary_profit','hist_net_income','hist_total_assets','hist_net_assets',
+                      'hist_loss_ratio_pct','hist_expense_ratio_pct','hist_combined_ratio_pct','hist_smr_old_pct','hist_esr_pct'];
+    function ratioCard(label, cur, prev){
+      var d = (cur!=null && prev!=null) ? (cur-prev) : null;
+      return '<div class="jcard"><div class="jcard-val">'+esc(fmtPct1(cur))+'</div><div class="jcard-lab">'+esc(label)
+        + (d!=null ? ' <span class="small-muted">(前期比 '+esc(fmtPP(d))+')</span>' : '') + '</div></div>';
+    }
+    function svgLineChart(years, series){
+      // series: [{ja,color,values[]}] — null 은 선을 끊는다. y 0~max(100, 최대값)+10.
+      var W = 640, H = 220, L = 44, R = 16, T = 14, B = 30;
+      var allv = []; series.forEach(function(s){ s.values.forEach(function(v){ if(v!=null) allv.push(v); }); });
+      if(!allv.length) return '';
+      var ymax = Math.max(100, Math.ceil(Math.max.apply(null, allv)/10)*10 + 10);
+      var x = function(i){ return L + (W-L-R) * (years.length>1 ? i/(years.length-1) : 0.5); };
+      var y = function(v){ return T + (H-T-B) * (1 - v/ymax); };
+      var g = '';
+      [0,25,50,75,100].concat(ymax>100?[ymax]:[]).forEach(function(t){ if(t<=ymax) g += '<line x1="'+L+'" y1="'+y(t)+'" x2="'+(W-R)+'" y2="'+y(t)+'" stroke="#e5e7eb" stroke-width="1"/><text x="'+(L-6)+'" y="'+(y(t)+4)+'" font-size="11" text-anchor="end" fill="#6b7280">'+t+'%</text>'; });
+      g += '<line x1="'+L+'" y1="'+y(100)+'" x2="'+(W-R)+'" y2="'+y(100)+'" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 3"/>';
+      years.forEach(function(yr,i){ g += '<text x="'+x(i)+'" y="'+(H-8)+'" font-size="11" text-anchor="middle" fill="#6b7280">'+esc(yr)+'</text>'; });
+      series.forEach(function(s){
+        var seg = [], pts = '';
+        s.values.forEach(function(v,i){
+          if(v==null){ if(seg.length){ pts += '<polyline fill="none" stroke="'+s.color+'" stroke-width="2" points="'+seg.join(' ')+'"/>'; seg=[]; } return; }
+          seg.push(x(i)+','+y(v));
+          pts += '<circle cx="'+x(i)+'" cy="'+y(v)+'" r="3" fill="'+s.color+'"/><text x="'+x(i)+'" y="'+(y(v)-7)+'" font-size="10" text-anchor="middle" fill="'+s.color+'">'+v.toFixed(1)+'</text>';
+        });
+        if(seg.length) pts += '<polyline fill="none" stroke="'+s.color+'" stroke-width="2" points="'+seg.join(' ')+'"/>';
+        g += pts;
       });
-
-      document.getElementById('profitTableBody').innerHTML = rows.join('') ||
-        '<tr><td colspan="4" class="small-muted">データがありません。</td></tr>';
+      var legend = series.map(function(s){ return '<span><span class="sw" style="background:'+s.color+'"></span>'+esc(s.ja)+'</span>'; }).join('');
+      var label = series.map(function(s){ return s.ja+' '+s.values.map(function(v,i){ return years[i]+' '+(v==null?'—':v.toFixed(1)+'%'); }).join('、'); }).join('。');
+      return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(label)+'" style="width:100%;height:auto;max-width:760px">'+g+'</svg><div class="chart-legend">'+legend+'</div>';
+    }
+    function renderProfitability(c){
+      var wrap = document.getElementById('secProfitabilityWrap');
+      var p = c.profit || {}; var h = c.history || {}; var ratios = p.ratios || {}; var core = p.core || {};
+      var hasRatio = !!(ratios.pl_combined_ratio_pct || ratios.pl_loss_ratio_pct);
+      var hasCore = !!(core.pl_core_profit || core.pl_interest_margin);
+      var hasHist = !!(h.fiscal_years && h.series);
+      if(!hasRatio && !hasCore && !hasHist){ wrap.hidden = true; return; }
+      wrap.hidden = false;
+      var cards = '';
+      if(hasRatio){
+        cards += ratioCard('損害率', (ratios.pl_loss_ratio_pct||{}).cur, (ratios.pl_loss_ratio_pct||{}).prev)
+              + ratioCard('事業費率', (ratios.pl_expense_ratio_pct||{}).cur, (ratios.pl_expense_ratio_pct||{}).prev)
+              + ratioCard('合算率', (ratios.pl_combined_ratio_pct||{}).cur, (ratios.pl_combined_ratio_pct||{}).prev);
+      } else if(hasCore){
+        ['pl_interest_margin','pl_mortality_margin','pl_expense_margin'].forEach(function(k){
+          var e = core[k] || {}; cards += '<div class="jcard"><div class="jcard-val">'+esc(fmtEok(e.cur))+'</div><div class="jcard-lab">'+esc(labelOf(META,k,k))+'（億円）</div></div>';
+        });
+      }
+      document.getElementById('ratioCards').innerHTML = cards;
+      renderCombinedRatioBadge(p, document.getElementById('combinedBadge'));
+      var chartWrap = document.getElementById('historyChartWrap');
+      var head = document.getElementById('historyTableHead'), body = document.getElementById('historyTableBody');
+      if(!hasHist){ chartWrap.innerHTML = ''; head.innerHTML = ''; body.innerHTML = ''; document.getElementById('historyNote').textContent = '5事業年度の推移は本編開示後に追加します。'; return; }
+      var years = h.fiscal_years, S = h.series;
+      var series = HIST_RATIO.filter(function(r){ return S[r.key]; }).map(function(r){ return {ja:r.ja, color:r.color, values:S[r.key]}; });
+      chartWrap.innerHTML = series.length ? svgLineChart(years, series) : '';
+      head.innerHTML = '<tr><th scope="col">指標</th>' + years.map(function(yr){ return '<th scope="col" class="num">'+esc(yr)+'</th>'; }).join('') + '</tr>';
+      body.innerHTML = HIST_TABLE.filter(function(k){ return S[k]; }).map(function(k){
+        var isPct = /_pct$/.test(k);
+        return '<tr><td>'+esc(labelOf(META, k, k))+(isPct?'':'（億円）')+'</td>' + S[k].map(function(v){
+          return '<td class="num"'+(isPct||v==null?'':' title="'+esc(fmtMillionTip(v))+'"')+'>'+esc(v==null?'—':(isPct?fmtPct1(v):fmtEok(v)))+'</td>';
+        }).join('') + '</tr>';
+      }).join('');
+      document.getElementById('historyNote').textContent = '出所: 各社ディスクロージャー誌「主要な経営指標等の推移」。比率は開示行がない年度を「—」で示します。';
     }
 
     // 合算率(損害率+事業費率)の自己検算バッジ。損保のみ(ratiosがある会社のみ)表示。
@@ -925,8 +1176,7 @@
         ? ('※非公表のため次の区分は図から省略しています: ' + built.skipped.join('、'))
         : '';
 
-      renderProfitTable(p);
-      renderCombinedRatioBadge(p, badge);
+      renderProfitTable(p, c.profit_flow);
     }
   })();
   </script>

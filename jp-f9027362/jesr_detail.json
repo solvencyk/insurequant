@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-12T12:17:18.507046Z",
+    "generated_at": "2026-09-12T16:42:15.229293Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -1043,6 +1043,48 @@
         "kics_item_ref": null,
         "pl_item_ref": null
       },
+      "pl_gross_premiums_written": {
+        "ja": "元受正味保険料",
+        "ko": "원수정미보험료(출재 전, 元受正味保険料)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pl_assumed_premiums": {
+        "ja": "受再正味保険料",
+        "ko": "수재정미보험료(受再正味保険料, 해당없으면 0)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pl_ceded_premiums": {
+        "ja": "支払再保険料",
+        "ko": "출재보험료(支払再保険料)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pl_gross_claims_paid": {
+        "ja": "元受正味保険金",
+        "ko": "원수정미보험금(元受正味保険金)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pl_assumed_claims": {
+        "ja": "受再正味保険金",
+        "ko": "수재정미보험금(受再正味保険金, 해당없으면 0)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pl_recovered_reinsurance_claims": {
+        "ja": "回収再保険金",
+        "ko": "회수재보험금(出再分 회수, 回収再保険金)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
       "pl_loss_adjustment_expenses": {
         "ja": "損害調査費",
         "ko": "손해조사비",
@@ -1114,7 +1156,7 @@
         "pl_item_ref": 1
       },
       "pl_investment_pl": {
-        "ja": "合計",
+        "ja": "資産運用損益",
         "ko": "자산운용손익(실현기준 = 資産運用収益+積立保険料等運用益-資産運用費用)",
         "unit": "JPY_million",
         "kics_item_ref": null,
@@ -1217,12 +1259,117 @@
         "unit": "text",
         "kics_item_ref": null,
         "pl_item_ref": null
+      },
+      "hist_net_premiums_written": {
+        "ja": "正味収入保険料",
+        "ko": "정미수입보험료 5개년",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_ordinary_profit": {
+        "ja": "経常利益",
+        "ko": "경상이익 5개년",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_net_income": {
+        "ja": "当期純利益",
+        "ko": "당기순이익 5개년",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_loss_ratio_pct": {
+        "ja": "正味損害率",
+        "ko": "정미손해율 5개년 %",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_expense_ratio_pct": {
+        "ja": "正味事業費率",
+        "ko": "정미사업비율 5개년 %",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_combined_ratio_pct": {
+        "ja": "合算率（正味損害率＋正味事業費率）",
+        "ko": "합산비율 5개년 % (파생 = 손해율+사업비율, 있으면 표 직접값 우선)",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_total_assets": {
+        "ja": "総資産額",
+        "ko": "총자산 5개년",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_net_assets": {
+        "ja": "純資産額",
+        "ko": "순자산 5개년",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_smr_old_pct": {
+        "ja": "単体ベースのソルベンシー・マージン比率",
+        "ko": "구기준 단체 SMR 5개년 %(신제도 시행 전, 괄호로 병기된 회사만)",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_esr_pct": {
+        "ja": "単体ベースのソルベンシー・マージン比率",
+        "ko": "신기준 ESR(경제가치기준 지급여력비율) 5개년 % — FY2025 부터 공표",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_core_profit": {
+        "ja": "基礎利益",
+        "ko": "기초이익 5개년(생보)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_premium_income": {
+        "ja": "保険料等収入",
+        "ko": "보험료등수입 5개년(생보)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_policy_reserves": {
+        "ja": "責任準備金残高",
+        "ko": "책임준비금잔고 5개년(생보)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pl_other_ordinary": {
+        "ja": "その他経常損益",
+        "ko": "기타 경상손익(파생: 경상이익-引受利益-운용손익)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pl_extraordinary_net": {
+        "ja": "特別損益",
+        "ko": "특별손익 순액(파생: 특별이익-특별손실)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
       }
     },
     "next_update": "2026-10-31",
     "coverage": {
       "detail_posted": 2,
-      "posted_total": 13,
+      "posted_total": 15,
       "census_total": 79
     }
   },
@@ -1284,8 +1431,8 @@
         "top_sqrt": 1257.4,
         "simple_sum": 1531,
         "reproduced": true,
-        "checks_pass": 62,
-        "checks_total": 62,
+        "checks_pass": 83,
+        "checks_total": 83,
         "deviations": []
       },
       "axes": {
@@ -1427,6 +1574,30 @@
             "cur": 1940,
             "prev": 1868
           },
+          "pl_gross_premiums_written": {
+            "cur": 16646,
+            "prev": 17165
+          },
+          "pl_assumed_premiums": {
+            "cur": 0,
+            "prev": 0
+          },
+          "pl_ceded_premiums": {
+            "cur": 8509,
+            "prev": 9188
+          },
+          "pl_gross_claims_paid": {
+            "cur": 9595,
+            "prev": 10303
+          },
+          "pl_assumed_claims": {
+            "cur": 0,
+            "prev": 0
+          },
+          "pl_recovered_reinsurance_claims": {
+            "cur": 7655,
+            "prev": 8434
+          },
           "pl_loss_adjustment_expenses": {
             "cur": 649,
             "prev": 472
@@ -1496,6 +1667,467 @@
         },
         "core": {},
         "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_million",
+        "series": {
+          "hist_net_premiums_written": [
+            5582,
+            6470,
+            7358,
+            7976,
+            8137
+          ],
+          "hist_ordinary_profit": [
+            1334,
+            1128,
+            1637,
+            1451,
+            1654
+          ],
+          "hist_net_income": [
+            1273,
+            728,
+            1111,
+            961,
+            1171
+          ],
+          "hist_loss_ratio_pct": [
+            30.9,
+            36.4,
+            26.9,
+            29.4,
+            31.8
+          ],
+          "hist_expense_ratio_pct": [
+            46.7,
+            38.9,
+            49.5,
+            42.7,
+            39.2
+          ],
+          "hist_combined_ratio_pct": [
+            77.6,
+            75.3,
+            76.4,
+            72.1,
+            71.0
+          ],
+          "hist_total_assets": [
+            15060,
+            16357,
+            17629,
+            19390,
+            21524
+          ],
+          "hist_net_assets": [
+            5805,
+            6533,
+            7644,
+            8605,
+            9776
+          ],
+          "hist_esr_pct": [
+            null,
+            null,
+            null,
+            null,
+            791.7
+          ]
+        }
+      },
+      "capital_tree": [
+        {
+          "id": "eligible_capital",
+          "label_ja": "適格資本の額(A)",
+          "depth": 0,
+          "sign": "=",
+          "value": 9278,
+          "is_total": true,
+          "check": {
+            "lhs": 9278,
+            "rhs": 9277,
+            "tol": 2,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier1_eligible",
+          "label_ja": "Tier1適格資本の額",
+          "depth": 1,
+          "sign": "+",
+          "value": 9102,
+          "is_total": true,
+          "check": {
+            "lhs": 9102,
+            "rhs": 9102,
+            "tol": 2,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier1_basic",
+          "label_ja": "Tier1適格資本に係る基礎項目の額",
+          "depth": 2,
+          "sign": "+",
+          "value": 13880,
+          "is_total": true,
+          "check": {
+            "lhs": 13880,
+            "rhs": 13880,
+            "tol": 2,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier1_instr_unrestricted",
+          "label_ja": "算入制限のないTier1資本調達手段の額",
+          "depth": 3,
+          "sign": "+",
+          "value": 3150,
+          "is_total": false
+        },
+        {
+          "id": "tier1_non_instrument",
+          "label_ja": "資本調達手段以外のTier1適格資本の額",
+          "depth": 3,
+          "sign": "+",
+          "value": 10730,
+          "is_total": true,
+          "check": {
+            "lhs": 10730,
+            "rhs": 10730,
+            "tol": 3,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier1_ni_retained_earnings",
+          "label_ja": "剰余金等の額又は利益剰余金等の額",
+          "depth": 4,
+          "sign": "+",
+          "value": 5998,
+          "is_total": false
+        },
+        {
+          "id": "tier1_ni_capital_surplus",
+          "label_ja": "資本剰余金(Tier2適格資本に算入されるものを除く)の額",
+          "depth": 4,
+          "sign": "+",
+          "value": 2850,
+          "is_total": false
+        },
+        {
+          "id": "tier1_ni_ev_adjustment",
+          "label_ja": "経済価値ベースの調整額",
+          "depth": 4,
+          "sign": "+",
+          "value": 1882,
+          "is_total": false
+        },
+        {
+          "id": "tier1_adjustments",
+          "label_ja": "Tier1適格資本に係る調整項目の額",
+          "depth": 2,
+          "sign": "-",
+          "value": 4778,
+          "is_total": true,
+          "check": {
+            "lhs": 4778,
+            "rhs": 4778,
+            "tol": 1,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier1_adj_intangibles",
+          "label_ja": "無形固定資産(繰延税金負債相殺後)の額",
+          "depth": 3,
+          "sign": "+",
+          "value": 4778,
+          "is_total": false
+        },
+        {
+          "id": "tier2_eligible",
+          "label_ja": "Tier2適格資本の額",
+          "depth": 1,
+          "sign": "+",
+          "value": 175,
+          "is_total": true,
+          "check": {
+            "lhs": 175,
+            "rhs": 175,
+            "tol": 1,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier2_basic",
+          "label_ja": "Tier2適格資本に係る基礎項目の額",
+          "depth": 2,
+          "sign": "+",
+          "value": 175,
+          "is_total": true,
+          "check": {
+            "lhs": 175,
+            "rhs": 175,
+            "tol": 1,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier2_non_instrument",
+          "label_ja": "資本調達手段以外のTier2適格資本の額",
+          "depth": 3,
+          "sign": "+",
+          "value": 175,
+          "is_total": true,
+          "check": {
+            "lhs": 175,
+            "rhs": 175,
+            "tol": 1,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier2_ni_basket",
+          "label_ja": "Tier2バスケット(上限適用後)の額",
+          "depth": 4,
+          "sign": "+",
+          "value": 175,
+          "is_total": false
+        }
+      ],
+      "risk_tree": [
+        {
+          "id": "rc_pre_tax",
+          "label_ja": "所要資本の額(税効果考慮前)",
+          "depth": 0,
+          "sign": "=",
+          "value": 1510,
+          "is_total": true,
+          "check": {
+            "lhs": 1510,
+            "rhs": 1508,
+            "tol": 6,
+            "ok": true
+          }
+        },
+        {
+          "id": "rc_nonlife",
+          "label_ja": "損害保険リスクの額",
+          "depth": 1,
+          "sign": "+",
+          "value": 1119,
+          "is_total": true,
+          "aggregation": "correlated",
+          "check": {
+            "simple_sum": 1190,
+            "disclosed": 1119,
+            "diversification_within": 71
+          }
+        },
+        {
+          "id": "rc_nl_property",
+          "label_ja": "財物保険類似の商品に係るリスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 159,
+          "is_total": false
+        },
+        {
+          "id": "rc_nl_other",
+          "label_ja": "その他保険に係るリスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 1031,
+          "is_total": false
+        },
+        {
+          "id": "rc_catastrophe",
+          "label_ja": "巨大災害リスクの額",
+          "depth": 1,
+          "sign": "+",
+          "value": 87,
+          "is_total": true,
+          "aggregation": "correlated",
+          "check": {
+            "simple_sum": 87,
+            "disclosed": 87,
+            "diversification_within": 0
+          }
+        },
+        {
+          "id": "rc_cat_other",
+          "label_ja": "その他の巨大災害に係るリスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 87,
+          "is_total": false
+        },
+        {
+          "id": "rc_market",
+          "label_ja": "市場リスクの額",
+          "depth": 1,
+          "sign": "+",
+          "value": 247,
+          "is_total": true,
+          "aggregation": "correlated",
+          "check": {
+            "simple_sum": 247,
+            "disclosed": 247,
+            "diversification_within": 0
+          }
+        },
+        {
+          "id": "rc_mkt_spread",
+          "label_ja": "スプレッドリスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 0,
+          "is_total": false
+        },
+        {
+          "id": "rc_mkt_concentration",
+          "label_ja": "資産集中リスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 247,
+          "is_total": false
+        },
+        {
+          "id": "rc_credit",
+          "label_ja": "信用リスクの額",
+          "depth": 1,
+          "sign": "+",
+          "value": 78,
+          "is_total": false
+        },
+        {
+          "id": "rc_operational",
+          "label_ja": "オペレーショナル・リスクの額",
+          "depth": 1,
+          "sign": "+",
+          "value": 251,
+          "is_total": false
+        },
+        {
+          "id": "rc_diversification",
+          "label_ja": "分散効果の額",
+          "depth": 1,
+          "sign": "-",
+          "value": 274,
+          "is_total": false
+        }
+      ],
+      "profit_flow": {
+        "sector": "nonlife",
+        "rows": [
+          {
+            "id": "pl_net_premiums_written",
+            "label_ja": "正味収入保険料",
+            "sign": "=",
+            "cur": 8137,
+            "prev": 7976,
+            "derived": false
+          },
+          {
+            "id": "pl_net_claims_paid",
+            "label_ja": "正味支払保険金",
+            "sign": "-",
+            "cur": 1940,
+            "prev": 1868,
+            "derived": false
+          },
+          {
+            "id": "pl_loss_adjustment_expenses",
+            "label_ja": "損害調査費",
+            "sign": "-",
+            "cur": 649,
+            "prev": 472,
+            "derived": false
+          },
+          {
+            "id": "pl_commissions_collection",
+            "label_ja": "諸手数料及び集金費",
+            "sign": "-",
+            "cur": 79,
+            "prev": 98,
+            "derived": false
+          },
+          {
+            "id": "pl_uw_operating_general_admin",
+            "label_ja": "保険引受に係る営業費及び一般管理費",
+            "sign": "-",
+            "cur": 3113,
+            "prev": 3309,
+            "derived": false
+          },
+          {
+            "id": "pl_underwriting_profit",
+            "label_ja": "保険引受利益",
+            "sign": "=",
+            "cur": 1550,
+            "prev": 1363,
+            "derived": false
+          },
+          {
+            "id": "pl_investment_pl",
+            "label_ja": "資産運用損益",
+            "sign": "+",
+            "cur": 48,
+            "prev": 7,
+            "derived": false
+          },
+          {
+            "id": "pl_other_ordinary",
+            "label_ja": "その他経常損益",
+            "sign": "±",
+            "cur": 56,
+            "prev": 81,
+            "derived": true
+          },
+          {
+            "id": "pl_ordinary_profit",
+            "label_ja": "経常利益",
+            "sign": "=",
+            "cur": 1654,
+            "prev": 1451,
+            "derived": false
+          },
+          {
+            "id": "pl_income_taxes",
+            "label_ja": "法人税等合計",
+            "sign": "-",
+            "cur": 481,
+            "prev": 407,
+            "derived": false
+          },
+          {
+            "id": "pl_net_income",
+            "label_ja": "当期純利益",
+            "sign": "=",
+            "cur": 1171,
+            "prev": 961,
+            "derived": false
+          }
+        ],
+        "missing": [
+          "pl_underwriting_other",
+          "pl_extraordinary_net"
+        ],
+        "checks": {
+          "underwriting_ok": false,
+          "ordinary_ok": true,
+          "net_ok": false
+        }
       }
     },
     {
@@ -1599,8 +2231,8 @@
         "top_sqrt": 6519.5,
         "simple_sum": 9049,
         "reproduced": true,
-        "checks_pass": 66,
-        "checks_total": 70,
+        "checks_pass": 85,
+        "checks_total": 89,
         "deviations": [
           {
             "id": "G06_nonlife",
@@ -1756,6 +2388,30 @@
             "cur": 5108,
             "prev": 5098
           },
+          "pl_gross_premiums_written": {
+            "cur": 16363,
+            "prev": 16086
+          },
+          "pl_assumed_premiums": {
+            "cur": 811,
+            "prev": 688
+          },
+          "pl_ceded_premiums": {
+            "cur": 1482,
+            "prev": 1447
+          },
+          "pl_gross_claims_paid": {
+            "cur": 4733,
+            "prev": 4654
+          },
+          "pl_assumed_claims": {
+            "cur": 552,
+            "prev": 727
+          },
+          "pl_recovered_reinsurance_claims": {
+            "cur": 176,
+            "prev": 282
+          },
           "pl_loss_adjustment_expenses": {
             "cur": 814,
             "prev": 778
@@ -1829,6 +2485,581 @@
         },
         "core": {},
         "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_million",
+        "series": {
+          "hist_net_premiums_written": [
+            14822,
+            14724,
+            14862,
+            15327,
+            15692
+          ],
+          "hist_ordinary_profit": [
+            1947,
+            866,
+            1078,
+            1216,
+            1594
+          ],
+          "hist_net_income": [
+            1147,
+            450,
+            709,
+            777,
+            1003
+          ],
+          "hist_loss_ratio_pct": [
+            null,
+            null,
+            40.2,
+            38.3,
+            37.7
+          ],
+          "hist_expense_ratio_pct": [
+            null,
+            null,
+            52.6,
+            51.5,
+            51.7
+          ],
+          "hist_combined_ratio_pct": [
+            null,
+            null,
+            92.8,
+            89.8,
+            89.5
+          ],
+          "hist_total_assets": [
+            67732,
+            66368,
+            67909,
+            62769,
+            63763
+          ],
+          "hist_net_assets": [
+            26060,
+            25104,
+            26445,
+            21895,
+            23367
+          ],
+          "hist_smr_old_pct": [
+            2847.6,
+            2940.4,
+            2814.7,
+            2642.5,
+            null
+          ],
+          "hist_esr_pct": [
+            null,
+            null,
+            null,
+            null,
+            743.2
+          ]
+        }
+      },
+      "capital_tree": [
+        {
+          "id": "eligible_capital",
+          "label_ja": "適格資本の額(A)",
+          "depth": 0,
+          "sign": "=",
+          "value": 40290,
+          "is_total": true,
+          "check": {
+            "lhs": 40290,
+            "rhs": 40289,
+            "tol": 2,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier1_eligible",
+          "label_ja": "Tier1適格資本の額",
+          "depth": 1,
+          "sign": "+",
+          "value": 40140,
+          "is_total": true,
+          "check": {
+            "lhs": 40140,
+            "rhs": 40140,
+            "tol": 2,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier1_basic",
+          "label_ja": "Tier1適格資本に係る基礎項目の額",
+          "depth": 2,
+          "sign": "+",
+          "value": 42118,
+          "is_total": true,
+          "check": {
+            "lhs": 42118,
+            "rhs": 42118,
+            "tol": 2,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier1_instr_unrestricted",
+          "label_ja": "算入制限のないTier1資本調達手段の額",
+          "depth": 3,
+          "sign": "+",
+          "value": 10000,
+          "is_total": false
+        },
+        {
+          "id": "tier1_non_instrument",
+          "label_ja": "資本調達手段以外のTier1適格資本の額",
+          "depth": 3,
+          "sign": "+",
+          "value": 32118,
+          "is_total": true,
+          "check": {
+            "lhs": 32118,
+            "rhs": 32118,
+            "tol": 4,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier1_ni_retained_earnings",
+          "label_ja": "剰余金等の額又は利益剰余金等の額",
+          "depth": 4,
+          "sign": "+",
+          "value": 18237,
+          "is_total": false
+        },
+        {
+          "id": "tier1_ni_capital_surplus",
+          "label_ja": "資本剰余金(Tier2適格資本に算入されるものを除く)の額",
+          "depth": 4,
+          "sign": "+",
+          "value": 8455,
+          "is_total": false
+        },
+        {
+          "id": "tier1_ni_aoci",
+          "label_ja": "その他の包括利益累計額又は評価・換算差額等の額",
+          "depth": 4,
+          "sign": "+",
+          "value": 2064,
+          "is_total": false
+        },
+        {
+          "id": "tier1_ni_ev_adjustment",
+          "label_ja": "経済価値ベースの調整額",
+          "depth": 4,
+          "sign": "+",
+          "value": 3362,
+          "is_total": false
+        },
+        {
+          "id": "tier1_adjustments",
+          "label_ja": "Tier1適格資本に係る調整項目の額",
+          "depth": 2,
+          "sign": "-",
+          "value": 1978,
+          "is_total": true,
+          "check": {
+            "lhs": 1978,
+            "rhs": 1978,
+            "tol": 1,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier1_adj_intangibles",
+          "label_ja": "無形固定資産(繰延税金負債相殺後)の額",
+          "depth": 3,
+          "sign": "+",
+          "value": 1978,
+          "is_total": false
+        },
+        {
+          "id": "tier2_eligible",
+          "label_ja": "Tier2適格資本の額",
+          "depth": 1,
+          "sign": "+",
+          "value": 149,
+          "is_total": true,
+          "check": {
+            "lhs": 149,
+            "rhs": 149,
+            "tol": 1,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier2_basic",
+          "label_ja": "Tier2適格資本に係る基礎項目の額",
+          "depth": 2,
+          "sign": "+",
+          "value": 149,
+          "is_total": true,
+          "check": {
+            "lhs": 149,
+            "rhs": 149,
+            "tol": 1,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier2_non_instrument",
+          "label_ja": "資本調達手段以外のTier2適格資本の額",
+          "depth": 3,
+          "sign": "+",
+          "value": 149,
+          "is_total": true,
+          "check": {
+            "lhs": 149,
+            "rhs": 149,
+            "tol": 1,
+            "ok": true
+          }
+        },
+        {
+          "id": "tier2_ni_basket",
+          "label_ja": "Tier2バスケット(上限適用後)の額",
+          "depth": 4,
+          "sign": "+",
+          "value": 149,
+          "is_total": false
+        }
+      ],
+      "risk_tree": [
+        {
+          "id": "rc_pre_tax",
+          "label_ja": "所要資本の額(税効果考慮前)",
+          "depth": 0,
+          "sign": "=",
+          "value": 6985,
+          "is_total": true,
+          "check": {
+            "lhs": 6985,
+            "rhs": 6982,
+            "tol": 6,
+            "ok": true
+          }
+        },
+        {
+          "id": "rc_nonlife",
+          "label_ja": "損害保険リスクの額",
+          "depth": 1,
+          "sign": "+",
+          "value": 2096,
+          "is_total": true,
+          "aggregation": "correlated",
+          "check": {
+            "simple_sum": 2458,
+            "disclosed": 2096,
+            "diversification_within": 362
+          }
+        },
+        {
+          "id": "rc_nl_liability",
+          "label_ja": "賠償責任保険類似の商品に係るリスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 283,
+          "is_total": false
+        },
+        {
+          "id": "rc_nl_motor",
+          "label_ja": "自動車保険類似の商品に係るリスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 0,
+          "is_total": false
+        },
+        {
+          "id": "rc_nl_property",
+          "label_ja": "財物保険類似の商品に係るリスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 518,
+          "is_total": false
+        },
+        {
+          "id": "rc_nl_other",
+          "label_ja": "その他保険に係るリスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 1657,
+          "is_total": false
+        },
+        {
+          "id": "rc_catastrophe",
+          "label_ja": "巨大災害リスクの額",
+          "depth": 1,
+          "sign": "+",
+          "value": 1865,
+          "is_total": true,
+          "aggregation": "correlated",
+          "check": {
+            "simple_sum": 2666,
+            "disclosed": 1865,
+            "diversification_within": 801
+          }
+        },
+        {
+          "id": "rc_cat_natural",
+          "label_ja": "巨大自然災害リスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 1748,
+          "is_total": true,
+          "aggregation": "correlated",
+          "check": {
+            "simple_sum": 2523,
+            "disclosed": 1748,
+            "diversification_within": 775
+          }
+        },
+        {
+          "id": "rc_cat_nat_jp_earthquake",
+          "label_ja": "日本における地震に係るリスクの額",
+          "depth": 3,
+          "sign": "+",
+          "value": 546,
+          "is_total": false
+        },
+        {
+          "id": "rc_cat_nat_jp_windflood",
+          "label_ja": "日本における風水災に係るリスクの額",
+          "depth": 3,
+          "sign": "+",
+          "value": 1447,
+          "is_total": false
+        },
+        {
+          "id": "rc_cat_nat_jp_snow",
+          "label_ja": "日本における雪災に係るリスクの額",
+          "depth": 3,
+          "sign": "+",
+          "value": 374,
+          "is_total": false
+        },
+        {
+          "id": "rc_cat_nat_foreign",
+          "label_ja": "外国における巨大自然災害リスクの額",
+          "depth": 3,
+          "sign": "+",
+          "value": 156,
+          "is_total": false
+        },
+        {
+          "id": "rc_cat_other",
+          "label_ja": "その他の巨大災害に係るリスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 918,
+          "is_total": false
+        },
+        {
+          "id": "rc_market",
+          "label_ja": "市場リスクの額",
+          "depth": 1,
+          "sign": "+",
+          "value": 4613,
+          "is_total": true,
+          "aggregation": "correlated",
+          "check": {
+            "simple_sum": 7567,
+            "disclosed": 4613,
+            "diversification_within": 2954
+          }
+        },
+        {
+          "id": "rc_mkt_interest",
+          "label_ja": "金利リスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 665,
+          "is_total": false
+        },
+        {
+          "id": "rc_mkt_equity",
+          "label_ja": "株式リスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 2218,
+          "is_total": false
+        },
+        {
+          "id": "rc_mkt_property",
+          "label_ja": "不動産リスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 1591,
+          "is_total": false
+        },
+        {
+          "id": "rc_mkt_fx",
+          "label_ja": "為替リスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 1681,
+          "is_total": false
+        },
+        {
+          "id": "rc_mkt_concentration",
+          "label_ja": "資産集中リスクの額",
+          "depth": 2,
+          "sign": "+",
+          "value": 1412,
+          "is_total": false
+        },
+        {
+          "id": "rc_credit",
+          "label_ja": "信用リスクの額",
+          "depth": 1,
+          "sign": "+",
+          "value": 475,
+          "is_total": false
+        },
+        {
+          "id": "rc_operational",
+          "label_ja": "オペレーショナル・リスクの額",
+          "depth": 1,
+          "sign": "+",
+          "value": 463,
+          "is_total": false
+        },
+        {
+          "id": "rc_diversification",
+          "label_ja": "分散効果の額",
+          "depth": 1,
+          "sign": "-",
+          "value": 2530,
+          "is_total": false
+        }
+      ],
+      "profit_flow": {
+        "sector": "nonlife",
+        "rows": [
+          {
+            "id": "pl_net_premiums_written",
+            "label_ja": "正味収入保険料",
+            "sign": "=",
+            "cur": 15692,
+            "prev": 15327,
+            "derived": false
+          },
+          {
+            "id": "pl_net_claims_paid",
+            "label_ja": "正味支払保険金",
+            "sign": "-",
+            "cur": 5108,
+            "prev": 5098,
+            "derived": false
+          },
+          {
+            "id": "pl_loss_adjustment_expenses",
+            "label_ja": "損害調査費",
+            "sign": "-",
+            "cur": 814,
+            "prev": 778,
+            "derived": false
+          },
+          {
+            "id": "pl_commissions_collection",
+            "label_ja": "諸手数料及び集金費",
+            "sign": "-",
+            "cur": 3492,
+            "prev": 3336,
+            "derived": false
+          },
+          {
+            "id": "pl_uw_operating_general_admin",
+            "label_ja": "保険引受に係る営業費及び一般管理費",
+            "sign": "-",
+            "cur": 4624,
+            "prev": 4555,
+            "derived": false
+          },
+          {
+            "id": "pl_underwriting_other",
+            "label_ja": "その他(準備金繰入等)",
+            "sign": "±",
+            "cur": -1,
+            "prev": -2,
+            "derived": false
+          },
+          {
+            "id": "pl_underwriting_profit",
+            "label_ja": "保険引受利益",
+            "sign": "=",
+            "cur": 963,
+            "prev": 729,
+            "derived": false
+          },
+          {
+            "id": "pl_investment_pl",
+            "label_ja": "資産運用損益",
+            "sign": "+",
+            "cur": 773,
+            "prev": 592,
+            "derived": false
+          },
+          {
+            "id": "pl_other_ordinary",
+            "label_ja": "その他経常損益",
+            "sign": "±",
+            "cur": -142,
+            "prev": -105,
+            "derived": true
+          },
+          {
+            "id": "pl_ordinary_profit",
+            "label_ja": "経常利益",
+            "sign": "=",
+            "cur": 1594,
+            "prev": 1216,
+            "derived": false
+          },
+          {
+            "id": "pl_extraordinary_net",
+            "label_ja": "特別損益",
+            "sign": "±",
+            "cur": null,
+            "prev": 26,
+            "derived": true
+          },
+          {
+            "id": "pl_income_taxes",
+            "label_ja": "法人税等合計",
+            "sign": "-",
+            "cur": 571,
+            "prev": 465,
+            "derived": false
+          },
+          {
+            "id": "pl_net_income",
+            "label_ja": "当期純利益",
+            "sign": "=",
+            "cur": 1003,
+            "prev": 777,
+            "derived": false
+          }
+        ],
+        "missing": [],
+        "checks": {
+          "underwriting_ok": false,
+          "ordinary_ok": true,
+          "net_ok": false
+        }
       }
     }
   ]
