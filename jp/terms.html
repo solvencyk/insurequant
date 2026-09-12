@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <!-- CSP: root index.html 6행과 동일. head 첫 자식 유지, CDN 태그보다 앞. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>利用規約・プライバシーポリシー | InsureQuant</title>
+  <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
+       integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
+       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
+       인라인 블록은 script-src의 기존 'unsafe-inline'으로 실행된다 — nonce를 넣으면 'unsafe-inline'이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8NSCQZBZK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // owner 본인 방문 제외(2026-09-12): ?iq_internal=1 로 한 번 접속하면 이 브라우저는 내부로 기억,
+    // ?iq_internal=0 이면 해제. GA4 Admin > Data filters > Internal Traffic 을 Active 로 둬야 실제 제외된다.
+    (function(){
+      var cfg = {};
+      try {
+        var q = new URLSearchParams(location.search).get('iq_internal');
+        if (q === '1') localStorage.setItem('iq_internal', '1');
+        else if (q === '0') localStorage.removeItem('iq_internal');
+        if (localStorage.getItem('iq_internal') === '1') cfg.traffic_type = 'internal';
+      } catch (e) {}
+      gtag('config', 'G-F8NSCQZBZK', cfg);
+    })();
+  </script>
+  <meta name="description" content="InsureQuant 日本語サイトの利用規約とプライバシーポリシー — 許諾される利用と禁止事項、データ出典、免責、Google Analytics および誤り報告フォームで取得する情報とその取扱い"/>
+  <meta property="og:title" content="InsureQuant — 利用規約・プライバシーポリシー"/>
+  <meta property="og:description" content="InsureQuant 日本語サイトの利用規約とプライバシーポリシー"/>
+  <meta property="og:type" content="website"/>
+  <!-- owner 초안 검토 전 임시 noindex(jp/index.html과 동일 관례). -->
+  <meta name="robots" content="noindex,follow"/>
+  <link rel="canonical" href="https://www.insurequant.com/jp/terms.html"/>
+  <link rel="alternate" hreflang="ko" href="https://www.insurequant.com/privacy.html"/>
+  <link rel="alternate" hreflang="ja" href="https://www.insurequant.com/jp/terms.html"/>
+  <link rel="alternate" hreflang="x-default" href="https://www.insurequant.com/privacy.html"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="../common.css"/>
+  <style>
+    /* 루트 privacy.html 의 읽기 페이지 스타일을 그대로 가져옴(공유 토큰·chrome 은 ../common.css).
+       본문은 --muted 가 아닌 --text, 넉넉한 line-height, 좁은 읽기 컬럼. */
+    .panel{box-sizing:border-box;max-width:760px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px}
+    .panel h1{margin:0 0 14px 0;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.01em}
+    .panel h2{margin-top:32px}
+    .panel h3{margin:20px 0 8px 0;font-size:15px;font-weight:700;color:var(--text)}
+    .panel p{color:var(--text);line-height:1.9;font-size:15px;margin:0 0 14px 0}
+    .panel ul{margin:0 0 14px 0;padding-left:22px;color:var(--text);line-height:1.9;font-size:15px}
+    .panel li{margin-bottom:6px}
+    /* --primary on --card 는 4.27:1 로 AA 미달 — --primary-hover(5.54:1) 사용(privacy.html 과 동일 근거). */
+    .panel a{color:var(--primary-hover);text-decoration:underline}
+    .panel a:hover, .panel a:focus-visible{color:var(--text)}
+    .lang-switch{display:flex;align-items:center;gap:8px;font-size:13px}
+    .lang-switch .lang-current{font-weight:700;color:var(--text)}
+    .lang-switch .lang-sep{color:var(--border)}
+    .lang-switch a{color:var(--muted);text-decoration:none}
+    .lang-switch a:hover{color:var(--primary);text-decoration:underline}
+    .policy-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:8px;background:var(--bg);margin:0 0 16px 0}
+    .policy-table{min-width:640px;font-size:14px}
+    .policy-table th:nth-child(n+2), .policy-table td:nth-child(n+2){text-align:left}
+    .panel h1.section-break{margin-top:48px;padding-top:32px;border-top:1px solid var(--border)}
+    .policy-table.src-table{min-width:0}
+    .doc-toc{font-size:13px;color:var(--muted);margin:0 0 20px 0}
+    @media (max-width:640px){
+      header{padding:8px 12px}
+      .brand{font-size:15px}
+      .brand .hint{display:none}
+      .lang-switch{font-size:12px;gap:6px}
+      .container{padding:10px}
+      .panel{padding:18px}
+      .panel h1{font-size:21px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">利用規約・プライバシーポリシー</span></a>
+      <nav class="lang-switch" aria-label="言語切替 / 언어 선택">
+        <span class="lang-current" aria-current="page">日本語</span>
+        <span class="lang-sep" aria-hidden="true">|</span>
+        <a href="../privacy.html" lang="ko">한국어</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <div class="panel">
+      <p class="doc-toc"><a href="#terms">利用規約</a> · <a href="#privacy">プライバシーポリシー</a></p>
+
+      <h1 id="terms">利用規約</h1>
+      <p>本規約は、InsureQuant(以下「本サイト」といいます)の日本語サイト(www.insurequant.com/jp/ 配下)の利用条件を定めるものです。本サイトを閲覧・利用された時点で、本規約に同意いただいたものとみなします。</p>
+
+      <h2>第1条(本サイトについて)</h2>
+      <ul>
+        <li>本サイトは、個人が運営する情報サイトです。会員登録および決済の仕組みは、現時点では設けておりません。</li>
+        <li>本サイトは、各保険会社が保険業法に基づき公表する開示資料(ディスクロージャー誌、決算説明資料、決算短信等)および金融庁告示を自動的に収集・正規化・検証し、経済価値ベースのソルベンシー比率(ESR)等の指標として表示するものです。</li>
+        <li>収集・加工の過程で誤りが生じる可能性があります。本サイトの表示内容は、投資、保険契約の締結、規制対応その他いかなる判断の根拠にもご利用いただけません。正確な数値は、必ず各社の開示資料の原本でご確認ください。</li>
+        <li>原数値に関する権利は、各開示主体(各保険会社および金融庁)に帰属します。本サイトは、原資料を代替するものではありません。</li>
+      </ul>
+
+      <h2>第2条(許諾される利用)</h2>
+      <p>次の利用については、個別の許諾を要しません。</p>
+      <ul>
+        <li>画面の閲覧および画面のキャプチャ</li>
+        <li>出典(InsureQuant、www.insurequant.com/jp/、参照日)を明示したうえで、一部の数値や図表を引用すること(報道、研究、教育、社内報告を含みます)</li>
+        <li>本サイトからダウンロードしたファイルを、所属する組織の内部で分析に用いること</li>
+      </ul>
+
+      <h2>第3条(禁止事項)</h2>
+      <p>次の行為を禁止します。</p>
+      <ul>
+        <li>クローラ、スクリプトその他の自動化された手段により、本サイトのデータファイルまたは画面の全部もしくは相当部分を、継続的または反復的に収集すること(AI・機械学習の学習用データとして収集する場合を含みます)</li>
+        <li>本サイトのデータの全部または相当部分を再配布し、または再販売すること</li>
+        <li>本サイトのデータを用いて、本サイトと同一または類似のサービスを構築すること</li>
+        <li>本サイトの表示またはデータを、自社または第三者のサービスに組み込むこと</li>
+      </ul>
+      <p>個々の数値は公開された事実ですが、それらを会社・期・項目ごとに選択し、体系的に整理した本サイトの画面およびデータは、著作権法上の編集著作物(第12条)およびデータベースの著作物(第12条の2)として保護され、その権利は本サイトの運営者に帰属します。上記の範囲を超える利用をご希望の場合は、事前に第8条の窓口までお問い合わせください。</p>
+
+      <h2>第4条(有料サービスおよびライセンスの留保)</h2>
+      <p>運営者は、データの提供、API、レポートその他の有償サービスまたはライセンスを、本規約とは別に定める契約条件のもとで提供することがあります。本規約は、本サイトのデータに関するいかなる商用利用権も付与するものではありません。商用利用または大量の利用をご希望の場合は、第8条の窓口から個別にご相談ください。</p>
+
+      <h2>第5条(データの出典)</h2>
+      <div class="policy-table-wrap">
+        <table class="policy-table src-table">
+          <thead>
+            <tr>
+              <th scope="col">項目</th>
+              <th scope="col">出典</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ESR(経済価値ベースのソルベンシー比率)、適格資本・所要資本の内訳、感応度</td>
+              <td>各社の開示資料(ディスクロージャー誌およびその別冊、決算説明資料、決算短信)</td>
+            </tr>
+            <tr>
+              <td>算定に関する規定</td>
+              <td>金融庁告示</td>
+            </tr>
+            <tr>
+              <td>公表状況</td>
+              <td>各社ウェブサイトの実査</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>すべての数値は、上記の資料から自動的に抽出・正規化・検証したものです。出典機関は本サイトとは一切関係がありません。最終反映時点は、各ページ上部の基準時点の表示によります。</p>
+
+      <h2>第6条(免責)</h2>
+      <ul>
+        <li>運営者は、本サイトの内容の正確性、完全性および最新性を保証しません。</li>
+        <li>運営者は、本サイトの利用または利用不能により生じたいかなる損害についても、法令上免責が認められない場合を除き、責任を負いません。</li>
+      </ul>
+
+      <h2>第7条(規約の変更)</h2>
+      <p>運営者は、予告なく本規約を変更することがあります。変更後の規約は、本サイトに掲載した時点から効力を生じます。</p>
+
+      <h2 id="operator">第8条(運営者・問い合わせ・準拠法)</h2>
+      <!-- 運営者 표기는 이 문단 한 곳에만 둔다(향후 법인 전환 시 이 문단만 교체). 표기 확정은 owner 확인 사항. -->
+      <p>運営者: InsureQuant(個人運営)、運営責任者: Cho Sangwook(조상욱)。</p>
+      <p>本サイトに関するお問い合わせおよび数値の誤りのご報告は、各ページ右下の「誤りを報告」ボタンからお寄せください。別途のメールアドレスは運用しておりません。ご報告いただいた内容は確認のうえ訂正し、訂正の履歴は本サイトまたはそのリポジトリに記録します。</p>
+      <p>本規約は大韓民国法に準拠し、本サイトの利用に関して紛争が生じた場合には、運営者の所在地を管轄する裁判所を第一審の専属的合意管轄裁判所とします。</p>
+      <p>本規約(日本語版)は www.insurequant.com/jp/ 配下の日本語サイトに適用され、韓国語版(<a href="../privacy.html" lang="ko">privacy.html</a>)は韓国語サイトに適用されます。両者の内容に相違がある場合は、それぞれのサイトについて各版が優先します。</p>
+
+      <h1 id="privacy" class="section-break">プライバシーポリシー</h1>
+      <p>本サイトは個人が運営するサイトであり、訪問者の個人情報の取扱いは必要最小限にとどめています。本ポリシーは、本サイトが何を取得し、何のために利用し、どのように取得を拒否できるかを説明するものです。本サイトには会員登録の仕組みはなく、氏名、住所、電話番号等の入力を求めることはありません。日本の個人情報の保護に関する法律が、国外の事業者にも適用されうることを前提として定めています。</p>
+
+      <h2>1. 取得する情報と取得方法</h2>
+
+      <h3>(1) アクセス解析 — Google Analytics 4</h3>
+      <ul>
+        <li>取得する情報: 閲覧したページのアドレス、閲覧日時と滞在時間、流入経路(検索語・リンク等)、ブラウザ・OS・端末の種類、おおよその接続地域(都市レベル)、Cookie に保存される任意の訪問者識別子</li>
+        <li>取得方法: 閲覧時に自動的に取得</li>
+        <li>IP アドレスは保存されません。Google は Analytics において IP アドレスを記録・保存しない旨を明示しています。</li>
+        <li>運営者本人による確認のためのアクセスは、内部トラフィックとして分類し、統計から除外します。</li>
+      </ul>
+
+      <h3>(2) 誤り報告フォーム(設置済み)</h3>
+      <ul>
+        <li>取得する情報: 報告対象のシート、会社、期、および誤りの内容(自由記述)。氏名やメールアドレス等の連絡先は求めません。ただし、自由記述欄にご本人の情報を記入された場合はそのまま保存されますのでご注意ください。</li>
+        <li>取得方法: 訪問者がご自身で入力し、送信した場合に限ります。</li>
+        <li>保存先: Google スプレッドシート(Google LLC、米国)</li>
+        <li>利用目的: データの誤りの確認および修正</li>
+        <li>保有期間: 本サイトの運営期間中。利用目的を達成した後は削除します。</li>
+      </ul>
+
+      <h2>2. 利用目的</h2>
+      <ul>
+        <li>本サイトの利用状況の把握および改善</li>
+        <li>不正利用の検知</li>
+        <li>有償サービスの検討に際しての需要の把握(集計値のみを用います)</li>
+        <li>誤り報告への対応(上記 1-(2))</li>
+      </ul>
+
+      <h2>3. 第三者への提供および外国にある第三者への提供</h2>
+      <p>本サイトは、以下の事業者のサービスを利用しており、取得した情報はこれらの事業者の国外のサーバーに送信・保存されます。これ以外の第三者に個人情報を提供または販売することはありません。</p>
+      <div class="policy-table-wrap">
+        <table class="policy-table">
+          <thead>
+            <tr>
+              <th scope="col">提供先</th>
+              <th scope="col">所在国</th>
+              <th scope="col">提供する情報</th>
+              <th scope="col">目的</th>
+              <th scope="col">保有期間</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Google LLC(Google Analytics)</td>
+              <td>米国</td>
+              <td>上記 1-(1) の情報</td>
+              <td>アクセス解析</td>
+              <td>最長 14 か月</td>
+            </tr>
+            <tr>
+              <td>Google LLC(Google スプレッドシート・Apps Script)</td>
+              <td>米国</td>
+              <td>上記 1-(2) の情報</td>
+              <td>送信内容の保存</td>
+              <td>本サイトの運営期間</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Google におけるデータの取扱いについては、Google の利用規約およびプライバシーポリシー(<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">https://policies.google.com/privacy</a>)、ならびに Google が公表するデータ保護の枠組み(EU-U.S. Data Privacy Framework 等の認証を含みます)をご参照ください。米国には、日本と同等の水準にあると認められる個人情報保護制度は存在しませんが、Google は上記の枠組みおよび契約上の措置により、個人データの保護に関する相当の措置を講じています。</p>
+
+      <h2>4. Cookie とその無効化</h2>
+      <p>本サイトは、訪問者を識別するために、ブラウザに Cookie(_ga 等)を保存します。広告目的には使用せず、Google 広告や Google シグナル等の広告のパーソナライズ機能は利用していません。</p>
+      <p>取得を望まれない場合は、次の方法をご利用ください。</p>
+      <ul>
+        <li>ブラウザの設定で Cookie をブロックまたは削除する</li>
+        <li>Google が提供する Google Analytics オプトアウト アドオンをインストールする(<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">https://tools.google.com/dlpage/gaoptout</a>)</li>
+      </ul>
+      <p>Cookie を無効にしても、本サイトの閲覧に支障はありません。</p>
+
+      <h2>5. 保有期間</h2>
+      <ul>
+        <li>アクセス解析の情報: Google Analytics に設定したイベントデータの保持期間(最長 14 か月)の経過後、自動的に削除されます。</li>
+        <li>誤り報告の内容: 本サイトの運営期間中保有し、利用目的を達成した後に削除します。</li>
+      </ul>
+
+      <h2>6. 開示・訂正・利用停止等の請求</h2>
+      <p>ご自身の情報について、開示、訂正、追加、削除、利用停止または第三者への提供の停止をご希望の場合は、各ページ右下の「誤りを報告」ボタンからお申し出ください。遅滞なく対応します。</p>
+
+      <h2>7. 安全管理措置</h2>
+      <p>本サイトは静的ページのみで構成され、独自のサーバーやデータベースを保有していません。すべてのページは HTTPS で配信され、外部スクリプトの実行範囲を制限するコンテンツ セキュリティ ポリシー(CSP)を適用しています。運営者が閲覧するアクセス解析の情報は集計されたデータのみであり、個人を識別できる情報は保有しません。</p>
+
+      <h2>8. 施行日</h2>
+      <p>本ポリシーおよび上記の利用規約は、2026年9月12日から施行します。内容を変更した場合は、変更内容と施行日を本ページに掲載します。</p>
+    </div>
+  </main>
+  <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
+    掲載データは公開資料を基に作成しており、誤りを含む可能性があります。投資判断の根拠として使用しないでください。画面およびデータベースは著作権法により保護され、利用条件は利用規約によります。<br/>
+    © 2026 InsureQuant · <a href="terms.html" class="iq-anon-link">利用規約・プライバシーポリシー</a> · <a href="../index.html" class="iq-anon-link" lang="ko">한국어 사이트</a>
+  </footer>
+</body>
+</html>

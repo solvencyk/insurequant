@@ -2,10 +2,34 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8"/>
-  <!-- CSP: jp/index.html과 같은 형식(jsdelivr만 허용). head 첫 자식 유지, CDN 태그보다 앞. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"/>
+  <!-- CSP: root index.html 6행과 동일(GA4 호스트 + 오류제보 Apps Script connect-src 포함, 2026-09-12).
+       analytics.google.com apex 는 *.analytics.google.com 와일드카드에 안 잡혀 별도 등재. script.googleusercontent.com 은
+       Apps Script /exec 가 302 로 보내는 리다이렉트 목적지라 빠지면 제출이 CSP 에 막힌다. head 첫 자식 유지, CDN 태그보다 앞. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>会社別ESR詳細 | InsureQuant</title>
+  <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
+       integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
+       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
+       인라인 블록은 script-src의 기존 'unsafe-inline'으로 실행된다 — nonce를 넣으면 'unsafe-inline'이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8NSCQZBZK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // owner 본인 방문 제외(2026-09-12): ?iq_internal=1 로 한 번 접속하면 이 브라우저는 내부로 기억,
+    // ?iq_internal=0 이면 해제. GA4 Admin > Data filters > Internal Traffic 을 Active 로 둬야 실제 제외된다.
+    (function(){
+      var cfg = {};
+      try {
+        var q = new URLSearchParams(location.search).get('iq_internal');
+        if (q === '1') localStorage.setItem('iq_internal', '1');
+        else if (q === '0') localStorage.removeItem('iq_internal');
+        if (localStorage.getItem('iq_internal') === '1') cfg.traffic_type = 'internal';
+      } catch (e) {}
+      gtag('config', 'G-F8NSCQZBZK', cfg);
+    })();
+  </script>
   <meta name="description" content="日本の保険会社の経済価値ベースソルベンシー比率(ESR)の会社別内訳。適格資本・所要資本の構成、感応度分析。"/>
   <meta property="og:title" content="InsureQuant — 会社別ESR詳細"/>
   <meta property="og:description" content="日本の保険会社の経済価値ベースソルベンシー比率(ESR)の会社別内訳。"/>
@@ -103,6 +127,12 @@
       .jcard .jcard-lab{font-size:10px}
       .esr-table{font-size:12px}
       .esr-table th,.esr-table td{padding:5px 6px}
+      /* nit③ 2026-09-12: 適格資本 구성표는 min-width 520px 때문에 375px 에서 금액·構成比 열이 화면 밖으로
+         밀려 가로 스크롤 전엔 안 보였다. 이 표만 최소폭을 풀고 긴 항목명을 줄바꿈, 숫자열은 줄바꿈 금지. */
+      #capitalTable{min-width:0}
+      #capitalTable td:first-child,#capitalTable th:first-child{overflow-wrap:anywhere}
+      #capitalTable td.num,#capitalTable th.num{white-space:nowrap}
+      #capitalTable td.subitem{padding-left:14px}
       .mini-name{flex-basis:30%}
       .mini-val{flex-basis:60px;font-size:12px}
     }
@@ -169,7 +199,7 @@
           <tbody id="capitalTableBody"><tr><td colspan="3" class="small-muted">読み込み中…</td></tr></tbody>
         </table>
       </div>
-      <p class="small-muted" style="margin-top:6px">※構成比は、Tier1適格資本・Tier2適格資本の各行は適格資本総額に対する割合、その他の項目はそれぞれのTier基礎項目に対する割合です。</p>
+      <p class="small-muted" style="margin-top:6px">※構成比は適格資本総額に対する割合で、Tier1適格資本・Tier2適格資本・適格資本の額の各行のみ表示します。内訳項目は金額のみです。</p>
     </section>
 
     <section class="panel" aria-labelledby="secRisk">
@@ -210,7 +240,7 @@
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
     出所: 各社開示資料(決算短信・決算説明資料・ディスクロージャー誌 等) — 数値の権利は各開示主体に帰属します。掲載データは公開資料を基に作成しており、誤りを含む可能性があります。投資判断の根拠として使用しないでください。<br/>
     規制様式(告示)に基づく開示のある会社のみ表示しています。2026年10月末に順次追加予定です。<br/>
-    © 2026 InsureQuant · <a href="../index.html" class="iq-anon-link" lang="ko">한국어 사이트</a>
+    © 2026 InsureQuant · <a href="terms.html" class="iq-anon-link">利用規約・プライバシーポリシー</a> · <a href="../index.html" class="iq-anon-link" lang="ko">한국어 사이트</a>
   </footer>
 
   <script>
@@ -399,25 +429,18 @@
         'Tier2 '+fmtEok(t2)+'億円('+fmtPct1(total>0?(t2||0)/total*100:null)+')。');
 
       var grandTotal = (h.eligible_capital!=null) ? h.eligible_capital : total;
-      // 비중(構成比)의 분모: 최상위 2행(tier1/tier2 적격자본·합계행)은 적격자본 총액 대비,
-      // 그 외 세부항목은 자기 tier 의 기초항목(basic) 대비로 잡는다 — tier1_basic 은 조정항목
-      // 공제 "전" 총액이라 grandTotal 대비로 계산하면 100%를 넘는 항목이 나와 오독을 부른다
-      // (실측: au_nonlife tier1_basic 138.8억/총액92.8억=149.6%). 스키마 parent 체인 전체를
-      // 복제하진 않되, tier1_*/tier2_* 접두만으로도 이 왜곡은 없어진다.
-      function denomFor(k){
-        if(k==='tier1_eligible' || k==='tier2_eligible' || k==='eligible_capital_total') return grandTotal;
-        if(k.indexOf('tier1_')===0) return cap.tier1_basic!=null ? cap.tier1_basic : grandTotal;
-        if(k.indexOf('tier2_')===0) return cap.tier2_basic!=null ? cap.tier2_basic : grandTotal;
-        return grandTotal;
-      }
+      // 構成比(비중)는 최상위 3행(Tier1/Tier2 적격자본·적격자본 합계)에만 적격자본 총액 대비로 표시하고
+      // 세부항목은 비워 둔다(nit② 2026-09-12). 종전에는 세부항목을 자기 tier 의 basic 대비로 냈는데
+      // 기초항목 138.8억(>총액 91.0억)이 100.0% 로 찍혀 "총액 대비" 로 오독됐다. 총액 대비로 통일하면
+      // 조정 전 기초항목이 149.6% 가 되어 마찬가지로 혼란 — 세부항목은 금액만 보여주는 것이 가장 명확하다.
+      var TOP_KEYS = {tier1_eligible:1, tier2_eligible:1, eligible_capital_total:1};
       var rows = Object.keys(cap).filter(function(k){ return cap[k]!=null; }).map(function(k){
         var v = cap[k];
-        var isTop = (k==='tier1_eligible' || k==='tier2_eligible');
-        var d = denomFor(k);
+        var isTop = !!TOP_KEYS[k];
         return '<tr'+(isTop?' class="total-row"':'')+'>'
           + '<td'+(isTop?'':' class="subitem"')+'>'+esc(labelOf(META, k, k))+'</td>'
           + '<td class="num" title="'+esc(fmtMillionTip(v))+'">'+esc(fmtEok(v))+'</td>'
-          + '<td class="num">'+esc(fmtPct1(d?(v/d*100):null))+'</td>'
+          + '<td class="num">'+(isTop ? esc(fmtPct1(grandTotal?(v/grandTotal*100):null)) : '')+'</td>'
           + '</tr>';
       }).join('');
       document.getElementById('capitalTableBody').innerHTML = rows ||
@@ -495,7 +518,9 @@
       var vals = [0]; geo.forEach(function(g){ if(!g.missing){ vals.push(g.y0, g.y1); } });
       var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
       var pad = Math.max((hi-lo)*0.12, 10);
-      var yMin = Math.floor((lo-pad)/10)*10, yMax = Math.ceil((hi+pad)/10)*10;
+      // 2026-09-12 nit①: 하한 패딩을 0 아래로 내리지 않는다 — 누적값이 0 이상인 정상 케이스에서
+      // y축이 △2.2/△11.5 억엔까지 내려가 0선이 떠 보였다. 실제 0선 아래로 가는 값이 있을 때만 음수 허용.
+      var yMin = lo < 0 ? Math.floor((lo-pad)/10)*10 : 0, yMax = Math.ceil((hi+pad)/10)*10;
 
       var ariaBits = bars.map(function(b, i){
         return b.ja + ' ' + fmtEok(b.value) + '億円';
@@ -513,7 +538,8 @@
             return '<b>'+b.ja+'</b><br/>'+sign+Math.abs(b.value/100).toLocaleString('ja-JP',{maximumFractionDigits:1})+'億円';
           }
         },
-        grid:{left:isMobile?36:48, right:isMobile?6:16, top:20, bottom: isMobile?70:56},
+        // top 은 y축 제목("(億円)")이 캔버스 상단에서 잘리지 않도록 확보(nit① 2026-09-12, 종전 20).
+        grid:{left:isMobile?36:48, right:isMobile?6:16, top:40, bottom: isMobile?70:56},
         xAxis:{
           type:'category', data:xs,
           axisLabel:{color:'#495057', fontSize:isMobile?10:11, interval:0,
@@ -521,8 +547,8 @@
           axisLine:{lineStyle:{color:'#dee2e6'}}, axisTick:{show:false},
         },
         yAxis:{
-          type:'value', name:'億円', min:yMin, max:yMax,
-          nameTextStyle:{color:'#6c757d', fontSize:11},
+          type:'value', name:'(億円)', min:yMin, max:yMax,
+          nameGap:12, nameTextStyle:{color:'#6c757d', fontSize:11},
           axisLabel:{color:'#6c757d', fontSize:11, formatter:function(v){ return (v/100).toLocaleString('ja-JP'); }},
           splitLine:{lineStyle:{color:'#e9ecef'}},
         },
@@ -647,5 +673,8 @@
     }
   })();
   </script>
+  <!-- 오류제보 팝업(일본어). 백엔드는 루트 forms-config.js(같은 Apps Script)를 그대로 재사용, sheet 값에 JP: 접두. -->
+  <script src="../forms-config.js"></script>
+  <script src="report-widget.ja.js" data-sheet-hint="jesr_detail"></script>
 </body>
 </html>

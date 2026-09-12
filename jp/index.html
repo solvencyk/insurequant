@@ -2,11 +2,34 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8"/>
-  <!-- CSP: root index.html과 같은 형식(jsdelivr만 허용). 이 페이지는 GA를 탑재하지 않아 관련 호스트는 제외했다.
-       head 첫 자식 유지, CDN 태그보다 앞. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"/>
+  <!-- CSP: root index.html 6행과 동일(GA4 호스트 + 오류제보 Apps Script connect-src 포함, 2026-09-12).
+       analytics.google.com apex 는 *.analytics.google.com 와일드카드에 안 잡혀 별도 등재. script.googleusercontent.com 은
+       Apps Script /exec 가 302 로 보내는 리다이렉트 목적지라 빠지면 제출이 CSP 에 막힌다. head 첫 자식 유지, CDN 태그보다 앞. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>日本 ESR ダッシュボード | InsureQuant</title>
+  <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
+       integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
+       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
+       인라인 블록은 script-src의 기존 'unsafe-inline'으로 실행된다 — nonce를 넣으면 'unsafe-inline'이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8NSCQZBZK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // owner 본인 방문 제외(2026-09-12): ?iq_internal=1 로 한 번 접속하면 이 브라우저는 내부로 기억,
+    // ?iq_internal=0 이면 해제. GA4 Admin > Data filters > Internal Traffic 을 Active 로 둬야 실제 제외된다.
+    (function(){
+      var cfg = {};
+      try {
+        var q = new URLSearchParams(location.search).get('iq_internal');
+        if (q === '1') localStorage.setItem('iq_internal', '1');
+        else if (q === '0') localStorage.removeItem('iq_internal');
+        if (localStorage.getItem('iq_internal') === '1') cfg.traffic_type = 'internal';
+      } catch (e) {}
+      gtag('config', 'G-F8NSCQZBZK', cfg);
+    })();
+  </script>
   <meta name="description" content="日本の保険会社の経済価値ベースソルベンシー比率(ESR)を一覧表示。公表され次第、順次更新します。"/>
   <meta property="og:title" content="InsureQuant — 日本 ESR ダッシュボード"/>
   <meta property="og:description" content="日本の保険会社の経済価値ベースソルベンシー比率(ESR)を一覧表示。公表され次第、順次更新します。"/>
@@ -202,7 +225,7 @@
 
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
     出所: 各社開示資料(決算短信・決算説明資料・ディスクロージャー誌 等) — 数値の権利は各開示主体に帰属します。掲載データは公開資料を基に作成しており、誤りを含む可能性があります。投資判断の根拠として使用しないでください。<br/>
-    © 2026 InsureQuant · <a href="../index.html" class="iq-anon-link" lang="ko">한국어 사이트</a>
+    © 2026 InsureQuant · <a href="terms.html" class="iq-anon-link">利用規約・プライバシーポリシー</a> · <a href="../index.html" class="iq-anon-link" lang="ko">한국어 사이트</a>
   </footer>
 
   <script>
@@ -534,5 +557,8 @@
     }
   })();
   </script>
+  <!-- 오류제보 팝업(일본어). 백엔드는 루트 forms-config.js(같은 Apps Script)를 그대로 재사용, sheet 값에 JP: 접두. -->
+  <script src="../forms-config.js"></script>
+  <script src="report-widget.ja.js" data-sheet-hint="jesr_esr"></script>
 </body>
 </html>
