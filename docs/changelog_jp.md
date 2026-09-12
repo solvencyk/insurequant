@@ -2,6 +2,30 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-13 (17) -- 손보 6사 표본 실측(3사 확보) — 손해율/사업비율/합산율 시계열 공시 여부 확인, ESR 은 전원 미공표
+
+- 티켓 `inbox/jp/20260913T0230Z__owner__JP_MULTI__nonlife_ratio_availability.md`. owner "손해율 5개년이 다른 손보사에도 다 있는지" 질의에
+  대형4(東京海上日動·損保ジャパン·三井住友海上·あいおいニッセイ同和)+중형2(共栄火災·日新火災) 표본으로 답. 세션 중반 curl 이 전 도메인
+  차단(`www.google.com` 포함)으로 전환돼 **3사만 원문 PDF 확보**: Tokio Marine & Nichido Fire(TMNF_2026_d.pdf, 292p), Mitsui Sumitomo
+  Insurance(a01.pdf, 272p), Sompo Japan Insurance(sj_disc2026.pdf, 292p) — `J-ESR/raw/fy2025_samples/others/`(gitignore).
+- 실측 결과: 3사 전부 정미손해율·정미사업비율 시계열이 이미 공시돼 있다(owner 가정 확인). 단 표 구조가 회사마다 다르다 — TMNF/au/Meiji 는
+  「主要な経営指標等の推移」5개년 단일표(合算率 행 없음), Sompo Japan 은 표제목 변형 「最近5事業年度に係る主要な財務指標」(5개년, 合算率
+  없음), MSI 는 5개년 단일표 자체를 못 찾고 대신 3개년 종목별표에서 합산율을 직접 확인. **MSI·Sompo Japan 둘 다 별도 3개년 종목별표
+  (正味損害率、正味事業費率及びその合算率)에 合算率이 라벨로 직접 공시**되어 있어(파생 불필요) `hist_combined_ratio_pct` labels_ja 에
+  `"合算率"` 단독 추가. FY2025: TMNF 損害率61.6%/事業費率31.4%, MSI 合計행 損害率62.8%/事業費率30.4%/合算率93.2%, Sompo Japan
+  損害率63.8%/事業費率33.3%/合算率(3개년표 合計행)97.0%.
+- ESR 은 3사 전부 not_yet(2026年10月末), 문구가 회사마다 새로 발견돼 `esr_disclosure_schema.json` `esr_status` labels_ja 에 3종 추가:
+  TMNF 표셀 "別時期での開示", MSI 각주 "…2026年10月末までに開示します", Sompo Japan 각주 "…2026年10月末の予定です".
+- 폰트 인코딩 함정 발견: Sompo Japan PDF 는 숫자/기호(`0-9`·`.`·`%`)가 U+3EDC 대역으로 **+16044(0x3EAC) 오프셋**된 PUA 유사 코드포인트로
+  추출된다(임베디드 폰트 ToUnicode CMap 이상, TMNF/MSI 는 정상) — `ord(ch)-16044` 가 32~126 이면 ASCII 로 치환하는 디코더로 우회.
+  `docs/domains/jp_esr_disclosure_template.md` §10-7 에 재현법 기록.
+- 미확보 3사는 행을 지우지 않고 사유를 남김: Aioi Nissay Dowa(disclo_policy/ir 페이지에 PDF href 없음, ms-ad-hd.com 은 403/커넥션거부,
+  WebSearch 로도 직접 URL 미발견), Kyoei Fire & Marine(도메인 curl 2회 연결거부+WebFetch 인증서 오류), Nisshin Fire & Marine(WebSearch 로
+  정확한 URL은 특정 — `https://www.nisshinfire.co.jp/ir/pdf/disclosure2026.pdf` — 그러나 curl 차단으로 원문 미열람, 손해율 실측 안 함).
+- 산출물: census csv 4행(TMNF/MSI/Sompo Japan/Nisshin) `disclosure_url`·`checked_at`·`notes` 갱신(TMNF `sector` 공백 버그도 함께
+  수정 — `損保` 자회사인데 빈 문자열이라 sector 필터에서 누락되고 있었음), `docs/domains/jp_esr_disclosure_template.md` §10-7 신설,
+  `J-ESR/esr_disclosure_schema.json` 라벨 보강 2건. `jp/*.html`·builder·서브에이전트·커밋·git push 없음.
+
 ## 2026-09-13 (14) -- jesr.html 단일 표([+] 펼침)·손익 선별·재보험 다리·収益性指標·자회사 dedup 해제 (orchestrator 직접)
 
 - owner 피드백 6건(부호/계층·하위리스크 미표시·손익 항목·손해율 별도·원수/출재·자회사 삭제 이유) 처리. designer 2회(32분+13분 연장) 미완으로 종료·되돌린 뒤

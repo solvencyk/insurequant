@@ -1,9 +1,23 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-13 (16) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-13 (17) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-13 (17) 손보 6사 표본 실측(정본 3사 확보) — 손해율/사업비율/합산율 5개년표는 owner 가정대로 이미 공시, ESR 만 표본 전원 미공표(jp).**
+티켓 `inbox/jp/20260913T0230Z__owner__JP_MULTI__nonlife_ratio_availability.md`(answered). owner "손해율 5개년이 다른 손보사에도 다
+있는지" → 대형4(東京海上日動·損保ジャパン·三井住友海上·あいおいニッセイ同和)+중형2(共栄火災·日新火災) 표본 중 세션 중반 curl 이 전
+도메인 차단(`google.com` 포함)으로 바뀌어 **3사만 원문 확보**(Tokio Marine & Nichido Fire·Mitsui Sumitomo Insurance·Sompo Japan
+Insurance, `J-ESR/raw/fy2025_samples/others/`). 확보 3사 전부 손해율/사업비율 5개년(또는 3개년) 시계열 실측 완료: TMNF FY2025
+損害率61.6%/事業費率31.4%(合算率 행 없음, 파생93.0%), MSI 3개년표 合計행 FY2025 損害率62.8%/事業費率30.4%/**合算率93.2%(직접공시)**,
+Sompo Japan 5개년표 FY2025 損害率63.8%/事業費率33.3% + 별도 3개년표 合算率(合計행)97.0%. **ESR 은 3사 전부 not_yet**(2026年10月末),
+문구는 회사마다 신규 변형 3종(TMNF 표셀 "別時期での開示", Sompo 각주 "…の予定です", MSI 각주 "…開示します") — `esr_disclosure_schema.json`
+`esr_status`/`hist_combined_ratio_pct` labels_ja 에 반영(合算率 단독 라벨도 추가). Sompo Japan PDF 는 숫자/기호가 U+3EDC 대역
++16044 오프셋 PUA 로 추출되는 폰트함정 발견(디코더 필요, 문서에 재현법 기록). 미확보 3사(Aioi·Kyoei·Nisshin)는 사유 남기고 행 보존
+(Aioi=PDF링크 미발견, Kyoei=도메인 접속거부, Nisshin=URL은 WebSearch로 특정했으나 curl 차단으로 원문 미열람). census csv 4행
+(disclosure_url·checked_at·notes) 갱신, `docs/domains/jp_esr_disclosure_template.md` §10-7 신설. `jp/*`·builder·서브에이전트·
+커밋·git push 없음.
 
 **🟢 2026-09-13 (14) jesr.html 한 표([+] 펼침)·손익 선별·재보험 다리·収益性指標 + 자회사 dedup 해제 — 라운드 종결(orchestrator).**
 owner 피드백: 자본표 부호/계층, 보험·대재해 하위 미표시(괘씸), 손익 항목 선별, 손해율 별도, 원수/출재 분해, 자회사 삭제 이유(한국은 교보생명·교보라이프플래닛
@@ -74,11 +88,6 @@ Meiji Yasuda Non-Life 는 손해율/사업비율/합산율이 5개년표 자체�
 만 (11) 항목과 같은 이유로 자연 증가: au 62→79, Meiji 66/70→81/85 — 이번 신규 H01/H02 가 같은 gate 에 합류했기 때문).
 문서 `docs/domains/jp_esr_disclosure_template.md` §0·§10(표 위치·연도 수·라벨 렌더링 특이점·SMR/ESR 괄호 분리·검산·회사별
 편차·중간기 공시 없음 메모). `jp/*.html`·서브에이전트·커밋 없음.
-
-**🟢 2026-09-12 (12) `jp/jesr.html` 損益の内訳 패널 + 비공개 프리뷰 경로 + terms/GA/오류제보 팝업 — 라운드 종결(orchestrator).**
-손익 패널: 会計基準 한 줄(J-GAAP·IFRS17 未適用)·当期純利益 워터폴(引受→運用→その他→経常→特別→法人税等△→純利益)·当期/前期/増減 표·損害率/事業費率/合算率·✓ 배지
-(티켓 `inbox/_resolved/20260912T1330Z`). designer 가 CDN 우회 검증 반복으로 52분 소요 → 산출물 커밋 후 종료. 배포는 main 에서 `jp-f9027362/`
-(비공개 프리뷰, `android_push_and_deploy.sh` JP_PRIVATE_DIR). 다음 = 게이트 → 번들 → owner 폰 배포 2회 실행.
 
 ## Active follow-ups
 
