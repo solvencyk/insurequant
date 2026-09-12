@@ -76,3 +76,43 @@ NN Life 13/16·12/12, 회계기준 2사 jgaap·IFRS17 미적용 근거문장 확
 `jp/jesr_detail.json` profit 블록 추가는 후속 티켓.
 
 status: **resolved**
+
+## 본편 확보 후 추가 (jp, 2026-09-12 2회차)
+
+owner 가 `明治安田損害保険の現状2026`(60p) 본편을 직접 받아 `J-ESR/raw/fy2025_samples/meijiyasuda_nonlife_20260729_main.pdf` 에 넣었다.
+읽고 페이지·라벨을 배선해 재실행한 결과, **25/25 applicable 전항목 추출, 검산 17/19(2건은 informational), accounting_basis=jgaap /
+ifrs17_applied=false.**
+
+**페이지 매핑.** 이 PDF 는 인쇄쪽 2장을 pdf 1페이지에 담는다: 인쇄쪽 P(홀수·좌쪽) ↔ pdf 인덱스 N = `(P+3)/2`, P(짝수·우쪽) ↔
+N = `(P+2)/2`(TOC "2.損益計算書 81" → N=42 로 검증). 실사용: `pl`(損益計算書)=42, `uw`(保険引受利益明細表)=36,
+`ratio`(正味損害率·正味事業費率·合算率)=35, `summary5`(主要な業務の状況を示す指標 5개년표)=9, `basis`(회계기준 근거)=42,45.
+
+**라벨 렌더링 3개 특이점** (모두 회사별 opt-in, au/NN 무회귀 확인 — 상세는 `docs/domains/jp_esr_disclosure_template.md` §9-6):
+1. 損益計算書는 한 구획의 라벨을 전부 나열한 뒤 그 구획 전체 3개년 값을 한꺼번에 찍는다(항목별 라벨+값 교대 방식이 아님) — 라벨을
+   무시하고 제목~注記 사이 값 토큰 120개를 고정 위치로 읽는 `pl_flat_tokens`+`MEIJI_PL_FLAT_MAP` 신설.
+2. 明細表·比率표는 라벨을 글자 하나씩 세로줄로 찍는다 — 기존 summary5 전용 `merge_vertical()` 을 `vertical_labels=True` 로 확대
+   적용. 회계기준 근거문 판정도 같은 이유로 깨져 있어 공백 제거 사본(`basis_ns`/`doc_ns`)으로 판정하게 고쳤다.
+3. 資産運用損益(実現ベース) 합계행을 그대로 쓰면 積立保険料等運用益 이 保険引受収益 안에도 들어 있어 이중계상(P07 이 ±15 로 깨짐) —
+   손익계산서 기준(資産運用収益-資産運用費用)으로 대체하는 `pl_investment_override="pl_stmt"` 신설.
+
+**스키마 무변경.** `pl_uw_operating_general_admin` 라벨이 이 회사 明細表에선 "営業費及び一般管理費"(注記로만 보험인수 귀속분 확인)
+라 스키마 정본 라벨을 못 찾았는데, 스키마 항목의 `labels` 는 그대로 두고 회사별 `label_overrides` 로만 별명을 추가했다.
+`esr_disclosure_schema.json` 173항목 바이트 무변경(`git diff --stat` 확인).
+
+**세션 중 사고.** 읽고 검증을 마친 뒤 재확인하려는데 소스 PDF 가 로컬에서 사라졌다(홈 디렉터리 전체 검색 + git 이력 대조 — 애초
+git 미추적, 원인 불명, Claude 가 지운 적 없음). 사라지기 전 읽은 원문(p9·35·36·42·45)을 `meijiyasuda_nonlife_main_pages_fixture.json`
+으로 남겨, `main()` 이 "실물 PDF → fixture 재현 → NOT_ACQUIRED" 순으로 동작하도록 고쳤다(`FixtureDoc`). 이번 산출은 fixture
+경로지만, 새 추출 코드 자체는 실제 파일에서 읽은 실제 텍스트를 재생해 검증했으므로 추정이 아니다. 실물 파일이 돌아오면 다음
+실행이 자동으로 그쪽을 우선한다.
+
+**추출값(百万円, cur=2025년도/prev=2024년도).** 経常利益 1,594(1,216)·当期純利益 1,003(777)·保険引受利益 963(729)·資産運用損益
+773(592)·正味収入保険料 15,692(15,327)·損害率/事業費率/合算率 37.7/51.7/89.5(38.3/51.5/89.8). 회계기준 근거: p42 법정 損益計算書
+양식(責任準備金繰入額 등) + p45 "保険業法第111条第1項…「会社法第436条第2項第1号」…有限責任あずさ監査法人の会計監査を受けており、
+適正である旨の証明を受けています"(au 와 같은 B 티어).
+
+**산출물.** `J-ESR/extract_esr_template_samples.py`(위 배선), `J-ESR/raw/fy2025_samples/meijiyasuda_nonlife_main_pages_fixture.json`(신규),
+`extracted_sample_values.json`(재생성), `_item_table_fragment.md`(재생성), `docs/domains/jp_esr_disclosure_template.md` §9-1·§9-6.
+`TODO_jp.md`/`docs/changelog_jp.md` 갱신. publishing 의 `jp/jesr_detail.json` profit 블록(Meiji 는 아직 not_obtained 로 박혀 있음)
+재실행은 후속 — 이번 라운드는 `jp/` 미접촉 원칙 유지.
+
+status: **resolved**

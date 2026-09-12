@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-12T11:23:28.948423Z",
+    "generated_at": "2026-09-12T12:17:18.507046Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -1383,7 +1383,7 @@
       "profit": {
         "accounting_basis": "jgaap",
         "ifrs17_applied": false,
-        "evidence": "B(法定P&L 様式 p[15, 17, 31]):  79 △ 19 支払備金繰入額 276 315 39 責任準備金繰入額 637 558 △ 79 資産運用費用 ー ー ー 営業費及び一 | B(監査 文구): は有価証券先渡取引、外国金融商品市場における 有価証券先物取引と類似の取引 該当事項はありません。 5.監査法人による監査の状況 当社は、会社法第436条第2項第1号の規定に基づき、保険業法第111条第1項の規定により公衆の縦覧 に供する書類のうち、貸借対照表、損益計算書及び株主資本等変動計算 | ifrs17_applied=false: derived from accounting_basis=jgaap on 単体 statutory statements (no IFRS/IFRS17 mention in the document)",
+        "evidence": "B(法定P&L 様式 p[15, 17, 31]): 72649176諸手数料及び集金費9879 △19支払備金繰入額27631539責任準備金繰入額637558 △79資産運用費用ーーー営業費及び一般管理費3,3183,121  | B(監査 文구): 取引もしくは有価証券先渡取引、外国金融商品市場における有価証券先物取引と類似の取引該当事項はありません。5.監査法人による監査の状況当社は、会社法第436条第2項第1号の規定に基づき、保険業法第111条第1項の規定により公衆の縦覧に供する書類のうち、貸借対照表、損益計算書及び株主資本等変動計算書 | ifrs17_applied=false: derived from accounting_basis=jgaap on 単体 statutory statements (no IFRS/IFRS17 mention in the document)",
         "source_doc": "au_nonlife_disclo_260730_4of5.pdf",
         "unit": "JPY_million",
         "items": {
@@ -1599,8 +1599,8 @@
         "top_sqrt": 6519.5,
         "simple_sum": 9049,
         "reproduced": true,
-        "checks_pass": 50,
-        "checks_total": 52,
+        "checks_pass": 66,
+        "checks_total": 70,
         "deviations": [
           {
             "id": "G06_nonlife",
@@ -1706,15 +1706,129 @@
         }
       },
       "profit": {
-        "accounting_basis": "unstated",
-        "ifrs17_applied": "unstated",
-        "evidence": "別冊 has no 会計方針 section (EBS 財務会計ベース column shows 価格変動準備金·危険準備金等 — consistent with jgaap, unconfirmed)",
-        "source_doc": "NOT_ACQUIRED: 別冊 has no P&L; main volume 20260729.pdf blocked on :443 (curl 000 x3, requests ConnectionError x3) and >10MB for WebFetch (2026-09-12)",
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": "B(法定P&L 様式 p[42, 45]): 15経常費用保険引受費用正味支払保険金損害調査費諸手数料及び集金費支払備金繰入額責任準備金繰入額為替差損資産運用費用有価証券売却損営業費及び一般管理費その他経常費用支払利息貸倒 | B(監査 文구): 20268210.会計監査当社では、保険業法第111条第1項の規定により公衆の縦覧に供する書類のうち、計算書類及びその附属明細書について、「会社法第436条第2項第1号」の規定に基づき、有限責任あずさ監査法人の会計監査を受けており、適正である旨の証明を受けています。2.商品有価証券該当事項はあり | ifrs17_applied=false: derived from accounting_basis=jgaap on 単体 statutory statements (no IFRS/IFRS17 mention in the document)",
+        "source_doc": "meijiyasuda_nonlife_20260729_main.pdf",
         "unit": "JPY_million",
-        "items": {},
-        "ratios": {},
+        "items": {
+          "pl_ordinary_revenue": {
+            "cur": 16757,
+            "prev": 15956
+          },
+          "pl_ordinary_expenses": {
+            "cur": 15163,
+            "prev": 14739
+          },
+          "pl_ordinary_profit": {
+            "cur": 1594,
+            "prev": 1216
+          },
+          "pl_extraordinary_gains": {
+            "cur": null,
+            "prev": 26
+          },
+          "pl_extraordinary_losses": {
+            "cur": 19,
+            "prev": 0
+          },
+          "pl_pretax_profit": {
+            "cur": 1574,
+            "prev": 1242
+          },
+          "pl_income_taxes": {
+            "cur": 571,
+            "prev": 465
+          },
+          "pl_net_income": {
+            "cur": 1003,
+            "prev": 777
+          },
+          "pl_interest_dividend_income": {
+            "cur": 657,
+            "prev": 546
+          },
+          "pl_net_premiums_written": {
+            "cur": 15692,
+            "prev": 15327
+          },
+          "pl_net_claims_paid": {
+            "cur": 5108,
+            "prev": 5098
+          },
+          "pl_loss_adjustment_expenses": {
+            "cur": 814,
+            "prev": 778
+          },
+          "pl_commissions_collection": {
+            "cur": 3492,
+            "prev": 3336
+          },
+          "pl_operating_general_admin": {
+            "cur": 4709,
+            "prev": 4648
+          },
+          "pl_other_ordinary_revenue": {
+            "cur": 15,
+            "prev": 12
+          },
+          "pl_other_ordinary_expenses": {
+            "cur": 73,
+            "prev": 27
+          },
+          "pl_underwriting_revenue": {
+            "cur": 15856,
+            "prev": 15350
+          },
+          "pl_underwriting_expenses": {
+            "cur": 10267,
+            "prev": 10063
+          },
+          "pl_uw_operating_general_admin": {
+            "cur": 4624,
+            "prev": 4555
+          },
+          "pl_underwriting_other": {
+            "cur": -1,
+            "prev": -2
+          },
+          "pl_underwriting_profit": {
+            "cur": 963,
+            "prev": 729
+          },
+          "pl_investment_pl": {
+            "cur": 773,
+            "prev": 592
+          },
+          "pl_loss_ratio_pct": {
+            "cur": 37.7,
+            "prev": 38.3
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 51.7,
+            "prev": 51.5
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 89.5,
+            "prev": 89.8
+          }
+        },
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 37.7,
+            "prev": 38.3
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 51.7,
+            "prev": 51.5
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 89.5,
+            "prev": 89.8
+          }
+        },
         "core": {},
-        "status": "not_obtained"
+        "status": "extracted"
       }
     }
   ]

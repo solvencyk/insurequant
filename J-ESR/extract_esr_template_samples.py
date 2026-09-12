@@ -345,6 +345,24 @@ PROFIT_META_ITEMS = [
     dict(id="profit_source_doc", ko="손익 표가 있는 문서(별책만 있는 회사는 본편 URL) / NOT_ACQUIRED 사유", unit="text", labels=[]),
 ]
 
+# Meiji Yasuda Non-Life main volume (別冊 has no P&L) — 損益計算書 p42 renders EVERY row label
+# vertically (one glyph per line) AND groups ALL labels of a section before ALL its values
+# (12-item 経常収益 block → 36 values in 3 year-major chunks; 15-item 経常費用 block → 45 values;
+# then 経常利益(3) / 特別利益(9) / 特別損失(12) / 税引前~当期純利益(15) blocks) — grab()'s per-label
+# regex + small skip_limit cannot anchor this shape at all, so item positions are read out of one
+# flat run of value-tokens (labels are skipped regardless of rendering) at fixed offsets, verified
+# 2026-09-12 against the real page (see docs/domains/jp_esr_disclosure_template.md §9-6).
+# tuple = (idx at 2023년도, idx at 2024년도=prev, idx at 2025년도=cur) into that 120-token flat run.
+MEIJI_PL_FLAT_MAP = {
+    "pl_ordinary_revenue": (0, 12, 24), "pl_net_premiums_written": (2, 14, 26), "pl_other_ordinary_revenue": (11, 23, 35),
+    "pl_interest_dividend_income": (7, 19, 31), "_inv_rev": (6, 18, 30),
+    "pl_ordinary_expenses": (36, 51, 66), "pl_net_claims_paid": (38, 53, 68), "pl_loss_adjustment_expenses": (39, 54, 69),
+    "pl_commissions_collection": (40, 55, 70), "pl_operating_general_admin": (46, 61, 76), "pl_other_ordinary_expenses": (47, 62, 77),
+    "_inv_exp": (44, 59, 74),
+    "pl_ordinary_profit": (81, 82, 83), "pl_extraordinary_gains": (84, 87, 90), "pl_extraordinary_losses": (93, 97, 101),
+    "pl_pretax_profit": (105, 110, 115), "pl_income_taxes": (108, 113, 118), "pl_net_income": (109, 114, 119),
+}
+
 COMPANIES = [
     dict(key="au_nonlife", company_jp="au損害保険", company_en="au Non-Life", sector="nonlife", pdf="au_nonlife_disclo_260730_4of5.pdf",
          layers=["esr", "article_axes", "profit"],
@@ -352,13 +370,29 @@ COMPANIES = [
          headline_5yr_page=2, axes_pages=dict(reins=[6], reserves=[8]),
          profit_pages=dict(pl=[17], uw=[5], ratio=[5], inv=[11], summary5=[2], basis=[15, 17, 31]), pl_layout="prev_cur_diff"),
     dict(key="meijiyasuda_nonlife", company_jp="明治安田損害保険", company_en="Meiji Yasuda Non-Life", sector="nonlife", pdf="meijiyasuda_nonlife_20260904_performance_data.pdf",
-         layers=["esr", "article_axes"],
+         layers=["esr", "article_axes", "profit"],
          pages=dict(T1=[2], T2=[3], T3=[4], T4=[5, 6, 7], T6=[11], T7=[12], T8=[8, 13]),
          headline_5yr_page=None, axes_pages=dict(),
-         # 別冊 業績データ has no P&L. Main volume = https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260729.pdf
-         # (2026-09-12: curl 000 ×3, requests ConnectionError ×3 on :443, WebFetch refuses >10MB) → NOT_ACQUIRED, retry when 443 opens.
-         profit_pages=None, profit_main_volume_url="https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260729.pdf",
-         profit_not_acquired="NOT_ACQUIRED: 別冊 has no P&L; main volume 20260729.pdf blocked on :443 (curl 000 x3, requests ConnectionError x3) and >10MB for WebFetch (2026-09-12)"),
+         # 別冊 業績データ has no P&L. Profit layer reads the MAIN VOLUME (separate PDF, owner-supplied
+         # 2026-09-12 2nd round): J-ESR/raw/fy2025_samples/meijiyasuda_nonlife_20260729_main.pdf (60p).
+         # main() opens profit_pdf defensively — if it is absent this run, profit falls back to
+         # NOT_ACQUIRED (below) rather than crashing the whole script.
+         profit_pdf="meijiyasuda_nonlife_20260729_main.pdf",
+         # The main volume disappeared from local disk partway through the 2026-09-12 session that
+         # wired this (confirmed absent by exhaustive filesystem search + git history — never
+         # tracked; cause unknown). main() prefers the live PDF when present; this fixture is a JSON
+         # snapshot of doc[p-1].get_text('text') for pages 9/35/36/42/45, captured from the real file
+         # BEFORE it vanished, so a re-run still fills the profit layer instead of going NOT_ACQUIRED.
+         profit_pdf_fixture="meijiyasuda_nonlife_main_pages_fixture.json",
+         profit_main_volume_url="https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260729.pdf",
+         profit_not_acquired="NOT_ACQUIRED: main volume 20260729.pdf is not on disk and no fixture was found either.",
+         profit_pages=dict(pl=[42], uw=[36], ratio=[35], summary5=[9], basis=[42, 45]),
+         pl_layout="label_block_3yr", vertical_labels=True,
+         pl_flat_bounds=(r"損益計算書$", r"^損益計算書の注記"), pl_flat_len=120, pl_flat_map=MEIJI_PL_FLAT_MAP,
+         pl_investment_override="pl_stmt",
+         # 保険引受利益明細表 labels this row "営業費及び一般管理費" (bare), not the schema's canonical
+         # "保険引受に係る営業費及び一般管理費" (that fuller phrase is only in the table's footnote).
+         label_overrides={"pl_uw_operating_general_admin": [r"^営業費及び一般管理費$"]}),
     dict(key="nnlife", company_jp="エヌエヌ生命保険", company_en="NN Life", sector="life", pdf="nnlife_2025disclosure_202607.pdf",
          layers=["article_axes", "profit"], pages=dict(), headline_5yr_page=11,
          axes_pages=dict(summary5=[11], soundness=[15], core_profit=[60], reins=[64], esr_section=[54]),
@@ -367,6 +401,34 @@ COMPANIES = [
 
 
 # --------------------------------------------------------------------------------------
+class FixturePage:
+    """Stand-in for a fitz Page backed by pre-captured get_text('text') output."""
+
+    def __init__(self, text):
+        self._text = text
+
+    def get_text(self, kind="text"):
+        return self._text
+
+
+class FixtureDoc:
+    """Stand-in for a fitz Document when the live PDF is absent — replays extraction against a
+    JSON snapshot of {page_number: raw get_text('text')} captured while the PDF was on disk (see
+    comp["profit_pdf_fixture"]). Only pages the fixture recorded are addressable."""
+
+    def __init__(self, pages_by_number):
+        self._pages = {int(k): FixturePage(v) for k, v in pages_by_number.items()}
+
+    def __getitem__(self, idx):
+        return self._pages[idx + 1]  # callers use doc[p - 1]
+
+    def __iter__(self):
+        return iter(self._pages[p] for p in sorted(self._pages))
+
+    def __len__(self):
+        return max(self._pages) if self._pages else 0
+
+
 def page_lines(doc, pages):
     out = []
     for p in pages:
@@ -651,6 +713,16 @@ def merge_vertical(lines):
     return out
 
 
+def pl_flat_tokens(lines, start_rx, end_rx):
+    """All value tokens between the first line matching start_rx and the first line matching
+    end_rx after it (labels dropped regardless of how they render — see MEIJI_PL_FLAT_MAP)."""
+    start_i = next((i for i, (_, ln) in enumerate(lines) if re.search(start_rx, ln)), None)
+    if start_i is None:
+        return None
+    end_i = next((i for i, (_, ln) in enumerate(lines) if i > start_i and re.search(end_rx, ln)), len(lines))
+    return [ln for _, ln in lines[start_i:end_i] if is_val(ln)]
+
+
 def pick_pc(toks, layout):
     """(prev, cur) from a row's value tokens.
     prev_cur_diff     : 前年度 / 当年度 / 比較増減                     (au 損益計算書)
@@ -691,23 +763,46 @@ def extract_profit(comp, doc):
         # 회계방침 절 is in the main volume → stays unstated (no estimation).
         meta["accounting_basis_evidence"] = "別冊 has no 会計方針 section (EBS 財務会計ベース column shows 価格変動準備金·危険準備金等 — consistent with jgaap, unconfirmed)"
         return dict(values=v, pages=pg, raw_tokens=raw, meta=meta, summary5=None)
-    meta["profit_source_doc"] = comp["pdf"]
+    meta["profit_source_doc"] = comp.get("profit_pdf") or comp["pdf"]
+    if comp.get("profit_pdf_used_fixture"):
+        meta["profit_source_doc"] += " (read via profit_pdf_fixture — live PDF absent this run, see COMPANIES comment)"
     layout = comp["pl_layout"]
     tl = {k: page_lines(doc, pages) for k, pages in pp.items()}
+    if comp.get("vertical_labels"):
+        # Meiji Yasuda main volume renders 保険引受利益明細表/比率표 row labels one glyph per line
+        # (unlike au/NN's horizontal labels) — merge them so grab()'s regex can anchor on them.
+        # "pl" and "summary5" are handled separately below (pl via pl_flat_tokens; summary5 already
+        # merge_vertical'd further down) so they are left untouched here.
+        tl = {k: (merge_vertical(ls) if k not in ("pl", "summary5") else ls) for k, ls in tl.items()}
+    pl_flat = None
+    if layout == "label_block_3yr":
+        pl_flat = pl_flat_tokens(tl["pl"], *comp["pl_flat_bounds"])
+        if pl_flat is not None and comp.get("pl_flat_len") and len(pl_flat) != comp["pl_flat_len"]:
+            pl_flat = None  # layout drifted from the verified page — don't trust positional offsets
     cursors = {}
     for it in PROFIT_ITEMS:
         if it["scope"] not in ("both", comp["sector"]):
             raw[it["id"]] = "N/A_SECTOR"
             continue
         src = it["src"]
+        if src == "pl" and layout == "label_block_3yr":
+            idxs = comp["pl_flat_map"].get(it["id"])
+            if pl_flat is None or idxs is None:
+                raw[it["id"]] = "NOT_FOUND"
+                continue
+            i23, i24, i25 = idxs
+            v[it["id"]] = dict(prev=to_val(pl_flat[i24]), cur=to_val(pl_flat[i25]))
+            pg[it["id"]] = pp["pl"][0]
+            raw[it["id"]] = [pl_flat[i23], pl_flat[i24], pl_flat[i25]]
+            continue
         lines = tl.get(src)
         if lines is None:
             raw[it["id"]] = "NO_PAGE"
             continue
         start = cursors.get(src, 0)
         if src == "ratio":
-            # (6)正味損害率、正味事業費率及びその合算率 → first 合計 after that heading; the three ratios share one row
-            h = next((i for i, (_, ln) in enumerate(lines) if ln.startswith("(6)正味損害率")), 0)
+            # heading varies (au "(6)正味損害率…" / Meiji "6. 正味損害率…") → match on the two labels together
+            h = next((i for i, (_, ln) in enumerate(lines) if "正味損害率" in ln and "正味事業費率" in ln), 0)
             res = grab(lines, h, [r"^合計$"])
             if res and len(res[0]) >= 9:
                 k = {"pl_loss_ratio_pct": 0, "pl_expense_ratio_pct": 1, "pl_combined_ratio_pct": 2}[it["id"]]
@@ -721,7 +816,11 @@ def extract_profit(comp, doc):
             res = grab(lines, h, [r"^合計$"])
             lay = "three_years_x3"
         else:
-            res = grab(lines, start, it["labels"])
+            # per-company label alias (schema's canonical `labels` stays untouched) — e.g. Meiji
+            # Yasuda's 保険引受利益明細表 prints the underwriting-share G&A row as the bare label
+            # "営業費及び一般管理費" (the fuller "保険引受に係る…" phrase only appears in a footnote).
+            labels = comp.get("label_overrides", {}).get(it["id"], it["labels"])
+            res = grab(lines, start, labels)
             lay = layout if src == "pl" else ("three_years" if src == "uw" else "prev_cur_diff")
         if res is None:
             raw[it["id"]] = "NOT_FOUND" if src != "three" else "TABLE_ABSENT"
@@ -732,6 +831,16 @@ def extract_profit(comp, doc):
         pg[it["id"]], raw[it["id"]] = p, toks
         if src == "uw":  # 明細表 rows are in form order; P&L labels are anchored (^…$) and unique, so no cursor there
             cursors[src] = nxt
+    if comp.get("pl_investment_override") == "pl_stmt" and pl_flat is not None:
+        # 資産運用利回り(実現利回り)합계행의 분자는 資産運用収益+積立保険料等運用益-資産運用費用인데, 積立保険料等運用益은
+        # 이미 保険引受収益(→保険引受利益) 안에 들어 있어 그대로 pl_investment_pl 로 쓰면 P07 이 이중계상으로 깨진다
+        # (Meiji Yasuda 2026-09-12 발견, ±15 어긋남). 損益計算書의 資産運用収益-資産運用費用 으로 대체한다.
+        ir, ie = comp["pl_flat_map"]["_inv_rev"], comp["pl_flat_map"]["_inv_exp"]
+        prev = z(to_val(pl_flat[ir[1]])) - z(to_val(pl_flat[ie[1]]))
+        cur = z(to_val(pl_flat[ir[2]])) - z(to_val(pl_flat[ie[2]]))
+        v["pl_investment_pl"] = dict(prev=prev, cur=cur)
+        pg["pl_investment_pl"] = pp["pl"][0]
+        raw["pl_investment_pl"] = "override=pl_stmt: 資産運用収益-資産運用費用 (not the yield-table 合計, which double-counts 積立保険料等運用益 already inside 保険引受収益 for this company)"
     # 5개년 主要な経営指標 표 (au) — cross-check source for P10
     s5 = None
     if pp.get("summary5"):
@@ -747,26 +856,32 @@ def extract_profit(comp, doc):
     # --- accounting basis (evidence sentences only; no inference beyond the two documented tiers) ---
     basis_text = norm("\n".join(doc[p - 1].get_text("text") for p in pp.get("basis", []))).replace("\n", " ")
     doc_text = norm("\n".join(p.get_text("text") for p in doc)).replace("\n", " ")
+    # Vertical-rendered labels (Meiji main volume) turn into "責 任 準 備 金 …" once "\n" -> " " above,
+    # which breaks every substring check below — match against a space-stripped copy instead (CJK
+    # phrases carry no real spaces, so this only ever ADDS matches, never removes one that already
+    # worked for au/NN's horizontally-rendered text).
+    basis_ns = basis_text.replace(" ", "")
+    doc_ns = doc_text.replace(" ", "")
     ev = []
 
     def ctx(txt, ph, w=70):
         i = txt.find(ph)
         return None if i < 0 else re.sub(r"\s+", " ", txt[max(0, i - w): i + len(ph) + w])
 
-    ifrs_hit = next((ph for ph in ["国際財務報告基準", "IFRS"] if ph in doc_text), None)
-    tier_a = next((ph for ph in ["標準責任準備金", "大蔵省告示第48号", "企業会計基準"] if ph in basis_text), None)
-    tier_b_pl = "責任準備金繰入額" in basis_text or "責任準備金戻入額" in basis_text
-    tier_b_audit = ("会社法第436条" in basis_text or "保険業法第111条" in basis_text)
-    if ifrs_hit and ("作成基準" in doc_text or "連結財務諸表" in doc_text):
+    ifrs_hit = next((ph for ph in ["国際財務報告基準", "IFRS"] if ph in doc_ns), None)
+    tier_a = next((ph for ph in ["標準責任準備金", "大蔵省告示第48号", "企業会計基準"] if ph in basis_ns), None)
+    tier_b_pl = "責任準備金繰入額" in basis_ns or "責任準備金戻入額" in basis_ns
+    tier_b_audit = ("会社法第436条" in basis_ns or "保険業法第111条" in basis_ns)
+    if ifrs_hit and ("作成基準" in doc_ns or "連結財務諸表" in doc_ns):
         meta["accounting_basis"] = "ifrs"
-        ev.append(f"IFRS: {ctx(doc_text, ifrs_hit)}")
+        ev.append(f"IFRS: {ctx(doc_ns, ifrs_hit)}")
     elif tier_a:
         meta["accounting_basis"] = "jgaap"
-        ev.append(f"A(会計方針 p{pp['basis']}): {ctx(basis_text, tier_a)}")
+        ev.append(f"A(会計方針 p{pp['basis']}): {ctx(basis_ns, tier_a)}")
     elif tier_b_pl and tier_b_audit:
         meta["accounting_basis"] = "jgaap"
-        ev.append(f"B(法定P&L 様式 p{pp['basis']}): {ctx(basis_text, '責任準備金繰入額', 40)}")
-        ev.append(f"B(監査 文구): {ctx(basis_text, '会社法第436条' if '会社法第436条' in basis_text else '保険業法第111条')}")
+        ev.append(f"B(法定P&L 様式 p{pp['basis']}): {ctx(basis_ns, '責任準備金繰入額' if '責任準備金繰入額' in basis_ns else '責任準備金戻入額', 40)}")
+        ev.append(f"B(監査 文구): {ctx(basis_ns, '会社法第436条' if '会社法第436条' in basis_ns else '保険業法第111条')}")
     if any(ph in doc_text for ph in ["IFRS第17号", "IFRS 17", "保険契約に関する国際財務報告基準"]):
         meta["ifrs17_applied"] = True
     elif meta["accounting_basis"] == "jgaap":
@@ -1207,8 +1322,23 @@ def main():
         ax = extract_axes(comp, doc)
         ax["checks"] = run_axes_checks(comp, ax, esr)
         r["axes"] = ax
-        pf = extract_profit(comp, doc)
-        pf["checks"] = run_profit_checks(comp, pf) + run_profit_axes_xref(comp, pf, ax)
+        # profit layer may live in a SEPARATE pdf (comp["profit_pdf"], e.g. Meiji Yasuda's main volume).
+        # Prefer the live PDF; fall back to a captured-text fixture (profit_pdf_fixture) when the PDF
+        # is absent; only go NOT_ACQUIRED (profit_pages=None) if neither is available.
+        pf_doc, pf_comp = doc, comp
+        if comp.get("profit_pdf"):
+            pf_path = SAMPLES / comp["profit_pdf"]
+            fixture_path = SAMPLES / comp["profit_pdf_fixture"] if comp.get("profit_pdf_fixture") else None
+            if pf_path.exists():
+                pf_doc = fitz.open(str(pf_path))
+            elif fixture_path and fixture_path.exists():
+                with open(fixture_path, encoding="utf-8") as f:
+                    pf_doc = FixtureDoc(json.load(f))
+                pf_comp = {**comp, "profit_pdf_used_fixture": True}
+            else:
+                pf_comp = {**comp, "profit_pages": None}
+        pf = extract_profit(pf_comp, pf_doc)
+        pf["checks"] = run_profit_checks(pf_comp, pf) + run_profit_axes_xref(pf_comp, pf, ax)
         r["profit"] = pf
         cz = census_headline(comp["company_jp"])
         r["census"] = dict(**cz, match=(cz["esr_pct"] == esr["values"]["esr_pct"]) if esr else (cz["status"] == ax["values"]["esr_status"]))

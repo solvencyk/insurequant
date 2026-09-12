@@ -348,10 +348,26 @@ def self_check(out, jesr_esr):
                         f"loss {loss} + expense {expense} = {loss + expense} vs combined {combined} (tol 0.1)"
                     )
         elif c["id"] == "meijiyasuda_nonlife":
-            if profit.get("status") != "not_obtained":
-                errors.append(f"{cen}: profit.status expected 'not_obtained', got {profit.get('status')!r}")
-            if profit.get("items"):
-                errors.append(f"{cen}: profit.items expected empty for not_obtained, got {list(profit['items'])}")
+            # 2026-09-12: 본편(main PDF)이 owner 제공으로 확보돼 profit 이 extracted 로 바뀜. 두 상태 모두 정합만 검사한다 --
+            # not_obtained 면 items 비어야 하고, extracted 면 au 와 같은 손보 검산(경상·순이익 존재, 合算率 항등식)을 적용.
+            if profit.get("status") == "not_obtained":
+                if profit.get("items"):
+                    errors.append(f"{cen}: profit.items expected empty for not_obtained, got {list(profit['items'])}")
+            elif profit.get("status") == "extracted":
+                for req in ("pl_ordinary_profit", "pl_net_income"):
+                    if req not in profit.get("items", {}):
+                        errors.append(f"{cen}: profit.items missing required id {req}")
+                ratios = profit.get("ratios", {})
+                for period in ("cur", "prev"):
+                    loss = ratios.get("pl_loss_ratio_pct", {}).get(period)
+                    expense = ratios.get("pl_expense_ratio_pct", {}).get(period)
+                    combined = ratios.get("pl_combined_ratio_pct", {}).get(period)
+                    if None in (loss, expense, combined):
+                        errors.append(f"{cen}: profit.ratios[{period}] missing loss/expense/combined for 合算率 check")
+                    elif abs((loss + expense) - combined) > 0.1 + 1e-9:
+                        errors.append(f"{cen}: profit.ratios[{period}] 合算率 mismatch -- {loss}+{expense} vs {combined}")
+            else:
+                errors.append(f"{cen}: profit.status unexpected {profit.get('status')!r}")
 
     return errors
 

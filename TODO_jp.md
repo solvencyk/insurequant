@@ -1,9 +1,26 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-12 (12) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-12 (13) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-12 (13) Meiji Yasuda Non-Life 본편 확보 후 profit 층 채움 — 25/25 추출, 검산 17/19(2건 informational), jgaap/ifrs17=false.**
+티켓 `inbox/_resolved/20260912T1150Z__owner__JP_MULTI__profit_layer_schema.md` 말미에 "본편 확보 후 추가" 절 append(status 는
+resolved 유지). owner 가 `J-ESR/raw/fy2025_samples/meijiyasuda_nonlife_20260729_main.pdf`(60p)를 직접 넣어줌. `extract_esr_template_samples.py`
+에 페이지 매핑(pl=42·uw=36·ratio=35·summary5=9·basis=42,45, 인쇄쪽↔pdf인덱스 환산식)·`MEIJI_PL_FLAT_MAP`(損益計算書가 라벨 전체
+나열 후 값 전체 나열하는 구획식이라 `pl_flat_tokens` 로 라벨 무시하고 고정 위치 120토큰 읽음)·`vertical_labels`(세로줄 라벨 렌더링
+→ `merge_vertical` 을 uw/ratio 에도 적용)·`label_overrides`(스키마 정본 라벨은 안 바꾸고 회사별 別名만 추가)·`pl_investment_override`
+(자산운용손익 이중계상 방지, 손익계산서 기준으로 대체)를 배선. **세션 중 소스 PDF 가 로컬에서 사라진 사고 발생**(홈 디렉터리
+전체검색+git 이력 대조로 부재 확인, 애초 git 미추적) — 사라지기 전 읽은 원문을 `meijiyasuda_nonlife_main_pages_fixture.json`
+으로 남겨 `main()` 이 실물PDF→fixture→NOT_ACQUIRED 순으로 재시도하게 배선(`FixtureDoc`), 이번 결과는 fixture 경로.
+**실측**(exit 0, au 19/19·NN 12/12 무회귀 확인): meiji profit_items_nonnull=25/25 applicable, checks 17/19(P13 이자배당↔투자손익
+2건만 informational, au 도 같은 사유), accounting_basis=jgaap/ifrs17_applied=false(B 티어: p42 법정 損益計算書 양식+p45
+10.会計監査 会社法436条/保険業法111条). 경상이익 1,594(prev 1,216)·당기순이익 1,003(777)·보험인수이익 963(729)·손해율/사업비율/
+합산율 37.7/51.7/89.5(38.3/51.5/89.8). 스키마(`esr_disclosure_schema.json`, 173항목) 바이트 무변경(`git diff --stat` 확인) —
+라벨 별명은 회사별 `label_overrides` 로만, 항목 정의 무변경. `docs/domains/jp_esr_disclosure_template.md` §9-1·§9-6(신설: 페이지
+매핑·라벨 렌더링 특이점·이중계상 발견·검산·회계기준·파일소실 사고). publishing 의 `jp/jesr_detail.json` profit 블록(TODO(11))은
+Meiji 가 아직 not_obtained 로 박혀 있어 **재실행 필요**(후속 티켓, jp/ 미접촉 원칙상 이번 라운드에서 직접 안 돌림).
 
 **🟢 2026-09-12 (12) `jp/terms.html`(利用規約·プライバシー) 신규 + `/jp/` 2페이지 GA4·CSP·푸터 링크·오류제보 팝업 + `jp/jesr.html` nit 3건(designer).**
 티켓 `inbox/designer/20260912T1215Z__owner__JP_MULTI__jp_terms_privacy.md`(answered, 본문+추가 절). 산출: `jp/terms.html`(利用規約 第1~8条 +
@@ -86,27 +103,6 @@ CDN 참조·integrity 원복을 `grep echarts jp/jesr.html` 로 재확인(git �
 `full_page=True`)로 전환해 확보: `artifacts/designer/jesr_jp_jesr_desktop_20260912.png`(1280×2454)·
 `artifacts/designer/jesr_jp_jesr_mobile_20260912.png`(375×2545, 워터폴 막대 8개 전부 표시 확인).
 배포는 owner 승인 후 별도 라운드(`scripts/android_push_and_deploy.sh` NEW_FILES 는 오케스트레이터가 처리 — 미접촉).
-
-**🟢 2026-09-12 (8) `jp/jesr_detail.json` 신규 조립 — au_nonlife·meijiyasuda_nonlife 2사 상세(publishing).**
-티켓 `inbox/publishing/20260912T1120Z__owner__JP_MULTI__jesr_detail_json.md`(answered). `jp/company.html`(designer 병렬
-작업, 이 세션 미접촉) 이 fetch 할 회사별 상세 JSON. 신규 `J-ESR/build_jesr_detail_json.py`(stdlib, self-check 내장 exit 1).
-입력 4개: `extracted_sample_values.json`(이미 존재 — 없으면 추출기 자동 선실행) · `esr_disclosure_schema.json`(137 items 라벨) ·
-`esr_aggregation_rules.json`(포인터만, known_deviations 는 이미 각 check 의 note 에 반영돼 있어 재병합 안 함) · `jp/jesr_esr.json`
-(self-check 대조용). **판단 근거**: `jp/jesr_esr.json` 은 부모-자회사 중복 제거로 明治安田損害保険 을 `excluded_subsidiaries`
-로만 남기고 `source_url`/`doc_type`/`doc_date`/`preliminary` 를 비운 상태라, 이 4필드는 제외 전 원본인 `J-ESR/jesr_master.json`
-에서 조인(실측 확인 완료 — au 는 두 파일 값 동일, meiji 손보만 master 에만 존재). `census.status=="posted"` 인 2사만
-(nnlife 는 ESR 미공시 제외). 계약 고정 키 그대로(`risk`=`diversification_effect`/`tax_effect` 리네임 포함,
-`market_sub` 6개, `sensitivity[].delta_pp`=기준 대비, `aggregation.deviations`=informational 실패 체크만). **실측**(exit 0):
-au_nonlife esr_pct=791.7·eligible=9,278·required=1,171·reproduced=true·checks=43/43·deviations=0·sensitivity=[](공시 생략사) /
-meijiyasuda_nonlife esr_pct=743.2·eligible=40,290·required=5,420·reproduced=true·checks=49/51·deviations=2(G06_nonlife
-다지역·G07_catastrophe, 둘 다 `esr_aggregation_rules.json known_deviations` 등재분)·sensitivity=7행(엔금리+50bp→-6.5pp 등).
-`_meta.coverage`={detail_posted:2, posted_total:13, census_total:79}. self-check 4종 전부 통과(companies==2·headline.esr_pct
-=jesr_esr.json 대조 일치·risk.rc_post_tax==headline.required_capital·items 전 id 가 labels 에 존재·단위 무변환 확인).
-BOM 없음(`7b0a`)·`ast.parse` 통과. 배포: `scripts/android_push_and_deploy.sh` `NEW_FILES` 에 `jp/company.html jp/jesr_detail.json`
-추가(한 줄). `git status --short J-ESR/ jp/` = 신규 `build_jesr_detail_json.py`·`jp/jesr_detail.json` 뿐(루트 마스터·xlsx·
-public_exports·keep-list·HTML 무변경 확인; `jp/_fixture_jesr_detail.json` 은 designer 병렬세션 산출물이라 미접촉).
-재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/build_jesr_detail_json.py`.
-**아직 라이브 미반영**(owner 승인 후 별도 배포 라운드, `jp/company.html` 대기 중).
 
 ## Active follow-ups
 

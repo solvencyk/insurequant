@@ -2,6 +2,39 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 -- Meiji Yasuda Non-Life 본편 확보 후 profit 층 채움(스키마 무변경) + 세션 중 소스 PDF 소실 사고
+
+owner 가 티켓 `inbox/_resolved/20260912T1150Z__owner__JP_MULTI__profit_layer_schema.md` 회차(위 09-12 항목들의 profit 층 신설)에서
+本編 미확보였던 Meiji Yasuda Non-Life 손익 데이터를 `J-ESR/raw/fy2025_samples/meijiyasuda_nonlife_20260729_main.pdf`(60p)로 직접
+넣어줘, 추출기에 경로·페이지·라벨을 배선하고 재실행했다.
+
+**발견한 회사별 레이아웃 특이점 3개** (모두 `extract_esr_template_samples.py` 에 회사별 opt-in 으로만 배선, au/NN 무회귀 확인):
+1. 損益計算書(p42)가 한 구획(경상수익 12항목 등)의 라벨을 전부 나열한 뒤 그 구획 전체 3개년 값을 한꺼번에 찍는 방식 — 기존 `grab()`
+   방식(라벨 뒤 값)이 안 먹어서, 라벨을 무시하고 제목~注記 사이 값 토큰만 순서대로 읽는 `pl_flat_tokens`+`MEIJI_PL_FLAT_MAP`(120개
+   고정 위치) 신설.
+2. 明細表·比率표는 라벨을 글자 하나씩 세로줄로 찍어(`保`→`険`→`引`→`受`…) 정규식 라벨 매칭이 아예 안 됨 — 기존에 summary5 전용이던
+   `merge_vertical()` 를 `vertical_labels=True` 로 uw/ratio 에도 적용. 회계기준 근거문 판정도 같은 이유로 깨져 있어서
+   `"\n"→" "` 치환 후 공백을 전부 제거한 사본(`basis_ns`/`doc_ns`)으로 판정하도록 고쳤다(CJK 는 원래 공백이 없어 매치를 늘리기만
+   하고 기존 회사의 매치는 그대로 유지).
+3. 資産運用損益(実現ベース) 합계행을 그대로 쓰면 積立保険料等運用益 이 保険引受収益 안에도 들어 있어 이중계상(P07 이 ±15 로 깨짐) —
+   손익계산서의 資産運用収益-資産運用費用 으로 대체하는 `pl_investment_override="pl_stmt"` 신설.
+
+**스키마 불변식 유지.** `pl_uw_operating_general_admin` 행 라벨이 明細表에선 그냥 "営業費及び一般管理費"(注記로만 보험인수 귀속분
+확인)라 스키마 정본 라벨 "保険引受に係る営業費及び一般管理費" 를 못 찾았는데, 스키마 항목의 `labels` 자체를 고치지 않고 회사별
+`label_overrides` 딕셔너리로만 별명을 추가했다 — `esr_disclosure_schema.json` 173항목 바이트 무변경(`git diff --stat` 로 확인).
+
+**세션 중 사고: 소스 PDF 가 로컬에서 사라짐.** 페이지를 다 읽고 검증까지 마친 뒤 재확인하려는데 파일이 없어졌다(홈 디렉터리 전체
+검색 + git 이력 대조 — 애초 git 미추적이라 이력도 없음, 원인 불명, Claude 가 지우지 않았음). 사라지기 전 읽은 원문(p9·35·36·42·45
+의 `get_text('text')`)을 `meijiyasuda_nonlife_main_pages_fixture.json` 으로 남겨 뒀고, `main()` 을 "① 실물 PDF ② fixture 재현
+③ NOT_ACQUIRED" 순으로 동작하게 고쳤다(`FixtureDoc`). 이번 결과는 fixture 경로 산출 — 새 코드 경로(`pl_flat_tokens`/
+`MEIJI_PL_FLAT_MAP`/`vertical_labels`/`label_overrides`/`pl_investment_override`) 자체는 실제 파일에서 읽은 실제 텍스트를
+재생해 검증했으므로 추정이 아니다. 실물 PDF 가 돌아오면 다음 실행이 자동으로 그쪽을 우선하고, fixture 결과와 대조해 볼 것.
+
+**결과.** meiji profit 25/25 applicable 전항목 추출, 검산 17/19(2건은 P13 이자배당↔투자손익 informational, au 도 같은 사유로
+실패), accounting_basis=jgaap/ifrs17_applied=false(B 티어, au 와 같은 판정 근거 구조). 상세 수치·페이지 매핑식·검산표는
+`docs/domains/jp_esr_disclosure_template.md` §9-1(갱신)·§9-6(신설). publishing 의 `jp/jesr_detail.json` profit 블록은 아직
+Meiji 가 not_obtained 로 박혀 있어 재실행이 후속 필요(이번 라운드는 `jp/` 미접촉 원칙 유지).
+
 ## 2026-09-12 (owner 결정) -- jp 비공개 프리뷰: main 배포 경로를 `jp-f9027362/` 로 (deploy-time 매핑)
 
 owner "당분간 비공개, 그러나 라이브 배포는 해서 확인" → 선택지 3(비밀 경로 / JS 비밀번호 / Cloudflare Access) 중 1번. GitHub Pages 는 서버 인증 불가,
