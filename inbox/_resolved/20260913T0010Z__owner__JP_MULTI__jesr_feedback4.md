@@ -2,7 +2,7 @@
 from: owner
 to: designer
 created: 20260913T0010Z
-status: open
+status: resolved
 route: html
 company: JP_MULTI
 period: FY2025
@@ -38,3 +38,9 @@ K-ICS.html 처럼 **한 표 안에서 [+] 버튼으로 하위 리스크가 펼�
 profit 표 행 수 = profit_flow 길이(+다리 행), SVG polyline 3개, pageerror 0 — **DOM 으로만**. ECharts 시각 검증 생략. 스크린샷 1장(`artifacts/designer/jesr_jp_feedback4_desktop_20260913.png`,
 CDN 차단이면 차트 빈 채로 OK). 띄운 서버 kill. 서브에이전트 금지, 멀티라인 `python -c` 금지, UTF-8 BOM 없음, 줄바꿈 보존, 커밋 금지, JSON·common.css 무변경.
 끝나면 답변란 요약, `status: answered`, `TODO_jp.md`(5개 유지)·`docs/changelog_jp.md`. 보고문 일본어 문자 금지.
+
+## 종결 (orchestrator 2026-09-13)
+
+designer 2회(32분+13분 연장) 미완 → 종료·되돌리고 orchestrator 가 직접 구현: 適格資本・所要資本 한 표(capital_tree+risk_tree, subtoggle 다단 접기, 符号 ＝/＋/－, ✓·差·相関統合 備考, 税効果·所要資本 마무리 행), 市場リスク 패널 폐지, 損益 표 = profit_flow + 재보험 다리 [+](元受/受再/出再·回収) + details 전 항목, 손해율 이관, 収益性指標 패널(카드 3 + 5개년 SVG 3선 + 연도표). Playwright DOM 검증: au 표 30행(트리 28+2)·depth≥2 기본 숨김·rc_nonlife 펼침 2·profit 17행·다리 3·polyline 3·pageerror 0; Meiji 41행·펼침 4·profit 19행. 스키마 라벨 2건 정정(pl_investment_pl '合計'→資産運用損益, hist_combined_ratio_pct 라벨 부재).
+
+status: **resolved**

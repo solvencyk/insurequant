@@ -2730,6 +2730,7 @@
       "layer": "profit",
       "table": "profit:inv",
       "labels_ja": [
+        "資産運用損益",
         "合計"
       ],
       "ko": "자산운용손익(실현기준 = 資産運用収益+積立保険料等運用益-資産運用費用)",
@@ -3082,7 +3083,9 @@
       "id": "hist_combined_ratio_pct",
       "layer": "history",
       "table": "history:summary5",
-      "labels_ja": [],
+      "labels_ja": [
+        "合算率（正味損害率＋正味事業費率）"
+      ],
       "ko": "합산비율 5개년 % (파생 = 손해율+사업비율, 있으면 표 직접값 우선)",
       "unit": "pct",
       "parent": null,

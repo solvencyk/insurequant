@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-12T16:07:27.546963Z",
+    "generated_at": "2026-09-12T16:42:15.229293Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -1156,7 +1156,7 @@
         "pl_item_ref": 1
       },
       "pl_investment_pl": {
-        "ja": "合計",
+        "ja": "資産運用損益",
         "ko": "자산운용손익(실현기준 = 資産運用収益+積立保険料等運用益-資産運用費用)",
         "unit": "JPY_million",
         "kics_item_ref": null,
@@ -1296,7 +1296,7 @@
         "pl_item_ref": null
       },
       "hist_combined_ratio_pct": {
-        "ja": null,
+        "ja": "合算率（正味損害率＋正味事業費率）",
         "ko": "합산비율 5개년 % (파생 = 손해율+사업비율, 있으면 표 직접값 우선)",
         "unit": "pct",
         "kics_item_ref": null,
@@ -2080,7 +2080,7 @@
           },
           {
             "id": "pl_investment_pl",
-            "label_ja": "合計",
+            "label_ja": "資産運用損益",
             "sign": "+",
             "cur": 48,
             "prev": 7,
@@ -3007,7 +3007,7 @@
           },
           {
             "id": "pl_investment_pl",
-            "label_ja": "合計",
+            "label_ja": "資産運用損益",
             "sign": "+",
             "cur": 773,
             "prev": 592,
