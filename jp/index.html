@@ -2,11 +2,34 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8"/>
-  <!-- CSP: root index.html과 같은 형식(jsdelivr만 허용). 이 페이지는 GA를 탑재하지 않아 관련 호스트는 제외했다.
-       head 첫 자식 유지, CDN 태그보다 앞. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"/>
+  <!-- CSP: root index.html 6행과 동일(GA4 호스트 + 오류제보 Apps Script connect-src 포함, 2026-09-12).
+       analytics.google.com apex 는 *.analytics.google.com 와일드카드에 안 잡혀 별도 등재. script.googleusercontent.com 은
+       Apps Script /exec 가 302 로 보내는 리다이렉트 목적지라 빠지면 제출이 CSP 에 막힌다. head 첫 자식 유지, CDN 태그보다 앞. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>日本 ESR ダッシュボード | InsureQuant</title>
+  <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
+       integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
+       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
+       인라인 블록은 script-src의 기존 'unsafe-inline'으로 실행된다 — nonce를 넣으면 'unsafe-inline'이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8NSCQZBZK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // owner 본인 방문 제외(2026-09-12): ?iq_internal=1 로 한 번 접속하면 이 브라우저는 내부로 기억,
+    // ?iq_internal=0 이면 해제. GA4 Admin > Data filters > Internal Traffic 을 Active 로 둬야 실제 제외된다.
+    (function(){
+      var cfg = {};
+      try {
+        var q = new URLSearchParams(location.search).get('iq_internal');
+        if (q === '1') localStorage.setItem('iq_internal', '1');
+        else if (q === '0') localStorage.removeItem('iq_internal');
+        if (localStorage.getItem('iq_internal') === '1') cfg.traffic_type = 'internal';
+      } catch (e) {}
+      gtag('config', 'G-F8NSCQZBZK', cfg);
+    })();
+  </script>
   <meta name="description" content="日本の保険会社の経済価値ベースソルベンシー比率(ESR)を一覧表示。公表され次第、順次更新します。"/>
   <meta property="og:title" content="InsureQuant — 日本 ESR ダッシュボード"/>
   <meta property="og:description" content="日本の保険会社の経済価値ベースソルベンシー比率(ESR)を一覧表示。公表され次第、順次更新します。"/>
@@ -84,8 +107,10 @@
     /* 표 (業種 2섹션 각각 별도 table, .esr-table 공통 클래스) */
     .table-container{overflow-x:auto}
     .esr-table{min-width:680px}
+    /* owner 2026-09-12: 業態·基準日 열 제거로 5열(会社名/範囲/ESR/公表日/備考) — ESR 이
+       4번째에서 3번째로 이동, nth-child 인덱스 갱신. */
     .esr-table td:nth-child(n+2), .esr-table th:nth-child(n+2){text-align:left}
-    .esr-table td:nth-child(4), .esr-table th:nth-child(4){text-align:right}
+    .esr-table td:nth-child(3), .esr-table th:nth-child(3){text-align:right}
     .esr-table a{color:var(--primary)}
     .esr-table td, .esr-table th{vertical-align:top}
 
@@ -169,14 +194,17 @@
 
     <section class="panel" aria-labelledby="secTable">
       <h2 id="secTable">一覧表</h2>
+      <!-- owner 2026-09-12 추가지시: 전 행이 같은 基準日(2026-03-31)라 열로 반복하지 않고
+           위 公表状況 패널의 基準時点 한 줄(asOfLine)로 대신한다 — 새 줄을 여기 또 넣지 않는다.
+           業態는 生保/損保 섹션 분리로 이미 표현되어 열 자체를 제거. -->
 
       <h3 class="rank-group-title">生命保険<span class="rank-group-count" id="tableCountLife"></span></h3>
       <div class="table-container">
         <table class="esr-table" id="esrTableLife">
           <thead><tr>
-            <th scope="col">会社名</th><th scope="col">業態</th><th scope="col">範囲</th><th scope="col">ESR</th><th scope="col">基準日</th><th scope="col">公表日</th><th scope="col">備考</th>
+            <th scope="col">会社名</th><th scope="col">範囲</th><th scope="col">ESR</th><th scope="col">公表日</th><th scope="col">備考</th>
           </tr></thead>
-          <tbody id="esrTableBodyLife"><tr><td colspan="7" class="small-muted">読み込み中…</td></tr></tbody>
+          <tbody id="esrTableBodyLife"><tr><td colspan="5" class="small-muted">読み込み中…</td></tr></tbody>
         </table>
       </div>
       <button type="button" class="more-btn" id="tableMoreBtnLife" hidden aria-expanded="false"></button>
@@ -185,9 +213,9 @@
       <div class="table-container">
         <table class="esr-table" id="esrTableNonlife">
           <thead><tr>
-            <th scope="col">会社名</th><th scope="col">業態</th><th scope="col">範囲</th><th scope="col">ESR</th><th scope="col">基準日</th><th scope="col">公表日</th><th scope="col">備考</th>
+            <th scope="col">会社名</th><th scope="col">範囲</th><th scope="col">ESR</th><th scope="col">公表日</th><th scope="col">備考</th>
           </tr></thead>
-          <tbody id="esrTableBodyNonlife"><tr><td colspan="7" class="small-muted">読み込み中…</td></tr></tbody>
+          <tbody id="esrTableBodyNonlife"><tr><td colspan="5" class="small-muted">読み込み中…</td></tr></tbody>
         </table>
       </div>
       <button type="button" class="more-btn" id="tableMoreBtnNonlife" hidden aria-expanded="false"></button>
@@ -197,7 +225,7 @@
 
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
     出所: 各社開示資料(決算短信・決算説明資料・ディスクロージャー誌 等) — 数値の権利は各開示主体に帰属します。掲載データは公開資料を基に作成しており、誤りを含む可能性があります。投資判断の根拠として使用しないでください。<br/>
-    © 2026 InsureQuant · <a href="../index.html" class="iq-anon-link" lang="ko">한국어 사이트</a>
+    © 2026 InsureQuant · <a href="terms.html" class="iq-anon-link">利用規約・プライバシーポリシー</a> · <a href="../index.html" class="iq-anon-link" lang="ko">한국어 사이트</a>
   </footer>
 
   <script>
@@ -205,9 +233,6 @@
     'use strict';
     var DATA_URL = 'jesr_esr.json';
     var FOLD = 5;
-    // 表の「業態」列はそのまま個別ラベル(再保険も再保険と表示)。sector グループ分け(下記
-    // GROUP_KEY/GROUP_LABEL)は「どのセクションに置くか」だけを決め、行自体のラベルは変えない。
-    var SECTOR_LABEL = {life:'生命保険', nonlife:'損害保険', reinsurance:'再保険'};
     var SCOPE_LABEL  = {group:'連結', solo:'単体'};
     // owner 지시 2: sector 섹션은 生保/損保 두 개뿐 — reinsurance는 損保 섹션에 합친다.
     function groupKey(sector){ return sector === 'life' ? 'life' : 'nonlife'; }
@@ -262,6 +287,20 @@
     }
     function jaMonthEnd(iso){ var p=String(iso).split('-'); return p[0]+'年'+parseInt(p[1],10)+'月末'; }
     function jaMonthEndShort(iso){ var p=String(iso).split('-'); return parseInt(p[1],10)+'月末'; }
+    // owner 2026-09-12 정정: 날짜(2026年3月31日) 그대로 쓰면 한국식 "2026.1Q"류 표기와 헷갈려
+    // 일본 독자가 역월(4~6월)로 잘못 읽는다(일본 회계연도는 4월 시작). 일본 회계연도 분기로
+    // 변환 — 1~3월은 전년도 4Q, 4~6월=1Q, 7~9월=2Q, 10~12월=3Q. 실제 날짜는 title 툴팁으로만.
+    function jaFiscalQuarter(iso){
+      if(!iso) return null;
+      var p = String(iso).split('-');
+      var y = parseInt(p[0],10), m = parseInt(p[1],10);
+      var fy, q;
+      if(m>=1 && m<=3){ fy = y-1; q = 4; }
+      else if(m<=6){ fy = y; q = 1; }
+      else if(m<=9){ fy = y; q = 2; }
+      else { fy = y; q = 3; }
+      return fy + '年度 ' + q + 'Q';
+    }
     // basis가 표준(J-ICS)과 다르면 표에 짧은 표식을 남긴다(예: "J-ICS_VaR99.5" -> "VaR99.5").
     function basisNote(basis){
       if(!basis || basis==='J-ICS') return null;
@@ -282,6 +321,25 @@
     var cov=null;
     var groupData = {life:[], nonlife:[]};   // 業種별 버킷정렬 전체 리스트
     var expanded  = {life:false, nonlife:false};
+    // 一覧表 회사명 -> jesr.html 링크 판정용(inbox 20260912T1120Z). null=아직 로딩중(링크 보류),
+    // {}=상세 없음(로드 실패 포함). jesr_detail.json 이 없으면(publishing 병행작업 중) fixture로
+    // 폴백 — 진짜 파일이 생기면 그대로 성공해 fixture는 자동으로 안 쓰인다.
+    var detailMap = null;
+    function loadDetailMap(){
+      function tryFetch(url){
+        return fetch(url, {cache:'no-store'}).then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); });
+      }
+      tryFetch('jesr_detail.json')
+        .catch(function(){ return tryFetch('_fixture_jesr_detail.json'); })
+        .then(function(d){
+          var map = {};
+          (d.companies||[]).forEach(function(c){ if(c.company_en) map[c.company_en] = c.id; });
+          detailMap = map;
+          renderGroup('life'); renderGroup('nonlife');
+        })
+        .catch(function(){ detailMap = {}; });
+    }
+    loadDetailMap();
 
     fetch(DATA_URL, {cache:'no-store'})
       .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
@@ -355,8 +413,12 @@
       var nextLabel = meta.next_update ? jaMonthEnd(meta.next_update) : '順次';
       document.getElementById('noteLine').textContent =
         '各社の経済価値ベースのソルベンシー比率(ESR)は' + nextLabel + 'までに全社反映予定です。';
-      var asOf = meta.as_of_label_ja || (meta.as_of ? jaDateFlexible(meta.as_of) : '—');
-      document.getElementById('asOfLine').textContent = '基準日: ' + asOf + ' 時点(公表済み分)';
+      // owner 2026-09-12 정정: 날짜 표기 대신 일본 회계연도 분기 표기(基準時点 2025年度 4Q).
+      // 실제 날짜(2026年3月31日)는 title 툴팁으로만 — jp/jesr.html 상단과 동일 원칙.
+      var fq = meta.as_of ? jaFiscalQuarter(meta.as_of) : '—';
+      var asOfLineEl = document.getElementById('asOfLine');
+      asOfLineEl.textContent = '基準時点 ' + fq + '（公表済み分）';
+      asOfLineEl.title = (meta.as_of_label_ja || (meta.as_of ? jaDateFlexible(meta.as_of) : '—'));
     }
 
     // 2026-09-12: ECharts 가로막대 폐기, 루트 index.html 877~948행 renderList() 패턴으로 교체
@@ -462,7 +524,7 @@
       var full = groupData[key];
       var list = (expanded[key] || full.length<=FOLD) ? full : full.slice(0, FOLD);
       if(!list.length){
-        tbody.innerHTML = '<tr><td colspan="7" class="small-muted">該当データがありません。</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="small-muted">該当データがありません。</td></tr>';
         return;
       }
       tbody.innerHTML = list.map(function(r){
@@ -477,12 +539,17 @@
         if(bn) remarks.push('<span class="small-muted">'+esc(bn)+'</span>');
         // 2026-09-12: ▲目標水準 마커가 리스트 레이아웃에서 빠지면서(자리 없음) 表 備考로 이동.
         if(r.target_pct) remarks.push('<span class="small-muted">目標 '+esc(r.target_pct)+'</span>');
+        // 상세 페이지(jesr.html) 가 있는 회사만 링크(jesr_detail.json companies id 로 판정).
+        var detailId = (detailMap && r.company_en) ? detailMap[r.company_en] : null;
+        var nameCell = detailId
+          ? '<a href="jesr.html?company='+esc(detailId)+'">'+esc(r.company_jp)+'</a>'
+          : esc(r.company_jp);
+        // owner 2026-09-12: 業態(生保/損保 섹션분리로 중복)·基準日(전 행 동일, 上の基準時点
+        // 한 줄로 대체) 열 제거. 남는 열 = 会社名/範囲/ESR/公表日/備考.
         return '<tr>'
-          + '<td title="'+esc(r.category||'')+'">'+esc(r.company_jp)+'</td>'
-          + '<td>'+esc(SECTOR_LABEL[r.sector]||r.sector||'—')+'</td>'
+          + '<td title="'+esc(r.category||'')+'">'+nameCell+'</td>'
           + '<td>'+esc(SCOPE_LABEL[r.scope]||r.scope||'—')+'</td>'
           + '<td class="num">'+fmtPct(r.esr_pct)+'</td>'
-          + '<td>'+esc(jaDateFlexible(r.as_of)||'—')+'</td>'
           + '<td>'+pubCell+'</td>'
           + '<td>'+(remarks.length? remarks.join(' ') : '—')+'</td>'
           + '</tr>';
@@ -490,5 +557,8 @@
     }
   })();
   </script>
+  <!-- 오류제보 팝업(일본어). 백엔드는 루트 forms-config.js(같은 Apps Script)를 그대로 재사용, sheet 값에 JP: 접두. -->
+  <script src="../forms-config.js"></script>
+  <script src="report-widget.ja.js" data-sheet-hint="jesr_esr"></script>
 </body>
 </html>
