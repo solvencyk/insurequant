@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-09-11 · Stage 5/5 — designer
+> Last updated: 2026-09-12 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,28 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-09-12, J-ESR 킥오프 2차 — owner 발주 `inbox/designer/20260912T0446Z`, 초안 draft 완료·라이브 미배포):**
+- **`jp/index.html` 신규 — 일본 ESR 대시보드 초안(일본어 UI).** 헤더(언어전환)+공표상황 카드3+
+  ESR랭킹 가로막대(15사, 색=업태·빗금=연결·速報배지·▲목표마커)+커버리지 도넛+一覧表(7열)+푸터.
+  `../common.css` 재사용, 데이터는 `fetch('jesr_esr.json')`(publishing 산출, 읽기전용).
+  fixture 불필요 — 착수 시점에 이미 진짜 파일(79사 census·15사값) 도착.
+- **실데이터에서 스키마 예시에 없던 오염 2건 발견해 화면단에서 방어**: ① `notes` 필드가
+  한국어 내부 검증메모라 비노출 처리 ② `doc_type` 3건(au損害保険 등)에 한글 단어 혼입
+  → `jaOnly()`(정규식 한글 토큰 제거, 원본 JSON 불변)로 표시 직전 정화, 전체 렌더 텍스트
+  한글 잔여 0건 확인. `basis`≠"J-ICS"(SOMPO만 VaR99.5) 케이스는 차트 캡션+表 표식으로 고지.
+- **버그 2건 발견 즉시 수정**: 도넛 인접 슬라이스 라벨 말줄임("公表済...") → 온차트 라벨
+  끄고 범례에 건수 병기 / 모바일 375px 헤더 2줄 줄바꿈 → 루트 기존 관례(`.hint{display:none}`
+  at ≤640px) 적용.
+- **검증**: Claude Browser(1280·375px, 가로스크롤 0, aria-label 데이터기반 확인) + Playwright
+  실네트워크 재검증(진짜 배포 파일 그대로, 콘솔 에러 0, 스크린샷 2장 `artifacts/designer/
+  jesr_jp_draft_{desktop,mobile}_20260912.png`) + `a11y_contrast_check.py` 실측(업태3색·도넛3색
+  전부 delta-RGB 103+, 速報배지 흰글자 2.15:1 FAIL→진한글자 7.18:1 로 교체) + html.parser
+  태그균형 0오류·BOM없음·ECharts/Pretendard integrity 루트와 byte-diff 0.
+- **owner 판단거리 5건**(備考 공개비고 필요 여부·doc_type 오염 근본수정·noindex 해제 시점·GA
+  포함 여부·루트 삽입 조각 3종 실반영)을 티켓 답변에 정리. 루트 `index.html`/`common.css` 등
+  4개 배포 페이지는 이번 라운드 무수정(코드 조각만 답변에 제공). 상세는
+  `inbox/designer/20260912T0446Z__owner__JP_MULTI__jesr_jp_page_draft.md` 답변, changelog 2026-09-12.
 
 **Recent (2026-09-11b, 이용안내 — owner 지시, 커밋·배포 대기):**
 - **`privacy.html` 에 "이용안내" 절을 추가했다(새 HTML 파일 없음, owner 지시 1).** `<h1 id="terms">`
@@ -70,18 +92,6 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
   되어 `style.display` 직접 토글을 버리고 `openState` + `applyVis()` 재계산으로 바꿨다.
   실측 4개 회사 유형(손보·생보·LOB형·PAA) × 데스크톱·모바일 통과. 상세는 changelog 2026-09-03b.
 - **배포 대상: `IFRS17.html` 1개.** 안드로이드 얕은 main 클론에서 올린다(작업 PC push 불가).
-
-**Recent (2026-09-03, owner 직접 지시 — 라이브 배포 완료 `cda3c1e`):**
-- **섹션 스크롤 스냅("쫀득") 4개 페이지 공통.** `common.css` 한 곳(`html{scroll-snap-type:y
-  proximity}` + `.panel{align:start}` + `.container{start}`/`footer{end}` + `scroll-padding-top:88px`).
-  HTML 무수정. 4개 페이지 × 데스크톱 1280×900 · 모바일 375×812 실측: 제목 가림 0, 맨 위·바닥
-  도달 O, 섹션 중간 끌림 0. 양 끝 스냅 트랩(최상단 못 감 · 푸터 못 봄)은 재현해서 잡았다.
-  `prefers-reduced-motion` 에서 스냅 해제. 상세·근거는 changelog 2026-09-03.
-- **배포 경로: 안드로이드(Termux) 얕은 main 클론.** 작업 PC 는 읽기(fetch/ls-remote)는 통하지만
-  **push 는 여전히 막혀 있다** — `git push --dry-run` 이 3분 무응답으로 걸린다. 읽기가 되는 것을
-  보고 "열렸다"고 판단하면 안 된다.
-- **잔여: 브랜치 4커밋이 이 PC 에만 있다**(`4d73826`·`374c7f9`·`3ce1672`·`8f05c19`).
-  라이브에는 영향 없으나 백업이 없다. 폰으로 브랜치를 올리려면 316MB 를 받아야 해서 보류.
 
 > 📦 **Status 이력은 `docs/todo_archive_designer.md` 로 이동했다** (2026-09-11, 내용 무수정 — Recent (2026-09-03) 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 

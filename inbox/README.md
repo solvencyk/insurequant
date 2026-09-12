@@ -19,6 +19,7 @@ inbox/
   validation/   ← 검증에게 오는 메시지     (parser의 재작업 status: answered)
   publishing/   ← 퍼블리싱에게 오는 메시지 (owner backlog / validation pass 통지) — 2026-06-12 신설
   designer/     ← 디자이너에게 오는 메시지 (owner backlog / publishing schema-delta 통지) — 2026-06-12 신설
+  jp/          ← jp 레인(일본 ESR, jp-collector)에게 오는 메시지 — 2026-09-12 신설. 한국 stage 폴더와 섞지 않는다
   _resolved/    ← 종결 스레드 아카이브
 ```
 

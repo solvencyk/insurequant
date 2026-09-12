@@ -1,12 +1,56 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-09-11 · Stage 4/5 — publishing
+> Last updated: 2026-09-12 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
 
 **Cross-stage history:** `docs/claude-changelog.md`.
 **This file:** entries scoped to publishing work only.
+
+---
+
+## 2026-09-12 — J-ESR `/jp/` 페이지 데이터 JSON 신설 (`inbox/publishing/20260912T0446Z`)
+
+배경: owner가 `/jp/` 일본어 ESR 현황 페이지 초안 킥오프(designer 병행 티켓 `inbox/designer/20260912T0446Z`). 화면 규칙
+"그래프 데이터는 HTML 인라인 금지, JSON fetch"에 따라 페이지가 읽을 JSON을 publishing이 먼저 조립.
+
+신규 `J-ESR/build_jesr_page_json.py` — stdlib만(csv/json/re/datetime/pathlib), self-check 내장(실패 시 exit 1).
+입력은 `J-ESR/fy2025_esr_census_20260912.csv`(downloader 산출, 79사 census, utf-8-sig)의
+`fy2025_esr_status == "posted"` 15행과, `J-ESR/jesr_sources_2026Q1.csv`(6월 수집 11사)의 보조 열(`ticker` ·
+`total_assets_bn_jpy` · `target_pct` · `basis`)을 `company_jp`로 조인. 조인 규칙은 필드별로 다르게 뒀다: `ticker`는
+상장코드라 시간불변이므로 무조건 조인, 나머지 세 필드는 sources 행의 `as_of`가 census 행의 `as_of`(2026-03-31)와
+**일치할 때만** 조인했다 — 상호회사 4사(日本生命保険·住友生命保険·明治安田生命保険·富国生命保険)는 sources csv에
+2025-03-31~2025-09-30 구분기 값만 있어서, as_of를 안 걸고 그대로 조인하면 새로 posted된 2026-03-31 수치에 옛 분기의
+총자산/목표비율/basis 라벨이 잘못 붙는 사고가 난다("틀린 값을 싣느니 빈칸" 원칙 적용, CLAUDE.md). `preliminary`는
+census `notes`+`doc_type` 문자열에 속보/잠정/速報 중 하나라도 있으면 true로 판정하고, 어느 키워드로 잡았는지를
+`notes` 끝에 괄호로 남겼다(티켓 지시 "어느 표현을 잡았는지 notes에 남김" 반영). `doc_date`는 `doc_type` 문자열에서
+정규식 3단(YYYY-MM-DD → YYYY年M月D日 → YYYY年M月) 파싱으로 추출 — 15건 전부 육안 대조 확인.
+
+출력은 두 곳에 동일 바이트: `J-ESR/jesr_master.json`(2026-06 스키마를 전량 교체 — 이 스크립트가 유일한 생산자라
+"마스터 통째 read-modify-write 금지" 원칙 예외 적용, 프롬프트·티켓 양쪽 명시)과 `jp/jesr_esr.json`(신규 `jp/` 폴더,
+배포용 사본). 스키마는 designer와 합의된 고정 계약이라 키 이름은 손대지 않았고, 티켓이 derivation을 명시하지 않은
+두 필드(`basis`는 조인 실패 시 상수 `"J-ICS"` 기본값, SOMPO만 sources 원본 `"J-ICS_VaR99.5"`를 그대로 반영)는
+판단 근거를 답변 티켓에 남겼다.
+
+실측 검증: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/build_jesr_page_json.py`
+→ exit 0, `15 records`, `census: {total:79, posted:15, not_yet:62, not_found:2}`, `preliminary=5`
+(LifeNet·朝日生命保険·富国生命保険·かんぽ生命保険·住友生命保険). `cmp J-ESR/jesr_master.json jp/jesr_esr.json` 바이트
+동일. `head -c3 | xxd -p` 양쪽 `7b0d0a`(BOM 아님), 스크립트 자체도 `23202d`. `ast.parse` 통과. `git status --short
+J-ESR/ jp/` = 정확히 3건(`M jesr_master.json` · `?? build_jesr_page_json.py` · `?? jp/`) — 루트 마스터·HTML·xlsx·
+public_exports·keep-list 무변경 확인(티켓 4번 제약 준수).
+
+**라이브 미반영(이번 범위 밖)** — 필요 항목 3가지를 조사해 답변 티켓에 기록:
+1. keep-list(§1/§9) 신규 페이지 경로 추가 필요. **실측**: 4-페이지 하드코딩(`["index.html","K-ICS.html","IFRS17.html",
+   "공시보고서.html"]`)이 `claude-agent-publishing.md` §1 grep 스니펫 · `tests/test_deploy_assets.py:27` `PAGES` ·
+   `tests/test_push_gate_wiring.py:378` `_HTML` 세 곳에 그대로 박혀 있어, `/jp/` 페이지를 여기 추가하지 않으면 그
+   fetch가 세 게이트 어디서도 "통과"가 아니라 아예 안 보이게 된다(불변식 1번: 게이트가 보는 파일=사용자가 보는 파일).
+2. master xlsx 신규 시트는 불요 — `scripts/build_master_xlsx.py`의 `MASTERS`, `scripts/sync_master_xlsx_sheet.py`
+   둘 다 "jesr" grep 매치 0(J-ESR은 K-ICS/IFRS17 xlsx 체계 밖 독립 트랙). 시트를 만들지는 owner 결정 사항으로 남김.
+3. `scripts/status_report.py` §4("화면 fetch ↔ 마스터 시트")는 1번의 `_HTML`을 갱신하기 전까지 `jp/jesr_esr.json`
+   fetch 자체를 못 보므로 지금은 무검사 상태 — 갱신하는 순간 `MASTERS`에 대응 시트가 없어 GAP으로 잡힐 것(2번과 연결).
+
+티켓 `status: answered`로 전환(`_resolved/` 이동은 owner 확인 후). 서브에이전트 생성 없이 직접 처리.
 
 ---
 

@@ -1,9 +1,99 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-11 (b) · Stage 5/5 — designer
+> Last updated: 2026-09-12 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-09-12 — jp/index.html: 일본 ESR 대시보드 초안 (owner 발주, J-ESR 킥오프 2차)
+
+배경은 `inbox/designer/20260912T0446Z__owner__JP_MULTI__jesr_jp_page_draft.md`. owner 2026-09-12
+결정: 접속지 차등이나 `.co.jp` 도메인 대신 같은 사이트 `/jp/` 경로에 일본어 페이지를 둔다.
+2026-07-21 revert 된 `J-ESR/index.html` MVP("데이터가 그룹값뿐")와는 별개로, 79사 census + 15사
+확정값이 갖춰진 지금 새로 만들었다. 데이터는 publishing 이 같은 시각 발주(`inbox/publishing/
+20260912T0446Z__owner__JP_MULTI__jesr_page_json.md`)로 만든 `jp/jesr_esr.json` — 착수 시점에
+이미 도착해 있어 티켓이 허용한 fixture 경로는 쓰지 않았다.
+
+### 무엇을 만들었나
+
+- **`jp/index.html`** (신규, 380행, UTF-8 BOM 없음). 티켓 6절 화면 구성 그대로: 헤더(브랜드+
+  언어전환 `日本語|한국어`, 한국어는 `../index.html`) → 공표상황 패널(카드3+안내문+기준일,
+  전부 `_meta`에서 파생) → ESR랭킹 ECharts 가로막대(15사 내림차순, 색=업태 3색, `scope==
+  group`은 decal 빗금, `preliminary`는 라벨 옆 速報 배지, `target_pct` 있으면 ▲ scatter
+  마커, 캡션+범례) → 커버리지 도넛(公表済み/公表予定/未確認) → 一覧表(会社名/業態/範囲/ESR/
+  基準日/出所/備考) → 푸터. `../common.css` 재사용(토큰·chrome), 페이지 전용 스타일은 인라인
+  `<style>`(다른 4개 배포 페이지와 같은 패턴 — `jp/jp.css`는 안 만들었다).
+- CSP meta·ECharts 5.5.0 CDN `integrity`·Pretendard CDN `integrity`는 루트 `index.html`과
+  byte-diff 0(CSP는 GA 관련 호스트만 제외 — 이 페이지는 분석 태그를 안 실었다).
+- 스크린샷: `artifacts/designer/jesr_jp_draft_desktop_20260912.png`(1280px) ·
+  `jesr_jp_draft_mobile_20260912.png`(375px), 둘 다 full-page.
+
+### 실데이터가 스키마 예시와 다르게 갖고 있던 것 — 화면단에서 방어
+
+publishing 이 만든 진짜 JSON을 열어보니 티켓의 스키마 예시(`"notes":"..."`, 깨끗한 `doc_type`)
+와 실제 내용이 달랐다. 마스터는 읽기 전용이라 JSON은 안 건드리고, **표시 직전 정화** 로 처리:
+
+1. **`notes` 필드는 한국어 내부 검증 메모**(예: "PDF p21-22 직접 열람 확인: 적격자본(A)=9,278
+   백만엔..."). 티켓 표 스펙("備考(速報 등)")에도 원문 그대로 노출하라는 요구는 없었고, 무엇보다
+   일본어 페이지에 한국어 문장을 그대로 얹으면 안 되므로 **아예 렌더링 대상에서 뺐다** — 備考
+   열은 `preliminary`→速報 배지·`basis`≠표준→짧은 표식만 보여준다.
+2. **`doc_type` 15건 중 3건에 한국어 단어가 섞여 있었다**: au損害保険 "…업적데이터편…발행)",
+   明治安田損害保険 "…게시)", SOMPOホールディングス "…VaR99.5%기준)". `jaOnly()` 함수를 만들어
+   화면 표시 직전에만 정규식 `[가-힣]+` 로 한글 토큰을 제거하고 잔여 구두점(중복 콤마·빈 괄호)을
+   정리한다 — 원본 JSON은 무변경. 브라우저에서 `document.body`(스크립트/스타일 태그 제외)
+   textContent 전체를 같은 정규식으로 스윕해 잔여 한글 0건을 확인했다. 근본 원인(publishing
+   파이프라인이 doc_type에 내부메모를 섞어 쓰는 습관으로 추정)은 이번 라운드에서 고치지 않았다
+   — 티켓 답변에 owner 판단거리로 남겼다.
+3. **`basis` 필드가 회사마다 다르다**(14/15는 "J-ICS", SOMPO만 "J-ICS_VaR99.5"). 서로 다른
+   산정기준을 같은 랭킹 차트에 나란히 놓는 셈이라 차트 밑에 상시 캡션과 表 備考에
+   `算定基準:VaR99.5` 표식을 추가했다. `basis.replace(/^J-ICS[_-]?/,'')` 로 접두사를 떼는
+   일반식이라 향후 다른 basis 값에도 하드코딩 없이 동작한다.
+4. `doc_date`가 "2026-05-20" 외에 "2026-05"(일자 없음) 형식도 3건 있어 `jaDateFlexible()`이
+   2/3-분절 ISO 를 모두 받도록 만들었다.
+
+### 발견 즉시 고친 버그 2건 (발주 범위 밖이지만 명백 + 해결 쉬움)
+
+- **도넛 라벨 겹침**: `未確認`(2社)과 `公表済み`(15社) 슬라이스가 원형에서 서로 이웃해
+  ECharts `avoidLabelOverlap`이 "公表済..."로 말줄임했다(Claude Browser 실측 스크린샷으로
+  발견). 온차트 라벨을 끄고(`label:{show:false}`) 범례 텍스트에 건수를 병기(`公表済み
+  （15社）`)하는 쪽으로 바꿔 정보 손실 없이 해결 — 위 카드가 이미 같은 숫자를 더 크게
+  보여주고 있어 애초에 중복이었다.
+- **모바일 헤더 줄바꿈**: 375px에서 "InsureQuant 日本 ESR ダッシュボード" + 언어전환이 한
+  줄에 안 들어가 2줄로 깨졌다. 루트 4개 페이지의 기존 관례(`.brand .hint{display:none}` at
+  `≤640px`)를 그대로 적용했다.
+
+### 검증 — 브라우저 도구의 네트워크 샌드박스를 우회한 이유까지 기록
+
+Claude Browser 도구로 열었더니 콘솔에 `net::ERR_NETWORK_ACCESS_DENIED`(jsdelivr, 즉
+Pretendard·ECharts CDN)가 떴다. `curl`로 같은 URL을 치면 200 이 와서(회사망 차단이 아니라
+이 브라우저 도구 자체의 네트워크 샌드박스 — TODO_designer.md 2026-09-11b 항목의 "Pretendard·
+gtag" 케이스와 같은 부류) **검증 목적으로만** echarts.min.js 를 로컬에 내려받아
+`jp/_dev_verify.html`(임시 사본, script src만 로컬로 교체)로 렌더 확인 → 이 경로로 도넛 라벨
+겹침 버그와 모바일 헤더 줄바꿈 버그를 실제로 찾아 고쳤다. `jp/index.html` 자체는 처음부터
+끝까지 CDN 경로만 가리키고, 임시 사본·로컬 echarts 사본은 확인 후 즉시 삭제했다.
+
+최종 확인은 Playwright(project venv, 실네트워크)로 **진짜 `jp/index.html` 그대로** 재검증 —
+데스크톱 1280px·모바일 375px 둘 다 `console` 이벤트 리스너로 **에러 0건**(Pretendard·ECharts
+CDN 포함 전부 정상 로드) 확인, 이 결과로 위 스크린샷 2장을 생성했다. 이 결과가 실제 방문자
+환경을 더 정확히 대표한다.
+
+추가 확인: `body.scrollWidth===innerWidth`(375px, 가로스크롤 0), `.table-container` 안에서만
+가로스크롤(出所/備考 도달 확인, 사이트 기존 관례와 동일), 두 차트의 `aria-label`이 실측
+데이터로 채워짐(예: "ESRランキング棒グラフ。全15社中、最高はau損害保険 791.7%、最低は
+ソニー生命保険 162.0%…"), `scripts/a11y_contrast_check.py` 로 업태 3색(`#2f6fed`/`#f59e0b`/
+`#0f766e`, 상호 delta-RGB 103~236)·도넛 3색(`#0d6efd`/`#f59e0b`/`#475569`, 상호 123~255)이
+protanopia/deuteranopia 임계 60 을 전부 통과 확인, 速報 배지는 흰 글자+amber 배경이 2.15:1
+FAIL 로 나와 진한 글자(`#212529`)로 바꿔 7.18:1 로 통과시켰다. `html.parser` 로 태그 균형
+기계 검사(0 오류, EOF 스택 빈 상태), BOM 없음.
+
+### 넘긴 것 (owner 판단거리, 티켓 답변에 상세)
+
+루트 `index.html`에 넣을 hreflang 3줄·상단 언어전환 링크·일본어 브라우저 안내 띠는 코드
+조각으로만 답변에 적었고 **적용하지 않았다**(이번 라운드 범위 밖, 티켓 명시). `robots`
+meta 는 owner 초안 검토 전 안전장치로 `noindex,follow`를 넣어뒀다 — 라이브 확정 시 제거
+여부는 owner 결정. GA 분석 태그도 이번 초안엔 넣지 않았다.
 
 ---
 

@@ -193,3 +193,7 @@ When invoked, read in this order:
 5. Root `TODO.md` for cross-stage dependencies / roadmap notes
 
 Deferred (2026-07-27): `docs/changelog_designer.md` is history — open only when you need a past decision's background; most sessions don't.
+
+## 12. jp 레인 페이지 (`/jp/`, 2026-09-12 신설)
+
+일본 ESR 페이지 `jp/index.html` 은 이 프롬프트의 디자인 시스템(§5)·CSP·SRI·`../common.css` 를 그대로 쓰되 `<html lang="ja">`, hreflang(ko↔ja, x-default=ko), 언어 전환 링크가 있다. 데이터는 `jp/jesr_esr.json`(publishing 산출, 읽기 전용) 만 fetch. 도메인 지식은 `docs/domains/claude-agent-jp.md`. 발주는 `inbox/designer/` 에 `track: J-ESR` 로 온다. 보고문에 일본어 문자 금지(회사명은 영문).

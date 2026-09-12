@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-09-11 · Stage 4/5 — publishing
+> Last updated: 2026-09-12 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -10,6 +10,25 @@ Session start: read this file + `claude-agent-publishing.md` + relevant validati
 NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
 
 ## Status
+
+**2026-09-12 (J-ESR `/jp/` 페이지 데이터 JSON 신설 — `20260912T0446Z`, J-ESR 킥오프 2차 조각)**: designer가 만들 일본
+ESR 현황 페이지가 fetch할 JSON을 조립(HTML은 무수정, designer 소관 별도 티켓). 신규 `J-ESR/build_jesr_page_json.py`
+(stdlib만: csv/json/re/datetime/pathlib, self-check 내장 exit 1). 입력 `J-ESR/fy2025_esr_census_20260912.csv`(79사,
+`fy2025_esr_status==posted` 15사만) + `J-ESR/jesr_sources_2026Q1.csv`(보조 열, company_jp 조인). **판단 근거**: `ticker`는
+시간불변이라 무조건 조인하되, `total_assets_bn_jpy`/`target_pct`/`basis`는 sources 행의 `as_of`가 census 행과 **일치할
+때만** 조인 — 상호회사 4사(日本生命·住友生命·明治安田生命·富国生命)는 sources csv에 구분기(2025.3~2025.9) 값만 있어
+그대로 조인하면 새 posted 값에 옛 분기 수치가 잘못 붙는다. 출력: `J-ESR/jesr_master.json`(6월 스키마 전량 교체 — 이
+스크립트가 유일한 생산자) + `jp/jesr_esr.json`(신규 `jp/` 폴더, 바이트 동일). **실측**(exit 0): 15 records · census
+{total:79,posted:15,not_yet:62,not_found:2} · preliminary=5(LifeNet·朝日生命保険·富国生命保険·かんぽ生命保険·住友生命保険,
+notes 내 속보/잠정 키워드 검출·notes에 근거 병기) · `cmp` 바이트동일 · BOM 없음(`7b0d0a`/`23202d`) · `ast.parse` 통과 ·
+`git status --short J-ESR/ jp/` = 딱 3건(`M jesr_master.json`, `?? build_jesr_page_json.py`, `?? jp/`) — 루트 마스터·
+HTML·xlsx·public_exports·keep-list 무변경 확인. **아직 라이브 미반영**(이번 티켓 범위 밖, owner 승인 후 별도 라운드).
+라이브 반영 시 필요 3가지를 `inbox/publishing/20260912T0446Z` 답변에 기록: ① keep-list(§1/§9) 신규 페이지 경로 추가 +
+**4-페이지 하드코딩이 실측 3곳**(`claude-agent-publishing.md` §1 grep 스니펫 · `tests/test_deploy_assets.py` `PAGES` L27 ·
+`tests/test_push_gate_wiring.py` `_HTML` L378)에 박혀 있어 갱신 안 하면 새 페이지 fetch가 세 게이트 모두에서 안 보임
+② master xlsx 시트는 불요(J-ESR은 K-ICS/IFRS17 xlsx 체계 밖, `build_master_xlsx.py` `MASTERS`·`sync_master_xlsx_sheet.py`
+grep "jesr" 매치 0) ③ `status_report.py` §4는 ①의 `_HTML` 갱신 전까지 `jp/jesr_esr.json` fetch를 못 보므로 지금은 무검사.
+티켓 `status: answered`로 전환.
 
 **2026-09-11 (지식재산 0원 조치 — 저장소 쪽 6건, owner 지시 "진입장벽 낮게")**: 배경 `artifacts/legal/ip_protection_report_20260911.md` §6. HTML·`privacy.html`·`download-survey.js` 는 designer 가 동시에 작업(publishing 무수정). **한 일**: ① 루트 `LICENSE` 신설(19줄, 한국어+영어 요약, BOM 없음) — All rights reserved 이되 열람·출처표기 인용·사내분석 허용, 자동수집·대량재배포·재판매·유사서비스 금지, 저작권법 제4장의2 데이터베이스제작자권 고지, 원천 권리는 각 공시주체, 운영자 조상욱. ② `robots.txt` — 기존 keep-list 경고 주석 유지, `User-agent: *` 는 `Allow: /` + `Disallow: /public_exports/`(방명록 스냅샷, 렌더링 미사용), AI **학습용** 크롤러 8종만 차단(GPTBot·CCBot·ClaudeBot·anthropic-ai·Google-Extended·Bytespider·meta-externalagent·Applebot-Extended), 사용자 대행 fetcher(ChatGPT-User·PerplexityBot)는 **의도적으로 안 막음**(AI 검색 유입 수용), 이용안내 URL 주석 1줄. ③ `public_exports/manifest.json` 지문 — 생성 스크립트 `scripts/export_public_sheets.py` 를 고쳐 재실행. designer 가 먼저 `license`(URL)+`build_id` 를 넣어 두었기에 그 위에 `license` 를 조건 문장으로, `terms_url`·`copyright` 를 추가(`build_id`=HEAD short sha 는 그대로). download-survey.js 가 읽는 `sheets`·`generated_at_utc`·`build_id` 와 `validate_live_artifacts` CHECK 6(`sheets` 만 대조) 모두 무영향 확인. 재실행 결과 13개 시트 스냅샷은 HEAD 와 **바이트 동일**(드리프트 0), manifest 만 +5줄. xlsx 표지 이용조건 행은 **클라이언트(download-survey.js buildCoverSheet)** 가 만들고 designer 가 이미 추가했으므로 publishing 은 손대지 않음 — 마스터 xlsx 는 이 경로에 없어 수식캐시 위험 0. ④ `docs/ip/investment_record.md` 신설 + 재측정 스크립트 `scripts/measure_investment_record.py`(추정 0, 전부 git/저장소 실측; 마스터는 `git show HEAD:` 로 읽어 동시세션 반쯤 쓴 파일 배제). 실측: 첫 커밋 2025-09-15 · 561 커밋 · 57 작업일 · scripts 278파일 84,175줄 · src 33/8,822 · K-ICS 룰 id 30(골든 findings 16,140) · validator rule id 123 · 골든 8 · 테스트 함수 266 · 마스터 13개 53,530행 · 39사 · 16분기(2021.4Q~2026.2Q) · 공시 PDF 550 · DART raw 1,297 · gold xlsx 44 · resolved 티켓 386 · 포스트모템 10. ⑤ IR xlsx 11개 `git rm --cached`(디스크 보존, 이력 purge 안 함=owner 결정) + `.gitignore` `data/ir/**/*.xlsx`. 파이프라인은 전부 디스크 경로로 읽음(`crawl_ir_db.py`·`_build_lob_cross_check.py`·`check_data_file_integrity.py`, `git show` 참조 0) → 영향 없음. main 에는 원래 없음. ⑥ **keep-list 등록 근거**: `LICENSE` 는 어떤 HTML 도 참조하지 않아 §1 grep 도출에 안 걸리지만 공개 `main`(=GitHub 공개 저장소 + `https://www.insurequant.com/LICENSE`)에 있어야 의미가 있으므로 robots.txt·`.nojekyll`·CNAME 과 같은 **"HTML 무참조 상시 유지 파일"** 로 분류. designer changelog 2026-09-11 "미배선 잔여"(robots.txt 상시 유지 배선, publishing 소관)를 이 기회에 같이 배선: `claude-agent-publishing.md` §1 표 신설 + §9 스냅샷에 5줄, `docs/launch_runbook.md` §2 소절 신설, `tests/test_deploy_assets.py::test_always_keep_files_exist_and_are_documented`(`ALWAYS_KEEP` 5개 존재·BOM·두 문서 등재 강제). `pytest tests/test_deploy_assets.py` **11 passed**. **commit/push 없음**(스테이징은 `git rm --cached` 11건만). **다음 배포 때 keep-list 에 `LICENSE`·`robots.txt` 를 반드시 포함**(§3 절차 2 의 checkout 목록).
 
