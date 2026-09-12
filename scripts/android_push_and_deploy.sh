@@ -29,6 +29,17 @@
 set -eu
 
 BRANCH="fix/csm-product-segmented-columns"
+# jp 비공개 프리뷰 (owner 2026-09-12): 저장소의 `jp/` 는 main 에서 아래 폴더명으로 배포한다(추측 불가 경로 + noindex).
+# 공개 시점에는 이 값을 빈 문자열로 바꾸고, main 의 옛 비공개 폴더는 그 라운드에서 `git rm -r` 로 지운다.
+# 주의: 이 저장소는 공개 repo 라 폴더명 자체는 repo 를 읽는 사람에게는 보인다 — "링크·검색으로 안 드러남" 수준의 비공개다.
+JP_PRIVATE_DIR="jp-f9027362"
+# 저장소 경로 -> main 배포 경로
+deploy_path() {
+  case "$1" in
+    jp/*) if [ -n "$JP_PRIVATE_DIR" ]; then printf '%s/%s' "$JP_PRIVATE_DIR" "${1#jp/}"; else printf '%s' "$1"; fi ;;
+    *) printf '%s' "$1" ;;
+  esac
+}
 BUNDLE="${1:-}"
 DEPLOY=1
 [ "${2:-}" = "--no-deploy" ] && DEPLOY=0
@@ -68,9 +79,11 @@ CHANGED=""
 while IFS= read -r f; do
   [ -n "$f" ] || continue
   [ "$f" = ".gitignore" ] && continue
+  src="$f"
+  case "$f" in "$JP_PRIVATE_DIR"/*) [ -n "$JP_PRIVATE_DIR" ] && src="jp/${f#"$JP_PRIVATE_DIR"/}" ;; esac
   a=$(git rev-parse "origin/main:$f" 2>/dev/null) || continue
-  b=$(git rev-parse "$BRANCH:$f" 2>/dev/null) || continue
-  [ "$a" = "$b" ] || CHANGED="$CHANGED$f
+  b=$(git rev-parse "$BRANCH:$src" 2>/dev/null) || continue
+  [ "$a" = "$b" ] || CHANGED="$CHANGED$src
 "
 done <<EOF
 $(git -c core.quotePath=false ls-tree -r --name-only origin/main)
@@ -81,7 +94,7 @@ EOF
 # 여기 적힌 파일은 브랜치에 있고 main 에 없으면 배포 목록에 넣는다.
 NEW_FILES="LICENSE jp/index.html jp/jesr_esr.json jp/jesr.html jp/jesr_detail.json jp/terms.html jp/report-widget.ja.js"
 for f in $NEW_FILES; do
-  git rev-parse "origin/main:$f" >/dev/null 2>&1 && continue
+  git rev-parse "origin/main:$(deploy_path "$f")" >/dev/null 2>&1 && continue
   git rev-parse "$BRANCH:$f" >/dev/null 2>&1 || continue
   CHANGED="$CHANGED$f
 "
@@ -102,9 +115,13 @@ trap cleanup EXIT
 # here-string 으로 돌려 같은 셸에서 실행한다.
 ( cd "$WT"
   git checkout -B main origin/main >/dev/null 2>&1
+  # 비공개 프리뷰: main 에 공개 경로 jp/ 가 남아 있으면 지운다(첫 전환 라운드에만 해당).
+  if [ -n "$JP_PRIVATE_DIR" ] && [ -d jp ]; then git rm -r -q jp; fi
   while IFS= read -r f; do
     [ -n "$f" ] || continue
     git checkout "$BRANCH" -- "$f" || exit 1      # 리다이렉션 금지 — 블롭 그대로
+    d=$(deploy_path "$f")
+    if [ "$d" != "$f" ]; then mkdir -p "$(dirname "$d")"; git mv -f "$f" "$d" || exit 1; fi
   done <<< "$CHANGED"
   git add -A
 
@@ -113,7 +130,7 @@ trap cleanup EXIT
   while IFS= read -r f; do
     [ -n "$f" ] || continue
     want=$(git rev-parse "$BRANCH:$f")
-    got=$(git ls-files -s -- "$f" | awk '{print $2}')
+    got=$(git ls-files -s -- "$(deploy_path "$f")" | awk '{print $2}')
     if [ "$want" != "$got" ]; then
       printf '  불일치 %s (기대 %s / 실제 %s)
 ' "$f" "$want" "$got"; bad=1
@@ -132,7 +149,7 @@ step "라이브 확인 (몇 분 뒤)"
 while IFS= read -r f; do
   [ -n "$f" ] || continue
   case "$f" in
-    *.json|*.css|*.js) printf '  https://www.insurequant.com/%s?cb=%s
-' "$f" "$RANDOM";;
+    *.json|*.css|*.js|*.html) printf '  https://www.insurequant.com/%s?cb=%s
+' "$(deploy_path "$f")" "$RANDOM";;
   esac
 done <<< "$CHANGED"

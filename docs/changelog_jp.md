@@ -2,6 +2,13 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 (owner 결정) -- jp 비공개 프리뷰: main 배포 경로를 `jp-f9027362/` 로 (deploy-time 매핑)
+
+owner "당분간 비공개, 그러나 라이브 배포는 해서 확인" → 선택지 3(비밀 경로 / JS 비밀번호 / Cloudflare Access) 중 1번. GitHub Pages 는 서버 인증 불가,
+JS 비밀번호는 소스·JSON 직접 접근으로 우회되므로 비권장. 구현은 저장소 구조를 안 바꾸고 `android_push_and_deploy.sh` 에 `JP_PRIVATE_DIR` +
+`deploy_path()` 매핑(CHANGED 계산·NEW_FILES 존재 확인·워크트리 checkout→mv·blob 검증·라이브 URL 출력 5곳). 첫 라운드에 main 의 공개 `jp/` 자동 삭제.
+임시 워크트리 시뮬레이션으로 6파일 이동·blob 일치·커밋 확인(push 없이). 공개 전환 체크리스트는 `TODO_jp.md`.
+
 ## 2026-09-12 (owner 확인) -- jp/terms.html 4건 확정: 運営者 표기 유지·관할 = ソウル中央地方法院(한국판과 동일)·GA 보유 최대 14개월·施行日 2026-09-12
 
 owner "4건 다 확인" → 관할만 한국 `privacy.html` 과 맞춰 "運営者の所在地を管轄する裁判所" → "ソウル中央地方法院(大韓民国)" 로 1문장 수정(orchestrator 직접, 텍스트 1줄). 나머지 3건은 초안 그대로 확정.
