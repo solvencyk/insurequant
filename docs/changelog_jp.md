@@ -2,6 +2,39 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 (8) -- `jp/jesr_detail.json` 신규 조립 (publishing)
+
+- 티켓 `inbox/publishing/20260912T1120Z__owner__JP_MULTI__jesr_detail_json.md`(answered). owner: "2개사에 대해 K-ICS.html 에
+  대응되는 페이지 만들어라" — `jp/company.html`(designer 병렬 티켓 `inbox/designer/20260912T1120Z__..._jesr_company_page.md`,
+  이 세션은 미접촉)이 fetch 할 회사별 상세 데이터.
+- 신규 `J-ESR/build_jesr_detail_json.py`(stdlib only, self-check 내장 — 실패 시 exit 1). 입력: `extracted_sample_values.json`
+  (이미 존재, 없으면 `extract_esr_template_samples.py` 자동 선실행) · `esr_disclosure_schema.json`(137 items) ·
+  `esr_aggregation_rules.json`(포인터로만 읽음 — known_deviations 는 이미 각 check 의 note 필드에 반영돼 있어 재병합하지 않음) ·
+  `jp/jesr_esr.json`(self-check 대조 소스).
+- `census.status == "posted"` 인 2사만 채택(au_nonlife·meijiyasuda_nonlife). nnlife 는 ESR 미공시(`not_yet`)라 제외.
+- **source_url/doc_type/doc_date/preliminary 는 `J-ESR/jesr_master.json` 에서 조인.** `jp/jesr_esr.json` 은 부모-자회사 중복
+  제거(2026-09-12 (3) 항목, archive 이관)로 明治安田損害保険 을 `_meta.excluded_subsidiaries` 에만 `esr_pct` 없이 남겨 저 4필드가
+  비어 있다 — `jesr_master.json`(제외 전 15사 원본)에서 회사명(`company_en`)으로 조인해 채웠다. au_nonlife 는 두 파일 값이 동일함을
+  확인(중복 아님).
+- 계약 고정 키(designer 와 확정, 리네임 금지): `risk` 블록은 `rc_diversification`→`diversification_effect`,
+  `rc_tax_effect`→`tax_effect` 로 표시 키를 바꿔 매핑(값은 그대로), `market_sub` 6항목, `sensitivity[]`(scenario 별
+  `delta_pp`=기준 대비, `base` 시나리오·미공시 값은 제외), `aggregation.deviations`(informational 실패 체크만, hard fail 은
+  자동으로 0 이라 `reproduced`=true).
+- 실측(exit 0): au_nonlife esr_pct=791.7·eligible=9,278·required=1,171·reproduced=true·checks=43/43·deviations=0(민감도
+  공시 생략사라 sensitivity=[]) / meijiyasuda_nonlife esr_pct=743.2·eligible=40,290·required=5,420·reproduced=true·
+  checks=49/51·deviations=2(`G06_nonlife` 다지역 상관통합 순서 차이·`G07_catastrophe`, 둘 다 `esr_aggregation_rules.json
+  known_deviations` 등재분과 동일)·sensitivity=7행(엔금리+50bp→esr_pct 736.7/delta -6.5pp 등, 티켓 예시값과 정확히 일치).
+  `_meta.coverage`={detail_posted:2, posted_total:13(=`jp/jesr_esr.json` records 길이), census_total:79}.
+- self-check 4종 통과: companies==2 · 각 headline.esr_pct 가 `jp/jesr_esr.json`(records ∪ excluded_subsidiaries) 대조 일치 ·
+  `risk.rc_post_tax == headline.required_capital` · `items` 의 모든 id 가 `_meta.labels` 에 존재 · 단위 무변환 통과(items.eligible_capital
+  == headline.eligible_capital, 억엔 환산 없음).
+- 파일 위생: BOM 없음(`xxd` 첫 바이트 `7b0a`=`{\n`) · `ast.parse` 통과 · `git status --short J-ESR/ jp/` = 신규
+  `build_jesr_detail_json.py`·`jp/jesr_detail.json` 뿐(루트 마스터·xlsx·public_exports·keep-list·HTML 무변경; `jp/_fixture_jesr_detail.json`
+  은 designer 병렬세션 산출물이라 손대지 않음).
+- 배포 준비만: `scripts/android_push_and_deploy.sh` `NEW_FILES` 한 줄에 `jp/company.html jp/jesr_detail.json` 추가. 실제 push 는
+  `jp/company.html` 완성 + owner 승인 후 별도 라운드.
+- 재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/build_jesr_detail_json.py`.
+
 ## 2026-09-12 (7) -- 소요자본 합산 규정(상관행렬) 기계화 + √(xᵀRx) 재계산 검산 (jp)
 
 - 티켓 `inbox/jp/20260912T1005Z__owner__JP_MULTI__esr_aggregation_rule.md`(answered). owner 지적: 직전 티켓이 "부모 ≤ Σ하위" 부등식으로 끝냈는데

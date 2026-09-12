@@ -1,0 +1,1204 @@
+{
+  "_meta": {
+    "as_of": "2026-03-31",
+    "as_of_label_ja": "2026年3月31日",
+    "generated_at": "2026-09-12T10:27:56.314238Z",
+    "unit": "JPY_million",
+    "schema_ref": "J-ESR/esr_disclosure_schema.json",
+    "rules_ref": "J-ESR/esr_aggregation_rules.json",
+    "labels": {
+      "eligible_capital": {
+        "ja": "適格資本の額(A)",
+        "ko": "적격자본 총액(A)",
+        "unit": "JPY_million",
+        "kics_item_ref": 1
+      },
+      "required_capital": {
+        "ja": "所要資本の額(B)",
+        "ko": "소요자본 총액(B, 세효과 고려후)",
+        "unit": "JPY_million",
+        "kics_item_ref": 14
+      },
+      "esr_pct": {
+        "ja": "ソルベンシー・マージン比率((A)/(B))",
+        "ko": "ESR(경제가치기준 지급여력비율, 신기준 SMR)",
+        "unit": "pct",
+        "kics_item_ref": 27
+      },
+      "tier1_eligible": {
+        "ja": "Tier1適格資本の額",
+        "ko": "Tier1 적격자본(A)",
+        "unit": "JPY_million",
+        "kics_item_ref": 2
+      },
+      "tier1_basic": {
+        "ja": "Tier1適格資本に係る基礎項目の額",
+        "ko": "Tier1 기초항목(B) = EBS 순자산",
+        "unit": "JPY_million",
+        "kics_item_ref": 4
+      },
+      "tier1_instr_unrestricted": {
+        "ja": "算入制限のないTier1資本調達手段の額",
+        "ko": "산입제한 없는 Tier1 자본조달수단(자본금·기금)",
+        "unit": "JPY_million",
+        "kics_item_ref": 5
+      },
+      "tier1_instr_restricted": {
+        "ja": "算入制限のあるTier1資本調達手段の額",
+        "ko": "산입제한 있는 Tier1 자본조달수단(신종자본증권 등)",
+        "unit": "JPY_million",
+        "kics_item_ref": 6
+      },
+      "tier1_non_instrument": {
+        "ja": "資本調達手段以外のTier1適格資本の額",
+        "ko": "자본조달수단 이외 Tier1 적격자본",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier1_ni_retained_earnings": {
+        "ja": "剰余金等の額又は利益剰余金等の額",
+        "ko": "잉여금등(이익잉여금+규제상 준비금)",
+        "unit": "JPY_million",
+        "kics_item_ref": 7
+      },
+      "tier1_ni_capital_surplus": {
+        "ja": "資本剰余金(Tier2適格資本に算入されるものを除く)の額",
+        "ko": "자본잉여금(Tier2 산입분 제외)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier1_ni_aoci": {
+        "ja": "その他の包括利益累計額又は評価・換算差額等の額",
+        "ko": "기타포괄손익누계액(평가·환산차액)",
+        "unit": "JPY_million",
+        "kics_item_ref": 9
+      },
+      "tier1_ni_other_contrib": {
+        "ja": "その他の拠出金等の額",
+        "ko": "기타 출자금등",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier1_ni_ev_adjustment": {
+        "ja": "経済価値ベースの調整額",
+        "ko": "경제가치기준 조정액(EBS 순자산 − 회계 순자산 − 규제상 준비금)",
+        "unit": "JPY_million",
+        "kics_item_ref": 11
+      },
+      "tier1_adjustments": {
+        "ja": "Tier1適格資本に係る調整項目の額",
+        "ko": "Tier1 조정항목(C, 공제)",
+        "unit": "JPY_million",
+        "kics_item_ref": 12
+      },
+      "tier1_adj_intangibles": {
+        "ja": "無形固定資産(繰延税金負債相殺後)の額",
+        "ko": "무형고정자산(DTL 상계후)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier1_adj_dta": {
+        "ja": "繰延税金資産の額",
+        "ko": "이연법인세자산",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier1_adj_pension_asset": {
+        "ja": "前払年金費用又は退職給付に係る資産",
+        "ko": "선급연금비용/퇴직급여 관련 자산",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier1_adj_holdings_other_fi": {
+        "ja": "他の金融機関等が意図的に保有しているTier1資本調達手段の額",
+        "ko": "타 금융기관 의도적 보유 Tier1 조달수단",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier1_adj_own_instruments": {
+        "ja": "自己のTier1資本調達手段への投資の額",
+        "ko": "자기 Tier1 조달수단 투자",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier1_adj_ineligible_reinsurance": {
+        "ja": "不適格再保険資産の額",
+        "ko": "부적격 재보험자산",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier1_adj_encumbered_excess": {
+        "ja": "処分制約のある資産のうち関連する負債と所要資本を上回る額",
+        "ko": "처분제약 자산 중 관련부채+소요자본 초과분",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_eligible": {
+        "ja": "Tier2適格資本の額",
+        "ko": "Tier2 적격자본(D)",
+        "unit": "JPY_million",
+        "kics_item_ref": 3
+      },
+      "tier2_basic": {
+        "ja": "Tier2適格資本に係る基礎項目の額",
+        "ko": "Tier2 기초항목(E)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_instruments": {
+        "ja": "Tier2資本調達手段の額",
+        "ko": "Tier2 자본조달수단(후순위채 등)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_instr_t1_excess": {
+        "ja": "算入制限のあるTier1資本調達手段の制限を超過した額",
+        "ko": "제한초과 Tier1 조달수단(Tier2 재분류)",
+        "unit": "JPY_million",
+        "kics_item_ref": 13
+      },
+      "tier2_instr_paid": {
+        "ja": "払込済みTier2資本調達手段の額",
+        "ko": "납입완료 Tier2 조달수단",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_instr_unpaid": {
+        "ja": "払込未済のTier2資本調達手段の額",
+        "ko": "미납입 Tier2 조달수단(약정자본)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_non_instrument": {
+        "ja": "資本調達手段以外のTier2適格資本の額",
+        "ko": "자본조달수단 이외 Tier2 적격자본",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_ni_surplus_from_instr": {
+        "ja": "Tier2資本調達手段の額に含まれる資本調達手段を",
+        "ko": "Tier2 조달수단 발행 자본잉여금",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_ni_encumbered_t1_deducted": {
+        "ja": "処分制約のある資産のうちTier1適格資本から控除される額",
+        "ko": "처분제약 자산 중 Tier1 공제분",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_ni_basket": {
+        "ja": "Tier2バスケット(上限適用後)の額",
+        "ko": "Tier2 바스켓(상한 적용후)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_adjustments": {
+        "ja": "Tier2適格資本に係る調整項目の額",
+        "ko": "Tier2 조정항목(F)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_adj_holdings_other_fi": {
+        "ja": "他の金融機関等が意図的に保有しているTier2資本調達手段の額",
+        "ko": "타 금융기관 의도적 보유 Tier2 조달수단",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_adj_own_instruments": {
+        "ja": "自己のTier2資本調達手段への投資の額",
+        "ko": "자기 Tier2 조달수단 투자",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "tier2_cap_deduction": {
+        "ja": "Tier2適格資本への上限適用による控除の額",
+        "ko": "Tier2 상한 적용 공제(G)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "eligible_capital_total": {
+        "ja": "適格資本の額((A)+(D))",
+        "ko": "적격자본 합계(A+D) — T2 표 합계행",
+        "unit": "JPY_million",
+        "kics_item_ref": 1
+      },
+      "rc_life": {
+        "ja": "生命保険リスクの額",
+        "ko": "생명보험리스크(A)",
+        "unit": "JPY_million",
+        "kics_item_ref": 17
+      },
+      "rc_life_mortality": {
+        "ja": "死亡リスクの額",
+        "ko": "사망리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": 29
+      },
+      "rc_life_longevity": {
+        "ja": "長寿リスクの額",
+        "ko": "장수리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": 30
+      },
+      "rc_life_morbidity": {
+        "ja": "罹患及び障害リスクの額",
+        "ko": "이환·장해리스크(질병·상해)",
+        "unit": "JPY_million",
+        "kics_item_ref": 31
+      },
+      "rc_life_lapse": {
+        "ja": "解約及び失効リスクの額",
+        "ko": "해지·실효리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": 33
+      },
+      "rc_life_expense": {
+        "ja": "経費リスクの額",
+        "ko": "사업비리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": 34
+      },
+      "rc_life_mgmt_action": {
+        "ja": "マネジメント・アクションの効果の額",
+        "ko": "경영조치 효과(생보, 정보행 — 하위액에 이미 반영)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_nonlife": {
+        "ja": "損害保険リスクの額",
+        "ko": "손해보험리스크(B)",
+        "unit": "JPY_million",
+        "kics_item_ref": 18
+      },
+      "rc_nl_liability": {
+        "ja": "賠償責任保険類似の商品に係るリスクの額",
+        "ko": "배상책임보험 유사 상품 리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_nl_motor": {
+        "ja": "自動車保険類似の商品に係るリスクの額",
+        "ko": "자동차보험 유사 상품 리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_nl_property": {
+        "ja": "財物保険類似の商品に係るリスクの額",
+        "ko": "재물보험 유사 상품 리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_nl_other": {
+        "ja": "その他保険に係るリスクの額",
+        "ko": "기타보험 리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_catastrophe": {
+        "ja": "巨大災害リスクの額",
+        "ko": "거대재해리스크(C)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_cat_natural": {
+        "ja": "巨大自然災害リスクの額",
+        "ko": "거대자연재해리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_cat_nat_jp_earthquake": {
+        "ja": "日本における地震に係るリスクの額",
+        "ko": "일본 지진",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_cat_nat_jp_windflood": {
+        "ja": "日本における風水災に係るリスクの額",
+        "ko": "일본 풍수해",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_cat_nat_jp_snow": {
+        "ja": "日本における雪災に係るリスクの額",
+        "ko": "일본 설해",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_cat_nat_foreign": {
+        "ja": "外国における巨大自然災害リスクの額",
+        "ko": "해외 거대자연재해",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_cat_nat_other": {
+        "ja": "その他の額",
+        "ko": "기타(거대자연재해 내)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_cat_other": {
+        "ja": "その他の巨大災害に係るリスクの額",
+        "ko": "기타 거대재해(팬데믹·테러 등)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_cat_mgmt_action": {
+        "ja": "マネジメント・アクションの効果の額",
+        "ko": "경영조치 효과(거대재해)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_market": {
+        "ja": "市場リスクの額",
+        "ko": "시장리스크(D)",
+        "unit": "JPY_million",
+        "kics_item_ref": 19
+      },
+      "rc_mkt_interest": {
+        "ja": "金利リスクの額",
+        "ko": "금리리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": 36
+      },
+      "rc_mkt_spread": {
+        "ja": "スプレッドリスクの額",
+        "ko": "스프레드리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_mkt_equity": {
+        "ja": "株式リスクの額",
+        "ko": "주식리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": 37
+      },
+      "rc_mkt_property": {
+        "ja": "不動産リスクの額",
+        "ko": "부동산리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": 38
+      },
+      "rc_mkt_fx": {
+        "ja": "為替リスクの額",
+        "ko": "환리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": 39
+      },
+      "rc_mkt_concentration": {
+        "ja": "資産集中リスクの額",
+        "ko": "자산집중리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": 40
+      },
+      "rc_mkt_mgmt_action": {
+        "ja": "マネジメント・アクションの効果の額",
+        "ko": "경영조치 효과(시장)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_credit": {
+        "ja": "信用リスクの額",
+        "ko": "신용리스크(E)",
+        "unit": "JPY_million",
+        "kics_item_ref": 20
+      },
+      "rc_operational": {
+        "ja": "オペレーショナル・リスクの額",
+        "ko": "운영리스크(F)",
+        "unit": "JPY_million",
+        "kics_item_ref": 21
+      },
+      "rc_mgmt_action_excess": {
+        "ja": "マネジメント・アクションの効果の上限超過額",
+        "ko": "경영조치 효과 상한초과액(G, 가산)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_diversification": {
+        "ja": "分散効果の額",
+        "ko": "분산효과(H, 차감)",
+        "unit": "JPY_million",
+        "kics_item_ref": 16
+      },
+      "rc_pre_tax": {
+        "ja": "所要資本の額(税効果考慮前)",
+        "ko": "소요자본(세효과 고려전, I/J)",
+        "unit": "JPY_million",
+        "kics_item_ref": 15
+      },
+      "rc_tax_effect": {
+        "ja": "所要資本の税効果の額",
+        "ko": "소요자본 세효과(J/K, 차감)",
+        "unit": "JPY_million",
+        "kics_item_ref": 22
+      },
+      "rc_post_tax": {
+        "ja": "所要資本の額(税効果考慮後)",
+        "ko": "소요자본(세효과 고려후) — T3 합계행",
+        "unit": "JPY_million",
+        "kics_item_ref": 14
+      },
+      "ebs_total_assets": {
+        "ja": "総資産",
+        "ko": "EBS 총자산",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_intangibles": {
+        "ja": "無形固定資産",
+        "ko": "EBS 무형고정자산",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_reinsurance_recoverables": {
+        "ja": "再保険回収額",
+        "ko": "EBS 재보험회수액",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_total_liabilities": {
+        "ja": "総負債",
+        "ko": "EBS 총부채",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_insurance_liabilities": {
+        "ja": "保険負債(保険契約準備金)合計",
+        "ko": "EBS 보험부채 합계",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_current_estimate": {
+        "ja": "現在推計の額",
+        "ko": "현재추계(최선추정부채, BEL)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_moce": {
+        "ja": "現在推計を超えるマージン",
+        "ko": "MOCE(현재추계 초과 마진, 위험마진)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_reg_reserve_in_liabilities": {
+        "ja": "規制上の準備金に属するもの",
+        "ko": "규제상 준비금(위험준비금·이상위험준비금 등, 회계기준 보험부채 내) — イ열",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_non_insurance_liabilities": {
+        "ja": "非保険負債合計",
+        "ko": "EBS 비보험부채 합계",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_other_reserves_reclass": {
+        "ja": "その他の準備金",
+        "ko": "기타 준비금(부채로 재분류된 규제상 준비금 일부) — ニ열",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_price_fluctuation_reserve": {
+        "ja": "価格変動準備金",
+        "ko": "가격변동준비금(회계기준, 자본으로 재분류) — イ열",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_net_assets": {
+        "ja": "純資産",
+        "ko": "EBS 순자산",
+        "unit": "JPY_million",
+        "kics_item_ref": 4
+      },
+      "ebs_net_assets_statutory": {
+        "ja": "純資産",
+        "ko": "회계기준 순자산(EBS 표 イ열)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_capital_stock": {
+        "ja": "基金又は資本金",
+        "ko": "자본금/기금",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_capital_surplus": {
+        "ja": "資本剰余金",
+        "ko": "자본잉여금",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_retained_earnings": {
+        "ja": "剰余金又は利益剰余金",
+        "ko": "이익잉여금",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_regulatory_reserve_equity": {
+        "ja": "規制上の準備金",
+        "ko": "규제상 준비금(자본으로 재분류된 합계) — ニ열",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_aoci": {
+        "ja": "その他の包括利益累計額合計",
+        "ko": "기타포괄손익누계액",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "ebs_ev_adjustment": {
+        "ja": "経済価値ベースの調整額",
+        "ko": "경제가치기준 조정액",
+        "unit": "JPY_million",
+        "kics_item_ref": 11
+      },
+      "il_total_ex_moce": {
+        "ja": "保険負債",
+        "ko": "보험부채(MOCE 제외) 경제가치",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "il_unexpired": {
+        "ja": "未経過責任に係る保険負債",
+        "ko": "미경과책임 보험부채(LRC 상당)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "il_incurred": {
+        "ja": "既経過責任に係る保険負債",
+        "ko": "기경과책임 보험부채(LIC 상당)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "rc_non_insurance_business": {
+        "ja": "非保険事業に係る所要資本の額",
+        "ko": "비보험사업 소요자본(i) — au 결합표에만 있는 행",
+        "unit": "JPY_million",
+        "kics_item_ref": 23
+      },
+      "tier1_ratio_pct": {
+        "ja": null,
+        "ko": "기본자본비율 상당 = tier1_eligible / required_capital × 100 (일본 미공시, 파생)",
+        "unit": "pct",
+        "kics_item_ref": 28
+      },
+      "esr_pct_5yr_summary": {
+        "ja": "単体ベースのソルベンシー・マージン比率",
+        "ko": "5개년 주요지표 표의 헤드라인(교차확인용)",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "sens_jpy_rate_up50_esr_pct": {
+        "ja": "円金利50ベーシス・ポイント上昇",
+        "ko": "민감도 ESR: 엔 금리 +50bp",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "sens_jpy_rate_down50_esr_pct": {
+        "ja": "円金利50ベーシス・ポイント下降",
+        "ko": "민감도 ESR: 엔 금리 -50bp",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "sens_usd_rate_up50_esr_pct": {
+        "ja": "米ドル金利50ベーシス・ポイント上昇",
+        "ko": "민감도 ESR: 달러 금리 +50bp",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "sens_usd_rate_down50_esr_pct": {
+        "ja": "米ドル金利50ベーシス・ポイント下降",
+        "ko": "민감도 ESR: 달러 금리 -50bp",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "sens_jpy_ufr_down50_esr_pct": {
+        "ja": "円金利UFR50ベーシス・ポイント下降",
+        "ko": "민감도 ESR: 엔 UFR -50bp",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "sens_equity_property_down10_esr_pct": {
+        "ja": "株式・不動産10%下落",
+        "ko": "민감도 ESR: 주식·부동산 -10%",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "sens_fx_yen_up10_esr_pct": {
+        "ja": "為替10%円高",
+        "ko": "민감도 ESR: 환율 10% 엔고",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "internal_model_applied": {
+        "ja": "内部モデル手法の適用",
+        "ko": "내부모형 적용 여부",
+        "unit": "flag",
+        "kics_item_ref": null
+      },
+      "usp_applied": {
+        "ja": "会社固有のストレス係数手法の適用",
+        "ko": "회사고유 스트레스계수(USP) 적용 여부",
+        "unit": "flag",
+        "kics_item_ref": null
+      },
+      "internal_discount_rate_applied": {
+        "ja": "内部割引率手法の適用",
+        "ko": "내부할인율 적용 여부",
+        "unit": "flag",
+        "kics_item_ref": null
+      },
+      "mgmt_action_applied": {
+        "ja": "マネジメント・アクション",
+        "ko": "경영조치(management action) 반영 여부",
+        "unit": "flag",
+        "kics_item_ref": null
+      },
+      "risk_mitigation_reinsurance": {
+        "ja": "リスク削減手法",
+        "ko": "재보험 리스크경감 반영 여부",
+        "unit": "flag",
+        "kics_item_ref": null
+      },
+      "transitional_measures": {
+        "ja": "経過措置",
+        "ko": "경과조치(激変緩和措置) 적용 여부",
+        "unit": "flag",
+        "kics_item_ref": null
+      },
+      "sensitivity_omitted": {
+        "ja": "記載を省略",
+        "ko": "민감도 표 생략 여부(차이 1%p 미만 사유)",
+        "unit": "flag",
+        "kics_item_ref": null
+      },
+      "first_year_no_movement_analysis": {
+        "ja": "変動要因分析",
+        "ko": "변동요인분석 미기재(초년도)",
+        "unit": "flag",
+        "kics_item_ref": null
+      },
+      "calc_method": {
+        "ja": "内部モデル手法の適用",
+        "ko": "산정방식 standard / standard_implied / internal_model",
+        "unit": "enum",
+        "kics_item_ref": null
+      },
+      "discount_bucket_jpy": {
+        "ja": "適用バケット",
+        "ko": "엔화 할인율 버킷",
+        "unit": "enum",
+        "kics_item_ref": null
+      },
+      "discount_rates_jpy": {
+        "ja": "主な通貨",
+        "ko": "엔화 할인율(연한별 %)",
+        "unit": "pct_by_tenor",
+        "kics_item_ref": null
+      },
+      "esr_status": {
+        "ja": "後日公表予定",
+        "ko": "posted / not_yet / not_found",
+        "unit": "enum",
+        "kics_item_ref": null
+      },
+      "esr_placeholder_locations": {
+        "ja": "ソルベンシー・マージン比率 新基準",
+        "ko": "'後日公表予定' 문구가 놓인 표/절 위치 목록(10월에 채워질 자리)",
+        "unit": "list",
+        "kics_item_ref": null
+      },
+      "smr_old_basis_fy2024_pct": {
+        "ja": "ソルベンシー・マージン比率 旧基準",
+        "ko": "구기준 SMR FY2024 (비교 참고, ESR 아님)",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "cat_reserve_total": {
+        "ja": "異常危険準備金",
+        "ko": "이상위험준비금 잔액 합계(전 종목)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "cat_reserve_fire": {
+        "ja": "火災 行 × 異常危険準備金 列",
+        "ko": "화재 종목 이상위험준비금 잔액(금융청 부족 지적 대상)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "cat_reserve_by_line": {
+        "ja": "火災/海上/傷害/自動車/自動車損害賠償責任/その他",
+        "ko": "종목별 이상위험준비금 잔액",
+        "unit": "dict",
+        "kics_item_ref": null
+      },
+      "ordinary_reserve_total": {
+        "ja": "普通責任準備金",
+        "ko": "보통책임준비금 합계(같은 표)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "cat_reserve_adequacy_note": {
+        "ja": "積立不足",
+        "ko": "적립 부족/적립률 서술 유무 (없으면 null)",
+        "unit": "text",
+        "kics_item_ref": null
+      },
+      "air_used": {
+        "ja": "アセット・インテンシブ",
+        "ko": "not_mentioned / mentioned / mentioned_esr_purpose",
+        "unit": "enum",
+        "kics_item_ref": null
+      },
+      "air_evidence": {
+        "ja": "既契約の出再に伴う損益",
+        "ko": "AIR 정황 근거(기계약 출재 손익·관계사 재보험 각주 등)",
+        "unit": "text",
+        "kics_item_ref": null
+      },
+      "inforce_cession_pl": {
+        "ja": "既契約の出再に伴う損益に相当する額",
+        "ko": "기계약 출재 관련 손익(기초이익에서 제외된 액)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "reins_counterparties_n": {
+        "ja": "出再先保険会社の数",
+        "ko": "출재 상대 재보험사 수",
+        "unit": "count",
+        "kics_item_ref": null
+      },
+      "reins_top5_share_pct": {
+        "ja": "出再保険料のうち上位5社の出再先に集中している割合",
+        "ko": "상위 5사 출재보험료 집중도",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "reins_rating_a_or_above_pct": {
+        "ja": "出再保険料の格付ごとの割合",
+        "ko": "A등급 이상 재보험사 출재보험료 비중",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      "reins_unreceived_claims": {
+        "ja": "未だ収受していない再保険金の金額",
+        "ko": "미수 재보험금",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "core_profit": {
+        "ja": "基礎利益",
+        "ko": "기초이익(당기)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "core_profit_prev": {
+        "ja": "基礎利益",
+        "ko": "기초이익(전기)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "negative_spread_100m": {
+        "ja": "逆ざや",
+        "ko": "역마진(逆ざや) 금액 — 단위 億円(표본 원문 단위) — 양수=역마진 존재",
+        "unit": "JPY_100million",
+        "kics_item_ref": null
+      },
+      "negative_spread_prev_100m": {
+        "ja": "逆ざや",
+        "ko": "역마진 전기(億円)",
+        "unit": "JPY_100million",
+        "kics_item_ref": null
+      },
+      "interest_margin": {
+        "ja": "利差損益",
+        "ko": "이차손익(三利源 공시사에서만)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      "interest_margin_sign": {
+        "ja": "利差損益",
+        "ko": "positive / negative / unstated (역마진이면 negative)",
+        "unit": "enum",
+        "kics_item_ref": null
+      },
+      "three_source_disclosed": {
+        "ja": "利差損益",
+        "ko": "三利源(利差·危険差·費差) 분해 공시 여부",
+        "unit": "bool",
+        "kics_item_ref": null
+      }
+    },
+    "next_update": "2026-10-31",
+    "coverage": {
+      "detail_posted": 2,
+      "posted_total": 13,
+      "census_total": 79
+    }
+  },
+  "companies": [
+    {
+      "id": "au_nonlife",
+      "company_jp": "au損害保険",
+      "company_en": "au Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "source_url": "https://www.au-sonpo.co.jp/corporate/pdf/disclo_260730_4of5.pdf",
+      "doc_type": "ディスクロージャー誌(au損保の現状2026, 업적데이터편, 2026-07-30 발행)",
+      "doc_date": "2026-07-30",
+      "headline": {
+        "eligible_capital": 9278,
+        "required_capital": 1171,
+        "esr_pct": 791.7,
+        "preliminary": false
+      },
+      "capital": {
+        "tier1_eligible": 9102,
+        "tier1_basic": 13880,
+        "tier1_instr_unrestricted": 3150,
+        "tier1_non_instrument": 10730,
+        "tier1_ni_retained_earnings": 5998,
+        "tier1_ni_capital_surplus": 2850,
+        "tier1_ni_ev_adjustment": 1882,
+        "tier1_adjustments": 4778,
+        "tier1_adj_intangibles": 4778,
+        "tier2_eligible": 175,
+        "tier2_basic": 175,
+        "tier2_non_instrument": 175,
+        "tier2_ni_basket": 175,
+        "eligible_capital_total": 9278
+      },
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": 1119,
+        "rc_catastrophe": 87,
+        "rc_market": 247,
+        "rc_credit": 78,
+        "rc_operational": 251,
+        "diversification_effect": 274,
+        "rc_pre_tax": 1510,
+        "tax_effect": 338,
+        "rc_post_tax": 1171
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": 0,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": 247
+      },
+      "sensitivity": [],
+      "aggregation": {
+        "top_sqrt": 1257.4,
+        "simple_sum": 1531,
+        "reproduced": true,
+        "checks_pass": 43,
+        "checks_total": 43,
+        "deviations": []
+      },
+      "axes": {
+        "esr_status": "posted",
+        "esr_placeholder_locations": [],
+        "cat_reserve_total": 2222,
+        "cat_reserve_by_line": {
+          "火災": null,
+          "海上": null,
+          "傷害": 1421,
+          "自動車": null,
+          "自動車損害賠償責任": null,
+          "その他": 800
+        },
+        "ordinary_reserve_total": 3259,
+        "air_used": "not_mentioned",
+        "reins_counterparties_n": 5,
+        "reins_top5_share_pct": 100.0,
+        "reins_rating_a_or_above_pct": 80.0,
+        "_reins_rating_buckets": {
+          "A以上": 80.0,
+          "BBB以上": null,
+          "その他": 20.0
+        }
+      },
+      "items": {
+        "eligible_capital": 9278,
+        "required_capital": 1171,
+        "esr_pct": 791.7,
+        "tier1_eligible": 9102,
+        "tier1_basic": 13880,
+        "tier1_instr_unrestricted": 3150,
+        "tier1_non_instrument": 10730,
+        "tier1_ni_retained_earnings": 5998,
+        "tier1_ni_capital_surplus": 2850,
+        "tier1_ni_ev_adjustment": 1882,
+        "tier1_adjustments": 4778,
+        "tier1_adj_intangibles": 4778,
+        "tier2_eligible": 175,
+        "tier2_basic": 175,
+        "tier2_non_instrument": 175,
+        "tier2_ni_basket": 175,
+        "eligible_capital_total": 9278,
+        "rc_nonlife": 1119,
+        "rc_nl_property": 159,
+        "rc_nl_other": 1031,
+        "rc_catastrophe": 87,
+        "rc_cat_other": 87,
+        "rc_market": 247,
+        "rc_mkt_spread": 0,
+        "rc_mkt_concentration": 247,
+        "rc_credit": 78,
+        "rc_operational": 251,
+        "rc_diversification": 274,
+        "rc_pre_tax": 1510,
+        "rc_tax_effect": 338,
+        "rc_post_tax": 1171,
+        "ebs_total_assets": 22664,
+        "ebs_intangibles": 4778,
+        "ebs_reinsurance_recoverables": 1575,
+        "ebs_total_liabilities": 8783,
+        "ebs_insurance_liabilities": 4969,
+        "ebs_current_estimate": 4917,
+        "ebs_moce": 51,
+        "ebs_reg_reserve_in_liabilities": 2222,
+        "ebs_non_insurance_liabilities": 3814,
+        "ebs_net_assets": 13880,
+        "ebs_net_assets_statutory": 9776,
+        "ebs_capital_stock": 3150,
+        "ebs_capital_surplus": 2850,
+        "ebs_retained_earnings": 3776,
+        "ebs_regulatory_reserve_equity": 2222,
+        "ebs_ev_adjustment": 1882,
+        "il_total_ex_moce": 4917,
+        "il_unexpired": 2020,
+        "il_incurred": 2897,
+        "tier1_ratio_pct": 777.3,
+        "esr_pct_5yr_summary": 791.7,
+        "internal_model_applied": "unstated",
+        "usp_applied": "unstated",
+        "internal_discount_rate_applied": "unstated",
+        "mgmt_action_applied": "unstated",
+        "risk_mitigation_reinsurance": true,
+        "transitional_measures": false,
+        "sensitivity_omitted": true,
+        "first_year_no_movement_analysis": true,
+        "calc_method": "standard_implied",
+        "discount_bucket_jpy": "一般バケット",
+        "discount_rates_jpy": {
+          "1y": 1.21,
+          "2y": 1.447,
+          "3y": 1.576
+        }
+      }
+    },
+    {
+      "id": "meijiyasuda_nonlife",
+      "company_jp": "明治安田損害保険",
+      "company_en": "Meiji Yasuda Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "source_url": "https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260904_performance_data.pdf",
+      "doc_type": "ディスクロージャー誌【別冊】業績データ(明治安田損害保険の現状2026, 2026-09-04 게시)",
+      "doc_date": "2026-09-04",
+      "headline": {
+        "eligible_capital": 40290,
+        "required_capital": 5420,
+        "esr_pct": 743.2,
+        "preliminary": false
+      },
+      "capital": {
+        "tier1_eligible": 40140,
+        "tier1_basic": 42118,
+        "tier1_instr_unrestricted": 10000,
+        "tier1_non_instrument": 32118,
+        "tier1_ni_retained_earnings": 18237,
+        "tier1_ni_capital_surplus": 8455,
+        "tier1_ni_aoci": 2064,
+        "tier1_ni_ev_adjustment": 3362,
+        "tier1_adjustments": 1978,
+        "tier1_adj_intangibles": 1978,
+        "tier2_eligible": 149,
+        "tier2_basic": 149,
+        "tier2_non_instrument": 149,
+        "tier2_ni_basket": 149,
+        "eligible_capital_total": 40290
+      },
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": 2096,
+        "rc_catastrophe": 1865,
+        "rc_market": 4613,
+        "rc_credit": 475,
+        "rc_operational": 463,
+        "diversification_effect": 2530,
+        "rc_pre_tax": 6985,
+        "tax_effect": 1564,
+        "rc_post_tax": 5420
+      },
+      "market_sub": {
+        "rc_mkt_interest": 665,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": 2218,
+        "rc_mkt_property": 1591,
+        "rc_mkt_fx": 1681,
+        "rc_mkt_concentration": 1412
+      },
+      "sensitivity": [
+        {
+          "id": "sens_jpy_rate_up50_esr_pct",
+          "label_ja": "円金利50ベーシス・ポイント上昇",
+          "esr_pct": 736.7,
+          "delta_pp": -6.5
+        },
+        {
+          "id": "sens_jpy_rate_down50_esr_pct",
+          "label_ja": "円金利50ベーシス・ポイント下降",
+          "esr_pct": 750.1,
+          "delta_pp": 6.9
+        },
+        {
+          "id": "sens_usd_rate_up50_esr_pct",
+          "label_ja": "米ドル金利50ベーシス・ポイント上昇",
+          "esr_pct": 743.3,
+          "delta_pp": 0.1
+        },
+        {
+          "id": "sens_usd_rate_down50_esr_pct",
+          "label_ja": "米ドル金利50ベーシス・ポイント下降",
+          "esr_pct": 743.2,
+          "delta_pp": 0.0
+        },
+        {
+          "id": "sens_jpy_ufr_down50_esr_pct",
+          "label_ja": "円金利UFR50ベーシス・ポイント下降",
+          "esr_pct": 743.2,
+          "delta_pp": 0.0
+        },
+        {
+          "id": "sens_equity_property_down10_esr_pct",
+          "label_ja": "株式・不動産10%下落",
+          "esr_pct": 764.4,
+          "delta_pp": 21.2
+        },
+        {
+          "id": "sens_fx_yen_up10_esr_pct",
+          "label_ja": "為替10%円高",
+          "esr_pct": 755.9,
+          "delta_pp": 12.7
+        }
+      ],
+      "aggregation": {
+        "top_sqrt": 6519.5,
+        "simple_sum": 9049,
+        "reproduced": true,
+        "checks_pass": 49,
+        "checks_total": 51,
+        "deviations": [
+          {
+            "id": "G06_nonlife",
+            "lhs": 2096,
+            "rhs": 2137.3,
+            "note": "multi-geography (rc_cat_nat_foreign > 0): regulation aggregates 大区分 within geography first → informational | registered in esr_aggregation_rules.json known_deviations"
+          },
+          {
+            "id": "G07_catastrophe",
+            "lhs": 1865,
+            "rhs": 1974.4,
+            "note": "registered in esr_aggregation_rules.json known_deviations"
+          }
+        ]
+      },
+      "axes": {
+        "esr_status": "posted",
+        "esr_placeholder_locations": [],
+        "cat_reserve_adequacy_note": "NOT_IN_SAMPLE_DOC (別冊 業績データ has no 責任準備金の内訳 table — main disclosure volume needed)",
+        "air_used": "not_mentioned"
+      },
+      "items": {
+        "eligible_capital": 40290,
+        "required_capital": 5420,
+        "esr_pct": 743.2,
+        "tier1_eligible": 40140,
+        "tier1_basic": 42118,
+        "tier1_instr_unrestricted": 10000,
+        "tier1_non_instrument": 32118,
+        "tier1_ni_retained_earnings": 18237,
+        "tier1_ni_capital_surplus": 8455,
+        "tier1_ni_aoci": 2064,
+        "tier1_ni_ev_adjustment": 3362,
+        "tier1_adjustments": 1978,
+        "tier1_adj_intangibles": 1978,
+        "tier2_eligible": 149,
+        "tier2_basic": 149,
+        "tier2_non_instrument": 149,
+        "tier2_ni_basket": 149,
+        "eligible_capital_total": 40290,
+        "rc_nonlife": 2096,
+        "rc_nl_liability": 283,
+        "rc_nl_motor": 0,
+        "rc_nl_property": 518,
+        "rc_nl_other": 1657,
+        "rc_catastrophe": 1865,
+        "rc_cat_natural": 1748,
+        "rc_cat_nat_jp_earthquake": 546,
+        "rc_cat_nat_jp_windflood": 1447,
+        "rc_cat_nat_jp_snow": 374,
+        "rc_cat_nat_foreign": 156,
+        "rc_cat_other": 918,
+        "rc_market": 4613,
+        "rc_mkt_interest": 665,
+        "rc_mkt_equity": 2218,
+        "rc_mkt_property": 1591,
+        "rc_mkt_fx": 1681,
+        "rc_mkt_concentration": 1412,
+        "rc_credit": 475,
+        "rc_operational": 463,
+        "rc_diversification": 2530,
+        "rc_pre_tax": 6985,
+        "rc_tax_effect": 1564,
+        "rc_post_tax": 5420,
+        "ebs_total_assets": 64031,
+        "ebs_intangibles": 1978,
+        "ebs_reinsurance_recoverables": 142,
+        "ebs_total_liabilities": 21912,
+        "ebs_insurance_liabilities": 7306,
+        "ebs_current_estimate": 7099,
+        "ebs_moce": 207,
+        "ebs_reg_reserve_in_liabilities": 14879,
+        "ebs_non_insurance_liabilities": 14605,
+        "ebs_other_reserves_reclass": 322,
+        "ebs_price_fluctuation_reserve": 831,
+        "ebs_net_assets": 42118,
+        "ebs_net_assets_statutory": 23367,
+        "ebs_capital_stock": 10000,
+        "ebs_capital_surplus": 8455,
+        "ebs_retained_earnings": 2847,
+        "ebs_regulatory_reserve_equity": 15389,
+        "ebs_aoci": 2064,
+        "ebs_ev_adjustment": 3362,
+        "il_total_ex_moce": 7099,
+        "il_unexpired": 823,
+        "il_incurred": 6275,
+        "tier1_ratio_pct": 740.6,
+        "internal_model_applied": false,
+        "usp_applied": false,
+        "internal_discount_rate_applied": false,
+        "mgmt_action_applied": false,
+        "risk_mitigation_reinsurance": true,
+        "transitional_measures": false,
+        "sensitivity_omitted": false,
+        "first_year_no_movement_analysis": false,
+        "calc_method": "standard",
+        "discount_bucket_jpy": "一般バケット",
+        "discount_rates_jpy": {
+          "5y": 1.889,
+          "10y": 2.49,
+          "15y": 3.013,
+          "20y": 3.579
+        }
+      }
+    }
+  ]
+}
