@@ -162,7 +162,7 @@
 
     <section class="panel" aria-labelledby="secRanking">
       <h2 id="secRanking">ESRランキング</h2>
-      <p>経済価値ベースのソルベンシー比率(ESR)。色は金融庁の監督基準(100%)を上回るほど濃い緑、下回るほど濃い赤で示します。範囲(連結/単体)や算定基準等の詳細は下の一覧表でご確認いただけます。</p>
+      <p>経済価値ベースのソルベンシー比率(ESR)。色は金融庁の監督基準(100%)を上回るほど濃い緑、下回るほど濃い赤で示します。行を選ぶと会社別の詳細（適格資本・所要資本・損益・収益性指標）に移動します。</p>
 
       <h3 class="rank-group-title">生命保険<span class="rank-group-count" id="rankCountLife"></span></h3>
       <div id="esrListLife" class="map-list" aria-label="ESRランキング(生命保険、読み込み中)"></div>
@@ -192,35 +192,6 @@
           <span><span class="sw" style="background:#475569"></span><span id="covLegNotFound">未確認</span></span>
         </div>
       </div>
-    </section>
-
-    <section class="panel" aria-labelledby="secTable">
-      <h2 id="secTable">一覧表</h2>
-      <!-- owner 2026-09-12 추가지시: 전 행이 같은 基準日(2026-03-31)라 열로 반복하지 않고
-           위 公表状況 패널의 基準時点 한 줄(asOfLine)로 대신한다 — 새 줄을 여기 또 넣지 않는다.
-           業態는 生保/損保 섹션 분리로 이미 표현되어 열 자체를 제거. -->
-
-      <h3 class="rank-group-title">生命保険<span class="rank-group-count" id="tableCountLife"></span></h3>
-      <div class="table-container">
-        <table class="esr-table" id="esrTableLife">
-          <thead><tr>
-            <th scope="col">会社名</th><th scope="col">範囲</th><th scope="col">ESR</th><th scope="col">公表日</th><th scope="col">備考</th>
-          </tr></thead>
-          <tbody id="esrTableBodyLife"><tr><td colspan="5" class="small-muted">読み込み中…</td></tr></tbody>
-        </table>
-      </div>
-      <button type="button" class="more-btn" id="tableMoreBtnLife" hidden aria-expanded="false"></button>
-
-      <h3 class="rank-group-title">損害保険<span class="rank-group-count" id="tableCountNonlife"></span></h3>
-      <div class="table-container">
-        <table class="esr-table" id="esrTableNonlife">
-          <thead><tr>
-            <th scope="col">会社名</th><th scope="col">範囲</th><th scope="col">ESR</th><th scope="col">公表日</th><th scope="col">備考</th>
-          </tr></thead>
-          <tbody id="esrTableBodyNonlife"><tr><td colspan="5" class="small-muted">読み込み中…</td></tr></tbody>
-        </table>
-      </div>
-      <button type="button" class="more-btn" id="tableMoreBtnNonlife" hidden aria-expanded="false"></button>
     </section>
 
   </main>
@@ -386,24 +357,22 @@
     // 항상 적용(티켓 지시 — 루트는 모바일에서만 fold, jp는 기존부터 양쪽 다 적용해 그대로 유지).
     function renderGroup(key){
       var full = groupData[key], c = cap(key);
-      var rc = document.getElementById('rankCount'+c), tc = document.getElementById('tableCount'+c);
+      var rc = document.getElementById('rankCount'+c), tc = null;
       if(rc) rc.textContent = '（'+full.length+'社）';
       if(tc) tc.textContent = '（'+full.length+'社）';
       renderList(key);
-      renderTable(key);
       updateMoreButtons(key);
     }
 
     function toggleExpand(key){
       expanded[key] = !expanded[key];
       renderList(key);
-      renderTable(key);
       updateMoreButtons(key);
     }
 
     function updateMoreButtons(key){
       var full = groupData[key], c = cap(key);
-      [document.getElementById('moreBtn'+c), document.getElementById('tableMoreBtn'+c)].forEach(function(btn){
+      [document.getElementById('moreBtn'+c)].forEach(function(btn){
         if(!btn) return;
         if(full.length <= FOLD){ btn.hidden = true; return; }
         btn.hidden = false;
@@ -477,6 +446,12 @@
         nm.className = 'li-nm';
         nm.textContent = r.company_jp;
         name.appendChild(nm);
+        if(r.scope){
+          var sc = document.createElement('span');
+          sc.className = 'li-chip';
+          sc.textContent = SCOPE_LABEL[r.scope] || r.scope;
+          name.appendChild(sc);
+        }
         if(r.preliminary){
           var chip = document.createElement('span');
           chip.className = 'li-chip';
@@ -505,7 +480,7 @@
       var top = list[0], bottom = list[list.length-1];
       if(top && bottom){
         el.setAttribute('aria-label',
-          'ESRランキング（'+GROUP_LABEL[key]+'）。表示中'+list.length+'社(全'+full.length+'社)、最高は'+top.company_jp+' '+fmtPct(top.esr_pct)+'、最低は'+bottom.company_jp+' '+fmtPct(bottom.esr_pct)+'。詳細は下の一覧表を参照してください。');
+          'ESRランキング（'+GROUP_LABEL[key]+'）。表示中'+list.length+'社(全'+full.length+'社)、最高は'+top.company_jp+' '+fmtPct(top.esr_pct)+'、最低は'+bottom.company_jp+' '+fmtPct(bottom.esr_pct)+'。行を選ぶと会社別詳細に移動します。');
       } else {
         el.setAttribute('aria-label', 'ESRランキング（'+GROUP_LABEL[key]+'）。データがありません。');
       }
@@ -539,44 +514,7 @@
         'ESR公表状況カバレッジ。全'+(c.total||0)+'社中、公表済み'+(c.posted||0)+'社、公表予定'+(c.not_yet||0)+'社、未確認'+(c.not_found||0)+'社。');
     }
 
-    // owner 지시 3: 出所 열 제거 + 공시일자(doc_date) 텍스트에 source_url 링크.
-    function renderTable(key){
-      var tbody = document.getElementById('esrTableBody'+cap(key));
-      if(!tbody) return;
-      var full = groupData[key];
-      var list = (expanded[key] || full.length<=FOLD) ? full : full.slice(0, FOLD);
-      if(!list.length){
-        tbody.innerHTML = '<tr><td colspan="5" class="small-muted">該当データがありません。</td></tr>';
-        return;
-      }
-      tbody.innerHTML = list.map(function(r){
-        var docDateTxt = r.doc_date ? (jaDateFlexible(r.doc_date)||'—') : '—';
-        var docTypeClean = jaOnly(r.doc_type) || '';
-        var pubCell = r.source_url
-          ? '<a href="'+esc(r.source_url)+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc(r.company_jp)+'の根拠資料'+(docTypeClean?'（'+esc(docTypeClean)+'）':'')+'、別タブで開く">'+esc(docDateTxt)+' ↗</a>'
-          : esc(docDateTxt);
-        var remarks = [];
-        if(r.preliminary) remarks.push('<span class="jp-badge">速報</span>');
-        var bn = basisNote(r.basis);
-        if(bn) remarks.push('<span class="small-muted">'+esc(bn)+'</span>');
-        // 2026-09-12: ▲目標水準 마커가 리스트 레이아웃에서 빠지면서(자리 없음) 表 備考로 이동.
-        if(r.target_pct) remarks.push('<span class="small-muted">目標 '+esc(r.target_pct)+'</span>');
-        // 一覧表 회사명은 전사 링크(inbox 20260912T1420Z) — jesr_detail.json 에 있으면 그 id,
-        // 없으면 company_jp 를 encodeURIComponent(jesr.html 에서 헤드라인 전용 기본 페이지로 처리).
-        var detailId = (detailMap && r.company_en) ? detailMap[r.company_en] : null;
-        var tableKey = detailId || encodeURIComponent(r.company_jp);
-        var nameCell = '<a href="jesr.html?company='+esc(tableKey)+'">'+esc(r.company_jp)+'</a>';
-        // owner 2026-09-12: 業態(生保/損保 섹션분리로 중복)·基準日(전 행 동일, 上の基準時点
-        // 한 줄로 대체) 열 제거. 남는 열 = 会社名/範囲/ESR/公表日/備考.
-        return '<tr>'
-          + '<td title="'+esc(r.category||'')+'">'+nameCell+'</td>'
-          + '<td>'+esc(SCOPE_LABEL[r.scope]||r.scope||'—')+'</td>'
-          + '<td class="num">'+fmtPct(r.esr_pct)+'</td>'
-          + '<td>'+pubCell+'</td>'
-          + '<td>'+(remarks.length? remarks.join(' ') : '—')+'</td>'
-          + '</tr>';
-      }).join('');
-    }
+    // renderTable()/一覧表 는 2026-09-13 owner 지시로 폐지(랭킹 리스트와 중복). 範囲는 리스트 칩, 公表日·出所는 상세 페이지.
   })();
   </script>
   <!-- 오류제보 팝업(일본어). 백엔드는 루트 forms-config.js(같은 Apps Script)를 그대로 재사용, sheet 값에 JP: 접두. -->
