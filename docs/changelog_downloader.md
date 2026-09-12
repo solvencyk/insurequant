@@ -3,6 +3,22 @@
 > Last updated: 2026-09-03 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
 
+## 2026-09-12 -- J-ESR FY2025 ESR 공시 게재 census (킥오프 1차 조각, 79사)
+
+owner 09-12 정정: 개별사 ESR 정본은 EDINET XBRL 이 아니라 회사별 공시(IR) 사이트 PDF, 공시 기한 2026-10-31
+(06-24 probe 에서 FY2024 XBRL 에 ESR 구성요소 0건이었던 사실과 일치). 킥오프(9월 말) 전에 분모를 재기 위해
+downloader 에이전트 2개(행 1~41 / 42~81)로 `jp_insurers.csv` 81행 전수 조회.
+
+- 산출: `J-ESR/fy2025_esr_census_20260912.csv` (utf-8-sig, 14열, 완전 중복 2사 제거 → 79사),
+  `J-ESR/jp_insurers.csv` ir_url 공란 41 → 2 (39칸만 diff, 행 순서·다른 열 불변). part csv 는 `J-ESR/raw/`(gitignore).
+- 집계: posted 15(생보 10·손보 5) / not_yet 62 / not_found 2. posted = HD 상장 5 그룹값 + 대형 생보 8(상호사 4 포함)
+  + 소형 손보 2 solo. 이상치 2건(au 791.7%, Meiji Yasuda Non-Life 743.2%) orchestrator 가 원문 PDF fitz 로 재확인.
+- 핵심 사실: 손보 원문 13건 중 11건 + 생보 일부(NN Life·Rakuten Life)가 "신기준 비율은 2026년 10월 말 공표 예정"
+  명시. 9월 말 킥오프에서 얻는 것은 페이지 존재(77/79)와 15사 값, 나머지는 10월 말 일괄.
+- 한계: not_yet 일부(Zurich Life·AXA Life 등)는 PDF 미열람 패턴 판정으로 notes 에 명시. 10월 말 재census 때 그 행부터.
+- 운영 교훈: 에이전트 생존 판정은 `tasks/<id>.output`(placeholder, 0바이트) 가 아니라 세션 `subagents/agent-<id>.jsonl`
+  mtime — 살아 있는 에이전트를 죽여 13분 재작업. 이 PC 는 시간대별로 curl 이 막혔다 풀림(part1 은 WebFetch 만으로 수행).
+
 ## 2026-09-12 (2) — 정정본 병존 저장 구현 + KR0075 2023.4Q 0.08% 차 정정공시 조사(정정 없음)
 
 오케스트레이터 발주 2건(직접 처리, 하위 에이전트 미사용). 첫 동작 네트워크 확인

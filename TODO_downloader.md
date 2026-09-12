@@ -1,11 +1,19 @@
 # Insurequant TODO — Downloader Stage
 
-> Last updated: 2026-09-03 · Stage 1/5 — downloader
+> Last updated: 2026-09-12 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md (+ docs/agents/source-catalog.yaml) · Changelog: docs/changelog_downloader.md
 
 **Cross-stage TODO:** `TODO.md` (root). **This file:** active + done items scoped to data collection only.
 
 ## Status
+
+**🟢 2026-09-12 (3) J-ESR 킥오프 1차 조각 — 일본 원수사 FY2025 ESR 공시 게재 census 79사 완료.**
+티켓 `inbox/_resolved/20260912T0307Z__owner__JP_MULTI__jesr_fy2025_disclosure_census.md`. 산출
+`J-ESR/fy2025_esr_census_20260912.csv`(79사, 중복 2사 제거) + `J-ESR/jp_insurers.csv` ir_url 공란 41→2.
+집계 **posted 15 / not_yet 62 / not_found 2**. 손보 원문 13건 중 11건이 "신기준 비율 2026년 10월 말 공표
+예정" 명시 → 9월 말 킥오프 분모 = 79사, 실측치는 15사 외 10월 말 일괄. posted 이상치 2건(au 791.7%·Meiji
+Yasuda Non-Life 743.2%) 원문 PDF fitz 재확인 일치. 소스 루트 정정(EDINET 보조, 회사별 공시 사이트 정본)은
+`TODO.md` J-ESR 항목. 다음 = **10월 말 재census**(같은 티켓 구조·같은 csv 열 재사용, not_yet 잠정판정 행부터).
 
 **🟢 2026-09-12 (2) 정정본 병존 저장 구현 + KR0075 2023.4Q 0.08% 차 정정공시 조사 — 정정 없음 확정.**
 상세: `docs/changelog_downloader.md` 2026-09-12.
@@ -110,21 +118,6 @@
   이쪽은 기대 그리드 미충족. 유실 축도 clear(baseline 395 -> 398 `--update`, missing=0).
 - AIG 2026.1Q/2Q 는 라이브 확인(2026년 필링 = 감사보고서 2건뿐) 후 `no_filing` 마커 기록.
   AIG 2022.4Q 2건은 owner 가 2022.4Q 백필을 보류 확정했으므로 미착수, `known_absent` 유지.
-
-**🟢 2026-09-01 인박스 처리 — KR0011/KR0029/KR0150 정기경영공시 셀렉터 하드닝
-(`inbox/_resolved/20260901T0140Z`).** 2026.2Q 라운드에서 세 회사가 위치고정 xpath(`li[1]`)/
-duplicate id(`id="test1"` ×5)/하드코딩 파라미터(`pancId=15467`)로 직전 분기(1분기) PDF를 조용히
-재수집한 것의 재발 방지. 세 사이트를 실제로 열어 현재 마크업으로 확인 후(추정 없음)
-`docs/agents/source-catalog.yaml` + `scripts/download_disclosure_2026q2_nonlife.py`를 분기 라벨
-텍스트 매칭(`contains(., "상반기"/"2분기")`)으로 교체 — KR0011은 `url2` 하드코딩 제거하고
-`two_step`으로 매 실행 목록에서 상세 URL 해석, KR0029는 사이트가 2단계 자체를 없애 `pancId` 코드
-전체 삭제(`direct_href`로 단순화), KR0150은 id 대신 링크 자신의 텍스트로 매칭. `_run_one`에
-`_verify_period()` 신설 — 집은 요소의 텍스트를 다운로드 직전 정규식으로 재검사해 기대 분기가
-아니면 즉시 실패(조용한 오탐 재발 차단). 스크래치에서 실제 엔진으로 재수집해 대상분기(2026.2Q)·
-회귀(2026.1Q) 양방향 검증 — 셋 다 기존 repo 파일과 sha256 완전 일치. `validate_disclosure_
-freshness.py` RED=0 유지 확인. 신규 `tests/test_disclosure_selector_hardcoding.py`(12 tests,
-mutation-tested against 원본) — **단, `scripts/prepush_check.py`의 fast 리스트에는 미배선**(동시
-편집 중인 공용 파일이라 충돌 회피, validation/orchestrator 후속 필요). 상세: 티켓 `## 답변`.
 
 > 📦 2026-08-30 이전 Status 항목은 `docs/todo_archive_downloader.md` 로 이동(2026-09-12, 내용
 > 무수정). 세션 시작 시 읽지 않는다.

@@ -1,7 +1,7 @@
 # J-ESR Pipeline Status
 > Track: J-ESR (Japan Economic Solvency Ratio)
 > First J-ICS mandatory disclosure cycle: FY2025 (ending 2026-03-31)
-> Last updated: 2026-06-24
+> Last updated: 2026-09-12
 
 ## Coverage Summary
 
@@ -14,6 +14,21 @@
 | Small/foreign subs | ~40 | Not scoped | Oct 2026+ |
 
 **2026-06-24 total confirmed (2026.3末 as-of):** 5 companies (HD only)
+
+## 2026-09-12 FY2025 disclosure census (79 companies)
+
+Source route corrected (owner 2026-09-12): individual-company ESR lives in each insurer's own disclosure/IR PDFs
+(deadline 2026-10-31); EDINET XBRL is secondary (FY2024 probe: 0 ESR elements). Census file:
+`J-ESR/fy2025_esr_census_20260912.csv` (`fy2025_esr_status` = posted / not_yet / not_found).
+
+| Status | Total | Life | Non-life | Re | Note |
+|---|---|---|---|---|---|
+| posted | 15 | 10 | 5 | 0 | 5 HD group + 8 large life (4 mutuals) + 2 small non-life solo |
+| not_yet | 62 | 34 | 25 | 2 | 11/13 non-life PDFs state new-basis ratio to be published end of Oct 2026 |
+| not_found | 2 | 1 | 1 | 0 | no disclosure page located |
+
+Next: re-run the same census at end of October 2026 (start from rows whose notes say pattern-based).
+`jp_insurers.csv` `ir_url` blanks 41 -> 2; the 2 exact-duplicate rows are kept for now (row order preserved).
 
 ## October 2026 Checklist
 
