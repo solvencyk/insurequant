@@ -2,7 +2,7 @@
 from: owner
 to: designer
 created: 20260912T1120Z
-status: answered
+status: resolved
 route: html
 company: JP_MULTI
 period: FY2025
@@ -99,3 +99,12 @@ meijiyasuda_nonlife 2사 전환(select 변경 + URL 직접이동 둘 다) 확인
 
 **미결(owner 승인 대기).** `/jp/` 라이브 반영은 publishing 답변의 3건(keep-list·xlsx·status_report) 처리 후 별도
 배포 라운드 — `scripts/android_push_and_deploy.sh` NEW_FILES 편집은 오케스트레이터가 처리(지시대로 미접촉).
+
+## 종결 재확인 (orchestrator 2026-09-12)
+
+`jp/jesr.html`(owner 명명) 데스크톱·모바일 스크린샷 육안 확인: 회사 선택 2사, 基準時点 2025年度 4Q 한 줄, 헤드라인 카드(억엔·ESR 색),
+Tier 구성 스택+표, 소요자본 워터폴(△ 표기, 規定再現 배지 43/43·49/51), 시장 하위, 민감도(Meiji 7 시나리오), 기타 공시(이상위험준비금 등).
+`jp/jesr_detail.json` 2사·self-check exit 0, CDN 참조·BOM 정상. 잔여 시각 nit 3건(워터폴 y축 제목 잘림·음수 최소값, 構成比 하위행
+기준 혼동, 모바일 자본표 금액열 스크롤)은 다음 designer 라운드(terms 티켓)에 포함.
+
+status: **resolved**

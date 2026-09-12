@@ -84,8 +84,10 @@
     /* 표 (業種 2섹션 각각 별도 table, .esr-table 공통 클래스) */
     .table-container{overflow-x:auto}
     .esr-table{min-width:680px}
+    /* owner 2026-09-12: 業態·基準日 열 제거로 5열(会社名/範囲/ESR/公表日/備考) — ESR 이
+       4번째에서 3번째로 이동, nth-child 인덱스 갱신. */
     .esr-table td:nth-child(n+2), .esr-table th:nth-child(n+2){text-align:left}
-    .esr-table td:nth-child(4), .esr-table th:nth-child(4){text-align:right}
+    .esr-table td:nth-child(3), .esr-table th:nth-child(3){text-align:right}
     .esr-table a{color:var(--primary)}
     .esr-table td, .esr-table th{vertical-align:top}
 
@@ -169,14 +171,17 @@
 
     <section class="panel" aria-labelledby="secTable">
       <h2 id="secTable">一覧表</h2>
+      <!-- owner 2026-09-12 추가지시: 전 행이 같은 基準日(2026-03-31)라 열로 반복하지 않고
+           위 公表状況 패널의 基準時点 한 줄(asOfLine)로 대신한다 — 새 줄을 여기 또 넣지 않는다.
+           業態는 生保/損保 섹션 분리로 이미 표현되어 열 자체를 제거. -->
 
       <h3 class="rank-group-title">生命保険<span class="rank-group-count" id="tableCountLife"></span></h3>
       <div class="table-container">
         <table class="esr-table" id="esrTableLife">
           <thead><tr>
-            <th scope="col">会社名</th><th scope="col">業態</th><th scope="col">範囲</th><th scope="col">ESR</th><th scope="col">基準日</th><th scope="col">公表日</th><th scope="col">備考</th>
+            <th scope="col">会社名</th><th scope="col">範囲</th><th scope="col">ESR</th><th scope="col">公表日</th><th scope="col">備考</th>
           </tr></thead>
-          <tbody id="esrTableBodyLife"><tr><td colspan="7" class="small-muted">読み込み中…</td></tr></tbody>
+          <tbody id="esrTableBodyLife"><tr><td colspan="5" class="small-muted">読み込み中…</td></tr></tbody>
         </table>
       </div>
       <button type="button" class="more-btn" id="tableMoreBtnLife" hidden aria-expanded="false"></button>
@@ -185,9 +190,9 @@
       <div class="table-container">
         <table class="esr-table" id="esrTableNonlife">
           <thead><tr>
-            <th scope="col">会社名</th><th scope="col">業態</th><th scope="col">範囲</th><th scope="col">ESR</th><th scope="col">基準日</th><th scope="col">公表日</th><th scope="col">備考</th>
+            <th scope="col">会社名</th><th scope="col">範囲</th><th scope="col">ESR</th><th scope="col">公表日</th><th scope="col">備考</th>
           </tr></thead>
-          <tbody id="esrTableBodyNonlife"><tr><td colspan="7" class="small-muted">読み込み中…</td></tr></tbody>
+          <tbody id="esrTableBodyNonlife"><tr><td colspan="5" class="small-muted">読み込み中…</td></tr></tbody>
         </table>
       </div>
       <button type="button" class="more-btn" id="tableMoreBtnNonlife" hidden aria-expanded="false"></button>
@@ -205,9 +210,6 @@
     'use strict';
     var DATA_URL = 'jesr_esr.json';
     var FOLD = 5;
-    // 表の「業態」列はそのまま個別ラベル(再保険も再保険と表示)。sector グループ分け(下記
-    // GROUP_KEY/GROUP_LABEL)は「どのセクションに置くか」だけを決め、行自体のラベルは変えない。
-    var SECTOR_LABEL = {life:'生命保険', nonlife:'損害保険', reinsurance:'再保険'};
     var SCOPE_LABEL  = {group:'連結', solo:'単体'};
     // owner 지시 2: sector 섹션은 生保/損保 두 개뿐 — reinsurance는 損保 섹션에 합친다.
     function groupKey(sector){ return sector === 'life' ? 'life' : 'nonlife'; }
@@ -262,6 +264,20 @@
     }
     function jaMonthEnd(iso){ var p=String(iso).split('-'); return p[0]+'年'+parseInt(p[1],10)+'月末'; }
     function jaMonthEndShort(iso){ var p=String(iso).split('-'); return parseInt(p[1],10)+'月末'; }
+    // owner 2026-09-12 정정: 날짜(2026年3月31日) 그대로 쓰면 한국식 "2026.1Q"류 표기와 헷갈려
+    // 일본 독자가 역월(4~6월)로 잘못 읽는다(일본 회계연도는 4월 시작). 일본 회계연도 분기로
+    // 변환 — 1~3월은 전년도 4Q, 4~6월=1Q, 7~9월=2Q, 10~12월=3Q. 실제 날짜는 title 툴팁으로만.
+    function jaFiscalQuarter(iso){
+      if(!iso) return null;
+      var p = String(iso).split('-');
+      var y = parseInt(p[0],10), m = parseInt(p[1],10);
+      var fy, q;
+      if(m>=1 && m<=3){ fy = y-1; q = 4; }
+      else if(m<=6){ fy = y; q = 1; }
+      else if(m<=9){ fy = y; q = 2; }
+      else { fy = y; q = 3; }
+      return fy + '年度 ' + q + 'Q';
+    }
     // basis가 표준(J-ICS)과 다르면 표에 짧은 표식을 남긴다(예: "J-ICS_VaR99.5" -> "VaR99.5").
     function basisNote(basis){
       if(!basis || basis==='J-ICS') return null;
@@ -282,6 +298,25 @@
     var cov=null;
     var groupData = {life:[], nonlife:[]};   // 業種별 버킷정렬 전체 리스트
     var expanded  = {life:false, nonlife:false};
+    // 一覧表 회사명 -> jesr.html 링크 판정용(inbox 20260912T1120Z). null=아직 로딩중(링크 보류),
+    // {}=상세 없음(로드 실패 포함). jesr_detail.json 이 없으면(publishing 병행작업 중) fixture로
+    // 폴백 — 진짜 파일이 생기면 그대로 성공해 fixture는 자동으로 안 쓰인다.
+    var detailMap = null;
+    function loadDetailMap(){
+      function tryFetch(url){
+        return fetch(url, {cache:'no-store'}).then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); });
+      }
+      tryFetch('jesr_detail.json')
+        .catch(function(){ return tryFetch('_fixture_jesr_detail.json'); })
+        .then(function(d){
+          var map = {};
+          (d.companies||[]).forEach(function(c){ if(c.company_en) map[c.company_en] = c.id; });
+          detailMap = map;
+          renderGroup('life'); renderGroup('nonlife');
+        })
+        .catch(function(){ detailMap = {}; });
+    }
+    loadDetailMap();
 
     fetch(DATA_URL, {cache:'no-store'})
       .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
@@ -355,8 +390,12 @@
       var nextLabel = meta.next_update ? jaMonthEnd(meta.next_update) : '順次';
       document.getElementById('noteLine').textContent =
         '各社の経済価値ベースのソルベンシー比率(ESR)は' + nextLabel + 'までに全社反映予定です。';
-      var asOf = meta.as_of_label_ja || (meta.as_of ? jaDateFlexible(meta.as_of) : '—');
-      document.getElementById('asOfLine').textContent = '基準日: ' + asOf + ' 時点(公表済み分)';
+      // owner 2026-09-12 정정: 날짜 표기 대신 일본 회계연도 분기 표기(基準時点 2025年度 4Q).
+      // 실제 날짜(2026年3月31日)는 title 툴팁으로만 — jp/jesr.html 상단과 동일 원칙.
+      var fq = meta.as_of ? jaFiscalQuarter(meta.as_of) : '—';
+      var asOfLineEl = document.getElementById('asOfLine');
+      asOfLineEl.textContent = '基準時点 ' + fq + '（公表済み分）';
+      asOfLineEl.title = (meta.as_of_label_ja || (meta.as_of ? jaDateFlexible(meta.as_of) : '—'));
     }
 
     // 2026-09-12: ECharts 가로막대 폐기, 루트 index.html 877~948행 renderList() 패턴으로 교체
@@ -462,7 +501,7 @@
       var full = groupData[key];
       var list = (expanded[key] || full.length<=FOLD) ? full : full.slice(0, FOLD);
       if(!list.length){
-        tbody.innerHTML = '<tr><td colspan="7" class="small-muted">該当データがありません。</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="small-muted">該当データがありません。</td></tr>';
         return;
       }
       tbody.innerHTML = list.map(function(r){
@@ -477,12 +516,17 @@
         if(bn) remarks.push('<span class="small-muted">'+esc(bn)+'</span>');
         // 2026-09-12: ▲目標水準 마커가 리스트 레이아웃에서 빠지면서(자리 없음) 表 備考로 이동.
         if(r.target_pct) remarks.push('<span class="small-muted">目標 '+esc(r.target_pct)+'</span>');
+        // 상세 페이지(jesr.html) 가 있는 회사만 링크(jesr_detail.json companies id 로 판정).
+        var detailId = (detailMap && r.company_en) ? detailMap[r.company_en] : null;
+        var nameCell = detailId
+          ? '<a href="jesr.html?company='+esc(detailId)+'">'+esc(r.company_jp)+'</a>'
+          : esc(r.company_jp);
+        // owner 2026-09-12: 業態(生保/損保 섹션분리로 중복)·基準日(전 행 동일, 上の基準時点
+        // 한 줄로 대체) 열 제거. 남는 열 = 会社名/範囲/ESR/公表日/備考.
         return '<tr>'
-          + '<td title="'+esc(r.category||'')+'">'+esc(r.company_jp)+'</td>'
-          + '<td>'+esc(SECTOR_LABEL[r.sector]||r.sector||'—')+'</td>'
+          + '<td title="'+esc(r.category||'')+'">'+nameCell+'</td>'
           + '<td>'+esc(SCOPE_LABEL[r.scope]||r.scope||'—')+'</td>'
           + '<td class="num">'+fmtPct(r.esr_pct)+'</td>'
-          + '<td>'+esc(jaDateFlexible(r.as_of)||'—')+'</td>'
           + '<td>'+pubCell+'</td>'
           + '<td>'+(remarks.length? remarks.join(' ') : '—')+'</td>'
           + '</tr>';

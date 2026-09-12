@@ -2,7 +2,7 @@
 from: owner
 to: publishing
 created: 20260912T1120Z
-status: answered
+status: resolved
 route: assemble
 company: JP_MULTI
 period: FY2025
@@ -103,3 +103,12 @@ meiji손보에만 실질적으로 필요).
 
 TODO_jp.md Status (8)번 항목 및 docs/changelog_jp.md (8)번 항목에 동일 내용 기록. Status 최신 5개 유지를 위해 (3)번 항목을
 `docs/todo_archive_jp.md`로 무수정 이관.
+
+## 종결 재확인 (orchestrator 2026-09-12)
+
+`jp/jesr.html`(owner 명명) 데스크톱·모바일 스크린샷 육안 확인: 회사 선택 2사, 基準時点 2025年度 4Q 한 줄, 헤드라인 카드(억엔·ESR 색),
+Tier 구성 스택+표, 소요자본 워터폴(△ 표기, 規定再現 배지 43/43·49/51), 시장 하위, 민감도(Meiji 7 시나리오), 기타 공시(이상위험준비금 등).
+`jp/jesr_detail.json` 2사·self-check exit 0, CDN 참조·BOM 정상. 잔여 시각 nit 3건(워터폴 y축 제목 잘림·음수 최소값, 構成比 하위행
+기준 혼동, 모바일 자본표 금액열 스크롤)은 다음 designer 라운드(terms 티켓)에 포함.
+
+status: **resolved**
