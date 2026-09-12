@@ -22,6 +22,15 @@ Only companies with census.status == "posted" in extracted_sample_values.json ar
 included (currently 2: au_nonlife, meijiyasuda_nonlife -- nnlife is ESR-not-yet-disclosed
 and is excluded).
 
+Each included company also gets a "profit" block (layer:"profit" in the schema, added
+2026-09-12 per inbox/publishing/20260912T1240Z__owner__JP_MULTI__jesr_detail_profit_block.md).
+"items" holds every non-null profit:pl/uw/inv id for that company; "ratios" (nonlife
+loss/expense/combined ratio) and "core" (life 基礎利益 decomposition + 三利源) are
+convenience sub-views that duplicate a subset of the same ids -- same "items" + narrower
+view pattern already used above for capital/risk/market_sub. meijiyasuda_nonlife has no
+profit tables in its excerpt volume (main volume blocked, see extract_esr_template_samples.py)
+so its profit.status is "not_obtained" and items/ratios/core are all empty.
+
 Output: jp/jesr_detail.json (UTF-8, no BOM, ensure_ascii=False).
 Self-check runs after the file is written; on failure the script exits 1 (file is still
 written so a human can inspect it, but the caller must not treat exit 1 as success).
@@ -61,6 +70,11 @@ MARKET_SUB_KEYS = [
     "rc_mkt_property", "rc_mkt_fx", "rc_mkt_concentration",
 ]
 
+# profit layer (2026-09-12): id groupings by schema `table` tag.
+PROFIT_META_TABLE = "profit:meta"
+PROFIT_RATIO_TABLE = "profit:ratio"           # nonlife 損害率/事業費率/合算率
+PROFIT_CORE_TABLES = {"profit:core", "profit:three"}  # life 基礎利益 decomposition + 三利源
+
 
 def ensure_extracted():
     if EXTRACTED_PATH.exists():
@@ -82,6 +96,50 @@ def r1(x):
     return round(x, 1) if isinstance(x, (int, float)) else x
 
 
+def build_profit_block(profit_raw, items_by_id):
+    """Assemble the profit block for one company from its extracted profit.values/meta.
+
+    items_by_id: schema id -> schema item dict (for the `table` tag lookup).
+    """
+    values = profit_raw.get("values") or {}
+    meta = profit_raw.get("meta") or {}
+    source_doc = meta.get("profit_source_doc")
+    status = "not_obtained" if isinstance(source_doc, str) and source_doc.startswith("NOT_ACQUIRED") else "extracted"
+
+    items = {}
+    ratios = {}
+    core = {}
+    for pid, val in values.items():
+        it = items_by_id.get(pid)
+        if it is None or it.get("table") == PROFIT_META_TABLE:
+            continue  # accounting_basis/ifrs17_applied/evidence/source_doc are top-level fields, not items
+        if not isinstance(val, dict):
+            continue
+        cur = val.get("cur")
+        prev = val.get("prev")
+        if cur is None and prev is None:
+            continue  # non-null 만 (2026-09-12 ticket)
+        entry = {"cur": cur, "prev": prev}
+        items[pid] = entry
+        table = it.get("table")
+        if table == PROFIT_RATIO_TABLE:
+            ratios[pid] = entry
+        elif table in PROFIT_CORE_TABLES:
+            core[pid] = entry
+
+    return {
+        "accounting_basis": meta.get("accounting_basis"),
+        "ifrs17_applied": meta.get("ifrs17_applied"),
+        "evidence": meta.get("accounting_basis_evidence"),
+        "source_doc": source_doc,
+        "unit": "JPY_million",
+        "items": items,
+        "ratios": ratios,
+        "core": core,
+        "status": status,
+    }
+
+
 def build(extracted, schema, jesr_master, jesr_esr):
     labels = {}
     items_by_id = {}
@@ -93,6 +151,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "ko": it.get("ko"),
             "unit": it.get("unit"),
             "kics_item_ref": it.get("kics_item_ref"),
+            "pl_item_ref": it.get("pl_item_ref"),
         }
 
     master_by_en = {r["company_en"]: r for r in jesr_master.get("records", [])}
@@ -178,6 +237,8 @@ def build(extracted, schema, jesr_master, jesr_esr):
             if it["layer"] == "esr" and merged.get(it["id"]) is not None
         }
 
+        profit = build_profit_block(comp.get("profit") or {}, items_by_id)
+
         companies_out.append({
             "id": cid,
             "company_jp": comp.get("company_jp"),
@@ -196,6 +257,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "aggregation": aggregation,
             "axes": axes,
             "items": items,
+            "profit": profit,
         })
 
     meta_src = jesr_esr.get("_meta", {})
@@ -258,6 +320,39 @@ def self_check(out, jesr_esr):
                 f"{c['headline']['eligible_capital']}"
             )
 
+        # profit layer (2026-09-12 ticket)
+        profit = c.get("profit") or {}
+        missing_profit_labels = [
+            k for k in list(profit.get("items", {})) + list(profit.get("ratios", {})) + list(profit.get("core", {}))
+            if k not in labels
+        ]
+        if missing_profit_labels:
+            errors.append(f"{cen}: profit ids missing from _meta.labels: {missing_profit_labels}")
+
+        if c["id"] == "au_nonlife":
+            if profit.get("status") != "extracted":
+                errors.append(f"{cen}: profit.status expected 'extracted', got {profit.get('status')!r}")
+            for req in ("pl_ordinary_profit", "pl_net_income"):
+                if req not in profit.get("items", {}):
+                    errors.append(f"{cen}: profit.items missing required id {req}")
+            ratios = profit.get("ratios", {})
+            for period in ("cur", "prev"):
+                loss = ratios.get("pl_loss_ratio_pct", {}).get(period)
+                expense = ratios.get("pl_expense_ratio_pct", {}).get(period)
+                combined = ratios.get("pl_combined_ratio_pct", {}).get(period)
+                if None in (loss, expense, combined):
+                    errors.append(f"{cen}: profit.ratios[{period}] missing loss/expense/combined for 合算率 check")
+                elif abs((loss + expense) - combined) > 0.1 + 1e-9:
+                    errors.append(
+                        f"{cen}: profit.ratios[{period}] 合算率 mismatch -- "
+                        f"loss {loss} + expense {expense} = {loss + expense} vs combined {combined} (tol 0.1)"
+                    )
+        elif c["id"] == "meijiyasuda_nonlife":
+            if profit.get("status") != "not_obtained":
+                errors.append(f"{cen}: profit.status expected 'not_obtained', got {profit.get('status')!r}")
+            if profit.get("items"):
+                errors.append(f"{cen}: profit.items expected empty for not_obtained, got {list(profit['items'])}")
+
     return errors
 
 
@@ -286,6 +381,14 @@ def main():
             f"required={c['headline']['required_capital']} "
             f"reproduced={c['aggregation']['reproduced']} "
             f"checks={c['aggregation']['checks_pass']}/{c['aggregation']['checks_total']}"
+        )
+        p = c.get("profit") or {}
+        print(
+            f"    profit: status={p.get('status')} accounting_basis={p.get('accounting_basis')} "
+            f"ifrs17_applied={p.get('ifrs17_applied')} "
+            f"pl_ordinary_profit={p.get('items', {}).get('pl_ordinary_profit')} "
+            f"pl_net_income={p.get('items', {}).get('pl_net_income')} "
+            f"combined_ratio={p.get('ratios', {}).get('pl_combined_ratio_pct')}"
         )
 
     if errors:

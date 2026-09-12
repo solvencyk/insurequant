@@ -2,7 +2,7 @@
 from: owner
 to: designer
 created: 20260912T1215Z
-status: answered
+status: resolved
 route: html
 company: JP_MULTI
 period: -
@@ -116,3 +116,9 @@ track: J-ESR
 3. GA 보유기간: 한국판 값(최대 14개월) 그대로 "最長 14 か月" 로 표기 — GA4 실제 설정값 확인.
 4. 시행일 2026年9月12日(利用規約·プライバシー 공통). 誤り報告 시트 값은 `JP:jesr_esr`/`JP:jesr_detail` 로 들어오니 Apps Script 시트에서 접두로 구분.
 5. 커밋 범위: `TODO_jp.md`·`docs/changelog_jp.md` 는 publishing 세션의 미커밋 (11) 항목이 같은 파일에 있어 이 라운드 커밋에서 제외(갱신은 해 둠).
+
+## 종결 재확인 (orchestrator 2026-09-12)
+
+검수 완료: terms.html 핵심 조항(有料サービス留保·編集著作物/DB 권리·準拠法·運営者·内部トラフィック·誤り報告) 확인, CSP connect-src 에 script.google.com/googleusercontent 포함, NEW_FILES 7개, 팝업 모바일 스크린샷 정상, BOM 없음. profit 블록은 au 확정(経常利益 1,654·当期純利益 1,171·合算率 71.1), Meiji 는 본편 확보 후 재빌드 예정(별도 jp-collector 진행 중). owner 확인 항목(運営者 표기·準拠法·GA 보유기간·施行日)은 owner 에게 전달.
+
+status: **resolved**

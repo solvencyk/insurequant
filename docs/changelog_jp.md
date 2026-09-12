@@ -2,6 +2,59 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 (12) -- `jp/terms.html` 신규 + `/jp/` GA4·CSP·오류제보 팝업 + `jp/jesr.html` nit 3건 (designer)
+
+- 티켓 `inbox/designer/20260912T1215Z__owner__JP_MULTI__jp_terms_privacy.md`(answered). owner: "일본 사이트에 이용약관이 없다 — 해외야말로
+  유료화·사업화 여지가 있어 약관을 잘 써 둬야 한다."
+- `jp/terms.html`: 利用規約 第1条~第8条(本サイト/許諾/禁止+編集著作物·データベース 第12条·第12条の2/有料サービス・ライセンス留保/出典表/免責/変更/
+  運営者·問い合わせ·準拠法) + プライバシーポリシー 1~8(GA4·誤り報告フォーム 設置済み/利用目的/外国第三者提供表+Google DPF/Cookie 무효화/保有期間/
+  開示等請求/安全管理/施行日 2026-09-12). 運営者 표기는 第8条 한 문단에만(법인 전환 시 그 문단만 교체). chrome·CSP·GA4·hreflang·noindex 는
+  `jp/index.html` 관례, 읽기 페이지 스타일은 루트 `privacy.html` 이식.
+- `jp/report-widget.ja.js`: 루트 `report-widget.js` 복제·일본어화. 시트 2개, payload sheet 에 `JP:` 접두(백엔드 무변경). 회사 목록·期 는
+  `jesr_esr.json`+`jesr_detail.json` fetch 로 유도(14사, `_meta.as_of`→`jaFiscalQuarter`), fetch 실패 시만 정적 폴백 — 분기 리터럴 하드코딩 함정 회피.
+  루트 대비 A11y 추가: `label[for]` 연결, 오류문 `role=alert`, 허니팟 `aria-hidden`.
+- `jp/index.html`·`jp/jesr.html`: CSP 를 루트 index.html 6행과 동일 문자열로(googletagmanager·google-analytics·analytics.google.com apex·
+  script.google.com·script.googleusercontent.com), GA4 스니펫(iq_internal) 추가, 푸터 링크, 본문 끝 `../forms-config.js`+`report-widget.ja.js`.
+- `jp/jesr.html` nit: ① 워터폴 y축 하한이 패딩 때문에 음수(au △2.2·MY △11.5 억엔)로 내려가던 것을 `lo<0` 일 때만 음수 허용, 제목 `(億円)`+
+  `nameGap 12`+`grid.top 20→40` ② 構成比 세부행(tier basic 대비 100.0%)이 총액 대비로 오독 → Tier1/Tier2/適格資本の額 3행만 총액 대비 표시,
+  세부행 빈칸, 각주 교체 ③ 375px 에서 `#capitalTable{min-width:0}`+항목명 `overflow-wrap:anywhere`+숫자열 nowrap.
+- `scripts/android_push_and_deploy.sh` NEW_FILES 에 `jp/terms.html jp/report-widget.ja.js`.
+- 검증: 로컬 8931 + Playwright 3페이지×(1280/375) 콘솔에러 0(jsdelivr/gtag 차단만 ignore)·링크 200·팝업 제출 POST 시도 확인, echarts 는 이 PC 외부
+  443 차단(curl/requests 000, WSAEACCES)으로 `add_init_script` setOption 스텁으로 옵션 검증(yMin=0, grid.top=40, 8막대), `test_deploy_assets.py`
+  11 passed, 5개 파일 UTF-8 BOM 없음·LF.
+- owner 확인 필요: 運営者 표기·準拠法/관할·GA 보유기간·시행일. `TODO_jp.md`·`docs/changelog_jp.md` 는 publishing 세션의 미커밋 (11) 과 같은 파일이라
+  이 라운드 designer 커밋에서 제외(갱신만).
+
+## 2026-09-12 (11) -- `jp/jesr_detail.json` profit 블록 추가 (publishing)
+
+- 티켓 `inbox/publishing/20260912T1240Z__owner__JP_MULTI__jesr_detail_profit_block.md`(answered). 위 (10) 이 스키마·추출을 끝낸
+  `layer:"profit"` 값을 배포 JSON 에 실제로 붙이는 조립 작업.
+- `J-ESR/build_jesr_detail_json.py` 에 `build_profit_block(profit_raw, items_by_id)` 추가. 스키마 `table` 태그로 그룹 분리:
+  `items` = 값이 있는(non-null) 전체 profit id (`{cur,prev}` 쌍, 양쪽 다 null 이면 항목째 생략), `ratios` = `profit:ratio`(손보
+  손해율/사업비율/합산율), `core` = `profit:core`+`profit:three`(생보 基礎利益 분해 3개 + 三利源 3개) — capital/risk 블록이 이미
+  쓰던 "items 전체 + 부분집합 편의 뷰" 패턴을 그대로 따름(티켓 예시는 core 에 4개 id 만 나열했지만, 그 4개가 정확히 스키마
+  `profit:core`/`profit:three` 두 테이블의 교집합 절반이라 스키마 태그로 일반화 — 10월 62사가 三利源 을 다르게 공시해도 손 안 대고 맞음).
+  나머지 필드는 티켓 그대로: `accounting_basis`/`ifrs17_applied`/`evidence`(← `accounting_basis_evidence`)/`source_doc`(←
+  `profit_source_doc`)/`unit`("JPY_million" 고정)/`status`(`profit_source_doc` 가 `"NOT_ACQUIRED"` 로 시작하면 `not_obtained`,
+  아니면 `extracted`).
+- `_meta.labels` 에 `pl_item_ref` 필드 신규 추가(모든 항목에 균일 — profit 36개는 값, 기존 esr/article_axes 는 null). 라벨 총
+  137→173.
+- meijiyasuda_nonlife 본편 PDF(`J-ESR/raw/fy2025_samples/meijiyasuda_nonlife_20260729_main.pdf`)는 이번에도 로컬에 없어
+  `extract_esr_template_samples.py` 재실행 스킵, 기존 추출값(profit 전부 null, `status="not_obtained"`) 그대로 사용.
+- self-check 확장: au `pl_ordinary_profit`/`pl_net_income` 존재 확인, 손보 合算率 항등식(`損害率+事業費率==合算率`, ±0.1, cur·prev
+  각각) 확인, meiji `status=="not_obtained"` + `items=={}` 확인, profit 하위 모든 id 가 `_meta.labels` 에 존재하는지 확인.
+- 실행 결과(exit 0): au_nonlife profit.status=extracted, accounting_basis=jgaap, ifrs17_applied=false, 経常利益 cur=1,654/prev=1,451,
+  当期純利益 cur=1,171/prev=961, 合算率 cur=71.1(=31.8+39.2)/prev=72.1(=29.4+42.7). meijiyasuda_nonlife profit.status=not_obtained,
+  items/ratios/core 전부 `{}`.
+- `git diff jp/jesr_detail.json` 로 부작용 감사: `generated_at` 갱신과 신규 `pl_item_ref`/`profit` 필드 외에 유일한 변화는
+  `aggregation.checks_pass/checks_total` 이 43/43→62/62(au)·49/51→50/52(meiji) 로 증가한 것 — 이는 이번 코드 변경이 아니라
+  입력 `extracted_sample_values.json` 이 이미 (10) 라운드에서 profit 검산(au 19개·meiji 1개)을 포함하도록 갱신돼 있었고,
+  `aggregation` 필드가 원래부터 회사 전체 검산 요약(esr 전용이 아님)을 그대로 읽는 로직이었기 때문. headline/risk/market_sub/
+  capital/axes/sensitivity 등 다른 블록은 바이트 무변경. `jp/*.html`·`esr_disclosure_schema.json`·루트 마스터 미접촉(같은
+  워크트리에서 designer 세션이 `jp/index.html`·`jp/jesr.html` 을 동시에 수정 중인 것을 확인, 미개입).
+- 재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/build_jesr_detail_json.py`.
+- 라이브 미반영(owner 승인 후 별도 배포 라운드, designer 의 `jp/jesr.html` profit 렌더 작업 대기).
+
 ## 2026-09-12 (10) -- 스키마 손익 층(profit) + 표본 3건 추출·검산 + 회계기준 메타 (jp)
 
 - 티켓 `inbox/jp/20260912T1150Z__owner__JP_MULTI__profit_layer_schema.md`(answered). 일본 법정 결산은 J-GAAP 원가법이라 CSM 이 없고,
