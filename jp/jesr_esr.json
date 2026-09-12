@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-12T05:01:24Z",
+    "generated_at": "2026-09-12T06:54:31Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -13,7 +13,19 @@
       "posted": 15,
       "not_yet": 62,
       "not_found": 2
-    }
+    },
+    "excluded_subsidiaries": [
+      {
+        "company_en": "Meiji Yasuda Non-Life",
+        "parent": "Meiji Yasuda Life Insurance",
+        "esr_pct": 743.2
+      },
+      {
+        "company_en": "Sony Life Insurance",
+        "parent": "Sony Financial Group",
+        "esr_pct": 162.0
+      }
+    ]
   },
   "records": [
     {
@@ -33,24 +45,6 @@
       "doc_date": "2026-07-30",
       "source_url": "https://www.au-sonpo.co.jp/corporate/pdf/disclo_260730_4of5.pdf",
       "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比率. PDF p21-22 직접 열람 확인: 적격자본(A)=9,278백만엔, 소요자본(B)=1,171백만엔, 비율(A/B)=791.7%. 라벨은 'ESR'이 아닌 신기준 'ソルベンシー・マージン比率'이나 동일한 경제가치기반 규제비율."
-    },
-    {
-      "company_jp": "明治安田損害保険",
-      "company_en": "Meiji Yasuda Non-Life",
-      "ticker": null,
-      "sector": "nonlife",
-      "category": "子会社(明治安田)",
-      "scope": "solo",
-      "esr_pct": 743.2,
-      "basis": "J-ICS",
-      "as_of": "2026-03-31",
-      "preliminary": false,
-      "total_assets_bn_jpy": null,
-      "target_pct": null,
-      "doc_type": "ディスクロージャー誌【別冊】業績データ(明治安田損害保険の現状2026, 2026-09-04 게시)",
-      "doc_date": "2026-09-04",
-      "source_url": "https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260904_performance_data.pdf",
-      "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比率. PDF p2 직접 열람 확인: 적격자본(A)=40,290백만엔, 소요자본(B)=5,420백만엔, 비율(A/B)=743.2%. 경제가치기준 BS·감응도분석·산출체제까지 포함된 완전한 신기준 공시(2026-09-04 동일자 정정 1건 있음, 수치 자체는 불변)."
     },
     {
       "company_jp": "ライフネット生命保険",
@@ -267,24 +261,6 @@
       "doc_date": "2026-05-14",
       "source_url": "https://www.sonyfg.co.jp/ja/financial_info/results/sfgi_fy2025_4q_01.pdf",
       "notes": "jesr_sources_2026Q1.csv 기존치(177%,2026-03-31) 재확인 시도 - WebFetch 403이나, 자회사 소니생명 단체치(162%)가 동일 자료군(260514 개시)에서 별도 확인되어 그룹치 신뢰 유지"
-    },
-    {
-      "company_jp": "ソニー生命保険",
-      "company_en": "Sony Life Insurance",
-      "ticker": null,
-      "sector": "life",
-      "category": "子会社",
-      "scope": "solo",
-      "esr_pct": 162.0,
-      "basis": "J-ICS",
-      "as_of": "2026-03-31",
-      "preliminary": false,
-      "total_assets_bn_jpy": null,
-      "target_pct": null,
-      "doc_type": "News Release - 経済価値資本・ESR(2026-05-14)",
-      "doc_date": "2026-05-14",
-      "source_url": "https://www.sonylife.co.jp/company/news/2026/files/260514_ev-japanese.pdf",
-      "notes": "전기(2025-03-31) 168%에서 하락. PDF 직접 텍스트추출은 실패했으나 검색결과에 원문 수치 인용 확인(162%, 전년168%)"
     }
   ]
 }

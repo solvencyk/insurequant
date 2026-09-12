@@ -16,18 +16,28 @@ J-ESR/jesr_sources_2026Q1.csv (utf-8-sig, 11 rows) -- auxiliary columns
     H1/FY2024 figures for 4 mutual companies, and attaching a stale
     balance-sheet snapshot or methodology label to a newer posted record
     would be a silent wrong-source bug, not a join. Unmatched -> null.
+J-ESR/jp_insurers.csv (utf-8-sig) -- `parent_group` column, joined onto the
+    census rows by company_jp. Used only for the parent-subsidiary dedup
+    below; no other column of this csv is consumed here.
 
-Writes (byte-identical)
-------------------------
-J-ESR/jesr_master.json  -- replaces the 2026-06 schema. This script is the
-    sole producer of this path (full-replace is intentional, not a
-    read-modify-write of a shared root master).
-jp/jesr_esr.json        -- deploy copy for the /jp/ page fetch. `jp/` is
-    created if it does not exist yet.
+Writes (no longer byte-identical -- 2026-09-12 parent-subsidiary dedup,
+inbox/publishing/20260912T0530Z)
+------------------------------------------------------------------------
+J-ESR/jesr_master.json  -- the full posted census, unchanged from before
+    (still 15 records as of 2026-09-12). This script is the sole producer of
+    this path (full-replace is intentional, not a read-modify-write of a
+    shared root master). This file is the source of truth for "who is
+    posted"; the dedup below only affects what ships to the page.
+jp/jesr_esr.json        -- deploy copy for the /jp/ page fetch, MINUS any
+    subsidiary row whose parent group is *also* posted (same capital shown
+    twice at two consolidation levels -- see `apply_subsidiary_dedup`
+    below). `jp/` is created if it does not exist yet.
 
 Schema is a fixed contract agreed with designer (see the ticket) -- key
 names must not change; do not add or rename fields here without re-checking
-with that ticket.
+with that ticket. `_meta.excluded_subsidiaries` on the deploy file is new
+(2026-09-12) and additive -- designer does not render it, it exists for
+audit/self-check only.
 """
 from __future__ import annotations
 
@@ -41,8 +51,16 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CENSUS_CSV = HERE / "fy2025_esr_census_20260912.csv"
 SOURCES_CSV = HERE / "jesr_sources_2026Q1.csv"
+INSURERS_CSV = HERE / "jp_insurers.csv"
 MASTER_OUT = HERE / "jesr_master.json"
 DEPLOY_OUT = HERE.parent / "jp" / "jesr_esr.json"
+
+# Generic corporate-suffix abbreviations seen in jp_insurers.csv's parent_group
+# column (e.g. "東京海上HD", "ソニーFG"). Not company names -- these two
+# abbreviations recur across many groups, so expanding them is reusable logic,
+# not a per-company hardcode. Used only to test whether a parent_group value
+# is a (possibly abbreviated) substring of an already-posted company_jp.
+_SUFFIX_ABBREV = {"HD": "ホールディングス", "FG": "フィナンシャルグループ"}
 
 AS_OF_TARGET = "2026-03-31"
 AS_OF_LABEL_JA = "2026年3月31日"
@@ -219,6 +237,71 @@ def self_check(out: dict) -> list[str]:
     return errors
 
 
+def _expand_abbrev(name: str) -> str | None:
+    """If `name` ends with a known corporate-suffix abbreviation, return the
+    variant with that suffix spelled out in full. None if no abbreviation
+    matches (most parent_group values, e.g. plain "KDDI" or "明治安田")."""
+    for abbr, full in _SUFFIX_ABBREV.items():
+        if name.endswith(abbr):
+            return name[: -len(abbr)] + full
+    return None
+
+
+def _find_parent_record(parent_group: str, records_by_jp: dict, self_jp: str):
+    """Return the posted record whose company_jp contains `parent_group`
+    (directly, or via the abbreviation-expanded form), else None. Never
+    matches the subsidiary's own record."""
+    if not parent_group:
+        return None
+    candidates = [parent_group]
+    expanded = _expand_abbrev(parent_group)
+    if expanded:
+        candidates.append(expanded)
+    for jp_name, rec in records_by_jp.items():
+        if jp_name == self_jp:
+            continue
+        if any(cand in jp_name for cand in candidates):
+            return rec
+    return None
+
+
+def apply_subsidiary_dedup(records: list[dict], insurers_by_name: dict) -> tuple[list[dict], list[dict]]:
+    """Drop any posted subsidiary row whose parent group is *also* posted --
+    same underlying capital would otherwise show up twice at two
+    consolidation levels (group HD/mutual-parent solo/group vs. subsidiary
+    solo). General rule (ticket inbox/publishing/20260912T0530Z, no company
+    names hardcoded): a record is a candidate for exclusion only if its
+    census `category` starts with "子会社"; its `parent_group` (from
+    jp_insurers.csv, joined by company_jp) is then tested against every
+    *other* posted record's company_jp. A match (direct or abbreviation-
+    expanded substring) excludes it. Empty parent_group, or a parent_group
+    that matches no posted record (parent is not an insurer, or not yet
+    posted -- e.g. au損害保険's parent KDDI), keeps the row.
+
+    Returns (kept_records, excluded_entries) where excluded_entries carries
+    company_en / parent / esr_pct for the `_meta.excluded_subsidiaries` audit
+    trail -- not rendered on the page.
+    """
+    records_by_jp = {r["company_jp"]: r for r in records}
+    kept, excluded = [], []
+    for r in records:
+        category = r.get("category") or ""
+        parent_rec = None
+        if category.startswith("子会社"):
+            insurer_row = insurers_by_name.get(r["company_jp"])
+            parent_group = (insurer_row.get("parent_group") or "").strip() if insurer_row else ""
+            parent_rec = _find_parent_record(parent_group, records_by_jp, r["company_jp"])
+        if parent_rec is not None:
+            excluded.append({
+                "company_en": r["company_en"],
+                "parent": parent_rec["company_en"],
+                "esr_pct": r["esr_pct"],
+            })
+        else:
+            kept.append(r)
+    return kept, excluded
+
+
 def main() -> int:
     out = build()
 
@@ -228,19 +311,36 @@ def main() -> int:
             print(f"SELF-CHECK FAIL: {e}", file=sys.stderr)
         return 1
 
-    text = json.dumps(out, ensure_ascii=False, indent=2)
+    insurer_rows = _read_csv(INSURERS_CSV)
+    insurers_by_name = {
+        r["company_jp"].strip(): r for r in insurer_rows if (r.get("company_jp") or "").strip()
+    }
+    deploy_records, excluded = apply_subsidiary_dedup(out["records"], insurers_by_name)
 
-    MASTER_OUT.write_text(text, encoding="utf-8")
-    DEPLOY_OUT.parent.mkdir(parents=True, exist_ok=True)
-    DEPLOY_OUT.write_text(text, encoding="utf-8")
-
-    a, b = MASTER_OUT.read_bytes(), DEPLOY_OUT.read_bytes()
-    if a != b:
-        print("SELF-CHECK FAIL: outputs are not byte-identical", file=sys.stderr)
+    if len(out["records"]) - len(excluded) != len(deploy_records):
+        print(
+            "SELF-CHECK FAIL: jesr_master records - excluded subsidiaries != "
+            f"jp/jesr_esr records ({len(out['records'])} - {len(excluded)} != {len(deploy_records)})",
+            file=sys.stderr,
+        )
         return 1
 
-    print(f"wrote {MASTER_OUT} and {DEPLOY_OUT}  ({len(out['records'])} records)")
+    deploy_meta = dict(out["_meta"])
+    deploy_meta["excluded_subsidiaries"] = excluded
+    deploy_out = {"_meta": deploy_meta, "records": deploy_records}
+
+    master_text = json.dumps(out, ensure_ascii=False, indent=2)
+    deploy_text = json.dumps(deploy_out, ensure_ascii=False, indent=2)
+
+    MASTER_OUT.write_text(master_text, encoding="utf-8")
+    DEPLOY_OUT.parent.mkdir(parents=True, exist_ok=True)
+    DEPLOY_OUT.write_text(deploy_text, encoding="utf-8")
+
+    print(f"wrote {MASTER_OUT}  ({len(out['records'])} records)")
+    print(f"wrote {DEPLOY_OUT}  ({len(deploy_records)} records, excluded={len(excluded)})")
     print(f"  census: {out['_meta']['census']}")
+    if excluded:
+        print(f"  excluded_subsidiaries: {excluded}")
     prelim = [r['company_en'] for r in out['records'] if r['preliminary']]
     print(f"  preliminary={len(prelim)}: {prelim}")
     return 0
