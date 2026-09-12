@@ -2,6 +2,15 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-13 (14) -- jesr.html 단일 표([+] 펼침)·손익 선별·재보험 다리·収益性指標·자회사 dedup 해제 (orchestrator 직접)
+
+- owner 피드백 6건(부호/계층·하위리스크 미표시·손익 항목·손해율 별도·원수/출재·자회사 삭제 이유) 처리. designer 2회(32분+13분 연장) 미완으로 종료·되돌린 뒤
+  orchestrator 가 jesr.html 직접 수정(88595f4): capital_tree+risk_tree 단일 표(K-ICS.html subtoggle, 다단 접기, 符号, ✓/差/相関統合), profit_flow+재보험 다리 [+],
+  details 전 항목, 収益性指標(카드+5개년 SVG+연도표). DOM 검증 au 30행/Meiji 41행·pageerror 0. 스키마 라벨 2건 정정.
+- 자회사 dedup 해제(b9c3f23): 한국 K-ICS 는 법인 단위(교보생명 155.43·교보라이프플래닛 162.97 각각 게시) → 일본도 법인마다 한 행, 지주 連結값은 10월 単体로 교체.
+- 데이터: 재보험 다리 6항목(au 원수 166억엔 중 출재 85억엔=51%, Meiji 9%), 5개년 history 13항목, 손익 profit 36항목.
+- 교훈: jp designer 라운드 45~57분의 원인은 ECharts CDN 차단 검증 루프 → jp 차트는 SVG/CSS 만, 티켓은 DOM 검증만, 30분 초과 시 orchestrator 인수.
+
 ## 2026-09-13 (16) -- publishing: `jp/jesr_detail.json` 에 `capital_tree`/`risk_tree`/`profit_flow` 구조화 블록 신설
 
 티켓 `inbox/publishing/20260913T0005Z__owner__JP_MULTI__jesr_detail_trees.md`. owner 09-12 피드백(① 자본구성표 하위합≠상위
