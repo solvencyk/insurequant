@@ -92,6 +92,8 @@
 
     /* 워터폴 */
     #chartWaterfall{width:100%;height:320px}
+    #chartProfitWaterfall{width:100%;height:320px}
+    .profit-ratio-row td{border-top:2px solid var(--border)}
     .repro-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:var(--r-pill);border:1px solid var(--border);cursor:help}
     .repro-badge.ok{color:#166534;background:#dcfce7;border-color:#bbf7d0}
     .repro-badge.warn{color:#92400e;background:#fef3c7;border-color:#fde68a}
@@ -224,6 +226,22 @@
       </div>
     </section>
 
+    <section class="panel" aria-labelledby="secProfit" id="secProfitWrap">
+      <h2 id="secProfit">損益の内訳 <span class="repro-badge" id="combinedBadge" style="display:none"></span></h2>
+      <div id="profitNotExtracted" class="empty-note" hidden>本編未取得のため、損益の内訳はまだ表示できません。</div>
+      <div id="profitBody" hidden>
+        <p class="axes-note" id="profitBasisNote"></p>
+        <div id="chartProfitWaterfall" role="img" aria-label="当期純利益の内訳、読み込み中"></div>
+        <p class="small-muted" id="profitFootnote" style="margin-top:4px"></p>
+        <div class="table-container" style="margin-top:14px">
+          <table class="esr-table" id="profitTable">
+            <thead><tr><th scope="col">項目</th><th scope="col" class="num">当期</th><th scope="col" class="num">前期</th><th scope="col" class="num">増減</th></tr></thead>
+            <tbody id="profitTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section class="panel" aria-labelledby="secAxes" id="secAxesWrap" hidden>
       <h2 id="secAxes">その他開示事項</h2>
       <p class="axes-note">金融庁モニタリング関連資料等、規制ESR様式(T1~T8)以外の開示欄からの補足情報です。</p>
@@ -272,6 +290,14 @@
     function fmtEok(v){
       if(v==null || !isFinite(v)) return '—';
       var eok = v/100, sign = eok<0 ? '△' : '';
+      return sign + Math.abs(eok).toLocaleString('ja-JP',{minimumFractionDigits:1,maximumFractionDigits:1});
+    }
+    // 損益内訳表の増減列(億円)用。fmtEokと違い正の増減にも+符号を付ける(pp用fmtPPと同じ発想)。
+    function fmtEokDelta(cur, prev){
+      if(cur==null || prev==null) return '—';
+      var d = cur - prev;
+      if(d===0) return '±0.0';
+      var eok = d/100, sign = eok<0 ? '△' : '+';
       return sign + Math.abs(eok).toLocaleString('ja-JP',{minimumFractionDigits:1,maximumFractionDigits:1});
     }
     function fmtMillionTip(v){
@@ -340,7 +366,7 @@
         });
     }
 
-    var DATA = null, META = null, waterfallChart = null;
+    var DATA = null, META = null, waterfallChart = null, profitWaterfallChart = null;
 
     loadDetail().then(boot).catch(function(err){
       document.getElementById('mainRoot').innerHTML =
@@ -363,7 +389,10 @@
       var initial = (wanted && ids.indexOf(wanted)>=0) ? wanted : ids[0];
       if(initial){ sel.value = initial; selectCompany(initial, false); }
 
-      window.addEventListener('resize', function(){ if(waterfallChart) waterfallChart.resize(); });
+      window.addEventListener('resize', function(){
+        if(waterfallChart) waterfallChart.resize();
+        if(profitWaterfallChart) profitWaterfallChart.resize();
+      });
     }
 
     function selectCompany(id, pushUrl){
@@ -381,6 +410,7 @@
       renderWaterfall(c);
       renderMarketSub(c);
       renderSensitivity(c);
+      renderProfit(c);
       renderAxes(c);
     }
 
@@ -670,6 +700,233 @@
         var disp = (typeof v === 'number') ? (u==='pct' ? fmtPct1(v) : (u==='JPY_million' ? fmtEok(v)+'億円' : v.toLocaleString('ja-JP'))) : esc(v);
         return '<tr><td>'+esc(labelOf(META, k, k))+'</td><td class="num">'+disp+'</td></tr>';
       }).join('');
+    }
+
+    // 損益の内訳(当期純利益ウォーターフォール + 当期/前期表)。inbox 20260912T1330Z。
+    // データは c.profit(jp/jesr_detail.json)。所要資本の内訳(renderWaterfall)と同じ
+    // custom renderItem 方式(0線を跨ぐ棒も正しく描ける — reference_waterfall_zero_crossing)。
+    var PL_ACCOUNTING_BASIS_JA = {
+      jgaap: '日本基準(J-GAAP)', ifrs: 'IFRS', ifrs17: 'IFRS17', us_gaap: '米国会計基準(US-GAAP)'
+    };
+    var PL_RATIO_JA = {
+      pl_loss_ratio_pct: '損害率', pl_expense_ratio_pct: '事業費率', pl_combined_ratio_pct: '合算率'
+    };
+    var PL_PCT_KEYS = {pl_loss_ratio_pct:1, pl_expense_ratio_pct:1, pl_combined_ratio_pct:1};
+
+    // items と core(生保の基礎利益・三利源は core 専用)の両方から当期値を引く。
+    function plEntry(p, id){
+      var e = p.items && p.items[id]!=null ? p.items[id] : null;
+      if(!e && p.core) e = p.core[id]!=null ? p.core[id] : null;
+      return e;
+    }
+    function plCur(p, id){ var e=plEntry(p,id); return (e && e.cur!=null) ? e.cur : null; }
+
+    function buildProfitWaterfallBars(p, isMobile){
+      var isLife = !!(p.core && Object.keys(p.core).length);
+      var bars = [], skipped = [];
+      function xl(short, full){ return isMobile ? short : full; }
+      function addFlow(ja, short, v){
+        if(v==null){ skipped.push(ja); return; }
+        bars.push({ja:ja, xLabel:xl(short, ja), cur:v, role:'flow'});
+      }
+      function addEnd(ja, short, v){
+        if(v==null){ skipped.push(ja); return; }
+        bars.push({ja:ja, xLabel:xl(short, ja), cur:v, role:'end'});
+      }
+
+      if(isLife){
+        // 생보(10월 이후): 三利源 → 基礎利益 → キャピタル損益 → 臨時損益 → 経常利益。
+        addFlow('利差損益', '利差', plCur(p, 'pl_interest_margin'));
+        addFlow('危険差損益', '危険差', plCur(p, 'pl_mortality_margin'));
+        addFlow('費差損益', '費差', plCur(p, 'pl_expense_margin'));
+        addEnd('基礎利益', '基礎利益', plCur(p, 'pl_core_profit'));
+        addFlow('キャピタル損益', 'キャピタル', plCur(p, 'pl_capital_gains'));
+        addFlow('臨時損益', '臨時損益', plCur(p, 'pl_extraordinary_pl'));
+      } else {
+        // 손보: 保険引受利益 → 資産運用損益 → その他経常損益(差引) → 経常利益。
+        var uw = plCur(p, 'pl_underwriting_profit');
+        var inv = plCur(p, 'pl_investment_pl');
+        var ord = plCur(p, 'pl_ordinary_profit');
+        addFlow('保険引受利益', '引受利益', uw);
+        addFlow('資産運用損益', '運用損益', inv);
+        var other = (uw!=null && inv!=null && ord!=null) ? (ord - uw - inv) : null;
+        addFlow('その他経常損益(差引)', 'その他(差引)', other);
+      }
+
+      addEnd('経常利益', '経常利益', plCur(p, 'pl_ordinary_profit'));
+
+      // 特別損益 = 特別利益 − 特別損失。片方だけ非公表(欠測キー)なら0扱い、両方欠測ならスキップ。
+      var gains = plCur(p, 'pl_extraordinary_gains');
+      var losses = plCur(p, 'pl_extraordinary_losses');
+      if(gains==null && losses==null){ skipped.push('特別損益'); }
+      else { bars.push({ja:'特別損益', xLabel:'特別損益', cur:(gains||0)-(losses||0), role:'flow'}); }
+
+      var tax = plCur(p, 'pl_income_taxes');
+      addFlow('法人税等', '法人税等', tax!=null ? -Math.abs(tax) : null);
+
+      addEnd('当期純利益', '当期純利益', plCur(p, 'pl_net_income'));
+
+      return {bars:bars, skipped:skipped, isLife:isLife};
+    }
+
+    function drawProfitWaterfall(bars){
+      var el = document.getElementById('chartProfitWaterfall');
+      if(typeof echarts === 'undefined') return;
+      if(profitWaterfallChart){ try{ profitWaterfallChart.dispose(); }catch(e){} }
+      profitWaterfallChart = echarts.init(el, null, {renderer:'canvas'});
+
+      var isMobile = window.matchMedia('(max-width:640px)').matches;
+      var xs = bars.map(function(b){ return b.xLabel; });
+      var geo = []; var running = 0;
+      bars.forEach(function(b){
+        if(b.cur==null){ geo.push({missing:true, at:running}); return; }
+        if(b.role==='end'){ geo.push({y0:0, y1:b.cur, color:'#0d6efd'}); running=b.cur; }
+        else { var end=running+b.cur; geo.push({y0:running, y1:end, color: b.cur>=0 ? '#22c55e' : '#ef4444'}); running=end; }
+      });
+
+      var vals = [0]; geo.forEach(function(g){ if(!g.missing){ vals.push(g.y0, g.y1); } });
+      var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+      var pad = Math.max((hi-lo)*0.12, 10);
+      var yMin = lo < 0 ? Math.floor((lo-pad)/10)*10 : 0, yMax = Math.ceil((hi+pad)/10)*10;
+
+      var ariaBits = bars.map(function(b){ return b.ja + ' ' + fmtEok(b.cur) + '億円'; }).join('、');
+      el.setAttribute('aria-label', '当期純利益の内訳。' + ariaBits + '。');
+
+      profitWaterfallChart.setOption({
+        backgroundColor:'transparent',
+        tooltip:{
+          trigger:'axis', axisPointer:{type:'shadow'},
+          formatter: function(items){
+            var i = items[0].dataIndex, b = bars[i];
+            if(!b || b.cur==null) return '<b>'+(b?b.ja:'')+'</b><br/>データなし';
+            var sign = b.cur<0 ? '△' : (b.role==='flow' ? '+' : '');
+            return '<b>'+b.ja+'</b><br/>'+sign+Math.abs(b.cur/100).toLocaleString('ja-JP',{maximumFractionDigits:1})+'億円';
+          }
+        },
+        grid:{left:isMobile?36:48, right:isMobile?6:16, top:40, bottom: isMobile?84:64},
+        xAxis:{
+          type:'category', data:xs,
+          axisLabel:{color:'#495057', fontSize:isMobile?10:11, interval:0,
+                     rotate:isMobile?45:30, margin:isMobile?6:8},
+          axisLine:{lineStyle:{color:'#dee2e6'}}, axisTick:{show:false},
+        },
+        yAxis:{
+          type:'value', name:'(億円)', min:yMin, max:yMax,
+          nameGap:12, nameTextStyle:{color:'#6c757d', fontSize:11},
+          axisLabel:{color:'#6c757d', fontSize:11, formatter:function(v){ return (v/100).toLocaleString('ja-JP'); }},
+          splitLine:{lineStyle:{color:'#e9ecef'}},
+        },
+        series:[{
+          type:'custom',
+          renderItem: function(params, api){
+            var idx = params.dataIndex, g = geo[idx], b = bars[idx];
+            if(!g) return;
+            var xPix = api.coord([idx,0])[0];
+            var bw = Math.max(10, api.size([1,0])[0]*0.55);
+            if(g.missing){
+              var yc = api.coord([idx, g.at||0])[1];
+              return {type:'group', children:[
+                {type:'rect', shape:{x:xPix-bw/2, y:yc-4, width:bw, height:8}, style:{fill:'rgba(173,181,189,0.55)'}},
+                {type:'text', style:{text:'非公表', x:xPix, y:yc-10, textAlign:'center', fill:'#868e96', fontSize:9}},
+              ]};
+            }
+            var yHi = api.coord([idx, Math.max(g.y0,g.y1)])[1];
+            var yLo = api.coord([idx, Math.min(g.y0,g.y1)])[1];
+            var isTot = b.role!=='flow';
+            var txt = (b.cur<0?'△':(b.role==='flow'?'+':'')) + Math.abs(b.cur/100).toLocaleString('ja-JP',{maximumFractionDigits:1});
+            return {type:'group', children:[
+              {type:'rect', shape:{x:xPix-bw/2, y:yHi, width:bw, height:Math.max(1,yLo-yHi)}, style:{fill:g.color}},
+              {type:'text', style:{text:txt, x:xPix, y:yHi-4, textAlign:'center', textVerticalAlign:'bottom',
+                fill:'#212529', fontSize:isTot?11:10, fontWeight:isTot?'bold':'normal'}},
+            ]};
+          },
+          data: geo.map(function(g){ return (g && !g.missing) ? [g.y0, g.y1] : [0,0]; }),
+          z:2,
+        }],
+      }, true);
+      requestAnimationFrame(function(){ if(profitWaterfallChart){ try{ profitWaterfallChart.resize(); }catch(e){} } });
+    }
+
+    function renderProfitTable(p){
+      var items = p.items || {};
+      var rows = Object.keys(items).filter(function(k){ return !PL_PCT_KEYS[k]; }).map(function(k){
+        var e = items[k];
+        return '<tr>'
+          + '<td>'+esc(labelOf(META, k, k))+'</td>'
+          + '<td class="num" title="'+esc(fmtMillionTip(e.cur))+'">'+esc(fmtEok(e.cur))+'</td>'
+          + '<td class="num" title="'+esc(fmtMillionTip(e.prev))+'">'+esc(fmtEok(e.prev))+'</td>'
+          + '<td class="num">'+esc(fmtEokDelta(e.cur, e.prev))+'</td>'
+          + '</tr>';
+      });
+
+      var ratios = p.ratios || {};
+      Object.keys(PL_RATIO_JA).forEach(function(k){
+        var e = ratios[k];
+        if(!e) return;
+        var delta = (e.cur!=null && e.prev!=null) ? (e.cur - e.prev) : null;
+        rows.push('<tr class="profit-ratio-row total-row">'
+          + '<td>'+esc(PL_RATIO_JA[k])+'</td>'
+          + '<td class="num">'+esc(fmtPct1(e.cur))+'</td>'
+          + '<td class="num">'+esc(fmtPct1(e.prev))+'</td>'
+          + '<td class="num">'+esc(fmtPP(delta))+'</td>'
+          + '</tr>');
+      });
+
+      document.getElementById('profitTableBody').innerHTML = rows.join('') ||
+        '<tr><td colspan="4" class="small-muted">データがありません。</td></tr>';
+    }
+
+    // 合算率(損害率+事業費率)の自己検算バッジ。損保のみ(ratiosがある会社のみ)表示。
+    function renderCombinedRatioBadge(p, badge){
+      var ratios = p.ratios || {};
+      var loss = ratios.pl_loss_ratio_pct, exp = ratios.pl_expense_ratio_pct, comb = ratios.pl_combined_ratio_pct;
+      if(!loss || !exp || !comb){ badge.style.display = 'none'; return; }
+      var checks = [];
+      ['cur','prev'].forEach(function(period){
+        if(loss[period]==null || exp[period]==null || comb[period]==null) return;
+        var diff = comb[period] - (loss[period] + exp[period]);
+        checks.push({period:period, diff:diff, pass: Math.abs(diff) <= 0.1});
+      });
+      if(!checks.length){ badge.style.display = 'none'; return; }
+      var allPass = checks.every(function(x){ return x.pass; });
+      badge.style.display = 'inline-flex';
+      badge.className = 'repro-badge ' + (allPass ? 'ok' : 'warn');
+      badge.textContent = (allPass ? '✓' : '△') + ' 合算率 = 損害率+事業費率';
+      badge.title = checks.map(function(x){
+        return (x.period==='cur'?'当期':'前期') + ': 差 ' + (x.diff>=0?'+':'△') + Math.abs(x.diff).toFixed(2) + 'pt';
+      }).join(' / ');
+    }
+
+    function renderProfit(c){
+      var p = c.profit;
+      var notExtracted = document.getElementById('profitNotExtracted');
+      var body = document.getElementById('profitBody');
+      var badge = document.getElementById('combinedBadge');
+
+      if(!p || p.status !== 'extracted'){
+        notExtracted.hidden = false;
+        body.hidden = true;
+        badge.style.display = 'none';
+        return;
+      }
+      notExtracted.hidden = true;
+      body.hidden = false;
+
+      var basisText = PL_ACCOUNTING_BASIS_JA[p.accounting_basis] || (p.accounting_basis || '不明');
+      var ifrs17Text = p.ifrs17_applied ? 'IFRS17適用' : 'IFRS17未適用';
+      document.getElementById('profitBasisNote').textContent =
+        '会計基準: ' + basisText + '（' + ifrs17Text + '）。金額は億円換算、百万円単位は数値にカーソルを合わせるとツールチップで確認できます。';
+
+      var isMobile = window.matchMedia('(max-width:640px)').matches;
+      var built = buildProfitWaterfallBars(p, isMobile);
+      drawProfitWaterfall(built.bars);
+
+      document.getElementById('profitFootnote').textContent = built.skipped.length
+        ? ('※非公表のため次の区分は図から省略しています: ' + built.skipped.join('、'))
+        : '';
+
+      renderProfitTable(p);
+      renderCombinedRatioBadge(p, badge);
     }
   })();
   </script>
