@@ -24,6 +24,7 @@ jp 레인은 **한국 stage 프롬프트를 읽지 않는다.** 이 문서 + `TO
 구기준 `ソルベンシー・マージン比率` 단독(분모가 リスクの合計額 ×1/2)은 **ESR 이 아니다** — 옛 지표. 두 표가 같은 PDF 에 나란히 있는 경우가 흔하다.
 
 **규제 양식(告示 74호·75호) 표 골격·항목 id·검산식·회사별 편차는 `docs/domains/jp_esr_disclosure_template.md` 가 정본**(2026-09-12, 표본 3건으로 해부). 10월 census 확장 열 이름은 그 문서/`J-ESR/esr_disclosure_schema.json` 의 id 를 그대로 쓴다.
+**소요자본 합산(상관행렬·오퍼리스크 선형가산·세효과 80%)은 `J-ESR/esr_aggregation_rules.json` 이 기계본**(告示74 원문 `J-ESR/raw/regulation/`, 같은 문서 §8). 하위 리스크가 공시된 회사는 `extract_esr_template_samples.py` 의 G01~G10 으로 √(xᵀRx) 재현을 돌려 부모≤Σ하위 부등식이 아니라 **등식**으로 검산한다. 내부모형사·다지역 손보사는 하위 재현이 안 되는 것이 정상(§8-4).
 
 ## 4. 처리 규칙
 
