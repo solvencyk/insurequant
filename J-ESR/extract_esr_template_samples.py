@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-J-ESR regulatory-template extractor prototype (FY2025 samples) — two layers.
+J-ESR regulatory-template extractor prototype (FY2025 samples) — three layers.
 
   layer "esr"          : the 令和7年金融庁告示第74号/75号 regulatory tables (headline, eligible-capital composition,
                          required-capital composition, EBS, insurance-liability bridge, sensitivity, method flags)
   layer "article_axes" : the three FSA-monitoring-report axes (docs/domains/claude-agent-jp.md §4b) that live in
                          OTHER sections of the same disclosure PDF — 異常危険準備金 / 再保険(AIR) / 基礎利益·逆ざや —
                          plus the ESR placeholder skeleton for companies that print 後日公表予定.
+  layer "profit"       : J-GAAP statutory P&L (損益計算書 spine, 損保 保険引受利益·資産運用損益·損害率/事業費率/合算率,
+                         生保 基礎利益·キャピタル/臨時損益·三利源) with 前年度/当年度 pairs + accounting-basis meta
+                         (accounting_basis / ifrs17_applied, evidence sentences only). Ticket 20260912T1150Z.
 
 Reads the local sample PDFs with fitz and emits:
   (B) J-ESR/esr_disclosure_schema.json
@@ -282,18 +285,84 @@ AXES_ITEMS = [
     dict(id="three_source_disclosed", axis="interest_margin_sign", applies="life", labels_ja=["利差損益", "危険差損益", "費差損益"], ko="三利源(利差·危険差·費差) 분해 공시 여부", unit="bool", kics=None),
 ]
 
+# --------------------------------------------------------------------------------------
+# layer "profit" — J-GAAP statutory P&L layer (ticket 20260912T1150Z). Values are stored as {"cur": 当年度, "prev": 前年度}
+# (百万円 as disclosed; ratios %). `scope`: life / nonlife / both. `pl`: Korean PL_breakdown item number
+# (root PL_breakdown.json 항목번호 1~32) — strict counterpart only, null when the concept has no IFRS17 analogue.
+# `src`: which table the row comes from — "pl" 損益計算書 / "uw" 保険引受利益明細表 / "ratio" 正味損害率·事業費率·合算率 표 /
+#        "inv" 資産運用利回り(実現利回り) 표 / "core" 経常利益等の明細(基礎利益) 표 / "three" 三利源 표 / "meta" 회계방침 절.
+# --------------------------------------------------------------------------------------
+PROFIT_ITEMS = [
+    # ---- common P&L spine (損益計算書) ----
+    dict(id="pl_ordinary_revenue", scope="both", src="pl", labels=[r"^経常収益$"], ko="경상수익(총수익)", unit=M, formula=None, pl=None),
+    dict(id="pl_ordinary_expenses", scope="both", src="pl", labels=[r"^経常費用$"], ko="경상비용(총비용)", unit=M, formula=None, pl=None),
+    dict(id="pl_ordinary_profit", scope="both", src="pl", labels=[r"^経常利益$", r"^経常利益\s*A\+B\+C$"], ko="경상이익", unit=M,
+         formula="= pl_ordinary_revenue - pl_ordinary_expenses; life: = pl_core_profit + pl_capital_gains + pl_extraordinary_pl; nonlife: = pl_underwriting_profit + pl_investment_pl + other (P07)", pl=20),
+    dict(id="pl_extraordinary_gains", scope="both", src="pl", labels=[r"^特別利益$"], ko="특별이익", unit=M, formula=None, pl=None),
+    dict(id="pl_extraordinary_losses", scope="both", src="pl", labels=[r"^特別損失$"], ko="특별손실", unit=M, formula=None, pl=None),
+    dict(id="pl_pretax_profit", scope="both", src="pl", labels=[r"^税引前当期純利益$", r"^税引前当期純剰余$"], ko="법인세차감전 당기순이익", unit=M,
+         formula="= pl_ordinary_profit + pl_extraordinary_gains - pl_extraordinary_losses", pl=22),
+    dict(id="pl_income_taxes", scope="both", src="pl", labels=[r"^法人税等合計$"], ko="법인세등 합계", unit=M, formula=None, pl=23),
+    dict(id="pl_net_income", scope="both", src="pl", labels=[r"^当期純利益$", r"^当期純剰余$"], ko="당기순이익(상호회사: 당기순잉여)", unit=M,
+         formula="= pl_pretax_profit - pl_income_taxes", pl=24),
+    dict(id="pl_interest_dividend_income", scope="both", src="pl", labels=[r"^利息及び配当金収入$", r"^利息及び配当金等収入$"], ko="이자 및 배당금 수입", unit=M, formula=None, pl=None),
+    # ---- nonlife ----
+    dict(id="pl_net_premiums_written", scope="nonlife", src="pl", labels=[r"^正味収入保険料$"], ko="정미수입보험료(원수+수재-출재)", unit=M, formula=None, pl=None),
+    dict(id="pl_net_claims_paid", scope="nonlife", src="pl", labels=[r"^正味支払保険金$"], ko="정미지급보험금", unit=M, formula=None, pl=None),
+    dict(id="pl_loss_adjustment_expenses", scope="nonlife", src="pl", labels=[r"^損害調査費$"], ko="손해조사비", unit=M, formula=None, pl=None),
+    dict(id="pl_commissions_collection", scope="nonlife", src="pl", labels=[r"^諸手数料及び集金費$"], ko="제수수료 및 집금비", unit=M, formula=None, pl=None),
+    dict(id="pl_operating_general_admin", scope="nonlife", src="pl", labels=[r"^営業費及び一般管理費$"], ko="영업비 및 일반관리비(전체)", unit=M, formula=None, pl=None),
+    dict(id="pl_other_ordinary_revenue", scope="nonlife", src="pl", labels=[r"^その他経常収益$"], ko="기타경상수익", unit=M, formula=None, pl=None),
+    dict(id="pl_other_ordinary_expenses", scope="nonlife", src="pl", labels=[r"^その他経常費用$"], ko="기타경상비용", unit=M, formula=None, pl=None),
+    dict(id="pl_underwriting_revenue", scope="nonlife", src="uw", labels=[r"^保険引受収益$"], ko="보험인수수익", unit=M, formula=None, pl=None),
+    dict(id="pl_underwriting_expenses", scope="nonlife", src="uw", labels=[r"^保険引受費用$"], ko="보험인수비용", unit=M, formula=None, pl=None),
+    dict(id="pl_uw_operating_general_admin", scope="nonlife", src="uw", labels=[r"^保険引受に係る営業費及び一般管理費$"], ko="보험인수 관련 영업비·일반관리비", unit=M, formula=None, pl=None),
+    dict(id="pl_underwriting_other", scope="nonlife", src="uw", labels=[r"^その他収支$"], ko="기타수지(자배책 법인세상당액 등)", unit=M, formula=None, pl=None),
+    dict(id="pl_underwriting_profit", scope="nonlife", src="uw", labels=[r"^保険引受利益$"], ko="보험인수이익", unit=M,
+         formula="= pl_underwriting_revenue - pl_underwriting_expenses - pl_uw_operating_general_admin + pl_underwriting_other", pl=1),
+    dict(id="pl_investment_pl", scope="nonlife", src="inv", labels=[r"^合計$"], ko="자산운용손익(실현기준 = 資産運用収益+積立保険料等運用益-資産運用費用)", unit=M, formula=None, pl=17),
+    dict(id="pl_loss_ratio_pct", scope="nonlife", src="ratio", labels=[r"^合計$"], ko="정미손해율 %", unit=P,
+         formula="= (pl_net_claims_paid + pl_loss_adjustment_expenses) / pl_net_premiums_written * 100", pl=None),
+    dict(id="pl_expense_ratio_pct", scope="nonlife", src="ratio", labels=[r"^合計$"], ko="정미사업비율 %", unit=P,
+         formula="= (pl_commissions_collection + pl_uw_operating_general_admin) / pl_net_premiums_written * 100", pl=None),
+    dict(id="pl_combined_ratio_pct", scope="nonlife", src="ratio", labels=[r"^合計$"], ko="합산비율 %", unit=P, formula="= pl_loss_ratio_pct + pl_expense_ratio_pct", pl=None),
+    # ---- life ----
+    dict(id="pl_premium_income", scope="life", src="pl", labels=[r"^保険料等収入$"], ko="보험료등수입(보험료+재보험수입)", unit=M, formula=None, pl=None),
+    dict(id="pl_core_profit", scope="life", src="core", labels=[r"^基礎利益$", r"^基礎利益\s*A$"], ko="기초이익(생보 핵심이익, 経常利益 - キャピタル損益 - 臨時損益)", unit=M,
+         formula="= pl_ordinary_profit - pl_capital_gains - pl_extraordinary_pl; (三利源 공시사) ≈ pl_interest_margin + pl_mortality_margin + pl_expense_margin", pl=None),
+    dict(id="pl_capital_gains", scope="life", src="core", labels=[r"^キャピタル損益$", r"^キャピタル損益\s*B$"], ko="캐피털손익(유가증권매각손익·파생·환차 등)", unit=M, formula=None, pl=None),
+    dict(id="pl_extraordinary_pl", scope="life", src="core", labels=[r"^臨時損益$", r"^臨時損益\s*C$"], ko="임시손익(위험준비금·대손충당 등)", unit=M, formula=None, pl=None),
+    dict(id="pl_interest_margin", scope="life", src="three", labels=[r"^利差損益$", r"^利差益$", r"^利差損$"], ko="이차손익(三利源)", unit=M, formula=None, pl=None),
+    dict(id="pl_mortality_margin", scope="life", src="three", labels=[r"^危険差損益$", r"^危険差益$"], ko="위험차손익(三利源)", unit=M, formula=None, pl=None),
+    dict(id="pl_expense_margin", scope="life", src="three", labels=[r"^費差損益$", r"^費差益$", r"^費差損$"], ko="비차손익(三利源)", unit=M, formula=None, pl=None),
+]
+PROFIT_META_ITEMS = [
+    dict(id="accounting_basis", ko="회계기준 jgaap / ifrs / unstated — 회계방침 절·감사 문구·P&L 양식에서 판정(추정 금지)", unit="enum",
+         labels=["企業会計基準", "標準責任準備金", "大蔵省告示第48号", "責任準備金繰入額", "保険業法第111条", "国際財務報告基準", "IFRS"]),
+    dict(id="ifrs17_applied", ko="IFRS17 적용 true / false / unstated — false 는 accounting_basis=jgaap 가 확인된 単体 법정재무제표에서만(IFRS 는 上場社 連結 임의적용뿐)", unit="tri",
+         labels=["IFRS第17号", "IFRS 17", "保険契約に関する国際財務報告基準"]),
+    dict(id="accounting_basis_evidence", ko="판정 근거 문장(원문, 페이지) — A: 회계방침 절 명시 / B: 법정 P&L 양식(責任準備金繰入額 등)+会社法·保険業法 감사 문구", unit="text", labels=[]),
+    dict(id="profit_source_doc", ko="손익 표가 있는 문서(별책만 있는 회사는 본편 URL) / NOT_ACQUIRED 사유", unit="text", labels=[]),
+]
+
 COMPANIES = [
     dict(key="au_nonlife", company_jp="au損害保険", company_en="au Non-Life", sector="nonlife", pdf="au_nonlife_disclo_260730_4of5.pdf",
-         layers=["esr", "article_axes"],
+         layers=["esr", "article_axes", "profit"],
          pages=dict(T1=[22], T1_combined=[22], T2=[23], T3=[24], T4=[25], T6=[28], T7=[29], T8=[26, 27, 29]),
-         headline_5yr_page=2, axes_pages=dict(reins=[6], reserves=[8])),
+         headline_5yr_page=2, axes_pages=dict(reins=[6], reserves=[8]),
+         profit_pages=dict(pl=[17], uw=[5], ratio=[5], inv=[11], summary5=[2], basis=[15, 17, 31]), pl_layout="prev_cur_diff"),
     dict(key="meijiyasuda_nonlife", company_jp="明治安田損害保険", company_en="Meiji Yasuda Non-Life", sector="nonlife", pdf="meijiyasuda_nonlife_20260904_performance_data.pdf",
          layers=["esr", "article_axes"],
          pages=dict(T1=[2], T2=[3], T3=[4], T4=[5, 6, 7], T6=[11], T7=[12], T8=[8, 13]),
-         headline_5yr_page=None, axes_pages=dict()),
+         headline_5yr_page=None, axes_pages=dict(),
+         # 別冊 業績データ has no P&L. Main volume = https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260729.pdf
+         # (2026-09-12: curl 000 ×3, requests ConnectionError ×3 on :443, WebFetch refuses >10MB) → NOT_ACQUIRED, retry when 443 opens.
+         profit_pages=None, profit_main_volume_url="https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260729.pdf",
+         profit_not_acquired="NOT_ACQUIRED: 別冊 has no P&L; main volume 20260729.pdf blocked on :443 (curl 000 x3, requests ConnectionError x3) and >10MB for WebFetch (2026-09-12)"),
     dict(key="nnlife", company_jp="エヌエヌ生命保険", company_en="NN Life", sector="life", pdf="nnlife_2025disclosure_202607.pdf",
-         layers=["article_axes"], pages=dict(), headline_5yr_page=11,
-         axes_pages=dict(summary5=[11], soundness=[15], core_profit=[60], reins=[64], esr_section=[54])),
+         layers=["article_axes", "profit"], pages=dict(), headline_5yr_page=11,
+         axes_pages=dict(summary5=[11], soundness=[15], core_profit=[60], reins=[64], esr_section=[54]),
+         profit_pages=dict(pl=[44], core=[60], three=[60], basis=[47, 48, 49]), pl_layout="prev_pct_cur_pct"),
 ]
 
 
@@ -565,6 +634,218 @@ def extract_axes(comp, doc):
 
 
 # --------------------------------------------------------------------------------------
+def merge_vertical(lines):
+    """au 5개년 표는 행 라벨이 세로쓰기(한 글자 한 줄)로 추출된다 → 연속 1글자 줄을 하나로 합친다."""
+    out, buf, bufp = [], [], None
+    for p, ln in lines:
+        if len(ln) == 1 and not is_val(ln) and not ln.isdigit():
+            buf.append(ln)
+            bufp = p
+            continue
+        if buf:
+            out.append((bufp, "".join(buf)))
+            buf = []
+        out.append((p, ln))
+    if buf:
+        out.append((bufp, "".join(buf)))
+    return out
+
+
+def pick_pc(toks, layout):
+    """(prev, cur) from a row's value tokens.
+    prev_cur_diff     : 前年度 / 当年度 / 比較増減                     (au 損益計算書)
+    prev_pct_cur_pct  : 前年度 金額 / 百分比 / 当年度 金額 / 百分比 — 소계행만 4토큰, 내역행은 2토큰 (NN 損益計算書)
+    three_years       : 2023 / 2024 / 2025                             (au 明細表·比率表)
+    three_years_x3    : (損益·平均運用額·利回り) × 3개년 = 9토큰       (au 資産運用利回り 합계행)
+    ratio_x3          : (損害率·事業費率·合算率) × 3개년 = 9토큰       (au 比率표 합계행) → returns the last-3 / prev-3 triples
+    five_years        : 2021..2025                                     (au 主要な経営指標)"""
+    n = len(toks)
+    if layout == "prev_cur_diff" and n >= 2:
+        return to_val(toks[0]), to_val(toks[1])
+    if layout == "prev_pct_cur_pct":
+        if n >= 4:
+            return to_val(toks[0]), to_val(toks[2])
+        if n >= 2:
+            return to_val(toks[0]), to_val(toks[1])
+    if layout == "three_years" and n >= 3:
+        return to_val(toks[1]), to_val(toks[2])
+    if layout == "three_years_x3" and n >= 9:
+        return to_val(toks[3]), to_val(toks[6])
+    if layout == "five_years" and n >= 2:
+        return to_val(toks[-2]), to_val(toks[-1])
+    return None, None
+
+
+def extract_profit(comp, doc):
+    """layer profit — 損益計算書 / 保険引受利益明細表 / 比率표 / 資産運用利回り / 基礎利益(三利源) + accounting-basis meta."""
+    ids = [it["id"] for it in PROFIT_ITEMS]
+    v, pg, raw = {i: None for i in ids}, {}, {}
+    meta = dict(accounting_basis="unstated", ifrs17_applied="unstated", accounting_basis_evidence=None, profit_source_doc=None)
+    pp = comp.get("profit_pages")
+    if not pp:
+        for i in ids:
+            raw[i] = "NOT_ACQUIRED"
+        meta["profit_source_doc"] = comp.get("profit_not_acquired") or "NOT_ACQUIRED"
+        meta["profit_main_volume_url"] = comp.get("profit_main_volume_url")
+        # accounting basis from the 別冊 alone: EBS 財務会計ベース column carries 価格変動準備金 / 危険準備金 (保険業法 reserves) but the
+        # 회계방침 절 is in the main volume → stays unstated (no estimation).
+        meta["accounting_basis_evidence"] = "別冊 has no 会計方針 section (EBS 財務会計ベース column shows 価格変動準備金·危険準備金等 — consistent with jgaap, unconfirmed)"
+        return dict(values=v, pages=pg, raw_tokens=raw, meta=meta, summary5=None)
+    meta["profit_source_doc"] = comp["pdf"]
+    layout = comp["pl_layout"]
+    tl = {k: page_lines(doc, pages) for k, pages in pp.items()}
+    cursors = {}
+    for it in PROFIT_ITEMS:
+        if it["scope"] not in ("both", comp["sector"]):
+            raw[it["id"]] = "N/A_SECTOR"
+            continue
+        src = it["src"]
+        lines = tl.get(src)
+        if lines is None:
+            raw[it["id"]] = "NO_PAGE"
+            continue
+        start = cursors.get(src, 0)
+        if src == "ratio":
+            # (6)正味損害率、正味事業費率及びその合算率 → first 合計 after that heading; the three ratios share one row
+            h = next((i for i, (_, ln) in enumerate(lines) if ln.startswith("(6)正味損害率")), 0)
+            res = grab(lines, h, [r"^合計$"])
+            if res and len(res[0]) >= 9:
+                k = {"pl_loss_ratio_pct": 0, "pl_expense_ratio_pct": 1, "pl_combined_ratio_pct": 2}[it["id"]]
+                v[it["id"]] = dict(prev=to_val(res[0][3 + k]), cur=to_val(res[0][6 + k]))
+                pg[it["id"]], raw[it["id"]] = res[1], res[0]
+            else:
+                raw[it["id"]] = "NOT_FOUND"
+            continue
+        if src == "inv":
+            h = next((i for i, (_, ln) in enumerate(lines) if ln.startswith("(3)資産運用利回り")), 0)
+            res = grab(lines, h, [r"^合計$"])
+            lay = "three_years_x3"
+        else:
+            res = grab(lines, start, it["labels"])
+            lay = layout if src == "pl" else ("three_years" if src == "uw" else "prev_cur_diff")
+        if res is None:
+            raw[it["id"]] = "NOT_FOUND" if src != "three" else "TABLE_ABSENT"
+            continue
+        toks, p, nxt = res
+        prev, cur = pick_pc(toks, lay)
+        v[it["id"]] = dict(prev=prev, cur=cur)
+        pg[it["id"]], raw[it["id"]] = p, toks
+        if src == "uw":  # 明細表 rows are in form order; P&L labels are anchored (^…$) and unique, so no cursor there
+            cursors[src] = nxt
+    # 5개년 主要な経営指標 표 (au) — cross-check source for P10
+    s5 = None
+    if pp.get("summary5"):
+        ml = merge_vertical(tl["summary5"])
+        s5 = {}
+        for sid, rx in [("pl_net_premiums_written", r"^正味収入保険料$"), ("pl_ordinary_revenue", r"^経常収益$"), ("pl_ordinary_profit", r"^経常利益$"),
+                        ("pl_underwriting_profit", r"^保険引受利益$"), ("pl_net_income", r"^当期純利益$"), ("pl_loss_ratio_pct", r"^正味損害率$"),
+                        ("pl_expense_ratio_pct", r"^正味事業費率$"), ("pl_interest_dividend_income", r"^利息及び配当金収入$")]:
+            res = grab(ml, 0, [rx])
+            if res:
+                prev, cur = pick_pc(res[0], "five_years")
+                s5[sid] = dict(prev=prev, cur=cur)
+    # --- accounting basis (evidence sentences only; no inference beyond the two documented tiers) ---
+    basis_text = norm("\n".join(doc[p - 1].get_text("text") for p in pp.get("basis", []))).replace("\n", " ")
+    doc_text = norm("\n".join(p.get_text("text") for p in doc)).replace("\n", " ")
+    ev = []
+
+    def ctx(txt, ph, w=70):
+        i = txt.find(ph)
+        return None if i < 0 else re.sub(r"\s+", " ", txt[max(0, i - w): i + len(ph) + w])
+
+    ifrs_hit = next((ph for ph in ["国際財務報告基準", "IFRS"] if ph in doc_text), None)
+    tier_a = next((ph for ph in ["標準責任準備金", "大蔵省告示第48号", "企業会計基準"] if ph in basis_text), None)
+    tier_b_pl = "責任準備金繰入額" in basis_text or "責任準備金戻入額" in basis_text
+    tier_b_audit = ("会社法第436条" in basis_text or "保険業法第111条" in basis_text)
+    if ifrs_hit and ("作成基準" in doc_text or "連結財務諸表" in doc_text):
+        meta["accounting_basis"] = "ifrs"
+        ev.append(f"IFRS: {ctx(doc_text, ifrs_hit)}")
+    elif tier_a:
+        meta["accounting_basis"] = "jgaap"
+        ev.append(f"A(会計方針 p{pp['basis']}): {ctx(basis_text, tier_a)}")
+    elif tier_b_pl and tier_b_audit:
+        meta["accounting_basis"] = "jgaap"
+        ev.append(f"B(法定P&L 様式 p{pp['basis']}): {ctx(basis_text, '責任準備金繰入額', 40)}")
+        ev.append(f"B(監査 文구): {ctx(basis_text, '会社法第436条' if '会社法第436条' in basis_text else '保険業法第111条')}")
+    if any(ph in doc_text for ph in ["IFRS第17号", "IFRS 17", "保険契約に関する国際財務報告基準"]):
+        meta["ifrs17_applied"] = True
+    elif meta["accounting_basis"] == "jgaap":
+        meta["ifrs17_applied"] = False  # 単体 statutory accounts under 保険業法/会社計算規則 are J-GAAP by law; IFRS is a consolidated-only option
+        ev.append("ifrs17_applied=false: derived from accounting_basis=jgaap on 単体 statutory statements (no IFRS/IFRS17 mention in the document)")
+    meta["accounting_basis_evidence"] = " | ".join(ev) if ev else None
+    return dict(values=v, pages=pg, raw_tokens=raw, meta=meta, summary5=s5)
+
+
+def run_profit_checks(comp, pf):
+    """P01..P12 — 손익 층 검산. 금액 百万円 절사(항 수만큼 ±1), 비율 소수1자리 반올림(±0.15)."""
+    checks = []
+    if not comp.get("profit_pages"):
+        checks.append(dict(id="P00_not_acquired", formula="profit tables acquired", lhs=None, rhs=None, tol="", **{"pass": True}, gate=False,
+                           note=pf["meta"]["profit_source_doc"]))
+        return checks
+    v = pf["values"]
+
+    def g(i, col):
+        x = v.get(i)
+        return None if not x else x.get(col)
+
+    def add(cid, formula, lhs, rhs, tol, note="", gate=True):
+        ok = lhs is not None and rhs is not None and abs(lhs - rhs) <= tol
+        checks.append(dict(id=cid, formula=formula, lhs=lhs, rhs=None if rhs is None else round(rhs, 2), tol=tol, **{"pass": ok}, gate=gate, note=note))
+
+    for col in ("cur", "prev"):
+        sfx = "" if col == "cur" else "_prev"
+        add(f"P03_ordinary{sfx}", "pl_ordinary_profit = pl_ordinary_revenue - pl_ordinary_expenses", g("pl_ordinary_profit", col), z(g("pl_ordinary_revenue", col)) - z(g("pl_ordinary_expenses", col)), 1)
+        add(f"P04_pretax{sfx}", "pl_pretax_profit = pl_ordinary_profit + pl_extraordinary_gains - pl_extraordinary_losses", g("pl_pretax_profit", col),
+            z(g("pl_ordinary_profit", col)) + z(g("pl_extraordinary_gains", col)) - z(g("pl_extraordinary_losses", col)), 1)
+        add(f"P05_net_income{sfx}", "pl_net_income = pl_pretax_profit - pl_income_taxes", g("pl_net_income", col), z(g("pl_pretax_profit", col)) - z(g("pl_income_taxes", col)), 1)
+        if comp["sector"] == "life":
+            add(f"P01_core_bridge{sfx}", "pl_ordinary_profit = pl_core_profit + pl_capital_gains + pl_extraordinary_pl", g("pl_ordinary_profit", col),
+                z(g("pl_core_profit", col)) + z(g("pl_capital_gains", col)) + z(g("pl_extraordinary_pl", col)), 2)
+            three = [g("pl_interest_margin", col), g("pl_mortality_margin", col), g("pl_expense_margin", col)]
+            if any(x is not None for x in three):
+                add(f"P02_three_sources{sfx}", "pl_core_profit ≈ 利差 + 危険差 + 費差 (company definitions differ — informational)", g("pl_core_profit", col), sum(z(x) for x in three), 5, gate=False)
+            else:
+                checks.append(dict(id=f"P02_three_sources{sfx}", formula="三利源 table present", lhs=None, rhs=None, tol="", **{"pass": True}, gate=False, note="TABLE_ABSENT — 三利源 not disclosed (NN Life prints キャピタル/臨時 split only)"))
+        else:
+            add(f"P06_combined{sfx}", "pl_combined_ratio_pct = pl_loss_ratio_pct + pl_expense_ratio_pct (±0.15, each rounded to 0.1)", g("pl_combined_ratio_pct", col),
+                z(g("pl_loss_ratio_pct", col)) + z(g("pl_expense_ratio_pct", col)), 0.15)
+            other = z(g("pl_other_ordinary_revenue", col)) - z(g("pl_other_ordinary_expenses", col)) - (z(g("pl_operating_general_admin", col)) - z(g("pl_uw_operating_general_admin", col)))
+            add(f"P07_ordinary_bridge{sfx}", "pl_ordinary_profit = pl_underwriting_profit + pl_investment_pl + (その他経常収益 − その他経常費用 − (営業費及び一般管理費 − 保険引受に係る営業費及び一般管理費)) (±3)",
+                g("pl_ordinary_profit", col), z(g("pl_underwriting_profit", col)) + z(g("pl_investment_pl", col)) + other, 3)
+            npw = g("pl_net_premiums_written", col)
+            if npw:
+                add(f"P08_loss_ratio{sfx}", "pl_loss_ratio_pct = (正味支払保険金 + 損害調査費) / 正味収入保険料 × 100 (±0.1)", g("pl_loss_ratio_pct", col),
+                    (z(g("pl_net_claims_paid", col)) + z(g("pl_loss_adjustment_expenses", col))) / npw * 100, 0.1)
+                add(f"P09_expense_ratio{sfx}", "pl_expense_ratio_pct = (諸手数料及び集金費 + 保険引受に係る営業費及び一般管理費) / 正味収入保険料 × 100 (±0.1)", g("pl_expense_ratio_pct", col),
+                    (z(g("pl_commissions_collection", col)) + z(g("pl_uw_operating_general_admin", col))) / npw * 100, 0.1)
+            add(f"P11_underwriting{sfx}", "pl_underwriting_profit = 保険引受収益 − 保険引受費用 − 保険引受に係る営業費及び一般管理費 + その他収支", g("pl_underwriting_profit", col),
+                z(g("pl_underwriting_revenue", col)) - z(g("pl_underwriting_expenses", col)) - z(g("pl_uw_operating_general_admin", col)) + z(g("pl_underwriting_other", col)), 1)
+            add(f"P13_interest_vs_investment{sfx}", "pl_interest_dividend_income ≈ pl_investment_pl (등식은 운용비용·매각손익 0 인 회사만 — informational)", g("pl_interest_dividend_income", col), z(g("pl_investment_pl", col)), 1, gate=False)
+    if pf.get("summary5"):
+        n = nbad = 0
+        for sid, row in pf["summary5"].items():
+            for col in ("cur", "prev"):
+                if row.get(col) is not None and g(sid, col) is not None:
+                    n += 1
+                    if abs(row[col] - g(sid, col)) > 0:
+                        nbad += 1
+        checks.append(dict(id="P10_summary5_xref", formula="主要な経営指標 5개년표 == P&L/明細表 (cur & prev, exact)", lhs=n - nbad, rhs=n, tol="count", **{"pass": nbad == 0 and n > 0}, gate=True, note=f"{n} cells compared"))
+    return checks
+
+
+def run_profit_axes_xref(comp, pf, ax):
+    """P12 — profit layer ↔ article_axes cross: pl_core_profit == core_profit (same table, two layers)."""
+    out = []
+    if comp["sector"] == "life" and comp.get("profit_pages"):
+        for col, aid in (("cur", "core_profit"), ("prev", "core_profit_prev")):
+            lhs = (pf["values"].get("pl_core_profit") or {}).get(col)
+            rhs = ax["values"].get(aid)
+            out.append(dict(id=f"P12_core_profit_xref_{col}", formula=f"profit.pl_core_profit.{col} == article_axes.{aid}", lhs=lhs, rhs=rhs, tol=0, **{"pass": lhs is not None and lhs == rhs}, gate=True, note=""))
+    return out
+
+
+# --------------------------------------------------------------------------------------
 def write_lf(path: Path, text: str) -> None:
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write(text)
@@ -806,14 +1087,24 @@ def build_schema():
     for a in AXES_ITEMS:
         items.append(dict(id=a["id"], layer="article_axes", table="axes:" + a["axis"], labels_ja=a["labels_ja"], ko=a["ko"], unit=a["unit"], parent=None, formula=None,
                           required=(a["id"] in ("esr_status", "air_used", "interest_margin_sign", "cat_reserve_total")), column="section", applies_to=a["applies"], kics_item_ref=a["kics"]))
+    for it in PROFIT_ITEMS:
+        items.append(dict(id=it["id"], layer="profit", table="profit:" + it["src"], labels_ja=[clean_label(l) for l in it["labels"]], ko=it["ko"], unit=it["unit"], parent=None,
+                          formula=it["formula"], required=(it["id"] in ("pl_ordinary_profit", "pl_net_income")), column="prev+cur", sector_scope=it["scope"],
+                          kics_item_ref=None, pl_item_ref=it["pl"]))
+    for mi in PROFIT_META_ITEMS:
+        items.append(dict(id=mi["id"], layer="profit", table="profit:meta", labels_ja=mi["labels"], ko=mi["ko"], unit=mi["unit"], parent=None, formula=None,
+                          required=(mi["id"] in ("accounting_basis", "ifrs17_applied")), column="text", sector_scope="both", kics_item_ref=None, pl_item_ref=None))
     return dict(
         schema_version="2026-09-12",
         regulation="保険業法施行規則 59条の2 / 令和7年金融庁告示第74号(SMR告示)·第75号(EBS) — FY2025 첫 적용",
-        layers={"esr": "regulatory ESR tables (T1~T8)", "article_axes": "FSA monitoring-report axes from other sections (docs/domains/claude-agent-jp.md §4b): catastrophe_reserve_adequacy / air_used / interest_margin_sign + ESR placeholder skeleton"},
+        layers={"esr": "regulatory ESR tables (T1~T8)", "article_axes": "FSA monitoring-report axes from other sections (docs/domains/claude-agent-jp.md §4b): catastrophe_reserve_adequacy / air_used / interest_margin_sign + ESR placeholder skeleton",
+                "profit": "J-GAAP statutory P&L layer (ticket 20260912T1150Z): 損益計算書 spine + 損保 保険引受利益·資産運用損益·損害率/事業費率/合算率 + 生保 基礎利益·キャピタル/臨時·三利源 + accounting-basis meta. Values are {prev, cur} pairs."},
         unit_note="amounts as disclosed (JPY_million = 百万円) unless the item unit says otherwise (negative_spread_* are 億円 in the life summary box). census/master converts to 億円 (÷100). Record unit_disclosed per row — large life insurers may print 億円.",
         null_note="dash (－ / ー) = not applicable; stored as null, treated as 0 in formulas.",
-        column_note="FY2025 tables carry two value columns (イ=前年度 '－', ロ=当年度); column='cur' takes the 2nd token. EBS tables: 'ev' = last token (経済価値ベースの額), 'first' = 財務会計ベースの額 (only when all 4 columns are printed).",
+        column_note="FY2025 tables carry two value columns (イ=前年度 '－', ロ=当年度); column='cur' takes the 2nd token. EBS tables: 'ev' = last token (経済価値ベースの額), 'first' = 財務会計ベースの額 (only when all 4 columns are printed). profit layer: column='prev+cur' = both fiscal years of the 損益計算書 (前年度 / 当年度), stored as {\"prev\":…, \"cur\":…}.",
         kics_ref_note="kics_item_ref = docs/agents/kics-json-validation-rules.md item number. Approximate mappings (different aggregation/scope) are documented in docs/domains/jp_esr_disclosure_template.md §6; null = no K-ICS counterpart (e.g. 巨大災害 C, スプレッド, MOCE, EBS rows).",
+        pl_ref_note="pl_item_ref (profit layer only) = root PL_breakdown.json 항목번호 1~32 (docs/domains/claude-agent-ifrs17.md). Strict counterparts only: 24 당기순이익 / 22 세전이익 / 23 법인세 exact; 20 영업이익 ≈ 経常利益 (J 特別損益 ≈ K 영업외 — approximate); 1 보험손익 ≈ 損保 保険引受利益 and 17 투자손익 ≈ 資産運用損益 are J-GAAP-cost vs IFRS17 concepts (approximate, sign/scope differ). 基礎利益·三利源·正味収入保険料·損害率 등은 null (no IFRS17 analogue).",
+        accounting_basis_note="accounting_basis: jgaap when (A) 会計方針 절이 企業会計基準/標準責任準備金(大蔵省告示第48号) 을 인용하거나 (B) 법정 損益計算書 양식(責任準備金繰入額 등) + 会社法第436条/保険業法第111条 감사 문구가 같이 있고 IFRS 언급이 없을 때; ifrs when 連結財務諸表の作成基準 이 国際財務報告基準/IFRS 를 명시. ifrs17_applied: true 는 IFRS第17号 명시, false 는 accounting_basis=jgaap 인 単体 법정재무제표(保険業法 상 J-GAAP 강제)에서만, 그 외 unstated. 추정 금지.",
         tables={
             "T1": "要約: ソルベンシー・マージン比率並びに適格資本の額及び所要資本の額 (headline)",
             "T1_combined": "au variant: (1) 単体SMR 결합표 — Tier1/2 + 리스크(a)~(k) 한 표, 非保険事業 (i) 포함",
@@ -828,11 +1119,18 @@ def build_schema():
             "axes:air_used": "リスク管理·再保険 절 + 出再先 수/上位5社/格付 표 + 関連当事者 각주",
             "axes:interest_margin_sign": "생보 経常利益等の明細(基礎利益) 표 + 健全性 box 逆ざや (+ 三利源 표가 있는 회사는 利差損益)",
             "axes:esr_placeholder": "後日公表予定 문구가 놓인 5개년 표·健全性 box·業績データ 7절",
+            "profit:pl": "損益計算書 (前年度/当年度 2열 ± 比較増減·百分比 열)",
+            "profit:uw": "損保 保険引受利益明細表 (3개년: 保険引受収益/費用/営業費及び一般管理費/その他収支/保険引受利益)",
+            "profit:ratio": "損保 正味損害率、正味事業費率及びその合算率 표 (종목 × 3개년, 合計행)",
+            "profit:inv": "損保 資産運用利回り(実現利回り) 표 合計행 = 資産運用損益(実現ベース)",
+            "profit:core": "生保 経常利益等の明細(基礎利益) 표 (基礎利益 A / キャピタル損益 B / 臨時損益 C / 経常利益 A+B+C)",
+            "profit:three": "生保 三利源 표 (利差損益/危険差損益/費差損益) — 대형사만, NN Life 는 없음",
+            "profit:meta": "회계방침 절(会計方針に関する事項)·감사 문구·損益計算書 양식에서 회계기준 판정",
         },
         sensitivity=dict(scenarios=[dict(id=a, label_ja=b, ko=c) for a, b, c in SENS_SCENARIOS],
                          rows=[dict(id=a, label_ja=re.sub(r"[\^\$]", "", b), ko=c, unit=d, kics_item_ref=e) for a, b, c, d, e in SENS_ROWS]),
         items=items,
-        checks="C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks",
+        checks="C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) + P01..P13 (profit, cur & prev) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks / run_profit_checks / run_profit_axes_xref",
         aggregation_rules_ref="J-ESR/esr_aggregation_rules.json (告示74 第八十一条·第八十九条·第百条·第百二十七条·第百五十四条~第百五十六条 + 告示75 別紙様式第三号 注; matrices in id order)",
     )
 
@@ -869,9 +1167,24 @@ def md_fragment(results, schema):
                     val = "－" if x is None else (f"{x:,}" if isinstance(x, int) and not isinstance(x, bool) else str(x))
             elif it["layer"] == "esr":
                 val = "n/a(not_yet)"
+            elif it["layer"] == "profit" and r.get("profit"):
+                pf = r["profit"]
+                if it["table"] == "profit:meta":
+                    x = pf["meta"].get(it["id"])
+                    val = "－" if x is None else str(x)
+                else:
+                    x = pf["values"].get(it["id"])
+                    rt = pf["raw_tokens"].get(it["id"])
+                    if x is None:
+                        val = "n/a" if rt == "N/A_SECTOR" else ("NOT_ACQUIRED" if rt == "NOT_ACQUIRED" else "－")
+                    else:
+                        fmt = lambda y: "－" if y is None else (f"{y:,}" if isinstance(y, int) else str(y))
+                        val = f"{fmt(x['cur'])} (prev {fmt(x['prev'])})"
+                    page = "" if pf["pages"].get(it["id"]) is None else str(pf["pages"][it["id"]])
             vals.append(val.replace("|", "/"))
             pg.append(page)
-        rows.append(f"| `{it['id']}` | {it['layer']} | {it['table']} | {' / '.join(it['labels_ja'])} | {it['ko']} | {it['unit']} | {it['parent'] or ''} | {it['kics_item_ref'] if it['kics_item_ref'] is not None else ''} | "
+        ref = it["kics_item_ref"] if it["kics_item_ref"] is not None else (f"pl{it['pl_item_ref']}" if it.get("pl_item_ref") is not None else "")
+        rows.append(f"| `{it['id']}` | {it['layer']} | {it['table']} | {' / '.join(it['labels_ja'])} | {it['ko']} | {it['unit']} | {it['parent'] or ''} | {ref} | "
                     + " | ".join(vals) + f" | {'/'.join(p for p in pg if p)} | {it['formula'] or ''} |")
     return "\n".join(rows)
 
@@ -894,10 +1207,13 @@ def main():
         ax = extract_axes(comp, doc)
         ax["checks"] = run_axes_checks(comp, ax, esr)
         r["axes"] = ax
+        pf = extract_profit(comp, doc)
+        pf["checks"] = run_profit_checks(comp, pf) + run_profit_axes_xref(comp, pf, ax)
+        r["profit"] = pf
         cz = census_headline(comp["company_jp"])
         r["census"] = dict(**cz, match=(cz["esr_pct"] == esr["values"]["esr_pct"]) if esr else (cz["status"] == ax["values"]["esr_status"]))
         results[comp["key"]] = r
-        all_checks = (esr["checks"] if esr else []) + ax["checks"]
+        all_checks = (esr["checks"] if esr else []) + ax["checks"] + pf["checks"]
         summary[comp["key"]] = dict(
             company_en=comp["company_en"], sector=comp["sector"], layers=comp["layers"],
             esr_pct=esr["values"]["esr_pct"] if esr else None, eligible=esr["values"]["eligible_capital"] if esr else None, required=esr["values"]["required_capital"] if esr else None,
@@ -905,6 +1221,11 @@ def main():
             esr_items_nonnull=sum(1 for x in esr["values"].values() if x is not None) if esr else 0,
             esr_items_total=len(esr["values"]) if esr else 0,
             axes_items_nonnull=sum(1 for k, x in ax["values"].items() if x is not None and not k.startswith("_")),
+            profit_items_nonnull=sum(1 for x in pf["values"].values() if x is not None),
+            profit_items_applicable=sum(1 for x in pf["raw_tokens"].values() if x != "N/A_SECTOR"),
+            profit_items_total=len(pf["values"]),
+            profit_checks_pass=sum(1 for c in pf["checks"] if c["pass"]), profit_checks_total=len(pf["checks"]),
+            accounting_basis=pf["meta"]["accounting_basis"], ifrs17_applied=pf["meta"]["ifrs17_applied"],
             checks_pass=sum(1 for c in all_checks if c["pass"]), checks_total=len(all_checks),
             checks_failed=[c["id"] for c in all_checks if not c["pass"] and c.get("gate", True)],
             checks_info_failed=[c["id"] for c in all_checks if not c["pass"] and not c.get("gate", True)],
@@ -915,18 +1236,22 @@ def main():
     schema = build_schema()
     write_lf(SCHEMA_OUT, json.dumps(schema, ensure_ascii=False, indent=2) + "\n")
     out = dict(schema_ref="J-ESR/esr_disclosure_schema.json", generated_at=str(date.today()), generator="J-ESR/extract_esr_template_samples.py",
-               n_schema_items=dict(esr=sum(1 for i in schema["items"] if i["layer"] == "esr"), article_axes=sum(1 for i in schema["items"] if i["layer"] == "article_axes")),
+               n_schema_items=dict(esr=sum(1 for i in schema["items"] if i["layer"] == "esr"), article_axes=sum(1 for i in schema["items"] if i["layer"] == "article_axes"),
+                                   profit=sum(1 for i in schema["items"] if i["layer"] == "profit")),
                summary=summary, companies=results)
     write_lf(VALUES_OUT, json.dumps(out, ensure_ascii=False, indent=2) + "\n")
     write_lf(MD_FRAGMENT_OUT, md_fragment(results, schema) + "\n")
     print(json.dumps(dict(n_schema_items=out["n_schema_items"], summary=summary), ensure_ascii=False, indent=2))
     for k, r in results.items():
-        for c in (r.get("esr", {}).get("checks", []) + r["axes"]["checks"]):
+        for c in (r.get("esr", {}).get("checks", []) + r["axes"]["checks"] + r["profit"]["checks"]):
             if not c["pass"]:
                 print("FAIL" if c.get("gate", True) else "INFO", k, c)
         for iid, tk in r.get("esr", {}).get("raw_tokens", {}).items():
             if tk == "NOT_FOUND":
                 print("NOT_FOUND", k, iid)
+        for iid, tk in r["profit"]["raw_tokens"].items():
+            if tk in ("NOT_FOUND", "NO_PAGE"):
+                print("PROFIT_NOT_FOUND", k, iid, tk)
     ok = all(s["checks_failed"] == [] and s["census_match"] for s in summary.values())
     return 0 if ok else 1
 

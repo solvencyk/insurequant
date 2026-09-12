@@ -3,12 +3,15 @@
   "regulation": "保険業法施行規則 59条の2 / 令和7年金融庁告示第74号(SMR告示)·第75号(EBS) — FY2025 첫 적용",
   "layers": {
     "esr": "regulatory ESR tables (T1~T8)",
-    "article_axes": "FSA monitoring-report axes from other sections (docs/domains/claude-agent-jp.md §4b): catastrophe_reserve_adequacy / air_used / interest_margin_sign + ESR placeholder skeleton"
+    "article_axes": "FSA monitoring-report axes from other sections (docs/domains/claude-agent-jp.md §4b): catastrophe_reserve_adequacy / air_used / interest_margin_sign + ESR placeholder skeleton",
+    "profit": "J-GAAP statutory P&L layer (ticket 20260912T1150Z): 損益計算書 spine + 損保 保険引受利益·資産運用損益·損害率/事業費率/合算率 + 生保 基礎利益·キャピタル/臨時·三利源 + accounting-basis meta. Values are {prev, cur} pairs."
   },
   "unit_note": "amounts as disclosed (JPY_million = 百万円) unless the item unit says otherwise (negative_spread_* are 億円 in the life summary box). census/master converts to 億円 (÷100). Record unit_disclosed per row — large life insurers may print 億円.",
   "null_note": "dash (－ / ー) = not applicable; stored as null, treated as 0 in formulas.",
-  "column_note": "FY2025 tables carry two value columns (イ=前年度 '－', ロ=当年度); column='cur' takes the 2nd token. EBS tables: 'ev' = last token (経済価値ベースの額), 'first' = 財務会計ベースの額 (only when all 4 columns are printed).",
+  "column_note": "FY2025 tables carry two value columns (イ=前年度 '－', ロ=当年度); column='cur' takes the 2nd token. EBS tables: 'ev' = last token (経済価値ベースの額), 'first' = 財務会計ベースの額 (only when all 4 columns are printed). profit layer: column='prev+cur' = both fiscal years of the 損益計算書 (前年度 / 当年度), stored as {\"prev\":…, \"cur\":…}.",
   "kics_ref_note": "kics_item_ref = docs/agents/kics-json-validation-rules.md item number. Approximate mappings (different aggregation/scope) are documented in docs/domains/jp_esr_disclosure_template.md §6; null = no K-ICS counterpart (e.g. 巨大災害 C, スプレッド, MOCE, EBS rows).",
+  "pl_ref_note": "pl_item_ref (profit layer only) = root PL_breakdown.json 항목번호 1~32 (docs/domains/claude-agent-ifrs17.md). Strict counterparts only: 24 당기순이익 / 22 세전이익 / 23 법인세 exact; 20 영업이익 ≈ 経常利益 (J 特別損益 ≈ K 영업외 — approximate); 1 보험손익 ≈ 損保 保険引受利益 and 17 투자손익 ≈ 資産運用損益 are J-GAAP-cost vs IFRS17 concepts (approximate, sign/scope differ). 基礎利益·三利源·正味収入保険料·損害率 등은 null (no IFRS17 analogue).",
+  "accounting_basis_note": "accounting_basis: jgaap when (A) 会計方針 절이 企業会計基準/標準責任準備金(大蔵省告示第48号) 을 인용하거나 (B) 법정 損益計算書 양식(責任準備金繰入額 등) + 会社法第436条/保険業法第111条 감사 문구가 같이 있고 IFRS 언급이 없을 때; ifrs when 連結財務諸表の作成基準 이 国際財務報告基準/IFRS 를 명시. ifrs17_applied: true 는 IFRS第17号 명시, false 는 accounting_basis=jgaap 인 単体 법정재무제표(保険業法 상 J-GAAP 강제)에서만, 그 외 unstated. 추정 금지.",
   "tables": {
     "T1": "要約: ソルベンシー・マージン比率並びに適格資本の額及び所要資本の額 (headline)",
     "T1_combined": "au variant: (1) 単体SMR 결합표 — Tier1/2 + 리스크(a)~(k) 한 표, 非保険事業 (i) 포함",
@@ -22,7 +25,14 @@
     "axes:catastrophe_reserve_adequacy": "손보 본편 責任準備金の内訳 표(종목 × 普通/異常危険/危険/払戻/配当/合計)",
     "axes:air_used": "リスク管理·再保険 절 + 出再先 수/上位5社/格付 표 + 関連当事者 각주",
     "axes:interest_margin_sign": "생보 経常利益等の明細(基礎利益) 표 + 健全性 box 逆ざや (+ 三利源 표가 있는 회사는 利差損益)",
-    "axes:esr_placeholder": "後日公表予定 문구가 놓인 5개년 표·健全性 box·業績データ 7절"
+    "axes:esr_placeholder": "後日公表予定 문구가 놓인 5개년 표·健全性 box·業績データ 7절",
+    "profit:pl": "損益計算書 (前年度/当年度 2열 ± 比較増減·百分比 열)",
+    "profit:uw": "損保 保険引受利益明細表 (3개년: 保険引受収益/費用/営業費及び一般管理費/その他収支/保険引受利益)",
+    "profit:ratio": "損保 正味損害率、正味事業費率及びその合算率 표 (종목 × 3개년, 合計행)",
+    "profit:inv": "損保 資産運用利回り(実現利回り) 표 合計행 = 資産運用損益(実現ベース)",
+    "profit:core": "生保 経常利益等の明細(基礎利益) 표 (基礎利益 A / キャピタル損益 B / 臨時損益 C / 経常利益 A+B+C)",
+    "profit:three": "生保 三利源 표 (利差損益/危険差損益/費差損益) — 대형사만, NN Life 는 없음",
+    "profit:meta": "회계방침 절(会計方針に関する事項)·감사 문구·損益計算書 양식에서 회계기준 판정"
   },
   "sensitivity": {
     "scenarios": [
@@ -2248,8 +2258,636 @@
       "column": "section",
       "applies_to": "life",
       "kics_item_ref": null
+    },
+    {
+      "id": "pl_ordinary_revenue",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "経常収益"
+      ],
+      "ko": "경상수익(총수익)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_ordinary_expenses",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "経常費用"
+      ],
+      "ko": "경상비용(총비용)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_ordinary_profit",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "経常利益",
+        "経常利益A+B+C"
+      ],
+      "ko": "경상이익",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= pl_ordinary_revenue - pl_ordinary_expenses; life: = pl_core_profit + pl_capital_gains + pl_extraordinary_pl; nonlife: = pl_underwriting_profit + pl_investment_pl + other (P07)",
+      "required": true,
+      "column": "prev+cur",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": 20
+    },
+    {
+      "id": "pl_extraordinary_gains",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "特別利益"
+      ],
+      "ko": "특별이익",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_extraordinary_losses",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "特別損失"
+      ],
+      "ko": "특별손실",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_pretax_profit",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "税引前当期純利益",
+        "税引前当期純剰余"
+      ],
+      "ko": "법인세차감전 당기순이익",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= pl_ordinary_profit + pl_extraordinary_gains - pl_extraordinary_losses",
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": 22
+    },
+    {
+      "id": "pl_income_taxes",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "法人税等合計"
+      ],
+      "ko": "법인세등 합계",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": 23
+    },
+    {
+      "id": "pl_net_income",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "当期純利益",
+        "当期純剰余"
+      ],
+      "ko": "당기순이익(상호회사: 당기순잉여)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= pl_pretax_profit - pl_income_taxes",
+      "required": true,
+      "column": "prev+cur",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": 24
+    },
+    {
+      "id": "pl_interest_dividend_income",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "利息及び配当金収入",
+        "利息及び配当金等収入"
+      ],
+      "ko": "이자 및 배당금 수입",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_net_premiums_written",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "正味収入保険料"
+      ],
+      "ko": "정미수입보험료(원수+수재-출재)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_net_claims_paid",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "正味支払保険金"
+      ],
+      "ko": "정미지급보험금",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_loss_adjustment_expenses",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "損害調査費"
+      ],
+      "ko": "손해조사비",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_commissions_collection",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "諸手数料及び集金費"
+      ],
+      "ko": "제수수료 및 집금비",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_operating_general_admin",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "営業費及び一般管理費"
+      ],
+      "ko": "영업비 및 일반관리비(전체)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_other_ordinary_revenue",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "その他経常収益"
+      ],
+      "ko": "기타경상수익",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_other_ordinary_expenses",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "その他経常費用"
+      ],
+      "ko": "기타경상비용",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_underwriting_revenue",
+      "layer": "profit",
+      "table": "profit:uw",
+      "labels_ja": [
+        "保険引受収益"
+      ],
+      "ko": "보험인수수익",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_underwriting_expenses",
+      "layer": "profit",
+      "table": "profit:uw",
+      "labels_ja": [
+        "保険引受費用"
+      ],
+      "ko": "보험인수비용",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_uw_operating_general_admin",
+      "layer": "profit",
+      "table": "profit:uw",
+      "labels_ja": [
+        "保険引受に係る営業費及び一般管理費"
+      ],
+      "ko": "보험인수 관련 영업비·일반관리비",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_underwriting_other",
+      "layer": "profit",
+      "table": "profit:uw",
+      "labels_ja": [
+        "その他収支"
+      ],
+      "ko": "기타수지(자배책 법인세상당액 등)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_underwriting_profit",
+      "layer": "profit",
+      "table": "profit:uw",
+      "labels_ja": [
+        "保険引受利益"
+      ],
+      "ko": "보험인수이익",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= pl_underwriting_revenue - pl_underwriting_expenses - pl_uw_operating_general_admin + pl_underwriting_other",
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": 1
+    },
+    {
+      "id": "pl_investment_pl",
+      "layer": "profit",
+      "table": "profit:inv",
+      "labels_ja": [
+        "合計"
+      ],
+      "ko": "자산운용손익(실현기준 = 資産運用収益+積立保険料等運用益-資産運用費用)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": 17
+    },
+    {
+      "id": "pl_loss_ratio_pct",
+      "layer": "profit",
+      "table": "profit:ratio",
+      "labels_ja": [
+        "合計"
+      ],
+      "ko": "정미손해율 %",
+      "unit": "pct",
+      "parent": null,
+      "formula": "= (pl_net_claims_paid + pl_loss_adjustment_expenses) / pl_net_premiums_written * 100",
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_expense_ratio_pct",
+      "layer": "profit",
+      "table": "profit:ratio",
+      "labels_ja": [
+        "合計"
+      ],
+      "ko": "정미사업비율 %",
+      "unit": "pct",
+      "parent": null,
+      "formula": "= (pl_commissions_collection + pl_uw_operating_general_admin) / pl_net_premiums_written * 100",
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_combined_ratio_pct",
+      "layer": "profit",
+      "table": "profit:ratio",
+      "labels_ja": [
+        "合計"
+      ],
+      "ko": "합산비율 %",
+      "unit": "pct",
+      "parent": null,
+      "formula": "= pl_loss_ratio_pct + pl_expense_ratio_pct",
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_premium_income",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "保険料等収入"
+      ],
+      "ko": "보험료등수입(보험료+재보험수입)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_core_profit",
+      "layer": "profit",
+      "table": "profit:core",
+      "labels_ja": [
+        "基礎利益",
+        "基礎利益A"
+      ],
+      "ko": "기초이익(생보 핵심이익, 経常利益 - キャピタル損益 - 臨時損益)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= pl_ordinary_profit - pl_capital_gains - pl_extraordinary_pl; (三利源 공시사) ≈ pl_interest_margin + pl_mortality_margin + pl_expense_margin",
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_capital_gains",
+      "layer": "profit",
+      "table": "profit:core",
+      "labels_ja": [
+        "キャピタル損益",
+        "キャピタル損益B"
+      ],
+      "ko": "캐피털손익(유가증권매각손익·파생·환차 등)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_extraordinary_pl",
+      "layer": "profit",
+      "table": "profit:core",
+      "labels_ja": [
+        "臨時損益",
+        "臨時損益C"
+      ],
+      "ko": "임시손익(위험준비금·대손충당 등)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_interest_margin",
+      "layer": "profit",
+      "table": "profit:three",
+      "labels_ja": [
+        "利差損益",
+        "利差益",
+        "利差損"
+      ],
+      "ko": "이차손익(三利源)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_mortality_margin",
+      "layer": "profit",
+      "table": "profit:three",
+      "labels_ja": [
+        "危険差損益",
+        "危険差益"
+      ],
+      "ko": "위험차손익(三利源)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_expense_margin",
+      "layer": "profit",
+      "table": "profit:three",
+      "labels_ja": [
+        "費差損益",
+        "費差益",
+        "費差損"
+      ],
+      "ko": "비차손익(三利源)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "accounting_basis",
+      "layer": "profit",
+      "table": "profit:meta",
+      "labels_ja": [
+        "企業会計基準",
+        "標準責任準備金",
+        "大蔵省告示第48号",
+        "責任準備金繰入額",
+        "保険業法第111条",
+        "国際財務報告基準",
+        "IFRS"
+      ],
+      "ko": "회계기준 jgaap / ifrs / unstated — 회계방침 절·감사 문구·P&L 양식에서 판정(추정 금지)",
+      "unit": "enum",
+      "parent": null,
+      "formula": null,
+      "required": true,
+      "column": "text",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "ifrs17_applied",
+      "layer": "profit",
+      "table": "profit:meta",
+      "labels_ja": [
+        "IFRS第17号",
+        "IFRS 17",
+        "保険契約に関する国際財務報告基準"
+      ],
+      "ko": "IFRS17 적용 true / false / unstated — false 는 accounting_basis=jgaap 가 확인된 単体 법정재무제표에서만(IFRS 는 上場社 連結 임의적용뿐)",
+      "unit": "tri",
+      "parent": null,
+      "formula": null,
+      "required": true,
+      "column": "text",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "accounting_basis_evidence",
+      "layer": "profit",
+      "table": "profit:meta",
+      "labels_ja": [],
+      "ko": "판정 근거 문장(원문, 페이지) — A: 회계방침 절 명시 / B: 법정 P&L 양식(責任準備金繰入額 등)+会社法·保険業法 감사 문구",
+      "unit": "text",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "profit_source_doc",
+      "layer": "profit",
+      "table": "profit:meta",
+      "labels_ja": [],
+      "ko": "손익 표가 있는 문서(별책만 있는 회사는 본편 URL) / NOT_ACQUIRED 사유",
+      "unit": "text",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "sector_scope": "both",
+      "kics_item_ref": null,
+      "pl_item_ref": null
     }
   ],
-  "checks": "C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks",
+  "checks": "C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) + P01..P13 (profit, cur & prev) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks / run_profit_checks / run_profit_axes_xref",
   "aggregation_rules_ref": "J-ESR/esr_aggregation_rules.json (告示74 第八十一条·第八十九条·第百条·第百二十七条·第百五十四条~第百五十六条 + 告示75 別紙様式第三号 注; matrices in id order)"
 }

@@ -12,6 +12,7 @@
 - 헤드라인 `esr_pct` 는 `適格資本の額(A) / 所要資本の額(B)`. 두 표본 모두 census 값과 일치(au 791.7 / Meiji Yasuda Non-Life 743.2). 금액은 百万円 절사라 비율 검산은 **구간 검산**이어야 한다(§4 C01).
 - 스키마는 두 층: `layer:"esr"` 115항목(표 T1~T8, 생보 리스크 하위 6행 포함) / `layer:"article_axes"` 22항목(금융청 모니터링 보고서 3축 + ESR 빈 자리 골격). 검산 C01~C34 + A01~A05 + **G01~G10(상관행렬 재계산, §8)**: au 43/43, Meiji Yasuda Non-Life 49/51(미재현 2건은 등재된 informational), NN Life 4/4.
 - **소요자본 합산은 √(xᵀRx) 로 재현된다.** 告示74 第百五十五条 행렬(생보·손보 0.00, 나머지 0.25)로 분산효과 au 273.6 vs 274 · MY 2,529.5 vs 2,530, 세효과 = 0.8 × 28.0% × 세효과전 으로 두 회사 모두 ±1. 하위(시장 第百二十七条)도 재현. 안 되는 곳은 손보 하위(다지역 회사)와 巨大災害(MY) — §8.
+- **세 번째 층 `layer:"profit"` 36항목(2026-09-12 추가, §9)** — J-GAAP 법정 손익계산서 층. 생보 基礎利益·キャピタル/臨時·三利源, 손보 保険引受利益·資産運用損益·損害率/事業費率/合算率, 공통 経常利益·当期純利益 + 전기 비교값(`{prev, cur}`) + 회계기준 메타(`accounting_basis`/`ifrs17_applied`). 검산 P01~P13: au 19/19, NN Life 12/12, MY 는 별책에 손익 표가 없어 본편 미확보(NOT_ACQUIRED).
 
 ## 1. 표본
 
@@ -383,3 +384,113 @@ case_down 은 スプレッド–株式 0.00, スプレッド–不動産 0.00 (�
 - USP(会社固有のストレス係数/リスク係数): 하위 입력값만 바뀌고 행렬은 그대로 → 전 검산 적용.
 - 판정 흐름: G06/G07 실패 + T8 `内部モデル 適用` → expected(`calc_method=internal_model` 기록) / + `該当ありません` → known_deviations 후보로 티켓.
 - 세율: `implied_statutory_tax_rate = K/(J−I)/0.8` 가 0.27~0.31 밖이면 2호 분기(DTA 과다·적자사) — 데이터 오류 아님, notes 에 적는다.
+
+## 9. 손익 층 `layer:"profit"` (2026-09-12 추가 — 티켓 `inbox/jp/20260912T1150Z__owner__JP_MULTI__profit_layer_schema.md`)
+
+> 한국 PL 패널(손익분해)의 일본판 입력층. 일본 법정 결산은 **J-GAAP 원가법**(책임준비금 標準責任準備金 lock-in, IFRS17 미적용)이라 CSM·RA·예실차가 없고,
+> 대신 생보는 `基礎利益`(기초이익)+`三利源`, 손보는 `保険引受利益`+`資産運用損益`+비율 3종이 공시서류 표로 있다. 기사 3축 ③(이차손익 전환, 도메인 문서 §4b-3)은
+> 이 층의 `pl_interest_margin` 으로 흡수한다(`article_axes.interest_margin_sign` 은 유지, 三利源 공시사는 `pl_interest_margin` 부호가 정본).
+> 기계 스키마 = `J-ESR/esr_disclosure_schema.json` `layer:"profit"` 36항목(값 32 + 메타 4). 값은 `{"prev": 前年度, "cur": 当年度}` 쌍, 百万円(비율 %).
+> 추출·검산 = `extract_esr_template_samples.py::extract_profit / run_profit_checks / run_profit_axes_xref`.
+
+### 9-1. 항목 (id → 위치·검산·한국 PL 대응)
+
+`pl` 열 = 루트 `PL_breakdown.json` 항목번호(1~32). **억지 대응 금지** — 정확(당기순이익 24·세전 22·법인세 23)과 근사(経常利益→20 영업이익, 保険引受利益→1 보험손익, 資産運用損益→17 투자손익)만 적고 나머지는 null.
+근사 사유: 일본 特別損益 ≈ 한국 영업외손익(20↔経常利益), 保険引受利益 은 J-GAAP 원가법(責任準備金繰入 포함)이라 IFRS17 보험서비스결과와 범위가 다름, 資産運用損益 은 보험금융손익(19)을 포함하지 않음.
+
+| id | scope | 표 | label (ja) | 뜻 | pl | au Non-Life (prev) | NN Life (prev) | page |
+|---|---|---|---|---|---|---|---|---|
+| `pl_ordinary_revenue` | both | 損益計算書 | 経常収益 | 경상수익 |  | 8,320 (8,129) | 596,118 (576,434) | 17/44 |
+| `pl_ordinary_expenses` | both | 損益計算書 | 経常費用 | 경상비용 |  | 6,665 (6,678) | 574,744 (562,097) | 17/44 |
+| `pl_ordinary_profit` | both | 損益計算書 | 経常利益 | 경상이익 | 20(근사) | 1,654 (1,451) | 21,373 (14,336) | 17/44 |
+| `pl_extraordinary_gains` / `pl_extraordinary_losses` | both | 損益計算書 | 特別利益 / 特別損失 | 특별이익/손실 |  | －/1 (－/82) | 0/446 (13/529) | 17/44 |
+| `pl_pretax_profit` | both | 損益計算書 | 税引前当期純利益(純剰余) | 세전이익 | 22 | 1,652 (1,368) | 20,928 (13,819) | 17/44 |
+| `pl_income_taxes` | both | 損益計算書 | 法人税等合計 | 법인세 | 23 | 481 (407) | 5,837 (3,414) | 17/44 |
+| `pl_net_income` | both | 損益計算書 | 当期純利益 / 当期純剰余(상호회사) | 당기순이익 | 24 | 1,171 (961) | 15,090 (10,405) | 17/44 |
+| `pl_interest_dividend_income` | both | 損益計算書 | 利息及び配当金(等)収入 | 이자·배당수입 |  | 48 (7) | 20,895 (22,133) | 17/44 |
+| `pl_net_premiums_written` | nonlife | 損益計算書 | 正味収入保険料 | 정미수입보험료 |  | 8,137 (7,976) | n/a | 17 |
+| `pl_net_claims_paid` / `pl_loss_adjustment_expenses` | nonlife | 損益計算書 | 正味支払保険金 / 損害調査費 | 손해율 분자 |  | 1,940/649 | n/a | 17 |
+| `pl_commissions_collection` / `pl_operating_general_admin` | nonlife | 損益計算書 | 諸手数料及び集金費 / 営業費及び一般管理費 | 사업비율 분자·전체 판관비 |  | 79/3,121 | n/a | 17 |
+| `pl_other_ordinary_revenue` / `pl_other_ordinary_expenses` | nonlife | 損益計算書 | その他経常収益 / 費用 | P07 브리지 항 |  | 65/0 | n/a | 17 |
+| `pl_underwriting_revenue` / `pl_underwriting_expenses` / `pl_uw_operating_general_admin` / `pl_underwriting_other` | nonlife | 保険引受利益明細表 | 保険引受収益 / 費用 / 保険引受に係る営業費及び一般管理費 / その他収支 | 인수이익 내역 |  | 8,206/3,543/3,113/－ | n/a | 5 |
+| `pl_underwriting_profit` | nonlife | 保険引受利益明細表 | 保険引受利益 | 보험인수이익 | 1(근사) | 1,550 (1,363) | n/a | 5 |
+| `pl_investment_pl` | nonlife | 資産運用利回り(実現利回り) 합계행 | 資産運用損益(実現ベース) | 자산운용손익 | 17(근사) | 48 (7) | n/a | 11 |
+| `pl_loss_ratio_pct` / `pl_expense_ratio_pct` / `pl_combined_ratio_pct` | nonlife | 正味損害率、正味事業費率及びその合算率 合計행 | 正味損害率 / 正味事業費率 / 合算率 | 손해율/사업비율/합산율 |  | 31.8/39.2/71.1 (29.4/42.7/72.1) | n/a | 5 |
+| `pl_premium_income` | life | 損益計算書 | 保険料等収入 | 보험료등수입 |  | n/a | 371,006 (395,528) | 44 |
+| `pl_core_profit` | life | 経常利益等の明細(基礎利益) | 基礎利益 (A) | 기초이익 |  | n/a | 18,523 (14,828) | 60 |
+| `pl_capital_gains` / `pl_extraordinary_pl` | life | 같은 표 | キャピタル損益 (B) / 臨時損益 (C) | 캐피털/임시손익 |  | n/a | △1,232/4,082 (△1,007/515) | 60 |
+| `pl_interest_margin` / `pl_mortality_margin` / `pl_expense_margin` | life | 三利源 표 | 利差損益 / 危険差損益 / 費差損益 | 三利源 |  | n/a | TABLE_ABSENT | — |
+| `accounting_basis` | meta | 会計方針 절·감사 문구·P&L 양식 | — | jgaap / ifrs / unstated |  | jgaap (B) | jgaap (A) | 15·17·31 / 47~49 |
+| `ifrs17_applied` | meta | 〃 | IFRS第17号 | true / false / unstated |  | false | false | |
+| `accounting_basis_evidence` / `profit_source_doc` | meta | | | 근거 문장 / 출처 문서 |  | | | |
+
+Meiji Yasuda Non-Life: 전 항목 `NOT_ACQUIRED`, `accounting_basis=unstated`. 【別冊】業績データ에는 손익계산서·손익 표가 없고 본편 `明治安田損害保険の現状2026`
+(`https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260729.pdf`, census 의 disclosure 페이지에서 WebFetch 로 링크 확인)이 필요한데 2026-09-12 이 PC 에서
+curl 000 ×3·requests ConnectionError ×3(443 차단)·WebFetch 는 10MB 초과 거부 → 미확보. 443 이 열리는 시간대에 `COMPANIES[meijiyasuda_nonlife].profit_pages` 를 채우면 같은 코드로 돈다.
+별책 EBS 財務会計ベース 열에 価格変動準備金 831·危険準備金等 14,879 가 있어 J-GAAP 과 정합하지만 **회계방침 문장이 없으므로 unstated 로 둔다(추정 금지)**.
+
+### 9-2. 위치 (회사 유형별)
+
+| 유형 | 손익계산서 | 손보 인수이익·비율 | 손보 운용손익 | 생보 기초이익 | 회계방침 |
+|---|---|---|---|---|---|
+| au Non-Life (본편 業績データ 장) | p17 `(2)損益計算書` 3열(前年度/当年度/比較増減) + 관계주기(正味収入保険料 내역 등) | p5 `(6)正味損害率、正味事業費率及びその合算率`(종목×3개년, 合計행)·`(8)保険引受利益明細表`(3개년) | p11 `(3)資産運用利回り(実現利回り)` 合計행(損益·平均運用額·利回り × 3개년 = 9토큰, 当期 = 7번째) | — | 貸借対照表関係注記(p15) 는 감가상각·인당 방침만, `企業会計基準` 문구 없음 → **B 티어**: P&L 법정양식(責任準備金繰入額·支払備金繰入額) + p31 会社法第436条/保険業法第111条 감사 문구 |
+| NN Life (ディスクロージャー誌 본편) | p44 `2.損益計算書` 4열(前年度 金額/百分比/当年度 金額/百分比 — 소계행만 4토큰, 내역행 2토큰) | — | — | p60 `9.経常利益等の明細(基礎利益)`: 基礎利益 A / キャピタル収益·費用 → B / 臨時収益·費用 → C / 経常利益 A+B+C, 라벨 뒤 기호 A·B·C 가 별도 줄 | p47~49 `1.会計方針に関する事項`(有価証券 評価·標準責任準備金 大蔵省告示第48号·ヘッジ会計 企業会計基準第10号) → **A 티어** |
+| Meiji Yasuda Non-Life (별책) | 없음 → 본편 필요 | 없음 | 없음 | — | 없음 → unstated |
+| 5개년 主要な経営指標 (au p2, NN p11) | 열 = 오래된→최신 5개년, 마지막 = 当年度·직전 = 前年度. au 는 행 라벨이 **세로쓰기(한 글자 한 줄)** 로 추출돼 `merge_vertical` 로 합친 뒤 매칭 | | | | P10 교차검산 소스 |
+
+### 9-3. 검산 P01~P13 (cur·prev 각각, `run_profit_checks`)
+
+| id | 식 | 오차 | au (cur/prev) | NN (cur/prev) | 비고 |
+|---|---|---|---|---|---|
+| P01 | 生保 `経常利益 = 基礎利益 + キャピタル損益 + 臨時損益` | ±2 | — | 18,523−1,232+4,082 = 21,373 ✓ / 14,336 ✓ | 基礎利益 정의(2022년도 개정식)의 항등식 |
+| P02 | 生保 `基礎利益 ≈ 利差 + 危険差 + 費差` | ±5, informational | — | TABLE_ABSENT | NN 은 三利源 미공시. 대형 생보는 회사별 정의(その他 포함 여부) 차이 있어 informational |
+| P03 | `経常利益 = 経常収益 − 経常費用` | ±1 | 8,320−6,665=1,655 vs 1,654 / 1,451 ✓ | 21,374 vs 21,373 / 14,337 vs 14,336 | 百万円 절사 |
+| P04 | `税引前 = 経常利益 + 特別利益 − 特別損失` | ±1 | 1,653 vs 1,652 / 1,369 vs 1,368 | 20,927 vs 20,928 / 13,820 vs 13,819 | |
+| P05 | `当期純利益 = 税引前 − 法人税等合計` | ±1 | 1,171 ✓ / 961 ✓ | 15,091 vs 15,090 / 10,405 ✓ | |
+| P06 | 損保 `合算率 = 損害率 + 事業費率` | ±0.15 | 71.0 vs 71.1 / 72.1 ✓ | — | 각 비율이 소수1자리 반올림이라 ±0.1 초과 가능 |
+| P07 | 損保 `経常利益 = 保険引受利益 + 資産運用損益 + (その他経常収益 − その他経常費用 − (営業費及び一般管理費 − 保険引受に係る営業費及び一般管理費))` | ±3 | 1,550+48+(65−0−8)=1,655 vs 1,654 / 1,451 ✓ | — | 티켓의 "± その他" 를 P&L 행으로 명시한 식. 판관비 중 보험인수 귀속분 외(8)는 경상비용에만 있음 |
+| P08 | 損保 `損害率 = (正味支払保険金 + 損害調査費) / 正味収入保険料` | ±0.1 | 31.82→31.8 / 29.34→29.4 | — | 회사 주기 정의 그대로 |
+| P09 | 損保 `事業費率 = (諸手数料及び集金費 + 保険引受に係る営業費及び一般管理費) / 正味収入保険料` | ±0.1 | 39.23→39.2 / 42.72→42.7 | — | |
+| P10 | 5개년 主要な経営指標 표 == P&L/明細表 (8행 × cur·prev) | 0 | 16/16 | (NN 5개년 표는 億円 — 미비교) | |
+| P11 | 損保 `保険引受利益 = 保険引受収益 − 保険引受費用 − 保険引受に係る営業費及び一般管理費 + その他収支` | ±1 | 1,550 ✓ / 1,364 vs 1,363 | — | |
+| P12 | `profit.pl_core_profit == article_axes.core_profit` (cur·prev) | 0 | — | 18,523 / 14,828 ✓ | 두 층이 같은 표를 읽는지 교차 |
+| P13 | `利息及び配当金収入 ≈ 資産運用損益` | ±1, informational | 48 ✓ / 7 ✓ | — | au 는 운용비용·매각손익 0 이라 등식. 유가증권 보유사는 당연히 깨진다 |
+
+결과: **au 19/19, NN Life 12/12 (게이트 0 실패), Meiji Yasuda Non-Life P00 NOT_ACQUIRED 1건(informational).**
+
+### 9-4. 생보/손보 차이와 10월 62사 주의점
+
+- 손익계산서 골격(経常収益→経常利益→特別損益→税引前→法人税等→当期純利益)은 생·손보 공통. 상호회사는 `当期純剰余`·`税引前当期純剰余`(라벨 변형 등록됨).
+- **생보**: `基礎利益` 표(経常利益等の明細)는 전사 공통이지만 **三利源 표는 대형사·일부 상장사만**(NN 없음). 三利源 라벨 변형 `利差損益/利差益/利差損`(부호는 益/損 으로 표기, 損 이면 음수로 저장할 것 — 표본 없어 미검증). 逆ざや 는 §7-2 대로 `article_axes` 에 남긴다.
+- **손보**: 비율 3종은 `合計` 행이 여러 표에 반복(正味 표·出再控除前 표)되므로 `(6)正味損害率` 제목 뒤 첫 `合計` 만 잡는다. 資産運用損益 도 `(2)インカム利回り`·`(3)実現利回り`·`(参考)時価総合利回り` 세 표에 `合計` 가 있어 `(3)` 뒤 첫 `合計`. 대형 손보(지주 자회사)는 본편 業績データ에 같은 순번 표가 있으나 **단위 億円·소수 1자리** 가 흔하다(§7-4) — `unit_disclosed` 필수.
+- 열 레이아웃은 회사별 `pl_layout` 로 선언한다(`prev_cur_diff` au / `prev_pct_cur_pct` NN). 10월엔 `prev_cur`(2열)·`cur_only` 가 더 나올 수 있다 — 첫 매칭 행의 토큰 수로 판별하되 자동 추정하지 말고 회사별로 적는다.
+- **회계기준 판정 규칙**(`accounting_basis`): (A) 会計方針 절이 `標準責任準備金`/`大蔵省告示第48号`/`企業会計基準` 을 인용 → jgaap. (B) 회계방침 절이 없어도 법정 損益計算書 양식(`責任準備金繰入額`·`支払備金繰入額`) + `会社法第436条`/`保険業法第111条` 감사 문구가 같이 있고 IFRS 언급 0 → jgaap. `連結財務諸表の作成基準` 에 `国際財務報告基準`/`IFRS` → ifrs(지주 연결 결산설명자료에서 나올 수 있음, 표본 0). 둘 다 아니면 unstated.
+  `ifrs17_applied`: `IFRS第17号` 명시 → true; accounting_basis=jgaap 인 **単体 법정재무제표** → false(保険業法·会社計算規則상 単体은 J-GAAP 강제, IFRS 는 上場社 連結 임의적용뿐 — 문서 밖 추정이 아니라 법령 사실); 그 외 unstated. 3사 판정: au jgaap/false(B), NN jgaap/false(A), MY unstated/unstated(별책만).
+- 그룹 지주 6사의 결산설명자료는 **연결 J-GAAP**(修正利益·グループ調整利益 등 자체 지표)이라 이 층의 単体 항목과 섞지 않는다 — `scope=group` 행은 `pl_net_income`(親会社株主に帰属する当期純利益)만 채우고 나머지는 null 로 두는 편이 안전하다(10월 결정).
+
+### 9-5. publishing 용 블록 제안 (`jp/jesr_detail.json` companies[].profit)
+
+```json
+"profit": {
+  "fiscal_year": "FY2025", "period": "2025-04-01..2026-03-31", "unit": "JPY_million",
+  "accounting_basis": "jgaap", "ifrs17_applied": false,
+  "accounting_basis_evidence": "A(会計方針 p47): 標準責任準備金 … 大蔵省告示第48号",
+  "source": {"doc": "au_nonlife_disclo_260730_4of5.pdf", "pages": {"pl": [17], "uw": [5], "ratio": [5], "inv": [11]}},
+  "items": {
+    "pl_ordinary_profit":      {"cur": 1654, "prev": 1451, "pl_item_ref": 20},
+    "pl_net_income":           {"cur": 1171, "prev": 961,  "pl_item_ref": 24},
+    "pl_underwriting_profit":  {"cur": 1550, "prev": 1363, "pl_item_ref": 1},
+    "pl_investment_pl":        {"cur": 48,   "prev": 7,    "pl_item_ref": 17},
+    "pl_loss_ratio_pct":       {"cur": 31.8, "prev": 29.4},
+    "pl_expense_ratio_pct":    {"cur": 39.2, "prev": 42.7},
+    "pl_combined_ratio_pct":   {"cur": 71.1, "prev": 72.1}
+  },
+  "checks": {"pass": 19, "total": 19, "failed": []},
+  "not_acquired": null
+}
+```
+
+- `items` 는 `extracted_sample_values.json` `companies[].profit.values` 에서 null 이 아닌 것만, 값·단위 무변환(百万円 그대로; 화면 億円 변환은 designer). `_meta.labels` 에는 이미 36개 profit id 의 ja/ko/unit 이 들어간다(schema `items` 전체를 복사하므로).
+- 생보는 `pl_core_profit`·`pl_capital_gains`·`pl_extraordinary_pl`(+ 三利源 있으면 3개) 가 핵심, 손보는 위 7개. `pl_item_ref` 는 스키마에서 조인(null 이면 키 생략).
+- 미확보 회사(MY)는 `"items": {}`, `"not_acquired": "<profit_source_doc 문자열>"`, `"main_volume_url"` 을 넣어 화면이 "본편 미확보" 를 구분 표시할 수 있게 한다.
+- 검산 게이트: `failed` 가 비어야 블록을 붙인다(informational P02/P13/P00 은 제외). 전기값은 회사가 같은 표에 찍은 값이라 별도 검증 없이 그대로.

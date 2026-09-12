@@ -2,6 +2,52 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 (10) -- 스키마 손익 층(profit) + 표본 3건 추출·검산 + 회계기준 메타 (jp)
+
+- 티켓 `inbox/jp/20260912T1150Z__owner__JP_MULTI__profit_layer_schema.md`(answered). 일본 법정 결산은 J-GAAP 원가법이라 CSM 이 없고,
+  생보 基礎利益·三利源 / 손보 保険引受利益·資産運用損益·비율 3종 / 공통 経常利益·当期純利益 이 공시 표로 있다 → `layer:"profit"`.
+- 스키마: 36항목(값 32 + 메타 4). id 접두 `pl_`, `sector_scope` life/nonlife/both, `column:"prev+cur"`(전기 비교값 동반), `pl_item_ref`
+  (루트 PL_breakdown 항목번호: 24·22·23 정확, 20·1·17 근사, 그 외 null), 헤더 `pl_ref_note`·`accounting_basis_note`. 기존 두 층 무변경.
+- 추출기: 회사별 `profit_pages`(pl/uw/ratio/inv/core/three/summary5/basis) + `pl_layout`(prev_cur_diff au / prev_pct_cur_pct NN). P&L 라벨은
+  `^…$` 앵커라 커서 없이 매칭(처음엔 esr 층처럼 순차 커서를 썼다가 항목 순서≠행 순서로 8항목 NOT_FOUND — 제거). 손보 비율·운용 표는 `合計` 행이
+  여러 표에 반복되므로 `(6)正味損害率`·`(3)資産運用利回り` 제목 뒤 첫 `合計` 만. au 5개년표는 라벨이 세로쓰기(한 글자 한 줄)라 `merge_vertical`.
+- 검산 P01~P13(cur·prev 각각): au 19/19, NN 12/12, MY P00 informational. 티켓식 대응 — 合算率=損害率+事業費率(P06 ±0.15, 반올림),
+  経常≈引受+運用±その他(P07, その他 를 その他経常収益−その他経常費用−(営業費及び一般管理費−保険引受係る営業費) 로 명시하니 ±1),
+  基礎利益≈三利源(P02 informational, NN 미공시 → 대신 基礎利益 정의식 P01 정확). P12 = profit ↔ article_axes core_profit 교차.
+- 회계기준: (A) 会計方針 절 인용(標準責任準備金/大蔵省告示48号/企業会計基準) 또는 (B) 법정 P&L 양식+会社法436条/保険業法111条 감사문 → jgaap;
+  `ifrs17_applied=false` 는 jgaap 단체 법정재무제표에서만(법령 사실), 그 외 unstated. au B·NN A → jgaap/false, MY 별책만 → unstated.
+- Meiji Yasuda 본편: census disclosure 페이지를 WebFetch 로 열어 `pdf/20260729.pdf` 링크 특정, 그러나 443 차단(curl 000×3, requests ×3)·WebFetch
+  10MB 초과 → 미확보. URL·사유 COMPANIES 등재.
+- 문서: `jp_esr_disclosure_template.md` §9(항목표·위치·검산표·생손보 차이·판정 규칙·publishing `profit` 블록 JSON 제안) + §0 요약,
+  `claude-agent-jp.md` §4b-3. `jp/`·마스터·detail builder 미접촉.
+
+## 2026-09-12 (9) -- `jp/jesr.html` 신규(K-ICS.html 대응 회사별 ESR 상세) + `jp/index.html` 링크·표 개편 (designer)
+
+- 티켓 `inbox/designer/20260912T1120Z__owner__JP_MULTI__jesr_company_page.md`(answered). 산출물: `jp/jesr.html`(신규, K-ICS.html
+  패널 구조·chrome·`../common.css` 재사용) · `jp/index.html`(一覧表 링크 + 표 개편). owner 중간지시 2건: 파일명 `company.html`→
+  `jesr.html`(제도명 관례), `jp/index.html` 一覧表 業態·基準日 열 제거 + 基準日 표기를 일본 회계연도 분기(`基準時点 2025年度 4Q`,
+  실제 날짜는 title 툴팁)로 변경 — 날짜 그대로 쓰면 한국식 "2026.1Q" 로 오독됨.
+- 데이터는 publishing 이 이 라운드에 병행 완성한 `jp/jesr_detail.json`(au_nonlife·meijiyasuda_nonlife 2사). 개발 중 임시
+  `jp/_fixture_jesr_detail.json` 을 계약대로 만들었으나 실 파일이 곧 도착해 삭제, 실사용은 안 됨(코드는 실패시에만 폴백).
+- 페이지 구성 9개: 헤더+뒤로가기 · 회사선택(URL `?company=` 동기) · 헤드라인 3카드 · Tier1/Tier2 구성 스택바+표 ·
+  소요자본 워터폴(ECharts custom renderItem, IFRS17.html 관례 — 0선 넘는 항목 zero-crossing 안전) + 規定再現 배지 ·
+  시장리스크 세부 6개(비-null만) · 감응도 표+미니바(기준행 포함) · 기사3축(숫자값만, dict/문자열/배열은 자동 제외).
+- 실측 버그 3건 발견·직접수정(발주범위 밖이지만 명백한 버그): (1) 실 데이터 `doc_type` 에 파이프라인 내부 한국어 메모
+  혼입(`…업적데이터편, 2026-07-30 발행)`) → `jp/index.html` 의 기존 `jaOnly()` 를 이식해 화면표시 직전 제거. (2) 適格資本
+  구성표 비중을 전부 총액 대비로 계산하면 중간항목(tier1_basic 등)이 149.6% 로 찍힘 → 최상위 2행만 총액 대비, 나머지는
+  자기 tier 의 basic 대비로 분모 교체. (3) 모바일(375px)에서 워터폴 x축 8라벨 겹침(짧은 라벨+45도 회전으로 수정) +
+  echarts.init 이 컨테이너 폭 안정 전에 불려 뒤쪽 2개 막대가 안 그려지는 타이밍버그(`requestAnimationFrame` 안전망 resize
+  추가) + 메타줄이 줄바꿈 없이 뷰포트 밖으로 밀려나감(`overflow-wrap:anywhere`).
+- 검증: 로컬서버 `python -m http.server 8917`. 2사 전환(select + URL 직접이동) 확인, 콘솔에러 0(jsdelivr
+  `ERR_NETWORK_ACCESS_DENIED` 만 — 이 PC 공통현상, `typeof echarts==='undefined'` 가드로 무해). echarts 는 로컬 임시사본
+  (`jp/_tmp_echarts.min.js`, SRI 해시 사전대조)으로 렌더 확인 후 삭제, CDN 참조·integrity 원복을 `grep` 로 재확인. 최종
+  스크린샷은 msedge headless `--screenshot` 가 RAF resize 타이밍과 안 맞아(반복 동일 파일크기) Playwright 로 전환해 확보:
+  `artifacts/designer/jesr_jp_jesr_{desktop,mobile}_20260912.png`(모바일 워터폴 막대 8개 전부 표시 확인).
+- 동시편집 조정: 같은 라운드에 jp-collector 세션이 `TODO_jp.md`Status 에 "(9) profit 층" 항목을 병행 추가해 내 항목과
+  번호(9)가 충돌 — profit 항목을 (10) 으로, 6개로 늘어난 Status 에서 가장 오래된 (5) `jp/index.html` ECharts→리스트 항목을
+  `docs/todo_archive_jp.md` 로 무수정 이관해 5개 유지 규칙 복구(내용은 안 건드리고 번호·위치만 조정).
+- 배포는 owner 승인 후 별도 라운드(`scripts/android_push_and_deploy.sh` NEW_FILES 는 오케스트레이터 처리, 미접촉).
+
 ## 2026-09-12 (8) -- `jp/jesr_detail.json` 신규 조립 (publishing)
 
 - 티켓 `inbox/publishing/20260912T1120Z__owner__JP_MULTI__jesr_detail_json.md`(answered). owner: "2개사에 대해 K-ICS.html 에
