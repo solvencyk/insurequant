@@ -9,6 +9,27 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-09-12c, GA4 내부 트래픽 플래그 — owner 발주 `inbox/designer/20260912T0830Z`, 커밋만·라이브 미배포):**
+- **gtag 스니펫이 있는 5 페이지(`index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html`·`privacy.html`)
+  전부에서 인라인 `gtag('config', 'G-F8NSCQZBZK');` 를 브라우저 플래그 버전으로 교체.**
+  `?iq_internal=1` 접속 시 `localStorage.iq_internal='1'` 저장 → 이후 파라미터 없이 재접속해도
+  `gtag('config', ..., {traffic_type:'internal'})` 로 계속 전송, `?iq_internal=0` 으로 해제.
+  owner 가 GA4 Admin > Data filters > Internal Traffic 을 Active 로 켜야 실제 보고서에서 빠진다
+  (그 활성화는 owner 몫, 이 라운드는 코드만). CSP meta·`<script async src>` 줄은 무수정.
+  `jp/index.html` 은 대상 아님(다른 designer 세션이 동시 작업 중이라 미접근).
+  `privacy.html` GA 문단에 "운영자 본인의 확인 접속은 내부 트래픽으로 분류해 통계에서
+  제외합니다." 한 줄 추가.
+- **함정 1건 발견·수정: `index.html` 만 파일 전체가 CRLF.** 최초 치환 스크립트가 LF 기준이라
+  이 파일만 매치 실패했고, 이어서 임시로 쓴 `sed -i` 가 CRLF 전체를 LF 로 뭉개버렸다(git diff
+  로 전수 확인해 발견) — Python 으로 전체 라인을 다시 `\r\n` 복원, `git diff` 로 5줄 삭제+13줄
+  추가만 남는지 재확인. 5 파일 전부 BOM 없음 재확인.
+- **검증**: 로컬 `http.server`(포트 8901) + Claude Browser 로 `index.html` 3-way 실측 —
+  `?iq_internal=1` → `localStorage`='1'·`dataLayer` config 인자에 `traffic_type:'internal'`,
+  파라미터 없는 재접속 → 유지, `?iq_internal=0` → `localStorage` null·`cfg={}` 로 해제.
+  `K-ICS.html` 도 동일 스니펫 스팟체크로 재확인. `pytest tests/test_deploy_assets.py` 11 passed.
+- **잔여**: 커밋만 하고 push 는 owner 승인 후(publishing 소관). GA4 Admin 쪽 필터 활성화는
+  owner 본인 조치.
+
 **Recent (2026-09-12, J-ESR 킥오프 2차 — owner 발주 `inbox/designer/20260912T0446Z`, 초안 draft 완료·라이브 미배포):**
 - **`jp/index.html` 신규 — 일본 ESR 대시보드 초안(일본어 UI).** 헤더(언어전환)+공표상황 카드3+
   ESR랭킹 가로막대(15사, 색=업태·빗금=연결·速報배지·▲목표마커)+커버리지 도넛+一覧表(7열)+푸터.
@@ -84,14 +105,6 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
 - **동의 배너는 두지 않는다(owner 결정).** footer 한 줄 링크만. 상세는 changelog 2026-09-10.
 - 잔여: 실제 `/g/collect` 전송 미확인(개발 PC 가 사내 VPN 경유라 확인 불가) — owner 가
   GA 실시간 보고서로 확인하면 종결. 서치 콘솔(가비아 DNS TXT)은 미착수.
-
-**Recent (2026-09-03b, owner 직접 지시 — 커밋만, 라이브 미배포):**
-- **IFRS17 Panel 5 보험손익 구성 접기.** 보험손익 행에 ＋ 를 붙여 구성 항목(원수 CSM상각·
-  위험조정·예실차·기타 원수·생명장기재보험·자동차+일반·기타 사업비)을 그 아래로 내리고
-  평시 숨김. 표(`renderPlTable`)만 변경 — 워터폴 차트는 그대로. 한 행이 그룹 둘에 속하게
-  되어 `style.display` 직접 토글을 버리고 `openState` + `applyVis()` 재계산으로 바꿨다.
-  실측 4개 회사 유형(손보·생보·LOB형·PAA) × 데스크톱·모바일 통과. 상세는 changelog 2026-09-03b.
-- **배포 대상: `IFRS17.html` 1개.** 안드로이드 얕은 main 클론에서 올린다(작업 PC push 불가).
 
 > 📦 **Status 이력은 `docs/todo_archive_designer.md` 로 이동했다** (2026-09-11, 내용 무수정 — Recent (2026-09-03) 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 

@@ -2,6 +2,40 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 (5) -- `jp/index.html` ESR 랭킹 ECharts 가로막대 → 루트 모바일 리스트 이식 (designer)
+
+- 티켓 `inbox/designer/20260912T0810Z__owner__JP_MULTI__jesr_jp_page_v3_korean_list.md`. owner 지적 원문 취지: "한국
+  insurequant 모바일 리스트(막대) 레이아웃을 그대로 쓰면 되는데 왜 새로 ECharts 막대를 만들었나. 기준 하나 정해서
+  그보다 높으면 진한 초록, 낮으면 진한 빨강이 더 직관적이다."
+- **삭제**: `#esrChartLife`/`#esrChartNonlife` echarts 컨테이너·CSS(`#esrChartLife, #esrChartNonlife{width:100%}`)·
+  `renderChart()` 전체(그리드/축/툴팁/시리즈 옵션, target 삼각 마커 scatter 시리즈 포함)·`chartInst`·`GROUP_COLOR`·
+  `isMobile()`·`parseTargetNum()`·`debounce()`·resize 리스너(리스트는 뷰포트 무관 렌더라 불필요, 위 4개 함수는 이
+  변경으로 orphan 이 돼 같이 제거).
+- **이식**: 루트 `index.html` 82~98행 `.map-list`~`.li-chip` CSS 블록 + 877~948행 `renderList()` + 531~547행
+  `_ratioHsl()`/`colorForRatio()` 를 그대로 복사. id 만 jp 스코프로 조정(`esrListLife`/`esrListNonlife`). 원본의
+  `#bubble-list .li-name{display:flex}`(칩 병기용 변형)을 jp 의 기본 `.li-name` 규칙으로 채택 — jp 리스트는 速報 칩이
+  항상 붙을 수 있어야 하므로.
+- **색 상수**: `RATIO_SCALE={esr:{base:100,strong:300}}`. base=일본 금융청 감독기준 100%(미달 시 早期是正措置 대상),
+  strong=규제수치 아닌 표시용 끝점(13사 분포 p90≈300 — 루트 kics 색상의 p90 채택과 같은 근거). 상수 옆 2줄 주석으로
+  이유 명시(티켓 지시).
+- **fold**: FOLD=5 더보기를 `isMob` 조건 없이 데스크톱·모바일 모두 적용(jp 기존 동작 유지 — 원래도 isMob 체크가
+  없었다). 生保 9사→top5+더보기, 損保 4사=버튼 없음(≤FOLD). 리스트·표는 `expanded{life,nonlife}` 상태 공유(기존과 동일).
+- **인터랙션 제거**: 루트는 행 클릭/`role="link"`/`tabindex`/keydown 으로 K-ICS.html 상세로 이동하지만, jp 에는 상세
+  페이지가 없어 이 부분은 이식하지 않음(티켓 명시). `title`/`aria-label` 에는 이전 echarts 툴팁 내용(ESR·範囲·基準日·
+  算定基準)을 요약 텍스트로 유지. `.li-row` 의 `cursor:pointer`/`:active` 도 복사하지 않음 — 클릭 동작이 없는데
+  포인터 커서를 남기면 오탐 어포던스가 되므로(직접판단, 렌더링되는 수치·레이아웃 변경 아님).
+- **▲目標水準 제거**: 리스트에 마커 자리가 없어 표(一覧表) 備考 열에 `目標 190%+`(`target_pct` 그대로) 텍스트로 이관.
+- **범례**: 業態 색상 스와치(生保 파랑/損保 주황) 제거 → 감독기준 색 설명 2줄("監督基準100%以上ほど濃い緑"/
+  "監督基準100%未満ほど濃い赤")로 교체. 상단 설명 문단도 "色は業態、▲は目標水準" → "色は監督基準(100%)を…" 로 수정.
+- **검증**: `python -m http.server 8896`(기존 실행 중) + Claude Browser preview, 데스크톱 1280px·모바일 375px 렌더
+  확인(콘솔 에러 0 — jsdelivr `ERR_NETWORK_ACCESS_DENIED` 는 이 PC 크로미움 공통 현상으로 echarts CDN 못 받는 도넛만
+  영향, 순수 CSS 인 리스트는 무관). 더보기 클릭 → 生保 9사 전체 펼침 + 표 동시 펼침 확인(DOM 텍스트로 회사 9개 전부
+  대조). `scripts/a11y_contrast_check.py contrast "#212529" "#ffffff"` → 15.43:1(AA, `.li-name`/`.li-val`).
+  Playwright(headless, CDN 차단 없어 도넛도 렌더) 로 `artifacts/designer/jesr_jp_draft_{desktop,mobile}_20260912.png`
+  덮어씀 — 이번엔 실제 막대가 스크린샷에 보임(직전 (4) 의 echarts CDN 차단 문제가 애초에 구조적으로 사라짐).
+- Status 아카이브: `TODO_jp.md` Status 최신 5개 유지 원칙에 따라 가장 오래된 (1) FY2025 census 항목을
+  `docs/todo_archive_jp.md` 신설 파일로 무수정 이관.
+
 ## 2026-09-12 (4) -- `jp/index.html` 2차 개선, owner 실사용 피드백 5건 (designer)
 
 - 티켓 `inbox/designer/20260912T0530Z__owner__JP_MULTI__jesr_jp_page_v2.md`. owner 가 초안(2026-09-12 (2))을 직접 보고

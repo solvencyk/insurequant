@@ -41,8 +41,24 @@
     .note-line{font-size:13px;color:var(--ink-strong);background:#fff;border:1px dashed var(--border);border-radius:var(--r-md);padding:10px 12px;margin:0}
     .as-of-line{font-size:12px;color:var(--muted);margin:8px 0 0}
 
-    /* 랭킹 차트 (業種 2섹션: 生保/損保) */
-    #esrChartLife, #esrChartNonlife{width:100%}
+    /* 랭킹 리스트 (業種 2섹션: 生保/損保). 루트 index.html 82~98행 .map-list~.li-chip 그대로
+       복사 + jp 전용 id 로 스코프 조정(원본은 #bubble-list 스코프의 flex 버전을 li-name 기본값으로
+       씀 — 速報 칩이 항상 붙을 수 있어야 해서). 2026-09-12 owner 지적으로 ECharts 가로막대
+       폐기 → 순수 HTML/CSS 리스트로 교체(inbox 20260912T0810Z).
+       cursor:pointer/:active 는 뺐다 — jp 에는 상세 페이지가 없어 행 클릭이 없으므로(티켓 지시),
+       포인터 커서를 남기면 클릭 가능해 보이는 오탐 어포던스가 된다. */
+    .map-list{display:block}
+    .li-sector{font-size:12px;color:var(--muted);font-weight:700;margin:14px 0 6px;padding-left:2px}
+    .li-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;background:#fff}
+    .li-name{flex:0 0 36%;display:flex;align-items:center;min-width:0;font-size:13px;font-weight:600}
+    .li-nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+    .li-bar-track{flex:1 1 auto;height:14px;background:#eef0f2;border-radius:7px;overflow:hidden}
+    .li-bar{height:100%;border-radius:7px;min-width:2px}
+    .li-val{flex:0 0 54px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+    .li-more-btn{display:block;width:100%;margin-top:4px;padding:10px;background:var(--card);border:var(--bd);border-radius:var(--r-md);color:var(--text);font-size:13px;font-family:var(--font-sans);cursor:pointer;text-align:center;font-weight:500;transition:background .15s}
+    .li-more-btn:hover{background:var(--border)}
+    .li-more-btn[hidden]{display:none}
+    .li-chip{font-size:10px;font-weight:400;color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:0 4px;margin-left:6px;white-space:nowrap;flex:0 0 auto}
     .chart-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px;align-items:center}
     .chart-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px}
     .jp-badge{display:inline-block;font-size:11px;font-weight:700;color:#212529;background:#f59e0b;padding:1px 6px;border-radius:3px;white-space:nowrap}
@@ -120,21 +136,20 @@
 
     <section class="panel" aria-labelledby="secRanking">
       <h2 id="secRanking">ESRランキング</h2>
-      <p>経済価値ベースのソルベンシー比率(ESR)。色は業態、▲は目標水準を示します。範囲(連結/単体)は下の一覧表・ツールチップでご確認いただけます。</p>
+      <p>経済価値ベースのソルベンシー比率(ESR)。色は金融庁の監督基準(100%)を上回るほど濃い緑、下回るほど濃い赤で示します。範囲(連結/単体)や算定基準等の詳細は下の一覧表でご確認いただけます。</p>
 
       <h3 class="rank-group-title">生命保険<span class="rank-group-count" id="rankCountLife"></span></h3>
-      <div id="esrChartLife" role="img" aria-label="ESRランキング棒グラフ(生命保険、読み込み中)"></div>
-      <button type="button" class="more-btn" id="moreBtnLife" hidden aria-expanded="false"></button>
+      <div id="esrListLife" class="map-list" aria-label="ESRランキング(生命保険、読み込み中)"></div>
+      <button type="button" class="li-more-btn" id="moreBtnLife" hidden aria-expanded="false"></button>
 
       <h3 class="rank-group-title">損害保険<span class="rank-group-count" id="rankCountNonlife"></span></h3>
-      <div id="esrChartNonlife" role="img" aria-label="ESRランキング棒グラフ(損害保険、読み込み中)"></div>
-      <button type="button" class="more-btn" id="moreBtnNonlife" hidden aria-expanded="false"></button>
+      <div id="esrListNonlife" class="map-list" aria-label="ESRランキング(損害保険、読み込み中)"></div>
+      <button type="button" class="li-more-btn" id="moreBtnNonlife" hidden aria-expanded="false"></button>
 
       <div class="chart-legend" id="chartLegend">
-        <span><span class="sw" style="background:#2f6fed"></span>生命保険</span>
-        <span><span class="sw" style="background:#f59e0b"></span>損害保険(再保険含む)</span>
+        <span><span class="sw" style="background:hsl(130,66%,24%)"></span>監督基準100%以上ほど濃い緑</span>
+        <span><span class="sw" style="background:hsl(0,66%,24%)"></span>監督基準100%未満ほど濃い赤</span>
         <span><span class="jp-badge">速報</span>&nbsp;速報値</span>
-        <span>▲ 目標水準</span>
       </div>
       <p class="chart-caveat">※ 算定基準(標準式・内部モデル・VaR水準等)は各社で異なる場合があり、単純比較にはご注意ください。詳細は各社開示資料をご確認ください。</p>
     </section>
@@ -197,8 +212,27 @@
     // owner 지시 2: sector 섹션은 生保/損保 두 개뿐 — reinsurance는 損保 섹션에 합친다.
     function groupKey(sector){ return sector === 'life' ? 'life' : 'nonlife'; }
     var GROUP_LABEL = {life:'生命保険', nonlife:'損害保険'};
-    var GROUP_COLOR = {life:'#2f6fed', nonlife:'#f59e0b'};
     function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    // 루트 index.html 531~547행 _ratioHsl/colorForRatio 그대로(HSL 발산 스케일).
+    // base=100: 일본 금융청 감독기준(ESR 100% 미달 시 早期是正措置 대상).
+    // strong=300: 규제수치가 아니라 색이 퍼지도록 잡은 표시용 끝점(현재 13사 분포 p90≈300,
+    // 루트 index.html kics 색상도 p90 채택 — 같은 이유, claude-agent-designer.md §5 참고).
+    var RATIO_SCALE = { esr: { base: 100, strong: 300 } };
+    function _ratioHsl(r, ratioType){
+      ratioType = ratioType || 'esr';
+      var ratio = (typeof r === 'number' && isFinite(r)) ? r : 0;
+      var scale = RATIO_SCALE[ratioType] || RATIO_SCALE.esr;
+      var base = scale.base, strong = scale.strong;
+      var up = ratio >= base;
+      var span = up ? (strong - base) : base;
+      var i = Math.min(Math.max(up ? (ratio - base) : (base - ratio), 0) / span, 1);
+      return { h: up ? 130 : 0, s: 28 + 38 * i, l: 62 - 38 * i };
+    }
+    function colorForRatio(r, ratioType){
+      var c = _ratioHsl(r, ratioType);
+      return 'hsl(' + c.h + ', ' + c.s + '%, ' + c.l + '%)';
+    }
 
     function esc(s){
       return String(s==null?'':s).replace(/[&<>"']/g, function(c){
@@ -228,19 +262,12 @@
     }
     function jaMonthEnd(iso){ var p=String(iso).split('-'); return p[0]+'年'+parseInt(p[1],10)+'月末'; }
     function jaMonthEndShort(iso){ var p=String(iso).split('-'); return parseInt(p[1],10)+'月末'; }
-    function isMobile(){ return window.innerWidth < 640; }
-    function parseTargetNum(s){
-      if(!s) return null;
-      var m = String(s).match(/[\d.]+/);
-      return m ? parseFloat(m[0]) : null;
-    }
     // basis가 표준(J-ICS)과 다르면 표에 짧은 표식을 남긴다(예: "J-ICS_VaR99.5" -> "VaR99.5").
     function basisNote(basis){
       if(!basis || basis==='J-ICS') return null;
       var suffix = basis.replace(/^J-ICS[_-]?/, '');
       return '算定基準:' + (suffix || basis);
     }
-    function debounce(fn, ms){ var t; return function(){ clearTimeout(t); t=setTimeout(fn, ms); }; }
     // owner 지시 1: 2단 버킷 정렬. category 가 HD上場/相互会社/上場 로 시작하면 버킷A(주요 시장
     // 플레이어), 그 외(子会社/独立 등)는 버킷B. 각 버킷 안에서 esr_pct 내림차순, A 전체가 먼저.
     function isBucketA(category){ return /^(HD上場|相互会社|上場)/.test(category||''); }
@@ -252,7 +279,7 @@
       });
     }
 
-    var chartInst = {life:null, nonlife:null}, cov=null;
+    var cov=null;
     var groupData = {life:[], nonlife:[]};   // 業種별 버킷정렬 전체 리스트
     var expanded  = {life:false, nonlife:false};
 
@@ -261,7 +288,7 @@
       .then(renderAll)
       .catch(function(err){
         ['Life','Nonlife'].forEach(function(suf){
-          var c = document.getElementById('esrChart'+suf);
+          var c = document.getElementById('esrList'+suf);
           if(c) c.innerHTML = '<div class="jp-err">データを読み込めませんでした。時間をおいて再度お試しください。</div>';
           var tb = document.getElementById('esrTableBody'+suf);
           if(tb) tb.innerHTML = '<tr><td colspan="7" class="small-muted">データを読み込めませんでした。</td></tr>';
@@ -281,26 +308,25 @@
       renderGroup('life');
       renderGroup('nonlife');
       renderDonut(meta);
-
-      window.addEventListener('resize', debounce(function(){ renderChart('life'); renderChart('nonlife'); }, 150));
     }
 
     // owner 지시 2: 業種별 top5 + 더보기(FOLD=5, 루트 index.html MOB-INDEX-FOLD 패턴).
-    // 섹션 안 회사 수가 FOLD 이하면 버튼 자체를 렌더링하지 않는다. 차트·표는 상태를 공유해
-    // 둘 중 어느 버튼을 눌러도 같이 펼쳐진다/접힌다.
+    // 섹션 안 회사 수가 FOLD 이하면 버튼 자체를 렌더링하지 않는다. 리스트·표는 상태를 공유해
+    // 둘 중 어느 버튼을 눌러도 같이 펼쳐진다/접힌다. 2026-09-12: isMob 조건 없이 데스크톱에도
+    // 항상 적용(티켓 지시 — 루트는 모바일에서만 fold, jp는 기존부터 양쪽 다 적용해 그대로 유지).
     function renderGroup(key){
       var full = groupData[key], c = cap(key);
       var rc = document.getElementById('rankCount'+c), tc = document.getElementById('tableCount'+c);
       if(rc) rc.textContent = '（'+full.length+'社）';
       if(tc) tc.textContent = '（'+full.length+'社）';
-      renderChart(key);
+      renderList(key);
       renderTable(key);
       updateMoreButtons(key);
     }
 
     function toggleExpand(key){
       expanded[key] = !expanded[key];
-      renderChart(key);
+      renderList(key);
       renderTable(key);
       updateMoreButtons(key);
     }
@@ -333,78 +359,71 @@
       document.getElementById('asOfLine').textContent = '基準日: ' + asOf + ' 時点(公表済み分)';
     }
 
-    // owner 지시 4: 연결(スケール) 빗금 인코딩·범례 제거. scope 는 표(範囲 열)·툴팁 텍스트로만.
-    function renderChart(key){
-      var el = document.getElementById('esrChart'+cap(key));
-      if(!el || !window.echarts) return;
+    // 2026-09-12: ECharts 가로막대 폐기, 루트 index.html 877~948행 renderList() 패턴으로 교체
+    // (inbox 20260912T0810Z). 바 색은 GROUP_COLOR(業態별)가 아니라 colorForRatio(ESR 값, 監督基準
+    // 기준 발산 스케일)로 바뀐다. jp 에는 상세 페이지가 없어 행 클릭/role="link"/keydown 은 넣지
+    // 않는다 — title/aria-label 요약 텍스트만 유지(이전 툴팁 내용을 옮김). ▲目標水準 마커는 표
+    // 備考 열의 텍스트(目標 190%+ 등)로 옮겼다(renderTable).
+    function renderList(key){
+      var el = document.getElementById('esrList'+cap(key));
+      if(!el) return;
       var full = groupData[key];
       var list = (expanded[key] || full.length<=FOLD) ? full : full.slice(0, FOLD);
-      var mobile = isMobile();
-      el.style.height = Math.max(200, list.length*(mobile?42:34) + 60) + 'px';
-      if(!chartInst[key]) chartInst[key] = echarts.init(el);
-      var chart = chartInst[key];
+      el.innerHTML = '';
 
-      var catNames = list.map(function(r){ return mobile ? (r.company_en||r.company_jp) : r.company_jp; });
-      var barData = list.map(function(r){
-        return {value:r.esr_pct, itemStyle:{color: GROUP_COLOR[key]}};
-      });
-      var targetPoints = [];
-      list.forEach(function(r,i){
-        var t = parseTargetNum(r.target_pct);
-        if(t!=null) targetPoints.push([t, i]);
-      });
+      var maxV = 1;
+      list.forEach(function(r){ maxV = Math.max(maxV, r.esr_pct||0); });
 
-      chart.setOption({
-        grid:{left:8, right: mobile?100:130, top:10, bottom:10, containLabel:true},
-        xAxis:{type:'value', splitNumber: mobile?4:6, axisLabel:{formatter:'{value}%', fontSize:11, hideOverlap:true}},
-        yAxis:{
-          type:'category', data:catNames, inverse:true,
-          axisLabel:{fontSize: mobile?10:12, width: mobile?92:170, overflow:'break', lineHeight: mobile?13:15}
-        },
-        tooltip:{
-          trigger:'item',
-          formatter: function(p){
-            if(p.componentSubType==='scatter') return '';
-            var r = list[p.dataIndex];
-            var lines = [
-              '<b>'+esc(r.company_jp)+'</b>'+(r.company_en?' ('+esc(r.company_en)+')':''),
-              'ESR: '+fmtPct(r.esr_pct)+(r.preliminary?' <span style="color:#b45309;font-weight:700">(速報)</span>':''),
-              '範囲: '+esc(SCOPE_LABEL[r.scope]||r.scope||'—'),
-              '基準日: '+esc(jaDateFlexible(r.as_of)||'—'),
-              '算定基準: '+esc(r.basis||'—'),
-              '出所: '+esc(jaOnly(r.doc_type)||'—')
-            ];
-            return lines.join('<br/>');
-          }
-        },
-        series:[
-          {
-            type:'bar', data: barData, barWidth: mobile?14:18,
-            label:{
-              show:true, position:'right',
-              formatter: function(p){
-                var r=list[p.dataIndex];
-                return r.preliminary ? '{val|'+fmtPct(r.esr_pct)+'} {badge| 速報 }' : '{val|'+fmtPct(r.esr_pct)+'}';
-              },
-              rich:{
-                val:{fontWeight:700, color:'#212529', fontSize: mobile?11:12},
-                badge:{backgroundColor:'#f59e0b', color:'#212529', fontSize:10, padding:[2,4], borderRadius:3}
-              }
-            }
-          },
-          {
-            type:'scatter', data: targetPoints, symbol:'triangle', symbolSize:9,
-            itemStyle:{color:'#212529'}, silent:true, tooltip:{show:false}
-          }
-        ]
-      }, true);
+      list.forEach(function(r){
+        var row = document.createElement('div');
+        row.className = 'li-row';
+        var titleParts = [
+          r.company_jp + (r.company_en ? '（'+r.company_en+'）' : ''),
+          'ESR ' + fmtPct(r.esr_pct) + (r.preliminary ? '（速報）' : ''),
+          '範囲:' + (SCOPE_LABEL[r.scope]||r.scope||'—'),
+          '基準日:' + (jaDateFlexible(r.as_of)||'—'),
+          '算定基準:' + (r.basis||'—')
+        ];
+        row.title = titleParts.join(' / ');
+        row.setAttribute('aria-label', row.title);
+
+        var name = document.createElement('div');
+        name.className = 'li-name';
+        var nm = document.createElement('span');
+        nm.className = 'li-nm';
+        nm.textContent = r.company_jp;
+        name.appendChild(nm);
+        if(r.preliminary){
+          var chip = document.createElement('span');
+          chip.className = 'li-chip';
+          chip.textContent = '速報';
+          name.appendChild(chip);
+        }
+
+        var track = document.createElement('div');
+        track.className = 'li-bar-track';
+        var bar = document.createElement('div');
+        bar.className = 'li-bar';
+        bar.style.width = Math.max(2, ((r.esr_pct||0) / maxV) * 100) + '%';
+        bar.style.background = colorForRatio(r.esr_pct, 'esr');
+        track.appendChild(bar);
+
+        var val = document.createElement('div');
+        val.className = 'li-val';
+        val.textContent = fmtPct(r.esr_pct);
+
+        row.appendChild(name);
+        row.appendChild(track);
+        row.appendChild(val);
+        el.appendChild(row);
+      });
 
       var top = list[0], bottom = list[list.length-1];
       if(top && bottom){
         el.setAttribute('aria-label',
-          'ESRランキング棒グラフ（'+GROUP_LABEL[key]+'）。表示中'+list.length+'社(全'+full.length+'社)、最高は'+top.company_jp+' '+fmtPct(top.esr_pct)+'、最低は'+bottom.company_jp+' '+fmtPct(bottom.esr_pct)+'。詳細は下の一覧表を参照してください。');
+          'ESRランキング（'+GROUP_LABEL[key]+'）。表示中'+list.length+'社(全'+full.length+'社)、最高は'+top.company_jp+' '+fmtPct(top.esr_pct)+'、最低は'+bottom.company_jp+' '+fmtPct(bottom.esr_pct)+'。詳細は下の一覧表を参照してください。');
       } else {
-        el.setAttribute('aria-label', 'ESRランキング棒グラフ（'+GROUP_LABEL[key]+'）。データがありません。');
+        el.setAttribute('aria-label', 'ESRランキング（'+GROUP_LABEL[key]+'）。データがありません。');
       }
     }
 
@@ -456,6 +475,8 @@
         if(r.preliminary) remarks.push('<span class="jp-badge">速報</span>');
         var bn = basisNote(r.basis);
         if(bn) remarks.push('<span class="small-muted">'+esc(bn)+'</span>');
+        // 2026-09-12: ▲目標水準 마커가 리스트 레이아웃에서 빠지면서(자리 없음) 表 備考로 이동.
+        if(r.target_pct) remarks.push('<span class="small-muted">目標 '+esc(r.target_pct)+'</span>');
         return '<tr>'
           + '<td title="'+esc(r.category||'')+'">'+esc(r.company_jp)+'</td>'
           + '<td>'+esc(SECTOR_LABEL[r.sector]||r.sector||'—')+'</td>'

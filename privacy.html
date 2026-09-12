@@ -15,7 +15,18 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-F8NSCQZBZK');
+    // owner 본인 방문 제외(2026-09-12): ?iq_internal=1 로 한 번 접속하면 이 브라우저는 내부로 기억,
+    // ?iq_internal=0 이면 해제. GA4 Admin > Data filters > Internal Traffic 을 Active 로 둬야 실제 제외된다.
+    (function(){
+      var cfg = {};
+      try {
+        var q = new URLSearchParams(location.search).get('iq_internal');
+        if (q === '1') localStorage.setItem('iq_internal', '1');
+        else if (q === '0') localStorage.removeItem('iq_internal');
+        if (localStorage.getItem('iq_internal') === '1') cfg.traffic_type = 'internal';
+      } catch (e) {}
+      gtag('config', 'G-F8NSCQZBZK', cfg);
+    })();
   </script>
   <meta name="description" content="InsureQuant 개인정보처리방침 · 이용안내 — 수집 항목, 보유 기간, 처리 위탁 및 국외 이전, 쿠키와 거부 방법, 그리고 화면·데이터의 이용 조건과 출처 안내"/>
   <meta property="og:title" content="InsureQuant — 개인정보처리방침 · 이용안내"/>
@@ -79,6 +90,7 @@
         <li>수집 방법: 방문 시 자동 수집</li>
         <li>IP 주소는 저장되지 않습니다. Google은 Analytics에서 IP 주소를 기록·저장하지 않는다고 명시하고 있습니다.</li>
         <li>이용 목적: 어떤 자료가 얼마나 이용되는지 파악하여 사이트를 개선</li>
+        <li>운영자 본인의 확인 접속은 내부 트래픽으로 분류해 통계에서 제외합니다.</li>
       </ul>
 
       <h3>(2) 데이터 다운로드 방명록</h3>

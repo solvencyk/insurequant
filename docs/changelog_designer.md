@@ -7,6 +7,65 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-09-12c — GA4 내부 트래픽 플래그 (owner 발주 `inbox/designer/20260912T0830Z`)
+
+배경: 하루 방문 15명 안팎인데 owner 본인 확인 접속이 상당수라 통계가 왜곡됨. IP 기반 규칙은
+회사망·집·폰으로 IP 가 바뀌어 쓸 수 없어, 브라우저에 한 번 표시해 그 브라우저의 모든 방문을
+GA4 "Internal Traffic" 으로 분류하는 방식(owner 가 GA4 Admin 에서 필터를 Active 로 켜야 실제
+보고서에서 빠짐 — 그 활성화는 owner 몫).
+
+### 무엇을 바꿨나
+
+gtag 스니펫이 있는 5 페이지(`index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html`·
+`privacy.html`) 전부에서 인라인 `gtag('config', 'G-F8NSCQZBZK');` 한 줄을 IIFE 로 교체:
+
+```js
+(function(){
+  var cfg = {};
+  try {
+    var q = new URLSearchParams(location.search).get('iq_internal');
+    if (q === '1') localStorage.setItem('iq_internal', '1');
+    else if (q === '0') localStorage.removeItem('iq_internal');
+    if (localStorage.getItem('iq_internal') === '1') cfg.traffic_type = 'internal';
+  } catch (e) {}
+  gtag('config', 'G-F8NSCQZBZK', cfg);
+})();
+```
+
+`?iq_internal=1` 로 한 번 접속하면 `localStorage` 에 남아 이후 방문마다 `traffic_type:'internal'`
+이 실려 나가고, `?iq_internal=0` 이면 해제된다. CSP meta·`<script async src>` 줄·그 위 SRI 예외
+주석은 무수정(새 호스트 없음, 기존 `'unsafe-inline'` 으로 그대로 실행). `jp/index.html` 은 GA
+태그 자체가 없고 다른 designer 세션이 동시에 작업 중이라 이번 라운드 대상에서 제외.
+
+`privacy.html` "(1) 방문 통계 — Google Analytics 4" 절 `<ul>` 에 한 줄 추가:
+"운영자 본인의 확인 접속은 내부 트래픽으로 분류해 통계에서 제외합니다."
+
+### 함정 1건 — index.html 만 CRLF 전체
+
+최초 문자열 치환 스크립트가 LF 개행 기준으로 짠 것이라 `index.html` 만 매치 실패했다
+(`K-ICS.html`·`IFRS17.html`·`공시보고서.html`·`privacy.html` 은 LF, `index.html` 은 파일
+전체가 CRLF — 원인은 확인 안 했으나 기존부터 그랬던 상태). 급히 `sed -i` 로 우회했다가
+`sed` 가 파일 전체를 LF 로 재작성해버려 `git diff` 에 1400+ 줄 개행변경이 뜨는 사고 직전에
+`git diff --stat` 로 잡았다 — Python `io.open(..., newline='')` 로 원본 CRLF 를 전량 복원한
+뒤 재확인, 최종 diff 는 5 파일 모두 "삭제 1줄·삽입 12~13줄"(+privacy.html 문단 1줄)만 남았다.
+5 파일 전부 BOM 없음 재확인.
+
+### 검증
+
+로컬 `python -m http.server 8901` + Claude Browser 로 `index.html` 을 3단계 실측:
+① `?iq_internal=1` → `localStorage.getItem('iq_internal')==='1'`,
+`dataLayer` 의 두 번째 config push 인자가 `{traffic_type:'internal'}`
+② 파라미터 없이 재접속 → 동일하게 `traffic_type:'internal'` 유지(localStorage 기억 확인)
+③ `?iq_internal=0` → `localStorage` 값 `null`, config 인자 `{}` 로 해제.
+동일 스니펫인 `K-ICS.html` 도 `?iq_internal=1` 스팟체크로 재확인.
+`pytest tests/test_deploy_assets.py` 11 passed. gtag.js 자체 네트워크 전송은 이 PC 의 CDN 차단
+때문에 관측 불가 — 티켓이 지정한 대로 `dataLayer` 검사로 대체.
+
+### 잔여
+
+커밋까지만, push 는 owner 승인 후 publishing 소관. GA4 Admin > Data filters > Internal
+Traffic 활성화는 owner 본인 조치(코드가 대신 켤 수 없음).
+
 ## 2026-09-12 — jp/index.html: 일본 ESR 대시보드 초안 (owner 발주, J-ESR 킥오프 2차)
 
 배경은 `inbox/designer/20260912T0446Z__owner__JP_MULTI__jesr_jp_page_draft.md`. owner 2026-09-12
