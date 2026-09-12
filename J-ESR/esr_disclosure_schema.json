@@ -692,10 +692,100 @@
       "ko": "생명보험리스크(A)",
       "unit": "JPY_million",
       "parent": "rc_pre_tax",
-      "formula": null,
+      "formula": "= sqrt(x^T R x) of rc_life_* subs (告示74 第八十一条 matrix, esr_aggregation_rules.json levels.life)",
       "required": true,
       "column": "cur",
       "kics_item_ref": 17
+    },
+    {
+      "id": "rc_life_mortality",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "死亡リスクの額"
+      ],
+      "ko": "사망리스크",
+      "unit": "JPY_million",
+      "parent": "rc_life",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 29
+    },
+    {
+      "id": "rc_life_longevity",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "長寿リスクの額"
+      ],
+      "ko": "장수리스크",
+      "unit": "JPY_million",
+      "parent": "rc_life",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 30
+    },
+    {
+      "id": "rc_life_morbidity",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "罹患及び障害リスクの額"
+      ],
+      "ko": "이환·장해리스크(질병·상해)",
+      "unit": "JPY_million",
+      "parent": "rc_life",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 31
+    },
+    {
+      "id": "rc_life_lapse",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "解約及び失効リスクの額"
+      ],
+      "ko": "해지·실효리스크",
+      "unit": "JPY_million",
+      "parent": "rc_life",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 33
+    },
+    {
+      "id": "rc_life_expense",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "経費リスクの額"
+      ],
+      "ko": "사업비리스크",
+      "unit": "JPY_million",
+      "parent": "rc_life",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 34
+    },
+    {
+      "id": "rc_life_mgmt_action",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "マネジメント・アクションの効果の額"
+      ],
+      "ko": "경영조치 효과(생보, 정보행 — 하위액에 이미 반영)",
+      "unit": "JPY_million",
+      "parent": "rc_life",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
     },
     {
       "id": "rc_nonlife",
@@ -2160,5 +2250,6 @@
       "kics_item_ref": null
     }
   ],
-  "checks": "C01..C34 (esr) + A01..A05 (article_axes) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks"
+  "checks": "C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks",
+  "aggregation_rules_ref": "J-ESR/esr_aggregation_rules.json (告示74 第八十一条·第八十九条·第百条·第百二十七条·第百五十四条~第百五十六条 + 告示75 別紙様式第三号 注; matrices in id order)"
 }

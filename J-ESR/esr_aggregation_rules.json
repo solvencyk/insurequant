@@ -1,0 +1,263 @@
+{
+  "schema_version": "2026-09-12",
+  "purpose": "Machine form of the FSA standard-method aggregation rules for 所要資本 (required capital) under the economic-value solvency regime, used by J-ESR/extract_esr_template_samples.py::run_aggregation_checks to recompute the disclosed 所要資本の額の構成 (form 別紙様式第三号) with sqrt(x^T R x). Item ids = J-ESR/esr_disclosure_schema.json.",
+  "sources": [
+    {
+      "key": "kokuji74",
+      "title": "保険業法施行規則第八十六条及び第八十七条等の規定に基づき保険金等の支払能力に相当する額及び通常の予測を超える危険に相当する額の計算方法等を定める件（令和七年金融庁告示第七十四号, 1柱告示 / ソルベンシー・マージン比率告示）",
+      "issued": "2025-07-23",
+      "applies_from": "2026-03-31",
+      "version_note": "consolidated text as posted on fsa.go.jp (PDF creationDate 2026-03-19); already contains the 2026-03-23 amendment wording (ローリングヘッジ in 第二十六条第四項, 附則第十三条) — verified by grep",
+      "url": "https://www.fsa.go.jp/policy/economic_value-based_solvency/14.pdf",
+      "local": "J-ESR/raw/regulation/fsa_pillar1_kokuji_14.pdf",
+      "local_text": "J-ESR/raw/regulation/fsa_pillar1_kokuji_14.txt",
+      "sha256": "b4cb7e4b0d62c832f60dfd759852a1f7cc68bea79a49ec50b475d34645e14122",
+      "pages": 167,
+      "fetched": "2026-09-12",
+      "articles_used": ["第四十五条", "第四十六条", "第五十四条", "第八十一条", "第八十二条", "第八十九条", "第九十条", "第九十二条", "第九十三条", "第百条", "第百一条", "第百十二条", "第百二十七条", "第百二十八条", "第百五十四条", "第百五十五条", "第百五十六条", "第百五十七条", "別表七"]
+    },
+    {
+      "key": "kokuji75",
+      "title": "保険業法施行規則第五十九条の二第一項第五号ニ等の規定に基づき、保険金等の支払能力の充実の状況に関する事項の開示方法等を定める件（令和七年金融庁告示第七十五号, 3柱告示） — 別紙様式第三号 所要資本の額の構成 + 記載上の注意",
+      "issued": "2025-07-23",
+      "applies_from": "2026-03-31",
+      "url": "https://www.fsa.go.jp/policy/economic_value-based_solvency/13.pdf",
+      "local": "J-ESR/raw/regulation/fsa_pillar3_kokuji_13.pdf",
+      "local_text": "J-ESR/raw/regulation/fsa_pillar3_kokuji_13.txt",
+      "sha256": "24b509d3f05ffa43c59f8bc155d4ae0d9e4ef039c9d1bd4dade17181b09d2d04",
+      "pages": 67,
+      "fetched": "2026-09-12",
+      "fetch_note": "curl returned a truncated 35 KB file (000); full 324 KB copy obtained through WebFetch binary save",
+      "sections_used": ["別紙様式第三号", "記載上の注意 1(3), 2(1)-(7), 3(2)-(3), 4(2)-(5), 5(3), 6(3)-(7)"]
+    },
+    {
+      "key": "kokuji_r8_6",
+      "title": "…計算方法等を定める件の一部を改正する件（令和八年金融庁告示第六号, 2026-03-23）",
+      "issued": "2026-03-23",
+      "applies_from": "2026-03-31",
+      "url": "https://www.fsa.go.jp/news/r7/hoken/20260323/03.pdf",
+      "local": "J-ESR/raw/regulation/fsa_20260323_03_pillar1_amend.pdf",
+      "local_text": "J-ESR/raw/regulation/fsa_20260323_03_pillar1_amend.txt",
+      "sha256": "291f8d30109c3bfff8ced490b8fb265928442bcbb46e0ca64ee7eefe1341c3a6",
+      "pages": 8,
+      "fetched": "2026-09-12",
+      "amended_articles": ["第二十六条", "第二十七条", "第六十四条", "第百二十八条", "第百四十条", "第百七十条", "附則第十三条"],
+      "aggregation_impact": "none — no correlation matrix or aggregation article (81/89/100/127/154/155/156) is touched"
+    }
+  ],
+  "not_obtained": [
+    {"title": "3柱告示 改正 2026-03-23", "url": "https://www.fsa.go.jp/news/r7/hoken/20260323/04.pdf", "reason": "curl 000 (outbound 443 blocked at fetch time); not needed for aggregation — form 3 notes are in the consolidated 13.pdf"},
+    {"title": "経済価値ベースのソルベンシー規制の概要", "url": "https://www.fsa.go.jp/policy/economic_value-based_solvency/10.pdf", "reason": "curl 000; explanatory only"},
+    {"title": "Q&A", "url": "https://www.fsa.go.jp/policy/economic_value-based_solvency/11.pdf", "reason": "curl 000; may explain 第九十二条 '適切な方法' for cross-geography nat-cat aggregation — re-fetch when 443 opens"},
+    {"title": "2024年フィールドテスト仕様書", "url": "https://www.fsa.go.jp/policy/economic_value-based_solvency/08_1.pdf", "reason": "curl 000; superseded by the notice"}
+  ],
+  "unit_note": "all amounts 百万円 as disclosed, truncated below the unit (記載単位未満切捨て). Recomputation tolerance = number of truncated input terms (each true value lies in [x, x+1)).",
+  "aggregation_operator": "sqrt(x^T R x) with x = vector of risk amounts in the stated id order and R = the matrix; non-negative inputs; null (dash) = 0",
+  "levels": {
+    "top": {
+      "article": "kokuji74 第百五十五条 (via 第四十五条第一項第一号イ)",
+      "ids": ["rc_life", "rc_nonlife", "rc_catastrophe", "rc_market", "rc_credit"],
+      "labels_ja": ["生命保険リスクの額", "損害保険リスクの額", "巨大災害リスクの額", "市場リスクの額", "信用リスクの額"],
+      "matrix": [
+        [1.00, 0.00, 0.25, 0.25, 0.25],
+        [0.00, 1.00, 0.25, 0.25, 0.25],
+        [0.25, 0.25, 1.00, 0.25, 0.25],
+        [0.25, 0.25, 0.25, 1.00, 0.25],
+        [0.25, 0.25, 0.25, 0.25, 1.00]
+      ],
+      "then": "insurance_business_rc_before_MA_excess = sqrt(x^T R x) + rc_operational  (オペレーショナル・リスクは相関統合の外で線形加算, 第百五十五条 末尾)"
+    },
+    "operational": {
+      "article": "kokuji74 第百五十四条",
+      "id": "rc_operational",
+      "value": "min(上限適用前オペリスク, 0.20 × (top_sqrt + rc_mgmt_action_excess))",
+      "cap_factor": 0.20,
+      "cap_base": ["top_sqrt", "rc_mgmt_action_excess"],
+      "pre_cap_components": {
+        "nonlife": "max(2.75% × 当年度収入保険料, 2.75% × (現在推計 + 複製可能契約評価額)) + 2.75% × max(0, 当年度収入保険料 − 1.2 × 前年度収入保険料)",
+        "life_with_risk": "max(4% × 収入保険料, 0.45% × (現在推計 + 複製可能契約評価額)) + 4% × max(0, 収入保険料 − 1.2 × 前年度収入保険料)",
+        "life_unit_linked": "0.40% × (現在推計 + 複製可能契約評価額)"
+      },
+      "note": "pre-cap inputs (premiums, current estimate by contract class) are not in the disclosure form → only the cap can be checked from disclosed figures. au Non-Life FY2025: F=251 vs cap 251.5 → binding at the cap."
+    },
+    "management_action_excess": {
+      "article": "kokuji74 第四十六条第三項",
+      "id": "rc_mgmt_action_excess",
+      "value": "max(0, RC_ins(MA未考慮, op=0) − RC_ins(MA考慮, op=0) − 将来の裁量給付に係る正味現在推計)",
+      "note": "added linearly to 所要資本（税効果考慮前）; both FY2025 samples print a dash (0)"
+    },
+    "diversification": {
+      "article": "kokuji75 別紙様式第三号 記載上の注意 6(5)",
+      "id": "rc_diversification",
+      "definition": "Σ(rc_life, rc_nonlife, rc_catastrophe, rc_market, rc_credit, rc_operational) − (top_sqrt + rc_operational)",
+      "simplifies_to": "Σ(rc_life, rc_nonlife, rc_catastrophe, rc_market, rc_credit) − top_sqrt",
+      "sign": "printed positive, subtracted in row (J)"
+    },
+    "pre_tax": {
+      "article": "kokuji75 別紙様式第三号 row (J) / kokuji74 第四十五条第一項",
+      "id": "rc_pre_tax",
+      "definition": "(A)+(B)+(C)+(D)+(E)+(F)+(G)−(H)+(I) = top_sqrt + rc_operational + rc_mgmt_action_excess + rc_non_insurance_business",
+      "non_insurance": {"article": "kokuji74 第百五十七条", "id": "rc_non_insurance_business", "note": "単体ベースでは 0 (第四十五条第一項第二号); row (I) deleted from the solo form unless 子会社株式特例手法"}
+    },
+    "tax_effect": {
+      "article": "kokuji74 第百五十六条第一号 (単体ベース)",
+      "id": "rc_tax_effect",
+      "definition": "min( 0.80 × 法定実効税率 × (top_sqrt + rc_operational + rc_mgmt_action_excess) , [0.50 × 法定実効税率 × Σ直近5期税引前当期純利益]+ + [DTL − DTA]+ − min([DTA − DTL]+, 0.15 × (top_sqrt + rc_operational + rc_mgmt_action_excess)) ), floored at 0",
+      "branch1_factor": 0.80,
+      "branch2_profit_factor": 0.50,
+      "branch2_dta_cap_factor": 0.15,
+      "statutory_effective_tax_rate": {
+        "regulation": "company-specific 法定実効税率 (財務諸表等規則の定義, 第三十五条第二項) — the notice fixes no number",
+        "observed_samples": {"au_nonlife": 0.2798, "meijiyasuda_nonlife": 0.2799},
+        "assumed_for_check": 0.28,
+        "note": "both FY2025 samples reproduce K exactly as trunc(0.80 × 0.28 × J): au 338.2→338, MY 1564.6→1564, i.e. branch 1 binds with t=28.0%. In October, K/J/0.8 outside 0.27–0.31 means branch 2 binds (DTA-heavy or loss-making company) — informational, not a data error."
+      },
+      "consolidated_variant": "第百五十六条第二号: same with 実効税率 (3-year weighted) and an extra foreign loss-carryback term — applies to scope=group rows only"
+    },
+    "post_tax": {
+      "id": "rc_post_tax",
+      "definition": "rc_pre_tax − rc_tax_effect (== required_capital, headline (B))"
+    },
+    "life": {
+      "article": "kokuji74 第八十一条 (via 第五十四条)",
+      "parent_id": "rc_life",
+      "ids": ["rc_life_mortality", "rc_life_longevity", "rc_life_morbidity", "rc_life_lapse", "rc_life_expense"],
+      "labels_ja": ["死亡リスクの額", "長寿リスクの額", "罹患及び障害リスクの額", "解約及び失効リスクの額", "経費リスクの額"],
+      "matrix": [
+        [1.00, -0.25, 0.25, 0.00, 0.25],
+        [-0.25, 1.00, 0.00, 0.25, 0.25],
+        [0.25, 0.00, 1.00, 0.00, 0.50],
+        [0.00, 0.25, 0.00, 1.00, 0.50],
+        [0.25, 0.25, 0.50, 0.50, 1.00]
+      ],
+      "management_action_id": "rc_life_mgmt_action",
+      "management_action_note": "kokuji75 注 6(3): the MA row shows the increase/decrease of the parent already reflected inside the sub-amounts (each sub is computed with MA per 第四十六条) — NOT a separate subtraction after sqrt. Recompute parent = sqrt(x^T R x) of the subs as printed.",
+      "omission_rule": "kokuji75 注 2(7): 損害保険会社 may omit the life sub-rows when 生命保険リスク is immaterial (both FY2025 samples: rc_life dash, rows absent)",
+      "sample_status": "no life sample yet (NN Life not_yet) — matrix taken from the notice, reproduction untested; kics_item_ref 29~34 candidates"
+    },
+    "nonlife": {
+      "article": "kokuji74 第八十九条 (via 第八十二条) + 別表七; disclosed sub-level defined by kokuji75 注 3(2)",
+      "parent_id": "rc_nonlife",
+      "ids": ["rc_nl_liability", "rc_nl_motor", "rc_nl_property", "rc_nl_other"],
+      "labels_ja": ["賠償責任保険類似の商品に係るリスクの額", "自動車保険類似の商品に係るリスクの額", "財物保険類似の商品に係るリスクの額", "その他保険に係るリスクの額"],
+      "regulation_steps": [
+        "1. per (地域区分 × 商品区分): 保険料リスク and 支払備金リスク aggregated with ρ = 0.25",
+        "2. per (地理的区分 × 商品大区分): the step-1 amounts of the 商品区分 in that 大区分 aggregated with the 別表七 uniform ρ: 財物保険類似 0.50 / 賠償責任保険類似 0.50 / 自動車保険類似 0.75 / その他保険 0.25 (不動産ローン保証保険·信用保険 excluded — they sit in 不動産リスク 第百十九条 / 信用リスク 第百二十八条第三号)",
+        "3. per 地理的区分: the four 商品大区分 amounts aggregated with ρ = 0.50 (uniform)",
+        "4. across 地理的区分 (日本 / EEA等 / 米国·カナダ / 中国·その他): ρ = 0.25 (uniform)"
+      ],
+      "disclosed_sub_definition": "kokuji75 注 3(2): each printed sub = step-2 amounts of that 商品大区分 aggregated ACROSS geographies with the step-4 ρ = 0.25 (order differs from the regulation's step 3→4)",
+      "matrix_for_disclosed_subs": [
+        [1.00, 0.50, 0.50, 0.50],
+        [0.50, 1.00, 0.50, 0.50],
+        [0.50, 0.50, 1.00, 0.50],
+        [0.50, 0.50, 0.50, 1.00]
+      ],
+      "exactness": "sqrt(x^T R x) of the printed subs equals rc_nonlife ONLY for single-geography (Japan-only) companies (steps 3 and 4 then commute). Multi-geography companies (indicator: rc_cat_nat_foreign > 0 or foreign business) will not reproduce — record the gap, do not treat as a parse error.",
+      "sample_result": {"au_nonlife": "1119.0 vs 1119 (exact; Japan-only)", "meijiyasuda_nonlife": "2137.3 vs 2096 (+41, +2.0%; rc_cat_nat_foreign=156 → multi-geography)"}
+    },
+    "catastrophe": {
+      "article": "kokuji74 第百条 (via 第九十条); nat-cat 第九十二条·第九十三条; disclosed sub-level kokuji75 注 4(2)-(4)",
+      "parent_id": "rc_catastrophe",
+      "ids": ["rc_cat_natural", "rc_cat_other"],
+      "labels_ja": ["巨大自然災害リスクの額", "その他の巨大災害に係るリスクの額"],
+      "matrix": [
+        [1.00, 0.00],
+        [0.00, 1.00]
+      ],
+      "regulation_note": "第百条: 巨大自然災害 / テロリズム / 感染症 / 信用及び保証 の4額を ρ = 0.00 で統合. kokuji75 注 4(4): その他の巨大災害 row = the three non-natural amounts aggregated with the same ρ = 0.00, so rc_catastrophe should equal sqrt(rc_cat_natural² + rc_cat_other²) exactly (before the MA row, which is informational per 注 6(3)).",
+      "natural_cat": {
+        "ids": ["rc_cat_nat_jp_earthquake", "rc_cat_nat_jp_windflood", "rc_cat_nat_jp_snow", "rc_cat_nat_foreign", "rc_cat_nat_other"],
+        "japan_perils_rho": 0.00,
+        "japan_rule": "第九十三条第一項: 地震·風水災·雪災 のペリル区分ごとの合計額を ρ = 0.00 で統合",
+        "foreign_rule": "第九十二条第二号: 地理的区分ごとに 正味既経過保険料 × リスク係数 (EEA等 40% / 米国·カナダ 50% / 中国·その他 30%)",
+        "cross_geography_rule": "第九十二条 柱書: 地理的区分ごとの額を『適切な方法により統合』 — no ρ specified in the notice",
+        "observed": "Meiji Yasuda Non-Life: sqrt(546²+1447²+374²)=1591.2, +156 (simple sum) = 1747.2 vs printed 1748 → company uses simple addition for Japan+foreign; hypot would give 1598.8 (fails)"
+      },
+      "sample_result": {"au_nonlife": "87.0 vs 87 (exact; only その他 87)", "meijiyasuda_nonlife": "sqrt(1748²+918²)=1974.4 vs 1865 (+109, +5.9%) — NOT reproduced"}
+    },
+    "market": {
+      "article": "kokuji74 第百二十七条 (via 第百一条); selector 第百十二条",
+      "parent_id": "rc_market",
+      "ids": ["rc_mkt_interest", "rc_mkt_spread", "rc_mkt_equity", "rc_mkt_property", "rc_mkt_fx", "rc_mkt_concentration"],
+      "labels_ja": ["金利リスクの額", "スプレッドリスクの額", "株式リスクの額", "不動産リスクの額", "為替リスクの額", "資産集中リスクの額"],
+      "selector": "case_up if spread-risk (上昇ストレス) >= spread-risk (下降ストレス) else case_down. kokuji75 注 5(3): the printed row label becomes 『スプレッドリスク（上昇）の額』 or 『（下降）の額』 — read the label; plain 『スプレッドリスクの額』 with a dash/0 → both cases coincide.",
+      "matrix_case_up": [
+        [1.00, 0.25, 0.25, 0.25, 0.25, 0.00],
+        [0.25, 1.00, 0.75, 0.50, 0.25, 0.00],
+        [0.25, 0.75, 1.00, 0.50, 0.25, 0.00],
+        [0.25, 0.50, 0.50, 1.00, 0.25, 0.00],
+        [0.25, 0.25, 0.25, 0.25, 1.00, 0.00],
+        [0.00, 0.00, 0.00, 0.00, 0.00, 1.00]
+      ],
+      "matrix_case_down": [
+        [1.00, 0.25, 0.25, 0.25, 0.25, 0.00],
+        [0.25, 1.00, 0.00, 0.00, 0.25, 0.00],
+        [0.25, 0.00, 1.00, 0.50, 0.25, 0.00],
+        [0.25, 0.00, 0.50, 1.00, 0.25, 0.00],
+        [0.25, 0.25, 0.25, 0.25, 1.00, 0.00],
+        [0.00, 0.00, 0.00, 0.00, 0.00, 1.00]
+      ],
+      "management_action_id": "rc_mkt_mgmt_action",
+      "management_action_note": "same as life: informational row, subs already net of MA",
+      "sample_result": {"au_nonlife": "247.0 vs 247 (exact; only 資産集中 247)", "meijiyasuda_nonlife": "4611.8 vs 4613 (Δ1.2, within 6-term truncation)"}
+    },
+    "credit": {
+      "article": "kokuji74 第百二十八条",
+      "id": "rc_credit",
+      "definition": "simple sum: Σ 各信用エクスポージャー (EAD × リスク係数) + 特別勘定契約分 + 信用保険分 — no correlation matrix, no sub-rows in the form"
+    }
+  },
+  "recompute_chain": [
+    "top_sqrt = sqrt(x^T R_top x), x = [rc_life, rc_nonlife, rc_catastrophe, rc_market, rc_credit]",
+    "rc_diversification_calc = Σx − top_sqrt",
+    "rc_pre_tax_calc = top_sqrt + rc_operational + rc_mgmt_action_excess + rc_non_insurance_business",
+    "rc_tax_effect_calc = 0.80 × t × (top_sqrt + rc_operational + rc_mgmt_action_excess)  [branch 1, t = assumed 0.28 — verify K/J]",
+    "rc_post_tax_calc = rc_pre_tax_calc − rc_tax_effect_calc",
+    "esr_calc = eligible_capital / rc_post_tax_calc × 100"
+  ],
+  "checks": {
+    "G01_top_diversification": {"formula": "rc_diversification == Σ(A..E) − top_sqrt", "tol": 1, "gate": true},
+    "G02_pre_tax_chain": {"formula": "rc_pre_tax == top_sqrt + F + G + I", "tol": "n_inputs (7)", "gate": true},
+    "G03_op_cap": {"formula": "rc_operational <= 0.20 × (top_sqrt + G) + 1; at_cap flag when within 1", "tol": 1, "gate": true},
+    "G04_tax_branch1": {"formula": "rc_tax_effect <= 0.80 × t × (top_sqrt + F + G) + 1 (upper bound, always); implied_t = K / (J − I) / 0.80 reported", "tol": 1, "gate": true},
+    "G05_market": {"formula": "rc_market == sqrt(x^T R_mkt x) (case by spread label)", "tol": "n_inputs (6)", "gate": true},
+    "G06_nonlife": {"formula": "rc_nonlife == sqrt(x^T R_nl x), ρ = 0.50", "tol": "n_inputs (4)", "gate": "only when single-geography (rc_cat_nat_foreign in (null, 0)); otherwise informational"},
+    "G07_catastrophe": {"formula": "rc_catastrophe == sqrt(rc_cat_natural² + rc_cat_other²)", "tol": 2, "gate": "true unless registered in known_deviations"},
+    "G08_natcat_japan": {"formula": "rc_cat_natural == sqrt(Σ jp perils²) + rc_cat_nat_foreign + rc_cat_nat_other (observed simple sum across geographies)", "tol": 5, "gate": "informational (cross-geography method unspecified in 第九十二条)"},
+    "G09_post_tax_chain": {"formula": "rc_post_tax vs rc_post_tax_calc (t assumed) and esr_pct vs esr_calc", "tol": "amount 8 / pct 0.5", "gate": true},
+    "G10_life": {"formula": "rc_life == sqrt(x^T R_life x)", "tol": "n_inputs (5)", "gate": "only when life sub-rows are printed"}
+  },
+  "calc_method_rule": {
+    "standard / standard_implied": "all G-checks expected to reproduce within tolerance (except the structural exceptions above: G06 multi-geography, G08 cross-geography nat-cat)",
+    "internal_model": "kokuji74 第六章 / kokuji75 注 4(2): an approved internal model replaces the standard 巨大自然災害 (and possibly other) amounts, and the disclosed subs are model outputs → G06/G07/G08 (and G05/G10 if the model covers market/life) are NOT expected to reproduce. Top-level G01/G02/G04 still use the notice matrix (第百五十五条 applies to internal-model users too) and remain gated.",
+    "usp (会社固有のストレス係数 / リスク係数)": "changes the sub-amount inputs, not the matrices → all G-checks still apply",
+    "census_link": "docs/domains/claude-agent-jp.md §4b-4 calc_method column: when a company fails G06/G07 and its T8 section says 内部モデル手法 適用 → expected; when it says 該当ありません → record as deviation for follow-up"
+  },
+  "known_deviations": [
+    {
+      "company_key": "meijiyasuda_nonlife",
+      "check": "G07_catastrophe",
+      "disclosed": 1865,
+      "recomputed": 1974.4,
+      "gap": "+109 (+5.9%)",
+      "hypotheses": [
+        "printed その他の巨大災害 918 is the simple sum of テロ/感染症/信用保証 rather than the ρ=0.00 aggregate required by kokuji75 注 4(4) — consistent if the true 0.00-aggregate is ≈650 (e.g. 500+418 → 651.6)",
+        "cross-geography nat-cat aggregation inside 1748 differs from the simple sum observed (第九十二条 leaves the method to the company)",
+        "an undisclosed management-action effect on 感染症 (第四十六条) — MA row is a dash, so unlikely"
+      ],
+      "status": "open — re-examine with more nonlife companies in the October census; if most companies fail G07 the same way, the sub-level definition in kokuji75 注 4(4) is being read differently by issuers",
+      "registered": "2026-09-12"
+    },
+    {
+      "company_key": "meijiyasuda_nonlife",
+      "check": "G06_nonlife",
+      "disclosed": 2096,
+      "recomputed": 2137.3,
+      "gap": "+41 (+2.0%)",
+      "hypotheses": ["multi-geography (rc_cat_nat_foreign = 156): regulation aggregates 商品大区分 within geography (ρ 0.50) before geographies (ρ 0.25); the printed subs are aggregated across geographies first, so a single-level sqrt cannot reproduce"],
+      "status": "structural — informational by rule (see checks.G06_nonlife.gate)",
+      "registered": "2026-09-12"
+    }
+  ]
+}

@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import csv
 import json
+import math
 import re
 import sys
 import unicodedata
@@ -36,6 +37,7 @@ SAMPLES = ROOT / "J-ESR" / "raw" / "fy2025_samples"
 SCHEMA_OUT = ROOT / "J-ESR" / "esr_disclosure_schema.json"
 VALUES_OUT = SAMPLES / "extracted_sample_values.json"
 CENSUS = ROOT / "J-ESR" / "fy2025_esr_census_20260912.csv"
+RULES = ROOT / "J-ESR" / "esr_aggregation_rules.json"  # 告示74/75 aggregation matrices (hand-transcribed, see sources[] inside)
 MD_FRAGMENT_OUT = SAMPLES / "_item_table_fragment.md"
 
 DASHES = {"-", "ー", "−", "―", "‐", "－"}
@@ -132,7 +134,16 @@ ITEMS = [
          formula="== eligible_capital", required=True, kics=1),
 
     # ---- T3 required capital composition (所要資本の額の構成) ----
-    dict(id="rc_life", table="T3", labels=[r"^生命保険リスクの額"], ko="생명보험리스크(A)", unit=M, parent="rc_pre_tax", formula=None, required=True, kics=17),
+    dict(id="rc_life", table="T3", labels=[r"^生命保険リスクの額"], ko="생명보험리스크(A)", unit=M, parent="rc_pre_tax",
+         formula="= sqrt(x^T R x) of rc_life_* subs (告示74 第八十一条 matrix, esr_aggregation_rules.json levels.life)", required=True, kics=17),
+    # life sub-rows (告示75 別紙様式第三号; 損保 may omit when immaterial — 注 2(7) — hence optional). Searched only up to 損害保険リスクの額
+    # so that the life マネジメント・アクション row does not swallow the 巨大災害 one when the block is omitted.
+    dict(id="rc_life_mortality", table="T3", labels=[r"^死亡リスクの額"], ko="사망리스크", unit=M, parent="rc_life", formula=None, required=False, optional=True, stop_before=r"^損害保険リスクの額", kics=29),
+    dict(id="rc_life_longevity", table="T3", labels=[r"^長寿リスクの額"], ko="장수리스크", unit=M, parent="rc_life", formula=None, required=False, optional=True, stop_before=r"^損害保険リスクの額", kics=30),
+    dict(id="rc_life_morbidity", table="T3", labels=[r"^罹患及び障害リスクの額"], ko="이환·장해리스크(질병·상해)", unit=M, parent="rc_life", formula=None, required=False, optional=True, stop_before=r"^損害保険リスクの額", kics=31),
+    dict(id="rc_life_lapse", table="T3", labels=[r"^解約及び失効リスクの額"], ko="해지·실효리스크", unit=M, parent="rc_life", formula=None, required=False, optional=True, stop_before=r"^損害保険リスクの額", kics=33),
+    dict(id="rc_life_expense", table="T3", labels=[r"^経費リスクの額"], ko="사업비리스크", unit=M, parent="rc_life", formula=None, required=False, optional=True, stop_before=r"^損害保険リスクの額", kics=34),
+    dict(id="rc_life_mgmt_action", table="T3", labels=[r"^マネジメント・アクションの効果の額"], ko="경영조치 효과(생보, 정보행 — 하위액에 이미 반영)", unit=M, parent="rc_life", formula=None, required=False, optional=True, stop_before=r"^損害保険リスクの額", kics=None),
     dict(id="rc_nonlife", table="T3", labels=[r"^損害保険リスクの額"], ko="손해보험리스크(B)", unit=M, parent="rc_pre_tax",
          formula="<= rc_nl_liability + rc_nl_motor + rc_nl_property + rc_nl_other (correlation aggregation)", required=True, kics=18),
     dict(id="rc_nl_liability", table="T3", labels=[r"^賠償責任保険類似の商品に係るリスクの額"], ko="배상책임보험 유사 상품 리스크", unit=M, parent="rc_nonlife", formula=None, required=False, kics=None),
@@ -336,7 +347,10 @@ def extract_esr(comp, doc):
         t = it["table"]
         lines = table_lines[t]
         start = cursors.get(t + "_prev", 0) if it.get("reuse") else cursors.get(t, 0)
-        res = grab(lines, start, it["labels"])
+        stop = None
+        if it.get("stop_before"):
+            stop = next((i for i in range(start, len(lines)) if re.search(it["stop_before"], lines[i][1])), None)
+        res = grab(lines, start, it["labels"], stop=stop)
         if res is None:
             values[it["id"]], pages[it["id"]] = None, None
             raw[it["id"]] = "ROW_OMITTED" if it.get("optional") else "NOT_FOUND"
@@ -414,7 +428,8 @@ def extract_esr(comp, doc):
     tenors = re.findall(r"(\d+)年", doc_text[max(0, m.start() - 60): m.start()]) if m else []
     method["discount_bucket_jpy"] = m.group(1) if m else None
     method["discount_rates_jpy"] = dict(zip([t + "y" for t in tenors[-4:]], [float(x.rstrip("%")) for x in m.group(2).split()])) if m else None
-    return dict(values=values, pages=pages, raw_tokens=raw, sensitivity=sens, method=method)
+    spread_label = next((ln for _, ln in table_lines["T3"] if ln.startswith("スプレッドリスク")), None)
+    return dict(values=values, pages=pages, raw_tokens=raw, sensitivity=sens, method=method, spread_label=spread_label)
 
 
 # --------------------------------------------------------------------------------------
@@ -647,6 +662,100 @@ def run_checks(c):
     return checks
 
 
+def sqrt_agg(x, R):
+    """sqrt(x^T R x); x already null->0."""
+    n = len(x)
+    return math.sqrt(max(0.0, sum(x[i] * x[j] * R[i][j] for i in range(n) for j in range(n))))
+
+
+def run_aggregation_checks(comp, c, rules):
+    """Recompute 所要資本の額の構成 (form 3) from the disclosed sub-amounts with the 告示74 correlation matrices
+    (J-ESR/esr_aggregation_rules.json) — the J-ESR analogue of the K-ICS mmult check. Every check carries
+    `gate`: False = informational (structurally not reproducible from disclosed inputs, or a registered known deviation)."""
+    v, L, checks = c["values"], rules["levels"], {}
+    known = {(d["company_key"], d["check"]) for d in rules.get("known_deviations", [])}
+    calc = {}
+
+    def add(cid, formula, lhs, rhs, tol, gate=True, note=""):
+        ok = lhs is not None and rhs is not None and abs(lhs - rhs) <= tol
+        if not ok and (comp["key"], cid) in known:
+            gate, note = False, (note + " | registered in esr_aggregation_rules.json known_deviations").strip(" |")
+        checks[cid] = dict(id=cid, formula=formula, lhs=lhs, rhs=None if rhs is None else round(rhs, 1), tol=tol, **{"pass": ok}, gate=gate, note=note)
+
+    # --- top level (第百五十五条) ---
+    top = L["top"]
+    x = [z(v.get(i)) for i in top["ids"]]
+    top_sqrt = sqrt_agg(x, top["matrix"])
+    simple = sum(x)
+    F, G, I = z(v.get("rc_operational")), z(v.get("rc_mgmt_action_excess")), z(v.get("rc_non_insurance_business"))
+    calc.update(top_sqrt=round(top_sqrt, 1), simple_sum_ABCDE=simple, diversification=round(simple - top_sqrt, 1))
+    add("G01_top_diversification", "rc_diversification == Σ(A..E) − sqrt(x^T R_top x)", v.get("rc_diversification"), simple - top_sqrt, 1)
+    add("G02_pre_tax_chain", "rc_pre_tax == top_sqrt + F + G + I (tol = 7 truncated inputs)", v.get("rc_pre_tax"), top_sqrt + F + G + I, 7)
+    # --- operational cap (第百五十四条) ---
+    op = L["operational"]
+    cap = op["cap_factor"] * (top_sqrt + G)
+    at_cap = abs(F - cap) <= 1
+    calc.update(op_cap=round(cap, 1), op_at_cap=at_cap)
+    checks["G03_op_cap"] = dict(id="G03_op_cap", formula="rc_operational <= 0.20 × (top_sqrt + G) + 1", lhs=F, rhs=round(cap, 1), tol=1,
+                                **{"pass": F <= cap + 1}, gate=True, note="AT CAP (binding)" if at_cap else "below cap")
+    # --- tax effect (第百五十六条第一号 branch 1) ---
+    tx = L["tax_effect"]
+    t = tx["statutory_effective_tax_rate"]["assumed_for_check"]
+    K, J = v.get("rc_tax_effect"), v.get("rc_pre_tax")
+    base = top_sqrt + F + G
+    implied_t = (K / (J - I) / tx["branch1_factor"]) if (K is not None and J) else None
+    tax_calc = tx["branch1_factor"] * t * base
+    calc.update(tax_branch1=round(tax_calc, 1), implied_statutory_tax_rate=None if implied_t is None else round(implied_t, 4))
+    checks["G04_tax_branch1"] = dict(id="G04_tax_branch1", formula=f"rc_tax_effect <= 0.80 × t × (top_sqrt+F+G) + 1, t={t}; implied t reported", lhs=K, rhs=round(tax_calc, 1), tol=1,
+                                     **{"pass": K is not None and K <= tax_calc + 1}, gate=True,
+                                     note=("branch 1 binds (|K − 0.8·t·base| <= 1)" if K is not None and abs(K - tax_calc) <= 1 else "K off branch 1 → branch 2 (DTA/profit) binds or different t")
+                                     + (f"; implied t = {implied_t:.4f}" if implied_t is not None else ""))
+    # --- market (第百二十七条) ---
+    mk = L["market"]
+    xm = [z(v.get(i)) for i in mk["ids"]]
+    # 告示75 注5(3): the row is relabelled スプレッドリスク（上昇）/（下降）の額 according to which stress binds → selects the matrix
+    case = "matrix_case_down" if "下降" in (c.get("spread_label") or "") else "matrix_case_up"
+    mkt_sqrt = sqrt_agg(xm, mk[case])
+    calc.update(market_sqrt=round(mkt_sqrt, 1), market_case=case)
+    add("G05_market", f"rc_market == sqrt(x^T R_mkt x) [{case}] (tol 6)", v.get("rc_market"), mkt_sqrt, 6)
+    # --- nonlife (第八十九条; disclosed subs per 告示75 注3(2)) ---
+    nl = L["nonlife"]
+    xn = [z(v.get(i)) for i in nl["ids"]]
+    nl_sqrt = sqrt_agg(xn, nl["matrix_for_disclosed_subs"])
+    multi_geo = z(v.get("rc_cat_nat_foreign")) > 0
+    calc.update(nonlife_sqrt=round(nl_sqrt, 1), multi_geography=multi_geo)
+    if any(xn):
+        add("G06_nonlife", "rc_nonlife == sqrt(x^T R_nl x), ρ=0.50 (exact only for single-geography companies)", v.get("rc_nonlife"), nl_sqrt, 4,
+            gate=not multi_geo, note="multi-geography (rc_cat_nat_foreign > 0): regulation aggregates 大区分 within geography first → informational" if multi_geo else "single-geography")
+    # --- catastrophe (第百条) ---
+    ct = L["catastrophe"]
+    xc = [z(v.get(i)) for i in ct["ids"]]
+    cat_sqrt = sqrt_agg(xc, ct["matrix"])
+    calc.update(cat_sqrt=round(cat_sqrt, 1))
+    if any(xc):
+        add("G07_catastrophe", "rc_catastrophe == sqrt(nat² + other²) (ρ=0.00, 告示75 注4(4))", v.get("rc_catastrophe"), cat_sqrt, 2)
+    jp = [z(v.get(i)) for i in ["rc_cat_nat_jp_earthquake", "rc_cat_nat_jp_windflood", "rc_cat_nat_jp_snow"]]
+    if any(jp):
+        nat_calc = math.sqrt(sum(a * a for a in jp)) + z(v.get("rc_cat_nat_foreign")) + z(v.get("rc_cat_nat_other"))
+        calc.update(natcat_japan_sqrt=round(math.sqrt(sum(a * a for a in jp)), 1), natcat_calc=round(nat_calc, 1))
+        add("G08_natcat_japan", "rc_cat_natural == sqrt(Σ jp perils²) + foreign + other (observed simple sum across geographies; 第九十二条 unspecified)", v.get("rc_cat_natural"), nat_calc, 5, gate=False)
+    # --- life (第八十一条) ---
+    lf = L["life"]
+    xl = [z(v.get(i)) for i in lf["ids"]]
+    if any(xl):
+        add("G10_life", "rc_life == sqrt(x^T R_life x)", v.get("rc_life"), sqrt_agg(xl, lf["matrix"]), 5)
+    # --- full chain to headline ---
+    post_calc = top_sqrt + F + G + I - tax_calc
+    e = v.get("eligible_capital")
+    esr_calc = e / post_calc * 100 if e and post_calc else None
+    calc.update(post_tax_calc=round(post_calc, 1), esr_calc=None if esr_calc is None else round(esr_calc, 2))
+    add("G09_post_tax_chain", "rc_post_tax vs top_sqrt + F + G + I − 0.8·t·(top_sqrt+F+G) (tol 8)", v.get("rc_post_tax"), post_calc, 8)
+    # ratio tolerance follows the amount tolerance of G09: ±8 百万円 on the denominator → ±(esr × 8 / R) pp (au: 792% / 1,171 → 1 百万円 = 0.68pp)
+    tol_pp = round(max(0.5, (esr_calc or 0) * 8 / post_calc), 2) if post_calc else 0.5
+    add("G09b_esr_chain", f"esr_pct vs eligible / rc_post_tax_calc × 100 (tol {tol_pp}pp = 8 百万円 on the denominator)", v.get("esr_pct"), esr_calc, tol_pp)
+    return list(checks.values()), calc
+
+
 def run_axes_checks(comp, ax, esr):
     checks = []
     v = ax["values"]
@@ -723,7 +832,8 @@ def build_schema():
         sensitivity=dict(scenarios=[dict(id=a, label_ja=b, ko=c) for a, b, c in SENS_SCENARIOS],
                          rows=[dict(id=a, label_ja=re.sub(r"[\^\$]", "", b), ko=c, unit=d, kics_item_ref=e) for a, b, c, d, e in SENS_ROWS]),
         items=items,
-        checks="C01..C34 (esr) + A01..A05 (article_axes) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks",
+        checks="C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks",
+        aggregation_rules_ref="J-ESR/esr_aggregation_rules.json (告示74 第八十一条·第八十九条·第百条·第百二十七条·第百五十四条~第百五十六条 + 告示75 別紙様式第三号 注; matrices in id order)",
     )
 
 
@@ -768,6 +878,8 @@ def md_fragment(results, schema):
 
 def main():
     results, summary = {}, {}
+    with open(RULES, encoding="utf-8") as f:
+        rules = json.load(f)
     for comp in COMPANIES:
         doc = fitz.open(str(SAMPLES / comp["pdf"]))
         r = dict(company_jp=comp["company_jp"], company_en=comp["company_en"], sector=comp["sector"], layers=comp["layers"],
@@ -776,6 +888,8 @@ def main():
         if "esr" in comp["layers"]:
             esr = extract_esr(comp, doc)
             esr["checks"] = run_checks(esr)
+            agg_checks, esr["aggregation_recompute"] = run_aggregation_checks(comp, esr, rules)
+            esr["checks"] += agg_checks
             r["esr"] = esr
         ax = extract_axes(comp, doc)
         ax["checks"] = run_axes_checks(comp, ax, esr)
@@ -791,7 +905,10 @@ def main():
             esr_items_nonnull=sum(1 for x in esr["values"].values() if x is not None) if esr else 0,
             esr_items_total=len(esr["values"]) if esr else 0,
             axes_items_nonnull=sum(1 for k, x in ax["values"].items() if x is not None and not k.startswith("_")),
-            checks_pass=sum(1 for c in all_checks if c["pass"]), checks_total=len(all_checks), checks_failed=[c["id"] for c in all_checks if not c["pass"]],
+            checks_pass=sum(1 for c in all_checks if c["pass"]), checks_total=len(all_checks),
+            checks_failed=[c["id"] for c in all_checks if not c["pass"] and c.get("gate", True)],
+            checks_info_failed=[c["id"] for c in all_checks if not c["pass"] and not c.get("gate", True)],
+            aggregation=esr["aggregation_recompute"] if esr else None,
             census_match=r["census"]["match"], calc_method=esr["method"]["calc_method"] if esr else None, esr_status=ax["values"]["esr_status"],
             air_used=ax["values"]["air_used"], interest_margin_sign=ax["values"].get("interest_margin_sign"), cat_reserve_total=ax["values"].get("cat_reserve_total"))
 
@@ -806,7 +923,7 @@ def main():
     for k, r in results.items():
         for c in (r.get("esr", {}).get("checks", []) + r["axes"]["checks"]):
             if not c["pass"]:
-                print("FAIL", k, c)
+                print("FAIL" if c.get("gate", True) else "INFO", k, c)
         for iid, tk in r.get("esr", {}).get("raw_tokens", {}).items():
             if tk == "NOT_FOUND":
                 print("NOT_FOUND", k, iid)

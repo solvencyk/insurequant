@@ -2,6 +2,23 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 (7) -- 소요자본 합산 규정(상관행렬) 기계화 + √(xᵀRx) 재계산 검산 (jp)
+
+- 티켓 `inbox/jp/20260912T1005Z__owner__JP_MULTI__esr_aggregation_rule.md`(answered). owner 지적: 직전 티켓이 "부모 ≤ Σ하위" 부등식으로 끝냈는데
+  당연히 상관행렬 통합이니 규정을 찾아 공시 합산액이 재현되는지 검산해야 한다(K-ICS mmult 검산과 같은 것).
+- 규정 원문 확보 `J-ESR/raw/regulation/`: 令和7年金融庁告示第74号(1柱, 167p, fsa.go.jp 통합본 — 2026-03-23 개정 반영 확인)·第75号(3柱 별지양식,
+  67p — curl 35KB 절단이라 WebFetch 바이너리 저장본)·令和8年告示第6号(개정 8p, 합산 조문 무변경). 미확보 4건(概要·Q&A·필드테스트 仕様書·3柱
+  개정)은 curl 000 으로 남김, 추정으로 채우지 않음.
+- 기계본 `J-ESR/esr_aggregation_rules.json`: 최상위 第155条 행렬(生保–損保 0.00, 그 외 0.25) + オペ 선형가산, オペ 상한 第154条(20%×(√+G)),
+  세효과 第156条(0.8×法定実効税率×(√+F+G) vs DTA 분기 min), MA 上限超過 第46条, 生保 第81条(死亡–長寿 −0.25 등), 損保 第89条 4단계+別表七,
+  巨大災害 第100条(0.00), 市場 第127条(스프레드 上昇/下降 2행렬, 資産集中 0.00), 信用 第128条 단순합, 分散効果 정의(75호 注 6(5)),
+  공시 하위행 정의(注 3(2)·4(4)), MA 행은 정보행(注 6(3)). known_deviations 등재부 포함.
+- `extract_esr_template_samples.py`: `run_aggregation_checks` G01~G10(gate/informational 구분, known_deviations lookup), `rc_life_*` 6 id
+  추가(스키마 esr 109→115, K-ICS 29/30/31/33/34 대응, `stop_before` 로 생보 MA 행이 巨大災害 MA 행을 삼키는 사고 예방). exit 0.
+- 재현: 分散効果 au 273.6/274·MY 2,529.5/2,530, 세효과 두 회사 ±1(역산 세율 28.0%), 시장 MY 4,611.8/4,613, au 損保 정확, au オペ 20% 캡 바인딩.
+  미재현: MY 損保 +41(다지역 구조, informational 규칙) · MY 巨大災害 +109(注 4(4) 위반 방향 — `その他の巨大災害` 단순합 가설, 10월 재확인).
+- 문서: `docs/domains/jp_esr_disclosure_template.md` §8 신설 + §0/§3/§4/§6/§7-4 동기, `claude-agent-jp.md` §3 포인터.
+
 ## 2026-09-12 (6) -- ESR 규제 공시 양식 지도 + 기계 스키마 + 표본값 (jp)
 
 - 티켓 `inbox/jp/20260912T0905Z__owner__JP_MULTI__esr_disclosure_template_map.md`(answered). owner 취지: 10월 말 62사가 낼 규제 양식

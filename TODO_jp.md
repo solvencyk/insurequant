@@ -5,6 +5,17 @@
 
 ## Status
 
+**🟢 2026-09-12 (7) 소요자본 합산 규정(상관행렬)을 告示 원문에서 기계화 + √(xᵀRx) 재계산 검산 G01~G10 — 표본 2사 최상위·세효과·시장 재현.**
+티켓 `inbox/jp/20260912T1005Z__owner__JP_MULTI__esr_aggregation_rule.md`(answered). 규정 원문 3건 확보 `J-ESR/raw/regulation/`(告示74호
+통합본 167p·告示75호 별지양식 67p·令和8年告示6호 개정 8p; 개정은 합산 조문 무변경. curl 이 시간대 차단이라 75호는 WebFetch 바이너리
+저장본). 기계본 `J-ESR/esr_aggregation_rules.json`: 최상위 第百五十五条(生保–損保 0.00, 그 외 0.25, オペ 선형가산)·생보 第八十一条·손보
+第八十九条+別表七·巨大災害 第百条(0.00)·시장 第百二十七条(스프레드 上昇/下降 2행렬)·オペ 상한 20%·세효과 0.8×税率·分散効果 정의(75호 注 6(5)).
+`extract_esr_template_samples.py` 에 `run_aggregation_checks`(G01~G10) + `rc_life_*` 6 id(스키마 esr 109→115). **재현:** 分散効果 au 273.6
+vs 274·MY 2,529.5 vs 2,530, 세효과 = 0.8×28.0%×J 두 회사 ±1(역산 세율 27.98/27.99%), 시장 MY 4,611.8 vs 4,613, au 損保 1,119.0 정확, au
+オペ는 20% 캡에 걸림(251 vs 251.5). **미재현(등재):** MY 損保 2,137 vs 2,096(다지역 — 규정 통합 순서와 공시 하위행 정의가 교환 안 됨,
+informational 규칙) · MY 巨大災害 1,974 vs 1,865(注 4(4) 대로면 맞아야 함 — `その他の巨大災害` 단순합 가설, 10월 다수 확인 후 규칙 수정).
+내부모형사 판정 규칙 문서 §8-4. exit 0(au 43/43, MY 49/51+info 2, NN 4/4). 문서 `docs/domains/jp_esr_disclosure_template.md` §8.
+
 **🟢 2026-09-12 (6) ESR 규제 공시 양식 지도 + 기계 스키마 + 표본값(10월 62사 대비) — 두 층(esr / article_axes).**
 티켓 `inbox/jp/20260912T0905Z__owner__JP_MULTI__esr_disclosure_template_map.md`(answered). 로컬 표본 3건(au Non-Life 31p·Meiji Yasuda
 Non-Life 별책 14p·NN Life 95p, 전부 텍스트 PDF)을 fitz 로 해부. 산출 (A) `docs/domains/jp_esr_disclosure_template.md`(양식 구조 T1~T8·항목 표
@@ -54,10 +65,6 @@ au 최하단 이동·빗금 제거 전부 스크린샷으로 확인됨. 그 과�
 (parent 明治安田生命保険) 제외, au損害保険(parent KDDI, 미공시)은 유지. `J-ESR/build_jesr_page_json.py` 에 회사명 비하드코딩 일반 로직
 (`jp_insurers.csv` `parent_group` 조인) 추가. `J-ESR/jesr_master.json` 은 15사 그대로. 재현:
 `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/build_jesr_page_json.py`.
-
-**🟢 2026-09-12 (2) `/jp/` 일본어 페이지 초안 — 데이터 `jp/jesr_esr.json`(15사, publishing) + `jp/index.html`(designer).**
-티켓 `inbox/_resolved/20260912T0446Z__owner__JP_MULTI__jesr_page_json.md` · `..._jesr_jp_page_draft.md`. owner 결정: IP 차등·`.co.jp` 대신
-같은 사이트 `/jp/` 경로(나중에 `jp.insurequant.com` 승격 가능). 라이브 반영은 owner 가 초안을 본 뒤.
 
 ## Active follow-ups
 
