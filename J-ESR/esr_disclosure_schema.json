@@ -1,0 +1,2164 @@
+{
+  "schema_version": "2026-09-12",
+  "regulation": "保険業法施行規則 59条の2 / 令和7年金融庁告示第74号(SMR告示)·第75号(EBS) — FY2025 첫 적용",
+  "layers": {
+    "esr": "regulatory ESR tables (T1~T8)",
+    "article_axes": "FSA monitoring-report axes from other sections (docs/domains/claude-agent-jp.md §4b): catastrophe_reserve_adequacy / air_used / interest_margin_sign + ESR placeholder skeleton"
+  },
+  "unit_note": "amounts as disclosed (JPY_million = 百万円) unless the item unit says otherwise (negative_spread_* are 億円 in the life summary box). census/master converts to 億円 (÷100). Record unit_disclosed per row — large life insurers may print 億円.",
+  "null_note": "dash (－ / ー) = not applicable; stored as null, treated as 0 in formulas.",
+  "column_note": "FY2025 tables carry two value columns (イ=前年度 '－', ロ=当年度); column='cur' takes the 2nd token. EBS tables: 'ev' = last token (経済価値ベースの額), 'first' = 財務会計ベースの額 (only when all 4 columns are printed).",
+  "kics_ref_note": "kics_item_ref = docs/agents/kics-json-validation-rules.md item number. Approximate mappings (different aggregation/scope) are documented in docs/domains/jp_esr_disclosure_template.md §6; null = no K-ICS counterpart (e.g. 巨大災害 C, スプレッド, MOCE, EBS rows).",
+  "tables": {
+    "T1": "要約: ソルベンシー・マージン比率並びに適格資本の額及び所要資本の額 (headline)",
+    "T1_combined": "au variant: (1) 単体SMR 결합표 — Tier1/2 + 리스크(a)~(k) 한 표, 非保険事業 (i) 포함",
+    "T2": "適格資本の額の構成に関する事項",
+    "T3": "所要資本の額の構成に関する事項",
+    "T4": "経済価値ベースのバランスシート (4열: 財務会計/組替え/評価替え/経済価値)",
+    "T5": "外国証券の種類別差異調整 (look-through; not extracted)",
+    "T6": "保険負債の商品別差異調整 (6열; 経済価値ベースの額(MOCE除く) 만 추출)",
+    "T7": "感応度分析 (8 scenarios × 10 rows; 差額表 optional)",
+    "T8": "定性: 計算に用いられた前提及び手法 (내부모형/USP/내부할인율/경영조치/재보험/할인율 버킷)",
+    "axes:catastrophe_reserve_adequacy": "손보 본편 責任準備金の内訳 표(종목 × 普通/異常危険/危険/払戻/配当/合計)",
+    "axes:air_used": "リスク管理·再保険 절 + 出再先 수/上位5社/格付 표 + 関連当事者 각주",
+    "axes:interest_margin_sign": "생보 経常利益等の明細(基礎利益) 표 + 健全性 box 逆ざや (+ 三利源 표가 있는 회사는 利差損益)",
+    "axes:esr_placeholder": "後日公表予定 문구가 놓인 5개년 표·健全性 box·業績データ 7절"
+  },
+  "sensitivity": {
+    "scenarios": [
+      {
+        "id": "base",
+        "label_ja": "当期末の数値",
+        "ko": "기준(당기말)"
+      },
+      {
+        "id": "jpy_rate_up50",
+        "label_ja": "円金利50ベーシス・ポイント上昇",
+        "ko": "엔 금리 +50bp"
+      },
+      {
+        "id": "jpy_rate_down50",
+        "label_ja": "円金利50ベーシス・ポイント下降",
+        "ko": "엔 금리 -50bp"
+      },
+      {
+        "id": "usd_rate_up50",
+        "label_ja": "米ドル金利50ベーシス・ポイント上昇",
+        "ko": "달러 금리 +50bp"
+      },
+      {
+        "id": "usd_rate_down50",
+        "label_ja": "米ドル金利50ベーシス・ポイント下降",
+        "ko": "달러 금리 -50bp"
+      },
+      {
+        "id": "jpy_ufr_down50",
+        "label_ja": "円金利UFR50ベーシス・ポイント下降",
+        "ko": "엔 UFR -50bp"
+      },
+      {
+        "id": "equity_property_down10",
+        "label_ja": "株式・不動産10%下落",
+        "ko": "주식·부동산 -10%"
+      },
+      {
+        "id": "fx_yen_up10",
+        "label_ja": "為替10%円高",
+        "ko": "환율 10% 엔고"
+      }
+    ],
+    "rows": [
+      {
+        "id": "esr_pct",
+        "label_ja": "ソルベンシー・マージン比率",
+        "ko": "ESR",
+        "unit": "pct",
+        "kics_item_ref": null
+      },
+      {
+        "id": "eligible_capital",
+        "label_ja": "適格資本の額",
+        "ko": "적격자본",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      {
+        "id": "ebs_total_assets",
+        "label_ja": "総資産",
+        "ko": "총자산",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      {
+        "id": "il_total_ex_moce",
+        "label_ja": "保険負債の額",
+        "ko": "보험부채(MOCE 제외)",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      {
+        "id": "ebs_moce",
+        "label_ja": "現在推計を超える",
+        "ko": "MOCE",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      {
+        "id": "ebs_non_insurance_liabilities",
+        "label_ja": "非保険負債の額",
+        "ko": "비보험부채",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      {
+        "id": "ebs_net_assets",
+        "label_ja": "純資産の額",
+        "ko": "순자산",
+        "unit": "JPY_million",
+        "kics_item_ref": "41 (base) / 43 (jpy_rate_up50) / 44 (jpy_rate_down50) — 충격폭 다름(K-ICS 규정 시나리오 vs 50bp), 근사"
+      },
+      {
+        "id": "required_capital",
+        "label_ja": "所要資本の額",
+        "ko": "소요자본",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      {
+        "id": "rc_life",
+        "label_ja": "生命保険リスクの額",
+        "ko": "생명보험리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      },
+      {
+        "id": "rc_market",
+        "label_ja": "市場リスクの額",
+        "ko": "시장리스크",
+        "unit": "JPY_million",
+        "kics_item_ref": null
+      }
+    ]
+  },
+  "items": [
+    {
+      "id": "eligible_capital",
+      "layer": "esr",
+      "table": "T1",
+      "labels_ja": [
+        "適格資本の額(A)"
+      ],
+      "ko": "적격자본 총액(A)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= tier1_eligible + tier2_eligible",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 1
+    },
+    {
+      "id": "required_capital",
+      "layer": "esr",
+      "table": "T1",
+      "labels_ja": [
+        "所要資本の額(B)"
+      ],
+      "ko": "소요자본 총액(B, 세효과 고려후)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= rc_post_tax",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 14
+    },
+    {
+      "id": "esr_pct",
+      "layer": "esr",
+      "table": "T1",
+      "labels_ja": [
+        "ソルベンシー・マージン比率((A)/(B))"
+      ],
+      "ko": "ESR(경제가치기준 지급여력비율, 신기준 SMR)",
+      "unit": "pct",
+      "parent": null,
+      "formula": "= eligible_capital / required_capital * 100 (truncation interval)",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 27
+    },
+    {
+      "id": "tier1_eligible",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "Tier1適格資本の額"
+      ],
+      "ko": "Tier1 적격자본(A)",
+      "unit": "JPY_million",
+      "parent": "eligible_capital",
+      "formula": "= tier1_basic - tier1_adjustments",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 2
+    },
+    {
+      "id": "tier1_basic",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "Tier1適格資本に係る基礎項目の額"
+      ],
+      "ko": "Tier1 기초항목(B) = EBS 순자산",
+      "unit": "JPY_million",
+      "parent": "tier1_eligible",
+      "formula": "= tier1_instr_unrestricted + tier1_instr_restricted + tier1_non_instrument; == ebs_net_assets",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 4
+    },
+    {
+      "id": "tier1_instr_unrestricted",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "算入制限のないTier1資本調達手段の額"
+      ],
+      "ko": "산입제한 없는 Tier1 자본조달수단(자본금·기금)",
+      "unit": "JPY_million",
+      "parent": "tier1_basic",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 5
+    },
+    {
+      "id": "tier1_instr_restricted",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "算入制限のあるTier1資本調達手段の額"
+      ],
+      "ko": "산입제한 있는 Tier1 자본조달수단(신종자본증권 등)",
+      "unit": "JPY_million",
+      "parent": "tier1_basic",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 6
+    },
+    {
+      "id": "tier1_non_instrument",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "資本調達手段以外のTier1適格資本の額"
+      ],
+      "ko": "자본조달수단 이외 Tier1 적격자본",
+      "unit": "JPY_million",
+      "parent": "tier1_basic",
+      "formula": "= tier1_ni_retained_earnings + tier1_ni_capital_surplus + tier1_ni_aoci + tier1_ni_other_contrib + tier1_ni_ev_adjustment",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier1_ni_retained_earnings",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "剰余金等の額又は利益剰余金等の額"
+      ],
+      "ko": "잉여금등(이익잉여금+규제상 준비금)",
+      "unit": "JPY_million",
+      "parent": "tier1_non_instrument",
+      "formula": "= ebs_retained_earnings + ebs_regulatory_reserve_equity",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 7
+    },
+    {
+      "id": "tier1_ni_capital_surplus",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "資本剰余金(Tier2適格資本に算入されるものを除く)の額"
+      ],
+      "ko": "자본잉여금(Tier2 산입분 제외)",
+      "unit": "JPY_million",
+      "parent": "tier1_non_instrument",
+      "formula": "== ebs_capital_surplus",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier1_ni_aoci",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "その他の包括利益累計額又は評価・換算差額等の額"
+      ],
+      "ko": "기타포괄손익누계액(평가·환산차액)",
+      "unit": "JPY_million",
+      "parent": "tier1_non_instrument",
+      "formula": "== ebs_aoci",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 9
+    },
+    {
+      "id": "tier1_ni_other_contrib",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "その他の拠出金等の額"
+      ],
+      "ko": "기타 출자금등",
+      "unit": "JPY_million",
+      "parent": "tier1_non_instrument",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier1_ni_ev_adjustment",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "経済価値ベースの調整額"
+      ],
+      "ko": "경제가치기준 조정액(EBS 순자산 − 회계 순자산 − 규제상 준비금)",
+      "unit": "JPY_million",
+      "parent": "tier1_non_instrument",
+      "formula": "== ebs_ev_adjustment",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 11
+    },
+    {
+      "id": "tier1_adjustments",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "Tier1適格資本に係る調整項目の額"
+      ],
+      "ko": "Tier1 조정항목(C, 공제)",
+      "unit": "JPY_million",
+      "parent": "tier1_eligible",
+      "formula": "= Σ tier1_adj_* (7 subs)",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 12
+    },
+    {
+      "id": "tier1_adj_intangibles",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "無形固定資産(繰延税金負債相殺後)の額"
+      ],
+      "ko": "무형고정자산(DTL 상계후)",
+      "unit": "JPY_million",
+      "parent": "tier1_adjustments",
+      "formula": "== ebs_intangibles",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier1_adj_dta",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "繰延税金資産の額"
+      ],
+      "ko": "이연법인세자산",
+      "unit": "JPY_million",
+      "parent": "tier1_adjustments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier1_adj_pension_asset",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "前払年金費用又は退職給付に係る資産"
+      ],
+      "ko": "선급연금비용/퇴직급여 관련 자산",
+      "unit": "JPY_million",
+      "parent": "tier1_adjustments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier1_adj_holdings_other_fi",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "他の金融機関等が意図的に保有しているTier1資本調達手段の額"
+      ],
+      "ko": "타 금융기관 의도적 보유 Tier1 조달수단",
+      "unit": "JPY_million",
+      "parent": "tier1_adjustments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier1_adj_own_instruments",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "自己のTier1資本調達手段への投資の額"
+      ],
+      "ko": "자기 Tier1 조달수단 투자",
+      "unit": "JPY_million",
+      "parent": "tier1_adjustments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier1_adj_ineligible_reinsurance",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "不適格再保険資産の額"
+      ],
+      "ko": "부적격 재보험자산",
+      "unit": "JPY_million",
+      "parent": "tier1_adjustments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier1_adj_encumbered_excess",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "処分制約のある資産のうち関連する負債と所要資本を上回る額"
+      ],
+      "ko": "처분제약 자산 중 관련부채+소요자본 초과분",
+      "unit": "JPY_million",
+      "parent": "tier1_adjustments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_eligible",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "Tier2適格資本の額"
+      ],
+      "ko": "Tier2 적격자본(D)",
+      "unit": "JPY_million",
+      "parent": "eligible_capital",
+      "formula": "= tier2_basic - tier2_adjustments - tier2_cap_deduction",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 3
+    },
+    {
+      "id": "tier2_basic",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "Tier2適格資本に係る基礎項目の額"
+      ],
+      "ko": "Tier2 기초항목(E)",
+      "unit": "JPY_million",
+      "parent": "tier2_eligible",
+      "formula": "= tier2_instruments + tier2_non_instrument",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_instruments",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "Tier2資本調達手段の額"
+      ],
+      "ko": "Tier2 자본조달수단(후순위채 등)",
+      "unit": "JPY_million",
+      "parent": "tier2_basic",
+      "formula": "= tier2_instr_t1_excess + tier2_instr_paid + tier2_instr_unpaid",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_instr_t1_excess",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "算入制限のあるTier1資本調達手段の制限を超過した額"
+      ],
+      "ko": "제한초과 Tier1 조달수단(Tier2 재분류)",
+      "unit": "JPY_million",
+      "parent": "tier2_instruments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 13
+    },
+    {
+      "id": "tier2_instr_paid",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "払込済みTier2資本調達手段の額"
+      ],
+      "ko": "납입완료 Tier2 조달수단",
+      "unit": "JPY_million",
+      "parent": "tier2_instruments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_instr_unpaid",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "払込未済のTier2資本調達手段の額"
+      ],
+      "ko": "미납입 Tier2 조달수단(약정자본)",
+      "unit": "JPY_million",
+      "parent": "tier2_instruments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_non_instrument",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "資本調達手段以外のTier2適格資本の額"
+      ],
+      "ko": "자본조달수단 이외 Tier2 적격자본",
+      "unit": "JPY_million",
+      "parent": "tier2_basic",
+      "formula": "= tier2_ni_surplus_from_instr + tier2_ni_encumbered_t1_deducted + tier2_ni_basket",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_ni_surplus_from_instr",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "Tier2資本調達手段の額に含まれる資本調達手段を"
+      ],
+      "ko": "Tier2 조달수단 발행 자본잉여금",
+      "unit": "JPY_million",
+      "parent": "tier2_non_instrument",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_ni_encumbered_t1_deducted",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "処分制約のある資産のうちTier1適格資本から控除される額"
+      ],
+      "ko": "처분제약 자산 중 Tier1 공제분",
+      "unit": "JPY_million",
+      "parent": "tier2_non_instrument",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_ni_basket",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "Tier2バスケット(上限適用後)の額"
+      ],
+      "ko": "Tier2 바스켓(상한 적용후)",
+      "unit": "JPY_million",
+      "parent": "tier2_non_instrument",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_adjustments",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "Tier2適格資本に係る調整項目の額"
+      ],
+      "ko": "Tier2 조정항목(F)",
+      "unit": "JPY_million",
+      "parent": "tier2_eligible",
+      "formula": "= tier2_adj_holdings_other_fi + tier2_adj_own_instruments",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_adj_holdings_other_fi",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "他の金融機関等が意図的に保有しているTier2資本調達手段の額"
+      ],
+      "ko": "타 금융기관 의도적 보유 Tier2 조달수단",
+      "unit": "JPY_million",
+      "parent": "tier2_adjustments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_adj_own_instruments",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "自己のTier2資本調達手段への投資の額"
+      ],
+      "ko": "자기 Tier2 조달수단 투자",
+      "unit": "JPY_million",
+      "parent": "tier2_adjustments",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "tier2_cap_deduction",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "Tier2適格資本への上限適用による控除の額"
+      ],
+      "ko": "Tier2 상한 적용 공제(G)",
+      "unit": "JPY_million",
+      "parent": "tier2_eligible",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "eligible_capital_total",
+      "layer": "esr",
+      "table": "T2",
+      "labels_ja": [
+        "適格資本の額((A)+(D))",
+        "適格資本の額(A)+(D)"
+      ],
+      "ko": "적격자본 합계(A+D) — T2 표 합계행",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "== eligible_capital",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 1
+    },
+    {
+      "id": "rc_life",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "生命保険リスクの額"
+      ],
+      "ko": "생명보험리스크(A)",
+      "unit": "JPY_million",
+      "parent": "rc_pre_tax",
+      "formula": null,
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 17
+    },
+    {
+      "id": "rc_nonlife",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "損害保険リスクの額"
+      ],
+      "ko": "손해보험리스크(B)",
+      "unit": "JPY_million",
+      "parent": "rc_pre_tax",
+      "formula": "<= rc_nl_liability + rc_nl_motor + rc_nl_property + rc_nl_other (correlation aggregation)",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 18
+    },
+    {
+      "id": "rc_nl_liability",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "賠償責任保険類似の商品に係るリスクの額"
+      ],
+      "ko": "배상책임보험 유사 상품 리스크",
+      "unit": "JPY_million",
+      "parent": "rc_nonlife",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_nl_motor",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "自動車保険類似の商品に係るリスクの額"
+      ],
+      "ko": "자동차보험 유사 상품 리스크",
+      "unit": "JPY_million",
+      "parent": "rc_nonlife",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_nl_property",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "財物保険類似の商品に係るリスクの額"
+      ],
+      "ko": "재물보험 유사 상품 리스크",
+      "unit": "JPY_million",
+      "parent": "rc_nonlife",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_nl_other",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "その他保険に係るリスクの額"
+      ],
+      "ko": "기타보험 리스크",
+      "unit": "JPY_million",
+      "parent": "rc_nonlife",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_catastrophe",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "巨大災害リスクの額"
+      ],
+      "ko": "거대재해리스크(C)",
+      "unit": "JPY_million",
+      "parent": "rc_pre_tax",
+      "formula": "<= rc_cat_natural + rc_cat_other - rc_cat_mgmt_action",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_cat_natural",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "巨大自然災害リスクの額"
+      ],
+      "ko": "거대자연재해리스크",
+      "unit": "JPY_million",
+      "parent": "rc_catastrophe",
+      "formula": "<= rc_cat_nat_jp_earthquake + rc_cat_nat_jp_windflood + rc_cat_nat_jp_snow + rc_cat_nat_foreign + rc_cat_nat_other",
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_cat_nat_jp_earthquake",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "日本における地震に係るリスクの額"
+      ],
+      "ko": "일본 지진",
+      "unit": "JPY_million",
+      "parent": "rc_cat_natural",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_cat_nat_jp_windflood",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "日本における風水災に係るリスクの額"
+      ],
+      "ko": "일본 풍수해",
+      "unit": "JPY_million",
+      "parent": "rc_cat_natural",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_cat_nat_jp_snow",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "日本における雪災に係るリスクの額"
+      ],
+      "ko": "일본 설해",
+      "unit": "JPY_million",
+      "parent": "rc_cat_natural",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_cat_nat_foreign",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "外国における巨大自然災害リスクの額"
+      ],
+      "ko": "해외 거대자연재해",
+      "unit": "JPY_million",
+      "parent": "rc_cat_natural",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_cat_nat_other",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "その他の額"
+      ],
+      "ko": "기타(거대자연재해 내)",
+      "unit": "JPY_million",
+      "parent": "rc_cat_natural",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_cat_other",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "その他の巨大災害に係るリスクの額"
+      ],
+      "ko": "기타 거대재해(팬데믹·테러 등)",
+      "unit": "JPY_million",
+      "parent": "rc_catastrophe",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_cat_mgmt_action",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "マネジメント・アクションの効果の額"
+      ],
+      "ko": "경영조치 효과(거대재해)",
+      "unit": "JPY_million",
+      "parent": "rc_catastrophe",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_market",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "市場リスクの額"
+      ],
+      "ko": "시장리스크(D)",
+      "unit": "JPY_million",
+      "parent": "rc_pre_tax",
+      "formula": "<= rc_mkt_interest + rc_mkt_spread + rc_mkt_equity + rc_mkt_property + rc_mkt_fx + rc_mkt_concentration - rc_mkt_mgmt_action",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 19
+    },
+    {
+      "id": "rc_mkt_interest",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "金利リスクの額"
+      ],
+      "ko": "금리리스크",
+      "unit": "JPY_million",
+      "parent": "rc_market",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 36
+    },
+    {
+      "id": "rc_mkt_spread",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "スプレッドリスクの額"
+      ],
+      "ko": "스프레드리스크",
+      "unit": "JPY_million",
+      "parent": "rc_market",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_mkt_equity",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "株式リスクの額"
+      ],
+      "ko": "주식리스크",
+      "unit": "JPY_million",
+      "parent": "rc_market",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 37
+    },
+    {
+      "id": "rc_mkt_property",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "不動産リスクの額"
+      ],
+      "ko": "부동산리스크",
+      "unit": "JPY_million",
+      "parent": "rc_market",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 38
+    },
+    {
+      "id": "rc_mkt_fx",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "為替リスクの額"
+      ],
+      "ko": "환리스크",
+      "unit": "JPY_million",
+      "parent": "rc_market",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 39
+    },
+    {
+      "id": "rc_mkt_concentration",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "資産集中リスクの額"
+      ],
+      "ko": "자산집중리스크",
+      "unit": "JPY_million",
+      "parent": "rc_market",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 40
+    },
+    {
+      "id": "rc_mkt_mgmt_action",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "マネジメント・アクションの効果の額"
+      ],
+      "ko": "경영조치 효과(시장)",
+      "unit": "JPY_million",
+      "parent": "rc_market",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_credit",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "信用リスクの額"
+      ],
+      "ko": "신용리스크(E)",
+      "unit": "JPY_million",
+      "parent": "rc_pre_tax",
+      "formula": null,
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 20
+    },
+    {
+      "id": "rc_operational",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "オペレーショナル・リスクの額"
+      ],
+      "ko": "운영리스크(F)",
+      "unit": "JPY_million",
+      "parent": "rc_pre_tax",
+      "formula": null,
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 21
+    },
+    {
+      "id": "rc_mgmt_action_excess",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "マネジメント・アクションの効果の上限超過額"
+      ],
+      "ko": "경영조치 효과 상한초과액(G, 가산)",
+      "unit": "JPY_million",
+      "parent": "rc_pre_tax",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_diversification",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "分散効果の額"
+      ],
+      "ko": "분산효과(H, 차감)",
+      "unit": "JPY_million",
+      "parent": "rc_pre_tax",
+      "formula": null,
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 16
+    },
+    {
+      "id": "rc_pre_tax",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "所要資本の額(税効果考慮前)"
+      ],
+      "ko": "소요자본(세효과 고려전, I/J)",
+      "unit": "JPY_million",
+      "parent": "required_capital",
+      "formula": "= rc_life + rc_nonlife + rc_catastrophe + rc_market + rc_credit + rc_operational + rc_mgmt_action_excess - rc_diversification + rc_non_insurance_business",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 15
+    },
+    {
+      "id": "rc_tax_effect",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "所要資本の税効果の額"
+      ],
+      "ko": "소요자본 세효과(J/K, 차감)",
+      "unit": "JPY_million",
+      "parent": "required_capital",
+      "formula": null,
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 22
+    },
+    {
+      "id": "rc_post_tax",
+      "layer": "esr",
+      "table": "T3",
+      "labels_ja": [
+        "所要資本の額(税効果考慮後)"
+      ],
+      "ko": "소요자본(세효과 고려후) — T3 합계행",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= rc_pre_tax - rc_tax_effect; == required_capital",
+      "required": true,
+      "column": "cur",
+      "kics_item_ref": 14
+    },
+    {
+      "id": "ebs_total_assets",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "総資産"
+      ],
+      "ko": "EBS 총자산",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= statutory + reclass + revaluation (row-wise)",
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_intangibles",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "無形固定資産"
+      ],
+      "ko": "EBS 무형고정자산",
+      "unit": "JPY_million",
+      "parent": "ebs_total_assets",
+      "formula": "== tier1_adj_intangibles",
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_reinsurance_recoverables",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "再保険回収額"
+      ],
+      "ko": "EBS 재보험회수액",
+      "unit": "JPY_million",
+      "parent": "ebs_total_assets",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_total_liabilities",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "総負債"
+      ],
+      "ko": "EBS 총부채",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= ebs_insurance_liabilities + ebs_non_insurance_liabilities",
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_insurance_liabilities",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "保険負債(保険契約準備金)合計"
+      ],
+      "ko": "EBS 보험부채 합계",
+      "unit": "JPY_million",
+      "parent": "ebs_total_liabilities",
+      "formula": "= ebs_current_estimate + ebs_moce",
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_current_estimate",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "現在推計の額"
+      ],
+      "ko": "현재추계(최선추정부채, BEL)",
+      "unit": "JPY_million",
+      "parent": "ebs_insurance_liabilities",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_moce",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "現在推計を超えるマージン"
+      ],
+      "ko": "MOCE(현재추계 초과 마진, 위험마진)",
+      "unit": "JPY_million",
+      "parent": "ebs_insurance_liabilities",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_reg_reserve_in_liabilities",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "規制上の準備金に属するもの"
+      ],
+      "ko": "규제상 준비금(위험준비금·이상위험준비금 등, 회계기준 보험부채 내) — イ열",
+      "unit": "JPY_million",
+      "parent": "ebs_insurance_liabilities",
+      "formula": "reclassified to equity (ロ열 △)",
+      "required": false,
+      "column": "first",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_non_insurance_liabilities",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "非保険負債合計"
+      ],
+      "ko": "EBS 비보험부채 합계",
+      "unit": "JPY_million",
+      "parent": "ebs_total_liabilities",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_other_reserves_reclass",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "その他の準備金"
+      ],
+      "ko": "기타 준비금(부채로 재분류된 규제상 준비금 일부) — ニ열",
+      "unit": "JPY_million",
+      "parent": "ebs_non_insurance_liabilities",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_price_fluctuation_reserve",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "価格変動準備金"
+      ],
+      "ko": "가격변동준비금(회계기준, 자본으로 재분류) — イ열",
+      "unit": "JPY_million",
+      "parent": "ebs_non_insurance_liabilities",
+      "formula": null,
+      "required": false,
+      "column": "first",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_net_assets",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "純資産"
+      ],
+      "ko": "EBS 순자산",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= ebs_total_assets - ebs_total_liabilities; == tier1_basic; = ebs_net_assets_statutory + ebs_regulatory_reserve_equity + ebs_ev_adjustment",
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": 4
+    },
+    {
+      "id": "ebs_net_assets_statutory",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "純資産"
+      ],
+      "ko": "회계기준 순자산(EBS 표 イ열)",
+      "unit": "JPY_million",
+      "parent": "ebs_net_assets",
+      "formula": null,
+      "required": false,
+      "column": "first",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_capital_stock",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "基金又は資本金",
+        "資本金"
+      ],
+      "ko": "자본금/기금",
+      "unit": "JPY_million",
+      "parent": "ebs_net_assets",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_capital_surplus",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "資本剰余金"
+      ],
+      "ko": "자본잉여금",
+      "unit": "JPY_million",
+      "parent": "ebs_net_assets",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_retained_earnings",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "剰余金又は利益剰余金",
+        "利益剰余金"
+      ],
+      "ko": "이익잉여금",
+      "unit": "JPY_million",
+      "parent": "ebs_net_assets",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_regulatory_reserve_equity",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "規制上の準備金"
+      ],
+      "ko": "규제상 준비금(자본으로 재분류된 합계) — ニ열",
+      "unit": "JPY_million",
+      "parent": "ebs_net_assets",
+      "formula": "≈ ebs_reg_reserve_in_liabilities + ebs_price_fluctuation_reserve - ebs_other_reserves_reclass (observed bridge)",
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_aoci",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "その他の包括利益累計額合計",
+        "その他の包括利益累計額"
+      ],
+      "ko": "기타포괄손익누계액",
+      "unit": "JPY_million",
+      "parent": "ebs_net_assets",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ebs_ev_adjustment",
+      "layer": "esr",
+      "table": "T4",
+      "labels_ja": [
+        "経済価値ベースの調整額"
+      ],
+      "ko": "경제가치기준 조정액",
+      "unit": "JPY_million",
+      "parent": "ebs_net_assets",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": 11
+    },
+    {
+      "id": "il_total_ex_moce",
+      "layer": "esr",
+      "table": "T6",
+      "labels_ja": [
+        "保険負債"
+      ],
+      "ko": "보험부채(MOCE 제외) 경제가치",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "== ebs_current_estimate",
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "il_unexpired",
+      "layer": "esr",
+      "table": "T6",
+      "labels_ja": [
+        "未経過責任に係る保険負債"
+      ],
+      "ko": "미경과책임 보험부채(LRC 상당)",
+      "unit": "JPY_million",
+      "parent": "il_total_ex_moce",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "il_incurred",
+      "layer": "esr",
+      "table": "T6",
+      "labels_ja": [
+        "既経過責任に係る保険負債"
+      ],
+      "ko": "기경과책임 보험부채(LIC 상당)",
+      "unit": "JPY_million",
+      "parent": "il_total_ex_moce",
+      "formula": null,
+      "required": false,
+      "column": "ev",
+      "kics_item_ref": null
+    },
+    {
+      "id": "rc_non_insurance_business",
+      "layer": "esr",
+      "table": "T1_combined",
+      "labels_ja": [
+        "非保険事業に係る所要資本の額"
+      ],
+      "ko": "비보험사업 소요자본(i) — au 결합표에만 있는 행",
+      "unit": "JPY_million",
+      "parent": "rc_pre_tax",
+      "formula": null,
+      "required": false,
+      "column": "cur",
+      "kics_item_ref": 23
+    },
+    {
+      "id": "tier1_ratio_pct",
+      "layer": "esr",
+      "table": "derived",
+      "labels_ja": [],
+      "ko": "기본자본비율 상당 = tier1_eligible / required_capital × 100 (일본 미공시, 파생)",
+      "unit": "pct",
+      "parent": "esr_pct",
+      "formula": "= tier1_eligible / required_capital * 100",
+      "required": false,
+      "column": "derived",
+      "kics_item_ref": 28
+    },
+    {
+      "id": "esr_pct_5yr_summary",
+      "layer": "esr",
+      "table": "summary_5yr",
+      "labels_ja": [
+        "単体ベースのソルベンシー・マージン比率",
+        "ソルベンシー・マージン比率 新基準"
+      ],
+      "ko": "5개년 주요지표 표의 헤드라인(교차확인용)",
+      "unit": "pct",
+      "parent": "esr_pct",
+      "formula": "== esr_pct",
+      "required": false,
+      "column": "last",
+      "kics_item_ref": null
+    },
+    {
+      "id": "sens_jpy_rate_up50_esr_pct",
+      "layer": "esr",
+      "table": "T7",
+      "labels_ja": [
+        "円金利50ベーシス・ポイント上昇"
+      ],
+      "ko": "민감도 ESR: 엔 금리 +50bp",
+      "unit": "pct",
+      "parent": "esr_pct",
+      "formula": "levels row ソルベンシー・マージン比率 × column; ESR-under-shock — K-ICS 는 kics_rate_sensitivity.json(별도 마스터, 항목번호 없음)",
+      "required": false,
+      "column": "sens",
+      "kics_item_ref": null
+    },
+    {
+      "id": "sens_jpy_rate_down50_esr_pct",
+      "layer": "esr",
+      "table": "T7",
+      "labels_ja": [
+        "円金利50ベーシス・ポイント下降"
+      ],
+      "ko": "민감도 ESR: 엔 금리 -50bp",
+      "unit": "pct",
+      "parent": "esr_pct",
+      "formula": "levels row ソルベンシー・マージン比率 × column; ESR-under-shock — K-ICS 는 kics_rate_sensitivity.json(별도 마스터, 항목번호 없음)",
+      "required": false,
+      "column": "sens",
+      "kics_item_ref": null
+    },
+    {
+      "id": "sens_usd_rate_up50_esr_pct",
+      "layer": "esr",
+      "table": "T7",
+      "labels_ja": [
+        "米ドル金利50ベーシス・ポイント上昇"
+      ],
+      "ko": "민감도 ESR: 달러 금리 +50bp",
+      "unit": "pct",
+      "parent": "esr_pct",
+      "formula": "levels row ソルベンシー・マージン比率 × column; ESR-under-shock — K-ICS 는 kics_rate_sensitivity.json(별도 마스터, 항목번호 없음)",
+      "required": false,
+      "column": "sens",
+      "kics_item_ref": null
+    },
+    {
+      "id": "sens_usd_rate_down50_esr_pct",
+      "layer": "esr",
+      "table": "T7",
+      "labels_ja": [
+        "米ドル金利50ベーシス・ポイント下降"
+      ],
+      "ko": "민감도 ESR: 달러 금리 -50bp",
+      "unit": "pct",
+      "parent": "esr_pct",
+      "formula": "levels row ソルベンシー・マージン比率 × column; ESR-under-shock — K-ICS 는 kics_rate_sensitivity.json(별도 마스터, 항목번호 없음)",
+      "required": false,
+      "column": "sens",
+      "kics_item_ref": null
+    },
+    {
+      "id": "sens_jpy_ufr_down50_esr_pct",
+      "layer": "esr",
+      "table": "T7",
+      "labels_ja": [
+        "円金利UFR50ベーシス・ポイント下降"
+      ],
+      "ko": "민감도 ESR: 엔 UFR -50bp",
+      "unit": "pct",
+      "parent": "esr_pct",
+      "formula": "levels row ソルベンシー・マージン比率 × column; ESR-under-shock — K-ICS 는 kics_rate_sensitivity.json(별도 마스터, 항목번호 없음)",
+      "required": false,
+      "column": "sens",
+      "kics_item_ref": null
+    },
+    {
+      "id": "sens_equity_property_down10_esr_pct",
+      "layer": "esr",
+      "table": "T7",
+      "labels_ja": [
+        "株式・不動産10%下落"
+      ],
+      "ko": "민감도 ESR: 주식·부동산 -10%",
+      "unit": "pct",
+      "parent": "esr_pct",
+      "formula": "levels row ソルベンシー・マージン比率 × column; ESR-under-shock — K-ICS 는 kics_rate_sensitivity.json(별도 마스터, 항목번호 없음)",
+      "required": false,
+      "column": "sens",
+      "kics_item_ref": null
+    },
+    {
+      "id": "sens_fx_yen_up10_esr_pct",
+      "layer": "esr",
+      "table": "T7",
+      "labels_ja": [
+        "為替10%円高"
+      ],
+      "ko": "민감도 ESR: 환율 10% 엔고",
+      "unit": "pct",
+      "parent": "esr_pct",
+      "formula": "levels row ソルベンシー・マージン比率 × column; ESR-under-shock — K-ICS 는 kics_rate_sensitivity.json(별도 마스터, 항목번호 없음)",
+      "required": false,
+      "column": "sens",
+      "kics_item_ref": null
+    },
+    {
+      "id": "internal_model_applied",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "内部モデル手法の適用"
+      ],
+      "ko": "내부모형 적용 여부",
+      "unit": "flag",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "usp_applied",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "会社固有のストレス係数手法の適用"
+      ],
+      "ko": "회사고유 스트레스계수(USP) 적용 여부",
+      "unit": "flag",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "internal_discount_rate_applied",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "内部割引率手法の適用"
+      ],
+      "ko": "내부할인율 적용 여부",
+      "unit": "flag",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "mgmt_action_applied",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "マネジメント・アクション"
+      ],
+      "ko": "경영조치(management action) 반영 여부",
+      "unit": "flag",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "risk_mitigation_reinsurance",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "リスク削減手法",
+        "リスク削減効果"
+      ],
+      "ko": "재보험 리스크경감 반영 여부",
+      "unit": "flag",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "transitional_measures",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "経過措置",
+        "激変緩和"
+      ],
+      "ko": "경과조치(激変緩和措置) 적용 여부",
+      "unit": "flag",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "sensitivity_omitted",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "記載を省略"
+      ],
+      "ko": "민감도 표 생략 여부(차이 1%p 미만 사유)",
+      "unit": "flag",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "first_year_no_movement_analysis",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "変動要因分析"
+      ],
+      "ko": "변동요인분석 미기재(초년도)",
+      "unit": "flag",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "calc_method",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "内部モデル手法の適用",
+        "標準的手法"
+      ],
+      "ko": "산정방식 standard / standard_implied / internal_model",
+      "unit": "enum",
+      "parent": null,
+      "formula": "derived from internal_model_applied",
+      "required": true,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "discount_bucket_jpy",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "適用バケット",
+        "一般バケット",
+        "ミドルバケット",
+        "トップバケット"
+      ],
+      "ko": "엔화 할인율 버킷",
+      "unit": "enum",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "discount_rates_jpy",
+      "layer": "esr",
+      "table": "T8",
+      "labels_ja": [
+        "主な通貨",
+        "主要な年限ごとの割引率"
+      ],
+      "ko": "엔화 할인율(연한별 %)",
+      "unit": "pct_by_tenor",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "text",
+      "kics_item_ref": null
+    },
+    {
+      "id": "esr_status",
+      "layer": "article_axes",
+      "table": "axes:esr_placeholder",
+      "labels_ja": [
+        "後日公表予定",
+        "別途公表予定",
+        "2026年10月末に公表予定"
+      ],
+      "ko": "posted / not_yet / not_found",
+      "unit": "enum",
+      "parent": null,
+      "formula": null,
+      "required": true,
+      "column": "section",
+      "applies_to": "both",
+      "kics_item_ref": null
+    },
+    {
+      "id": "esr_placeholder_locations",
+      "layer": "article_axes",
+      "table": "axes:esr_placeholder",
+      "labels_ja": [
+        "ソルベンシー・マージン比率 新基準",
+        "保険金等の支払能力の充実の状況（ソルベンシー・マージン比率）"
+      ],
+      "ko": "'後日公表予定' 문구가 놓인 표/절 위치 목록(10월에 채워질 자리)",
+      "unit": "list",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "both",
+      "kics_item_ref": null
+    },
+    {
+      "id": "smr_old_basis_fy2024_pct",
+      "layer": "article_axes",
+      "table": "axes:esr_placeholder",
+      "labels_ja": [
+        "ソルベンシー・マージン比率 旧基準"
+      ],
+      "ko": "구기준 SMR FY2024 (비교 참고, ESR 아님)",
+      "unit": "pct",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "both",
+      "kics_item_ref": null
+    },
+    {
+      "id": "cat_reserve_total",
+      "layer": "article_axes",
+      "table": "axes:catastrophe_reserve_adequacy",
+      "labels_ja": [
+        "異常危険準備金",
+        "責任準備金の内訳"
+      ],
+      "ko": "이상위험준비금 잔액 합계(전 종목)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": true,
+      "column": "section",
+      "applies_to": "nonlife",
+      "kics_item_ref": null
+    },
+    {
+      "id": "cat_reserve_fire",
+      "layer": "article_axes",
+      "table": "axes:catastrophe_reserve_adequacy",
+      "labels_ja": [
+        "火災 行 × 異常危険準備金 列"
+      ],
+      "ko": "화재 종목 이상위험준비금 잔액(금융청 부족 지적 대상)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "nonlife",
+      "kics_item_ref": null
+    },
+    {
+      "id": "cat_reserve_by_line",
+      "layer": "article_axes",
+      "table": "axes:catastrophe_reserve_adequacy",
+      "labels_ja": [
+        "火災/海上/傷害/自動車/自動車損害賠償責任/その他"
+      ],
+      "ko": "종목별 이상위험준비금 잔액",
+      "unit": "dict",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "nonlife",
+      "kics_item_ref": null
+    },
+    {
+      "id": "ordinary_reserve_total",
+      "layer": "article_axes",
+      "table": "axes:catastrophe_reserve_adequacy",
+      "labels_ja": [
+        "普通責任準備金"
+      ],
+      "ko": "보통책임준비금 합계(같은 표)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "nonlife",
+      "kics_item_ref": null
+    },
+    {
+      "id": "cat_reserve_adequacy_note",
+      "layer": "article_axes",
+      "table": "axes:catastrophe_reserve_adequacy",
+      "labels_ja": [
+        "積立不足",
+        "積立率",
+        "異常危険準備金の取崩"
+      ],
+      "ko": "적립 부족/적립률 서술 유무 (없으면 null)",
+      "unit": "text",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "nonlife",
+      "kics_item_ref": null
+    },
+    {
+      "id": "air_used",
+      "layer": "article_axes",
+      "table": "axes:air_used",
+      "labels_ja": [
+        "アセット・インテンシブ",
+        "資産集約型再保険",
+        "再保険"
+      ],
+      "ko": "not_mentioned / mentioned / mentioned_esr_purpose",
+      "unit": "enum",
+      "parent": null,
+      "formula": null,
+      "required": true,
+      "column": "section",
+      "applies_to": "both",
+      "kics_item_ref": null
+    },
+    {
+      "id": "air_evidence",
+      "layer": "article_axes",
+      "table": "axes:air_used",
+      "labels_ja": [
+        "既契約の出再に伴う損益",
+        "共同保険式再保険",
+        "最低保証再保険"
+      ],
+      "ko": "AIR 정황 근거(기계약 출재 손익·관계사 재보험 각주 등)",
+      "unit": "text",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "both",
+      "kics_item_ref": null
+    },
+    {
+      "id": "inforce_cession_pl",
+      "layer": "article_axes",
+      "table": "axes:air_used",
+      "labels_ja": [
+        "既契約の出再に伴う損益に相当する額"
+      ],
+      "ko": "기계약 출재 관련 손익(기초이익에서 제외된 액)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "life",
+      "kics_item_ref": null
+    },
+    {
+      "id": "reins_counterparties_n",
+      "layer": "article_axes",
+      "table": "axes:air_used",
+      "labels_ja": [
+        "出再先保険会社の数",
+        "再保険を引き受けた主要な保険会社等の数"
+      ],
+      "ko": "출재 상대 재보험사 수",
+      "unit": "count",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "both",
+      "kics_item_ref": null
+    },
+    {
+      "id": "reins_top5_share_pct",
+      "layer": "article_axes",
+      "table": "axes:air_used",
+      "labels_ja": [
+        "出再保険料のうち上位5社の出再先に集中している割合",
+        "支払再保険料の金額が大きい上位5社に対する支払再保険料の割合"
+      ],
+      "ko": "상위 5사 출재보험료 집중도",
+      "unit": "pct",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "both",
+      "kics_item_ref": null
+    },
+    {
+      "id": "reins_rating_a_or_above_pct",
+      "layer": "article_axes",
+      "table": "axes:air_used",
+      "labels_ja": [
+        "出再保険料の格付ごとの割合",
+        "格付機関による格付に基づく区分ごとの支払再保険料の割合"
+      ],
+      "ko": "A등급 이상 재보험사 출재보험료 비중",
+      "unit": "pct",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "both",
+      "kics_item_ref": null
+    },
+    {
+      "id": "reins_unreceived_claims",
+      "layer": "article_axes",
+      "table": "axes:air_used",
+      "labels_ja": [
+        "未だ収受していない再保険金の金額"
+      ],
+      "ko": "미수 재보험금",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "life",
+      "kics_item_ref": null
+    },
+    {
+      "id": "core_profit",
+      "layer": "article_axes",
+      "table": "axes:interest_margin_sign",
+      "labels_ja": [
+        "基礎利益"
+      ],
+      "ko": "기초이익(당기)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "life",
+      "kics_item_ref": null
+    },
+    {
+      "id": "core_profit_prev",
+      "layer": "article_axes",
+      "table": "axes:interest_margin_sign",
+      "labels_ja": [
+        "基礎利益"
+      ],
+      "ko": "기초이익(전기)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "life",
+      "kics_item_ref": null
+    },
+    {
+      "id": "negative_spread_100m",
+      "layer": "article_axes",
+      "table": "axes:interest_margin_sign",
+      "labels_ja": [
+        "逆ざや",
+        "逆鞘"
+      ],
+      "ko": "역마진(逆ざや) 금액 — 단위 億円(표본 원문 단위) — 양수=역마진 존재",
+      "unit": "JPY_100million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "life",
+      "kics_item_ref": null
+    },
+    {
+      "id": "negative_spread_prev_100m",
+      "layer": "article_axes",
+      "table": "axes:interest_margin_sign",
+      "labels_ja": [
+        "逆ざや"
+      ],
+      "ko": "역마진 전기(億円)",
+      "unit": "JPY_100million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "life",
+      "kics_item_ref": null
+    },
+    {
+      "id": "interest_margin",
+      "layer": "article_axes",
+      "table": "axes:interest_margin_sign",
+      "labels_ja": [
+        "利差損益",
+        "利差益",
+        "利差損",
+        "順ざや"
+      ],
+      "ko": "이차손익(三利源 공시사에서만)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "life",
+      "kics_item_ref": null
+    },
+    {
+      "id": "interest_margin_sign",
+      "layer": "article_axes",
+      "table": "axes:interest_margin_sign",
+      "labels_ja": [
+        "利差損益",
+        "逆ざや",
+        "順ざや"
+      ],
+      "ko": "positive / negative / unstated (역마진이면 negative)",
+      "unit": "enum",
+      "parent": null,
+      "formula": null,
+      "required": true,
+      "column": "section",
+      "applies_to": "life",
+      "kics_item_ref": null
+    },
+    {
+      "id": "three_source_disclosed",
+      "layer": "article_axes",
+      "table": "axes:interest_margin_sign",
+      "labels_ja": [
+        "利差損益",
+        "危険差損益",
+        "費差損益"
+      ],
+      "ko": "三利源(利差·危険差·費差) 분해 공시 여부",
+      "unit": "bool",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "section",
+      "applies_to": "life",
+      "kics_item_ref": null
+    }
+  ],
+  "checks": "C01..C34 (esr) + A01..A05 (article_axes) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks"
+}

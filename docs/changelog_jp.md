@@ -2,6 +2,23 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 (6) -- ESR 규제 공시 양식 지도 + 기계 스키마 + 표본값 (jp)
+
+- 티켓 `inbox/jp/20260912T0905Z__owner__JP_MULTI__esr_disclosure_template_map.md`(answered). owner 취지: 10월 말 62사가 낼 규제 양식
+  (令和7年金融庁告示第74号·第75号)을 지금 표본 2건으로 해부해 두면 회사마다 다른 표를 같은 열로 뽑을 수 있다. 발주 직후 범위 확장(6~8번):
+  `kics_item_ref` 열, 기사 3축(異常危険準備金·재보험/AIR·基礎利益/逆ざや) 같은 문서에서 추출, 생보 표본 NN Life 추가, 생보/손보 양식 차이.
+- 산출: (A) `docs/domains/jp_esr_disclosure_template.md` (B) `J-ESR/esr_disclosure_schema.json` (C) `J-ESR/raw/fy2025_samples/extracted_sample_values.json`
+  + 생성기 `J-ESR/extract_esr_template_samples.py`(fitz, NFKC 정규화, 라벨 순차 커서, 절사 구간 검산; exit 0 게이트). 스크래치 `_item_table_fragment.md` 는
+  생성기가 다시 만드는 문서 조각.
+- 실측: 스키마 131항목(esr 109 / article_axes 22). 검산 C01~C34 + A01~A05: au 34/34, Meiji Yasuda Non-Life 41/41, NN Life 4/4. census 헤드라인
+  791.7 / 743.2 일치, NN `not_yet` 일치.
+- 규칙으로 승격한 발견: ① `esr = 適格資本/所要資本` 는 百万円 절사 때문에 소수 첫째자리 반올림으로 안 맞고 구간 [E/(R+1), (E+1)/R] 로만 맞는다.
+  ② 리스크 부모(損保·巨大災害·市場)는 Σ하위보다 작다(상관 통합) — 등식 검산 금지. ③ `Tier1 基礎項目 == EBS 純資産`, `EBS 純資産 = 회계 純資産 +
+  規制上の準備金 + 経済価値調整額` 이 T2↔T4 교차 게이트. ④ 정성 플래그는 정성 페이지에서만 검색(전체 문서 검색 시 T3 행 라벨 `マネジメント・
+  アクションの効果の額` 에 걸려 "적용" 오판 — 실측 후 수정). ⑤ au 는 EBS 빈 행을 생략하므로 미매치 = 0 으로 허용(`ROW_OMITTED`).
+- 편차·한계는 티켓 답변란과 문서 §7. MY 3축은 별책에 없어 본편 미열람(로컬 3건 조건). `calc_method=standard_implied` 는 추정.
+- `docs/domains/claude-agent-jp.md` §3 에 양식 지도 포인터 1줄 추가.
+
 ## 2026-09-12 (5) -- `jp/index.html` ESR 랭킹 ECharts 가로막대 → 루트 모바일 리스트 이식 (designer)
 
 - 티켓 `inbox/designer/20260912T0810Z__owner__JP_MULTI__jesr_jp_page_v3_korean_list.md`. owner 지적 원문 취지: "한국

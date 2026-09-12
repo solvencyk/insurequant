@@ -1,0 +1,818 @@
+# -*- coding: utf-8 -*-
+"""
+J-ESR regulatory-template extractor prototype (FY2025 samples) — two layers.
+
+  layer "esr"          : the 令和7年金融庁告示第74号/75号 regulatory tables (headline, eligible-capital composition,
+                         required-capital composition, EBS, insurance-liability bridge, sensitivity, method flags)
+  layer "article_axes" : the three FSA-monitoring-report axes (docs/domains/claude-agent-jp.md §4b) that live in
+                         OTHER sections of the same disclosure PDF — 異常危険準備金 / 再保険(AIR) / 基礎利益·逆ざや —
+                         plus the ESR placeholder skeleton for companies that print 後日公表予定.
+
+Reads the local sample PDFs with fitz and emits:
+  (B) J-ESR/esr_disclosure_schema.json
+  (C) J-ESR/raw/fy2025_samples/extracted_sample_values.json   (values + self-check)
+  (scratch) J-ESR/raw/fy2025_samples/_item_table_fragment.md   (markdown table rows for the domain doc)
+
+Run:
+  C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/extract_esr_template_samples.py
+
+No network. Amounts are stored as disclosed (百万円 unless the item says otherwise); ratios in %.
+Dashes ("－"/"ー") are stored as null (= not applicable / zero); checks treat null as 0.
+"""
+from __future__ import annotations
+
+import csv
+import json
+import re
+import sys
+import unicodedata
+from datetime import date
+from pathlib import Path
+
+import fitz  # PyMuPDF
+
+ROOT = Path(__file__).resolve().parent.parent
+SAMPLES = ROOT / "J-ESR" / "raw" / "fy2025_samples"
+SCHEMA_OUT = ROOT / "J-ESR" / "esr_disclosure_schema.json"
+VALUES_OUT = SAMPLES / "extracted_sample_values.json"
+CENSUS = ROOT / "J-ESR" / "fy2025_esr_census_20260912.csv"
+MD_FRAGMENT_OUT = SAMPLES / "_item_table_fragment.md"
+
+DASHES = {"-", "ー", "−", "―", "‐", "－"}
+NUM_RE = re.compile(r"^[△▲]?\d{1,3}(,\d{3})*(\.\d+)?%?$")
+M = "JPY_million"
+P = "pct"
+
+
+def norm(s: str) -> str:
+    return unicodedata.normalize("NFKC", s).strip()
+
+
+def is_dash(tok: str) -> bool:
+    return tok.rstrip("%") in DASHES
+
+
+def is_num(tok: str) -> bool:
+    return bool(NUM_RE.match(tok))
+
+
+def is_val(tok: str) -> bool:
+    return is_dash(tok) or is_num(tok)
+
+
+def to_val(tok):
+    if tok is None or is_dash(tok):
+        return None
+    neg = tok.startswith("△") or tok.startswith("▲")
+    t = tok.lstrip("△▲").replace(",", "").rstrip("%")
+    v = float(t) if "." in t else int(t)
+    return -v if neg else v
+
+
+# --------------------------------------------------------------------------------------
+# layer "esr" item spec.  One list drives the schema (B), the extraction (C) and the doc table (A).
+#   col: "cur" = 2nd token (当年度; 1st token is 前年度 '－' in FY2025), "ev" = last token (EBS 経済価値ベースの額),
+#        "first" = 1st token when the row has all 4 EBS columns (財務会計ベースの額)
+#   kics: K-ICS master item number (docs/agents/kics-json-validation-rules.md) or None when the concept does not map.
+# --------------------------------------------------------------------------------------
+ITEMS = [
+    # ---- T1 headline summary (要約) ----
+    dict(id="eligible_capital", table="T1", labels=[r"^適格資本の額\s*\(A\)$"], ko="적격자본 총액(A)", unit=M, parent=None,
+         formula="= tier1_eligible + tier2_eligible", required=True, kics=1),
+    dict(id="required_capital", table="T1", labels=[r"^所要資本の額\s*\(B\)$"], ko="소요자본 총액(B, 세효과 고려후)", unit=M, parent=None,
+         formula="= rc_post_tax", required=True, kics=14),
+    dict(id="esr_pct", table="T1", labels=[r"^ソルベンシー・マージン比率\s*\(\s*\(A\)\s*/\s*\(B\)\s*\)$"],
+         ko="ESR(경제가치기준 지급여력비율, 신기준 SMR)", unit=P, parent=None,
+         formula="= eligible_capital / required_capital * 100 (truncation interval)", required=True, kics=27),
+
+    # ---- T2 eligible capital composition (適格資本の額の構成) ----
+    dict(id="tier1_eligible", table="T2", labels=[r"^Tier1適格資本の額"], ko="Tier1 적격자본(A)", unit=M, parent="eligible_capital",
+         formula="= tier1_basic - tier1_adjustments", required=True, kics=2),
+    dict(id="tier1_basic", table="T2", labels=[r"^Tier1適格資本に係る基礎項目の額"], ko="Tier1 기초항목(B) = EBS 순자산", unit=M, parent="tier1_eligible",
+         formula="= tier1_instr_unrestricted + tier1_instr_restricted + tier1_non_instrument; == ebs_net_assets", required=True, kics=4),
+    dict(id="tier1_instr_unrestricted", table="T2", labels=[r"^算入制限のないTier1資本調達手段の額"], ko="산입제한 없는 Tier1 자본조달수단(자본금·기금)", unit=M, parent="tier1_basic", formula=None, required=False, kics=5),
+    dict(id="tier1_instr_restricted", table="T2", labels=[r"^算入制限のあるTier1資本調達手段の額"], ko="산입제한 있는 Tier1 자본조달수단(신종자본증권 등)", unit=M, parent="tier1_basic", formula=None, required=False, kics=6),
+    dict(id="tier1_non_instrument", table="T2", labels=[r"^資本調達手段以外のTier1適格資本の額"], ko="자본조달수단 이외 Tier1 적격자본", unit=M, parent="tier1_basic",
+         formula="= tier1_ni_retained_earnings + tier1_ni_capital_surplus + tier1_ni_aoci + tier1_ni_other_contrib + tier1_ni_ev_adjustment", required=False, kics=None),
+    dict(id="tier1_ni_retained_earnings", table="T2", labels=[r"^剰余金等の額又は利益剰余金等の額"], ko="잉여금등(이익잉여금+규제상 준비금)", unit=M, parent="tier1_non_instrument",
+         formula="= ebs_retained_earnings + ebs_regulatory_reserve_equity", required=False, kics=7),
+    dict(id="tier1_ni_capital_surplus", table="T2", labels=[r"^資本剰余金\(Tier2適格資本に算入されるものを除く\)の額"], ko="자본잉여금(Tier2 산입분 제외)", unit=M, parent="tier1_non_instrument", formula="== ebs_capital_surplus", required=False, kics=None),
+    dict(id="tier1_ni_aoci", table="T2", labels=[r"^その他の包括利益累計額又は評価・換算差額等の額"], ko="기타포괄손익누계액(평가·환산차액)", unit=M, parent="tier1_non_instrument", formula="== ebs_aoci", required=False, kics=9),
+    dict(id="tier1_ni_other_contrib", table="T2", labels=[r"^その他の拠出金等の額"], ko="기타 출자금등", unit=M, parent="tier1_non_instrument", formula=None, required=False, kics=None),
+    dict(id="tier1_ni_ev_adjustment", table="T2", labels=[r"^経済価値ベースの調整額"], ko="경제가치기준 조정액(EBS 순자산 − 회계 순자산 − 규제상 준비금)", unit=M, parent="tier1_non_instrument", formula="== ebs_ev_adjustment", required=False, kics=11),
+    dict(id="tier1_adjustments", table="T2", labels=[r"^Tier1適格資本に係る調整項目の額"], ko="Tier1 조정항목(C, 공제)", unit=M, parent="tier1_eligible",
+         formula="= Σ tier1_adj_* (7 subs)", required=True, kics=12),
+    dict(id="tier1_adj_intangibles", table="T2", labels=[r"^無形固定資産\(繰延税金負債相殺後\)の額"], ko="무형고정자산(DTL 상계후)", unit=M, parent="tier1_adjustments", formula="== ebs_intangibles", required=False, kics=None),
+    dict(id="tier1_adj_dta", table="T2", labels=[r"^繰延税金資産の額"], ko="이연법인세자산", unit=M, parent="tier1_adjustments", formula=None, required=False, kics=None),
+    dict(id="tier1_adj_pension_asset", table="T2", labels=[r"^前払年金費用又は退職給付に係る資産"], ko="선급연금비용/퇴직급여 관련 자산", unit=M, parent="tier1_adjustments", formula=None, required=False, kics=None),
+    dict(id="tier1_adj_holdings_other_fi", table="T2", labels=[r"^他の金融機関等が意図的に保有しているTier1資本調達手段の額"], ko="타 금융기관 의도적 보유 Tier1 조달수단", unit=M, parent="tier1_adjustments", formula=None, required=False, kics=None),
+    dict(id="tier1_adj_own_instruments", table="T2", labels=[r"^自己のTier1資本調達手段への投資の額"], ko="자기 Tier1 조달수단 투자", unit=M, parent="tier1_adjustments", formula=None, required=False, kics=None),
+    dict(id="tier1_adj_ineligible_reinsurance", table="T2", labels=[r"^不適格再保険資産の額"], ko="부적격 재보험자산", unit=M, parent="tier1_adjustments", formula=None, required=False, kics=None),
+    dict(id="tier1_adj_encumbered_excess", table="T2", labels=[r"^処分制約のある資産のうち関連する負債と所要資本を上回る額"], ko="처분제약 자산 중 관련부채+소요자본 초과분", unit=M, parent="tier1_adjustments", formula=None, required=False, kics=None),
+    dict(id="tier2_eligible", table="T2", labels=[r"^Tier2適格資本の額"], ko="Tier2 적격자본(D)", unit=M, parent="eligible_capital",
+         formula="= tier2_basic - tier2_adjustments - tier2_cap_deduction", required=True, kics=3),
+    dict(id="tier2_basic", table="T2", labels=[r"^Tier2適格資本に係る基礎項目の額"], ko="Tier2 기초항목(E)", unit=M, parent="tier2_eligible",
+         formula="= tier2_instruments + tier2_non_instrument", required=False, kics=None),
+    dict(id="tier2_instruments", table="T2", labels=[r"^Tier2資本調達手段の額$"], ko="Tier2 자본조달수단(후순위채 등)", unit=M, parent="tier2_basic",
+         formula="= tier2_instr_t1_excess + tier2_instr_paid + tier2_instr_unpaid", required=False, kics=None),
+    dict(id="tier2_instr_t1_excess", table="T2", labels=[r"^算入制限のあるTier1資本調達手段の制限を超過した額"], ko="제한초과 Tier1 조달수단(Tier2 재분류)", unit=M, parent="tier2_instruments", formula=None, required=False, kics=13),
+    dict(id="tier2_instr_paid", table="T2", labels=[r"^払込済みTier2資本調達手段の額"], ko="납입완료 Tier2 조달수단", unit=M, parent="tier2_instruments", formula=None, required=False, kics=None),
+    dict(id="tier2_instr_unpaid", table="T2", labels=[r"^払込未済のTier2資本調達手段の額"], ko="미납입 Tier2 조달수단(약정자본)", unit=M, parent="tier2_instruments", formula=None, required=False, kics=None),
+    dict(id="tier2_non_instrument", table="T2", labels=[r"^資本調達手段以外のTier2適格資本の額"], ko="자본조달수단 이외 Tier2 적격자본", unit=M, parent="tier2_basic",
+         formula="= tier2_ni_surplus_from_instr + tier2_ni_encumbered_t1_deducted + tier2_ni_basket", required=False, kics=None),
+    dict(id="tier2_ni_surplus_from_instr", table="T2", labels=[r"^Tier2資本調達手段の額に含まれる資本調達手段を"], ko="Tier2 조달수단 발행 자본잉여금", unit=M, parent="tier2_non_instrument", formula=None, required=False, kics=None),
+    dict(id="tier2_ni_encumbered_t1_deducted", table="T2", labels=[r"^処分制約のある資産のうちTier1適格資本から控除される額"], ko="처분제약 자산 중 Tier1 공제분", unit=M, parent="tier2_non_instrument", formula=None, required=False, kics=None),
+    dict(id="tier2_ni_basket", table="T2", labels=[r"^Tier2バスケット\(上限適用後\)の額"], ko="Tier2 바스켓(상한 적용후)", unit=M, parent="tier2_non_instrument", formula=None, required=False, kics=None),
+    dict(id="tier2_adjustments", table="T2", labels=[r"^Tier2適格資本に係る調整項目の額"], ko="Tier2 조정항목(F)", unit=M, parent="tier2_eligible",
+         formula="= tier2_adj_holdings_other_fi + tier2_adj_own_instruments", required=False, kics=None),
+    dict(id="tier2_adj_holdings_other_fi", table="T2", labels=[r"^他の金融機関等が意図的に保有しているTier2資本調達手段の額"], ko="타 금융기관 의도적 보유 Tier2 조달수단", unit=M, parent="tier2_adjustments", formula=None, required=False, kics=None),
+    dict(id="tier2_adj_own_instruments", table="T2", labels=[r"^自己のTier2資本調達手段への投資の額"], ko="자기 Tier2 조달수단 투자", unit=M, parent="tier2_adjustments", formula=None, required=False, kics=None),
+    dict(id="tier2_cap_deduction", table="T2", labels=[r"^Tier2適格資本への上限適用による控除の額"], ko="Tier2 상한 적용 공제(G)", unit=M, parent="tier2_eligible", formula=None, required=False, kics=None),
+    dict(id="eligible_capital_total", table="T2", labels=[r"^適格資本の額\s*\(\(A\)\+\(D\)\)$", r"^適格資本の額\(A\)\+\(D\)$"], ko="적격자본 합계(A+D) — T2 표 합계행", unit=M, parent=None,
+         formula="== eligible_capital", required=True, kics=1),
+
+    # ---- T3 required capital composition (所要資本の額の構成) ----
+    dict(id="rc_life", table="T3", labels=[r"^生命保険リスクの額"], ko="생명보험리스크(A)", unit=M, parent="rc_pre_tax", formula=None, required=True, kics=17),
+    dict(id="rc_nonlife", table="T3", labels=[r"^損害保険リスクの額"], ko="손해보험리스크(B)", unit=M, parent="rc_pre_tax",
+         formula="<= rc_nl_liability + rc_nl_motor + rc_nl_property + rc_nl_other (correlation aggregation)", required=True, kics=18),
+    dict(id="rc_nl_liability", table="T3", labels=[r"^賠償責任保険類似の商品に係るリスクの額"], ko="배상책임보험 유사 상품 리스크", unit=M, parent="rc_nonlife", formula=None, required=False, kics=None),
+    dict(id="rc_nl_motor", table="T3", labels=[r"^自動車保険類似の商品に係るリスクの額"], ko="자동차보험 유사 상품 리스크", unit=M, parent="rc_nonlife", formula=None, required=False, kics=None),
+    dict(id="rc_nl_property", table="T3", labels=[r"^財物保険類似の商品に係るリスクの額"], ko="재물보험 유사 상품 리스크", unit=M, parent="rc_nonlife", formula=None, required=False, kics=None),
+    dict(id="rc_nl_other", table="T3", labels=[r"^その他保険に係るリスクの額"], ko="기타보험 리스크", unit=M, parent="rc_nonlife", formula=None, required=False, kics=None),
+    dict(id="rc_catastrophe", table="T3", labels=[r"^巨大災害リスクの額"], ko="거대재해리스크(C)", unit=M, parent="rc_pre_tax",
+         formula="<= rc_cat_natural + rc_cat_other - rc_cat_mgmt_action", required=True, kics=None),
+    dict(id="rc_cat_natural", table="T3", labels=[r"^巨大自然災害リスクの額"], ko="거대자연재해리스크", unit=M, parent="rc_catastrophe",
+         formula="<= rc_cat_nat_jp_earthquake + rc_cat_nat_jp_windflood + rc_cat_nat_jp_snow + rc_cat_nat_foreign + rc_cat_nat_other", required=False, kics=None),
+    dict(id="rc_cat_nat_jp_earthquake", table="T3", labels=[r"^日本における地震に係るリスクの額"], ko="일본 지진", unit=M, parent="rc_cat_natural", formula=None, required=False, kics=None),
+    dict(id="rc_cat_nat_jp_windflood", table="T3", labels=[r"^日本における風水災に係るリスクの額"], ko="일본 풍수해", unit=M, parent="rc_cat_natural", formula=None, required=False, kics=None),
+    dict(id="rc_cat_nat_jp_snow", table="T3", labels=[r"^日本における雪災に係るリスクの額"], ko="일본 설해", unit=M, parent="rc_cat_natural", formula=None, required=False, kics=None),
+    dict(id="rc_cat_nat_foreign", table="T3", labels=[r"^外国における巨大自然災害リスクの額"], ko="해외 거대자연재해", unit=M, parent="rc_cat_natural", formula=None, required=False, kics=None),
+    dict(id="rc_cat_nat_other", table="T3", labels=[r"^その他の額$"], ko="기타(거대자연재해 내)", unit=M, parent="rc_cat_natural", formula=None, required=False, kics=None),
+    dict(id="rc_cat_other", table="T3", labels=[r"^その他の巨大災害に係るリスクの額"], ko="기타 거대재해(팬데믹·테러 등)", unit=M, parent="rc_catastrophe", formula=None, required=False, kics=None),
+    dict(id="rc_cat_mgmt_action", table="T3", labels=[r"^マネジメント・アクションの効果の額"], ko="경영조치 효과(거대재해)", unit=M, parent="rc_catastrophe", formula=None, required=False, kics=None),
+    dict(id="rc_market", table="T3", labels=[r"^市場リスクの額"], ko="시장리스크(D)", unit=M, parent="rc_pre_tax",
+         formula="<= rc_mkt_interest + rc_mkt_spread + rc_mkt_equity + rc_mkt_property + rc_mkt_fx + rc_mkt_concentration - rc_mkt_mgmt_action", required=True, kics=19),
+    dict(id="rc_mkt_interest", table="T3", labels=[r"^金利リスクの額"], ko="금리리스크", unit=M, parent="rc_market", formula=None, required=False, kics=36),
+    dict(id="rc_mkt_spread", table="T3", labels=[r"^スプレッドリスクの額"], ko="스프레드리스크", unit=M, parent="rc_market", formula=None, required=False, kics=None),
+    dict(id="rc_mkt_equity", table="T3", labels=[r"^株式リスクの額"], ko="주식리스크", unit=M, parent="rc_market", formula=None, required=False, kics=37),
+    dict(id="rc_mkt_property", table="T3", labels=[r"^不動産リスクの額"], ko="부동산리스크", unit=M, parent="rc_market", formula=None, required=False, kics=38),
+    dict(id="rc_mkt_fx", table="T3", labels=[r"^為替リスクの額"], ko="환리스크", unit=M, parent="rc_market", formula=None, required=False, kics=39),
+    dict(id="rc_mkt_concentration", table="T3", labels=[r"^資産集中リスクの額"], ko="자산집중리스크", unit=M, parent="rc_market", formula=None, required=False, kics=40),
+    dict(id="rc_mkt_mgmt_action", table="T3", labels=[r"^マネジメント・アクションの効果の額"], ko="경영조치 효과(시장)", unit=M, parent="rc_market", formula=None, required=False, kics=None),
+    dict(id="rc_credit", table="T3", labels=[r"^信用リスクの額"], ko="신용리스크(E)", unit=M, parent="rc_pre_tax", formula=None, required=True, kics=20),
+    dict(id="rc_operational", table="T3", labels=[r"^オペレーショナル・リスクの額"], ko="운영리스크(F)", unit=M, parent="rc_pre_tax", formula=None, required=True, kics=21),
+    dict(id="rc_mgmt_action_excess", table="T3", labels=[r"^マネジメント・アクションの効果の上限超過額"], ko="경영조치 효과 상한초과액(G, 가산)", unit=M, parent="rc_pre_tax", formula=None, required=False, kics=None),
+    dict(id="rc_diversification", table="T3", labels=[r"^分散効果の額"], ko="분산효과(H, 차감)", unit=M, parent="rc_pre_tax", formula=None, required=True, kics=16),
+    dict(id="rc_pre_tax", table="T3", labels=[r"^所要資本の額\(税効果考慮前\)"], ko="소요자본(세효과 고려전, I/J)", unit=M, parent="required_capital",
+         formula="= rc_life + rc_nonlife + rc_catastrophe + rc_market + rc_credit + rc_operational + rc_mgmt_action_excess - rc_diversification + rc_non_insurance_business", required=True, kics=15),
+    dict(id="rc_tax_effect", table="T3", labels=[r"^所要資本の税効果の額"], ko="소요자본 세효과(J/K, 차감)", unit=M, parent="required_capital", formula=None, required=True, kics=22),
+    dict(id="rc_post_tax", table="T3", labels=[r"^所要資本の額\(税効果考慮後\)"], ko="소요자본(세효과 고려후) — T3 합계행", unit=M, parent=None,
+         formula="= rc_pre_tax - rc_tax_effect; == required_capital", required=True, kics=14),
+
+    # ---- T4 EBS (経済価値ベースのバランスシート) — value column = 経済価値ベースの額 (last) unless col='first' ----
+    dict(id="ebs_total_assets", table="T4", labels=[r"^総資産$"], ko="EBS 총자산", unit=M, parent=None, formula="= statutory + reclass + revaluation (row-wise)", required=False, col="ev", kics=None),
+    dict(id="ebs_intangibles", table="T4", labels=[r"^無形固定資産$"], ko="EBS 무형고정자산", unit=M, parent="ebs_total_assets", formula="== tier1_adj_intangibles", required=False, col="ev", kics=None),
+    dict(id="ebs_reinsurance_recoverables", table="T4", labels=[r"^再保険回収額$"], ko="EBS 재보험회수액", unit=M, parent="ebs_total_assets", formula=None, required=False, col="ev", kics=None),
+    dict(id="ebs_total_liabilities", table="T4", labels=[r"^総負債$"], ko="EBS 총부채", unit=M, parent=None, formula="= ebs_insurance_liabilities + ebs_non_insurance_liabilities", required=False, col="ev", kics=None),
+    dict(id="ebs_insurance_liabilities", table="T4", labels=[r"^保険負債\(保険契約準備金\)合計$"], ko="EBS 보험부채 합계", unit=M, parent="ebs_total_liabilities", formula="= ebs_current_estimate + ebs_moce", required=False, col="ev", kics=None),
+    dict(id="ebs_current_estimate", table="T4", labels=[r"^現在推計の額"], ko="현재추계(최선추정부채, BEL)", unit=M, parent="ebs_insurance_liabilities", formula=None, required=False, col="ev", kics=None),
+    dict(id="ebs_moce", table="T4", labels=[r"^現在推計を超えるマージン"], ko="MOCE(현재추계 초과 마진, 위험마진)", unit=M, parent="ebs_insurance_liabilities", formula=None, required=False, col="ev", kics=None),
+    dict(id="ebs_reg_reserve_in_liabilities", table="T4", labels=[r"^規制上の準備金に属するもの"], ko="규제상 준비금(위험준비금·이상위험준비금 등, 회계기준 보험부채 내) — イ열", unit=M, parent="ebs_insurance_liabilities", formula="reclassified to equity (ロ열 △)", required=False, col="first", kics=None),
+    dict(id="ebs_non_insurance_liabilities", table="T4", labels=[r"^非保険負債合計$"], ko="EBS 비보험부채 합계", unit=M, parent="ebs_total_liabilities", formula=None, required=False, col="ev", kics=None),
+    dict(id="ebs_other_reserves_reclass", table="T4", labels=[r"^その他の準備金$"], ko="기타 준비금(부채로 재분류된 규제상 준비금 일부) — ニ열", unit=M, parent="ebs_non_insurance_liabilities", formula=None, required=False, col="ev", optional=True, kics=None),
+    dict(id="ebs_price_fluctuation_reserve", table="T4", labels=[r"^価格変動準備金$"], ko="가격변동준비금(회계기준, 자본으로 재분류) — イ열", unit=M, parent="ebs_non_insurance_liabilities", formula=None, required=False, col="first", optional=True, kics=None),
+    dict(id="ebs_net_assets", table="T4", labels=[r"^純資産$"], ko="EBS 순자산", unit=M, parent=None,
+         formula="= ebs_total_assets - ebs_total_liabilities; == tier1_basic; = ebs_net_assets_statutory + ebs_regulatory_reserve_equity + ebs_ev_adjustment", required=False, col="ev", kics=4),
+    dict(id="ebs_net_assets_statutory", table="T4", labels=[r"^純資産$"], ko="회계기준 순자산(EBS 표 イ열)", unit=M, parent="ebs_net_assets", formula=None, required=False, col="first", reuse=True, kics=None),
+    dict(id="ebs_capital_stock", table="T4", labels=[r"^基金又は資本金$", r"^資本金$"], ko="자본금/기금", unit=M, parent="ebs_net_assets", formula=None, required=False, col="ev", kics=None),
+    dict(id="ebs_capital_surplus", table="T4", labels=[r"^資本剰余金$"], ko="자본잉여금", unit=M, parent="ebs_net_assets", formula=None, required=False, col="ev", kics=None),
+    dict(id="ebs_retained_earnings", table="T4", labels=[r"^剰余金又は利益剰余金$", r"^利益剰余金$"], ko="이익잉여금", unit=M, parent="ebs_net_assets", formula=None, required=False, col="ev", kics=None),
+    dict(id="ebs_regulatory_reserve_equity", table="T4", labels=[r"^規制上の準備金$"], ko="규제상 준비금(자본으로 재분류된 합계) — ニ열", unit=M, parent="ebs_net_assets",
+         formula="≈ ebs_reg_reserve_in_liabilities + ebs_price_fluctuation_reserve - ebs_other_reserves_reclass (observed bridge)", required=False, col="ev", kics=None),
+    dict(id="ebs_aoci", table="T4", labels=[r"^その他の包括利益累計額合計", r"^その他の包括利益累計額$"], ko="기타포괄손익누계액", unit=M, parent="ebs_net_assets", formula=None, required=False, col="ev", optional=True, kics=None),
+    dict(id="ebs_ev_adjustment", table="T4", labels=[r"^経済価値ベースの調整額$"], ko="경제가치기준 조정액", unit=M, parent="ebs_net_assets", formula=None, required=False, col="ev", kics=11),
+
+    # ---- T6 insurance liabilities by product (保険負債の商品別差異調整) — value = 経済価値ベースの額(MOCE除く) ----
+    dict(id="il_total_ex_moce", table="T6", labels=[r"^保険負債$"], ko="보험부채(MOCE 제외) 경제가치", unit=M, parent=None, formula="== ebs_current_estimate", required=False, col="ev", kics=None),
+    dict(id="il_unexpired", table="T6", labels=[r"^未経過責任に係る保険負債$"], ko="미경과책임 보험부채(LRC 상당)", unit=M, parent="il_total_ex_moce", formula=None, required=False, col="ev", kics=None),
+    dict(id="il_incurred", table="T6", labels=[r"^既経過責任に係る保険負債$"], ko="기경과책임 보험부채(LIC 상당)", unit=M, parent="il_total_ex_moce", formula=None, required=False, col="ev", kics=None),
+]
+
+# extra esr-layer items not produced by the table walker (derived / variant-table / sensitivity / method)
+EXTRA_ESR_ITEMS = [
+    dict(id="rc_non_insurance_business", table="T1_combined", labels_ja=["非保険事業に係る所要資本の額"], ko="비보험사업 소요자본(i) — au 결합표에만 있는 행", unit=M, parent="rc_pre_tax", formula=None, required=False, column="cur", kics=23),
+    dict(id="tier1_ratio_pct", table="derived", labels_ja=[], ko="기본자본비율 상당 = tier1_eligible / required_capital × 100 (일본 미공시, 파생)", unit=P, parent="esr_pct", formula="= tier1_eligible / required_capital * 100", required=False, column="derived", kics=28),
+    dict(id="esr_pct_5yr_summary", table="summary_5yr", labels_ja=["単体ベースのソルベンシー・マージン比率", "ソルベンシー・マージン比率 新基準"], ko="5개년 주요지표 표의 헤드라인(교차확인용)", unit=P, parent="esr_pct", formula="== esr_pct", required=False, column="last", kics=None),
+]
+
+SENS_SCENARIOS = [
+    ("base", "当期末の数値", "기준(당기말)"),
+    ("jpy_rate_up50", "円金利50ベーシス・ポイント上昇", "엔 금리 +50bp"),
+    ("jpy_rate_down50", "円金利50ベーシス・ポイント下降", "엔 금리 -50bp"),
+    ("usd_rate_up50", "米ドル金利50ベーシス・ポイント上昇", "달러 금리 +50bp"),
+    ("usd_rate_down50", "米ドル金利50ベーシス・ポイント下降", "달러 금리 -50bp"),
+    ("jpy_ufr_down50", "円金利UFR50ベーシス・ポイント下降", "엔 UFR -50bp"),
+    ("equity_property_down10", "株式・不動産10%下落", "주식·부동산 -10%"),
+    ("fx_yen_up10", "為替10%円高", "환율 10% 엔고"),
+]
+SENS_ROWS = [
+    ("esr_pct", r"^ソルベンシー・マージン比率$", "ESR", P, None),
+    ("eligible_capital", r"^適格資本の額$", "적격자본", M, None),
+    ("ebs_total_assets", r"^総資産$", "총자산", M, None),
+    ("il_total_ex_moce", r"^保険負債の額", "보험부채(MOCE 제외)", M, None),
+    ("ebs_moce", r"^現在推計を超える", "MOCE", M, None),
+    ("ebs_non_insurance_liabilities", r"^非保険負債の額$", "비보험부채", M, None),
+    ("ebs_net_assets", r"^純資産の額$", "순자산", M, "41 (base) / 43 (jpy_rate_up50) / 44 (jpy_rate_down50) — 충격폭 다름(K-ICS 규정 시나리오 vs 50bp), 근사"),
+    ("required_capital", r"^所要資本の額$", "소요자본", M, None),
+    ("rc_life", r"^生命保険リスクの額$", "생명보험리스크", M, None),
+    ("rc_market", r"^市場リスクの額$", "시장리스크", M, None),
+]
+
+METHOD_ITEMS = [
+    dict(id="internal_model_applied", ko="내부모형 적용 여부", labels=["内部モデル手法の適用"], type="tri"),
+    dict(id="usp_applied", ko="회사고유 스트레스계수(USP) 적용 여부", labels=["会社固有のストレス係数手法の適用"], type="tri"),
+    dict(id="internal_discount_rate_applied", ko="내부할인율 적용 여부", labels=["内部割引率手法の適用"], type="tri"),
+    dict(id="mgmt_action_applied", ko="경영조치(management action) 반영 여부", labels=["マネジメント・アクション"], type="tri"),
+    dict(id="risk_mitigation_reinsurance", ko="재보험 리스크경감 반영 여부", labels=["リスク削減手法", "リスク削減効果"], type="bool"),
+    dict(id="transitional_measures", ko="경과조치(激変緩和措置) 적용 여부", labels=["経過措置", "激変緩和"], type="bool"),
+    dict(id="sensitivity_omitted", ko="민감도 표 생략 여부(차이 1%p 미만 사유)", labels=["記載を省略"], type="bool"),
+    dict(id="first_year_no_movement_analysis", ko="변동요인분석 미기재(초년도)", labels=["変動要因分析"], type="bool"),
+]
+
+# --------------------------------------------------------------------------------------
+# layer "article_axes" — schema entries (values come from extract_axes)
+# --------------------------------------------------------------------------------------
+AXES_ITEMS = [
+    # ESR placeholder skeleton (companies still at 後日公表予定)
+    dict(id="esr_status", axis="esr_placeholder", applies="both", labels_ja=["後日公表予定", "別途公表予定", "2026年10月末に公表予定"], ko="posted / not_yet / not_found", unit="enum", kics=None),
+    dict(id="esr_placeholder_locations", axis="esr_placeholder", applies="both", labels_ja=["ソルベンシー・マージン比率 新基準", "保険金等の支払能力の充実の状況（ソルベンシー・マージン比率）"], ko="'後日公表予定' 문구가 놓인 표/절 위치 목록(10월에 채워질 자리)", unit="list", kics=None),
+    dict(id="smr_old_basis_fy2024_pct", axis="esr_placeholder", applies="both", labels_ja=["ソルベンシー・マージン比率 旧基準"], ko="구기준 SMR FY2024 (비교 참고, ESR 아님)", unit=P, kics=None),
+    # 손보 축: 이상위험준비금
+    dict(id="cat_reserve_total", axis="catastrophe_reserve_adequacy", applies="nonlife", labels_ja=["異常危険準備金", "責任準備金の内訳"], ko="이상위험준비금 잔액 합계(전 종목)", unit=M, kics=None),
+    dict(id="cat_reserve_fire", axis="catastrophe_reserve_adequacy", applies="nonlife", labels_ja=["火災 行 × 異常危険準備金 列"], ko="화재 종목 이상위험준비금 잔액(금융청 부족 지적 대상)", unit=M, kics=None),
+    dict(id="cat_reserve_by_line", axis="catastrophe_reserve_adequacy", applies="nonlife", labels_ja=["火災/海上/傷害/自動車/自動車損害賠償責任/その他"], ko="종목별 이상위험준비금 잔액", unit="dict", kics=None),
+    dict(id="ordinary_reserve_total", axis="catastrophe_reserve_adequacy", applies="nonlife", labels_ja=["普通責任準備金"], ko="보통책임준비금 합계(같은 표)", unit=M, kics=None),
+    dict(id="cat_reserve_adequacy_note", axis="catastrophe_reserve_adequacy", applies="nonlife", labels_ja=["積立不足", "積立率", "異常危険準備金の取崩"], ko="적립 부족/적립률 서술 유무 (없으면 null)", unit="text", kics=None),
+    # 재보험 / AIR 축
+    dict(id="air_used", axis="air_used", applies="both", labels_ja=["アセット・インテンシブ", "資産集約型再保険", "再保険"], ko="not_mentioned / mentioned / mentioned_esr_purpose", unit="enum", kics=None),
+    dict(id="air_evidence", axis="air_used", applies="both", labels_ja=["既契約の出再に伴う損益", "共同保険式再保険", "最低保証再保険"], ko="AIR 정황 근거(기계약 출재 손익·관계사 재보험 각주 등)", unit="text", kics=None),
+    dict(id="inforce_cession_pl", axis="air_used", applies="life", labels_ja=["既契約の出再に伴う損益に相当する額"], ko="기계약 출재 관련 손익(기초이익에서 제외된 액)", unit=M, kics=None),
+    dict(id="reins_counterparties_n", axis="air_used", applies="both", labels_ja=["出再先保険会社の数", "再保険を引き受けた主要な保険会社等の数"], ko="출재 상대 재보험사 수", unit="count", kics=None),
+    dict(id="reins_top5_share_pct", axis="air_used", applies="both", labels_ja=["出再保険料のうち上位5社の出再先に集中している割合", "支払再保険料の金額が大きい上位5社に対する支払再保険料の割合"], ko="상위 5사 출재보험료 집중도", unit=P, kics=None),
+    dict(id="reins_rating_a_or_above_pct", axis="air_used", applies="both", labels_ja=["出再保険料の格付ごとの割合", "格付機関による格付に基づく区分ごとの支払再保険料の割合"], ko="A등급 이상 재보험사 출재보험료 비중", unit=P, kics=None),
+    dict(id="reins_unreceived_claims", axis="air_used", applies="life", labels_ja=["未だ収受していない再保険金の金額"], ko="미수 재보험금", unit=M, kics=None),
+    # 생보 축: 기초이익 / 이차손익
+    dict(id="core_profit", axis="interest_margin_sign", applies="life", labels_ja=["基礎利益"], ko="기초이익(당기)", unit=M, kics=None),
+    dict(id="core_profit_prev", axis="interest_margin_sign", applies="life", labels_ja=["基礎利益"], ko="기초이익(전기)", unit=M, kics=None),
+    dict(id="negative_spread_100m", axis="interest_margin_sign", applies="life", labels_ja=["逆ざや", "逆鞘"], ko="역마진(逆ざや) 금액 — 단위 億円(표본 원문 단위) — 양수=역마진 존재", unit="JPY_100million", kics=None),
+    dict(id="negative_spread_prev_100m", axis="interest_margin_sign", applies="life", labels_ja=["逆ざや"], ko="역마진 전기(億円)", unit="JPY_100million", kics=None),
+    dict(id="interest_margin", axis="interest_margin_sign", applies="life", labels_ja=["利差損益", "利差益", "利差損", "順ざや"], ko="이차손익(三利源 공시사에서만)", unit=M, kics=None),
+    dict(id="interest_margin_sign", axis="interest_margin_sign", applies="life", labels_ja=["利差損益", "逆ざや", "順ざや"], ko="positive / negative / unstated (역마진이면 negative)", unit="enum", kics=None),
+    dict(id="three_source_disclosed", axis="interest_margin_sign", applies="life", labels_ja=["利差損益", "危険差損益", "費差損益"], ko="三利源(利差·危険差·費差) 분해 공시 여부", unit="bool", kics=None),
+]
+
+COMPANIES = [
+    dict(key="au_nonlife", company_jp="au損害保険", company_en="au Non-Life", sector="nonlife", pdf="au_nonlife_disclo_260730_4of5.pdf",
+         layers=["esr", "article_axes"],
+         pages=dict(T1=[22], T1_combined=[22], T2=[23], T3=[24], T4=[25], T6=[28], T7=[29], T8=[26, 27, 29]),
+         headline_5yr_page=2, axes_pages=dict(reins=[6], reserves=[8])),
+    dict(key="meijiyasuda_nonlife", company_jp="明治安田損害保険", company_en="Meiji Yasuda Non-Life", sector="nonlife", pdf="meijiyasuda_nonlife_20260904_performance_data.pdf",
+         layers=["esr", "article_axes"],
+         pages=dict(T1=[2], T2=[3], T3=[4], T4=[5, 6, 7], T6=[11], T7=[12], T8=[8, 13]),
+         headline_5yr_page=None, axes_pages=dict()),
+    dict(key="nnlife", company_jp="エヌエヌ生命保険", company_en="NN Life", sector="life", pdf="nnlife_2025disclosure_202607.pdf",
+         layers=["article_axes"], pages=dict(), headline_5yr_page=11,
+         axes_pages=dict(summary5=[11], soundness=[15], core_profit=[60], reins=[64], esr_section=[54])),
+]
+
+
+# --------------------------------------------------------------------------------------
+def page_lines(doc, pages):
+    out = []
+    for p in pages:
+        for ln in doc[p - 1].get_text("text").splitlines():
+            n = norm(ln)
+            if n:
+                out.append((p, n))
+    return out
+
+
+def grab(lines, start, label_res, skip_limit=6, stop=None):
+    """First line >= start matching any regex -> (value_tokens, page, next_index) or None."""
+    end = len(lines) if stop is None else stop
+    for i in range(start, end):
+        p, ln = lines[i]
+        if any(re.search(r, ln) for r in label_res):
+            j = i + 1
+            skipped = 0
+            while j < end and not is_val(lines[j][1]) and skipped < skip_limit:
+                j += 1
+                skipped += 1
+            toks = []
+            while j < end and is_val(lines[j][1]):
+                toks.append(lines[j][1])
+                j += 1
+            return toks, p, j
+    return None
+
+
+def pick(toks, col):
+    if not toks:
+        return None
+    if col == "ev":
+        return to_val(toks[-1])
+    if col == "first":
+        return to_val(toks[0]) if len(toks) >= 4 else None
+    if len(toks) >= 2:
+        return to_val(toks[1])
+    return to_val(toks[0])
+
+
+def extract_esr(comp, doc):
+    values, pages, raw = {}, {}, {}
+    cursors = {}
+    table_lines = {t: page_lines(doc, pg) for t, pg in comp["pages"].items()}
+    for it in ITEMS:
+        t = it["table"]
+        lines = table_lines[t]
+        start = cursors.get(t + "_prev", 0) if it.get("reuse") else cursors.get(t, 0)
+        res = grab(lines, start, it["labels"])
+        if res is None:
+            values[it["id"]], pages[it["id"]] = None, None
+            raw[it["id"]] = "ROW_OMITTED" if it.get("optional") else "NOT_FOUND"
+            continue
+        toks, p, nxt = res
+        values[it["id"]] = pick(toks, it.get("col", "cur"))
+        pages[it["id"]] = p
+        raw[it["id"]] = toks
+        if not it.get("reuse"):
+            cursors[t + "_prev"] = start
+            cursors[t] = nxt
+
+    lines = table_lines.get("T1_combined")
+    if lines:
+        res = grab(lines, 0, [r"^非保険事業に係る所要資本の額"])
+        values["rc_non_insurance_business"] = pick(res[0], "cur") if res else None
+        pages["rc_non_insurance_business"] = res[1] if res else None
+        raw["rc_non_insurance_business"] = res[0] if res else "NOT_FOUND"
+    else:
+        values["rc_non_insurance_business"], pages["rc_non_insurance_business"], raw["rc_non_insurance_business"] = None, None, "NOT_IN_TEMPLATE"
+
+    # derived: tier1 ratio (K-ICS 기본자본비율 상당)
+    t1, rq = values.get("tier1_eligible"), values.get("required_capital")
+    values["tier1_ratio_pct"] = round(t1 / rq * 100, 1) if t1 and rq else None
+    pages["tier1_ratio_pct"], raw["tier1_ratio_pct"] = None, "DERIVED"
+
+    hl5 = None
+    if comp.get("headline_5yr_page"):
+        for p, ln in page_lines(doc, [comp["headline_5yr_page"]]):
+            m = re.match(r"^(\d{2,4}\.\d)%$", ln)
+            if m:
+                hl5 = float(m.group(1))  # last % token on the page = latest FY (columns run oldest -> newest)
+    values["esr_pct_5yr_summary"] = hl5
+    pages["esr_pct_5yr_summary"], raw["esr_pct_5yr_summary"] = comp.get("headline_5yr_page"), "REGEX"
+
+    # sensitivity
+    sens_lines = table_lines["T7"]
+    split_idx = next((i for i, (_, ln) in enumerate(sens_lines) if "当期末の数値との差額" in ln), None)
+    blocks = [("levels", sens_lines[:split_idx] if split_idx else sens_lines)]
+    if split_idx:
+        blocks.append(("diffs", sens_lines[split_idx:]))
+    sens = {"scenarios": [s[0] for s in SENS_SCENARIOS], "levels": {}, "diffs": {}, "pages": comp["pages"]["T7"]}
+    for bname, blines in blocks:
+        cur = 0
+        for rid, rre, _, _, _ in SENS_ROWS:
+            res = grab(blines, cur, [rre])
+            if res is None:
+                sens[bname][rid] = None
+                continue
+            toks, p, nxt = res
+            cur = nxt
+            vals = [to_val(t) for t in toks[:8]]
+            vals += [None] * (8 - len(vals))
+            sens[bname][rid] = dict(zip(sens["scenarios"], vals))
+
+    # method flags — searched only in the qualitative pages (T8) + sensitivity page (T7), so that T3 row labels
+    # such as マネジメント・アクションの効果の額 do not masquerade as "applied"
+    doc_text = norm("\n".join(pg.get_text("text") for pg in doc))
+    qual_text = norm("\n".join(doc[p - 1].get_text("text") for p in sorted(set(comp["pages"]["T8"] + comp["pages"]["T7"]))))
+    method = {}
+    for mi in METHOD_ITEMS:
+        found = None
+        for lab in mi["labels"]:
+            idx = qual_text.find(lab)
+            if idx >= 0:
+                found = qual_text[idx: idx + 80]
+                break
+        if mi["type"] == "tri":
+            method[mi["id"]] = "unstated" if found is None else (False if ("該当ありません" in found or "該当なし" in found) else True)
+        else:
+            method[mi["id"]] = found is not None
+    ima = method["internal_model_applied"]
+    method["calc_method"] = "standard" if ima is False else ("standard_implied" if ima == "unstated" else "internal_model")
+    m = re.search(r"(一般バケット|ミドルバケット|トップバケット)\s*((?:\d+\.\d+%\s*)+)", doc_text)
+    tenors = re.findall(r"(\d+)年", doc_text[max(0, m.start() - 60): m.start()]) if m else []
+    method["discount_bucket_jpy"] = m.group(1) if m else None
+    method["discount_rates_jpy"] = dict(zip([t + "y" for t in tenors[-4:]], [float(x.rstrip("%")) for x in m.group(2).split()])) if m else None
+    return dict(values=values, pages=pages, raw_tokens=raw, sensitivity=sens, method=method)
+
+
+# --------------------------------------------------------------------------------------
+def extract_axes(comp, doc):
+    """layer article_axes — company-type specific sections outside the ESR tables."""
+    v = {k: None for k in [a["id"] for a in AXES_ITEMS]}
+    pg = {}
+    doc_text = norm("\n".join(p.get_text("text") for p in doc))
+    ap = comp["axes_pages"]
+
+    # --- ESR placeholder / status ---
+    locs = []
+    for i, page in enumerate(doc):
+        t = norm(page.get_text("text"))
+        for phrase in ["後日公表予定", "別途公表予定", "10月末に公表予定", "後日公表"]:
+            if phrase in t:
+                ctx_i = t.find(phrase)
+                locs.append(dict(page=i + 1, phrase=phrase, context=t[max(0, ctx_i - 60): ctx_i + 20].replace("\n", " ")))
+                break
+    v["esr_placeholder_locations"] = locs
+    v["esr_status"] = "not_yet" if locs and "esr" not in comp["layers"] else ("posted" if "esr" in comp["layers"] else "not_found")
+    m = re.search(r"旧基準\s*\n((?:[\d.]+%?\s*\n|-\s*\n){1,5})", doc_text)
+    if m:
+        toks = [x for x in m.group(1).split() if x]
+        # columns run oldest -> newest; FY2024 = second-to-last
+        v["smr_old_basis_fy2024_pct"] = to_val(toks[-2]) if len(toks) >= 2 and is_num(toks[-2]) else None
+    pg["esr_placeholder"] = [l["page"] for l in locs]
+
+    # --- AIR / reinsurance ---
+    if "アセット・インテンシブ" in doc_text or "資産集約型" in doc_text:
+        v["air_used"] = "mentioned_esr_purpose" if re.search(r"(アセット・インテンシブ|資産集約型).{0,200}(ESR|ソルベンシー)", doc_text, re.S) else "mentioned"
+    else:
+        v["air_used"] = "not_mentioned"
+    ev = []
+    if "既契約の出再に伴う損益" in doc_text:
+        ev.append("基礎利益 note: 既契約の出再に伴う損益を除外 (in-force block cession P&L excluded from core profit)")
+    if "共同保険式再保険" in doc_text:
+        ev.append("関連当事者取引 note: 共同保険式再保険・最低保証再保険 (coinsurance-type / guarantee reinsurance with group company)")
+    v["air_evidence"] = "; ".join(ev) if ev else None
+
+    if ap.get("reins"):
+        lines = page_lines(doc, ap["reins"])
+        pg["reins"] = ap["reins"]
+        if comp["sector"] == "nonlife":
+            # au form: (10) 出再先保険会社の数 / 上位5社 ... 2025年度 5社 100.0%
+            txt = "\n".join(ln for _, ln in lines)
+            m = re.search(r"2025年度\s*\n(\d+)社\s*\n([\d.]+)%", txt)
+            if m:
+                v["reins_counterparties_n"], v["reins_top5_share_pct"] = int(m.group(1)), float(m.group(2))
+            # (11) 格付区分 A以上 BBB以上 その他 合計 ... 2025年度 80.0% ー% 20.0% 100.0%
+            m = re.search(r"格付区分\s*\n(.+?)合計\s*\n", txt, re.S)
+            if m:
+                buckets = [b for b in m.group(1).split("\n") if b and not b.startswith("(")]
+                m2 = re.search(r"2025年度\s*\n((?:[\d.]+%|ー%|-%)\s*\n?){" + str(len(buckets) + 1) + ",}", txt)
+                if m2:
+                    toks = re.findall(r"([\d.]+%|ー%|-%)", m2.group(0))
+                    share = dict(zip(buckets, [to_val(t) for t in toks]))
+                    v["reins_rating_a_or_above_pct"] = sum((share.get(b) or 0) for b in buckets if b.startswith("A"))
+                    v["_reins_rating_buckets"] = share
+        else:
+            # life form: (4) 主要な保険会社等の数 / (5) 上位5社 / (6) 格付区分 / (7) 未収再保険金
+            res = grab(lines, 0, [r"再保険を引き受けた主要な保険会社等の数"])
+            v["reins_counterparties_n"] = pick(res[0], "cur") if res else None
+            res = grab(lines, 0, [r"上位5社に対する支払"])
+            v["reins_top5_share_pct"] = pick(res[0], "cur") if res else None
+            i0 = next((i for i, (_, ln) in enumerate(lines) if ln.startswith("格付区分")), None)
+            if i0 is not None:
+                share = {}
+                j = i0 + 1
+                while j < len(lines) and not lines[j][1].startswith("(注"):
+                    ln = lines[j][1]
+                    if re.match(r"^(AAA|AA|A|BBB|BB|B)[+-]?$|^A以上$|^BBB以上$|^その他$", ln):
+                        res = grab(lines, j, [re.escape(ln) + "$"])
+                        if res:
+                            share[ln] = pick(res[0], "cur")
+                            j = res[2]
+                            continue
+                    j += 1
+                v["_reins_rating_buckets"] = share
+                v["reins_rating_a_or_above_pct"] = round(sum((x or 0) for k, x in share.items() if k.startswith("A")), 1)
+            res = grab(lines, 0, [r"未だ収受していない再保険金の金額"])
+            v["reins_unreceived_claims"] = pick(res[0], "cur") if res else None
+
+    # --- nonlife: 異常危険準備金 (責任準備金の内訳 table, 2025年度) ---
+    if comp["sector"] == "nonlife" and ap.get("reserves"):
+        lines = page_lines(doc, ap["reserves"])
+        pg["reserves"] = ap["reserves"]
+        i0 = next((i for i, (_, ln) in enumerate(lines) if "責任準備金の内訳" in ln and "2025年度" in ln), None)
+        if i0 is not None:
+            by_line, cur = {}, i0
+            for lob in ["火災", "海上", "傷害", "自動車", "自動車損害賠償責任", "その他", "合計"]:
+                res = grab(lines, cur, [r"^" + lob + r"$"])
+                if res:
+                    toks, _, cur = res
+                    # columns: 普通責任準備金 / 異常危険準備金 / 危険準備金 / 払戻積立金 / 契約者配当準備金等 / 合計
+                    by_line[lob] = dict(ordinary=to_val(toks[0]) if len(toks) > 0 else None, catastrophe=to_val(toks[1]) if len(toks) > 1 else None)
+            v["cat_reserve_by_line"] = {k: x["catastrophe"] for k, x in by_line.items() if k != "合計"}
+            v["cat_reserve_total"] = by_line.get("合計", {}).get("catastrophe")
+            v["cat_reserve_fire"] = by_line.get("火災", {}).get("catastrophe")
+            v["ordinary_reserve_total"] = by_line.get("合計", {}).get("ordinary")
+        # only an explicit statement about 異常危険準備金 counts; 責任準備金積立水準 '積立率 100%' is the policy reserve, not this
+        m = re.search(r"異常危険準備金[^\n]{0,60}(不足|積立率)[^\n]{0,60}|積立不足[^\n]{0,80}", doc_text)
+        v["cat_reserve_adequacy_note"] = m.group(0) if m else None
+    elif comp["sector"] == "nonlife":
+        v["cat_reserve_adequacy_note"] = "NOT_IN_SAMPLE_DOC (別冊 業績データ has no 責任準備金の内訳 table — main disclosure volume needed)"
+
+    # --- life: 基礎利益 / 逆ざや ---
+    if comp["sector"] == "life":
+        if ap.get("core_profit"):
+            lines = page_lines(doc, ap["core_profit"])
+            pg["core_profit"] = ap["core_profit"]
+            res = grab(lines, 0, [r"^基礎利益$"])
+            if res:
+                v["core_profit_prev"], v["core_profit"] = to_val(res[0][0]), to_val(res[0][1])
+            res = grab(lines, 0, [r"^既契約の出再に伴う損益に相当する額$"])
+            v["inforce_cession_pl"] = pick(res[0], "cur") if res else None
+        if ap.get("soundness"):
+            lines = page_lines(doc, ap["soundness"])
+            pg["soundness"] = ap["soundness"]
+            res = grab(lines, 0, [r"^逆ざや$"])
+            if res and len(res[0]) >= 2:
+                v["negative_spread_prev_100m"], v["negative_spread_100m"] = to_val(res[0][0]), to_val(res[0][1])
+        v["three_source_disclosed"] = bool(re.search(r"利差損益|危険差損益|費差損益", doc_text))
+        if v["three_source_disclosed"]:
+            v["interest_margin_sign"] = "see interest_margin"
+        elif v["negative_spread_100m"] is not None:
+            v["interest_margin_sign"] = "negative" if v["negative_spread_100m"] > 0 else "positive"
+        elif "順ざや" in doc_text:
+            v["interest_margin_sign"] = "positive"
+        else:
+            v["interest_margin_sign"] = "unstated"
+    return dict(values=v, pages=pg)
+
+
+# --------------------------------------------------------------------------------------
+def write_lf(path: Path, text: str) -> None:
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+
+
+def z(x):
+    return 0 if x is None else x
+
+
+def run_checks(c):
+    v, s, checks = c["values"], c["sensitivity"], []
+
+    def add(cid, formula, lhs, rhs, tol, note=""):
+        ok = lhs is not None and rhs is not None and abs(lhs - rhs) <= tol
+        checks.append(dict(id=cid, formula=formula, lhs=lhs, rhs=rhs, tol=tol, **{"pass": ok}, note=note))
+
+    def add_le(cid, formula, lhs, rhs, note=""):
+        checks.append(dict(id=cid, formula=formula, lhs=lhs, rhs=rhs, tol="lhs<=rhs+1", **{"pass": z(lhs) <= z(rhs) + 1}, note=note))
+
+    e, r, esr = v["eligible_capital"], v["required_capital"], v["esr_pct"]
+    if e and r:
+        lo, hi = e / (r + 1) * 100, (e + 1) / r * 100
+        ok = esr is not None and (lo - 0.05) <= esr <= (hi + 0.05)
+        checks.append(dict(id="C01_esr_ratio", formula="esr_pct in [eligible/(required+1), (eligible+1)/required]*100 (±0.05; amounts truncated to 百万円)",
+                           lhs=esr, rhs=[round(lo, 2), round(hi, 2)], tol="interval", **{"pass": ok}, note=f"point estimate {e / r * 100:.2f}"))
+    add("C02_eligible_eq_total", "eligible_capital == eligible_capital_total", v["eligible_capital"], v["eligible_capital_total"], 0)
+    add("C03_required_eq_post_tax", "required_capital == rc_post_tax", v["required_capital"], v["rc_post_tax"], 0)
+    add("C04_eligible_tiers", "eligible_capital = tier1_eligible + tier2_eligible", v["eligible_capital"], z(v["tier1_eligible"]) + z(v["tier2_eligible"]), 1)
+    add("C05_tier1", "tier1_eligible = tier1_basic - tier1_adjustments", v["tier1_eligible"], z(v["tier1_basic"]) - z(v["tier1_adjustments"]), 1)
+    add("C06_tier1_basic", "tier1_basic = instr_unrestricted + instr_restricted + non_instrument", v["tier1_basic"],
+        z(v["tier1_instr_unrestricted"]) + z(v["tier1_instr_restricted"]) + z(v["tier1_non_instrument"]), 1)
+    add("C07_tier1_non_instr", "tier1_non_instrument = retained + capital_surplus + aoci + other_contrib + ev_adjustment", v["tier1_non_instrument"],
+        z(v["tier1_ni_retained_earnings"]) + z(v["tier1_ni_capital_surplus"]) + z(v["tier1_ni_aoci"]) + z(v["tier1_ni_other_contrib"]) + z(v["tier1_ni_ev_adjustment"]), 2)
+    add("C08_tier1_adj", "tier1_adjustments = Σ 7 subs", v["tier1_adjustments"],
+        sum(z(v[k]) for k in ["tier1_adj_intangibles", "tier1_adj_dta", "tier1_adj_pension_asset", "tier1_adj_holdings_other_fi", "tier1_adj_own_instruments", "tier1_adj_ineligible_reinsurance", "tier1_adj_encumbered_excess"]), 2)
+    add("C09_tier2", "tier2_eligible = tier2_basic - tier2_adjustments - tier2_cap_deduction", v["tier2_eligible"], z(v["tier2_basic"]) - z(v["tier2_adjustments"]) - z(v["tier2_cap_deduction"]), 1)
+    add("C10_tier2_basic", "tier2_basic = tier2_instruments + tier2_non_instrument", v["tier2_basic"], z(v["tier2_instruments"]) + z(v["tier2_non_instrument"]), 1)
+    add("C11_tier2_non_instr", "tier2_non_instrument = surplus_from_instr + encumbered_t1_deducted + basket", v["tier2_non_instrument"],
+        z(v["tier2_ni_surplus_from_instr"]) + z(v["tier2_ni_encumbered_t1_deducted"]) + z(v["tier2_ni_basket"]), 1)
+    terms = ["rc_life", "rc_nonlife", "rc_catastrophe", "rc_market", "rc_credit", "rc_operational", "rc_mgmt_action_excess"]
+    add("C12_rc_pre_tax", "rc_pre_tax = A+B+C+D+E+F+G - H + non_insurance_business (tol = n terms; each term truncated)", v["rc_pre_tax"],
+        sum(z(v[k]) for k in terms) - z(v["rc_diversification"]) + z(v["rc_non_insurance_business"]), len(terms) + 2)
+    add("C13_rc_post_tax", "rc_post_tax = rc_pre_tax - rc_tax_effect", v["rc_post_tax"], z(v["rc_pre_tax"]) - z(v["rc_tax_effect"]), 1)
+    add_le("C14_nonlife_le_sum", "rc_nonlife <= Σ nonlife subs (correlation aggregation)", v["rc_nonlife"], sum(z(v[k]) for k in ["rc_nl_liability", "rc_nl_motor", "rc_nl_property", "rc_nl_other"]))
+    add_le("C15_cat_le_sum", "rc_catastrophe <= rc_cat_natural + rc_cat_other", v["rc_catastrophe"], z(v["rc_cat_natural"]) + z(v["rc_cat_other"]))
+    add_le("C16_catnat_le_sum", "rc_cat_natural <= Σ nat-cat subs", v["rc_cat_natural"], sum(z(v[k]) for k in ["rc_cat_nat_jp_earthquake", "rc_cat_nat_jp_windflood", "rc_cat_nat_jp_snow", "rc_cat_nat_foreign", "rc_cat_nat_other"]))
+    add_le("C17_market_le_sum", "rc_market <= Σ market subs", v["rc_market"], sum(z(v[k]) for k in ["rc_mkt_interest", "rc_mkt_spread", "rc_mkt_equity", "rc_mkt_property", "rc_mkt_fx", "rc_mkt_concentration"]))
+    add("C18_tier1_basic_eq_ebs_net", "tier1_basic == ebs_net_assets", v["tier1_basic"], v["ebs_net_assets"], 0)
+    add("C19_ebs_net", "ebs_net_assets = ebs_total_assets - ebs_total_liabilities", v["ebs_net_assets"], z(v["ebs_total_assets"]) - z(v["ebs_total_liabilities"]), 1)
+    add("C20_ebs_liab", "ebs_total_liabilities = insurance + non_insurance", v["ebs_total_liabilities"], z(v["ebs_insurance_liabilities"]) + z(v["ebs_non_insurance_liabilities"]), 1)
+    add("C21_ebs_ins_liab", "ebs_insurance_liabilities = current_estimate + moce", v["ebs_insurance_liabilities"], z(v["ebs_current_estimate"]) + z(v["ebs_moce"]), 1)
+    add("C22_ebs_net_bridge", "ebs_net_assets = statutory net assets + regulatory_reserve_equity + ev_adjustment", v["ebs_net_assets"],
+        z(v["ebs_net_assets_statutory"]) + z(v["ebs_regulatory_reserve_equity"]) + z(v["ebs_ev_adjustment"]), 1)
+    add("C23_ev_adj_xref", "tier1_ni_ev_adjustment == ebs_ev_adjustment", v["tier1_ni_ev_adjustment"], v["ebs_ev_adjustment"], 0)
+    add("C24_intangibles_xref", "tier1_adj_intangibles == ebs_intangibles", v["tier1_adj_intangibles"], v["ebs_intangibles"], 0)
+    add("C25_capital_surplus_xref", "tier1_ni_capital_surplus == ebs_capital_surplus", v["tier1_ni_capital_surplus"], v["ebs_capital_surplus"], 0)
+    add("C26_retained_xref", "tier1_ni_retained_earnings = ebs_retained_earnings + ebs_regulatory_reserve_equity", v["tier1_ni_retained_earnings"],
+        z(v["ebs_retained_earnings"]) + z(v["ebs_regulatory_reserve_equity"]), 1)
+    add("C27_aoci_xref", "tier1_ni_aoci == ebs_aoci", z(v["tier1_ni_aoci"]), z(v["ebs_aoci"]), 0)
+    add("C28_il_eq_current_estimate", "il_total_ex_moce == ebs_current_estimate", v["il_total_ex_moce"], v["ebs_current_estimate"], 0)
+    add("C29_il_split", "il_total_ex_moce = il_unexpired + il_incurred", v["il_total_ex_moce"], z(v["il_unexpired"]) + z(v["il_incurred"]), 1)
+    if v.get("esr_pct_5yr_summary") is not None:
+        add("C30_headline_5yr", "esr_pct == 5-year-summary headline", v["esr_pct"], v["esr_pct_5yr_summary"], 0)
+    add("C34_reg_reserve_bridge", "ebs_regulatory_reserve_equity = reg_reserve_in_liabilities + price_fluctuation_reserve - other_reserves_reclass (observed, 2 samples)",
+        v["ebs_regulatory_reserve_equity"], z(v["ebs_reg_reserve_in_liabilities"]) + z(v["ebs_price_fluctuation_reserve"]) - z(v["ebs_other_reserves_reclass"]), 2)
+    lv = s["levels"]
+    if lv.get("esr_pct") and lv["esr_pct"].get("base") is not None:
+        for rid in ["esr_pct", "eligible_capital", "required_capital", "ebs_net_assets", "ebs_total_assets", "rc_market", "ebs_moce", "il_total_ex_moce", "ebs_non_insurance_liabilities"]:
+            add(f"C31_sens_base_{rid}", f"sensitivity.levels.{rid}.base == {rid}", lv[rid]["base"] if lv.get(rid) else None, v.get(rid), 0)
+        if s["diffs"]:
+            nbad = n = 0
+            for rid, row in s["diffs"].items():
+                if not row or not lv.get(rid):
+                    continue
+                tol = 0.15 if rid == "esr_pct" else 1
+                for sc in s["scenarios"][1:]:
+                    if row.get(sc) is None or lv[rid].get(sc) is None:
+                        continue
+                    n += 1
+                    if abs((lv[rid][sc] - lv[rid]["base"]) - row[sc]) > tol:
+                        nbad += 1
+            checks.append(dict(id="C32_sens_diff_table", formula="diffs[row][sc] == levels[row][sc] - levels[row].base (pct ±0.15, amounts ±1)", lhs=n - nbad, rhs=n, tol="count", **{"pass": nbad == 0}, note=f"{nbad} mismatches"))
+        nb = n = 0
+        for sc in s["scenarios"][1:]:
+            ee, rr, xx = lv["eligible_capital"].get(sc), lv["required_capital"].get(sc), lv["esr_pct"].get(sc)
+            if ee and rr and xx is not None:
+                n += 1
+                lo, hi = ee / (rr + 1) * 100, (ee + 1) / rr * 100
+                if not (lo - 0.05 <= xx <= hi + 0.05):
+                    nb += 1
+        checks.append(dict(id="C33_sens_ratio", formula="each scenario esr == eligible/required (truncation interval)", lhs=n - nb, rhs=n, tol="count", **{"pass": nb == 0}, note=""))
+    else:
+        checks.append(dict(id="C31_sens_base", formula="sensitivity table present or omission note present", lhs=None, rhs=None, tol="",
+                           **{"pass": c["method"].get("sensitivity_omitted") is True}, note="issuer omitted values (all |Δ| < 1pp) — pass only if the omission note is present"))
+    return checks
+
+
+def run_axes_checks(comp, ax, esr):
+    checks = []
+    v = ax["values"]
+    if comp["sector"] == "nonlife" and esr and v.get("cat_reserve_total") is not None:
+        # au: 規制上の準備金 reclassified to equity == 異常危険準備金 total (no 価格変動準備金 / 危険準備金 at au)
+        lhs, rhs = esr["values"].get("ebs_regulatory_reserve_equity"), z(v["cat_reserve_total"]) + z(esr["values"].get("ebs_price_fluctuation_reserve"))
+        checks.append(dict(id="A01_cat_reserve_vs_ebs_reg_reserve", formula="ebs_regulatory_reserve_equity == cat_reserve_total + price_fluctuation_reserve (when no other regulatory reserves)", lhs=lhs, rhs=rhs, tol=1, **{"pass": lhs is not None and abs(lhs - rhs) <= 1}, note="au: 異常危険準備金 2,222 is the only regulatory reserve"))
+    if v.get("_reins_rating_buckets"):
+        tot = sum((x or 0) for x in v["_reins_rating_buckets"].values())
+        checks.append(dict(id="A02_reins_rating_sum", formula="Σ rating buckets == 100", lhs=round(tot, 1), rhs=100.0, tol=0.2, **{"pass": abs(tot - 100) <= 0.2}, note=""))
+    if comp["sector"] == "life" and v.get("core_profit") is not None:
+        checks.append(dict(id="A03_core_profit_positive_int", formula="core_profit parsed as int (百万円)", lhs=v["core_profit"], rhs=None, tol="", **{"pass": isinstance(v["core_profit"], int)}, note=""))
+        checks.append(dict(id="A04_negative_spread_sign", formula="interest_margin_sign == negative iff negative_spread_100m > 0", lhs=v["interest_margin_sign"], rhs=v["negative_spread_100m"], tol="",
+                           **{"pass": (v["interest_margin_sign"] == "negative") == (z(v["negative_spread_100m"]) > 0)}, note=""))
+    if v.get("esr_status") == "not_yet":
+        checks.append(dict(id="A05_placeholder_found", formula="esr_status not_yet requires >=1 placeholder location", lhs=len(v["esr_placeholder_locations"]), rhs=">=1", tol="", **{"pass": len(v["esr_placeholder_locations"]) >= 1}, note=""))
+    return checks
+
+
+def census_headline(company_jp):
+    with open(CENSUS, encoding="utf-8-sig", newline="") as f:
+        for row in csv.DictReader(f):
+            if row["company_jp"] == company_jp:
+                return dict(esr_pct=float(row["esr_pct"]) if row["esr_pct"] else None, status=row["fy2025_esr_status"], scope=row["esr_scope"], as_of=row["as_of"])
+    return dict(esr_pct=None, status=None, scope=None, as_of=None)
+
+
+def clean_label(rx):
+    return re.sub(r"\\s\*|\\\(|\\\)|\\\+|[\^\$]", lambda m: {"\\(": "(", "\\)": ")", "\\+": "+"}.get(m.group(0), ""), rx).replace("\\s*", "")
+
+
+def build_schema():
+    items = []
+    for it in ITEMS:
+        items.append(dict(id=it["id"], layer="esr", table=it["table"], labels_ja=[clean_label(l) for l in it["labels"]], ko=it["ko"], unit=it["unit"],
+                          parent=it["parent"], formula=it["formula"], required=it["required"], column=it.get("col", "cur"), kics_item_ref=it["kics"]))
+    for it in EXTRA_ESR_ITEMS:
+        items.append(dict(id=it["id"], layer="esr", table=it["table"], labels_ja=it["labels_ja"], ko=it["ko"], unit=it["unit"], parent=it["parent"], formula=it["formula"],
+                          required=it["required"], column=it["column"], kics_item_ref=it["kics"]))
+    for sc, ja, ko in SENS_SCENARIOS[1:]:
+        items.append(dict(id=f"sens_{sc}_esr_pct", layer="esr", table="T7", labels_ja=[ja], ko=f"민감도 ESR: {ko}", unit=P, parent="esr_pct",
+                          formula="levels row ソルベンシー・マージン比率 × column; ESR-under-shock — K-ICS 는 kics_rate_sensitivity.json(별도 마스터, 항목번호 없음)", required=False, column="sens", kics_item_ref=None))
+    for mi in METHOD_ITEMS:
+        items.append(dict(id=mi["id"], layer="esr", table="T8", labels_ja=mi["labels"], ko=mi["ko"], unit="flag", parent=None, formula=None, required=False, column="text", kics_item_ref=None))
+    items.append(dict(id="calc_method", layer="esr", table="T8", labels_ja=["内部モデル手法の適用", "標準的手法"], ko="산정방식 standard / standard_implied / internal_model", unit="enum", parent=None, formula="derived from internal_model_applied", required=True, column="text", kics_item_ref=None))
+    items.append(dict(id="discount_bucket_jpy", layer="esr", table="T8", labels_ja=["適用バケット", "一般バケット", "ミドルバケット", "トップバケット"], ko="엔화 할인율 버킷", unit="enum", parent=None, formula=None, required=False, column="text", kics_item_ref=None))
+    items.append(dict(id="discount_rates_jpy", layer="esr", table="T8", labels_ja=["主な通貨", "主要な年限ごとの割引率"], ko="엔화 할인율(연한별 %)", unit="pct_by_tenor", parent=None, formula=None, required=False, column="text", kics_item_ref=None))
+    for a in AXES_ITEMS:
+        items.append(dict(id=a["id"], layer="article_axes", table="axes:" + a["axis"], labels_ja=a["labels_ja"], ko=a["ko"], unit=a["unit"], parent=None, formula=None,
+                          required=(a["id"] in ("esr_status", "air_used", "interest_margin_sign", "cat_reserve_total")), column="section", applies_to=a["applies"], kics_item_ref=a["kics"]))
+    return dict(
+        schema_version="2026-09-12",
+        regulation="保険業法施行規則 59条の2 / 令和7年金融庁告示第74号(SMR告示)·第75号(EBS) — FY2025 첫 적용",
+        layers={"esr": "regulatory ESR tables (T1~T8)", "article_axes": "FSA monitoring-report axes from other sections (docs/domains/claude-agent-jp.md §4b): catastrophe_reserve_adequacy / air_used / interest_margin_sign + ESR placeholder skeleton"},
+        unit_note="amounts as disclosed (JPY_million = 百万円) unless the item unit says otherwise (negative_spread_* are 億円 in the life summary box). census/master converts to 億円 (÷100). Record unit_disclosed per row — large life insurers may print 億円.",
+        null_note="dash (－ / ー) = not applicable; stored as null, treated as 0 in formulas.",
+        column_note="FY2025 tables carry two value columns (イ=前年度 '－', ロ=当年度); column='cur' takes the 2nd token. EBS tables: 'ev' = last token (経済価値ベースの額), 'first' = 財務会計ベースの額 (only when all 4 columns are printed).",
+        kics_ref_note="kics_item_ref = docs/agents/kics-json-validation-rules.md item number. Approximate mappings (different aggregation/scope) are documented in docs/domains/jp_esr_disclosure_template.md §6; null = no K-ICS counterpart (e.g. 巨大災害 C, スプレッド, MOCE, EBS rows).",
+        tables={
+            "T1": "要約: ソルベンシー・マージン比率並びに適格資本の額及び所要資本の額 (headline)",
+            "T1_combined": "au variant: (1) 単体SMR 결합표 — Tier1/2 + 리스크(a)~(k) 한 표, 非保険事業 (i) 포함",
+            "T2": "適格資本の額の構成に関する事項",
+            "T3": "所要資本の額の構成に関する事項",
+            "T4": "経済価値ベースのバランスシート (4열: 財務会計/組替え/評価替え/経済価値)",
+            "T5": "外国証券の種類別差異調整 (look-through; not extracted)",
+            "T6": "保険負債の商品別差異調整 (6열; 経済価値ベースの額(MOCE除く) 만 추출)",
+            "T7": "感応度分析 (8 scenarios × 10 rows; 差額表 optional)",
+            "T8": "定性: 計算に用いられた前提及び手法 (내부모형/USP/내부할인율/경영조치/재보험/할인율 버킷)",
+            "axes:catastrophe_reserve_adequacy": "손보 본편 責任準備金の内訳 표(종목 × 普通/異常危険/危険/払戻/配当/合計)",
+            "axes:air_used": "リスク管理·再保険 절 + 出再先 수/上位5社/格付 표 + 関連当事者 각주",
+            "axes:interest_margin_sign": "생보 経常利益等の明細(基礎利益) 표 + 健全性 box 逆ざや (+ 三利源 표가 있는 회사는 利差損益)",
+            "axes:esr_placeholder": "後日公表予定 문구가 놓인 5개년 표·健全性 box·業績データ 7절",
+        },
+        sensitivity=dict(scenarios=[dict(id=a, label_ja=b, ko=c) for a, b, c in SENS_SCENARIOS],
+                         rows=[dict(id=a, label_ja=re.sub(r"[\^\$]", "", b), ko=c, unit=d, kics_item_ref=e) for a, b, c, d, e in SENS_ROWS]),
+        items=items,
+        checks="C01..C34 (esr) + A01..A05 (article_axes) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks",
+    )
+
+
+def md_fragment(results, schema):
+    keys = [c["key"] for c in COMPANIES]
+    rows = ["| id | layer | table | label (ja) | meaning (ko) | unit | parent | kics | " + " | ".join(keys) + " | page | formula |",
+            "|---|---|---|---|---|---|---|---|" + "---|" * len(keys) + "---|---|"]
+    for it in schema["items"]:
+        vals, pg = [], []
+        for k in keys:
+            r = results[k]
+            val, page = "", ""
+            if it["layer"] == "esr" and r.get("esr"):
+                e = r["esr"]
+                if it["table"] == "T7":
+                    sc = it["id"][len("sens_"):-len("_esr_pct")]
+                    lv = e["sensitivity"]["levels"].get("esr_pct")
+                    val = "" if not lv or lv.get(sc) is None else str(lv[sc])
+                    page = str(e["sensitivity"]["pages"][0])
+                elif it["table"] == "T8":
+                    val = str(e["method"].get(it["id"]))
+                else:
+                    x = e["values"].get(it["id"])
+                    val = "－" if x is None else (f"{x:,}" if isinstance(x, int) else str(x))
+                    page = "" if e["pages"].get(it["id"]) is None else str(e["pages"][it["id"]])
+            elif it["layer"] == "article_axes" and r.get("axes"):
+                x = r["axes"]["values"].get(it["id"])
+                if isinstance(x, list):
+                    val = f"{len(x)} loc" if x else "－"
+                elif isinstance(x, dict):
+                    val = json.dumps(x, ensure_ascii=False)
+                else:
+                    val = "－" if x is None else (f"{x:,}" if isinstance(x, int) and not isinstance(x, bool) else str(x))
+            elif it["layer"] == "esr":
+                val = "n/a(not_yet)"
+            vals.append(val.replace("|", "/"))
+            pg.append(page)
+        rows.append(f"| `{it['id']}` | {it['layer']} | {it['table']} | {' / '.join(it['labels_ja'])} | {it['ko']} | {it['unit']} | {it['parent'] or ''} | {it['kics_item_ref'] if it['kics_item_ref'] is not None else ''} | "
+                    + " | ".join(vals) + f" | {'/'.join(p for p in pg if p)} | {it['formula'] or ''} |")
+    return "\n".join(rows)
+
+
+def main():
+    results, summary = {}, {}
+    for comp in COMPANIES:
+        doc = fitz.open(str(SAMPLES / comp["pdf"]))
+        r = dict(company_jp=comp["company_jp"], company_en=comp["company_en"], sector=comp["sector"], layers=comp["layers"],
+                 source_pdf=str((SAMPLES / comp["pdf"]).relative_to(ROOT)).replace("\\", "/"), n_pages=len(doc), as_of="2026-03-31", scope="solo", unit_disclosed="JPY_million")
+        esr = None
+        if "esr" in comp["layers"]:
+            esr = extract_esr(comp, doc)
+            esr["checks"] = run_checks(esr)
+            r["esr"] = esr
+        ax = extract_axes(comp, doc)
+        ax["checks"] = run_axes_checks(comp, ax, esr)
+        r["axes"] = ax
+        cz = census_headline(comp["company_jp"])
+        r["census"] = dict(**cz, match=(cz["esr_pct"] == esr["values"]["esr_pct"]) if esr else (cz["status"] == ax["values"]["esr_status"]))
+        results[comp["key"]] = r
+        all_checks = (esr["checks"] if esr else []) + ax["checks"]
+        summary[comp["key"]] = dict(
+            company_en=comp["company_en"], sector=comp["sector"], layers=comp["layers"],
+            esr_pct=esr["values"]["esr_pct"] if esr else None, eligible=esr["values"]["eligible_capital"] if esr else None, required=esr["values"]["required_capital"] if esr else None,
+            esr_items_matched=sum(1 for x in esr["raw_tokens"].values() if x not in ("NOT_FOUND", "NOT_IN_TEMPLATE", "ROW_OMITTED")) if esr else 0,
+            esr_items_nonnull=sum(1 for x in esr["values"].values() if x is not None) if esr else 0,
+            esr_items_total=len(esr["values"]) if esr else 0,
+            axes_items_nonnull=sum(1 for k, x in ax["values"].items() if x is not None and not k.startswith("_")),
+            checks_pass=sum(1 for c in all_checks if c["pass"]), checks_total=len(all_checks), checks_failed=[c["id"] for c in all_checks if not c["pass"]],
+            census_match=r["census"]["match"], calc_method=esr["method"]["calc_method"] if esr else None, esr_status=ax["values"]["esr_status"],
+            air_used=ax["values"]["air_used"], interest_margin_sign=ax["values"].get("interest_margin_sign"), cat_reserve_total=ax["values"].get("cat_reserve_total"))
+
+    schema = build_schema()
+    write_lf(SCHEMA_OUT, json.dumps(schema, ensure_ascii=False, indent=2) + "\n")
+    out = dict(schema_ref="J-ESR/esr_disclosure_schema.json", generated_at=str(date.today()), generator="J-ESR/extract_esr_template_samples.py",
+               n_schema_items=dict(esr=sum(1 for i in schema["items"] if i["layer"] == "esr"), article_axes=sum(1 for i in schema["items"] if i["layer"] == "article_axes")),
+               summary=summary, companies=results)
+    write_lf(VALUES_OUT, json.dumps(out, ensure_ascii=False, indent=2) + "\n")
+    write_lf(MD_FRAGMENT_OUT, md_fragment(results, schema) + "\n")
+    print(json.dumps(dict(n_schema_items=out["n_schema_items"], summary=summary), ensure_ascii=False, indent=2))
+    for k, r in results.items():
+        for c in (r.get("esr", {}).get("checks", []) + r["axes"]["checks"]):
+            if not c["pass"]:
+                print("FAIL", k, c)
+        for iid, tk in r.get("esr", {}).get("raw_tokens", {}).items():
+            if tk == "NOT_FOUND":
+                print("NOT_FOUND", k, iid)
+    ok = all(s["checks_failed"] == [] and s["census_match"] for s in summary.values())
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
