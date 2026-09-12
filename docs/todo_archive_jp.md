@@ -3,6 +3,39 @@
 > `TODO_jp.md` Status 최신 5개 유지 원칙에 따라 밀려난 항목을 한 글자도 고치지 않고 여기로 옮긴다.
 > 최신이 위. 필요할 때만 연다(changelog 와 같은 원칙).
 
+**🟢 2026-09-12 (9) `jp/jesr.html` 신규(K-ICS.html 대응 회사별 ESR 상세) + `jp/index.html` 링크·표 개편(designer).**
+티켓 `inbox/designer/20260912T1120Z__owner__JP_MULTI__jesr_company_page.md`(answered). 데이터는 publishing 산출
+`jp/jesr_detail.json`(위 (8) 항목, 병행완성 — designer 개발 중 도착해 fixture(`jp/_fixture_jesr_detail.json`)는 만들자마자
+삭제, 실제로는 안 씀; 코드는 실패 시에만 폴백하도록 남겨둠). owner 중간지시 2건 반영: ① 파일명 `company.html`→`jesr.html`
+(K-ICS.html 처럼 제도명, hreflang/canonical 도 갱신) ② `jp/index.html` 一覧表 2개에서 業態·基準日 열 제거(生保/損保 섹션
+분리로 業態 중복, 基準日은 상단 asOfLine 한 줄로 대체) → 5열(会社名/範囲/ESR/公表日/備考). ③ 基準日 표기를 날짜
+그대로 대신 **일본 회계연도 분기**(基準時点 2025年度 4Q, title 툴팁에 실제 날짜)로 — 한국식 "2026.1Q" 로 읽으면
+역월(4~6月)로 오독되는 문제(owner 정정) — `jp/index.html`·`jp/jesr.html` 둘 다 `jaFiscalQuarter(as_of)` 로 유도(하드코딩 안 함).
+
+구성 9개(헤더+뒤로가기·회사선택+기준/범위/출처·헤드라인3카드·Tier1/Tier2 구성 스택바+표·소요자본 워터폴(ECharts
+custom renderItem, IFRS17.html 워터폴 관례)+規定再現 배지·시장리스크 세부 6개·감응도 표+미니바·기사3축(숫자값만)).
+실측 버그 2건 발견·직접수정: (a) publishing 실 데이터의 `doc_type` 에 파이프라인 내부 한국어 메모가 섞여 있어
+(`…업적데이터편, 2026-07-30 발행)`) jp/index.html 의 기존 `jaOnly()` 를 그대로 이식해 제거. (b) 適格資本 구성표
+비중(構成比)을 전부 적격자본 총액 대비로 계산하면 `tier1_basic` 류 중간항목이 149.6% 로 찍혀 오독 유발 →
+Tier1/Tier2 최상위 2행만 총액 대비, 나머지는 자기 tier 의 `tier1_basic`/`tier2_basic` 대비로 분모 교체(표 하단에
+계산기준 각주 추가). 모바일(375px) 렌더에서 워터폴 x축 8라벨 겹침 발견 → 짧은 라벨(生保/損保/巨大災害/市場/信用/
+運営/分散効果/税効果/所要資本)+45도 회전으로 수정, 추가로 echarts.init 컨테이너 폭이 좁게 굳어 뒤쪽 2개 막대
+(税効果·所要資本)가 통째로 안 그려지는 타이밍버그 실측 → `requestAnimationFrame` 안전망 resize 로 수정.
+메타줄(기준시점|범위|공표)이 모바일에서 줄바꿈 없이 뷰포트 밖으로 밀려나가는 오버플로도 `.meta-line{overflow-wrap:anywhere}`
+로 수정. `jp/index.html` 一覧表 회사명은 `jesr_detail.json` companies id 매칭 시만 `jesr.html?company=<id>` 링크
+(au損害保険만 해당 — 明治安田損害保険 은 `excluded_subsidiaries` 라 一覧表 행 자체가 없어 링크 대상 없음, 정상).
+
+검증: 로컬서버(`python -m http.server 8917`), 2사 전환(select 변경 + URL `?company=` 동기·직접 이동) 확인, 콘솔에러=0
+(jsdelivr `ERR_NETWORK_ACCESS_DENIED` 는 이 PC 공통현상, JS 런타임에러 아님 — renderWaterfall 은 `typeof echarts==='undefined'`
+가드로 무해하게 스킵됨). 이 PC 크로미움 CDN 차단으로 echarts 는 로컬 임시사본(`jp/_tmp_echarts.min.js`, SRI 해시
+`sha384-o5uz97et3bErHvpKfD4Jz4n0JfhJDWABFuF4NP+iEEDxE1VwMWJ19QGR0lqFZnr6` 일치 확인 후 사용)으로 렌더 확인 후 삭제,
+CDN 참조·integrity 원복을 `grep echarts jp/jesr.html` 로 재확인(git 미추적 신규파일이라 `git diff` 대신 `grep`). 최종
+스크린샷은 msedge headless `--screenshot` 가 RAF resize 안전망 타이밍과 안 맞아 반복적으로 구버전 렌더가 찍혀(파일
+크기 동일 반복) Playwright(`C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe`, `networkidle`+600ms 대기+
+`full_page=True`)로 전환해 확보: `artifacts/designer/jesr_jp_jesr_desktop_20260912.png`(1280×2454)·
+`artifacts/designer/jesr_jp_jesr_mobile_20260912.png`(375×2545, 워터폴 막대 8개 전부 표시 확인).
+배포는 owner 승인 후 별도 라운드(`scripts/android_push_and_deploy.sh` NEW_FILES 는 오케스트레이터가 처리 — 미접촉).
+
 **🟢 2026-09-12 (8) `jp/jesr_detail.json` 신규 조립 — au_nonlife·meijiyasuda_nonlife 2사 상세(publishing).**
 티켓 `inbox/publishing/20260912T1120Z__owner__JP_MULTI__jesr_detail_json.md`(answered). `jp/company.html`(designer 병렬
 작업, 이 세션 미접촉) 이 fetch 할 회사별 상세 JSON. 신규 `J-ESR/build_jesr_detail_json.py`(stdlib, self-check 내장 exit 1).

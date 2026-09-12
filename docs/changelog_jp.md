@@ -2,6 +2,13 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 (12) -- jp/jesr.html 損益の内訳 패널 (designer, orchestrator 종결)
+
+티켓 `inbox/_resolved/20260912T1330Z__owner__JP_MULTI__jesr_profit_panel.md`. `jp/jesr_detail.json` profit 블록(2사 extracted, J-GAAP)으로 会計基準 한 줄·
+当期純利益 워터폴(소요자본 워터폴과 같은 custom renderItem, △ 표기)·当期/前期/増減 표(損害率·事業費率·合算率 포함)·✓ 合算率 배지(클라이언트 재계산).
+생보 분기(基礎利益·3이원)는 `profit.core` 유무로 배선만(10월 생보 표본 후 확인). designer 세션이 CDN 차단 우회 검증을 반복해 52분 소요 → 산출물
+확인 후 orchestrator 가 커밋(92863df)·에이전트 종료. 교훈: designer 티켓에 "시각 검증 1회, 이후 DOM 검증으로 마무리" 명시.
+
 ## 2026-09-12 -- Meiji Yasuda Non-Life 본편 확보 후 profit 층 채움(스키마 무변경) + 세션 중 소스 PDF 소실 사고
 
 owner 가 티켓 `inbox/_resolved/20260912T1150Z__owner__JP_MULTI__profit_layer_schema.md` 회차(위 09-12 항목들의 profit 층 신설)에서
