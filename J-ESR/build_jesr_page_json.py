@@ -63,6 +63,9 @@ DEPLOY_OUT = HERE.parent / "jp" / "jesr_esr.json"
 _SUFFIX_ABBREV = {"HD": "ホールディングス", "FG": "フィナンシャルグループ"}
 
 AS_OF_TARGET = "2026-03-31"
+# 2026-09-13 owner: 한국 사이트처럼 법인 단위로 전부 싣는다(교보생명·교보라이프플래닛 각각 게시와 동일). 부모-자회사
+# 중복 제거는 끈다. True 로 되돌리면 apply_subsidiary_dedup 이 다시 동작한다(감사 이력용 보존).
+SUBSIDIARY_DEDUP = False
 AS_OF_LABEL_JA = "2026年3月31日"
 NEXT_UPDATE = "2026-10-31"
 BASIS_DEFAULT = "J-ICS"
@@ -284,6 +287,11 @@ def apply_subsidiary_dedup(records: list[dict], insurers_by_name: dict) -> tuple
     """
     records_by_jp = {r["company_jp"]: r for r in records}
     kept, excluded = [], []
+    # 2026-09-13 owner 결정: 한국 사이트 기준(교보생명·교보라이프플래닛을 각각 게시, K-ICS 는 법인 단위)에
+    # 맞춰 **자회사도 한 행씩 전부 싣는다** — 이 dedup 은 끈다(SUBSIDIARY_DEDUP=False). 지주 6사의 連結값은
+    # 10월 単体 공시가 나오면 사업회사 単体값으로 교체(範囲 열 "連結" 표시로 임시 구분). 함수는 감사 이력용으로 보존.
+    if not SUBSIDIARY_DEDUP:
+        return list(records), []
     for r in records:
         category = r.get("category") or ""
         parent_rec = None
@@ -291,6 +299,11 @@ def apply_subsidiary_dedup(records: list[dict], insurers_by_name: dict) -> tuple
             insurer_row = insurers_by_name.get(r["company_jp"])
             parent_group = (insurer_row.get("parent_group") or "").strip() if insurer_row else ""
             parent_rec = _find_parent_record(parent_group, records_by_jp, r["company_jp"])
+            # 2026-09-13 owner: 같은 업권(生保/損保) 표 안에서만 중복이다. 부모가 다른 업권 표에
+            # 있으면(明治安田損保 ← 明治安田生命) 자회사는 그 업권의 유일한 데이터 포인트라 남긴다.
+            # (ソニー生命 ← ソニーFG 는 둘 다 life 라 계속 제외.)
+            if parent_rec is not None and parent_rec.get("sector") != r.get("sector"):
+                parent_rec = None
         if parent_rec is not None:
             excluded.append({
                 "company_en": r["company_en"],

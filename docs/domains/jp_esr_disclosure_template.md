@@ -12,7 +12,7 @@
 - 헤드라인 `esr_pct` 는 `適格資本の額(A) / 所要資本の額(B)`. 두 표본 모두 census 값과 일치(au 791.7 / Meiji Yasuda Non-Life 743.2). 금액은 百万円 절사라 비율 검산은 **구간 검산**이어야 한다(§4 C01).
 - 스키마는 두 층: `layer:"esr"` 115항목(표 T1~T8, 생보 리스크 하위 6행 포함) / `layer:"article_axes"` 22항목(금융청 모니터링 보고서 3축 + ESR 빈 자리 골격). 검산 C01~C34 + A01~A05 + **G01~G10(상관행렬 재계산, §8)**: au 43/43, Meiji Yasuda Non-Life 49/51(미재현 2건은 등재된 informational), NN Life 4/4.
 - **소요자본 합산은 √(xᵀRx) 로 재현된다.** 告示74 第百五十五条 행렬(생보·손보 0.00, 나머지 0.25)로 분산효과 au 273.6 vs 274 · MY 2,529.5 vs 2,530, 세효과 = 0.8 × 28.0% × 세효과전 으로 두 회사 모두 ±1. 하위(시장 第百二十七条)도 재현. 안 되는 곳은 손보 하위(다지역 회사)와 巨大災害(MY) — §8.
-- **세 번째 층 `layer:"profit"` 36항목(2026-09-12 추가, §9)** — J-GAAP 법정 손익계산서 층. 생보 基礎利益·キャピタル/臨時·三利源, 손보 保険引受利益·資産運用損益·損害率/事業費率/合算率, 공통 経常利益·当期純利益 + 전기 비교값(`{prev, cur}`) + 회계기준 메타(`accounting_basis`/`ifrs17_applied`). 검산 P01~P13: au 19/19, NN Life 12/12, MY 는 별책에 손익 표가 없어 본편 미확보(NOT_ACQUIRED).
+- **세 번째 층 `layer:"profit"` 42항목(2026-09-12 신설 36 + 2026-09-13 재보험 다리 6, §9)** — J-GAAP 법정 손익계산서 층. 생보 基礎利益·キャピタル/臨時·三利源, 손보 保険引受利益·資産運用損益·損害率/事業費率/合算率, 공통 経常利益·当期純利益 + 전기 비교값(`{prev, cur}`) + 회계기준 메타(`accounting_basis`/`ifrs17_applied`) + **손보 元受/受再/出再 재보험 다리(`table:"profit:bridge"`, §9-7)**. 검산 P01~P15: au 23/23, NN Life 12/12(P14/P15 는 nonlife 전용), MY 는 별책에 손익 표가 없어 본편 미확보(NOT_ACQUIRED) — 단 본편 60p 는 §9-6·§9-7 이 확보해 profit+bridge 전부 채움.
 - **네 번째 층 `layer:"history"` 13항목(2026-09-12 2회차 추가, §10)** — 「主要な経営指標等の推移」 5개년표(FY2021~FY2025). profit 층과 같은
   페이지를 다시 읽어 정미수입보험료·경상이익·당기순이익·손해율/사업비율/합산율·총자산·순자산·(구기준SMR/신기준ESR)을 5개년 전체로 뽑는다.
   검산 H01(FY2025==profit.cur, FY2024==profit.prev)·H02(合算率 항등식): au 17/17, Meiji Yasuda Non-Life 15/15.
@@ -545,6 +545,54 @@ IFRS/国際財務報告基準 문자열 0건 확인 → `ifrs17_applied=false`.
 `extract_esr_template_samples.py::main()` 은 **① 실물 PDF 우선 → ② 없으면 이 fixture 로 재현 → ③ 그것도 없으면 NOT_ACQUIRED** 순으로
 동작한다(`profit_pdf_fixture`, `FixtureDoc`). 위 25/25·17/19 는 이 fixture 재현 경로로 나온 결과다 — **실물 PDF 가 돌아오면 다음 실행이
 자동으로 그쪽을 쓰고, 같은 숫자가 나오는지 대조해 볼 것**(라벨/좌표가 100% 같은 파일이면 바이트 단위로 같아야 한다).
+
+### 9-7. 재보험 다리(bridge) `table:"profit:bridge"` — 元受/受再/出再 분해 (2026-09-13 추가, 티켓 `inbox/jp/20260913T0025Z__owner__JP_MULTI__reinsurance_bridge.md`)
+
+owner 질문 "정미(正味) 숫자 말고 원수(元受, 출재 전) 숫자를 따로 볼 수 없나" → 손보 디스클로저지 「保険引受の状況」 절에 종목별(火災/海上/傷害/自動車/
+自動車損害賠償責任/その他) + `合計` 행으로 있는 6개 하위표에서 뽑는다. 표 위치는 두 회사가 다르다 — au 는 業績데이터 4of5 분책 p3~4(같은
+분책, curl 불필요), Meiji Yasuda 는 본편 60p p33~34(§9-6 에서 확보한 그 파일, 별책엔 없음).
+
+**항목 6개** (스키마 `layer:"profit"`, `table:"profit:bridge"`, sector_scope=nonlife, 값 `{cur,prev}` 百万円):
+
+| id | 라벨(ja) | 뜻 |
+|---|---|---|
+| `pl_gross_premiums_written` | 元受正味保険料 | 원수정미보험료(출재 전) |
+| `pl_assumed_premiums` | 受再正味保険料 | 수재정미보험료 |
+| `pl_ceded_premiums` | 支払再保険料 | 출재보험료 |
+| `pl_gross_claims_paid` | 元受正味保険金 | 원수정미보험금 |
+| `pl_assumed_claims` | 受再正味保険金 | 수재정미보험금 |
+| `pl_recovered_reinsurance_claims` | 回収再保険金 | 회수재보험금(출재분 회수) |
+
+기존 항목(9-1 표)에 formula 를 추가: `pl_net_premiums_written = pl_gross_premiums_written + pl_assumed_premiums - pl_ceded_premiums`,
+`pl_net_claims_paid = pl_gross_claims_paid + pl_assumed_claims - pl_recovered_reinsurance_claims`. 검산 **P14_premium_bridge** ·
+**P15_claims_bridge**(cur/prev 각각, ±1 百万円 절사 허용) — au 4/4, Meiji Yasuda Non-Life 4/4 전부 통과.
+
+**추출 특이점.** 6개 표는 같은 페이지에 순서대로 나열되지만 **순서가 회사마다 다르고**(au: 支払→元受料→受再料→元受金→回収金→受再金,
+Meiji: 元受料→受再金→回収金→受再料→支払→元受金), 라벨 문자열이 페이지 후반 각주에 재등장한다(예: au "従業員1人当たり元受正味保険料"). 그래서
+표준 `grab()`(라벨 매치 직후 바로 값을 읽는 헬퍼) 대신 `extract_bridge_block()`이 회사별 `BRIDGE_ORDER` 순서를 문서 순서대로 걸으며 커서를
+전진시킨다 — 각 항목은 "직전 항목의 `合計` 행 다음부터" 검색하므로 뒤에 나오는 각주와 충돌하지 않는다. au 는 `該当事項はありません`(해당없음)으로
+受再(수재) 두 항목이 아예 표가 없다 — 그대로 `0`으로 채운다(null 아님, 항등식이 0으로 닫혀야 하므로). 합계 행 토큰 수는 표마다 다르다: au 保険料
+표는 金額/構成比/増減率 × 3개년 = 9토큰(idx 3·6이 전년/당년), au 保険金 표와 Meiji 전 표는 増減率 열이 없어 金額/構成比 × 3개년 = 6토큰(idx
+2·4). **함정 1건 발견·수정**: `_bridge_row_value()`의 `합計` 검색에 처음엔 `grab(..., stop=heading_idx+80)` 을 줬는데, `grab()` 은 `stop` 으로
+라벨 탐색과 값 캡처 **양쪽 다** 잘라서 라벨을 정확히 그 경계에서 찾으면 캡처할 공간이 0이 됨(au 保険料 두 항목이 전부 빈 리스트로 나와 P14 가
+0/0 으로 깨졌던 원인) — `stop` 없이 호출(표 안의 첫 `合計`가 항상 정답이므로 무제한 탐색이 안전)로 수정.
+
+**추출값(au / Meiji Yasuda, cur·prev, 百万円):**
+
+| | au 元受 | au 受再 | au 出再 | au 正味(파생) | Meiji 元受 | Meiji 受再 | Meiji 出再 | Meiji 正味(파생) |
+|---|---|---|---|---|---|---|---|---|
+| 保険料 cur | 16,646 | 0 | 8,509 | 8,137 | 16,363 | 811 | 1,482 | 15,692 |
+| 保険料 prev | 17,165 | 0 | 9,188 | 7,976(7,977) | 16,086 | 688 | 1,447 | 15,327 |
+| 保険金 cur | 9,595 | 0 | 7,655(回収) | 1,940(1,940) | 4,733 | 552 | 176(回収) | 5,108(5,109) |
+| 保険金 prev | 10,303 | 0 | 8,434(回収) | 1,868(1,869) | 4,654 | 727 | 282(回収) | 5,098(5,099) |
+
+括弧 안 = 元受+受再−出再 재계산값(기존 正味 항목과 ±1 이내 일치, 百万円 절사 오차).
+
+**`_meta.labels` 자동생성 확인(할 일 3).** `build_jesr_detail_json.py::build()` 는 이 문서·builder 를 이번에 건드리지 않았는데도
+`_meta.labels` 를 스키마 `items` 배열 전체를 순회해 자동으로 채운다(`for it in schema["items"]: labels[it["id"]] = {...}` — 434~446행).
+새 6항목이 `PROFIT_ITEMS`(→ `build_schema()` → `esr_disclosure_schema.json`)에 들어갔으므로, **오케스트레이터가 `build_jesr_detail_json.py` 를
+재실행하기만 하면** `_meta.labels` 에 6개가 자동으로 추가된다(수동 라벨 등재 불필요). 단, `build_profit_block()`(화면 값 조립)이 이 6개를 카드에
+얹을지는 publishing/designer 판단.
 
 ## 10. 시계열 층 `layer:"history"` (2026-09-12 추가 — 티켓 `inbox/jp/20260912T1440Z__owner__JP_MULTI__pl_history_5y.md`)
 

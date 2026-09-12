@@ -34,6 +34,7 @@
     "profit:core": "生保 経常利益等の明細(基礎利益) 표 (基礎利益 A / キャピタル損益 B / 臨時損益 C / 経常利益 A+B+C)",
     "profit:three": "生保 三利源 표 (利差損益/危険差損益/費差損益) — 대형사만, NN Life 는 없음",
     "profit:meta": "회계방침 절(会計方針に関する事項)·감사 문구·損益計算書 양식에서 회계기준 판정",
+    "profit:bridge": "損保 保険引受の状況 — 元受/受再/出再 재보험 다리 6표(각 표 종목별+合計행, ticket 20260913T0025Z). pl_net_premiums_written = gross+assumed-ceded, pl_net_claims_paid = gross_claims+assumed_claims-recovered",
     "history:summary5": "主要な経営指標等の推移 5개년표 (au 業績データ 편 p2 / Meiji Yasuda 본편 p9) — 정미수입보험료·経常利益·当期純利益·(손보만)損害率·事業費率·総資産額·純資産額·単体ベースのソルベンシー・マージン比率(旧基準 괄호/신기준 ESR 비괄호)"
   },
   "sensitivity": {
@@ -2428,7 +2429,7 @@
       "ko": "정미수입보험료(원수+수재-출재)",
       "unit": "JPY_million",
       "parent": null,
-      "formula": null,
+      "formula": "= pl_gross_premiums_written + pl_assumed_premiums - pl_ceded_premiums",
       "required": false,
       "column": "prev+cur",
       "sector_scope": "nonlife",
@@ -2443,6 +2444,108 @@
         "正味支払保険金"
       ],
       "ko": "정미지급보험금",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= pl_gross_claims_paid + pl_assumed_claims - pl_recovered_reinsurance_claims",
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_gross_premiums_written",
+      "layer": "profit",
+      "table": "profit:bridge",
+      "labels_ja": [
+        "元受正味保険料"
+      ],
+      "ko": "원수정미보험료(출재 전, 元受正味保険料)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_assumed_premiums",
+      "layer": "profit",
+      "table": "profit:bridge",
+      "labels_ja": [
+        "受再正味保険料"
+      ],
+      "ko": "수재정미보험료(受再正味保険料, 해당없으면 0)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_ceded_premiums",
+      "layer": "profit",
+      "table": "profit:bridge",
+      "labels_ja": [
+        "支払再保険料"
+      ],
+      "ko": "출재보험료(支払再保険料)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_gross_claims_paid",
+      "layer": "profit",
+      "table": "profit:bridge",
+      "labels_ja": [
+        "元受正味保険金"
+      ],
+      "ko": "원수정미보험금(元受正味保険金)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_assumed_claims",
+      "layer": "profit",
+      "table": "profit:bridge",
+      "labels_ja": [
+        "受再正味保険金"
+      ],
+      "ko": "수재정미보험금(受再正味保険金, 해당없으면 0)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_recovered_reinsurance_claims",
+      "layer": "profit",
+      "table": "profit:bridge",
+      "labels_ja": [
+        "回収再保険金"
+      ],
+      "ko": "회수재보험금(出再分 회수, 回収再保険金)",
       "unit": "JPY_million",
       "parent": null,
       "formula": null,
@@ -3111,6 +3214,6 @@
       "pl_item_ref": null
     }
   ],
-  "checks": "C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) + P01..P13 (profit, cur & prev) + H01..H02 (history: FY2025==profit.cur, FY2024==profit.prev, 合算率 항등식) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks / run_profit_checks / run_profit_axes_xref / run_history_checks",
+  "checks": "C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) + P01..P15 (profit, cur & prev; P14/P15 = 元受/受再/出再 bridge) + H01..H02 (history: FY2025==profit.cur, FY2024==profit.prev, 合算率 항등식) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks / run_profit_checks / run_profit_axes_xref / run_history_checks",
   "aggregation_rules_ref": "J-ESR/esr_aggregation_rules.json (告示74 第八十一条·第八十九条·第百条·第百二十七条·第百五十四条~第百五十六条 + 告示75 別紙様式第三号 注; matrices in id order)"
 }

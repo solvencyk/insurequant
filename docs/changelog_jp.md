@@ -2,6 +2,72 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-13 (16) -- publishing: `jp/jesr_detail.json` 에 `capital_tree`/`risk_tree`/`profit_flow` 구조화 블록 신설
+
+티켓 `inbox/publishing/20260913T0005Z__owner__JP_MULTI__jesr_detail_trees.md`. owner 09-12 피드백(① 자본구성표 하위합≠상위
+② 보험위험·대재해위험 하위분해 화면에 없음 ③ 손익 항목 선별 나쁨 ④ 손해율 별도패널)의 데이터 쪽. designer 가 formula 를 파싱하지 않도록
+builder 가 트리·흐름을 완성해서 넘긴다.
+
+**`J-ESR/build_jesr_detail_json.py` 신규 함수**: `build_tree(root_id, merged, items_by_id, children_map)` — 스키마 `parent`
+링크를 따라가는 전위순회 공용 함수, `capital_tree`(`eligible_capital` 뿌리)·`risk_tree`(`rc_pre_tax` 뿌리) 둘 다 이걸로 만듦.
+`build_profit_flow(profit_raw, items_by_id, sector)` — 손보 13행/생보 10행 고정 순서, `pl_other_ordinary`(=경상이익-引受利益-
+운용손익)·`pl_extraordinary_net`(=특별이익-특별손실) 2개 파생 id(스키마에는 안 넣고 `_meta.labels` 에만 추가).
+
+**설계에서 티켓 문구를 리터럴대로 안 따르고 바꾼 지점 2개** (실측 근거, 답변에 상세):
+1. `is_total` 판정 — 티켓은 "formula 보유 = is_total" 이라고 썼으나, `tier1_ni_capital_surplus`/`tier1_ni_aoci`/
+   `tier1_ni_ev_adjustment` 3항목은 formula 가 있지만(`== ebs_capital_surplus` 등) 이 tree 안에서 자식이 0개인 alias 라
+   리터럴대로면 "합계 0개짜리 total" 이 된다. **스키마상 자식 존재 여부**(구조)로 판정하도록 바꿔 이 예외를 별도 분기 없이 해결.
+2. total 노드 check 의 tolerance — 티켓은 `±1` 로 명시했으나 risk_tree 루트(`rc_pre_tax`, 9-term 공식)는 au/meiji 둘 다 ±1
+   을 못 지킨다(diff 2/3). 기존 추출기 자체 체크 `C12_rc_pre_tax` 가 이미 이 공식에 `tol=9`("n terms, 각 항 절사")를 쓰고 있어
+   그 근거를 따라 `tol=max(1, 실제 합산 항 개수)` 로 일반화(2-3항 노드는 사실상 ±1~2 와 동일, 회귀 없음).
+
+**실측** (재현 `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/build_jesr_detail_json.py`,
+exit 0, SELF-CHECK OK): capital_tree/risk_tree correlated 노드(`rc_nonlife`/`rc_catastrophe`/`rc_cat_natural`/`rc_market`)의
+`simple_sum` 이 기존 체크 C14/C15/C16/C17 의 rhs 와 2사 전부 정확히 일치(교차검증 통과) — au 1190/87/247, meiji 2458/2666/2523/7567.
+profit_flow 검산 3개는 `ordinary_ok`=true(설계상 항등) 둘 다, `underwriting_ok`/`net_ok`=**false 둘 다** — 선별 6행 합이 保険引受利益
+과 실제로 차이남(au 806~866·meiji 690~829, 스키마에 없는 責任準備金等繰入額 등 항목 추정), 특별이익 cur 미공시로 net 재현도 어긋남.
+정직하게 false 로 실어 self_check() 하드게이트에는 안 걸었다(root check 2개 + ordinary_ok 만 게이트). `git diff` 로 확인: 세 신규
+키 + `_meta.labels` 2개 + `generated_at` 외의 `jp/jesr_detail.json` 변경분은 전부 이번 세션 시작 전부터 있던 (15)번 재보험
+브릿지 스키마/추출기 미커밋 변경(관여 안 함). 상세: `TODO_jp.md` (16), 티켓 답변란.
+
+## 2026-09-13 (15) -- 손익 층에 재보험 다리(bridge) `table:"profit:bridge"` 6항목 신설 — 元受/受再/出재 분해
+
+티켓 `inbox/jp/20260913T0025Z__owner__JP_MULTI__reinsurance_bridge.md`. owner: "정미(正味) 숫자 말고 원수(元受, 출재 전) 숫자를 따로 볼
+수 없나." 디스클로저지 「保険引受の状況」 절의 6개 종목별(火災/海上/傷害/自動車/自動車損害賠償責任/その他) 표에서 元受正味保険料·受再正味保険料·
+支払再保険料(→正味収入保険料) 와 元受正味保険金·受再正味保険金·回収再保険金(→正味支払保険金) 을 `{cur,prev}` 百万円 으로 추출한다.
+
+**스키마**: `J-ESR/esr_disclosure_schema.json` `layer:"profit"` 신규 6항목(`pl_gross_premiums_written`/`pl_assumed_premiums`/
+`pl_ceded_premiums`/`pl_gross_claims_paid`/`pl_assumed_claims`/`pl_recovered_reinsurance_claims`, `table:"profit:bridge"`,
+sector_scope=nonlife) + 기존 `pl_net_premiums_written`/`pl_net_claims_paid` 에 formula 필드 추가(둘 다 `PROFIT_ITEMS` 리스트
+수정만으로 `build_schema()` 가 자동 반영 — 스키마 항목 42개, 이전 36개에서 +6).
+
+**추출** (`extract_esr_template_samples.py::extract_bridge_block`/`_bridge_row_value`/`BRIDGE_ORDER`): 두 회사 모두 같은 이번
+표본 PDF 안에 이미 있다 — au 는 業績데이터 4of5 분책 p3~4(curl 불필요), Meiji Yasuda 는 본편(§9-6 에서 확보) 60p p33~34. 6개
+하위표는 페이지에 순서대로 나열되지만 **회사마다 순서가 다르고**(au: 支払→元受料→受再料→元受金→回収金→受再金 / Meiji: 元受料→受再金→
+回収金→受再料→支払→元受金) 라벨 문자열이 페이지 후반 각주에 재등장한다(예: au "従業員1人当たり元受正味保険料"). `BRIDGE_ORDER` 로
+회사별 문서순서를 명시하고, 각 항목은 "직전 항목의 `合計` 행 다음부터" 커서를 전진시키며 탐색해 각주와의 충돌을 회피했다. au 受再 두
+항목은 원문에 표 자체가 없고 `該当事項はありません`(해당없음) 문구뿐 — 0으로 채운다(null 아님, 항등식이 0으로 닫혀야 하므로).
+
+**버그 1건 발견·즉시 수정**: `_bridge_row_value()`에서 `合計` 행을 처음엔 `grab(lines, h+1, [r"^合計$"], stop=h+80)` 로 좁혀 찾았는데,
+`grab()` 은 `stop` 파라미터로 **라벨 탐색과 값 캡처 구간을 동일하게** 자른다 — 라벨이 그 경계 바로 앞에서 매치되면 캡처할 여지가 0이
+되어 버린다(au 保険料 두 항목의 合計 가 heading+79 위치라 stop=heading+80 과 거의 맞닿아 toks=[] 로 나왔고, 첫 실행에서 P14 두 건이
+0/0 으로 깨졌다). `stop` 을 제거(표 안 첫 `合計` 가 항상 정답이므로 무제한 탐색이 안전)해 해결.
+
+**검산** (`run_profit_checks` 확장): P14_premium_bridge(`정미수입보험료 = 元受+受再-出再`) · P15_claims_bridge(`정미지급보험금 =
+元受+受再-回収`), cur·prev 각각 ±1 百万円. **실측**(exit 0): au 4/4, Meiji Yasuda Non-Life 4/4 전부 통과 — au 保険料
+16,646+0-8,509=8,137(정미 실측과 정확 일치, prev 17,165+0-9,188=7,977 vs 실측 7,976 ±1), Meiji 保険料 16,363+811-1,482=15,692
+(정확 일치, prev 16,086+688-1,447=15,327 정확), 保険金 은 百万円 절사로 양사 모두 ±1(au cur 9,595+0-7,655=1,940 정확·prev
+10,303+0-8,434=1,869 vs 1,868 ±1, Meiji cur 4,733+552-176=5,109 vs 5,108 ±1·prev 4,654+727-282=5,099 vs 5,098 ±1).
+
+**`_meta.labels` 자동생성 확인** (티켓 할 일 3): `build_jesr_detail_json.py` 는 이번 라운드에 손대지 않았다(publishing 편집 중).
+`build()` 함수(434~446행)가 `for it in schema["items"]: labels[it["id"]] = {...}` 로 스키마 전체를 순회해 `_meta.labels` 를
+자동 조립하므로, 새 6항목이 `esr_disclosure_schema.json` 에 들어간 이상 **오케스트레이터가 그 빌더를 재실행하기만 하면** 라벨이
+자동 추가된다(수동 등재 불필요). `build_profit_block()`(화면용 `items`/`ratios`/`core` 뷰 조립)이 이 6개를 어느 뷰에 얹을지는
+publishing 판단 — 이번 라운드는 스키마·추출·검산까지만.
+
+`docs/domains/jp_esr_disclosure_template.md` §9-7 신설(항목표·추출특이점·버그 기록·회사별 수치표). `jp/*.html`·
+`build_jesr_detail_json.py`·서브에이전트·커밋 없음.
+
 ## 2026-09-12 (14) -- 시계열 층 `layer:"history"` 신설 + 손보 2사 5개년(FY2021~FY2025) 추출
 
 티켓 `inbox/jp/20260912T1440Z__owner__JP_MULTI__pl_history_5y.md`. owner: "손해율·사업비율·합산비율 시계열을 쭉 보여줘도 좋겠다. 당기/전기만

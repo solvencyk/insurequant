@@ -322,8 +322,21 @@ PROFIT_ITEMS = [
          formula="= pl_pretax_profit - pl_income_taxes", pl=24),
     dict(id="pl_interest_dividend_income", scope="both", src="pl", labels=[r"^利息及び配当金収入$", r"^利息及び配当金等収入$"], ko="이자 및 배당금 수입", unit=M, formula=None, pl=None),
     # ---- nonlife ----
-    dict(id="pl_net_premiums_written", scope="nonlife", src="pl", labels=[r"^正味収入保険料$"], ko="정미수입보험료(원수+수재-출재)", unit=M, formula=None, pl=None),
-    dict(id="pl_net_claims_paid", scope="nonlife", src="pl", labels=[r"^正味支払保険金$"], ko="정미지급보험금", unit=M, formula=None, pl=None),
+    dict(id="pl_net_premiums_written", scope="nonlife", src="pl", labels=[r"^正味収入保険料$"], ko="정미수입보험료(원수+수재-출재)", unit=M,
+         formula="= pl_gross_premiums_written + pl_assumed_premiums - pl_ceded_premiums", pl=None),
+    dict(id="pl_net_claims_paid", scope="nonlife", src="pl", labels=[r"^正味支払保険金$"], ko="정미지급보험금", unit=M,
+         formula="= pl_gross_claims_paid + pl_assumed_claims - pl_recovered_reinsurance_claims", pl=None),
+    # ---- nonlife: 保険引受の状況 재보험 다리(bridge) — ticket 20260913T0025Z. table="bridge" is handled
+    # specially in extract_profit() (via extract_bridge_block()/BRIDGE_ORDER), not by the generic
+    # grab()-then-pick_pc() path other src values use, because each sub-table's own 合計 row sits
+    # several lines below a heading that repeats elsewhere on the page (a per-employee footnote for
+    # au, a footnote sentence for Meiji) — a plain label-regex grab would land on the wrong row.
+    dict(id="pl_gross_premiums_written", scope="nonlife", src="bridge", labels=[r"元受正味保険料"], ko="원수정미보험료(출재 전, 元受正味保険料)", unit=M, formula=None, pl=None),
+    dict(id="pl_assumed_premiums", scope="nonlife", src="bridge", labels=[r"受再正味保険料"], ko="수재정미보험료(受再正味保険料, 해당없으면 0)", unit=M, formula=None, pl=None),
+    dict(id="pl_ceded_premiums", scope="nonlife", src="bridge", labels=[r"支払再保険料"], ko="출재보험료(支払再保険料)", unit=M, formula=None, pl=None),
+    dict(id="pl_gross_claims_paid", scope="nonlife", src="bridge", labels=[r"元受正味保険金"], ko="원수정미보험금(元受正味保険金)", unit=M, formula=None, pl=None),
+    dict(id="pl_assumed_claims", scope="nonlife", src="bridge", labels=[r"受再正味保険金"], ko="수재정미보험금(受再正味保険金, 해당없으면 0)", unit=M, formula=None, pl=None),
+    dict(id="pl_recovered_reinsurance_claims", scope="nonlife", src="bridge", labels=[r"回収再保険金"], ko="회수재보험금(出再分 회수, 回収再保険金)", unit=M, formula=None, pl=None),
     dict(id="pl_loss_adjustment_expenses", scope="nonlife", src="pl", labels=[r"^損害調査費$"], ko="손해조사비", unit=M, formula=None, pl=None),
     dict(id="pl_commissions_collection", scope="nonlife", src="pl", labels=[r"^諸手数料及び集金費$"], ko="제수수료 및 집금비", unit=M, formula=None, pl=None),
     dict(id="pl_operating_general_admin", scope="nonlife", src="pl", labels=[r"^営業費及び一般管理費$"], ko="영업비 및 일반관리비(전체)", unit=M, formula=None, pl=None),
@@ -359,6 +372,16 @@ PROFIT_META_ITEMS = [
     dict(id="accounting_basis_evidence", ko="판정 근거 문장(원문, 페이지) — A: 회계방침 절 명시 / B: 법정 P&L 양식(責任準備金繰入額 등)+会社法·保険業法 감사 문구", unit="text", labels=[]),
     dict(id="profit_source_doc", ko="손익 표가 있는 문서(별책만 있는 회사는 본편 URL) / NOT_ACQUIRED 사유", unit="text", labels=[]),
 ]
+
+# 保険引受の状況 bridge (ticket 20260913T0025Z) — document order of the 6 sub-tables differs per
+# company, so each item's heading is located by walking forward from the previous item's row
+# (see extract_bridge_block()) rather than by a company-wide fixed page offset.
+BRIDGE_ORDER = {
+    "au_nonlife": ["pl_ceded_premiums", "pl_gross_premiums_written", "pl_assumed_premiums",
+                   "pl_gross_claims_paid", "pl_recovered_reinsurance_claims", "pl_assumed_claims"],
+    "meijiyasuda_nonlife": ["pl_gross_premiums_written", "pl_assumed_claims", "pl_recovered_reinsurance_claims",
+                            "pl_assumed_premiums", "pl_ceded_premiums", "pl_gross_claims_paid"],
+}
 
 # --------------------------------------------------------------------------------------
 # layer "history" (2026-09-12, ticket 20260912T1440Z) — 「主要な経営指標等の推移」 5개년표.
@@ -408,7 +431,7 @@ COMPANIES = [
          layers=["esr", "article_axes", "profit", "history"],
          pages=dict(T1=[22], T1_combined=[22], T2=[23], T3=[24], T4=[25], T6=[28], T7=[29], T8=[26, 27, 29]),
          headline_5yr_page=2, axes_pages=dict(reins=[6], reserves=[8]),
-         profit_pages=dict(pl=[17], uw=[5], ratio=[5], inv=[11], summary5=[2], basis=[15, 17, 31]), pl_layout="prev_cur_diff"),
+         profit_pages=dict(pl=[17], uw=[5], ratio=[5], inv=[11], summary5=[2], basis=[15, 17, 31], bridge=[3, 4]), pl_layout="prev_cur_diff"),
     dict(key="meijiyasuda_nonlife", company_jp="明治安田損害保険", company_en="Meiji Yasuda Non-Life", sector="nonlife", pdf="meijiyasuda_nonlife_20260904_performance_data.pdf",
          layers=["esr", "article_axes", "profit", "history"],
          pages=dict(T1=[2], T2=[3], T3=[4], T4=[5, 6, 7], T6=[11], T7=[12], T8=[8, 13]),
@@ -426,7 +449,7 @@ COMPANIES = [
          profit_pdf_fixture="meijiyasuda_nonlife_main_pages_fixture.json",
          profit_main_volume_url="https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260729.pdf",
          profit_not_acquired="NOT_ACQUIRED: main volume 20260729.pdf is not on disk and no fixture was found either.",
-         profit_pages=dict(pl=[42], uw=[36], ratio=[35], summary5=[9], basis=[42, 45]),
+         profit_pages=dict(pl=[42], uw=[36], ratio=[35], summary5=[9], basis=[42, 45], bridge=[33, 34]),
          pl_layout="label_block_3yr", vertical_labels=True,
          pl_flat_bounds=(r"損益計算書$", r"^損益計算書の注記"), pl_flat_len=120, pl_flat_map=MEIJI_PL_FLAT_MAP,
          pl_investment_override="pl_stmt",
@@ -763,6 +786,55 @@ def pl_flat_tokens(lines, start_rx, end_rx):
     return [ln for _, ln in lines[start_i:end_i] if is_val(ln)]
 
 
+def _bridge_row_value(lines, heading_idx):
+    """From a 保険引受の状況 bridge sub-table heading line, find its own 合計 row and read (prev, cur)
+    amounts (百万円). Two row shapes are in the sample: 9-token 金額/構成比/増減率 × 3年 (au premium
+    tables) and 6-token 金額/構成比 × 3年 (au claim tables + every Meiji table, growth-rate column
+    absent). N/A tables (au 受再正味保険料/保険金 when au writes no assumed business) print
+    「該当事項はありません」 instead of a 合計 row — read as 0, not missing."""
+    for j in range(heading_idx + 1, min(len(lines), heading_idx + 12)):
+        if "該当事項はありません" in lines[j][1]:
+            return 0, 0, lines[j][0], "N/A (該当事項はありません)"
+    # no `stop` here: grab()'s capture loop is itself bounded by `stop`, so a tight bound aimed at
+    # just reaching the 合計 label leaves no room to read the values that follow it.
+    res = grab(lines, heading_idx + 1, [r"^合計$"])
+    if res is None:
+        return None, None, None, "NOT_FOUND"
+    toks, p, _ = res
+    n = len(toks)
+    if n >= 9:
+        return to_val(toks[3]), to_val(toks[6]), p, toks
+    if n >= 6:
+        return to_val(toks[2]), to_val(toks[4]), p, toks
+    if n >= 3:
+        return to_val(toks[1]), to_val(toks[2]), p, toks
+    return None, None, p, toks
+
+
+def extract_bridge_block(comp, tl, profit_items_by_id):
+    """layer profit, table profit:bridge — 元受/受再/出再 재보험 다리. Sub-table document order
+    differs per company (BRIDGE_ORDER), so items are walked in that order sharing one cursor —
+    a plain per-item label search would otherwise land on a footnote reusing the same phrase
+    (e.g. au's 従業員1人当たり元受正味保険料) instead of the table's own heading."""
+    out = {}
+    lines = tl.get("bridge")
+    order = BRIDGE_ORDER.get(comp["key"])
+    if lines is None or not order:
+        return out
+    cur = 0
+    for iid in order:
+        it = profit_items_by_id[iid]
+        h = next((i for i in range(cur, len(lines)) if any(re.search(r, lines[i][1]) for r in it["labels"])), None)
+        if h is None:
+            out[iid] = (None, None, None, "NOT_FOUND")
+            continue
+        out[iid] = _bridge_row_value(lines, h)
+        nxt = next((i for i in range(h + 1, min(len(lines), h + 200))
+                    if lines[i][1] == "合計" or "該当事項はありません" in lines[i][1]), None)
+        cur = (nxt + 1) if nxt is not None else h + 1
+    return out
+
+
 def pick_pc(toks, layout):
     """(prev, cur) from a row's value tokens.
     prev_cur_diff     : 前年度 / 当年度 / 比較増減                     (au 損益計算書)
@@ -819,12 +891,23 @@ def extract_profit(comp, doc):
         pl_flat = pl_flat_tokens(tl["pl"], *comp["pl_flat_bounds"])
         if pl_flat is not None and comp.get("pl_flat_len") and len(pl_flat) != comp["pl_flat_len"]:
             pl_flat = None  # layout drifted from the verified page — don't trust positional offsets
+    profit_items_by_id = {it["id"]: it for it in PROFIT_ITEMS}
+    bridge_vals = extract_bridge_block(comp, tl, profit_items_by_id)
     cursors = {}
     for it in PROFIT_ITEMS:
         if it["scope"] not in ("both", comp["sector"]):
             raw[it["id"]] = "N/A_SECTOR"
             continue
         src = it["src"]
+        if src == "bridge":
+            res = bridge_vals.get(it["id"])
+            if res is None or (res[0] is None and res[1] is None):
+                raw[it["id"]] = res[3] if res else "NOT_FOUND"
+                continue
+            prevv, curv, p, tok = res
+            v[it["id"]] = dict(prev=prevv, cur=curv)
+            pg[it["id"]], raw[it["id"]] = p, tok
+            continue
         if src == "pl" and layout == "label_block_3yr":
             idxs = comp["pl_flat_map"].get(it["id"])
             if pl_flat is None or idxs is None:
@@ -977,6 +1060,10 @@ def run_profit_checks(comp, pf):
             add(f"P11_underwriting{sfx}", "pl_underwriting_profit = 保険引受収益 − 保険引受費用 − 保険引受に係る営業費及び一般管理費 + その他収支", g("pl_underwriting_profit", col),
                 z(g("pl_underwriting_revenue", col)) - z(g("pl_underwriting_expenses", col)) - z(g("pl_uw_operating_general_admin", col)) + z(g("pl_underwriting_other", col)), 1)
             add(f"P13_interest_vs_investment{sfx}", "pl_interest_dividend_income ≈ pl_investment_pl (등식은 운용비용·매각손익 0 인 회사만 — informational)", g("pl_interest_dividend_income", col), z(g("pl_investment_pl", col)), 1, gate=False)
+            add(f"P14_premium_bridge{sfx}", "pl_net_premiums_written = pl_gross_premiums_written + pl_assumed_premiums - pl_ceded_premiums (元受+受再-出再)", g("pl_net_premiums_written", col),
+                z(g("pl_gross_premiums_written", col)) + z(g("pl_assumed_premiums", col)) - z(g("pl_ceded_premiums", col)), 1)
+            add(f"P15_claims_bridge{sfx}", "pl_net_claims_paid = pl_gross_claims_paid + pl_assumed_claims - pl_recovered_reinsurance_claims (元受+受再-回収)", g("pl_net_claims_paid", col),
+                z(g("pl_gross_claims_paid", col)) + z(g("pl_assumed_claims", col)) - z(g("pl_recovered_reinsurance_claims", col)), 1)
     if pf.get("summary5"):
         n = nbad = 0
         for sid, row in pf["summary5"].items():
@@ -1424,12 +1511,13 @@ def build_schema():
             "profit:core": "生保 経常利益等の明細(基礎利益) 표 (基礎利益 A / キャピタル損益 B / 臨時損益 C / 経常利益 A+B+C)",
             "profit:three": "生保 三利源 표 (利差損益/危険差損益/費差損益) — 대형사만, NN Life 는 없음",
             "profit:meta": "회계방침 절(会計方針に関する事項)·감사 문구·損益計算書 양식에서 회계기준 판정",
+            "profit:bridge": "損保 保険引受の状況 — 元受/受再/出再 재보험 다리 6표(각 표 종목별+合計행, ticket 20260913T0025Z). pl_net_premiums_written = gross+assumed-ceded, pl_net_claims_paid = gross_claims+assumed_claims-recovered",
             "history:summary5": "主要な経営指標等の推移 5개년표 (au 業績データ 편 p2 / Meiji Yasuda 본편 p9) — 정미수입보험료·経常利益·当期純利益·(손보만)損害率·事業費率·総資産額·純資産額·単体ベースのソルベンシー・マージン比率(旧基準 괄호/신기준 ESR 비괄호)",
         },
         sensitivity=dict(scenarios=[dict(id=a, label_ja=b, ko=c) for a, b, c in SENS_SCENARIOS],
                          rows=[dict(id=a, label_ja=re.sub(r"[\^\$]", "", b), ko=c, unit=d, kics_item_ref=e) for a, b, c, d, e in SENS_ROWS]),
         items=items,
-        checks="C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) + P01..P13 (profit, cur & prev) + H01..H02 (history: FY2025==profit.cur, FY2024==profit.prev, 合算率 항등식) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks / run_profit_checks / run_profit_axes_xref / run_history_checks",
+        checks="C01..C34 (esr) + A01..A05 (article_axes) + G01..G10 (aggregation recompute, sqrt(x^T R x)) + P01..P15 (profit, cur & prev; P14/P15 = 元受/受再/出再 bridge) + H01..H02 (history: FY2025==profit.cur, FY2024==profit.prev, 合算率 항등식) implemented in J-ESR/extract_esr_template_samples.py::run_checks / run_axes_checks / run_aggregation_checks / run_profit_checks / run_profit_axes_xref / run_history_checks",
         aggregation_rules_ref="J-ESR/esr_aggregation_rules.json (告示74 第八十一条·第八十九条·第百条·第百二十七条·第百五十四条~第百五十六条 + 告示75 別紙様式第三号 注; matrices in id order)",
     )
 

@@ -42,6 +42,7 @@ Self-check runs after the file is written; on failure the script exits 1 (file i
 written so a human can inspect it, but the caller must not treat exit 1 as success).
 """
 import json
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -80,6 +81,273 @@ MARKET_SUB_KEYS = [
 PROFIT_META_TABLE = "profit:meta"
 PROFIT_RATIO_TABLE = "profit:ratio"           # nonlife 損害率/事業費率/合算率
 PROFIT_CORE_TABLES = {"profit:core", "profit:three"}  # life 基礎利益 decomposition + 三利源
+
+# --- capital_tree / risk_tree (2026-09-13 ticket 20260913T0005Z) ---------------
+# Pure parent-link preorder walk over the `esr` layer -- sign/is_total/aggregation
+# are derived from the schema's own `parent`/`formula` fields so designer never has
+# to parse a formula string. See build_tree() for the inclusion/tolerance rules.
+SIGN_NUM = {"+": 1, "-": -1, "=": 1}
+
+
+def _parse_child_sign(parent_formula, child_id):
+    """Sign of `child_id` inside `parent_formula` ("- tier1_adjustments" -> "-"),
+    default "+" when the id has no explicit leading sign (first term after "=") or
+    the parent formula only describes its children in prose (e.g. rc_life's
+    "sqrt(x^T R x) of rc_life_* subs" -- correlation aggregation, no offsetting)."""
+    if not parent_formula:
+        return "+"
+    m = re.search(r"([+-])\s*" + re.escape(child_id) + r"\b", parent_formula)
+    return m.group(1) if m else "+"
+
+
+def _is_correlated_formula(formula):
+    """告示74/75 correlation aggregation (sqrt of a quadratic form, or a disclosed
+    total that is only required to be <= the naive sum of its subs) -- ticket calls
+    these out for aggregation:"correlated" + a simple_sum/diversification_within
+    check instead of an equality check."""
+    return bool(formula) and ("<=" in formula or "sqrt" in formula)
+
+
+def build_tree(root_id, merged, items_by_id, children_map):
+    """Preorder-flatten the schema's parent-linked tree rooted at `root_id` (e.g.
+    eligible_capital, rc_pre_tax) into the ticket's row format.
+
+    Inclusion: a leaf (no schema children) is dropped when its value is null; an
+    intermediate node (has schema children) is dropped only when its OWN value is
+    null AND none of its children survived filtering (an empty container is not
+    shown). A node whose own value is null but which HAS surviving children is
+    still shown (label row only, value null) -- not observed in the FY2025 2-company
+    sample but kept for robustness.
+
+    is_total is structural (schema children exist) rather than formula-presence:
+    three schema items in the capital tree (tier1_ni_capital_surplus/aoci/
+    ev_adjustment) carry a real `formula` but it is an alias into the EBS/BS tree
+    ("== ebs_..."), not a same-tree aggregation -- they are plain leaves here, which
+    this structural rule gets right without a separate alias-formula special case
+    (this also covers tier1_ni_retained_earnings, whose formula similarly points at
+    EBS ids outside this tree).
+
+    check.tol = max(1, n) where n = number of same-tree children actually summed --
+    matches the extractor's own per-check tolerances (e.g. C12_rc_pre_tax notes
+    "tol = n terms; each term truncated" for the 9-term rc_pre_tax formula: FY2025
+    au/meiji both reproduce within n but not within a flat +/-1). A fixed +/-1 for
+    every node (as a literal reading of the ticket's capital_tree wording would
+    imply) fails the 9-term risk root for both companies; this is documented in the
+    inbox answer.
+    """
+
+    def visit(node_id, depth, sign):
+        item = items_by_id[node_id]
+        value = merged.get(node_id)
+        child_ids = children_map.get(node_id, [])
+        child_subtrees = []
+        term_summaries = []  # (sign_char, value) per surviving immediate child
+        for cid in child_ids:
+            csign = _parse_child_sign(item.get("formula"), cid)
+            sub = visit(cid, depth + 1, csign)
+            if sub is None:
+                continue
+            child_subtrees.append(sub)
+            term_summaries.append((csign, sub[0]["value"]))
+
+        if value is None and not child_subtrees:
+            return None  # null leaf, or an all-null intermediate container
+
+        is_total = bool(child_ids)
+        row = {
+            "id": node_id,
+            "label_ja": item["labels_ja"][0] if item.get("labels_ja") else None,
+            "depth": depth,
+            "sign": sign,
+            "value": value,
+            "is_total": is_total,
+        }
+
+        usable_terms = [(s, v) for (s, v) in term_summaries if v is not None]
+        if is_total and usable_terms:
+            rhs = sum(SIGN_NUM[s] * v for s, v in usable_terms)
+            if _is_correlated_formula(item.get("formula")):
+                row["aggregation"] = "correlated"
+                row["check"] = {
+                    "simple_sum": rhs,
+                    "disclosed": value,
+                    "diversification_within": (rhs - value) if value is not None else None,
+                }
+            else:
+                tol = max(1, len(usable_terms))
+                row["check"] = {
+                    "lhs": value,
+                    "rhs": rhs,
+                    "tol": tol,
+                    "ok": value is not None and abs(value - rhs) <= tol,
+                }
+
+        rows = [row]
+        for sub in child_subtrees:
+            rows.extend(sub)
+        return rows
+
+    return visit(root_id, 0, "=") or []
+
+
+# --- profit_flow (2026-09-13 ticket 20260913T0005Z) -----------------------------
+# Fixed, owner-picked flow of profit-layer ids per sector -- NOT derived from
+# schema parent/formula (every profit:* item has parent=None; the schema does not
+# encode a P&L flow shape). Entries are (id, sign, label_override, derived).
+NONLIFE_PROFIT_FLOW = [
+    ("pl_net_premiums_written", "=", None, False),
+    ("pl_net_claims_paid", "-", None, False),
+    ("pl_loss_adjustment_expenses", "-", None, False),
+    ("pl_commissions_collection", "-", None, False),
+    ("pl_uw_operating_general_admin", "-", None, False),
+    ("pl_underwriting_other", "±", "その他(準備金繰入等)", False),
+    ("pl_underwriting_profit", "=", None, False),
+    ("pl_investment_pl", "+", None, False),
+    ("pl_other_ordinary", "±", "その他経常損益", True),
+    ("pl_ordinary_profit", "=", None, False),
+    ("pl_extraordinary_net", "±", "特別損益", True),
+    ("pl_income_taxes", "-", None, False),
+    ("pl_net_income", "=", None, False),
+]
+
+LIFE_PROFIT_FLOW = [
+    ("pl_premium_income", "=", None, False),
+    ("pl_interest_margin", "+", None, False),
+    ("pl_mortality_margin", "+", None, False),
+    ("pl_expense_margin", "+", None, False),
+    ("pl_core_profit", "=", None, False),
+    ("pl_capital_gains", "+", None, False),
+    ("pl_extraordinary_pl", "±", None, False),
+    ("pl_ordinary_profit", "=", None, False),
+    ("pl_income_taxes", "-", None, False),
+    ("pl_net_income", "=", None, False),
+]
+
+
+def _pair(values, pid, period):
+    v = values.get(pid)
+    return v.get(period) if isinstance(v, dict) else None
+
+
+def _derived_pair(pid, values, period):
+    if pid == "pl_other_ordinary":
+        op = _pair(values, "pl_ordinary_profit", period)
+        up = _pair(values, "pl_underwriting_profit", period)
+        inv = _pair(values, "pl_investment_pl", period)
+        if None in (op, up, inv):
+            return None
+        return op - up - inv
+    if pid == "pl_extraordinary_net":
+        g = _pair(values, "pl_extraordinary_gains", period)
+        l = _pair(values, "pl_extraordinary_losses", period)
+        if None in (g, l):
+            return None
+        return g - l
+    raise ValueError(f"no derivation rule for {pid}")
+
+
+def _tol_close(a, b, tol=1):
+    return a is not None and b is not None and abs(a - b) <= tol
+
+
+def _period_value(pid, values, period):
+    if pid in ("pl_other_ordinary", "pl_extraordinary_net"):
+        return _derived_pair(pid, values, period)
+    return _pair(values, pid, period)
+
+
+def _reconstruction_check(values, terms_plus, terms_minus, total_id, tol=1):
+    """checks dict helper: total_id vs sum(terms_plus) - sum(terms_minus), summing
+    only the terms that are actually present -- same "표시된 행만으로 재현되는지"
+    philosophy as build_tree()'s check (a term missing from the selected flow is
+    treated as a 0 contribution to the reconstruction, not as "can't check at all";
+    it's what's NOT in terms_plus/terms_minus at all -- e.g. a P&L line the schema
+    never captured -- that makes a check legitimately fail, and that failure is
+    real, reportable information, not a bug).
+    True only if every period with a present total_id (and >=1 present term) holds
+    within tol; None if no period is checkable at all."""
+    results = []
+    for period in ("cur", "prev"):
+        lhs = _period_value(total_id, values, period)
+        if lhs is None:
+            continue
+        rhs, any_term = 0, False
+        for pid in terms_plus:
+            v = _period_value(pid, values, period)
+            if v is not None:
+                rhs += v
+                any_term = True
+        for pid in terms_minus:
+            v = _period_value(pid, values, period)
+            if v is not None:
+                rhs -= v
+                any_term = True
+        if not any_term:
+            continue
+        results.append(_tol_close(lhs, rhs, tol))
+    if not results:
+        return None
+    return all(results)
+
+
+def build_profit_flow(profit_raw, items_by_id, sector):
+    """Assemble the fixed profit_flow rows + checks for one company (2026-09-13
+    ticket). Returns None if the company's profit layer has no values at all
+    (status "not_obtained") -- nothing to show."""
+    values = profit_raw.get("values") or {}
+    if not values:
+        return None
+
+    spec = LIFE_PROFIT_FLOW if sector == "life" else NONLIFE_PROFIT_FLOW
+    rows = []
+    missing = []
+    for pid, sign, label_override, derived in spec:
+        if derived:
+            cur = _derived_pair(pid, values, "cur")
+            prev = _derived_pair(pid, values, "prev")
+        else:
+            cur = _pair(values, pid, "cur")
+            prev = _pair(values, pid, "prev")
+        if cur is None and prev is None:
+            missing.append(pid)
+            continue
+        it = items_by_id.get(pid)
+        label = label_override or (it["labels_ja"][0] if it and it.get("labels_ja") else pid)
+        rows.append({
+            "id": pid,
+            "label_ja": label,
+            "sign": sign,
+            "cur": cur,
+            "prev": prev,
+            "derived": derived,
+        })
+
+    if sector == "life":
+        checks = {
+            "underwriting_ok": None,  # not applicable to the life flow shape
+            "ordinary_ok": _reconstruction_check(
+                values, ["pl_core_profit", "pl_capital_gains", "pl_extraordinary_pl"], [], "pl_ordinary_profit"
+            ),
+            "net_ok": _reconstruction_check(values, ["pl_ordinary_profit"], ["pl_income_taxes"], "pl_net_income"),
+        }
+    else:
+        checks = {
+            "underwriting_ok": _reconstruction_check(
+                values,
+                ["pl_net_premiums_written", "pl_underwriting_other"],
+                ["pl_net_claims_paid", "pl_loss_adjustment_expenses", "pl_commissions_collection",
+                 "pl_uw_operating_general_admin"],
+                "pl_underwriting_profit",
+            ),
+            "ordinary_ok": _reconstruction_check(
+                values, ["pl_underwriting_profit", "pl_investment_pl", "pl_other_ordinary"], [], "pl_ordinary_profit"
+            ),
+            "net_ok": _reconstruction_check(
+                values, ["pl_ordinary_profit", "pl_extraordinary_net"], ["pl_income_taxes"], "pl_net_income"
+            ),
+        }
+
+    return {"sector": sector, "rows": rows, "missing": missing, "checks": checks}
 
 
 def ensure_extracted():
@@ -177,6 +445,25 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "pl_item_ref": it.get("pl_item_ref"),
         }
 
+    # 2026-09-13: derived ids that only exist inside profit_flow (not schema items,
+    # so build_profit_block's schema-driven label loop above never sees them) --
+    # add their labels here per the ticket ("_meta.labels 에 파생 id 라벨 추가").
+    labels["pl_other_ordinary"] = {
+        "ja": "その他経常損益", "ko": "기타 경상손익(파생: 경상이익-引受利益-운용손익)",
+        "unit": "JPY_million", "kics_item_ref": None, "pl_item_ref": None,
+    }
+    labels["pl_extraordinary_net"] = {
+        "ja": "特別損益", "ko": "특별손익 순액(파생: 특별이익-특별손실)",
+        "unit": "JPY_million", "kics_item_ref": None, "pl_item_ref": None,
+    }
+
+    # capital_tree / risk_tree (2026-09-13): schema-structural parent -> children
+    # map over the esr layer, built once (shared by every company's tree walk).
+    children_map = {}
+    for it in schema["items"]:
+        if it.get("layer") == "esr" and it.get("parent"):
+            children_map.setdefault(it["parent"], []).append(it["id"])
+
     master_by_en = {r["company_en"]: r for r in jesr_master.get("records", [])}
     public_by_en = {r["company_en"]: r for r in jesr_esr.get("records", [])}
     for r in jesr_esr.get("_meta", {}).get("excluded_subsidiaries", []):
@@ -262,6 +549,9 @@ def build(extracted, schema, jesr_master, jesr_esr):
 
         profit = build_profit_block(comp.get("profit") or {}, items_by_id)
         history = build_history_block(comp.get("history") or {})
+        capital_tree = build_tree("eligible_capital", merged, items_by_id, children_map)
+        risk_tree = build_tree("rc_pre_tax", merged, items_by_id, children_map)
+        profit_flow = build_profit_flow(comp.get("profit") or {}, items_by_id, comp.get("sector"))
 
         companies_out.append({
             "id": cid,
@@ -283,6 +573,9 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "items": items,
             "profit": profit,
             "history": history,
+            "capital_tree": capital_tree,
+            "risk_tree": risk_tree,
+            "profit_flow": profit_flow,
         })
 
     meta_src = jesr_esr.get("_meta", {})
@@ -336,6 +629,59 @@ def self_check(out, jesr_esr):
         missing_labels = [k for k in c["items"].keys() if k not in labels]
         if missing_labels:
             errors.append(f"{cen}: items ids missing from _meta.labels: {missing_labels}")
+
+        # capital_tree (2026-09-13 ticket) -- root present, is eligible_capital,
+        # root check reproduces within its own declared tolerance.
+        ctree = c.get("capital_tree") or []
+        if not ctree or ctree[0]["id"] != "eligible_capital":
+            errors.append(f"{cen}: capital_tree missing or root id != eligible_capital")
+        else:
+            root_chk = ctree[0].get("check")
+            if not root_chk or not root_chk.get("ok"):
+                errors.append(f"{cen}: capital_tree root check not ok: {root_chk}")
+            tree_labels_missing = [row["id"] for row in ctree if row["id"] not in labels]
+            if tree_labels_missing:
+                errors.append(f"{cen}: capital_tree ids missing from _meta.labels: {tree_labels_missing}")
+            depths = [row["depth"] for row in ctree]
+            if depths and (min(depths) != 0 or max(depths) > 4):
+                errors.append(f"{cen}: capital_tree depth out of 0..4 range: {sorted(set(depths))}")
+
+        # risk_tree -- root present, is rc_pre_tax, reproduces rc_pre_tax = Σ대분류
+        # + 운영 − 분산효과 within tol=max(1,n terms) (see build_tree docstring: a
+        # flat +/-1 fails this 9-term formula for both FY2025 companies).
+        rtree = c.get("risk_tree") or []
+        if not rtree or rtree[0]["id"] != "rc_pre_tax":
+            errors.append(f"{cen}: risk_tree missing or root id != rc_pre_tax")
+        else:
+            root_chk = rtree[0].get("check")
+            if not root_chk or not root_chk.get("ok"):
+                errors.append(f"{cen}: risk_tree root check not ok: {root_chk}")
+            tree_labels_missing = [row["id"] for row in rtree if row["id"] not in labels]
+            if tree_labels_missing:
+                errors.append(f"{cen}: risk_tree ids missing from _meta.labels: {tree_labels_missing}")
+            for row in rtree:
+                if row.get("aggregation") == "correlated":
+                    chk = row.get("check") or {}
+                    if chk.get("simple_sum") is None or chk.get("disclosed") is None:
+                        errors.append(f"{cen}: risk_tree correlated node {row['id']} missing simple_sum/disclosed")
+
+        # profit_flow -- rows/missing partition the fixed sequence for this
+        # sector, derived ids are labelled, and the tautological ordinary_ok
+        # (row7+row8+row9==row10 by construction) actually holds -- if it doesn't,
+        # that is a real arithmetic bug, unlike underwriting_ok/net_ok which can
+        # legitimately be False/None when the source P&L has lines outside the
+        # selected flow (see inbox answer).
+        pflow = c.get("profit_flow")
+        if pflow is not None:
+            row_ids = {r["id"] for r in pflow["rows"]}
+            missing_ids = set(pflow["missing"])
+            if row_ids & missing_ids:
+                errors.append(f"{cen}: profit_flow ids in both rows and missing: {row_ids & missing_ids}")
+            missing_from_meta = [i for i in row_ids if i not in labels]
+            if missing_from_meta:
+                errors.append(f"{cen}: profit_flow row ids missing from _meta.labels: {missing_from_meta}")
+            if pflow["checks"].get("ordinary_ok") is False:
+                errors.append(f"{cen}: profit_flow ordinary_ok is False (expected tautological True/None): {pflow['checks']}")
         # unit passthrough guard: no JPY_million -> JPY_100million (or any other) conversion
         # may have been applied anywhere in this builder.
         if c["items"].get("eligible_capital") != c["headline"]["eligible_capital"]:
@@ -463,6 +809,21 @@ def main():
             f"pl_ordinary_profit={p.get('items', {}).get('pl_ordinary_profit')} "
             f"pl_net_income={p.get('items', {}).get('pl_net_income')} "
             f"combined_ratio={p.get('ratios', {}).get('pl_combined_ratio_pct')}"
+        )
+        ctree = c.get("capital_tree") or []
+        rtree = c.get("risk_tree") or []
+        root_c = ctree[0] if ctree else {}
+        root_r = rtree[0] if rtree else {}
+        print(
+            f"    capital_tree: rows={len(ctree)} root_check={root_c.get('check')}"
+        )
+        print(
+            f"    risk_tree: rows={len(rtree)} root_check={root_r.get('check')}"
+        )
+        pf = c.get("profit_flow") or {}
+        print(
+            f"    profit_flow: rows={len(pf.get('rows', []))} missing={pf.get('missing')} "
+            f"checks={pf.get('checks')}"
         )
 
     if errors:
