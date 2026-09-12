@@ -2,6 +2,10 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-12 (owner 확인) -- jp/terms.html 4건 확정: 運営者 표기 유지·관할 = ソウル中央地方法院(한국판과 동일)·GA 보유 최대 14개월·施行日 2026-09-12
+
+owner "4건 다 확인" → 관할만 한국 `privacy.html` 과 맞춰 "運営者の所在地を管轄する裁判所" → "ソウル中央地方法院(大韓民国)" 로 1문장 수정(orchestrator 직접, 텍스트 1줄). 나머지 3건은 초안 그대로 확정.
+
 ## 2026-09-12 (12) -- `jp/terms.html` 신규 + `/jp/` GA4·CSP·오류제보 팝업 + `jp/jesr.html` nit 3건 (designer)
 
 - 티켓 `inbox/designer/20260912T1215Z__owner__JP_MULTI__jp_terms_privacy.md`(answered). owner: "일본 사이트에 이용약관이 없다 — 해외야말로
