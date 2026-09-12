@@ -1,4 +1,4 @@
-﻿---
+---
 from: owner
 to: designer
 created: 20260912T1420Z
