@@ -1,9 +1,26 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-13 (20) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-13 (22) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-13 (22) 회사별 상세 3페이지 분리(jesr 자본 / jgaap 회계 / disclosure 기타공시) + 所要資本 워터폴 폐지 + 貸借対照表 T자형 패널(orchestrator).**
+owner "한국처럼 자본·회계·기타공시로 나눠라, 워터폴은 분산효과만 보여주니 빼라, jgaap 에 IFRS17.html 식 T자 BS". 종전 `jp/jesr.html` 인라인 CSS/JS 를
+`jp/jp.css`·`jp/jesr_app.js`(공용, `<body data-page>` 분기·byId 가드·`?company=` 탭 동기화)로 빼고 `jgaap.html`(主要指標 4카드·損益 2블록·워터폴·収益性·
+種目別·基礎利益·準備金·**貸借対照表 T자**)·`disclosure.html`(再保険 의존도·その他) 신설, axes 라우팅 reserve→jgaap / reins→disclosure / smr→esr.
+`jp/index.html`·`terms.html` 헤더 3탭. T자 패널은 (21)의 `bs.tree` 를 IFRS17.html Panel 1 규칙(존 3개·[+]·負債:純資産 flex 비율·2기 비교표·資産=負債+純資産 배지)로 렌더,
+7사 표시(TMNF 資産 97,596.8억엔 등)·3사 숨김. Playwright 12케이스×2폭 pageerrors 0, `test_deploy_assets` 11 passed. 배포 NEW_FILES +4(폰 2회).
+**다음**: ① Meiji Yasuda Non-Life 본편 PDF 는 로컬에 있다(`meijiyasuda_nonlife_20260729_main.pdf` p39~40, 3개년 **열 우선** 세로글리프 표) — `extract_bs.py` 에
+column-major 레이아웃 1개 추가하면 bs 8사. ② 住友生命·第一生命 7월 ディスクロージャー誌 확보 → bs 10사(10월 재조사와 병행). ③ 準備金 표 `cat_reserve_fire` 라벨
+"火災 行 × 異常危険準備金 列" → builder `LABEL_JA_DISPLAY_OVERRIDES` 로 「異常危険準備金（火災）」. ④ 前期 出再保険手数料(20).
+
+**🟢 2026-09-13 (21) J-GAAP 貸借対照表 요약 층 `bs` 신설 — 상세 10사 중 7사 extracted, T자형 BS 패널용 tree 18행·checks 3종(jp).**
+티켓 `inbox/jp/20260913T1300Z__owner__JP_MULTI__jgaap_balance_sheet.md`(answered). `J-ESR/extract_bs.py`(신규, `extract_esr_template_samples.py` 헬퍼 재사용) →
+`extracted_bs_values.json` → builder `build_bs_block()`+`BS_LABELS`+self_check(id↔labels·합계 3행, checks False 는 WARN) → `jp/jesr_detail.json` 10사 전부 `bs` 블록,
+`_meta.coverage.bs_extracted=7`, SELF-CHECK OK. 손보 4사(au·TMNF·MSI·Sompo)+NN Life 는 단체 2개년 百万円 checks 3/3 True; 日本生命·明治安田生命은 5월 설명자료 연결 요약(億円→×100,
+当期末만, group) 으로 equity 검산 True·준비금 검산 None. not_obtained 3(明治安田損保 별책엔 純資産 없음·住友生命 요약 없음·第一生命 PDF 없음). 함정 3: NN Life `△ 7,608`
+부호 뒤 공백, MSI 「純資産の部資本金」 라벨 접합, Sompo 資本剰余金/利益剰余金 은 合計 행에만 값. 문서 §12. 32분(상한 30분 소폭 초과). 다음 = 오케스트레이터 `jgaap.html` T자형 렌더.
 
 **🟢 2026-09-13 (20) 損益表 상단을 元受収支 / 再保険収支 두 블록으로 + 出再保険手数料 추출(5사) — `jp/jesr.html`·builder·extractor(jp).**
 owner "원수/수재/출재를 상대방 기준으로 묶자 → 수재는 출재 재원이니 元受·再保険 둘로" + "출재보험수수료(재보험자→출재사)도 재보험 수지에". extractor 에 `src:"note"`
@@ -35,26 +52,6 @@ adjustments 로 뽑아 P14 차감(추정 없음) ② P07 에 `−その他収支
 ifrs 로 오판 → IFRS 검색을 basis 페이지로 한정 ④ Sompo 폰트 함정은 숫자만이 아니라 한자·가나 전부 글리프 id — MS Gothic 글리프 순서와 일치해 로컬 msgothic.ttc
 cmap 으로 복원(`GidDoc`) ⑤ MSI 5개년표는 p31 에 있음(직전 티켓 "없음" 오판, 損害率 2자리 소수·SMR 新旧 쌍 구조). 커밋 e67bc36 이 손으로 고친 `_meta.labels`
 4개는 builder `LABEL_JA_DISPLAY_OVERRIDES` 로 고정. 문서 §9-8·§10-8. `jp/*.html`·커밋·서브에이전트 없음. 다음 = 오케스트레이터가 `jp/jesr.html` 을 5사·not_yet 분기로.
-
-**🟢 2026-09-13 (17) 손보 6사 표본 실측(정본 3사 확보) — 손해율/사업비율/합산율 5개년표는 owner 가정대로 이미 공시, ESR 만 표본 전원 미공표(jp).**
-티켓 `inbox/jp/20260913T0230Z__owner__JP_MULTI__nonlife_ratio_availability.md`(answered). owner "손해율 5개년이 다른 손보사에도 다
-있는지" → 대형4(東京海上日動·損保ジャパン·三井住友海上·あいおいニッセイ同和)+중형2(共栄火災·日新火災) 표본 중 세션 중반 curl 이 전
-도메인 차단(`google.com` 포함)으로 바뀌어 **3사만 원문 확보**(Tokio Marine & Nichido Fire·Mitsui Sumitomo Insurance·Sompo Japan
-Insurance, `J-ESR/raw/fy2025_samples/others/`). 확보 3사 전부 손해율/사업비율 5개년(또는 3개년) 시계열 실측 완료: TMNF FY2025
-損害率61.6%/事業費率31.4%(合算率 행 없음, 파생93.0%), MSI 3개년표 合計행 FY2025 損害率62.8%/事業費率30.4%/**合算率93.2%(직접공시)**,
-Sompo Japan 5개년표 FY2025 損害率63.8%/事業費率33.3% + 별도 3개년표 合算率(合計행)97.0%. **ESR 은 3사 전부 not_yet**(2026年10月末),
-문구는 회사마다 신규 변형 3종(TMNF 표셀 "別時期での開示", Sompo 각주 "…の予定です", MSI 각주 "…開示します") — `esr_disclosure_schema.json`
-`esr_status`/`hist_combined_ratio_pct` labels_ja 에 반영(合算率 단독 라벨도 추가). Sompo Japan PDF 는 숫자/기호가 U+3EDC 대역
-+16044 오프셋 PUA 로 추출되는 폰트함정 발견(디코더 필요, 문서에 재현법 기록). 미확보 3사(Aioi·Kyoei·Nisshin)는 사유 남기고 행 보존
-(Aioi=PDF링크 미발견, Kyoei=도메인 접속거부, Nisshin=URL은 WebSearch로 특정했으나 curl 차단으로 원문 미열람). census csv 4행
-(disclosure_url·checked_at·notes) 갱신, `docs/domains/jp_esr_disclosure_template.md` §10-7 신설. `jp/*`·builder·서브에이전트·
-커밋·git push 없음.
-
-**🟢 2026-09-13 (14) jesr.html 한 표([+] 펼침)·손익 선별·재보험 다리·収益性指標 + 자회사 dedup 해제 — 라운드 종결(orchestrator).**
-owner 피드백: 자본표 부호/계층, 보험·대재해 하위 미표시(괘씸), 손익 항목 선별, 손해율 별도, 원수/출재 분해, 자회사 삭제 이유(한국은 교보생명·교보라이프플래닛
-각각) → K-ICS.html 방식 단일 표(capital_tree+risk_tree), profit_flow+다리, 収益性指標(5개년 SVG), SUBSIDIARY_DEDUP=False(15사). designer 2회 시간 초과(32+13분)로
-orchestrator 직접 구현(88595f4). 교훈: jp HTML 은 ECharts 검증 루프 때문에 designer 라운드가 45~57분 — 다음부터 jp 차트는 SVG/CSS 만, 티켓은 DOM 검증만.
-다음 = 번들(비공개 경로 jp-f9027362/) → owner 확인.
 
 ## Active follow-ups
 

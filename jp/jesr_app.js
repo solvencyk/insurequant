@@ -133,7 +133,7 @@
   var DATA = null, META = null, ENTRIES = [], profitWaterfallChart = null;
   var CURRENT = null;   // 마지막으로 그린 entry — 테마 전환 시 그대로 다시 그린다
   var TH = window.IQTheme ? IQTheme.chart() : { text:'#212529', muted:'#6c757d', ink:'#495057', bg:'#fff', grid:'#e9ecef' };
-  var TOGGLE_IDS = ['secCapitalWrap','secSensWrap','secProfitWrap','secProfitabilityWrap','secReservesWrap','secReinsWrap','secAxesWrap'];
+  var TOGGLE_IDS = ['secCapitalWrap','secSensWrap','secBsWrap','secProfitWrap','secProfitabilityWrap','secReservesWrap','secReinsWrap','secAxesWrap'];
 
   Promise.all([loadDetail(), loadEsr()]).then(function(res){ boot(res[0], res[1]); }).catch(function(err){
     document.getElementById('mainRoot').innerHTML =
@@ -260,6 +260,7 @@
         renderReproBadge(c);
         renderSensitivity(c);
       }
+      renderBs(c);
       renderProfit(c);
       renderProfitability(c);
       renderAxes(c);
@@ -532,6 +533,76 @@
       var disp = (typeof v === 'number') ? (u==='pct' ? fmtPct1(v) : (u==='JPY_million' ? fmtEok(v)+'億円' : v.toLocaleString('ja-JP'))) : esc(v);
       return '<tr><td>'+esc(labelOf(META, k, k))+'</td><td class="num">'+disp+'</td></tr>';
     }).join('');
+  }
+
+  // ── 貸借対照表 T자형 (jgaap.html, owner 2026-09-13; IFRS17.html Panel 1 미러) ────────────────────────
+  // 입력: c.bs = {status, tree:[{id,label_ja,depth,sign,cur,prev,parent,derived}], checks} (bs 층 builder 계약).
+  // 총계 3행(depth 0) = 資産/負債/純資産 존, depth 1 = 존 안의 행(막대 = 총계 대비 비중), depth 2 = 하위행(합계 미포함).
+  var BS_ZONE = { bs_assets_total:'assets', bs_liabilities_total:'liabilities', bs_net_assets_total:'net_assets' };
+  var BS_TOT_EL = { assets:'bsTotAssets', liabilities:'bsTotLiabilities', net_assets:'bsTotNetAssets' };
+  var BS_DET_EL = { assets:'bsDetailAssets', liabilities:'bsDetailLiabilities', net_assets:'bsDetailNetAssets' };
+  var bsOpen = { assets:false, liabilities:false, net_assets:false };
+  function renderBs(c){
+    var wrap = byId('secBsWrap'); if(!wrap) return;
+    var bs = c.bs;
+    if(!bs || bs.status !== 'extracted' || !bs.tree || !bs.tree.length){ wrap.hidden = true; return; }
+    wrap.hidden = false;
+    var tree = bs.tree, byZone = { assets:[], liabilities:[], net_assets:[] }, totals = {};
+    var zone = null;
+    tree.forEach(function(n){
+      if(n.depth === 0){ zone = BS_ZONE[n.id] || null; if(zone) totals[zone] = n; return; }
+      if(zone) byZone[zone].push(n);
+    });
+    Object.keys(BS_TOT_EL).forEach(function(z){
+      var t = totals[z], el = byId(BS_TOT_EL[z]);
+      if(el){ el.textContent = t ? fmtEok(t.cur) : '—'; el.title = t ? fmtMillionTip(t.cur) : ''; }
+      var det = byId(BS_DET_EL[z]); if(!det) return;
+      var tot = (t && t.cur) ? Math.abs(t.cur) : 0;
+      det.innerHTML = byZone[z].map(function(n){
+        var pct = (tot > 0 && n.cur != null) ? Math.max(0, Math.min(100, Math.abs(n.cur)/tot*100)) : 0;
+        var cls = 'bs-l2-row' + (n.derived ? ' bs-l2-row-residual' : '') + (n.depth >= 2 ? ' bs-l2-row-sub' : '');
+        return '<div class="'+cls+'"><span class="bs-l2-lab">'+esc(labelOf(META, n.id, null) || n.label_ja || n.id)+'</span>'
+          + '<span class="bs-l2-val" title="'+esc(fmtMillionTip(n.cur))+'">'+esc(fmtEok(n.cur))+'</span>'
+          + (n.depth >= 2 ? '<span></span>' : '<span class="bs-l2-bar-track"><span class="bs-l2-bar" style="width:'+pct.toFixed(1)+'%"></span></span>')
+          + '</div>';
+      }).join('');
+      det.hidden = !bsOpen[z];
+    });
+    // 負債:純資産 실제 비율로 우측 두 존 높이 배분(IFRS17.html 과 같은 시각 규칙)
+    var L = totals.liabilities && totals.liabilities.cur, E = totals.net_assets && totals.net_assets.cur;
+    var zl = byId('bsZoneLiab'), ze = byId('bsZoneEquity');
+    if(zl && ze && L > 0 && E > 0){ zl.style.flexGrow = String(Math.max(1, L / (L + E) * 10)); ze.style.flexGrow = String(Math.max(1, E / (L + E) * 10)); }
+    wrap.querySelectorAll('.subtoggle[data-zone]').forEach(function(btn){
+      var z = btn.dataset.zone;
+      btn.textContent = bsOpen[z] ? '−' : '+'; btn.setAttribute('aria-expanded', String(bsOpen[z]));
+      btn.onclick = function(){
+        bsOpen[z] = !bsOpen[z];
+        var det = byId(BS_DET_EL[z]); if(det) det.hidden = !bsOpen[z];
+        btn.textContent = bsOpen[z] ? '−' : '+'; btn.setAttribute('aria-expanded', String(bsOpen[z]));
+        btn.title = '内訳を' + (bsOpen[z] ? '閉じる' : '展開');
+      };
+    });
+    // 2기 비교표(当期末/前期末/増減) — 트리 전부, 들여쓰기
+    var body = byId('bsTableBody');
+    if(body){
+      body.innerHTML = tree.map(function(n){
+        var isTot = n.depth === 0;
+        return '<tr'+(isTot ? ' class="total-row"' : '')+'><td style="padding-left:'+(8 + n.depth*16)+'px">'+esc(labelOf(META, n.id, null) || n.label_ja || n.id)+(n.derived ? ' <span class="small-muted">(差引)</span>' : '')+'</td>'
+          + '<td class="num" title="'+esc(fmtMillionTip(n.cur))+'">'+esc(fmtEok(n.cur))+'</td>'
+          + '<td class="num" title="'+esc(fmtMillionTip(n.prev))+'">'+esc(fmtEok(n.prev))+'</td>'
+          + '<td class="num">'+esc(fmtEokDelta(n.cur, n.prev))+'</td></tr>';
+      }).join('');
+    }
+    var cap = byId('bsCap');
+    if(cap) cap.textContent = '法定決算(J-GAAP)の貸借対照表。' + (bs.as_of ? '基準日 ' + jaDate(bs.as_of) + '。' : '') + (bs.source_doc ? ' 出所: ' + jaOnly(String(bs.source_doc)).split('/').pop() : '');
+    var badge = byId('bsBadge');
+    if(badge){
+      var ch = bs.checks || {}, ok = ch.assets_eq_liab_plus_equity;
+      if(ok === true || ok === false){
+        badge.style.display = 'inline-flex'; badge.className = 'repro-badge ' + (ok ? 'ok' : 'warn');
+        badge.textContent = (ok ? '✓' : '△') + ' 資産 = 負債 + 純資産';
+      } else badge.style.display = 'none';
+    }
   }
 
   // 損益の内訳(当期純利益ウォーターフォール + 当期/前期表)。inbox 20260912T1330Z。

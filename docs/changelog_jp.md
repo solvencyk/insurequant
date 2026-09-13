@@ -2,6 +2,16 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-13 (22) -- 회사별 상세 3페이지 분리 + 所要資本 워터폴 폐지 + 貸借対照表 T자형 패널
+
+- owner: 한국 K-ICS/IFRS17/기타공시 대응으로 `jp/jesr.html`(자본) / `jp/jgaap.html`(회계) / `jp/disclosure.html`(기타공시). 인라인 CSS/JS → `jp/jp.css` + `jp/jesr_app.js`
+  (공용; `<body data-page>` 분기, 컨테이너 없는 render 는 byId 가드로 스킵, `syncTabLinks` 로 `?company=` 동기화, 제목·그룹 사업회사 링크 페이지별).
+- 所要資本 워터폴 제거(owner: 분산효과 △만 보여주는 그래프). 告示 재현 배지는 適格資本・所要資本 표 제목으로. jesr.html 은 더는 ECharts 를 읽지 않는다.
+- jgaap.html: 主要指標 카드(当期純利益·経常利益·保険引受利益/基礎利益·合算率), 貸借対照表 T자(IFRS17.html Panel 1 미러: 존 3개·[+]·負債:純資産 flex 비율·2기 비교표·
+  資産=負債+純資産 배지, 입력 = (21) `bs.tree`), 損益·収益性·準備金(axes reserve*). disclosure.html: 再保険 의존도(reins_*)·その他·미수록 안내.
+- jp/index.html·terms.html 헤더 3탭. 배포 스크립트 NEW_FILES +jgaap.html/disclosure.html/jesr_app.js/jp.css. designer 프롬프트 jp 절·publishing §12 keep-list 갱신.
+- 검증: Playwright 12케이스(3페이지×손보/생보/지주/없는 id + index/terms)×1200/375px pageerrors 0, T자 패널 TMNF/日本生命 표시·住友生命 숨김 확인.
+
 ## 2026-09-13 (20) -- 損益表 元受収支 / 再保険収支 두 블록 + 出再保険手数料(注記) 추출
 
 - owner 결정: 상대방 기준 두 블록(수재는 출재 재원이라 재보험 블록에), 명칭은 損益 이 아니라 収支(수입·지급 기준). 出再保険手数料 는 재보험 수지에 더하고

@@ -101,3 +101,30 @@
 /* 決算 페이지 상단 카드 4장(当期純利益·経常利益·保険引受利益/基礎利益·合算率) */
 #jgaapCards{grid-template-columns:repeat(4,1fr)}
 @media (max-width:640px){ #jgaapCards{grid-template-columns:repeat(2,1fr)} }
+
+/* 貸借対照表 T자형 (IFRS17.html Panel 1 미러) */
+.bs-t{display:flex;gap:10px;min-height:200px}
+.bs-t-zone{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 16px;display:flex;flex-direction:column}
+.bs-t-asset{flex:1}
+.bs-t-right{flex:1;display:flex;flex-direction:column;gap:10px}
+.bs-t-liab,.bs-t-equity{flex:1} /* JS 가 負債:純資産 실제 비율로 flex-grow 를 바꾼다 */
+.bs-t-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bs-t-lab{font-size:13px;color:var(--muted);font-weight:600}
+.bs-t-val{font-size:22px;font-weight:800;color:var(--text);margin-top:6px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.bs-l2-rows{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.bs-l2-rows[hidden]{display:none}
+.bs-l2-row{display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;gap:10px;padding:4px 0}
+.bs-l2-lab{font-size:12px;color:var(--text)}
+.bs-l2-val{font-size:12px;font-weight:700;color:var(--text);text-align:right;font-variant-numeric:tabular-nums}
+.bs-l2-row-residual{opacity:.6;font-style:italic;border-top:1px dashed var(--border);margin-top:2px;padding-top:8px}
+.bs-l2-row-residual .bs-l2-val{font-weight:400}
+.bs-l2-row-sub{padding-left:14px;opacity:.75}
+.bs-l2-row-sub .bs-l2-lab{font-size:11px;color:var(--muted)}
+.bs-l2-row-sub .bs-l2-val{font-size:11px;font-weight:400;color:var(--muted)}
+.bs-l2-bar-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.bs-l2-bar{display:block;height:100%;background:var(--primary);border-radius:4px}
+@media (max-width:640px){
+  .bs-t{flex-direction:column}
+  .bs-l2-row{grid-template-columns:1fr;gap:2px}
+  .bs-l2-val{text-align:left}
+}

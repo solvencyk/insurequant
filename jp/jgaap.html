@@ -93,7 +93,40 @@
       <p class="axes-note" id="groupChildrenLine" hidden></p>
     </section>
 
-    <!-- T자형 貸借対照表 패널은 bs 층(inbox/jp 20260913T1300Z) 도착 후 여기에 붙는다. -->
+    <!-- 貸借対照表 T자형 (IFRS17.html Panel 1 미러, owner 2026-09-13). 데이터 = c.bs.tree (bs 층, inbox/jp 20260913T1300Z). -->
+    <section class="panel" aria-labelledby="secBs" id="secBsWrap" hidden>
+      <h2 id="secBs">貸借対照表（資産 ＝ 負債 ＋ 純資産） <span class="repro-badge" id="bsBadge" style="display:none"></span></h2>
+      <p class="axes-note" id="bsCap"></p>
+      <div class="bs-t" id="bsT">
+        <div class="bs-t-zone bs-t-asset">
+          <div class="bs-t-head"><span class="bs-t-lab">資産</span>
+            <button type="button" class="subtoggle" data-zone="assets" aria-expanded="false" title="内訳を展開">+</button></div>
+          <div class="bs-t-val" id="bsTotAssets">—</div>
+          <div class="bs-l2-rows" id="bsDetailAssets" hidden></div>
+        </div>
+        <div class="bs-t-right">
+          <div class="bs-t-zone bs-t-liab" id="bsZoneLiab">
+            <div class="bs-t-head"><span class="bs-t-lab">負債</span>
+              <button type="button" class="subtoggle" data-zone="liabilities" aria-expanded="false" title="内訳を展開">+</button></div>
+            <div class="bs-t-val" id="bsTotLiabilities">—</div>
+            <div class="bs-l2-rows" id="bsDetailLiabilities" hidden></div>
+          </div>
+          <div class="bs-t-zone bs-t-equity" id="bsZoneEquity">
+            <div class="bs-t-head"><span class="bs-t-lab">純資産</span>
+              <button type="button" class="subtoggle" data-zone="net_assets" aria-expanded="false" title="内訳を展開">+</button></div>
+            <div class="bs-t-val" id="bsTotNetAssets">—</div>
+            <div class="bs-l2-rows" id="bsDetailNetAssets" hidden></div>
+          </div>
+        </div>
+      </div>
+      <div class="table-container" style="margin-top:14px">
+        <table class="esr-table" id="bsTable">
+          <thead><tr><th scope="col">項目</th><th scope="col" class="num">当期末</th><th scope="col" class="num">前期末</th><th scope="col" class="num">増減</th></tr></thead>
+          <tbody id="bsTableBody"></tbody>
+        </table>
+      </div>
+      <p class="small-muted" id="bsNote" style="margin-top:6px">※ 単位 億円（百万円はツールチップ）。「その他」は合計から表示行を差し引いた残差です。</p>
+    </section>
     <section class="panel" aria-labelledby="secProfit" id="secProfitWrap">
       <h2 id="secProfit">損益の内訳</h2>
       <div id="profitNotExtracted" class="empty-note" hidden>本編未取得のため、損益の内訳はまだ表示できません。</div>

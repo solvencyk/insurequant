@@ -835,3 +835,16 @@ owner: "생보는 이차·사차·비차 마진 통계가 있을 것". 표본 5�
 **결론.** 표본에서 三利源 3분해(利差·危険差·費差)를 그대로 공시하는 회사는 0. 결산설명자료 표준은 利差(順ざや) + 保険関係(危険差+費差) 2분해이고, 住友生命만 「うち危険差」 로 費差를 파생할 수
 있다. 5개년은 住友 그룹 기초이익뿐. 검산 `基礎利益 ≈ Σ三利源` 은 회사 정의(明治安田 業務利益, 住友 保険関係差 묶음, 日本生命 그룹 합산)가 달라 회사별로 식이 다르다 — 스키마의 P02 "informational" 판단이 맞았다.
 발행 블록 `jp/jesr_detail.json` companies[].core_history = {fiscal_years 5, unit, series{hist_core_profit / hist_core_profit_group / hist_interest_margin / hist_mortality_margin / hist_expense_margin / hist_insurance_margin / hist_operating_profit / hist_investment_margin}, labels_ja, three_source, status, notes}, 생보 행은 `esr_status:"life_core_only"`.
+
+## 12. J-GAAP 貸借対照表 요약 층 `bs` (2026-09-13, 티켓 `inbox/jp/20260913T1300Z__owner__JP_MULTI__jgaap_balance_sheet.md`)
+
+- 코드 `J-ESR/extract_bs.py` → `J-ESR/raw/fy2025_samples/extracted_bs_values.json` → `build_jesr_detail_json.py::build_bs_block()` → `jp/jesr_detail.json` companies[].bs.
+  행 id·순서·depth·sign·parent 는 티켓 표 그대로(18행, 합계 3행 필수, 잔차 3행 `derived:true`). id 는 스키마 항목이 아니라 builder `BS_LABELS` 가 `_meta.labels` 를 채운다.
+- 페이지 헬퍼는 `extract_esr_template_samples.py` 재사용: MSI = `merge_vertical`+`unwrap_paren_lines`(라벨 「純資産の部資本金」로 붙어 나와 alias `^(純資産の部)?資本金$`), Sompo = `GidDoc`(폰트 gid 복원), au·NN Life = `pct` 레이아웃(상위행 [前期,構成比,当期,構成比(,増減)] → toks[0]/[2], 하위행 2열).
+  섹션 분할(`資産の部`/`負債の部`/`純資産の部`)로 유가증권 하위 `社債` 와 부채 `社債` 를 구분. Sompo 는 `資本剰余金`/`利益剰余金` 행에 값이 없고 `…合計` 행에만 있어 alias 순서를 合計 우선으로.
+- **실측 FY2025 (10사):** extracted 7 / not_obtained 3. 손보 = au(p14)·TMNF(p98-99)·MSI(p106)·Sompo(p130-131) 단체 2개년 百万円, 3 checks 전부 True.
+  생보 = NN Life(p43, 단체 2개년, 평가차액금 △, `△ 7,608` 처럼 부호 뒤 공백 함정) / 日本生命(p9)·明治安田生命(p10) 은 5월 결산설명자료의 **연결 요약 슬라이드**(億円·当期末만, ×100 하여 百万円, tol 100, `scope:"group"`, prev null)
+  → `assets_eq_liab_plus_equity` True, `policy_reserves_sum_ok` None(責任準備金 1행만 인쇄). not_obtained: 明治安田損保(별책 EBS 표 列イ 에 純資産 없음, 본편 부재)·住友生命(설명자료에 BS 요약 없음)·第一生命(PDF 미취득).
+- checks: `assets_eq_liab_plus_equity` 資産=負債+純資産 ±1(億円 소스 ±100) / `policy_reserves_sum_ok` 支払備金·責任準備金 둘 다 있을 때만 판정 / `no_negative_residual` = 資産·負債 잔차 ≥0(純資産 잔차는 自己株式·繰延ヘッジ 로 음수 정당, 제외 — TMNF △391억엔·NN Life △26억엔 실측).
+  self_check 는 id↔labels·합계 3행 존재만 에러, checks False 는 WARN 출력.
+- 10월 재census 때: 明治安田損保 본편·住友生命·第一生命 7월 본편 貸借対照表 확보 시 `BS_COMPANIES` 에 pages 만 배선. 생보 2사는 본편의 단체 貸借対照表로 교체(現在 group/億円 요약).

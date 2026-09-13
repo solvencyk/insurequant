@@ -517,6 +517,45 @@ def build_core_history_block(entry, years):
     }
 
 
+BS_PATH = SCHEMA_PATH.parent / "raw" / "fy2025_samples" / "extracted_bs_values.json"
+
+# layer bs (ticket 20260913T1300Z) — J-GAAP 貸借対照表 요약, ids are not schema items (J-ESR/extract_bs.py)
+BS_LABELS = {
+    "bs_assets_total": {"ja": "資産合計", "ko": "자산 합계"},
+    "bs_cash": {"ja": "現金及び預貯金", "ko": "현금 및 예치금"},
+    "bs_securities": {"ja": "有価証券", "ko": "유가증권"},
+    "bs_loans": {"ja": "貸付金", "ko": "대출금"},
+    "bs_tangible": {"ja": "有形固定資産", "ko": "유형고정자산"},
+    "bs_other_assets": {"ja": "その他資産", "ko": "기타자산(잔차: 자산합계 − 위 4행)"},
+    "bs_liabilities_total": {"ja": "負債合計", "ko": "부채 합계"},
+    "bs_policy_reserves_total": {"ja": "保険契約準備金", "ko": "보험계약준비금"},
+    "bs_outstanding_claims": {"ja": "支払備金", "ko": "지급비금"},
+    "bs_policy_reserves": {"ja": "責任準備金", "ko": "책임준비금"},
+    "bs_policyholder_dividend_reserve": {"ja": "契約者配当準備金", "ko": "계약자(사원)배당준비금"},
+    "bs_bonds": {"ja": "社債", "ko": "사채"},
+    "bs_other_liabilities": {"ja": "その他負債", "ko": "기타부채(잔차: 부채합계 − 보험계약준비금 − 사채)"},
+    "bs_net_assets_total": {"ja": "純資産合計", "ko": "순자산 합계"},
+    "bs_capital_and_surplus": {"ja": "資本金・資本剰余金", "ko": "자본금·자본잉여금(상호회사는 기금·기금상각적립금)"},
+    "bs_retained_earnings": {"ja": "利益剰余金", "ko": "이익잉여금(상호회사는 잉여금)"},
+    "bs_valuation_diff": {"ja": "その他有価証券評価差額金", "ko": "기타유가증권 평가차액금(부호 그대로)"},
+    "bs_other_equity": {"ja": "その他(純資産)", "ko": "기타 순자산(잔차: 이연헤지손익·토지재평가차액금·자기주식 등, 음수 가능)"},
+}
+
+
+def build_bs_block(entry):
+    """layer bs: {status, as_of, unit, scope, source_doc, pages, tree, checks, notes}. tree rows share the
+    capital_tree shape (id/label_ja/depth/sign/cur/prev/parent/derived) so the page's treeRows() is reused."""
+    if not entry or entry.get("status") != "extracted":
+        return {"status": "not_obtained", "scope": (entry or {}).get("scope"), "source_doc": (entry or {}).get("source_doc"),
+                "tree": [], "checks": {}, "notes": (entry or {}).get("notes") or []}
+    return {
+        "status": "extracted", "as_of": entry.get("as_of"), "unit": entry.get("unit"), "unit_disclosed": entry.get("unit_disclosed"),
+        "scope": entry.get("scope"), "source_doc": entry.get("source_doc"), "doc_type": entry.get("doc_type"),
+        "pages": entry.get("pages") or {}, "tree": entry.get("tree") or [], "checks": entry.get("checks") or {},
+        "notes": entry.get("notes") or [],
+    }
+
+
 def build_history_block(history_raw):
     """Assemble the history block (2026-09-12 ticket 20260912T1440Z) — 主要な経営指標等の推移
     5개년표. Extraction stores each id as a {fiscal_year: value} dict (schema/self-describing);
@@ -581,6 +620,7 @@ def build_profit_block(profit_raw, items_by_id):
 
 def build(extracted, schema, jesr_master, jesr_esr):
     labels = {}
+    bs_by_id = (load_json(BS_PATH).get("companies") or {}) if BS_PATH.exists() else {}
     items_by_id = {}
     for it in schema["items"]:
         items_by_id[it["id"]] = it
@@ -622,6 +662,8 @@ def build(extracted, schema, jesr_master, jesr_esr):
     ]:
         labels[pid] = {"ja": ja, "ko": ko, "unit": "JPY_million", "kics_item_ref": None, "pl_item_ref": None}
 
+    for bid, lab in BS_LABELS.items():
+        labels.setdefault(bid, {**lab, "unit": "JPY_million", "kics_item_ref": None, "pl_item_ref": None})
     for hid, lab in CORE_HISTORY_LABELS.items():
         labels.setdefault(hid, {**lab, "kics_item_ref": None, "pl_item_ref": None})
     lob_lines = []
@@ -770,6 +812,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "risk_tree": risk_tree,
             "profit_flow": profit_flow,
             "by_line": by_line,
+            "bs": build_bs_block(bs_by_id.get(cid)),
         })
 
     # 2026-09-13 (ticket 20260913T0400Z): life insurers enter with the core_history layer only
@@ -792,6 +835,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
                 "capital": {}, "risk": {}, "market_sub": {}, "sensitivity": {}, "aggregation": None, "axes": {}, "items": {},
                 "profit": None, "history": None, "capital_tree": [], "risk_tree": [], "profit_flow": None, "by_line": None,
                 "core_history": build_core_history_block(entry, years),
+                "bs": build_bs_block(bs_by_id.get(cid)),
             })
 
     meta_src = jesr_esr.get("_meta", {})
@@ -811,6 +855,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
                 "esr_not_yet": sum(1 for c in companies_out if c["esr_status"] == "not_yet"),
                 "life_core_only": sum(1 for c in companies_out if c["esr_status"] == "life_core_only"),
                 "by_line_total": sum(1 for c in companies_out if c.get("by_line")),
+                "bs_extracted": sum(1 for c in companies_out if (c.get("bs") or {}).get("status") == "extracted"),
                 "posted_total": len(jesr_esr.get("records", [])),
                 "census_total": meta_src.get("census", {}).get("total"),
             },
@@ -838,6 +883,20 @@ def self_check(out, jesr_esr):
 
     for c in companies:
         cen = c["company_en"]
+        bs = c.get("bs") or {}
+        if bs.get("status") == "extracted":
+            missing_bs = [r["id"] for r in bs.get("tree", []) if r["id"] not in labels]
+            if missing_bs:
+                errors.append(f"{cen}: bs ids missing from _meta.labels: {missing_bs}")
+            ids = {r["id"] for r in bs.get("tree", [])}
+            need = [t for t in ("bs_assets_total", "bs_liabilities_total", "bs_net_assets_total") if t not in ids]
+            if need:
+                errors.append(f"{cen}: bs totals missing: {need}")
+            for k, v in (bs.get("checks") or {}).items():
+                if v is False:
+                    print(f"WARN {cen}: bs check {k} is False (not an error)")
+        elif bs.get("status") != "not_obtained":
+            errors.append(f"{cen}: bs block missing")
         if c.get("esr_status") == "life_core_only":
             ch = c.get("core_history") or {}
             if ch.get("status") == "extracted":
@@ -1092,6 +1151,8 @@ def main():
 
     print(f"wrote {OUT_PATH} -- companies={len(out['companies'])}")
     for c in out["companies"]:
+        bs = c.get("bs") or {}
+        print(f"  {c['id']}: bs status={bs.get('status')} rows={len(bs.get('tree', []))} checks={bs.get('checks')}")
         if c.get("esr_status") == "life_core_only":
             ch = c.get("core_history") or {}
             print(f"  {c['id']}: life_core_only status={ch.get('status')} series={sorted(ch.get('series', {}))}")
