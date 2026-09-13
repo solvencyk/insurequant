@@ -340,6 +340,11 @@ def build_group_children(records: list[dict], insurers_by_name: dict) -> dict:
         parent = _find_parent_record(parent_group, records_by_jp, jp) if parent_group else None
         if parent is None:
             continue
+        # owner 2026-09-13: "지주(연결) ↔ 같은 업권의 사업회사" 만 잇는다. 明治安田生命(생보 본체) → 明治安田損保(손보 자회사)처럼
+        # 업권이 다른 모자관계는 별개 회사이므로 연결하지 않는다(자회사는 자기 업권 랭킹에 자기 행이 있다).
+        child_sector = c.get("sector")
+        if parent.get("scope") != "group" or (child_sector and parent.get("sector") != child_sector):
+            continue
         out.setdefault(parent["company_jp"], []).append(
             {"id": c.get("id"), "company_jp": jp, "company_en": c.get("company_en")}
         )
