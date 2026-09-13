@@ -1,0 +1,130 @@
+/* jp/jp.css — 회사별 상세 3페이지(jesr / jgaap / disclosure) 공유 스킨 (2026-09-13 분리, 종전 jesr.html 인라인).
+   공유 토큰·chrome 은 ../common.css. 이 파일은 카드·표·감응도 바·탭 등 상세 페이지 전용. */
+*{box-sizing:border-box}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
+
+.lang-switch{display:flex;align-items:center;gap:8px;font-size:13px}
+.lang-switch .lang-current{font-weight:700;color:var(--text)}
+.lang-switch .lang-sep{color:var(--border)}
+.lang-switch a{color:var(--muted);text-decoration:none}
+.lang-switch a:hover{color:var(--primary);text-decoration:underline}
+.back-row{padding:6px 16px 0}
+.back-row a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:600}
+.back-row a:hover{color:var(--primary);text-decoration:underline}
+
+/* 회사 선택 + 메타 라인 */
+.picker-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.picker-row label{font-size:13px;font-weight:600;color:var(--text)}
+#companySelect{min-width:260px;font-size:14px;font-family:var(--font-sans)}
+/* 모바일 375px 에서 공표일자+doc_type 텍스트가 줄바꿈 안 되고 뷰포트 밖으로 밀려나간
+   실측 버그 수정(공표 링크 안 긴 괄호구 때문) — overflow-wrap 으로 강제 줄바꿈 허용. */
+.meta-line{font-size:13px;color:var(--muted);line-height:1.9;margin:0;overflow-wrap:anywhere}
+.meta-line a{color:var(--primary)}
+.prelim-badge{display:inline-block;font-size:11px;font-weight:700;color:#212529;background:#f59e0b;padding:1px 6px;border-radius:3px;margin-left:6px}
+
+/* 헤드라인 카드 3 */
+.card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.jcard{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 10px;text-align:center}
+.jcard .jcard-val{font-size:26px;font-weight:800;color:var(--text);line-height:1.15}
+.jcard .jcard-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.jcard .jcard-lab{margin-top:6px;font-size:12px;color:var(--muted);font-weight:600}
+
+/* Tier1/Tier2 구성 스택 막대 */
+.stackbar-track{display:flex;height:28px;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.stackbar-seg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;min-width:0;white-space:nowrap;overflow:hidden}
+.stackbar-seg.t1{background:var(--primary)}
+.stackbar-seg.t2{background:var(--warn);color:#212529}
+.stackbar-legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:8px}
+.stackbar-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px}
+
+.table-container{overflow-x:auto}
+.esr-table{min-width:520px;width:100%}
+.esr-table th,.esr-table td{vertical-align:top}
+.esr-table td.subitem,.esr-table th.subitem{padding-left:22px;color:var(--muted);font-size:12px}
+.esr-table tr.total-row td{font-weight:700}
+.esr-table td.sign,.esr-table th.sign{text-align:center;width:44px;color:var(--muted);font-variant-numeric:tabular-nums}
+.esr-table tr.block-head td{background:var(--card);font-size:13px;letter-spacing:.02em}
+#capReqTable td .subtoggle{margin-left:6px}
+
+/* 워터폴 */
+#chartWaterfall{width:100%;height:320px}
+#chartProfitWaterfall{width:100%;height:320px}
+.profit-ratio-row td{border-top:2px solid var(--border)}
+.repro-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:var(--r-pill);border:1px solid var(--border);cursor:help}
+.repro-badge.ok{color:#166534;background:#dcfce7;border-color:#bbf7d0}
+.repro-badge.warn{color:#92400e;background:#fef3c7;border-color:#fde68a}
+
+/* 시장리스크 세부/감응도 미니바 (jp/index.html 의 .li-row 패턴 재사용) */
+.mini-row{display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid var(--border)}
+.mini-row:last-child{border-bottom:none}
+.mini-name{flex:0 0 34%;font-size:13px;font-weight:600;color:var(--text)}
+.mini-track{flex:1 1 auto;height:12px;background:var(--border);border-radius:6px;overflow:hidden}
+.mini-bar{height:100%;border-radius:6px;min-width:2px;background:var(--primary)}
+.mini-val{flex:0 0 76px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+
+.sens-row.base{background:rgba(13,110,253,0.06)}
+.sens-delta.pos{color:var(--pos)}
+.sens-delta.neg{color:var(--neg)}
+
+.axes-note{font-size:12px;color:var(--muted);margin:0 0 8px}
+.empty-note{font-size:13px;color:var(--muted);padding:10px 0}
+.jp-err{padding:36px 12px;text-align:center;color:var(--muted);font-size:13px}
+
+@media (max-width:640px){
+  header{padding:8px 12px}
+  .brand{font-size:15px}
+  .brand .hint{display:none}
+  .lang-switch{font-size:12px;gap:6px}
+  .back-row{padding:6px 12px 0}
+  .container{padding:10px}
+  .panel{padding:12px}
+  #companySelect{width:100%;min-width:0}
+  .card-row{grid-template-columns:1fr;gap:6px}
+  .jcard{padding:10px 4px}
+  .jcard .jcard-val{font-size:18px}
+  .jcard .jcard-lab{font-size:10px}
+  .esr-table{font-size:12px}
+  .esr-table th,.esr-table td{padding:5px 6px}
+  /* nit③ 2026-09-12: 適格資本 구성표는 min-width 520px 때문에 375px 에서 금액·構成比 열이 화면 밖으로
+     밀려 가로 스크롤 전엔 안 보였다. 이 표만 최소폭을 풀고 긴 항목명을 줄바꿈, 숫자열은 줄바꿈 금지. */
+  #capitalTable{min-width:0}
+  #capitalTable td:first-child,#capitalTable th:first-child{overflow-wrap:anywhere}
+  #capitalTable td.num,#capitalTable th.num{white-space:nowrap}
+  #capitalTable td.subitem{padding-left:14px}
+  .mini-name{flex-basis:30%}
+  .mini-val{flex-basis:60px;font-size:12px}
+}
+
+/* 상세 3페이지 탭 (한국 K-ICS | IFRS17 | 기타공시 와 같은 자리, common.css .tabs/.tab 재사용) */
+.jp-tabs{margin-top:8px}
+.jp-tabs .tab[aria-current="page"]{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+/* 決算 페이지 상단 카드 4장(当期純利益·経常利益·保険引受利益/基礎利益·合算率) */
+#jgaapCards{grid-template-columns:repeat(4,1fr)}
+@media (max-width:640px){ #jgaapCards{grid-template-columns:repeat(2,1fr)} }
+
+/* 貸借対照表 T자형 (IFRS17.html Panel 1 미러) */
+.bs-t{display:flex;gap:10px;min-height:200px}
+.bs-t-zone{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 16px;display:flex;flex-direction:column}
+.bs-t-asset{flex:1}
+.bs-t-right{flex:1;display:flex;flex-direction:column;gap:10px}
+.bs-t-liab,.bs-t-equity{flex:1} /* JS 가 負債:純資産 실제 비율로 flex-grow 를 바꾼다 */
+.bs-t-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bs-t-lab{font-size:13px;color:var(--muted);font-weight:600}
+.bs-t-val{font-size:22px;font-weight:800;color:var(--text);margin-top:6px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.bs-l2-rows{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.bs-l2-rows[hidden]{display:none}
+.bs-l2-row{display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;gap:10px;padding:4px 0}
+.bs-l2-lab{font-size:12px;color:var(--text)}
+.bs-l2-val{font-size:12px;font-weight:700;color:var(--text);text-align:right;font-variant-numeric:tabular-nums}
+.bs-l2-row-residual{opacity:.6;font-style:italic;border-top:1px dashed var(--border);margin-top:2px;padding-top:8px}
+.bs-l2-row-residual .bs-l2-val{font-weight:400}
+.bs-l2-row-sub{padding-left:14px;opacity:.75}
+.bs-l2-row-sub .bs-l2-lab{font-size:11px;color:var(--muted)}
+.bs-l2-row-sub .bs-l2-val{font-size:11px;font-weight:400;color:var(--muted)}
+.bs-l2-bar-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.bs-l2-bar{display:block;height:100%;background:var(--primary);border-radius:4px}
+@media (max-width:640px){
+  .bs-t{flex-direction:column}
+  .bs-l2-row{grid-template-columns:1fr;gap:2px}
+  .bs-l2-val{text-align:left}
+}
