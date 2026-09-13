@@ -260,10 +260,12 @@ def _find_parent_record(parent_group: str, records_by_jp: dict, self_jp: str):
     expanded = _expand_abbrev(parent_group)
     if expanded:
         candidates.append(expanded)
+    # 대소문자 무시 — jp_insurers.csv 의 parent_group "Sompo" 가 랭킹의 "SOMPOホールディングス" 와 매칭돼야 한다(2026-09-13).
+    cands_l = [c.lower() for c in candidates]
     for jp_name, rec in records_by_jp.items():
         if jp_name == self_jp:
             continue
-        if any(cand in jp_name for cand in candidates):
+        if any(cand in jp_name.lower() for cand in cands_l):
             return rec
     return None
 
@@ -315,6 +317,35 @@ def apply_subsidiary_dedup(records: list[dict], insurers_by_name: dict) -> tuple
     return kept, excluded
 
 
+DETAIL_JSON = HERE.parent / "jp" / "jesr_detail.json"
+
+
+def build_group_children(records: list[dict], insurers_by_name: dict) -> dict:
+    """owner 2026-09-13: 랭킹의 지주(연결) 행 ↔ 상세 페이지가 있는 사업회사(単体)를 잇는다.
+    상세가 있는 회사(jp/jesr_detail.json companies)의 jp_insurers.csv `parent_group` 을 랭킹 레코드의
+    company_jp 에 (약칭 확장 포함) 매칭 → {parent_company_jp: [{"id","company_jp","company_en"}]}.
+    화면: index 지주 행 클릭 → 첫 자식 상세, jesr 지주 헤드라인 페이지에 자식 링크. 상세 파일이 없으면 {}."""
+    if not DETAIL_JSON.exists():
+        return {}
+    try:
+        detail = json.loads(DETAIL_JSON.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    records_by_jp = {r["company_jp"]: r for r in records}
+    out: dict = {}
+    for c in detail.get("companies", []):
+        jp = c.get("company_jp") or ""
+        row = insurers_by_name.get(jp)
+        parent_group = (row.get("parent_group") or "").strip() if row else ""
+        parent = _find_parent_record(parent_group, records_by_jp, jp) if parent_group else None
+        if parent is None:
+            continue
+        out.setdefault(parent["company_jp"], []).append(
+            {"id": c.get("id"), "company_jp": jp, "company_en": c.get("company_en")}
+        )
+    return out
+
+
 def main() -> int:
     out = build()
 
@@ -340,6 +371,7 @@ def main() -> int:
 
     deploy_meta = dict(out["_meta"])
     deploy_meta["excluded_subsidiaries"] = excluded
+    deploy_meta["group_children"] = build_group_children(deploy_records, insurers_by_name)
     deploy_out = {"_meta": deploy_meta, "records": deploy_records}
 
     master_text = json.dumps(out, ensure_ascii=False, indent=2)

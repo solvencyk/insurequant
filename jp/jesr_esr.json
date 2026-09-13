@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-12T16:07:14Z",
+    "generated_at": "2026-09-13T00:29:33Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -14,7 +14,37 @@
       "not_yet": 62,
       "not_found": 2
     },
-    "excluded_subsidiaries": []
+    "excluded_subsidiaries": [],
+    "group_children": {
+      "明治安田生命保険": [
+        {
+          "id": "meijiyasuda_nonlife",
+          "company_jp": "明治安田損害保険",
+          "company_en": "Meiji Yasuda Non-Life"
+        }
+      ],
+      "東京海上ホールディングス": [
+        {
+          "id": "tokiomarine_nichido",
+          "company_jp": "東京海上日動火災保険",
+          "company_en": "Tokio Marine & Nichido Fire"
+        }
+      ],
+      "MS&ADインシュアランスグループHD": [
+        {
+          "id": "mitsui_sumitomo",
+          "company_jp": "三井住友海上火災保険",
+          "company_en": "Mitsui Sumitomo Insurance"
+        }
+      ],
+      "SOMPOホールディングス": [
+        {
+          "id": "sompo_japan",
+          "company_jp": "損害保険ジャパン",
+          "company_en": "Sompo Japan Insurance"
+        }
+      ]
+    }
   },
   "records": [
     {

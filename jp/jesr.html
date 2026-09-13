@@ -202,6 +202,7 @@
     <section class="panel" id="noticePanelWrap" hidden>
       <h2 id="secNotice">詳細開示について</h2>
       <p class="empty-note">規制様式(告示)に基づく詳細開示は、2026年10月末までに順次追加する予定です。現在は決算説明資料等の速報値のみ掲載しています。</p>
+      <p class="axes-note" id="groupChildrenLine" hidden></p>
     </section>
 
     <section class="panel" aria-labelledby="secCapital" id="secCapitalWrap">
@@ -436,8 +437,9 @@
     // 디코딩하므로 encodeURIComponent 를 여기서 또 하지 않는다 — jp/index.html 쪽 링크는 href
     // 문자열 조립이라 거기서만 encodeURIComponent 한다). 정렬 = jp/index.html 과 동일 2단 버킷 +
     // ESR desc, 상세만 있는 회사는 맨 뒤(inbox 20260912T1420Z).
+    var ESR_META = null;
     function boot(detailData, esrData){
-      DATA = detailData; META = detailData._meta || {};
+      DATA = detailData; META = detailData._meta || {}; ESR_META = (esrData && esrData._meta) || {};
       var detailCompanies = detailData.companies || [];
       var esrRecords = Array.isArray(esrData.records) ? esrData.records : [];
       var detailByEn = {};
@@ -546,6 +548,15 @@
         };
         renderMeta(hc);
         renderHeadline(hc);
+        // 지주(연결) 헤드라인 페이지: 그룹 사업회사(単体) 상세 링크(_meta.group_children, owner 2026-09-13)
+        var gcl = document.getElementById('groupChildrenLine');
+        var kids = (ESR_META && ESR_META.group_children && ESR_META.group_children[r.company_jp]) || [];
+        if(gcl){
+          if(kids.length){
+            gcl.hidden = false;
+            gcl.innerHTML = 'グループ会社（単体）の詳細: ' + kids.map(function(k){ return '<a href="jesr.html?company='+esc(k.id)+'">'+esc(k.company_jp)+'</a>'; }).join('・');
+          } else { gcl.hidden = true; }
+        }
       }
     }
 
