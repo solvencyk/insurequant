@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T05:20:32.495016Z",
+    "generated_at": "2026-09-13T06:43:07.954536Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -1632,7 +1632,7 @@
       "esr_not_yet": 3,
       "life_core_only": 5,
       "by_line_total": 5,
-      "bs_extracted": 7,
+      "bs_extracted": 10,
       "posted_total": 15,
       "census_total": 79
     }
@@ -3987,15 +3987,176 @@
         }
       },
       "bs": {
-        "status": "not_obtained",
+        "status": "extracted",
+        "as_of": "2026-03-31",
+        "unit": "JPY_million",
+        "unit_disclosed": "JPY_million",
         "scope": "solo",
-        "source_doc": "raw/fy2025_samples/meijiyasuda_nonlife_20260904_performance_data.pdf",
-        "tree": [],
-        "checks": {},
-        "notes": [
-          "totals missing: ['bs_net_assets_total']",
-          "本編(貸借対照表)がローカルに無いため EBS 表の財務会計ベース列(当期末のみ)を J-GAAP 値として採用。前期末なし。"
-        ]
+        "source_doc": "raw/fy2025_samples/meijiyasuda_nonlife_20260729_main.pdf",
+        "doc_type": "ディスクロージャー誌 本編 計算書類等 貸借対照表",
+        "pages": {
+          "assets": 39,
+          "liabilities": 40,
+          "net_assets": 40
+        },
+        "tree": [
+          {
+            "id": "bs_assets_total",
+            "label_ja": "資産合計",
+            "depth": 0,
+            "sign": "=",
+            "cur": 63763,
+            "prev": 62769,
+            "parent": null,
+            "derived": false
+          },
+          {
+            "id": "bs_cash",
+            "label_ja": "現金及び預貯金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 4930,
+            "prev": 5314,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_securities",
+            "label_ja": "有価証券",
+            "depth": 1,
+            "sign": "+",
+            "cur": 33277,
+            "prev": 30743,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_tangible",
+            "label_ja": "有形固定資産",
+            "depth": 1,
+            "sign": "+",
+            "cur": 3821,
+            "prev": 3855,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_other_assets",
+            "label_ja": "その他資産",
+            "depth": 1,
+            "sign": "+",
+            "cur": 21735,
+            "prev": 22857,
+            "parent": "bs_assets_total",
+            "derived": true
+          },
+          {
+            "id": "bs_liabilities_total",
+            "label_ja": "負債合計",
+            "depth": 0,
+            "sign": "=",
+            "cur": 40395,
+            "prev": 40873,
+            "parent": null,
+            "derived": false
+          },
+          {
+            "id": "bs_policy_reserves_total",
+            "label_ja": "保険契約準備金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 25765,
+            "prev": 25060,
+            "parent": "bs_liabilities_total",
+            "derived": false
+          },
+          {
+            "id": "bs_outstanding_claims",
+            "label_ja": "支払備金",
+            "depth": 2,
+            "sign": "+",
+            "cur": 5737,
+            "prev": 5883,
+            "parent": "bs_policy_reserves_total",
+            "derived": false
+          },
+          {
+            "id": "bs_policy_reserves",
+            "label_ja": "責任準備金",
+            "depth": 2,
+            "sign": "+",
+            "cur": 20028,
+            "prev": 19176,
+            "parent": "bs_policy_reserves_total",
+            "derived": false
+          },
+          {
+            "id": "bs_other_liabilities",
+            "label_ja": "その他負債",
+            "depth": 1,
+            "sign": "+",
+            "cur": 14630,
+            "prev": 15813,
+            "parent": "bs_liabilities_total",
+            "derived": true
+          },
+          {
+            "id": "bs_net_assets_total",
+            "label_ja": "純資産合計",
+            "depth": 0,
+            "sign": "=",
+            "cur": 23367,
+            "prev": 21895,
+            "parent": null,
+            "derived": false
+          },
+          {
+            "id": "bs_capital_and_surplus",
+            "label_ja": "資本金・資本剰余金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 18455,
+            "prev": 18455,
+            "parent": "bs_net_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_retained_earnings",
+            "label_ja": "利益剰余金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 2847,
+            "prev": 1843,
+            "parent": "bs_net_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_valuation_diff",
+            "label_ja": "その他有価証券評価差額金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 2064,
+            "prev": 1596,
+            "parent": "bs_net_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_other_equity",
+            "label_ja": "その他(純資産)",
+            "depth": 1,
+            "sign": "+",
+            "cur": 1,
+            "prev": 1,
+            "parent": "bs_net_assets_total",
+            "derived": true
+          }
+        ],
+        "checks": {
+          "assets_eq_liab_plus_equity": true,
+          "policy_reserves_sum_ok": true,
+          "no_negative_residual": true
+        },
+        "notes": []
       }
     },
     {
@@ -6966,14 +7127,206 @@
         ]
       },
       "bs": {
-        "status": "not_obtained",
+        "status": "extracted",
+        "as_of": "2026-03-31",
+        "unit": "JPY_million",
+        "unit_disclosed": "JPY_million",
         "scope": "solo",
-        "source_doc": "決算説明資料(5月)",
-        "tree": [],
-        "checks": {},
-        "notes": [
-          "決算説明資料に貸借対照表要約なし(総資産 1行のみ)。7月本編 未取得。"
-        ]
+        "source_doc": "raw/fy2025_samples/others/sumitomolife_2026_repodata.pdf",
+        "doc_type": "ディスクロージャー誌 資料編 計算書類 貸借対照表",
+        "pages": {
+          "assets": 58,
+          "liabilities": 58,
+          "net_assets": 58
+        },
+        "tree": [
+          {
+            "id": "bs_assets_total",
+            "label_ja": "資産合計",
+            "depth": 0,
+            "sign": "=",
+            "cur": 37656023,
+            "prev": 36722496,
+            "parent": null,
+            "derived": false
+          },
+          {
+            "id": "bs_cash",
+            "label_ja": "現金及び預貯金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 996744,
+            "prev": 902108,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_securities",
+            "label_ja": "有価証券",
+            "depth": 1,
+            "sign": "+",
+            "cur": 31817336,
+            "prev": 30338695,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_loans",
+            "label_ja": "貸付金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 2060390,
+            "prev": 2069452,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_tangible",
+            "label_ja": "有形固定資産",
+            "depth": 1,
+            "sign": "+",
+            "cur": 644901,
+            "prev": 655303,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_other_assets",
+            "label_ja": "その他資産",
+            "depth": 1,
+            "sign": "+",
+            "cur": 2136652,
+            "prev": 2756938,
+            "parent": "bs_assets_total",
+            "derived": true
+          },
+          {
+            "id": "bs_liabilities_total",
+            "label_ja": "負債合計",
+            "depth": 0,
+            "sign": "=",
+            "cur": 34966120,
+            "prev": 34960186,
+            "parent": null,
+            "derived": false
+          },
+          {
+            "id": "bs_policy_reserves_total",
+            "label_ja": "保険契約準備金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 29033003,
+            "prev": 29091434,
+            "parent": "bs_liabilities_total",
+            "derived": false
+          },
+          {
+            "id": "bs_outstanding_claims",
+            "label_ja": "支払備金",
+            "depth": 2,
+            "sign": "+",
+            "cur": 130411,
+            "prev": 130964,
+            "parent": "bs_policy_reserves_total",
+            "derived": false
+          },
+          {
+            "id": "bs_policy_reserves",
+            "label_ja": "責任準備金",
+            "depth": 2,
+            "sign": "+",
+            "cur": 28687235,
+            "prev": 28749390,
+            "parent": "bs_policy_reserves_total",
+            "derived": false
+          },
+          {
+            "id": "bs_policyholder_dividend_reserve",
+            "label_ja": "社員配当準備金",
+            "depth": 2,
+            "sign": "+",
+            "cur": 215356,
+            "prev": 211078,
+            "parent": "bs_policy_reserves_total",
+            "derived": false
+          },
+          {
+            "id": "bs_bonds",
+            "label_ja": "社債",
+            "depth": 1,
+            "sign": "+",
+            "cur": 626455,
+            "prev": 448695,
+            "parent": "bs_liabilities_total",
+            "derived": false
+          },
+          {
+            "id": "bs_other_liabilities",
+            "label_ja": "その他負債",
+            "depth": 1,
+            "sign": "+",
+            "cur": 5306662,
+            "prev": 5420057,
+            "parent": "bs_liabilities_total",
+            "derived": true
+          },
+          {
+            "id": "bs_net_assets_total",
+            "label_ja": "純資産合計",
+            "depth": 0,
+            "sign": "=",
+            "cur": 2689902,
+            "prev": 1762310,
+            "parent": null,
+            "derived": false
+          },
+          {
+            "id": "bs_capital_and_surplus",
+            "label_ja": "基金・基金償却積立金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 689000,
+            "prev": 689000,
+            "parent": "bs_net_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_retained_earnings",
+            "label_ja": "利益剰余金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 364075,
+            "prev": 349875,
+            "parent": "bs_net_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_valuation_diff",
+            "label_ja": "その他有価証券評価差額金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 1770301,
+            "prev": 822943,
+            "parent": "bs_net_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_other_equity",
+            "label_ja": "その他(純資産)",
+            "depth": 1,
+            "sign": "+",
+            "cur": -133474,
+            "prev": -99508,
+            "parent": "bs_net_assets_total",
+            "derived": true
+          }
+        ],
+        "checks": {
+          "assets_eq_liab_plus_equity": true,
+          "policy_reserves_sum_ok": true,
+          "no_negative_residual": true
+        },
+        "notes": []
       }
     },
     {
@@ -7523,14 +7876,206 @@
         ]
       },
       "bs": {
-        "status": "not_obtained",
+        "status": "extracted",
+        "as_of": "2026-03-31",
+        "unit": "JPY_million",
+        "unit_disclosed": "JPY_million",
         "scope": "solo",
-        "source_doc": null,
-        "tree": [],
-        "checks": {},
-        "notes": [
-          "PDF 未取得(2026-09-13 セッションで 404 ×2)。"
-        ]
+        "source_doc": "raw/fy2025_samples/others/daiichi_2026_index_004.pdf",
+        "doc_type": "アニュアルレポート2026 経理の状況 貸借対照表",
+        "pages": {
+          "assets": 23,
+          "liabilities": 24,
+          "net_assets": 24
+        },
+        "tree": [
+          {
+            "id": "bs_assets_total",
+            "label_ja": "資産合計",
+            "depth": 0,
+            "sign": "=",
+            "cur": 35185307,
+            "prev": 35136780,
+            "parent": null,
+            "derived": false
+          },
+          {
+            "id": "bs_cash",
+            "label_ja": "現金及び預貯金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 341585,
+            "prev": 243072,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_securities",
+            "label_ja": "有価証券",
+            "depth": 1,
+            "sign": "+",
+            "cur": 28912500,
+            "prev": 28729468,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_loans",
+            "label_ja": "貸付金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 3273572,
+            "prev": 3423016,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_tangible",
+            "label_ja": "有形固定資産",
+            "depth": 1,
+            "sign": "+",
+            "cur": 1186836,
+            "prev": 1219553,
+            "parent": "bs_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_other_assets",
+            "label_ja": "その他資産",
+            "depth": 1,
+            "sign": "+",
+            "cur": 1470814,
+            "prev": 1521671,
+            "parent": "bs_assets_total",
+            "derived": true
+          },
+          {
+            "id": "bs_liabilities_total",
+            "label_ja": "負債合計",
+            "depth": 0,
+            "sign": "=",
+            "cur": 32527891,
+            "prev": 32789940,
+            "parent": null,
+            "derived": false
+          },
+          {
+            "id": "bs_policy_reserves_total",
+            "label_ja": "保険契約準備金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 28454942,
+            "prev": 28891029,
+            "parent": "bs_liabilities_total",
+            "derived": false
+          },
+          {
+            "id": "bs_outstanding_claims",
+            "label_ja": "支払備金",
+            "depth": 2,
+            "sign": "+",
+            "cur": 172338,
+            "prev": 181307,
+            "parent": "bs_policy_reserves_total",
+            "derived": false
+          },
+          {
+            "id": "bs_policy_reserves",
+            "label_ja": "責任準備金",
+            "depth": 2,
+            "sign": "+",
+            "cur": 27844746,
+            "prev": 28277671,
+            "parent": "bs_policy_reserves_total",
+            "derived": false
+          },
+          {
+            "id": "bs_policyholder_dividend_reserve",
+            "label_ja": "契約者配当準備金",
+            "depth": 2,
+            "sign": "+",
+            "cur": 437856,
+            "prev": 432050,
+            "parent": "bs_policy_reserves_total",
+            "derived": false
+          },
+          {
+            "id": "bs_bonds",
+            "label_ja": "社債",
+            "depth": 1,
+            "sign": "+",
+            "cur": 576780,
+            "prev": 576780,
+            "parent": "bs_liabilities_total",
+            "derived": false
+          },
+          {
+            "id": "bs_other_liabilities",
+            "label_ja": "その他負債",
+            "depth": 1,
+            "sign": "+",
+            "cur": 3496169,
+            "prev": 3322131,
+            "parent": "bs_liabilities_total",
+            "derived": true
+          },
+          {
+            "id": "bs_net_assets_total",
+            "label_ja": "純資産合計",
+            "depth": 0,
+            "sign": "=",
+            "cur": 2657415,
+            "prev": 2346839,
+            "parent": null,
+            "derived": false
+          },
+          {
+            "id": "bs_capital_and_surplus",
+            "label_ja": "資本金・資本剰余金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 243203,
+            "prev": 258560,
+            "parent": "bs_net_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_retained_earnings",
+            "label_ja": "利益剰余金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 408447,
+            "prev": 322655,
+            "parent": "bs_net_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_valuation_diff",
+            "label_ja": "その他有価証券評価差額金",
+            "depth": 1,
+            "sign": "+",
+            "cur": 2157146,
+            "prev": 1842611,
+            "parent": "bs_net_assets_total",
+            "derived": false
+          },
+          {
+            "id": "bs_other_equity",
+            "label_ja": "その他(純資産)",
+            "depth": 1,
+            "sign": "+",
+            "cur": -151381,
+            "prev": -76987,
+            "parent": "bs_net_assets_total",
+            "derived": true
+          }
+        ],
+        "checks": {
+          "assets_eq_liab_plus_equity": true,
+          "policy_reserves_sum_ok": true,
+          "no_negative_residual": true
+        },
+        "notes": []
       }
     },
     {
