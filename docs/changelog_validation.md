@@ -5,6 +5,19 @@
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
+## 2026-09-13 (4차) -- jp 빌더의 `records count != 15` 를 census 파생 항등식으로 (TODO_jp(27) ②)
+
+- 사고 유형(예방): **게이트가 사실이 아니라 옛 숫자를 지킨다.** 10/31 J-ICS 공시기한 직후 census 의 posted 가 15 → 60~70사로 뒤집히면 `build_jesr_page_json.py::self_check` 의 리터럴이 정상 데이터를 RED 로 막는다. 2026-08-29 분기 지평 사고(리터럴 분기목록 3곳 → 2026.2Q 미순회)와 같은 형태.
+- 되돌려 재본 실측: `not_yet` 62사를 posted 로 뒤집은 합성 census(posted 77)를 **HEAD 빌더**에 물리면 `SELF-CHECK FAIL: records count = 77, expected 15` · exit 1. 새 빌더는 exit 0 · RED 0건.
+- 숫자 대신 항등식: `census posted == _meta.census.posted == len(master) == len(deploy) + len(excluded)`. 개수는 "한 건 빠지고 한 건 중복" 을 통과시키므로 **집합**(company_jp·company_en)으로도 건다. `check_census_identity` · `check_deploy_identity` 신설.
+- **0 으로 닫히는 등식 차단**: posted==0 이면 모든 등식이 성립하고 화면만 빈다 → `JP_CENSUS_EMPTY`. 종전에는 리터럴 15 가 우연히 이 구멍을 막고 있었다(리터럴 제거의 부작용을 같이 닫았다).
+- 리터럴 전수 감사(AST): 일부러 둔 것 = `ESR_PCT_MIN/MAX`(100~1000%; 데이터에서 파생하면 틀린 값이 스스로 범위를 넓힌다) · `AS_OF_TARGET`(기간 선언; 10/31 은 같은 기간에 회사만 는다) · `SECTOR_MAP` · `PRELIM_KEYWORDS` · `DEAD_CLASSIFICATIONS` · `_SUFFIX_ABBREV`. 고친 것 = 회사 수 15 · `AS_OF_LABEL_JA`(→ `AS_OF_TARGET` 파생) · sector 어휘(→ `SECTOR_MAP.values()` 파생) · status/preliminary 어휘 상수화.
+- 같이 닫은 사각: `company_en` 중복(2026-09-13 `6e051be` 실사고인데 게이트 침묵, 하류가 이 키로 조인) · `preliminary` 모르는 값(결측이 아니라 **오독** — 속보가 확정치로 표시된다) · `JP_CENSUS_SHAPE`(따옴표 없는 쉼표로 열이 넘친 posted 행) · esr_pct 결측 시 정렬 TypeError → 이름 붙은 RED.
+- 새 발견 → jp 발주: census 14행 第一ライフグループ 이 18열(헤더 16열)이라 notes 가 잘려 읽힌다. 지금 `not_yet` 이라 무영향, 10/31 에 posted 로 뒤집히면 실린다. 티켓 `inbox/jp/20260913T1730Z__validation__JP_MULTI__census_ragged_row.md`. `jesr_sources_2026Q1.csv`·`jp_insurers.csv` 의 같은 모양 5행은 **읽는 열이 넘침 앞쪽**이라 영향 0(실측) — RED 로 걸지 않았다.
+- 회귀는 **새 파일을 만들지 않고** `tests/test_jp_deploy_matches_census.py` 에 얹었다(23케이스 → 파일 전체 25). 근거: `prepush_check.py` §0 실측에서 빈 테스트 파일 하나만 추가해도 판정이 `REDUCED (jp-scope)` → `FULL` 로 뒤집힌다(`tests/` 는 jp 2종만 예외).
+- 변이시험 11/11 발화(사본에서만, 종료 후 원본 md5 동일). "배선했다 ≠ exit code 가 바뀐다" 는 ① 진짜 빌더 exit-code 케이스 5종 ② 데이터로 도달 불가능한 배포 항등식은 AST 배선 검사로 나눠 잡았다.
+- `NEXT_UPDATE` 는 데이터에서 파생 불가(편집상 약속)라 리터럴 유지 + 지나면 **경고만**. RED 로 하면 데이터 무변경 상태에서 날짜 경계에 빌더와 배포 테스트가 동시에 터진다.
+
 ## 2026-09-13 (3차) -- push 게이트 **범위 판정**을 훅에 구현 (문서에만 있던 CLAUDE.md §5 규칙)
 
 - 사고 유형: 규칙이 문서에만 있고 코드가 안 본다. 방향만 반대일 뿐 "문서에 mandatory 라고 썼다 ≠ 강제" 와 같은 병이다. jp 만 고친 번들이 한국 원문 부재(`data/disclosure/`)로 `RED=197 → BLOCKED` — 인과 0.

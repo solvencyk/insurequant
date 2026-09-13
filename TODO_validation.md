@@ -7,6 +7,20 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 
 ## Status
 
+**(2026-09-13, 4차) jp 빌더 self-check 의 `records count != 15` 를 census 파생 항등식으로 교체 — 게이트가 사실이 아니라 옛 숫자를 지키고 있었다(TODO_jp(27) ②).** 10/31 J-ICS 공시기한 직후 census 의 posted 가 15사 → 60~70사로 뒤집히면 이 self-check 가 **정상 데이터를 RED 로 막는다**. 실측 재현(격리 사본, not_yet 62사를 posted 로 뒤집은 합성 census): HEAD 빌더 `SELF-CHECK FAIL: records count = 77, expected 15` · **exit 1**, 새 빌더 **exit 0 · posted 77 · RED 0건**. 2026-08-29 분기 지평 사고(게이트 3곳이 리터럴 분기목록을 들고 있다가 2026.2Q 를 순회조차 안 함)와 같은 형태라 그 교훈("하드코딩 자체가 재발 구조다")을 그대로 적용했다.
+
+> 신설: `check_census_identity`(+`check_census_row_shape`·`check_preliminary_vocabulary`) · `check_deploy_identity` · 회귀 23케이스를 **기존 `tests/test_jp_deploy_matches_census.py` 에 얹었다**(새 파일을 만들면 `prepush_check.py` §0 이 `tests/` 를 전체 게이트로 판정한다 — 실측: 빈 테스트 파일 하나 추가 시 판정이 `REDUCED` → `FULL`).
+>
+> - **숫자가 아니라 항등식.** `census posted 행 수 == _meta.census.posted == len(마스터 records) == len(배포 records) + len(excluded)`. 수는 한 건 빠지고 한 건 중복돼도 맞으므로 **집합으로** 건다(company_jp·company_en).
+> - **0 으로 닫히는 등식은 등식이 아니다.** posted==0 이면 산수는 전부 맞고 화면만 빈다 → `JP_CENSUS_EMPTY` 로 RED. 종전에는 리터럴 15 가 우연히 이 구멍을 막고 있었다.
+> - **일부러 둔 리터럴**: `ESR_PCT_MIN/MAX`(100~1000%, 규제 하한·단위오류 상식선 — 데이터에서 파생하면 틀린 값이 스스로 범위를 넓힌다) · `AS_OF_TARGET`(기간 선언, 10/31 은 같은 기간에 회사만 느는 이벤트라 안 깨진다) · `SECTOR_MAP`·`PRELIM_KEYWORDS`·`_SUFFIX_ABBREV`·`DEAD_CLASSIFICATIONS`. 근거는 파일 주석에.
+> - **덤으로 닫은 것**: `AS_OF_LABEL_JA` 를 `AS_OF_TARGET` 에서 파생(같은 사실 두 벌) · `SECTOR_VALUES` 를 `SECTOR_MAP.values()` 에서 파생(재타이핑) · `company_en` 중복 검사(2026-09-13 `6e051be` 실사고인데 게이트는 침묵했다; 하류가 이 키로 조인) · `preliminary` 모르는 값 RED(결측이 아니라 오독) · esr_pct 결측 시 정렬 TypeError → 이름 붙은 RED.
+> - **새 사각 발견 → jp 로 발주**: census 14행 第一ライフグループ 이 따옴표 없는 쉼표로 **18열**(헤더 16열)이라 notes 가 잘려 읽힌다. 지금은 `not_yet` 이라 화면 무영향이지만 10/31 에 posted 로 뒤집히면 실린다 → `JP_CENSUS_SHAPE` 를 posted 행 한정 RED 로 걸고 티켓 `inbox/jp/20260913T1730Z__validation__JP_MULTI__census_ragged_row.md` 발주. `jesr_sources_2026Q1.csv` 6행·`jp_insurers.csv` 4행도 같은 모양이나 **이 빌더가 읽는 열은 넘침 앞쪽**이라 영향 0(실측) — RED 로 걸지 않았다.
+> - **변이시험 11/11 발화**(사본에서만, 종료 후 원본 md5 `c03fad75…` 동일 확인): 리터럴 15 재삽입 · 항등식 호출 삭제 · 열수검사 삭제 · preliminary 검사 삭제 · 집합검사 제거(개수만) · posted==0 가드 제거 · main() 배포항등식 호출 삭제 · company_en 중복검사 제거 · None-취약 정렬 복귀 · as_of 라벨 리터럴 복귀 · unknown status 검사 제거.
+> - **배선 ≠ 돈다**: 단위 테스트는 검사 함수를 직접 부르므로 호출 한 줄을 지워도 통과한다. 그래서 ① 진짜 빌더를 돌려 exit code 를 재는 케이스 5종(빈 census·ragged·preliminary·company_en 중복·esr_pct 결측) ② 데이터로 도달 불가능한 배포 항등식은 AST 배선 검사로 못 박았다.
+> - 검증: 빌더 exit 0 · `[source-gate] … RED 0건` · `jp/jesr_esr.json`·`jesr_master.json` 이 `generated_at` 외 **바이트 동일** · `pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py tests/test_deploy_assets.py -q` **79 passed** · 축소 묶음 5종 **197 passed·4 skipped** · `prepush_check.py --scope-only` = `REDUCED (jp-scope)`.
+> - **잔여**: `NEXT_UPDATE="2026-10-31"` 은 데이터에서 파생할 수 없는 편집상 약속이라 리터럴로 두고 **경고만** 인쇄한다(지난 날짜가 되면). RED 로 하면 데이터가 안 바뀐 날짜 경계에서 빌더와 배포 테스트가 동시에 터지는 시한폭탄이 된다.
+
 **(2026-09-13, 3차) push 게이트 범위 판정을 `prepush_check.py` 안에 구현 — 규칙이 문서에만 있어서 강제도 완화도 안 되던 자리다.** owner 지적: "한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 된다". `CLAUDE.md` §5 는 2026-09-12 에 이미 "번들 diff 가 jp 범위뿐이면 한국 마스터 게이트를 안 돌린다" 고 적어 뒀는데 훅은 **그 규칙을 코드로 보지 않았다**(무조건 전부 실행). 실측 재현: jp 만 바꾼 번들에서 `PRE-PUSH VERDICT … gate RED=197 · K-ICS rule gate=BLOCK … BLOCKED`(exit 2) — 197건 전부 한국 원문 `data/disclosure/` 부재 때문이고 jp 변경과 인과 0.
 
 > 신설: `prepush_check.py` §0(`classify_path`/`decide_scope`/`collect_changed_paths`/`resolve_scope`/`print_scope` + `_run_korean_master_gates()` 로 한국 축 묶음 분리) · `tests/test_prepush_scope.py`(65케이스) · `tests/test_push_gate_wiring.py::test_wired_means_wired_in_the_full_gate_only`.
@@ -23,46 +37,6 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 **(2026-09-13) jp 레인에서 false-green 3건 — 포스트모템 `PM-2026-09-13` 신설, 룰 4종 정의했으나 **전부 미배선(UH-18)**.** jp 빌더 self-check(범위·형식·합계)는 통과했는데 화면 수치 2건이 2차보도·조정치였고(東京海上HD 238→268 · かんぽ 220→181 · 明治安田生命 208.0→208.7), 출처 URL 1건은 ESR 이 한 줄도 없는 합병 보도자료였다(MS&AD). **메커니즘: self-check 가 census 안에서만 닫히는 자기참조라 "출처가 살아 있나 / 그 문서에 그 숫자가 있나" 축이 없다** — PM-2026-06-16("산술만 검사")의 jp 판. 룰 4종(`JP_SOURCE_URL_DEAD`·`JP_SOURCE_EXPIRING_HOST`·`JP_ESR_NOT_IN_SOURCE`·`JP_ESR_EDINET_MISMATCH`)을 오탐억제까지 정의하고 도구는 만들었으나(`J-ESR/check_source_urls.py`·`edinet_esr_probe.py`) 어느 게이트에도 안 걸려 있다 = honor system. 배선 방향은 **증거 신선도 검사**(`source_url_health.json` 의 `checked_at` 이 census 보다 오래되면 RED) — 네트워크 없이 "점검을 안 돌리고 census 를 고쳤다" 를 잡는 형태. 티켓 `inbox/jp/20260913T1500Z__validation__JP_MULTI__jp_source_gate_wiring.md` / P1.
 
 **(2026-09-11) `public_exports/` 변이시험이 실제 배포 파일을 제자리에서 흔들다 끊긴 잔해(가짜 회사 행 1건)가 워킹트리에 남아 prepush 오프라인 테스트를 막았다 — 3번째 재발이라 구조를 바꿨다.** `check_public_exports(fd, out_dir=None)` 로 검사 폴더를 주입 가능하게 하고, `test_mutation_public_export_fires` 는 pytest 임시 폴더에 복사한 사본만 훼손한다. dirty-check·백업·`finally` 복원 코드 삭제(필요 없어짐). 실측: 관련 테스트 149 passed, 변이시험 후 `git status public_exports/` 깨끗, `validate_live_artifacts.py` RED=0. 밀려난 Status 항목(09-01 소급재작성 축)은 `docs/todo_archive_validation.md` 로.
-
-**(2026-09-02) 마스터 JSON 의 하류 사본이 둘인데 검사기는 하나였다 — `MASTER_XLSX_*` 축을 신설해 닫았다.**
-
-> owner 승인(2026-09-02 "신설한다 — 14개 시트 전수"). 신설:
-> `scripts/check_master_xlsx_drift.py`(비교기) · `validate_data_contract.py` CHECK 8
-> `check_master_xlsx`(게이트, `run_gate` → `prepush_check.py` §1 → 훅) ·
-> `tests/test_push_gate_wiring.py` WIRED 선언 · `tests/test_rule_coverage_manifest.py` 18개 테스트 ·
-> `scripts/_probes/probe_20260902_master_xlsx_retrodiction.py`(되돌려 재보기).
->
-> - **무엇이 사각이었나.** 루트 마스터의 하류 사본은 둘(`public_exports/` 스냅샷 ·
->   `insurequant_master_tables.xlsx`)인데 검사기는 `PUBLIC_EXPORT_*` 하나뿐이었다 —
->   **마스터 ↔ xlsx 를 대조하는 룰이 0건.** xlsx 만 뒤처져도 RED 가 구조적으로 나올 수 없었다.
->   `sync_master_xlsx_sheet.py` 는 요청받은 시트만 동기화하고 스스로 뒤처짐을 탐지하지 않으므로,
->   정합성이 **"누가 어느 시트를 동기화할지 기억하는 것"** 에 걸려 있었다.
-> - **사고 2건.** ① owner 라이브 QA — NH농협손해 2026 기본자본비율 전망이 라이브·마스터 102.77
->   인데 xlsx 만 79.8(그 회사 2026.1Q 값). 38개사 전부 2090칸 중 **1219칸 stale**.
->   ② owner 반문("소진율 2종도 stale 하겠네")으로 13시트 전수 측정 → **가설과 결과가 달랐다**:
->   소진율 2종은 깨끗, 아무도 안 보던 `K-ICS공시` 가 stale(33셀·121행).
->   **어느 시트가 stale 한지 추측하지 말고 전수로 재라.** 데이터 수정은 `d1f1e7f`·`ee11c1d`.
-> - **배선 전 시뮬레이션(규율)**: RED=0 · YELLOW=0 확인(13시트 **53,288행** = 워크북 전 데이터 행).
-> - **되돌려 재본 실측**: 두 수정 커밋이 xlsx 만 건드렸으므로 그때 워크북을 꺼내 오늘 마스터로
->   대조 → `d1f1e7f~1` **RED=5** · `ee11c1d~1` **RED=2** · `HEAD` **RED=0**. 셀 수가 두 커밋의
->   자체 기록과 **정확히 일치**(1111/169/33/121) — 이 룰이었으면 사람보다 먼저 막았다.
-> - **스키마는 import 한다.** 시트목록·평탄화·타입강제는 `build_master_xlsx`, 목표행·비교정규화·
->   행식별키는 `sync_master_xlsx_sheet` 에서 가져온다. 베끼면 빌더가 바뀌는 순간 갈라진다.
->   비교 기준은 동기화와 **정확히 같다** — 느슨하면 값 차이를 놓치고 **엄하면 어떤 도구도 만들 수
->   없는 상태를 요구**해 영원히 못 고치는 RED 이 된다. `'154'` vs `154.0` 은 셀 타입 차이라
->   드리프트가 아니다(양방향으로 테스트에 박아 뒀다).
-> - **`요약` 은 행수만 검사한다** — 설명 열은 다른 레인이 손으로 관리하는 문구다(sync L21-22).
->   `MASTERS` 밖 수기 시트는 허용된 설계라 RED 이 아니라 YELLOW census.
-> - **변이시험은 워크북을 재저장하지 않는다.** `compare_sheet`/`scan(sheets=...)` 을 순수 함수로
->   분리해 메모리 안에서만 흔든다(openpyxl load+save 는 다른 시트 수식 캐시를 날린다). 픽스처가
->   읽기 전후 바이트 해시로 무변경을 실측한다. 변이 8종 + 사고 재생 1종 전부 발화.
-> - 회귀: `--selftest` **57/57 유지** · 게이트 **RED=0 유지**(YELLOW 96→97) · 오프라인 묶음 통과.
->   **실행 비용 +11.9초**(게이트 15.2→27.1초, 훅 17분 33초 대비 +1.1%).
-> - 잔여 **UH-15**(하류 사본 매니페스트 부재 — 세 사본이 전부 사고 후에야 검사 대상이 됐다.
->   UH-14 와 같은 뿌리라 합류) · **UH-16**(sync 가 시트 무변경 시 `요약` 행수 미갱신, 현재 무해) ·
->   **UH-17**(워킹트리 기준 대조라 sync 후 커밋 없이 push 하면 안 잡힌다 — 커밋 기준으로 바꾸면
->   정상 sync 중 상시 발화라 오탐억제 설계 전까지 배선 안 함).
->   포스트모템 `docs/postmortems/PM-2026-09-02_master_xlsx_stale_unchecked.md`.
 
 > 📦 **Status 이력은 `docs/todo_archive_validation.md` 로 이동했다** (2026-09-11, 내용 무수정 — (2026-09-01) 판정 사이드카 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 

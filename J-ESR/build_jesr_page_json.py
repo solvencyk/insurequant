@@ -80,7 +80,21 @@ AS_OF_TARGET = "2026-03-31"
 # 2026-09-13 owner: 한국 사이트처럼 법인 단위로 전부 싣는다(교보생명·교보라이프플래닛 각각 게시와 동일). 부모-자회사
 # 중복 제거는 끈다. True 로 되돌리면 apply_subsidiary_dedup 이 다시 동작한다(감사 이력용 보존).
 SUBSIDIARY_DEDUP = False
-AS_OF_LABEL_JA = "2026年3月31日"
+
+
+def _as_of_label_ja(iso: str) -> str:
+    """'2026-03-31' -> '2026年3月31日'.
+
+    화면 라벨은 AS_OF_TARGET 에서 **파생**한다. 손으로 또 적어 두면 같은 사실이 두 벌이 되고,
+    기간을 바꾸는 사람은 보통 ISO 쪽만 고친다 — 그러면 9월 데이터에 '3月31日' 라벨이
+    붙은 채로 어느 검사에도 안 걸린다(같은 사실 두 벌 = 이 저장소가 골든 표·룰 id 목록에서
+    반복해서 데인 형태).
+    """
+    y, m, d = iso.split("-")
+    return f"{y}年{int(m)}月{int(d)}日"
+
+
+AS_OF_LABEL_JA = _as_of_label_ja(AS_OF_TARGET)
 NEXT_UPDATE = "2026-10-31"
 BASIS_DEFAULT = "J-ICS"
 
@@ -88,6 +102,48 @@ SECTOR_MAP = {"損保": "nonlife", "生保": "life", "再保険": "reinsurance"}
 PRELIM_KEYWORDS = ["속보", "잠정", "速報", "暫定", "監査未済"]  # ticket 규칙: 속보/잠정/速報 류 표현
 # 2026-09-13: 일본어 원문 표기(暫定値·監査未済)를 추가. 노트에 원문을 그대로 인용하면
 # 한국어 키워드만으로는 안 걸려 かんぽ生命(監査未済の暫定値)이 조용히 확정치로 표시됐다.
+
+# ---------------------------------------------------------------------------
+# census 어휘 — census 열 값을 읽는 **유일한 정의**다.
+# build() 와 self_check 가 각자 문자열을 적어 두면 한쪽만 고쳐져도 아무도 모른다
+# (K-ICS 상관행렬을 검증기에 재타이핑하지 말라는 규칙과 같은 이유).
+# ---------------------------------------------------------------------------
+POSTED_STATUS = "posted"
+#: census `fy2025_esr_status` 가 가질 수 있는 값. 여기 없는 값은 세 카운터 어디에도 안 잡혀
+#: `posted+not_yet+not_found == total` 을 깨뜨린다 — 그 행은 화면에도 census 요약에도
+#: 없는 유령이 된다. 미분류는 SKIP 이 아니라 RED.
+CENSUS_STATUSES = (POSTED_STATUS, "not_yet", "not_found")
+#: census `preliminary` 명시열의 어휘. 빈 값은 "명시 안 함"(= PRELIM_KEYWORDS 폴백)이라 정상이고,
+#: **모르는 값**은 build() 의 if/elif 어느 쪽에도 안 걸려 조용히 폴백으로 떨어진다(= 오독).
+PRELIM_TRUE = ("yes", "true", "1")
+PRELIM_FALSE = ("no", "false", "0")
+#: 화면에 실리는 `scope` 어휘. sector 어휘는 SECTOR_MAP 의 **값**에서 파생시킨다 —
+#: 여기 다시 적으면 SECTOR_MAP 에 업권을 하나 추가하는 순간 그 업권이 전부 RED 가 된다.
+SCOPE_VALUES = ("group", "solo")
+SECTOR_VALUES = tuple(SECTOR_MAP.values())
+#: esr_pct 의 도메인 상·하한. **이건 일부러 리터럴이다** — census 에서 파생할 값이 아니다.
+#: 100% 는 J-ICS 규제 하한(밑돌면 사람이 원문을 확인해야 하는 사건)이고, 1000% 는 단위 오류
+#: (배수·bp 혼동, 총자산을 esr_pct 칸에 붙여넣기)를 잡는 상식선이다. 데이터에서 파생시키면
+#: 틀린 값이 스스로 범위를 넓혔 버려 검사 자체가 사라진다.
+ESR_PCT_MIN = 100.0
+ESR_PCT_MAX = 1000.0
+
+
+def census_status(row: dict) -> str:
+    return (row.get("fy2025_esr_status") or "").strip()
+
+
+def census_posted_rows(rows: list[dict]) -> list[dict]:
+    """'누가 posted 인가' 의 유일한 정의. 화면 회사 수는 전부 여기서 나온다."""
+    return [r for r in rows if census_status(r) == POSTED_STATUS]
+
+
+def census_counts(rows: list[dict]) -> dict:
+    """`_meta.census` 요약. 키 순서는 배포 JSON 의 바이트라 바꾸지 마라."""
+    counts = {"total": len(rows)}
+    for st in CENSUS_STATUSES:
+        counts[st] = sum(1 for r in rows if census_status(r) == st)
+    return counts
 
 
 def _read_csv(path: Path) -> list[dict]:
@@ -148,13 +204,8 @@ def build() -> dict:
         r["company_jp"].strip(): r for r in source_rows if (r.get("company_jp") or "").strip()
     }
 
-    def status(r):
-        return (r.get("fy2025_esr_status") or "").strip()
-
-    total = len(census_rows)
-    posted_rows = [r for r in census_rows if status(r) == "posted"]
-    not_yet = sum(1 for r in census_rows if status(r) == "not_yet")
-    not_found = sum(1 for r in census_rows if status(r) == "not_found")
+    counts = census_counts(census_rows)
+    posted_rows = census_posted_rows(census_rows)
 
     records = []
     for r in posted_rows:
@@ -193,9 +244,9 @@ def build() -> dict:
         # 원문 인용이라 놓쳤고, 朝日·富国은 notes 안의 *다른 수치*에 붙은 속보 표기를
         # 헤드라인 값의 속보로 잘못 읽었다).
         explicit = (r.get("preliminary") or "").strip().lower()
-        if explicit in ("yes", "true", "1"):
+        if explicit in PRELIM_TRUE:
             preliminary, kw = True, "census.preliminary=yes"
-        elif explicit in ("no", "false", "0"):
+        elif explicit in PRELIM_FALSE:
             preliminary, kw = False, None
         else:
             preliminary, kw = _detect_preliminary(notes, doc_type)
@@ -222,7 +273,11 @@ def build() -> dict:
             "notes": notes,
         })
 
-    records.sort(key=lambda x: x["esr_pct"], reverse=True)
+    # esr_pct 가 None 인 행(posted 로 뒤집혔는데 값을 안 채운 census 행)이 섞이면 예전엔
+    # 정렬이 TypeError 로 죽어 self_check 가 **도달하지도 못했다**. 막히는 것 자체는 같지만
+    # 트레이스백과 "어느 회사의 esr_pct 가 비었다" 는 가치가 다르다 — None 은 맨 뒤로 보내고
+    # 이름 붙은 RED 를 self_check 가 내게 한다. 값이 전부 있으면 정렬 결과는 종전과 바이트 동일하다.
+    records.sort(key=lambda x: (x["esr_pct"] is not None, x["esr_pct"] or 0.0), reverse=True)
 
     return {
         "_meta": {
@@ -231,12 +286,7 @@ def build() -> dict:
             "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "built_from": [CENSUS_CSV.name, SOURCES_CSV.name],
             "next_update": NEXT_UPDATE,
-            "census": {
-                "total": total,
-                "posted": len(posted_rows),
-                "not_yet": not_yet,
-                "not_found": not_found,
-            },
+            "census": dict(counts),
         },
         "records": records,
     }
@@ -545,41 +595,227 @@ def source_gate_check(
     return errors
 
 
+# ---------------------------------------------------------------------------
+# census <-> 마스터 <-> 배포 항등식 (2026-09-13, TODO_jp(27) ②)
+#
+# 왜: 종전 self-check 의 회사 수 검사는 `len(records) != 15` 였다. 10월 말 J-ICS 공시기한
+# 직후 라운드에서 census 의 posted 가 15사 -> 60~70사로 한꺼번에 뒤집히면(현재 not_yet 62사)
+# 그 리터럴은 **정상 데이터를 RED 로 막는다** — 게이트가 사실이 아니라 옛 숫자를 지키는 상태다.
+# 이 저장소는 2026-08-29 에 같은 형태로 데였다: 게이트 세 곳이 각자 분기 목록을 리터럴로
+# 들고 있어서 2026.2Q 를 배포한 날 그 분기를 **순회조차 안 했다**(RED=0 = "안 봤다").
+# 그때 남은 것이 `tests/test_quarter_horizon.py` 이고 거기 적힌 교훈이 그대로 여기 적용된다:
+# "하드코딩 자체가 재발 구조다."
+#
+# 그래서 기대값을 census 에서 파생시키되 **검사를 없애지는 않는다**. 숫자가 아니라 항등식:
+#
+#     census posted 행 수 == _meta.census.posted == len(마스터 records)
+#                          == len(배포 records) + len(excluded)
+#
+# 두 가지를 더 지킨다:
+#  · **수가 아니라 집합으로 건다.** 한 건 빠지고 한 건 중복되면 수는 그대로 맞는다.
+#  · **0 으로 닫히는 등식은 등식이 아니다.** posted 가 0 이면 산수는 전부 맞고 화면만 빈다.
+#    status 열 이름이 바뀌거나 census 가 잘리면 정확히 그 모양이 되므로 posted == 0 이 RED 다.
+# ---------------------------------------------------------------------------
+
+
+def check_census_row_shape(census_rows: list[dict]) -> list[str]:
+    """posted 행이 헤더와 같은 열 수인가 — CSV **구조** 자체의 검사.
+
+    `csv.DictReader` 는 열이 남으면 `None` 키에 흘려 담고 모자라면 `None` 값으로 채운다.
+    둘 다 조용하다: 따옴표 없는 쉼표 하나로 그 행의 마지막 열이 첫 쉼표에서 **잘린 채**
+    읽히는데 아무도 모른다. 실측(2026-09-13): census 14행 第一ライフグループ 이 16열 헤더에
+    18열이고 notes 가 잘려 있다 — 지금은 `not_yet` 이라 화면에 안 나가지만 10/31 에 posted 로
+    뒤집히면 그대로 실린다(`jesr_sources_2026Q1.csv` 6행 · `jp_insurers.csv` 3·14·16·57행도
+    같은 모양이지만 이 빌더가 그 파일들에서 읽는 열은 넘침 앞쪽이라 영향이 없다).
+
+    **왜 posted 행만 보나.** 화면에 나가는 행만 이 빌더의 책임이고, 지금 census 를 고칠 수
+    있는 것은 jp 레인이다(티켓 발주함). 전 행을 RED 로 하면 오늘 당장 아무도 push 를 못 하는데
+    오늘 그 행은 아무 화면에도 안 나간다. 대신 그 행이 posted 로 뒤집히는 순간 RED 다.
+
+    쉼표가 **중간 열**에 들어가면 뒤 열이 통째로 밀리는데, 그건 이 검사 말고도
+    JP_CENSUS_STATUS(모르는 status) · esr_pct 범위 · source_url https · as_of 검사가 같이 잡는다.
+    """
+    errors: list[str] = []
+    for row in census_posted_rows(census_rows):
+        company = (row.get("company_jp") or "").strip() or "<이름없음>"
+        if None in row:
+            extra = row[None]
+            errors.append(
+                f"[JP_CENSUS_SHAPE] {company}: CSV 열이 헤더보다 {len(extra)}개 많다 —"
+                f" 따옴표 없는 쉼표 때문에 마지막 열이 잘려서 읽힌다. 넘친 조각: {extra!r}."
+                f" 해당 셀을 \"...\" 로 감싸라"
+            )
+        short = sorted(k for k, v in row.items() if k is not None and v is None)
+        if short:
+            errors.append(
+                f"[JP_CENSUS_SHAPE] {company}: CSV 열이 모자라 {short} 이 아예 없다"
+                f"(빈 문자열이 아니라 결측) — 열을 채워라"
+            )
+    return errors
+
+
+def check_preliminary_vocabulary(census_rows: list[dict]) -> list[str]:
+    """posted 행의 `preliminary` 명시값이 아는 어휘인가.
+
+    빈 값은 정상이다(명시 안 함 -> PRELIM_KEYWORDS 폴백). 문제는 **모르는 값**이다:
+    `preliminary=Y` 라고 적으면 build() 의 if/elif 어느 쪽에도 안 걸려 조용히 폴백으로
+    떨어지고, 폴백 키워드가 못 잡으면 속보치가 확정치로 화면에 실린다. 결측(빈칸)과
+    오독(모르는 값)은 다르게 다뤄야 한다 — 후자는 RED.
+    2026-09-13 かんぽ 사고가 정확히 '속보인데 확정치로 표시' 였고, 10/31 에 62행이 사람 손으로
+    채워진다는 것이 이 검사를 지금 거는 이유다.
+    """
+    known = set(PRELIM_TRUE) | set(PRELIM_FALSE)
+    errors: list[str] = []
+    for row in census_posted_rows(census_rows):
+        raw = (row.get("preliminary") or "").strip()
+        if raw and raw.lower() not in known:
+            company = (row.get("company_jp") or "").strip() or "<이름없음>"
+            errors.append(
+                f"[JP_CENSUS_PRELIM] {company}: preliminary={raw!r} 는 모르는 값이라"
+                f" 조용히 키워드 폴백으로 떨어진다(= 속보 표시가 사라질 수 있다)."
+                f" 아는 값: {', '.join(sorted(known))} / 빈칸은 '명시 안 함' 으로 정상"
+            )
+    return errors
+
+
+def check_census_identity(out: dict, census_rows: list[dict]) -> list[str]:
+    """census 파일 <-> `_meta.census` <-> `records` 의 항등식(위 블록 주석 참조)."""
+    errors: list[str] = []
+    recs = out["records"]
+    meta = out["_meta"]["census"]
+
+    unknown = sorted({census_status(r) for r in census_rows} - set(CENSUS_STATUSES))
+    if unknown:
+        errors.append(
+            f"[JP_CENSUS_STATUS] 모르는 fy2025_esr_status {unknown} —"
+            f" 세 카운터({', '.join(CENSUS_STATUSES)}) 어디에도 안 잡혀 census 요약에서 사라진다."
+            f" 오타면 고치고, 새 상태면 CENSUS_STATUSES 에 등재해라"
+        )
+
+    counts = census_counts(census_rows)
+    missing_keys = [k for k in ("total",) + CENSUS_STATUSES if k not in meta]
+    if missing_keys:
+        errors.append(f"[JP_CENSUS_COUNT] _meta.census 에 키가 없다: {missing_keys}")
+    else:
+        for key in ("total",) + CENSUS_STATUSES:
+            if meta[key] != counts[key]:
+                errors.append(
+                    f"[JP_CENSUS_COUNT] _meta.census.{key} = {meta[key]!r} 인데"
+                    f" census 파일 재계수는 {counts[key]} 다"
+                )
+        if sum(meta[k] for k in CENSUS_STATUSES) != meta["total"]:
+            errors.append(f"[JP_CENSUS_COUNT] census does not sum to total: {meta}")
+
+    if counts[POSTED_STATUS] == 0:
+        errors.append(
+            "[JP_CENSUS_EMPTY] census 에 posted 행이 0 건이다 — 0 == 0 으로 닫히는 등식은"
+            " 검사가 아니다. status 열 이름·값이 바뀌었는지, census 가 잘리지 않았는지 확인해라"
+        )
+
+    # 수가 아니라 집합. 한 건 빠지고 한 건 중복되면 수는 맞는다.
+    want = [(r.get("company_jp") or "").strip() for r in census_posted_rows(census_rows)]
+    got = [(r.get("company_jp") or "").strip() for r in recs]
+    if len(got) != len(want):
+        errors.append(
+            f"[JP_CENSUS_RECORDS] records {len(got)}건 != census posted {len(want)}건."
+            f" 기대값은 census 에서 파생한다 — 이 수를 코드에 다시 적지 마라"
+        )
+    missing = sorted(set(want) - set(got))
+    extra = sorted(set(got) - set(want))
+    if missing:
+        errors.append(f"[JP_CENSUS_RECORDS] census 는 posted 인데 records 에 없다: {missing}")
+    if extra:
+        errors.append(f"[JP_CENSUS_RECORDS] records 에 있는데 census posted 가 아니다: {extra}")
+
+    errors.extend(check_census_row_shape(census_rows))
+    errors.extend(check_preliminary_vocabulary(census_rows))
+    return errors
+
+
+def check_deploy_identity(
+    master_records: list[dict],
+    deploy_records: list[dict],
+    excluded: list[dict],
+    census_rows: list[dict],
+) -> list[str]:
+    """마스터 <-> 배포 <-> 제외의 항등식.
+
+        census posted 행 수 == len(master) == len(deploy) + len(excluded)
+
+    종전 main() 의 검사는 `len(master) - len(excluded) != len(deploy)` 한 줄이었다. census 를
+    한쪽 끝에 묶지 않으면 세 수가 사이좋게 같이 틀려도 통과하고, 수만 보면 한 건 빠지고 한 건
+    중복돼도 통과한다. 그래서 집합으로도 건다 — 키는 `company_en`: 하류
+    `build_jesr_detail_json.py` 가 `{company_en: record}` 로 마스터를 훑고
+    `attach_target_ranges` 도 company_en 으로 목표레인지를 붙인다.
+    """
+    errors: list[str] = []
+    n_posted = len(census_posted_rows(census_rows))
+    if not (n_posted == len(master_records) == len(deploy_records) + len(excluded)):
+        errors.append(
+            f"[JP_DEPLOY_COUNT] census posted {n_posted} == 마스터 {len(master_records)} =="
+            f" 배포 {len(deploy_records)} + 제외 {len(excluded)} 이 성립하지 않는다"
+        )
+
+    def ens(rows, key="company_en"):
+        return [(r.get(key) or "").strip() for r in rows]
+
+    m, d, x = set(ens(master_records)), set(ens(deploy_records)), set(ens(excluded))
+    overlap = sorted(d & x)
+    if overlap:
+        errors.append(f"[JP_DEPLOY_SET] 배포와 제외에 동시에 있다: {overlap}")
+    lost = sorted(m - d - x)
+    if lost:
+        errors.append(
+            f"[JP_DEPLOY_SET] 마스터에 있는데 배포에도 제외에도 없다(조용히 사라진 회사): {lost}"
+        )
+    ghost = sorted((d | x) - m)
+    if ghost:
+        errors.append(f"[JP_DEPLOY_SET] 마스터에 없는 회사가 배포/제외에 있다: {ghost}")
+    return errors
+
+
 def self_check(out: dict, census_rows: list[dict] | None = None) -> list[str]:
     errors = []
     recs = out["records"]
-    if len(recs) != 15:
-        errors.append(f"records count = {len(recs)}, expected 15")
+    census_rows = _read_csv(CENSUS_CSV) if census_rows is None else census_rows
+    # 회사 수 기대값은 census 에서 파생한다(위 블록). 하드코딩된 15 는 2026-09-13 에 제거됐다.
+    errors.extend(check_census_identity(out, census_rows))
     seen = set()
+    seen_en = set()
     for rec in recs:
         name = rec["company_jp"]
         if name in seen:
             errors.append(f"duplicate company_jp: {name}")
         seen.add(name)
+        # company_en 도 유일해야 한다 — 하류가 이 키로 조인하기 때문이다. 중복이면 한쪽이
+        # 조용히 덮여 **다른 회사의 목표레인지·상세**가 붙는다. 2026-09-13 커밋 `6e051be`
+        # (第一ネオ生命保険이 다른 회사 영문명을 달고 있었다)가 실사고였고, 그때 이 검사가
+        # 없어서 게이트는 아무 말도 안 했다.
+        en = (rec.get("company_en") or "").strip()
+        if not en:
+            errors.append(f"company_en 이 비어 있다: {name}")
+        elif en in seen_en:
+            errors.append(f"duplicate company_en: {en} ({name})")
+        seen_en.add(en)
         e = rec["esr_pct"]
-        if e is None or not isinstance(e, float) or not (100 <= e <= 1000):
-            errors.append(f"esr_pct out of range or not float: {name} = {e!r}")
-        if rec["scope"] not in ("group", "solo"):
+        if e is None or not isinstance(e, float) or not (ESR_PCT_MIN <= e <= ESR_PCT_MAX):
+            errors.append(
+                f"esr_pct out of range or not float: {name} = {e!r}"
+                f" (도메인 상식선 {ESR_PCT_MIN:g}~{ESR_PCT_MAX:g}%; 벗어나면 census 를 고치지 말고"
+                f" 먼저 원문을 확인해라 — 단위 오류이거나 기사가 날 사건이다)"
+            )
+        if rec["scope"] not in SCOPE_VALUES:
             errors.append(f"bad scope: {name} = {rec['scope']!r}")
-        if rec["sector"] not in ("life", "nonlife", "reinsurance"):
+        if rec["sector"] not in SECTOR_VALUES:
             errors.append(f"bad sector: {name} = {rec['sector']!r}")
         su = rec["source_url"]
         if not su or not su.startswith("https://"):
             errors.append(f"source_url not https: {name} = {su!r}")
         if rec["as_of"] != AS_OF_TARGET:
             errors.append(f"as_of != {AS_OF_TARGET}: {name} = {rec['as_of']!r}")
-    c = out["_meta"]["census"]
-    if c["posted"] + c["not_yet"] + c["not_found"] != c["total"]:
-        errors.append(f"census does not sum to total: {c}")
-    if c["posted"] != len(recs):
-        errors.append(f"census.posted ({c['posted']}) != len(records) ({len(recs)})")
     # 출처 게이트도 같은 errors 리스트로 흘려보낸다 — main() 이 errors 가 있으면 return 1 이므로
     # 여기에 붙이는 것만으로 **실제 exit code 가 바뀐다**(배선했다 ≠ 돈다를 가르는 지점).
-    errors.extend(
-        source_gate_check(
-            recs, _read_csv(CENSUS_CSV) if census_rows is None else census_rows
-        )
-    )
+    errors.extend(source_gate_check(recs, census_rows))
     return errors
 
 
@@ -720,7 +956,10 @@ def attach_target_ranges(records: list[dict]) -> dict:
 def main() -> int:
     out = build()
 
-    errors = self_check(out)
+    # 게이트는 census **파일을 다시 읽는다**. build() 가 이미 센 숫자를 그대로 넘겨받으면
+    # 검사가 자기참조가 된다(이 저장소가 반복해서 데인 false-green 의 형태).
+    census_rows = _read_csv(CENSUS_CSV)
+    errors = self_check(out, census_rows)
     if errors:
         for e in errors:
             print(f"SELF-CHECK FAIL: {e}", file=sys.stderr)
@@ -732,12 +971,10 @@ def main() -> int:
     }
     deploy_records, excluded = apply_subsidiary_dedup(out["records"], insurers_by_name)
 
-    if len(out["records"]) - len(excluded) != len(deploy_records):
-        print(
-            "SELF-CHECK FAIL: jesr_master records - excluded subsidiaries != "
-            f"jp/jesr_esr records ({len(out['records'])} - {len(excluded)} != {len(deploy_records)})",
-            file=sys.stderr,
-        )
+    deploy_errors = check_deploy_identity(out["records"], deploy_records, excluded, census_rows)
+    if deploy_errors:
+        for e in deploy_errors:
+            print(f"SELF-CHECK FAIL: {e}", file=sys.stderr)
         return 1
 
     deploy_meta = dict(out["_meta"])
@@ -760,6 +997,15 @@ def main() -> int:
         print(f"  excluded_subsidiaries: {excluded}")
     prelim = [r['company_en'] for r in out['records'] if r['preliminary']]
     print(f"  preliminary={len(prelim)}: {prelim}")
+    # next_update 는 데이터에서 파생할 수 없는 편집상의 약속이라 리터럴로 둔다. 대신 지나면
+    # 말은 한다. **RED 로 하지 않는 이유**: 데이터가 하나도 안 바뀐 날짜 경계에서 빌더와
+    # `tests/test_jp_deploy_matches_census.py` 가 동시에 터지는 시한폭탄이 된다.
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    if NEXT_UPDATE < today:
+        print(
+            f"  [warn] next_update={NEXT_UPDATE} 가 이미 지났다(오늘 {today}) —"
+            f" 화면이 지난 날짜를 '다음 갱신' 으로 약속하고 있다. 다음 공시 기한으로 올려라."
+        )
     return 0
 
 
