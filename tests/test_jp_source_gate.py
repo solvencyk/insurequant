@@ -14,8 +14,12 @@
 값이 크다: 2026-09-13 전수 실측에서 blocked 20 · ok_requires_headers 16 · tls_client_issue 4 가
 나왔고, 이걸 dead 와 섞으면 멀쩡한 회사 40건이 한꺼번에 거짓 RED 가 된다.
 
+2026-09-13 에 축이 하나 더 붙었다(UH-21): `JP_ESR_ADJUSTED_FIGURE` — **"그 문서에 그 숫자가
+있나" 가 아니라 "그 숫자가 그 문서에서 우리가 싣겠다고 한 정의의 값인가"**. 사고 3건 중
+かんぽ 220% 는 앞의 축으로 원리상 안 걸린다(220 은 p35 에 실재하는 조정치라 `found` 다).
+
 그리고 이 저장소가 반복해서 데인 것: **"배선했다" 와 "실제로 exit code 를 바꾼다" 는 다른 말이다.**
-`test_gate_*_changes_exit_code_*` 두 개가 진짜 빌더를 서브프로세스로 돌려 그걸 직접 잰다.
+`test_gate_*` 의 사본 실행 케이스들이 진짜 빌더를 서브프로세스로 돌려 그걸 직접 잰다.
 전부 tmp 사본에서만 변이시키고 원본 파일은 건드리지 않는다(변이시험 잔해 사고 3회 선례).
 """
 from __future__ import annotations
@@ -48,6 +52,26 @@ def mod():
     return m
 
 
+def _collector():
+    """증거 수집기(`check_esr_in_source.py`)를 import 한다.
+
+    조정치 판정식의 **정본은 수집기**다(게이트는 박제된 verdict 만 읽는다). 그래서 판정식
+    자체의 회귀는 여기서 잰다. `fitz` 는 `scan_pdf` 안에서만 import 하므로 이 테스트가
+    검사하는 `scan_adjusted` 는 **순수 텍스트 함수**라 PDF 도 네트워크도 필요 없다.
+    """
+    path = JESR / "check_esr_in_source.py"
+    if not path.exists():
+        pytest.skip("수집기가 없는 slim 트리")
+    sys.path.insert(0, str(JESR))
+    spec = importlib.util.spec_from_file_location("jesr_esr_collector_under_test", path)
+    m = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(m)
+    except ImportError as exc:            # requests 없는 환경
+        pytest.skip(f"수집기 의존성 없음: {exc}")
+    return m
+
+
 def _ids(errors: list[str]) -> list[str]:
     return sorted({m.group(1) for e in errors if (m := _RULE_ID.match(e))})
 
@@ -59,7 +83,8 @@ def _scenario(tmp_path, *, url=OK_URL, company="テスト生命", census_checked
               health_checked="2026-09-13T14:30Z", scope="all", classification="ok",
               in_health=True, health_present=True, exceptions=None, exceptions_present=True,
               esr_pct=268.0, esr_checked="2026-09-13T16:10Z", esr_scope="all",
-              esr_verdict="found", esr_row_pct=None, in_esr=True, esr_present=True):
+              esr_verdict="found", esr_row_pct=None, in_esr=True, esr_present=True,
+              adjusted="unqualified", adjusted_alts=None, drop_adjusted=False):
     """게이트 입력 한 벌을 tmp 에 만든다. 기본값은 '전부 정상' 이다.
 
     증거 파일이 **둘**이다(출처 생존 · 값이 문서 안에 있나). 둘 다 같은 봉투를 쓰고 같은
@@ -82,11 +107,24 @@ def _scenario(tmp_path, *, url=OK_URL, company="テスト生命", census_checked
     if esr_present:
         rows = []
         if in_esr:
-            rows.append({"origin": "fy2025_esr_census.csv", "company": company,
-                         "field": "source_url", "url": url,
-                         "esr_pct": ("%g" % float(esr_pct)) if esr_row_pct is None else esr_row_pct,
-                         "verdict": esr_verdict, "page": 5, "distance": 3, "label": "ESR",
-                         "pages": 40, "evidence": "…ESR は 268% …"})
+            row = {"origin": "fy2025_esr_census.csv", "company": company,
+                   "field": "source_url", "url": url,
+                   "esr_pct": ("%g" % float(esr_pct)) if esr_row_pct is None else esr_row_pct,
+                   "verdict": esr_verdict, "page": 5, "distance": 3, "label": "ESR",
+                   "pages": 40, "evidence": "…ESR は 268% …"}
+            if not drop_adjusted:
+                # 조정치 축(UH-21). `drop_adjusted` 는 **옛 수집기가 만든 증거**를 흉내 내는
+                # 변이다 — 필드 부재를 통과로 읽으면 이 축이 조용히 사라진다.
+                row.update({"adjusted_verdict": adjusted, "adjusted_qualifiers":
+                            ["除いた場合"] if adjusted in ("adjusted_alt", "adjusted_only") else [],
+                            "adjusted_frags": 3 if adjusted != "abstain_no_prose" else 0,
+                            "adjusted_frags_unqualified": 0,
+                            "adjusted_alternatives": (adjusted_alts if adjusted_alts is not None
+                                                      else ([{"pct": "181", "page": 35,
+                                                              "evidence": "ESRは181%"}]
+                                                            if adjusted == "adjusted_alt" else [])),
+                            "adjusted_evidence": "p35 한정어 ['除いた場合']: …を除いた場合のESRは220%"})
+            rows.append(row)
         esr_path.write_text(
             json.dumps({"checked_at": esr_checked, "scope": esr_scope, "rows": rows},
                        ensure_ascii=False), encoding="utf-8")
@@ -327,6 +365,214 @@ def test_live_esr_evidence_covers_every_posted_row(mod):
     missing = [(r["company_jp"], r["esr_pct"]) for r in posted
                if (r["source_url"], mod._norm_pct(r["esr_pct"])) not in keys]
     assert not missing, f"증거에 없는 posted 행: {missing}"
+
+
+# --------------------------------------------------------------------------
+# JP_ESR_ADJUSTED_FIGURE — "그 문서에서 **우리가 싣겠다고 한 정의의** 숫자인가" (UH-21)
+#
+# 위 축은 "그 문서에 그 숫자가 있나" 만 묻는다. 사고 3건 중 かんぽ 220% 는 그걸로 **원리상**
+# 안 걸린다 — 220 은 자료 p35 에 실재하는 「大量解約リスクを除いた場合」 조정치이기 때문이다
+# (실측 d=1 → found). 같은 문서에 한정어 없는 진짜 헤드라인 181% 가 나란히 있었다.
+#
+# 판정식은 두 조건의 곱이다: ① 화면값의 라벨동반 조각이 **전부** 한정어를 달았다
+# ② 같은 문서에 **한정어 없는 다른 ESR 값**이 있다. ② 가 본 룰인 이유는 실측이다 —
+# definition marker 4종(ベース·内部管理·規制·速報値)을 한정어로 오인해 넣으면 ① 단독은
+# 정상 3사(日本生命·住友·朝日)가 거짓 발화하는데 ② 를 붙이면 그 3사가 전부 조용하다.
+# --------------------------------------------------------------------------
+
+def _gate_stdout(mod, tmp_path, capsys, **kw):
+    """verbose 로 돌려 YELLOW 노트까지 본다. YELLOW 는 errors 가 아니라 stdout 으로 나간다."""
+    records, census, health_path, esr_path, exc_path = _scenario(tmp_path, **kw)
+    errors = mod.source_gate_check(records, census, health_path=health_path,
+                                   esr_health_path=esr_path, exceptions_path=exc_path,
+                                   today="2026-09-13", verbose=True)
+    return errors, capsys.readouterr().out
+
+
+def test_adjusted_figure_is_yellow_not_red(mod, tmp_path):
+    """severity 는 YELLOW — 조건부 값을 정당하게 헤드라인으로 쓰는 회사가 있을 수 있다.
+
+    RED 로 걸면 그런 회사의 정상 배포가 막히고, 면제는 owner 권한이라 그 자리에서 못 푼다
+    (UH-5·UH-9 선례). 대신 배포본 증거에 발화가 남아 있으면 아래 live 테스트가 막는다.
+    """
+    assert _run(mod, tmp_path, adjusted="adjusted_alt") == []
+    assert _run(mod, tmp_path, adjusted="adjusted_only") == []
+
+
+def test_adjusted_alt_message_names_the_unqualified_alternative(mod, tmp_path, capsys):
+    """**사고 재현의 핵심.** 사람이 바로 고칠 수 있는 메시지가 아니면 룰의 절반은 쓸모없다.
+
+    かんぽ 사고의 정답(181%)은 같은 문서 안에 있었다. 그러니 발화는 그 값을 같이 찍어야 한다.
+    """
+    errors, out = _gate_stdout(mod, tmp_path, capsys, adjusted="adjusted_alt")
+    assert errors == []
+    assert "JP_ESR_ADJUSTED_FIGURE" in out and "/YELLOW]" in out
+    assert "181%(p35)" in out, f"대안값이 메시지에 없다:\n{out}"
+
+
+def test_adjusted_only_says_there_is_no_alternative(mod, tmp_path, capsys):
+    """보조 신호. 대안이 없으면 없다고 적는다 — 있는 척하면 사람이 엉뚱한 값을 찾는다."""
+    _, out = _gate_stdout(mod, tmp_path, capsys, adjusted="adjusted_only")
+    assert "JP_ESR_ADJUSTED_FIGURE" in out and "대안값은 그 문서에 없다" in out
+
+
+@pytest.mark.parametrize("verdict", ["unqualified", "abstain_no_prose", "not_applicable"])
+def test_clean_and_abstained_adjusted_verdicts_do_not_fire(mod, tmp_path, capsys, verdict):
+    """**오탐억제.** 라벨동반 산문 조각이 0개인 표·차트 전용 문서가 15사 중 7사다.
+
+    기권 조건 없이 걸면 그 7사가 한꺼번에 거짓 YELLOW 다(2026-09-13 실측).
+    """
+    errors, out = _gate_stdout(mod, tmp_path, capsys, adjusted=verdict)
+    assert errors == []
+    # 요약 줄에는 룰 이름이 늘 나온다(분포를 세는 줄). 발화는 YELLOW 노트로만 센다.
+    assert "/YELLOW] JP_ESR_ADJUSTED_FIGURE" not in out
+
+
+def test_abstained_rows_are_counted_not_silently_skipped(mod, tmp_path, capsys):
+    """기권은 SKIP 이 아니라 **따로 세는 분류**다 — 몇 사가 판정 대상이 아니었는지 남아야 한다.
+
+    "룰이 0이라고 말한다" 와 "그 축이 깨끗하다" 는 다른 말이고, 그 차이가 census 로만 보인다.
+    """
+    _, out = _gate_stdout(mod, tmp_path, capsys, adjusted="abstain_no_prose")
+    assert "판정 분포" in out and "abstain_no_prose=1" in out
+
+
+def test_missing_adjusted_field_is_red_not_a_pass(mod, tmp_path):
+    """옛 수집기가 만든 증거(필드 없음)를 통과로 읽으면 이 축이 **조용히 사라진다**.
+
+    이 저장소가 반복해서 데인 모양이 정확히 그것이다 — 룰이 순회조차 안 하면 게이트는 0 을
+    찍는데 축은 검사된 적이 없다.
+    """
+    errors = _run(mod, tmp_path, drop_adjusted=True)
+    assert "JP_SOURCE_EVIDENCE_INCOMPLETE" in _ids(errors)
+    assert any("adjusted_verdict" in e for e in errors)
+
+
+def test_unknown_adjusted_verdict_is_red(mod, tmp_path):
+    assert "JP_ESR_ADJUSTED_FIGURE" in _ids(_run(mod, tmp_path, adjusted="looks_ok_to_me"))
+
+
+def test_adjusted_exception_is_cell_scoped(mod, tmp_path, capsys):
+    """면제도 (rule, company, field) 셀 단위. 한 줄이 축 전체를 눈감기지 못한다."""
+    ok = _exc(rule="JP_ESR_ADJUSTED_FIGURE", company="テスト生命")
+    _, out = _gate_stdout(mod, tmp_path, capsys, adjusted="adjusted_alt", exceptions=[ok])
+    assert "면제 적용 JP_ESR_ADJUSTED_FIGURE" in out and "/YELLOW]" not in out
+    other = _exc(rule="JP_ESR_ADJUSTED_FIGURE", company="よその生命")
+    _, out2 = _gate_stdout(mod, tmp_path, capsys, adjusted="adjusted_alt", exceptions=[other])
+    assert "/YELLOW]" in out2
+
+
+def test_adjusted_exception_does_not_cover_the_procedural_rules(mod, tmp_path):
+    """면제는 '조정치일 수 있다' 만 덮는다. '축을 안 돌렸다' 는 못 덮는다."""
+    exc = _exc(rule="JP_ESR_ADJUSTED_FIGURE", company="テスト生命")
+    assert "JP_SOURCE_EVIDENCE_INCOMPLETE" in _ids(
+        _run(mod, tmp_path, drop_adjusted=True, exceptions=[exc]))
+
+
+def test_live_esr_evidence_judges_the_adjusted_axis_on_every_row(mod):
+    """실데이터 — 배포본 증거의 **모든 행**이 조정치 축을 실제로 통과했나.
+
+    수집기를 옛 버전으로 돌리면 필드가 통째로 빠지는데, 게이트는 그 행을 보기 전에
+    다른 이유로 끝날 수도 있다. 그러니 증거 파일 자체를 직접 센다.
+    """
+    ev = json.loads((JESR / "esr_in_source_health.json").read_text(encoding="utf-8"))
+    known = set(mod.ESR_ADJUSTED_PASS + mod.ESR_ADJUSTED_YELLOW + mod.ESR_ADJUSTED_ABSTAIN)
+    bad = [(r.get("company"), r.get("adjusted_verdict", "<필드없음>")) for r in ev["rows"]
+           if r.get("adjusted_verdict") not in known]
+    assert not bad, f"조정치 판정이 없거나 모르는 값인 행: {bad}"
+
+
+def test_live_esr_evidence_has_no_unexempted_adjusted_figure(mod):
+    """**이 YELLOW 의 이빨.** 인쇄만 하는 YELLOW 는 통제가 아니다.
+
+    2026-09-12 에는 census notes 에 「特定条件を除いた場合の ESR は 220%」 라고 **적혀 있었는데도**
+    그 값이 그대로 화면에 올라갔다. 그래서 빌더 severity 는 YELLOW 로 두되(정상 배포를 막지
+    않는다), 배포본 증거에 면제 없는 발화가 남아 있으면 **push 묶음이 여기서 막는다**.
+    깨졌다면 둘 중 하나다 — 값을 고치거나, owner 가 면제를 등재하거나. 테스트를 고치는 것이
+    아니다(`J-ESR/jp_source_exceptions.json`, 등재는 owner 권한).
+    """
+    ev = json.loads((JESR / "esr_in_source_health.json").read_text(encoding="utf-8"))
+    exempt, errors, _notes = mod.load_source_exceptions(today=None)
+    assert errors == [], f"면제 레지스트리 자체가 RED 다: {errors}"
+    fired = [r for r in ev["rows"] if r.get("adjusted_verdict") in mod.ESR_ADJUSTED_YELLOW
+             and ("JP_ESR_ADJUSTED_FIGURE", r.get("company"), "source_url") not in exempt]
+    assert not fired, (
+        "조정치 후보가 배포본 증거에 남아 있다 — 원문을 열어 헤드라인 값을 확인해라:\n" +
+        "\n".join(f"  {r.get('company')} esr={r.get('esr_pct')}"
+                  f" 한정어={r.get('adjusted_qualifiers')}"
+                  f" 대안={[a.get('pct') for a in (r.get('adjusted_alternatives') or [])]}"
+                  for r in fired))
+
+
+def test_qualifier_list_is_not_empty_and_excludes_definition_markers():
+    """한정어 목록을 비우면 이 룰은 **아무것도 안 잡는다**(かんぽ 220 이 unqualified 가 된다).
+
+    반대로 definition marker 를 넣으면 정상사가 거짓 발화한다 — 실측으로
+    `ベース`·`内部管理`·`規制`·`速報値` 를 넣으면 日本生命·住友·朝日 3사가 발화했다.
+    이 둘은 대칭이라 양쪽을 다 박는다.
+    """
+    c = _collector()
+    assert c.ADJUSTED_QUALIFIERS, "한정어 목록이 비었다 — 룰이 아무것도 안 잡는다"
+    assert "除いた場合" in c.ADJUSTED_QUALIFIERS, "사고 그 문장의 한정어가 빠졌다"
+    assert "適正水準" in c.ADJUSTED_QUALIFIERS, (
+        "適正水準 을 빼면 かんぽ p18 「ESR適正水準 150~220%」 가 한정어 없는 조각이 되어"
+        " 220 이 빠져나간다(실측)")
+    for marker in ("ベース", "内部管理", "規制", "速報値"):
+        assert marker not in c.ADJUSTED_QUALIFIERS, (
+            f"{marker} 는 '어느 ESR 이냐' 지 '조정했다' 가 아니다 —"
+            " 넣으면 정상사 3사가 거짓 발화한다(2026-09-13 실측)")
+
+
+def test_adjusted_value_range_is_the_builders_not_a_retyped_literal(mod):
+    """값 후보 범위는 빌더가 정본이다. 재타이핑하면 수집기와 게이트가 서로 다른 범위를 쓴다."""
+    c = _collector()
+    assert (c.ADJ_PCT_MIN, c.ADJ_PCT_MAX) == (mod.ESR_PCT_MIN, mod.ESR_PCT_MAX)
+
+
+# --- 수집기 판정식 자체(오프라인, 실제 원문 문장으로) -----------------------
+# かんぽ 자료(2026-05, p18·p35·p37)에서 그대로 딴 문장이다. 요약하거나 다듬지 않는다 —
+# 다듬으면 검증기가 원문이 아닌 것을 검증하게 된다.
+_KAMPO_P18 = "・ ESR適正水準 150~220%"
+_KAMPO_P35 = (
+    "◼26.3末のESRは大量解約リスクの影響により181%1と、25.3末から15ポイント低下したが、"
+    "適正水準の範囲内にある\n"
+    "26.3末のESRは181%と、大量解約リスクの影響等により25.3末から15ポ\n"
+    "なお、大量解約リスクを除いた場合のESRは220%と適正水準の上限水準"
+)
+_KAMPO_P37 = "◼26.3末のESRは25.3末のESR(新基準)から15ポイント低下し、181%となった"
+
+
+def test_collector_separates_the_accident_value_from_the_correct_one():
+    """**사고 재현.** 같은 문서에서 220 은 발화하고 181 은 발화하지 않아야 한다.
+
+    이게 이 룰의 존재 이유다. 둘 다 그 문서에 실재하므로 JP_ESR_NOT_IN_SOURCE 로는
+    둘 다 `found` 이고 구분이 안 된다(실측 d=1).
+    """
+    c = _collector()
+    pages = [_KAMPO_P18, _KAMPO_P35, _KAMPO_P37]
+    bad = c.scan_adjusted(pages, "220")
+    assert bad["adjusted_verdict"] == "adjusted_alt", bad
+    assert [a["pct"] for a in bad["adjusted_alternatives"]] == ["181"], bad
+    good = c.scan_adjusted(pages, "181")
+    assert good["adjusted_verdict"] == "unqualified", good
+
+
+def test_collector_abstains_when_there_is_no_label_bearing_prose():
+    """표·차트 전용 문서(15사 중 7사). 기권이 없으면 거짓 발화 7건이다."""
+    c = _collector()
+    assert c.scan_adjusted(["ESRの推移", "253%|267%|268%"], "268")[
+        "adjusted_verdict"] == "abstain_no_prose"
+
+
+def test_collector_does_not_fire_on_a_range_sentence_beside_a_clean_headline():
+    """富国 형태 — 밴드 문장(ターゲットレンジ 230%~270%)이 따로 있고 화면값은 깨끗한 문장에 있다.
+
+    한정어가 **다른 조각의 다른 값**에 붙은 것을 화면값에 옮겨 붙이면 거짓 발화다.
+    """
+    c = _collector()
+    pages = ["配当還元を行ったうえで業界最高水準のESR248.5%を確保し\n"
+             "ESRをターゲットレンジ内(230%~270%)に維持することで、"]
+    assert c.scan_adjusted(pages, "248.5")["adjusted_verdict"] == "unqualified"
 
 
 def test_esr_labels_are_all_named_in_the_domain_doc():
@@ -573,3 +819,59 @@ def test_gate_value_changed_without_recollect_changes_exit_code(tmp_path):
     proc = _run_builder(script)
     assert proc.returncode == 1, f"값만 고쳤는데 exit {proc.returncode}:\n{proc.stdout}"
     assert "JP_SOURCE_EVIDENCE_INCOMPLETE" in proc.stderr
+
+
+def test_gate_adjusted_axis_missing_changes_exit_code(tmp_path):
+    """옛 수집기가 만든 증거(= `adjusted_verdict` 없음)는 **exit 1** 이다.
+
+    조정치 축 자체는 YELLOW 라 exit code 를 바꾸지 않는다. 그래서 이 축이 조용히 사라지는
+    경로는 딱 하나 — "수집기를 옛 버전으로 돌렸다" 다. 그 경로를 절차 룰이 막는지를 진짜
+    빌더를 돌려서 잰다("배선했다" 와 "exit code 를 바꾼다" 는 다른 말이다).
+    """
+    script = _sandbox(tmp_path)
+    ev_path = script.parent / "esr_in_source_health.json"
+    ev = json.loads(ev_path.read_text(encoding="utf-8"))
+    for row in ev["rows"]:
+        row.pop("adjusted_verdict", None)
+    ev_path.write_text(json.dumps(ev, ensure_ascii=False), encoding="utf-8")
+
+    proc = _run_builder(script)
+    assert proc.returncode == 1, f"조정치 축이 통째로 빠졌는데 exit {proc.returncode}:\n{proc.stdout}"
+    assert "adjusted_verdict" in proc.stderr
+
+
+def test_gate_prints_the_adjusted_finding_end_to_end(tmp_path):
+    """**사고 재현(엔드투엔드).** かんぽ를 220 으로 되돌린 사본에서 진짜 빌더가 발화하나.
+
+    실측(2026-09-13): 그 값으로 수집기를 다시 돌리면 `JP_ESR_NOT_IN_SOURCE` 는 **found** 라
+    조용하고(220 은 p35 에 실재한다), 조정치 축만 `adjusted_alt` 로 발화하면서 같은 문서의
+    한정어 없는 대안값 181% 를 같이 찍는다. 여기서는 네트워크를 안 타려고 그 수집 결과를
+    증거 파일에 심는다.
+    """
+    script = _sandbox(tmp_path)
+    jesr = script.parent
+    census = jesr / "fy2025_esr_census_20260912.csv"
+    text = census.read_text(encoding="utf-8-sig")
+    ev_path = jesr / "esr_in_source_health.json"
+    ev = json.loads(ev_path.read_text(encoding="utf-8"))
+    victim = next(r for r in ev["rows"] if r["company"] == "かんぽ生命保険")
+    census.write_text(
+        re.sub(r"(?m)^(%s,.*?),%s," % (re.escape(victim["company"]), re.escape(victim["esr_pct"])),
+               r"\1,%s," % "220", text, count=1), encoding="utf-8")
+    assert ",220," in census.read_text(encoding="utf-8"), "census 변이가 안 먹었다"
+    victim2 = dict(victim, esr_pct="220", verdict="found", page=35, distance=1,
+                   adjusted_verdict="adjusted_alt",
+                   adjusted_qualifiers=["適正水準", "除いた場合"],
+                   adjusted_frags=3, adjusted_frags_unqualified=0,
+                   adjusted_alternatives=[{"pct": "181", "page": 35,
+                                           "evidence": "26.3末のESRは181%と、"}],
+                   adjusted_evidence="p35 한정어 ['除いた場合']: …を除いた場合のESRは220%")
+    ev["rows"] = [r for r in ev["rows"] if r is not victim] + [victim2]
+    ev_path.write_text(json.dumps(ev, ensure_ascii=False), encoding="utf-8")
+
+    proc = _run_builder(script)
+    assert proc.returncode == 0, f"YELLOW 인데 exit {proc.returncode}:\n{proc.stdout}{proc.stderr}"
+    out = proc.stdout + proc.stderr
+    assert "/YELLOW] JP_ESR_ADJUSTED_FIGURE" in out, f"발화가 없다:\n{out}"
+    assert "181%(p35)" in out, f"대안값이 메시지에 없다:\n{out}"
+    assert "adjusted_alt=1" in out, f"분포 census 에 안 잡혔다:\n{out}"

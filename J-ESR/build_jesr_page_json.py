@@ -315,12 +315,14 @@ SOURCE_RULE_IDS = (
     "JP_SOURCE_EXPIRING_HOST",
     "JP_SOURCE_URL_DEAD",
     "JP_ESR_NOT_IN_SOURCE",
+    "JP_ESR_ADJUSTED_FIGURE",
     "JP_SOURCE_EVIDENCE_STALE",
     "JP_SOURCE_EVIDENCE_INCOMPLETE",
 )
 #: 면제 가능한 룰. 나머지 둘은 "점검을 돌렸는가" 를 묻는 **절차 룰**이라 면제하면 룰 자체가
 #: 사라진다 — 낡았으면 면제하지 말고 점검을 다시 돌려라.
-EXEMPTABLE_RULE_IDS = ("JP_SOURCE_EXPIRING_HOST", "JP_SOURCE_URL_DEAD", "JP_ESR_NOT_IN_SOURCE")
+EXEMPTABLE_RULE_IDS = ("JP_SOURCE_EXPIRING_HOST", "JP_SOURCE_URL_DEAD",
+                       "JP_ESR_NOT_IN_SOURCE", "JP_ESR_ADJUSTED_FIGURE")
 
 #: 증거 파일에서 **RED 로 읽는 유일한 분류**. blocked(WAF 4xx) · ok_requires_headers(봇차단,
 #: 헤더 붙이면 200) · tls_client_issue(파이썬만 실패, curl 200) · spa_shell(200 인 JS 셸) ·
@@ -344,6 +346,30 @@ ESR_VERDICT_YELLOW = ("skip_landing", "skip_no_text")
 #: 판정이 아니라 "받지 못했다". 네트워크 사고를 데이터 오류로 둔갑시키지 않으려고 수집기가
 #: 따로 적는 값이고, 게이트는 절차 룰(EVIDENCE_INCOMPLETE)로 잡는다 — 면제 불가.
 ESR_VERDICT_UNJUDGED = ("fetch_failed",)
+
+# --- JP_ESR_ADJUSTED_FIGURE (UH-21, 2026-09-13) -----------------------------
+# 위 축(JP_ESR_NOT_IN_SOURCE)은 "그 문서에 그 숫자가 있나" 만 묻는다. 2026-09-12 사고 3건 중
+# かんぽ 220% 는 그 축으로 **원리상** 안 걸린다 — 220 은 자료 p35 에 실재하는
+# 「大量解約リスクを除いた場合」 조정치다(실측 d=1 → found). 즉 かんぽ형은 "없는 숫자를 썼다"
+# 가 아니라 "있는 숫자 중 한정 조건이 붙은 것을 헤드라인으로 골랐다" 이고, 같은 문서에 한정어
+# 없는 진짜 헤드라인(181%)이 나란히 있었다. 판정식 정본은 수집기의 `scan_adjusted` docstring.
+#
+# severity 는 **YELLOW** 다. 한정어 목록이 휴리스틱이고, 조건부 값을 정당하게 헤드라인으로 쓰는
+# 회사가 있을 수 있어 RED 로 걸면 정상 배포를 막는다(UH-5·UH-9 선례: 오탐억제를 설계할 수
+# 없으면 걸지 않는다). 다만 **"인쇄만 하는 YELLOW" 는 통제가 아니다** — 2026-09-12 에는 census
+# notes 에 「特定条件を除いた場合の ESR は 220%」 라고 적혀 있었는데도 그 값이 그대로 나갔다.
+# 그래서 배포본 증거에 면제 없는 발화가 남아 있으면 push 묶음의 오프라인 테스트가 막는다
+# (tests/test_jp_source_gate.py::test_live_esr_evidence_has_no_unexempted_adjusted_figure).
+ESR_ADJUSTED_PASS = ("unqualified",)
+#: 판정하지 않은 분류. **SKIP 이 아니라 따로 세는 분류**다 — 몇 사가 판정 대상이 아니었는지를
+#: source-gate 요약이 인쇄한다("룰이 0이라고 말한다" 와 "그 축이 깨끗하다" 는 다르다).
+#:  - abstain_no_prose : ESR 라벨과 값이 같이 나오는 산문 조각이 0개(표·차트 전용 문서).
+#:    2026-09-13 실측으로 15사 중 7사가 이 형태다 — 기권 조건 없이 걸면 거짓 발화 7건.
+#:  - not_applicable   : PDF 가 아니거나 문서를 못 받아 애초에 판정 대상이 아니다.
+ESR_ADJUSTED_ABSTAIN = ("abstain_no_prose", "not_applicable")
+#: 발화. adjusted_alt 가 **본 룰**(같은 문서에 한정어 없는 대안값이 있다), adjusted_only 는
+#: 보조(한정어는 붙었는데 대안이 없다). 둘 다 YELLOW 지만 메시지가 다르다.
+ESR_ADJUSTED_YELLOW = ("adjusted_alt", "adjusted_only")
 
 _EXCEPTION_REQUIRED_KEYS = ("rule", "company_jp", "field", "reason", "owner_approved_on")
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -560,12 +586,64 @@ def _load_evidence_envelope(path: Path, census_max: str | None, rerun_cmd: str):
     return rows, checked_at, scope, errors
 
 
+def _adjusted_figure_check(company: str, url: str, pct: str, row: dict, path: Path,
+                           exempt: set, notes: list[str], seen: dict) -> list[str]:
+    """`JP_ESR_ADJUSTED_FIGURE` — 화면값이 **그 문서에서 우리가 싣겠다고 한 정의의 값인가**.
+
+    증거 행의 `adjusted_verdict` 만 읽는다(판정은 수집기가 한다). 세 가지를 fail-closed 로 건다.
+
+      · 필드가 아예 없다      → RED(EVIDENCE_INCOMPLETE). 옛 수집기로 만든 증거라는 뜻이고,
+                                없는 것을 통과로 읽으면 이 축이 **조용히 사라진다**.
+      · 모르는 값이다          → RED. SKIP 으로 넘기면 그 행은 아무 검사도 안 받는다.
+      · adjusted_alt/only      → YELLOW(면제 가능). 메시지에 한정어와 **대안값**을 같이 찍는다.
+
+    `seen` 에 분류별 개수를 누적해 요약이 인쇄한다 — 기권은 세지 않으면 사각이 된다.
+    """
+    errors: list[str] = []
+    if "adjusted_verdict" not in row:
+        seen["missing"] = seen.get("missing", 0) + 1
+        return [
+            f"[JP_SOURCE_EVIDENCE_INCOMPLETE] {company} 의 증거 행에 adjusted_verdict 가 없다"
+            f" — {path.name} 이 조정치 축(JP_ESR_ADJUSTED_FIGURE)을 돌리지 않은 옛 산출이다."
+            f" 필드가 없는 것을 통과로 읽으면 이 축이 조용히 사라진다 — 다시 돌려라: {CHECK_ESR_CMD}"
+        ]
+    verdict = str(row.get("adjusted_verdict") or "").strip()
+    seen[verdict] = seen.get(verdict, 0) + 1
+    if verdict in ESR_ADJUSTED_PASS or verdict in ESR_ADJUSTED_ABSTAIN:
+        return errors
+    if verdict in ESR_ADJUSTED_YELLOW:
+        if ("JP_ESR_ADJUSTED_FIGURE", company, "source_url") in exempt:
+            notes.append(f"[source-gate] 면제 적용 JP_ESR_ADJUSTED_FIGURE · {company}")
+            return errors
+        quals = row.get("adjusted_qualifiers") or []
+        alts = row.get("adjusted_alternatives") or []
+        if alts:
+            alt_txt = " · ".join(f"{a.get('pct')}%(p{a.get('page')})" for a in alts)
+            tail = (f" 같은 문서에 **한정어 없는 대안값 {alt_txt} 가 있다** —"
+                    f" 어느 쪽이 헤드라인인지 원문에서 확인하고 값을 고쳐라")
+        else:
+            tail = (" 한정어 없는 대안값은 그 문서에 없다 — 사람이 원문을 열어"
+                    " 이 값이 정말 헤드라인인지 확인해야 한다")
+        notes.append(
+            f"[source-gate/YELLOW] JP_ESR_ADJUSTED_FIGURE · {company} esr={pct}"
+            f" — 화면값이 나오는 ESR 라벨동반 조각 {row.get('adjusted_frags')}개가"
+            f" **전부** 한정어 {quals} 를 달고 있다.{tail}."
+            f" 근거: {str(row.get('adjusted_evidence') or '')[:200]} · {url}"
+        )
+        return errors
+    return [
+        f"[JP_ESR_ADJUSTED_FIGURE] {company} 의 adjusted_verdict 를 모르겠다 {verdict!r}."
+        f" 아는 값: {sorted(ESR_ADJUSTED_PASS + ESR_ADJUSTED_YELLOW + ESR_ADJUSTED_ABSTAIN)}"
+    ]
+
+
 def _esr_in_source_check(
     posted_rows: list[tuple[str, str, str | None]],
     rows: list,
     path: Path,
     exempt: set,
     notes: list[str],
+    adjusted_seen: dict | None = None,
 ) -> list[str]:
     """`JP_ESR_NOT_IN_SOURCE` — 화면값이 1차 출처 문서 **안에** 있나.
 
@@ -582,9 +660,11 @@ def _esr_in_source_check(
 
     이 룰이 **못 잡는 것**(설계상의 한계, 숨기지 말 것): 문서 안에 실재하지만 **다른 정의**의
     값(かんぽ 220% = 「大量解約リスクを除いた場合」 조정치)은 여기서 `found` 로 통과한다.
-    그 축은 별도 룰이 필요하다 — PM §5 참조.
+    그 축은 `JP_ESR_ADJUSTED_FIGURE`(UH-21, 2026-09-13 배선)가 같은 증거 행에서 잡는다 —
+    `_adjusted_figure_check` 를 **RED 가 아닌 모든 행에 대해** 이어서 부른다.
     """
     errors: list[str] = []
+    adjusted_seen = {} if adjusted_seen is None else adjusted_seen
     by_key: dict[tuple[str, str], dict] = {}
     by_url: dict[str, list[dict]] = {}
     for row in rows:
@@ -616,12 +696,17 @@ def _esr_in_source_check(
         verdict = str(row.get("verdict") or "").strip()
         where = f"p{row.get('page')}" if row.get("page") else "?"
         if verdict in ESR_VERDICT_PASS:
+            # found 라고 끝이 아니다 — "그 숫자가 있다" 와 "그 정의의 숫자다" 는 다른 축이다.
+            errors.extend(_adjusted_figure_check(company, url, pct, row, path, exempt,
+                                                 notes, adjusted_seen))
             continue
         if verdict in ESR_VERDICT_YELLOW:
             notes.append(
                 f"[source-gate/YELLOW] JP_ESR_NOT_IN_SOURCE · {company} esr={pct}"
                 f" — {verdict}: {str(row.get('evidence') or '')[:120]}"
             )
+            errors.extend(_adjusted_figure_check(company, url, pct, row, path, exempt,
+                                                 notes, adjusted_seen))
             continue
         if verdict in ESR_VERDICT_UNJUDGED:
             errors.append(
@@ -658,7 +743,8 @@ def source_gate_check(
     today: str | None = None,
     verbose: bool = True,
 ) -> list[str]:
-    """출처 게이트 4룰. 반환된 문자열은 그대로 self_check 의 errors 로 흘러 exit 1 이 된다.
+    """출처 게이트(`SOURCE_RULE_IDS`). 반환된 문자열은 그대로 self_check 의 errors 로 흘러
+    exit 1 이 된다. `notes` 로만 나가는 YELLOW 는 exit code 를 바꾸지 않는다.
 
     scope = census `posted` 행 = `jesr_master.json` records ⊇ `jp/jesr_esr.json` records.
     (부모-자회사 dedup 이 켜져도 마스터 쪽이 상위집합이라 검사가 더 엄해지지, 느슨해지지 않는다.)
@@ -666,6 +752,8 @@ def source_gate_check(
     - `JP_SOURCE_EXPIRING_HOST`     source_url netloc 이 jesr_http.EXPIRING_HOSTS 면 RED
     - `JP_SOURCE_URL_DEAD`          증거 파일이 그 URL 을 dead(404/410)로 기록했으면 RED
     - `JP_ESR_NOT_IN_SOURCE`        화면값이 그 문서 안에 없으면 RED (증거: esr_in_source_health)
+    - `JP_ESR_ADJUSTED_FIGURE`      화면값이 그 문서의 **조건부 조정치**로만 나오면 YELLOW
+                                    (같은 증거 행의 `adjusted_verdict`. 필드 부재·모르는 값은 RED)
     - `JP_SOURCE_EVIDENCE_STALE`    증거 파일 부재·scope≠all·census 보다 낡음이면 RED (**두 파일 다**)
     - `JP_SOURCE_EVIDENCE_INCOMPLETE`  posted 행이 증거에 아예 없으면 RED (**두 파일 다**)
     """
@@ -737,12 +825,18 @@ def source_gate_check(
     esr_rows, esr_checked_at, esr_scope, esr_ev_errors = _load_evidence_envelope(
         esr_health_path, census_max, CHECK_ESR_CMD)
     errors.extend(esr_ev_errors)
+    adjusted_seen: dict[str, int] = {}
     if esr_rows is not None:
-        errors.extend(_esr_in_source_check(posted_urls, esr_rows, esr_health_path, exempt, notes))
+        errors.extend(_esr_in_source_check(posted_urls, esr_rows, esr_health_path, exempt,
+                                           notes, adjusted_seen))
 
     if verbose:
         for note in notes:
             print(note)
+        # 조정치 축은 **분류별로 센다**. "발화 0" 만 찍으면 몇 사가 판정 대상이 아니었는지
+        # (기권)가 사라져 "룰이 0이라고 말한다" 가 "그 축이 깨끗하다" 로 읽힌다.
+        adj = " ".join(f"{k}={adjusted_seen.get(k, 0)}"
+                       for k in ESR_ADJUSTED_PASS + ESR_ADJUSTED_YELLOW + ESR_ADJUSTED_ABSTAIN)
         print(
             f"[source-gate] posted {len(posted_urls)}건 · expiring-host 검사 완료 ·"
             f" 증거 {health_path.name} checked_at={checked_at or '?'} scope={scope!r}"
@@ -752,6 +846,7 @@ def source_gate_check(
             f" · YELLOW {sum(1 for n in notes if '/YELLOW]' in n)}건"
             f" · RED {len(errors)}건"
         )
+        print(f"[source-gate] 조정치 축(JP_ESR_ADJUSTED_FIGURE) 판정 분포: {adj}")
     return errors
 
 

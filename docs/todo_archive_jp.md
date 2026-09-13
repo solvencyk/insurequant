@@ -1,5 +1,16 @@
 # TODO archive — jp 레인 (일본 ESR)
 
+**🟢 2026-09-13 (23) 각사 ESR 목표레인지(자본정책) census 20사 → `J-ESR/esr_target_ranges.json` 신설(jp).**
+티켓 `inbox/jp/20260913T1610Z__owner__JP_MULTI__esr_target_ranges.md`(answered). owner "랭킹 막대색이 감독하한 100%뿐이라 전부 초록 — 자본정책 목표레인지로 차등하겠다더니 안 됨" →
+`jp/jesr_esr.json` 15사 + `jp/jesr_detail.json` 미중복 5사(Dai-ichi Life Insurance·NN Life·Tokio Marine & Nichido Fire·Mitsui Sumitomo Insurance·Sompo Japan Insurance) 총 20사 WebSearch/WebFetch
+census. **확보 6건**: Tokio Marine HD 190%+(2026-03 신규제 전환, 구기준 100~140%/99.95%내부모형에서 99.5%규제로 재설정) · MS&AD HD 180~250% · Sompo HD 200~270%(기존 jesr_esr.json
+basis=J-ICS_VaR99.5와 일치) · T&D HD 133~225%(ERM 페이지 직접열람, 신뢰수준99.5% 원문 확인 — 6건 중 유일 직접확인) · Dai-ichi Life 170~200%(그룹+국내3사 공통) — 전부 basis=regulatory·
+confidence=99.5%. 자회사 3사(東京海上日動·三井住友海上·損保ジャパン)는 모회사 레인지 상속(`inherited_from`). **null 14건**: 상호회사 5사(日本生命·住友生명·明治安田生命·朝日生命·富国生命)
+전원 목표레인지 미공표(추정 금지 원칙대로 null), Sony Financial Group·ソニー生命(모회사도 null이라 상속 불가)·かんぽ生命·ライフネット生명·NN生명·au損保·明治安田損保(모회사 상호회사라 상속 불가) 미확인.
+직접 PDF 열람은 T&D 1건뿐, 나머지는 WebFetch가 PDF 텍스트추출 실패(스캔/암호화)하거나 403이라 WebSearch 스니펫 교차확인으로 대체(policy_note에 명시). 산출
+`J-ESR/esr_target_ranges.json`(계약대로 low_pct/high_pct/basis/confidence_level/policy_note/source_url/source_doc/as_of/inherited_from). 도메인 문서 §4b 에 `esr_target_range` 항목 추가.
+페이지 색 규칙 반영은 오케스트레이터 소관(designer). Sonnet 5, 약 20분, 회사당 검색≤2·fetch≤2 준수. 다음(10월 재census) = Sony FG·かんぽ生命·ライフネット·NN生명·상호회사 5사 재탐색.
+
 **🟢 2026-09-13 (22) 회사별 상세 3페이지 분리(jesr 자본 / jgaap 회계 / disclosure 기타공시) + 所要資本 워터폴 폐지 + 貸借対照表 T자형 패널(orchestrator).**
 owner "한국처럼 자본·회계·기타공시로 나눠라, 워터폴은 분산효과만 보여주니 빼라, jgaap 에 IFRS17.html 식 T자 BS". 종전 `jp/jesr.html` 인라인 CSS/JS 를
 `jp/jp.css`·`jp/jesr_app.js`(공용, `<body data-page>` 분기·byId 가드·`?company=` 탭 동기화)로 빼고 `jgaap.html`(主要指標 4카드·損益 2블록·워터폴·収益性·

@@ -1,9 +1,21 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-13 (27) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-13 (28) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-13 (28) 출처 게이트 6종 완성 — 사고 3건이 전부 어떤 룰엔가 걸린다, 포스트모템 `closed`(jp).**
+(27) 의 "다음" 3건을 다 닫고 UH-21 까지 갔다. ① **`JP_ESR_NOT_IN_SOURCE` 배선**(수집기 `J-ESR/check_esr_in_source.py` 가 증거를 박제 → 빌더는 오프라인으로 읽음, 증거 키 `(url, esr_pct)` — url 만으로 잡으면 값만 고치고 수집기를 안 돌린 상태가 옛 값의 found 를 물려받는다).
+**실측이 PM §5 의 전제를 뒤집었다**: 이 축이 잡는 것은 東京海上HD(238, 원문 56p 어디에도 없다 — 문턱 10만 자로 풀어도 not_found)·MS&AD(무관한 합병 보도자료)이고 **かんぽ 220 은 못 잡는다**(그 값은 p35 에 실재, d=1).
+초안 "같은 문장" 규격으로 되돌리면 거짓 RED 7건 — §4c-pre 예고치와 정확히 일치. ② **`JP_ESR_ADJUSTED_FIGURE` 신설(UH-21)** — かんぽ형은 "없는 숫자" 가 아니라 **"있는 숫자 중 틀린 것"** 이다.
+판정식은 「라벨동반 산문 조각 ≥1(0이면 **기권**) × 전부 한정어 × **같은 문서에 한정어 없는 대안값 존재**」 3곱. 한정어 단독 조건과 정상 상태 답은 같지만, 다음 사람이 목록을 넓히는 경로에서
+단독은 정상 3사(日本生命·住友·朝日)를 거짓 발화시키고 대안값 조건만 조용하다 — **표본이 보여줘서** 대안값 조건을 본 룰로 골랐다. 발화 메시지에 「한정어 없는 대안값 181%(p35) 가 있다」 를 같이 찍는다.
+재현: 사본 census 를 220 으로 되돌리면 빌더가 그 메시지 + push 묶음 exit 1, 현재값 181 은 미발화. 정상 14사 오탐 0(기권 7·unqualified 7·not_applicable 1).
+severity 는 YELLOW 지만 **이빨은 push 묶음**에 뒀다(2026-09-12 에는 census notes 에 조정치라고 적혀 있었는데도 그 값이 나갔다 — 인쇄만 하는 YELLOW 는 통제가 아니다).
+③ **한정어 목록 정본을 도메인 문서 §3 에 등재**(UH-23 해소) — 실측 관측은 `除いた場合`·`適正水準`·`ターゲットレンジ` 셋뿐이고, 「規制ESR」 같은 **정의 표지는 한정어가 아니다**(넣으면 정상 3사 거짓 발화).
+④ **포스트모템 `closed`** — 사고 3건이 전부 룰에 걸린다. 잔여 UH-22(severity 승격 판단, 10/31 재측정 조건은 PM §5 에 박음)·UH-23 후속(코드↔문서 대조 테스트).
+게이트: `prepush_check.py` **REDUCED(jp-scope) gate-clear** 238 passed · 변이 10/10 발화 · `jp/jesr_esr.json` 은 `generated_at` 외 불변. **다음**: ① 10/31 재census 에서 조정치 축 재측정(posted 15→최대 77) ② UH-22 승격 판단 ③ UH-23 대조 테스트.
 
 **🟢 2026-09-13 (27) UH-18 출처 게이트 배선(4종·exit code 실증) + UH-19 신규·같은 날 해소 + 산정기준 미확인 0(jp).**
 병렬 2건(validation=Opus / jp-collector=Sonnet). ① **배선**: `build_jesr_page_json.py::source_gate_check` 에 4종 —
@@ -64,17 +76,6 @@ owner "목표 레인지 초과 초록(높을수록 진하게) / 100% 초과~레�
 p25~26·基礎利益 A/B/C p30·再保険 p21·会計方針 p32~33 추출(P01~P16 실패 0, 契約者配当準備金繰入額 항목 신설로 P04 정합), core_history 5개년(p7)·順ざや/危険差(p31, 억엔),
 builder 가 損益 층 있는 생보를 상세 회사로 승격(esr_status not_yet 5 = 大型損保 3 + NN·第一; life_core_only 3). 旧基準SMR 파서 전각 대시(ー) 버그 수정(第一 852.9).
 貸借対照表 10사 전부(住友 7월 資料編·第一 분책·明治安田損保 열 우선 파서). **다음**: ① 10월 재조사에서 目標レンジ 원문 확인·미공표 12사 재탐색 ② NN·第一 三利源 억엔 통일 표기.
-
-**🟢 2026-09-13 (23) 각사 ESR 목표레인지(자본정책) census 20사 → `J-ESR/esr_target_ranges.json` 신설(jp).**
-티켓 `inbox/jp/20260913T1610Z__owner__JP_MULTI__esr_target_ranges.md`(answered). owner "랭킹 막대색이 감독하한 100%뿐이라 전부 초록 — 자본정책 목표레인지로 차등하겠다더니 안 됨" →
-`jp/jesr_esr.json` 15사 + `jp/jesr_detail.json` 미중복 5사(Dai-ichi Life Insurance·NN Life·Tokio Marine & Nichido Fire·Mitsui Sumitomo Insurance·Sompo Japan Insurance) 총 20사 WebSearch/WebFetch
-census. **확보 6건**: Tokio Marine HD 190%+(2026-03 신규제 전환, 구기준 100~140%/99.95%내부모형에서 99.5%규제로 재설정) · MS&AD HD 180~250% · Sompo HD 200~270%(기존 jesr_esr.json
-basis=J-ICS_VaR99.5와 일치) · T&D HD 133~225%(ERM 페이지 직접열람, 신뢰수준99.5% 원문 확인 — 6건 중 유일 직접확인) · Dai-ichi Life 170~200%(그룹+국내3사 공통) — 전부 basis=regulatory·
-confidence=99.5%. 자회사 3사(東京海上日動·三井住友海上·損保ジャパン)는 모회사 레인지 상속(`inherited_from`). **null 14건**: 상호회사 5사(日本生命·住友生명·明治安田生命·朝日生命·富国生命)
-전원 목표레인지 미공표(추정 금지 원칙대로 null), Sony Financial Group·ソニー生命(모회사도 null이라 상속 불가)·かんぽ生命·ライフネット生명·NN生명·au損保·明治安田損保(모회사 상호회사라 상속 불가) 미확인.
-직접 PDF 열람은 T&D 1건뿐, 나머지는 WebFetch가 PDF 텍스트추출 실패(스캔/암호화)하거나 403이라 WebSearch 스니펫 교차확인으로 대체(policy_note에 명시). 산출
-`J-ESR/esr_target_ranges.json`(계약대로 low_pct/high_pct/basis/confidence_level/policy_note/source_url/source_doc/as_of/inherited_from). 도메인 문서 §4b 에 `esr_target_range` 항목 추가.
-페이지 색 규칙 반영은 오케스트레이터 소관(designer). Sonnet 5, 약 20분, 회사당 검색≤2·fetch≤2 준수. 다음(10월 재census) = Sony FG·かんぽ生命·ライフネット·NN生명·상호회사 5사 재탐색.
 
 ## Active follow-ups
 

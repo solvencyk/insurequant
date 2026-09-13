@@ -194,6 +194,13 @@ def _synthetic_esr_evidence(tmp_path: Path, census_path: Path) -> Path:
             "esr_pct": b._norm_pct(r.get("esr_pct")),
             "verdict": "found", "match_rule": "text_window", "page": 1, "distance": 0,
             "label": "ESR", "pages": 1, "evidence": "(synthetic) ESR は ... %",
+            # 조정치 축(UH-21, 2026-09-13). 필드를 빼면 게이트가 "수집기가 이 축을 안 돌렸다"
+            # 로 읽어 정당하게 RED 를 낸다 — fixture 는 **선행 단계를 다 돌린 라운드**를
+            # 흉내 내야 하므로 여기도 같이 채운다(게이트를 느슨하게 하지 않는다).
+            "adjusted_verdict": "unqualified", "adjusted_qualifiers": [],
+            "adjusted_frags": 1, "adjusted_frags_unqualified": 1,
+            "adjusted_alternatives": [],
+            "adjusted_evidence": "(synthetic) p1 한정어 없이: ESR は ... %",
         })
     checked = max((r.get("checked_at") or "").strip()[:10] for r in rows)
     path = tmp_path / "esr_in_source_health.json"

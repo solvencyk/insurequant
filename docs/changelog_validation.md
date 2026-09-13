@@ -5,6 +5,21 @@
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
+## 2026-09-13 (6차) -- jp `JP_ESR_ADJUSTED_FIGURE` 배선 (UH-21 해소, PM-2026-09-13 `closed`)
+
+- 사고 유형: **"없는 숫자" 가 아니라 "있는 숫자 중 틀린 것".** 5차의 `JP_ESR_NOT_IN_SOURCE` 는 "그 문서에 그 숫자가 있나" 만 물어서 かんぽ 220% 를 원리상 못 잡는다 -- 220 은 그 자료 p35 에 **실재**한다(「大量解約リスクを除いた場合のESRは220%」 + p18 「ESR適正水準 150~220%」, 실측 d=1 -> `found`). 한정 조건이 붙은 조정치를 헤드라인으로 고른 것이고, 같은 문서에 한정어 없는 진짜 헤드라인 181% 가 나란히 있었다.
+- 판정식: ① 화면값이 나오는 ESR 라벨동반 **산문 조각**(`。`/개행 분할)이 1개 이상(0개면 **기권**) ② 그 조각이 **전부** 한정어를 달았다 ③ **같은 문서에 한정어 없는 다른 ESR 값이 있다** -> `adjusted_alt`(본 룰). ②까지면 `adjusted_only`(보조).
+- **③ 을 본 룰로 고른 근거(실측, 한정어 목록 4변형 x 15사)**: 확정본 -> ①② 단독 1 · ①②③ 1(정상사 오탐 0) / `適正水準` 제거 -> **사고를 놓친다**(p18 조각이 한정어 없는 조각이 되어 220 이 빠져나간다) / definition marker 4종(`ベース`·`内部管理`·`規制`·`速報値`) 오염판 -> **①② 단독은 정상 3사 거짓 발화**(日本生命·住友·朝日), ③ 을 붙이면 전부 조용 / 빈 목록 -> 0. 정상 상태에선 둘이 같은 답이지만 **룰이 망가지는 현실적 경로에서 ③ 만 버틴다**. 근거가 가설이 아닌 이유: `適正水準` 은 かんぽ **정답값 181 의 조각에도** 붙어 있고(「適正水準の範囲内にある」), 朝日의 정답 헤드라인은 「ESR(グループ)(内部管理ベース)は258.9%」다.
+- 한정어 목록은 **15사 실측으로 확정**(seed 를 그대로 쓰지 않았다): 라벨동반 조각 전체에서 관측된 것은 `除いた場合`(2) · `適正水準`(4) · `ターゲットレンジ`(1)뿐. `を除く`·`レンジ`·`目安`·`調整後`·`参考` 는 **관측 0**, definition marker 4종은 **일부러 제외**.
+- 오탐억제: 정상 14사 중 **7사가 라벨동반 산문 조각 0개**(표·차트 전용 문서) -- 기권 조건 없이 걸면 거짓 YELLOW 7건. 기권은 SKIP 이 아니라 **따로 세는 분류**(`unqualified=7 adjusted_alt=0 adjusted_only=0 abstain_no_prose=7 not_applicable=1` 을 수집기·게이트가 인쇄).
+- 배선: `check_esr_in_source.py::scan_adjusted`(판정식 정본, 네트워크) -> 기존 `esr_in_source_health.json` rows 에 필드 6개(**새 증거 파일 없음** = 신선도 검사 재사용) -> `build_jesr_page_json.py::_adjusted_figure_check`(오프라인). 면제는 `jp_source_exceptions.json` 셀 단위(등재 0건, owner 권한).
+- **severity YELLOW, 이빨은 push 묶음.** RED 로 걸면 조건부 값을 정당하게 헤드라인으로 쓰는 회사의 정상 배포를 오탐 1건이 막는다(UH-5·UH-9 선례). 대신 "인쇄만 하는 YELLOW 는 통제가 아니다" -- 2026-09-12 에는 census notes 에 조정치임이 **적혀 있었는데도** 그 값이 나갔다. `test_live_esr_evidence_has_no_unexempted_adjusted_figure` 가 **배포본 증거**(게이트가 읽는 그 파일 = 불변식 1)에 면제 없는 발화가 남으면 FAIL 한다.
+- **소멸 경로 차단**: YELLOW 는 exit code 를 안 바꾸므로 축이 죽는 유일한 길은 "옛 수집기로 돌려 필드가 빠지는 것" -> **필드 부재는 RED**(`JP_SOURCE_EVIDENCE_INCOMPLETE`, 면제 불가) · 모르는 verdict 도 RED. 진짜 빌더로 exit 1 실증.
+- **사고 재현(엔드투엔드, 사본에서만)**: census 를 かんぽ 220 으로 되돌리고 수집기를 원문 바이트로 재실행 -> `found(p35,d=1)`(NOT_IN_SOURCE 조용) + `adjusted_alt`/대안 `181` -> 빌더 exit 0 + 대안값을 찍는 메시지 -> **push 묶음 exit 1**. 현재값 181 은 `unqualified` = 발화 안 함.
+- 회귀 **83**(63에서) + 26, 새 파일 없음(`REDUCED (jp-scope)` 유지). 이빨 변이 **10/10 발화**(사본에서만, 원본 md5 복원 확인).
+- PM 종결: 5칸이 다 차 `PM-2026-09-13` -> **`closed`**, README 색인·UH 표 갱신. 잔여 **UH-22**(severity 승격 판단, 10/31 라운드 재측정 + 승격 3조건 명문화 / P2) · **UH-23**(한정어 목록 정본이 코드에만 있다 / P3).
+- 검증: 빌더 exit 0 · RED 0 · YELLOW 1(T&D) · 산출 `generated_at` 외 전량 동일 · `prepush_check.py` = `REDUCED (jp-scope)` · **238 passed · 4 skipped** · `gate-clear`.
+
 ## 2026-09-13 (5차) -- jp `JP_ESR_NOT_IN_SOURCE` 배선 (PM-2026-09-13 의 마지막 미배선 축, UH-18 해소)
 
 - 사고 유형: **자기참조 게이트.** jp self-check 는 census 안에서만 닫히는 범위·형식·합계 검사라 "그 문서에 그 숫자가 있나" 축이 없었다. 東京海上HD 238%(2차보도 인용값)와 MS&AD 의 무관한 출처(ESR 한 줄 없는 합병 보도자료)가 그 구멍으로 통과했다.

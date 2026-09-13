@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-13T16:16Z",
+  "checked_at": "2026-09-13T16:54Z",
   "scope": "all",
   "targets": 15,
   "unique_urls": 15,
@@ -10,8 +10,28 @@
     "skip_no_text": 0,
     "fetch_failed": 0
   },
+  "adjusted_summary": {
+    "unqualified": 7,
+    "adjusted_alt": 0,
+    "adjusted_only": 0,
+    "abstain_no_prose": 7,
+    "not_applicable": 1
+  },
   "not_found": 0,
+  "adjusted": 0,
   "proximity_chars": 200,
+  "adjusted_qualifiers": [
+    "除いた場合",
+    "除いたESR",
+    "除くESR",
+    "除外した",
+    "調整後",
+    "適正水準",
+    "ターゲットレンジ",
+    "目標レンジ",
+    "参考値",
+    "試算値"
+  ],
   "rows": [
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -35,7 +55,13 @@
       "page": 44,
       "distance": 22,
       "label": "ESR",
-      "evidence": " 2026 Tokio Marine Holdings, Inc.|Appendix|ESRの推移と感応度|2025年9月|2026年3月|253%|267%|269%|270%|268%|284%|270%|266%|267%|ESR*3の推移|ESRの感応度(パラレルシフトが前提)|実質純資産増減要因|リスク量増減要因|*4: 自己株式取得4,000億円実施後"
+      "evidence": " 2026 Tokio Marine Holdings, Inc.|Appendix|ESRの推移と感応度|2025年9月|2026年3月|253%|267%|269%|270%|268%|284%|270%|266%|267%|ESR*3の推移|ESRの感応度(パラレルシフトが前提)|実質純資産増減要因|リスク量増減要因|*4: 自己株式取得4,000億円実施後",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 0,
+      "adjusted_frags_unqualified": 0,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "abstain_no_prose",
+      "adjusted_evidence": "ESR 라벨과 화면값이 같이 나오는 산문 조각이 없다(표·차트 전용 문서) — 이 축은 판정하지 않는다"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -59,7 +85,13 @@
       "page": 17,
       "distance": 2,
       "label": "ESR",
-      "evidence": "時価純資産÷統合リスク量)|※2 統合リスク量:信頼水準99.5%のVaR(Value at Risk)でリスク量を計測|※3 健全性の下限は180%で設定|市場環境|226%|214%|ESR※1|"
+      "evidence": "時価純資産÷統合リスク量)|※2 統合リスク量:信頼水準99.5%のVaR(Value at Risk)でリスク量を計測|※3 健全性の下限は180%で設定|市場環境|226%|214%|ESR※1|",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 0,
+      "adjusted_frags_unqualified": 0,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "abstain_no_prose",
+      "adjusted_evidence": "ESR 라벨과 화면값이 같이 나오는 산문 조각이 없다(표·차트 전용 문서) — 이 축은 판정하지 않는다"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -83,7 +115,13 @@
       "page": 14,
       "distance": 72,
       "label": "ESR",
-      "evidence": "部改定|ESR*1の増減要因|ESRの感応度分析|2025年3月末|2026年3月末|市場変動等|+5pt|256%|利益・還元|+9pt|リスク削減・|リスクテイク|+14pt|270%|Aspen買収影響|△15pt|ターゲット資本水準*2|200%|• 政策株式の削減+11pt|• 持株会社保有株式影響+12pt|• 海外運用資産増等△9pt|• イールドカ"
+      "evidence": "部改定|ESR*1の増減要因|ESRの感応度分析|2025年3月末|2026年3月末|市場変動等|+5pt|256%|利益・還元|+9pt|リスク削減・|リスクテイク|+14pt|270%|Aspen買収影響|△15pt|ターゲット資本水準*2|200%|• 政策株式の削減+11pt|• 持株会社保有株式影響+12pt|• 海外運用資産増等△9pt|• イールドカ",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 0,
+      "adjusted_frags_unqualified": 0,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "abstain_no_prose",
+      "adjusted_evidence": "ESR 라벨과 화면값이 같이 나오는 산문 조각이 없다(표·차트 전용 문서) — 이 축은 판정하지 않는다"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -107,7 +145,13 @@
       "page": null,
       "distance": null,
       "label": null,
-      "evidence": "PDF 가 아니다(상설 페이지·목록 페이지). 본문에 222 표기가 안 보인다 — 참고값이며 판정 근거 아님"
+      "evidence": "PDF 가 아니다(상설 페이지·목록 페이지). 본문에 222 표기가 안 보인다 — 참고값이며 판정 근거 아님",
+      "adjusted_verdict": "not_applicable",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 0,
+      "adjusted_frags_unqualified": 0,
+      "adjusted_alternatives": [],
+      "adjusted_evidence": "PDF 가 아니라 조정치 판정 대상이 아니다"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -131,7 +175,13 @@
       "page": 12,
       "distance": 1,
       "label": "ESR",
-      "evidence": "グループ連結ESRの推移|•|2025年度第3四半期末から更に金利が上昇したものの、財務改善施策の効果や新契約の積上げなどにより、2025年度末の|連結ESRは177%|•|2025年度累計の債券売却額は、前年度から1,000億円増の約2,300億円|グループ連結ESR (経済価値資本*1 /経済価値税引後リスク量)|*1:劣後債務を含む(次項"
+      "evidence": "グループ連結ESRの推移|•|2025年度第3四半期末から更に金利が上昇したものの、財務改善施策の効果や新契約の積上げなどにより、2025年度末の|連結ESRは177%|•|2025年度累計の債券売却額は、前年度から1,000億円増の約2,300億円|グループ連結ESR (経済価値資本*1 /経済価値税引後リスク量)|*1:劣後債務を含む(次項",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 2,
+      "adjusted_frags_unqualified": 2,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "unqualified",
+      "adjusted_evidence": "p3 한정어 없이: ◼2025年度末のグループ連結ESRは、前年度末から12ポイント低下し、177%"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -155,7 +205,13 @@
       "page": 1,
       "distance": 2,
       "label": "ESR",
-      "evidence": " 年3 月末 |2025 年3 月末 |増減 |内部管理適格資本 |19,106 |19,014 |92 |内部管理所要資本 |11,809 |11,321 |488 |ESR |162% |168% |▲6 ポイント|(単位:億円) |2025 年度 |2024 年度 |増減 |新契約経済価値 |1,615 |1,963 |▲348|以 上 |"
+      "evidence": " 年3 月末 |2025 年3 月末 |増減 |内部管理適格資本 |19,106 |19,014 |92 |内部管理所要資本 |11,809 |11,321 |488 |ESR |162% |168% |▲6 ポイント|(単位:億円) |2025 年度 |2024 年度 |増減 |新契約経済価値 |1,615 |1,963 |▲348|以 上 |",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 0,
+      "adjusted_frags_unqualified": 0,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "abstain_no_prose",
+      "adjusted_evidence": "ESR 라벨과 화면값이 같이 나오는 산문 조각이 없다(표·차트 전용 문서) — 이 축은 판정하지 않는다"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -179,7 +235,15 @@
       "page": 35,
       "distance": 1,
       "label": "ESR",
-      "evidence": "ご説明します。|◼|新資本規制のもとでも、ESRのターゲットレンジと水準に応じた経営行|動を引き続き適用し、適正水準は150%~220%を継続いたします。|◼|26.3末のESRは181%と、大量解約リスクの影響等により25.3末から15ポ|イント低下いたしましたが、適正水準の範囲内にございます。|◼|なお、大量解約リスクを除いた場合のESRは220%と適正水準の"
+      "evidence": "ご説明します。|◼|新資本規制のもとでも、ESRのターゲットレンジと水準に応じた経営行|動を引き続き適用し、適正水準は150%~220%を継続いたします。|◼|26.3末のESRは181%と、大量解約リスクの影響等により25.3末から15ポ|イント低下いたしましたが、適正水準の範囲内にございます。|◼|なお、大量解約リスクを除いた場合のESRは220%と適正水準の",
+      "adjusted_qualifiers": [
+        "適正水準"
+      ],
+      "adjusted_frags": 3,
+      "adjusted_frags_unqualified": 2,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "unqualified",
+      "adjusted_evidence": "p35 한정어 없이: 26.3末のESRは181%と、大量解約リスクの影響等により25.3末から15ポ"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -203,7 +267,13 @@
       "page": 8,
       "distance": 8,
       "label": "ESR",
-      "evidence": "本(リスクバッファー)の十分性を経済価値ベースで測る健全性指標。25年度数値は速報値。|※ ソルベンシー・マージン比率(告示等に則り算出するESR。以下「規制ESR」 )は、連結:195%、単体:204%と、監督介入水準である100%を上回る水準を確保。 25年度数値は速報値。|7|4ESR・新契約価値|グループ概況|国内生命保険事業|グループ業績見通し|グループ"
+      "evidence": "本(リスクバッファー)の十分性を経済価値ベースで測る健全性指標。25年度数値は速報値。|※ ソルベンシー・マージン比率(告示等に則り算出するESR。以下「規制ESR」 )は、連結:195%、単体:204%と、監督介入水準である100%を上回る水準を確保。 25年度数値は速報値。|7|4ESR・新契約価値|グループ概況|国内生命保険事業|グループ業績見通し|グループ",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 1,
+      "adjusted_frags_unqualified": 1,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "unqualified",
+      "adjusted_evidence": "p8 한정어 없이: 以下「規制ESR」 )は、連結:195%、単体:204%と、監督介入水準である100%を上回る水準を確保"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -227,7 +297,13 @@
       "page": 9,
       "distance": 13,
       "label": "ESR",
-      "evidence": "末|2024年度末|2025年度末|8.経済価値ベースのソルベンシー比率【連結】|■連結ESRの推移|◆経済価値ベースのソルベンシー比率(以下、連結ESR)※1は、安定的に推移し、197%※2(前年度末比+19pt)となり、リスクに対して|十分なリスクバッファーを有している。|※1ここでは当社の実態を表す方法で計算した内部管理上の数値(内部管理ESR)を記載。(E"
+      "evidence": "末|2024年度末|2025年度末|8.経済価値ベースのソルベンシー比率【連結】|■連結ESRの推移|◆経済価値ベースのソルベンシー比率(以下、連結ESR)※1は、安定的に推移し、197%※2(前年度末比+19pt)となり、リスクに対して|十分なリスクバッファーを有している。|※1ここでは当社の実態を表す方法で計算した内部管理上の数値(内部管理ESR)を記載。(E",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 1,
+      "adjusted_frags_unqualified": 1,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "unqualified",
+      "adjusted_evidence": "p9 한정어 없이: ◆経済価値ベースのソルベンシー比率(以下、連結ESR)※1は、安定的に推移し、197%※2(前年度末比+19pt)となり、リスクに対して"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -251,7 +327,13 @@
       "page": 3,
       "distance": 1,
       "label": "ESR",
-      "evidence": "なモデルによ|るESR と、当社の事業実態を反映した内部モデルによる|ESRがあり、当社は低い方をグループESRとし、ご契約者|配当等の経営判断を実施しています。|グループESRは208.7%となり、引き続き高い水準を維|持しています。|12兆9,000億円|グループサープラス|企業価値を表わすグループサープラスは、12兆9,000億円|と前年度末比で14.5%増加し"
+      "evidence": "なモデルによ|るESR と、当社の事業実態を反映した内部モデルによる|ESRがあり、当社は低い方をグループESRとし、ご契約者|配当等の経営判断を実施しています。|グループESRは208.7%となり、引き続き高い水準を維|持しています。|12兆9,000億円|グループサープラス|企業価値を表わすグループサープラスは、12兆9,000億円|と前年度末比で14.5%増加し",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 3,
+      "adjusted_frags_unqualified": 3,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "unqualified",
+      "adjusted_evidence": "p3 한정어 없이: グループESRは208.7%となり、引き続き高い水準を維"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -275,7 +357,13 @@
       "page": 13,
       "distance": 0,
       "label": "ESR",
-      "evidence": "投資を行う|◼|配当還元率が高くなるほど保有契約価値は減少し、その結果、|ESRは低下する。当社における低下幅は約30ポイント。高水準の|配当還元を行ったうえで業界最高水準のESR248.5%を確保し|ている|◼|ESRをターゲットレンジ内(230%~270%)に維持することで、|お客さまが安心してご契約を継続していただける健全性を確保|すると同時に、配当還元を加速さ"
+      "evidence": "投資を行う|◼|配当還元率が高くなるほど保有契約価値は減少し、その結果、|ESRは低下する。当社における低下幅は約30ポイント。高水準の|配当還元を行ったうえで業界最高水準のESR248.5%を確保し|ている|◼|ESRをターゲットレンジ内(230%~270%)に維持することで、|お客さまが安心してご契約を継続していただける健全性を確保|すると同時に、配当還元を加速さ",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 1,
+      "adjusted_frags_unqualified": 1,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "unqualified",
+      "adjusted_evidence": "p13 한정어 없이: 配当還元を行ったうえで業界最高水準のESR248.5%を確保し"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -299,7 +387,13 @@
       "page": 11,
       "distance": 7,
       "label": "ESR",
-      "evidence": ".4%)|375億円|385億円|保障性商品の|保有契約年換算保険料(グループ)※|3,572億円|(前年度末差+139億円)|3,500億円|3,600億円|ESR(グループ)|258.9%|(前年度末差+1.3pt)|220~260%|経営戦略目標の進捗状況|P.10|※貯蓄性商品を除く、死亡保障および医療保障・介護保障等の第三分野合計|(代理店で販売している無配"
+      "evidence": ".4%)|375億円|385億円|保障性商品の|保有契約年換算保険料(グループ)※|3,572億円|(前年度末差+139億円)|3,500億円|3,600億円|ESR(グループ)|258.9%|(前年度末差+1.3pt)|220~260%|経営戦略目標の進捗状況|P.10|※貯蓄性商品を除く、死亡保障および医療保障・介護保障等の第三分野合計|(代理店で販売している無配",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 1,
+      "adjusted_frags_unqualified": 1,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "unqualified",
+      "adjusted_evidence": "p10 한정어 없이: • ESR ( グループ)( 内部管理ベース) は258.9%となり、十分な健全性を維持しています"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -323,7 +417,13 @@
       "page": 5,
       "distance": 20,
       "label": "ESR",
-      "evidence": "て、2026年3月末より「経済価値ベースのソルベン|シー規制」が導入されました。新たな経済価値ベースによるソルベンシー・マージン比率(ESR)|*7は、当連結会計|年度末において、333%となり、十分な支払い余力を維持しています。なお、当社のビジネスの実態を考慮して、対|象とするリスク等を調整した内部ESR|*8は、当連結会計年度末において394%(前連結会計年度"
+      "evidence": "て、2026年3月末より「経済価値ベースのソルベン|シー規制」が導入されました。新たな経済価値ベースによるソルベンシー・マージン比率(ESR)|*7は、当連結会計|年度末において、333%となり、十分な支払い余力を維持しています。なお、当社のビジネスの実態を考慮して、対|象とするリスク等を調整した内部ESR|*8は、当連結会計年度末において394%(前連結会計年度",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 0,
+      "adjusted_frags_unqualified": 0,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "abstain_no_prose",
+      "adjusted_evidence": "ESR 라벨과 화면값이 같이 나오는 산문 조각이 없다(표·차트 전용 문서) — 이 축은 판정하지 않는다"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -347,7 +447,13 @@
       "page": 22,
       "distance": 7,
       "label": "ソルベンシー・マージン比率(新基準ページ)",
-      "evidence": "j)|ー|1,510|ー|所要資本の税効果の額|(k)|ー|338|ー|所要資本の額(税効果考慮後)(j)-(k)|2|ー|1,171|ー|ソルベンシー・マージン比率 1/2|ー|791.7|ー|(注) ‌\u0007|「ソルベンシー・マージン比率」とは、保険業法施行規則第86条(健全性の基準に用いる資本金、基金、準備金等)および第87条(通常の予測を超え|る危険に対応する額)"
+      "evidence": "j)|ー|1,510|ー|所要資本の税効果の額|(k)|ー|338|ー|所要資本の額(税効果考慮後)(j)-(k)|2|ー|1,171|ー|ソルベンシー・マージン比率 1/2|ー|791.7|ー|(注) ‌\u0007|「ソルベンシー・マージン比率」とは、保険業法施行規則第86条(健全性の基準に用いる資本金、基金、準備金等)および第87条(通常の予測を超え|る危険に対応する額)",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 0,
+      "adjusted_frags_unqualified": 0,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "abstain_no_prose",
+      "adjusted_evidence": "ESR 라벨과 화면값이 같이 나오는 산문 조각이 없다(표·차트 전용 문서) — 이 축은 판정하지 않는다"
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -371,7 +477,13 @@
       "page": 12,
       "distance": 1,
       "label": "ソルベンシー・マージン比率(新基準ページ)",
-      "evidence": "ント|上昇|米ドル金利|50ベーシス・|ポイント|下降|円金利UFR|50ベーシス・|ポイント|下降|株式・|不動産|10%|下落|為替|10%|円高|ソルベンシー・マージン比率|743.2|736.7|750.1|743.3|743.2|743.2|764.4|755.9|適格資本の額|40,290|39,842|40,762|40,279|40,300|40,29"
+      "evidence": "ント|上昇|米ドル金利|50ベーシス・|ポイント|下降|円金利UFR|50ベーシス・|ポイント|下降|株式・|不動産|10%|下落|為替|10%|円高|ソルベンシー・マージン比率|743.2|736.7|750.1|743.3|743.2|743.2|764.4|755.9|適格資本の額|40,290|39,842|40,762|40,279|40,300|40,29",
+      "adjusted_qualifiers": [],
+      "adjusted_frags": 0,
+      "adjusted_frags_unqualified": 0,
+      "adjusted_alternatives": [],
+      "adjusted_verdict": "abstain_no_prose",
+      "adjusted_evidence": "ESR 라벨과 화면값이 같이 나오는 산문 조각이 없다(표·차트 전용 문서) — 이 축은 판정하지 않는다"
     }
   ]
 }

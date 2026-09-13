@@ -4,6 +4,10 @@
 
 ---
 
+**(2026-09-13) jp 레인에서 false-green 3건 — 포스트모템 `PM-2026-09-13` 신설, 룰 4종 정의했으나 **전부 미배선(UH-18)**.** jp 빌더 self-check(범위·형식·합계)는 통과했는데 화면 수치 2건이 2차보도·조정치였고(東京海上HD 238→268 · かんぽ 220→181 · 明治安田生命 208.0→208.7), 출처 URL 1건은 ESR 이 한 줄도 없는 합병 보도자료였다(MS&AD). **메커니즘: self-check 가 census 안에서만 닫히는 자기참조라 "출처가 살아 있나 / 그 문서에 그 숫자가 있나" 축이 없다** — PM-2026-06-16("산술만 검사")의 jp 판. 룰 4종(`JP_SOURCE_URL_DEAD`·`JP_SOURCE_EXPIRING_HOST`·`JP_ESR_NOT_IN_SOURCE`·`JP_ESR_EDINET_MISMATCH`)을 오탐억제까지 정의하고 도구는 만들었으나(`J-ESR/check_source_urls.py`·`edinet_esr_probe.py`) 어느 게이트에도 안 걸려 있다 = honor system. 배선 방향은 **증거 신선도 검사**(`source_url_health.json` 의 `checked_at` 이 census 보다 오래되면 RED) — 네트워크 없이 "점검을 안 돌리고 census 를 고쳤다" 를 잡는 형태. 티켓 `inbox/jp/20260913T1500Z__validation__JP_MULTI__jp_source_gate_wiring.md` / P1.
+
+---
+
 **(2026-09-11) `public_exports/` 변이시험이 실제 배포 파일을 제자리에서 흔들다 끊긴 잔해(가짜 회사 행 1건)가 워킹트리에 남아 prepush 오프라인 테스트를 막았다 — 3번째 재발이라 구조를 바꿨다.** `check_public_exports(fd, out_dir=None)` 로 검사 폴더를 주입 가능하게 하고, `test_mutation_public_export_fires` 는 pytest 임시 폴더에 복사한 사본만 훼손한다. dirty-check·백업·`finally` 복원 코드 삭제(필요 없어짐). 실측: 관련 테스트 149 passed, 변이시험 후 `git status public_exports/` 깨끗, `validate_live_artifacts.py` RED=0. 밀려난 Status 항목(09-01 소급재작성 축)은 `docs/todo_archive_validation.md` 로.
 
 > 📦 **Status 이력은 `docs/todo_archive_validation.md` 로 이동했다** (2026-09-11, 내용 무수정 — (2026-09-01) 판정 사이드카 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
