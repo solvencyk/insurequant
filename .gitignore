@@ -88,7 +88,13 @@ kics_disclosure.xlsx
 # legacy snapshots
 archive/
 # per-user IDE / agent configs
-.claude/
+# .claude/ 통째 제외였다가 2026-09-13 에 좁혔다 — 서브에이전트 정의·스킬이 저장소 밖에만
+# 있어서 새 머신·클라우드 세션이 오케스트레이션 규칙(어느 stage 를 어느 모델로)을 못 읽었다.
+# 머신마다 다른 것(로컬 권한·IDE 실행설정)만 계속 제외한다.
+.claude/settings.local.json
+.claude/settings.json
+.claude/launch.json
+.claude/*.local.json
 .cursor/
 .codex/
 

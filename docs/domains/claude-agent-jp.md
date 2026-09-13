@@ -1,7 +1,8 @@
 # jp 레인 — 일본 보험사 ESR 도메인 문서 (정본, 2026-09-12 신설)
 
 jp 레인은 **한국 stage 프롬프트를 읽지 않는다.** 이 문서 + `TODO_jp.md` + `inbox/jp/` + 루트 `CLAUDE.md` 만 읽는다.
-에이전트 정의는 `.claude/agents/jp-collector.md`(머신 로컬, push 안 됨 — 새 머신이면 이 문서로 다시 만든다).
+에이전트 정의는 `.claude/agents/jp-collector.md` — **2026-09-13 부터 저장소에 들어 있다**(그전엔 `.gitignore` 의 `.claude/` 한 줄에 걸려
+머신 밖으로 안 나갔고, 그래서 클라우드 세션이 오케스트레이션 규칙을 못 읽었다). 머신마다 다른 `settings.local.json`·`launch.json` 만 계속 제외한다.
 
 ## 1. 무엇을 모으나
 

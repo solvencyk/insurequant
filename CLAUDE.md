@@ -85,6 +85,8 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 
 ## 10. 멀티에이전트
 
+- **에이전트 정의는 `.claude/agents/*.md` (저장소 추적, 2026-09-13~).** downloader·parser-kics·parser-ifrs17·publishing·designer·jp-collector = Sonnet 5, **validation = Opus 5**;
+  스킬은 `.claude/skills/`(kics-parser·ifrs17-parser·a11y-audit·launch-runbook·incident-postmortem). 그전엔 `.gitignore` 가 `.claude/` 를 통째로 막아 새 머신·클라우드 세션이 이 매핑을 못 읽었다.
 - 독립 작업은 **서브에이전트를 한 메시지에서 병렬 발사**. 병렬 축은 ① stage 내부 fan-out(회사×분기×도메인) ② item 별 파이프라인 중첩. "stage 별 병렬" 은 틀린 프레임(순차 파이프라인).
 - 동시 ≤4, 서브-서브에이전트 금지, 각 에이전트에 이 파일 + 자기 stage 프롬프트·TODO 를 명시. 메인 세션은 오케스트레이션(조율·통합·게이트)만.
 - 모델은 **티켓 유형으로** 고른다(정의 파일은 Sonnet 5 기본, validation 만 Opus 5): 대량·기계적 `bulk` 는 정의대로, 원인조사·핸들러 설계·릴레이 종합 같은 `investigate` 는 Agent 호출에 `model: opus` 덮어쓰기. 티켓 종결 노트에 모델·토큰·소요시간을 한 줄 남긴다(월 1회 같은 유형 Sonnet/Opus 비교).
