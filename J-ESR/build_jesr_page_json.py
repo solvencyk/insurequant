@@ -65,8 +65,9 @@ SOURCES_CSV = HERE / "jesr_sources_2026Q1.csv"
 INSURERS_CSV = HERE / "jp_insurers.csv"
 MASTER_OUT = HERE / "jesr_master.json"
 DEPLOY_OUT = HERE.parent / "jp" / "jesr_esr.json"
-#: 출처 게이트(JP_SOURCE_*, 2026-09-13 UH-18) 가 읽는 두 파일. 둘 다 오프라인 입력이다.
+#: 출처 게이트(JP_SOURCE_*, 2026-09-13 UH-18) 가 읽는 세 파일. 전부 오프라인 입력이다.
 SOURCE_HEALTH_PATH = HERE / "source_url_health.json"      # check_source_urls.py --all 의 산출
+ESR_HEALTH_PATH = HERE / "esr_in_source_health.json"      # check_esr_in_source.py --all 의 산출
 SOURCE_EXCEPTIONS_PATH = HERE / "jp_source_exceptions.json"  # owner 승인 면제 등재처
 
 # Generic corporate-suffix abbreviations seen in jp_insurers.csv's parent_group
@@ -313,12 +314,13 @@ def build() -> dict:
 SOURCE_RULE_IDS = (
     "JP_SOURCE_EXPIRING_HOST",
     "JP_SOURCE_URL_DEAD",
+    "JP_ESR_NOT_IN_SOURCE",
     "JP_SOURCE_EVIDENCE_STALE",
     "JP_SOURCE_EVIDENCE_INCOMPLETE",
 )
 #: 면제 가능한 룰. 나머지 둘은 "점검을 돌렸는가" 를 묻는 **절차 룰**이라 면제하면 룰 자체가
 #: 사라진다 — 낡았으면 면제하지 말고 점검을 다시 돌려라.
-EXEMPTABLE_RULE_IDS = ("JP_SOURCE_EXPIRING_HOST", "JP_SOURCE_URL_DEAD")
+EXEMPTABLE_RULE_IDS = ("JP_SOURCE_EXPIRING_HOST", "JP_SOURCE_URL_DEAD", "JP_ESR_NOT_IN_SOURCE")
 
 #: 증거 파일에서 **RED 로 읽는 유일한 분류**. blocked(WAF 4xx) · ok_requires_headers(봇차단,
 #: 헤더 붙이면 200) · tls_client_issue(파이썬만 실패, curl 200) · spa_shell(200 인 JS 셸) ·
@@ -328,12 +330,48 @@ EXEMPTABLE_RULE_IDS = ("JP_SOURCE_EXPIRING_HOST", "JP_SOURCE_URL_DEAD")
 #: ok_requires_headers 2 · tls_client_issue 1 · dead 0 이다.
 DEAD_CLASSIFICATIONS = ("dead",)
 
+#: `esr_in_source_health.json` 의 verdict 어휘. 모르는 값은 RED 다(fail-closed) — 수집기가
+#: 새 verdict 를 내기 시작했는데 여기 안 배선돼 있으면 그 행은 **아무 검사도 안 받는다**.
+#: (이 저장소가 반복해서 데인 "룰이 순회조차 안 하는 축" 이 정확히 그 모양이다.)
+ESR_VERDICT_PASS = ("found",)
+ESR_VERDICT_RED = ("not_found",)
+#: SKIP+YELLOW. 실측 근거(2026-09-13 posted 15사 전수):
+#:  - skip_landing  : `source_url` 이 PDF 가 아니라 상설 IR 페이지(T&D 1사). 문서가 아니라
+#:    목록 페이지라 "그 문서에 그 숫자가" 를 물을 대상이 아니다.
+#:  - skip_no_text  : 텍스트 레이어 0자(이미지형 PDF). **실측 0사** — 초안 §2 의 "최소 2사
+#:    이미지형" 은 추정이었고 실측이 뒤집었다. 방어용으로만 남긴다.
+ESR_VERDICT_YELLOW = ("skip_landing", "skip_no_text")
+#: 판정이 아니라 "받지 못했다". 네트워크 사고를 데이터 오류로 둔갑시키지 않으려고 수집기가
+#: 따로 적는 값이고, 게이트는 절차 룰(EVIDENCE_INCOMPLETE)로 잡는다 — 면제 불가.
+ESR_VERDICT_UNJUDGED = ("fetch_failed",)
+
 _EXCEPTION_REQUIRED_KEYS = ("rule", "company_jp", "field", "reason", "owner_approved_on")
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 CHECK_SOURCES_CMD = (
     "python3 J-ESR/check_source_urls.py --all --out J-ESR/source_url_health.json"
 )
+CHECK_ESR_CMD = (
+    "python3 J-ESR/check_esr_in_source.py --all --out J-ESR/esr_in_source_health.json"
+)
+
+
+def _norm_pct(value) -> str | None:
+    """`268` / `268.0` / `"268%"` → `"268"`. 못 읽으면 None.
+
+    census(문자열) · 마스터 record(float) · 증거 파일(문자열)이 같은 값을 서로 다른 표기로
+    들고 있어도 같은 값으로 읽혀야 한다. 여기서 갈라지면 "증거는 있는데 못 찾았다" 는
+    거짓 RED 가 난다.
+    """
+    if value is None:
+        return None
+    s = str(value).strip().rstrip("%").strip()
+    if not s:
+        return None
+    try:
+        return "%g" % float(s)
+    except ValueError:
+        return None
 
 
 def load_source_exceptions(path: Path | None = None, *, today: str | None = None):
@@ -458,11 +496,164 @@ def _census_checked_at_max(census_rows: list[dict]) -> tuple[str | None, list[st
     return best, errors
 
 
+def _load_evidence_envelope(path: Path, census_max: str | None, rerun_cmd: str):
+    """증거 파일 한 개의 **봉투**를 읽고 신선도를 잰다. 반환 (rows|None, checked_at, scope, errors).
+
+    `source_url_health.json`(출처 생존)과 `esr_in_source_health.json`(값이 문서 안에 있나)은
+    **같은 봉투**(`checked_at`/`scope`/`rows`)를 쓴다. 그래서 신선도 검사가 한 벌이면 된다 —
+    두 벌로 적어 두면 한쪽만 고쳐져도 아무도 모른다.
+
+    *** 이 함수가 두 룰쌍의 이빨을 전부 쥐고 있다. ***
+    `JP_SOURCE_URL_DEAD` 도 `JP_ESR_NOT_IN_SOURCE` 도 **박제된 증거를 읽을 뿐**이라, 증거가
+    낡으면 판정도 같이 낡는다. 즉 둘 다 `JP_SOURCE_EVIDENCE_STALE` 과 한 쌍이지 독립된 룰이
+    아니다. 신선도 검사를 느슨하게 만들면 두 룰이 동시에 조용히 죽는다.
+    """
+    errors: list[str] = []
+    if not path.exists():
+        errors.append(
+            f"[JP_SOURCE_EVIDENCE_STALE] 출처 점검 증거가 없다: {path.name} —"
+            f" census 를 고치기 전에 먼저 돌려라: {rerun_cmd}"
+        )
+        return None, None, None, errors
+    try:
+        loaded = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        errors.append(
+            f"[JP_SOURCE_EVIDENCE_STALE] {path.name} 을 읽을 수 없다:"
+            f" {type(exc).__name__}: {exc}"
+        )
+        return None, None, None, errors
+    if not isinstance(loaded, dict):
+        errors.append(f"[JP_SOURCE_EVIDENCE_STALE] {path.name}: 최상위가 객체가 아니다")
+        return None, None, None, errors
+
+    scope = str(loaded.get("scope") or "").strip()
+    if scope != "all":
+        errors.append(
+            f"[JP_SOURCE_EVIDENCE_STALE] {path.name}: scope={scope!r} 이다."
+            f" 'all' 이 아닌 좁은 범위 산출로 게이트를 통과시키면 검사한 척만 하는 것이다 —"
+            f" 다시 돌려라: {rerun_cmd}"
+        )
+    checked_raw = str(loaded.get("checked_at") or "").strip()
+    checked_at = checked_raw[:10]
+    if not _DATE_RE.match(checked_at):
+        errors.append(
+            f"[JP_SOURCE_EVIDENCE_STALE] {path.name}: checked_at 을 못 읽는다"
+            f" {checked_raw!r} (YYYY-MM-DD... 여야 한다)"
+        )
+        checked_at = None
+    elif census_max and checked_at < census_max:
+        errors.append(
+            f"[JP_SOURCE_EVIDENCE_STALE] 증거가 census 보다 낡았다:"
+            f" {path.name}.checked_at={checked_raw} < census 최신 checked_at"
+            f"={census_max}. census 를 고쳤는데 점검을 다시 안 돌렸다는 뜻이다 —"
+            f" {rerun_cmd}"
+        )
+
+    rows = loaded.get("rows")
+    if not isinstance(rows, list):
+        errors.append(
+            f"[JP_SOURCE_EVIDENCE_STALE] {path.name}: 'rows' 가 배열이 아니다"
+            f" ({type(rows).__name__})"
+        )
+        rows = None
+    return rows, checked_at, scope, errors
+
+
+def _esr_in_source_check(
+    posted_rows: list[tuple[str, str, str | None]],
+    rows: list,
+    path: Path,
+    exempt: set,
+    notes: list[str],
+) -> list[str]:
+    """`JP_ESR_NOT_IN_SOURCE` — 화면값이 1차 출처 문서 **안에** 있나.
+
+    2026-09-12 사고의 東京海上HD 238% 는 어느 1차 문서에도 없는 2차보도 인용값이었고,
+    MS&AD 의 출처는 ESR 이 한 줄도 없는 합병 보도자료였다. URL 은 둘 다 살아 있었으므로
+    `JP_SOURCE_URL_DEAD`·`JP_SOURCE_EXPIRING_HOST` 로는 못 잡는다.
+
+    판정은 네트워크가 필요하므로 선행 단계(check_esr_in_source.py)가 문서를 열어 박제하고
+    이 함수는 **박제만 읽는다**(빌드는 완전 오프라인). 증거 신선도는 위 봉투 검사가 쥔다.
+
+    증거 행의 키는 **(url, esr_pct)** 다. url 만으로 잡으면 census 값만 바꾸고 수집기를
+    다시 안 돌린 상태가 옛 값의 `found` 를 그대로 물려받아 통과한다 — 그게 정확히
+    2026-09-12 의 사고 모양이다.
+
+    이 룰이 **못 잡는 것**(설계상의 한계, 숨기지 말 것): 문서 안에 실재하지만 **다른 정의**의
+    값(かんぽ 220% = 「大量解約リスクを除いた場合」 조정치)은 여기서 `found` 로 통과한다.
+    그 축은 별도 룰이 필요하다 — PM §5 참조.
+    """
+    errors: list[str] = []
+    by_key: dict[tuple[str, str], dict] = {}
+    by_url: dict[str, list[dict]] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        url = str(row.get("url") or "").strip()
+        if not url:
+            continue
+        by_url.setdefault(url, []).append(row)
+        pct = _norm_pct(row.get("esr_pct"))
+        if pct is not None:
+            by_key[(url, pct)] = row
+
+    for company, url, pct in posted_rows:
+        if pct is None:
+            # esr_pct 를 수로 못 읽는 상태는 self_check 의 범위 룰이 이미 RED 로 잡는다.
+            continue
+        row = by_key.get((url, pct))
+        if row is None:
+            seen = sorted({str(_norm_pct(r.get("esr_pct"))) for r in by_url.get(url, [])})
+            detail = (f" 이 URL 은 {seen} 에 대해서만 점검됐다" if seen
+                      else " 이 URL 은 한 번도 점검된 적이 없다")
+            errors.append(
+                f"[JP_SOURCE_EVIDENCE_INCOMPLETE] {company} 의 (source_url, esr_pct={pct})"
+                f" 조합이 {path.name} 에 없다 —{detail}."
+                f" 값이나 출처를 고쳤으면 수집기를 **다시** 돌려라: {CHECK_ESR_CMD}"
+            )
+            continue
+        verdict = str(row.get("verdict") or "").strip()
+        where = f"p{row.get('page')}" if row.get("page") else "?"
+        if verdict in ESR_VERDICT_PASS:
+            continue
+        if verdict in ESR_VERDICT_YELLOW:
+            notes.append(
+                f"[source-gate/YELLOW] JP_ESR_NOT_IN_SOURCE · {company} esr={pct}"
+                f" — {verdict}: {str(row.get('evidence') or '')[:120]}"
+            )
+            continue
+        if verdict in ESR_VERDICT_UNJUDGED:
+            errors.append(
+                f"[JP_SOURCE_EVIDENCE_INCOMPLETE] {company} 의 출처를 수집기가 받지 못해"
+                f" **판정하지 못했다**(verdict={verdict}). 판정 없는 행을 통과시키면"
+                f" 네트워크 사고가 검증 통과로 둔갑한다 — 다시 돌려라: {CHECK_ESR_CMD}"
+            )
+            continue
+        if verdict in ESR_VERDICT_RED:
+            if ("JP_ESR_NOT_IN_SOURCE", company, "source_url") in exempt:
+                notes.append(f"[source-gate] 면제 적용 JP_ESR_NOT_IN_SOURCE · {company}")
+                continue
+            errors.append(
+                f"[JP_ESR_NOT_IN_SOURCE] {company} 의 화면값 {pct}% 가 1차 출처 문서 안에 없다"
+                f"({row.get('pages')}페이지 전수, ESR 라벨 근처 미검출). 2차보도 인용값이거나"
+                f" 출처가 다른 문서다 — 원문을 열어 값이나 URL 을 고쳐라: {url}"
+            )
+            continue
+        # 모르는 verdict. SKIP 으로 넘기면 그 행은 아무 검사도 안 받는다.
+        errors.append(
+            f"[JP_ESR_NOT_IN_SOURCE] {company} 의 증거 verdict 를 모르겠다 {verdict!r}"
+            f" ({where}). 아는 값: {sorted(ESR_VERDICT_PASS + ESR_VERDICT_RED + ESR_VERDICT_YELLOW + ESR_VERDICT_UNJUDGED)}"
+        )
+    return errors
+
+
 def source_gate_check(
     records: list[dict],
     census_rows: list[dict],
     *,
     health_path: Path | None = None,
+    esr_health_path: Path | None = None,
     exceptions_path: Path | None = None,
     today: str | None = None,
     verbose: bool = True,
@@ -474,22 +665,27 @@ def source_gate_check(
 
     - `JP_SOURCE_EXPIRING_HOST`     source_url netloc 이 jesr_http.EXPIRING_HOSTS 면 RED
     - `JP_SOURCE_URL_DEAD`          증거 파일이 그 URL 을 dead(404/410)로 기록했으면 RED
-    - `JP_SOURCE_EVIDENCE_STALE`    증거 파일 부재·scope≠all·census 보다 낡음이면 RED
-    - `JP_SOURCE_EVIDENCE_INCOMPLETE`  posted 행 source_url 이 증거에 아예 없으면 RED
+    - `JP_ESR_NOT_IN_SOURCE`        화면값이 그 문서 안에 없으면 RED (증거: esr_in_source_health)
+    - `JP_SOURCE_EVIDENCE_STALE`    증거 파일 부재·scope≠all·census 보다 낡음이면 RED (**두 파일 다**)
+    - `JP_SOURCE_EVIDENCE_INCOMPLETE`  posted 행이 증거에 아예 없으면 RED (**두 파일 다**)
     """
     health_path = SOURCE_HEALTH_PATH if health_path is None else health_path
+    esr_health_path = ESR_HEALTH_PATH if esr_health_path is None else esr_health_path
     errors: list[str] = []
     exempt, exc_errors, notes = load_source_exceptions(exceptions_path, today=today)
     errors.extend(exc_errors)
 
     expiring_hosts = {h.lower() for h in jesr_http.EXPIRING_HOSTS}
-    posted_urls: list[tuple[str, str]] = []  # (company_jp, url)
+    # (company_jp, url, 정규화 esr_pct). esr_pct 는 **화면에 실리는 record 값**에서 딴다 —
+    # census 원문이 아니라 사용자가 보는 값을 검사해야 불변식 1번(게이트가 검사하는 파일 =
+    # 사용자가 보는 파일)이 닫힌다.
+    posted_urls: list[tuple[str, str, str | None]] = []
     for rec in records:
         company = (rec.get("company_jp") or "").strip() or "<이름없음>"
         url = (rec.get("source_url") or "").strip()
         if not url:
             continue  # 빈 source_url 은 위쪽 self_check 의 https 룰이 이미 RED 로 잡는다
-        posted_urls.append((company, url))
+        posted_urls.append((company, url, _norm_pct(rec.get("esr_pct"))))
         netloc = urlsplit(url).netloc.lower()
         if netloc in expiring_hosts:
             if ("JP_SOURCE_EXPIRING_HOST", company, "source_url") in exempt:
@@ -504,92 +700,56 @@ def source_gate_check(
     census_max, census_errors = _census_checked_at_max(census_rows)
     errors.extend(census_errors)
 
-    health: dict | None = None
-    if not health_path.exists():
-        errors.append(
-            f"[JP_SOURCE_EVIDENCE_STALE] 출처 점검 증거가 없다: {health_path.name} —"
-            f" census 를 고치기 전에 먼저 돌려라: {CHECK_SOURCES_CMD}"
-        )
-    else:
-        try:
-            loaded = json.loads(health_path.read_text(encoding="utf-8"))
-            health = loaded if isinstance(loaded, dict) else None
-            if health is None:
+    # --- 증거 1: 출처 URL 생존(check_source_urls.py) -------------------------
+    rows, checked_at, scope, ev_errors = _load_evidence_envelope(
+        health_path, census_max, CHECK_SOURCES_CMD)
+    errors.extend(ev_errors)
+    if rows is not None:
+        probed: dict[str, str] = {}
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            url = str(row.get("url") or "").strip()
+            if url:
+                # 같은 URL 이 여러 origin 에 있으면 판정은 같다. 나쁜 쪽을 남긴다.
+                cls = str(row.get("classification") or "").strip()
+                if url not in probed or cls in DEAD_CLASSIFICATIONS:
+                    probed[url] = cls
+        for company, url, _pct in posted_urls:
+            if url not in probed:
                 errors.append(
-                    f"[JP_SOURCE_EVIDENCE_STALE] {health_path.name}: 최상위가 객체가 아니다"
+                    f"[JP_SOURCE_EVIDENCE_INCOMPLETE] {company} 의 source_url 이"
+                    f" {health_path.name} 에 아예 없다 — 이 URL 은 한 번도 점검된 적이 없다."
+                    f" {CHECK_SOURCES_CMD} 를 census 수정 **후에** 돌려라: {url}"
                 )
-        except Exception as exc:
-            errors.append(
-                f"[JP_SOURCE_EVIDENCE_STALE] {health_path.name} 을 읽을 수 없다:"
-                f" {type(exc).__name__}: {exc}"
-            )
-
-    checked_at = None
-    if health is not None:
-        scope = str(health.get("scope") or "").strip()
-        if scope != "all":
-            errors.append(
-                f"[JP_SOURCE_EVIDENCE_STALE] {health_path.name}: scope={scope!r} 이다."
-                f" 'all' 이 아닌 좁은 범위 산출로 게이트를 통과시키면 검사한 척만 하는 것이다 —"
-                f" 다시 돌려라: {CHECK_SOURCES_CMD}"
-            )
-        checked_raw = str(health.get("checked_at") or "").strip()
-        checked_at = checked_raw[:10]
-        if not _DATE_RE.match(checked_at):
-            errors.append(
-                f"[JP_SOURCE_EVIDENCE_STALE] {health_path.name}: checked_at 을 못 읽는다"
-                f" {checked_raw!r} (YYYY-MM-DD... 여야 한다)"
-            )
-            checked_at = None
-        elif census_max and checked_at < census_max:
-            errors.append(
-                f"[JP_SOURCE_EVIDENCE_STALE] 증거가 census 보다 낡았다:"
-                f" {health_path.name}.checked_at={checked_raw} < census 최신 checked_at"
-                f"={census_max}. census 를 고쳤는데 점검을 다시 안 돌렸다는 뜻이다 —"
-                f" {CHECK_SOURCES_CMD}"
-            )
-
-        rows = health.get("rows")
-        if not isinstance(rows, list):
-            errors.append(
-                f"[JP_SOURCE_EVIDENCE_STALE] {health_path.name}: 'rows' 가 배열이 아니다"
-                f" ({type(rows).__name__})"
-            )
-        else:
-            probed: dict[str, str] = {}
-            for row in rows:
-                if not isinstance(row, dict):
+            elif probed[url] in DEAD_CLASSIFICATIONS:
+                if ("JP_SOURCE_URL_DEAD", company, "source_url") in exempt:
+                    notes.append(f"[source-gate] 면제 적용 JP_SOURCE_URL_DEAD · {company}")
                     continue
-                url = str(row.get("url") or "").strip()
-                if url:
-                    # 같은 URL 이 여러 origin 에 있으면 판정은 같다. 나쁜 쪽을 남긴다.
-                    cls = str(row.get("classification") or "").strip()
-                    if url not in probed or cls in DEAD_CLASSIFICATIONS:
-                        probed[url] = cls
-            for company, url in posted_urls:
-                if url not in probed:
-                    errors.append(
-                        f"[JP_SOURCE_EVIDENCE_INCOMPLETE] {company} 의 source_url 이"
-                        f" {health_path.name} 에 아예 없다 — 이 URL 은 한 번도 점검된 적이 없다."
-                        f" {CHECK_SOURCES_CMD} 를 census 수정 **후에** 돌려라: {url}"
-                    )
-                elif probed[url] in DEAD_CLASSIFICATIONS:
-                    if ("JP_SOURCE_URL_DEAD", company, "source_url") in exempt:
-                        notes.append(f"[source-gate] 면제 적용 JP_SOURCE_URL_DEAD · {company}")
-                        continue
-                    errors.append(
-                        f"[JP_SOURCE_URL_DEAD] {company} 의 source_url 이 죽었다"
-                        f"(classification={probed[url]}, 404/410). 대체 URL 이 필요하다: {url}"
-                    )
+                errors.append(
+                    f"[JP_SOURCE_URL_DEAD] {company} 의 source_url 이 죽었다"
+                    f"(classification={probed[url]}, 404/410). 대체 URL 이 필요하다: {url}"
+                )
+
+    # --- 증거 2: 화면값이 그 문서 안에 있나(check_esr_in_source.py) -----------
+    # 같은 봉투를 쓰므로 신선도·범위 검사는 위와 **같은 함수**가 잰다. 증거가 낡으면
+    # JP_ESR_NOT_IN_SOURCE 도 같이 낡는다 — 한 쌍이지 독립된 룰이 아니다.
+    esr_rows, esr_checked_at, esr_scope, esr_ev_errors = _load_evidence_envelope(
+        esr_health_path, census_max, CHECK_ESR_CMD)
+    errors.extend(esr_ev_errors)
+    if esr_rows is not None:
+        errors.extend(_esr_in_source_check(posted_urls, esr_rows, esr_health_path, exempt, notes))
 
     if verbose:
         for note in notes:
             print(note)
         print(
             f"[source-gate] posted {len(posted_urls)}건 · expiring-host 검사 완료 ·"
-            f" 증거 {health_path.name} checked_at={checked_at or '?'}"
-            f" scope={(health or {}).get('scope', '?')!r}"
+            f" 증거 {health_path.name} checked_at={checked_at or '?'} scope={scope!r}"
+            f" · 증거 {esr_health_path.name} checked_at={esr_checked_at or '?'}"
+            f" scope={esr_scope!r}"
             f" · census 최신 checked_at={census_max or '?'} · 면제 {len(exempt)}건"
+            f" · YELLOW {sum(1 for n in notes if '/YELLOW]' in n)}건"
             f" · RED {len(errors)}건"
         )
     return errors

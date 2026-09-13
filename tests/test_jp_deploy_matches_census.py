@@ -170,6 +170,39 @@ def _synthetic_census(tmp_path: Path, *, extra_posted: int) -> tuple[Path, int]:
     return out, len(posted) + extra_posted
 
 
+def _synthetic_esr_evidence(tmp_path: Path, census_path: Path) -> Path:
+    """합성 census 에 맞는 `esr_in_source_health.json`.
+
+    10/31 flip 시뮬레이션은 census 만 뒤집는 것이 아니라 **선행 단계 두 개를 다시 돌린
+    라운드 전체**를 흉내 내야 한다. census 만 뒤집으면 '아무도 원문을 확인한 적 없는 posted
+    행' 이라는, 실제로는 존재해서는 안 되는 상태가 되고 `JP_ESR_NOT_IN_SOURCE` 의 증거 커버리지
+    룰(`JP_SOURCE_EVIDENCE_INCOMPLETE`)이 정당하게 RED 를 낸다 — 그건 거짓 RED 가 아니라
+    게이트가 제 일을 한 것이다(2026-09-13 실측: 이 fixture 를 안 고치면 1·30·62 세 케이스가
+    전부 그 이유로 실패한다). 그래서 게이트를 느슨하게 하지 않고 **fixture 를 완성한다**.
+
+    URL 생존 증거(`source_url_health.json`)는 합성 행이 실제 census 의 `source_url` 을
+    돌려쓰므로 실제 파일이 그대로 덮는다 — 그쪽은 손댈 필요가 없다.
+    """
+    b = _builder()
+    with census_path.open(encoding="utf-8-sig", newline="") as fh:
+        rows = list(csv.DictReader(fh, restkey="_overflow"))
+    ev_rows = []
+    for r in b.census_posted_rows(rows):
+        ev_rows.append({
+            "origin": census_path.name, "company": r["company_jp"], "field": "source_url",
+            "url": (r.get("source_url") or "").strip(),
+            "esr_pct": b._norm_pct(r.get("esr_pct")),
+            "verdict": "found", "match_rule": "text_window", "page": 1, "distance": 0,
+            "label": "ESR", "pages": 1, "evidence": "(synthetic) ESR は ... %",
+        })
+    checked = max((r.get("checked_at") or "").strip()[:10] for r in rows)
+    path = tmp_path / "esr_in_source_health.json"
+    path.write_text(json.dumps(
+        {"checked_at": f"{checked}T23:59Z", "scope": "all", "targets": len(ev_rows),
+         "rows": ev_rows}, ensure_ascii=False), encoding="utf-8")
+    return path
+
+
 @pytest.mark.parametrize("extra_posted", [1, 30, 62])
 def test_record_count_follows_census_not_a_literal(tmp_path, monkeypatch, extra_posted):
     """posted 가 15가 아닌 census 로도 빌더가 통과하고, 산출 회사 수가 census 를 따라간다.
@@ -183,6 +216,8 @@ def test_record_count_follows_census_not_a_literal(tmp_path, monkeypatch, extra_
     monkeypatch.setattr(b, "CENSUS_CSV", census_path)
     monkeypatch.setattr(b, "MASTER_OUT", tmp_path / "jesr_master.json")
     monkeypatch.setattr(b, "DEPLOY_OUT", tmp_path / "jesr_esr.json")
+    # 선행 단계(check_esr_in_source.py)도 같이 돌린 라운드를 흉내 낸다 — 이유는 헬퍼 docstring.
+    monkeypatch.setattr(b, "ESR_HEALTH_PATH", _synthetic_esr_evidence(tmp_path, census_path))
     rc = b.main()
     assert rc == 0, "정상 census 인데 빌더가 RED 다(거짓 RED — stderr 확인)"
 
@@ -191,6 +226,21 @@ def test_record_count_follows_census_not_a_literal(tmp_path, monkeypatch, extra_
     assert len(master["records"]) == want_posted
     assert master["_meta"]["census"]["posted"] == want_posted
     assert len(deploy["records"]) + len(deploy["_meta"]["excluded_subsidiaries"]) == want_posted
+
+
+def test_flipped_census_without_fresh_esr_evidence_is_red(tmp_path, monkeypatch):
+    """**음성대조군.** 위 테스트가 fixture 로 게이트를 덮어 버린 게 아님을 보증한다.
+
+    같은 합성 census 인데 `esr_in_source_health.json` 만 실제(=옛) 파일 그대로면, 뒤집은
+    행들은 아무도 원문을 확인한 적이 없으므로 RED 여야 한다. 여기가 통과해 버리면
+    `JP_ESR_NOT_IN_SOURCE` 는 census 를 늘리는 것만으로 우회된다.
+    """
+    b = _builder()
+    census_path, _ = _synthetic_census(tmp_path, extra_posted=3)
+    monkeypatch.setattr(b, "CENSUS_CSV", census_path)
+    monkeypatch.setattr(b, "MASTER_OUT", tmp_path / "m.json")
+    monkeypatch.setattr(b, "DEPLOY_OUT", tmp_path / "d.json")
+    assert b.main() == 1, "증거 없이 posted 를 늘렸는데 빌더가 통과했다"
 
 
 def test_builder_has_no_literal_record_count():

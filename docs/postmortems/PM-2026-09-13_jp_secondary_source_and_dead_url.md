@@ -1,7 +1,12 @@
 # PM-2026-09-13 — jp 레인 ESR 2건이 2차보도·조정치 기반으로 화면에 올라갔고, 출처 URL 은 다른 문서였다
 
-> 상태: `open` (3번이 **부분 배선** — 2026-09-13 UH-18 로 룰 4종이 빌더 self-check 에 들어갔으나,
-> 그 self-check 는 **빌더를 돌릴 때만** 돈다. 빌드 없이 census·배포 JSON 이 push 되는 경로가 남아 있다 → UH-19)
+> 상태: `open` — **2번 칸이 비었다(3번이 아니다).** 2026-09-13 에 `JP_ESR_NOT_IN_SOURCE` 까지 배선을
+> 끝내 정의된 차단 룰 5종이 전부 exit 1 에 반영된다(§3·§4c-배선). 그런데 그 축을 실제로 돌려 보니
+> **사고 3건 중 2건(東京海上HD 238 · MS&AD 무관 문서)만 잡고 かんぽ 220 은 못 잡는다** — 220 은
+> 그 문서 안에 실재하는 「大量解約リスクを除いた場合」 조정치라 "그 문서에 그 숫자가 있나" 로는
+> 원리상 안 걸린다. 즉 **かんぽ 사고를 잡을 룰이 아직 정의된 적이 없다**(→ UH-21).
+> 이 포스트모템이 종전에 주장하던 "이 축이 東京海上HD·かんぽ 2건을 잡는다" 는 **틀렸고**,
+> 2026-09-13 전수 실측이 그것을 뒤집었다.
 > 발견 경로: 타 세션 리허설(출처 URL 생존 점검) → 이 세션에서 원문 대조로 확대
 > 관련 inbox: `inbox/_resolved/20260913T1325Z__owner__JP_MULTI__source_url_rehearsal_and_edinet_key.md` ·
 > 후속 `inbox/jp/20260913T1500Z__validation__JP_MULTI__jp_source_gate_wiring.md` · 관련 커밋: `04f27f7`
@@ -65,7 +70,9 @@
 | 판정식 | 문서 텍스트에 `esr_pct` 표기가 **한 번도 안 나오면** 위반. 표기 정규화: `268` / `268.0` / `268％` / 전각 `２６８` 동일 취급 |
 | 임계값 | 정확일치(비율은 % 한 자리 표기가 규약, §2) |
 | severity | **RED**(차단) |
-| 오탐 억제 | ① 텍스트 추출 0자(이미지형 PDF) → `SKIP`+YELLOW(2026-09-13 실측으로 최소 2사가 이미지형) ② `source_url` 이 PDF 가 아닌 랜딩 페이지면 → YELLOW(T&D 처럼 상설 페이지를 정본으로 쓰는 경우) ③ 3자리 숫자가 다른 문맥(페이지번호·연도)에 우연히 있을 수 있으므로 **ESR 라벨(§3 변형 목록)과 같은 문장 안**일 것을 요구 |
+| 오탐 억제 | ⚠️ **이 칸은 §4c-pre-실측 이 뒤집었다 — 아래 초안을 그대로 읽지 마라.** ① 텍스트 추출 0자(이미지형 PDF) → `SKIP`+YELLOW(2026-09-13 실측으로 최소 2사가 이미지형) ② `source_url` 이 PDF 가 아닌 랜딩 페이지면 → YELLOW(T&D 처럼 상설 페이지를 정본으로 쓰는 경우) ③ 3자리 숫자가 다른 문맥(페이지번호·연도)에 우연히 있을 수 있으므로 **ESR 라벨(§3 변형 목록)과 같은 문장 안**일 것을 요구 |
+| 초안 정정 | ①은 **실측 0사**(추정이 틀렸다). ③ "같은 문장" 은 실측에서 **거짓 RED 7/14** 를 낸다 — 확정 규격은 §4c-pre-실측·§4c-배선 |
+| 이 룰이 못 잡는 것 | **문서 안에 실재하는 다른 정의의 값**(かんぽ 220 = 조정치). 사고 3건 중 이 룰이 잡는 것은 2건이고 かんぽ 는 별도 룰이 필요하다(UH-21) |
 
 | 항목 | 내용 |
 |---|---|
@@ -88,7 +95,7 @@
 | `JP_SOURCE_URL_DEAD` | `source_gate_check` — **증거 기록 판독형**: `source_url_health.json` 행의 `classification == "dead"` | 〃 | 같음 | ✅ **exit 1** |
 | `JP_SOURCE_EVIDENCE_STALE` | `source_gate_check` — 증거 파일 부재 · `scope != "all"` · `checked_at` < census 최신 `checked_at` · posted 행 `checked_at` 결측 | 〃 | 증거 파일 1개 + census 전량 | ✅ **exit 1** |
 | `JP_SOURCE_EVIDENCE_INCOMPLETE` | `source_gate_check` — posted `source_url` 이 증거 파일 `rows[].url` 에 없음 | 〃 | census `posted` × `source_url` | ✅ **exit 1** |
-| `JP_ESR_NOT_IN_SOURCE` | **미배선**(§5) — 선행 단계 규격만 §4c-pre 에 확정 | — | — | ❌ |
+| `JP_ESR_NOT_IN_SOURCE` | `source_gate_check` → `_esr_in_source_check` — **증거 기록 판독형**: `esr_in_source_health.json` 행의 `verdict`. 증거 키는 **(url, esr_pct)** 라 값만 고치고 수집기를 안 돌린 상태는 `JP_SOURCE_EVIDENCE_INCOMPLETE` 로 걸린다. 수집은 `J-ESR/check_esr_in_source.py`(네트워크, 선행 단계) | `J-ESR/build_jesr_page_json.py` · `J-ESR/check_esr_in_source.py` | census `posted` × (`source_url`, `esr_pct`) | ✅ **exit 1** (§4c-배선 실증) |
 | `JP_ESR_EDINET_MISMATCH` | **미배선**(§5) — YELLOW 축이라 차단 룰로 승격하지 않음 | `J-ESR/edinet_esr_probe.py` | EDINET 제출 17사 | ⚠️ 사람이 돌려야 돈다 |
 | K-ICS 게이트 | 해당 없음(도메인 밖) | `scripts/validate_kics_disclosure.py` | — | — |
 | **push 훅(prepush)** | ✅ **배선됨**(2026-09-13 후속) — `scripts/prepush_check.py` 의 offline 묶음에 `tests/test_jp_source_gate.py`(43케이스) + `tests/test_jp_deploy_matches_census.py`(불변식 1번) 추가. CLAUDE.md §5 의 jp 축소범위 목록에도 두 파일을 넣었다 | `scripts/prepush_check.py` · `CLAUDE.md §5` | jp 전량 | ✅ **push 차단** |
@@ -179,36 +186,135 @@ dead 판정도 같이 낡으므로, 신선도 룰이 죽으면 dead 룰도 같�
 으로 넓힌다. 이 기준이면 SKIP+YELLOW 는 **T&D 1사뿐**(랜딩 페이지라 문서가 아니다)이고 14/15 가 정상 통과한다.
 산출 봉투는 `source_url_health.json` 과 동일(`checked_at`/`scope`/`rows`)로 내어 신선도 검사를 그대로 재사용한다.
 
+## 4c-배선. `JP_ESR_NOT_IN_SOURCE` 배선 완료 (2026-09-13) — 실측과 사고 재현
+
+§4c-pre-실측 의 확정 규격대로 걸었다. **오프라인/온라인을 가른 것은 `JP_SOURCE_URL_DEAD` 와 같다** —
+네트워크가 필요한 판정은 선행 단계가 박제하고 빌더는 박제만 읽는다(빌드는 완전 오프라인 유지).
+
+| | |
+|---|---|
+| 수집기(네트워크) | `J-ESR/check_esr_in_source.py --all --out J-ESR/esr_in_source_health.json` |
+| 증거(오프라인 입력) | `J-ESR/esr_in_source_health.json` — `source_url_health.json` 과 **같은 봉투**(`checked_at`/`scope`/`rows`) |
+| 게이트 | `build_jesr_page_json.py::source_gate_check` → `_esr_in_source_check` (verdict 판독만, 네트워크 0) |
+| 신선도 | `_load_evidence_envelope` 을 두 증거 파일이 **공유**한다 — 부재·`scope!="all"`·census 보다 낡음 → `JP_SOURCE_EVIDENCE_STALE` |
+
+**근접 규칙(확정).** 같은 페이지 읽기순서 텍스트에서 ESR 라벨과 값의 간격 ≤ 200자(`text_window`),
+또는 같은 페이지에서 라벨 줄과 값 줄의 **세로 범위가 겹침**(`table_row`, 열 간격이 넓은 표용 안전망).
+라벨 목록의 정본은 `docs/domains/claude-agent-jp.md §3` 이고 코드는 그 기계본이다
+(`tests/test_jp_source_gate.py::test_esr_labels_are_all_named_in_the_domain_doc` 가 한 줄씩 대조).
+구기준 단독 `ソルベンシー・マージン比率` 는 **ESR 이 아니므로** 같은 페이지에 신기준 표지
+(`所要資本`·`適格資本`·`適格自己資本`·`UFR`)가 있을 때만 라벨로 친다 — §3 의 조건을 그대로 옮긴 것이고,
+이 조건이 없으면 au損保·明治安田損保의 5개년 구기준 표가 라벨로 읽혀 **거짓 통과**가 난다.
+
+**실측 분포(posted 15사 전수, 2026-09-13 16:16Z).** §4c-pre-실측 과 **정확히 일치**했다 —
+`found=14 · not_found=0 · skip_landing=1(T&D) · skip_no_text=0 · fetch_failed=0`.
+최소 거리 0·1·1·1·2·2·7·8·13·20·22·39·39·72 로 전부 `text_window` 안이라 `table_row` 는 이번
+표본에서 발화하지 않았다(넓은 표가 들어올 다음 라운드용 안전망으로 남긴다).
+`ソニー生命` 은 파이썬 TLS 악수 실패(`tls_client_issue`)라 curl 폴백으로 받았다 — UA 는
+`jesr_http.UA_BROWSER` 를 그대로 쓴다(헤더 기본값은 한 군데에만).
+
+**초안 규격을 그대로 걸었으면 어땠나(되돌려 재본 실측).** 같은 14사에 "같은 문장" 판정을 돌리면
+`found=7/14` → **거짓 RED 7건**. §4c-pre-실측 이 예고한 수와 정확히 같다. 확정 규격은 `found=14/14`,
+거짓 RED 0.
+
+**사고 재현 — 이 축의 존재 이유.** 사본 census 에서만 변이시키고 원본은 건드리지 않았다.
+
+| 재현 | 무엇을 되돌렸나 | 결과 |
+|---|---|---|
+| A | 東京海上HD 268→**238** · かんぽ 181→**220**, 수집기는 다시 안 돌림 | **exit 1** · `JP_SOURCE_EVIDENCE_INCOMPLETE` **2건** — 증거 키가 (url, esr_pct) 라 "이 URL 은 ['268'] 에 대해서만 점검됐다" 로 걸린다. **결측이 SKIP 이 아니라 RED** 인 형태 |
+| B | 같은 census 로 수집기까지 재실행(= 사고 당시와 동일 상태) | **exit 1** · `JP_ESR_NOT_IN_SOURCE` **1건(東京海上HD)**. 수집기 자체도 exit 1 |
+| B 의 かんぽ | 220 으로 수집기 재실행 | **`found`(p35, d=1)** — **RED 가 안 난다.** 220 은 그 자료에 실재한다: 「大量解約リスクを除いた場合のESRは220%」 + 「適正水準は150%~220%」 |
+| C | MS&AD 출처를 사고 당시 URL(2026-02-13 합병 보도자료)로 되돌림 | 수집기 **`not_found`** → 게이트 RED. 이 URL 은 지금 probe 하면 `ok_requires_headers`(=살아 있음)라 **먼저 배선한 4종으로는 못 잡는다** — 이 축만 잡는다 |
+
+즉 **이 축이 잡는 것은 東京海上HD 와 MS&AD 2건이고, かんぽ 는 아니다.** 종전 §5 가 "2건(東京海上HD·かんぽ)" 이라고
+적은 것은 틀렸다. 덧붙여 238 은 프레젠테이션 56페이지 **어디에도 없다**(근접 문턱을 100,000자로 풀어도
+`not_found`) — 즉 200자 문턱은 사고 탐지가 아니라 **거짓 RED 억제**가 전부인 파라미터다.
+
+**오탐 억제(실측 기반).** RED 로 읽는 verdict 는 `not_found` 하나뿐이다. `skip_landing`(문서가 아니라
+상설 IR 페이지 — T&D 1사) · `skip_no_text`(이미지형 PDF — **실측 0사**, 방어용)는 YELLOW 로 인쇄만 하고
+차단하지 않는다. `skip_no_text` 의 문턱은 **공백 제외 0자**로 잡았다 — "몇 자 안 나오니 SKIP" 으로 올리면
+그게 이 저장소가 반복해서 데인 SKIP-on-missing 이다. 문서를 받지 못한 경우는 판정이 아니므로
+`fetch_failed` 라는 제3의 값으로 적고 게이트는 절차 룰(`JP_SOURCE_EVIDENCE_INCOMPLETE`, **면제 불가**)로
+잡는다 — 네트워크 사고가 검증 통과로 둔갑하지 못하게.
+
+**자기검증.** `tests/test_jp_source_gate.py` 63케이스(43 → 63) · `tests/test_jp_deploy_matches_census.py` 26케이스.
+새 파일은 만들지 않았다(`prepush_check.py --scope-only` = `REDUCED (jp-scope)` 유지). 이빨 변이 **8/8 발화**
+(사본에서만, 종료 후 원본 md5 동일 확인): 배선 호출 제거 → 9 FAIL · 룰 no-op → 9 FAIL · `not_found` 를
+YELLOW 로 강등 → 1 FAIL · 모르는 verdict 를 조용히 통과 → 1 FAIL · 증거 키를 (url,값)→url 로 느슨하게
+→ 2 FAIL · YELLOW 에 `not_found` 끼워넣기 → 3 FAIL · ESR 증거 봉투 신선도 무력화 → 6 FAIL ·
+`fetch_failed` 를 통과로 → 1 FAIL. 수집기 쪽 변이: 라벨 목록을 비우면 정상 문서가 `not_found` 로 무너진다
+(= 거짓 RED) — 그래서 라벨·신기준표지 목록의 **비어있지 않음**을 테스트가 강제한다.
+
+**같이 고친 것 — fixture 가 게이트를 덮고 있었다.** `tests/test_jp_deploy_matches_census.py` 의 10/31 flip
+시뮬레이션(`not_yet` → `posted` 로 1·30·62사 뒤집기)은 census 만 뒤집고 **선행 단계를 안 돌린 라운드**를
+흉내 내고 있었다. 새 룰을 걸자 세 케이스가 전부 `JP_SOURCE_EVIDENCE_INCOMPLETE` 로 실패했는데 이건
+거짓 RED 가 아니라 **게이트가 제 일을 한 것**이다(아무도 원문을 확인한 적 없는 posted 행). 게이트를
+느슨하게 하지 않고 fixture 를 완성했고(`_synthetic_esr_evidence`), 그 fixture 가 게이트를 덮어 버리지
+않았음을 음성대조군으로 못 박았다(`test_flipped_census_without_fresh_esr_evidence_is_red` — 증거 없이
+posted 를 늘리면 exit 1).
+
+**정상 상태 검증**: `python3 J-ESR/build_jesr_page_json.py` → **exit 0** · `RED 0건 · YELLOW 1건(T&D)` ·
+`jp/jesr_esr.json`·`J-ESR/jesr_master.json` 이 `generated_at` 외 **전량 동일**. 축소 묶음
+`python3 scripts/prepush_check.py` → `REDUCED (jp-scope)` · **218 passed · 4 skipped** · `gate-clear`.
+
+---
+
 ## 5. 미배선 잔여 + 후속 티켓
 
 | 잔여 | 왜 위험 | 후속 티켓 / 우선순위 |
 |---|---|---|
-| **UH-18 ⚠️ 부분 해소 (2026-09-13)** — 룰 4종(`JP_SOURCE_EXPIRING_HOST`·`JP_SOURCE_URL_DEAD`·`JP_SOURCE_EVIDENCE_STALE`·`JP_SOURCE_EVIDENCE_INCOMPLETE`)을 빌더 self-check 에 배선하고 exit 1 을 실증했다(§3). **남은 것은 `JP_ESR_NOT_IN_SOURCE`** — "그 문서에 그 숫자가 있나" 축은 여전히 아무도 안 본다 | 東京海上HD 238·かんぽ 220 은 **URL 이 살아 있고 만료 호스트도 아니었다.** 이번에 배선한 4종은 그 둘을 못 잡는다 — 잡은 것은 MS&AD 형(출처가 무관한 문서)·T&D 형(만료 호스트)뿐이다 | 규격 §4c-pre 확정. 오탐 억제 실측(이미지형 PDF·랜딩 페이지 분포)이 **선행조건** / **P2** |
-| **UH-19** (신규) — **빌더 self-check 는 빌더를 돌릴 때만 돈다.** jp 레인은 `prepush_check.py` 대상이 아니고(CLAUDE.md §5 jp 범위 = `test_deploy_assets` + inbox 위생), 게이트는 "새 `jp/jesr_esr.json` 을 만들 때" 발화한다. census 를 고치고 **빌드 없이** 커밋하면 게이트는 한 번도 안 돈다 | **가정이 아니라 실측이다.** 커밋 `62eed63`(2026-09-13 14:43Z)이 census 와 `esr_target_ranges.json` 만 고치고 `jp/jesr_esr.json` 을 재생성하지 않아, HEAD 의 배포 JSON 이 HEAD 의 census 와 어긋난 채 남았다: 2사 `basis` 가 여전히 `"unconfirmed"`(정정값 `regulatory_standard`·`internal_model`), SOMPO `target_range.high_pct` 가 여전히 `270`(정정값 `null`). 즉 **불변식 1번**(게이트가 검사하는 파일 = 사용자가 보는 파일)이 jp 레인에서 아직 안 닫혔다 | 권고: `tests/test_deploy_assets.py` 나 jp 범위 게이트에 "`jp/jesr_esr.json` = census 로 다시 빌드한 결과(generated_at 제외)" 대조를 넣는다. **지금 넣으면 즉시 RED** 이므로 배포 JSON 재생성이 선행 / **P1** |
+| **UH-18 ✅ 해소 (2026-09-13)** — 차단 룰 5종이 전부 `source_gate_check` 에 배선되고 exit 1 이 실증됐다(§3·§4c-배선). 마지막 축 `JP_ESR_NOT_IN_SOURCE` 는 수집기(`check_esr_in_source.py`) + 증거(`esr_in_source_health.json`) + 게이트(`_esr_in_source_check`)로 갈라 걸었고, 증거 신선도는 `JP_SOURCE_URL_DEAD` 와 **같은 함수**(`_load_evidence_envelope`)가 잰다 | — | 회귀 63 + 26 · 이빨 8/8 · 축소 묶음 218 passed |
+| **UH-19 ✅ 해소 (2026-09-13, 같은 날)** — 빌더를 안 돌리면 게이트도 안 도는 구조를 `tests/test_jp_deploy_matches_census.py` 가 닫았다(빌더 재실행 결과 ↔ 커밋본 전량 비교) | — | prepush offline 묶음 + CLAUDE.md §5 jp 축소범위에 등재 |
+| **UH-21 (신규)** — **문서 안에 실재하지만 정의가 다른 값**을 가르는 축이 없다. `JP_ESR_NOT_IN_SOURCE` 는 "그 숫자가 그 문서에 있나" 만 묻기 때문에 かんぽ 220 을 `found` 로 통과시킨다(실측: p35, d=1) | **사고 3건 중 1건이 아직 어떤 룰에도 안 걸린다.** 그리고 이 형태는 재발이 쉽다 — 공시 자료는 헤드라인 옆에 「○○を除いた場合」·「適正水準 150~220%」·「調整後」를 나란히 싣는 것이 관행이라, 표에서 한 칸 옆을 집으면 형식·범위·출처가 전부 맞는 채로 틀린 값이 실린다. 실제로 census notes 에 「特定条件を除いた場合の ESR は 220%」 라고 **스스로 적어 놓고** 그 값을 헤드라인으로 썼다 | **P1** — 후속 티켓 발주 대상(`inbox/jp/`). 설계 근거는 아래 실측 |
 
-**배선 방향(이번에 실행한 것)**: 오프라인/온라인을 갈라서 걸었다.
+**UH-21 의 실측 선행 자료(2026-09-13, posted 15사 전수).** "오탐 억제를 설계 못 하면 배선하지 않는다"
+(UH-5·UH-9 선례)를 지키려고 후보 판정식을 같은 표본에 먼저 돌렸다.
+
+- 후보 판정식: 값이 **ESR 라벨과 같은 문장 조각**(`。`·개행으로 자름) 안에 나오는 등장 중,
+  한정어(`を除いた場合`·`を除く`·`調整後`·`適正水準`·`ターゲットレンジ`·`レンジ`·`目安`)가 **없는** 등장이
+  하나도 없으면 "조정치 후보" → YELLOW.
+- 결과: `かんぽ 220` = 라벨동반 조각 3, 한정어 없는 조각 **0** → **정확히 발화**.
+  `かんぽ 181`(정답) = 한정어 없는 조각 **2** → 발화 안 함. 둘을 가른다.
+- **다만 그대로 걸면 안 된다.** 정상 14사 중 **7사는 라벨동반 산문 조각이 아예 0개**다(표 행·차트
+  데이터라벨로만 공존하는 문서 유형 — §4c-pre-실측 의 그 7사와 같은 집합). 이 7사까지 "한정어 없는
+  등장 0" 으로 읽으면 **거짓 YELLOW 7건**이다. 따라서 판정식에 **"라벨동반 조각 ≥ 1 일 때만 판정,
+  0 이면 기권"** 을 반드시 붙여야 한다. 그 조건을 붙이면 이 표본에서 발화는 かんぽ 220 **단 1건**.
+- severity 권고: 처음엔 **YELLOW**(한정어 목록이 휴리스틱이고 회사마다 표현이 다르다). 다음 라운드
+  실측으로 오탐 0 이 유지되면 RED 승격을 검토한다.
+
+**`JP_ESR_EDINET_MISMATCH`** 는 여전히 사람이 돌린다(YELLOW 축이라 차단 룰로 승격하지 않는다는
+판단은 유지 — 有報는 연결/단체·내부모델/규제·전기/당기를 섞어 싣는다).
+
+**배선 방향(이번 라운드까지 실행한 것)**: 오프라인/온라인을 갈라서 걸었다.
 ① 네트워크 없이 되는 `JP_SOURCE_EXPIRING_HOST` 는 netloc 만 보면 되므로 빌더 self-check 에 직접.
-② 네트워크가 필요한 판정은 선행 단계(`check_source_urls.py --all`)가 `source_url_health.json` 에
-박제하고, 빌더는 **박제를 읽는다**(`JP_SOURCE_URL_DEAD`). 박제가 낡거나 좁거나 빠지면 RED
-(`JP_SOURCE_EVIDENCE_STALE`·`JP_SOURCE_EVIDENCE_INCOMPLETE`). 이 방식은 UH-14 가 지적한
-"정본 증거가 push 묶음 밖" 문제를 **증거 신선도 검사**로 우회하는 형태다 — 증거를 push 묶음 안으로
-가져오는 대신 **증거의 나이**를 검사한다.
+② 네트워크가 필요한 판정은 선행 단계가 박제하고 빌더는 **박제를 읽는다** — URL 생존은
+`check_source_urls.py --all` → `source_url_health.json`(`JP_SOURCE_URL_DEAD`), 값이 문서 안에 있나는
+`check_esr_in_source.py --all` → `esr_in_source_health.json`(`JP_ESR_NOT_IN_SOURCE`). 박제가 낡거나
+좁거나 빠지면 RED(`JP_SOURCE_EVIDENCE_STALE`·`JP_SOURCE_EVIDENCE_INCOMPLETE`). 이 방식은 UH-14 가
+지적한 "정본 증거가 push 묶음 밖" 문제를 **증거 신선도 검사**로 우회하는 형태다 — 증거를 push 묶음
+안으로 가져오는 대신 **증거의 나이**를 검사한다. 두 증거 파일이 **같은 봉투**를 쓰는 덕에 신선도
+검사 코드가 한 벌(`_load_evidence_envelope`)이다.
 
-**남은 사각을 정확히 말하면**: 이번 배선은 "출처가 살아 있나 / 점검을 돌리긴 했나" 를 닫았고,
-**"그 문서에 그 숫자가 있나" 는 못 닫았다.** 사고 3건 중 2건(東京海上HD 238 · かんぽ 220)이 후자였다.
-그래서 이 포스트모템은 `open` 이다.
+**남은 사각을 정확히 말하면**: 이제 "출처가 살아 있나 / 점검을 돌리긴 했나 / 그 문서에 그 숫자가 있나"
+셋이 다 닫혔다. 안 닫힌 것은 **"그 숫자가 그 문서에서 우리가 싣겠다고 한 그 정의의 숫자인가"** 다.
+사고 3건 중 1건(かんぽ 220)이 그것이고, 그래서 이 포스트모템은 `open` 이다.
 
 ---
 
 ## close 체크
 
 - [x] 1 무엇이 통과했나
-- [x] 2 구체 룰 정의 (4종, 오탐억제 포함)
-- [~] 3 배선 위치 + scope — **4종 배선 + exit 1 실증**(`source_gate_check`, 회귀 43 · 이빨 5/5).
-      **`JP_ESR_NOT_IN_SOURCE` 미배선**이고, 배선한 4종도 **빌더를 돌릴 때만** 돈다(UH-19)
-- [x] 4 exception 근거·등재 위치 (`J-ESR/jp_source_exceptions.json` 신설, 0건, owner 권한 명시)
-- [x] 5 미배선 잔여 + 후속 티켓 (UH-18 부분 해소 / P2 · UH-19 신규 / P1)
+- [~] 2 구체 룰 정의 — 5종 정의·오탐억제 실측 완료. **かんぽ 220 을 잡을 룰은 아직 정의 단계**
+      (UH-21: 판정식 후보와 오탐억제 조건까지 실측으로 나왔으나 룰로 굳히지 않았다).
+      종전 이 칸은 `JP_ESR_NOT_IN_SOURCE` 가 かんぽ 를 잡는다고 **잘못 적고 있었다** — 2026-09-13
+      전수 실측이 뒤집었다(§4c-배선 재현 B)
+- [x] 3 배선 위치 + scope — **정의된 차단 룰 5종 전부 배선 + exit 1 실증**
+      (`source_gate_check`, 회귀 63+26 · 이빨 8/8 · 축소 묶음 218 passed). UH-19 도 해소돼
+      "빌더를 돌렸는가" 자체가 push 묶음에서 검사된다
+- [x] 4 exception 근거·등재 위치 (`J-ESR/jp_source_exceptions.json`, **0건**, owner 권한 명시.
+      새 룰 `JP_ESR_NOT_IN_SOURCE` 는 면제 가능 목록에 올렸으나 실제 등재는 0건)
+- [x] 5 미배선 잔여 + 후속 티켓 (UH-18·UH-19 해소 / **UH-21 신규 · P1**)
 
-**3번이 아직 완전한 "예"가 아니므로 `open` 유지.** close 조건 두 개:
-① `JP_ESR_NOT_IN_SOURCE` 배선(§4c-pre 규격 + 오탐 억제 실측 선행), ② UH-19 — 빌드를 거치지 않고
-배포 JSON·census 가 push 되는 경로를 막는 대조 검사.
+**2번이 완전한 "예" 가 아니므로 `open` 유지.** close 조건은 이제 하나다:
+**UH-21 — かんぽ형(문서 안에 실재하는 조정치)을 가르는 룰의 정의·배선.** 위 실측대로
+"라벨동반 조각 ≥ 1 일 때만 판정" 조건을 붙이면 이 표본에서 오탐 0 · 발화 1(かんぽ 220)이다.

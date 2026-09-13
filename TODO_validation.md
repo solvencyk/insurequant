@@ -1,11 +1,26 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-09-13 (push 범위 판정을 훅에 구현 — CLAUDE.md §5 가 문서로만 있던 규칙을 코드로; 직전 jp false-green 포스트모템·UH-18 등재; 직전 2026-09-02 MASTER_XLSX_* 축 신설 — 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조를 CHECK 8 로 배선) · Stage 3/5 — validation
+> Last updated: 2026-09-13 (jp `JP_ESR_NOT_IN_SOURCE` 배선 — 마지막 미배선 축; 직전 push 범위 판정을 훅에 구현 — CLAUDE.md §5 가 문서로만 있던 규칙을 코드로; 직전 jp false-green 포스트모템·UH-18 등재; 직전 2026-09-02 MASTER_XLSX_* 축 신설 — 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조를 CHECK 8 로 배선) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-09-13, 5차) jp `JP_ESR_NOT_IN_SOURCE` 배선 — "그 문서에 그 숫자가 있나" 축. PM-2026-09-13 의 마지막 미배선 축이었다.** 오프라인/온라인을 갈랐다: 수집기 `J-ESR/check_esr_in_source.py`(신규, 네트워크)가 posted 행의 `source_url` 문서를 열어 `J-ESR/esr_in_source_health.json` 에 박제하고, 빌더는 **박제만 읽는다**(`source_gate_check` → `_esr_in_source_check`). 증거 봉투는 `source_url_health.json` 과 동일해서 신선도 검사를 **같은 함수**(`_load_evidence_envelope`)가 잰다 — 증거가 낡으면 두 룰이 같이 낡는다(한 쌍).
+
+> - **증거 키는 (url, esr_pct).** url 만으로 잡으면 값만 고치고 수집기를 안 돌린 상태가 옛 값의 `found` 를 그대로 물려받는다 — 그게 정확히 2026-09-12 의 사고 모양이다.
+> - **분포 실측이 PM §4c-pre-실측 과 정확히 일치**: posted 15사 전수 `found=14 · not_found=0 · skip_landing=1(T&D) · skip_no_text=0`. 최소거리 0~72 로 전부 `text_window` 안. `ソニー生命` 은 파이썬 TLS 악수 실패라 curl 폴백(UA 는 `jesr_http.UA_BROWSER` 그대로 — 헤더 기본값은 한 군데에만).
+> - **초안 규격을 되돌려 재봤다**: "같은 문장" 으로 걸면 `found=7/14` = **거짓 RED 7건**(PM 예고치와 정확히 같다). 확정 규격(±200자 / 같은 표 행)은 14/14·거짓 RED 0.
+> - **사고 재현 — 잡히는 것과 안 잡히는 것을 실측으로 갈랐다.** ① 東京海上HD 238 → `JP_ESR_NOT_IN_SOURCE` RED(exit 1). 238 은 56페이지 **어디에도 없다**(문턱을 100,000자로 풀어도 not_found) — 즉 200자 문턱은 사고 탐지가 아니라 **거짓 RED 억제**가 전부인 파라미터다. ② MS&AD 를 사고 당시 URL(합병 보도자료)로 되돌려도 RED — 그 URL 은 지금도 `ok_requires_headers`(살아 있음)라 **먼저 배선한 4종으로는 못 잡는다**. ③ **かんぽ 220 은 못 잡는다** — 그 자료 p35 에 「大量解約リスクを除いた場合のESRは220%」로 실재해 `found` 다. 값만 고치고 수집기를 안 돌린 상태에서는 `JP_SOURCE_EVIDENCE_INCOMPLETE` 로 걸리지만, 수집기까지 돌리면 통과한다.
+> - **PM 의 주장이 틀렸음을 기록에 남겼다.** PM §5 는 "이 축이 東京海上HD·かんぽ 2건을 잡는다" 고 적고 있었다. 실제로 잡는 2건은 **東京海上HD·MS&AD** 이고 かんぽ 는 원리상 못 잡는다. PM 상태는 **`open` 유지**하되 사유를 3번 칸(배선)에서 **2번 칸(룰 정의)**으로 옮겼다 — かんぽ형을 잡을 룰이 정의된 적이 없다(**UH-21 신규 / P1**).
+> - **UH-21 의 오탐억제까지 실측해 뒀다**(배선은 안 함, UH-5·UH-9 선례): 한정어(`を除いた場合`·`調整後`·`適正水準`·`ターゲットレンジ`) 없는 라벨동반 등장이 0개면 조정치 후보 → かんぽ 220 발화 / 181 미발화로 둘을 가른다. **단 정상 14사 중 7사는 라벨동반 산문 조각이 0개**(표·차트 전용 문서)라 "라벨동반 조각 ≥ 1 일 때만 판정" 조건이 필수 — 붙이면 표본 발화 1건·오탐 0.
+> - 오탐억제: RED 로 읽는 verdict 는 `not_found` 하나. `skip_landing`(1사)·`skip_no_text`(**0사**, 방어용)는 YELLOW 인쇄만. `skip_no_text` 문턱은 **공백 제외 0자** — "몇 자 안 나오니 SKIP" 으로 올리면 그게 SKIP-on-missing 이다. 문서를 못 받으면 판정이 아니라 `fetch_failed` 로 적고 게이트가 절차 룰(면제 불가)로 잡는다.
+> - **라벨 정본은 `docs/domains/claude-agent-jp.md §3`**, 코드는 기계본이고 테스트가 한 줄씩 대조한다. 구기준 단독 `ソルベンシー・マージン比率` 는 ESR 이 아니라 같은 페이지에 신기준 표지(`所要資本`·`適格資本`·`UFR`)가 있을 때만 라벨로 친다 — 이 조건이 없으면 au損保·明治安田損保의 5개년 구기준 표가 라벨로 읽혀 **거짓 통과**가 난다.
+> - **fixture 가 게이트를 덮고 있던 것도 같이 고쳤다.** `tests/test_jp_deploy_matches_census.py` 의 10/31 flip 시뮬레이션(1·30·62사)은 census 만 뒤집고 선행 단계를 안 돌린 라운드를 흉내 내고 있어 새 룰에 전부 걸렸다 — **거짓 RED 가 아니라 게이트가 제 일을 한 것**(아무도 원문을 확인한 적 없는 posted 행). 게이트를 안 풀고 fixture 를 완성(`_synthetic_esr_evidence`)한 뒤, fixture 가 게이트를 덮지 않았음을 음성대조군(`test_flipped_census_without_fresh_esr_evidence_is_red`)으로 못 박았다.
+> - 회귀는 **새 파일 없이** 기존 jp 2종에 얹었다(63 + 26). 이빨 변이 **8/8 발화**(사본에서만, 원본 md5 복원 확인): 배선 호출 제거 9 FAIL · 룰 no-op 9 · `not_found` YELLOW 강등 1 · 모르는 verdict 통과 1 · 증거 키 느슨화 2 · YELLOW 에 not_found 끼워넣기 3 · 봉투 신선도 무력화 6 · `fetch_failed` 통과 1. 수집기 쪽: 라벨 목록을 비우면 정상 문서가 무너져 거짓 RED — 그래서 목록 비어있지 않음을 테스트가 강제.
+> - 검증: 빌더 **exit 0** · `RED 0건 · YELLOW 1건(T&D)` · `jp/jesr_esr.json`·`jesr_master.json` 이 `generated_at` 외 **전량 동일** · `prepush_check.py` = `REDUCED (jp-scope)` · **218 passed · 4 skipped** · `gate-clear`.
+> - 재현: `python3 J-ESR/check_esr_in_source.py --all --out J-ESR/esr_in_source_health.json` → `python3 J-ESR/build_jesr_page_json.py` → `python3 -m pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py tests/test_deploy_assets.py -q`.
 
 **(2026-09-13, 4차) jp 빌더 self-check 의 `records count != 15` 를 census 파생 항등식으로 교체 — 게이트가 사실이 아니라 옛 숫자를 지키고 있었다(TODO_jp(27) ②).** 10/31 J-ICS 공시기한 직후 census 의 posted 가 15사 → 60~70사로 뒤집히면 이 self-check 가 **정상 데이터를 RED 로 막는다**. 실측 재현(격리 사본, not_yet 62사를 posted 로 뒤집은 합성 census): HEAD 빌더 `SELF-CHECK FAIL: records count = 77, expected 15` · **exit 1**, 새 빌더 **exit 0 · posted 77 · RED 0건**. 2026-08-29 분기 지평 사고(게이트 3곳이 리터럴 분기목록을 들고 있다가 2026.2Q 를 순회조차 안 함)와 같은 형태라 그 교훈("하드코딩 자체가 재발 구조다")을 그대로 적용했다.
 
@@ -35,10 +50,6 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 **(2026-09-13 후속) UH-18 배선 완료 · UH-19 신규·같은 날 해소 — jp 레인에도 "게이트가 검사하는 파일 = 사용자가 보는 파일"이 걸렸다.** `build_jesr_page_json.py::source_gate_check` 4종(`JP_SOURCE_EXPIRING_HOST`·`JP_SOURCE_URL_DEAD`·`JP_SOURCE_EVIDENCE_STALE`·`JP_SOURCE_EVIDENCE_INCOMPLETE`)이 `self_check` 경유로 **exit 1 에 실제 반영**된다(변이시험: extend 한 줄 제거 시 exit-code 케이스 3개만 정확히 FAIL). 회귀 43케이스 + 이빨 변이 5/5. **네트워크를 안 타는 설계**: 판정은 `check_source_urls.py --all` 이 `source_url_health.json` 에 박제하고 빌더는 박제를 읽는다 — 그래서 `JP_SOURCE_URL_DEAD` 의 이빨은 `JP_SOURCE_EVIDENCE_STALE` 에 전적으로 의존한다(한 쌍, 독립 룰 아님). 오탐억제: RED 로 읽는 분류는 `dead` 하나뿐(254건 실측에서 "ok 아니면 RED" 는 48건 거짓 RED). 예외 등재처 `J-ESR/jp_source_exceptions.json`(0건, fail-closed, 절차 룰 2종은 면제 불가, 등재는 owner 권한). **UH-19**: jp 게이트는 빌더를 돌릴 때만 도는 구조라 census 만 고친 커밋이 검사를 통째로 비껴갔다(실측 사례 `62eed63`) → `tests/test_jp_deploy_matches_census.py` 로 "배포 JSON = census 재빌드 결과" 를 강제, 두 테스트를 `prepush_check.py` offline 묶음 + CLAUDE.md §5 jp 축소범위에 등재해 **훅이 실제로 부른다**. 포스트모템 `PM-2026-09-13` 은 **open 유지** — 사고 3건 중 2건(東京海上HD·かんぽ)은 URL 이 살아 있었고, 그 축(`JP_ESR_NOT_IN_SOURCE`)은 오탐억제 3종의 실측 분포가 선행조건이라 아직 안 걸었다(UH-5·UH-9 선례).
 
 **(2026-09-13) jp 레인에서 false-green 3건 — 포스트모템 `PM-2026-09-13` 신설, 룰 4종 정의했으나 **전부 미배선(UH-18)**.** jp 빌더 self-check(범위·형식·합계)는 통과했는데 화면 수치 2건이 2차보도·조정치였고(東京海上HD 238→268 · かんぽ 220→181 · 明治安田生命 208.0→208.7), 출처 URL 1건은 ESR 이 한 줄도 없는 합병 보도자료였다(MS&AD). **메커니즘: self-check 가 census 안에서만 닫히는 자기참조라 "출처가 살아 있나 / 그 문서에 그 숫자가 있나" 축이 없다** — PM-2026-06-16("산술만 검사")의 jp 판. 룰 4종(`JP_SOURCE_URL_DEAD`·`JP_SOURCE_EXPIRING_HOST`·`JP_ESR_NOT_IN_SOURCE`·`JP_ESR_EDINET_MISMATCH`)을 오탐억제까지 정의하고 도구는 만들었으나(`J-ESR/check_source_urls.py`·`edinet_esr_probe.py`) 어느 게이트에도 안 걸려 있다 = honor system. 배선 방향은 **증거 신선도 검사**(`source_url_health.json` 의 `checked_at` 이 census 보다 오래되면 RED) — 네트워크 없이 "점검을 안 돌리고 census 를 고쳤다" 를 잡는 형태. 티켓 `inbox/jp/20260913T1500Z__validation__JP_MULTI__jp_source_gate_wiring.md` / P1.
-
-**(2026-09-11) `public_exports/` 변이시험이 실제 배포 파일을 제자리에서 흔들다 끊긴 잔해(가짜 회사 행 1건)가 워킹트리에 남아 prepush 오프라인 테스트를 막았다 — 3번째 재발이라 구조를 바꿨다.** `check_public_exports(fd, out_dir=None)` 로 검사 폴더를 주입 가능하게 하고, `test_mutation_public_export_fires` 는 pytest 임시 폴더에 복사한 사본만 훼손한다. dirty-check·백업·`finally` 복원 코드 삭제(필요 없어짐). 실측: 관련 테스트 149 passed, 변이시험 후 `git status public_exports/` 깨끗, `validate_live_artifacts.py` RED=0. 밀려난 Status 항목(09-01 소급재작성 축)은 `docs/todo_archive_validation.md` 로.
-
-> 📦 **Status 이력은 `docs/todo_archive_validation.md` 로 이동했다** (2026-09-11, 내용 무수정 — (2026-09-01) 판정 사이드카 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 
 ## 🔴 Open — P1
 

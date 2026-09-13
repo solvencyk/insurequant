@@ -5,6 +5,22 @@
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
+## 2026-09-13 (5차) -- jp `JP_ESR_NOT_IN_SOURCE` 배선 (PM-2026-09-13 의 마지막 미배선 축, UH-18 해소)
+
+- 사고 유형: **자기참조 게이트.** jp self-check 는 census 안에서만 닫히는 범위·형식·합계 검사라 "그 문서에 그 숫자가 있나" 축이 없었다. 東京海上HD 238%(2차보도 인용값)와 MS&AD 의 무관한 출처(ESR 한 줄 없는 합병 보도자료)가 그 구멍으로 통과했다.
+- 신설: `J-ESR/check_esr_in_source.py`(수집기, 네트워크) → `J-ESR/esr_in_source_health.json`(증거) → `build_jesr_page_json.py::_esr_in_source_check`(게이트, 오프라인). 봉투는 `source_url_health.json` 과 동일해서 신선도 검사를 `_load_evidence_envelope` 한 벌이 두 파일에 공유한다 -- **증거가 낡으면 두 룰이 같이 낡는다(한 쌍)**.
+- **증거 키는 (url, esr_pct).** url 만으로 잡으면 값만 고치고 수집기를 안 돌린 상태가 옛 값의 `found` 를 물려받는다(= 2026-09-12 사고의 모양). 실측 재현 A: 東京海上HD 268→238 · かんぽ 181→220 으로 되돌리면 `JP_SOURCE_EVIDENCE_INCOMPLETE` 2건 · exit 1.
+- **사고 재현 B(수집기까지 재실행 = 사고 당시 상태)**: 東京海上HD 238 → `JP_ESR_NOT_IN_SOURCE` RED · exit 1. 238 은 決算プレゼン 56페이지 **어디에도 없다**(근접 문턱을 100,000자로 풀어도 not_found) -- 200자 문턱은 사고 탐지가 아니라 **거짓 RED 억제**가 전부인 파라미터다.
+- **재현 C**: MS&AD 를 사고 당시 URL(2026-02-13 합병 보도자료)로 되돌리면 `not_found` → RED. 그 URL 은 지금 probe 해도 `ok_requires_headers`(살아 있음)라 **먼저 배선한 4종으로는 못 잡는다** -- 이 축만 잡는다.
+- **못 잡는 것을 기록에 남겼다**: **かんぽ 220 은 안 걸린다**(p35 「大量解約リスクを除いた場合のESRは220%」 로 실재 → `found`). PM 이 주장하던 "이 축이 東京海上HD·かんぽ 2건을 잡는다" 는 **틀렸고**, 실제로 잡는 2건은 東京海上HD·MS&AD 다. PM 은 `open` 유지하되 사유를 3번 칸(배선)에서 **2번 칸(룰 정의)**으로 옮겼다 -- **UH-21 신규 / P1**.
+- **UH-21 오탐억제 실측 선행**(배선은 안 함, UH-5·UH-9 선례): 한정어(`を除いた場合`·`調整後`·`適正水準`·`ターゲットレンジ`) 없는 라벨동반 등장이 0개면 조정치 후보 → かんぽ 220 발화 / 181 미발화. **단 정상 14사 중 7사는 라벨동반 산문 조각이 0개**(표·차트 전용 문서)라 "라벨동반 조각 >= 1 일 때만 판정" 조건이 필수 -- 붙이면 표본 발화 1건·오탐 0.
+- 오탐억제(실측): posted 15사 전수 `found=14 · not_found=0 · skip_landing=1(T&D) · skip_no_text=0` -- PM §4c-pre-실측 과 **정확히 일치**. 초안의 "같은 문장" 규격을 되돌려 재보면 `found=7/14` = **거짓 RED 7건**(예고치와 같다). 확정 규격(±200자 / 같은 표 행)은 14/14·거짓 RED 0.
+- RED 로 읽는 verdict 는 `not_found` 하나. `skip_landing`·`skip_no_text` 는 YELLOW 인쇄만. `skip_no_text` 문턱은 **공백 제외 0자** -- 올리면 SKIP-on-missing 이다. 문서를 못 받으면 판정이 아니라 `fetch_failed` 로 적고 게이트가 절차 룰(면제 불가)로 잡는다.
+- 라벨 정본은 `docs/domains/claude-agent-jp.md §3`, 코드는 기계본이고 테스트가 한 줄씩 대조(`test_esr_labels_are_all_named_in_the_domain_doc`). 구기준 단독 `ソルベンシー・マージン比率` 는 ESR 이 아니라 같은 페이지에 신기준 표지(`所要資本`·`適格資本`·`UFR`)가 있을 때만 라벨 -- 없으면 au損保·明治安田損保 5개년 구기준 표가 라벨로 읽혀 **거짓 통과**.
+- **fixture 가 게이트를 덮고 있던 것도 같이 고쳤다**: `tests/test_jp_deploy_matches_census.py` 의 10/31 flip 시뮬레이션이 census 만 뒤집고 선행 단계를 안 돌린 라운드를 흉내 내고 있어 새 룰에 전부 걸렸다 -- **거짓 RED 가 아니라 게이트가 제 일을 한 것**. 게이트를 안 풀고 fixture 를 완성(`_synthetic_esr_evidence`) + 음성대조군(`test_flipped_census_without_fresh_esr_evidence_is_red`) 추가.
+- 회귀는 **새 파일 없이** 기존 jp 2종에 얹었다(63 + 26; 새 파일을 만들면 `--scope-only` 판정이 FULL 로 뒤집힌다). 이빨 변이 **8/8 발화**(사본에서만, 원본 md5 복원 확인).
+- 검증: 빌더 **exit 0** · `RED 0건 · YELLOW 1건` · 산출 2종이 `generated_at` 외 전량 동일 · `prepush_check.py` = `REDUCED (jp-scope)` · **218 passed · 4 skipped** · `gate-clear`.
+
 ## 2026-09-13 (4차) -- jp 빌더의 `records count != 15` 를 census 파생 항등식으로 (TODO_jp(27) ②)
 
 - 사고 유형(예방): **게이트가 사실이 아니라 옛 숫자를 지킨다.** 10/31 J-ICS 공시기한 직후 census 의 posted 가 15 → 60~70사로 뒤집히면 `build_jesr_page_json.py::self_check` 의 리터럴이 정상 데이터를 RED 로 막는다. 2026-08-29 분기 지평 사고(리터럴 분기목록 3곳 → 2026.2Q 미순회)와 같은 형태.
