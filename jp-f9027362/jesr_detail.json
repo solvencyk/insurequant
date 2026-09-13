@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T01:18:51.439251Z",
+    "generated_at": "2026-09-13T04:19:03.245432Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -841,7 +841,7 @@
         "pl_item_ref": null
       },
       "cat_reserve_fire": {
-        "ja": "異常危険準備金（火災）",
+        "ja": "火災 行 × 異常危険準備金 列",
         "ko": "화재 종목 이상위험준비금 잔액(금융청 부족 지적 대상)",
         "unit": "JPY_million",
         "kics_item_ref": null,
@@ -1095,6 +1095,20 @@
       "pl_commissions_collection": {
         "ja": "諸手数料及び集金費",
         "ko": "제수수료 및 집금비",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pl_commissions_gross": {
+        "ja": "支払諸手数料及び集金費",
+        "ko": "지급제수수료 및 집금비(총액, 注記; 당기만)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pl_ceded_commission": {
+        "ja": "出再保険手数料",
+        "ko": "출재보험수수료(재보험자→출재사 수취, 注記; 당기만) — 재보험 수지 구성항목",
         "unit": "JPY_million",
         "kics_item_ref": null,
         "pl_item_ref": null
@@ -1400,6 +1414,41 @@
         "kics_item_ref": null,
         "pl_item_ref": null
       },
+      "pf_direct_balance": {
+        "ja": "元受収支",
+        "ko": "원수 수지(파생: 원수정미보험료(적립보험료 제외) − 원수정미보험금)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pf_reins_balance": {
+        "ja": "再保険収支",
+        "ko": "재보험 수지(파생: 수재보험료 − 수재보험금 − 출재보험료 + 회수재보험금 + 출재보험수수료; 전기는 출재보험수수료 미취득이라 공란)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pf_deposit_premiums": {
+        "ja": "うち収入積立保険料(控除)",
+        "ko": "원수정미보험료에 포함된 적립보험료(정미수입보험료 산정 시 차감)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pf_commissions_row": {
+        "ja": "支払諸手数料及び集金費",
+        "ko": "지급제수수료 및 집금비(총액 = 손익계산서 순액 + 출재보험수수료; 注記 없으면 순액)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "pf_uw_other_residual": {
+        "ja": "その他収支(積立保険・準備金繰入戻入等)",
+        "ko": "기타 수지(잔차: 보험인수이익 − 위 행 합계; 적립보험료·만기환급금·준비금 전입환입·기타수지 포함)",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
       "hist_core_profit_group": {
         "ja": "グループ基礎利益",
         "ko": "기초이익(그룹 합산)",
@@ -1521,8 +1570,8 @@
         "top_sqrt": 1257.4,
         "simple_sum": 1531,
         "reproduced": true,
-        "checks_pass": 105,
-        "checks_total": 105,
+        "checks_pass": 106,
+        "checks_total": 106,
         "deviations": []
       },
       "axes": {
@@ -1696,6 +1745,14 @@
             "cur": 79,
             "prev": 98
           },
+          "pl_commissions_gross": {
+            "cur": 289,
+            "prev": null
+          },
+          "pl_ceded_commission": {
+            "cur": 209,
+            "prev": null
+          },
           "pl_operating_general_admin": {
             "cur": 3121,
             "prev": 3318
@@ -1756,6 +1813,7 @@
           }
         },
         "core": {},
+        "adjustments": {},
         "status": "extracted"
       },
       "history": {
@@ -2121,20 +2179,73 @@
         "sector": "nonlife",
         "rows": [
           {
-            "id": "pl_net_premiums_written",
-            "label_ja": "正味収入保険料",
+            "id": "pf_direct_balance",
+            "label_ja": "元受収支",
             "sign": "=",
-            "cur": 8137,
-            "prev": 7976,
-            "derived": false
+            "cur": 7051,
+            "prev": 6862,
+            "derived": true,
+            "parts": [
+              {
+                "id": "pl_gross_premiums_written",
+                "label_ja": "元受正味保険料",
+                "sign": "+",
+                "cur": 16646,
+                "prev": 17165
+              },
+              {
+                "id": "pl_gross_claims_paid",
+                "label_ja": "元受正味保険金",
+                "sign": "-",
+                "cur": 9595,
+                "prev": 10303
+              }
+            ]
           },
           {
-            "id": "pl_net_claims_paid",
-            "label_ja": "正味支払保険金",
-            "sign": "-",
-            "cur": 1940,
-            "prev": 1868,
-            "derived": false
+            "id": "pf_reins_balance",
+            "label_ja": "再保険収支",
+            "sign": "±",
+            "cur": -645,
+            "prev": null,
+            "derived": true,
+            "parts": [
+              {
+                "id": "pl_assumed_premiums",
+                "label_ja": "受再正味保険料",
+                "sign": "+",
+                "cur": 0,
+                "prev": 0
+              },
+              {
+                "id": "pl_assumed_claims",
+                "label_ja": "受再正味保険金",
+                "sign": "-",
+                "cur": 0,
+                "prev": 0
+              },
+              {
+                "id": "pl_ceded_premiums",
+                "label_ja": "支払再保険料",
+                "sign": "-",
+                "cur": 8509,
+                "prev": 9188
+              },
+              {
+                "id": "pl_recovered_reinsurance_claims",
+                "label_ja": "回収再保険金",
+                "sign": "+",
+                "cur": 7655,
+                "prev": 8434
+              },
+              {
+                "id": "pl_ceded_commission",
+                "label_ja": "出再保険手数料",
+                "sign": "+",
+                "cur": 209,
+                "prev": null
+              }
+            ]
           },
           {
             "id": "pl_loss_adjustment_expenses",
@@ -2145,12 +2256,12 @@
             "derived": false
           },
           {
-            "id": "pl_commissions_collection",
-            "label_ja": "諸手数料及び集金費",
+            "id": "pf_commissions_row",
+            "label_ja": "支払諸手数料及び集金費",
             "sign": "-",
-            "cur": 79,
-            "prev": 98,
-            "derived": false
+            "cur": 288,
+            "prev": null,
+            "derived": true
           },
           {
             "id": "pl_uw_operating_general_admin",
@@ -2159,6 +2270,14 @@
             "cur": 3113,
             "prev": 3309,
             "derived": false
+          },
+          {
+            "id": "pf_uw_other_residual",
+            "label_ja": "その他収支(積立保険・準備金繰入戻入等)",
+            "sign": "±",
+            "cur": -806,
+            "prev": null,
+            "derived": true
           },
           {
             "id": "pl_underwriting_profit",
@@ -2210,11 +2329,13 @@
           }
         ],
         "missing": [
-          "pl_underwriting_other",
           "pl_extraordinary_net"
         ],
         "checks": {
-          "underwriting_ok": false,
+          "premium_bridge_ok": true,
+          "claims_bridge_ok": true,
+          "commission_note_ok": true,
+          "underwriting_ok": true,
           "ordinary_ok": true,
           "net_ok": false
         }
@@ -2502,8 +2623,8 @@
         "top_sqrt": 6519.5,
         "simple_sum": 9049,
         "reproduced": true,
-        "checks_pass": 107,
-        "checks_total": 111,
+        "checks_pass": 108,
+        "checks_total": 112,
         "deviations": [
           {
             "id": "G06_nonlife",
@@ -2691,6 +2812,14 @@
             "cur": 3492,
             "prev": 3336
           },
+          "pl_commissions_gross": {
+            "cur": 3732,
+            "prev": null
+          },
+          "pl_ceded_commission": {
+            "cur": 239,
+            "prev": null
+          },
           "pl_operating_general_admin": {
             "cur": 4709,
             "prev": 4648
@@ -2755,6 +2884,7 @@
           }
         },
         "core": {},
+        "adjustments": {},
         "status": "extracted"
       },
       "history": {
@@ -3221,20 +3351,73 @@
         "sector": "nonlife",
         "rows": [
           {
-            "id": "pl_net_premiums_written",
-            "label_ja": "正味収入保険料",
+            "id": "pf_direct_balance",
+            "label_ja": "元受収支",
             "sign": "=",
-            "cur": 15692,
-            "prev": 15327,
-            "derived": false
+            "cur": 11630,
+            "prev": 11432,
+            "derived": true,
+            "parts": [
+              {
+                "id": "pl_gross_premiums_written",
+                "label_ja": "元受正味保険料",
+                "sign": "+",
+                "cur": 16363,
+                "prev": 16086
+              },
+              {
+                "id": "pl_gross_claims_paid",
+                "label_ja": "元受正味保険金",
+                "sign": "-",
+                "cur": 4733,
+                "prev": 4654
+              }
+            ]
           },
           {
-            "id": "pl_net_claims_paid",
-            "label_ja": "正味支払保険金",
-            "sign": "-",
-            "cur": 5108,
-            "prev": 5098,
-            "derived": false
+            "id": "pf_reins_balance",
+            "label_ja": "再保険収支",
+            "sign": "±",
+            "cur": -808,
+            "prev": null,
+            "derived": true,
+            "parts": [
+              {
+                "id": "pl_assumed_premiums",
+                "label_ja": "受再正味保険料",
+                "sign": "+",
+                "cur": 811,
+                "prev": 688
+              },
+              {
+                "id": "pl_assumed_claims",
+                "label_ja": "受再正味保険金",
+                "sign": "-",
+                "cur": 552,
+                "prev": 727
+              },
+              {
+                "id": "pl_ceded_premiums",
+                "label_ja": "支払再保険料",
+                "sign": "-",
+                "cur": 1482,
+                "prev": 1447
+              },
+              {
+                "id": "pl_recovered_reinsurance_claims",
+                "label_ja": "回収再保険金",
+                "sign": "+",
+                "cur": 176,
+                "prev": 282
+              },
+              {
+                "id": "pl_ceded_commission",
+                "label_ja": "出再保険手数料",
+                "sign": "+",
+                "cur": 239,
+                "prev": null
+              }
+            ]
           },
           {
             "id": "pl_loss_adjustment_expenses",
@@ -3245,12 +3428,12 @@
             "derived": false
           },
           {
-            "id": "pl_commissions_collection",
-            "label_ja": "諸手数料及び集金費",
+            "id": "pf_commissions_row",
+            "label_ja": "支払諸手数料及び集金費",
             "sign": "-",
-            "cur": 3492,
-            "prev": 3336,
-            "derived": false
+            "cur": 3731,
+            "prev": null,
+            "derived": true
           },
           {
             "id": "pl_uw_operating_general_admin",
@@ -3261,12 +3444,12 @@
             "derived": false
           },
           {
-            "id": "pl_underwriting_other",
-            "label_ja": "その他(準備金繰入等)",
+            "id": "pf_uw_other_residual",
+            "label_ja": "その他収支(積立保険・準備金繰入戻入等)",
             "sign": "±",
-            "cur": -1,
-            "prev": -2,
-            "derived": false
+            "cur": -690,
+            "prev": null,
+            "derived": true
           },
           {
             "id": "pl_underwriting_profit",
@@ -3327,7 +3510,10 @@
         ],
         "missing": [],
         "checks": {
-          "underwriting_ok": false,
+          "premium_bridge_ok": true,
+          "claims_bridge_ok": true,
+          "commission_note_ok": true,
+          "underwriting_ok": true,
           "ordinary_ok": true,
           "net_ok": false
         }
@@ -3568,8 +3754,8 @@
         "top_sqrt": null,
         "simple_sum": null,
         "reproduced": true,
-        "checks_pass": 76,
-        "checks_total": 79,
+        "checks_pass": 77,
+        "checks_total": 80,
         "deviations": []
       },
       "axes": {
@@ -3760,6 +3946,14 @@
             "cur": 485480,
             "prev": 479861
           },
+          "pl_commissions_gross": {
+            "cur": 535974,
+            "prev": null
+          },
+          "pl_ceded_commission": {
+            "cur": 50494,
+            "prev": null
+          },
           "pl_operating_general_admin": {
             "cur": 398424,
             "prev": 376699
@@ -3824,6 +4018,14 @@
           }
         },
         "core": {},
+        "adjustments": {
+          "deposit_premium_in_gross": {
+            "prev": 43216,
+            "cur": 48334,
+            "source": "損益計算書 収入積立保険料",
+            "note": "pl_gross_premiums_written includes 収入積立保険料 (table heading 含む収入積立保険料); P14 = gross + assumed - ceded - this"
+          }
+        },
         "status": "extracted"
       },
       "history": {
@@ -3900,20 +4102,80 @@
         "sector": "nonlife",
         "rows": [
           {
-            "id": "pl_net_premiums_written",
-            "label_ja": "正味収入保険料",
+            "id": "pf_direct_balance",
+            "label_ja": "元受収支",
             "sign": "=",
-            "cur": 2596396,
-            "prev": 2518823,
-            "derived": false
+            "cur": 1393892,
+            "prev": 1328331,
+            "derived": true,
+            "parts": [
+              {
+                "id": "pl_gross_premiums_written",
+                "label_ja": "元受正味保険料",
+                "sign": "+",
+                "cur": 2862377,
+                "prev": 2784550
+              },
+              {
+                "id": "pf_deposit_premiums",
+                "label_ja": "うち収入積立保険料(控除)",
+                "sign": "-",
+                "cur": 48334,
+                "prev": 43216
+              },
+              {
+                "id": "pl_gross_claims_paid",
+                "label_ja": "元受正味保険金",
+                "sign": "-",
+                "cur": 1420151,
+                "prev": 1413003
+              }
+            ]
           },
           {
-            "id": "pl_net_claims_paid",
-            "label_ja": "正味支払保険金",
-            "sign": "-",
-            "cur": 1454585,
-            "prev": 1448432,
-            "derived": false
+            "id": "pf_reins_balance",
+            "label_ja": "再保険収支",
+            "sign": "±",
+            "cur": -201587,
+            "prev": null,
+            "derived": true,
+            "parts": [
+              {
+                "id": "pl_assumed_premiums",
+                "label_ja": "受再正味保険料",
+                "sign": "+",
+                "cur": 322829,
+                "prev": 333669
+              },
+              {
+                "id": "pl_assumed_claims",
+                "label_ja": "受再正味保険金",
+                "sign": "-",
+                "cur": 264344,
+                "prev": 297433
+              },
+              {
+                "id": "pl_ceded_premiums",
+                "label_ja": "支払再保険料",
+                "sign": "-",
+                "cur": 540476,
+                "prev": 556180
+              },
+              {
+                "id": "pl_recovered_reinsurance_claims",
+                "label_ja": "回収再保険金",
+                "sign": "+",
+                "cur": 229910,
+                "prev": 262003
+              },
+              {
+                "id": "pl_ceded_commission",
+                "label_ja": "出再保険手数料",
+                "sign": "+",
+                "cur": 50494,
+                "prev": null
+              }
+            ]
           },
           {
             "id": "pl_loss_adjustment_expenses",
@@ -3924,12 +4186,12 @@
             "derived": false
           },
           {
-            "id": "pl_commissions_collection",
-            "label_ja": "諸手数料及び集金費",
+            "id": "pf_commissions_row",
+            "label_ja": "支払諸手数料及び集金費",
             "sign": "-",
-            "cur": 485480,
-            "prev": 479861,
-            "derived": false
+            "cur": 535974,
+            "prev": null,
+            "derived": true
           },
           {
             "id": "pl_uw_operating_general_admin",
@@ -3940,12 +4202,12 @@
             "derived": false
           },
           {
-            "id": "pl_underwriting_other",
-            "label_ja": "その他(準備金繰入等)",
+            "id": "pf_uw_other_residual",
+            "label_ja": "その他収支(積立保険・準備金繰入戻入等)",
             "sign": "±",
-            "cur": -3152,
-            "prev": 1186,
-            "derived": false
+            "cur": -133200,
+            "prev": null,
+            "derived": true
           },
           {
             "id": "pl_underwriting_profit",
@@ -4006,7 +4268,10 @@
         ],
         "missing": [],
         "checks": {
-          "underwriting_ok": false,
+          "premium_bridge_ok": true,
+          "claims_bridge_ok": true,
+          "commission_note_ok": true,
+          "underwriting_ok": true,
           "ordinary_ok": true,
           "net_ok": true
         }
@@ -4248,8 +4513,8 @@
         "top_sqrt": null,
         "simple_sum": null,
         "reproduced": true,
-        "checks_pass": 77,
-        "checks_total": 79,
+        "checks_pass": 78,
+        "checks_total": 80,
         "deviations": []
       },
       "axes": {
@@ -4442,6 +4707,14 @@
             "cur": 315074,
             "prev": 309573
           },
+          "pl_commissions_gross": {
+            "cur": 381231,
+            "prev": null
+          },
+          "pl_ceded_commission": {
+            "cur": 66157,
+            "prev": null
+          },
           "pl_operating_general_admin": {
             "cur": 236819,
             "prev": 244196
@@ -4506,6 +4779,7 @@
           }
         },
         "core": {},
+        "adjustments": {},
         "status": "extracted"
       },
       "history": {
@@ -4589,20 +4863,73 @@
         "sector": "nonlife",
         "rows": [
           {
-            "id": "pl_net_premiums_written",
-            "label_ja": "正味収入保険料",
+            "id": "pf_direct_balance",
+            "label_ja": "元受収支",
             "sign": "=",
-            "cur": 1754431,
-            "prev": 1679248,
-            "derived": false
+            "cur": 1018557,
+            "prev": 884715,
+            "derived": true,
+            "parts": [
+              {
+                "id": "pl_gross_premiums_written",
+                "label_ja": "元受正味保険料",
+                "sign": "+",
+                "cur": 2017006,
+                "prev": 1924364
+              },
+              {
+                "id": "pl_gross_claims_paid",
+                "label_ja": "元受正味保険金",
+                "sign": "-",
+                "cur": 998449,
+                "prev": 1039649
+              }
+            ]
           },
           {
-            "id": "pl_net_claims_paid",
-            "label_ja": "正味支払保険金",
-            "sign": "-",
-            "cur": 970472,
-            "prev": 1005894,
-            "derived": false
+            "id": "pf_reins_balance",
+            "label_ja": "再保険収支",
+            "sign": "±",
+            "cur": -168442,
+            "prev": null,
+            "derived": true,
+            "parts": [
+              {
+                "id": "pl_assumed_premiums",
+                "label_ja": "受再正味保険料",
+                "sign": "+",
+                "cur": 192437,
+                "prev": 191355
+              },
+              {
+                "id": "pl_assumed_claims",
+                "label_ja": "受再正味保険金",
+                "sign": "-",
+                "cur": 164499,
+                "prev": 187347
+              },
+              {
+                "id": "pl_ceded_premiums",
+                "label_ja": "支払再保険料",
+                "sign": "-",
+                "cur": 455012,
+                "prev": 436471
+              },
+              {
+                "id": "pl_recovered_reinsurance_claims",
+                "label_ja": "回収再保険金",
+                "sign": "+",
+                "cur": 192475,
+                "prev": 221103
+              },
+              {
+                "id": "pl_ceded_commission",
+                "label_ja": "出再保険手数料",
+                "sign": "+",
+                "cur": 66157,
+                "prev": null
+              }
+            ]
           },
           {
             "id": "pl_loss_adjustment_expenses",
@@ -4613,12 +4940,12 @@
             "derived": false
           },
           {
-            "id": "pl_commissions_collection",
-            "label_ja": "諸手数料及び集金費",
+            "id": "pf_commissions_row",
+            "label_ja": "支払諸手数料及び集金費",
             "sign": "-",
-            "cur": 315074,
-            "prev": 309573,
-            "derived": false
+            "cur": 381231,
+            "prev": null,
+            "derived": true
           },
           {
             "id": "pl_uw_operating_general_admin",
@@ -4629,12 +4956,12 @@
             "derived": false
           },
           {
-            "id": "pl_underwriting_other",
-            "label_ja": "その他(準備金繰入等)",
+            "id": "pf_uw_other_residual",
+            "label_ja": "その他収支(積立保険・準備金繰入戻入等)",
             "sign": "±",
-            "cur": 4,
-            "prev": 2018,
-            "derived": false
+            "cur": -1969,
+            "prev": null,
+            "derived": true
           },
           {
             "id": "pl_underwriting_profit",
@@ -4695,7 +5022,10 @@
         ],
         "missing": [],
         "checks": {
-          "underwriting_ok": false,
+          "premium_bridge_ok": true,
+          "claims_bridge_ok": true,
+          "commission_note_ok": true,
+          "underwriting_ok": true,
           "ordinary_ok": true,
           "net_ok": true
         }
@@ -4937,8 +5267,8 @@
         "top_sqrt": null,
         "simple_sum": null,
         "reproduced": true,
-        "checks_pass": 77,
-        "checks_total": 79,
+        "checks_pass": 78,
+        "checks_total": 80,
         "deviations": []
       },
       "axes": {
@@ -5139,6 +5469,14 @@
             "cur": 435834,
             "prev": 435133
           },
+          "pl_commissions_gross": {
+            "cur": 481388,
+            "prev": null
+          },
+          "pl_ceded_commission": {
+            "cur": 45553,
+            "prev": null
+          },
           "pl_operating_general_admin": {
             "cur": 370771,
             "prev": 345171
@@ -5203,6 +5541,14 @@
           }
         },
         "core": {},
+        "adjustments": {
+          "deposit_premium_in_gross": {
+            "prev": 67376,
+            "cur": 63753,
+            "source": "損益計算書 収入積立保険料",
+            "note": "pl_gross_premiums_written includes 収入積立保険料 (table heading 含む収入積立保険料); P14 = gross + assumed - ceded - this"
+          }
+        },
         "status": "extracted"
       },
       "history": {
@@ -5279,20 +5625,80 @@
         "sector": "nonlife",
         "rows": [
           {
-            "id": "pl_net_premiums_written",
-            "label_ja": "正味収入保険料",
+            "id": "pf_direct_balance",
+            "label_ja": "元受収支",
             "sign": "=",
-            "cur": 2311577,
-            "prev": 2229919,
-            "derived": false
+            "cur": 1217126,
+            "prev": 1112137,
+            "derived": true,
+            "parts": [
+              {
+                "id": "pl_gross_premiums_written",
+                "label_ja": "元受正味保険料",
+                "sign": "+",
+                "cur": 2662630,
+                "prev": 2586214
+              },
+              {
+                "id": "pf_deposit_premiums",
+                "label_ja": "うち収入積立保険料(控除)",
+                "sign": "-",
+                "cur": 63753,
+                "prev": 67376
+              },
+              {
+                "id": "pl_gross_claims_paid",
+                "label_ja": "元受正味保険金",
+                "sign": "-",
+                "cur": 1381751,
+                "prev": 1406701
+              }
+            ]
           },
           {
-            "id": "pl_net_claims_paid",
-            "label_ja": "正味支払保険金",
-            "sign": "-",
-            "cur": 1339037,
-            "prev": 1346628,
-            "derived": false
+            "id": "pf_reins_balance",
+            "label_ja": "再保険収支",
+            "sign": "±",
+            "cur": -199033,
+            "prev": null,
+            "derived": true,
+            "parts": [
+              {
+                "id": "pl_assumed_premiums",
+                "label_ja": "受再正味保険料",
+                "sign": "+",
+                "cur": 179447,
+                "prev": 186830
+              },
+              {
+                "id": "pl_assumed_claims",
+                "label_ja": "受再正味保険金",
+                "sign": "-",
+                "cur": 178590,
+                "prev": 191690
+              },
+              {
+                "id": "pl_ceded_premiums",
+                "label_ja": "支払再保険料",
+                "sign": "-",
+                "cur": 466747,
+                "prev": 475749
+              },
+              {
+                "id": "pl_recovered_reinsurance_claims",
+                "label_ja": "回収再保険金",
+                "sign": "+",
+                "cur": 221304,
+                "prev": 251764
+              },
+              {
+                "id": "pl_ceded_commission",
+                "label_ja": "出再保険手数料",
+                "sign": "+",
+                "cur": 45553,
+                "prev": null
+              }
+            ]
           },
           {
             "id": "pl_loss_adjustment_expenses",
@@ -5303,12 +5709,12 @@
             "derived": false
           },
           {
-            "id": "pl_commissions_collection",
-            "label_ja": "諸手数料及び集金費",
+            "id": "pf_commissions_row",
+            "label_ja": "支払諸手数料及び集金費",
             "sign": "-",
-            "cur": 435834,
-            "prev": 435133,
-            "derived": false
+            "cur": 481387,
+            "prev": null,
+            "derived": true
           },
           {
             "id": "pl_uw_operating_general_admin",
@@ -5319,12 +5725,12 @@
             "derived": false
           },
           {
-            "id": "pl_underwriting_other",
-            "label_ja": "その他(準備金繰入等)",
+            "id": "pf_uw_other_residual",
+            "label_ja": "その他収支(積立保険・準備金繰入戻入等)",
             "sign": "±",
-            "cur": -1341,
-            "prev": -150,
-            "derived": false
+            "cur": -20700,
+            "prev": null,
+            "derived": true
           },
           {
             "id": "pl_underwriting_profit",
@@ -5385,7 +5791,10 @@
         ],
         "missing": [],
         "checks": {
-          "underwriting_ok": false,
+          "premium_bridge_ok": true,
+          "claims_bridge_ok": true,
+          "commission_note_ok": true,
+          "underwriting_ok": true,
           "ordinary_ok": true,
           "net_ok": true
         }

@@ -248,14 +248,15 @@
         <p class="axes-note" id="profitBasisNote"></p>
         <div id="chartProfitWaterfall" role="img" aria-label="当期純利益の内訳、読み込み中"></div>
         <p class="small-muted" id="profitFootnote" style="margin-top:4px"></p>
-        <!-- owner 2026-09-13: 총계 행 남발 대신 선별 흐름(profit_flow)만. 正味収入保険料·正味支払保険金 은 [+] 로
-             元受→受再→出再(回収) 재보험 다리 전개. 전 항목은 details 로 접어 둠. 손해율 3행은 収益性指標 패널로 이관. -->
+        <!-- owner 2026-09-13: 총계 행 남발 대신 선별 흐름(profit_flow)만. 손보는 상단이 元受収支 / 再保険収支 두 블록이고
+             [+] 로 구성항목(builder 의 row.parts) 전개. 전 항목은 details 로 접어 둠. 손해율 3행은 収益性指標 패널로 이관. -->
         <div class="table-container" style="margin-top:14px">
           <table class="esr-table" id="profitTable">
             <thead><tr><th scope="col">項目</th><th scope="col" class="sign">符号</th><th scope="col" class="num">当期</th><th scope="col" class="num">前期</th><th scope="col" class="num">増減</th></tr></thead>
             <tbody id="profitTableBody"></tbody>
           </table>
         </div>
+        <p class="small-muted" id="profitFlowNote" style="margin-top:6px;line-height:1.6" hidden></p>
         <details style="margin-top:10px">
           <summary class="small-muted" style="cursor:pointer">全項目を表示</summary>
           <div class="table-container" style="margin-top:8px">
@@ -1047,12 +1048,13 @@
       requestAnimationFrame(function(){ if(profitWaterfallChart){ try{ profitWaterfallChart.resize(); }catch(e){} } });
     }
 
-    // 損益 표 = profit_flow 선별 흐름만(owner 2026-09-13). 正味収入保険料 / 正味支払保険金 은 [+] 로 재보험 다리
-    // (元受 → ＋受再 → －出再(回収) ＝ 正味) 전개 — profit.items 에 해당 id 가 있을 때만. 전 항목은 details 표.
-    var BRIDGE = {
-      pl_net_premiums_written: [['pl_gross_premiums_written','+'], ['pl_assumed_premiums','+'], ['pl_ceded_premiums','-']],
-      pl_net_claims_paid:      [['pl_gross_claims_paid','+'], ['pl_assumed_claims','+'], ['pl_recovered_reinsurance_claims','-']]
-    };
+    // 損益 표 = profit_flow 선별 흐름만(owner 2026-09-13). 상단은 상대방 기준 두 블록 元受収支 / 再保険収支
+    // (owner 2026-09-13 (2): 受再는 사실상 出再 재원이라 한 블록, 出再保険手数料 포함). 각 블록은 [+] 로 구성항목(row.parts)
+    // 전개. 구성항목·부호·값은 builder(build_profit_flow)가 넣어 준다 — 페이지는 계산하지 않는다. 전 항목은 details 표.
+    var PROFIT_FOOT_2BLOCK = '再保険収支＝(受再正味保険料−受再正味保険金)−支払再保険料＋回収再保険金＋出再保険手数料。'
+      + '自賠責・地震保険はプール経由で受再・出再の双方に計上されるため、商業再保険のコストとは一致しません。'
+      + '出再保険手数料は損益計算書の注記(当期のみ)から取得しているため、前期欄が空欄の行があります。'
+      + 'その他収支は保険引受利益から上の各行を差し引いた残差(積立保険料・満期返戻金・支払備金/責任準備金の繰入戻入等)です。';
     function flowCells(cur, prev, sign){
       var c = fmtEok(cur), p = fmtEok(prev);
       if(sign === '-'){ if(cur!=null && cur!==0) c = '△'+c; if(prev!=null && prev!==0) p = '△'+p; }
@@ -1067,22 +1069,23 @@
       var rows = [];
       flow.forEach(function(f){
         var signTxt = f.sign === '=' ? '＝' : (f.sign === '-' ? '－' : (f.sign === '+' ? '＋' : '±'));
-        var bridge = (BRIDGE[f.id] || []).filter(function(b){ return items[b[0]]; });
-        var has = bridge.length > 0;
+        var parts = f.parts || [];
+        var has = parts.length > 0;
         if(has && subOpen['pf_'+f.id] === undefined) subOpen['pf_'+f.id] = false;
-        var toggle = has ? ' <button type="button" class="subtoggle" data-group="pf_'+esc(f.id)+'" aria-expanded="'+subOpen['pf_'+f.id]+'" title="再保険の内訳">'+(subOpen['pf_'+f.id]?'−':'+')+'</button>' : '';
+        var toggle = has ? ' <button type="button" class="subtoggle" data-group="pf_'+esc(f.id)+'" aria-expanded="'+subOpen['pf_'+f.id]+'" title="内訳">'+(subOpen['pf_'+f.id]?'−':'+')+'</button>' : '';
         // 라벨은 스키마(_meta.labels) 우선 — 추출 원문 라벨은 "合計" 같은 표 안 행 이름이 섞여 온다(pl_investment_pl).
         var lab = labelOf(META, f.id, null) || f.label_ja || f.id;
         rows.push('<tr'+(f.sign==='='?' class="total-row"':'')+'><td>'+esc(lab)+(f.derived?' <span class="small-muted">(差引)</span>':'')+toggle+'</td>'
           + '<td class="sign">'+signTxt+'</td>' + flowCells(f.cur, f.prev, f.sign) + '</tr>');
-        bridge.forEach(function(b){
-          var e = items[b[0]];
-          rows.push('<tr class="subrow-pf_'+esc(f.id)+'"'+(subOpen['pf_'+f.id]?'':' style="display:none"')+'><td class="subitem" style="padding-left:28px">'+esc(labelOf(META, b[0], b[0]))+'</td>'
-            + '<td class="sign">'+(b[1]==='-'?'－':'＋')+'</td>' + flowCells(e.cur, e.prev, b[1]) + '</tr>');
+        parts.forEach(function(b){
+          rows.push('<tr class="subrow-pf_'+esc(f.id)+'"'+(subOpen['pf_'+f.id]?'':' style="display:none"')+'><td class="subitem" style="padding-left:28px">'+esc(labelOf(META, b.id, null) || b.label_ja || b.id)+'</td>'
+            + '<td class="sign">'+(b.sign==='-'?'－':'＋')+'</td>' + flowCells(b.cur, b.prev, b.sign) + '</tr>');
         });
       });
       var body = document.getElementById('profitTableBody');
       body.innerHTML = rows.join('') || '<tr><td colspan="5" class="small-muted">データがありません。</td></tr>';
+      var fn = document.getElementById('profitFlowNote');
+      if(fn){ var twoBlock = flow.some(function(f){ return f.id === 'pf_reins_balance'; }); fn.hidden = !twoBlock; fn.textContent = twoBlock ? '※ ' + PROFIT_FOOT_2BLOCK : ''; }
       body.querySelectorAll('.subtoggle').forEach(function(btn){
         btn.addEventListener('click', function(){
           var g = btn.dataset.group; subOpen[g] = !subOpen[g];
