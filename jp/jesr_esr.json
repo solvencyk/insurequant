@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T14:11:14Z",
+    "generated_at": "2026-09-13T14:18:41Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -40,7 +40,7 @@
     },
     "target_ranges": {
       "as_of": "2026-09-13",
-      "attached": 4
+      "attached": 7
     }
   },
   "records": [
@@ -52,7 +52,7 @@
       "category": "子会社(KDDI)",
       "scope": "solo",
       "esr_pct": 791.7,
-      "basis": "J-ICS",
+      "basis": "regulatory_standard",
       "as_of": "2026-03-31",
       "preliminary": false,
       "total_assets_bn_jpy": null,
@@ -60,7 +60,7 @@
       "doc_type": "ディスクロージャー誌(au損保の現状2026, 업적데이터편, 2026-07-30 발행)",
       "doc_date": "2026-07-30",
       "source_url": "https://www.au-sonpo.co.jp/corporate/pdf/disclo_260730_4of5.pdf",
-      "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比率. PDF p21-22 직접 열람 확인: 적격자본(A)=9,278백만엔, 소요자본(B)=1,171백만엔, 비율(A/B)=791.7%. 라벨은 'ESR'이 아닌 신기준 'ソルベンシー・マージン比率'이나 동일한 경제가치기반 규제비율.",
+      "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比율. 2026-09-13 재확인 — 디스클로저지 p22 告示74호 요약표 적격자본(A) 9,278/소요자본(B) 1,171 백만엔 = 791.7%, p2 주요업적 5개년표도 동일. 화면 15사 중 규제 표준모델 기준으로 확인된 4사 중 하나",
       "target_range": null
     },
     {
@@ -71,7 +71,7 @@
       "category": "子会社(明治安田)",
       "scope": "solo",
       "esr_pct": 743.2,
-      "basis": "J-ICS",
+      "basis": "regulatory_standard",
       "as_of": "2026-03-31",
       "preliminary": false,
       "total_assets_bn_jpy": null,
@@ -79,7 +79,7 @@
       "doc_type": "ディスクロージャー誌【別冊】業績データ(明治安田損害保険の現状2026, 2026-09-04 게시)",
       "doc_date": "2026-09-04",
       "source_url": "https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260904_performance_data.pdf",
-      "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比率. PDF p2 직접 열람 확인: 적격자본(A)=40,290백만엔, 소요자본(B)=5,420백만엔, 비율(A/B)=743.2%. 경제가치기준 BS·감응도분석·산출체제까지 포함된 완전한 신기준 공시(2026-09-04 동일자 정정 1건 있음, 수치 자체는 불변).",
+      "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比율. 2026-09-13 재확인 — 별책 업적데이터 p2 적격 40,290/소요 5,420 백만엔 = 743.2%, p12 감응도 분석 기준값도 743.2%. 경제가치기준 BS·감응도·산출체제까지 포함된 완전한 신기준 공시. 규제 표준모델 기준 확인 4사 중 하나",
       "target_range": null
     },
     {
@@ -90,7 +90,7 @@
       "category": "上場",
       "scope": "solo",
       "esr_pct": 333.0,
-      "basis": "J-ICS",
+      "basis": "unconfirmed",
       "as_of": "2026-03-31",
       "preliminary": true,
       "total_assets_bn_jpy": null,
@@ -98,7 +98,7 @@
       "doc_type": "決算短信〔IFRS〕(2026-05-13)",
       "doc_date": "2026-05-13",
       "source_url": "https://data.swcms.net/file/lifenet-corp/dam/jcr:e9412bb2-3fc0-45b2-9854-d619e11990bb/140120260513529356.pdf",
-      "notes": "외부감사 미완료 속보치(회사 명시, 확정치와 다를 수 있음). 상장 단독사 (preliminary 판정: notes 내 '속보' 검출)",
+      "notes": "외부감사 미완료 속보치(회사 명시, 확정치와 다를 수 있음). 상장 단독사",
       "target_range": null
     },
     {
@@ -109,7 +109,7 @@
       "category": "HD上場",
       "scope": "group",
       "esr_pct": 270.0,
-      "basis": "J-ICS_VaR99.5",
+      "basis": "unconfirmed",
       "as_of": "2026-03-31",
       "preliminary": false,
       "total_assets_bn_jpy": null,
@@ -136,7 +136,7 @@
       "category": "HD上場",
       "scope": "group",
       "esr_pct": 268.0,
-      "basis": "J-ICS",
+      "basis": "internal_model",
       "as_of": "2026-03-31",
       "preliminary": false,
       "total_assets_bn_jpy": 319600,
@@ -163,15 +163,15 @@
       "category": "相互会社",
       "scope": "group",
       "esr_pct": 258.9,
-      "basis": "J-ICS",
+      "basis": "internal_management",
       "as_of": "2026-03-31",
-      "preliminary": true,
+      "preliminary": false,
       "total_assets_bn_jpy": null,
       "target_pct": null,
       "doc_type": "2025年度決算説明資料(2026-05-26)",
       "doc_date": "2026-05-26",
       "source_url": "https://www.asahi-life.co.jp/company/intro/kessan/pdf/20260526_1.pdf",
-      "notes": "그룹(내부관리기준) 258.9%. 경제가치기준 지급여력비율(규제기준,2026.3말) 별도 약242%로 추산 병기됨(속보치). jesr_sources_2026Q1.csv에는 미수록 상태였음 - 이번에 신규 확보 (preliminary 판정: notes 내 '속보' 검출)",
+      "notes": "그룹 内部管理 ESR 258.9%(결산설명자료 p10·p14 직접 확인, 1년 VaR 99.5%). 같은 p10 에 규제기준 経済価値ベースSMR 見込み 242%(외부검증 전 暫定) 병기. **규제 확정치는 7월 통합보고서에서 나왔다** — 資料編 p44 連結 241.9%(적격 1,696,488/소요 701,247 백만엔), p9 単体 242.2% (https://www.asahi-life.co.jp/company/intro/disclosure/disclosure2026_08.pdf). 헤드라인은 회사 공표 기준(내부관리) 유지. 2026-09-13 원문 재확인, 속보 표기는 규제치 쪽에만 있어 preliminary=no",
       "target_range": null
     },
     {
@@ -182,16 +182,24 @@
       "category": "相互会社",
       "scope": "solo",
       "esr_pct": 248.5,
-      "basis": "J-ICS",
+      "basis": "internal_model",
       "as_of": "2026-03-31",
-      "preliminary": true,
+      "preliminary": false,
       "total_assets_bn_jpy": null,
       "target_pct": null,
       "doc_type": "2025年度決算(案)説明資料(2026-05-26)",
       "doc_date": "2026-05-26",
       "source_url": "https://www.fukoku-life.co.jp/about/ir/news/upload/20260525_4.pdf",
-      "notes": "연결ESR(내부모델)=244.7%, 단체ESR(내부모델)=248.5%(전년대비+6.9pt), 표준모델(규제속보치)=210%. esr_pct는 단체·내부모델 기준. jesr_sources_2026Q1.csv 舊치(260.9%,2025-09-30 H1)에서 갱신 (preliminary 판정: notes 내 '속보' 검출)",
-      "target_range": null
+      "notes": "単体ESR(内部モデル) 248.5%(결산(안)설명자료 p12 직접 확인, 전년말비 +6.9pt). 같은 페이지 連結ESR(内部モデル) 244.7%, 標準モデル(규제) 210%(속보). 헤드라인은 단체·내부모델 기준. 2026-09-13 원문 재확인 — 속보 표기는 연결·표준모델 쪽에만 있어 preliminary=no. 목표레인지 230~270%(p13)",
+      "target_range": {
+        "low_pct": 230,
+        "high_pct": 270,
+        "basis": "internal_model",
+        "inherited_from": null,
+        "source_doc": "2025年度決算(案)説明資料 p13 — PDF 직접 열람",
+        "source_url": "https://www.fukoku-life.co.jp/about/ir/news/upload/20260525_4.pdf",
+        "as_of": "2026-03-31"
+      }
     },
     {
       "company_jp": "T&Dホールディングス",
@@ -201,7 +209,7 @@
       "category": "HD上場",
       "scope": "group",
       "esr_pct": 222.0,
-      "basis": "J-ICS",
+      "basis": "internal_management",
       "as_of": "2026-03-31",
       "preliminary": false,
       "total_assets_bn_jpy": null,
@@ -228,7 +236,7 @@
       "category": "HD上場",
       "scope": "group",
       "esr_pct": 214.0,
-      "basis": "J-ICS",
+      "basis": "internal_model",
       "as_of": "2026-03-31",
       "preliminary": false,
       "total_assets_bn_jpy": null,
@@ -254,17 +262,25 @@
       "sector": "life",
       "category": "相互会社",
       "scope": "group",
-      "esr_pct": 208.0,
-      "basis": "J-ICS",
+      "esr_pct": 208.7,
+      "basis": "internal_model",
       "as_of": "2026-03-31",
       "preliminary": false,
       "total_assets_bn_jpy": null,
       "target_pct": null,
-      "doc_type": "決算説明資料(2026年5月)",
-      "doc_date": "2026-05",
-      "source_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/",
-      "notes": "그룹ESR 208%(2026-05 공표). jesr_sources_2026Q1.csv 舊치(216%,2025-03-31, FY2024)에서 갱신 - 신규제 재계산 가능성 있어 직접비교 주의",
-      "target_range": null
+      "doc_type": "統合報告書2026「経営活動と決算の概況」分冊(2026-07)",
+      "doc_date": null,
+      "source_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/status-2026/pdf/status_2026_06.pdf",
+      "notes": "2026-09-13 원문 대조로 정정. 종전 208.0 은 어느 1차 문서에도 없고 종전 source_url 은 PDF 가 아닌 디스클로저 디렉토리 페이지였다. 分冊 p10 직접 확인 — グループESR 208.7%(=標準モデルESR 과 内部モデルESR 중 낮은 쪽, 당기는 内部モデル 채택), 같은 페이지 標準モデル(규제 連結 SMR) 213.4%. 별책 업적자료 status_2026_01.pdf 의 告示74 요약표와 정합(連結 적격 12,307,019/소요 5,766,307 백만엔=213.4%, 単体 224.0%). 좌우 2단 감응도 블록이라 텍스트 순서로는 라벨↔수치가 뒤집혀 읽힌다 — 좌표(blocks) 파싱으로 확정",
+      "target_range": {
+        "low_pct": 165,
+        "high_pct": null,
+        "basis": "internal_model",
+        "inherited_from": null,
+        "source_doc": "統合報告書2026 経営活動と決算の概況 分冊 p10 — PDF 직접 열람",
+        "source_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/status-2026/pdf/status_2026_06.pdf",
+        "as_of": "2026-03-31"
+      }
     },
     {
       "company_jp": "住友生命保険",
@@ -274,7 +290,7 @@
       "category": "相互会社",
       "scope": "group",
       "esr_pct": 197.0,
-      "basis": "J-ICS",
+      "basis": "internal_management",
       "as_of": "2026-03-31",
       "preliminary": true,
       "total_assets_bn_jpy": null,
@@ -282,7 +298,7 @@
       "doc_type": "2025年度決算(案)説明用資料(2026-05-26)",
       "doc_date": "2026-05-26",
       "source_url": "https://www.sumitomolife.co.jp/about/pdf/company/ir/settlement/260526.pdf",
-      "notes": "연결ESR 197%(속보치, 전기대비+19pt). 단체 수치는 미확인. PDF 직접 텍스트추출은 실패(이미지형 추정), 검색결과 인용으로 확인. jesr_sources_2026Q1.csv 舊치(184%,2025-09-30 H1)에서 갱신 (preliminary 판정: notes 내 '속보' 검출)",
+      "notes": "連結 内部管理ESR 197%(결산(안)설명용자료 p9 직접 확인, 전년말비 +19pt, 원문 「※2 速報値」 명시 → preliminary=yes). 규제 経済価値SMR 은 원문이 「後日公表予定」으로 명시 — 미공표가 확인된 것이지 못 찾은 게 아니다. 2026-09-13 pymupdf 로 텍스트 추출 성공(종전 회차의 '추출 실패·검색결과 인용' 기록은 해소)",
       "target_range": null
     },
     {
@@ -293,7 +309,7 @@
       "category": "相互会社",
       "scope": "group",
       "esr_pct": 195.0,
-      "basis": "J-ICS",
+      "basis": "regulatory_standard",
       "as_of": "2026-03-31",
       "preliminary": true,
       "total_assets_bn_jpy": null,
@@ -301,7 +317,7 @@
       "doc_type": "2025年度決算の概要(2026-05)",
       "doc_date": null,
       "source_url": "https://www.nissay.co.jp/sites/default/files/assets/news/files/kessan202605_gaiyo.pdf",
-      "notes": "2026-09-13 1차출처 교체·수치 재확인. 종전 /kaisha/annai/kenzen/ 는 사이트 개편으로 404(현 경로는 /kaisha/gyoseki/). 決算概要 p8 직접 열람 — 「規制ESR(ソルベンシー・マージン比率) 連結195％・単体204％, 감독개입수준 100% 상회, 25년도 수치는 속보치」, 内部モデルESR 은 222%→195%. esr_pct 는 연결 기준 유지, 단체 204%는 참고 (preliminary 판정: notes 내 '속보' 검출)",
+      "notes": "2026-09-13 1차출처 교체·수치 재확인. 종전 /kaisha/annai/kenzen/ 는 사이트 개편으로 404(현 경로는 /kaisha/gyoseki/). 決算概要 p8 직접 열람 — 「規制ESR(ソルベンシー・マージン比率) 連結195％・単体204％, 감독개입수준 100% 상회, 25년도 수치는 속보치」, 内部モデルESR 은 222%→195%. esr_pct 는 연결 기준 유지, 단체 204%는 참고",
       "target_range": null
     },
     {
@@ -312,7 +328,7 @@
       "category": "上場",
       "scope": "solo",
       "esr_pct": 181.0,
-      "basis": "J-ICS",
+      "basis": "regulatory_standard",
       "as_of": "2026-03-31",
       "preliminary": true,
       "total_assets_bn_jpy": null,
@@ -320,8 +336,16 @@
       "doc_type": "決算・経営方針説明会資料(2026-05-29)",
       "doc_date": "2026-05-29",
       "source_url": "https://pdf.irpocket.com/C7181/fcDL/shwf/b6Hu.pdf",
-      "notes": "2026-09-13 수치 정정. 종전 220%는 「大量解約リスクを除いた場合」의 조정치였다 — 같은 자료 p35·p37 직접 확인: 「26.3末のESRは大量解約リスクの影響により181%1と、25.3末から15ポイント低下」, 適正水準 150~220%, 25.3末 新基準 196%·旧基準 204%. 有報(EDINET S100YD29, 2026-06-18) 본문도 「連結ソルベンシー・マージン比率(経済価値ベースのソルベンシー比率)は181％(監査未済の経済価値ベースのバランスシートに基づく暫定値)」로 일치. 220%는 참고치로 병기 (preliminary 판정: notes 내 '暫定' 검출)",
-      "target_range": null
+      "notes": "2026-09-13 수치 정정. 종전 220%는 「大量解約リスクを除いた場合」의 조정치였다 — 같은 자료 p35·p37 직접 확인: 「26.3末のESRは大量解約リスクの影響により181%1と、25.3末から15ポイント低下」, 適正水準 150~220%, 25.3末 新基準 196%·旧基準 204%. 有報(EDINET S100YD29, 2026-06-18) 본문도 「連結ソルベンシー・マージン比率(経済価値ベースのソルベンシー比率)は181％(監査未済の経済価値ベースのバランスシートに基づく暫定値)」로 일치. 220%는 참고치로 병기",
+      "target_range": {
+        "low_pct": 150,
+        "high_pct": 220,
+        "basis": "regulatory",
+        "inherited_from": null,
+        "source_doc": "2025年度決算・経営方針説明会資料 p35·p37 — PDF 직접 열람",
+        "source_url": "https://pdf.irpocket.com/C7181/fcDL/shwf/b6Hu.pdf",
+        "as_of": "2026-03-31"
+      }
     },
     {
       "company_jp": "ソニーフィナンシャルグループ",
@@ -331,7 +355,7 @@
       "category": "HD上場",
       "scope": "group",
       "esr_pct": 177.0,
-      "basis": "J-ICS",
+      "basis": "internal_model",
       "as_of": "2026-03-31",
       "preliminary": false,
       "total_assets_bn_jpy": 207800,
@@ -350,7 +374,7 @@
       "category": "子会社",
       "scope": "solo",
       "esr_pct": 162.0,
-      "basis": "J-ICS",
+      "basis": "internal_model",
       "as_of": "2026-03-31",
       "preliminary": false,
       "total_assets_bn_jpy": null,
@@ -358,7 +382,7 @@
       "doc_type": "News Release - 経済価値資本・ESR(2026-05-14)",
       "doc_date": "2026-05-14",
       "source_url": "https://www.sonylife.co.jp/company/news/2026/files/260514_ev-japanese.pdf",
-      "notes": "전기(2025-03-31) 168%에서 하락. PDF 직접 텍스트추출은 실패했으나 검색결과에 원문 수치 인용 확인(162%, 전년168%)",
+      "notes": "単体 内部モデルESR 162%(2026-05-14 뉴스릴리스 p1 요약표·p8 §1.6 직접 확인: 内部管理適格資本 19,106억엔/内部管理所要資本 11,809억엔, 1년 VaR 99.5%, 전기 168%). 규제 経済価値SMR 은 어느 공표문서에도 없다 — 10월말 디스클로저지에서 확보 필요. 2026-09-13 텍스트 추출 성공(이 사이트는 파이썬 TLS 악수가 실패해 curl 로 받아야 한다 — 도메인 문서 §4c tls_client_issue)",
       "target_range": null
     }
   ]

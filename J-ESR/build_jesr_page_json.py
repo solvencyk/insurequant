@@ -166,11 +166,28 @@ def build() -> dict:
                 total_assets_bn_jpy = _canon(tn * 1e4)  # 兆円 -> 億円 (x1e4)
             target_pct = (src.get("target_pct") or "").strip() or None
             basis = (src.get("esr_basis") or "").strip() or BASIS_DEFAULT
+        # census 의 esr_basis 는 1차 원문에서 확인한 산정기준이라 sources csv 조인보다 우선한다
+        # (2026-09-13 실측: 화면 15사 중 규제 표준모델 4 · 내부모델 7 · 내부관리 3 · 미확인 2.
+        #  화면은 이 값을 렌더하지 않지만, 서로 다른 기준을 한 줄로 세우고 있다는 사실이
+        #  데이터에 남아 있어야 한다 — 표기 방식은 owner 판단 대기)
+        census_basis = (r.get("esr_basis") or "").strip()
+        if census_basis:
+            basis = census_basis
 
-        preliminary, kw = _detect_preliminary(notes, doc_type)
-        if preliminary:
-            tag = f"(preliminary 판정: notes 내 '{kw}' 검출)"
-            notes = f"{notes} {tag}" if notes else tag
+        # census 에 명시열이 있으면 그게 정본이다. 키워드 탐지는 명시값이 없을 때만 쓰는
+        # 폴백 — 2026-09-13 실측에서 키워드 방식이 양방향으로 틀렸다(かんぽ는 일본어
+        # 원문 인용이라 놓쳤고, 朝日·富国은 notes 안의 *다른 수치*에 붙은 속보 표기를
+        # 헤드라인 값의 속보로 잘못 읽었다).
+        explicit = (r.get("preliminary") or "").strip().lower()
+        if explicit in ("yes", "true", "1"):
+            preliminary, kw = True, "census.preliminary=yes"
+        elif explicit in ("no", "false", "0"):
+            preliminary, kw = False, None
+        else:
+            preliminary, kw = _detect_preliminary(notes, doc_type)
+            if preliminary:
+                tag = f"(preliminary 판정: notes 내 '{kw}' 검출)"
+                notes = f"{notes} {tag}" if notes else tag
 
         records.append({
             "company_jp": company_jp,

@@ -1,7 +1,8 @@
 {
   "_meta": {
     "as_of": "2026-09-13",
-    "note": "티켓 inbox/jp/20260913T1610Z__owner__JP_MULTI__esr_target_ranges.md 산출. jp/jesr_esr.json 15건 전부 + jp/jesr_detail.json 10사 중 미중복 5사(Dai-ichi Life Insurance/NN Life/Tokio Marine & Nichido Fire/Mitsui Sumitomo Insurance/Sompo Japan Insurance) 포함 총 20사. 20분 상한·회사당 검색2·fetch2 제약으로 大手 상장HD 6사(Tokio Marine/MS&AD/Sompo/T&D 확보, Sony FG/Dai-ichi 일부만) 위주로 확보, 상호회사 5사(日本生命·住友生命·明治安田生命·朝日生命·富国生命)는 목표레인지 미공표로 全社 null. basis=regulatory 는 2026-03 신경제가치규제(J-ICS, 99.5% VaR) 기준 목표치, internal_99.95는 구기준(AA격 상당 사내모델) 목표치. PDF 다수가 이미지/스캔형이라 WebFetch 텍스트추출 실패 — 그 경우 WebSearch 스니펫 인용으로 교차확인했음을 policy_note에 명시, 직접열람 성공은 T&D ERM 페이지 1건뿐. 10월 말 재census 때 Sony FG/かんぽ生命/ライフネット生命/NN生命/상호회사 5사 재탐색 필요."
+    "note": "티켓 inbox/jp/20260913T1610Z__owner__JP_MULTI__esr_target_ranges.md 산출. jp/jesr_esr.json 15건 전부 + jp/jesr_detail.json 10사 중 미중복 5사(Dai-ichi Life Insurance/NN Life/Tokio Marine & Nichido Fire/Mitsui Sumitomo Insurance/Sompo Japan Insurance) 포함 총 20사. 20분 상한·회사당 검색2·fetch2 제약으로 大手 상장HD 6사(Tokio Marine/MS&AD/Sompo/T&D 확보, Sony FG/Dai-ichi 일부만) 위주로 확보, 상호회사 5사(日本生命·住友生命·明治安田生命·朝日生命·富国生命)는 목표레인지 미공표로 全社 null. basis=regulatory 는 2026-03 신경제가치규제(J-ICS, 99.5% VaR) 기준 목표치, internal_99.95는 구기준(AA격 상당 사내모델) 목표치. PDF 다수가 이미지/스캔형이라 WebFetch 텍스트추출 실패 — 그 경우 WebSearch 스니펫 인용으로 교차확인했음을 policy_note에 명시, 직접열람 성공은 T&D ERM 페이지 1건뿐. 10월 말 재census 때 Sony FG/かんぽ生命/ライフネット生命/NN生命/상호회사 5사 재탐색 필요. 2026-09-13: 상호회사 2사(富国·明治安田)의 null 은 오판이었다 — 각사 결산/통합보고서 원문에 목표레인지가 있다. 10월 재census 에서 나머지 null(日本生命·住友生命·かんぽ 등)도 결산자료 본문까지 열어 재확인할 것.",
+    "updated_at": "2026-09-13"
   },
   "ranges": [
     {
@@ -150,13 +151,13 @@
     {
       "company_jp": "かんぽ生命保険",
       "company_en": "Japan Post Insurance",
-      "low_pct": null,
-      "high_pct": null,
-      "basis": "unknown",
+      "low_pct": 150,
+      "high_pct": 220,
+      "basis": "regulatory",
       "confidence_level": null,
-      "policy_note": "2026-05-15 중기경영계획(2026~2028년도) 공표 확인했으나 ESR 목표레인지 구체 수치는 WebSearch 결과에 없음(PDF 직접열람 미시도, 시간상한).",
-      "source_url": "https://www.jp-life.japanpost.jp/IR/management/pdf/plan_20260515.pdf",
-      "source_doc": "中期経営計画(2026年度~2028年度)(2026-05-15) — 수치 미확인",
+      "policy_note": "2026-09-13 원문 확인. 決算・経営方針説明会資料 p35 「新資本規制のもとでも、ESR のターゲットレンジと水準に応じた経営行動は引き続き適用。適正水準は150%~220%を継続」. 같은 페이지에 자본수준 구간별 행동(220% 초과=추가 리스크테이크·환원 / 110% 미만=자본확충)이 표로 있다. 헤드라인 ESR 181% 는 규제(経済価値ベースSMR) 기준이라 레인지와 같은 축.",
+      "source_url": "https://pdf.irpocket.com/C7181/fcDL/shwf/b6Hu.pdf",
+      "source_doc": "2025年度決算・経営方針説明会資料 p35·p37 — PDF 직접 열람",
       "as_of": "2026-03-31",
       "inherited_from": null
     },
@@ -189,13 +190,13 @@
     {
       "company_jp": "富国生命保険",
       "company_en": "Fukoku Life Insurance",
-      "low_pct": null,
-      "high_pct": null,
-      "basis": "unknown",
+      "low_pct": 230,
+      "high_pct": 270,
+      "basis": "internal_model",
       "confidence_level": null,
-      "policy_note": "상호회사, ESR 목표레인지 공표 확인 안됨.",
-      "source_url": null,
-      "source_doc": null,
+      "policy_note": "2026-09-13 원문 확인(종전 '공표 확인 안됨'은 오판). 2025年度決算(案)説明資料 p13 「ESR をターゲットレンジ内(230%～270%)で維持」. 회사 헤드라인 ESR 은 단체·내부모델 기준(248.5%)이라 레인지도 같은 축으로 읽는다.",
+      "source_url": "https://www.fukoku-life.co.jp/about/ir/news/upload/20260525_4.pdf",
+      "source_doc": "2025年度決算(案)説明資料 p13 — PDF 직접 열람",
       "as_of": "2026-03-31",
       "inherited_from": null
     },
@@ -228,13 +229,13 @@
     {
       "company_jp": "明治安田生命保険",
       "company_en": "Meiji Yasuda Life Insurance",
-      "low_pct": null,
+      "low_pct": 165,
       "high_pct": null,
-      "basis": "unknown",
+      "basis": "internal_model",
       "confidence_level": null,
-      "policy_note": "상호회사. '健全性水準に応じた経営の方針' 페이지가 존재하나(정성적 프레임워크) 이번 검색에서 구체 수치 미확인.",
-      "source_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/mutual/soundness/",
-      "source_doc": "健全性水準に応じた経営の方針 페이지 — 수치 미확인",
+      "policy_note": "2026-09-13 원문 확인(종전 '수치 미확인'은 오판). 統合報告書2026「経営活動と決算の概況」分冊 p10 — 안정적 배당환원 등을 유지하는 수준으로 165% 이상 설정. 그룹ESR 정의는 標準モデル·内部モデル 중 낮은 쪽(당기 内部モデル 208.7%).",
+      "source_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/status-2026/pdf/status_2026_06.pdf",
+      "source_doc": "統合報告書2026 経営活動と決算の概況 分冊 p10 — PDF 직접 열람",
       "as_of": "2026-03-31",
       "inherited_from": null
     },
