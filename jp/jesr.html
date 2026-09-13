@@ -278,6 +278,21 @@
         </table>
       </div>
       <p class="small-muted" id="historyNote" style="margin-top:6px"></p>
+      <!-- owner 2026-09-13: 손보 종목별(火災·海上·傷害·自動車·自賠責·その他) 손해율/합산율, 생보 基礎利益·三利源 추이 -->
+      <div id="lobWrap" hidden style="margin-top:18px">
+        <h3 class="rank-group-title">種目別（当期）</h3>
+        <div class="table-container">
+          <table class="esr-table" id="lobTable"><thead id="lobTableHead"></thead><tbody id="lobTableBody"></tbody></table>
+        </div>
+        <p class="small-muted" id="lobNote" style="margin-top:6px"></p>
+      </div>
+      <div id="coreWrap" hidden style="margin-top:18px">
+        <h3 class="rank-group-title">基礎利益と三利源の推移（億円）</h3>
+        <div class="table-container">
+          <table class="esr-table" id="coreTable"><thead id="coreTableHead"></thead><tbody id="coreTableBody"></tbody></table>
+        </div>
+        <p class="small-muted" id="coreNote" style="margin-top:6px"></p>
+      </div>
     </section>
 
     <section class="panel" aria-labelledby="secAxes" id="secAxesWrap" hidden>
@@ -866,7 +881,8 @@
       // 같은 중첩 dict, esr_placeholder_locations 같은 배열도 섞여 온다(실측 jp/jesr_detail.json,
       // 2026-09-12). 이 표는 "값 표"(티켓 예시: 異常危険準備金 등 숫자 항목)이므로 숫자 항목만 남긴다
       // — 문자열/배열/객체는 자동으로 제외되어 별도 스킵리스트가 필요 없다.
-      var keys = Object.keys(axes).filter(function(k){ return typeof axes[k] === 'number'; });
+      // '_' 로 시작하는 키는 추출기 내부 보조값(_reserve_total_all 등) — 화면 제외(2026-09-13).
+      var keys = Object.keys(axes).filter(function(k){ return typeof axes[k] === 'number' && k.charAt(0) !== '_'; });
       if(!keys.length){ wrap.hidden = true; return; }
       wrap.hidden = false;
       var unit = function(k){ var l=META.labels&&META.labels[k]; return l&&l.unit; };
@@ -1112,13 +1128,61 @@
       var label = series.map(function(s){ return s.ja+' '+s.values.map(function(v,i){ return years[i]+' '+(v==null?'—':v.toFixed(1)+'%'); }).join('、'); }).join('。');
       return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(label)+'" style="width:100%;height:auto;max-width:760px">'+g+'</svg><div class="chart-legend">'+legend+'</div>';
     }
+    // 손보 종목별 표(by_line: {lines, labels_ja, items{lob_id:{line:{cur,prev}}}}) — 당기 값, 전기는 툴팁.
+    function renderLob(c){
+      var w = document.getElementById('lobWrap'); var bl = c.by_line;
+      if(!bl || !bl.items || !bl.lines){ w.hidden = true; return; }
+      var cols = [
+        {id:'lob_net_premiums_written', ja:'正味収入保険料', pct:false},
+        {id:'lob_net_claims_paid', ja:'正味支払保険金', pct:false},
+        {id:'lob_loss_ratio_pct', ja:'損害率', pct:true},
+        {id:'lob_expense_ratio_pct', ja:'事業費率', pct:true},
+        {id:'lob_combined_ratio_pct', ja:'合算率', pct:true}
+      ].filter(function(k){ return bl.items[k.id]; });
+      if(!cols.length){ w.hidden = true; return; }
+      w.hidden = false;
+      document.getElementById('lobTableHead').innerHTML = '<tr><th scope="col">種目</th>' + cols.map(function(k){ return '<th scope="col" class="num">'+esc(k.ja)+(k.pct?'':'（億円）')+'</th>'; }).join('') + '</tr>';
+      document.getElementById('lobTableBody').innerHTML = bl.lines.map(function(line){
+        var isTotal = line === 'total';
+        return '<tr'+(isTotal?' class="total-row"':'')+'><td>'+esc((bl.labels_ja||{})[line] || line)+'</td>' + cols.map(function(k){
+          var e = (bl.items[k.id]||{})[line] || {};
+          var cur = e.cur, prev = e.prev;
+          var txt = cur==null ? '—' : (k.pct ? fmtPct1(cur) : fmtEok(cur));
+          var tip = prev==null ? '' : ('前期 ' + (k.pct ? fmtPct1(prev) : fmtEok(prev)+'億円'));
+          return '<td class="num" title="'+esc(tip)+'">'+esc(txt)+'</td>';
+        }).join('') + '</tr>';
+      }).join('');
+      document.getElementById('lobNote').textContent = '出所: ディスクロージャー誌「保険引受の状況」（種目別）。合計行は損益の内訳と一致。金額は百万円を億円に換算、前期値はツールチップ。';
+    }
+    // 생보 基礎利益·三利源 추이(core_history: unit JPY_100million = 이미 억엔, labels_ja 동봉)
+    function renderCoreHistory(c){
+      var w = document.getElementById('coreWrap'); var ch = c.core_history;
+      if(!ch || !ch.series || !ch.fiscal_years){ w.hidden = true; return; }
+      var keys = Object.keys(ch.series).filter(function(k){ return (ch.series[k]||[]).some(function(v){ return v!=null; }); });
+      if(!keys.length){ w.hidden = true; return; }
+      w.hidden = false;
+      var years = ch.fiscal_years;
+      document.getElementById('coreTableHead').innerHTML = '<tr><th scope="col">指標</th>' + years.map(function(y){ return '<th scope="col" class="num">'+esc(y)+'</th>'; }).join('') + '</tr>';
+      document.getElementById('coreTableBody').innerHTML = keys.map(function(k){
+        var lab = (ch.labels_ja||{})[k] || labelOf(META, k, k);
+        var isTotal = /core_profit/.test(k);
+        return '<tr'+(isTotal?' class="total-row"':'')+'><td>'+esc(lab)+'</td>' + ch.series[k].map(function(v){
+          var txt = v==null ? '—' : (typeof v==='number' ? (v<0?'△':'')+Math.abs(v).toLocaleString('ja-JP',{maximumFractionDigits:1}) : String(v));
+          return '<td class="num">'+esc(txt)+'</td>';
+        }).join('') + '</tr>';
+      }).join('');
+      document.getElementById('coreNote').textContent = '出所: 各社決算説明資料・ディスクロージャー誌。三利源（利差・危険差・費差）の開示は任意のため、会社により保険関係差（危険差＋費差）のみの場合があります。';
+    }
     function renderProfitability(c){
       var wrap = document.getElementById('secProfitabilityWrap');
       var p = c.profit || {}; var h = c.history || {}; var ratios = p.ratios || {}; var core = p.core || {};
       var hasRatio = !!(ratios.pl_combined_ratio_pct || ratios.pl_loss_ratio_pct);
       var hasCore = !!(core.pl_core_profit || core.pl_interest_margin);
       var hasHist = !!(h.fiscal_years && h.series);
-      if(!hasRatio && !hasCore && !hasHist){ wrap.hidden = true; return; }
+      var hasLob = !!(c.by_line && c.by_line.items);
+      var hasCoreHist = !!(c.core_history && c.core_history.series);
+      renderLob(c); renderCoreHistory(c);
+      if(!hasRatio && !hasCore && !hasHist && !hasLob && !hasCoreHist){ wrap.hidden = true; return; }
       wrap.hidden = false;
       var cards = '';
       if(hasRatio){

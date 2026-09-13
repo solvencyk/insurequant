@@ -1,9 +1,21 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-13 (18) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-13 (19) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-13 (19) 손보 5사 종목별 층 `by_line` + 생보 5사 기초이익·三利源 `core_history` → `jp/jesr_detail.json` 10사(jp).**
+티켓 `inbox/jp/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`(answered). owner "손해율·사업비율·합산율이 종목별로 찢어져 있지 않나? 생보는
+이차·사차·비차 마진 통계가 있을 것" → ① 「保険引受の状況」 種目別 3표(正味収入保険料/正味支払保険金/比率)에서 火災·海上·傷害·自動車·自賠責·その他·合計 ×
+{prev,cur} 5항목(`lob_*`), 5사 gate 실패 0(B01 Σ종목=合計 는 6개 종목 각각 百万円 절사라 ±1 불가 → tol 6, 실측 차 0~3 / B02 合計=profit 층 30/30 / B03 종목 合算率
+항등식 전부 통과 / B04 정보성: TMNF その他 FY2025 損害率이 두 표에서 52.9 vs 55.0 — 원문 차이, 比率표 정본). au 는 자동차 0·傷害 78.6%(티켓 가정과 다름), 自賠責은
+4사 合算率 118~140%. ② 생보: curl 전 도메인 차단 → WebFetch 바이너리 저장으로 住友生命·日本生命·明治安田生命 결산설명자료 확보(`others/`), 第一生命 404 2회
+미확보(행 보존). **三利源 3분해 공시 0사** — 利差(順ざや)+保険関係(危険差+費差) 2분해가 표준, 住友生命만 「うち危険差」로 費差 파생 가능(L01 基礎利益≈Σ ±2 통과),
+5개년은 住友 그룹 기초이익만, 明治安田는 基礎利益 대신 業務利益. 5월 설명자료 기준이라 7월 본편에 三利源·5개년 표 가능성 남음(10월 재census). ③
+`extract_life_core_history.py`(신규, fitz words 위치 파싱)·builder `build_by_line_block`/`build_core_history_block`·생보 `esr_status:"life_core_only"`·self_check 확장,
+`_meta.coverage` detail_total 10 / esr_posted 2 / esr_not_yet 3 / life_core_only 5 / by_line_total 5, SELF-CHECK OK. 문서 §11·§9-9. 45분 규칙 10분 초과(생보 URL 탐색).
+`jp/*.html`·커밋·서브에이전트 없음. 다음 = 오케스트레이터 화면(`by_line.labels_ja`·`_meta.labels.hist_*`).
 
 **🟢 2026-09-13 (18) 대형 손보 3사(東京海上日動·三井住友海上·損保ジャパン) ESR 외 전 층 추출 → `jp/jesr_detail.json` 5사(jp).**
 티켓 `inbox/jp/20260913T0330Z__owner__JP_MULTI__big3_partial_detail.md`(answered). owner "손해율 있다면서 왜 사이트엔 2사만" → (17)에서 확보한 본편 3 PDF 에서
@@ -62,23 +74,6 @@ underwriting_ok/net_ok 는 실측치 그대로 JSON 에 싣고 게이트에는 �
 안 건드림, `git diff --stat HEAD -- J-ESR/esr_disclosure_schema.json` 이미 +107 줄) — 내 추가분은 `capital_tree`/`risk_tree`/`profit_flow`
 3키 + `_meta.labels` 2개(`pl_other_ordinary`/`pl_extraordinary_net`) + `generated_at` 뿐. `jp/*.html`·스키마 항목 정의·커밋 없음.
 
-**🟢 2026-09-13 (15) 손익 층에 재보험 다리(bridge) 6항목 추가 — 元受/受再/出再 분해, 손보 2사 검산 P14/P15 전부 통과(jp).**
-티켓 `inbox/jp/20260913T0025Z__owner__JP_MULTI__reinsurance_bridge.md`(answered). owner "정미(正味) 말고 원수(元受) 숫자를 따로 볼 수
-없나" → 디스클로저지 「保険引受の状況」 6개 하위표(元受/受再正味保険料·支払再保険料, 元受/受再正味保険金·回収再保険金)에서 추출. `esr_disclosure_schema.json`
-`layer:"profit"` 에 `table:"profit:bridge"` 6항목(`pl_gross_premiums_written`/`pl_assumed_premiums`/`pl_ceded_premiums`/
-`pl_gross_claims_paid`/`pl_assumed_claims`/`pl_recovered_reinsurance_claims`, `{cur,prev}` 百万円) + 기존 `pl_net_premiums_written`/
-`pl_net_claims_paid` 에 formula 추가(=元受+受再-出再). au 는 業績데이터 4of5 분책 p3~4(같은 분책, curl 불필요), Meiji Yasuda 는 본편
-60p p33~34(§9-6 에서 이미 확보한 파일). `extract_esr_template_samples.py` 에 `extract_bridge_block()`/`_bridge_row_value()`/
-`BRIDGE_ORDER`(회사별 6표 문서순서, au≠Meiji) — 각 항목은 "직전 항목의 合計 행 다음부터" 커서 전진 탐색(같은 라벨이 페이지 후반 각주에
-재등장하는 함정 회피). **버그 1건 발견·수정**: 처음 `grab(..., stop=heading_idx+80)` 로 합계 탐색을 좁혔더니 `grab()` 이 `stop` 으로
-라벨탐색과 값캡처 둘 다 잘라 au 保険料 두 항목이 빈 리스트로 나옴(P14 0/0 실패) → `stop` 제거(표 안 첫 合計가 항상 정답)로 해결.
-**실측**(exit 0): au P14/P15 cur·prev 4/4, Meiji 4/4 — au 保険料 16,646+0-8,509=8,137(정미 실측 8,137과 정확 일치), Meiji
-保険料 16,363+811-1,482=15,692(정미 실측과 정확 일치). 保険金 쪽은 백만원 절사로 ±1(au 9,595+0-7,655=1,940 vs 정미 실측 1,940
-정확, Meiji 4,733+552-176=5,109 vs 정미 실측 5,108, ±1). au 受再(수재) 두 항목은 원문 `該当事項はありません` → 0(null 아님). 스키마 42항목(36+6),
-`build_schema()` 자동생성이라 `pl_item_ref`/`table` 등 파생 필드 무손 반영. `docs/domains/jp_esr_disclosure_template.md` §9-7 신설(표·
-검산·추출특이점·회사별 순서표). **`build_jesr_detail_json.py` 는 손대지 않음**(publishing 편집 중) — `_meta.labels` 는
-`for it in schema["items"]` 로 스키마 전체를 자동 순회해 채우므로(434~446행), 오케스트레이터가 그 빌더를 재실행하기만 하면 새 6항목
-라벨이 자동 추가됨(수동 등재 불필요). `jp/*`·builder·서브에이전트·커밋 없음.
 
 ## Active follow-ups
 

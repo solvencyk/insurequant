@@ -2,6 +2,21 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-13 (19) -- 손보 종목별 층 `by_line` + 생보 기초이익·三利源 `core_history`, `jp/jesr_detail.json` 5사→10사
+
+- 티켓 `inbox/jp/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`. `extract_esr_template_samples.py` 에 `LOB_LINES`/`BYLINE_ITEMS`/`BYLINE_HEADINGS`,
+  `extract_byline()`(헤딩 앵커 + 7라벨 순차 커서 grab, 행 토큰 3개년×g, g=3 또는 Meiji g=2), `run_byline_checks()`(B01~B04), 5사 `byline_pages`, 스키마 `layer:"by_line"` 5항목.
+  결과 5사 gate 실패 0, 기존 층 산출 무변경. B01 tol 은 항 개수 6(종목별 百万円 절사 — 실측 차 TMNF 2·MSI 2~3·Sompo 3·Meiji 2~3·au 0).
+- 발견: au 는 자동차 종목 0(傷害 78.6%) — 티켓의 "au 는 자동차 중심" 은 원문과 다름. TMNF p91 두 표(正味支払保険金 표 vs 比率표)의 その他 FY2025 損害率이 52.9 vs 55.0(원문 차이,
+  나머지 41셀 일치) → B04 정보성 체크로 남기고 比率표를 정본으로.
+- 생보: 이 세션 curl 은 전 도메인 차단(google.com 포함) → WebFetch 가 PDF 바이너리를 저장해 주는 것을 이용해 住友生命(決算説明用資料 18p)·日本生命(業績の概要 28p)·
+  明治安田生命(決算説明資料 26p) 확보(`J-ESR/raw/fy2025_samples/others/`). 第一生命은 index.html/kessan pdf 404 2회로 미확보(행 보존, 사유 기록).
+  신규 `J-ESR/extract_life_core_history.py`: 슬라이드형 PDF 라 텍스트 레이어에서 라벨/값이 뒤섞여 fitz `words` 를 y 로 묶는 위치 파싱 → `life_core_history.json`
+  (L01 住友 基礎利益≈保険関係差+順ざや ±2, L02 明治安田 業務利益=保険関係+運用関係 정확, 4/4). **표본 三利源 3분해 공시 0사**(2분해 표준, 住友만 危険差 별도→費差 파생).
+- `build_jesr_detail_json.py`: `build_by_line_block`/`build_core_history_block`, 생보 5사 `esr_status:"life_core_only"`(ESR/profit 블록 fabricate 없음, headline.esr_pct 는
+  `jp/jesr_esr.json` 기공표값), `CORE_HISTORY_LABELS` 8개, self_check 확장(by_line 게이트/라벨, core_history 5년폭·not_acquired 사유). SELF-CHECK OK exit 0.
+- 문서 `docs/domains/jp_esr_disclosure_template.md` §11 "생보 3이원 census" + §9-9 종목별 층. 45분 규칙 10분 초과(생보 URL 탐색 WebFetch 7회).
+
 ## 2026-09-13 (18) -- 대형 손보 3사 본편에서 ESR 외 전 층 추출, `jp/jesr_detail.json` 2사→5사
 
 - 티켓 `inbox/jp/20260913T0330Z__owner__JP_MULTI__big3_partial_detail.md`. (17)에서 확보한 `J-ESR/raw/fy2025_samples/others/` 3 PDF(TMNF 292p·MSI 272p·

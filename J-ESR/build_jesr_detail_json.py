@@ -384,6 +384,58 @@ def r1(x):
     return round(x, 1) if isinstance(x, (int, float)) else x
 
 
+LIFE_CORE_PATH = SCHEMA_PATH.parent / "raw" / "fy2025_samples" / "life_core_history.json"
+
+# core_history ids are not schema items (life sample values come from J-ESR/extract_life_core_history.py)
+CORE_HISTORY_LABELS = {
+    "hist_core_profit": {"ja": "基礎利益", "ko": "기초이익(단체)", "unit": "JPY_100million"},
+    "hist_core_profit_group": {"ja": "グループ基礎利益", "ko": "기초이익(그룹 합산)", "unit": "JPY_100million"},
+    "hist_interest_margin": {"ja": "利差損益", "ko": "이차손익(三利源)", "unit": "JPY_100million"},
+    "hist_mortality_margin": {"ja": "危険差損益", "ko": "위험차손익(三利源)", "unit": "JPY_100million"},
+    "hist_expense_margin": {"ja": "費差損益", "ko": "비차손익(三利源)", "unit": "JPY_100million"},
+    "hist_insurance_margin": {"ja": "保険関係損益", "ko": "보험관계손익(危険差+費差 합산 공시형)", "unit": "JPY_100million"},
+    "hist_operating_profit": {"ja": "業務利益", "ko": "업무이익(기초이익에서 표준책임준비금 적립 영향 제외)", "unit": "JPY_100million"},
+    "hist_investment_margin": {"ja": "運用関係損益", "ko": "운용관계손익", "unit": "JPY_100million"},
+}
+
+
+def build_by_line_block(byline_raw, lob_lines):
+    """layer by_line (2026-09-13 ticket 20260913T0400Z) — 損保 種目別 표 3개. Published shape:
+    {"unit", "lines":[code...], "labels_ja":{code: 原文}, "items":{lob_id:{code:{prev,cur}}}, "checks":{...}}.
+    Only lob_* ids (never the private _loss_ratio_from_claims_table cross-ref)."""
+    values = byline_raw.get("values") or {}
+    items = {k: v for k, v in values.items() if k.startswith("lob_") and isinstance(v, dict)}
+    checks = byline_raw.get("checks") or []
+    gate = [c for c in checks if c.get("gate", True)]
+    return {
+        "unit": "JPY_million",
+        "lines": [c for c, _ja in lob_lines],
+        "labels_ja": {c: ja for c, ja in lob_lines},
+        "items": items,
+        "checks": {"pass": sum(1 for c in gate if c["pass"]), "total": len(gate),
+                   "failed": [c["id"] for c in gate if not c["pass"]],
+                   "info_failed": [c["id"] for c in checks if not c.get("gate", True) and not c["pass"]]},
+    }
+
+
+def build_core_history_block(entry, years):
+    """layer core_history (life): {fiscal_years, unit, series:{id:[v...]}, labels_ja, three_source, source}."""
+    series = {}
+    for hid, per_year in (entry.get("values") or {}).items():
+        if isinstance(per_year, dict) and any(per_year.get(y) is not None for y in years):
+            series[hid] = [per_year.get(y) for y in years]
+    return {
+        "fiscal_years": years,
+        "unit": entry.get("unit_disclosed") or "JPY_100million",
+        "series": series,
+        "labels_ja": entry.get("labels_ja") or {},
+        "pages": entry.get("pages") or {},
+        "three_source": entry.get("three_source"),
+        "status": "extracted" if series else "not_acquired",
+        "notes": entry.get("notes") or [],
+    }
+
+
 def build_history_block(history_raw):
     """Assemble the history block (2026-09-12 ticket 20260912T1440Z) — 主要な経営指標等の推移
     5개년표. Extraction stores each id as a {fiscal_year: value} dict (schema/self-describing);
@@ -478,6 +530,15 @@ def build(extracted, schema, jesr_master, jesr_esr):
         "ja": "特別損益", "ko": "특별손익 순액(파생: 특별이익-특별손실)",
         "unit": "JPY_million", "kics_item_ref": None, "pl_item_ref": None,
     }
+
+    for hid, lab in CORE_HISTORY_LABELS.items():
+        labels.setdefault(hid, {**lab, "kics_item_ref": None, "pl_item_ref": None})
+    lob_lines = []
+    for it in schema["items"]:
+        if it.get("layer") == "by_line" and it.get("line_codes"):
+            ja_tail = it["labels_ja"][-len(it["line_codes"]):]
+            lob_lines = list(zip(it["line_codes"], ja_tail))
+            break
 
     # capital_tree / risk_tree (2026-09-13): schema-structural parent -> children
     # map over the esr layer, built once (shared by every company's tree walk).
@@ -585,6 +646,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
         capital_tree = build_tree("eligible_capital", merged, items_by_id, children_map) if esr else []
         risk_tree = build_tree("rc_pre_tax", merged, items_by_id, children_map) if esr else []
         profit_flow = build_profit_flow(comp.get("profit") or {}, items_by_id, comp.get("sector"))
+        by_line = build_by_line_block(comp["by_line"], lob_lines) if comp.get("by_line") else None
 
         companies_out.append({
             "id": cid,
@@ -616,7 +678,30 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "capital_tree": capital_tree,
             "risk_tree": risk_tree,
             "profit_flow": profit_flow,
+            "by_line": by_line,
         })
+
+    # 2026-09-13 (ticket 20260913T0400Z): life insurers enter with the core_history layer only
+    # (基礎利益·三利源). esr_status "life_core_only" -- no ESR/profit/history blocks are fabricated;
+    # headline reuses the already-published group/solo ESR from jp/jesr_esr.json when that record exists.
+    if LIFE_CORE_PATH.exists():
+        life = load_json(LIFE_CORE_PATH)
+        years = life.get("fiscal_years") or ["FY2021", "FY2022", "FY2023", "FY2024", "FY2025"]
+        for cid, entry in life["companies"].items():
+            if any(c["id"] == cid for c in companies_out):
+                continue
+            cen = entry["company_en"]
+            pub = public_by_en.get(cen) or {}
+            companies_out.append({
+                "id": cid, "company_jp": entry.get("company_jp"), "company_en": cen, "sector": "life",
+                "scope": entry.get("scope"), "as_of": "2026-03-31", "esr_status": "life_core_only", "esr_placeholder": None,
+                "source_url": entry.get("source_url"), "doc_type": entry.get("doc_type"), "doc_date": None,
+                "headline": {"eligible_capital": None, "required_capital": None, "esr_pct": pub.get("esr_pct"), "preliminary": pub.get("preliminary"),
+                             "esr_scope": pub.get("esr_scope") or pub.get("scope")},
+                "capital": {}, "risk": {}, "market_sub": {}, "sensitivity": {}, "aggregation": None, "axes": {}, "items": {},
+                "profit": None, "history": None, "capital_tree": [], "risk_tree": [], "profit_flow": None, "by_line": None,
+                "core_history": build_core_history_block(entry, years),
+            })
 
     meta_src = jesr_esr.get("_meta", {})
     return {
@@ -633,6 +718,8 @@ def build(extracted, schema, jesr_master, jesr_esr):
                 "detail_total": len(companies_out),
                 "esr_posted": sum(1 for c in companies_out if c["esr_status"] == "posted"),
                 "esr_not_yet": sum(1 for c in companies_out if c["esr_status"] == "not_yet"),
+                "life_core_only": sum(1 for c in companies_out if c["esr_status"] == "life_core_only"),
+                "by_line_total": sum(1 for c in companies_out if c.get("by_line")),
                 "posted_total": len(jesr_esr.get("records", [])),
                 "census_total": meta_src.get("census", {}).get("total"),
             },
@@ -660,6 +747,29 @@ def self_check(out, jesr_esr):
 
     for c in companies:
         cen = c["company_en"]
+        if c.get("esr_status") == "life_core_only":
+            ch = c.get("core_history") or {}
+            if ch.get("status") == "extracted":
+                missing = [k for k in ch.get("series", {}) if k not in labels]
+                if missing:
+                    errors.append(f"{cen}: core_history ids missing from _meta.labels: {missing}")
+                if len(ch.get("fiscal_years", [])) != 5 or any(len(v) != 5 for v in ch.get("series", {}).values()):
+                    errors.append(f"{cen}: core_history series must be 5 fiscal years wide")
+            elif not ch.get("notes"):
+                errors.append(f"{cen}: core_history not_acquired without a reason note")
+            if c["headline"]["eligible_capital"] is not None or c["capital_tree"] or c["profit"] is not None:
+                errors.append(f"{cen}: life_core_only must not carry esr/profit blocks")
+            continue
+        bl = c.get("by_line")
+        if c.get("sector") == "nonlife":
+            if not bl or not bl.get("items"):
+                errors.append(f"{cen}: nonlife company without by_line items")
+            elif bl["checks"]["failed"]:
+                errors.append(f"{cen}: by_line gate checks failed: {bl['checks']['failed']}")
+            else:
+                missing = [k for k in bl["items"] if k not in labels]
+                if missing:
+                    errors.append(f"{cen}: by_line ids missing from _meta.labels: {missing}")
         if c.get("esr_status") == "not_yet":
             # 2026-09-13 (ticket 20260913T0330Z): ESR layer absent by disclosure timing (2026-10-31) --
             # headline/capital/risk must be EMPTY (never a guessed skeleton); profit/history are checked
@@ -891,6 +1001,12 @@ def main():
 
     print(f"wrote {OUT_PATH} -- companies={len(out['companies'])}")
     for c in out["companies"]:
+        if c.get("esr_status") == "life_core_only":
+            ch = c.get("core_history") or {}
+            print(f"  {c['id']}: life_core_only status={ch.get('status')} series={sorted(ch.get('series', {}))}")
+            continue
+        bl = c.get("by_line") or {}
+        print(f"  {c['id']}: by_line items={len(bl.get('items', {}))} checks={bl.get('checks', {}).get('pass')}/{bl.get('checks', {}).get('total')}")
         print(
             f"  {c['id']}: esr_pct={c['headline']['esr_pct']} "
             f"eligible={c['headline']['eligible_capital']} "

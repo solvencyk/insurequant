@@ -3,6 +3,24 @@
 > `TODO_jp.md` Status 최신 5개 유지 원칙에 따라 밀려난 항목을 한 글자도 고치지 않고 여기로 옮긴다.
 > 최신이 위. 필요할 때만 연다(changelog 와 같은 원칙).
 
+**🟢 2026-09-13 (15) 손익 층에 재보험 다리(bridge) 6항목 추가 — 元受/受再/出再 분해, 손보 2사 검산 P14/P15 전부 통과(jp).**
+티켓 `inbox/jp/20260913T0025Z__owner__JP_MULTI__reinsurance_bridge.md`(answered). owner "정미(正味) 말고 원수(元受) 숫자를 따로 볼 수
+없나" → 디스클로저지 「保険引受の状況」 6개 하위표(元受/受再正味保険料·支払再保険料, 元受/受再正味保険金·回収再保険金)에서 추출. `esr_disclosure_schema.json`
+`layer:"profit"` 에 `table:"profit:bridge"` 6항목(`pl_gross_premiums_written`/`pl_assumed_premiums`/`pl_ceded_premiums`/
+`pl_gross_claims_paid`/`pl_assumed_claims`/`pl_recovered_reinsurance_claims`, `{cur,prev}` 百万円) + 기존 `pl_net_premiums_written`/
+`pl_net_claims_paid` 에 formula 추가(=元受+受再-出再). au 는 業績데이터 4of5 분책 p3~4(같은 분책, curl 불필요), Meiji Yasuda 는 본편
+60p p33~34(§9-6 에서 이미 확보한 파일). `extract_esr_template_samples.py` 에 `extract_bridge_block()`/`_bridge_row_value()`/
+`BRIDGE_ORDER`(회사별 6표 문서순서, au≠Meiji) — 각 항목은 "직전 항목의 合計 행 다음부터" 커서 전진 탐색(같은 라벨이 페이지 후반 각주에
+재등장하는 함정 회피). **버그 1건 발견·수정**: 처음 `grab(..., stop=heading_idx+80)` 로 합계 탐색을 좁혔더니 `grab()` 이 `stop` 으로
+라벨탐색과 값캡처 둘 다 잘라 au 保険料 두 항목이 빈 리스트로 나옴(P14 0/0 실패) → `stop` 제거(표 안 첫 合計가 항상 정답)로 해결.
+**실측**(exit 0): au P14/P15 cur·prev 4/4, Meiji 4/4 — au 保険料 16,646+0-8,509=8,137(정미 실측 8,137과 정확 일치), Meiji
+保険料 16,363+811-1,482=15,692(정미 실측과 정확 일치). 保険金 쪽은 백만원 절사로 ±1(au 9,595+0-7,655=1,940 vs 정미 실측 1,940
+정확, Meiji 4,733+552-176=5,109 vs 정미 실측 5,108, ±1). au 受再(수재) 두 항목은 원문 `該当事項はありません` → 0(null 아님). 스키마 42항목(36+6),
+`build_schema()` 자동생성이라 `pl_item_ref`/`table` 등 파생 필드 무손 반영. `docs/domains/jp_esr_disclosure_template.md` §9-7 신설(표·
+검산·추출특이점·회사별 순서표). **`build_jesr_detail_json.py` 는 손대지 않음**(publishing 편집 중) — `_meta.labels` 는
+`for it in schema["items"]` 로 스키마 전체를 자동 순회해 채우므로(434~446행), 오케스트레이터가 그 빌더를 재실행하기만 하면 새 6항목
+라벨이 자동 추가됨(수동 등재 불필요). `jp/*`·builder·서브에이전트·커밋 없음.
+
 **🟢 2026-09-12 (14) 스키마에 시계열 층 `layer:"history"` 13항목(FY2021~FY2025) + 손보 2사 5개년 추출·검산 H01~H02(jp).**
 티켓 `inbox/jp/20260912T1440Z__owner__JP_MULTI__pl_history_5y.md`(answered). owner "손해율·사업비율·합산비율 시계열을 쭉 보여줘도
 좋겠다" → profit 층({prev,cur} 2개년)의 확장. `J-ESR/esr_disclosure_schema.json` 에 history 13(값 10 + 생보 id 3개 정의만:

@@ -5,7 +5,8 @@
     "esr": "regulatory ESR tables (T1~T8)",
     "article_axes": "FSA monitoring-report axes from other sections (docs/domains/claude-agent-jp.md §4b): catastrophe_reserve_adequacy / air_used / interest_margin_sign + ESR placeholder skeleton",
     "profit": "J-GAAP statutory P&L layer (ticket 20260912T1150Z): 損益計算書 spine + 損保 保険引受利益·資産運用損益·損害率/事業費率/合算率 + 生保 基礎利益·キャピタル/臨時·三利源 + accounting-basis meta. Values are {prev, cur} pairs.",
-    "history": "5개년 시계열 층 (ticket 20260912T1440Z): 「主要な経営指標等の推移」 표에서 정미수입보険料/経常利益/当期純利益/損害率/事業費率/合算率/総資産/純資産/(旧基準SMR·新基準ESR) 를 FY2021~FY2025 5개 사업연도로 뽑는다. 生保 id 3개(hist_core_profit/hist_premium_income/hist_policy_reserves)는 id만 정의, 표본 손보 2사엔 미적용."
+    "history": "5개년 시계열 층 (ticket 20260912T1440Z): 「主要な経営指標等の推移」 표에서 정미수입보険料/経常利益/当期純利益/損害率/事業費率/合算率/総資産/純資産/(旧基準SMR·新基準ESR) 를 FY2021~FY2025 5개 사업연도로 뽑는다. 生保 id 3개(hist_core_profit/hist_premium_income/hist_policy_reserves)는 id만 정의, 표본 손보 2사엔 미적용.",
+    "by_line": "종목별 층 (ticket 20260913T0400Z): 損保 保険引受の状況 種目別 3표(正味収入保険料 / 正味支払保険金 / 正味損害率·正味事業費率·合算率)에서 火災·海上·傷害·自動車·自賠責·その他·合計 × {prev,cur}. 종목 코드 fire|marine|pa|motor|cali|other|total."
   },
   "unit_note": "amounts as disclosed (JPY_million = 百万円) unless the item unit says otherwise (negative_spread_* are 億円 in the life summary box). census/master converts to 億円 (÷100). Record unit_disclosed per row — large life insurers may print 億円.",
   "null_note": "dash (－ / ー) = not applicable; stored as null, treated as 0 in formulas.",
@@ -35,6 +36,9 @@
     "profit:three": "生保 三利源 표 (利差損益/危険差損益/費差損益) — 대형사만, NN Life 는 없음",
     "profit:meta": "회계방침 절(会計方針に関する事項)·감사 문구·損益計算書 양식에서 회계기준 판정",
     "profit:bridge": "損保 保険引受の状況 — 元受/受再/出再 재보험 다리 6표(각 표 종목별+合計행, ticket 20260913T0025Z). pl_net_premiums_written = gross+assumed-ceded, pl_net_claims_paid = gross_claims+assumed_claims-recovered",
+    "by_line:premiums": "損保 正味収入保険料 種目別 표 (3개년 × (金額,構成比[,増減率]))",
+    "by_line:claims": "損保 正味支払保険金 種目別 표 (3개년 × (金額,構成比[,正味損害率]))",
+    "by_line:ratio": "損保 正味損害率、正味事業費率及びその合算率 種目別 표 (3개년 × (損害率,事業費率,合算率))",
     "history:summary5": "主要な経営指標等の推移 5개년표 (au 業績データ 편 p2 / Meiji Yasuda 본편 p9) — 정미수입보험료·経常利益·当期純利益·(손보만)損害率·事業費率·総資産額·純資産額·単体ベースのソルベンシー・マージン比率(旧基準 괄호/신기준 ESR 비괄호)"
   },
   "sensitivity": {
@@ -1962,7 +1966,7 @@
       "layer": "article_axes",
       "table": "axes:catastrophe_reserve_adequacy",
       "labels_ja": [
-        "火災 行 × 異常危険準備金 列"
+        "異常危険準備金（火災）"
       ],
       "ko": "화재 종목 이상위험준비금 잔액(금융청 부족 지적 대상)",
       "unit": "JPY_million",
@@ -2995,6 +2999,174 @@
       "sector_scope": "both",
       "kics_item_ref": null,
       "pl_item_ref": null
+    },
+    {
+      "id": "lob_net_premiums_written",
+      "layer": "by_line",
+      "table": "by_line:premiums",
+      "labels_ja": [
+        "正味収入保険料",
+        "火災",
+        "海上",
+        "傷害",
+        "自動車",
+        "自動車損害賠償責任",
+        "その他",
+        "合計"
+      ],
+      "ko": "종목별 정미수입보험료",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "line×prev+cur",
+      "sector_scope": "nonlife",
+      "line_codes": [
+        "fire",
+        "marine",
+        "pa",
+        "motor",
+        "cali",
+        "other",
+        "total"
+      ],
+      "kics_item_ref": null,
+      "pl_item_ref": "pl_net_premiums_written"
+    },
+    {
+      "id": "lob_net_claims_paid",
+      "layer": "by_line",
+      "table": "by_line:claims",
+      "labels_ja": [
+        "正味支払保険金",
+        "火災",
+        "海上",
+        "傷害",
+        "自動車",
+        "自動車損害賠償責任",
+        "その他",
+        "合計"
+      ],
+      "ko": "종목별 정미지급보험금",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "line×prev+cur",
+      "sector_scope": "nonlife",
+      "line_codes": [
+        "fire",
+        "marine",
+        "pa",
+        "motor",
+        "cali",
+        "other",
+        "total"
+      ],
+      "kics_item_ref": null,
+      "pl_item_ref": "pl_net_claims_paid"
+    },
+    {
+      "id": "lob_loss_ratio_pct",
+      "layer": "by_line",
+      "table": "by_line:ratio",
+      "labels_ja": [
+        "正味損害率",
+        "正味事業費率",
+        "火災",
+        "海上",
+        "傷害",
+        "自動車",
+        "自動車損害賠償責任",
+        "その他",
+        "合計"
+      ],
+      "ko": "종목별 정미손해율 %",
+      "unit": "pct",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "line×prev+cur",
+      "sector_scope": "nonlife",
+      "line_codes": [
+        "fire",
+        "marine",
+        "pa",
+        "motor",
+        "cali",
+        "other",
+        "total"
+      ],
+      "kics_item_ref": null,
+      "pl_item_ref": "pl_loss_ratio_pct"
+    },
+    {
+      "id": "lob_expense_ratio_pct",
+      "layer": "by_line",
+      "table": "by_line:ratio",
+      "labels_ja": [
+        "正味損害率",
+        "正味事業費率",
+        "火災",
+        "海上",
+        "傷害",
+        "自動車",
+        "自動車損害賠償責任",
+        "その他",
+        "合計"
+      ],
+      "ko": "종목별 정미사업비율 %",
+      "unit": "pct",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "line×prev+cur",
+      "sector_scope": "nonlife",
+      "line_codes": [
+        "fire",
+        "marine",
+        "pa",
+        "motor",
+        "cali",
+        "other",
+        "total"
+      ],
+      "kics_item_ref": null,
+      "pl_item_ref": "pl_expense_ratio_pct"
+    },
+    {
+      "id": "lob_combined_ratio_pct",
+      "layer": "by_line",
+      "table": "by_line:ratio",
+      "labels_ja": [
+        "正味損害率",
+        "正味事業費率",
+        "火災",
+        "海上",
+        "傷害",
+        "自動車",
+        "自動車損害賠償責任",
+        "その他",
+        "合計"
+      ],
+      "ko": "종목별 합산율 %",
+      "unit": "pct",
+      "parent": null,
+      "formula": "= lob_loss_ratio_pct + lob_expense_ratio_pct",
+      "required": false,
+      "column": "line×prev+cur",
+      "sector_scope": "nonlife",
+      "line_codes": [
+        "fire",
+        "marine",
+        "pa",
+        "motor",
+        "cali",
+        "other",
+        "total"
+      ],
+      "kics_item_ref": null,
+      "pl_item_ref": "pl_combined_ratio_pct"
     },
     {
       "id": "hist_net_premiums_written",

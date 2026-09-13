@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T00:15:20.739344Z",
+    "generated_at": "2026-09-13T01:18:51.439251Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -841,7 +841,7 @@
         "pl_item_ref": null
       },
       "cat_reserve_fire": {
-        "ja": "火災 行 × 異常危険準備金 列",
+        "ja": "異常危険準備金（火災）",
         "ko": "화재 종목 이상위험준비금 잔액(금융청 부족 지적 대상)",
         "unit": "JPY_million",
         "kics_item_ref": null,
@@ -1260,6 +1260,41 @@
         "kics_item_ref": null,
         "pl_item_ref": null
       },
+      "lob_net_premiums_written": {
+        "ja": "正味収入保険料",
+        "ko": "종목별 정미수입보험료",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": "pl_net_premiums_written"
+      },
+      "lob_net_claims_paid": {
+        "ja": "正味支払保険金",
+        "ko": "종목별 정미지급보험금",
+        "unit": "JPY_million",
+        "kics_item_ref": null,
+        "pl_item_ref": "pl_net_claims_paid"
+      },
+      "lob_loss_ratio_pct": {
+        "ja": "正味損害率",
+        "ko": "종목별 정미손해율 %",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": "pl_loss_ratio_pct"
+      },
+      "lob_expense_ratio_pct": {
+        "ja": "正味損害率",
+        "ko": "종목별 정미사업비율 %",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": "pl_expense_ratio_pct"
+      },
+      "lob_combined_ratio_pct": {
+        "ja": "正味損害率",
+        "ko": "종목별 합산율 %",
+        "unit": "pct",
+        "kics_item_ref": null,
+        "pl_item_ref": "pl_combined_ratio_pct"
+      },
       "hist_net_premiums_written": {
         "ja": "正味収入保険料",
         "ko": "정미수입보험료 5개년",
@@ -1364,13 +1399,64 @@
         "unit": "JPY_million",
         "kics_item_ref": null,
         "pl_item_ref": null
+      },
+      "hist_core_profit_group": {
+        "ja": "グループ基礎利益",
+        "ko": "기초이익(그룹 합산)",
+        "unit": "JPY_100million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_interest_margin": {
+        "ja": "利差損益",
+        "ko": "이차손익(三利源)",
+        "unit": "JPY_100million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_mortality_margin": {
+        "ja": "危険差損益",
+        "ko": "위험차손익(三利源)",
+        "unit": "JPY_100million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_expense_margin": {
+        "ja": "費差損益",
+        "ko": "비차손익(三利源)",
+        "unit": "JPY_100million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_insurance_margin": {
+        "ja": "保険関係損益",
+        "ko": "보험관계손익(危険差+費差 합산 공시형)",
+        "unit": "JPY_100million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_operating_profit": {
+        "ja": "業務利益",
+        "ko": "업무이익(기초이익에서 표준책임준비금 적립 영향 제외)",
+        "unit": "JPY_100million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
+      },
+      "hist_investment_margin": {
+        "ja": "運用関係損益",
+        "ko": "운용관계손익",
+        "unit": "JPY_100million",
+        "kics_item_ref": null,
+        "pl_item_ref": null
       }
     },
     "next_update": "2026-10-31",
     "coverage": {
-      "detail_total": 5,
+      "detail_total": 10,
       "esr_posted": 2,
       "esr_not_yet": 3,
+      "life_core_only": 5,
+      "by_line_total": 5,
       "posted_total": 15,
       "census_total": 79
     }
@@ -1435,8 +1521,8 @@
         "top_sqrt": 1257.4,
         "simple_sum": 1531,
         "reproduced": true,
-        "checks_pass": 83,
-        "checks_total": 83,
+        "checks_pass": 105,
+        "checks_total": 105,
         "deviations": []
       },
       "axes": {
@@ -2132,6 +2218,185 @@
           "ordinary_ok": true,
           "net_ok": false
         }
+      },
+      "by_line": {
+        "unit": "JPY_million",
+        "lines": [
+          "fire",
+          "marine",
+          "pa",
+          "motor",
+          "cali",
+          "other",
+          "total"
+        ],
+        "labels_ja": {
+          "fire": "火災",
+          "marine": "海上",
+          "pa": "傷害",
+          "motor": "自動車",
+          "cali": "自動車損害賠償責任",
+          "other": "その他",
+          "total": "合計"
+        },
+        "items": {
+          "lob_net_premiums_written": {
+            "fire": {
+              "prev": null,
+              "cur": null
+            },
+            "marine": {
+              "prev": null,
+              "cur": null
+            },
+            "pa": {
+              "prev": 6493,
+              "cur": 6398
+            },
+            "motor": {
+              "prev": null,
+              "cur": null
+            },
+            "cali": {
+              "prev": null,
+              "cur": null
+            },
+            "other": {
+              "prev": 1483,
+              "cur": 1738
+            },
+            "total": {
+              "prev": 7976,
+              "cur": 8137
+            }
+          },
+          "lob_net_claims_paid": {
+            "fire": {
+              "prev": null,
+              "cur": null
+            },
+            "marine": {
+              "prev": null,
+              "cur": null
+            },
+            "pa": {
+              "prev": 1536,
+              "cur": 1631
+            },
+            "motor": {
+              "prev": null,
+              "cur": null
+            },
+            "cali": {
+              "prev": null,
+              "cur": null
+            },
+            "other": {
+              "prev": 332,
+              "cur": 309
+            },
+            "total": {
+              "prev": 1868,
+              "cur": 1940
+            }
+          },
+          "lob_loss_ratio_pct": {
+            "fire": {
+              "prev": null,
+              "cur": null
+            },
+            "marine": {
+              "prev": null,
+              "cur": null
+            },
+            "pa": {
+              "prev": 29.5,
+              "cur": 33.8
+            },
+            "motor": {
+              "prev": null,
+              "cur": null
+            },
+            "cali": {
+              "prev": null,
+              "cur": null
+            },
+            "other": {
+              "prev": 28.8,
+              "cur": 24.5
+            },
+            "total": {
+              "prev": 29.4,
+              "cur": 31.8
+            }
+          },
+          "lob_expense_ratio_pct": {
+            "fire": {
+              "prev": null,
+              "cur": null
+            },
+            "marine": {
+              "prev": null,
+              "cur": null
+            },
+            "pa": {
+              "prev": 43.3,
+              "cur": 44.3
+            },
+            "motor": {
+              "prev": null,
+              "cur": null
+            },
+            "cali": {
+              "prev": null,
+              "cur": null
+            },
+            "other": {
+              "prev": 40.2,
+              "cur": 20.6
+            },
+            "total": {
+              "prev": 42.7,
+              "cur": 39.2
+            }
+          },
+          "lob_combined_ratio_pct": {
+            "fire": {
+              "prev": null,
+              "cur": null
+            },
+            "marine": {
+              "prev": null,
+              "cur": null
+            },
+            "pa": {
+              "prev": 72.8,
+              "cur": 78.1
+            },
+            "motor": {
+              "prev": null,
+              "cur": null
+            },
+            "cali": {
+              "prev": null,
+              "cur": null
+            },
+            "other": {
+              "prev": 69.0,
+              "cur": 45.1
+            },
+            "total": {
+              "prev": 72.1,
+              "cur": 71.1
+            }
+          }
+        },
+        "checks": {
+          "pass": 16,
+          "total": 16,
+          "failed": [],
+          "info_failed": []
+        }
       }
     },
     {
@@ -2237,8 +2502,8 @@
         "top_sqrt": 6519.5,
         "simple_sum": 9049,
         "reproduced": true,
-        "checks_pass": 85,
-        "checks_total": 89,
+        "checks_pass": 107,
+        "checks_total": 111,
         "deviations": [
           {
             "id": "G06_nonlife",
@@ -3066,6 +3331,185 @@
           "ordinary_ok": true,
           "net_ok": false
         }
+      },
+      "by_line": {
+        "unit": "JPY_million",
+        "lines": [
+          "fire",
+          "marine",
+          "pa",
+          "motor",
+          "cali",
+          "other",
+          "total"
+        ],
+        "labels_ja": {
+          "fire": "火災",
+          "marine": "海上",
+          "pa": "傷害",
+          "motor": "自動車",
+          "cali": "自動車損害賠償責任",
+          "other": "その他",
+          "total": "合計"
+        },
+        "items": {
+          "lob_net_premiums_written": {
+            "fire": {
+              "prev": 875,
+              "cur": 1263
+            },
+            "marine": {
+              "prev": 85,
+              "cur": 84
+            },
+            "pa": {
+              "prev": 12146,
+              "cur": 12242
+            },
+            "motor": {
+              "prev": null,
+              "cur": null
+            },
+            "cali": {
+              "prev": 293,
+              "cur": 296
+            },
+            "other": {
+              "prev": 1925,
+              "cur": 1806
+            },
+            "total": {
+              "prev": 15327,
+              "cur": 15692
+            }
+          },
+          "lob_net_claims_paid": {
+            "fire": {
+              "prev": 284,
+              "cur": 234
+            },
+            "marine": {
+              "prev": 40,
+              "cur": 21
+            },
+            "pa": {
+              "prev": 4189,
+              "cur": 4146
+            },
+            "motor": {
+              "prev": 0,
+              "cur": 0
+            },
+            "cali": {
+              "prev": 434,
+              "cur": 415
+            },
+            "other": {
+              "prev": 149,
+              "cur": 290
+            },
+            "total": {
+              "prev": 5098,
+              "cur": 5108
+            }
+          },
+          "lob_loss_ratio_pct": {
+            "fire": {
+              "prev": 33.8,
+              "cur": 19.1
+            },
+            "marine": {
+              "prev": 47.2,
+              "cur": 25.7
+            },
+            "pa": {
+              "prev": 40.4,
+              "cur": 39.8
+            },
+            "motor": {
+              "prev": null,
+              "cur": null
+            },
+            "cali": {
+              "prev": 147.9,
+              "cur": 140.0
+            },
+            "other": {
+              "prev": 10.2,
+              "cur": 20.3
+            },
+            "total": {
+              "prev": 38.3,
+              "cur": 37.7
+            }
+          },
+          "lob_expense_ratio_pct": {
+            "fire": {
+              "prev": 52.7,
+              "cur": 51.5
+            },
+            "marine": {
+              "prev": 27.9,
+              "cur": 29.1
+            },
+            "pa": {
+              "prev": 51.2,
+              "cur": 50.6
+            },
+            "motor": {
+              "prev": null,
+              "cur": null
+            },
+            "cali": {
+              "prev": null,
+              "cur": null
+            },
+            "other": {
+              "prev": 61.8,
+              "cur": 68.8
+            },
+            "total": {
+              "prev": 51.5,
+              "cur": 51.7
+            }
+          },
+          "lob_combined_ratio_pct": {
+            "fire": {
+              "prev": 86.4,
+              "cur": 70.6
+            },
+            "marine": {
+              "prev": 75.0,
+              "cur": 54.8
+            },
+            "pa": {
+              "prev": 91.6,
+              "cur": 90.5
+            },
+            "motor": {
+              "prev": null,
+              "cur": null
+            },
+            "cali": {
+              "prev": 147.9,
+              "cur": 140.0
+            },
+            "other": {
+              "prev": 72.0,
+              "cur": 89.0
+            },
+            "total": {
+              "prev": 89.8,
+              "cur": 89.5
+            }
+          }
+        },
+        "checks": {
+          "pass": 22,
+          "total": 22,
+          "failed": [],
+          "info_failed": []
+        }
       }
     },
     {
@@ -3124,8 +3568,8 @@
         "top_sqrt": null,
         "simple_sum": null,
         "reproduced": true,
-        "checks_pass": 39,
-        "checks_total": 41,
+        "checks_pass": 76,
+        "checks_total": 79,
         "deviations": []
       },
       "axes": {
@@ -3566,6 +4010,187 @@
           "ordinary_ok": true,
           "net_ok": true
         }
+      },
+      "by_line": {
+        "unit": "JPY_million",
+        "lines": [
+          "fire",
+          "marine",
+          "pa",
+          "motor",
+          "cali",
+          "other",
+          "total"
+        ],
+        "labels_ja": {
+          "fire": "火災",
+          "marine": "海上",
+          "pa": "傷害",
+          "motor": "自動車",
+          "cali": "自動車損害賠償責任",
+          "other": "その他",
+          "total": "合計"
+        },
+        "items": {
+          "lob_net_premiums_written": {
+            "fire": {
+              "prev": 444603,
+              "cur": 469076
+            },
+            "marine": {
+              "prev": 90762,
+              "cur": 91687
+            },
+            "pa": {
+              "prev": 199565,
+              "cur": 205641
+            },
+            "motor": {
+              "prev": 1174188,
+              "cur": 1232191
+            },
+            "cali": {
+              "prev": 190456,
+              "cur": 193590
+            },
+            "other": {
+              "prev": 419247,
+              "cur": 404209
+            },
+            "total": {
+              "prev": 2518823,
+              "cur": 2596396
+            }
+          },
+          "lob_net_claims_paid": {
+            "fire": {
+              "prev": 216693,
+              "cur": 196185
+            },
+            "marine": {
+              "prev": 53103,
+              "cur": 55797
+            },
+            "pa": {
+              "prev": 102352,
+              "cur": 104271
+            },
+            "motor": {
+              "prev": 708509,
+              "cur": 737969
+            },
+            "cali": {
+              "prev": 154011,
+              "cur": 150978
+            },
+            "other": {
+              "prev": 213763,
+              "cur": 209383
+            },
+            "total": {
+              "prev": 1448432,
+              "cur": 1454585
+            }
+          },
+          "lob_loss_ratio_pct": {
+            "fire": {
+              "prev": 51.1,
+              "cur": 44.1
+            },
+            "marine": {
+              "prev": 61.2,
+              "cur": 63.5
+            },
+            "pa": {
+              "prev": 57.7,
+              "cur": 57.0
+            },
+            "motor": {
+              "prev": 67.5,
+              "cur": 67.1
+            },
+            "cali": {
+              "prev": 90.1,
+              "cur": 87.0
+            },
+            "other": {
+              "prev": 53.9,
+              "cur": 55.0
+            },
+            "total": {
+              "prev": 63.1,
+              "cur": 61.6
+            }
+          },
+          "lob_expense_ratio_pct": {
+            "fire": {
+              "prev": 33.8,
+              "cur": 33.0
+            },
+            "marine": {
+              "prev": 24.4,
+              "cur": 25.2
+            },
+            "pa": {
+              "prev": 41.7,
+              "cur": 41.9
+            },
+            "motor": {
+              "prev": 30.8,
+              "cur": 30.0
+            },
+            "cali": {
+              "prev": 31.3,
+              "cur": 31.5
+            },
+            "other": {
+              "prev": 28.4,
+              "cur": 30.0
+            },
+            "total": {
+              "prev": 31.6,
+              "cur": 31.4
+            }
+          },
+          "lob_combined_ratio_pct": {
+            "fire": {
+              "prev": 84.9,
+              "cur": 77.1
+            },
+            "marine": {
+              "prev": 85.6,
+              "cur": 88.6
+            },
+            "pa": {
+              "prev": 99.4,
+              "cur": 99.0
+            },
+            "motor": {
+              "prev": 98.3,
+              "cur": 97.1
+            },
+            "cali": {
+              "prev": 121.5,
+              "cur": 118.5
+            },
+            "other": {
+              "prev": 82.3,
+              "cur": 85.0
+            },
+            "total": {
+              "prev": 94.7,
+              "cur": 93.0
+            }
+          }
+        },
+        "checks": {
+          "pass": 24,
+          "total": 24,
+          "failed": [],
+          "info_failed": [
+            "B04_claims_vs_ratio_other_cur"
+          ]
+        }
       }
     },
     {
@@ -3623,8 +4248,8 @@
         "top_sqrt": null,
         "simple_sum": null,
         "reproduced": true,
-        "checks_pass": 39,
-        "checks_total": 41,
+        "checks_pass": 77,
+        "checks_total": 79,
         "deviations": []
       },
       "axes": {
@@ -4074,6 +4699,185 @@
           "ordinary_ok": true,
           "net_ok": true
         }
+      },
+      "by_line": {
+        "unit": "JPY_million",
+        "lines": [
+          "fire",
+          "marine",
+          "pa",
+          "motor",
+          "cali",
+          "other",
+          "total"
+        ],
+        "labels_ja": {
+          "fire": "火災",
+          "marine": "海上",
+          "pa": "傷害",
+          "motor": "自動車",
+          "cali": "自動車損害賠償責任",
+          "other": "その他",
+          "total": "合計"
+        },
+        "items": {
+          "lob_net_premiums_written": {
+            "fire": {
+              "prev": 267943,
+              "cur": 302552
+            },
+            "marine": {
+              "prev": 75803,
+              "cur": 73434
+            },
+            "pa": {
+              "prev": 163895,
+              "cur": 168182
+            },
+            "motor": {
+              "prev": 722883,
+              "cur": 754981
+            },
+            "cali": {
+              "prev": 123417,
+              "cur": 123408
+            },
+            "other": {
+              "prev": 325305,
+              "cur": 331872
+            },
+            "total": {
+              "prev": 1679248,
+              "cur": 1754431
+            }
+          },
+          "lob_net_claims_paid": {
+            "fire": {
+              "prev": 169189,
+              "cur": 151070
+            },
+            "marine": {
+              "prev": 37671,
+              "cur": 34597
+            },
+            "pa": {
+              "prev": 87135,
+              "cur": 87472
+            },
+            "motor": {
+              "prev": 425108,
+              "cur": 424936
+            },
+            "cali": {
+              "prev": 104477,
+              "cur": 101920
+            },
+            "other": {
+              "prev": 182311,
+              "cur": 170476
+            },
+            "total": {
+              "prev": 1005894,
+              "cur": 970472
+            }
+          },
+          "lob_loss_ratio_pct": {
+            "fire": {
+              "prev": 65.6,
+              "cur": 52.5
+            },
+            "marine": {
+              "prev": 52.6,
+              "cur": 50.0
+            },
+            "pa": {
+              "prev": 58.8,
+              "cur": 58.1
+            },
+            "motor": {
+              "prev": 69.3,
+              "cur": 68.3
+            },
+            "cali": {
+              "prev": 94.4,
+              "cur": 92.2
+            },
+            "other": {
+              "prev": 58.7,
+              "cur": 54.2
+            },
+            "total": {
+              "prev": 66.7,
+              "cur": 62.8
+            }
+          },
+          "lob_expense_ratio_pct": {
+            "fire": {
+              "prev": 36.5,
+              "cur": 33.0
+            },
+            "marine": {
+              "prev": 21.3,
+              "cur": 18.0
+            },
+            "pa": {
+              "prev": 38.9,
+              "cur": 37.5
+            },
+            "motor": {
+              "prev": 31.9,
+              "cur": 30.0
+            },
+            "cali": {
+              "prev": 29.5,
+              "cur": 30.4
+            },
+            "other": {
+              "prev": 28.5,
+              "cur": 28.2
+            },
+            "total": {
+              "prev": 32.0,
+              "cur": 30.4
+            }
+          },
+          "lob_combined_ratio_pct": {
+            "fire": {
+              "prev": 102.1,
+              "cur": 85.5
+            },
+            "marine": {
+              "prev": 73.9,
+              "cur": 68.0
+            },
+            "pa": {
+              "prev": 97.7,
+              "cur": 95.6
+            },
+            "motor": {
+              "prev": 101.2,
+              "cur": 98.3
+            },
+            "cali": {
+              "prev": 123.9,
+              "cur": 122.6
+            },
+            "other": {
+              "prev": 87.2,
+              "cur": 82.4
+            },
+            "total": {
+              "prev": 98.7,
+              "cur": 93.2
+            }
+          }
+        },
+        "checks": {
+          "pass": 24,
+          "total": 24,
+          "failed": [],
+          "info_failed": []
+        }
       }
     },
     {
@@ -4133,8 +4937,8 @@
         "top_sqrt": null,
         "simple_sum": null,
         "reproduced": true,
-        "checks_pass": 39,
-        "checks_total": 41,
+        "checks_pass": 77,
+        "checks_total": 79,
         "deviations": []
       },
       "axes": {
@@ -4585,6 +5389,591 @@
           "ordinary_ok": true,
           "net_ok": true
         }
+      },
+      "by_line": {
+        "unit": "JPY_million",
+        "lines": [
+          "fire",
+          "marine",
+          "pa",
+          "motor",
+          "cali",
+          "other",
+          "total"
+        ],
+        "labels_ja": {
+          "fire": "火災",
+          "marine": "海上",
+          "pa": "傷害",
+          "motor": "自動車",
+          "cali": "自動車損害賠償責任",
+          "other": "その他",
+          "total": "合計"
+        },
+        "items": {
+          "lob_net_premiums_written": {
+            "fire": {
+              "prev": 376679,
+              "cur": 404070
+            },
+            "marine": {
+              "prev": 53374,
+              "cur": 54607
+            },
+            "pa": {
+              "prev": 153573,
+              "cur": 154055
+            },
+            "motor": {
+              "prev": 1095178,
+              "cur": 1136309
+            },
+            "cali": {
+              "prev": 184226,
+              "cur": 185474
+            },
+            "other": {
+              "prev": 366888,
+              "cur": 377059
+            },
+            "total": {
+              "prev": 2229919,
+              "cur": 2311577
+            }
+          },
+          "lob_net_claims_paid": {
+            "fire": {
+              "prev": 230160,
+              "cur": 207949
+            },
+            "marine": {
+              "prev": 30792,
+              "cur": 26356
+            },
+            "pa": {
+              "prev": 80082,
+              "cur": 79692
+            },
+            "motor": {
+              "prev": 665376,
+              "cur": 690844
+            },
+            "cali": {
+              "prev": 146918,
+              "cur": 143032
+            },
+            "other": {
+              "prev": 193297,
+              "cur": 191163
+            },
+            "total": {
+              "prev": 1346628,
+              "cur": 1339037
+            }
+          },
+          "lob_loss_ratio_pct": {
+            "fire": {
+              "prev": 63.1,
+              "cur": 53.2
+            },
+            "marine": {
+              "prev": 60.1,
+              "cur": 50.9
+            },
+            "pa": {
+              "prev": 57.3,
+              "cur": 57.0
+            },
+            "motor": {
+              "prev": 68.3,
+              "cur": 68.6
+            },
+            "cali": {
+              "prev": 88.9,
+              "cur": 86.4
+            },
+            "other": {
+              "prev": 56.0,
+              "cur": 54.0
+            },
+            "total": {
+              "prev": 66.1,
+              "cur": 63.8
+            }
+          },
+          "lob_expense_ratio_pct": {
+            "fire": {
+              "prev": 33.9,
+              "cur": 33.5
+            },
+            "marine": {
+              "prev": 23.8,
+              "cur": 24.0
+            },
+            "pa": {
+              "prev": 39.6,
+              "cur": 40.6
+            },
+            "motor": {
+              "prev": 35.1,
+              "cur": 33.8
+            },
+            "cali": {
+              "prev": 33.5,
+              "cur": 33.4
+            },
+            "other": {
+              "prev": 29.4,
+              "cur": 29.7
+            },
+            "total": {
+              "prev": 33.9,
+              "cur": 33.3
+            }
+          },
+          "lob_combined_ratio_pct": {
+            "fire": {
+              "prev": 97.0,
+              "cur": 86.7
+            },
+            "marine": {
+              "prev": 83.9,
+              "cur": 74.9
+            },
+            "pa": {
+              "prev": 96.9,
+              "cur": 97.6
+            },
+            "motor": {
+              "prev": 103.4,
+              "cur": 102.3
+            },
+            "cali": {
+              "prev": 122.4,
+              "cur": 119.8
+            },
+            "other": {
+              "prev": 85.4,
+              "cur": 83.8
+            },
+            "total": {
+              "prev": 100.0,
+              "cur": 97.0
+            }
+          }
+        },
+        "checks": {
+          "pass": 24,
+          "total": 24,
+          "failed": [],
+          "info_failed": []
+        }
+      }
+    },
+    {
+      "id": "sumitomo_life",
+      "company_jp": "住友生命保険",
+      "company_en": "Sumitomo Life Insurance",
+      "sector": "life",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "life_core_only",
+      "esr_placeholder": null,
+      "source_url": "https://www.sumitomolife.co.jp/about/pdf/company/ir/settlement/260526.pdf",
+      "doc_type": "2025年度決算(案)説明用資料 (2026-05-26, 18p)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": 197.0,
+        "preliminary": true,
+        "esr_scope": "group"
+      },
+      "capital": {},
+      "risk": {},
+      "market_sub": {},
+      "sensitivity": {},
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": null,
+      "history": null,
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_100million",
+        "series": {
+          "hist_core_profit": [
+            null,
+            null,
+            null,
+            3405.5,
+            3500.9
+          ],
+          "hist_insurance_margin": [
+            null,
+            null,
+            null,
+            1813,
+            1073
+          ],
+          "hist_mortality_margin": [
+            null,
+            null,
+            null,
+            1586,
+            829
+          ],
+          "hist_interest_margin": [
+            null,
+            null,
+            null,
+            1591,
+            2427
+          ],
+          "hist_expense_margin": [
+            null,
+            null,
+            null,
+            227,
+            244
+          ],
+          "hist_core_profit_group": [
+            3971,
+            3375,
+            2613,
+            3056,
+            4081
+          ]
+        },
+        "labels_ja": {
+          "hist_core_profit": "基礎利益 住友生命 (百万円→億円 ÷100)",
+          "hist_insurance_margin": "保険関係差",
+          "hist_mortality_margin": "うち危険差",
+          "hist_interest_margin": "順ざや額",
+          "hist_expense_margin": "derived = 保険関係差 − うち危険差 (費差 단독 행 없음)",
+          "hist_core_profit_group": "グループ基礎利益 5개년 (2025年度から算出方法見直し, 2024年度遡及)"
+        },
+        "pages": {
+          "hist_core_profit": 15,
+          "hist_insurance_margin": 15,
+          "hist_mortality_margin": 15,
+          "hist_interest_margin": 15,
+          "hist_expense_margin": 15,
+          "hist_core_profit_group": 6
+        },
+        "three_source": {
+          "disclosed": "partial",
+          "detail": "利差(順ざや額)·危険差 직접, 費差 는 保険関係差−危険差 파생. 2개년(FY2024/FY2025)만."
+        },
+        "status": "extracted",
+        "notes": [
+          "hist_core_profit raw 百万円 row: 住友生命 | (百万円) | 340,547 | ( | 30.1) | 350,092 | ( | 2.8)"
+        ]
+      }
+    },
+    {
+      "id": "nippon_life",
+      "company_jp": "日本生命保険",
+      "company_en": "Nippon Life Insurance",
+      "sector": "life",
+      "scope": "group",
+      "as_of": "2026-03-31",
+      "esr_status": "life_core_only",
+      "esr_placeholder": null,
+      "source_url": "https://www.nissay.co.jp/sites/default/files/assets/news/files/kessan202605_gaiyo.pdf",
+      "doc_type": "2025年度 業績の概要 (2026-05-26, 28p)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": 195.0,
+        "preliminary": false,
+        "esr_scope": "group"
+      },
+      "capital": {},
+      "risk": {},
+      "market_sub": {},
+      "sensitivity": {},
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": null,
+      "history": null,
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_100million",
+        "series": {
+          "hist_core_profit_group": [
+            null,
+            null,
+            null,
+            10109,
+            13016
+          ],
+          "hist_interest_margin": [
+            null,
+            null,
+            null,
+            null,
+            7783
+          ],
+          "hist_insurance_margin": [
+            null,
+            null,
+            null,
+            null,
+            3722
+          ],
+          "hist_core_profit": [
+            null,
+            null,
+            null,
+            null,
+            10655
+          ]
+        },
+        "labels_ja": {
+          "hist_core_profit_group": "基礎利益 (グループ)",
+          "hist_interest_margin": "利差益 (国内生命保険の合計)",
+          "hist_insurance_margin": "保険関係損益 (国内生命保険の合計)",
+          "hist_core_profit": "基礎利益 日本生命 (単体)"
+        },
+        "pages": {
+          "hist_core_profit_group": 6,
+          "hist_interest_margin": 6,
+          "hist_insurance_margin": 6,
+          "hist_core_profit": 6
+        },
+        "three_source": {
+          "disclosed": "partial",
+          "detail": "2분해(利差益 / 保険関係損益)만, 危険差·費差 분리 없음. 국내생보 합산(그룹) 기준. 5개년표 없음(FY2025 + 前年度比 만)."
+        },
+        "status": "extracted",
+        "notes": [
+          "FY2024 group 基礎利益 10,109 read from the p6 bar chart label (24年度)"
+        ]
+      }
+    },
+    {
+      "id": "meijiyasuda_life",
+      "company_jp": "明治安田生命保険",
+      "company_en": "Meiji Yasuda Life Insurance",
+      "sector": "life",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "life_core_only",
+      "esr_placeholder": null,
+      "source_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/account/2025/pdf/close_2026_point.pdf",
+      "doc_type": "2025年度決算(案) 説明資料 (2026-05-26, 26p)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": 208.0,
+        "preliminary": false,
+        "esr_scope": "group"
+      },
+      "capital": {},
+      "risk": {},
+      "market_sub": {},
+      "sensitivity": {},
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": null,
+      "history": null,
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_100million",
+        "series": {
+          "hist_operating_profit": [
+            null,
+            null,
+            null,
+            5964,
+            6506
+          ],
+          "hist_insurance_margin": [
+            null,
+            null,
+            null,
+            2874,
+            2801
+          ],
+          "hist_investment_margin": [
+            null,
+            null,
+            null,
+            3090,
+            3705
+          ]
+        },
+        "labels_ja": {
+          "hist_operating_profit": "業務利益 (=基礎利益 − 標準責任準備金積み増し・戻し入れの影響)",
+          "hist_insurance_margin": "保険関係損益 (注2: 2025年度から算出方法変更, 2024年度引き直し)",
+          "hist_investment_margin": "運用関係損益"
+        },
+        "pages": {
+          "hist_operating_profit": 15,
+          "hist_insurance_margin": 15,
+          "hist_investment_margin": 15
+        },
+        "three_source": {
+          "disclosed": "partial",
+          "detail": "基礎利益 자체가 아니라 業務利益(準備金 영향 제외) 2분해(保険関係/運用関係). 三利源 없음. 2개년만."
+        },
+        "status": "extracted",
+        "notes": []
+      }
+    },
+    {
+      "id": "dai_ichi_life",
+      "company_jp": "第一生命保険",
+      "company_en": "Dai-ichi Life Insurance",
+      "sector": "life",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "life_core_only",
+      "esr_placeholder": null,
+      "source_url": "https://www.dai-ichi-life.co.jp/company/results/kessan/pdf/index_001.pdf",
+      "doc_type": null,
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null,
+        "esr_scope": null
+      },
+      "capital": {},
+      "risk": {},
+      "market_sub": {},
+      "sensitivity": {},
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": null,
+      "history": null,
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_100million",
+        "series": {},
+        "labels_ja": {},
+        "pages": {},
+        "three_source": {
+          "disclosed": "unknown",
+          "detail": "원문 미확보"
+        },
+        "status": "not_acquired",
+        "notes": [
+          "NOT_ACQUIRED: curl blocked (all domains, incl. google.com) and WebFetch of index.html/kessan/index_001.pdf returned 404 twice — per-company attempt limit reached."
+        ]
+      }
+    },
+    {
+      "id": "nnlife",
+      "company_jp": "エヌエヌ生命保険",
+      "company_en": "NN Life",
+      "sector": "life",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "life_core_only",
+      "esr_placeholder": null,
+      "source_url": "https://www.nnlife.co.jp/pdf/company/results/NNLJ_2025Disclosure_202607.pdf",
+      "doc_type": "ディスクロージャー誌 2025 (2026-07)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null,
+        "esr_scope": null
+      },
+      "capital": {},
+      "risk": {},
+      "market_sub": {},
+      "sensitivity": {},
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": null,
+      "history": null,
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_million",
+        "series": {
+          "hist_core_profit": [
+            null,
+            null,
+            null,
+            148.3,
+            185.2
+          ]
+        },
+        "labels_ja": {
+          "hist_core_profit": "基礎利益 (A) — profit 층 pl_core_profit 14,828/18,523 百万円 ÷100"
+        },
+        "pages": {
+          "hist_core_profit": 60
+        },
+        "three_source": {
+          "disclosed": "none",
+          "detail": "三利源 표 없음"
+        },
+        "status": "extracted",
+        "notes": [
+          "三利源 표 없음 (profit 층 TABLE_ABSENT, §9-1). 5개년 主要な経営指標 p11 은 億円 — 基礎利益 행 유무 미확인(이번 티켓 범위 밖)."
+        ]
       }
     }
   ]

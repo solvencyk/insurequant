@@ -652,6 +652,23 @@ Meiji: 元受料→受再金→回収金→受再料→支払→元受金), 라�
 - **MSI 세로쓰기 P&L**: Meiji(§9-6, 구획별 값 몰아찍기) 와 달리 행 단위로 "経|常|利|益|값" 이라 `vertical_pl=True` 로 P&L 도 `merge_vertical` 하면 기존
   `grab()` 이 그대로 동작. 내역행 값이 "(1,679,248)" 괄호 → `unwrap_parens=True`(깨진 "(64,842" 포함, 이중괄호는 유지).
 
+### 9-9. 종목별 층 `layer:"by_line"` (2026-09-13, 티켓 `inbox/jp/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`)
+
+「保険引受の状況」 種目別 3표 — 正味収入保険料 / 正味支払保険金(+正味損害率 열) / 正味損害率、正味事業費率及びその合算率 — 를 火災(fire)·海上(marine)·傷害(pa)·
+自動車(motor)·自動車損害賠償責任(cali)·その他(other)·合計(total) × {prev, cur} 로 뽑는다. 스키마 id `lob_net_premiums_written` / `lob_net_claims_paid` /
+`lob_loss_ratio_pct` / `lob_expense_ratio_pct` / `lob_combined_ratio_pct`(`line_codes` 필드에 종목 코드). 추출 `extract_byline` / 검산 `run_byline_checks`.
+
+| 회사 | 保険料 / 保険金 / 比率 페이지(1-idx) | 행 토큰 | 특이점 |
+|---|---|---|---|
+| au Non-Life (業績데이터 4of5) | 2 / 4 / 5 | 3개년 × 3(金額·構成比·増減率 / 金額·構成比·損害率 / 損害率·事業費率·合算率) | 火災·海上·自動車·自賠責 전부 대시 — **傷害 78.6% + その他 21.4%**(자동차 0) |
+| Meiji Yasuda Non-Life (본편) | 33 / 34 / 35 | 3개년 × **2**(金額·構成比) — 比率표만 ×3 | 自動車 대시, 自賠責 事業費率 대시(合算率=損害率 140.0), 保険金 自動車 "△0" |
+| TMNF | 89 / 91 / 91 | ×3 | 「(うち賠償責任)」 부행(괄호값) — 7라벨 정확매칭이라 무시. **p91 두 표의 その他 FY2025 損害率 52.9 vs 55.0**(원문 차이, B04 정보성) |
+| MSI | 95 / 97 / 99 | ×3 | 첫 행(火災)만 "%" 접미(15.5%·△5.8%), `is_val` 그대로 통과. 「うち賠償責任」 괄호 부행 |
+| Sompo Japan | 118 / 119 / 120 | ×3 | `GidDoc` 복원 후 동일. 「(うち賠償責任)」 부행 |
+
+검산: **B01** Σ(fire..other)=total — 종목별 百万円 절사라 ±1 은 성립하지 않는다(실측 차 0~3) → tol=항 개수 6(risk_tree root 와 같은 규칙). **B02** total 비율 = profit 층 ±0.1(같은 표, 30/30 정확).
+**B03** 종목별 合算率=損害率+事業費率 ±0.15. **B04**(gate=False) 保険金표 損害率 열 vs 比率표. 5사 gate 실패 0. 自賠責은 4사 合算率 118~140%(법정 노마진 종목) — 화면에서 total 과 같은 축에 두면 스케일이 깨진다.
+
 ## 10. 시계열 층 `layer:"history"` (2026-09-12 추가 — 티켓 `inbox/jp/20260912T1440Z__owner__JP_MULTI__pl_history_5y.md`)
 
 > owner: "손해율·사업비율·합산비율 시계열을 쭉 보여줘도 좋겠다. 당기/전기만 있어 허전하다." `profit` 층은 {prev,cur} 2개 사업연도뿐이라
@@ -784,3 +801,22 @@ owner 가정이 맞다. 다만 세 회사가 서로 다른 방식으로 담고 �
   `summary5_skip_p10=True` 로 끄고 H01 이 같은 역할을 한다(5개년표의 괄호 성장률 때문에 P10 의 단순 grab 이 첫 값에서 끊기기 때문).
 - `jp/jesr_detail.json` 은 5사(`_meta.coverage = {detail_total 5, esr_posted 2, esr_not_yet 3}`), 3사는 `esr_status:"not_yet"` + `esr_placeholder`
   (원문 문구·페이지·expected 2026-10-31), headline ESR null, capital_tree/risk_tree 빈 리스트, profit/history/profit_flow 는 posted 사와 동일 구조.
+
+## 11. 생보 3이원 census `layer:"core_history"` (2026-09-13, 티켓 `inbox/jp/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`)
+
+owner: "생보는 이차·사차·비차 마진 통계가 있을 것". 표본 5사(원문 확보 3 + NN Life 기확보 + 第一生命 미확보). **이 세션은 curl 이 전 도메인 차단**이라 WebFetch 가 PDF 바이너리를
+`tool-results/` 에 저장해 주는 것을 이용해 `J-ESR/raw/fy2025_samples/others/` 로 복사했다(도메인 문서 §4 "WebFetch 는 대체로 됨" 의 실제 경로). 읽은 문서는 **5월 결산설명자료**(슬라이드)이지
+7월 디스클로저지 본편이 아니다 — 본편에 三利源·5개년 표가 있을 가능성은 남는다(10월 재census 항목). 추출 `J-ESR/extract_life_core_history.py`(fitz `words` 를 y 로 묶는 위치 파싱 —
+슬라이드형 PDF 는 텍스트 레이어에서 라벨과 값이 뒤섞인다) → `raw/fy2025_samples/life_core_history.json`, 단위 億円.
+
+| 회사 | 문서 | 基礎利益 | 三利源 | 값(FY2024 → FY2025, 億円) | 검산 |
+|---|---|---|---|---|---|
+| Sumitomo Life (住友生命) | 決算(案)説明用資料 2026-05-26 18p | 単体 2개년(p15 百万円 340,547→350,092) + 그룹 5개년(p6: 3,971/3,375/2,613/3,056/4,081, 2025년도 산출법 변경·2024 소급) | **partial** — 順ざや額(利差) · 保険関係差 · うち危険差 직접, 費差=保険関係差−危険差 파생 | 順ざや 1,591→2,427 / 保険関係差 1,813→1,073 / 危険差 1,586→829 / 費差(파생) 227→244 | L01 基礎利益 ≈ 保険関係差+順ざや ±2 통과(3,405.5 vs 3,404 / 3,500.9 vs 3,500) |
+| Nippon Life (日本生命) | 業績の概要 2026-05-26 28p | 그룹 FY2025 13,016(FY2024 10,109) + 単体 FY2025 10,655(FY2024 는 前年度比만 → 미추정) | **partial(2분해)** 利差益 / 保険関係損益, 国内生命保険の合計(그룹) | 利差益 7,783 · 保険関係損益 3,722 (FY2025) | 単体 분해 없어 불가 |
+| Meiji Yasuda Life (明治安田生命) | 決算(案)説明資料 2026-05-26 26p | **基礎利益 행 없음** — 業務利益(基礎利益−標準責任準備金 積み増し·戻し入れ 영향) | **partial(2분해)** 保険関係損益 / 運用関係損益 (注2 2025년도 산출법 변경) | 業務利益 5,964→6,506 · 保険関係 2,874→2,801 · 運用関係 3,090→3,705 | L02 業務利益=保険関係+運用関係 정확 |
+| Dai-ichi Life (第一生命) | 미확보 | — | — | — | curl 차단 + WebFetch 404 2회(`results/index.html`, `kessan/pdf/index_001.pdf`) |
+| NN Life | ディスクロージャー誌 2025 | 単体 2개년(profit 층 148.3→185.2) | **none**(§9-1) | — | — |
+
+**결론.** 표본에서 三利源 3분해(利差·危険差·費差)를 그대로 공시하는 회사는 0. 결산설명자료 표준은 利差(順ざや) + 保険関係(危険差+費差) 2분해이고, 住友生命만 「うち危険差」 로 費差를 파생할 수
+있다. 5개년은 住友 그룹 기초이익뿐. 검산 `基礎利益 ≈ Σ三利源` 은 회사 정의(明治安田 業務利益, 住友 保険関係差 묶음, 日本生命 그룹 합산)가 달라 회사별로 식이 다르다 — 스키마의 P02 "informational" 판단이 맞았다.
+발행 블록 `jp/jesr_detail.json` companies[].core_history = {fiscal_years 5, unit, series{hist_core_profit / hist_core_profit_group / hist_interest_margin / hist_mortality_margin / hist_expense_margin / hist_insurance_margin / hist_operating_profit / hist_investment_margin}, labels_ja, three_source, status, notes}, 생보 행은 `esr_status:"life_core_only"`.
