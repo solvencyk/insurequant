@@ -72,9 +72,10 @@ owner "한국처럼 자본·회계·기타공시로 나눠라, 워터폴은 분�
 
 ## Active follow-ups
 
-- **`build_jesr_detail_json.py` 는 새 클론에서 못 돈다(2026-09-13 실측).** 입력인 `J-ESR/raw/fy2025_samples/*.pdf` 가 gitignore 라, 클라우드 세션에서 재빌드를 시도하면
-  `FileNotFoundError: au_nonlife_disclo_260730_4of5.pdf` 로 죽는다. 이번 라운드의 明治安田生命 208.0→208.7 은 그래서 **셀 단위 + guard**(CLAUDE.md §8)로 고쳤다.
-  다음 라운드 판단거리: ① 원문 PDF 를 어디에 둘지(용량·저작권) ② 아니면 `extracted_*.json` 중간산출만 추적해 빌더가 PDF 없이도 돌게 할지. 후자가 싸 보인다.
+- **✅ 해소(2026-09-13, owner 업로드).** `build_jesr_detail_json.py` 가 새 클론에서 못 돌던 문제 — 입력 PDF 가 gitignore 라 `FileNotFoundError` 로 죽었다.
+  owner 가 추출 중간산출 4종(`extracted_sample_values.json` · `extracted_bs_values.json` · `life_core_history.json` ·
+  `meijiyasuda_nonlife_main_pages_fixture.json`)을 올려 줘서 `.gitignore` 를 좁혀 **JSON 만 추적**한다(PDF 는 계속 제외 — 무겁고 다시 받으면 된다).
+  실측: PDF 0개인 클론에서 빌더 완주, SELF-CHECK OK, 日本生命 preliminary 오탐까지 자동 교정. 앞으로 수치 수정은 셀 수술이 아니라 **census 고치고 재빌드**가 정상 경로다.
 
 - **10월 census 선행 절차(2026-09-13 신설).** census 를 돌리기 전에 `python J-ESR/check_source_urls.py --all` 을 먼저 돌린다. 2026-09-13 기준
   blocked 21 · spa_shell 8 · requires_headers 17 — 헤더 없이 훑으면 이 46건이 전부 `not_found` 오탐이 된다. dead 5건은 그 라운드에 대체 URL 확보

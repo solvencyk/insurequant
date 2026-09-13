@@ -53,7 +53,13 @@ data/ir/**/*.xlsx
 
 # J-ESR (Japan ESR) pipeline — EDINET subscription key + raw XBRL pulls (HUGE, regenerable)
 J-ESR/edinet_key.txt
-J-ESR/raw/
+J-ESR/raw/*
+# 단, 추출 중간산출(JSON)은 추적한다 — 원문 PDF 는 무겁고 다시 받으면 되지만, 이 JSON 이
+# 없으면 새 클론·클라우드 세션에서 `build_jesr_detail_json.py` 가 아예 못 돈다
+# (2026-09-13 실측: FileNotFoundError au_nonlife_...pdf → 수치 수정을 빌더 대신 셀 수술로 해야 했다).
+!J-ESR/raw/fy2025_samples/
+J-ESR/raw/fy2025_samples/*
+!J-ESR/raw/fy2025_samples/*.json
 
 # Large reference / intermediate dirs (regenerable)
 artifacts/

@@ -99,6 +99,18 @@ owner 가 2026-09-01 에 공유한 기사(insnews #92437, 일본 금융청 '2026
    三井住友海上·あいおいニッセイ同和 **합병 보도자료**였고 ESR 은 한 줄도 없었다(기본 fetcher 에 403 이라
    그동안 아무도 못 열어봤다). 수치를 census 에 적을 때는 **그 문서에서 그 수치를 눈으로 본다.**
 
+## 4c-2. 빌더 입력은 추출 중간산출 JSON 이다 (원문 PDF 가 아니다)
+
+`build_jesr_detail_json.py` 의 입력은 `J-ESR/raw/fy2025_samples/` 의 **JSON 4종**이다 —
+`extracted_sample_values.json`(항목+checks) · `extracted_bs_values.json`(BS 층) ·
+`life_core_history.json`(생보 기초이익) · `meijiyasuda_nonlife_main_pages_fixture.json`(본편 페이지 텍스트 고정).
+`J-ESR/raw/` 는 통째 gitignore 지만 **이 JSON 들만 예외로 추적**한다(2026-09-13).
+
+왜: 원문 PDF 는 무겁고 회사 사이트에서 다시 받으면 되지만, 이 JSON 이 없으면 새 클론·클라우드 세션에서
+빌더가 `FileNotFoundError` 로 죽는다. 그러면 수치 하나 고치는 데 마스터 JSON 을 직접 손대야 하고
+(CLAUDE.md §8 이 금지하는 방향으로 밀려난다), 실제로 그날 明治安田生命 208.0→208.7 을 셀 수술로 고쳤다.
+**추출을 다시 돌린 라운드는 이 JSON 도 같이 커밋한다.** PDF 는 커밋하지 않는다(`*.pdf` 전역 제외).
+
 ## 4d. EDINET 루트 — 2026-09-13 키 확보 후 실측으로 확정
 
 - **키·호스트.** 환경변수 `EDINET_KEY`(저장소에 커밋 금지). 정본 호스트는 `https://api.edinet-fsa.go.jp/api/v2`

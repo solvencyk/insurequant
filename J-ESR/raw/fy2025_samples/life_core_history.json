@@ -1,0 +1,306 @@
+{
+  "generated_at": "2026-09-13",
+  "generator": "J-ESR/extract_life_core_history.py",
+  "layer": "core_history",
+  "unit_note": "億円 unless unit_disclosed says otherwise",
+  "fiscal_years": [
+    "FY2021",
+    "FY2022",
+    "FY2023",
+    "FY2024",
+    "FY2025"
+  ],
+  "companies": {
+    "sumitomo_life": {
+      "company_en": "Sumitomo Life Insurance",
+      "company_jp": "住友生命保険",
+      "scope": "solo",
+      "unit_disclosed": "JPY_100million",
+      "source_pdf": "J-ESR/raw/fy2025_samples/others/sumitomolife_260526_results.pdf",
+      "source_url": "https://www.sumitomolife.co.jp/about/pdf/company/ir/settlement/260526.pdf",
+      "doc_type": "2025年度決算(案)説明用資料 (2026-05-26, 18p)",
+      "values": {
+        "hist_core_profit": {
+          "FY2024": 3405.5,
+          "FY2025": 3500.9
+        },
+        "hist_insurance_margin": {
+          "FY2024": 1813,
+          "FY2025": 1073
+        },
+        "hist_mortality_margin": {
+          "FY2024": 1586,
+          "FY2025": 829
+        },
+        "hist_interest_margin": {
+          "FY2024": 1591,
+          "FY2025": 2427
+        },
+        "hist_expense_margin": {
+          "FY2024": 227,
+          "FY2025": 244
+        },
+        "hist_core_profit_group": {
+          "FY2021": 3971,
+          "FY2022": 3375,
+          "FY2023": 2613,
+          "FY2024": 3056,
+          "FY2025": 4081
+        }
+      },
+      "labels_ja": {
+        "hist_core_profit": "基礎利益 住友生命 (百万円→億円 ÷100)",
+        "hist_insurance_margin": "保険関係差",
+        "hist_mortality_margin": "うち危険差",
+        "hist_interest_margin": "順ざや額",
+        "hist_expense_margin": "derived = 保険関係差 − うち危険差 (費差 단독 행 없음)",
+        "hist_core_profit_group": "グループ基礎利益 5개년 (2025年度から算出方法見直し, 2024年度遡及)"
+      },
+      "pages": {
+        "hist_core_profit": 15,
+        "hist_insurance_margin": 15,
+        "hist_mortality_margin": 15,
+        "hist_interest_margin": 15,
+        "hist_expense_margin": 15,
+        "hist_core_profit_group": 6
+      },
+      "notes": [
+        "hist_core_profit raw 百万円 row: 住友生命 | (百万円) | 340,547 | ( | 30.1) | 350,092 | ( | 2.8)"
+      ],
+      "three_source": {
+        "disclosed": "partial",
+        "detail": "利差(順ざや額)·危険差 직접, 費差 는 保険関係差−危険差 파생. 2개년(FY2024/FY2025)만."
+      }
+    },
+    "nippon_life": {
+      "company_en": "Nippon Life Insurance",
+      "company_jp": "日本生命保険",
+      "scope": "group",
+      "unit_disclosed": "JPY_100million",
+      "source_pdf": "J-ESR/raw/fy2025_samples/others/nissay_kessan202605_gaiyo.pdf",
+      "source_url": "https://www.nissay.co.jp/sites/default/files/assets/news/files/kessan202605_gaiyo.pdf",
+      "doc_type": "2025年度 業績の概要 (2026-05-26, 28p)",
+      "values": {
+        "hist_core_profit_group": {
+          "FY2025": 13016,
+          "FY2024": 10109
+        },
+        "hist_interest_margin": {
+          "FY2025": 7783
+        },
+        "hist_insurance_margin": {
+          "FY2025": 3722
+        },
+        "hist_core_profit": {
+          "FY2025": 10655
+        }
+      },
+      "labels_ja": {
+        "hist_core_profit_group": "基礎利益 (グループ)",
+        "hist_interest_margin": "利差益 (国内生命保険の合計)",
+        "hist_insurance_margin": "保険関係損益 (国内生命保険の合計)",
+        "hist_core_profit": "基礎利益 日本生命 (単体)"
+      },
+      "pages": {
+        "hist_core_profit_group": 6,
+        "hist_interest_margin": 6,
+        "hist_insurance_margin": 6,
+        "hist_core_profit": 6
+      },
+      "notes": [
+        "FY2024 group 基礎利益 10,109 read from the p6 bar chart label (24年度)"
+      ],
+      "three_source": {
+        "disclosed": "partial",
+        "detail": "2분해(利差益 / 保険関係損益)만, 危険差·費差 분리 없음. 국내생보 합산(그룹) 기준. 5개년표 없음(FY2025 + 前年度比 만)."
+      }
+    },
+    "meijiyasuda_life": {
+      "company_en": "Meiji Yasuda Life Insurance",
+      "company_jp": "明治安田生命保険",
+      "scope": "solo",
+      "unit_disclosed": "JPY_100million",
+      "source_pdf": "J-ESR/raw/fy2025_samples/others/meijiyasuda_life_close_2026_point.pdf",
+      "source_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/account/2025/pdf/close_2026_point.pdf",
+      "doc_type": "2025年度決算(案) 説明資料 (2026-05-26, 26p)",
+      "values": {
+        "hist_operating_profit": {
+          "FY2024": 5964,
+          "FY2025": 6506
+        },
+        "hist_insurance_margin": {
+          "FY2024": 2874,
+          "FY2025": 2801
+        },
+        "hist_investment_margin": {
+          "FY2024": 3090,
+          "FY2025": 3705
+        }
+      },
+      "labels_ja": {
+        "hist_operating_profit": "業務利益 (=基礎利益 − 標準責任準備金積み増し・戻し入れの影響)",
+        "hist_insurance_margin": "保険関係損益 (注2: 2025年度から算出方法変更, 2024年度引き直し)",
+        "hist_investment_margin": "運用関係損益"
+      },
+      "pages": {
+        "hist_operating_profit": 15,
+        "hist_insurance_margin": 15,
+        "hist_investment_margin": 15
+      },
+      "notes": [],
+      "three_source": {
+        "disclosed": "partial",
+        "detail": "基礎利益 자체가 아니라 業務利益(準備金 영향 제외) 2분해(保険関係/運用関係). 三利源 없음. 2개년만."
+      }
+    },
+    "dai_ichi_life": {
+      "company_en": "Dai-ichi Life Insurance",
+      "company_jp": "第一生命保険",
+      "scope": "solo",
+      "unit_disclosed": "JPY_100million",
+      "source_pdf": "J-ESR/raw/fy2025_samples/others/daiichi_2026_index_004.pdf",
+      "source_url": "https://www.dai-ichi-life.co.jp/company/results/disclosure/2026/pdf/index_004.pdf",
+      "doc_type": "アニュアルレポート2026 業績に関する諸資料 (2026-07, 86p)",
+      "values": {
+        "hist_core_profit": {
+          "FY2021": 4964,
+          "FY2022": 2571,
+          "FY2023": 3310,
+          "FY2024": 3602,
+          "FY2025": 3727
+        },
+        "hist_ordinary_profit": {
+          "FY2021": 3789,
+          "FY2022": 3535,
+          "FY2023": 3913,
+          "FY2024": 5386,
+          "FY2025": 6528
+        },
+        "hist_net_income": {
+          "FY2021": 1997,
+          "FY2022": 1656,
+          "FY2023": 2038,
+          "FY2024": 3054,
+          "FY2025": 3778
+        },
+        "hist_interest_margin": {
+          "FY2024": 1253,
+          "FY2025": 1693
+        },
+        "hist_insurance_margin": {
+          "FY2024": 2349,
+          "FY2025": 2033
+        },
+        "hist_mortality_margin": {
+          "FY2024": 2388,
+          "FY2025": 2343
+        },
+        "hist_expense_margin": {
+          "FY2024": -39,
+          "FY2025": -310
+        }
+      },
+      "labels_ja": {
+        "hist_core_profit": "基礎利益 5개년 (2021年度は旧基準, 括弧の再計算値 (4,076) は除外)",
+        "hist_ordinary_profit": "経常利益 5개년",
+        "hist_net_income": "当期純利益 5개년",
+        "hist_interest_margin": "順ざや額",
+        "hist_insurance_margin": "保険関係損益",
+        "hist_mortality_margin": "うち危険差益",
+        "hist_expense_margin": "derived = 保険関係損益 − うち危険差益 (費差 단독 행 없음)"
+      },
+      "pages": {
+        "hist_core_profit": 7,
+        "hist_ordinary_profit": 7,
+        "hist_net_income": 7,
+        "hist_interest_margin": 31,
+        "hist_insurance_margin": 31,
+        "hist_mortality_margin": 31,
+        "hist_expense_margin": 31
+      },
+      "notes": [],
+      "three_source": {
+        "disclosed": "partial",
+        "detail": "利差(順ざや額)·危険差 직접, 費差 는 保険関係損益−危険差益 파생(住友生命과 같은 구조). 基礎利益·経常利益·当期純利益 5개년은 p7 主要指標."
+      }
+    },
+    "nnlife": {
+      "company_en": "NN Life",
+      "company_jp": "エヌエヌ生命保険",
+      "scope": "solo",
+      "unit_disclosed": "JPY_million",
+      "source_pdf": "J-ESR/raw/fy2025_samples/nnlife_2025disclosure_202607.pdf",
+      "source_url": "https://www.nnlife.co.jp/pdf/company/results/NNLJ_2025Disclosure_202607.pdf",
+      "doc_type": "ディスクロージャー誌 2025 (2026-07)",
+      "values": {
+        "hist_core_profit": {
+          "FY2024": 148.3,
+          "FY2025": 185.2
+        }
+      },
+      "labels_ja": {
+        "hist_core_profit": "基礎利益 (A) — profit 층 pl_core_profit 14,828/18,523 百万円 ÷100"
+      },
+      "pages": {
+        "hist_core_profit": 60
+      },
+      "notes": [
+        "三利源 표 없음 (profit 층 TABLE_ABSENT, §9-1). 5개년 主要な経営指標 p11 은 億円 — 基礎利益 행 유무 미확인(이번 티켓 범위 밖)."
+      ],
+      "three_source": {
+        "disclosed": "none",
+        "detail": "三利源 표 없음"
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "L01_sumitomo_core_eq_margins_FY2024",
+      "formula": "基礎利益(住友生命) ≈ 保険関係差 + 順ざや額 (±2 億円)",
+      "lhs": 3405.5,
+      "rhs": 3404,
+      "tol": 2,
+      "pass": true
+    },
+    {
+      "id": "L01_sumitomo_core_eq_margins_FY2025",
+      "formula": "基礎利益(住友生命) ≈ 保険関係差 + 順ざや額 (±2 億円)",
+      "lhs": 3500.9,
+      "rhs": 3500,
+      "tol": 2,
+      "pass": true
+    },
+    {
+      "id": "L02_meiji_operating_eq_margins_FY2024",
+      "formula": "業務利益 == 保険関係損益 + 運用関係損益 (±1)",
+      "lhs": 5964,
+      "rhs": 5964,
+      "tol": 1,
+      "pass": true
+    },
+    {
+      "id": "L02_meiji_operating_eq_margins_FY2025",
+      "formula": "業務利益 == 保険関係損益 + 運用関係損益 (±1)",
+      "lhs": 6506,
+      "rhs": 6506,
+      "tol": 1,
+      "pass": true
+    },
+    {
+      "id": "L03_daiichi_core_eq_margins_FY2024",
+      "formula": "基礎利益(第一生命) == 順ざや額 + 保険関係損益 (±1 億円)",
+      "lhs": 3602,
+      "rhs": 3602,
+      "tol": 1,
+      "pass": true
+    },
+    {
+      "id": "L03_daiichi_core_eq_margins_FY2025",
+      "formula": "基礎利益(第一生命) == 順ざや額 + 保険関係損益 (±1 億円)",
+      "lhs": 3727,
+      "rhs": 3726,
+      "tol": 1,
+      "pass": true
+    }
+  ]
+}
