@@ -339,8 +339,10 @@
         console.error('jesr_esr.json load failed', err);
       });
 
+    var GROUP_CHILDREN = null;
     function renderAll(data){
       var meta = data._meta || {};
+      GROUP_CHILDREN = meta.group_children || {};
       var records = Array.isArray(data.records) ? data.records.slice() : [];
       groupData.life    = sortBucketed(records.filter(function(r){ return groupKey(r.sector)==='life'; }));
       groupData.nonlife = sortBucketed(records.filter(function(r){ return groupKey(r.sector)==='nonlife'; }));
@@ -433,7 +435,10 @@
         row.setAttribute('aria-label', row.title);
         row.tabIndex = 0;
         row.setAttribute('role', 'link');
-        var detailKey = (detailMap && r.company_en && detailMap[r.company_en]) ? detailMap[r.company_en] : encodeURIComponent(r.company_jp);
+        // 지주(연결) 행에 자기 상세가 없고 그룹 사업회사 상세가 있으면(_meta.group_children, owner 2026-09-13) 그리로 보낸다.
+        var ownDetail = (detailMap && r.company_en && detailMap[r.company_en]) ? detailMap[r.company_en] : null;
+        var kids = (GROUP_CHILDREN && GROUP_CHILDREN[r.company_jp]) || [];
+        var detailKey = ownDetail || (kids.length ? kids[0].id : encodeURIComponent(r.company_jp));
         var goToDetailRow = function(){ window.location.href = 'jesr.html?company=' + detailKey; };
         row.addEventListener('click', goToDetailRow);
         row.addEventListener('keydown', function(e){
@@ -457,6 +462,13 @@
           chip.className = 'li-chip';
           chip.textContent = '速報';
           name.appendChild(chip);
+        }
+        if(!ownDetail && kids.length){
+          var kc = document.createElement('span');
+          kc.className = 'li-chip';
+          kc.textContent = '単体詳細: ' + kids.map(function(k){ return k.company_jp; }).join('・');
+          kc.title = 'グループ会社（単体）の詳細ページへ';
+          name.appendChild(kc);
         }
 
         var track = document.createElement('div');
