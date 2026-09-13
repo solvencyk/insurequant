@@ -1,7 +1,7 @@
 company_jp,company_en,ticker,sector,category,edinet_code,edinet_eligible,parent_group,ir_url,ir_health_url,notes
 東京海上ホールディングス,Tokio Marine Holdings,8766,損保,HD上場,E03847,yes,,https://www.tokiomarinehd.com/ir/,https://www.tokiomarinehd.com/ir/financial/highlight/,EDINETコード訂正2026-09-13: 旧E05026は코드리스트에 없음のコード
 東京海上日動火災保険,Tokio Marine & Nichido Fire,,,損保子会社,E03823,yes,東京海上HD,https://www.tokiomarine-nichido.co.jp/ir/,,,社債発行→有報義務
-日新火災海上保険,Nisshin Fire & Marine,,損保,子会社,E03829,yes,東京海上HD,https://irbank.net/E03829,,東京海上HD 子会社
+日新火災海上保険,Nisshin Fire & Marine,,損保,子会社,none,no,東京海上HD,https://irbank.net/E03829,,東京海上HD 子会社 / 旧コードE03829は現行EDINETコードリストに無し(2026-09-13 全件実測) — 有報提出者から外れたとみられる
 東京海上日動あんしん生命保険,Tokio Marine & Nichido Life,,生保,子会社,none,no,東京海上HD,https://www.tmn-anshin.co.jp/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 MS&ADインシュアランスグループHD,MS&AD Insurance Group Holdings,8725,損保,HD上場,E03854,yes,,https://www.ms-ad-hd.com/ja/ir/,,EDINETコード訂正2026-09-13: 旧E14905は코드리스트에 없음のコード
 三井住友海上火災保険,Mitsui Sumitomo Insurance,,損保,子会社,E03824,yes,MS&AD,https://www.ms-ad-hd.com/ja/ir/library/securities/msi.html,,社債発行→有報義務

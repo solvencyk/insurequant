@@ -24,9 +24,12 @@ Output: J-ESR/raw/mutual/<company>/<filename>.pdf
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
-import requests
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import jesr_http  # 브라우저 헤더 기본값 — 직접 requests 를 부르면 봇차단에 403 을 맞고
+                  # 그걸 "죽은 URL" 로 오해하게 된다(2026-09-13 §4c)
 
 OUT_DIR = Path(__file__).parent / "raw" / "mutual"
 
@@ -100,16 +103,17 @@ CONFIRMED_SEED = {
 
 
 def check_urls():
-    """HEAD check on all known IR pages."""
+    """IR 페이지 생존 점검.
+
+    HEAD 를 쓰지 않는다 — 헤더 없는 HEAD 는 403/405 를 잘 받고, 그걸 "죽었다" 로
+    읽으면 멀쩡한 회사를 놓친다(2026-09-13 리허설). 판정은 공용 probe 에 맡긴다.
+    """
     print("[CHECK] Verifying mutual company IR pages...")
     for c in MUTUAL_COMPANIES:
         for label, url in [("ir_base", c["ir_base"]), ("press", c["press_url"])]:
-            try:
-                r = requests.head(url, timeout=10, allow_redirects=True)
-                status = r.status_code
-            except Exception as e:
-                status = f"ERROR:{e}"
-            print(f"  {c['code']:20s} {label:8s} [{status}] {url}")
+            res = jesr_http.probe(url, timeout=30)
+            status = res.get("status") or res.get("error", "?")
+            print(f"  {c['code']:20s} {label:8s} [{res['classification']}/{status}] {url}")
 
 
 def download_pdfs(dry_run: bool = False):
@@ -132,7 +136,7 @@ def download_pdfs(dry_run: bool = False):
             continue
         print(f"  {c['code']:20s} Downloading {pattern}...")
         try:
-            r = requests.get(pattern, timeout=60, stream=True)
+            r = jesr_http.get(pattern, timeout=60, stream=True)
             r.raise_for_status()
             with open(dest, "wb") as f:
                 for chunk in r.iter_content(65536):

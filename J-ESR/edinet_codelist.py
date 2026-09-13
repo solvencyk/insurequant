@@ -263,7 +263,18 @@ def main() -> int:
         else:
             counts["ambiguous" if "ambiguous" in method else "none"] += 1
             entry["agrees_with_record"] = None
-            if args.apply and not res["candidates"] and old_code in ("TBD", ""):
+            stale = (old_code.startswith("E")
+                     and not any(r[COL_CODE] == old_code for r in code_rows))
+            if args.apply and not res["candidates"] and stale:
+                # 기재 코드가 현행 코드리스트에 아예 없고 이름으로도 안 잡힌다.
+                # 폐지된 옛 코드로 보고 none 처리하되, 옛 코드를 노트에 남겨 추적 가능하게.
+                entry["recorded_code_belongs_to"] = "현행 코드리스트에 없음(폐지 추정)"
+                _row_set(data_rows[idx], "edinet_code", "none")
+                _row_set(data_rows[idx], "edinet_eligible", "no")
+                _row_set(data_rows[idx], "notes", _append_note(
+                    row["notes"], f"旧コード{old_code}は現行EDINETコードリストに無し"
+                                  f"({date.today().isoformat()} 全件実測) — 有報提出者から外れたとみられる"))
+            elif args.apply and not res["candidates"] and old_code in ("TBD", ""):
                 # 코드리스트 11,389건에 이름이 아예 없다 = EDINET 등록 자체가 없는 회사.
                 # (증권 미발행 자회사·외자계 자회사. 매칭 실패가 아니라 실측 결과다.)
                 _row_set(data_rows[idx], "edinet_code", "none")
