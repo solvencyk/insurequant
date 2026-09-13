@@ -511,17 +511,27 @@
       document.title = e.company_jp + ' ESR詳細 | InsureQuant';
 
       if(e.mode === 'detail'){
-        document.getElementById('noticePanelWrap').hidden = true;
-        ['secCapitalWrap','secRiskWrap','secSensWrap','secProfitWrap'].forEach(function(id){
-          document.getElementById(id).hidden = false;
-        });
         var c = e.detail;
+        // ESR 층이 아직 없는 회사(대형 손보 3사: 신기준 ESR 은 2026-10-31 이연)도 손익·収益性·準備金은 있다(owner 2026-09-13).
+        // → ESR 관련 패널(適格資本・所要資本 표·워터폴·感応度)은 숨기고 안내 패널만, 나머지 패널은 그대로 렌더.
+        var hasEsr = !!(c.headline && c.headline.esr_pct != null) && !!(c.capital_tree && c.capital_tree.length);
+        document.getElementById('noticePanelWrap').hidden = hasEsr;
+        ['secCapitalWrap','secRiskWrap','secSensWrap'].forEach(function(id){ document.getElementById(id).hidden = !hasEsr; });
+        document.getElementById('secProfitWrap').hidden = false;
+        // headline 이 없으면 랭킹 레코드(jesr_esr)의 값으로 카드만 채운다(상장 지주 연결값이 있는 경우 등).
+        if(!hasEsr && e.headlineRec){
+          c.headline = c.headline || {};
+          if(c.headline.esr_pct == null) c.headline.esr_pct = e.headlineRec.esr_pct;
+          if(c.headline.preliminary == null) c.headline.preliminary = e.headlineRec.preliminary;
+        }
         renderMeta(c);
         renderHeadline(c);
-        renderCapital(c);
-        renderCapReqTable(c);
-        renderWaterfall(c);
-        renderSensitivity(c);
+        if(hasEsr){
+          renderCapital(c);
+          renderCapReqTable(c);
+          renderWaterfall(c);
+          renderSensitivity(c);
+        }
         renderProfit(c);
         renderProfitability(c);
         renderAxes(c);

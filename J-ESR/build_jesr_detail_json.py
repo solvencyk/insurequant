@@ -18,9 +18,14 @@ Inputs:
       preliminary for excluded subsidiaries such as meijiyasuda_nonlife, so those four
       fields are looked up here instead of being left blank)
 
-Only companies with census.status == "posted" in extracted_sample_values.json are
-included (currently 2: au_nonlife, meijiyasuda_nonlife -- nnlife is ESR-not-yet-disclosed
-and is excluded).
+Companies included: census.status == "posted" (au_nonlife, meijiyasuda_nonlife -- full ESR
+layer) PLUS, since 2026-09-13 (inbox/jp/20260913T0330Z), census.status == "not_yet" companies
+that have the profit AND history layers extracted (tokiomarine_nichido, mitsui_sumitomo,
+sompo_japan -- ESR due 2026-10-31). A not_yet company carries esr_status "not_yet", an
+esr_placeholder {phrases, pages, expected}, headline with null ESR values, empty capital/
+items/sensitivity/capital_tree/risk_tree, all-null risk/market_sub, and the same profit/
+history/profit_flow blocks as a posted company. nnlife (not_yet, no history layer) stays out.
+_meta.coverage: detail_total / esr_posted / esr_not_yet (replaces the old detail_posted).
 
 Each included company also gets a "profit" block (layer:"profit" in the schema, added
 2026-09-12 per inbox/publishing/20260912T1240Z__owner__JP_MULTI__jesr_detail_profit_block.md).
@@ -471,16 +476,26 @@ def build(extracted, schema, jesr_master, jesr_esr):
 
     companies_out = []
     for cid, comp in extracted["companies"].items():
-        if comp.get("census", {}).get("status") != "posted":
+        status = comp.get("census", {}).get("status")
+        # 2026-09-13 (ticket 20260913T0330Z): ESR-not-yet companies are included when every OTHER
+        # layer is there (profit extracted + history layer) -- the big-3 non-life main volumes.
+        # nnlife (not_yet, no history layer) stays out.
+        if status == "posted":
+            esr_status = "posted"
+        elif status == "not_yet" and "history" in comp.get("layers", []) and comp.get("profit", {}).get("values"):
+            esr_status = "not_yet"
+        else:
             continue
-        esr = comp["esr"]
-        values = esr["values"]
-        method = esr["method"]
+        esr = comp.get("esr") if esr_status == "posted" else None
+        values = esr["values"] if esr else {}
+        method = esr["method"] if esr else {}
         merged = {**values, **method}
         summ = extracted["summary"][cid]
 
         company_en = comp["company_en"]
         src = master_by_en.get(company_en, {})
+        if not src and esr_status == "not_yet":
+            src = {"source_url": comp.get("source_url"), "doc_type": comp.get("source_doc_type"), "doc_date": None, "preliminary": None}
 
         headline = {
             "eligible_capital": values.get("eligible_capital"),
@@ -499,7 +514,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
         market_sub = {k: merged.get(k) for k in MARKET_SUB_KEYS}
 
         sensitivity = []
-        sens = esr.get("sensitivity") or {}
+        sens = (esr.get("sensitivity") if esr else None) or {}
         levels = sens.get("levels", {}).get("esr_pct", {})
         diffs = sens.get("diffs", {}).get("esr_pct", {})
         for scen in sens.get("scenarios", []):
@@ -519,7 +534,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
             })
 
         deviations = []
-        for chk in esr.get("checks", []):
+        for chk in (esr.get("checks", []) if esr else []):
             if chk["id"] in summ.get("checks_info_failed", []):
                 deviations.append({
                     "id": chk["id"],
@@ -528,7 +543,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
                     "note": chk.get("note", ""),
                 })
 
-        agg_recompute = esr.get("aggregation_recompute") or {}
+        agg_recompute = (esr.get("aggregation_recompute") if esr else None) or {}
         aggregation = {
             "top_sqrt": agg_recompute.get("top_sqrt"),
             "simple_sum": agg_recompute.get("simple_sum_ABCDE"),
@@ -549,8 +564,9 @@ def build(extracted, schema, jesr_master, jesr_esr):
 
         profit = build_profit_block(comp.get("profit") or {}, items_by_id)
         history = build_history_block(comp.get("history") or {})
-        capital_tree = build_tree("eligible_capital", merged, items_by_id, children_map)
-        risk_tree = build_tree("rc_pre_tax", merged, items_by_id, children_map)
+        # not_yet: no esr layer -> empty trees (never a label-only skeleton; the page shows the placeholder note instead)
+        capital_tree = build_tree("eligible_capital", merged, items_by_id, children_map) if esr else []
+        risk_tree = build_tree("rc_pre_tax", merged, items_by_id, children_map) if esr else []
         profit_flow = build_profit_flow(comp.get("profit") or {}, items_by_id, comp.get("sector"))
 
         companies_out.append({
@@ -560,6 +576,13 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "sector": comp.get("sector"),
             "scope": comp.get("scope"),
             "as_of": comp.get("as_of"),
+            "esr_status": esr_status,
+            "esr_placeholder": (
+                None if esr_status == "posted" else
+                {"phrases": sorted({loc["phrase"] for loc in axes_values.get("esr_placeholder_locations", [])}),
+                 "pages": sorted({loc["page"] for loc in axes_values.get("esr_placeholder_locations", [])}),
+                 "expected": "2026-10-31"}
+            ),
             "source_url": src.get("source_url"),
             "doc_type": src.get("doc_type"),
             "doc_date": src.get("doc_date"),
@@ -590,7 +613,9 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "labels": labels,
             "next_update": meta_src.get("next_update"),
             "coverage": {
-                "detail_posted": len(companies_out),
+                "detail_total": len(companies_out),
+                "esr_posted": sum(1 for c in companies_out if c["esr_status"] == "posted"),
+                "esr_not_yet": sum(1 for c in companies_out if c["esr_status"] == "not_yet"),
                 "posted_total": len(jesr_esr.get("records", [])),
                 "census_total": meta_src.get("census", {}).get("total"),
             },
@@ -602,8 +627,13 @@ def build(extracted, schema, jesr_master, jesr_esr):
 def self_check(out, jesr_esr):
     errors = []
     companies = out["companies"]
-    if len(companies) != 2:
-        errors.append(f"expected exactly 2 companies, got {len(companies)}")
+    n_posted = sum(1 for c in companies if c.get("esr_status") == "posted")
+    n_not_yet = sum(1 for c in companies if c.get("esr_status") == "not_yet")
+    if n_posted != 2 or n_not_yet != 3:
+        errors.append(f"expected 2 esr-posted + 3 esr-not_yet companies, got {n_posted} + {n_not_yet}")
+    cov = out["_meta"]["coverage"]
+    if cov.get("detail_total") != len(companies) or cov.get("esr_posted") != n_posted:
+        errors.append(f"_meta.coverage inconsistent with companies: {cov}")
 
     public_by_en = {r["company_en"]: r for r in jesr_esr.get("records", [])}
     for r in jesr_esr.get("_meta", {}).get("excluded_subsidiaries", []):
@@ -613,6 +643,46 @@ def self_check(out, jesr_esr):
 
     for c in companies:
         cen = c["company_en"]
+        if c.get("esr_status") == "not_yet":
+            # 2026-09-13 (ticket 20260913T0330Z): ESR layer absent by disclosure timing (2026-10-31) --
+            # headline/capital/risk must be EMPTY (never a guessed skeleton); profit/history are checked
+            # exactly like a posted company (same 合算率 identity, same FY2025/FY2024 xref).
+            if c["headline"]["esr_pct"] is not None or c["headline"]["eligible_capital"] is not None or c["headline"]["required_capital"] is not None:
+                errors.append(f"{cen}: not_yet but headline carries ESR values {c['headline']}")
+            if c["capital_tree"] or c["risk_tree"] or c["capital"] or c["items"] or c["sensitivity"]:
+                errors.append(f"{cen}: not_yet but esr-layer blocks are not empty")
+            if any(v is not None for v in c["risk"].values()) or any(v is not None for v in c["market_sub"].values()):
+                errors.append(f"{cen}: not_yet but risk/market_sub carry values")
+            ph = c.get("esr_placeholder") or {}
+            if not ph.get("phrases") or not ph.get("pages"):
+                errors.append(f"{cen}: not_yet requires >=1 placeholder phrase/page from the source PDF, got {ph}")
+            if not c.get("source_url"):
+                errors.append(f"{cen}: source_url missing")
+            profit = c.get("profit") or {}
+            if profit.get("status") != "extracted":
+                errors.append(f"{cen}: profit.status expected 'extracted', got {profit.get('status')!r}")
+            for req in ("pl_ordinary_profit", "pl_net_income", "pl_underwriting_profit", "pl_net_premiums_written"):
+                if req not in profit.get("items", {}):
+                    errors.append(f"{cen}: profit.items missing required id {req}")
+            ratios = profit.get("ratios", {})
+            for period in ("cur", "prev"):
+                loss = ratios.get("pl_loss_ratio_pct", {}).get(period)
+                expense = ratios.get("pl_expense_ratio_pct", {}).get(period)
+                combined = ratios.get("pl_combined_ratio_pct", {}).get(period)
+                if None in (loss, expense, combined):
+                    errors.append(f"{cen}: profit.ratios[{period}] missing loss/expense/combined for 合算率 check")
+                elif abs((loss + expense) - combined) > 0.1 + 1e-9:
+                    errors.append(f"{cen}: profit.ratios[{period}] 合算率 mismatch -- {loss}+{expense} vs {combined}")
+            if not (c.get("history") or {}).get("series"):
+                errors.append(f"{cen}: history.series empty")
+            pflow = c.get("profit_flow")
+            if pflow is not None and pflow["checks"].get("ordinary_ok") is False:
+                errors.append(f"{cen}: profit_flow ordinary_ok is False: {pflow['checks']}")
+            missing_labels = [k for k in list(profit.get("items", {})) + list((c.get("history") or {}).get("series", {})) if k not in labels]
+            if missing_labels:
+                errors.append(f"{cen}: ids missing from _meta.labels: {missing_labels}")
+            _check_history_xref(c, labels, errors)
+            continue
         pub = public_by_en.get(cen)
         if pub is None:
             errors.append(f"{cen}: not found in jp/jesr_esr.json records/excluded_subsidiaries")
@@ -741,39 +811,48 @@ def self_check(out, jesr_esr):
                 errors.append(f"{cen}: profit.status unexpected {profit.get('status')!r}")
 
         # history layer (2026-09-12 ticket 20260912T1440Z)
-        history = c.get("history") or {}
-        years = history.get("fiscal_years", [])
-        series = history.get("series", {})
-        missing_hist_labels = [k for k in series if k not in labels]
-        if missing_hist_labels:
-            errors.append(f"{cen}: history ids missing from _meta.labels: {missing_hist_labels}")
-        for hid, arr in series.items():
-            if len(arr) != len(years):
-                errors.append(f"{cen}: history.series[{hid}] length {len(arr)} != fiscal_years length {len(years)}")
-        if "FY2025" in years and "FY2024" in years:
-            i25, i24 = years.index("FY2025"), years.index("FY2024")
-            xref = [("hist_net_premiums_written", "pl_net_premiums_written"), ("hist_net_income", "pl_net_income"),
-                    ("hist_ordinary_profit", "pl_ordinary_profit"), ("hist_loss_ratio_pct", "pl_loss_ratio_pct"),
-                    ("hist_expense_ratio_pct", "pl_expense_ratio_pct")]
-            pitems = profit.get("items", {})
-            for hid, pid in xref:
-                harr = series.get(hid)
-                pv = pitems.get(pid)
-                if not harr or not pv:
-                    continue
-                tol = 0.1 if hid.endswith("_pct") else 1
-                if harr[i25] is not None and pv.get("cur") is not None and abs(harr[i25] - pv["cur"]) > tol:
-                    errors.append(f"{cen}: history.series[{hid}][FY2025] {harr[i25]} != profit.items[{pid}].cur {pv.get('cur')}")
-                if harr[i24] is not None and pv.get("prev") is not None and abs(harr[i24] - pv["prev"]) > tol:
-                    errors.append(f"{cen}: history.series[{hid}][FY2024] {harr[i24]} != profit.items[{pid}].prev {pv.get('prev')}")
-        loss, exp, comb = series.get("hist_loss_ratio_pct"), series.get("hist_expense_ratio_pct"), series.get("hist_combined_ratio_pct")
-        if loss and exp and comb:
-            for i, y in enumerate(years):
-                l, e, cv = loss[i], exp[i], comb[i]
-                if l is not None and e is not None and cv is not None and abs(cv - (l + e)) > 0.1 + 1e-9:
-                    errors.append(f"{cen}: history.series 合算率 mismatch at {y} -- loss {l} + expense {e} = {l + e} vs combined {cv} (tol 0.1)")
+        _check_history_xref(c, labels, errors)
 
     return errors
+
+
+def _check_history_xref(c, labels, errors):
+    """history block: label coverage, series/fiscal_years alignment, FY2025/FY2024 == profit cur/prev,
+    合算率 identity (shared by esr-posted and esr-not_yet companies). Tolerances carry a 1e-9 epsilon
+    because MSI's 5개년표 prints ratios with two decimals (62.85) against one in the 3-year table (62.8)."""
+    cen = c["company_en"]
+    profit = c.get("profit") or {}
+    history = c.get("history") or {}
+    years = history.get("fiscal_years", [])
+    series = history.get("series", {})
+    missing_hist_labels = [k for k in series if k not in labels]
+    if missing_hist_labels:
+        errors.append(f"{cen}: history ids missing from _meta.labels: {missing_hist_labels}")
+    for hid, arr in series.items():
+        if len(arr) != len(years):
+            errors.append(f"{cen}: history.series[{hid}] length {len(arr)} != fiscal_years length {len(years)}")
+    if "FY2025" in years and "FY2024" in years:
+        i25, i24 = years.index("FY2025"), years.index("FY2024")
+        xref = [("hist_net_premiums_written", "pl_net_premiums_written"), ("hist_net_income", "pl_net_income"),
+                ("hist_ordinary_profit", "pl_ordinary_profit"), ("hist_loss_ratio_pct", "pl_loss_ratio_pct"),
+                ("hist_expense_ratio_pct", "pl_expense_ratio_pct")]
+        pitems = profit.get("items", {})
+        for hid, pid in xref:
+            harr = series.get(hid)
+            pv = pitems.get(pid)
+            if not harr or not pv:
+                continue
+            tol = 0.1 if hid.endswith("_pct") else 1
+            if harr[i25] is not None and pv.get("cur") is not None and abs(harr[i25] - pv["cur"]) > tol + 1e-9:
+                errors.append(f"{cen}: history.series[{hid}][FY2025] {harr[i25]} != profit.items[{pid}].cur {pv.get('cur')}")
+            if harr[i24] is not None and pv.get("prev") is not None and abs(harr[i24] - pv["prev"]) > tol + 1e-9:
+                errors.append(f"{cen}: history.series[{hid}][FY2024] {harr[i24]} != profit.items[{pid}].prev {pv.get('prev')}")
+    loss, exp, comb = series.get("hist_loss_ratio_pct"), series.get("hist_expense_ratio_pct"), series.get("hist_combined_ratio_pct")
+    if loss and exp and comb:
+        for i, y in enumerate(years):
+            l, e, cv = loss[i], exp[i], comb[i]
+            if l is not None and e is not None and cv is not None and abs(cv - (l + e)) > 0.1 + 1e-9:
+                errors.append(f"{cen}: history.series 合算率 mismatch at {y} -- loss {l} + expense {e} = {l + e} vs combined {cv} (tol 0.1)")
 
 
 def main():

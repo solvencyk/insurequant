@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-12T19:13:30.974983Z",
+    "generated_at": "2026-09-13T00:06:22.318868Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -1156,7 +1156,7 @@
         "pl_item_ref": 1
       },
       "pl_investment_pl": {
-        "ja": "資産運用損益",
+        "ja": "合計",
         "ko": "자산운용손익(실현기준 = 資産運用収益+積立保険料等運用益-資産運用費用)",
         "unit": "JPY_million",
         "kics_item_ref": null,
@@ -1296,7 +1296,7 @@
         "pl_item_ref": null
       },
       "hist_combined_ratio_pct": {
-        "ja": "合算率（正味損害率＋正味事業費率）",
+        "ja": null,
         "ko": "합산비율 5개년 % (파생 = 손해율+사업비율, 있으면 표 직접값 우선)",
         "unit": "pct",
         "kics_item_ref": null,
@@ -1317,14 +1317,14 @@
         "pl_item_ref": null
       },
       "hist_smr_old_pct": {
-        "ja": "ソルベンシー・マージン比率（旧基準、FY2024まで）",
+        "ja": "単体ベースのソルベンシー・マージン比率",
         "ko": "구기준 단체 SMR 5개년 %(신제도 시행 전, 괄호로 병기된 회사만)",
         "unit": "pct",
         "kics_item_ref": null,
         "pl_item_ref": null
       },
       "hist_esr_pct": {
-        "ja": "ESR（新基準・経済価値ベース、FY2025から）",
+        "ja": "単体ベースのソルベンシー・マージン比率",
         "ko": "신기준 ESR(경제가치기준 지급여력비율) 5개년 % — FY2025 부터 공표",
         "unit": "pct",
         "kics_item_ref": null,
@@ -1368,7 +1368,9 @@
     },
     "next_update": "2026-10-31",
     "coverage": {
-      "detail_posted": 2,
+      "detail_total": 5,
+      "esr_posted": 2,
+      "esr_not_yet": 3,
       "posted_total": 15,
       "census_total": 79
     }
@@ -1381,6 +1383,8 @@
       "sector": "nonlife",
       "scope": "solo",
       "as_of": "2026-03-31",
+      "esr_status": "posted",
+      "esr_placeholder": null,
       "source_url": "https://www.au-sonpo.co.jp/corporate/pdf/disclo_260730_4of5.pdf",
       "doc_type": "ディスクロージャー誌(au損保の現状2026, 업적데이터편, 2026-07-30 발행)",
       "doc_date": "2026-07-30",
@@ -2080,7 +2084,7 @@
           },
           {
             "id": "pl_investment_pl",
-            "label_ja": "資産運用損益",
+            "label_ja": "合計",
             "sign": "+",
             "cur": 48,
             "prev": 7,
@@ -2137,6 +2141,8 @@
       "sector": "nonlife",
       "scope": "solo",
       "as_of": "2026-03-31",
+      "esr_status": "posted",
+      "esr_placeholder": null,
       "source_url": "https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260904_performance_data.pdf",
       "doc_type": "ディスクロージャー誌【別冊】業績データ(明治安田損害保険の現状2026, 2026-09-04 게시)",
       "doc_date": "2026-09-04",
@@ -3007,7 +3013,7 @@
           },
           {
             "id": "pl_investment_pl",
-            "label_ja": "資産運用損益",
+            "label_ja": "合計",
             "sign": "+",
             "cur": 773,
             "prev": 592,
@@ -3059,6 +3065,1525 @@
           "underwriting_ok": false,
           "ordinary_ok": true,
           "net_ok": false
+        }
+      }
+    },
+    {
+      "id": "tokiomarine_nichido",
+      "company_jp": "東京海上日動火災保険",
+      "company_en": "Tokio Marine & Nichido Fire",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": {
+        "phrases": [
+          "2026年10月末までに開示",
+          "別時期での開示"
+        ],
+        "pages": [
+          35,
+          38,
+          88,
+          128
+        ],
+        "expected": "2026-10-31"
+      },
+      "source_url": "https://www.tokiomarine-nichido.co.jp/company/pdf/TMNF_2026_d.pdf",
+      "doc_type": "ディスクロージャー誌(東京海上日動の現状2026 本編, 292p)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": {
+        "top_sqrt": null,
+        "simple_sum": null,
+        "reproduced": true,
+        "checks_pass": 39,
+        "checks_total": 41,
+        "deviations": []
+      },
+      "axes": {
+        "esr_status": "not_yet",
+        "esr_placeholder_locations": [
+          {
+            "page": 35,
+            "phrase": "別時期での開示",
+            "context": ") 949,719百万円( 125.7%) 731,125百万円( △23.0%) 単体ソルベンシー・マージン比率 ― 別時期での開示 ※ 総資産額 9,782"
+          },
+          {
+            "page": 38,
+            "phrase": "2026年10月末までに開示",
+            "context": "期発行体格付) ※ 単体ソルベンシー・マージン比率は、新制度導入初年度における経過措置の適用により、2025年度の数値を2026年10月末までに開示します。 取"
+          },
+          {
+            "page": 88,
+            "phrase": "2026年10月末までに開示",
+            "context": "管理費)÷正味収入保険料 3. 単体ソルベンシー・マージン比率については、新制度導入初年度における経過措置の適用により、2026年10月末までに開示します。 8"
+          },
+          {
+            "page": 128,
+            "phrase": "別時期での開示",
+            "context": "3.64 466.92 希薄化後1株当たり当期利益 (円) - - - 連結ソルベンシー・マージン比率 (%) - - 別時期での開示 親会社所有者帰属持分比率"
+          }
+        ],
+        "cat_reserve_total": 1072011,
+        "cat_reserve_fire": 393148,
+        "cat_reserve_by_line": {
+          "火災": 393148,
+          "海上": 143604,
+          "傷害": 153580,
+          "自動車": 39568,
+          "自動車損害賠償責任": null,
+          "その他": 342110
+        },
+        "ordinary_reserve_total": 2054269,
+        "air_used": "not_mentioned",
+        "reins_counterparties_n": 154,
+        "reins_top5_share_pct": 61.7,
+        "reins_rating_a_or_above_pct": 99.3,
+        "_reins_rating_buckets": {
+          "S&P社 A格以上": 99.3,
+          "その他(格付なし・不明・BB格以下)": 0.7
+        },
+        "_reins_rating_note": "S&P社 BBB格以上 column (99.3) is cumulative (includes A格以上) — excluded from the bucket sum",
+        "_reserve_rows_raw": {
+          "火災": [
+            "752,614",
+            "393,148",
+            "7,227",
+            "-",
+            "-",
+            "1,152,990"
+          ],
+          "海上": [
+            "40,517",
+            "143,604",
+            "-",
+            "-",
+            "-",
+            "184,121"
+          ],
+          "傷害": [
+            "144,004",
+            "153,580",
+            "14,412",
+            "823,263",
+            "6,289",
+            "1,141,548"
+          ],
+          "自動車": [
+            "345,282",
+            "39,568",
+            "527",
+            "-",
+            "-",
+            "385,378"
+          ],
+          "自動車損害賠償責任": [
+            "356,986",
+            "-",
+            "-",
+            "-",
+            "-",
+            "356,986"
+          ],
+          "その他": [
+            "414,865",
+            "342,110",
+            "4,779",
+            "13,661",
+            "136",
+            "775,553"
+          ],
+          "合計": [
+            "2,054,269",
+            "1,072,011",
+            "26,946",
+            "836,925",
+            "6,425",
+            "3,996,578"
+          ]
+        },
+        "_reserve_total_all": 3996578
+      },
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": "B(法定P&L 様式 p[102, 109]): 収入積立保険料43,21648,334積立保険料等運用益30,64726,259責任準備金戻入額104,24741,841為替差益-356その他保険引受収益12390資産運用収 | B(監査 文구): 円)420,713949,719731,125普通株式の期中平均株式数(千株)1,549,6921,549,6921,549,692当社は、会社法第436条第2項第1号の規定に基づき、保険業法第111条第1項の規定により公衆の縦覧に供する書類のうち、貸借対照表、損益計算書、および株主資本等変動計 | ifrs17_applied=false for the 単体 statements (basis pages have no IFRS mention); the same volume's 連結 section is IFRS/IFRS17 at group level — not this layer",
+        "source_doc": "tmnf_2026_full.pdf",
+        "unit": "JPY_million",
+        "items": {
+          "pl_ordinary_revenue": {
+            "cur": 3764871,
+            "prev": 3948277
+          },
+          "pl_ordinary_expenses": {
+            "cur": 2834061,
+            "prev": 2787730
+          },
+          "pl_ordinary_profit": {
+            "cur": 930809,
+            "prev": 1160546
+          },
+          "pl_extraordinary_gains": {
+            "cur": 233,
+            "prev": 168
+          },
+          "pl_extraordinary_losses": {
+            "cur": 12171,
+            "prev": 12940
+          },
+          "pl_pretax_profit": {
+            "cur": 918871,
+            "prev": 1147774
+          },
+          "pl_income_taxes": {
+            "cur": 187746,
+            "prev": 198054
+          },
+          "pl_net_income": {
+            "cur": 731125,
+            "prev": 949719
+          },
+          "pl_interest_dividend_income": {
+            "cur": 337157,
+            "prev": 427868
+          },
+          "pl_net_premiums_written": {
+            "cur": 2596396,
+            "prev": 2518823
+          },
+          "pl_net_claims_paid": {
+            "cur": 1454585,
+            "prev": 1448432
+          },
+          "pl_gross_premiums_written": {
+            "cur": 2862377,
+            "prev": 2784550
+          },
+          "pl_assumed_premiums": {
+            "cur": 322829,
+            "prev": 333669
+          },
+          "pl_ceded_premiums": {
+            "cur": 540476,
+            "prev": 556180
+          },
+          "pl_gross_claims_paid": {
+            "cur": 1420151,
+            "prev": 1413003
+          },
+          "pl_assumed_claims": {
+            "cur": 264344,
+            "prev": 297433
+          },
+          "pl_recovered_reinsurance_claims": {
+            "cur": 229910,
+            "prev": 262003
+          },
+          "pl_loss_adjustment_expenses": {
+            "cur": 144791,
+            "prev": 139805
+          },
+          "pl_commissions_collection": {
+            "cur": 485480,
+            "prev": 479861
+          },
+          "pl_operating_general_admin": {
+            "cur": 398424,
+            "prev": 376699
+          },
+          "pl_other_ordinary_revenue": {
+            "cur": 12569,
+            "prev": 12985
+          },
+          "pl_other_ordinary_expenses": {
+            "cur": 3500,
+            "prev": 4330
+          },
+          "pl_underwriting_revenue": {
+            "cur": 2713278,
+            "prev": 2697058
+          },
+          "pl_underwriting_expenses": {
+            "cur": 2331785,
+            "prev": 2285258
+          },
+          "pl_uw_operating_general_admin": {
+            "cur": 330599,
+            "prev": 316037
+          },
+          "pl_underwriting_other": {
+            "cur": -3152,
+            "prev": 1186
+          },
+          "pl_underwriting_profit": {
+            "cur": 47741,
+            "prev": 96949
+          },
+          "pl_investment_pl": {
+            "cur": 938672,
+            "prev": 1116791
+          },
+          "pl_loss_ratio_pct": {
+            "cur": 61.6,
+            "prev": 63.1
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 31.4,
+            "prev": 31.6
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 93.0,
+            "prev": 94.7
+          }
+        },
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 61.6,
+            "prev": 63.1
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 31.4,
+            "prev": 31.6
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 93.0,
+            "prev": 94.7
+          }
+        },
+        "core": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_million",
+        "series": {
+          "hist_net_premiums_written": [
+            2288170,
+            2385239,
+            2417974,
+            2518823,
+            2596396
+          ],
+          "hist_ordinary_profit": [
+            319212,
+            362113,
+            430609,
+            1160546,
+            930809
+          ],
+          "hist_net_income": [
+            235471,
+            189549,
+            420713,
+            949719,
+            731125
+          ],
+          "hist_loss_ratio_pct": [
+            57.5,
+            62.0,
+            64.1,
+            63.1,
+            61.6
+          ],
+          "hist_expense_ratio_pct": [
+            31.9,
+            31.7,
+            31.9,
+            31.6,
+            31.4
+          ],
+          "hist_combined_ratio_pct": [
+            89.4,
+            93.7,
+            96.0,
+            94.7,
+            93.0
+          ],
+          "hist_total_assets": [
+            9564794,
+            9427112,
+            10789694,
+            9782260,
+            9759680
+          ],
+          "hist_net_assets": [
+            2944012,
+            2822759,
+            3908692,
+            3208837,
+            3165047
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": {
+        "sector": "nonlife",
+        "rows": [
+          {
+            "id": "pl_net_premiums_written",
+            "label_ja": "正味収入保険料",
+            "sign": "=",
+            "cur": 2596396,
+            "prev": 2518823,
+            "derived": false
+          },
+          {
+            "id": "pl_net_claims_paid",
+            "label_ja": "正味支払保険金",
+            "sign": "-",
+            "cur": 1454585,
+            "prev": 1448432,
+            "derived": false
+          },
+          {
+            "id": "pl_loss_adjustment_expenses",
+            "label_ja": "損害調査費",
+            "sign": "-",
+            "cur": 144791,
+            "prev": 139805,
+            "derived": false
+          },
+          {
+            "id": "pl_commissions_collection",
+            "label_ja": "諸手数料及び集金費",
+            "sign": "-",
+            "cur": 485480,
+            "prev": 479861,
+            "derived": false
+          },
+          {
+            "id": "pl_uw_operating_general_admin",
+            "label_ja": "保険引受に係る営業費及び一般管理費",
+            "sign": "-",
+            "cur": 330599,
+            "prev": 316037,
+            "derived": false
+          },
+          {
+            "id": "pl_underwriting_other",
+            "label_ja": "その他(準備金繰入等)",
+            "sign": "±",
+            "cur": -3152,
+            "prev": 1186,
+            "derived": false
+          },
+          {
+            "id": "pl_underwriting_profit",
+            "label_ja": "保険引受利益",
+            "sign": "=",
+            "cur": 47741,
+            "prev": 96949,
+            "derived": false
+          },
+          {
+            "id": "pl_investment_pl",
+            "label_ja": "合計",
+            "sign": "+",
+            "cur": 938672,
+            "prev": 1116791,
+            "derived": false
+          },
+          {
+            "id": "pl_other_ordinary",
+            "label_ja": "その他経常損益",
+            "sign": "±",
+            "cur": -55604,
+            "prev": -53194,
+            "derived": true
+          },
+          {
+            "id": "pl_ordinary_profit",
+            "label_ja": "経常利益",
+            "sign": "=",
+            "cur": 930809,
+            "prev": 1160546,
+            "derived": false
+          },
+          {
+            "id": "pl_extraordinary_net",
+            "label_ja": "特別損益",
+            "sign": "±",
+            "cur": -11938,
+            "prev": -12772,
+            "derived": true
+          },
+          {
+            "id": "pl_income_taxes",
+            "label_ja": "法人税等合計",
+            "sign": "-",
+            "cur": 187746,
+            "prev": 198054,
+            "derived": false
+          },
+          {
+            "id": "pl_net_income",
+            "label_ja": "当期純利益",
+            "sign": "=",
+            "cur": 731125,
+            "prev": 949719,
+            "derived": false
+          }
+        ],
+        "missing": [],
+        "checks": {
+          "underwriting_ok": false,
+          "ordinary_ok": true,
+          "net_ok": true
+        }
+      }
+    },
+    {
+      "id": "mitsui_sumitomo",
+      "company_jp": "三井住友海上火災保険",
+      "company_en": "Mitsui Sumitomo Insurance",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": {
+        "phrases": [
+          "2026年10月末までに開示"
+        ],
+        "pages": [
+          26,
+          31,
+          135,
+          242
+        ],
+        "expected": "2026-10-31"
+      },
+      "source_url": "https://www.ms-ins.com/company/aboutus/disclosure/data/a01.pdf",
+      "doc_type": "ディスクロージャー誌(Mitsui Sumitomo Insurance Disclosure 2026 本編, 272p)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": {
+        "top_sqrt": null,
+        "simple_sum": null,
+        "reproduced": true,
+        "checks_pass": 39,
+        "checks_total": 41,
+        "deviations": []
+      },
+      "axes": {
+        "esr_status": "not_yet",
+        "esr_placeholder_locations": [
+          {
+            "page": 26,
+            "phrase": "2026年10月末までに開示",
+            "context": "であるソルベンシー・マージン比率は、2025年度決算より計算基準が見直されており、2025年度数値は保 険業法等に基づき2026年10月末までに開示します。 【"
+          },
+          {
+            "page": 31,
+            "phrase": "2026年10月末までに開示",
+            "context": "21~2024年度、2025年度はそれぞれ異なる基準に よって算出しています。 \t 2025年度数値は保険業法等に基づき2026年10月末までに開示します。 ("
+          },
+          {
+            "page": 135,
+            "phrase": "2026年10月末までに開示",
+            "context": "2021~2024年度、2025年度はそれぞれ異なる基準によって算出しております。2025年度数値は保 険業法等に基づき2026年10月末までに開示します。 1"
+          },
+          {
+            "page": 242,
+            "phrase": "2026年10月末までに開示",
+            "context": "ある」とされております。 4. なお、三井住友海上のソルベンシー・マージン比率(2025年度数値)は、保険業法等に基づき2026年10月末までに開示      "
+          }
+        ],
+        "smr_old_basis_fy2024_pct": 706.3,
+        "cat_reserve_total": 590001,
+        "cat_reserve_fire": 127651,
+        "cat_reserve_by_line": {
+          "火災": 127651,
+          "海上": 98125,
+          "傷害": 90887,
+          "自動車": 48375,
+          "自動車損害賠償責任": null,
+          "その他": 224961
+        },
+        "ordinary_reserve_total": 1475745,
+        "air_used": "not_mentioned",
+        "reins_counterparties_n": 209,
+        "reins_top5_share_pct": 40.0,
+        "reins_rating_a_or_above_pct": 99.6,
+        "_reins_rating_buckets": {
+          "A以上": 99.6,
+          "BBB以上A未満": 0.0,
+          "その他": 0.4
+        },
+        "_reins_rating_note": "rating table dated 2026年4月末 (as of 2026-04-30), counterparties/top5 are 2025年度",
+        "_reserve_rows_raw": {
+          "火災": [
+            "598,537",
+            "127,651",
+            "1,323",
+            "-",
+            "-",
+            "727,512"
+          ],
+          "海上": [
+            "41,916",
+            "98,125",
+            "-",
+            "-",
+            "-",
+            "140,041"
+          ],
+          "傷害": [
+            "52,771",
+            "90,887",
+            "2,210",
+            "590,304",
+            "5,658",
+            "741,831"
+          ],
+          "自動車": [
+            "232,432",
+            "48,375",
+            "98",
+            "-",
+            "-",
+            "280,905"
+          ],
+          "自動車損害賠償責任": [
+            "235,904",
+            "-",
+            "-",
+            "-",
+            "-",
+            "235,904"
+          ],
+          "その他": [
+            "314,183",
+            "224,961",
+            "564",
+            "18,171",
+            "181",
+            "558,063"
+          ],
+          "合計": [
+            "1,475,745",
+            "590,001",
+            "4,196",
+            "608,475",
+            "5,839",
+            "2,684,258"
+          ]
+        },
+        "_reserve_total_all": 2684258
+      },
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": "B(法定P&L 様式 p[107, 109, 114]): 21,648)(20,071)積立保険料等運用益(24,594)(21,246)責任準備金戻入額(115,704)(67,359)為替差益(566)(1,543)その他保険引受 | B(監査 文구): 額1,909円51銭1,545円34銭1,666円89銭従業員1人当たり総資産647,647千円564,179千円582,326千円当社は、会社法第436条第2項第1号の規定に基づき、貸借対照表、損益計算書および株主資本等変動計算書等について、有限責任あずさ監査法人の監査を受けております。また、 | ifrs17_applied=false for the 単体 statements (basis pages have no IFRS mention); the same volume's 連結 section is IFRS/IFRS17 at group level — not this layer",
+        "source_doc": "msi_2026_full.pdf",
+        "unit": "JPY_million",
+        "items": {
+          "pl_ordinary_revenue": {
+            "cur": 2492658,
+            "prev": 2453546
+          },
+          "pl_ordinary_expenses": {
+            "cur": 1832388,
+            "prev": 1877519
+          },
+          "pl_ordinary_profit": {
+            "cur": 660270,
+            "prev": 576026
+          },
+          "pl_extraordinary_gains": {
+            "cur": 835,
+            "prev": 7293
+          },
+          "pl_extraordinary_losses": {
+            "cur": 56509,
+            "prev": 8360
+          },
+          "pl_pretax_profit": {
+            "cur": 604596,
+            "prev": 574959
+          },
+          "pl_income_taxes": {
+            "cur": 144631,
+            "prev": 115059
+          },
+          "pl_net_income": {
+            "cur": 459965,
+            "prev": 459900
+          },
+          "pl_interest_dividend_income": {
+            "cur": 210817,
+            "prev": 170438
+          },
+          "pl_net_premiums_written": {
+            "cur": 1754431,
+            "prev": 1679248
+          },
+          "pl_net_claims_paid": {
+            "cur": 970472,
+            "prev": 1005894
+          },
+          "pl_gross_premiums_written": {
+            "cur": 2017006,
+            "prev": 1924364
+          },
+          "pl_assumed_premiums": {
+            "cur": 192437,
+            "prev": 191355
+          },
+          "pl_ceded_premiums": {
+            "cur": 455012,
+            "prev": 436471
+          },
+          "pl_gross_claims_paid": {
+            "cur": 998449,
+            "prev": 1039649
+          },
+          "pl_assumed_claims": {
+            "cur": 164499,
+            "prev": 187347
+          },
+          "pl_recovered_reinsurance_claims": {
+            "cur": 192475,
+            "prev": 221103
+          },
+          "pl_loss_adjustment_expenses": {
+            "cur": 132137,
+            "prev": 114483
+          },
+          "pl_commissions_collection": {
+            "cur": 315074,
+            "prev": 309573
+          },
+          "pl_operating_general_admin": {
+            "cur": 236819,
+            "prev": 244196
+          },
+          "pl_other_ordinary_revenue": {
+            "cur": 6922,
+            "prev": 6306
+          },
+          "pl_other_ordinary_expenses": {
+            "cur": 12458,
+            "prev": 6826
+          },
+          "pl_underwriting_revenue": {
+            "cur": 1864681,
+            "prev": 1841780
+          },
+          "pl_underwriting_expenses": {
+            "cur": 1529907,
+            "prev": 1561654
+          },
+          "pl_uw_operating_general_admin": {
+            "cur": 219016,
+            "prev": 227542
+          },
+          "pl_underwriting_other": {
+            "cur": 4,
+            "prev": 2018
+          },
+          "pl_underwriting_profit": {
+            "cur": 115762,
+            "prev": 54601
+          },
+          "pl_investment_pl": {
+            "cur": 567850,
+            "prev": 540617
+          },
+          "pl_loss_ratio_pct": {
+            "cur": 62.8,
+            "prev": 66.7
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 30.4,
+            "prev": 32.0
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 93.2,
+            "prev": 98.7
+          }
+        },
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 62.8,
+            "prev": 66.7
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 30.4,
+            "prev": 32.0
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 93.2,
+            "prev": 98.7
+          }
+        },
+        "core": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_million",
+        "series": {
+          "hist_net_premiums_written": [
+            1579325,
+            1629832,
+            1623307,
+            1679248,
+            1754431
+          ],
+          "hist_ordinary_profit": [
+            184234,
+            141224,
+            214319,
+            576026,
+            660270
+          ],
+          "hist_net_income": [
+            145744,
+            107899,
+            167777,
+            459900,
+            459965
+          ],
+          "hist_loss_ratio_pct": [
+            59.01,
+            64.31,
+            65.58,
+            66.72,
+            62.85
+          ],
+          "hist_expense_ratio_pct": [
+            32.97,
+            32.49,
+            32.65,
+            31.99,
+            30.44
+          ],
+          "hist_combined_ratio_pct": [
+            92.0,
+            96.8,
+            98.2,
+            98.7,
+            93.3
+          ],
+          "hist_total_assets": [
+            7374326,
+            7000023,
+            7864388,
+            6822620,
+            7413596
+          ],
+          "hist_net_assets": [
+            2089181,
+            1962531,
+            2681722,
+            2170285,
+            2340984
+          ],
+          "hist_smr_old_pct": [
+            722.5,
+            684.3,
+            691.1,
+            706.3,
+            null
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": {
+        "sector": "nonlife",
+        "rows": [
+          {
+            "id": "pl_net_premiums_written",
+            "label_ja": "正味収入保険料",
+            "sign": "=",
+            "cur": 1754431,
+            "prev": 1679248,
+            "derived": false
+          },
+          {
+            "id": "pl_net_claims_paid",
+            "label_ja": "正味支払保険金",
+            "sign": "-",
+            "cur": 970472,
+            "prev": 1005894,
+            "derived": false
+          },
+          {
+            "id": "pl_loss_adjustment_expenses",
+            "label_ja": "損害調査費",
+            "sign": "-",
+            "cur": 132137,
+            "prev": 114483,
+            "derived": false
+          },
+          {
+            "id": "pl_commissions_collection",
+            "label_ja": "諸手数料及び集金費",
+            "sign": "-",
+            "cur": 315074,
+            "prev": 309573,
+            "derived": false
+          },
+          {
+            "id": "pl_uw_operating_general_admin",
+            "label_ja": "保険引受に係る営業費及び一般管理費",
+            "sign": "-",
+            "cur": 219016,
+            "prev": 227542,
+            "derived": false
+          },
+          {
+            "id": "pl_underwriting_other",
+            "label_ja": "その他(準備金繰入等)",
+            "sign": "±",
+            "cur": 4,
+            "prev": 2018,
+            "derived": false
+          },
+          {
+            "id": "pl_underwriting_profit",
+            "label_ja": "保険引受利益",
+            "sign": "=",
+            "cur": 115762,
+            "prev": 54601,
+            "derived": false
+          },
+          {
+            "id": "pl_investment_pl",
+            "label_ja": "合計",
+            "sign": "+",
+            "cur": 567850,
+            "prev": 540617,
+            "derived": false
+          },
+          {
+            "id": "pl_other_ordinary",
+            "label_ja": "その他経常損益",
+            "sign": "±",
+            "cur": -23342,
+            "prev": -19192,
+            "derived": true
+          },
+          {
+            "id": "pl_ordinary_profit",
+            "label_ja": "経常利益",
+            "sign": "=",
+            "cur": 660270,
+            "prev": 576026,
+            "derived": false
+          },
+          {
+            "id": "pl_extraordinary_net",
+            "label_ja": "特別損益",
+            "sign": "±",
+            "cur": -55674,
+            "prev": -1067,
+            "derived": true
+          },
+          {
+            "id": "pl_income_taxes",
+            "label_ja": "法人税等合計",
+            "sign": "-",
+            "cur": 144631,
+            "prev": 115059,
+            "derived": false
+          },
+          {
+            "id": "pl_net_income",
+            "label_ja": "当期純利益",
+            "sign": "=",
+            "cur": 459965,
+            "prev": 459900,
+            "derived": false
+          }
+        ],
+        "missing": [],
+        "checks": {
+          "underwriting_ok": false,
+          "ordinary_ok": true,
+          "net_ok": true
+        }
+      }
+    },
+    {
+      "id": "sompo_japan",
+      "company_jp": "損害保険ジャパン",
+      "company_en": "Sompo Japan Insurance",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": {
+        "phrases": [
+          "2026年10月末の予定"
+        ],
+        "pages": [
+          39,
+          116,
+          129,
+          162,
+          163,
+          164
+        ],
+        "expected": "2026-10-31"
+      },
+      "source_url": "https://www.sompo-japan.co.jp/-/media/SJNK/files/company/disclosure/2026/sj_disc2026.pdf?la=ja-JP",
+      "doc_type": "ディスクロージャー誌(損保ジャパンの現状2026 本編, 292p)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": {
+        "top_sqrt": null,
+        "simple_sum": null,
+        "reproduced": true,
+        "checks_pass": 39,
+        "checks_total": 41,
+        "deviations": []
+      },
+      "axes": {
+        "esr_status": "not_yet",
+        "esr_placeholder_locations": [
+          {
+            "page": 39,
+            "phrase": "2026年10月末の予定",
+            "context": "実際の市場価値やリスクを反映した評価が可能になりました。  2025年度の単体ベースのソルベンシー・マージン比率の開示は2026年10月末の予定ですが、早期是正"
+          },
+          {
+            "page": 116,
+            "phrase": "2026年10月末の予定",
+            "context": "積立保険料等運用益-資産運用費用)÷平均運用額    5. 2025年度の単体ベースのソルベンシー・マージン比率の開示は2026年10月末の予定です。    6"
+          },
+          {
+            "page": 129,
+            "phrase": "2026年10月末の予定",
+            "context": "実際の市場価値やリスクを反映した評価が可能になりました。  2025年度の単体ベースのソルベンシー・マージン比率の開示は2026年10月末の予定ですが、早期是正"
+          },
+          {
+            "page": 162,
+            "phrase": "2026年10月末の予定",
+            "context": "、潜在株式が存在しないため記載しておりません。    3. 2025年度の連結ベースのソルベンシー・マージン比率の開示は2026年10月末の予定です。    ("
+          },
+          {
+            "page": 163,
+            "phrase": "2026年10月末の予定",
+            "context": "実際の市場価値やリスクを反映した評価が可能になりました。  2025年度の連結ベースのソルベンシー・マージン比率の開示は2026年10月末の予定ですが、早期是正"
+          },
+          {
+            "page": 164,
+            "phrase": "2026年10月末の予定",
+            "context": "、単体ベースのソルベンシー・マージン比率を算出しています。  2025年度の各社の単体ソルベンシー・マージン比率の開示は2026年10月末の予定ですが、䠯䠫䠩䠬"
+          }
+        ],
+        "cat_reserve_total": 693262,
+        "cat_reserve_fire": 288055,
+        "cat_reserve_by_line": {
+          "火災": 288055,
+          "海上": 58194,
+          "傷害": 81927,
+          "自動車": 36782,
+          "自動車損害賠償責任": null,
+          "その他": 228302
+        },
+        "ordinary_reserve_total": 1927281,
+        "air_used": "not_mentioned",
+        "reins_counterparties_n": 102,
+        "reins_top5_share_pct": 47.5,
+        "reins_rating_a_or_above_pct": 98.9,
+        "_reins_rating_buckets": {
+          "A以上": 98.9,
+          "BBB格": 1.1,
+          "その他": 0.0
+        },
+        "_reserve_rows_raw": {
+          "火災": [
+            "666,130",
+            "288,055",
+            "2,653",
+            "8,658",
+            "152",
+            "965,651"
+          ],
+          "海上": [
+            "31,727",
+            "58,194",
+            "-",
+            "-",
+            "-",
+            "89,922"
+          ],
+          "傷害": [
+            "132,025",
+            "81,927",
+            "4,756",
+            "712,635",
+            "4,550",
+            "935,895"
+          ],
+          "自動車": [
+            "339,304",
+            "36,782",
+            "-",
+            "-",
+            "-",
+            "376,086"
+          ],
+          "自動車損害賠償責任": [
+            "394,408",
+            "-",
+            "-",
+            "-",
+            "-",
+            "394,408"
+          ],
+          "その他": [
+            "363,685",
+            "228,302",
+            "1,289",
+            "7,511",
+            "79",
+            "600,868"
+          ],
+          "合計": [
+            "1,927,281",
+            "693,262",
+            "8,699",
+            "728,806",
+            "4,782",
+            "3,362,832"
+          ]
+        },
+        "_reserve_total_all": 3362832
+      },
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": "B(法定P&L 様式 p[136, 142]): 3,753積立保険料等運用益30,32426,415支払備金戻入額-10,914責任準備金戻入額40,1148,480為替差益-1,237その他保険引受収益4844資産運用収益 | B(監査 文구): 641年超402645合計11496110貸主側1年内1791581831年超569411426合計7495696097会計監査1.当社は、会社法第436条第2項第1号の規定に基づき、貸借対照表、損益計算書、株主資本等変動計算書、重要な会計方針およびその他の注記ならびにその附属明細書について、䠡 | ifrs17_applied=false for the 単体 statements (basis pages have no IFRS mention); the same volume's 連結 section is IFRS/IFRS17 at group level — not this layer",
+        "source_doc": "sompojapan_2026_full.pdf",
+        "unit": "JPY_million",
+        "items": {
+          "pl_ordinary_revenue": {
+            "cur": 2856236,
+            "prev": 2870540
+          },
+          "pl_ordinary_expenses": {
+            "cur": 2479171,
+            "prev": 2555960
+          },
+          "pl_ordinary_profit": {
+            "cur": 377064,
+            "prev": 314579
+          },
+          "pl_extraordinary_gains": {
+            "cur": 2560,
+            "prev": 643
+          },
+          "pl_extraordinary_losses": {
+            "cur": 5093,
+            "prev": 10882
+          },
+          "pl_pretax_profit": {
+            "cur": 374531,
+            "prev": 304340
+          },
+          "pl_income_taxes": {
+            "cur": 78881,
+            "prev": 47358
+          },
+          "pl_net_income": {
+            "cur": 295649,
+            "prev": 256982
+          },
+          "pl_interest_dividend_income": {
+            "cur": 188006,
+            "prev": 207975
+          },
+          "pl_net_premiums_written": {
+            "cur": 2311577,
+            "prev": 2229919
+          },
+          "pl_net_claims_paid": {
+            "cur": 1339037,
+            "prev": 1346628
+          },
+          "pl_gross_premiums_written": {
+            "cur": 2662630,
+            "prev": 2586214
+          },
+          "pl_assumed_premiums": {
+            "cur": 179447,
+            "prev": 186830
+          },
+          "pl_ceded_premiums": {
+            "cur": 466747,
+            "prev": 475749
+          },
+          "pl_gross_claims_paid": {
+            "cur": 1381751,
+            "prev": 1406701
+          },
+          "pl_assumed_claims": {
+            "cur": 178590,
+            "prev": 191690
+          },
+          "pl_recovered_reinsurance_claims": {
+            "cur": 221304,
+            "prev": 251764
+          },
+          "pl_loss_adjustment_expenses": {
+            "cur": 134673,
+            "prev": 128177
+          },
+          "pl_commissions_collection": {
+            "cur": 435834,
+            "prev": 435133
+          },
+          "pl_operating_general_admin": {
+            "cur": 370771,
+            "prev": 345171
+          },
+          "pl_other_ordinary_revenue": {
+            "cur": 17683,
+            "prev": 15007
+          },
+          "pl_other_ordinary_expenses": {
+            "cur": 13197,
+            "prev": 13256
+          },
+          "pl_underwriting_revenue": {
+            "cur": 2422423,
+            "prev": 2367783
+          },
+          "pl_underwriting_expenses": {
+            "cur": 2039747,
+            "prev": 2099066
+          },
+          "pl_uw_operating_general_admin": {
+            "cur": 333082,
+            "prev": 320475
+          },
+          "pl_underwriting_other": {
+            "cur": -1341,
+            "prev": -150
+          },
+          "pl_underwriting_profit": {
+            "cur": 48251,
+            "prev": -51908
+          },
+          "pl_investment_pl": {
+            "cur": 360675,
+            "prev": 389283
+          },
+          "pl_loss_ratio_pct": {
+            "cur": 63.8,
+            "prev": 66.1
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 33.3,
+            "prev": 33.9
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 97.0,
+            "prev": 100.0
+          }
+        },
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 63.8,
+            "prev": 66.1
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 33.3,
+            "prev": 33.9
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 97.0,
+            "prev": 100.0
+          }
+        },
+        "core": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "JPY_million",
+        "series": {
+          "hist_net_premiums_written": [
+            2158791,
+            2225531,
+            2177954,
+            2229919,
+            2311577
+          ],
+          "hist_ordinary_profit": [
+            210810,
+            124926,
+            251517,
+            314579,
+            377064
+          ],
+          "hist_net_income": [
+            166207,
+            108041,
+            207984,
+            256982,
+            295649
+          ],
+          "hist_loss_ratio_pct": [
+            59.8,
+            64.1,
+            66.9,
+            66.1,
+            63.8
+          ],
+          "hist_expense_ratio_pct": [
+            33.7,
+            33.5,
+            33.8,
+            33.9,
+            33.3
+          ],
+          "hist_combined_ratio_pct": [
+            93.5,
+            97.6,
+            100.7,
+            100.0,
+            97.1
+          ],
+          "hist_total_assets": [
+            7366684,
+            7266668,
+            7664357,
+            7190174,
+            7438271
+          ],
+          "hist_net_assets": [
+            1478770,
+            1408675,
+            1895114,
+            1727138,
+            2039066
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": {
+        "sector": "nonlife",
+        "rows": [
+          {
+            "id": "pl_net_premiums_written",
+            "label_ja": "正味収入保険料",
+            "sign": "=",
+            "cur": 2311577,
+            "prev": 2229919,
+            "derived": false
+          },
+          {
+            "id": "pl_net_claims_paid",
+            "label_ja": "正味支払保険金",
+            "sign": "-",
+            "cur": 1339037,
+            "prev": 1346628,
+            "derived": false
+          },
+          {
+            "id": "pl_loss_adjustment_expenses",
+            "label_ja": "損害調査費",
+            "sign": "-",
+            "cur": 134673,
+            "prev": 128177,
+            "derived": false
+          },
+          {
+            "id": "pl_commissions_collection",
+            "label_ja": "諸手数料及び集金費",
+            "sign": "-",
+            "cur": 435834,
+            "prev": 435133,
+            "derived": false
+          },
+          {
+            "id": "pl_uw_operating_general_admin",
+            "label_ja": "保険引受に係る営業費及び一般管理費",
+            "sign": "-",
+            "cur": 333082,
+            "prev": 320475,
+            "derived": false
+          },
+          {
+            "id": "pl_underwriting_other",
+            "label_ja": "その他(準備金繰入等)",
+            "sign": "±",
+            "cur": -1341,
+            "prev": -150,
+            "derived": false
+          },
+          {
+            "id": "pl_underwriting_profit",
+            "label_ja": "保険引受利益",
+            "sign": "=",
+            "cur": 48251,
+            "prev": -51908,
+            "derived": false
+          },
+          {
+            "id": "pl_investment_pl",
+            "label_ja": "合計",
+            "sign": "+",
+            "cur": 360675,
+            "prev": 389283,
+            "derived": false
+          },
+          {
+            "id": "pl_other_ordinary",
+            "label_ja": "その他経常損益",
+            "sign": "±",
+            "cur": -31862,
+            "prev": -22796,
+            "derived": true
+          },
+          {
+            "id": "pl_ordinary_profit",
+            "label_ja": "経常利益",
+            "sign": "=",
+            "cur": 377064,
+            "prev": 314579,
+            "derived": false
+          },
+          {
+            "id": "pl_extraordinary_net",
+            "label_ja": "特別損益",
+            "sign": "±",
+            "cur": -2533,
+            "prev": -10239,
+            "derived": true
+          },
+          {
+            "id": "pl_income_taxes",
+            "label_ja": "法人税等合計",
+            "sign": "-",
+            "cur": 78881,
+            "prev": 47358,
+            "derived": false
+          },
+          {
+            "id": "pl_net_income",
+            "label_ja": "当期純利益",
+            "sign": "=",
+            "cur": 295649,
+            "prev": 256982,
+            "derived": false
+          }
+        ],
+        "missing": [],
+        "checks": {
+          "underwriting_ok": false,
+          "ordinary_ok": true,
+          "net_ok": true
         }
       }
     }

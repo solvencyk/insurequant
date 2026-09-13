@@ -426,6 +426,55 @@ MEIJI_PL_FLAT_MAP = {
     "pl_pretax_profit": (105, 110, 115), "pl_income_taxes": (108, 113, 118), "pl_net_income": (109, 114, 119),
 }
 
+# --------------------------------------------------------------------------------------
+# Big-3 non-life main volumes (ticket 20260913T0330Z) — ESR layer absent (all three print
+# "2026年10月末までに開示" placeholders), every other layer extracted from the 292/272/292-page
+# 現状2026 books under J-ESR/raw/fy2025_samples/others/. Per-company layout switches below are
+# documented in docs/domains/jp_esr_disclosure_template.md §9-8 / §10-8.
+OTHERS = "others"
+
+# 保険引受の状況 bridge for the big-3: sub-table HEADINGS differ per company (Sompo Japan calls
+# 支払再保険料 "出再正味保険料" and 回収再保険金 "出再正味保険金"; Tokio Marine prints 受再/支払 and
+# 受再/回収 as PAIRED two-column tables) so each entry is (heading regex, id | (id_left, id_right)).
+# Walked in document order with a shared cursor, values = the 合計 row's AMOUNT tokens (integers —
+# 構成比/増減率 carry a decimal point) so the 6/7/9-token row shapes all reduce to [y1, y2, y3].
+BRIDGE_SPEC = {
+    "tokiomarine_nichido": [
+        (r"^元受正味保険料\(含む収入積立保険料\)", "pl_gross_premiums_written"),
+        (r"^受再正味保険料及び支払再保険料$", ("pl_assumed_premiums", "pl_ceded_premiums")),
+        (r"^元受正味保険金$", "pl_gross_claims_paid"),
+        (r"^受再正味保険金及び回収再保険金$", ("pl_assumed_claims", "pl_recovered_reinsurance_claims")),
+    ],
+    "mitsui_sumitomo": [
+        (r"^2\s*元受正味保険料\(除く収入積立保険料\)", "pl_gross_premiums_written"),
+        (r"^3\s*受再正味保険料の種目別推移", "pl_assumed_premiums"),
+        (r"^4\s*支払再保険料の種目別推移", "pl_ceded_premiums"),
+        (r"^1\s*元受正味保険金の種目別推移", "pl_gross_claims_paid"),
+        (r"^2\s*受再正味保険金の種目別推移", "pl_assumed_claims"),
+        (r"^3\s*回収再保険金の種目別推移", "pl_recovered_reinsurance_claims"),
+    ],
+    "sompo_japan": [
+        (r"^1\s*元受正味保険料\(含む収入積立保険料\)", "pl_gross_premiums_written"),
+        (r"^2\s*受再正味保険料$", "pl_assumed_premiums"),
+        (r"^3\s*出再正味保険料$", "pl_ceded_premiums"),
+        (r"^5\s*元受正味保険金$", "pl_gross_claims_paid"),
+        (r"^6\s*受再正味保険金$", "pl_assumed_claims"),
+        (r"^7\s*出再正味保険金$", "pl_recovered_reinsurance_claims"),
+    ],
+}
+
+# 責任準備金の内訳 (by line × 普通責任/異常危険/危険/払戻/契約者配当/合計, FY2024 and FY2025 side by side
+# = 12 numbers per row, or two stacked one-year tables = 6 per row). NB: norm() is NFKC, so the
+# circled numerals MSI uses as table numbers ("②") arrive as plain digits ("2") — regexes below match those. Tokens are pulled with a regex
+# from the text between one 種目 label and the next, because the 3 books glue cells together
+# ("－1,109,472", "2,074,170 1,027,463", "自動車損害賠償責任 417,739 |").
+RESERVE_SPEC = {
+    "tokiomarine_nichido": dict(heading=r"^責任準備金の残高内訳$", year_marker=None),
+    "mitsui_sumitomo": dict(heading=r"^3\s*責任準備金の種目別残高の内訳", year_marker=r"^2025年度末$"),
+    "sompo_japan": dict(heading=r"^3\.\s*責任準備金の内訳$", year_marker=None),
+}
+RESERVE_LOBS = ["火災", "海上", "傷害", "自動車", "自動車損害賠償責任", "その他", "合計"]
+
 COMPANIES = [
     dict(key="au_nonlife", company_jp="au損害保険", company_en="au Non-Life", sector="nonlife", pdf="au_nonlife_disclo_260730_4of5.pdf",
          layers=["esr", "article_axes", "profit", "history"],
@@ -460,7 +509,161 @@ COMPANIES = [
          layers=["article_axes", "profit"], pages=dict(), headline_5yr_page=11,
          axes_pages=dict(summary5=[11], soundness=[15], core_profit=[60], reins=[64], esr_section=[54]),
          profit_pages=dict(pl=[44], core=[60], three=[60], basis=[47, 48, 49]), pl_layout="prev_pct_cur_pct"),
+    # ---- big-3 non-life main volumes (ticket 20260913T0330Z): no ESR layer (not_yet), everything else ----
+    dict(key="tokiomarine_nichido", company_jp="東京海上日動火災保険", company_en="Tokio Marine & Nichido Fire", sector="nonlife",
+         subdir=OTHERS, pdf="tmnf_2026_full.pdf", layers=["article_axes", "profit", "history"], pages=dict(), headline_5yr_page=None,
+         source_url="https://www.tokiomarine-nichido.co.jp/company/pdf/TMNF_2026_d.pdf", source_doc_type="ディスクロージャー誌(東京海上日動の現状2026 本編, 292p)",
+         axes_pages=dict(reins=[92], reserves=[118]), reins_style="tmnf",
+         # 損益計算書 p102 = 2 columns (2024年度/2025年度, no 比較増減) → prev_cur_diff still reads toks[0]/[1].
+         # 資産運用利回り(実現利回り) 合計 (p95) is 2-year × 3 and its numerator double-counts 積立保険料等運用益
+         # (26,259) → pl_investment_pl comes from the P&L 資産運用収益−資産運用費用 instead (same rule as Meiji).
+         profit_pages=dict(pl=[102], uw=[90], ratio=[91], summary5=[88], basis=[102, 109], bridge=[89, 90, 91]),
+         pl_layout="prev_cur_diff", pl_investment_override="pl_stmt", summary5_skip_p10=True,
+         label_overrides={"pl_uw_operating_general_admin": [r"^営業費及び一般管理費$"]},
+         # 元受正味保険料 table is "(含む収入積立保険料)" only → P14 subtracts the P&L 収入積立保険料 line.
+         bridge_gross_incl_deposit=True,
+         # 主要な経営指標等の推移 p88: every amount row is followed by a (対前期増減(△)率) sub-label and each
+         # value by its (x.x%) growth in parens → skip the sub-label, drop every paren token.
+         hist_skip=[r"対前期増減"], hist_drop_paren_all=True),
+    dict(key="mitsui_sumitomo", company_jp="三井住友海上火災保険", company_en="Mitsui Sumitomo Insurance", sector="nonlife",
+         subdir=OTHERS, pdf="msi_2026_full.pdf", layers=["article_axes", "profit", "history"], pages=dict(), headline_5yr_page=None,
+         source_url="https://www.ms-ins.com/company/aboutus/disclosure/data/a01.pdf", source_doc_type="ディスクロージャー誌(Mitsui Sumitomo Insurance Disclosure 2026 本編, 272p)",
+         axes_pages=dict(reins=[55], reserves=[123]), reins_style="msi",
+         # 業績データ pages render row labels one glyph per line ("経|常|利|益") and P&L sub-items in ASCII
+         # parens "(1,679,248)" → merge_vertical on every table incl. the P&L, unwrap paren values.
+         profit_pages=dict(pl=[109], uw=[100], ratio=[99], summary5=[31], basis=[107, 109, 114], bridge=[94, 95, 96, 97]),
+         pl_layout="prev_cur_diff", vertical_labels=True, vertical_pl=True, unwrap_parens=True,
+         pl_investment_override="pl_stmt", summary5_skip_p10=True,
+         label_overrides={"pl_uw_operating_general_admin": [r"^営業費及び一般管理費$"]},
+         # p31 5개년표: label+"（対前期増減率）" merge into one line, growth % tokens sit as "（|1.27% ）" pairs;
+         # 損害率/事業費率 carry TWO decimals here (62.85%) vs one in the 3-year table (62.8) → H01 tol 0.1 ok.
+         # SMR row = 新基準/旧基準 pairs per year (旧基準 FY2021-24 722.5/684.3/691.1/706.3, 新基準 all "－"/(注1)).
+         # growth cells arrive as "(" / "1.27% )" / "- )(" fragments (a backspace glyph after the paren) → skip all three shapes
+         hist_skip=[r"^[（(]\W*$", r"%\s*[）)]", r"^-\s*[）)]", r"^[）)]$"], hist_drop_paren_all=True,
+         hist_label_overrides={"hist_net_premiums_written": [r"^正味収入保険料"], "hist_ordinary_profit": [r"^経常利益"],
+                               "hist_net_income": [r"^当期純利益"]},
+         hist_smr_layout="new_old_pairs", smr_from_history=True),
+    dict(key="sompo_japan", company_jp="損害保険ジャパン", company_en="Sompo Japan Insurance", sector="nonlife",
+         subdir=OTHERS, pdf="sompojapan_2026_full.pdf", layers=["article_axes", "profit", "history"], pages=dict(), headline_5yr_page=None,
+         source_url="https://www.sompo-japan.co.jp/-/media/SJNK/files/company/disclosure/2026/sj_disc2026.pdf?la=ja-JP", source_doc_type="ディスクロージャー誌(損保ジャパンの現状2026 本編, 292p)",
+         # 業績データ section (p116+) is set in subset MS-PGothic/YuGothic fonts WITHOUT a ToUnicode map: fitz
+         # returns raw glyph ids (digits at +16044, kana at +5776/+5774, kanji = MS Gothic glyph order) →
+         # GidDoc decodes span-by-span using the local msgothic.ttc cmap (see decode_gid_text()).
+         gid_decode=True,
+         axes_pages=dict(reins=[121, 122], reserves=[151]), reins_style="sompo",
+         profit_pages=dict(pl=[136], uw=[122], ratio=[120], summary5=[116], basis=[136, 142], bridge=[117, 118, 119]),
+         pl_layout="prev_cur_diff", pl_investment_override="pl_stmt", summary5_skip_p10=True,
+         label_overrides={"pl_uw_operating_general_admin": [r"^営業費及び一般管理費$"]},
+         bridge_gross_incl_deposit=True,
+         hist_skip=[r"対前年度増減率"], hist_drop_paren_all=True),
 ]
+
+# extract_axes() placeholder phrases — the big-3 print three new variants (§10-7).
+ESR_PLACEHOLDER_PHRASES = ["後日公表予定", "別途公表予定", "10月末に公表予定", "後日公表",
+                           "別時期での開示", "2026年10月末までに開示", "2026年10月末の予定"]
+
+
+# --------------------------------------------------------------------------------------
+# Sompo Japan glyph-id decoding (ticket 20260913T0330Z). The 業績データ pages embed subset
+# MS-PGothic / YuGothic TrueType fonts with Identity-H and no ToUnicode CMap, so fitz emits the
+# glyph index as the code point. Empirically (verified against p116 主要な財務指標 / p121-122
+# 再保険 tables): ASCII glyphs sit at gid = cp + 16044, hiragana at cp + 5776, katakana at
+# cp + 5774, a handful of full-width punctuation at fixed gids, and kanji glyph ids are exactly
+# MS Gothic's glyph order (msgothic.ttc index 0 — has_glyph(cp) returns the gid, so the map is
+# built by inverting it over the BMP). Properly-encoded spans (Iwata CID fonts) are left alone.
+GID_FONT = Path(r"C:/Windows/Fonts/msgothic.ttc")
+GID_BROKEN_FONTS = ("PGothic", "YuGothic", "MS-Mincho")
+GID_PUNCT = {0x4804: "（", 0x4805: "）", 0x4802: "％", 0x4567: "△", 0x4809: "－", 0x4807: "＋", 0x3F82: "÷",
+             0x4816: "：", 0x46B8: "、", 0x46B9: "。", 0x4819: "＝"}
+_GID_MAP = None
+
+
+def gid_map():
+    global _GID_MAP
+    if _GID_MAP is None:
+        m = {}
+        if GID_FONT.exists():
+            f = fitz.Font(fontfile=str(GID_FONT))
+            for cp in range(0x20, 0x10000):
+                g = f.has_glyph(cp)
+                if g and g not in m:
+                    m[g] = cp
+        _GID_MAP = m
+    return _GID_MAP
+
+
+def decode_gid_text(text):
+    m = gid_map()
+    out = []
+    for c in text:
+        o = ord(c)
+        if o < 0x80:
+            out.append(c)
+        elif 32 <= o - 16044 <= 126:
+            out.append(chr(o - 16044))
+        elif 0x3041 + 5776 <= o <= 0x3096 + 5776:
+            out.append(chr(o - 5776))
+        elif 0x30A1 + 5774 <= o <= 0x30FC + 5774:
+            out.append(chr(o - 5774))
+        elif o in GID_PUNCT:
+            out.append(GID_PUNCT[o])
+        else:
+            cp = m.get(o)
+            out.append(chr(cp) if cp else c)
+    return "".join(out)
+
+
+class GidPage:
+    def __init__(self, page):
+        self._page = page
+        self._text = None
+
+    def get_text(self, kind="text"):
+        if self._text is None:
+            lines = []
+            for b in self._page.get_text("dict")["blocks"]:
+                for l in b.get("lines", []):
+                    parts = []
+                    for s in l["spans"]:
+                        t = s["text"]
+                        if any(k in s["font"] for k in GID_BROKEN_FONTS):
+                            t = decode_gid_text(t)
+                        parts.append(t)
+                    lines.append("".join(parts))
+            self._text = "\n".join(lines) + "\n"
+        return self._text
+
+    def get_fonts(self, *a, **k):
+        return self._page.get_fonts(*a, **k)
+
+
+class GidDoc:
+    """fitz.Document stand-in whose pages decode glyph-id text (Sompo Japan)."""
+
+    def __init__(self, doc):
+        self._doc = doc
+        self._pages = {}
+
+    def __getitem__(self, idx):
+        if idx not in self._pages:
+            self._pages[idx] = GidPage(self._doc[idx])
+        return self._pages[idx]
+
+    def __iter__(self):
+        return iter(self[i] for i in range(len(self._doc)))
+
+    def __len__(self):
+        return len(self._doc)
+
+
+def open_company_pdf(comp):
+    path = SAMPLES / comp.get("subdir", "") / comp["pdf"]
+    doc = fitz.open(str(path))
+    if comp.get("gid_decode"):
+        if not GID_FONT.exists():
+            print(f"WARN {comp['key']}: {GID_FONT} missing — glyph-id pages cannot be decoded on this machine")
+        doc = GidDoc(doc)
+    return doc, path
 
 
 # --------------------------------------------------------------------------------------
@@ -638,7 +841,7 @@ def extract_axes(comp, doc):
     locs = []
     for i, page in enumerate(doc):
         t = norm(page.get_text("text"))
-        for phrase in ["後日公表予定", "別途公表予定", "10月末に公表予定", "後日公表"]:
+        for phrase in ESR_PLACEHOLDER_PHRASES:
             if phrase in t:
                 ctx_i = t.find(phrase)
                 locs.append(dict(page=i + 1, phrase=phrase, context=t[max(0, ctx_i - 60): ctx_i + 20].replace("\n", " ")))
@@ -664,7 +867,45 @@ def extract_axes(comp, doc):
         ev.append("関連当事者取引 note: 共同保険式再保険・最低保証再保険 (coinsurance-type / guarantee reinsurance with group company)")
     v["air_evidence"] = "; ".join(ev) if ev else None
 
-    if ap.get("reins"):
+    if ap.get("reins") and comp.get("reins_style"):
+        # big-3 forms (ticket 20260913T0330Z) — same two tables as au but different cell decorations.
+        lines = page_lines(doc, ap["reins"])
+        pg["reins"] = ap["reins"]
+        txt = "\n".join(ln for _, ln in lines)
+        st = comp["reins_style"]
+        if st == "tmnf":
+            # 2025年度 / 154社(－) / 61.7%(－)   |   格付区分 … 2025年度 / 99.3(－) / 99.3(－) / 0.7(－)   (BBB以上 is cumulative)
+            m = re.search(r"2025年度\s*\n(\d+)社[^\n]*\n([\d.]+)%", txt)
+            if m:
+                v["reins_counterparties_n"], v["reins_top5_share_pct"] = int(m.group(1)), float(m.group(2))
+            m = re.search(r"格付区分\s*\n.*?2025年度\s*\n([\d.]+)\([^\n]*\n([\d.]+)\([^\n]*\n([\d.]+)\(", txt, re.S)
+            if m:
+                v["reins_rating_a_or_above_pct"] = float(m.group(1))
+                v["_reins_rating_buckets"] = {"S&P社 A格以上": float(m.group(1)), "その他(格付なし・不明・BB格以下)": float(m.group(3))}
+                v["_reins_rating_note"] = f"S&P社 BBB格以上 column ({m.group(2)}) is cumulative (includes A格以上) — excluded from the bucket sum"
+        elif st == "msi":
+            # 2025年度 / 209 （0） / 40.0% （0.0%）   |   格付区分 A以上 … 2026年4月末 / 99.6%（0.0%） / 0.0%（0.0%） / 0.4%（0.0%） / 100.0%
+            m = re.search(r"2025年度\s*\n(\d+)\s*\([^\n]*\n([\d.]+)%", txt)
+            if m:
+                v["reins_counterparties_n"], v["reins_top5_share_pct"] = int(m.group(1)), float(m.group(2))
+            m = re.search(r"2026年4月末\s*\n([\d.]+)%[^\n]*\n([\d.]+)%[^\n]*\n([\d.]+)%", txt)
+            if m:
+                v["reins_rating_a_or_above_pct"] = float(m.group(1))
+                v["_reins_rating_buckets"] = {"A以上": float(m.group(1)), "BBB以上A未満": float(m.group(2)), "その他": float(m.group(3)), }
+                v["_reins_rating_note"] = "rating table dated 2026年4月末 (as of 2026-04-30), counterparties/top5 are 2025年度"
+        elif st == "sompo":
+            # 出再先保険会社の数 / 100 / 102 (2024, 2025)  …  出再先に集中している割合(%) / 48.6 / 47.5   |   格付区分 A以上 98.3 98.9 / BBB格 1.7 1.1 / その他 0.0 0.0
+            m = re.search(r"出再先保険会社の数\s*\n(\d+)\s*\n(\d+)\s*\n", txt)
+            if m:
+                v["reins_counterparties_n"] = int(m.group(2))
+            m = re.search(r"集中している割合[^\n]*\n([\d.]+)\s*\n([\d.]+)\s*\n", txt)
+            if m:
+                v["reins_top5_share_pct"] = float(m.group(2))
+            m = re.search(r"A以上\s*\n([\d.]+)\s*\n([\d.]+)\s*\n.*?BBB格\s*\n([\d.]+)\s*\n([\d.]+)\s*\n.*?その他[^\n]*\n([\d.]+)\s*\n([\d.]+)\s*\n", txt, re.S)
+            if m:
+                v["reins_rating_a_or_above_pct"] = float(m.group(2))
+                v["_reins_rating_buckets"] = {"A以上": float(m.group(2)), "BBB格": float(m.group(4)), "その他": float(m.group(6))}
+    elif ap.get("reins"):
         lines = page_lines(doc, ap["reins"])
         pg["reins"] = ap["reins"]
         if comp["sector"] == "nonlife":
@@ -708,7 +949,40 @@ def extract_axes(comp, doc):
             v["reins_unreceived_claims"] = pick(res[0], "cur") if res else None
 
     # --- nonlife: 異常危険準備金 (責任準備金の内訳 table, 2025年度) ---
-    if comp["sector"] == "nonlife" and ap.get("reserves"):
+    if comp["sector"] == "nonlife" and ap.get("reserves") and comp["key"] in RESERVE_SPEC:
+        lines = merge_vertical(page_lines(doc, ap["reserves"]))
+        pg["reserves"] = ap["reserves"]
+        spec = RESERVE_SPEC[comp["key"]]
+        i0 = next((i for i, (_, ln) in enumerate(lines) if re.search(spec["heading"], ln)), None)
+        if i0 is not None and spec.get("year_marker"):
+            i0 = next((i for i in range(i0, len(lines)) if re.search(spec["year_marker"], lines[i][1])), i0)
+        if i0 is not None:
+            by_line, cur = {}, i0 + 1
+            num_re = re.compile(r"[△▲]?\d{1,3}(?:,\d{3})+|[△▲]?\d+|[-－ー−]")  # norm() NFKC turns "－" into "-"
+            for k, lob in enumerate(RESERVE_LOBS):
+                j = next((i for i in range(cur, len(lines)) if lines[i][1] == lob or lines[i][1].startswith(lob + " ")), None)
+                if j is None:
+                    continue
+                nxt = next((i for i in range(j + 1, len(lines)) if any(lines[i][1] == l2 or lines[i][1].startswith(l2 + " ") for l2 in RESERVE_LOBS[k + 1:] + ["(うち賠償責任)", "うち賠償責任"])
+                            or lines[i][1].startswith("(注") or lines[i][1].startswith("注")), min(len(lines), j + 20))
+                blob = " ".join([lines[j][1][len(lob):]] + [ln for _, ln in lines[j + 1:nxt]])
+                toks = [t for t in num_re.findall(blob)]
+                if len(toks) >= 12:
+                    toks = toks[6:12]     # FY2024 | FY2025 side by side → keep the FY2025 half (row order, from the row start)
+                elif len(toks) < 6:
+                    continue
+                by_line[lob] = dict(ordinary=to_val(toks[0]), catastrophe=to_val(toks[1]), total=to_val(toks[5]), raw=toks[:6])
+                cur = nxt
+            if by_line:
+                v["cat_reserve_by_line"] = {k2: x["catastrophe"] for k2, x in by_line.items() if k2 != "合計"}
+                v["cat_reserve_total"] = by_line.get("合計", {}).get("catastrophe")
+                v["cat_reserve_fire"] = by_line.get("火災", {}).get("catastrophe")
+                v["ordinary_reserve_total"] = by_line.get("合計", {}).get("ordinary")
+                v["_reserve_rows_raw"] = {k2: x["raw"] for k2, x in by_line.items()}
+                v["_reserve_total_all"] = by_line.get("合計", {}).get("total")
+        m = re.search(r"異常危険準備金[^\n]{0,60}(不足|積立率)[^\n]{0,60}|積立不足[^\n]{0,80}", doc_text)
+        v["cat_reserve_adequacy_note"] = m.group(0) if m else None
+    elif comp["sector"] == "nonlife" and ap.get("reserves"):
         lines = page_lines(doc, ap["reserves"])
         pg["reserves"] = ap["reserves"]
         i0 = next((i for i, (_, ln) in enumerate(lines) if "責任準備金の内訳" in ln and "2025年度" in ln), None)
@@ -835,6 +1109,61 @@ def extract_bridge_block(comp, tl, profit_items_by_id):
     return out
 
 
+def _amount_tokens(toks):
+    """Amount columns of a 保険引受の状況 合計 row: integers (百万円) — 構成比/増減率/損害率 columns
+    always carry a decimal point, dashes are dropped."""
+    return [t for t in toks if "." not in t and not is_dash(t)]
+
+
+def extract_bridge_spec(comp, tl):
+    """profit:bridge for companies in BRIDGE_SPEC (big-3): headings differ per company and Tokio
+    Marine pairs two items in one table (受再/支払, 受再/回収 → amounts [a1,b1,a2,b2,a3,b3])."""
+    out = {}
+    lines = tl.get("bridge")
+    spec = BRIDGE_SPEC.get(comp["key"])
+    if lines is None or not spec:
+        return out
+    cur = 0
+    for heading_rx, ids in spec:
+        h = next((i for i in range(cur, len(lines)) if re.search(heading_rx, lines[i][1])), None)
+        if h is None:
+            for iid in (ids if isinstance(ids, tuple) else (ids,)):
+                out[iid] = (None, None, None, "NOT_FOUND heading " + heading_rx)
+            continue
+        res = grab(lines, h + 1, [r"^合計$"])
+        if res is None:
+            for iid in (ids if isinstance(ids, tuple) else (ids,)):
+                out[iid] = (None, None, None, "NOT_FOUND 合計 after " + heading_rx)
+            cur = h + 1
+            continue
+        toks, p, nxt = res
+        amts = _amount_tokens(toks)
+        if isinstance(ids, tuple):
+            if len(amts) >= 6:
+                a, b = amts[-6:], None
+                out[ids[0]] = (to_val(a[2]), to_val(a[4]), p, toks)
+                out[ids[1]] = (to_val(a[3]), to_val(a[5]), p, toks)
+            else:
+                out[ids[0]] = out[ids[1]] = (None, None, p, toks)
+        else:
+            if len(amts) >= 2:
+                out[ids] = (to_val(amts[-2]), to_val(amts[-1]), p, toks)
+            else:
+                out[ids] = (None, None, p, toks)
+        cur = nxt
+    return out
+
+
+def unwrap_paren_lines(lines):
+    """MSI 損益計算書 prints sub-items as "(1,679,248)" / "(－)" / "(△24,594)" and one broken "(64,842" →
+    strip the parens so is_val()/grab() see plain value tokens. Double parens "((4,312))" are left alone."""
+    out = []
+    for p, ln in lines:
+        m = re.match(r"^\(([△▲]?[\d,]+(?:\.\d+)?%?)\)?$", ln) or re.match(r"^\(([-－ー−])\)$", ln)
+        out.append((p, m.group(1)) if m else (p, ln))
+    return out
+
+
 def pick_pc(toks, layout):
     """(prev, cur) from a row's value tokens.
     prev_cur_diff     : 前年度 / 当年度 / 比較増減                     (au 損益計算書)
@@ -880,19 +1209,23 @@ def extract_profit(comp, doc):
         meta["profit_source_doc"] += " (read via profit_pdf_fixture — live PDF absent this run, see COMPANIES comment)"
     layout = comp["pl_layout"]
     tl = {k: page_lines(doc, pages) for k, pages in pp.items()}
+    if comp.get("unwrap_parens"):
+        tl = {k: unwrap_paren_lines(ls) for k, ls in tl.items()}
     if comp.get("vertical_labels"):
         # Meiji Yasuda main volume renders 保険引受利益明細表/比率표 row labels one glyph per line
         # (unlike au/NN's horizontal labels) — merge them so grab()'s regex can anchor on them.
         # "pl" and "summary5" are handled separately below (pl via pl_flat_tokens; summary5 already
-        # merge_vertical'd further down) so they are left untouched here.
-        tl = {k: (merge_vertical(ls) if k not in ("pl", "summary5") else ls) for k, ls in tl.items()}
+        # merge_vertical'd further down) so they are left untouched here — unless vertical_pl (MSI:
+        # the P&L itself is glyph-per-line but row-wise, so merging is exactly what grab() needs).
+        keep = ("summary5",) if comp.get("vertical_pl") else ("pl", "summary5")
+        tl = {k: (merge_vertical(ls) if k not in keep else ls) for k, ls in tl.items()}
     pl_flat = None
     if layout == "label_block_3yr":
         pl_flat = pl_flat_tokens(tl["pl"], *comp["pl_flat_bounds"])
         if pl_flat is not None and comp.get("pl_flat_len") and len(pl_flat) != comp["pl_flat_len"]:
             pl_flat = None  # layout drifted from the verified page — don't trust positional offsets
     profit_items_by_id = {it["id"]: it for it in PROFIT_ITEMS}
-    bridge_vals = extract_bridge_block(comp, tl, profit_items_by_id)
+    bridge_vals = extract_bridge_spec(comp, tl) if comp["key"] in BRIDGE_SPEC else extract_bridge_block(comp, tl, profit_items_by_id)
     cursors = {}
     for it in PROFIT_ITEMS:
         if it["scope"] not in ("both", comp["sector"]):
@@ -964,9 +1297,28 @@ def extract_profit(comp, doc):
         v["pl_investment_pl"] = dict(prev=prev, cur=cur)
         pg["pl_investment_pl"] = pp["pl"][0]
         raw["pl_investment_pl"] = "override=pl_stmt: 資産運用収益-資産運用費用 (not the yield-table 合計, which double-counts 積立保険料等運用益 already inside 保険引受収益 for this company)"
+    elif comp.get("pl_investment_override") == "pl_stmt" and tl.get("pl") is not None:
+        # same rule for label-anchored P&Ls (big-3): 資産運用収益 / 資産運用費用 rows of the 損益計算書.
+        r1 = grab(tl["pl"], 0, [r"^資産運用収益$"])
+        r2 = grab(tl["pl"], 0, [r"^資産運用費用$"])
+        if r1 and r2:
+            rp, rc = pick_pc(r1[0], layout)
+            ep, ec = pick_pc(r2[0], layout)
+            v["pl_investment_pl"] = dict(prev=z(rp) - z(ep), cur=z(rc) - z(ec))
+            pg["pl_investment_pl"] = pp["pl"][0]
+            raw["pl_investment_pl"] = f"override=pl_stmt: 資産運用収益{r1[0]} - 資産運用費用{r2[0]} (yield-table 合計 double-counts 積立保険料等運用益 inside 保険引受収益)"
+    adjustments = {}
+    if comp.get("bridge_gross_incl_deposit") and tl.get("pl") is not None:
+        # 元受正味保険料 table is "(含む収入積立保険料)" only → the bridge identity needs the deposit premium
+        # (収入積立保険料, a 損益計算書 row inside 保険引受収益) taken back out. Stored as disclosed; P14 subtracts it.
+        r3 = grab(tl["pl"], 0, [r"^収入積立保険料$"])
+        if r3:
+            dp, dc = pick_pc(r3[0], layout)
+            adjustments["deposit_premium_in_gross"] = dict(prev=dp, cur=dc, source="損益計算書 収入積立保険料",
+                                                           note="pl_gross_premiums_written includes 収入積立保険料 (table heading 含む収入積立保険料); P14 = gross + assumed - ceded - this")
     # 5개년 主要な経営指標 표 (au) — cross-check source for P10
     s5 = None
-    if pp.get("summary5"):
+    if pp.get("summary5") and not comp.get("summary5_skip_p10"):
         ml = merge_vertical(tl["summary5"])
         s5 = {}
         for sid, rx in [("pl_net_premiums_written", r"^正味収入保険料$"), ("pl_ordinary_revenue", r"^経常収益$"), ("pl_ordinary_profit", r"^経常利益$"),
@@ -991,11 +1343,14 @@ def extract_profit(comp, doc):
         i = txt.find(ph)
         return None if i < 0 else re.sub(r"\s+", " ", txt[max(0, i - w): i + len(ph) + w])
 
-    ifrs_hit = next((ph for ph in ["国際財務報告基準", "IFRS"] if ph in doc_ns), None)
+    # IFRS test is scoped to the basis pages (単体 statements): the big-3 main volumes also carry the
+    # group's CONSOLIDATED IFRS statements further back, which must not relabel the solo P&L.
+    ifrs_scope = basis_ns if comp.get("ifrs_scope_basis_pages", comp["key"] in BRIDGE_SPEC) else doc_ns
+    ifrs_hit = next((ph for ph in ["国際財務報告基準", "IFRS"] if ph in ifrs_scope), None)
     tier_a = next((ph for ph in ["標準責任準備金", "大蔵省告示第48号", "企業会計基準"] if ph in basis_ns), None)
     tier_b_pl = "責任準備金繰入額" in basis_ns or "責任準備金戻入額" in basis_ns
     tier_b_audit = ("会社法第436条" in basis_ns or "保険業法第111条" in basis_ns)
-    if ifrs_hit and ("作成基準" in doc_ns or "連結財務諸表" in doc_ns):
+    if ifrs_hit and ("作成基準" in ifrs_scope or "連結財務諸表" in ifrs_scope):
         meta["accounting_basis"] = "ifrs"
         ev.append(f"IFRS: {ctx(doc_ns, ifrs_hit)}")
     elif tier_a:
@@ -1005,13 +1360,17 @@ def extract_profit(comp, doc):
         meta["accounting_basis"] = "jgaap"
         ev.append(f"B(法定P&L 様式 p{pp['basis']}): {ctx(basis_ns, '責任準備金繰入額' if '責任準備金繰入額' in basis_ns else '責任準備金戻入額', 40)}")
         ev.append(f"B(監査 文구): {ctx(basis_ns, '会社法第436条' if '会社法第436条' in basis_ns else '保険業法第111条')}")
-    if any(ph in doc_text for ph in ["IFRS第17号", "IFRS 17", "保険契約に関する国際財務報告基準"]):
+    ifrs17_scope = basis_text if ifrs_scope is basis_ns else doc_text
+    if any(ph in ifrs17_scope for ph in ["IFRS第17号", "IFRS 17", "保険契約に関する国際財務報告基準"]):
         meta["ifrs17_applied"] = True
     elif meta["accounting_basis"] == "jgaap":
         meta["ifrs17_applied"] = False  # 単体 statutory accounts under 保険業法/会社計算規則 are J-GAAP by law; IFRS is a consolidated-only option
-        ev.append("ifrs17_applied=false: derived from accounting_basis=jgaap on 単体 statutory statements (no IFRS/IFRS17 mention in the document)")
+        if ifrs_scope is basis_ns and any(ph in doc_ns for ph in ["IFRS第17号", "国際財務報告基準"]):
+            ev.append("ifrs17_applied=false for the 単体 statements (basis pages have no IFRS mention); the same volume's 連結 section is IFRS/IFRS17 at group level — not this layer")
+        else:
+            ev.append("ifrs17_applied=false: derived from accounting_basis=jgaap on 単体 statutory statements (no IFRS/IFRS17 mention in the document)")
     meta["accounting_basis_evidence"] = " | ".join(ev) if ev else None
-    return dict(values=v, pages=pg, raw_tokens=raw, meta=meta, summary5=s5)
+    return dict(values=v, pages=pg, raw_tokens=raw, meta=meta, summary5=s5, adjustments=adjustments)
 
 
 def run_profit_checks(comp, pf):
@@ -1048,8 +1407,10 @@ def run_profit_checks(comp, pf):
         else:
             add(f"P06_combined{sfx}", "pl_combined_ratio_pct = pl_loss_ratio_pct + pl_expense_ratio_pct (±0.15, each rounded to 0.1)", g("pl_combined_ratio_pct", col),
                 z(g("pl_loss_ratio_pct", col)) + z(g("pl_expense_ratio_pct", col)), 0.15)
-            other = z(g("pl_other_ordinary_revenue", col)) - z(g("pl_other_ordinary_expenses", col)) - (z(g("pl_operating_general_admin", col)) - z(g("pl_uw_operating_general_admin", col)))
-            add(f"P07_ordinary_bridge{sfx}", "pl_ordinary_profit = pl_underwriting_profit + pl_investment_pl + (その他経常収益 − その他経常費用 − (営業費及び一般管理費 − 保険引受に係る営業費及び一般管理費)) (±3)",
+            # その他収支 (自賠責 法人税相当額 etc.) sits inside 保険引受利益 but NOT in the P&L's 経常利益 → back it
+            # out (au: null, Meiji: -1/-2 — invisible under tol 3; Tokio Marine: -3,152 — visible, exact once removed).
+            other = z(g("pl_other_ordinary_revenue", col)) - z(g("pl_other_ordinary_expenses", col)) - (z(g("pl_operating_general_admin", col)) - z(g("pl_uw_operating_general_admin", col))) - z(g("pl_underwriting_other", col))
+            add(f"P07_ordinary_bridge{sfx}", "pl_ordinary_profit = pl_underwriting_profit − その他収支 + pl_investment_pl + (その他経常収益 − その他経常費用 − (営業費及び一般管理費 − 保険引受に係る営業費及び一般管理費)) (±3)",
                 g("pl_ordinary_profit", col), z(g("pl_underwriting_profit", col)) + z(g("pl_investment_pl", col)) + other, 3)
             npw = g("pl_net_premiums_written", col)
             if npw:
@@ -1057,11 +1418,14 @@ def run_profit_checks(comp, pf):
                     (z(g("pl_net_claims_paid", col)) + z(g("pl_loss_adjustment_expenses", col))) / npw * 100, 0.1)
                 add(f"P09_expense_ratio{sfx}", "pl_expense_ratio_pct = (諸手数料及び集金費 + 保険引受に係る営業費及び一般管理費) / 正味収入保険料 × 100 (±0.1)", g("pl_expense_ratio_pct", col),
                     (z(g("pl_commissions_collection", col)) + z(g("pl_uw_operating_general_admin", col))) / npw * 100, 0.1)
-            add(f"P11_underwriting{sfx}", "pl_underwriting_profit = 保険引受収益 − 保険引受費用 − 保険引受に係る営業費及び一般管理費 + その他収支", g("pl_underwriting_profit", col),
-                z(g("pl_underwriting_revenue", col)) - z(g("pl_underwriting_expenses", col)) - z(g("pl_uw_operating_general_admin", col)) + z(g("pl_underwriting_other", col)), 1)
+            # tol 3: four 百万円-truncated terms (Sompo Japan FY2025 reproduces to 48,253 vs disclosed 48,251; au/Meiji within 1)
+            add(f"P11_underwriting{sfx}", "pl_underwriting_profit = 保険引受収益 − 保険引受費用 − 保険引受に係る営業費及び一般管理費 + その他収支 (±3, 4 truncated terms)", g("pl_underwriting_profit", col),
+                z(g("pl_underwriting_revenue", col)) - z(g("pl_underwriting_expenses", col)) - z(g("pl_uw_operating_general_admin", col)) + z(g("pl_underwriting_other", col)), 3)
             add(f"P13_interest_vs_investment{sfx}", "pl_interest_dividend_income ≈ pl_investment_pl (등식은 운용비용·매각손익 0 인 회사만 — informational)", g("pl_interest_dividend_income", col), z(g("pl_investment_pl", col)), 1, gate=False)
-            add(f"P14_premium_bridge{sfx}", "pl_net_premiums_written = pl_gross_premiums_written + pl_assumed_premiums - pl_ceded_premiums (元受+受再-出再)", g("pl_net_premiums_written", col),
-                z(g("pl_gross_premiums_written", col)) + z(g("pl_assumed_premiums", col)) - z(g("pl_ceded_premiums", col)), 1)
+            dep = ((pf.get("adjustments") or {}).get("deposit_premium_in_gross") or {}).get(col)
+            add(f"P14_premium_bridge{sfx}", "pl_net_premiums_written = pl_gross_premiums_written + pl_assumed_premiums - pl_ceded_premiums (元受+受再-出再)" + (" - 収入積立保険料 (gross table is 含む収入積立保険料)" if dep is not None else ""),
+                g("pl_net_premiums_written", col),
+                z(g("pl_gross_premiums_written", col)) + z(g("pl_assumed_premiums", col)) - z(g("pl_ceded_premiums", col)) - z(dep), 1)
             add(f"P15_claims_bridge{sfx}", "pl_net_claims_paid = pl_gross_claims_paid + pl_assumed_claims - pl_recovered_reinsurance_claims (元受+受再-回収)", g("pl_net_claims_paid", col),
                 z(g("pl_gross_claims_paid", col)) + z(g("pl_assumed_claims", col)) - z(g("pl_recovered_reinsurance_claims", col)), 1)
     if pf.get("summary5"):
@@ -1104,8 +1468,13 @@ def extract_history(comp, doc, ratio_raw_tokens=None):
             raw[i] = "NO_PAGE"
         return dict(values=v, pages=pg, raw_tokens=raw, fiscal_years=HIST_FISCAL_YEARS)
     lines = merge_vertical(page_lines(doc, sp))
+    comp_skip = comp.get("hist_skip", [])
+    drop_all = comp.get("hist_drop_paren_all", False)
+    label_ovr = comp.get("hist_label_overrides", {})
 
     def row(label_res, skip_res=(), drop_paren=False):
+        drop_paren = drop_paren or drop_all
+        skip_res = list(skip_res) + list(comp_skip)
         idx = next((i for i in range(len(lines)) if any(re.search(r, lines[i][1]) for r in label_res)), None)
         if idx is None:
             return None, None
@@ -1141,10 +1510,33 @@ def extract_history(comp, doc, ratio_raw_tokens=None):
             continue
         if it["labels"] == "smr":
             if smr_cache is None:
-                smr_cache = row([HIST_SMR_LABEL_RE])
+                if comp.get("hist_smr_layout") == "new_old_pairs":
+                    # MSI p31: 単体SMR row = "新基準 | 旧基準 | (new, old) × 5 years" — 旧基準 values are NOT in parens,
+                    # so re-express as the common convention: old → parens=True, new → parens=False.
+                    idx = next((i for i in range(len(lines)) if re.search(HIST_SMR_LABEL_RE, lines[i][1])), None)
+                    toks = []
+                    j = (idx + 1) if idx is not None else len(lines)
+                    while j < len(lines) and len(toks) < 10:
+                        ln = lines[j][1]
+                        if ln in ("新基準", "旧基準"):
+                            j += 1
+                            continue
+                        if is_val(ln):
+                            toks.append(ln)
+                        elif re.match(r"^[（(]注\d*[）)]$", ln):
+                            toks.append("－")  # (注1) in the 新基準 cell = not yet disclosed
+                        else:
+                            break
+                        j += 1
+                    pairs = [(toks[i], toks[i + 1]) for i in range(0, len(toks) - 1, 2)]
+                    vals = [to_val(o) if to_val(n) is None else to_val(n) for n, o in pairs]
+                    parens = [to_val(n) is None for n, o in pairs]
+                    smr_cache = (vals, parens) if idx is not None else (None, None)
+                else:
+                    smr_cache = row([HIST_SMR_LABEL_RE])
             vals, parens = smr_cache
         else:
-            vals, parens = row(it["labels"], it.get("skip", []), it.get("drop_paren", False))
+            vals, parens = row(label_ovr.get(iid, it["labels"]), it.get("skip", []), it.get("drop_paren", False))
         if vals is None:
             raw[iid] = "NOT_FOUND"
             continue
@@ -1200,7 +1592,7 @@ def run_history_checks(comp, pf, hist):
             lhs, rhs = hs.get(fy), pv.get(col)
             if lhs is None or rhs is None:
                 continue  # not disclosed on one side — informational absence, not a mismatch
-            ok = abs(lhs - rhs) <= tol
+            ok = abs(lhs - rhs) <= tol + 1e-9
             checks.append(dict(id=f"H01_{iid}_{fy}", formula=f"history.{iid}.{fy} == profit.{pid}.{col} (±{tol})",
                                lhs=lhs, rhs=rhs, tol=tol, **{"pass": ok}, gate=True, note=""))
     if comp["sector"] == "nonlife":
@@ -1581,9 +1973,10 @@ def main():
     with open(RULES, encoding="utf-8") as f:
         rules = json.load(f)
     for comp in COMPANIES:
-        doc = fitz.open(str(SAMPLES / comp["pdf"]))
+        doc, pdf_path = open_company_pdf(comp)
         r = dict(company_jp=comp["company_jp"], company_en=comp["company_en"], sector=comp["sector"], layers=comp["layers"],
-                 source_pdf=str((SAMPLES / comp["pdf"]).relative_to(ROOT)).replace("\\", "/"), n_pages=len(doc), as_of="2026-03-31", scope="solo", unit_disclosed="JPY_million")
+                 source_pdf=str(pdf_path.relative_to(ROOT)).replace("\\", "/"), n_pages=len(doc), as_of="2026-03-31", scope="solo", unit_disclosed="JPY_million",
+                 source_url=comp.get("source_url"), source_doc_type=comp.get("source_doc_type"))
         esr = None
         if "esr" in comp["layers"]:
             esr = extract_esr(comp, doc)
@@ -1620,6 +2013,12 @@ def main():
             hist = extract_history(pf_comp, pf_doc, ratio_raw_tokens=pf["raw_tokens"].get("pl_loss_ratio_pct"))
             hist["checks"] = run_history_checks(pf_comp, pf, hist)
             r["history"] = hist
+            if comp.get("smr_from_history"):
+                # MSI: the generic 旧基準 regex in extract_axes reads the wrong column of the 新基準/旧基準 pair row →
+                # take FY2024 旧基準 from the history layer's per-year parse instead.
+                old = (hist["values"].get("hist_smr_old_pct") or {}).get("FY2024")
+                if old is not None:
+                    ax["values"]["smr_old_basis_fy2024_pct"] = old
         cz = census_headline(comp["company_jp"])
         r["census"] = dict(**cz, match=(cz["esr_pct"] == esr["values"]["esr_pct"]) if esr else (cz["status"] == ax["values"]["esr_status"]))
         results[comp["key"]] = r
