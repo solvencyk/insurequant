@@ -561,7 +561,7 @@
       det.innerHTML = byZone[z].map(function(n){
         var pct = (tot > 0 && n.cur != null) ? Math.max(0, Math.min(100, Math.abs(n.cur)/tot*100)) : 0;
         var cls = 'bs-l2-row' + (n.derived ? ' bs-l2-row-residual' : '') + (n.depth >= 2 ? ' bs-l2-row-sub' : '');
-        return '<div class="'+cls+'"><span class="bs-l2-lab">'+esc(labelOf(META, n.id, null) || n.label_ja || n.id)+'</span>'
+        return '<div class="'+cls+'"><span class="bs-l2-lab">'+esc(n.label_ja || labelOf(META, n.id, n.id))+'</span>'
           + '<span class="bs-l2-val" title="'+esc(fmtMillionTip(n.cur))+'">'+esc(fmtEok(n.cur))+'</span>'
           + (n.depth >= 2 ? '<span></span>' : '<span class="bs-l2-bar-track"><span class="bs-l2-bar" style="width:'+pct.toFixed(1)+'%"></span></span>')
           + '</div>';
@@ -587,7 +587,7 @@
     if(body){
       body.innerHTML = tree.map(function(n){
         var isTot = n.depth === 0;
-        return '<tr'+(isTot ? ' class="total-row"' : '')+'><td style="padding-left:'+(8 + n.depth*16)+'px">'+esc(labelOf(META, n.id, null) || n.label_ja || n.id)+(n.derived ? ' <span class="small-muted">(差引)</span>' : '')+'</td>'
+        return '<tr'+(isTot ? ' class="total-row"' : '')+'><td style="padding-left:'+(8 + n.depth*16)+'px">'+esc(n.label_ja || labelOf(META, n.id, n.id))+(n.derived ? ' <span class="small-muted">(差引)</span>' : '')+'</td>'
           + '<td class="num" title="'+esc(fmtMillionTip(n.cur))+'">'+esc(fmtEok(n.cur))+'</td>'
           + '<td class="num" title="'+esc(fmtMillionTip(n.prev))+'">'+esc(fmtEok(n.prev))+'</td>'
           + '<td class="num">'+esc(fmtEokDelta(n.cur, n.prev))+'</td></tr>';

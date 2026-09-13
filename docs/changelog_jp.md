@@ -11,6 +11,9 @@
   資産=負債+純資産 배지, 입력 = (21) `bs.tree`), 損益·収益性·準備金(axes reserve*). disclosure.html: 再保険 의존도(reins_*)·その他·미수록 안내.
 - jp/index.html·terms.html 헤더 3탭. 배포 스크립트 NEW_FILES +jgaap.html/disclosure.html/jesr_app.js/jp.css. designer 프롬프트 jp 절·publishing §12 keep-list 갱신.
 - 검증: Playwright 12케이스(3페이지×손보/생보/지주/없는 id + index/terms)×1200/375px pageerrors 0, T자 패널 TMNF/日本生命 표시·住友生命 숨김 확인.
+- 후속(같은 날): bs 7사→**10사**. 住友生命 = 7월 資料編(`others/sumitomolife_2026_repodata.pdf`, WebFetch 바이너리) 単体 p58 prev_cur / 第一生命 = owner 업로드 アニュアルレポート2026
+  분책 index_004(`others/daiichi_2026_index_004.pdf`) 単体 p23~24 prev_cur / 明治安田損保 = 본편 p39~40 **열 우선 3개년 표**(라벨 글리프 병합 불가 → 고정 라벨 목록 index 매핑,
+  `col_major_3yr`·`extract_colmajor()`). 準備金Σ 허용오차를 항 개수로(3항 百万円 절사 1~2 실측). 社債 라벨 「社　債」 alias, 相互会社 社員配当準備金 라벨, 페이지는 row.label_ja 우선.
 
 ## 2026-09-13 (20) -- 損益表 元受収支 / 再保険収支 두 블록 + 出再保険手数料(注記) 추출
 

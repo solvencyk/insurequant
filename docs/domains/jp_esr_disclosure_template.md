@@ -848,3 +848,11 @@ owner: "생보는 이차·사차·비차 마진 통계가 있을 것". 표본 5�
 - checks: `assets_eq_liab_plus_equity` 資産=負債+純資産 ±1(億円 소스 ±100) / `policy_reserves_sum_ok` 支払備金·責任準備金 둘 다 있을 때만 판정 / `no_negative_residual` = 資産·負債 잔차 ≥0(純資産 잔차는 自己株式·繰延ヘッジ 로 음수 정당, 제외 — TMNF △391억엔·NN Life △26억엔 실측).
   self_check 는 id↔labels·합계 3행 존재만 에러, checks False 는 WARN 출력.
 - 10월 재census 때: 明治安田損保 본편·住友生命·第一生命 7월 본편 貸借対照表 확보 시 `BS_COMPANIES` 에 pages 만 배선. 생보 2사는 본편의 단체 貸借対照表로 교체(現在 group/億円 요약).
+
+### 12-x. 후속 확보(2026-09-13 orchestrator): 10사 전부
+
+- 住友生命: 7월 資料編(162p) p58 単体 貸借対照表(2개년) — `prev_cur`. 社債 라벨은 「社　債」(전각 공백, alias `^社\s?債$`).
+- 第一生命: owner 업로드 アニュアルレポート2026 분책 index_004(業績に関する諸資料 86p) p23~24 単体(2개년) — `prev_cur`. 같은 분책에 損益計算書(p25~)·基礎利益 표가 있어 profit 층 후속 가능.
+- 明治安田損保: 본편 p39(資産)·p40(負債·純資産) — 3개년 **열 우선** 세로글리프 표(라벨 열 → 연도별 금액열+구성비 → 合計 행만 행 우선). 라벨 글리프가 붙어 나와 고정 라벨
+  목록(FY2025 인쇄 순서 28/16/11행)으로 index 매핑, N 불일치면 not_obtained(`col_major_3yr`, `extract_colmajor()`). 貸付金·社債·契約者配当準備金 없음.
+- checks: `policy_reserves_sum_ok` 허용오차 = 항 개수(百万円 절사, 住友·第一 3항 합 1~2 차).
