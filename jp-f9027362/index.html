@@ -110,11 +110,6 @@
        [hidden]{display:none} 을 특이도 동점+등장순서로 이겨버리므로 명시 가드 필요 */
     .more-btn[hidden]{display:none}
 
-    /* 커버리지 도넛 */
-    #covDonutWrap{display:flex;flex-wrap:wrap;gap:20px;align-items:center}
-    #covDonut{width:240px;height:220px;flex:0 0 auto}
-    .cov-legend{flex:1 1 200px;font-size:13px;color:var(--text);display:flex;flex-direction:column;gap:8px}
-    .cov-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
 
     /* 표 (業種 2섹션 각각 별도 table, .esr-table 공통 클래스) */
     .table-container{overflow-x:auto}
@@ -137,13 +132,10 @@
       .jcard{padding:10px 4px}
       .jcard .jcard-val{font-size:18px}
       .jcard .jcard-lab{font-size:10px}
-      #covDonutWrap{flex-direction:column;align-items:stretch}
-      #covDonut{width:100%;height:200px}
       .esr-table{font-size:12px}
       .esr-table th, .esr-table td{padding:5px 6px}
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" integrity="sha384-o5uz97et3bErHvpKfD4Jz4n0JfhJDWABFuF4NP+iEEDxE1VwMWJ19QGR0lqFZnr6" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
@@ -189,19 +181,6 @@
         <span><span class="jp-badge">速報</span>&nbsp;速報値</span>
       </div>
       <p class="chart-caveat">※ 算定基準(標準式・内部モデル・VaR水準等)は各社で異なる場合があり、単純比較にはご注意ください。詳細は各社開示資料をご確認ください。</p>
-    </section>
-
-    <section class="panel" aria-labelledby="secCoverage">
-      <h2 id="secCoverage">カバレッジ</h2>
-      <p>調査対象全社に占める公表状況の内訳です。</p>
-      <div id="covDonutWrap">
-        <div id="covDonut" role="img" aria-label="ESR公表状況カバレッジ(読み込み中)"></div>
-        <div class="cov-legend" id="covLegend">
-          <span><span class="sw" style="background:#0d6efd"></span><span id="covLegPosted">公表済み</span></span>
-          <span><span class="sw" style="background:#f59e0b"></span><span id="covLegNotYet">公表予定</span></span>
-          <span><span class="sw" style="background:#475569"></span><span id="covLegNotFound">未確認</span></span>
-        </div>
-      </div>
     </section>
 
   </main>
@@ -301,7 +280,6 @@
       });
     }
 
-    var cov=null, lastMeta=null;
     var groupData = {life:[], nonlife:[]};   // 業種별 버킷정렬 전체 리스트
     var expanded  = {life:false, nonlife:false};
     // 一覧表 회사명 -> jesr.html 링크 판정용(inbox 20260912T1120Z). null=아직 로딩중(링크 보류),
@@ -334,8 +312,6 @@
           var tb = document.getElementById('esrTableBody'+suf);
           if(tb) tb.innerHTML = '<tr><td colspan="7" class="small-muted">データを読み込めませんでした。</td></tr>';
         });
-        var c2 = document.getElementById('covDonut');
-        if(c2) c2.innerHTML = '';
         console.error('jesr_esr.json load failed', err);
       });
 
@@ -350,7 +326,6 @@
       renderCards(meta);
       renderGroup('life');
       renderGroup('nonlife');
-      renderDonut(meta);
     }
 
     // owner 지시 2: 業種별 top5 + 더보기(FOLD=5, 루트 index.html MOB-INDEX-FOLD 패턴).
@@ -498,37 +473,7 @@
       }
     }
 
-    function renderDonut(meta){
-      var el = document.getElementById('covDonut');
-      if(!el || !window.echarts) return;
-      var c = meta.census || {};
-      lastMeta = meta;
-      if(!cov) cov = echarts.init(el);
-      var data = [
-        {name:'公表済み', value:c.posted||0,    itemStyle:{color:'#0d6efd'}},
-        {name:'公表予定', value:c.not_yet||0,   itemStyle:{color:'#f59e0b'}},
-        {name:'未確認',   value:c.not_found||0, itemStyle:{color:(window.IQTheme ? IQTheme.chart().muted : '#475569')}}
-      ];
-      cov.setOption({
-        tooltip:Object.assign(window.IQTheme ? IQTheme.echartsTooltip() : {}, {trigger:'item', formatter:'{b}: {c}社 ({d}%)'}),
-        series:[{
-          type:'pie', radius:['45%','72%'], avoidLabelOverlap:true,
-          // 小さい区(未確認2社)と隣接する区の外側ラベルが重なって省略記号になったため、
-          // オンチャートのラベルは出さない — 件数は上のカードと右の凡例(件数併記)で示す。
-          label:{show:false},
-          labelLine:{show:false},
-          data: data
-        }]
-      }, true);
-      document.getElementById('covLegPosted').textContent   = '公表済み（'+(c.posted||0)+'社）';
-      document.getElementById('covLegNotYet').textContent   = '公表予定（'+(c.not_yet||0)+'社）';
-      document.getElementById('covLegNotFound').textContent = '未確認（'+(c.not_found||0)+'社）';
-      el.setAttribute('aria-label',
-        'ESR公表状況カバレッジ。全'+(c.total||0)+'社中、公表済み'+(c.posted||0)+'社、公表予定'+(c.not_yet||0)+'社、未確認'+(c.not_found||0)+'社。');
-    }
-
-    // 다크/라이트 전환: 리스트·카드는 CSS 변수라 자동, 도넛(툴팁·未確認 색)만 다시 그린다.
-    window.addEventListener('iq:themechange', function(){ if(lastMeta) renderDonut(lastMeta); });
+    // カバレッジ 도넛(公表済み/予定/未確認)은 2026-09-13 owner 지시로 폐지 — 상단 카드 3장과 중복. 이 페이지는 이제 ECharts 를 쓰지 않는다.
 
     // renderTable()/一覧表 는 2026-09-13 owner 지시로 폐지(랭킹 리스트와 중복). 範囲는 리스트 칩, 公表日·出所는 상세 페이지.
   })();
