@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <!-- CSP: root index.html 6행과 동일(GA4 호스트 + 오류제보 Apps Script connect-src 포함, 2026-09-12).
+       analytics.google.com apex 는 *.analytics.google.com 와일드카드에 안 잡혀 별도 등재. script.googleusercontent.com 은
+       Apps Script /exec 가 302 로 보내는 리다이렉트 목적지라 빠지면 제출이 CSP 에 막힌다. head 첫 자식 유지, CDN 태그보다 앞. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>会社別決算(J-GAAP) | InsureQuant</title>
+  <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
+       integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
+       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
+       인라인 블록은 script-src의 기존 'unsafe-inline'으로 실행된다 — nonce를 넣으면 'unsafe-inline'이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8NSCQZBZK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // owner 본인 방문 제외(2026-09-12): ?iq_internal=1 로 한 번 접속하면 이 브라우저는 내부로 기억,
+    // ?iq_internal=0 이면 해제. GA4 Admin > Data filters > Internal Traffic 을 Active 로 둬야 실제 제외된다.
+    (function(){
+      var cfg = {};
+      try {
+        var q = new URLSearchParams(location.search).get('iq_internal');
+        if (q === '1') localStorage.setItem('iq_internal', '1');
+        else if (q === '0') localStorage.removeItem('iq_internal');
+        if (localStorage.getItem('iq_internal') === '1') cfg.traffic_type = 'internal';
+      } catch (e) {}
+      gtag('config', 'G-F8NSCQZBZK', cfg);
+    })();
+  </script>
+  <meta name="description" content="日本の保険会社の法定決算(J-GAAP)の会社別内訳。損益の内訳、収益性指標(損害率・事業費率・合算率)、種目別、基礎利益。"/>
+  <meta property="og:title" content="InsureQuant — 会社別決算(J-GAAP)"/>
+  <meta property="og:description" content="日本の保険会社の法定決算(J-GAAP)の会社別内訳。損益の内訳、収益性指標(損害率・事業費率・合算率)、種目別、基礎利益。"/>
+  <meta property="og:type" content="website"/>
+  <!-- owner 초안 검토 전 임시 noindex(jp/index.html과 동일 관례). -->
+  <meta name="robots" content="noindex,follow"/>
+  <link rel="canonical" href="https://www.insurequant.com/jp/jgaap.html"/>
+  <link rel="alternate" hreflang="ko" href="https://www.insurequant.com/IFRS17.html"/>
+  <link rel="alternate" hreflang="ja" href="https://www.insurequant.com/jp/jgaap.html"/>
+  <link rel="alternate" hreflang="x-default" href="https://www.insurequant.com/IFRS17.html"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="../common.css"/>
+  <script src="../theme.js"></script>
+  <link rel="stylesheet" href="jp.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" integrity="sha384-o5uz97et3bErHvpKfD4Jz4n0JfhJDWABFuF4NP+iEEDxE1VwMWJ19QGR0lqFZnr6" crossorigin="anonymous"></script>
+</head>
+<body data-page="jgaap">
+  <header>
+    <div class="header-row">
+      <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">会社別決算(J-GAAP)</span></a>
+      <nav class="lang-switch" aria-label="言語切替 / 언어 선택">
+        <span class="lang-current" aria-current="page">日本語</span>
+        <span class="lang-sep" aria-hidden="true">|</span>
+        <a href="../IFRS17.html" lang="ko">한국어</a>
+      </nav>
+    </div>
+    <!-- 한국 K-ICS | IFRS17 | 기타공시 와 같은 3탭(owner 2026-09-13). href 는 jesr_app.js 가 ?company= 를 붙여 동기화. -->
+    <div class="header-row"><div class="tabs jp-tabs" role="navigation" aria-label="会社別ページ">
+        <a href="jesr.html" class="tab" data-page="esr">ESR</a>
+        <a href="jgaap.html" class="tab" data-page="jgaap" aria-current="page">決算</a>
+        <a href="disclosure.html" class="tab" data-page="disclosure">その他開示</a>
+      </div>
+      <div class="back-row" style="padding:0"><a href="index.html">&larr; ESRランキング</a></div></div>
+  </header>
+
+  <main class="container" id="mainRoot">
+
+    <section class="panel" aria-labelledby="secPicker">
+      <h2 id="secPicker">会社選択</h2>
+      <div class="picker-row">
+        <label for="companySelect">会社</label>
+        <select id="companySelect" class="select" disabled>
+          <option>読み込み中…</option>
+        </select>
+      </div>
+      <p class="meta-line" id="metaLine">読み込み中…</p>
+    </section>
+
+    <section class="panel" id="notFoundPanelWrap" hidden>
+      <p class="jp-err">該当する会社がありません。上の「会社」から選択してください。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="secJgaapHead" id="secHeadlineWrap">
+      <h2 id="secJgaapHead">主要指標（当期）</h2>
+      <div class="card-row" id="jgaapCards"></div>
+    </section>
+
+    <section class="panel" id="noDetailNote" hidden>
+      <p class="empty-note">この会社の決算・開示データは未収録です。ESRの速報値は <a href="jesr.html">ESR詳細</a> をご覧ください。</p>
+      <p class="axes-note" id="groupChildrenLine" hidden></p>
+    </section>
+
+    <!-- 貸借対照表 T자형 (IFRS17.html Panel 1 미러, owner 2026-09-13). 데이터 = c.bs.tree (bs 층, inbox/jp 20260913T1300Z). -->
+    <section class="panel" aria-labelledby="secBs" id="secBsWrap" hidden>
+      <h2 id="secBs">貸借対照表（資産 ＝ 負債 ＋ 純資産） <span class="repro-badge" id="bsBadge" style="display:none"></span></h2>
+      <p class="axes-note" id="bsCap"></p>
+      <div class="bs-t" id="bsT">
+        <div class="bs-t-zone bs-t-asset">
+          <div class="bs-t-head"><span class="bs-t-lab">資産</span>
+            <button type="button" class="subtoggle" data-zone="assets" aria-expanded="false" title="内訳を展開">+</button></div>
+          <div class="bs-t-val" id="bsTotAssets">—</div>
+          <div class="bs-l2-rows" id="bsDetailAssets" hidden></div>
+        </div>
+        <div class="bs-t-right">
+          <div class="bs-t-zone bs-t-liab" id="bsZoneLiab">
+            <div class="bs-t-head"><span class="bs-t-lab">負債</span>
+              <button type="button" class="subtoggle" data-zone="liabilities" aria-expanded="false" title="内訳を展開">+</button></div>
+            <div class="bs-t-val" id="bsTotLiabilities">—</div>
+            <div class="bs-l2-rows" id="bsDetailLiabilities" hidden></div>
+          </div>
+          <div class="bs-t-zone bs-t-equity" id="bsZoneEquity">
+            <div class="bs-t-head"><span class="bs-t-lab">純資産</span>
+              <button type="button" class="subtoggle" data-zone="net_assets" aria-expanded="false" title="内訳を展開">+</button></div>
+            <div class="bs-t-val" id="bsTotNetAssets">—</div>
+            <div class="bs-l2-rows" id="bsDetailNetAssets" hidden></div>
+          </div>
+        </div>
+      </div>
+      <div class="table-container" style="margin-top:14px">
+        <table class="esr-table" id="bsTable">
+          <thead><tr><th scope="col">項目</th><th scope="col" class="num">当期末</th><th scope="col" class="num">前期末</th><th scope="col" class="num">増減</th></tr></thead>
+          <tbody id="bsTableBody"></tbody>
+        </table>
+      </div>
+      <p class="small-muted" id="bsNote" style="margin-top:6px">※ 単位 億円（百万円はツールチップ）。「その他」は合計から表示行を差し引いた残差です。</p>
+    </section>
+    <section class="panel" aria-labelledby="secProfit" id="secProfitWrap">
+      <h2 id="secProfit">損益の内訳</h2>
+      <div id="profitNotExtracted" class="empty-note" hidden>本編未取得のため、損益の内訳はまだ表示できません。</div>
+      <div id="profitBody" hidden>
+        <p class="axes-note" id="profitBasisNote"></p>
+        <div id="chartProfitWaterfall" role="img" aria-label="当期純利益の内訳、読み込み中"></div>
+        <p class="small-muted" id="profitFootnote" style="margin-top:4px"></p>
+        <!-- owner 2026-09-13: 총계 행 남발 대신 선별 흐름(profit_flow)만. 손보는 상단이 元受収支 / 再保険収支 두 블록이고
+             [+] 로 구성항목(builder 의 row.parts) 전개. 전 항목은 details 로 접어 둠. 손해율 3행은 収益性指標 패널로 이관. -->
+        <div class="table-container" style="margin-top:14px">
+          <table class="esr-table" id="profitTable">
+            <thead><tr><th scope="col">項目</th><th scope="col" class="sign">符号</th><th scope="col" class="num">当期</th><th scope="col" class="num">前期</th><th scope="col" class="num">増減</th></tr></thead>
+            <tbody id="profitTableBody"></tbody>
+          </table>
+        </div>
+        <p class="small-muted" id="profitFlowNote" style="margin-top:6px;line-height:1.6" hidden></p>
+        <details style="margin-top:10px">
+          <summary class="small-muted" style="cursor:pointer">全項目を表示</summary>
+          <div class="table-container" style="margin-top:8px">
+            <table class="esr-table" id="profitAllTable">
+              <thead><tr><th scope="col">項目</th><th scope="col" class="num">当期</th><th scope="col" class="num">前期</th><th scope="col" class="num">増減</th></tr></thead>
+              <tbody id="profitAllTableBody"></tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="secProfitability" id="secProfitabilityWrap" hidden>
+      <h2 id="secProfitability">収益性指標 <span class="repro-badge" id="combinedBadge" style="display:none"></span></h2>
+      <div class="card-row" id="ratioCards"></div>
+      <div id="historyChartWrap" style="margin-top:14px"></div>
+      <div class="table-container" style="margin-top:14px">
+        <table class="esr-table" id="historyTable">
+          <thead id="historyTableHead"></thead>
+          <tbody id="historyTableBody"></tbody>
+        </table>
+      </div>
+      <p class="small-muted" id="historyNote" style="margin-top:6px"></p>
+      <!-- owner 2026-09-13: 손보 종목별(火災·海上·傷害·自動車·自賠責·その他) 손해율/합산율, 생보 基礎利益·三利源 추이 -->
+      <div id="lobWrap" hidden style="margin-top:18px">
+        <h3 class="rank-group-title">種目別（当期）</h3>
+        <div class="table-container">
+          <table class="esr-table" id="lobTable"><thead id="lobTableHead"></thead><tbody id="lobTableBody"></tbody></table>
+        </div>
+        <p class="small-muted" id="lobNote" style="margin-top:6px"></p>
+      </div>
+      <div id="coreWrap" hidden style="margin-top:18px">
+        <h3 class="rank-group-title">基礎利益と三利源の推移（億円）</h3>
+        <div class="table-container">
+          <table class="esr-table" id="coreTable"><thead id="coreTableHead"></thead><tbody id="coreTableBody"></tbody></table>
+        </div>
+        <p class="small-muted" id="coreNote" style="margin-top:6px"></p>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="secReserves" id="secReservesWrap" hidden>
+      <h2 id="secReserves">準備金</h2>
+      <p class="axes-note">保険業法上の準備金(異常危険準備金・普通責任準備金等)。金融庁2026年モニタリングの論点(異常危険準備金の積立水準)に対応する項目です。</p>
+      <div class="table-container"><table class="esr-table"><thead><tr><th scope="col">項目</th><th scope="col" class="num">値</th></tr></thead><tbody id="reservesTableBody"></tbody></table></div>
+    </section>
+
+  </main>
+
+  <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
+    出所: 各社開示資料(決算短信・決算説明資料・ディスクロージャー誌 等) — 数値の権利は各開示主体に帰属します。掲載データは公開資料を基に作成しており、誤りを含む可能性があります。投資判断の根拠として使用しないでください。<br/>
+    決算・開示データを収録した会社のみ表示しています。2026年10月末の法定開示に合わせて順次追加予定です。<br/>
+    © 2026 InsureQuant · <a href="terms.html" class="iq-anon-link">利用規約・プライバシーポリシー</a> · <a href="../index.html" class="iq-anon-link" lang="ko">한국어 사이트</a>
+  </footer>
+
+  <script src="jesr_app.js"></script>
+  <!-- 오류제보 팝업(일본어). 백엔드는 루트 forms-config.js(같은 Apps Script)를 그대로 재사용, sheet 값에 JP: 접두. -->
+  <script src="../forms-config.js"></script>
+  <script src="report-widget.ja.js" data-sheet-hint="jesr_detail"></script>
+</body>
+</html>
