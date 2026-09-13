@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T00:06:22.318868Z",
+    "generated_at": "2026-09-13T00:15:20.739344Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -1045,7 +1045,7 @@
       },
       "pl_gross_premiums_written": {
         "ja": "元受正味保険料",
-        "ko": "원수정미보험료(출재 전, 元受正味保険料)",
+        "ko": "원수정미보험료(출재 전, 元受正味保険料; 含む収入積立保険料 표만 있는 회사는 P14 에서 収入積立保険料 차감)",
         "unit": "JPY_million",
         "kics_item_ref": null,
         "pl_item_ref": null
@@ -1059,7 +1059,7 @@
       },
       "pl_ceded_premiums": {
         "ja": "支払再保険料",
-        "ko": "출재보험료(支払再保険料)",
+        "ko": "출재보험료(支払再保険料; 損保ジャパン 표기 出再正味保険料)",
         "unit": "JPY_million",
         "kics_item_ref": null,
         "pl_item_ref": null
@@ -1080,7 +1080,7 @@
       },
       "pl_recovered_reinsurance_claims": {
         "ja": "回収再保険金",
-        "ko": "회수재보험금(出再分 회수, 回収再保険金)",
+        "ko": "회수재보험금(出再分 회수, 回収再保険金; 損保ジャパン 표기 出再正味保険金)",
         "unit": "JPY_million",
         "kics_item_ref": null,
         "pl_item_ref": null
@@ -1156,7 +1156,7 @@
         "pl_item_ref": 1
       },
       "pl_investment_pl": {
-        "ja": "合計",
+        "ja": "資産運用損益",
         "ko": "자산운용손익(실현기준 = 資産運用収益+積立保険料等運用益-資産運用費用)",
         "unit": "JPY_million",
         "kics_item_ref": null,
@@ -1296,7 +1296,7 @@
         "pl_item_ref": null
       },
       "hist_combined_ratio_pct": {
-        "ja": null,
+        "ja": "合算率（正味損害率＋正味事業費率）",
         "ko": "합산비율 5개년 % (파생 = 손해율+사업비율, 있으면 표 직접값 우선)",
         "unit": "pct",
         "kics_item_ref": null,
@@ -1317,14 +1317,14 @@
         "pl_item_ref": null
       },
       "hist_smr_old_pct": {
-        "ja": "単体ベースのソルベンシー・マージン比率",
+        "ja": "ソルベンシー・マージン比率（旧基準、FY2024まで）",
         "ko": "구기준 단체 SMR 5개년 %(신제도 시행 전, 괄호로 병기된 회사만)",
         "unit": "pct",
         "kics_item_ref": null,
         "pl_item_ref": null
       },
       "hist_esr_pct": {
-        "ja": "単体ベースのソルベンシー・マージン比率",
+        "ja": "ESR（新基準・経済価値ベース、FY2025から）",
         "ko": "신기준 ESR(경제가치기준 지급여력비율) 5개년 % — FY2025 부터 공표",
         "unit": "pct",
         "kics_item_ref": null,
@@ -2084,7 +2084,7 @@
           },
           {
             "id": "pl_investment_pl",
-            "label_ja": "合計",
+            "label_ja": "資産運用損益",
             "sign": "+",
             "cur": 48,
             "prev": 7,
@@ -3013,7 +3013,7 @@
           },
           {
             "id": "pl_investment_pl",
-            "label_ja": "合計",
+            "label_ja": "資産運用損益",
             "sign": "+",
             "cur": 773,
             "prev": 592,
@@ -3513,7 +3513,7 @@
           },
           {
             "id": "pl_investment_pl",
-            "label_ja": "合計",
+            "label_ja": "資産運用損益",
             "sign": "+",
             "cur": 938672,
             "prev": 1116791,
@@ -4021,7 +4021,7 @@
           },
           {
             "id": "pl_investment_pl",
-            "label_ja": "合計",
+            "label_ja": "資産運用損益",
             "sign": "+",
             "cur": 567850,
             "prev": 540617,
@@ -4532,7 +4532,7 @@
           },
           {
             "id": "pl_investment_pl",
-            "label_ja": "合計",
+            "label_ja": "資産運用損益",
             "sign": "+",
             "cur": 360675,
             "prev": 389283,

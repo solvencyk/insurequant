@@ -2458,9 +2458,11 @@
       "layer": "profit",
       "table": "profit:bridge",
       "labels_ja": [
-        "元受正味保険料"
+        "元受正味保険料",
+        "元受正味保険料(除く収入積立保険料)",
+        "元受正味保険料(含む収入積立保険料)"
       ],
-      "ko": "원수정미보험료(출재 전, 元受正味保険料)",
+      "ko": "원수정미보험료(출재 전, 元受正味保険料; 含む収入積立保険料 표만 있는 회사는 P14 에서 収入積立保険料 차감)",
       "unit": "JPY_million",
       "parent": null,
       "formula": null,
@@ -2492,9 +2494,10 @@
       "layer": "profit",
       "table": "profit:bridge",
       "labels_ja": [
-        "支払再保険料"
+        "支払再保険料",
+        "出再正味保険料"
       ],
-      "ko": "출재보험료(支払再保険料)",
+      "ko": "출재보험료(支払再保険料; 損保ジャパン 표기 出再正味保険料)",
       "unit": "JPY_million",
       "parent": null,
       "formula": null,
@@ -2543,9 +2546,10 @@
       "layer": "profit",
       "table": "profit:bridge",
       "labels_ja": [
-        "回収再保険金"
+        "回収再保険金",
+        "出再正味保険金"
       ],
-      "ko": "회수재보험금(出再分 회수, 回収再保険金)",
+      "ko": "회수재보험금(出再分 회수, 回収再保険金; 損保ジャパン 표기 出再正味保険金)",
       "unit": "JPY_million",
       "parent": null,
       "formula": null,

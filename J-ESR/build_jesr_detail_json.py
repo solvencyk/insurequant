@@ -82,6 +82,13 @@ MARKET_SUB_KEYS = [
     "rc_mkt_property", "rc_mkt_fx", "rc_mkt_concentration",
 ]
 
+LABEL_JA_DISPLAY_OVERRIDES = {
+    "pl_investment_pl": "資産運用損益",
+    "hist_combined_ratio_pct": "合算率（正味損害率＋正味事業費率）",
+    "hist_smr_old_pct": "ソルベンシー・マージン比率（旧基準、FY2024まで）",
+    "hist_esr_pct": "ESR（新基準・経済価値ベース、FY2025から）",
+}
+
 # profit layer (2026-09-12): id groupings by schema `table` tag.
 PROFIT_META_TABLE = "profit:meta"
 PROFIT_RATIO_TABLE = "profit:ratio"           # nonlife 損害率/事業費率/合算率
@@ -207,7 +214,9 @@ NONLIFE_PROFIT_FLOW = [
     ("pl_uw_operating_general_admin", "-", None, False),
     ("pl_underwriting_other", "±", "その他(準備金繰入等)", False),
     ("pl_underwriting_profit", "=", None, False),
-    ("pl_investment_pl", "+", None, False),
+    # schema label for this id is the yield table's "合計" row -- meaningless as a flow-row caption, so the
+    # published label is fixed here (the working-tree jesr_detail.json already carried it by hand, 2026-09-13)
+    ("pl_investment_pl", "+", "資産運用損益", False),
     ("pl_other_ordinary", "±", "その他経常損益", True),
     ("pl_ordinary_profit", "=", None, False),
     ("pl_extraordinary_net", "±", "特別損益", True),
@@ -449,6 +458,14 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "kics_item_ref": it.get("kics_item_ref"),
             "pl_item_ref": it.get("pl_item_ref"),
         }
+
+    # Display labels that were fixed by hand in the published JSON (commit e67bc36 and the 2026-09-13
+    # working tree) but never in the schema: the schema's labels_ja[0] is the extraction anchor
+    # (e.g. the yield table's "合計" row, the shared SMR/ESR row caption), not a screen caption.
+    # Pinned here so a rebuild reproduces the published labels instead of silently reverting them.
+    for pid, ja in LABEL_JA_DISPLAY_OVERRIDES.items():
+        if pid in labels:
+            labels[pid]["ja"] = ja
 
     # 2026-09-13: derived ids that only exist inside profit_flow (not schema items,
     # so build_profit_block's schema-driven label loop above never sees them) --

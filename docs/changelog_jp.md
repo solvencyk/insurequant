@@ -2,6 +2,22 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-13 (18) -- 대형 손보 3사 본편에서 ESR 외 전 층 추출, `jp/jesr_detail.json` 2사→5사
+
+- 티켓 `inbox/jp/20260913T0330Z__owner__JP_MULTI__big3_partial_detail.md`. (17)에서 확보한 `J-ESR/raw/fy2025_samples/others/` 3 PDF(TMNF 292p·MSI 272p·
+  Sompo Japan 292p)에서 profit(損益計算書·保険引受利益 明細·比率·재보험 다리)·history 5개년·article_axes(責任準備金の内訳·出再先/格付)·회계기준 추출.
+  `extract_esr_template_samples.py` 에 `BRIDGE_SPEC`(회사별 표 헤딩·TMNF 2열 쌍표)·`RESERVE_SPEC`(붙은 셀 정규식 12/6 토큰)·`reins_style` 3종·
+  `GidDoc`(Sompo 글리프 id 복원)·history 옵션(`hist_skip`/`hist_drop_paren_all`/`hist_label_overrides`/`hist_smr_layout`) 추가. 3사 배선 결과 exit 0,
+  게이트 실패 0(profit 31/31·history 10/10·census_match 3/3), au/Meiji/NN 값 무변경(체크 formula 문자열·tol 만 변경).
+- 검산식 수정 2건: P07 経常利益 브리지에 `−その他収支`(보험인수이익 안의 自賠責 法人税相当額은 経常利益에 없음 — TMNF −3,152 에서 드러남, 넣으면 0 차이),
+  P11 tol 1→3(4항 절사, Sompo 48,253 vs 48,251). P14 는 元受 표가 含む収入積立保険料 뿐인 회사(TMNF·Sompo)에서 P&L 収入積立保険料 를
+  `profit.adjustments` 로 뽑아 차감(MSI 는 除く 표 사용). 회계기준 IFRS 검색을 basis 페이지로 한정(본편 뒷부분 그룹 연결 IFRS17 오판 방지).
+- `build_jesr_detail_json.py`: census not_yet + profit/history 있는 회사 포함, `esr_status`/`esr_placeholder` 키(5사 전부), not_yet self-check 분기,
+  `_meta.coverage` detail_total/esr_posted/esr_not_yet, `LABEL_JA_DISPLAY_OVERRIDES`(커밋 e67bc36 수기 라벨 4개 고정), profit_flow 資産運用損益 라벨 고정.
+  SELF-CHECK OK. 기존 2사 블록·labels 스크립트 diff 로 무변경 확인.
+- 스키마: bridge 3항목 labels_ja 에 `元受正味保険料(除く/含む収入積立保険料)`·`出再正味保険料`·`出再正味保険金` 변형 추가. 문서 §9-8·§10-8(페이지 매핑·추출값·편차·폰트 복원 규칙).
+- 미해결: Sompo 복원은 `C:/Windows/Fonts/msgothic.ttc` 의존(다른 머신은 경고 후 NOT_FOUND). 3사 ESR 은 2026-10-31 이후 재census 때 `layers` 에 `esr` 추가.
+
 ## 2026-09-13 (17) -- 손보 6사 표본 실측(3사 확보) — 손해율/사업비율/합산율 시계열 공시 여부 확인, ESR 은 전원 미공표
 
 - 티켓 `inbox/jp/20260913T0230Z__owner__JP_MULTI__nonlife_ratio_availability.md`. owner "손해율 5개년이 다른 손보사에도 다 있는지" 질의에

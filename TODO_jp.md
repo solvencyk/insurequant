@@ -1,9 +1,21 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-13 (17) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-13 (18) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-13 (18) 대형 손보 3사(東京海上日動·三井住友海上·損保ジャパン) ESR 외 전 층 추출 → `jp/jesr_detail.json` 5사(jp).**
+티켓 `inbox/jp/20260913T0330Z__owner__JP_MULTI__big3_partial_detail.md`(answered). owner "손해율 있다면서 왜 사이트엔 2사만" → (17)에서 확보한 본편 3 PDF 에서
+profit(損益計算書·保険引受利益 明細·損害率/事業費率/合算率·재보험 다리 6항목)·history 5개년·article_axes(異常危険準備金/普通責任準備金·出再先数/上位5社/格付)·회계기준을 추출,
+`extract_esr_template_samples.py` 에 3사 배선(id `tokiomarine_nichido`/`mitsui_sumitomo`/`sompo_japan`). **실측: 3사 profit 31/31·history 10/10, 게이트 실패 0, exit 0**;
+`build_jesr_detail_json.py` 가 ESR not_yet 회사를 허용(headline ESR null·트리 빈 리스트·self-check 분기), `_meta.coverage` = detail_total 5 / esr_posted 2 / esr_not_yet 3,
+SELF-CHECK OK. 기존 2사 블록·`_meta.labels` 무변경(추가 키 `esr_status`/`esr_placeholder` 뿐, 스크립트 diff 확인). FY2025 合算率 TMNF 93.0 / MSI 93.2 / Sompo 97.0,
+当期純利益 731,125 / 459,965 / 295,649 百万円, 出재 비중 17.0 / 20.6 / 16.4%. 발견 5건: ① TMNF·Sompo 元受 표는 含む収入積立保険料 뿐 → P&L 収入積立保険料 를
+adjustments 로 뽑아 P14 차감(추정 없음) ② P07 에 `−その他収支` 누락(TMNF −3,152 에서 드러남, au/Meiji 불변) ③ 본편 뒷부분 그룹 연결 IFRS17 때문에 単体 회계기준이
+ifrs 로 오판 → IFRS 검색을 basis 페이지로 한정 ④ Sompo 폰트 함정은 숫자만이 아니라 한자·가나 전부 글리프 id — MS Gothic 글리프 순서와 일치해 로컬 msgothic.ttc
+cmap 으로 복원(`GidDoc`) ⑤ MSI 5개년표는 p31 에 있음(직전 티켓 "없음" 오판, 損害率 2자리 소수·SMR 新旧 쌍 구조). 커밋 e67bc36 이 손으로 고친 `_meta.labels`
+4개는 builder `LABEL_JA_DISPLAY_OVERRIDES` 로 고정. 문서 §9-8·§10-8. `jp/*.html`·커밋·서브에이전트 없음. 다음 = 오케스트레이터가 `jp/jesr.html` 을 5사·not_yet 분기로.
 
 **🟢 2026-09-13 (17) 손보 6사 표본 실측(정본 3사 확보) — 손해율/사업비율/합산율 5개년표는 owner 가정대로 이미 공시, ESR 만 표본 전원 미공표(jp).**
 티켓 `inbox/jp/20260913T0230Z__owner__JP_MULTI__nonlife_ratio_availability.md`(answered). owner "손해율 5개년이 다른 손보사에도 다
@@ -67,27 +79,6 @@ underwriting_ok/net_ok 는 실측치 그대로 JSON 에 싣고 게이트에는 �
 검산·추출특이점·회사별 순서표). **`build_jesr_detail_json.py` 는 손대지 않음**(publishing 편집 중) — `_meta.labels` 는
 `for it in schema["items"]` 로 스키마 전체를 자동 순회해 채우므로(434~446행), 오케스트레이터가 그 빌더를 재실행하기만 하면 새 6항목
 라벨이 자동 추가됨(수동 등재 불필요). `jp/*`·builder·서브에이전트·커밋 없음.
-
-**🟢 2026-09-12 (14) 스키마에 시계열 층 `layer:"history"` 13항목(FY2021~FY2025) + 손보 2사 5개년 추출·검산 H01~H02(jp).**
-티켓 `inbox/jp/20260912T1440Z__owner__JP_MULTI__pl_history_5y.md`(answered). owner "손해율·사업비율·합산비율 시계열을 쭉 보여줘도
-좋겠다" → profit 층({prev,cur} 2개년)의 확장. `J-ESR/esr_disclosure_schema.json` 에 history 13(값 10 + 생보 id 3개 정의만:
-`hist_core_profit`/`hist_premium_income`/`hist_policy_reserves`), 값은 `{"FY2021":v,...,"FY2025":v}`. `extract_esr_template_samples.py`
-에 `extract_history`/`run_history_checks`/`strip_paren`(괄호 안 숫자 vs 괄호 안 대시 구분) — profit 층이 이미 읽던
-`profit_pages["summary5"]` 페이지를 재사용(문서 새로 안 염). **실측**(exit 0): au_nonlife 정미수입보험료/경상이익/당기순이익/
-손해율/사업비율/총자산/순자산 5개년 전부 표에서 직접 추출(31.8/29.4/26.9/36.4/30.9 등), 합산율은 파생(=손해율+사업비율).
-Meiji Yasuda Non-Life 는 손해율/사업비율/합산율이 5개년표 자체엔 없어 profit 층이 이미 읽는 3개년표(p35)에서 FY2023~2025 만
-백필, FY2021~2022 는 null(로 남김, 억지 채움 없음). 단체SMR/ESR 행은 **괄호 유무로 구기준/신기준을 나눔**(Meiji: 괄호
-4개=旧基準 2,847.6/2,940.4/2,814.7/2,642.5%, 비괄호 1개=신기준 743.2%; au: 旧基準 자리가 전부 대시라 `hist_smr_old_pct` 5개
-다 null 이 정상, `hist_esr_pct` FY2025 만 791.7%). Meiji SMR 라벨의 "ー"(장음부호)가 대시 문자와 동일 코드포인트라
-`merge_vertical` 이 라벨을 쪼개는 버그를 느슨한 부분일치 정규식(`HIST_SMR_LABEL_RE`)으로 우회. 검산: **au 17/17, Meiji
-15/15**(H01 FY2025==profit.cur·FY2024==profit.prev, H02 合算率=손해율+사업비율 ±0.1) — `extract_esr_template_samples.py`
-전체 게이트(all_checks)에 합류해 exit 0. `J-ESR/build_jesr_detail_json.py` 에 `build_history_block()` 추가(같은 값을
-`fiscal_years`+`series`(연도 배열) 형태로 재편) + companies_out `history` 키 + self_check 에 같은 검산(구조 정합·FY2025/2024
-교차·合算率 항등식) — exit 0, SELF-CHECK OK. `jp/jesr_detail.json` companies[].history 확인. 기존 esr/article_axes/profit
-블록·키 바이트 무변경(스키마 diff = 신규 항목·layers/tables/column_note 설명문 추가뿐, `aggregation.checks_pass/checks_total`
-만 (11) 항목과 같은 이유로 자연 증가: au 62→79, Meiji 66/70→81/85 — 이번 신규 H01/H02 가 같은 gate 에 합류했기 때문).
-문서 `docs/domains/jp_esr_disclosure_template.md` §0·§10(표 위치·연도 수·라벨 렌더링 특이점·SMR/ESR 괄호 분리·검산·회사별
-편차·중간기 공시 없음 메모). `jp/*.html`·서브에이전트·커밋 없음.
 
 ## Active follow-ups
 

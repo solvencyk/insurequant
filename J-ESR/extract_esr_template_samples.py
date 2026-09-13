@@ -331,12 +331,12 @@ PROFIT_ITEMS = [
     # grab()-then-pick_pc() path other src values use, because each sub-table's own 合計 row sits
     # several lines below a heading that repeats elsewhere on the page (a per-employee footnote for
     # au, a footnote sentence for Meiji) — a plain label-regex grab would land on the wrong row.
-    dict(id="pl_gross_premiums_written", scope="nonlife", src="bridge", labels=[r"元受正味保険料"], ko="원수정미보험료(출재 전, 元受正味保険料)", unit=M, formula=None, pl=None),
+    dict(id="pl_gross_premiums_written", scope="nonlife", src="bridge", labels=[r"元受正味保険料", r"元受正味保険料\(除く収入積立保険料\)", r"元受正味保険料\(含む収入積立保険料\)"], ko="원수정미보험료(출재 전, 元受正味保険料; 含む収入積立保険料 표만 있는 회사는 P14 에서 収入積立保険料 차감)", unit=M, formula=None, pl=None),
     dict(id="pl_assumed_premiums", scope="nonlife", src="bridge", labels=[r"受再正味保険料"], ko="수재정미보험료(受再正味保険料, 해당없으면 0)", unit=M, formula=None, pl=None),
-    dict(id="pl_ceded_premiums", scope="nonlife", src="bridge", labels=[r"支払再保険料"], ko="출재보험료(支払再保険料)", unit=M, formula=None, pl=None),
+    dict(id="pl_ceded_premiums", scope="nonlife", src="bridge", labels=[r"支払再保険料", r"出再正味保険料"], ko="출재보험료(支払再保険料; 損保ジャパン 표기 出再正味保険料)", unit=M, formula=None, pl=None),
     dict(id="pl_gross_claims_paid", scope="nonlife", src="bridge", labels=[r"元受正味保険金"], ko="원수정미보험금(元受正味保険金)", unit=M, formula=None, pl=None),
     dict(id="pl_assumed_claims", scope="nonlife", src="bridge", labels=[r"受再正味保険金"], ko="수재정미보험금(受再正味保険金, 해당없으면 0)", unit=M, formula=None, pl=None),
-    dict(id="pl_recovered_reinsurance_claims", scope="nonlife", src="bridge", labels=[r"回収再保険金"], ko="회수재보험금(出再分 회수, 回収再保険金)", unit=M, formula=None, pl=None),
+    dict(id="pl_recovered_reinsurance_claims", scope="nonlife", src="bridge", labels=[r"回収再保険金", r"出再正味保険金"], ko="회수재보험금(出再分 회수, 回収再保険金; 損保ジャパン 표기 出再正味保険金)", unit=M, formula=None, pl=None),
     dict(id="pl_loss_adjustment_expenses", scope="nonlife", src="pl", labels=[r"^損害調査費$"], ko="손해조사비", unit=M, formula=None, pl=None),
     dict(id="pl_commissions_collection", scope="nonlife", src="pl", labels=[r"^諸手数料及び集金費$"], ko="제수수료 및 집금비", unit=M, formula=None, pl=None),
     dict(id="pl_operating_general_admin", scope="nonlife", src="pl", labels=[r"^営業費及び一般管理費$"], ko="영업비 및 일반관리비(전체)", unit=M, formula=None, pl=None),
