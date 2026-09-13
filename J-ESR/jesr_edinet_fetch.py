@@ -1,70 +1,85 @@
+# -*- coding: utf-8 -*-
 """
-J-ESR EDINET fetcher scaffold.
-Fetches J-ICS ESR disclosure (Pillar-3) from EDINET XBRL filings.
+J-ESR EDINET fetcher. J-ICS ESR(Pillar-3) 를 EDINET 제출서류에서 찾는 루트.
 
 Usage:
-  python jesr_edinet_fetch.py --key YOUR_SUBSCRIPTION_KEY [--smoke]
-  python jesr_edinet_fetch.py --key YOUR_SUBSCRIPTION_KEY --edinet-code E05026
-  python jesr_edinet_fetch.py --key YOUR_SUBSCRIPTION_KEY --all --year 2026
+  python J-ESR/jesr_edinet_fetch.py --smoke              # 키 유효성·응답 확인
+  python J-ESR/jesr_edinet_fetch.py --scan --from 2026-06-01 --to 2026-07-31
+  python J-ESR/jesr_edinet_fetch.py --edinet-code E03847 --year 2026
+  python J-ESR/jesr_edinet_fetch.py --all --year 2026
 
-EDINET free key registration:
-  https://disclosure2.edinet-fsa.go.jp/  -> EDINET API -> Subscription-Key 取得
+키: 환경변수 `EDINET_KEY` 가 기본. `--key` 로 덮어쓴다. 무료 등록은
+  https://api.edinet-fsa.go.jp/ (EDINET API 利用登録) — 저장소에 키를 커밋하지 말 것.
+
+2026-09-13 실측으로 고친 것 3가지
+---------------------------------
+1. **호스트**. 정본은 `api.edinet-fsa.go.jp/api/v2`. 종전의
+   `disclosure.edinet-fsa.go.jp/api/v2` 는 301→`disclosure2…`→302 로 튕겨 간다(따라가면
+   되긴 하나 홉 2개를 매 요청 낭비한다). **키 없이 부르면 HTTP 200 에 본문이
+   `{"StatusCode": 401, …}` 로 온다** — status_code 만 보면 "성공인데 결과 0건" 으로 읽힌다.
+2. **회사코드**. 하드코딩 dict 에 있던 13개 중 7개가 오답이었다(E04979=パーク24,
+   E04506=九州電力 …). 코드는 이제 `jp_insurers.csv` 한 곳에서만 읽는다 —
+   그 파일은 `edinet_codelist.py` 가 공식 코드리스트로 채운다.
+3. **SSL**. `verify=False` 하드코딩을 걷어내고 `jesr_http.verify_setting()` 으로.
+   기본 검증 ON, 회사망 SSL 인스펙션 PC 에서만 `JESR_INSECURE_SSL=1`.
 
 Output: J-ESR/raw/edinet/<edinetCode>/<docID>/ (XBRL + meta JSON)
+        J-ESR/raw/edinet/scan_<from>_<to>.json (스캔 인덱스)
 """
 
 import argparse
+import csv
 import json
+import os
 import sys
 import time
 import zipfile
 from pathlib import Path
 
 import requests
-import urllib3
 
-# Company-network SSL inspection workaround (self-signed CA in chain)
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-VERIFY_SSL = False
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import jesr_http  # noqa: E402
+
+VERIFY_SSL = jesr_http.verify_setting()
 
 # Windows CP949 stdout fix — always write UTF-8 bytes
 def log(msg: str) -> None:
     sys.stdout.buffer.write((msg + "\n").encode("utf-8", errors="replace"))
     sys.stdout.buffer.flush()
 
-BASE_URL = "https://disclosure.edinet-fsa.go.jp/api/v2"
+BASE_URL = "https://api.edinet-fsa.go.jp/api/v2"
 OUT_DIR = Path(__file__).parent / "raw" / "edinet"
+INSURERS_CSV = Path(__file__).resolve().parent / "jp_insurers.csv"
 
-# Known EDINET codes for major insurance groups and listed companies.
-# TBD codes will be populated once API key is obtained and bulk lookup runs.
-KNOWN_INSURER_EDINET_CODES = {
-    # HD listed
-    "E05026": "東京海上ホールディングス",
-    "E14905": "MS&ADインシュアランスグループHD",
-    "E04979": "SOMPOホールディングス",
-    "E04506": "第一生命ホールディングス",
-    "E06008": "T&Dホールディングス",
-    "E33424": "ソニーフィナンシャルグループ",
-    "E04678": "かんぽ生命保険",
-    # Listed subsidiaries filing 有報 (bonds/equity)
-    "E03823": "東京海上日動火災保険",
-    "E03824": "三井住友海上火災保険",
-    "E03827": "損害保険ジャパン",
-    "E03829": "日新火災海上保険",
-    "E03833": "あいおいニッセイ同和損害保険",
-    "E03850": "共栄火災海上保険",
-    # TBD: populated by --lookup-all run after key obtained
-    # "TXXXXXX": "第一生命保険",
-    # "TXXXXXX": "大同生命保険",
-    # "TXXXXXX": "太陽生命保険",
-    # "TXXXXXX": "ソニー生命保険",
-    # "TXXXXXX": "ライフネット生命保険",  # ticker 7157
-}
+def load_insurer_codes(only_obligated: bool = False) -> dict[str, str]:
+    """`jp_insurers.csv` 에서 EDINET 코드를 읽는다(정본은 그 csv 하나뿐).
+
+    하드코딩 dict 를 되살리지 말 것 — 2026-09-13 실측에서 그 dict 의 13개 중 7개가
+    다른 회사 코드였다. 갱신은 `python J-ESR/edinet_codelist.py --apply`.
+    """
+    codes: dict[str, str] = {}
+    with INSURERS_CSV.open(encoding="utf-8", newline="") as fh:
+        rows = list(csv.reader(fh))
+    for row in rows[1:]:
+        if len(row) < 7:
+            continue
+        code, eligible = row[5].strip(), row[6].strip()
+        if not code.startswith("E"):
+            continue
+        if only_obligated and eligible != "yes":
+            continue
+        codes.setdefault(code, row[0].strip())
+    return codes
+
 
 # Target disclosure types for J-ICS ESR
 # 有価証券報告書 = docTypeCode "120"
 # 半期報告書 = "140"
 DOC_TYPE_YUHO = "120"
+
+#: main() 에서 jp_insurers.csv 로 채운다(코드->회사명 표시용)
+_CODE_NAMES: dict[str, str] = {}
 
 
 def get_headers(key: str) -> dict:
@@ -121,7 +136,7 @@ def search_yuho_bulk(key: str, target_codes: set, year: int) -> dict[str, list[d
         for doc in docs:
             code = doc.get("edinetCode")
             if code in target_codes and doc.get("docTypeCode") == DOC_TYPE_YUHO:
-                name = KNOWN_INSURER_EDINET_CODES.get(code, code)
+                name = _CODE_NAMES.get(code, code)
                 log(f"  FOUND {date_str}: {code} {name} docID={doc.get('docID')} "
                     f"period={doc.get('periodStart')}~{doc.get('periodEnd')}")
                 results[code].append(doc)
@@ -197,55 +212,129 @@ def validate_esr_record(rec: dict) -> list[str]:
     return errors
 
 
-def smoke_test(key: str):
-    """Smoke test: verify API connectivity with key."""
-    log("[SMOKE] Testing EDINET API connectivity...")
-    # Use a known weekday with filings
-    url = f"{BASE_URL}/documents.json?date=2025-06-19&type=2"
+def smoke_test(key: str) -> bool:
+    """키 유효성 + 보험사 有報 가 실제로 잡히는지까지 확인(응답 200 만 보면 반쪽이다)."""
+    log("[SMOKE] EDINET API v2 — key + insurer-filing check")
+    probe_date = "2026-06-26"  # 3월기 有報 제출 피크(東京海上HD 제출일)
+    url = f"{BASE_URL}/documents.json?date={probe_date}&type=2"
     resp = requests.get(url, headers=get_headers(key), timeout=30, verify=VERIFY_SSL)
-    log(f"  HTTP status: {resp.status_code}")
+    log(f"  HTTP {resp.status_code}  host={BASE_URL}")
+    if resp.status_code != 200:
+        log("[SMOKE] FAIL — 키 또는 호스트 확인")
+        return False
     data = resp.json()
     meta = data.get("metadata", {})
-    log(f"  EDINET status: {meta.get('status')} message: {meta.get('message')}")
-    count = meta.get("resultset", {}).get("count", 0)
-    log(f"  Documents on 2025-06-19: {count}")
-    if meta.get("status") == "200":
-        log("[SMOKE] PASS — API key valid")
-        return True
-    log("[SMOKE] FAIL — check key")
-    return False
+    count = (meta.get("resultset") or {}).get("count", 0)
+    log(f"  EDINET status={meta.get('status')} message={meta.get('message')} count={count}")
+    codes = load_insurer_codes()
+    docs = [d for d in data.get("results", [])
+            if d.get("edinetCode") in codes and d.get("docTypeCode") == DOC_TYPE_YUHO]
+    log(f"  보험사 有報 on {probe_date}: {len(docs)}")
+    for d in docs:
+        log(f"    {d['edinetCode']} {codes[d['edinetCode']]} docID={d['docID']} "
+            f"period={d.get('periodEnd')}")
+    ok = meta.get("status") == "200" and count > 0
+    log("[SMOKE] PASS — key valid" if ok else "[SMOKE] FAIL — check key")
+    return ok
+
+
+def scan_range(key: str, start: str, end: str, doc_types: tuple = (DOC_TYPE_YUHO,)) -> dict:
+    """기간 전체를 훑어 보험사 제출서류 인덱스를 만든다(하루 1콜).
+
+    10월 재census 때 "누가 언제 무엇을 냈나" 를 사람 눈으로 찾지 않기 위한 인덱스.
+    산출: J-ESR/raw/edinet/scan_<start>_<end>.json
+    """
+    codes = load_insurer_codes()
+    log(f"[SCAN] {start} ~ {end} · 보험사 코드 {len(codes)}개 · docType {doc_types}")
+    hits: list[dict] = []
+    days = 0
+    for date_str in _date_range(start, end):
+        days += 1
+        try:
+            docs = fetch_documents_by_date(key, date_str)
+        except Exception as exc:  # 하루 실패가 전체를 죽이지 않게
+            log(f"  {date_str} WARN {exc}")
+            time.sleep(0.5)
+            continue
+        for doc in docs:
+            code = doc.get("edinetCode")
+            if code in codes and doc.get("docTypeCode") in doc_types:
+                rec = {
+                    "date": date_str,
+                    "edinet_code": code,
+                    "company_jp": codes[code],
+                    "filer_name": doc.get("filerName"),
+                    "doc_id": doc.get("docID"),
+                    "doc_type_code": doc.get("docTypeCode"),
+                    "doc_description": doc.get("docDescription"),
+                    "period_start": doc.get("periodStart"),
+                    "period_end": doc.get("periodEnd"),
+                    "submit_datetime": doc.get("submitDateTime"),
+                    "xbrl_flag": doc.get("xbrlFlag"),
+                    "pdf_flag": doc.get("pdfFlag"),
+                }
+                hits.append(rec)
+                log(f"  HIT {date_str} {code} {codes[code]} {doc.get('docDescription')}")
+        time.sleep(0.2)
+    payload = {"scanned_days": days, "start": start, "end": end,
+               "doc_types": list(doc_types), "insurer_codes": len(codes),
+               "hits": hits}
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    out = OUT_DIR / f"scan_{start}_{end}.json"
+    out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    log(f"[SCAN] {len(hits)} hits / {days} days -> {out}")
+    return payload
 
 
 def main():
-    parser = argparse.ArgumentParser(description="J-ESR EDINET fetcher scaffold")
-    parser.add_argument("--key", required=True, help="EDINET Subscription-Key")
+    parser = argparse.ArgumentParser(description="J-ESR EDINET fetcher")
+    parser.add_argument("--key", default=os.environ.get("EDINET_KEY"),
+                        help="EDINET Subscription-Key (기본: 환경변수 EDINET_KEY)")
     parser.add_argument("--smoke", action="store_true", help="Connectivity smoke test only")
+    parser.add_argument("--scan", action="store_true",
+                        help="기간 스캔 — 보험사 제출서류 인덱스만 만든다(다운로드 없음)")
+    parser.add_argument("--from", dest="date_from", default="2026-06-01")
+    parser.add_argument("--to", dest="date_to", default="2026-07-31")
+    parser.add_argument("--doc-types", default=DOC_TYPE_YUHO,
+                        help="쉼표구분 docTypeCode (기본 120=有価証券報告書)")
     parser.add_argument("--edinet-code", help="Fetch single company by EDINET code")
     parser.add_argument("--all", dest="all_known", action="store_true",
-                        help="Fetch all known insurer codes")
+                        help="Fetch all insurer codes flagged edinet_eligible=yes")
     parser.add_argument("--year", type=int, default=2026,
                         help="Fiscal year (期末 March 31 of this year)")
     args = parser.parse_args()
+
+    if not args.key:
+        log("[FATAL] EDINET 키가 없다 — 환경변수 EDINET_KEY 를 세우거나 --key 로 넘긴다")
+        sys.exit(2)
 
     if args.smoke:
         ok = smoke_test(args.key)
         sys.exit(0 if ok else 1)
 
+    if args.scan:
+        scan_range(args.key, args.date_from, args.date_to,
+                   tuple(t.strip() for t in args.doc_types.split(",") if t.strip()))
+        sys.exit(0)
+
     target_codes: list[str] = []
     if args.edinet_code:
         target_codes = [args.edinet_code]
     elif args.all_known:
-        target_codes = list(KNOWN_INSURER_EDINET_CODES.keys())
+        target_codes = list(load_insurer_codes(only_obligated=True))
     else:
         parser.print_help()
         sys.exit(1)
+
+    global _CODE_NAMES
+    _CODE_NAMES = load_insurer_codes()
 
     # Bulk search: one API call per day for all codes
     bulk = search_yuho_bulk(args.key, set(target_codes), args.year)
 
     results = []
     for code in target_codes:
-        name = KNOWN_INSURER_EDINET_CODES.get(code, "unknown")
+        name = _CODE_NAMES.get(code, "unknown")
         docs = bulk.get(code, [])
         if not docs:
             log(f"\n[{code}] {name} — not yet submitted")

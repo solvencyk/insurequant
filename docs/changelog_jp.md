@@ -2,6 +2,31 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-13 (25) -- 타 세션 리허설 미결 이관 + EDINET 키 실측: 출처 URL 점검기·코드 7개 정정·화면 수치 2건 정정
+
+- **배경**. 다른 세션(`session_01F9N5Bt…`, repo `solvencyk/solvency`)이 egress 해제 직후 기게시 15사 출처 URL 을 전수 두드려 5건의 실패를 찾았으나
+  insurequant push 권한이 없어 티켓을 못 남기고 종료. 그 후속 5건 + 새로 들어온 EDINET 키(`EDINET_KEY` 환경변수)를 이 라운드에서 전부 처리했다.
+  티켓 `inbox/_resolved/20260913T1325Z__owner__JP_MULTI__source_url_rehearsal_and_edinet_key.md`.
+- **신설 `J-ESR/jesr_http.py`** — jp 레인 공용 HTTP. 브라우저 헤더 기본값(UA·Accept-Language·Referer), meta refresh 2홉 추적, TLS 실패 시 curl 대조,
+  판정 6종(`ok`/`ok_requires_headers`/`blocked`/`tls_client_issue`/`spa_shell`/`dead`), 만료 호스트 목록(`EXPIRING_HOSTS`, TDnet). 수집기는 이제 requests 를 직접 부르지 않는다.
+- **신설 `J-ESR/check_source_urls.py`** — 화면 출처 + census + jp_insurers 전수 점검(254건/고유 139건). 산출 `J-ESR/source_url_health.json`.
+  실측: blocked 21 · spa_shell 8 · ok_requires_headers 17 · tls_client_issue 4 · dead 5. 헤더 없이 census 를 돌리면 46건이 `not_found` 오탐이 됐을 자리다.
+- **오진 정정**: 東京海上HD IR 의 "HTML 364B·링크 0 = SPA" 는 틀렸다. 실체는 `<meta http-equiv="refresh">` 한 줄이고 따라가면 링크 25·PDF 6이 정적으로 있다
+  (requests 도 `curl -L` 도 meta refresh 를 안 따라간다). `sonylife.co.jp` 는 파이썬만 TLS 악수 실패·curl 200.
+- **EDINET 루트 실측 재구성**(도메인 문서 **§4d** 신설). 호스트 정본 `api.edinet-fsa.go.jp/api/v2`(종전 `disclosure…` 는 301→302). 키 없으면 **HTTP 200 + 본문 StatusCode 401**.
+  공식 코드리스트 11,389건 대조 → 기재 13개 중 **7개가 다른 회사 코드**(E04979=パーク24 · E04506=九州電力 · E05026/E14905/E06008/E33424/E04678 은 미존재).
+  `jp_insurers.csv` TBD 62행 해소: 매칭 27(有報의무 17 / 등록만 9) · **미등록 확정 51** · 보류 3. 도구 `edinet_codelist.py`, 증거 `edinet_code_match.json`.
+- **FY2025 有報는 이미 6월에 나와 있었다** — 14사 제출(6/11~6/30, 전부 XBRL). "ESR 초등장 = 10월 제출분" 은 오해였다(10/31 은 J-ICS 공시 기한이지 有報 기한이 아니다).
+  XBRL 태그에 ESR 은 여전히 없지만 **본문 iXBRL 에는 서술로 있다** → `edinet_esr_probe.py` 가 15건 전부에서 검출, 5사 수치 확정(東京海上HD 268 · T&D 222 · SOMPO 270 · ライフネット 333 · かんぽ 181).
+  EDINET 뷰어 딥링크는 세션 기반이라 사용자용 링크로 못 쓴다(docID 는 census notes 에).
+- **화면 수치 정정 2건**(census → `jp/jesr_esr.json` 재빌드): 東京海上HD **238 → 268**(238 은 원문 어디에도 없는 2차보도 인용값. 決算プレゼン p5·p44 와 有報 S100YLS8 본문 모두 268,
+  自己株取得 반영 255·사업계획 리스크테이크까지 234), かんぽ生命 **220 → 181**(220 은 「大量解約リスクを除いた場合」 조정치. 원문 p35·p37 과 有報 S100YD29 모두 181 監査未済 暫定).
+- **출처 오인용 1건**: MS&AD 의 source_url 은 200 이었지만 내용이 2026-02-13 三井住友海上·あいおいニッセイ同和 **합병 보도자료**(ESR 미수록)였다.
+  2025年度通期決算 電話会議資料(p17 226→214)로 교체, 수치 214 는 유지. → §4c 규칙 4 "URL 이 200 이라고 출처가 맞는 게 아니다".
+- **부수 버그**: `build_jesr_page_json.py` 의 preliminary 키워드가 한국어(속보·잠정)+速報 뿐이라 일본어 원문(暫定値·監査未済)을 인용한 레코드가 확정치로 표시됐다
+  → 키워드에 `暫定`·`監査未済` 추가. かんぽ生命이 preliminary=true 로 복귀(다른 레코드 영향 없음).
+- 404 3건 대체 URL: 東京海上HD 게시 디렉토리 이동(`gi58a8000000246z-att`→`gi58a80000002zwa-att`) · 日本生命 사이트 개편(`/kaisha/annai/`→`/kaisha/gyoseki/`, 決算概要 p8 규제ESR 連結195·単体204 직접 확인) · T&D TDnet 만료 → 회사 IR 상설 경로.
+
 ## 2026-09-13 (24) -- 랭킹 색 = 각사 ESR 목標レンジ 기준, 第一生命 損益·基礎利益 층, 貸借対照表 10사
 
 - 색 규칙(owner): 100% 미만 빨강(낮을수록 진함) / 100%~레인지 상한 노랑(100% 에 가까울수록 붉게) / 상한 초과 초록(높을수록 진함, 「○%以上」형은 하한 기준).

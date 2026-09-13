@@ -12,7 +12,7 @@ jp 레인은 **한국 stage 프롬프트를 읽지 않는다.** 이 문서 + `TO
 ## 2. 제도·주기 (한국과 다른 점 — 이걸 몰라서 생기는 오판이 대부분)
 
 - 회계연도 4월~3월. FY2025 = 2026-03-31 기준. 첫 의무 ESR 사이클이 FY2025 말이다.
-- **정본은 회사별 공시 사이트의 PDF**(결산설명자료·디스클로저지·별책). EDINET(전자공시) XBRL 은 보조 — FY2024 XBRL 6사 probe 에서 ESR 구성요소 0건(`inbox/_resolved/20260624T0337Z__owner__JP_MULTI__jesr_datalayer_asof.md`). 상장사 교차확인용으로만.
+- **정본은 회사별 공시 사이트의 PDF**(결산설명자료·디스클로저지·별책). EDINET(전자공시) XBRL 은 보조 — FY2024 XBRL 6사 probe 에서 ESR 구성요소 0건(`inbox/_resolved/20260624T0337Z__owner__JP_MULTI__jesr_datalayer_asof.md`). 상장사 교차확인용으로만. **2026-09-13 키 확보 후 실측: 태그는 여전히 없지만 有報 본문에는 ESR 이 서술로 있고, 대상은 최대 17사다 — §4d.**
 - 본문 디스클로저는 대부분 7월 말에 나오지만 **신기준 비율은 "2026년 10월 말 공표 예정" 으로 미루는 회사가 다수**(09-12 census: 손보 원문 13건 중 11건 명시). 최종 기한 2026-10-31. → 9월엔 분모(페이지 존재)와 일부 값, 10월 말에 전수 값.
 - 단위 억엔(億円). 비율은 % 한 자리.
 - 지주 상장 6사(Tokio Marine·MS&AD·Sompo·T&D·Sony FG·Dai-ichi)는 **그룹 연결값**을 결산설명자료에 먼저 낸다(5월). 자회사 단체값은 별도 — 둘을 `scope=group|solo` 로 반드시 구분해 적는다. 상호회사 5사(Nippon·Sumitomo·Meiji Yasuda·Fukoku·Asahi)는 비상장·EDINET 비대상, IR PDF 만.
@@ -68,6 +68,57 @@ owner 가 2026-09-01 에 공유한 기사(insnews #92437, 일본 금융청 '2026
    전례, 09-12 census 메모의 "新 J-ICS 기준 전환·목표 190%+ 재설정" 이 그 흔적). → census 열 `calc_method`(standard | internal_model |
    unstated) · `confidence_level`(예: 99.5) 추가. ESR 표 각주·리스크관리 파트에서 `標準的手法`/`内部モデル`/`信頼水準`/`VaR` 를 찾는다.
    결과가 오면 `/jp/` 각주를 "各社で異なる場合があり" 에서 실측("標準式 n社・内部モデル n社") 으로 바꾼다.
+
+## 4c. 출처 URL 규칙 (2026-09-13 리허설로 생긴 규칙 — 10월 재census 전에 반드시 읽는다)
+
+기게시 15사의 1차 출처를 전수 두드렸더니 5건이 실패했는데 **원인이 전부 달랐다.** 실패를 한 덩어리로 보면
+멀쩡한 출처를 `not_found` 로 적재한다. 판정은 `J-ESR/check_source_urls.py`(엔진 `J-ESR/jesr_http.py`)가 하고,
+**census 를 돌리기 전에 먼저 돌린다.**
+
+| 분류 | 뜻 | census 에 어떻게 적나 |
+|---|---|---|
+| `ok` | 정적으로 열린다 | 그대로 |
+| `ok_requires_headers` | 브라우저 헤더(UA·Accept-Language·Referer) 붙이면 200 | **살아있다.** `not_found` 금지 |
+| `blocked` | 404 아닌 4xx(WAF·봇룰) | 죽음 아님. 사람 브라우저로 재확인 |
+| `tls_client_issue` | 파이썬은 악수 실패인데 curl 은 200 | 우리 쪽 문제. 죽음 아님 |
+| `spa_shell` | 200 인데 `<a>` 0개 + `<script>` 있음 | 정적 수집 불가 — 헤드리스 필요 |
+| `dead` | 404/410 | 대체 URL 확보 대상 |
+
+규칙 4개.
+
+1. **수집기는 `requests.get` 을 직접 부르지 않는다.** `jesr_http.get()` / `probe()` 를 쓴다 — 헤더 기본값이
+   한 군데 있어야 다음 라운드에 또 403 을 "죽음" 으로 적지 않는다(MS&AD·ソニーFG 가 그 사례, URL 은 멀쩡했다).
+2. **만료 호스트는 1차 출처로 쓰지 않는다.** `release.tdnet.info`(TDnet 적시개시)는 게시 후 일정 기간이 지나면
+   문서를 내린다 — T&D 2026-05-15 결산단신이 그래서 404 가 됐다. 회사 IR 상설 경로로 인용한다.
+   목록은 `jesr_http.EXPIRING_HOSTS`, 점검기가 `expiring_host` 로 따로 표시한다(지금 200 이어도 경고).
+3. **meta refresh 를 먼저 확인한다.** 東京海上HD `/ir/event/presentation/` 은 HTML 364바이트라 "SPA 셸" 로
+   오진했지만 실체는 `<meta http-equiv="refresh">` 한 줄이었다 — 따라가면 링크 25개·PDF 6개가 정적으로 다 있다.
+   requests 도 `curl -L` 도 meta refresh 는 안 따라간다. `jesr_http.probe()` 가 2홉까지 따라간다.
+4. **URL 이 200 이라고 출처가 맞는 게 아니다.** MS&AD 출처 URL 은 200 이었지만 내용은 2026-02-13
+   三井住友海上·あいおいニッセイ同和 **합병 보도자료**였고 ESR 은 한 줄도 없었다(기본 fetcher 에 403 이라
+   그동안 아무도 못 열어봤다). 수치를 census 에 적을 때는 **그 문서에서 그 수치를 눈으로 본다.**
+
+## 4d. EDINET 루트 — 2026-09-13 키 확보 후 실측으로 확정
+
+- **키·호스트.** 환경변수 `EDINET_KEY`(저장소에 커밋 금지). 정본 호스트는 `https://api.edinet-fsa.go.jp/api/v2`
+  — 종전 코드가 쓰던 `disclosure.edinet-fsa.go.jp/api/v2` 는 301→302 로 튕겨 간다. 인증은 헤더
+  `Ocp-Apim-Subscription-Key` 와 쿼리 `Subscription-Key` 둘 다 된다. **키가 없으면 HTTP 200 에 본문이
+  `{"StatusCode": 401}` 로 온다** — 상태코드만 보고 "결과 0건" 으로 읽지 말 것.
+  확인: `python J-ESR/jesr_edinet_fetch.py --smoke`.
+- **회사코드 정본은 `J-ESR/jp_insurers.csv` 한 곳뿐.** 갱신은 `python J-ESR/edinet_codelist.py --apply`
+  (공식 EDINETコードリスト 11,389건 대조, 증거는 `J-ESR/edinet_code_match.json`). 스크립트에 코드를 하드코딩하지 말 것 —
+  종전 하드코딩 13개 중 **7개가 다른 회사 코드**였다(E04979=パーク24, E04506=九州電力 …).
+- **누가 EDINET 에 있나(81행 실측).** 有報 제출의무 17 · 등록만 있고 의무 없음 9(상호회사 5 + 第一生命保険·大同生命·
+  太陽生命·FWD生命) · **미등록 51**. 즉 EDINET 으로 ESR 을 받을 수 있는 회사는 **최대 17사**이고 나머지는 영원히 안 온다
+  — 각사 디스클로저 PDF 가 1차 출처라는 판단(owner 2026-09-12)의 기계 근거다.
+- **FY2025 有報는 이미 다 나왔다.** 2026-06-11~06-30 에 14사 제출(전부 XBRL 있음). 인덱스는
+  `python J-ESR/jesr_edinet_fetch.py --scan --from 2026-06-01 --to 2026-07-31` → `J-ESR/raw/edinet/scan_*.json`.
+- **XBRL 태그에는 ESR 이 없다(FY2024 probe 결론 유지). 본문 iXBRL htm 에는 서술로 있다.**
+  `python J-ESR/edinet_esr_probe.py` 가 有報 15건 전부에서 ESR 문장을 찾았고 5사는 수치까지 확정된다
+  (東京海上HD 268% · T&D 222% · SOMPO 270% · ライフネット 333% · かんぽ 181%). 산출 `J-ESR/edinet_esr_probe.json`.
+- **용도 두 가지.** ① 화면 수치 교차검증(감사받은 문서라 2차보도보다 강하다) ② 회사 IR PDF 가 사라졌을 때의 증거.
+  단 **EDINET 뷰어 딥링크는 사용자용 링크로 쓸 수 없다** — 세션 기반이라 `WEEK0040.html?docId=…` 는 "Document Moved" 로
+  튕긴다(2026-09-13 확인). 화면 `source_url` 은 회사 경로로 두고, 교차검증한 docID 는 census `notes` 에 적는다.
 
 ## 5. 이력 포인터
 

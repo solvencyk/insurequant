@@ -1,0 +1,1041 @@
+{
+  "generated_at": "2026-09-13",
+  "codelist_rows": 11389,
+  "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip",
+  "summary": {
+    "insurers": 81,
+    "matched": 26,
+    "yuho_obligated": 17,
+    "registered_but_not_obligated": 9,
+    "unmatched": 55,
+    "recorded_code_errors": 7
+  },
+  "rows": [
+    {
+      "company_jp": "東京海上ホールディングス",
+      "company_en": "Tokio Marine Holdings",
+      "category": "HD上場",
+      "recorded_code": "E05026",
+      "match_method": "ticker",
+      "matched": {
+        "edinet_code": "E03847",
+        "name": "東京海上ホールディングス株式会社",
+        "industry": "保険業",
+        "ticker": "87660",
+        "listed": "上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false,
+      "recorded_code_belongs_to": "코드리스트에 없음"
+    },
+    {
+      "company_jp": "東京海上日動火災保険",
+      "company_en": "Tokio Marine & Nichido Fire",
+      "category": "損保子会社",
+      "recorded_code": "E03823",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03823",
+        "name": "東京海上日動火災保険株式会社",
+        "industry": "保険業",
+        "ticker": null,
+        "listed": "非上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": true
+    },
+    {
+      "company_jp": "日新火災海上保険",
+      "company_en": "Nisshin Fire & Marine",
+      "category": "子会社",
+      "recorded_code": "E03829",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "東京海上日動あんしん生命保険",
+      "company_en": "Tokio Marine & Nichido Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "MS&ADインシュアランスグループHD",
+      "company_en": "MS&AD Insurance Group Holdings",
+      "category": "HD上場",
+      "recorded_code": "E14905",
+      "match_method": "ticker",
+      "matched": {
+        "edinet_code": "E03854",
+        "name": "ＭＳ＆ＡＤインシュアランスグループホールディングス株式会社",
+        "industry": "保険業",
+        "ticker": "87250",
+        "listed": "上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false,
+      "recorded_code_belongs_to": "코드리스트에 없음"
+    },
+    {
+      "company_jp": "三井住友海上火災保険",
+      "company_en": "Mitsui Sumitomo Insurance",
+      "category": "子会社",
+      "recorded_code": "E03824",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03824",
+        "name": "三井住友海上火災保険株式会社",
+        "industry": "保険業",
+        "ticker": null,
+        "listed": "非上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": true
+    },
+    {
+      "company_jp": "あいおいニッセイ同和損害保険",
+      "company_en": "Aioi Nissay Dowa Insurance",
+      "category": "子会社上場",
+      "recorded_code": "E03833",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03833",
+        "name": "あいおいニッセイ同和損害保険株式会社",
+        "industry": "保険業",
+        "ticker": null,
+        "listed": "非上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": true
+    },
+    {
+      "company_jp": "三井住友海上あいおい生命保険",
+      "company_en": "MSA Life Insurance",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "三井住友海上プライマリー生命保険",
+      "company_en": "MS Primary Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "SOMPOホールディングス",
+      "company_en": "Sompo Holdings",
+      "category": "HD上場",
+      "recorded_code": "E04979",
+      "match_method": "ticker",
+      "matched": {
+        "edinet_code": "E23924",
+        "name": "ＳＯＭＰＯホールディングス株式会社",
+        "industry": "保険業",
+        "ticker": "86300",
+        "listed": "上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false,
+      "recorded_code_belongs_to": "パーク二四株式会社（定款上の商号　パーク２４株式会社）"
+    },
+    {
+      "company_jp": "損害保険ジャパン",
+      "company_en": "Sompo Japan Insurance",
+      "category": "子会社",
+      "recorded_code": "E03827",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03827",
+        "name": "損害保険ジャパン株式会社",
+        "industry": "保険業",
+        "ticker": null,
+        "listed": "非上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": true
+    },
+    {
+      "company_jp": "SOMPOひまわり生命保険",
+      "company_en": "Sompo Himawari Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "第一生命ホールディングス",
+      "company_en": "Dai-ichi Life Holdings",
+      "category": "HD上場",
+      "recorded_code": "E04506",
+      "match_method": "ticker",
+      "matched": {
+        "edinet_code": "E06141",
+        "name": "株式会社第一ライフグループ",
+        "industry": "保険業",
+        "ticker": "87500",
+        "listed": "上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false,
+      "recorded_code_belongs_to": "九州電力株式会社"
+    },
+    {
+      "company_jp": "第一生命保険",
+      "company_en": "Dai-ichi Life Insurance",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E32692",
+        "name": "第一生命保険株式会社",
+        "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+        "ticker": null,
+        "listed": "",
+        "yuho_obligated": false
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "第一ネオ生命保険",
+      "company_en": "Dai-ichi Frontier Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [
+        {
+          "edinet_code": "E32692",
+          "name": "第一生命保険株式会社",
+          "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+          "ticker": null,
+          "listed": "",
+          "yuho_obligated": false
+        }
+      ],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "第一フロンティア生命保険",
+      "company_en": "Dai-ichi Frontier Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "T&Dホールディングス",
+      "company_en": "T&D Holdings",
+      "category": "HD上場",
+      "recorded_code": "E06008",
+      "match_method": "ticker",
+      "matched": {
+        "edinet_code": "E03851",
+        "name": "株式会社Ｔ＆Ｄホールディングス",
+        "industry": "保険業",
+        "ticker": "87950",
+        "listed": "上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false,
+      "recorded_code_belongs_to": "코드리스트에 없음"
+    },
+    {
+      "company_jp": "大同生命保険",
+      "company_en": "Daido Life Insurance",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03846",
+        "name": "大同生命保険株式会社",
+        "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+        "ticker": null,
+        "listed": "",
+        "yuho_obligated": false
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "太陽生命保険",
+      "company_en": "Taiyo Life Insurance",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03848",
+        "name": "太陽生命保険株式会社",
+        "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+        "ticker": null,
+        "listed": "",
+        "yuho_obligated": false
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "T&Dフィナンシャル生命保険",
+      "company_en": "T&D Financial Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "ソニーフィナンシャルグループ",
+      "company_en": "Sony Financial Group",
+      "category": "HD上場",
+      "recorded_code": "E33424",
+      "match_method": "ticker",
+      "matched": {
+        "edinet_code": "E05714",
+        "name": "ソニーフィナンシャルグループ株式会社",
+        "industry": "保険業",
+        "ticker": "87290",
+        "listed": "上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false,
+      "recorded_code_belongs_to": "코드리스트에 없음"
+    },
+    {
+      "company_jp": "ソニー生命保険",
+      "company_en": "Sony Life Insurance",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "ソニー損害保険",
+      "company_en": "Sony Sompo Insurance",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "かんぽ生命保険",
+      "company_en": "Japan Post Insurance",
+      "category": "上場",
+      "recorded_code": "E04678",
+      "match_method": "ticker",
+      "matched": {
+        "edinet_code": "E31755",
+        "name": "株式会社かんぽ生命保険",
+        "industry": "保険業",
+        "ticker": "71810",
+        "listed": "上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false,
+      "recorded_code_belongs_to": "코드리스트에 없음"
+    },
+    {
+      "company_jp": "日本生命保険",
+      "company_en": "Nippon Life Insurance",
+      "category": "相互会社",
+      "recorded_code": "none",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E06125",
+        "name": "日本生命保険相互会社",
+        "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+        "ticker": null,
+        "listed": "",
+        "yuho_obligated": false
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "住友生命保険",
+      "company_en": "Sumitomo Life Insurance",
+      "category": "相互会社",
+      "recorded_code": "none",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E06134",
+        "name": "住友生命保険相互会社",
+        "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+        "ticker": null,
+        "listed": "",
+        "yuho_obligated": false
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "明治安田生命保険",
+      "company_en": "Meiji Yasuda Life Insurance",
+      "category": "相互会社",
+      "recorded_code": "none",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E06369",
+        "name": "明治安田生命保険相互会社",
+        "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+        "ticker": null,
+        "listed": "",
+        "yuho_obligated": false
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "富国生命保険",
+      "company_en": "Fukoku Life Insurance",
+      "category": "相互会社",
+      "recorded_code": "none",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E06327",
+        "name": "富国生命保険相互会社",
+        "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+        "ticker": null,
+        "listed": "",
+        "yuho_obligated": false
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "朝日生命保険",
+      "company_en": "Asahi Life Insurance",
+      "category": "相互会社",
+      "recorded_code": "none",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E06130",
+        "name": "朝日生命保険相互会社",
+        "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+        "ticker": null,
+        "listed": "",
+        "yuho_obligated": false
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "フコクしんらい生命保険",
+      "company_en": "Fukoku Shinrai Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "オリックス生命保険",
+      "company_en": "Orix Life Insurance",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "ライフネット生命保険",
+      "company_en": "LifeNet Life Insurance",
+      "category": "上場",
+      "recorded_code": "TBD",
+      "match_method": "ticker",
+      "matched": {
+        "edinet_code": "E26327",
+        "name": "ライフネット生命保険株式会社",
+        "industry": "保険業",
+        "ticker": "71570",
+        "listed": "上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "楽天生命保険",
+      "company_en": "Rakuten Life Insurance",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "SBI生命保険",
+      "company_en": "SBI Life Insurance",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "なないろ生命保険",
+      "company_en": "Nanairo Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "アフラック生命保険",
+      "company_en": "Aflac Life Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "メットライフ生命保険",
+      "company_en": "MetLife Insurance Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "プルデンシャル生命保険",
+      "company_en": "Prudential Life Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "ジブラルタ生命保険",
+      "company_en": "Gibraltar Life",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "PGF生命",
+      "company_en": "Prudential Gibraltar Financial Life",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "マニュライフ生命保険",
+      "company_en": "Manulife Life Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "チューリッヒ生命保険",
+      "company_en": "Zurich Life Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "アクサ生命保険",
+      "company_en": "AXA Life Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03845",
+        "name": "アクサ生命保険株式会社",
+        "industry": "保険業",
+        "ticker": null,
+        "listed": "非上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "カーディフ生命保険",
+      "company_en": "Cardiff Life",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "エヌエヌ生命保険",
+      "company_en": "NN Life Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "FWD生命保険",
+      "company_en": "FWD Life Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E34445",
+        "name": "ＦＷＤ生命保険株式会社",
+        "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+        "ticker": null,
+        "listed": "",
+        "yuho_obligated": false
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "クレディ・アグリコル生命保険",
+      "company_en": "Credit Agricole Life Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "SBIプリズム少額短期保険",
+      "company_en": "SBI Prism",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "みどり生命保険",
+      "company_en": "Midori Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "ニッセイ・ウェルス生命保険",
+      "company_en": "Nissay Wealth Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "はなさく生命保険",
+      "company_en": "Hanasaku Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "明治安田トラスト生命保険",
+      "company_en": "Meiji Yasuda Trust Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "大樹生命保険",
+      "company_en": "Taiju Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [
+        {
+          "edinet_code": "E03846",
+          "name": "大同生命保険株式会社",
+          "industry": "内国法人・組合（有価証券報告書等の提出義務者以外）",
+          "ticker": null,
+          "listed": "",
+          "yuho_obligated": false
+        }
+      ],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "メディケア生命保険",
+      "company_en": "Medicare Life",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "共栄火災海上保険",
+      "company_en": "Kyoei Fire & Marine",
+      "category": "独立",
+      "recorded_code": "E03850",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03850",
+        "name": "共栄火災海上保険株式会社",
+        "industry": "保険業",
+        "ticker": null,
+        "listed": "非上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": true
+    },
+    {
+      "company_jp": "あいおいニッセイ同和損害保険",
+      "company_en": "Aioi Nissay Dowa",
+      "category": "子会社",
+      "recorded_code": "E03833",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03833",
+        "name": "あいおいニッセイ同和損害保険株式会社",
+        "industry": "保険業",
+        "ticker": null,
+        "listed": "非上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": true
+    },
+    {
+      "company_jp": "アクサ損害保険",
+      "company_en": "AXA Non-Life Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "アニコム損害保険",
+      "company_en": "Anicom Insurance",
+      "category": "上場",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "AIG損害保険",
+      "company_en": "AIG Non-Life Japan",
+      "category": "外資子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "エイチ・エス損害保険",
+      "company_en": "HS Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "SBI損害保険",
+      "company_en": "SBI Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "au損害保険",
+      "company_en": "au Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "NTTドコモ損害保険",
+      "company_en": "NTT Docomo Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "キャピタル損害保険",
+      "company_en": "Capital Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "さくら損害保険",
+      "company_en": "Sakura Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "ジェイアイ傷害火災保険",
+      "company_en": "JI Accidental Fire",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "セコム損害保険",
+      "company_en": "SECOM Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "全管協れいわ損害保険",
+      "company_en": "Zenkankyou Reiwa",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "ソニー損害保険",
+      "company_en": "Sony Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "SOMPOダイレクト損害保険",
+      "company_en": "Sompo Direct",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "第一アイペット損害保険",
+      "company_en": "Dai-ichi iPet",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [
+        {
+          "edinet_code": "E33935",
+          "name": "アイペット損害保険株式会社",
+          "industry": "保険業",
+          "ticker": null,
+          "listed": "非上場",
+          "yuho_obligated": true
+        }
+      ],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "大同火災海上保険",
+      "company_en": "Daido Fire & Marine",
+      "category": "独立",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "東京海上ダイレクト損害保険",
+      "company_en": "Tokio Marine Direct",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "トーア再保険",
+      "company_en": "Toa Reinsurance",
+      "category": "独立",
+      "recorded_code": "TBD",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03842",
+        "name": "トーア再保険株式会社",
+        "industry": "保険業",
+        "ticker": null,
+        "listed": "非上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "日本地震再保険",
+      "company_en": "Japan Earthquake Reinsurance",
+      "category": "独立",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "三井ダイレクト損害保険",
+      "company_en": "Mitsui Direct",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "明治安田損害保険",
+      "company_en": "Meiji Yasuda Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "楽天損害保険",
+      "company_en": "Rakuten Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "name_exact",
+      "matched": {
+        "edinet_code": "E03835",
+        "name": "楽天損害保険株式会社",
+        "industry": "保険業",
+        "ticker": null,
+        "listed": "非上場",
+        "yuho_obligated": true
+      },
+      "candidates": [],
+      "agrees_with_record": false
+    },
+    {
+      "company_jp": "レスキュー損害保険",
+      "company_en": "Rescue Non-Life",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "ペット＆ファミリー損害保険",
+      "company_en": "Pet & Family",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    },
+    {
+      "company_jp": "ヤマップネイチャランス損害保険",
+      "company_en": "Yamap",
+      "category": "子会社",
+      "recorded_code": "TBD",
+      "match_method": "none",
+      "matched": null,
+      "candidates": [],
+      "agrees_with_record": null
+    }
+  ]
+}

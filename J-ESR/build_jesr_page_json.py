@@ -71,7 +71,9 @@ NEXT_UPDATE = "2026-10-31"
 BASIS_DEFAULT = "J-ICS"
 
 SECTOR_MAP = {"損保": "nonlife", "生保": "life", "再保険": "reinsurance"}
-PRELIM_KEYWORDS = ["속보", "잠정", "速報"]  # ticket 규칙: 속보/잠정/速報 류 표현
+PRELIM_KEYWORDS = ["속보", "잠정", "速報", "暫定", "監査未済"]  # ticket 규칙: 속보/잠정/速報 류 표현
+# 2026-09-13: 일본어 원문 표기(暫定値·監査未済)를 추가. 노트에 원문을 그대로 인용하면
+# 한국어 키워드만으로는 안 걸려 かんぽ生命(監査未済の暫定値)이 조용히 확정치로 표시됐다.
 
 
 def _read_csv(path: Path) -> list[dict]:
