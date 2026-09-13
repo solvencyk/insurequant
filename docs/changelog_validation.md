@@ -5,6 +5,15 @@
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
+## 2026-09-13 (후속) -- UH-18 배선 완료 · UH-19 신규·즉시 해소
+
+- 룰 4종을 `J-ESR/build_jesr_page_json.py::source_gate_check` 에 배선, `self_check` → `main()` exit 1 까지 **변이시험으로 실증**. 회귀 43케이스(`tests/test_jp_source_gate.py`).
+- 오프라인 유지: 네트워크 판정은 선행 단계가 증거 파일에 박제, 빌더는 박제를 읽는다. **dead 룰과 신선도 룰은 한 쌍** — 증거가 낡으면 dead 판정도 같이 낡는다.
+- 예외 등재처 신설(셀 단위 키, fail-closed, `expires_on` 자동 해제, 절차 룰 면제 불가). 현재 0건.
+- **UH-19**: "빌더를 안 돌리면 게이트도 안 돈다" 를 `tests/test_jp_deploy_matches_census.py` 가 막는다(빌더 재실행 후 커밋본과 전량 비교). 불변식 1번의 jp 판.
+- 두 테스트를 `scripts/prepush_check.py` offline 묶음에 등재 — 배선과 강제는 다른 말이라는 2026-08-21 교훈 적용. `prepush_check.py` 를 고쳤으므로 그 라운드는 전체 게이트를 돌렸다.
+- PM-2026-09-13 은 `open` 유지: `JP_ESR_NOT_IN_SOURCE` 미배선(선행조건 = 오탐억제 3종 실측 분포).
+
 ## 2026-09-13 -- jp 레인 false-green 3건: PM-2026-09-13 + UH-18(룰 4종 미배선)
 
 - 사고: jp 빌더 self-check RED=0 인데 화면 수치 2건이 2차보도·조정치, 출처 1건은 무관 문서. 상세 `docs/postmortems/PM-2026-09-13_jp_secondary_source_and_dead_url.md`.

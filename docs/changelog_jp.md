@@ -2,6 +2,20 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-13 (27) -- UH-18 출처 게이트 배선 + UH-19 신규·즉시 해소 + 산정기준 미확인 0
+
+- **배선(validation, Opus)**: `build_jesr_page_json.py::source_gate_check` 4종이 `self_check` 를 거쳐 exit 1 에 반영된다.
+  `JP_SOURCE_EXPIRING_HOST` / `JP_SOURCE_URL_DEAD`(증거 판독형) / `JP_SOURCE_EVIDENCE_STALE` / `JP_SOURCE_EVIDENCE_INCOMPLETE`.
+  회귀 43케이스(`tests/test_jp_source_gate.py`), 이빨 변이 5/5 발화(배선 끊기·만료호스트 집합 비우기·dead 분류 비우기·절차룰 면제 허용·예외 필수키 검사 제거).
+- **오프라인 유지 설계**: 네트워크 판정은 선행 단계가 `source_url_health.json` 에 박제 → 빌더는 그 박제를 읽는다. dead 룰은 신선도 룰이 살아 있어야만 이빨이 있다(한 쌍).
+- **오탐억제**: RED 로 읽는 분류는 `dead` 하나뿐. 254건 실측에서 "ok 아니면 RED" 는 48건 거짓 RED 였다. 6개 분류 전부 비-RED 회귀 케이스로 박음.
+- **예외 등재처** `J-ESR/jp_source_exceptions.json`(0건): 셀 단위 `(rule, company_jp, field)`, fail-closed(손상·필수키 누락·모르는 rule id·절차룰 면제 시도는 RED), `expires_on` 경과 시 자동 해제. 등재는 **owner 권한**.
+- **UH-19 신규·같은 날 해소**: jp 게이트가 빌더 실행 시에만 도는 구조라 census 만 고친 커밋(`62eed63`)이 검사를 통째로 비껴갔다.
+  `tests/test_jp_deploy_matches_census.py` 로 "배포 JSON = census 재빌드 결과(generated_at 제외)" 를 강제 — 불변식 1번의 jp 판.
+- **훅 배선**: 두 테스트를 `scripts/prepush_check.py` offline 묶음과 CLAUDE.md §5 jp 축소범위에 등재. `prepush_check.py` 를 고쳤으므로 이 라운드는 축소범위가 아니라 **전체 게이트**를 돌렸다.
+- **산정기준(jp-collector, Sonnet)**: ライフネット 333% = 규제 표준식(내부ESR 394% 별도 공시, 혼동 금지) · SOMPO 270% = 내부모델 99.5%VaR. `esr_basis` unconfirmed 0.
+- **SOMPO 목표레인지 정정**: 상한 250% 가 2025년도 통기결산부터 폐지되고 하한 200% 가 타깃 자본수준이 됐다. 종전 '200~270%' 기재는 오류(270 은 당기 ESR 값).
+
 ## 2026-09-13 (26) -- 병렬 3에이전트 라운드: 전수 원문 대조 · dead URL 전건 해소 · EDINET 잔여 확정 + PM-2026-09-13
 
 - **왜 이제서야 병렬인가**: 서브에이전트 정의(`.claude/agents/*.md`)가 `.gitignore` 의 `.claude/` 한 줄에 걸려 저장소 밖에만 있었다. CLAUDE.md §10 은 "stage 별 모델을 티켓 유형으로" 규정하는데

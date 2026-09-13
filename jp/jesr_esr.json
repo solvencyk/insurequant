@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T14:22:19Z",
+    "generated_at": "2026-09-13T14:56:39Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -90,7 +90,7 @@
       "category": "上場",
       "scope": "solo",
       "esr_pct": 333.0,
-      "basis": "unconfirmed",
+      "basis": "regulatory_standard",
       "as_of": "2026-03-31",
       "preliminary": true,
       "total_assets_bn_jpy": null,
@@ -98,7 +98,7 @@
       "doc_type": "決算短信〔IFRS〕(2026-05-13)",
       "doc_date": "2026-05-13",
       "source_url": "https://data.swcms.net/file/lifenet-corp/dam/jcr:e9412bb2-3fc0-45b2-9854-d619e11990bb/140120260513529356.pdf",
-      "notes": "외부감사 미완료 속보치(회사 명시, 확정치와 다를 수 있음). 상장 단독사",
+      "notes": "신기준(経済価値ベース) ソルベンシー・マージン比率 333%(決算短信 p5 + 有報 S100YC7R 본문 동일 문장, 外部監査 미완료 속보치). **같은 문서에 内部ESR 394%(전기 356%)가 별도 공시**되므로 혼동 금지 — 화면값은 규제 표준식 쪽이다. 신뢰수준 명시 없음. 목표레인지는 두 원문 어디에도 서술 없음. **caveat: 원문 서술이 連結(그룹) 기준인데 census scope 는 solo 로 기재돼 있다 — 다음 라운드에 확인**(2026-09-13 jp-collector)",
       "target_range": null
     },
     {
@@ -109,7 +109,7 @@
       "category": "HD上場",
       "scope": "group",
       "esr_pct": 270.0,
-      "basis": "unconfirmed",
+      "basis": "internal_model",
       "as_of": "2026-03-31",
       "preliminary": false,
       "total_assets_bn_jpy": null,
@@ -117,13 +117,13 @@
       "doc_type": "決算説明資料(2026-05-20, VaR99.5%기준)",
       "doc_date": "2026-05-20",
       "source_url": "https://www.sompo-hd.com/-/media/hd/files/doc/pdf/ir/2026/ir_20260520.pdf?la=ja-JP",
-      "notes": "jesr_sources_2026Q1.csv 기존치(270%) 재확인. PDF는 WebFetch로 1.9MB 정상 다운로드(접속 확인)되나 이미지 위주라 텍스트 자동추출은 실패 - 기존 수집 회차의 직접확인 기록을 유지",
+      "notes": "ESR 270%(決算説明資料 p14, 各주 「リスク量は内部モデルを用いて算出(99.5%VaR)」 직접 확인). 有報 S100YC6Z 도 「事業ポートフォリオに即した内部モデルを用いて独自にＥＳＲを計算」 명시 — 내부모델 기준이다. 규제 표준식 ESR 은 有報에 「100%以上 확보」 정성 서술만 있고 수치 비공개. **목표레인지 정정**: 2025년도 통기결산부터 レンジ上限(250%) 폐지, 하한 200% 를 타깃 자본수준으로 단일화 — 종전 census 의 '200~270%' 는 오류(270 은 현재 ESR 값이지 상한이 아니었다). 2026-09-13 pymupdf 텍스트추출 성공(종전 '이미지 위주 실패' 기록 해소)",
       "target_range": {
         "low_pct": 200,
-        "high_pct": 270,
-        "basis": "regulatory",
+        "high_pct": null,
+        "basis": "internal_model",
         "inherited_from": null,
-        "source_doc": "決算説明資料(2026-05-20) + WebSearch 인용(SOMPO 목표자본수준 ESR 200-270%), PDF는 이미지 위주라 텍스트 직접확인 실패",
+        "source_doc": "2025年度通期決算説明資料 p14(각주) — PDF 직접 열람",
         "source_url": "https://www.sompo-hd.com/-/media/hd/files/doc/pdf/ir/2026/ir_20260520.pdf?la=ja-JP",
         "as_of": "2026-03-31"
       }

@@ -1,5 +1,15 @@
 # TODO archive — jp 레인 (일본 ESR)
 
+**🟢 2026-09-13 (22) 회사별 상세 3페이지 분리(jesr 자본 / jgaap 회계 / disclosure 기타공시) + 所要資本 워터폴 폐지 + 貸借対照表 T자형 패널(orchestrator).**
+owner "한국처럼 자본·회계·기타공시로 나눠라, 워터폴은 분산효과만 보여주니 빼라, jgaap 에 IFRS17.html 식 T자 BS". 종전 `jp/jesr.html` 인라인 CSS/JS 를
+`jp/jp.css`·`jp/jesr_app.js`(공용, `<body data-page>` 분기·byId 가드·`?company=` 탭 동기화)로 빼고 `jgaap.html`(主要指標 4카드·損益 2블록·워터폴·収益性·
+種目別·基礎利益·準備金·**貸借対照表 T자**)·`disclosure.html`(再保険 의존도·その他) 신설, axes 라우팅 reserve→jgaap / reins→disclosure / smr→esr.
+`jp/index.html`·`terms.html` 헤더 3탭. T자 패널은 (21)의 `bs.tree` 를 IFRS17.html Panel 1 규칙(존 3개·[+]·負債:純資産 flex 비율·2기 비교표·資産=負債+純資産 배지)로 렌더,
+**10사 전부 표시**(같은 날 후속: 住友生命 7월 資料編 WebFetch 확보 p58 / 第一生命 owner 업로드 アニュアルレポート2026 분책 index_004 p23~24 / 明治安田損保 본편 p39~40 열 우선 표에 `col_major_3yr` 파서). Playwright 12케이스×2폭 pageerrors 0, `test_deploy_assets` 11 passed. 배포 NEW_FILES +4(폰 2회).
+**다음**: ① 第一生命 분책 index_004(業績に関する諸資料 86p, `others/daiichi_2026_index_004.pdf`)에 損益計算書·基礎利益·5개년 표가 있다 — profit/core_history 층도
+채울 수 있다(현재 not_acquired). ② 生保 日本·明治安田는 5월 연결 요약이라 当期末만 — 7월 본편 확보 시 単体 2개년으로 교체. ③ 準備金 표 `cat_reserve_fire` 라벨
+"火災 行 × 異常危険準備金 列" → builder `LABEL_JA_DISPLAY_OVERRIDES` 로 「異常危険準備金（火災）」. ④ 前期 出再保険手数料(20).
+
 **🟢 2026-09-13 (21) J-GAAP 貸借対照表 요약 층 `bs` 신설 — 상세 10사 중 7사 extracted, T자형 BS 패널용 tree 18행·checks 3종(jp).**
 티켓 `inbox/jp/20260913T1300Z__owner__JP_MULTI__jgaap_balance_sheet.md`(answered). `J-ESR/extract_bs.py`(신규, `extract_esr_template_samples.py` 헬퍼 재사용) →
 `extracted_bs_values.json` → builder `build_bs_block()`+`BS_LABELS`+self_check(id↔labels·합계 3행, checks False 는 WARN) → `jp/jesr_detail.json` 10사 전부 `bs` 블록,

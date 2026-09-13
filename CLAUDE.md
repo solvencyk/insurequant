@@ -47,7 +47,7 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 ④ 오프라인 테스트(골든 + `test_rule_coverage_manifest.py` + `test_identity_tautology.py`). `main` 처럼 `scripts/` 없는 slim 트리는 경고만.
 **"문서에 mandatory 라고 썼다" ≠ 강제.** 새 게이트는 `prepush_check.py` 에 호출을 넣었는지 그 자리에서 확인. `git push --no-verify` 를 썼으면 커밋에 남긴다.
 `test_rule_coverage_manifest.py` 는 룰↔항목 커버리지를 변이시험으로 대조한다 — 룰 추가·개명·삭제 시 매니페스트를 같이 고친다.
-**게이트 범위는 변경 범위에 맞춘다(owner 2026-09-12).** 번들 범위 diff 가 `jp/`·`J-ESR/`·docs·inbox·TODO·배포 스크립트뿐이면 한국 마스터 게이트(8분)를 돌리지 않고 `tests/test_deploy_assets.py` + `check_inbox_hygiene.py` 만 돌린다. 루트 마스터 JSON·`scripts/*.py`(배포 스크립트 제외)·루트 HTML 이 하나라도 바뀌면 전체 게이트.
+**게이트 범위는 변경 범위에 맞춘다(owner 2026-09-12).** 번들 범위 diff 가 `jp/`·`J-ESR/`·docs·inbox·TODO·배포 스크립트뿐이면 한국 마스터 게이트(8분)를 돌리지 않고 `tests/test_deploy_assets.py` + **`tests/test_jp_source_gate.py` + `tests/test_jp_deploy_matches_census.py`**(2026-09-13 신설, jp 출처 게이트·불변식 1번) + `check_inbox_hygiene.py` 만 돌린다. 루트 마스터 JSON·`scripts/*.py`(배포 스크립트 제외)·루트 HTML 이 하나라도 바뀌면 전체 게이트.
 
 ## 6. K-ICS validation gate (필수)
 
