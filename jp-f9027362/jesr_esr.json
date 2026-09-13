@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T00:35:54Z",
+    "generated_at": "2026-09-13T07:36:23Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -37,6 +37,10 @@
           "company_en": "Sompo Japan Insurance"
         }
       ]
+    },
+    "target_ranges": {
+      "as_of": "2026-09-13",
+      "attached": 4
     }
   },
   "records": [
@@ -56,7 +60,8 @@
       "doc_type": "ディスクロージャー誌(au損保の現状2026, 업적데이터편, 2026-07-30 발행)",
       "doc_date": "2026-07-30",
       "source_url": "https://www.au-sonpo.co.jp/corporate/pdf/disclo_260730_4of5.pdf",
-      "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比率. PDF p21-22 직접 열람 확인: 적격자본(A)=9,278백만엔, 소요자본(B)=1,171백만엔, 비율(A/B)=791.7%. 라벨은 'ESR'이 아닌 신기준 'ソルベンシー・マージン比率'이나 동일한 경제가치기반 규제비율."
+      "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比率. PDF p21-22 직접 열람 확인: 적격자본(A)=9,278백만엔, 소요자본(B)=1,171백만엔, 비율(A/B)=791.7%. 라벨은 'ESR'이 아닌 신기준 'ソルベンシー・マージン比率'이나 동일한 경제가치기반 규제비율.",
+      "target_range": null
     },
     {
       "company_jp": "明治安田損害保険",
@@ -74,7 +79,8 @@
       "doc_type": "ディスクロージャー誌【別冊】業績データ(明治安田損害保険の現状2026, 2026-09-04 게시)",
       "doc_date": "2026-09-04",
       "source_url": "https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260904_performance_data.pdf",
-      "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比率. PDF p2 직접 열람 확인: 적격자본(A)=40,290백만엔, 소요자본(B)=5,420백만엔, 비율(A/B)=743.2%. 경제가치기준 BS·감응도분석·산출체제까지 포함된 완전한 신기준 공시(2026-09-04 동일자 정정 1건 있음, 수치 자체는 불변)."
+      "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比率. PDF p2 직접 열람 확인: 적격자본(A)=40,290백만엔, 소요자본(B)=5,420백만엔, 비율(A/B)=743.2%. 경제가치기준 BS·감응도분석·산출체제까지 포함된 완전한 신기준 공시(2026-09-04 동일자 정정 1건 있음, 수치 자체는 불변).",
+      "target_range": null
     },
     {
       "company_jp": "ライフネット生命保険",
@@ -92,7 +98,8 @@
       "doc_type": "決算短信〔IFRS〕(2026-05-13)",
       "doc_date": "2026-05-13",
       "source_url": "https://data.swcms.net/file/lifenet-corp/dam/jcr:e9412bb2-3fc0-45b2-9854-d619e11990bb/140120260513529356.pdf",
-      "notes": "외부감사 미완료 속보치(회사 명시, 확정치와 다를 수 있음). 상장 단독사 (preliminary 판정: notes 내 '속보' 검출)"
+      "notes": "외부감사 미완료 속보치(회사 명시, 확정치와 다를 수 있음). 상장 단독사 (preliminary 판정: notes 내 '속보' 검출)",
+      "target_range": null
     },
     {
       "company_jp": "SOMPOホールディングス",
@@ -110,7 +117,16 @@
       "doc_type": "決算説明資料(2026-05-20, VaR99.5%기준)",
       "doc_date": "2026-05-20",
       "source_url": "https://www.sompo-hd.com/-/media/hd/files/doc/pdf/ir/2026/ir_20260520.pdf?la=ja-JP",
-      "notes": "jesr_sources_2026Q1.csv 기존치(270%) 재확인. PDF는 WebFetch로 1.9MB 정상 다운로드(접속 확인)되나 이미지 위주라 텍스트 자동추출은 실패 - 기존 수집 회차의 직접확인 기록을 유지"
+      "notes": "jesr_sources_2026Q1.csv 기존치(270%) 재확인. PDF는 WebFetch로 1.9MB 정상 다운로드(접속 확인)되나 이미지 위주라 텍스트 자동추출은 실패 - 기존 수집 회차의 직접확인 기록을 유지",
+      "target_range": {
+        "low_pct": 200,
+        "high_pct": 270,
+        "basis": "regulatory",
+        "inherited_from": null,
+        "source_doc": "決算説明資料(2026-05-20) + WebSearch 인용(SOMPO 목표자본수준 ESR 200-270%), PDF는 이미지 위주라 텍스트 직접확인 실패",
+        "source_url": "https://www.sompo-hd.com/-/media/hd/files/doc/pdf/ir/2026/ir_20260520.pdf?la=ja-JP",
+        "as_of": "2026-03-31"
+      }
     },
     {
       "company_jp": "朝日生命保険",
@@ -128,7 +144,8 @@
       "doc_type": "2025年度決算説明資料(2026-05-26)",
       "doc_date": "2026-05-26",
       "source_url": "https://www.asahi-life.co.jp/company/intro/kessan/pdf/20260526_1.pdf",
-      "notes": "그룹(내부관리기준) 258.9%. 경제가치기준 지급여력비율(규제기준,2026.3말) 별도 약242%로 추산 병기됨(속보치). jesr_sources_2026Q1.csv에는 미수록 상태였음 - 이번에 신규 확보 (preliminary 판정: notes 내 '속보' 검출)"
+      "notes": "그룹(내부관리기준) 258.9%. 경제가치기준 지급여력비율(규제기준,2026.3말) 별도 약242%로 추산 병기됨(속보치). jesr_sources_2026Q1.csv에는 미수록 상태였음 - 이번에 신규 확보 (preliminary 판정: notes 내 '속보' 검출)",
+      "target_range": null
     },
     {
       "company_jp": "富国生命保険",
@@ -146,7 +163,8 @@
       "doc_type": "2025年度決算(案)説明資料(2026-05-26)",
       "doc_date": "2026-05-26",
       "source_url": "https://www.fukoku-life.co.jp/about/ir/news/upload/20260525_4.pdf",
-      "notes": "연결ESR(내부모델)=244.7%, 단체ESR(내부모델)=248.5%(전년대비+6.9pt), 표준모델(규제속보치)=210%. esr_pct는 단체·내부모델 기준. jesr_sources_2026Q1.csv 舊치(260.9%,2025-09-30 H1)에서 갱신 (preliminary 판정: notes 내 '속보' 검출)"
+      "notes": "연결ESR(내부모델)=244.7%, 단체ESR(내부모델)=248.5%(전년대비+6.9pt), 표준모델(규제속보치)=210%. esr_pct는 단체·내부모델 기준. jesr_sources_2026Q1.csv 舊치(260.9%,2025-09-30 H1)에서 갱신 (preliminary 판정: notes 내 '속보' 검출)",
+      "target_range": null
     },
     {
       "company_jp": "東京海上ホールディングス",
@@ -164,7 +182,16 @@
       "doc_type": "決算短信/決算説明資料(2026-05-20)",
       "doc_date": "2026-05-20",
       "source_url": "https://www.tokiomarinehd.com/ir/event/presentation/2025/gi58a8000000246z-att/4Q_FY2025_Summary_Report_j.pdf",
-      "notes": "jesr_sources_2026Q1.csv 기존 posted(238%,2026-03-31) 재확인 시도. 해당 PDF 직접 URL 재접속 시 404(경로 변경/URL rot 추정, IR 이벤트 디렉토리는 생존 확인). MS&AD 등 동종사 결산비교 보도에서도 동일 수치 반복 인용되어 corroborate. 정확 URL 재탐색 권고"
+      "notes": "jesr_sources_2026Q1.csv 기존 posted(238%,2026-03-31) 재확인 시도. 해당 PDF 직접 URL 재접속 시 404(경로 변경/URL rot 추정, IR 이벤트 디렉토리는 생존 확인). MS&AD 등 동종사 결산비교 보도에서도 동일 수치 반복 인용되어 corroborate. 정확 URL 재탐색 권고",
+      "target_range": {
+        "low_pct": 190,
+        "high_pct": null,
+        "basis": "regulatory",
+        "inherited_from": null,
+        "source_doc": "東京海上グループ中期経営計画2026(2024-05-20) + 2025-11-26 경영전략 설명자료(신목표 190%+, WebSearch 인용 교차확인, PDF 원문 텍스트추출 실패로 직접열람 미확인)",
+        "source_url": "https://www.tokiomarinehd.com/newsroom/release/2024/uh7ekg00000037gj-att/240520_MTP2026_j.pdf",
+        "as_of": "2026-03-31"
+      }
     },
     {
       "company_jp": "T&Dホールディングス",
@@ -182,7 +209,16 @@
       "doc_type": "決算短信(2026-05-15)",
       "doc_date": "2026-05-15",
       "source_url": "https://www.release.tdnet.info/inbs/140120260515536232.pdf",
-      "notes": "jesr_sources_2026Q1.csv에는 '확인 안됨'으로 기록돼 있었으나 이번 회차에 확보. 복수 2차보도(biggo파이낸스 등)에서 '적정수준180-225%내 222%' 동일 인용, 원문 결산단신 링크 확보"
+      "notes": "jesr_sources_2026Q1.csv에는 '확인 안됨'으로 기록돼 있었으나 이번 회차에 확보. 복수 2차보도(biggo파이낸스 등)에서 '적정수준180-225%내 222%' 동일 인용, 원문 결산단신 링크 확보",
+      "target_range": {
+        "low_pct": 133,
+        "high_pct": 225,
+        "basis": "regulatory",
+        "inherited_from": null,
+        "source_doc": "ERM 페이지(td-holdings.co.jp/ir/ir-policy/erm.php), WebFetch 직접열람 확인",
+        "source_url": "https://www.td-holdings.co.jp/ir/ir-policy/erm.php",
+        "as_of": "2026-03-31"
+      }
     },
     {
       "company_jp": "かんぽ生命保険",
@@ -200,7 +236,8 @@
       "doc_type": "決算・経営方針説明会資料(2026-05-29)",
       "doc_date": "2026-05-29",
       "source_url": "https://pdf.irpocket.com/C7181/fcDL/shwf/b6Hu.pdf",
-      "notes": "감사미완료 잠정치('特定条件を除いた場合のESRは220%と適正水準の上限水準'). 정식(감사완료) 수치는 추후 별도 공시 예정이나 FY2025 수치 자체는 존재하여 posted로 기록. jesr_sources_2026Q1.csv에는 당시 '수치 미확인'으로 기록돼 있었음 - 이번에 확보 (preliminary 판정: notes 내 '잠정' 검출)"
+      "notes": "감사미완료 잠정치('特定条件を除いた場合のESRは220%と適正水準の上限水準'). 정식(감사완료) 수치는 추후 별도 공시 예정이나 FY2025 수치 자체는 존재하여 posted로 기록. jesr_sources_2026Q1.csv에는 당시 '수치 미확인'으로 기록돼 있었음 - 이번에 확보 (preliminary 판정: notes 내 '잠정' 검출)",
+      "target_range": null
     },
     {
       "company_jp": "MS&ADインシュアランスグループHD",
@@ -218,7 +255,16 @@
       "doc_type": "決算短信/決算説明(2026年5月)",
       "doc_date": "2026-05",
       "source_url": "https://www.ms-ad-hd.com/ja/news/irnews/auto_20260213561398/pdfFile.pdf",
-      "notes": "jesr_sources_2026Q1.csv 기존치(214%,2026-03-31) 재확인. 2026-05-20 결산설명자료 요약보도(logmi finance)에서도 동일 수치 재인용(전기대비 -12pt)"
+      "notes": "jesr_sources_2026Q1.csv 기존치(214%,2026-03-31) 재확인. 2026-05-20 결산설명자료 요약보도(logmi finance)에서도 동일 수치 재인용(전기대비 -12pt)",
+      "target_range": {
+        "low_pct": 180,
+        "high_pct": 250,
+        "basis": "regulatory",
+        "inherited_from": null,
+        "source_doc": "資本政策と株主還元方針(IR 자본정책 페이지, WebFetch 403으로 직접열람 실패, WebSearch 인용 교차확인)",
+        "source_url": "https://www.ms-ad-hd.com/ja/ir/Management_policy/capital.html",
+        "as_of": "2026-03-31"
+      }
     },
     {
       "company_jp": "明治安田生命保険",
@@ -236,7 +282,8 @@
       "doc_type": "決算説明資料(2026年5月)",
       "doc_date": "2026-05",
       "source_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/",
-      "notes": "그룹ESR 208%(2026-05 공표). jesr_sources_2026Q1.csv 舊치(216%,2025-03-31, FY2024)에서 갱신 - 신규제 재계산 가능성 있어 직접비교 주의"
+      "notes": "그룹ESR 208%(2026-05 공표). jesr_sources_2026Q1.csv 舊치(216%,2025-03-31, FY2024)에서 갱신 - 신규제 재계산 가능성 있어 직접비교 주의",
+      "target_range": null
     },
     {
       "company_jp": "住友生命保険",
@@ -254,7 +301,8 @@
       "doc_type": "2025年度決算(案)説明用資料(2026-05-26)",
       "doc_date": "2026-05-26",
       "source_url": "https://www.sumitomolife.co.jp/about/pdf/company/ir/settlement/260526.pdf",
-      "notes": "연결ESR 197%(속보치, 전기대비+19pt). 단체 수치는 미확인. PDF 직접 텍스트추출은 실패(이미지형 추정), 검색결과 인용으로 확인. jesr_sources_2026Q1.csv 舊치(184%,2025-09-30 H1)에서 갱신 (preliminary 판정: notes 내 '속보' 검출)"
+      "notes": "연결ESR 197%(속보치, 전기대비+19pt). 단체 수치는 미확인. PDF 직접 텍스트추출은 실패(이미지형 추정), 검색결과 인용으로 확인. jesr_sources_2026Q1.csv 舊치(184%,2025-09-30 H1)에서 갱신 (preliminary 판정: notes 내 '속보' 검출)",
+      "target_range": null
     },
     {
       "company_jp": "日本生命保険",
@@ -272,7 +320,8 @@
       "doc_type": "決算概要(2026年5月)",
       "doc_date": "2026-05",
       "source_url": "https://www.nissay.co.jp/kaisha/annai/kenzen/",
-      "notes": "연결(그룹)195%/단체204% 양쪽 확인됨(2026-05 공표, 규제ESR). esr_pct는 연결 기준 기록, 단체 204%는 별도 참고. jesr_sources_2026Q1.csv 舊치(224%,2025-03-31, FY2024)에서 갱신 - 신규제 재계산으로 직접비교 주의"
+      "notes": "연결(그룹)195%/단체204% 양쪽 확인됨(2026-05 공표, 규제ESR). esr_pct는 연결 기준 기록, 단체 204%는 별도 참고. jesr_sources_2026Q1.csv 舊치(224%,2025-03-31, FY2024)에서 갱신 - 신규제 재계산으로 직접비교 주의",
+      "target_range": null
     },
     {
       "company_jp": "ソニーフィナンシャルグループ",
@@ -290,7 +339,8 @@
       "doc_type": "決算説明資料(2026-05-14)",
       "doc_date": "2026-05-14",
       "source_url": "https://www.sonyfg.co.jp/ja/financial_info/results/sfgi_fy2025_4q_01.pdf",
-      "notes": "jesr_sources_2026Q1.csv 기존치(177%,2026-03-31) 재확인 시도 - WebFetch 403이나, 자회사 소니생명 단체치(162%)가 동일 자료군(260514 개시)에서 별도 확인되어 그룹치 신뢰 유지"
+      "notes": "jesr_sources_2026Q1.csv 기존치(177%,2026-03-31) 재확인 시도 - WebFetch 403이나, 자회사 소니생명 단체치(162%)가 동일 자료군(260514 개시)에서 별도 확인되어 그룹치 신뢰 유지",
+      "target_range": null
     },
     {
       "company_jp": "ソニー生命保険",
@@ -308,7 +358,8 @@
       "doc_type": "News Release - 経済価値資本・ESR(2026-05-14)",
       "doc_date": "2026-05-14",
       "source_url": "https://www.sonylife.co.jp/company/news/2026/files/260514_ev-japanese.pdf",
-      "notes": "전기(2025-03-31) 168%에서 하락. PDF 직접 텍스트추출은 실패했으나 검색결과에 원문 수치 인용 확인(162%, 전년168%)"
+      "notes": "전기(2025-03-31) 168%에서 하락. PDF 직접 텍스트추출은 실패했으나 검색결과에 원문 수치 인용 확인(162%, 전년168%)",
+      "target_range": null
     }
   ]
 }
