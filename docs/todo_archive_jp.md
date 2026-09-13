@@ -1,5 +1,29 @@
 # TODO archive — jp 레인 (일본 ESR)
 
+**🟢 2026-09-13 (19) 손보 5사 종목별 층 `by_line` + 생보 5사 기초이익·三利源 `core_history` → `jp/jesr_detail.json` 10사(jp).**
+티켓 `inbox/jp/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`(answered). owner "손해율·사업비율·합산율이 종목별로 찢어져 있지 않나? 생보는
+이차·사차·비차 마진 통계가 있을 것" → ① 「保険引受の状況」 種目別 3표(正味収入保険料/正味支払保険金/比率)에서 火災·海上·傷害·自動車·自賠責·その他·合計 ×
+{prev,cur} 5항목(`lob_*`), 5사 gate 실패 0(B01 Σ종목=合計 는 6개 종목 각각 百万円 절사라 ±1 불가 → tol 6, 실측 차 0~3 / B02 合計=profit 층 30/30 / B03 종목 合算率
+항등식 전부 통과 / B04 정보성: TMNF その他 FY2025 損害率이 두 표에서 52.9 vs 55.0 — 원문 차이, 比率표 정본). au 는 자동차 0·傷害 78.6%(티켓 가정과 다름), 自賠責은
+4사 合算率 118~140%. ② 생보: curl 전 도메인 차단 → WebFetch 바이너리 저장으로 住友生命·日本生命·明治安田生命 결산설명자료 확보(`others/`), 第一生命 404 2회
+미확보(행 보존). **三利源 3분해 공시 0사** — 利差(順ざや)+保険関係(危険差+費差) 2분해가 표준, 住友生命만 「うち危険差」로 費差 파생 가능(L01 基礎利益≈Σ ±2 통과),
+5개년은 住友 그룹 기초이익만, 明治安田는 基礎利益 대신 業務利益. 5월 설명자료 기준이라 7월 본편에 三利源·5개년 표 가능성 남음(10월 재census). ③
+`extract_life_core_history.py`(신규, fitz words 위치 파싱)·builder `build_by_line_block`/`build_core_history_block`·생보 `esr_status:"life_core_only"`·self_check 확장,
+`_meta.coverage` detail_total 10 / esr_posted 2 / esr_not_yet 3 / life_core_only 5 / by_line_total 5, SELF-CHECK OK. 문서 §11·§9-9. 45분 규칙 10분 초과(생보 URL 탐색).
+`jp/*.html`·커밋·서브에이전트 없음. 다음 = 오케스트레이터 화면(`by_line.labels_ja`·`_meta.labels.hist_*`).
+
+**🟢 2026-09-13 (18) 대형 손보 3사(東京海上日動·三井住友海上·損保ジャパン) ESR 외 전 층 추출 → `jp/jesr_detail.json` 5사(jp).**
+티켓 `inbox/jp/20260913T0330Z__owner__JP_MULTI__big3_partial_detail.md`(answered). owner "손해율 있다면서 왜 사이트엔 2사만" → (17)에서 확보한 본편 3 PDF 에서
+profit(損益計算書·保険引受利益 明細·損害率/事業費率/合算率·재보험 다리 6항목)·history 5개년·article_axes(異常危険準備金/普通責任準備金·出再先数/上位5社/格付)·회계기준을 추출,
+`extract_esr_template_samples.py` 에 3사 배선(id `tokiomarine_nichido`/`mitsui_sumitomo`/`sompo_japan`). **실측: 3사 profit 31/31·history 10/10, 게이트 실패 0, exit 0**;
+`build_jesr_detail_json.py` 가 ESR not_yet 회사를 허용(headline ESR null·트리 빈 리스트·self-check 분기), `_meta.coverage` = detail_total 5 / esr_posted 2 / esr_not_yet 3,
+SELF-CHECK OK. 기존 2사 블록·`_meta.labels` 무변경(추가 키 `esr_status`/`esr_placeholder` 뿐, 스크립트 diff 확인). FY2025 合算率 TMNF 93.0 / MSI 93.2 / Sompo 97.0,
+当期純利益 731,125 / 459,965 / 295,649 百万円, 出재 비중 17.0 / 20.6 / 16.4%. 발견 5건: ① TMNF·Sompo 元受 표는 含む収入積立保険料 뿐 → P&L 収入積立保険料 를
+adjustments 로 뽑아 P14 차감(추정 없음) ② P07 에 `−その他収支` 누락(TMNF −3,152 에서 드러남, au/Meiji 불변) ③ 본편 뒷부분 그룹 연결 IFRS17 때문에 単体 회계기준이
+ifrs 로 오판 → IFRS 검색을 basis 페이지로 한정 ④ Sompo 폰트 함정은 숫자만이 아니라 한자·가나 전부 글리프 id — MS Gothic 글리프 순서와 일치해 로컬 msgothic.ttc
+cmap 으로 복원(`GidDoc`) ⑤ MSI 5개년표는 p31 에 있음(직전 티켓 "없음" 오판, 損害率 2자리 소수·SMR 新旧 쌍 구조). 커밋 e67bc36 이 손으로 고친 `_meta.labels`
+4개는 builder `LABEL_JA_DISPLAY_OVERRIDES` 로 고정. 문서 §9-8·§10-8. `jp/*.html`·커밋·서브에이전트 없음. 다음 = 오케스트레이터가 `jp/jesr.html` 을 5사·not_yet 분기로.
+
 **🟢 2026-09-13 (17) 손보 6사 표본 실측(정본 3사 확보) — 손해율/사업비율/합산율 5개년표는 owner 가정대로 이미 공시, ESR 만 표본 전원 미공표(jp).**
 티켓 `inbox/jp/20260913T0230Z__owner__JP_MULTI__nonlife_ratio_availability.md`(answered). owner "손해율 5개년이 다른 손보사에도 다
 있는지" → 대형4(東京海上日動·損保ジャパン·三井住友海上·あいおいニッセイ同和)+중형2(共栄火災·日新火災) 표본 중 세션 중반 curl 이 전

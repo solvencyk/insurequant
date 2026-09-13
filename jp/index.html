@@ -77,7 +77,9 @@
     .li-row:active{background:var(--card)}
     .li-name{flex:0 0 36%;display:flex;align-items:center;min-width:0;font-size:13px;font-weight:600}
     .li-nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-    .li-bar-track{flex:1 1 auto;height:14px;background:var(--border);border-radius:7px;overflow:hidden}
+    .li-bar-track{flex:1 1 auto;height:14px;background:var(--border);border-radius:7px;overflow:hidden;position:relative}
+    .li-band{position:absolute;top:0;bottom:0;background:rgba(127,127,127,.28);border-left:1px solid var(--muted);border-right:1px solid var(--muted);pointer-events:auto}
+    .li-bar{position:relative}
     .li-bar{height:100%;border-radius:7px;min-width:2px}
     .li-val{flex:0 0 54px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
     .li-more-btn{display:block;width:100%;margin-top:4px;padding:10px;background:var(--card);border:var(--bd);border-radius:var(--r-md);color:var(--text);font-size:13px;font-family:var(--font-sans);cursor:pointer;text-align:center;font-weight:500;transition:background .15s}
@@ -89,6 +91,7 @@
     .li-name .li-nm{flex:1 1 auto;min-width:5.5em}
     @media (max-width:640px){
       .li-name{flex-basis:44%}
+      .li-chip-range{display:none}
       .li-chip-kids{padding:0 3px}
       .li-chip-kids::before{content:'▸'}
       .li-chip-kids{font-size:0}
@@ -182,11 +185,15 @@
       <button type="button" class="li-more-btn" id="moreBtnNonlife" hidden aria-expanded="false"></button>
 
       <div class="chart-legend" id="chartLegend">
-        <span><span class="sw" style="background:hsl(130,66%,24%)"></span>監督基準100%以上ほど濃い緑</span>
-        <span><span class="sw" style="background:hsl(0,66%,24%)"></span>監督基準100%未満ほど濃い赤</span>
+        <span><span class="sw" style="background:hsl(130,70%,26%)"></span>各社の目標レンジ上限を超過（高いほど濃い緑）</span>
+        <span><span class="sw" style="background:hsl(40,78%,54%)"></span>100%以上・目標レンジ以下（100%に近いほど赤み）</span>
+        <span><span class="sw" style="background:hsl(0,75%,30%)"></span>監督基準100%未満（低いほど濃い赤）</span>
+        <span><span class="sw" style="background:rgba(127,127,127,.35);border:1px solid var(--muted)"></span>目標レンジ帯（棒の目盛）</span>
+        <span><span class="sw" style="background:hsl(130,40%,50%)"></span>目標レンジ非公表社は100%基準の参考色</span>
         <span><span class="jp-badge">速報</span>&nbsp;速報値</span>
       </div>
-      <p class="chart-caveat">※ 算定基準(標準式・内部モデル・VaR水準等)は各社で異なる場合があり、単純比較にはご注意ください。詳細は各社開示資料をご確認ください。</p>
+      <p class="chart-caveat">※ 算定基準(標準式・内部モデル・VaR水準等)は各社で異なる場合があり、単純比較にはご注意ください。詳細は各社開示資料をご確認ください。<br/>
+      ※ 目標レンジは各社の資本政策(中期経営計画・決算説明資料等)で公表された値(2026-09-13時点)。単体会社は親会社グループの目標を適用(行のツールチップに出所)。相互会社等は目標レンジ非公表。</p>
     </section>
 
   </main>
@@ -225,6 +232,29 @@
     function colorForRatio(r, ratioType){
       var c = _ratioHsl(r, ratioType);
       return 'hsl(' + c.h + ', ' + c.s + '%, ' + c.l + '%)';
+    }
+    // owner 2026-09-13: 색 기준 = 각사 ESR 목標レンジ(자본정책, jesr_esr.json record.target_range).
+    //   ① 100% 未満 → 赤(낮을수록 진하게)  ② 100% 以上 ~ レンジ上限 以下 → 黄(100% 에 가까울수록 붉게)
+    //   ③ レンジ上限 超過 → 緑(높을수록 진하게; 上限이 없는 「○%以上」형 목표는 下限 초과를 녹색으로)
+    //   目標レンジ 미공표 회사는 종전 100% 기준 스케일(colorForRatio) 그대로 — 툴팁·범례로 구분.
+    function colorForRange(r, tr){
+      if(typeof r !== 'number' || !isFinite(r)) return colorForRatio(r, 'esr');
+      if(r < 100){
+        var i = Math.min((100 - r) / 100, 1);
+        return 'hsl(0, ' + (45 + 30 * i) + '%, ' + (60 - 30 * i) + '%)';
+      }
+      if(!tr || tr.low_pct == null) return colorForRatio(r, 'esr');
+      var top = (tr.high_pct != null) ? tr.high_pct : tr.low_pct;
+      if(r > top){
+        var g = Math.min((r - top) / Math.max(top * 0.5, 1), 1);          // 上限의 +50% 에서 최진
+        return 'hsl(130, ' + (40 + 30 * g) + '%, ' + (52 - 26 * g) + '%)';
+      }
+      var t = Math.min(Math.max((r - 100) / Math.max(top - 100, 1), 0), 1);  // 100%→0(赤橙), 上限→1(黄)
+      return 'hsl(' + (12 + 40 * t) + ', 78%, ' + (50 + 6 * t) + '%)';
+    }
+    function rangeText(tr){
+      if(!tr || tr.low_pct == null) return null;
+      return (tr.high_pct != null) ? (tr.low_pct + '～' + tr.high_pct + '%') : (tr.low_pct + '%以上');
     }
 
     function esc(s){
@@ -454,11 +484,28 @@
 
         var track = document.createElement('div');
         track.className = 'li-bar-track';
+        var tr = r.target_range || null, rt = rangeText(tr);
+        if(rt){
+          // 목표 레인지 밴드(트랙 위 반투명) — 막대와 같은 스케일(maxV)
+          var band = document.createElement('div');
+          band.className = 'li-band';
+          var lo = Math.min(tr.low_pct / maxV, 1) * 100, hi = Math.min(((tr.high_pct != null ? tr.high_pct : maxV) / maxV), 1) * 100;
+          band.style.left = lo + '%'; band.style.width = Math.max(1, hi - lo) + '%';
+          band.title = '目標レンジ ' + rt;
+          track.appendChild(band);
+        }
         var bar = document.createElement('div');
         bar.className = 'li-bar';
         bar.style.width = Math.max(2, ((r.esr_pct||0) / maxV) * 100) + '%';
-        bar.style.background = colorForRatio(r.esr_pct, 'esr');
+        bar.style.background = colorForRange(r.esr_pct, tr);
         track.appendChild(bar);
+        row.title = r.company_jp + ' ESR ' + fmtPct(r.esr_pct) + (rt ? '｜目標レンジ ' + rt + (tr.inherited_from ? '（' + tr.inherited_from + 'の目標）' : '') + (tr.source_doc ? '｜出所: ' + jaOnly(String(tr.source_doc).split(' + ')[0]) : '') : '｜目標レンジ非公表（100%基準の参考色）');
+        if(rt){
+          var rc = document.createElement('span');
+          rc.className = 'li-chip li-chip-range';
+          rc.textContent = '目標 ' + rt;
+          name.appendChild(rc);
+        }
 
         var val = document.createElement('div');
         val.className = 'li-val';

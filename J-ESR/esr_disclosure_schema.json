@@ -2853,6 +2853,24 @@
       "pl_item_ref": null
     },
     {
+      "id": "pl_policyholder_dividend_provision",
+      "layer": "profit",
+      "table": "profit:pl",
+      "labels_ja": [
+        "契約者配当準備金繰入額",
+        "社員配当準備金繰入額"
+      ],
+      "ko": "계약자(사원)배당준비금 전입액(세전이익 차감 항목)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "life",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
       "id": "pl_core_profit",
       "layer": "profit",
       "table": "profit:core",

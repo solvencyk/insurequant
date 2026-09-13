@@ -2,6 +2,16 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-13 (24) -- 랭킹 색 = 각사 ESR 목標レンジ 기준, 第一生命 損益·基礎利益 층, 貸借対照表 10사
+
+- 색 규칙(owner): 100% 미만 빨강(낮을수록 진함) / 100%~레인지 상한 노랑(100% 에 가까울수록 붉게) / 상한 초과 초록(높을수록 진함, 「○%以上」형은 하한 기준).
+  미공표사는 종전 100% 기준색 + 툴팁 「目標レンジ非公表」. 트랙 위 반투명 목표 밴드, 「目標 ○～○%」칩(모바일 숨김), 범례 5종, 각주(출처·자회사 상속·상호회사 미공표).
+- 데이터: `J-ESR/esr_target_ranges.json`(티켓 20260913T1610Z, 20사, 4사 값) → `build_jesr_page_json.py::attach_target_ranges()` → `jp/jesr_esr.json` record.target_range.
+  값 신뢰도: T&D 원문 직접, TMHD/MS&AD/Sompo/第一 는 검색 스니펫 — 10월 재조사에서 확인(Sompo 上限=현재 ESR 의심).
+- 第一生命: 분책 index_004(owner 업로드) profit 층 14항목·checks 0 fail(契約者配当準備金繰入額 `pl_policyholder_dividend_provision` 신설, P04·LIFE_PROFIT_FLOW·net_ok 반영),
+  core_history(5개년 基礎利益·経常利益·当期純利益 + 順ざや/危険差/費差 파생, L03 통과). builder: 損益 층 있는 생보 승격(not_yet 5), self-check 생보 분기. 旧基準SMR 전각 대시 수정.
+- 貸借対照表: 住友生命(7월 資料編 p58)·第一生命(분책 p23~24)·明治安田損保(본편 p39~40 열 우선 파서 `col_major_3yr`) 추가로 10사 전부.
+
 ## 2026-09-13 (22) -- 회사별 상세 3페이지 분리 + 所要資本 워터폴 폐지 + 貸借対照表 T자형 패널
 
 - owner: 한국 K-ICS/IFRS17/기타공시 대응으로 `jp/jesr.html`(자본) / `jp/jgaap.html`(회계) / `jp/disclosure.html`(기타공시). 인라인 CSS/JS → `jp/jp.css` + `jp/jesr_app.js`

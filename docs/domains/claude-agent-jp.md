@@ -53,6 +53,15 @@ owner 가 2026-09-01 에 공유한 기사(insnews #92437, 일본 금융청 '2026
 3열 다 ESR 표와 **같은 PDF, 다른 섹션**에 있다 — 회사당 문서를 다시 열 필요는 없지만 훑는 페이지 수는 늘어난다. 화면(`/jp/`) 반영 여부는
 이 데이터가 얼마나 뽑히는지 본 뒤 owner 에게 다시 묻는다(즉시 화면에 얹지 않는다).
 
+5. **esr_target_range — 각사 ESR 목표레인지(자본정책), 랭킹 색 차등용 (owner 2026-09-13 확정, 티켓
+   `inbox/jp/20260913T1610Z__owner__JP_MULTI__esr_target_ranges.md`).** 감독하한 100%만으로는 랭킹 막대색이 전부 초록이 된다 — 회사가 자본정책에서 공표한
+   목표레인지(상단 초과=주주환원, 하단 미달=자본조치)로 색을 차등한다. 산출 `J-ESR/esr_target_ranges.json`(`_meta` + `ranges[]`: company_jp/company_en/low_pct/high_pct/
+   basis(`internal_99.95`|`regulatory`|`unknown`)/confidence_level/policy_note/source_url/source_doc/as_of/inherited_from). 単体사는 자기 레인지가 없으면 모회사(HD) 레인지를
+   `inherited_from` 표기로 상속, 상호회사(日本生命·住友生命·明治安田生命·朝日生命·富国生命)는 목표레인지 미공표가 정상이라 `null`(추정 금지). 2026-09-13 census 20사(jesr_esr.json 15
+   + jesr_detail.json 미중복 5사) 결과: 확보 6건(Tokio Marine HD 190%+·MS&AD HD 180~250%·Sompo HD 200~270%·T&D HD 133~225%·Dai-ichi Life 170~200%, 전부 basis=regulatory·
+   confidence=99.5%) + 자회사 3사 상속, null 14건(상호회사 5사 전원 + Sony FG/ソニー生命/かんぽ生命/ライフネット生命/NN生命/au損保/明治安田損保). **10월 말 재census 때 같이 갱신**
+   (Sony FG·かんぽ生命·ライフネット生命·NN生명·상호회사 5사 우선 재탐색). 페이지 색 규칙 자체는 designer/오케스트레이터 소관, 이 항목은 census + JSON 까지만.
+
 4. **산정 방식·신뢰수준도 같이 적는다 (owner 2026-09-12 질문에서 드러난 공백).** 09-12 census 는 15사 중 SOMPO 1사만 원문에
    "VaR 99.5%" 가 명시돼 `basis=J-ICS_VaR99.5` 로 적혔고, 나머지 14사는 방식을 안 뽑아 기본값 `J-ICS` 로만 남았다("다르다" 가 아니라
    "미확인"). 새 규제의 표준식은 1년 VaR 99.5%, 내부모형은 금융청 승인제 — 규제 전엔 회사별 자체 ESR 신뢰수준이 달랐다(도쿄해상 99.95%

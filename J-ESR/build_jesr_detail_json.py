@@ -240,6 +240,8 @@ LIFE_PROFIT_FLOW = [
     ("pl_capital_gains", "+", None, False),
     ("pl_extraordinary_pl", "±", None, False),
     ("pl_ordinary_profit", "=", None, False),
+    ("pl_extraordinary_net", "±", "特別損益", True),
+    ("pl_policyholder_dividend_provision", "-", None, False),   # 契約者(社員)配当準備金繰入額 — 第一生命 등 배당 있는 생보
     ("pl_income_taxes", "-", None, False),
     ("pl_net_income", "=", None, False),
 ]
@@ -411,7 +413,7 @@ def build_profit_flow(profit_raw, items_by_id, sector):
             "ordinary_ok": _reconstruction_check(
                 values, ["pl_core_profit", "pl_capital_gains", "pl_extraordinary_pl"], [], "pl_ordinary_profit"
             ),
-            "net_ok": _reconstruction_check(values, ["pl_ordinary_profit"], ["pl_income_taxes"], "pl_net_income"),
+            "net_ok": _reconstruction_check(values, ["pl_ordinary_profit", "pl_extraordinary_net"], ["pl_policyholder_dividend_provision", "pl_income_taxes"], "pl_net_income"),
         }
     else:
         # underwriting flow closes by construction (その他 is the residual) → check the disclosed identities instead:
@@ -686,6 +688,11 @@ def build(extracted, schema, jesr_master, jesr_esr):
         public_by_en.setdefault(r["company_en"], r)
 
     companies_out = []
+    life_entries, life_years = {}, ["FY2021", "FY2022", "FY2023", "FY2024", "FY2025"]
+    if LIFE_CORE_PATH.exists():
+        _life = load_json(LIFE_CORE_PATH)
+        life_entries = _life.get("companies") or {}
+        life_years = _life.get("fiscal_years") or life_years
     for cid, comp in extracted["companies"].items():
         status = comp.get("census", {}).get("status")
         # 2026-09-13 (ticket 20260913T0330Z): ESR-not-yet companies are included when every OTHER
@@ -695,6 +702,10 @@ def build(extracted, schema, jesr_master, jesr_esr):
             esr_status = "posted"
         elif status == "not_yet" and "history" in comp.get("layers", []) and comp.get("profit", {}).get("values"):
             esr_status = "not_yet"
+        elif comp.get("sector") == "life" and comp.get("profit", {}).get("values"):
+            # 2026-09-13 owner: 생보도 損益·基礎利益 층이 추출되면 상세 회사로(NN Life·第一生命). ESR 은 미공표(not_yet/not_found).
+            # core_history 는 아래 life_core_only 경로 대신 여기서 붙인다(LIFE_CORE_PATH 항목이 있으면).
+            esr_status = status if status in ("not_yet", "not_found") else "not_found"
         else:
             continue
         esr = comp.get("esr") if esr_status == "posted" else None
@@ -812,6 +823,7 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "risk_tree": risk_tree,
             "profit_flow": profit_flow,
             "by_line": by_line,
+            "core_history": (build_core_history_block(life_entries[cid], life_years) if cid in life_entries else None),
             "bs": build_bs_block(bs_by_id.get(cid)),
         })
 
@@ -869,8 +881,9 @@ def self_check(out, jesr_esr):
     companies = out["companies"]
     n_posted = sum(1 for c in companies if c.get("esr_status") == "posted")
     n_not_yet = sum(1 for c in companies if c.get("esr_status") == "not_yet")
-    if n_posted != 2 or n_not_yet != 3:
-        errors.append(f"expected 2 esr-posted + 3 esr-not_yet companies, got {n_posted} + {n_not_yet}")
+    # 2026-09-13: not_yet 5 = 大型損保 3 + 生保 2(NN Life·第一生命 — 損益·基礎利益 층 추출, ESR 미공표)
+    if n_posted != 2 or n_not_yet != 5:
+        errors.append(f"expected 2 esr-posted + 5 esr-not_yet companies, got {n_posted} + {n_not_yet}")
     cov = out["_meta"]["coverage"]
     if cov.get("detail_total") != len(companies) or cov.get("esr_posted") != n_posted:
         errors.append(f"_meta.coverage inconsistent with companies: {cov}")
@@ -931,18 +944,23 @@ def self_check(out, jesr_esr):
             if any(v is not None for v in c["risk"].values()) or any(v is not None for v in c["market_sub"].values()):
                 errors.append(f"{cen}: not_yet but risk/market_sub carry values")
             ph = c.get("esr_placeholder") or {}
-            if not ph.get("phrases") or not ph.get("pages"):
+            if c.get("sector") != "life" and (not ph.get("phrases") or not ph.get("pages")):
                 errors.append(f"{cen}: not_yet requires >=1 placeholder phrase/page from the source PDF, got {ph}")
-            if not c.get("source_url"):
+            if not c.get("source_url") and c.get("sector") != "life":
                 errors.append(f"{cen}: source_url missing")
             profit = c.get("profit") or {}
             if profit.get("status") != "extracted":
                 errors.append(f"{cen}: profit.status expected 'extracted', got {profit.get('status')!r}")
-            for req in ("pl_ordinary_profit", "pl_net_income", "pl_underwriting_profit", "pl_net_premiums_written"):
-                if req not in profit.get("items", {}):
+            is_life = c.get("sector") == "life"
+            # 생보(NN Life·第一生命, 2026-09-13): 損保 전용 항목(正味収入保険料·保険引受利益·損害率·5개년 history) 대신 基礎利益 층과 core_history 를 요구
+            req_ids = ("pl_ordinary_profit", "pl_net_income", "pl_core_profit") if is_life else ("pl_ordinary_profit", "pl_net_income", "pl_underwriting_profit", "pl_net_premiums_written")
+            for req in req_ids:
+                if req not in profit.get("items", {}) and req not in profit.get("core", {}):
                     errors.append(f"{cen}: profit.items missing required id {req}")
             ratios = profit.get("ratios", {})
             for period in ("cur", "prev"):
+                if is_life:
+                    break
                 loss = ratios.get("pl_loss_ratio_pct", {}).get(period)
                 expense = ratios.get("pl_expense_ratio_pct", {}).get(period)
                 combined = ratios.get("pl_combined_ratio_pct", {}).get(period)
@@ -950,7 +968,10 @@ def self_check(out, jesr_esr):
                     errors.append(f"{cen}: profit.ratios[{period}] missing loss/expense/combined for 合算率 check")
                 elif abs((loss + expense) - combined) > 0.1 + 1e-9:
                     errors.append(f"{cen}: profit.ratios[{period}] 合算率 mismatch -- {loss}+{expense} vs {combined}")
-            if not (c.get("history") or {}).get("series"):
+            if is_life:
+                if not ((c.get("core_history") or {}).get("series")):
+                    errors.append(f"{cen}: life detail requires core_history.series")
+            elif not (c.get("history") or {}).get("series"):
                 errors.append(f"{cen}: history.series empty")
             pflow = c.get("profit_flow")
             if pflow is not None and pflow["checks"].get("ordinary_ok") is False:

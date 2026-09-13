@@ -150,12 +150,50 @@ def meiji():
     return out
 
 
+def daiichi():
+    """2026-09-13 owner upload: アニュアルレポート2026 분책 index_004(業績に関する諸資料). p7 = 5개년 主要指標(億円), p31 = 基礎利益の内訳(億円, 2개년).
+    基礎利益 5개년 행은 2021年度 값 뒤에 (4,076)(2022年度 기준 소급 재계산) 괄호값이 끼어 있어 괄호 토큰을 버린다."""
+    d = fitz.open(str(OTHERS / "daiichi_2026_index_004.pdf"))
+    p7, p31 = d[6], d[30]
+    out = dict(company_en="Dai-ichi Life Insurance", company_jp="第一生命保険", scope="solo", unit_disclosed="JPY_100million",
+               source_pdf="J-ESR/raw/fy2025_samples/others/daiichi_2026_index_004.pdf",
+               source_url="https://www.dai-ichi-life.co.jp/company/results/disclosure/2026/pdf/index_004.pdf",
+               doc_type="アニュアルレポート2026 業績に関する諸資料 (2026-07, 86p)", values={}, labels_ja={}, pages={}, notes=[])
+    fys = ["FY2021", "FY2022", "FY2023", "FY2024", "FY2025"]
+    lines = [norm(l) for l in p7.get_text("text").splitlines() if l.strip()]
+    for iid, rx, ja in (("hist_core_profit", r"^基礎利益", "基礎利益 5개년 (2021年度は旧基準, 括弧の再計算値 (4,076) は除外)"),
+                        ("hist_ordinary_profit", r"^経常利益$", "経常利益 5개년"), ("hist_net_income", r"^当期純利益$", "当期純利益 5개년")):
+        i = next((k for k, l in enumerate(lines) if re.search(rx, l)), None)
+        if i is None:
+            continue
+        nums = []
+        for t in lines[i + 1:i + 12]:
+            if t.startswith("(") and t.endswith(")"):
+                continue      # 소급 재계산 괄호값
+            if NUM.match(t):
+                nums.append(to_val(t))
+            elif nums:
+                break
+            if len(nums) == 5:
+                break
+        if len(nums) == 5:
+            out["values"][iid] = dict(zip(fys, nums)); out["labels_ja"][iid], out["pages"][iid] = ja, 7
+    for iid, rx, ja in (("hist_interest_margin", r"^順ざや額$", "順ざや額"), ("hist_insurance_margin", r"^保険関係損益$", "保険関係損益"),
+                        ("hist_mortality_margin", r"^うち危険差益$", "うち危険差益")):
+        v, raw = line_values_after(p31, rx, 2)
+        if v:
+            out["values"][iid] = {"FY2024": v[0], "FY2025": v[1]}; out["labels_ja"][iid], out["pages"][iid] = ja, 31
+    ins, mort = out["values"].get("hist_insurance_margin"), out["values"].get("hist_mortality_margin")
+    if ins and mort:
+        out["values"]["hist_expense_margin"] = {fy: ins[fy] - mort[fy] for fy in ins}
+        out["labels_ja"]["hist_expense_margin"] = "derived = 保険関係損益 − うち危険差益 (費差 단독 행 없음)"; out["pages"]["hist_expense_margin"] = 31
+    out["three_source"] = dict(disclosed="partial", detail="利差(順ざや額)·危険差 직접, 費差 는 保険関係損益−危険差益 파생(住友生命과 같은 구조). 基礎利益·経常利益·当期純利益 5개년은 p7 主要指標.")
+    return out
+
+
 def main():
     companies = dict(sumitomo_life=sumitomo(), nippon_life=nissay(), meijiyasuda_life=meiji())
-    companies["dai_ichi_life"] = dict(company_en="Dai-ichi Life Insurance", company_jp="第一生命保険", scope="solo", unit_disclosed=None, source_pdf=None,
-                                      source_url="https://www.dai-ichi-life.co.jp/company/results/kessan/pdf/index_001.pdf", doc_type=None, values={}, labels_ja={}, pages={},
-                                      notes=["NOT_ACQUIRED: curl blocked (all domains, incl. google.com) and WebFetch of index.html/kessan/index_001.pdf returned 404 twice — per-company attempt limit reached."],
-                                      three_source=dict(disclosed="unknown", detail="원문 미확보"))
+    companies["dai_ichi_life"] = daiichi()
     companies["nnlife"] = dict(company_en="NN Life", company_jp="エヌエヌ生命保険", scope="solo", unit_disclosed="JPY_million",
                                source_pdf="J-ESR/raw/fy2025_samples/nnlife_2025disclosure_202607.pdf", source_url="https://www.nnlife.co.jp/pdf/company/results/NNLJ_2025Disclosure_202607.pdf",
                                doc_type="ディスクロージャー誌 2025 (2026-07)", values={"hist_core_profit": {"FY2024": 148.3, "FY2025": 185.2}},
@@ -173,6 +211,11 @@ def main():
         for fy in ("FY2024", "FY2025"):
             lhs, rhs = m["hist_operating_profit"][fy], m["hist_insurance_margin"][fy] + m["hist_investment_margin"][fy]
             checks.append(dict(id=f"L02_meiji_operating_eq_margins_{fy}", formula="業務利益 == 保険関係損益 + 運用関係損益 (±1)", lhs=lhs, rhs=rhs, tol=1, **{"pass": abs(lhs - rhs) <= 1}))
+    dv = companies["dai_ichi_life"]["values"]
+    if all(k in dv for k in ("hist_core_profit", "hist_insurance_margin", "hist_interest_margin")):
+        for fy in ("FY2024", "FY2025"):
+            lhs, rhs = dv["hist_core_profit"][fy], dv["hist_insurance_margin"][fy] + dv["hist_interest_margin"][fy]
+            checks.append(dict(id=f"L03_daiichi_core_eq_margins_{fy}", formula="基礎利益(第一生命) == 順ざや額 + 保険関係損益 (±1 億円)", lhs=lhs, rhs=rhs, tol=1, **{"pass": abs(lhs - rhs) <= 1}))
     out = dict(generated_at=str(date.today()), generator="J-ESR/extract_life_core_history.py", layer="core_history", unit_note="億円 unless unit_disclosed says otherwise",
                fiscal_years=["FY2021", "FY2022", "FY2023", "FY2024", "FY2025"], companies=companies, checks=checks)
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")

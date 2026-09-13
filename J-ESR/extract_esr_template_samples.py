@@ -360,6 +360,8 @@ PROFIT_ITEMS = [
     dict(id="pl_combined_ratio_pct", scope="nonlife", src="ratio", labels=[r"^合計$"], ko="합산비율 %", unit=P, formula="= pl_loss_ratio_pct + pl_expense_ratio_pct", pl=None),
     # ---- life ----
     dict(id="pl_premium_income", scope="life", src="pl", labels=[r"^保険料等収入$"], ko="보험료등수입(보험료+재보험수입)", unit=M, formula=None, pl=None),
+    # 생보 損益計算書: 特別損益 다음, 税引前 앞에 契約者配当準備金繰入額(상호회사 社員配当準備金繰入額)이 온다 — 第一生命 FY2025 107,500 (2026-09-13 P04 실패로 발견)
+    dict(id="pl_policyholder_dividend_provision", scope="life", src="pl", labels=[r"^契約者配当準備金繰入額$", r"^社員配当準備金繰入額$"], ko="계약자(사원)배당준비금 전입액(세전이익 차감 항목)", unit=M, formula=None, pl=None),
     dict(id="pl_core_profit", scope="life", src="core", labels=[r"^基礎利益$", r"^基礎利益\s*A$"], ko="기초이익(생보 핵심이익, 経常利益 - キャピタル損益 - 臨時損益)", unit=M,
          formula="= pl_ordinary_profit - pl_capital_gains - pl_extraordinary_pl; (三利源 공시사) ≈ pl_interest_margin + pl_mortality_margin + pl_expense_margin", pl=None),
     dict(id="pl_capital_gains", scope="life", src="core", labels=[r"^キャピタル損益$", r"^キャピタル損益\s*B$"], ko="캐피털손익(유가증권매각손익·파생·환차 등)", unit=M, formula=None, pl=None),
@@ -538,6 +540,14 @@ COMPANIES = [
          layers=["article_axes", "profit"], pages=dict(), headline_5yr_page=11,
          axes_pages=dict(summary5=[11], soundness=[15], core_profit=[60], reins=[64], esr_section=[54]),
          profit_pages=dict(pl=[44], core=[60], three=[60], basis=[47, 48, 49]), pl_layout="prev_pct_cur_pct"),
+    # ---- Dai-ichi Life (2026-09-13 owner upload): アニュアルレポート2026 분책 index_004 「業績に関する諸資料」(86p). 책 페이지 = 분책 + 50.
+    #      損益計算書 p25~26(2열 百万円) / 経常利益等の明細(基礎利益 A·B·C) p30 / 三利源 은 p31 이 億円 단위라 profit 층에서는 제외(core_history 에서 億円으로 수록) /
+    #      再保険 p21 / 5개년 主要指標 p7(億円) / 会計方針 p32~33. ESR 층 없음(規制様式 미공표).
+    dict(key="dai_ichi_life", company_jp="第一生命保険", company_en="Dai-ichi Life", sector="life", subdir=OTHERS, pdf="daiichi_2026_index_004.pdf",
+         layers=["article_axes", "profit"], pages=dict(), headline_5yr_page=7,
+         source_url="https://www.dai-ichi-life.co.jp/company/results/disclosure/2026/pdf/index_004.pdf", source_doc_type="アニュアルレポート2026 業績に関する諸資料(分冊, 86p)",
+         axes_pages=dict(summary5=[7], core_profit=[30], reins=[21]),
+         profit_pages=dict(pl=[25, 26], core=[30], three=[], basis=[32, 33]), pl_layout="prev_cur_diff"),
     # ---- big-3 non-life main volumes (ticket 20260913T0330Z): no ESR layer (not_yet), everything else ----
     dict(key="tokiomarine_nichido", company_jp="東京海上日動火災保険", company_en="Tokio Marine & Nichido Fire", sector="nonlife",
          subdir=OTHERS, pdf="tmnf_2026_full.pdf", byline_pages=dict(premiums=[89], claims=[91], ratio=[91]), layers=["article_axes", "profit", "history", "by_line"], pages=dict(), headline_5yr_page=None,
@@ -877,7 +887,8 @@ def extract_axes(comp, doc):
                 break
     v["esr_placeholder_locations"] = locs
     v["esr_status"] = "not_yet" if locs and "esr" not in comp["layers"] else ("posted" if "esr" in comp["layers"] else "not_found")
-    m = re.search(r"旧基準\s*\n((?:[\d.]+%?\s*\n|-\s*\n){1,5})", doc_text)
+    # FY2025 column is often a dash — ASCII "-" or full-width "ー"/"―" (第一生命 p7: 907.3％ 865.4％ 865.0％ 852.9％ ー) — capture it so FY2024 stays second-to-last
+    m = re.search(r"旧基準\s*\n((?:[\d.]+%?\s*\n|[-ー―]\s*\n){1,5})", doc_text)
     if m:
         toks = [x for x in m.group(1).split() if x]
         # columns run oldest -> newest; FY2024 = second-to-last
@@ -1440,8 +1451,8 @@ def run_profit_checks(comp, pf):
     for col in ("cur", "prev"):
         sfx = "" if col == "cur" else "_prev"
         add(f"P03_ordinary{sfx}", "pl_ordinary_profit = pl_ordinary_revenue - pl_ordinary_expenses", g("pl_ordinary_profit", col), z(g("pl_ordinary_revenue", col)) - z(g("pl_ordinary_expenses", col)), 1)
-        add(f"P04_pretax{sfx}", "pl_pretax_profit = pl_ordinary_profit + pl_extraordinary_gains - pl_extraordinary_losses", g("pl_pretax_profit", col),
-            z(g("pl_ordinary_profit", col)) + z(g("pl_extraordinary_gains", col)) - z(g("pl_extraordinary_losses", col)), 1)
+        add(f"P04_pretax{sfx}", "pl_pretax_profit = pl_ordinary_profit + pl_extraordinary_gains - pl_extraordinary_losses - 契約者配当準備金繰入額(생보, 없으면 0)", g("pl_pretax_profit", col),
+            z(g("pl_ordinary_profit", col)) + z(g("pl_extraordinary_gains", col)) - z(g("pl_extraordinary_losses", col)) - z(g("pl_policyholder_dividend_provision", col)), 1)
         add(f"P05_net_income{sfx}", "pl_net_income = pl_pretax_profit - pl_income_taxes", g("pl_net_income", col), z(g("pl_pretax_profit", col)) - z(g("pl_income_taxes", col)), 1)
         if comp["sector"] == "life":
             add(f"P01_core_bridge{sfx}", "pl_ordinary_profit = pl_core_profit + pl_capital_gains + pl_extraordinary_pl", g("pl_ordinary_profit", col),

@@ -351,6 +351,29 @@ def build_group_children(records: list[dict], insurers_by_name: dict) -> dict:
     return out
 
 
+# owner 2026-09-13: 랭킹 색 기준을 감독 하한 100% 에서 각사 ESR 목표 레인지로. 티켓 20260913T1610Z 산출
+# J-ESR/esr_target_ranges.json(census, basis/출처 포함) 을 company_en 으로 레코드에 붙인다 — 값이 없으면 None(페이지는 100% 기준 폴백).
+TARGET_RANGES_PATH = Path(__file__).resolve().parent / "esr_target_ranges.json"
+
+
+def attach_target_ranges(records: list[dict]) -> dict:
+    if not TARGET_RANGES_PATH.exists():
+        return {"as_of": None, "attached": 0}
+    data = json.loads(TARGET_RANGES_PATH.read_text(encoding="utf-8"))
+    by_en = {(r.get("company_en") or "").strip().lower(): r for r in data.get("ranges", [])}
+    n = 0
+    for rec in records:
+        tr = by_en.get((rec.get("company_en") or "").strip().lower())
+        if tr and tr.get("low_pct") is not None:
+            rec["target_range"] = {"low_pct": tr.get("low_pct"), "high_pct": tr.get("high_pct"), "basis": tr.get("basis"),
+                                   "inherited_from": tr.get("inherited_from"), "source_doc": tr.get("source_doc"), "source_url": tr.get("source_url"),
+                                   "as_of": tr.get("as_of")}
+            n += 1
+        else:
+            rec["target_range"] = None
+    return {"as_of": (data.get("_meta") or {}).get("as_of"), "attached": n}
+
+
 def main() -> int:
     out = build()
 
@@ -377,6 +400,7 @@ def main() -> int:
     deploy_meta = dict(out["_meta"])
     deploy_meta["excluded_subsidiaries"] = excluded
     deploy_meta["group_children"] = build_group_children(deploy_records, insurers_by_name)
+    deploy_meta["target_ranges"] = attach_target_ranges(deploy_records)
     deploy_out = {"_meta": deploy_meta, "records": deploy_records}
 
     master_text = json.dumps(out, ensure_ascii=False, indent=2)
