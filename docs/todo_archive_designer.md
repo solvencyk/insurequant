@@ -4,6 +4,20 @@
 
 ---
 
+**Recent (2026-09-10, owner 요청 "사이트 접속 트래픽 확인" — 라이브 배포):**
+- **GA4 방문 통계 태그 도입 + `privacy.html` 신설.** 측정 ID `G-F8NSCQZBZK`. 4 페이지
+  `<head>` 에 gtag 스니펫(line 9-19) + CSP(line 6) 확장. **CSP 를 같이 안 고치면 태그를
+  붙여도 차단돼 수집량이 0 이다** — 이 저장소의 meta CSP 는 `cdn.jsdelivr.net` 만 허용했다.
+- **gtag 는 반드시 CSP meta 뒤에 둔다.** 앞에 두면 meta CSP 가 그 태그에 적용되지 않아
+  하드닝이 조용히 우회된다(Google 문서의 "여는 `<head>` 바로 다음"과 충돌하는 지점).
+- **CSP 와일드카드 함정:** `*.analytics.google.com` 은 apex 를 포함하지 않는다.
+  `analytics.google.com` 을 따로 등재해야 한다. 브라우저 실측으로만 잡혔다.
+- **SRI 예외(owner 승인 2026-09-10):** gtag.js 는 가변 파일이라 integrity 고정 불가.
+  `compute_sri.py` 에 등재하지 않는다. 사유는 태그 옆 주석에 박아 뒀다.
+- **동의 배너는 두지 않는다(owner 결정).** footer 한 줄 링크만. 상세는 changelog 2026-09-10.
+- 잔여: 실제 `/g/collect` 전송 미확인(개발 PC 가 사내 VPN 경유라 확인 불가) — owner 가
+  GA 실시간 보고서로 확인하면 종결. 서치 콘솔(가비아 DNS TXT)은 미착수.
+
 **Recent (2026-09-03b, owner 직접 지시 — 커밋만, 라이브 미배포):**
 - **IFRS17 Panel 5 보험손익 구성 접기.** 보험손익 행에 ＋ 를 붙여 구성 항목(원수 CSM상각·
   위험조정·예실차·기타 원수·생명장기재보험·자동차+일반·기타 사업비)을 그 아래로 내리고

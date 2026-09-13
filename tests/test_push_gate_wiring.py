@@ -148,6 +148,32 @@ def test_wired_gates_are_in_the_blocking_verdict():
     )
 
 
+def test_wired_means_wired_in_the_full_gate_only():
+    """**WIRED 의 뜻이 2026-09-13 에 좁아졌다** — 여기 적어 둔다.
+
+    그날부터 훅은 push 범위를 판정하고(`CLAUDE.md` §5, owner 2026-09-12), 번들이 jp 범위
+    (`jp/`·`J-ESR/`·docs·inbox·TODO·배포 .sh·CLAUDE.md)뿐이면 한국 마스터 게이트를
+    **건너뛴다**. 즉 위 매니페스트의 WIRED 는 "전체 게이트에서 돈다" 이지 "매 push 마다
+    돈다" 가 아니다. 그 축소가 조용히 넓어지면 한국 마스터가 무검사로 나가면서도 verdict 는
+    `gate-clear` 를 찍는다(이 저장소의 false-green 형태 그대로). 그래서 세 가지를 못 박는다:
+      ① 한국 게이트 호출 지점이 **하나**일 것(여러 군데면 어디가 건너뛰는지 알 수 없다)
+      ② 건너뛴 게이트는 `SKIPPED(jp-scope)` 로 찍힐 것(0 을 'pass' 로 인쇄하면 그게 사고다)
+      ③ 범위 판정기의 셀프테스트·변이시험이 오프라인 묶음에 들어 있을 것.
+    판정 로직 자체의 변이시험은 `tests/test_prepush_scope.py` 가 한다."""
+    src = _prepush_src()
+    assert "def _run_korean_master_gates(" in src, (
+        "한국 마스터 게이트 묶음 함수가 없다 — 범위 판정이 사라졌거나 호출 지점이 흩어졌다")
+    calls = re.findall(r"(?<!def )_run_korean_master_gates\(\)", src)   # 정의줄은 빼고 센다
+    assert len(calls) == 1, (
+        f"한국 게이트 호출 지점이 {len(calls)}곳이다 — 어느 경로가 건너뛰는지 사람이 셀 수 없다")
+    assert "SKIPPED(jp-scope)" in src, (
+        "축소 모드에서 안 돈 게이트를 'pass' 로 찍고 있다 — '안 돌렸다' 와 '통과했다' 는 "
+        "화면에서 구분돼야 한다")
+    assert '"tests/test_prepush_scope.py"' in src, (
+        "범위 판정기의 셀프테스트가 오프라인 묶음에서 빠졌다 — 축소 목록이 조용히 넓어져도 "
+        "아무도 못 잡는다")
+
+
 @pytest.mark.parametrize("name", sorted(NOT_A_PUSH_GATE))
 def test_unwired_gate_has_a_reason(name):
     reason = NOT_A_PUSH_GATE[name]

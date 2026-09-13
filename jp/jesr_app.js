@@ -13,6 +13,10 @@
   var FIXTURE_URL = '_fixture_jesr_detail.json';
 
   var SCOPE_LABEL = {group:'連結', solo:'単体'};
+  // jp/index.html と同じ算定基準ラベル(owner 2026-09-13、§5.2 관례대로 공유 모듈 없이 파일별 복사).
+  // ESRページ(secHeadline)のみで使う — 決算・その他開示ページはESR算定基準と無関係なので出さない。
+  var BASIS_LABEL = { regulatory_standard:'規制ベース', internal_model:'内部モデル', internal_management:'内部管理' };
+  function basisLabel(basis){ return BASIS_LABEL[basis] || '未確認'; }
 
   // jp/index.html 313~320행과 동일한 2단 버킷 정렬(inbox 20260912T1420Z, 공유 JS 파일 없음 —
   // §5.2 관례대로 각 파일에 복사). 드롭다운(ENTRIES) 정렬에 쓴다.
@@ -237,6 +241,9 @@
 
     if(e.mode === 'detail'){
       var c = e.detail;
+      // jesr_detail.json 자체에는 basis 필드가 없다(publishing이 jesr_esr.json에만 채움) — 헤드라인
+      // 레코드가 있으면 거기서 가져온다(없는 회사는 undefined로 두고 renderMeta가 세그먼트를 생략).
+      c.basis = e.headlineRec ? e.headlineRec.basis : c.basis;
       // ESR 층이 아직 없는 회사(대형 손보 3사: 신기준 ESR 은 2026-10-31 이연)도 손익·収益性·準備金은 있다(owner 2026-09-13).
       // → ESR 관련 패널(適格資本・所要資本 표·워터폴·感応度)은 숨기고 안내 패널만, 나머지 패널은 그대로 렌더.
       var hasEsr = !!(c.headline && c.headline.esr_pct != null) && !!(c.capital_tree && c.capital_tree.length);
@@ -276,7 +283,7 @@
       TOGGLE_IDS.forEach(function(id){ setHidden(id, true); });
       var r = e.headlineRec;
       var hc = {
-        company_jp: r.company_jp, company_en: r.company_en, scope: r.scope,
+        company_jp: r.company_jp, company_en: r.company_en, scope: r.scope, basis: r.basis,
         source_url: r.source_url, doc_date: r.doc_date, doc_type: r.doc_type, as_of: r.as_of,
         headline: { eligible_capital: null, required_capital: null, esr_pct: r.esr_pct, preliminary: r.preliminary }
       };
@@ -301,8 +308,11 @@
       ? '<a href="'+esc(c.source_url)+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc(c.company_jp)+'の根拠資料、別タブで開く">'+esc(jaDate(c.doc_date))+(c.doc_type?'（'+esc(jaOnly(c.doc_type))+'）':'')+' &#8599;</a>'
       : esc(jaDate(c.doc_date));
     var fq = c.as_of ? jaFiscalQuarter(c.as_of) : '—';
+    // 算定基準(owner 2026-09-13、ランキングのchipと同じ区分) — ESRページのみ、値がある会社のみ表示
+    // (headline外の会社はbasisが無く、その場合"未確認"を出すとESR自体が無いのに紛らわしいので省略)。
+    var basisSeg = (PAGE === 'esr' && c.basis) ? (' &nbsp;|&nbsp; 算定基準: <span title="'+esc(basisLabel(c.basis) === '未確認' ? '算定基準が未確認です' : basisLabel(c.basis)+'で算定。規制ベース(告示74号の標準式)以外の会社とは単純比較に適さない場合があります。')+'">'+esc(basisLabel(c.basis))+'</span>') : '';
     document.getElementById('metaLine').innerHTML =
-      '<span title="'+esc(jaDate(c.as_of))+'">基準時点 '+esc(fq)+'</span> &nbsp;|&nbsp; 範囲: '+esc(scope)+' &nbsp;|&nbsp; 公表: '+srcCell;
+      '<span title="'+esc(jaDate(c.as_of))+'">基準時点 '+esc(fq)+'</span> &nbsp;|&nbsp; 範囲: '+esc(scope)+basisSeg+' &nbsp;|&nbsp; 公表: '+srcCell;
   }
 
   function renderHeadline(c){

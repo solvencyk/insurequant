@@ -81,17 +81,24 @@
     .li-band{position:absolute;top:0;bottom:0;background:rgba(127,127,127,.28);border-left:1px solid var(--muted);border-right:1px solid var(--muted);pointer-events:auto}
     .li-bar{position:relative}
     .li-bar{height:100%;border-radius:7px;min-width:2px}
+    /* 算定基準(owner 2026-09-13 2차: chip 아니라 막대 패턴, "칩 과다" 지적으로 1차 chip안 폐기) —
+       色(colorForRange의 초록/黄/赤)과 직교하는 채널만 쓴다. 自社基準(内部モデル・内部管理)은
+       ハッチ柄, 未確認은 点線枠(둘 다 배경색과 무관해 색맹·모노크롬에서도 구분됨) — 값 자체는
+       row.title/aria-label/bar.title 텍스트로 항상 병기(패턴만으로 의미를 나르지 않음, a11y). */
+    .li-bar-self{background-image:repeating-linear-gradient(135deg, rgba(0,0,0,.28) 0 3px, rgba(0,0,0,0) 3px 7px)}
+    .li-bar-unconfirmed{border:1px dashed var(--muted)}
     .li-val{flex:0 0 54px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
     .li-more-btn{display:block;width:100%;margin-top:4px;padding:10px;background:var(--card);border:var(--bd);border-radius:var(--r-md);color:var(--text);font-size:13px;font-family:var(--font-sans);cursor:pointer;text-align:center;font-weight:500;transition:background .15s}
     .li-more-btn:hover{background:var(--border)}
     .li-more-btn[hidden]{display:none}
     .li-chip{font-size:10px;font-weight:400;color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:0 4px;margin-left:6px;white-space:nowrap;flex:0 0 auto}
-    /* 회사명이 칩에 밀려 사라지지 않게(owner 2026-09-13 모바일 스크린샷): 이름은 최소 폭 보장, 칩은 뒤로 */
+    /* 회사명이 칩에 밀려 사라지지 않게(owner 2026-09-13 모바일 스크린샷): 이름은 최소 폭 보장, 칩은 뒤로.
+       2026-09-13 2차: scope・目標レンジ chip 을 폐지해 남는 chip 은 速報・単体詳細 뿐(행당 ≤1, 상호배타적) —
+       회사명 폭 확보가 한결 쉬워졌다. */
     .li-name{min-width:0}
     .li-name .li-nm{flex:1 1 auto;min-width:5.5em}
     @media (max-width:640px){
       .li-name{flex-basis:44%}
-      .li-chip-range{display:none}
       .li-chip-kids{padding:0 3px}
       .li-chip-kids::before{content:'▸'}
       .li-chip-kids{font-size:0}
@@ -191,8 +198,9 @@
         <span><span class="sw" style="background:rgba(127,127,127,.35);border:1px solid var(--muted)"></span>目標レンジ帯（棒の目盛）</span>
         <span><span class="sw" style="background:hsl(130,40%,50%)"></span>目標レンジ非公表社は100%基準の参考色</span>
         <span><span class="jp-badge">速報</span>&nbsp;速報値</span>
+        <span><span class="sw" style="background-color:var(--muted);background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.35) 0 3px,rgba(0,0,0,0) 3px 7px)"></span>ハッチ柄=自社基準（内部モデル・内部管理）</span>
       </div>
-      <p class="chart-caveat">※ 算定基準(標準式・内部モデル・VaR水準等)は各社で異なる場合があり、単純比較にはご注意ください。詳細は各社開示資料をご確認ください。<br/>
+      <p class="chart-caveat">※ 棒のハッチ柄は算定基準が自社基準（内部モデル・内部管理）であることを示します（無地=規制ベース、金融庁告示74号の標準式／点線枠=算定基準未確認）。自社基準の会社は規制ベースの会社と数値を単純比較しないようご注意ください。詳細（規制ベース・内部モデル・内部管理の別）は行にカーソルを合わせるか会社別詳細をご確認ください。<br/>
       ※ 目標レンジは各社の資本政策(中期経営計画・決算説明資料等)で公表された値(2026-09-13時点)。単体会社は親会社グループの目標を適用(行のツールチップに出所)。相互会社等は目標レンジ非公表。</p>
     </section>
 
@@ -209,6 +217,23 @@
     var DATA_URL = 'jesr_esr.json';
     var FOLD = 5;
     var SCOPE_LABEL  = {group:'連結', solo:'単体'};
+    // owner 2026-09-13(2차 지시 -- "칩이 너무 많다", 1차 chip안 되돌림): 算定基準(jesr_esr.json
+    // record.basis)는 chip이 아니라 막대(li-bar)의 패턴으로 표시한다. 색(초록/황/적)은 이미
+    // 目標レンジ 의미로 점유돼 있어 색과 직교하는 채널(塗りつぶしのハッチ柄)을 쓴다.
+    // 内部モデル・内部管理은 "自社基準" 한 덩어리(ハッチ)로 묶고, 未確認만 점선 테두리로 —
+    // 이건 3번째 "구분"이 아니라 데이터 품질 플래그(별도 채널). 内部モデル vs 内部管理의 3단
+    // 세분화는 title/aria-label(호버·스크린리더)과 상세 페이지(jesr_app.js)로 충분 —
+    // 랭킹에서 필요한 판단은 "이 숫자를 옆 회사와 그대로 비교해도 되나"뿐이고 그건 규제/自社
+    // 2단이면 끝난다(owner 지시).
+    var BASIS_LABEL = { regulatory_standard:'規制ベース', internal_model:'内部モデル', internal_management:'内部管理' };
+    function basisLabel(basis){ return BASIS_LABEL[basis] || '未確認'; }
+    function isSelfBasis(basis){ return basis === 'internal_model' || basis === 'internal_management'; }
+    function isUnconfirmedBasis(basis){ return !basis || !BASIS_LABEL[basis]; }
+    function basisTitle(basis){
+      if(basis === 'regulatory_standard') return '算定基準: 規制ベース（金融庁告示74号の標準式）';
+      if(isSelfBasis(basis)) return '算定基準: ' + basisLabel(basis) + '（各社独自の基準。規制ベースの会社とは単純比較に適さない場合があります）';
+      return '算定基準: 未確認（出所資料で個別にご確認ください）';
+    }
     // owner 지시 2: sector 섹션은 生保/損保 두 개뿐 — reinsurance는 損保 섹션에 합친다.
     function groupKey(sector){ return sector === 'life' ? 'life' : 'nonlife'; }
     var GROUP_LABEL = {life:'生命保険', nonlife:'損害保険'};
@@ -440,7 +465,7 @@
           'ESR ' + fmtPct(r.esr_pct) + (r.preliminary ? '（速報）' : ''),
           '範囲:' + (SCOPE_LABEL[r.scope]||r.scope||'—'),
           '基準日:' + (jaDateFlexible(r.as_of)||'—'),
-          '算定基準:' + (r.basis||'—')
+          '算定基準:' + basisLabel(r.basis)
         ];
         row.title = titleParts.join(' / ');
         row.setAttribute('aria-label', row.title);
@@ -462,12 +487,10 @@
         nm.className = 'li-nm';
         nm.textContent = r.company_jp;
         name.appendChild(nm);
-        if(r.scope){
-          var sc = document.createElement('span');
-          sc.className = 'li-chip';
-          sc.textContent = SCOPE_LABEL[r.scope] || r.scope;
-          name.appendChild(sc);
-        }
+        // owner 2026-09-13(2차): scope(連結/単体) chip 및 目標レンジ chip 폐지(전 15행 중복・
+        // 밴드와 중복이라 "칩 과다" 지적) — 둘 다 row.title/aria-label(위 titleParts)와
+        // (目標レンジ는) 트랙 위 밴드로만 표시. 남기는 chip은 速報・単体詳細 2종뿐(서로 배타적
+        // — HD그룹행만 単体詳細가 붙고 速報는 개별사에만 붙어 실측상 동시발생 0건, 행당 chip ≤1).
         if(r.preliminary){
           var chip = document.createElement('span');
           chip.className = 'li-chip';
@@ -495,17 +518,16 @@
           track.appendChild(band);
         }
         var bar = document.createElement('div');
-        bar.className = 'li-bar';
+        // owner 2026-09-13(2차): 算定基準은 chip이 아니라 이 막대의 塗りつぶし패턴으로 —
+        // 自社基準(内部モデル・内部管理)은 ハッチ柄, 未確認은 점선 테두리(색과 직교하는 채널,
+        // colorForRange의 초록/黄/赤과 안 겹침). background(shorthand) 대신 backgroundColor만
+        // 써서 CSS class의 background-image(ハッチ)가 안 지워지게 한다.
+        bar.className = 'li-bar' + (isSelfBasis(r.basis) ? ' li-bar-self' : '') + (isUnconfirmedBasis(r.basis) ? ' li-bar-unconfirmed' : '');
         bar.style.width = Math.max(2, ((r.esr_pct||0) / maxV) * 100) + '%';
-        bar.style.background = colorForRange(r.esr_pct, tr);
+        bar.style.backgroundColor = colorForRange(r.esr_pct, tr);
+        bar.title = basisTitle(r.basis);
         track.appendChild(bar);
-        row.title = r.company_jp + ' ESR ' + fmtPct(r.esr_pct) + (rt ? '｜目標レンジ ' + rt + (tr.inherited_from ? '（' + tr.inherited_from + 'の目標）' : '') + (tr.source_doc ? '｜出所: ' + jaOnly(String(tr.source_doc).split(' + ')[0]) : '') : '｜目標レンジ非公表（100%基準の参考色）');
-        if(rt){
-          var rc = document.createElement('span');
-          rc.className = 'li-chip li-chip-range';
-          rc.textContent = '目標 ' + rt;
-          name.appendChild(rc);
-        }
+        row.title = r.company_jp + ' ESR ' + fmtPct(r.esr_pct) + '｜' + basisTitle(r.basis) + (rt ? '｜目標レンジ ' + rt + (tr.inherited_from ? '（' + tr.inherited_from + 'の目標）' : '') + (tr.source_doc ? '｜出所: ' + jaOnly(String(tr.source_doc).split(' + ')[0]) : '') : '｜目標レンジ非公表（100%基準の参考色）');
 
         var val = document.createElement('div');
         val.className = 'li-val';

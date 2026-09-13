@@ -7,6 +7,8 @@ Pipeline organized as **downloader / parser / validation / publishing / designer
 
 ## Status
 
+**🔧 2026-09-13 push 게이트가 변경 범위를 코드로 판정한다(cross-stage).** owner 지적 *"한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 된다"*. CLAUDE.md §5 의 범위 규칙(owner 09-12)이 **문서에만 있고 훅은 무조건 전부 돌리고 있었다** — `prepush_check.py` §0 에 판정을 구현했다. jp 범위 번들이면 한국 마스터 축 5종을 건너뛰고 ~5초(실측), 한국 파일이 하나라도 섞이면 자동 FULL. **fail-closed**(upstream 없음·git 실패·빈 diff·모르는 경로 → 전체), 우회 환경변수 없음, verdict 에 `SKIPPED(jp-scope)` 로 "안 돌렸다"와 "통과했다"를 구분. 회귀 65케이스·변이 12/12 발화. 잔여 UH-20(훅이 refspec 을 안 넘겨 범위가 근사 — 빗나가면 전체가 도는 안전 방향). 상세 `docs/claude-changelog.md` 2026-09-13(2차).
+
 **🔧 2026-09-13 서브에이전트 정의·스킬이 저장소 밖에 있던 것을 안으로 들였다(cross-stage).** `.gitignore:91` 의 `.claude/` 한 줄 때문에 `.claude/agents/*.md` 7개(모델 매핑: validation=Opus 5, 나머지 Sonnet 5)와 스킬 4개가 머신 로컬에만 있었고, 클라우드 세션은 CLAUDE.md §10 의 병렬 발사 규칙만 읽고 실행체를 못 읽었다. ignore 를 머신별 설정 파일만으로 좁히고 정의·스킬을 커밋, CLAUDE.md §10 에 위치·매핑 등재. 상세 `docs/claude-changelog.md` 2026-09-13.
 
 **🧹 2026-09-11 지침 부채 정리 1차 — TODO Status 이력을 `docs/todo_archive_*.md` 6개로 분리(내용 무수정, HEAD 대비 바이트 재조립 검증 6/6).** 실측: stage TODO 7개 합계 ~288k → ~64k 토큰(−78%), `TODO_parser_ifrs17.md` 128k → 14k. 규칙(CLAUDE.md 핸드오프 절): Status 는 최신 5개만, 밀려난 것은 아카이브 헤더 아래에 잘라 붙임. 2차 후보(미착수, owner 판단): CLAUDE.md·stage 프롬프트의 '왜 생겼나' 서술 → 규칙 한 줄 + 포인터로 압축; `TODO.md` K-ICS 면제 등재부(340줄) 안의 superseded 스냅샷 분리.

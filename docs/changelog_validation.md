@@ -5,6 +5,18 @@
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
+## 2026-09-13 (3차) -- push 게이트 **범위 판정**을 훅에 구현 (문서에만 있던 CLAUDE.md §5 규칙)
+
+- 사고 유형: 규칙이 문서에만 있고 코드가 안 본다. 방향만 반대일 뿐 "문서에 mandatory 라고 썼다 ≠ 강제" 와 같은 병이다. jp 만 고친 번들이 한국 원문 부재(`data/disclosure/`)로 `RED=197 → BLOCKED` — 인과 0.
+- `scripts/prepush_check.py` §0 신설: `classify_path`(경로 1개 판정) · `decide_scope`(**git 을 안 부르는 순수 함수**) · `collect_changed_paths`(merge-base(@{upstream},HEAD)..HEAD + 스테이지 + 워킹트리 + 미추적, `-z`·`--no-renames` 필수) · `resolve_scope` · `print_scope`. 한국 축 게이트 5종은 `_run_korean_master_gates()` 한 함수로 묶어 **호출 지점을 하나로** 만들었다.
+- fail-closed: upstream 없음/ git 실패 / 빈 diff / 미분류 경로 1개 → 전체 게이트. 축소는 전 경로가 명시 목록에 있을 때만.
+- verdict 에 `SKIPPED(jp-scope)` 를 도입 — **0 을 'pass' 로 인쇄하지 않는다**("안 돌렸다"와 "통과했다"의 구분). 판정 근거(비교 ref·파일 수·결정적 파일)를 매 실행 인쇄.
+- 오버라이드는 `--full` · `--scope-only` 둘뿐. **환경변수 우회로는 만들지 않았다**(켜진 채로 잊힌다).
+- 셀프테스트 `tests/test_prepush_scope.py` 65케이스(1.5초) — 기대 경로 목록을 판정기 상수와 **따로 손으로 적어** 목록 삭제가 통과하지 않게 했다. 임시 git 저장소로 수집기까지 실검증(한글 경로·rename·미추적).
+- 변이시험 12/12 발화(심링크 그림자 트리의 **사본만** 훼손, 종료 후 원본 md5 동일 확인).
+- 실측: 축소 `exit=0` 4.97초(173 passed·4 skipped) ↔ 같은 트리 `--full` `exit=2` 16초(RED=197). 이 클라우드 클론은 한국 원문이 없어 전체 게이트가 원래 BLOCKED 다 — owner 머신의 ~18분과 다른 수치다.
+- 매니페스트 갱신: `tests/test_push_gate_wiring.py::test_wired_means_wired_in_the_full_gate_only` — WIRED 의 뜻이 "전체 게이트에서 돈다" 로 좁아진 것을 명시.
+
 ## 2026-09-13 (후속) -- UH-18 배선 완료 · UH-19 신규·즉시 해소
 
 - 룰 4종을 `J-ESR/build_jesr_page_json.py::source_gate_check` 에 배선, `self_check` → `main()` exit 1 까지 **변이시험으로 실증**. 회귀 43케이스(`tests/test_jp_source_gate.py`).

@@ -47,7 +47,8 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 ④ 오프라인 테스트(골든 + `test_rule_coverage_manifest.py` + `test_identity_tautology.py`). `main` 처럼 `scripts/` 없는 slim 트리는 경고만.
 **"문서에 mandatory 라고 썼다" ≠ 강제.** 새 게이트는 `prepush_check.py` 에 호출을 넣었는지 그 자리에서 확인. `git push --no-verify` 를 썼으면 커밋에 남긴다.
 `test_rule_coverage_manifest.py` 는 룰↔항목 커버리지를 변이시험으로 대조한다 — 룰 추가·개명·삭제 시 매니페스트를 같이 고친다.
-**게이트 범위는 변경 범위에 맞춘다(owner 2026-09-12).** 번들 범위 diff 가 `jp/`·`J-ESR/`·docs·inbox·TODO·배포 스크립트뿐이면 한국 마스터 게이트(8분)를 돌리지 않고 `tests/test_deploy_assets.py` + **`tests/test_jp_source_gate.py` + `tests/test_jp_deploy_matches_census.py`**(2026-09-13 신설, jp 출처 게이트·불변식 1번) + `check_inbox_hygiene.py` 만 돌린다. 루트 마스터 JSON·`scripts/*.py`(배포 스크립트 제외)·루트 HTML 이 하나라도 바뀌면 전체 게이트.
+**게이트 범위는 변경 범위에 맞춘다(owner 2026-09-12) — 2026-09-13 부터 `prepush_check.py` §0 이 코드로 판정한다**(그 전까지는 이 문단이 문서로만 있어서 훅은 무조건 전부 돌렸다). 번들 diff 가 `jp/`·`J-ESR/`·`docs/`·`inbox/`·`.claude/`·루트 `TODO*.md`·배포 `.sh`·`CLAUDE.md` 뿐이면 한국 마스터 게이트(data-contract·K-ICS 룰·도메인 7종·DART raw·골든 지문)를 건너뛰고 `tests/test_jp_source_gate.py` + `tests/test_jp_deploy_matches_census.py` + `tests/test_deploy_assets.py` + `tests/test_push_gate_wiring.py` + `tests/test_prepush_scope.py` + `check_inbox_hygiene.py` 만 돌린다(실측 ~5초). 루트 마스터 JSON·`scripts/*.py`(배포 `.sh` 제외)·루트 HTML·`src/`·`data/`·`tests/`(jp 2종 제외)가 하나라도 섞이면 전체 게이트.
+**판정은 fail-closed다**: `@{upstream}` 없음·git 실패·빈 diff·모르는 경로 1개 → 전부 전체 게이트. 비교 기준은 `merge-base(@{upstream},HEAD)..HEAD` + 스테이지 + 워킹트리 + 미추적이고, 판정 근거(비교 ref·파일 수·결정적 파일)를 매 실행 인쇄한다. 축소 시 verdict 는 `SKIPPED(jp-scope)` — **"안 돌렸다"는 "통과했다"가 아니다.** 수동 오버라이드는 `--full`(강제 전체)·`--scope-only`(판정만 인쇄, 게이트 미실행) 둘뿐이고 **환경변수 우회로는 없다**. 범위 목록을 고치려면 `tests/test_prepush_scope.py`(변이시험)를 같이 통과시켜야 한다.
 
 ## 6. K-ICS validation gate (필수)
 

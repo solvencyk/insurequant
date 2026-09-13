@@ -1,11 +1,106 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-12 · Stage 5/5 — designer
+> Last updated: 2026-09-13 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-09-13b — jp 랭킹 算定基準: chip 되돌리고 막대 패턴으로 (owner "칩이 너무 많다")
+
+배경: 바로 아래 2026-09-13 항목(chip안)을 owner가 반려. 실측(HEAD 기준) 랭킹 15행에 이미
+scope chip 15/15행·目標 chip 7행·速報 4행·単体詳細 3행이 붙고 있어 최대 3개/행 — 여기 basis
+chip을 얹으면 4개가 된다. (25) 라운드의 "모바일에서 칩이 회사명을 밀어낸다" 지적과 같은 부류의
+문제라 커밋 전에 바로 뒤집었다(1차 chip 구현은 라이브에 나간 적 없음).
+
+- **算定基準을 chip이 아니라 막대(`.li-bar`)의 패턴으로 교체.** 색(`colorForRange`의 초록/黄/赤)이
+  이미 目標レンジ 의미를 쓰고 있어, 색과 **직교하는 채널** 2개를 썼다 — ① 自社基準
+  (`internal_model`+`internal_management`, 한 덩어리로 묶음) = 대각선 ハッチ柄
+  (`.li-bar-self{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.28) 0 3px,
+  rgba(0,0,0,0) 3px 7px)}`) ② `未確認`(basis가 null/미지값) = 점선 테두리
+  (`.li-bar-unconfirmed{border:1px dashed var(--muted)}`) ③ `regulatory_standard` = 기존 무지
+  그대로. JS 는 `bar.style.background`(shorthand, 전체 리셋) 대신 `backgroundColor`만 인라인
+  세팅해 CSS class 의 `background-image`(ハッチ)가 지워지지 않게 했다.
+- **"3단이 필요한가"를 먼저 따져 2채널로 줄였다.** 内部モデル vs 内部管理의 세부 구분은 랭킹
+  막대에서는 안 보여주고 `row.title`/`aria-label`/`bar.title`(호버·스크린리더 텍스트, 전부
+  `basisLabel()`/`basisTitle()`로 갱신)과 상세 페이지(`jesr.html`)에만 남겼다 — 랭킹에서 필요한
+  판단은 "이 숫자를 옆 회사와 그대로 비교해도 되나" 뿐이고 그건 규제/自社 2단으로 충분.
+- **칩 감량이 이번 작업의 절반**: `scope`(連結/単体) chip · `目標 ○~○%` chip **전부 폐지**.
+  目標レンジ는 이미 트랙 위 반투명 밴드(`.li-band`)로 중복 표현되고 있어 chip 제거로 정보
+  손실이 없고, scope 는 `row.title`/`aria-label`에 그대로 남아 tooltip·스크린리더로는 계속
+  확인 가능. 남은 chip 은 `速報`·`単体詳細 ▸` 2종뿐인데 실측상 **완전히 배타적**(単体詳細는
+  SOMPO/東京海上/MS&AD 3개 지주행에만, 速報는 개별사 4행에만 — 동시발생 0건).
+- **Playwright DOM 실측(스크린샷만이 아니라 `.li-chip` 개수·`.li-nm` 폭을 코드로 측정)**:
+  15행 전부 **chip ≤1**(desktop·mobile 공통) — 목표(desktop ≤2·mobile ≤1)를 넉넉히 상회 달성.
+  모바일 회사명 폭 100.8~136.8px 로 회복(chip 2종 시절 71.5~75.8px 대비 뚜렷한 개선), 375px
+  가로스크롤 0. `regulatory_standard`(au損保 791.7%·明治安田損保 743.2%)는 무지 막대,
+  `internal_model`/`internal_management`(朝日生命保険·富国生命保険·T&Dホールディングス·
+  明治安田生命保険·SOMPOホールディングス·東京海上ホールディングス·MS&ADインシュアランスグループHD)
+  는 `li-bar-self` class 로 ハッチ 렌더 확인. `未確認`은 실데이터 15사 전원 basis 확정이라
+  실측 불가 — `isUnconfirmedBasis()` 로직 리뷰로만 확인(값이 다시 생기면 자동으로 점선 테두리).
+- **범례 1줄만 추가**(`.chart-legend`에 ハッチ 스와치 span 1개) — 기존 5종 문구는 그대로,
+  더 늘리지 않았다. 각주(`.chart-caveat`)는 새 패턴에 맞춰 1문단 재작성(전 라운드의 "chip은…"
+  문구를 "棒のハッチ柄は…"로 교체) — 無地=規制ベース(告示74号)/ハッチ柄=自社基準(内部モデル・
+  内部管理)/点線枠=算定基準未確認, 自社基準은 규제베이스와 단순비교 주의라는 취지.
+- **상세 페이지(`jesr.html`/`jesr_app.js`)는 1차 라운드 그대로 유지** — chip이 아니라 `metaLine`
+  인라인 텍스트 세그먼트(`算定基準: …`)였어서 이번 "칩 감량" 지시 대상이 아니다. 되돌리지 않음.
+- **검증**: `pytest tests/test_deploy_assets.py` 11 passed. BOM 0, html.parser 태그균형 0 오류,
+  IIFE 스크립트를 추출해 `node --check` 로 JS 구문 검증(문자열 치환 과정에서 남은 스텁 함수
+  중복 정의를 이 단계에서 잡아 제거함 — 상세는 세션 작업 로그). Playwright(1차와 동일
+  `executable_path` 우회, `/opt/pw-browsers/chromium-1194/chrome-linux/chrome` + `--no-sandbox`,
+  pip 최신판이 기대하는 리비전 1234와 설치본 1194가 안 맞아 기본 `launch()` 불가)로 1200px·
+  375px·다크모드 렌더 — pageerror 0(`ERR_CONNECTION_RESET` 2건은 샌드박스 외부망 차단, 코드와
+  무관, 기존 패턴). 상세 페이지 3케이스(au_nonlife detail-mode·headline-only 기본회사·
+  jgaap/disclosure 게이트)도 재확인, 전부 이상 없음(다른 세션이 동시에 `jesr_esr.json`을 고치고
+  있었으나 회귀 없음).
+- **손대지 않음(소유권 경계, owner 지시)**: `jp/jesr_esr.json`·`jp/jesr_detail.json`·`J-ESR/`·
+  `scripts/`·`CLAUDE.md`·`TODO_jp.md`. `jp/jp.css`도 무수정. 커밋·push 는 하지 않음.
+
+## 2026-09-13 — jp 랭킹 算定基準 chip (owner 지시 "랭킹은 칩으로 기준 구분해라") — **1차안, owner 반려로 위 2026-09-13b에서 되돌림**
+
+배경: `/jp/` ESR 랭킹 15사가 규제 표준식(告示74号)·내부모델·내부관리 3가지 다른 산정기준을 한 줄에
+세우고 있는데 화면은 이를 구분 없이 노출했다. publishing 이 2026-09-13 라운드에 `jesr_esr.json`
+`records[].basis`(census `esr_basis` 열 신설)로 3값(`regulatory_standard`/`internal_model`/
+`internal_management`)을 채웠지만 화면은 아직 렌더하지 않고 있었다.
+
+- **`jp/index.html`**: `BASIS_LABEL`/`BASIS_SHORT`/`BASIS_TITLE` 상수 신설(`renderList()` 상단
+  근처). 각 랭킹 행 이름 옆에 `.li-chip li-chip-basis` chip — 데스크톱 전체 라벨(`規制ベース`/
+  `内部モデル`/`内部管理`), 미확인·null 은 `未確認`(드롭 안 함, 향후 재발 대비). row 의 title(hover
+  tooltip)·aria-label(스크린리더)도 raw value 대신 이 라벨로 교체.
+- **모바일 375px 크로우딩 방지**: 기존 `.li-chip-kids`(▸ 아이콘화, `65f0aec` 2026-09-13 사고 수정)와
+  동일한 패턴 — `@media(max-width:640px)` 에서 `.li-chip-basis{font-size:0}` +
+  `::before{content:attr(data-short)}`로 1글자(規/モ/管/？)로 축약. `data-short` 는 JS 가 행마다
+  다르게 세팅(`bc.dataset.short = basisShort(r.basis)`). Playwright 375px 실측으로 회사명 폭이
+  축약 전(`65f0aec`)과 동일 수준(71.5~75.8px)임을 확인 — 이름이 밀리지 않는다.
+- **각주(`.chart-caveat`) 재작성**: chip 라벨을 그대로 인용해 "規制ベース(告示74号의 標準式)/
+  内部モデル/内部管理(各社独自) — 区分이 다른 회사 간은 단순 비교에 적합하지 않을 수 있다"는 취지로
+  — chip 만 보고 "무슨 뜻인지" 모르는 문제를 각주로 해소(owner 요구사항 2).
+  기존 캡션("算定基準(標準式・内部モデル・VaR水準等)…")을 대체.
+- **`jp/jesr_app.js`(상세 페이지, `jesr.html`)**: `metaLine`에 `算定基準: …` 세그먼트 추가.
+  `PAGE==='esr'` 이고 회사에 `basis` 값이 있을 때만 — `jesr_detail.json` 자체엔 basis 필드가
+  없어(publishing 이 `jesr_esr.json`에만 채움) `selectEntry()`의 detail/headline 두 분기 모두에서
+  `e.headlineRec.basis`를 끌어와 세팅. 랭킹 15사 밖 회사(basis 없음)는 세그먼트를 통째로 생략 —
+  "未確認"을 무차별로 붙이면 ESR 자체가 아직 없는 회사까지 있는 것처럼 오인시킨다. `jgaap.html`·
+  `disclosure.html`은 게이트로 막아 범위를 키우지 않음(owner 지시).
+- **검증**: `pytest tests/test_deploy_assets.py` 11 passed. BOM 0(`jp/index.html`·`jesr_app.js`),
+  html.parser 태그균형 0 오류. 이 환경엔 Playwright 가 미설치라 `pip install playwright` 후,
+  설치된 브라우저 리비전(`/opt/pw-browsers/chromium-1194`)이 pip 최신판이 기대하는 리비전(1234)과
+  달라 기본 `launch()`가 실패 — `executable_path`로 우회해 `chromium-1194/chrome-linux/chrome`을
+  직접 지정, `--no-sandbox`로 구동. 1200px·375px·다크모드(color_scheme=dark) 3-way로 랭킹 페이지,
+  au損害保険(算定基準 있는 detail-mode 회사)·headline-only 회사·jgaap/disclosure 게이트 3케이스
+  전부 렌더 — pageerror 0(리소스 로드 실패 `ERR_CONNECTION_RESET` 2건은 샌드박스 외부망 차단으로
+  Pretendard·gtag CDN 이 막힌 것, 기존 패턴과 동일해 코드 문제 아님), `document.documentElement.
+  scrollWidth > clientWidth` 로 가로스크롤 0 확인. `a11y_contrast_check.py`로 chip 글자색
+  (`--ink-strong` on `--bg`) 대비 실측 — 라이트 8.18:1, 다크 11.38:1 둘 다 WCAG AA(4.5:1) 통과.
+- **실데이터 15사 basis 분포(2026-09-13 확인)**: 규제표준 5사 — au損害保険 791.7 · 明治安田損害保険
+  743.2 · ライフネット生命保険 333.0 · 日本生命保険 195.0 · かんぽ生命保険 181.0(owner 메모의 "4사"와
+  달리 ライフネット生命保険도 규제표준으로 확인돼 있어 chip 이 5사로 자동 반영). 내부모델 7사(SOMPO
+  HD·東京海上HD·富国生命·MS&AD HD·明治安田生命·ソニーFG・ソニー生命). 내부관리 3사(朝日生命・T&D HD・
+  住友生命保険).
+- **손대지 않음(소유권 경계, owner 지시)**: `jp/jesr_esr.json`·`jp/jesr_detail.json`·`J-ESR/`·
+  `scripts/`·`CLAUDE.md`·`TODO_jp.md`. `jp/jp.css`도 무수정(jesr.html 쪽은 인라인 텍스트 세그먼트뿐
+  이라 새 클래스가 불필요). 커밋·push 는 하지 않음(오케스트레이터 몫).
 
 ## 2026-09-12c — GA4 내부 트래픽 플래그 (owner 발주 `inbox/designer/20260912T0830Z`)
 

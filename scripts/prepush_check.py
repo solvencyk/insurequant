@@ -17,7 +17,9 @@ try:
 except Exception:
     pass
 import os
+import subprocess
 import time
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,11 +32,258 @@ import validate_data_contract as gate            # noqa: E402
 import validate_golden_input_fingerprints as goldenfp   # noqa: E402
 
 
-def main() -> int:
-    print("=" * 72)
-    print("PRE-PUSH CHECK  (data-contract · K-ICS rules · domain gates · inbox · offline tests)")
-    print("=" * 72)
+# ===========================================================================
+# 0) PUSH SCOPE — 변경 범위에 맞춰 게이트를 고른다 (owner 2026-09-12, 2026-09-13 재지적)
+# ===========================================================================
+# **왜 있나.** `CLAUDE.md` §5 는 owner 가 2026-09-12 에 정한 규칙을 이렇게 적어 뒀다:
+# "번들 범위 diff 가 jp/·J-ESR/·docs·inbox·TODO·배포 스크립트뿐이면 한국 마스터 게이트(8분)를
+# 돌리지 않고 …만 돌린다." 그런데 **이 훅은 그 규칙을 코드로 보지 않았다** — 무조건 전부 돌았다.
+# 규칙이 문서에만 있으면 강제도 완화도 안 된다(이 저장소의 "문서에 mandatory 라고 썼다 ≠ 강제"
+# 와 정확히 같은 병, 방향만 반대다). 실측 2026-09-13: jp 만 고친 번들에서
+# `PRE-PUSH VERDICT … RED=197 … BLOCKED` 가 났고 그 197 은 전부 한국 원문(`data/disclosure/`)
+# 부재 때문이었다 — jp 변경과 인과가 0 인데 jp 작업이 막혔다.
+#
+# **설계는 fail-closed 다.** 축소는 "변경된 **모든** 경로가 아래 목록에 **명시적으로** 있을
+# 때"만 한다. 판정이 불확실한 모든 경우 — upstream 없음 · git 실패 · 빈 diff · 모르는 경로가
+# 한 개라도 섞임 — 는 전체 게이트로 간다. 축소는 게이트를 좁히는 행위라 이 저장소에서 가장
+# 위험한 코드다: 목록에 한 줄 잘못 넣으면 한국 마스터가 무검사로 나간다. 그래서
+#   ① 목록을 여기 한 곳에만 두고(다른 파일에 베껴 두지 않는다)
+#   ② `tests/test_prepush_scope.py` 가 변이시험으로 지키고
+#   ③ 판정 근거(비교 기준·파일 수·결정적 파일)를 **매 실행 인쇄한다**. 조용히 축소되면 그게
+#      다음 사고다 — "안 돌렸다" 와 "통과했다" 는 화면에서 구분돼야 한다.
+# 환경변수 우회로는 **일부러 안 만든다**(그런 건 반드시 켜진 채로 잊힌다). 수동 오버라이드는
+# `--full`(강제 전체) 하나뿐이고 `--scope-only` 는 판정만 인쇄하고 끝나는 디버그 모드다.
 
+# jp 범위로 **인정하는** 디렉토리. 여기 없는 것은 전부 전체 게이트다.
+JP_SCOPE_DIRS: tuple[tuple[str, str], ...] = (
+    ("jp/", "일본 ESR 레인 산출·페이지(한국 마스터와 파일이 겹치지 않는다)"),
+    ("J-ESR/", "일본 원문·추출 중간산출"),
+    ("docs/", "문서(에이전트 프롬프트·changelog·postmortem·도메인 문서)"),
+    ("inbox/", "스테이지 간 handoff — 축소 묶음의 check_inbox_hygiene 이 계속 검사한다"),
+    (".claude/", "에이전트·스킬 정의(파이프라인 산출물이 아니다)"),
+)
+
+# jp 범위로 인정하는 **개별 파일**(디렉토리 규칙보다 먼저 본다).
+JP_SCOPE_FILES: dict[str, str] = {
+    "scripts/android_push_and_deploy.sh":
+        "배포 스크립트(.sh) — 마스터·파생 JSON 을 만들지 않는다. `scripts/*.py` 는 배포용이라도"
+        " 여기 넣지 않는다(예: sync_tier_utilization_to_deploy.py 는 배포 JSON 을 쓴다).",
+    "tests/test_jp_source_gate.py":
+        "jp 출처 게이트 자신 — 축소 묶음이 이 파일을 실제로 실행하므로 검사 범위가 줄지 않는다",
+    "tests/test_jp_deploy_matches_census.py":
+        "jp 배포=census 게이트 자신 — 축소 묶음이 이 파일을 실제로 실행한다",
+    # CLAUDE.md 를 jp 범위에 넣는 판단(2026-09-13). owner 규칙 원문에는 없고, 넣을지는 이
+    # 세션의 판단이라 근거를 남긴다.
+    #  · 넣는 이유 — jp 라운드는 거의 매번 이 파일의 jp 절(§1 표·§5 게이트 범위)을 같이 고친다.
+    #    여기서 전체 게이트로 튀면 owner 가 지적한 그 BLOCK 이 그대로 재현된다.
+    #  · 안전한 이유 — CLAUDE.md 에서 **기계가 검사하는 주장**은 두 개뿐이다: 골든 테스트 표 ↔
+    #    `tests/test_*_golden.py` 동기화(`test_deploy_assets`), 'mandatory' 게이트 배선
+    #    (`test_push_gate_wiring`). **둘 다 축소 묶음에 들어 있다** — 그래서 CLAUDE.md 를 고쳐도
+    #    검사 범위가 줄지 않는다. 이 전제가 깨지면(둘 중 하나를 묶음에서 빼면)
+    #    `tests/test_prepush_scope.py::test_claude_md_guards_stay_in_the_reduced_bundle` 이 막는다.
+    "CLAUDE.md":
+        "룰 문서 — 기계검사 주장 2개(골든 표·게이트 배선)는 축소 묶음이 계속 본다",
+}
+
+# 전체 게이트를 강제하는 디렉토리. **판정에는 안 쓰인다**(기본값이 이미 전체다) — 화면에
+# "왜 전체인가" 를 사람이 읽을 수 있게 적는 용도다. 여기 없으면 '미분류'로 찍힌다.
+FULL_SCOPE_DIRS: tuple[tuple[str, str], ...] = (
+    ("data/", "한국 원천·중간산출 — 마스터의 입력"),
+    ("src/", "파서·빌더 코드"),
+    ("scripts/", "게이트·빌더 스크립트(배포 .sh 만 예외)"),
+    ("tests/", "테스트(jp 2종만 예외)"),
+    ("templates/", "배포 HTML 템플릿"),
+    ("public_exports/", "사용자가 내려받는 공개 스냅샷"),
+    ("config/", "파이프라인 설정"),
+    ("gold/", "gold 오버레이 입력"),
+    ("output/", "빌더 산출"),
+    ("archive/", "옛 산출 — 게이트가 읽는 경로가 섞여 있다"),
+    ("research/", "분석 노트북·산출"),
+    ("news/", "사이트가 읽는 뉴스 데이터"),
+    (".githooks/", "훅 자신 — 강제 지점"),
+)
+# 루트의 이 확장자들은 마스터 JSON·배포 HTML·워크북·프런트 자산이다 → 전체 게이트.
+ROOT_FULL_SUFFIXES = (".json", ".html", ".xlsx", ".xls", ".js", ".css", ".xml", ".csv")
+
+# 축소 모드에서 도는 pytest 묶음. **한국 골든·룰 커버리지는 여기 없다**(그게 축소의 정의다).
+# jp 게이트 2종 + 배포 자산 + 게이트 자신의 배선/범위판정 테스트만 남는다. 실측 ~3.3초.
+REDUCED_TEST_BUNDLE = [
+    "tests/test_jp_source_gate.py",
+    "tests/test_jp_deploy_matches_census.py",
+    "tests/test_deploy_assets.py",
+    # 아래 둘은 owner 규칙 원문에 없지만 **더한다**(축소는 빼는 방향만 위험하다):
+    # 게이트 자신의 배선 매니페스트와, 이 범위 판정기의 셀프테스트. CLAUDE.md 가 jp 범위에
+    # 들어 있는 근거이기도 하다(위 JP_SCOPE_FILES 주석).
+    "tests/test_push_gate_wiring.py",
+    "tests/test_prepush_scope.py",
+]
+
+
+@dataclass(frozen=True)
+class PathVerdict:
+    """파일 한 개의 판정. scope: "jp"(축소 허용) · "full"(한국 축) · "unknown"(미분류)."""
+    path: str
+    scope: str
+    rule: str
+
+
+@dataclass(frozen=True)
+class ScopeDecision:
+    reduced: bool
+    reason: str
+    verdicts: tuple[PathVerdict, ...] = ()
+    basis: str = "(비교 기준 없음)"
+
+    @property
+    def decisive(self) -> tuple[PathVerdict, ...]:
+        """판정을 결정한 파일들 — 전체면 '전체를 강제한 것들', 축소면 '전부 jp 인 그 목록'."""
+        if self.reduced:
+            return self.verdicts
+        return tuple(v for v in self.verdicts if v.scope != "jp")
+
+
+def classify_path(path: str) -> PathVerdict:
+    """경로 한 개 → 판정. **fail-closed**: 아는 jp 경로가 아니면 전부 전체 게이트."""
+    p = (path or "").strip().replace("\\", "/")
+    while p.startswith("./"):
+        p = p[2:]
+    if not p:
+        return PathVerdict(path, "unknown", "빈 경로 — 판정 불가")
+    if p.startswith("/") or ".." in p.split("/"):
+        # 절대경로·상위참조는 git 이 내보내는 형태가 아니다 → 파싱이 틀렸다는 뜻.
+        return PathVerdict(p, "unknown", "정상 경로가 아니다(절대경로/상위참조) — 판정 불가")
+    if p in JP_SCOPE_FILES:
+        return PathVerdict(p, "jp", JP_SCOPE_FILES[p])
+    for prefix, why in JP_SCOPE_DIRS:
+        if p.startswith(prefix):
+            return PathVerdict(p, "jp", f"{prefix} — {why}")
+    if "/" not in p and p.startswith("TODO") and p.endswith(".md"):
+        return PathVerdict(p, "jp", "루트 TODO*.md — 스테이지 작업목록")
+    for prefix, why in FULL_SCOPE_DIRS:
+        if p.startswith(prefix):
+            return PathVerdict(p, "full", f"{prefix} — {why}")
+    if "/" not in p and p.lower().endswith(ROOT_FULL_SUFFIXES):
+        return PathVerdict(p, "full", "루트 마스터 JSON·배포 HTML·워크북·프런트 자산")
+    return PathVerdict(p, "unknown", "미분류 경로 — 아는 목록에 없다(fail-closed)")
+
+
+def decide_scope(paths) -> ScopeDecision:
+    """파일 목록 → 판정. **git 을 부르지 않는 순수 함수**(그래야 테스트가 가능하다)."""
+    verdicts = tuple(classify_path(p) for p in sorted({str(p) for p in paths}))
+    if not verdicts:
+        # 빈 diff 는 "바뀐 게 없다" 가 아니라 "판정에 실패했다" 로 읽는다 — 훅은 push 직전에
+        # 도는데 밀 것이 0 개일 수는 없다. 여기서 축소하면 탐지 실패가 곧 무검사가 된다.
+        return ScopeDecision(False, "변경 파일 0개 — 판정 불가(fail-closed) → 전체 게이트")
+    forcing = tuple(v for v in verdicts if v.scope != "jp")
+    if forcing:
+        n_unknown = sum(1 for v in forcing if v.scope == "unknown")
+        tail = f" (그중 미분류 {n_unknown}개)" if n_unknown else ""
+        return ScopeDecision(
+            False, f"전체 게이트를 강제하는 파일 {len(forcing)}개{tail} → 전체 게이트", verdicts)
+    return ScopeDecision(
+        True, f"변경 {len(verdicts)}개가 전부 jp 범위 선언 안에 있다 → 축소(jp-scope)", verdicts)
+
+
+def _git_out(root, *args) -> str | None:
+    """git 호출. 실패(비-0 exit)는 None — 호출부가 fail-closed 로 받는다."""
+    try:
+        p = subprocess.run(["git", *args], cwd=str(root), capture_output=True)
+    except Exception:
+        return None
+    if p.returncode != 0:
+        return None
+    return p.stdout.decode("utf-8", errors="replace")
+
+
+def _nul_split(blob: str | None) -> list[str] | None:
+    if blob is None:
+        return None
+    return [x for x in blob.split("\0") if x.strip()]
+
+
+def collect_changed_paths(root=None):
+    """이번 push 로 올라갈 변경의 경로 목록 → (paths, 비교기준설명). 판정 불가면 (None, 사유).
+
+    "이번에 밀려는 것" = upstream 대비 커밋 + 스테이지 + 워킹트리 + 미추적. 뒤의 셋은 엄밀히는
+    push 대상이 아니지만 **일부러 포함한다**(fail-closed): 커밋 안 한 한국 마스터 수정이
+    트리에 있는데 게이트를 축소하면, 다음 커밋이 무검사로 나간다.
+    `-z` 는 필수다 — 기본 git 은 비ASCII 경로를 `"\\352\\263\\265…"` 로 따옴표 이스케이프해서
+    내보내고(이 저장소에는 `공시보고서.html` 같은 한글 경로가 있다), 그걸 그대로 분류하면
+    전부 '미분류'가 된다. `--no-renames` 도 필수: rename 을 한 줄로 접으면 **없어진 쪽 경로가
+    목록에서 사라진다**(한국 마스터를 jp 폴더로 옮기는 커밋이 축소로 통과할 수 있다).
+    """
+    root = ROOT if root is None else root
+    up = _git_out(root, "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{upstream}")
+    if up is None or not up.strip():
+        return None, "@{upstream} 이 없다(추적 브랜치 미설정)"
+    up = up.strip()
+    base = _git_out(root, "merge-base", up, "HEAD")
+    if base is None or not base.strip():
+        return None, f"merge-base({up}, HEAD) 실패"
+    base = base.strip()
+    parts = {
+        f"커밋({base[:9]}..HEAD)": _nul_split(
+            _git_out(root, "diff", "--name-only", "-z", "--no-renames", base, "HEAD")),
+        "스테이지": _nul_split(
+            _git_out(root, "diff", "--name-only", "-z", "--no-renames", "--cached", "HEAD")),
+        "워킹트리": _nul_split(
+            _git_out(root, "diff", "--name-only", "-z", "--no-renames", "HEAD")),
+        "미추적": _nul_split(
+            _git_out(root, "ls-files", "--others", "--exclude-standard", "-z")),
+    }
+    for label, got in parts.items():
+        if got is None:
+            return None, f"git diff 실패: {label}"
+    paths = sorted({p for got in parts.values() for p in got})
+    basis = (f"upstream={up} · merge-base={base[:9]} · "
+             + " · ".join(f"{k}={len(v)}" for k, v in parts.items()))
+    return paths, basis
+
+
+def resolve_scope(root=None, *, force_full=False, paths=None, collect=None) -> ScopeDecision:
+    """실제 판정 진입점. `collect` 를 갈아끼울 수 있어 git 없이도 테스트된다."""
+    if force_full:
+        return ScopeDecision(False, "--full (수동 오버라이드) → 전체 게이트",
+                             basis="(판정 생략)")
+    if paths is not None:
+        return replace(decide_scope(paths), basis="--scope-only 인자로 받은 목록(what-if)")
+    got, basis = (collect or collect_changed_paths)(ROOT if root is None else root)
+    if got is None:
+        return ScopeDecision(False, f"범위 판정 실패 — {basis} → 전체 게이트(fail-closed)",
+                             basis=basis)
+    return replace(decide_scope(got), basis=basis)
+
+
+def print_scope(decision: ScopeDecision, limit: int = 30) -> None:
+    """판정 근거를 인쇄한다. **조용히 축소되면 그게 다음 사고다** — 매번 찍는다."""
+    print("=" * 72)
+    print("PUSH SCOPE  (CLAUDE.md §5 — 변경 범위에 맞춘 게이트 선택)")
+    print("=" * 72)
+    print(f"  비교 기준   : {decision.basis}")
+    print(f"  변경 파일   : {len(decision.verdicts)}개"
+          f"  (jp={sum(1 for v in decision.verdicts if v.scope == 'jp')}"
+          f" · full={sum(1 for v in decision.verdicts if v.scope == 'full')}"
+          f" · 미분류={sum(1 for v in decision.verdicts if v.scope == 'unknown')})")
+    dec = decision.decisive
+    head = ("jp 범위로 인정된 파일" if decision.reduced else "전체 게이트를 강제한 파일")
+    print(f"  {head} : {len(dec)}개")
+    for v in dec[:limit]:
+        print(f"      [{v.scope:<7}] {v.path}   ← {v.rule}")
+    if len(dec) > limit:
+        print(f"      … 외 {len(dec) - limit}개")
+    print(f"  판정        : {'REDUCED (jp-scope)' if decision.reduced else 'FULL'}"
+          f" — {decision.reason}")
+    if decision.reduced:
+        print("  ※ 한국 마스터 게이트는 **안 돈다**. 'SKIPPED' 는 '통과'가 아니다 —")
+        print("     한국 축 파일이 하나라도 섞이면 자동으로 전체 게이트로 돌아간다.")
+
+
+def _run_korean_master_gates() -> dict:
+    """한국 마스터 축 게이트 묶음(1 · 1b · 1c · 1d · 1e) → 이름별 exit code.
+
+    jp-scope 축소 모드에서는 이 함수를 **부르지 않는다**(그게 축소의 전부다). 묶어 둔 이유는
+    호출 지점을 한 곳으로 만들어 "무엇이 건너뛰어졌나" 를 눈으로 셀 수 있게 하기 위해서다.
+    """
     # 1) hard gate (blocks on RED)
     env = gate.Env()
     res = gate.run_gate(env)
@@ -142,6 +391,44 @@ def main() -> int:
     print("GOLDEN INPUT FINGERPRINT (빌더 미실행 — scripts/validate_golden_input_fingerprints.py)")
     n_fp = goldenfp.main([])
 
+    return {"red": n_red, "kics": n_kics, "dom": n_dom, "raw": n_raw, "fp": n_fp}
+
+
+def main(argv=None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    force_full = "--full" in argv
+    scope_only = "--scope-only" in argv
+    rest = [a for a in argv if a not in ("--full", "--scope-only")]
+    bad = [a for a in rest if a.startswith("-")]
+    if bad or (rest and not scope_only):
+        print(f"알 수 없는 인자: {bad or rest}")
+        print("사용법: prepush_check.py [--full] [--scope-only [PATH ...]]")
+        print("  --full       범위 판정을 무시하고 전체 게이트를 돈다")
+        print("  --scope-only 범위 판정만 인쇄하고 끝낸다(디버그). PATH 를 주면 그 목록으로 what-if")
+        return 2
+
+    decision = resolve_scope(force_full=force_full, paths=rest or None)
+    print_scope(decision)
+    if scope_only:
+        print("\n[--scope-only] 판정만 인쇄했다 — **게이트는 한 줄도 안 돌았다**. push 판정이 아니다.")
+        return 0
+
+    print("\n" + "=" * 72)
+    print("PRE-PUSH CHECK  (data-contract · K-ICS rules · domain gates · inbox · offline tests)")
+    print("=" * 72)
+
+    if decision.reduced:
+        # 축소 모드: 한국 마스터 축 게이트(1·1b·1c·1d·1e)를 **부르지 않는다**. 0 으로 두되
+        # verdict 에는 `SKIPPED (jp-scope)` 로 찍는다 — 0 을 'pass' 로 읽으면 그게 false-green 이다.
+        print("\n[jp-scope] 한국 마스터 게이트 건너뜀: data-contract · K-ICS 룰 · 도메인 7종 ·"
+              " DART raw 커버리지 · 골든 입력지문")
+        print("           (건너뛴 이유: 위 PUSH SCOPE 판정. 한국 축 파일이 섞이면 자동 복귀)")
+        n_red = n_kics = n_dom = n_raw = n_fp = 0
+    else:
+        _g = _run_korean_master_gates()
+        n_red, n_kics, n_dom = _g["red"], _g["kics"], _g["dom"]
+        n_raw, n_fp = _g["raw"], _g["fp"]
+
     # 2) 일반 이상치 발견 → 트리아지 — **2026-08-25 에 push 경로에서 뺐다** (owner: "씰데없는
     #    룰들은 좀 쳐내"). 지운 게 아니라 `scripts/scan_generic_anomalies.py` 로 내렸다.
     #
@@ -177,7 +464,9 @@ def main() -> int:
     #    그 틀린 추정이 이 제외 결정의 근거였다), pl_breakdown ~95초 opt-in. 그 사각은 위 1e
     #    지문게이트가 메운다(빌더 미실행, 수초). 이 묶음 ~19초.
     print("\n" + "=" * 72)
-    print("OFFLINE TESTS (goldens + 룰 커버리지 매니페스트)")
+    print("OFFLINE TESTS (goldens + 룰 커버리지 매니페스트)"
+          if not decision.reduced else
+          "OFFLINE TESTS [jp-scope 축소 묶음 — 한국 골든·룰 커버리지는 SKIPPED]")
     fast = ["tests/test_kics_rules_golden.py", "tests/test_master_tables_golden.py",
             "tests/test_post_transition_golden.py", "tests/test_deploy_assets.py",
             "tests/test_rule_coverage_manifest.py",
@@ -227,7 +516,16 @@ def main() -> int:
             # jp 게이트가 빌더 실행 시에만 도는 구조라 아무 검사에도 안 걸렸다. 변이시험:
             # 배포본 수치 하나를 흔들면 즉시 FAIL. <1초.
             "tests/test_jp_deploy_matches_census.py",
+            # 범위 판정기(§0)의 셀프테스트 + 변이시험(2026-09-13 신설). 게이트를 **좁히는**
+            # 유일한 코드라 여기 안 넣으면 축소 목록이 조용히 넓어져도 아무도 못 잡는다 —
+            # 한국 마스터가 무검사로 나가고 verdict 는 `gate-clear` 를 찍는다. <1초.
+            "tests/test_prepush_scope.py",
             "tests/unit/"]
+    if decision.reduced:
+        # jp-scope: 한국 골든·룰 커버리지 묶음을 통째로 건너뛴다(위 1~1e 와 같은 이유).
+        # **빼는 목록이 아니라 남기는 목록**으로 쓴다 — 나중에 테스트가 추가돼도 축소 묶음이
+        # 자동으로 늘어나지 않게. 늘리려면 `REDUCED_TEST_BUNDLE` 을 명시적으로 고쳐야 한다.
+        fast = list(REDUCED_TEST_BUNDLE)
     # 커버리지 매니페스트는 훅에서만 **전수(48칸 × 게이트 1회)** 로 돌린다. 로컬 pytest 기본값은
     # 선언된 사각만 셀 단위 + 나머지 묶음(42초)인데, 묶음은 "44칸이 통째로 죽는 것"만 잡고
     # **한 칸이 조용히 사각이 되는 것**은 못 잡는다 — 그게 이 테스트의 존재 이유다.
@@ -256,13 +554,21 @@ def main() -> int:
 
     print("\n" + "#" * 72)
     blocked = n_red or n_hyg or n_test or n_kics or n_dom or n_raw or n_fp
-    print(f"PRE-PUSH VERDICT: gate RED={n_red} · K-ICS rule gate={'BLOCK' if n_kics else 'clear'}"
-          f" · domain gates={'FAIL' if n_dom else 'pass'}"
-          f" · DART raw 유실={'있음' if n_raw else '0'}"
-          f" · 골든 입력지문={'FAIL' if n_fp else 'pass'}"
+    # 축소 모드에서 안 돈 게이트는 **'pass' 로 찍으면 안 된다**. n_* 는 0 이지만 그 0 은
+    # "검사해서 깨끗했다" 가 아니라 "검사하지 않았다" 이고, 그 둘을 화면에서 못 가르는 것이
+    # 이 저장소의 false-green 그 자체다(docs/postmortems/ 전체가 그 기록이다).
+    _SKIP = "SKIPPED(jp-scope)"
+    _r = decision.reduced
+    print(f"PRE-PUSH VERDICT [scope={'REDUCED(jp-scope)' if _r else 'FULL'}]:"
+          f" gate {_SKIP if _r else f'RED={n_red}'}"
+          f" · K-ICS rule gate={_SKIP if _r else ('BLOCK' if n_kics else 'clear')}"
+          f" · domain gates={_SKIP if _r else ('FAIL' if n_dom else 'pass')}"
+          f" · DART raw 유실={_SKIP if _r else ('있음' if n_raw else '0')}"
+          f" · 골든 입력지문={_SKIP if _r else ('FAIL' if n_fp else 'pass')}"
           f" · inbox 기계적위반={'있음' if n_hyg else '0'}"
-          f" · offline tests={'FAIL' if n_test else 'pass'}"
+          f" · offline tests{'(jp 묶음)' if _r else ''}={'FAIL' if n_test else 'pass'}"
           f" → {'BLOCKED (fix or owner-escalate)' if blocked else 'gate-clear'}"
+          f"{' — 한국 마스터 축은 미검사다' if (_r and not blocked) else ''}"
           f"  |  anomaly discovery: 게이트 밖(scripts/scan_generic_anomalies.py)")
     print("#" * 72)
     return 2 if blocked else 0

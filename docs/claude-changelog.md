@@ -9,6 +9,30 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 ---
 
+## 2026-09-13 (2차) — 게이트 범위 판정을 문서에서 코드로
+
+owner 지적으로 시작: **"한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 되지."** 맞는 지적이었고,
+원인은 규칙이 아니라 배선이었다 — CLAUDE.md §5 의 범위 규칙은 owner 가 2026-09-12 에 이미 정해 놨는데
+`scripts/prepush_check.py` 가 그걸 **읽지 않고** 언제나 전부 돌렸다. 실측 사례: jp 만 고친 번들에서 `RED=197`
+(전부 한국 원문 `data/disclosure/` 부재) 로 BLOCKED.
+
+- `prepush_check.py` **§0 PUSH SCOPE** 신설. `classify_path`(경로 1개 → jp/full/unknown + 근거) ·
+  `decide_scope`(git 을 안 부르는 순수 함수) · `collect_changed_paths`(merge-base(@{upstream},HEAD)..HEAD +
+  스테이지 + 워킹트리 + 미추적) · `print_scope`(비교 ref·파일 수·**결정적 파일과 그 근거**를 매번 인쇄).
+  한국 마스터 게이트 5종(1·1b·1c·1d·1e)은 `_run_korean_master_gates()` 한 함수로 묶어 호출 지점을 하나로 만들었다.
+- **fail-closed**: `@{upstream}` 없음 · git 실패 · 빈 diff · 모르는 경로 1개 → 전부 전체 게이트. 우회 환경변수 없음.
+  오버라이드는 `--full`·`--scope-only` 둘뿐이고 `--scope-only` 는 verdict 를 아예 안 찍는다(게이트 미실행임을 화면으로 구분).
+- **실측**: jp 3파일 번들 → `REDUCED(jp-scope)` exit 0 **5초**, 한국 축 5종 전부 `SKIPPED(jp-scope)`(로그에 그 섹션 자체가 없다) ·
+  같은 트리에 `kics_disclosure.json` 하나 추가 → 자동 `FULL` exit 2 · `--full` 강제도 동일.
+- 회귀 `tests/test_prepush_scope.py` **65케이스**, 변이 **12/12 발화**(목록 삭제·fail-open·빈 diff 축소·git 실패 fail-open·
+  `-z` 제거(한글 경로)·미추적 누락·축소 모드에서 한국 게이트 호출·SKIPPED 대신 pass 인쇄 등).
+  `test_push_gate_wiring.py` 에 `test_wired_means_wired_in_the_full_gate_only` 추가 — WIRED 의 뜻이 "전체 게이트에서 돈다"로
+  좁아진 것을 매니페스트가 모르면 오독이다.
+- `CLAUDE.md` 를 jp 범위에 넣은 근거: 이 파일에서 **기계가 검사하는 주장**은 골든표 동기화와 게이트 배선 둘뿐이고 둘 다 축소 묶음에 있다.
+  그 전제 자체를 `test_claude_md_guards_stay_in_the_reduced_bundle` 이 지킨다.
+- `.githooks/pre-push` 안내 문구도 갱신(전체 ~18분 / jp 범위 ~5초).
+- **UH-20 등재**: 훅이 git 이 stdin 으로 주는 refspec 을 버려서 범위가 근사다. 빗나가면 전체가 도는 안전 방향이라 P3.
+
 ## 2026-09-13 — 서브에이전트 정의가 저장소 밖에 있었다 (`.gitignore` 의 `.claude/` 한 줄)
 
 CLAUDE.md §10 은 "독립 작업은 서브에이전트를 한 메시지에서 병렬 발사, 모델은 티켓 유형으로" 를

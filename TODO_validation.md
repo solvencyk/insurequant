@@ -1,11 +1,22 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-09-13 (jp false-green 포스트모템·UH-18 미배선 등재; 직전 2026-09-02 MASTER_XLSX_* 축 신설 — 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조를 CHECK 8 로 배선) · Stage 3/5 — validation
+> Last updated: 2026-09-13 (push 범위 판정을 훅에 구현 — CLAUDE.md §5 가 문서로만 있던 규칙을 코드로; 직전 jp false-green 포스트모템·UH-18 등재; 직전 2026-09-02 MASTER_XLSX_* 축 신설 — 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조를 CHECK 8 로 배선) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-09-13, 3차) push 게이트 범위 판정을 `prepush_check.py` 안에 구현 — 규칙이 문서에만 있어서 강제도 완화도 안 되던 자리다.** owner 지적: "한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 된다". `CLAUDE.md` §5 는 2026-09-12 에 이미 "번들 diff 가 jp 범위뿐이면 한국 마스터 게이트를 안 돌린다" 고 적어 뒀는데 훅은 **그 규칙을 코드로 보지 않았다**(무조건 전부 실행). 실측 재현: jp 만 바꾼 번들에서 `PRE-PUSH VERDICT … gate RED=197 · K-ICS rule gate=BLOCK … BLOCKED`(exit 2) — 197건 전부 한국 원문 `data/disclosure/` 부재 때문이고 jp 변경과 인과 0.
+
+> 신설: `prepush_check.py` §0(`classify_path`/`decide_scope`/`collect_changed_paths`/`resolve_scope`/`print_scope` + `_run_korean_master_gates()` 로 한국 축 묶음 분리) · `tests/test_prepush_scope.py`(65케이스) · `tests/test_push_gate_wiring.py::test_wired_means_wired_in_the_full_gate_only`.
+>
+> - **fail-closed.** 축소는 "변경된 **모든** 경로가 명시 목록 안"일 때만. upstream 없음 · git 실패 · 빈 diff · 미분류 경로 1개 → 전부 전체 게이트. 비교 기준 = `merge-base(@{upstream}, HEAD)..HEAD` + 스테이지 + 워킹트리 + 미추적(뒤 셋은 push 대상이 아니지만 **일부러 포함** — 커밋 안 한 한국 마스터 수정이 트리에 있는데 축소하면 다음 커밋이 무검사로 나간다).
+> - **jp 범위 목록**: `jp/`·`J-ESR/`·`docs/`·`inbox/`·`.claude/`·루트 `TODO*.md`·`scripts/android_push_and_deploy.sh`·jp 테스트 2종·`CLAUDE.md`. **CLAUDE.md 를 넣은 근거**: 이 파일에서 기계가 검사하는 주장은 골든 표 동기화(`test_deploy_assets`)와 게이트 배선(`test_push_gate_wiring`) 둘뿐이고 **둘 다 축소 묶음에 있다**. 그 전제는 `test_claude_md_guards_stay_in_the_reduced_bundle` 이 지킨다. `scripts/*.py`(배포 .sh 제외)·루트 마스터 JSON·루트 HTML·`src/`·`data/`·`tests/`(jp 2종 제외)는 무조건 전체.
+> - **"안 돌렸다" ≠ "통과했다".** 축소 시 verdict 는 `SKIPPED(jp-scope)` 로 찍고 0 을 pass 로 인쇄하지 않는다. 판정 근거(비교 ref·파일 수·결정적 파일 목록)를 매 실행 인쇄한다. 우회 환경변수는 **일부러 안 만들었다**; 수동은 `--full`(강제 전체)·`--scope-only`(판정만, 게이트 미실행) 둘뿐.
+> - **실측(격리 클론, jp 3파일만 변경)**: 축소 `exit=0` **4.97초**(오프라인 173 passed·4 skipped, 한국 게이트 5종 전부 SKIPPED) ↔ 같은 트리 `--full` `exit=2` 16초(`RED=197`·K-ICS BLOCK·도메인 FAIL). 재현: `python3 scripts/prepush_check.py --scope-only` → 판정만.
+> - **변이시험 12/12 발화**(사본에서만, 원본 md5 동일 확인): jp/ 목록삭제 · fail-closed 개방 · 빈 diff 축소 · git 실패 축소(fail-open) · `--no-renames` 제거 · `-z` 제거(한글 경로) · 미추적 제외 · 축소묶음에서 wiring 테스트 제거 · 축소 모드에서도 한국 게이트 호출 · `SKIPPED` 대신 `pass` 인쇄 · 전체묶음에서 셀프테스트 제거.
+> - **잔여 UH-20**: 훅(`.githooks/pre-push`)은 stdin 의 refspec 을 게이트에 안 넘긴다 — 판정은 `@{upstream}` 근사다. 다른 remote/branch 로 미는 경우(격리 워크트리 cherry-push)는 근사가 빗나갈 수 있고, 그때는 fail-closed 로 전체 게이트가 돈다(안전 방향). refspec 전달은 후속.
 
 **(2026-09-13 후속) UH-18 배선 완료 · UH-19 신규·같은 날 해소 — jp 레인에도 "게이트가 검사하는 파일 = 사용자가 보는 파일"이 걸렸다.** `build_jesr_page_json.py::source_gate_check` 4종(`JP_SOURCE_EXPIRING_HOST`·`JP_SOURCE_URL_DEAD`·`JP_SOURCE_EVIDENCE_STALE`·`JP_SOURCE_EVIDENCE_INCOMPLETE`)이 `self_check` 경유로 **exit 1 에 실제 반영**된다(변이시험: extend 한 줄 제거 시 exit-code 케이스 3개만 정확히 FAIL). 회귀 43케이스 + 이빨 변이 5/5. **네트워크를 안 타는 설계**: 판정은 `check_source_urls.py --all` 이 `source_url_health.json` 에 박제하고 빌더는 박제를 읽는다 — 그래서 `JP_SOURCE_URL_DEAD` 의 이빨은 `JP_SOURCE_EVIDENCE_STALE` 에 전적으로 의존한다(한 쌍, 독립 룰 아님). 오탐억제: RED 로 읽는 분류는 `dead` 하나뿐(254건 실측에서 "ok 아니면 RED" 는 48건 거짓 RED). 예외 등재처 `J-ESR/jp_source_exceptions.json`(0건, fail-closed, 절차 룰 2종은 면제 불가, 등재는 owner 권한). **UH-19**: jp 게이트는 빌더를 돌릴 때만 도는 구조라 census 만 고친 커밋이 검사를 통째로 비껴갔다(실측 사례 `62eed63`) → `tests/test_jp_deploy_matches_census.py` 로 "배포 JSON = census 재빌드 결과" 를 강제, 두 테스트를 `prepush_check.py` offline 묶음 + CLAUDE.md §5 jp 축소범위에 등재해 **훅이 실제로 부른다**. 포스트모템 `PM-2026-09-13` 은 **open 유지** — 사고 3건 중 2건(東京海上HD·かんぽ)은 URL 이 살아 있었고, 그 축(`JP_ESR_NOT_IN_SOURCE`)은 오탐억제 3종의 실측 분포가 선행조건이라 아직 안 걸었다(UH-5·UH-9 선례).
 
@@ -52,88 +63,6 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 >   **UH-17**(워킹트리 기준 대조라 sync 후 커밋 없이 push 하면 안 잡힌다 — 커밋 기준으로 바꾸면
 >   정상 sync 중 상시 발화라 오탐억제 설계 전까지 배선 안 함).
 >   포스트모템 `docs/postmortems/PM-2026-09-02_master_xlsx_stale_unchecked.md`.
-
-**(2026-09-01) item23(기타요구자본) 자식 24/25/26 적용후 결측 227버킷 판정 완료 — 등재부 신설로 SKIP-on-missing 사각을 닫았다.**
-
-> 티켓: `inbox/validation/20260901T1200Z__orchestrator__MULTI__post_transition_item23_children_227_buckets.md`.
-> 227버킷 = 196(부모≈0, 등식 0=0+0+0 자명, 원장 불요) + 31(부모 material, 원문대조 필요 —
-> 교보생명 18·흥국생명 12·삼성화재/DB손해/한화생명/코리안리 각 1). 이미 오늘 오전 두 커밋
-> (`e684f69`·`345b3a4`)이 227의 대부분(196+실제 채운 106칸 등)을 처리했고 `data/_derived/
-> item23_children_audit/verdict_group3.json`에 31버킷×3칸=93셀 건별 판정(POST_EQUALS_PRE_LEGIT
-> 54·SOURCE_ABSENT 36·UNMEASURED 3)까지 남겨 뒀는데 **게이트가 읽는 자리가 없어** 매 실행
-> 미분화 SKIP("추출갭 후보")으로 재발할 상태였다. 이 세션이 KR0071 raw PDF(fitz) 직접 재확인으로
-> 독립 검증(2023.2Q 사례 일치) 후 `data/_gold/kics_item23_children_post_absent.json`(31버킷,
-> verdict+pin) 신설 + `scripts/validate_kics_disclosure.py::_other_capital_children_sum`(3-tuple
-> 반환으로 확장, ledger lookup)·`scripts/validate_data_contract.py`(호출부 동기화 + 등재값 이탈시
-> `OTHER_CAPITAL_CHILDREN_LEDGER_DRIFT` RED) 배선. **원장은 finding을 지우지 않는다** — skip
-> 집계는 그대로고 태그에 판정만 붙는다, 등재값에서 벗어나면 RED로 승격.
-> 검증: gate 전/후 상태카운트 바이트동일(RED=39/YELLOW=1658/GREEN=11102/SKIP=2803, 요구자본 축만
-> 재태깅), `validate_data_contract.py` RED=0 유지, pytest 842 passed(BS golden 제외) +
-> `_data_contract_selftest.py` 57/57.
-> KR0071 2024.4Q(UNMEASURED)는 raw PDF가 정기경영공시가 아니라 DART 사업보고서(538p, K-ICS
-> 수치표 0회) — 스캔이 아니라 **잘못된 파일**이라 OCR로 안 풀린다. `inbox/downloader/
-> 20260901T1329Z__validation__KR0071_2024.4Q__wrong_document_not_periodic_disclosure.md`로 라우팅.
-
-**(2026-09-01, 이전) 판정 사이드카 2종이 2026.2Q 전체에 대해 스테일이었다 — 게이트가 39사를 조용히 "판정 불가"로 흘리며 exit 0 이었다. 경로·지표·스테일 검사 셋 다 고쳤다.**
-
-> 수정: `scripts/_disclosure_pdf_paths.py`(신설, raw//pdf/ 단일 해석기) ·
-> `scripts/build_kics_source_textlayer.py` · `scripts/extract_transition_applicability.py` ·
-> `scripts/validate_kics_disclosure.py`(freshness 경로 + 신규 룰 `SIDECAR_STALE_LATEST_QUARTER`)
->
-> - **원인 ① 디렉토리 축.** 13분기 동안 공시 PDF 는 `data/disclosure/<period>/raw/` 에 있었는데
->   **2026.2Q 부터 `pdf/` 로 바뀌었다**(실측 `FY2026_Q2: raw=1 · pdf=39`, 그 전 분기는 전부
->   `raw=38~40 · pdf=0`). `raw/` 만 glob 하던 두 생성기가 2026.2Q 를 통째로 스킵했다. 같은 버그가
->   이 저장소에서 **세 번째**다(`rebuild_combined_transition_after._pdf` · `fill_market_subitems`
->   에 이어). 그래서 개별 패치 대신 해석기 하나로 모았다.
-> - **원인 ② 판정 지표(owner 지적).** 판독성을 **문서 전체 평균 chars/page** 로 쟀다. 그 지표는
->   "앞은 스캔·뒤는 감사보고서 텍스트" 문서를 영원히 READABLE 로 부른다(흥국생명 FY2024_Q4:
->   p1-112 이미지인데 전체평균 532.8 → READABLE). 이 오판이 owner 의 옳은 `image-only` 등재를
->   2026-08-21 에 뒤집게 만들었고 처방을 OCR 대신 재수집으로 오라우팅했다. 이제 페이지별 분포 +
->   K-ICS 절 밀도로 재고, 신규 상태 **`SCANNED_SECTION`**(문서는 맞고 절만 이미지 → 처방=OCR)을
->   가른다. 두 판정 중 **엄한 쪽**을 써서 이 지표가 절대 느슨해지지 않게 했다.
-> - **원인 ③ 스테일 자체가 무검사.** 사이드카가 최신 분기를 안 담아도 게이트가 통과했다 →
->   신규 RED `SIDECAR_STALE_LATEST_QUARTER` + YELLOW `SIDECAR_COVERAGE_GAP` 배선.
->   역방향 검증: 구 사이드카를 되돌리면 **RED 2건(2026.2Q 39 + 3 버킷)** 으로 정확히 터진다.
->   `prepush_check.py` 는 이미 이 게이트를 부르고 `blocked = ... or n_kics` 로 강제한다(확인함).
-> - **실측 이동.** textlayer 486→538셀(2026.2Q 39사 신규) · applicability `NO_RAW_PDF` 8→0 ·
->   게이트 "판정 불가" **57칸/34버킷 → 37칸/20버킷**, `UNMEASURED` **25→0**.
->   사이드카만 A/B 한 결과 blocking RED **1→7**(+6). 값 flip 은 전부 `UNKNOWN→known` 이고
->   기존 판정을 뒤집은 것은 0건.
-> - **새 RED 6건은 진짜 결함이었고 같은 라운드에 닫혔다** (KR0009·KR0069·KR0150 2026.2Q ×
->   값/값_적용후): 항목 47~54 가 마스터에 없는데 **원문 MD 에는 숫자가 있고 2026.1Q 에는 적재돼
->   있었다**(커버리지 회귀 `item47` 37/39 → 35/39). parser/kics 발주 → 적재 완료 →
->   **셀 단위로 원문과 대조 확인**(예 KR0069 item47 118,528.22억 = 원문 11,852,822백만 ✅).
->   `item47` 보유 **38/39**, 그 RED **6→0**, blocking RED **7→1**.
->   티켓은 `inbox/_resolved/20260901T0400Z__validation__MULTI_2026.2Q__tier2_tfi_rows_47_54_absent.md`.
-> - **잔여 blocking RED 1건은 `19_market` 이고 내 변경과 무관하다** — 사이드카 A/B 양쪽에 똑같이
->   있었다(구 사이드카로 돌려도 나온다). 이 세션에서 원인 규명 안 함.
-> - **골든:** `tests/test_kics_rules_golden.py` 는 사이드카 교체 직후 해시가 어긋났으나
->   (구 사이드카로는 PASS 확인 = 내 변경이 원인, 의도된 산출 변경) **손으로 고치지 않았고**,
->   parser 백필 라운드가 재생성하면서 현재 **PASS**. 오프라인 74개 전부 통과.
-> - **경고:** `extract_transition_applicability` 의 "표가 있으면 TFI=O" 휴리스틱이 삼성생명 6분기를
->   오판한다(원문은 "공통 및 선택 경과조치를 적용하지 않았습니다"). 일반화 수정("전=후면 X")은
->   **198칸을 O→X 로 뒤집어** blocking RED 을 SKIP 으로 바꾸므로 **기각**했다. 좁은 대안(문서수준
->   부정문 + `외에` 배제)을 시뮬(10버킷 매치 / 6칸 정정 / 대조군 4칸 일치)해 parser 에 발주함.
-
-**(2026-09-01) 미결 — owner 판단이 필요한 것 2건**
-
-> 1. **“분기별 원공시본 기준” 정책이 선언된 적이 없다.** 실측: 가장 가까운 서술은
->    `data/_gold/kics_exemption_provenance.json` KR0032 2024.3Q 엔트리의 “as-disclosed 를
->    그대로 두는 것이 이 저장소의 ‘발행사 기재대로’ 원칙과 일치한다” 인데, **같은 엔트리가
->    ‘as-disclosed 를 유지할지 as-restated 를 채택할지는 owner/parser 정책 결정이고 이
->    세션은 정하지 않았다’ 라고 명시**한다. 관행일 뿐 결정이 아니었다. 게다가 **IFRS17 CSM
->    축에서는 owner 가 반대로 결정했다**(2026-06-20: 후속 분기 비교표에서 재작성값을 pull 해
->    마스터를 재작성 기준으로 통일 — `validate_master_tables.py` L797-799 ·
->    `inbox/_resolved/20260620T0600Z__validation__KR0073__kyobo_csm_priorperiod_pull_from_comparative.md` ·
->    `data/_gold/user_csm_cells.json` “교보 재작성 기준 통일 58,249.2”). 즉 **저장소가 전부
->    as-filed 로 정렬돼 있다는 말은 사실이 아니다** — K-ICS 는 as-filed, CSM 은 일부 셀이
->    as-restated. 새 등재부가 선언하는 것은 **K-ICS 마스터의 기준**이며, 바꾸려면 owner 결정이
->    필요하다.
-> 2. **과거 122칸을 등재부에 백필할지.** 지금 등재부는 검증된 2026.1Q 라운드 10칸뿐이다.
->    과거 시뮬레이션 결과는 `_history_probe` 에 **미검증 표시로** 넣어 뒀다(컨트롤 컬럼 대조·
->    잔여셀 육안 판독 안 함, 쌍당 3~9개사 미판독). 검증 없이 박제하면 그 박제 자체가
->    무검사가 된다.
-
 
 > 📦 **Status 이력은 `docs/todo_archive_validation.md` 로 이동했다** (2026-09-11, 내용 무수정 — (2026-09-01) 판정 사이드카 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 

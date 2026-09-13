@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-09-12 · Stage 5/5 — designer
+> Last updated: 2026-09-13 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -92,19 +92,40 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
   상시 유지 파일"로 문서·테스트에 배선(publishing 소관, 현재 배포 경로로는 안 지워짐)
   ③ 빙(서치 콘솔 import, 선택). 상세는 changelog 2026-09-11.
 
-**Recent (2026-09-10, owner 요청 "사이트 접속 트래픽 확인" — 라이브 배포):**
-- **GA4 방문 통계 태그 도입 + `privacy.html` 신설.** 측정 ID `G-F8NSCQZBZK`. 4 페이지
-  `<head>` 에 gtag 스니펫(line 9-19) + CSP(line 6) 확장. **CSP 를 같이 안 고치면 태그를
-  붙여도 차단돼 수집량이 0 이다** — 이 저장소의 meta CSP 는 `cdn.jsdelivr.net` 만 허용했다.
-- **gtag 는 반드시 CSP meta 뒤에 둔다.** 앞에 두면 meta CSP 가 그 태그에 적용되지 않아
-  하드닝이 조용히 우회된다(Google 문서의 "여는 `<head>` 바로 다음"과 충돌하는 지점).
-- **CSP 와일드카드 함정:** `*.analytics.google.com` 은 apex 를 포함하지 않는다.
-  `analytics.google.com` 을 따로 등재해야 한다. 브라우저 실측으로만 잡혔다.
-- **SRI 예외(owner 승인 2026-09-10):** gtag.js 는 가변 파일이라 integrity 고정 불가.
-  `compute_sri.py` 에 등재하지 않는다. 사유는 태그 옆 주석에 박아 뒀다.
-- **동의 배너는 두지 않는다(owner 결정).** footer 한 줄 링크만. 상세는 changelog 2026-09-10.
-- 잔여: 실제 `/g/collect` 전송 미확인(개발 PC 가 사내 VPN 경유라 확인 불가) — owner 가
-  GA 실시간 보고서로 확인하면 종결. 서치 콘솔(가비아 DNS TXT)은 미착수.
+**Recent (2026-09-13, jp 랭킹 算定基準 — owner 2차 지시로 chip안 폐기·막대 패턴으로 교체, 커밋만·라이브 미배포):**
+- **경위: 1차(chip안)를 owner가 "칩이 너무 많다"로 반려.** 실측(HEAD 기준) scope chip 15/15행·
+  目標 chip 7행·速報 4행·単体詳細 3행 — 이미 최대 3개/행인데 여기 basis chip을 더하면 4개.
+  (25) 라운드 "모바일에서 칩이 회사명을 밀어낸다" 지적과 같은 종류의 문제라 커밋 전에 되돌렸다.
+- **최종안: 算定基準은 chip이 아니라 막대(`li-bar`)의 塗りつぶし 패턴.** 색(`colorForRange`의
+  초록/黄/赤)은 이미 目標レンジ 의미로 점유돼 있어 색과 **직교하는 채널**을 썼다 —
+  自社基準(`internal_model`+`internal_management`, 한 덩어리)은 대각선 ハッチ柄
+  (`.li-bar-self{background-image:repeating-linear-gradient(...)}`, `background`(shorthand) 대신
+  `backgroundColor`만 인라인 세팅해 CSS class의 패턴이 안 지워지게 함), `未確認`(basis가 null이거나
+  알 수 없는 값)은 점선 테두리(`.li-bar-unconfirmed{border:1px dashed}`) — 규제표준은 무지(기존
+  그대로). **3단이 아니라 2채널**: 内部モデル vs 内部管理의 세부 구분은 chip을 없앤 대신
+  `row.title`/`aria-label`/`bar.title`(호버·스크린리더 텍스트, 전부 갱신)과 상세 페이지로만.
+- **칩 감량 결과**: scope chip·目標 chip **전부 폐지**(목표레인지는 이미 트랙 위 밴드로 중복
+  표현 중이었어서 손실 없음, scope는 tooltip에 남김). 남은 chip 은 速報·単体詳細 2종뿐인데
+  실측상 **서로 배타적**(単体詳細는 HD 지주행에만, 速報는 개별사에만 — 동시발생 0건) —
+  **Playwright 실측: 15행 전부 chip ≤1**(desktop·mobile 공통), 목표(desktop ≤2·mobile ≤1)를
+  넘겨서 달성. 모바일 회사명 폭도 100.8~136.8px 로 회복(chip 2종 시절 71.5~75.8px 대비 개선).
+- **범례 1줄만 추가**(`.chart-legend`에 ハッチ스와치 1개), 기존 5종은 문구 그대로 유지 — 새로
+  늘리지 않았다. 각주(`.chart-caveat`)는 새 문구 1문단으로 재작성: "無地=規制ベース(告示74号의
+  標準式)／ハッチ柄=自社基準(内部モデル・内部管理)／点線枠=算定基準未確認…自社基準은 규제베이스와
+  단순비교 주의…상세는 행에 커서를 올리거나 회사별 상세에서" 취지.
+- **상세 페이지(`jesr.html`, `jesr_app.js`)는 1차 라운드 그대로 유지** — chip이 아니라 `metaLine`
+  인라인 텍스트 세그먼트(`算定基準: ...`)라 이번 "칩 감량" 지시와 무관, 되돌리지 않았다.
+- **검증**: `pytest tests/test_deploy_assets.py` 11 passed. BOM 0, html.parser 태그균형 0 오류,
+  `node --check`(추출한 IIFE 스크립트)로 JS 구문 검증 통과. Playwright(1차 라운드와 동일
+  `executable_path` 우회, `/opt/pw-browsers/chromium-1194`)로 1200px·375px·다크모드 렌더:
+  콘솔 pageerror 0(`ERR_CONNECTION_RESET` 2건은 샌드박스 외부망 차단, 코드와 무관, 기존 패턴).
+  15행 전부 `.li-bar` class·chip 개수·`.li-nm` 폭을 DOM에서 직접 측정(스크린샷만으로 판단하지
+  않음) — chip ≤1/행, 가로스크롤 0. `regulatory_standard`(au損保·明治安田損保)는 무지 막대,
+  `internal_model`/`internal_management`(朝日生命·富国生命·T&D HD 등 7+3사)는 `li-bar-self`
+  class 로 ハッチ 렌더 확인. `未確認` 케이스는 실데이터 15사 전원 basis 확정이라 실측 불가 —
+  로직 검토(`isUnconfirmedBasis`)로만 확인, 값이 다시 생기면 자동으로 점선 테두리가 뜬다.
+- **손대지 않음(소유권 경계)**: `jp/jesr_esr.json`·`jp/jesr_detail.json`·`J-ESR/`·`scripts/`·
+  `TODO_jp.md`. `jp/jp.css`는 이번 라운드도 무수정. 커밋·push 는 오케스트레이터 몫.
 
 > 📦 **Status 이력은 `docs/todo_archive_designer.md` 로 이동했다** (2026-09-11, 내용 무수정 — Recent (2026-09-03) 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 
