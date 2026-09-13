@@ -83,6 +83,16 @@
     .li-more-btn:hover{background:var(--border)}
     .li-more-btn[hidden]{display:none}
     .li-chip{font-size:10px;font-weight:400;color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:0 4px;margin-left:6px;white-space:nowrap;flex:0 0 auto}
+    /* 회사명이 칩에 밀려 사라지지 않게(owner 2026-09-13 모바일 스크린샷): 이름은 최소 폭 보장, 칩은 뒤로 */
+    .li-name{min-width:0}
+    .li-name .li-nm{flex:1 1 auto;min-width:5.5em}
+    @media (max-width:640px){
+      .li-name{flex-basis:44%}
+      .li-chip-kids{padding:0 3px}
+      .li-chip-kids::before{content:'▸'}
+      .li-chip-kids{font-size:0}
+      .li-chip-kids::before{font-size:11px}
+    }
     .chart-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px;align-items:center}
     .chart-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px}
     .jp-badge{display:inline-block;font-size:11px;font-weight:700;color:#212529;background:#f59e0b;padding:1px 6px;border-radius:3px;white-space:nowrap}
@@ -178,7 +188,6 @@
         <span><span class="jp-badge">速報</span>&nbsp;速報値</span>
       </div>
       <p class="chart-caveat">※ 算定基準(標準式・内部モデル・VaR水準等)は各社で異なる場合があり、単純比較にはご注意ください。詳細は各社開示資料をご確認ください。</p>
-      <p class="chart-caveat" id="detailLinks" hidden></p>
     </section>
 
     <section class="panel" aria-labelledby="secCoverage">
@@ -309,16 +318,6 @@
           (d.companies||[]).forEach(function(c){ if(c.company_en) map[c.company_en] = c.id; });
           detailMap = map;
           renderGroup('life'); renderGroup('nonlife');
-          // 会社別詳細 진입점: 랭킹에서 부모-자회사 중복으로 빠진 회사(예: 明治安田損保)도 상세는 있으므로
-          // 랭킹 소속과 무관하게 detail 보유 회사 전부를 여기서 링크한다(owner 2026-09-12 지적).
-          var dl = document.getElementById('detailLinks');
-          var cs = (d.companies||[]);
-          if(dl && cs.length){
-            dl.innerHTML = '会社別詳細（規制様式で開示済み ' + cs.length + '社）: ' + cs.map(function(c){
-              return '<a href="jesr.html?company=' + esc(c.id) + '">' + esc(c.company_jp) + '</a>';
-            }).join(' · ');
-            dl.hidden = false;
-          }
         })
         .catch(function(){ detailMap = {}; });
     }
@@ -465,9 +464,9 @@
         }
         if(!ownDetail && kids.length){
           var kc = document.createElement('span');
-          kc.className = 'li-chip';
-          kc.textContent = '単体詳細: ' + kids.map(function(k){ return k.company_jp; }).join('・');
-          kc.title = 'グループ会社（単体）の詳細ページへ';
+          kc.className = 'li-chip li-chip-kids';
+          kc.textContent = '単体詳細 ▸';
+          kc.title = 'グループ会社（単体）の詳細へ: ' + kids.map(function(k){ return k.company_jp; }).join('・');
           name.appendChild(kc);
         }
 
