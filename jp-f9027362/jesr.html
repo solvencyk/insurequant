@@ -43,6 +43,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
   <link rel="stylesheet" href="../common.css"/>
+  <script src="../theme.js"></script>
   <style>
     /* jp/jesr.html 전용. 공유 토큰·chrome은 ../common.css, 카드·표·랭킹 리스트 스킨은
        jp/index.html 과 톤을 맞추되 이 파일 안에서 새로 정의한다(공유 CSS 파일 없음 — 두 파일
@@ -71,7 +72,7 @@
 
     /* 헤드라인 카드 3 */
     .card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
-    .jcard{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 10px;text-align:center}
+    .jcard{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 10px;text-align:center}
     .jcard .jcard-val{font-size:26px;font-weight:800;color:var(--text);line-height:1.15}
     .jcard .jcard-sub{font-size:11px;color:var(--muted);margin-top:2px}
     .jcard .jcard-lab{margin-top:6px;font-size:12px;color:var(--muted);font-weight:600}
@@ -105,7 +106,7 @@
     .mini-row{display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid var(--border)}
     .mini-row:last-child{border-bottom:none}
     .mini-name{flex:0 0 34%;font-size:13px;font-weight:600;color:var(--text)}
-    .mini-track{flex:1 1 auto;height:12px;background:#eef0f2;border-radius:6px;overflow:hidden}
+    .mini-track{flex:1 1 auto;height:12px;background:var(--border);border-radius:6px;overflow:hidden}
     .mini-bar{height:100%;border-radius:6px;min-width:2px;background:var(--primary)}
     .mini-val{flex:0 0 76px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
 
@@ -439,6 +440,8 @@
     }
 
     var DATA = null, META = null, ENTRIES = [], waterfallChart = null, profitWaterfallChart = null;
+    var CURRENT = null;   // 마지막으로 그린 entry — 테마 전환 시 그대로 다시 그린다
+    var TH = window.IQTheme ? IQTheme.chart() : { text:'#212529', muted:'#6c757d', ink:'#495057', bg:'#fff', grid:'#e9ecef' };
     var TOGGLE_IDS = ['secCapitalWrap','secRiskWrap','secSensWrap','secProfitWrap','secProfitabilityWrap','secAxesWrap'];
 
     Promise.all([loadDetail(), loadEsr()]).then(function(res){ boot(res[0], res[1]); }).catch(function(err){
@@ -496,6 +499,11 @@
         if(waterfallChart) waterfallChart.resize();
         if(profitWaterfallChart) profitWaterfallChart.resize();
       });
+      // 다크/라이트 전환: 표·SVG 는 CSS 변수라 자동, ECharts 워터폴 2개의 잉크·격자 색만 다시 읽어 재렌더.
+      window.addEventListener('iq:themechange', function(){
+        if(window.IQTheme) TH = IQTheme.chart();
+        if(CURRENT) selectEntry(CURRENT, false);
+      });
     }
 
     // id(상세) 또는 company_jp(URL 디코드) 둘 다 해석 — jp/index.html 이 회사에 따라 둘 중 하나로
@@ -516,6 +524,7 @@
     }
 
     function selectEntry(e, pushUrl){
+      CURRENT = e;
       document.getElementById('notFoundPanelWrap').hidden = true;
       document.getElementById('secHeadlineWrap').hidden = false;
       var sel = document.getElementById('companySelect');
@@ -766,7 +775,7 @@
 
       waterfallChart.setOption({
         backgroundColor:'transparent',
-        tooltip:{
+        tooltip:Object.assign(window.IQTheme ? IQTheme.echartsTooltip() : {}, {
           trigger:'axis', axisPointer:{type:'shadow'},
           formatter: function(items){
             var i = items[0].dataIndex, b = bars[i];
@@ -774,20 +783,20 @@
             var sign = b.value<0 ? '△' : (b.role==='flow' ? '+' : '');
             return '<b>'+b.ja+'</b><br/>'+sign+Math.abs(b.value/100).toLocaleString('ja-JP',{maximumFractionDigits:1})+'億円';
           }
-        },
+        }),
         // top 은 y축 제목("(億円)")이 캔버스 상단에서 잘리지 않도록 확보(nit① 2026-09-12, 종전 20).
         grid:{left:isMobile?36:48, right:isMobile?6:16, top:40, bottom: isMobile?70:56},
         xAxis:{
           type:'category', data:xs,
-          axisLabel:{color:'#495057', fontSize:isMobile?10:11, interval:0,
+          axisLabel:{color:TH.ink, fontSize:isMobile?10:11, interval:0,
                      rotate:isMobile?45:0, margin:isMobile?6:8},
-          axisLine:{lineStyle:{color:'#dee2e6'}}, axisTick:{show:false},
+          axisLine:{lineStyle:{color:TH.grid}}, axisTick:{show:false},
         },
         yAxis:{
           type:'value', name:'(億円)', min:yMin, max:yMax,
-          nameGap:12, nameTextStyle:{color:'#6c757d', fontSize:11},
-          axisLabel:{color:'#6c757d', fontSize:11, formatter:function(v){ return (v/100).toLocaleString('ja-JP'); }},
-          splitLine:{lineStyle:{color:'#e9ecef'}},
+          nameGap:12, nameTextStyle:{color:TH.muted, fontSize:11},
+          axisLabel:{color:TH.muted, fontSize:11, formatter:function(v){ return (v/100).toLocaleString('ja-JP'); }},
+          splitLine:{lineStyle:{color:TH.grid}},
         },
         series:[{
           type:'custom',
@@ -800,7 +809,7 @@
               var yc = api.coord([idx, g.at||0])[1];
               return {type:'group', children:[
                 {type:'rect', shape:{x:xPix-bw/2, y:yc-4, width:bw, height:8}, style:{fill:'rgba(173,181,189,0.55)'}},
-                {type:'text', style:{text:'非公表', x:xPix, y:yc-10, textAlign:'center', fill:'#868e96', fontSize:9}},
+                {type:'text', style:{text:'非公表', x:xPix, y:yc-10, textAlign:'center', fill:TH.muted, fontSize:9}},
               ]};
             }
             var yHi = api.coord([idx, Math.max(g.y0,g.y1)])[1];
@@ -810,7 +819,7 @@
             return {type:'group', children:[
               {type:'rect', shape:{x:xPix-bw/2, y:yHi, width:bw, height:Math.max(1,yLo-yHi)}, style:{fill:g.color}},
               {type:'text', style:{text:txt, x:xPix, y:yHi-4, textAlign:'center', textVerticalAlign:'bottom',
-                fill:'#212529', fontSize:isTot?11:10, fontWeight:isTot?'bold':'normal'}},
+                fill:TH.text, fontSize:isTot?11:10, fontWeight:isTot?'bold':'normal'}},
             ]};
           },
           data: geo.map(function(g){ return (g && !g.missing) ? [g.y0, g.y1] : [0,0]; }),
@@ -985,7 +994,7 @@
 
       profitWaterfallChart.setOption({
         backgroundColor:'transparent',
-        tooltip:{
+        tooltip:Object.assign(window.IQTheme ? IQTheme.echartsTooltip() : {}, {
           trigger:'axis', axisPointer:{type:'shadow'},
           formatter: function(items){
             var i = items[0].dataIndex, b = bars[i];
@@ -993,19 +1002,19 @@
             var sign = b.cur<0 ? '△' : (b.role==='flow' ? '+' : '');
             return '<b>'+b.ja+'</b><br/>'+sign+Math.abs(b.cur/100).toLocaleString('ja-JP',{maximumFractionDigits:1})+'億円';
           }
-        },
+        }),
         grid:{left:isMobile?36:48, right:isMobile?6:16, top:40, bottom: isMobile?84:64},
         xAxis:{
           type:'category', data:xs,
-          axisLabel:{color:'#495057', fontSize:isMobile?10:11, interval:0,
+          axisLabel:{color:TH.ink, fontSize:isMobile?10:11, interval:0,
                      rotate:isMobile?45:30, margin:isMobile?6:8},
-          axisLine:{lineStyle:{color:'#dee2e6'}}, axisTick:{show:false},
+          axisLine:{lineStyle:{color:TH.grid}}, axisTick:{show:false},
         },
         yAxis:{
           type:'value', name:'(億円)', min:yMin, max:yMax,
-          nameGap:12, nameTextStyle:{color:'#6c757d', fontSize:11},
-          axisLabel:{color:'#6c757d', fontSize:11, formatter:function(v){ return (v/100).toLocaleString('ja-JP'); }},
-          splitLine:{lineStyle:{color:'#e9ecef'}},
+          nameGap:12, nameTextStyle:{color:TH.muted, fontSize:11},
+          axisLabel:{color:TH.muted, fontSize:11, formatter:function(v){ return (v/100).toLocaleString('ja-JP'); }},
+          splitLine:{lineStyle:{color:TH.grid}},
         },
         series:[{
           type:'custom',
@@ -1018,7 +1027,7 @@
               var yc = api.coord([idx, g.at||0])[1];
               return {type:'group', children:[
                 {type:'rect', shape:{x:xPix-bw/2, y:yc-4, width:bw, height:8}, style:{fill:'rgba(173,181,189,0.55)'}},
-                {type:'text', style:{text:'非公表', x:xPix, y:yc-10, textAlign:'center', fill:'#868e96', fontSize:9}},
+                {type:'text', style:{text:'非公表', x:xPix, y:yc-10, textAlign:'center', fill:TH.muted, fontSize:9}},
               ]};
             }
             var yHi = api.coord([idx, Math.max(g.y0,g.y1)])[1];
@@ -1028,7 +1037,7 @@
             return {type:'group', children:[
               {type:'rect', shape:{x:xPix-bw/2, y:yHi, width:bw, height:Math.max(1,yLo-yHi)}, style:{fill:g.color}},
               {type:'text', style:{text:txt, x:xPix, y:yHi-4, textAlign:'center', textVerticalAlign:'bottom',
-                fill:'#212529', fontSize:isTot?11:10, fontWeight:isTot?'bold':'normal'}},
+                fill:TH.text, fontSize:isTot?11:10, fontWeight:isTot?'bold':'normal'}},
             ]};
           },
           data: geo.map(function(g){ return (g && !g.missing) ? [g.y0, g.y1] : [0,0]; }),
@@ -1111,9 +1120,9 @@
       var x = function(i){ return L + (W-L-R) * (years.length>1 ? i/(years.length-1) : 0.5); };
       var y = function(v){ return T + (H-T-B) * (1 - v/ymax); };
       var g = '';
-      [0,25,50,75,100].concat(ymax>100?[ymax]:[]).forEach(function(t){ if(t<=ymax) g += '<line x1="'+L+'" y1="'+y(t)+'" x2="'+(W-R)+'" y2="'+y(t)+'" stroke="#e5e7eb" stroke-width="1"/><text x="'+(L-6)+'" y="'+(y(t)+4)+'" font-size="11" text-anchor="end" fill="#6b7280">'+t+'%</text>'; });
-      g += '<line x1="'+L+'" y1="'+y(100)+'" x2="'+(W-R)+'" y2="'+y(100)+'" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 3"/>';
-      years.forEach(function(yr,i){ g += '<text x="'+x(i)+'" y="'+(H-8)+'" font-size="11" text-anchor="middle" fill="#6b7280">'+esc(yr)+'</text>'; });
+      [0,25,50,75,100].concat(ymax>100?[ymax]:[]).forEach(function(t){ if(t<=ymax) g += '<line x1="'+L+'" y1="'+y(t)+'" x2="'+(W-R)+'" y2="'+y(t)+'" style="stroke:var(--border)" stroke-width="1"/><text x="'+(L-6)+'" y="'+(y(t)+4)+'" font-size="11" text-anchor="end" style="fill:var(--muted)">'+t+'%</text>'; });
+      g += '<line x1="'+L+'" y1="'+y(100)+'" x2="'+(W-R)+'" y2="'+y(100)+'" style="stroke:var(--muted)" stroke-width="1" stroke-dasharray="4 3"/>';
+      years.forEach(function(yr,i){ g += '<text x="'+x(i)+'" y="'+(H-8)+'" font-size="11" text-anchor="middle" style="fill:var(--muted)">'+esc(yr)+'</text>'; });
       series.forEach(function(s){
         var seg = [], pts = '';
         s.values.forEach(function(v,i){

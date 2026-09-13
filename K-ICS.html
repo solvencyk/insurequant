@@ -40,13 +40,14 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js" integrity="sha384-FcQlsUOd0TJjROrBxhJdUhXTUgNJQxTMcxZe6nHbaEfFL1zjQ+bq/uRoBQxb0KMo" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js" integrity="sha384-oNtu+d18330MVFpltUTve1DatxCkkctlpA2AC3GulbVFOSqhHdDat3qHse/Lbuek" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="common.css"/>
+  <script src="theme.js"></script>
   <style>
     /* Shared tokens + chrome (header/tabs/brand/container/select/table/utils)
        now live in common.css. Below: K-ICS-specific only. */
     *{box-sizing:border-box}
     .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
     .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:16px}
-    .chart-container{position:relative;height:500px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
+    .chart-container{position:relative;height:500px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:16px}
     .coming-soon{text-align:center;padding:60px 20px;color:var(--muted)}
     .coming-soon h3{font-size:24px;margin:0 0 12px 0;color:var(--text)}
     .coming-soon p{font-size:16px;margin:0}
@@ -63,8 +64,8 @@
     .donut-note .capsec-gf{font-size:11.5px;opacity:.85}
     .no-data{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
     td.no-disclosure{color:var(--muted);font-size:12px;font-style:italic}
-    .forward-chart{position:relative;height:420px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
-    .sens-chart{position:relative;height:340px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
+    .forward-chart{position:relative;height:420px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:16px}
+    .sens-chart{position:relative;height:340px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:16px}
     .sens-kpis{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
     /* 순자산 듀레이션·컨벡서티 (owner 2026-08-30) — IFRS17.html 의 kpi7 스트립과 같은 결.
        금리민감도 표에서 나오는 파생값이라 표 위에 크게 둔다. */
@@ -77,7 +78,7 @@
     .dur-sub{font-size:11px;color:var(--muted);margin-top:3px}
     .dur-note{font-size:11.5px;color:var(--muted);margin:2px 0 6px;line-height:1.5}
     @media(max-width:640px){.dur-strip{grid-template-columns:1fr}.dur-val{font-size:24px}}
-    .sens-kpi{display:inline-block;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:8px 14px;font-size:13px}
+    .sens-kpi{display:inline-block;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:8px 14px;font-size:13px}
     .sens-kpi-delta{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;margin-left:4px}
     .sens-kpi .sub{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:2px}
     th.sens-name, td.sens-name{text-align:left}
@@ -259,19 +260,13 @@
     (function(){
       const C=window.Chart;
       if(!C) return;
-      const cs=getComputedStyle(document.documentElement);
-      const muted=cs.getPropertyValue('--muted').trim()||'#6c757d';
-      const border=cs.getPropertyValue('--border').trim()||'#e9ecef';
       const font="'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,'Segoe UI',sans-serif";
       C.defaults.font.family=font; C.defaults.font.size=12;
-      C.defaults.color=muted; C.defaults.borderColor=border;
-      C.defaults.plugins.tooltip.backgroundColor='rgba(33,37,41,0.9)';
-      C.defaults.plugins.tooltip.titleColor='#ffffff';
-      C.defaults.plugins.tooltip.bodyColor='#f8f9fa';
       C.defaults.plugins.tooltip.padding=10; C.defaults.plugins.tooltip.cornerRadius=6;
       C.defaults.plugins.tooltip.titleFont={family:font,size:12,weight:'600'};
       C.defaults.plugins.tooltip.bodyFont={family:font,size:12};
-      C.defaults.scale.grid.color=border; C.defaults.scale.ticks.color=muted;
+      // 색은 theme.js(다크/라이트 토큰)가 채운다. 테마가 바뀌면 아래 iq:themechange 에서 다시 부른다.
+      if(window.IQTheme) IQTheme.applyChartJs(C);
     })();
     let allData = [];
     let chart = null;
@@ -918,7 +913,8 @@
       // 인정한도 초과(분자=KOFIA 발행액, 분모=공시 한도, 독립 소스라 >100% 발생 가능)는 "100%+"로 표기.
       // (정확값 대신 "초과" 신호만 — 원호는 도넛 360° 한계로 100% 캡 유지.)
       const centerText = pct == null ? '데이터 없음' : (pct > 100 ? '100%+' : pct.toFixed(0) + '%');
-      const centerColor = pct == null ? '#6a737a' : (pct >= 100 ? '#dc3545' : '#212529');
+      const TH = window.IQTheme ? IQTheme.chart() : { muted:'#6a737a', text:'#212529', neg:'#dc3545' };
+      const centerColor = pct == null ? TH.muted : (pct >= 100 ? TH.neg : TH.text);
       const centerPlugin = {
         id: 'centerText_' + canvasId,
         afterDraw(chart) {
@@ -941,7 +937,7 @@
           labels: ['사용', '잔여'],
           datasets: [{
             data: pct == null ? [0, 100] : [fill, rest],
-            backgroundColor: [fillColor, 'rgba(233, 236, 239, 0.6)'],
+            backgroundColor: [fillColor, (window.IQTheme ? IQTheme.chart().border : 'rgba(233, 236, 239, 0.6)')],
             borderWidth: 0
           }]
         },
@@ -1606,6 +1602,7 @@
         // 이벤트 리스너 추가
         const refreshBottomPanels = () => { updateDonutPanel(); updateForwardPanel(); renderRateSensitivity(); };
         companySelect.addEventListener('change', () => { updateTable(); refreshBottomPanels(); });
+        window.addEventListener('iq:themechange', () => { if (window.IQTheme && window.Chart) IQTheme.applyChartJs(window.Chart); updateTable(); refreshBottomPanels(); });
         periodSelect.addEventListener('change', updateTable);
         document.getElementById('transition-mode').addEventListener('change', updateTable);
         // 오류 제보를 지금 보고 있는 회사로 프리필해서 연다(우하단 버튼은 백업).

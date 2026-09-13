@@ -38,16 +38,17 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
   <link rel="stylesheet" href="common.css"/>
+  <script src="theme.js"></script>
   <style>
     :root{--bg:#ffffff; --card:#f8f9fa; --border:#e9ecef; --text:#212529; --muted:#6c757d; --primary:#0d6efd; --primary-hover:#0b5ed7;}
     *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-variant-numeric:tabular-nums}
-    header{position:sticky;top:0;padding:10px 16px;border-bottom:1px solid var(--border);background:#ffffff;z-index:1000}
+    header{position:sticky;top:0;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--bg);z-index:1000}
     .brand{font-weight:700;margin-bottom:12px;cursor:pointer;color:var(--primary);text-decoration:none}
     .brand:hover{color:var(--primary-hover)}
     .tabs{display:flex;gap:4px;margin-bottom:0}
     .tab{padding:8px 16px;border:1px solid var(--border);border-radius:8px 8px 0 0;background:var(--card);color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:all 0.2s;cursor:pointer}
-    .tab:hover{background:var(--primary);color:white;border-color:var(--primary)}
-    .tab.active{background:var(--primary);color:white;border-color:var(--primary)}
+    .tab:hover{background:var(--primary);color:var(--on-primary,#fff);border-color:var(--primary)}
+    .tab.active{background:var(--primary);color:var(--on-primary,#fff);border-color:var(--primary)}
     .container{max-width:1320px;margin:0 auto;padding:16px}
     .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
     .panel h2{margin:0 0 16px 0;color:var(--text);font-size:20px;font-weight:600}
@@ -57,14 +58,14 @@
     .coming-soon p{font-size:16px;margin:0}
     /* 배당현황 (2026-08-15, inbox designer 20260814T2230Z) — 이 페이지 기존 로컬 토큰/클래스 그대로 사용 */
     .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-    .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:var(--r-md,8px);background:#fff;font-size:13px}
+    .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:var(--r-md,8px);background:var(--bg);font-size:13px}
     .div-kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
     .div-kpi-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md,8px);padding:12px 14px}
     .div-kpi-val{font-size:20px;font-weight:800;color:var(--text);line-height:1.1;letter-spacing:-.01em}
     .div-kpi-lab{font-size:11px;color:var(--muted);margin-top:3px}
     #divTables h3, #divClassSection h3{font-size:15px;margin:0 0 4px 0;color:var(--text)}
     .div-class-label{font-size:13px;font-weight:600;color:var(--text);margin:12px 0 4px}
-    .stub-msg{color:var(--muted);font-size:14px;padding:12px;border:1px dashed var(--border);border-radius:var(--r-md,8px);background:#fff}
+    .stub-msg{color:var(--muted);font-size:14px;padding:12px;border:1px dashed var(--border);border-radius:var(--r-md,8px);background:var(--bg)}
     /* Mobile responsive (<=640px) - M1 shared foundation */
     @media (max-width:640px){
       header{padding:8px 12px}

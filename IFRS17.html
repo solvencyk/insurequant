@@ -40,21 +40,22 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js" integrity="sha384-FcQlsUOd0TJjROrBxhJdUhXTUgNJQxTMcxZe6nHbaEfFL1zjQ+bq/uRoBQxb0KMo" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" integrity="sha384-o5uz97et3bErHvpKfD4Jz4n0JfhJDWABFuF4NP+iEEDxE1VwMWJ19QGR0lqFZnr6" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="common.css"/>
+  <script src="theme.js"></script>
   <style>
     /* Shared tokens + chrome (header/tabs/brand/container/select/table/utils)
        now live in common.css. Below: IFRS17-specific only. */
     *{box-sizing:border-box}
     .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
     .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:16px}
-    .chart-container{position:relative;height:500px;border:1px solid var(--border);border-radius:8px;background:#ffffff;padding:16px}
+    .chart-container{position:relative;height:500px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:16px}
     .coming-soon{text-align:center;padding:60px 20px;color:var(--muted)}
     .coming-soon h3{font-size:24px;margin:0 0 12px 0;color:var(--text)}
     .coming-soon p{font-size:16px;margin:0}
     .table-container{margin-top:32px;}
     .chart-sm{height:380px}
     .placeholder-empty{text-align:center;padding:44px 16px;color:var(--muted);font-size:16px}
-    .stub-msg{color:var(--muted);font-size:14px;padding:12px;border:1px dashed var(--border);border-radius:8px;background:#ffffff}
-    .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:8px;background:#ffffff;font-size:13px}
+    .stub-msg{color:var(--muted);font-size:14px;padding:12px;border:1px dashed var(--border);border-radius:8px;background:var(--bg)}
+    .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:13px}
     /* Mobile responsive (<=640px) - M1 shared foundation */
     @media (max-width:640px){
       header{padding:8px 12px}
@@ -77,7 +78,7 @@
       .table-wrap th:first-child,
       .table-wrap td:first-child{
         position:sticky; left:0; z-index:2;
-        background:#ffffff; box-shadow:1px 0 0 var(--border);
+        background:var(--bg); box-shadow:1px 0 0 var(--border);
         white-space:nowrap; max-width:44vw; overflow:hidden; text-overflow:ellipsis;
       }
       .table-wrap thead th:first-child{z-index:3}
@@ -253,29 +254,30 @@
 (function(){
   const C=window.Chart;
   if(C){
-    const cs=getComputedStyle(document.documentElement);
-    const muted=cs.getPropertyValue('--muted').trim()||'#6c757d';
-    const border=cs.getPropertyValue('--border').trim()||'#e9ecef';
     const font="'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,'Segoe UI',sans-serif";
     C.defaults.font.family=font; C.defaults.font.size=12;
-    C.defaults.color=muted; C.defaults.borderColor=border;
-    C.defaults.plugins.tooltip.backgroundColor='rgba(33,37,41,0.9)';
-    C.defaults.plugins.tooltip.titleColor='#ffffff';
-    C.defaults.plugins.tooltip.bodyColor='#f8f9fa';
     C.defaults.plugins.tooltip.padding=10; C.defaults.plugins.tooltip.cornerRadius=6;
     C.defaults.plugins.tooltip.titleFont={family:font,size:12,weight:'600'};
     C.defaults.plugins.tooltip.bodyFont={family:font,size:12};
-    C.defaults.scale.grid.color=border; C.defaults.scale.ticks.color=muted;
+    // 색은 theme.js(다크/라이트 토큰)가 채운다. 테마가 바뀌면 iq:themechange 에서 다시 부른다.
+    if(window.IQTheme) IQTheme.applyChartJs(C);
   }
-  if(window.echarts){
+  // ECharts 'iq' 테마도 토큰에서 만든다. 같은 이름으로 재등록하면 덮어써지고, 차트는 renderCompany 때
+  // dispose→init 되므로 테마 전환 뒤 재등록 + 재렌더로 충분하다.
+  window.registerIqEchartsTheme = function(){
+    if(!window.echarts) return;
+    const t = window.IQTheme ? IQTheme.chart() : { muted:'#6c757d', grid:'#e9ecef' };
     echarts.registerTheme('iq',{
-      textStyle:{fontFamily:"'Pretendard Variable',Pretendard,sans-serif",fontSize:12,color:'#6c757d'},
-      categoryAxis:{axisLine:{lineStyle:{color:'#e9ecef'}},splitLine:{lineStyle:{color:'#e9ecef'}},axisLabel:{color:'#6c757d'}},
-      valueAxis:{axisLine:{lineStyle:{color:'#e9ecef'}},splitLine:{lineStyle:{color:'#e9ecef'}},axisLabel:{color:'#6c757d'}},
+      textStyle:{fontFamily:"'Pretendard Variable',Pretendard,sans-serif",fontSize:12,color:t.muted},
+      categoryAxis:{axisLine:{lineStyle:{color:t.grid}},splitLine:{lineStyle:{color:t.grid}},axisLabel:{color:t.muted}},
+      valueAxis:{axisLine:{lineStyle:{color:t.grid}},splitLine:{lineStyle:{color:t.grid}},axisLabel:{color:t.muted}},
     });
-  }
+  };
+  window.registerIqEchartsTheme();
 })();
 (() => {
+  // 차트 잉크·격자 색(다크/라이트). 테마가 바뀌면 iq:themechange 에서 다시 읽고 renderCompany 로 전부 다시 그린다.
+  let TH = window.IQTheme ? IQTheme.chart() : { text:'#212529', muted:'#6c757d', ink:'#495057', bg:'#fff', grid:'#e9ecef' };
   function resolveUrl(relativePath) {
     return new URL(relativePath, window.location.href).href;
   }
@@ -604,7 +606,7 @@
 
     charts.wf.setOption({
       backgroundColor:"transparent",
-      tooltip:{
+      tooltip:Object.assign(window.IQTheme ? IQTheme.echartsTooltip() : {}, {
         trigger:"axis", axisPointer:{ type:"shadow" },
         formatter(items){
           const i=items[0].dataIndex; const bar=bars[i];
@@ -620,31 +622,31 @@
           const s0 = bar.value < 0 ? "△" : "";
           return `<b>${head}</b><br/>${s0}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${s0}${Math.abs(bar.value).toLocaleString("ko-KR")}억)`;
         },
-      },
+      }),
       grid: dataZoom ? { left:52, right:18, top:24, bottom:40 } : { left:52, right:18, top:24, bottom:54 },
       xAxis:{
         type:"category", data:xs,
-        axisLabel:{ color:"#495057", fontSize:isMobile?8:10, lineHeight:12, interval:0 },
-        axisLine:{ lineStyle:{ color:"#dee2e6" } },
+        axisLabel:{ color:TH.ink, fontSize:isMobile?8:10, lineHeight:12, interval:0 },
+        axisLine:{ lineStyle:{ color:TH.grid } },
         axisTick:{ show:false },
       },
       yAxis:{
         type:"value", name:"조원",
         min: wfYMin, max: wfYMax,
-        nameTextStyle:{ color:"#6c757d", fontSize:11 },
-        axisLabel:{ color:"#6c757d", formatter:v=> (v<0?"△":"")+Math.abs(v/10000).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
-        splitLine:{ lineStyle:{ color:"#e9ecef" } },
+        nameTextStyle:{ color:TH.muted, fontSize:11 },
+        axisLabel:{ color:TH.muted, formatter:v=> (v<0?"△":"")+Math.abs(v/10000).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
+        splitLine:{ lineStyle:{ color:TH.grid } },
       },
       dataZoom,
       series:[
         { name:"placeholder", type:"bar", stack:"wf", itemStyle:{ color:"transparent" }, emphasis:{ disabled:true }, data:placeholder },
         { name:"missing", type:"bar", stack:"wf", itemStyle:{ color:"rgba(173,181,189,0.55)" }, data:missing },
         { name:"+", type:"bar", stack:"wf", itemStyle:{ color:"#22c55e" }, data:positive,
-          label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"+"+wfFmtJo(p.value,2) } },
+          label:{ show:!isMobile, position:"top", color:TH.text, fontSize:9, formatter:p=> p.value==="-"?"":"+"+wfFmtJo(p.value,2) } },
         { name:"−", type:"bar", stack:"wf", itemStyle:{ color:"#ef4444" }, data:negative,
-          label:{ show:!isMobile, position:"top", color:"#212529", fontSize:9, formatter:p=> p.value==="-"?"":"△"+wfFmtJo(p.value,2) } },
+          label:{ show:!isMobile, position:"top", color:TH.text, fontSize:9, formatter:p=> p.value==="-"?"":"△"+wfFmtJo(p.value,2) } },
         { name:"total", type:"bar", stack:"wf", itemStyle:{ color:currentKey.primary }, data:totals,
-          label:{ show:true, position:"top", color:"#212529", fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":(p.value<0?"△":"")+wfFmtJo(Math.abs(p.value),1)+"조" } },
+          label:{ show:true, position:"top", color:TH.text, fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":(p.value<0?"△":"")+wfFmtJo(Math.abs(p.value),1)+"조" } },
       ],
     }, true);
   }
@@ -994,33 +996,33 @@
 
     charts.pl.setOption({
       backgroundColor:"transparent",
-      tooltip:{
+      tooltip:Object.assign(window.IQTheme ? IQTheme.echartsTooltip() : {}, {
         trigger:"axis", axisPointer:{ type:"shadow" },
         formatter(items){
           const i=items[0].dataIndex; const bar=bars[i]; if(!bar) return "";
           if(bar.value==null) return `<b>${bar.ko}</b><br/>데이터 없음`;
           const jo=bar.value/1e6, eok=bar.value/100;
           const sign = bar.value<0 ? "△" : (bar.role==="flow" ? "+" : "");
-          const note = PL_TIP_NOTE[bar.ko] ? `<br/><span style="color:#868e96;font-size:11px">${PL_TIP_NOTE[bar.ko]}</span>` : "";
+          const note = PL_TIP_NOTE[bar.ko] ? `<br/><span style="color:${TH.muted};font-size:11px">${PL_TIP_NOTE[bar.ko]}</span>` : "";
           return `<b>${bar.ko}</b><br/>${sign}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${sign}${Math.abs(eok).toLocaleString("ko-KR",{maximumFractionDigits:0})}억)${note}`;
         },
-      },
+      }),
       // x 라벨이 두 줄이라 슬라이더를 켜면 bottom을 더 줘야 한다(38이면 라벨 위에 슬라이더가 겹친다).
       grid:{ left:GRID_L, right:GRID_R, top:24,
              bottom: dataZoom ? (isMobile?72:58) : (isMobile?60:46) },
       xAxis:{
         type:"category", data:xs,
-        axisLabel:{ color:"#495057", fontSize:isMobile?9:10, lineHeight:12, interval:0,
+        axisLabel:{ color:TH.ink, fontSize:isMobile?9:10, lineHeight:12, interval:0,
                     rotate:isMobile?45:0, margin:isMobile?6:8 },
-        axisLine:{ lineStyle:{ color:"#dee2e6" } },
+        axisLine:{ lineStyle:{ color:TH.grid } },
         axisTick:{ show:false },
       },
       yAxis:{
         type:"value", name:"조원",
         min: plYMin, max: plYMax, interval: plYStep,
-        nameTextStyle:{ color:"#6c757d", fontSize:11 },
-        axisLabel:{ color:"#6c757d", fontSize:isMobile?9:12, formatter:v=> (v<0?"△":"")+Math.abs(v/1e6).toLocaleString("ko-KR",{minimumFractionDigits:plYDec,maximumFractionDigits:plYDec}) },
-        splitLine:{ lineStyle:{ color:"#e9ecef" } },
+        nameTextStyle:{ color:TH.muted, fontSize:11 },
+        axisLabel:{ color:TH.muted, fontSize:isMobile?9:12, formatter:v=> (v<0?"△":"")+Math.abs(v/1e6).toLocaleString("ko-KR",{minimumFractionDigits:plYDec,maximumFractionDigits:plYDec}) },
+        splitLine:{ lineStyle:{ color:TH.grid } },
       },
       dataZoom,
       series:[{
@@ -1039,7 +1041,7 @@
             const yy=Math.max(top, Math.min(bot-8, yc-4));
             const kids=[{ type:"rect", shape:{ x:xPix-bw/2, y:yy, width:bw, height:8 },
                           style:{ fill:"rgba(173,181,189,0.55)" } }];
-            if(!isMobile) kids.push({ type:"text", style:{ text:"미공시", x:xPix, y:yy-4, textAlign:"center", textVerticalAlign:"bottom", fill:"#868e96", fontSize:9 } });
+            if(!isMobile) kids.push({ type:"text", style:{ text:"미공시", x:xPix, y:yy-4, textAlign:"center", textVerticalAlign:"bottom", fill:TH.muted, fontSize:9 } });
             return { type:"group", children:kids };
           }
           const yHiRaw=api.coord([idx, Math.max(g.y0,g.y1)])[1];
@@ -1056,7 +1058,7 @@
           const zig=(y, dir)=>{
             const x0=xPix-bw/2, x1=xPix+bw/2, n=Math.max(4, Math.round(bw/5)), amp=3, pts=[];
             for(let i=0;i<=n;i++) pts.push([x0+(x1-x0)*i/n, y + dir*(i%2?amp:-amp)]);
-            return { type:"polyline", shape:{ points:pts }, style:{ stroke:"#fff", lineWidth:2.5, fill:null } };
+            return { type:"polyline", shape:{ points:pts }, style:{ stroke:TH.bg, lineWidth:2.5, fill:null } };
           };
           const isTot = bar.role!=="flow";
           const txt = (bar.value<0?"△":(bar.role==="flow"?"+":""))+plFmtJo(Math.abs(bar.value),2)+(isTot?"조":"");
@@ -1066,12 +1068,12 @@
             const lab=(isTot?txt:txt+"조")+(cutTop?" ↑":" ↓");
             const lw=Math.max(40, lab.length*8), ly=cutTop?(top+16):(bot-16);
             children.push({ type:"rect", shape:{ x:xPix-lw/2, y:ly-8, width:lw, height:16, r:3 },
-              style:{ fill:"rgba(255,255,255,0.88)" } });
+              style:{ fill:TH.bg } });
             children.push({ type:"text", style:{ text:lab, x:xPix, y:ly,
               textAlign:"center", textVerticalAlign:"middle",
-              fill:"#212529", fontSize:10, fontWeight:"bold" } });
+              fill:TH.text, fontSize:10, fontWeight:"bold" } });
           } else if(!isMobile){
-            children.push({ type:"text", style:{ text:txt, x:xPix, y:yHi-4, textAlign:"center", textVerticalAlign:"bottom", fill:"#212529", fontSize:isTot?10:9, fontWeight:isTot?"bold":"normal" } });
+            children.push({ type:"text", style:{ text:txt, x:xPix, y:yHi-4, textAlign:"center", textVerticalAlign:"bottom", fill:TH.text, fontSize:isTot?10:9, fontWeight:isTot?"bold":"normal" } });
           }
           return { type:"group", children };
         },
@@ -2215,6 +2217,12 @@
     const perSel=document.getElementById("wfPeriod");
     if (perSel) perSel.addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
     window.addEventListener("resize", ()=>{ if (charts.wf) charts.wf.resize(); if (charts.pl) charts.pl.resize(); });
+    // 다크/라이트 전환: 토큰을 다시 읽고(TH·Chart.defaults·ECharts 'iq' 테마) 회사 대시보드를 통째로 다시 그린다.
+    window.addEventListener("iq:themechange", ()=>{
+      if (window.IQTheme){ TH = IQTheme.chart(); if (window.Chart) IQTheme.applyChartJs(window.Chart); }
+      if (window.registerIqEchartsTheme) window.registerIqEchartsTheme();
+      if (sel.value) renderCompany(sel.value);
+    });
     // Re-render on mobile/desktop breakpoint cross so the amort chart switches 5y <-> 10y.
     window.matchMedia("(max-width:640px)").addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
 

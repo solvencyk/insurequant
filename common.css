@@ -34,6 +34,7 @@
   /* — Brand / action ———————————————————————————————————————————— */
   --primary:#0d6efd;        /* active tab, links, default series      */
   --primary-hover:#0b5ed7;
+  --on-primary:#ffffff;     /* ink on a --primary fill (tabs, CTA)    */
 
   /* — Semantic status (financial) ——————————————————————————————
      Canonical positive/negative/caution. Existing charts still use their own
@@ -53,11 +54,44 @@
   /* — Radius ——————————————————————————————————————————————————— */
   --r-sm:4px; --r-md:8px; --r-lg:12px; --r-pill:999px;
 
+  /* — Tooltip / overlay (charts read these via theme.js) ———————————— */
+  --tip-bg:rgba(33,37,41,0.9);   /* Chart.js/ECharts tooltip background  */
+  --tip-text:#f8f9fa;
+  --tip-border:rgba(33,37,41,0.9);
+  --overlay:rgba(255,255,255,0.85); /* translucent chips on top of the treemap */
+  color-scheme:light;
+
   /* — Misc ————————————————————————————————————————————————————— */
   --bd:1px solid var(--border);
   --t-fast:0.2s;            /* default transition                     */
   --maxw:1320px;            /* content container max-width             */
   /* --bp-mobile is 640px — documented here; @media cannot read a var. */
+}
+
+/* — Dark theme (2026-09-13, owner) ————————————————————————————————
+   Same token vocabulary, night values. Two entry points so both work:
+     (a) OS 설정: prefers-color-scheme dark, unless the user pinned light (data-theme="light")
+     (b) 토글: <html data-theme="dark"> set by theme.js from localStorage
+   Every page colour must come from a token — a literal #fff anywhere is a light-mode leak. */
+:root[data-theme="dark"]{
+  --bg:#121417; --card:#1b1f24; --border:#2c3138;
+  --text:#e4e7ea; --muted:#9aa4ad; --ink-strong:#c5ccd3;
+  --primary:#5b9cff; --primary-hover:#82b4ff; --on-primary:#0b1220;
+  --pos:#34c46a; --pos-soft:#4ade80; --neg:#f26b6b; --neg-strong:#f05252; --warn:#f5b942;
+  --tip-bg:#262b31; --tip-text:#e4e7ea; --tip-border:#3a4048;
+  --overlay:rgba(18,20,23,0.85);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121417; --card:#1b1f24; --border:#2c3138;
+    --text:#e4e7ea; --muted:#9aa4ad; --ink-strong:#c5ccd3;
+    --primary:#5b9cff; --primary-hover:#82b4ff; --on-primary:#0b1220;
+    --pos:#34c46a; --pos-soft:#4ade80; --neg:#f26b6b; --neg-strong:#f05252; --warn:#f5b942;
+    --tip-bg:#262b31; --tip-text:#e4e7ea; --tip-border:#3a4048;
+    --overlay:rgba(18,20,23,0.85);
+    color-scheme:dark;
+  }
 }
 
 /* — Base ——————————————————————————————————————————————————————————
@@ -76,7 +110,7 @@ header{
   position:sticky; top:0;
   padding:10px 16px;
   border-bottom:1px solid var(--border);
-  background:#ffffff;
+  background:var(--bg);
   z-index:1000;
 }
 .brand{
@@ -99,7 +133,7 @@ header{
   transition:all var(--t-fast);
 }
 .tab:hover,
-.tab.active{ background:var(--primary); color:#fff; border-color:var(--primary); }
+.tab.active{ background:var(--primary); color:var(--on-primary); border-color:var(--primary); }
 /* A11y 2026-07-21: active tab was color-only (WCAG 1.4.1) — add a non-color cue
    (underline) so it doesn't rely solely on the background-color change. */
 .tab.active{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:3px; }
@@ -107,8 +141,23 @@ header{
 /* 헤더 우측 다운로드 CTA — 데스크탑: 탭과 같은 줄·같은 높이(owner 요청 2026-08-28, 4페이지 공통 2026-08-28).
    모바일: 탭 바로 옆에 붙는 작은 pill로(데스크탑 톤·위치는 유지). */
 .header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.download-cta{padding:8px 16px;border:none;border-radius:8px 8px 0 0;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:background var(--t-fast, 0.2s)}
+.download-cta{padding:8px 16px;border:none;border-radius:8px 8px 0 0;background:var(--primary);color:var(--on-primary);font-size:14px;font-weight:700;cursor:pointer;transition:background var(--t-fast, 0.2s)}
 .download-cta:hover{background:var(--primary-hover)}
+
+/* 다크/라이트 토글 (theme.js 가 header 끝에 붙인다). header 가 sticky 라 absolute 기준이 된다.
+   헤더 우측 끝, 세로 가운데. .header-row 에 padding-right 를 줘 다운로드 CTA·언어 전환과 안 겹친다
+   (브랜드 <a> 는 inline 이라 margin-bottom 이 안 먹어 2번째 줄이 브랜드 바로 밑에 붙는다 — 실측). */
+header .header-row{ padding-right:40px; }
+.theme-toggle{
+  position:absolute; top:50%; right:16px; transform:translateY(-50%);
+  width:30px; height:30px; padding:0;
+  display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid var(--border); border-radius:50%;
+  background:var(--card); color:var(--text);
+  font-size:15px; line-height:1; cursor:pointer;
+  transition:background var(--t-fast), color var(--t-fast);
+}
+.theme-toggle:hover{ border-color:var(--primary); color:var(--primary); }
 
 /* — Layout container ——————————————————————————————————————————————— */
 .container{ max-width:var(--maxw); margin:0 auto; padding:16px; }
@@ -118,8 +167,8 @@ header{
   padding:8px 10px;
   border:1px solid var(--border);
   border-radius:8px;
-  background:#ffffff;
-  color:#212529;
+  background:var(--bg);
+  color:var(--text);
 }
 
 /* — Panel headings (the .panel box itself stays page-specific) ——————————— */
@@ -139,7 +188,7 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
 .muted{ color:var(--muted); }
 
 /* — Expand/collapse toggle button (+/−) — shared by K-ICS sub-risks & IFRS17 재보험 — */
-.subtoggle{ display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; margin-left:6px; padding:0; border:1px solid var(--border); border-radius:4px; background:#fff; color:var(--muted); font-size:13px; line-height:1; cursor:pointer; vertical-align:middle; }
+.subtoggle{ display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; margin-left:6px; padding:0; border:1px solid var(--border); border-radius:4px; background:var(--bg); color:var(--muted); font-size:13px; line-height:1; cursor:pointer; vertical-align:middle; }
 .subtoggle:hover{ border-color:var(--primary); color:var(--primary); }
 
 /* ============================================================================
@@ -250,13 +299,13 @@ footer{ scroll-snap-align:end; }         /* 바닥·푸터 도달 보장 */
 .iq-field .iq-hint{ font-size:12px; color:var(--muted); font-weight:400; margin-left:4px; }
 .iq-input, .iq-select, .iq-textarea{
   width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--r-md);
-  background:#fff; color:var(--text); font-family:var(--font-sans); font-size:14px;
+  background:var(--bg); color:var(--text); font-family:var(--font-sans); font-size:14px;
 }
 .iq-textarea{ resize:vertical; min-height:80px; }
 .iq-combo{ position:relative; }
 .iq-combo-list{
   position:absolute; left:0; right:0; top:calc(100% + 4px); z-index:2010;
-  background:#fff; border:1px solid var(--border); border-radius:var(--r-md);
+  background:var(--bg); border:1px solid var(--border); border-radius:var(--r-md);
   max-height:220px; overflow-y:auto; box-shadow:0 8px 24px rgba(0,0,0,0.12);
   display:none;
 }
@@ -274,7 +323,7 @@ footer{ scroll-snap-align:end; }         /* 바닥·푸터 도달 보장 */
 .iq-disclaimer{ font-size:12px; color:var(--muted); line-height:1.6; background:var(--card); border-radius:var(--r-sm); padding:var(--sp-3); margin-bottom:var(--sp-3); }
 .iq-btn{
   width:100%; padding:10px 16px; border:none; border-radius:var(--r-md);
-  background:var(--primary); color:#fff; font-size:14px; font-weight:700; cursor:pointer;
+  background:var(--primary); color:var(--on-primary); font-size:14px; font-weight:700; cursor:pointer;
   transition:background var(--t-fast);
 }
 .iq-btn:hover{ background:var(--primary-hover); }
@@ -288,7 +337,7 @@ footer{ scroll-snap-align:end; }         /* 바닥·푸터 도달 보장 */
 .iq-report-fab{
   position:fixed; right:var(--sp-4); bottom:var(--sp-4); z-index:1900;
   padding:10px 16px; border-radius:var(--r-pill); border:1px solid var(--border);
-  background:#fff; color:var(--text); font-size:13px; font-weight:600;
+  background:var(--bg); color:var(--text); font-size:13px; font-weight:600;
   box-shadow:0 4px 16px rgba(0,0,0,0.15); cursor:pointer;
   display:flex; align-items:center; gap:6px;
 }

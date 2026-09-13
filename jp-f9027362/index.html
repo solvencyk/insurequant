@@ -43,6 +43,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
   <link rel="stylesheet" href="../common.css"/>
+  <script src="../theme.js"></script>
   <style>
     /* jp/index.html 전용. 공유 토큰·chrome은 ../common.css. */
     *{box-sizing:border-box}
@@ -57,11 +58,11 @@
 
     /* 공시 현황 요약 카드 3개 */
     .card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .jcard{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 10px;text-align:center}
+    .jcard{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 10px;text-align:center}
     .jcard .jcard-val{font-size:26px;font-weight:800;color:var(--text);line-height:1.15}
     .jcard .jcard-lab{margin-top:6px;font-size:12px;color:var(--muted);font-weight:600}
     .total-line{text-align:center;margin:8px 0 12px}
-    .note-line{font-size:13px;color:var(--ink-strong);background:#fff;border:1px dashed var(--border);border-radius:var(--r-md);padding:10px 12px;margin:0}
+    .note-line{font-size:13px;color:var(--ink-strong);background:var(--bg);border:1px dashed var(--border);border-radius:var(--r-md);padding:10px 12px;margin:0}
     .as-of-line{font-size:12px;color:var(--muted);margin:8px 0 0}
 
     /* 랭킹 리스트 (業種 2섹션: 生保/損保). 루트 index.html 82~98행 .map-list~.li-chip 그대로
@@ -72,11 +73,11 @@
        → jesr.html?company= 이동(루트 index.html 877~948행 goToDetailRow 패턴과 동일). */
     .map-list{display:block}
     .li-sector{font-size:12px;color:var(--muted);font-weight:700;margin:14px 0 6px;padding-left:2px}
-    .li-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;background:#fff;cursor:pointer}
+    .li-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;background:var(--bg);cursor:pointer}
     .li-row:active{background:var(--card)}
     .li-name{flex:0 0 36%;display:flex;align-items:center;min-width:0;font-size:13px;font-weight:600}
     .li-nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-    .li-bar-track{flex:1 1 auto;height:14px;background:#eef0f2;border-radius:7px;overflow:hidden}
+    .li-bar-track{flex:1 1 auto;height:14px;background:var(--border);border-radius:7px;overflow:hidden}
     .li-bar{height:100%;border-radius:7px;min-width:2px}
     .li-val{flex:0 0 54px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
     .li-more-btn{display:block;width:100%;margin-top:4px;padding:10px;background:var(--card);border:var(--bd);border-radius:var(--r-md);color:var(--text);font-size:13px;font-family:var(--font-sans);cursor:pointer;text-align:center;font-weight:500;transition:background .15s}
@@ -300,7 +301,7 @@
       });
     }
 
-    var cov=null;
+    var cov=null, lastMeta=null;
     var groupData = {life:[], nonlife:[]};   // 業種별 버킷정렬 전체 리스트
     var expanded  = {life:false, nonlife:false};
     // 一覧表 회사명 -> jesr.html 링크 판정용(inbox 20260912T1120Z). null=아직 로딩중(링크 보류),
@@ -501,14 +502,15 @@
       var el = document.getElementById('covDonut');
       if(!el || !window.echarts) return;
       var c = meta.census || {};
+      lastMeta = meta;
       if(!cov) cov = echarts.init(el);
       var data = [
         {name:'公表済み', value:c.posted||0,    itemStyle:{color:'#0d6efd'}},
         {name:'公表予定', value:c.not_yet||0,   itemStyle:{color:'#f59e0b'}},
-        {name:'未確認',   value:c.not_found||0, itemStyle:{color:'#475569'}}
+        {name:'未確認',   value:c.not_found||0, itemStyle:{color:(window.IQTheme ? IQTheme.chart().muted : '#475569')}}
       ];
       cov.setOption({
-        tooltip:{trigger:'item', formatter:'{b}: {c}社 ({d}%)'},
+        tooltip:Object.assign(window.IQTheme ? IQTheme.echartsTooltip() : {}, {trigger:'item', formatter:'{b}: {c}社 ({d}%)'}),
         series:[{
           type:'pie', radius:['45%','72%'], avoidLabelOverlap:true,
           // 小さい区(未確認2社)と隣接する区の外側ラベルが重なって省略記号になったため、
@@ -524,6 +526,9 @@
       el.setAttribute('aria-label',
         'ESR公表状況カバレッジ。全'+(c.total||0)+'社中、公表済み'+(c.posted||0)+'社、公表予定'+(c.not_yet||0)+'社、未確認'+(c.not_found||0)+'社。');
     }
+
+    // 다크/라이트 전환: 리스트·카드는 CSS 변수라 자동, 도넛(툴팁·未確認 색)만 다시 그린다.
+    window.addEventListener('iq:themechange', function(){ if(lastMeta) renderDonut(lastMeta); });
 
     // renderTable()/一覧表 는 2026-09-13 owner 지시로 폐지(랭킹 리스트와 중복). 範囲는 리스트 칩, 公表日·出所는 상세 페이지.
   })();

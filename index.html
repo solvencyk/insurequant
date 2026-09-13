@@ -38,6 +38,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
   <link rel="stylesheet" href="common.css"/>
+  <script src="theme.js"></script>
   <style>
     /* Shared tokens + chrome (header/tabs/brand/container/select/utils) now live
        in common.css. Below: index-specific only. */
@@ -66,19 +67,19 @@
     .toggle-input:checked + .toggle-label:before{transform:translateX(30px)}
     .toggle-slider{display:none}
     #map{position:relative;height:76vh;min-height:560px;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
-    .map-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--muted);font-size:14px;line-height:1.5;background:rgba(255,255,255,.92);z-index:5}
+    .map-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--muted);font-size:14px;line-height:1.5;background:var(--overlay);z-index:5}
     .map-status.error{color:#842029;background:#f8d7da}
-    .group{position:absolute;border:1px solid rgba(0,0,0,.12);border-radius:10px;overflow:hidden;background:rgba(0,0,0,.02);box-sizing:border-box}
-    .group-title{position:absolute;left:6px;top:6px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.8);padding:2px 6px;border-radius:6px;z-index:2}
+    .group{position:absolute;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:rgba(0,0,0,.02);box-sizing:border-box}
+    .group-title{position:absolute;left:6px;top:6px;font-size:12px;color:var(--muted);background:var(--overlay);padding:2px 6px;border-radius:6px;z-index:2}
     .cell{position:absolute;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:6px;display:flex;flex-direction:column;justify-content:flex-start;gap:3px;overflow:hidden;transition:all 0.2s;box-sizing:border-box}
     /* scale은 타일 경계 밖으로 튀어 나와 인접 칸과 겹쳐 보일 수 있음 — 그림자만 */
     .cell:hover{box-shadow:0 4px 12px rgba(0,0,0,0.18);z-index:10}
     .name{font-weight:700;font-size:12px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .ratio{font-size:15px;font-weight:700}
-    .reference-period{position:absolute;left:12px;bottom:12px;font-size:11px;color:var(--muted);background:rgba(255,255,255,0.8);padding:4px 8px;border-radius:6px;z-index:100}
+    .reference-period{position:absolute;left:12px;bottom:12px;font-size:11px;color:var(--muted);background:var(--overlay);padding:4px 8px;border-radius:6px;z-index:100}
     .section-title{font-size:16px;font-weight:700;margin:0 0 4px}
     .section-desc{font-size:12px;color:var(--muted);margin:0 0 10px}
-    #csm-bubble-chart{height:520px;border-radius:14px;border:1px solid var(--border);background:#fff}
+    #csm-bubble-chart{height:520px;border-radius:14px;border:1px solid var(--border);background:var(--bg)}
     #bubble-list{display:none}
     .bubble-legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
     .bubble-swatch{width:120px;height:10px;border-radius:6px;background:linear-gradient(90deg,#7f1d1d,#f59e0b,#84cc16,#14532d)}
@@ -93,10 +94,10 @@
     /* M2: mobile list view for the treemap (shown only <=640px) */
     .map-list{display:none}
     .li-sector{font-size:12px;color:var(--muted);font-weight:700;margin:14px 0 6px;padding-left:2px}
-    .li-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;background:#fff;cursor:pointer}
+    .li-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;background:var(--bg);cursor:pointer}
     .li-row:active{background:var(--card)}
     .li-name{flex:0 0 36%;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .li-bar-track{flex:1 1 auto;height:14px;background:#eef0f2;border-radius:7px;overflow:hidden}
+    .li-bar-track{flex:1 1 auto;height:14px;background:var(--border);border-radius:7px;overflow:hidden}
     .li-bar{height:100%;border-radius:7px;min-width:2px}
     .li-val{flex:0 0 54px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
     .li-empty{padding:24px 12px;text-align:center;color:var(--muted);font-size:13px}
@@ -802,14 +803,14 @@
 
           // '기타' 묶음 칸: 중립색 + 호버 목록, 클릭 내비 없음
           if (d.isOther) {
-            cell.style.background = '#dde2e7';
+            cell.style.background = 'var(--card)';
             cell.title = `기타 ${d.count}사 (기준금액 소형) — ` + d.list.map(m =>
               `${shortName(m.company)} ${(ratioType === 'basicCapital' ? (m.basicCapitalRatio || 0) : (m.ratio || 0)).toFixed(0)}%`
             ).join(' · ');
             if (finalH >= 24 && finalW >= 40) {
               const nm = document.createElement('div');
               nm.className = 'name';
-              nm.style.cssText = 'font-weight:500;color:#6c757d;pointer-events:none';
+              nm.style.cssText = 'font-weight:500;color:var(--muted);pointer-events:none';
               nm.textContent = `기타 ${d.count}사`;
               cell.appendChild(nm);
             }
@@ -1049,10 +1050,12 @@
       const legendData = sectorFilter === 'ALL' ? ['생명보험', '손해보험'] : [];
       legendData.push(ESTIMATED_NAME);                     // 섹터 필터와 무관하게 항상 노출
 
+      const TH = window.IQTheme ? IQTheme.chart() : { text:'#212529', muted:'#6a737a', ink:'#495057', bg:'#fff', grid:'#eef0f2' };
       bubbleChart.setOption({
         grid: { left: 70, right: 28, top: 40, bottom: 58 },
-        legend: { top: 8, data: legendData },
-        tooltip: {
+        textStyle: { color: TH.muted },
+        legend: { top: 8, data: legendData, textStyle: { color: TH.text } },
+        tooltip: Object.assign(window.IQTheme ? IQTheme.echartsTooltip() : {}, {
           trigger: 'item',
           formatter: p => {
             const d = p.data.d;
@@ -1068,30 +1071,33 @@
             if (d.multEstimated) lines.push(`⚠ ${NB_TARGET_Q} 미공시 — 연1회 공시사(배수)`);
             return lines.join('<br/>');
           }
-        },
+        }),
         xAxis: {
           type: 'log', logBase: 10, name: '신계약 CSM 규모 (억 · 로그축)', nameLocation: 'middle', nameGap: 34,
           min: xAxisMin, max: xAxisMax,
-          axisLabel: { formatter: v => v >= 10000 ? (v / 10000).toLocaleString('ko-KR') + '조' : Math.round(v).toLocaleString('ko-KR') + '억' },
-          splitLine: { lineStyle: { type: 'dashed', color: '#eef0f2' } }
+          axisLabel: { color: TH.muted, formatter: v => v >= 10000 ? (v / 10000).toLocaleString('ko-KR') + '조' : Math.round(v).toLocaleString('ko-KR') + '억' },
+          axisLine: { lineStyle: { color: TH.grid } },
+          splitLine: { lineStyle: { type: 'dashed', color: TH.grid } }
         },
         yAxis: {
           type: 'value', name: 'NB CSM 배수 (×)', nameGap: 44, min: 0,
-          splitLine: { lineStyle: { type: 'dashed', color: '#eef0f2' } }
+          axisLabel: { color: TH.muted },
+          axisLine: { lineStyle: { color: TH.grid } },
+          splitLine: { lineStyle: { type: 'dashed', color: TH.grid } }
         },
         series: [
           ...sectors.map(sec => ({
             name: sec === 'Life' ? '생명보험' : '손해보험',
             type: 'scatter',
             labelLayout: { hideOverlap: true, moveOverlap: 'shiftY' },
-            labelLine: { show: true, length2: 4, lineStyle: { color: '#ced4da', width: 1 } },
+            labelLine: { show: true, length2: 4, lineStyle: { color: TH.grid, width: 1 } },
             data: rows.filter(r => r.sector === sec && !r.estimated).map(r => ({
               name: r.name,
               value: [r.nbCsm, r.multiple],
               d: r,
               symbolSize: bubbleSize(r.closing, maxClosing),
-              itemStyle: { color: SECTOR_COLOR[sec], opacity: 0.6, borderColor: '#fff', borderWidth: 1 },
-              label: { show: true, formatter: shortName(r.name), position: 'top', fontSize: 10, color: '#495057', textBorderColor: '#fff', textBorderWidth: 2 },
+              itemStyle: { color: SECTOR_COLOR[sec], opacity: 0.6, borderColor: TH.bg, borderWidth: 1 },
+              label: { show: true, formatter: shortName(r.name), position: 'top', fontSize: 10, color: TH.ink, textBorderColor: TH.bg, textBorderWidth: 2 },
               emphasis: { focus: 'self', label: { show: true, fontWeight: 'bold' }, itemStyle: { opacity: 0.95 } }
             }))
           })),
@@ -1099,14 +1105,14 @@
             name: ESTIMATED_NAME,
             type: 'scatter',
             labelLayout: { hideOverlap: true, moveOverlap: 'shiftY' },
-            labelLine: { show: true, length2: 4, lineStyle: { color: '#ced4da', width: 1 } },
+            labelLine: { show: true, length2: 4, lineStyle: { color: TH.grid, width: 1 } },
             data: rows.filter(r => r.estimated).map(r => ({
               name: r.name,
               value: [r.nbCsm, r.multiple],
               d: r,
               symbolSize: bubbleSize(r.closing, maxClosing),
               itemStyle: { color: '#adb5bd', opacity: 0.45, borderColor: '#868e96', borderType: 'dashed', borderWidth: 1 },
-              label: { show: true, formatter: shortName(r.name) + '*', position: 'top', fontSize: 10, color: '#868e96', textBorderColor: '#fff', textBorderWidth: 2 },
+              label: { show: true, formatter: shortName(r.name) + '*', position: 'top', fontSize: 10, color: TH.muted, textBorderColor: TH.bg, textBorderWidth: 2 },
               emphasis: { focus: 'self', label: { show: true, fontWeight: 'bold' }, itemStyle: { opacity: 0.7 } }
             }))
           }
@@ -1413,6 +1419,10 @@
       }).catch(err => rest.length ? fetchFirst(rest) : Promise.reject(err));
     }
 
+    // 다크/라이트 전환: 축·라벨 색은 setOption 때 읽으므로 버블만 다시 그린다(트리맵은 CSS 변수라 자동).
+    window.addEventListener('iq:themechange', () => {
+      renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
+    });
     window.addEventListener('resize', () => {
       if (bubbleChart) bubbleChart.resize();
     });
