@@ -382,4 +382,4 @@ History is not lost by this slim — removed files remain in old commits forever
 
 ## 12. jp 레인 산출물 (2026-09-12 신설)
 
-`J-ESR/build_jesr_page_json.py` 가 `J-ESR/jesr_master.json` + 배포용 `jp/jesr_esr.json`(바이트 동일) 을 만든다(self-check 내장). 라이브 반영 시 `jp/index.html`·`jp/jesr_esr.json` 을 배포 keep-list 에 넣고 `tests/test_deploy_assets.py` 로 확인한다. xlsx 시트는 만들지 않는다(owner 결정 전까지). 도메인 지식은 `docs/domains/claude-agent-jp.md`, 현황 `TODO_jp.md`.
+`J-ESR/build_jesr_page_json.py` 가 `J-ESR/jesr_master.json` + 배포용 `jp/jesr_esr.json`(바이트 동일) 을 만든다(self-check 내장). 라이브 반영 시 `jp/index.html`·`jp/jesr_esr.json`·상세 3페이지(`jp/jesr.html`·`jp/jgaap.html`·`jp/disclosure.html` + `jp/jp.css`·`jp/jesr_app.js`·`jp/jesr_detail.json`)·`jp/terms.html`·`jp/report-widget.ja.js` 를 배포 keep-list(`android_push_and_deploy.sh` NEW_FILES) 에 넣고 `tests/test_deploy_assets.py` 로 확인한다. xlsx 시트는 만들지 않는다(owner 결정 전까지). 도메인 지식은 `docs/domains/claude-agent-jp.md`, 현황 `TODO_jp.md`.

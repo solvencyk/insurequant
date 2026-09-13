@@ -196,4 +196,5 @@ Deferred (2026-07-27): `docs/changelog_designer.md` is history — open only whe
 
 ## 12. jp 레인 페이지 (`/jp/`, 2026-09-12 신설)
 
-일본 ESR 페이지 `jp/index.html` 은 이 프롬프트의 디자인 시스템(§5)·CSP·SRI·`../common.css` 를 그대로 쓰되 `<html lang="ja">`, hreflang(ko↔ja, x-default=ko), 언어 전환 링크가 있다. 데이터는 `jp/jesr_esr.json`(publishing 산출, 읽기 전용) 만 fetch. 도메인 지식은 `docs/domains/claude-agent-jp.md`. 발주는 `inbox/designer/` 에 `track: J-ESR` 로 온다. 보고문에 일본어 문자 금지(회사명은 영문).
+일본 ESR 페이지 `jp/index.html` 은 이 프롬프트의 디자인 시스템(§5)·CSP·SRI·`../common.css` 를 그대로 쓰되 `<html lang="ja">`, hreflang(ko↔ja, x-default=ko), 언어 전환 링크가 있다. 데이터는 `jp/jesr_esr.json`(publishing 산출, 읽기 전용) 만 fetch.
+**회사별 상세는 3페이지(2026-09-13 owner, 한국 K-ICS/IFRS17/기타공시 대응)**: `jp/jesr.html`(자본: ESR 헤드라인·適格資本/所要資本 표·感応度·旧基準SMR), `jp/jgaap.html`(회계: 損益 2블록 흐름·워터폴·収益性·種目別·基礎利益·準備金, 貸借対照表는 `bs` 층 도착 후), `jp/disclosure.html`(기타공시: 再保険 의존도·その他). 셋은 `jp/jp.css`(스킨) + `jp/jesr_app.js`(공용 스크립트, `<body data-page>` 로 분기, 컨테이너 없는 render 는 byId 가드로 스킵) 를 공유하고 `?company=` 를 탭 링크에 동기화한다. 데이터는 `jp/jesr_detail.json` 하나. 所要資本 워터폴은 폐지(owner: 분산효과 △만 보여주는 그래프). 새 패널을 붙일 때는 페이지 HTML 에 섹션만 두고 render 함수는 `jesr_app.js` 에 가드와 함께 넣는다. 도메인 지식은 `docs/domains/claude-agent-jp.md`. 발주는 `inbox/designer/` 에 `track: J-ESR` 로 온다. 보고문에 일본어 문자 금지(회사명은 영문).

@@ -7,7 +7,7 @@
        Apps Script /exec 가 302 로 보내는 리다이렉트 목적지라 빠지면 제출이 CSP 에 막힌다. head 첫 자식 유지, CDN 태그보다 앞. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>会社別ESR詳細 | InsureQuant</title>
+  <title>会社別その他開示 | InsureQuant</title>
   <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
        integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
        이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
@@ -30,37 +30,37 @@
       gtag('config', 'G-F8NSCQZBZK', cfg);
     })();
   </script>
-  <meta name="description" content="日本の保険会社の経済価値ベースソルベンシー比率(ESR)の会社別内訳。適格資本・所要資本の構成、感応度分析。"/>
-  <meta property="og:title" content="InsureQuant — 会社別ESR詳細"/>
-  <meta property="og:description" content="日本の保険会社の経済価値ベースソルベンシー比率(ESR)の会社別内訳。適格資本・所要資本の構成、感応度分析。"/>
+  <meta name="description" content="日本の保険会社のその他開示事項。再保険の依存度(出再先数・上位5社・格付)等。"/>
+  <meta property="og:title" content="InsureQuant — 会社別その他開示"/>
+  <meta property="og:description" content="日本の保険会社のその他開示事項。再保険の依存度(出再先数・上位5社・格付)等。"/>
   <meta property="og:type" content="website"/>
   <!-- owner 초안 검토 전 임시 noindex(jp/index.html과 동일 관례). -->
   <meta name="robots" content="noindex,follow"/>
-  <link rel="canonical" href="https://www.insurequant.com/jp/jesr.html"/>
-  <link rel="alternate" hreflang="ko" href="https://www.insurequant.com/K-ICS.html"/>
-  <link rel="alternate" hreflang="ja" href="https://www.insurequant.com/jp/jesr.html"/>
-  <link rel="alternate" hreflang="x-default" href="https://www.insurequant.com/K-ICS.html"/>
+  <link rel="canonical" href="https://www.insurequant.com/jp/disclosure.html"/>
+  <link rel="alternate" hreflang="ko" href="https://www.insurequant.com/공시보고서.html"/>
+  <link rel="alternate" hreflang="ja" href="https://www.insurequant.com/jp/disclosure.html"/>
+  <link rel="alternate" hreflang="x-default" href="https://www.insurequant.com/공시보고서.html"/>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
   <link rel="stylesheet" href="../common.css"/>
   <script src="../theme.js"></script>
   <link rel="stylesheet" href="jp.css"/>
 </head>
-<body data-page="esr">
+<body data-page="disclosure">
   <header>
     <div class="header-row">
-      <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">会社別ESR詳細</span></a>
+      <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">会社別その他開示</span></a>
       <nav class="lang-switch" aria-label="言語切替 / 언어 선택">
         <span class="lang-current" aria-current="page">日本語</span>
         <span class="lang-sep" aria-hidden="true">|</span>
-        <a href="../K-ICS.html" lang="ko">한국어</a>
+        <a href="../공시보고서.html" lang="ko">한국어</a>
       </nav>
     </div>
     <!-- 한국 K-ICS | IFRS17 | 기타공시 와 같은 3탭(owner 2026-09-13). href 는 jesr_app.js 가 ?company= 를 붙여 동기화. -->
     <div class="header-row"><div class="tabs jp-tabs" role="navigation" aria-label="会社別ページ">
-        <a href="jesr.html" class="tab" data-page="esr" aria-current="page">ESR</a>
+        <a href="jesr.html" class="tab" data-page="esr">ESR</a>
         <a href="jgaap.html" class="tab" data-page="jgaap">決算</a>
-        <a href="disclosure.html" class="tab" data-page="disclosure">その他開示</a>
+        <a href="disclosure.html" class="tab" data-page="disclosure" aria-current="page">その他開示</a>
       </div>
       <div class="back-row" style="padding:0"><a href="index.html">&larr; ESRランキング</a></div></div>
   </header>
@@ -82,74 +82,37 @@
       <p class="jp-err">該当する会社がありません。上の「会社」から選択してください。</p>
     </section>
 
-    <section class="panel" aria-labelledby="secHeadline" id="secHeadlineWrap">
-      <h2 id="secHeadline">主要指標</h2>
-      <div class="card-row">
-        <div class="jcard">
-          <div class="jcard-val" id="cardEligible">—</div>
-          <div class="jcard-sub">億円</div>
-          <div class="jcard-lab">適格資本の額(A)</div>
-        </div>
-        <div class="jcard">
-          <div class="jcard-val" id="cardRequired">—</div>
-          <div class="jcard-sub">億円</div>
-          <div class="jcard-lab">所要資本の額(B)</div>
-        </div>
-        <div class="jcard">
-          <div class="jcard-val" id="cardEsr">—</div>
-          <div class="jcard-sub">&nbsp;</div>
-          <div class="jcard-lab">ESR (A/B)<span id="cardPrelim"></span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" id="noticePanelWrap" hidden>
-      <h2 id="secNotice">詳細開示について</h2>
-      <p class="empty-note">規制様式(告示)に基づく詳細開示は、2026年10月末までに順次追加する予定です。現在は決算説明資料等の速報値のみ掲載しています。</p>
+    <section class="panel" id="noDetailNote" hidden>
+      <p class="empty-note">この会社の決算・開示データは未収録です。ESRの速報値は <a href="jesr.html">ESR詳細</a> をご覧ください。</p>
       <p class="axes-note" id="groupChildrenLine" hidden></p>
     </section>
 
-    <section class="panel" aria-labelledby="secCapital" id="secCapitalWrap">
-      <h2 id="secCapital">適格資本・所要資本 <span class="repro-badge" id="reproBadge" style="display:none"></span></h2>
-      <div class="stackbar-track" id="stackBar" role="img" aria-label="適格資本構成、読み込み中"></div>
-      <div class="stackbar-legend">
-        <span><span class="sw" style="background:var(--primary)"></span>Tier1</span>
-        <span><span class="sw" style="background:var(--warn)"></span>Tier2</span>
-      </div>
-      <!-- owner 2026-09-13: K-ICS.html 방식 — 適格資本(Tier 트리)과 所要資本(리스크 트리)을 한 표에, [+] 로 하위 항목 펼침.
-           符号: ＝ 합계 / ＋ 가산 / － 차감(값 앞 △). 備考: 합계 행 재현 ✓·差, 상관 통합 노드는 단순합계 병기. -->
-      <div class="table-container" style="margin-top:14px">
-        <table class="esr-table" id="capReqTable">
-          <thead><tr><th scope="col">項目</th><th scope="col" class="sign">符号</th><th scope="col" class="num">金額(億円)</th><th scope="col">備考</th></tr></thead>
-          <tbody id="capReqBody"><tr><td colspan="4" class="small-muted">読み込み中…</td></tr></tbody>
+    <section class="panel" id="disclosureEmpty" hidden>
+      <p class="empty-note">この会社のその他開示項目は未収録です。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="secReins" id="secReinsWrap" hidden>
+      <h2 id="secReins">再保険の依存度</h2>
+      <p class="axes-note">出再先の数・上位5社集中度・格付別割合。金融庁2026年モニタリングの論点(資産集約型再保険を含む再保険への依存)に対応する項目です。</p>
+      <div class="table-container"><table class="esr-table"><thead><tr><th scope="col">項目</th><th scope="col" class="num">値</th></tr></thead><tbody id="reinsTableBody"></tbody></table></div>
+    </section>
+
+    <section class="panel" aria-labelledby="secAxes" id="secAxesWrap" hidden>
+      <h2 id="secAxes">その他</h2>
+      <p class="axes-note">金融庁モニタリング関連資料等、規制ESR様式(T1~T8)以外の開示欄からの補足情報です。</p>
+      <div class="table-container">
+        <table class="esr-table" id="axesTable">
+          <thead><tr><th scope="col">項目</th><th scope="col" class="num">値</th></tr></thead>
+          <tbody id="axesTableBody"></tbody>
         </table>
       </div>
-      <p class="small-muted" style="margin-top:6px">※［＋］で内訳を展開。符号は上位項目に対する加算（＋）・減算（－）、＝は合計。所要資本の各リスクは相関統合のため内訳の単純合計と一致しません（備考に単純合計を併記）。</p>
-    </section>
-
-    <section class="panel" aria-labelledby="secSens" id="secSensWrap">
-      <h2 id="secSens">感応度</h2>
-      <div id="sensWrap">
-        <div class="table-container">
-          <table class="esr-table" id="sensTable">
-            <thead><tr><th scope="col">シナリオ</th><th scope="col" class="num">ESR</th><th scope="col" class="num">変化幅</th><th scope="col">&nbsp;</th></tr></thead>
-            <tbody id="sensTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" id="smrOldWrap" hidden>
-      <h2>参考: 旧基準ソルベンシー・マージン比率</h2>
-      <p class="axes-note">2025年度までの旧基準(SMR)の値です。ESR(新基準)とは信頼水準・対象リスクが異なり、単純比較できません。</p>
-      <div class="table-container"><table class="esr-table"><thead><tr><th scope="col">項目</th><th scope="col" class="num">値</th></tr></thead><tbody id="smrOldTableBody"></tbody></table></div>
     </section>
 
   </main>
 
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
     出所: 各社開示資料(決算短信・決算説明資料・ディスクロージャー誌 等) — 数値の権利は各開示主体に帰属します。掲載データは公開資料を基に作成しており、誤りを含む可能性があります。投資判断の根拠として使用しないでください。<br/>
-    規制様式(告示)に基づく開示のある会社のみ表示しています。2026年10月末に順次追加予定です。<br/>
+    決算・開示データを収録した会社のみ表示しています。2026年10月末の法定開示に合わせて順次追加予定です。<br/>
     © 2026 InsureQuant · <a href="terms.html" class="iq-anon-link">利用規約・プライバシーポリシー</a> · <a href="../index.html" class="iq-anon-link" lang="ko">한국어 사이트</a>
   </footer>
 
