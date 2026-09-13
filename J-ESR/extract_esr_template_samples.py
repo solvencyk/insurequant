@@ -339,6 +339,10 @@ PROFIT_ITEMS = [
     dict(id="pl_recovered_reinsurance_claims", scope="nonlife", src="bridge", labels=[r"回収再保険金", r"出再正味保険金"], ko="회수재보험금(出再分 회수, 回収再保険金; 損保ジャパン 표기 出再正味保険金)", unit=M, formula=None, pl=None),
     dict(id="pl_loss_adjustment_expenses", scope="nonlife", src="pl", labels=[r"^損害調査費$"], ko="손해조사비", unit=M, formula=None, pl=None),
     dict(id="pl_commissions_collection", scope="nonlife", src="pl", labels=[r"^諸手数料及び集金費$"], ko="제수수료 및 집금비", unit=M, formula=None, pl=None),
+    # 損益計算書の注記 「諸手数料及び集金費の内訳」: 支払諸手数料及び集金費 − 出再保険手数料 = 諸手数料及び集金費(P&L 순액).
+    # 注記는 당기 단년이라 prev 없음. owner 2026-09-13: 출재보험수수료(재보험자가 출재사에 지급)는 재보험 수지에 넣는다.
+    dict(id="pl_commissions_gross", scope="nonlife", src="note", labels=[r"支払諸手数料及び集金費"], ko="지급제수수료 및 집금비(총액, 注記; 당기만)", unit=M, formula="= pl_commissions_collection + pl_ceded_commission", pl=None),
+    dict(id="pl_ceded_commission", scope="nonlife", src="note", labels=[r"出再保険手数料"], ko="출재보험수수료(재보험자→출재사 수취, 注記; 당기만) — 재보험 수지 구성항목", unit=M, formula=None, pl=None),
     dict(id="pl_operating_general_admin", scope="nonlife", src="pl", labels=[r"^営業費及び一般管理費$"], ko="영업비 및 일반관리비(전체)", unit=M, formula=None, pl=None),
     dict(id="pl_other_ordinary_revenue", scope="nonlife", src="pl", labels=[r"^その他経常収益$"], ko="기타경상수익", unit=M, formula=None, pl=None),
     dict(id="pl_other_ordinary_expenses", scope="nonlife", src="pl", labels=[r"^その他経常費用$"], ko="기타경상비용", unit=M, formula=None, pl=None),
@@ -1276,6 +1280,24 @@ def extract_profit(comp, doc):
             pg[it["id"]] = pp["pl"][0]
             raw[it["id"]] = [pl_flat[i23], pl_flat[i24], pl_flat[i25]]
             continue
+        if src == "note":
+            found = None
+            for pno in range(len(doc)):
+                # au prints a backspace control char between label and amount -- strip controls before matching
+                txt = norm(" ".join(re.sub(r"[\x00-\x1f]", " ", doc[pno].get_text("text")).split()))
+                for lab in it["labels"]:
+                    m = re.search(lab + r"[\s　]*(△?)\s*([\d,]+)\s*百万円", txt)
+                    if m:
+                        found = (pno + 1, m.group(0), (-1 if m.group(1) else 1) * int(m.group(2).replace(",", "")))
+                        break
+                if found:
+                    break
+            if found is None:
+                raw[it["id"]] = "NOT_FOUND"
+                continue
+            v[it["id"]] = dict(prev=None, cur=found[2])
+            pg[it["id"]], raw[it["id"]] = found[0], found[1]
+            continue
         lines = tl.get(src)
         if lines is None:
             raw[it["id"]] = "NO_PAGE"
@@ -1453,6 +1475,9 @@ def run_profit_checks(comp, pf):
                 z(g("pl_gross_premiums_written", col)) + z(g("pl_assumed_premiums", col)) - z(g("pl_ceded_premiums", col)) - z(dep), 1)
             add(f"P15_claims_bridge{sfx}", "pl_net_claims_paid = pl_gross_claims_paid + pl_assumed_claims - pl_recovered_reinsurance_claims (元受+受再-回収)", g("pl_net_claims_paid", col),
                 z(g("pl_gross_claims_paid", col)) + z(g("pl_assumed_claims", col)) - z(g("pl_recovered_reinsurance_claims", col)), 1)
+            if col == "cur" and g("pl_ceded_commission", col) is not None:
+                add("P16_commission_note", "pl_commissions_collection = pl_commissions_gross - pl_ceded_commission (注記 差引; 당기만)", g("pl_commissions_collection", col),
+                    z(g("pl_commissions_gross", col)) - z(g("pl_ceded_commission", col)), 1)
     if pf.get("summary5"):
         n = nbad = 0
         for sid, row in pf["summary5"].items():

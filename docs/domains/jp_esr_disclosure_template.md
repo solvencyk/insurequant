@@ -594,6 +594,21 @@ Meiji: 元受料→受再金→回収金→受再料→支払→元受金), 라�
 재실행하기만 하면** `_meta.labels` 에 6개가 자동으로 추가된다(수동 라벨 등재 불필요). 단, `build_profit_block()`(화면 값 조립)이 이 6개를 카드에
 얹을지는 publishing/designer 판단.
 
+#### 9-7-b. 화면 표기: 元受収支 / 再保険収支 두 블록 + 出再保険手数料 (2026-09-13 owner 결정)
+
+owner: "원수끼리·수재끼리·출재끼리 묶어 원수손익·재보험손익으로 보이는 게 자연스럽지 않나" → 수재는 사실상 출재 재원(自賠責·地震 풀)이라
+**元受 / 再保険 두 블록**으로 확정. "손익"이 아니라 **収支**(수입보험료·지급보험금 기준, 준비금 증감 미포함)로 부른다.
+
+- `pl_commissions_gross`(支払諸手数料及び集金費) · `pl_ceded_commission`(出再保険手数料) — 손익계산서 **注記 「諸手数料及び集金費の内訳」**(당기 단년)에서
+  `src:"note"`(문서 전체 스캔, `<라벨> <금액>百万円` 첫 매치; au 는 라벨과 금액 사이에 제어문자 \x08 이 끼어 있어 제어문자 제거 후 매칭). 5사 전부 확보,
+  P16 `諸手数料及び集金費 = 支払諸手数料 − 出再保険手数料` ±1 통과. **prev 는 없음**(注記 단년) → 화면 前期欄 공란, 다음 연도부터 채워진다.
+- builder `build_profit_flow`(NONLIFE_PROFIT_FLOW): `pf_direct_balance` = 元受正味保険料 − 収入積立保険料(adjustments, TMNF·Sompo 만) − 元受正味保険金 /
+  `pf_reins_balance` = 受再保険料 − 受再保険金 − 支払再保険料 + 回収再保険金 + 出再保険手数料 / `pf_commissions_row` = 支払諸手数料(총액; 注記 없으면 순액) /
+  `pf_uw_other_residual` = 保険引受利益 − (위 행 합) 잔차(積立保険料·満期返戻金·準備金繰入戻入·その他収支). 각 블록은 `row.parts`(id·label_ja·sign·cur·prev)로
+  구성항목을 싣고 페이지는 계산 없이 [+] 전개만 한다. checks 는 `premium_bridge_ok`/`claims_bridge_ok`/`commission_note_ok`(종전 `underwriting_ok` 는
+  積立·準備金 행이 빠져 5사 전부 False 였던 항등식 — 잔차 행으로 대체, 항상 True).
+- 해석 주의(화면 각주): 自賠責·地震保険은 풀 경유로 受再·出再 양쪽에 계상되므로 再保険収支 △ 전부가 상업 재보험 비용은 아니다.
+
 ### 9-8. 대형 손보 3사 본편 — ESR 층 제외 전 층 추출 (2026-09-13, 티켓 `inbox/jp/20260913T0330Z__owner__JP_MULTI__big3_partial_detail.md`)
 
 §10-7 에서 확보한 3 PDF(`J-ESR/raw/fy2025_samples/others/`)에서 profit(손익·재보험 다리·비율)·history·article_axes(준비금·재보험 집중)·회계기준을

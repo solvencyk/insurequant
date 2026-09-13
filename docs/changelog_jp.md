@@ -2,6 +2,16 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-13 (20) -- 損益表 元受収支 / 再保険収支 두 블록 + 出再保険手数料(注記) 추출
+
+- owner 결정: 상대방 기준 두 블록(수재는 출재 재원이라 재보험 블록에), 명칭은 損益 이 아니라 収支(수입·지급 기준). 出再保険手数料 는 재보험 수지에 더하고
+  사업비 행은 총액(支払諸手数料及び集金費)으로 — 순액+수수료 이중계상 방지. 자배책·지진 풀 경유 각주.
+- extractor: `pl_commissions_gross`/`pl_ceded_commission` `src:"note"`(문서 전체 스캔) + P16. 5사 확보(TMNF 50,494 / MSI 66,157 / Sompo 45,553 / Meiji 239 / au 209 百万円).
+  au 라벨-금액 사이  제어문자 → 제거 후 매칭. 注記 단년이라 prev None.
+- builder: `NONLIFE_PROFIT_FLOW` 상단 4행 → `pf_direct_balance`(元受, 収入積立保険料 차감)·`pf_reins_balance`·`pf_commissions_row`·`pf_uw_other_residual`(잔차),
+  `row.parts` 계약 신설, `_meta.labels` 5개 추가, checks `premium_bridge_ok`/`claims_bridge_ok`/`commission_note_ok`. 종전 `underwriting_ok` 는 5사 전부 False 였다(積立·準備金 누락).
+- page: BRIDGE 상수 제거, `row.parts` 렌더, `#profitFlowNote` 각주. Playwright: TMNF/au 행·[+] 전개·pageerrors 0, 생보(住友) 무영향.
+
 ## 2026-09-13 (19) -- 손보 종목별 층 `by_line` + 생보 기초이익·三利源 `core_history`, `jp/jesr_detail.json` 5사→10사
 
 - 티켓 `inbox/jp/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`. `extract_esr_template_samples.py` 에 `LOB_LINES`/`BYLINE_ITEMS`/`BYLINE_HEADINGS`,

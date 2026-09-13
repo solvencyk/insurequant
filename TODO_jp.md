@@ -1,9 +1,16 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-13 (19) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-13 (20) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-13 (20) 損益表 상단을 元受収支 / 再保険収支 두 블록으로 + 出再保険手数料 추출(5사) — `jp/jesr.html`·builder·extractor(jp).**
+owner "원수/수재/출재를 상대방 기준으로 묶자 → 수재는 출재 재원이니 元受·再保険 둘로" + "출재보험수수료(재보험자→출재사)도 재보험 수지에". extractor 에 `src:"note"`
+2항목(`pl_commissions_gross`·`pl_ceded_commission`, 注記 단년 → prev 없음, P16 ±1 5/5 통과, au 제어문자 \x08 함정), builder `NONLIFE_PROFIT_FLOW` 를
+`pf_direct_balance`/`pf_reins_balance`(row.parts 로 구성항목)/`pf_commissions_row`(총액)/`pf_uw_other_residual`(잔차) 로 교체 — 종전 `underwriting_ok` 는
+5사 전부 False 였음(積立·準備金 행 누락) → 잔차 행으로 닫고 checks 는 bridge 3종으로. 화면 각주(풀 경유·前期 공란·잔차 정의). 실측 TMNF FY2025 元受収支
+1조3,939억엔 / 再保険収支 △2,016억엔(手数料 505억엔 포함). 문서 §9-7-b. **다음**: FY2024 出再保険手数料(前期欄) 는 전년 결산단신 注記 — 10월 재조사 때.
 
 **🟢 2026-09-13 (19) 손보 5사 종목별 층 `by_line` + 생보 5사 기초이익·三利源 `core_history` → `jp/jesr_detail.json` 10사(jp).**
 티켓 `inbox/jp/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`(answered). owner "손해율·사업비율·합산율이 종목별로 찢어져 있지 않나? 생보는
@@ -48,32 +55,6 @@ owner 피드백: 자본표 부호/계층, 보험·대재해 하위 미표시(괘
 각각) → K-ICS.html 방식 단일 표(capital_tree+risk_tree), profit_flow+다리, 収益性指標(5개년 SVG), SUBSIDIARY_DEDUP=False(15사). designer 2회 시간 초과(32+13분)로
 orchestrator 직접 구현(88595f4). 교훈: jp HTML 은 ECharts 검증 루프 때문에 designer 라운드가 45~57분 — 다음부터 jp 차트는 SVG/CSS 만, 티켓은 DOM 검증만.
 다음 = 번들(비공개 경로 jp-f9027362/) → owner 확인.
-
-**🟢 2026-09-13 (16) `jp/jesr_detail.json` 에 `capital_tree`·`risk_tree`·`profit_flow` 구조화 블록 추가 — 2사 실측, underwriting_ok/net_ok 는 실제 갭으로 false(publishing).**
-티켓 `inbox/publishing/20260913T0005Z__owner__JP_MULTI__jesr_detail_trees.md`(answered). owner 09-12 피드백(① 자본구성표 하위합≠상위 ②
-보험/대재해 하위분해 안 보임 ③ 손익 항목 선별 나쁨 ④ 손해율 별도패널)의 데이터 쪽. `J-ESR/build_jesr_detail_json.py` 에 `build_tree()`(스키마
-`parent`/`formula` 전위순회, `capital_tree`=`eligible_capital` 뿌리·`risk_tree`=`rc_pre_tax` 뿌리 공용) + `build_profit_flow()`(손보 13행 고정
-흐름, `pl_other_ordinary`/`pl_extraordinary_net` 2개 파생 id — `_meta.labels` 에만 추가, 스키마 항목 정의는 무변경) 신설. 설계 결정 2개는 티켓
-문구를 그대로 안 따르고 실측 근거로 바꿈(답변란에 상세): (a) `is_total` 을 "formula 보유" 대신 "스키마상 자식 존재"로 구조화 — tier1_ni_capital_surplus
-등 3개 항목이 alias formula(`== ebs_*`)라 리터럴대로 하면 자식 0개인데 total 로 표시되는 오류 발생, 구조화 규칙이 이 alias 예외를 별도 코드 없이 자동
-해결. (b) risk_tree 루트(9-term rc_pre_tax 공식) 재현 tolerance 를 ±1 고정 대신 `max(1, 항 개수)` 로 — 기존 추출기 자체 체크
-`C12_rc_pre_tax` 가 이미 이 9-term 공식에 tol=9 를 쓰고 있음(각 항 절사 오차 누적), ±1 로는 au/meiji 둘 다 fail. **실측**(재현
-`PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/build_jesr_detail_json.py`, exit 0,
-SELF-CHECK OK): au capital_tree 14행·root check `9278=9102+175`(diff 1, tol 2) ok — risk_tree 12행·root check
-`1510≈1119+87+247+78+251-274=1508`(diff 2, tol 6) ok, rc_nonlife/rc_catastrophe/rc_market 3개 correlated 노드의
-simple_sum 이 기존 체크 C14/C15/C17 rhs(1190/87/247)와 정확 일치(교차검증) — meiji capital_tree 15행 root ok(diff 1,
-tol 2), risk_tree 22행 root ok(diff 3, tol 6), rc_cat_natural 포함 4개 correlated 노드 전부 기존 C14-C17 rhs(2458/2666/
-2523/7567)와 정확 일치. profit_flow: au 11행(`pl_underwriting_other`·`pl_extraordinary_net` 값 없어 missing 2), meiji 13행(missing
-0). 검산 3개 — `ordinary_ok`=true 둘 다(설계상 항등, `pl_other_ordinary` 가 잔차로 정의돼 항상 닫힘) / `underwriting_ok`=**false 둘 다**
-(선별 6행 합 vs 保険引受利益 차이 au 806~866·meiji 690~829, 원인 추정: 責任準備金等繰入額 등 스키마에 없는 保険引受費用 행이 원문엔 있음 —
-`pl_underwriting_other`(その他収支) 는 실제로 작은 값이라 이 갭을 못 메움, 정직하게 false 유지·억지 보정 없음) / `net_ok`=**false 둘 다**(cur
-기 特別利益 미공시로 `pl_extraordinary_net` cur 이 null → 그 항을 0취급하고 재현하면 diff 2(au)/20(meiji); meiji prev 만 단독 검산하면
-1216+26-465=777=실측 net_income prev 일치). self_check() 는 root check 2개(capital/risk)와 ordinary_ok 만 하드게이트(모두 true 로 통과),
-underwriting_ok/net_ok 는 실측치 그대로 JSON 에 싣고 게이트에는 안 건다(실제 데이터 공백이지 코드 버그가 아님). **부작용 확인**: `git diff`
-상 `jp/jesr_detail.json` 의 나머지 차이는 전부 이번 세션 시작 전부터 워킹트리에 이미 있던 (15)번 재보험 브릿지 스키마/추출기 미커밋 변경분(내가
-안 건드림, `git diff --stat HEAD -- J-ESR/esr_disclosure_schema.json` 이미 +107 줄) — 내 추가분은 `capital_tree`/`risk_tree`/`profit_flow`
-3키 + `_meta.labels` 2개(`pl_other_ordinary`/`pl_extraordinary_net`) + `generated_at` 뿐. `jp/*.html`·스키마 항목 정의·커밋 없음.
-
 
 ## Active follow-ups
 

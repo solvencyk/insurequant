@@ -1966,7 +1966,7 @@
       "layer": "article_axes",
       "table": "axes:catastrophe_reserve_adequacy",
       "labels_ja": [
-        "異常危険準備金（火災）"
+        "火災 行 × 異常危険準備金 列"
       ],
       "ko": "화재 종목 이상위험준비금 잔액(금융청 부족 지적 대상)",
       "unit": "JPY_million",
@@ -2588,6 +2588,40 @@
         "諸手数料及び集金費"
       ],
       "ko": "제수수료 및 집금비",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": null,
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_commissions_gross",
+      "layer": "profit",
+      "table": "profit:note",
+      "labels_ja": [
+        "支払諸手数料及び集金費"
+      ],
+      "ko": "지급제수수료 및 집금비(총액, 注記; 당기만)",
+      "unit": "JPY_million",
+      "parent": null,
+      "formula": "= pl_commissions_collection + pl_ceded_commission",
+      "required": false,
+      "column": "prev+cur",
+      "sector_scope": "nonlife",
+      "kics_item_ref": null,
+      "pl_item_ref": null
+    },
+    {
+      "id": "pl_ceded_commission",
+      "layer": "profit",
+      "table": "profit:note",
+      "labels_ja": [
+        "出再保険手数料"
+      ],
+      "ko": "출재보험수수료(재보험자→출재사 수취, 注記; 당기만) — 재보험 수지 구성항목",
       "unit": "JPY_million",
       "parent": null,
       "formula": null,

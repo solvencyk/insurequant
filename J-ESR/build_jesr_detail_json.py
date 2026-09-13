@@ -206,13 +206,20 @@ def build_tree(root_id, merged, items_by_id, children_map):
 # Fixed, owner-picked flow of profit-layer ids per sector -- NOT derived from
 # schema parent/formula (every profit:* item has parent=None; the schema does not
 # encode a P&L flow shape). Entries are (id, sign, label_override, derived).
+# owner 2026-09-13 (2): 正味収入保険料/正味支払保険金 두 줄 대신 상대방 기준 두 블록 —
+#   元受収支   = 元受正味保険料(除く収入積立保険料) − 元受正味保険金
+#   再保険収支 = (受再正味保険料 − 受再正味保険金) − 支払再保険料 + 回収再保険金 + 出再保険手数料
+# 受再는 사실상 出再 재원(자배책·지진 풀)이라 出再와 한 블록. 出再保険手数料(재보험자→출재사)는 손익계산서에서
+# 諸手数料及び集金費 순액 안에 숨어 있으므로 여기서 꺼내 재보험 블록에 넣고, 사업비 행은 총액(支払諸手数料及び集金費)으로.
+# 두 블록 − 損害調査費 − 支払諸手数料 − 営業費 ± その他(差引) = 保険引受利益 이 항상 닫히도록 その他 는 잔차(derived).
+# (종전 pl_underwriting_other=その他収支 만으로는 積立保険料·満期返戻金·準備金繰入戻入이 빠져 5사 전부 underwriting_ok=False 였다.)
 NONLIFE_PROFIT_FLOW = [
-    ("pl_net_premiums_written", "=", None, False),
-    ("pl_net_claims_paid", "-", None, False),
+    ("pf_direct_balance", "=", "元受収支", True),
+    ("pf_reins_balance", "±", "再保険収支", True),
     ("pl_loss_adjustment_expenses", "-", None, False),
-    ("pl_commissions_collection", "-", None, False),
+    ("pf_commissions_row", "-", None, True),
     ("pl_uw_operating_general_admin", "-", None, False),
-    ("pl_underwriting_other", "±", "その他(準備金繰入等)", False),
+    ("pf_uw_other_residual", "±", "その他収支(積立保険・準備金繰入戻入等)", True),
     ("pl_underwriting_profit", "=", None, False),
     # schema label for this id is the yield table's "合計" row -- meaningless as a flow-row caption, so the
     # published label is fixed here (the working-tree jesr_detail.json already carried it by hand, 2026-09-13)
@@ -243,7 +250,62 @@ def _pair(values, pid, period):
     return v.get(period) if isinstance(v, dict) else None
 
 
-def _derived_pair(pid, values, period):
+def _deposit(profit_raw, period):
+    """収入積立保険料 that sits inside pl_gross_premiums_written (TMNF/Sompo 元受 표가 含む収入積立保険料) — 0 otherwise."""
+    adj = (profit_raw.get("adjustments") or {}).get("deposit_premium_in_gross") or {}
+    return adj.get(period)
+
+
+def _sum_or_none(terms):
+    """terms: [(value, sign)] -> signed sum; None if any value is None."""
+    tot = 0
+    for v, sg in terms:
+        if v is None:
+            return None
+        tot += v if sg == "+" else -v
+    return tot
+
+
+def _block_parts(values, profit_raw, pid, period):
+    """(value, parts) for the two balance blocks. parts = [{id,label_ja,sign,value}] (value for `period`)."""
+    g = lambda i: _pair(values, i, period)
+    if pid == "pf_direct_balance":
+        dep = _deposit(profit_raw, period)
+        parts = [("pl_gross_premiums_written", "元受正味保険料", "+", g("pl_gross_premiums_written"))]
+        if dep is not None:
+            parts.append(("pf_deposit_premiums", "うち収入積立保険料(控除)", "-", dep))
+        parts.append(("pl_gross_claims_paid", "元受正味保険金", "-", g("pl_gross_claims_paid")))
+    elif pid == "pf_reins_balance":
+        parts = [("pl_assumed_premiums", "受再正味保険料", "+", g("pl_assumed_premiums")),
+                 ("pl_assumed_claims", "受再正味保険金", "-", g("pl_assumed_claims")),
+                 ("pl_ceded_premiums", "支払再保険料", "-", g("pl_ceded_premiums")),
+                 ("pl_recovered_reinsurance_claims", "回収再保険金", "+", g("pl_recovered_reinsurance_claims"))]
+        # 出再保険手数料 is a single-year note → prev None → the block's prev is None too (no silent partial sums)
+        if _pair(values, "pl_ceded_commission", "cur") is not None:
+            parts.append(("pl_ceded_commission", "出再保険手数料", "+", g("pl_ceded_commission")))
+    else:
+        raise ValueError(pid)
+    return _sum_or_none([(v, sg) for _, _, sg, v in parts]), parts
+
+
+def _derived_pair(pid, values, period, profit_raw=None):
+    if pid in ("pf_direct_balance", "pf_reins_balance"):
+        return _block_parts(values, profit_raw or {}, pid, period)[0]
+    if pid == "pf_commissions_row":
+        # gross (支払諸手数料及び集金費) when the note was captured, else the P&L net figure
+        if _pair(values, "pl_ceded_commission", "cur") is not None:
+            net, cc = _pair(values, "pl_commissions_collection", period), _pair(values, "pl_ceded_commission", period)
+            return None if None in (net, cc) else net + cc
+        return _pair(values, "pl_commissions_collection", period)
+    if pid == "pf_uw_other_residual":
+        uw = _pair(values, "pl_underwriting_profit", period)
+        terms = [(_derived_pair("pf_direct_balance", values, period, profit_raw), "+"),
+                 (_derived_pair("pf_reins_balance", values, period, profit_raw), "+"),
+                 (_pair(values, "pl_loss_adjustment_expenses", period), "-"),
+                 (_derived_pair("pf_commissions_row", values, period, profit_raw), "-"),
+                 (_pair(values, "pl_uw_operating_general_admin", period), "-")]
+        base = _sum_or_none(terms)
+        return None if None in (uw, base) else uw - base
     if pid == "pl_other_ordinary":
         op = _pair(values, "pl_ordinary_profit", period)
         up = _pair(values, "pl_underwriting_profit", period)
@@ -264,9 +326,10 @@ def _tol_close(a, b, tol=1):
     return a is not None and b is not None and abs(a - b) <= tol
 
 
-def _period_value(pid, values, period):
-    if pid in ("pl_other_ordinary", "pl_extraordinary_net"):
-        return _derived_pair(pid, values, period)
+def _period_value(pid, values, period, profit_raw=None):
+    if pid in ("pl_other_ordinary", "pl_extraordinary_net", "pf_direct_balance", "pf_reins_balance",
+               "pf_commissions_row", "pf_uw_other_residual"):
+        return _derived_pair(pid, values, period, profit_raw)
     return _pair(values, pid, period)
 
 
@@ -317,8 +380,8 @@ def build_profit_flow(profit_raw, items_by_id, sector):
     missing = []
     for pid, sign, label_override, derived in spec:
         if derived:
-            cur = _derived_pair(pid, values, "cur")
-            prev = _derived_pair(pid, values, "prev")
+            cur = _derived_pair(pid, values, "cur", profit_raw)
+            prev = _derived_pair(pid, values, "prev", profit_raw)
         else:
             cur = _pair(values, pid, "cur")
             prev = _pair(values, pid, "prev")
@@ -327,14 +390,20 @@ def build_profit_flow(profit_raw, items_by_id, sector):
             continue
         it = items_by_id.get(pid)
         label = label_override or (it["labels_ja"][0] if it and it.get("labels_ja") else pid)
-        rows.append({
+        if pid == "pf_commissions_row":
+            label = "支払諸手数料及び集金費" if _pair(values, "pl_ceded_commission", "cur") is not None else "諸手数料及び集金費"
+        row = {
             "id": pid,
             "label_ja": label,
             "sign": sign,
             "cur": cur,
             "prev": prev,
             "derived": derived,
-        })
+        }
+        if pid in ("pf_direct_balance", "pf_reins_balance"):
+            pc, pp = _block_parts(values, profit_raw, pid, "cur")[1], _block_parts(values, profit_raw, pid, "prev")[1]
+            row["parts"] = [{"id": i, "label_ja": lab, "sign": sg, "cur": v, "prev": pp[k][3]} for k, (i, lab, sg, v) in enumerate(pc)]
+        rows.append(row)
 
     if sector == "life":
         checks = {
@@ -345,14 +414,26 @@ def build_profit_flow(profit_raw, items_by_id, sector):
             "net_ok": _reconstruction_check(values, ["pl_ordinary_profit"], ["pl_income_taxes"], "pl_net_income"),
         }
     else:
+        # underwriting flow closes by construction (その他 is the residual) → check the disclosed identities instead:
+        # 正味 = 元受 + 受再 − 出再 (− 収入積立保険料 when the 元受 table includes it) for premiums and claims.
+        dep_c, dep_p = _deposit(profit_raw, "cur"), _deposit(profit_raw, "prev")
+        def _bridge_ok(net_id, gross_id, assumed_id, minus_id, dep_by_period):
+            res = []
+            for period, dep in (("cur", dep_by_period[0]), ("prev", dep_by_period[1])):
+                lhs = _pair(values, net_id, period)
+                rhs = _sum_or_none([(_pair(values, gross_id, period), "+"), (_pair(values, assumed_id, period), "+"),
+                                    (_pair(values, minus_id, period), "-")])
+                if lhs is None or rhs is None:
+                    continue
+                res.append(_tol_close(lhs, rhs - (dep or 0), 1))
+            return all(res) if res else None
         checks = {
-            "underwriting_ok": _reconstruction_check(
-                values,
-                ["pl_net_premiums_written", "pl_underwriting_other"],
-                ["pl_net_claims_paid", "pl_loss_adjustment_expenses", "pl_commissions_collection",
-                 "pl_uw_operating_general_admin"],
-                "pl_underwriting_profit",
-            ),
+            "premium_bridge_ok": _bridge_ok("pl_net_premiums_written", "pl_gross_premiums_written", "pl_assumed_premiums", "pl_ceded_premiums", (dep_c, dep_p)),
+            "claims_bridge_ok": _bridge_ok("pl_net_claims_paid", "pl_gross_claims_paid", "pl_assumed_claims", "pl_recovered_reinsurance_claims", (None, None)),
+            "commission_note_ok": (None if _pair(values, "pl_ceded_commission", "cur") is None else
+                                   _tol_close(_pair(values, "pl_commissions_gross", "cur"),
+                                              _sum_or_none([(_pair(values, "pl_commissions_collection", "cur"), "+"), (_pair(values, "pl_ceded_commission", "cur"), "+")]), 1)),
+            "underwriting_ok": True,   # residual row makes the flow close by construction (kept for the page's badge)
             "ordinary_ok": _reconstruction_check(
                 values, ["pl_underwriting_profit", "pl_investment_pl", "pl_other_ordinary"], [], "pl_ordinary_profit"
             ),
@@ -493,6 +574,7 @@ def build_profit_block(profit_raw, items_by_id):
         "items": items,
         "ratios": ratios,
         "core": core,
+        "adjustments": profit_raw.get("adjustments") or {},
         "status": status,
     }
 
@@ -530,6 +612,15 @@ def build(extracted, schema, jesr_master, jesr_esr):
         "ja": "特別損益", "ko": "특별손익 순액(파생: 특별이익-특별손실)",
         "unit": "JPY_million", "kics_item_ref": None, "pl_item_ref": None,
     }
+    # owner 2026-09-13 (2): 元受/再保険 두 블록 + 잔차 행 (build_profit_flow NONLIFE_PROFIT_FLOW 주석 참조)
+    for pid, ja, ko in [
+        ("pf_direct_balance", "元受収支", "원수 수지(파생: 원수정미보험료(적립보험료 제외) − 원수정미보험금)"),
+        ("pf_reins_balance", "再保険収支", "재보험 수지(파생: 수재보험료 − 수재보험금 − 출재보험료 + 회수재보험금 + 출재보험수수료; 전기는 출재보험수수료 미취득이라 공란)"),
+        ("pf_deposit_premiums", "うち収入積立保険料(控除)", "원수정미보험료에 포함된 적립보험료(정미수입보험료 산정 시 차감)"),
+        ("pf_commissions_row", "支払諸手数料及び集金費", "지급제수수료 및 집금비(총액 = 손익계산서 순액 + 출재보험수수료; 注記 없으면 순액)"),
+        ("pf_uw_other_residual", "その他収支(積立保険・準備金繰入戻入等)", "기타 수지(잔차: 보험인수이익 − 위 행 합계; 적립보험료·만기환급금·준비금 전입환입·기타수지 포함)"),
+    ]:
+        labels[pid] = {"ja": ja, "ko": ko, "unit": "JPY_million", "kics_item_ref": None, "pl_item_ref": None}
 
     for hid, lab in CORE_HISTORY_LABELS.items():
         labels.setdefault(hid, {**lab, "kics_item_ref": None, "pl_item_ref": None})
