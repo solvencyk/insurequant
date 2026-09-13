@@ -7,6 +7,8 @@ Pipeline organized as **downloader / parser / validation / publishing / designer
 
 ## Status
 
+**📡 2026-09-13 클라우드에서 한국 원천 도달성 실측 — 회사망 제약이 보편 제약이 아니었다(cross-stage).** owner 질문("접근 막혀 미검증인 것들 다시 볼 수 있나")에 답하려 이 컨테이너에서 재봤다: **DART 200 · OpenDART API 200 · 금융감독원 200 · 생명보험협회 공시(pub.insure.or.kr) 200 · FISIS 200 · data.go.kr 200 · 손해보험협회 200(브라우저 헤더 필요)**. **KIPRIS 도 살아 있다** — 기본 `requests`/`curl` 은 클라이언트 핑거프린팅으로 끊기지만 브라우저 헤더(`J-ESR/jesr_http.get`)로는 루트·`/khome/main.do` 둘 다 200(MS&AD·ソニーFG 와 같은 `ok_requires_headers` 유형). 실패: 한화생명(TLS)·교보생명(프록시) 2사 — 재확인 대상. **CLAUDE.md §10 의 "go.kr·KIPRIS 는 브라우저·WebFetch 금지(영구 행)" 은 회사망 PC 의 제약이다** — 이 문장을 보편 제약으로 읽으면 클라우드 라운드에서 할 수 있는 일을 스스로 막는다. 규칙 문구 조정은 owner 판단(이 항목은 실측 기록일 뿐 규칙을 고치지 않았다). **경영공시 PDF 재수집·OCR 은 owner 지시로 범위 밖**(2026-09-13: "건들면 골치아프다").
+
 **🔧 2026-09-13 push 게이트가 변경 범위를 코드로 판정한다(cross-stage).** owner 지적 *"한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 된다"*. CLAUDE.md §5 의 범위 규칙(owner 09-12)이 **문서에만 있고 훅은 무조건 전부 돌리고 있었다** — `prepush_check.py` §0 에 판정을 구현했다. jp 범위 번들이면 한국 마스터 축 5종을 건너뛰고 ~5초(실측), 한국 파일이 하나라도 섞이면 자동 FULL. **fail-closed**(upstream 없음·git 실패·빈 diff·모르는 경로 → 전체), 우회 환경변수 없음, verdict 에 `SKIPPED(jp-scope)` 로 "안 돌렸다"와 "통과했다"를 구분. 회귀 65케이스·변이 12/12 발화. 잔여 UH-20(훅이 refspec 을 안 넘겨 범위가 근사 — 빗나가면 전체가 도는 안전 방향). 상세 `docs/claude-changelog.md` 2026-09-13(2차).
 
 **🔧 2026-09-13 서브에이전트 정의·스킬이 저장소 밖에 있던 것을 안으로 들였다(cross-stage).** `.gitignore:91` 의 `.claude/` 한 줄 때문에 `.claude/agents/*.md` 7개(모델 매핑: validation=Opus 5, 나머지 Sonnet 5)와 스킬 4개가 머신 로컬에만 있었고, 클라우드 세션은 CLAUDE.md §10 의 병렬 발사 규칙만 읽고 실행체를 못 읽었다. ignore 를 머신별 설정 파일만으로 좁히고 정의·스킬을 커밋, CLAUDE.md §10 에 위치·매핑 등재. 상세 `docs/claude-changelog.md` 2026-09-13.

@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T15:16:21Z",
+    "generated_at": "2026-09-13T15:47:17Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -60,7 +60,7 @@
       "ticker": null,
       "sector": "life",
       "category": "上場",
-      "scope": "solo",
+      "scope": "group",
       "esr_pct": 333.0,
       "basis": "regulatory_standard",
       "as_of": "2026-03-31",
@@ -70,7 +70,7 @@
       "doc_type": "決算短信〔IFRS〕(2026-05-13)",
       "doc_date": "2026-05-13",
       "source_url": "https://data.swcms.net/file/lifenet-corp/dam/jcr:e9412bb2-3fc0-45b2-9854-d619e11990bb/140120260513529356.pdf",
-      "notes": "신기준(経済価値ベース) ソルベンシー・マージン比率 333%(決算短信 p5 + 有報 S100YC7R 본문 동일 문장, 外部監査 미완료 속보치). **같은 문서에 内部ESR 394%(전기 356%)가 별도 공시**되므로 혼동 금지 — 화면값은 규제 표준식 쪽이다. 신뢰수준 명시 없음. 목표레인지는 두 원문 어디에도 서술 없음. **caveat: 원문 서술이 連結(그룹) 기준인데 census scope 는 solo 로 기재돼 있다 — 다음 라운드에 확인**(2026-09-13 jp-collector)",
+      "notes": "신기준(経済価値ベース) ソルベンシー・マージン比率 333%(決算短信 p5 + 有報 S100YC7R 본문 동일 문장, 外部監査 미완료 속보치). **같은 문서에 内部ESR 394%(전기 356%)가 별도 공시**되므로 혼동 금지 — 화면값은 규제 표준식 쪽이다. 신뢰수준 명시 없음. 목표레인지는 두 원문 어디에도 서술 없음. **caveat: 원문 서술이 連結(그룹) 기준인데 census scope 는 solo 로 기재돼 있다 — 다음 라운드에 확인**(2026-09-13 jp-collector) / 2026-09-13 scope 정정: solo → **group**. 決算短信〔IFRS〕p5 와 有報 S100YC7R 본문이 동일 문장 「…ESR)は、当連結会計年度末において、333%となり…」 — 連結 기준이다. 단독 상장 생보사라 単体와 근사하겠지만 원문이 連結이라 부른다(추정으로 solo 로 적혀 있던 것)",
       "target_range": null
     },
     {
