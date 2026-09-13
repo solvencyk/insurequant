@@ -56,6 +56,10 @@ DEFAULT_OUT = HERE / "source_url_health.json"
 CLASS_ORDER = ["dead", "error", "blocked", "tls_client_issue", "spa_shell",
                "ok_requires_headers", "ok"]
 
+#: 넓은 범위의 산출을 좁은 범위가 덮어쓰면 증거가 조용히 줄어든다(2026-09-13 실측:
+#: 기본 실행 한 번에 254건 산출이 24건짜리로 교체됐다). 범위에 등급을 매겨 강등을 막는다.
+SCOPE_RANK = {"page": 1, "insurers": 2, "census": 3, "all": 4}
+
 
 def log(msg: str) -> None:
     sys.stdout.buffer.write((msg + "\n").encode("utf-8", errors="replace"))
@@ -108,6 +112,8 @@ def main() -> int:
     ap.add_argument("--workers", type=int, default=4, help="동시 요청 수(예의상 기본 4)")
     ap.add_argument("--timeout", type=int, default=45)
     ap.add_argument("--out", default=str(DEFAULT_OUT))
+    ap.add_argument("--force", action="store_true",
+                    help="좁은 범위 결과로 넓은 범위 산출을 덮어쓴다(기본 금지)")
     args = ap.parse_args()
 
     targets = collect_targets(args.census or args.all, args.insurers or args.all)
@@ -146,8 +152,12 @@ def main() -> int:
         for r in expiring:
             log(f"    {r['company']} ({r['origin']}:{r['field']}) {r['url']}")
 
+    scope = ("all" if (args.census or args.all) and (args.insurers or args.all)
+             else "census" if (args.census or args.all)
+             else "insurers" if args.insurers else "page")
     payload = {
         "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ"),
+        "scope": scope,
         "targets": len(rows),
         "unique_urls": len(uniq),
         "summary": counts,
@@ -156,8 +166,17 @@ def main() -> int:
         "rows": rows,
     }
     out = Path(args.out)
+    if out.exists() and not args.force:
+        try:
+            prev = json.loads(out.read_text(encoding="utf-8")).get("scope", "all")
+        except Exception:
+            prev = "all"
+        if SCOPE_RANK.get(scope, 0) < SCOPE_RANK.get(prev, 0):
+            out = out.with_suffix(f".{scope}.json")
+            log(f"[guard] 기존 산출이 더 넓은 범위({prev})라 덮어쓰지 않는다 — {out} 로 쓴다"
+                f" (덮어쓰려면 --force)")
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    log(f"[out] {out}")
+    log(f"[out] {out}  (scope={scope})")
     return 1 if (dead or expiring) else 0
 
 

@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T14:18:41Z",
+    "generated_at": "2026-09-13T14:22:19Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -143,7 +143,7 @@
       "doc_type": "2025年度決算説明資料(2026-05-26)",
       "doc_date": "2026-05-26",
       "source_url": "https://www.asahi-life.co.jp/company/intro/kessan/pdf/20260526_1.pdf",
-      "notes": "그룹 内部管理 ESR 258.9%(결산설명자료 p10·p14 직접 확인, 1년 VaR 99.5%). 같은 p10 에 규제기준 経済価値ベースSMR 見込み 242%(외부검증 전 暫定) 병기. **규제 확정치는 7월 통합보고서에서 나왔다** — 資料編 p44 連結 241.9%(적격 1,696,488/소요 701,247 백만엔), p9 単体 242.2% (https://www.asahi-life.co.jp/company/intro/disclosure/disclosure2026_08.pdf). 헤드라인은 회사 공표 기준(내부관리) 유지. 2026-09-13 원문 재확인, 속보 표기는 규제치 쪽에만 있어 preliminary=no",
+      "notes": "그룹 内部管理 ESR 258.9%(결산설명자료 p10·p14 직접 확인, 1년 VaR 99.5%). 같은 p10 에 규제기준 経済価値ベースSMR 見込み 242%(외부검증 전 暫定) 병기. **규제 확정치는 7월 통합보고서에서 나왔다** — 資料編 p44 連結 241.9%(적격 1,696,488/소요 701,247 백만엔), p9 単体 242.2% (https://www.asahi-life.co.jp/company/intro/disclosure/disclosure2026_08.pdf). 헤드라인은 회사 공표 기준(내부관리) 유지. 2026-09-13 원문 재확인, 속보 표기는 규제치 쪽에만 있어 preliminary=no / 2026-09-13 ir_url 교체(구 /company/zaimu/ 404)",
       "target_range": null
     },
     {

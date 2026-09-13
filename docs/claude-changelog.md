@@ -1,6 +1,6 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-09-11 · Stage: cross-stage
+> Last updated: 2026-09-13 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
@@ -8,6 +8,24 @@ Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
 
 ---
+
+## 2026-09-13 — 서브에이전트 정의가 저장소 밖에 있었다 (`.gitignore` 의 `.claude/` 한 줄)
+
+CLAUDE.md §10 은 "독립 작업은 서브에이전트를 한 메시지에서 병렬 발사, 모델은 티켓 유형으로" 를
+규정한다. 그런데 그 실행체인 `.claude/agents/*.md` 7개가 `.gitignore:91` 의 `.claude/` 에 걸려
+**머신 밖으로 나간 적이 없었다.** 클라우드 세션(이 저장소를 clone 만 해서 도는 환경)은 규칙만 읽고
+실행체를 못 읽어, 병렬 발사 없이 혼자 도는 상태였다 — owner 가 직접 지적해서 발견.
+
+- `.claude/agents/` 7개 커밋: downloader · parser-kics · parser-ifrs17 · **validation(Opus 5)** ·
+  publishing · designer · jp-collector (나머지 전부 Sonnet 5). `.claude/skills/` 5개도 함께
+  (kics-parser · ifrs17-parser · a11y-audit · launch-runbook · incident-postmortem —
+  종전엔 ifrs17-parser 하나만 들어와 있었다).
+- `.gitignore` 를 좁혔다: `.claude/` → `settings.local.json` · `settings.json` · `launch.json` ·
+  `*.local.json`(머신마다 다른 권한·IDE 실행설정만 제외). 비밀정보 스캔 결과 agents·skills 에는
+  키가 없다(환경변수 *이름*만 언급).
+- CLAUDE.md §10 에 정의 위치·모델 매핑 한 줄 추가. jp 도메인 문서의 "머신 로컬, push 안 됨" 문장 정정.
+- 같은 라운드의 jp 레인 산출은 `docs/changelog_jp.md` (25)(26), validation 은
+  `docs/changelog_validation.md` 2026-09-13 참조.
 
 ## 2026-09-11 — 지침 부채 정리 1차: TODO Status 이력 아카이브 분리
 

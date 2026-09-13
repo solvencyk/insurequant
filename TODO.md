@@ -7,6 +7,8 @@ Pipeline organized as **downloader / parser / validation / publishing / designer
 
 ## Status
 
+**🔧 2026-09-13 서브에이전트 정의·스킬이 저장소 밖에 있던 것을 안으로 들였다(cross-stage).** `.gitignore:91` 의 `.claude/` 한 줄 때문에 `.claude/agents/*.md` 7개(모델 매핑: validation=Opus 5, 나머지 Sonnet 5)와 스킬 4개가 머신 로컬에만 있었고, 클라우드 세션은 CLAUDE.md §10 의 병렬 발사 규칙만 읽고 실행체를 못 읽었다. ignore 를 머신별 설정 파일만으로 좁히고 정의·스킬을 커밋, CLAUDE.md §10 에 위치·매핑 등재. 상세 `docs/claude-changelog.md` 2026-09-13.
+
 **🧹 2026-09-11 지침 부채 정리 1차 — TODO Status 이력을 `docs/todo_archive_*.md` 6개로 분리(내용 무수정, HEAD 대비 바이트 재조립 검증 6/6).** 실측: stage TODO 7개 합계 ~288k → ~64k 토큰(−78%), `TODO_parser_ifrs17.md` 128k → 14k. 규칙(CLAUDE.md 핸드오프 절): Status 는 최신 5개만, 밀려난 것은 아카이브 헤더 아래에 잘라 붙임. 2차 후보(미착수, owner 판단): CLAUDE.md·stage 프롬프트의 '왜 생겼나' 서술 → 규칙 한 줄 + 포인터로 압축; `TODO.md` K-ICS 면제 등재부(340줄) 안의 superseded 스냅샷 분리.
 
 **🟢 2026-08-30 현재 — 게이트 전부 통과, 라이브 배포 정상.** 실측:

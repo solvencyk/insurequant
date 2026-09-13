@@ -1,5 +1,12 @@
 # TODO archive — jp 레인 (일본 ESR)
 
+**🟢 2026-09-13 (21) J-GAAP 貸借対照表 요약 층 `bs` 신설 — 상세 10사 중 7사 extracted, T자형 BS 패널용 tree 18행·checks 3종(jp).**
+티켓 `inbox/jp/20260913T1300Z__owner__JP_MULTI__jgaap_balance_sheet.md`(answered). `J-ESR/extract_bs.py`(신규, `extract_esr_template_samples.py` 헬퍼 재사용) →
+`extracted_bs_values.json` → builder `build_bs_block()`+`BS_LABELS`+self_check(id↔labels·합계 3행, checks False 는 WARN) → `jp/jesr_detail.json` 10사 전부 `bs` 블록,
+`_meta.coverage.bs_extracted=7`, SELF-CHECK OK. 손보 4사(au·TMNF·MSI·Sompo)+NN Life 는 단체 2개년 百万円 checks 3/3 True; 日本生命·明治安田生命은 5월 설명자료 연결 요약(億円→×100,
+当期末만, group) 으로 equity 검산 True·준비금 검산 None. not_obtained 3(明治安田損保 별책엔 純資産 없음·住友生命 요약 없음·第一生命 PDF 없음). 함정 3: NN Life `△ 7,608`
+부호 뒤 공백, MSI 「純資産の部資本金」 라벨 접합, Sompo 資本剰余金/利益剰余金 은 合計 행에만 값. 문서 §12. 32분(상한 30분 소폭 초과). 다음 = 오케스트레이터 `jgaap.html` T자형 렌더.
+
 **🟢 2026-09-13 (20) 損益表 상단을 元受収支 / 再保険収支 두 블록으로 + 出再保険手数料 추출(5사) — `jp/jesr.html`·builder·extractor(jp).**
 owner "원수/수재/출재를 상대방 기준으로 묶자 → 수재는 출재 재원이니 元受·再保険 둘로" + "출재보험수수료(재보험자→출재사)도 재보험 수지에". extractor 에 `src:"note"`
 2항목(`pl_commissions_gross`·`pl_ceded_commission`, 注記 단년 → prev 없음, P16 ±1 5/5 통과, au 제어문자 \x08 함정), builder `NONLIFE_PROFIT_FLOW` 를

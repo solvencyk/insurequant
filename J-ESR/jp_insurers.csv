@@ -11,9 +11,9 @@ MS&ADインシュアランスグループHD,MS&AD Insurance Group Holdings,8725,
 SOMPOホールディングス,Sompo Holdings,8630,損保,HD上場,E23924,yes,,https://www.sompo-hd.com/ir/,,EDINETコード訂正2026-09-13: 旧E04979はパーク二四株式会社（定款上の商号　パーク２４株式会社）のコード
 損害保険ジャパン,Sompo Japan Insurance,,損保,子会社,E03827,yes,Sompo,https://www.sompo-japan.co.jp/,,社債発行→有報義務
 SOMPOひまわり生命保険,Sompo Himawari Life,,生保,子会社,none,no,Sompo,https://www.sompo-himawari.co.jp/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
-第一生命ホールディングス,Dai-ichi Life Holdings,8750,生保,HD上場,E06141,yes,,https://www.dai-ichi-life-hd.com/investor/,,EDINETコード訂正2026-09-13: 旧E04506は九州電力株式会社のコード
+第一生命ホールディングス,Dai-ichi Life Holdings,8750,生保,HD上場,E06141,yes,,https://www.dai-ichi-life-hd.com/investor/,,EDINETコード訂正2026-09-13: 旧E04506は九州電力株式会社のコード / 2026-09-13 EDINET 등록명은 「株式会社第一ライフグループ」 — 2025-06-23 주총 결의로 2026-04-01 상호 변경(有報 S100YC7A 표지 원문 「旧会社名：第一生命ホールディングス株式会社」로 확인). 코드 E06141 불변. 표시명 교체 여부는 owner 판단
 第一生命保険,Dai-ichi Life Insurance,,生保,子会社,E32692,no,第一生命HD,https://www.dai-ichi-life.co.jp/company/results/kenzensei/,,株式会社→有報義務あり可能性 / EDINET登録あり・有報提出義務者以外(2026-09-13)
-第一ネオ生命保険,Dai-ichi Frontier Life,,生保,子会社,TBD,tbd,第一生命HD,,,第一フロンティア生命と同一?
+第一ネオ生命保険,Dai-ichi Frontier Life,,生保,子会社,E35324,no,第一生命HD,,,第一フロンティア生命と同一? / 2026-09-13 실체 확정 — ネオファースト生命保険(E35324)이 2026-04-01 개명한 회사. 종전 notes 의 '第一フロンティア生命と同一?' 의심은 오판(그 회사는 별도 행·EDINET 미등록). EDINET 등록 있으나 有報 제출의무 없음
 第一フロンティア生命保険,Dai-ichi Frontier Life,,生保,子会社,none,no,第一生命HD,https://www.d-frontier-life.co.jp/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 T&Dホールディングス,T&D Holdings,8795,生保,HD上場,E03851,yes,,https://www.td-holdings.co.jp/ir/,,EDINETコード訂正2026-09-13: 旧E06008は코드리스트에 없음のコード
 大同生命保険,Daido Life Insurance,,生保,子会社,E03846,no,T&D,https://www.daido-life.co.jp/,,KK→有報義務あり可能性 / EDINET登録あり・有報提出義務者以外(2026-09-13)
@@ -23,13 +23,13 @@ T&Dフィナンシャル生命保険,T&D Financial Life,,生保,子会社,none,n
 ソニー生命保険,Sony Life Insurance,,生保,子会社,none,no,ソニーFG,https://www.sonylife.co.jp/company/corporate/results/,,株式会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)
 ソニー損害保険,Sony Sompo Insurance,,損保,子会社,none,no,ソニーFG,https://www.sonysonpo.co.jp/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 かんぽ生命保険,Japan Post Insurance,7181,生保,上場,E31755,yes,,https://www.jp-life.japanpost.jp/IR/,,単独上場 / EDINETコード訂正2026-09-13: 旧E04678は코드리스트에 없음のコード
-日本生命保険,Nippon Life Insurance,,生保,相互会社,E06125,no,,https://www.nissay.co.jp/kaisha/annai/gyoseki/kessan.html,https://www.nissay.co.jp/kaisha/annai/kenzen/,EDINET登録あり・有報提出義務者以外(2026-09-13)
+日本生命保険,Nippon Life Insurance,,生保,相互会社,E06125,no,,https://www.nissay.co.jp/kaisha/annai/gyoseki/kessan.html,https://www.nissay.co.jp/kaisha/gyoseki/report/disclosure/ichiran/disclosure_2026.html,"EDINET登録あり・有報提出義務者以外(2026-09-13) / 2026-09-13 ir_health_url 교체(구 /kaisha/annai/kenzen/ 404, 사이트 개편)"
 住友生命保険,Sumitomo Life Insurance,,生保,相互会社,E06134,no,,https://www.sumitomolife.co.jp/about/company/disclosure/settlement/,,EDINET登録あり・有報提出義務者以外(2026-09-13)
 明治安田生命保険,Meiji Yasuda Life Insurance,,生保,相互会社,E06369,no,,https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/account/,https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/,EDINET登録あり・有報提出義務者以外(2026-09-13)
 富国生命保険,Fukoku Life Insurance,,生保,相互会社,E06327,no,,https://www.fukoku-life.co.jp/about/finance/,https://www.fukoku-life.co.jp/about/finance/health/,EDINET登録あり・有報提出義務者以外(2026-09-13)
-朝日生命保険,Asahi Life Insurance,,生保,相互会社,E06130,no,,https://www.asahi-life.co.jp/company/zaimu/,,EDINET登録あり・有報提出義務者以外(2026-09-13)
+朝日生命保険,Asahi Life Insurance,,生保,相互会社,E06130,no,,https://www.asahi-life.co.jp/company/intro/disclosure/index.html,,EDINET登録あり・有報提出義務者以外(2026-09-13) / 2026-09-13 ir_url 교체(구 경로 404)
 フコクしんらい生命保険,Fukoku Shinrai Life,,生保,子会社,none,no,富国生命,,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
-オリックス生命保険,Orix Life Insurance,,生保,子会社,none,no,ORIX,https://www.orixlife.co.jp/company/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
+オリックス生命保険,Orix Life Insurance,,生保,子会社,none,no,ORIX,https://www.orixlife.co.jp/about/results/disclosure/,,EDINET未登録(2026-09-13 コードリスト全件検索0件) / 2026-09-13 ir_url 교체 — sitemap 실측: /company/ 섹션이 /about/ 로 통째 개명
 ライフネット生命保険,LifeNet Life Insurance,7157,生保,上場,E26327,yes,,https://ir.lifenet-seimei.co.jp/,,単独上場
 楽天生命保険,Rakuten Life Insurance,,生保,子会社,none,no,楽天,https://www.rakuten-life.co.jp/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 SBI生命保険,SBI Life Insurance,,生保,子会社,none,no,SBI,https://www.sbilife.co.jp/corporate/disclosure.html,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
@@ -41,7 +41,7 @@ SBI生命保険,SBI Life Insurance,,生保,子会社,none,no,SBI,https://www.sbi
 PGF生命,Prudential Gibraltar Financial Life,,生保,外資子会社,none,no,,https://www.pgf-life.co.jp/,,米Prudential Financial子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)
 マニュライフ生命保険,Manulife Life Japan,,生保,外資子会社,none,no,,https://www.manulife.co.jp/,,加Manulife子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)
 チューリッヒ生命保険,Zurich Life Japan,,生保,外資子会社,none,no,,https://www.zurichlife.co.jp/,,スイスZurich子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)
-アクサ生命保険,AXA Life Japan,,生保,外資子会社,E03845,yes,,https://www.axa.co.jp/,,仏AXA子会社
+アクサ生命保険,AXA Life Japan,,生保,外資子会社,E03845,yes,,https://www.axa.co.jp/,,仏AXA子会社 / 2026-09-13 有報 의무자 구분이나 FY2024·FY2025 두 결산기(15개월) 스캔에서 有報·訂正·半期·臨時 전부 0건. 결산일은 코드리스트상 3月31日로 동일하고 금융청 제출기한 연장 승인 목록에도 없다 — 의무 실효 가능성(법적 사유 미확정)
 カーディフ生命保険,Cardiff Life,,生保,外資子会社,none,no,,https://life.cardif.co.jp/company/ir/,,仏BNPパリバ子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)
 エヌエヌ生命保険,NN Life Japan,,生保,外資子会社,none,no,,https://www.nnlife.co.jp/company/results,,蘭NN Group子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)
 FWD生命保険,FWD Life Japan,,生保,外資子会社,E34445,no,,https://www.fwdlife.co.jp/,,香FWD Group子会社 / EDINET登録あり・有報提出義務者以外(2026-09-13)
@@ -51,7 +51,7 @@ SBIプリズム少額短期保険,SBI Prism,,生保,子会社,none,no,SBI,https:
 ニッセイ・ウェルス生命保険,Nissay Wealth Life,,生保,子会社,none,no,日本生命,https://www.nw-life.co.jp/about/result/disclosure/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 はなさく生命保険,Hanasaku Life,,生保,子会社,none,no,日本生命,https://www.life8739.co.jp/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 明治安田トラスト生命保険,Meiji Yasuda Trust Life,,生保,子会社,none,no,明治安田,https://www.meijiyasuda-trustlife.co.jp/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
-大樹生命保険,Taiju Life,,生保,子会社,TBD,tbd,朝日生命,https://www.taiju-life.co.jp/corporate/,,
+大樹生命保険,Taiju Life,,生保,子会社,none,no,日本生命,https://www.taiju-life.co.jp/corporate/,,"2026-09-13 실존(구 三井生命, 2019 개명)하나 코드리스트 전수검색에 현재명·구명 모두 없음 → EDINET 미등록. parent_group 정정: 朝日生命(오기) → 日本生命(2016 경영통합)"
 メディケア生命保険,Medicare Life,,生保,外資子会社,none,no,,https://www.medicarelife.com/company/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 共栄火災海上保険,Kyoei Fire & Marine,,損保,独立,E03850,yes,,https://irbank.net/E03850,,全国共済農協連合会が筆頭株主
 あいおいニッセイ同和損害保険,Aioi Nissay Dowa,,損保,子会社,E03833,yes,MS&AD,https://irbank.net/E03833,,,2027年三井住友海上と合併予定(重複)
@@ -69,14 +69,14 @@ NTTドコモ損害保険,NTT Docomo Non-Life,,損保,子会社,none,no,NTT,https
 全管協れいわ損害保険,Zenkankyou Reiwa,,損保,子会社,none,no,,https://www.zkreiwa-sonpo.co.jp/category/disclosure/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 ソニー損害保険,Sony Non-Life,,損保,子会社,none,no,ソニーFG,https://www.sonysonpo.co.jp/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 SOMPOダイレクト損害保険,Sompo Direct,,損保,子会社,none,no,Sompo,https://www.sompo-direct.co.jp/company/disclosure/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
-第一アイペット損害保険,Dai-ichi iPet,,損保,子会社,TBD,tbd,第一生命,https://www.ipet-ins.com/company/ipet/disclosure.html,,ペット保険
+第一アイペット損害保険,Dai-ichi iPet,,損保,子会社,E33935,yes,第一生命,https://www.ipet-ins.com/company/ipet/disclosure.html,,ペット保険 / 2026-09-13 실체 확정 — アイペット損害保険(E33935)이 2026-04-01 개명. 옛 후보 E35826(アイペットHD)은 흡수합병 소멸 코드
 大同火災海上保険,Daido Fire & Marine,,損保,独立,none,no,,https://www.daidokasai.co.jp/,,沖縄・九州地盤 / EDINET未登録(2026-09-13 コードリスト全件検索0件)
 東京海上ダイレクト損害保険,Tokio Marine Direct,,損保,子会社,none,no,東京海上HD,https://www.e-design.net/company/disclosure/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 トーア再保険,Toa Reinsurance,,再保険,独立,E03842,yes,,https://www.toare.co.jp/,,
 日本地震再保険,Japan Earthquake Reinsurance,,再保険,独立,none,no,,https://www.nihonjishin.co.jp/disclosure.html,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 三井ダイレクト損害保険,Mitsui Direct,,損保,子会社,none,no,MS&AD,https://www.mitsui-direct.co.jp/profile/overview/disclosure/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 明治安田損害保険,Meiji Yasuda Non-Life,,損保,子会社,none,no,明治安田,https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
-楽天損害保険,Rakuten Non-Life,,損保,子会社,E03835,yes,楽天,https://www.rakuten-sonpo.co.jp/company/tabid/409/Default.aspx,,
+楽天損害保険,Rakuten Non-Life,,損保,子会社,E03835,yes,楽天,https://www.rakuten-sonpo.co.jp/company/tabid/409/Default.aspx,,2026-09-13 有報 의무자 구분이나 FY2024·FY2025 두 결산기(15개월) 스캔에서 有報·訂正·半期·臨時 전부 0건. 결산일은 코드리스트상 3月31日로 동일하고 금융청 제출기한 연장 승인 목록에도 없다 — 의무 실효 가능성(법적 사유 미확정)
 レスキュー損害保険,Rescue Non-Life,,損保,子会社,none,no,,https://www.rescue-sonpo.jp/,,EDINET未登録(2026-09-13 コードリスト全件検索0件)
 ペット＆ファミリー損害保険,Pet & Family,,損保,子会社,none,no,,https://www.petfamilyins.co.jp/company/notification/,,ペット保険 / EDINET未登録(2026-09-13 コードリスト全件検索0件)
 ヤマップネイチャランス損害保険,Yamap,,損保,子会社,none,no,,https://yamap-naturance.co.jp/company,,EDINET未登録(2026-09-13 コードリスト全件検索0件)

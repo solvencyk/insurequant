@@ -1,9 +1,17 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-09-02 · Stage 3/5 — validation
+> Last updated: 2026-09-13 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-09-13 -- jp 레인 false-green 3건: PM-2026-09-13 + UH-18(룰 4종 미배선)
+
+- 사고: jp 빌더 self-check RED=0 인데 화면 수치 2건이 2차보도·조정치, 출처 1건은 무관 문서. 상세 `docs/postmortems/PM-2026-09-13_jp_secondary_source_and_dead_url.md`.
+- 원인 유형: **"산술만 검사"(PM-2026-06-16)의 jp 판** — 범위·형식·합계가 census 내부에서 닫혀 외부 대조 축이 없다.
+- 룰 4종 정의(입력·판정식·임계값·severity·오탐억제). 오탐억제가 핵심이다: 봇차단 403·WAF 4xx·파이썬 TLS 실패를 dead 와 섞으면 전수 254건 중 41건이 거짓 RED 이 된다.
+- **배선 0.** 도구만 신설(`J-ESR/check_source_urls.py` exit 1, `J-ESR/edinet_esr_probe.py`). UH-18 등재, 티켓 발주.
+- 파생 결정: jp 예외 등재처가 없다 — 배선 시 `J-ESR/jp_source_exceptions.json` 을 같이 만든다(exemption 추가는 owner 권한).
 
 ## 2026-09-11 — `public_exports/` 변이시험을 임시 복사본으로 (제자리 훼손 폐지)
 

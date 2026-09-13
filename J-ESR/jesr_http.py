@@ -60,6 +60,11 @@ ACCEPT_LANGUAGE = "ja,en-US;q=0.9,en;q=0.8,ko;q=0.7"
 #: 1차 출처는 회사 자체 IR/디스클로저의 영구 경로를 쓴다.
 EXPIRING_HOSTS = ("release.tdnet.info", "www.release.tdnet.info", "kabutan.jp")
 
+#: 연속 요청에 간헐적으로 403(Akamai Access Denied)을 내는 호스트 — 죽은 게 아니라
+#: 속도제한이다(2026-09-13 실측: 같은 URL 이 5회 중 4회 200, 1회 403).
+#: 수집기는 이 호스트에 요청 간격을 5초 이상 둔다.
+RATE_LIMITED_HOSTS = ("www.tokiomarine-nichido.co.jp",)
+
 _ANCHOR_RE = re.compile(rb"<a\b[^>]*href=", re.I)
 _SCRIPT_RE = re.compile(rb"<script\b", re.I)
 #: <meta http-equiv="refresh" content="0;URL=/ir/event/presentation/2026/">
@@ -159,7 +164,9 @@ def curl_status(url: str, timeout: int = 45) -> int | None:
             capture_output=True, text=True, timeout=timeout + 10,
         )
         code = (out.stdout or "").strip()[-3:]
-        return int(code) if code.isdigit() else None
+        # curl 은 연결 자체가 실패하면 "000" 을 찍는다 — 상태코드 0 으로 넘기면
+        # 호출부에서 "응답은 받았는데 0" 처럼 읽히므로 None 으로 정규화한다.
+        return int(code) if (code.isdigit() and int(code) > 0) else None
     except Exception:
         return None
 
@@ -176,7 +183,7 @@ def looks_like_spa(body: bytes, content_type: str) -> tuple[bool, dict]:
 
 
 def probe(url: str, *, timeout: int = 45, compare_bare: bool = True, max_body: int = 400_000,
-          _depth: int = 0) -> dict:
+          hard_cap: int = 4_000_000, _depth: int = 0) -> dict:
     """URL 1건 생존 점검. classification 5종으로 분류해 dict 반환.
 
     - ``ok``                : 브라우저 헤더로 200, 정적으로 읽힘
@@ -205,6 +212,14 @@ def probe(url: str, *, timeout: int = 45, compare_bare: bool = True, max_body: i
     try:
         resp = get(url, timeout=timeout, stream=True)
         body = resp.raw.read(max_body, decode_content=True) or b""
+        truncated = len(body) >= max_body
+        ctype = (resp.headers.get("Content-Type") or "").split(";")[0].strip().lower()
+        if truncated and "html" in ctype and not _ANCHOR_RE.search(body):
+            # 앞부분이 인라인 base64 이미지·거대 인라인 CSS 로 채워져 있으면 400KB 안에
+            # <a> 가 한 개도 없을 수 있다 — 그걸 SPA 로 읽으면 멀쩡한 정적 페이지가
+            # "정적 수집 불가" 로 분류된다(2026-09-13 アクサ生命 3행 오탐). 그때만
+            # 나머지를 더 읽는다(상한 hard_cap).
+            body += resp.raw.read(hard_cap - max_body, decode_content=True) or b""
         resp.close()
         out["status"] = resp.status_code
         out["final_url"] = resp.url
@@ -238,7 +253,7 @@ def probe(url: str, *, timeout: int = 45, compare_bare: bool = True, max_body: i
         target = meta_refresh_target(body, resp.url)
         if target and target.rstrip("/") != resp.url.rstrip("/"):
             hop = probe(target, timeout=timeout, compare_bare=compare_bare,
-                        max_body=max_body, _depth=_depth + 1)
+                        max_body=max_body, hard_cap=hard_cap, _depth=_depth + 1)
             hop["meta_refresh_from"] = url
             hop.setdefault("meta_refresh_chain", []).insert(0, url)
             hop["url"] = url  # 보고는 원래 URL 기준으로

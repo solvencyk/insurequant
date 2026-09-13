@@ -49,12 +49,11 @@
       "company_jp": "日新火災海上保険",
       "company_en": "Nisshin Fire & Marine",
       "category": "子会社",
-      "recorded_code": "E03829",
+      "recorded_code": "none",
       "match_method": "none",
       "matched": null,
       "candidates": [],
-      "agrees_with_record": null,
-      "recorded_code_belongs_to": "현행 코드리스트에 없음(폐지 추정)"
+      "agrees_with_record": null
     },
     {
       "company_jp": "東京海上日動あんしん生命保険",
@@ -219,7 +218,7 @@
       "company_jp": "第一ネオ生命保険",
       "company_en": "Dai-ichi Frontier Life",
       "category": "子会社",
-      "recorded_code": "TBD",
+      "recorded_code": "E35324",
       "match_method": "none",
       "matched": null,
       "candidates": [
@@ -232,7 +231,9 @@
           "yuho_obligated": false
         }
       ],
-      "agrees_with_record": null
+      "agrees_with_record": null,
+      "recorded_code_in_codelist": "ネオファースト生命保険株式会社",
+      "rename_suspected": true
     },
     {
       "company_jp": "第一フロンティア生命保険",
@@ -699,7 +700,7 @@
       "company_jp": "大樹生命保険",
       "company_en": "Taiju Life",
       "category": "子会社",
-      "recorded_code": "TBD",
+      "recorded_code": "none",
       "match_method": "none",
       "matched": null,
       "candidates": [
@@ -902,7 +903,7 @@
       "company_jp": "第一アイペット損害保険",
       "company_en": "Dai-ichi iPet",
       "category": "子会社",
-      "recorded_code": "TBD",
+      "recorded_code": "E33935",
       "match_method": "none",
       "matched": null,
       "candidates": [
@@ -915,7 +916,9 @@
           "yuho_obligated": true
         }
       ],
-      "agrees_with_record": null
+      "agrees_with_record": null,
+      "recorded_code_in_codelist": "アイペット損害保険株式会社",
+      "rename_suspected": true
     },
     {
       "company_jp": "大同火災海上保険",

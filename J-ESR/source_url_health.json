@@ -1,17 +1,18 @@
 {
-  "checked_at": "2026-09-13T14:00Z",
+  "checked_at": "2026-09-13T14:30Z",
+  "scope": "all",
   "targets": 254,
-  "unique_urls": 139,
+  "unique_urls": 140,
   "summary": {
-    "dead": 5,
+    "dead": 0,
     "error": 4,
-    "blocked": 21,
+    "blocked": 20,
     "tls_client_issue": 4,
-    "spa_shell": 8,
-    "ok_requires_headers": 17,
-    "ok": 195
+    "spa_shell": 4,
+    "ok_requires_headers": 16,
+    "ok": 206
   },
-  "dead": 5,
+  "dead": 0,
   "expiring_host": 0,
   "rows": [
     {
@@ -162,17 +163,17 @@
       "origin": "jp/jesr_esr.json",
       "company": "明治安田生命保険",
       "field": "source_url",
-      "url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/",
+      "url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/status-2026/pdf/status_2026_06.pdf",
       "status": 200,
       "bare_status": 200,
-      "final_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/",
-      "content_type": "text/html",
+      "final_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/status-2026/pdf/status_2026_06.pdf",
+      "content_type": "application/pdf",
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 29331,
-      "anchors": 94,
-      "scripts": 3
+      "bytes": 400000,
+      "anchors": 0,
+      "scripts": 0
     },
     {
       "origin": "jp/jesr_esr.json",
@@ -405,9 +406,9 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 10736,
+      "bytes": 10603,
       "anchors": 16,
-      "scripts": 5
+      "scripts": 4
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -430,12 +431,12 @@
       "company": "東京海上日動火災保険",
       "field": "ir_url",
       "url": "https://www.tokiomarine-nichido.co.jp/ir/",
-      "status": 403,
+      "status": 400,
       "bare_status": null,
       "final_url": "https://www.tokiomarine-nichido.co.jp/ir/",
       "content_type": "text/html",
       "classification": "blocked",
-      "error": "HTTP 403",
+      "error": "HTTP 400",
       "expiring_host": false
     },
     {
@@ -472,13 +473,16 @@
       "company": "日新火災海上保険",
       "field": "disclosure_url",
       "url": "https://www.nisshinfire.co.jp/ir/pdf/disclosure2026.pdf",
-      "status": 403,
-      "bare_status": null,
+      "status": 200,
+      "bare_status": 200,
       "final_url": "https://www.nisshinfire.co.jp/ir/pdf/disclosure2026.pdf",
-      "content_type": "text/html",
-      "classification": "blocked",
-      "error": "HTTP 403",
-      "expiring_host": false
+      "content_type": "application/pdf",
+      "classification": "ok",
+      "error": null,
+      "expiring_host": false,
+      "bytes": 400000,
+      "anchors": 0,
+      "scripts": 0
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -486,10 +490,10 @@
       "field": "ir_url",
       "url": "https://www.tmn-anshin.co.jp/",
       "status": 200,
-      "bare_status": 403,
+      "bare_status": 200,
       "final_url": "https://www.tmn-anshin.co.jp/",
       "content_type": "text/html",
-      "classification": "ok_requires_headers",
+      "classification": "ok",
       "error": null,
       "expiring_host": false,
       "bytes": 102794,
@@ -1020,17 +1024,17 @@
       "origin": "fy2025_esr_census_20260912.csv",
       "company": "明治安田生命保険",
       "field": "source_url",
-      "url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/",
+      "url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/status-2026/pdf/status_2026_06.pdf",
       "status": 200,
       "bare_status": 200,
-      "final_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/",
-      "content_type": "text/html",
+      "final_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/status-2026/pdf/status_2026_06.pdf",
+      "content_type": "application/pdf",
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 29331,
-      "anchors": 94,
-      "scripts": 3
+      "bytes": 400000,
+      "anchors": 0,
+      "scripts": 0
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -1068,14 +1072,17 @@
       "origin": "fy2025_esr_census_20260912.csv",
       "company": "朝日生命保険",
       "field": "ir_url",
-      "url": "https://www.asahi-life.co.jp/company/zaimu/",
-      "status": 404,
-      "bare_status": null,
-      "final_url": "https://www.asahi-life.co.jp/company/zaimu/",
+      "url": "https://www.asahi-life.co.jp/company/intro/disclosure/index.html",
+      "status": 200,
+      "bare_status": "ConnectionError",
+      "final_url": "https://www.asahi-life.co.jp/company/intro/disclosure/index.html",
       "content_type": "text/html",
-      "classification": "dead",
+      "classification": "ok",
       "error": null,
-      "expiring_host": false
+      "expiring_host": false,
+      "bytes": 19628,
+      "anchors": 78,
+      "scripts": 9
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -1246,7 +1253,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 83338,
+      "bytes": 83339,
       "anchors": 287,
       "scripts": 21
     },
@@ -1262,7 +1269,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 127142,
+      "bytes": 127143,
       "anchors": 316,
       "scripts": 6
     },
@@ -1320,12 +1327,12 @@
       "bare_status": 200,
       "final_url": "https://www.axa.co.jp/",
       "content_type": "text/html",
-      "classification": "spa_shell",
+      "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 400000,
-      "anchors": 0,
-      "scripts": 4
+      "bytes": 857597,
+      "anchors": 363,
+      "scripts": 5
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -1336,12 +1343,12 @@
       "bare_status": 200,
       "final_url": "https://www.axa.co.jp/ir/performance-report/",
       "content_type": "text/html",
-      "classification": "spa_shell",
+      "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 400000,
-      "anchors": 0,
-      "scripts": 4
+      "bytes": 871030,
+      "anchors": 432,
+      "scripts": 5
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -1451,25 +1458,25 @@
       "classification": "spa_shell",
       "error": null,
       "expiring_host": false,
-      "bytes": 400000,
+      "bytes": 2018863,
       "anchors": 0,
-      "scripts": 21
+      "scripts": 22
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
       "company": "FWD生命保険",
       "field": "disclosure_url",
-      "url": "https://www.fwdlife.co.jp/about-us/disclosure-archives/",
+      "url": "https://assets.contentstack.io/v3/assets/blt52d7347d77fa3188/blt0973672e88d8798d/6a9667f66fe1456a00b1c770/2026_disclosure.pdf",
       "status": 200,
       "bare_status": 200,
-      "final_url": "https://www.fwdlife.co.jp/about-us/disclosure-archives/",
-      "content_type": "text/html",
-      "classification": "spa_shell",
+      "final_url": "https://assets.contentstack.io/v3/assets/blt52d7347d77fa3188/blt0973672e88d8798d/6a9667f66fe1456a00b1c770/2026_disclosure.pdf",
+      "content_type": "application/pdf",
+      "classification": "ok",
       "error": null,
       "expiring_host": false,
       "bytes": 400000,
       "anchors": 0,
-      "scripts": 25
+      "scripts": 0
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -1653,7 +1660,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 90307,
+      "bytes": 90305,
       "anchors": 105,
       "scripts": 9
     },
@@ -1669,9 +1676,9 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 49159,
+      "bytes": 49025,
       "anchors": 67,
-      "scripts": 12
+      "scripts": 11
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -1701,7 +1708,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 271033,
+      "bytes": 271032,
       "anchors": 216,
       "scripts": 6
     },
@@ -1717,9 +1724,9 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 268151,
+      "bytes": 268018,
       "anchors": 223,
-      "scripts": 6
+      "scripts": 5
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -1765,7 +1772,7 @@
       "classification": "error",
       "error": "SSLError: HTTPSConnectionPool(host='www.kyoeikasai.co.jp', port=443): Max retries exceeded with url: /about/company/outline.html (Caused by SSLError(SSLCertVerificationEr",
       "expiring_host": false,
-      "curl_status": 0
+      "curl_status": null
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -1779,7 +1786,7 @@
       "classification": "error",
       "error": "SSLError: HTTPSConnectionPool(host='www.kyoeikasai.co.jp', port=443): Max retries exceeded with url: /about/company/disclosure.html (Caused by SSLError(SSLCertVerificatio",
       "expiring_host": false,
-      "curl_status": 0
+      "curl_status": null
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -1953,7 +1960,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 58146,
+      "bytes": 58145,
       "anchors": 213,
       "scripts": 14
     },
@@ -1969,7 +1976,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 58146,
+      "bytes": 58145,
       "anchors": 213,
       "scripts": 14
     },
@@ -2105,14 +2112,17 @@
       "origin": "fy2025_esr_census_20260912.csv",
       "company": "キャピタル損害保険",
       "field": "source_url",
-      "url": "https://www.capital-sonpo.co.jp/pdf/disc_2026-all.pdf",
-      "status": 404,
-      "bare_status": null,
-      "final_url": "https://www.capital-sonpo.co.jp/pdf/disc_2026-all.pdf",
-      "content_type": "text/html",
-      "classification": "dead",
+      "url": "https://www.capital-sonpo.co.jp/company/manual/pdf/disc_2026-all.pdf",
+      "status": 200,
+      "bare_status": 200,
+      "final_url": "https://www.capital-sonpo.co.jp/company/manual/pdf/disc_2026-all.pdf",
+      "content_type": "application/pdf",
+      "classification": "ok",
       "error": null,
-      "expiring_host": false
+      "expiring_host": false,
+      "bytes": 400000,
+      "anchors": 0,
+      "scripts": 0
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -2318,7 +2328,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 25406,
+      "bytes": 25407,
       "anchors": 68,
       "scripts": 5
     },
@@ -2334,7 +2344,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 25406,
+      "bytes": 25407,
       "anchors": 68,
       "scripts": 5
     },
@@ -2376,9 +2386,9 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 13138,
+      "bytes": 13005,
       "anchors": 32,
-      "scripts": 10
+      "scripts": 9
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -2392,9 +2402,9 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 13138,
+      "bytes": 13005,
       "anchors": 32,
-      "scripts": 10
+      "scripts": 9
     },
     {
       "origin": "fy2025_esr_census_20260912.csv",
@@ -2600,7 +2610,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 68840,
+      "bytes": 68712,
       "anchors": 145,
       "scripts": 23
     },
@@ -2616,7 +2626,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 68840,
+      "bytes": 68712,
       "anchors": 145,
       "scripts": 23
     },
@@ -2712,9 +2722,9 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 10736,
+      "bytes": 10603,
       "anchors": 16,
-      "scripts": 5
+      "scripts": 4
     },
     {
       "origin": "jp_insurers.csv",
@@ -2728,9 +2738,9 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 5345,
+      "bytes": 5211,
       "anchors": 5,
-      "scripts": 5,
+      "scripts": 4,
       "meta_refresh_from": "https://www.tokiomarinehd.com/ir/financial/highlight/",
       "meta_refresh_chain": [
         "https://www.tokiomarinehd.com/ir/financial/highlight/"
@@ -2742,12 +2752,12 @@
       "company": "東京海上日動火災保険",
       "field": "ir_url",
       "url": "https://www.tokiomarine-nichido.co.jp/ir/",
-      "status": 403,
+      "status": 400,
       "bare_status": null,
       "final_url": "https://www.tokiomarine-nichido.co.jp/ir/",
       "content_type": "text/html",
       "classification": "blocked",
-      "error": "HTTP 403",
+      "error": "HTTP 400",
       "expiring_host": false
     },
     {
@@ -2772,10 +2782,10 @@
       "field": "ir_url",
       "url": "https://www.tmn-anshin.co.jp/",
       "status": 200,
-      "bare_status": 403,
+      "bare_status": 200,
       "final_url": "https://www.tmn-anshin.co.jp/",
       "content_type": "text/html",
-      "classification": "ok_requires_headers",
+      "classification": "ok",
       "error": null,
       "expiring_host": false,
       "bytes": 102794,
@@ -2977,7 +2987,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 174129,
+      "bytes": 174132,
       "anchors": 275,
       "scripts": 28
     },
@@ -3097,14 +3107,17 @@
       "origin": "jp_insurers.csv",
       "company": "日本生命保険",
       "field": "ir_health_url",
-      "url": "https://www.nissay.co.jp/kaisha/annai/kenzen/",
-      "status": 404,
-      "bare_status": null,
-      "final_url": "https://www.nissay.co.jp/kaisha/annai/kenzen/",
+      "url": "https://www.nissay.co.jp/kaisha/gyoseki/report/disclosure/ichiran/disclosure_2026.html",
+      "status": 200,
+      "bare_status": 200,
+      "final_url": "https://www.nissay.co.jp/kaisha/gyoseki/report/disclosure/ichiran/disclosure_2026.html",
       "content_type": "text/html",
-      "classification": "dead",
+      "classification": "ok",
       "error": null,
-      "expiring_host": false
+      "expiring_host": false,
+      "bytes": 16715,
+      "anchors": 10,
+      "scripts": 2
     },
     {
       "origin": "jp_insurers.csv",
@@ -3190,27 +3203,33 @@
       "origin": "jp_insurers.csv",
       "company": "朝日生命保険",
       "field": "ir_url",
-      "url": "https://www.asahi-life.co.jp/company/zaimu/",
-      "status": 404,
-      "bare_status": null,
-      "final_url": "https://www.asahi-life.co.jp/company/zaimu/",
+      "url": "https://www.asahi-life.co.jp/company/intro/disclosure/index.html",
+      "status": 200,
+      "bare_status": "ConnectionError",
+      "final_url": "https://www.asahi-life.co.jp/company/intro/disclosure/index.html",
       "content_type": "text/html",
-      "classification": "dead",
+      "classification": "ok",
       "error": null,
-      "expiring_host": false
+      "expiring_host": false,
+      "bytes": 19628,
+      "anchors": 78,
+      "scripts": 9
     },
     {
       "origin": "jp_insurers.csv",
       "company": "オリックス生命保険",
       "field": "ir_url",
-      "url": "https://www.orixlife.co.jp/company/",
-      "status": 404,
-      "bare_status": null,
-      "final_url": "https://www.orixlife.co.jp/company/",
+      "url": "https://www.orixlife.co.jp/about/results/disclosure/",
+      "status": 200,
+      "bare_status": 403,
+      "final_url": "https://www.orixlife.co.jp/about/results/disclosure/",
       "content_type": "text/html",
-      "classification": "dead",
+      "classification": "ok_requires_headers",
       "error": null,
-      "expiring_host": false
+      "expiring_host": false,
+      "bytes": 163848,
+      "anchors": 413,
+      "scripts": 14
     },
     {
       "origin": "jp_insurers.csv",
@@ -3333,7 +3352,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 83338,
+      "bytes": 83339,
       "anchors": 287,
       "scripts": 21
     },
@@ -3349,7 +3368,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 127142,
+      "bytes": 127143,
       "anchors": 316,
       "scripts": 6
     },
@@ -3391,12 +3410,12 @@
       "bare_status": 200,
       "final_url": "https://www.axa.co.jp/",
       "content_type": "text/html",
-      "classification": "spa_shell",
+      "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 400000,
-      "anchors": 0,
-      "scripts": 4
+      "bytes": 857597,
+      "anchors": 363,
+      "scripts": 5
     },
     {
       "origin": "jp_insurers.csv",
@@ -3442,9 +3461,9 @@
       "classification": "spa_shell",
       "error": null,
       "expiring_host": false,
-      "bytes": 400000,
+      "bytes": 2018863,
       "anchors": 0,
-      "scripts": 21
+      "scripts": 22
     },
     {
       "origin": "jp_insurers.csv",
@@ -3519,7 +3538,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 90307,
+      "bytes": 90305,
       "anchors": 105,
       "scripts": 9
     },
@@ -3551,7 +3570,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 271033,
+      "bytes": 271032,
       "anchors": 216,
       "scripts": 6
     },
@@ -3679,7 +3698,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 58146,
+      "bytes": 58145,
       "anchors": 213,
       "scripts": 14
     },
@@ -3836,7 +3855,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 25406,
+      "bytes": 25407,
       "anchors": 68,
       "scripts": 5
     },
@@ -3865,9 +3884,9 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 13138,
+      "bytes": 13005,
       "anchors": 32,
-      "scripts": 10
+      "scripts": 9
     },
     {
       "origin": "jp_insurers.csv",
@@ -3945,7 +3964,7 @@
       "classification": "ok",
       "error": null,
       "expiring_host": false,
-      "bytes": 68840,
+      "bytes": 68712,
       "anchors": 145,
       "scripts": 23
     },

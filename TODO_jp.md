@@ -1,9 +1,26 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-13 (25) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-13 (26) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-13 (26) 병렬 3에이전트 라운드 — 화면 15사 전수 원문 대조 · dead URL 전건 해소 · EDINET 잔여 확정 + 포스트모템 PM-2026-09-13(jp).**
+CLAUDE.md §10 대로 동시 3개(검증 Opus 1 / 수집 Sonnet 2). 에이전트 정의가 `.gitignore` 의 `.claude/` 에 걸려 저장소 밖에 있던 것도 이 라운드에 고쳐 커밋했다(그래서 그전까지 병렬 발사를 못 했다).
+① **검증(Opus)** — 미검증 7사를 1차 원문으로 열어 6사 확인·**1사 정정**: 明治安田生命 208.0 → **208.7**(종전 값은 어느 원문에도 없고 출처가 PDF 아닌 디렉토리였다. 統合報告書2026 분책 p10:
+グループESR = 標準モデル·内部モデル 중 **낮은 쪽**, 당기는 内部モデル 208.7%, 標準モデル 連結 213.4% 병기, 별책 告示74 요약표와 정합). **화면이 서로 다른 기준을 한 줄에 세우고 있다** — 규제 표준모델 4사 ·
+내부모델 7사 · 내부관리 3사 · 미확인 2사 → census `esr_basis` 열 신설(화면 미렌더, 칩·각주 표기는 **owner 판단 대기**). `preliminary` 를 notes 키워드 추정에서 **명시열**로 교체 — 키워드가 양방향으로 틀렸다
+(かんぽ는 일본어 원문 인용이라 놓치고, 朝日·富国은 notes 안 *다른 수치*의 속보 표기를 헤드라인 속보로 오판), 실측 4사만 true. 목표레인지 null 3건 해소(富国 230~270% p13 · 明治安田生命 165%以上 p10 ·
+かんぽ 150~220% p35) → 7/15 부착. 朝日 규제 확정치 확보(7월 통합보고서 資料編 p44 連結 241.9% / p9 単体 242.2% — 5월 「242%程度 暫定」의 확정판). 住友·ソニー生命의 "텍스트추출 실패·검색결과 인용" 기록 해소.
+② **수집A(Sonnet)** — dead 5건 **전건** 대체 URL 확보(전부 200). spa_shell 8건 실체 판정: **アクサ生命 3행은 점검기 오탐**이었다(본문 앞 400KB 만 읽어 인라인 이미지에 밀린 `<a>` 를 못 봄 → `hard_cap` 재읽기로
+수정, 앵커 363개 정상) · FWD生命은 진짜 Next.js CSR 이라 `__NEXT_DATA__` 서버렌더 JSON 에서 연도별 PDF 14건을 꺼내 FY2025분 지정 · ヤマップ는 전 17페이지에 재무공시 페이지 자체가 없어 not_found 유지.
+blocked 21건 중 census 가 인용 중인 것은 TMNF 1건뿐이고 5회 중 4회 200 = Akamai **속도제한**(`jesr_http.RATE_LIMITED_HOSTS` 등재, 요청 간격 5초).
+③ **수집C(Sonnet)** — 보류 3사의 원인은 전부 **2026-04-01 그룹 리브랜딩**이었다: 第一ネオ生命保険 = ネオファースト生命保険 **E35324**(의무 없음) · 第一アイペット損害保険 = アイペット損害保険 **E33935**(의무 있음) ·
+大樹生命保険 = **미등록**(구 三井生命 포함 전수검색 0건) + `parent_group` 오기 정정(朝日生命 → 日本生命). **第一生命HD 자체가 「株式会社第一ライフグループ」로 개명**(有報 S100YC7A 표지 원문, 코드 E06141 불변).
+アクサ生命·楽天損保 "결산월 상이" 가설 **기각** — 決算日은 3月31日로 동일, 15개월 스캔에 제출 0건, 금융청 연장승인 목록에도 없다(의무 실효 가능성, 법적 사유 미확정).
+④ **포스트모템 `docs/postmortems/PM-2026-09-13_jp_secondary_source_and_dead_url.md`** — false-green 메커니즘(빌더 self-check 가 census 안에서만 닫히는 자기참조라 "출처 생존·문서내 존재" 축이 없다), 룰 4종을
+오탐억제까지 정의, **전부 미배선 = UH-18** → 티켓 `inbox/jp/20260913T1500Z__validation__JP_MULTI__jp_source_gate_wiring.md` 발주. **다음**: ① UH-18 배선(오프라인 `JP_SOURCE_EXPIRING_HOST` 즉시 + 증거 신선도 검사)
+② 화면 basis 표기 owner 판단 ③ 第一ライフグループ 표시명 교체 여부 ④ ライフネット·SOMPO 산정기준 확정.
 
 **🟢 2026-09-13 (25) 타 세션 리허설 미결 5건 이관·처리 + EDINET 키 실측 — 출처 URL 점검기 신설·코드 7개 정정·화면 수치 2건 정정(jp).**
 티켓 `inbox/jp/20260913T1325Z__owner__JP_MULTI__source_url_rehearsal_and_edinet_key.md`(resolved). 다른 세션(`session_01F9N5Bt…`, `solvencyk/solvency`)이 insurequant
@@ -53,14 +70,11 @@ owner "한국처럼 자본·회계·기타공시로 나눠라, 워터폴은 분�
 채울 수 있다(현재 not_acquired). ② 生保 日本·明治安田는 5월 연결 요약이라 当期末만 — 7월 본편 확보 시 単体 2개년으로 교체. ③ 準備金 표 `cat_reserve_fire` 라벨
 "火災 行 × 異常危険準備金 列" → builder `LABEL_JA_DISPLAY_OVERRIDES` 로 「異常危険準備金（火災）」. ④ 前期 出再保険手数料(20).
 
-**🟢 2026-09-13 (21) J-GAAP 貸借対照表 요약 층 `bs` 신설 — 상세 10사 중 7사 extracted, T자형 BS 패널용 tree 18행·checks 3종(jp).**
-티켓 `inbox/jp/20260913T1300Z__owner__JP_MULTI__jgaap_balance_sheet.md`(answered). `J-ESR/extract_bs.py`(신규, `extract_esr_template_samples.py` 헬퍼 재사용) →
-`extracted_bs_values.json` → builder `build_bs_block()`+`BS_LABELS`+self_check(id↔labels·합계 3행, checks False 는 WARN) → `jp/jesr_detail.json` 10사 전부 `bs` 블록,
-`_meta.coverage.bs_extracted=7`, SELF-CHECK OK. 손보 4사(au·TMNF·MSI·Sompo)+NN Life 는 단체 2개년 百万円 checks 3/3 True; 日本生命·明治安田生命은 5월 설명자료 연결 요약(億円→×100,
-当期末만, group) 으로 equity 검산 True·준비금 검산 None. not_obtained 3(明治安田損保 별책엔 純資産 없음·住友生命 요약 없음·第一生命 PDF 없음). 함정 3: NN Life `△ 7,608`
-부호 뒤 공백, MSI 「純資産の部資本金」 라벨 접합, Sompo 資本剰余金/利益剰余金 은 合計 행에만 값. 문서 §12. 32분(상한 30분 소폭 초과). 다음 = 오케스트레이터 `jgaap.html` T자형 렌더.
-
 ## Active follow-ups
+
+- **`build_jesr_detail_json.py` 는 새 클론에서 못 돈다(2026-09-13 실측).** 입력인 `J-ESR/raw/fy2025_samples/*.pdf` 가 gitignore 라, 클라우드 세션에서 재빌드를 시도하면
+  `FileNotFoundError: au_nonlife_disclo_260730_4of5.pdf` 로 죽는다. 이번 라운드의 明治安田生命 208.0→208.7 은 그래서 **셀 단위 + guard**(CLAUDE.md §8)로 고쳤다.
+  다음 라운드 판단거리: ① 원문 PDF 를 어디에 둘지(용량·저작권) ② 아니면 `extracted_*.json` 중간산출만 추적해 빌더가 PDF 없이도 돌게 할지. 후자가 싸 보인다.
 
 - **10월 census 선행 절차(2026-09-13 신설).** census 를 돌리기 전에 `python J-ESR/check_source_urls.py --all` 을 먼저 돌린다. 2026-09-13 기준
   blocked 21 · spa_shell 8 · requires_headers 17 — 헤더 없이 훑으면 이 46건이 전부 `not_found` 오탐이 된다. dead 5건은 그 라운드에 대체 URL 확보

@@ -263,6 +263,15 @@ def main() -> int:
         else:
             counts["ambiguous" if "ambiguous" in method else "none"] += 1
             entry["agrees_with_record"] = None
+            # 이름으로는 안 잡혔는데 기재 코드가 코드리스트에 살아 있으면 십중팔구 개명이다
+            # (2026-09-13: 第一ネオ生命=ネオファースト生命 E35324, 第一アイペット損保=
+            #  アイペット損害保険 E33935 — 둘 다 2026-04-01 개명). 사람이 판정한 결과를
+            #  덮지 않도록 매칭은 안 하고 사실만 적는다.
+            if old_code.startswith("E"):
+                listed = next((r for r in code_rows if r[COL_CODE] == old_code), None)
+                if listed:
+                    entry["recorded_code_in_codelist"] = listed[COL_NAME]
+                    entry["rename_suspected"] = True
             stale = (old_code.startswith("E")
                      and not any(r[COL_CODE] == old_code for r in code_rows))
             if args.apply and not res["candidates"] and stale:
