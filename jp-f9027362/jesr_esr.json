@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T17:08:02Z",
+    "generated_at": "2026-09-14T05:29:11Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -10,12 +10,19 @@
     "next_update": "2026-10-31",
     "census": {
       "total": 79,
-      "posted": 15,
+      "posted": 16,
       "not_yet": 62,
-      "not_found": 2
+      "not_found": 1
     },
     "excluded_subsidiaries": [],
     "group_children": {
+      "第一ライフグループ": [
+        {
+          "id": "dai_ichi_life",
+          "company_jp": "第一生命保険",
+          "company_en": "Dai-ichi Life"
+        }
+      ],
       "東京海上ホールディングス": [
         {
           "id": "tokiomarine_nichido",
@@ -214,10 +221,10 @@
       "preliminary": false,
       "total_assets_bn_jpy": null,
       "target_pct": null,
-      "doc_type": "決算短信(2026-05-15) / IR資料室 상설 페이지",
-      "doc_date": "2026-05-15",
-      "source_url": "https://www.td-holdings.co.jp/ir/document/results.html",
-      "notes": "2026-09-13 1차출처 교체. 종전 URL은 TDnet(release.tdnet.info) 경로로 게시 만료돼 404 — 만료 호스트는 1차 출처 금지(도메인 문서 §4c). 회사 IR 決算短信 상설 페이지로 교체. 수치 222%는 有報(EDINET S100Y9UP, 2026-06-11) 본문 「内部管理モデルによるＥＳＲは、222％」로 확인. ESR 225% 恒常 초과 시 추가환원 방침 병기(목표 레인지 133~225%)",
+      "doc_type": "統合報告書2026 データ編 p8「ESR(内部管理モデル) 222%」(PDF作成 2026-09-04)",
+      "doc_date": "2026-09-04",
+      "source_url": "https://www.td-holdings.co.jp/ir/document/annual/pdf/ar2026j_data.pdf",
+      "notes": "2026-09-13 1차출처 교체. 종전 URL은 TDnet(release.tdnet.info) 경로로 게시 만료돼 404 — 만료 호스트는 1차 출처 금지(도메인 문서 §4c). 회사 IR 決算短信 상설 페이지로 교체. 수치 222%는 有報(EDINET S100Y9UP, 2026-06-11) 본문 「内部管理モデルによるＥＳＲは、222％」로 확인. ESR 225% 恒常 초과 시 추가환원 방침 병기(목표 레인지 133~225%) / 2026-09-14 source_url 교체 — 값·기준·scope 는 불변(222 / internal_management / group 전부 원문과 일치 재확인). 종전 URL(ir/document/results.html)은 문서가 아니라 목록 페이지였고, E-IR Parts(ssl4.eir-parts.net) 외부 위젯이 JS 로 표를 채워 정적 수집에 실제 PDF 링크가 안 보였다 — 그래서 esr_in_source_health 가 skip_landing(=값 검증 0축)이었다(UH-25). 교체 후: scan_pdf found p8 「健全性 ESR(内部管理モデル) 222%」, p90 10년 시계열 말단도 222%. 교차확인 有報 S100Y9UP p53 재구성식 43,421억엔/19,563억엔=222%. doc_type 의 날짜는 PDF 작성 타임스탬프(2026-09-04)다 — 원문에 발행일 명기가 없어 그걸 썼고, 표기로 구분해 둔다.",
       "target_range": {
         "low_pct": 133,
         "high_pct": 225,
@@ -227,6 +234,25 @@
         "source_url": "https://www.td-holdings.co.jp/ir/ir-policy/erm.php",
         "as_of": "2026-03-31"
       }
+    },
+    {
+      "company_jp": "第一ライフグループ",
+      "company_en": "Daiichi Life Group",
+      "ticker": "8750",
+      "sector": "life",
+      "category": "HD上場",
+      "scope": "group",
+      "esr_pct": 220.0,
+      "basis": "internal_model",
+      "as_of": "2026-03-31",
+      "preliminary": false,
+      "total_assets_bn_jpy": null,
+      "target_pct": null,
+      "doc_type": "2026年3月期 決算・経営説明会 説明資料(2026-05-27)",
+      "doc_date": "2026-05-27",
+      "source_url": "https://www.daiichilife-group.com/investor/library/presentation/pdf/2025_statement.pdf",
+      "notes": "자사 健全性 페이지(WebFetch 직접확인) 문구: '2026年3月末時点の比率については、確定次第、開示' - 09-12 재확인 시점까지 정식 수치 미공표 상태. 2025-12(Q3) SM비율 831.8%만 게재. [2026-09-13 owner 지시 표시명 교체] 旧: 第一生命ホールディングス(Dai-ichi Life Holdings) — 2025-06-23 주총 결의로 2026-04-01 부로 「株式会社第一ライフグループ」 상호 변경(有報 S100YC7A 표지 원문 확인, EDINET코드 E06141 불변). company_en은 dai-ichi-life-hd.com/en/ 라이브 확인(公式 \"Daiichi Life Group, Inc.\")에 맞춰 \"Daiichi Life Group\" 로 교체. / 2026-09-14 有報 스윕에서 신규 확정. グループESR 220%(決算説明資料 p3「26/3末 資本充足率(ESR) 220%(前期末比+10%pt)」· p4「グループESRは前期末比+10%pt改善し220%」). basis 근거는 자료 자신의 각주 「本資料内においては、内部モデルを用いて算出したESRについて、「ESR」と呼称しています」 → internal_model. scope 는 슬라이드 제목 「グループESR」. 한정어 없음(scan_adjusted=unqualified). 함정 확인: 210%는 전기말(p4 브리지 차트 25/3末→26/3末 로 직접 확인), 227%는 2024年3月期 실적(有報 p178 보수 KPI 표), 170%는 목표 하한. 有報 S100YC7A(2026-06-16 제출) p39/p56 동일 문장으로 교차확인, 회사 자체 미러 PDF 도 found+unqualified(백업 출처). 같은 회사가 2026-08-31 CFOダイアログ(event_029.pdf)에서 規制ESR 198%를 따로 공시하는데 basis 가 다른 별개 지표라 헤드라인으로 쓰지 않는다 — 원문 인용은 J-ESR/proposal_daiichi_source_url.json(preliminary 판정 키워드를 notes 에 심지 않으려고 여기 옮겼다). 10/31 규제 공시 때 교체 판단할 것.",
+      "target_range": null
     },
     {
       "company_jp": "MS&ADインシュアランスグループHD",
