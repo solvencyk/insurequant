@@ -4,6 +4,19 @@
 
 ---
 
+**(2026-09-13, 3차) push 게이트 범위 판정을 `prepush_check.py` 안에 구현 — 규칙이 문서에만 있어서 강제도 완화도 안 되던 자리다.** owner 지적: "한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 된다". `CLAUDE.md` §5 는 2026-09-12 에 이미 "번들 diff 가 jp 범위뿐이면 한국 마스터 게이트를 안 돌린다" 고 적어 뒀는데 훅은 **그 규칙을 코드로 보지 않았다**(무조건 전부 실행). 실측 재현: jp 만 바꾼 번들에서 `PRE-PUSH VERDICT … gate RED=197 · K-ICS rule gate=BLOCK … BLOCKED`(exit 2) — 197건 전부 한국 원문 `data/disclosure/` 부재 때문이고 jp 변경과 인과 0.
+
+> 신설: `prepush_check.py` §0(`classify_path`/`decide_scope`/`collect_changed_paths`/`resolve_scope`/`print_scope` + `_run_korean_master_gates()` 로 한국 축 묶음 분리) · `tests/test_prepush_scope.py`(65케이스) · `tests/test_push_gate_wiring.py::test_wired_means_wired_in_the_full_gate_only`.
+>
+> - **fail-closed.** 축소는 "변경된 **모든** 경로가 명시 목록 안"일 때만. upstream 없음 · git 실패 · 빈 diff · 미분류 경로 1개 → 전부 전체 게이트. 비교 기준 = `merge-base(@{upstream}, HEAD)..HEAD` + 스테이지 + 워킹트리 + 미추적(뒤 셋은 push 대상이 아니지만 **일부러 포함** — 커밋 안 한 한국 마스터 수정이 트리에 있는데 축소하면 다음 커밋이 무검사로 나간다).
+> - **jp 범위 목록**: `jp/`·`J-ESR/`·`docs/`·`inbox/`·`.claude/`·루트 `TODO*.md`·`scripts/android_push_and_deploy.sh`·jp 테스트 2종·`CLAUDE.md`. **CLAUDE.md 를 넣은 근거**: 이 파일에서 기계가 검사하는 주장은 골든 표 동기화(`test_deploy_assets`)와 게이트 배선(`test_push_gate_wiring`) 둘뿐이고 **둘 다 축소 묶음에 있다**. 그 전제는 `test_claude_md_guards_stay_in_the_reduced_bundle` 이 지킨다. `scripts/*.py`(배포 .sh 제외)·루트 마스터 JSON·루트 HTML·`src/`·`data/`·`tests/`(jp 2종 제외)는 무조건 전체.
+> - **"안 돌렸다" ≠ "통과했다".** 축소 시 verdict 는 `SKIPPED(jp-scope)` 로 찍고 0 을 pass 로 인쇄하지 않는다. 판정 근거(비교 ref·파일 수·결정적 파일 목록)를 매 실행 인쇄한다. 우회 환경변수는 **일부러 안 만들었다**; 수동은 `--full`(강제 전체)·`--scope-only`(판정만, 게이트 미실행) 둘뿐.
+> - **실측(격리 클론, jp 3파일만 변경)**: 축소 `exit=0` **4.97초**(오프라인 173 passed·4 skipped, 한국 게이트 5종 전부 SKIPPED) ↔ 같은 트리 `--full` `exit=2` 16초(`RED=197`·K-ICS BLOCK·도메인 FAIL). 재현: `python3 scripts/prepush_check.py --scope-only` → 판정만.
+> - **변이시험 12/12 발화**(사본에서만, 원본 md5 동일 확인): jp/ 목록삭제 · fail-closed 개방 · 빈 diff 축소 · git 실패 축소(fail-open) · `--no-renames` 제거 · `-z` 제거(한글 경로) · 미추적 제외 · 축소묶음에서 wiring 테스트 제거 · 축소 모드에서도 한국 게이트 호출 · `SKIPPED` 대신 `pass` 인쇄 · 전체묶음에서 셀프테스트 제거.
+> - **잔여 UH-20**: 훅(`.githooks/pre-push`)은 stdin 의 refspec 을 게이트에 안 넘긴다 — 판정은 `@{upstream}` 근사다. 다른 remote/branch 로 미는 경우(격리 워크트리 cherry-push)는 근사가 빗나갈 수 있고, 그때는 fail-closed 로 전체 게이트가 돈다(안전 방향). refspec 전달은 후속.
+
+---
+
 **(2026-09-13 후속) UH-18 배선 완료 · UH-19 신규·같은 날 해소 — jp 레인에도 "게이트가 검사하는 파일 = 사용자가 보는 파일"이 걸렸다.** `build_jesr_page_json.py::source_gate_check` 4종(`JP_SOURCE_EXPIRING_HOST`·`JP_SOURCE_URL_DEAD`·`JP_SOURCE_EVIDENCE_STALE`·`JP_SOURCE_EVIDENCE_INCOMPLETE`)이 `self_check` 경유로 **exit 1 에 실제 반영**된다(변이시험: extend 한 줄 제거 시 exit-code 케이스 3개만 정확히 FAIL). 회귀 43케이스 + 이빨 변이 5/5. **네트워크를 안 타는 설계**: 판정은 `check_source_urls.py --all` 이 `source_url_health.json` 에 박제하고 빌더는 박제를 읽는다 — 그래서 `JP_SOURCE_URL_DEAD` 의 이빨은 `JP_SOURCE_EVIDENCE_STALE` 에 전적으로 의존한다(한 쌍, 독립 룰 아님). 오탐억제: RED 로 읽는 분류는 `dead` 하나뿐(254건 실측에서 "ok 아니면 RED" 는 48건 거짓 RED). 예외 등재처 `J-ESR/jp_source_exceptions.json`(0건, fail-closed, 절차 룰 2종은 면제 불가, 등재는 owner 권한). **UH-19**: jp 게이트는 빌더를 돌릴 때만 도는 구조라 census 만 고친 커밋이 검사를 통째로 비껴갔다(실측 사례 `62eed63`) → `tests/test_jp_deploy_matches_census.py` 로 "배포 JSON = census 재빌드 결과" 를 강제, 두 테스트를 `prepush_check.py` offline 묶음 + CLAUDE.md §5 jp 축소범위에 등재해 **훅이 실제로 부른다**. 포스트모템 `PM-2026-09-13` 은 **open 유지** — 사고 3건 중 2건(東京海上HD·かんぽ)은 URL 이 살아 있었고, 그 축(`JP_ESR_NOT_IN_SOURCE`)은 오탐억제 3종의 실측 분포가 선행조건이라 아직 안 걸었다(UH-5·UH-9 선례).
 
 ---

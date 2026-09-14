@@ -7,6 +7,18 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 
 ## Status
 
+**(2026-09-14, 8차) 第一ライフグループ posted 전환 경로를 **사본으로** 전증 — 6종 전건 반응 실측 + 새 사각 **UH-25** 등재(비-PDF 출처 = 값 검증 2축 동시 침묵).** 진짜 census·`jp/*.json` 은 한 바이트도 안 건드렸다(작업 전후 md5 5개 동일). UH-19 교훈("census 만 고치고 빌더를 안 돌리면 게이트가 한 번도 안 돈다")대로 **경로를 먼저 증명**하고 무엇이 막을지 미리 쟀다.
+
+> - **오케스트레이터 서술 5개 중 4개 맞고 1개 틀렸다.** 6종 룰 id · 증거 2종 봉투(`source_url_health` `2026-09-13T14:30Z` scope=all rows=254 · `esr_in_source_health` `2026-09-13T16:54Z` scope=all rows=15) · census 보다 낡은 증거 = STALE RED · PDF 만 기계검증 — 전부 맞다. **틀린 것**: "비-PDF 는 `not_applicable`". `not_applicable` 은 **`adjusted_verdict`** 값이고, 비-PDF 의 **`verdict`** 는 `skip_landing` 이다. 빌더의 `verdict` 어휘(`ESR_VERDICT_*`)에는 `not_applicable` 이 **없어서** 거기 들어오면 오히려 "모르는 verdict → RED" 로 걸린다. 결론(두 축 다 침묵)은 같지만 **경로가 둘**이라 룰을 설계할 때 갈라 봐야 한다.
+> - **사본 드라이런 11 시나리오, 6종 전건 발화 실증**(`/tmp/…/scratchpad/dryrun_driver.py`, 사본 트리에서만). S1 둘 다 미실행 → STALE×2 + INCOMPLETE×2 **exit 1** / S2 URL 수집기만 → STALE×1 + INCOMPLETE×1 **exit 1** / S3 둘 다 실행 → **exit 0 · RED 0** / S4 `release.tdnet.info` → EXPIRING_HOST RED / S5 `classification=dead` → URL_DEAD RED / S6 `verdict=not_found` → NOT_IN_SOURCE RED / S7 `adjusted_alt` → ADJUSTED_FIGURE **YELLOW · exit 0**(이빨은 push 묶음) / S9 `adjusted_*` 필드 누락 → INCOMPLETE RED / S10 `scope=partial` → STALE RED.
+> - **🔴 새 사각 UH-25 — S8.** 비-PDF URL 로 posted 하면 `verdict=skip_landing`(인쇄만) + `adjusted_verdict=not_applicable`(기권) 이라 **`JP_ESR_NOT_IN_SOURCE`·`JP_ESR_ADJUSTED_FIGURE` 가 둘 다 침묵**하고 빌더는 **exit 0 · RED 0건**. 배포본에서 **구분이 안 된다** — 0축 검증 행과 2축 검증 행의 **키 집합 차이가 공집합**이고 `jesr_app.js` L307 은 둘 다 같은 「根拠資料 ↗」 로 그린다. 즉 "검증 못 함" 과 "검증 통과" 가 사용자에게 같은 모양이다.
+> - **세고 나서 말한다(UH-5·UH-9 선례).** posted 15사 중 `skip_landing`·`not_applicable` = **1사**(0 아님). **T&D 222%** 이고, 그 증거행 evidence 는 「본문에 222 표기가 **안 보인다**」 인데도 게이트는 green — **이미 라이브인 false-green** 이다. 10/31 노출: not_yet 62행의 ir_url 60/62 가 비-PDF, disclosure_url 도 비-PDF 33 · pdf 5. 有報 스윕이 쓰는 EDINET 뷰어 URL 도 **.html**(`…WZEK0040.html?…&S100YC7A` = 第一ライフグループ 근거 docID) 이라 이번 라운드에 2건째가 될 수 있다.
+> - **비대칭이 근거다.** 같은 YELLOW 인 조정치 축은 `test_live_esr_evidence_has_no_unexempted_adjusted_figure` 로 push 묶음에 이빨이 있는데, skip 축에는 라이브 대조가 **하나도 없다**(유일한 테스트가 *침묵을 단언한다*). 게이트 요약도 조정치 축만 분포를 찍고 1차 축(found/not_found/skip_*)은 **분포를 안 찍는다** — 「기권은 세지 않으면 사각이 된다」 를 한쪽에만 적용했다.
+> - **룰은 안 만들었다.** 필드는 이미 있다(`doc_kind` pdf 14·other 1, `content_type` pdf 52·html 194) 라서 새 수집기 없이 셀 수 있지만, 지금 RED 로 걸면 **데이터 오류가 아닌 T&D 1건이 정상 배포를 막는다**(그 행이 비-PDF 인 이유가 만료호스트 회피라, 고칠 대상이 URL 인지 룰인지 미확정). `docs/postmortems/README.md` **UH-25 / P1** 로 등재만.
+> - **덤으로 확인한 것 2개.** ① 2026-09-13 4차가 발주한 census ragged row(第一ライフグループ 16열 헤더에 18열)는 **이미 고쳐져 있다** — 79행 전수에 `None` 키·결측 셀 0. 즉 `JP_CENSUS_SHAPE` 는 이번 전환을 막지 않는다. ② `check_source_urls.py` 모듈 docstring 은 census 대상이 `ir_url/disclosure_url` 이라 적었지만 **코드는 `source_url` 도 읽는다**(`collect_targets` L89) — 문서가 낡은 것이고, 덕분에 "새 URL 을 넣었는데 증거 수집 대상이 아님" 인 교착은 **없다**.
+> - 검증: 실트리 md5 5개 불변(census·증거 2종·마스터·배포본) · `git status` 에 내 변경 0 · `prepush_check.py` = **`REDUCED(jp-scope)` … `gate-clear`** · 축소 묶음 **242 passed · 2 skipped** · inbox 활성 1(내 것 아님) · 위반 0.
+> - 재현: `python3 /tmp/…/scratchpad/dryrun_driver.py S0 S1 … S10` (사본 트리 `pristine/` 에서 매 시나리오 재구성).
+
 **(2026-09-14, 7차) UH-23 정식 해소 — 한정어 정본(도메인 문서 §3) ↔ 기계본(`ADJUSTED_QUALIFIERS`) **양방향** 대조 배선. 겸해서 TODO 의 과장을 정정했다 — UH-23 은 어제 절반만 닫혀 있었다.** `TODO_jp.md`(28) ③ 은 "한정어 목록 정본을 도메인 문서 §3 에 등재(**UH-23 해소**)" 라고 적었지만, PM 이 요구한 정식 해소는 「§3 절 신설 **+** 코드↔문서 대조 테스트」 둘이고 테스트가 없었다(`tests/test_jp_source_gate.py` 의 코드↔문서 대조는 **ESR 라벨만** 봤다). CLAUDE.md §3 대로 재서 확인했다.
 
 > - **③ 자체도 과장이었다(내 실측).** §3 은 관측 3종(`除いた場合`·`適正水準`·`ターゲットレンジ`)만 산문으로 적고 코드는 **10종**을 들고 있었다. 코드 10종 중 §3 에 문자열로라도 있던 것은 **4종**뿐이고, 그중 `調整後` 는 §3 이 「추측으로 넣지 말 것」 으로 **지목한** 어휘인데 코드가 실제로 들고 있었다 — 정본과 기계본이 **서로 반대를 말하고 있었다**. 즉 UH-23 은 "테스트만 없는" 상태가 아니라 **정본이 기계본과 어긋난** 상태였다.
@@ -63,17 +75,6 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 > - **배선 ≠ 돈다**: 단위 테스트는 검사 함수를 직접 부르므로 호출 한 줄을 지워도 통과한다. 그래서 ① 진짜 빌더를 돌려 exit code 를 재는 케이스 5종(빈 census·ragged·preliminary·company_en 중복·esr_pct 결측) ② 데이터로 도달 불가능한 배포 항등식은 AST 배선 검사로 못 박았다.
 > - 검증: 빌더 exit 0 · `[source-gate] … RED 0건` · `jp/jesr_esr.json`·`jesr_master.json` 이 `generated_at` 외 **바이트 동일** · `pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py tests/test_deploy_assets.py -q` **79 passed** · 축소 묶음 5종 **197 passed·4 skipped** · `prepush_check.py --scope-only` = `REDUCED (jp-scope)`.
 > - **잔여**: `NEXT_UPDATE="2026-10-31"` 은 데이터에서 파생할 수 없는 편집상 약속이라 리터럴로 두고 **경고만** 인쇄한다(지난 날짜가 되면). RED 로 하면 데이터가 안 바뀐 날짜 경계에서 빌더와 배포 테스트가 동시에 터지는 시한폭탄이 된다.
-
-**(2026-09-13, 3차) push 게이트 범위 판정을 `prepush_check.py` 안에 구현 — 규칙이 문서에만 있어서 강제도 완화도 안 되던 자리다.** owner 지적: "한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 된다". `CLAUDE.md` §5 는 2026-09-12 에 이미 "번들 diff 가 jp 범위뿐이면 한국 마스터 게이트를 안 돌린다" 고 적어 뒀는데 훅은 **그 규칙을 코드로 보지 않았다**(무조건 전부 실행). 실측 재현: jp 만 바꾼 번들에서 `PRE-PUSH VERDICT … gate RED=197 · K-ICS rule gate=BLOCK … BLOCKED`(exit 2) — 197건 전부 한국 원문 `data/disclosure/` 부재 때문이고 jp 변경과 인과 0.
-
-> 신설: `prepush_check.py` §0(`classify_path`/`decide_scope`/`collect_changed_paths`/`resolve_scope`/`print_scope` + `_run_korean_master_gates()` 로 한국 축 묶음 분리) · `tests/test_prepush_scope.py`(65케이스) · `tests/test_push_gate_wiring.py::test_wired_means_wired_in_the_full_gate_only`.
->
-> - **fail-closed.** 축소는 "변경된 **모든** 경로가 명시 목록 안"일 때만. upstream 없음 · git 실패 · 빈 diff · 미분류 경로 1개 → 전부 전체 게이트. 비교 기준 = `merge-base(@{upstream}, HEAD)..HEAD` + 스테이지 + 워킹트리 + 미추적(뒤 셋은 push 대상이 아니지만 **일부러 포함** — 커밋 안 한 한국 마스터 수정이 트리에 있는데 축소하면 다음 커밋이 무검사로 나간다).
-> - **jp 범위 목록**: `jp/`·`J-ESR/`·`docs/`·`inbox/`·`.claude/`·루트 `TODO*.md`·`scripts/android_push_and_deploy.sh`·jp 테스트 2종·`CLAUDE.md`. **CLAUDE.md 를 넣은 근거**: 이 파일에서 기계가 검사하는 주장은 골든 표 동기화(`test_deploy_assets`)와 게이트 배선(`test_push_gate_wiring`) 둘뿐이고 **둘 다 축소 묶음에 있다**. 그 전제는 `test_claude_md_guards_stay_in_the_reduced_bundle` 이 지킨다. `scripts/*.py`(배포 .sh 제외)·루트 마스터 JSON·루트 HTML·`src/`·`data/`·`tests/`(jp 2종 제외)는 무조건 전체.
-> - **"안 돌렸다" ≠ "통과했다".** 축소 시 verdict 는 `SKIPPED(jp-scope)` 로 찍고 0 을 pass 로 인쇄하지 않는다. 판정 근거(비교 ref·파일 수·결정적 파일 목록)를 매 실행 인쇄한다. 우회 환경변수는 **일부러 안 만들었다**; 수동은 `--full`(강제 전체)·`--scope-only`(판정만, 게이트 미실행) 둘뿐.
-> - **실측(격리 클론, jp 3파일만 변경)**: 축소 `exit=0` **4.97초**(오프라인 173 passed·4 skipped, 한국 게이트 5종 전부 SKIPPED) ↔ 같은 트리 `--full` `exit=2` 16초(`RED=197`·K-ICS BLOCK·도메인 FAIL). 재현: `python3 scripts/prepush_check.py --scope-only` → 판정만.
-> - **변이시험 12/12 발화**(사본에서만, 원본 md5 동일 확인): jp/ 목록삭제 · fail-closed 개방 · 빈 diff 축소 · git 실패 축소(fail-open) · `--no-renames` 제거 · `-z` 제거(한글 경로) · 미추적 제외 · 축소묶음에서 wiring 테스트 제거 · 축소 모드에서도 한국 게이트 호출 · `SKIPPED` 대신 `pass` 인쇄 · 전체묶음에서 셀프테스트 제거.
-> - **잔여 UH-20**: 훅(`.githooks/pre-push`)은 stdin 의 refspec 을 게이트에 안 넘긴다 — 판정은 `@{upstream}` 근사다. 다른 remote/branch 로 미는 경우(격리 워크트리 cherry-push)는 근사가 빗나갈 수 있고, 그때는 fail-closed 로 전체 게이트가 돈다(안전 방향). refspec 전달은 후속.
 
 ## 🔴 Open — P1
 

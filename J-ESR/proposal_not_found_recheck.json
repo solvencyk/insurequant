@@ -1,0 +1,302 @@
+{
+  "_meta": {
+    "purpose": "census 20260912 not_found 2사 재탐색 제안 (census/master 미수정, 제안만)",
+    "generated_at": "2026-09-14",
+    "generated_by": "jp-collector (Sonnet 5)",
+    "method": "jesr_http.get/probe only (no browser tools)",
+    "census_source": "J-ESR/fy2025_esr_census_20260912.csv",
+    "note": "verdict 3분류: page_found_with_esr / page_found_no_esr / still_not_found. 이 파일은 제안이며 census CSV·jp/*.json·마스터는 이 라운드에서 고치지 않았다."
+  },
+  "companies": [
+    {
+      "company_jp": "明治安田トラスト生命保険",
+      "company_en": "Meiji Yasuda Trust Life",
+      "prior_status": "not_found",
+      "prior_notes": "회사 홈페이지(meijiyasuda-trustlife.co.jp)는 확인됐으나 디스클로저 전용 페이지 URL을 검색으로 특정하지 못함 - 공시 페이지 자체를 못 찾음.",
+      "verdict": "page_found_no_esr",
+      "verdict_reason": "공시 페이지를 찾았다. 홈페이지 내비게이션 경로는 홈 -> 상단 메뉴 '기업정보(企業情報)' -> 'IR・業績のご案内' -> '디스클로저(ディスクロージャー)' 순이고, 3홉 링크만 거치면 PDF에 닿는다. PDF(명칭 2026, 게시 2026-07-24)를 실제로 열어 ESR/경제가치기준 문구가 있는지 확인했다. 새 가치기준(고시74호) 적용 사실은 명기되어 있으나, 수치 자체는 '2026년 10월 발표 예정'으로 미루어졌다(이 레이아웃 패턴은 도메인 문서 §2의 '속보 지연 회사 다수' 기술과 일치). 판단 = 문서 있음, ESR 값 미수록.",
+      "document_found": {
+        "disclosure_page_url": "https://www.meijiyasuda-trustlife.co.jp/about/ir/disclosure/",
+        "disclosure_page_title": "ディスクロージャー | 明治安田トラスト生命",
+        "pdf_url": "https://www.meijiyasuda-trustlife.co.jp/pdf/%E6%98%8E%E6%B2%BB%E5%AE%89%E7%94%B0%E3%83%88%E3%83%A9%E3%82%B9%E3%83%88%E7%94%9F%E5%91%BD%E3%81%AE%E7%8F%BE%E7%8A%B62026.pdf",
+        "pdf_title_ja": "明治安田トラスト生命の現状2026 (Annual Report 2026)",
+        "publish_date_on_page": "2026.07.24",
+        "pdf_pages": 90,
+        "pdf_bytes": 5019065,
+        "fiscal_period_covered": "FY2025 (2025-04-01 ~ 2026-03-31), disclosed as 「2025年度末」/「2026年3月31日現在」 in the PDF",
+        "archive_page_url": "https://www.meijiyasuda-trustlife.co.jp/about/ir/disclosure/archive/"
+      },
+      "esr_presence": {
+        "esr_label_found": false,
+        "keyword_counts_in_pdf_text": {
+          "ESR": 0,
+          "経済価値ベース": 2,
+          "ソルベンシー・マージン": 6,
+          "ソルベンシーマージン": 0,
+          "適格自己資本": 0,
+          "所要資本": 0
+        },
+        "value_pct": null,
+        "as_of": "2026-03-31",
+        "scope": "solo",
+        "esr_basis": "告示74号 경제가치기준(新基準) — 적용은 명기되나 값은 아직 미공표",
+        "preliminary": false,
+        "status_for_census_if_merged": "not_yet",
+        "evidence_quotes": [
+          "あわせて、内部統制委員会にて、経済価値ベースのソルベンシー規制で求められるソルベンシー・マージン比率の適正性を確保するための態勢について検討を行ない、その整備・確保に取り組んでいます。",
+          "ソルベンシー・マージン比率は、令和7年金融庁告示第74号に基づき、2025年度決算より計算基準の見直し（経済価値ベースの評価方法への変更、リスク計測の厳格化等）がなされています。そのため、2021～2024年度、2025年度はそれぞれ異なる基準によって算出されております。",
+          "7 保険金等の支払能力の充実の状況（ソルベンシー・マージン比率） ソルベンシー・マージン比率は、2026年10月を目途に別途公表予定です。"
+        ],
+        "old_basis_smr_found_for_context": {
+          "note": "구기준(受額基準) 지표는 표에 값이 있지만 ESR이 아니다(도메인 문서 §3 구기준ソルベンシー・マージン比率 단독 규칙).",
+          "values": {
+            "FY2021": "817.1%",
+            "FY2022": "907.9%",
+            "FY2023": "910.5%",
+            "FY2024": "483.4%",
+            "FY2025": "신기준 2026-10 발표예정(공란)"
+          }
+        }
+      },
+      "attempts": [
+        {
+          "url": "https://www.meijiyasuda-trustlife.co.jp/",
+          "method": "probe",
+          "status": 200,
+          "classification": "ok"
+        },
+        {
+          "url": "https://www.meijiyasuda-trustlife.co.jp/robots.txt",
+          "method": "probe",
+          "status": 200,
+          "classification": "ok"
+        },
+        {
+          "url": "https://www.meijiyasuda-trustlife.co.jp/sitemap.xml",
+          "method": "probe",
+          "status": 200,
+          "classification": "ok"
+        },
+        {
+          "url": "https://www.meijiyasuda-trustlife.co.jp/about/ir/",
+          "method": "get",
+          "status": 200,
+          "note": "링크 '디스클로저(ディスクロージャー)' 발견"
+        },
+        {
+          "url": "https://www.meijiyasuda-trustlife.co.jp/about/institution/",
+          "method": "get",
+          "status": 200,
+          "note": "다른 제도 페이지, 디스클로저와 무관"
+        },
+        {
+          "url": "https://www.meijiyasuda-trustlife.co.jp/about/company/",
+          "method": "get",
+          "status": 200,
+          "note": "회사개요, 디스클로저 링크 없음"
+        },
+        {
+          "url": "https://www.meijiyasuda-trustlife.co.jp/about/ir/disclosure/",
+          "method": "get",
+          "status": 200,
+          "note": "디스클로저 페이지 확정, PDF 링크 1건 발견"
+        },
+        {
+          "url": "https://www.meijiyasuda-trustlife.co.jp/pdf/%E6%98%8E%E6%B2%BB%E5%AE%89%E7%94%B0%E3%83%88%E3%83%A9%E3%82%B9%E3%83%88%E7%94%9F%E5%91%BD%E3%81%AE%E7%8F%BE%E7%8A%B62026.pdf",
+          "method": "get",
+          "status": 200,
+          "note": "실제 열어 확인(fitz 텍스트 추출, 90페이지). ESR 라벨 없음, ソルベンシー・マージン 수치는 '2026-10 발표 예정'."
+        }
+      ],
+      "why_prior_round_missed_it": "이전 라운드는 홈페이지만 보고 IR 하위 3단계(/about/ir/ -> /about/ir/disclosure/)까지 클릭하지 않았다. 검색(WebSearch)만으로는 이 회사의 작은 자회사 디스클로저 페이지가 검색결과에 잘 안 잡히며, 사이트맵(nav)을 직접 따라가는 정공법이 효과적이었다."
+    },
+    {
+      "company_jp": "ヤマップネイチャランス損害保険",
+      "company_en": "Yamap",
+      "prior_status": "not_found",
+      "prior_notes": "2024-05 손보업 면허취득한 신생사. 2026-09-13 진짜 SPA(Nuxt/Studio.Design) 확인. 서버렌더 JSON의 전 17페이지에 재무공시·ESR 페이지 자체가 없다(電子公告도 수치 없음) - not_found 유지.",
+      "verdict": "still_not_found",
+      "verdict_reason": "이번 라운드에서 사이트맵(sitemap.xml -> sitemap-static.xml)을 전수 읽어 17개 정적 페이지를 다 확인했다. '/publicnotice'(페이지 타이틀=電子公告, 보험업법상 디스클로저와 가장 가까운 후보)를 찾았지만, 이 사이트는 진짜 SPA(Nuxt3 + Studio.Design CMS)라 본문 텍스트가 클라이언트측에서만 렌더된다. 서버응답(HTML/__NUXT_DATA__/GCS 스냅샷 index.json)에는 페이지 메타(제목·설명)만 있고 본문 내용은 없다. CMS/API 엔드포인트(8건) 시도 모두 404. 브라우저 도구가 금지되어 있어 이 벤더의 CSR 콘텐츠는 이 환경에서 정적으로 딸 수 없다 — '없다'가 아니라 '못 열었다'이다.",
+      "candidate_document": {
+        "page_id": "publicnotice",
+        "page_title_ja": "電子公告 | 株式会社ヤマップネイチャランス損害保険（YAMAP NATURANCE）",
+        "page_description_ja": "電子公告についてのご案内です。",
+        "url": "https://yamap-naturance.co.jp/publicnotice",
+        "cms_page_uuid": "1f496109-5467-4294-acbb-ca7e8845cce5",
+        "content_reachable_statically": false,
+        "note": "電子公告(회사법상 공고)는 보험업법상 디스클로저지와 다를 수 있음(확인 불가) — 콘텐츠를 못 열어본 한 이상 단정 못한다."
+      },
+      "esr_presence": {
+        "esr_label_found": false,
+        "esr_found_reason": "서버측 페이로드(HTML/__NUXT_DATA__/GCS index.json)에서 ESR/経済価値/ソルベンシー/決算/貸借対照表/損益計算書/自己資本 7종 키워드 전수 0건.",
+        "value_pct": null,
+        "as_of": null,
+        "scope": null,
+        "confidence": "이 0건이 '없다' 판단이 아니다 — 본문이 클라이언트측에 있어 검색 자체가 미치지 않았다."
+      },
+      "attempts": [
+        {
+          "url": "https://yamap-naturance.co.jp/",
+          "method": "probe",
+          "status": 200,
+          "classification": "spa_shell",
+          "anchors": 0,
+          "scripts": 4
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/company",
+          "method": "probe",
+          "status": 200,
+          "classification": "spa_shell",
+          "anchors": 0,
+          "scripts": 4
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/robots.txt",
+          "method": "probe",
+          "status": 200,
+          "classification": "ok"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/sitemap.xml",
+          "method": "probe",
+          "status": 200,
+          "classification": "ok",
+          "note": "sitemapindex -> sitemap-static.xml + sitemap-dynamic/*.xml 발견"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/disclosure",
+          "method": "probe",
+          "status": 200,
+          "classification": "spa_shell",
+          "note": "라우팅 없는 경로도 200(클라이언트 라우터 fallback으로 추정) — 단독으로 '존재'의 증거가 되지 않음"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/company/disclosure",
+          "method": "probe",
+          "status": 200,
+          "classification": "spa_shell"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/about/disclosure",
+          "method": "probe",
+          "status": 200,
+          "classification": "spa_shell"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/ir",
+          "method": "probe",
+          "status": 200,
+          "classification": "spa_shell"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/news",
+          "method": "probe",
+          "status": 200,
+          "classification": "spa_shell"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/sitemap-static.xml",
+          "method": "get",
+          "status": 200,
+          "note": "17개 실제 정적 페이지 URL 리스트 확보 (/document /publicnotice /profit /solicitation 포함)"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/sitemap-dynamic/sitemap-dynamic-dGtCamNSa0MvOnNsdWc.xml",
+          "method": "get",
+          "status": 200,
+          "note": "43건 뉴스/tkBjcRkC 동적 기사 slug 목록(2024-08~2026-09)"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/document",
+          "method": "get",
+          "status": 200,
+          "note": "페이지 타이틀 '保険金請求書類'(claim documents) — 디스클로저 아님"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/publicnotice",
+          "method": "get",
+          "status": 200,
+          "note": "페이지 타이틀 '電子公告'(전자공고) — 가장 가까운 후보. 본문 미렌더(__NUXT_DATA__ dynamicDatapublicnotice=-1/null)"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/profit",
+          "method": "get",
+          "status": 200,
+          "note": "'利益相反管理基本方針' — 재무공시 아님"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/solicitation",
+          "method": "get",
+          "status": 200,
+          "note": "'勧誘方針' — 재무공시 아님"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/tkBjcRkC/vCtC58TN",
+          "method": "get",
+          "status": 200,
+          "note": "동적 기사 샘플 1건 확인 — title/meta가 사이트 기본값으로 고정(기사별 치환 안 됨) → 기사 본문도 CSR"
+        },
+        {
+          "url": "https://storage.googleapis.com/studio-publish/projects/VGOKD757qn/Xax5orwEW7/index.json",
+          "method": "get",
+          "status": 200,
+          "note": "CMS 스냅샷 번들 JSON(17페이지 메타만, components={} — 본문 미포함)"
+        },
+        {
+          "url": "https://storage.googleapis.com/studio-publish/projects/VGOKD757qn/Xax5orwEW7/publicnotice.json",
+          "method": "get",
+          "status": 404,
+          "note": "GCS 직접 추측 경로"
+        },
+        {
+          "url": "https://storage.googleapis.com/studio-publish/projects/VGOKD757qn/Xax5orwEW7/pages/publicnotice.json",
+          "method": "get",
+          "status": 404
+        },
+        {
+          "url": "https://storage.googleapis.com/studio-publish/projects/VGOKD757qn/Xax5orwEW7/1f496109-5467-4294-acbb-ca7e8845cce5.json",
+          "method": "get",
+          "status": 404,
+          "note": "페이지 uuid 직접 추측"
+        },
+        {
+          "url": "https://api.cms.studiodesignapp.com/schemas/tkBjcRkC",
+          "method": "get",
+          "status": 404,
+          "note": "CMS API 라우트 추측, 응답 'route could not be found'"
+        },
+        {
+          "url": "https://api.cms.studiodesignapp.com/projects/VGOKD757qn/contents",
+          "method": "get",
+          "status": 404
+        },
+        {
+          "url": "https://api.studiodesignapp.com/api/projects/VGOKD757qn/pages/publicnotice",
+          "method": "get",
+          "status": 404
+        },
+        {
+          "url": "https://api.studiodesignapp.com/data_proxy_api/projects/VGOKD757qn",
+          "method": "get",
+          "status": 404
+        }
+      ],
+      "why_still_not_found": "이번 라운드는 이전과 달리 sitemap.xml을 따라 실제 페이지 목록(17개)과 대응되는 CMS 페이지 uuid까지 찾았고, CMS/GCS API를 8번 더 시도했지만 본문 콘텐츠를 정적으로 따지 못했다. 핵심 원인은 회사 공시 의무가 없다가 아니라 이 사이트의 CMS(Studio.Design/Nuxt3)가 모든 본문 지자를 클라이언트 JS 실행 시점에만 주입하고, 이에 필요한 마지막 API 경로를 찾지 못했다는 점이다(브라우저 도구 금지로 돌파 불가). 다음 라운드에서 시도할 것: (1) CMS API 리버스엔지니어링을 더 (2) 이 회사의 금융청 면허/등록 공시 또는 손해보험협회(損害保険協会)가 대행 공시하는지 확인 (3) 신생사라 FY2025가 첫 결산기일 수도 있어 아직 발행 자체가 안 됐을 가능성도 열어둘 것."
+    }
+  ],
+  "summary": {
+    "attempts_total": {
+      "meiji_yasuda_trust_life": 8,
+      "yamap": 22
+    },
+    "verdicts": {
+      "meiji_yasuda_trust_life": "page_found_no_esr",
+      "yamap": "still_not_found"
+    },
+    "recommended_census_action": {
+      "meiji_yasuda_trust_life": "fy2025_esr_status: not_found -> not_yet | disclosure_url/source_url: 위 pdf_url | doc_type=disclosure_pdf | as_of=2026-03-31 | esr_basis=告示74号 경제가치기준(값 미공표) | notes: '2026-10 발표 예정 명기(원문 p47) — 재census 10/31 대상'",
+      "yamap": "변경 없음(not_found 유지). notes에 /publicnotice(전자공고) 후보 발견 + CSR 확증 사실 추가 권장."
+    }
+  }
+}
