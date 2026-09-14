@@ -63,6 +63,20 @@
 .caveat-badge--read{color:#374151;background:#e5e7eb;border:1px dashed #9aa4ad}
 .caveat-badge--dup{color:#5b21b6;background:#ede9fe;border:3px double #c4b5fd}
 
+/* value_verified 배지(2026-09-14, UH-25 — PM-2026-09-13 T&D 222%/東京海上HD 238/MS&AD/かんぽ220
+   사고 후속). caveat-badge(=값은 검증됐지만 단순비교 주의, 위)와 성격이 다르다("값 자체를
+   확인 못함") — 그래서 같은 pill 모양을 재사용하지 않고 아이콘칩(굵은 테두리+채워진 머리글자
+   블록)으로 실루엣 자체를 다르게 한다. verified/필드없음은 배지 자체를 렌더하지 않는다
+   (jesr_app.js verifyBadgeHtml). 색만으로 구분하지 않음: unverified=주황 굵은 실선, exempt=
+   파랑 굵은 실선 + 서로 다른 머리글자(?/免)와 라벨 문구. */
+.verify-badge{display:inline-flex;align-items:stretch;font-size:10px;font-weight:700;white-space:nowrap;line-height:1.6;cursor:help;border-radius:3px;overflow:hidden;border:2px solid currentColor;vertical-align:middle}
+.verify-badge .vb-ic{display:inline-flex;align-items:center;justify-content:center;padding:0 4px;font-weight:900;color:#fff}
+.verify-badge .vb-tx{padding:0 6px}
+.verify-badge--unverified{color:#7c2d12;background:#fff7ed}
+.verify-badge--unverified .vb-ic{background:#c2410c}
+.verify-badge--exempt{color:#1e3a8a;background:#eff6ff}
+.verify-badge--exempt .vb-ic{background:#1d4ed8}
+
 /* 시장리스크 세부/감응도 미니바 (jp/index.html 의 .li-row 패턴 재사용) */
 .mini-row{display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid var(--border)}
 .mini-row:last-child{border-bottom:none}
