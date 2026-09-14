@@ -103,10 +103,23 @@
       .li-chip-kids::before{content:'▸'}
       .li-chip-kids{font-size:0}
       .li-chip-kids::before{font-size:11px}
+      /* 損害率一覧(2026-09-14): ESRランキング側は速報・単体詳細chipが行当たり最大1個で
+         li-nmのmin-width(5.5em)確保に成功しているが、caveat-badgeはテキストが長く(最長「Σ
+         単純合算」)同じ横並びだと会社名を最小幅まで押し潰す(実測: 71.5px)。この一覧だけ
+         バッジを名前の下の行に折り返す — チップ数を増やさず(owner既存指摘の再発回避)、
+         会社名の可読幅は確保する。 */
+      #lossRatioList .li-name{flex-wrap:wrap;row-gap:2px}
+      #lossRatioList .li-name .caveat-badge{flex:0 0 100%;margin-left:0}
     }
     .chart-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px;align-items:center}
     .chart-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px}
     .jp-badge{display:inline-block;font-size:11px;font-weight:700;color:#212529;background:#f59e0b;padding:1px 6px;border-radius:3px;white-space:nowrap}
+    /* 損害率 ratio_caveat 배지(2026-09-14) — jp/jp.css .caveat-badge* 와 동일 정의(파일별 복사, §5.2 관례).
+       4종을 성격별 3그룹으로 나눠 테두리 모양(실선/파선/이중선)+머리글자(Δ/OCR/Σ)로 구분, 색에만 기대지 않는다. */
+    .caveat-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;cursor:help;white-space:nowrap;line-height:1.6}
+    .caveat-badge--formula{color:#92400e;background:#fef3c7;border:1px solid #fde68a}
+    .caveat-badge--read{color:#374151;background:#e5e7eb;border:1px dashed #9aa4ad}
+    .caveat-badge--dup{color:#5b21b6;background:#ede9fe;border:3px double #c4b5fd}
     .chart-caveat{font-size:12px;color:var(--muted);margin:8px 0 0}
     .jp-err{padding:36px 12px;text-align:center;color:var(--muted);font-size:13px}
 
@@ -202,6 +215,25 @@
       </div>
       <p class="chart-caveat">※ 棒のハッチ柄は算定基準が自社基準（内部モデル・内部管理）であることを示します（無地=規制ベース、金融庁告示74号の標準式／点線枠=算定基準未確認）。自社基準の会社は規制ベースの会社と数値を単純比較しないようご注意ください。詳細（規制ベース・内部モデル・内部管理の別）は行にカーソルを合わせるか会社別詳細をご確認ください。<br/>
       ※ 目標レンジは各社の資本政策(中期経営計画・決算説明資料等)で公表された値(2026-09-13時点)。単体会社は親会社グループの目標を適用(行のツールチップに出所)。相互会社等は目標レンジ非公表。</p>
+    </section>
+
+    <!-- 損害率一覧（2026-09-14）: ESRランキングと同じ .map-list/.li-row/FOLD パターンで、正味損害率・正味事業費率・
+         合算率のある損保会社を一覧化。ESR未公表(census not_yet)の会社もここでは表示対象 — jesr_esr.json
+         のランキングに載らない会社(規制ESR様式が未着手でも決算・損害率は先に収録済みの会社)への唯一の
+         入口になる(inbox 20260914 owner 발주)。データは jesr_detail.json(loadDetailMap が読み込む)。 -->
+    <section class="panel" aria-labelledby="secLossRatio">
+      <h2 id="secLossRatio">損害率一覧（損保）</h2>
+      <p>各社の正味損害率・正味事業費率・合算率（当期）。ESRの規制様式がまだ無い会社もここでは表示します。色は合算率が100%（収支均衡）を下回るほど濃い緑、上回るほど濃い赤。行を選ぶと会社別の「決算」詳細に移動します。</p>
+      <div id="lossRatioList" class="map-list" aria-label="損害率一覧、読み込み中"></div>
+      <button type="button" class="li-more-btn" id="moreBtnLossRatio" hidden aria-expanded="false"></button>
+      <div class="chart-legend" id="lossRatioLegend">
+        <span><span class="sw" style="background:hsl(130,70%,26%)"></span>合算率が低いほど濃い緑（保険引受収支が黒字）</span>
+        <span><span class="sw" style="background:hsl(0,75%,30%)"></span>合算率100%超過は赤（高いほど濃い、保険引受収支が赤字）</span>
+        <span><span class="caveat-badge caveat-badge--formula">Δ 算式差</span>他社と算式が異なり単純比較に適さない場合があります</span>
+        <span><span class="caveat-badge caveat-badge--read">OCR 画像判読</span>画像PDFを目視で読み取った値です</span>
+        <span><span class="caveat-badge caveat-badge--dup">Σ 単純合算</span>子会社の単純合算値のため重複計上にご注意ください</span>
+      </div>
+      <p class="chart-caveat" id="lossRatioCaveat"></p>
     </section>
 
   </main>
@@ -342,7 +374,47 @@
     }
 
     var groupData = {life:[], nonlife:[]};   // 業種별 버킷정렬 전체 리스트
-    var expanded  = {life:false, nonlife:false};
+    var expanded  = {life:false, nonlife:false, lossRatio:false};
+    // 損害率 caveat 배지(2026-09-14) — jp/jesr_app.js CAVEAT_META 와 동일 정의(§5.2 관례대로 파일별 복사).
+    // 성격별 3그룹(算式差=formula／画像判読精度=read／重複計上=dup)마다 다른 테두리 모양+머리글자,
+    // 4코드를 한 덩어리로 뭉뚱그리지 않고 라벨 문구도 코드마다 다르다.
+    var CAVEAT_META = {
+      lae_excluded: { cat:'formula', mark:'Δ', label:'算式差(損調費除く)' },
+      ei_basis:     { cat:'formula', mark:'Δ', label:'E.I.基準' },
+      ocr_read:     { cat:'read',    mark:'OCR', label:'画像判読' },
+      simple_sum:   { cat:'dup',     mark:'Σ', label:'単純合算' }
+    };
+    // 損害率(合算率)スケール: ESRと逆で低いほど良い(保険引受収支が黒字)。base=100(収支均衡点)を
+    // 下回るほど濃い緑、上回るほど濃い赤 — colorForRatio と同じHSL発散式を上下反転して流用。
+    function colorForCombined(r){
+      if(typeof r !== 'number' || !isFinite(r)) return 'var(--muted)';
+      var base = 100, strong = 140;
+      var bad = r > base;
+      var span = bad ? (strong - base) : base;
+      var i = Math.min(Math.max(bad ? (r - base) : (base - r), 0) / span, 1);
+      var h = bad ? 0 : 130, s = 28 + 38 * i, l = 62 - 38 * i;
+      return 'hsl(' + h + ',' + s + '%,' + l + '%)';
+    }
+    // jesr_detail.json の companies から損保(sector=nonlife)のうち合算率が取れる会社だけ抽出、合算率
+    // 昇順(低いほど上)。data_scope(ratio_only/full)を問わず対象 — このセクションの目的自体が
+    // 「ESRランキングに出ない会社（ratio_only含む）にも損害率の入口を作る」こと(2026-09-14 owner発주)。
+    function buildLossRatioData(companies){
+      return (companies || []).filter(function(c){
+        return c.sector === 'nonlife' && c.profit && c.profit.ratios
+          && c.profit.ratios.pl_combined_ratio_pct && c.profit.ratios.pl_combined_ratio_pct.cur != null;
+      }).map(function(c){
+        var r = c.profit.ratios;
+        return {
+          id: c.id, company_jp: c.company_jp, company_en: c.company_en,
+          loss: r.pl_loss_ratio_pct ? r.pl_loss_ratio_pct.cur : null,
+          expense: r.pl_expense_ratio_pct ? r.pl_expense_ratio_pct.cur : null,
+          combined: r.pl_combined_ratio_pct.cur,
+          caveat: c.ratio_caveat || null
+        };
+      }).sort(function(a, b){ return (a.combined || 0) - (b.combined || 0); });
+    }
+    var lossRatioData = [];
+
     // 一覧表 회사명 -> jesr.html 링크 판정용(inbox 20260912T1120Z). null=아직 로딩중(링크 보류),
     // {}=상세 없음(로드 실패 포함). jesr_detail.json 이 없으면(publishing 병행작업 중) fixture로
     // 폴백 — 진짜 파일이 생기면 그대로 성공해 fixture는 자동으로 안 쓰인다.
@@ -357,9 +429,11 @@
           var map = {};
           (d.companies||[]).forEach(function(c){ if(c.company_en) map[c.company_en] = c.id; });
           detailMap = map;
+          lossRatioData = buildLossRatioData(d.companies);
           renderGroup('life'); renderGroup('nonlife');
+          renderLossRatioSection();
         })
-        .catch(function(){ detailMap = {}; });
+        .catch(function(){ detailMap = {}; renderLossRatioSection(); });
     }
     loadDetailMap();
 
@@ -545,6 +619,104 @@
           'ESRランキング（'+GROUP_LABEL[key]+'）。表示中'+list.length+'社(全'+full.length+'社)、最高は'+top.company_jp+' '+fmtPct(top.esr_pct)+'、最低は'+bottom.company_jp+' '+fmtPct(bottom.esr_pct)+'。行を選ぶと会社別詳細に移動します。');
       } else {
         el.setAttribute('aria-label', 'ESRランキング（'+GROUP_LABEL[key]+'）。データがありません。');
+      }
+    }
+
+    // 損害率一覧(2026-09-14) — 上の renderList() と同じ .li-row/FOLD パターン。ESRランキング
+    // (jesr_esr.json由来)とは別系統のデータ(jesr_detail.json由来)なので関数は分けるが、外見・
+    // 操作(クリック/Enter/Space遷移・もっと見る)は完全に揃える(owner: 新しいUI言語を作るな)。
+    function renderLossRatioList(){
+      var el = document.getElementById('lossRatioList');
+      if(!el) return;
+      var full = lossRatioData;
+      var list = (expanded.lossRatio || full.length<=FOLD) ? full : full.slice(0, FOLD);
+      el.innerHTML = '';
+      var maxV = 1;
+      list.forEach(function(r){ maxV = Math.max(maxV, r.combined||0); });
+
+      list.forEach(function(r){
+        var row = document.createElement('div');
+        row.className = 'li-row';
+        var titleParts = [
+          r.company_jp + (r.company_en ? '（'+r.company_en+'）' : ''),
+          '合算率 ' + fmtPct(r.combined),
+          '損害率 ' + fmtPct(r.loss),
+          '事業費率 ' + fmtPct(r.expense)
+        ];
+        if(r.caveat && r.caveat.text) titleParts.push(r.caveat.text);
+        row.title = titleParts.join(' / ');
+        row.setAttribute('aria-label', row.title);
+        row.tabIndex = 0;
+        row.setAttribute('role', 'link');
+        var detailKey = r.id;
+        var goToDetailRow = function(){ window.location.href = 'jgaap.html?company=' + encodeURIComponent(detailKey); };
+        row.addEventListener('click', goToDetailRow);
+        row.addEventListener('keydown', function(e){
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToDetailRow(); }
+        });
+
+        var name = document.createElement('div');
+        name.className = 'li-name';
+        var nm = document.createElement('span');
+        nm.className = 'li-nm';
+        nm.textContent = r.company_jp;
+        name.appendChild(nm);
+        // ratio_caveat(2026-09-14): 値は他社と同じ列・同じ並びのまま、名前の脇に表示専用の印だけ足す
+        // (owner: 別列に切り出すな)。色だけに頼らず形(枠線)・頭字(Δ/OCR/Σ)・文言をコードごとに変える。
+        if(r.caveat && r.caveat.code){
+          var m = CAVEAT_META[r.caveat.code] || { cat:'formula', mark:'△', label:'要確認' };
+          var badge = document.createElement('span');
+          badge.className = 'caveat-badge caveat-badge--' + m.cat;
+          badge.title = r.caveat.text || m.label;
+          badge.textContent = m.mark + ' ' + m.label;
+          name.appendChild(badge);
+        }
+
+        var track = document.createElement('div');
+        track.className = 'li-bar-track';
+        var bar = document.createElement('div');
+        bar.className = 'li-bar';
+        bar.style.width = Math.max(2, ((r.combined||0) / maxV) * 100) + '%';
+        bar.style.backgroundColor = colorForCombined(r.combined);
+        bar.title = '損害率 ' + fmtPct(r.loss) + ' ＋ 事業費率 ' + fmtPct(r.expense) + ' ＝ 合算率 ' + fmtPct(r.combined);
+        track.appendChild(bar);
+
+        var val = document.createElement('div');
+        val.className = 'li-val';
+        val.textContent = fmtPct(r.combined);
+
+        row.appendChild(name);
+        row.appendChild(track);
+        row.appendChild(val);
+        el.appendChild(row);
+      });
+
+      var top = list[0];
+      if(top){
+        el.setAttribute('aria-label',
+          '損害率一覧。表示中'+list.length+'社(全'+full.length+'社)、合算率が最も低いのは'+top.company_jp+' '+fmtPct(top.combined)+'。行を選ぶと会社別「決算」詳細に移動します。');
+      } else {
+        el.setAttribute('aria-label', '損害率一覧。データがありません。');
+      }
+    }
+    function updateLossRatioMoreButton(){
+      var btn = document.getElementById('moreBtnLossRatio');
+      if(!btn) return;
+      var full = lossRatioData;
+      if(full.length <= FOLD){ btn.hidden = true; return; }
+      btn.hidden = false;
+      btn.textContent = expanded.lossRatio ? '閉じる' : 'もっと見る（他'+(full.length - FOLD)+'社）';
+      btn.setAttribute('aria-expanded', expanded.lossRatio ? 'true' : 'false');
+      btn.onclick = function(){ expanded.lossRatio = !expanded.lossRatio; renderLossRatioList(); updateLossRatioMoreButton(); };
+    }
+    function renderLossRatioSection(){
+      renderLossRatioList();
+      updateLossRatioMoreButton();
+      var cap = document.getElementById('lossRatioCaveat');
+      if(cap){
+        cap.textContent = lossRatioData.length
+          ? ('※ 全'+lossRatioData.length+'社。合算率＝正味損害率＋正味事業費率（端数調整により表示値の和と一致しない場合があります）。規制ESR様式(告示)に基づく開示がまだ無い会社も、決算資料に基づく損害率は先行して収録しています。出所: 各社ディスクロージャー誌「主要な経営指標等の推移」等。')
+          : '※ 損害率データを読み込み中、または未収録です。';
       }
     }
 

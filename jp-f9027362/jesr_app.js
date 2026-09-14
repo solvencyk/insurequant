@@ -18,6 +18,40 @@
   var BASIS_LABEL = { regulatory_standard:'規制ベース', internal_model:'内部モデル', internal_management:'内部管理' };
   function basisLabel(basis){ return BASIS_LABEL[basis] || '未確認'; }
 
+  // data_scope(publishing 계약, 2026-09-14): "ratio_only" 회사는 profit.ratios/history.series の
+  // hist_*_ratio_pct 3종만 값이 있고 capital/items/sensitivity/risk/market_sub/bs/by_line は
+  // 全部空(既存の"not_yet"部分会社と同じ表現)。既存10社は"full"(またはフィールドなし)。
+  function isRatioOnly(c){ return !!c && c.data_scope === 'ratio_only'; }
+  // ページごとに文言が違う一行案内 — 空パネルを黙って消すだけでなく「なぜ無いか」を必ず一言残す
+  // (claude-agent-designer.md の反省: 空⇔壊れているは画面上で区別できないといけない)。__ID__は会社idに置換。
+  var RATIO_ONLY_NOTE = {
+    esr: 'このページ（ESR詳細）は損害率系の指標のみ収録しています。適格資本・所要資本・感応度は、規制様式(告示)に基づく本編開示の取得後に追加します。損害率・事業費率・合算率は<a href="jgaap.html?company=__ID__">「決算」タブ</a>でご覧いただけます。',
+    jgaap: 'このページは損害率系の指標(損害率・事業費率・合算率)のみ収録しています。損益の内訳・貸借対照表・種目別は本編開示の取得後に追加します。下の「収益性指標」をご覧ください。',
+    disclosure: 'この会社は損害率系の指標のみ収録しています。再保険の依存度等その他開示は本編開示の取得後に追加します。損害率は<a href="jgaap.html?company=__ID__">「決算」タブ</a>でご覧いただけます。'
+  };
+  function renderScopeNote(c, ratioOnly){
+    var wrap = byId('scopeNoteWrap'); if(!wrap) return;
+    if(!ratioOnly){ wrap.hidden = true; return; }
+    wrap.hidden = false;
+    var tpl = RATIO_ONLY_NOTE[PAGE] || '';
+    byId('scopeNoteText').innerHTML = tpl.replace(/__ID__/g, encodeURIComponent(c.id || c.company_jp));
+  }
+
+  // ratio_caveat(4種、2026-09-14): 値そのものは他社と同じ列・同じ並びに置いたまま、脇に付ける表示専用の
+  // 印。性格が違う3グループ(算式差=formula／画像判読の精度=read／重複計上=dup)ごとに枠線の形と頭字を変え、
+  // 色だけに頼らない(a11y、jp.css の .caveat-badge*)。4コードを一括りにしない — 個々のラベル文言も違う。
+  var CAVEAT_META = {
+    lae_excluded: { cat:'formula', mark:'Δ', label:'算式差(損調費除く)' },
+    ei_basis:     { cat:'formula', mark:'Δ', label:'E.I.基準' },
+    ocr_read:     { cat:'read',    mark:'OCR', label:'画像判読' },
+    simple_sum:   { cat:'dup',     mark:'Σ', label:'単純合算' }
+  };
+  function caveatBadgeHtml(caveat){
+    if(!caveat || !caveat.code) return '';
+    var m = CAVEAT_META[caveat.code] || { cat:'formula', mark:'△', label:'要確認' };
+    return ' <span class="caveat-badge caveat-badge--'+m.cat+'" title="'+esc(caveat.text||m.label)+'">'+esc(m.mark)+' '+esc(m.label)+'</span>';
+  }
+
   // jp/index.html 313~320행과 동일한 2단 버킷 정렬(inbox 20260912T1420Z, 공유 JS 파일 없음 —
   // §5.2 관례대로 각 파일에 복사). 드롭다운(ENTRIES) 정렬에 쓴다.
   function isBucketA(category){ return /^(HD上場|相互会社|上場)/.test(category||''); }
@@ -213,6 +247,7 @@
     setHidden('notFoundPanelWrap', false);
     setHidden('secHeadlineWrap', true);
     setHidden('noticePanelWrap', true);
+    setHidden('scopeNoteWrap', true);
     TOGGLE_IDS.forEach(function(id){ setHidden(id, true); });
     document.title = '会社別' + PAGE_TITLE[PAGE] + ' | InsureQuant';
     syncTabLinks(null);
@@ -244,14 +279,23 @@
       // jesr_detail.json 자체에는 basis 필드가 없다(publishing이 jesr_esr.json에만 채움) — 헤드라인
       // 레코드가 있으면 거기서 가져온다(없는 회사는 undefined로 두고 renderMeta가 세그먼트를 생략).
       c.basis = e.headlineRec ? e.headlineRec.basis : c.basis;
+      // ratio_only(publishing 계약, 2026-09-14): capital_tree 등 資本層이 애초에 없는 회사 — hasEsr을
+      // 무조건 false로 못박아 아래 "ESR 층이 아직 없는 회사"(대형 손보 3사 등)와 같은 코드경로를 타되,
+      // 안내문은 별도(renderScopeNote)로 갈라 "곧 규제양식이 온다"가 아니라 "이번 라운드 수집범위가
+      // 손해율뿐"이라고 정확히 말한다.
+      var ratioOnly = isRatioOnly(c);
       // ESR 층이 아직 없는 회사(대형 손보 3사: 신기준 ESR 은 2026-10-31 이연)도 손익·収益性·準備金은 있다(owner 2026-09-13).
       // → ESR 관련 패널(適格資本・所要資本 표·워터폴·感応度)은 숨기고 안내 패널만, 나머지 패널은 그대로 렌더.
-      var hasEsr = !!(c.headline && c.headline.esr_pct != null) && !!(c.capital_tree && c.capital_tree.length);
+      var hasEsr = !ratioOnly && !!(c.headline && c.headline.esr_pct != null) && !!(c.capital_tree && c.capital_tree.length);
       // 안내 패널(規制様式 미공시)은 ESR 페이지에서만 의미가 있다 — 決算·その他開示 페이지는 ESR 유무와 무관.
-      setHidden('noticePanelWrap', PAGE === 'esr' ? hasEsr : true);
+      // ratio_only는 아래 scopeNoteWrap이 그 역할을 대신하므로 기존 noticePanelWrap은 끈다(문구 중복 방지).
+      setHidden('noticePanelWrap', ratioOnly ? true : (PAGE === 'esr' ? hasEsr : true));
       setHidden('noDetailNote', true);
+      renderScopeNote(c, ratioOnly);
       ['secCapitalWrap','secSensWrap'].forEach(function(id){ setHidden(id, !hasEsr); });
-      setHidden('secProfitWrap', false);
+      // 損益の内訳(items)은 ratio_only엔 애초에 없다 — 빈 패널을 그리는 대신 패널째 숨기고
+      // scopeNoteWrap 한 줄로 이유를 남긴다(owner 지시: "빈 패널 20개"가 아니라 "왜 없는지 한 줄").
+      setHidden('secProfitWrap', ratioOnly);
       // headline 이 없으면 랭킹 레코드(jesr_esr)의 값으로 카드만 채운다(상장 지주 연결값이 있는 경우 등).
       if(!hasEsr && e.headlineRec){
         c.headline = c.headline || {};
@@ -268,17 +312,29 @@
         renderSensitivity(c);
       }
       renderBs(c);
-      renderProfit(c);
+      if(ratioOnly){
+        // 손익 워터폴/표는 items가 비어 그릴 게 없다 — 이전에 그려둔 차트가 남아있으면 정리만.
+        if(profitWaterfallChart){ try{ profitWaterfallChart.dispose(); }catch(ex){} profitWaterfallChart = null; }
+      } else {
+        renderProfit(c);
+      }
       renderProfitability(c);
       renderAxes(c);
-      // その他開示 페이지: 재보험·その他 둘 다 비면 미수록 안내
+      // その他開示 페이지: 재보험·その他 둘 다 비면 미수록 안내 — ratio_only는 scopeNoteWrap이 이미
+      // 같은 설명(その他開示は本編開示後)을 하고 있어 disclosureEmpty를 더 띄우면 문장 두 개가
+      // 겹쳐 보인다(2026-09-14 실측). ratio_only일 땐 이 안내를 끈다.
       if(PAGE === 'disclosure'){
-        var anyDisc = ['secReinsWrap','secAxesWrap'].some(function(id){ var el = byId(id); return el && !el.hidden; });
-        setHidden('disclosureEmpty', anyDisc);
+        if(ratioOnly){
+          setHidden('disclosureEmpty', true);
+        } else {
+          var anyDisc = ['secReinsWrap','secAxesWrap'].some(function(id){ var el = byId(id); return el && !el.hidden; });
+          setHidden('disclosureEmpty', anyDisc);
+        }
       }
     } else {
       setHidden('noticePanelWrap', PAGE !== 'esr');   // ESR 페이지: 規制様式 미공시 안내
       setHidden('noDetailNote', PAGE === 'esr');      // 決算·その他開示 페이지: 미수록 안내(+그룹 사업회사 링크)
+      setHidden('scopeNoteWrap', true);               // 상세 자체가 없는 회사 — ratio_only 안내는 무관
       setHidden('disclosureEmpty', true);
       TOGGLE_IDS.forEach(function(id){ setHidden(id, true); });
       var r = e.headlineRec;
@@ -332,7 +388,18 @@
   function renderJgaapCards(c){
     var host = byId('jgaapCards'); if(!host) return;
     var p = (c && c.profit && c.profit.status === 'extracted') ? c.profit : null;
-    if(!p){ host.innerHTML = '<div class="empty-note" style="grid-column:1/-1">損益データは未取得です。</div>'; return; }
+    if(!p){
+      // ratio_only(2026-09-14): items は無いが合算率(ratios)はある — "未取得"と書くと下の「収益性指標」
+      // に実際にはデータがあるのに全く無いように読めるので、合算率カード1枚+誘導文に差し替える。
+      var ro = c && c.profit && c.profit.ratios && c.profit.ratios.pl_combined_ratio_pct;
+      if(isRatioOnly(c) && ro){
+        host.innerHTML = '<div class="jcard"><div class="jcard-val">'+esc(fmtPct1(ro.cur))+'</div><div class="jcard-sub">&nbsp;</div><div class="jcard-lab">合算率'+caveatBadgeHtml(c.ratio_caveat)+'</div></div>'
+          + '<div class="empty-note" style="grid-column:span 3;align-self:center">当期純利益・経常利益・保険引受利益等は本編開示の取得後に追加します。損害率・事業費率は下の「収益性指標」をご覧ください。</div>';
+        return;
+      }
+      host.innerHTML = '<div class="empty-note" style="grid-column:1/-1">損益データは未取得です。</div>';
+      return;
+    }
     var isLife = !!(p.core && Object.keys(p.core).length);
     var cards = [
       {lab:'当期純利益', v:plCur(p,'pl_net_income'), unit:'億円'},
@@ -821,10 +888,10 @@
   ];
   var HIST_TABLE = ['hist_net_premiums_written','hist_ordinary_profit','hist_net_income','hist_total_assets','hist_net_assets',
                     'hist_loss_ratio_pct','hist_expense_ratio_pct','hist_combined_ratio_pct','hist_smr_old_pct','hist_esr_pct'];
-  function ratioCard(label, cur, prev){
+  function ratioCard(label, cur, prev, badgeHtml){
     var d = (cur!=null && prev!=null) ? (cur-prev) : null;
     return '<div class="jcard"><div class="jcard-val">'+esc(fmtPct1(cur))+'</div><div class="jcard-lab">'+esc(label)
-      + (d!=null ? ' <span class="small-muted">(前期比 '+esc(fmtPP(d))+')</span>' : '') + '</div></div>';
+      + (d!=null ? ' <span class="small-muted">(前期比 '+esc(fmtPP(d))+')</span>' : '') + (badgeHtml||'') + '</div></div>';
   }
   function svgLineChart(years, series){
     // series: [{ja,color,values[]}] — null 은 선을 끊는다. y 0~max(100, 최대값)+10.
@@ -913,9 +980,11 @@
     wrap.hidden = false;
     var cards = '';
     if(hasRatio){
+      // ratio_caveat(2026-09-14)이 있으면 合算率 카드에 배지 병기 — 값은 다른 회사와 같은 카드·
+      // 같은 자리, 표식만 옆에 붙인다(owner: 별도 열로 빼지 말 것).
       cards += ratioCard('損害率', (ratios.pl_loss_ratio_pct||{}).cur, (ratios.pl_loss_ratio_pct||{}).prev)
             + ratioCard('事業費率', (ratios.pl_expense_ratio_pct||{}).cur, (ratios.pl_expense_ratio_pct||{}).prev)
-            + ratioCard('合算率', (ratios.pl_combined_ratio_pct||{}).cur, (ratios.pl_combined_ratio_pct||{}).prev);
+            + ratioCard('合算率', (ratios.pl_combined_ratio_pct||{}).cur, (ratios.pl_combined_ratio_pct||{}).prev, caveatBadgeHtml(c.ratio_caveat));
     } else if(hasCore){
       ['pl_interest_margin','pl_mortality_margin','pl_expense_margin'].forEach(function(k){
         var e = core[k] || {}; cards += '<div class="jcard"><div class="jcard-val">'+esc(fmtEok(e.cur))+'</div><div class="jcard-lab">'+esc(labelOf(META,k,k))+'（億円）</div></div>';

@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-13T14:37:08.906014Z",
+    "generated_at": "2026-09-14T07:28:59.835572Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -1634,14 +1634,18 @@
     },
     "next_update": "2026-10-31",
     "coverage": {
-      "detail_total": 10,
+      "detail_total": 34,
       "esr_posted": 2,
       "esr_not_yet": 5,
       "life_core_only": 3,
       "by_line_total": 5,
       "bs_extracted": 10,
-      "posted_total": 15,
-      "census_total": 79
+      "posted_total": 16,
+      "census_total": 79,
+      "ratio_only": 24,
+      "ratio_only_posted": 1,
+      "ratio_only_not_yet": 23,
+      "ratio_only_caveat": 4
     }
   },
   "companies": [
@@ -8861,6 +8865,2662 @@
           "連結・億円・当期末のみの要約スライド。前年度末差(増減額)は印字されるが前期末を逆算しない(推定禁止)。"
         ]
       }
+    },
+    {
+      "id": "aig_nonlife",
+      "company_jp": "AIG損害保険",
+      "company_en": "AIG Non-Life Japan",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.aig.co.jp/content/dam/aig/sonpo/jp/ja/documents/company/disclosures/aigsonpo_disclosure_2026.pdf",
+      "doc_type": "AIG損害保険 ディスクロージャー誌2026【2025年4月1日〜2026年3月31日】",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "aigsonpo_disclosure_2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 59.9,
+            "prev": 65.4
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 32.4,
+            "prev": 31.8
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 92.3,
+            "prev": null
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            70.9,
+            72.5,
+            66.8,
+            65.4,
+            59.9
+          ],
+          "hist_expense_ratio_pct": [
+            35.2,
+            38.4,
+            34.2,
+            31.8,
+            32.4
+          ],
+          "hist_combined_ratio_pct": [
+            null,
+            null,
+            null,
+            null,
+            92.3
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "msad_holdings",
+      "company_jp": "MS&ADインシュアランスグループホールディングス",
+      "company_en": "MS&AD Insurance Group Holdings",
+      "sector": "nonlife",
+      "scope": "group",
+      "as_of": "2026-03-31",
+      "esr_status": "posted",
+      "esr_placeholder": null,
+      "source_url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
+      "doc_type": "2025年度通期決算 補足説明資料",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "FY2025Q4_J2.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 63.6,
+            "prev": null
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 31.4,
+            "prev": null
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 95.0,
+            "prev": null
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            63.6
+          ],
+          "hist_expense_ratio_pct": [
+            31.4
+          ],
+          "hist_combined_ratio_pct": [
+            95.0
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": {
+        "code": "simple_sum",
+        "text": "「２社合計（単純合計）」 = 三井住友海上 + あいおいニッセイ同和 단순합산. 회사가 직접 공시한 표지만, 두 자회사를 따로 싣고 있으면 **중복 계상**이다."
+      }
+    },
+    {
+      "id": "nttdocomo_nonlife",
+      "company_jp": "NTTドコモ損害保険",
+      "company_en": "NTT Docomo Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.docomo-sompo.com/assets/docs/2026/01/disclosure/disclosure20260730.pdf",
+      "doc_type": "ディスクロージャー誌(NTTドコモ損害保険の現状2026, 2026-07-30発行)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disclosure20260730.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 29.2,
+            "prev": 29.4
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 1.7,
+            "prev": 2.5
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 30.9,
+            "prev": 31.9
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            29.4,
+            29.2
+          ],
+          "hist_expense_ratio_pct": [
+            2.5,
+            1.7
+          ],
+          "hist_combined_ratio_pct": [
+            31.9,
+            30.9
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "sbi_nonlife",
+      "company_jp": "SBI損害保険",
+      "company_en": "SBI Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.sbisonpo.co.jp/company/pdf/SBI_Disclosure2026_All.pdf",
+      "doc_type": "ディスクロージャー誌2026(全冊)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "SBI_Disclosure2026_All.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 73.3,
+            "prev": 73.3
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 16.4,
+            "prev": 17.9
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 89.7,
+            "prev": 91.2
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            73.4,
+            73.3,
+            73.3
+          ],
+          "hist_expense_ratio_pct": [
+            19.4,
+            17.9,
+            16.4
+          ],
+          "hist_combined_ratio_pct": [
+            92.8,
+            91.2,
+            89.7
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "sompo_direct",
+      "company_jp": "SOMPOダイレクト損害保険",
+      "company_en": "Sompo Direct",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.sompo-direct.co.jp/company/outline/insgenjo2026.pdf",
+      "doc_type": "ディスクロージャー誌(SOMPOダイレクトの現状2026, 全冊)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "insgenjo2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 72.8,
+            "prev": 75.9
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 24.3,
+            "prev": 24.8
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 97.1,
+            "prev": 100.7
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            72.6,
+            75.9,
+            72.8
+          ],
+          "hist_expense_ratio_pct": [
+            23.5,
+            24.8,
+            24.3
+          ],
+          "hist_combined_ratio_pct": [
+            96.2,
+            100.7,
+            97.1
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "aioi_nissay_dowa",
+      "company_jp": "あいおいニッセイ同和損害保険",
+      "company_en": "Aioi Nissay Dowa",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
+      "doc_type": "MS&AD HD 2025年度通期決算 補足説明資料 内 あいおいニッセイ同和損保(単体)열",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "FY2025Q4_J2.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 64.5,
+            "prev": null
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 32.6,
+            "prev": null
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 97.1,
+            "prev": null
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            64.5
+          ],
+          "hist_expense_ratio_pct": [
+            32.6
+          ],
+          "hist_combined_ratio_pct": [
+            97.1
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "sakura_nonlife",
+      "company_jp": "さくら損害保険",
+      "company_en": "Sakura Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.sakura-ins.co.jp/company/file/disclosure_07.pdf",
+      "doc_type": "ディスクロージャー誌(さくら損保の現状2026)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disclosure_07.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 16.1,
+            "prev": 14.7
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 27.0,
+            "prev": 39.1
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 43.1,
+            "prev": 53.8
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            15.1,
+            14.7,
+            16.1
+          ],
+          "hist_expense_ratio_pct": [
+            44.0,
+            39.1,
+            27.0
+          ],
+          "hist_combined_ratio_pct": [
+            59.1,
+            53.8,
+            43.1
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "axa_nonlife",
+      "company_jp": "アクサ損害保険",
+      "company_en": "AXA Non-Life Japan",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.axa-direct.co.jp/assets/pdf/annual_report_2026.pdf",
+      "doc_type": "アクサ損害保険 ディスクロージャー誌/アニュアルレポート2026(2025年度決算)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "annual_report_2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 65.1,
+            "prev": 66.5
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 26.7,
+            "prev": 27.0
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 91.8,
+            "prev": 93.5
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            65.6,
+            66.5,
+            65.1
+          ],
+          "hist_expense_ratio_pct": [
+            27.1,
+            27.0,
+            26.7
+          ],
+          "hist_combined_ratio_pct": [
+            92.7,
+            93.5,
+            91.8
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "anicom_nonlife",
+      "company_jp": "アニコム損害保険",
+      "company_en": "Anicom Insurance",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.anicom-sompo.co.jp/company/disclosure/pdf/DC_AS2026.pdf",
+      "doc_type": "アニコム損害保険 ディスクロージャー誌2026(2025年度決算)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "DC_AS2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 59.8,
+            "prev": 58.3
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 32.0,
+            "prev": 31.3
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 91.8,
+            "prev": 89.6
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            58.0,
+            58.3,
+            59.8
+          ],
+          "hist_expense_ratio_pct": [
+            32.5,
+            31.3,
+            32.0
+          ],
+          "hist_combined_ratio_pct": [
+            90.5,
+            89.6,
+            91.8
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "hs_nonlife",
+      "company_jp": "エイチ・エス損害保険",
+      "company_en": "HS Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.hs-sonpo.co.jp/img/disclosure_2026.pdf",
+      "doc_type": "ディスクロージャー誌2026(本誌)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disclosure_2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 42.6,
+            "prev": 43.6
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 51.9,
+            "prev": 51.3
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 94.5,
+            "prev": 94.9
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            43.6,
+            43.6,
+            42.6
+          ],
+          "hist_expense_ratio_pct": [
+            53.4,
+            51.3,
+            51.9
+          ],
+          "hist_combined_ratio_pct": [
+            97.0,
+            94.9,
+            94.5
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "capital_nonlife",
+      "company_jp": "キャピタル損害保険",
+      "company_en": "Capital Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.capital-sonpo.co.jp/company/manual/pdf/disc_2026-all.pdf",
+      "doc_type": "ディスクロージャー誌(キャピタル損害保険の現状2026)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disc_2026-all.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 40.2,
+            "prev": 41.6
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 52.3,
+            "prev": 48.7
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 92.4,
+            "prev": 90.4
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            33.0,
+            41.6,
+            40.2
+          ],
+          "hist_expense_ratio_pct": [
+            46.1,
+            48.7,
+            52.3
+          ],
+          "hist_combined_ratio_pct": [
+            79.1,
+            90.4,
+            92.4
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "ji_accident_fire",
+      "company_jp": "ジェイアイ傷害火災保険",
+      "company_en": "JI Accidental Fire",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.jihoken.co.jp/wp-content/themes/jihoken/assets/image/pdf/disclosure/disc2026-all.pdf",
+      "doc_type": "ディスクロージャー誌(現状2026, 全冊)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disc2026-all.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 42.3,
+            "prev": 46.8
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 52.7,
+            "prev": 53.2
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 95.0,
+            "prev": 100.0
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            49.0,
+            44.2,
+            38.9,
+            46.8,
+            42.3
+          ],
+          "hist_expense_ratio_pct": [
+            88.0,
+            59.4,
+            56.3,
+            53.2,
+            52.7
+          ],
+          "hist_combined_ratio_pct": [
+            137.0,
+            103.6,
+            95.3,
+            100.0,
+            95.0
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "secom_nonlife",
+      "company_jp": "セコム損害保険",
+      "company_en": "SECOM Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.secom-sonpo.co.jp/gaiyo/pdf/disclosure2026.pdf",
+      "doc_type": "ディスクロージャー誌(セコム損害保険の現状2026)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disclosure2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 55.2,
+            "prev": 56.1
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 34.2,
+            "prev": 35.0
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 89.3,
+            "prev": 91.0
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            60.4,
+            56.1,
+            55.2
+          ],
+          "hist_expense_ratio_pct": [
+            34.9,
+            35.0,
+            34.2
+          ],
+          "hist_combined_ratio_pct": [
+            95.4,
+            91.0,
+            89.3
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "sony_nonlife",
+      "company_jp": "ソニー損害保険",
+      "company_en": "Sony Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.sonyfg.co.jp/ja/financial_info/results/sfgi_fy2025_4q_01.pdf",
+      "doc_type": "ソニーフィナンシャルグループ 2025年度(FY25) 決算説明資料 -- 「ソニー損保｜2025年度 業容(J-GAAP)」및「主要指標の推移」섹션",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "sfgi_fy2025_4q_01.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 68.2,
+            "prev": 69.7
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 24.6,
+            "prev": 25.4
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 92.8,
+            "prev": 95.1
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            67.9,
+            69.7,
+            68.2
+          ],
+          "hist_expense_ratio_pct": [
+            26.5,
+            25.4,
+            24.6
+          ],
+          "hist_combined_ratio_pct": [
+            94.4,
+            95.1,
+            92.8
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": {
+        "code": "ei_basis",
+        "text": "**E.I.損害率**(경과보험료·발생손해액 기준)이지 正味損害率(수입보험료 기준)가 아니다. 범위도 地震保険・自賠責 제외."
+      }
+    },
+    {
+      "id": "toa_re",
+      "company_jp": "トーア再保険",
+      "company_en": "Toa Reinsurance",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.toare.co.jp/img/company/disclo/pdf/toa_ar2026.pdf",
+      "doc_type": "ディスクロージャー誌／アニュアルレポート(トーア再保険 2026)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "toa_ar2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 77.5,
+            "prev": 80.4
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 20.9,
+            "prev": 21.0
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 98.4,
+            "prev": 101.4
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            87.8,
+            80.4,
+            77.5
+          ],
+          "hist_expense_ratio_pct": [
+            21.8,
+            21.0,
+            20.9
+          ],
+          "hist_combined_ratio_pct": [
+            109.6,
+            101.4,
+            98.4
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": {
+        "code": "lae_excluded",
+        "text": "正味損害率 산식이 正味支払保険金÷正味収入保険料 로 **損害調査費(LAE)를 분자에 안 더한다**. 다른 손보사는 전부 (正味支払保険金+損害調査費)÷正味収入保険料 라 이 회사만 과소 표시된다."
+      }
+    },
+    {
+      "id": "pet_and_family",
+      "company_jp": "ペット＆ファミリー損害保険",
+      "company_en": "Pet & Family",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.petfamilyins.co.jp/company/disclosure2026.pdf",
+      "doc_type": "ディスクロージャー誌(ペット＆ファミリー損害保険の現状2026)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disclosure2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 64.2,
+            "prev": 63.6
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 28.6,
+            "prev": 31.4
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 92.8,
+            "prev": 95.0
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            58.8,
+            63.6,
+            64.2
+          ],
+          "hist_expense_ratio_pct": [
+            32.1,
+            31.4,
+            28.6
+          ],
+          "hist_combined_ratio_pct": [
+            90.9,
+            95.0,
+            92.8
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "rescue_nonlife",
+      "company_jp": "レスキュー損害保険",
+      "company_en": "Rescue Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.rescue-sonpo.jp/upload_files/news/disclo2025.pdf",
+      "doc_type": "ディスクロージャー誌(レスキュー損害保険の現状2026)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disclo2025.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 30.0,
+            "prev": 35.0
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 61.5,
+            "prev": 61.3
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 91.5,
+            "prev": 96.3
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            29.2,
+            35.0,
+            30.0
+          ],
+          "hist_expense_ratio_pct": [
+            60.9,
+            61.3,
+            61.5
+          ],
+          "hist_combined_ratio_pct": [
+            90.1,
+            96.3,
+            91.5
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": {
+        "code": "ocr_read",
+        "text": "이미지 스캔 PDF 라 자동 텍스트 추출이 실패했고(세로쓰기 표 헤더 파손) 렌더링 후 **육안 판독**한 값이다. 신뢰도가 다른 행과 같지 않다."
+      }
+    },
+    {
+      "id": "mitsui_direct",
+      "company_jp": "三井ダイレクト損害保険",
+      "company_en": "Mitsui Direct",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.mitsui-direct.co.jp/download/pdf/disclosure/disclosure2026.pdf",
+      "doc_type": "ディスクロージャー誌(三井ダイレクト損害保険の現状2026, 全体版)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disclosure2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 64.3,
+            "prev": 70.4
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 28.9,
+            "prev": 35.1
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 93.2,
+            "prev": 105.5
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            64.4,
+            67.5,
+            68.6,
+            70.4,
+            64.3
+          ],
+          "hist_expense_ratio_pct": [
+            33.0,
+            37.9,
+            37.1,
+            35.1,
+            28.9
+          ],
+          "hist_combined_ratio_pct": [
+            null,
+            null,
+            105.7,
+            105.5,
+            93.2
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "zenkankyo_reiwa",
+      "company_jp": "全管協れいわ損害保険",
+      "company_en": "Zenkankyou Reiwa",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.zkreiwa-sonpo.co.jp/wp1/wp-content/uploads/2026/07/全管協れいわ損害保険の現状2026_業績データ編.pdf",
+      "doc_type": "ディスクロージャー誌(全管協れいわ損害保険の現状2026・業績データ編)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "全管協れいわ損害保険の現状2026_業績データ編.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 49.8,
+            "prev": 65.7
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 187.6,
+            "prev": 547.3
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 237.4,
+            "prev": 613.0
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            977.5,
+            93.3,
+            58.9,
+            65.7,
+            49.8
+          ],
+          "hist_expense_ratio_pct": [
+            33833.8,
+            2326.0,
+            1064.3,
+            547.3,
+            187.6
+          ],
+          "hist_combined_ratio_pct": [
+            34811.3,
+            2419.3,
+            1123.2,
+            613.0,
+            237.4
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "nisshin_fire_marine",
+      "company_jp": "日新火災海上保険",
+      "company_en": "Nisshin Fire & Marine",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.nisshinfire.co.jp/ir/pdf/disclosure2026.pdf",
+      "doc_type": "日新火災の現状2026(ディスクロージャー誌, 2025年度=令和7年度決算)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disclosure2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 61.1,
+            "prev": 60.9
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 36.5,
+            "prev": 35.6
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 97.6,
+            "prev": 96.4
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            60.9,
+            61.1
+          ],
+          "hist_expense_ratio_pct": [
+            35.6,
+            36.5
+          ],
+          "hist_combined_ratio_pct": [
+            96.4,
+            97.6
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "japan_earthquake_re",
+      "company_jp": "日本地震再保険",
+      "company_en": "Japan Earthquake Reinsurance",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.nihonjishin.co.jp/pdf/disclosure/2026/disclosure.pdf",
+      "doc_type": "ディスクロージャー誌(日本地震再保険の現状2026)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disclosure.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 6.6,
+            "prev": 38.0
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 21.8,
+            "prev": 21.9
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 28.4,
+            "prev": 59.9
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            64.7,
+            85.0,
+            12.9,
+            38.0,
+            6.6
+          ],
+          "hist_expense_ratio_pct": [
+            22.4,
+            22.0,
+            22.3,
+            21.9,
+            21.8
+          ],
+          "hist_combined_ratio_pct": [
+            87.1,
+            107.0,
+            35.2,
+            59.9,
+            28.4
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "tokiomarine_direct",
+      "company_jp": "東京海上ダイレクト損害保険",
+      "company_en": "Tokio Marine Direct",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.e-design.net/assets/pdf/company/disclosure/company_005_2026.pdf",
+      "doc_type": "ディスクロージャー誌(東京海上ダイレクトの現状2026, 旧イーデザイン損保, 2025-10-01 사명변경)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "company_005_2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 73.9,
+            "prev": 76.2
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 47.8,
+            "prev": 39.4
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 121.7,
+            "prev": 115.6
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            58.1,
+            74.4,
+            84.6,
+            76.2,
+            73.9
+          ],
+          "hist_expense_ratio_pct": [
+            34.8,
+            47.3,
+            50.5,
+            39.4,
+            47.8
+          ],
+          "hist_combined_ratio_pct": [
+            null,
+            null,
+            135.1,
+            115.6,
+            121.7
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "rakuten_nonlife",
+      "company_jp": "楽天損害保険",
+      "company_en": "Rakuten Non-Life",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.rakuten-sonpo.co.jp/Portals/0/images/company/disclosure2026.pdf",
+      "doc_type": "ディスクロージャー誌(楽天損保の現状2026)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "disclosure2026.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 74.4,
+            "prev": 83.6
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 41.7,
+            "prev": 51.0
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 116.1,
+            "prev": 134.6
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2021",
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            82.3,
+            96.1,
+            89.6,
+            83.6,
+            74.4
+          ],
+          "hist_expense_ratio_pct": [
+            71.9,
+            63.2,
+            59.3,
+            51.0,
+            41.7
+          ],
+          "hist_combined_ratio_pct": [
+            null,
+            null,
+            148.9,
+            134.6,
+            116.1
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
+    },
+    {
+      "id": "daiichi_ipet",
+      "company_jp": "第一アイペット損害保険",
+      "company_en": "Dai-ichi iPet",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.ipet-ins.com/company/ipet/pdf/disclosure/2026_data.pdf",
+      "doc_type": "ディスクロージャー誌(第一アイペットの現状2026, 業績データ編／資料編)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "2026_data.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 57.8,
+            "prev": 55.1
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 35.8,
+            "prev": 35.8
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 93.6,
+            "prev": 91.0
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2024",
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            55.1,
+            57.8
+          ],
+          "hist_expense_ratio_pct": [
+            35.8,
+            35.8
+          ],
+          "hist_combined_ratio_pct": [
+            91.0,
+            93.6
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null
     }
   ]
 }
