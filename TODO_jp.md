@@ -1,9 +1,28 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-13 (28) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-14 (29) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-14 (29) T&D 222% source_url 검증 — 값은 전부 원문과 일치, source_url 이 랜딩페이지였던 것만 문제(jp).**
+긴급 티켓(`esr_in_source_health.json` T&D verdict=skip_landing, adjusted_verdict=not_applicable — census `source_url`
+이 PDF 가 아니라 決算短信・補足資料 **목록** 페이지 `ir/document/results.html`). 원인: 그 페이지는 정적 HTML 이 아니라
+E-IR Parts(ssl4.eir-parts.net) 외부 SaaS 위젯이 JS 로 채우는 목록이라 실제 PDF 링크가 정적 수집에 안 보인다
+(`/ir/event/presentation.html` 決算説明資料 도 같은 위젯). **회사 자체 PDF 로 재검증**: 統合報告書2026(본편·データ編,
+`ir/document/annual/pdf/ar2026j_data.pdf`) p8 하이라이트표에 「ESR(内部管理モデル) 222%」가 グループ연결지표(グループ
+連結総資産·グループEV·グループ修正利益) 묶음 안에 명시 · 分割版 s4(コーポレートデータ) p3 5개년 트렌드표(…243% 222%)
++ p12 용어집 정의(当社グループ, 内部管理モデル) · 分割版 s3(리스크관리) p24 방법론(VaR 99.5%, 1年). **교차검증**:
+有価証券報告書(EDINET S100Y9UP, 2026-06-11提出) p22 「内部管理モデルによるＥＳＲは、222％」(한정어 없음, `scan_pdf`
+adjusted_verdict=unqualified) + p53 재구성식 サープラス43,421億円÷エコノミック・キャピタル19,563億円=222%(전기 243% 와
+도 정합). **결론: census 값 222/scope=group/basis=internal_management/as_of=2026-03-31/preliminary=no 전부 정정 불필요
+— 문제는 source_url 한 필드뿐.** 6개 후보(회사 PDF 4·랜딩페이지 1·EDINET 1) 전수 http_status 200, `check_esr_in_source.py
+::scan_pdf` 그대로 import 해서 돌림(재구현 안 함). 산출 `J-ESR/proposal_td_source_url.json`(권고: source_url →
+`ar2026j_data.pdf`, doc_type 갱신문구 포함) — census·마스터·증거 파일은 건드리지 않음, 병합은 오케스트레이터 소관.
+부수: 같은 세션에서 inbox 티켓(한정어 10종 정본 확정 — 표 현행 유지, T&D 재검증에서도 한정어 0건 재확인) 처리.
+**다음**: ① census `source_url`/`doc_type` 셀 병합(오케스트레이터) ② 10/31 재census 때 목표레인지 하단 133% 재확인(이번
+조사 4개 문서에 133 언급 없음, 상단 225%(추가환원 트리거)만 재확인됨) ③ 다른 15사 중 landing-page 출처가 더 있는지
+`check_source_urls.py` doc_kind 로 스윕.
 
 **🟢 2026-09-13 (28) 출처 게이트 6종 완성 — 사고 3건이 전부 어떤 룰엔가 걸린다, 포스트모템 `closed`(jp).**
 (27) 의 "다음" 3건을 다 닫고 UH-21 까지 갔다. ① **`JP_ESR_NOT_IN_SOURCE` 배선**(수집기 `J-ESR/check_esr_in_source.py` 가 증거를 박제 → 빌더는 오프라인으로 읽음, 증거 키 `(url, esr_pct)` — url 만으로 잡으면 값만 고치고 수집기를 안 돌린 상태가 옛 값의 found 를 물려받는다).
@@ -70,15 +89,6 @@ XBRL 태그엔 ESR 없음(기존 결론 유지)이나 **본문 iXBRL 엔 서술�
 **합병 보도자료** 오인용이라 電話会議資料(p17 226→214)로 교체(수치 214 는 유지). 부수 버그: `build_jesr_page_json.py` preliminary 키워드가 한국어뿐이라
 일본어 원문(暫定値·監査未済)을 인용하면 확정치로 표시 → 키워드 추가, かんぽ preliminary=true 복귀. **다음**: ① 10월 census 는 `check_source_urls.py --all` 선행
 ② dead 5건(朝日生命·キャピタル損保·オリックス生命·日本生命 구경로 2) 대체 ③ 第一生命HD 의 EDINET 등록명이 「第一ライフグループ」(E06141)인 것 확인.
-
-**🟢 2026-09-13 (24) 랭킹 색을 각사 ESR 목標レンジ 기준으로 + 第一生命 損益·基礎利益 층 + 貸借対照表 10사(orchestrator).**
-owner "목표 레인지 초과 초록(높을수록 진하게) / 100% 초과~레인지 이하 노랑(100% 에 가까울수록 붉게) / 100% 미만 빨강(낮을수록 진하게)". `jp/index.html`
-`colorForRange()`·트랙 위 목표 밴드·「目標 ○～○%」칩·툴팁(출처, 자회사는 모회사 목표 상속)·범례 5종. 레인지는 (23) census → `build_jesr_page_json.py::attach_target_ranges()`
-→ `jp/jesr_esr.json` record.target_range(4사 부착: TMHD 190%以上 / MS&AD 180~250 / Sompo 200~270 / T&D 133~225; 미공표사는 100% 기준 참고색+툴팁). **검증 필요**: T&D 만
-원문 직접 열람, 나머지 3사는 검색 스니펫 — Sompo 上限 270 이 현재 ESR 270 과 같아 의심 → 10월 재조사 1순위. 第一生命: owner 업로드 분책 index_004 로 損益計算書
-p25~26·基礎利益 A/B/C p30·再保険 p21·会計方針 p32~33 추출(P01~P16 실패 0, 契約者配当準備金繰入額 항목 신설로 P04 정합), core_history 5개년(p7)·順ざや/危険差(p31, 억엔),
-builder 가 損益 층 있는 생보를 상세 회사로 승격(esr_status not_yet 5 = 大型損保 3 + NN·第一; life_core_only 3). 旧基準SMR 파서 전각 대시(ー) 버그 수정(第一 852.9).
-貸借対照表 10사 전부(住友 7월 資料編·第一 분책·明治安田損保 열 우선 파서). **다음**: ① 10월 재조사에서 目標レンジ 원문 확인·미공표 12사 재탐색 ② NN·第一 三利源 억엔 통일 표기.
 
 ## Active follow-ups
 

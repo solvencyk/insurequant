@@ -2,6 +2,15 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-14 (29) -- T&D 222% 값 재확인 완료, source_url 만 landing page 였다
+
+- 티켓: `esr_in_source_health.json` T&D verdict=skip_landing(census `source_url` 이 PDF 아닌 決算短信・補足資料 목록 페이지) — 값 자체는 한 축도 검증 안 된 상태였다.
+- 원인: `ir/document/results.html`·`ir/event/presentation.html` 둘 다 정적 HTML 이 아니라 E-IR Parts(ssl4.eir-parts.net) 외부 위젯이 JS 로 문서 링크를 채우는 구조 — 브라우저 도구 금지 환경에서 추적 불가.
+- 회사 자체 PDF 3종(統合報告書2026 본편·データ編 p8 / 分割版 s4 p3·p12 / 分割版 s3 p24) + EDINET 有価証券報告書(S100Y9UP) p22·p53 4개 독립 문서 전부 222%/internal_management/group/2026-03-31 로 일치. `check_esr_in_source.py::scan_pdf` 를 그대로 import 해서 돌림(재구현 안 함).
+- p53 재구성식(サープラス43,421億円÷エコノミック・キャピタル19,563億円=222%)까지 일치, adjusted_verdict=unqualified(한정어 0건).
+- 산출 `J-ESR/proposal_td_source_url.json`(권고: source_url → `ar2026j_data.pdf`). census·마스터·증거 파일은 미수정 — 병합은 오케스트레이터 소관.
+- 부수: inbox 티켓 `20260914T0425Z__validation__JP_MULTI__qualifier_canon_registered.md` 처리 — 한정어 10종 표 현행 유지 확정(T&D 재검증에서도 한정어 0건, 줄일 근거 없음).
+
 ## 2026-09-13 (28) -- 출처 게이트 6종 완성, PM-2026-09-13 closed
 
 - `JP_ESR_NOT_IN_SOURCE` 배선: 수집기(네트워크)가 `J-ESR/esr_in_source_health.json` 에 박제 → 빌더는 오프라인으로 읽는다. 증거 키는 `(url, esr_pct)`.

@@ -1,5 +1,14 @@
 # TODO archive — jp 레인 (일본 ESR)
 
+**🟢 2026-09-13 (24) 랭킹 색을 각사 ESR 목標レンジ 기준으로 + 第一生命 損益·基礎利益 층 + 貸借対照表 10사(orchestrator).**
+owner "목표 레인지 초과 초록(높을수록 진하게) / 100% 초과~레인지 이하 노랑(100% 에 가까울수록 붉게) / 100% 미만 빨강(낮을수록 진하게)". `jp/index.html`
+`colorForRange()`·트랙 위 목표 밴드·「目標 ○～○%」칩·툴팁(출처, 자회사는 모회사 목표 상속)·범례 5종. 레인지는 (23) census → `build_jesr_page_json.py::attach_target_ranges()`
+→ `jp/jesr_esr.json` record.target_range(4사 부착: TMHD 190%以上 / MS&AD 180~250 / Sompo 200~270 / T&D 133~225; 미공표사는 100% 기준 참고색+툴팁). **검증 필요**: T&D 만
+원문 직접 열람, 나머지 3사는 검색 스니펫 — Sompo 上限 270 이 현재 ESR 270 과 같아 의심 → 10월 재조사 1순위. 第一生命: owner 업로드 분책 index_004 로 損益計算書
+p25~26·基礎利益 A/B/C p30·再保険 p21·会計方針 p32~33 추출(P01~P16 실패 0, 契約者配当準備金繰入額 항목 신설로 P04 정합), core_history 5개년(p7)·順ざや/危険差(p31, 억엔),
+builder 가 損益 층 있는 생보를 상세 회사로 승격(esr_status not_yet 5 = 大型損保 3 + NN·第一; life_core_only 3). 旧基準SMR 파서 전각 대시(ー) 버그 수정(第一 852.9).
+貸借対照表 10사 전부(住友 7월 資料編·第一 분책·明治安田損保 열 우선 파서). **다음**: ① 10월 재조사에서 目標レンジ 원문 확인·미공표 12사 재탐색 ② NN·第一 三利源 억엔 통일 표기.
+
 **🟢 2026-09-13 (23) 각사 ESR 목표레인지(자본정책) census 20사 → `J-ESR/esr_target_ranges.json` 신설(jp).**
 티켓 `inbox/jp/20260913T1610Z__owner__JP_MULTI__esr_target_ranges.md`(answered). owner "랭킹 막대색이 감독하한 100%뿐이라 전부 초록 — 자본정책 목표레인지로 차등하겠다더니 안 됨" →
 `jp/jesr_esr.json` 15사 + `jp/jesr_detail.json` 미중복 5사(Dai-ichi Life Insurance·NN Life·Tokio Marine & Nichido Fire·Mitsui Sumitomo Insurance·Sompo Japan Insurance) 총 20사 WebSearch/WebFetch

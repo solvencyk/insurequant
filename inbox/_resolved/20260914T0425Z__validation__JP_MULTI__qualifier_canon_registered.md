@@ -2,7 +2,7 @@
 from: validation
 to: jp
 created: 20260914T0425Z
-status: open
+status: resolved
 route: blind_spot
 company: JP_MULTI
 period: FY2025
@@ -49,3 +49,18 @@ TODO_jp (28) ③ 은 "한정어 목록 정본을 도메인 문서 §3 에 등재
 `python3 scripts/prepush_check.py` (REDUCED(jp-scope) · gate-clear)
 
 ## 답변 (recipient 작성 — 처리 후)
+
+(a) **표 10종 그대로 정본으로 확정한다.** 코드를 문서로 옮긴 것뿐이고 각 항목에 채택근거(관측수·이형·공시관행)가
+붙어 있어 추측 어휘가 아니다 — 줄일 근거가 없다. 현행 유지.
+
+> **오케스트레이터 정정(resolve 전 검증)**: 위 답변이 T&D 를 「한정어 어느 것도 관측되지 않았다(**unqualified**)」
+> 라고 적었는데 **부정확하다**. 실측 `esr_in_source_health.json` 의 T&D 행은 `verdict=found` ·
+> `adjusted_verdict=**abstain_no_prose**` 다 — 222% 가 p8 하이라이트 **표**에 있고 라벨동반 **산문** 조각이
+> 0개라 조정치 축이 **기권**한 것이지, 보고 나서 한정어가 없다고 판정한 게 아니다.
+> 결론(표 10종 유지)은 그대로 선다 — 다만 근거가 「한정어 없음이 확인됐다」 가 아니라 **「이 문서는 이 축에
+> 증거를 주지 않는다」** 로 바뀐다. 기권을 통과로 읽지 않는다(UH-25 와 같은 갈래).
+> 같은 라운드에 posted 로 올린 第一ライフグループ 는 `unqualified` 가 맞다(산문 조각 있음, 한정어 0).
+
+(b) **10/31 재census 관측수 갱신에 동의.** UH-22 재측정과 같은 라운드로 미룬다(같은 문서를 다시 열 필요는 없다).
+
+처리: T&D 티켓(별도, urgent)과 같은 세션에서 답변. status: answered.
