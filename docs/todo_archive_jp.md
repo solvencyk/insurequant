@@ -1,5 +1,23 @@
 # TODO archive — jp 레인 (일본 ESR)
 
+**🟢 2026-09-13 (25) 타 세션 리허설 미결 5건 이관·처리 + EDINET 키 실측 — 출처 URL 점검기 신설·코드 7개 정정·화면 수치 2건 정정(jp).**
+티켓 `inbox/jp/20260913T1325Z__owner__JP_MULTI__source_url_rehearsal_and_edinet_key.md`(resolved). 다른 세션(`session_01F9N5Bt…`, `solvencyk/solvency`)이 insurequant
+push 권한이 없어 남기지 못한 후속 5건을 이관해 전부 닫았다. ① 공용 헤더 모듈 `J-ESR/jesr_http.py` + 점검기 `J-ESR/check_source_urls.py` — 판정 6종
+(ok / ok_requires_headers / blocked / tls_client_issue / spa_shell / dead), 전수 254건·고유 139건에서 blocked 21 · spa_shell 8 · requires_headers 17 · dead 5
+(`J-ESR/source_url_health.json`). **리허설의 "東京海上HD IR 은 SPA" 판정은 오진**이었다 — 364바이트의 정체는 `<meta http-equiv="refresh">` 한 줄이고 따라가면
+링크 25·PDF 6이 정적으로 다 있다(probe 가 2홉 추적). `sonylife.co.jp` 는 파이썬만 TLS 악수 실패·curl 200 → `tls_client_issue` 로 분리(죽음 아님).
+② TDnet 영구인용 금지 규칙화(`jesr_http.EXPIRING_HOSTS`, 도메인 문서 **§4c**) + 404 3건 대체 URL 확보(東京海上HD 게시 디렉토리 이동 · 日本生命 사이트 개편 · T&D 만료).
+③ **EDINET 키**: smoke PASS. 호스트 정본 `api.edinet-fsa.go.jp/api/v2`(종전 `disclosure…` 는 301→302, **키 없으면 HTTP 200 + 본문 StatusCode 401** 함정).
+공식 코드리스트 11,389건 대조로 **기재 13개 중 7개가 다른 회사 코드**(E04979=パーク24 · E04506=九州電力 …) — `jp_insurers.csv` TBD 62행 해소
+(매칭 27 / 미등록 확정 51 / 보류 3), 有報 의무는 17사뿐이 **EDINET 루트의 천장**. FY2025 有報는 이미 6월에 14사 제출(「10월 제출」 가정이 틀렸다 — 10/31 은 J-ICS 공시 기한).
+XBRL 태그엔 ESR 없음(기존 결론 유지)이나 **본문 iXBRL 엔 서술로 있다** → `edinet_esr_probe.py` 가 15건 전부 검출, 5사 수치 확정. 도구·증거 4종
+(`edinet_codelist.py`/`edinet_code_match.json`, `edinet_esr_probe.py`/`edinet_esr_probe.json`). ④ **화면 수치 정정 2건**(1차 원문 직접 열람):
+東京海上HD 238 → **268**(238 은 원문 어디에도 없는 2차보도 인용값; 決算プレゼン p5·p44 와 有報 S100YLS8 본문 모두 268, 自己株取得 후 255·리스크테이크 반영 234),
+かんぽ生命 220 → **181**(220 은 「大量解約リスクを除いた場合」 조정치; 원문 p35·p37 과 有報 S100YD29 모두 181 監査未済 暫定). MS&AD 는 출처 URL 이 2026-02-13
+**합병 보도자료** 오인용이라 電話会議資料(p17 226→214)로 교체(수치 214 는 유지). 부수 버그: `build_jesr_page_json.py` preliminary 키워드가 한국어뿐이라
+일본어 원문(暫定値·監査未済)을 인용하면 확정치로 표시 → 키워드 추가, かんぽ preliminary=true 복귀. **다음**: ① 10월 census 는 `check_source_urls.py --all` 선행
+② dead 5건(朝日生命·キャピタル損保·オリックス生命·日本生命 구경로 2) 대체 ③ 第一生命HD 의 EDINET 등록명이 「第一ライフグループ」(E06141)인 것 확인.
+
 **🟢 2026-09-13 (24) 랭킹 색을 각사 ESR 목標レンジ 기준으로 + 第一生命 損益·基礎利益 층 + 貸借対照表 10사(orchestrator).**
 owner "목표 레인지 초과 초록(높을수록 진하게) / 100% 초과~레인지 이하 노랑(100% 에 가까울수록 붉게) / 100% 미만 빨강(낮을수록 진하게)". `jp/index.html`
 `colorForRange()`·트랙 위 목표 밴드·「目標 ○～○%」칩·툴팁(출처, 자회사는 모회사 목표 상속)·범례 5종. 레인지는 (23) census → `build_jesr_page_json.py::attach_target_ranges()`

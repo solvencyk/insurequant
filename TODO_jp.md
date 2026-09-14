@@ -5,6 +5,18 @@
 
 ## Status
 
+**🟢 2026-09-14 (30) 손보 손해율 전수조사 — 29사 FY2025 전건 확보, 항등식 69/69. owner 지적으로 재개한 축이다(jp).**
+**왜 재개했나**: (17)(2026-09-13)이 손보 6사 표본 중 **3사만 확보**하고 나머지는 네트워크 차단으로 남겨뒀는데, 이 세션이 "막혔던 것 클라우드에서 다시 본다" 고 해놓고 ESR 축만 하고 이 축을 빠뜨렸다. owner 가 그걸 짚었다.
+**현황 실측**: census 손보·재보험 34사 중 `jp/jesr_detail.json` 에 손해율이 있던 회사는 **5사**뿐. 나머지 29사를 A(대형·중견 10)·B(중소·특화 9)·C(다이렉트·펫·재보험 10) 3조 병렬로 조사.
+**결과**: `found` 24 · `not_applicable_holding` 2(東京海上HD·SOMPO HD — 지주 자료에 그룹 단일 합산치가 없다) · `unreachable` 3(共栄火災 SSL 인증서 체인 · 大同火災 도메인 WAF 403 · ヤマップ Nuxt3 SPA). FY2025 는 기확보 5사 포함 **29사 전건**.
+**막혔던 3사 처리**: ① **日新火災 확보** — (17)이 "URL 은 특정했으나 curl 차단으로 미열람" 이라 적은 바로 그 PDF 가 이번엔 200 이다(61.1/36.5/97.6, p81 合計行 직접). ② **あいおいニッセイ同和 확보(우회)** — 자사 사이트는 JS flipbook 뿐이라 PDF 가 없어 모회사 MS&AD HD 결산자료의 **単体 열**에서 확보(64.5/32.6/97.1). ③ **共栄火災 여전히 막힘** — python·curl·WebFetch 세 방법 전부 SSL 인증서 체인 오류. 추정하지 않고 `unreachable` 로 남겼다("못 열었다" ≠ "없다").
+**검산**: `合算率 == 正味損害率 + 正味事業費率`(±0.15) 을 전 연도에 돌려 **69건 중 불일치 0**. 값이 맞다는 증명은 아니고 옮겨적기 오류가 없다는 증명이다.
+**연도 키 불일치 — 조용히 10사를 잃을 뻔했다**: 3조가 키를 제각각 썼다(A·B `"FY2025"` / C `"2025"` / あいおい는 dict 아닌 float / MS&AD `"FY2025_jgaap"`). 발주 프롬프트에 형식을 안 박은 오케스트레이터 잘못이다. 실측: 순진하게 `["FY2025"]` 로 읽으면 **19사만 잡히고 10사가 사라진다**. `J-ESR/merge_nonlife_ratio_census.py` 로 한 스키마로 합쳐 `J-ESR/nonlife_ratio_census.json` 에 박제.
+**같은 열에 놓으면 안 되는 값 4건** (값을 고치지 않고 `caveat` 로 이유만 박제): **トーア再保険**(正味損害率 산식이 LAE 를 분자에 안 더한다 — 이 회사만 과소) · **ソニー損保**(`E.I.損害率`, 경과/발생 기준이라 정의가 다르다. 地震·自賠責 제외) · **レスキュー損保**(이미지 스캔 PDF, 자동추출이 세로쓰기 헤더에서 깨져 **육안 판독** — 신뢰도가 다르다) · **MS&AD HD**(「２社合計（単純合計）」라 자회사 2사를 따로 실으면 중복 계상. IFRS 참고치는 범위가 달라 `alt_values` 로 분리).
+`損害調査費` 가 4사에서 검색됐지만 **3사(ジェイアイ·第一アイペット·日本地震再保険)는 표준 산식을 명기한 것**이고 진짜 차이는 トーア 1사뿐이다 — 안 갈랐으면 정상 3사를 이상값으로 몰 뻔했다.
+**아직 census·화면 미반영.** 남은 결정 3건은 화면 구조라 owner 판단이 필요하다: ① caveat 4건을 별도 열로 뺄지 라벨만 붙일지 ② `jesr_detail.json` 이 10사 구조인데 24사를 어떻게 실을지 ③ SOMPOダイレクト `source_url` 이 비율표 없는 분책(21p)을 가리킨다 — **다만 그 행은 `not_yet` 이라 게이트 검사 대상이 아니어서 T&D 같은 false-green 이 아니다**(오케스트레이터가 처음에 같은 급으로 말한 것을 정정). census `checked_at` 을 건드리면 전 행 기준으로 수집기 2종이 다시 돌아야 하므로 병합 때 묶는다.
+**다음**: ① owner 결정 3건 ② 결정 후 census 병합 + 수집기 재실행 1회 + 빌더 ③ 10/31 재census 와 UH-22 승격 판단.
+
 **🟢 2026-09-14 (29) T&D 222% source_url 검증 — 값은 전부 원문과 일치, source_url 이 랜딩페이지였던 것만 문제(jp).**
 긴급 티켓(`esr_in_source_health.json` T&D verdict=skip_landing, adjusted_verdict=not_applicable — census `source_url`
 이 PDF 가 아니라 決算短信・補足資料 **목록** 페이지 `ir/document/results.html`). 원인: 그 페이지는 정적 HTML 이 아니라
@@ -72,23 +84,6 @@ blocked 21건 중 census 가 인용 중인 것은 TMNF 1건뿐이고 5회 중 4�
 오탐억제까지 정의, **전부 미배선 = UH-18** → 티켓 `inbox/jp/20260913T1500Z__validation__JP_MULTI__jp_source_gate_wiring.md` 발주. **다음**: ① UH-18 배선(오프라인 `JP_SOURCE_EXPIRING_HOST` 즉시 + 증거 신선도 검사)
 ② 화면 basis 표기 owner 판단 ③ 第一ライフグループ 표시명 교체 여부 ④ ライフネット·SOMPO 산정기준 확정.
 
-**🟢 2026-09-13 (25) 타 세션 리허설 미결 5건 이관·처리 + EDINET 키 실측 — 출처 URL 점검기 신설·코드 7개 정정·화면 수치 2건 정정(jp).**
-티켓 `inbox/jp/20260913T1325Z__owner__JP_MULTI__source_url_rehearsal_and_edinet_key.md`(resolved). 다른 세션(`session_01F9N5Bt…`, `solvencyk/solvency`)이 insurequant
-push 권한이 없어 남기지 못한 후속 5건을 이관해 전부 닫았다. ① 공용 헤더 모듈 `J-ESR/jesr_http.py` + 점검기 `J-ESR/check_source_urls.py` — 판정 6종
-(ok / ok_requires_headers / blocked / tls_client_issue / spa_shell / dead), 전수 254건·고유 139건에서 blocked 21 · spa_shell 8 · requires_headers 17 · dead 5
-(`J-ESR/source_url_health.json`). **리허설의 "東京海上HD IR 은 SPA" 판정은 오진**이었다 — 364바이트의 정체는 `<meta http-equiv="refresh">` 한 줄이고 따라가면
-링크 25·PDF 6이 정적으로 다 있다(probe 가 2홉 추적). `sonylife.co.jp` 는 파이썬만 TLS 악수 실패·curl 200 → `tls_client_issue` 로 분리(죽음 아님).
-② TDnet 영구인용 금지 규칙화(`jesr_http.EXPIRING_HOSTS`, 도메인 문서 **§4c**) + 404 3건 대체 URL 확보(東京海上HD 게시 디렉토리 이동 · 日本生命 사이트 개편 · T&D 만료).
-③ **EDINET 키**: smoke PASS. 호스트 정본 `api.edinet-fsa.go.jp/api/v2`(종전 `disclosure…` 는 301→302, **키 없으면 HTTP 200 + 본문 StatusCode 401** 함정).
-공식 코드리스트 11,389건 대조로 **기재 13개 중 7개가 다른 회사 코드**(E04979=パーク24 · E04506=九州電力 …) — `jp_insurers.csv` TBD 62행 해소
-(매칭 27 / 미등록 확정 51 / 보류 3), 有報 의무는 17사뿐이 **EDINET 루트의 천장**. FY2025 有報는 이미 6월에 14사 제출(「10월 제출」 가정이 틀렸다 — 10/31 은 J-ICS 공시 기한).
-XBRL 태그엔 ESR 없음(기존 결론 유지)이나 **본문 iXBRL 엔 서술로 있다** → `edinet_esr_probe.py` 가 15건 전부 검출, 5사 수치 확정. 도구·증거 4종
-(`edinet_codelist.py`/`edinet_code_match.json`, `edinet_esr_probe.py`/`edinet_esr_probe.json`). ④ **화면 수치 정정 2건**(1차 원문 직접 열람):
-東京海上HD 238 → **268**(238 은 원문 어디에도 없는 2차보도 인용값; 決算プレゼン p5·p44 와 有報 S100YLS8 본문 모두 268, 自己株取得 후 255·리스크테이크 반영 234),
-かんぽ生命 220 → **181**(220 은 「大量解約リスクを除いた場合」 조정치; 원문 p35·p37 과 有報 S100YD29 모두 181 監査未済 暫定). MS&AD 는 출처 URL 이 2026-02-13
-**합병 보도자료** 오인용이라 電話会議資料(p17 226→214)로 교체(수치 214 는 유지). 부수 버그: `build_jesr_page_json.py` preliminary 키워드가 한국어뿐이라
-일본어 원문(暫定値·監査未済)을 인용하면 확정치로 표시 → 키워드 추가, かんぽ preliminary=true 복귀. **다음**: ① 10월 census 는 `check_source_urls.py --all` 선행
-② dead 5건(朝日生命·キャピタル損保·オリックス生命·日本生命 구경로 2) 대체 ③ 第一生命HD 의 EDINET 등록명이 「第一ライフグループ」(E06141)인 것 확인.
 
 ## Active follow-ups
 
