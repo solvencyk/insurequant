@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-14T05:29:11Z",
+    "generated_at": "2026-09-14T07:28:59Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -28,6 +28,16 @@
           "id": "tokiomarine_nichido",
           "company_jp": "東京海上日動火災保険",
           "company_en": "Tokio Marine & Nichido Fire"
+        },
+        {
+          "id": "nisshin_fire_marine",
+          "company_jp": "日新火災海上保険",
+          "company_en": "Nisshin Fire & Marine"
+        },
+        {
+          "id": "tokiomarine_direct",
+          "company_jp": "東京海上ダイレクト損害保険",
+          "company_en": "Tokio Marine Direct"
         }
       ],
       "MS&ADインシュアランスグループHD": [
@@ -35,6 +45,16 @@
           "id": "mitsui_sumitomo",
           "company_jp": "三井住友海上火災保険",
           "company_en": "Mitsui Sumitomo Insurance"
+        },
+        {
+          "id": "aioi_nissay_dowa",
+          "company_jp": "あいおいニッセイ同和損害保険",
+          "company_en": "Aioi Nissay Dowa"
+        },
+        {
+          "id": "mitsui_direct",
+          "company_jp": "三井ダイレクト損害保険",
+          "company_en": "Mitsui Direct"
         }
       ],
       "SOMPOホールディングス": [
@@ -42,6 +62,11 @@
           "id": "sompo_japan",
           "company_jp": "損害保険ジャパン",
           "company_en": "Sompo Japan Insurance"
+        },
+        {
+          "id": "sompo_direct",
+          "company_jp": "SOMPOダイレクト損害保険",
+          "company_en": "Sompo Direct"
         }
       ]
     },
