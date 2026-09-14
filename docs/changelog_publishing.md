@@ -10,6 +10,32 @@
 
 ---
 
+## 2026-09-14 (2차) — 손보 2사 추가(24→26사) + `value_verified` UH-25 화면축 배선 (owner 승인)
+
+두 가지 독립 변경, 둘 다 jp 범위.
+
+**① 共栄火災海上保険·ヤマップネイチャランス損害保険 적재**: `J-ESR/nonlife_ratio_retry.json`(오케스트레이터가 원문 PDF로
+독립 확인, 항등식 2/2)을 `J-ESR/merge_nonlife_ratio_census.py`에 override 소스로 배선(`load_retry()` 신설,
+company_jp 매칭 시 A/B/C 그룹 원본 행을 통째로 대체, 고아 override는 `SystemExit`). `nonlife_ratio_census.json`
+found 24→26·unreachable 3→1(大同火災만 잔존), 항등식 재검산 71건 중 불일치 0. `build_jesr_detail_json.py`
+`RATIO_ONLY_ID_BY_JP`에 `kyoei_fire_marine`·`yamap_naturance` 2개 id 추가(caveat 없음) — `build_ratio_only_companies()`가
+census를 그대로 읽어 26사를 자동 생성. census CSV(`fy2025_esr_census_20260912.csv`) 2행의 `disclosure_url`·
+`doc_type`·`checked_at`·`notes` 갱신(`fy2025_esr_status`는 무변경 — 共栄火災=not_yet, ヤマップ=not_found 유지),
+notes에 재현 가능한 방법 기록(共栄火災=TLS 중간인증서 보강, ヤマップ=Playwright route-intercept 우회). 행-인덱스
+csv.reader/writer + utf-8-sig/LF 보존, git diff 2줄만 확인.
+
+**② `value_verified` 계약**: `jp/jesr_esr.json`/`jp/jesr_detail.json`의 posted record마다
+`{"state":"verified"|"unverified"|"exempt","reason":null|str}` 부착 — 판정은 재타이핑하지 않고 게이트 정본
+`unverified_value_reasons()`·`load_source_exceptions()`을 그대로 재사용(`build_jesr_page_json.py`에
+`compute_value_verified()`/`_exception_reason_by_key()`/`check_value_verified()` 신설). `build_jesr_detail_json.py`는
+`public_by_en.get(company_en,{}).get("value_verified")`로 가져오고(비posted는 자동 None), ratio_only는 명시적
+None + self_check 3중 강제. 오늘 기준 **16/16 전부 verified**(발화 0, 기대치와 일치). ④→⑤→④ 고정점 확인
+(`generated_at` 제외 바이트 동일), ESR 16사 5필드 전건 diff 0. `pytest tests/test_jp_source_gate.py
+tests/test_jp_deploy_matches_census.py` 127 passed, `scripts/prepush_check.py` REDUCED(jp-scope) gate-clear
+(258 passed 2 skipped). commit/push 없음. 상세: `TODO_publishing.md` 2026-09-14 (2차) 항목.
+
+---
+
 ## 2026-09-14 — 손보 손해율 24사 `jp/jesr_detail.json` ratio_only 레이어 + SOMPOダイレクト source_url 교체 (owner 승인)
 
 배경: `J-ESR/nonlife_ratio_census.json`(손보 29사 전수조사, verdict `found` 24 / `not_applicable_holding` 2 /

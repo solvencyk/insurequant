@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-14T07:28:59Z",
+    "generated_at": "2026-09-14T14:28:53Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -93,6 +93,10 @@
       "doc_date": "2026-07-30",
       "source_url": "https://www.au-sonpo.co.jp/corporate/pdf/disclo_260730_4of5.pdf",
       "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比율. 2026-09-13 재확인 — 디스클로저지 p22 告示74호 요약표 적격자본(A) 9,278/소요자본(B) 1,171 백만엔 = 791.7%, p2 주요업적 5개년표도 동일. 화면 15사 중 규제 표준모델 기준으로 확인된 4사 중 하나",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": null
     },
     {
@@ -112,6 +116,10 @@
       "doc_date": "2026-09-04",
       "source_url": "https://www.meijiyasuda-sonpo.co.jp/profile/disclosure/pdf/20260904_performance_data.pdf",
       "notes": "신기준(경제가치기준) 단체 ソルベンシー・マージン比율. 2026-09-13 재확인 — 별책 업적데이터 p2 적격 40,290/소요 5,420 백만엔 = 743.2%, p12 감응도 분석 기준값도 743.2%. 경제가치기준 BS·감응도·산출체제까지 포함된 완전한 신기준 공시. 규제 표준모델 기준 확인 4사 중 하나",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": null
     },
     {
@@ -131,6 +139,10 @@
       "doc_date": "2026-05-13",
       "source_url": "https://data.swcms.net/file/lifenet-corp/dam/jcr:e9412bb2-3fc0-45b2-9854-d619e11990bb/140120260513529356.pdf",
       "notes": "신기준(経済価値ベース) ソルベンシー・マージン比率 333%(決算短信 p5 + 有報 S100YC7R 본문 동일 문장, 外部監査 미완료 속보치). **같은 문서에 内部ESR 394%(전기 356%)가 별도 공시**되므로 혼동 금지 — 화면값은 규제 표준식 쪽이다. 신뢰수준 명시 없음. 목표레인지는 두 원문 어디에도 서술 없음. **caveat: 원문 서술이 連結(그룹) 기준인데 census scope 는 solo 로 기재돼 있다 — 다음 라운드에 확인**(2026-09-13 jp-collector) / 2026-09-13 scope 정정: solo → **group**. 決算短信〔IFRS〕p5 와 有報 S100YC7R 본문이 동일 문장 「…ESR)は、当連結会計年度末において、333%となり…」 — 連結 기준이다. 단독 상장 생보사라 単体와 근사하겠지만 원문이 連結이라 부른다(추정으로 solo 로 적혀 있던 것)",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": null
     },
     {
@@ -150,6 +162,10 @@
       "doc_date": "2026-05-20",
       "source_url": "https://www.sompo-hd.com/-/media/hd/files/doc/pdf/ir/2026/ir_20260520.pdf?la=ja-JP",
       "notes": "ESR 270%(決算説明資料 p14, 各주 「リスク量は内部モデルを用いて算出(99.5%VaR)」 직접 확인). 有報 S100YC6Z 도 「事業ポートフォリオに即した内部モデルを用いて独自にＥＳＲを計算」 명시 — 내부모델 기준이다. 규제 표준식 ESR 은 有報에 「100%以上 확보」 정성 서술만 있고 수치 비공개. **목표레인지 정정**: 2025년도 통기결산부터 レンジ上限(250%) 폐지, 하한 200% 를 타깃 자본수준으로 단일화 — 종전 census 의 '200~270%' 는 오류(270 은 현재 ESR 값이지 상한이 아니었다). 2026-09-13 pymupdf 텍스트추출 성공(종전 '이미지 위주 실패' 기록 해소)",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": {
         "low_pct": 200,
         "high_pct": null,
@@ -177,6 +193,10 @@
       "doc_date": "2026-05-20",
       "source_url": "https://www.tokiomarinehd.com/ir/event/presentation/2025/gi58a80000002zwa-att/Tokio_Marine_2025Q4_Results_Presentation_j.pdf",
       "notes": "2026-09-13 1차출처 재확보·수치 정정. 종전 238%는 원문에 없는 2차보도 인용값이었다 — 決算プレゼンテーション資料(2026-05-20) p5 「268%(2026.3末), 2025.9末 297% 대비 △29pt」, p44 ESR 추이·감응도. 有報(EDINET S100YLS8, 2026-06-26) 본문도 「2026年3月末時点におけるESRは268％」로 일치. 99.5%VaR 내부ESR(2026.3末부터 정의 변경, 그전 99.95%VaR). 自己株式取得 4,000억엔 반영 후 255%, 사업계획 리스크테이크까지 반영 시 234%. 목표 190%以上. 종전 URL(.../gi58a8000000246z-att/...)은 게시 디렉토리 변경으로 404 → gi58a80000002zwa-att 로 교체",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": {
         "low_pct": 190,
         "high_pct": null,
@@ -204,6 +224,10 @@
       "doc_date": "2026-05-26",
       "source_url": "https://www.asahi-life.co.jp/company/intro/kessan/pdf/20260526_1.pdf",
       "notes": "그룹 内部管理 ESR 258.9%(결산설명자료 p10·p14 직접 확인, 1년 VaR 99.5%). 같은 p10 에 규제기준 経済価値ベースSMR 見込み 242%(외부검증 전 暫定) 병기. **규제 확정치는 7월 통합보고서에서 나왔다** — 資料編 p44 連結 241.9%(적격 1,696,488/소요 701,247 백만엔), p9 単体 242.2% (https://www.asahi-life.co.jp/company/intro/disclosure/disclosure2026_08.pdf). 헤드라인은 회사 공표 기준(내부관리) 유지. 2026-09-13 원문 재확인, 속보 표기는 규제치 쪽에만 있어 preliminary=no / 2026-09-13 ir_url 교체(구 /company/zaimu/ 404)",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": null
     },
     {
@@ -223,6 +247,10 @@
       "doc_date": "2026-05-26",
       "source_url": "https://www.fukoku-life.co.jp/about/ir/news/upload/20260525_4.pdf",
       "notes": "単体ESR(内部モデル) 248.5%(결산(안)설명자료 p12 직접 확인, 전년말비 +6.9pt). 같은 페이지 連結ESR(内部モデル) 244.7%, 標準モデル(규제) 210%(속보). 헤드라인은 단체·내부모델 기준. 2026-09-13 원문 재확인 — 속보 표기는 연결·표준모델 쪽에만 있어 preliminary=no. 목표레인지 230~270%(p13)",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": {
         "low_pct": 230,
         "high_pct": 270,
@@ -250,6 +278,10 @@
       "doc_date": "2026-09-04",
       "source_url": "https://www.td-holdings.co.jp/ir/document/annual/pdf/ar2026j_data.pdf",
       "notes": "2026-09-13 1차출처 교체. 종전 URL은 TDnet(release.tdnet.info) 경로로 게시 만료돼 404 — 만료 호스트는 1차 출처 금지(도메인 문서 §4c). 회사 IR 決算短信 상설 페이지로 교체. 수치 222%는 有報(EDINET S100Y9UP, 2026-06-11) 본문 「内部管理モデルによるＥＳＲは、222％」로 확인. ESR 225% 恒常 초과 시 추가환원 방침 병기(목표 레인지 133~225%) / 2026-09-14 source_url 교체 — 값·기준·scope 는 불변(222 / internal_management / group 전부 원문과 일치 재확인). 종전 URL(ir/document/results.html)은 문서가 아니라 목록 페이지였고, E-IR Parts(ssl4.eir-parts.net) 외부 위젯이 JS 로 표를 채워 정적 수집에 실제 PDF 링크가 안 보였다 — 그래서 esr_in_source_health 가 skip_landing(=값 검증 0축)이었다(UH-25). 교체 후: scan_pdf found p8 「健全性 ESR(内部管理モデル) 222%」, p90 10년 시계열 말단도 222%. 교차확인 有報 S100Y9UP p53 재구성식 43,421억엔/19,563억엔=222%. doc_type 의 날짜는 PDF 작성 타임스탬프(2026-09-04)다 — 원문에 발행일 명기가 없어 그걸 썼고, 표기로 구분해 둔다.",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": {
         "low_pct": 133,
         "high_pct": 225,
@@ -277,6 +309,10 @@
       "doc_date": "2026-05-27",
       "source_url": "https://www.daiichilife-group.com/investor/library/presentation/pdf/2025_statement.pdf",
       "notes": "자사 健全性 페이지(WebFetch 직접확인) 문구: '2026年3月末時点の比率については、確定次第、開示' - 09-12 재확인 시점까지 정식 수치 미공표 상태. 2025-12(Q3) SM비율 831.8%만 게재. [2026-09-13 owner 지시 표시명 교체] 旧: 第一生命ホールディングス(Dai-ichi Life Holdings) — 2025-06-23 주총 결의로 2026-04-01 부로 「株式会社第一ライフグループ」 상호 변경(有報 S100YC7A 표지 원문 확인, EDINET코드 E06141 불변). company_en은 dai-ichi-life-hd.com/en/ 라이브 확인(公式 \"Daiichi Life Group, Inc.\")에 맞춰 \"Daiichi Life Group\" 로 교체. / 2026-09-14 有報 스윕에서 신규 확정. グループESR 220%(決算説明資料 p3「26/3末 資本充足率(ESR) 220%(前期末比+10%pt)」· p4「グループESRは前期末比+10%pt改善し220%」). basis 근거는 자료 자신의 각주 「本資料内においては、内部モデルを用いて算出したESRについて、「ESR」と呼称しています」 → internal_model. scope 는 슬라이드 제목 「グループESR」. 한정어 없음(scan_adjusted=unqualified). 함정 확인: 210%는 전기말(p4 브리지 차트 25/3末→26/3末 로 직접 확인), 227%는 2024年3月期 실적(有報 p178 보수 KPI 표), 170%는 목표 하한. 有報 S100YC7A(2026-06-16 제출) p39/p56 동일 문장으로 교차확인, 회사 자체 미러 PDF 도 found+unqualified(백업 출처). 같은 회사가 2026-08-31 CFOダイアログ(event_029.pdf)에서 規制ESR 198%를 따로 공시하는데 basis 가 다른 별개 지표라 헤드라인으로 쓰지 않는다 — 원문 인용은 J-ESR/proposal_daiichi_source_url.json(preliminary 판정 키워드를 notes 에 심지 않으려고 여기 옮겼다). 10/31 규제 공시 때 교체 판단할 것.",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": null
     },
     {
@@ -296,6 +332,10 @@
       "doc_date": "2026-05-20",
       "source_url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
       "notes": "2026-09-13 1차출처 교체. 종전 URL(auto_20260213561398)은 2026-02-13 三井住友海上·あいおいニッセイ同和 합병 보도자료로 ESR 미수록 — 문서 오인용이었다(기본 fetcher 에는 403 이라 그동안 열어보지 못했다). 2025年度通期決算 電話会議資料 p17 직접 확인 「226%→214%」, 統合リスク量=신뢰수준 99.5% VaR, 健全性 하한 180%. 수치 214% 는 종전과 동일",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": {
         "low_pct": 180,
         "high_pct": 250,
@@ -323,6 +363,10 @@
       "doc_date": null,
       "source_url": "https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/data/status-2026/pdf/status_2026_06.pdf",
       "notes": "2026-09-13 원문 대조로 정정. 종전 208.0 은 어느 1차 문서에도 없고 종전 source_url 은 PDF 가 아닌 디스클로저 디렉토리 페이지였다. 分冊 p10 직접 확인 — グループESR 208.7%(=標準モデルESR 과 内部モデルESR 중 낮은 쪽, 당기는 内部モデル 채택), 같은 페이지 標準モデル(규제 連結 SMR) 213.4%. 별책 업적자료 status_2026_01.pdf 의 告示74 요약표와 정합(連結 적격 12,307,019/소요 5,766,307 백만엔=213.4%, 単体 224.0%). 좌우 2단 감응도 블록이라 텍스트 순서로는 라벨↔수치가 뒤집혀 읽힌다 — 좌표(blocks) 파싱으로 확정",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": {
         "low_pct": 165,
         "high_pct": null,
@@ -350,6 +394,10 @@
       "doc_date": "2026-05-26",
       "source_url": "https://www.sumitomolife.co.jp/about/pdf/company/ir/settlement/260526.pdf",
       "notes": "連結 内部管理ESR 197%(결산(안)설명용자료 p9 직접 확인, 전년말비 +19pt, 원문 「※2 速報値」 명시 → preliminary=yes). 규제 経済価値SMR 은 원문이 「後日公表予定」으로 명시 — 미공표가 확인된 것이지 못 찾은 게 아니다. 2026-09-13 pymupdf 로 텍스트 추출 성공(종전 회차의 '추출 실패·검색결과 인용' 기록은 해소)",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": null
     },
     {
@@ -369,6 +417,10 @@
       "doc_date": null,
       "source_url": "https://www.nissay.co.jp/sites/default/files/assets/news/files/kessan202605_gaiyo.pdf",
       "notes": "2026-09-13 1차출처 교체·수치 재확인. 종전 /kaisha/annai/kenzen/ 는 사이트 개편으로 404(현 경로는 /kaisha/gyoseki/). 決算概要 p8 직접 열람 — 「規制ESR(ソルベンシー・マージン比率) 連結195％・単体204％, 감독개입수준 100% 상회, 25년도 수치는 속보치」, 内部モデルESR 은 222%→195%. esr_pct 는 연결 기준 유지, 단체 204%는 참고",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": null
     },
     {
@@ -388,6 +440,10 @@
       "doc_date": "2026-05-29",
       "source_url": "https://pdf.irpocket.com/C7181/fcDL/shwf/b6Hu.pdf",
       "notes": "2026-09-13 수치 정정. 종전 220%는 「大量解約リスクを除いた場合」의 조정치였다 — 같은 자료 p35·p37 직접 확인: 「26.3末のESRは大量解約リスクの影響により181%1と、25.3末から15ポイント低下」, 適正水準 150~220%, 25.3末 新基準 196%·旧基準 204%. 有報(EDINET S100YD29, 2026-06-18) 본문도 「連結ソルベンシー・マージン比率(経済価値ベースのソルベンシー比率)は181％(監査未済の経済価値ベースのバランスシートに基づく暫定値)」로 일치. 220%는 참고치로 병기",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": {
         "low_pct": 150,
         "high_pct": 220,
@@ -415,6 +471,10 @@
       "doc_date": "2026-05-14",
       "source_url": "https://www.sonyfg.co.jp/ja/financial_info/results/sfgi_fy2025_4q_01.pdf",
       "notes": "jesr_sources_2026Q1.csv 기존치(177%,2026-03-31) 재확인 시도 - WebFetch 403이나, 자회사 소니생명 단체치(162%)가 동일 자료군(260514 개시)에서 별도 확인되어 그룹치 신뢰 유지",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": null
     },
     {
@@ -434,6 +494,10 @@
       "doc_date": "2026-05-14",
       "source_url": "https://www.sonylife.co.jp/company/news/2026/files/260514_ev-japanese.pdf",
       "notes": "単体 内部モデルESR 162%(2026-05-14 뉴스릴리스 p1 요약표·p8 §1.6 직접 확인: 内部管理適格資本 19,106억엔/内部管理所要資本 11,809억엔, 1년 VaR 99.5%, 전기 168%). 규제 経済価値SMR 은 어느 공표문서에도 없다 — 10월말 디스클로저지에서 확보 필요. 2026-09-13 텍스트 추출 성공(이 사이트는 파이썬 TLS 악수가 실패해 curl 로 받아야 한다 — 도메인 문서 §4c tls_client_issue)",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "target_range": null
     }
   ]

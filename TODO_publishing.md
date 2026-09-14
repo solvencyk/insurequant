@@ -11,6 +11,41 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ## Status
 
+**2026-09-14 (2차 — 손보 2사 추가 적재 24→26사 + `value_verified` UH-25 화면축 배선, owner 승인)**:
+두 가지 독립 변경, 둘 다 jp 범위(한국 마스터 무수정 확인 — `git status --short` 결과 K-ICS/IFRS17/xlsx/public_exports/keep-list 0건).
+
+**① 共栄火災海上保険·ヤマップネイチャランス損害保険 적재 (손보 손해율 24사→26사)**: 오늘 오케스트레이터가 원문 PDF 직접 확인(항등식 2/2, 独立 대조)한 재시도 결과
+`J-ESR/nonlife_ratio_retry.json`(found 2 · unreachable 1=大同火災)을 `J-ESR/merge_nonlife_ratio_census.py`에 override 소스로 배선(신설 `load_retry()`
++ company_jp 매칭 시 그룹 A/B/C 원본 행을 통째로 대체, 고아 override는 즉시 `SystemExit`). 재생성 `nonlife_ratio_census.json`: found 24→26·unreachable 3→1,
+`_meta.identity_check` 재계산 결과 71건 중 불일치 0(신규 2사분 포함). `J-ESR/build_jesr_detail_json.py`의 `RATIO_ONLY_ID_BY_JP`에 2개 id 추가
+(`kyoei_fire_marine`·`yamap_naturance`, caveat 없음 — 둘 다 `RATIO_CAVEAT_CODE_BY_JP` 미등재, ticket 지시대로) — 이 매핑 외에는 손대지 않았고
+`build_ratio_only_companies()`가 census를 그대로 읽어 26사를 자동 생성(길이 불일치 시 self_check가 이미 RED로 잡는 구조라 별도 카운트 하드코딩 불요).
+census CSV(`fy2025_esr_census_20260912.csv`) 2행(共栄火災=not_yet 유지·ヤマップ=not_found 유지, `fy2025_esr_status` 무변경) 갱신 — `disclosure_url`을
+실제 확보한 PDF로, `doc_type`에 항등식 대조 위치(p.6/p.71, p.9/p.29) 명시, `checked_at`=2026-09-14, `notes`에 재현 가능하도록 방법 기록(共栄火災=TLS
+중간인증서 보강 combined_ca.pem 경로, ヤマップ=Playwright route-intercept로 Chromium JS실행+Python requests 네트워크대행 우회). 행-인덱스 `csv.reader`/
+`csv.writer` + `utf-8-sig`+LF 보존, `git diff`로 정확히 2줄만 바뀐 것 확인(바이트 라운드트립).
+
+**② `value_verified` 계약 — 화면이 "검증 못 함"과 "검증 통과"를 구분하게 배선(UH-25, 10/31 면제 개시 전 마지막 방어선)**: 새 판정 로직을 짜지
+않고 게이트의 두 정본을 그대로 재사용 — `unverified_value_reasons()`(발화 사유 판정식)·`load_source_exceptions()`(면제 조회, 유효성 검증 포함).
+`build_jesr_page_json.py`에 `compute_value_verified()`(judge) + `_exception_reason_by_key()`(면제 사유 텍스트만 별도 조회, 유효성 재검증 없음 —
+이미 검증된 `exempt` 키 집합과 교집합만 냄) + `check_value_verified()`(출력 모양 검사, 재판정 아님) 신설, `main()`에서 self_check 통과 직후·
+dedup 이전에 `out["records"]`(master·deploy가 dedup 전까지 dict 객체 공유) 각 행에 `{"state":"verified"|"unverified"|"exempt","reason":null|str}`
+부착. `build_jesr_detail_json.py`는 메인 루프·life_core_only 분기 둘 다 `public_by_en.get(company_en,{}).get("value_verified")`로 그대로
+가져오고(posted 아니면 자동 None), ratio_only 분기는 명시적으로 `None`("이 축의 대상 자체가 아니다") + self_check에 3중 강제(① ratio_only는
+반드시 None ② 전 회사 공통: state 가 verified면 reason null·아니면 reason 비지 않음 ③ `jp/jesr_esr.json`의 값과 divergence 0). **실측(오늘 기준)
+16/16 전부 `verified`**(발화 0, ticket 기대치와 일치) — `jesr_detail.json` 36사 중 verified 5(au_nonlife·明治安田損保·sumitomo_life·nippon_life·
+meijiyasuda_life, 즉 posted 5사와 정확히 일치)·null 31(ratio_only 26 + not_yet/life_core_only 나머지).
+
+**순서·고정점**: census 수정 → (source_url_health.json/esr_in_source_health.json 이미 오늘 `checked_at=2026-09-14` 최신 — census_max도 동일 날짜라
+재프로브 불요, staleness 0 확인) → ④(`build_jesr_page_json.py`) → ⑤(`build_jesr_detail_json.py`, 26사 반영) → ④ 재실행 → `generated_at` 제외 바이트
+비교로 고정점 확인(④·⑤ 둘 다 True). **ESR 16사 5필드(esr_pct/eligible_capital/required_capital/as_of/scope) 전건 diff 0**(작업 전 백업 대조).
+`pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py` **127 passed**(직전 라운드 111 → 증가, 신규 테스트가 이미 값검증 축을
+파라미터화해 커버하고 있었음). `scripts/prepush_check.py` **REDUCED(jp-scope) gate-clear**(비교 파일 11개 전부 jp 범위 — `J-ESR/*` 5 + `jp/jesr_esr.json`·
+`jp/jesr_detail.json` 2 + designer 동시작업 중이던 `jp/index.html`·`jesr_app.js`·`jp.css` 3(이번 세션 미접촉, `git status` 시점 대조로 확인), offline
+tests(jp 묶음) **258 passed 2 skipped**). `jp/*.html`·`jesr_app.js`·`jp.css`·`tests/test_jp_source_gate.py`·`docs/postmortems/` 전부 미접촉(ticket 금지
+항목). commit/push 없음(오케스트레이터 소관). 모델 Sonnet 5 · 소요 약 50분(정본 재사용 조사 15 + merge 확장 10 + value_verified 배선 20 + 파이프라인
+검증 5).
+
 **2026-09-14 (손보 손해율 24사를 `jp/jesr_detail.json` 에 ratio_only 레이어로 추가 + SOMPOダイレクト source_url 교체, owner 승인)**:
 `J-ESR/nonlife_ratio_census.json`(verdict=="found" 24사)을 `J-ESR/build_jesr_detail_json.py`에 새 브랜치로
 배선(`build_ratio_only_companies` — 기존 `extracted_sample_values.json` 스키마 파이프라인과 완전히 분리, 별도

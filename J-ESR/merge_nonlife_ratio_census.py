@@ -12,6 +12,13 @@
   · IFRS 참고치처럼 기준이 다른 값은 본값에서 빼고 `alt_values` 로 옮긴다.
   · `caveat` 는 **같은 열에 나란히 놓으면 안 되는 이유**를 적는다. 값을 고치지 않는다.
   · 검산 `合算率 == 損害率 + 事業費率`(±0.15) 을 전 연도에 돌려 결과를 박제한다.
+
+2026-09-14 (2차) — retry 재시도 병합:
+  `nonlife_ratio_retry.json`(A/B/C 조가 처음에 못 뚫은 회사의 재시도 결과, 스키마는 census
+  행과 동일)을 **override 소스**로 추가한다. company_jp 가 겹치면 retry 쪽 행이 원래 A/B/C
+  조 파일의 행을 통째로 대체한다(재시도가 verdict 를 바꾸지 않았어도 — 예: 大同火災는 재시도
+  후에도 unreachable — 그대로 대체해 결과는 동일, 로직을 단순하게 유지). retry 에만 있고 아무
+  그룹 파일에도 없는 company_jp 는 즉시 에러(고아 override 방지).
 """
 import io
 import json
@@ -20,6 +27,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 GROUPS = ("A", "B", "C")
+RETRY = HERE / "nonlife_ratio_retry.json"
 OUT = HERE / "nonlife_ratio_census.json"
 
 #: 같은 열에 나란히 놓으면 안 되는 회사와 그 이유(원문 근거는 각 조 산출의 quote).
@@ -60,11 +68,24 @@ def load_group(g):
     return d.get("companies") or d.get("records") or []
 
 
+def load_retry():
+    """company_jp -> retry row (override source). {} if the file doesn't exist."""
+    if not RETRY.exists():
+        return {}
+    d = json.load(io.open(RETRY, encoding="utf-8"))
+    return {(c.get("company_jp") or "").strip(): c for c in d.get("companies", [])}
+
+
 def main():
     rows, checks, bad = [], 0, []
+    retry_by_name = load_retry()
+    retry_used = set()
     for g in GROUPS:
         for c in load_group(g):
             nm = (c.get("company_jp") or "").strip()
+            if nm in retry_by_name:
+                c = retry_by_name[nm]
+                retry_used.add(nm)
             lr, lr_alt = norm_series(c.get("loss_ratio_pct"))
             er, er_alt = norm_series(c.get("expense_ratio_pct"))
             cr, cr_alt = norm_series(c.get("combined_ratio_pct"))
@@ -97,13 +118,21 @@ def main():
                 row["caveat"] = CAVEATS[nm]
             rows.append(row)
 
+    orphans = set(retry_by_name) - retry_used
+    if orphans:
+        raise SystemExit(
+            f"nonlife_ratio_retry.json has company_jp not present in any of "
+            f"nonlife_ratio_census_{{{','.join(GROUPS)}}}.json -- orphan override: {sorted(orphans)}"
+        )
+
     from collections import Counter
     verdicts = dict(Counter(r["verdict"] for r in rows))
     fy25 = [r for r in rows if r["verdict"] == "found" and "FY2025" in r["loss_ratio_pct"]]
     out = {
         "_meta": {
             "purpose": "일본 손보사 正味損害率·正味事業費率·合算率 전수조사 (FY2025 우선, 없으면 FY2024)",
-            "merged_from": [f"nonlife_ratio_census_{g}.json" for g in GROUPS],
+            "merged_from": [f"nonlife_ratio_census_{g}.json" for g in GROUPS]
+            + ([f"{RETRY.name} (override: {sorted(retry_used)})"] if retry_used else []),
             "year_key": "FY20xx 로 정규화됨 — 원본 3조는 키 형식이 서로 달랐다",
             "identity_check": {
                 "rule": "合算率 == 正味損害率 + 正味事業費率 (±0.15)",

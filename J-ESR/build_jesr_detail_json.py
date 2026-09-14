@@ -642,6 +642,7 @@ RATIO_ONLY_ID_BY_JP = {
     "アニコム損害保険": "anicom_nonlife",
     "エイチ・エス損害保険": "hs_nonlife",
     "キャピタル損害保険": "capital_nonlife",
+    "共栄火災海上保険": "kyoei_fire_marine",
     "ジェイアイ傷害火災保険": "ji_accident_fire",
     "セコム損害保険": "secom_nonlife",
     "ソニー損害保険": "sony_nonlife",
@@ -655,6 +656,7 @@ RATIO_ONLY_ID_BY_JP = {
     "東京海上ダイレクト損害保険": "tokiomarine_direct",
     "楽天損害保険": "rakuten_nonlife",
     "第一アイペット損害保険": "daiichi_ipet",
+    "ヤマップネイチャランス損害保険": "yamap_naturance",
 }
 
 # owner 2026-09-14: caveat stays attached to the SAME ratio values (not split into a separate
@@ -764,6 +766,11 @@ def build_ratio_only_companies(public_by_en):
             "bs": build_bs_block(None),
             "data_scope": "ratio_only",
             "ratio_caveat": ratio_caveat,
+            # value_verified: null -- ratio_only 회사는 ESR headline 값 자체가 없다(위 headline
+            # 블록 전부 None). JP_ESR_UNVERIFIED_VALUE 축은 census ESR posted 행에만 도는
+            # 판정이라 이 회사들에는 애초에 적용되지 않는다 -- "판정 안 됨"이 아니라
+            # "판정 대상이 아니다" (owner 2026-09-14 지시, self_check 에서 구조적으로 강제).
+            "value_verified": None,
         })
     return out
 
@@ -958,6 +965,12 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "doc_type": src.get("doc_type"),
             "doc_date": src.get("doc_date"),
             "headline": headline,
+            # value_verified (2026-09-14, UH-25 화면축): 판정은 재타이핑하지 않는다 --
+            # jp/jesr_esr.json 의 posted record(=public_by_en, build_jesr_page_json.py 가
+            # 이미 compute_value_verified() 로 계산해 붙여 둠)에서 그대로 가져온다.
+            # 이 회사가 그 파일에 없으면(=headline.esr_pct 도 None) None -- 검증할 값 자체가
+            # 없다는 뜻이지, 미검증이라는 뜻이 아니다.
+            "value_verified": public_by_en.get(company_en, {}).get("value_verified"),
             "capital": capital,
             "risk": risk,
             "market_sub": market_sub,
@@ -992,6 +1005,9 @@ def build(extracted, schema, jesr_master, jesr_esr):
                 "source_url": entry.get("source_url"), "doc_type": entry.get("doc_type"), "doc_date": None,
                 "headline": {"eligible_capital": None, "required_capital": None, "esr_pct": pub.get("esr_pct"), "preliminary": pub.get("preliminary"),
                              "esr_scope": pub.get("esr_scope") or pub.get("scope")},
+                # value_verified: 위 headline.esr_pct 와 같은 출처(pub=jp/jesr_esr.json record) --
+                # 이 회사가 posted 라 pub 가 비어있지 않으면 그 record 의 value_verified 를 그대로 쓴다.
+                "value_verified": pub.get("value_verified"),
                 "capital": {}, "risk": {}, "market_sub": {}, "sensitivity": {}, "aggregation": None, "axes": {}, "items": {},
                 "profit": None, "history": None, "capital_tree": [], "risk_tree": [], "profit_flow": None, "by_line": None,
                 "core_history": build_core_history_block(entry, years),
@@ -1075,6 +1091,29 @@ def self_check(out, jesr_esr):
 
     labels = out["_meta"]["labels"]
 
+    # value_verified (2026-09-14, UH-25): must be present as a key on every company (None or a
+    # dict), never absent -- an absent key is indistinguishable from "forgot to wire it" for a
+    # downstream reader. If present as non-None, shape must match the jp/jesr_esr.json contract
+    # (compute_value_verified() in build_jesr_page_json.py is the sole source of the dict itself
+    # -- this only checks it was carried through unmangled).
+    vv_states = ("verified", "unverified", "exempt")
+    for c in companies:
+        cen = c["company_en"]
+        if "value_verified" not in c:
+            errors.append(f"{cen}: value_verified key missing")
+            continue
+        vv = c["value_verified"]
+        if vv is not None:
+            if not isinstance(vv, dict) or vv.get("state") not in vv_states:
+                errors.append(f"{cen}: value_verified malformed: {vv!r}")
+            elif vv.get("state") == "verified" and vv.get("reason") is not None:
+                errors.append(f"{cen}: value_verified state=verified but reason not null: {vv!r}")
+            elif vv.get("state") != "verified" and not vv.get("reason"):
+                errors.append(f"{cen}: value_verified state={vv.get('state')} but reason empty: {vv!r}")
+            pub = public_by_en.get(cen)
+            if pub is not None and pub.get("value_verified") != vv:
+                errors.append(f"{cen}: value_verified diverges from jp/jesr_esr.json record: {vv!r} != {pub.get('value_verified')!r}")
+
     for c in companies:
         cen = c["company_en"]
         bs = c.get("bs") or {}
@@ -1107,6 +1146,11 @@ def self_check(out, jesr_esr):
         if c.get("data_scope") == "ratio_only":
             if c.get("sector") != "nonlife":
                 errors.append(f"{cen}: ratio_only company with sector != nonlife: {c.get('sector')}")
+            if c.get("value_verified") is not None:
+                errors.append(
+                    f"{cen}: ratio_only but value_verified is not None: {c['value_verified']!r}"
+                    " -- ESR headline 이 없는 회사는 이 축의 대상이 아니다(owner 2026-09-14)"
+                )
             if c["capital"] or c["items"] or c["capital_tree"] or c["risk_tree"] or c["sensitivity"]:
                 errors.append(f"{cen}: ratio_only but esr-layer blocks are not empty")
             if any(v is not None for v in c["risk"].values()) or any(v is not None for v in c["market_sub"].values()):
@@ -1417,6 +1461,11 @@ def main():
         f.write("\n")
 
     print(f"wrote {OUT_PATH} -- companies={len(out['companies'])}")
+    vv_counts = {}
+    for c in out["companies"]:
+        state = (c.get("value_verified") or {}).get("state") if c.get("value_verified") else "null"
+        vv_counts[state] = vv_counts.get(state, 0) + 1
+    print(f"  value_verified: {vv_counts}")
     for c in out["companies"]:
         bs = c.get("bs") or {}
         print(f"  {c['id']}: bs status={bs.get('status')} rows={len(bs.get('tree', []))} checks={bs.get('checks')}")

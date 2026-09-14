@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-14T07:28:59.835572Z",
+    "generated_at": "2026-09-14T14:29:06.424368Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -1634,7 +1634,7 @@
     },
     "next_update": "2026-10-31",
     "coverage": {
-      "detail_total": 34,
+      "detail_total": 36,
       "esr_posted": 2,
       "esr_not_yet": 5,
       "life_core_only": 3,
@@ -1642,9 +1642,9 @@
       "bs_extracted": 10,
       "posted_total": 16,
       "census_total": 79,
-      "ratio_only": 24,
+      "ratio_only": 26,
       "ratio_only_posted": 1,
-      "ratio_only_not_yet": 23,
+      "ratio_only_not_yet": 25,
       "ratio_only_caveat": 4
     }
   },
@@ -1666,6 +1666,10 @@
         "required_capital": 1171,
         "esr_pct": 791.7,
         "preliminary": false
+      },
+      "value_verified": {
+        "state": "verified",
+        "reason": null
       },
       "capital": {
         "tier1_eligible": 9102,
@@ -2838,6 +2842,10 @@
         "required_capital": 5420,
         "esr_pct": 743.2,
         "preliminary": false
+      },
+      "value_verified": {
+        "state": "verified",
+        "reason": null
       },
       "capital": {
         "tier1_eligible": 40140,
@@ -4200,6 +4208,7 @@
         "esr_pct": null,
         "preliminary": null
       },
+      "value_verified": null,
       "capital": {},
       "risk": {
         "rc_life": null,
@@ -4680,6 +4689,7 @@
         "esr_pct": null,
         "preliminary": null
       },
+      "value_verified": null,
       "capital": {},
       "risk": {
         "rc_life": null,
@@ -5230,6 +5240,7 @@
         "esr_pct": null,
         "preliminary": null
       },
+      "value_verified": null,
       "capital": {},
       "risk": {
         "rc_life": null,
@@ -6182,6 +6193,7 @@
         "esr_pct": null,
         "preliminary": null
       },
+      "value_verified": null,
       "capital": {},
       "risk": {
         "rc_life": null,
@@ -7129,6 +7141,7 @@
         "esr_pct": null,
         "preliminary": null
       },
+      "value_verified": null,
       "capital": {},
       "risk": {
         "rc_life": null,
@@ -8079,6 +8092,10 @@
         "preliminary": true,
         "esr_scope": "group"
       },
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "capital": {},
       "risk": {},
       "market_sub": {},
@@ -8392,6 +8409,10 @@
         "preliminary": true,
         "esr_scope": "group"
       },
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
       "capital": {},
       "risk": {},
       "market_sub": {},
@@ -8618,6 +8639,10 @@
         "esr_pct": 208.7,
         "preliminary": false,
         "esr_scope": "group"
+      },
+      "value_verified": {
+        "state": "verified",
+        "reason": null
       },
       "capital": {},
       "risk": {},
@@ -8981,7 +9006,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "msad_holdings",
@@ -9085,7 +9111,8 @@
       "ratio_caveat": {
         "code": "simple_sum",
         "text": "「２社合計（単純合計）」 = 三井住友海上 + あいおいニッセイ同和 단순합산. 회사가 직접 공시한 표지만, 두 자회사를 따로 싣고 있으면 **중복 계상**이다."
-      }
+      },
+      "value_verified": null
     },
     {
       "id": "nttdocomo_nonlife",
@@ -9190,7 +9217,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "sbi_nonlife",
@@ -9299,7 +9327,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "sompo_direct",
@@ -9408,7 +9437,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "aioi_nissay_dowa",
@@ -9509,7 +9539,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "sakura_nonlife",
@@ -9618,7 +9649,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "axa_nonlife",
@@ -9727,7 +9759,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "anicom_nonlife",
@@ -9836,7 +9869,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "hs_nonlife",
@@ -9945,7 +9979,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "capital_nonlife",
@@ -10054,7 +10089,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "ji_accident_fire",
@@ -10171,7 +10207,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "secom_nonlife",
@@ -10280,7 +10317,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "sony_nonlife",
@@ -10392,7 +10430,8 @@
       "ratio_caveat": {
         "code": "ei_basis",
         "text": "**E.I.損害率**(경과보험료·발생손해액 기준)이지 正味損害率(수입보험료 기준)가 아니다. 범위도 地震保険・自賠責 제외."
-      }
+      },
+      "value_verified": null
     },
     {
       "id": "toa_re",
@@ -10504,7 +10543,8 @@
       "ratio_caveat": {
         "code": "lae_excluded",
         "text": "正味損害率 산식이 正味支払保険金÷正味収入保険料 로 **損害調査費(LAE)를 분자에 안 더한다**. 다른 손보사는 전부 (正味支払保険金+損害調査費)÷正味収入保険料 라 이 회사만 과소 표시된다."
-      }
+      },
+      "value_verified": null
     },
     {
       "id": "pet_and_family",
@@ -10613,7 +10653,110 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
+    },
+    {
+      "id": "yamap_naturance",
+      "company_jp": "ヤマップネイチャランス損害保険",
+      "company_en": "Yamap Naturance",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://image.yamap.co.jp/19fb5e1df2138d.pdf",
+      "doc_type": "disclosure_booklet_2026 (ディスクロージャー誌2026, FY2025) -- linked from /publicnotice (電子公告) page",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "19fb5e1df2138d.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 50.6,
+            "prev": null
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 179.5,
+            "prev": null
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 230.0,
+            "prev": null
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            50.6
+          ],
+          "hist_expense_ratio_pct": [
+            179.5
+          ],
+          "hist_combined_ratio_pct": [
+            230.0
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "rescue_nonlife",
@@ -10725,7 +10868,8 @@
       "ratio_caveat": {
         "code": "ocr_read",
         "text": "이미지 스캔 PDF 라 자동 텍스트 추출이 실패했고(세로쓰기 표 헤더 파손) 렌더링 후 **육안 판독**한 값이다. 신뢰도가 다른 행과 같지 않다."
-      }
+      },
+      "value_verified": null
     },
     {
       "id": "mitsui_direct",
@@ -10842,7 +10986,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "zenkankyo_reiwa",
@@ -10959,7 +11104,110 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
+    },
+    {
+      "id": "kyoei_fire_marine",
+      "company_jp": "共栄火災海上保険",
+      "company_en": "Kyoei Fire & Marine",
+      "sector": "nonlife",
+      "scope": "solo",
+      "as_of": "2026-03-31",
+      "esr_status": "not_yet",
+      "esr_placeholder": null,
+      "source_url": "https://www.kyoeikasai.co.jp/pdf/about/company/disclosure/2026all.pdf",
+      "doc_type": "disclosure_booklet_2026 (共栄火災の現状2026, FY2025)",
+      "doc_date": null,
+      "headline": {
+        "eligible_capital": null,
+        "required_capital": null,
+        "esr_pct": null,
+        "preliminary": null
+      },
+      "capital": {},
+      "risk": {
+        "rc_life": null,
+        "rc_nonlife": null,
+        "rc_catastrophe": null,
+        "rc_market": null,
+        "rc_credit": null,
+        "rc_operational": null,
+        "diversification_effect": null,
+        "rc_pre_tax": null,
+        "tax_effect": null,
+        "rc_post_tax": null
+      },
+      "market_sub": {
+        "rc_mkt_interest": null,
+        "rc_mkt_spread": null,
+        "rc_mkt_equity": null,
+        "rc_mkt_property": null,
+        "rc_mkt_fx": null,
+        "rc_mkt_concentration": null
+      },
+      "sensitivity": [],
+      "aggregation": null,
+      "axes": {},
+      "items": {},
+      "profit": {
+        "accounting_basis": "jgaap",
+        "ifrs17_applied": false,
+        "evidence": null,
+        "source_doc": "2026all.pdf",
+        "unit": "pct",
+        "items": {},
+        "ratios": {
+          "pl_loss_ratio_pct": {
+            "cur": 60.7,
+            "prev": null
+          },
+          "pl_expense_ratio_pct": {
+            "cur": 37.0,
+            "prev": null
+          },
+          "pl_combined_ratio_pct": {
+            "cur": 97.7,
+            "prev": null
+          }
+        },
+        "core": {},
+        "adjustments": {},
+        "status": "extracted"
+      },
+      "history": {
+        "fiscal_years": [
+          "FY2025"
+        ],
+        "unit": "pct",
+        "series": {
+          "hist_loss_ratio_pct": [
+            60.7
+          ],
+          "hist_expense_ratio_pct": [
+            37.0
+          ],
+          "hist_combined_ratio_pct": [
+            97.7
+          ]
+        }
+      },
+      "capital_tree": [],
+      "risk_tree": [],
+      "profit_flow": null,
+      "by_line": null,
+      "core_history": null,
+      "bs": {
+        "status": "not_obtained",
+        "scope": null,
+        "source_doc": null,
+        "tree": [],
+        "checks": {},
+        "notes": []
+      },
+      "data_scope": "ratio_only",
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "nisshin_fire_marine",
@@ -11064,7 +11312,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "japan_earthquake_re",
@@ -11181,7 +11430,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "tokiomarine_direct",
@@ -11298,7 +11548,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "rakuten_nonlife",
@@ -11415,7 +11666,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     },
     {
       "id": "daiichi_ipet",
@@ -11520,7 +11772,8 @@
         "notes": []
       },
       "data_scope": "ratio_only",
-      "ratio_caveat": null
+      "ratio_caveat": null,
+      "value_verified": null
     }
   ]
 }

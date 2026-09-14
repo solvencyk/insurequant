@@ -1002,6 +1002,120 @@ def source_gate_check(
 # ---------------------------------------------------------------------------
 
 
+def _exception_reason_by_key(path: Path | None = None) -> dict[tuple[str, str, str], str | None]:
+    """`(rule, company_jp, field) -> reason` 텍스트만 뽑는다. **검증은 하지 않는다** —
+    유효성(필수 키·rule id·날짜 형식·만료)은 이미 `load_source_exceptions()` 가 유일하게 쥐고
+    있고, 그 결과(검증된 `exempt` 키 집합)와 여기서 교집합을 내는 쪽(호출부)이 유효성 재검사를
+    대신한다. 여기서 같은 검증을 다시 적으면 두 벌의 판정식이 생긴다."""
+    path = SOURCE_EXCEPTIONS_PATH if path is None else path
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    entries = data.get("exceptions") if isinstance(data, dict) else None
+    if not isinstance(entries, list):
+        return {}
+    out: dict[tuple[str, str, str], str | None] = {}
+    for entry in entries:
+        if not isinstance(entry, dict):
+            continue
+        key = (
+            str(entry.get("rule") or "").strip(),
+            str(entry.get("company_jp") or "").strip(),
+            str(entry.get("field") or "").strip(),
+        )
+        out[key] = str(entry.get("reason") or "").strip() or None
+    return out
+
+
+def compute_value_verified(
+    records: list[dict],
+    *,
+    esr_health_path: Path | None = None,
+    exceptions_path: Path | None = None,
+    today: str | None = None,
+) -> dict[str, dict]:
+    """`value_verified` 계약(2026-09-14, UH-25 화면축, designer 합의) -- posted record 마다
+    {"state": "verified"|"unverified"|"exempt", "reason": null|str}.
+
+    판정은 **재타이핑하지 않는다** -- 게이트가 이미 쓰는 두 정본을 그대로 부른다:
+      - 판정식   = `unverified_value_reasons()` (JP_ESR_UNVERIFIED_VALUE 의 유일한 정의)
+      - 면제 조회 = `load_source_exceptions()` (jp_source_exceptions.json, 유효성 검증 포함)
+    이 함수는 `main()`이 `self_check()`(source_gate_check 포함, 증거 신선도 RED 게이트)를
+    통과한 **뒤**에만 불린다 -- 그래서 여기서는 증거 파일의 신선도를 재검사하지 않는다
+    (신선도가 깨졌으면 이미 exit 1 로 멈춰 있다).
+
+    반환: {company_jp: {"state", "reason"}}. esr_pct/source_url 이 없어 애초에 대조 불가한
+    행, 증거 파일 자체가 없는 행은 모두 "unverified"로 떨어진다(추측 금지 -- 빈 칸 대신
+    이유를 남긴다).
+    """
+    esr_health_path = ESR_HEALTH_PATH if esr_health_path is None else esr_health_path
+    exceptions_path = SOURCE_EXCEPTIONS_PATH if exceptions_path is None else exceptions_path
+
+    exempt, _exc_errors, _notes = load_source_exceptions(exceptions_path, today=today)
+    reason_by_key = _exception_reason_by_key(exceptions_path)
+
+    out: dict[str, dict] = {}
+
+    def _mark_all_unverified(reason: str) -> None:
+        for rec in records:
+            company = (rec.get("company_jp") or "").strip()
+            out[company] = {"state": "unverified", "reason": reason}
+
+    if not esr_health_path.exists():
+        _mark_all_unverified(f"{esr_health_path.name} 증거 파일이 없다")
+        return out
+    try:
+        loaded = json.loads(esr_health_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        _mark_all_unverified(f"{esr_health_path.name} 을 읽을 수 없다: {type(exc).__name__}: {exc}")
+        return out
+    rows = loaded.get("rows") if isinstance(loaded, dict) else None
+    by_key: dict[tuple[str, str], dict] = {}
+    if isinstance(rows, list):
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            url = str(row.get("url") or "").strip()
+            pct = _norm_pct(row.get("esr_pct"))
+            if url and pct is not None:
+                by_key[(url, pct)] = row
+
+    for rec in records:
+        company = (rec.get("company_jp") or "").strip()
+        url = (rec.get("source_url") or "").strip()
+        pct = _norm_pct(rec.get("esr_pct"))
+        if not url or pct is None:
+            out[company] = {
+                "state": "unverified",
+                "reason": "source_url 또는 esr_pct 가 없어 증거와 대조할 수 없다",
+            }
+            continue
+        row = by_key.get((url, pct))
+        if row is None:
+            out[company] = {
+                "state": "unverified",
+                "reason": f"(source_url, esr_pct) 조합이 {esr_health_path.name} 에 없다"
+                f" -- 수집기를 다시 돌려야 한다: {CHECK_ESR_CMD}",
+            }
+            continue
+        reasons = unverified_value_reasons(row)
+        if not reasons:
+            out[company] = {"state": "verified", "reason": None}
+            continue
+        key = ("JP_ESR_UNVERIFIED_VALUE", company, "source_url")
+        if key in exempt:
+            out[company] = {
+                "state": "exempt",
+                "reason": reason_by_key.get(key) or "; ".join(reasons),
+            }
+        else:
+            out[company] = {"state": "unverified", "reason": "; ".join(reasons)}
+    return out
+
+
 def check_census_row_shape(census_rows: list[dict]) -> list[str]:
     """posted 행이 헤더와 같은 열 수인가 — CSV **구조** 자체의 검사.
 
@@ -1113,6 +1227,31 @@ def check_census_identity(out: dict, census_rows: list[dict]) -> list[str]:
 
     errors.extend(check_census_row_shape(census_rows))
     errors.extend(check_preliminary_vocabulary(census_rows))
+    return errors
+
+
+VALUE_VERIFIED_STATES = ("verified", "unverified", "exempt")
+
+
+def check_value_verified(records: list[dict]) -> list[str]:
+    """`value_verified` 계약을 지키는지 — 상태 어휘·reason null 규칙·필드 존재.
+    판정 자체(누가 verified 인가)는 `compute_value_verified()`/`unverified_value_reasons()`
+    가 정본이다 — 여기서는 **그 출력의 모양**만 검사한다(재판정 아님)."""
+    errors = []
+    for rec in records:
+        name = rec.get("company_jp")
+        vv = rec.get("value_verified")
+        if not isinstance(vv, dict):
+            errors.append(f"value_verified missing or not an object: {name} = {vv!r}")
+            continue
+        state = vv.get("state")
+        reason = vv.get("reason")
+        if state not in VALUE_VERIFIED_STATES:
+            errors.append(f"value_verified.state unknown: {name} = {state!r}")
+        if state == "verified" and reason is not None:
+            errors.append(f"value_verified state=verified but reason is not null: {name} = {reason!r}")
+        if state in ("unverified", "exempt") and not reason:
+            errors.append(f"value_verified state={state} but reason is empty: {name}")
     return errors
 
 
@@ -1349,6 +1488,22 @@ def main() -> int:
             print(f"SELF-CHECK FAIL: {e}", file=sys.stderr)
         return 1
 
+    # value_verified (2026-09-14, UH-25 화면축) -- self_check() 가 이미 source_gate_check 를
+    # 통과시킨 뒤에만 계산한다(증거 신선도는 그 게이트가 RED 로 쥔다). records 는 master/deploy가
+    # dedup 전까지 같은 dict 객체를 공유하므로 여기서 한 번만 붙이면 둘 다에 실린다.
+    vv_map = compute_value_verified(out["records"])
+    vv_counts: dict[str, int] = {}
+    for rec in out["records"]:
+        vv = vv_map.get((rec.get("company_jp") or "").strip(),
+                        {"state": "unverified", "reason": "value_verified 매핑에 없다"})
+        rec["value_verified"] = vv
+        vv_counts[vv["state"]] = vv_counts.get(vv["state"], 0) + 1
+    vv_errors = check_value_verified(out["records"])
+    if vv_errors:
+        for e in vv_errors:
+            print(f"SELF-CHECK FAIL: {e}", file=sys.stderr)
+        return 1
+
     insurer_rows = _read_csv(INSURERS_CSV)
     insurers_by_name = {
         r["company_jp"].strip(): r for r in insurer_rows if (r.get("company_jp") or "").strip()
@@ -1376,6 +1531,7 @@ def main() -> int:
 
     print(f"wrote {MASTER_OUT}  ({len(out['records'])} records)")
     print(f"wrote {DEPLOY_OUT}  ({len(deploy_records)} records, excluded={len(excluded)})")
+    print(f"  value_verified: {vv_counts}")
     print(f"  census: {out['_meta']['census']}")
     if excluded:
         print(f"  excluded_subsidiaries: {excluded}")

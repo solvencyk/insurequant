@@ -4,21 +4,22 @@
   "merged_from": [
    "nonlife_ratio_census_A.json",
    "nonlife_ratio_census_B.json",
-   "nonlife_ratio_census_C.json"
+   "nonlife_ratio_census_C.json",
+   "nonlife_ratio_retry.json (override: ['ヤマップネイチャランス損害保険', '共栄火災海上保険', '大同火災海上保険'])"
   ],
   "year_key": "FY20xx 로 정규화됨 — 원본 3조는 키 형식이 서로 달랐다",
   "identity_check": {
    "rule": "合算率 == 正味損害率 + 正味事業費率 (±0.15)",
-   "checked": 69,
+   "checked": 71,
    "mismatch": 0,
    "mismatches": []
   },
   "verdicts": {
    "not_applicable_holding": 2,
-   "found": 24,
-   "unreachable": 3
+   "found": 26,
+   "unreachable": 1
   },
-  "fy2025_found": 24,
+  "fy2025_found": 26,
   "caveat_companies": [
    "MS&ADインシュアランスグループホールディングス",
    "ソニー損害保険",
@@ -489,18 +490,24 @@
   },
   {
    "company_jp": "ヤマップネイチャランス損害保険",
-   "company_en": "Yamap",
+   "company_en": "Yamap Naturance",
    "group": "C",
-   "verdict": "unreachable",
-   "scope": null,
-   "source_url": null,
-   "doc_type": null,
-   "page": null,
-   "loss_ratio_pct": {},
-   "expense_ratio_pct": {},
-   "combined_ratio_pct": {},
-   "combined_is_derived": null,
-   "quote": null
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://image.yamap.co.jp/19fb5e1df2138d.pdf",
+   "doc_type": "disclosure_booklet_2026 (ディスクロージャー誌2026, FY2025) -- linked from /publicnotice (電子公告) page",
+   "page": "PDF p.29 (document's own footer page '27'); headline also on PDF p.9 (footer '7')",
+   "loss_ratio_pct": {
+    "FY2025": 50.6
+   },
+   "expense_ratio_pct": {
+    "FY2025": 179.5
+   },
+   "combined_ratio_pct": {
+    "FY2025": 230.0
+   },
+   "combined_is_derived": false,
+   "quote": "[p.9 headline] 正味損害率 50.6% (前期比2.4ポイント低下) / 正味事業費率 179.5% (前期比122.4ポイント低下)\n[p.29 table '正味損害率、正味事業費率およびその合算率', 合計 row, 2025年度] 50.6 / 179.5 / 230.0\n(注) 3. 合算率＝正味損害率＋正味事業費率\n参考(p.26 事業の概況): 「正味損害率は前年度の53.0％から50.6％へと改善いたしました。...コンバインド・レシオについても前期から着実な改善を見せております。」"
   },
   {
    "company_jp": "レスキュー損害保険",
@@ -604,16 +611,22 @@
    "company_jp": "共栄火災海上保険",
    "company_en": "Kyoei Fire & Marine",
    "group": "A",
-   "verdict": "unreachable",
-   "scope": null,
-   "source_url": null,
-   "doc_type": null,
-   "page": null,
-   "loss_ratio_pct": {},
-   "expense_ratio_pct": {},
-   "combined_ratio_pct": {},
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.kyoeikasai.co.jp/pdf/about/company/disclosure/2026all.pdf",
+   "doc_type": "disclosure_booklet_2026 (共栄火災の現状2026, FY2025)",
+   "page": "PDF p.71 (document's own footer page '69'); headline also on PDF p.6",
+   "loss_ratio_pct": {
+    "FY2025": 60.7
+   },
+   "expense_ratio_pct": {
+    "FY2025": 37.0
+   },
+   "combined_ratio_pct": {
+    "FY2025": 97.7
+   },
    "combined_is_derived": false,
-   "quote": null
+   "quote": "[p.6 headline] ②正味損害率 ... 2025年度 60.7% / ③正味事業費率 ... 2025年度 37.0%\n[p.71 table '7 正味損害率、正味事業費率及びその合算率', 合計 row, 2025年度] 60.7 / 37.0 / 97.7\n(注) 3. 合算率＝正味損害率＋正味事業費率"
   },
   {
    "company_jp": "大同火災海上保険",
