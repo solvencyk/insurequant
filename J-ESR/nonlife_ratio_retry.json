@@ -1,0 +1,310 @@
+{
+  "_meta": {
+    "generated_at": "2026-09-14",
+    "purpose": "손해율 전수조사에서 못 뚫은 3사 재시도 (unreachable 재분류)",
+    "companies_total": 3,
+    "verdict_counts": {
+      "found": 2,
+      "no_ratio_in_doc": 0,
+      "unreachable": 1
+    },
+    "notes": "census/jp/*.json/마스터/nonlife_ratio_census*.json 은 건드리지 않음 -- 이 파일은 별도 결과 파일이고 census 병합은 오케스트레이터 소관."
+  },
+  "companies": [
+    {
+      "company_jp": "共栄火災海上保険",
+      "company_en": "Kyoei Fire & Marine",
+      "group": "A",
+      "verdict": "found",
+      "scope": "solo",
+      "source_url": "https://www.kyoeikasai.co.jp/pdf/about/company/disclosure/2026all.pdf",
+      "doc_type": "disclosure_booklet_2026 (共栄火災の現状2026, FY2025)",
+      "page": "PDF p.71 (document's own footer page '69'); headline also on PDF p.6",
+      "loss_ratio_pct": {
+        "FY2025": 60.7
+      },
+      "expense_ratio_pct": {
+        "FY2025": 37.0
+      },
+      "combined_ratio_pct": {
+        "FY2025": 97.7
+      },
+      "combined_is_derived": false,
+      "self_check": {
+        "formula": "combined == loss + expense",
+        "computed": 97.7,
+        "printed": 97.7,
+        "diff": 0.0,
+        "within_tolerance_0.15": true
+      },
+      "quote": "[p.6 headline] ②正味損害率 ... 2025年度 60.7% / ③正味事業費率 ... 2025年度 37.0%\n[p.71 table '7 正味損害率、正味事業費率及びその合算率', 合計 row, 2025年度] 60.7 / 37.0 / 97.7\n(注) 3. 合算率＝正味損害率＋正味事業費率",
+      "root_cause_prior_failure": "TLS 핸드셰이크에서 서버(www.kyoeikasai.co.jp)가 리프 인증서만 보내고 중간 CA 'Cybertrust Japan SureServer EV CA G3' 를 안 보낸다 (openssl s_client -proxy ... -showcerts 로 확인: Certificate chain 항목이 1개뿐, issuer=Cybertrust Japan SureServer EV CA G3). 브라우저는 캐시된 중간 인증서로 이를 못 느끼지만 requests/curl 은 체인 불완전으로 'unable to get local issuer certificate' 로 거부한다.",
+      "fix_this_round": "TLS 검증을 끄지 않고, 부족한 중간 인증서를 공개 CA 저장소에서 받아 신뢰 체인을 완성했다. 1) openssl s_client -proxy 127.0.0.1:38081 -connect www.kyoeikasai.co.jp:443 -showcerts 로 리프 인증서의 issuer 확인 (Cybertrust Japan SureServer EV CA G3). 2) 그 인증서의 AIA caIssuers URL(http://crl.cybertrust.ne.jp/SureServer/evcag3/evcag3.crt, 공개 CA 배포 경로, DER)을 curl 로 받아 PEM 변환. 3) /root/.ccr/ca-bundle.crt(프록시 CA) + certifi 루트스토어 + 이 중간인증서를 합친 combined_ca.pem 을 requests(verify=combined_ca.pem) 에 지정 -> 200. verify=False 나 JESR_INSECURE_SSL 은 전혀 쓰지 않았다(검증은 항상 ON, 신뢰 체인만 보강).",
+      "attempts": [
+        {
+          "round": "prior (this session start)",
+          "method": "requests (jesr_http)",
+          "url": "https://www.kyoeikasai.co.jp/about/company/disclosure.html",
+          "result": "SSLError: unable to get local issuer certificate"
+        },
+        {
+          "round": "prior",
+          "method": "curl -v",
+          "url": "https://www.kyoeikasai.co.jp/about/company/disclosure.html",
+          "result": "SSL certificate problem: unable to get local issuer certificate (handshake fail, unknown CA alert)"
+        },
+        {
+          "round": "prior",
+          "method": "WebFetch",
+          "url": "https://www.kyoeikasai.co.jp/about/company/disclosure.html",
+          "result": "HTTP 503"
+        },
+        {
+          "round": "this_round",
+          "method": "openssl s_client -proxy 127.0.0.1:38081 -showcerts (diagnostic only, no data fetch)",
+          "url": "https://www.kyoeikasai.co.jp:443",
+          "result": "leaf cert only, issuer=Cybertrust Japan SureServer EV CA G3, chain incomplete -- root cause confirmed"
+        },
+        {
+          "round": "this_round",
+          "method": "curl (CA bundle fetch, public repo, not the target site)",
+          "url": "http://crl.cybertrust.ne.jp/SureServer/evcag3/evcag3.crt",
+          "result": "HTTP 200, 1285 bytes DER cert -- missing intermediate obtained"
+        },
+        {
+          "round": "this_round",
+          "method": "requests, verify=combined_ca.pem (proxy CA + certifi + fetched intermediate)",
+          "url": "https://www.kyoeikasai.co.jp/about/company/disclosure.html",
+          "result": "HTTP 200, 33189 bytes -- TLS 검증 유지한 채 성공, PDF 링크 3개(2024/2025/2026all.pdf) 확보"
+        },
+        {
+          "round": "this_round",
+          "method": "requests, verify=combined_ca.pem",
+          "url": "https://www.kyoeikasai.co.jp/pdf/about/company/disclosure/2026all.pdf",
+          "result": "HTTP 200, 12707768 bytes application/pdf -- FY2025 disclosure booklet 확보, 원문 열람"
+        }
+      ]
+    },
+    {
+      "company_jp": "大同火災海上保険",
+      "company_en": "Daido Fire & Marine",
+      "group": "C",
+      "verdict": "unreachable",
+      "scope": null,
+      "source_url": null,
+      "doc_type": null,
+      "page": null,
+      "loss_ratio_pct": {},
+      "expense_ratio_pct": {},
+      "combined_ratio_pct": {},
+      "combined_is_derived": null,
+      "self_check": null,
+      "quote": null,
+      "notes": "daidokasai.co.jp 도메인 전체가 여전히 WAF/ALB 레벨 403이다. TLS 자체는 문제 없음 (Amazon RSA 2048 M04 정상 체인, openssl s_client 검증 통과) -- 순수 애플리케이션(ALB) 레이어 차단이라 Kyoei 와는 원인이 다르다. 응답이 'Server: awselb/2.0' + 정적 '403 Forbidden' HTML(520바이트, JS 챌린지 없음)이라 헤드리스 브라우저로 우회할 여지가 낮다(챌린지가 아니라 규칙 기반 즉시 차단으로 보인다) -- 3rd party reader(r.jina.ai, 완전히 다른 인프라/IP) 로도 동일하게 403이 나서 우리 세션 IP 특정 문제가 아니라 광범위한 지역/봇 차단 규칙일 가능성이 높다는 근거를 추가 확보했다. 대체 경로 4종(WAF 헤더변경, 업계단체 GIAJ, 등급기관 R&I, web.archive.org)을 전부 시도했으나 FY2025 또는 FY2024 수치를 못 얻었다 -- '공시가 없다'가 아니라 '이 환경에서 못 열었다'. 회사 자체 공시(決算公告·ディスクロージャー誌)는 매년 정상 발행되는 것으로 확인됨 (GIAJ 디렉토리·2020~2024년 PDF 파일명 패턴으로 실재 확인, EDINET 미등록·미상장이라 교차출처 없음).",
+      "attempts": [
+        {
+          "round": "prior",
+          "method": "jesr_http.probe (requests, browser headers)",
+          "url": "https://www.daidokasai.co.jp/corporate/disclosure/",
+          "result": "HTTP 403, classification=blocked"
+        },
+        {
+          "round": "prior",
+          "method": "WebFetch",
+          "url": "https://www.daidokasai.co.jp/corporate/disclosure/",
+          "result": "HTTP 403 (same)"
+        },
+        {
+          "round": "prior",
+          "method": "requests, guessed filename #1",
+          "url": "https://www.daidokasai.co.jp/wp-content/uploads/2025/07/ディスクロージャー誌-2025.pdf",
+          "result": "HTTP 403"
+        },
+        {
+          "round": "prior",
+          "method": "requests, guessed filename #2",
+          "url": "https://www.daidokasai.co.jp/wp-content/uploads/2026/07/ディスクロージャー誌-2026.pdf",
+          "result": "HTTP 403"
+        },
+        {
+          "round": "prior",
+          "method": "requests, guessed filename #3 (no hyphen)",
+          "url": "https://www.daidokasai.co.jp/wp-content/uploads/2025/07/ディスクロージャー誌2025.pdf",
+          "result": "HTTP 403"
+        },
+        {
+          "round": "this_round",
+          "method": "openssl s_client -proxy -showcerts (diagnostic)",
+          "url": "https://www.daidokasai.co.jp:443",
+          "result": "TLS OK, Amazon RSA 2048 M04 chain valid -- TLS is not the blocker, confirms real WAF block"
+        },
+        {
+          "round": "this_round",
+          "method": "curl, browser headers + Referer=google.com",
+          "url": "https://www.daidokasai.co.jp/corporate/disclosure/",
+          "result": "HTTP 403, Server: awselb/2.0, static 520-byte '403 Forbidden' page (no JS challenge)"
+        },
+        {
+          "round": "this_round",
+          "method": "requests, trust_env=False (transparent path, not explicit CONNECT proxy)",
+          "url": "https://www.daidokasai.co.jp/corporate/disclosure/",
+          "result": "HTTP 403, identical body -- same block regardless of egress path used"
+        },
+        {
+          "round": "this_round",
+          "method": "r.jina.ai reader proxy (3rd-party infra, different IP/network entirely)",
+          "url": "https://r.jina.ai/https://www.daidokasai.co.jp/corporate/disclosure/",
+          "result": "HTTP 200 (from jina) but body says 'Target URL returned error 403: Forbidden' -- even a wholly different network path gets the same 403, suggesting a broad geo/bot rule, not an IP-specific block on our sandbox"
+        },
+        {
+          "round": "this_round",
+          "method": "WebFetch (industry association directory)",
+          "url": "https://www.sonpo.or.jp/member/gaikyou/disclose/index.html",
+          "result": "200, but page is only a directory linking back to daidokasai.co.jp's own disclosure page -- no aggregated loss/expense/combined ratio data hosted by GIAJ itself"
+        },
+        {
+          "round": "this_round",
+          "method": "curl, browser headers (rating agency)",
+          "url": "https://www.r-i.co.jp/rating/issuers/007150/301275/index.html",
+          "result": "200 -- lists rating history; the free 'ニュースリリース' PDF (2026-03-04 rating action) is qualitative only (typhoon risk narrative, rating rationale), no numeric loss/expense/combined ratio; the detailed '発行体ファイル' report (would likely have financial tables) is paywalled (request returns an HTML login page instead of a PDF)"
+        },
+        {
+          "round": "this_round",
+          "method": "curl (rating agency, free news release PDF, fetched to confirm content)",
+          "url": "https://www.r-i.co.jp/news_release_cfp/2026/03/news_release_cfp_20260304_24528_jpn.pdf",
+          "result": "200, 2-page PDF -- read in full, no combined/loss/expense ratio figures (narrative rating rationale only)"
+        },
+        {
+          "round": "this_round",
+          "method": "curl (rating agency, paywalled issuer-file report)",
+          "url": "https://www.r-i.co.jp/news_rating-file/2026/03/news_rating-file_20260304_jpn_2.pdf",
+          "result": "200 but content-type is HTML (login/paywall redirect), not a PDF -- inaccessible without R&I subscription"
+        },
+        {
+          "round": "this_round",
+          "method": "web.archive.org CDX API, full-domain scan 2024-2026",
+          "url": "https://web.archive.org/cdx/search/cdx?url=daidokasai.co.jp&matchType=domain&from=2024&to=2026",
+          "result": "1616 URLs indexed; most recent full capture of the /corporate/disclosure/ listing page is 2025-01-26 and only lists up to 'ディスクロージャー誌-2024-1.pdf' (FY2023 data, published 2024-07) -- not FY2024 or FY2025"
+        },
+        {
+          "round": "this_round",
+          "method": "web.archive.org CDX, targeted path search",
+          "url": "https://web.archive.org/cdx/search/cdx?url=daidokasai.co.jp/wp-content/uploads/2025/07*",
+          "result": "Only 1 file archived in that folder: a companion thumbnail PNG (2025-07-16) -- the actual FY2024 disclosure PDF itself was never crawled/archived (likely blocked by the same WAF even for the Wayback crawler)"
+        },
+        {
+          "round": "this_round",
+          "method": "web.archive.org CDX, targeted path search",
+          "url": "https://web.archive.org/cdx/search/cdx?url=daidokasai.co.jp/wp-content/uploads/2026*",
+          "result": "0 results -- zero 2026-dated snapshots exist for this entire domain in Wayback"
+        },
+        {
+          "round": "this_round",
+          "method": "web.archive.org, fetch archived sitemap",
+          "url": "https://web.archive.org/web/20250709180456id_/https://www.daidokasai.co.jp/wp-sitemap-posts-disclosure-1.xml",
+          "result": "200 -- lists 10 post IDs (7488-7508, all lastmod 2025-06-02); fetched all resolvable ones, all render as the same news template titled '2024年度正誤表' (FY2024 corrections notice), not the disclosure booklet PDF itself"
+        },
+        {
+          "round": "this_round",
+          "method": "archive.ph search",
+          "url": "https://archive.ph/https://www.daidokasai.co.jp/corporate/disclosure/*",
+          "result": "Connection reset by peer (proxy relay failure, unrelated to WAF -- could not complete this check at all)"
+        }
+      ]
+    },
+    {
+      "company_jp": "ヤマップネイチャランス損害保険",
+      "company_en": "Yamap Naturance",
+      "group": "C",
+      "verdict": "found",
+      "scope": "solo",
+      "source_url": "https://image.yamap.co.jp/19fb5e1df2138d.pdf",
+      "doc_type": "disclosure_booklet_2026 (ディスクロージャー誌2026, FY2025) -- linked from /publicnotice (電子公告) page",
+      "page": "PDF p.29 (document's own footer page '27'); headline also on PDF p.9 (footer '7')",
+      "loss_ratio_pct": {
+        "FY2025": 50.6
+      },
+      "expense_ratio_pct": {
+        "FY2025": 179.5
+      },
+      "combined_ratio_pct": {
+        "FY2025": 230.0
+      },
+      "combined_is_derived": false,
+      "self_check": {
+        "formula": "combined == loss + expense",
+        "computed": 230.1,
+        "printed": 230.0,
+        "diff": 0.1,
+        "within_tolerance_0.15": true
+      },
+      "quote": "[p.9 headline] 正味損害率 50.6% (前期比2.4ポイント低下) / 正味事業費率 179.5% (前期比122.4ポイント低下)\n[p.29 table '正味損害率、正味事業費率およびその合算率', 合計 row, 2025年度] 50.6 / 179.5 / 230.0\n(注) 3. 合算率＝正味損害率＋正味事業費率\n参考(p.26 事業の概況): 「正味損害率は前年度の53.0％から50.6％へと改善いたしました。...コンバインド・レシオについても前期から着実な改善を見せております。」",
+      "notes": "同じPDFに ソルベンシー・マージン比率(旧基準) は '2026年10月末までに別途開示予定' と明記 -- 다른 회사들과 같은 10월 말 유예 패턴, 이 티켓 목적(손해율)과는 무관하지만 참고로 남긴다. 설립 2024-05, 손보업 개시 후 2년차 -- FY2023 은 데이터 없음(−), FY2024/FY2025 만 존재.",
+      "root_cause_prior_failure": "진짜 SPA(Nuxt3 + Studio.Design CMS). 서버는 window.__NUXT__={} 빈 객체를 반환하고 실제 콘텐츠는 클라이언트 사이드에서 storage.googleapis.com 등 CMS API 를 JS 로 호출해 채운다. 정적 fetch(curl/requests/WebFetch)로는 링크 0개인 빈 셸만 보이고, 지난 라운드의 서버렌더 JSON 17페이지 전수조사도 이 CMS API 콘텐츠를 못 봤다(재무공시 링크 자체가 서버 JSON 에 없다).",
+      "fix_this_round": "Chromium(Playwright)을 이 환경의 프록시로 직접 내보내려는 시도는 전부 실패했다(아래 별도 진단 참고, 사이트 무관 시스템 문제). 우회: Chromium 은 JS 실행/DOM 렌더링에만 쓰고, context.route('**/*') 로 모든 네트워크 요청을 가로채 실제 전송은 Python requests(정상 작동, verify=/root/.ccr/ca-bundle.crt 유지)로 대신 수행한 뒤 route.fulfill() 로 응답을 Chromium 에 돌려줬다 -- Chromium 은 한 번도 실제 소켓을 열지 않고 우리가 이미 검증한 HTTP 클라이언트가 '네트워크 계층'을 대신했다. 이 방식으로 /company, /profit, /publicnotice, /document 를 완전히 hydrate 시켜 /publicnotice(電子公告) 페이지에서 'ディスクロージャー資料 2026年' PDF 링크를 발견, 그 PDF 를 곧바로 requests 로 받아 원문을 열람했다.",
+      "chromium_diagnostic": "Chromium+Playwright 를 --proxy-server=127.0.0.1:38081 로 직접 내보내면 example.com 등 무관한 사이트를 포함해 전 사이트에서 net::ERR_CONNECTION_RESET. --log-net-log 로 원인 분리: (1) 기본값인 Chromium 의 Secure DNS(DoH, dns.google 대상)가 net_error=-202(ERR_CERT_AUTHORITY_INVALID) -- Chromium 자체 트러스트스토어가 이 환경의 커스텀 CA(/root/.ccr/ca-bundle.crt)를 안 믿는다(--disable-features=DnsOverHttps,DnsOverHttpsUpgrade,AsyncDns 로 회피 가능, 확인함). (2) DoH 를 꺼도 실제 대상 사이트 TLS 핸드셰이크 자체가 net_error=-101(ERR_SSL_PROTOCOL_ERROR, os_error=104 ECONNRESET) -- 프록시 릴레이가 Chromium 의 연결만 중도에 끊는다(동일 시각 curl/python 은 같은 사이트에 정상 200). --disable-quic, PostQuantumKyber/EncryptedClientHello 비활성 등도 시도했으나 해결 안 됨 -- 이 환경의 egress 릴레이와 Chromium 의 조합 자체가 광범위하게 깨져 있는 것으로 보이며(대상 사이트와 무관), 이번 라운드에서는 원인 규명까지만 하고 근본 수정은 포기, 위 route-intercept 우회로 목적을 달성했다.",
+      "attempts": [
+        {
+          "round": "prior",
+          "method": "static fetch (jesr_http/WebFetch)",
+          "url": "https://yamap-naturance.co.jp/company",
+          "result": "HTTP 200 but SPA shell, 0 static <a> links, window.__NUXT__={} empty"
+        },
+        {
+          "round": "prior",
+          "method": "static fetch",
+          "url": "https://yamap-naturance.co.jp/publicnotice",
+          "result": "HTTP 200 but SPA shell (same)"
+        },
+        {
+          "round": "prior",
+          "method": "server-rendered __NEXT_DATA__/JSON sweep, 17 pages",
+          "url": "https://yamap-naturance.co.jp/ (sitemap-driven crawl)",
+          "result": "no financial disclosure page found in server-rendered JSON at all"
+        },
+        {
+          "round": "this_round",
+          "method": "Playwright/Chromium, proxy={server: 127.0.0.1:38081}",
+          "url": "https://yamap-naturance.co.jp/company",
+          "result": "net::ERR_CONNECTION_RESET"
+        },
+        {
+          "round": "this_round",
+          "method": "Playwright/Chromium, no explicit proxy (transparent)",
+          "url": "https://yamap-naturance.co.jp/company",
+          "result": "net::ERR_CONNECTION_RESET (relay log shows tunnel WAS attempted then closed after ~6s)"
+        },
+        {
+          "round": "this_round",
+          "method": "Playwright/Chromium, control test on unrelated site",
+          "url": "https://example.com/",
+          "result": "net::ERR_CONNECTION_RESET -- confirms failure is systemic, not site-specific"
+        },
+        {
+          "round": "this_round",
+          "method": "Playwright/Chromium + --disable-features=DnsOverHttps,AsyncDns,...",
+          "url": "https://example.com/",
+          "result": "still net::ERR_CONNECTION_RESET, but net-log shows the DoH/dns.google cert error is gone; new failure point is ECONNRESET during the real TLS handshake itself"
+        },
+        {
+          "round": "this_round",
+          "method": "Playwright/Chromium + --disable-quic/--ssl-version-max/PQ-Kyber/ECH flags",
+          "url": "https://example.com/",
+          "result": "still net::ERR_CONNECTION_RESET -- not a QUIC/ECH/PQ-cipher issue"
+        },
+        {
+          "round": "this_round",
+          "method": "Playwright/Chromium with context.route() intercepting all requests, fulfilled via Python requests (bypasses Chromium's own network stack entirely)",
+          "url": "https://yamap-naturance.co.jp/company, /profit, /publicnotice, /document",
+          "result": "SUCCESS -- full JS hydration, real rendered text extracted for all 4 pages"
+        },
+        {
+          "round": "this_round",
+          "method": "requests (via the fully-hydrated /publicnotice page's discovered link)",
+          "url": "https://image.yamap.co.jp/19fb5e1df2138d.pdf",
+          "result": "HTTP 200, 2109670 bytes application/pdf -- FY2025 disclosure booklet 확보, 원문 열람"
+        }
+      ]
+    }
+  ]
+}

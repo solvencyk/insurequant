@@ -2,6 +2,62 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-14 (31) -- 손해율 unreachable 3사 재시도, 2/3 확보
+
+(30)이 `unreachable` 로 남긴 3사(共栄火災海上保険·大同火災海上保険·ヤマップネイチャランス損害保険)를
+**같은 방법을 반복하지 않고** 다시 팠다. 산출 `J-ESR/nonlife_ratio_retry.json`(census·`jesr_detail.json`·
+마스터는 미수정, 병합은 오케스트레이터 소관).
+
+**共栄火災海上保険 -- found.** 원인 재진단: TLS 가 아니라 서버가 중간 인증서를 안 보낸다.
+`openssl s_client -proxy 127.0.0.1:38081 -connect www.kyoeikasai.co.jp:443 -showcerts` 로 확인하니
+Certificate chain 에 리프 인증서(issuer=Cybertrust Japan SureServer EV CA G3) 하나뿐이고 그 중간
+인증서 자체가 체인에 없었다. 브라우저는 캐시된 중간 인증서로 이 결함을 못 느끼지만 requests/curl 은
+체인 불완전으로 거부한다. **TLS 검증은 끄지 않고**, 리프 인증서의 AIA caIssuers URL
+(`http://crl.cybertrust.ne.jp/SureServer/evcag3/evcag3.crt`, 공개 CA 배포 경로)에서 그 중간 인증서를
+받아 `/root/.ccr/ca-bundle.crt`(프록시 CA) + certifi 루트스토어와 합친 `combined_ca.pem` 을
+`requests(verify=combined_ca.pem)` 에 지정하니 200. FY2025: 正味損害率 60.7 / 正味事業費率 37.0 /
+合算率 97.7(ディスクロージャー誌2026 p.71 "7 正味損害率、正味事業費率及びその合算率" 合計행, 원문
+표기값 그대로 — 検算 diff 0.0), scope=solo(独立損保, 単体).
+
+**ヤマップネイチャランス損害保険 -- found.** Playwright/Chromium 을 이 환경 프록시로 그냥 내보내면
+example.com 같은 무관한 사이트까지 전부 `net::ERR_CONNECTION_RESET`. `--log-net-log` 로 원인 분리:
+① Chromium 기본 Secure DNS(DoH, dns.google 대상)가 이 환경의 커스텀 CA 를 신뢰하지 않아
+ERR_CERT_AUTHORITY_INVALID(`--disable-features=DnsOverHttps,DnsOverHttpsUpgrade,AsyncDns` 로 회피
+가능, 확인함) ② 그걸 꺼도 실제 대상 사이트 TLS 핸드셰이크 자체가 ECONNRESET(os_error=104) -- 동일
+시각 curl/python 은 같은 사이트에 정상 200 이라 프록시 릴레이가 Chromium 의 연결만 특이적으로
+끊는 것으로 보인다. QUIC·PostQuantumKyber·ECH 비활성화도 시도했으나 해결 안 됨 -- 대상 사이트와
+무관한, 이 환경·Chromium 조합의 시스템 문제로 결론짓고 근본 수정은 포기.
+**우회**: Chromium 은 JS 실행/DOM 렌더링에만 쓰고 `context.route("**/*")` 로 모든 네트워크 요청을
+가로채 실제 전송은 정상 작동하는 Python `requests`(verify=/root/.ccr/ca-bundle.crt 유지)가 대신
+수행한 뒤 `route.fulfill()` 로 응답을 돌려주는 방식으로 SPA(Nuxt3/Studio.Design CMS)를 완전히
+hydrate 시켰다 -- Chromium 은 한 번도 실제 소켓을 열지 않았다. `/publicnotice`(電子公告) 페이지에서
+지난 라운드의 서버렌더 JSON 17페이지 전수조사가 못 본(CMS API 로 클라이언트 사이드에서만 로드되는)
+「ディスクロージャー資料 2026年」 PDF 링크를 발견. FY2025: 正味損害率 50.6 / 正味事業費率 179.5 /
+合算率 230.0(ディスクロージャー誌2026 p.29 합계행, 원문 표기값 -- 検算 50.6+179.5=230.1 vs 표기
+230.0, diff 0.1 로 ±0.15 이내), scope=solo(単体).
+
+**大同火災海上保険 -- 여전히 unreachable.** TLS 는 정상(Amazon RSA 2048 M04 체인 유효, openssl 검증
+통과) -- 진짜 WAF/ALB 레벨 403(`Server: awselb/2.0`, JS 챌린지 없는 정적 403 HTML 520바이트)이라
+헤드리스 브라우저로도 못 뚫을 가능성이 높다는 근거를 추가했다: 완전히 다른 인프라(r.jina.ai reader
+proxy, 이 세션과 무관한 IP/네트워크)로도 **동일하게 403** -- 세션별 IP 문제가 아니라 광범위한 지역/봇
+차단 규칙으로 보인다. 대체 경로 4종을 전부 시도했으나 전부 실패:
+① 日本損害保険協会(GIAJ) 회원 디스크로저 디렉토리 -- 자사 링크만 있고 집계자료 없음
+② R&I(등급투자정보센터) 등급 페이지는 열리지만 무료 자료(ニュースリリース)는 정성적 서술뿐, 수치가
+있을 「発行体ファイル」 상세 리포트는 유료 페이월(요청하면 PDF 대신 HTML 로그인 페이지가 온다)
+③ web.archive.org -- 도메인 전체 CDX 를 2024~2026 범위로 스캔해도 `/corporate/disclosure/` 목록
+페이지의 가장 최근 전면 캡처가 2025-01-26(FY2023 자료 "ディスクロージャー誌-2024-1.pdf" 까지만),
+`/wp-content/uploads/2025/07/*`·`/2026/*` 경로를 직접 쳐도 PDF 자체가 안 잡히고 동반 썸네일 이미지만
+2025-07-16 에 archived(아카이브 크롤러도 같은 WAF 에 막힌 정황), 2026년 스냅샷은 도메인 전체에
+0건 ④ archive.ph 는 이 세션 프록시 릴레이 자체가 connection reset(WAF 와 무관한 별도 문제).
+**"공시가 없다" 가 아니라 "이 환경에서 못 연다"** -- 大同火災는 決算公告·ディスクロージャー誌 를
+매년 정상 발행하는 것으로 확인됨(GIAJ 디렉토리 링크·2020~2024년 PDF 파일명 패턴 실재, EDINET
+미등록·미상장이라 교차 출처가 없다).
+
+**다음**: ① census 병합은 오케스트레이터(값 2건 반영 + scope=solo 기록, source_url/doc_type/page/quote
+포함) ② 大同火災는 10월 말 재census 라운드에 사람이 직접 브라우저로 열람하거나 IP 대역이 다른
+환경에서 재시도 권고 ③ Chromium+프록시 ECONNRESET 문제가 이 세션만의 일시적 증상인지 다음
+라운드에도 재현되는지 확인 -- 재현되면 인프라 티켓(`/root/.ccr/`) 가치가 있다.
+
 ## 2026-09-14 (30) -- 손보 손해율 전수조사 29사, owner 지적으로 재개한 축
 
 **재개 경위.** (17)(2026-09-13)이 손보 6사 표본 중 3사만 확보하고 나머지를 네트워크 차단으로 남겨뒀다.
