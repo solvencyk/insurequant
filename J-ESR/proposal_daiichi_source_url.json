@@ -1,0 +1,193 @@
+{
+  "_meta": {
+    "company_jp": "第一ライフグループ",
+    "company_en": "Daiichi Life Group",
+    "edinet_code": "E06141",
+    "target_value_pct": 220,
+    "target_as_of": "2026-03-31",
+    "checked_at": "2026-09-14",
+    "method": "J-ESR/check_esr_in_source.py::scan_pdf (imported, not reimplemented) + manual fitz text-search for basis/scope evidence and qualifier check",
+    "starting_point": "https://www.dai-ichi-life-hd.com/investor/ -> redirects (2026-04-01 rename) to https://www.daiichilife-group.com/investor/",
+    "confirmed_background": "EDINET S100YC7A (2026-06-16 filed, E06141) already independently verified: internal ESR = 220% group scope, basis quote '本ESRの数値は、内部モデルを用いて算出したものであり'. Traps confirmed present in the same filing at p178 (executive-comp KPI table): 227% = FY2023/03 actual, 210% = FY2024/03 actual, 170% = target floor -- none of these are FY2025 headlines.",
+    "candidates_evaluated": 7,
+    "candidates_pdf": 7,
+    "candidates_http_200": 7,
+    "candidates_scan_found": 2,
+    "candidates_scan_not_found": 5,
+    "candidates_scan_abstain_no_prose": 5,
+    "candidates_scan_unqualified": 2,
+    "candidates_fetched_but_not_scanned": 1,
+    "summary_for_report": "7 PDF candidates fetched and run through scan_pdf (all HTTP 200, all is_pdf=true; an 8th, the 18MB full integrated-report, was fetched but not scanned -- see not_fetched_candidates). 2/7 scan_pdf verdict=found+adjusted_verdict=unqualified (clean). 5/7 not_found (ESR label absent or too far from 220 in that document). Both found candidates are group-scope, internal_model-basis, no qualifiers on the 220 fragment."
+  },
+  "candidates": [
+    {
+      "id": "kessan_setsumei_2025_statement",
+      "label": "決算・経営説明会 説明資料 (2026-05-27, FY ending 2026-03 results)",
+      "url": "https://www.daiichilife-group.com/investor/library/presentation/pdf/2025_statement.pdf",
+      "is_pdf": true,
+      "http_status": 200,
+      "probe_classification": "ok",
+      "scan_verdict": "found",
+      "scan_match_rule": "text_window",
+      "scan_page": 4,
+      "scan_distance": 1,
+      "matched_sentence": "金利上昇に伴う解約リスクの増加を、市場リスク削減による効果で一部相殺したことに加え、国内株式の上昇等の市場変動や新契約価値の獲得、期待収益の認識などにより適格資本が大幅に増加した結果、グループESRは前期末比+10%pt改善し220%",
+      "page": 4,
+      "basis_evidence": {
+        "found": true,
+        "page": 2,
+        "quote": "(1) 本資料内においては、内部モデルを用いて算出したESRについて、「ESR」と呼称しています。(2) ESRは、経済価値ベースの所要資本に対する経済価値ベースの適格資本の割合を示す指標です。ESRはマネジメントの判断に供することを目的として経済価値ベースの新たなソルベンシー規制(J-ICS)等を参考に算出しています。",
+        "note": "footnote on the section 目次 (table of contents) page, applies to every ESR figure in this deck including the p3/p4 220% headline. This is the single clearest basis statement of all 8 candidates -- it defines the document-wide meaning of the word 'ESR' as internal-model-based, in one sentence."
+      },
+      "scope_evidence": {
+        "found": true,
+        "page": [3, 4],
+        "quote": "p3 slide title area: '26/3末 資本充足率(ESR) 220% (前期末比+10%pt)' inside a slide block headed 'グループESR'. p4 slide title: 'グループESR' with body text '...グループESRは前期末比+10%pt改善し220%'.",
+        "note": "'グループ' (Group) is literally part of the metric's label on both slides that carry the 220% figure -- not an inferred scope, a stated one."
+      },
+      "qualifiers": {
+        "adjusted_verdict": "unqualified",
+        "adjusted_qualifiers_hit": [],
+        "adjusted_alternatives": [],
+        "note": "p4 also shows a bridge chart with '25/3末 210%' (prior fiscal year-end, FY2024/03) as a comparison anchor for the +10pt walk -- this is a prior-period value, not a same-period qualified alternative, and scan_adjusted did not flag it (no qualifier token attaches to it and it is not the same as_of). p5 discusses a separate '規制モデルのESR' (regulatory-model ESR) only as an unquantified reference ('規制モデルのESRを参照しつつも'), no number given on this page, so it did not surface as a same-doc competing value."
+      },
+      "recommend": true
+    },
+    {
+      "id": "yuho_2025",
+      "label": "有価証券報告書（第124期, FY ending 2026-03） -- company's own mirror of the EDINET S100YC7A filing",
+      "url": "https://www.daiichilife-group.com/investor/library/security/pdf/2025/2025.pdf",
+      "is_pdf": true,
+      "http_status": 200,
+      "probe_classification": "ok",
+      "scan_verdict": "found",
+      "scan_match_rule": "text_window",
+      "scan_page": 39,
+      "scan_distance": 1,
+      "matched_sentence": "当社は、財務健全性の確保に向けて、経済価値ベースの資本充足率（以下、ESRという。）について170％以上の確保を基本としており、2026年３月末の内部ESRは220％と十分な水準を確保しております。",
+      "page": 39,
+      "basis_evidence": {
+        "found": true,
+        "page": 56,
+        "quote": "なお、本ESRの数値は、内部モデルを用いて算出したものであり、「第2 事業の状況 4 経営者による財政状態、経営成績及びキャッシュ・フローの状況の分析(2) 資本政策」においても同様であります。",
+        "note": "same wording independently confirmed by the orchestrator's earlier EDINET check. Also confirms p39's '内部ESR' label is internal-model-based, not just a naming coincidence."
+      },
+      "scope_evidence": {
+        "found": true,
+        "page": 39,
+        "quote": "'当社グループの財務内容及び業績に悪影響を及ぼす可能性があります' surrounds the 220% sentence (risk-factors section framed at 当社グループ = the Group throughout); p56 headline restates: '財務健全性を示す資本充足率（ＥＳＲ）（注）８は、2026年３月末時点で220％となりました' inside the グループ修正利益 (Group adjusted profit) results narrative.",
+        "note": "less literal than the kessan_setsumei candidate (no metric literally named 'グループESR'), but the surrounding paragraph is explicitly about consolidated/group results throughout p56."
+      },
+      "qualifiers": {
+        "adjusted_verdict": "unqualified",
+        "adjusted_qualifiers_hit": [],
+        "adjusted_alternatives": [],
+        "note": "TRAP CONFIRMED PRESENT AND CORRECTLY NOT PICKED: p178 executive-compensation KPI table lists 資本充足率(ESR) 227% for '(2024年3月期)' actual (=FY2023/03) and 210% for '(2025年3月期)' actual (=FY2024/03) -- both prior fiscal years, both correctly absent from scan_adjusted's alt list because neither fragment carries the target pct (220) nor is same as_of. p68 also carries the 170% target-floor sentence (policy statement, not an actual)."
+      },
+      "recommend": false,
+      "recommend_note": "Fully qualifies as an alternate/backup source (statutory 有報, machine-verified, matches EDINET S100YC7A text exactly, basis+scope both present). Not chosen as primary only because the kessan_setsumei candidate states the internal-model basis and Group scope more literally and directly on the same page as the headline number, and 決算説明資料 is the source type the jp lane's domain doc names as 정본(primary) (docs/domains/claude-agent-jp.md §2)."
+    },
+    {
+      "id": "gaikyo_index_016",
+      "label": "2026年3月期決算報告 財務・業績の概況 (compact quarterly-style overview, 4p)",
+      "url": "https://www.daiichilife-group.com/investor/library/earning/pdf/2025/index_016.pdf",
+      "is_pdf": true,
+      "http_status": 200,
+      "scan_verdict": "not_found",
+      "matched_sentence": null,
+      "page": null,
+      "basis_evidence": {"found": false},
+      "scope_evidence": {"found": false},
+      "qualifiers": {"adjusted_verdict": "abstain_no_prose"},
+      "recommend": false,
+      "recommend_note": "No ESR content at all -- this doc is new-business/premium/reserves tables only (契約の状況, 基礎利益, 準備金, 社員数, 配当の状況). Not a source for ESR."
+    },
+    {
+      "id": "kessan_shiryo_index_017",
+      "label": "【第一生命】2026年3月期 決算資料 (40p, subsidiary-level results pack)",
+      "url": "https://www.daiichilife-group.com/investor/library/earning/pdf/2025/index_017.pdf",
+      "is_pdf": true,
+      "http_status": 200,
+      "scan_verdict": "not_found",
+      "matched_sentence": null,
+      "page": null,
+      "basis_evidence": {"found": false},
+      "scope_evidence": {"found": false},
+      "qualifiers": {"adjusted_verdict": "abstain_no_prose"},
+      "recommend": false,
+      "recommend_note": "Subsidiary (第一生命保険, solo) results pack -- not scanned to have ESR near 220 within window. Wrong scope target anyway (this ticket is about the HD/group headline)."
+    },
+    {
+      "id": "hokoku_index_018",
+      "label": "【第一生命】2026年3月期 決算関係補足資料 (12p supplement)",
+      "url": "https://www.daiichilife-group.com/investor/library/earning/pdf/2025/index_018.pdf",
+      "is_pdf": true,
+      "http_status": 200,
+      "scan_verdict": "not_found",
+      "matched_sentence": null,
+      "page": null,
+      "basis_evidence": {"found": false},
+      "scope_evidence": {"found": false},
+      "qualifiers": {"adjusted_verdict": "abstain_no_prose"},
+      "recommend": false,
+      "recommend_note": "Supplementary data pack, no ESR label found within window of 220."
+    },
+    {
+      "id": "event029_kisei_esr",
+      "label": "CFOダイアログ：規制ESRパート 説明要旨 (2026-08-31, 2p)",
+      "url": "https://www.daiichilife-group.com/investor/library/presentation/pdf/event_029.pdf",
+      "is_pdf": true,
+      "http_status": 200,
+      "scan_verdict": "not_found",
+      "matched_sentence": null,
+      "page": null,
+      "basis_evidence": {"found": false},
+      "scope_evidence": {"found": false},
+      "qualifiers": {"adjusted_verdict": "abstain_no_prose"},
+      "recommend": false,
+      "recommend_note": "IMPORTANT CROSS-CHECK, not a source for 220. This doc is the company's own August 2026 explanation of a DIFFERENT metric: 'グループ規制ESR は、速報値で198%となりました。5月に開示したグループ内部ESR をやや下回っております' (regulatory-basis ESR as of 2026-03-31, preliminary/速報値, disclosed later = 198%, distinct from the internal-model-basis 220% disclosed in May). This independently confirms (a) the 220% figure disclosed in kessan_setsumei_2025_statement.pdf IS the internal-model one (basis=internal_model, matches its own footnote), and (b) 198% is a DIFFERENT basis (regulatory/standard, preliminary) for the same as_of, not a same-basis competing headline -- so it is not a qualifier hit on 220 (scan_adjusted correctly abstained, no ESR-labeled prose fragment contains 220 in this doc at all)."
+    },
+    {
+      "id": "toka_report_2026_data",
+      "label": "統合報告書2026 データセクション (10p data section of integrated report)",
+      "url": "https://www.daiichilife-group.com/investor/library/annual_report/pdf/2026_index_008.pdf",
+      "is_pdf": true,
+      "http_status": 200,
+      "scan_verdict": "not_found",
+      "matched_sentence": null,
+      "page": null,
+      "basis_evidence": {"found": false},
+      "scope_evidence": {"found": false},
+      "qualifiers": {"adjusted_verdict": "abstain_no_prose"},
+      "recommend": false,
+      "recommend_note": "Statistical data tables (multi-year), 220 not found within proximity window of an ESR label in this excerpt."
+    }
+  ],
+  "not_fetched_candidates": [
+    {
+      "label": "統合報告書2026 本編 (2026_index_001.pdf, 18.4MB)",
+      "reason": "downloaded but not scanned in this round (very large, and 2 clean found+unqualified candidates already secured with basis+scope evidence; scanning this would only add a third redundant confirmation). Left on disk at scratchpad/pdfs/toka_report_2026_main.pdf if a follow-up wants to check it."
+    },
+    {
+      "label": "EDINET viewer URL / EDINET API URL",
+      "reason": "explicitly forbidden by the ticket -- viewer is a JS shell with no body text, API URL carries the Subscription-Key. Not evaluated as a source-url candidate, only used earlier (by the orchestrator) for independent verification."
+    }
+  ],
+  "recommendation": {
+    "chosen_candidate_id": "kessan_setsumei_2025_statement",
+    "census_cells": {
+      "esr_pct": "220",
+      "esr_scope": "group",
+      "as_of": "2026-03-31",
+      "source_url": "https://www.daiichilife-group.com/investor/library/presentation/pdf/2025_statement.pdf",
+      "doc_type": "2026年3月期決算 機関投資家・アナリスト向け決算・経営説明会 説明資料(2026-05-27)",
+      "esr_basis": "internal_model",
+      "preliminary": "no",
+      "fy2025_esr_status": "posted",
+      "notes_suggestion": "グループESR 220%(決算説明資料 p3-4, '26/3末 資本充足率(ESR) 220%' / 'グループESRは前期末比+10%pt改善し220%'). 기준 근거: p2 각주 (1) '本資料内においては、内部モデルを用いて算出したESRについて、「ESR」と呼称しています' -> internal_model. scope 근거: p3-4 라벨 자체가 'グループESR'. 한정어 없음(check_esr_in_source.scan_adjusted: unqualified). 교차확인: 有報 S100YC7A(EDINET, 2026-06-16 제출, p39/p56 동일 문장 '2026年３月末の内部ESRは220％')와 일치, 회사 자체 미러 https://www.daiichilife-group.com/investor/library/security/pdf/2025/2025.pdf 도 posted+found+unqualified(백업 출처). 별도 규제기준 ESR=198%(속보치, CFOダイアログ 2026-08-31 공시, event_029.pdf) 는 basis 가 다른 별개 지표이지 220% 의 한정치가 아님 -- 헤드라인으로 쓰지 않는다. 트랩 확인: 227%=2024年3月期(FY2023)실적, 210%=2025年3月期(FY2024)실적, 170%=목표 하한(有報 p178/p39/p68) -- 전부 FY2025 헤드라인 아님."
+    },
+    "backup_candidate_id": "yuho_2025",
+    "backup_url": "https://www.daiichilife-group.com/investor/library/security/pdf/2025/2025.pdf",
+    "not_found_reason": null
+  }
+}
