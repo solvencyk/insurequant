@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-09-12 · Stage 4/5 — publishing
+> Last updated: 2026-09-14 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -10,6 +10,41 @@ Session start: read this file + `claude-agent-publishing.md` + relevant validati
 NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
 
 ## Status
+
+**2026-09-14 (손보 손해율 24사를 `jp/jesr_detail.json` 에 ratio_only 레이어로 추가 + SOMPOダイレクト source_url 교체, owner 승인)**:
+`J-ESR/nonlife_ratio_census.json`(verdict=="found" 24사)을 `J-ESR/build_jesr_detail_json.py`에 새 브랜치로
+배선(`build_ratio_only_companies` — 기존 `extracted_sample_values.json` 스키마 파이프라인과 완전히 분리, 별도
+소스 파일을 읽는 독립 함수). **신규 계약 필드 2개**: `data_scope:"ratio_only"`(패널 스킵 신호, 기존 10사는 키
+자체가 없음="full") · `ratio_caveat:{code,text}|null`(text는 census `caveat` 필드를 런타임에 그대로 복사 —
+손으로 재입력 안 함). 4사에 caveat 부착: トーア再保険(`lae_excluded`)·ソニー損害保険(`ei_basis`)·レスキュー損害保険
+(`ocr_read`)·MS&ADインシュアランスグループHD(`simple_sum`). shape는 sompo_japan(not_yet) 선례보다 한 단계
+더 얕음 — `profit.ratios`(loss/expense/combined, cur=FY2025/prev=FY2024)만 채우고 `profit.items`/`core`={},
+`capital`/`items`={}, `capital_tree`/`risk_tree`/`sensitivity`=[], `risk`/`market_sub`=스키마 키 전부 null,
+`aggregation`/`by_line`/`core_history`/`profit_flow`=null(life_core_only 선례), `bs`=`build_bs_block(None)`
+재사용(=`{"status":"not_obtained",...}`, 기존 "비어있음" 표현 그대로, 새 shape 발명 안 함), `headline` ESR 4필드
+전부 null. `esr_status`는 `jp/jesr_esr.json` posted 목록 매칭으로 파생(재-CSV 파싱 안 함) — MS&AD만 `posted`
+(이미 랭킹에 실린 지주사, 단 이 detail 레이어는 ratio만이라 headline은 여전히 null — 후속 검토 대상으로 남김,
+이번 티켓 범위 아님), 나머지 23사 `not_yet`. `self_check`에 ratio_only 전용 블록 추가(24건 카운트+id 유일성+
+census 매핑 일치, 合算率 항등식 ±0.15 tol로 cur/prev 및 history series 전부 재검산, caveat는 지정된 4사에만).
+기존 `n_posted!=2 or n_not_yet!=5` 구조 단언은 `data_scope!="ratio_only"`로 필터링해 유지(`_meta.coverage`도
+동일하게 분리 + `ratio_only`/`ratio_only_posted`/`ratio_only_not_yet`/`ratio_only_caveat` 4필드 신설).
+**SOMPOダイレクト**: `J-ESR/fy2025_esr_census_20260912.csv`의 `source_url`을 분책(`insgenjo2026_05.pdf`,
+21p, 비율표 없음) → 전체책(`insgenjo2026.pdf`, 100p)으로 교체(행-인덱스 `csv.reader/writer`, BOM·LF 유지,
+diff 1행 확인) — 교체 전 `J-ESR/jesr_http.get`으로 200·`application/pdf`·2,486,089 bytes 확인 + PyMuPDF로
+p9/p68 정미損害率72.8%/事業費率24.3% 본문 대조(census B조 수치와 일치), p64 5개년표 주석에서 esr not_yet
+플레이스홀더 재확인(`esr_status`는 유지, URL만 교체). **파이프라인 순서**: census 수정 → `check_source_urls.py
+--all`(dead=0) → `check_esr_in_source.py --all`(found=16/not_found=0) → `build_jesr_page_json.py` 1차 →
+`build_jesr_detail_json.py`(24사 추가) → **`build_jesr_page_json.py` 2차 재실행 필수**(`_meta.group_children`이
+`jp/jesr_detail.json`을 읽어 지주↔자회사를 잇는데, 1차 실행 시점엔 아직 24사가 없어 stale — 재실행 후
+`test_jp_deploy_matches_census.py`가 잡아낸 이 순서 문제를 여기 기록) → 고정점 확인(2회 연속 실행 바이트 동일,
+`generated_at` 제외) → `pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py` **111
+passed** → `prepush_check.py` **REDUCED(jp-scope) gate-clear**(242 passed 2 skipped, 비교대상 13개 전부
+jp 범위). **ESR 16사 값 불변 확인**(esr_pct/eligible_capital/required_capital/as_of/scope 5필드 전건 byte
+diff 0, 실행 전/후 대조). `jp/*.html`·`jesr_app.js`·`jp.css` 6개 파일이 워킹트리에 동시에 M 상태였으나(designer
+병렬 작업, 이번 세션 미접촉 확인 — `git status --short` 시점 대조) 커밋 시 반드시 이 티켓 7개 파일만 명시
+add(`J-ESR/build_jesr_detail_json.py`·`esr_in_source_health.json`·`fy2025_esr_census_20260912.csv`·
+`jesr_master.json`·`source_url_health.json`·`jp/jesr_detail.json`·`jp/jesr_esr.json`). git commit/push는
+오케스트레이터 소관(미실행). 모델 Sonnet 5 · 소요 약 45분(케이스 조사 15 + 빌더 확장 20 + 파이프라인 검증 10).
 
 **2026-09-12 (J-ESR `/jp/` 페이지 데이터 JSON 신설 — `20260912T0446Z`, J-ESR 킥오프 2차 조각)**: designer가 만들 일본
 ESR 현황 페이지가 fetch할 JSON을 조립(HTML은 무수정, designer 소관 별도 티켓). 신규 `J-ESR/build_jesr_page_json.py`

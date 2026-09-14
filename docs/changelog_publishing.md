@@ -1,6 +1,6 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-09-12 · Stage 4/5 — publishing
+> Last updated: 2026-09-14 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
@@ -9,6 +9,69 @@
 **This file:** entries scoped to publishing work only.
 
 ---
+
+## 2026-09-14 — 손보 손해율 24사 `jp/jesr_detail.json` ratio_only 레이어 + SOMPOダイレクト source_url 교체 (owner 승인)
+
+배경: `J-ESR/nonlife_ratio_census.json`(손보 29사 전수조사, verdict `found` 24 / `not_applicable_holding` 2 /
+`unreachable` 3, 오케스트레이터가 合算率 항등식 69/69 전건 검산 완료)을 `jp/jesr_detail.json`에 싣는 owner 승인
+작업. HTML/CSS/`jesr_app.js`는 designer가 같은 라운드에 병행 — publishing은 JSON만.
+
+**1) 24사 추가 (`J-ESR/build_jesr_detail_json.py` 확장)**: `EXTRACTED_PATH`(schema-item 추출) 파이프라인과는
+완전히 분리된 새 함수 `build_ratio_only_companies()`를 신설해 `J-ESR/nonlife_ratio_census.json`을 직접 읽고
+`build()`의 `companies_out`에 append(life_core_only 브랜치 뒤). 신규 계약 필드 2개(designer 합의):
+- `data_scope: "ratio_only"` — 패널 스킵 신호. 기존 10사는 이 키 자체가 없음(="full" 취급).
+- `ratio_caveat: {code, text} | null` — 4사만. `text`는 census의 `caveat` 필드를 **런타임에 그대로 복사**
+  (하드코딩 재입력 금지, 전사 오류 방지). 코드 매핑만 하드코딩: トーア再保険→`lae_excluded`, ソニー損害保険→
+  `ei_basis`, レスキュー損害保険→`ocr_read`, MS&ADインシュアランスグループHD→`simple_sum`.
+
+shape는 sompo_japan(not_yet) 선례보다 한 단계 더 얕음: `profit.ratios`(pl_loss/expense/combined_ratio_pct,
+cur=FY2025/prev=FY2024, FY2024 없으면 null)만 채우고 `profit.items`/`core`={}, 최상위 `capital`/`items`={},
+`capital_tree`/`risk_tree`/`sensitivity`=[], `risk`/`market_sub`=스키마 키(`RISK_KEYS`/`MARKET_SUB_KEYS`)
+전부 null, `aggregation`/`by_line`/`core_history`/`profit_flow`=null(life_core_only 선례 재사용), `bs`는
+`build_bs_block(None)`을 그대로 호출(={"status":"not_obtained",...} — 기존 함수의 "비어있음" 표현을 재사용,
+새 shape 발명 안 함), `headline`은 ESR 4필드 전부 null. `history`는 fiscal_years를 loss/expense/combined
+3개 dict의 연도 합집합으로 구성(회사마다 2~5년, index 정렬 보장) + `hist_loss/expense/combined_ratio_pct`
+3종만. `esr_status`는 `jp/jesr_esr.json`의 posted 레코드 멤버십으로 파생(census CSV 재파싱 안 함 — 24사
+전원이 posted 아니면 not_yet뿐이라 이걸로 충분): MS&AD만 `posted`(랭킹엔 이미 실제 ESR 수치로 존재하지만
+이 detail 레이어는 ratio만이라 headline은 여전히 null — 이 불일치는 후속 검토 대상으로 명시적으로 남김, 이번
+티켓 범위 밖), 나머지 23사 `not_yet`.
+
+`self_check`에 ratio_only 전용 블록 추가: 24건 카운트 + id 유일성 + `RATIO_ONLY_ID_BY_JP` 매핑 일치, esr-layer
+블록(`capital`/`items`/`capital_tree`/`risk_tree`/`sensitivity`) 전부 빈값, `risk`/`market_sub` 전부 null,
+headline ESR 3필드 null, `profit.items`/`core` 빈값, 合算率 항등식(loss+expense≈combined) **cur/prev 및
+history series 전부 ±0.15 tol로 재검산**(census 검산과 동일 tolerance), caveat는 지정된 4사에만 붙었는지 확인.
+기존 `n_posted != 2 or n_not_yet != 5` 구조 단언은 `data_scope != "ratio_only"`로 필터링해 그대로 유지 —
+`_meta.coverage`의 `esr_posted`/`esr_not_yet`/`life_core_only`도 동일하게 분리하고 `ratio_only` /
+`ratio_only_posted` / `ratio_only_not_yet` / `ratio_only_caveat` 4필드 신설.
+
+**2) SOMPOダイレクト source_url 교체 (owner 승인)**: `J-ESR/fy2025_esr_census_20260912.csv`에서 분책
+(`insgenjo2026_05.pdf`, 재산상황편 21p, 손해율 표 없음) → 전체책(`insgenjo2026.pdf`, 100p, 全冊)으로 교체.
+행-인덱스 `csv.reader`/`csv.writer`로 편집(BOM·LF 라인엔딩 원본 그대로 보존, `diff` 1행만 확인). **교체 전
+검증**: `J-ESR/jesr_http.get`으로 200 · `content-type: application/pdf` · 2,486,089 bytes 확인 → PyMuPDF로
+본문 추출해 p9·p68에서 「正味損害率72.8%／正味事業費率24.3%」 직접 대조(`nonlife_ratio_census.json` B조 수치와
+일치) → p64 5개년표 주석에서 esr not_yet 플레이스홀더("2025年度の単体ベースのソルベンシー・マージン比率の開示は
+2026年10月末の予定です。")를 전체책에서도 재확인(`esr_status`는 `not_yet` 그대로, URL만 교체). `doc_type`에
+"全冊" 표기 추가, `checked_at` 2026-09-14, `notes`에 교체 근거 기록.
+
+**3) 파이프라인 순서 + 재실행 함정**: census 수정 → `check_source_urls.py --all`(dead=0) →
+`check_esr_in_source.py --all`(found=16/not_found=0) → `build_jesr_page_json.py` 1차 →
+`build_jesr_detail_json.py`(24사 추가) → **`build_jesr_page_json.py` 2차 재실행이 필수임을 이번에 발견**:
+`_meta.group_children`이 `jp/jesr_detail.json`을 읽어 지주(연결)↔자회사(単体) 상세페이지를 잇는데, 1차 실행
+시점엔 아직 24사가 jesr_detail에 없어 stale — `test_jp_deploy_matches_census.py`가 `_meta.group_children`
+불일치로 이 순서 문제를 실제로 잡아냈다(재실행 후 Nisshin/Tokio Marine Direct/Aioi Nissay Dowa/Mitsui
+Direct/Sompo Direct가 각 지주 아래 신규 연결됨). 고정점 확인(④⑤를 한 번씩 더 돌려 `generated_at` 제외 바이트
+동일 재확인) → `pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py` **111 passed** →
+`scripts/prepush_check.py` **REDUCED(jp-scope) gate-clear**(비교대상 13개 파일 전부 jp 범위, 242 passed
+2 skipped). **ESR 16사 값 불변 확인**: `esr_pct`/`eligible_capital`/`required_capital`/`as_of`/`scope` 5필드
+전건 실행 전/후 byte diff 0.
+
+공유 워킹트리 메모: `jp/*.html`·`jesr_app.js`·`jp.css` 6개 파일이 이번 세션 내내 `git status`에 M으로 잡혔으나
+이 세션은 그 파일들을 Read/Edit/Write한 적이 없음(designer 병렬 세션의 미커밋 변경) — 커밋 시 반드시 이 티켓의
+7개 파일만 명시 add: `J-ESR/build_jesr_detail_json.py` · `J-ESR/esr_in_source_health.json` ·
+`J-ESR/fy2025_esr_census_20260912.csv` · `J-ESR/jesr_master.json` · `J-ESR/source_url_health.json` ·
+`jp/jesr_detail.json` · `jp/jesr_esr.json`. git commit/push는 오케스트레이터 소관, 이번 세션은 미실행.
+
+모델: Sonnet 5. 소요: 약 45분(케이스 조사 15분 + 빌더 확장 20분 + 파이프라인 검증 10분).
 
 ## 2026-09-12 — J-ESR `/jp/` 페이지 데이터 JSON 신설 (`inbox/publishing/20260912T0446Z`)
 

@@ -52,6 +52,7 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
 
 JESR_DIR = Path(__file__).resolve().parent
 ROOT = JESR_DIR.parent
@@ -64,6 +65,15 @@ RULES_PATH = JESR_DIR / "esr_aggregation_rules.json"
 JESR_MASTER_PATH = JESR_DIR / "jesr_master.json"
 JESR_ESR_PATH = JP_DIR / "jesr_esr.json"
 OUT_PATH = JP_DIR / "jesr_detail.json"
+
+# --- ratio-only 손보 24사 (2026-09-14, owner-approved 손해율 라운드) --------------
+# J-ESR/nonlife_ratio_census.json rows with verdict=="found" carry ONLY 正味損害率/
+# 正味事業費率/合算率 (no ESR capital layer -- not in extracted_sample_values.json's
+# schema-item pipeline at all). Kept in a separate branch below instead of forcing
+# them through that pipeline; `data_scope: "ratio_only"` is the designer-agreed
+# signal so the page skips panels this layer has no data for (every OTHER company
+# above implicitly has data_scope "full").
+NONLIFE_RATIO_CENSUS_PATH = JESR_DIR / "nonlife_ratio_census.json"
 
 RISK_KEYS = [
     ("rc_life", "rc_life"),
@@ -620,6 +630,144 @@ def build_profit_block(profit_raw, items_by_id):
     }
 
 
+RATIO_ONLY_ID_BY_JP = {
+    "AIG損害保険": "aig_nonlife",
+    "MS&ADインシュアランスグループホールディングス": "msad_holdings",
+    "NTTドコモ損害保険": "nttdocomo_nonlife",
+    "SBI損害保険": "sbi_nonlife",
+    "SOMPOダイレクト損害保険": "sompo_direct",
+    "あいおいニッセイ同和損害保険": "aioi_nissay_dowa",
+    "さくら損害保険": "sakura_nonlife",
+    "アクサ損害保険": "axa_nonlife",
+    "アニコム損害保険": "anicom_nonlife",
+    "エイチ・エス損害保険": "hs_nonlife",
+    "キャピタル損害保険": "capital_nonlife",
+    "ジェイアイ傷害火災保険": "ji_accident_fire",
+    "セコム損害保険": "secom_nonlife",
+    "ソニー損害保険": "sony_nonlife",
+    "トーア再保険": "toa_re",
+    "ペット＆ファミリー損害保険": "pet_and_family",
+    "レスキュー損害保険": "rescue_nonlife",
+    "三井ダイレクト損害保険": "mitsui_direct",
+    "全管協れいわ損害保険": "zenkankyo_reiwa",
+    "日新火災海上保険": "nisshin_fire_marine",
+    "日本地震再保険": "japan_earthquake_re",
+    "東京海上ダイレクト損害保険": "tokiomarine_direct",
+    "楽天損害保険": "rakuten_nonlife",
+    "第一アイペット損害保険": "daiichi_ipet",
+}
+
+# owner 2026-09-14: caveat stays attached to the SAME ratio values (not split into a separate
+# column) -- ratio_caveat is a display label for what's already in profit.ratios, not a filter.
+# `text` is pulled verbatim from the census row's own `caveat` field at build time (see
+# build_ratio_only_companies) so this table only has to get the *code* right, never retype the
+# Korean caveat prose (which would risk a silent transcription drift from the source census).
+RATIO_CAVEAT_CODE_BY_JP = {
+    "トーア再保険": "lae_excluded",
+    "ソニー損害保険": "ei_basis",
+    "レスキュー損害保険": "ocr_read",
+    "MS&ADインシュアランスグループホールディングス": "simple_sum",
+}
+
+
+def _ratio_pair(per_year, cur_year="FY2025", prev_year="FY2024"):
+    per_year = per_year or {}
+    return {"cur": per_year.get(cur_year), "prev": per_year.get(prev_year)}
+
+
+def build_ratio_only_companies(public_by_en):
+    """24 손보사 (nonlife_ratio_census.json verdict=='found') -- ratio layer only.
+    esr_status is derived from jp/jesr_esr.json membership (public_by_en, already loaded by
+    build()) rather than re-reading J-ESR/fy2025_esr_census_20260912.csv here -- every one of
+    these 24 companies is either in that posted list (MS&AD) or not (the other 23, "not_yet";
+    none of the 24 census rows are esr not_found), so a second CSV read/join is unnecessary."""
+    if not NONLIFE_RATIO_CENSUS_PATH.exists():
+        return []
+    census = load_json(NONLIFE_RATIO_CENSUS_PATH)
+    out = []
+    seen_ids = set()
+    for row in census.get("rows", []):
+        if row.get("verdict") != "found":
+            continue
+        jp = row["company_jp"]
+        cid = RATIO_ONLY_ID_BY_JP.get(jp)
+        if cid is None:
+            raise SystemExit(
+                f"build_ratio_only_companies: no id mapping for census company_jp={jp!r} "
+                "-- add it to RATIO_ONLY_ID_BY_JP"
+            )
+        if cid in seen_ids:
+            raise SystemExit(f"build_ratio_only_companies: duplicate id {cid!r}")
+        seen_ids.add(cid)
+
+        loss = row.get("loss_ratio_pct") or {}
+        expense = row.get("expense_ratio_pct") or {}
+        combined = row.get("combined_ratio_pct") or {}
+        years = sorted(set(loss) | set(expense) | set(combined), key=lambda y: int(y[2:]))
+
+        caveat_code = RATIO_CAVEAT_CODE_BY_JP.get(jp)
+        ratio_caveat = {"code": caveat_code, "text": row.get("caveat")} if caveat_code else None
+
+        src_url = row.get("source_url") or ""
+        source_doc = Path(urlsplit(src_url).path).name or None
+
+        out.append({
+            "id": cid,
+            "company_jp": jp,
+            "company_en": row["company_en"],
+            "sector": "nonlife",
+            "scope": row.get("scope"),
+            "as_of": "2026-03-31",
+            "esr_status": "posted" if row["company_en"] in public_by_en else "not_yet",
+            "esr_placeholder": None,
+            "source_url": row.get("source_url"),
+            "doc_type": row.get("doc_type"),
+            "doc_date": None,
+            "headline": {"eligible_capital": None, "required_capital": None, "esr_pct": None, "preliminary": None},
+            "capital": {},
+            "risk": {out_key: None for out_key, _src_key in RISK_KEYS},
+            "market_sub": {k: None for k in MARKET_SUB_KEYS},
+            "sensitivity": [],
+            "aggregation": None,
+            "axes": {},
+            "items": {},
+            "profit": {
+                "accounting_basis": "jgaap",
+                "ifrs17_applied": False,
+                "evidence": None,
+                "source_doc": source_doc,
+                "unit": "pct",
+                "items": {},
+                "ratios": {
+                    "pl_loss_ratio_pct": _ratio_pair(loss),
+                    "pl_expense_ratio_pct": _ratio_pair(expense),
+                    "pl_combined_ratio_pct": _ratio_pair(combined),
+                },
+                "core": {},
+                "adjustments": {},
+                "status": "extracted",
+            },
+            "history": {
+                "fiscal_years": years,
+                "unit": "pct",
+                "series": {
+                    "hist_loss_ratio_pct": [loss.get(y) for y in years],
+                    "hist_expense_ratio_pct": [expense.get(y) for y in years],
+                    "hist_combined_ratio_pct": [combined.get(y) for y in years],
+                },
+            },
+            "capital_tree": [],
+            "risk_tree": [],
+            "profit_flow": None,
+            "by_line": None,
+            "core_history": None,
+            "bs": build_bs_block(None),
+            "data_scope": "ratio_only",
+            "ratio_caveat": ratio_caveat,
+        })
+    return out
+
+
 def build(extracted, schema, jesr_master, jesr_esr):
     labels = {}
     bs_by_id = (load_json(BS_PATH).get("companies") or {}) if BS_PATH.exists() else {}
@@ -850,7 +998,16 @@ def build(extracted, schema, jesr_master, jesr_esr):
                 "bs": build_bs_block(bs_by_id.get(cid)),
             })
 
+    # 2026-09-14 (owner-approved 손보 손해율 라운드): ratio-only companies, appended last so the
+    # census-id collision check in build_ratio_only_companies runs against a stable id set above.
+    ratio_only_companies = build_ratio_only_companies(public_by_en)
+    for c in ratio_only_companies:
+        if any(existing["id"] == c["id"] for existing in companies_out):
+            raise SystemExit(f"build_ratio_only_companies: id {c['id']!r} collides with an existing company")
+    companies_out.extend(ratio_only_companies)
+
     meta_src = jesr_esr.get("_meta", {})
+    full_companies = [c for c in companies_out if c.get("data_scope") != "ratio_only"]
     return {
         "_meta": {
             "as_of": meta_src.get("as_of"),
@@ -863,13 +1020,20 @@ def build(extracted, schema, jesr_master, jesr_esr):
             "next_update": meta_src.get("next_update"),
             "coverage": {
                 "detail_total": len(companies_out),
-                "esr_posted": sum(1 for c in companies_out if c["esr_status"] == "posted"),
-                "esr_not_yet": sum(1 for c in companies_out if c["esr_status"] == "not_yet"),
-                "life_core_only": sum(1 for c in companies_out if c["esr_status"] == "life_core_only"),
+                # esr_posted/esr_not_yet/life_core_only stay scoped to the "full" (non ratio_only)
+                # companies -- this is the set self_check's n_posted/n_not_yet structural assertion
+                # guards, so it must stay in sync with that filter (see full_companies above).
+                "esr_posted": sum(1 for c in full_companies if c["esr_status"] == "posted"),
+                "esr_not_yet": sum(1 for c in full_companies if c["esr_status"] == "not_yet"),
+                "life_core_only": sum(1 for c in full_companies if c["esr_status"] == "life_core_only"),
                 "by_line_total": sum(1 for c in companies_out if c.get("by_line")),
                 "bs_extracted": sum(1 for c in companies_out if (c.get("bs") or {}).get("status") == "extracted"),
                 "posted_total": len(jesr_esr.get("records", [])),
                 "census_total": meta_src.get("census", {}).get("total"),
+                "ratio_only": len(ratio_only_companies),
+                "ratio_only_posted": sum(1 for c in ratio_only_companies if c["esr_status"] == "posted"),
+                "ratio_only_not_yet": sum(1 for c in ratio_only_companies if c["esr_status"] == "not_yet"),
+                "ratio_only_caveat": sum(1 for c in ratio_only_companies if c.get("ratio_caveat")),
             },
         },
         "companies": companies_out,
@@ -879,14 +1043,31 @@ def build(extracted, schema, jesr_master, jesr_esr):
 def self_check(out, jesr_esr):
     errors = []
     companies = out["companies"]
-    n_posted = sum(1 for c in companies if c.get("esr_status") == "posted")
-    n_not_yet = sum(1 for c in companies if c.get("esr_status") == "not_yet")
+    # ratio_only (2026-09-14) is a separate, much shallower layer (see build_ratio_only_companies) --
+    # excluded from the "full" pipeline's structural counts, checked separately below instead.
+    full_companies = [c for c in companies if c.get("data_scope") != "ratio_only"]
+    ratio_only_companies = [c for c in companies if c.get("data_scope") == "ratio_only"]
+    n_posted = sum(1 for c in full_companies if c.get("esr_status") == "posted")
+    n_not_yet = sum(1 for c in full_companies if c.get("esr_status") == "not_yet")
     # 2026-09-13: not_yet 5 = 大型損保 3 + 生保 2(NN Life·第一生命 — 損益·基礎利益 층 추출, ESR 미공표)
     if n_posted != 2 or n_not_yet != 5:
         errors.append(f"expected 2 esr-posted + 5 esr-not_yet companies, got {n_posted} + {n_not_yet}")
     cov = out["_meta"]["coverage"]
     if cov.get("detail_total") != len(companies) or cov.get("esr_posted") != n_posted:
         errors.append(f"_meta.coverage inconsistent with companies: {cov}")
+    if len(ratio_only_companies) != len(RATIO_ONLY_ID_BY_JP):
+        errors.append(
+            f"expected {len(RATIO_ONLY_ID_BY_JP)} ratio_only companies, got {len(ratio_only_companies)}"
+        )
+    ratio_only_ids = [c["id"] for c in ratio_only_companies]
+    if len(set(ratio_only_ids)) != len(ratio_only_ids):
+        errors.append(f"ratio_only ids not unique: {ratio_only_ids}")
+    if set(ratio_only_ids) != set(RATIO_ONLY_ID_BY_JP.values()):
+        errors.append(
+            f"ratio_only ids don't match RATIO_ONLY_ID_BY_JP -- "
+            f"missing={set(RATIO_ONLY_ID_BY_JP.values()) - set(ratio_only_ids)} "
+            f"extra={set(ratio_only_ids) - set(RATIO_ONLY_ID_BY_JP.values())}"
+        )
 
     public_by_en = {r["company_en"]: r for r in jesr_esr.get("records", [])}
     for r in jesr_esr.get("_meta", {}).get("excluded_subsidiaries", []):
@@ -922,6 +1103,71 @@ def self_check(out, jesr_esr):
                 errors.append(f"{cen}: core_history not_acquired without a reason note")
             if c["headline"]["eligible_capital"] is not None or c["capital_tree"] or c["profit"] is not None:
                 errors.append(f"{cen}: life_core_only must not carry esr/profit blocks")
+            continue
+        if c.get("data_scope") == "ratio_only":
+            if c.get("sector") != "nonlife":
+                errors.append(f"{cen}: ratio_only company with sector != nonlife: {c.get('sector')}")
+            if c["capital"] or c["items"] or c["capital_tree"] or c["risk_tree"] or c["sensitivity"]:
+                errors.append(f"{cen}: ratio_only but esr-layer blocks are not empty")
+            if any(v is not None for v in c["risk"].values()) or any(v is not None for v in c["market_sub"].values()):
+                errors.append(f"{cen}: ratio_only but risk/market_sub carry values")
+            if (c["headline"]["esr_pct"] is not None or c["headline"]["eligible_capital"] is not None
+                    or c["headline"]["required_capital"] is not None):
+                errors.append(f"{cen}: ratio_only but headline carries ESR values {c['headline']}")
+            if c.get("aggregation") is not None:
+                errors.append(f"{cen}: ratio_only but aggregation is not None")
+            if c.get("by_line") is not None:
+                errors.append(f"{cen}: ratio_only but by_line is not None")
+            if c.get("core_history") is not None:
+                errors.append(f"{cen}: ratio_only but core_history is not None")
+            if c.get("profit_flow") is not None:
+                errors.append(f"{cen}: ratio_only but profit_flow is not None")
+            profit = c.get("profit") or {}
+            if profit.get("items"):
+                errors.append(f"{cen}: ratio_only profit.items expected empty, got {list(profit['items'])}")
+            if profit.get("core"):
+                errors.append(f"{cen}: ratio_only profit.core expected empty, got {list(profit['core'])}")
+            ratios = profit.get("ratios", {})
+            missing_ratio_labels = [k for k in ratios if k not in labels]
+            if missing_ratio_labels:
+                errors.append(f"{cen}: ratio_only profit.ratios ids missing from _meta.labels: {missing_ratio_labels}")
+            for period in ("cur", "prev"):
+                loss = ratios.get("pl_loss_ratio_pct", {}).get(period)
+                expense = ratios.get("pl_expense_ratio_pct", {}).get(period)
+                combined = ratios.get("pl_combined_ratio_pct", {}).get(period)
+                if None not in (loss, expense, combined) and abs((loss + expense) - combined) > 0.15 + 1e-9:
+                    errors.append(
+                        f"{cen}: ratio_only profit.ratios[{period}] 合算率 mismatch -- "
+                        f"{loss}+{expense} vs {combined} (tol 0.15)"
+                    )
+            history = c.get("history") or {}
+            years = history.get("fiscal_years", [])
+            series = history.get("series", {})
+            if not series or not years:
+                errors.append(f"{cen}: ratio_only history.series/fiscal_years empty")
+            missing_hist_labels = [k for k in series if k not in labels]
+            if missing_hist_labels:
+                errors.append(f"{cen}: ratio_only history ids missing from _meta.labels: {missing_hist_labels}")
+            for hid, arr in series.items():
+                if len(arr) != len(years):
+                    errors.append(f"{cen}: ratio_only history.series[{hid}] length {len(arr)} != fiscal_years length {len(years)}")
+            loss_s = series.get("hist_loss_ratio_pct")
+            exp_s = series.get("hist_expense_ratio_pct")
+            comb_s = series.get("hist_combined_ratio_pct")
+            if loss_s and exp_s and comb_s:
+                for i, y in enumerate(years):
+                    l, e, cv = loss_s[i], exp_s[i], comb_s[i]
+                    if l is not None and e is not None and cv is not None and abs(cv - (l + e)) > 0.15 + 1e-9:
+                        errors.append(
+                            f"{cen}: ratio_only history.series 合算率 mismatch at {y} -- "
+                            f"{l}+{e} vs {cv} (tol 0.15)"
+                        )
+            rc = c.get("ratio_caveat")
+            expected_code = RATIO_CAVEAT_CODE_BY_JP.get(c.get("company_jp"))
+            if expected_code and (not rc or rc.get("code") != expected_code or not rc.get("text")):
+                errors.append(f"{cen}: ratio_caveat expected code {expected_code!r}, got {rc}")
+            if not expected_code and rc is not None:
+                errors.append(f"{cen}: unexpected ratio_caveat {rc}")
             continue
         bl = c.get("by_line")
         if c.get("sector") == "nonlife":
@@ -1177,6 +1423,16 @@ def main():
         if c.get("esr_status") == "life_core_only":
             ch = c.get("core_history") or {}
             print(f"  {c['id']}: life_core_only status={ch.get('status')} series={sorted(ch.get('series', {}))}")
+            continue
+        if c.get("data_scope") == "ratio_only":
+            r = (c.get("profit") or {}).get("ratios", {})
+            print(
+                f"  {c['id']}: ratio_only esr_status={c.get('esr_status')} "
+                f"caveat={(c.get('ratio_caveat') or {}).get('code')} "
+                f"loss={r.get('pl_loss_ratio_pct')} expense={r.get('pl_expense_ratio_pct')} "
+                f"combined={r.get('pl_combined_ratio_pct')} "
+                f"history_years={(c.get('history') or {}).get('fiscal_years')}"
+            )
             continue
         bl = c.get("by_line") or {}
         print(f"  {c['id']}: by_line items={len(bl.get('items', {}))} checks={bl.get('checks', {}).get('pass')}/{bl.get('checks', {}).get('total')}")
