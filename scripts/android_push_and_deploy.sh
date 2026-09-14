@@ -10,6 +10,10 @@
 #   pkg install git
 #   git clone https://github.com/solvencyk/insurequant.git   # 최초 1회
 #   cd insurequant
+#   # !! clone 직후 HEAD 는 main 이고 main 은 slim 이라 scripts/ 가 아예 없다.
+#   #    (2026-09-14 확인: main 은 55개 파일, scripts/ 없음) 그래서 이 스크립트를 돌리려면
+#   #    **먼저 작업 브랜치로 체크아웃**해서 스크립트를 손에 넣어야 한다:
+#   git fetch origin <브랜치명> && git checkout -B <브랜치명> origin/<브랜치명>
 #   bash scripts/android_push_and_deploy.sh ~/storage/downloads/insurequant_XX.bundle
 #
 #   브랜치만 올리고 라이브 배포는 안 할 때:
@@ -19,7 +23,8 @@
 #   번들이 필요 없다 — origin 에서 바로 읽어 라이브 배포만 한다.
 #   bash scripts/android_push_and_deploy.sh --from-origin --branch <브랜치명>
 #
-#   브랜치 지정(생략하면 아래 기본값). 기본값이 옛 브랜치로 굳어 있으면 엉뚱한 걸 배포하므로
+#   브랜치 기본값은 **없다**(옛 브랜치로 굳어 엉뚱한 걸 배포하는 사고를 막으려고 없앴다).
+#   --from-origin 은 --branch 필수, 번들 모드는 번들 안의 ref 에서 읽는다.
 #   스크립트가 매 실행 브랜치명을 인쇄하고, origin 에 없으면 중단한다.
 #
 # 인증: HTTPS 는 비밀번호가 아니라 **토큰(PAT)** 이다.
