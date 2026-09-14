@@ -1,0 +1,228 @@
+{
+  "_meta": {
+    "generated_at": "2026-09-14T16:41:41Z",
+    "task": "A조 13사 正味収入保険料 수집 (손해율 버블차트 원크기용)",
+    "unit": "JPY_million (백만엔)",
+    "n_rows": 13,
+    "verdict_counts": {
+      "found": 13,
+      "not_in_doc": 0,
+      "unreachable": 0
+    },
+    "sanity_check_note": "자릿수 상식 검사: owner 제공 참고치(백만엔) 東京海上日動 2,596,396 / 損保ジャパン 2,311,577 / 三井住友海上 1,754,431 / 明治安田損保 15,692 / au損保 8,137 대비, 13사 값이 전부 같은 자릿수대(수백~수십만 백만엔)에 위치 — 100배 이탈 없음. 특히 あいおいニッセイ同和 추출에 쓴 것과 같은 표(MS&AD HD p56)의 三井住友海上(単体) 열 값(17,544億円=1,754,400百万円)이 owner 참고치 1,754,431百万円과 0.03% 오차로 정합해 이 표/단위환산(億円×100=百万円) 자체가 교차검증됨. AIG는 표 값(162,356百万円)과 본문 서술값(1,623億円=162,300百万円) 두 독립 표기가 상호 일치. SBI·キャピタル손보도 본문 서술 대비 검산 일치.",
+    "caveats": [
+      "MS&ADインシュアランスグループホールディングス는 그룹 완전연결이 아니라 결산설명자료 p56의 「２社合計（単純合計）」(三井住友海上+あいおいニッセイ同和)이다. A조 13사 목록에 あいおいニッセイ同和가 별도 행으로도 포함돼 있어, 두 행을 그대로 합산해 버블차트 총합을 내면 あいおいニッセイ同和분이 이중계상된다. census의 loss_ratio_pct도 같은 열을 쓰므로 이번 산출은 census 방법론과 동일 선상이며, 값을 바꾸지 않고 이 caveat만 남긴다(오케스트레이터/designer 판단 사항).",
+      "AIG는 대표적경영지표 표에 이미 백만円 단위로 나와 있어 환산 불필요, 나머지 10사(MS&AD/あいおい 2건 제외)도 전부 원문이 이미 百万円 단위라 환산 없이 그대로 사용."
+    ]
+  },
+  "rows": [
+    {
+      "company_jp": "AIG損害保険",
+      "company_en": "AIG Non-Life Japan",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 162356,
+        "FY2024": 155609
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.aig.co.jp/content/dam/aig/sonpo/jp/ja/documents/company/disclosures/aigsonpo_disclosure_2026.pdf",
+      "page": "p26(代表的な経営指標, 5개년표, pdf idx25)",
+      "quote": "代表的な経営指標（単位：百万円）2024年度／2025年度: 正味収入保険料 155,609／162,356。同 p24(pdf idx23) 본문: 「当年度の正味収入保険料は、前年度に比べて67億円の増収となり、1,623億円となりました。」（162,356百万円=1,623億円과 정합）。",
+      "attempts": 1
+    },
+    {
+      "company_jp": "MS&ADインシュアランスグループホールディングス",
+      "company_en": "MS&AD Insurance Group Holdings",
+      "verdict": "found",
+      "scope": "group",
+      "net_premiums_written": {
+        "FY2025": 3225600,
+        "FY2024": 3109600
+      },
+      "unit_raw": "億円",
+      "converted_from": "億円×100→百万円 (FY2025: 32,256億円→3,225,600百万円 / FY2024: 32,256-1,160=31,096億円→3,109,600百万円, 前期比열에서 역산)",
+      "source_url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
+      "page": "p56「③国内損害保険 主要2社 業績概要①」(2社合計=単純合計열, pdf idx55)",
+      "quote": "p56 ２社合計（単純合計）열: 「正味収入保険料※1 32,256（前期比+1,160）」（単位：億円）。※1全種目ベース、日本基準。 **주의: 이 값은 그룹 전체 연결이 아니라 三井住友海上+あいおいニッセイ同和 2社 단순합산이다**(census 원래 caveat과 동일 — 자회사 2사를 census에 따로 실으면 중복 계상 위험, 이번 A조 산출에는 あいおいニッセイ同和가 별도 행으로도 있어 동일 위험 존재).",
+      "attempts": 1
+    },
+    {
+      "company_jp": "NTTドコモ損害保険",
+      "company_en": "NTT Docomo Non-Life",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 119242,
+        "FY2024": 95871
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.docomo-sompo.com/assets/docs/2026/01/disclosure/disclosure20260730.pdf",
+      "page": "p8(直近の2事業年度における主要な業務の状況を示す指標, pdf idx8)",
+      "quote": "項目/2024年度/2025年度 表: 「正味収入保険料 95,871 119,242」（単位：百万円）。2024年4月設立이라 2개년만 존재(census 비율표와 동일 사유).",
+      "attempts": 1
+    },
+    {
+      "company_jp": "SBI損害保険",
+      "company_en": "SBI Non-Life",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 45551,
+        "FY2024": 39566
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.sbisonpo.co.jp/company/pdf/SBI_Disclosure2026_All.pdf",
+      "page": "p20(直近の2事業年度における代表的な経営指標, pdf idx21)",
+      "quote": "項目/2024年度/2025年度 표: 「正味収入保険料 39,566百万円 45,551百万円」。census quote의 「正味収入保険料455億円」(하이라이트, p23)과 정합(45,551百万円≈455億円).",
+      "attempts": 1
+    },
+    {
+      "company_jp": "SOMPOダイレクト損害保険",
+      "company_en": "Sompo Direct",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 73291,
+        "FY2024": 70704
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.sompo-direct.co.jp/company/outline/insgenjo2026.pdf",
+      "page": "p9(代表的な経営指標, 3개년표, pdf idx8)",
+      "quote": "代表的な経営指標（単位：百万円）2023/2024/2025年度: 正味収入保険料 69,256／70,704／73,291（対前期増減率 7.5%／2.1%／3.7%）。본문: 「2025年度正味収入保険料は対前年度比で3.7％増加し、73,291百万円となりました。」",
+      "attempts": 1
+    },
+    {
+      "company_jp": "あいおいニッセイ同和損害保険",
+      "company_en": "Aioi Nissay Dowa",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 1471100,
+        "FY2024": 1430300
+      },
+      "unit_raw": "億円",
+      "converted_from": "億円×100→百万円 (FY2025: 14,711億円→1,471,100百万円 / FY2024: 14,711-408=14,303億円→1,430,300百万円, 前期比열에서 역산)",
+      "source_url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
+      "page": "p56「③国内損害保険 主要2社 業績概要①」あいおいニッセイ同和損保（単体）열(pdf idx55)",
+      "quote": "p56 あいおいニッセイ同和損保（単体）열: 「正味収入保険料※1 14,711（前期比+408）」（単位：億円）。同じ표의 三井住友海上（単体）열 17,544億円=1,754,400百万円이 owner가 준 기준치 三井住友海上 1,754,431百万円과 오차 0.03% 이내로 정합 — 이 표/단위환산 신뢰도 교차검증됨.",
+      "attempts": 1
+    },
+    {
+      "company_jp": "さくら損害保険",
+      "company_en": "Sakura Non-Life",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 10446,
+        "FY2024": 9147
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.sakura-ins.co.jp/company/file/disclosure_07.pdf",
+      "page": "p4(代表的な経営指標等, pdf idx4)",
+      "quote": "代表的な経営指標等 2024年度／2025年度: 「正味収入保険料 ９，１４７百万円／１０，４４６百万円」（전각 숫자 원문）。",
+      "attempts": 1
+    },
+    {
+      "company_jp": "アクサ損害保険",
+      "company_en": "AXA Non-Life Japan",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 53444,
+        "FY2024": 53846
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.axa-direct.co.jp/assets/pdf/annual_report_2026.pdf",
+      "page": "p26(主要業績, pdf idx14) / p25(元受正味保険料・正味収入保険料の推移 그래프, pdf idx13)",
+      "quote": "主要業績 2024年度／2025年度: 「❷正味収入保険料 53,846百万円／53,444百万円」。同じ값이 p25(pdf idx13) 5개년 그래프에도 「2024:53,846 2025:53,444」로 동일하게 재확인됨.",
+      "attempts": 1
+    },
+    {
+      "company_jp": "アニコム損害保険",
+      "company_en": "Anicom Insurance",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 64362,
+        "FY2024": 59129
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.anicom-sompo.co.jp/company/disclosure/pdf/DC_AS2026.pdf",
+      "page": "p10(代表的な経営指標, 3개년표, pdf idx11)",
+      "quote": "代表的な経営指標 2023/2024/2025年度: 正味収入保険料 54,497百万円／59,129百万円／64,362百万円。본문 병기: 「643億62百万円（108.8％）」= 64,362百万円과 정합.",
+      "attempts": 1
+    },
+    {
+      "company_jp": "エイチ・エス損害保険",
+      "company_en": "HS Non-Life",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 3404,
+        "FY2024": 3147
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.hs-sonpo.co.jp/img/disclosure_2026.pdf",
+      "page": "p8(代表的な経営指標, pdf idx8)",
+      "quote": "代表的な経営指標 2024年度／2025年度: 「正味収入保険料 3,147百万円 3,404百万円」。해외여행보험 전업 소형사(종업원 9명).",
+      "attempts": 1
+    },
+    {
+      "company_jp": "キャピタル損害保険",
+      "company_en": "Capital Non-Life",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 6129,
+        "FY2024": 6448
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.capital-sonpo.co.jp/company/manual/pdf/disc_2026-all.pdf",
+      "page": "p4(代表的な経営指標, pdf idx5) / p26(主要な業務の状況を示す指標の推移 5개년표, pdf idx27)",
+      "quote": "代表的な経営指標: 「正味収入保険料 6,129百万円 前期比5.0％の減収」。5개년표(p26): 2021-2025年度 正味収入保険料 5,131／6,115／6,941／6,448／6,129（단위：百万円）— FY2024=6,448 확정, 6,129/6,448=0.9505(4.95%감소)로 본문 5.0%와 정합.",
+      "attempts": 1
+    },
+    {
+      "company_jp": "ジェイアイ傷害火災保険",
+      "company_en": "JI Accidental Fire",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 13661,
+        "FY2024": 12485
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.jihoken.co.jp/wp-content/themes/jihoken/assets/image/pdf/disclosure/disc2026-all.pdf",
+      "page": "p1(主要な経営指標等の推移, 5개년표, pdf idx5)",
+      "quote": "主要な経営指標等の推移（単位：百万円）2021-2025年度 正味収入保険料（対前期増減率）: 5,294／10,525／12,429／12,485／13,661（2025年度は対前期9.4%増）。",
+      "attempts": 1
+    },
+    {
+      "company_jp": "セコム損害保険",
+      "company_en": "SECOM Non-Life",
+      "verdict": "found",
+      "scope": "solo",
+      "net_premiums_written": {
+        "FY2025": 60000,
+        "FY2024": 57428
+      },
+      "unit_raw": "百万円",
+      "converted_from": null,
+      "source_url": "https://www.secom-sonpo.co.jp/gaiyo/pdf/disclosure2026.pdf",
+      "page": "p2(代表的な経営指標, 3개년표, pdf idx3)",
+      "quote": "代表的な経営指標 2023/2024/2025年度: 正味収入保険料 51,929百万円／57,428百万円／60,000百万円。",
+      "attempts": 1
+    }
+  ]
+}
