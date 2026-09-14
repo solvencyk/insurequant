@@ -1,0 +1,382 @@
+{
+  "_meta": {
+    "generated_at": "2026-09-14",
+    "purpose": "손보 13사(B조) 正味収入保険料(net premiums written) 수집 -- 손해율·사업비율 버블차트 원 크기용. 출처는 nonlife_ratio_census.json rows[]의 source_url/page 그대로 재사용.",
+    "companies_total": 13,
+    "verdict_counts": {
+      "found": 13,
+      "not_in_doc": 0,
+      "unreachable": 0
+    },
+    "unit_convention": "JPY_million (백만엔) -- 원문 단위가 이미 百万円이어서 13사 전부 변환 불필요",
+    "self_check_notes": [
+      "자망상식 검사 (백만엔 단위, FY2025 기준): 기확보 5사(동경해상녹동화화재 2,596,396 / 손보재팬 2,311,577 / 미츠스미토해상 1,754,431 / 메이지야스다손해 15,692 / au손해 8,137)와 비교해 B조 13사 자망수가 자망상식시 보이지 않는지 전수 점검.",
+      "최대 (Kyoei 202,959): 대형사 하위 범위, 회사 규모(총자산 5,794억엔)와 정합 -- 자망 없음.",
+      "최소 (Zenkankyou 26): 화재 단일종목의 극소형사, 이미 이전 라운드에서 원문 값으로 확인된 값(자망 없음 -- 오히려 owner가 예시로 제시한 값과 일치).",
+      "Yamap 213 -- owner 예시값과 정확히 일치(자망 없음).",
+      "대형사(Kyoei 202,959 / Toa 174,482 / Japan Earthquake Re 290,926 / Nisshin 161,943)와 소형사(Zenkankyou 26 / Yamap 213 / Rescue 783)간 자망 차이가 크다 -- 하지만 각사 독자적으로 변환없이 원문 표에서 그대로 읽은 값이고, 같은 문서의 손해율·사업비율과 정합하는 특수값(Zenkankyou의 극단 합산율 수백프로 등)이 이미 기존 census에 박제되어 있어 자망 수치 자체가 이상하지 않다고 판단.",
+      "단위 변환: 13사 전부 원문이 이미 (単位：百万円) 표기된 표에서 직접 읽었으므로 변환 없음(converted_from='no_conversion_needed'). 억엔 차트값과 대조해 자맜수 일치 확인된 사(Sony/Kyoei)는 quote에 기록."
+    ],
+    "not_touched": [
+      "census (fy2025_esr_census_*.csv)",
+      "jp/*.json",
+      "jesr_master.json",
+      "nonlife_ratio_census*.json",
+      "nonlife_ratio_census_A.json/_C.json"
+    ],
+    "note": "census·jp/*.json·마스터·nonlife_ratio_census*.json 미수정 -- 이 파일은 별도 결과 파일이고 census 병합은 오케스트레이터 소관."
+  },
+  "companies": [
+    {
+      "company_jp": "ソニー損害保険",
+      "company_en": "Sony Non-Life",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 199523,
+        "FY2024": 173896
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed (already JPY_million in source)",
+      "read_method": "automated_text_extraction (pymupdf get_text)",
+      "source_url": "https://www.sonyfg.co.jp/ja/financial_info/results/sfgi_fy2025_4q_01.pdf",
+      "page": "PDF p.34 (1-indexed; 'ソニー損保｜主要指標の推移', FY25.4Q累計 column)",
+      "quote": "p34「ソニー損保｜主要指標の推移」単位：百万円 / 元受正味保険料 FY24.4Q累計 173,896 / FY25.4Q累計 199,523（p10のチャートの億円単位値 FY24 1,738億円・FY25 1,995億円と整合）",
+      "caveat": "이 IR 자료에는 '正味収入保険料'(순수입어수입보험료, 재보험 출재/수재 반영후 값) 수치가 없고 '元受正味保険料'(원수보험료에서 해약반금만 차감, 재보험 미반영)만 있다. 전체 문서(38p) 전 순색인색(페이지 37)에서 '正味収入保険料が堆調に増加' 라는 서술만 있고 수치는 없다(전문 검색 확인: '収入保険料' 포함 페이지는 p37 하나뿐이고 공식 값은 없음). 위 값은 정의가 다른 대체 지표이며, 순수입보험료보다 크게 나옴 가능(출재 전 금액이라). 이 회사만 다른 열에 놓으면 버블 크기가 과대평가될 수 있다.",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://www.sonyfg.co.jp/ja/financial_info/results/sfgi_fy2025_4q_01.pdf",
+          "result": "HTTP 200, 1900400 bytes"
+        },
+        {
+          "method": "pymupdf full-text search for '正味収入保険料'",
+          "result": "found only on p37 (narrative, no number) -- no numeric 正味収入保険料 table in this PDF"
+        },
+        {
+          "method": "pymupdf full-text search for '元受正味保険料'",
+          "result": "found on p10 (chart, 億円) and p34 (table, 百万円, quarterly cumulative) -- used p34 FY25.4Q累計 as annual figure"
+        }
+      ]
+    },
+    {
+      "company_jp": "トーア再保険",
+      "company_en": "Toa Reinsurance",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 174482,
+        "FY2024": 176029
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text)",
+      "source_url": "https://www.toare.co.jp/img/company/disclo/pdf/toa_ar2026.pdf",
+      "page": "PDF p.5 (代表的な経営指標等)",
+      "quote": "p5「代表的な経営指標等」（単位：百万円） 正味収入保険料 2023年度185,075 / 2024年度176,029 / 2025年度174,482",
+      "caveat": "再保険会社だが 正味収入保険料 라는 표준 라벨을 그대로 쓴다(이름이 다른 것은 아니다). 다만 같은 문서의 손해율 산식(正味支払保険金÷正味収入保険料, LAE 미포함)이 원수사와 다르다는 점은 비율　쪽 케이뻐트이고 보험료 값 자체에는 영향 없음.",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://www.toare.co.jp/img/company/disclo/pdf/toa_ar2026.pdf",
+          "result": "HTTP 200, 5227726 bytes"
+        },
+        {
+          "method": "pymupdf full-text search + dump p5",
+          "result": "table found directly, 3-year series with FY2025 value"
+        }
+      ]
+    },
+    {
+      "company_jp": "ペット＆ファミリー損害保険",
+      "company_en": "Pet & Family",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 12628,
+        "FY2024": 11256
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text)",
+      "source_url": "https://www.petfamilyins.co.jp/company/disclosure2026.pdf",
+      "page": "PDF p.6 (代表的な経営指標, FY2025値 12,628百万円) + p.23 (保険引受収益表, FY2024=11,256百万円)",
+      "quote": "p6「代表的な経営指標」 2025年度 正味収入保険料 12,628百万円。 p23 保険引受利益表の「保険引受収益」行: 2023年度 10,444 / 2024年度 11,256 / 2025年度 12,628（百万円） -- 2025年度値（12,628）가 p6の 正味収入保険料 와 정확히 일치해 이 회사는 保険引受収益 ≈ 正味収入保険料로 확인.",
+      "caveat": "FY2024값(11,256)은 p6의 '代表的な経営指標'(1개년만 실림)가 아니라 p23의 保険引受収益 표(3개년)에서 가져왔다. 라벨이 正味収入保険料가 아니라 保険引受収益이지만 FY2025하나로 두 값이 정확히 일치해(12,628=12,628) 동일 지표로 판단.",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://www.petfamilyins.co.jp/company/disclosure2026.pdf",
+          "result": "HTTP 200, 1256770 bytes"
+        },
+        {
+          "method": "pymupdf full-text search '正味収入保険料'",
+          "result": "p6 has FY2025-only figure; p23 has 3-year 保険引受収益 table used for FY2024 cross-check"
+        }
+      ]
+    },
+    {
+      "company_jp": "ヤマップネイチャランス損害保険",
+      "company_en": "Yamap Naturance",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 213,
+        "FY2024": 109
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text)",
+      "source_url": "https://image.yamap.co.jp/19fb5e1df2138d.pdf",
+      "page": "PDF p.9 (代表的な経営指標) + p.26/27 (正味収入保険料 種目別表)",
+      "quote": "p9「代表的な経営指標」 正味収入保険料 213百万円（前期比195.4％の増収）。 p26/27「■正味収入保険料」表 合計 2023年度− / 2024年度109 / 2025年度213（百万円）",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://image.yamap.co.jp/19fb5e1df2138d.pdf",
+          "result": "HTTP 200, 2109670 bytes"
+        },
+        {
+          "method": "pymupdf full-text search '正味収入保険料'",
+          "result": "found on p9 (headline) and p26/27 (2-year table by line of business)"
+        }
+      ]
+    },
+    {
+      "company_jp": "レスキュー損害保険",
+      "company_en": "Rescue Non-Life",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 783,
+        "FY2024": 770
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "VISUAL (육안 판독) -- 이미지 스캔 PDF라 pymupdf get_text() 텍스트 추출이 0건(전 페이지 해당). get_pixmap(dpi=200)로 페이지를 PNG 렌더링 후 육안으로 표를 판독했다. 자동추출과 달리 신뢰도가 다르다.",
+      "source_url": "https://www.rescue-sonpo.jp/upload_files/news/disclo2025.pdf",
+      "page": "PDF page index 4 (printed page '4', 代表的な経営指標 표)",
+      "quote": "(육안 판독, printed p4) 項目：正味収入保険料 / 2024年度 770 / 2025年度 783（単位：百万円）. 같은 표의 正味損害率 35.0%/30.0%와 正味事業費率 61.3%/61.5%가 기확보된 nonlife_ratio_census.json 값과 일치.",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://www.rescue-sonpo.jp/upload_files/news/disclo2025.pdf",
+          "result": "HTTP 200, 17839535 bytes"
+        },
+        {
+          "method": "pymupdf full-text search '正味収入保険料'",
+          "result": "0 hits across all 50 pages -- scanned image PDF, no text layer"
+        },
+        {
+          "method": "pymupdf get_pixmap(dpi=200) render p3-5,17-19 + visual read",
+          "result": "p4 (printed '4') has clear 代表的な経営指標 table, legible despite no text layer -- read 770/783 百万円"
+        }
+      ]
+    },
+    {
+      "company_jp": "三井ダイレクト損害保険",
+      "company_en": "Mitsui Direct",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 43937,
+        "FY2024": 37395
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text)",
+      "source_url": "https://www.mitsui-direct.co.jp/download/pdf/disclosure/disclosure2026.pdf",
+      "page": "PDF p.13 (主要な経営指標等の推移, 5年間)",
+      "quote": "p13「主要な経営指標等の推移」 正味収入保険料 2021年度 35,400 / 2022年度 34,530 / 2023年度 35,212 / 2024年度 37,395 / 2025年度 43,937（単位：百万円）",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://www.mitsui-direct.co.jp/download/pdf/disclosure/disclosure2026.pdf",
+          "result": "HTTP 200, 3089150 bytes"
+        },
+        {
+          "method": "pymupdf full-text search + dump p13",
+          "result": "5-year series table found directly"
+        }
+      ]
+    },
+    {
+      "company_jp": "全管協れいわ損害保険",
+      "company_en": "Zenkankyou Reiwa",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 26,
+        "FY2024": 16
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text) -- 값은 nonlife_ratio_census.json의 기존 quote에 이미 포함되어 있어 재다운로드 없이 그 문자열을 그대로 사용",
+      "source_url": "https://www.zkreiwa-sonpo.co.jp/wp1/wp-content/uploads/2026/07/全管協れいわ損害保険の現状2026_業績データ編.pdf",
+      "page": "本誌 p10 (代表的な経営指標等, 3ヶ年)",
+      "quote": "本誌p10 代表的な経営指標等: 正味収入保険料 2023年度9百万円 2024年度16百万円 2025年度26百万円（nonlife_ratio_census.json rows[] 기존 quote 그대로임, 출처는 동일 PDF이나 새로 열지는 않았음임을 명시함）",
+      "caveat": "극소형사. 직전 라운드(30)에서 이미 이 값이 확인되어 census에 기록되어 있었다(owner의 예시 값 26백만엔과 일치).",
+      "attempts": [
+        {
+          "method": "reused existing quote from nonlife_ratio_census.json rows[] (no re-download needed, value already present verbatim)",
+          "result": "FY2023=9, FY2024=16, FY2025=26 百万円"
+        }
+      ]
+    },
+    {
+      "company_jp": "共栄火災海上保険",
+      "company_en": "Kyoei Fire & Marine",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 202959,
+        "FY2024": 184970
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text, combined CA bundle TLS fix)",
+      "source_url": "https://www.kyoeikasai.co.jp/pdf/about/company/disclosure/2026all.pdf",
+      "page": "PDF p.6 (代表的な経営指標について)",
+      "quote": "p6「代表的な経営指標について」(単位：百万円) ①正味収入保険料 2024年度184,970 / 2025年度202,959（グラフ億円値：2024年1,849億円・2025年2,029億円と整合）",
+      "caveat": "지난 라운드(31)의 TLS 중간인증서 누락 우회법(AIA caIssuers 인증서 + 프록시 CA + certifi 결합번들)을 그대로 재사용해 다운로드성공.",
+      "attempts": [
+        {
+          "method": "jesr_http.get (default CA)",
+          "url": "https://www.kyoeikasai.co.jp/pdf/about/company/disclosure/2026all.pdf",
+          "result": "SSLError: unable to get local issuer certificate (기존 알려진 문제)"
+        },
+        {
+          "method": "requests, verify=combined_ca.pem (proxy CA + certifi + fetched Cybertrust intermediate cert)",
+          "result": "HTTP 200, 12707768 bytes"
+        },
+        {
+          "method": "pymupdf full-text search + dump p6",
+          "result": "2-year table with FY2025/FY2024 found directly, plus corroborating 億円 bar-chart"
+        }
+      ]
+    },
+    {
+      "company_jp": "日新火災海上保険",
+      "company_en": "Nisshin Fire & Marine",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 161943,
+        "FY2024": 158266
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text)",
+      "source_url": "https://www.nisshinfire.co.jp/ir/pdf/disclosure2026.pdf",
+      "page": "PDF p.23 (2025年度 代表的な経営指標)",
+      "quote": "p23「2025年度 代表的な経営指標」 正味収入保険料(対前期増減率) 2024年度158,266百万円（2.3%）/ 2025年度161,943百万円（2.3%）",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://www.nisshinfire.co.jp/ir/pdf/disclosure2026.pdf",
+          "result": "HTTP 200, 6707592 bytes"
+        },
+        {
+          "method": "pymupdf full-text search + dump p23",
+          "result": "headline table found directly"
+        }
+      ]
+    },
+    {
+      "company_jp": "日本地震再保険",
+      "company_en": "Japan Earthquake Reinsurance",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 290926,
+        "FY2024": 284093
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text)",
+      "source_url": "https://www.nihonjishin.co.jp/pdf/disclosure/2026/disclosure.pdf",
+      "page": "PDF p.13 (直近の5事業年度における主要の業務の状況を示す指標, 5年間 表)",
+      "quote": "p13 직근5개년 표의 正味収入保険料 행: 2021年度252,468 / 2022年度268,987 / 2023年度264,288 / 2024年度284,093 / 2025年度290,926（百万円）. p14 서술: 「正味収入保険料は、...前年比2.4％増の2,909億円となりました」（290,926百万円과 정합）",
+      "caveat": "지진재보험 전문 재보험사로 이익 구조가 원수사와 다르다(험료 수지를 위험준비금으로 전액 적립, 이익 없다는 구조). 다만 라벨 자체는 正味収入保険料 로 표준적이고 산식도 원수사와 동일(주를 正味支払保険金÷正味収入保険料 이라고 p8이 명시).",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://www.nihonjishin.co.jp/pdf/disclosure/2026/disclosure.pdf",
+          "result": "HTTP 200, 9128127 bytes"
+        },
+        {
+          "method": "pymupdf full-text search + dump p12-13 (0-idx)",
+          "result": "5-year series table found directly, narrative cross-check on same page"
+        }
+      ]
+    },
+    {
+      "company_jp": "東京海上ダイレクト損害保険",
+      "company_en": "Tokio Marine Direct",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 33839,
+        "FY2024": 29365
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text)",
+      "source_url": "https://www.e-design.net/assets/pdf/company/disclosure/company_005_2026.pdf",
+      "page": "PDF p.55 (主要な経営指標等の推移, 5年間)",
+      "quote": "p55「主要な経営指標等の推移」 正味収入保険料 2021年度 33,735 / 2022年度 29,850 / 2023年度 27,378 / 2024年度 29,365 / 2025年度 33,839（単位：百万円）",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://www.e-design.net/assets/pdf/company/disclosure/company_005_2026.pdf",
+          "result": "HTTP 200, 4790718 bytes"
+        },
+        {
+          "method": "pymupdf full-text search + dump p55",
+          "result": "5-year series table found directly"
+        }
+      ]
+    },
+    {
+      "company_jp": "楽天損害保険",
+      "company_en": "Rakuten Non-Life",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 29693,
+        "FY2024": 26310
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text)",
+      "source_url": "https://www.rakuten-sonpo.co.jp/Portals/0/images/company/disclosure2026.pdf",
+      "page": "PDF p.10 (１　代表的な経営指標等, 5年間)",
+      "quote": "p10「１　代表的な経営指標等」 正味収入保険料（対前期増減率） 2021年度17,491 / 2022年度21,903 / 2023年度23,102 / 2024年度26,310（13.9%）/ 2025年度29,693（12.9%）（単位：百万円）",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://www.rakuten-sonpo.co.jp/Portals/0/images/company/disclosure2026.pdf",
+          "result": "HTTP 200, 3705523 bytes"
+        },
+        {
+          "method": "pymupdf full-text search + dump p10",
+          "result": "5-year series table found directly"
+        }
+      ]
+    },
+    {
+      "company_jp": "第一アイペット損害保険",
+      "company_en": "Dai-ichi iPet",
+      "verdict": "found",
+      "net_premiums_written": {
+        "FY2025": 43643,
+        "FY2024": 39539
+      },
+      "unit_raw": "百万円",
+      "converted_from": "no_conversion_needed",
+      "read_method": "automated_text_extraction (pymupdf get_text)",
+      "source_url": "https://www.ipet-ins.com/company/ipet/pdf/disclosure/2026_data.pdf",
+      "page": "PDF p.9 (正味収入保険料 種目別表, 合計行)",
+      "quote": "p9「正味収入保険料」(単位：百万円) 合計行: 2024年度 39,539（100.0%，増収率11.5%）/ 2025年度 43,643（100.0%，増収率10.4%）",
+      "attempts": [
+        {
+          "method": "download via jesr_http.get",
+          "url": "https://www.ipet-ins.com/company/ipet/pdf/disclosure/2026_data.pdf",
+          "result": "HTTP 200, 1142250 bytes"
+        },
+        {
+          "method": "pymupdf full-text search + dump p8-9 (0-idx)",
+          "result": "2-year 正味収入保険料 table found directly"
+        }
+      ]
+    }
+  ]
+}
