@@ -1,0 +1,473 @@
+{
+  "_meta": {
+    "generated_at": "2026-09-14",
+    "group": "A",
+    "companies_total": 10,
+    "verdict_counts": {
+      "found": 7,
+      "no_ratio_in_doc": 0,
+      "not_applicable_holding": 2,
+      "unreachable": 1
+    },
+    "note": "손보 A조(대형·중견 10사) 正味損害率/正味事業費率/合算率 전수조사. HTTP는 J-ESR/jesr_http.py 경유. ESR(경제가치기준 지급여력비율)은 이번 조사범위 밖(별도 census 트랙, docs/domains/claude-agent-jp.md) -- 원문에서 우연히 발견된 ESR 수치는 notes에만 참고로 남겼다."
+  },
+  "companies": [
+    {
+      "company_jp": "東京海上ホールディングス",
+      "company_en": "Tokio Marine Holdings",
+      "category": "HD上場",
+      "verdict": "not_applicable_holding",
+      "source_url": "https://www.tokiomarinehd.com/ir/event/presentation/2025/gi58a80000002zwa-att/Tokio_Marine_2025Q4_Results_Presentation_j.pdf",
+      "doc_type": "決算プレゼンテーション資料(2026年5月, 2025年度通期)",
+      "page": "p14-20 (International/Japan P&C 事業別ページ)",
+      "fiscal_years": [
+        "FY2025"
+      ],
+      "loss_ratio_pct": null,
+      "expense_ratio_pct": null,
+      "combined_ratio_pct": null,
+      "combined_is_derived": false,
+      "scope": null,
+      "quote": "p20「Japan P&C事業④：コンバインド・レシオ（TMNF）」-- 損害率・事業費率・コンバインド・レシオは 事業別(Japan P&C=TMNF単体, International=PHLY/DFG/TMHCC 등)로 개별 제시된다. 그룹 전체(全事業合算) 단일 コンバインド・レシオ는 이 자료 어디에도 없다 -- p8-9의 修正純利益도 事業別(Japan P&C/International/Japan Life/その他)로 분해될 뿐 손해율류 비율은 사업부문(=사업회사) 단위로만 공시된다.",
+      "notes": "HD 자체는 순수지주회사라 損害率을 갖지 않는다. TMNF(단체) 자체 손해율(61.6%/事業費率31.4%/コンバインド93.0%, FY2025)은 이 HD 자료 p14 부근에 있으나 TMNF는 이번 A조 조사대상이 아니다(2026-09-13 라운드에서 별도 확보 완료, docs/domains/jp_esr_disclosure_template.md §10-7/9-8). 그룹 합산(scope=group) 단일 수치가 아니므로 not_applicable_holding으로 판정.",
+      "attempts": [
+        {
+          "url": "https://www.tokiomarinehd.com/ir/event/presentation/2025/gi58a80000002zwa-att/Tokio_Marine_2025Q4_Results_Presentation_j.pdf",
+          "status": 200,
+          "result": "opened, 56p, 실제로 열람"
+        },
+        {
+          "url": "https://www.tokiomarinehd.com/ir/",
+          "status": 200,
+          "result": "IR 톱페이지(meta refresh 경유 정적), 참고용"
+        }
+      ]
+    },
+    {
+      "company_jp": "日新火災海上保険",
+      "company_en": "Nisshin Fire & Marine",
+      "category": "子会社(東京海上グループ)",
+      "verdict": "found",
+      "source_url": "https://www.nisshinfire.co.jp/ir/pdf/disclosure2026.pdf",
+      "doc_type": "日新火災の現状2026(ディスクロージャー誌, 2025年度=令和7年度決算)",
+      "page": "p81(正味損害率、正味事業費率及びその合算率 合計行) / p23(代表的な経営指標)",
+      "fiscal_years": [
+        "FY2024",
+        "FY2025"
+      ],
+      "loss_ratio_pct": {
+        "FY2024": 60.9,
+        "FY2025": 61.1
+      },
+      "expense_ratio_pct": {
+        "FY2024": 35.6,
+        "FY2025": 36.5
+      },
+      "combined_ratio_pct": {
+        "FY2024": 96.4,
+        "FY2025": 97.6
+      },
+      "combined_is_derived": false,
+      "scope": "solo",
+      "quote": "p23代表的な経営指標: 「正味損害率 60.9%(2024年度)→61.1%(2025年度)」「正味事業費率 35.6%→36.5%」. p81「正味損害率、正味事業費率及びその合算率」合計行(単位%, 2023/2024/2025年度 3개년 병기, 좌표 대조로 열 확인): 2025年度 61.1／36.5／97.6. 「単体ベースのソルベンシー・マージン比率」는 p23/26 모두 「別時期での開示」「新制度導入初年度における 経過措置の適用により、2026年10月末までに開示します」 -- ESR/SMR은 not_yet.",
+      "notes": "종전 티켓(09-13)에서 curl 차단으로 미확보였던 회사. 이번 세션에서 200 정상 확보, 손해율 실측 완료.",
+      "attempts": [
+        {
+          "url": "https://www.nisshinfire.co.jp/ir/pdf/disclosure2026.pdf",
+          "status": 200,
+          "result": "opened, 140p, 실제로 열람"
+        },
+        {
+          "url": "https://www.nisshinfire.co.jp/ir/disclosure.html",
+          "status": 200,
+          "result": "IR 디스클로저 목록페이지, 참고용"
+        }
+      ]
+    },
+    {
+      "company_jp": "MS&ADインシュアランスグループホールディングス",
+      "company_en": "MS&AD Insurance Group Holdings",
+      "category": "HD上場",
+      "verdict": "found",
+      "source_url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
+      "doc_type": "2025年度通期決算 補足説明資料",
+      "page": "p56「③国内損害保険 主要2社 業績概要①」(2社合計=単純合計行, 日本基準) / p40「(参考)決算数値」(IFRS基準, 국내손보사업)",
+      "fiscal_years": [
+        "FY2025"
+      ],
+      "loss_ratio_pct": {
+        "FY2025_jgaap": 63.6,
+        "FY2025_ifrs_ref": 65.5
+      },
+      "expense_ratio_pct": {
+        "FY2025_jgaap": 31.4,
+        "FY2025_ifrs_ref": 28.1
+      },
+      "combined_ratio_pct": {
+        "FY2025_jgaap": 95.0,
+        "FY2025_ifrs_ref": 93.6
+      },
+      "combined_is_derived": false,
+      "scope": "group",
+      "quote": "p56 표 헤더 「２社合計（単純合計）／三井住友海上（単体）／あいおいニッセイ同和損保（単体）」, 日本基準行: 「正味損害率※1 63.6% △3.0pt」「正味事業費率※1 31.4% △1.4pt」「コンバインド・レシオ※1 95.0% △4.4pt」(2社合計열). ※1 全種目ベース, 除く家計地震・自賠責 아님(전종목). p40(参考)決算数値(IFRS, 除く家計地震・自賠責): 「損害率※2 65.5% 事業費率※2 28.1% コンバインド・レシオ※2 93.6%」 「※修正利益を除き、国内損害保険会社主要2社（MS・AD）の合計」.",
+      "notes": "HD 자체가 JGAAP(全種目)·IFRS(除자배책·가계지진) 두 기준의 '2社合計(単純合計)' 손해율류를 직접 계산·게시한다 -- MSI+Aioi 2사 산술합산이라 scope=group(그룹 합산, TMNF·SOMPO 케이스와 달리 단일 자회사가 아니라 2사 합산)으로 판정. JGAAP 값(63.6/31.4/95.0)을 헤드라인으로 쓰고 IFRS 값(65.5/28.1/93.6)은 참고로 병기.",
+      "attempts": [
+        {
+          "url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
+          "status": 200,
+          "result": "ok_requires_headers(브라우저 헤더로 200), 68p, 실제로 열람"
+        }
+      ]
+    },
+    {
+      "company_jp": "あいおいニッセイ同和損害保険",
+      "company_en": "Aioi Nissay Dowa",
+      "category": "子会社(MS&AD)",
+      "verdict": "found",
+      "source_url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
+      "doc_type": "MS&AD HD 2025年度通期決算 補足説明資料 内 あいおいニッセイ同和損保(単体)열",
+      "page": "p56「③国内損害保険 主要2社 業績概要①」あいおいニッセイ同和損保(単体)열",
+      "fiscal_years": [
+        "FY2025"
+      ],
+      "loss_ratio_pct": 64.5,
+      "expense_ratio_pct": 32.6,
+      "combined_ratio_pct": 97.1,
+      "combined_is_derived": false,
+      "scope": "solo",
+      "quote": "p56 あいおいニッセイ同和損保（単体）열: 「正味損害率※1 64.5% △2.1pt」「正味事業費率※1 32.6% △1.1pt」「コンバインド・レシオ※1 97.1% △3.2pt」(日本基準, 全種目ベース, 2025年度).",
+      "notes": "회사 자체 사이트(aioinissaydowa.co.jp)는 디스클로저가 자체 도메인 flipbook SaaS 뷰어(dps.aioinissaydowa.co.jp, JS 렌더링)로만 제공돼 정적 PDF href가 없다(disclo_policy.html 전수 확인, 09-13 라운드와 동일 결론 재확인). 모회사(MS&AD HD) 결산보족자료에 단체(単体) 기준 Aioi 자체 수치가 직접 라벨로 실려 있어 그걸로 found 판정 -- 1차 출처는 아니지만 회사 자체 수치(scope=solo, 単体)이지 그룹합산이 아니다.",
+      "attempts": [
+        {
+          "url": "https://irbank.net/E03833",
+          "status": 200,
+          "result": "ok_requires_headers, 3자 미러 사이트라 1차출처로 안 씀"
+        },
+        {
+          "url": "https://www.aioinissaydowa.co.jp/",
+          "status": 200,
+          "result": "ok"
+        },
+        {
+          "url": "https://www.aioinissaydowa.co.jp/corporate/disclosure/",
+          "status": 404,
+          "result": "dead"
+        },
+        {
+          "url": "https://www.aioinissaydowa.co.jp/corporate/policy/disclo_policy.html",
+          "status": 200,
+          "result": "ok, but PDF href 없음 -- JS flipbook(dps.aioinissaydowa.co.jp/iportal/...)만 링크"
+        },
+        {
+          "url": "https://www.aioinissaydowa.co.jp/company/aboutus/disclosure/data/f01.pdf",
+          "status": 404,
+          "result": "dead(추정 경로)"
+        },
+        {
+          "url": "https://www.ms-ad-hd.com/ja/ir/library.html",
+          "status": 200,
+          "result": "ok_requires_headers, PDF href 없음(JS)"
+        },
+        {
+          "url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
+          "status": 200,
+          "result": "opened -- 이 문서에서 Aioi 単体값 확보"
+        }
+      ]
+    },
+    {
+      "company_jp": "SOMPOホールディングス",
+      "company_en": "Sompo Holdings",
+      "category": "HD上場",
+      "verdict": "not_applicable_holding",
+      "source_url": "https://www.sompo-hd.com/-/media/hd/files/doc/pdf/ir/2026/ir_20260520.pdf?la=ja-JP",
+      "doc_type": "2025年度決算説明資料(2026年5月20日)",
+      "page": "p22-23(コンバインド・レシオ/損害率・事業費率, タブ「国内損保」)",
+      "fiscal_years": [
+        "FY2025"
+      ],
+      "loss_ratio_pct": null,
+      "expense_ratio_pct": null,
+      "combined_ratio_pct": null,
+      "combined_is_derived": false,
+      "scope": null,
+      "quote": "p22 페이지 상단 탭 목록: 「グループ／SOMPO P&C／SOMPOウェルビーイング／国内損保／海外保険／国内生保／介護／SJI／SIH」 -- 본문은 「国内損保事業におけるコンバインド・レシオの定義は次のとおり」로 시작, 이 페이지의 損害率58.2%/事業費率32.8%/コンバインド・レシオ91.0%(FY2025, 除く自賠責・家計地震)는 国内損保(=SOMPO Japan 단체) 세그먼트 수치이지 그룹(SOMPO P&C・海外保険・国内生保・介護 전체) 단일 합산치가 아니다.",
+      "notes": "「グループ」탭과 「国内損保」탭이 별도로 병기돼 있다는 것 자체가, 이 손해율류가 SOMPO Japan(자회사) 단위 지표임을 문서가 스스로 구분하고 있다는 근거다. 그룹 전체(해외보험·국내생보·개호 포함) 단일 コンバインド・レシオ는 이 문서에 없다 -- MS&AD처럼 복수 국내손보사를 산술합산한 '그룹' 표는 SOMPO에는 없음(국내손보 사업회사가 SOMPO Japan 1개뿐). SOMPO Japan(자회사) 자체 수치는 참고로만 quote에 남기고 HD 자신의 값으로는 채점하지 않음.",
+      "attempts": [
+        {
+          "url": "https://www.sompo-hd.com/-/media/hd/files/doc/pdf/ir/2026/ir_20260520.pdf?la=ja-JP",
+          "status": 200,
+          "result": "opened, 53p, 실제로 열람"
+        }
+      ]
+    },
+    {
+      "company_jp": "ソニー損害保険",
+      "company_en": "Sony Non-Life",
+      "category": "子会社(ソニーフィナンシャルグループ)",
+      "verdict": "found",
+      "source_url": "https://www.sonyfg.co.jp/ja/financial_info/results/sfgi_fy2025_4q_01.pdf",
+      "doc_type": "ソニーフィナンシャルグループ 2025年度(FY25) 決算説明資料 -- 「ソニー損保｜2025年度 業容(J-GAAP)」및「主要指標の推移」섹션",
+      "page": "p10(業容, J-GAAP) / p34(主要指標の推移, 4Q累計)",
+      "fiscal_years": [
+        "FY2023",
+        "FY2024",
+        "FY2025"
+      ],
+      "loss_ratio_pct": {
+        "FY2023": 67.9,
+        "FY2024": 69.7,
+        "FY2025": 68.2
+      },
+      "expense_ratio_pct": {
+        "FY2023": 26.5,
+        "FY2024": 25.4,
+        "FY2025": 24.6
+      },
+      "combined_ratio_pct": {
+        "FY2023": 94.4,
+        "FY2024": 95.1,
+        "FY2025": 92.8
+      },
+      "combined_is_derived": false,
+      "scope": "solo",
+      "quote": "p10「ソニー損保｜2025年度 業容（J-GAAP）」: 「コンバインドレシオは自然災害の減少による損害率の低下と事業費コントロールの進展により前年度を下回り、92.8％に改善」, 막대그래프 라벨 FY25: E.I.損害率 68.2 / 正味事業費率 24.6 / 합계 92.8 (주석 *1 地震保険・自賠責保険を除く). p34「主要指標の推移」FY25.4Q累計: E.I損害率 68.2% / 正味事業費率 24.6%(분기 누계표로 재확인).",
+      "notes": "회사 자체 사이트(sonysonpo.co.jp)와 뉴스 서브도메인(from.sonysonpo.co.jp) 모두 이 세션에서 전 경로 403(WAF, 도메인 전체 차단 -- root/company 페이지/PDF 추정경로 전부)으로 확인, WebFetch도 동일 403. 부득이 모회사 ソニーフィナンシャルグループ(舊ソニーフィナンシャルホールディングス, sonyfg.co.jp)의 결산설명자료에서 「ソニー損保」세그먼트로 직접 라벨된 J-GAAP 손해율(단체 자체 수치, 그룹합산 아님)을 확보 -- scope=solo로 판정. 구기준 SMR=684.2%(2026年1月末, 중간시점·구기준)는 census notes에 이미 있었으나 FY2025 확정 ESR/SMR은 이 자료에도 없음(미확인).",
+      "attempts": [
+        {
+          "url": "https://www.sonysonpo.co.jp/company/fr05020.html",
+          "status": 403,
+          "result": "blocked"
+        },
+        {
+          "url": "https://www.sonysonpo.co.jp/",
+          "status": 403,
+          "result": "blocked(도메인 전체)"
+        },
+        {
+          "url": "https://www.sonysonpo.co.jp/company/",
+          "status": 403,
+          "result": "blocked"
+        },
+        {
+          "url": "https://www.sonysonpo.co.jp/company/kaiji.html",
+          "status": 403,
+          "result": "blocked"
+        },
+        {
+          "url": "https://www.sonysonpo.co.jp/company/pdf/ar_00_2026.pdf",
+          "status": 403,
+          "result": "blocked(추정경로)"
+        },
+        {
+          "url": "https://www.sonysonpo.co.jp/company/pdf/ar_00_2025.pdf",
+          "status": 403,
+          "result": "blocked(전년판 추정경로도 차단)"
+        },
+        {
+          "url": "https://from.sonysonpo.co.jp/topics/news/2026/05/20260514.html",
+          "status": 403,
+          "result": "blocked(요청+WebFetch 둘 다 403)"
+        },
+        {
+          "url": "https://from.sonysonpo.co.jp/company/news/docs/2026/20260514.pdf",
+          "status": 403,
+          "result": "blocked"
+        },
+        {
+          "url": "https://www.sonyfg.co.jp/ja/financial_info/results/sfgi_fy2025_4q_01.pdf",
+          "status": 200,
+          "result": "ok_requires_headers -- opened, 38p, 실제로 열람(모회사 경로로 우회 성공)"
+        }
+      ]
+    },
+    {
+      "company_jp": "共栄火災海上保険",
+      "company_en": "Kyoei Fire & Marine",
+      "category": "独立",
+      "verdict": "unreachable",
+      "source_url": null,
+      "doc_type": null,
+      "page": null,
+      "fiscal_years": [],
+      "loss_ratio_pct": null,
+      "expense_ratio_pct": null,
+      "combined_ratio_pct": null,
+      "combined_is_derived": false,
+      "scope": null,
+      "quote": null,
+      "notes": "kyoeikasai.co.jp 도메인 전체(www 및 yakkan 서브도메인 포함)가 이 세션에서도 여전히 접속 불가 -- python requests(jesr_http)·curl -v 둘 다 동일하게 「SSL certificate problem: unable to get local issuer certificate」(unknown CA alert, TLS handshake 단계에서 서버가 중간인증서 체인을 안 보냄, 클라이언트/프록시측 문제 아님 -- 다른 전 도메인은 동일 CA번들로 전부 정상). WebFetch도 503. 09-13 라운드('연결거부 2회+WebFetch 인증서 오류')와 증상이 일치 -- **여전히 막힘**, 억지 추정 안 함. WebSearch로 '共栄火災の現状2025' PDF URL 패턴은 확인했으나 (www.kyoeikasai.co.jp/pdf/about/company/disclosure/2025all.pdf, FY2025판은 미확인) 같은 도메인이라 열람 불가. 10월 재census 때 재시도 필요.",
+      "attempts": [
+        {
+          "url": "https://www.kyoeikasai.co.jp/about/company/disclosure.html",
+          "status": null,
+          "result": "SSLError(unable to get local issuer certificate) -- requests"
+        },
+        {
+          "url": "https://www.kyoeikasai.co.jp/about/company/disclosure.html",
+          "status": null,
+          "result": "curl -v: SSL certificate problem: unable to get local issuer certificate (handshake 실패, unknown CA alert)"
+        },
+        {
+          "url": "https://www.kyoeikasai.co.jp/about/company/disclosure.html",
+          "status": 503,
+          "result": "WebFetch: HTTP 503 Service Unavailable"
+        },
+        {
+          "url": "https://www.kyoeikasai.co.jp/pdf/about/company/disclosure/2026all.pdf",
+          "status": null,
+          "result": "SSLError(추정경로도 동일 원인으로 불가)"
+        },
+        {
+          "url": "https://yakkan.kyoeikasai.co.jp/",
+          "status": null,
+          "result": "SSLError(서브도메인도 동일 원인)"
+        },
+        {
+          "url": "https://www.kyoeikasai.co.jp/",
+          "status": null,
+          "result": "SSLError(루트도 동일 원인 -- 도메인 전체 문제)"
+        }
+      ]
+    },
+    {
+      "company_jp": "アクサ損害保険",
+      "company_en": "AXA Non-Life Japan",
+      "category": "外資子会社",
+      "verdict": "found",
+      "source_url": "https://www.axa-direct.co.jp/assets/pdf/annual_report_2026.pdf",
+      "doc_type": "アクサ損害保険 ディスクロージャー誌/アニュアルレポート2026(2025年度決算)",
+      "page": "p15(主要業績) / p26(正味損害率、正味事業費率及びその合算率 合計行)",
+      "fiscal_years": [
+        "FY2023",
+        "FY2024",
+        "FY2025"
+      ],
+      "loss_ratio_pct": {
+        "FY2023": 65.6,
+        "FY2024": 66.5,
+        "FY2025": 65.1
+      },
+      "expense_ratio_pct": {
+        "FY2023": 27.1,
+        "FY2024": 27.0,
+        "FY2025": 26.7
+      },
+      "combined_ratio_pct": {
+        "FY2023": 92.7,
+        "FY2024": 93.5,
+        "FY2025": 91.8
+      },
+      "combined_is_derived": false,
+      "scope": "solo",
+      "quote": "p15 主要業績표: 「❸正味損害率 66.5%(2024年度)→65.1%(2025年度)」「❹正味事業費率 27.0%→26.7%」「❺コンバインドレシオ 93.5%→91.8%」. p26「正味損害率、正味事業費率及びその合算率」合計행(2025年度): 「65.1 26.7 91.8」(3개년 병기표, 종목별 행 합=合計 정확 일치). p15 각주: 「❾単体ソルベンシー・マージン比率（新基準）」= 384.1%(2025年度, 旧基準 2024年度 603.2%) -- **ESR은 이미 확정 공표됨**(2025년금융청告示74호 신기준, 참고로 기록, 이번 조사범위 밖).",
+      "notes": "FY2025 손해율류가 전부 원문 라벨로 직접 공시(파생 불필요), 5개년 아닌 3개년(FY2023-2025) 병기표.",
+      "attempts": [
+        {
+          "url": "https://www.axa-direct.co.jp/company/ir/",
+          "status": 200,
+          "result": "ok, PDF href 2건 확보"
+        },
+        {
+          "url": "https://www.axa-direct.co.jp/assets/pdf/annual_report_2026.pdf",
+          "status": 200,
+          "result": "opened, 44p, 실제로 열람"
+        }
+      ]
+    },
+    {
+      "company_jp": "アニコム損害保険",
+      "company_en": "Anicom Insurance",
+      "category": "上場",
+      "verdict": "found",
+      "source_url": "https://www.anicom-sompo.co.jp/company/disclosure/pdf/DC_AS2026.pdf",
+      "doc_type": "アニコム損害保険 ディスクロージャー誌2026(2025年度決算)",
+      "page": "p12-13(代表的な経営指標/現状) / p74(正味損害率、正味事業費率及びその合算率 合計行)",
+      "fiscal_years": [
+        "FY2023",
+        "FY2024",
+        "FY2025"
+      ],
+      "loss_ratio_pct": {
+        "FY2023": 58.0,
+        "FY2024": 58.3,
+        "FY2025": 59.8
+      },
+      "expense_ratio_pct": {
+        "FY2023": 32.5,
+        "FY2024": 31.3,
+        "FY2025": 32.0
+      },
+      "combined_ratio_pct": {
+        "FY2023": 90.5,
+        "FY2024": 89.6,
+        "FY2025": 91.8
+      },
+      "combined_is_derived": false,
+      "scope": "solo",
+      "quote": "p12-13 代表的な経営指標: 「正味損害率 58.3%(2024年度)→59.8%(2025年度)」「正味事業費率 31.3%→32.0%」「コンバインド・レシオ 89.6%→91.8%」. p74 合計행(3개년): 2025年度 정味損害率59.8/正味事業費率32.0/合算率91.8 (종목이 사실상 「その他(うちペット保険)」 단일이라 合計와 동일값). p12 각주: 「単体ベースのソルベンシー・マージン比率」= 260.9%(2025年度, 2024年度以前는 대시) -- **ESR도 이미 확정 공표됨**(참고, 이번 조사범위 밖).",
+      "notes": "펫보험 전업사라 종목이 사실상 その他(ペット保険) 1개뿐, 合計행과 값이 동일.",
+      "attempts": [
+        {
+          "url": "https://www.anicom-sompo.co.jp/company/disclosure/",
+          "status": 200,
+          "result": "ok, PDF href 6건 확보"
+        },
+        {
+          "url": "https://www.anicom-sompo.co.jp/company/disclosure/pdf/DC_AS2026.pdf",
+          "status": 200,
+          "result": "opened, 108p, 실제로 열람"
+        }
+      ]
+    },
+    {
+      "company_jp": "AIG損害保険",
+      "company_en": "AIG Non-Life Japan",
+      "category": "外資子会社",
+      "verdict": "found",
+      "source_url": "https://www.aig.co.jp/content/dam/aig/sonpo/jp/ja/documents/company/disclosures/aigsonpo_disclosure_2026.pdf",
+      "doc_type": "AIG損害保険 ディスクロージャー誌2026【2025年4月1日〜2026年3月31日】",
+      "page": "p26-27(代表的な経営指標) / p69(正味損害率、正味事業費率及びその合算率 合計行)",
+      "fiscal_years": [
+        "FY2021",
+        "FY2022",
+        "FY2023",
+        "FY2024",
+        "FY2025"
+      ],
+      "loss_ratio_pct": {
+        "FY2021": 70.9,
+        "FY2022": 72.5,
+        "FY2023": 66.8,
+        "FY2024": 65.4,
+        "FY2025": 59.9
+      },
+      "expense_ratio_pct": {
+        "FY2021": 35.2,
+        "FY2022": 38.4,
+        "FY2023": 34.2,
+        "FY2024": 31.8,
+        "FY2025": 32.4
+      },
+      "combined_ratio_pct": {
+        "FY2025": 92.3
+      },
+      "combined_is_derived": false,
+      "scope": "solo",
+      "quote": "p26 代表的な経営指標(5개년표): 「正味損害率 65.4%(2024)→59.9%(2025)」「正味事業費率 31.8%→32.4%」. p27: 「保険事業に係る主要な比率の状況／正味損害率 59.9% ／正味事業費率 32.4%」. p69「(2)正味損害率、正味事業費率及びその合算率」合計행: 「65.4 31.8 97.2(2024年度)／59.9 32.4 92.3(2025年度)」(合算率 직접 라벨). p26 각주: 「※単体ベースのソルベンシー・マージン比率については、法令上の延長措置に基づき、2026年10月末までに当社ホームページにて別途開示します。」 -- ESR/SMR은 not_yet.",
+      "notes": "종전 census notes가 지적한 손상 다운로드(507,904바이트) 문제는 이번 jesr_http 경유 재다운로드(5,913,824바이트, 114p)로 해소.",
+      "attempts": [
+        {
+          "url": "https://www.aig.co.jp/sonpo/company/disclosure",
+          "status": 200,
+          "result": "ok"
+        },
+        {
+          "url": "https://www.aig.co.jp/content/dam/aig/sonpo/jp/ja/documents/company/disclosures/aigsonpo_disclosure_2026.pdf",
+          "status": 200,
+          "result": "opened, 114p, 실제로 열람 -- 종전 손상다운로드 문제 해소"
+        }
+      ]
+    }
+  ]
+}
