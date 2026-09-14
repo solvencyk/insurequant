@@ -7,6 +7,20 @@ Pipeline organized as **downloader / parser / validation / publishing / designer
 
 ## Status
 
+**🚀 2026-09-14 jp 프리뷰 라이브 배포 + 폰 배포 스크립트 rot 2건 제거 + 훅 강제점이 리눅스 클론에서 무력인 것 발견(cross-stage).**
+① **라이브 배포 나갔다** — `jp-f9027362/` 4개(`index.html`·`jesr_app.js`·`jesr_detail.json`·`jesr_esr.json`), 배포 커밋 `e797f61`.
+검증은 "커밋했다" 가 아니라 **라이브에서 바이트를 받아 `git hash-object` 로 커밋 블롭과 대조 4/4 일치**. `generated_at` 2026-09-13T07:36:23Z → **17:08:02Z**, 화면 15사 = census posted 15.
+배포 커밋 name-status 가 4파일 전부 jp 라 **한국 자산은 한 바이트도 안 바뀌었다**.
+② **`scripts/android_push_and_deploy.sh` rot 2건** — (a) 번들 인자가 필수라 *브랜치가 이미 origin 에 있는* 경우(클라우드 세션이 직접 push)를 배포할 방법이 없었다 → `--from-origin` 신설.
+(b) 기본 브랜치가 `fix/csm-product-segmented-columns` 로 굳어 있어 인자 없이 돌리면 **옛 브랜치가 라이브로 나간다** → 문서 경고가 아니라 **기본값 자체를 제거**했다(`--from-origin` 은 `--branch` 필수, 번들 모드는 `git bundle list-heads` 로 번들에서 읽고 0개·2개 이상이면 중단).
+헤더 사용법도 틀렸었다 — main 은 slim(실측 55파일, `scripts/` 없음)이라 clone 직후 HEAD 에는 이 스크립트가 **없다**. 커밋 `f35603f`·`a8de4ae`.
+③ **UH-24 (신규, cross-stage, P1)** — `.githooks/pre-push` 가 저장소에 **mode 100644**(실행권한 없음)로 들어 있다. `git config core.hooksPath .githooks` 를 해도 git 이 훅을 **조용히 건너뛴다**.
+이번 push 에서 git 이 직접 인쇄했다: `hint: The '.githooks/pre-push' hook was ignored because it's not set as executable.`
+즉 **리눅스·macOS·Termux 클론에서는 CLAUDE.md §5 의 "훅으로 강제" 가 강제가 아니다** — 이 클라우드 컨테이너도, 배포용 폰 클론도 해당된다.
+`docs/todo_archive_root.md` 의 2026-08-21 항목이 "실제 `git push` 차단 확인" 이라고 적은 것은 **owner Windows PC 기준**이고(Git for Windows 는 exec 비트를 안 보는 경우가 많다), 그래서 3주 넘게 안 드러났다. **UH-1("배선한 룰이 push 를 못 막았다")의 재발형.**
+고치는 것은 `git update-index --chmod=+x .githooks/pre-push` **한 줄**인데, `.githooks/` 는 범위판정상 full-gate 경로이고 이 컨테이너는 `data/disclosure` **0개**·`data/kidi` **0개**라 full gate 를 못 돌린다 → **작업 PC 몫**. (레지스트리 등재는 `docs/postmortems/README.md`, 이번 라운드 병렬 에이전트가 같은 파일을 쓰고 있어 그 뒤에 넣는다.)
+④ 이번 라운드 두 커밋은 훅이 무시된 채 그냥 나간 게 아니다 — `prepush_check.py` 를 **손으로 돌려** `REDUCED(jp-scope)` 판정 + offline 240 passed 를 확인하고 밀었다.
+
 **📡 2026-09-13 클라우드에서 한국 원천 도달성 실측 — 회사망 제약이 보편 제약이 아니었다(cross-stage).** owner 질문("접근 막혀 미검증인 것들 다시 볼 수 있나")에 답하려 이 컨테이너에서 재봤다: **DART 200 · OpenDART API 200 · 금융감독원 200 · 생명보험협회 공시(pub.insure.or.kr) 200 · FISIS 200 · data.go.kr 200 · 손해보험협회 200(브라우저 헤더 필요)**. **KIPRIS 도 살아 있다** — 기본 `requests`/`curl` 은 클라이언트 핑거프린팅으로 끊기지만 브라우저 헤더(`J-ESR/jesr_http.get`)로는 루트·`/khome/main.do` 둘 다 200(MS&AD·ソニーFG 와 같은 `ok_requires_headers` 유형). 실패: 한화생명(TLS)·교보생명(프록시) 2사 — 재확인 대상. **CLAUDE.md §10 의 "go.kr·KIPRIS 는 브라우저·WebFetch 금지(영구 행)" 은 회사망 PC 의 제약이다** — 이 문장을 보편 제약으로 읽으면 클라우드 라운드에서 할 수 있는 일을 스스로 막는다. 규칙 문구 조정은 owner 판단(이 항목은 실측 기록일 뿐 규칙을 고치지 않았다). **경영공시 PDF 재수집·OCR 은 owner 지시로 범위 밖**(2026-09-13: "건들면 골치아프다").
 
 **🔧 2026-09-13 push 게이트가 변경 범위를 코드로 판정한다(cross-stage).** owner 지적 *"한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 된다"*. CLAUDE.md §5 의 범위 규칙(owner 09-12)이 **문서에만 있고 훅은 무조건 전부 돌리고 있었다** — `prepush_check.py` §0 에 판정을 구현했다. jp 범위 번들이면 한국 마스터 축 5종을 건너뛰고 ~5초(실측), 한국 파일이 하나라도 섞이면 자동 FULL. **fail-closed**(upstream 없음·git 실패·빈 diff·모르는 경로 → 전체), 우회 환경변수 없음, verdict 에 `SKIPPED(jp-scope)` 로 "안 돌렸다"와 "통과했다"를 구분. 회귀 65케이스·변이 12/12 발화. 잔여 UH-20(훅이 refspec 을 안 넘겨 범위가 근사 — 빗나가면 전체가 도는 안전 방향). 상세 `docs/claude-changelog.md` 2026-09-13(2차).
@@ -15,45 +29,6 @@ Pipeline organized as **downloader / parser / validation / publishing / designer
 
 **🧹 2026-09-11 지침 부채 정리 1차 — TODO Status 이력을 `docs/todo_archive_*.md` 6개로 분리(내용 무수정, HEAD 대비 바이트 재조립 검증 6/6).** 실측: stage TODO 7개 합계 ~288k → ~64k 토큰(−78%), `TODO_parser_ifrs17.md` 128k → 14k. 규칙(CLAUDE.md 핸드오프 절): Status 는 최신 5개만, 밀려난 것은 아카이브 헤더 아래에 잘라 붙임. 2차 후보(미착수, owner 판단): CLAUDE.md·stage 프롬프트의 '왜 생겼나' 서술 → 규칙 한 줄 + 포인터로 압축; `TODO.md` K-ICS 면제 등재부(340줄) 안의 superseded 스냅샷 분리.
 
-**🟢 2026-08-30 현재 — 게이트 전부 통과, 라이브 배포 정상.** 실측:
-`validate_data_contract` RED=0 exit 0 · `validate_kics_disclosure` RED=0 exit 0 ·
-`validate_live_artifacts` RED=0 exit 0 · `prepush_check.py` exit 0 · inbox 활성 스레드 **0건**
-(위생 위반 0). 2026-08-29~30 에 브랜치 push 3회 + `main` 라이브 배포 1회가 실제로 나갔다.
-
-> **아래 2026-08-21 문단의 "현재 push 는 차단 상태" · "라이브(main) 배포도 이것 때문에 대기중"
-> 은 그 시점의 사실이고 지금은 아니다.** `R2_순자산합` IDENTITY_TAUTOLOGY 는 해소됐고,
-> main 의 `kics_disclosure.json` 은 브랜치와 **바이트 동일**(2026-08-30 실측: main 이 추적하는
-> 39개 파일 중 브랜치와 다른 것은 `.gitignore` · `PL_breakdown.json` · `public_exports/` 3개뿐).
-> 이 문단들은 이력으로 남겨 두되 현황으로 읽지 말 것.
-
-> **📊 2026-08-30 듀레이션 공시현황 census (owner 지시: "공시현황부터 체크")**
->
-> **결론: 듀레이션 수치는 어느 원천에도 없다. 갭은 유도할 수밖에 없고, 그 유도 입력은
-> 96.6% 차 있다.**
->
-> | 원천 | 실측 |
-> |---|---|
-> | DART 사업보고서 본문 (39사 최신 연차) | '듀레이션' 언급 37사인데 **전부 회계정책 서술문**("보장단위 수는 … 예상 듀레이션에 의해 결정됩니다"). 자산·부채 듀레이션 수치 **0사** |
-> | K-ICS 정기경영공시 MD (497개) | 언급 66개 파일·28사, **전부 서술만**("듀레이션 갭 한도를 설정하여…"). '`X.X년`' 형태 수치 **0사** |
-> | 금리 시나리오별 순자산 (항목41~46) | **완비 226/234 = 96.6%** — 아래 표 |
->
-> 시나리오표는 반기·연차에만 공시되므로 짝수분기 6개 × 39사 = 234셀이 모집단이다.
->
-> ```
-> 분기별 완비(6/6) 회사수: 2023.2Q 37 · 2023.4Q 38 · 2024.2Q 37 · 2024.4Q 38 ·
->                        2025.2Q 37 · 2025.4Q **39/39**
-> 구멍 8칸뿐 — AIG손해보험 5칸(2023.2Q~2025.2Q, 2025.4Q부터 적재) ·
->              서울보증보험 3칸(반기 미공시, 연차만 낸다)
-> ```
->
-> **함정 기록**: 1차 탐지기가 `듀레이션[^<]{0,80}(\d+\.\d+)` 였는데 DART 표는 라벨과 값이
-> 서로 다른 `<TD>` 에 있어 **0사**가 나왔다. 태그를 벗기고 다시 재서야 실체(서술문뿐)가
-> 확인됐다 — "키워드 0회 = 원문 없음" 으로 결론내지 말 것(이 저장소가 세 번 데인 함정).
->
-> **다음 단계**: 유도식은 owner 가 이미 준 형태(base 대비 시나리오별 gap → max(상승,하락)²
-> + max(평탄,경사)² 의 제곱합 계열)와 같은 축이고, 그 계산은 이미 `36_irr` 로 구현돼 돌고 있다.
-> 남은 것은 그 결과를 **듀레이션 연수로 환산할지, 순자산 민감도 그대로 보여줄지** 의 표현 결정뿐이다.
-> owner 지시: **당장 착수하지 말 것.**
 
 ### 상시 점검 (날짜 걸린 것)
 

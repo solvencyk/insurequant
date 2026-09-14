@@ -1,11 +1,68 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-09-13 · Stage: cross-stage
+> Last updated: 2026-09-14 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
 
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
+
+---
+
+## 2026-09-14 — jp 프리뷰 라이브 배포 · 폰 배포 스크립트 rot 2건 · 훅이 리눅스에서 무력
+
+### 1. 라이브 배포 (jp 프리뷰 4개)
+
+owner 가 폰(Termux)에서 `scripts/android_push_and_deploy.sh --from-origin` 으로 실행. 배포 커밋 `e797f61`.
+
+| 검사 | 결과 |
+|---|---|
+| 배포 커밋 name-status | 4파일, 전부 `jp-f9027362/` — **한국 자산 미포함** |
+| 브랜치 `jp/<f>` ↔ `origin/main:jp-f9027362/<f>` 블롭 | 4/4 일치 |
+| **라이브에서 받은 실제 바이트 ↔ 커밋 블롭** (`git hash-object`) | **4/4 일치** |
+| `generated_at` | 2026-09-13T07:36:23Z → **17:08:02Z** |
+| 화면 회사수 ↔ census posted | 15 = 15 |
+
+"배포했다" 를 커밋 존재가 아니라 **라이브 바이트를 되받아 해시로** 확인했다. 2026-09-03 BOM 사고(리다이렉션이
+파일을 조용히 변형)의 교훈이 그것이다 — 중간 경로가 바꿔치기해도 커밋 로그로는 안 보인다.
+
+### 2. `scripts/android_push_and_deploy.sh` — 썩은 것 2건 (커밋 `f35603f`·`a8de4ae`)
+
+- **번들 강제**: 브랜치가 이미 origin 에 있으면(클라우드 세션이 직접 push 하는 지금 구도) 번들은 불필요한데
+  인자가 필수라 스크립트를 돌릴 수가 없었다 → `--from-origin` 신설. origin 에서 fetch/checkout 하고
+  번들 검증·fetch·merge·push 를 건너뛴다. cherry-push 본체(격리 워크트리·블롭 해시 대조·`git checkout <branch> -- <path>`)는 그대로.
+- **하드코딩 기본 브랜치**: `BRANCH=fix/csm-product-segmented-columns` 로 굳어 있었다. 인자 없이 돌리면
+  **옛 브랜치가 라이브로 나간다**. 문서에 경고를 다는 대신 **기본값을 없앴다** — `--from-origin` 은 `--branch` 필수(없으면 중단),
+  번들 모드는 `git bundle list-heads` 로 번들에서 읽고 refs/heads 가 0개·2개 이상이면 중단하고 `--branch` 를 요구한다.
+  *기본값은 시간이 지나면 반드시 썩는다. 정답을 들고 있는 쪽(번들·인자)에서 읽는 게 갱신이 필요 없다.*
+- **헤더 사용법이 틀렸다**: `git clone → cd → bash scripts/...` 인데 clone 직후 HEAD 는 `main` 이고 main 은
+  slim(실측 55파일, `scripts/` 없음)이라 그 자리에 스크립트가 없다. 브랜치 checkout 단계를 넣었다.
+- 검증: `bash -n` + 인자 파싱 6케이스 + 가드 5경로 실측(브랜치 누락·없는 브랜치·번들 없음·단일헤드 자동인식·멀티헤드 중단).
+
+### 3. UH-24 (신규, P1) — 훅이 리눅스 클론에서 실행되지 않는다
+
+push 중에 git 이 직접 인쇄했다:
+
+```
+hint: The '.githooks/pre-push' hook was ignored because it's not set as executable.
+```
+
+`.githooks/pre-push` 가 저장소에 **mode 100644** 로 커밋돼 있다. `git config core.hooksPath .githooks`(CLAUDE.md §5 가
+새 클론마다 시키는 그 설정)를 해도 git 은 실행권한이 없는 훅을 **조용히 건너뛴다**. 즉 **리눅스·macOS·Termux
+클론에서 §5 의 "훅으로 강제" 는 강제가 아니다** — 이 클라우드 컨테이너도, 배포용 폰 클론도 해당된다.
+
+2026-08-21 항목(`docs/todo_archive_root.md`)이 "실제 `git push` 차단 확인" 이라고 적은 것은 owner Windows PC
+기준이다(Git for Windows 는 exec 비트를 보지 않는 경우가 많다). 그래서 3주 넘게 드러나지 않았다.
+**UH-1("배선한 룰이 push 를 못 막았다")의 재발형** — 이 저장소가 반복해서 데이는 자리다.
+
+수정은 `git update-index --chmod=+x .githooks/pre-push` **한 줄**. 다만 `.githooks/` 는 `prepush_check.py` §0 에서
+full-gate 경로로 분류되고, 이 컨테이너는 `data/disclosure` **0개**·`data/kidi` **0개**라 full gate 가 못 돈다 →
+**작업 PC 에서 처리**. 게이트 범위를 느슨하게 고쳐서 밀지 않았다(그러면 고치려는 것과 같은 부류의 구멍을 하나 더 뚫는다).
+
+### 4. 이번 라운드 커밋은 훅 없이 나간 게 아니다
+
+`prepush_check.py` 를 손으로 돌려 `REDUCED(jp-scope)` 판정 + offline **240 passed** 를 확인하고 밀었다.
+훅이 무시된다는 사실 자체가 위 UH-24 의 증거이므로, 그 상태에서 "게이트 통과" 라고 쓰지 않는다.
 
 ---
 
