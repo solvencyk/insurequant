@@ -1,0 +1,792 @@
+{
+ "_meta": {
+  "purpose": "일본 손보사 正味損害率·正味事業費率·合算率 전수조사 (FY2025 우선, 없으면 FY2024)",
+  "merged_from": [
+   "nonlife_ratio_census_A.json",
+   "nonlife_ratio_census_B.json",
+   "nonlife_ratio_census_C.json"
+  ],
+  "year_key": "FY20xx 로 정규화됨 — 원본 3조는 키 형식이 서로 달랐다",
+  "identity_check": {
+   "rule": "合算率 == 正味損害率 + 正味事業費率 (±0.15)",
+   "checked": 69,
+   "mismatch": 0,
+   "mismatches": []
+  },
+  "verdicts": {
+   "not_applicable_holding": 2,
+   "found": 24,
+   "unreachable": 3
+  },
+  "fy2025_found": 24,
+  "caveat_companies": [
+   "MS&ADインシュアランスグループホールディングス",
+   "ソニー損害保険",
+   "トーア再保険",
+   "レスキュー損害保険"
+  ]
+ },
+ "rows": [
+  {
+   "company_jp": "AIG損害保険",
+   "company_en": "AIG Non-Life Japan",
+   "group": "A",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.aig.co.jp/content/dam/aig/sonpo/jp/ja/documents/company/disclosures/aigsonpo_disclosure_2026.pdf",
+   "doc_type": "AIG損害保険 ディスクロージャー誌2026【2025年4月1日〜2026年3月31日】",
+   "page": "p26-27(代表的な経営指標) / p69(正味損害率、正味事業費率及びその合算率 合計行)",
+   "loss_ratio_pct": {
+    "FY2021": 70.9,
+    "FY2022": 72.5,
+    "FY2023": 66.8,
+    "FY2024": 65.4,
+    "FY2025": 59.9
+   },
+   "expense_ratio_pct": {
+    "FY2021": 35.2,
+    "FY2022": 38.4,
+    "FY2023": 34.2,
+    "FY2024": 31.8,
+    "FY2025": 32.4
+   },
+   "combined_ratio_pct": {
+    "FY2025": 92.3
+   },
+   "combined_is_derived": false,
+   "quote": "p26 代表的な経営指標(5개년표): 「正味損害率 65.4%(2024)→59.9%(2025)」「正味事業費率 31.8%→32.4%」. p27: 「保険事業に係る主要な比率の状況／正味損害率 59.9% ／正味事業費率 32.4%」. p69「(2)正味損害率、正味事業費率及びその合算率」合計행: 「65.4 31.8 97.2(2024年度)／59.9 32.4 92.3(2025年度)」(合算率 직접 라벨). p26 각주: 「※単体ベースのソルベンシー・マージン比率については、法令上の延長措置に基づき、2026年10月末までに当社ホームページにて別途開示します。」 -- ESR/SMR은 not_yet."
+  },
+  {
+   "company_jp": "MS&ADインシュアランスグループホールディングス",
+   "company_en": "MS&AD Insurance Group Holdings",
+   "group": "A",
+   "verdict": "found",
+   "scope": "group",
+   "source_url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
+   "doc_type": "2025年度通期決算 補足説明資料",
+   "page": "p56「③国内損害保険 主要2社 業績概要①」(2社合計=単純合計行, 日本基準) / p40「(参考)決算数値」(IFRS基準, 국내손보사업)",
+   "loss_ratio_pct": {
+    "FY2025": 63.6
+   },
+   "expense_ratio_pct": {
+    "FY2025": 31.4
+   },
+   "combined_ratio_pct": {
+    "FY2025": 95.0
+   },
+   "combined_is_derived": false,
+   "quote": "p56 표 헤더 「２社合計（単純合計）／三井住友海上（単体）／あいおいニッセイ同和損保（単体）」, 日本基準行: 「正味損害率※1 63.6% △3.0pt」「正味事業費率※1 31.4% △1.4pt」「コンバインド・レシオ※1 95.0% △4.4pt」(2社合計열). ※1 全種目ベース, 除く家計地震・自賠責 아님(전종목). p40(参考)決算数値(IFRS, 除く家計地震・自賠責): 「損害率※2 65.5% 事業費率※2 28.1% コンバインド・レシオ※2 93.6%」 「※修正利益を除き、国内損害保険会社主要2社（MS・AD）の合計」.",
+   "alt_values": {
+    "loss_ratio_pct": {
+     "FY2025": 65.5
+    },
+    "expense_ratio_pct": {
+     "FY2025": 28.1
+    },
+    "combined_ratio_pct": {
+     "FY2025": 93.6
+    }
+   },
+   "caveat": "「２社合計（単純合計）」 = 三井住友海上 + あいおいニッセイ同和 단순합산. 회사가 직접 공시한 표지만, 두 자회사를 따로 싣고 있으면 **중복 계상**이다."
+  },
+  {
+   "company_jp": "NTTドコモ損害保険",
+   "company_en": "NTT Docomo Non-Life",
+   "group": "B",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.docomo-sompo.com/assets/docs/2026/01/disclosure/disclosure20260730.pdf",
+   "doc_type": "ディスクロージャー誌(NTTドコモ損害保険の現状2026, 2026-07-30発行)",
+   "page": "p12(（2）保険契約に関する指標等 正味損害率、正味事業費率およびその合算率)",
+   "loss_ratio_pct": {
+    "FY2024": 29.4,
+    "FY2025": 29.2
+   },
+   "expense_ratio_pct": {
+    "FY2024": 2.5,
+    "FY2025": 1.7
+   },
+   "combined_ratio_pct": {
+    "FY2024": 31.9,
+    "FY2025": 30.9
+   },
+   "combined_is_derived": false,
+   "quote": "p12 正味損害率、正味事業費率およびその合算率（単位：％）合計: 2024年度 正味損害率29.4 正味事業費率2.5 合算率31.9／2025年度 29.2 1.7 30.9。（注）3.合算率＝正味損害率＋正味事業費率。 p4（注1）「当社は2024年4月に設立されたため、2024年度より記載しています（以降の頁も同様）」— 設立が2024年4月のため構造的にFY2021-2023のデータは存在しない（2ヵ年のみ）。（注2）「ソルベンシー・マージン比率は2026年10月に公表予定です」。"
+  },
+  {
+   "company_jp": "SBI損害保険",
+   "company_en": "SBI Non-Life",
+   "group": "B",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.sbisonpo.co.jp/company/pdf/SBI_Disclosure2026_All.pdf",
+   "doc_type": "ディスクロージャー誌2026(全冊)",
+   "page": "p66(②正味損害率、正味事業費率及びその合算率（コンバインド・レシオ）)",
+   "loss_ratio_pct": {
+    "FY2023": 73.4,
+    "FY2024": 73.3,
+    "FY2025": 73.3
+   },
+   "expense_ratio_pct": {
+    "FY2023": 19.4,
+    "FY2024": 17.9,
+    "FY2025": 16.4
+   },
+   "combined_ratio_pct": {
+    "FY2023": 92.8,
+    "FY2024": 91.2,
+    "FY2025": 89.7
+   },
+   "combined_is_derived": false,
+   "quote": "p66 ②正味損害率、正味事業費率及びその合算率（コンバインド・レシオ）合計: 2023年度 正味損害率73.4 正味事業費率19.4 合算率92.8／2024年度 73.3 17.9 91.2／2025年度 73.3 16.4 89.7。（注）3.合算率（コンバインド・レシオ）＝正味損害率＋正味事業費率。 p23 2025年度ハイライト: 正味収入保険料455億円、正味損害率73.3％、コンバインド・レシオ89.7%、正味事業費率16.4%。5ヵ年推移表（p59「主要な経営指標等の推移」）には正味損害率・事業費率の記載は無い（単体SMRも2026年10月末開示予定と注記）。"
+  },
+  {
+   "company_jp": "SOMPOダイレクト損害保険",
+   "company_en": "Sompo Direct",
+   "group": "B",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.sompo-direct.co.jp/company/outline/insgenjo2026.pdf",
+   "doc_type": "ディスクロージャー誌(SOMPOダイレクトの現状2026, 全冊)",
+   "page": "p9(代表的な経営指標, 3ヵ年), p68(3.正味損害率、正味事業費率およびその合算率, 3ヵ年)",
+   "loss_ratio_pct": {
+    "FY2023": 72.6,
+    "FY2024": 75.9,
+    "FY2025": 72.8
+   },
+   "expense_ratio_pct": {
+    "FY2023": 23.5,
+    "FY2024": 24.8,
+    "FY2025": 24.3
+   },
+   "combined_ratio_pct": {
+    "FY2023": 96.2,
+    "FY2024": 100.7,
+    "FY2025": 97.1
+   },
+   "combined_is_derived": false,
+   "quote": "p9 代表的な経営指標: 正味損害率 2023年度72.6% 2024年度75.9% 2025年度72.8%／正味事業費率 23.5% 24.8% 24.3%（合算率の直接記載は無い）。 p68 3.正味損害率、正味事業費率およびその合算率（単位：％）合計: 2023年度 72.6 23.5 96.2／2024年度 75.9 24.8 100.7／2025年度 72.8 24.3 97.1（注3.合算率＝正味損害率＋正味事業費率）。 主要種目は自動車保険（ダイレクト型『おとなの自動車保険』が主力、2025年度正味収入保険料の96.7%）。5ヵ年推移表（p64「最近5事業年度に係る主要な経営指標等の推移」）には損害率・事業費率の記載は無い。"
+  },
+  {
+   "company_jp": "SOMPOホールディングス",
+   "company_en": "Sompo Holdings",
+   "group": "A",
+   "verdict": "not_applicable_holding",
+   "scope": null,
+   "source_url": "https://www.sompo-hd.com/-/media/hd/files/doc/pdf/ir/2026/ir_20260520.pdf?la=ja-JP",
+   "doc_type": "2025年度決算説明資料(2026年5月20日)",
+   "page": "p22-23(コンバインド・レシオ/損害率・事業費率, タブ「国内損保」)",
+   "loss_ratio_pct": {},
+   "expense_ratio_pct": {},
+   "combined_ratio_pct": {},
+   "combined_is_derived": false,
+   "quote": "p22 페이지 상단 탭 목록: 「グループ／SOMPO P&C／SOMPOウェルビーイング／国内損保／海外保険／国内生保／介護／SJI／SIH」 -- 본문은 「国内損保事業におけるコンバインド・レシオの定義は次のとおり」로 시작, 이 페이지의 損害率58.2%/事業費率32.8%/コンバインド・レシオ91.0%(FY2025, 除く自賠責・家計地震)는 国内損保(=SOMPO Japan 단체) 세그먼트 수치이지 그룹(SOMPO P&C・海外保険・国内生保・介護 전체) 단일 합산치가 아니다."
+  },
+  {
+   "company_jp": "あいおいニッセイ同和損害保険",
+   "company_en": "Aioi Nissay Dowa",
+   "group": "A",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.ms-ad-hd.com/ja/ir/ir_event/event/event2026/main/0111111116/teaserItems1/00/linkList/0/link/FY2025Q4_J2.pdf",
+   "doc_type": "MS&AD HD 2025年度通期決算 補足説明資料 内 あいおいニッセイ同和損保(単体)열",
+   "page": "p56「③国内損害保険 主要2社 業績概要①」あいおいニッセイ同和損保(単体)열",
+   "loss_ratio_pct": {
+    "FY2025": 64.5
+   },
+   "expense_ratio_pct": {
+    "FY2025": 32.6
+   },
+   "combined_ratio_pct": {
+    "FY2025": 97.1
+   },
+   "combined_is_derived": false,
+   "quote": "p56 あいおいニッセイ同和損保（単体）열: 「正味損害率※1 64.5% △2.1pt」「正味事業費率※1 32.6% △1.1pt」「コンバインド・レシオ※1 97.1% △3.2pt」(日本基準, 全種目ベース, 2025年度)."
+  },
+  {
+   "company_jp": "さくら損害保険",
+   "company_en": "Sakura Non-Life",
+   "group": "B",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.sakura-ins.co.jp/company/file/disclosure_07.pdf",
+   "doc_type": "ディスクロージャー誌(さくら損保の現状2026)",
+   "page": "p5(代表的な経営指標等), p32(②正味損害率、正味事業費率およびその合算率)",
+   "loss_ratio_pct": {
+    "FY2023": 15.1,
+    "FY2024": 14.7,
+    "FY2025": 16.1
+   },
+   "expense_ratio_pct": {
+    "FY2023": 44.0,
+    "FY2024": 39.1,
+    "FY2025": 27.0
+   },
+   "combined_ratio_pct": {
+    "FY2023": 59.1,
+    "FY2024": 53.8,
+    "FY2025": 43.1
+   },
+   "combined_is_derived": false,
+   "quote": "p5 代表的な経営指標等: コンバインドレシオ 2024年度53.92% 2025年度43.09%／正味損害率 2024年度14.71% 2025年度16.08%／正味事業費率 2024年度39.21% 2025年度27.01%（2桁小数、ヘッドライン表記）。 p32 ②正味損害率、正味事業費率およびその合算率（単位：％）合計: 2023年度 15.1 44.0 59.1／2024年度 14.7 39.1 53.8／2025年度 16.1 27.0 43.1（1桁小数、種目別詳細表）。（注）3. 合算率＝正味損害率＋正味事業費率。 単体ソルベンシー・マージン比率: 2024年度 651.7%（旧基準）／2025年度「ー」（新基準未公表）。"
+  },
+  {
+   "company_jp": "アクサ損害保険",
+   "company_en": "AXA Non-Life Japan",
+   "group": "A",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.axa-direct.co.jp/assets/pdf/annual_report_2026.pdf",
+   "doc_type": "アクサ損害保険 ディスクロージャー誌/アニュアルレポート2026(2025年度決算)",
+   "page": "p15(主要業績) / p26(正味損害率、正味事業費率及びその合算率 合計行)",
+   "loss_ratio_pct": {
+    "FY2023": 65.6,
+    "FY2024": 66.5,
+    "FY2025": 65.1
+   },
+   "expense_ratio_pct": {
+    "FY2023": 27.1,
+    "FY2024": 27.0,
+    "FY2025": 26.7
+   },
+   "combined_ratio_pct": {
+    "FY2023": 92.7,
+    "FY2024": 93.5,
+    "FY2025": 91.8
+   },
+   "combined_is_derived": false,
+   "quote": "p15 主要業績표: 「❸正味損害率 66.5%(2024年度)→65.1%(2025年度)」「❹正味事業費率 27.0%→26.7%」「❺コンバインドレシオ 93.5%→91.8%」. p26「正味損害率、正味事業費率及びその合算率」合計행(2025年度): 「65.1 26.7 91.8」(3개년 병기표, 종목별 행 합=合計 정확 일치). p15 각주: 「❾単体ソルベンシー・マージン比率（新基準）」= 384.1%(2025年度, 旧基準 2024年度 603.2%) -- **ESR은 이미 확정 공표됨**(2025년금융청告示74호 신기준, 참고로 기록, 이번 조사범위 밖)."
+  },
+  {
+   "company_jp": "アニコム損害保険",
+   "company_en": "Anicom Insurance",
+   "group": "A",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.anicom-sompo.co.jp/company/disclosure/pdf/DC_AS2026.pdf",
+   "doc_type": "アニコム損害保険 ディスクロージャー誌2026(2025年度決算)",
+   "page": "p12-13(代表的な経営指標/現状) / p74(正味損害率、正味事業費率及びその合算率 合計行)",
+   "loss_ratio_pct": {
+    "FY2023": 58.0,
+    "FY2024": 58.3,
+    "FY2025": 59.8
+   },
+   "expense_ratio_pct": {
+    "FY2023": 32.5,
+    "FY2024": 31.3,
+    "FY2025": 32.0
+   },
+   "combined_ratio_pct": {
+    "FY2023": 90.5,
+    "FY2024": 89.6,
+    "FY2025": 91.8
+   },
+   "combined_is_derived": false,
+   "quote": "p12-13 代表的な経営指標: 「正味損害率 58.3%(2024年度)→59.8%(2025年度)」「正味事業費率 31.3%→32.0%」「コンバインド・レシオ 89.6%→91.8%」. p74 合計행(3개년): 2025年度 정味損害率59.8/正味事業費率32.0/合算率91.8 (종목이 사실상 「その他(うちペット保険)」 단일이라 合計와 동일값). p12 각주: 「単体ベースのソルベンシー・マージン比率」= 260.9%(2025年度, 2024年度以前는 대시) -- **ESR도 이미 확정 공표됨**(참고, 이번 조사범위 밖)."
+  },
+  {
+   "company_jp": "エイチ・エス損害保険",
+   "company_en": "HS Non-Life",
+   "group": "B",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.hs-sonpo.co.jp/img/disclosure_2026.pdf",
+   "doc_type": "ディスクロージャー誌2026(本誌)",
+   "page": "p9(代表的な経営指標, 2ヵ年), p33(②正味損害率、正味事業費率およびその合算率, 3ヵ年)",
+   "loss_ratio_pct": {
+    "FY2023": 43.6,
+    "FY2024": 43.6,
+    "FY2025": 42.6
+   },
+   "expense_ratio_pct": {
+    "FY2023": 53.4,
+    "FY2024": 51.3,
+    "FY2025": 51.9
+   },
+   "combined_ratio_pct": {
+    "FY2023": 97.0,
+    "FY2024": 94.9,
+    "FY2025": 94.5
+   },
+   "combined_is_derived": false,
+   "quote": "p9 代表的な経営指標: 正味損害率 2024年度43.6% 2025年度42.6%／正味事業費率 2024年度51.3% 2025年度51.9%（単体ソルベンシー・マージン比率は別冊で開示、2026年10月末予定）。 p33 ②正味損害率、正味事業費率およびその合算率（単位：％）合計: 2023年度 正味損害率43.6 正味事業費率53.4 合算率97.0／2024年度 43.6 51.3 94.9／2025年度 42.6 51.9 94.5。（注）3.合算率＝正味損害率＋正味事業費率。 種目別は「傷害」（海外旅行保険が主力）と「その他」のみ値があり、火災・海上・自動車・自賠責は全て「-」（単一種目特化の海外旅行保険専業会社）。"
+  },
+  {
+   "company_jp": "キャピタル損害保険",
+   "company_en": "Capital Non-Life",
+   "group": "B",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.capital-sonpo.co.jp/company/manual/pdf/disc_2026-all.pdf",
+   "doc_type": "ディスクロージャー誌(キャピタル損害保険の現状2026)",
+   "page": "p31(■正味損害率、正味事業費率およびその合算率)",
+   "loss_ratio_pct": {
+    "FY2023": 33.0,
+    "FY2024": 41.6,
+    "FY2025": 40.2
+   },
+   "expense_ratio_pct": {
+    "FY2023": 46.1,
+    "FY2024": 48.7,
+    "FY2025": 52.3
+   },
+   "combined_ratio_pct": {
+    "FY2023": 79.1,
+    "FY2024": 90.4,
+    "FY2025": 92.4
+   },
+   "combined_is_derived": false,
+   "quote": "p31 ■正味損害率、正味事業費率およびその合算率（単位：％）合計: 2023年度 正味損害率33.0 正味事業費率46.1 合算率79.1／2024年度 41.6 48.7 90.4／2025年度 40.2 52.3 92.4。（注）3. 合算率＝正味損害率＋正味事業費率。 p6代表的な経営指標: 正味損害率40.2%(前期比1.4pt低下)、正味事業費率52.3%(前期比3.6pt上昇)。（＊）2025年度のソルベンシー・マージン比率は本誌の別冊（ソルベンシー・マージン比率編）を参照とのみ記載（未公表）。5ヵ年推移表（p28主要な業務の状況を示す指標の推移）には損害率・事業費率の記載は無い。"
+  },
+  {
+   "company_jp": "ジェイアイ傷害火災保険",
+   "company_en": "JI Accidental Fire",
+   "group": "B",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.jihoken.co.jp/wp-content/themes/jihoken/assets/image/pdf/disclosure/disc2026-all.pdf",
+   "doc_type": "ディスクロージャー誌(現状2026, 全冊)",
+   "page": "p6(主要な経営指標等の推移, 5ヵ年), p67((11)正味損害率、正味事業費率及びその合算率, 3ヵ年)",
+   "loss_ratio_pct": {
+    "FY2021": 49.0,
+    "FY2022": 44.2,
+    "FY2023": 38.9,
+    "FY2024": 46.8,
+    "FY2025": 42.3
+   },
+   "expense_ratio_pct": {
+    "FY2021": 88.0,
+    "FY2022": 59.4,
+    "FY2023": 56.3,
+    "FY2024": 53.2,
+    "FY2025": 52.7
+   },
+   "combined_ratio_pct": {
+    "FY2021": 137.0,
+    "FY2022": 103.6,
+    "FY2023": 95.3,
+    "FY2024": 100.0,
+    "FY2025": 95.0
+   },
+   "combined_is_derived": {
+    "FY2021": true,
+    "FY2022": true,
+    "FY2023": false,
+    "FY2024": false,
+    "FY2025": false
+   },
+   "quote": "p6 主要な経営指標等の推移（5ヵ年）合計: 正味損害率（損害調査費含む） 2021年度49.0% 2022年度44.2% 2023年度38.9% 2024年度46.8% 2025年度42.3%／正味事業費率（損害調査費除く） 88.0% 59.4% 56.3% 53.2% 52.7%。この表に合算率の列は無い（損害率・事業費率のみ）。 p67 (11)正味損害率、正味事業費率及びその合算率（単位：％）合計: 2023年度 38.9 56.3 95.3／2024年度 46.8 53.2 100.0／2025年度 42.3 52.7 95.0（注3. 合算率＝正味損害率＋正味事業費率）。 FY2021・FY2022 の合算率は5ヵ年表に直接ラベルが無いため 正味損害率+正味事業費率 で機械的に加算した派生値（combined_is_derived=true）。FY2023-2025 は原文に「合算率」ラベルが直接ある値をそのまま使用。"
+  },
+  {
+   "company_jp": "セコム損害保険",
+   "company_en": "SECOM Non-Life",
+   "group": "B",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.secom-sonpo.co.jp/gaiyo/pdf/disclosure2026.pdf",
+   "doc_type": "ディスクロージャー誌(セコム損害保険の現状2026)",
+   "page": "p4(代表的な経営指標, 3ヵ年), p46(２．正味損害率、正味事業費率およびその合算率, 3ヵ年)",
+   "loss_ratio_pct": {
+    "FY2023": 60.4,
+    "FY2024": 56.1,
+    "FY2025": 55.2
+   },
+   "expense_ratio_pct": {
+    "FY2023": 34.9,
+    "FY2024": 35.0,
+    "FY2025": 34.2
+   },
+   "combined_ratio_pct": {
+    "FY2023": 95.4,
+    "FY2024": 91.0,
+    "FY2025": 89.3
+   },
+   "combined_is_derived": false,
+   "quote": "p4 代表的な経営指標: コンバインドレシオ 2023年度95.4% 2024年度91.0% 2025年度89.3%／正味損害率 60.4% 56.1% 55.2%／正味事業費率 34.9% 35.0% 34.2%。用語解説「コンバインドレシオ＝『正味損害率』と『正味事業費率』の合算値であり、損害保険会社の保険引受に係る『収益力』を示す指標」。 p46 ２．正味損害率、正味事業費率およびその合算率（単位：％）合計: 60.4 34.9 95.4／56.1 35.0 91.0／55.2 34.2 89.3（p4と完全一致）。（注）3.合算率＝正味損害率＋正味事業費率。 単体ソルベンシー・マージン比率※: 2023年度928.1% 2024年度896.5% 2025年度「－％」（※2025年度末から経済価値ベースのソルベンシー・マージン比率となることから、必要な手続きが完了後に別途ホームページ等で開示）。5ヵ年推移表は本誌に存在しない（目次上も3ヵ年のみ）。"
+  },
+  {
+   "company_jp": "ソニー損害保険",
+   "company_en": "Sony Non-Life",
+   "group": "A",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.sonyfg.co.jp/ja/financial_info/results/sfgi_fy2025_4q_01.pdf",
+   "doc_type": "ソニーフィナンシャルグループ 2025年度(FY25) 決算説明資料 -- 「ソニー損保｜2025年度 業容(J-GAAP)」및「主要指標の推移」섹션",
+   "page": "p10(業容, J-GAAP) / p34(主要指標の推移, 4Q累計)",
+   "loss_ratio_pct": {
+    "FY2023": 67.9,
+    "FY2024": 69.7,
+    "FY2025": 68.2
+   },
+   "expense_ratio_pct": {
+    "FY2023": 26.5,
+    "FY2024": 25.4,
+    "FY2025": 24.6
+   },
+   "combined_ratio_pct": {
+    "FY2023": 94.4,
+    "FY2024": 95.1,
+    "FY2025": 92.8
+   },
+   "combined_is_derived": false,
+   "quote": "p10「ソニー損保｜2025年度 業容（J-GAAP）」: 「コンバインドレシオは自然災害の減少による損害率の低下と事業費コントロールの進展により前年度を下回り、92.8％に改善」, 막대그래프 라벨 FY25: E.I.損害率 68.2 / 正味事業費率 24.6 / 합계 92.8 (주석 *1 地震保険・自賠責保険を除く). p34「主要指標の推移」FY25.4Q累計: E.I損害率 68.2% / 正味事業費率 24.6%(분기 누계표로 재확인).",
+   "caveat": "**E.I.損害率**(경과보험료·발생손해액 기준)이지 正味損害率(수입보험료 기준)가 아니다. 범위도 地震保険・自賠責 제외."
+  },
+  {
+   "company_jp": "トーア再保険",
+   "company_en": "Toa Reinsurance",
+   "group": "C",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.toare.co.jp/img/company/disclo/pdf/toa_ar2026.pdf",
+   "doc_type": "ディスクロージャー誌／アニュアルレポート(トーア再保険 2026)",
+   "page": "5 (3개년 대표적 경영지표), 55 (3개년 종목별 정미손해율・정미사업비율・합산율, '保険の引受（単体）' 섹션)",
+   "loss_ratio_pct": {
+    "FY2023": 87.8,
+    "FY2024": 80.4,
+    "FY2025": 77.5
+   },
+   "expense_ratio_pct": {
+    "FY2023": 21.8,
+    "FY2024": 21.0,
+    "FY2025": 20.9
+   },
+   "combined_ratio_pct": {
+    "FY2023": 109.6,
+    "FY2024": 101.4,
+    "FY2025": 98.4
+   },
+   "combined_is_derived": false,
+   "quote": "p5「代表的な経営指標等」正味損害率 87.8％ 80.4％ 77.5％／正味事業費率 21.8％ 21.0％ 20.9％（2023~2025年度）／p55「正味損害率、正味事業費率およびその合算率」合計 87.8 21.8 109.6 80.4 21.0 101.4 77.5 20.9 98.4／（注）１．正味損害率＝正味支払保険金÷正味収入保険料 ２．正味事業費率＝（諸手数料及び集金費＋保険引受に係る営業費及び一般管理費）÷正味収入保険料 ３．合算率＝正味損害率＋正味事業費率",
+   "caveat": "正味損害率 산식이 正味支払保険金÷正味収入保険料 로 **損害調査費(LAE)를 분자에 안 더한다**. 다른 손보사는 전부 (正味支払保険金+損害調査費)÷正味収入保険料 라 이 회사만 과소 표시된다."
+  },
+  {
+   "company_jp": "ペット＆ファミリー損害保険",
+   "company_en": "Pet & Family",
+   "group": "C",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.petfamilyins.co.jp/company/disclosure2026.pdf",
+   "doc_type": "ディスクロージャー誌(ペット＆ファミリー損害保険の現状2026)",
+   "page": "6 (2025年度 대표적 경영지표), 24 (3개년 종목별 정미손해율・정미사업비율・합算率)",
+   "loss_ratio_pct": {
+    "FY2023": 58.8,
+    "FY2024": 63.6,
+    "FY2025": 64.2
+   },
+   "expense_ratio_pct": {
+    "FY2023": 32.1,
+    "FY2024": 31.4,
+    "FY2025": 28.6
+   },
+   "combined_ratio_pct": {
+    "FY2023": 90.9,
+    "FY2024": 95.0,
+    "FY2025": 92.8
+   },
+   "combined_is_derived": false,
+   "quote": "p6「代表的な経営指標」正味損害率 64.2％ 正味事業費率 28.6％ 単体ソルベンシー・マージン比率 181.5％（2025年度、旧基準）／p24「②正味損害率、正味事業費率およびその合算率」合計 58.8 32.1 90.9（2023）63.6 31.4 95.0（2024）64.2 28.6 92.8（2025）／（注）３．合算率＝正味損害率＋正味事業費率"
+  },
+  {
+   "company_jp": "ヤマップネイチャランス損害保険",
+   "company_en": "Yamap",
+   "group": "C",
+   "verdict": "unreachable",
+   "scope": null,
+   "source_url": null,
+   "doc_type": null,
+   "page": null,
+   "loss_ratio_pct": {},
+   "expense_ratio_pct": {},
+   "combined_ratio_pct": {},
+   "combined_is_derived": null,
+   "quote": null
+  },
+  {
+   "company_jp": "レスキュー損害保険",
+   "company_en": "Rescue Non-Life",
+   "group": "C",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.rescue-sonpo.jp/upload_files/news/disclo2025.pdf",
+   "doc_type": "ディスクロージャー誌(レスキュー損害保険の現状2026)",
+   "page": "4(printed) — 대표적 경영지표(2024-2025), 18(printed) — ②正味損害率、正味事業費率及びその合算率(3개년)",
+   "loss_ratio_pct": {
+    "FY2023": 29.2,
+    "FY2024": 35.0,
+    "FY2025": 30.0
+   },
+   "expense_ratio_pct": {
+    "FY2023": 60.9,
+    "FY2024": 61.3,
+    "FY2025": 61.5
+   },
+   "combined_ratio_pct": {
+    "FY2023": 90.1,
+    "FY2024": 96.3,
+    "FY2025": 91.5
+   },
+   "combined_is_derived": false,
+   "quote": "printed p4「1.代表的な経営指標」正味損害率 35.0％(2024) 30.0％(2025) 正味事業費率 61.3％(2024) 61.5％(2025)／printed p18「②正味損害率、正味事業費率及びその合算率」合計 29.2 60.9 90.1(2023) 35.0 61.3 96.3(2024) 30.0 61.5 91.5(2025)／（注）１．正味損害率＝（正味支払保険金＋損害調査費）÷正味収入保険料　２．正味事業費率＝（諸手数料及び集金費＋保険引受に係る営業費及び一般管理費）÷正味収入保険料　３．合算率＝正味損害率＋正味事業費率",
+   "caveat": "이미지 스캔 PDF 라 자동 텍스트 추출이 실패했고(세로쓰기 표 헤더 파손) 렌더링 후 **육안 판독**한 값이다. 신뢰도가 다른 행과 같지 않다."
+  },
+  {
+   "company_jp": "三井ダイレクト損害保険",
+   "company_en": "Mitsui Direct",
+   "group": "C",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.mitsui-direct.co.jp/download/pdf/disclosure/disclosure2026.pdf",
+   "doc_type": "ディスクロージャー誌(三井ダイレクト損害保険の現状2026, 全体版)",
+   "page": "13 (5개년 경영지표 추이), 43 (3개년 종목별 정미손해율・정미사업비율・합산율)",
+   "loss_ratio_pct": {
+    "FY2021": 64.4,
+    "FY2022": 67.5,
+    "FY2023": 68.6,
+    "FY2024": 70.4,
+    "FY2025": 64.3
+   },
+   "expense_ratio_pct": {
+    "FY2021": 33.0,
+    "FY2022": 37.9,
+    "FY2023": 37.1,
+    "FY2024": 35.1,
+    "FY2025": 28.9
+   },
+   "combined_ratio_pct": {
+    "FY2023": 105.7,
+    "FY2024": 105.5,
+    "FY2025": 93.2
+   },
+   "combined_is_derived": false,
+   "quote": "p13「主要な経営指標の推移」正味損害率 64.4％ 67.5％ 68.6％ 70.4％ 64.3％／正味事業費率 33.0％ 37.9％ 37.1％ 35.1％ 28.9％（2021~2025年度）／p43「②正味損害率、正味事業費率及びその合算率」合計 68.6 37.1 105.7（2023）70.4 35.1 105.5（2024）64.3 28.9 93.2（2025）／（注）３．合算率＝正味損害率＋正味事業費率"
+  },
+  {
+   "company_jp": "全管協れいわ損害保険",
+   "company_en": "Zenkankyou Reiwa",
+   "group": "B",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.zkreiwa-sonpo.co.jp/wp1/wp-content/uploads/2026/07/全管協れいわ損害保険の現状2026_業績データ編.pdf",
+   "doc_type": "ディスクロージャー誌(全管協れいわ損害保険の現状2026・業績データ編)",
+   "page": "本誌p10(代表的な経営指標等, 3ヵ年), データ編p8(主要な経営指標等の推移, 5ヵ年), データ編p12(正味損害率、正味事業費率及びその合算率, 3ヵ年)",
+   "loss_ratio_pct": {
+    "FY2021": 977.5,
+    "FY2022": 93.3,
+    "FY2023": 58.9,
+    "FY2024": 65.7,
+    "FY2025": 49.8
+   },
+   "expense_ratio_pct": {
+    "FY2021": 33833.8,
+    "FY2022": 2326.0,
+    "FY2023": 1064.3,
+    "FY2024": 547.3,
+    "FY2025": 187.6
+   },
+   "combined_ratio_pct": {
+    "FY2021": 34811.3,
+    "FY2022": 2419.3,
+    "FY2023": 1123.2,
+    "FY2024": 613.0,
+    "FY2025": 237.4
+   },
+   "combined_is_derived": {
+    "FY2021": true,
+    "FY2022": true,
+    "FY2023": false,
+    "FY2024": false,
+    "FY2025": false
+   },
+   "quote": "本誌p10 代表的な経営指標等: 正味収入保険料 2023年度9百万円 2024年度16百万円 2025年度26百万円／正味損害率 58.9% 65.7% 49.8%／正味事業費率 1,064.3% 547.3% 187.6%（原文ママ、極端な高率は誤記ではない——取扱種目が火災保険のみで正味収入保険料が数千万円〜数億円規模と極小のため）。 データ編p8 主要な経営指標等の推移（5ヵ年）: 正味損害率 2021年度977.5% 2022年度93.3% 2023年度58.9% 2024年度65.7% 2025年度49.8%／正味事業費率 33,833.8% 2,326.0% 1,064.3% 547.3% 187.6%（この表に合算率列は無い）。 データ編p12 正味損害率、正味事業費率及びその合算率（単位：％、火災=合計）: 2023年度 58.9% 1,064.3% 1,123.2%／2024年度 65.7% 547.3% 613.0%／2025年度 49.8% 187.6% 237.4%（注3.合算率＝正味損害率＋正味事業費率）。 種目は火災のみで海上・傷害・自動車・自賠責・その他は全て「－」（火災保険専業の極小規模会社）。FY2021・FY2022の合算率は5ヵ年表に直接ラベルが無いため損害率+事業費率の機械的合算（derived）、FY2023-2025は原文の「合算率」ラベル値をそのまま使用。"
+  },
+  {
+   "company_jp": "共栄火災海上保険",
+   "company_en": "Kyoei Fire & Marine",
+   "group": "A",
+   "verdict": "unreachable",
+   "scope": null,
+   "source_url": null,
+   "doc_type": null,
+   "page": null,
+   "loss_ratio_pct": {},
+   "expense_ratio_pct": {},
+   "combined_ratio_pct": {},
+   "combined_is_derived": false,
+   "quote": null
+  },
+  {
+   "company_jp": "大同火災海上保険",
+   "company_en": "Daido Fire & Marine",
+   "group": "C",
+   "verdict": "unreachable",
+   "scope": null,
+   "source_url": null,
+   "doc_type": null,
+   "page": null,
+   "loss_ratio_pct": {},
+   "expense_ratio_pct": {},
+   "combined_ratio_pct": {},
+   "combined_is_derived": null,
+   "quote": null
+  },
+  {
+   "company_jp": "日新火災海上保険",
+   "company_en": "Nisshin Fire & Marine",
+   "group": "A",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.nisshinfire.co.jp/ir/pdf/disclosure2026.pdf",
+   "doc_type": "日新火災の現状2026(ディスクロージャー誌, 2025年度=令和7年度決算)",
+   "page": "p81(正味損害率、正味事業費率及びその合算率 合計行) / p23(代表的な経営指標)",
+   "loss_ratio_pct": {
+    "FY2024": 60.9,
+    "FY2025": 61.1
+   },
+   "expense_ratio_pct": {
+    "FY2024": 35.6,
+    "FY2025": 36.5
+   },
+   "combined_ratio_pct": {
+    "FY2024": 96.4,
+    "FY2025": 97.6
+   },
+   "combined_is_derived": false,
+   "quote": "p23代表的な経営指標: 「正味損害率 60.9%(2024年度)→61.1%(2025年度)」「正味事業費率 35.6%→36.5%」. p81「正味損害率、正味事業費率及びその合算率」合計行(単位%, 2023/2024/2025年度 3개년 병기, 좌표 대조로 열 확인): 2025年度 61.1／36.5／97.6. 「単体ベースのソルベンシー・マージン比率」는 p23/26 모두 「別時期での開示」「新制度導入初年度における 経過措置の適用により、2026年10月末までに開示します」 -- ESR/SMR은 not_yet."
+  },
+  {
+   "company_jp": "日本地震再保険",
+   "company_en": "Japan Earthquake Reinsurance",
+   "group": "C",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.nihonjishin.co.jp/pdf/disclosure/2026/disclosure.pdf",
+   "doc_type": "ディスクロージャー誌(日本地震再保険の現状2026)",
+   "page": "8-9 (経営について, 5개년 막대그래프 — 좌표 정렬로 연도 매칭 재구성, dump_page 읽기순서로는 라벨과 값이 섞여 나옴)",
+   "loss_ratio_pct": {
+    "FY2021": 64.7,
+    "FY2022": 85.0,
+    "FY2023": 12.9,
+    "FY2024": 38.0,
+    "FY2025": 6.6
+   },
+   "expense_ratio_pct": {
+    "FY2021": 22.4,
+    "FY2022": 22.0,
+    "FY2023": 22.3,
+    "FY2024": 21.9,
+    "FY2025": 21.8
+   },
+   "combined_ratio_pct": {
+    "FY2021": 87.1,
+    "FY2022": 107.0,
+    "FY2023": 35.2,
+    "FY2024": 59.9,
+    "FY2025": 28.4
+   },
+   "combined_is_derived": false,
+   "quote": "正味損害率＝（正味支払保険金＋損害調査費）÷正味収入保険料（p8, 원수사와 동일 공식）／正味事業費率＝（保険引受に係る営業費及び一般管理費＋諸手数料及び集金費）÷正味収入保険料（p9）／コンバインド・レシオとは、損害保険における収益力を示す指標です。正味損害率と正味事業費率の合計値で、この値が低いほど収益力が高いといわれています。コンバインド・レシオ＝正味損害率＋正味事業費率（p9）／구조 설명(p8): 地震保険においては、制度の趣旨から保険料を極力低く抑える必要があり、経費を圧縮するとともに保険料収支残や資産運用益について、「地震保険に関する法律」により全額を将来の保険金支払いのために危険準備金として積み立てているため、利益が一切発生しない仕組みとなっています。保険引受利益はありません。"
+  },
+  {
+   "company_jp": "東京海上ダイレクト損害保険",
+   "company_en": "Tokio Marine Direct",
+   "group": "C",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.e-design.net/assets/pdf/company/disclosure/company_005_2026.pdf",
+   "doc_type": "ディスクロージャー誌(東京海上ダイレクトの現状2026, 旧イーデザイン損保, 2025-10-01 사명변경)",
+   "page": "55 (5개년 경영지표 추이), 59 (3개년 종목별 정미손해율・정미사업비율・합산율)",
+   "loss_ratio_pct": {
+    "FY2021": 58.1,
+    "FY2022": 74.4,
+    "FY2023": 84.6,
+    "FY2024": 76.2,
+    "FY2025": 73.9
+   },
+   "expense_ratio_pct": {
+    "FY2021": 34.8,
+    "FY2022": 47.3,
+    "FY2023": 50.5,
+    "FY2024": 39.4,
+    "FY2025": 47.8
+   },
+   "combined_ratio_pct": {
+    "FY2023": 135.1,
+    "FY2024": 115.6,
+    "FY2025": 121.7
+   },
+   "combined_is_derived": false,
+   "quote": "p55「主要な経営指標等の推移」正味損害率 58.1％ 74.4％ 84.6％ 76.2％ 73.9％／正味事業費率 34.8％ 47.3％ 50.5％ 39.4％ 47.8％（2021~2025年度）／p59「正味損害率、正味事業費率及びその合算率」合計 84.6 50.5 135.1（2023）76.2 39.4 115.6（2024）73.9 47.8 121.7（2025）／（注）３．合算率＝正味損害率＋正味事業費率"
+  },
+  {
+   "company_jp": "東京海上ホールディングス",
+   "company_en": "Tokio Marine Holdings",
+   "group": "A",
+   "verdict": "not_applicable_holding",
+   "scope": null,
+   "source_url": "https://www.tokiomarinehd.com/ir/event/presentation/2025/gi58a80000002zwa-att/Tokio_Marine_2025Q4_Results_Presentation_j.pdf",
+   "doc_type": "決算プレゼンテーション資料(2026年5月, 2025年度通期)",
+   "page": "p14-20 (International/Japan P&C 事業別ページ)",
+   "loss_ratio_pct": {},
+   "expense_ratio_pct": {},
+   "combined_ratio_pct": {},
+   "combined_is_derived": false,
+   "quote": "p20「Japan P&C事業④：コンバインド・レシオ（TMNF）」-- 損害率・事業費率・コンバインド・レシオは 事業別(Japan P&C=TMNF単体, International=PHLY/DFG/TMHCC 등)로 개별 제시된다. 그룹 전체(全事業合算) 단일 コンバインド・レシオ는 이 자료 어디에도 없다 -- p8-9의 修正純利益도 事業別(Japan P&C/International/Japan Life/その他)로 분해될 뿐 손해율류 비율은 사업부문(=사업회사) 단위로만 공시된다."
+  },
+  {
+   "company_jp": "楽天損害保険",
+   "company_en": "Rakuten Non-Life",
+   "group": "C",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.rakuten-sonpo.co.jp/Portals/0/images/company/disclosure2026.pdf",
+   "doc_type": "ディスクロージャー誌(楽天損保の現状2026)",
+   "page": "10 (5개년 경영지표 추이), 75 (3개년 종목별 정미손해율・정미사업비율・합산율 c.표 — 표 레이아웃상 get_text 기본모드로는 표가 안 잡혀 sort=True 재추출 필요했음)",
+   "loss_ratio_pct": {
+    "FY2021": 82.3,
+    "FY2022": 96.1,
+    "FY2023": 89.6,
+    "FY2024": 83.6,
+    "FY2025": 74.4
+   },
+   "expense_ratio_pct": {
+    "FY2021": 71.9,
+    "FY2022": 63.2,
+    "FY2023": 59.3,
+    "FY2024": 51.0,
+    "FY2025": 41.7
+   },
+   "combined_ratio_pct": {
+    "FY2023": 148.9,
+    "FY2024": 134.6,
+    "FY2025": 116.1
+   },
+   "combined_is_derived": false,
+   "quote": "p10「代表的な経営指標等」正味損害率 82.3％ 96.1％ 89.6％ 83.6％ 74.4％／正味事業費率 71.9％ 63.2％ 59.3％ 51.0％ 41.7％（2021~2025年度）／p75「c.正味損害率、正味事業費率およびその合算率」合計 89.6 59.3 148.9（2023）83.6 51.0 134.6（2024）74.4 41.7 116.1（2025）／（注３）合算率＝正味損害率＋正味事業費率"
+  },
+  {
+   "company_jp": "第一アイペット損害保険",
+   "company_en": "Dai-ichi iPet",
+   "group": "C",
+   "verdict": "found",
+   "scope": "solo",
+   "source_url": "https://www.ipet-ins.com/company/ipet/pdf/disclosure/2026_data.pdf",
+   "doc_type": "ディスクロージャー誌(第一アイペットの現状2026, 業績データ編／資料編)",
+   "page": "10",
+   "loss_ratio_pct": {
+    "FY2024": 55.1,
+    "FY2025": 57.8
+   },
+   "expense_ratio_pct": {
+    "FY2024": 35.8,
+    "FY2025": 35.8
+   },
+   "combined_ratio_pct": {
+    "FY2024": 91.0,
+    "FY2025": 93.6
+   },
+   "combined_is_derived": false,
+   "quote": "正味損害率、正味事業費率及びその合算率／合計 55.1％ 35.8％ 91.0％（2024年度） 57.8％ 35.8％ 93.6％（2025年度）／（注）１ 正味損害率＝（正味支払保険金＋損害調査費）÷正味収入保険料　２ 正味事業費率＝（諸手数料＋保険引受に係る営業費及び一般管理費）÷正味収入保険料　３ 合算率＝正味損害率＋正味事業費率"
+  }
+ ]
+}

@@ -1,0 +1,460 @@
+{
+  "_meta": {
+    "group": "C",
+    "companies": 10,
+    "generated_by": "jp-collector (Claude Sonnet 5)",
+    "generated_note": "group C = direct-sale / pet / reinsurance 10 non-life insurers. loss/expense/combined ratio census only (NOT ESR census)."
+  },
+  "records": [
+    {
+      "company_jp": "第一アイペット損害保険",
+      "company_en": "Dai-ichi iPet",
+      "verdict": "found",
+      "source_url": "https://www.ipet-ins.com/company/ipet/pdf/disclosure/2026_data.pdf",
+      "doc_type": "ディスクロージャー誌(第一アイペットの現状2026, 業績データ編／資料編)",
+      "page": "10",
+      "scope": "solo",
+      "fiscal_years": [
+        "2024",
+        "2025"
+      ],
+      "loss_ratio_pct": {
+        "2024": 55.1,
+        "2025": 57.8
+      },
+      "expense_ratio_pct": {
+        "2024": 35.8,
+        "2025": 35.8
+      },
+      "combined_ratio_pct": {
+        "2024": 91.0,
+        "2025": 93.6
+      },
+      "combined_is_derived": false,
+      "quote": "正味損害率、正味事業費率及びその合算率／合計 55.1％ 35.8％ 91.0％（2024年度） 57.8％ 35.8％ 93.6％（2025年度）／（注）１ 正味損害率＝（正味支払保険金＋損害調査費）÷正味収入保険料　２ 正味事業費率＝（諸手数料＋保険引受に係る営業費及び一般管理費）÷正味収入保険料　３ 合算率＝正味損害率＋正味事業費率",
+      "notes": "本편(2026_main.pdf)에는 손해율 표가 없다(용어해설·개황 위주) — 자료편(2026_data.pdf) p10에서 확인. 이 회사 공시는 FY2024-2025 2개년표만 있고 5개년 시계열은 없음(반려동물보험 단일 종목뿐이라 '合計' 행과 '기타(ペット保険)' 행 숫자가 동일).",
+      "attempts": [
+        {
+          "url": "https://www.ipet-ins.com/company/ipet/disclosure.html",
+          "status": 200,
+          "note": "listing page, found pdf links"
+        },
+        {
+          "url": "https://www.ipet-ins.com/company/ipet/pdf/disclosure/2026_main.pdf",
+          "status": 200,
+          "note": "opened, no loss-ratio table (16p summary booklet)"
+        },
+        {
+          "url": "https://www.ipet-ins.com/company/ipet/pdf/disclosure/2026_data.pdf",
+          "status": 200,
+          "note": "opened, table found p10"
+        }
+      ]
+    },
+    {
+      "company_jp": "大同火災海上保険",
+      "company_en": "Daido Fire & Marine",
+      "verdict": "unreachable",
+      "source_url": null,
+      "doc_type": null,
+      "page": null,
+      "scope": null,
+      "fiscal_years": [],
+      "loss_ratio_pct": {},
+      "expense_ratio_pct": {},
+      "combined_ratio_pct": {},
+      "combined_is_derived": null,
+      "quote": null,
+      "notes": "daidokasai.co.jp 도메인 전체가 WAF 로 403(jesr_http.probe classification=blocked, WebFetch 도 동일 403 — 봇차단이 사람 브라우저까지 막는지는 미확인). wp-content 구경로 3종 추정 URL(2025/2026 연도판)도 전부 403. 2026-09-13 세션에서도 같은 결과였다(재현됨, 일시적 장애 아님). 2024년판까지는 검색엔진 캐시로 존재가 확인되나 FY2025판 원문은 열지 못함.",
+      "attempts": [
+        {
+          "url": "https://www.daidokasai.co.jp/corporate/disclosure/",
+          "status": 403,
+          "note": "jesr_http.probe classification=blocked"
+        },
+        {
+          "url": "https://www.daidokasai.co.jp/corporate/disclosure/",
+          "status": 403,
+          "note": "WebFetch tool, same 403"
+        },
+        {
+          "url": "https://www.daidokasai.co.jp/wp-content/uploads/2025/07/%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%BC%E8%AA%8C-2025.pdf",
+          "status": 403,
+          "note": "guessed URL pattern from 2020-2024 filenames"
+        },
+        {
+          "url": "https://www.daidokasai.co.jp/wp-content/uploads/2026/07/%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%BC%E8%AA%8C-2026.pdf",
+          "status": 403,
+          "note": "guessed URL pattern"
+        },
+        {
+          "url": "https://www.daidokasai.co.jp/wp-content/uploads/2025/07/%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%BC%E8%AA%8C2025.pdf",
+          "status": 403,
+          "note": "guessed URL pattern, no hyphen"
+        }
+      ]
+    },
+    {
+      "company_jp": "東京海上ダイレクト損害保険",
+      "company_en": "Tokio Marine Direct",
+      "verdict": "found",
+      "source_url": "https://www.e-design.net/assets/pdf/company/disclosure/company_005_2026.pdf",
+      "doc_type": "ディスクロージャー誌(東京海上ダイレクトの現状2026, 旧イーデザイン損保, 2025-10-01 사명변경)",
+      "page": "55 (5개년 경영지표 추이), 59 (3개년 종목별 정미손해율・정미사업비율・합산율)",
+      "scope": "solo",
+      "fiscal_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "loss_ratio_pct": {
+        "2021": 58.1,
+        "2022": 74.4,
+        "2023": 84.6,
+        "2024": 76.2,
+        "2025": 73.9
+      },
+      "expense_ratio_pct": {
+        "2021": 34.8,
+        "2022": 47.3,
+        "2023": 50.5,
+        "2024": 39.4,
+        "2025": 47.8
+      },
+      "combined_ratio_pct": {
+        "2023": 135.1,
+        "2024": 115.6,
+        "2025": 121.7
+      },
+      "combined_is_derived": false,
+      "quote": "p55「主要な経営指標等の推移」正味損害率 58.1％ 74.4％ 84.6％ 76.2％ 73.9％／正味事業費率 34.8％ 47.3％ 50.5％ 39.4％ 47.8％（2021~2025年度）／p59「正味損害率、正味事業費率及びその合算率」合計 84.6 50.5 135.1（2023）76.2 39.4 115.6（2024）73.9 47.8 121.7（2025）／（注）３．合算率＝正味損害率＋正味事業費率",
+      "notes": "単体ソルベンシー・マージン比率は p14/p55 모두 '別時期での開示※'(2026年10月末). ESR 미공표.",
+      "attempts": [
+        {
+          "url": "https://www.e-design.net/assets/pdf/company/disclosure/company_005_2026.pdf",
+          "status": 200,
+          "note": "already known from 09-12 census source_url"
+        }
+      ]
+    },
+    {
+      "company_jp": "トーア再保険",
+      "company_en": "Toa Reinsurance",
+      "verdict": "found",
+      "source_url": "https://www.toare.co.jp/img/company/disclo/pdf/toa_ar2026.pdf",
+      "doc_type": "ディスクロージャー誌／アニュアルレポート(トーア再保険 2026)",
+      "page": "5 (3개년 대표적 경영지표), 55 (3개년 종목별 정미손해율・정미사업비율・합산율, '保険の引受（単体）' 섹션)",
+      "scope": "solo",
+      "fiscal_years": [
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "loss_ratio_pct": {
+        "2023": 87.8,
+        "2024": 80.4,
+        "2025": 77.5
+      },
+      "expense_ratio_pct": {
+        "2023": 21.8,
+        "2024": 21.0,
+        "2025": 20.9
+      },
+      "combined_ratio_pct": {
+        "2023": 109.6,
+        "2024": 101.4,
+        "2025": 98.4
+      },
+      "combined_is_derived": false,
+      "quote": "p5「代表的な経営指標等」正味損害率 87.8％ 80.4％ 77.5％／正味事業費率 21.8％ 21.0％ 20.9％（2023~2025年度）／p55「正味損害率、正味事業費率およびその合算率」合計 87.8 21.8 109.6 80.4 21.0 101.4 77.5 20.9 98.4／（注）１．正味損害率＝正味支払保険金÷正味収入保険料 ２．正味事業費率＝（諸手数料及び集金費＋保険引受に係る営業費及び一般管理費）÷正味収入保険料 ３．合算率＝正味損害率＋正味事業費率",
+      "notes": "재보험사 정의 차이 명시: 이 회사의 正味損害率 산식은 '正味支払保険金÷正味収入保険料'로 損害調査費(LAE)를 분자에 안 더한다 — 원수 손보사(iPet·Tokio Marine Direct·Mitsui Direct·Rakuten·Pet&Family, 전부 '(正味支払保険金+損害調査費)÷正味収入保険料')와 공식이 다르다. 표는 '合計'(全種目) 행이며 구성비 최대 종목은 生命再保険 52.5%(p5, FY2025 정미수입보험료 기준) — 손해보험 원수사와 종목 구성 자체가 다르므로 액면 비교 시 주의. ESR은 census와 동일하게 미공표(p5 각주, 2026年10月末 예정).",
+      "attempts": [
+        {
+          "url": "https://www.toare.co.jp/keiei/settlement/",
+          "status": 200,
+          "note": "known from 09-12 census source_url, but this page only has quarterly ソルベンシー・マージン比率 filings, no loss-ratio table"
+        },
+        {
+          "url": "https://www.toare.co.jp/corporate/disclo.html",
+          "status": 200,
+          "note": "found via WebSearch — actual disclosure booklet index"
+        },
+        {
+          "url": "https://www.toare.co.jp/img/company/disclo/pdf/toa_ar2026.pdf",
+          "status": 200,
+          "note": "table found p5, p55"
+        }
+      ]
+    },
+    {
+      "company_jp": "日本地震再保険",
+      "company_en": "Japan Earthquake Reinsurance",
+      "verdict": "found",
+      "source_url": "https://www.nihonjishin.co.jp/pdf/disclosure/2026/disclosure.pdf",
+      "doc_type": "ディスクロージャー誌(日本地震再保険の現状2026)",
+      "page": "8-9 (経営について, 5개년 막대그래프 — 좌표 정렬로 연도 매칭 재구성, dump_page 읽기순서로는 라벨과 값이 섞여 나옴)",
+      "scope": "solo",
+      "fiscal_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "loss_ratio_pct": {
+        "2021": 64.7,
+        "2022": 85.0,
+        "2023": 12.9,
+        "2024": 38.0,
+        "2025": 6.6
+      },
+      "expense_ratio_pct": {
+        "2021": 22.4,
+        "2022": 22.0,
+        "2023": 22.3,
+        "2024": 21.9,
+        "2025": 21.8
+      },
+      "combined_ratio_pct": {
+        "2021": 87.1,
+        "2022": 107.0,
+        "2023": 35.2,
+        "2024": 59.9,
+        "2025": 28.4
+      },
+      "combined_is_derived": false,
+      "quote": "正味損害率＝（正味支払保険金＋損害調査費）÷正味収入保険料（p8, 원수사와 동일 공식）／正味事業費率＝（保険引受に係る営業費及び一般管理費＋諸手数料及び集金費）÷正味収入保険料（p9）／コンバインド・レシオとは、損害保険における収益力を示す指標です。正味損害率と正味事業費率の合計値で、この値が低いほど収益力が高いといわれています。コンバインド・レシオ＝正味損害率＋正味事業費率（p9）／구조 설명(p8): 地震保険においては、制度の趣旨から保険料を極力低く抑える必要があり、経費を圧縮するとともに保険料収支残や資産運用益について、「地震保険に関する法律」により全額を将来の保険金支払いのために危険準備金として積み立てているため、利益が一切発生しない仕組みとなっています。保険引受利益はありません。",
+      "notes": "라벨・공식 자체는 원수 손보사와 동일(正味損害率=(正味支払保険金+損害調査費)/正味収入保険料)이라 not_applicable 로 빼지 않고 found 로 남긴다. 단 정부-민간 공동 지진재보험 특수법인이라 위험준비금 全額적립 구조상 '이익이 일절 발생하지 않는 구조'(원문)이며, 지진 발생 여부에 따라 손해율이 연도별로 6.6%~85.0%까지 극단적으로 튄다 — 손보 원수사와 리스크풀 성격이 전혀 다르므로 그대로 순위 비교하지 말 것. 값은 텍스트 읽기순서로는 라벨/막대와 뒤섞여 나와 words 좌표(x,y) 정렬로 연도-값을 재매칭했고, 손해율+사업비율=콤바인드레시오 항등식이 5개년 전부 정확히 성립함을 자체 검산했다(예: 2025년 6.6+21.8=28.4). ESR은 census와 동일하게 미공표.",
+      "attempts": [
+        {
+          "url": "https://www.nihonjishin.co.jp/disclosure.html",
+          "status": 200,
+          "note": "listing page (2026-09-12 census 는 curl http=000 이었으나 이번엔 정상 200)"
+        },
+        {
+          "url": "https://www.nihonjishin.co.jp/pdf/disclosure/2026/disclosure.pdf",
+          "status": 200,
+          "note": "table found p8-9"
+        }
+      ]
+    },
+    {
+      "company_jp": "三井ダイレクト損害保険",
+      "company_en": "Mitsui Direct",
+      "verdict": "found",
+      "source_url": "https://www.mitsui-direct.co.jp/download/pdf/disclosure/disclosure2026.pdf",
+      "doc_type": "ディスクロージャー誌(三井ダイレクト損害保険の現状2026, 全体版)",
+      "page": "13 (5개년 경영지표 추이), 43 (3개년 종목별 정미손해율・정미사업비율・합산율)",
+      "scope": "solo",
+      "fiscal_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "loss_ratio_pct": {
+        "2021": 64.4,
+        "2022": 67.5,
+        "2023": 68.6,
+        "2024": 70.4,
+        "2025": 64.3
+      },
+      "expense_ratio_pct": {
+        "2021": 33.0,
+        "2022": 37.9,
+        "2023": 37.1,
+        "2024": 35.1,
+        "2025": 28.9
+      },
+      "combined_ratio_pct": {
+        "2023": 105.7,
+        "2024": 105.5,
+        "2025": 93.2
+      },
+      "combined_is_derived": false,
+      "quote": "p13「主要な経営指標の推移」正味損害率 64.4％ 67.5％ 68.6％ 70.4％ 64.3％／正味事業費率 33.0％ 37.9％ 37.1％ 35.1％ 28.9％（2021~2025年度）／p43「②正味損害率、正味事業費率及びその合算率」合計 68.6 37.1 105.7（2023）70.4 35.1 105.5（2024）64.3 28.9 93.2（2025）／（注）３．合算率＝正味損害率＋正味事業費率",
+      "notes": "単体ソルベンシー・マージン比率(旧基準) p13에 2021-2024년치만 있고 신기준은 全欄 '－'(注, 2026年10月末開示予定).",
+      "attempts": [
+        {
+          "url": "https://www.mitsui-direct.co.jp/download/pdf/disclosure/disclosure2026.pdf",
+          "status": 200,
+          "note": "already known from 09-12 census source_url"
+        }
+      ]
+    },
+    {
+      "company_jp": "楽天損害保険",
+      "company_en": "Rakuten Non-Life",
+      "verdict": "found",
+      "source_url": "https://www.rakuten-sonpo.co.jp/Portals/0/images/company/disclosure2026.pdf",
+      "doc_type": "ディスクロージャー誌(楽天損保の現状2026)",
+      "page": "10 (5개년 경영지표 추이), 75 (3개년 종목별 정미손해율・정미사업비율・합산율 c.표 — 표 레이아웃상 get_text 기본모드로는 표가 안 잡혀 sort=True 재추출 필요했음)",
+      "scope": "solo",
+      "fiscal_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "loss_ratio_pct": {
+        "2021": 82.3,
+        "2022": 96.1,
+        "2023": 89.6,
+        "2024": 83.6,
+        "2025": 74.4
+      },
+      "expense_ratio_pct": {
+        "2021": 71.9,
+        "2022": 63.2,
+        "2023": 59.3,
+        "2024": 51.0,
+        "2025": 41.7
+      },
+      "combined_ratio_pct": {
+        "2023": 148.9,
+        "2024": 134.6,
+        "2025": 116.1
+      },
+      "combined_is_derived": false,
+      "quote": "p10「代表的な経営指標等」正味損害率 82.3％ 96.1％ 89.6％ 83.6％ 74.4％／正味事業費率 71.9％ 63.2％ 59.3％ 51.0％ 41.7％（2021~2025年度）／p75「c.正味損害率、正味事業費率およびその合算率」合計 89.6 59.3 148.9（2023）83.6 51.0 134.6（2024）74.4 41.7 116.1（2025）／（注３）合算率＝正味損害率＋正味事業費率",
+      "notes": "단체ベース의 ソルベンシー・マージン比率(FY2025)은 (注7) 처리로 10월 공표예정, 단 구기준(FY2024) 535.0% 수치는 남아있다. p76에 별도로 '出再控除前の発生損害率' 3개년표(재보험 출재전 총손해율, 다른 분모)도 있으나 이건 정미(net)표가 아니라 채택 안 함.",
+      "attempts": [
+        {
+          "url": "https://www.rakuten-sonpo.co.jp/Portals/0/images/company/disclosure2026.pdf",
+          "status": 200,
+          "note": "already known from 09-12 census source_url"
+        }
+      ]
+    },
+    {
+      "company_jp": "レスキュー損害保険",
+      "company_en": "Rescue Non-Life",
+      "verdict": "found",
+      "source_url": "https://www.rescue-sonpo.jp/upload_files/news/disclo2025.pdf",
+      "doc_type": "ディスクロージャー誌(レスキュー損害保険の現状2026)",
+      "page": "4(printed) — 대표적 경영지표(2024-2025), 18(printed) — ②正味損害率、正味事業費率及びその合算率(3개년)",
+      "scope": "solo",
+      "fiscal_years": [
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "loss_ratio_pct": {
+        "2023": 29.2,
+        "2024": 35.0,
+        "2025": 30.0
+      },
+      "expense_ratio_pct": {
+        "2023": 60.9,
+        "2024": 61.3,
+        "2025": 61.5
+      },
+      "combined_ratio_pct": {
+        "2023": 90.1,
+        "2024": 96.3,
+        "2025": 91.5
+      },
+      "combined_is_derived": false,
+      "quote": "printed p4「1.代表的な経営指標」正味損害率 35.0％(2024) 30.0％(2025) 正味事業費率 61.3％(2024) 61.5％(2025)／printed p18「②正味損害率、正味事業費率及びその合算率」合計 29.2 60.9 90.1(2023) 35.0 61.3 96.3(2024) 30.0 61.5 91.5(2025)／（注）１．正味損害率＝（正味支払保険金＋損害調査費）÷正味収入保険料　２．正味事業費率＝（諸手数料及び集金費＋保険引受に係る営業費及び一般管理費）÷正味収入保険料　３．合算率＝正味損害率＋正味事業費率",
+      "notes": "이 PDF(disclo2025.pdf, 17.8MB/50p)는 텍스트 레이어가 전혀 없는 스캔 이미지 PDF다(fitz get_text() 전 페이지 0자) — 처음 pymupdf 텍스트 추출로는 not_found 로 오판할 뻔했다.tesseract-ocr(+jpn 언어팩) 설치 후 페이지를 렌더링해 직접 육안 확인(정본 페이지 2장, p5/p19=pdf page index)으로 값을 읽었다 — OCR 텍스트 자동추출은 세로쓰기 표 헤더에서 문자가 깨져(예: '正味損害率' 열 라벨이 '下KK人...' 등으로 오인식) 신뢰할 수 없었고, 렌더링된 표 자체를 그대로 옮겨적었다. 값은 두 표(단일 대표지표 표 vs 3개년 상세표)가 2024/2025 구간에서 정확히 일치해 교차검증됨. 단체(총자산 23-24억엔대)의 소형 손보사라 5개년 시계열은 없고 3개년(2023-2025)까지만 공시.",
+      "attempts": [
+        {
+          "url": "https://www.rescue-sonpo.jp/news.php",
+          "status": 200,
+          "note": "listing page"
+        },
+        {
+          "url": "https://www.rescue-sonpo.jp/upload_files/news/kessan2025.pdf",
+          "status": 200,
+          "note": "wrong doc (10p, no loss-ratio keywords — likely a 決算公告/settlement notice, not the disclosure booklet)"
+        },
+        {
+          "url": "https://www.rescue-sonpo.jp/upload_files/news/20260626.pdf",
+          "status": 200,
+          "note": "wrong doc (16p, no loss-ratio keywords — press release)"
+        },
+        {
+          "url": "https://www.rescue-sonpo.jp/upload_files/news/disclo2025.pdf",
+          "status": 200,
+          "note": "correct doc — image-only PDF, required OCR/visual render (tesseract-ocr+jpn installed this session)"
+        }
+      ]
+    },
+    {
+      "company_jp": "ペット＆ファミリー損害保険",
+      "company_en": "Pet & Family",
+      "verdict": "found",
+      "source_url": "https://www.petfamilyins.co.jp/company/disclosure2026.pdf",
+      "doc_type": "ディスクロージャー誌(ペット＆ファミリー損害保険の現状2026)",
+      "page": "6 (2025年度 대표적 경영지표), 24 (3개년 종목별 정미손해율・정미사업비율・합算率)",
+      "scope": "solo",
+      "fiscal_years": [
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "loss_ratio_pct": {
+        "2023": 58.8,
+        "2024": 63.6,
+        "2025": 64.2
+      },
+      "expense_ratio_pct": {
+        "2023": 32.1,
+        "2024": 31.4,
+        "2025": 28.6
+      },
+      "combined_ratio_pct": {
+        "2023": 90.9,
+        "2024": 95.0,
+        "2025": 92.8
+      },
+      "combined_is_derived": false,
+      "quote": "p6「代表的な経営指標」正味損害率 64.2％ 正味事業費率 28.6％ 単体ソルベンシー・マージン比率 181.5％（2025年度、旧基準）／p24「②正味損害率、正味事業費率およびその合算率」合計 58.8 32.1 90.9（2023）63.6 31.4 95.0（2024）64.2 28.6 92.8（2025）／（注）３．合算率＝正味損害率＋正味事業費率",
+      "notes": "p6 표는 2025年度 1개년만, p23-24 자료편에 3개년(2023-2025) 시계열 있음. 상품군은 その他(ペット保険) 단일.",
+      "attempts": [
+        {
+          "url": "https://www.petfamilyins.co.jp/company/notification/",
+          "status": 200,
+          "note": "listing page — found disclosure2026.pdf link (09-12 census 엔 이 URL이 없어서 disclosure_url 공란이었음)"
+        },
+        {
+          "url": "https://www.petfamilyins.co.jp/company/disclosure2026.pdf",
+          "status": 200,
+          "note": "table found p6, p23-24"
+        }
+      ]
+    },
+    {
+      "company_jp": "ヤマップネイチャランス損害保険",
+      "company_en": "Yamap",
+      "verdict": "unreachable",
+      "source_url": null,
+      "doc_type": null,
+      "page": null,
+      "scope": null,
+      "fiscal_years": [],
+      "loss_ratio_pct": {},
+      "expense_ratio_pct": {},
+      "combined_ratio_pct": {},
+      "combined_is_derived": null,
+      "quote": null,
+      "notes": "2026-09-13 확인된 진짜 SPA(Nuxt3/Studio.Design) 재확인 — 2026-09-14 재시도도 동일: /company, /publicnotice(電子公告) 둘 다 HTTP 200 이지만 body 는 Studio.Design 클라이언트렌더 셸(window.__NUXT__ 빈 객체, 실제 콘텐츠는 별도 API storage.googleapis.com 에서 JS로 가져옴 — 정적 fetch 로는 못 딴다). 2026-09-13 세션이 이미 서버렌더 JSON 전 17페이지를 훑어 재무공시 페이지 자체가 없음을 확인했고, 이번 라운드는 '/publicnotice(전자공고)' 페이지를 추가로 열어봤으나 같은 결과. 신생 손보사(2024-05 면허취득, 2년차)라 FY2025 공시의무 자체가 있는지도 불명. unreachable 유지, 해결하려면 헤드리스 브라우저가 필요한데 이 레인은 브라우저 도구 사용이 금지돼 있다.",
+      "attempts": [
+        {
+          "url": "https://yamap-naturance.co.jp/company",
+          "status": 200,
+          "note": "SPA shell, 0 static links (재확인)"
+        },
+        {
+          "url": "https://yamap-naturance.co.jp/publicnotice",
+          "status": 200,
+          "note": "SPA shell (window.__NUXT__={} empty), 전자공고 페이지도 클라이언트렌더"
+        }
+      ]
+    }
+  ]
+}
