@@ -362,7 +362,7 @@ push 묶음에 뒀다: `tests/test_jp_source_gate.py::test_live_esr_evidence_has
 | **UH-19 ✅ 해소 (2026-09-13, 같은 날)** — 빌더를 안 돌리면 게이트도 안 도는 구조를 `tests/test_jp_deploy_matches_census.py` 가 닫았다(빌더 재실행 결과 ↔ 커밋본 전량 비교) | — | prepush offline 묶음 + CLAUDE.md §5 jp 축소범위에 등재 |
 | **UH-21 ✅ 해소 (2026-09-13, 같은 날)** — `JP_ESR_ADJUSTED_FIGURE` 정의·배선 완료(§4d). 판정식은 "화면값의 라벨동반 조각이 전부 한정어 + **같은 문서에 한정어 없는 대안값이 있다**" 의 곱이고, 대안값 조건이 본 룰이다(실측 근거는 §4d 표) | — | 회귀 83+26 · 이빨 10/10 · 엔드투엔드 재현(220 → push 묶음 exit 1 / 181 → 조용) |
 | **UH-22 (신규)** — `JP_ESR_ADJUSTED_FIGURE` 의 severity 가 **YELLOW** 다. 빌더 exit code 를 안 바꾸고, 차단은 push 묶음의 라이브 증거 테스트가 한다 | **RED 축과 이빨의 위치가 다르다.** 지금은 `tests/test_jp_source_gate.py` 를 지우거나 라이브 증거 검사를 느슨하게 하면 발화가 통과한다(RED 였다면 빌더가 직접 막는다). YELLOW 로 시작한 것은 판단이지 사고가 아니다 — 한정어 목록이 휴리스틱이고 조건부 값을 정당하게 헤드라인으로 쓰는 회사가 있을 수 있어 RED 는 오탐 1건이 정상 배포를 막는다(UH-5·UH-9 선례) | **P2 — 다음 census 라운드(10/31 J-ICS 공시기한 직후, posted 15 → 최대 77사)에서 재측정.** 승격 조건을 미리 못 박는다: ① 늘어난 표본에서 `adjusted_alt` 오탐 **0** ② 한정어 목록을 바꿔도(definition marker 오염판 포함) `adjusted_alt` 가 정상사에서 발화 0 유지 ③ 발화한 회사가 실제로 원문 대조에서 조정치로 확인됨. 셋이 다 서면 `ESR_ADJUSTED_YELLOW` → RED 분류로 옮긴다(상수 한 줄 + 회귀 갱신). 못 서면 YELLOW 유지 |
-| **UH-23 (신규, 작음)** — 한정어 목록(`ADJUSTED_QUALIFIERS`)의 **정본이 코드에만 있다** | ESR 라벨 목록은 정본이 `docs/domains/claude-agent-jp.md §3` 이고 테스트가 한 줄씩 대조한다(`test_esr_labels_are_all_named_in_the_domain_doc`). 한정어는 같은 장치가 없어 코드가 혼자 늘어날 수 있다 — 늘어나면 §4d 표가 보여 준 대로 정상사가 거짓 발화한다 | **P3** — jp 도메인 문서 §3 에 한정어 절을 추가하고 대조 테스트를 얹는다(도메인 문서는 jp 레인 소유라 이 세션이 고치지 않았다). 그 전까지의 방어는 `test_qualifier_list_is_not_empty_and_excludes_definition_markers`(definition marker 4종의 **부재**를 강제) |
+| **UH-23 ✅ 해소 (2026-09-14)** — 한정어 목록(`ADJUSTED_QUALIFIERS`)의 **정본이 코드에만 있었다** | ESR 라벨 목록은 정본이 `docs/domains/claude-agent-jp.md §3` 이고 테스트가 한 줄씩 대조한다(`test_esr_labels_are_all_named_in_the_domain_doc`). 한정어는 같은 장치가 없어 코드가 혼자 늘어날 수 있었다 — 늘어나면 §4d 표가 보여 준 대로 정상사가 거짓 발화한다 | **2026-09-13 에는 절반만 닫혔다**: §3 에 한정어 절이 서긴 했으나 대조 테스트가 없었고, §3 이 적은 것은 관측 3종뿐이라 코드 10종과 어긋나 있었다(실측: §3 에 문자열로라도 있던 것 4종, 그중 `調整後` 는 §3 이 「추측으로 넣지 말 것」 으로 지목한 어휘). **2026-09-14**: §3 이 한정어 10종·정의 표지 4종을 **표**로 싣고, `test_adjusted_qualifiers_match_the_domain_doc`(집합일치, 양방향) + `test_definition_markers_named_in_the_doc_stay_out_of_the_code_list`(문서추종 제외검사) 를 `tests/test_jp_source_gate.py` 에 배선했다 — 그 파일은 `prepush_check.py` 의 전체·축소 묶음에 **둘 다** 들어 있다. 변이 6/6 발화 + 음성대조 2건(단방향 약화는 빠져나감 · 하드코딩 바닥선은 별도 발화). 기존 `test_qualifier_list_is_not_empty_and_excludes_definition_markers` 는 **문서를 안 따라가는 바닥선**으로 존치 |
 
 **UH-21 의 실측 선행 자료(2026-09-13, posted 15사 전수).** "오탐 억제를 설계 못 하면 배선하지 않는다"
 (UH-5·UH-9 선례)를 지키려고 후보 판정식을 같은 표본에 먼저 돌렸다.
@@ -425,8 +425,9 @@ push 묶음에 뒀다: `tests/test_jp_source_gate.py::test_live_esr_evidence_has
       새 룰 `JP_ESR_NOT_IN_SOURCE`·`JP_ESR_ADJUSTED_FIGURE` 를 면제 가능 목록에 올렸으나 실제
       등재는 0건. `_README` 의 룰 목록 ↔ 코드 `SOURCE_RULE_IDS` 는 테스트가 대조한다)
 - [x] 5 미배선 잔여 + 후속 티켓 (UH-18·UH-19·**UH-21** 해소 / **UH-22**(severity 승격 판단, P2) ·
-      **UH-23**(한정어 목록 정본 위치, P3) 신규)
+      **UH-23**(한정어 목록 정본 위치, P3) 신규 → **2026-09-14 해소**)
 
 **5칸이 다 찼으므로 `closed`.** 남은 UH-22·UH-23 은 "룰이 없다" 가 아니라 "이빨의 위치와 정본의
-위치" 문제이고, 둘 다 §5 에 승격 조건·후속 위치까지 적어 뒀다. 다음 census 라운드(10/31 직후,
+위치" 문제이고, 둘 다 §5 에 승격 조건·후속 위치까지 적어 뒀다.
+**2026-09-14 갱신: UH-23 해소**(§3 정본 표 + 양방향 대조 테스트 2건, 변이 6/6). 잔여는 UH-22 하나. 다음 census 라운드(10/31 직후,
 posted 15 → 최대 77사)가 UH-22 의 재측정 시점이다 — 그때 이 문서를 다시 열 것.

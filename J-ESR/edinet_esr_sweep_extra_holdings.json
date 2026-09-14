@@ -1,0 +1,124 @@
+{
+  "checked_at": "2026-09-14T04:21Z",
+  "scope": "extra_holding_codes_orchestrator_20260914",
+  "note": "지주회사 EDINET 코드(jp_insurers.csv 에 없음) 4건 — 오케스트레이터 추가발주. scope(連結/単体)는 원문 표지 그대로, 사업회사(E03845/E33935)와 지주(E34736/E35826) 코드가 별도 존재하는 경우 어느 문서에서 나온 값인지 doc_id/edinet_code 로 구분.",
+  "rows_count": 4,
+  "summary": {
+    "found": 1,
+    "no_esr_in_doc": 2,
+    "doc_not_found": 1,
+    "error": 0
+  },
+  "rows": [
+    {
+      "edinet_code": "E24073",
+      "company_jp": "アニコムホールディングス株式会社",
+      "company_en": "Anicom Holdings",
+      "census_mapped_company_en": "Anicom Insurance",
+      "note_kind": "holding_company_code_not_in_jp_insurers_csv",
+      "doc_id": "S100YFY1",
+      "edinet_eligible": "yes(holding, 有報 실제 제출)",
+      "census_status": "n/a(extra holding-code sweep, orchestrator 2026-09-14 지시)",
+      "doc_type_code": "120",
+      "period_end": "2026-03-31",
+      "edinet_doc_url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.html?uji.bean=ee.bean.W1E63011.EEW1E63011Bean&S100YFY1",
+      "verdict": "no_esr_in_doc",
+      "candidates": [],
+      "headline_candidates": [],
+      "evidence": "ESR 라벨은 있으나 동반 문장에 수치(%)가 없다(정의·방법론 서술만) — 規制当局により、保険の健全性に係る新たな資本規制(ESR及びリスク係数等)の導入が決定されたことから、今後新たに創出されるリスク量を勘案しながら目標値の再設定を行うと同時に、引き続き保険金の削減や損害率の低減に努め、ペット保険事業等の強化に取り組んでいきたいと考えています",
+      "submit_datetime": null
+    },
+    {
+      "edinet_code": "E33840",
+      "company_jp": "ＳＢＩインシュアランスグループ株式会社",
+      "company_en": "SBI Insurance Group",
+      "census_mapped_company_en": "SBI Life Insurance / SBI Non-Life",
+      "note_kind": "holding_company_code_not_in_jp_insurers_csv",
+      "doc_id": "S100YDWS",
+      "edinet_eligible": "yes(holding, 有報 실제 제출)",
+      "census_status": "n/a(extra holding-code sweep, orchestrator 2026-09-14 지시)",
+      "doc_type_code": "120",
+      "period_end": "2026-03-31",
+      "edinet_doc_url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.html?uji.bean=ee.bean.W1E63011.EEW1E63011Bean&S100YDWS",
+      "verdict": "found",
+      "candidates": [
+        {
+          "pct": 100.0,
+          "label": "ESR",
+          "qualifiers": [],
+          "scope": "both_mentioned",
+          "basis": "unstated",
+          "basis_evidence": "",
+          "sentence": "このESRにおける早期是正措置命令発動の前提となる基準は100%である一方で、規制上、少額短期保険業者はESRでの評価の対象とはならないことから、従来どおりのソルベンシー・マージン比率200%がその基準値となります",
+          "source_file": "XBRL/PublicDoc/0102010_honbun_jpcrp030000-asr-001_E33840-000_2026-03-31_01_2026-06-19_ixbrl.htm",
+          "as_of": "2026-03-31",
+          "boilerplate_100": true
+        },
+        {
+          "pct": 200.0,
+          "label": "ESR",
+          "qualifiers": [],
+          "scope": "both_mentioned",
+          "basis": "unstated",
+          "basis_evidence": "",
+          "sentence": "このESRにおける早期是正措置命令発動の前提となる基準は100%である一方で、規制上、少額短期保険業者はESRでの評価の対象とはならないことから、従来どおりのソルベンシー・マージン比率200%がその基準値となります",
+          "source_file": "XBRL/PublicDoc/0102010_honbun_jpcrp030000-asr-001_E33840-000_2026-03-31_01_2026-06-19_ixbrl.htm",
+          "as_of": "2026-03-31",
+          "boilerplate_100": false
+        }
+      ],
+      "headline_candidates": [
+        {
+          "pct": 200.0,
+          "label": "ESR",
+          "qualifiers": [],
+          "scope": "both_mentioned",
+          "basis": "unstated",
+          "basis_evidence": "",
+          "sentence": "このESRにおける早期是正措置命令発動の前提となる基準は100%である一方で、規制上、少額短期保険業者はESRでの評価の対象とはならないことから、従来どおりのソルベンシー・マージン比率200%がその基準値となります",
+          "source_file": "XBRL/PublicDoc/0102010_honbun_jpcrp030000-asr-001_E33840-000_2026-03-31_01_2026-06-19_ixbrl.htm",
+          "as_of": "2026-03-31",
+          "boilerplate_100": false
+        }
+      ],
+      "evidence": "헤드라인 후보 1건",
+      "submit_datetime": null
+    },
+    {
+      "edinet_code": "E34736",
+      "company_jp": "アクサ・ホールディングス・ジャパン株式会社",
+      "company_en": "AXA Holdings Japan",
+      "census_mapped_company_en": "AXA Life Japan (separate biz code E03845 exists)",
+      "note_kind": "holding_company_code_not_in_jp_insurers_csv",
+      "doc_id": "S100YM3V",
+      "edinet_eligible": "yes(holding, 有報 실제 제출)",
+      "census_status": "n/a(extra holding-code sweep, orchestrator 2026-09-14 지시)",
+      "doc_type_code": "120",
+      "period_end": "2026-03-31",
+      "edinet_doc_url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.html?uji.bean=ee.bean.W1E63011.EEW1E63011Bean&S100YM3V",
+      "verdict": "no_esr_in_doc",
+      "candidates": [],
+      "headline_candidates": [],
+      "evidence": "ESR 라벨 자체가 본문 PublicDoc 어디에도 없다",
+      "submit_datetime": null
+    },
+    {
+      "edinet_code": "E35826",
+      "company_jp": "アイペットホールディングス株式会社",
+      "company_en": "iPet Holdings",
+      "census_mapped_company_en": "Dai-ichi iPet (separate biz code E33935 exists)",
+      "note_kind": "holding_company_code_not_in_jp_insurers_csv",
+      "doc_id": null,
+      "edinet_eligible": "unknown(0 hits)",
+      "census_status": "n/a(extra holding-code sweep, orchestrator 2026-09-14 지시)",
+      "verdict": "doc_not_found",
+      "evidence": "2026-06-01~2026-09-14 EDINET 스캔(docTypeCode=120)에 有報 0건 — 有報 제출의무자가 아니거나 다른 코드로 제출했을 가능성",
+      "candidates": [],
+      "headline_candidates": [],
+      "doc_type_code": null,
+      "submit_datetime": null,
+      "period_end": null,
+      "edinet_doc_url": null
+    }
+  ]
+}

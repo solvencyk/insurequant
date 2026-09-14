@@ -1,11 +1,24 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-09-13 (jp `JP_ESR_ADJUSTED_FIGURE` 배선 — 조정치 축, UH-21 해소 → PM-2026-09-13 `closed`; 직전 jp `JP_ESR_NOT_IN_SOURCE` 배선; 직전 push 범위 판정을 훅에 구현 — CLAUDE.md §5 가 문서로만 있던 규칙을 코드로; 직전 jp false-green 포스트모템·UH-18 등재; 직전 2026-09-02 MASTER_XLSX_* 축 신설 — 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조를 CHECK 8 로 배선) · Stage 3/5 — validation
+> Last updated: 2026-09-14 (UH-23 정식 해소 — 한정어 정본 §3 표 ↔ `ADJUSTED_QUALIFIERS` 양방향 대조 배선 + TODO 과장 정정; 직전 jp `JP_ESR_ADJUSTED_FIGURE` 배선 — 조정치 축, UH-21 해소 → PM-2026-09-13 `closed`; 직전 jp `JP_ESR_NOT_IN_SOURCE` 배선; 직전 push 범위 판정을 훅에 구현 — CLAUDE.md §5 가 문서로만 있던 규칙을 코드로; 직전 jp false-green 포스트모템·UH-18 등재; 직전 2026-09-02 MASTER_XLSX_* 축 신설 — 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조를 CHECK 8 로 배선) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-09-14, 7차) UH-23 정식 해소 — 한정어 정본(도메인 문서 §3) ↔ 기계본(`ADJUSTED_QUALIFIERS`) **양방향** 대조 배선. 겸해서 TODO 의 과장을 정정했다 — UH-23 은 어제 절반만 닫혀 있었다.** `TODO_jp.md`(28) ③ 은 "한정어 목록 정본을 도메인 문서 §3 에 등재(**UH-23 해소**)" 라고 적었지만, PM 이 요구한 정식 해소는 「§3 절 신설 **+** 코드↔문서 대조 테스트」 둘이고 테스트가 없었다(`tests/test_jp_source_gate.py` 의 코드↔문서 대조는 **ESR 라벨만** 봤다). CLAUDE.md §3 대로 재서 확인했다.
+
+> - **③ 자체도 과장이었다(내 실측).** §3 은 관측 3종(`除いた場合`·`適正水準`·`ターゲットレンジ`)만 산문으로 적고 코드는 **10종**을 들고 있었다. 코드 10종 중 §3 에 문자열로라도 있던 것은 **4종**뿐이고, 그중 `調整後` 는 §3 이 「추측으로 넣지 말 것」 으로 **지목한** 어휘인데 코드가 실제로 들고 있었다 — 정본과 기계본이 **서로 반대를 말하고 있었다**. 즉 UH-23 은 "테스트만 없는" 상태가 아니라 **정본이 기계본과 어긋난** 상태였다.
+> - **고친 방향은 "문서를 코드에 맞춘다" 가 아니다.** 10종 전부에 15사 관측수와 채택근거(이형 / PM seed)를 열로 달아 §3 표에 올렸다 — 관측 0인 7종이 **추측 어휘가 아니라 관측된 구문의 이형·공시 관행 표기**임을 문서가 스스로 말하게 했다. 맨 `を除く`·`レンジ`·`目安`·`参考` 같은 **넓은 형태는 여전히 금지**(각주 기호·목차와 충돌)라고 §3 에 남겼고, "늘리려면 §3 표를 먼저 고치고 15사에 다시 돌려 정상사 발화 0 을 확인" 을 정본에 못 박았다.
+> - **양방향이어야 하는 이유는 실측이다.** 집합일치를 부분집합(코드⊆문서)으로 약화하면 "코드에서 `ターゲットレンジ` 삭제" 가 **그대로 빠져나간다**(음성대조 M7, `2 passed`). 코드가 넓어지는 쪽만 막으면 *정본이 잡는다고 적힌 것을 코드가 안 잡는* 반쪽이 무검사로 남는다 — `適正水準` 을 코드에서 빼면 かんぽ 220 이 빠져나간다(6차 실측).
+> - **기존 테스트와 역할을 갈랐고, 중복이 아님을 변이로 증명했다.** `test_qualifier_list_is_not_empty_and_excludes_definition_markers` 는 4종을 **테스트에 하드코딩한 바닥선**(문서를 고쳐도 안 흔들린다), 새 `test_definition_markers_named_in_the_doc_stay_out_of_the_code_list` 는 **문서를 따라간다**(§3 표에 5번째 정의 표지가 서면 코드 검사가 자동으로 넓어진다). 음성대조 M8 — `規制` 를 §3 정의 표지 표에서 빼 한정어로 승격하면 **새 2건은 조용하고 바닥선만 발화**(`old 83건 rc=1`). 반대로 M4(5번째 정의 표지 `暫定値` 를 코드·표 양쪽에 일관 추가)는 **바닥선이 조용하고 새 것만 발화**. 둘 다 필요하다.
+> - **변이 6/6 발화**(사본 트리 `mut/` 에서만 — J-ESR·docs/domains·tests 만 복사, 종료 후 원본 md5 복원 확인: 수집기 `255d643f…` · 도메인 문서 `7a98fe6e…` · 테스트 `678a361e…`): ① 코드에 가짜 한정어 `参考` 추가 ② §3 표에서 `ターゲットレンジ` 행 삭제 ③ 코드에서 `ターゲットレンジ` 삭제 ④ 정의 표지 `暫定値` 를 양쪽에 일관 추가 ⑤ §3 한정어 표 통째 삭제 ⑥ §3 정의 표지 표 통째 삭제. **6건 전부 기존 83건은 침묵** — 새 2건을 deselect 하면 `83 passed`. 즉 중복 테스트가 아니다(이게 "새 테스트를 죽이면 기존으로 못 잡는다" 의 증거다).
+> - **🔴 훅이 실제로 부르는지 — 절반만 참이다(UH-1 교훈대로 그 자리에서 확인했다).** 새 테스트는 `tests/test_jp_source_gate.py` 안이고 그 파일은 `prepush_check.py` 의 `REDUCED_TEST_BUNDLE`(L111)과 전체 오프라인 묶음(L513)에 **둘 다** 있다 — 게이트를 돌리면 실제로 돈다(실측 240→**242 passed**). **그러나 이 리눅스 컨테이너에서는 git 훅 자체가 안 돈다**: `.githooks/pre-push` 가 **mode 100644**(실행권한 없음)라 git 이 조용히 건너뛰고(**UH-24**, 같은 날 다른 세션이 루트 `TODO.md` 에 등재), 설령 chmod 해도 훅이 `PY="C:/Users/sangwook.cho/venvs/…/python.exe"` 를 하드코딩해 리눅스에선 `[ ! -f "$PY" ] → exit 1` 로 **게이트를 한 줄도 안 돌리고 죽는다**. 그러니 이 라운드의 정확한 주장은 "**`prepush_check.py` 가 부른다**" 이지 "훅이 강제한다" 가 아니다. 훅 수정은 `.githooks/` = 전체 게이트 경로라 이 컨테이너에서 손대지 않았다(UH-24 에 귀속).
+> - **정정한 문서**: `TODO_jp.md`(28) ③④ + "다음" 줄 · `docs/postmortems/README.md` UH-23 행 + PM-2026-09-13 색인행 잔여표기 · PM 본문 §5 표 + 5번 칸 + 종결문. jp 도메인 문서는 jp 레인 소유라 티켓으로 통지: `inbox/jp/20260914T0425Z__validation__JP_MULTI__qualifier_canon_registered.md`.
+> - **잔여**: PM-2026-09-13 의 미배선은 **UH-22 하나**(severity 승격 판단 — 10/31 재census 에서 재측정). cross-stage 로 **UH-24**(훅이 리눅스에서 무력) 가 열려 있다.
+> - 검증: `pytest tests/test_jp_source_gate.py -q` **85 passed**(83→85) · 축소 묶음 **242 passed · 2 skipped**(그 2건은 `test_push_gate_wiring.py` 의 기존 skip, 내 것 아님) · inbox 활성 0 · 위반 0 · `prepush_check.py` = **`REDUCED(jp-scope)` … `gate-clear`**(한국 마스터 축은 미검사 — 이 컨테이너엔 `data/disclosure` 가 없다).
+> - 재현: `python3 -m pytest tests/test_jp_source_gate.py -q` → `python3 scripts/prepush_check.py --scope-only` → `python3 scripts/prepush_check.py`.
 
 **(2026-09-13, 6차) jp `JP_ESR_ADJUSTED_FIGURE` 배선 — "있는 숫자 중 틀린 것을 골랐나" 축. UH-21 해소 → PM-2026-09-13 `closed`.** 직전 5차의 `JP_ESR_NOT_IN_SOURCE` 는 "그 문서에 그 숫자가 있나" 만 물어서 かんぽ 220% 를 원리상 못 잡았다(220 은 그 자료 p35 에 **실재**하는 「大量解約リスクを除いた場合」 조정치, 실측 d=1 → `found`). 이번에 판정식을 정의해 같은 수집기·같은 증거 봉투에 얹었다 — `check_esr_in_source.py::scan_adjusted`(판정식 정본) → `esr_in_source_health.json` rows 의 필드 6개 → `build_jesr_page_json.py::_adjusted_figure_check`. **새 증거 파일을 만들지 않아 신선도 검사(`_load_evidence_envelope`)를 그대로 재사용한다.**
 
@@ -61,8 +74,6 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 > - **실측(격리 클론, jp 3파일만 변경)**: 축소 `exit=0` **4.97초**(오프라인 173 passed·4 skipped, 한국 게이트 5종 전부 SKIPPED) ↔ 같은 트리 `--full` `exit=2` 16초(`RED=197`·K-ICS BLOCK·도메인 FAIL). 재현: `python3 scripts/prepush_check.py --scope-only` → 판정만.
 > - **변이시험 12/12 발화**(사본에서만, 원본 md5 동일 확인): jp/ 목록삭제 · fail-closed 개방 · 빈 diff 축소 · git 실패 축소(fail-open) · `--no-renames` 제거 · `-z` 제거(한글 경로) · 미추적 제외 · 축소묶음에서 wiring 테스트 제거 · 축소 모드에서도 한국 게이트 호출 · `SKIPPED` 대신 `pass` 인쇄 · 전체묶음에서 셀프테스트 제거.
 > - **잔여 UH-20**: 훅(`.githooks/pre-push`)은 stdin 의 refspec 을 게이트에 안 넘긴다 — 판정은 `@{upstream}` 근사다. 다른 remote/branch 로 미는 경우(격리 워크트리 cherry-push)는 근사가 빗나갈 수 있고, 그때는 fail-closed 로 전체 게이트가 돈다(안전 방향). refspec 전달은 후속.
-
-**(2026-09-13 후속) UH-18 배선 완료 · UH-19 신규·같은 날 해소 — jp 레인에도 "게이트가 검사하는 파일 = 사용자가 보는 파일"이 걸렸다.** `build_jesr_page_json.py::source_gate_check` 4종(`JP_SOURCE_EXPIRING_HOST`·`JP_SOURCE_URL_DEAD`·`JP_SOURCE_EVIDENCE_STALE`·`JP_SOURCE_EVIDENCE_INCOMPLETE`)이 `self_check` 경유로 **exit 1 에 실제 반영**된다(변이시험: extend 한 줄 제거 시 exit-code 케이스 3개만 정확히 FAIL). 회귀 43케이스 + 이빨 변이 5/5. **네트워크를 안 타는 설계**: 판정은 `check_source_urls.py --all` 이 `source_url_health.json` 에 박제하고 빌더는 박제를 읽는다 — 그래서 `JP_SOURCE_URL_DEAD` 의 이빨은 `JP_SOURCE_EVIDENCE_STALE` 에 전적으로 의존한다(한 쌍, 독립 룰 아님). 오탐억제: RED 로 읽는 분류는 `dead` 하나뿐(254건 실측에서 "ok 아니면 RED" 는 48건 거짓 RED). 예외 등재처 `J-ESR/jp_source_exceptions.json`(0건, fail-closed, 절차 룰 2종은 면제 불가, 등재는 owner 권한). **UH-19**: jp 게이트는 빌더를 돌릴 때만 도는 구조라 census 만 고친 커밋이 검사를 통째로 비껴갔다(실측 사례 `62eed63`) → `tests/test_jp_deploy_matches_census.py` 로 "배포 JSON = census 재빌드 결과" 를 강제, 두 테스트를 `prepush_check.py` offline 묶음 + CLAUDE.md §5 jp 축소범위에 등재해 **훅이 실제로 부른다**. 포스트모템 `PM-2026-09-13` 은 **open 유지** — 사고 3건 중 2건(東京海上HD·かんぽ)은 URL 이 살아 있었고, 그 축(`JP_ESR_NOT_IN_SOURCE`)은 오탐억제 3종의 실측 분포가 선행조건이라 아직 안 걸었다(UH-5·UH-9 선례).
 
 ## 🔴 Open — P1
 

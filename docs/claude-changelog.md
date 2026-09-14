@@ -55,9 +55,31 @@ hint: The '.githooks/pre-push' hook was ignored because it's not set as executab
 기준이다(Git for Windows 는 exec 비트를 보지 않는 경우가 많다). 그래서 3주 넘게 드러나지 않았다.
 **UH-1("배선한 룰이 push 를 못 막았다")의 재발형** — 이 저장소가 반복해서 데이는 자리다.
 
-수정은 `git update-index --chmod=+x .githooks/pre-push` **한 줄**. 다만 `.githooks/` 는 `prepush_check.py` §0 에서
-full-gate 경로로 분류되고, 이 컨테이너는 `data/disclosure` **0개**·`data/kidi` **0개**라 full gate 가 못 돈다 →
-**작업 PC 에서 처리**. 게이트 범위를 느슨하게 고쳐서 밀지 않았다(그러면 고치려는 것과 같은 부류의 구멍을 하나 더 뚫는다).
+**정정 — 처음에 이 항목을 "chmod 한 줄" 로 적었는데 틀렸다. chmod 만 하면 더 나빠진다.** 훅 본문이
+
+```sh
+PY="C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe"
+...
+if [ ! -f "$PY" ]; then echo "pre-push: venv 인터프리터를 못 찾음: $PY" >&2; exit 1; fi
+```
+
+로 **owner Windows PC 의 venv 경로를 하드코딩**한다. 리눅스·Termux 에는 그 경로가 없으므로 실행권한만 주면
+훅이 **게이트를 한 줄도 안 돌리고 `exit 1`** → push 가 통째로 막힌다. 정리하면:
+
+| 상태 | 리눅스 클론에서 |
+|---|---|
+| 지금 (mode 100644) | git 이 훅을 건너뜀 → **무게이트로 push 통과** |
+| chmod 만 적용 | 훅이 돌지만 PY 부재로 즉시 exit 1 → **push 전면 차단** |
+| chmod + PY 이식 | 게이트가 실제로 돈다 ← 이게 목표 |
+
+**두 상태 모두 게이트는 안 돈다** — 하나는 조용히 통과시키고 하나는 전부 막을 뿐이다. 제대로 된 수정은
+① `git update-index --chmod=+x .githooks/pre-push` ② `PY` 를 이식 가능하게(Windows 경로가 있으면 그것, 없으면
+`python3`) **둘 다**다. 폰 배포 경로에도 영향이 있다 — slim main 워크트리는 `$GATE` 부재로 먼저 exit 0 되어
+라이브 배포 push 는 살아남지만, 번들 모드의 브랜치 push 는 막힌다.
+
+`.githooks/` 는 `prepush_check.py` §0 에서 full-gate 경로로 분류되고, 이 컨테이너는 `data/disclosure` **0개**·
+`data/kidi` **0개**라 full gate 가 못 돈다 → **작업 PC 에서 처리**. 게이트 범위를 느슨하게 고쳐서 밀지
+않았다(그러면 고치려는 것과 같은 부류의 구멍을 하나 더 뚫는다).
 
 ### 4. 이번 라운드 커밋은 훅 없이 나간 게 아니다
 
