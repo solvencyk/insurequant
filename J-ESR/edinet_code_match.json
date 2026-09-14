@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-13",
+  "generated_at": "2026-09-14",
   "codelist_rows": 11389,
   "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip",
   "summary": {
@@ -181,8 +181,8 @@
       "agrees_with_record": null
     },
     {
-      "company_jp": "第一生命ホールディングス",
-      "company_en": "Dai-ichi Life Holdings",
+      "company_jp": "第一ライフグループ",
+      "company_en": "Daiichi Life Group",
       "category": "HD上場",
       "recorded_code": "E06141",
       "match_method": "ticker",
@@ -216,7 +216,7 @@
     },
     {
       "company_jp": "第一ネオ生命保険",
-      "company_en": "Dai-ichi Frontier Life",
+      "company_en": "Daiichi Neo Life Insurance",
       "category": "子会社",
       "recorded_code": "E35324",
       "match_method": "none",
