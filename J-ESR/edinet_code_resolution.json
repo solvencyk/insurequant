@@ -1,0 +1,1063 @@
+{
+  "generated_at": "2026-09-14",
+  "scope": "jp_insurers.csv edinet_code=='none' 53행 (2026-09-13 라운드가 edinet_code=TBD 62행 중 이미 3행을 확정코드로, 나머지를 'none' 으로 판정해 둔 상태 — 이번 라운드는 그 53건 해소 시도)",
+  "verdict_definitions": {
+    "resolved": "공식 EDINET코드리스트에서 확신 매칭(ticker/name_exact) → edinet_code 열에 실제 적용",
+    "ambiguous": "candidates>=2 이거나 근거가 갈려 확정 못함 → edinet_code 는 비워둔다(코드 오기 방지)",
+    "no_edinet_filer": "코드리스트 11,389건 전수(ticker/name_exact/name_prefix/difflib/부분일치 한자+영문) 검색 0건 + 제도적으로 개별 등록이 없을 근거(자회사 구조/외자계/소액단기보험 등)가 뚜렷함 — '존재하지 않는다'",
+    "not_found": "검색이 불충분했거나(예: 자료 접근 실패) 판단 근거가 부족한 경우 — 이번 53건 중 해당 없음"
+  },
+  "method": [
+    "1) J-ESR/edinet_codelist.py 매칭축(ticker/name_exact/name_prefix/difflib0.82) 재실행 — 2026-09-13 결과(0건)와 일치 재확인, --apply 는 실행하지 않음(신규 확신 매칭 없어 변경사항 0)",
+    "2) 전수 부분일치 재검색: 회사명 핵심어(株式会社/相互会社 제거)의 提出者名 부분일치 + company_en 의 提出者名（英字） 부분일치, 11,389행 전체(업종 무관) — 실제 히트 1건(ヤマップ→岡山製紙 Okayama Paper, 영문 우연 부분일치 OKA+YAMAP+APER, 무관 회사라 기각)",
+    "3) 業種='保険業' 필터로 EDINET 등록 보험관련법인 48건 전수 육안 대조 — HD_REFERENCE 3건(アニコムHD/SBIインシュアランスグループ/アクサHDジャパン) 발견, 대상 자회사 행에는 코드 미적용(오기 방지)",
+    "4) parent_group(csv 약칭) → 별칭맵으로 csv 내 실제 지주/상호회사 행과 연결해 'sub_of_listed_filer_hd' / 'sub_of_mutual_nonfiler_parent' 구분",
+    "5) KDDI/NTT/SECOM/ORIX/楽天/SBI 등 비보험업 대형 상장모회사의 자회사(au損保·NTTドコモ損保·セコム損保 등)는 모회사 코드를 확인하지 않았다 — 자회사 행에 채울 게 아니므로 굳이 찾지 않음, 'sub_of_diversified_listed_parent' 로 분류만"
+  ],
+  "verdict_counts": {
+    "no_edinet_filer": 53
+  },
+  "reason_counts": {
+    "sub_of_listed_filer_hd": 13,
+    "sub_of_mutual_nonfiler_parent": 6,
+    "sub_of_diversified_listed_parent": 5,
+    "sub_of_listed_hd_not_in_our_csv": 4,
+    "foreign_capital_jp_sub": 13,
+    "shougaku_tanki_hoken": 1,
+    "independent_unlisted_no_trigger": 11
+  },
+  "csv_write_policy": "이번 라운드는 jp_insurers.csv 의 edinet_code 열을 변경하지 않았다 — 53건 전부 no_edinet_filer 로 이미 정확히 기재돼 있었고(2026-09-13 라운드가 이미 반영), 새로 확보한 resolved 코드가 0건이라 --apply 대상이 없다. 이 JSON 은 그 판정의 근거·분류를 남긴다.",
+  "rows": [
+    {
+      "company_jp": "日新火災海上保険",
+      "company_en": "Nisshin Fire & Marine",
+      "category": "子会社",
+      "parent_group": "東京海上HD",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 東京海上ホールディングス(E03847, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "東京海上HD 子会社 / 旧コードE03829は現行EDINETコードリストに無し(2026-09-13 全件実測) — 有報提出者から外れたとみられる"
+    },
+    {
+      "company_jp": "東京海上日動あんしん生命保険",
+      "company_en": "Tokio Marine & Nichido Life",
+      "category": "子会社",
+      "parent_group": "東京海上HD",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 東京海上ホールディングス(E03847, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "三井住友海上あいおい生命保険",
+      "company_en": "MSA Life Insurance",
+      "category": "子会社",
+      "parent_group": "MS&AD",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 MS&ADインシュアランスグループHD(E03854, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "三井住友海上プライマリー生命保険",
+      "company_en": "MS Primary Life",
+      "category": "子会社",
+      "parent_group": "MS&AD",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 MS&ADインシュアランスグループHD(E03854, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "SOMPOひまわり生命保険",
+      "company_en": "Sompo Himawari Life",
+      "category": "子会社",
+      "parent_group": "Sompo",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 SOMPOホールディングス(E23924, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "第一フロンティア生命保険",
+      "company_en": "Dai-ichi Frontier Life",
+      "category": "子会社",
+      "parent_group": "第一ライフグループ",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 第一ライフグループ(E06141, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件). parent_group 은 2026-09-13 지주 개명(第一生命HD→第一ライフグループ)에 맞춰 갱신(회사 자체는 미개명)."
+    },
+    {
+      "company_jp": "T&Dフィナンシャル生命保険",
+      "company_en": "T&D Financial Life",
+      "category": "子会社",
+      "parent_group": "T&D",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 T&Dホールディングス(E03851, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "ソニー生命保険",
+      "company_en": "Sony Life Insurance",
+      "category": "子会社",
+      "parent_group": "ソニーFG",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 ソニーフィナンシャルグループ(E05714, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "株式会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "ソニー損害保険",
+      "company_en": "Sony Sompo Insurance",
+      "category": "子会社",
+      "parent_group": "ソニーFG",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 ソニーフィナンシャルグループ(E05714, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "フコクしんらい生命保険",
+      "company_en": "Fukoku Shinrai Life",
+      "category": "子会社",
+      "parent_group": "富国生命",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_mutual_nonfiler_parent",
+      "basis": "모회사 富国生命保険(E06327)조차 상호회사라 edinet_eligible=no(등록은 있으나 有報 제출의무 없음). 그 자회사인 이 회사는 당연히 개별 등록도 없다 — 코드리스트 전수검색 0건으로 재확인.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "オリックス生命保険",
+      "company_en": "Orix Life Insurance",
+      "category": "子会社",
+      "parent_group": "ORIX",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_diversified_listed_parent",
+      "basis": "모회사(ORIX)는 통신·부동산금융 등 비보험 업종의 대형 상장사로 별도 EDINET 코드를 갖고 있을 것이나, 이 자회사(オリックス生命保険)명 자체는 코드리스트 전수 텍스트검색 0건 — 모회사 공시(다른 업종 분류라 '保険業' 필터에 안 걸림)에 흡수되는 구조로 판단, 이 행에 모회사 코드를 채우지 않는다(다른 회사 코드 오기 방지).",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件) / 2026-09-13 ir_url 교체 — sitemap 실측: /company/ 섹션이 /about/ 로 통째 개명"
+    },
+    {
+      "company_jp": "楽天生命保険",
+      "company_en": "Rakuten Life Insurance",
+      "category": "子会社",
+      "parent_group": "楽天",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_diversified_listed_parent",
+      "basis": "모회사(楽天)는 통신·부동산금융 등 비보험 업종의 대형 상장사로 별도 EDINET 코드를 갖고 있을 것이나, 이 자회사(楽天生命保険)명 자체는 코드리스트 전수 텍스트검색 0건 — 모회사 공시(다른 업종 분류라 '保険業' 필터에 안 걸림)에 흡수되는 구조로 판단, 이 행에 모회사 코드를 채우지 않는다(다른 회사 코드 오기 방지).",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "SBI生命保険",
+      "company_en": "SBI Life Insurance",
+      "category": "子会社",
+      "parent_group": "SBI",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_hd_not_in_our_csv",
+      "basis": "지주 SBIインシュアランスグループ(E33840, ticker 7326, 業種=保険業)가 有報 제출자. SBI生命保険 자체 개별 등록 없음.",
+      "hd_reference": {
+        "hd_code": "E33840",
+        "hd_name": "ＳＢＩインシュアランスグループ株式会社",
+        "hd_ticker": "7326",
+        "note": "지주 SBIインシュアランスグループ(E33840, ticker 7326, 業種=保険業)가 有報 제출자. SBI生命保険 자체 개별 등록 없음."
+      },
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "なないろ生命保険",
+      "company_en": "Nanairo Life",
+      "category": "子会社",
+      "parent_group": "アフラック",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사(notes: 旧アフラック生命保険에서 分社 — 모회사 계통이 외자계). 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "旧アフラック生命から分離 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "アフラック生命保険",
+      "company_en": "Aflac Life Japan",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "米Aflac子会社, US Aflac連結 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "メットライフ生命保険",
+      "company_en": "MetLife Insurance Japan",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "米MetLife子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "プルデンシャル生命保険",
+      "company_en": "Prudential Life Japan",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "米Prudential Financial子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "ジブラルタ生命保険",
+      "company_en": "Gibraltar Life",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "米Prudential Financial子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "PGF生命",
+      "company_en": "Prudential Gibraltar Financial Life",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "米Prudential Financial子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "マニュライフ生命保険",
+      "company_en": "Manulife Life Japan",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "加Manulife子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "チューリッヒ生命保険",
+      "company_en": "Zurich Life Japan",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "スイスZurich子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "カーディフ生命保険",
+      "company_en": "Cardiff Life",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "仏BNPパリバ子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "エヌエヌ生命保険",
+      "company_en": "NN Life Japan",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "蘭NN Group子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "クレディ・アグリコル生命保険",
+      "company_en": "Credit Agricole Life Japan",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "仏Crédit Agricole子会社 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "SBIプリズム少額短期保険",
+      "company_en": "SBI Prism",
+      "category": "子会社",
+      "parent_group": "SBI",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "shougaku_tanki_hoken",
+      "basis": "少額短期保険業者 — 보험업법상 별도 소규모 규제 범주. 규모 기준 미달로 애초에 有報 제출의무 대상이 아니다(제도상 배제, 검색 실패 아님).",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "みどり生命保険",
+      "company_en": "Midori Life",
+      "category": "子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "ニッセイ・ウェルス生命保険",
+      "company_en": "Nissay Wealth Life",
+      "category": "子会社",
+      "parent_group": "日本生命",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_mutual_nonfiler_parent",
+      "basis": "모회사 日本生命保険(E06125)조차 상호회사라 edinet_eligible=no(등록은 있으나 有報 제출의무 없음). 그 자회사인 이 회사는 당연히 개별 등록도 없다 — 코드리스트 전수검색 0건으로 재확인.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "はなさく生命保険",
+      "company_en": "Hanasaku Life",
+      "category": "子会社",
+      "parent_group": "日本生命",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_mutual_nonfiler_parent",
+      "basis": "모회사 日本生命保険(E06125)조차 상호회사라 edinet_eligible=no(등록은 있으나 有報 제출의무 없음). 그 자회사인 이 회사는 당연히 개별 등록도 없다 — 코드리스트 전수검색 0건으로 재확인.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "明治安田トラスト生命保険",
+      "company_en": "Meiji Yasuda Trust Life",
+      "category": "子会社",
+      "parent_group": "明治安田",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_mutual_nonfiler_parent",
+      "basis": "모회사 明治安田生命保険(E06369)조차 상호회사라 edinet_eligible=no(등록은 있으나 有報 제출의무 없음). 그 자회사인 이 회사는 당연히 개별 등록도 없다 — 코드리스트 전수검색 0건으로 재확인.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "大樹生命保険",
+      "company_en": "Taiju Life",
+      "category": "子会社",
+      "parent_group": "日本生命",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_mutual_nonfiler_parent",
+      "basis": "모회사 日本生命保険(E06125)조차 상호회사라 edinet_eligible=no(등록은 있으나 有報 제출의무 없음). 그 자회사인 이 회사는 당연히 개별 등록도 없다 — 코드리스트 전수검색 0건으로 재확인.",
+      "notes_current": "2026-09-13 실존(구 三井生命, 2019 개명)하나 코드리스트 전수검색에 현재명·구명 모두 없음 → EDINET 미등록. parent_group 정정: 朝日生命(오기) → 日本生命(2016 경영통합)"
+    },
+    {
+      "company_jp": "メディケア生命保険",
+      "company_en": "Medicare Life",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "アクサ損害保険",
+      "company_en": "AXA Non-Life Japan",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_hd_not_in_our_csv",
+      "basis": "일본법인 지주 アクサ・ホールディングス・ジャパン(E34736, 業種=保険業, 非上場)는 등록돼 있으나 提出者種別=内国法人・組合(유보 제출자 표시는 별도 확인 필요). アクサ損害保険 자체 개별 등록은 0건.",
+      "hd_reference": {
+        "hd_code": "E34736",
+        "hd_name": "アクサ・ホールディングス・ジャパン株式会社",
+        "hd_ticker": null,
+        "note": "일본법인 지주 アクサ・ホールディングス・ジャパン(E34736, 業種=保険業, 非上場)는 등록돼 있으나 提出者種別=内国法人・組合(유보 제출자 표시는 별도 확인 필요). アクサ損害保険 자체 개별 등록은 0건."
+      },
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "アニコム損害保険",
+      "company_en": "Anicom Insurance",
+      "category": "上場",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_hd_not_in_our_csv",
+      "basis": "csv 의 category=上場 은 그룹(持株会社) 기준 표기로 보인다 — 실제 上場 법인은 지주 アニコムホールディングス(E24073, ticker 8715, 業種=保険業, 2026-09-14 전수 육안대조로 확인). アニコム損害保険 자체는 개별 有報 제출자가 아니라 이 행에는 채우지 않는다.",
+      "hd_reference": {
+        "hd_code": "E24073",
+        "hd_name": "アニコム　ホールディングス株式会社",
+        "hd_ticker": "8715",
+        "note": "csv 의 category=上場 은 그룹(持株会社) 기준 표기로 보인다 — 실제 上場 법인은 지주 アニコムホールディングス(E24073, ticker 8715, 業種=保険業, 2026-09-14 전수 육안대조로 확인). アニコム損害保険 자체는 개별 有報 제출자가 아니라 이 행에는 채우지 않는다."
+      },
+      "notes_current": "ペット保険特化 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "AIG損害保険",
+      "company_en": "AIG Non-Life Japan",
+      "category": "外資子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "foreign_capital_jp_sub",
+      "basis": "외자계 일본법인 자회사. 해외모회사는 일본 EDINET 등록 대상이 아니고(비상장·엔화표시 유가증권 미발행), 일본법인 자체도 사채발행 등으로 개별 有報 의무가 촉발된 적이 없다 — 코드리스트 전수 텍스트검색(한자 원문 그대로 + 영문 제출者名) 0건.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "エイチ・エス損害保険",
+      "company_en": "HS Non-Life",
+      "category": "子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "SBI損害保険",
+      "company_en": "SBI Non-Life",
+      "category": "子会社",
+      "parent_group": "SBI",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_hd_not_in_our_csv",
+      "basis": "지주 SBIインシュアランスグループ(E33840, ticker 7326, 業種=保険業)가 有報 제출자. SBI損害保険 자체 개별 등록 없음.",
+      "hd_reference": {
+        "hd_code": "E33840",
+        "hd_name": "ＳＢＩインシュアランスグループ株式会社",
+        "hd_ticker": "7326",
+        "note": "지주 SBIインシュアランスグループ(E33840, ticker 7326, 業種=保険業)가 有報 제출자. SBI損害保険 자체 개별 등록 없음."
+      },
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "au損害保険",
+      "company_en": "au Non-Life",
+      "category": "子会社",
+      "parent_group": "KDDI",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_diversified_listed_parent",
+      "basis": "모회사(KDDI)는 통신·부동산금융 등 비보험 업종의 대형 상장사로 별도 EDINET 코드를 갖고 있을 것이나, 이 자회사(au損害保険)명 자체는 코드리스트 전수 텍스트검색 0건 — 모회사 공시(다른 업종 분류라 '保険業' 필터에 안 걸림)에 흡수되는 구조로 판단, 이 행에 모회사 코드를 채우지 않는다(다른 회사 코드 오기 방지).",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "NTTドコモ損害保険",
+      "company_en": "NTT Docomo Non-Life",
+      "category": "子会社",
+      "parent_group": "NTT",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_diversified_listed_parent",
+      "basis": "모회사(NTT)는 통신·부동산금융 등 비보험 업종의 대형 상장사로 별도 EDINET 코드를 갖고 있을 것이나, 이 자회사(NTTドコモ損害保険)명 자체는 코드리스트 전수 텍스트검색 0건 — 모회사 공시(다른 업종 분류라 '保険業' 필터에 안 걸림)에 흡수되는 구조로 판단, 이 행에 모회사 코드를 채우지 않는다(다른 회사 코드 오기 방지).",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "キャピタル損害保険",
+      "company_en": "Capital Non-Life",
+      "category": "子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "さくら損害保険",
+      "company_en": "Sakura Non-Life",
+      "category": "子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "ジェイアイ傷害火災保険",
+      "company_en": "JI Accidental Fire",
+      "category": "子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "セコム損害保険",
+      "company_en": "SECOM Non-Life",
+      "category": "子会社",
+      "parent_group": "SECOM",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_diversified_listed_parent",
+      "basis": "모회사(SECOM)는 통신·부동산금융 등 비보험 업종의 대형 상장사로 별도 EDINET 코드를 갖고 있을 것이나, 이 자회사(セコム損害保険)명 자체는 코드리스트 전수 텍스트검색 0건 — 모회사 공시(다른 업종 분류라 '保険業' 필터에 안 걸림)에 흡수되는 구조로 판단, 이 행에 모회사 코드를 채우지 않는다(다른 회사 코드 오기 방지).",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "全管協れいわ損害保険",
+      "company_en": "Zenkankyou Reiwa",
+      "category": "子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "ソニー損害保険",
+      "company_en": "Sony Non-Life",
+      "category": "子会社",
+      "parent_group": "ソニーFG",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 ソニーフィナンシャルグループ(E05714, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "SOMPOダイレクト損害保険",
+      "company_en": "Sompo Direct",
+      "category": "子会社",
+      "parent_group": "Sompo",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 SOMPOホールディングス(E23924, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "大同火災海上保険",
+      "company_en": "Daido Fire & Marine",
+      "category": "独立",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "沖縄・九州地盤 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "東京海上ダイレクト損害保険",
+      "company_en": "Tokio Marine Direct",
+      "category": "子会社",
+      "parent_group": "東京海上HD",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 東京海上ホールディングス(E03847, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "日本地震再保険",
+      "company_en": "Japan Earthquake Reinsurance",
+      "category": "独立",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "三井ダイレクト損害保険",
+      "company_en": "Mitsui Direct",
+      "category": "子会社",
+      "parent_group": "MS&AD",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_listed_filer_hd",
+      "basis": "모회사 MS&ADインシュアランスグループHD(E03854, edinet_eligible=yes)가 有報 제출자로 그룹연결 공시. 이 자회사 자체는 개별 EDINET 등록이 없다(코드리스트 전수검색 0건) — 모회사 공시에 흡수되는 정상 구조.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "明治安田損害保険",
+      "company_en": "Meiji Yasuda Non-Life",
+      "category": "子会社",
+      "parent_group": "明治安田",
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "sub_of_mutual_nonfiler_parent",
+      "basis": "모회사 明治安田生命保険(E06369)조차 상호회사라 edinet_eligible=no(등록은 있으나 有報 제출의무 없음). 그 자회사인 이 회사는 당연히 개별 등록도 없다 — 코드리스트 전수검색 0건으로 재확인.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "レスキュー損害保険",
+      "company_en": "Rescue Non-Life",
+      "category": "子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "ペット＆ファミリー損害保険",
+      "company_en": "Pet & Family",
+      "category": "子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "ペット保険 / EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    },
+    {
+      "company_jp": "ヤマップネイチャランス損害保険",
+      "company_en": "Yamap",
+      "category": "子会社",
+      "parent_group": null,
+      "search_method": [
+        "ticker(none)",
+        "name_exact(codelist 11389 full)",
+        "name_prefix",
+        "difflib_cutoff0.82",
+        "jp_substring(core w/o 株式会社/相互会社)",
+        "en_substring(company_en, codelist 提出者名（英字）)"
+      ],
+      "search_result": "0 real candidates across all methods (재실행 2026-09-14, 2026-09-13 결과와 일치)",
+      "verdict": "no_edinet_filer",
+      "reason": "independent_unlisted_no_trigger",
+      "basis": "독립·비상장이며 사채발행 등 有報 촉발 사유가 확인되지 않는다. 코드리스트 전수 텍스트검색(한자·영문) 0건 — '없다'는 11,389건 전수 실측 결과이고, '아직 못 찾았다'가 아니다.",
+      "notes_current": "EDINET未登録(2026-09-13 コードリスト全件検索0件)"
+    }
+  ]
+}
