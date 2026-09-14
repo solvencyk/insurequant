@@ -7,6 +7,55 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-09-14b — `value_verified` 화면 배지 (UH-25, PM-2026-09-13 후속)
+
+배경: PM-2026-09-13(東京海上HD 238/MS&AD/かんぽ 220 + 당일 T&D 222% — 출처 URL이 목록
+페이지였음) 후속. 게이트엔 `JP_ESR_UNVERIFIED_VALUE`가 배선됐지만 화면은 검증
+못함/검증통과가 같은 모양이었다. publishing과 계약된 `value_verified:{state,reason}`
+(verified/unverified/exempt/null)을 렌더. 오늘 실 마스터엔 필드 없음(16사 전부 verified가
+될 미래) — 스크래치패드 fixture(원본 `jp/jesr_esr.json`·`jp/jesr_detail.json` 복사 후 값
+주입, 실 마스터 무수정)로 4갈래 전수 실렌더 확인.
+
+- **`verifyBadgeHtml()`/`VERIFY_META`(`jp/jesr_app.js`) + DOM판 `makeVerifyBadge()`
+  (`jp/index.html`, §5.2 파일별 복사 관례)**: 같은 날 오전 라운드가 신설한
+  caveat-badge(값은 검증됐지만 단순비교 주의)와 성격이 다르므로("값 자체를 확인 못함")
+  실루엣을 다르게 함 — caveat-badge는 둥근 pill, 새 `.verify-badge`는 아이콘칩(굵은 2px
+  테두리 + 채워진 머리글자 블록 `.vb-ic` + 라벨 `.vb-tx`). unverified=주황(`?` "値
+  未検証"), exempt=파랑(`免` "確認対象外"). verified/null은 배지 없음(평소엔 안 보이는 게
+  정상). `reason`은 publishing 문자열 그대로 title에 노출, designer가 다시 쓰지 않음.
+- **「根拠資料 ↗」링크 수정(`renderMeta()`, 3페이지 공통 metaLine)**: 링크는 유지하되
+  `state!=='verified'`면 verify-badge를 링크 바로 뒤에 병기 + 앵커 `aria-label`에도
+  "（値 未検証）"/"（確認対象外）" 추가 — "여기가 근거다"라는 단독 약속이 스크린리더에서도
+  안 남게 함. `source_url` 없는 회사도 배지는 뜬다.
+- **적용 3곳(caveat-badge와 동일 위치 관례, owner 지시)**: ① jesr.html ESR 헤드라인 카드
+  (`renderHeadline()`→`cardPrelim` 슬롯) ② jgaap.html 上段KPI 合算率 카드
+  (`renderJgaapCards()`) + 収益性指標 合算率 카드(`renderProfitability()`→`ratioCard()`)
+  ③ jp/index.html ESRランキング 리스트 행 + 損害率一覧 리스트 행(둘 다 `.li-name`). 손익
+  라인아이템·감응도 표 등에는 추가하지 않음(계약이 posted/company record 단위 — 헤드라인성
+  지표로 스코프 한정).
+- **모바일 함정 선제 대응**: caveat+verify 두 배지가 동시에 뜰 수 있어(예: MS&AD/토어재보험)
+  오전 라운드가 `#lossRatioList`에만 걸어둔 折り返し 규칙을 `.verify-badge`까지 확장하고
+  **`#esrListLife`/`#esrListNonlife`에도 선제로 같은 규칙을 걸었다**(速報/単体詳細 chip과
+  verify-badge 동시 발생 대비). fixture로 T&D에 `preliminary:true`를 임시로 얹어 2배지
+  스트레스 테스트, msad_holdings/toa_re에 caveat+verify 2배지 스트레스 테스트 — 375px에서
+  `.li-nm` 폭 137px 유지(오전 라운드가 고친 71.5px 붕괴 재발 없음).
+- **A11y**: `a11y_contrast_check.py` 실측 — unverified 텍스트 8.83:1·아이콘 5.18:1,
+  exempt 텍스트 9.52:1·아이콘 6.70:1(전부 AA 통과). `cbcheck`: unverified↔exempt 아이콘색
+  delta-RGB 212~220, unverified↔기존 caveat amber(#f59e0b) delta 95+(전부 안전선 60
+  상회) — 색만으로 구분하지 않음(머리글자+라벨 문구+아이콘칩 실루엣 병행). `.vb-ic`는
+  `aria-hidden`. 다크모드에서 배지 고정 hex 색 유지(`.prelim-badge`/`.caveat-badge`와 동일
+  "테마 비의존 고정색" 기존 컨벤션).
+- **검증**: `node --check` 전체 통과, 4 HTML 태그균형 0 오류·BOM 0(실제 수정은 3파일 —
+  `jp/index.html`/`jp/jesr_app.js`/`jp/jp.css`뿐, jesr/jgaap/disclosure html은 공유
+  스크립트·CSS 변경만으로 무수정). 로컬 `http.server`(스크래치패드에 저장소 루트 복사, 포트
+  8931) + Playwright(`/opt/pw-browsers/chromium-1194`)로 1280px/375px 다수 실측(ESRランキング
+  T&D=unverified·東京海上HD=exempt·SOMPO=명시적verified→배지없음·かんぽ=필드없음→배지없음,
+  損害率一覧 caveat+verify 동시렌더, jesr.html 헤드라인+링크, jgaap.html 카드 2종,
+  disclosure.html 공유 확인) — `body.scrollWidth<=innerWidth` 전 케이스, `pageerror` 콘솔 0
+  (외부 CDN 연결실패만, 개발망 차단 기존 패턴). fixture·검증 스크립트는 스크래치패드에만,
+  `jp/*.json` 실 마스터·census·tests·docs/postmortems 전부 무수정, commit/push 없음.
+- **모델·소요**: Claude Sonnet 5, 단일 세션 약 1시간.
+
 ## 2026-09-14 — 손보 손해율 24사: `data_scope`/`ratio_caveat` 렌더 + 진입점 신설
 
 배경: 손보 29사 손해율(正味損害率·正味事業費率·合算率) 전수조사 완료, publishing이 같은

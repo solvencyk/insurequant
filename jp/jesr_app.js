@@ -52,6 +52,26 @@
     return ' <span class="caveat-badge caveat-badge--'+m.cat+'" title="'+esc(caveat.text||m.label)+'">'+esc(m.mark)+' '+esc(m.label)+'</span>';
   }
 
+  // value_verified(publishing 계약, 2026-09-14 신설 — PM-2026-09-13 T&D 222%/東京海上HD 238/MS&AD/
+  // かんぽ 220 사고 후속, UH-25). "검증 못 함"과 "검증 통과"가 화면에서 같은 모양이면 안 된다.
+  // caveat-badge 는 "값은 검증됐지만 다른 회사와 단순비교 주의"고, 이건 "값 자체를 그 출처 문서
+  // 안에서 확인하지 못했다"로 성격이 다르다 — 그래서 같은 배지 "언어"(작은 표식+title 툴팁, 색만으로
+  // 구분 안 함)는 쓰되 실루엣은 확실히 다르게 한다(둥근 pill 한 겹이 아니라 아이콘칩+굵은 테두리).
+  // state: "verified"(정상, 배지 없음) | "unverified"(검증 못 함, 값이 틀렸다는 뜻 아님) |
+  // "exempt"(owner 면제 등재, reason 에 등재 사유) | null/필드 없음(이 축 대상 아님, ratio_only의
+  // ESR 등 — 역시 배지 없음). reason 은 publishing 이 게이트 정본에서 뽑아 넣은 문자열 그대로
+  // title 에 노출한다 — designer 가 다시 쓰지 않는다.
+  var VERIFY_META = {
+    unverified: { cat:'unverified', mark:'?', label:'値 未検証' },
+    exempt:     { cat:'exempt',     mark:'免', label:'確認対象外' }
+  };
+  function verifyBadgeHtml(vv){
+    if(!vv || !vv.state || vv.state === 'verified') return '';
+    var m = VERIFY_META[vv.state] || VERIFY_META.unverified;
+    var tip = vv.reason ? (m.label+'：'+vv.reason) : m.label;
+    return ' <span class="verify-badge verify-badge--'+m.cat+'" title="'+esc(tip)+'"><span class="vb-ic" aria-hidden="true">'+esc(m.mark)+'</span><span class="vb-tx">'+esc(m.label)+'</span></span>';
+  }
+
   // jp/index.html 313~320행과 동일한 2단 버킷 정렬(inbox 20260912T1420Z, 공유 JS 파일 없음 —
   // §5.2 관례대로 각 파일에 복사). 드롭다운(ENTRIES) 정렬에 쓴다.
   function isBucketA(category){ return /^(HD上場|相互会社|上場)/.test(category||''); }
@@ -341,6 +361,7 @@
       var hc = {
         company_jp: r.company_jp, company_en: r.company_en, scope: r.scope, basis: r.basis,
         source_url: r.source_url, doc_date: r.doc_date, doc_type: r.doc_type, as_of: r.as_of,
+        value_verified: r.value_verified,
         headline: { eligible_capital: null, required_capital: null, esr_pct: r.esr_pct, preliminary: r.preliminary }
       };
       renderMeta(hc);
@@ -360,9 +381,15 @@
 
   function renderMeta(c){
     var scope = SCOPE_LABEL[c.scope] || c.scope || '—';
+    // value_verified(2026-09-14): 「根拠資料 ↗」링크는 "여기서 값을 확인했다"는 약속이다
+    // (PM-2026-09-13 T&D: 그 링크가 실은 목록 페이지였다). unverified/exempt 면 링크는 그대로
+    // 두되(원문을 보는 건 여전히 유용하다) 그 약속이 아직 안 지켜졌다는 사실을 바로 옆에 붙인다.
+    var vv = c.value_verified;
+    var vBadge = verifyBadgeHtml(vv);
+    var vNote = (vv && vv.state && vv.state !== 'verified') ? '（'+(VERIFY_META[vv.state]||VERIFY_META.unverified).label+'）' : '';
     var srcCell = c.source_url
-      ? '<a href="'+esc(c.source_url)+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc(c.company_jp)+'の根拠資料、別タブで開く">'+esc(jaDate(c.doc_date))+(c.doc_type?'（'+esc(jaOnly(c.doc_type))+'）':'')+' &#8599;</a>'
-      : esc(jaDate(c.doc_date));
+      ? '<a href="'+esc(c.source_url)+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc(c.company_jp)+'の根拠資料、別タブで開く'+esc(vNote)+'">'+esc(jaDate(c.doc_date))+(c.doc_type?'（'+esc(jaOnly(c.doc_type))+'）':'')+' &#8599;</a>' + vBadge
+      : esc(jaDate(c.doc_date)) + vBadge;
     var fq = c.as_of ? jaFiscalQuarter(c.as_of) : '—';
     // 算定基準(owner 2026-09-13、ランキングのchipと同じ区分) — ESRページのみ、値がある会社のみ表示
     // (headline外の会社はbasisが無く、その場合"未確認"を出すとESR自体が無いのに紛らわしいので省略)。
@@ -381,7 +408,8 @@
     var esrEl = document.getElementById('cardEsr');
     esrEl.textContent = fmtPct1(h.esr_pct);
     esrEl.style.color = colorForRatio(h.esr_pct);
-    document.getElementById('cardPrelim').innerHTML = h.preliminary ? '<span class="prelim-badge">速報</span>' : '';
+    // value_verified(2026-09-14): ESR 헤드라인 값 옆(値検証状態) — 速報 배지와 같은 자리에 병기.
+    document.getElementById('cardPrelim').innerHTML = (h.preliminary ? '<span class="prelim-badge">速報</span>' : '') + verifyBadgeHtml(c.value_verified);
   }
 
   // 決算 페이지 상단 카드: 当期純利益 / 経常利益 / 保険引受利益(손보) 또는 基礎利益(생보) / 合算率(손보만)
@@ -393,7 +421,7 @@
       // に実際にはデータがあるのに全く無いように読めるので、合算率カード1枚+誘導文に差し替える。
       var ro = c && c.profit && c.profit.ratios && c.profit.ratios.pl_combined_ratio_pct;
       if(isRatioOnly(c) && ro){
-        host.innerHTML = '<div class="jcard"><div class="jcard-val">'+esc(fmtPct1(ro.cur))+'</div><div class="jcard-sub">&nbsp;</div><div class="jcard-lab">合算率'+caveatBadgeHtml(c.ratio_caveat)+'</div></div>'
+        host.innerHTML = '<div class="jcard"><div class="jcard-val">'+esc(fmtPct1(ro.cur))+'</div><div class="jcard-sub">&nbsp;</div><div class="jcard-lab">合算率'+caveatBadgeHtml(c.ratio_caveat)+verifyBadgeHtml(c.value_verified)+'</div></div>'
           + '<div class="empty-note" style="grid-column:span 3;align-self:center">当期純利益・経常利益・保険引受利益等は本編開示の取得後に追加します。損害率・事業費率は下の「収益性指標」をご覧ください。</div>';
         return;
       }
@@ -984,7 +1012,7 @@
       // 같은 자리, 표식만 옆에 붙인다(owner: 별도 열로 빼지 말 것).
       cards += ratioCard('損害率', (ratios.pl_loss_ratio_pct||{}).cur, (ratios.pl_loss_ratio_pct||{}).prev)
             + ratioCard('事業費率', (ratios.pl_expense_ratio_pct||{}).cur, (ratios.pl_expense_ratio_pct||{}).prev)
-            + ratioCard('合算率', (ratios.pl_combined_ratio_pct||{}).cur, (ratios.pl_combined_ratio_pct||{}).prev, caveatBadgeHtml(c.ratio_caveat));
+            + ratioCard('合算率', (ratios.pl_combined_ratio_pct||{}).cur, (ratios.pl_combined_ratio_pct||{}).prev, caveatBadgeHtml(c.ratio_caveat)+verifyBadgeHtml(c.value_verified));
     } else if(hasCore){
       ['pl_interest_margin','pl_mortality_margin','pl_expense_margin'].forEach(function(k){
         var e = core[k] || {}; cards += '<div class="jcard"><div class="jcard-val">'+esc(fmtEok(e.cur))+'</div><div class="jcard-lab">'+esc(labelOf(META,k,k))+'（億円）</div></div>';

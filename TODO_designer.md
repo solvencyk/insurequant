@@ -9,6 +9,76 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-09-14b, value_verified 화면 배지 — owner 발주(직접 지시, UH-25), 커밋만·라이브 미배포):**
+- **배경: 같은 날 jp 게이트에 `JP_ESR_UNVERIFIED_VALUE` 가 배선됐지만(T&D 222% 출처가 목록
+  페이지였던 사고 후속) 화면은 여전히 "검증 못 함"과 "검증 통과"가 같은 모양이었다.** publishing
+  과 계약된 `value_verified:{state,reason}`(state: verified/unverified/exempt, ratio_only 회사의
+  ESR 축처럼 이 축 대상이 아니면 null)을 렌더하는 게 이번 라운드 — **오늘 실 마스터엔 이 필드가
+  아직 없다**(16사 전부 verified 가 됐을 미래 상태), 그래서 스크래치패드 fixture(원본 `jp/jesr_esr.json`·
+  `jp/jesr_detail.json` 을 복사해 값만 주입, 실 마스터 무수정)로 verified/unverified/exempt/필드없음
+  4갈래를 전부 실렌더 확인했다.
+- **caveat-badge(같은 날 손해율 라운드에서 신설, "값은 검증됐지만 단순비교 주의")와 성격이 다르므로
+  같은 배지 "언어"(작은 표식+title 툴팁, 색만으로 구분 안 함)를 쓰되 실루엣을 확실히 다르게 했다.**
+  `.caveat-badge`는 둥근 pill(얇은 테두리, 균일 배경색) — 새 `.verify-badge`는 아이콘칩(굵은
+  2px 테두리 + 채워진 머리글자 블록 `.vb-ic`/라벨 `.vb-tx` 두 부분 구조)으로 실루엣 자체가 다르다.
+  unverified=주황(`?` "値 未検証"), exempt=파랑(`免` "確認対象外"), verified/null 은 배지 자체를
+  렌더하지 않는다(jesr_app.js `verifyBadgeHtml()`/`VERIFY_META`, jp/index.html 은 §5.2 관례대로
+  DOM 버전 `makeVerifyBadge()`로 파일별 복사). `reason` 은 publishing 문자열 그대로 배지 `title` 에
+  노출 — designer 가 다시 쓰지 않음.
+- **「根拠資料 ↗」 링크는 지우지 않고 옆에 사실을 붙였다.** `renderMeta()`(jesr_app.js, 3페이지
+  공통 metaLine)에서 `state!=='verified'` 면 verify-badge 를 링크 바로 뒤에 병기 + 앵커
+  `aria-label` 에도 "（値 未検証）"/"（確認対象外）" 를 덧붙여 스크린리더에서도 "여기가 근거다"라는
+  단독 약속이 안 남게 했다. 링크가 없는 회사(`source_url` null)도 배지는 그대로 뜬다.
+  실측(T&D Holdings 실데이터 222%를 fixture 에서 unverified 로 재현 — 실제 09-13 사고 케이스):
+  aria-label = "T&Dホールディングスの根拠資料、別タブで開く（値 未検証）", 배지 title 에
+  publishing reason 전문 노출 확인.
+  **적용 3곳(owner 지시): 값 옆(=caveat-badge 와 동일 위치 관례)** — ① jesr.html ESR 헤드라인
+  카드(`cardEsr`, `renderHeadline()`이 `cardPrelim` 슬롯에 速報배지와 나란히 병기) ② jgaap.html
+  上段KPI 合算率 카드(ratio_only 전용 카드, `renderJgaapCards()`) + 収益性指標 合算率 카드
+  (`renderProfitability()`→`ratioCard()`, caveat-badge 와 같은 자리에 이어붙임) ③
+  jp/index.html ESRランキング 리스트 행 + 損害率一覧 리스트 행(둘 다 `.li-name`, caveat-badge 와
+  동일 위치 관례). 그 밖에(当期純利益 등 손익 라인아이템, 감응도 표 등) 추가하지 않음 — 계약이
+  "posted record/company record 단위" 라 헤드라인성 지표(ESR·合算率)로 스코프를 한정, 근거는
+  이 파일 답변에 기록.
+- **함정 선제 대응(모바일): caveat+verify 두 배지가 한 회사에 동시에 뜰 수 있다** (예:
+  MS&AD/토어재보험처럼 이미 ratio_caveat 가 있는 회사가 value_verified 도 unverified/exempt 인
+  경우) — 같은 날 오전 라운드가 겪은 "칩이 회사명을 밀어낸다" 재발을 막기 위해 `#lossRatioList`
+  전용이던 모바일 折り返し 규칙을 `.verify-badge` 까지 확장하고 **`#esrListLife`/`#esrListNonlife`
+  에도 선제로 같은 규칙을 걸었다**(ESRランキング은 기존에 速報/単体詳細 chip 이 행당 ≤1개라 문제가
+  없었지만, verify-badge 가 chip 과 동시에 뜨면 다시 2개가 되므로). 실측(fixture 로 T&D 에
+  `preliminary:true` 를 임시로 얹어 速報chip+verify-badge 2배지 스트레스 테스트, msad_holdings/
+  toa_re 에 caveat+verify 2배지 스트레스 테스트): 375px 에서 `.li-nm` 폭 137px 유지(오전 라운드가
+  고친 71.5px 붕괴 재발 없음), 어느 조합도 `body.scrollWidth>innerWidth` 0건.
+- **A11y**: `a11y_contrast_check.py` 실측 — unverified 글자#7c2d12/배경#fff7ed 8.83:1, 아이콘
+  흰글자/배경#c2410c 5.18:1, exempt 글자#1e3a8a/배경#eff6ff 9.52:1, 아이콘 흰글자/배경#1d4ed8
+  6.70:1 — 전부 AA(4.5:1) 통과. `cbcheck`: unverified↔exempt 아이콘색 delta-RGB 212(protan)/220
+  (deutan), unverified↔caveat 기존 amber(#f59e0b) delta 95+ — 전부 안전선(60) 상회, 게다가
+  아이콘 머리글자(?/免)+라벨 문구+아이콘칩 실루엣 자체가 이미 달라 색만으로 구분하지 않음(스킬
+  §3-4 fully-additive 판정). `.vb-ic` 는 `aria-hidden`(장식 글리프, 바로 옆 `.vb-tx` 가 같은 뜻을
+  텍스트로 이미 담음). 다크모드(`color-scheme:dark` viewport)에서 배지 고정 hex 색 유지 확인
+  (`.prelim-badge`/`.repro-badge`/`.caveat-badge` 와 동일한 "테마 비의존 고정색" 기존 컨벤션 유지,
+  Playwright computed-style 로 라이트/다크 동일 rgb 확인).
+- **검증**: `node --check` jesr_app.js + index.html 인라인 스크립트 2블록 전부 통과. 4 HTML
+  html.parser 태그균형 0 오류·BOM 0(3 파일: index.html/jesr_app.js/jp.css 만 수정, jesr.html/
+  jgaap.html/disclosure.html 은 공유 스크립트·CSS 변경만으로 무수정). 로컬 `http.server`(스크래치
+  패드 사본 — 저장소 루트를 복사해 `common.css`/`theme.js` 404 안 나게, 포트 8931) +
+  Playwright(`/opt/pw-browsers/chromium-1194`)로 데스크톱 1280px·모바일 375px 다수 실측:
+  ESRランキング(T&D=unverified, 東京海上HD=exempt, SOMPO=명시적 verified→배지 없음, かんぽ=필드
+  자체 없음→배지 없음 확인) · 損害率一覧(au損保=unverified, SBI損保=unverified, MS&AD/トーア=
+  caveat+verify 동시 렌더, 三井住友海上=exempt) · jesr.html 헤드라인 카드+메타라인 링크(au_nonlife
+  실 자본층 데이터로 unverified, mitsui_sumitomo 로 exempt, T&D/東京海上HD/SOMPO/かんぽ 4종
+  headline-only 경로) · jgaap.html 上段KPI+収益性指標 카드(msad_holdings/toa_re 2배지 동시,
+  au_nonlife 단독) · disclosure.html metaLine(3페이지 공유 확인). 전 케이스
+  `body.scrollWidth<=innerWidth`(가로스크롤 0), `pageerror` 콘솔 0(외부 CDN 연결실패만 — 개발망
+  차단, 기존 패턴, 코드와 무관). fixture·검증 스크립트는 스크래치패드에만 존재, `jp/*.json` 실
+  마스터·`J-ESR/`·census·tests·docs/postmortems 전부 무수정, commit/push 없음.
+- **손대지 않음(소유권 경계)**: `jp/jesr_esr.json`·`jp/jesr_detail.json`·`J-ESR/`·`scripts/`·
+  `TODO_jp.md`·census·한국 자산(`index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html`) 전부
+  무수정. `jesr.html`/`jgaap.html`/`disclosure.html` 자체 HTML도 무수정(공유 스크립트/CSS 변경만
+  으로 3페이지 모두에 반영되는 구조라 손 댈 필요가 없었다).
+- **모델·소요**: Claude Sonnet 5, 단일 세션 약 1시간(탐색+구현+fixture 3종+Playwright 4라운드
+  검증 포함).
+
 **Recent (2026-09-14, 손보 손해율 24사 — owner 발주(직접 지시, inbox 티켓 아님), 커밋만·라이브 미배포):**
 - **publishing 계약(`data_scope`/`ratio_caveat`)은 이 라운드 세션 시작 시점엔 `jp/jesr_detail.json`·
   `jesr_esr.json` 에 아직 없었다(같은 라운드 병렬 작업) — **스크래치패드 fixture**로 개발
@@ -104,31 +174,6 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
   포함 여부·루트 삽입 조각 3종 실반영)을 티켓 답변에 정리. 루트 `index.html`/`common.css` 등
   4개 배포 페이지는 이번 라운드 무수정(코드 조각만 답변에 제공). 상세는
   `inbox/designer/20260912T0446Z__owner__JP_MULTI__jesr_jp_page_draft.md` 답변, changelog 2026-09-12.
-
-**Recent (2026-09-11b, 이용안내 — owner 지시, 커밋·배포 대기):**
-- **`privacy.html` 에 "이용안내" 절을 추가했다(새 HTML 파일 없음, owner 지시 1).** `<h1 id="terms">`
-  아래 h2 5개(무엇인가 / 이렇게 쓰셔도 됩니다 / 이것만은 피해주세요 / 데이터 출처 / 운영자·문의·준거법).
-  보고서 `artifacts/legal/ip_protection_report_20260911.md` §6-2 의 9개 조를 owner 지시 3번대로
-  압축 — "제N조" 없음, 자유인 이용을 먼저 말하고 금지는 두 가지(통째 크롤링·대량 재배포)만.
-  운영자 실명 조상욱 표기(owner OK).
-  **검수(2026-09-11c):** 3절 금지 목록이 4개(출처표시 제거·AI 학습 수집 별도 항목)로 늘어 owner 지시
-  "딱 두 가지만"과 어긋나 2개로 압축(AI 학습 수집은 크롤링 항목 괄호로 흡수, 출처표시 제거는 2절의
-  "출처를 밝히고 인용"에 이미 담겨 삭제). 출처표의 "보험업법 제124조" 인용 삭제(법조문 벽 금지).
-  이용안내 글자수 1,117 < 개인정보 절 1,532.
-  title·og·description·brand hint 를 "개인정보처리방침 · 이용안내" 로. 신규 CSS 2줄(`h1.section-break`,
-  `.policy-table.src-table{min-width:0}` — 2열 출처표가 모바일에서 가로스크롤 나지 않게).
-- **푸터 5페이지(4 대시보드 + privacy) 한 문장 + 링크 2개.** "화면·데이터베이스는 저작권법으로 보호되며
-  이용 조건은 이용안내를 따릅니다." + "© 2026 InsureQuant · 운영자 조상욱 · 개인정보처리방침 · 이용안내".
-- **`download-survey.js` 동의 라벨만 손봄 — 체크박스 개수 1개·필수 여부·에러 문구 불변(owner 지시 3).**
-  "위 안내사항과 [이용안내](데이터 이용 조건)를 확인했습니다", 링크는 `privacy.html#terms` 새 탭.
-  xlsx 표지 시트에 "이용 조건" 행 + `build_id` 가 manifest 에 있을 때만 "빌드 ID" 행(지문).
-- **검증:** `pytest tests/test_deploy_assets.py` 10 passed · 5 HTML html.parser 태그균형 0 오류·BOM 0 ·
-  브라우저 1280/375 실측(가로스크롤 0, 출처표 303px < 305px 래퍼, 모달 라벨 링크 렌더, consent 1개).
-  콘솔 오류는 외부 CDN(Pretendard·gtag) `ERR_NETWORK_ACCESS_DENIED` 뿐 — 개발 PC 망 차단, 기존.
-- **같은 시각 publishing 에이전트가 저장소 쪽 0원 조치(robots.txt AI 크롤러·LICENSE·`.gitignore`·IR xlsx
-  11개 `git rm --cached`·manifest license/build_id)를 병행했다** — 내가 먼저 쓴 robots.txt/LICENSE 를
-  그쪽이 덮었고 내용이 더 낫길래 그대로 뒀다. `export_public_sheets.py` 의 build_id 블록은 내 것,
-  license/terms_url/copyright 키는 그쪽 추가. 상세는 changelog 2026-09-11b.
 
 **Recent (2026-09-13, jp 랭킹 算定基準 — owner 2차 지시로 chip안 폐기·막대 패턴으로 교체, 커밋만·라이브 미배포):**
 - **경위: 1차(chip안)를 owner가 "칩이 너무 많다"로 반려.** 실측(HEAD 기준) scope chip 15/15행·

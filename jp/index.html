@@ -107,9 +107,17 @@
          li-nmのmin-width(5.5em)確保に成功しているが、caveat-badgeはテキストが長く(最長「Σ
          単純合算」)同じ横並びだと会社名を最小幅まで押し潰す(実測: 71.5px)。この一覧だけ
          バッジを名前の下の行に折り返す — チップ数を増やさず(owner既存指摘の再発回避)、
-         会社名の可読幅は確保する。 */
-      #lossRatioList .li-name{flex-wrap:wrap;row-gap:2px}
-      #lossRatioList .li-name .caveat-badge{flex:0 0 100%;margin-left:0}
+         会社名の可読幅は確保する。
+         value_verified(2026-09-14, UH-25): verify-badgeも同じ理由で折り返し対象に追加。加えて
+         ESRランキング側(esrList*)にもverify-badgeが付き得るようになった(速報/単体詳細chipと
+         同時発生の可能性、実測要 — 09-13の"칩 과다" 재발과 같은 패턴이라 선제적으로 折り返す)。 */
+      #lossRatioList .li-name,
+      #esrListLife .li-name,
+      #esrListNonlife .li-name{flex-wrap:wrap;row-gap:2px}
+      #lossRatioList .li-name .caveat-badge,
+      #lossRatioList .li-name .verify-badge,
+      #esrListLife .li-name .verify-badge,
+      #esrListNonlife .li-name .verify-badge{flex:0 0 100%;margin-left:0}
     }
     .chart-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px;align-items:center}
     .chart-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px}
@@ -120,6 +128,17 @@
     .caveat-badge--formula{color:#92400e;background:#fef3c7;border:1px solid #fde68a}
     .caveat-badge--read{color:#374151;background:#e5e7eb;border:1px dashed #9aa4ad}
     .caveat-badge--dup{color:#5b21b6;background:#ede9fe;border:3px double #c4b5fd}
+    /* value_verified 배지(2026-09-14, UH-25) — jp/jp.css .verify-badge* 와 동일 정의(파일별 복사,
+       §5.2 관례). caveat-badge(값은 검증됐지만 단순비교 주의)와 성격이 다르다("값 자체를 확인
+       못함") — pill 모양을 재사용하지 않고 아이콘칩(굵은 테두리+채워진 머리글자)으로 실루엣을
+       다르게 한다. verified/필드없음은 배지를 렌더하지 않는다(평소엔 안 보이는 게 정상). */
+    .verify-badge{display:inline-flex;align-items:stretch;font-size:10px;font-weight:700;white-space:nowrap;line-height:1.6;cursor:help;border-radius:3px;overflow:hidden;border:2px solid currentColor;vertical-align:middle}
+    .verify-badge .vb-ic{display:inline-flex;align-items:center;justify-content:center;padding:0 4px;font-weight:900;color:#fff}
+    .verify-badge .vb-tx{padding:0 6px}
+    .verify-badge--unverified{color:#7c2d12;background:#fff7ed}
+    .verify-badge--unverified .vb-ic{background:#c2410c}
+    .verify-badge--exempt{color:#1e3a8a;background:#eff6ff}
+    .verify-badge--exempt .vb-ic{background:#1d4ed8}
     .chart-caveat{font-size:12px;color:var(--muted);margin:8px 0 0}
     .jp-err{padding:36px 12px;text-align:center;color:var(--muted);font-size:13px}
 
@@ -384,6 +403,32 @@
       ocr_read:     { cat:'read',    mark:'OCR', label:'画像判読' },
       simple_sum:   { cat:'dup',     mark:'Σ', label:'単純合算' }
     };
+    // value_verified 배지(2026-09-14, UH-25) — jp/jesr_app.js VERIFY_META 와 동일 정의(§5.2 관례대로
+    // 파일별 복사). caveat-badge(값은 검증됐지만 단순비교 주의)와 다른 축이다("값 자체를 확인
+    // 못함") — verified/필드없음은 배지 없음(평소엔 안 보이는 게 정상). reason 은 publishing 문자열
+    // 그대로 title 에 노출.
+    var VERIFY_META = {
+      unverified: { cat:'unverified', mark:'?', label:'値 未検証' },
+      exempt:     { cat:'exempt',     mark:'免', label:'確認対象外' }
+    };
+    function makeVerifyBadge(vv){
+      if(!vv || !vv.state || vv.state === 'verified') return null;
+      var m = VERIFY_META[vv.state] || VERIFY_META.unverified;
+      var el = document.createElement('span');
+      el.className = 'verify-badge verify-badge--' + m.cat;
+      el.title = vv.reason ? (m.label+'：'+vv.reason) : m.label;
+      var ic = document.createElement('span');
+      ic.className = 'vb-ic'; ic.setAttribute('aria-hidden', 'true'); ic.textContent = m.mark;
+      var tx = document.createElement('span');
+      tx.className = 'vb-tx'; tx.textContent = m.label;
+      el.appendChild(ic); el.appendChild(tx);
+      return el;
+    }
+    function verifyNoteText(vv){
+      if(!vv || !vv.state || vv.state === 'verified') return '';
+      var m = VERIFY_META[vv.state] || VERIFY_META.unverified;
+      return m.label + (vv.reason ? '：'+vv.reason : '');
+    }
     // 損害率(合算率)スケール: ESRと逆で低いほど良い(保険引受収支が黒字)。base=100(収支均衡点)を
     // 下回るほど濃い緑、上回るほど濃い赤 — colorForRatio と同じHSL発散式を上下反転して流用。
     function colorForCombined(r){
@@ -409,7 +454,8 @@
           loss: r.pl_loss_ratio_pct ? r.pl_loss_ratio_pct.cur : null,
           expense: r.pl_expense_ratio_pct ? r.pl_expense_ratio_pct.cur : null,
           combined: r.pl_combined_ratio_pct.cur,
-          caveat: c.ratio_caveat || null
+          caveat: c.ratio_caveat || null,
+          verified: c.value_verified || null
         };
       }).sort(function(a, b){ return (a.combined || 0) - (b.combined || 0); });
     }
@@ -541,6 +587,8 @@
           '基準日:' + (jaDateFlexible(r.as_of)||'—'),
           '算定基準:' + basisLabel(r.basis)
         ];
+        var vNote0 = verifyNoteText(r.value_verified);
+        if(vNote0) titleParts.push(vNote0);
         row.title = titleParts.join(' / ');
         row.setAttribute('aria-label', row.title);
         row.tabIndex = 0;
@@ -578,6 +626,11 @@
           kc.title = 'グループ会社（単体）の詳細へ: ' + kids.map(function(k){ return k.company_jp; }).join('・');
           name.appendChild(kc);
         }
+        // value_verified(2026-09-14, UH-25 — 実データはT&D Holdings 222%がunverifiedの実例
+        // PM-2026-09-13で根拠資料URLが一覧ページだったケース)。速報/単体詳細chipと同時発生し
+        // 得る前提で上の@mediaに折り返しを足した。
+        var vBadge0 = makeVerifyBadge(r.value_verified);
+        if(vBadge0) name.appendChild(vBadge0);
 
         var track = document.createElement('div');
         track.className = 'li-bar-track';
@@ -644,6 +697,8 @@
           '事業費率 ' + fmtPct(r.expense)
         ];
         if(r.caveat && r.caveat.text) titleParts.push(r.caveat.text);
+        var vNote1 = verifyNoteText(r.verified);
+        if(vNote1) titleParts.push(vNote1);
         row.title = titleParts.join(' / ');
         row.setAttribute('aria-label', row.title);
         row.tabIndex = 0;
@@ -671,6 +726,10 @@
           badge.textContent = m.mark + ' ' + m.label;
           name.appendChild(badge);
         }
+        // value_verified(2026-09-14, UH-25): 別の軸なので caveat とは独立に병기(둘 다 있을 수 있다 —
+        // msad_holdings 같은 케이스, 모바일 折り返しは上の@mediaで別途 처리).
+        var vBadge = makeVerifyBadge(r.verified);
+        if(vBadge) name.appendChild(vBadge);
 
         var track = document.createElement('div');
         track.className = 'li-bar-track';
