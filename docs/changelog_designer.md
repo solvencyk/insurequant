@@ -1,11 +1,55 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-13 · Stage 5/5 — designer
+> Last updated: 2026-09-14 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-09-14 — 손보 손해율 24사: `data_scope`/`ratio_caveat` 렌더 + 진입점 신설
+
+배경: 손보 29사 손해율(正味損害率·正味事業費率·合算率) 전수조사 완료, publishing이 같은
+라운드에 병렬로 기존 5사 외 24사를 `jp/jesr_detail.json`에 추가 중. 세션 시작 시점엔 아직
+`data_scope`/`ratio_caveat` 필드가 실 마스터에 없어 스크래치패드 fixture(`build_fixture.py`)로
+개발(마스터 무수정, publishing 소유).
+
+- **`isRatioOnly()`/`renderScopeNote()`(`jp/jesr_app.js`)**: `data_scope==="ratio_only"`인
+  회사는 `jesr.html`/`jgaap.html`/`disclosure.html` 공통 `#scopeNoteWrap`에 페이지별 안내문
+  ("決算" 탭으로 링크)을 띄우고, 資本(`secCapitalWrap`/`secSensWrap`)·損益内訳
+  (`secProfitWrap`) 패널은 패널째 숨김 — 빈 패널을 그리는 대신 "왜 없는지" 한 줄만 남김.
+  기존 `noticePanelWrap`(規制様式 곧 온다는 문구)은 ratio_only일 땐 꺼서 문구 중복/오인도
+  막음. `jgaapCards`(決算 상단 KPI)는 items가 없어도 合算率 카드 1장 + 안내문으로 대체.
+  `secBsWrap`/`secReservesWrap`/`secReinsWrap`/`secAxesWrap`/`by_line`/`core_history`는 기존
+  self-hide 로직이 빈 데이터에서 이미 정상 동작(추가수정 불필요, 확인만 함).
+- **`jp/index.html` "損害率一覧（損保）" 섹션 신설 — 24사 진입점.** 기존 ESRランキング의
+  `.map-list`/`.li-row`/FOLD(top5+もっと見る) 패턴 그대로 재사용. 데이터는 `jesr_detail.json`
+  (`loadDetailMap()`이 이미 읽던 fetch에 편승, `buildLossRatioData()` 신설) — sector=nonlife
+  이고 合算率이 있으면 `data_scope` 무관하게 포함(기존 full 5사 + 신규 ratio_only 24사 = 29사),
+  合算率 오름차순 정렬. 행 클릭/Enter/Space → `jgaap.html?company=<id>`(収益性指標로 직행).
+  census `not_yet`이라 ESRランキング에 안 뜨던 회사도 이걸로 처음 도달 가능.
+- **caveat 4종(`lae_excluded`/`ei_basis`/`ocr_read`/`simple_sum`) 배지 — 별도 열이 아니라
+  값 옆 표식(owner 지시).** `CAVEAT_META`(jesr_app.js·index.html 양쪽 §5.2 관례대로 복사)로
+  성격별 3그룹: 算式差(`lae_excluded`/`ei_basis`, Δ·실선 앰버) / 画像判読精度(`ocr_read`,
+  OCR·파선 회색) / 重複計上(`simple_sum`, Σ·이중선 보라) — 색만으로 구분하지 않게 테두리
+  모양+머리글자+라벨 문구를 전부 다르게. `a11y_contrast_check.py` 실측: 3쌍 전부 AA
+  6.37~9.43:1 통과, 파스텔 3색 간 delta-RGB 16.5~51(완전 안전선 60 미만이나 텍스트·테두리
+  모양이 이미 달라 a11y-audit 스킬 기준 severity 낮음으로 판단). 손해율一覧 행 + `jgaap.html`
+  収益性指標 合算率 카드 + 상단 KPI 카드 3곳에 동일 배지, title에 `ratio_caveat.text` 전문.
+- **모바일 함정 발견·수정**: 배지 붙은 행에서 `.li-name`이 badge+회사명을 한 줄에 욱여넣어
+  375px에서 `.li-nm`이 min-width 바닥(5.5em≈71.5px)까지 눌려 이름이 잘림(TODO 이력 "칩이
+  회사명을 밀어낸다"와 동일 패턴). `#lossRatioList` 스코프로 한정해 모바일에서만 배지를 이름
+  아래 줄로 줄바꿈 — 기존 ESRランキング chip 튜닝은 무수정. 재측정: 71.5px → 136.8px 회복.
+- **검증**: `node --check`(jesr_app.js + index.html/jgaap.html 인라인 스크립트 추출본),
+  html.parser 태그균형(4페이지 EOF 미종료 0), BOM 0. 로컬 `http.server`(스크래치패드 사본,
+  8931) + Playwright(`/opt/pw-browsers/chromium-1194`)로 1280px/375px 둘 다: 가로스크롤 0,
+  pageerror 콘솔 0(외부 CDN `ERR_CONNECTION_RESET`만, 기존 패턴), ratio_only(caveat 有/無)·
+  full 회사(`au_nonlife`) 상세 3페이지 hidden 속성/텍스트 DOM 직접 확인, 키보드 Enter 네비
+  확인, 다크모드 배지 배경/글자색 유지 확인(`.repro-badge`와 동일 테마-비의존 고정색, 기존
+  컨벤션).
+- **손대지 않음**: `jp/jesr_detail.json`·`jp/jesr_esr.json`·`J-ESR/`·`scripts/`·`TODO_jp.md`·
+  census·한국 자산 4개 전부 무수정. commit/push 안 함.
+- 모델·소요: Claude Sonnet 5, 단일 세션 약 1.5시간.
 
 ## 2026-09-13b — jp 랭킹 算定基準: chip 되돌리고 막대 패턴으로 (owner "칩이 너무 많다")
 
