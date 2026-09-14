@@ -523,6 +523,98 @@ def test_qualifier_list_is_not_empty_and_excludes_definition_markers():
             " 넣으면 정상사 3사가 거짓 발화한다(2026-09-13 실측)")
 
 
+# --- 한정어 정본(도메인 문서 §3) ↔ 기계본 대조 — UH-23 정식 해소(2026-09-14) -------
+# 라벨 목록은 2026-09-13 부터 `test_esr_labels_are_all_named_in_the_domain_doc` 이 대조하는데
+# **한정어는 같은 장치가 없었다**. 그래서 문서 §3 은 관측된 3종만 산문으로 적고 코드는 10종을
+# 들고 있었고, 심지어 §3 이 「추측으로 넣지 말 것」 으로 지목한 `調整後` 를 코드가 실제로 들고
+# 있었다(실측: 코드 10종 중 §3 에 문자열로라도 있던 것은 4종). 산수는 맞는데 정본이 틀린 통과다.
+# 근거: docs/postmortems/README.md UH-23 · PM-2026-09-13 §5
+
+
+def _jp_domain_doc_section3() -> str:
+    """도메인 문서 §3 본문. 라벨·한정어의 **정본**이 여기다."""
+    doc = REPO / "docs" / "domains" / "claude-agent-jp.md"
+    if not doc.exists():
+        pytest.skip("jp 도메인 문서가 없는 트리")
+    return doc.read_text(encoding="utf-8").split("## 3.", 1)[1].split("\n## 4", 1)[0]
+
+
+def _doc_table_first_column(body: str, header_cell: str) -> list:
+    """§3 안에서 **헤더 첫 칸이 `header_cell` 인 표**를 찾아 1열의 백틱 토큰을 딴다.
+
+    표를 헤더로 특정한다 — "§3 안의 모든 표행" 으로 주우면 옆 표(정의 표지)까지 섞여
+    대조가 조용히 무의미해진다. 표가 없으면 빈 목록이 나오고, 그건 호출부가 RED 로 읽는다
+    (`jesr_http.EXPIRING_HOSTS`·라벨 목록과 같은 이유의 빈-목록 방어).
+    """
+    rows = []
+    in_table = False
+    for line in body.splitlines():
+        s = line.strip()
+        if not s.startswith("|"):
+            in_table = False
+            continue
+        cells = [c.strip() for c in s.strip("|").split("|")]
+        if cells and cells[0] == header_cell:
+            in_table = True
+            continue
+        if not in_table:
+            continue
+        if set(cells[0]) <= set("-: "):          # 헤더 구분선
+            continue
+        m = re.match(r"`([^`]+)`", cells[0])
+        assert m, f"§3 표 1열이 백틱 토큰이 아니다: {cells[0]!r}"
+        rows.append(m.group(1))
+    return rows
+
+
+def test_adjusted_qualifiers_match_the_domain_doc():
+    """**한정어 목록의 정본은 `docs/domains/claude-agent-jp.md §3` 표다**(UH-23).
+
+    코드가 지어낸 한정어로 검증하면 **검증기가 정본과 다른 목록으로 검증**하게 된다 —
+    K-ICS 상관행렬을 재타이핑하지 말라는 것과 같은 병이고, 라벨 목록이 이미 같은 이유로
+    대조되고 있다(`test_esr_labels_are_all_named_in_the_domain_doc`).
+
+    **양방향**으로 건다. 한 방향만 걸면 반쪽이 무검사로 남는다:
+      · 코드에만 있는 것을 막지 않으면 → 목록이 조용히 넓어져 정상사가 거짓 발화한다.
+      · 문서에만 있는 것을 막지 않으면 → 문서는 잡는다고 적혀 있는데 코드는 안 잡는다
+        (`適正水準` 을 코드에서 빼면 かんぽ 220 이 그대로 빠져나간다 — 실측).
+    목록을 고치려면 §3 표를 먼저 고치고 15사에 다시 돌려 정상사 발화 0 을 확인한다.
+    """
+    c = _collector()
+    doc_quals = _doc_table_first_column(_jp_domain_doc_section3(), "한정어")
+    assert doc_quals, "§3 에 한정어 표가 없다 — 정본이 비면 이 대조는 no-op 이다"
+    assert len(doc_quals) == len(set(doc_quals)), f"§3 표에 중복 한정어가 있다: {doc_quals}"
+    code_quals = list(c.ADJUSTED_QUALIFIERS)
+    assert len(code_quals) == len(set(code_quals)), f"코드 목록에 중복이 있다: {code_quals}"
+    assert set(code_quals) == set(doc_quals), (
+        "한정어 정본(§3 표) ↔ 기계본(ADJUSTED_QUALIFIERS) 불일치 —"
+        f" 코드에만: {sorted(set(code_quals) - set(doc_quals))} ·"
+        f" 문서에만: {sorted(set(doc_quals) - set(code_quals))}."
+        " 한쪽만 고치면 검증기가 정본과 다른 목록으로 검증한다(문서 §3 을 먼저 고쳐라)")
+
+
+def test_definition_markers_named_in_the_doc_stay_out_of_the_code_list():
+    """정의 표지 **제외 목록도 문서가 정본**이다 — 바로 위 하드코딩 테스트와 역할이 반대다.
+
+    `test_qualifier_list_is_not_empty_and_excludes_definition_markers` 는 4종을 테스트 안에
+    **하드코딩한 바닥선**이다: 문서를 어떻게 고쳐도 안 흔들린다. 이 테스트는 반대로
+    **문서를 따라간다**: jp 레인이 §3 표에 5번째 정의 표지를 등재하면 코드 검사가 자동으로
+    넓어진다. 둘 다 필요한 이유가 여기 있다 — 하드코딩만 두면 문서 증가분을 영영 안 보고,
+    문서추종만 두면 §3 에서 한 줄 지우는 것으로 검사가 사라진다.
+
+    (exact membership 으로 본다. `内部管理ベース` 처럼 **붙여 쓴** 변형은 이 검사를 비껴가지만
+    그건 위 `test_adjusted_qualifiers_match_the_domain_doc` 의 집합일치가 잡는다 — §3 한정어
+    표에 없는 문자열이기 때문이다. 둘을 겹쳐야 닫힌다.)
+    """
+    c = _collector()
+    markers = _doc_table_first_column(_jp_domain_doc_section3(), "정의 표지")
+    assert markers, "§3 에 정의 표지 표가 없다 — 제외 검사가 no-op 이다"
+    bad = [m for m in markers if m in c.ADJUSTED_QUALIFIERS]
+    assert not bad, (
+        f"§3 이 정의 표지로 지목한 것이 한정어 목록에 섞였다: {bad} —"
+        " '어느 ESR 이냐' 지 '조정했다' 가 아니다. 정상 3사가 거짓 발화한다(실측)")
+
+
 def test_adjusted_value_range_is_the_builders_not_a_retyped_literal(mod):
     """값 후보 범위는 빌더가 정본이다. 재타이핑하면 수집기와 게이트가 서로 다른 범위를 쓴다."""
     c = _collector()
