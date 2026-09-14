@@ -119,6 +119,30 @@
       #esrListLife .li-name .verify-badge,
       #esrListNonlife .li-name .verify-badge{flex:0 0 100%;margin-left:0}
     }
+    /* 損害率バブルチャート(2026-09-14b, owner発注) — デスクトップ:バブル(X=正味損害率 Y=正味事業費率
+       円=正味収入保険料)、モバイル:積み上げ棒一覧(既存#lossRatioList)。root index.html の
+       #csm-bubble-chart(デスクトップ)/#bubble-list(モバイル)切替パターンと同じ display 切替方式
+       (新しいUI言語を作らない、既存パターンの流用)。 */
+    #lossRatioBubble{height:520px;border-radius:14px;border:1px solid var(--border);background:var(--bg);cursor:pointer}
+    #lossRatioBubbleMeta{font-size:12px;color:var(--muted);margin:8px 0 0}
+    /* キーボード操作が円クリックだけに閉じないように(a11y-audit スキル§4「円クリックが唯一の
+       進入路なら鍵盤でも到達できる必要がある」— 今回のチケットで明示要求)。root index.html の
+       #bubble-list は<640pxでしか出現せずデスクトップでは鍵盤到達路が無い(既知のギャップ、
+       root側は今回のスコープ外=韓国資産に触れない)。ここだけ「一覧表で見る」ボタンで
+       #lossRatioList(=既存の鍵盤操作済みの行)をデスクトップでも開けるようにする。 */
+    #toggleLossRatioListBtn{display:block;width:100%;margin:10px 0 0;padding:9px;background:var(--card);border:var(--bd);border-radius:var(--r-md);color:var(--text);font-size:13px;font-family:var(--font-sans);cursor:pointer;text-align:center;font-weight:500;transition:background .15s}
+    #toggleLossRatioListBtn:hover{background:var(--border)}
+    #lossRatioListWrap{display:none}
+    #lossRatioListWrap.lr-open{display:block}
+    /* 積み上げ棒(モバイル一覧, 2026-09-14b) — 正味損害率+正味事業費率を隣接2色で積み上げ、末尾に
+       合算率100%(収支均衡)の目安線を重ねて「一目で合算率」を実現。色は blue(--primary)と
+       #c2410c(value_verified--unverifiedアイコン色の再利用、新規リテラル無し) —
+       cbcheck実測delta-RGB 225(protan)/232(deutan)で色覚多様性下でも区別可、かつ区間の並び順
+       自体が非色チャネル(位置)なので色のみに依存しない。値はtitle/tooltipに常時併記。 */
+    .li-bar-stack{display:flex;height:100%;border-radius:7px;overflow:hidden;min-width:2px}
+    .li-bar-seg-loss{background:var(--primary)}
+    .li-bar-seg-expense{background:#c2410c}
+    .li-tick-100{position:absolute;top:0;bottom:0;width:2px;background:var(--text);opacity:.55;pointer-events:none}
     .chart-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px;align-items:center}
     .chart-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px}
     .jp-badge{display:inline-block;font-size:11px;font-weight:700;color:#212529;background:#f59e0b;padding:1px 6px;border-radius:3px;white-space:nowrap}
@@ -176,8 +200,15 @@
       .jcard .jcard-lab{font-size:10px}
       .esr-table{font-size:12px}
       .esr-table th, .esr-table td{padding:5px 6px}
+      #lossRatioBubbleWrap{display:none}
+      #lossRatioListWrap{display:block}
     }
   </style>
+  <!-- ECharts(損害率バブルチャート, 2026-09-14b owner発注) — index.html(ルート) 128行と同一バージョン・
+       同一SRI(compute_sri.py の既存登録エントリを再利用、新規登録不要)。async/defer 無しで <head> 末尾に
+       置く(root と同じ配置) — body のインラインスクリプトが実行される時点で window.echarts が確実に
+       定義済みになる。 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" integrity="sha384-o5uz97et3bErHvpKfD4Jz4n0JfhJDWABFuF4NP+iEEDxE1VwMWJ19QGR0lqFZnr6" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
@@ -242,17 +273,42 @@
          入口になる(inbox 20260914 owner 발주)。データは jesr_detail.json(loadDetailMap が読み込む)。 -->
     <section class="panel" aria-labelledby="secLossRatio">
       <h2 id="secLossRatio">損害率一覧（損保）</h2>
-      <p>各社の正味損害率・正味事業費率・合算率（当期）。ESRの規制様式がまだ無い会社もここでは表示します。色は合算率が100%（収支均衡）を下回るほど濃い緑、上回るほど濃い赤。行を選ぶと会社別の「決算」詳細に移動します。</p>
-      <div id="lossRatioList" class="map-list" aria-label="損害率一覧、読み込み中"></div>
-      <button type="button" class="li-more-btn" id="moreBtnLossRatio" hidden aria-expanded="false"></button>
-      <div class="chart-legend" id="lossRatioLegend">
-        <span><span class="sw" style="background:hsl(130,70%,26%)"></span>合算率が低いほど濃い緑（保険引受収支が黒字）</span>
-        <span><span class="sw" style="background:hsl(0,75%,30%)"></span>合算率100%超過は赤（高いほど濃い、保険引受収支が赤字）</span>
-        <span><span class="caveat-badge caveat-badge--formula">Δ 算式差</span>他社と算式が異なり単純比較に適さない場合があります</span>
-        <span><span class="caveat-badge caveat-badge--read">OCR 画像判読</span>画像PDFを目視で読み取った値です</span>
-        <span><span class="caveat-badge caveat-badge--dup">Σ 単純合算</span>子会社の単純合算値のため重複計上にご注意ください</span>
+      <p>各社の正味損害率・正味事業費率・合算率（当期）。ESRの規制様式がまだ無い会社もここでは表示します。行（バブル/一覧表とも）を選ぶと会社別の「決算」詳細に移動します。</p>
+
+      <!-- デスクトップ: バブルチャート(2026-09-14b owner発注)。X=正味損害率 Y=正味事業費率 円=正味収入保険料。
+           モバイルでは#lossRatioBubbleWrapごと非表示(上のCSS)、下の#lossRatioListが代わる。 -->
+      <div id="lossRatioBubbleWrap">
+        <div id="lossRatioBubble" role="img" aria-label="損害率バブルチャート。横軸は正味損害率、縦軸は正味事業費率、円の大きさは正味収入保険料。円の色は合算率(緑=100%未満の黒字、赤=100%超の赤字)。クリックすると会社別「決算」詳細に移動します。率が近い会社の円は重なりますが、右上の拡大アイコンやCtrl＋ホイールで拡大すると分離します。マウス操作が難しい場合は下の「一覧表で見る」ボタンから同じデータをキーボードで操作できます。"></div>
+        <p id="lossRatioBubbleMeta"></p>
+        <div class="chart-legend" id="lossRatioBubbleLegend">
+          <span><span class="sw" style="background:hsl(130,70%,26%)"></span>合算率100%未満（黒字、低いほど濃い緑）</span>
+          <span><span class="sw" style="background:hsl(0,75%,30%)"></span>合算率100%超（赤字、高いほど濃い赤）</span>
+          <span>円の大きさ＝正味収入保険料（非線形・最小サイズあり。面積の比率は実際の保険料の倍率と一致しません）</span>
+          <span>点線の円＝正味収入保険料データ未収録（横軸・縦軸の値は実データです）</span>
+          <span>▲上端固定＝正味事業費率が図の範囲外（実際の値はラベルに表示、クリップしていません）</span>
+          <span>太い破線の縁取り＝算定基準・算式に注意が必要な会社（Δ算式差／OCR画像判読／Σ単純合算、詳細はツールチップ）</span>
+          <span>大手4社のように率がほぼ同じ会社は円が重なります（値が近いという事実そのものです）。右上の <b>拡大</b> アイコンで範囲を指定するか、<b>Ctrl＋ホイール</b>で拡大すると分離します（<b>戻す</b>アイコンで初期表示）。</span>
+        </div>
+        <p class="chart-caveat">※ MS&ADインシュアランス グループ ホールディングスはこのバブルには表示していません — 開示が「三井住友海上＋あいおいニッセイ同和の単純合計」のため、2社を個別に表示している下でこの合計まで円にすると同じ事業が3つ計上されてしまいます。三井住友海上・あいおいニッセイ同和はそれぞれ個別の円で表示しています。</p>
+        <button type="button" id="toggleLossRatioListBtn" aria-expanded="false" aria-controls="lossRatioListWrap">一覧表で見る（キーボード操作の場合はこちら）</button>
       </div>
-      <p class="chart-caveat" id="lossRatioCaveat"></p>
+
+      <!-- #lossRatioListWrap(2026-09-14b) — 一覧表本体+もっと見る+凡例+注記を1つにまとめてデスクトップでは
+           まとめて隠す(バブル表示中に「合算率100%目安線」の凡例だけ浮いて残る事故を防ぐ)。モバイルは
+           @mediaで常時表示、デスクトップは#toggleLossRatioListBtnが.lr-openを付けて丸ごと開く。 -->
+      <div id="lossRatioListWrap">
+        <div id="lossRatioList" class="map-list" aria-label="損害率一覧、読み込み中"></div>
+        <button type="button" class="li-more-btn" id="moreBtnLossRatio" hidden aria-expanded="false"></button>
+        <div class="chart-legend" id="lossRatioLegend">
+          <span><span class="sw" style="background:var(--primary)"></span>正味損害率</span>
+          <span><span class="sw" style="background:#c2410c"></span>正味事業費率（積み上げ＝合算率）</span>
+          <span><span class="sw" style="background:var(--text);width:2px;height:14px;border-radius:0"></span>合算率100%（収支均衡）の目安線</span>
+          <span><span class="caveat-badge caveat-badge--formula">Δ 算式差</span>他社と算式が異なり単純比較に適さない場合があります</span>
+          <span><span class="caveat-badge caveat-badge--read">OCR 画像判読</span>画像PDFを目視で読み取った値です</span>
+          <span><span class="caveat-badge caveat-badge--dup">Σ 単純合算</span>子会社の単純合算値のため重複計上にご注意ください</span>
+        </div>
+        <p class="chart-caveat" id="lossRatioCaveat"></p>
+      </div>
     </section>
 
   </main>
@@ -449,17 +505,35 @@
           && c.profit.ratios.pl_combined_ratio_pct && c.profit.ratios.pl_combined_ratio_pct.cur != null;
       }).map(function(c){
         var r = c.profit.ratios;
+        var items = c.profit.items || {};
+        // 正味収入保険料(2026-09-14b, バブルの円サイズ) — 31사 중 5사만 수록(나머지는 병렬 수집 중,
+        // 티켓 데이터계약 그대로). null 이면 렌더 단계에서 최소 반지름 + 점선 테두리로 "미수록"을
+        // 명시("모른다"를 "0이다"로 뭉개지 않는다).
+        var premRec = items.pl_net_premiums_written;
         return {
           id: c.id, company_jp: c.company_jp, company_en: c.company_en,
           loss: r.pl_loss_ratio_pct ? r.pl_loss_ratio_pct.cur : null,
           expense: r.pl_expense_ratio_pct ? r.pl_expense_ratio_pct.cur : null,
           combined: r.pl_combined_ratio_pct.cur,
+          premium: (premRec && typeof premRec.cur === 'number') ? premRec.cur : null,
           caveat: c.ratio_caveat || null,
           verified: c.value_verified || null
         };
       }).sort(function(a, b){ return (a.combined || 0) - (b.combined || 0); });
     }
     var lossRatioData = [];
+
+    // モバイル一覧の並び順(2026-09-14b owner発注): 正味収入保険料の降順(大きい会社が上)。
+    // premium欠測(まだ収集中の26社)は「小さい」扱いで最後尾にまとめる — 未知を中位に紛れ込ませて
+    // 誤解させない。欠測同士・既知の同値内は合算率昇順で安定させる(副ソート)。
+    function sortByPremiumDesc(list){
+      return list.slice().sort(function(a, b){
+        var pa = (typeof a.premium === 'number') ? a.premium : -1;
+        var pb = (typeof b.premium === 'number') ? b.premium : -1;
+        if (pb !== pa) return pb - pa;
+        return (a.combined || 0) - (b.combined || 0);
+      });
+    }
 
     // 一覧表 회사명 -> jesr.html 링크 판정용(inbox 20260912T1120Z). null=아직 로딩중(링크 보류),
     // {}=상세 없음(로드 실패 포함). jesr_detail.json 이 없으면(publishing 병행작업 중) fixture로
@@ -482,6 +556,19 @@
         .catch(function(){ detailMap = {}; renderLossRatioSection(); });
     }
     loadDetailMap();
+
+    // 損害率バブル(2026-09-14b): テーマ切替時は再setOption(軸・ラベル色がCSS変数依存)、
+    // リサイズ時はresize()のみ。モバイル⇔デスクトップ境界越えは#lossRatioBubbleがCSSで
+    // display:noneから戻った直後にinit/再描画する必要がある(root index.htmlのbubbleMobileMq
+    // パターンと同じ)。
+    window.addEventListener('iq:themechange', function(){ renderLossRatioBubble(); });
+    window.addEventListener('resize', function(){ if(lossRatioBubbleChart) lossRatioBubbleChart.resize(); });
+    var lossRatioMobileMq = window.matchMedia('(max-width:640px)');
+    if(lossRatioMobileMq.addEventListener){
+      lossRatioMobileMq.addEventListener('change', function(e){
+        if(!e.matches){ renderLossRatioBubble(); if(lossRatioBubbleChart) lossRatioBubbleChart.resize(); }
+      });
+    }
 
     fetch(DATA_URL, {cache:'no-store'})
       .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
@@ -678,10 +765,257 @@
     // 損害率一覧(2026-09-14) — 上の renderList() と同じ .li-row/FOLD パターン。ESRランキング
     // (jesr_esr.json由来)とは別系統のデータ(jesr_detail.json由来)なので関数は分けるが、外見・
     // 操作(クリック/Enter/Space遷移・もっと見る)は完全に揃える(owner: 新しいUI言語を作るな)。
+    // ===== 損害率バブルチャート(デスクトップ、2026-09-14b owner発注) =====
+    var lossRatioBubbleChart = null;
+    // クリック判定用の実座標キャッシュ(描画のたびに入れ替え)。ECharts の params.data は
+    // 「ラベルを押した場合もその系列データ」を返すため、円そのものの当たり判定を別に持つ。
+    var lossRatioBubblePoints = [];
+
+    // owner確定 1: MS&AD HD(持株会社)は三井住友海上+あいおいニッセイ同和の単純合算開示。
+    // 2子会社をそれぞれ円で表示している状態でHD自体も円にすると同じ事業が3つ計上される。
+    // モバイル一覧(既存, Σ単純合算バッジで既に警告表示)からは除外しない — バブルのみ。
+    var BUBBLE_EXCLUDE_IDS = { msad_holdings: true };
+
+    // owner確定 2: 29社の正味事業費率は1.7~61.5%だが2社(全管協れいわ187.6%・ヤマップ179.5%)だけ
+    // 極端に高い(共に保険料が超小型)。縦軸をこの2社に合わせると29社が下1/3に潰れるので、
+    // 縦軸は「正常」集団基準で組み、この2社は上端に固定表示(実数値はラベルで常に開示)。
+    // 閾値は会社ID固定ではなく「事業費率>100%」というドメイン的に意味のある線(保険料そのものより
+    // 費用が大きい=構造的異常)を使う — 実データの29社と2社の間には61.5→179.5の大きな空白があり、
+    // 100という閾値はその空白の中に自然に収まる(将来別の会社が同様の外れ値になっても自動対応)。
+    var OUTLIER_EXPENSE_THRESHOLD = 100;
+
+    // 円の大きさ=正味収入保険料。実測レンジが26百万円~2,596,396百万円(10万倍)と極端なため、
+    // sqrtスケール+床(FLOOR)+天井(CAP)を使う(root index.htmlのbubbleSize()と同じ形)。
+    // 26~15,692百万円クラスの小型社はほぼ床に張り付くが、これは「面積を偽って見せない」ための
+    // 意図的な結果(owner: 面積比較は嘘になる) — 範囲は凡例に非線形と明記。
+    // 実測(2026-09-14c, desktop 1280px / プロット1134x424px)で分かったこと: 「円同士を完全に重ねない」
+    // は既定表示では数学的に不可能。最も近い2社(三井ダイレクト 損害率64.3/事業費率28.9 と
+    // ペット＆ファミリー 64.2/28.6)の中心間距離は 2.0px しかなく、この2つが接しないためには
+    // 2円の直径の和が 4.1px 以下 — つまり全社を直径2px の点にするしかない(大きさ=保険料の情報が消える)。
+    // 大手4社(東京海上61.6/31.4・損保ジャパン63.8/33.3・三井住友62.8/30.4・あいおい64.5/32.6)も
+    // 損害率2.9pt・事業費率2.9pt の箱に収まっており、これは「大手4社は率がほぼ同じで規模だけ違う」
+    // という実データの事実そのもの。座標をずらして見かけ上離すのは値の嘘になる(owner: 座標は押すな)。
+    // そこで ① 天井を 46→34 に下げて既定表示の重なりを減らし(実測 重なり20組/最悪-30.7px →
+    // 10組/最悪-20.4px)、② 本当に分離したい時は拡大(toolbox の範囲指定ズーム / Ctrl+ホイール)を
+    // 使えるようにした。円の直径はズームしても一定なので、倍率を上げれば必ず離れる
+    // (実測: 損害率62~67%/事業費率27~35%に拡大すると上記の最接近ペアが+17.9px、
+    //  損保ジャパン×あいおいが+132.8px 離れて完全に分離する)。
+    var BUBBLE_R_FLOOR = 7, BUBBLE_R_CAP = 34;
+    function premiumBubbleSize(premium, maxPremium){
+      if(!(premium > 0) || !(maxPremium > 0)) return BUBBLE_R_FLOOR;
+      var t = Math.sqrt(premium / maxPremium);
+      return Math.max(BUBBLE_R_FLOOR, Math.min(BUBBLE_R_CAP, BUBBLE_R_FLOOR + t * (BUBBLE_R_CAP - BUBBLE_R_FLOOR)));
+    }
+
+    // caveat(ソニー損保=ei_basis、トーア再保険=lae_excluded)の縁取り色 — CAVEAT_META の cat と同じ
+    // 3分類(formula/read/dup)、色はjp/index.html内の.caveat-badge--*文字色を再利用(新規リテラル無し)。
+    var CAVEAT_BORDER = { formula:'#92400e', read:'#374151', dup:'#5b21b6' };
+
+    function renderLossRatioBubble(){
+      var el = document.getElementById('lossRatioBubble');
+      var metaEl = document.getElementById('lossRatioBubbleMeta');
+      if(!el || !window.echarts) return;
+      if(window.matchMedia('(max-width:640px)').matches) return; // モバイルは#lossRatioListが代替(0×0コンテナinit防止)
+
+      var rows = lossRatioData.filter(function(r){
+        return r.loss != null && r.expense != null && !BUBBLE_EXCLUDE_IDS[r.id];
+      });
+      if(!rows.length){
+        el.innerHTML = '<div class="jp-err">損害率データがまだありません。</div>';
+        return;
+      }
+
+      var normal = rows.filter(function(r){ return r.expense <= OUTLIER_EXPENSE_THRESHOLD; });
+      var outliers = rows.filter(function(r){ return r.expense > OUTLIER_EXPENSE_THRESHOLD; });
+
+      // 軸範囲は実データから毎回導出(リテラル固定禁止 — CLAUDE.md実測事故の教訓)。
+      var lossVals = rows.map(function(r){ return r.loss; });
+      var xAxisMax = Math.max(10, Math.ceil((Math.max.apply(null, lossVals) * 1.1) / 10) * 10);
+      // X軸は現状(29+2社とも損害率6.6~77.5%で正常域)クランプ不要 — Y軸と対称なクランプが要る
+      // ケースが出たら同じ仕組みをxAxisにも足せばよい(今は不要な複雑化を避ける)。
+
+      var normalExp = normal.map(function(r){ return r.expense; });
+      var yBase = normalExp.length ? Math.max.apply(null, normalExp) : OUTLIER_EXPENSE_THRESHOLD;
+      var yAxisMax = Math.max(20, Math.ceil((yBase * 1.15) / 10) * 10);
+
+      var knownPremiums = rows.map(function(r){ return r.premium; }).filter(function(v){ return typeof v === 'number' && v > 0; });
+      var maxPremium = knownPremiums.length ? Math.max.apply(null, knownPremiums) : 0;
+      var missingPremiumCount = rows.length - knownPremiums.length;
+
+      if(metaEl){
+        metaEl.textContent = '表示 ' + rows.length + '社（縦軸範囲外を上端固定表示 ' + outliers.length + '社・正味収入保険料未収録 ' + missingPremiumCount + '社）';
+      }
+
+      if(!lossRatioBubbleChart) lossRatioBubbleChart = echarts.init(el);
+      var TH = window.IQTheme ? IQTheme.chart() : { text:'#212529', muted:'#6a737a', ink:'#495057', bg:'#fff', grid:'#eef0f2' };
+
+      function pointStyle(r){
+        var caveatCat = (r.caveat && r.caveat.code && CAVEAT_META[r.caveat.code]) ? CAVEAT_META[r.caveat.code].cat : null;
+        var hasPremium = typeof r.premium === 'number' && r.premium > 0;
+        return {
+          color: colorForCombined(r.combined),
+          opacity: hasPremium ? 0.62 : 0.32,
+          borderColor: caveatCat ? (CAVEAT_BORDER[caveatCat] || '#374151') : TH.bg,
+          borderWidth: caveatCat ? 2 : 1,
+          borderType: caveatCat ? 'dashed' : (hasPremium ? 'solid' : 'dashed')
+        };
+      }
+
+      function tooltipLines(r, clipped){
+        var lines = ['<b>' + esc(r.company_jp) + '</b>' + (r.company_en ? ' (' + esc(r.company_en) + ')' : '')];
+        lines.push('正味損害率 ' + fmtPct(r.loss));
+        lines.push('正味事業費率 ' + fmtPct(r.expense) + (clipped ? '（図の範囲外 — 軸上端に固定表示中）' : ''));
+        lines.push('合算率 ' + fmtPct(r.combined));
+        lines.push('正味収入保険料 ' + (typeof r.premium === 'number' ? r.premium.toLocaleString('ja-JP') + '百万円' : '未収録'));
+        if(r.caveat && r.caveat.text) lines.push('※ ' + esc(r.caveat.text));
+        var vNote = verifyNoteText(r.verified);
+        if(vNote) lines.push('※ ' + esc(vNote));
+        return lines.join('<br/>');
+      }
+
+      // z-order(겹침 대응, owner: 좌표는 밀지 말되 겹침 수단은 허용) — 円が大きい会社ほど先に描画
+      // (=下に沈む)、小さい会社ほど後に描画(=上に浮く)。配列順=描画順=後着が上に乗るというECharts/
+      // canvasの一般則を使い、大きさ降順(大→小)に並べるだけで実現する(値そのものは動かさない)。
+      var normalSorted = normal.slice().sort(function(a, b){
+        return premiumBubbleSize(b.premium, maxPremium) - premiumBubbleSize(a.premium, maxPremium);
+      });
+
+      lossRatioBubblePoints = [];
+      // ラベルの向きを4方向(上→右→下→左)に回す。normalSorted は円が大きい順なので、
+      // 大手4社(東京海上・損保ジャパン・三井住友・あいおい)には必ず互いに違う向きが割り当たり、
+      // 密集していてもラベルが衝突しない。実測(2026-09-14c): 全部'top'だと大手4社のうち1社しか
+      // ラベルが残らなかった(16枚)が、4方向回転では4社とも残る(19枚・重なり0組)。
+      // 「大きい円ほど先に並ぶ」という既存の並びをそのまま流用しているので、会社IDの決め打ちは無い。
+      var LABEL_POSITIONS = ['top', 'right', 'bottom', 'left'];
+      var mainData = normalSorted.map(function(r, idx){
+        var st = pointStyle(r);
+        var radius = premiumBubbleSize(r.premium, maxPremium);
+        lossRatioBubblePoints.push({ si: 0, value: [r.loss, r.expense], radius: radius, d: r });
+        return {
+          name: r.company_jp,
+          value: [r.loss, r.expense],
+          d: r,
+          clipped: false,
+          symbolSize: radius,
+          // hideOverlapの優先度(2026-09-14b実測: 密集帯で無指定だとラベルが読めない文字列に
+          // 潰れて重なった — z2が高いほど残る仕様なので、円が大きい=保険料が大きい会社ほど
+          // ラベルが生き残るようにする。「大きい会社が読める」は保険料サイズと同じ判断軸で一貫)。
+          z2: Math.round(radius),
+          itemStyle: { color: st.color, opacity: st.opacity, borderColor: st.borderColor, borderWidth: st.borderWidth, borderType: st.borderType },
+          label: { show: true, formatter: r.company_jp, position: LABEL_POSITIONS[idx % LABEL_POSITIONS.length], fontSize: 10, color: TH.ink, textBorderColor: TH.bg, textBorderWidth: 2 },
+          emphasis: { focus: 'self', label: { show: true, fontWeight: 'bold' }, itemStyle: { opacity: 0.95 } }
+        };
+      });
+
+      // 縦軸クランプ(owner確定2): 実際のY値ではなくyAxisMaxの94%に固定して描画、ラベルに実数値を明記。
+      // 2社(全管協れいわ・ヤマップ)は損害率が49.8/50.6とX位置がほぼ同じで▲同士がほぼ重なる —
+      // labelLayoutの自動shiftXは実測(2026-09-14b)でこの真横一致ケースを十分に離せなかったため、
+      // ラベルだけ左右に明示オフセット(マーカー自体のX位置=真の損害率は動かさない、値も常にラベル
+      // 文字列自体に実数を書くので位置がずれても数値は読める)。将来3社以上が同時にクラスタする
+      // ケースは扇状に等間隔配置(OUTLIER_LABEL_SPREADpx刻み)で一般化しておく。
+      var pinY = yAxisMax * 0.94;
+      var OUTLIER_LABEL_SPREAD = 170; // ラベル文字幅の実測目安(10px日本語10文字前後)を上回る間隔
+      var outliersForLabel = outliers.slice().sort(function(a, b){ return a.loss - b.loss; });
+      var outlierData = outliersForLabel.map(function(r, i){
+        var st = pointStyle(r);
+        var dx = Math.round((i - (outliersForLabel.length - 1) / 2) * OUTLIER_LABEL_SPREAD);
+        return {
+          name: r.company_jp,
+          value: [r.loss, pinY],
+          d: r,
+          clipped: true,
+          symbolSize: Math.max(12, premiumBubbleSize(r.premium, maxPremium)),
+          symbol: 'triangle',
+          itemStyle: { color: st.color, opacity: Math.max(st.opacity, 0.7), borderColor: TH.text, borderWidth: 2, borderType: 'dashed' },
+          label: {
+            show: true, position: 'top', offset: [dx, -6], fontSize: 10, fontWeight: 'bold', color: TH.text,
+            backgroundColor: TH.bg, padding: [2, 4], borderRadius: 3,
+            formatter: '↑ ' + r.company_jp + ' ' + fmtPct(r.expense)
+          },
+          labelLine: { show: true, length2: 10, lineStyle: { color: TH.grid, width: 1 } }
+        };
+      });
+
+      lossRatioBubbleChart.setOption({
+        grid: { left: 56, right: 24, top: 46, bottom: 50 },
+        toolbox: {
+          right: 12, top: 6, itemSize: 14, itemGap: 8,
+          iconStyle: { borderColor: TH.muted },
+          emphasis: { iconStyle: { borderColor: TH.text } },
+          feature: {
+            dataZoom: { xAxisIndex: 0, yAxisIndex: 0, title: { zoom: '範囲を指定して拡大', back: '拡大を戻す' } },
+            restore: { title: '初期表示に戻す' }
+          }
+        },
+        dataZoom: [
+          { type: 'inside', xAxisIndex: 0, filterMode: 'none', zoomOnMouseWheel: 'ctrl', moveOnMouseMove: true, moveOnMouseWheel: false },
+          { type: 'inside', yAxisIndex: 0, filterMode: 'none', zoomOnMouseWheel: 'ctrl', moveOnMouseMove: true, moveOnMouseWheel: false }
+        ],
+        textStyle: { color: TH.muted },
+        tooltip: Object.assign(window.IQTheme ? IQTheme.echartsTooltip() : {}, {
+          trigger: 'item',
+          formatter: function(p){ return tooltipLines(p.data.d, !!p.data.clipped); }
+        }),
+        xAxis: {
+          type: 'value', name: '正味損害率 (%)', nameLocation: 'middle', nameGap: 30, min: 0, max: xAxisMax,
+          axisLabel: { color: TH.muted, formatter: '{value}%' },
+          axisLine: { lineStyle: { color: TH.grid } },
+          splitLine: { lineStyle: { type: 'dashed', color: TH.grid } }
+        },
+        yAxis: {
+          type: 'value', name: '正味事業費率 (%)', nameGap: 44, min: 0, max: yAxisMax,
+          axisLabel: { color: TH.muted, formatter: '{value}%' },
+          axisLine: { lineStyle: { color: TH.grid } },
+          splitLine: { lineStyle: { type: 'dashed', color: TH.grid } }
+        },
+        series: [
+          // labelLayout は hideOverlap 単独。実測(2026-09-14c, desktop 1280px): moveOverlap を
+          // 併用すると hideOverlap が無効化され、密集帯(損害率60~65%/事業費率28~33%)で30枚全部が
+          // 描かれて重なり35組 = 読めない文字の塊になっていた。hideOverlap 単独なら16枚/重なり0組で、
+          // z2=円の直径にしてあるので大きい会社(=保険料が大きい会社)のラベルが残る。
+          // 残り14社は ①円にカーソルを合わせるとツールチップ ②下の「一覧表で見る」 ③拡大
+          // (拡大すると点が離れるのでラベルも増える) の3経路で読める。
+          { name: '損保各社', type: 'scatter', labelLayout: { hideOverlap: true }, data: mainData },
+          { name: '軸範囲外', type: 'scatter', data: outlierData }
+        ]
+      }, true);
+
+      lossRatioBubbleChart.off('click');
+      lossRatioBubbleChart.on('click', function(params){
+        if(!(params && params.componentType === 'series' && params.data && params.data.d)) return;
+        // ラベルは円より上に描かれるので、小型社の長いラベルが大手の円に重なる。実測(2026-09-14c):
+        // 東京海上日動の円の中心がペット＆ファミリー損保のラベル矩形の中に入っていて、大手の円を
+        // 押したのに小型社の詳細へ飛んでいた。ECharts の params.data はラベルを押しても同じ
+        // データを返すため、これは params だけでは直せない。そこで「クリック点を実際に含む円」を
+        // 優先して選び直す。複数の円に含まれるときは小さい方を採る(大きい円の上に乗った小さい円を
+        // ちゃんと押せるように — 描画順も同じ理由で小さい円を後に=上に置いている)。
+        // どの円にも入っていなければ params のまま(=ラベルだけを狙って押した場合)。
+        var target = params.data.d;
+        var ev = params.event;
+        var ox = ev ? (ev.offsetX != null ? ev.offsetX : ev.zrX) : null;
+        var oy = ev ? (ev.offsetY != null ? ev.offsetY : ev.zrY) : null;
+        if(ox != null && oy != null){
+          var hit = null;
+          lossRatioBubblePoints.forEach(function(q){
+            var px = lossRatioBubbleChart.convertToPixel({ seriesIndex: q.si }, q.value);
+            if(!px) return;
+            var dist = Math.sqrt(Math.pow(px[0] - ox, 2) + Math.pow(px[1] - oy, 2));
+            if(dist <= q.radius / 2 && (!hit || q.radius < hit.radius)) hit = q;
+          });
+          if(hit) target = hit.d;
+        }
+        window.location.href = 'jgaap.html?company=' + encodeURIComponent(target.id);
+      });
+      el.style.cursor = 'pointer';
+    }
+
     function renderLossRatioList(){
       var el = document.getElementById('lossRatioList');
       if(!el) return;
-      var full = lossRatioData;
+      // 2026-09-14b owner発注: モバイル一覧は正味収入保険料の降順(大きい会社が上)。
+      // 従来の合算率昇順から変更 — デスクトップのバブルは軸=損害率/事業費率、大きさ=保険料なので、
+      // モバイルの並び順を保険料基準に揃え、両ビューで「どの会社が主要プレイヤーか」の見え方を一致させる。
+      var full = sortByPremiumDesc(lossRatioData);
       var list = (expanded.lossRatio || full.length<=FOLD) ? full : full.slice(0, FOLD);
       el.innerHTML = '';
       var maxV = 1;
@@ -733,12 +1067,30 @@
 
         var track = document.createElement('div');
         track.className = 'li-bar-track';
-        var bar = document.createElement('div');
-        bar.className = 'li-bar';
-        bar.style.width = Math.max(2, ((r.combined||0) / maxV) * 100) + '%';
-        bar.style.backgroundColor = colorForCombined(r.combined);
-        bar.title = '損害率 ' + fmtPct(r.loss) + ' ＋ 事業費率 ' + fmtPct(r.expense) + ' ＝ 合算率 ' + fmtPct(r.combined);
-        track.appendChild(bar);
+        // 積み上げ棒(2026-09-14b owner発注): 正味損害率+正味事業費率を隣接2色で積み上げ、合算率が
+        // 一目でわかるようにする。stack自体の幅=合算率/maxV、内部2区画の比は flex-grow(基準0)で
+        // 分割するので「損害率:事業費率」の実比率がそのまま幅比になる(パーセント二重計算の丸め誤差を
+        // 避ける)。どちらかが0でもflex-grow 0側は幅0、残りが100%を取るので破綻しない。
+        var stack = document.createElement('div');
+        stack.className = 'li-bar-stack';
+        stack.style.width = Math.max(2, ((r.combined||0) / maxV) * 100) + '%';
+        var segLoss = document.createElement('div');
+        segLoss.className = 'li-bar-seg-loss';
+        segLoss.style.flex = (r.loss||0) + ' 0 0';
+        segLoss.title = '正味損害率 ' + fmtPct(r.loss);
+        var segExpense = document.createElement('div');
+        segExpense.className = 'li-bar-seg-expense';
+        segExpense.style.flex = (r.expense||0) + ' 0 0';
+        segExpense.title = '正味事業費率 ' + fmtPct(r.expense);
+        stack.appendChild(segLoss);
+        stack.appendChild(segExpense);
+        track.appendChild(stack);
+        // 合算率100%(収支均衡)の目安線 — maxVがまれに100未満だと右端(100%)に張り付く(clamp)。
+        var tick = document.createElement('div');
+        tick.className = 'li-tick-100';
+        tick.style.left = Math.min((100 / maxV) * 100, 100) + '%';
+        tick.title = '合算率100%（収支均衡）の目安線';
+        track.appendChild(tick);
 
         var val = document.createElement('div');
         val.className = 'li-val';
@@ -753,7 +1105,7 @@
       var top = list[0];
       if(top){
         el.setAttribute('aria-label',
-          '損害率一覧。表示中'+list.length+'社(全'+full.length+'社)、合算率が最も低いのは'+top.company_jp+' '+fmtPct(top.combined)+'。行を選ぶと会社別「決算」詳細に移動します。');
+          '損害率一覧（正味収入保険料の大きい順）。表示中'+list.length+'社(全'+full.length+'社)、最大は'+top.company_jp+'（合算率'+fmtPct(top.combined)+'）。行を選ぶと会社別「決算」詳細に移動します。');
       } else {
         el.setAttribute('aria-label', '損害率一覧。データがありません。');
       }
@@ -768,9 +1120,28 @@
       btn.setAttribute('aria-expanded', expanded.lossRatio ? 'true' : 'false');
       btn.onclick = function(){ expanded.lossRatio = !expanded.lossRatio; renderLossRatioList(); updateLossRatioMoreButton(); };
     }
+    // デスクトップ「一覧表で見る」トグル(2026-09-14b) — #lossRatioListWrap(一覧表+もっと見る+凡例+
+    // 注記まとめて)はCSS基本display:noneで、.lr-openが付くと開く(モバイルは@mediaで常時
+    // display:block、トグルの状態と無関係)。まとめて開閉することで「バブル表示中に一覧専用の
+    // 凡例（合算率100%目安線など）だけ浮いて残る」事故を防ぐ。.onclick=での再代入は他の
+    // more-btn群と同じ冪等パターン(renderLossRatioSectionが複数回呼ばれても二重バインドしない)。
+    function initLossRatioListToggle(){
+      var btn = document.getElementById('toggleLossRatioListBtn');
+      var wrap = document.getElementById('lossRatioListWrap');
+      if(!btn || !wrap) return;
+      btn.onclick = function(){
+        var open = wrap.classList.toggle('lr-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.textContent = open ? '一覧表を閉じる' : '一覧表で見る（キーボード操作の場合はこちら）';
+        // 開いたら先頭行にフォーカスを送る(鍵盤利用者がボタンの次にもう一度Tabしなくて済むように)。
+        if(open){ var firstRow = wrap.querySelector('.li-row'); if(firstRow) firstRow.focus(); }
+      };
+    }
     function renderLossRatioSection(){
       renderLossRatioList();
       updateLossRatioMoreButton();
+      renderLossRatioBubble();
+      initLossRatioListToggle();
       var cap = document.getElementById('lossRatioCaveat');
       if(cap){
         cap.textContent = lossRatioData.length
@@ -779,7 +1150,9 @@
       }
     }
 
-    // カバレッジ 도넛(公表済み/予定/未確認)은 2026-09-13 owner 지시로 폐지 — 상단 카드 3장과 중복. 이 페이지는 이제 ECharts 를 쓰지 않는다.
+    // 커버리지 도넛(公表済み/予定/未確認)은 2026-09-13 owner 지시로 폐지 — 상단 카드 3장과 중복.
+    // (2026-09-14b 정정: 그때 「이 페이지는 이제 ECharts 를 쓰지 않는다」고 적었지만, 같은 날
+    //  손해율 버블차트가 들어와서 ECharts 는 다시 쓴다 — <head> 의 CDN script 는 그쪽 용도다.)
 
     // renderTable()/一覧表 는 2026-09-13 owner 지시로 폐지(랭킹 리스트와 중복). 範囲는 리스트 칩, 公表日·出所는 상세 페이지.
   })();

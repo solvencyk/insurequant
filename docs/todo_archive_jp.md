@@ -1,6 +1,22 @@
 # TODO archive — jp 레인 (일본 ESR)
 
 
+**🟢 2026-09-13 (27) UH-18 출처 게이트 배선(4종·exit code 실증) + UH-19 신규·같은 날 해소 + 산정기준 미확인 0(jp).**
+병렬 2건(validation=Opus / jp-collector=Sonnet). ① **배선**: `build_jesr_page_json.py::source_gate_check` 에 4종 —
+`JP_SOURCE_EXPIRING_HOST`(netloc ∈ `jesr_http.EXPIRING_HOSTS`, import) · `JP_SOURCE_URL_DEAD`(**증거 판독형**) ·
+`JP_SOURCE_EVIDENCE_STALE`(증거 부재·`scope≠all`·census 보다 낡음·posted `checked_at` 결측) · `JP_SOURCE_EVIDENCE_INCOMPLETE`(posted URL 미점검).
+`self_check` 가 errors 에 extend → `main()` exit 1 **실증**(그 extend 한 줄을 지우는 변이에서 exit-code 케이스 3개만 정확히 FAIL).
+회귀 `tests/test_jp_source_gate.py` **43 케이스**, 이빨 변이 5/5 발화. 예외 등재처 `J-ESR/jp_source_exceptions.json` 신설(0건, fail-closed, **등재는 owner 권한**, 절차 룰 2종은 면제 불가).
+**빌드는 여전히 오프라인** — 네트워크 판정은 `check_source_urls.py --all` 이 `source_url_health.json` 에 박제하고 빌더는 그 박제를 읽는다(dead 룰의 이빨은 신선도 룰에 전적으로 의존, **둘은 한 쌍**).
+오탐억제: 증거에서 RED 로 읽는 분류는 `dead` 하나뿐 — "ok 아니면 RED" 로 짰으면 254건 중 **48건이 한꺼번에 거짓 RED**(blocked 20·requires_headers 16·tls 4·spa 4·error 4).
+② **UH-19(신규)**: jp 게이트는 **빌더를 돌릴 때만 돈다** — census 만 고치고 커밋한 `62eed63`(내 커밋)이 실제 사례로, HEAD 의 배포 JSON 이 census 와 어긋나 있었다(2사 basis=unconfirmed, SOMPO high_pct=270).
+같은 날 ① 재빌드 ② `tests/test_jp_deploy_matches_census.py` 신설(빌더를 임시 경로로 재실행해 커밋본과 `generated_at` 제외 전량 비교 — **"빌더를 돌렸는가" 자체가 검사 대상**)로 닫았다. 변이 확인: 배포본 수치 하나 흔들면 즉시 FAIL(원본 md5 복원).
+③ **훅 배선**: 두 테스트를 `scripts/prepush_check.py` offline 묶음 + CLAUDE.md §5 jp 축소범위 목록에 넣었다 — 안 넣으면 "배선했는데 push 를 안 막는" 2026-08-21 실패의 반복이다.
+④ **산정기준 미확인 0**: ライフネット 333% = **규제 표준식**(決算短信 p5·有報 S100YC7R 동일 문장, 같은 문서의 内部ESR 394% 와 혼동 금지) · SOMPO 270% = **내부모델**(決算説明資料 p14 각주 99.5%VaR, 有報도 「独自にＥＳＲを計算」).
+**SOMPO 목표레인지 정정**: 「2025年度通期決算から、ターゲットレンジおよびレンジ上限(250%)を撤廃し、下限 200% をターゲット資本水準として設定」 → 200% 이상 단일 기준. 종전 '200~270%' 는 오류였다(270 은 당기 ESR 값, 폐지 전 상한은 250).
+**다음**: ① `JP_ESR_NOT_IN_SOURCE`(사고 3건 중 2건을 잡는 축)는 오탐억제 3종의 **실측 분포**(이미지형 PDF·랜딩페이지 정본 몇 사)가 선행조건 — 규격은 PM §4c-pre 에 확정, 세기 전엔 배선 금지(UH-5·UH-9 선례)
+② `self_check` 의 `records count != 15` 하드코딩은 **10/31 재census 에서 그대로 깨진다** ③ ライフネット scope(원문은 連結 서술, census 는 solo) 확인.
+
 **🟢 2026-09-13 (26) 병렬 3에이전트 라운드 — 화면 15사 전수 원문 대조 · dead URL 전건 해소 · EDINET 잔여 확정 + 포스트모템 PM-2026-09-13(jp).**
 CLAUDE.md §10 대로 동시 3개(검증 Opus 1 / 수집 Sonnet 2). 에이전트 정의가 `.gitignore` 의 `.claude/` 에 걸려 저장소 밖에 있던 것도 이 라운드에 고쳐 커밋했다(그래서 그전까지 병렬 발사를 못 했다).
 ① **검증(Opus)** — 미검증 7사를 1차 원문으로 열어 6사 확인·**1사 정정**: 明治安田生命 208.0 → **208.7**(종전 값은 어느 원문에도 없고 출처가 PDF 아닌 디렉토리였다. 統合報告書2026 분책 p10:

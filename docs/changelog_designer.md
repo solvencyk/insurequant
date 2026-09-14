@@ -1,11 +1,54 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-14 · Stage 5/5 — designer
+> Last updated: 2026-09-14c · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-09-14c -- 손해율 버블차트 실렌더 검증 + 결함 3건 수정 (jp/index.html)
+
+(2026-09-14b)에 들어간 버블차트는 **그려지는 걸 본 적이 없는 코드**였다(담당 에이전트가 세션 한도로
+최종검증 직전에 끊김). 이 라운드에서 실렌더로 끝까지 확인하고, 거기서 나온 결함 3건을 고쳤다.
+
+**검증 방법 — `echarts=undefined` 는 페이지 결함이 아니었다.** 이 샌드박스의 Chromium 은 외부망을
+못 뚫어 CDN 스크립트가 안 온다(같은 URL 을 쓰는 루트 `index.html`·`IFRS17.html` 도 동일). curl 은
+프록시로 되므로 `echarts@5.5.0` 을 받아 **sha384 가 페이지 `integrity` 속성과 바이트 단위로 일치**
+함을 먼저 확인한 뒤(=페이지가 가리키는 그 파일이 맞다), Playwright `route()` 로 그 사본을 물려
+렌더했다. **저장소에는 사본을 넣지 않았다** — 하네스 전용, `jp/index.html` 은 CDN 그대로.
+
+**결함① 라벨 글자죽 — `labelLayout` 에서 `moveOverlap:'shiftY'` 제거.**
+실측(desktop 1280px): `{hideOverlap:true, moveOverlap:'shiftY'}` 는 30장 전부 그려 **겹침 35쌍**.
+`moveOverlap` 이 `hideOverlap` 을 무효화한다. `hideOverlap` 단독 = 16장 / 겹침 0쌍.
+
+**결함② 대형 4사 라벨이 1장만 생존 — 라벨 방향 4방향 회전(上→右→下→左).**
+`normalSorted`(원 큰 순) 인덱스로 방향을 돌리면 가장 큰 4개에 반드시 서로 다른 방향이 배정된다.
+결과 19장 / 겹침 0쌍 / 대형4사 4/4 / 컨테이너 밖 라벨 0장. 회사 ID 하드코딩 없음.
+
+**결함③ 대형 원을 눌렀는데 소형사로 이동 — 클릭 대상 재판정.**
+라벨이 원보다 위에 그려져 소형사의 긴 라벨이 대형원 위에 얹힌다(東京海上의 원 중심이 ペット＆
+ファミリー 라벨 사각형 안에 있었고, 실제로 `pet_and_family` 로 이동했다). ECharts `params.data` 는
+라벨 클릭에도 같은 데이터를 주므로 params 만으론 못 고친다. `params.event.offsetX/Y` 로 "클릭점을
+실제로 포함하는 원"을 찾고, 복수면 **작은 원 우선**(큰 원 위의 작은 원을 누를 수 있게 — 그리기
+순서와 같은 기준), 포함하는 원이 없으면 종전 params(라벨만 조준한 경우). 4종 클릭 전건 OK.
+
+**"원끼리 안 겹치게"(owner) 는 기본 표시에서 수학적으로 불가능 — 축소 + 확대로 처리.**
+최근접 2사(三井ダイレクト 64.3/28.9 · ペット＆ファミリー 64.2/28.6) 중심거리가 **2.0px** 라서
+두 원 지름 합이 4.1px 이하여야 한다(=전 회사 2px 점, 크기=보험료 정보 소멸). 좌표를 밀면 값의
+거짓말이 되므로(owner: 좌표는 밀지 마라) ① 지름 천장 46→34 (겹침 20쌍/최악 -30.7px →
+**10쌍/-20.4px**) ② toolbox 범위지정 확대 + Ctrl+휠 (`dataZoom` inside 2축, `filterMode:'none'`
+— 점을 지우지 않고 클립만 해 ▲상단고정·라벨배치가 안 깨진다). 원 지름은 확대해도 일정하므로
+배율만 올리면 반드시 떨어진다: 확대(손해율62~67/사업비27~35) 후 최근접쌍 **+17.9px**,
+損保ジャパン×あいおい **+132.8px**. 素 휠은 페이지 스크롤로 남겼다(긴 페이지).
+
+**모바일(375px) 발주사항 전건 확인.** 버블 wrap `display:none`·인스턴스 미생성(0×0 init 방지),
+31사 목록이 정미수입보험료 **내림차순 31/31 단조**, 막대는 손해율+사업비율 2구간 누적(폭비 0.6693
+vs 값비 0.6695), 가로스크롤 없음, 콘솔 에러 0. 다크모드 동시 확인.
+
+옛 주석 1줄 정정: 도넛 폐지 때 적은 "이 페이지는 이제 ECharts 를 쓰지 않는다" 는 같은 날 버블
+도입으로 사실과 반대가 됐다.
+
 
 ## 2026-09-14b — `value_verified` 화면 배지 (UH-25, PM-2026-09-13 후속)
 
@@ -685,7 +728,8 @@ jsdelivr 를 막아 차트가 안 그려지고 패널이 `will-reveal`(opacity 0
 2. **`git hash-object` 값을 기계 간에 비교하면 안 된다.** 작업 PC 작업본은 줄끝이 CRLF 인데
    git 이 LF 로 정규화해 `147c421b` 를 뱉고, 폰(autocrlf 없음)에서는 원본 바이트 그대로
    `e674363` 이 나왔다. 파일은 바이트가 같았는데 "깨졌다"고 오판할 뻔했다. 폰에서
-   `sed -i 's/$//'` 로 LF 로 맞춘 뒤 해시가 일치했고, 그래야 저장소 관례(LF)와도 맞고
+   `sed -i 's/
+$//'` 로 LF 로 맞춘 뒤 해시가 일치했고, 그래야 저장소 관례(LF)와도 맞고
    diff 도 36줄 추가로 깔끔하게 남는다.
 3. **커밋 전 게이트 두 개를 명령줄에 박아 두면 사고를 막는다.** 스테이지된 블롭 해시 대조 +
    `git diff --cached --stat`. 이번엔 `1 file changed, 36 insertions(+)` 이 찍혔다 —

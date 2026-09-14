@@ -2,6 +2,23 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+## 2026-09-14 (32) -- 정미수입보험료 26사 적재, 손해율 31사 전건 보험료 확보
+
+`J-ESR/build_jesr_detail_json.py` 가 `J-ESR/nonlife_premium_census_{A,B}.json`(26사 `正味収入保険料`,
+백만엔)를 읽어 `jp/jesr_detail.json` 의 `ratio_only` 회사 블록에 `pl_net_premiums_written` 으로 싣는다.
+버블차트 원 크기 축의 입력.
+
+- 로더가 연도키를 `FY20xx` 로 **강제**한다(안 맞으면 `SystemExit`). (30) 라운드에서 병렬 에이전트 3개가
+  `FY2025`/`2025`/맨 float 를 섞어 써 29사 중 10사가 조용히 누락될 뻔한 사고의 재발 방지.
+- 단위 라벨: `ratio_only` 블록은 종전 `unit:"pct"` — 백만엔 값을 그대로 넣으면 라벨이 거짓이 되므로
+  보험료가 있는 회사만 `unit:"JPY_million"` 로 바꿨다(비율 항목은 풀컴퍼니 관례대로 `_pct` 접미사).
+- `profit.items` 가 비어 있어야 한다는 자기검사는 **삭제가 아니라 축소**: `pl_net_premiums_written`
+  하나만 허용하고, 그게 있으면 `profit.unit` 과 `history.unit` 이 둘 다 `JPY_million` 인지 검사한다.
+- ソニー損害保険은 지표가 2개 다르다(X축 `E.I.損害率` / 크기 `元受正味保険料`=재보험 출재 전).
+  `premium_caveat.code="gross_direct"` 로 화면에 사유를 노출한다.
+- 검증: 보험료 31/31 · 단위 라벨 전건 `JPY_million` · 빌더 고정점 ④→⑤→④ 3회 바이트 동일 ·
+  ESR 16사 값 변경 0사 · 최대/최소 124,062배(東京海上日動 2,596,396 vs 全管協れいわ 26백만엔).
+
 ## 2026-09-14 (31) -- 손해율 unreachable 3사 재시도, 2/3 확보
 
 (30)이 `unreachable` 로 남긴 3사(共栄火災海上保険·大同火災海上保険·ヤマップネイチャランス損害保険)를

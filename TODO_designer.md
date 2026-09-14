@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-09-14 · Stage 5/5 — designer
+> Last updated: 2026-09-14c · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,47 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-09-14c, 손해율 버블차트 실렌더 검증 + 3건 수정 — owner 발주(직접 지시), 커밋만·라이브 미배포):**
+- **배경: (2026-09-14b)의 버블차트는 코드가 들어갔을 뿐 "그려지는 걸 본 적이 없었다"**(담당
+  에이전트가 세션 한도로 최종검증 직전에 끊김). 이 라운드는 그 검증을 끝내고, 검증에서 나온 결함
+  3건을 고친 것. **이 샌드박스의 Chromium 은 외부망을 못 뚫어 CDN 의 ECharts 가 안 온다**(curl 은
+  프록시로 됨) — 그래서 `echarts=undefined`·canvas 0 이 나왔던 것이지 페이지 결함이 아니었다.
+  받아둔 `echarts@5.5.0` 의 sha384 가 페이지 `integrity` 속성과 **바이트 단위로 일치**함을 먼저
+  확인한 뒤(=페이지가 가리키는 파일이 맞다), Playwright `route()` 로 그 사본을 물려 실렌더했다.
+  **저장소에는 사본을 넣지 않았다**(하네스 전용, `jp/index.html` 은 CDN 그대로).
+- **결함① 라벨이 글자죽이 됐다 — `labelLayout` 에서 `moveOverlap:'shiftY'` 제거.** 실측: 현행
+  `{hideOverlap:true, moveOverlap:'shiftY'}` 는 30장 전부 그려서 **겹침 35쌍**(밀집대에서 판독
+  불가). `moveOverlap` 이 `hideOverlap` 을 무효화한다(`hideOverlap` 단독 = 16장/겹침 0쌍).
+- **결함② 대형 4사 라벨이 1장만 남았다 — 라벨 방향 4방향 회전(上→右→下→左).** `hideOverlap`
+  단독은 겹침은 0 이지만 대형4사(東京海上·損保ジャパン·三井住友·あいおい) 중 1사만 살아남았다.
+  `normalSorted`(원 큰 순)의 인덱스로 방향을 돌리면 **가장 큰 4개에 반드시 서로 다른 방향**이
+  배정된다 → 19장/겹침 0쌍/대형4사 4/4, 컨테이너 밖으로 나간 라벨 0장. 회사 ID 하드코딩 없음.
+- **결함③ 대형 원을 눌렀는데 소형사 상세로 갔다 — 클릭 대상을 "클릭점을 실제로 포함하는 원"으로
+  재판정.** 라벨은 원보다 위에 그려지므로 소형사의 긴 라벨이 대형원 위에 얹힌다(실측: 東京海上의
+  원 중심이 ペット＆ファミリー 라벨 사각형 안에 있었고, 東京海上을 눌렀더니 `pet_and_family` 로
+  이동했다). ECharts 의 `params.data` 는 라벨을 눌러도 같은 데이터를 주므로 params 만으론 못 고친다.
+  `params.event.offsetX/Y` 로 포함 판정, 복수 포함이면 **작은 원 우선**(큰 원 위에 얹힌 작은 원을
+  누를 수 있게 — 그리기 순서와 같은 기준). 포함하는 원이 없으면 종전대로 params(=라벨만 조준한 경우).
+  4종 클릭(최대원/대형원에 인접한 소형원/고립원/아웃라이어▲) 전부 의도한 회사로 이동 확인.
+- **owner 지시 "원끼리 안 겹치게" 는 기본 표시에서는 수학적으로 불가능하다 — 대신 축소+확대 제공.**
+  최근접 2사(三井ダイレクト 64.3/28.9 · ペット＆ファミリー 64.2/28.6)의 화면상 중심거리가 **2.0px**
+  라서, 이 둘이 안 닿으려면 두 원의 지름 합이 4.1px 이하 = 전 회사를 2px 점으로 만들어야 한다
+  (원 크기=보험료 정보가 사라진다). 대형4사도 손해율 2.9pt·사업비율 2.9pt 상자 안에 있고, 이건
+  "대형4사는 율이 거의 같고 규모만 다르다"는 실데이터 사실 그 자체다. 좌표를 밀어 떼어놓는 건 값의
+  거짓말이라(owner: 좌표는 밀지 마라) **① 원 지름 천장 46→34**(실측 겹침 20쌍/최악 -30.7px →
+  **10쌍/최악 -20.4px**) **② toolbox 범위지정 확대 + Ctrl+휠 확대**(`dataZoom` inside 2축,
+  `filterMode:'none'` — 점을 지우지 않고 클립만 해서 ▲상단고정·라벨배치가 안 깨진다)로 처리.
+  원 지름은 확대해도 일정하므로 배율만 올리면 반드시 떨어진다 — 실측 확대(손해율62~67/사업비27~35)
+  후 최근접쌍 **+17.9px**, 損保ジャパン×あいおい **+132.8px**. 素 휠은 페이지 스크롤로 남겼다(긴 페이지).
+- **모바일(375px)은 발주대로 전건 확인.** 버블 wrap `display:none`·인스턴스 미생성(0×0 init 방지),
+  31사 목록이 **정미수입보험료 내림차순**(MS&AD HD 3,225,600 → … → 全管協れいわ 26백만엔, 31/31
+  단조), 막대는 손해율+사업비율 **2구간 누적**이고 폭비 0.6693 vs 값비 0.6695(차 0.0002 — flex-grow
+  기준0 분할이라 퍼센트 이중계산 오차가 안 생긴다), 가로스크롤 없음, 콘솔 에러 0.
+- **다크모드 동시 확인**(toolbox 아이콘·라벨 textBorder 가 테마색을 따라간다). 옛 주석 1줄 정정:
+  도넛 폐지 때 적은 "이 페이지는 이제 ECharts 를 쓰지 않는다" 는 같은 날 버블 도입으로 사실과 반대가 됐다.
+- **다음**: 라이브 배포는 폰 Termux 번들(이 PC 는 push 차단). 배포 후 `public_exports/manifest.json`
+  `build_id` 로 확인.
 
 **Recent (2026-09-14b, value_verified 화면 배지 — owner 발주(직접 지시, UH-25), 커밋만·라이브 미배포):**
 - **배경: 같은 날 jp 게이트에 `JP_ESR_UNVERIFIED_VALUE` 가 배선됐지만(T&D 222% 출처가 목록
@@ -174,43 +215,6 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
   포함 여부·루트 삽입 조각 3종 실반영)을 티켓 답변에 정리. 루트 `index.html`/`common.css` 등
   4개 배포 페이지는 이번 라운드 무수정(코드 조각만 답변에 제공). 상세는
   `inbox/designer/20260912T0446Z__owner__JP_MULTI__jesr_jp_page_draft.md` 답변, changelog 2026-09-12.
-
-**Recent (2026-09-13, jp 랭킹 算定基準 — owner 2차 지시로 chip안 폐기·막대 패턴으로 교체, 커밋만·라이브 미배포):**
-- **경위: 1차(chip안)를 owner가 "칩이 너무 많다"로 반려.** 실측(HEAD 기준) scope chip 15/15행·
-  目標 chip 7행·速報 4행·単体詳細 3행 — 이미 최대 3개/행인데 여기 basis chip을 더하면 4개.
-  (25) 라운드 "모바일에서 칩이 회사명을 밀어낸다" 지적과 같은 종류의 문제라 커밋 전에 되돌렸다.
-- **최종안: 算定基準은 chip이 아니라 막대(`li-bar`)의 塗りつぶし 패턴.** 색(`colorForRange`의
-  초록/黄/赤)은 이미 目標レンジ 의미로 점유돼 있어 색과 **직교하는 채널**을 썼다 —
-  自社基準(`internal_model`+`internal_management`, 한 덩어리)은 대각선 ハッチ柄
-  (`.li-bar-self{background-image:repeating-linear-gradient(...)}`, `background`(shorthand) 대신
-  `backgroundColor`만 인라인 세팅해 CSS class의 패턴이 안 지워지게 함), `未確認`(basis가 null이거나
-  알 수 없는 값)은 점선 테두리(`.li-bar-unconfirmed{border:1px dashed}`) — 규제표준은 무지(기존
-  그대로). **3단이 아니라 2채널**: 内部モデル vs 内部管理의 세부 구분은 chip을 없앤 대신
-  `row.title`/`aria-label`/`bar.title`(호버·스크린리더 텍스트, 전부 갱신)과 상세 페이지로만.
-- **칩 감량 결과**: scope chip·目標 chip **전부 폐지**(목표레인지는 이미 트랙 위 밴드로 중복
-  표현 중이었어서 손실 없음, scope는 tooltip에 남김). 남은 chip 은 速報·単体詳細 2종뿐인데
-  실측상 **서로 배타적**(単体詳細는 HD 지주행에만, 速報는 개별사에만 — 동시발생 0건) —
-  **Playwright 실측: 15행 전부 chip ≤1**(desktop·mobile 공통), 목표(desktop ≤2·mobile ≤1)를
-  넘겨서 달성. 모바일 회사명 폭도 100.8~136.8px 로 회복(chip 2종 시절 71.5~75.8px 대비 개선).
-- **범례 1줄만 추가**(`.chart-legend`에 ハッチ스와치 1개), 기존 5종은 문구 그대로 유지 — 새로
-  늘리지 않았다. 각주(`.chart-caveat`)는 새 문구 1문단으로 재작성: "無地=規制ベース(告示74号의
-  標準式)／ハッチ柄=自社基準(内部モデル・内部管理)／点線枠=算定基準未確認…自社基準은 규제베이스와
-  단순비교 주의…상세는 행에 커서를 올리거나 회사별 상세에서" 취지.
-- **상세 페이지(`jesr.html`, `jesr_app.js`)는 1차 라운드 그대로 유지** — chip이 아니라 `metaLine`
-  인라인 텍스트 세그먼트(`算定基準: ...`)라 이번 "칩 감량" 지시와 무관, 되돌리지 않았다.
-- **검증**: `pytest tests/test_deploy_assets.py` 11 passed. BOM 0, html.parser 태그균형 0 오류,
-  `node --check`(추출한 IIFE 스크립트)로 JS 구문 검증 통과. Playwright(1차 라운드와 동일
-  `executable_path` 우회, `/opt/pw-browsers/chromium-1194`)로 1200px·375px·다크모드 렌더:
-  콘솔 pageerror 0(`ERR_CONNECTION_RESET` 2건은 샌드박스 외부망 차단, 코드와 무관, 기존 패턴).
-  15행 전부 `.li-bar` class·chip 개수·`.li-nm` 폭을 DOM에서 직접 측정(스크린샷만으로 판단하지
-  않음) — chip ≤1/행, 가로스크롤 0. `regulatory_standard`(au損保·明治安田損保)는 무지 막대,
-  `internal_model`/`internal_management`(朝日生命·富国生命·T&D HD 등 7+3사)는 `li-bar-self`
-  class 로 ハッチ 렌더 확인. `未確認` 케이스는 실데이터 15사 전원 basis 확정이라 실측 불가 —
-  로직 검토(`isUnconfirmedBasis`)로만 확인, 값이 다시 생기면 자동으로 점선 테두리가 뜬다.
-- **손대지 않음(소유권 경계)**: `jp/jesr_esr.json`·`jp/jesr_detail.json`·`J-ESR/`·`scripts/`·
-  `TODO_jp.md`. `jp/jp.css`는 이번 라운드도 무수정. 커밋·push 는 오케스트레이터 몫.
-
-> 📦 **Status 이력은 `docs/todo_archive_designer.md` 로 이동했다** (2026-09-11, 내용 무수정 — Recent (2026-09-03) 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 
 ## 🔴 Open — P1
 

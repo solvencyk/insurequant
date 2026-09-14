@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-09-14T14:29:06.424368Z",
+    "generated_at": "2026-09-14T22:06:35.174985Z",
     "unit": "JPY_million",
     "schema_ref": "J-ESR/esr_disclosure_schema.json",
     "rules_ref": "J-ESR/esr_aggregation_rules.json",
@@ -8939,8 +8939,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "aigsonpo_disclosure_2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 162356,
+            "prev": 155609
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 59.9,
@@ -8967,7 +8972,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             70.9,
@@ -8989,6 +8994,13 @@
             null,
             null,
             92.3
+          ],
+          "hist_net_premiums_written": [
+            null,
+            null,
+            null,
+            155609,
+            162356
           ]
         }
       },
@@ -9007,6 +9019,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -9057,8 +9070,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "FY2025Q4_J2.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 3225600,
+            "prev": 3109600
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 63.6,
@@ -9079,18 +9097,26 @@
       },
       "history": {
         "fiscal_years": [
+          "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
+            null,
             63.6
           ],
           "hist_expense_ratio_pct": [
+            null,
             31.4
           ],
           "hist_combined_ratio_pct": [
+            null,
             95.0
+          ],
+          "hist_net_premiums_written": [
+            3109600,
+            3225600
           ]
         }
       },
@@ -9112,6 +9138,7 @@
         "code": "simple_sum",
         "text": "「２社合計（単純合計）」 = 三井住友海上 + あいおいニッセイ同和 단순합산. 회사가 직접 공시한 표지만, 두 자회사를 따로 싣고 있으면 **중복 계상**이다."
       },
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -9162,8 +9189,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disclosure20260730.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 119242,
+            "prev": 95871
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 29.2,
@@ -9187,7 +9219,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             29.4,
@@ -9200,6 +9232,10 @@
           "hist_combined_ratio_pct": [
             31.9,
             30.9
+          ],
+          "hist_net_premiums_written": [
+            95871,
+            119242
           ]
         }
       },
@@ -9218,6 +9254,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -9268,8 +9305,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "SBI_Disclosure2026_All.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 45551,
+            "prev": 39566
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 73.3,
@@ -9294,7 +9336,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             73.4,
@@ -9310,6 +9352,11 @@
             92.8,
             91.2,
             89.7
+          ],
+          "hist_net_premiums_written": [
+            null,
+            39566,
+            45551
           ]
         }
       },
@@ -9328,6 +9375,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -9378,8 +9426,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "insgenjo2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 73291,
+            "prev": 70704
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 72.8,
@@ -9404,7 +9457,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             72.6,
@@ -9420,6 +9473,11 @@
             96.2,
             100.7,
             97.1
+          ],
+          "hist_net_premiums_written": [
+            null,
+            70704,
+            73291
           ]
         }
       },
@@ -9438,6 +9496,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -9488,8 +9547,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "FY2025Q4_J2.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 1471100,
+            "prev": 1430300
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 64.5,
@@ -9510,18 +9574,26 @@
       },
       "history": {
         "fiscal_years": [
+          "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
+            null,
             64.5
           ],
           "hist_expense_ratio_pct": [
+            null,
             32.6
           ],
           "hist_combined_ratio_pct": [
+            null,
             97.1
+          ],
+          "hist_net_premiums_written": [
+            1430300,
+            1471100
           ]
         }
       },
@@ -9540,6 +9612,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -9590,8 +9663,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disclosure_07.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 10446,
+            "prev": 9147
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 16.1,
@@ -9616,7 +9694,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             15.1,
@@ -9632,6 +9710,11 @@
             59.1,
             53.8,
             43.1
+          ],
+          "hist_net_premiums_written": [
+            null,
+            9147,
+            10446
           ]
         }
       },
@@ -9650,6 +9733,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -9700,8 +9784,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "annual_report_2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 53444,
+            "prev": 53846
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 65.1,
@@ -9726,7 +9815,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             65.6,
@@ -9742,6 +9831,11 @@
             92.7,
             93.5,
             91.8
+          ],
+          "hist_net_premiums_written": [
+            null,
+            53846,
+            53444
           ]
         }
       },
@@ -9760,6 +9854,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -9810,8 +9905,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "DC_AS2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 64362,
+            "prev": 59129
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 59.8,
@@ -9836,7 +9936,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             58.0,
@@ -9852,6 +9952,11 @@
             90.5,
             89.6,
             91.8
+          ],
+          "hist_net_premiums_written": [
+            null,
+            59129,
+            64362
           ]
         }
       },
@@ -9870,6 +9975,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -9920,8 +10026,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disclosure_2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 3404,
+            "prev": 3147
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 42.6,
@@ -9946,7 +10057,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             43.6,
@@ -9962,6 +10073,11 @@
             97.0,
             94.9,
             94.5
+          ],
+          "hist_net_premiums_written": [
+            null,
+            3147,
+            3404
           ]
         }
       },
@@ -9980,6 +10096,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -10030,8 +10147,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disc_2026-all.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 6129,
+            "prev": 6448
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 40.2,
@@ -10056,7 +10178,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             33.0,
@@ -10072,6 +10194,11 @@
             79.1,
             90.4,
             92.4
+          ],
+          "hist_net_premiums_written": [
+            null,
+            6448,
+            6129
           ]
         }
       },
@@ -10090,6 +10217,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -10140,8 +10268,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disc2026-all.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 13661,
+            "prev": 12485
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 42.3,
@@ -10168,7 +10301,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             49.0,
@@ -10190,6 +10323,13 @@
             95.3,
             100.0,
             95.0
+          ],
+          "hist_net_premiums_written": [
+            null,
+            null,
+            null,
+            12485,
+            13661
           ]
         }
       },
@@ -10208,6 +10348,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -10258,8 +10399,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disclosure2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 60000,
+            "prev": 57428
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 55.2,
@@ -10284,7 +10430,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             60.4,
@@ -10300,6 +10446,11 @@
             95.4,
             91.0,
             89.3
+          ],
+          "hist_net_premiums_written": [
+            null,
+            57428,
+            60000
           ]
         }
       },
@@ -10318,6 +10469,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -10368,8 +10520,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "sfgi_fy2025_4q_01.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 199523,
+            "prev": 173896
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 68.2,
@@ -10394,7 +10551,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             67.9,
@@ -10410,6 +10567,11 @@
             94.4,
             95.1,
             92.8
+          ],
+          "hist_net_premiums_written": [
+            null,
+            173896,
+            199523
           ]
         }
       },
@@ -10430,6 +10592,10 @@
       "ratio_caveat": {
         "code": "ei_basis",
         "text": "**E.I.損害率**(경과보험료·발생손해액 기준)이지 正味損害率(수입보험료 기준)가 아니다. 범위도 地震保険・自賠責 제외."
+      },
+      "premium_caveat": {
+        "code": "gross_direct",
+        "text": "`元受正味保険料`(재보험 출재 **전**)이지 `正味収入保険料`(출재 후)가 아니다. 자사 사이트가 403 이고 SFG IR 자료 38p 전수 검색에도 正味収入保険料 수치가 없어(서술만) 대체 지표를 썼다. 출재분만큼 과대하며 그 크기는 미상 — 다른 회사와 원 크기를 직접 비교하면 안 된다."
       },
       "value_verified": null
     },
@@ -10481,8 +10647,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "toa_ar2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 174482,
+            "prev": 176029
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 77.5,
@@ -10507,7 +10678,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             87.8,
@@ -10523,6 +10694,11 @@
             109.6,
             101.4,
             98.4
+          ],
+          "hist_net_premiums_written": [
+            null,
+            176029,
+            174482
           ]
         }
       },
@@ -10544,6 +10720,7 @@
         "code": "lae_excluded",
         "text": "正味損害率 산식이 正味支払保険金÷正味収入保険料 로 **損害調査費(LAE)를 분자에 안 더한다**. 다른 손보사는 전부 (正味支払保険金+損害調査費)÷正味収入保険料 라 이 회사만 과소 표시된다."
       },
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -10594,8 +10771,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disclosure2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 12628,
+            "prev": 11256
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 64.2,
@@ -10620,7 +10802,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             58.8,
@@ -10636,6 +10818,11 @@
             90.9,
             95.0,
             92.8
+          ],
+          "hist_net_premiums_written": [
+            null,
+            11256,
+            12628
           ]
         }
       },
@@ -10654,6 +10841,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -10704,8 +10892,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "19fb5e1df2138d.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 213,
+            "prev": 109
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 50.6,
@@ -10726,18 +10919,26 @@
       },
       "history": {
         "fiscal_years": [
+          "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
+            null,
             50.6
           ],
           "hist_expense_ratio_pct": [
+            null,
             179.5
           ],
           "hist_combined_ratio_pct": [
+            null,
             230.0
+          ],
+          "hist_net_premiums_written": [
+            109,
+            213
           ]
         }
       },
@@ -10756,6 +10957,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -10806,8 +11008,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disclo2025.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 783,
+            "prev": 770
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 30.0,
@@ -10832,7 +11039,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             29.2,
@@ -10848,6 +11055,11 @@
             90.1,
             96.3,
             91.5
+          ],
+          "hist_net_premiums_written": [
+            null,
+            770,
+            783
           ]
         }
       },
@@ -10869,6 +11081,7 @@
         "code": "ocr_read",
         "text": "이미지 스캔 PDF 라 자동 텍스트 추출이 실패했고(세로쓰기 표 헤더 파손) 렌더링 후 **육안 판독**한 값이다. 신뢰도가 다른 행과 같지 않다."
       },
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -10919,8 +11132,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disclosure2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 43937,
+            "prev": 37395
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 64.3,
@@ -10947,7 +11165,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             64.4,
@@ -10969,6 +11187,13 @@
             105.7,
             105.5,
             93.2
+          ],
+          "hist_net_premiums_written": [
+            null,
+            null,
+            null,
+            37395,
+            43937
           ]
         }
       },
@@ -10987,6 +11212,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -11037,8 +11263,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "全管協れいわ損害保険の現状2026_業績データ編.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 26,
+            "prev": 16
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 49.8,
@@ -11065,7 +11296,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             977.5,
@@ -11087,6 +11318,13 @@
             1123.2,
             613.0,
             237.4
+          ],
+          "hist_net_premiums_written": [
+            null,
+            null,
+            null,
+            16,
+            26
           ]
         }
       },
@@ -11105,6 +11343,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -11155,8 +11394,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "2026all.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 202959,
+            "prev": 184970
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 60.7,
@@ -11177,18 +11421,26 @@
       },
       "history": {
         "fiscal_years": [
+          "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
+            null,
             60.7
           ],
           "hist_expense_ratio_pct": [
+            null,
             37.0
           ],
           "hist_combined_ratio_pct": [
+            null,
             97.7
+          ],
+          "hist_net_premiums_written": [
+            184970,
+            202959
           ]
         }
       },
@@ -11207,6 +11459,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -11257,8 +11510,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disclosure2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 161943,
+            "prev": 158266
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 61.1,
@@ -11282,7 +11540,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             60.9,
@@ -11295,6 +11553,10 @@
           "hist_combined_ratio_pct": [
             96.4,
             97.6
+          ],
+          "hist_net_premiums_written": [
+            158266,
+            161943
           ]
         }
       },
@@ -11313,6 +11575,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -11363,8 +11626,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disclosure.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 290926,
+            "prev": 284093
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 6.6,
@@ -11391,7 +11659,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             64.7,
@@ -11413,6 +11681,13 @@
             35.2,
             59.9,
             28.4
+          ],
+          "hist_net_premiums_written": [
+            null,
+            null,
+            null,
+            284093,
+            290926
           ]
         }
       },
@@ -11431,6 +11706,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -11481,8 +11757,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "company_005_2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 33839,
+            "prev": 29365
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 73.9,
@@ -11509,7 +11790,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             58.1,
@@ -11531,6 +11812,13 @@
             135.1,
             115.6,
             121.7
+          ],
+          "hist_net_premiums_written": [
+            null,
+            null,
+            null,
+            29365,
+            33839
           ]
         }
       },
@@ -11549,6 +11837,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -11599,8 +11888,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "disclosure2026.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 29693,
+            "prev": 26310
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 74.4,
@@ -11627,7 +11921,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             82.3,
@@ -11649,6 +11943,13 @@
             148.9,
             134.6,
             116.1
+          ],
+          "hist_net_premiums_written": [
+            null,
+            null,
+            null,
+            26310,
+            29693
           ]
         }
       },
@@ -11667,6 +11968,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     },
     {
@@ -11717,8 +12019,13 @@
         "ifrs17_applied": false,
         "evidence": null,
         "source_doc": "2026_data.pdf",
-        "unit": "pct",
-        "items": {},
+        "unit": "JPY_million",
+        "items": {
+          "pl_net_premiums_written": {
+            "cur": 43643,
+            "prev": 39539
+          }
+        },
         "ratios": {
           "pl_loss_ratio_pct": {
             "cur": 57.8,
@@ -11742,7 +12049,7 @@
           "FY2024",
           "FY2025"
         ],
-        "unit": "pct",
+        "unit": "JPY_million",
         "series": {
           "hist_loss_ratio_pct": [
             55.1,
@@ -11755,6 +12062,10 @@
           "hist_combined_ratio_pct": [
             91.0,
             93.6
+          ],
+          "hist_net_premiums_written": [
+            39539,
+            43643
           ]
         }
       },
@@ -11773,6 +12084,7 @@
       },
       "data_scope": "ratio_only",
       "ratio_caveat": null,
+      "premium_caveat": null,
       "value_verified": null
     }
   ]

@@ -1,9 +1,19 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-14 (31) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-14 (32) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-14 (32) 정미수입보험료 26사 수집분을 `jesr_detail.json` 에 적재 — 손해율 31사 전건 보험료 확보(jp).**
+버블차트의 원 크기 축(owner 발주)이 쓸 데이터를 `J-ESR/build_jesr_detail_json.py` 가 읽어 싣도록 했다. 입력은 `J-ESR/nonlife_premium_census_{A,B}.json`(26사, `正味収入保険料`, 단위 백만엔,
+연도키 `FY20xx` 강제 — 안 맞으면 `SystemExit`). 병렬 에이전트 3개가 연도키를 제각각(`FY2025`/`2025`/맨 float) 쓴 (30) 라운드 사고의 재발 방지로, 이번엔 로더가 키 형식을 검사한다.
+**단위 라벨 함정을 그냥 넘기지 않았다**: `ratio_only` 블록은 종전에 `unit:"pct"` 였는데 백만엔 값을 같은 블록에 넣으면 라벨이 거짓이 된다 → 보험료가 있는 회사만 `unit:"JPY_million"`
+(비율 항목은 풀컴퍼니 관례대로 `_pct` 접미사로 구분). `profit.items` 가 비어 있어야 한다는 자기검사는 **지우지 않고 좁혔다**(`pl_net_premiums_written` 만 허용 + 그게 있으면 단위 라벨 2곳을 강제).
+**ソニー損害保険만 지표가 2개 다르다** — X축은 `E.I.損害率`, 원 크기는 `元受正味保険料`(재보험 출재 **전**). `premium_caveat.code="gross_direct"` 로 화면 툴팁에 사유를 노출한다(owner 상시 지시 "caveat 표시만").
+검증: 손해율 31사 · 보험료 **31/31** 적재 · 단위 라벨 전건 `JPY_million` · 빌더 고정점 ④→⑤→④ 3회 바이트 동일(`build_jesr_page_json.py` 가 `jesr_detail.json` 의 `_meta.group_children` 를
+읽는 순환 의존 때문에 순서가 정해져 있다) · ESR 16사 값 변경 0사. 최대/최소 배수 124,062배(東京海上日動 2,596,396 vs 全管協れいわ 26백만엔) — 이 배수가 버블 크기 스케일 설계의 입력이 됐다.
+**다음**: 大同火災는 여전히 unreachable((31) 그대로) — 10월 말 재census 라운드로.
 
 **🟢 2026-09-14 (31) 손해율 unreachable 3사 재시도 — 2/3 확보(共栄火災·ヤマップ), 大同火災는 여전히 unreachable(jp).**
 (30)이 `unreachable` 로 남긴 3사를 **같은 방법을 안 쓰고** 다시 팠다. 산출 `J-ESR/nonlife_ratio_retry.json`(census·`jesr_detail.json`·마스터는 미수정, 병합은 오케스트레이터 소관).
@@ -69,23 +79,6 @@ severity 는 YELLOW 지만 **이빨은 push 묶음**에 뒀다(2026-09-12 에는
 > 2026-09-14 에 §3 을 10종 표 + 정의 표지 4종 표로 바꾸고 양방향 대조 테스트 2건을 얹어 닫았다(`TODO_validation.md` 2026-09-14 · 변이 6/6 발화).
 ④ **포스트모템 `closed`** — 사고 3건이 전부 룰에 걸린다. 잔여 UH-22(severity 승격 판단, 10/31 재측정 조건은 PM §5 에 박음). **UH-23 은 2026-09-14 해소**(위 ③ 정정).
 게이트: `prepush_check.py` **REDUCED(jp-scope) gate-clear** 238 passed · 변이 10/10 발화 · `jp/jesr_esr.json` 은 `generated_at` 외 불변. **다음**: ① 10/31 재census 에서 조정치 축 재측정(posted 15→최대 77) ② UH-22 승격 판단. (③ UH-23 대조 테스트 — **2026-09-14 완료**.)
-
-**🟢 2026-09-13 (27) UH-18 출처 게이트 배선(4종·exit code 실증) + UH-19 신규·같은 날 해소 + 산정기준 미확인 0(jp).**
-병렬 2건(validation=Opus / jp-collector=Sonnet). ① **배선**: `build_jesr_page_json.py::source_gate_check` 에 4종 —
-`JP_SOURCE_EXPIRING_HOST`(netloc ∈ `jesr_http.EXPIRING_HOSTS`, import) · `JP_SOURCE_URL_DEAD`(**증거 판독형**) ·
-`JP_SOURCE_EVIDENCE_STALE`(증거 부재·`scope≠all`·census 보다 낡음·posted `checked_at` 결측) · `JP_SOURCE_EVIDENCE_INCOMPLETE`(posted URL 미점검).
-`self_check` 가 errors 에 extend → `main()` exit 1 **실증**(그 extend 한 줄을 지우는 변이에서 exit-code 케이스 3개만 정확히 FAIL).
-회귀 `tests/test_jp_source_gate.py` **43 케이스**, 이빨 변이 5/5 발화. 예외 등재처 `J-ESR/jp_source_exceptions.json` 신설(0건, fail-closed, **등재는 owner 권한**, 절차 룰 2종은 면제 불가).
-**빌드는 여전히 오프라인** — 네트워크 판정은 `check_source_urls.py --all` 이 `source_url_health.json` 에 박제하고 빌더는 그 박제를 읽는다(dead 룰의 이빨은 신선도 룰에 전적으로 의존, **둘은 한 쌍**).
-오탐억제: 증거에서 RED 로 읽는 분류는 `dead` 하나뿐 — "ok 아니면 RED" 로 짰으면 254건 중 **48건이 한꺼번에 거짓 RED**(blocked 20·requires_headers 16·tls 4·spa 4·error 4).
-② **UH-19(신규)**: jp 게이트는 **빌더를 돌릴 때만 돈다** — census 만 고치고 커밋한 `62eed63`(내 커밋)이 실제 사례로, HEAD 의 배포 JSON 이 census 와 어긋나 있었다(2사 basis=unconfirmed, SOMPO high_pct=270).
-같은 날 ① 재빌드 ② `tests/test_jp_deploy_matches_census.py` 신설(빌더를 임시 경로로 재실행해 커밋본과 `generated_at` 제외 전량 비교 — **"빌더를 돌렸는가" 자체가 검사 대상**)로 닫았다. 변이 확인: 배포본 수치 하나 흔들면 즉시 FAIL(원본 md5 복원).
-③ **훅 배선**: 두 테스트를 `scripts/prepush_check.py` offline 묶음 + CLAUDE.md §5 jp 축소범위 목록에 넣었다 — 안 넣으면 "배선했는데 push 를 안 막는" 2026-08-21 실패의 반복이다.
-④ **산정기준 미확인 0**: ライフネット 333% = **규제 표준식**(決算短信 p5·有報 S100YC7R 동일 문장, 같은 문서의 内部ESR 394% 와 혼동 금지) · SOMPO 270% = **내부모델**(決算説明資料 p14 각주 99.5%VaR, 有報도 「独自にＥＳＲを計算」).
-**SOMPO 목표레인지 정정**: 「2025年度通期決算から、ターゲットレンジおよびレンジ上限(250%)を撤廃し、下限 200% をターゲット資本水準として設定」 → 200% 이상 단일 기준. 종전 '200~270%' 는 오류였다(270 은 당기 ESR 값, 폐지 전 상한은 250).
-**다음**: ① `JP_ESR_NOT_IN_SOURCE`(사고 3건 중 2건을 잡는 축)는 오탐억제 3종의 **실측 분포**(이미지형 PDF·랜딩페이지 정본 몇 사)가 선행조건 — 규격은 PM §4c-pre 에 확정, 세기 전엔 배선 금지(UH-5·UH-9 선례)
-② `self_check` 의 `records count != 15` 하드코딩은 **10/31 재census 에서 그대로 깨진다** ③ ライフネット scope(원문은 連結 서술, census 는 solo) 확인.
-
 
 ## Active follow-ups
 

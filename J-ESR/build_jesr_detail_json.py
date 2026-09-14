@@ -74,6 +74,12 @@ OUT_PATH = JP_DIR / "jesr_detail.json"
 # signal so the page skips panels this layer has no data for (every OTHER company
 # above implicitly has data_scope "full").
 NONLIFE_RATIO_CENSUS_PATH = JESR_DIR / "nonlife_ratio_census.json"
+#: 보험료(正味収入保険料) 수집본. 손해율 버블차트의 원 크기 축이다(owner 2026-09-14).
+#: 손해율 조사 때 비율 3종만 받아서 보험료가 빠져 있었고, 같은 PDF 로 따로 수집했다.
+NONLIFE_PREMIUM_CENSUS_PATHS = (
+    JESR_DIR / "nonlife_premium_census_A.json",
+    JESR_DIR / "nonlife_premium_census_B.json",
+)
 
 RISK_KEYS = [
     ("rc_life", "rc_life"),
@@ -672,9 +678,61 @@ RATIO_CAVEAT_CODE_BY_JP = {
 }
 
 
+#: 보험료 지표가 **다른 정의**인 회사. 값은 고치지 않고 왜 비교 불가인지만 남긴다
+#: (`ratio_caveat` 와 같은 방식 — 오늘 owner 방침 "caveat 는 별도 표시만").
+PREMIUM_CAVEAT_BY_JP = {
+    "ソニー損害保険": {
+        "code": "gross_direct",
+        "text": ("`元受正味保険料`(재보험 출재 **전**)이지 `正味収入保険料`(출재 후)가 아니다. "
+                 "자사 사이트가 403 이고 SFG IR 자료 38p 전수 검색에도 正味収入保険料 수치가 "
+                 "없어(서술만) 대체 지표를 썼다. 출재분만큼 과대하며 그 크기는 미상 — "
+                 "다른 회사와 원 크기를 직접 비교하면 안 된다."),
+    },
+}
+
+
+def load_premium_census():
+    """회사명 -> {FY20xx: 백만엔}. 연도 키는 수집 단계에서 FY20xx 로 통일돼 있고,
+    여기서 한 번 더 강제한다 — 3조 병렬 수집에서 키가 제각각이라 10사가 조용히
+    누락될 뻔한 전례가 있다(2026-09-14)."""
+    out = {}
+    for path in NONLIFE_PREMIUM_CENSUS_PATHS:
+        if not path.exists():
+            continue
+        doc = load_json(path)
+        rows = doc.get("rows") or doc.get("companies") or doc.get("records") or []
+        for row in rows:
+            if row.get("verdict") != "found":
+                continue
+            per_year = row.get("net_premiums_written") or {}
+            bad = [k for k in per_year if not (k.startswith("FY") and k[2:].isdigit())]
+            if bad:
+                raise SystemExit(
+                    f"load_premium_census: {path.name} {row.get('company_jp')!r} 의 연도 키가 "
+                    f"FY20xx 형식이 아니다: {bad}"
+                )
+            out[row["company_jp"]] = {k: v for k, v in per_year.items() if v is not None}
+    return out
+
+
 def _ratio_pair(per_year, cur_year="FY2025", prev_year="FY2024"):
     per_year = per_year or {}
     return {"cur": per_year.get(cur_year), "prev": per_year.get(prev_year)}
+
+
+def _ratio_only_series(years, premium_years, loss, expense, combined, premium):
+    """비율 3종 + (있으면) 보험료를 하나의 연도축에 index 정렬해 싣는다.
+    fiscal_years 와 각 배열의 길이·순서가 어긋나면 화면이 다른 해의 값을 그린다 —
+    기존 계약이 index 정렬이라 여기서 한 축으로 맞춘다."""
+    axis = sorted(set(years) | set(premium_years), key=lambda y: int(y[2:]))
+    series = {
+        "hist_loss_ratio_pct": [loss.get(y) for y in axis],
+        "hist_expense_ratio_pct": [expense.get(y) for y in axis],
+        "hist_combined_ratio_pct": [combined.get(y) for y in axis],
+    }
+    if premium:
+        series["hist_net_premiums_written"] = [premium.get(y) for y in axis]
+    return series
 
 
 def build_ratio_only_companies(public_by_en):
@@ -686,6 +744,7 @@ def build_ratio_only_companies(public_by_en):
     if not NONLIFE_RATIO_CENSUS_PATH.exists():
         return []
     census = load_json(NONLIFE_RATIO_CENSUS_PATH)
+    premiums = load_premium_census()
     out = []
     seen_ids = set()
     for row in census.get("rows", []):
@@ -706,6 +765,13 @@ def build_ratio_only_companies(public_by_en):
         expense = row.get("expense_ratio_pct") or {}
         combined = row.get("combined_ratio_pct") or {}
         years = sorted(set(loss) | set(expense) | set(combined), key=lambda y: int(y[2:]))
+
+        # 보험료(백만엔). 있으면 profit.items / history.series 에 싣고 **단위 라벨을 같이 고친다** —
+        # 비율만 있을 때는 unit="pct" 였는데 금액이 섞이면 그 라벨이 거짓이 된다. full 회사와
+        # 같은 규약으로 맞춘다: unit="JPY_million" 이고 비율은 키의 `_pct` 접미사가 구분한다.
+        premium = premiums.get(jp) or {}
+        premium_years = sorted(premium, key=lambda y: int(y[2:]))
+        block_unit = "JPY_million" if premium else "pct"
 
         caveat_code = RATIO_CAVEAT_CODE_BY_JP.get(jp)
         ratio_caveat = {"code": caveat_code, "text": row.get("caveat")} if caveat_code else None
@@ -738,8 +804,8 @@ def build_ratio_only_companies(public_by_en):
                 "ifrs17_applied": False,
                 "evidence": None,
                 "source_doc": source_doc,
-                "unit": "pct",
-                "items": {},
+                "unit": block_unit,
+                "items": ({"pl_net_premiums_written": _ratio_pair(premium)} if premium else {}),
                 "ratios": {
                     "pl_loss_ratio_pct": _ratio_pair(loss),
                     "pl_expense_ratio_pct": _ratio_pair(expense),
@@ -750,13 +816,11 @@ def build_ratio_only_companies(public_by_en):
                 "status": "extracted",
             },
             "history": {
-                "fiscal_years": years,
-                "unit": "pct",
-                "series": {
-                    "hist_loss_ratio_pct": [loss.get(y) for y in years],
-                    "hist_expense_ratio_pct": [expense.get(y) for y in years],
-                    "hist_combined_ratio_pct": [combined.get(y) for y in years],
-                },
+                # 연도축은 비율과 보험료의 **합집합**이다 — 보험료가 더 긴 회사가 있어
+                # 비율 연도만 쓰면 보험료가 잘린다.
+                "fiscal_years": sorted(set(years) | set(premium_years), key=lambda y: int(y[2:])),
+                "unit": block_unit,
+                "series": _ratio_only_series(years, premium_years, loss, expense, combined, premium),
             },
             "capital_tree": [],
             "risk_tree": [],
@@ -766,6 +830,7 @@ def build_ratio_only_companies(public_by_en):
             "bs": build_bs_block(None),
             "data_scope": "ratio_only",
             "ratio_caveat": ratio_caveat,
+            "premium_caveat": PREMIUM_CAVEAT_BY_JP.get(jp),
             # value_verified: null -- ratio_only 회사는 ESR headline 값 자체가 없다(위 headline
             # 블록 전부 None). JP_ESR_UNVERIFIED_VALUE 축은 census ESR posted 행에만 도는
             # 판정이라 이 회사들에는 애초에 적용되지 않는다 -- "판정 안 됨"이 아니라
@@ -1167,8 +1232,18 @@ def self_check(out, jesr_esr):
             if c.get("profit_flow") is not None:
                 errors.append(f"{cen}: ratio_only but profit_flow is not None")
             profit = c.get("profit") or {}
-            if profit.get("items"):
-                errors.append(f"{cen}: ratio_only profit.items expected empty, got {list(profit['items'])}")
+            # ratio_only 의 profit.items 는 **보험료 한 키만** 허용한다(버블차트 원 크기,
+            # owner 2026-09-14). 검사를 "비어 있어야 한다"에서 지우지 않고 좁힌 것은,
+            # 다른 PL 항목이 새어 들어오는 것은 여전히 막아야 하기 때문이다.
+            extra_items = [k for k in (profit.get("items") or {}) if k != "pl_net_premiums_written"]
+            if extra_items:
+                errors.append(f"{cen}: ratio_only profit.items 는 pl_net_premiums_written 만 허용, got {extra_items}")
+            # 보험료가 실렸으면 단위 라벨이 금액 기준이어야 한다 — "pct" 로 두면 거짓이 된다.
+            if (profit.get("items") or {}).get("pl_net_premiums_written"):
+                if profit.get("unit") != "JPY_million":
+                    errors.append(f"{cen}: ratio_only 보험료가 있는데 profit.unit={profit.get('unit')!r} (JPY_million 이어야)")
+                if (c.get("history") or {}).get("unit") != "JPY_million":
+                    errors.append(f"{cen}: ratio_only 보험료가 있는데 history.unit={(c.get('history') or {}).get('unit')!r}")
             if profit.get("core"):
                 errors.append(f"{cen}: ratio_only profit.core expected empty, got {list(profit['core'])}")
             ratios = profit.get("ratios", {})
