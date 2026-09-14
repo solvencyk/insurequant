@@ -1,11 +1,28 @@
 # Insurequant Validation TODO (Stage 3)
 
-> Last updated: 2026-09-14 (UH-23 정식 해소 — 한정어 정본 §3 표 ↔ `ADJUSTED_QUALIFIERS` 양방향 대조 배선 + TODO 과장 정정; 직전 jp `JP_ESR_ADJUSTED_FIGURE` 배선 — 조정치 축, UH-21 해소 → PM-2026-09-13 `closed`; 직전 jp `JP_ESR_NOT_IN_SOURCE` 배선; 직전 push 범위 판정을 훅에 구현 — CLAUDE.md §5 가 문서로만 있던 규칙을 코드로; 직전 jp false-green 포스트모템·UH-18 등재; 직전 2026-09-02 MASTER_XLSX_* 축 신설 — 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조를 CHECK 8 로 배선) · Stage 3/5 — validation
+> Last updated: 2026-09-14 (UH-25 게이트 축 해소 — `JP_ESR_UNVERIFIED_VALUE` 신설: 값 검증 두 축이 동시에 침묵하는 상태를 YELLOW 로 세고 push 묶음이 막는다; 직전 UH-23 정식 해소 — 한정어 정본 §3 표 ↔ `ADJUSTED_QUALIFIERS` 양방향 대조 배선 + TODO 과장 정정; 직전 jp `JP_ESR_ADJUSTED_FIGURE` 배선 — 조정치 축, UH-21 해소 → PM-2026-09-13 `closed`; 직전 jp `JP_ESR_NOT_IN_SOURCE` 배선; 직전 push 범위 판정을 훅에 구현 — CLAUDE.md §5 가 문서로만 있던 규칙을 코드로; 직전 jp false-green 포스트모템·UH-18 등재; 직전 2026-09-02 MASTER_XLSX_* 축 신설 — 마스터 JSON ↔ 마스터 xlsx 13시트 전수 대조를 CHECK 8 로 배선) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Changelog: docs/changelog_validation.md
 
 Session start: read this file + `claude-agent-validation.md` + domain refs (`docs/domains/claude-agent-{kics,ifrs17}.md`). English where Korean encoding is fragile (`CLAUDE.md` rule).
 
 ## Status
+
+**(2026-09-14, 9차) UH-25 배선 — `JP_ESR_UNVERIFIED_VALUE` 신설. "이 화면값은 **어떤 축으로든** 판정된 적이 있나" 를 묻는 3번째 축이고, UH-25 가 지적한 비대칭(조정치 축에만 라이브 이빨이 있고 skip 축에는 하나도 없다)을 **대칭으로** 채웠다.** 전제는 8차가 등재만 하고 룰을 안 만든 이유였던 "오탐 억제를 실측할 수 없다" 인데, 오늘 T&D 출처가 목록 페이지 → 統合報告書 PDF 로 바뀌면서 그 점유가 사라져 **발화 0 을 실측으로 증명할 수 있는 창**이 열렸다(UH-5·UH-9 선례의 선행조건 충족).
+
+> - **재측정: 오케스트레이터 숫자 4/4 정확, 단 한 개는 낡았다.** `verdict {'found': 16}` · `adjusted {'abstain_no_prose': 8, 'unqualified': 8}` · `doc_kind {'pdf': 16}` · 값 검증 0축 행 **0사** — 전부 일치. 낡은 것은 **posted 수**: 8차가 적은 15사가 아니라 **16사**(第一ライフグループ 220% 가 posted 로 들어왔다). T&D 222% 는 지금 `found`+`abstain_no_prose`+`pdf` = **1축 검증**이라 새 룰이 안 문다. census ↔ 증거 집합이 정확히 일치(증거에만 있는 행 0 · posted 중 증거 없는 행 0).
+> - **배선 후 실데이터 발화 0 재확인**: `[source-gate] … YELLOW 0건 · RED 0건` · `1차 축 판정 분포: found=16` · `값검증 축 census: 판정됨=16 무검증=0 (그중 면제=0)`. **전제가 유지돼서 배선했다** — 깨졌으면 배선 안 하고 보고하는 것이 지시였다.
+> - **판정식은 논리곱(=0축)이 아니라 논리합이다.** (a) `verdict ∈ (skip_landing, skip_no_text)` 또는 (b) `adjusted_verdict == not_applicable`. 곱으로 걸면 수집기가 반쪽만 회귀한 상태(한 축만 죽은 행)가 빠져나간다 — 이 저장소가 반복해서 데인 "룰이 순회는 하는데 그 칸은 안 본다" 의 모양이다. 호출 위치도 **verdict 분기보다 앞**이라 회사·verdict 필터 없이 전 행을 돈다.
+> - **오탐 억제의 선은 `abstain_no_prose` 를 (b) 에서 뺀 것이고, 그 선이 load-bearing 임을 실측했다.** 그건 PDF 를 실제로 읽고 「라벨동반 산문 조각 0개」 로 판정한 결과(표·차트 전용 문서)라 1차 축이 `found` 로 살아 있다. 변이 M11 — `ESR_ADJUSTED_NOT_JUDGED` 에 `abstain_no_prose` 를 넣고 **증거는 손대지 않은 채** 돌리면 정상 **8사**가 한꺼번에 거짓 발화한다(東京海上HD·MS&AD·SOMPO·T&D·ソニー生命·ライフネット·au損保·明治安田損保).
+> - **severity 는 YELLOW, 이빨은 push 묶음.** 조정치 축(`test_live_esr_evidence_has_no_unexempted_adjusted_figure`)과 **같은 모양**으로 맞췄다 — 근거 셋: ① 빌더 RED 로 걸면 기존 `test_skip_verdicts_are_yellow_not_red` 와 정면 모순 ② UH-25 가 적은 구조적 긴장(T&D 의 비-PDF URL 은 만료호스트 회피로 고른 것이라 데이터 오류가 아니다) 에서 정상 재빌드가 막힌다 ③ 비대칭의 근거가 "skip 축에 라이브 대조가 없다" 였으니 그 자리를 채우는 것이 해소다. 기존 테스트와 **역할을 docstring 에 갈라 적었다**: 그쪽은 *빌더 exit code 가 안 바뀐다*(합성), 새 것은 *배포본 증거에 그런 행이 면제 없이 남지 않는다*(실데이터). 모순 아님.
+> - **면제 경로는 열려 있고 owner 권한이다.** `JP_ESR_UNVERIFIED_VALUE` 를 `SOURCE_RULE_IDS`+`EXEMPTABLE_RULE_IDS` 와 레지스트리 `_README` 에 등재했다(`exceptions` 는 **0건 그대로**). 10/31 에 정당하게 비-PDF 밖에 없는 회사가 나오면 그 경로로 간다. 등재 전에 먼저 물을 것은 「판정 가능한 1차 문서(PDF·有報)로 바꿀 수 있는가」 라고 레지스트리에 적었다.
+> - **UH-25 remedy ② 도 같이 닫았다**: 게이트 요약이 종전에는 조정치 축 분포만 찍고 **1차 축은 안 찍었다**. 이제 `1차 축(JP_ESR_NOT_IN_SOURCE) 판정 분포` + `값검증 축 census(판정됨/무검증/면제)` 를 대칭으로 인쇄한다 — 분포가 skip_* 로 쏠렸는데 RED 0 이면 깨끗한 게 아니라 안 본 것이다.
+> - **케이스 16건 추가**(85 → **101 passed**, 새 파일 없이 기존 `tests/test_jp_source_gate.py` 에 얹었다 — 새 파일을 만들면 §0 이 `tests/` 를 전체 게이트로 판정한다).
+> - **변이 10/10 발화 + 음성대조 2건**(전부 사본 트리 `uh25_sand/` 에서만. 진짜 증거·census md5 작업 전후 동일: `fe0021bc…` · `ba79154d…`). M1 `verdict→skip_landing` **필드 (a) 단독** · M2 `adjusted_verdict→not_applicable` **필드 (b) 단독** · M3 둘 다(실제 UH-25 모양) · M4 `skip_no_text` · M5 다른 회사(かんぽ) · M8 그 회사 면제 등재 → **조용해진다** · M9 다른 회사 면제 → **여전히 발화**(셀 단위) · M10 다른 룰 면제 → 여전히 발화 · M12 진짜 빌더 엔드투엔드 → **exit 0**(YELLOW 설계대로) + 두 축을 이름으로 적는 발화 + `skip_landing=1 · 무검증=1`.
+> - **🔴 중복이 아님을 증명했다(M6).** M3 변이를 남긴 채 **새 라이브 테스트만 삭제**하면 나머지 **100건이 전부 통과**한다(`100 passed`, 실패 0). 즉 기존 85건 + 내 합성 15건 어느 것도 이 상태를 못 잡는다. 반대 방향(M7, 판정식을 `return []` 로 gut)에서는 라이브 테스트가 조용해지고 **합성 6건이 발화**한다 — 라이브는 데이터를, 합성은 판정식을 지킨다(둘 다 필요).
+> - **🔴 훅이 실제로 막는지 그 자리에서 실증했다(UH-1 교훈).** 진짜 증거 파일을 T&D 행만 UH-25 모양으로 **일시 변이**(백업 후 trap 복원) → `python3 scripts/prepush_check.py` → `FAILED tests/test_jp_source_gate.py::test_live_esr_evidence_has_no_unexempted_unverified_value` · `1 failed, 257 passed, 2 skipped` · **`offline tests(jp 묶음)=FAIL → BLOCKED (fix or owner-escalate)`**. 복원 후 md5 `fe0021bc…` 동일. 깨끗한 상태에서는 `258 passed, 2 skipped → gate-clear`(축소 전 242 → 258). 새 테스트가 `REDUCED_TEST_BUNDLE`(L111)·전체 묶음(L513) 양쪽에 이미 있는 파일 안이라 매니페스트 수정은 불필요했다.
+> - **잔여(이번 범위 밖, UH-25 에 명시)**: **화면 축**. 배포본 `jp/jesr_esr.json` 에서 0축 검증 행과 2축 검증 행의 키 집합 차이가 여전히 공집합이고 `jesr_app.js` L307 이 둘 다 같은 「根拠資料 ↗」 로 그린다 — 게이트는 이제 막지만 **사용자는 여전히 구분 못 한다**. designer·publishing 소관이라 `inbox/jp/20260914T0740Z__validation__JP_MULTI__uh25_screen_axis_residual.md` 로 발주. UH-22(조정치 축 severity 승격)도 10/31 재census 대기로 계속 열려 있다.
+> - 검증: `pytest tests/test_jp_source_gate.py -q` **101 passed**(85→101) · 축소 묶음 **258 passed · 2 skipped** · `prepush_check.py --scope-only` = **`REDUCED (jp-scope)`**(변경 3개 전부 jp) · 전체 실행 **`gate-clear`** · inbox 활성 1(내가 방금 낸 것) · 위반 0 · 한국 축은 이 컨테이너에서 미검사(`data/disclosure` 없음).
+> - 재현: `python3 -m pytest tests/test_jp_source_gate.py -q` → `python3 /tmp/…/scratchpad/probe_gate.py`(실데이터 게이트, 산출 안 씀) → `python3 /tmp/…/scratchpad/uh25_mutate.py`(사본 변이 12종) → `python3 scripts/prepush_check.py`.
 
 **(2026-09-14, 8차) 第一ライフグループ posted 전환 경로를 **사본으로** 전증 — 6종 전건 반응 실측 + 새 사각 **UH-25** 등재(비-PDF 출처 = 값 검증 2축 동시 침묵).** 진짜 census·`jp/*.json` 은 한 바이트도 안 건드렸다(작업 전후 md5 5개 동일). UH-19 교훈("census 만 고치고 빌더를 안 돌리면 게이트가 한 번도 안 돈다")대로 **경로를 먼저 증명**하고 무엇이 막을지 미리 쟀다.
 
@@ -61,20 +78,6 @@ Session start: read this file + `claude-agent-validation.md` + domain refs (`doc
 > - 회귀는 **새 파일 없이** 기존 jp 2종에 얹었다(63 + 26). 이빨 변이 **8/8 발화**(사본에서만, 원본 md5 복원 확인): 배선 호출 제거 9 FAIL · 룰 no-op 9 · `not_found` YELLOW 강등 1 · 모르는 verdict 통과 1 · 증거 키 느슨화 2 · YELLOW 에 not_found 끼워넣기 3 · 봉투 신선도 무력화 6 · `fetch_failed` 통과 1. 수집기 쪽: 라벨 목록을 비우면 정상 문서가 무너져 거짓 RED — 그래서 목록 비어있지 않음을 테스트가 강제.
 > - 검증: 빌더 **exit 0** · `RED 0건 · YELLOW 1건(T&D)` · `jp/jesr_esr.json`·`jesr_master.json` 이 `generated_at` 외 **전량 동일** · `prepush_check.py` = `REDUCED (jp-scope)` · **218 passed · 4 skipped** · `gate-clear`.
 > - 재현: `python3 J-ESR/check_esr_in_source.py --all --out J-ESR/esr_in_source_health.json` → `python3 J-ESR/build_jesr_page_json.py` → `python3 -m pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py tests/test_deploy_assets.py -q`.
-
-**(2026-09-13, 4차) jp 빌더 self-check 의 `records count != 15` 를 census 파생 항등식으로 교체 — 게이트가 사실이 아니라 옛 숫자를 지키고 있었다(TODO_jp(27) ②).** 10/31 J-ICS 공시기한 직후 census 의 posted 가 15사 → 60~70사로 뒤집히면 이 self-check 가 **정상 데이터를 RED 로 막는다**. 실측 재현(격리 사본, not_yet 62사를 posted 로 뒤집은 합성 census): HEAD 빌더 `SELF-CHECK FAIL: records count = 77, expected 15` · **exit 1**, 새 빌더 **exit 0 · posted 77 · RED 0건**. 2026-08-29 분기 지평 사고(게이트 3곳이 리터럴 분기목록을 들고 있다가 2026.2Q 를 순회조차 안 함)와 같은 형태라 그 교훈("하드코딩 자체가 재발 구조다")을 그대로 적용했다.
-
-> 신설: `check_census_identity`(+`check_census_row_shape`·`check_preliminary_vocabulary`) · `check_deploy_identity` · 회귀 23케이스를 **기존 `tests/test_jp_deploy_matches_census.py` 에 얹었다**(새 파일을 만들면 `prepush_check.py` §0 이 `tests/` 를 전체 게이트로 판정한다 — 실측: 빈 테스트 파일 하나 추가 시 판정이 `REDUCED` → `FULL`).
->
-> - **숫자가 아니라 항등식.** `census posted 행 수 == _meta.census.posted == len(마스터 records) == len(배포 records) + len(excluded)`. 수는 한 건 빠지고 한 건 중복돼도 맞으므로 **집합으로** 건다(company_jp·company_en).
-> - **0 으로 닫히는 등식은 등식이 아니다.** posted==0 이면 산수는 전부 맞고 화면만 빈다 → `JP_CENSUS_EMPTY` 로 RED. 종전에는 리터럴 15 가 우연히 이 구멍을 막고 있었다.
-> - **일부러 둔 리터럴**: `ESR_PCT_MIN/MAX`(100~1000%, 규제 하한·단위오류 상식선 — 데이터에서 파생하면 틀린 값이 스스로 범위를 넓힌다) · `AS_OF_TARGET`(기간 선언, 10/31 은 같은 기간에 회사만 느는 이벤트라 안 깨진다) · `SECTOR_MAP`·`PRELIM_KEYWORDS`·`_SUFFIX_ABBREV`·`DEAD_CLASSIFICATIONS`. 근거는 파일 주석에.
-> - **덤으로 닫은 것**: `AS_OF_LABEL_JA` 를 `AS_OF_TARGET` 에서 파생(같은 사실 두 벌) · `SECTOR_VALUES` 를 `SECTOR_MAP.values()` 에서 파생(재타이핑) · `company_en` 중복 검사(2026-09-13 `6e051be` 실사고인데 게이트는 침묵했다; 하류가 이 키로 조인) · `preliminary` 모르는 값 RED(결측이 아니라 오독) · esr_pct 결측 시 정렬 TypeError → 이름 붙은 RED.
-> - **새 사각 발견 → jp 로 발주**: census 14행 第一ライフグループ 이 따옴표 없는 쉼표로 **18열**(헤더 16열)이라 notes 가 잘려 읽힌다. 지금은 `not_yet` 이라 화면 무영향이지만 10/31 에 posted 로 뒤집히면 실린다 → `JP_CENSUS_SHAPE` 를 posted 행 한정 RED 로 걸고 티켓 `inbox/jp/20260913T1730Z__validation__JP_MULTI__census_ragged_row.md` 발주. `jesr_sources_2026Q1.csv` 6행·`jp_insurers.csv` 4행도 같은 모양이나 **이 빌더가 읽는 열은 넘침 앞쪽**이라 영향 0(실측) — RED 로 걸지 않았다.
-> - **변이시험 11/11 발화**(사본에서만, 종료 후 원본 md5 `c03fad75…` 동일 확인): 리터럴 15 재삽입 · 항등식 호출 삭제 · 열수검사 삭제 · preliminary 검사 삭제 · 집합검사 제거(개수만) · posted==0 가드 제거 · main() 배포항등식 호출 삭제 · company_en 중복검사 제거 · None-취약 정렬 복귀 · as_of 라벨 리터럴 복귀 · unknown status 검사 제거.
-> - **배선 ≠ 돈다**: 단위 테스트는 검사 함수를 직접 부르므로 호출 한 줄을 지워도 통과한다. 그래서 ① 진짜 빌더를 돌려 exit code 를 재는 케이스 5종(빈 census·ragged·preliminary·company_en 중복·esr_pct 결측) ② 데이터로 도달 불가능한 배포 항등식은 AST 배선 검사로 못 박았다.
-> - 검증: 빌더 exit 0 · `[source-gate] … RED 0건` · `jp/jesr_esr.json`·`jesr_master.json` 이 `generated_at` 외 **바이트 동일** · `pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py tests/test_deploy_assets.py -q` **79 passed** · 축소 묶음 5종 **197 passed·4 skipped** · `prepush_check.py --scope-only` = `REDUCED (jp-scope)`.
-> - **잔여**: `NEXT_UPDATE="2026-10-31"` 은 데이터에서 파생할 수 없는 편집상 약속이라 리터럴로 두고 **경고만** 인쇄한다(지난 날짜가 되면). RED 로 하면 데이터가 안 바뀐 날짜 경계에서 빌더와 배포 테스트가 동시에 터지는 시한폭탄이 된다.
 
 ## 🔴 Open — P1
 

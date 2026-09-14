@@ -316,13 +316,15 @@ SOURCE_RULE_IDS = (
     "JP_SOURCE_URL_DEAD",
     "JP_ESR_NOT_IN_SOURCE",
     "JP_ESR_ADJUSTED_FIGURE",
+    "JP_ESR_UNVERIFIED_VALUE",
     "JP_SOURCE_EVIDENCE_STALE",
     "JP_SOURCE_EVIDENCE_INCOMPLETE",
 )
 #: 면제 가능한 룰. 나머지 둘은 "점검을 돌렸는가" 를 묻는 **절차 룰**이라 면제하면 룰 자체가
 #: 사라진다 — 낡았으면 면제하지 말고 점검을 다시 돌려라.
 EXEMPTABLE_RULE_IDS = ("JP_SOURCE_EXPIRING_HOST", "JP_SOURCE_URL_DEAD",
-                       "JP_ESR_NOT_IN_SOURCE", "JP_ESR_ADJUSTED_FIGURE")
+                       "JP_ESR_NOT_IN_SOURCE", "JP_ESR_ADJUSTED_FIGURE",
+                       "JP_ESR_UNVERIFIED_VALUE")
 
 #: 증거 파일에서 **RED 로 읽는 유일한 분류**. blocked(WAF 4xx) · ok_requires_headers(봇차단,
 #: 헤더 붙이면 200) · tls_client_issue(파이썬만 실패, curl 200) · spa_shell(200 인 JS 셸) ·
@@ -370,6 +372,71 @@ ESR_ADJUSTED_ABSTAIN = ("abstain_no_prose", "not_applicable")
 #: 발화. adjusted_alt 가 **본 룰**(같은 문서에 한정어 없는 대안값이 있다), adjusted_only 는
 #: 보조(한정어는 붙었는데 대안이 없다). 둘 다 YELLOW 지만 메시지가 다르다.
 ESR_ADJUSTED_YELLOW = ("adjusted_alt", "adjusted_only")
+
+# --- JP_ESR_UNVERIFIED_VALUE (UH-25, 2026-09-14) ----------------------------
+# 위 두 축은 각각 "그 문서에 그 숫자가 있나"(1차) 와 "그 숫자가 우리가 싣겠다고 한 정의인가"
+# (조정치) 를 묻는다. **둘 다 침묵할 수 있다** — 그리고 그 침묵은 어디에도 안 남았다.
+#
+# 메커니즘(실측, UH-25): `source_url` 이 PDF 가 아니면 수집기 `check_esr_in_source.py::check_row`
+# 의 `is_pdf` 분기가 문서를 `scan_landing` 으로 보내 `verdict="skip_landing"` 을 적고, 같은
+# 함수가 `_not_judged_adjusted("PDF 가 아니라 조정치 판정 대상이 아니다")` 로
+# `adjusted_verdict="not_applicable"` 을 같이 적는다. 그러면 `JP_ESR_NOT_IN_SOURCE` 는
+# ESR_VERDICT_YELLOW 라 인쇄만 하고, `JP_ESR_ADJUSTED_FIGURE` 는 ESR_ADJUSTED_ABSTAIN 이라
+# 기권한다 → **그 행의 화면값은 어떤 원문과도 대조된 적이 없는데 빌더는 exit 0 · RED 0** 이다.
+# 2026-09-13 라이브에 T&D 222% 1건이 정확히 그 상태로 있었다(증거 evidence 는 「본문에 222
+# 표기가 안 보인다」 였는데도 게이트는 green).
+#
+# 판정식 — posted 행의 증거에서 **두 필드를 각각** 본다. 둘 중 하나라도 참이면 발화:
+#   (a) verdict          ∈ ESR_VERDICT_YELLOW      (skip_landing · skip_no_text)
+#   (b) adjusted_verdict ∈ ESR_ADJUSTED_NOT_JUDGED (not_applicable)
+# 논리곱(= 0축)이 아니라 논리합인 이유: 두 메커니즘은 수집기가 바뀌면 **따로** 재현된다.
+# 곱으로 걸면 반쪽 회귀(한 축만 죽은 상태)가 빠져나가고, 그게 이 저장소가 반복해서 데인
+# "룰이 순회는 하는데 그 칸은 안 본다" 의 모양이다.
+#
+# **오탐 억제의 핵심은 `abstain_no_prose` 를 (b) 에서 뺀 것이다.** 그것은 PDF 를 실제로 읽고
+# 「라벨동반 산문 조각이 0개」 라고 판정한 결과(표·차트 전용 문서)이고, 그런 행은 1차 축이
+# `found` 로 **살아 있다**. 2026-09-14 실측으로 posted 16사 중 8사가 그 모양이라, 여기 넣으면
+# 정상 8사가 한꺼번에 거짓 발화한다. `not_applicable` 은 반대로 「문서가 애초에 판정 대상이
+# 아니었다」 는 뜻이라 1차 축도 같이 죽어 있다 — 가르는 선은 거기다.
+#
+# severity 는 **YELLOW** 다(빌더 exit code 를 안 바꾼다). 근거 셋:
+#   1. RED 로 걸면 기존 `test_skip_verdicts_are_yellow_not_red` 와 정면으로 모순된다.
+#   2. UH-25 가 적은 구조적 긴장 — T&D 가 비-PDF 인 이유는 종전 TDnet URL 이 만료돼
+#      `JP_SOURCE_EXPIRING_HOST` 를 피하려고 상설 IR 페이지로 옮긴 것이다. 빌더 RED 는
+#      **데이터 오류가 아닌 출처선택 문제로 정상 재빌드를 막는다**(UH-5·UH-9 선례).
+#   3. 이빨은 조정치 축과 **같은 자리**에 둔다 — 배포본 증거에 면제 없는 발화가 남아 있으면
+#      push 묶음이 막는다(tests/test_jp_source_gate.py::
+#      test_live_esr_evidence_has_no_unexempted_unverified_value). UH-25 를 "비대칭" 이라
+#      부른 근거가 skip 축에 그 대조가 없다는 것이었으므로, 대칭으로 맞추는 것이 해소다.
+#: (b) 축. `abstain_no_prose` 와 **다르게 다룬다** — 위 주석의 실측이 가르는 선이다.
+ESR_ADJUSTED_NOT_JUDGED = ("not_applicable",)
+
+
+def unverified_value_reasons(row: dict) -> list[str]:
+    """`JP_ESR_UNVERIFIED_VALUE` 의 판정식 **정본**. 발화 사유를 사람이 읽는 문장으로 돌려준다.
+
+    빌더도 push 묶음의 라이브 대조 테스트도 **이 함수 하나**를 부른다. 판정식을 테스트에
+    재타이핑하면 게이트와 테스트가 서로 다른 룰을 검증하게 된다(상관행렬 재타이핑 금지와
+    같은 이유). 순수 함수라 네트워크도 파일도 필요 없다.
+
+    빈 리스트 = 최소 한 축은 실제로 판정됐다. 비어 있지 않으면 그 행의 화면값은 **어떤 원문
+    대조도 받지 않았다**. `adjusted_verdict` 키 자체가 없는 경우는 여기서 판정하지 않는다 —
+    그건 `_adjusted_figure_check` 가 이미 `JP_SOURCE_EVIDENCE_INCOMPLETE` 로 RED 를 낸다.
+    """
+    reasons: list[str] = []
+    verdict = str(row.get("verdict") or "").strip()
+    if verdict in ESR_VERDICT_YELLOW:
+        reasons.append(
+            f"1차 축(JP_ESR_NOT_IN_SOURCE)이 verdict={verdict} 로 판정을 건너뛰었다"
+        )
+    adjusted = str(row.get("adjusted_verdict") or "").strip()
+    if "adjusted_verdict" in row and adjusted in ESR_ADJUSTED_NOT_JUDGED:
+        reasons.append(
+            f"조정치 축(JP_ESR_ADJUSTED_FIGURE)이 adjusted_verdict={adjusted} 로 기권했다"
+            " (문서가 PDF 가 아니거나 받지 못해 판정 대상이 아니었다)"
+        )
+    return reasons
+
 
 _EXCEPTION_REQUIRED_KEYS = ("rule", "company_jp", "field", "reason", "owner_approved_on")
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -586,6 +653,38 @@ def _load_evidence_envelope(path: Path, census_max: str | None, rerun_cmd: str):
     return rows, checked_at, scope, errors
 
 
+def _unverified_value_check(company: str, url: str, pct: str, row: dict,
+                            exempt: set, notes: list[str], seen: dict) -> list[str]:
+    """`JP_ESR_UNVERIFIED_VALUE` — 이 행의 화면값이 **어떤 축으로든 실제로 판정됐나**(UH-25).
+
+    위 두 룰은 각자 자기 축의 결론을 본다. 이 룰은 그 위에서 **"판정이 있었나"** 만 본다 —
+    비-PDF 출처는 두 축을 동시에 침묵시키는데, 종전에는 그 침묵이 exit code 에도 요약에도
+    안 남아서 화면값이 무검증으로 라이브에 올라갔다(T&D 222%, 2026-09-13).
+
+    판정식 정본은 `unverified_value_reasons()` — 여기서도 push 묶음의 라이브 테스트에서도
+    같은 함수를 부른다. severity 는 YELLOW(면제 가능, 셀 단위)이고, 이빨은 배포본 증거를
+    대조하는 push 묶음 테스트가 쥔다. 근거는 ESR_ADJUSTED_NOT_JUDGED 위 주석 §severity.
+
+    `seen` 에 판정/미판정 수를 누적해 요약이 인쇄한다 — **세지 않으면 사각이 된다**.
+    """
+    reasons = unverified_value_reasons(row)
+    if not reasons:
+        seen["judged"] = seen.get("judged", 0) + 1
+        return []
+    seen["unverified"] = seen.get("unverified", 0) + 1
+    if ("JP_ESR_UNVERIFIED_VALUE", company, "source_url") in exempt:
+        seen["exempt"] = seen.get("exempt", 0) + 1
+        notes.append(f"[source-gate] 면제 적용 JP_ESR_UNVERIFIED_VALUE · {company}")
+        return []
+    notes.append(
+        f"[source-gate/YELLOW] JP_ESR_UNVERIFIED_VALUE · {company} esr={pct}"
+        f" — 이 화면값은 원문 대조를 **한 축도 받지 않았다**: {' / '.join(reasons)}."
+        f" 1차 출처를 PDF 등 판정 가능한 문서로 바꾸거나, 정당하게 비-PDF 밖에 없으면"
+        f" owner 가 J-ESR/jp_source_exceptions.json 에 등재해야 한다: {url}"
+    )
+    return []
+
+
 def _adjusted_figure_check(company: str, url: str, pct: str, row: dict, path: Path,
                            exempt: set, notes: list[str], seen: dict) -> list[str]:
     """`JP_ESR_ADJUSTED_FIGURE` — 화면값이 **그 문서에서 우리가 싣겠다고 한 정의의 값인가**.
@@ -644,6 +743,7 @@ def _esr_in_source_check(
     exempt: set,
     notes: list[str],
     adjusted_seen: dict | None = None,
+    unverified_seen: dict | None = None,
 ) -> list[str]:
     """`JP_ESR_NOT_IN_SOURCE` — 화면값이 1차 출처 문서 **안에** 있나.
 
@@ -665,6 +765,7 @@ def _esr_in_source_check(
     """
     errors: list[str] = []
     adjusted_seen = {} if adjusted_seen is None else adjusted_seen
+    unverified_seen = {} if unverified_seen is None else unverified_seen
     by_key: dict[tuple[str, str], dict] = {}
     by_url: dict[str, list[dict]] = {}
     for row in rows:
@@ -695,6 +796,11 @@ def _esr_in_source_check(
             continue
         verdict = str(row.get("verdict") or "").strip()
         where = f"p{row.get('page')}" if row.get("page") else "?"
+        # UH-25. **verdict 분기보다 먼저, 회사·verdict 필터 없이** 전 행에 돈다. 아래 분기들은
+        # 각자 자기 축의 결론을 보는데, 이 룰은 "판정이 있었나" 를 보므로 어느 분기에 걸어도
+        # 그 분기에 안 들어오는 행은 순회조차 안 하게 된다 — 이 저장소의 반복 사고 모양이다.
+        errors.extend(_unverified_value_check(company, url, pct, row, exempt,
+                                              notes, unverified_seen))
         if verdict in ESR_VERDICT_PASS:
             # found 라고 끝이 아니다 — "그 숫자가 있다" 와 "그 정의의 숫자다" 는 다른 축이다.
             errors.extend(_adjusted_figure_check(company, url, pct, row, path, exempt,
@@ -754,6 +860,9 @@ def source_gate_check(
     - `JP_ESR_NOT_IN_SOURCE`        화면값이 그 문서 안에 없으면 RED (증거: esr_in_source_health)
     - `JP_ESR_ADJUSTED_FIGURE`      화면값이 그 문서의 **조건부 조정치**로만 나오면 YELLOW
                                     (같은 증거 행의 `adjusted_verdict`. 필드 부재·모르는 값은 RED)
+    - `JP_ESR_UNVERIFIED_VALUE`     위 두 축이 **둘 다 판정을 안 했으면** YELLOW (UH-25).
+                                    verdict=skip_* 또는 adjusted_verdict=not_applicable.
+                                    이빨은 push 묶음의 라이브 증거 대조 테스트가 쥔다.
     - `JP_SOURCE_EVIDENCE_STALE`    증거 파일 부재·scope≠all·census 보다 낡음이면 RED (**두 파일 다**)
     - `JP_SOURCE_EVIDENCE_INCOMPLETE`  posted 행이 증거에 아예 없으면 RED (**두 파일 다**)
     """
@@ -826,9 +935,10 @@ def source_gate_check(
         esr_health_path, census_max, CHECK_ESR_CMD)
     errors.extend(esr_ev_errors)
     adjusted_seen: dict[str, int] = {}
+    unverified_seen: dict[str, int] = {}
     if esr_rows is not None:
         errors.extend(_esr_in_source_check(posted_urls, esr_rows, esr_health_path, exempt,
-                                           notes, adjusted_seen))
+                                           notes, adjusted_seen, unverified_seen))
 
     if verbose:
         for note in notes:
@@ -847,6 +957,25 @@ def source_gate_check(
             f" · RED {len(errors)}건"
         )
         print(f"[source-gate] 조정치 축(JP_ESR_ADJUSTED_FIGURE) 판정 분포: {adj}")
+        # UH-25 remedy ②. 종전에는 조정치 축만 분포를 찍고 **1차 축은 안 찍었다** — 그래서
+        # 「기권은 세지 않으면 사각이 된다」 를 한쪽 축에만 적용한 꼴이었다. 두 축을 대칭으로
+        # 인쇄한다: 분포가 skip_* 로 쏠려 있는데 RED 0 이면 그건 깨끗한 게 아니라 안 본 것이다.
+        prim_counts: dict[str, int] = {}
+        if esr_rows is not None:
+            by_k = {(str(r.get("url") or "").strip(), _norm_pct(r.get("esr_pct"))): r
+                    for r in esr_rows if isinstance(r, dict)}
+            for _c, _u, _p in posted_urls:
+                _r = by_k.get((_u, _p))
+                _v = str((_r or {}).get("verdict") or "").strip() or "<행없음>"
+                prim_counts[_v] = prim_counts.get(_v, 0) + 1
+        prim = " ".join(f"{k}={prim_counts[k]}" for k in sorted(prim_counts)) or "없음"
+        print(f"[source-gate] 1차 축(JP_ESR_NOT_IN_SOURCE) 판정 분포: {prim}")
+        print(
+            f"[source-gate] 값검증 축(JP_ESR_UNVERIFIED_VALUE) census:"
+            f" 판정됨={unverified_seen.get('judged', 0)}"
+            f" 무검증={unverified_seen.get('unverified', 0)}"
+            f" (그중 면제={unverified_seen.get('exempt', 0)})"
+        )
     return errors
 
 

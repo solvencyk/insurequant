@@ -4,6 +4,20 @@
 
 ---
 
+**(2026-09-13, 4차) jp 빌더 self-check 의 `records count != 15` 를 census 파생 항등식으로 교체 — 게이트가 사실이 아니라 옛 숫자를 지키고 있었다(TODO_jp(27) ②).** 10/31 J-ICS 공시기한 직후 census 의 posted 가 15사 → 60~70사로 뒤집히면 이 self-check 가 **정상 데이터를 RED 로 막는다**. 실측 재현(격리 사본, not_yet 62사를 posted 로 뒤집은 합성 census): HEAD 빌더 `SELF-CHECK FAIL: records count = 77, expected 15` · **exit 1**, 새 빌더 **exit 0 · posted 77 · RED 0건**. 2026-08-29 분기 지평 사고(게이트 3곳이 리터럴 분기목록을 들고 있다가 2026.2Q 를 순회조차 안 함)와 같은 형태라 그 교훈("하드코딩 자체가 재발 구조다")을 그대로 적용했다.
+
+> 신설: `check_census_identity`(+`check_census_row_shape`·`check_preliminary_vocabulary`) · `check_deploy_identity` · 회귀 23케이스를 **기존 `tests/test_jp_deploy_matches_census.py` 에 얹었다**(새 파일을 만들면 `prepush_check.py` §0 이 `tests/` 를 전체 게이트로 판정한다 — 실측: 빈 테스트 파일 하나 추가 시 판정이 `REDUCED` → `FULL`).
+>
+> - **숫자가 아니라 항등식.** `census posted 행 수 == _meta.census.posted == len(마스터 records) == len(배포 records) + len(excluded)`. 수는 한 건 빠지고 한 건 중복돼도 맞으므로 **집합으로** 건다(company_jp·company_en).
+> - **0 으로 닫히는 등식은 등식이 아니다.** posted==0 이면 산수는 전부 맞고 화면만 빈다 → `JP_CENSUS_EMPTY` 로 RED. 종전에는 리터럴 15 가 우연히 이 구멍을 막고 있었다.
+> - **일부러 둔 리터럴**: `ESR_PCT_MIN/MAX`(100~1000%, 규제 하한·단위오류 상식선 — 데이터에서 파생하면 틀린 값이 스스로 범위를 넓힌다) · `AS_OF_TARGET`(기간 선언, 10/31 은 같은 기간에 회사만 느는 이벤트라 안 깨진다) · `SECTOR_MAP`·`PRELIM_KEYWORDS`·`_SUFFIX_ABBREV`·`DEAD_CLASSIFICATIONS`. 근거는 파일 주석에.
+> - **덤으로 닫은 것**: `AS_OF_LABEL_JA` 를 `AS_OF_TARGET` 에서 파생(같은 사실 두 벌) · `SECTOR_VALUES` 를 `SECTOR_MAP.values()` 에서 파생(재타이핑) · `company_en` 중복 검사(2026-09-13 `6e051be` 실사고인데 게이트는 침묵했다; 하류가 이 키로 조인) · `preliminary` 모르는 값 RED(결측이 아니라 오독) · esr_pct 결측 시 정렬 TypeError → 이름 붙은 RED.
+> - **새 사각 발견 → jp 로 발주**: census 14행 第一ライフグループ 이 따옴표 없는 쉼표로 **18열**(헤더 16열)이라 notes 가 잘려 읽힌다. 지금은 `not_yet` 이라 화면 무영향이지만 10/31 에 posted 로 뒤집히면 실린다 → `JP_CENSUS_SHAPE` 를 posted 행 한정 RED 로 걸고 티켓 `inbox/jp/20260913T1730Z__validation__JP_MULTI__census_ragged_row.md` 발주. `jesr_sources_2026Q1.csv` 6행·`jp_insurers.csv` 4행도 같은 모양이나 **이 빌더가 읽는 열은 넘침 앞쪽**이라 영향 0(실측) — RED 로 걸지 않았다.
+> - **변이시험 11/11 발화**(사본에서만, 종료 후 원본 md5 `c03fad75…` 동일 확인): 리터럴 15 재삽입 · 항등식 호출 삭제 · 열수검사 삭제 · preliminary 검사 삭제 · 집합검사 제거(개수만) · posted==0 가드 제거 · main() 배포항등식 호출 삭제 · company_en 중복검사 제거 · None-취약 정렬 복귀 · as_of 라벨 리터럴 복귀 · unknown status 검사 제거.
+> - **배선 ≠ 돈다**: 단위 테스트는 검사 함수를 직접 부르므로 호출 한 줄을 지워도 통과한다. 그래서 ① 진짜 빌더를 돌려 exit code 를 재는 케이스 5종(빈 census·ragged·preliminary·company_en 중복·esr_pct 결측) ② 데이터로 도달 불가능한 배포 항등식은 AST 배선 검사로 못 박았다.
+> - 검증: 빌더 exit 0 · `[source-gate] … RED 0건` · `jp/jesr_esr.json`·`jesr_master.json` 이 `generated_at` 외 **바이트 동일** · `pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py tests/test_deploy_assets.py -q` **79 passed** · 축소 묶음 5종 **197 passed·4 skipped** · `prepush_check.py --scope-only` = `REDUCED (jp-scope)`.
+> - **잔여**: `NEXT_UPDATE="2026-10-31"` 은 데이터에서 파생할 수 없는 편집상 약속이라 리터럴로 두고 **경고만** 인쇄한다(지난 날짜가 되면). RED 로 하면 데이터가 안 바뀐 날짜 경계에서 빌더와 배포 테스트가 동시에 터지는 시한폭탄이 된다.
+
 **(2026-09-13, 3차) push 게이트 범위 판정을 `prepush_check.py` 안에 구현 — 규칙이 문서에만 있어서 강제도 완화도 안 되던 자리다.** owner 지적: "한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 된다". `CLAUDE.md` §5 는 2026-09-12 에 이미 "번들 diff 가 jp 범위뿐이면 한국 마스터 게이트를 안 돌린다" 고 적어 뒀는데 훅은 **그 규칙을 코드로 보지 않았다**(무조건 전부 실행). 실측 재현: jp 만 바꾼 번들에서 `PRE-PUSH VERDICT … gate RED=197 · K-ICS rule gate=BLOCK … BLOCKED`(exit 2) — 197건 전부 한국 원문 `data/disclosure/` 부재 때문이고 jp 변경과 인과 0.
 
 > 신설: `prepush_check.py` §0(`classify_path`/`decide_scope`/`collect_changed_paths`/`resolve_scope`/`print_scope` + `_run_korean_master_gates()` 로 한국 축 묶음 분리) · `tests/test_prepush_scope.py`(65케이스) · `tests/test_push_gate_wiring.py::test_wired_means_wired_in_the_full_gate_only`.

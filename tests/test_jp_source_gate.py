@@ -276,6 +276,16 @@ def test_skip_verdicts_are_yellow_not_red(mod, tmp_path, verdict):
 
     §2 초안은 "같은 문장" 이었고 그대로 걸면 표 행·차트 데이터라벨로만 공존하는 7사가
     거짓 RED 였다. skip 두 종은 차단하지 않고 YELLOW 로 보고한다.
+
+    **역할 분담(2026-09-14, UH-25 배선 시 명시).** 이 테스트가 지키는 것은
+    **빌더의 exit code 가 skip verdict 로는 안 바뀐다** 는 것 하나다 — 합성 시나리오에서
+    `source_gate_check` 의 반환 errors 만 본다. UH-25 로 신설된
+    `test_live_esr_evidence_has_no_unexempted_unverified_value` 는 **다른 것**을 지킨다:
+    저장소에 실린 **배포본 증거 파일**에 그런 행이 면제 없이 남아 있으면 push 를 막는다.
+    둘은 모순이 아니다 — 조정치 축이 이미 정확히 같은 모양이다(빌더 YELLOW +
+    라이브 증거 테스트가 이빨). 이 테스트가 깨졌다면 severity 가 RED 로 승격된 것이고,
+    그건 UH-25 가 고른 설계가 아니다(근거: build_jesr_page_json.py 의
+    ESR_ADJUSTED_NOT_JUDGED 위 주석 §severity 3개).
     """
     assert _run(mod, tmp_path, esr_verdict=verdict) == []
 
@@ -619,6 +629,186 @@ def test_adjusted_value_range_is_the_builders_not_a_retyped_literal(mod):
     """값 후보 범위는 빌더가 정본이다. 재타이핑하면 수집기와 게이트가 서로 다른 범위를 쓴다."""
     c = _collector()
     assert (c.ADJ_PCT_MIN, c.ADJ_PCT_MAX) == (mod.ESR_PCT_MIN, mod.ESR_PCT_MAX)
+
+
+# --------------------------------------------------------------------------
+# JP_ESR_UNVERIFIED_VALUE — "이 화면값은 **어떤 축으로든** 판정된 적이 있나" (UH-25)
+#
+# 위 두 축은 각자 자기 축의 결론을 본다. 비-PDF 출처는 **둘을 동시에 침묵시킨다**:
+# 수집기의 `is_pdf` 분기가 `verdict="skip_landing"`(ESR_VERDICT_YELLOW = 인쇄만) 과
+# `adjusted_verdict="not_applicable"`(ESR_ADJUSTED_ABSTAIN = 기권) 을 **같이** 적기 때문에
+# `JP_ESR_NOT_IN_SOURCE` 도 `JP_ESR_ADJUSTED_FIGURE` 도 발화하지 않고 빌더는 exit 0 · RED 0 이다.
+# 2026-09-13 라이브에 T&D 222% 1건이 정확히 그 상태였다(증거 evidence 는 「본문에 222 표기가
+# 안 보인다」 였는데도 게이트는 green).
+#
+# 메커니즘이 **둘**이라 억제도 둘 다 다룬다 — 판정식은 논리곱(=0축)이 아니라 논리합이고,
+# 아래 테스트가 **두 필드를 각각** 변이시켜 그걸 잰다. 수집기가 바뀌면 반쪽만 재현될 수 있고,
+# 곱으로 걸면 그 반쪽이 빠져나간다.
+#
+# 오탐 억제의 선: `abstain_no_prose` 는 **발화하지 않는다**. 그건 PDF 를 실제로 읽고
+# 「라벨동반 산문 조각이 0개」 라고 판정한 결과(표·차트 전용 문서)이고 1차 축이 `found` 로
+# 살아 있다. 2026-09-14 실측으로 posted 16사 중 8사가 그 모양 — 넣으면 정상 8사가 거짓 발화다.
+# --------------------------------------------------------------------------
+
+def _yellow_lines(out: str, rule: str) -> list[str]:
+    return [ln for ln in out.splitlines() if f"/YELLOW] {rule}" in ln]
+
+
+@pytest.mark.parametrize("kw", [
+    {"esr_verdict": "skip_landing", "adjusted": "not_applicable"},
+    {"esr_verdict": "skip_no_text", "adjusted": "not_applicable"},
+])
+def test_unverified_value_is_yellow_not_red(mod, tmp_path, kw):
+    """severity 는 YELLOW — 빌더 exit code 를 바꾸지 않는다(조정치 축과 같은 모양).
+
+    RED 로 걸면 ① 위 `test_skip_verdicts_are_yellow_not_red` 와 정면으로 모순되고
+    ② UH-25 가 적은 구조적 긴장(T&D 의 비-PDF URL 은 만료 호스트를 피하려고 고른 것이라
+    데이터 오류가 아니다)에서 **정상 재빌드가 막힌다**. 이빨은 아래 라이브 대조가 쥔다.
+    """
+    assert _run(mod, tmp_path, **kw) == []
+
+
+@pytest.mark.parametrize("verdict", ["skip_landing", "skip_no_text"])
+def test_unverified_value_fires_on_the_skipped_primary_axis(mod, tmp_path, capsys, verdict):
+    """**필드 (a) 단독.** `verdict` 만 skip 으로 바꾼다(조정치 축은 멀쩡한 `unqualified`).
+
+    반쪽 회귀 — 수집기가 1차 축만 건너뛰는 상태 — 를 논리곱으로 걸면 놓친다.
+    """
+    _, out = _gate_stdout(mod, tmp_path, capsys, esr_verdict=verdict)
+    assert _yellow_lines(out, "JP_ESR_UNVERIFIED_VALUE"), (
+        f"1차 축이 {verdict} 인데 무검증 발화가 없다:\n{out}")
+
+
+def test_unverified_value_fires_on_the_not_applicable_adjusted_axis(mod, tmp_path, capsys):
+    """**필드 (b) 단독.** `adjusted_verdict` 만 `not_applicable` 로 바꾼다(1차 축은 `found`).
+
+    `not_applicable` 은 「문서가 애초에 판정 대상이 아니었다」 는 뜻이라, 지금 수집기에서는
+    1차 축도 같이 죽는다. 그래도 **필드 단위로** 거는 이유는 수집기가 바뀌면 둘이 갈릴 수
+    있고, 갈린 뒤엔 이 축이 조용히 사라지기 때문이다.
+    """
+    _, out = _gate_stdout(mod, tmp_path, capsys, adjusted="not_applicable")
+    assert _yellow_lines(out, "JP_ESR_UNVERIFIED_VALUE"), (
+        f"조정치 축이 not_applicable 인데 무검증 발화가 없다:\n{out}")
+
+
+def test_unverified_value_fires_on_the_real_uh25_shape(mod, tmp_path, capsys):
+    """**사고 재현.** 비-PDF 출처가 실제로 만드는 조합 — 두 필드가 동시에 죽은 행.
+
+    사람이 바로 고칠 수 있어야 하므로 메시지가 두 축을 **둘 다** 이름으로 적는지 본다.
+    """
+    errors, out = _gate_stdout(mod, tmp_path, capsys,
+                               esr_verdict="skip_landing", adjusted="not_applicable")
+    assert errors == []
+    fired = _yellow_lines(out, "JP_ESR_UNVERIFIED_VALUE")
+    assert len(fired) == 1, f"발화가 1건이 아니다:\n{out}"
+    assert "JP_ESR_NOT_IN_SOURCE" in fired[0] and "JP_ESR_ADJUSTED_FIGURE" in fired[0], (
+        f"두 축을 다 이름으로 적지 않는다 — 사람이 어디가 죽었는지 모른다:\n{fired[0]}")
+
+
+@pytest.mark.parametrize("adjusted", ["unqualified", "abstain_no_prose",
+                                      "adjusted_alt", "adjusted_only"])
+def test_unverified_value_does_not_fire_on_the_measured_legit_shapes(mod, tmp_path, capsys,
+                                                                     adjusted):
+    """**오탐 억제.** 1차 축이 `found` 인 행은 최소 한 축을 통과했으므로 무검증이 아니다.
+
+    특히 `abstain_no_prose` 를 여기 넣으면 2026-09-14 실측 기준 정상 8사(posted 16사 중)가
+    한꺼번에 거짓 발화한다 — 그게 이 룰을 오늘 걸 수 있게 만든 선이다(UH-5·UH-9 선례).
+    `adjusted_alt`/`only` 는 조정치 축이 **판정을 했다**(발화했다) 는 뜻이라 무검증이 아니다.
+    """
+    _, out = _gate_stdout(mod, tmp_path, capsys, adjusted=adjusted)
+    assert not _yellow_lines(out, "JP_ESR_UNVERIFIED_VALUE"), (
+        f"정상 형태 adjusted={adjusted} 에서 거짓 발화:\n{out}")
+
+
+def test_unverified_value_exception_is_cell_scoped(mod, tmp_path, capsys):
+    """면제 경로가 **실제로 동작하는가** + 한 줄이 축 전체를 눈감기지 못하는가.
+
+    10/31 J-ICS 공시 라운드에 정당하게 비-PDF 출처밖에 없는 회사가 나올 수 있어 이 경로가
+    열려 있어야 한다. 등재는 owner 권한이고 레지스트리는 fail-closed 다.
+    """
+    kw = {"esr_verdict": "skip_landing", "adjusted": "not_applicable"}
+    ok = _exc(rule="JP_ESR_UNVERIFIED_VALUE", company="テスト生命")
+    _, out = _gate_stdout(mod, tmp_path, capsys, exceptions=[ok], **kw)
+    assert "면제 적용 JP_ESR_UNVERIFIED_VALUE" in out
+    assert not _yellow_lines(out, "JP_ESR_UNVERIFIED_VALUE"), out
+    other = _exc(rule="JP_ESR_UNVERIFIED_VALUE", company="よその生命")
+    _, out2 = _gate_stdout(mod, tmp_path, capsys, exceptions=[other], **kw)
+    assert _yellow_lines(out2, "JP_ESR_UNVERIFIED_VALUE"), out2
+
+
+def test_unverified_exception_does_not_cover_the_procedural_rules(mod, tmp_path):
+    """면제는 '비-PDF 밖에 없다' 만 덮는다. '축을 안 돌렸다'(필드 부재) 는 못 덮는다."""
+    exc = _exc(rule="JP_ESR_UNVERIFIED_VALUE", company="テスト生命")
+    assert "JP_SOURCE_EVIDENCE_INCOMPLETE" in _ids(
+        _run(mod, tmp_path, drop_adjusted=True, exceptions=[exc]))
+
+
+def test_unverified_rows_are_counted_not_silently_skipped(mod, tmp_path, capsys):
+    """무검증은 SKIP 이 아니라 **따로 세는 분류**다 — 몇 사가 무검증인지 요약에 남아야 한다.
+
+    "룰이 0이라고 말한다" 와 "그 축이 깨끗하다" 는 다른 말이고, 그 차이가 census 로만 보인다.
+    """
+    _, out = _gate_stdout(mod, tmp_path, capsys,
+                          esr_verdict="skip_landing", adjusted="not_applicable")
+    assert "JP_ESR_UNVERIFIED_VALUE) census" in out and "무검증=1" in out, out
+    _, clean = _gate_stdout(mod, tmp_path, capsys)
+    assert "판정됨=1 무검증=0" in clean, clean
+
+
+def test_primary_axis_distribution_is_printed_like_the_adjusted_one(mod, tmp_path, capsys):
+    """UH-25 remedy ②. 종전에는 **조정치 축만** 분포를 찍고 1차 축은 안 찍었다.
+
+    「기권은 세지 않으면 사각이 된다」 를 한쪽 축에만 적용한 상태였다 — 분포가 skip_* 로
+    쏠려 있는데 RED 0 이면 그건 깨끗한 게 아니라 안 본 것이다.
+    """
+    _, out = _gate_stdout(mod, tmp_path, capsys, esr_verdict="skip_landing",
+                          adjusted="not_applicable")
+    assert "1차 축(JP_ESR_NOT_IN_SOURCE) 판정 분포" in out, out
+    assert "skip_landing=1" in out, out
+
+
+def test_unverified_predicate_is_the_builders_not_a_retyped_one(mod):
+    """판정식은 빌더가 정본이다. 라이브 대조 테스트가 조건을 재타이핑하면 게이트와 테스트가
+    **서로 다른 룰**을 검증하게 된다(상관행렬 재타이핑 금지와 같은 이유).
+
+    여기서 보는 것: 빌더가 판정식을 공개 함수로 노출하고 있고, 그 함수가 두 축을 각각 본다.
+    """
+    fn = mod.unverified_value_reasons
+    assert fn({"verdict": "found", "adjusted_verdict": "unqualified"}) == []
+    assert fn({"verdict": "found", "adjusted_verdict": "abstain_no_prose"}) == []
+    assert len(fn({"verdict": "skip_landing", "adjusted_verdict": "unqualified"})) == 1
+    assert len(fn({"verdict": "found", "adjusted_verdict": "not_applicable"})) == 1
+    assert len(fn({"verdict": "skip_landing", "adjusted_verdict": "not_applicable"})) == 2
+    # 필드 부재는 여기서 판정하지 않는다 — 그건 EVIDENCE_INCOMPLETE 의 몫이다.
+    assert fn({"verdict": "found"}) == []
+
+
+def test_live_esr_evidence_has_no_unexempted_unverified_value(mod):
+    """**이 YELLOW 의 이빨 — UH-25 가 지적한 비대칭을 닫는 자리.**
+
+    조정치 축은 같은 YELLOW 인데도 `test_live_esr_evidence_has_no_unexempted_adjusted_figure`
+    로 push 묶음에 이빨이 있었고, skip 축에는 라이브 대조가 **하나도 없었다**. 유일한 테스트
+    `test_skip_verdicts_are_yellow_not_red` 는 *침묵을 단언한다*. 그래서 T&D 222% 가 값 검증
+    0축으로 라이브에 올라가 있어도 아무것도 막지 않았다.
+
+    깨졌다면 셋 중 하나다 — ① 1차 출처를 판정 가능한 문서(PDF·有報)로 바꾼다
+    ② 값·URL 을 고치고 수집기를 다시 돌린다 ③ 정당하게 비-PDF 밖에 없으면 owner 가
+    `J-ESR/jp_source_exceptions.json` 에 등재한다. **테스트를 고치는 것이 아니다.**
+
+    판정식은 빌더의 `unverified_value_reasons()` 를 그대로 부른다(재타이핑 금지).
+    """
+    ev = json.loads((JESR / "esr_in_source_health.json").read_text(encoding="utf-8"))
+    exempt, errors, _notes = mod.load_source_exceptions(today=None)
+    assert errors == [], f"면제 레지스트리 자체가 RED 다: {errors}"
+    fired = [(r, mod.unverified_value_reasons(r)) for r in ev["rows"]]
+    fired = [(r, why) for r, why in fired if why
+             and ("JP_ESR_UNVERIFIED_VALUE", r.get("company"), "source_url") not in exempt]
+    assert not fired, (
+        "값 검증을 한 축도 받지 않은 행이 배포본 증거에 남아 있다 — 이 값은 어떤 원문과도"
+        " 대조된 적이 없다:\n" +
+        "\n".join(f"  {r.get('company')} esr={r.get('esr_pct')}"
+                  f" doc_kind={r.get('doc_kind')} url={r.get('url')}\n      · " +
+                  "\n      · ".join(why) for r, why in fired))
 
 
 # --- 수집기 판정식 자체(오프라인, 실제 원문 문장으로) -----------------------
