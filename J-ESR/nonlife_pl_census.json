@@ -297,7 +297,8 @@
     }
    },
    "notes": [
-    "앵커 p46 正味収入保険料 일치 → prev_cur"
+    "앵커 p46 正味収入保険料 일치 → prev_cur",
+    "BS: p41 법정 貸借対照表(前期金額/構成比/当期金額/構成比/増減率 5열) — idx0=前期,idx2=当期"
    ]
   },
   "daiichi_ipet": {
@@ -688,8 +689,8 @@
    "source_doc": "raw/fy2025_samples/others/mitsui_direct.pdf",
    "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
    "pages": {
-    "bs": null,
-    "pl": null
+    "bs": 49,
+    "pl": 53
    },
    "items": {
     "pl_ordinary_revenue": {
@@ -734,7 +735,8 @@
     }
    },
    "notes": [
-    "앵커 p53 正味収入保険料 일치 → prev_cur"
+    "앵커 p53 正味収入保険料 일치 → prev_cur",
+    "BS: p49 법정 貸借対照表(前期金額/構成比/当期金額/構成比/増減率 5열) — idx0=前期,idx2=当期"
    ]
   },
   "nisshin_fire_marine": {
@@ -890,6 +892,250 @@
     "bs_identity prev: 資産合計111,287 vs 負債86,131+純資産25,155=111,286、原文の丸め差1百万円(許容誤差内、cur は完全一致)。"
    ]
   },
+  "pet_and_family": {
+   "company_jp": "ペット＆ファミリー損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/pet_and_family.pdf",
+   "doc_type": "計算書類 貸借対照表(p43)/損益計算書(p46) — 본문이 스캔 이미지라 텍스트 추출 불가, Read 로 직접 판독",
+   "pages": {
+    "bs": 43,
+    "pl": 46
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 11260,
+     "cur": 12645
+    },
+    "pl_underwriting_revenue": {
+     "prev": 11256,
+     "cur": 12628
+    },
+    "pl_net_premiums_written": {
+     "prev": 11256,
+     "cur": 12628
+    },
+    "pl_interest_dividend_income": {
+     "prev": 4,
+     "cur": 17
+    },
+    "pl_ordinary_expenses": {
+     "prev": 11123,
+     "cur": 12564
+    },
+    "pl_underwriting_expenses": {
+     "prev": 8757,
+     "cur": 10169
+    },
+    "pl_net_claims_paid": {
+     "prev": 6637,
+     "cur": 7478
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 525,
+     "cur": 633
+    },
+    "pl_commissions_collection": {
+     "prev": 1170,
+     "cur": 1220
+    },
+    "pl_operating_general_admin": {
+     "prev": 2365,
+     "cur": 2395
+    },
+    "pl_underwriting_profit": {
+     "prev": 132,
+     "cur": 63
+    },
+    "pl_ordinary_profit": {
+     "prev": 137,
+     "cur": 80
+    },
+    "pl_extraordinary_losses": {
+     "prev": 0,
+     "cur": 0
+    },
+    "pl_pretax_profit": {
+     "prev": 137,
+     "cur": 80
+    },
+    "pl_income_taxes": {
+     "prev": 42,
+     "cur": 30
+    },
+    "pl_net_income": {
+     "prev": 94,
+     "cur": 50
+    }
+   },
+   "notes": [
+    "BS/PL 표 본문이 이미지로 인쇄돼 fitz get_text 로 텍스트가 안 잡힌다(1차 라운드에서 저장한 pet_p43.png/pet_p46.png 를 Read 도구로 직접 판독) — 1차 G.json 의 [12628] 単一값(prev 결측)을 p46 법정 損益計算書 정식 표(前期 2024年度/当期 2025年度 2열)로 교체, prev=11256 확인",
+    "pl_underwriting_profit 는 법정 損益計算書 본문에 없고 p23 각주 '⑥保険引受利益' 추이표(3개년)에서 직접 확인: 2024年度 132 / 2025年度 63 — 추정·보간 아님, 각주에 명시된 원문 숫자",
+    "bs_valuation_diff·bs_securities·bs_loans·bs_bonds·bs_policyholder_dividend_reserve: 원문 BS에 해당 행 자체가 없음(전액 예적금 운용, 유가증권 보유 없음) → null",
+    "pl_extraordinary_gains: 원문 '－'(대시) → null. pl_extraordinary_losses 는 '0' 실수치로 인쇄 → 0"
+   ]
+  },
+  "rakuten_nonlife": {
+   "company_jp": "楽天損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/rakuten_nonlife.pdf",
+   "doc_type": "業績データ 貸借対照表/損益計算書(法定様式)",
+   "pages": {
+    "bs": 96,
+    "pl": 107
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 52229,
+     "cur": 43980
+    },
+    "pl_underwriting_revenue": {
+     "prev": 46965,
+     "cur": 42502
+    },
+    "pl_net_premiums_written": {
+     "prev": 26310,
+     "cur": 29693
+    },
+    "pl_interest_dividend_income": {
+     "prev": 3538,
+     "cur": 1228
+    },
+    "pl_ordinary_expenses": {
+     "prev": 63322,
+     "cur": 45987
+    },
+    "pl_underwriting_expenses": {
+     "prev": 45355,
+     "cur": 36381
+    },
+    "pl_net_claims_paid": {
+     "prev": 18926,
+     "cur": 19892
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 3064,
+     "cur": 2200
+    },
+    "pl_commissions_collection": {
+     "prev": 3582,
+     "cur": 3566
+    },
+    "pl_operating_general_admin": {
+     "prev": 9873,
+     "cur": 8840
+    },
+    "pl_ordinary_profit": {
+     "prev": -11092,
+     "cur": -2006
+    },
+    "pl_extraordinary_gains": {
+     "prev": 5593,
+     "cur": 10
+    },
+    "pl_extraordinary_losses": {
+     "prev": 7625,
+     "cur": 2105
+    },
+    "pl_pretax_profit": {
+     "prev": -13124,
+     "cur": -4102
+    },
+    "pl_income_taxes": {
+     "prev": 7526,
+     "cur": -233
+    },
+    "pl_net_income": {
+     "prev": -20650,
+     "cur": -3868
+    }
+   },
+   "notes": [
+    "BS p96/PL p107 법정 계산서류 직접 확인(diag 로 표제 배제 사유 재확인, 괄호=내역표기 부호 아님 처리)"
+   ]
+  },
+  "rescue_nonlife": {
+   "company_jp": "レスキュー損害保険",
+   "unit": "JPY_million",
+   "source_doc": "https://www.rescue-sonpo.jp/upload_files/news/kessan2025.pdf (cur) + https://www.rescue-sonpo.jp/upload_files/news/kessan2024.pdf (prev) -- NOT raw/fy2025_samples/others/rescue_nonlife.pdf (disclo2025.pdf, 50p scanned image, 0 chars extractable). Found better source: same company site's Companies-Act kessan-koukoku (決算公告) PDFs, which carry real text.",
+   "doc_type": "決算公告(会社法440条) 貨借対照表・損益計算書 -- 単体(連結ではない方)",
+   "pages": {
+    "bs": 6,
+    "pl": 9
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "cur": 843,
+     "prev": 816
+    },
+    "pl_underwriting_revenue": {
+     "cur": 794,
+     "prev": 770
+    },
+    "pl_net_premiums_written": {
+     "cur": 783,
+     "prev": 770
+    },
+    "pl_interest_dividend_income": {
+     "cur": 3,
+     "prev": 0
+    },
+    "pl_ordinary_expenses": {
+     "cur": 910,
+     "prev": 944
+    },
+    "pl_underwriting_expenses": {
+     "cur": 487,
+     "prev": 512
+    },
+    "pl_net_claims_paid": {
+     "cur": 189,
+     "prev": 229
+    },
+    "pl_loss_adjustment_expenses": {
+     "cur": 45,
+     "prev": 39
+    },
+    "pl_commissions_collection": {
+     "cur": 168,
+     "prev": 202
+    },
+    "pl_operating_general_admin": {
+     "cur": 313,
+     "prev": 269
+    },
+    "pl_ordinary_profit": {
+     "cur": -67,
+     "prev": -128
+    },
+    "pl_extraordinary_losses": {
+     "cur": 3,
+     "prev": 29
+    },
+    "pl_pretax_profit": {
+     "cur": -70,
+     "prev": -158
+    },
+    "pl_income_taxes": {
+     "cur": -109,
+     "prev": -38
+    },
+    "pl_net_income": {
+     "cur": 38,
+     "prev": -119
+    }
+   },
+   "notes": [
+    "원본 disclo2025.pdf(J-ESR/raw/fy2025_samples/others/rescue_nonlife.pdf, 17.8MB/50p)는 이미지만 있는 스캔 PDF로 fitz get_text 전페이지 0자 확인(50p 전부 0). tesseract 5(jpn팬 설치됨)로 OCR도 가능하지만, 대신 회사 홈페이지에서 더 좋은 원본을 발견해 그쪽을 쓰기로 전환.",
+    "사이트 럼페이지(https://www.rescue-sonpo.jp/)에서 링크 탐색 -> kessan2025.pdf(제7기 결산공고, 회사법440조 법정공시)가 텍스트 포함(10p, 8809자). 동일패턴으로 kessan2024.pdf(제6기, 전기)도 존재 확인하고 함께 사용.",
+    "kessan2025.pdf p9(1-idx, 単体損益計算書)의 正味収入保险料=783 이 스펙의 기대값(cur 783)과 정확히 일치, kessan2024.pdf p8(1-idx)의 同 값=770 이 기대값(prev 770)과 정확히 일치 -> 회사/연도 오인 아님을 강하게 확인.",
+    "BS/PL 모두 単体(solo) 표 사용(連結表는 각 PDF 앞부분에 따로 있음, 사용 안 함).",
+    "pages 필드는 cur년도 문서(kessan2025.pdf) 기준(bs p6, pl p9, 1-idx). prev년도 값은 별도 문서 kessan2024.pdf p5(bs)/p8(pl) (1-idx) 에서 따로 추출.",
+    "회사가 '금액은 기리단위미만을 절사하여 표시'라고 명시(각 문서 마지막 주). 그 영향으로 소목당 합계 및 bs_identity가 두 연도 모두 diff=1(백만엔 단위 허용오차 ±1 이내) — 수치 수정 안 하고 그대로 놓음.",
+    "pl_underwriting_profit(保险引受利益/損失)와 pl_investment_pl(資産運用損益) 럼은 이 決算公告 양식에 별도 소계로 찍힌 라인이 없어(수익측 資産運用収益만 있고 대응하는 資産運用費用/損益계선은 없음) null 유지(추정 금지).",
+    "bs_policyholder_dividend_reserve, bs_loans, bs_bonds, bs_valuation_diff 모두 양 연도 원문에 해당 라인 자체가 없어 null(자회사주는 이동평균법 원가법, 평가차액금 라인 자체 없음).",
+    "검산 4축(손해율/사업비율 역산): cur 손해율=(189+45)/783=29.9% (화면값 30.0, Δ=-0.1pt), 사업비율=(168+313)/783=61.4% (화면값 61.5, Δ=-0.1pt) — 둘 다 허용오차 내."
+   ]
+  },
   "sakura_nonlife": {
    "company_jp": "さくら損害保険",
    "unit": "JPY_million",
@@ -1014,6 +1260,81 @@
    },
    "notes": [
     "앵커 p87 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "secom_nonlife": {
+   "company_jp": "セコム損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/secom_nonlife.pdf",
+   "doc_type": "財産の状況 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 72,
+    "pl": 77
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 60608,
+     "cur": 69173
+    },
+    "pl_underwriting_revenue": {
+     "prev": 57719,
+     "cur": 64777
+    },
+    "pl_net_premiums_written": {
+     "prev": 57428,
+     "cur": 60000
+    },
+    "pl_interest_dividend_income": {
+     "prev": 3205,
+     "cur": 4087
+    },
+    "pl_ordinary_expenses": {
+     "prev": 56677,
+     "cur": 63255
+    },
+    "pl_underwriting_expenses": {
+     "prev": 45508,
+     "cur": 52263
+    },
+    "pl_net_claims_paid": {
+     "prev": 28581,
+     "cur": 29547
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 3621,
+     "cur": 3545
+    },
+    "pl_commissions_collection": {
+     "prev": 9119,
+     "cur": 9642
+    },
+    "pl_operating_general_admin": {
+     "prev": 11088,
+     "cur": 10985
+    },
+    "pl_ordinary_profit": {
+     "prev": 3930,
+     "cur": 5917
+    },
+    "pl_extraordinary_losses": {
+     "prev": 389,
+     "cur": 290
+    },
+    "pl_pretax_profit": {
+     "prev": 3540,
+     "cur": 5627
+    },
+    "pl_income_taxes": {
+     "prev": 299,
+     "cur": 1110
+    },
+    "pl_net_income": {
+     "prev": 3241,
+     "cur": 4517
+    }
+   },
+   "notes": [
+    "BS p72/PL p77 법정 계산서류 직접 확인(diag 로 표제 배제 사유 재확인, 괄호=내역표기 부호 아님 처리)"
    ]
   },
   "sompo_direct": {
@@ -1169,8 +1490,8 @@
    "source_doc": "raw/fy2025_samples/others/tokiomarine_direct.pdf",
    "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
    "pages": {
-    "bs": null,
-    "pl": null
+    "bs": 64,
+    "pl": 68
    },
    "items": {
     "pl_ordinary_revenue": {
@@ -1223,7 +1544,8 @@
     }
    },
    "notes": [
-    "앵커 p68 正味収入保険料 일치 → prev_cur"
+    "앵커 p68 正味収入保険料 일치 → prev_cur",
+    "BS: p64 법정 貸借対照表(前期金額/構成比/当期金額/構成比/増減率 5열) — idx0=前期,idx2=当期"
    ]
   },
   "yamap_naturance": {

@@ -1,9 +1,19 @@
 # Insurequant TODO — jp 레인 (일본 ESR)
 
-> Last updated: 2026-09-15 (33) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
+> Last updated: 2026-09-15 (34) · 도메인 문서: `docs/domains/claude-agent-jp.md` · Changelog: `docs/changelog_jp.md` · inbox: `inbox/jp/`
 > Status 는 최신 5개만 유지, 밀린 항목은 [`docs/todo_archive_jp.md`](docs/todo_archive_jp.md) 로(무수정).
 
 ## Status
+
+**🟢 2026-09-15 (34) 남은 10사 2차 — 貸借対照表 21→28사, 아직 못 채운 건 3사뿐(jp).**
+1차에서 막혔던 10사를 3개조로 재발사(1차 3개조는 세션 한도로 죽었다). **E조 6사·H조 1사 전건 성공**, F조(출처 교체 3사)는 진행 중.
+**E조가 푼 것** ① `capital`·`三井ダイレクト`·`東京海上ダイレクト` BS 가 안 잡힌 진짜 이유는 **前期金額/前期構成比/当期金額/当期構成比/増減率 5열 구성비 표**였다(내 `MAX_COLS=3` 이 통째로 거부).
+② `楽天` 은 5년추이표(p10/p73)와 経理説明용 PL(p72)에 속았고 법정 ②損益計算書는 p107 이었다. ③ `セコム` 은 `(57,428)` 처럼 **완전괄호가 음수가 아니라 내역 표기** — p78 각주(収入保険料73,360−支払再保険料13,360=差引60,000)로 양수 확인.
+④ `ペット＆ファミリー` 는 법정 계산서류가 **스캔 이미지**라 텍스트가 안 잡혀, 페이지 PNG 를 직접 판독해 prev=11256 을 확보(출처에 그 사실을 명시).
+**H조**: `レスキュー` 는 OCR 대신 **더 나은 원본**을 찾았다 — 같은 사이트의 **決算公告**(회사법 440조) PDF 가 실텍스트였다(당기 kessan2025 / 전기 kessan2024 2개 문서).
+**내 파서 버그 1건과 그 감사**: `val()` 이 완전괄호를 음수로 처리하고 있었다(セコム 에서 발각). **이미 커밋된 21사를 전수 감사**한 결과 그 PDF 들엔 완전괄호 수치가 하나도 없었고, 커밋본의 음수 19건은 전부 △/▲ 에서 온 진짜 음수였다(야마프 경상손실 −359, SOMPOダイレクト 이월결손금 −60,767, 法人税等 환입 등) — **오염 없음**.
+**결과**: 손보 31사 중 貸借対照表 **28사**(5→21→28) · 損益 5항목 이상 **27사**. 검증 4축 전건 통과(항등식 diff ≤ ±1, 보험료 당기·전기 일치, 역산 손해율 ±0.1pt 이내).
+**다음**: 남은 3사(あいおい·MS&AD HD·ソニー損保)는 출처가 그룹 IR 덱이라 BS 자체가 없어 URL 교체가 필요 — F조 진행 중.
 
 **🟢 2026-09-15 (33) 손보 법정 BS/PL 추출 — 貸借対照表 5→21사, 損益計算書 5→23사(jp).**
 손해율 전수조사로 손보 31사 목록이 생겼는데 **26사는 `bs.status="not_obtained"`, PL 도 보험료 1개뿐**이었다. 그 26사 PDF 를 전부 받아(126MB, gitignore) 법정 単体 貸借対照表/損益計算書를 뽑았다.
@@ -59,25 +69,6 @@ Chromium 기본 Secure DNS 가 이 환경의 커스텀 CA 를 안 믿음 ② 그
 `損害調査費` 가 4사에서 검색됐지만 **3사(ジェイアイ·第一アイペット·日本地震再保険)는 표준 산식을 명기한 것**이고 진짜 차이는 トーア 1사뿐이다 — 안 갈랐으면 정상 3사를 이상값으로 몰 뻔했다.
 **아직 census·화면 미반영.** 남은 결정 3건은 화면 구조라 owner 판단이 필요하다: ① caveat 4건을 별도 열로 뺄지 라벨만 붙일지 ② `jesr_detail.json` 이 10사 구조인데 24사를 어떻게 실을지 ③ SOMPOダイレクト `source_url` 이 비율표 없는 분책(21p)을 가리킨다 — **다만 그 행은 `not_yet` 이라 게이트 검사 대상이 아니어서 T&D 같은 false-green 이 아니다**(오케스트레이터가 처음에 같은 급으로 말한 것을 정정). census `checked_at` 을 건드리면 전 행 기준으로 수집기 2종이 다시 돌아야 하므로 병합 때 묶는다.
 **다음**: ① owner 결정 3건 ② 결정 후 census 병합 + 수집기 재실행 1회 + 빌더 ③ 10/31 재census 와 UH-22 승격 판단.
-
-**🟢 2026-09-14 (29) T&D 222% source_url 검증 — 값은 전부 원문과 일치, source_url 이 랜딩페이지였던 것만 문제(jp).**
-긴급 티켓(`esr_in_source_health.json` T&D verdict=skip_landing, adjusted_verdict=not_applicable — census `source_url`
-이 PDF 가 아니라 決算短信・補足資料 **목록** 페이지 `ir/document/results.html`). 원인: 그 페이지는 정적 HTML 이 아니라
-E-IR Parts(ssl4.eir-parts.net) 외부 SaaS 위젯이 JS 로 채우는 목록이라 실제 PDF 링크가 정적 수집에 안 보인다
-(`/ir/event/presentation.html` 決算説明資料 도 같은 위젯). **회사 자체 PDF 로 재검증**: 統合報告書2026(본편·データ編,
-`ir/document/annual/pdf/ar2026j_data.pdf`) p8 하이라이트표에 「ESR(内部管理モデル) 222%」가 グループ연결지표(グループ
-連結総資産·グループEV·グループ修正利益) 묶음 안에 명시 · 分割版 s4(コーポレートデータ) p3 5개년 트렌드표(…243% 222%)
-+ p12 용어집 정의(当社グループ, 内部管理モデル) · 分割版 s3(리스크관리) p24 방법론(VaR 99.5%, 1年). **교차검증**:
-有価証券報告書(EDINET S100Y9UP, 2026-06-11提出) p22 「内部管理モデルによるＥＳＲは、222％」(한정어 없음, `scan_pdf`
-adjusted_verdict=unqualified) + p53 재구성식 サープラス43,421億円÷エコノミック・キャピタル19,563億円=222%(전기 243% 와
-도 정합). **결론: census 값 222/scope=group/basis=internal_management/as_of=2026-03-31/preliminary=no 전부 정정 불필요
-— 문제는 source_url 한 필드뿐.** 6개 후보(회사 PDF 4·랜딩페이지 1·EDINET 1) 전수 http_status 200, `check_esr_in_source.py
-::scan_pdf` 그대로 import 해서 돌림(재구현 안 함). 산출 `J-ESR/proposal_td_source_url.json`(권고: source_url →
-`ar2026j_data.pdf`, doc_type 갱신문구 포함) — census·마스터·증거 파일은 건드리지 않음, 병합은 오케스트레이터 소관.
-부수: 같은 세션에서 inbox 티켓(한정어 10종 정본 확정 — 표 현행 유지, T&D 재검증에서도 한정어 0건 재확인) 처리.
-**다음**: ① census `source_url`/`doc_type` 셀 병합(오케스트레이터) ② 10/31 재census 때 목표레인지 하단 133% 재확인(이번
-조사 4개 문서에 133 언급 없음, 상단 225%(추가환원 트리거)만 재확인됨) ③ 다른 15사 중 landing-page 출처가 더 있는지
-`check_source_urls.py` doc_kind 로 스윕.
 
 ## Active follow-ups
 
