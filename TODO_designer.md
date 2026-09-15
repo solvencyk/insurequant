@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-09-15b · Stage 5/5 — designer
+> Last updated: 2026-09-15c · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,41 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-09-15c, 손해율 버블차트 폐지 → 적층막대 일원화 — owner 질의("비용 대비 효용"), 커밋만·라이브 미배포):**
+- **owner 질문: 손해율×사업비율 버블이 난잡함에 비해 값어치를 하냐, ESR 랭킹만 남기고 치울까.
+  재서 답했다 — ① 버블은 빼고 ② 패널 자체는 남긴다.**
+- **①-a 2D 자체는 정보가 있었다.** 손해율-사업비율 상관 **r = −0.096**(대각선이 아님). 합산율이
+  1.0pt 이내인 쌍 56개에서 손해율 차이 평균 **10.3pt**·최대 **35.6pt**(明治安田 37.7 vs SBI 73.3).
+  즉 "합산율 하나로 뭉개면 안 된다"는 맞다.
+- **①-b 그런데 적층막대가 그 정보를 안 잃는다.** 손해율·사업비율 두 값이 구간으로 그대로 보이고,
+  **합산율은 막대 길이 + 숫자**(버블에선 색 농도 하나뿐이었다 — 헤드라인 지표에 가장 약한 채널을
+  주고 있었다). 버블만의 추가 정보는 "원 크기=보험료" 하나인데 그건 이미 정렬 순서가 담당한다
+  (10만배 차이라 범례에 「面積比≠保険料比」 변명을 달고 있던 채널이다).
+- **①-c 실측 비교(1280px)**: 회사명 표시 버블 30사 중 일부만(라벨 충돌) → 막대 **31사 전건**.
+  겹친 쌍 버블 10조(최악 −20.4px) → 막대 **0조**. JS 에러 0, 가로 넘침 0.
+  **ECharts CDN(1,029,203 bytes)이 이 페이지에서 통째로 빠졌다** — 유일한 사용처가 버블이었다.
+  HTML −19,292 bytes.
+- **② "ESR 랭킹만 남긴다"는 안 된다 — 재보니 손보 ESR 은 5사뿐이고 그중 3개가 지주사다**
+  (au損保·明治安田損保 + SOMPO HD·東京海上 HD·MS&AD HD). 東京海上日動·三井住友海上·損保ジャパン·
+  あいおい 같은 **대형 사업회사는 ESR 랭킹에 아예 없다.** 손해율 패널을 치우면 손보 31사 중 26사가
+  화면에서 사라진다(마크업 주석에도 "이 회사들의 유일한 입구"라고 적혀 있다).
+- **③ 막대 척도에 버블과 같은 병이 남아 있어 같이 고쳤다.** 꼬리 2사(ヤマップ 230.0%·全管協
+  237.4%, 둘 다 事業費率>100%)가 트랙의 **49%**를 먹어 29사가 왼쪽에 뭉쳤다. 버블이 쓰던 것과
+  **같은 선·같은 이유**(事業費率>100% = 보험료보다 비용이 큰 구조적 이상)로 눈금에서 빼고 오른쪽
+  끝에서 打ち切り(사선 해치, 실수치는 우측 숫자·title 로 상시 개시). 실측 89.3%~98.4% 폭차
+  **27px → 52px**, 대형4사 12px → 23px.
+- **③-b 눈금 기준을 `list`(접힌 5사) → `full`(31사)로.** 종전엔 「もっと見る」로 척도가 바뀌고,
+  접힌 상태에선 maxV=97.1 이라 **100% 기준선이 오른쪽 끝에 붙어 있었다**(실측). 이제 양쪽 82% 고정.
+- **④ 칩: 정직하게 재니 내가 또 늘렸길래 도로 줄였다.** 버블 뷰 4칩/잔글씨 4줄 → 일람 뷰가
+  5칩/**5줄**이 됐다(버튼 뒤에 있던 6칩 범례가 상시 노출로 바뀌어서). 색 칩 2→1 병합 + caveat 칩
+  3줄을 **1줄**로 접어(印＝値に注記あり：Δ／OCR／Σ) **3칩/4줄**. 배지 자체는 각 행에 그대로고
+  긴 설명은 이미 배지 `title`·행 `aria-label` 에 있다 — 범례에서 중복이던 부분만 뺐다.
+  caveat 칩은 `data-caveat-cat` 으로 **실제로 그 印이 붙은 행이 있을 때만** 나온다.
+- **다음**: ESRランキング 범례 8개는 그대로다(2026-09-15b 에서 넘긴 건, owner 판단 대기).
+  일본 손보의 진짜 핵심축은 「引受으로 버느냐 運用으로 버느냐」인데(東京海上 引受利益은 経常利益의
+  **5%**, 三井住友 17%, 損保ジャパン 13% — 실측) `pl_underwriting_profit`/`pl_investment_pl` 이
+  5~6사뿐이라 아직 화면에 못 올린다. jp 레인 수집 타깃으로 넘긴다.
 
 **Recent (2026-09-15b, 버블 하단 잔글씨 7줄→4줄 — owner 반려("칩 남발"), 커밋만·라이브 미배포):**
 - **owner 지적이 맞다. 이번 세션에 내가 늘렸다.** 이 세션 전 범례는 5줄이었고(`1499f9f`), 버블
@@ -161,58 +196,6 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
 - **모델·소요**: Claude Sonnet 5, 단일 세션 약 1시간(탐색+구현+fixture 3종+Playwright 4라운드
   검증 포함).
 
-**Recent (2026-09-14, 손보 손해율 24사 — owner 발주(직접 지시, inbox 티켓 아님), 커밋만·라이브 미배포):**
-- **publishing 계약(`data_scope`/`ratio_caveat`)은 이 라운드 세션 시작 시점엔 `jp/jesr_detail.json`·
-  `jesr_esr.json` 에 아직 없었다(같은 라운드 병렬 작업) — **스크래치패드 fixture**로 개발
-  (`build_fixture.py`, 기존 10사 `data_scope:"full"` + 신규 24사 `ratio_only`, 그중 4사에
-  `ratio_caveat` 코드별 1건씩). 실 마스터는 무수정.
-- **1) `ratio_only` 회사: 빈 패널 대신 "왜 없는지" 한 줄.** `jesr_app.js`에 `isRatioOnly()`/
-  `renderScopeNote()` 신설 — `jesr.html`/`jgaap.html`/`disclosure.html` 3페이지 공통 `#scopeNoteWrap`
-  섹션(페이지별 문구, "決算" 탭으로 링크)을 추가하고, 資本層 없는 회사에 쓰던 기존 `noticePanelWrap`
-  (規制様式 곧 온다는 문구)은 ratio_only 일 땐 끄고 이걸로 대체 — 안내 문구가 부정확해지는 걸 막음.
-  `secCapitalWrap`/`secSensWrap`/`secProfitWrap`(損益の内訳, items 없음)은 패널째 숨김.
-  `jgaapCards`(決算 상단 KPI 4장)는 items 없어도 合算率 카드 1장 + 안내문으로 대체(완전 공란 방지).
-  `secBsWrap`/`secReservesWrap`/`secReinsWrap`/`secAxesWrap`/`by_line`/`core_history`는 기존
-  self-hide 로직이 빈 데이터에서 원래도 잘 숨었다(추가수정 불필요, 확인만). `secProfitabilityWrap`
-  (収益性指標: 損害率·事業費率·合算率 카드+5개년 SVG 추이)은 그대로 렌더 — ratio_only 의 유일한
-  실데이터 패널.
-- **2) 24사 진입점: `jp/index.html`에 "損害率一覧（損保）" 섹션 신설.** 기존 ESRランキング의
-  `.map-list`/`.li-row`/FOLD(top5+もっと見る) 패턴을 그대로 재사용(새 UI 언어 안 만듦) — 단
-  데이터 소스는 `jesr_esr.json`이 아니라 `jesr_detail.json`(publishing이 이미 만들어 둔
-  `loadDetailMap()` fetch에 편승, `buildLossRatioData()` 신설). sector=nonlife 이고 合算率이
-  있는 회사는 `data_scope` 무관(既存 full 5사 + 신규 ratio_only 24사 = 29사) 전부 포함, 合算率
-  오름차순(낮을수록 위 = 収支黒字). 행 클릭/Enter/Space → `jgaap.html?company=<id>`(収益性指標
-  패널로 직행). 이걸로 census `not_yet`라 ESRランキング에 안 뜨는 24사도 처음으로 도달 가능해짐.
-  실측: fixture 34사 중 29사가 이 리스트에 집계, 4개사(トーア再保険/ソニー損害保険/レスキュー
-  損害保険/MS&AD HD) 전원 노출, 첫 행 클릭·Enter 키보드 둘 다 `jgaap.html?company=` 로 정상 이동.
-- **3) caveat 4종 배지 — 별도 열 아니라 값 옆 표식(owner 지시).** `CAVEAT_META`(jesr_app.js·
-  index.html 양쪽에 §5.2 관례대로 복사)로 4코드를 성격별 **3그룹**으로 나눔: 算式差
-  (`lae_excluded`/`ei_basis`, 머리글자 Δ·실선 앰버 테두리) / 画像判読精度(`ocr_read`, 머리글자
-  OCR·파선 회색 테두리) / 重複計上(`simple_sum`, 머리글자 Σ·이중선 보라 테두리) — 색만으로
-  구분하지 않게 테두리 모양+머리글자+라벨 문구를 코드마다 다르게(a11y-audit 스킬 §3-4 절차대로
-  `a11y_contrast_check.py` 로 3쌍 전부 contrast 실측, AA 6.37~9.43:1 전부 통과; 3색 파스텔 간
-  delta-RGB 는 16.5~51 로 완전 안전선(60) 미만이지만 텍스트·테두리 모양이 이미 다르므로 스킬
-  가이드대로 severity 낮음으로 판단·완화 없이 진행). `손해율一覧` 리스트 행 + `jgaap.html`
-  `収益性指標` 合算率 카드 + 상단 KPI 合算率 카드, 총 3곳에 동일 배지, title 속성에
-  `ratio_caveat.text` 전문.
-- **함정 1건 발견·즉시 수정(모바일)**: 손해율一覧 배지가 붙은 행에서 `.li-name`이 badge와
-  회사명을 한 줄에 욱여넣어 375px 에서 `.li-nm`이 min-width 바닥(5.5em≈71.5px)까지 눌려
-  회사명이 잘렸다(TODO 이력의 "칩이 회사명을 밀어낸다"와 동일 패턴, 실측으로 발견). `#lossRatioList`
-  스코프로 한정해 모바일에서만 배지를 이름 아래 줄로 줄바꿈(`flex-wrap:wrap`+배지
-  `flex:0 0 100%`) — 기존 ESRランキング chip 튜닝은 무수정. 재측정: 이름 폭 71.5px → 136.8px 회복.
-- **검증**: `node --check`로 `jesr_app.js` + `index.html`/`jgaap.html` 인라인 스크립트 추출본
-  구문 확인. html.parser 로 4페이지 태그균형(EOF 시점 미종료 태그 0) 확인, BOM 0. 로컬
-  `http.server`(스크래치패드 사본, 포트 8931) + Playwright(`/opt/pw-browsers/chromium-1194`)로
-  데스크톱 1280px·모바일 375px 둘 다 실측 — `document.body.scrollWidth<=innerWidth`(가로스크롤
-  0, 양쪽 뷰포트), `pageerror` 콘솔 0(외부 CDN `ERR_CONNECTION_RESET`만, 개발망 차단 기존 패턴),
-  ratio_only(caveat 有/無 둘 다)·full 회사(`au_nonlife`) 상세 3페이지 전부 DOM 직접 조회로
-  hidden 속성·텍스트 확인(스크린샷만으로 판단 안 함), 다크모드(`prefers-color-scheme:dark`)에서
-  배지 배경/글자색 유지 확인(기존 `.repro-badge`/`.prelim-badge`와 동일하게 테마 비의존 고정색 —
-  기존 컨벤션).
-- **손대지 않음(소유권 경계)**: `jp/jesr_detail.json`·`jp/jesr_esr.json`·`J-ESR/`·`scripts/`·
-  `TODO_jp.md`·census·한국 자산(`index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html`) 전부
-  무수정. `git commit`/`push` 안 함(오케스트레이터/publishing 병합 대기).
-- **모델·소요**: Claude Sonnet 5, 단일 세션 약 1.5시간(탐색+구현+fixture+Playwright 검증 포함).
 
 ## 🔴 Open — P1
 
