@@ -1,11 +1,30 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-14c · Stage 5/5 — designer
+> Last updated: 2026-09-15 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-09-15 -- 손보 決算 상세에 BS/損益 패널 개방 (jesr_app.js)
+
+패널은 이미 만들어져 있었고 데이터가 없어 숨어 있었을 뿐이다. jp 레인이 법정 BS/PL 을 실으면서
+(貸借対照表 21사·損益計算書 23사) `jesr_app.js` 의 전제 2개가 사실과 어긋나 3곳을 고쳤다.
+
+1. `setHidden('secProfitWrap', ratioOnly)` → `ratioOnly && !hasPlItems`. "ratio_only면 損益 패널
+   무조건 숨김"은 ratio_only 에 PL 이 없던 시절 규칙. 이제 `profit.items` 에 보험료 외 항목이
+   실제로 있는지로 판정한다.
+2. `if(ratioOnly){dispose} else {renderProfit}` 도 같은 조건으로. 1번만 고치면 패널만 열리고
+   본문이 안 그려져 빈 패널이 된다(실측).
+3. `profit_flow` 가 없는 회사는 단계표가 「データがありません。」 한 줄로 남는다(실측) → 그 표를
+   접고 `<details>` 전 항목표를 펼치며 summary 를 「損益計算書（全項目）」로. HTML 3벌을 고치지 않고
+   `closest('details')` 로 DOM 에서 처리(§5.2 파일별 복사를 늘리지 않으려고).
+
+실렌더: AIG損保에서 워터폴(282.6 → △95.3 → △52.2 → 135.0)·16행 PL 표·16행 BS 표·
+`✓ 資産 = 負債 + 純資産` 배지 확인, 콘솔 에러 0. 회귀: 기존 full 3사 단계표 19~21행 유지,
+전 항목표 접힘 유지, 회사 전환 시 토글 추종 확인.
+
 
 ## 2026-09-14c -- 손해율 버블차트 실렌더 검증 + 결함 3건 수정 (jp/index.html)
 

@@ -4,6 +4,30 @@
 
 ---
 
+**Recent (2026-09-12, J-ESR 킥오프 2차 — owner 발주 `inbox/designer/20260912T0446Z`, 초안 draft 완료·라이브 미배포):**
+- **`jp/index.html` 신규 — 일본 ESR 대시보드 초안(일본어 UI).** 헤더(언어전환)+공표상황 카드3+
+  ESR랭킹 가로막대(15사, 색=업태·빗금=연결·速報배지·▲목표마커)+커버리지 도넛+一覧表(7열)+푸터.
+  `../common.css` 재사용, 데이터는 `fetch('jesr_esr.json')`(publishing 산출, 읽기전용).
+  fixture 불필요 — 착수 시점에 이미 진짜 파일(79사 census·15사값) 도착.
+- **실데이터에서 스키마 예시에 없던 오염 2건 발견해 화면단에서 방어**: ① `notes` 필드가
+  한국어 내부 검증메모라 비노출 처리 ② `doc_type` 3건(au損害保険 등)에 한글 단어 혼입
+  → `jaOnly()`(정규식 한글 토큰 제거, 원본 JSON 불변)로 표시 직전 정화, 전체 렌더 텍스트
+  한글 잔여 0건 확인. `basis`≠"J-ICS"(SOMPO만 VaR99.5) 케이스는 차트 캡션+表 표식으로 고지.
+- **버그 2건 발견 즉시 수정**: 도넛 인접 슬라이스 라벨 말줄임("公表済...") → 온차트 라벨
+  끄고 범례에 건수 병기 / 모바일 375px 헤더 2줄 줄바꿈 → 루트 기존 관례(`.hint{display:none}`
+  at ≤640px) 적용.
+- **검증**: Claude Browser(1280·375px, 가로스크롤 0, aria-label 데이터기반 확인) + Playwright
+  실네트워크 재검증(진짜 배포 파일 그대로, 콘솔 에러 0, 스크린샷 2장 `artifacts/designer/
+  jesr_jp_draft_{desktop,mobile}_20260912.png`) + `a11y_contrast_check.py` 실측(업태3색·도넛3색
+  전부 delta-RGB 103+, 速報배지 흰글자 2.15:1 FAIL→진한글자 7.18:1 로 교체) + html.parser
+  태그균형 0오류·BOM없음·ECharts/Pretendard integrity 루트와 byte-diff 0.
+- **owner 판단거리 5건**(備考 공개비고 필요 여부·doc_type 오염 근본수정·noindex 해제 시점·GA
+  포함 여부·루트 삽입 조각 3종 실반영)을 티켓 답변에 정리. 루트 `index.html`/`common.css` 등
+  4개 배포 페이지는 이번 라운드 무수정(코드 조각만 답변에 제공). 상세는
+  `inbox/designer/20260912T0446Z__owner__JP_MULTI__jesr_jp_page_draft.md` 답변, changelog 2026-09-12.
+
+---
+
 **Recent (2026-09-13, jp 랭킹 算定基準 — owner 2차 지시로 chip안 폐기·막대 패턴으로 교체, 커밋만·라이브 미배포):**
 - **경위: 1차(chip안)를 owner가 "칩이 너무 많다"로 반려.** 실측(HEAD 기준) scope chip 15/15행·
   目標 chip 7행·速報 4행·単体詳細 3행 — 이미 최대 3개/행인데 여기 basis chip을 더하면 4개.

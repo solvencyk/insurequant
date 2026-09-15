@@ -76,6 +76,39 @@ OUT_PATH = JP_DIR / "jesr_detail.json"
 NONLIFE_RATIO_CENSUS_PATH = JESR_DIR / "nonlife_ratio_census.json"
 #: 보험료(正味収入保険料) 수집본. 손해율 버블차트의 원 크기 축이다(owner 2026-09-14).
 #: 손해율 조사 때 비율 3종만 받아서 보험료가 빠져 있었고, 같은 PDF 로 따로 수집했다.
+# 2026-09-15: ratio_only 손보사의 법정 貸借対照表/損益計算書. BS 는 기존 extracted_bs_values.json
+# 에 합쳐 두었고(같은 파일·같은 tree 규약), PL 은 이 파일에서 읽어 profit.items 를 채운다.
+NONLIFE_PL_CENSUS_PATH = JESR_DIR / "nonlife_pl_census.json"
+
+# 법정 損益計算書에서 실을 수 있는 id 화이트리스트. 여기 없는 키가 들어오면 아래 자기검사가 막는다
+# (스키마를 넓히되 "아무거나 새어 들어오는" 것은 계속 막는다 — 2026-09-14 에 좁혔던 검사의 취지).
+NONLIFE_PL_ITEM_IDS = frozenset({
+    "pl_ordinary_revenue", "pl_underwriting_revenue", "pl_net_premiums_written",
+    "pl_interest_dividend_income", "pl_ordinary_expenses", "pl_underwriting_expenses",
+    "pl_net_claims_paid", "pl_loss_adjustment_expenses", "pl_commissions_collection",
+    "pl_operating_general_admin", "pl_underwriting_profit", "pl_investment_pl",
+    "pl_ordinary_profit", "pl_extraordinary_gains", "pl_extraordinary_losses",
+    "pl_pretax_profit", "pl_income_taxes", "pl_net_income",
+})
+
+
+def load_pl_census():
+    """{company_id: {item_id: {"cur":…, "prev":…}}}. 없으면 빈 dict(=종전 동작)."""
+    if not NONLIFE_PL_CENSUS_PATH.exists():
+        return {}
+    raw = load_json(NONLIFE_PL_CENSUS_PATH).get("companies") or {}
+    out = {}
+    for cid, rec in raw.items():
+        items = rec.get("items") or {}
+        bad = sorted(set(items) - NONLIFE_PL_ITEM_IDS)
+        if bad:
+            raise SystemExit(f"load_pl_census: {cid} 에 모르는 PL id {bad} — NONLIFE_PL_ITEM_IDS 를 같이 고쳐라")
+        if rec.get("unit") != "JPY_million":
+            raise SystemExit(f"load_pl_census: {cid} unit={rec.get('unit')!r} (JPY_million 이어야)")
+        out[cid] = {k: {"cur": v.get("cur"), "prev": v.get("prev")} for k, v in items.items()}
+    return out
+
+
 NONLIFE_PREMIUM_CENSUS_PATHS = (
     JESR_DIR / "nonlife_premium_census_A.json",
     JESR_DIR / "nonlife_premium_census_B.json",
@@ -735,6 +768,19 @@ def _ratio_only_series(years, premium_years, loss, expense, combined, premium):
     return series
 
 
+def _merge_pl_items(pl_items, premium):
+    """법정 PL 항목 + 보험료 census. 값이 없는 항목은 키를 만들지 않는다(화면에서 '—')."""
+    out = {}
+    if pl_items:
+        for k, v in pl_items.items():
+            if v.get("cur") is None and v.get("prev") is None:
+                continue
+            out[k] = {"cur": v.get("cur"), "prev": v.get("prev")}
+    if premium:
+        out["pl_net_premiums_written"] = _ratio_pair(premium)
+    return out
+
+
 def build_ratio_only_companies(public_by_en):
     """24 손보사 (nonlife_ratio_census.json verdict=='found') -- ratio layer only.
     esr_status is derived from jp/jesr_esr.json membership (public_by_en, already loaded by
@@ -745,6 +791,8 @@ def build_ratio_only_companies(public_by_en):
         return []
     census = load_json(NONLIFE_RATIO_CENSUS_PATH)
     premiums = load_premium_census()
+    pl_census = load_pl_census()
+    bs_by_id_ratio = (load_json(BS_PATH).get("companies") or {}) if BS_PATH.exists() else {}
     out = []
     seen_ids = set()
     for row in census.get("rows", []):
@@ -805,7 +853,10 @@ def build_ratio_only_companies(public_by_en):
                 "evidence": None,
                 "source_doc": source_doc,
                 "unit": block_unit,
-                "items": ({"pl_net_premiums_written": _ratio_pair(premium)} if premium else {}),
+                # 보험료(census)와 법정 PL(pl_census)을 합친다. 둘 다 正味収入保険料 를 주는데
+                # **census 쪽을 이긴 값으로 둔다** — 그게 화면에 이미 나간 값이고, PL 추출은 그 값과
+                # 일치하는지로 검증됐다(일치하지 않으면 애초에 census 에 안 실린다).
+                "items": _merge_pl_items(pl_census.get(cid), premium),
                 "ratios": {
                     "pl_loss_ratio_pct": _ratio_pair(loss),
                     "pl_expense_ratio_pct": _ratio_pair(expense),
@@ -827,7 +878,7 @@ def build_ratio_only_companies(public_by_en):
             "profit_flow": None,
             "by_line": None,
             "core_history": None,
-            "bs": build_bs_block(None),
+            "bs": build_bs_block(bs_by_id_ratio.get(cid)),
             "data_scope": "ratio_only",
             "ratio_caveat": ratio_caveat,
             "premium_caveat": PREMIUM_CAVEAT_BY_JP.get(jp),
@@ -1232,12 +1283,13 @@ def self_check(out, jesr_esr):
             if c.get("profit_flow") is not None:
                 errors.append(f"{cen}: ratio_only but profit_flow is not None")
             profit = c.get("profit") or {}
-            # ratio_only 의 profit.items 는 **보험료 한 키만** 허용한다(버블차트 원 크기,
-            # owner 2026-09-14). 검사를 "비어 있어야 한다"에서 지우지 않고 좁힌 것은,
-            # 다른 PL 항목이 새어 들어오는 것은 여전히 막아야 하기 때문이다.
-            extra_items = [k for k in (profit.get("items") or {}) if k != "pl_net_premiums_written"]
+            # ratio_only 의 profit.items 허용 범위: 2026-09-14 에는 보험료 한 키만이었고(버블 원 크기),
+            # 2026-09-15 에 법정 損益計算書 18항목을 실으면서 **화이트리스트로 넓혔다**. 검사를 지우지
+            # 않은 이유는 그대로다 — 목록 밖의 키가 새어 들어오는 것은 계속 막아야 한다.
+            allowed_items = NONLIFE_PL_ITEM_IDS
+            extra_items = [k for k in (profit.get("items") or {}) if k not in allowed_items]
             if extra_items:
-                errors.append(f"{cen}: ratio_only profit.items 는 pl_net_premiums_written 만 허용, got {extra_items}")
+                errors.append(f"{cen}: ratio_only profit.items 는 NONLIFE_PL_ITEM_IDS 만 허용, got {extra_items}")
             # 보험료가 실렸으면 단위 라벨이 금액 기준이어야 한다 — "pct" 로 두면 거짓이 된다.
             if (profit.get("items") or {}).get("pl_net_premiums_written"):
                 if profit.get("unit") != "JPY_million":

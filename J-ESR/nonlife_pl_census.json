@@ -1,0 +1,1325 @@
+{
+ "generated": "2026-09-15",
+ "unit": "JPY_million",
+ "companies": {
+  "aig_nonlife": {
+   "company_jp": "AIG損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/aig_nonlife.pdf",
+   "doc_type": "ディスクロージャー誌 Ⅱ.経理の状況 1.計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 73,
+    "pl": 80
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 185004,
+     "cur": 194468
+    },
+    "pl_underwriting_revenue": {
+     "prev": 174814,
+     "cur": 179424
+    },
+    "pl_net_premiums_written": {
+     "prev": 155609,
+     "cur": 162356
+    },
+    "pl_interest_dividend_income": {
+     "prev": 9922,
+     "cur": 11632
+    },
+    "pl_ordinary_expenses": {
+     "prev": 167719,
+     "cur": 166210
+    },
+    "pl_underwriting_expenses": {
+     "prev": 62819,
+     "cur": 57466
+    },
+    "pl_net_claims_paid": {
+     "prev": 78731,
+     "cur": 73632
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 23012,
+     "cur": 23662
+    },
+    "pl_commissions_collection": {
+     "prev": -47376,
+     "cur": -47925
+    },
+    "pl_operating_general_admin": {
+     "prev": 97227,
+     "cur": 100900
+    },
+    "pl_ordinary_profit": {
+     "prev": 17285,
+     "cur": 28257
+    },
+    "pl_extraordinary_gains": {
+     "prev": 1128,
+     "cur": 127
+    },
+    "pl_extraordinary_losses": {
+     "prev": 398,
+     "cur": 9661
+    },
+    "pl_pretax_profit": {
+     "prev": 18015,
+     "cur": 18723
+    },
+    "pl_income_taxes": {
+     "prev": 2608,
+     "cur": 5223
+    },
+    "pl_net_income": {
+     "prev": 15407,
+     "cur": 13500
+    }
+   },
+   "notes": []
+  },
+  "anicom_nonlife": {
+   "company_jp": "アニコム損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/anicom_nonlife.pdf",
+   "doc_type": "ディスクロージャー誌 業績データ 財産の状況 1計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 83,
+    "pl": 85
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 60805,
+     "cur": 66133
+    },
+    "pl_underwriting_revenue": {
+     "prev": 59129,
+     "cur": 64362
+    },
+    "pl_net_premiums_written": {
+     "prev": 59129,
+     "cur": 64362
+    },
+    "pl_interest_dividend_income": {
+     "prev": 780,
+     "cur": 887
+    },
+    "pl_ordinary_expenses": {
+     "prev": 55621,
+     "cur": 61616
+    },
+    "pl_underwriting_expenses": {
+     "prev": 42176,
+     "cur": 46924
+    },
+    "pl_net_claims_paid": {
+     "prev": 33345,
+     "cur": 37213
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 1122,
+     "cur": 1256
+    },
+    "pl_commissions_collection": {
+     "prev": 5484,
+     "cur": 6148
+    },
+    "pl_operating_general_admin": {
+     "prev": 13134,
+     "cur": 14580
+    },
+    "pl_ordinary_profit": {
+     "prev": 5183,
+     "cur": 4517
+    },
+    "pl_extraordinary_losses": {
+     "prev": 52,
+     "cur": 271
+    },
+    "pl_pretax_profit": {
+     "prev": 5131,
+     "cur": 4246
+    },
+    "pl_income_taxes": {
+     "prev": 1450,
+     "cur": 1224
+    },
+    "pl_net_income": {
+     "prev": 3680,
+     "cur": 3021
+    }
+   },
+   "notes": [
+    "貸付金は当期(2025年度)欄が「―」(ダッシュ)表記のため null 処理。"
+   ]
+  },
+  "axa_nonlife": {
+   "company_jp": "アクサ損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/axa_nonlife.pdf",
+   "doc_type": "ディスクロージャー誌 Ⅲ業績データ財産の状況 1計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 30,
+    "pl": 32
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 59733,
+     "cur": 58196
+    },
+    "pl_underwriting_revenue": {
+     "prev": 57205,
+     "cur": 55572
+    },
+    "pl_net_premiums_written": {
+     "prev": 53846,
+     "cur": 53444
+    },
+    "pl_interest_dividend_income": {
+     "prev": 752,
+     "cur": 1683
+    },
+    "pl_ordinary_expenses": {
+     "prev": 50632,
+     "cur": 49833
+    },
+    "pl_underwriting_expenses": {
+     "prev": 35988,
+     "cur": 35354
+    },
+    "pl_net_claims_paid": {
+     "prev": 31274,
+     "cur": 30444
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 4540,
+     "cur": 4328
+    },
+    "pl_commissions_collection": {
+     "prev": 173,
+     "cur": 38
+    },
+    "pl_operating_general_admin": {
+     "prev": 14428,
+     "cur": 14278
+    },
+    "pl_ordinary_profit": {
+     "prev": 9100,
+     "cur": 8363
+    },
+    "pl_extraordinary_losses": {
+     "prev": 130,
+     "cur": 56
+    },
+    "pl_pretax_profit": {
+     "prev": 8969,
+     "cur": 8306
+    },
+    "pl_income_taxes": {
+     "prev": 2595,
+     "cur": 2282
+    },
+    "pl_net_income": {
+     "prev": 6373,
+     "cur": 6024
+    }
+   },
+   "notes": [
+    "純資産の部に資本剰余金の印字なし(資本金・利益剰余金・評価差額のみ)のため _capital_surplus は null。"
+   ]
+  },
+  "capital_nonlife": {
+   "company_jp": "キャピタル損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/capital_nonlife.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 41,
+    "pl": 46
+   },
+   "items": {
+    "pl_underwriting_revenue": {
+     "prev": 6611,
+     "cur": 6137
+    },
+    "pl_net_premiums_written": {
+     "prev": 6448,
+     "cur": 6129
+    },
+    "pl_interest_dividend_income": {
+     "prev": 39,
+     "cur": 71
+    },
+    "pl_ordinary_expenses": {
+     "prev": 5834,
+     "cur": 5998
+    },
+    "pl_underwriting_expenses": {
+     "prev": 4485,
+     "cur": 4633
+    },
+    "pl_net_claims_paid": {
+     "prev": 2509,
+     "cur": 2277
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 174,
+     "cur": 185
+    },
+    "pl_commissions_collection": {
+     "prev": 1797,
+     "cur": 1842
+    },
+    "pl_operating_general_admin": {
+     "prev": 1349,
+     "cur": 1364
+    },
+    "pl_ordinary_profit": {
+     "prev": 839,
+     "cur": 237
+    },
+    "pl_extraordinary_losses": {
+     "prev": 2,
+     "cur": 2
+    },
+    "pl_pretax_profit": {
+     "prev": 837,
+     "cur": 235
+    },
+    "pl_income_taxes": {
+     "prev": 207,
+     "cur": 72
+    },
+    "pl_net_income": {
+     "prev": 630,
+     "cur": 162
+    }
+   },
+   "notes": [
+    "앵커 p46 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "daiichi_ipet": {
+   "company_jp": "第一アイペット損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/daiichi_ipet.pdf",
+   "doc_type": "直近の2事業年度における財産の状況 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 19,
+    "pl": 24
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 39613,
+     "cur": 43764
+    },
+    "pl_underwriting_revenue": {
+     "prev": 39539,
+     "cur": 43643
+    },
+    "pl_net_premiums_written": {
+     "prev": 39539,
+     "cur": 43643
+    },
+    "pl_interest_dividend_income": {
+     "prev": 30,
+     "cur": 77
+    },
+    "pl_ordinary_expenses": {
+     "prev": 37997,
+     "cur": 41456
+    },
+    "pl_underwriting_expenses": {
+     "prev": 29211,
+     "cur": 31124
+    },
+    "pl_net_claims_paid": {
+     "prev": 20293,
+     "cur": 23590
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 1511,
+     "cur": 1622
+    },
+    "pl_commissions_collection": {
+     "prev": 5397,
+     "cur": 5322
+    },
+    "pl_operating_general_admin": {
+     "prev": 8773,
+     "cur": 10298
+    },
+    "pl_ordinary_profit": {
+     "prev": 1616,
+     "cur": 2308
+    },
+    "pl_extraordinary_losses": {
+     "prev": 0,
+     "cur": 2
+    },
+    "pl_pretax_profit": {
+     "prev": 1615,
+     "cur": 2305
+    },
+    "pl_income_taxes": {
+     "prev": 254,
+     "cur": 554
+    },
+    "pl_net_income": {
+     "prev": 1360,
+     "cur": 1751
+    }
+   },
+   "notes": []
+  },
+  "hs_nonlife": {
+   "company_jp": "エイチ・エス損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/hs_nonlife.pdf",
+   "doc_type": "ディスクロージャー誌 Ⅴ財産の状況 1計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 65,
+    "pl": 70
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 3158,
+     "cur": 3586
+    },
+    "pl_underwriting_revenue": {
+     "prev": 3148,
+     "cur": 3567
+    },
+    "pl_net_premiums_written": {
+     "prev": 3147,
+     "cur": 3404
+    },
+    "pl_interest_dividend_income": {
+     "prev": 1,
+     "cur": 7
+    },
+    "pl_ordinary_expenses": {
+     "prev": 3130,
+     "cur": 3568
+    },
+    "pl_underwriting_expenses": {
+     "prev": 2290,
+     "cur": 2561
+    },
+    "pl_net_claims_paid": {
+     "prev": 1127,
+     "cur": 1162
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 244,
+     "cur": 288
+    },
+    "pl_commissions_collection": {
+     "prev": 776,
+     "cur": 767
+    },
+    "pl_operating_general_admin": {
+     "prev": 838,
+     "cur": 1006
+    },
+    "pl_ordinary_profit": {
+     "prev": 28,
+     "cur": 18
+    },
+    "pl_extraordinary_gains": {
+     "prev": 1,
+     "cur": 15
+    },
+    "pl_extraordinary_losses": {
+     "prev": 3,
+     "cur": 0
+    },
+    "pl_pretax_profit": {
+     "prev": 26,
+     "cur": 33
+    },
+    "pl_income_taxes": {
+     "prev": 42,
+     "cur": -30
+    },
+    "pl_net_income": {
+     "prev": -16,
+     "cur": 64
+    }
+   },
+   "notes": [
+    "bs_identity cur: 資産合計3,228 vs 負債2,439+純資産788=3,227、原文の丸め差1百万円(許容誤差内)。"
+   ]
+  },
+  "japan_earthquake_re": {
+   "company_jp": "日本地震再保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/japan_earthquake_re.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 67,
+    "pl": 71
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 350878,
+     "cur": 304016
+    },
+    "pl_underwriting_revenue": {
+     "prev": 347881,
+     "cur": 295121
+    },
+    "pl_net_premiums_written": {
+     "prev": 284093,
+     "cur": 290926
+    },
+    "pl_interest_dividend_income": {
+     "prev": 3535,
+     "cur": 6924
+    },
+    "pl_ordinary_expenses": {
+     "prev": 350877,
+     "cur": 303485
+    },
+    "pl_underwriting_expenses": {
+     "prev": 346190,
+     "cur": 292826
+    },
+    "pl_net_claims_paid": {
+     "prev": 95737,
+     "cur": 13192
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 12326,
+     "cur": 5876
+    },
+    "pl_commissions_collection": {
+     "prev": 60544,
+     "cur": 61773
+    },
+    "pl_operating_general_admin": {
+     "prev": 2100,
+     "cur": 2217
+    },
+    "pl_ordinary_profit": {
+     "prev": 1,
+     "cur": 530
+    },
+    "pl_extraordinary_losses": {
+     "prev": 0,
+     "cur": 0
+    },
+    "pl_pretax_profit": {
+     "prev": 1,
+     "cur": 530
+    },
+    "pl_income_taxes": {
+     "prev": 0,
+     "cur": 384
+    },
+    "pl_net_income": {
+     "prev": 1,
+     "cur": 145
+    }
+   },
+   "notes": [
+    "앵커 p71 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "ji_accident_fire": {
+   "company_jp": "ジェイアイ傷害火災保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/ji_accident_fire.pdf",
+   "doc_type": "ディスクロージャー誌 Ⅱ経理の状況 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 74,
+    "pl": 80
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 13218,
+     "cur": 13905
+    },
+    "pl_underwriting_revenue": {
+     "prev": 12901,
+     "cur": 13663
+    },
+    "pl_net_premiums_written": {
+     "prev": 12485,
+     "cur": 13661
+    },
+    "pl_interest_dividend_income": {
+     "prev": 46,
+     "cur": 75
+    },
+    "pl_ordinary_expenses": {
+     "prev": 12620,
+     "cur": 13920
+    },
+    "pl_underwriting_expenses": {
+     "prev": 8551,
+     "cur": 9416
+    },
+    "pl_net_claims_paid": {
+     "prev": 5254,
+     "cur": 5363
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 584,
+     "cur": 416
+    },
+    "pl_commissions_collection": {
+     "prev": 2694,
+     "cur": 2880
+    },
+    "pl_operating_general_admin": {
+     "prev": 4067,
+     "cur": 4503
+    },
+    "pl_ordinary_profit": {
+     "prev": 597,
+     "cur": -15
+    },
+    "pl_extraordinary_losses": {
+     "prev": 3,
+     "cur": 5
+    },
+    "pl_pretax_profit": {
+     "prev": 594,
+     "cur": -20
+    },
+    "pl_income_taxes": {
+     "prev": 255,
+     "cur": -421
+    },
+    "pl_net_income": {
+     "prev": 339,
+     "cur": 401
+    }
+   },
+   "notes": [
+    "貸借対照表は表題p74(資産の部)+p75(負債・純資産の部)の2ページ構成。",
+    "bs_identity cur: 資産合計23,441 vs 負債15,064+純資産8,376=23,440、原文の丸め差1百万円(許容誤差内)。"
+   ]
+  },
+  "kyoei_fire_marine": {
+   "company_jp": "共栄火災海上保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/kyoei_fire_marine.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 88,
+    "pl": 86
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 210909,
+     "cur": 220094
+    },
+    "pl_underwriting_revenue": {
+     "prev": 198336,
+     "cur": 205506
+    },
+    "pl_net_premiums_written": {
+     "prev": 184970,
+     "cur": 202959
+    },
+    "pl_interest_dividend_income": {
+     "prev": 8568,
+     "cur": 10420
+    },
+    "pl_ordinary_expenses": {
+     "prev": 207138,
+     "cur": 218899
+    },
+    "pl_underwriting_expenses": {
+     "prev": 171632,
+     "cur": 182391
+    },
+    "pl_net_claims_paid": {
+     "prev": 103105,
+     "cur": 111998
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 10731,
+     "cur": 11228
+    },
+    "pl_commissions_collection": {
+     "prev": 38213,
+     "cur": 41295
+    },
+    "pl_operating_general_admin": {
+     "prev": 33631,
+     "cur": 34846
+    },
+    "pl_ordinary_profit": {
+     "prev": 3770,
+     "cur": 1195
+    },
+    "pl_extraordinary_gains": {
+     "prev": 734,
+     "cur": 76
+    },
+    "pl_extraordinary_losses": {
+     "prev": 1638,
+     "cur": 1027
+    },
+    "pl_pretax_profit": {
+     "prev": 2867,
+     "cur": 244
+    },
+    "pl_income_taxes": {
+     "prev": -460,
+     "cur": -873
+    },
+    "pl_net_income": {
+     "prev": 3327,
+     "cur": 1117
+    }
+   },
+   "notes": [
+    "앵커 p86 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "mitsui_direct": {
+   "company_jp": "三井ダイレクト損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/mitsui_direct.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": null,
+    "pl": null
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 39334,
+     "cur": 44316
+    },
+    "pl_underwriting_revenue": {
+     "prev": 39136,
+     "cur": 43961
+    },
+    "pl_net_premiums_written": {
+     "prev": 37395,
+     "cur": 43937
+    },
+    "pl_interest_dividend_income": {
+     "prev": 219,
+     "cur": 354
+    },
+    "pl_ordinary_expenses": {
+     "prev": 41101,
+     "cur": 46810
+    },
+    "pl_underwriting_expenses": {
+     "prev": 28307,
+     "cur": 34799
+    },
+    "pl_net_claims_paid": {
+     "prev": 23742,
+     "cur": 25700
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 2595,
+     "cur": 2543
+    },
+    "pl_commissions_collection": {
+     "prev": 558,
+     "cur": 762
+    },
+    "pl_operating_general_admin": {
+     "prev": 12575,
+     "cur": 11973
+    }
+   },
+   "notes": [
+    "앵커 p53 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "nisshin_fire_marine": {
+   "company_jp": "日新火災海上保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/nisshin_fire_marine.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 88,
+    "pl": 94
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 167524,
+     "cur": 177247
+    },
+    "pl_underwriting_revenue": {
+     "prev": 160937,
+     "cur": 164303
+    },
+    "pl_net_premiums_written": {
+     "prev": 158266,
+     "cur": 161943
+    },
+    "pl_interest_dividend_income": {
+     "prev": 7026,
+     "cur": 7150
+    },
+    "pl_ordinary_expenses": {
+     "prev": 169699,
+     "cur": 171019
+    },
+    "pl_underwriting_expenses": {
+     "prev": 138543,
+     "cur": 139001
+    },
+    "pl_net_claims_paid": {
+     "prev": 85625,
+     "cur": 88139
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 10692,
+     "cur": 10870
+    },
+    "pl_commissions_collection": {
+     "prev": 30193,
+     "cur": 30888
+    },
+    "pl_operating_general_admin": {
+     "prev": 26363,
+     "cur": 28453
+    },
+    "pl_ordinary_profit": {
+     "prev": -2174,
+     "cur": 6227
+    },
+    "pl_extraordinary_gains": {
+     "prev": 2758,
+     "cur": 1118
+    },
+    "pl_extraordinary_losses": {
+     "prev": 2579,
+     "cur": 366
+    },
+    "pl_pretax_profit": {
+     "prev": -1995,
+     "cur": 6979
+    },
+    "pl_income_taxes": {
+     "prev": -978,
+     "cur": 1756
+    },
+    "pl_net_income": {
+     "prev": -1017,
+     "cur": 5223
+    }
+   },
+   "notes": [
+    "앵커 p94 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "nttdocomo_nonlife": {
+   "company_jp": "NTTドコモ損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/nttdocomo_nonlife.pdf",
+   "doc_type": "NTTドコモ損害保険の現状 Ⅴ.財産の状況 1.計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 27,
+    "pl": 32
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 95872,
+     "cur": 119643
+    },
+    "pl_underwriting_revenue": {
+     "prev": 95871,
+     "cur": 119242
+    },
+    "pl_net_premiums_written": {
+     "prev": 95871,
+     "cur": 119242
+    },
+    "pl_interest_dividend_income": {
+     "prev": 1,
+     "cur": 401
+    },
+    "pl_ordinary_expenses": {
+     "prev": 100208,
+     "cur": 58918
+    },
+    "pl_underwriting_expenses": {
+     "prev": 99247,
+     "cur": 57794
+    },
+    "pl_net_claims_paid": {
+     "prev": 28205,
+     "cur": 34806
+    },
+    "pl_commissions_collection": {
+     "prev": 1406,
+     "cur": 955
+    },
+    "pl_operating_general_admin": {
+     "prev": 960,
+     "cur": 1124
+    },
+    "pl_ordinary_profit": {
+     "prev": -4335,
+     "cur": 60725
+    },
+    "pl_extraordinary_losses": {
+     "prev": 0,
+     "cur": null
+    },
+    "pl_pretax_profit": {
+     "prev": -4335,
+     "cur": 60725
+    },
+    "pl_income_taxes": {
+     "prev": -7491,
+     "cur": 7777
+    },
+    "pl_net_income": {
+     "prev": 3155,
+     "cur": 52948
+    }
+   },
+   "notes": [
+    "有価証券は前期欄が「-」表記のため null。純資産の部に評価・換算差額等の印字なし(株主資本合計=純資産合計)のため bs_valuation_diff は null。",
+    "損益計算書に損害調査費の印字なし(正味支払保険金の次が直接諸手数料及び集金費)のため pl_loss_adjustment_expenses は null。",
+    "特別利益は前期・当期とも「-」表記のため null。特別損失は当期欄が「-」表記のため cur null(前期は実数0を印字)。",
+    "bs_identity prev: 資産合計111,287 vs 負債86,131+純資産25,155=111,286、原文の丸め差1百万円(許容誤差内、cur は完全一致)。"
+   ]
+  },
+  "sakura_nonlife": {
+   "company_jp": "さくら損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/sakura_nonlife.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 63,
+    "pl": 68
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 9294,
+     "cur": 10855
+    },
+    "pl_underwriting_revenue": {
+     "prev": 9147,
+     "cur": 10446
+    },
+    "pl_net_premiums_written": {
+     "prev": 9147,
+     "cur": 10446
+    },
+    "pl_interest_dividend_income": {
+     "prev": 141,
+     "cur": 270
+    },
+    "pl_ordinary_expenses": {
+     "prev": 6845,
+     "cur": 7130
+    },
+    "pl_underwriting_expenses": {
+     "prev": 6446,
+     "cur": 6683
+    },
+    "pl_net_claims_paid": {
+     "prev": 1154,
+     "cur": 1465
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 191,
+     "cur": 214
+    },
+    "pl_commissions_collection": {
+     "prev": 3187,
+     "cur": 2388
+    },
+    "pl_operating_general_admin": {
+     "prev": 399,
+     "cur": 444
+    },
+    "pl_ordinary_profit": {
+     "prev": 2448,
+     "cur": 3725
+    },
+    "pl_extraordinary_gains": {
+     "prev": null,
+     "cur": 2101
+    },
+    "pl_extraordinary_losses": {
+     "prev": 9,
+     "cur": 17
+    },
+    "pl_pretax_profit": {
+     "prev": 4541,
+     "cur": 3707
+    },
+    "pl_income_taxes": {
+     "prev": 588,
+     "cur": 1003
+    },
+    "pl_net_income": {
+     "prev": 3952,
+     "cur": 2704
+    }
+   },
+   "notes": [
+    "앵커 p68 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "sbi_nonlife": {
+   "company_jp": "SBI損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/sbi_nonlife.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 82,
+    "pl": 87
+   },
+   "items": {
+    "pl_net_premiums_written": {
+     "prev": 39566,
+     "cur": 45551
+    },
+    "pl_interest_dividend_income": {
+     "prev": 563,
+     "cur": 629
+    },
+    "pl_net_claims_paid": {
+     "prev": 24726,
+     "cur": 28890
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 4291,
+     "cur": 4510
+    },
+    "pl_operating_general_admin": {
+     "prev": 11349,
+     "cur": 12007
+    },
+    "pl_ordinary_profit": {
+     "prev": 1392,
+     "cur": 2103
+    },
+    "pl_pretax_profit": {
+     "prev": 1324,
+     "cur": 2063
+    },
+    "pl_net_income": {
+     "prev": 1212,
+     "cur": 1706
+    }
+   },
+   "notes": [
+    "앵커 p87 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "sompo_direct": {
+   "company_jp": "SOMPOダイレクト損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/sompo_direct.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 92,
+    "pl": 88
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 71390,
+     "cur": 73646
+    },
+    "pl_underwriting_revenue": {
+     "prev": 71322,
+     "cur": 73359
+    },
+    "pl_net_premiums_written": {
+     "prev": 70704,
+     "cur": 73291
+    },
+    "pl_interest_dividend_income": {
+     "prev": 103,
+     "cur": 312
+    },
+    "pl_ordinary_expenses": {
+     "prev": 75541,
+     "cur": 74644
+    },
+    "pl_underwriting_expenses": {
+     "prev": 59138,
+     "cur": 57775
+    },
+    "pl_net_claims_paid": {
+     "prev": 47929,
+     "cur": 47278
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 5708,
+     "cur": 6092
+    },
+    "pl_commissions_collection": {
+     "prev": 1270,
+     "cur": 1292
+    },
+    "pl_operating_general_admin": {
+     "prev": 16366,
+     "cur": 16595
+    },
+    "pl_ordinary_profit": {
+     "prev": 4151,
+     "cur": 998
+    },
+    "pl_extraordinary_gains": {
+     "prev": null,
+     "cur": 4
+    },
+    "pl_extraordinary_losses": {
+     "prev": 519,
+     "cur": 150
+    },
+    "pl_pretax_profit": {
+     "prev": 4670,
+     "cur": 1144
+    },
+    "pl_income_taxes": {
+     "prev": -1262,
+     "cur": -420
+    },
+    "pl_net_income": {
+     "prev": 3408,
+     "cur": 723
+    }
+   },
+   "notes": [
+    "앵커 p88 正味収入保険料 일치 → prev_cur",
+    "負債合計 단독 미인쇄 → 負債及び純資産合計 − 純資産合計 로 유도"
+   ]
+  },
+  "toa_re": {
+   "company_jp": "トーア再保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/toa_re.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 60,
+    "pl": 62
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 225649,
+     "cur": 214163
+    },
+    "pl_underwriting_revenue": {
+     "prev": 198076,
+     "cur": 189029
+    },
+    "pl_net_premiums_written": {
+     "prev": 176029,
+     "cur": 174482
+    },
+    "pl_interest_dividend_income": {
+     "prev": 20195,
+     "cur": 18935
+    },
+    "pl_net_claims_paid": {
+     "prev": 141593,
+     "cur": 135150
+    },
+    "pl_commissions_collection": {
+     "prev": 28136,
+     "cur": 28443
+    },
+    "pl_operating_general_admin": {
+     "prev": 9559,
+     "cur": 8585
+    },
+    "pl_ordinary_profit": {
+     "prev": 29089,
+     "cur": 37927
+    },
+    "pl_extraordinary_gains": {
+     "prev": 9,
+     "cur": 12
+    },
+    "pl_extraordinary_losses": {
+     "prev": 305,
+     "cur": 295
+    },
+    "pl_pretax_profit": {
+     "prev": 28792,
+     "cur": 37644
+    },
+    "pl_income_taxes": {
+     "prev": 6105,
+     "cur": 9297
+    },
+    "pl_net_income": {
+     "prev": 22687,
+     "cur": 28347
+    }
+   },
+   "notes": [
+    "앵커 p62 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "tokiomarine_direct": {
+   "company_jp": "東京海上ダイレクト損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/tokiomarine_direct.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": null,
+    "pl": null
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 29826,
+     "cur": 34027
+    },
+    "pl_underwriting_revenue": {
+     "prev": 29838,
+     "cur": 33863
+    },
+    "pl_net_premiums_written": {
+     "prev": 29365,
+     "cur": 33839
+    },
+    "pl_interest_dividend_income": {
+     "prev": 14,
+     "cur": 119
+    },
+    "pl_ordinary_expenses": {
+     "prev": 34700,
+     "cur": 43453
+    },
+    "pl_underwriting_expenses": {
+     "prev": 23609,
+     "cur": 27861
+    },
+    "pl_net_claims_paid": {
+     "prev": 18717,
+     "cur": 21082
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 3669,
+     "cur": 3938
+    },
+    "pl_commissions_collection": {
+     "prev": 493,
+     "cur": 579
+    },
+    "pl_operating_general_admin": {
+     "prev": 11078,
+     "cur": 15589
+    },
+    "pl_extraordinary_losses": {
+     "prev": 37,
+     "cur": 295
+    },
+    "pl_income_taxes": {
+     "prev": 12,
+     "cur": -4262
+    }
+   },
+   "notes": [
+    "앵커 p68 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "yamap_naturance": {
+   "company_jp": "ヤマップネイチャランス損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/yamap_naturance.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 35,
+    "pl": 26
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 109,
+     "cur": 214
+    },
+    "pl_net_premiums_written": {
+     "prev": 109,
+     "cur": 213
+    },
+    "pl_ordinary_profit": {
+     "prev": null,
+     "cur": -359
+    },
+    "pl_net_income": {
+     "prev": -361,
+     "cur": -93
+    }
+   },
+   "notes": [
+    "앵커 p26 正味収入保険料 일치 → prev_cur"
+   ]
+  },
+  "zenkankyo_reiwa": {
+   "company_jp": "全管協れいわ損害保険",
+   "unit": "JPY_million",
+   "source_doc": "raw/fy2025_samples/others/zenkankyo_reiwa.pdf",
+   "doc_type": "ディスクロージャー誌 計算書類 貸借対照表/損益計算書",
+   "pages": {
+    "bs": 22,
+    "pl": 26
+   },
+   "items": {
+    "pl_ordinary_revenue": {
+     "prev": 1242,
+     "cur": 750
+    },
+    "pl_underwriting_revenue": {
+     "prev": 16,
+     "cur": 26
+    },
+    "pl_net_premiums_written": {
+     "prev": 16,
+     "cur": 26
+    },
+    "pl_interest_dividend_income": {
+     "prev": 983,
+     "cur": 540
+    },
+    "pl_ordinary_expenses": {
+     "prev": 440,
+     "cur": 329
+    },
+    "pl_net_claims_paid": {
+     "prev": 4,
+     "cur": 4
+    },
+    "pl_loss_adjustment_expenses": {
+     "prev": 6,
+     "cur": 8
+    },
+    "pl_operating_general_admin": {
+     "prev": 462,
+     "cur": 368
+    },
+    "pl_ordinary_profit": {
+     "prev": 802,
+     "cur": 421
+    },
+    "pl_extraordinary_losses": {
+     "prev": null,
+     "cur": 546
+    },
+    "pl_pretax_profit": {
+     "prev": 255,
+     "cur": 421
+    },
+    "pl_net_income": {
+     "prev": 390,
+     "cur": 446
+    }
+   },
+   "notes": [
+    "앵커 p26 正味収入保険料 일치 → prev_cur",
+    "負債合計 단독 미인쇄 → 負債及び純資産合計 − 純資産合計 로 유도"
+   ]
+  }
+ }
+}

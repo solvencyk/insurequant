@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-09-14c · Stage 5/5 — designer
+> Last updated: 2026-09-15 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,25 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-09-15, 손보 決算 상세에 BS/損益 패널 개방 — owner 발주(직접 지시), 커밋만·라이브 미배포):**
+- **배경: 패널은 원래 다 만들어져 있었고 데이터가 없어 숨어 있었을 뿐이다.** jp 레인이 법정 BS/PL 을
+  실으면서(21사/23사) `jesr_app.js` 의 두 군데 전제가 사실과 어긋나게 됐다.
+- **① `setHidden('secProfitWrap', ratioOnly)` → PL 유무로 판정.** "ratio_only 면 損益 패널 무조건 숨김"은
+  ratio_only 에 PL 이 아예 없던 시절 규칙이다. 이제 `profit.items` 에 보험료 말고 다른 항목이 실제로
+  있는지로 판정한다 — 아직 없는 회사(출처 교체 대기·스캔 PDF)는 종전대로 숨고 scopeNoteWrap 한 줄이 이유를 남긴다.
+- **② `if(ratioOnly){dispose} else {renderProfit}` → 같은 조건으로.** 위만 고치면 패널만 열리고
+  본문이 안 그려져 **빈 패널**이 된다(실측). renderProfit 을 실제로 호출해야 워터폴+표가 붙는다.
+- **③ 단계표(profit_flow)가 없는 회사는 빈 표 대신 전 항목표를 본문으로.** `profit_flow`(元受収支→
+  再保険収支→…)는 本編까지 읽은 회사에만 있어, 법정 PL 만 실은 19사는 요약표가 「データがありません。」
+  한 줄로 남았다(실측). 그 표를 접고 `<details>` 의 전 항목표를 펼치며 summary 문구를
+  「全項目を表示」→「損益計算書（全項目）」로 바꾼다. **HTML 3벌(jesr/jgaap/disclosure)을 고치지 않고**
+  `closest('details')` 로 DOM 에서 찾아 처리했다(§5.2 파일별 복사 관례를 늘리지 않으려고).
+- **실렌더 확인**: AIG損保 상세에서 워터폴(経常利益 282.6 → 特別損益 △95.3 → 法人税等 △52.2 →
+  当期純利益 135.0)과 16행 損益計算書 표, 16행 BS 표, `✓ 資産 = 負債 + 純資産` 배지까지 눈으로 확인. 콘솔 에러 0.
+- **회귀 확인**: 기존 full 회사(東京海上日動·損保ジャパン·au損保)는 단계표 19~21행 그대로 보이고 전 항목표는
+  접힌 채다. 회사 셀렉트로 신규→기존 전환해도 토글이 따라온다(aig→東京海上日動 실측).
+- **다음**: 아직 PL/BS 가 없는 10사는 jp 레인 몫(`TODO_jp.md` (33)). 라이브 배포는 폰 Termux 번들.
 
 **Recent (2026-09-14c, 손해율 버블차트 실렌더 검증 + 3건 수정 — owner 발주(직접 지시), 커밋만·라이브 미배포):**
 - **배경: (2026-09-14b)의 버블차트는 코드가 들어갔을 뿐 "그려지는 걸 본 적이 없었다"**(담당
@@ -198,28 +217,6 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
   `K-ICS.html` 도 동일 스니펫 스팟체크로 재확인. `pytest tests/test_deploy_assets.py` 11 passed.
 - **잔여**: 커밋만 하고 push 는 owner 승인 후(publishing 소관). GA4 Admin 쪽 필터 활성화는
   owner 본인 조치.
-
-**Recent (2026-09-12, J-ESR 킥오프 2차 — owner 발주 `inbox/designer/20260912T0446Z`, 초안 draft 완료·라이브 미배포):**
-- **`jp/index.html` 신규 — 일본 ESR 대시보드 초안(일본어 UI).** 헤더(언어전환)+공표상황 카드3+
-  ESR랭킹 가로막대(15사, 색=업태·빗금=연결·速報배지·▲목표마커)+커버리지 도넛+一覧表(7열)+푸터.
-  `../common.css` 재사용, 데이터는 `fetch('jesr_esr.json')`(publishing 산출, 읽기전용).
-  fixture 불필요 — 착수 시점에 이미 진짜 파일(79사 census·15사값) 도착.
-- **실데이터에서 스키마 예시에 없던 오염 2건 발견해 화면단에서 방어**: ① `notes` 필드가
-  한국어 내부 검증메모라 비노출 처리 ② `doc_type` 3건(au損害保険 등)에 한글 단어 혼입
-  → `jaOnly()`(정규식 한글 토큰 제거, 원본 JSON 불변)로 표시 직전 정화, 전체 렌더 텍스트
-  한글 잔여 0건 확인. `basis`≠"J-ICS"(SOMPO만 VaR99.5) 케이스는 차트 캡션+表 표식으로 고지.
-- **버그 2건 발견 즉시 수정**: 도넛 인접 슬라이스 라벨 말줄임("公表済...") → 온차트 라벨
-  끄고 범례에 건수 병기 / 모바일 375px 헤더 2줄 줄바꿈 → 루트 기존 관례(`.hint{display:none}`
-  at ≤640px) 적용.
-- **검증**: Claude Browser(1280·375px, 가로스크롤 0, aria-label 데이터기반 확인) + Playwright
-  실네트워크 재검증(진짜 배포 파일 그대로, 콘솔 에러 0, 스크린샷 2장 `artifacts/designer/
-  jesr_jp_draft_{desktop,mobile}_20260912.png`) + `a11y_contrast_check.py` 실측(업태3색·도넛3색
-  전부 delta-RGB 103+, 速報배지 흰글자 2.15:1 FAIL→진한글자 7.18:1 로 교체) + html.parser
-  태그균형 0오류·BOM없음·ECharts/Pretendard integrity 루트와 byte-diff 0.
-- **owner 판단거리 5건**(備考 공개비고 필요 여부·doc_type 오염 근본수정·noindex 해제 시점·GA
-  포함 여부·루트 삽입 조각 3종 실반영)을 티켓 답변에 정리. 루트 `index.html`/`common.css` 등
-  4개 배포 페이지는 이번 라운드 무수정(코드 조각만 답변에 제공). 상세는
-  `inbox/designer/20260912T0446Z__owner__JP_MULTI__jesr_jp_page_draft.md` 답변, changelog 2026-09-12.
 
 ## 🔴 Open — P1
 
