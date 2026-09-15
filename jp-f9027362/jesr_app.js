@@ -313,9 +313,15 @@
       setHidden('noDetailNote', true);
       renderScopeNote(c, ratioOnly);
       ['secCapitalWrap','secSensWrap'].forEach(function(id){ setHidden(id, !hasEsr); });
-      // 損益の内訳(items)은 ratio_only엔 애초에 없다 — 빈 패널을 그리는 대신 패널째 숨기고
-      // scopeNoteWrap 한 줄로 이유를 남긴다(owner 지시: "빈 패널 20개"가 아니라 "왜 없는지 한 줄").
-      setHidden('secProfitWrap', ratioOnly);
+      // 損益の内訳: 2026-09-14 까지는 ratio_only 에 PL 이 아예 없어서 "ratio_only면 무조건 숨김"이
+      // 맞았지만, 2026-09-15 에 법정 損益計算書를 실으면서 그 전제가 깨졌다(19사). 이제는 **실제로
+      // PL 항목이 있는지**로 판정한다 — 아직 없는 회사(출처 교체 대기·스캔 PDF)는 종전대로 숨기고
+      // scopeNoteWrap 한 줄이 이유를 남긴다(owner 지시: "빈 패널 20개"가 아니라 "왜 없는지 한 줄").
+      var plItems = (c.profit && c.profit.items) || {};
+      var hasPlItems = Object.keys(plItems).some(function(k){
+        return k !== 'pl_net_premiums_written' && plItems[k] && plItems[k].cur != null;
+      });
+      setHidden('secProfitWrap', ratioOnly && !hasPlItems);
       // headline 이 없으면 랭킹 레코드(jesr_esr)의 값으로 카드만 채운다(상장 지주 연결값이 있는 경우 등).
       if(!hasEsr && e.headlineRec){
         c.headline = c.headline || {};
@@ -332,8 +338,9 @@
         renderSensitivity(c);
       }
       renderBs(c);
-      if(ratioOnly){
-        // 손익 워터폴/표는 items가 비어 그릴 게 없다 — 이전에 그려둔 차트가 남아있으면 정리만.
+      if(ratioOnly && !hasPlItems){
+        // PL 이 정말 없는 회사(출처 교체 대기·스캔 PDF)만 여기로 온다 — 그릴 게 없으니
+        // 이전에 그려둔 차트가 남아있으면 정리만 하고, 패널은 위에서 이미 숨겼다.
         if(profitWaterfallChart){ try{ profitWaterfallChart.dispose(); }catch(ex){} profitWaterfallChart = null; }
       } else {
         renderProfit(c);
@@ -891,6 +898,20 @@
     });
     var body = document.getElementById('profitTableBody');
     body.innerHTML = rows.join('') || '<tr><td colspan="5" class="small-muted">データがありません。</td></tr>';
+    // 2026-09-15: profit_flow(元受収支→再保険収支→…의 단계표)는 本編까지 읽은 회사에만 있다.
+    // 법정 損益計算書만 실은 회사(ratio_only 19사)는 flow 가 없어 이 표가 「データがありません。」
+    // 한 줄로 남았다(실측) — 빈 표를 보이느니 접고, 대신 전 항목표를 펼쳐 그쪽을 본문으로 쓴다.
+    // 3개 페이지가 같은 스크립트를 쓰므로 HTML 3벌을 고치지 않고 DOM 에서 찾아 처리한다.
+    var hasFlow = rows.length > 0;
+    var flowTbl = document.getElementById('profitTable');
+    if(flowTbl && flowTbl.parentElement) flowTbl.parentElement.hidden = !hasFlow;
+    var allTbl = document.getElementById('profitAllTable');
+    var det = allTbl && allTbl.closest ? allTbl.closest('details') : null;
+    if(det){
+      det.open = !hasFlow;
+      var sm = det.querySelector('summary');
+      if(sm) sm.textContent = hasFlow ? '全項目を表示' : '損益計算書（全項目）';
+    }
     var fn = document.getElementById('profitFlowNote');
     if(fn){ var twoBlock = flow.some(function(f){ return f.id === 'pf_reins_balance'; }); fn.hidden = !twoBlock; fn.textContent = twoBlock ? '※ ' + PROFIT_FOOT_2BLOCK : ''; }
     body.querySelectorAll('.subtoggle').forEach(function(btn){
