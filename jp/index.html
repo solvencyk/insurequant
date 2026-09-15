@@ -280,16 +280,15 @@
       <div id="lossRatioBubbleWrap">
         <div id="lossRatioBubble" role="img" aria-label="損害率バブルチャート。横軸は正味損害率、縦軸は正味事業費率、円の大きさは正味収入保険料。円の色は合算率(緑=100%未満の黒字、赤=100%超の赤字)。クリックすると会社別「決算」詳細に移動します。率が近い会社の円は重なりますが、右上の「範囲を指定して拡大」アイコンを押してから範囲をドラッグすると分離します。マウス操作が難しい場合は下の「一覧表で見る」ボタンから同じデータをキーボードで操作できます。"></div>
         <p id="lossRatioBubbleMeta"></p>
+        <!-- 凡例は**常設2つだけ**。▲や破線のように「今この図に出ている時だけ意味がある」説明は
+             renderLossRatioBubble() が実データを見て足す(#lossRatioBubbleLegend の data-fixed 以降)。
+             2026-09-15 owner 반려: 하단 잔글씨가 7줄까지 불었다. 화면에 없는 것을 설명하는 줄
+             (未収録 0社인데 "点線の円＝未収録")과 조작법 3문장이 범례에 섞여 있던 게 원인. -->
         <div class="chart-legend" id="lossRatioBubbleLegend">
-          <span><span class="sw" style="background:hsl(130,70%,26%)"></span>合算率100%未満（黒字、低いほど濃い緑）</span>
-          <span><span class="sw" style="background:hsl(0,75%,30%)"></span>合算率100%超（赤字、高いほど濃い赤）</span>
-          <span>円の大きさ＝正味収入保険料（非線形・最小サイズあり。面積の比率は実際の保険料の倍率と一致しません）</span>
-          <span>点線の円＝正味収入保険料データ未収録（横軸・縦軸の値は実データです）</span>
-          <span>▲上端固定＝正味事業費率が図の範囲外（実際の値はラベルに表示、クリップしていません）</span>
-          <span>太い破線の縁取り＝算定基準・算式に注意が必要な会社（Δ算式差／OCR画像判読／Σ単純合算、詳細はツールチップ）</span>
-          <span>大手4社のように率がほぼ同じ会社は円が重なります（値が近いという事実そのものです）。右上の <b>拡大アイコン（範囲を指定して拡大）</b> を押してから図の上で範囲をドラッグすると分離します。<b>初期表示に戻すアイコン</b>で元に戻ります。</span>
+          <span data-fixed><span class="sw" style="background:hsl(130,70%,26%)"></span><span class="sw" style="background:hsl(0,75%,30%)"></span>合算率 100%未満＝緑／100%超＝赤（濃いほど極端）</span>
+          <span data-fixed title="円の面積は保険料に比例しません。最大2,596,396百万円〜最小26百万円と10万倍の開きがあるため、平方根スケール＋最小サイズで描いています。">円の大きさ＝正味収入保険料（非線形・面積比≠保険料比）</span>
         </div>
-        <p class="chart-caveat">※ MS&ADインシュアランス グループ ホールディングスはこのバブルには表示していません — 開示が「三井住友海上＋あいおいニッセイ同和の単純合計」のため、2社を個別に表示している下でこの合計まで円にすると同じ事業が3つ計上されてしまいます。三井住友海上・あいおいニッセイ同和はそれぞれ個別の円で表示しています。</p>
+        <p class="chart-caveat" title="MS&ADの開示は「三井住友海上＋あいおいニッセイ同和の単純合計」です。2社を個別の円で表示している下でこの合計まで円にすると、同じ事業が3つ計上されてしまいます。一覧表（下）には Σ単純合算 の印つきで残しています。">※ MS&AD ホールディングスはバブル対象外（傘下2社の単純合計のため。2社は個別に表示）。</p>
         <button type="button" id="toggleLossRatioListBtn" aria-expanded="false" aria-controls="lossRatioListWrap">一覧表で見る（キーボード操作の場合はこちら）</button>
       </div>
 
@@ -842,7 +841,29 @@
       var missingPremiumCount = rows.length - knownPremiums.length;
 
       if(metaEl){
-        metaEl.textContent = '表示 ' + rows.length + '社（縦軸範囲外を上端固定表示 ' + outliers.length + '社・正味収入保険料未収録 ' + missingPremiumCount + '社）';
+        // 「未収録 0社」처럼 **해당 없는 사실은 아예 안 쓴다**. 확대 조작법도 범례가 아니라
+        // 이 한 줄로 옮겼다(2026-09-15 owner 반려 — 범례에 조작 설명 3문장이 섞여 있었다).
+        var metaBits = ['表示 ' + rows.length + '社'];
+        if(outliers.length) metaBits.push('▲上端固定 ' + outliers.length + '社');
+        if(missingPremiumCount) metaBits.push('保険料未収録 ' + missingPremiumCount + '社');
+        metaEl.textContent = metaBits.join('・') + '｜円が重なるときは右上の拡大アイコンで範囲を指定できます';
+      }
+
+      // 조건부 범례: 지금 이 図에 실제로 그려진 것만 설명한다. 매 렌더마다 갈아끼운다.
+      var legendEl = document.getElementById('lossRatioBubbleLegend');
+      if(legendEl){
+        legendEl.querySelectorAll('span:not([data-fixed])').forEach(function(n){
+          if(!n.classList.contains('sw')) n.remove();
+        });
+        var addLegend = function(text, tip){
+          var sp = document.createElement('span');
+          sp.textContent = text; if(tip) sp.title = tip;
+          legendEl.appendChild(sp);
+        };
+        if(outliers.length) addLegend('▲＝事業費率が図の範囲外（実数値はラベルに表示）');
+        if(rows.some(function(r){ return r.caveat && r.caveat.code; }))
+          addLegend('太い破線の縁＝算定基準に注意', '算式差／OCR判読／単純合算。詳細は円にカーソルを合わせるとツールチップに出ます。');
+        if(missingPremiumCount) addLegend('点線の円＝保険料未収録（軸の値は実データ）');
       }
 
       if(!lossRatioBubbleChart) lossRatioBubbleChart = echarts.init(el);

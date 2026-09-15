@@ -1,11 +1,27 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-15 · Stage 5/5 — designer
+> Last updated: 2026-09-15b · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-09-15b -- 버블 하단 잔글씨 7줄→4줄 (owner 반려: "칩 남발")
+
+이 세션 전 범례 5줄(`1499f9f`) → 버블 라운드에서 7줄. 마지막 3문장짜리 확대 조작 안내는
+2026-09-14c 에 내가 얹은 것이다. `d70be8a`("랭킹 칩 3개→1개")에서 이미 한 번 쳐낸 축을 도로 늘렸다.
+
+원칙 2개로 정리:
+1. **화면에 없는 것은 설명하지 않는다.** 「点線の円＝保険料未収録」은 未収録이 0사인데도 상시
+   출력되고 있었다. ▲·破線·点線을 `renderLossRatioBubble()` 이 실데이터를 보고 붙이게 바꿨다
+   (고정은 색·크기 2개만, HTML 에 `data-fixed`).
+2. **조작법은 범례가 아니다.** 확대 안내 3문장을 meta 한 줄 끝으로 이동.
+
+색 2줄을 swatch 2개 한 줄로 합치고, 면적 caveat 과 MS&AD 주석은 `title`(호버)로 내렸다.
+실측: 하단 6행 → 3행, 범례 7 → 4. 재렌더 2회 후에도 4 유지(조건부 항목 중복 누적 없음 —
+`span:not([data-fixed])` 를 매번 비우고 다시 붙인다). 가로스크롤 없음, 콘솔 에러 0.
+
 
 ## 2026-09-15 -- 손보 決算 상세에 BS/損益 패널 개방 (jesr_app.js)
 

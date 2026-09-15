@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-09-15 · Stage 5/5 — designer
+> Last updated: 2026-09-15b · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,23 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-09-15b, 버블 하단 잔글씨 7줄→4줄 — owner 반려("칩 남발"), 커밋만·라이브 미배포):**
+- **owner 지적이 맞다. 이번 세션에 내가 늘렸다.** 이 세션 전 범례는 5줄이었고(`1499f9f`), 버블
+  라운드에서 7줄이 됐다 — 마지막 3문장짜리 확대 조작 안내는 2026-09-14c 에 내가 얹은 것이다.
+  `d70be8a` 에서 이미 "랭킹 칩 3개→1개"로 한 번 쳐냈던 축인데 도로 늘렸다.
+- **원칙 2개로 정리했다.** ① **화면에 없는 것은 설명하지 않는다** — 「点線の円＝保険料未収録」은
+  실제 未収録이 **0사**인데도 상시 출력되고 있었다(있지도 않은 상태를 설명). ② **조작법은 범례가
+  아니다** — 확대 3문장을 meta 한 줄 끝으로 옮겼다.
+- **구현**: 고정 범례는 2개만 HTML 에 남기고(`data-fixed`), ▲·破線·点線은 `renderLossRatioBubble()`
+  이 실데이터를 보고 붙인다. 색 2줄(緑/赤)은 swatch 2개를 한 줄에 합쳐 1줄로. 사이즈 줄의 긴
+  면적 caveat 은 `title`(호버)로 내리고 본문은 「非線形・面積比≠保険料比」로 압축.
+  MS&AD 주석 3줄도 1줄 + `title` 로.
+- **실측**: 차트 하단 6행 → **3행**(meta 1 + 범례 1 + MS&AD 1), 범례 항목 7 → 4.
+  未収録 0사라 点線 줄은 실제로 안 나온다. **재렌더 2회 후에도 4개 유지**(조건부 항목이 중복
+  누적되지 않는지 확인 — `span:not([data-fixed])` 를 매번 비우고 다시 붙인다). 가로스크롤 없음, 에러 0.
+- **다음**: ESRランキング 범례는 아직 8개다(이번 지적 범위 밖 — "아랫부분"이라 했고 랭킹은 상단).
+  줄일지는 owner 판단.
 
 **Recent (2026-09-15, 손보 決算 상세에 BS/損益 패널 개방 — owner 발주(직접 지시), 커밋만·라이브 미배포):**
 - **배경: 패널은 원래 다 만들어져 있었고 데이터가 없어 숨어 있었을 뿐이다.** jp 레인이 법정 BS/PL 을
@@ -196,27 +213,6 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
   `TODO_jp.md`·census·한국 자산(`index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html`) 전부
   무수정. `git commit`/`push` 안 함(오케스트레이터/publishing 병합 대기).
 - **모델·소요**: Claude Sonnet 5, 단일 세션 약 1.5시간(탐색+구현+fixture+Playwright 검증 포함).
-
-**Recent (2026-09-12c, GA4 내부 트래픽 플래그 — owner 발주 `inbox/designer/20260912T0830Z`, 커밋만·라이브 미배포):**
-- **gtag 스니펫이 있는 5 페이지(`index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html`·`privacy.html`)
-  전부에서 인라인 `gtag('config', 'G-F8NSCQZBZK');` 를 브라우저 플래그 버전으로 교체.**
-  `?iq_internal=1` 접속 시 `localStorage.iq_internal='1'` 저장 → 이후 파라미터 없이 재접속해도
-  `gtag('config', ..., {traffic_type:'internal'})` 로 계속 전송, `?iq_internal=0` 으로 해제.
-  owner 가 GA4 Admin > Data filters > Internal Traffic 을 Active 로 켜야 실제 보고서에서 빠진다
-  (그 활성화는 owner 몫, 이 라운드는 코드만). CSP meta·`<script async src>` 줄은 무수정.
-  `jp/index.html` 은 대상 아님(다른 designer 세션이 동시 작업 중이라 미접근).
-  `privacy.html` GA 문단에 "운영자 본인의 확인 접속은 내부 트래픽으로 분류해 통계에서
-  제외합니다." 한 줄 추가.
-- **함정 1건 발견·수정: `index.html` 만 파일 전체가 CRLF.** 최초 치환 스크립트가 LF 기준이라
-  이 파일만 매치 실패했고, 이어서 임시로 쓴 `sed -i` 가 CRLF 전체를 LF 로 뭉개버렸다(git diff
-  로 전수 확인해 발견) — Python 으로 전체 라인을 다시 `\r\n` 복원, `git diff` 로 5줄 삭제+13줄
-  추가만 남는지 재확인. 5 파일 전부 BOM 없음 재확인.
-- **검증**: 로컬 `http.server`(포트 8901) + Claude Browser 로 `index.html` 3-way 실측 —
-  `?iq_internal=1` → `localStorage`='1'·`dataLayer` config 인자에 `traffic_type:'internal'`,
-  파라미터 없는 재접속 → 유지, `?iq_internal=0` → `localStorage` null·`cfg={}` 로 해제.
-  `K-ICS.html` 도 동일 스니펫 스팟체크로 재확인. `pytest tests/test_deploy_assets.py` 11 passed.
-- **잔여**: 커밋만 하고 push 는 owner 승인 후(publishing 소관). GA4 Admin 쪽 필터 활성화는
-  owner 본인 조치.
 
 ## 🔴 Open — P1
 

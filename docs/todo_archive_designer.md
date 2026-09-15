@@ -4,6 +4,29 @@
 
 ---
 
+**Recent (2026-09-12c, GA4 내부 트래픽 플래그 — owner 발주 `inbox/designer/20260912T0830Z`, 커밋만·라이브 미배포):**
+- **gtag 스니펫이 있는 5 페이지(`index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html`·`privacy.html`)
+  전부에서 인라인 `gtag('config', 'G-F8NSCQZBZK');` 를 브라우저 플래그 버전으로 교체.**
+  `?iq_internal=1` 접속 시 `localStorage.iq_internal='1'` 저장 → 이후 파라미터 없이 재접속해도
+  `gtag('config', ..., {traffic_type:'internal'})` 로 계속 전송, `?iq_internal=0` 으로 해제.
+  owner 가 GA4 Admin > Data filters > Internal Traffic 을 Active 로 켜야 실제 보고서에서 빠진다
+  (그 활성화는 owner 몫, 이 라운드는 코드만). CSP meta·`<script async src>` 줄은 무수정.
+  `jp/index.html` 은 대상 아님(다른 designer 세션이 동시 작업 중이라 미접근).
+  `privacy.html` GA 문단에 "운영자 본인의 확인 접속은 내부 트래픽으로 분류해 통계에서
+  제외합니다." 한 줄 추가.
+- **함정 1건 발견·수정: `index.html` 만 파일 전체가 CRLF.** 최초 치환 스크립트가 LF 기준이라
+  이 파일만 매치 실패했고, 이어서 임시로 쓴 `sed -i` 가 CRLF 전체를 LF 로 뭉개버렸다(git diff
+  로 전수 확인해 발견) — Python 으로 전체 라인을 다시 `\r\n` 복원, `git diff` 로 5줄 삭제+13줄
+  추가만 남는지 재확인. 5 파일 전부 BOM 없음 재확인.
+- **검증**: 로컬 `http.server`(포트 8901) + Claude Browser 로 `index.html` 3-way 실측 —
+  `?iq_internal=1` → `localStorage`='1'·`dataLayer` config 인자에 `traffic_type:'internal'`,
+  파라미터 없는 재접속 → 유지, `?iq_internal=0` → `localStorage` null·`cfg={}` 로 해제.
+  `K-ICS.html` 도 동일 스니펫 스팟체크로 재확인. `pytest tests/test_deploy_assets.py` 11 passed.
+- **잔여**: 커밋만 하고 push 는 owner 승인 후(publishing 소관). GA4 Admin 쪽 필터 활성화는
+  owner 본인 조치.
+
+---
+
 **Recent (2026-09-12, J-ESR 킥오프 2차 — owner 발주 `inbox/designer/20260912T0446Z`, 초안 draft 완료·라이브 미배포):**
 - **`jp/index.html` 신규 — 일본 ESR 대시보드 초안(일본어 UI).** 헤더(언어전환)+공표상황 카드3+
   ESR랭킹 가로막대(15사, 색=업태·빗금=연결·速報배지·▲목표마커)+커버리지 도넛+一覧表(7열)+푸터.
