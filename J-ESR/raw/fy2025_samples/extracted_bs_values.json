@@ -6011,6 +6011,210 @@
     "앵커 p68 正味収入保険料 일치 → prev_cur",
     "BS: p64 법정 貸借対照表(前期金額/構成比/当期金額/構成比/増減率 5열) — idx0=前期,idx2=当期"
    ]
+  },
+  "aioi_nissay_dowa": {
+   "company_en": "Aioi Nissay Dowa",
+   "status": "extracted",
+   "scope": "solo",
+   "as_of": "2026-03-31",
+   "unit": "JPY_million",
+   "unit_disclosed": "JPY_million",
+   "source_doc": "https://dps.aioinissaydowa.co.jp/iportal/CatalogDownload.do?method=downloadPdfCatalog&catalogID=4815680000&volumeID=AIO18001&designID=AIOD03",
+   "doc_type": "ディスクロージャー資料2026「業務と財務の概況」分冊 1.財務諸表 (1)貸借対照表 / (2)損益計算書 (単体・法定様式)",
+   "pages": {
+    "bs": 30,
+    "pl": 33
+   },
+   "layout": "generic_anchored",
+   "tree": [
+    {
+     "id": "bs_assets_total",
+     "label_ja": "資産合計",
+     "depth": 0,
+     "sign": "=",
+     "cur": 3984129,
+     "prev": 3706643,
+     "parent": null,
+     "derived": false
+    },
+    {
+     "id": "bs_cash",
+     "label_ja": "現金及び預貯金",
+     "depth": 1,
+     "sign": "+",
+     "cur": 230005,
+     "prev": 182269,
+     "parent": "bs_assets_total",
+     "derived": false
+    },
+    {
+     "id": "bs_securities",
+     "label_ja": "有価証券",
+     "depth": 1,
+     "sign": "+",
+     "cur": 2743239,
+     "prev": 2542985,
+     "parent": "bs_assets_total",
+     "derived": false
+    },
+    {
+     "id": "bs_loans",
+     "label_ja": "貸付金",
+     "depth": 1,
+     "sign": "+",
+     "cur": 263000,
+     "prev": 270163,
+     "parent": "bs_assets_total",
+     "derived": false
+    },
+    {
+     "id": "bs_tangible",
+     "label_ja": "有形固定資産",
+     "depth": 1,
+     "sign": "+",
+     "cur": 171125,
+     "prev": 170457,
+     "parent": "bs_assets_total",
+     "derived": false
+    },
+    {
+     "id": "bs_other_assets",
+     "label_ja": "その他資産",
+     "depth": 1,
+     "sign": "+",
+     "cur": 576760,
+     "prev": 540769,
+     "parent": "bs_assets_total",
+     "derived": true
+    },
+    {
+     "id": "bs_liabilities_total",
+     "label_ja": "負債合計",
+     "depth": 0,
+     "sign": "=",
+     "cur": 2919598,
+     "prev": 2848997,
+     "parent": null,
+     "derived": false
+    },
+    {
+     "id": "bs_policy_reserves_total",
+     "label_ja": "保険契約準備金",
+     "depth": 1,
+     "sign": "+",
+     "cur": 2418607,
+     "prev": 2427643,
+     "parent": "bs_liabilities_total",
+     "derived": false
+    },
+    {
+     "id": "bs_outstanding_claims",
+     "label_ja": "支払備金",
+     "depth": 2,
+     "sign": "+",
+     "cur": 753439,
+     "prev": 748837,
+     "parent": "bs_policy_reserves_total",
+     "derived": false
+    },
+    {
+     "id": "bs_policy_reserves",
+     "label_ja": "責任準備金",
+     "depth": 2,
+     "sign": "+",
+     "cur": 1665167,
+     "prev": 1678806,
+     "parent": "bs_policy_reserves_total",
+     "derived": false
+    },
+    {
+     "id": "bs_bonds",
+     "label_ja": "社債",
+     "depth": 1,
+     "sign": "+",
+     "cur": 25000,
+     "prev": 25000,
+     "parent": "bs_liabilities_total",
+     "derived": false
+    },
+    {
+     "id": "bs_other_liabilities",
+     "label_ja": "その他負債",
+     "depth": 1,
+     "sign": "+",
+     "cur": 475991,
+     "prev": 396354,
+     "parent": "bs_liabilities_total",
+     "derived": true
+    },
+    {
+     "id": "bs_net_assets_total",
+     "label_ja": "純資産合計",
+     "depth": 0,
+     "sign": "=",
+     "cur": 1064531,
+     "prev": 857645,
+     "parent": null,
+     "derived": false
+    },
+    {
+     "id": "bs_capital_and_surplus",
+     "label_ja": "資本金・資本剰余金",
+     "depth": 1,
+     "sign": "+",
+     "cur": 179793,
+     "prev": 179793,
+     "parent": "bs_net_assets_total",
+     "derived": false
+    },
+    {
+     "id": "bs_retained_earnings",
+     "label_ja": "利益剰余金",
+     "depth": 1,
+     "sign": "+",
+     "cur": 281188,
+     "prev": 223915,
+     "parent": "bs_net_assets_total",
+     "derived": false
+    },
+    {
+     "id": "bs_valuation_diff",
+     "label_ja": "その他有価証券評価差額金",
+     "depth": 1,
+     "sign": "+",
+     "cur": 603549,
+     "prev": 453936,
+     "parent": "bs_net_assets_total",
+     "derived": false
+    },
+    {
+     "id": "bs_other_equity",
+     "label_ja": "その他(純資産)",
+     "depth": 1,
+     "sign": "+",
+     "cur": 1,
+     "prev": 1,
+     "parent": "bs_net_assets_total",
+     "derived": true
+    }
+   ],
+   "checks": {
+    "assets_eq_liab_plus_equity": true,
+    "policy_reserves_sum_ok": true,
+    "no_negative_residual": true
+   },
+   "notes": [
+    "출처 교체(구 출처 = MS&AD HD 'FY2025Q4_J2.pdf' 그룹 IR 덱, 貸借対照表 0쪽). 신 출처는 회사 자신의 공식 도메인 dps.aioinissaydowa.co.jp(ディスクロージャー資料 배포 포털)의 PDF 직링크 — CatalogDownload.do 가 application/octet-stream 으로 PDF 본문을 그대로 반환한다(랜딩/목록 페이지 아님, 실측 5,554,752 bytes / 136p PDF 1.7).",
+    "그 URL 은 www.aioinissaydowa.co.jp/corporate/policy/disclo_policy.html(ディスクロージャー) 의 「ダウンロード PDF」 버튼이 가리키는 것이다. 회사 본사이트의 열람 링크는 전부 iPortal 플립북(JS)이라 PDF 직링크가 아니다 — 그래서 CatalogDownload.do 를 쓴다. URL 에 .pdf 확장자가 없다는 점은 census 병합 시 출처 게이트(doc_kind 판정)와 부딪힐 수 있으니 오케스트레이터 확인 필요.",
+    "대체 후보(같은 값, .pdf 확장자): https://www.ms-ad-hd.com/ja/ir/library/securities/ioi/main/0110/teaserItems1/0/linkList/01/link/ad16_yuukasyokenhokokusyo.pdf — あいおいニッセイ同和損保 第16期 有価証券報告書(2026年6月30日提出) p205 貸借対照表 / p207 損益計算書. 16행 · 18행 전부 ディスクロージャー誌와 숫자 동일함을 대조 확인했다(교차검증 2문서 일치). 다만 도메인이 모회사(MS&AD HD)라 '자사 도메인' 요건에는 위 iPortal URL 이 더 맞는다.",
+    "premium_match FAIL 은 값 오류가 아니다. 법정 損益計算書 正味収入保険料 当期 = 1,471,193 / 前期 = 1,430,364(백만엔, 원문 그대로). 기대값 1,471,100 / 1,430,300 은 MS&AD IR 덱의 億円 반올림 표기(1兆4,711億円)를 백만엔으로 환산한 값이라 각각 93 / 64 백만엔 차이가 난다. 같은 표·같은 회사·같은 연도이며 差는 전적으로 억엔 반올림이다. 값을 건드리지 않고 pass:false 로 둔다.",
+    "bs_identity 当期: 2,919,598 + 1,064,531 = 3,984,129 = 資産の部合計 (diff 0). 前期는 2,848,997 + 857,645 = 3,706,642 vs 표기 3,706,643 (diff 1, 백만엔 표시 반올림 허용오차 ±1 이내).",
+    "bs_policyholder_dividend_reserve = null: 손보 단체 BS 에 契約者配当準備金 행 자체가 없다(損益計算書에는 契約者配当金 19백만엔이 비용으로만 나온다).",
+    "bs_bonds = 25,000(부채 社債). 자산측 有価証券 내역의 社債 186,977 과 혼동 금지 — ROWS 정의상 社債는 負債の部 항목이다.",
+    "pl_underwriting_profit = null(법정 損益計算書에 保険引受利益 행이 없다). 같은 PDF p9 「主要な業務の状況を示す指標」 5년표에는 保険引受利益 FY2025 54,858 / FY2024 13,482 이 인쇄돼 있으나, SPEC 의 '다른 표에서 끌어오기 금지' 규칙에 따라 PL 블록에는 싣지 않고 여기 기록만 한다.",
+    "pl_investment_pl = null(資産運用収益 255,204 · 資産運用費用 50,863 은 별행이고 '資産運用損益' 합계행은 인쇄되지 않는다 — 차감 계산 금지 규칙 적용).",
+    "검증 ④ 참고: 법정 PL 역산 正味損害率 = (正味支払保険金 838,937 + 損害調査費 109,876) / 1,471,193 = 64.49% → 같은 PDF p9 공식표 64.49%·화면값 64.5 와 일치. 반면 事業費率를 (諸手数料及び集金費 295,876 + 営業費及び一般管理費 197,534)/1,471,193 로 역산하면 33.54% 로 공식 正味事業費率 32.60%(p9)와 0.94pt 어긋난다 — 営業費及び一般管理費 전액이 아니라 그중 保険引受분만 분자에 들어가기 때문이다(회사 공식표가 32.60%). 추출 오류가 아니다."
+   ]
   }
  }
 }
