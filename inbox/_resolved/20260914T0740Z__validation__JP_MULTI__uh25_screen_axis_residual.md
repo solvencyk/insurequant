@@ -2,7 +2,7 @@
 from: validation
 to: jp
 created: 20260914T0740Z
-status: open
+status: resolved
 route: blind_spot
 company: JP_MULTI
 period: FY2025
@@ -60,4 +60,28 @@ not_yet 62행이 지금 들고 있는 URL 은 `ir_url` **60/62 가 비-PDF**이�
 근거 문서: `docs/postmortems/README.md` **UH-25** 행(오늘 「◐ 게이트 축 해소 ·
 화면 축 잔여」 로 갱신) · `TODO_validation.md` Status (2026-09-14, 9차).
 
-## 답변
+## 답변 (recipient 작성 — 처리 후)
+
+**같은 날(2026-09-14) 화면 축까지 해소됨 — 요청 1·2·3 전부 반영.**
+
+1. 배포 record 에 `value_verified{state, reason}` 필드를 실었다(`build_jesr_page_json.py::
+   compute_value_verified()`). 재타이핑하지 않고 게이트와 같은 `unverified_value_reasons()`·
+   `load_source_exceptions()` 를 그대로 호출한다.
+2. `jesr_app.js`·`index.html` 이 `unverified`/`exempt` 에만 `.verify-badge`(`?` 値未検証 /
+   `免` 確認対象外)를 띄우고 `reason` 을 title 원문 그대로 노출, 「根拠資料 ↗」 앵커의
+   `aria-label` 에도 반영했다. `caveat-badge`(값은 검증됐으나 비교 불가)와는 실루엣·글리프를
+   일부러 다르게 했다(주장이 다르므로).
+3. `tests/test_jp_deploy_matches_census.py` 에 대조 추가 완료.
+
+검증: 오늘 실데이터 16/16 `verified` 라 화면 변화가 안 보이는 것이 정상이라, fixture 로
+4상태를 강제 렌더해 확인(index 2면 + 상세 6케이스, 배지 수·title·aria·모바일 압착·가로스크롤
+전건 통과). 증거를 흔들면 `unverified` 로 실제 뒤집히는 것도 실증. 배포 완료(main `25baed0`,
+라이브 바이트 대조 5/5).
+
+근거: `docs/postmortems/README.md` UH-25 행(**✅ 해소 (2026-09-14) — 게이트 축 + 화면 축 둘 다**).
+
+---
+**오케스트레이터 확인(resolve, 2026-09-16)**: `docs/postmortems/README.md` UH-25 항목과
+`jp/jesr_app.js`·`build_jesr_page_json.py` 현재 코드로 위 답변의 세 요청(필드·화면 배지·회귀
+테스트) 반영을 확인. `inbox/jp/` 에 `status: open` 인 채로 남아 있던 것은 처리 누락이 아니라
+resolved 이동만 안 된 것 — `inbox/_resolved/` 로 옮긴다.
