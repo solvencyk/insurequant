@@ -1,6 +1,6 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-09-14 · Stage 4/5 — publishing
+> Last updated: 2026-09-17 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
@@ -9,6 +9,24 @@
 **This file:** entries scoped to publishing work only.
 
 ---
+
+## 2026-09-17 — KR0073 2026.1Q 경과조치 후 지급여력비율 정정, main 배포 (owner 발주+승인)
+
+FSS 보도자료(`R26090720.pdf`, 2026.9.17)와 `kics_disclosure.json` 대조(38개사×2분기×전/후 152칸,
+항목27)에서 KR0073(교보생명) 2026.1Q 경과조치 후만 진짜 오류(214.23 vs 정답 211.39) 발견 — 26.1Q
+원본 공시의 미정정 값이 26.2Q 공시의 정정 비교컬럼에 반영되지 않았다("적용후 컬럼 파싱 불안정"
+사각의 구체 사례).
+
+`scripts/fix_20260917_kr0073_2026q1_headline_afterapply.py`로 3칸 정정(item1/14/27_적용후).
+부수효과로 R5_기준금액 적용후 항등식이 깨져(하위 세부항목은 재공시 안 됨) `validate_kics_disclosure.py`·
+`validate_data_contract.py`에 `AFTER_IDENT_ISSUER_INCONSISTENT` documented-exception 등재부 신설
+(잔차 938.25 박제, owner 승인 — 이 배터리는 R1/R2/R5/R6/R7/R8 중 R5만 해당, 나머지 축은 등재 없음).
+`sync_master_xlsx_sheet.py "K-ICS공시"` xlsx 동기화. 게이트 `RED=0`(양쪽) 확인 후
+`scripts/export_public_sheets.py` 재실행(`K-ICS공시.json`·`manifest.json`만 변경).
+
+격리 워크트리(`../insurequant-main-deploy`, `origin/main` 기준) cherry-push — kics_disclosure.json
++ public_exports 2개 파일만, 커밋 `a84520c`. 라이브 검증: `kics_disclosure.json` 200, KR0073
+2026.1Q item27_적용후="211.39" 확인. HTML 무수정, keep-list 밖 파일 섞임 없음.
 
 ## 2026-09-14 (2차) — 손보 2사 추가(24→26사) + `value_verified` UH-25 화면축 배선 (owner 승인)
 

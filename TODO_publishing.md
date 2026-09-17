@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-09-14 · Stage 4/5 — publishing
+> Last updated: 2026-09-17 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -10,6 +10,24 @@ Session start: read this file + `claude-agent-publishing.md` + relevant validati
 NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
 
 ## Status
+
+**2026-09-17 (KR0073 2026.1Q 경과조치 후 지급여력비율 정정 — FSS 보도자료 대조, main 배포 완료)**:
+owner가 FSS 보도자료(`R26090720.pdf`, '26.6월말 기준 보험회사 지급여력비율 현황, 2026.9.17)를
+`kics_disclosure.json`과 대조해달라고 발주. 38개사(국내 공시대상, 외국 재보험지점 14사·예별손보
+제외) × 2개분기(26.1Q/26.2Q) × 전/후 152칸을 항목27로 대조 — 오차 대부분 억원단위 반올림 설계상
+차(<0.3%p)였는데 KR0073(교보생명) 2026.1Q 경과조치 후만 2.83%p(214.23 vs 정답 211.39) 진짜 오류.
+원인: 26.1Q 원본 공시의 미정정 item1/14/27_적용후가 26.2Q 공시의 정정 비교컬럼(FSS 보도자료와도
+일치)에 반영 안 됨 — "적용후 컬럼 파싱 불안정" 사각의 구체 사례. **한 곳**:
+`scripts/fix_20260917_kr0073_2026q1_headline_afterapply.py`로 3칸 정정(item1_적용후
+149556→149557 · item14_적용후 69811→70749 · item27_적용후 214.23→211.39). 부수효과로
+R5_기준금액(item14=item15-item22+item23) 적용후 항등식이 깨져서(하위 세부항목은 26.2Q 공시가
+재공시 안 함) `validate_kics_disclosure.py`·`validate_data_contract.py`에
+`AFTER_IDENT_ISSUER_INCONSISTENT` 등재부(발행사 자기모순 documented exception, 잔차 938.25 박제)
+신설(owner 승인). `sync_master_xlsx_sheet.py "K-ICS공시"`로 xlsx 동기화. 게이트 `RED=0` 확인
+(양쪽 gate). 격리 워크트리(`../insurequant-main-deploy`, origin/main 기준)로 kics_disclosure.json
++ `public_exports/K-ICS공시.json`·`manifest.json` 3파일만 cherry-push(`a84520c`). 라이브 확인:
+`curl -k https://www.insurequant.com/kics_disclosure.json` 200, KR0073 2026.1Q item27_적용후=
+"211.39" 확인. HTML 무수정. 워크트리 정리 대기 중.
 
 **2026-09-14 (2차 — 손보 2사 추가 적재 24→26사 + `value_verified` UH-25 화면축 배선, owner 승인)**:
 두 가지 독립 변경, 둘 다 jp 범위(한국 마스터 무수정 확인 — `git status --short` 결과 K-ICS/IFRS17/xlsx/public_exports/keep-list 0건).
