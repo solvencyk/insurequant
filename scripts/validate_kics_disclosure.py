@@ -853,8 +853,28 @@ _TRANS_AFTER_IDENT = [
     ("R8_기본자본비율", 28, (2, 14), lambda v: (v[2] / v[14] * 100) if v[14] else None, True),
 ]
 
+# documented exception — 발행사 자기모순 (owner 2026-09-17 승인, 1건). 이 배터리는 2026-08-21
+# 신설 이래 예외 등록 장치가 아예 없었다(다른 축 3개는 다 있음) — 이번이 첫 등재.
+#
+# 배경: FSS 보도자료('26.6월말 기준 지급여력비율 현황, R26090720.pdf, 2026.9.17)와
+# kics_disclosure.json 을 대조하다 KR0073(교보생명) 2026.1Q 경과조치 후 지급여력비율이
+# 214.23 으로 부정확함을 발견(정확치 211.39 — FSS 보도자료 및 KR0073 26.2Q 공시
+# [지급여력비율 총괄] 직전분기 비교컬럼 두 소스 모두 일치). item1/14/27_적용후를 정정치로
+# 고쳤는데(scripts/fix_20260917_kr0073_2026q1_headline_afterapply.py), KR0073 26.2Q 공시는
+# 총괄표의 26.1Q 비교컬럼(비율·지급여력금액·지급여력기준금액)만 정정해서 보여주고 세부표
+# (항목15 기본요구자본·22 법인세조정액·23 기타요구자본)의 정정된 비교치는 공시하지 않는다
+# (당분기 전용 ①②③ 유형별 표만 있다) — 즉 총괄=최신/세부=구버전으로 회사 공시 자체가
+# 갈린다. 파생값으로 세부항목을 갈아끼우지 않는다(발행사 불일치는 있는 그대로 둔다,
+# reference_issuer_inconsistent_keep_as_disclosed 와 동형) — 대신 이 잔차를 값으로 박제하고
+# 매 실행 마스터에 대고 재검산한다(통째 skip 아님, 다른 3개 documented-exception 배터리와 동형).
+# 잔차 = 실측(공시후 item14) − 기대(item15−22+23) = 70749 − 69810.75 = 938.25.
+AFTER_IDENT_ISSUER_INCONSISTENT: dict[tuple[str, str, str], float] = {
+    ("KR0073", "2026.1Q", "R5_기준금액"): 938.25,
+}
+AFTER_IDENT_PIN_TOL = 0.01
 
-def _transition_identities_after(records: list[dict]) -> tuple[list, Counter]:
+
+def _transition_identities_after(records: list[dict]) -> tuple[list, Counter, list]:
     """'적용후' 항등식 정합 R1/R2/R5/R6/R7/R8 — **전사 39사** (owner 2026-07-07 blind spot).
     룰엔진의 R1~R8 은 적용전만 검사 → 적용후(값_적용후)는 미검증이었음.
 
@@ -867,7 +887,10 @@ def _transition_identities_after(records: list[dict]) -> tuple[list, Counter]:
          적용전에선 GREEN 인데 적용후에서만 RED 로 뜨던 비대칭 제거).
 
     genuine 적용후 입력 완비 셀만 판정 — 결측은 결함과 섞지 않되 `skipped` 로 명시 집계한다.
-    반환: (fails, skipped). fails = (code, quarter, name, rule, expected_after, disclosed_after, diff)."""
+    등재된 (code, quarter, rule) 은 잔차가 `AFTER_IDENT_ISSUER_INCONSISTENT` 박제값과 일치하면
+    fails 대신 pinned 로 빠진다(MATCH) — 이탈하면 그대로 fails 다(DRIFT, 면제 무효).
+    반환: (fails, skipped, pinned). fails/pinned = (code, quarter, name, rule, expected_after,
+    disclosed_after, diff)."""
     def _num(v):
         try:
             return float(str(v).replace(",", ""))
@@ -886,6 +909,7 @@ def _transition_identities_after(records: list[dict]) -> tuple[list, Counter]:
         if c and q:
             byq.setdefault((c, q), {})[it] = _num(r.get(KEY_VALUE_POST))
     fails = []
+    pinned_matches = []
     skipped: Counter = Counter()
     for (c, q), m in sorted(byq.items()):
         for rule, tgt, ins, fn, is_ratio in _TRANS_AFTER_IDENT:
@@ -898,9 +922,16 @@ def _transition_identities_after(records: list[dict]) -> tuple[list, Counter]:
                 skipped[f"{rule}:분모0"] += 1
                 continue
             tol = _ratio_tol(c, exp, m.get(14)) if is_ratio else _eff_tol(c)
-            if abs(exp - tv) > tol:
-                fails.append((c, q, name.get(c, c), rule, round(exp, 2), round(tv, 2), round(tv - exp, 2)))
-    return fails, skipped
+            diff = tv - exp
+            if abs(diff) > tol:
+                row = (c, q, name.get(c, c), rule, round(exp, 2), round(tv, 2), round(diff, 2))
+                pinned = AFTER_IDENT_ISSUER_INCONSISTENT.get((c, q, rule))
+                if pinned is not None and abs(diff - pinned) <= AFTER_IDENT_PIN_TOL:
+                    pinned_matches.append(row)
+                    skipped[f"DOCUMENTED_EXEMPT_PINNED({rule} 잔차 박제 일치)"] += 1
+                else:
+                    fails.append(row)
+    return fails, skipped, pinned_matches
 
 
 # 36_irr 축의 항목 집합 — 단일 소스. `_transition_irr_after` 와 축 평가율 census 가 같은 것을 본다.
@@ -3947,7 +3978,7 @@ def main() -> int:
             for c, q, n, p, tag in mmult_unverifiable
         ],
     }
-    after_ident_fails, after_ident_skipped = _transition_identities_after(records)
+    after_ident_fails, after_ident_skipped, after_ident_pinned = _transition_identities_after(records)
     report["transition_identities_after"] = {
         "scope": "all 39 filers — 2026-08-21 widened from 18 appliers; tolerance now matches the pre-column engine",
         "red": [
@@ -3956,6 +3987,16 @@ def main() -> int:
             for c, q, n, rule, e, a, diff in after_ident_fails
         ],
         "not_evaluated": dict(sorted(after_ident_skipped.items())),
+        "documented_exception": {
+            "doc": ("발행사 자기모순 documented exception — blanket skip 아니라 기대잔차 박제 "
+                    "(owner 2026-09-17 승인). registry=AFTER_IDENT_ISSUER_INCONSISTENT"),
+            "pin_tolerance": AFTER_IDENT_PIN_TOL,
+            "matched": [
+                {"code": c, "quarter": q, "name": n, "rule": rule,
+                 "expected_after": e, "disclosed_after": a, "diff": diff}
+                for c, q, n, rule, e, a, diff in after_ident_pinned
+            ],
+        },
     }
     irr_after_fails, irr_after_skipped = _transition_irr_after(records)
     report["transition_irr_after"] = {
@@ -4394,6 +4435,11 @@ def main() -> int:
     else:
         print("적용후 항등식 위반 (전사 39사): 0")
     print(f"    [적용후 항등식 미판정 내역] {dict(sorted(after_ident_skipped.items()))}")
+    if after_ident_pinned:
+        print(f"  documented exception (발행사 자기모순, 잔차 박제): {len(after_ident_pinned)}건 "
+              f"(tol {AFTER_IDENT_PIN_TOL})")
+        for c, q, n, rule, e, a, diff in after_ident_pinned:
+            print(f"    {q} {c} {n} [{rule}] 공시후={a} 계산후={e} diff={diff} → 박제잔차와 일치")
     if taut_red_axes:
         print(f"    ⚠ 위 '위반 0' 중 **동어반복으로 판정된 축은 증거가 아니다**: "
               f"{sorted(f'{a}[{c}]' for a, c in taut_red_axes)} — 아래 동어반복 검사 참조")

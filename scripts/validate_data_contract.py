@@ -497,13 +497,25 @@ def check_census(res: GateResult, env: "Env") -> None:
                 message="육안판독 근거를 등재했는데 이 (회사,분기)가 더 이상 "
                         "SOURCE_UNREADABLE_NOT_VERIFIED 를 내지 않는다 — 원천이 판독 가능해졌거나 "
                         "세부가 적재됐다. 등재를 풀어라(죽은 핀)")
-    _ident_after, _ident_skipped = _transition_identities_after(kd_records)
+    # 2026-09-17: 세 번째 반환값(등재부 대조, AFTER_IDENT_ISSUER_INCONSISTENT) 추가 — 정본은
+    # validate_kics_disclosure._transition_identities_after 다(재구현 금지, 두 게이트가 같은
+    # 함수를 부른다). 박제잔차와 일치하면 이 축은 발행사 자기모순 documented exception 이라
+    # RED 로 올리지 않고 YELLOW 로만 남긴다(면제가 깨지면 함수가 이미 fails 로 돌려줘 아래
+    # 루프가 그대로 RED 처리한다 — 여기선 '매 실행 재검산에 통과한 면제'만 빠진다).
+    _ident_after, _ident_skipped, _ident_pinned = _transition_identities_after(kd_records)
     for c, q, n, rule, exp_after, disc_after, diff in _ident_after:
         if not _emit(q):
             continue
         res.add(check="census", severity="RED", master="kics_disclosure", company=n, quarter=q,
                 rule="TRANSITION_AFTER_IDENTITY",
                 message=f"[{rule}] 공시후={disc_after} 계산후={exp_after} diff={diff} — 적용후 항등식 위반")
+    for c, q, n, rule, exp_after, disc_after, diff in _ident_pinned:
+        if not _emit(q):
+            continue
+        res.add(check="census", severity="YELLOW", master="kics_disclosure", company=n, quarter=q,
+                rule="TRANSITION_AFTER_IDENTITY_PINNED",
+                message=f"[{rule}] 공시후={disc_after} 계산후={exp_after} diff={diff} — "
+                        "발행사 자기모순 documented exception(박제잔차 일치, 비차단)")
     _irr_after, _irr_skipped = _transition_irr_after(kd_records)
     for c, q, n, disc_after, exp_after in _irr_after:
         if not _emit(q):
