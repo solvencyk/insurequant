@@ -233,7 +233,12 @@ IFRS17 적용 완료 2026-06-13. K-ICS 적용은 **owner가 2026-06-17 취소** 
 Owner complaint: site looks AI-generated. Audit done (4 pages + barabom.me reference — actual findings: Spoqa Han Sans Neo webfont + restrained neutrals + 0.1-0.2s micro transitions, NOT heavy animation). Phases:
 - [~] **P1 quick wins** — **3/4 이미 배포돼 있다 (2026-08-30 `origin/main` 실측)**: Pretendard 4페이지+common.css 전부 적용 · `tabular-nums` 적용 · `rel="icon"` 4페이지 전부 존재. **남은 것은 둘뿐** — 부트스트랩 잔재 색(`#0d6efd`·`#f8f9fa`)이 4페이지+common.css 에 아직 있고, `og:image` 는 0건이다. 종전 문구 —: Pretendard Variable + `font-variant-numeric:tabular-nums` 전역 / 탈부트스트랩 팔레트(#0d6efd·#f8f9fa 교체, 잉크+페이퍼+딥블루 1액센트) / favicon(IQ 모노그램)+OG+meta description / footer(출처·기준분기·면책) / 이모지 placeholder 제거 / radius 12→6px / Chart.js·ECharts 색 CSS 변수화 (기본 teal/pink 퇴출). [부분 착수: P1-QUICKWIN 일부 done 2026-06-12, 팔레트 교체는 보류]
 - [x] **P2 structural (1~2d)**: ✅ common.css · ✅ index 히어로 KPI 스트립+typeahead · ✅ scroll-reveal · ✅ 차트 공통 테마 · ✅ KPI 카운트업 애니(index 3개+IFRS17 Panel7 4개, ease-out 600ms, 2026-06-20) — **완료**
-- [ ] **P3**: M3 잔여(도넛 stack·범례) 흡수, 다크모드(선택)
+- [x] **P3 — 문서가 낡아 있었다(2026-09-19 정정, 이 트리에서 직접 확인).** 다크모드는 이미 구현돼 있다:
+  `theme.js` L93-94 가 `id='iqThemeToggle'` · `class='theme-toggle'` 버튼을 **런타임에 주입**한다(그래서
+  HTML 을 grep 하면 0건 — 없는 게 아니라 JS 가 만든다). `common.css` 에 `:root[data-theme="dark"]` 토큰
+  (L76)·`@media (prefers-color-scheme:dark)`(L85)·`.theme-toggle` 스타일(L151·L160)이 전부 있고,
+  OS 자동감지가 아니라 사용자가 누르는 토글 + localStorage 고정이다. "M3 잔여(도넛 stack·범례) 흡수" 도
+  아래 M3 절에서 이미 둘 다 [x] — P3 는 사실상 완료다.
 - [x] **TREEMAP-SCALE**: 트리맵 색 임계 앵커 130/200% + 범례 임계 표기 — done 2026-06-13 (권고선=130%, 민감도 패널 150%→130% 정합)
 - [ ] **COMPANY-ACCENT**: 회사 키컬러는 배경 틴트 대신 "액센트 1곳" 원칙(패널 제목 2px 룰 + 회사명 칩 + 차트 주 시리즈, 저채도 변형 23사 맵) — 시안 owner 승인 후
 
@@ -250,7 +255,11 @@ Owner confirmed scope: **full-panel mobile pass + alternative render** (not foun
 ### MOB-IFRS17 — IFRS17.html full mobile layout (scope confirmed by owner 2026-06-12)
 Owner confirmed scope: **full-panel mobile pass + alternative render**. M1 foundation only so far.
 - [ ] Panel 1–6 mobile policy: which to keep, which to collapse, which to swap for alternate viz
-- [ ] Panel 7 (BS-DRILLDOWN, added 2026-08-14) has `@media(max-width:640px)` CSS following the same pattern as Panels 1-6 but hasn't had a real-viewport pixel check — fold into this pass' verification
+- [x] **Panel 7 (BS-DRILLDOWN) 모바일 실측 — 문서가 낡아 있었다(2026-09-19 정정).** 같은 사실이 두 티켓에
+  다른 상태로 남아 있었다: 위 **BS-TACCOUNT 티켓 L208** 에 2026-08-18 real-viewport recheck 기록이
+  이미 있다(`window.innerWidth===375` 실측, `.bs-t` 가 `flex-direction:column` 으로 전환, 세부·하위 행이
+  1열로 접힘, `body.scrollWidth` 가 `innerWidth` 를 안 넘음 = 가로 넘침 0, 콘솔 오류 0). 이 티켓에만
+  반영이 안 됐던 것이다. 코드 변경 없음, 체크박스만 정정.
 - [ ] **(owner open rec 1)** horizontal-scroll range for dense panels
 - [ ] **(owner open rec 2)** breakpoint set confirmation
 - (shares the two owner open recs with MOB-KICS — resolve once for both pages.)
@@ -274,8 +283,12 @@ IFRS17.html 대시보드 최상단에 4-card KPI strip 추가(기말 CSM 잔액�
 ### INDEX-BUBBLE-V2 HTML side — 4축 bubble rendering
 Publishing ships the data (`TODO_publishing.md` INDEX-BUBBLE-V2). Designer ships the ECharts spec:
 - [x] **🚫 폐기 — 재착수 금지 (2026-08-20 확인)**. 4축 V2는 owner가 폐기했고 **3축이 이미 라이브 완결**이다: `index.html` L165 *"X: 신계약 CSM 규모 · Y: NB CSM 배수 · 크기: 기말 CSM 잔액"*. 이 줄을 열린 항목으로 두면 다음 세션이 완결된 기능을 다시 만든다. 원문:
-- [ ] Mobile rendering: **3축** 버블맵 → simplified (bar 또는 list with sort options) — 위 4축 폐기에 맞춰 축 표기 정정(2026-08-20)
-- [ ] Click → cross-nav (existing pattern)
+- [x] **Mobile rendering — 문서가 낡아 있었다(2026-09-19 정정, 이 트리에서 직접 확인).** 이미 구현돼 있다:
+  `index.html` L83 `#bubble-list{display:none}`(데스크톱) + 모바일 폭에서 노출, L107-108 에 행 레이아웃
+  CSS, L1363 에 행 클릭 핸들러. 버블맵 대신 리스트로 떨어지는 대체 렌더가 라이브다. 코드 변경 없음.
+- [x] **Click → cross-nav — 문서가 낡아 있었다(2026-09-19 정정, 이 트리에서 직접 확인).** `index.html`
+  L1125-1127 `bubbleChart.on('click', ...)` → `window.location.href='IFRS17.html?company='+encodeURIComponent(...)`.
+  모바일 리스트 행도 같은 이동(L1363), 상단 typeahead 도 같은 패턴(L446). 코드 변경 없음.
 
 ### F17 Panel 3 — Tier2 LOB drill-down rendering (when publishing ships Tier2 JSON)
 Publishing currently has Tier1 4-bar in production. Tier2 (LOB 장기/자동차/일반 stacked) waits on parser F17 decision + publishing assembly.
