@@ -37,18 +37,18 @@
     return {
       dark:dark,
       bg:cssVar('--bg','#ffffff'),
-      card:cssVar('--card','#f8f9fa'),
-      border:cssVar('--border','#e9ecef'),
-      text:cssVar('--text','#212529'),
-      muted:cssVar('--muted','#6a737a'),
-      ink:cssVar('--ink-strong','#495057'),
-      primary:cssVar('--primary','#0d6efd'),
-      pos:cssVar('--pos','#16a34a'),
-      neg:cssVar('--neg','#ef4444'),
-      grid:cssVar('--border','#e9ecef'),
-      tipBg:cssVar('--tip-bg','rgba(33,37,41,0.9)'),
-      tipText:cssVar('--tip-text','#f8f9fa'),
-      tipBorder:cssVar('--tip-border','rgba(33,37,41,0.9)')
+      card:cssVar('--card','#f5f5f4'),
+      border:cssVar('--border','#e4e4e2'),
+      text:cssVar('--text','#18181b'),
+      muted:cssVar('--muted','#63666b'),
+      ink:cssVar('--ink-strong','#3f4347'),
+      primary:cssVar('--primary','#0f6e68'),
+      pos:cssVar('--pos','#4b7f2a'),
+      neg:cssVar('--neg','#b4443a'),
+      grid:cssVar('--border','#e4e4e2'),
+      tipBg:cssVar('--tip-bg','rgba(24,24,27,0.92)'),
+      tipText:cssVar('--tip-text','#f5f5f4'),
+      tipBorder:cssVar('--tip-border','rgba(24,24,27,0.92)')
     };
   }
   function applyChartJs(C){

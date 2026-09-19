@@ -18,32 +18,38 @@
      - tier1 capital donut shows "100%+" when issuance exceeds the recognised cap
      - 현대해상 key color = orange #F47920
      - mobile (<=640px) shows current-period only
-   Palette swap (de-AI DESIGN-V2 P1) is owner-gated — do NOT change token VALUES
-   here without sign-off; only the token VOCABULARY is being formalised now.
+   Palette: **owner 가 2026-09-20 에 B안(무채색 + 틸 한 점)을 승인해 적용했다.**
+   그 전 값은 부트스트랩 5 기본값(--primary #0d6efd = --bs-primary, --card #f8f9fa = --bs-light)을
+   손대지 않은 것이라 "스캐폴딩 기본값" 으로 읽혔다(owner: "ㅈ같이 AI스럽다"). 액센트를 하나로 고정하고
+   중립색을 따뜻한 무채색으로 옮긴 것이 이번 변경의 전부다 — 레이아웃·폰트·간격은 안 건드렸다.
+   **여기서 더 바꾸려면 다시 owner 승인을 받는다.**
    ========================================================================== */
 
 :root{
   /* — Surfaces / ink ——————————————————————————————————————————— */
   --bg:#ffffff;             /* page + card-inner background          */
-  --card:#f8f9fa;           /* panel / table-header / inactive-tab   */
-  --border:#e9ecef;         /* hairline borders                      */
-  --text:#212529;           /* primary ink                           */
-  --muted:#6a737a;          /* secondary ink, captions, placeholders — A11y 2026-07-21: darkened from #6c757d (4.45:1 on --card, sub-AA) to clear 4.5:1 on both --bg and --card */
-  --ink-strong:#495057;     /* axis labels / strong secondary        */
+  --card:#f5f5f4;           /* panel / table-header / inactive-tab   */
+  --border:#e4e4e2;         /* hairline borders                      */
+  --text:#18181b;           /* primary ink                           */
+  --muted:#63666b;          /* secondary ink, captions, placeholders — A11y: --bg 대비 5.6:1, --card 대비 5.3:1 (둘 다 AA 통과). 2026-07-21 에 #6c757d 가 --card 위에서 4.45:1 로 미달이던 것을 고쳤고, 2026-09-20 팔레트 B 에서도 그 조건을 유지했다 */
+  --ink-strong:#3f4347;     /* axis labels / strong secondary        */
 
   /* — Brand / action ———————————————————————————————————————————— */
-  --primary:#0d6efd;        /* active tab, links, default series      */
-  --primary-hover:#0b5ed7;
+  --primary:#0f6e68;        /* active tab, links, default series — 딥 틸. 흰 배경 대비 6.1:1 */
+  --primary-hover:#0b544f;
   --on-primary:#ffffff;     /* ink on a --primary fill (tabs, CTA)    */
 
   /* — Semantic status (financial) ——————————————————————————————
      Canonical positive/negative/caution. Existing charts still use their own
      literals; adopt these progressively. △-negatives keep --neg.            */
-  --pos:#16a34a;            /* 양(+) increase / healthy               */
-  --pos-soft:#22c55e;
-  --neg:#ef4444;            /* 음(△) decrease / breach                */
-  --neg-strong:#dc3545;
-  --warn:#f59e0b;           /* caution / medium-confidence            */
+  /* 2026-09-20: 액센트가 틸로 바뀌면서 기존 --pos(#16a34a, hue 145°)가 액센트(hue 176°)와
+     "두 개의 초록" 으로 읽혔다. 양(+)은 올리브 쪽으로 밀어 색상환에서 떼어 놓는다(hue ~95°).
+     음(△)은 형광 빨강 대신 벽돌색으로 — 레퍼런스(Mercury)가 경고색 빨강을 빼는 이유와 같다. */
+  --pos:#4b7f2a;            /* 양(+) increase / healthy               */
+  --pos-soft:#63a038;
+  --neg:#b4443a;            /* 음(△) decrease / breach                */
+  --neg-strong:#993a31;
+  --warn:#c98a12;           /* caution / medium-confidence            */
 
   /* — Typography ———————————————————————————————————————————————— */
   --font-sans:'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,'Segoe UI',Roboto,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
@@ -55,9 +61,9 @@
   --r-sm:4px; --r-md:8px; --r-lg:12px; --r-pill:999px;
 
   /* — Tooltip / overlay (charts read these via theme.js) ———————————— */
-  --tip-bg:rgba(33,37,41,0.9);   /* Chart.js/ECharts tooltip background  */
-  --tip-text:#f8f9fa;
-  --tip-border:rgba(33,37,41,0.9);
+  --tip-bg:rgba(24,24,27,0.92);  /* Chart.js/ECharts tooltip background  */
+  --tip-text:#f5f5f4;
+  --tip-border:rgba(24,24,27,0.92);
   --overlay:rgba(255,255,255,0.85); /* translucent chips on top of the treemap */
   color-scheme:light;
 
@@ -74,22 +80,22 @@
      (b) 토글: <html data-theme="dark"> set by theme.js from localStorage
    Every page colour must come from a token — a literal #fff anywhere is a light-mode leak. */
 :root[data-theme="dark"]{
-  --bg:#121417; --card:#1b1f24; --border:#2c3138;
-  --text:#e4e7ea; --muted:#9aa4ad; --ink-strong:#c5ccd3;
-  --primary:#5b9cff; --primary-hover:#82b4ff; --on-primary:#0b1220;
-  --pos:#34c46a; --pos-soft:#4ade80; --neg:#f26b6b; --neg-strong:#f05252; --warn:#f5b942;
-  --tip-bg:#262b31; --tip-text:#e4e7ea; --tip-border:#3a4048;
-  --overlay:rgba(18,20,23,0.85);
+  --bg:#151615; --card:#1f211f; --border:#313431;
+  --text:#e7e8e6; --muted:#9ba09c; --ink-strong:#c6cac6;
+  --primary:#54b3aa; --primary-hover:#74c7bf; --on-primary:#0c110f;
+  --pos:#77b34a; --pos-soft:#8fc765; --neg:#e0776a; --neg-strong:#d96a5c; --warn:#e0a93f;
+  --tip-bg:#262926; --tip-text:#e7e8e6; --tip-border:#3a3e3a;
+  --overlay:rgba(21,22,21,0.85);
   color-scheme:dark;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#121417; --card:#1b1f24; --border:#2c3138;
-    --text:#e4e7ea; --muted:#9aa4ad; --ink-strong:#c5ccd3;
-    --primary:#5b9cff; --primary-hover:#82b4ff; --on-primary:#0b1220;
-    --pos:#34c46a; --pos-soft:#4ade80; --neg:#f26b6b; --neg-strong:#f05252; --warn:#f5b942;
-    --tip-bg:#262b31; --tip-text:#e4e7ea; --tip-border:#3a4048;
-    --overlay:rgba(18,20,23,0.85);
+    --bg:#151615; --card:#1f211f; --border:#313431;
+    --text:#e7e8e6; --muted:#9ba09c; --ink-strong:#c6cac6;
+    --primary:#54b3aa; --primary-hover:#74c7bf; --on-primary:#0c110f;
+    --pos:#77b34a; --pos-soft:#8fc765; --neg:#e0776a; --neg-strong:#d96a5c; --warn:#e0a93f;
+    --tip-bg:#262926; --tip-text:#e7e8e6; --tip-border:#3a3e3a;
+    --overlay:rgba(21,22,21,0.85);
     color-scheme:dark;
   }
 }
@@ -190,6 +196,74 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
 /* — Expand/collapse toggle button (+/−) — shared by K-ICS sub-risks & IFRS17 재보험 — */
 .subtoggle{ display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; margin-left:6px; padding:0; border:1px solid var(--border); border-radius:4px; background:var(--bg); color:var(--muted); font-size:13px; line-height:1; cursor:pointer; vertical-align:middle; }
 .subtoggle:hover{ border-color:var(--primary); color:var(--primary); }
+
+/* — Inline help "?" — 본문에 박혀 있던 근거 조문·산식 유도·전망 가정을 이 뒤로 옮긴다
+   (COPY-TOOLTIP, owner 2026-09-19: "쓸데없는 설명주석 정리 + 메타발언 삭제").
+   **JS 를 쓰지 않는다** — 배포 에셋 keep-list 를 늘리지 않으려고 CSS 만으로 세 경로를 연다:
+   포인터는 :hover, 키보드는 :focus-within(button 이라 Tab 으로 도달), 터치는 탭하면 button 에
+   포커스가 잡혀 열리고 바깥을 탭하면 닫힌다. 숨김에 visibility 를 안 쓰는 이유는 접근성 트리에서
+   사라져 aria-describedby 가 헛돌기 때문이다 — opacity + pointer-events 로만 가린다. */
+.iq-help{ position:relative; display:inline-flex; vertical-align:middle; margin-left:4px; }
+.iq-help-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:22px; height:22px; padding:0; border:1px solid var(--border); border-radius:50%;
+  background:var(--bg); color:var(--muted); font-size:12px; font-weight:600; line-height:1;
+  cursor:pointer; -webkit-appearance:none; appearance:none;
+}
+.iq-help-btn:hover, .iq-help-btn:focus-visible{ border-color:var(--primary); color:var(--primary); }
+.iq-help-pop{
+  position:absolute; left:0; top:calc(100% + 6px); z-index:1800;
+  width:max-content; max-width:min(340px, calc(100vw - 32px));
+  padding:9px 11px; border:1px solid var(--border); border-radius:6px;
+  background:var(--bg); color:var(--text);
+  font-size:12px; font-weight:400; line-height:1.55; text-align:left; white-space:normal;
+  box-shadow:0 4px 16px rgba(0,0,0,0.15);
+  opacity:0; pointer-events:none; transition:opacity .12s ease;
+}
+.iq-help:hover > .iq-help-pop, .iq-help:focus-within > .iq-help-pop{ opacity:1; pointer-events:auto; }
+/* 오른쪽 가장자리에 붙는 트리거용 — 팝오버가 화면 밖으로 안 나가게 반대쪽으로 편다. */
+.iq-help-pop--right{ left:auto; right:0; }
+@media (prefers-reduced-motion:reduce){ .iq-help-pop{ transition:none; } }
+
+/* — Section nav (KICS-SECTIONNAV, owner 2026-09-19) ————————————————————
+   owner: "드래그 내리기 전에는 어떤 항목이 있는지 알기 어렵다."
+   이름을 `.tab/.tabs` 와 일부러 다르게 뒀다 — 그쪽은 **페이지 간** 이동(K-ICS/IFRS17/기타공시)에
+   이미 쓰고 있어서, 같은 화면에 생김새가 같은 두 종류가 있으면 어디로 가는 링크인지 구별이 안 된다.
+   앵커 착지는 이미 깔려 있는 scroll-padding-top(아래 scroll-snap 절)이 받아 준다. */
+.section-nav ul{ list-style:none; margin:0; padding:0; }
+.section-nav a{
+  display:block; padding:7px 10px; border-radius:var(--r-sm);
+  color:var(--muted); font-size:13px; line-height:1.35; text-decoration:none;
+  border-left:2px solid transparent; transition:color var(--t-fast), background var(--t-fast);
+}
+.section-nav a:hover{ color:var(--text); background:var(--card); }
+.section-nav a.is-current{ color:var(--primary); border-left-color:var(--primary); font-weight:600; }
+.section-nav a:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; }
+
+@media (min-width:1080px){
+  .container.has-section-nav{
+    display:grid; grid-template-columns:186px minmax(0,1fr);
+    gap:var(--sp-5); align-items:start;
+  }
+  .section-nav{ position:sticky; top:88px; }   /* sticky header 76px + 숨 쉴 틈 12px */
+}
+@media (max-width:1079px){
+  /* 좌측에 넣을 폭이 없다(owner 가 먼저 짚었다). 헤더 바로 밑에 붙는 가로 줄로 바꾼다.
+     항목을 4개로 묶어 두는 건 2026-09-15 에 owner 가 "칩 남발" 로 두 번 반려했기 때문이다.
+     z-index 는 header(1000) 아래여야 한다 — 위로 올리면 헤더를 덮는다. */
+  .section-nav{
+    position:sticky; top:71px; z-index:900;
+    margin:0 0 12px; padding:6px 0;
+    background:var(--bg); border-bottom:1px solid var(--border);
+  }
+  .section-nav ul{ display:flex; gap:6px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .section-nav ul::-webkit-scrollbar{ display:none; }
+  .section-nav a{
+    flex:0 0 auto; padding:6px 11px; border:1px solid var(--border);
+    border-left-width:1px; border-radius:var(--r-pill); white-space:nowrap; font-size:12.5px;
+  }
+  .section-nav a.is-current{ border-color:var(--primary); }
+}
 
 /* ============================================================================
    Shared mobile foundation (<=640px). Hoisted 2026-07-22 from the three
