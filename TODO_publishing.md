@@ -11,6 +11,18 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ## Status
 
+**🚀 2026-09-20 2차 디자인 배포 라이브 — owner 반려 8건 반영.** main 커밋 `2dbc4ca`(`17e3733..2dbc4ca`).
+**데이터는 한 바이트도 안 나갔다** — HTML/CSS/JS 5파일뿐(워크트리에서 json/xlsx 변경 **0건** 확인).
+- 라이브 바이트 ↔ 커밋 블롭 **5/5 일치**(`theme.js` 는 CDN 전파가 늦어 쿼리 붙여 재확인).
+  라이브 `IFRS17.html` 에 `section-nav` 2건, `theme.js` 에 `iq-hdr-h` 2건 확인.
+- 작업 트리 `prepush_check.py [scope=FULL]` **gate-clear · 567 passed** 후 push.
+- **뒷정리 4겹을 같은 라운드에서 닫았다**(KR0073 선례 반복 방지): `MASTER_XLSX_DRIFT`(시트 1개 sync, 12칸) ·
+  골든 입력지문 RED 4(**골든 4종 전부 돌려 산출 불변 확인 후** 재생성 — ifrs17_bs 476초·pl_breakdown 175초) ·
+  `PUBLIC_EXPORT_DRIFT`(마스터 커밋 뒤 스냅샷 재생성) · `live_artifacts` RED 1(위 재생성으로 자동 해소).
+  커밋 `e049696`·`f891153`.
+- **대기(배포 안 함)**: NH농협손보 자본구성 6칸 정정은 **화면 숫자를 바꾸는 건**이라 owner 승인 대기.
+  브랜치에는 들어가 있다(`e049696`) — 승인 시 `kics_disclosure.json` + `public_exports/` 를 같이 올린다.
+
 **🚀 2026-09-20 디자인 배포 라이브 — 팔레트 B + K-ICS 섹션 네비 + "?" 툴팁 (owner 승인).**
 main 배포 커밋 `17e3733`(`a84520c..17e3733`). **데이터는 한 바이트도 안 바뀌었다** — HTML/CSS/JS 6파일뿐.
 - **검증은 "커밋했다" 가 아니라 라이브에서 바이트를 받아 커밋 블롭과 대조**: `common.css`·`theme.js`·
