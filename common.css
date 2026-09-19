@@ -239,23 +239,40 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
 .section-nav a:hover{ color:var(--text); background:var(--card); }
 .section-nav a.is-current{ color:var(--primary); border-left-color:var(--primary); font-weight:600; }
 .section-nav a:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; }
+/* 그 회사에 없는 섹션 — **감추지 않고 '미공시' 로 남긴다**(owner 2026-09-20).
+   항목이 사라지면 그 회사에 무엇이 없는지조차 알 수 없다. */
+.section-nav a.is-na{ color:var(--muted); opacity:.55; pointer-events:none; cursor:default; }
+.section-nav a.is-na::after{
+  content:"미공시"; margin-left:6px; padding:1px 5px; border-radius:var(--r-pill);
+  border:1px solid var(--border); font-size:10px; font-weight:500; white-space:nowrap;
+}
+@media (prefers-reduced-motion:reduce){ .section-nav{ transition:none; } }
+
+/* 패널 리드 문장 — 제목 밑 한 줄 설명. 본문과 같은 크기면 제목만큼 무거워 보인다. */
+.panel > p.lede{ margin:-2px 0 14px; color:var(--muted); font-size:13px; line-height:1.55; }
 
 @media (min-width:1080px){
   .container.has-section-nav{
     display:grid; grid-template-columns:186px minmax(0,1fr);
     gap:var(--sp-5); align-items:start;
   }
-  .section-nav{ position:sticky; top:88px; }   /* sticky header 76px + 숨 쉴 틈 12px */
+  /* top 을 박지 않는다 — theme.js 가 헤더를 실측해 --iq-hdr-h 로 내려 준다.
+     71/88px 하드코딩은 헤더가 줄바꿈되는 폭에서 네비를 헤더 뒤로 숨겼다. */
+  .section-nav{ position:sticky; top:calc(var(--iq-hdr-h, 76px) + 12px); }
 }
 @media (max-width:1079px){
   /* 좌측에 넣을 폭이 없다(owner 가 먼저 짚었다). 헤더 바로 밑에 붙는 가로 줄로 바꾼다.
      항목을 4개로 묶어 두는 건 2026-09-15 에 owner 가 "칩 남발" 로 두 번 반려했기 때문이다.
      z-index 는 header(1000) 아래여야 한다 — 위로 올리면 헤더를 덮는다. */
   .section-nav{
-    position:sticky; top:71px; z-index:900;
+    position:sticky; top:var(--iq-hdr-h, 71px); z-index:900;
     margin:0 0 12px; padding:6px 0;
     background:var(--bg); border-bottom:1px solid var(--border);
+    transition:transform .18s ease;
   }
+  /* 내려갈 때 접고 올라갈 때 꺼낸다 — 좁은 화면에서 목록이 본문을 계속 먹지 않게.
+     감추는 데 display 를 쓰면 레이아웃이 튀므로 transform 으로만 민다. */
+  .section-nav.is-tucked{ transform:translateY(calc(-100% - var(--iq-hdr-h, 71px))); }
   .section-nav ul{ display:flex; gap:6px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
   .section-nav ul::-webkit-scrollbar{ display:none; }
   .section-nav a{
