@@ -1710,6 +1710,85 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
     res.notes.append(f"cross_source guard (tier2 Face↔BS reference-only): {len(violations)} "
                      f"wrong-concept penalties detected (must be 0)")
 
+    # --- 3-cc. 17BS ↔ kics_disclosure 자본 계정 교차대조 (owner 2026-09-20) ---
+    # 왜 필요했나: 두 마스터는 **서로 다른 원천**(17BS=DART 별도 / K-ICS=정기경영공시)인데
+    # 같은 실체(이익잉여금·AOCI)를 각자 들고 있으면서 **서로를 한 번도 안 봤다.**
+    # 실측 사고: NH농협손해보험 2023.2Q·2023.3Q·2024.4Q 는 K-ICS 이익잉여금이 **정확히 0** 인데
+    # 17BS 는 9,577억·9,115억·1조279억이다(AOCI 도 같은 분기 0). 폐쇄식은 0 들로도 닫히므로
+    # 단일 마스터 안의 어느 룰도 이걸 못 본다 — 교차대조만이 탐지기다.
+    #
+    # **절대 허용오차를 쓰지 않는 이유(실측):** 17BS 는 DART 별도(OFS) 고정인데 K-ICS 는 연결로
+    # 내는 회사가 있어 전수 중앙값이 이익잉여금 0.56% · AOCI 0.29% 인데 p90 은 17~28% 다.
+    # owner 제안대로 비지배지분(item10)=0 으로 좁혀 봤지만 **안 닫힌다**(중앙값은 0.29% 로
+    # 내려가도 p90 8.7%, 0.5% 기준 발화 164건 = red-out). 100% 자회사를 가진 회사는 비지배지분이
+    # 0 이어도 연결≠별도이기 때문이다(흥국생명·ABL·라이나가 그 예).
+    # 그래서 **회사 자신의 평소 잔차(중앙값)를 기준선으로** 쓴다. 별도/연결 레지스트리가 필요 없고,
+    # "이 회사는 평소 X% 로 붙는데 이 분기만 벌어졌다" 만 잡는다. 실측 발화 이익잉여금 10/433 ·
+    # AOCI 29/405 이고 상위가 전부 진짜 결함이다.
+    #
+    # **심각도는 YELLOW 로 시작한다.** 신설 룰이라 RED 로 걸면 그날로 push 가 막히고, 발화분이
+    # 추출 갭인지 원문 부재인지 아직 원문으로 안 갈랐다. parser 가 원문을 확인해 갈라 준 뒤
+    # HARD_ZERO 축부터 RED 로 승격한다(발주 inbox/parser/20260920T...).
+    _BSK_PAIRS = (("이익잉여금", 7, "이익잉여금"), ("AOCI", 9, "기타포괄손익 누계액"))
+    _bs_cap: dict = {}
+    for r in env.ifrs17_bs:
+        if not isinstance(r, dict):
+            continue
+        nm = r.get("항목명")
+        if nm in ("이익잉여금", "기타포괄손익 누계액"):
+            _bs_cap.setdefault((r.get("원보험사코드"), r.get("공시분기")), {})[nm] = _num(r.get("값"))
+    _ki_cap: dict = {}
+    _ki_name: dict = {}
+    for r in env.kics_records:
+        if not isinstance(r, dict):
+            continue
+        try:
+            _n = int(r.get("항목번호", -1))
+        except Exception:
+            continue
+        if _n in (7, 9):
+            _ki_cap.setdefault((r.get("원보험사코드"), r.get("공시분기")), {})[_n] = _num(r.get("값"))
+            _ki_name[r.get("원보험사코드")] = r.get("원수사명") or r.get("원보험사명")
+
+    for _label, _kn, _bn in _BSK_PAIRS:
+        _per: dict = {}
+        for _key in set(_bs_cap) | set(_ki_cap):
+            _bv = _bs_cap.get(_key, {}).get(_bn)
+            _kv = _ki_cap.get(_key, {}).get(_kn)
+            if _bv is None or _kv is None:
+                continue
+            _bve = _bv / 100.0                      # 17BS 백만원 -> K-ICS 억원
+            _den = max(abs(_bve), abs(_kv))
+            if _den < 100:                          # 100억 미만은 상대오차가 요동쳐 제외
+                continue
+            _per.setdefault(_key[0], []).append((_key[1], abs(_bve - _kv) / _den * 100.0, _bve, _kv))
+        for _code, _rows in sorted(_per.items()):
+            _nm = _ki_name.get(_code, _code)
+            # (a) 한쪽이 정확히 0 인데 반대쪽은 거액 — 기준선과 무관하게 판정이 명확하다.
+            #     연결/별도 차이는 크기를 바꾸지 6.9% 수준이지 0 으로 만들지 않는다.
+            for _q, _rel, _bve, _kv in _rows:
+                if (_kv == 0.0) != (_bve == 0.0):
+                    res.add(check="cross_source", severity="YELLOW", master="kics_disclosure",
+                            company=_nm, quarter=_q, rule="BS_KICS_HARD_ZERO",
+                            message=f"{_label}: 17BS {_bve:,.0f}억 vs K-ICS {_kv:,.0f}억 — "
+                                    f"한쪽만 정확히 0 이다. 연결/별도 기준 차이는 값을 0 으로 만들지 "
+                                    f"않는다(전수 중앙 6.9%). 추출 갭 의심 — 원문 확인 필요")
+            if len(_rows) < 6:                      # 기준선을 잡으려면 최소 6분기
+                continue
+            _vals = sorted(x[1] for x in _rows)
+            _med = _vals[len(_vals) // 2] if len(_vals) % 2 else (_vals[len(_vals) // 2 - 1] + _vals[len(_vals) // 2]) / 2
+            for _q, _rel, _bve, _kv in _rows:
+                if _kv == 0.0 or _bve == 0.0:
+                    continue                        # (a) 에서 이미 잡았다
+                if _rel > max(_med * 4 + 2.0, 3.0):
+                    res.add(check="cross_source", severity="YELLOW", master="kics_disclosure",
+                            company=_nm, quarter=_q, rule="BS_KICS_BASELINE_BREAK",
+                            message=f"{_label}: 17BS {_bve:,.0f}억 vs K-ICS {_kv:,.0f}억 "
+                                    f"(이탈 {_rel:.1f}%, 이 회사 평소 {_med:.1f}%) — 두 마스터가 "
+                                    f"평소에는 붙는데 이 분기만 벌어졌다")
+    res.notes.append("cross_source 17BS↔K-ICS 자본계정: 회사별 기준선 대비 이탈 + 한쪽만 0 축. "
+                     "절대 허용오차를 안 쓰는 이유는 17BS 별도 ↔ K-ICS 연결 혼재(전수 p90 17~28%)다")
+
 
 def _ir_period_to_quarter(period):
     m = re.match(r"FY(\d{4})_Q(\d)", period or "")
