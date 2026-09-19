@@ -1,6 +1,46 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-12(15회차 — inbox `20260912T0115Z`(KR0079 2023.2Q MD 결측) + KR0080-2326
+> Last updated: 2026-09-20(16회차 — inbox `20260920T0430Z`(KR0032 `BS_KICS_HARD_ZERO` 3분기)
+> 1건 처리, orchestrator 발주) — `status: answered`, 원 sender 재확인 대기.
+>
+> **판정 = (a) 추출 갭 6칸 전부.** NH농협손해보험(KR0032)은 **비지배지분 행이 없는 6행 표**로
+> 공시하는데(부모 라벨 `(1+2+3+4+5+6)`) 정본 슬롯은 7행이라 한 칸이 어긋난다.
+> `AUDIT_LABEL_ALIASES` 의 `"6. 조정준비금" → "7. 조정준비금"` 이 **마지막 행만** 제자리로
+> 돌려놓아, 그 위 두 행이 밀린 채 과거 write path 에 실렸다 — 이익잉여금 → item8(자본조정),
+> AOCI → item10(비지배지분), item7·item9 에는 0. **오늘 코드는 이미 정상**이라(2024.4Q MD 재생 시
+> item7=10279·item8=0·item9=-2617 정답) 마스터 행이 stale 이었다. `fill_period` 는 UPSERT 라
+> `--refresh` 없이는 기존 셀을 안 덮는다. 2023.2Q·2023.3Q 는 현행 `extract_kics_detail_rows` 가
+> 자본 표를 아예 못 잡아(7 pair 만 반환) raw PDF 로 직접 확정했다.
+>
+> **확정 경로 3중**: raw PDF fitz words→y버킷→x정렬 재구성 · **240dpi 렌더 3장 눈대조**
+> (`artifacts/kr0032_render/`) · docling MD. 단위는 표 머리글 `(단위: 억원, %)` 라 환산 없음.
+> 정정 12칸(6칸 채움 + 밀려 있던 6칸 0 복귀): item7 0→9,577/9,115/10,279 · item9 0→2,383/2,607/
+> -2,617 · item8·item10 → 0. `scripts/_probes/_20260920_fix_kr0032_slot_shift.py`(guard 6종:
+> 정확타격·기존값 assert·항목명 assert·`값_적용후` 존재 시 abort·Σ(5..11) 불변·**12개 외 행 변경
+> 시 abort** + 쓰기 직전 mtime/size 재확인). 적용 후 `diff` **12줄**, 그 외 0.
+>
+> **게이트 실측**: `validate_kics_disclosure.py` RED=36 YELLOW=1675 GREEN=11599 SKIP=2830 ·
+> exit=0 — 정정 전후 출력이 리포트 타임스탬프 한 줄 빼고 **완전 동일**(슬롯 맞교환이라 Σ(5..11)
+> 보존 → rule 2 잔차 ±1 억원 그대로). `validate_data_contract.py` **`BS_KICS_HARD_ZERO` 6→0**,
+> NH농협은 `BS_KICS_BASELINE_BREAK` 도 0(총계 36→33, 줄어든 3건 전부 KR0032, 신규 회사 0).
+> 정정 후 17BS 잔차 0.001~0.015% = 같은 회사 나머지 11분기(0.000~0.041%)와 구분 불가.
+> **전수 서명 스캔**(`item7==0 & item8!=0`, `item9==0 & item10!=0`) 25,522행 → 정정 후 **0 buckets**.
+>
+> **RED 승격 가능**: 6칸 전부 (a) 확정, 원천 부재 0 건 → `BS_KICS_HARD_ZERO` 축은 면제 없이
+> YELLOW→RED 로 올려도 된다(현재 발화 0 이라 push 무영향).
+>
+> **미처리 2건(의도적, 승인 대기)**: ① `MASTER_XLSX_DRIFT` RED 1건 — K-ICS공시 시트가 12칸 밀렸다.
+> 발주에 "마스터 xlsx 손대지 마라"가 있어 `sync_master_xlsx_sheet.py "K-ICS공시"` 미실행.
+> ② 골든 입력 지문 RED=4(`kics_disclosure.json` 이 4개 빌더 입력). 이 중 `post_transition`·
+> `dividend` 골든은 **직접 돌려 2 passed**(산출 불변). `ifrs17_bs`(~8분)·`pl_breakdown`(~95초)는
+> **ifrs17 레인 마스터를 인플레이스 재빌드**하고 `build_pl_breakdown` 은 7,799→2,940행 사고 이력의
+> 그 빌더라 kics 레인이 임의 실행하지 않았다. 오프라인 묶음 **93 passed / 1 failed**(실패=위 ①).
+> `test_kics_rules_golden.py` 는 통과 — 룰 매트릭스 무변동.
+>
+> 변경 파일: `kics_disclosure.json`(12칸, 행 수 불변 25522) · 신규 프로브 7종
+> `scripts/_probes/_20260920_*.py` · `artifacts/kr0032_render/*.png`.
+>
+> Last updated (이전): 2026-09-12(15회차 — inbox `20260912T0115Z`(KR0079 2023.2Q MD 결측) + KR0080-2326
 > (item23-26 8분기 결측) 2건 직렬 처리, orchestrator 발주) — 둘 다 완료.
 >
 > **① KR0079 2023.2Q MD 결측**: census 결과 45칸(1-9·11-28·29-46)은 이미 적재돼 있었고 fitz

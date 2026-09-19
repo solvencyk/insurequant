@@ -1726,9 +1726,8 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
     # "이 회사는 평소 X% 로 붙는데 이 분기만 벌어졌다" 만 잡는다. 실측 발화 이익잉여금 10/433 ·
     # AOCI 29/405 이고 상위가 전부 진짜 결함이다.
     #
-    # **심각도는 YELLOW 로 시작한다.** 신설 룰이라 RED 로 걸면 그날로 push 가 막히고, 발화분이
-    # 추출 갭인지 원문 부재인지 아직 원문으로 안 갈랐다. parser 가 원문을 확인해 갈라 준 뒤
-    # HARD_ZERO 축부터 RED 로 승격한다(발주 inbox/parser/20260920T...).
+    # **심각도**: HARD_ZERO 는 **RED**(2026-09-20 승격 — 아래 주석), BASELINE_BREAK 는 YELLOW.
+    # 후자는 회사별 기준선이 판단의 산물이라 차단 축으로 세우기 전에 발화분을 원문으로 갈라야 한다.
     _BSK_PAIRS = (("이익잉여금", 7, "이익잉여금"), ("AOCI", 9, "기타포괄손익 누계액"))
     _bs_cap: dict = {}
     for r in env.ifrs17_bs:
@@ -1768,7 +1767,12 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
             #     연결/별도 차이는 크기를 바꾸지 6.9% 수준이지 0 으로 만들지 않는다.
             for _q, _rel, _bve, _kv in _rows:
                 if (_kv == 0.0) != (_bve == 0.0):
-                    res.add(check="cross_source", severity="YELLOW", master="kics_disclosure",
+                    # 2026-09-20 YELLOW -> RED 승격. 신설 당시엔 발화 6건이 추출 갭인지 원천 부재인지
+                    # 안 갈려 있어 YELLOW 로 뒀다. parser 가 240dpi 렌더로 원문을 떠서 **6/6 전부
+                    # 추출 갭**으로 확정했고(NH농협손보는 비지배지분 행이 없는 6행 표라 슬롯이 한 칸
+                    # 밀려 실렸다), 고친 뒤 발화가 0 이 됐다. **원천 부재 사례가 0 건**이라 면제 등재
+                    # 없이 차단 축으로 세울 수 있다. 연결/별도 기준 차이는 값을 0 으로 만들지 않는다.
+                    res.add(check="cross_source", severity="RED", master="kics_disclosure",
                             company=_nm, quarter=_q, rule="BS_KICS_HARD_ZERO",
                             message=f"{_label}: 17BS {_bve:,.0f}억 vs K-ICS {_kv:,.0f}억 — "
                                     f"한쪽만 정확히 0 이다. 연결/별도 기준 차이는 값을 0 으로 만들지 "
