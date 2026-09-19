@@ -130,10 +130,21 @@
       <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 테이블 다운로드(.xlsx)</button>
     </div>
   </header>
-  <div class="container">
+  <div class="container has-section-nav">
+    <nav class="section-nav" aria-label="이 페이지의 섹션">
+      <ul>
+        <li><a href="#sec-bs">재무상태표</a></li>
+        <li><a href="#sec-wf">CSM 이동</a></li>
+        <li><a href="#sec-hist">CSM 시계열</a></li>
+        <li><a href="#sec-amort">상각 스케줄</a></li>
+        <li><a href="#sec-pl">손익 워터폴</a></li>
+        <li><a href="#sec-nb">NB 배수</a></li>
+        <li><a href="#sec-sens">민감도</a></li>
+      </ul>
+    </nav>
+    <div class="section-body">
     <div class="panel">
       <h2>IFRS17 통합 현황</h2>
-      <p>K-ICS 템플릿과 동일 스타일의 IFRS17 분석 패널입니다.</p>
       <p id="wfPeriodLine" class="small-muted"></p>
     </div>
     <div class="panel">
@@ -150,6 +161,7 @@
       <div id="emptyHint" class="placeholder-empty">보험사를 선택해 주세요</div>
       <div id="dashHost" style="display:none"></div>
     </div>
+    </div>
   </div>
 
   <template id="dashTpl">
@@ -161,7 +173,7 @@
         <div class="kpi7-card"><div class="kpi7-val" id="kpi7NbMult">—</div><div class="kpi7-lab">NB CSM 배수</div></div>
       </div>
     </div>
-        <div class="panel" data-pane="bs">
+        <div class="panel" id="sec-bs" data-pane="bs">
       <!-- 2026-08-14 owner 발주(inbox/designer/20260814T1250Z, bs_taccount_top_panel): 최상단 이동
            + T자(왼쪽 자산·우상단 부채·우하단 자본) + 섹션당 2단계 드릴다운(총계→세부). 데이터는
            IFRS17_BS.json에 parser가 추가 예정인 섹션/레벨 2열 계약으로 구동 — 항목번호 하드코딩 없이
@@ -210,38 +222,38 @@
         </div>
       </div>
     </div>
-        <div class="panel" data-pane="wf">
+        <div class="panel" id="sec-wf" data-pane="wf">
       <h2>2) CSM 이동 (Waterfall)</h2>
       <div class="small-muted" style="margin-bottom:10px" id="wfMeta"></div>
       <div id="wfStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container chart-sm"><div id="chartWf" style="width:100%;height:100%" role="img" aria-label="CSM 이동(Waterfall) 차트"></div></div>
       <div class="table-wrap" id="wfTable" style="margin-top:12px"></div>
     </div>
-    <div class="panel" data-pane="hist">
+    <div class="panel" id="sec-hist" data-pane="hist">
       <h2>3) CSM 시계열 (<span id="histRange">…</span>)</h2>
       <div class="small-muted" id="histCap">분기별 CSM 추이 · 단위 조원 · 신계약 CSM은 당기 증분(YTD를 분기로 환산)</div>
       <div id="histStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container"><canvas id="canvasHist" role="img" aria-label="CSM 시계열 차트"></canvas></div>
     </div>
-    <div class="panel" data-pane="amort">
+    <div class="panel" id="sec-amort" data-pane="amort">
       <h2>4) CSM 상각 스케줄 (연도별)</h2>
       <div class="small-muted" id="amortCap"></div>
       <div id="amortStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container chart-sm"><canvas id="canvasAmort" role="img" aria-label="CSM 상각 스케줄(연도별) 차트"></canvas></div>
     </div>
-    <div class="panel" data-pane="pl">
+    <div class="panel" id="sec-pl" data-pane="pl">
       <h2>5) 당기순이익 → 총포괄손익 워터폴 (장기원수 세부 분해)</h2>
       <div class="small-muted" id="plCap"></div>
       <div id="plStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container chart-sm"><div id="chartPl" style="width:100%;height:100%" role="img" aria-label="당기순이익에서 총포괄손익까지의 워터폴(장기원수 세부 분해·기타포괄손익) 차트"></div></div>
       <div class="table-wrap" id="plTable" style="margin-top:12px"></div>
     </div>
-    <div class="panel" data-pane="nb">
+    <div class="panel" id="sec-nb" data-pane="nb">
       <h2>6) NB · CSM 배수 시계열 (신계약 CSM ÷ 월납월초)</h2>
       <div id="nbStub" class="stub-msg"></div>
       <div id="nbWrap" style="display:none"><div class="chart-container chart-sm"><canvas id="canvasNb" role="img" aria-label="NB·CSM 배수 시계열 차트"></canvas></div></div>
     </div>
-    <div class="panel" data-pane="sens">
+    <div class="panel" id="sec-sens" data-pane="sens">
       <h2>7) 민감도(ΔCSM)</h2>
       <div class="small-muted" id="senCap"></div>
       <div id="senStub" class="stub-msg" style="display:none"></div>
@@ -1179,7 +1191,7 @@
       tbl.parentNode.insertBefore(el, tbl);
     }
     el.textContent = show
-      ? "좁은 화면에서는 그래프를 당기순이익까지만 그립니다 — 기타포괄손익 항목은 당기순이익보다 자릿수가 커서 함께 그리면 순이익까지의 흐름이 눌립니다. 총포괄손익까지의 전 구간은 아래 표에 그대로 있습니다."
+      ? "좁은 화면에서는 그래프가 당기순이익까지만 표시됩니다. 총포괄손익까지는 아래 표에 있습니다."
       : "";
     el.style.display = show ? "block" : "none";
   }
@@ -1307,8 +1319,10 @@
           ? " · " + (togGroups.length>1 ? "LOB 각 행" : togGroups[0].label) + " ＋ 클릭 시 세부"
           : "");
     const note=document.createElement("div"); note.className="small-muted"; note.style.marginTop="6px";
-    note.textContent = "단위 억원(소수 반올림) · " + (mode==="quarter" ? "직전 4분기(당분기)" : "직전 3개년(연 누계)")
-      + " · 음수 △" + subHint + " · 당기순이익 이후 행은 기타포괄손익(OCI) 구간 · —는 해당 항목 미공시";
+    note.innerHTML = "단위 억원(소수 반올림) · " + (mode==="quarter" ? "직전 4분기(당분기)" : "직전 3개년(연 누계)")
+      + " · 음수 △"
+      + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표 읽는 법" aria-describedby="help-pl-table">?</button><span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-pl-table">당기순이익 이후 행은 <b>기타포괄손익(OCI) 구간</b>입니다.<br>&mdash; 는 해당 항목이 원천에 공시되지 않았다는 뜻입니다.</span></span>'
+      + (subHint ? "<br><span style=\"opacity:.85\">" + subHint.replace(/^ · /, "") + "</span>" : "");
     box.appendChild(note);
   }
 
@@ -1562,7 +1576,8 @@
       }
       stub(stubEl, false);
       if (wrap) wrap.style.display = "";
-      if (capEl) capEl.textContent = "기준 "+qtr+" · 단위 억원 · 음수 △ · 섹션 옆 + 를 누르면 세부가 펼쳐집니다(주요 계정만 — 전 계정 아님)";
+      if (capEl) capEl.innerHTML = "기준 "+qtr+" · 단위 억원 · 음수 △"
+        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="세부 펼치는 법" aria-describedby="help-bs-expand">?</button><span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-bs-expand">섹션 옆 <b>+</b> 를 누르면 세부가 펼쳐집니다.<br>세부는 주요 계정만 담아 전 계정을 망라하지 않습니다 &mdash; 총계에서 표시분을 뺀 나머지는 \'기타·미표시\' 행으로 따로 보여 줍니다.</span></span>';
 
       const liab   = renderBsZone(company, qtr, "부채", "bsTotLiab",   "bsToggleLiab",   "bsDetailLiab");
       const equity = renderBsZone(company, qtr, "자본", "bsTotEquity", "bsToggleEquity", "bsDetailEquity");
@@ -2099,10 +2114,15 @@
       destroyCharts();
       const _sw=document.getElementById("coSwatch"); if(_sw) _sw.style.background="transparent";
       const _cs=document.getElementById("company"); if(_cs){ _cs.style.borderColor=""; _cs.style.boxShadow=""; }
-      dash.style.display="none"; hint.style.display="block"; dash.innerHTML=""; return;
+      dash.style.display="none"; hint.style.display="block"; dash.innerHTML="";
+      if (window.IQTheme && IQTheme.syncSectionNav) IQTheme.syncSectionNav();
+      return;
     }
     dash.style.display="block"; hint.style.display="none";
     renderCompany(v);
+    // 패널이 template 에서 복제된 뒤라야 어느 섹션이 실제로 있는지 알 수 있다.
+    // 없는 섹션은 감추지 않고 "미공시" 로 남긴다(owner 2026-09-20).
+    if (window.IQTheme && IQTheme.syncSectionNav) IQTheme.syncSectionNav();
   }
 
   async function boot(){

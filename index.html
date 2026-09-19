@@ -47,18 +47,16 @@
     .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:8px}
     .legend{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
     .swatch{width:110px;height:10px;background:linear-gradient(90deg,#7f1d1d,#ef4444,#fca5a5,#34d399,#16a34a,#14532d);border-radius:6px}
-    /* Hero KPI strip + 회사 typeahead (DESIGN-V2 P2, 2026-06-16) — 토큰 사용, 무채색 절제 */
+    /* Hero KPI strip (DESIGN-V2 P2, 2026-06-16) — 토큰 사용, 무채색 절제 */
     .hero{margin-bottom:16px}
     .kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
     .kpi{background:var(--card);border:var(--bd);border-radius:var(--r-lg);padding:16px 18px}
     .kpi-val{font-size:26px;font-weight:800;color:var(--text);line-height:1.1;letter-spacing:-.01em}
     .kpi-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:2px}
     .kpi-lab{margin-top:6px;font-size:12px;color:var(--muted);font-weight:600}
-    .hero-jump{margin-top:12px}
-    .hero-jump .select{width:100%;max-width:360px}
     @keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
     .rise{animation:riseIn .5s ease both}
-    @media (max-width:640px){ .kpi-strip{grid-template-columns:repeat(2,1fr);gap:8px} .kpi{padding:12px 14px} .kpi-val{font-size:20px} .hero-jump .select{max-width:none} }
+    @media (max-width:640px){ .kpi-strip{grid-template-columns:repeat(2,1fr);gap:8px} .kpi{padding:12px 14px} .kpi-val{font-size:20px} }
     .toggle-switch{position:relative;display:inline-block;width:60px;height:30px}
     .toggle-input{opacity:0;width:0;height:0}
     .toggle-label{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.4s;border-radius:30px}
@@ -146,10 +144,6 @@
         <div class="kpi rise" style="animation-delay:.08s"><div class="kpi-val" id="kpiRatio">—</div><div class="kpi-lab">K-ICS 지급여력비율 중위값</div></div>
         <div class="kpi rise" style="animation-delay:.14s"><div class="kpi-val" id="kpiCount">—</div><div class="kpi-lab">수록 보험사</div></div>
         <div class="kpi rise" style="animation-delay:.20s"><div class="kpi-val" id="kpiPeriod">—</div><div class="kpi-lab">기준 분기</div></div>
-      </div>
-      <div class="hero-jump">
-        <input id="coJump" class="select" list="coJumpList" placeholder="보험사 검색 → IFRS17 바로가기" autocomplete="off" aria-label="보험사 검색 후 IFRS17 페이지로 이동"/>
-        <datalist id="coJumpList"></datalist>
       </div>
     </div>
     <div class="panel">
@@ -392,7 +386,7 @@
       }
     }
     
-    // ── Hero KPI strip + 회사 typeahead (DESIGN-V2 P2) ─────────────────────
+    // ── Hero KPI strip (DESIGN-V2 P2) ─────────────────────
     function _median(nums){
       const a = nums.filter(n=>Number.isFinite(n)).slice().sort((x,y)=>x-y);
       if(!a.length) return null;
@@ -434,20 +428,6 @@
       const eok = totalClosingCsmEok();
       if(eok!=null) countUp(document.getElementById('kpiCsm'), eok/10000, v=>samoNum(v,0)+'<span class="u">조</span>');
     }
-    function buildJumpList(){
-      const dl=document.getElementById('coJumpList'); if(!dl) return;
-      const names=new Set();
-      for(const c of [...(GROUPED.Life||[]),...(GROUPED['Non-Life']||[])]) if(c.company) names.add(c.company);
-      for(const r of (wfRowsRaw||[])) if(r['원수사명']) names.add(r['원수사명']);
-      dl.innerHTML=''; [...names].sort((a,b)=>a.localeCompare(b,'ko')).forEach(n=>{ const o=document.createElement('option'); o.value=n; dl.appendChild(o); });
-    }
-    function wireJump(){
-      const inp=document.getElementById('coJump'); if(!inp || inp._wired) return; inp._wired=true;
-      const go=()=>{ const v=inp.value.trim(); if(v) window.location.href='IFRS17.html?company='+encodeURIComponent(v); };
-      inp.addEventListener('change', go);
-      inp.addEventListener('keydown', e=>{ if(e.key==='Enter') go(); });
-    }
-    if(document.readyState!=='loading') wireJump(); else document.addEventListener('DOMContentLoaded', wireJump);
 
     function setMapStatus(message, isError) {
       const status = document.getElementById('map-status');
@@ -504,7 +484,7 @@
             setMapStatus(null);
           }
           updateReferencePeriod();
-          updateKpis(); buildJumpList();
+          updateKpis();
           const sectorSel = document.getElementById('sector');
           render(sectorSel ? sectorSel.value : 'ALL');
           requestAnimationFrame(() => render(sectorSel ? sectorSel.value : 'ALL'));
@@ -1404,7 +1384,7 @@
         renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
         renderBubbleList();
         renderCsmCoverageTable();
-        updateKpis(); buildJumpList();
+        updateKpis();
       }).catch(e => {
         console.error('bubble masters load failed:', e);
         const metaEl = document.getElementById('bubble-meta');
