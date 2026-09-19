@@ -71,7 +71,7 @@
        금리민감도 표에서 나오는 파생값이라 표 위에 크게 둔다. */
     .dur-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0 4px}
     .dur-card{background:var(--card);border:var(--bd);border-radius:var(--r-md);padding:14px 16px}
-    .dur-card.lead{border-color:#0d6efd33;background:linear-gradient(180deg,#0d6efd0a,transparent)}
+    .dur-card.lead{border-color:#0f6e6833;background:linear-gradient(180deg,#0f6e680a,transparent)}
     .dur-val{font-size:26px;font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--text)}
     .dur-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:3px}
     .dur-lab{font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
@@ -117,12 +117,21 @@
       <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 테이블 다운로드(.xlsx)</button>
     </div>
   </header>
-  <div class="container">
+  <div class="container has-section-nav">
+    <nav class="section-nav" aria-label="이 페이지의 섹션">
+      <ul>
+        <li><a href="#sec-trend">지급여력비율 추이</a></li>
+        <li><a href="#donut-section-panel">자본성증권 소진율</a></li>
+        <li><a href="#sec-sens">금리 민감도</a></li>
+        <li><a href="#sec-forward">자본비율 전망</a></li>
+      </ul>
+    </nav>
+    <div class="section-body">
     <div class="panel">
       <h2>원보험사별 K-ICS 지급여력비율 변동 추이</h2>
       <p>보험회사들의 K-ICS 지급여력비율 변화를 시계열로 분석하여 안정성 추이를 파악할 수 있습니다.</p>
     </div>
-    <div class="panel">
+    <div class="panel" id="sec-trend">
       <div class="controls">
         <div>
           <label>보험사 선택: 
@@ -196,8 +205,7 @@
       <h2>자본성증권 인정 한도 소진율 <span id="capsecQuarter" style="color:var(--muted);font-size:13px;font-weight:400"></span></h2>
       <ul class="subtitle">
         <li>기본자본 자본증권(보통주 제외): 공시 인정액 / (SCR &times; 15%)</li>
-        <li>보완자본(전체): 한도 적용 전 보완자본 / (SCR &times; 50%)</li>
-        <li style="opacity:.8">한도는 증권 종류가 아니라 <b>계정 단위</b>로 걸린다 — 신종자본증권·후순위채만의 한도는 없다(보험업감독업무시행세칙 [별표22] Ⅲ.2.다·마).</li>
+        <li>보완자본(전체): 한도 적용 전 보완자본 / (SCR &times; 50%)<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="한도가 걸리는 단위 설명" aria-describedby="help-capsec-unit">?</button><span class="iq-help-pop" role="tooltip" id="help-capsec-unit">한도는 증권 종류가 아니라 <b>계정 단위</b>로 걸립니다. 신종자본증권·후순위채 각각에 따로 걸리는 한도는 없습니다.<br>근거: 보험업감독업무시행세칙 [별표22] Ⅲ.2.다·마</span></span></li>
       </ul>
       <div id="donut-placeholder" class="no-data">상단의 보험사를 선택하면 해당 보험사의 소진율이 표시됩니다.</div>
       <div id="donut-row" class="donut-row" style="display:none">
@@ -213,7 +221,7 @@
       <div class="donut-note" id="donut-note"></div>
     </div>
 
-    <div class="panel">
+    <div class="panel" id="sec-sens">
       <h2>금리 민감도 <span style="color:var(--muted);font-size:13px;font-weight:400">(시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향 · 순자산 듀레이션/컨벡서티)</span></h2>
       <div class="controls" style="justify-content:flex-start">
         <label id="sens-quarter-label" style="display:none">기준 분기: <select id="sens-quarter" class="select"></select></label>
@@ -227,17 +235,17 @@
       <div class="donut-note" id="sens-note"></div>
     </div>
 
-    <div class="panel">
+    <div class="panel" id="sec-forward">
       <h2>자본비율 Forward Outlook <span style="color:var(--muted);font-size:13px;font-weight:400">(보수 시나리오, 2026~2030)</span></h2>
       <ul class="subtitle">
-        <li>지급여력기준금액: 2032년까지 경과조치 효과 축소 가정 (적용후→적용전 선형 보간)</li>
-        <li>지급여력금액: 기발행 자본성증권의 콜옵션 전체 행사 및 신규 발행 zero 가정 (콜 5년 도래 시점에 가용자본에서 차감)</li>
+        <li>보수적인 가정 두 가지를 놓고 계산한 전망치입니다<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="전망에 쓴 가정 두 가지" aria-describedby="help-forward-assump">?</button><span class="iq-help-pop" role="tooltip" id="help-forward-assump"><b>지급여력기준금액</b> — 2032년까지 경과조치 효과가 줄어든다고 보고, 적용후 값에서 적용전 값으로 선형 보간했습니다.<br><b>지급여력금액</b> — 이미 발행한 자본성증권의 콜옵션을 전부 행사하고 신규 발행은 없다고 보아, 콜이 도래하는 5년 시점에 가용자본에서 뺐습니다.</span></span></li>
       </ul>
       <div id="forward-placeholder" class="no-data">상단의 보험사를 선택하면 5년 자본비율 전망이 표시됩니다.</div>
       <div class="forward-chart" id="forward-chart-wrap" style="display:none">
         <canvas id="forward-chart" role="img" aria-label="자본비율 5년 전망(Forward Outlook) 차트"></canvas>
       </div>
       <div class="donut-note" id="forward-note"></div>
+    </div>
     </div>
   </div>
   <script>
@@ -254,6 +262,52 @@
       const el = document.getElementById('footerQ');
       if (el && max) el.textContent = max;
     }
+
+    /* 섹션 네비 현재 위치 표시.
+       IntersectionObserver 로 먼저 짰다가 버렸다 — "교차 중인 첫 섹션" 을 고르면 도넛 패널처럼
+       키가 큰 섹션이 그 아래 섹션까지 내려가도 계속 교차 상태라 활성 표시가 안 넘어간다
+       (1280px 실측: 금리민감도·전망으로 스크롤해도 '자본성증권 소진율' 이 그대로 남았다).
+       그래서 기하로 판정한다 — 앵커선(sticky header 아래) 위로 올라간 섹션 중 **마지막** 것이 현재다.
+       스크롤 핸들러에 rAF 를 쓰지 않는다 — 백그라운드 탭에서 rAF 가 멈추면 스파이가 조용히 죽는다
+       (실측으로 밟았다). 대상이 4개뿐이라 매 스크롤에 rect 를 재도 비용이 없고, 활성이 바뀔 때만
+       DOM 을 건드려 레이아웃 무효화를 막는다. */
+    (function(){
+      const nav = document.querySelector('.section-nav');
+      if (!nav) return;
+      const pairs = [];
+      Array.prototype.forEach.call(nav.querySelectorAll('a[href^="#"]'), function(a){
+        const el = document.getElementById(a.getAttribute('href').slice(1));
+        if (el) pairs.push({ a: a, el: el });
+      });
+      if (!pairs.length) return;
+      let last = null;
+      function apply(){
+        const anchor = 96;   // sticky header 76px + 여유 20px
+        let active = pairs[0];
+        for (let i = 0; i < pairs.length; i++){
+          if (pairs[i].el.getBoundingClientRect().top <= anchor) active = pairs[i];
+        }
+        // 문서 끝에 닿으면 마지막 섹션을 현재로 — 마지막 패널이 짧아 앵커선을 못 넘는 경우가 있다
+        // (보험사 미선택 상태에서는 뒤 세 패널이 전부 placeholder 라 실제로 그렇게 된다).
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+          active = pairs[pairs.length - 1];
+        }
+        if (active === last) return;   // 바뀔 때만 DOM 을 건드린다
+        last = active;
+        pairs.forEach(function(p){
+          const on = (p === active);
+          p.a.classList.toggle('is-current', on);
+          if (on) p.a.setAttribute('aria-current', 'true'); else p.a.removeAttribute('aria-current');
+        });
+      }
+      window.addEventListener('scroll', apply, { passive: true });
+      window.addEventListener('resize', apply);
+      apply();
+    })();
+
+    /* 차트 라이브러리는 CSS `var()` 를 못 읽는다 — 토큰 값을 문자열로 꺼내 준다.
+       theme.js 가 없으면 팔레트 B 액센트로 폴백. */
+    function IQP(){ return (window.IQTheme && IQTheme.chart().primary) || '#0f6e68'; }
 
     const jsonPath = 'kics_disclosure.json';
     /* Chart common theme (DESIGN-V2 P2) */
@@ -1318,11 +1372,15 @@
       ].join('');
       strip.style.display = 'grid';
       note.innerHTML = '순자산 = 지급여력금액(가용자본). '
-        + '듀레이션 D = −(V<sub>+100bp</sub> − V<sub>−100bp</sub>) ÷ (2·V<sub>기준</sub>·0.01), '
-        + '컨벡서티 C = (V<sub>+100bp</sub> + V<sub>−100bp</sub> − 2·V<sub>기준</sub>) ÷ (V<sub>기준</sub>·0.01²). '
-        + '<strong>양수 듀레이션 = 금리 상승 시 순자산 감소</strong>(자산 듀레이션이 부채보다 김), '
-        + '<strong>음수면 반대로 금리 상승 시 순자산 증가</strong>(부채 듀레이션이 더 김 — 국내 생보사에서 흔하다). '
-        + '아래 표의 5개 충격값에서 그대로 유도되며 마스터 「금리민감도」 시트에 같은 컬럼으로 실려 있다.';
+        + '<strong>양수 듀레이션 = 금리가 오르면 순자산 감소</strong>, '
+        + '<strong>음수면 금리가 올라도 순자산 증가</strong>입니다.'
+        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="듀레이션·컨벡서티 산식" aria-describedby="help-dur-formula">?</button>'
+        + '<span class="iq-help-pop" role="tooltip" id="help-dur-formula">'
+        + '듀레이션 D = −(V<sub>+100bp</sub> − V<sub>−100bp</sub>) ÷ (2·V<sub>기준</sub>·0.01)<br>'
+        + '컨벡서티 C = (V<sub>+100bp</sub> + V<sub>−100bp</sub> − 2·V<sub>기준</sub>) ÷ (V<sub>기준</sub>·0.01²)<br>'
+        + '아래 표의 충격값 5개에서 그대로 나옵니다. 양수는 자산 듀레이션이 부채보다 긴 경우, '
+        + '음수는 부채 쪽이 더 긴 경우이고 국내 생보사에서는 음수가 흔합니다.'
+        + '</span></span>';
       note.style.display = 'block';
     }
 
@@ -1350,8 +1408,8 @@
         datasets.push({
           label: '경과조치 적용후',
           data: postRatio,
-          borderColor: '#0d6efd',
-          backgroundColor: '#0d6efd',
+          borderColor: IQP(),
+          backgroundColor: IQP(),
           pointRadius: 4,
           tension: 0,
           fill: false
@@ -1443,7 +1501,7 @@
         [[0, '−100bp'], [4, '+100bp']].forEach(([idx, bp]) => {
           if (kpiVals[idx] == null) return;
           const d = kpiVals[idx] - kpiVals[2];
-          const color = d < 0 ? '#dc3545' : (d > 0 ? '#0d6efd' : 'var(--muted)');
+          const color = d < 0 ? 'var(--neg-strong)' : (d > 0 ? 'var(--primary)' : 'var(--muted)');
           chips.push('<span class="sens-kpi">금리 ' + bp + ' 시 비율 <span class="sens-kpi-delta" style="color:' + color + '">' + sensFmtDelta(d) + '</span><span class="sub">' + kpiMode + ' 기준</span></span>');
         });
       }
