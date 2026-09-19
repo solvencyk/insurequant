@@ -3,7 +3,7 @@
  "_contract": "입력 불변 ∧ 코드 불변 ∧ 산출 불변 ⟹ 지금 다시 빌드해도 같은 바이트. 하나라도 어긋나면 전체 골든을 돌려 확인한 뒤 --update 한다. 지문은 무거운 골든의 대체가 아니라 층이다.",
  "specs": {
   "ifrs17_bs": {
-   "inputs_sha256": "716a640b4328f5690b74b774a5a54da59e4e71d8a9240c3116e0f4b01f3df0c8",
+   "inputs_sha256": "7dfa4798a81bc880116797a4aa16c7f57f6b57b1c50c06ea0c4b7ae53570193a",
    "input_files": 2138,
    "input_bytes": 3369240890,
    "input_files_per_pattern": {
@@ -60,7 +60,7 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_ifrs17_bs.py + inbox/parser/20260911T0109Z(계보 완결성 목적 추가, 빌더가 직접 읽진 않음)"
   },
   "pl_breakdown": {
-   "inputs_sha256": "29d6faa22a9f57fb9fdc4e3b2b68c9d0a2e26b64d445a4650c63f9da03619d42",
+   "inputs_sha256": "2944d1550faeb9077c6cacfa6b157acb621f8016290843adac16beb846f0e90d",
    "input_files": 1587,
    "input_bytes": 2011702892,
    "input_files_per_pattern": {
@@ -181,7 +181,7 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/viz_build_ifrs17_panels.py — 트레이스는 첫 패널 쓰기에서 멈추므로 나머지 3패널의 glob (*_insurance_pl_mvp/*_bs_snapshot_mvp/*_sensitivity)은 main() 의 outputs 표에서 확인해 extracted/*.json 로 통합했다"
   },
   "dividend": {
-   "inputs_sha256": "c5c394a86df45030ced46da7ff8ee9d539136a79fb74e5ba82d913711c42fa0b",
+   "inputs_sha256": "30d39beadfec99cc75700026d3372a899d41175fb93256a1394452b6402c1d7a",
    "input_files": 626,
    "input_bytes": 9740753,
    "input_files_per_pattern": {
@@ -211,7 +211,7 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_dividend.py (관측 627개 = census 1 + 캐시 624 + kics_disclosure 1)"
   },
   "post_transition": {
-   "inputs_sha256": "b78c68f8527eb971032e9730f8163cbc9b76844388b422e795b5fb8c08acaa2d",
+   "inputs_sha256": "47b800b391f6cd107bac7a5181e466b7ff79bf39cabbc0352175bc6dc00cffe5",
    "input_files": 549,
    "input_bytes": 34929330,
    "input_files_per_pattern": {
