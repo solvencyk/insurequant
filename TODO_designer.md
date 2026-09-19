@@ -349,7 +349,27 @@ IFRS17.html 대시보드 최상단에 4-card KPI strip 추가(기말 CSM 잔액�
 Publishing ships the data (`TODO_publishing.md` INDEX-BUBBLE-V2). Designer ships the ECharts spec:
 - [x] **🚫 폐기 — 재착수 금지 (2026-08-20 확인)**. 4축 V2는 owner가 폐기했고 **3축이 이미 라이브 완결**이다: `index.html` L165 *"X: 신계약 CSM 규모 · Y: NB CSM 배수 · 크기: 기말 CSM 잔액"*. 이 줄을 열린 항목으로 두면 다음 세션이 완결된 기능을 다시 만든다. 원문:
 - [ ] Mobile rendering: **3축** 버블맵 → simplified (bar 또는 list with sort options) — 위 4축 폐기에 맞춰 축 표기 정정(2026-08-20)
-- [ ] Click → cross-nav (existing pattern)
+- [x] **Click → cross-nav — 문서가 낡아 있었다, 실제론 이미 구현·라이브 확인됨(2026-09-19)**. `index.html` L1122-1128
+  `bubbleChart.on('click', ...) → window.location.href='IFRS17.html?company='+...`. 라이브(www.insurequant.com)
+  소스 fetch + Playwright 클릭 이벤트 배선 직접 확인. 모바일 리스트 행도 동일(L1362-1363). 체크박스만 정정, 코드 변경 없음.
+
+### HERO-JUMP-REMOVE — index.html 상단 "보험사 검색 → IFRS17 바로가기" 제거 (owner 2026-09-19, 미착수)
+owner: "index.html 중간에 보험사 검색 → IFRS17 바로가기 이것도 빼라. 이제 밑에 버블맵 통해서 타고들어갈 수
+있으니까." — 위 INDEX-BUBBLE-V2 체크박스 정정에서 실측 확인: 버블 클릭(`index.html` L1122-1128)과 모바일
+버블 리스트(L1362-1363)가 이미 `IFRS17.html?company=<회사명>`으로 정확히 같은 목적지로 보낸다 — 검색창은
+중복 기능이다.
+
+- **제거 대상 (전부 `index.html`)**:
+  - HTML: L150-153 `<div class="hero-jump">...<input id="coJump">...<datalist id="coJumpList">...</div>`
+  - CSS: L57-58 `.hero-jump{...}` `.hero-jump .select{...}`, L61 모바일 미디어쿼리 안의
+    `.hero-jump .select{max-width:none}` 부분만(나머지 셀렉터는 유지)
+  - JS: `buildJumpList()`(L437-443) · `wireJump()`(L444-448) 함수 전체 + 호출부 3곳
+    (L450 초기 와이어링, L507 · L1405 데이터 갱신 후 재빌드)
+- **확인 필요**: 삭제 전에 `coJump`/`coJumpList`/`buildJumpList`/`wireJump`를 4개 HTML 전체에 grep —
+  K-ICS.html/IFRS17.html/공시보고서.html이 같은 id를 참조하거나 이 함수를 재사용하는지 미확인(이번 조사는
+  index.html만 봤음).
+- **다음**: 위 4곳 삭제 → 다른 페이지 미참조 확인 → `pytest tests/test_deploy_assets.py` → 375px 실측
+  (레이아웃에 빈 공간 안 남는지, `.hero-jump` 제거로 KPI strip 바로 아래 여백 확인).
 
 ### F17 Panel 3 — Tier2 LOB drill-down rendering (when publishing ships Tier2 JSON)
 Publishing currently has Tier1 4-bar in production. Tier2 (LOB 장기/자동차/일반 stacked) waits on parser F17 decision + publishing assembly.
