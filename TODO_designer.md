@@ -244,6 +244,57 @@ Owner complaint: site looks AI-generated. Audit done (4 pages + barabom.me refer
 
 ## 🟠 Open — P2
 
+### ✅ KICS-SECTIONNAV — K-ICS.html 섹션 네비 (owner 2026-09-19, **구현 완료 2026-09-20**)
+owner: *"드래그 내리기 전에는 어떤 항목이 있는지 알기 어려운데, 좌측에 탭 기능 만들어서 뭐뭐 있는지 미리 좀
+알 수 있게. 모바일은 탭 들어갈 공간이 없을 거 같기도."*
+
+- [x] **id 3개 부여** — `#sec-trend`(컨트롤+피벗표 패널) · `#sec-sens`(금리 민감도) · `#sec-forward`(전망).
+  `#donut-section-panel` 은 **이름을 안 바꿨다**(다른 곳에서 딥링크할 수 있어 기존 id 를 그대로 앵커로 쓴다).
+- [x] **`.section-nav` 컴포넌트를 `common.css` 에** 신설. **`.tab/.tabs` 와 이름을 일부러 분리** — 그쪽은
+  페이지 간 이동(K-ICS/IFRS17/기타공시)에 이미 쓰고 있어서, 같은 화면에 생김새가 같은 두 종류가 있으면
+  어디로 가는 링크인지 구별이 안 된다.
+- [x] **데스크톱(≥1080px)**: `.container.has-section-nav` 를 `186px + 1fr` 그리드로. 네비는 `sticky; top:88px`
+  (헤더 76px + 여유). 실측 1280px 에서 `grid-template-columns: 186px 1023px`, 가로 넘침 0.
+- [x] **모바일(<1080px)**: 좌측에 넣을 폭이 없어 **헤더 밑에 붙는 가로 칩 줄**(`sticky; top:71px`,
+  `z-index:900` — header 1000 아래여야 덮지 않는다). 항목을 **4개로 고정**했다 — 2026-09-15 에 owner 가
+  "칩 남발" 로 두 번 반려한 이력을 지켰다. 실측 가로 넘침 0.
+- [x] **스크롤 스파이** — 앵커선(96px) 위로 올라간 섹션 중 **마지막** 것을 현재로 표시, `aria-current="true"`
+  는 항상 1개. 4개 섹션 전부 제 항목으로 매핑되는 것과 문서 끝 폴백을 실측으로 확인.
+- **실패했다가 고친 것 2가지 — 같은 함정을 다시 밟지 말 것:**
+  1. **IntersectionObserver 로 "교차 중인 첫 섹션" 을 고르면 안 된다.** 도넛 패널이 키가 커서 그 아래
+     섹션으로 내려가도 계속 교차 상태라 활성 표시가 안 넘어간다(1280px 실측: 민감도·전망으로 가도
+     '자본성증권 소진율' 이 그대로 남았다). 기하 판정으로 바꿨다.
+  2. **`requestAnimationFrame` 으로 스크롤을 스로틀하지 마라.** 백그라운드 탭에서 rAF 가 멈추면 스파이가
+     조용히 죽는다(프리뷰 창에서 실제로 밟았다). 대상이 4개뿐이라 매 스크롤에 rect 를 재도 비용이 없고,
+     활성이 바뀔 때만 DOM 을 건드려 레이아웃 무효화를 막는다.
+- **검증 한계**: 이 PC 의 프리뷰 창은 **`window` scroll 이벤트를 아예 안 뿜는다**(`scrollY` 는 바뀌는데
+  리스너가 0회 호출). 그래서 스파이는 합성 `scroll` 이벤트로 실제 핸들러를 깨워 검증했다 — 기하·배선은
+  확인됐지만 "브라우저가 스크롤 이벤트를 준다" 는 전제는 이 창에서 확인 못 한다.
+
+### ✅ COPY-TOOLTIP — 화면 설명문 정리 + "?" 툴팁 (owner 2026-09-19, **구현 완료 2026-09-20**)
+owner: *"쓸데없는 설명주석들 좀 다 정리 — `?` 표시 만들어서 커서 올리면 설명 나오게. 특히 니가 사이트
+구축하면서 노트해둔 메타발언들은 싹 다 지워."*
+
+- [x] **`.iq-help` 컴포넌트를 `common.css` 에** 신설, 4페이지 공용.
+  **JS 를 안 쓴다** — 배포 에셋 keep-list 를 안 늘리려고 CSS 만으로 세 경로를 연다:
+  포인터 `:hover` · 키보드 `:focus-within`(button 이라 Tab 으로 도달) · 터치는 탭하면 button 에 포커스가
+  잡혀 열리고 바깥을 탭하면 닫힌다.
+  **숨김에 `visibility` 를 쓰지 않았다** — 접근성 트리에서 사라져 `aria-describedby` 가 헛돈다.
+  `opacity` + `pointer-events` 로만 가린다.
+- [x] 이관 완료 6곳(전부 실측 확인, `aria-describedby` ↔ 팝오버 `id` 일치 6/6):
+  | 위치 | 본문에 남긴 것 | `?` 뒤로 보낸 것 |
+  |---|---|---|
+  | K-ICS 자본성증권 | 소진율 산식 2줄 | 한도가 계정 단위라는 규정 근거([별표22]) |
+  | K-ICS Forward Outlook | "보수적인 가정 두 가지" 한 줄 | 가정 2개 전문 |
+  | K-ICS 듀레이션 노트 | 부호 해석 결론 | D·C 산식 유도 전체 (**가장 길었다**) |
+  | IFRS17 PL 캡션 | 제목·기간·단위 | 계정 흐름 + y축 톱니 처리 설명 |
+  | IFRS17 민감도 캡션 | 기준 분기 | 왜 과거 분기인지(연 1회 공시) |
+  | 공시보고서 커버리지 | "24개사" | 상장사만 대상이라 결측이 아니라는 설명 |
+- [x] 원문 잔존 0 확인 — 걷어낸 문장 3종을 `document.body.textContent` 로 재검색해 전부 0건.
+- **범위에서 뺀 것**: `//` JS 주석으로만 있는 개발 노트는 **화면에 안 나간다**. owner 지시가 "사이트에
+  있는" 설명문이라 화면에 렌더되는 것만 건드렸다. 지워야 한다면 별도 티켓으로 — 코드 맥락이 같이 사라진다.
+
+
 ### MOB-KICS — K-ICS.html full mobile layout (scope confirmed by owner 2026-06-12)
 Owner confirmed scope: **full-panel mobile pass + alternative render** (not foundation-only). M1 foundation already in place (header/tabs/table scroll, chart heights ↓).
 - [x] Donuts stacked vertically — `.donut-cell{flex:1 1 280px}` + `flex-wrap:wrap`으로 375px에서 자동 1열 스택. 이미 구현됨 (2026-06-17 확인).

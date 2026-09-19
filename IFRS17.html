@@ -1873,8 +1873,11 @@
         plOci === "full"  ? " → [기타포괄손익 구간] FVOCI채무 → 보험계약금융(OCI) → 위험회피파생 → 재보험금융(OCI) → 기타 포괄손익 → FVOCI지분 → 총포괄손익"
       : plOci === "total" ? " → 기타포괄손익(총액만 공시·세부 미공시) → 총포괄손익"
       :                     " · 총포괄손익 미공시(원천 보고서에 총포괄손익계산서 미수록) — 당기순이익까지만 표시";
-      q(host,"#plCap").textContent = "당기순이익 → 총포괄손익 워터폴 · " + plPer.label + " · 단위 백만원(축은 조원) · " + plSeq + ociTail
-        + (plOci === "none" ? "" : " · y축은 FVOCI 지분증권을 뺀 범위로 고정 — 넘치는 막대는 톱니로 잘라 값 라벨로 표기");
+      q(host,"#plCap").innerHTML = "당기순이익 → 총포괄손익 워터폴 · " + plPer.label + " · 단위 백만원(축은 조원)"
+        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="계정 흐름과 축 처리 설명" aria-describedby="help-pl-flow">?</button>'
+        + '<span class="iq-help-pop" role="tooltip" id="help-pl-flow"><b>계정 흐름</b><br>' + plSeq + ociTail
+        + (plOci === "none" ? "" : '<br><br><b>축 처리</b><br>y축은 FVOCI 지분증권을 뺀 범위로 고정했습니다. 범위를 넘는 막대는 톱니로 자르고 값을 라벨로 적습니다.')
+        + '</span></span>';
     } else {
       if (charts.pl){ try{ charts.pl.dispose(); }catch(e){} charts.pl=null; }
       const box=q(host,"#chartPl"); if(box) box.innerHTML="";
@@ -1930,8 +1933,14 @@
     // D-1 20260818(owner): "왜 25.4Q냐"는 stale이 아니라 무설명 — IFRS17 가정민감도(할인율·손해율·
     // 사업비율 충격)는 사업보고서 연 1회 주석이고 반기·분기보고서엔 그 표 자체가 없다(원문 XML 확인,
     // 한화생명/삼성화재/DB손보 3사 라벨 출현횟수로 검증). 다음 갱신은 FY2026 사업보고서(2027-03경).
-    q(host,"#senCap").textContent = senAo ? ("기준: " + senAo.label + " (" + senAo.date + ") · 보험계약 가정민감도는 사업보고서 연 1회 공시 — 반기·분기보고서 미공시 항목")
-                                          : (sPick && sPick.caption ? String(sPick.caption) : "");
+    const senCapEl = q(host,"#senCap");
+    if (senAo) {
+      senCapEl.innerHTML = "기준: " + senAo.label + " (" + senAo.date + ")"
+        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="기준 분기가 과거인 이유" aria-describedby="help-sen-asof">?</button>'
+        + '<span class="iq-help-pop" role="tooltip" id="help-sen-asof">보험계약 가정민감도는 사업보고서에 1년에 한 번만 실립니다. 반기·분기보고서에는 이 표 자체가 없어서 기준 분기가 과거로 표시됩니다.</span></span>';
+    } else {
+      senCapEl.textContent = (sPick && sPick.caption) ? String(sPick.caption) : "";
+    }
     q(host,"#senTable").innerHTML="";
     if (sOk){
       const deltas = scen.map(z=> Number(z.csm_delta)).filter(Number.isFinite)

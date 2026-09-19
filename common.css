@@ -191,6 +191,74 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
 .subtoggle{ display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; margin-left:6px; padding:0; border:1px solid var(--border); border-radius:4px; background:var(--bg); color:var(--muted); font-size:13px; line-height:1; cursor:pointer; vertical-align:middle; }
 .subtoggle:hover{ border-color:var(--primary); color:var(--primary); }
 
+/* — Inline help "?" — 본문에 박혀 있던 근거 조문·산식 유도·전망 가정을 이 뒤로 옮긴다
+   (COPY-TOOLTIP, owner 2026-09-19: "쓸데없는 설명주석 정리 + 메타발언 삭제").
+   **JS 를 쓰지 않는다** — 배포 에셋 keep-list 를 늘리지 않으려고 CSS 만으로 세 경로를 연다:
+   포인터는 :hover, 키보드는 :focus-within(button 이라 Tab 으로 도달), 터치는 탭하면 button 에
+   포커스가 잡혀 열리고 바깥을 탭하면 닫힌다. 숨김에 visibility 를 안 쓰는 이유는 접근성 트리에서
+   사라져 aria-describedby 가 헛돌기 때문이다 — opacity + pointer-events 로만 가린다. */
+.iq-help{ position:relative; display:inline-flex; vertical-align:middle; margin-left:4px; }
+.iq-help-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:22px; height:22px; padding:0; border:1px solid var(--border); border-radius:50%;
+  background:var(--bg); color:var(--muted); font-size:12px; font-weight:600; line-height:1;
+  cursor:pointer; -webkit-appearance:none; appearance:none;
+}
+.iq-help-btn:hover, .iq-help-btn:focus-visible{ border-color:var(--primary); color:var(--primary); }
+.iq-help-pop{
+  position:absolute; left:0; top:calc(100% + 6px); z-index:1800;
+  width:max-content; max-width:min(340px, calc(100vw - 32px));
+  padding:9px 11px; border:1px solid var(--border); border-radius:6px;
+  background:var(--bg); color:var(--text);
+  font-size:12px; font-weight:400; line-height:1.55; text-align:left; white-space:normal;
+  box-shadow:0 4px 16px rgba(0,0,0,0.15);
+  opacity:0; pointer-events:none; transition:opacity .12s ease;
+}
+.iq-help:hover > .iq-help-pop, .iq-help:focus-within > .iq-help-pop{ opacity:1; pointer-events:auto; }
+/* 오른쪽 가장자리에 붙는 트리거용 — 팝오버가 화면 밖으로 안 나가게 반대쪽으로 편다. */
+.iq-help-pop--right{ left:auto; right:0; }
+@media (prefers-reduced-motion:reduce){ .iq-help-pop{ transition:none; } }
+
+/* — Section nav (KICS-SECTIONNAV, owner 2026-09-19) ————————————————————
+   owner: "드래그 내리기 전에는 어떤 항목이 있는지 알기 어렵다."
+   이름을 `.tab/.tabs` 와 일부러 다르게 뒀다 — 그쪽은 **페이지 간** 이동(K-ICS/IFRS17/기타공시)에
+   이미 쓰고 있어서, 같은 화면에 생김새가 같은 두 종류가 있으면 어디로 가는 링크인지 구별이 안 된다.
+   앵커 착지는 이미 깔려 있는 scroll-padding-top(아래 scroll-snap 절)이 받아 준다. */
+.section-nav ul{ list-style:none; margin:0; padding:0; }
+.section-nav a{
+  display:block; padding:7px 10px; border-radius:var(--r-sm);
+  color:var(--muted); font-size:13px; line-height:1.35; text-decoration:none;
+  border-left:2px solid transparent; transition:color var(--t-fast), background var(--t-fast);
+}
+.section-nav a:hover{ color:var(--text); background:var(--card); }
+.section-nav a.is-current{ color:var(--primary); border-left-color:var(--primary); font-weight:600; }
+.section-nav a:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; }
+
+@media (min-width:1080px){
+  .container.has-section-nav{
+    display:grid; grid-template-columns:186px minmax(0,1fr);
+    gap:var(--sp-5); align-items:start;
+  }
+  .section-nav{ position:sticky; top:88px; }   /* sticky header 76px + 숨 쉴 틈 12px */
+}
+@media (max-width:1079px){
+  /* 좌측에 넣을 폭이 없다(owner 가 먼저 짚었다). 헤더 바로 밑에 붙는 가로 줄로 바꾼다.
+     항목을 4개로 묶어 두는 건 2026-09-15 에 owner 가 "칩 남발" 로 두 번 반려했기 때문이다.
+     z-index 는 header(1000) 아래여야 한다 — 위로 올리면 헤더를 덮는다. */
+  .section-nav{
+    position:sticky; top:71px; z-index:900;
+    margin:0 0 12px; padding:6px 0;
+    background:var(--bg); border-bottom:1px solid var(--border);
+  }
+  .section-nav ul{ display:flex; gap:6px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .section-nav ul::-webkit-scrollbar{ display:none; }
+  .section-nav a{
+    flex:0 0 auto; padding:6px 11px; border:1px solid var(--border);
+    border-left-width:1px; border-radius:var(--r-pill); white-space:nowrap; font-size:12.5px;
+  }
+  .section-nav a.is-current{ border-color:var(--primary); }
+}
+
 /* ============================================================================
    Shared mobile foundation (<=640px). Hoisted 2026-07-22 from the three
    dashboards, which each carried a byte-identical copy of the tab rules (M1

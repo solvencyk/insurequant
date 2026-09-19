@@ -18,7 +18,7 @@
 # 진짜로 우회해야 하면:  git push --no-verify   (우회했다는 사실을 커밋/이슈에 남길 것)
 # 훅 자체를 끄려면:      git config --unset core.hooksPath
 
-PY="C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe"
+WIN_PY="C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe"
 ROOT="$(git rev-parse --show-toplevel)"
 GATE="$ROOT/scripts/prepush_check.py"
 
@@ -29,9 +29,18 @@ if [ ! -f "$GATE" ]; then
   exit 0
 fi
 
-if [ ! -f "$PY" ]; then
-  echo "pre-push: venv 인터프리터를 못 찾음: $PY" >&2
-  echo "          경로가 바뀌었으면 .githooks/pre-push 의 PY 를 고칠 것." >&2
+# UH-24: owner Windows PC venv 를 우선 쓰되(하드코딩 값 유지 — 대다수 push 가 여기서 난다),
+# 그 경로가 없는 클론(리눅스·macOS·Termux·클라우드 컨테이너)에서는 PATH 의 python3/python 로
+# 폴백한다. 예전엔 이 경우 "venv 못 찾음" 으로 exit 1 해서 게이트를 통째로 막았다.
+if [ -f "$WIN_PY" ]; then
+  PY="$WIN_PY"
+elif command -v python3 >/dev/null 2>&1; then
+  PY="python3"
+elif command -v python >/dev/null 2>&1; then
+  PY="python"
+else
+  echo "pre-push: python 인터프리터를 못 찾음 (owner venv 없음, PATH 에 python3/python 도 없음)." >&2
+  echo "          .githooks/pre-push 의 WIN_PY 를 고치거나 python3 를 PATH 에 넣을 것." >&2
   exit 1
 fi
 
