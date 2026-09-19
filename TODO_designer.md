@@ -239,6 +239,80 @@ Owner complaint: site looks AI-generated. Audit done (4 pages + barabom.me refer
 
 ## 🟠 Open — P2
 
+### KICS-SECTIONNAV — K-ICS.html 좌측 섹션 네비 (owner 2026-09-19, 미착수)
+owner: "지금 K-ICS.html은 드래그 내리기 전에는 어떤 항목이 있는지 알기 어려운데, 좌측에 탭 기능 만들어서
+뭐뭐 있는지 미리 좀 알수있게. 모바일은 탭 들어갈 공간이 없을거같기도" — owner 스스로 데스크톱/모바일
+패턴이 달라야 함을 인지하고 있다.
+
+- **현재 구조 (K-ICS.html 확인)**: `.container` 안에 `.panel` 4개가 세로로 쭉 나열, 좌측 네비 없음. 순서대로:
+  1. L121 헤더/제목 패널("원보험사별 K-ICS 지급여력비율 변동 추이") + L125 컨트롤 패널(보험사/기간/경과조치
+     select + 다운로드) — id 없음.
+  2. L195 `id="donut-section-panel"` — "자본성증권 인정 한도 소진율"(도넛 2개). **4개 중 유일하게 id 있음.**
+  3. L216 "금리 민감도"(±50bp/±100bp 순자산가치 영향 + 듀레이션·컨벡서티 카드 + 표). id 없음.
+  4. L230 "자본비율 Forward Outlook"(2026~2030 라인차트). id 없음.
+  - 첫 패널 안에 본문 피벗 표(항목 1-28, `RISK_SUB_GROUPS` L283-288 — 순자산/생명장기/시장위험/기타요구자본
+    4그룹, 기본 접힘)가 들어있어 실질적으로 "스크롤해야 보이는" 건 도넛/민감도/전망 3패널 + 표 하위그룹.
+  - **id가 3개 없다** — 앵커 걸려면 먼저 부여해야 함(`#donut-section-panel`은 기존 이름 유지, 다른 페이지
+    참조 여부 미확인·grep 필요).
+
+- **제안: 데스크톱 좌측 sticky 섹션 네비(앵커 리스트, "탭"이라는 컴포넌트는 아님)**:
+  - `common.css` L245-249에 이미 `scroll-snap-type:y proximity` + `scroll-padding-top` 이 4페이지 전부에
+    걸려있고 `.panel`이 스냅 대상으로 설계돼 있음 — 기존 섹션 경계에 앵커만 얹으면 됨.
+  - `header{position:sticky;top:0}`(L110)도 이미 있어 좌측 네비도 같은 sticky 관용구 재사용 가능.
+  - **주의**: `.tab`/`.tabs`(L124-136)는 이미 페이지 간 이동(K-ICS/IFRS17/기타공시)에 쓰이고 있다 — 좌측
+    섹션 네비를 "탭"이라 부르면 헷갈리니 구현 시 별도 클래스(`.section-nav` 등)로 분리.
+  - 항목이 4개뿐이라 좌측 네비가 짧다 — 큰 sticky 박스보다 얇은 세로 스트립 권장(1280px 실측 후 판단).
+
+- **모바일 대안 후보** (공간 없음, owner도 인지):
+  1. **상단 collapsible chip row** — 기존 `.tabs` mobile 패턴(L205, `overflow-x:auto`) 재사용 가능,
+     구현 비용 최저. 단 `TODO_designer.md` 2026-09-15b/c에서 owner가 "칩 남발"로 두 번 반려한 전례 있음 —
+     4개 이하로 억제, 라벨 짧게.
+  2. **hamburger 드롭다운** — 세로공간 0이지만 이 저장소에 햄버거 패턴 자체가 전무해 새 A11y 비용(포커스
+     트랩·ESC·aria-expanded) 발생.
+  3. **bottom sheet/플로팅 목차 버튼** — 스크롤 중에도 항상 접근 가능하지만 셋 중 구현·A11y 비용 최대.
+  - 종합: chip row가 최저비용이나 4개 이하 고정 필요, 최종 선택은 375px 실측 후 owner 확인.
+
+- **참고**: 4페이지 어디에도 좌측 sticky 섹션 네비 없음(전수 grep 결과). 가장 가까운 선례는 scroll-snap과
+  index.html M2 모바일 패턴(트리맵→세로 리스트 전환)인데 이건 "통째 교체"라 직접 재사용은 어려움.
+- **다음**: id 3개 부여 → 좌측 네비 마크업/CSS → 모바일 대안 1개 확정(owner 재확인) → 1280px/375px 실측 →
+  `pytest tests/test_deploy_assets.py`.
+
+### COPY-TOOLTIP — 화면에 박힌 인라인 설명문을 "?" 아이콘 툴팁으로 분리 (owner 2026-09-19, 미착수)
+owner 예시: K-ICS.html에 "한도는 증권 종류가 아니라 계정 단위로 걸린다 — 신종자본증권·후순위채만의
+한도는 없다(보험업감독업무시행세칙 [별표22] Ⅲ.2.다·마)." 같은 문장이 본문 인라인 텍스트로 박혀 있다.
+읽는 사람은 규정 조문·산식 유도 과정까지 알 필요 없이 결론만 보면 되는데 지금은 전부 한 줄에 늘어서 있다.
+owner 지시: "이런식으로 사이트에 있는 쓸데없는 설명주석들 좀 다 정리 — 니가 사이트 구축하면서 노트해둔
+메타발언들은 싹 다 지워."
+
+**제안**: "왜 이 숫자냐/산식 근거가 뭐냐"류 설명은 본문에서 빼고 "?" 아이콘으로 옮긴다.
+- hover 시 툴팁 노출 + **키보드 포커스 가능**(tab으로 아이콘 도달 → 포커스 시에도 노출) 필수.
+- `a11y-audit` 스킬의 WCAG 2.1 AA 기준(대비·포커스 가시성·터치 타겟)에 맞춰 구현.
+- 데이터 자체(수치·단위)는 본문에 남기고, "근거 조문/산식 유도/가정" 같은 메타 설명만 아이콘 뒤로.
+
+**발견한 인스턴스** (4개 배포 HTML 전수 스캔):
+- [ ] **K-ICS.html:200** (owner 예시, 정확한 위치) — 자본성증권 한도 설명 문장(위 인용 그대로).
+- [ ] **K-ICS.html:233** — Forward Outlook 가정: "지급여력기준금액: 2032년까지 경과조치 효과 축소 가정
+  (적용후→적용전 선형 보간)".
+- [ ] **K-ICS.html:234** — Forward Outlook 가정: "지급여력금액: 기발행 자본성증권의 콜옵션 전체 행사 및
+  신규 발행 zero 가정 (콜 5년 도래 시점에 가용자본에서 차감)".
+- [ ] **K-ICS.html:1019** (JS `renderCapsecPanel`, `donut-note`에 주입) — "참고 — 자본성증권 발행잔액:
+  신종 N억원 · 후순위 N억원" + 왜 기준일을 안 적는지까지 부연(주변 1011-1024).
+- [ ] **K-ICS.html:1320-1325** (`renderDurationCards`, `#dur-note`) — 듀레이션·컨벡서티 산식 전체 유도
+  ("D = −(V₊₁₀₀bp − V₋₁₀₀bp) ÷ (2·V기준·0.01) …")와 부호 해석까지 통째로 인라인 노출. **가장 길고
+  수식이 섞여 있어 최우선 후보.**
+- [ ] **IFRS17.html:1933** (`#senCap`) — "보험계약 가정민감도는 사업보고서 연 1회 공시 — 반기·분기보고서
+  미공시 항목".
+- [ ] **IFRS17.html:1876-1877** (`#plCap`, PL 워터폴 캡션) — 계정 흐름 전체 + OCI 3-상태 분기 설명
+  (`ociTail`) + "y축은 FVOCI 지분증권을 뺀 범위로 고정 — 넘치는 막대는 톱니로 잘라 값 라벨로 표기" 같은
+  렌더링 방식 설명까지 한 캡션에 다 들어감 — 캡션이 사실상 설계 노트를 겸함.
+- [ ] **공시보고서.html:384** (`#divCoverageLine`) — "배당 공시 커버리지: N개사(DART 배당 API — 상장사만
+  대상, 비상장사는 이 공시 자체가 없어 결측이 아님)".
+
+**범위 밖(참고만)**: JS 주석(`//`)으로만 존재하는 owner 노트(IFRS17.html:1930-1932 "D-1 20260818(owner):
+왜 25.4Q냐…" 등)는 화면에 안 보이므로 이 항목 범위 아님 — 개발 컨텍스트로 남겨둠. jp/index.html의 ※
+각주도 이번 스캔 대상(index/K-ICS/IFRS17/공시보고서) 밖이라 제외 — 필요하면 별도 티켓.
+- **다음**: "?" 툴팁 컴포넌트 설계(4페이지 공유) → 인스턴스 8개 순차 이관 → a11y 재검증.
+
 ### MOB-KICS — K-ICS.html full mobile layout (scope confirmed by owner 2026-06-12)
 Owner confirmed scope: **full-panel mobile pass + alternative render** (not foundation-only). M1 foundation already in place (header/tabs/table scroll, chart heights ↓).
 - [x] Donuts stacked vertically — `.donut-cell{flex:1 1 280px}` + `flex-wrap:wrap`으로 375px에서 자동 1열 스택. 이미 구현됨 (2026-06-17 확인).
