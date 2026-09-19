@@ -176,7 +176,21 @@
   window.addEventListener('scroll', onNavScroll, { passive:true });
   window.addEventListener('resize', function(){ syncHdrVar(); _navActive = null; spySectionNav(); });
 
-  function boot(){ mount(); syncSectionNav(); }
+  /* **페이지마다 re-sync 를 배선하지 않는다.** 처음엔 IFRS17 에만 렌더 후 호출을 넣었는데,
+     K-ICS 는 부팅 시점(보험사 미선택)에 안내문이 떠 있어 3개 섹션이 "미공시" 로 찍히고
+     회사를 골라도 다시 재지 않아 그대로 남았다 — 라이브에서 owner 가 잡았다.
+     어느 페이지든 본문이 바뀌면 다시 재도록 관찰자를 건다(디바운스 180ms). */
+  var _navTimer = null;
+  function watchForRerender(){
+    var host = document.querySelector('.container') || document.body;
+    if(!host || !window.MutationObserver) return;
+    new MutationObserver(function(){
+      clearTimeout(_navTimer);
+      _navTimer = setTimeout(syncSectionNav, 180);
+    }).observe(host, { childList:true, subtree:true, attributes:true,
+                       attributeFilter:['style','class','hidden'] });
+  }
+  function boot(){ mount(); syncSectionNav(); watchForRerender(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
   window.IQTheme={ isDark:function(){ return effective()==='dark'; }, current:effective, set:set, toggle:toggle,

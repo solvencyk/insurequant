@@ -983,10 +983,17 @@
       const xQs = [...new Set(rows.map(r => r.srcQ).filter(Boolean))].sort();
       const cQs = [...new Set(rows.map(r => qlabel(r.closingK)).filter(Boolean))].sort();
       const span = (qs, maxQ) => qs.length > 1 ? `회사별 최신 공시 — ${qs[qs.length - 2]}·${maxQ} 혼재` : `${maxQ}`;
-      el.textContent = `X: 신계약 CSM 규모 (CSM_waterfall 기준, ${span(xQs, maxXQ)}) · `
-        + `Y: NB CSM 배수 (${NB_TARGET_Q} 연누계 고정 — 배수 분모인 월납초회보험료 수집분 기준) · `
-        + `크기: 기말 CSM 잔액 (${span(cQs, maxClosingQ)}) · `
-        + `회색(*)=연1회 공시사 추정치(직전 마감연도 연누계 ÷2, 배수는 이월)`;
+      // 축 이름만 본문에 두고 기준분기·추정 규칙은 ? 뒤로 옮긴다(owner 2026-09-20).
+      el.innerHTML = `X: 신계약 CSM 규모 · Y: NB CSM 배수 · 크기: 기말 CSM 잔액`
+        + `<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="축 기준과 추정 규칙" `
+        + `aria-describedby="help-bubble-axes">?</button>`
+        + `<span class="iq-help-pop" role="tooltip" id="help-bubble-axes">`
+        + `<b>X · 신계약 CSM 규모</b> — CSM_waterfall 기준, ${span(xQs, maxXQ)}<br>`
+        + `<b>Y · NB CSM 배수</b> — ${NB_TARGET_Q} 연누계 고정. 배수의 분모는 월납초회보험료 수집분입니다.<br>`
+        + `<b>크기 · 기말 CSM 잔액</b> — ${span(cQs, maxClosingQ)}<br><br>`
+        + `회색 별표(*)는 연 1회만 공시하는 회사의 추정치입니다 — 직전 마감연도 연누계를 2로 나누고, `
+        + `배수는 직전 값을 이월했습니다.`
+        + `</span></span>`;
     }
 
     function renderBubble(sectorFilter) {
