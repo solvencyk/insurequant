@@ -11,6 +11,23 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ## Status
 
+**🚀 2026-09-20 디자인 배포 라이브 — 팔레트 B + K-ICS 섹션 네비 + "?" 툴팁 (owner 승인).**
+main 배포 커밋 `17e3733`(`a84520c..17e3733`). **데이터는 한 바이트도 안 바뀌었다** — HTML/CSS/JS 6파일뿐.
+- **검증은 "커밋했다" 가 아니라 라이브에서 바이트를 받아 커밋 블롭과 대조**: `common.css`·`theme.js`·
+  `index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html` **6/6 해시 일치**. 라이브 `--primary` 도
+  `#0f6e68`(라이트)·`#54b3aa`(다크) 확인.
+- 작업 트리에서 `prepush_check.py [scope=FULL]` **gate-clear · 567 passed** 확인 후 push.
+  배포 워크트리는 slim(=`scripts/` 없음)이라 훅이 게이트를 건너뛴다고 인쇄한다 — **정상 동작이고,
+  게이트는 작업 트리에서 미리 돌린 것이다.**
+- **선행 블록 3건을 먼저 치웠다(이번 작업과 무관, `196f6f1` KR0073 정정 라운드가 남긴 것)**:
+  골든 입력지문 `INPUTS_MOVED` RED 4 · 룰 골든 해시 이동 · `AFTER_IDENT_PIN_TOL` 미등재.
+  **둘 다 해시만 보고 갱신하지 않았다** — 지문은 골든 4종(17BS 7분·PL 4.5분 포함)을 전부 돌려 산출
+  불변을 확인한 뒤, 룰 골든은 `by_rule` 을 내용으로 대조해 **움직인 칸이 `8_post` 딱 하나**
+  (GREEN→YELLOW, RED 36 불변)임을 확인한 뒤 재생성했다. 커밋 `f5c0453`·`6445dde`.
+- 남은 것: `og:image` 4페이지 0건(팔레트와 무관한 별건).
+
+
+
 **2026-09-17 (KR0073 2026.1Q 경과조치 후 지급여력비율 정정 — FSS 보도자료 대조, main 배포 완료)**:
 owner가 FSS 보도자료(`R26090720.pdf`, '26.6월말 기준 보험회사 지급여력비율 현황, 2026.9.17)를
 `kics_disclosure.json`과 대조해달라고 발주. 38개사(국내 공시대상, 외국 재보험지점 14사·예별손보
