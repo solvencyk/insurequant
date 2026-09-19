@@ -71,7 +71,7 @@
        금리민감도 표에서 나오는 파생값이라 표 위에 크게 둔다. */
     .dur-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0 4px}
     .dur-card{background:var(--card);border:var(--bd);border-radius:var(--r-md);padding:14px 16px}
-    .dur-card.lead{border-color:#0d6efd33;background:linear-gradient(180deg,#0d6efd0a,transparent)}
+    .dur-card.lead{border-color:#0f6e6833;background:linear-gradient(180deg,#0f6e680a,transparent)}
     .dur-val{font-size:26px;font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--text)}
     .dur-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:3px}
     .dur-lab{font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
@@ -304,6 +304,10 @@
       window.addEventListener('resize', apply);
       apply();
     })();
+
+    /* 차트 라이브러리는 CSS `var()` 를 못 읽는다 — 토큰 값을 문자열로 꺼내 준다.
+       theme.js 가 없으면 팔레트 B 액센트로 폴백. */
+    function IQP(){ return (window.IQTheme && IQTheme.chart().primary) || '#0f6e68'; }
 
     const jsonPath = 'kics_disclosure.json';
     /* Chart common theme (DESIGN-V2 P2) */
@@ -1404,8 +1408,8 @@
         datasets.push({
           label: '경과조치 적용후',
           data: postRatio,
-          borderColor: '#0d6efd',
-          backgroundColor: '#0d6efd',
+          borderColor: IQP(),
+          backgroundColor: IQP(),
           pointRadius: 4,
           tension: 0,
           fill: false
@@ -1497,7 +1501,7 @@
         [[0, '−100bp'], [4, '+100bp']].forEach(([idx, bp]) => {
           if (kpiVals[idx] == null) return;
           const d = kpiVals[idx] - kpiVals[2];
-          const color = d < 0 ? '#dc3545' : (d > 0 ? '#0d6efd' : 'var(--muted)');
+          const color = d < 0 ? 'var(--neg-strong)' : (d > 0 ? 'var(--primary)' : 'var(--muted)');
           chips.push('<span class="sens-kpi">금리 ' + bp + ' 시 비율 <span class="sens-kpi-delta" style="color:' + color + '">' + sensFmtDelta(d) + '</span><span class="sub">' + kpiMode + ' 기준</span></span>');
         });
       }

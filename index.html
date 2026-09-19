@@ -201,7 +201,7 @@
           </select>
         </label>
         <div class="bubble-legend">
-          <span style="color:#0d6efd;font-weight:700">● 생명</span>
+          <span style="color:var(--primary);font-weight:700">● 생명</span>
           <span style="color:#15803d;font-weight:700">● 손해</span>
           <span>크기: 기말 CSM</span>
           <span id="bubble-meta"></span>
@@ -1043,7 +1043,8 @@
       const xAxisMin = Math.min(...xVals) / xPad;
       const xAxisMax = Math.max(...xVals) * xPad;
       const maxClosing = Math.max(...rows.map(r => r.closing || 0), 1);
-      const SECTOR_COLOR = { 'Life': '#0d6efd', 'Non-Life': '#16a34a' };
+      const SECTOR_COLOR = (function(){ var t = (window.IQTheme && IQTheme.chart()) || {};
+      return { 'Life': t.primary || '#0f6e68', 'Non-Life': t.pos || '#4b7f2a' }; })();
       const sectors = ['Life', 'Non-Life'].filter(s => sectorFilter === 'ALL' || sectorFilter === s);
       const ESTIMATED_NAME = '추정 (연1회 공시)';
 
@@ -1284,7 +1285,8 @@
       if (!host) return;
       host.innerHTML = '';
       const sectorFilter = document.getElementById('bubble-sector')?.value || 'ALL';
-      const SECTOR_COLOR = { 'Life': '#0d6efd', 'Non-Life': '#16a34a' };
+      const SECTOR_COLOR = (function(){ var t = (window.IQTheme && IQTheme.chart()) || {};
+      return { 'Life': t.primary || '#0f6e68', 'Non-Life': t.pos || '#4b7f2a' }; })();
 
       const nbLatest = {};                               // code -> 배수 있는 최신 NB 행
       for (const r of (nbRowsRaw || [])) {
