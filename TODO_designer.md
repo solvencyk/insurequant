@@ -231,9 +231,13 @@ IFRS17 적용 완료 2026-06-13. K-ICS 적용은 **owner가 2026-06-17 취소** 
 
 ### DESIGN-V2 — de-AI 디자인 오버홀 (proposal delivered 2026-06-11, awaiting owner sign-off)
 Owner complaint: site looks AI-generated. Audit done (4 pages + barabom.me reference — actual findings: Spoqa Han Sans Neo webfont + restrained neutrals + 0.1-0.2s micro transitions, NOT heavy animation). Phases:
-- [~] **P1 quick wins** — **3/4 이미 배포돼 있다 (2026-08-30 `origin/main` 실측)**: Pretendard 4페이지+common.css 전부 적용 · `tabular-nums` 적용 · `rel="icon"` 4페이지 전부 존재. **남은 것은 둘뿐** — 부트스트랩 잔재 색(`#0d6efd`·`#f8f9fa`)이 4페이지+common.css 에 아직 있고, `og:image` 는 0건이다. 종전 문구 —: Pretendard Variable + `font-variant-numeric:tabular-nums` 전역 / 탈부트스트랩 팔레트(#0d6efd·#f8f9fa 교체, 잉크+페이퍼+딥블루 1액센트) / favicon(IQ 모노그램)+OG+meta description / footer(출처·기준분기·면책) / 이모지 placeholder 제거 / radius 12→6px / Chart.js·ECharts 색 CSS 변수화 (기본 teal/pink 퇴출). [부분 착수: P1-QUICKWIN 일부 done 2026-06-12, 팔레트 교체는 보류]
+- [~] **P1 quick wins** — **3/4 이미 배포돼 있다 (2026-08-30 `origin/main` 실측, 2026-09-19 `#0d6efd`/`#f8f9fa` 재확인 — `common.css` L28·35 여전히 부트스트랩 기본값 그대로, `getComputedStyle` 로 라이브 재검증)**: Pretendard 4페이지+common.css 전부 적용 · `tabular-nums` 적용 · `rel="icon"` 4페이지 전부 존재. **남은 것은 둘뿐** — 부트스트랩 잔재 색(`#0d6efd`·`#f8f9fa`)이 4페이지+common.css 에 아직 있고, `og:image` 는 0건이다. 종전 문구 —: Pretendard Variable + `font-variant-numeric:tabular-nums` 전역 / 탈부트스트랩 팔레트(#0d6efd·#f8f9fa 교체, 잉크+페이퍼+딥블루 1액센트) / favicon(IQ 모노그램)+OG+meta description / footer(출처·기준분기·면책) / 이모지 placeholder 제거 / radius 12→6px / Chart.js·ECharts 색 CSS 변수화 (기본 teal/pink 퇴출). [부분 착수: P1-QUICKWIN 일부 done 2026-06-12, 팔레트 교체는 보류]
 - [x] **P2 structural (1~2d)**: ✅ common.css · ✅ index 히어로 KPI 스트립+typeahead · ✅ scroll-reveal · ✅ 차트 공통 테마 · ✅ KPI 카운트업 애니(index 3개+IFRS17 Panel7 4개, ease-out 600ms, 2026-06-20) — **완료**
-- [ ] **P3**: M3 잔여(도넛 stack·범례) 흡수, 다크모드(선택)
+- [x] **P3, 다크모드 — 문서가 낡아 있었다, 실제론 이미 구현·라이브 확인됨(2026-09-19)**. `#iqThemeToggle`
+  버튼(`aria-label="다크 모드로 전환"`, `☾`)이 4페이지 헤더에 실재 — 자동 OS 감지가 아니라 사용자가 직접
+  누르는 토글이다. Playwright로 index.html 다크 전환 확인(`bodyBg: rgb(18,20,23)`). "M3 잔여(도넛
+  stack·범례) 흡수"도 아래 M3 섹션에서 이미 둘 다 [x] 처리돼 있어 P3 자체가 사실상 완료 — 남는 건
+  "차트 미세조정 across pages"(M3 마지막 줄, 상시 폴리시 항목이라 완료 표시 대상 아님)뿐이다.
 - [x] **TREEMAP-SCALE**: 트리맵 색 임계 앵커 130/200% + 범례 임계 표기 — done 2026-06-13 (권고선=130%, 민감도 패널 150%→130% 정합)
 - [ ] **COMPANY-ACCENT**: 회사 키컬러는 배경 틴트 대신 "액센트 1곳" 원칙(패널 제목 2px 룰 + 회사명 칩 + 차트 주 시리즈, 저채도 변형 23사 맵) — 시안 owner 승인 후
 
@@ -324,7 +328,10 @@ Owner confirmed scope: **full-panel mobile pass + alternative render** (not foun
 ### MOB-IFRS17 — IFRS17.html full mobile layout (scope confirmed by owner 2026-06-12)
 Owner confirmed scope: **full-panel mobile pass + alternative render**. M1 foundation only so far.
 - [ ] Panel 1–6 mobile policy: which to keep, which to collapse, which to swap for alternate viz
-- [ ] Panel 7 (BS-DRILLDOWN, added 2026-08-14) has `@media(max-width:640px)` CSS following the same pattern as Panels 1-6 but hasn't had a real-viewport pixel check — fold into this pass' verification
+- [x] **Panel 7 (BS-DRILLDOWN) 실측 — 문서가 낡아 있었다(2026-09-19 정정)**. 위 BS-TACCOUNT 티켓(L208)에
+  2026-08-18 확인 기록이 이미 있었는데 이 티켓엔 반영이 안 돼 있었다 — 같은 사실이 두 티켓에서 다른
+  상태로 남아있던 stale 사례. 오늘 `?company=KR0008`로 375px 재확인: `.bs-t` 존재, `flex-direction:column`
+  적용, `body.scrollWidth`(375)가 `innerWidth`(375) 안 넘음(가로 넘침 0). 코드 변경 없음, 체크박스만 정정.
 - [ ] **(owner open rec 1)** horizontal-scroll range for dense panels
 - [ ] **(owner open rec 2)** breakpoint set confirmation
 - (shares the two owner open recs with MOB-KICS — resolve once for both pages.)
@@ -348,7 +355,9 @@ IFRS17.html 대시보드 최상단에 4-card KPI strip 추가(기말 CSM 잔액�
 ### INDEX-BUBBLE-V2 HTML side — 4축 bubble rendering
 Publishing ships the data (`TODO_publishing.md` INDEX-BUBBLE-V2). Designer ships the ECharts spec:
 - [x] **🚫 폐기 — 재착수 금지 (2026-08-20 확인)**. 4축 V2는 owner가 폐기했고 **3축이 이미 라이브 완결**이다: `index.html` L165 *"X: 신계약 CSM 규모 · Y: NB CSM 배수 · 크기: 기말 CSM 잔액"*. 이 줄을 열린 항목으로 두면 다음 세션이 완결된 기능을 다시 만든다. 원문:
-- [ ] Mobile rendering: **3축** 버블맵 → simplified (bar 또는 list with sort options) — 위 4축 폐기에 맞춰 축 표기 정정(2026-08-20)
+- [x] **Mobile rendering — 문서가 낡아 있었다, 실제론 이미 구현·라이브 확인됨(2026-09-19)**. 375px에서
+  `#csm-bubble-chart{display:none}` + `#bubble-list{display:block}`, 리스트 실제로 14행 채워짐(첫 행
+  "생명보험" 그룹 헤더) — Playwright로 index.html 375px 직접 확인. 코드 변경 없음, 체크박스만 정정.
 - [x] **Click → cross-nav — 문서가 낡아 있었다, 실제론 이미 구현·라이브 확인됨(2026-09-19)**. `index.html` L1122-1128
   `bubbleChart.on('click', ...) → window.location.href='IFRS17.html?company='+...`. 라이브(www.insurequant.com)
   소스 fetch + Playwright 클릭 이벤트 배선 직접 확인. 모바일 리스트 행도 동일(L1362-1363). 체크박스만 정정, 코드 변경 없음.
