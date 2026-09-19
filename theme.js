@@ -96,8 +96,90 @@
     b.addEventListener('click', toggle);
     h.appendChild(b);
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', mount); else mount();
+
+  /* ---- 섹션 네비 (KICS-SECTIONNAV, 2026-09-20 공통화) --------------------
+     K-ICS 에만 있던 것을 IFRS17 과 공유하려고 여기로 올렸다. 세 가지를 한다:
+
+     1) **헤더 높이를 실측해 `--iq-hdr-h` 로 내려 준다.** 종전에는 sticky top 을
+        71px/88px 로 박아 뒀는데, 헤더가 줄바꿈되면(다운로드 버튼이 아래로 내려가는
+        폭 구간) 네비가 그대로 헤더 뒤로 숨는다 — owner 가 본 "어떨 땐 되고 어떨 땐
+        안 되는" 증상이 이것이다. 높이를 재서 쓰면 그 구간이 사라진다.
+     2) **없는 섹션을 감추지 않고 "미공시" 로 남긴다**(owner 2026-09-20:
+        "없는 사들은 없다고 띄우면 되지"). 항목이 사라지면 그 회사에 무엇이 없는지
+        조차 알 수 없다.
+     3) **내려갈 때 접고 올라갈 때 도로 꺼낸다**(좁은 화면 전용, 폭 판정은 CSS 가 한다).
+        목록을 늘 띄워 두면 좁은 화면에서 본문을 계속 먹는다.                    */
+  function hdrH(){
+    var h=document.querySelector('header');
+    return h ? Math.round(h.getBoundingClientRect().height) : 72;
+  }
+  function syncHdrVar(){
+    document.documentElement.style.setProperty('--iq-hdr-h', hdrH() + 'px');
+  }
+  /* 패널이 **있는데 안이 비어 있는** 경우를 미공시로 본다. 그 회사에 데이터가 없으면 패널은
+     그대로 복제되고 안에 "…미제공 보험사입니다" 안내(.stub-msg / .no-data)만 보인다 —
+     높이만 재면 이걸 '있음' 으로 잘못 읽는다. 안내가 떠 있고 실제 표·차트가 없으면 미공시다. */
+  function hasStub(el){
+    var stubs = el.querySelectorAll('.stub-msg, .no-data, .placeholder-empty');
+    for(var i = 0; i < stubs.length; i++){
+      var s = stubs[i];
+      if(s.getBoundingClientRect().height > 0 && (s.textContent || '').trim()) return true;
+    }
+    return false;
+  }
+  var _navPairs = [], _navActive = null, _lastY = 0;
+  function syncSectionNav(){
+    syncHdrVar();
+    var nav = document.querySelector('.section-nav');
+    if(!nav){ _navPairs = []; return; }
+    _navPairs = [];
+    [].slice.call(nav.querySelectorAll('a[href^="#"]')).forEach(function(a){
+      var el = document.getElementById(a.getAttribute('href').slice(1));
+      var live = !!(el && el.getBoundingClientRect().height > 0) && !hasStub(el);
+      a.classList.toggle('is-na', !live);
+      if(live){ a.removeAttribute('aria-disabled'); _navPairs.push({ a:a, el:el }); }
+      else { a.setAttribute('aria-disabled', 'true'); a.classList.remove('is-current'); a.removeAttribute('aria-current'); }
+    });
+    _navActive = null;
+    spySectionNav();
+  }
+  function spySectionNav(){
+    if(!_navPairs.length) return;
+    var anchor = hdrH() + 20, active = _navPairs[0];
+    for(var i = 0; i < _navPairs.length; i++){
+      if(_navPairs[i].el.getBoundingClientRect().top <= anchor) active = _navPairs[i];
+    }
+    // 문서 끝에 닿으면 마지막 섹션 — 마지막 패널이 짧아 앵커선을 못 넘는 경우가 있다.
+    if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2){
+      active = _navPairs[_navPairs.length - 1];
+    }
+    if(active === _navActive) return;   // 바뀔 때만 DOM 을 건드린다
+    _navActive = active;
+    _navPairs.forEach(function(p){
+      var on = (p === active);
+      p.a.classList.toggle('is-current', on);
+      if(on) p.a.setAttribute('aria-current', 'true'); else p.a.removeAttribute('aria-current');
+    });
+  }
+  function onNavScroll(){
+    var nav = document.querySelector('.section-nav');
+    if(nav){
+      var y = window.scrollY, h = hdrH();
+      if(y > _lastY + 6 && y > h + 80) nav.classList.add('is-tucked');
+      else if(y < _lastY - 6 || y <= h) nav.classList.remove('is-tucked');
+      _lastY = y;
+    }
+    spySectionNav();
+  }
+  /* rAF 로 묶지 않는다 — 백그라운드 탭에서 rAF 가 멈추면 스파이가 조용히 죽는다(실측).
+     대상이 10개 미만이라 매 스크롤에 rect 를 재도 비용이 없고, 활성이 바뀔 때만 DOM 을 건드린다. */
+  window.addEventListener('scroll', onNavScroll, { passive:true });
+  window.addEventListener('resize', function(){ syncHdrVar(); _navActive = null; spySectionNav(); });
+
+  function boot(){ mount(); syncSectionNav(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
   window.IQTheme={ isDark:function(){ return effective()==='dark'; }, current:effective, set:set, toggle:toggle,
-                   chart:chart, applyChartJs:applyChartJs, echartsTooltip:echartsTooltip };
+                   chart:chart, applyChartJs:applyChartJs, echartsTooltip:echartsTooltip,
+                   syncSectionNav:syncSectionNav };
 })();

@@ -129,7 +129,7 @@
     <div class="section-body">
     <div class="panel">
       <h2>원보험사별 K-ICS 지급여력비율 변동 추이</h2>
-      <p>보험회사들의 K-ICS 지급여력비율 변화를 시계열로 분석하여 안정성 추이를 파악할 수 있습니다.</p>
+      <p class="lede">분기 공시 기준 시계열입니다.</p>
     </div>
     <div class="panel" id="sec-trend">
       <div class="controls">
@@ -205,7 +205,7 @@
       <h2>자본성증권 인정 한도 소진율 <span id="capsecQuarter" style="color:var(--muted);font-size:13px;font-weight:400"></span></h2>
       <ul class="subtitle">
         <li>기본자본 자본증권(보통주 제외): 공시 인정액 / (SCR &times; 15%)</li>
-        <li>보완자본(전체): 한도 적용 전 보완자본 / (SCR &times; 50%)<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="한도가 걸리는 단위 설명" aria-describedby="help-capsec-unit">?</button><span class="iq-help-pop" role="tooltip" id="help-capsec-unit">한도는 증권 종류가 아니라 <b>계정 단위</b>로 걸립니다. 신종자본증권·후순위채 각각에 따로 걸리는 한도는 없습니다.<br>근거: 보험업감독업무시행세칙 [별표22] Ⅲ.2.다·마</span></span></li>
+        <li>보완자본(전체): 한도 적용 전 보완자본 / (SCR &times; 50%)</li>
       </ul>
       <div id="donut-placeholder" class="no-data">상단의 보험사를 선택하면 해당 보험사의 소진율이 표시됩니다.</div>
       <div id="donut-row" class="donut-row" style="display:none">
@@ -263,51 +263,8 @@
       if (el && max) el.textContent = max;
     }
 
-    /* 섹션 네비 현재 위치 표시.
-       IntersectionObserver 로 먼저 짰다가 버렸다 — "교차 중인 첫 섹션" 을 고르면 도넛 패널처럼
-       키가 큰 섹션이 그 아래 섹션까지 내려가도 계속 교차 상태라 활성 표시가 안 넘어간다
-       (1280px 실측: 금리민감도·전망으로 스크롤해도 '자본성증권 소진율' 이 그대로 남았다).
-       그래서 기하로 판정한다 — 앵커선(sticky header 아래) 위로 올라간 섹션 중 **마지막** 것이 현재다.
-       스크롤 핸들러에 rAF 를 쓰지 않는다 — 백그라운드 탭에서 rAF 가 멈추면 스파이가 조용히 죽는다
-       (실측으로 밟았다). 대상이 4개뿐이라 매 스크롤에 rect 를 재도 비용이 없고, 활성이 바뀔 때만
-       DOM 을 건드려 레이아웃 무효화를 막는다. */
-    (function(){
-      const nav = document.querySelector('.section-nav');
-      if (!nav) return;
-      const pairs = [];
-      Array.prototype.forEach.call(nav.querySelectorAll('a[href^="#"]'), function(a){
-        const el = document.getElementById(a.getAttribute('href').slice(1));
-        if (el) pairs.push({ a: a, el: el });
-      });
-      if (!pairs.length) return;
-      let last = null;
-      function apply(){
-        const anchor = 96;   // sticky header 76px + 여유 20px
-        let active = pairs[0];
-        for (let i = 0; i < pairs.length; i++){
-          if (pairs[i].el.getBoundingClientRect().top <= anchor) active = pairs[i];
-        }
-        // 문서 끝에 닿으면 마지막 섹션을 현재로 — 마지막 패널이 짧아 앵커선을 못 넘는 경우가 있다
-        // (보험사 미선택 상태에서는 뒤 세 패널이 전부 placeholder 라 실제로 그렇게 된다).
-        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
-          active = pairs[pairs.length - 1];
-        }
-        if (active === last) return;   // 바뀔 때만 DOM 을 건드린다
-        last = active;
-        pairs.forEach(function(p){
-          const on = (p === active);
-          p.a.classList.toggle('is-current', on);
-          if (on) p.a.setAttribute('aria-current', 'true'); else p.a.removeAttribute('aria-current');
-        });
-      }
-      window.addEventListener('scroll', apply, { passive: true });
-      window.addEventListener('resize', apply);
-      apply();
-    })();
-
-    /* 차트 라이브러리는 CSS `var()` 를 못 읽는다 — 토큰 값을 문자열로 꺼내 준다.
-       theme.js 가 없으면 팔레트 B 액센트로 폴백. */
-    function IQP(){ return (window.IQTheme && IQTheme.chart().primary) || '#0f6e68'; }
+    /* 섹션 네비(현재 위치 표시·헤더 오프셋·스크롤 업 노출)는 theme.js 가 4페이지 공통으로 한다.
+       2026-09-20 에 IFRS17 과 공유하려고 여기 있던 인라인 구현을 그리로 올렸다. */
 
     const jsonPath = 'kics_disclosure.json';
     /* Chart common theme (DESIGN-V2 P2) */
@@ -1534,7 +1491,8 @@
       tbl.innerHTML = html;
       tbl.style.display = 'block';
 
-      document.getElementById('sens-note').innerHTML = '자료: 정기경영공시 「6-8. 위험 민감도」 · ' + quarter + ' 기준 · 금리 평행이동 즉시충격 · 단위: 억원, % · 반기 공시 항목(2024.4Q~)';
+      document.getElementById('sens-note').innerHTML = '자료: 정기경영공시 「6-8. 위험 민감도」 · ' + quarter + ' 기준'
+        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표의 기준" aria-describedby="help-sens-basis">?</button><span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-sens-basis">금리를 평행이동시킨 <b>즉시충격</b> 기준입니다.<br>단위는 억원과 %.<br>2024.4Q 에 도입된 <b>반기 공시</b> 항목이라 홀수 분기에는 없습니다.</span></span>';
     }
 
     // URL 파라미터 읽기
