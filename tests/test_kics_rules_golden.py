@@ -270,7 +270,16 @@ def _update() -> int:
                     "L3841-3845)에는 있는데 여기엔 없어서, 처음 --update 를 돌렸을 때 "
                     "2023.1Q/2023.3Q `8_life_census` 24버킷이 report_latest.json(RED=36)과 "
                     "달리 RED=60 으로 잘못 고정될 뻔했다(둘 다 고쳐진 지금은 RED=36 으로 "
-                    "일치, scripts/_probes/probe_20260911_red_count_diagnose.py 로 확진).")
+                    "일치, scripts/_probes/probe_20260911_red_count_diagnose.py 로 확진). "
+                    "※ 2026-09-20 재갱신: 움직인 것은 **딱 한 칸**이다 — `8_post` GREEN 538 -> "
+                    "537 + YELLOW 1. buckets 538 · findings 16,140 · **RED 36 전부 불변**. "
+                    "원인은 196f6f1(KR0073 교보생명 2026.1Q 경과조치 후 지급여력비율 214.23 -> "
+                    "211.39 정정)이고, 그 커밋이 이 골든과 tests/fixtures/"
+                    "builder_input_fingerprints.json 재생성을 빠뜨려 브랜치가 그때부터 "
+                    "prepush BLOCKED 상태였다. 룰 코드는 안 건드렸다 — 해시 이동은 그 한 칸의 "
+                    "데이터 변경 때문이다(해시만 보고 갱신하지 않고 by_rule 을 내용으로 대조해 "
+                    "확인). 같은 라운드가 빠뜨린 AFTER_IDENT_PIN_TOL 등재도 같이 넣었다"
+                    "(tests/test_identity_registry.py 의 after_ident_pinned_residual).")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

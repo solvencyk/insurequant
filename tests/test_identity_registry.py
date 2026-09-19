@@ -555,6 +555,24 @@ REGISTRY: dict[str, dict] = {
         },
         "mutation": "tests/test_rule_coverage_manifest.py",
     },
+    "after_ident_pinned_residual": {
+        "statement": "적용후 항등식(R1/R2/R5/R6/R7/R8)이 깨진 칸 중, **발행사 자기모순으로 확인돼 "
+                     "기대잔차를 박제해 둔 것**은 실측잔차가 박제값과 같을 때만 면제한다: "
+                     "|실측잔차 − 박제잔차| <= AFTER_IDENT_PIN_TOL. 통째 skip 이 아니라 "
+                     "**잔차 고정**이라, 발행사가 정정공시를 내거나 우리 추출이 바뀌어 잔차가 "
+                     "움직이면 즉시 다시 RED 이 된다.",
+        "impl": [("scripts/validate_kics_disclosure.py", "_transition_identities_after")],
+        "kind": "IDENTITY",
+        "tol": {"abs": 0.01, "rel": 0.0, "unit": "억원"},
+        "tol_from": [("validate_kics_disclosure", "AFTER_IDENT_PIN_TOL", 0.01)],
+        "measured": "등재 1건 — KR0073 교보생명 2026.1Q R5_기준금액 잔차 938.25억 "
+                    "(실측 item14_적용후 70,749 − 기대 item15−22+23 = 69,810.75). "
+                    "tol 0.01 은 억원 인쇄 반올림 폭이지 밴드가 아니다 — 박제값과 "
+                    "소수 둘째 자리까지 같아야 통과한다.",
+        "reason": "면제를 '이 칸은 보지 마라' 가 아니라 '이 칸의 잔차는 정확히 이 값이어야 한다' 로 "
+                  "박아 두는 장치다. blanket skip 은 그 뒤에 생기는 새 오류까지 같이 가려 버린다.",
+        "mutation": "inline",
+    },
     "9": {
         "statement": "경과조치 방향성: item2_적용후 >= item2_적용전 (준비금 경과조치는 "
                      "가용자본을 올리지 내리지 않는다)",
