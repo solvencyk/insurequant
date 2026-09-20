@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20260918T0205Z
-status: open
+status: answered
 route: reparse
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -127,3 +127,29 @@ DART 데이터가 있는 23사로 2026.2Q 대조: 전 항목이 마스터 `값`(
 달아 제안만 올려라. 채택 여부는 validation/owner 판정.
 
 ## 답변 (recipient 작성 — 처리 후)
+
+처리자: parser-ifrs17 (2026-09-20). **정정 티켓
+`inbox/parser/20260918T0700Z__validation__ALL_2023.1Q-2026.2Q__disclosure_pl_backfill_scope_amend.md`
+§답변에 전문을 적었다 — 그쪽이 상위 티켓이라 여기서는 이 발주서 대비 달라진 점만 남긴다.**
+
+- **§6 의 8항목 → 5항목**(#1 보험손익 · #16 기타사업비용 · #22 세전 · #23 법인세 · #24 순이익).
+  #17 투자손익 · #20 영업이익 · #21 영업외손익은 감독회계 재분류로 **다른 개념**이라 빠졌다
+  (정정 §A). 스테이징에는 검산용으로 남아 있으나 `merge_candidate: false` 다.
+- **16사 → 15사**. KR0004 예별손해는 범위 불일치 규명까지 제외(정정 §B). 스테이징에서
+  `backfill_excluded` 로 표시돼 있고, 이번에 판정한 대시 2칸도 `merged: false` 로 못 박았다.
+- **§6 의 "먼저 스테이징한다" 는 그대로 유효하다.** 마스터 `PL_breakdown.json` 에 **병합하지
+  않았다.** 병합은 validation 의 ②③④ 뒤 별도 라운드다.
+- **§6 의 provenance 요구(`source_id: "DISCLOSURE"`)는 병합 시점에 적용된다.** 지금 재발행한
+  `PL_breakdown_provenance.json` 에는 DISCLOSURE 셀이 **0건**이다(아직 마스터에 없는 값이라).
+  스테이징의 `provenance_entries` 가 병합 때 append 된다. **`DART` 라벨을 경영공시 파일에 단
+  곳은 없다.**
+- **§3 의 `TABLE_NOT_FOUND` 14칸 · AIG 레이아웃 변형**은 재파싱으로 해소됐다(스테이징 status:
+  OK 159 · OK_VISION_MANUAL 7 · NO_PDF 6). 남은 6칸은 KR0150 서울보증 **원천 부재 확정**이다.
+- **§7 Phase 2(서술문 CSM 상각·위험조정·예실차)는 착수하지 않았다.** Phase 1 병합이 끝나기 전에는
+  섞지 말라는 지시대로 남겨 둔다.
+
+이번 라운드에서 실제로 끝낸 것은 **병합 순서 ①(`PL_breakdown_provenance.json` 셀 단위 `source_file`
+재발행: 638 → 748셀 · 채움 730 · null 18 전건 사유 기재 · 디스크 부재 0)**과 **PRINTED_DASH 27칸
+판정**이다. 수치·근거·판정표는 정정 티켓 §답변을 보라.
+
+모델 Opus 5 · 약 2시간. push 하지 않았다.
