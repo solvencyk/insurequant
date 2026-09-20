@@ -8247,6 +8247,9 @@
           "how": "raw_filing",
           "items": [
             1,
+            2,
+            3,
+            8,
             15,
             16,
             17,
@@ -8261,7 +8264,7 @@
         }
       ],
       "resolution": "raw_filing",
-      "published_items": 11,
+      "published_items": 14,
       "schema_items": 24
     },
     {
@@ -8278,10 +8281,17 @@
             4,
             9
           ]
+        },
+        {
+          "file": "data/dart/FY2024_Q4/raw/KR0029_에이아이지손해보험_20250409001949",
+          "how": "raw_filing",
+          "items": [
+            14
+          ]
         }
       ],
       "resolution": "owner_gold_overlay",
-      "published_items": 2,
+      "published_items": 3,
       "schema_items": 8,
       "owner_override": true
     },
@@ -8297,6 +8307,9 @@
           "how": "raw_filing",
           "items": [
             1,
+            2,
+            3,
+            8,
             15,
             16,
             17,
@@ -8311,7 +8324,7 @@
         }
       ],
       "resolution": "raw_filing",
-      "published_items": 11,
+      "published_items": 14,
       "schema_items": 24
     },
     {
@@ -8328,10 +8341,17 @@
             4,
             9
           ]
+        },
+        {
+          "file": "data/dart/FY2025_Q4/raw/KR0029_에이아이지손해보험_20260407002104",
+          "how": "raw_filing",
+          "items": [
+            14
+          ]
         }
       ],
       "resolution": "owner_gold_overlay",
-      "published_items": 2,
+      "published_items": 3,
       "schema_items": 8,
       "owner_override": true
     },
@@ -9680,6 +9700,11 @@
           "how": "raw_filing",
           "items": [
             1,
+            2,
+            3,
+            7,
+            8,
+            12,
             15,
             16,
             17,
@@ -9694,7 +9719,7 @@
         }
       ],
       "resolution": "raw_filing",
-      "published_items": 11,
+      "published_items": 16,
       "schema_items": 24
     },
     {
@@ -9702,10 +9727,25 @@
       "quarter": "2024.4Q",
       "item_block": "contract_notes",
       "source_id": "DART",
-      "source_file": null,
-      "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
-      "published_items": 0,
-      "schema_items": 8
+      "source_file": "data/dart/FY2024_Q4/raw/KR0051_신한이지손해보험_20250328002305",
+      "published_items": 7,
+      "schema_items": 8,
+      "source_files": [
+        {
+          "file": "data/dart/FY2024_Q4/raw/KR0051_신한이지손해보험_20250328002305",
+          "how": "raw_filing",
+          "items": [
+            4,
+            5,
+            6,
+            9,
+            10,
+            11,
+            14
+          ]
+        }
+      ],
+      "resolution": "raw_filing"
     },
     {
       "company_code": "KR0051",
@@ -28008,6 +28048,3572 @@
       "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
       "published_items": 0,
       "schema_items": 8
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0029",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0049",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0050",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0051",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0074",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0075",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0076_아이엠라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0076_아이엠라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0076_아이엠라이프생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0076_아이엠라이프생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0076_아이엠라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0076_아이엠라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0076_아이엠라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0076_아이엠라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0076_아이엠라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0076_아이엠라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0076_아이엠라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0076_아이엠라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0076_아이엠라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0076_아이엠라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0076",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0080",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0080_에이아이에이생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0095",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0095_메트라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0095_메트라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0097_하나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0097_하나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0097_하나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0097_하나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0097_하나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0097_하나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0097_하나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0097_하나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0097_하나생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0097_하나생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0097_하나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0097_하나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0097_하나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0097_하나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0097_하나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0097_하나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0097_하나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0097_하나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0097",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0097_하나생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0097_하나생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR0100_처브라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR0100_처브라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR0100_처브라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0100",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR0100_처브라이프생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR0100_처브라이프생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR0150",
+      "quarter": "2023.4Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1010",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1011",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR1011_IBK연금보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR1011_IBK연금보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2023.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2023.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2023.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2024.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2024.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2024.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q1/raw/KR1098_카카오페이손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR1098_카카오페이손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q2/raw/KR1098_카카오페이손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2025.3Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2026.1Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
+    },
+    {
+      "company_code": "KR1098",
+      "quarter": "2026.2Q",
+      "item_block": "income_statement",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR1098_카카오페이손해보험.pdf",
+      "source_files": [
+        {
+          "file": "data/disclosure/FY2026_Q2/raw/KR1098_카카오페이손해보험.pdf",
+          "how": "disclosure_summary_pl",
+          "items": [
+            1,
+            16,
+            22,
+            23,
+            24
+          ]
+        }
+      ],
+      "resolution": "disclosure_summary_pl",
+      "published_items": 5,
+      "schema_items": 24
     }
-  ]
+  ],
+  "merge_note_20260920": "경영공시 §2-1 백필 155셀(DISCLOSURE) append + DART 4Q LOB 재추출 5블록 패치. as_of_date 는 싣지 않았다 — 분기말일 기계 삽입 금지(validation 20260920T1500Z §1c), downloader 가 필링 meta 에서 채울 별도 티켓이다. 재현: scripts/merge_pl_backfill_disclosure_20260920.py --apply"
 }
