@@ -279,7 +279,16 @@ def _update() -> int:
                     "prepush BLOCKED 상태였다. 룰 코드는 안 건드렸다 — 해시 이동은 그 한 칸의 "
                     "데이터 변경 때문이다(해시만 보고 갱신하지 않고 by_rule 을 내용으로 대조해 "
                     "확인). 같은 라운드가 빠뜨린 AFTER_IDENT_PIN_TOL 등재도 같이 넣었다"
-                    "(tests/test_identity_registry.py 의 after_ident_pinned_residual).")
+                    "(tests/test_identity_registry.py 의 after_ident_pinned_residual). "
+                    "※ 2026-09-20(2차) 재갱신: 움직인 룰은 `2_tier1_bridge_post` **하나뿐**이다 — "
+                    "YELLOW 101 -> 46 · SKIP 300 -> 355. buckets 538 · findings 16,140 · "
+                    "**RED 36 · GREEN 11,599 전부 불변**. 원인은 item4/12/13 미러링 감사 결과 "
+                    "item13 의 `값_적용후` **55칸을 삭제**한 것이다(전부 과대, 역산 "
+                    "`item13_후 = item4_전 - item12_전 - item2_후` 로 55/55 확인 · 과소 0). "
+                    "값이 사라지니 그 버킷은 평가 불가(SKIP)가 된다 — **검사를 잃은 것이 아니라 "
+                    "미러링으로 지어낸 값을 평가하던 것을 그만둔 것**이다. 결측 = 미공시가 정답이다. "
+                    "분쟁 4칸(동양생명 2026.1Q·2025.4Q, BNP 2024.4Q·2024.3Q)은 두 측정이 갈려 "
+                    "일부러 남겼다. 룰 코드는 안 건드렸다.")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")
