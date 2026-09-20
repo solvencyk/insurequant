@@ -61,6 +61,13 @@ def base_kics():
 
 CAPSEC_SOURCE = "data/bonds/capital_securities_fy2025.json"   # DART 계보 (실재 경로여야 함:
 SENS_SOURCE = "data/dart/viz/sensitivity_heatmap.json"        # verify가 디스크 존재를 확인한다)
+# 2026-09-20: 계보 검사(`SOURCE_ID_LINEAGE_MISMATCH`)가 capital-securities guard 밖으로 나오면서
+# **모든** 사이드카가 `source_id ↔ source_file 경로` 일치를 요구한다. 종전 fixture 는 rate
+# sensitivity 셀에 `DISCLOSURE_MD` 라벨을 달아 놓고 `data/dart/…` 파일을 가리키고 있었다(라이브
+# 사이드카는 `md_inbox/…` 다) — 룰이 배선되자마자 그 자기모순이 바로 잡혔다. 실경로로 바로잡는다.
+RS_SOURCE = "md_inbox/FY2024_Q4/KR0001_메리츠화재해상보험.md"     # DISCLOSURE_MD 계보
+DISCLOSURE_SOURCE = "data/disclosure/FY2023_Q1/raw/KR0001_메리츠화재해상보험.pdf"  # DISCLOSURE 계보
+PL_SOURCE = "data/dart/_fs_api_cache"                         # DART 계보(디렉터리도 존재 판정됨)
 
 
 def base_sidecars(sens_quarter=LATEST, sens_as_of="2026-03-31"):
@@ -77,7 +84,7 @@ def base_sidecars(sens_quarter=LATEST, sens_as_of="2026-03-31"):
     return {
         "sensitivity_heatmap": {"master": "sensitivity_heatmap", "cells": [
             {"company_code": "KR9001", "quarter": sens_quarter, "item_block": "sensitivity",
-             "as_of_date": sens_as_of, "source_file": SENS_SOURCE}]},
+             "source_id": "DART", "as_of_date": sens_as_of, "source_file": SENS_SOURCE}]},
         "forward_capital": capsec("forward_capital"),
         "tier1_utilization": capsec("tier1_utilization"),
         "tier2_utilization": capsec("tier2_utilization"),
@@ -86,7 +93,29 @@ def base_sidecars(sens_quarter=LATEST, sens_as_of="2026-03-31"):
         "kics_rate_sensitivity": {"master": "kics_rate_sensitivity", "cells": [
             {"company_code": "KR9001", "quarter": LATEST, "item_block": "rate_sensitivity",
              "source_id": "DISCLOSURE_MD", "as_of_date": "2026-03-31",
-             "source_file": SENS_SOURCE}]},
+             "source_file": RS_SOURCE}]},
+        # 2026-09-20 CHECK 2 2a(v) 신설분(PL_breakdown). 블록 둘: DART 필링 1개 +
+        # 생보 LOB zero 빌더파생 1개(= `source_file: null` 이 정답인 유일한 형태).
+        "PL_breakdown": {"master": "PL_breakdown", "cells": [
+            {"company_code": "KR9001", "quarter": LATEST, "item_block": "income_statement",
+             "source_id": "DART", "source_file": PL_SOURCE,
+             "source_files": [{"file": PL_SOURCE, "how": "fs_api_tier1", "items": [1, 24]}]},
+            {"company_code": "KR9002", "quarter": LATEST, "item_block": "contract_notes",
+             "source_id": "DERIVED", "source_file": None,
+             "unresolved_reason": "LIFE_LOB_ZERO_BUILDER_RULE_NOT_FROM_A_FILING",
+             "builder_derived_items": [13, 14]}]},
+    }
+
+
+def base_pl_cells():
+    """PL_breakdown 의 published 셀 census(게이트가 마스터에서 재계산하는 것의 합성판).
+
+    baseline 은 `base_sidecars()["PL_breakdown"]` 과 정확히 1:1 이어야 clean 이다."""
+    return {
+        "pl_published_items": {("KR9001", LATEST, "income_statement"): [1, 24],
+                               ("KR9002", LATEST, "contract_notes"): [13, 14]},
+        # 게이트가 "이 블록 published 값은 전부 빌더 산물" 이라고 **직접** 판정한 집합.
+        "pl_builder_derived_cells": {("KR9002", LATEST, "contract_notes")},
     }
 
 
@@ -124,6 +153,9 @@ def base_inject(**over):
         # 읽어 합성 사이드카(KR9001 1셀)와 대조하게 되고, 87건 MISSING_PROVENANCE 오탐이 난다.
         rate_sensitivity_rows=[{"원보험사코드": "KR9001", "공시분기": LATEST,
                                 "measure구분": "비율", "경과조치여부": "적용전"}],
+        # 2026-09-20 CHECK 2 2a(v). 같은 사유 — 주입하지 않으면 selftest 가 디스크 실마스터
+        # 731셀을 읽어 합성 사이드카(2셀)와 대조하게 된다.
+        **base_pl_cells(),
         # 2026-08-03: 계보별(per-lineage) 구조로 변경 — 2c가 "쓰이는 계보마다" 증거를 요구한다
         # (owner 20260803T0056Z §3). 종전 flat dict을 그대로 두면 키가 계보로 오해된다.
         # 계보 키는 사이드카가 선언한 소스(CAPSEC_SOURCE = DART)와 일치시킨다.
@@ -720,6 +752,170 @@ def f_rs_stale_as_of():
     return base_inject(provenance_sidecars=sc)
 
 
+# --- Q1~Q8: PL_breakdown provenance(CHECK 2 2a(v)) + 계보 검사의 guard 탈출 -----------------
+# 2026-09-20. 이 묶음이 죽으면 곧 "PL 748셀의 원천이 다시 무검증이 된다 / 계보 검사가 다시
+# capital-securities 세 마스터에만 걸린다 / 경영공시 값이 DART 개념 칸에 조용히 섞인다" 는 뜻이다.
+def _pl_sidecar(cells):
+    sc = base_sidecars()
+    sc["PL_breakdown"] = {"master": "PL_breakdown", "cells": cells}
+    return sc
+
+
+def _pl_base_cells():
+    import copy
+    return copy.deepcopy(base_sidecars()["PL_breakdown"]["cells"])
+
+
+def f_pl_provenance_missing():
+    """마스터가 발행한 (회사,분기,블록)이 사이드카에 없다 → MISSING_PROVENANCE.
+
+    `published_cells` 를 **마스터에서** 세기 때문에 잡힌다. 사이드카에서 검사 대상을 고르면
+    사이드카가 빠뜨린 셀은 영원히 무검사가 된다 — 그 형태를 이 케이스가 막는다."""
+    items = dict(base_pl_cells()["pl_published_items"])
+    items[("KR9003", LATEST, "income_statement")] = [1, 24]   # 사이드카에 없는 셀
+    return base_inject(pl_published_items=items,
+                       pl_published_cells=sorted(items),
+                       pl_builder_derived_cells=base_pl_cells()["pl_builder_derived_cells"])
+
+
+def f_pl_lineage_mismatch():
+    """경영공시 PDF 를 가리키면서 `source_id: DART` 로 선언 = 계보 라벨 거짓.
+    2026-09-20 이전에는 이 검사가 `_CAPITAL_SECURITIES_MASTERS` guard 안이라 **PL 은 무검증**."""
+    cells = _pl_base_cells()
+    cells[0] = dict(cells[0], source_file=DISCLOSURE_SOURCE, source_files=[
+        {"file": DISCLOSURE_SOURCE, "how": "disclosure_pdf", "items": [1, 24]}])
+    return base_inject(provenance_sidecars=_pl_sidecar(cells))
+
+
+def f_pl_derived_label_abuse():
+    """**라벨 도용**: 진짜 필링 셀이 `source_id: DERIVED` + `source_file: null` 로 갈아입어
+    MISSING_PROVENANCE 를 회피하려 한다. 면제는 게이트가 마스터에서 재계산한 집합으로만 준다."""
+    cells = _pl_base_cells()
+    cells[0] = dict(cells[0], source_id="DERIVED", source_file=None, source_files=[])
+    return base_inject(provenance_sidecars=_pl_sidecar(cells))
+
+
+def f_pl_derived_claims_a_filing():
+    """반대 방향: 빌더가 만든 0 에 필링 경로를 달았다 = 거짓 계보(그 파일엔 그 값이 없다)."""
+    cells = _pl_base_cells()
+    cells[1] = dict(cells[1], source_id="DART", source_file=PL_SOURCE)
+    return base_inject(provenance_sidecars=_pl_sidecar(cells))
+
+
+def _disclosure_cell(items):
+    return [{"company_code": "KR9001", "quarter": LATEST, "item_block": "income_statement",
+             "source_id": "DISCLOSURE", "source_file": DISCLOSURE_SOURCE,
+             "source_files": [{"file": DISCLOSURE_SOURCE, "how": "disclosure_pdf",
+                               "items": items}]},
+            _pl_base_cells()[1]]
+
+
+def f_pl_concept_mixed():
+    """경영공시(감독회계) 계보 셀에 #17 투자손익이 실렸다 → CONCEPT_MIXED_DISCLOSURE_INTO_DART.
+    경영공시 투자손익 = 투자수익−투자비용 이고 마스터 #17 = 투자이익+보험금융손익 이라 **다른
+    개념**이다(4Q 중첩 43칸 실측 50.0% 불일치). CONCEPT_REGISTRY 등재부의 **리더**가 이것이다 —
+    등재만 하고 lookup 분기가 없으면 다음 라운드에 그대로 샌다."""
+    items = dict(base_pl_cells()["pl_published_items"])
+    items[("KR9001", LATEST, "income_statement")] = [1, 17, 24]
+    return base_inject(provenance_sidecars=_pl_sidecar(_disclosure_cell([1, 17, 24])),
+                       pl_published_items=items, pl_published_cells=sorted(items),
+                       pl_builder_derived_cells=base_pl_cells()["pl_builder_derived_cells"])
+
+
+def f_pl_concept_allowed_is_clean():
+    """오탐 금지: §2-1 5항목(#1·#16·#22·#23·#24)만 실은 경영공시 셀은 **정상 병합**이다.
+    이걸 막으면 백필 자체가 불가능해진다 — allowlist 의 경계를 고정한다."""
+    items = dict(base_pl_cells()["pl_published_items"])
+    items[("KR9001", LATEST, "income_statement")] = [1, 16, 22, 23, 24]
+    return base_inject(provenance_sidecars=_pl_sidecar(_disclosure_cell([1, 16, 22, 23, 24])),
+                       pl_published_items=items, pl_published_cells=sorted(items),
+                       pl_builder_derived_cells=base_pl_cells()["pl_builder_derived_cells"])
+
+
+def f_pl_missing_sidecar():
+    """PL 사이드카가 통째로 사라지면 RED(UH-3 end-state 와 같은 규칙). 2026-09-20 이전에는
+    `_fallback_note` 가 4개 마스터 분기 안에서만 도달 가능해서 **부재 RED 조차 안 났다**."""
+    sc = base_sidecars()
+    del sc["PL_breakdown"]
+    return base_inject(provenance_sidecars=sc)
+
+
+def f_lineage_check_escapes_capsec_guard():
+    """**guard 탈출의 회귀 그물.** 비-capital-securities 마스터(kics_rate_sensitivity)의 계보
+    라벨이 거짓인데 2026-09-20 이전에는 조용했다 — 검사가 `if master in
+    _CAPITAL_SECURITIES_MASTERS:` 안에 있었기 때문이다. 138셀이 `md_inbox/…` ↔ `DISCLOSURE_MD`
+    인데 판정이 전건 None 이었다(코드 주석은 '계보 일치를 본다'고 적어 놓고)."""
+    sc = base_sidecars()
+    sc["kics_rate_sensitivity"] = {
+        "master": "kics_rate_sensitivity",
+        "cells": [dict(sc["kics_rate_sensitivity"]["cells"][0], source_id="DART")]}
+    return base_inject(provenance_sidecars=sc)
+
+
+def _pl_active_index():
+    """`coverage_holes` 가 `active` 로 인정할 만큼(>=7분기) 채워진 PL 인덱스 1사.
+    `생명장기손익` 만 비운다 — 경영공시 §2-1 이 LOB 분해를 안 싣는 그 모양이다.
+    분기 목록은 `validate_master_tables.QS`(마스터에서 파생된 실지평)를 그대로 쓴다."""
+    from validate_master_tables import QS as MQS
+    return {("KR9001", q): {"보험손익": 1000.0, "당기순이익": 800.0} for q in MQS}
+
+
+def f_census_grid_ignores_lineage():
+    """**두 게이트가 같은 census 를 다르게 계산하는 것**을 막는 케이스(2026-09-20).
+
+    `validate_data_contract.check_census` 1c 와 `validate_master_tables._check_coverage` 는
+    같은 `coverage_holes` 를 부른다. 소스인식 기대그리드를 한쪽에만 넣으면 병합 후 이쪽만
+    RED 118 이 나고 저쪽은 6 이 된다 — 같은 등식을 두 파일에 다르게 구현해 둔 것이 CSM상각
+    대조 사고의 절반이었다. 여기서는 계보를 **DART** 로 줘서 `MASTER_HOLE` 이 정상 발화함을
+    고정한다(아래 쌍둥이 케이스가 DISCLOSURE 쪽 침묵을 고정)."""
+    from validate_master_tables import QS as MQS
+    return base_inject(pl=_pl_active_index(),
+                       pl_source_ids={("KR9001", q): "DART" for q in MQS})
+
+
+def f_census_grid_disclosure_is_clean():
+    """오탐 금지: 같은 결측이라도 그 분기 값의 **출처가 경영공시 §2-1** 이면 `생명장기손익` 은
+    애초에 실리지 않는 항목이라 hole 이 아니다. 이게 안 되면 백필 자체가 red-out 된다."""
+    from validate_master_tables import QS as MQS
+    return base_inject(pl=_pl_active_index(),
+                       pl_source_ids={("KR9001", q): "DISCLOSURE" for q in MQS})
+
+
+# --- R1~R2: 17BS ↔ K-ICS 교차대조(2026-09-20 신설)의 변이 케이스 ----------------------------
+# TODO_validation.md 에 "selftest 에 이 두 축의 주입 케이스가 아직 없다" 로 박제돼 있던 잔여분.
+# 변이시험 없이 배선된 룰은 다음 라운드에 조용히 죽는다.
+_BSK_QS = ["2024.4Q", "2025.1Q", "2025.2Q"] + QS      # 6분기(기준선은 최소 6분기를 요구한다)
+
+
+def _bsk_inject(bs_eok_by_q, kics_eok_by_q):
+    """17BS(백만원) ↔ K-ICS item7(억원) 이익잉여금 쌍만 깐다. AOCI(item9) 는 안 깔아서
+    결함이 한 축에만 있게 한다. LATEST 는 유지 — 뒤로만 늘린다(앞으로 늘리면 기존 fixture 의
+    sensitivity/forward/tier 가 전부 STALE 로 터진다)."""
+    rows = []
+    for q in _BSK_QS:
+        for c in FILERS:
+            rows += [rec(c, q, 1, "1000"), rec(c, q, 14, "500")]
+        if q in kics_eok_by_q:
+            rows.append(rec("KR9001", q, 7, str(kics_eok_by_q[q])))
+    bs = [{"원보험사코드": "KR9001", "원수사명": "KR9001", "항목번호": 7,
+           "항목명": "이익잉여금", "공시분기": q, "값": v}
+          for q, v in bs_eok_by_q.items()]
+    return base_inject(kics_records=rows, ifrs17_bs=bs)
+
+
+def f_bs_kics_hard_zero():
+    """한쪽이 **정확히 0** 인데 반대쪽은 9,577억(NH농협손보 2023.2Q 의 실제 모양).
+    폐쇄식은 0 들로도 닫히므로 단일 마스터 룰로는 구조적으로 못 본다 — 교차대조만이 탐지기다."""
+    return _bsk_inject({LATEST: 957700.0}, {LATEST: 0})
+
+
+def f_bs_kics_baseline_break():
+    """회사 자신의 평소 잔차(≈0%)에서 한 분기만 벌어진다 → BASELINE_BREAK(YELLOW).
+    절대 허용오차를 쓰면 17BS 별도 ↔ K-ICS 연결 혼재 때문에 164건 red-out 이 된다."""
+    return _bsk_inject({q: 300000.0 for q in _BSK_QS},
+                       {q: (3600 if q == LATEST else 3000) for q in _BSK_QS})
+
+
 CASES = [
     # (이름, fixture, 기대 rule 집합, 그 외 RED 허용 안 함)
     ("A  clean baseline (오탐 0)",              base_inject,               set()),
@@ -830,6 +1026,30 @@ CASES = [
     ("P1 RS MISSING_PROVENANCE (사이드카 미커버 셀)", f_rs_provenance_missing,
      {"MISSING_PROVENANCE"}),
     ("P2 RS STALE_AS_OF (as_of 분기 ≠ 셀 분기)",     f_rs_stale_as_of, {"STALE_AS_OF"}),
+    # Q: PL_breakdown provenance(2a(v)) + 계보 검사의 capsec guard 탈출 (2026-09-20).
+    ("Q1 PL MISSING_PROVENANCE (마스터 셀이 사이드카에 없음)", f_pl_provenance_missing,
+     {"MISSING_PROVENANCE"}),
+    ("Q2 PL SOURCE_ID_LINEAGE_MISMATCH (경영공시 파일에 DART 라벨)", f_pl_lineage_mismatch,
+     {"SOURCE_ID_LINEAGE_MISMATCH"}),
+    ("Q3 DERIVED 라벨 도용 (필링 셀이 면제로 위장)", f_pl_derived_label_abuse,
+     {"SOURCE_ID_LINEAGE_MISMATCH"}),
+    ("Q4 빌더 파생값에 필링 경로 (반대 방향 거짓 계보)", f_pl_derived_claims_a_filing,
+     {"SOURCE_ID_LINEAGE_MISMATCH"}),
+    ("Q5 CONCEPT_MIXED_DISCLOSURE_INTO_DART (#17 혼입)", f_pl_concept_mixed,
+     {"CONCEPT_MIXED_DISCLOSURE_INTO_DART"}),
+    ("Q5b 경영공시 §2-1 5항목만은 정상 병합 — finding 0", f_pl_concept_allowed_is_clean, set()),
+    ("Q6 PL MISSING_PROVENANCE_SIDECAR (부재 = RED)", f_pl_missing_sidecar,
+     {"MISSING_PROVENANCE_SIDECAR"}),
+    ("Q7 계보 검사가 capsec guard 밖에서도 문다", f_lineage_check_escapes_capsec_guard,
+     {"SOURCE_ID_LINEAGE_MISMATCH"}),
+    ("Q8 census 1c 도 소스인식 기대그리드를 쓴다 (DART → MASTER_HOLE)",
+     f_census_grid_ignores_lineage, {"MASTER_HOLE"}),
+    ("Q8b 같은 결측도 경영공시 계보면 hole 아님 — finding 0",
+     f_census_grid_disclosure_is_clean, set()),
+    # R: 17BS ↔ K-ICS 교차대조 — 2026-09-20 배선분의 미배선 잔여(TODO_validation.md 박제) 해소.
+    ("R1 BS_KICS_HARD_ZERO (한쪽만 정확히 0)", f_bs_kics_hard_zero, {"BS_KICS_HARD_ZERO"}),
+    ("R2 BS_KICS_BASELINE_BREAK (평소 붙던 회사가 이 분기만, YELLOW)",
+     f_bs_kics_baseline_break, set(), {"BS_KICS_BASELINE_BREAK"}),
 ]
 
 

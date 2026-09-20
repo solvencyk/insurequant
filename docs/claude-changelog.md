@@ -1,11 +1,24 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-09-14 · Stage: cross-stage
+> Last updated: 2026-09-20 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
 
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
+
+---
+
+## 2026-09-20 — 경영공시 PL 백필 라운드: 병합 선행조건 ②③④ 배선 (parser ① → validation ②③④)
+
+cross-stage 라운드(parser-ifrs17 → validation → publishing)의 2번째 구간. ① 사이드카 실물 발행은 parser 가 끝냈고(`fa08bfe`, `PL_breakdown_provenance.json` 638→748셀, 마스터 실재 셀과 1:1), validation 이 ②③④ 를 배선했다. **⑤ 병합·⑥ push 는 미착수.**
+
+- **②** `_SOURCE_LINEAGE` 에 `data/disclosure/`·`md_inbox/`·`data/_gold/`·`scripts/build_pl_breakdown.py` 등재 + `SOURCE_ID_LINEAGE_MISMATCH` 를 capital-securities guard **밖으로**(전 마스터 공통). 그 결과 `kics_rate_sensitivity` 138셀이 **처음으로 계보 검증**을 받는다(그동안 코드 주석만 "검사한다" 였다). `PL_breakdown` 은 `verify_provenance_sidecar` 호출처가 **0** 이었는데 published 731셀 검증으로 들어왔다.
+- **③** `coverage_holes` 기대 그리드를 **셀 계보별로**. 경영공시(§2-1)는 LOB 분해를 안 싣기 때문에, 계보가 `DISCLOSURE` 인 (회사,분기)는 5항목만 기대한다. 계보 미상은 엄격 쪽(fail-closed). 오늘은 DISCLOSURE 셀이 0 이라 산출이 **바이트 동일**(골든 불변).
+- **④** `CONCEPT_REGISTRY["pl_disclosure_vs_dart"]` 등재 + **리더**. 등재만 하면 다음 라운드에 또 새므로, DISCLOSURE 계보 셀의 항목을 allowlist 로 강제한다(위반 = `CONCEPT_MIXED_DISCLOSURE_INTO_DART` RED).
+- 전임 세션의 "병합하면 census RED 0→80" 예측은 배선 후 **0→3** 으로 줄었다(real hole 118→6, 그중 3건은 이미 있던 서울보증 원천부재). 남는 3건은 경영공시 탓이 아니라 **DART 추출 갭**이라 parser 로 발주했다.
+- 검증: `validate_data_contract` RED=0 YELLOW=123(불변) · `--selftest` 57→**69** · `validate_master_tables --no-build` SUMMARY 불변 · `prepush_check.py` FULL 범위 gate-clear. 마스터 JSON·xlsx 미수정, push 없음.
+- 상세: `docs/changelog_validation.md` 2026-09-20 (12차) · 회신 티켓 `inbox/parser/20260920T1500Z__validation__ALL_2023.1Q-2026.2Q__disclosure_pl_merge_authorized.md`.
 
 ---
 

@@ -92,6 +92,11 @@ from validate_master_tables import (  # noqa: E402
     CSM_AMORT_TOL_ABS_EOK,
     CSM_AMORT_TOL_REL,
     LOB_LEG_NA,
+    # 경영공시 출처 PL 셀의 기대/허용 항목 정본. **여기서 재타이핑하지 않는다** — 같은 목록을
+    # 두 파일에 따로 적어 두면 한쪽만 고쳐졌을 때 게이트가 서로 다른 계약을 강제하게 된다
+    # (상관행렬을 import 해서 쓰는 것과 같은 이유).
+    PL_DISCLOSURE_ITEM_NOS,
+    PL_DISCLOSURE_SOURCE_ID,
     coverage_holes,
     csm_amort_coverage_baseline,
     csm_amort_ledger,
@@ -100,6 +105,8 @@ from validate_master_tables import (  # noqa: E402
     csm_amort_residual,
     csm_amort_tol,
     load_long,
+    pl_cell_source_ids,
+    pl_key_items_for,
 )
 from solvency.validation.kics_json_rules import (  # noqa: E402
     KEY_CODE,
@@ -668,11 +675,17 @@ def check_census(res: GateResult, env: "Env") -> None:
     # 문턱을 처음 넘기면서 원래부터 구조적인 item2 결측이 전 분기 "부분" hole 로 드러난 것이
     # 계기 — 필터는 coverage_holes() 안에 있다(단일 구현, validate_master_tables.py 의
     # _check_coverage 도 동일 registry 를 쓰도록 같이 맞췄다).
-    for master, idx, key_items, na_reg in (
-        ("CSM_waterfall", env.wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"], None),
-        ("PL_breakdown", env.pl, ["보험손익", "생명장기손익", "당기순이익"], LOB_LEG_NA),
+    # 2026-09-20: `key_items_for` 도 같이 넘긴다. **이 게이트와 validate_master_tables 가 같은
+    # census 를 서로 다르게 계산하면 안 된다** — 소스인식 기대그리드를 저쪽에만 넣으면 병합 후
+    # 여기서만 118 RED 이 나고 저쪽은 6 이 된다(같은 등식을 두 파일에 다르게 구현해 둔 것이
+    # CSM상각 대조 사고의 절반이었다). resolver 는 Env 가 한 번만 만든다.
+    for master, idx, key_items, na_reg, kif in (
+        ("CSM_waterfall", env.wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"], None, None),
+        ("PL_breakdown", env.pl, ["보험손익", "생명장기손익", "당기순이익"], LOB_LEG_NA,
+         pl_key_items_for(env.pl_source_ids, ["보험손익", "생명장기손익", "당기순이익"])),
     ):
-        real, _known, _struct = coverage_holes(idx, key_items, na_registry=na_reg)
+        real, _known, _struct = coverage_holes(idx, key_items, na_registry=na_reg,
+                                               key_items_for=kif)
         for co, q, kind in real:
             if not _emit(q):
                 continue
@@ -913,7 +926,37 @@ _SOURCE_LINEAGE = (
     # (owner 결정 — 한도는 증권 종류별이 아니라 계정 전체에 걸린다. [별표22] Ⅲ.2.다.(1)②·Ⅲ.2.마).
     # 그 마스터 자체가 FSS 정기경영공시 PDF 파생물이라 계보는 DISCLOSURE 다.
     ("kics_disclosure.json", "DISCLOSURE"),
+    # --- 2026-09-20 등재 4건 (inbox/_resolved/20260918T0205Z…disclosure_sourced_pl_contract 결정 1) ---
+    # 아래 4개가 없으면 `SOURCE_ID_LINEAGE_MISMATCH` 를 capsec guard 밖으로 빼는 순간
+    # **정상 셀이 대량 red-out** 된다(실측: kics_rate_sensitivity 138셀 전건 UNREGISTERED →
+    # md_inbox/ 등재로 138/138 MATCH. PL_breakdown 은 64 → 18, 나머지 18 은 값 없는 블록 17 +
+    # 빌더파생 1 이라 애초에 published_cells 가 아니다).
+    ("data/disclosure/", "DISCLOSURE"),           # FSS 정기경영공시 PDF 원본
+    ("md_inbox/", "DISCLOSURE_MD"),               # 그 PDF 의 docling MD 변환본
+    # owner 가 확정한 **리터럴**이 사는 두 곳. 필링 경로가 아니므로 DART 라벨을 달면 거짓 계보다
+    # (빌더가 raw 를 읽어 만든 값이 아니라 파일 안에 적힌 상수다). 경로가 곧 라벨을 함의하므로
+    # 계보로 등재할 수 있다 — 이 점이 아래 DERIVED 와 갈리는 지점이다.
+    ("data/_gold/", "OWNER_GOLD"),                # user_{pl,csm}_cells.json 등 owner 확정 셀
+    ("scripts/build_pl_breakdown.py", "OWNER_GOLD"),   # _GOLD_CELL_OVERRIDE 리터럴
 )
+
+# `DERIVED` 는 **일부러 `_SOURCE_LINEAGE` 에 넣지 않았다.**
+# 계보 판정기는 `source_file` **경로**에서 라벨을 유도하는데 빌더 파생값에는 경로가 없다
+# (`source_file: null`). 널 경로에 라벨을 주려면 빈 접두를 등재해야 하고, 그러면
+# `source_id_for_lineage(None)` 이 라벨을 돌려주어 **모든 마스터의 모든 null source_file 이
+# 계보 검사를 통과**한다 = 보편적 탈출구. 대신 `verify_provenance_sidecar(builder_derived_keys=)`
+# 로 **게이트가 마스터에서 직접 재계산한 셀에만** 좁은 면제를 준다(사이드카의 자기 라벨은 근거가
+# 아니다 — 라벨을 믿은 검증이 false-green 이 된 게 PM-2026-08-03 이다).
+_BUILDER_DERIVED_SOURCE_ID = "DERIVED"
+
+# PL_breakdown 사이드카의 블록 분할. `scripts/emit_pl_provenance.py::PL_CONTRACT_NOTES` 와
+# 같아야 한다 — 어긋나면 게이트가 만드는 published 키가 사이드카에 없어 `MISSING_PROVENANCE`
+# RED 이 난다(즉 드리프트는 게이트를 **더 시끄럽게** 만든다. fail-closed 라 숨지 않는다).
+_PL_CONTRACT_NOTE_ITEMS = frozenset({4, 5, 6, 9, 10, 11, 13, 14})
+# `build_pl_breakdown.assemble()` L125-127 의 무조건 규칙: `if is_life: v[13] = 0.0; v[14] = 0.0`.
+# 생보사의 자동차손익(#13)·일반손익(#14) 0 은 **어느 필링에서도 읽은 값이 아니다**.
+# 빌더 규칙이 바뀌면 여기도 바뀌어야 한다 — 그래야 면제가 매번 재정당화된다.
+_PL_LIFE_LOB_ZERO_ITEMS = frozenset({13, 14})
 
 
 def source_id_for_lineage(source_file: str | None) -> str | None:
@@ -1135,7 +1178,8 @@ def _sidecar_quarter(as_of_date: str | None) -> str | None:
 
 def verify_provenance_sidecar(res: GateResult, master: str, sidecar: dict,
                               published_cells: list, target_q: str | None,
-                              max_lag_quarters: int = 0) -> None:
+                              max_lag_quarters: int = 0,
+                              builder_derived_keys: set | None = None) -> None:
     """Strict Phase-2 verification of a master against its provenance sidecar (contract per
     --print-provenance-contract). `published_cells` = the (company, quarter, item_block) tuples
     actually published by this master. Emits:
@@ -1144,8 +1188,16 @@ def verify_provenance_sidecar(res: GateResult, master: str, sidecar: dict,
       - STALE_AS_OF: as_of_date's quarter != the cell's quarter (or older than target basis,
         beyond `max_lag_quarters` of forward-hold grace — see call-site comments; default 0
         keeps the original strict "must equal or exceed the basis" behavior).
+      - SOURCE_ID_LINEAGE_MISMATCH: declared source_id != the lineage implied by source_file's
+        path (or that path is not registered in _SOURCE_LINEAGE at all = unverifiable = RED).
       - EFFECTIVE_LIST_NOT_FILTERED: capital-securities cell not source_id==FSC_BONDS with
-        effective_filtered==true (authoritative-source requirement)."""
+        effective_filtered==true (authoritative-source requirement).
+
+    `builder_derived_keys` -- (company, quarter, item_block) 중 **게이트가 마스터에서 직접
+    재계산해** "이 블록의 published 값이 전부 빌더 산물"이라고 판정한 셀. 그런 셀만 `source_file:
+    null` + `source_id == "DERIVED"` 를 허용한다(필링 경로를 달면 오히려 거짓 계보). 사이드카가
+    스스로 DERIVED 라고 적은 것은 근거가 아니다 — 게이트 계산에 없는데 DERIVED 를 주장하면 RED,
+    반대로 게이트가 파생이라 판정했는데 사이드카가 파일을 달아도 RED(양방향)."""
     prov = sidecar.get("cells") or []
     # index provenance by (company, quarter, item_block); company keyed by code OR name.
     index = {}
@@ -1178,29 +1230,53 @@ def verify_provenance_sidecar(res: GateResult, master: str, sidecar: dict,
                         message=f"{company or '-'}: provenance as_of_date={cell.get('as_of_date')} "
                                 f"(={aq}) is {lag}Q behind required basis {target_q} "
                                 f"(hold grace {max_lag_quarters}Q) — stale baseline")
-        # source_file must exist on disk
         sf = cell.get("source_file")
+        declared = cell.get("source_id")
+        # 빌더 파생 셀: 필링 경로가 **없는 것이 정답**이다. 면제 여부는 게이트가 마스터에서
+        # 재계산한 집합으로만 정한다(사이드카의 자기 라벨 아님). 양방향으로 건다.
+        is_derived = bool(builder_derived_keys) and (company, quarter, item_block) in builder_derived_keys
+        if is_derived:
+            if sf is not None or declared != _BUILDER_DERIVED_SOURCE_ID:
+                res.add(check="as_of", severity="RED", master=master, company=company,
+                        quarter=quarter, rule="SOURCE_ID_LINEAGE_MISMATCH",
+                        message=f"{company or '-'} {quarter or '-'} {item_block or '-'}: 이 블록의 "
+                                f"published 값은 전부 빌더가 만든 값인데 사이드카는 "
+                                f"source_id={declared} / source_file={sf} 를 주장한다 — 필링 계보를 "
+                                f"다는 것은 거짓이다 (source_id={_BUILDER_DERIVED_SOURCE_ID} + "
+                                f"source_file=null 이어야 한다)")
+            continue
+        if declared == _BUILDER_DERIVED_SOURCE_ID:
+            res.add(check="as_of", severity="RED", master=master, company=company, quarter=quarter,
+                    rule="SOURCE_ID_LINEAGE_MISMATCH",
+                    message=f"{company or '-'} {quarter or '-'} {item_block or '-'}: "
+                            f"source_id={_BUILDER_DERIVED_SOURCE_ID} 를 주장하지만 게이트가 마스터에서 "
+                            f"재계산한 빌더-파생 셀 집합에 없다 — 라벨만으로는 면제되지 않는다")
+            continue
+        # source_file must exist on disk
         if not sf or not (ROOT / sf).exists():
             res.add(check="as_of", severity="RED", master=master, company=company, quarter=quarter,
                     rule="MISSING_PROVENANCE",
                     message=f"{company or '-'} {quarter or '-'}: source_file "
                             f"{sf or '(none)'} not found on disk (provenance unverifiable = RED)")
-        # capital-securities: (i) declared source_id must match source_file's real lineage,
-        # (ii) effective_filtered must be true (the actual donut-bug invariant).
+        # (i) declared source_id must match source_file's real lineage — **전 마스터 공통**.
+        # 2026-09-20 까지 이 검사는 `if master in _CAPITAL_SECURITIES_MASTERS:` 안에 있었다.
+        # 그래서 kics_rate_sensitivity 138셀은 코드 주석이 "계보 일치를 본다"고 적어 놓고도
+        # 실제로는 한 번도 안 봤다(사이드카가 `md_inbox/…` ↔ `DISCLOSURE_MD` 인데 판정 None).
+        # 계보 검사는 자본증권 고유 개념이 아니라 "선언 라벨이 경로와 맞나"라서 마스터를 안 가린다.
+        expected = source_id_for_lineage(sf)
+        if expected is None:
+            res.add(check="as_of", severity="RED", master=master, company=company,
+                    quarter=quarter, rule="SOURCE_ID_LINEAGE_MISMATCH",
+                    message=f"{company or '-'} {quarter or '-'}: source_file={sf or '(none)'} "
+                            f"의 계보가 _SOURCE_LINEAGE에 미등록 → source_id={declared} 주장을 "
+                            f"검증할 수 없음 (미검증 = RED, owner 원칙 0)")
+        elif declared != expected:
+            res.add(check="as_of", severity="RED", master=master, company=company,
+                    quarter=quarter, rule="SOURCE_ID_LINEAGE_MISMATCH",
+                    message=f"{company or '-'} {quarter or '-'}: source_id={declared} 로 선언했으나 "
+                            f"source_file={sf} 의 실제 계보는 {expected} — provenance 라벨 거짓")
+        # (ii) capital-securities only: effective_filtered must be true (the donut-bug invariant).
         if master in _CAPITAL_SECURITIES_MASTERS:
-            declared = cell.get("source_id")
-            expected = source_id_for_lineage(sf)
-            if expected is None:
-                res.add(check="as_of", severity="RED", master=master, company=company,
-                        quarter=quarter, rule="SOURCE_ID_LINEAGE_MISMATCH",
-                        message=f"{company or '-'} {quarter or '-'}: source_file={sf or '(none)'} "
-                                f"의 계보가 _SOURCE_LINEAGE에 미등록 → source_id={declared} 주장을 "
-                                f"검증할 수 없음 (미검증 = RED, owner 원칙 0)")
-            elif declared != expected:
-                res.add(check="as_of", severity="RED", master=master, company=company,
-                        quarter=quarter, rule="SOURCE_ID_LINEAGE_MISMATCH",
-                        message=f"{company or '-'} {quarter or '-'}: source_id={declared} 로 선언했으나 "
-                                f"source_file={sf} 의 실제 계보는 {expected} — provenance 라벨 거짓")
             if cell.get("effective_filtered") is not True:
                 res.add(check="as_of", severity="RED", master=master, company=company,
                         quarter=quarter, rule="EFFECTIVE_LIST_NOT_FILTERED",
@@ -1407,6 +1483,37 @@ def check_as_of(res: GateResult, env: "Env") -> None:
     else:
         _fallback_note("kics_rate_sensitivity")
 
+    # --- 2a(v). PL_breakdown provenance (2026-09-20 배선) ---
+    # 배경: 이 마스터는 `Env.MASTER_FILES` 에 등재돼 mtime 감시만 받고 **계보·원천 축은 아무도
+    # 보지 않았다**. 사이드카는 2026-06-20 부터 있었지만 `verify_provenance_sidecar()` 호출처가
+    # 4곳(sensitivity_heatmap·forward_capital·tier1/2)뿐이라 PL 은 한 번도 검증되지 않았고,
+    # `_fallback_note`(= MISSING_PROVENANCE_SIDECAR RED)조차 그 4개 분기 안에서만 도달 가능해서
+    # "사이드카가 없다"는 RED 도 안 났다. 638셀이 `source_file` 전건 부재였는데도 게이트는 조용했다.
+    # parser 가 2026-09-20 에 748셀(마스터 실재 셀과 1:1)로 재발행하면서 이 축을 걸 수 있게 됐다.
+    #
+    # **target_q 는 None** — kics_rate_sensitivity 와 같은 이유로 이력형 마스터다(14분기 동시 보유).
+    # 최신분기를 걸면 과거 분기가 전부 STALE_AS_OF 로 터진다(데이터가 틀려서가 아니라 축이 틀려서).
+    # 셀 단위 축만 강제한다: as_of_date 분기 == 셀 분기 / source_file 디스크 존재 / 계보 일치.
+    # `as_of_date` 는 아직 downloader 미발행(전건 null)이라 as-of 축은 지금 침묵한다 — 그 사실을
+    # 아래 notes 에 **세어서** 남긴다("안 봤다"를 "통과했다"로 읽지 않기 위해).
+    if sidecars.get("PL_breakdown") is not None:
+        verify_provenance_sidecar(res, "PL_breakdown", sidecars["PL_breakdown"],
+                                  env.pl_published_cells, None,
+                                  builder_derived_keys=env.pl_builder_derived_cells)
+        _pl_sc = sidecars["PL_breakdown"].get("cells") or []
+        _pl_noasof = sum(1 for c in _pl_sc if not c.get("as_of_date"))
+        res.notes.append(
+            f"PL_breakdown provenance: published {len(env.pl_published_cells)}셀 검증 "
+            f"(빌더파생 면제 {len(env.pl_builder_derived_cells)}셀) · 사이드카 {len(_pl_sc)}셀 중 "
+            f"as_of_date 부재 {_pl_noasof}셀 → 그만큼 STALE_AS_OF 축이 침묵한다"
+            f"(downloader 가 필링 meta 의 보고기간 종료일을 채워야 살아난다)")
+    elif not env.pl_published_cells:
+        res.add(check="as_of", severity="RED", master="PL_breakdown", company=None, quarter=None,
+                rule="MISSING_PROVENANCE",
+                message="PL_breakdown.json absent/empty — cannot resolve provenance (RED)")
+    else:
+        _fallback_note("PL_breakdown")
+
     # --- 2c. effective-list applied evidence (capital-securities) ---
     # The donut bug (spec §5.1): downloader used a stale snapshot WITHOUT filtering to bonds
     # effective (outstanding) as of the baseline. Evidence = bonds carry status/effective_call_date
@@ -1485,6 +1592,39 @@ CONCEPT_REGISTRY = {
         "note": "tier2 Face (FSC 채권등록 outstanding) vs BS (K-ICS 경과조치 grandfathered issued) "
                 "are structurally different — comparing/penalizing them is forbidden (parser-kics "
                 "2026-06-16). Confidence MUST stay decoupled.",
+    },
+    # ------------------------------------------------------------------------------------
+    # 경영공시(감독회계) PL ↔ DART(일반회계) PL — 2026-09-20 등재
+    # (판정 원본: inbox/_resolved/20260918T0205Z__orchestrator__ALL__disclosure_sourced_pl_contract
+    #  §답변 결정 2·3, 4Q 중첩 43칸 전수 실측)
+    #
+    # **같은 이름의 칸이 두 원천에서 다른 개념이다.**
+    #   · 경영공시 §3-2-1: `투자손익 = 투자수익 − 투자비용` (감독회계 분류)
+    #   · 마스터(DART)  : `투자손익(#17) = 투자이익(#18) + 보험금융손익(#19)` — 336/336 성립(위반 0)
+    # 차이는 **투자손익 ↔ 영업외손익 경계의 재분류**이고 두 항목의 **합은 보존**된다.
+    # 실측(tol max(1억, 0.5%), 4Q 중첩 43칸): 동일개념 5항목은 #1 3F/39 · #16 2F/35 · #22 3F/32 ·
+    # #23 4F/34 · #24 3F/30 인데, 재분류를 타는 3항목은 #17 19F/38(50.0%) · #21 18F/38(47.4%) ·
+    # #20 11F/22(50.0%) 다. 5항목의 FAIL 은 3개 셀에 몰리는데 #17/#21 의 FAIL 은 13개사에 흩어진다 —
+    # 셀 사고가 아니라 구조다.
+    # **발행사 자기 진술**: KR0004 예별손해 FY2024 경영공시 §3-2-1 주3) "종속기업투자주식
+    # 손상차손(환입) … 감독회계에서는 **투자손익**, 일반회계에서는 **영업외손익** 관련 계정으로 분류".
+    #
+    # 따라서 #17·#20·#21 은 **경영공시 값을 마스터 칸에 실으면 안 된다**(reference_only — 검산에만).
+    # 이건 등재만으로는 안 지켜진다(등재부에 적어도 lookup 분기가 없으면 다음 라운드에 또 샌다) →
+    # 아래 `check_cross_source` §3d 가 계보 DISCLOSURE 셀의 항목을 allowlist 로 강제한다.
+    "pl_disclosure_vs_dart": {
+        "kind": "mixed",
+        # 같은 개념 — 병합 가능. tol 은 비-hold 최악값(4.35억 / 1.67%) 대비 1.8배 여유.
+        "comparable_items": PL_DISCLOSURE_ITEM_NOS,    # (1, 16, 22, 23, 24)
+        "tol_rel": 0.015, "tol_abs_eok": 8.0,
+        # 다른 개념 — 값을 마스터에 실으면 RED. 화면 구분표기는 불요(남는 5항목은 동일개념이라
+        # 계단이 안 생긴다) · provenance 라벨만으로도 불가(PL 셀 단위 source 라벨을 읽는 소비자 0개).
+        "reference_only_items": (17, 20, 21),          # 투자손익 · 영업이익 · 영업외손익
+        "enforced_by": "check_cross_source §3d — PL_DISCLOSURE_SOURCE_ID 계보 셀의 항목 allowlist",
+        "note": "경영공시 투자손익(=투자수익−투자비용, 감독회계) != 마스터 투자손익"
+                "(=투자이익+보험금융손익, 일반회계). 합은 보존되나 개별 칸은 다른 개념이므로 "
+                "같은 칸에 섞으면 안 된다. 근거: 발행사 자기 진술(KR0004 FY2024 §3-2-1 주3) + "
+                "4Q 중첩 43칸 실측(#17 50.0% · #21 47.4% · #20 50.0% 불일치).",
     },
 }
 
@@ -1709,6 +1849,49 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
                         f"comparison is forbidden (guard violation)")
     res.notes.append(f"cross_source guard (tier2 Face↔BS reference-only): {len(violations)} "
                      f"wrong-concept penalties detected (must be 0)")
+
+    # --- 3d. DIFFERENT-concept guard: 경영공시(감독회계) 값이 DART 개념 칸에 실리면 RED ---
+    # `CONCEPT_REGISTRY["pl_disclosure_vs_dart"]` 의 **리더**다. 등재부에 "#17/#20/#21 은 실으면
+    # 안 된다"고 적어 두기만 하면 다음 라운드에 그대로 샌다 — 룰에 lookup 분기가 있어야 지켜진다.
+    # allowlist 방식(금지 3항목 열거가 아니라 허용 5항목)인 이유: 경영공시 §2-1 이 싣는 16행 중
+    # 마스터 항목번호로 매핑되는 것이 더 있고(투자수익·투자비용 등), 금지목록을 쓰면 새 항목이
+    # 조용히 들어온다. 허용목록은 fail-closed 다.
+    # 라벨과 경로를 **둘 다** 본다 — 라벨만 보면 `source_id` 를 DART 로 고쳐 다는 것으로 빠져나간다.
+    _pl_side = (env.provenance_sidecars or {}).get("PL_breakdown") or {}
+    _pl_allowed = set(PL_DISCLOSURE_ITEM_NOS)
+    _pl_disc_cells = _pl_disc_items = 0
+    for _c in _pl_side.get("cells") or []:
+        _key = (_c.get("company_code"), _c.get("quarter"), _c.get("item_block"))
+        _pub = set(env.pl_published_items.get(_key) or ())
+        if not _pub:
+            continue
+        # 이 블록에서 DISCLOSURE 계보로 귀착되는 항목 집합
+        _disc: set = set()
+        if (_c.get("source_id") == PL_DISCLOSURE_SOURCE_ID
+                or source_id_for_lineage(_c.get("source_file")) == PL_DISCLOSURE_SOURCE_ID):
+            _disc |= _pub
+        for _sf in _c.get("source_files") or []:
+            if source_id_for_lineage(_sf.get("file")) == PL_DISCLOSURE_SOURCE_ID:
+                _disc |= {int(i) for i in (_sf.get("items") or []) if str(i).isdigit()}
+        _disc &= _pub
+        if not _disc:
+            continue
+        _pl_disc_cells += 1
+        _pl_disc_items += len(_disc)
+        _bad = sorted(_disc - _pl_allowed)
+        if _bad:
+            res.add(check="cross_source", severity="RED", master="PL_breakdown",
+                    company=_key[0], quarter=_key[1], rule="CONCEPT_MIXED_DISCLOSURE_INTO_DART",
+                    message=f"{_key[0]} {_key[1]} {_key[2]}: 경영공시(감독회계) 계보 셀에 항목 "
+                            f"{_bad} 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 "
+                            f"reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 "
+                            f"투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 "
+                            f"{sorted(_pl_allowed)} 뿐이다. 검산에만 쓰고 값은 싣지 마라")
+    res.notes.append(
+        f"cross_source guard (경영공시↔DART PL 개념): DISCLOSURE 계보 {_pl_disc_cells}셀 / "
+        f"{_pl_disc_items}값 검사 · 허용항목 {sorted(_pl_allowed)} · "
+        f"reference_only {list(CONCEPT_REGISTRY['pl_disclosure_vs_dart']['reference_only_items'])} "
+        f"혼입 0 이어야 한다")
 
     # --- 3-cc. 17BS ↔ kics_disclosure 자본 계정 교차대조 (owner 2026-09-20) ---
     # 왜 필요했나: 두 마스터는 **서로 다른 원천**(17BS=DART 별도 / K-ICS=정기경영공시)인데
@@ -2133,6 +2316,18 @@ class Env:
         else:
             self.wf_by_code = {}
             self._build_wf_by_code()
+        # PL provenance 축(2026-09-20). 같은 격리 규칙 — inject 모드는 디스크 마스터를 안 읽는다.
+        # `pl_source_ids` 는 CHECK 1 의 1c census 가 쓰는 **소스별 기대그리드 resolver 의 입력**
+        # 이다. validate_master_tables._check_coverage 와 **같은 함수**를 쓴다 — 같은 census 를
+        # 두 파일에 다르게 구현해 두면 병합 후 한쪽만 118 RED 이 난다.
+        self.pl_source_ids = self.inject.get(
+            "pl_source_ids", {} if self.inject else pl_cell_source_ids())
+        self.pl_published_items = self.inject.get("pl_published_items", {})
+        self.pl_published_cells = self.inject.get(
+            "pl_published_cells", sorted(self.pl_published_items))
+        self.pl_builder_derived_cells = self.inject.get("pl_builder_derived_cells", set())
+        if not self.inject:
+            self._build_pl_cells()
         self.latest_kics_quarter = self._latest_quarter(self.kics_records)
         # sensitivity heatmap target = the disclosure quarter the heatmap SHOULD be on.
         # Owner V12 anchored it to the 25.4Q 경영공시 basis. Use the latest sensitivity-bearing
@@ -2390,6 +2585,52 @@ class Env:
                     if declared > recomputed and declared <= all_total:
                         ev["called_or_matured_in_recognized"] = True
         return ev
+
+    def _build_pl_cells(self):
+        """PL_breakdown 의 **published 셀 census** + 빌더-파생 셀 집합.
+
+        사이드카 키가 (원보험사코드, 공시분기, item_block) 인데 `load_long()` 은 원수사명으로만
+        색인하므로 여기서 코드 기준으로 따로 읽는다(`_build_wf_by_code` 와 같은 사유).
+
+        - `pl_published_cells` = 그 블록에 **값이 하나라도 있는** 셀. 사이드카에서 뽑지 않는다 —
+          사이드카가 스스로 "검사할 셀"을 고르면 빠뜨린 셀은 영원히 무검사다.
+        - `pl_builder_derived_cells` = published 값이 **전부** 빌더 산물인 셀. 생보사
+          contract_notes 블록에서 published 항목이 {13,14} 뿐이고 그 값이 정확히 0.0 인 경우다.
+          값이 0.0 이 아니면 파생이 아니다 → 면제 없음 → 필링 경로를 요구한다."""
+        try:
+            rows = self._load_json("PL_breakdown.json")
+        except Exception:
+            self.pl_published_cells, self.pl_builder_derived_cells = [], set()
+            self.pl_published_items = {}
+            return
+        vals: dict = {}
+        is_life: dict = {}
+        for r in rows:
+            code, q = r.get("원보험사코드"), r.get("공시분기")
+            try:
+                it = int(r.get("항목번호"))
+            except (TypeError, ValueError):
+                continue          # 코리안리 `2-1`… 추가 LOB — 정수 스키마 밖(사이드카도 제외)
+            if not (code and q):
+                continue
+            is_life[code] = (r.get("생손보여부") == "생명보험")
+            blk = "contract_notes" if it in _PL_CONTRACT_NOTE_ITEMS else "income_statement"
+            vals.setdefault((code, q, blk), {})[it] = r.get("값")
+        published, derived = {}, set()
+        for key, items in vals.items():
+            pub = {i: v for i, v in items.items() if v is not None}
+            if not pub:
+                continue          # 값이 없는 블록 = 발행한 게 없다 → 계보를 물을 대상이 아니다
+                                  # (있어야 하는데 없는 것은 census 축의 일이다 — check_census /
+                                  #  validate_master_tables.coverage_holes 가 따로 센다)
+            published[key] = sorted(pub)
+            if (is_life.get(key[0]) and key[2] == "contract_notes"
+                    and set(pub) <= _PL_LIFE_LOB_ZERO_ITEMS
+                    and all(v == 0.0 for v in pub.values())):
+                derived.add(key)
+        self.pl_published_items = published  # (code, quarter, block) -> [발행된 항목번호]
+        self.pl_published_cells = sorted(published)
+        self.pl_builder_derived_cells = derived
 
     def _build_wf_by_code(self):
         # CSM_waterfall rows carry 원보험사코드; load_long keys by 원수사명 — build code-keyed too.

@@ -1,9 +1,25 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-09-13 · Stage 3/5 — validation
+> Last updated: 2026-09-20 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-09-20 (12차) -- 경영공시 PL 백필 병합 선행조건 ②③④ 배선 (계보 등재 · PL provenance 첫 검증 · 기대그리드 소스화 · 개념 등재부 리더)
+
+- 발주: 오케스트레이터. 판정 원본 `inbox/_resolved/20260918T0205Z__orchestrator__ALL__disclosure_sourced_pl_contract.md` 결정 1/3/4. ① 사이드카 발행은 parser 가 먼저 끝냈다(커밋 `fa08bfe`, 638->748셀). **⑤ 병합은 하지 않았다** -- parser 소관이라 조건부 승인으로 회신(`inbox/parser/20260920T1500Z__validation__ALL_2023.1Q-2026.2Q__disclosure_pl_merge_authorized.md`). 마스터(`PL_breakdown.json`·`kics_disclosure.json`·마스터 xlsx) 미수정.
+- **② 계보 등재 4건**(`validate_data_contract._SOURCE_LINEAGE`): `data/disclosure/`->DISCLOSURE · `md_inbox/`->DISCLOSURE_MD · `data/_gold/`->OWNER_GOLD · `scripts/build_pl_breakdown.py`->OWNER_GOLD. 동시에 `SOURCE_ID_LINEAGE_MISMATCH` 를 `_CAPITAL_SECURITIES_MASTERS` guard **밖으로**(전 마스터 공통), `effective_filtered` 만 capsec 전용 잔류.
+- **등재와 guard 해제는 같이 해야 한다(실측).** 등재 없이 guard 만 풀면 `kics_rate_sensitivity` **138셀이 한꺼번에 RED**(`md_inbox/…` <-> `DISCLOSURE_MD` 인데 계보 미등록 -> 판정 None). 등재만 하고 guard 를 안 풀면 PL 은 여전히 무검증. 부수: 코드 주석이 "계보 일치를 검사한다" 고 적어 놓고 실제로는 안 하던 상태가 해소(138/138 MATCH).
+- **`DERIVED` 는 계보에 등재하지 않았다.** 계보 판정기는 `source_file` **경로**에서 라벨을 유도하는데 빌더 파생값엔 경로가 없다(`null`) -- 널에 라벨을 주려면 빈 접두를 등재해야 하고, 그러면 `source_id_for_lineage(None)` 이 라벨을 돌려주어 **전 마스터의 모든 null source_file 이 계보 검사를 통과**한다(보편적 탈출구). 대신 `verify_provenance_sidecar(builder_derived_keys=)` 로 **게이트가 마스터에서 재계산한 셀**(생보·contract_notes·published⊆{13,14}·값 정확히 0.0)에만 좁은 면제. 사이드카 자기 라벨은 근거가 아니다(PM-2026-08-03). 양방향 -- 라벨 도용도, 파생값에 필링 경로 다는 것도 RED. 라이브 면제 1셀(KR0080 2023.4Q).
+- **PL provenance 는 호출처가 0 이었다.** 사이드카는 2026-06-20 부터 있었는데 `verify_provenance_sidecar()` 호출처 4곳에 PL 이 없었고, `_fallback_note`(부재 RED)조차 그 4개 분기 **안에서만** 도달 가능해 "사이드카가 없다" 는 RED 도 안 났다. 배선 후 published **731셀** 검증(마스터에서 독립 재계산 -- 사이드카가 검사 대상을 고르면 빠뜨린 셀이 영원히 무검사), RED 0. `target_q=None`(이력형 마스터).
+- **③ `coverage_holes` 기대그리드를 셀 계보별로**(`validate_master_tables.PL_DISCLOSURE_*` · `pl_cell_source_ids()` · `pl_key_items_for()` · `coverage_holes(key_items_for=)`). DISCLOSURE -> §2-1 5항목, 그 외·**계보 미상 -> 종전 전량(fail-closed)**. 사이드카 부재·파손·중복계보는 전부 엄격 쪽. 실측: `LIVE 종전규격 real=3` == `LIVE 소스인식 real=3`(바이트 동일 -> 골든 `--update` 불요) / `MERGED 종전규격 118` -> `MERGED 소스인식 6`.
+- **`LOB_LEG_NA` 등재 금지 근거를 회사별로 실측**: 백필 15사 중 12사는 DART 4Q 에 생명장기손익이 실재. 예외는 AIG(3개 4Q·3개 LOB 전부 결측, 원문 확인 전 등재 금지) · 신한이지(2025.4Q 에 실재하므로 2024.4Q 는 확정 결손). 병합하면 진짜 RED 3건이 드러난다 -- parser 발주.
+- **④ `CONCEPT_REGISTRY["pl_disclosure_vs_dart"]` 등재 + 리더**(`check_cross_source` §3d). 경영공시 `투자손익=투자수익-투자비용`(감독회계) vs 마스터 `#17=#18+#19`(336/336). 등재만 하면 다음 라운드에 또 샌다 -> DISCLOSURE 계보 셀 항목을 **allowlist `{1,16,22,23,24}`** 로 강제, 위반 시 `CONCEPT_MIXED_DISCLOSURE_INTO_DART` RED. 금지 3항목 열거가 아니라 허용 5항목(fail-closed). 라벨과 경로를 둘 다 본다.
+- **🔴 배선 도중 같은 census 의 두 번째 구현 발견**: `check_census` §1c 가 PL 에 `coverage_holes` 를 **resolver 없이** 부르고 있었다. ③ 을 `validate_master_tables` 에만 넣고 끝냈으면 병합 후 이쪽만 `MASTER_HOLE` 118 RED, 저쪽은 6 이 된다. 같은 resolver 를 `Env.pl_source_ids` 로 한 번만 만들어 양쪽에 물렸고 병합 전/후 두 게이트 숫자 일치를 실측(LIVE 3=3 · MERGED 6=6).
+- **selftest 57 -> 69**: Q1~Q8b(PL provenance + guard 탈출 + census 1c 소스인식, 오탐금지 Q5b·Q8b 포함) · **R1~R2(`BS_KICS_HARD_ZERO`·`BS_KICS_BASELINE_BREAK`) = 직전 11차가 "미배선 잔여" 로 박제한 잔여분 해소.** 12건 전부 killer 변이로 반증(M1b·M2b·M3·M3b·M4·M5·M6·M7·M8·M9·M10). 1차 변이 M1·M2 는 "옛 동작 복원" 이 아니라 다른 버그 주입이라 무의미했다 -- 변이는 되돌리려는 동작과 정확히 같아야 한다.
+- 검증: `validate_data_contract` **RED=0 YELLOW=123 exit 0**(불변) · `--selftest` **69/69** · `validate_master_tables --no-build` SUMMARY 불변 · `test_master_tables_golden` 1 passed · `test_push_gate_wiring`+`test_identity_tautology` 65 passed 2 skipped · `test_rule_coverage_manifest` 83 passed(불변) · `prepush_check.py` FULL 범위 **gate-clear**.
+- 재현: `$py scripts/_probes/_probe_20260920_pl_merge_precondition.py` (읽기전용, 임시 사이드카는 끝나면 지운다).
+- 미배선 잔여: PL 사이드카 `as_of_date` 748/748 null(`STALE_AS_OF` 침묵, downloader 발주) · `kics_disclosure`(1,123셀)·`CSM_waterfall`(327셀) 사이드카는 존재하나 `source_file` 전건 null + 호출처 0(PL 과 같은 상태) · `IFRS17_BS`·`dividend` 는 사이드카 파일 자체 없음 -> provenance 축은 등록 마스터 10종 중 **6종**만 본다(5->6) · `pl_disclosure_vs_dart` 의 `comparable` tol 은 리더 없음(겹치는 칸 0).
 
 ## 2026-09-13 (6차) -- jp `JP_ESR_ADJUSTED_FIGURE` 배선 (UH-21 해소, PM-2026-09-13 `closed`)
 

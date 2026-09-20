@@ -46,9 +46,35 @@ from _quarter_horizon import QUARTER_FLOOR, quarter_horizon  # noqa: E402
 # 다음 세션이 "HOLE-PL 24건이 사라졌다"를 회귀로 오인하지 않도록 SUMMARY 가 phantom 소멸을
 # 명시한다(아래 main() 의 PHANTOM 주석·PL_BASELINE 참조).
 PL_PATH = "PL_breakdown.json"
+PL_PROVENANCE_PATH = "PL_breakdown_provenance.json"
 PL_SRC_UPSTREAM = "data/dart/viz/pl_breakdown_master.json"   # 참고용(더 이상 검사 대상 아님)
 WF_PATH = "CSM_waterfall.json"
 BS_PATH = "IFRS17_BS.json"   # PL_OCI_VS_BS_AOCI (항목4 기타포괄손익 누계액) 대조용
+
+# ---------------------------------------------------------------------------
+# 경영공시(감독회계 업무보고서) 출처 PL 셀이 실을 수 있는 항목 — **소스별 기대 그리드**의 정본.
+#
+# 배경(2026-09-18 validation 결정 4, inbox/_resolved/20260918T0205Z…disclosure_sourced_pl_contract):
+# 비상장 15사의 비-4Q 분기는 DART 분기보고서가 없어 정기경영공시 §2-1 요약 포괄손익계산서로
+# 백필한다. 그 표는 **전사 총괄 16행**이고 LOB(생명장기/자동차/일반) 분해를 **싣지 않는다**.
+# 그래서 백필하면 그 15사가 `active_min` 문턱을 넘어 `struct`(검사 제외) → `active` 로 승격되고,
+# 원천에 애초에 없는 `생명장기손익` 때문에 **채운 분기 전부가 "부분 hole"** 로 뒤집힌다
+# (읽기전용 시뮬 실측: real hole 3 → 118, struct 15 → 1).
+#
+# **`LOB_LEG_NA` 등재로 막으면 안 된다(거짓 면제).** 그 15사 중 12사는 DART 4Q 셀에
+# 생명장기손익이 실재한다(실측: 악사·아이엠라이프·AIA·처브·교보라플·IBK연금·카카오페이 3/3,
+# 하나손보 3/3, 라이나·BNP·메트라이프·하나생명 2/3). 개념이 없는 게 아니라 **이 소스가 안 싣는
+# 것**이다. 등재하면 DART 쪽 결손까지 같이 눈감는다.
+#
+# 그래서 기대 그리드를 **셀의 계보로** 가른다: 계보가 DISCLOSURE 인 (회사,분기)는 §2-1 이 실을
+# 수 있는 항목만 기대하고, DART 면 종전 그대로 전부 기대한다. 계보를 모르면 **엄격한 쪽(DART)**
+# 으로 떨어진다 — fail-closed. 사이드카를 지우면 검사가 느슨해지는 형태는 면제로 위장한 무력화다.
+PL_DISCLOSURE_ITEM_NOS = (1, 16, 22, 23, 24)   # 보험손익 · 기타사업비용 · 세전 · 법인세 · 순이익
+PL_DISCLOSURE_ITEM_NAMES = ("보험손익", "기타사업비용", "세전이익", "법인세", "당기순이익")
+PL_DISCLOSURE_SOURCE_ID = "DISCLOSURE"
+# 계보 판정에 쓰는 블록. §2-1 5항목은 전부 income_statement 블록이다(contract_notes =
+# {4,5,6,9,10,11,13,14} 뿐). 블록을 틀리게 잡으면 계보를 못 찾아 전부 엄격 판정으로 떨어진다.
+PL_LINEAGE_BLOCK = "income_statement"
 
 # 재조준으로 **처음 검사받게 된** 셀에서 드러난 기지(旣知) PL_BRIDGE 실패 등재부.
 # 통째 면제가 아니다 — 건별로 열거하고, 여기 없는 실패가 하나라도 생기면 `pl_new` 가 0 을
@@ -634,11 +660,68 @@ def qoq_scan(idx, items, floor, cfg):
     return rows
 
 
-def coverage_holes(idx, key_items, active_min=7, na_registry=None):
+def pl_cell_source_ids(pl_path=PL_PATH, sidecar_path=PL_PROVENANCE_PATH) -> dict:
+    """(원수사명, 공시분기) -> 그 셀 income_statement 블록의 `source_id`.
+
+    `coverage_holes` 의 기대 그리드를 소스별로 가르기 위한 입력이다(위 PL_DISCLOSURE_* 주석).
+    마스터는 **원수사명**으로 색인되는데 사이드카 키는 **원보험사코드**라, 마스터에서 코드↔이름을
+    직접 뽑아 잇는다(별도 매핑 파일을 만들지 않는다 — 낡으면 조용히 어긋난다).
+
+    **fail-closed**: 사이드카가 없거나 읽히지 않거나 그 셀이 없으면 키를 만들지 않는다 → 호출부가
+    엄격한 기본 기대 그리드를 쓴다. 사이드카를 지워서 검사를 느슨하게 만들 수 없다."""
+    p = ROOT / sidecar_path
+    if not p.exists():
+        return {}
+    try:
+        doc = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}          # 깨진 사이드카 = 계보 미상 = 엄격 판정(ARTIFACT_UNREADABLE 은 게이트 축)
+    code2name: dict = {}
+    for r in json.loads((ROOT / pl_path).read_text(encoding="utf-8")):
+        if r.get("원보험사코드") and r.get("원수사명"):
+            code2name.setdefault(r["원보험사코드"], r["원수사명"])
+    out: dict = {}
+    for c in doc.get("cells") or []:
+        if c.get("item_block") != PL_LINEAGE_BLOCK:
+            continue
+        name = code2name.get(c.get("company_code"))
+        if not (name and c.get("quarter") and c.get("source_id")):
+            continue
+        key = (name, c["quarter"])
+        prior = out.get(key)
+        # 같은 (회사,분기,블록) 셀이 두 번 있고 계보가 갈리면 **엄격한 쪽**으로 떨어뜨린다.
+        # 나중 항목이 덮어쓰게 두면, 이미 DART 로 채워진 분기에 DISCLOSURE 셀을 하나 append
+        # 하는 것만으로 그 분기의 기대 그리드가 느슨해진다(=검사 회피 경로).
+        out[key] = c["source_id"] if prior in (None, c["source_id"]) else "__CONFLICT__"
+    return out
+
+
+def pl_key_items_for(source_ids: dict, key_items):
+    """`coverage_holes(key_items_for=...)` 에 넘길 per-cell 기대 항목 resolver.
+
+    DISCLOSURE 계보면 §2-1 이 실을 수 있는 항목만, 그 밖(=DART / 계보 미상)이면 종전 전량."""
+    disclosure_keys = tuple(k for k in key_items if k in PL_DISCLOSURE_ITEM_NAMES)
+
+    def resolve(co, q):
+        if source_ids.get((co, q)) == PL_DISCLOSURE_SOURCE_ID:
+            return disclosure_keys
+        return tuple(key_items)
+    return resolve
+
+
+def coverage_holes(idx, key_items, active_min=7, na_registry=None, key_items_for=None):
     """데이터 누락(hole) census. SKIP으로 숨기지 말고 명시.
     active 회사(핵심항목 보유 분기 >= active_min)의 빈 분기 = hole.
     그 미만(외국계·소형 = 애초에 미공시)은 structural로 분리(검증 제외).
     2023 분기는 사이트 비노출(사용자 결정)이라 known으로 분리 — real hole은 2024+.
+
+    `key_items_for` -- optional callable (co, q) -> 그 셀의 **소스가 실을 수 있는** key_item 들.
+    None 이면 전 셀에 `key_items` 를 그대로 쓴다(= 2026-09-20 이전과 바이트 동일). 소스마다 담는
+    항목이 다른 마스터에서 "이 소스엔 애초에 없는 항목"을 결손으로 세지 않기 위한 축이다 --
+    `LOB_LEG_NA` 같은 **회사 단위 면제와는 다르다**: 저쪽은 "이 회사엔 그 개념이 없다"(전 분기),
+    이쪽은 "이 분기 값의 출처가 그 항목을 안 싣는다"(분기별, 같은 회사의 DART 분기는 그대로 검사).
+    `present`(active 판정) 계산에도 같은 resolver 를 쓴다 -- 안 그러면 기대하지도 않는 항목으로
+    active 를 재게 된다.
 
     `na_registry` -- optional {co: {key_item: 근거}} (예: LOB_LEG_NA). "부분" hole 인데
     비어 있는 key_item 전부가 등재부에 있으면(그 회사엔 그 개념 자체가 없다) real hole 이
@@ -649,8 +732,13 @@ def coverage_holes(idx, key_items, active_min=7, na_registry=None):
     '부분' hole 로 드러난 것이 계기 -- 등재 없이 default(None)면 기존 동작과 완전히 같다."""
     cos = sorted({co for (co, _) in idx})
     real, known, struct = [], [], []
+
+    def _keys(co, q):
+        return tuple(key_items_for(co, q)) if key_items_for else tuple(key_items)
+
     for co in cos:
-        present = [q for q in QS if any(idx.get((co, q), {}).get(k) is not None for k in key_items)]
+        present = [q for q in QS
+                   if any(idx.get((co, q), {}).get(k) is not None for k in _keys(co, q))]
         if not present:
             continue
         if len(present) < active_min:
@@ -659,12 +747,13 @@ def coverage_holes(idx, key_items, active_min=7, na_registry=None):
         na_legs = (na_registry or {}).get(co, {})
         for q in QS:
             m = idx.get((co, q), {})
-            vals = [m.get(k) for k in key_items]
+            ks = _keys(co, q)
+            vals = [m.get(k) for k in ks]
             if all(v is None for v in vals):
                 kind = "통째"
             elif any(v is None for v in vals):
                 if na_legs:
-                    missing = [k for k in key_items if m.get(k) is None]
+                    missing = [k for k in ks if m.get(k) is None]
                     if missing and all(k in na_legs for k in missing):
                         continue
                 kind = "부분"
@@ -1401,10 +1490,20 @@ def _check_coverage(wf: dict, pl: dict) -> tuple[list, list]:
     main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     # ===== 0. COVERAGE (데이터 누락 hole — SKIP으로 숨기지 않음) =====
     wf_holes, wf_known, wf_struct = coverage_holes(wf, ["기초CSM", "신계약CSM", "이자부리", "가정및경험조정", "CSM상각", "기말CSM"])
-    pl_holes, pl_known, pl_struct = coverage_holes(pl, ["보험손익", "생명장기손익", "당기순이익"], na_registry=LOB_LEG_NA)
+    pl_keys = ["보험손익", "생명장기손익", "당기순이익"]
+    # 소스별 기대 그리드(위 PL_DISCLOSURE_* 주석). 사이드카가 없거나 그 셀이 없으면 계보 미상 →
+    # 엄격(DART) 판정으로 떨어진다. DISCLOSURE 셀이 0 개면 이 줄은 종전과 **바이트 동일**하다.
+    pl_src = pl_cell_source_ids()
+    n_disc = sum(1 for v in pl_src.values() if v == PL_DISCLOSURE_SOURCE_ID)
+    pl_holes, pl_known, pl_struct = coverage_holes(
+        pl, pl_keys, na_registry=LOB_LEG_NA,
+        key_items_for=pl_key_items_for(pl_src, pl_keys))
     print("=" * 78)
     print(f"0. COVERAGE real hole(2024+)  CSM={len(wf_holes)} PL={len(pl_holes)}  | "
           f"2023 known(비노출)={len(wf_known)+len(pl_known)} | struct(미공시)제외={len(wf_struct)+len(pl_struct)}")
+    print(f"   PL 기대그리드 소스별: 계보판정 {len(pl_src)}셀 중 DISCLOSURE={n_disc} "
+          f"(§2-1 {len(PL_DISCLOSURE_ITEM_NOS)}항목 기대) · 그 외/미상={len(pl_src) - n_disc} "
+          f"(전량 {len(pl_keys)}항목 기대, fail-closed)")
     print("=" * 78)
     for co, q, kind in wf_holes:
         print(f"  HOLE-CSM {co:14s} {q} ({kind})")
