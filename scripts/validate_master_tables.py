@@ -69,6 +69,20 @@ BS_PATH = "IFRS17_BS.json"   # PL_OCI_VS_BS_AOCI (항목4 기타포괄손익 누
 # 그래서 기대 그리드를 **셀의 계보로** 가른다: 계보가 DISCLOSURE 인 (회사,분기)는 §2-1 이 실을
 # 수 있는 항목만 기대하고, DART 면 종전 그대로 전부 기대한다. 계보를 모르면 **엄격한 쪽(DART)**
 # 으로 떨어진다 — fail-closed. 사이드카를 지우면 검사가 느슨해지는 형태는 면제로 위장한 무력화다.
+#
+# 🔴 2026-09-20 (2차) — **같은 계보 판정을 쓰는 축이 셋이다.** 2026-09-18 배선은
+# `coverage_holes`(기대 그리드)만 소스인식으로 바꾸고 `_check_pl_bridge` 의
+# `보험손익(leg-coverage)`(2e)·`PL_ZERO_LEGS`(2b) 를 빠뜨렸다. 그 둘은 **결측 LOB 다리를 0 으로
+# 채워** 검산하므로(L1046~ 주석), §2-1 처럼 LOB 분해를 애초에 안 싣는 원천에서는 우변이 통째로
+# 0 이 되어 잔차가 `item1` 전액이 된다 — 병합 즉시 신규 실패 153 건(전부 DISCLOSURE 계보,
+# 153/153 이 `|잔차| == |item1|`). 이건 "등식이 깨졌다"가 아니라 **검산 불가(NOT_TESTABLE)** 다.
+# 같은 부재가 어떤 셀에서는 FAIL, 어떤 셀에서는 우연한 PASS 로 읽히기도 했다(처브라이프
+# 2023.1Q·2024.1Q — 다리가 하나도 없는데 `bare + 기타영업수익 - 기타사업비용` 후보가 허용오차
+# 안에 들었다). 그래서 **resolver 를 새로 만들지 말고** `pl_cell_source_ids()` 를 그대로
+# `_check_pl_bridge(source_ids=)` 에 물린다 — 같은 등식·같은 census 를 두 파일에 다르게 구현해
+# 둔 것이 이 저장소 사고의 절반이다.
+# **SKIP 은 조용히 하지 않는다**: 셀 목록을 2e 블록에 건별 인쇄하고 수를 SUMMARY `src_na:` 로
+# 올린다. "안 봤다"가 "통과했다"로 읽히면 그게 false-green 이다.
 PL_DISCLOSURE_ITEM_NOS = (1, 16, 22, 23, 24)   # 보험손익 · 기타사업비용 · 세전 · 법인세 · 순이익
 PL_DISCLOSURE_ITEM_NAMES = ("보험손익", "기타사업비용", "세전이익", "법인세", "당기순이익")
 PL_DISCLOSURE_SOURCE_ID = "DISCLOSURE"
@@ -1005,17 +1019,29 @@ def _check_plausibility(wf: dict) -> tuple[list, list, list, list, list]:
 
 def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
                      unknown_hyphen: list | None = None,
-                     evidence_out: dict | None = None) -> tuple[int, list, int, list, list]:
+                     evidence_out: dict | None = None,
+                     source_ids: dict | None = None,
+                     src_na_out: dict | None = None) -> tuple[int, list, int, list, list]:
     """PL bridge identity (2) + 생명장기 zero-legs (2b) + impossible-zero legs (2c).
     All three read pl_breakdown and share one print block, so they stay together.
     `extra_lob` = load_pl_extra_lob() 첫 반환값((co,q) -> Σ 항목번호 `2-N`); 생략하면 추가 LOB
     다리 없이 종전 3항 등식으로 돈다. `unknown_hyphen` = 그 두 번째 반환값(커버리지 census).
     `evidence_out` = 넘기면 `{REAL/TAUTOLOGY/PARTIAL: pass 수}` 로 채운다 — pass 를 증거력별로
     갈라 SUMMARY 에 인쇄하기 위한 것이고, **반환 arity 는 유지**한다(기존 호출부 보호).
+
+    `source_ids` = `pl_cell_source_ids()` 의 산출((co,q) -> 계보). **`coverage_holes` 가 쓰는
+    것과 같은 resolver 다 — 여기서 두 번째 구현을 만들지 않는다.** 생략하면 그 함수를 직접 부른다.
+    `{}` 를 넘기면 계보 미상 = 전 셀 엄격 판정 = 2026-09-20 이전과 동작이 같다(시뮬·selftest 용).
+    `src_na_out` = 넘기면 `{"legcov": n, "zleg": n}` 로 채운다 — **원천이 그 축을 애초에 안 싣는
+    셀의 수**다. SKIP 을 조용히 하지 않기 위한 출력 경로이고 이것도 arity 를 안 바꾼다.
+
     Returns (pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows). Split out of
     main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
     extra_lob = extra_lob or {}
     unknown_hyphen = unknown_hyphen or []
+    # fail-closed: 사이드카가 없거나 깨졌으면 pl_cell_source_ids() 가 {} 를 돌려주고, 그러면
+    # 아래 판정은 전 셀에서 종전(엄격) 경로로 떨어진다. 사이드카를 지워 검사를 끌 수 없다.
+    source_ids = pl_cell_source_ids() if source_ids is None else source_ids
     na_of = LOB_LEG_NA          # (co) -> {leg: 근거}; 결측을 "미해당"으로 읽게 하는 등재부
     ev = {EQ_REAL: 0, EQ_TAUTOLOGY: 0, EQ_PARTIAL: 0}
     eq_pass_count = defaultdict(int)
@@ -1027,7 +1053,7 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     pb_pass = pb_skip = 0
     pb_fail = []
     eq_fail_count = defaultdict(int)
-    legcov_pass, legcov_fail, nolhs_rows = [], [], []
+    legcov_pass, legcov_fail, nolhs_rows, legcov_na_rows = [], [], [], []
     for (co, q), m in sorted(pl.items()):
         # --- 보험손익 dual-form (bare ΣLOB / adj +기타영업수익-기타사업비용) ---
         # `보험손익`(항목1)의 폐쇄식 `1 = 2+13+14(+15-16)` 은 **PL_EQS 밖의 이 블록**이
@@ -1055,15 +1081,29 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
         # 0-fill 경로에 추가 후보를 붙이면 masking 면만 넓어지고, 실측상 그 후보가 필요한
         # 버킷도 없었다(13건 전부 기존 adj 로 닫혔다).
         bo = m.get("보험손익")
+        raw_lob = [m.get(k) for k in LOB_KEYS]
+        zf = [k for k, v in zip(LOB_KEYS, raw_lob) if v is None]
+        xlob = extra_lob.get((co, q), 0.0)
+        # 🔴 원천이 LOB 분해를 **애초에 안 싣는** 셀 — 0-fill 검산이 성립하지 않는다.
+        # 조건을 좁게 건다: 계보가 DISCLOSURE 이고 **세 다리가 전부** 결측이고 추가 LOB(`2-N`)도
+        # 없을 때만. 한 다리라도 값이 있으면 그 값은 §2-1 이 준 것이 아니므로(그런 버킷은 계보가
+        # `__CONFLICT__` 로 떨어진다) 종전대로 엄격 검산한다 = fail-closed.
+        src_na_legcov = (source_ids.get((co, q)) == PL_DISCLOSURE_SOURCE_ID
+                         and len(zf) == len(LOB_KEYS) and not xlob)
         if bo is None:
             # 좌변 자체가 없으면 등식을 세울 수 없다. 이 축은 coverage census(key_items 에
             # 보험손익 포함)의 몫이라 RED 로 올리지 않되, 조용히 사라지지 않게 건별로 인쇄한다.
             # 오늘 18건 전부 2023 분기(사이트 비노출)다 — 2024+ 가 여기 뜨면 그건 회귀다.
             pb_skip += 1
             nolhs_rows.append((co, q))
+        elif src_na_legcov:
+            # 검산 불가(NOT_TESTABLE). **PASS 가 아니다** — 등식을 적용하지 않았다는 사실을
+            # skip 으로 세고 아래 2e 블록에 건별로 인쇄한다. 등재부(baseline)에 넣지 않는 이유:
+            # 등재부의 의미는 "기지 **실패**" 인데 이건 실패가 아니고, 등재하면 그 회사가 나중에
+            # 진짜 LOB 를 얻어도 이 축이 영원히 침묵한다.
+            pb_skip += 1
+            legcov_na_rows.append((co, q, round(bo, 1)))
         else:
-            raw_lob = [m.get(k) for k in LOB_KEYS]
-            zf = [k for k, v in zip(LOB_KEYS, raw_lob) if v is None]
             # 결측 다리를 **미해당(등재부에 있음)** 과 **설명되지 않은 결측** 으로 가른다.
             # 판정에는 안 쓴다 — 등재는 면제가 아니므로 등식은 양쪽 다 똑같이 검산한다.
             # 인쇄만 갈라서, 다음 사람이 `0-fill=자동차손익` 을 추출 실패로 오독하지 않게 한다.
@@ -1083,7 +1123,7 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
             # **빌더와 검증기가 서로 다른 등식을 쓰고 있었다**. 이제 같은 등식을 쓴다.
             # 새 재보험사·특수 분류사가 들어오면 `2-N` 을 무조건 더하는 것이 맞는지 그 회사의
             # 택소노미로 다시 확인해야 한다 — 슬롯 이름이 보편이라는 가정이 여기서 깨졌다.
-            xlob = extra_lob.get((co, q), 0.0)
+            # (`xlob` 은 위 src_na 판정에서 이미 읽었다 — 같은 값을 두 번 읽지 않는다.)
             bare = sum(0.0 if v is None else v for v in raw_lob) + xlob
             cands = [bare]
             oi, oe = m.get("기타영업수익"), m.get("기타사업비용")
@@ -1168,10 +1208,23 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
                      ("2024.1Q", "2024.2Q", "2024.3Q", "2024.4Q", "2025.1Q", "2025.2Q")}
     zleg_rows = []  # (co, q, n_zero, n_none, 생명장기손익)
     zleg_exc = 0
+    zleg_na_rows = []   # (co, q) — 원천이 생명장기 분해를 안 싣는 셀. 발화 대상이 아니다.
     for (co, q), m in sorted(pl.items()):
         if q.startswith("2023."):
             continue
         if m.get("보험손익") is None:
+            continue
+        # 🔴 leg-coverage 와 같은 사유(같은 resolver). 경영공시 §2-1 은 생명장기 10개 sub-leg 을
+        # 하나도 싣지 않으므로 그 셀은 `n_none >= 4` 가 **항상** 성립한다 — "추출실패"가 아니라
+        # 원천 부재다. 병합 직후 실측 88건이 전부 이 형태였다(DART 계보 9건은 진짜 후보라 그대로
+        # 둔다). 회사 단위 `ZLEG_LEGIT` 보다 먼저 보는 이유: 계보는 **셀 단위 사실**이고
+        # 등재부는 회사 단위 **주장**이라, 사실이 더 정확한 사유다.
+        # 조건은 leg-coverage 와 같은 폭으로 좁힌다 — **10개가 전부 결측일 때만**. 하나라도 값이
+        # 있으면 그 값은 §2-1 이 준 것이 아니므로 종전대로 검사한다(계보가 통째 면제가 되면,
+        # 나중에 그 버킷에 0.0 이 섞여 들어와도 이 축이 영원히 침묵한다).
+        if (source_ids.get((co, q)) == PL_DISCLOSURE_SOURCE_ID
+                and all(m.get(k) is None for k in PL_LEG_ITEMS)):
+            zleg_na_rows.append((co, q))
             continue
         legit = ZLEG_LEGIT.get(co)
         if legit == "ALL" or (co, q) in ZLEG_LEGIT_CQ:
@@ -1188,6 +1241,9 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     print("=" * 78)
     print(f"2. PL_BRIDGE (PL_breakdown.json 배포본, 백만원)  pass={pb_pass} fail={len(pb_fail)} skip={pb_skip}  "
           f"| 2b. ZERO_LEGS flag={len(zleg_rows)} | 2c. IMPOSSIBLE-0 leg={len(zerolegs_rows)}")
+    print(f"   원천 미수록(SKIP, 검산불가): leg-coverage {len(legcov_na_rows)}셀 · "
+          f"ZERO_LEGS {len(zleg_na_rows)}셀 — 계보 {PL_DISCLOSURE_SOURCE_ID}. "
+          f"**통과가 아니라 '안 봤다'** 이고 아래에 건별로 인쇄한다.")
     print(f"   pass 내역: 진짜 {ev[EQ_REAL]} · 구성상 {ev[EQ_TAUTOLOGY]} · 부분 {ev[EQ_PARTIAL]}"
           f"  (구성상 = 빌더가 우변 한 항을 좌변에서 빼 만들어 **깨질 수 없는** 등식)")
     print("=" * 78)
@@ -1206,6 +1262,12 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     for co, q, zs, nnone, lt in zleg_rows[:40]:
         lt_s = f"{lt:.0f}" if lt is not None else "None"
         print(f"  ZLEG {co:14s} {q}  zero={zs} none={nnone}  생명장기손익={lt_s}")
+    print(f"  -- 2b-na. ZERO_LEGS 원천 미수록 {len(zleg_na_rows)}건 (계보 {PL_DISCLOSURE_SOURCE_ID}, "
+          f"first 40) — 이 축이 **안 본** 셀이다 --")
+    print("     §2-1 요약 포괄손익계산서에 생명장기 10개 sub-leg 이 한 줄도 없다. 등재부 면제가")
+    print("     아니라 원천 부재이므로, 그 회사의 DART 분기는 그대로 이 축의 검사를 받는다.")
+    for co, q in zleg_na_rows[:40]:
+        print(f"  ZLEGNA {co:14s} {q}  생명장기 sub-leg 원천 미수록")
     print("  -- IMPOSSIBLE-0: 생명장기 분해손익 0원 불가 (owner 확정) --")
     for co, q, item in zerolegs_rows[:40]:
         print(f"  ZERO0 {co:14s} {q}  {item}=0 (불가능 — 추출오류)")
@@ -1229,6 +1291,11 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     print("     좌변없음 = item1 자체가 결측이라 등식 성립 불가(coverage census 소관).")
     for co, q in nolhs_rows[:40]:
         print(f"  NOLHS {co:14s} {q}  보험손익=None")
+    print(f"     원천미수록 {len(legcov_na_rows)}건 = 계보 {PL_DISCLOSURE_SOURCE_ID} · LOB 3다리 전부 부재.")
+    print("     0-fill 하면 우변이 통째로 0 이라 잔차가 item1 전액이 된다 = 검산 불가(NOT_TESTABLE).")
+    print("     **PASS 아님 · 등재부 면제 아님** — 그 회사의 DART 분기는 그대로 검사받는다.")
+    for co, q, lhs in legcov_na_rows[:40]:
+        print(f"  LEGNA {co:14s} {q}  보험손익={lhs:.1f}  LOB 다리 원천 미수록")
     # 추가 LOB 커버리지 census — 등식이 **모르는 형태**의 하이픈 항목이 있으면 여기서 운다.
     # 오늘 0 건이다(하이픈 항목은 코리안리재보험의 2-1~12-1 뿐). 0 이 아니게 되는 날은
     # 새 재보험사가 다른 슬롯에 LOB 을 냈다는 뜻이고, 그때 이 등식은 그 회사를 또 오탐한다.
@@ -1246,6 +1313,8 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
         print(f"  NOEQ  item{no:<3d} {why}")
     if evidence_out is not None:
         evidence_out.update(ev)
+    if src_na_out is not None:
+        src_na_out.update({"legcov": len(legcov_na_rows), "zleg": len(zleg_na_rows)})
     return pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows
 
 
@@ -1759,8 +1828,9 @@ def main() -> int:
 
     pl_extra_lob, pl_unknown_hyphen = load_pl_extra_lob(PL_PATH)
     pl_evidence: dict = {}
+    pl_src_na: dict = {}
     pb_pass, pb_fail, pb_skip, zleg_rows, zerolegs_rows = _check_pl_bridge(
-        pl, pl_extra_lob, pl_unknown_hyphen, pl_evidence)
+        pl, pl_extra_lob, pl_unknown_hyphen, pl_evidence, src_na_out=pl_src_na)
 
     lob_na, lob_stale, lob_dangle = _check_lob_taxonomy(pl)
 
@@ -1795,6 +1865,8 @@ def main() -> int:
           f"·부분{pl_evidence.get(EQ_PARTIAL, 0)})/{len(pb_fail)}F/{pb_skip}S/{pb_new}NEW | "
           f"tax22_src:{tax_pass}P/{len(tax_fail)}F/{sum(tax_skip.values())}S | "
           f"zero_legs:{len(zleg_rows)} | "
+          f"src_na({PL_DISCLOSURE_SOURCE_ID}):{pl_src_na.get('legcov', 0)}legcov/"
+          f"{pl_src_na.get('zleg', 0)}zleg | "
           f"impossible0:{len(zerolegs_rows)} | "
           f"lob_na:{len(lob_na)}NA/{len(lob_stale) + len(lob_dangle)}BAD | "
           f"csm_amort_identity:{cc_pass}P/{cc_pinned}PIN/{len(cc_fail)}F/{cc_skip}S | "

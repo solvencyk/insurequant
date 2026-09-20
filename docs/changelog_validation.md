@@ -5,6 +5,25 @@
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
+## 2026-09-20 (13차) -- 경영공시 PL 백필 ⑤ 병합 후속: `_check_pl_bridge`(leg-coverage 2e · ZERO_LEGS 2b) 소스인식
+
+- 발주: parser/ifrs17 `inbox/validation/20260920T1730Z__parser__MULTI_2023.1Q-2026.2Q__pl_bridge_legcoverage_not_source_aware.md`(status: answered). 12차가 `coverage_holes` 만 소스인식으로 바꾸고 `_check_pl_bridge` 의 두 축을 빠뜨려, ⑤ 병합 직후 `pl_new=153` 으로 `tests/test_master_tables_golden.py` 가 push 를 막고 있었다.
+- **원인은 데이터가 아니라 룰이다.** 경영공시 §2-1 요약 포괄손익계산서는 LOB 다리(생명장기/자동차/일반)도 생명장기 10개 sub-leg 도 싣지 않는다. leg-coverage 는 결측 다리를 **0 으로 채워** 검산하므로 그 셀에서는 우변이 통째 0 이 되어 잔차 = item1 전액. 신규 실패 153/153 이 `|잔차| == |item1|` 이었다 = 실패가 아니라 **검산 불가(NOT_TESTABLE)**.
+- **같은 resolver 재사용**(`validate_master_tables.py` L1044). `coverage_holes` 가 `pl_key_items_for()` 로 쓰는 `pl_cell_source_ids()` 를 그대로 `_check_pl_bridge(source_ids=)` 에 물렸다 — 두 번째 계보 판정기를 만들지 않았다(12차에 census 가 두 곳에 따로 구현돼 118 vs 6 으로 갈릴 뻔한 것과 같은 형태의 재발 방지).
+- 배선: `_check_pl_bridge()` 에 `source_ids`·`src_na_out` 키워드 추가(**반환 arity 5 유지** — `tests/test_rule_coverage_manifest.py:745` 보호) · 2e L1091-1105 · 2b L1225-1227 · `src_na_out` L1317 · `main()` L1833 · SUMMARY L1868.
+- **가드를 "계보가 DISCLOSURE 면 SKIP" 으로 넓히지 않았다.** 그러면 거짓 면제가 된다. leg-coverage 는 `LOB 3다리 전부 결측 + 추가 LOB(2-N) 없음`, ZERO_LEGS 는 `sub-leg 10개 전부 결측` 일 때만 SKIP. 한 칸이라도 값이 있으면 계보와 무관하게 검산한다(라이브 숫자 동일, 미래 회귀만 막는다).
+- **SKIP 을 조용히 하지 않는다**: SUMMARY 신설 필드 `src_na(DISCLOSURE):155legcov/112zleg` + 본문 `LEGNA` 155줄 · `ZLEGNA` 112줄 건별 인쇄.
+- **거짓 PASS 2건 동반 해소**: 처브라이프 2023.1Q·2024.1Q 는 다리가 하나도 없는데 `bare+기타영업수익-기타사업비용` 후보가 우연히 허용오차에 들어 PASS 였다 → SKIP(`진짜(REAL)` pass 1173 -> 1171).
+- **전 버킷 시뮬레이션은 같은 함수를 토글해 쟀다**(`source_ids={}` = 수정 전). leg-coverage FAIL 172(DISCLOSURE 153/DART 19) -> **19(DART 19)** · ZERO_LEGS 97(88/9) -> **9(DART 9)**. strict 토글이 수정 전과 집계·`fail_ids`·`zleg_ids` 집합까지 전건 동일(회귀 0) · **새로 생긴 FAIL 0**(단방향).
+- **골든은 `병합 전` 기준이었다 -> 2x2 로 귀속을 갈랐다.** `e83b619^` 에서 마스터·사이드카·등재부를 꺼내 `{병합전,병합후} x {strict,aware}` 로 `main()` 실행. **골든 == 병합전+수정후(전 필드 일치) = 내 룰은 병합 전 마스터에서 no-op.** 병합이 움직인 축 = `pl_bridge`·`tax22_src`·`zero_legs`·`lob_na`(parser 티켓 §1 표와 숫자 일치) / 내 수정이 움직인 축 = `pl_bridge`·`zero_legs`·신설 `src_na` **3개뿐**. `zero_legs` 는 9 -> 97 -> **9** 로 골든 값 복귀.
+- **153건을 등재부에 넣지 않았다** — `data/_gold/pl_bridge_baseline.json` 31건 불변(31/31 DART). 등재부의 의미는 "기지 **실패**" 인데 이건 검산 불가이고, 등재하면 그 15사가 나중에 진짜 LOB 를 얻어도 축이 영원히 침묵한다. `등재부에만 남은 것` 도 0 건이라 지울 줄이 없었다.
+- **ZERO_LEGS DART 9건은 살렸다**: 아이엠라이프 2024/2025.4Q · AIA 2024.4Q · 예별 2024/2025.4Q · 카카오페이 2024/2025.4Q · 하나손보 2024/2025.4Q. **9/9 가 4Q(DART 사업보고서)** 이고 12차에 "DART 4Q 에 생명장기손익 실재" 로 실측한 12사 안에 있어 **추출 갭 가능성**이 높다 — 원문 확정은 parser 레인.
+- **selftest 69 -> 75**(`_data_contract_selftest.py` `_mt()` L933 · `MT_CASES` L948 · `run_master_tables_cases()` L971). 이 축은 `run_gate` 안에 없어 `Env(inject=)` 로 못 찌른다 -> `_check_pl_bridge` 를 직접 부르는 가족을 신설(run_gate 에 얹으면 "그 룰이 거기 있다" 는 거짓말이 된다). S1 DART 생존 / S2 SKIP 이고 세어진다 / S3 다리 일부결측이면 검산 / S4 계보 미상 엄격 / S5 sub-leg 값 있으면 ZERO_LEGS 문다 / S6 추가 LOB 있으면 검산.
+- **killer 변이 7종으로 반증**(게이트 파일 변조 후 복원, md5 `365d8f25cbacc8f4f2a298e039b3b18f` 전후 동일): M-A/M-B(2e 가드) · M-C/M-D(2b 가드) · M-E(fail-closed) · M-F/M-G(축 통째 소멸). **6/6 케이스가 최소 1변이로 사망(동어반복 0) · 7/7 변이가 최소 1건 사망(안 보이는 변이 0).** S3 는 처음에 fixture 가 틀려서 FAIL 했다(3다리를 다 채우면 라벨이 `보험손익(dual)` 로 가 leg-coverage 축을 안 찌른다) — 룰이 아니라 케이스를 고쳤다.
+- **미배선 잔여**: ① `tests/test_rule_coverage_manifest.py:749` 의 `coverage_holes` 는 아직 resolver 없이 부른다(매니페스트 `holes` 축만 게이트보다 엄격). 오늘은 무해 — 그 변이는 값만 흔들고 결측을 안 만들어 `holes` 가 baseline·mutated 양쪽 동일. 결측을 만드는 변이가 생기면 커버리지 과대선언이 된다. ② `zleg_exc` 는 세기만 하고 인쇄 안 된다(이전부터).
+- 마스터 무수정: `PL_breakdown.json`·`PL_breakdown_provenance.json`·`kics_disclosure.json`·`insurequant_master_tables.xlsx` 전부 `git status` 깨끗. 바꾼 파일은 게이트 3개(`validate_master_tables.py`·`_data_contract_selftest.py`·`tests/fixtures/master_tables_golden.json`).
+- 검증: `validate_master_tables --no-build` `pl_bridge:3309P/31F/1950S/**0NEW** · zero_legs:9 · src_na(DISCLOSURE):155legcov/112zleg` · `validate_data_contract` **RED=0 YELLOW=123 exit 0**(불변) · `--selftest` **75/75** · `test_master_tables_golden` `--update` 후 1 passed · `test_rule_coverage_manifest`+`test_identity_registry`+`test_push_gate_wiring`+`test_identity_tautology` **162 passed / 2 skipped**(매니페스트 수정 불요).
+
 ## 2026-09-20 (12차) -- 경영공시 PL 백필 병합 선행조건 ②③④ 배선 (계보 등재 · PL provenance 첫 검증 · 기대그리드 소스화 · 개념 등재부 리더)
 
 - 발주: 오케스트레이터. 판정 원본 `inbox/_resolved/20260918T0205Z__orchestrator__ALL__disclosure_sourced_pl_contract.md` 결정 1/3/4. ① 사이드카 발행은 parser 가 먼저 끝냈다(커밋 `fa08bfe`, 638->748셀). **⑤ 병합은 하지 않았다** -- parser 소관이라 조건부 승인으로 회신(`inbox/parser/20260920T1500Z__validation__ALL_2023.1Q-2026.2Q__disclosure_pl_merge_authorized.md`). 마스터(`PL_breakdown.json`·`kics_disclosure.json`·마스터 xlsx) 미수정.

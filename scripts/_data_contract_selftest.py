@@ -916,6 +916,94 @@ def f_bs_kics_baseline_break():
                        {q: (3600 if q == LATEST else 3000) for q in _BSK_QS})
 
 
+# --- S1~S6: validate_master_tables._check_pl_bridge 의 소스인식(2026-09-20 2차) -------------
+# 이 축은 `validate_data_contract.run_gate` 안에 없다 — `validate_master_tables` 의
+# `_check_pl_bridge`(leg-coverage 2e · ZERO_LEGS 2b)다. 그래서 `Env(inject=)` 로는 못 찌르고
+# 아래 `MT_CASES` 가 그 함수를 **직접** 부른다. run_gate 에 억지로 얹으면 "그 룰이 거기 있다"는
+# 거짓말이 되고, 룰이 죽어도 이 suite 가 통과하게 된다.
+#
+# 무엇을 고정하나: 경영공시 §2-1 은 LOB 다리(생명장기/자동차/일반)도 생명장기 10개 sub-leg 도
+# 싣지 않는다. 결측을 0 으로 채워 검산하면 우변이 통째로 0 이 되어 잔차가 item1 전액이 된다 =
+# 검산 불가. 그렇다고 "계보가 DISCLOSURE 면 통째 면제"로 짜면 그게 다음 라운드의 false-green 이다.
+# 그래서 **양방향**으로 건다 — 원천이 안 싣는 모양이면 SKIP(세어서 인쇄), 값이 하나라도 있으면
+# 계보와 무관하게 검산, 계보 미상이면 엄격(fail-closed).
+_MT_CO, _MT_Q = "KR9001", "2025.1Q"      # ZLEG_LEGIT·LOB_LEG_NA 어디에도 없는 회사 / 2024+ 분기
+
+
+def _mt(bucket, lineage, extra_lob=None):
+    """(pl, source_ids, extra_lob) — 한 버킷짜리 최소 fixture.
+    `lineage=None` 이면 source_ids={} = 계보 미상(엄격 판정)."""
+    key = (_MT_CO, _MT_Q)
+    return ({key: bucket},
+            {} if lineage is None else {key: lineage},
+            {key: extra_lob} if extra_lob else {})
+
+
+_MT_BARE = {"보험손익": 1000.0}                       # LOB 3다리·sub-leg 전부 부재
+# 다리가 **일부만** 결측 = 남은 값이 §2-1 이 준 것일 수 없다 → 계보와 무관하게 검산해야 한다.
+# (셋 다 present 면 라벨이 `보험손익(dual)` 로 가므로 leg-coverage 축을 안 찌른다.)
+_MT_PARTIAL = {"보험손익": 1000.0, "생명장기손익": 100.0, "자동차손익": 50.0}
+
+
+MT_CASES = [
+    # (이름, fixture, 기대 {legcov_fail, zleg, na_legcov, na_zleg})
+    ("S1 DART 계보는 종전대로 검사한다 (leg-coverage + ZERO_LEGS 생존)",
+     lambda: _mt(_MT_BARE, "DART"),
+     {"legcov_fail": 1, "zleg": 1, "na_legcov": 0, "na_zleg": 0}),
+    ("S2 DISCLOSURE 계보는 검산불가 — FAIL 아니라 SKIP, 그리고 세어진다",
+     lambda: _mt(_MT_BARE, "DISCLOSURE"),
+     {"legcov_fail": 0, "zleg": 0, "na_legcov": 1, "na_zleg": 1}),
+    ("S3 DISCLOSURE 여도 LOB 다리가 **일부만** 결측이면 검산한다 (계보는 통째 면제가 아니다)",
+     lambda: _mt(_MT_PARTIAL, "DISCLOSURE"),
+     {"legcov_fail": 1, "zleg": 0, "na_legcov": 0, "na_zleg": 1}),
+    ("S4 계보 미상은 엄격 판정 (fail-closed — 사이드카를 지워 검사를 끌 수 없다)",
+     lambda: _mt(_MT_BARE, None),
+     {"legcov_fail": 1, "zleg": 1, "na_legcov": 0, "na_zleg": 0}),
+    ("S5 DISCLOSURE 여도 sub-leg 이 **있으면** ZERO_LEGS 는 문다 (0.0 혼입 방지)",
+     lambda: _mt(dict(_MT_BARE, 생명장기원수손익=0.0), "DISCLOSURE"),
+     {"legcov_fail": 0, "zleg": 1, "na_legcov": 1, "na_zleg": 0}),
+    ("S6 DISCLOSURE 여도 추가 LOB(`2-N`) 가 있으면 검산한다",
+     lambda: _mt(_MT_BARE, "DISCLOSURE", extra_lob=300.0),
+     {"legcov_fail": 1, "zleg": 0, "na_legcov": 0, "na_zleg": 1}),
+]
+
+
+def run_master_tables_cases() -> tuple[int, int]:
+    """`_check_pl_bridge` 직접 호출형 케이스. (passed, failed)."""
+    import contextlib
+    import io
+
+    import validate_master_tables as V
+
+    passed = failed = 0
+    for name, fixture, expect in MT_CASES:
+        try:
+            pl, src, extra = fixture()
+            na: dict = {}
+            with contextlib.redirect_stdout(io.StringIO()):
+                _p, pb_fail, _s, zleg_rows, _z0 = V._check_pl_bridge(
+                    pl, extra, [], {}, source_ids=src, src_na_out=na)
+            got = {
+                "legcov_fail": sum(1 for r in pb_fail if r[2] == "보험손익(leg-coverage)"),
+                "zleg": len(zleg_rows),
+                "na_legcov": na.get("legcov", 0),
+                "na_zleg": na.get("zleg", 0),
+            }
+        except Exception as exc:  # noqa: BLE001
+            print(f"  ERROR {name}: {type(exc).__name__}: {exc}")
+            failed += 1
+            continue
+        if got == expect:
+            print(f"  PASS  {name}")
+            passed += 1
+        else:
+            print(f"  FAIL  {name}")
+            print(f"          기대={expect}")
+            print(f"          실제={got}")
+            failed += 1
+    return passed, failed
+
+
 CASES = [
     # (이름, fixture, 기대 rule 집합, 그 외 RED 허용 안 함)
     ("A  clean baseline (오탐 0)",              base_inject,               set()),
@@ -1091,6 +1179,13 @@ def run_selftest() -> int:
             if extra:
                 print(f"          오탐(예상 밖 RED): {sorted(extra)}")
             failed += 1
+
+    # `validate_master_tables._check_pl_bridge` 는 run_gate 밖이라 별도 가족으로 돈다.
+    print("-" * 78)
+    print("S. validate_master_tables._check_pl_bridge (leg-coverage 2e · ZERO_LEGS 2b) 소스인식")
+    mt_pass, mt_fail = run_master_tables_cases()
+    passed += mt_pass
+    failed += mt_fail
 
     total = passed + failed
     print("-" * 78)
