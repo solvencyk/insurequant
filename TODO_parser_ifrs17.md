@@ -1,9 +1,68 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
-> **Status (top, 2026-09-20 91st pass 직후): 경영공시 PL 백필 병합 순서 ① 완료 —
-> `PL_breakdown_provenance.json` 을 셀 단위 `source_file` 포함해 재발행(638→748셀, 채움
-> 730, null 18 전건 사유, 디스크 부재 0) + PRINTED_DASH 27칸 3축 판정.** 마스터
-> `PL_breakdown.json` 은 미변경(⑤ 병합은 validation ②③④ 뒤 별도 라운드). push 안 함.
+> **Status (top, 2026-09-20 92nd pass 직후): 경영공시 PL 백필 ⑤ 병합 완료 — `PL_breakdown.json`
+> 12,122→12,897행(+775칸, 15사×5항목×155셀, 덮어쓴 기존 셀 0) + DART 4Q LOB 결손 3건 raw 재추출
+> 20칸 + 사이드카 748→903셀.** `validate_data_contract` RED=0 YELLOW=123 exit 0(findings 124줄
+> 병합 전과 바이트 동일) · PL 골든 PASS(`--update` 불필요). **push 안 함. prepush verdict =
+> BLOCKED 이고 원인은 데이터가 아니라 게이트 룰 하나다** — `validate_master_tables` 의
+> `보험손익(leg-coverage)`·`PL_ZERO_LEGS` 가 소스인식이 아니라 DISCLOSURE 계보 153셀을 FAIL 로
+> 센다(`inbox/validation/20260920T1730Z` 발주).
+
+> **2026-09-20 (92nd pass) — 경영공시 PL 백필 ⑤ 병합(775칸) + DART 4Q LOB 결손 3건 raw 재추출.
+> 커밋 `e83b619`·`4faf083`.**
+>
+> 발주: `inbox/parser/20260920T1500Z`(validation, 병합 승인) + `20260918T0205Z`(원 발주). 둘 다
+> `status: answered`. 전문은 승인 티켓 §답변.
+>
+> ### ① 병합 — 775칸, 덮어쓴 셀 0
+>
+> 스테이징 `data/_derived/pl_backfill_disclosure_20260918.json` 의 merge_candidate 775칸
+> (15사 × 항목 1·16·22·23·24 × 155 (회사,분기), 합 17,871,426 백만원)을 루트
+> `PL_breakdown.json` 에 **새 행으로만** 넣었다. 행 12,122→12,897 · 셀 374→529 ·
+> 사이드카 748→903(전부 `DISCLOSURE`, `as_of_date` 없음 — 분기말일 기계삽입 금지).
+> 스크립트 `scripts/merge_pl_backfill_disclosure_20260920.py` 는 guard 9개 + 쓰기 직전
+> mtime/size 재확인 + 기존 행 스냅샷 대조(허가 밖 1칸이라도 바뀌면 abort)로 쓴다.
+> **셀 단위 전후 대조: ADDED 775 · REMOVED 0 · 공유키 변경 20칸(전부 5-2 허가 집합) ·
+> `값_당분기` 변경 0.** 항목 23 항목명은 스테이징 `법인세비용` → 마스터 정본 `법인세` 로
+> 정규화(529/529 확인) — `load_long()` 이 항목명으로 색인하므로 안 맞추면 개념이 갈린다.
+> `값_당분기` 는 같은 소스 안에서만 차분(Q1직접 280 · 차분 490 · None 5). **4Q 당분기
+> (=DART 연간 − 경영공시 3Q 누계)는 소스 혼합이라 안 만들었다.**
+>
+> ### ② 🔴 병합으로 드러난 DART 4Q 결손 3건 — 셋 다 원문에 있었다
+>
+> - **신한이지(KR0051) 2024.4Q** (12칸): 주석 '22. 보험영업손익' 은 LOB 가 아니라 **전환방법**
+>   으로 쪼개져 있다. owner 가 2025.4Q 를 xlsx 로 채울 때 쓴 규약(일반모형→생명장기 2/3/8,
+>   보험료배분접근법→일반손익 14)을 그 12칸에 **천원 단위까지 역산 재현**한 뒤 동일 적용.
+>   잔차 0.000546 백만원. FY2025 filing '2) 제22(전)기' 가 독립 확인.
+> - **AIG(KR0029) 2024.4Q·2025.4Q** (각 4칸): 주석 6-1~6-4 가 `[장 기|일 반|합 계]` 컬럼으로
+>   **LOB 분해를 실제로 싣는다** → `LOB_LEG_NA` 등재 대상이 아니다. item3=6-1장기−6-2장기 ·
+>   item8=6-3장기−6-4장기 · item2=3+8 · item14=(6-1일반−6-2일반)+(6-3일반−6-4일반).
+>   잔차 0.000147 / 0.001089 백만원. FY2025 `<전기>` == FY2024 `<당기>` 8/8 일치.
+>   **자동차 컬럼은 filing 354개 표 어디에도 없다** → item13 공백 유지, `LOB_LEG_NA` 등재는
+>   owner/validation 판정이라 제안만 했다. 예실차 행 짝이 일의적이지 않은 5/6/7/10/11/12 는
+>   **비웠다**(추측 금지).
+> - `data/_gold/pl_bridge_baseline.json` 에서 그 3줄 삭제(34→31). 등재부가
+>   `route: parser/ifrs17` 로 요구한 "raw 로 확정" 을 끝냈기 때문이다.
+>
+> ### ③ 뒷정리 — xlsx 시트 cherry-pick · public_exports · 골든
+>
+> `sync_master_xlsx_sheet.py "손익분해PL"`(변경 셀 20 · 추가 행 775 · 삭제 0, 검증 OK) ·
+> `export_public_sheets.py`(커밋 HEAD 에서, 12,897행) · `validate_live_artifacts` RED=0
+> STALE_BASELINE=0. **`tests/test_pl_breakdown_golden.py` 는 PASS 이고 `--update` 가 필요 없다** —
+> 그 골든이 고정하는 것은 빌더 산출 `data/dart/viz/pl_breakdown_master.json` 이지 루트가 아니고,
+> 이 병합은 빌더의 입력·코드·산출을 한 바이트도 안 건드렸다(빌더 재실행 295초 실측 PASS).
+> 루트 775행은 `build_pl()` 의 `_additive_merge` 가 보존한다.
+> `validate_golden_input_fingerprints` RED=0(6종 ok) · 오프라인 227 passed / 2 skipped.
+>
+> ### ④ 🔴 미해결 — 게이트 룰 하나 (validation 발주)
+>
+> `validate_master_tables` SUMMARY 가 `pl_bridge …/153NEW` · `zero_legs 9→97` 로 움직여
+> `test_master_tables_golden` 이 막혔다. **신규 실패 153/153 이 전부 DISCLOSURE 계보이고
+> 153/153 이 '잔차 == item1 전액'(우변 통째 0)** = 검산 불가의 지문이다(경영공시 §2-1 은 LOB
+> 분해를 안 싣는데 leg-coverage 는 결측 다리를 0 으로 채워 검산한다). **골든 `--update` 도,
+> 153건 baseline 등재도 하지 않았다 — 둘 다 false-green 이다.**
+> 재현 `scripts/_probes/_probe_20260920_pl_bridge_after_merge.py`,
+> 발주 `inbox/validation/20260920T1730Z`.
 
 > **2026-09-20 (91st pass) — PL provenance 사이드카 실물 발행(계보 축) + 백필
 > PRINTED_DASH 판정. 빌더 파생값 412개를 거짓 계보에서 분리.**
@@ -401,49 +460,6 @@
 > C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py
 > C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/sync_master_xlsx_sheet.py "17BS"
 > ```
-
-> **2026-09-11 (87th pass) — 코디네이터 course-correction 5건 전부 처리, 게이트 RED
-> 12→0.** 86th pass 직후 코디네이터가 지시한 5건: (1) 분기공시사 5개사(한화손해·흥국화재·
-> 삼성생명·푸본현대·한화생명) 9분기 백필 — 이미 86th pass 세션 도중 처리돼 있었음(재확인만).
-> (2) merge→build→validate 재실행. (3) **RED=12(예별손해·카카오페이손해 2023 QoQ hold) —
-> "게이트 판정이 아니라 원문으로 직접 판정하라"** 지시대로 DART 자본변동표 조회: 예별손해는
-> FY2023 사업보고서(rcept 20240408000665)에 유상증자(자본금+13.9억/자본잉여금+26.0억)+
-> 결손보전(자본잉여금→이월결손금 308.5억 재분류) 실측, 카카오페이손해는 FY2023 사업보고서
-> (rcept 20240329002933)에 유상증자 1,000억(자본금 1,000→2,000억, 2023.12.31) 실측 — 둘 다
-> 2023년 중 진짜 자본재구성이 있었다(추출오류 아님). `scratchpad/unhold_kr0004_kr1098.py`로
-> QoQ 게이트 우회 후 항등식(1=2+3)은 그대로 검산, 41칸 적재(기존 엔진출력 9칸과 값 100%
-> 일치 — 교차검증). (4) KR1011(IBK연금)·KR0080(AIA) 렌더링+비전 — 이미 86th pass 세션
-> 도중 완료돼 있었음(KR1011 15칸·KR0080 17칸, 전부 4Q/축척 항등식 교차확인, 재확인만).
-> (5) 사이드카 skip_reason "None 잔존" 재확인 — `grep -rzoP '"skip_reason":\s*null'` 전체
-> parts(29개)+사이드카 전수 스캔 **0건**, 코디네이터가 본 None은 이 세션 초반의 stale
-> 스냅샷으로 판단(이미 그때 수정 완료돼 있었음). 사이드카(`bs_from_disclosure.json`)가
-> 유일 정본이고 parts 개별파일은 재실행마다 대상축소로 내용이 줄어들 수 있다는 점을
-> 명시(완전 빈 파일 KR0002.json 1개만 정리 삭제, 스킵사유 있는 0-cell 파일은 보존).
->
-> **게이트 RED=12→3→0 경로**: merge(606칸)+rebuild(7959→7966행, combo-diff LOST=0)+
-> validate → RED=3(COMPLETENESS CENSUS 1 + MASTER_XLSX 2). 잔여 COMPLETENESS RED
-> 1건(**푸본현대생명 2023.1Q 항목3(자본총계) 결측**) 조사: 원문 raw PDF p22 에 '자본총계'
-> 578,326,429,715원 값이 실재하고 항등식(1=2+3) EXACT, 축척 앵커 완전일치, 현재 시점 QoQ
-> 재계산도 -9.7%로 정상 통과 — 과거(이 세션 초반, 앵커 후보가 지금보다 훨씬 적던 시점)
-> QoQ hold 로 단독 스킵된 뒤 항목1 이 이미 채워져 재타겟되지 않고 방치된 것으로 판단, 직접
-> 복원(`_fill_kr0083_2023q1_item3.json`). 추가로 KR0002(한화손해) 항목4 2023.1Q/2Q 도 같은
-> 부류(라벨 '기타자본구성요소' 정확매칭·항등식 EXACT·축척 완전일치인데 앵커가 부호반전
-> 구간이라 QoQ 상대비율이 폭발해 hold)로 원문 재확인 후 해제, KR0068(한화생명) 항목4
-> 2023.2Q 는 fitz 표가 라벨 21개를 한 칸에 뭉친 특수구조라 위치기반 복원(같은 표 9개
-> 타항목 전부 마스터와 EXACT 일치로 열정렬 검증 + 자본 5구성요소 합산=자본총계 EXACT로
-> 행정렬 이중검증). re-merge(607칸)+rebuild(7966→7967행, combo-diff LOST=0, GAINED=
-> KR0083|3|2023.1Q 1건만)+validate → **RED=3→2**(MASTER_XLSX 2건만) → `sync_master_xlsx_
-> sheet.py "17BS"`(7772→7967행 동기화) → **RED=0**. `tests/test_ifrs17_bs_golden.py
-> --update`(7967행·39사) + `validate_golden_input_fingerprints.py --update` 둘 다 재생성,
-> `validate_master_tables.py --no-build` 골든(`test_master_tables_golden.py`) 통과 재확인
-> (CSM/PL 축 무변경이라 회귀 없음).
->
-> **최종 수치**: `bs_manual_overrides.json` 363→1,208칸(순증 845칸), `IFRS17_BS.json`
-> 7,042→7,967행(순증 925행, 39사). `data/_derived/bs_from_disclosure.json` 사이드카
-> 607칸/240스킵(스킵 전부 skip_reason 有, 재현: 위 grep). 게이트 최종
-> `validate_data_contract.py` **RED=0 YELLOW=83**(기존 수준). push 안 함(여전히 금지).
-> 티켓 `## 답변` 갱신 완료.
-
 
 > 📦 **Status 이력은 `docs/todo_archive_parser_ifrs17.md` 로 이동했다** (2026-09-11, 내용 무수정 — 2026-09-03 (84th pass) 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 

@@ -153,3 +153,39 @@ DART 데이터가 있는 23사로 2026.2Q 대조: 전 항목이 마스터 `값`(
 판정**이다. 수치·근거·판정표는 정정 티켓 §답변을 보라.
 
 모델 Opus 5 · 약 2시간. push 하지 않았다.
+
+---
+
+### 2026-09-20 (92nd pass) — **⑤ 병합 완료. 이 발주서의 Phase 1 은 끝났다.**
+
+승인: `inbox/parser/20260920T1500Z__validation__…disclosure_pl_merge_authorized.md`
+(**전문은 그쪽 §답변**). 여기에는 이 발주서 §6 의 요구 대비 결과만 남긴다. 커밋
+`e83b619` + `4faf083`, **push 안 함**.
+
+| §6 요구 | 결과 |
+|---|---|
+| 단위 억원 ×100 = 백만원 | 스테이징이 이미 변환해 둔 `값`(백만원)만 썼다. 병합 775칸 합 **17,871,426 백만원** |
+| `값` = 경영공시 해당분기 열(누계) | 그대로 |
+| `값_당분기` = 같은 소스 직전분기 누계와 차분 · 1Q 는 `값` | Q1직접 **280** · 동일소스차분 **490** · **None 5**(직전분기가 `NO_PDF` = KR0150 2023.4Q) |
+| **4Q 당분기는 범위 밖, 기존 4Q 셀 건드리지 말 것** | 지켰다. 기존 행의 `값_당분기` **변경 0칸**. 4Q 당분기(=DART 연간 − 경영공시 3Q 누계)는 만들지 않았다 |
+| **기존 DART 셀 덮어쓰기 금지, 빈 칸만** | **덮어쓴 셀 0.** 155 (회사,분기)가 마스터에 아예 없던 칸이라 키 충돌 검사가 0 확인 |
+| 통째 read-modify-write 금지, 셀 단위 + guard | `scripts/merge_pl_backfill_disclosure_20260920.py` — 전처리 guard 9개 + 쓰기 직전 mtime/size 재확인 + 기존 행 스냅샷 대조(허가 밖 1칸이라도 바뀌면 abort) |
+| provenance `source_id: DISCLOSURE` · `DART` 라벨 금지 | 155/155 `DISCLOSURE` · `data/disclosure/…` · 디스크 부재 0. `DART` 라벨 0 |
+| `_SOURCE_LINEAGE` 등재 | validation 이 ② 에서 등재 완료(`data/disclosure/` → `DISCLOSURE`) |
+
+마스터 행 **12,122 → 12,897** · (회사,분기) **374 → 529** · 사이드카 **748 → 903**.
+`validate_data_contract` **RED=0 YELLOW=123 exit 0** 이고 findings 124줄이 병합 전과 정렬 후
+**바이트 동일**. `tests/test_pl_breakdown_golden.py` **PASS**(빌더 재실행 295초, `--update`
+불필요 — 이 병합은 빌더 산출을 안 건드린다).
+
+**§7 Phase 2(서술문 CSM 상각·위험조정·예실차)는 여전히 미착수다.** Phase 1 이 gate-clear 되면
+착수 가능하다. 지금 막혀 있는 것은 데이터가 아니라 게이트 룰 하나다 —
+`validate_master_tables` 의 `보험손익(leg-coverage)`·`PL_ZERO_LEGS` 가 소스인식이 아니라
+DISCLOSURE 계보 153셀을 FAIL 로 센다(`inbox/validation/20260920T1730Z` 로 발주).
+
+부수로 §5 에서 당신이 별건으로 남겨 둔 것 중 하나가 해소됐다: **KR0004 예별손해는 여전히 제외**
+(`backfill_excluded` 11셀)이지만, validation §5-2 가 병합으로 드러난다고 한 DART 4Q 결손 3건
+(신한이지 2024.4Q · AIG 2024.4Q·2025.4Q 생명장기손익)은 **raw 재추출로 전부 채웠다**(잔차
+0.000147~0.001089 백만원). 근거·표 실물은 승인 티켓 §답변 C 절.
+
+모델 Opus 5 · 약 2시간 40분.

@@ -4,6 +4,49 @@
 
 ---
 
+> **2026-09-11 (87th pass) — 코디네이터 course-correction 5건 전부 처리, 게이트 RED
+> 12→0.** 86th pass 직후 코디네이터가 지시한 5건: (1) 분기공시사 5개사(한화손해·흥국화재·
+> 삼성생명·푸본현대·한화생명) 9분기 백필 — 이미 86th pass 세션 도중 처리돼 있었음(재확인만).
+> (2) merge→build→validate 재실행. (3) **RED=12(예별손해·카카오페이손해 2023 QoQ hold) —
+> "게이트 판정이 아니라 원문으로 직접 판정하라"** 지시대로 DART 자본변동표 조회: 예별손해는
+> FY2023 사업보고서(rcept 20240408000665)에 유상증자(자본금+13.9억/자본잉여금+26.0억)+
+> 결손보전(자본잉여금→이월결손금 308.5억 재분류) 실측, 카카오페이손해는 FY2023 사업보고서
+> (rcept 20240329002933)에 유상증자 1,000억(자본금 1,000→2,000억, 2023.12.31) 실측 — 둘 다
+> 2023년 중 진짜 자본재구성이 있었다(추출오류 아님). `scratchpad/unhold_kr0004_kr1098.py`로
+> QoQ 게이트 우회 후 항등식(1=2+3)은 그대로 검산, 41칸 적재(기존 엔진출력 9칸과 값 100%
+> 일치 — 교차검증). (4) KR1011(IBK연금)·KR0080(AIA) 렌더링+비전 — 이미 86th pass 세션
+> 도중 완료돼 있었음(KR1011 15칸·KR0080 17칸, 전부 4Q/축척 항등식 교차확인, 재확인만).
+> (5) 사이드카 skip_reason "None 잔존" 재확인 — `grep -rzoP '"skip_reason":\s*null'` 전체
+> parts(29개)+사이드카 전수 스캔 **0건**, 코디네이터가 본 None은 이 세션 초반의 stale
+> 스냅샷으로 판단(이미 그때 수정 완료돼 있었음). 사이드카(`bs_from_disclosure.json`)가
+> 유일 정본이고 parts 개별파일은 재실행마다 대상축소로 내용이 줄어들 수 있다는 점을
+> 명시(완전 빈 파일 KR0002.json 1개만 정리 삭제, 스킵사유 있는 0-cell 파일은 보존).
+>
+> **게이트 RED=12→3→0 경로**: merge(606칸)+rebuild(7959→7966행, combo-diff LOST=0)+
+> validate → RED=3(COMPLETENESS CENSUS 1 + MASTER_XLSX 2). 잔여 COMPLETENESS RED
+> 1건(**푸본현대생명 2023.1Q 항목3(자본총계) 결측**) 조사: 원문 raw PDF p22 에 '자본총계'
+> 578,326,429,715원 값이 실재하고 항등식(1=2+3) EXACT, 축척 앵커 완전일치, 현재 시점 QoQ
+> 재계산도 -9.7%로 정상 통과 — 과거(이 세션 초반, 앵커 후보가 지금보다 훨씬 적던 시점)
+> QoQ hold 로 단독 스킵된 뒤 항목1 이 이미 채워져 재타겟되지 않고 방치된 것으로 판단, 직접
+> 복원(`_fill_kr0083_2023q1_item3.json`). 추가로 KR0002(한화손해) 항목4 2023.1Q/2Q 도 같은
+> 부류(라벨 '기타자본구성요소' 정확매칭·항등식 EXACT·축척 완전일치인데 앵커가 부호반전
+> 구간이라 QoQ 상대비율이 폭발해 hold)로 원문 재확인 후 해제, KR0068(한화생명) 항목4
+> 2023.2Q 는 fitz 표가 라벨 21개를 한 칸에 뭉친 특수구조라 위치기반 복원(같은 표 9개
+> 타항목 전부 마스터와 EXACT 일치로 열정렬 검증 + 자본 5구성요소 합산=자본총계 EXACT로
+> 행정렬 이중검증). re-merge(607칸)+rebuild(7966→7967행, combo-diff LOST=0, GAINED=
+> KR0083|3|2023.1Q 1건만)+validate → **RED=3→2**(MASTER_XLSX 2건만) → `sync_master_xlsx_
+> sheet.py "17BS"`(7772→7967행 동기화) → **RED=0**. `tests/test_ifrs17_bs_golden.py
+> --update`(7967행·39사) + `validate_golden_input_fingerprints.py --update` 둘 다 재생성,
+> `validate_master_tables.py --no-build` 골든(`test_master_tables_golden.py`) 통과 재확인
+> (CSM/PL 축 무변경이라 회귀 없음).
+>
+> **최종 수치**: `bs_manual_overrides.json` 363→1,208칸(순증 845칸), `IFRS17_BS.json`
+> 7,042→7,967행(순증 925행, 39사). `data/_derived/bs_from_disclosure.json` 사이드카
+> 607칸/240스킵(스킵 전부 skip_reason 有, 재현: 위 grep). 게이트 최종
+> `validate_data_contract.py` **RED=0 YELLOW=83**(기존 수준). push 안 함(여전히 금지).
+> 티켓 `## 답변` 갱신 완료.
+
+
 > **2026-09-11 (86th pass) — 17BS 경영공시(정기경영공시 raw PDF) 백필 신규 엔진 구축,
 > TIER2 15개사 21항목 대상 overrides 669칸 순증(363→1,032칸), 마스터 7,042→7,772행.**
 >
