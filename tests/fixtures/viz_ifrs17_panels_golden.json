@@ -24,7 +24,7 @@
       }
     },
     "sensitivity_heatmap.json": {
-      "sha256": "fd489cc093ea1239f890fc0682579f4878646b140a0e25f6541c2430777fd1c3",
+      "sha256": "012ce066bc82df38e2abcfb95eeda2677f7fc25e7583736545565cbdf8d68fe0",
       "companies": 32,
       "status_counts": {
         "ok": 31,

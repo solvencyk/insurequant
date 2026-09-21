@@ -1662,7 +1662,11 @@ def build_panel(
                         "company": company, "rcept_no": ov.get("rcept_no"),
                         "status": "ok", "period": ov.get("period"), "as_of": ov.get("as_of"),
                         "table_kind": "sensitivity_analysis", "unit": "억원",
-                        "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+                        # caption 은 '공시 각주 원문' 칸이다. override 행에는 원문 각주가 없으므로
+                        # 비운다 — 빌드 과정 설명("verified override — owner 1242Z")을 여기 적으면
+                        # 그대로 IFRS17.html 표 아래 muted 각주로 화면에 나간다(owner 지적 2026-09-21).
+                        # 이 행이 override 라는 사실은 아래 `_source` 가 들고 있다(기계용, 렌더 안 됨).
+                        "caption": "",
                         "scenarios": ov.get("scenarios", []), "_source": "override",
                     }
                 else:
