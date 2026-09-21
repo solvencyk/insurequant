@@ -1,0 +1,179 @@
+# TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
+
+> `TODO_publishing.md` 의 Status 이력 블록을 2026-09-21 에 **한 글자도 고치지 않고** 옮긴 것(최신이 위). 규칙: Status 는 최신 5개만, 밀린 항목은 이 헤더 바로 아래에 잘라 붙인다(CLAUDE.md §2-3).
+
+---
+
+**2026-09-17 (KR0073 2026.1Q 경과조치 후 지급여력비율 정정 — FSS 보도자료 대조, main 배포 완료)**:
+owner가 FSS 보도자료(`R26090720.pdf`, '26.6월말 기준 보험회사 지급여력비율 현황, 2026.9.17)를
+`kics_disclosure.json`과 대조해달라고 발주. 38개사(국내 공시대상, 외국 재보험지점 14사·예별손보
+제외) × 2개분기(26.1Q/26.2Q) × 전/후 152칸을 항목27로 대조 — 오차 대부분 억원단위 반올림 설계상
+차(<0.3%p)였는데 KR0073(교보생명) 2026.1Q 경과조치 후만 2.83%p(214.23 vs 정답 211.39) 진짜 오류.
+원인: 26.1Q 원본 공시의 미정정 item1/14/27_적용후가 26.2Q 공시의 정정 비교컬럼(FSS 보도자료와도
+일치)에 반영 안 됨 — "적용후 컬럼 파싱 불안정" 사각의 구체 사례. **한 곳**:
+`scripts/fix_20260917_kr0073_2026q1_headline_afterapply.py`로 3칸 정정(item1_적용후
+149556→149557 · item14_적용후 69811→70749 · item27_적용후 214.23→211.39). 부수효과로
+R5_기준금액(item14=item15-item22+item23) 적용후 항등식이 깨져서(하위 세부항목은 26.2Q 공시가
+재공시 안 함) `validate_kics_disclosure.py`·`validate_data_contract.py`에
+`AFTER_IDENT_ISSUER_INCONSISTENT` 등재부(발행사 자기모순 documented exception, 잔차 938.25 박제)
+신설(owner 승인). `sync_master_xlsx_sheet.py "K-ICS공시"`로 xlsx 동기화. 게이트 `RED=0` 확인
+(양쪽 gate). 격리 워크트리(`../insurequant-main-deploy`, origin/main 기준)로 kics_disclosure.json
++ `public_exports/K-ICS공시.json`·`manifest.json` 3파일만 cherry-push(`a84520c`). 라이브 확인:
+`curl -k https://www.insurequant.com/kics_disclosure.json` 200, KR0073 2026.1Q item27_적용후=
+"211.39" 확인. HTML 무수정. 워크트리 정리 대기 중.
+
+**2026-09-14 (2차 — 손보 2사 추가 적재 24→26사 + `value_verified` UH-25 화면축 배선, owner 승인)**:
+두 가지 독립 변경, 둘 다 jp 범위(한국 마스터 무수정 확인 — `git status --short` 결과 K-ICS/IFRS17/xlsx/public_exports/keep-list 0건).
+
+**① 共栄火災海上保険·ヤマップネイチャランス損害保険 적재 (손보 손해율 24사→26사)**: 오늘 오케스트레이터가 원문 PDF 직접 확인(항등식 2/2, 独立 대조)한 재시도 결과
+`J-ESR/nonlife_ratio_retry.json`(found 2 · unreachable 1=大同火災)을 `J-ESR/merge_nonlife_ratio_census.py`에 override 소스로 배선(신설 `load_retry()`
++ company_jp 매칭 시 그룹 A/B/C 원본 행을 통째로 대체, 고아 override는 즉시 `SystemExit`). 재생성 `nonlife_ratio_census.json`: found 24→26·unreachable 3→1,
+`_meta.identity_check` 재계산 결과 71건 중 불일치 0(신규 2사분 포함). `J-ESR/build_jesr_detail_json.py`의 `RATIO_ONLY_ID_BY_JP`에 2개 id 추가
+(`kyoei_fire_marine`·`yamap_naturance`, caveat 없음 — 둘 다 `RATIO_CAVEAT_CODE_BY_JP` 미등재, ticket 지시대로) — 이 매핑 외에는 손대지 않았고
+`build_ratio_only_companies()`가 census를 그대로 읽어 26사를 자동 생성(길이 불일치 시 self_check가 이미 RED로 잡는 구조라 별도 카운트 하드코딩 불요).
+census CSV(`fy2025_esr_census_20260912.csv`) 2행(共栄火災=not_yet 유지·ヤマップ=not_found 유지, `fy2025_esr_status` 무변경) 갱신 — `disclosure_url`을
+실제 확보한 PDF로, `doc_type`에 항등식 대조 위치(p.6/p.71, p.9/p.29) 명시, `checked_at`=2026-09-14, `notes`에 재현 가능하도록 방법 기록(共栄火災=TLS
+중간인증서 보강 combined_ca.pem 경로, ヤマップ=Playwright route-intercept로 Chromium JS실행+Python requests 네트워크대행 우회). 행-인덱스 `csv.reader`/
+`csv.writer` + `utf-8-sig`+LF 보존, `git diff`로 정확히 2줄만 바뀐 것 확인(바이트 라운드트립).
+
+**② `value_verified` 계약 — 화면이 "검증 못 함"과 "검증 통과"를 구분하게 배선(UH-25, 10/31 면제 개시 전 마지막 방어선)**: 새 판정 로직을 짜지
+않고 게이트의 두 정본을 그대로 재사용 — `unverified_value_reasons()`(발화 사유 판정식)·`load_source_exceptions()`(면제 조회, 유효성 검증 포함).
+`build_jesr_page_json.py`에 `compute_value_verified()`(judge) + `_exception_reason_by_key()`(면제 사유 텍스트만 별도 조회, 유효성 재검증 없음 —
+이미 검증된 `exempt` 키 집합과 교집합만 냄) + `check_value_verified()`(출력 모양 검사, 재판정 아님) 신설, `main()`에서 self_check 통과 직후·
+dedup 이전에 `out["records"]`(master·deploy가 dedup 전까지 dict 객체 공유) 각 행에 `{"state":"verified"|"unverified"|"exempt","reason":null|str}`
+부착. `build_jesr_detail_json.py`는 메인 루프·life_core_only 분기 둘 다 `public_by_en.get(company_en,{}).get("value_verified")`로 그대로
+가져오고(posted 아니면 자동 None), ratio_only 분기는 명시적으로 `None`("이 축의 대상 자체가 아니다") + self_check에 3중 강제(① ratio_only는
+반드시 None ② 전 회사 공통: state 가 verified면 reason null·아니면 reason 비지 않음 ③ `jp/jesr_esr.json`의 값과 divergence 0). **실측(오늘 기준)
+16/16 전부 `verified`**(발화 0, ticket 기대치와 일치) — `jesr_detail.json` 36사 중 verified 5(au_nonlife·明治安田損保·sumitomo_life·nippon_life·
+meijiyasuda_life, 즉 posted 5사와 정확히 일치)·null 31(ratio_only 26 + not_yet/life_core_only 나머지).
+
+**순서·고정점**: census 수정 → (source_url_health.json/esr_in_source_health.json 이미 오늘 `checked_at=2026-09-14` 최신 — census_max도 동일 날짜라
+재프로브 불요, staleness 0 확인) → ④(`build_jesr_page_json.py`) → ⑤(`build_jesr_detail_json.py`, 26사 반영) → ④ 재실행 → `generated_at` 제외 바이트
+비교로 고정점 확인(④·⑤ 둘 다 True). **ESR 16사 5필드(esr_pct/eligible_capital/required_capital/as_of/scope) 전건 diff 0**(작업 전 백업 대조).
+`pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py` **127 passed**(직전 라운드 111 → 증가, 신규 테스트가 이미 값검증 축을
+파라미터화해 커버하고 있었음). `scripts/prepush_check.py` **REDUCED(jp-scope) gate-clear**(비교 파일 11개 전부 jp 범위 — `J-ESR/*` 5 + `jp/jesr_esr.json`·
+`jp/jesr_detail.json` 2 + designer 동시작업 중이던 `jp/index.html`·`jesr_app.js`·`jp.css` 3(이번 세션 미접촉, `git status` 시점 대조로 확인), offline
+tests(jp 묶음) **258 passed 2 skipped**). `jp/*.html`·`jesr_app.js`·`jp.css`·`tests/test_jp_source_gate.py`·`docs/postmortems/` 전부 미접촉(ticket 금지
+항목). commit/push 없음(오케스트레이터 소관). 모델 Sonnet 5 · 소요 약 50분(정본 재사용 조사 15 + merge 확장 10 + value_verified 배선 20 + 파이프라인
+검증 5).
+
+**2026-09-14 (손보 손해율 24사를 `jp/jesr_detail.json` 에 ratio_only 레이어로 추가 + SOMPOダイレクト source_url 교체, owner 승인)**:
+`J-ESR/nonlife_ratio_census.json`(verdict=="found" 24사)을 `J-ESR/build_jesr_detail_json.py`에 새 브랜치로
+배선(`build_ratio_only_companies` — 기존 `extracted_sample_values.json` 스키마 파이프라인과 완전히 분리, 별도
+소스 파일을 읽는 독립 함수). **신규 계약 필드 2개**: `data_scope:"ratio_only"`(패널 스킵 신호, 기존 10사는 키
+자체가 없음="full") · `ratio_caveat:{code,text}|null`(text는 census `caveat` 필드를 런타임에 그대로 복사 —
+손으로 재입력 안 함). 4사에 caveat 부착: トーア再保険(`lae_excluded`)·ソニー損害保険(`ei_basis`)·レスキュー損害保険
+(`ocr_read`)·MS&ADインシュアランスグループHD(`simple_sum`). shape는 sompo_japan(not_yet) 선례보다 한 단계
+더 얕음 — `profit.ratios`(loss/expense/combined, cur=FY2025/prev=FY2024)만 채우고 `profit.items`/`core`={},
+`capital`/`items`={}, `capital_tree`/`risk_tree`/`sensitivity`=[], `risk`/`market_sub`=스키마 키 전부 null,
+`aggregation`/`by_line`/`core_history`/`profit_flow`=null(life_core_only 선례), `bs`=`build_bs_block(None)`
+재사용(=`{"status":"not_obtained",...}`, 기존 "비어있음" 표현 그대로, 새 shape 발명 안 함), `headline` ESR 4필드
+전부 null. `esr_status`는 `jp/jesr_esr.json` posted 목록 매칭으로 파생(재-CSV 파싱 안 함) — MS&AD만 `posted`
+(이미 랭킹에 실린 지주사, 단 이 detail 레이어는 ratio만이라 headline은 여전히 null — 후속 검토 대상으로 남김,
+이번 티켓 범위 아님), 나머지 23사 `not_yet`. `self_check`에 ratio_only 전용 블록 추가(24건 카운트+id 유일성+
+census 매핑 일치, 合算率 항등식 ±0.15 tol로 cur/prev 및 history series 전부 재검산, caveat는 지정된 4사에만).
+기존 `n_posted!=2 or n_not_yet!=5` 구조 단언은 `data_scope!="ratio_only"`로 필터링해 유지(`_meta.coverage`도
+동일하게 분리 + `ratio_only`/`ratio_only_posted`/`ratio_only_not_yet`/`ratio_only_caveat` 4필드 신설).
+**SOMPOダイレクト**: `J-ESR/fy2025_esr_census_20260912.csv`의 `source_url`을 분책(`insgenjo2026_05.pdf`,
+21p, 비율표 없음) → 전체책(`insgenjo2026.pdf`, 100p)으로 교체(행-인덱스 `csv.reader/writer`, BOM·LF 유지,
+diff 1행 확인) — 교체 전 `J-ESR/jesr_http.get`으로 200·`application/pdf`·2,486,089 bytes 확인 + PyMuPDF로
+p9/p68 정미損害率72.8%/事業費率24.3% 본문 대조(census B조 수치와 일치), p64 5개년표 주석에서 esr not_yet
+플레이스홀더 재확인(`esr_status`는 유지, URL만 교체). **파이프라인 순서**: census 수정 → `check_source_urls.py
+--all`(dead=0) → `check_esr_in_source.py --all`(found=16/not_found=0) → `build_jesr_page_json.py` 1차 →
+`build_jesr_detail_json.py`(24사 추가) → **`build_jesr_page_json.py` 2차 재실행 필수**(`_meta.group_children`이
+`jp/jesr_detail.json`을 읽어 지주↔자회사를 잇는데, 1차 실행 시점엔 아직 24사가 없어 stale — 재실행 후
+`test_jp_deploy_matches_census.py`가 잡아낸 이 순서 문제를 여기 기록) → 고정점 확인(2회 연속 실행 바이트 동일,
+`generated_at` 제외) → `pytest tests/test_jp_source_gate.py tests/test_jp_deploy_matches_census.py` **111
+passed** → `prepush_check.py` **REDUCED(jp-scope) gate-clear**(242 passed 2 skipped, 비교대상 13개 전부
+jp 범위). **ESR 16사 값 불변 확인**(esr_pct/eligible_capital/required_capital/as_of/scope 5필드 전건 byte
+diff 0, 실행 전/후 대조). `jp/*.html`·`jesr_app.js`·`jp.css` 6개 파일이 워킹트리에 동시에 M 상태였으나(designer
+병렬 작업, 이번 세션 미접촉 확인 — `git status --short` 시점 대조) 커밋 시 반드시 이 티켓 7개 파일만 명시
+add(`J-ESR/build_jesr_detail_json.py`·`esr_in_source_health.json`·`fy2025_esr_census_20260912.csv`·
+`jesr_master.json`·`source_url_health.json`·`jp/jesr_detail.json`·`jp/jesr_esr.json`). git commit/push는
+오케스트레이터 소관(미실행). 모델 Sonnet 5 · 소요 약 45분(케이스 조사 15 + 빌더 확장 20 + 파이프라인 검증 10).
+
+**2026-09-12 (J-ESR `/jp/` 페이지 데이터 JSON 신설 — `20260912T0446Z`, J-ESR 킥오프 2차 조각)**: designer가 만들 일본
+ESR 현황 페이지가 fetch할 JSON을 조립(HTML은 무수정, designer 소관 별도 티켓). 신규 `J-ESR/build_jesr_page_json.py`
+(stdlib만: csv/json/re/datetime/pathlib, self-check 내장 exit 1). 입력 `J-ESR/fy2025_esr_census_20260912.csv`(79사,
+`fy2025_esr_status==posted` 15사만) + `J-ESR/jesr_sources_2026Q1.csv`(보조 열, company_jp 조인). **판단 근거**: `ticker`는
+시간불변이라 무조건 조인하되, `total_assets_bn_jpy`/`target_pct`/`basis`는 sources 행의 `as_of`가 census 행과 **일치할
+때만** 조인 — 상호회사 4사(日本生命·住友生命·明治安田生命·富国生命)는 sources csv에 구분기(2025.3~2025.9) 값만 있어
+그대로 조인하면 새 posted 값에 옛 분기 수치가 잘못 붙는다. 출력: `J-ESR/jesr_master.json`(6월 스키마 전량 교체 — 이
+스크립트가 유일한 생산자) + `jp/jesr_esr.json`(신규 `jp/` 폴더, 바이트 동일). **실측**(exit 0): 15 records · census
+{total:79,posted:15,not_yet:62,not_found:2} · preliminary=5(LifeNet·朝日生命保険·富国生命保険·かんぽ生命保険·住友生命保険,
+notes 내 속보/잠정 키워드 검출·notes에 근거 병기) · `cmp` 바이트동일 · BOM 없음(`7b0d0a`/`23202d`) · `ast.parse` 통과 ·
+`git status --short J-ESR/ jp/` = 딱 3건(`M jesr_master.json`, `?? build_jesr_page_json.py`, `?? jp/`) — 루트 마스터·
+HTML·xlsx·public_exports·keep-list 무변경 확인. **아직 라이브 미반영**(이번 티켓 범위 밖, owner 승인 후 별도 라운드).
+라이브 반영 시 필요 3가지를 `inbox/publishing/20260912T0446Z` 답변에 기록: ① keep-list(§1/§9) 신규 페이지 경로 추가 +
+**4-페이지 하드코딩이 실측 3곳**(`claude-agent-publishing.md` §1 grep 스니펫 · `tests/test_deploy_assets.py` `PAGES` L27 ·
+`tests/test_push_gate_wiring.py` `_HTML` L378)에 박혀 있어 갱신 안 하면 새 페이지 fetch가 세 게이트 모두에서 안 보임
+② master xlsx 시트는 불요(J-ESR은 K-ICS/IFRS17 xlsx 체계 밖, `build_master_xlsx.py` `MASTERS`·`sync_master_xlsx_sheet.py`
+grep "jesr" 매치 0) ③ `status_report.py` §4는 ①의 `_HTML` 갱신 전까지 `jp/jesr_esr.json` fetch를 못 보므로 지금은 무검사.
+티켓 `status: answered`로 전환.
+
+**2026-09-11 (지식재산 0원 조치 — 저장소 쪽 6건, owner 지시 "진입장벽 낮게")**: 배경 `artifacts/legal/ip_protection_report_20260911.md` §6. HTML·`privacy.html`·`download-survey.js` 는 designer 가 동시에 작업(publishing 무수정). **한 일**: ① 루트 `LICENSE` 신설(19줄, 한국어+영어 요약, BOM 없음) — All rights reserved 이되 열람·출처표기 인용·사내분석 허용, 자동수집·대량재배포·재판매·유사서비스 금지, 저작권법 제4장의2 데이터베이스제작자권 고지, 원천 권리는 각 공시주체, 운영자 조상욱. ② `robots.txt` — 기존 keep-list 경고 주석 유지, `User-agent: *` 는 `Allow: /` + `Disallow: /public_exports/`(방명록 스냅샷, 렌더링 미사용), AI **학습용** 크롤러 8종만 차단(GPTBot·CCBot·ClaudeBot·anthropic-ai·Google-Extended·Bytespider·meta-externalagent·Applebot-Extended), 사용자 대행 fetcher(ChatGPT-User·PerplexityBot)는 **의도적으로 안 막음**(AI 검색 유입 수용), 이용안내 URL 주석 1줄. ③ `public_exports/manifest.json` 지문 — 생성 스크립트 `scripts/export_public_sheets.py` 를 고쳐 재실행. designer 가 먼저 `license`(URL)+`build_id` 를 넣어 두었기에 그 위에 `license` 를 조건 문장으로, `terms_url`·`copyright` 를 추가(`build_id`=HEAD short sha 는 그대로). download-survey.js 가 읽는 `sheets`·`generated_at_utc`·`build_id` 와 `validate_live_artifacts` CHECK 6(`sheets` 만 대조) 모두 무영향 확인. 재실행 결과 13개 시트 스냅샷은 HEAD 와 **바이트 동일**(드리프트 0), manifest 만 +5줄. xlsx 표지 이용조건 행은 **클라이언트(download-survey.js buildCoverSheet)** 가 만들고 designer 가 이미 추가했으므로 publishing 은 손대지 않음 — 마스터 xlsx 는 이 경로에 없어 수식캐시 위험 0. ④ `docs/ip/investment_record.md` 신설 + 재측정 스크립트 `scripts/measure_investment_record.py`(추정 0, 전부 git/저장소 실측; 마스터는 `git show HEAD:` 로 읽어 동시세션 반쯤 쓴 파일 배제). 실측: 첫 커밋 2025-09-15 · 561 커밋 · 57 작업일 · scripts 278파일 84,175줄 · src 33/8,822 · K-ICS 룰 id 30(골든 findings 16,140) · validator rule id 123 · 골든 8 · 테스트 함수 266 · 마스터 13개 53,530행 · 39사 · 16분기(2021.4Q~2026.2Q) · 공시 PDF 550 · DART raw 1,297 · gold xlsx 44 · resolved 티켓 386 · 포스트모템 10. ⑤ IR xlsx 11개 `git rm --cached`(디스크 보존, 이력 purge 안 함=owner 결정) + `.gitignore` `data/ir/**/*.xlsx`. 파이프라인은 전부 디스크 경로로 읽음(`crawl_ir_db.py`·`_build_lob_cross_check.py`·`check_data_file_integrity.py`, `git show` 참조 0) → 영향 없음. main 에는 원래 없음. ⑥ **keep-list 등록 근거**: `LICENSE` 는 어떤 HTML 도 참조하지 않아 §1 grep 도출에 안 걸리지만 공개 `main`(=GitHub 공개 저장소 + `https://www.insurequant.com/LICENSE`)에 있어야 의미가 있으므로 robots.txt·`.nojekyll`·CNAME 과 같은 **"HTML 무참조 상시 유지 파일"** 로 분류. designer changelog 2026-09-11 "미배선 잔여"(robots.txt 상시 유지 배선, publishing 소관)를 이 기회에 같이 배선: `claude-agent-publishing.md` §1 표 신설 + §9 스냅샷에 5줄, `docs/launch_runbook.md` §2 소절 신설, `tests/test_deploy_assets.py::test_always_keep_files_exist_and_are_documented`(`ALWAYS_KEEP` 5개 존재·BOM·두 문서 등재 강제). `pytest tests/test_deploy_assets.py` **11 passed**. **commit/push 없음**(스테이징은 `git rm --cached` 11건만). **다음 배포 때 keep-list 에 `LICENSE`·`robots.txt` 를 반드시 포함**(§3 절차 2 의 checkout 목록).
+
+**2026-08-25 (소진율 100% 캡 제거 — 데이터는 실제값, 화면만 `100%+`, `20260825T1130Z` iter2)**: owner 2026-06-14 결정(*"raw data 에선 144% 로 살리고 K-ICS.html 에서 보여줄 땐 100%+ 로 표시"*)을 **데이터 쪽에서 이제야 이행**했다. `wire_capital_securities_to_utilization.py:122` 의 `min(t1_util, 100.0)` 이 tier1 소진율을 100 에서 잘라, 위 항목의 배포본 동기화로 0.0% 가 걷히자마자 **6사가 전부 평평한 `100%`** 로 그려졌다(한도에 정확히 걸친 회사와 구분 불가). tier2 는 같은 빌더에서 처음부터 안 잘랐다 — 그 **비대칭 자체가 버그의 지문**이었다. **고친 곳 6개**: ① `wire_…py:122` 캡 제거(tier2 L140 과 동일 규약, `utilization_pct_raw` 는 하위호환 별칭으로 유지) ② `validate_live_artifacts.py:465` 항등식 `min(100, n/lim×100)` → `n/lim×100` + 옛 주석(캡이 owner 결정이라던 것) 교체 ③ `compute_tier1_utilization.py` **상류 빌더에도 같은 캡이 있어 같이 제거**(L412 primary·L414 strict) + `utilization_cap` 정의 문구를 "규정 다.(1) 재분류는 사실이나 표시값을 자를 근거가 아니다"로 재작성 — 문구만 고치면 다음 분기에 그 빌더가 ②의 새 항등식을 그날 바로 깨뜨린다 ④ `forward_capital_simulation.py:321` 은 **tier2 전용이라 정당**, 사유를 그 자리에 주석으로 기록(tier1 은 `_pick_kics_t1_baseline` 이 금액 필드만 봄) ⑤ `docs/tier1_hybrid_utilization_definition.md` 에 소진율 4필드 의미 표 + "왜 캡이 없나" 절 신설 ⑥ `sync_tier_utilization_to_deploy.py --apply` 로 배포본 반영. **6사 before→after(데이터)**: NH농협 100.0→192.9 · 하나생명 100.0→187.0 · 하나손해 100.0→144.1 · 코리안리 100.0→139.8 · 한화생명 100.0→138.5 · KDB생명 100.0→113.4. 분자(발행액)·분모(한도) 불변, `git diff kics_tier1_utilization.json` = **6줄**, tier2 배포본·빌더 산출물은 **바이트 동일**. **화면 직접 확인**(`python -m http.server 8889` + Playwright headless, 회사 선택은 실제 `<select>` 조작, **HTML 무수정**): 6사 도넛 가운데가 `100%+`(캔버스 스크린샷), 툴팁이 `사용: 100%+ (실제 144.1% · 발행액이 인정한도 초과)` 로 **실제값 병기**, 원호는 `[100, 0]`(360° 한계로 의도된 캡), 하단 노트는 `발행 1,000억원 / 한도 694억원` 원값. 대조군 삼성화재(발행 0)는 `0%` 정상. **변이시험으로 게이트 확인**: 캡을 되돌려 넣으면 `validate_live_artifacts` **exit 2**(`TIER_UTILIZATION_IDENTITY` 6 + `TIER_DEPLOYED_VALUE_DIFFERS` 6), 복원 후 sha256 일치·exit 0 — 캡이 다시 들어오면 push 가 막힌다. `utilization_pct` 소비처 **전수 grep** 결과 ≤100 가정이 남은 곳 0(K-ICS.html 은 `pct > 100` 분기가 이제 살아남 / `validate_data_contract.py:1535` R-T2-UTIL 은 tier2 전용이라 의미 불변). **게이트 최종 `scripts/prepush_check.py` exit 0**(`RED=0 · K-ICS clear · domain pass · DART raw 유실 0 · inbox 위반 0 · offline tests 230 passed/1 skipped → gate-clear`) — 문서·티켓 편집까지 끝낸 최종 트리 재실행값이고 편집 전후 두 번 다 exit 0. `emit_capsec_provenance.py --check` 0 out of sync. **HTML 4개 무수정**. ⚠️ `scripts/validate_live_artifacts.py` 는 내 훅(소진율 항등식) 외에 **다른 세션의 미커밋 변경**(`RULE_REASON` INSPL_CSM_AMORT_BAND 문구)이 섞여 있어 커밋 시 훅 단위로 골라 담아야 한다. **owner 승인 대상 = 도넛 6칸 `100%` → `100%+`**(값 자체를 바꾸는 게 아니라 2026-06-14 결정 이행). commit/push 없음.
+
+**2026-08-25 (라이브 오표시 수정 — tier 소진율 도넛 4사, `20260825T1130Z`)**: **화면에 틀린 숫자가 나가 있던 것을 고쳤다.** 원인 한 문장 = **빌더 산출물 `output/tier{1,2}_utilization/*_20261Q.json` → 배포본 루트 `kics_tier{1,2}_utilization.json` 을 갱신하는 조립 스크립트가 저장소에 존재한 적이 없어서**, 2026-07-22 `a629e34`(K-ICS.html 인라인 147KB 분리) 때 손으로 한 번 복사된 스냅샷이 굳었고 2026-08-03 `cb084e7`(DART per-bond 24사→39사)로 빌더만 갱신됐다. 배포본을 쓰는 코드 전수 grep = **0곳**(`emit_capsec_provenance.py` 는 읽기만), 배포본은 `a629e34` 이후 diff 0. 빌더가 정본인 근거 = `wire_capital_securities_to_utilization.py` 재실행 시 산출물 **바이트 동일**(diff 0) + `data/bonds/capital_securities_fy2025.json` 에 해당 채권 실재(하나손해 신종 1,000억 2024-05-14 등). **전수 확인 39사×2파일=78행**: 어긋난 곳 **5사 / 25필드**, 전부 `배포본 0 → 빌더 값` 한 방향(반대방향 0 = 통째 교체로 잃는 값 없음). **화면 바뀌는 값 7개**: 하나손해 tier1 0.0%→100.0%(발행 0→1,000억) · 하나손해 tier2 0.0%→13.2%(인정 0→306.1억) · 아이엠라이프 tier2 0.0%→40.6%(0→1,324.3억) · IBK연금 tier2 0.0%→22.2%(0→797.8억). 한도(분모)는 전부 불변. **티켓의 3사-tier1 서술은 tier1/tier2 혼동** — tier1 에서 화면이 바뀌는 회사는 하나손해 1사뿐이고, 아이엠라이프(전액 pre-2023 경과조치 면제)·IBK연금(신종 미발행)·악사(call 2025-12-31 이 as-of 이전이라 인정액 0)의 0.0% 는 **정답**이다. **조치**: 빠져 있던 조립 단계를 `scripts/sync_tier_utilization_to_deploy.py`(신설, 기본 dry-run·`--apply` 반영, 배포본 포맷 indent=1·CRLF 보존해 git diff 가 값 25줄만)로 만들고 프롬프트 §2.1 에 "돌렸으면 반드시 이것도"로 명문화. `emit_capsec_provenance.py --check` = 0 out of sync(사이드카는 분기·계보만 담아 재발행 불요). **등재 해제**: `data/_gold/live_artifact_baseline.json` 의 `TIER_DEPLOYED_VALUE_DIFFERS` 4건 + `_counts` 2키 삭제(게이트가 `BASELINE STALE 4건` 으로 알린 뒤 삭제 — 등재부 `_promote` (1) 절차대로). 게이트: `validate_live_artifacts` RED=0 STALE=0, **내 변경분만 있던 상태의 `prepush_check.py` = exit 0**(offline tests 198 passed). ⚠️ **확인용 재실행은 exit 2** — 그 사이 다른 세션이 `PL_breakdown.json`·`user_pl_cells.json` 을 고쳐(KR0070 에이비엘 item7, `inbox/parser/20260825T1120Z`) `test_master_tables_golden.py` 가 `pl_bridge:2503P/26F → 2513P/16F` 로 움직였다. 실패는 그 한 건뿐이고 나머지 카운트는 전부 골든과 일치 — **PL 축 전용이라 내 변경(tier 배포본·baseline·문서)과 무관**하고, 골든 재생성은 그 수정의 소유자(parser/ifrs17) 몫이다. `pytest test_deploy_assets.py test_push_gate_wiring.py` 55 passed. **HTML 무수정 · commit/push 없음**(owner 승인은 오케스트레이터). **티켓 §2 는 못 고친다**: `NB_CSM_multiple.json` 2026.2Q 재생성은 분모 `data/kidi/premium_summary.json` 이 디스크에 없고(gitignore, git 복구 불가) `data/kidi/FY2026_Q2/` 도 없어 빌더가 `load_wolnap()` 에서 즉사한다 — 강행하면 배수 전부 null 이 되고 기존 분기 월납까지 통째 유실(파일 전체 재작성 빌더). **막힌 지점 = KIDI 재수집(owner 보류 사안)**, `NB_CENSUS_MISSING` 31건은 등재 유지. > ⚠️ 공유 트리 주의: `scripts/validate_data_contract.py` · `data/_gold/user_pl_cells.json` 은 **다른 세션**이 수정 중 — 커밋 시 내 4파일(배포본 2 + baseline + 신설 스크립트 + 프롬프트/TODO/changelog/티켓)만 골라 담을 것.
+
+**2026-08-25 (프롬프트 정합 — 이상치 분류 주기 확정)**: validation 티켓(`inbox/_resolved/20260825T0130Z`) 처리. 2026-08-25 커밋 `22697c2`로 일반 이상치 발견/트리아지가 push 게이트에서 분리(삭제 아님 → `scripts/scan_generic_anomalies.py`)되면서 stale해진 프롬프트 문장 4개를 코드 대조로 확인 후 정정. **핵심 결정: 이상치 발견+LLM-skeptic 은 push마다가 아니라 "분기 라운드 1회"로 돌린다** — 실행 주체(publishing)·4개 트리거(분기 라운드 첫 push 전 / 새 마스터 온보딩 / 빌더 대개편·±100행 뒤채움 / owner 요청)·기록 위치(라운드 리포트 + 이 TODO)를 `claude-agent-publishing.md` **§3.0b**에 명문화. 폐지도 "owner 요청 시에만"도 기각(근거: 산술 게이트는 내부적으로 닫히는 단위오류(BNP 1.77조)를 못 잡는다 / 문서에만 있고 아무도 안 부르는 단계가 이 저장소의 반복 실패형태). §3.0도 실제 체인(①·①b K-ICS·①c 도메인 4종·③ inbox·④ 오프라인 테스트)으로 갱신 — 종전 서술은 이상치 건 이전에 이미 2026-08-21 배선 4종이 통째로 빠져 있었다. 스캐너 실측(`--no-write`, 산출 JSON이 git 추적이라 트리 안 더럽힘): 후보 224(PEER_OUTLIER 147·COHORT_ZERO 77) → REAL=77 UNCERTAIN=6 NOISE=134 OWNER_CONFIRMED=8 → skeptic 입력 83건(2026-06 이후 **미분류 방치 중**, 다음 분기 라운드에서 소화). **부수 발견**: 무관한 stale 사실 `"prepush_check.py는 validate_kics_disclosure.py를 호출하지 않는다"`가 4곳에 복사돼 있었는데 2026-08-21 단계 1b 배선으로 이미 거짓(정반대를 퍼뜨리고 있었음) — `docs/launch_runbook.md`·`.claude/skills/launch-runbook/SKILL.md`·`.claude/skills/incident-postmortem/SKILL.md`(frontmatter+본문 함정표) 정정. `docs/postmortems/PM-2026-06-16` 배선표에는 후속 정정 각주 추가(이력은 보존). **단 SKILL 2건은 `.gitignore:86`이 `.claude/`를 통째로 무시해 git에 안 실린다 — 이 머신에만 반영됐고 다른 클론에는 stale 문장이 남는다**(스킬 = 머신-로컬 운영정본이라는 기존 계약대로이나, "고쳤다"를 "전파됐다"로 읽지 말 것). `docs/` 4건은 추적되므로 커밋 시 전파된다. 검증: 편집 5파일 UTF-8 BOM 없음, `pytest test_deploy_assets.py` 10 passed, inbox 위생 위반 0. **미착수 권고 1건**: `scan_generic_anomalies.py`가 화면에 후보 8건만 찍고 정작 조치 대상 83건(특히 skeptic 스코프인 UNCERTAIN 6건)은 JSON에만 남긴다 — 게이트 밖 수동 스크립트는 터미널이 곧 UI라 UNCERTAIN 전건 인쇄 권고(스크립트 소유자 = validation, 코드 미수정). 커밋/푸시 없음.
+
+**2026-08-20 (배포 12차)**: 이전 턴에서 남겨뒀던 "2023년 준비금 뒤채움 과대계상" 건이 parser+validation 왕복으로 해소된 것을 확인 후 배포. `IFRS17_BS.json` 6,953→6,855행(뒤채움 사본 98칸 제거+원문대조 10칸 정정) — 삭제분은 validation이 FS-API 캐시 전수 조회로 실관측 0건 확인, 정정분은 원문 raw 대조로 이중검증됨(4중 독립검증 기록 확인 후 진행). combo-diff로 재확인(lost 98/gained 0/value-changed 10, 티켓 수치와 일치). 부수로 R-RSV-1 래칫 baseline 키 구조 버그도 같이 고쳐짐(구간축소를 오탐 RED로 잡던 것). 골든 fixture 재추적(이전 커밋에 stale 버전이 실려 있던 걸 최신화). xlsx 17BS 시트 재동기화. `55ef3ec..346e4da`. 라이브 확인: 6,855행, 삼성화재 2023.2Q 해약환급금준비금=556,503.49(정정값) 확인, 콘솔 에러 0.
+
+**2026-08-20 (배포 11차)**: 2026.2Q 배당 갭 해소 배포 — `dividend.json` 1,924→2,043행(+119, DART alotMatter negative-cache 해제로 19개사 신규 유입) + xlsx '배당' 시트 동기화(공식 xlsx skill, 다른 8개 시트 무변경 확인, 수식 0개라 캐시 위험 없음). `a0979b9..55ef3ec`. 게이트 RED=0, combo-diff 손실0, `test_dividend_golden.py` 재생성 확인. 라이브: 2,043행·2026.2Q 24개사 fetch 확인, 콘솔 에러 0. `inbox/publishing/20260820T1815Z`(parser)·`20260820T1500Z`(validation, "masters ready" 통지) 둘 다 답변·`_resolved/` 이동 — publishing inbox 전부 drain됨.
+
+**2026-08-20 (배포 10차)**: 8/19~20 parser 작업분 전수 확인 후 배포(`5c27538..a0979b9`). 사전 확인: `IFRS17_BS.json` combo-diff에서 8셀 LOST 발견 — TODO_parser_ifrs17.md 24th pass 기록 대조해 OFS/CFS 표선택 버그 정정으로 인한 의도된 삭제임을 확인(DB손해·한화생명 2023.1Q 연결오염 제거, 문서화됨). `CSM_waterfall.json`은 키 동일(0 lost/gained)인데 diff 39,590줄이라 값 단위로 재대조 — 실제 값변경 6셀뿐(예별손해 부호수정, 미래에셋생명 2026.2Q CSM상각 결측해소, 둘 다 기존 티켓과 일치). `kics_forward_capital.json`은 순수 추가(quarter-agnostic baseline 키, 기존값과 동일). 게이트 RED=0, BS항등식 356P/0F, `pytest test_deploy_assets.py` 10 passed. 라이브 확인: BS 6,953·CSM 2,136행, 미래에셋생명 CSM상각=-1128.3(결측 해소) fetch 확인, 콘솔 에러 0.
+
+**2026-08-20 (gold-overlay 착수)**: owner 승인 받아 `20260620T0859Z` 착수·완료(`71914c3`, 로컬 커밋 — scripts/tests라 main 미배포). PL/CSM 오버레이 파일(`data/dart/viz/{pl,csm}_manual_overrides.json`)을 K-ICS 관례에 맞춰 `data/_gold/user_{pl,csm}_cells.json`로 이전, `build_root_masters.py`/`emit_ifrs17_provenance.py` 경로 갱신. 진짜 구멍이던 `sync_owner_fills_to_json.py`(xlsx H열 동기화가 루트 JSON에 직접 써서 리빌드에 클로버되던 경로)를 gold 오버레이 경유로 리라우팅(즉시반영은 유지). 회귀 테스트 신설(`tests/test_gold_overlay_survives_rebuild.py`, tmp_path 격리, 2번 연속 리빌드에도 gold 셀 생존 확인, 3/3 pass) — `build_root_masters.py` 실행 금지 원칙은 유지(직접 실행 안 함). `user_pl_confirmed_cells.json`(skeptic suppress)은 스키마가 달라 병행 유지. 부수 발견: 커밋 직전 IFRS17_BS.json이 다른 세션 작업으로 5,686→6,209행 되며 RED=12 — 내 스코프 아니라 커밋에서 제외. 부수 사고(경미): 세션 시작 전부터 staged였던 무관 archive rename 8건이 커밋에 같이 딸려감(순수 rename, 데이터 위험 없음) — `git commit`이 add한 것만이 아니라 index 전체를 커밋한다는 걸 또 놓침.
+
+**2026-08-20 (배포 9차 + 정리)**: owner 상태점검 티켓(`inbox/publishing/20260820T0033Z`) 대응. 워킹트리에 미커밋 상태로 쌓여있던 루트 마스터 3종(CSM/PL/BS) 발견 — combo-diff로 안전 확인 후 WIP 체크포인트 커밋(`4592f1e`), IFRS17.html 증분(원천테이블 연도모드 4개년 캡 수정, 2021년까지 늘어지던 버그)도 검증(`eqYearPeriods()` 실데이터 실행 확인) 후 커밋(`a6acee6`). main 배포(`fca6560..5c27538`): IFRS17_BS.json(5,587→5,686) · PL_breakdown.json(8,554→8,650) · IFRS17.html. 라이브 확인 완료. 골든 stale 건은 parser에 리마인드만(기존 발주 유지). gold-overlay 통일 건(`20260620T0859Z`)은 여전히 미착수 — owner 확인 필요하다고 답변에 명시. 나머지 68건 미커밋 파일은 타 stage 소관이라 미손댐.
+
+**2026-08-19 (배포 8차)**: IFRS17_BS.json 준비금 세부확대(22분기, 5,028→5,587행) + IFRS17.html 원천 테이블 패널 배포(`5e0af59..fca6560`). 배포 전 combo-diff 손실0·RED=0·BS항등식 356P/0F·`node --check`·실제 렌더함수 라이브데이터 실행(항등식 gap=0) 전부 확인. **특이사항**: `tests/test_ifrs17_bs_golden.py` FAIL(픽스처 stale, 5,389→5,587행 drift) — 데이터 자체는 안전 확인됐으나 골든 재생성은 빌더 소유자 판단이 필요해 parser에 발주(`inbox/parser/20260819T0858Z`), owner 지시대로 배포 먼저 하고 골든은 별도 트랙으로 진행. 라이브 확인: 원천 테이블 18행 렌더, 콘솔 에러 0.
+
+**2026-08-18 (배포 7차)**: index.html CSM 버블맵 로그축 자동범위 수정 — `9619297..5db2610`. ECharts 로그축이 데이터 최댓값(~1.7조)을 다음 10의 거듭제곱(10조)으로 반올림해 버블이 왼쪽에 몰리던 문제, 매 렌더마다 현재 표시 데이터의 실제 min/max+로그패딩(×1.58)으로 축 범위 재계산하도록 수정(하드코딩 없음, 업권 필터에도 반응). 전체 [1,10조]→[4억,2.7조]·손보필터 [6억,2조] 압축 확인, 콘솔 에러 0, `pytest test_deploy_assets.py` 10 passed. JSON 마스터 변경 없음. 라이브 hard-reload로 배포 반영 확인.
+
+**2026-08-18 (배포 6차)**: index.html CSM 버블맵 X축(신계약CSM)을 Y축(배수) 고정타깃(2026.1Q)에서 분리(D-2 후속, owner 20260818T0210Z) — `996e5ba..9619297`. X축을 회사별 최신(CSM_waterfall 항목2)으로, "직전값 이월" 오표기 제거, 스케일 ÷4→÷2 수정. 이번엔 로직이 복잡해서(추정/비추정 분기 처리) `node --check` 문법검사에 더해 **실제 `buildBubbleData()` 함수를 파일에서 그대로 추출**해 라이브 데이터로 브라우저에서 직접 실행 — 37개사 NaN 0건, 삼성화재(최신) raw값 그대로, AIG손보(연1회공시) 986.8→493.4(÷2) 정확히 확인. 배포 후 라이브 hard-reload로 새 캡션 텍스트 반영 확인, 콘솔 404 1건은 제 검증스크립트 자체의 fallback fetch였음(실제 페이지 리소스 전부 200).
+
+**2026-08-18 (배포 5차)**: designer HTML 4개 배포(`d225383..996e5ba`, `inbox/_resolved/20260818T0104Z`) — owner D-1~D-5 지시 반영. K-ICS.html(baseline 키 폴백, UH-7 후속) · index.html(CSM버블 캡션 정확화 + 하드코딩 "2026.1Q" 동적화) · IFRS17.html(PL기간 피커가 최신이 반기여도 직전FY로 고정되던 버그 수정 + 법정준비금 재배치 + CSS 토글 버그) · 공시보고서.html(분기/연도 토글 추가 + 항목1 제거). JSON 마스터 변경 없어(순수 HTML/JS) combo-diff는 불필요, 대신 4개 파일 인라인 스크립트 전부 `node --check`로 문법 검증(로컬 브라우저 preview가 이번에도 compositing 안 돼 대체) + `pytest test_deploy_assets.py` 10 passed. 라이브 검증: 공시보고서 분기/연도 토글 동작, IFRS17 `histRange`가 "2023.1Q~2026.2Q"로 동적 갱신 확인, 콘솔 에러 0.
+
+**2026-08-17 (배포 4차)**: 라이브 버그 수정 — 2026.2Q PL 생명장기 분해 9개사(삼성화재·DB손보·현대해상·한화생명·한화손보·흥국화재·미래에셋생명·롯데손보·코리안리)가 main에 item2-14 통째 null로 올라가 있던 걸 owner가 화면에서 발견(`inbox/_resolved/20260815T1400Z`). owner가 신설 PL↔CSM워터폴 교차대조 룰 3종을 즉시 RED로 승격시켜 배포가 며칠 보류됐다가, parser(20건)+downloader(AIG 2023.4Q raw 1건) 해소로 RED=0 전환. 독립 재확인(gate RED=0 + combo-diff 4마스터 전부 손실0) 후 `PL_breakdown.json`(8,543→8,554행)+`IFRS17_BS.json`(5,008→5,028행) 배포(`1902bd7..d225383`) — CSM/dividend는 main과 이미 동일해 제외, HTML 4개도 diff 0 확인 후 배포에서 뺌. 라이브 검증: 삼성화재 2026.2Q 24행 전부 채움 확인, 원수CSM상각=802,950백만원(8,029.5억) 표값과 일치.
+
+**2026-08-15 (배포 3차)**: CSM continuity 수정(5사 override 철회+2026.2Q raw 재확정) + PL 기타사업비용 9셀 복원 main 배포(`6e5634f..1902bd7`). xlsx는 parser가 이미 재생성해둬서(mtime 확인) 재작업 불요, 시트 행수(CSM 2,136·PL 8,543)도 대조 확인. 격리 워크트리 cherry-push, `CSM_waterfall.json`/`PL_breakdown.json` 2개 파일만. 라이브 검증: 브라우저에서 직접 fetch해 행수 + 교보생명보험 2026.2Q 기초CSM=65,109.6 확인(WebFetch는 대용량 파일 앞부분만 봐서 신뢰 불가 — 이후 큰 JSON 검증은 브라우저 직접 fetch 우선).
+
+**2026-08-15 (사고)**: publishing 과실로 데이터 유실 발생 — `scripts/build_tidy_exports.py`를 내용 확인 없이 실행, 루트 `CSM_waterfall.json`/`PL_breakdown.json`/`CSM_amortization.json`을 이 스크립트의 자체(훨씬 좁은) 계산으로 덮어씀(CSM 2,136→1,794행, **PL 8,543→187행**). 유실분은 parser가 방금 완료한 CSM continuity 수정(`inbox/parser/20260815T0042Z`, override 철회 + 2026.2Q raw 재확정)이었는데 git에 커밋된 적이 없어 복구 불가 — git 이력·타 세션 scratchpad 확인했으나 백업 없음. **즉시 조치**: 두 파일 다 마지막 커밋(`08321db`/`79b1f7d`, CSM 1,962행·PL 8,111행)으로 롤백, 게이트 RED=0 재확인 — **main/라이브는 무관**(유실분이 애초에 미배포 상태였음). 재작업 발주: `inbox/parser/20260815T0739Z`(HIGH). **교훈**: 처음 보는 스크립트는 반드시 내용부터 읽고, 루트 마스터에 손댈 가능성 있으면 사전 백업 후 실행.
+
+**후속 (같은 날)**: 유실분은 parser가 별건 작업 중 `build_csm()`/`build_pl()`을 재실행하며 override 파일 덕에 우연히 복구(재작업 불필요, `inbox/_resolved/20260815T0739Z`). 같은 날 validation이 **별도의 두 번째 마스터 되감김**을 지적(`inbox/_resolved/20260815T1130Z`, `validate_master_tables.py`를 `--no-build` 없이 돌리는 함정 재발) — publishing도 `validate_master_tables.py` rebuild 기본값 반전(기본 no-build)에 동의 표명, parser 쪽 요구와 합쳐 2-스테이지 조건 충족. **앞으로 publishing은 게이트를 `validate_data_contract.py` + `validate_master_tables.py --no-build` 두 개로만 돌리고, 루트 마스터 빌더는 직접 실행하지 않는다.** 최종 검증: CSM 2,136행·PL 8,543행·IFRS17_BS 5,008행·dividend 1,924행, RED=0, `--no-build` cont=0. 잔여 1건(동양생명 2025.3Q 재보험예실차 0-회귀, YELLOW·비차단)은 parser 미착수 — 배포 전 owner 인지 필요.
+
+**2026-08-15 (배포 2차)**: IFRS17 재무상태표 패널 T자 재구성 main 배포(`4f1d344..6e5634f`) — Panel 7(타일형)을 Panel 1(최상단)로 이동해 T자(좌 자산/우상 부채/우하 자본, 실값 비율) + 2단계 드릴다운으로 전면 개편(`inbox/_resolved/20260814T1250Z`, designer). `IFRS17_BS.json`도 같이 갱신: `섹션`/`레벨` 컬럼 추가, 항목 1-7→1-31, 1,637→5,008행. **`scripts/build_ifrs17_bs.py`가 여태 git 미추적이었던 것을 이번에 발견해 같이 커밋** — 앞으로는 이 파일도 정상 추적됨. 게이트 RED=0 YELLOW=236, `pytest test_deploy_assets.py` 10 passed 확인 후 owner GO 받고 push. GitHub Actions Pages 배포(legacy `pages/builds` API는 새 커밋을 안 잡아줘서 `gh run list`로 확인 — 다음부터는 이쪽을 우선 사용) 확인 후 라이브 검증: `IFRS17_BS.json`에서 `섹션`/`레벨` 필드 WebFetch 확인 + 브라우저에서 삼성화재해상보험 선택해 T자 패널 실데이터 렌더 확인(자산 112조4,436억=부채 77조981억+자본 35조3,455억, 항등식 성립).
+
+**2026-08-15 (배포)**: `dividend.json`(신규, DART alotMatter 배당현황, 24개사, 1,924행) + `공시보고서.html`(배당현황 대시보드 오픈, designer 작업물) + `PL_breakdown.json`(61셀/1,475행 유실분 복구, 7,799→8,111행) main 배포 완료(`de0aef9..4f1d344`, 격리 워크트리 cherry-push). Pre-flight `validate_data_contract.py` RED=0 YELLOW=220, `pytest test_deploy_assets.py` 10 passed 확인 후 owner GO 받고 push. 라이브 검증: `dividend.json`/`PL_breakdown.json` WebFetch 스키마 확인 + 브라우저에서 삼성화재해상보험 선택해 배당 Panel 실데이터 렌더 확인(현금배당금총액 8,289억원 등) + 콘솔 에러 0. `inbox/publishing/20260814T2230Z`(dividend keep-list) `_resolved/`로 이동. **PL_breakdown 근본원인(`validate_master_tables.py`가 `--no-build` 없이 돌면 `build_root_masters.py` 재실행으로 같은 61셀을 결정론적으로 다시 떨굼)은 미수정** — `inbox/parser/20260814T1637Z`에 열어둠, parser가 빌더를 순가산으로 바꾸거나 rebuild 기본값을 반전해야 재발 방지.
+
+**2026-08-15**: `dividend.json`(신규 마스터, DART alotMatter 배당현황, 24/39사 Tier-1, 1,924행) keep-list 등록 처리(`inbox/publishing/20260814T2230Z`, 이후 배포로 종결 — 위 항목 참조).
+
+**2026-08-14 (배포)**: `IFRS17_BS.json`(신규, 1,637행) + `IFRS17.html`(Panel 7 "재무상태표·자본의 질") main 배포 완료 (`255e445..de0aef9`, 격리 워크트리 cherry-push). Pre-flight `validate_data_contract.py` RED=0 YELLOW=220 확인 후 owner GO 받고 push. 라이브 검증: `IFRS17_BS.json` WebFetch로 스키마·내용 확인, `IFRS17.html`은 브라우저에서 삼성생명(KR0069) 선택 후 Panel 7 렌더 확인(자산총계 309조 9,483억원, 2025.4Q) + 콘솔 에러 0. `common.css` 등 나머지 keep-list는 main과 동일해 미포함. 워크트리 정리 완료.
+
+**2026-08-14**: HIGH 티켓(`inbox/publishing/20260814T0232Z`, owner) 처리 완료 — `equity_composition.json`(항목1-49, 아카이브됨) → `IFRS17_BS.json`(항목1-7) keep-list 교체. `claude-agent-publishing.md` §1 fetch표·§9 keep-list 스냅샷·§0 게이트 라이브 수치 갱신, `build_master_xlsx.py:18` 소스 스왑(`17BS` 시트, owner 수기 피벗은 백업 후 소실 — 보정 로직은 `build_ifrs17_bs.py`에 이식 확인됨), xlsx 재생성(8열·1,637행). `pytest tests/test_deploy_assets.py` 10 passed. 이 티켓 `_resolved/`로 이동.
+- **당시엔 RED=42로 push 보류 보고**(6개사 Tier-2 본표 부분추출, `[IFRS17_BS] BS_CENSUS_MISSING_ITEM`) — **재확인 결과 다른 세션(validation)이 이미 RED=0으로 종결**해 있었음: owner가 "DART API 013/014 실측 결과 비상장 6개사는 XBRL 자체가 없다"를 확인하고 "걔네는 걍 접고 마무리해" 지시 → `validate_data_contract.py`에 `IFRS17_BS_NO_SOURCE` census 면제 추가(`BS_IDENTITY`는 계속 검사), YELLOW 1건(`BS_CENSUS_NO_SOURCE_COMPANY`)으로 집계만 남김(`inbox/_resolved/20260814T0620Z`). `claude-agent-publishing.md`의 RED=42 서술 3곳 정정 완료. **기술 게이트는 RED=0으로 통과 — 실제 main push는 여전히 owner 명시적 GO 별도 필요**(publishing은 권고만).
+
+**2026-08-14 (inbox 정리)**: 2~8주 방치된 backlog 티켓 다수가 실제로는 이미 처리 완료됐는데 frontmatter `status`가 `open`으로 남아 있거나(`## 답변`엔 "status: answered"라 적어놓고 YAML은 안 고침) 후속 아키텍처 전환으로 obsolete가 된 채 방치돼 있었음 — 재확인 후 정리:
+- `resolved`+archive: `20260803T0743Z`(xlsx 재생성, 기존 답변 확인만) · `20260814T0135Z`(equity keep-list gap, superseded 확인) · `20260620T0859Z_skeptic_hardening`(§3 하드닝 규칙 4개 전부 이미 프롬프트에 반영 확인) · `20260616T0700Z`(K-ICS FORWARD_DATA 인라인 재임베드 — 이후 "인라인 금지" 리팩토링으로 아예 다른 방식으로 대체돼 obsolete) · `20260813T0422Z`(equity_composition 배포준비 — 파일 자체가 archive돼 superseded)
+- frontmatter만 `open`→`answered` 동기화(내용은 이미 종결, 재확인 대기 상태로 존치): `20260619T0412Z`(prepush_check 체인+skeptic 배선, 현재 §0에 라이브) · `20260620T0834Z`(코리안리·삼성화재·신한이지 5셀 owner-확정 레지스트리, `data/_gold/user_pl_confirmed_cells.json` 존재 확인)
+- **진짜 미착수로 남은 것**: `20260620T0859Z__gold_overlay_durable_ownerfix` (open) — PL/CSM 마스터에도 K-ICS식 gold-overlay를 build 마지막 단계로 통일하자는 owner 아키텍처 요청, `## 답변` 공란. 착수 안 함(범위가 커서 owner 확인 후 진행 권고).
+
+**2026-08-06**: `inbox/publishing/20260806T0027Z` (owner) — `claude-agent-publishing.md`가 viz path migration 상태를 두 곳에서 모순되게 서술(§1 "still reads data/ifrs17/viz" vs §9 "LANDED"). `git ls-tree -r main` + `git show main:IFRS17.html`로 실측 확인: 라이브는 전부 `data/dart/viz/*`에서 fetch, `data/ifrs17/viz`는 main·로컬 어디에도 없음 → §9가 맞음. §1 stale Path note 삭제, §9 문구를 실측근거로 교체, §9 delete-list 예시에서 존재하지 않는 `data/ifrs17/viz` 제거(`data/ir`는 유효해 유지). Resolved, `inbox/_resolved/`로 이동.
+
+Open viz-assembly work, all gated on upstream stages: F4 v2 (forward-outlook confidence research), F13 (재보험 지표, waits on downloader F8), F17/F18 viz (waits on parser Tier2/IR JSON). CSM bubble map **완결됨** (라이브, 2026-06-14 — 4축 V2 폐기). No master JSON push pending here standalone.
+
+**2026-08-03**: 2026-08-03 capsec 체인의 마스터 JSON 4종을 `main`에 배포 완료 (`a4e8a7c..255e445`) — `CSM_waterfall.json`(1944→1962행, KR0004 3개년 온보딩)·`NB_CSM_multiple.json`(321→327)·`PL_breakdown.json`(KR0051 2025.4Q 투자이익/보험금융손익 분리)·`kics_forward_capital.json`(FSC→DART 리베이스). HTML 4종+`common.css`는 main과 이미 동일해 미포함. Pre-flight `validate_data_contract.py` RED=0, 행 손실 가드 dropped=0, 배포 후 라이브 4파일 브라우저 fetch 검증 완료.
+
+**2026-08-03 (2차)**: inbox 2건 처리.
+1. `insurequant_master_tables.xlsx` 재생성 완료 (`inbox/publishing/20260803T0743Z`, resolved) — 재생성 전 수식 셀 0건 스캔 확인 후 `.bak` 백업 → `build_master_xlsx.py` 실행. KR0004 3개년·KR0051 PL 분리값 눈으로 확인. xlsx는 untracked/push 비대상.
+2. `kics_forward_capital.json`의 `baseline_2025_4Q` 키 오기(UH-7, `inbox/publishing/20260803T0210Z`, answered) — `scripts/forward_capital_simulation.py`에서 quarter-agnostic `baseline` + `baseline_quarter` 형제 필드로 교체, 하위호환 위해 이번 릴리스만 `baseline_2025_4Q` alias 병기. 재생성 후 `validate_data_contract.py` RED=0, `pytest tests/test_deploy_assets.py` 9 passed. HTML 소비처(`K-ICS.html:1090`, 1곳)는 publishing이 못 건드리므로 designer inbox로 라우팅(`inbox/designer/20260803T0900Z`) — alias 제거는 designer 스왑 확인 후.
+
+**2026-07-22**: designer의 A11y 색상/대비 2차분(owner-review queue 5건, `docs/changelog_designer.md` 2026-07-21d) + 트리맵 red→blue 원복(finviz 정체성, 07-22) — `launch_runbook.md` 절차로 격리 워크트리 cherry-push, owner GO 받고 `main`에 push 완료(`a5d0ffa`, index/K-ICS/IFRS17.html + common.css). Pre-flight `validate_data_contract.py` RED=0 확인. 배포 후 라이브 4개 값 curl 검증 완료.
+
+**2026-07-21**: provenance sidecar 3종 발행 완료(forward_capital/tier1/tier2_utilization) + 게이트 로더 키-불일치 버그 수정, launch runbook 신설(`docs/launch_runbook.md` + `launch-runbook` skill). `inbox/publishing/20260716T0330Z`(2026.1Q 5개사 적용후 요구자본 fill 배포 여부) — owner 승인 받고 착수했으나 `git fetch origin main` 대조 결과 **이미 다른 세션이 배포 완료**(kics_disclosure.json diff 0) — 중복 push 스킵, resolved. **미착수 잔여 backlog** (2026-06-16~20, owner/designer 발주, 이번 세션 범위 밖): reembed-done trigger(0616T0700Z) · skeptic gate-chain 문서화(0619T0412Z) · owner-confirmed registry 분쟁 3건(0620T0834Z) · gold-overlay 통일 요청(0620T0859Z) · skeptic 하드닝 명문화(0620T0859Z) — `inbox/publishing/`에 `status: open`으로 남아 있음, 다음 세션에서 트리아지 필요.
+
+---
+

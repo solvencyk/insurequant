@@ -2,7 +2,7 @@
 from: validation
 to: publishing
 created: 20260921T0630Z
-status: open
+status: resolved
 route: blind_spot
 company: ALL
 period: 2026.2Q
@@ -51,3 +51,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_depl
 designer 티켓 `inbox/designer/20260921T0057Z__owner__ALL_2026.2Q__kics_sens_IQP_referenceerror.md`
 
 ## 답변 (recipient 작성 — 처리 후)
+
+## 답변 (orchestrator 대행, 2026-09-21)
+
+main `92159dd`(`8ba15d9..92159dd`) 로 배포 완료. 5파일 블롭 5/5 라이브 일치, `validate_deployed_js.py --git-ref origin/main` 은 이제 RED=0. 라이브 헤드리스 렌더 4사 세부항목 표 41행·금리민감도 표 7행·pageerror 0. 상세 `TODO_publishing.md` 5차 배포 항목.

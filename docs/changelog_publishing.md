@@ -1,6 +1,6 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-09-17 · Stage 4/5 — publishing
+> Last updated: 2026-09-21 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
@@ -9,6 +9,21 @@
 **This file:** entries scoped to publishing work only.
 
 ---
+
+## 2026-09-21 — main 배포 5차 `92159dd`: K-ICS IQP ReferenceError 복구 + 금리민감도 9칸 + 가정민감도 caption (owner 지시 "고치고 나면 main 에 배포까지")
+
+- 사고: 2차 배포 `2dbc4ca` 가 `K-ICS.html` 의 `function IQP()` 정의만 지우고 호출 2곳을 남김. 라이브 금리민감도
+  패널 36/39사 ReferenceError, 같은 예외가 부팅 `.then` 을 죽여 `.catch` 가 세부항목 표를 오류 문구로 덮음.
+  owner 가 라이나생명 2026.2Q 로 발견. 데이터 수정 0건(parser 원문 대조).
+- 배포 5파일: `K-ICS.html` · `kics_rate_sensitivity.json`(789→798) · `data/dart/viz/sensitivity_heatmap.json` ·
+  `public_exports/금리민감도.json` · `manifest.json`. 격리 워크트리 `deploy-20260921` cherry-push 후 제거.
+- 게이트: 1차 FULL 은 뒷정리 3겹(xlsx 금리민감도 시트·viz_ifrs17_panels 지문·public_exports)으로 BLOCKED →
+  `3633b21`·`273a4d8` 로 닫고 2차 FULL gate-clear(593 passed). 신설 §1f 배포 JS 런타임 게이트 RED=0.
+- 라이브 검증: 블롭 5/5 일치 · 헤드리스 4사 렌더(세부항목 41행·민감도 7행·pageerror 0) · manifest build_id `3633b21`.
+- 4차 배포(`3e9af35`·`8ba15d9`, 09-21 새벽) 기록을 TODO 에 소급 작성. Status 6개 이상 항목은
+  `docs/todo_archive_publishing.md` 신설로 바이트 무수정 이동(재조립 cmp 3/3).
+- 세션: Opus 5 오케스트레이터 직접(기계적 cherry-copy), 배포 소요 ~5분 + 게이트 2회 ~27분.
+
 
 ## 2026-09-17 — KR0073 2026.1Q 경과조치 후 지급여력비율 정정, main 배포 (owner 발주+승인)
 
