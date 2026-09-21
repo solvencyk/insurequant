@@ -1,11 +1,26 @@
 # Insurequant TODO — Downloader Stage
 
-> Last updated: 2026-09-12 · Stage 1/5 — downloader
+> Last updated: 2026-09-18 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md (+ docs/agents/source-catalog.yaml) · Changelog: docs/changelog_downloader.md
 
 **Cross-stage TODO:** `TODO.md` (root). **This file:** active + done items scoped to data collection only.
 
 ## Status
+
+**🟢 2026-09-18 inbox `20260918T0205Z`(서울보증 8분기 PDF 재확인 발주) — 재조사 없이 재확인, 기존 판정 유지. RESOLVED.**
+요청 8분기(2023.1Q·2023.2Q·2023.3Q·2024.1Q·2024.2Q·2024.3Q·2025.2Q·2025.3Q)는 신규 결측이
+아니라 **`scripts/audit_all_periods.py:35-39` `SGI_QUARTERLY_STRUCTURAL` 레지스트리와 정확히
+일치**(2026-06-01 최초 판정, 2026-06-15 재확인, 6개는 2026-09-12 owner 직접 사이트 확인으로
+재확정). 이번엔 SGIC 정기공시 페이지를 직접 재확인(`https://www.sgic.co.kr` → 정기공시 탭,
+2026-09-18 KST, Claude_Browser navigate+get_page_text)했다 — 라이브에 뜨는 것은 **2026년 1분기·
+2026년 상반기 / 2025·2024·2023 각 "연간 경영공시 자료" 뿐**, 과거 분기 항목은 UI에 아예 없다.
+SGIC 공시 SPA 는 "연간 + 최신 1분기"만 노출하고 지난 분기는 롤오프시키는 구조(코드 주석: "SPA
+list shows only latest 1Q + one 연간 file per year")라 2025.2Q/2025.3Q 도 존재했던 적은
+있으나(당시가 "최신 분기"였을 때 캡처를 놓치면) 지금은 원천 자체에서 물리적으로 회수 불가.
+DART 도 서울보증 미상장(IPO 철회)이라 정기공시 없음(`DART_DROP = {"KR0150"}`, owner 결정
+"걍 버려", 2026-06-01). 8분기 전부 **원천 부재로 재확인**, 재수집 시도 없음(원천에 없어 시도할
+대상 자체가 없음) — 티켓 `## 답변`에 분기별 표 + 재현 절차 기록 후 `resolved`로 `_resolved/`
+이동. parser 두 레인(17BS 백필·PL_breakdown 백필)은 이 8분기를 정당 결측으로 처리하면 된다.
 
 **🟢 2026-09-12 (3) J-ESR 킥오프 1차 조각 — 일본 원수사 FY2025 ESR 공시 게재 census 79사 완료.**
 티켓 `inbox/_resolved/20260912T0307Z__owner__JP_MULTI__jesr_fy2025_disclosure_census.md`. 산출
@@ -89,37 +104,7 @@ Yasuda Non-Life 743.2%) 원문 PDF fitz 재확인 일치. 소스 루트 정정(E
 - **census: FY2026_Q2 raw/ 1 → 39.** 미게시/실패 구분 불필요 — 39/39 전원 이미 posted+fetched
   상태였음(원래 우려였던 "일부 미게시"는 해당 없음).
 
-**🟢 2026-09-02 DART 본문 XML 전수 census — 발주된 "결측" 은 오탐, 진짜 결손 3칸 회수해 0으로.**
-상세: `docs/changelog_downloader.md` 2026-09-02.
-
-- **발주 근거였던 삼성생명/미래에셋생명 2026.2Q "디렉터리 자체가 없음" 은 사실이 아니다.**
-  둘 다 5.3MB·3.7MB 본문 XML 이 디스크에 있다. raw 리프는 `KR####_<DART canonical>` 인데
-  DART canonical 이 K-ICS 원수사명과 달라서(`삼성생명` vs `삼성생명보험`) **회사명으로
-  디렉터리를 찾으면 거짓 결측이 나온다. 반드시 KR 코드로 키를 잡을 것.**
-- **함정 하나 더**: `leaf/*.xml` 만 glob 하면 **64칸**이 "zip 만 있음" 으로 나오는데 전부
-  `leaf/xml/*.xml` 로 이미 풀려 있다. 세 레이아웃(`*.xml`·`xml/*.xml`·`extracted*/*.xml`)
-  을 다 봐야 한다 — `extract_dart_zips.py` 가 인정하는 그 세 개.
-- **census before -> after (39사 x 14분기 = 546칸)**: xml 372 -> **375** · zip_only 0 ·
-  no_filing 43 -> **45** · MISSING 131 -> **126**. 그중 **분기 공시사의 진짜 결손 3 -> 0.**
-  나머지 126칸은 연1회 공시사(감사보고서만 내는 회사)의 비-4분기라 원천에 필링이 없다
-  (판정 근거 = `data/_derived/bs_carry_forward_cells.json` `hold_forward_annual_only_filer`).
-- **회수 3칸 (전부 2023.4Q, 전부 감사보고서)**: KR1098 카카오페이손해 `20240329002933` ·
-  KR0075 BNP파리바카디프 `20240403001384` · KR0150 서울보증 `20240403001186`.
-  셋 다 **사업보고서를 안 내는 회사**라 `A001` 로 훑던 과거 스윕이 `no_filing` 으로
-  기록했던 것 — AIG·악사손해 5사에 이은 **같은 함정 세 번째 재발**. `pblntf_ty=None` 으로
-  전체를 훑을 것. **특히 KR0150 은 2026-08-19 발주 C 의 "7분기 no_filing 확정" 을
-  부분적으로 뒤집는다**(2023.4Q 는 감사보고서가 있었다; 1~3분기 부재는 여전히 맞음).
-  내용검증 통과(제3/22/57(당)기 · 2023-12-31 마커 · 회사명 13~22회).
-- **2026.2Q 본문 24/24 내용검증 통과** — 전원 제NN기·2026-06-30 마커(50~203회)·BS 키워드
-  보유, 1.2M~22.3M자, 스캔본/빈 껍데기 0. 유일 플래그 NH농협손해는 본문이 자기를
-  '농협손해보험' 으로 쓰는 것(리프는 'NH농협손해보험') — 발주를 만든 것과 같은 탐지기 함정.
-- **신규 경로자산 `scripts/_probes/census_dart_body_xml.py`** (재사용, 진짜 결손 시 exit 1).
-  `check_dart_raw_coverage.py` 와 **축이 반대라 둘 다 필요** — 그쪽은 유실(high-water mark),
-  이쪽은 기대 그리드 미충족. 유실 축도 clear(baseline 395 -> 398 `--update`, missing=0).
-- AIG 2026.1Q/2Q 는 라이브 확인(2026년 필링 = 감사보고서 2건뿐) 후 `no_filing` 마커 기록.
-  AIG 2022.4Q 2건은 owner 가 2022.4Q 백필을 보류 확정했으므로 미착수, `known_absent` 유지.
-
-> 📦 2026-08-30 이전 Status 항목은 `docs/todo_archive_downloader.md` 로 이동(2026-09-12, 내용
+> 📦 2026-09-02 이전 Status 항목은 `docs/todo_archive_downloader.md` 로 이동(2026-09-18, 내용
 > 무수정). 세션 시작 시 읽지 않는다.
 
 ## Active follow-ups (next sessions)

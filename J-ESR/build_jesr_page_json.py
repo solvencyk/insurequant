@@ -49,6 +49,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
 
+# UH-24 계열 실측(2026-09-16, owner Windows PC): 콘솔 코드페이지가 cp949 인 환경에서
+# self_check() 가 일본어 산문(かんぽ生命保険 등)을 print() 하면 UnicodeEncodeError 로 죽는다
+# (클라우드 컨테이너는 기본 UTF-8 이라 안 드러났다). scripts/prepush_check.py 와 같은 패턴.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 # EXPIRING_HOSTS 는 jesr_http 에서 **import** 한다 — 여기에 옮겨 적지 않는다. 손으로 복사하면
 # 이 빌더가 점검기(check_source_urls.py)와 다른 목록을 보게 되고, 그 순간 두 도구는 이름만 같은
 # 다른 룰이 된다(K-ICS 상관행렬 재타이핑 금지와 같은 이유).

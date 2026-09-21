@@ -1,11 +1,15 @@
 # Insurequant TODO
 
-> Last updated: 2026-08-30 · Stage: cross-stage
+> Last updated: 2026-09-16 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage; parser 2-lane since 2026-06-13) · Stage TODOs: TODO_<stage>.md
 
 Pipeline organized as **downloader / parser / validation / publishing / designer** — each stage has its own prompt (`docs/agents/claude-agent-<stage>.md`), TODO (`TODO_<stage>.md`), and changelog (`docs/changelog_<stage>.md`). See `CLAUDE.md` for the full index. This root file carries cross-stage items + project-wide policy only.
 
 ## Status
+
+**🔁 2026-09-18 경영공시 PL 백필 라운드 진행 중(cross-stage: parser-ifrs17 → validation → publishing).** PL_breakdown 비-4Q 결손을 정기경영공시 §2-1 요약 포괄손익계산서로 메우는 작업. 결손 실측 39사x14분기 546칸 중 172칸, 전부 DART 분기보고서를 안 내는 비상장 16사의 1~3Q. **오케스트레이터 직접 실측(9/18 12:35)**: 스테이징 `data/_derived/pl_backfill_disclosure_20260918.json` 172칸 중 OK 159 + vision_manual 7 + NO_PDF 6(KR0150 서울보증 2023.1~3Q·2024.1~3Q = **원천 부재 확정**, SGIC 사이트가 과거 분기를 게시 안 함). 자기폐쇄 E3/E5/E6 **실패 0건**, `|값|>200,000억` 이상치 **0건**, `dash_zero` 이면서 `raw_value==''` 인 읽기실패 **0칸** — validation 이 결정 5·7 로 지적한 오파싱은 파서 재실행으로 이미 해소됐다(반증 사례 KR0075 2024.3Q 보험손익도 `-80` 으로 정확). validation 판정 수용: **항목 8개→5개**(#1 보험손익·#16 기타사업비용·#22 세전·#23 법인세·#24 순이익. #17 투자손익·#20 영업이익·#21 영업외손익은 감독회계 재분류로 **다른 개념** — 경영공시 = 투자수익−투자비용, 마스터 = 투자이익+보험금융손익 336/336 성립), **16사→15사**(KR0004 예별손해는 DART·경영공시 양쪽 다 내부정합인데 값이 달라 범위 규명까지 보류). 계보 축 실측 재확인: `verify_provenance_sidecar()` 호출처 4곳에 PL_breakdown **없음**, `PL_breakdown_provenance.json` 638셀 **전부 `source_file` 부재**, `_SOURCE_LINEAGE` 에 `data/disclosure/` **미등록**. **병합 순서 고정(어기면 census RED 0→80 으로 push 차단)**: ① 사이드카 실물 발행[parser] → ② 계보 배선(guard 밖으로)[validation] → ③ `coverage_holes` source-aware 기대그리드[validation] → ④ CONCEPT_REGISTRY 등재[validation] → ⑤ 5항목 병합[parser→publishing] → ⑥ 게이트 RED=0 후 push. 같이 드러난 새 사각: `#2 생명장기손익` 부모 None 인데 자식 `#3~#12` present 가 **29버킷**(display 10), PL 에 "자식 present·부모 None" 룰이 아예 없다(K-ICS `_parent_present_child_incomplete` 대응물 부재). **(2026-09-20 진척) ①②③④ 완료 — 남은 것은 ⑤⑥.** ① parser 사이드카 재발행(커밋 `fa08bfe`, 638→748셀 · 마스터 실재 셀과 1:1 · `source_file` 730/748 · 디스크 부재 0). ②③④ validation 배선 완료(계보 등재 4건 + `SOURCE_ID_LINEAGE_MISMATCH` 를 capsec guard 밖으로 · PL provenance 첫 검증 published 731셀 · `coverage_holes` 기대그리드를 셀 계보별로 · `CONCEPT_REGISTRY["pl_disclosure_vs_dart"]` 등재 + allowlist 리더). **라이브 RED=0 YELLOW=123 불변 · selftest 57→69 · 골든 SUMMARY 불변(`--update` 불요) · `prepush_check` FULL gate-clear.** 병합 후 예측은 census RED **0→80 이 아니라 0→3** 이다(소스인식 규격에서 real hole 118→6, 그중 3건은 이미 있던 서울보증 원천부재). **⑤ 전에 parser 가 처리할 차단 2건**: (가) 스테이징 `항목번호 23` 항목명이 `법인세비용` 인데 마스터는 `법인세` — 이대로 병합하면 같은 번호에 이름이 둘 생긴다, (나) 병합으로 드러나는 진짜 DART 결손 3건(AIG 2024.4Q·2025.4Q · 신한이지 2024.4Q 의 생명장기손익). 회신 티켓 `inbox/parser/20260920T1500Z__validation__ALL_2023.1Q-2026.2Q__disclosure_pl_merge_authorized.md`.
+
+**✅ 2026-09-16 UH-24 해소 — owner 로컬 PC 세션이 훅을 실행권한 부여·이식 가능하게 고치고 실제로 두 번 끝까지 돌려서 검증했다(cross-stage).** `.githooks/pre-push` `chmod +x` + `PY` 를 owner venv 우선·부재시 `python3`/`python` 폴백으로 재작성. 1차 실행에서 `test_jp_source_gate.py::test_gate_prints_the_adjusted_finding_end_to_end` RED(콘솔이 cp949 인 이 PC에서 `build_jesr_page_json.py` 가 일본어 산문을 print 하다 `UnicodeEncodeError`, 클라우드는 콘솔이 UTF-8 이라 46개 커밋 내내 안 걸렸던 버그) → `build_jesr_page_json.py`·`tests/test_jp_source_gate.py::_run_builder` 에 UTF-8 인코딩 고정 → 2차 `567 passed, 2 skipped` · `PRE-PUSH VERDICT ... gate-clear` · exit 0. 상세 `docs/postmortems/README.md` UH-24.
 
 **🚀 2026-09-14 jp 프리뷰 라이브 배포 + 폰 배포 스크립트 rot 2건 제거 + 훅 강제점이 리눅스 클론에서 무력인 것 발견(cross-stage).**
 ① **라이브 배포 나갔다** — `jp-f9027362/` 4개(`index.html`·`jesr_app.js`·`jesr_detail.json`·`jesr_esr.json`), 배포 커밋 `e797f61`.
@@ -24,11 +28,6 @@ Pipeline organized as **downloader / parser / validation / publishing / designer
 **📡 2026-09-13 클라우드에서 한국 원천 도달성 실측 — 회사망 제약이 보편 제약이 아니었다(cross-stage).** owner 질문("접근 막혀 미검증인 것들 다시 볼 수 있나")에 답하려 이 컨테이너에서 재봤다: **DART 200 · OpenDART API 200 · 금융감독원 200 · 생명보험협회 공시(pub.insure.or.kr) 200 · FISIS 200 · data.go.kr 200 · 손해보험협회 200(브라우저 헤더 필요)**. **KIPRIS 도 살아 있다** — 기본 `requests`/`curl` 은 클라이언트 핑거프린팅으로 끊기지만 브라우저 헤더(`J-ESR/jesr_http.get`)로는 루트·`/khome/main.do` 둘 다 200(MS&AD·ソニーFG 와 같은 `ok_requires_headers` 유형). 실패: 한화생명(TLS)·교보생명(프록시) 2사 — 재확인 대상. **CLAUDE.md §10 의 "go.kr·KIPRIS 는 브라우저·WebFetch 금지(영구 행)" 은 회사망 PC 의 제약이다** — 이 문장을 보편 제약으로 읽으면 클라우드 라운드에서 할 수 있는 일을 스스로 막는다. 규칙 문구 조정은 owner 판단(이 항목은 실측 기록일 뿐 규칙을 고치지 않았다). **경영공시 PDF 재수집·OCR 은 owner 지시로 범위 밖**(2026-09-13: "건들면 골치아프다").
 
 **🔧 2026-09-13 push 게이트가 변경 범위를 코드로 판정한다(cross-stage).** owner 지적 *"한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 된다"*. CLAUDE.md §5 의 범위 규칙(owner 09-12)이 **문서에만 있고 훅은 무조건 전부 돌리고 있었다** — `prepush_check.py` §0 에 판정을 구현했다. jp 범위 번들이면 한국 마스터 축 5종을 건너뛰고 ~5초(실측), 한국 파일이 하나라도 섞이면 자동 FULL. **fail-closed**(upstream 없음·git 실패·빈 diff·모르는 경로 → 전체), 우회 환경변수 없음, verdict 에 `SKIPPED(jp-scope)` 로 "안 돌렸다"와 "통과했다"를 구분. 회귀 65케이스·변이 12/12 발화. 잔여 UH-20(훅이 refspec 을 안 넘겨 범위가 근사 — 빗나가면 전체가 도는 안전 방향). 상세 `docs/claude-changelog.md` 2026-09-13(2차).
-
-**🔧 2026-09-13 서브에이전트 정의·스킬이 저장소 밖에 있던 것을 안으로 들였다(cross-stage).** `.gitignore:91` 의 `.claude/` 한 줄 때문에 `.claude/agents/*.md` 7개(모델 매핑: validation=Opus 5, 나머지 Sonnet 5)와 스킬 4개가 머신 로컬에만 있었고, 클라우드 세션은 CLAUDE.md §10 의 병렬 발사 규칙만 읽고 실행체를 못 읽었다. ignore 를 머신별 설정 파일만으로 좁히고 정의·스킬을 커밋, CLAUDE.md §10 에 위치·매핑 등재. 상세 `docs/claude-changelog.md` 2026-09-13.
-
-**🧹 2026-09-11 지침 부채 정리 1차 — TODO Status 이력을 `docs/todo_archive_*.md` 6개로 분리(내용 무수정, HEAD 대비 바이트 재조립 검증 6/6).** 실측: stage TODO 7개 합계 ~288k → ~64k 토큰(−78%), `TODO_parser_ifrs17.md` 128k → 14k. 규칙(CLAUDE.md 핸드오프 절): Status 는 최신 5개만, 밀려난 것은 아카이브 헤더 아래에 잘라 붙임. 2차 후보(미착수, owner 판단): CLAUDE.md·stage 프롬프트의 '왜 생겼나' 서술 → 규칙 한 줄 + 포인터로 압축; `TODO.md` K-ICS 면제 등재부(340줄) 안의 superseded 스냅샷 분리.
-
 
 ### 상시 점검 (날짜 걸린 것)
 

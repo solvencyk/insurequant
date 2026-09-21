@@ -1,6 +1,6 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-09-20 · Stage: cross-stage
+> Last updated: 2026-09-21 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
@@ -8,6 +8,27 @@ Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
 
 ---
+
+## 2026-09-21 — 배포 HTML 의 JS 런타임 게이트 신설 (validation → designer·publishing 에 영향)
+
+**designer 가 화면 JS 를 고치면 이제 push 게이트가 그 JS 를 읽는다.** 2026-09-20 designer 커밋
+`2dbc4ca` 가 `K-ICS.html` 의 `function IQP(){…}` **한 줄**만 지우고 호출부 2곳을 남겨 라이브
+금리민감도 패널이 `ReferenceError` 로 하루 넘게 죽어 있었는데 **모든 게이트가 초록**이었다 —
+데이터는 100% 정상이었고(고칠 셀 0개) owner 가 눈으로 잡았다. 원인은 단순하다: 저장소에서 배포
+HTML 의 `<script>` 내용을 읽는 검사기가 **0개**였다. 불변식 1번을 데이터 축에서만 지키고 화면
+축에서는 한 번도 지킨 적이 없었던 자리다.
+
+- 신설 `scripts/validate_deployed_js.py`(`DEPLOYED_JS_UNDEFINED_CALL`) → 훅 §1f
+  (`prepush_check.py` L409 호출 · L581 `blocked` · L600 exit 2). 브라우저 없이 토큰 분석,
+  인-프로세스 **0.09초**. 현 트리 **오탐 0**(토큰 73,175 · 참조 3,627), 정의삭제 전수 변이
+  **172/183(94%) 검출**. 회귀·변이시험 `tests/test_deployed_js_gate.py`(24케이스 8.6초).
+- **scope 영향**: 루트 `.html`·`.js` 는 §0 에서 이미 전체 게이트 강제라 범위 목록은 안 고쳤다.
+  즉 **designer 가 화면만 고쳐도 전체 게이트(≈8분)가 돈다** — 종전과 같다.
+- **publishing 은 배포 후 한 줄이 늘었다**:
+  `validate_deployed_js.py --git-ref origin/main` 이 RED=0 이어야 배포 성공이다(현재 RED=2 —
+  복구 커밋 `197d15e` 가 아직 main 에 안 나갔다).
+- 상세 `docs/changelog_validation.md` 2026-09-21(14차) ·
+  포스트모템 `docs/postmortems/PM-20260921_kics_sens_iqp_referenceerror.md`(closed, 잔여 UH-26·UH-27).
 
 ## 2026-09-20 — 경영공시 PL 백필 라운드: 병합 선행조건 ②③④ 배선 (parser ① → validation ②③④)
 

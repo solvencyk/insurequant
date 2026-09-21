@@ -1,7 +1,34 @@
 # Insurequant Changelog — Downloader Stage
 
-> Last updated: 2026-09-03 · Stage 1/5 — downloader
+> Last updated: 2026-09-18 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
+
+## 2026-09-18 -- KR0150 서울보증 8분기 정기경영공시 재확인 (신규 결측 아님, 기존 판정 재확정)
+
+inbox `20260918T0205Z`(orchestrator, route: refetch): 서울보증(KR0150) 2023.1Q·2023.2Q·2023.3Q·
+2024.1Q·2024.2Q·2024.3Q·2025.2Q·2025.3Q 8개 분기 정기경영공시 PDF 부재 재확인 요청. 17BS
+PL_breakdown 백필 172칸 중 서울보증 7칸이 이 부재로 막혀 있다는 게 발주 동기.
+
+- **신규 발견 아님** — 요청 8분기는 `scripts/audit_all_periods.py:35-39`의
+  `SGI_QUARTERLY_STRUCTURAL` 레지스트리와 정확히 일치(2026-06-01 최초 판정, 2026-06-15
+  재확인). 6분기(2023.1Q~2024.3Q)는 2026-09-12에 owner가 SGIC 사이트를 직접 확인해 "원문
+  부재"로 이미 확정(`inbox/_resolved/20260911T0115Z`).
+- **오늘 라이브 재검증** (`mcp__Claude_Browser__navigate` → `https://www.sgic.co.kr/biz/ccg/index.html?p=CCGIRI010101F01`
+  → `get_page_text`): 정기공시 탭에 뜨는 항목은 "2026년 1분기/상반기" + "2025·2024·2023년
+  각 연간 경영공시 자료"뿐. 과거 분기 항목은 UI에 존재하지 않는다 — SGIC 공시 SPA가
+  "연간 + 최신 1분기만 노출, 지난 분기 롤오프"하는 구조라는 기존 판정(2026-06-01)이 오늘도
+  그대로 재현됨. 2025.2Q/2025.3Q도 같은 메커니즘(당시 "최신 분기"였을 때 캡처를 놓쳐 지금은
+  물리적으로 회수 불가)으로 설명된다 — 보유 중인 2025.1Q·2025.4Q는 각각 그 순간의 "최신
+  분기"·"연간"으로 캡처됐던 것과 정합.
+  - 부수 관찰: `curl -m 15 https://www.sgic.co.kr/...`는 이 세션에서 `HTTP=000`이었으나
+    브라우저 도구(`Claude_Browser`)로는 정상 로드됨 — 접근 차단이 아니라 curl 경로 문제,
+    브라우저로 우회 확인 완료. opendart.fss.or.kr는 curl로도 200 정상.
+- DART 경로도 재확인: 서울보증은 미상장(IPO 철회)이라 정기공시가 원천적으로 없음
+  (`DART_DROP = {"KR0150"}`, 2026-06-01 owner "걍 버려" 결정) — 대체 소스 없음.
+- **재수집 시도 없음**(원천에 파일 자체가 없어 시도할 대상이 없음). `data/disclosure/**`·
+  `data/dart/**` 변경 없음. 티켓 `## 답변`에 분기별 표 + 재현 절차 기록 후 `status: resolved` →
+  `inbox/_resolved/`로 이동. parser 두 레인(17BS·PL_breakdown 백필)은 이 8칸을 정당 결측으로
+  처리.
 
 ## 2026-09-12 -- J-ESR FY2025 ESR 공시 게재 census (킥오프 1차 조각, 79사)
 

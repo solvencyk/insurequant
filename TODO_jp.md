@@ -81,8 +81,11 @@ Chromium 기본 Secure DNS 가 이 환경의 커스텀 CA 를 안 믿음 ② 그
 - **10월 census 선행 절차(2026-09-13 신설).** census 를 돌리기 전에 `python J-ESR/check_source_urls.py --all` 을 먼저 돌린다. 2026-09-13 기준
   blocked 21 · spa_shell 8 · requires_headers 17 — 헤더 없이 훑으면 이 46건이 전부 `not_found` 오탐이 된다. dead 5건은 그 라운드에 대체 URL 확보
   (朝日生命 `company/zaimu/` · キャピタル損害保険 disc PDF · オリックス生命 `company/` · 日本生命 `ir_health_url` 구경로).
-- **EDINET 보류 3사**(第一ネオ生命保険 · 大樹生命保険 · 第一アイペット損害保険): 코드리스트에 비슷한 이름이 있어 자동매칭을 막아 뒀다(`edinet_code_match.json`
-  의 candidates). 사람이 한 번 보고 확정. 第一ネオ生命 은 그 행 notes 자체가 「第一フロンティア生命と同一?」이라 회사 실체부터 확인할 것.
+- **✅ 해소(2026-09-16, 로컬 PC 세션 웹검색).** EDINET 보류 3사(第一ネオ生命保険 · 大樹生命保険 · 第一アイペット損害保険) 전건 확정:
+  ① **第一ネオ生命保険** — `recorded_code` E35324 **그대로 맞다**. 2026-04-01 자로 ネオファースト生命保険→第一ネオ生命保険 상호변경(第一ライフグループ 그룹 전체 리브랜딩과 동시, 第一フロンティア生命과는 별개 자회사)했고 EDINET 코드리스트가 구 상호로 안 갱신된 것뿐 — `rename_suspected` 결론 확정(출처: neofirst.co.jp/about/brand/, faq.neofirst.co.jp/faq/show/31272).
+  ② **第一アイペット損害保険** — `recorded_code` E33935 **그대로 맞다**. 같은 날(2026-04-01) アイペット損害保険→第一アイペット損害保険 상호변경, 같은 이유로 코드리스트만 구명(출처: prtimes.jp/main/html/rd/p/000000185.000046213.html).
+  ③ **大樹生命保険** — 이미 `edinet_code_resolution.json`(588행)에서 `verdict: no_edinet_filer` 로 확정돼 있었다(모회사 日本生命保険이 상호회사라 애초 有報 제출의무 없음, 6개 방법 전수검색 0건 재확인 2회). `edinet_code_match.json` 의 대응 행(`candidates`=大同生命保険)은 이름만 비슷한 오탐이므로 무시할 것 — 두 회사는 무관(大同=T&D그룹, 大樹=日本生命그룹).
+  **잔여**: `edinet_code_match.json` 의 ①②③ 행에 `agrees_with_record`/`matched` 필드를 위 결론으로 채우는 것은 jp-collector 가 다음 라운드에(매처 스크립트 계약을 안 건드리려고 이 세션에서는 문서만 갱신).
 - **10월 有報 재스캔**: `jesr_edinet_fetch.py --scan --from 2026-10-01 --to 2026-11-30 --doc-types 130,140`(訂正有報·半期). 그 뒤 `edinet_esr_probe.py` 재대조.
 
 - **비공개 프리뷰 경로(owner 2026-09-12 결정).** 저장소는 `jp/` 그대로, main 배포만 `jp-f9027362/`(`scripts/android_push_and_deploy.sh`

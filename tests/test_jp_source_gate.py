@@ -28,6 +28,7 @@ import importlib.util
 import json
 import re
 import shutil
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -1003,7 +1004,12 @@ def _sandbox(tmp_path) -> Path:
 
 
 def _run_builder(script: Path):
-    return subprocess.run([sys.executable, str(script)], capture_output=True, text=True)
+    # UH-24 계열 실측(2026-09-16): 콘솔 코드페이지가 cp949 인 환경(owner Windows PC)에서는
+    # 자식 프로세스가 UTF-8 로 print 해도 이 프로세스가 로케일 기본값(cp949)으로 디코드하려다
+    # UnicodeDecodeError 로 죽는다 — scripts/prepush_check.py 의 서브프로세스 호출과 같은 패턴.
+    return subprocess.run([sys.executable, str(script)], capture_output=True, text=True,
+                           encoding="utf-8", errors="replace",
+                           env=dict(os.environ, PYTHONIOENCODING="utf-8"))
 
 
 def test_sandbox_copy_builds_green(tmp_path):
