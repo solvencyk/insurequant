@@ -154,7 +154,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률(위험률)",
@@ -346,7 +346,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률(위험률)",
@@ -389,7 +389,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률(위험률)",
@@ -636,7 +636,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률(위험률)",
@@ -679,7 +679,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률",
@@ -716,7 +716,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률(위험률)",
@@ -777,7 +777,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률",
@@ -838,7 +838,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률",
@@ -881,7 +881,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망위험",
@@ -918,7 +918,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률",
@@ -1139,7 +1139,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률(위험률)",
@@ -1249,7 +1249,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률(위험률)",
@@ -1292,7 +1292,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률(위험률)",
@@ -1414,7 +1414,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률(위험률)",
@@ -1531,7 +1531,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률",
@@ -1604,7 +1604,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률",
@@ -1671,7 +1671,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률",
@@ -1799,7 +1799,7 @@
       "as_of": "2025-12-31",
       "table_kind": "sensitivity_analysis",
       "unit": "억원",
-      "caption": "FY2025 보험위험 민감도 (verified override — owner 1242Z)",
+      "caption": "",
       "scenarios": [
         {
           "risk": "사망률(위험률)",
