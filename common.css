@@ -177,6 +177,31 @@ header .header-row{ padding-right:40px; }
   color:var(--text);
 }
 
+/* — Header select row (보험사 선택, sticky header, owner 2026-09-21) ——————————
+   Hoisted 2026-09-21 from K-ICS.html's page-local <style> (first shipped there,
+   commit 3573509) once IFRS17.html/공시보고서.html needed the identical row —
+   design-system single-source rule (docs/agents/claude-agent-designer.md §5).
+   theme.js hdrH() measures the header at runtime, so this row's height
+   auto-feeds --iq-hdr-h; no hardcoding needed here. */
+.header-select-row{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.header-select-label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);font-weight:500}
+.header-select-row .select{min-width:200px}
+.control-group{display:flex;align-items:center;gap:8px}
+
+/* — Segmented toggle (select 대체, owner 2026-09-21) — 실제 <select> 는 .sr-only 로
+   화면에서만 숨기고 DOM/.value/change 계약은 그대로 유지한다(K-ICS 최초 도입 →
+   IFRS17.html/공시보고서.html 이식, 2026-09-21). */
+.control-label{font-size:12px;color:var(--muted);font-weight:600}
+.seg-toggle{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.seg-btn{padding:8px 14px;border:none;border-right:1px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;font-weight:500;cursor:pointer;transition:background var(--t-fast),color var(--t-fast)}
+.seg-btn:last-child{border-right:none}
+.seg-btn:hover{background:var(--card)}
+.seg-btn.active{background:var(--primary);color:var(--on-primary)}
+.seg-btn:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+/* active 버튼은 배경 자체가 --primary 라 같은 색 링이 안 보인다(A11y) — on-primary 로 대비 확보. */
+.seg-btn.active:focus-visible{outline-color:var(--on-primary)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
 /* — Panel headings (the .panel box itself stays page-specific) ——————————— */
 .panel h2{ margin:0 0 16px 0; color:var(--text); font-size:20px; font-weight:600; }
 .panel p{ color:var(--muted); line-height:1.6; margin:0 0 12px 0; }
@@ -297,6 +322,10 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
   .tab{ flex:0 0 auto; padding:8px 12px; font-size:13px; }
   .header-row{align-items:center;flex-wrap:nowrap;gap:8px}
   .download-cta{flex:0 0 auto;border-radius:var(--r-pill);font-size:11px;font-weight:600;padding:6px 10px;white-space:nowrap}
+  .header-select-row{margin-top:6px}
+  .header-select-label{width:100%}
+  .header-select-row .select{min-width:0;flex:1 1 auto}
+  .seg-btn{padding:7px 10px;font-size:13px}
 }
 
 /* ============================================================================
@@ -316,8 +345,12 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
    읽을 수 없다. proximity 는 경계 근처에서만 당기고 중간에서는 자유 스크롤이다.
 
    scroll-padding-top: header 가 position:sticky; top:0 이라 이걸 안 주면 스냅된 섹션 제목이
-   헤더 밑에 가린다. 실측(4개 페이지 전부 동일) 데스크톱 76px / 모바일(<=640px) 71px 이라
-   큰 쪽에 맞추고 +12px 을 숨 쉴 틈으로 준다. 모바일에서 5px 더 뜨는 건 무해하다.
+   헤더 밑에 가린다. **높이를 박지 않는다 — theme.js hdrH() 가 헤더를 실측해 내려 주는
+   `--iq-hdr-h` 를 쓴다.** 예전엔 76px 하드코딩(`--header-h`)이었는데, 2026-09-21 보험사
+   셀렉트가 헤더로 올라가면서 K-ICS 헤더가 119px 로 커졌고 섹션 앵커가 88px 에 착지해
+   **섹션 윗부분 31px 이 헤더에 잘린 채** 보였다(owner 지적, 1400px 실측). 페이지마다·
+   분기마다 헤더 높이가 다르므로 상수로는 못 맞춘다. `--header-h` 는 theme.js 가 아직
+   측정을 못 했을 때(부팅 전 해시 진입)의 폴백으로만 남긴다.
 
    scroll-snap-stop:normal — 빠르게 튕기면 여러 섹션을 건너뛸 수 있게. always 면 한 칸씩만
    가서 답답하다.
@@ -329,14 +362,15 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
    첫 지점 위와 마지막 지점 아래가 통째로 못 가는 영역이 된다. index 실측: scrollTo(0) 이
    160 으로 끌려가 페이지 최상단에 못 가고, 최대 스크롤 2,678 에서 2,564 로 되돌아가
    푸터가 화면 밖에 남았다.
-     - `.container` 의 레이아웃 top 은 sticky header 높이(76px)라 padding(88px)을 빼면
-       음수 -> 0 으로 clamp 된다. 즉 "맨 위"가 정식 스냅 지점이 된다.
+     - `.container` 의 레이아웃 top 은 sticky header 높이와 같고 padding 은 그 높이+12px 이라
+       빼면 항상 음수 -> 0 으로 clamp 된다. 즉 "맨 위"가 정식 스냅 지점이 된다(헤더가
+       76px 이든 119px 이든 성립 — 그래서 실측값을 써도 이 보장이 깨지지 않는다).
      - `footer` 는 end 정렬이라 문서 바닥이 스냅 지점이 된다.
    header 에 start 를 주는 방법은 실패했다 — sticky 라 스냅 위치가 안 잡힌다(실측 그대로 160). */
-:root{ --header-h:76px; }
+:root{ --header-h:76px; }   /* theme.js 가 --iq-hdr-h 를 아직 안 내렸을 때의 폴백 */
 html{
   scroll-snap-type:y proximity;
-  scroll-padding-top:calc(var(--header-h) + 12px);
+  scroll-padding-top:calc(var(--iq-hdr-h, var(--header-h)) + 12px);
 }
 .panel{ scroll-snap-align:start; scroll-snap-stop:normal; }
 .container{ scroll-snap-align:start; }   /* 맨 위 도달 보장 */

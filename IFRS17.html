@@ -129,6 +129,12 @@
       </div>
       <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 테이블 다운로드(.xlsx)</button>
     </div>
+    <div class="header-select-row">
+      <label class="header-select-label" for="company">보험사 선택
+        <span id="coSwatch" title="회사 키컬러" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:transparent;margin-right:3px;vertical-align:middle"></span>
+        <select id="company" class="select"><option value="">보험사 선택</option></select>
+      </label>
+    </div>
   </header>
   <div class="container has-section-nav">
     <nav class="section-nav" aria-label="이 페이지의 섹션">
@@ -149,12 +155,18 @@
     </div>
     <div class="panel">
       <div class="controls">
-        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <label>보험사: <span id="coSwatch" title="회사 키컬러" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:transparent;margin-right:3px;vertical-align:middle"></span><select id="company" class="select"><option value="">보험사 선택</option></select></label>
-          <label>기준: <select id="wfPeriod" class="select">
+        <div class="control-group">
+          <span class="control-label" id="wfPeriod-label">기준</span>
+          <div class="seg-toggle" id="wfPeriod-toggle" role="radiogroup" aria-labelledby="wfPeriod-label">
+            <button type="button" class="seg-btn active" data-value="year" role="radio" aria-checked="true" tabindex="0">연도</button>
+            <button type="button" class="seg-btn" data-value="quarter" role="radio" aria-checked="false" tabindex="-1">분기</button>
+          </div>
+          <select id="wfPeriod" class="select sr-only" tabindex="-1" aria-hidden="true">
             <option value="year" selected>연도</option>
             <option value="quarter">분기</option>
-          </select></label>
+          </select>
+        </div>
+        <div>
           <button id="reportThisBtn" type="button" class="iq-anon-link" style="font-size:13px">⚑ 이 데이터에 오류가 있나요?</button>
         </div>
       </div>
@@ -361,6 +373,40 @@
       .replace(/생명보험$/, '생명')
       .replace(/재보험$/, '')             // 코리안리재보험 → 코리안리
       .replace(/보증보험$/, '보증');
+  }
+
+  // 기준(연도/분기) 세그먼트 토글 (owner 2026-09-21, select 대체) — K-ICS 최초 도입 패턴 이식.
+  // 실제 값은 숨긴 <select id="wfPeriod">(selectEl)에 그대로 두고 버튼 클릭/키보드가
+  // selectEl.value 를 갱신 + change 를 dispatch 한다. 기존 change 리스너(L2258 부근)는 무변경.
+  function setupSegToggle(root, selectEl) {
+    if (!root || !selectEl) return { sync(){} };
+    const btns = Array.from(root.querySelectorAll('.seg-btn'));
+    function apply(value, dispatch) {
+      selectEl.value = value;
+      btns.forEach(b => {
+        const active = b.dataset.value === selectEl.value;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-checked', active ? 'true' : 'false');
+        b.tabIndex = active ? 0 : -1;
+      });
+      if (dispatch) selectEl.dispatchEvent(new Event('change'));
+    }
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => apply(b.dataset.value, true));
+      b.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          const next = btns[(i + 1) % btns.length];
+          next.focus(); apply(next.dataset.value, true);
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prev = btns[(i - 1 + btns.length) % btns.length];
+          prev.focus(); apply(prev.dataset.value, true);
+        }
+      });
+    });
+    // 외부에서 selectEl.value 를 직접 바꿨을 때 토글 표시를 맞춘다.
+    return { sync: () => apply(selectEl.value, false) };
   }
 
   function parseKoNum(x){
@@ -2245,6 +2291,8 @@
     });
     const perSel=document.getElementById("wfPeriod");
     if (perSel) perSel.addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
+    // 기준 세그먼트 토글 초기화 — 기본값(연도) 표시를 selectEl.value 와 맞춘다.
+    setupSegToggle(document.getElementById("wfPeriod-toggle"), perSel).sync();
     window.addEventListener("resize", ()=>{ if (charts.wf) charts.wf.resize(); if (charts.pl) charts.pl.resize(); });
     // 다크/라이트 전환: 토큰을 다시 읽고(TH·Chart.defaults·ECharts 'iq' 테마) 회사 대시보드를 통째로 다시 그린다.
     window.addEventListener("iq:themechange", ()=>{
