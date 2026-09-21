@@ -1,13 +1,44 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-15c · Stage 5/5 — designer
+> Last updated: 2026-09-21 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
 
-## 2026-09-15c -- 손해율 버블차트 폐지 → 적층막대 일원화 (owner 질의: "비용 대비 효용")
+## 2026-09-21 -- K-ICS 금리민감도 `IQP is not defined` 라이브 사고 복구 (owner 신고 → inbox 20260921T0057Z)
+
+**증상**: 라이브 K-ICS.html 금리민감도 패널이 39사 중 36사에서 "…아직 없습니다" placeholder에
+멈춰 있었다(owner: "라이나생명 2026.2Q 데이터가 있는데 미공시라고 나온다"). 오케스트레이터가
+`renderSensDetail() → ReferenceError: IQP is not defined (K-ICS.html:1368)`로 재현.
+
+**원인**: `2dbc4ca`(2026-09-20, IFRS17 섹션 네비 통일 라운드)가 섹션 네비 인라인 구현을
+`theme.js`로 옮기면서 바로 옆에 있던 `function IQP(){...}` 정의를 같이 지웠는데, `renderSensDetail`
+안의 호출 2곳(`borderColor: IQP()` / `backgroundColor: IQP()`)은 남았다. `적용후` 행이 있는
+회사만 이 경로를 타서 36사가 죽었고(적용전만 있는 3사는 `'#6c757d'` 리터럴이라 안 죽었다),
+예외가 `renderDurationCards()` 뒤·placeholder를 숨기는 줄 앞에서 터지는 순서라 듀레이션 카드는
+그려지고 placeholder는 직전 회사의 문구를 그대로 매달고 남아 "미공시"로 보였다. 데이터
+(`kics_rate_sensitivity.json`)는 처음부터 정상이었다.
+
+**수정**:
+1. `IQP()`를 `K-ICS.html:273`(옛 자리, `jsonPath` 선언 바로 앞)에 `392e8ec`가 넣었던 정의와
+   바이트 단위로 동일하게 복구. 팔레트 B 색·호출부는 손대지 않음(복구지 재디자인이 아님).
+2. `renderSensDetail`(`K-ICS.html:1351`)을 try/catch 래퍼로 바꾸고 실제 본문을
+   `renderSensDetailInner`(`K-ICS.html:1362`)로 분리 — 어떤 예외든 잡아 `sensHideAll()`로
+   차트/KPI/표/듀레이션 카드를 전부 리셋한다. "정의 삭제·호출부 잔존" 버그류 재발에 대한
+   구조적 안전망(이번 버그만이 아니라 이 클래스 전체를 막는다).
+3. 배포 4종 정적 스윕(`scripts/_probes/_20260921_scan_undefined_calls.py` — 문자열/주석/
+   템플릿리터럴 제거 후 호출-정의 대조, CSS `var()`/object-shorthand-method 오탐 필터링):
+   실결함은 `IQP` 하나뿐이었다(`IFRS17.html`의 `formatter`·`K-ICS.html`의 `afterDraw`는
+   플러그인 콜백 shorthand 메서드 오탐).
+4. 런타임 검증(로컬 서빙 + Claude Browser, `?iq_internal=1`): 39사 전건 `renderRateSensitivity()`
+   예외 0건·`#sens-chart-wrap`/`#sens-table` 전부 `block`. 엣지케이스 3종(미선택/`IQP` 재발
+   인위 재현/복구 후 재렌더) 전부 의도대로 동작. 스크린샷(라이나생명보험 2026.2Q)
+   `data/_derived/`가 아니라 세션 스크래치패드에 저장(파일 경로는 인박스 답변 참조).
+   `pytest tests/test_deploy_assets.py` 11 passed.
+
+마스터 JSON 무수정, `main` cherry-push·배포 없음(publishing/owner 승인 사항).
 
 owner 질문: 손해율×사업비율 버블이 난잡함에 비해 값어치를 하냐 / 다른 핵심지표는 없냐 /
 ESR 랭킹만 남기고 치울까. 세 가지를 다 재서 답했다.

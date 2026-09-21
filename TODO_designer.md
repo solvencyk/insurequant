@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-09-15c · Stage 5/5 — designer
+> Last updated: 2026-09-21 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,23 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-09-21, K-ICS 금리민감도 `IQP is not defined` 라이브 사고 복구 — owner 신고, inbox `20260921T0057Z`, 커밋만·라이브 미배포):**
+- **원인**: `2dbc4ca`(2026-09-20 섹션 네비 통일)가 `IQP()` 정의를 지우고 호출 2곳만 남겨,
+  적용후 데이터가 있는 39사 중 36사에서 `renderSensDetail()`이 죽고 있었다(3사만 리터럴 색이라 생존).
+  예외가 placeholder 리셋 줄 앞에서 터져 "미공시" 문구가 직전 회사 것 그대로 눌러붙었다.
+- **수정 2건**: ① `IQP()`를 `K-ICS.html:273`에 원문 그대로 복구(팔레트 B 색·호출부 무변경).
+  ② `renderSensDetail`(`K-ICS.html:1351`)을 try/catch 래퍼로, 본문을 `renderSensDetailInner`
+  (`:1362`)로 분리 — 어떤 예외든 `sensHideAll()`로 강제 리셋해 이 버그류(정의 삭제·호출부
+  잔존) 재발 자체를 무해화했다.
+- **배포 4종 스윕**: 정적 스캐너(`scripts/_probes/_20260921_scan_undefined_calls.py`, 문자열/
+  주석/템플릿리터럴 제거 후 호출-정의 대조)로 훑은 결과 실결함은 `IQP` 하나. `IFRS17.html`
+  `formatter`·`K-ICS.html` `afterDraw`는 object-shorthand-method 오탐으로 확인.
+- **런타임 검증**(로컬 서빙+Claude Browser, `?iq_internal=1`): 39사 전건 예외 0·차트/표 전부
+  visible. 엣지케이스 3종(미선택/버그 인위재현/재렌더 복구) 전부 의도대로. `pytest
+  tests/test_deploy_assets.py` 11 passed. 스크린샷(라이나생명보험 2026.2Q) 저장 완료.
+- 마스터 JSON 무수정, main cherry-push 없음. 상세: `docs/changelog_designer.md` 2026-09-21,
+  `inbox/designer/20260921T0057Z__owner__ALL_2026.2Q__kics_sens_IQP_referenceerror.md` 답변.
 
 **Recent (2026-09-15c, 손해율 버블차트 폐지 → 적층막대 일원화 — owner 질의("비용 대비 효용"), 커밋만·라이브 미배포):**
 - **owner 질문: 손해율×사업비율 버블이 난잡함에 비해 값어치를 하냐, ESR 랭킹만 남기고 치울까.
