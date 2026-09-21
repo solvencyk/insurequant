@@ -7,6 +7,72 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-09-21b -- K-ICS 보험사 선택 헤더 고정 + 제목 이동·부제 삭제 + 기간/경과조치 토글 (owner 발주 → inbox 20260921T0430Z)
+
+**요청(owner 원문)**: "kics.html에서 보험사 선택 부분은 이제 화면 맨 위로 올리고 (스크롤해도 떠있게)
+'원보험사별 K-ICS 지급여력비율 변동 추이 / 분기 공시 기준 시계열입니다.' 를 아래 탭 부분으로 넣어야
+할거같은데? 그리고 '분기 공시 기준 시계열'도 이젠 꼭 맞는 말도 아니니까 걍 지워라. 기간, 경과조치도
+스크롤박스 말고 토글로 바꿔보자." 대상은 `K-ICS.html` 단독(모델: Sonnet 5).
+
+**변경 1 — 보험사 선택 → 헤더**: `#company` `<select>`(옵션 30개, 그대로 이동)를 `<header>` 안
+`.header-select-row`(신설, `K-ICS.html:143-179`)로 옮겨 스크롤해도 항상 보이게 했다. `theme.js`의
+`hdrH()`/`syncHdrVar()`는 `header.getBoundingClientRect().height`를 실측해 `--iq-hdr-h`에 반영하므로
+새 행이 늘린 헤더 높이가 자동으로 섹션 네비 `top`·tuck에 반영된다(하드코딩 없음 — 이전 라운드의
+71/88px 하드코딩 → 실측 120px 사고를 이 설계로 원천 회피). 클래스명(`header-select-row` 등)은
+K-ICS 전용이 아니게 지어 IFRS17.html이 같은 패턴을 나중에 쓸 수 있게 열어뒀다(지금은 1페이지만
+쓰므로 common.css hoist는 하지 않음 — §5.2 "≥3페이지 byte-identical만 hoist" 규칙).
+
+**변경 2 — 제목 이동 + 부제 삭제**: 첫 `.panel`(h2+lede)을 삭제하고 `<h2>원보험사별 K-ICS 지급여력비율
+변동 추이</h2>`를 `#sec-trend` 패널 최상단으로 옮겼다. `분기 공시 기준 시계열입니다.`는 다른 곳으로
+옮기지도, `?` 툴팁으로 숨기지도 않고 완전히 삭제했다(owner 지시 그대로).
+
+**변경 3 — 기간·경과조치 → 세그먼트 토글**: `<select id="period">`/`<select id="transition-mode">`는
+DOM에 `.sr-only`(clip-rect 패턴)로 화면에서만 숨겨 남기고, 그 위에 `role="radiogroup"` +
+`<button role="radio" aria-checked>` 2개짜리 `.seg-toggle`을 얹었다. 새 헬퍼 `setupSegToggle()`
+(`K-ICS.html:366-395`)이 버튼 클릭·키보드(←→, 로빙 탭인덱스)에서 `selectEl.value`를 갱신하고
+`dispatchEvent(new Event('change'))`를 실행 — 기존 `change` 리스너(`updateTable` 등, L1706-1707)와
+`.value`를 읽는 8곳 이상(`getTransitionMode`·`getFilteredData`·URL 파라미터 세팅 L1684-1690 등)을
+**한 글자도 고치지 않고** 그대로 재사용했다. 기간 기본값을 `분기`로 바꿔 `canShowTable()`(무변경,
+`company && period`)이 회사 선택만으로 즉시 참이 되게 했고, 안내문을 "보험사와 조회 기간을 선택해
+주세요" → "보험사를 선택해 주세요"로 정정했다(부제도 "헤더의 드롭다운 메뉴에서..."로). 경과조치
+기본값은 그대로 `적용전`.
+
+**A11y 즉시수정(실측 중 발견)**: `.seg-btn.active`의 배경이 `--primary`인데 `:focus-visible` 링도
+같은 `--primary`라 활성 버튼(로빙 탭인덱스 시작점)에서 포커스 링이 안 보이는 문제를 발견,
+`.seg-btn.active:focus-visible{outline-color:var(--on-primary)}`로 바로 고쳤다(a11y-audit 스킬
+§7의 "purely additive" 분류 — 신설 컴포넌트의 포커스 가시성이라 기존 렌더값 변경이 아니므로 owner
+승인 없이 처리). `scripts/a11y_contrast_check.py` 실측: 활성 버튼 텍스트 라이트 `#fff`/`#0f6e68`
+6.09:1·다크 `#0c110f`/`#54b3aa` 7.62:1(포커스 링도 동일 조합이라 3:1 UI 경계 기준도 충족), 비활성
+버튼 텍스트 `#212529`/`#fff` 15.43:1, 라벨 `--muted`/`#fff` 4.69:1 — 전부 WCAG AA 통과.
+
+**검증(헤드리스 Playwright, `scripts/_probes/_20260921_verify_header_toggles.py` — 미커밋 throwaway,
+venv playwright + 로컬 `http.server` 랜덤 포트)**, 7항목 지시 그대로:
+1. 데스크톱 1400px·모바일 375px 스크린샷 + 2000px 스크롤 후 `#company.getBoundingClientRect()`가
+   뷰포트 안 → 둘 다 `true`.
+2. 라이나생명 선택(기본 `분기` 토글) → `period.value="quarter"`, tbody 40행, `#chart` visible.
+3. `연도` 토글 클릭 → `period.value="year"`, 표 헤더 `["항목명","2023.4Q","2024.4Q","2025.4Q","2026.2Q"]`.
+4. 한화생명 2024.4Q `적용전`↔`적용후` 토글 → 표 텍스트 diff `true`(값 실제로 바뀜).
+5. `?company=라이나생명보험&period=year` 진입 → `#period.value="year"`, `연도` 버튼
+   `active`+`aria-checked="true"`로 자동 반영(`setupSegToggle().sync()`).
+6. `python scripts/validate_deployed_js.py --no-live` → `RED=0 (clear)`(4페이지 전부).
+7. Playwright `console`(error)+`pageerror` 리스너 누적 0건(전 시나리오 합산).
+추가로 키보드 `ArrowRight`/`ArrowLeft`가 `period.value`를 즉시 갱신함을 별도 확인. 스크린샷은
+`artifacts/designer_shots/20260921_header_toggles/*.png`(8장). `pytest tests/test_deploy_assets.py`
+11 passed(재인라인 금지·BOM·keep-list 그대로 유지 확인).
+
+**변경 파일**: `K-ICS.html` 단독. `common.css`는 무수정(신규 클래스는 아직 1페이지만 써서 페이지
+로컬 `<style>`에 둠).
+
+**범위 밖 발견 → 별도 티켓 분리(`spawn_task task_1dc9b489`)**: 모바일 375px에서 `기타공시` 탭이
+`⬇ 테이블 다운로드(.xlsx)` 버튼에 가려 겹치는 기존 버그를 검증 중 발견했다. **이번 변경이 원인이
+아님**을 변경 전 HEAD 버전을 임시 디렉터리에 체크아웃해 같은 뷰포트(375px)로 재현해 확인
+(`common.css`의 `.header-row`/`.tabs`/`.download-cta`가 원인, 4페이지 공유라 범위가 커서 이 티켓
+에서는 고치지 않았다).
+
+마스터 JSON 무수정, `git push`/main 배포 없음(커밋만). 상세 답변: `inbox/designer/20260921T0430Z…`.
+
+---
+
 ## 2026-09-21 -- K-ICS 금리민감도 `IQP is not defined` 라이브 사고 복구 (owner 신고 → inbox 20260921T0057Z)
 
 **증상**: 라이브 K-ICS.html 금리민감도 패널이 39사 중 36사에서 "…아직 없습니다" placeholder에

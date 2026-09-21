@@ -4,6 +4,123 @@
 
 ---
 
+**Recent (2026-09-14c, 손해율 버블차트 실렌더 검증 + 3건 수정 — owner 발주(직접 지시), 커밋만·라이브 미배포):**
+- **배경: (2026-09-14b)의 버블차트는 코드가 들어갔을 뿐 "그려지는 걸 본 적이 없었다"**(담당
+  에이전트가 세션 한도로 최종검증 직전에 끊김). 이 라운드는 그 검증을 끝내고, 검증에서 나온 결함
+  3건을 고친 것. **이 샌드박스의 Chromium 은 외부망을 못 뚫어 CDN 의 ECharts 가 안 온다**(curl 은
+  프록시로 됨) — 그래서 `echarts=undefined`·canvas 0 이 나왔던 것이지 페이지 결함이 아니었다.
+  받아둔 `echarts@5.5.0` 의 sha384 가 페이지 `integrity` 속성과 **바이트 단위로 일치**함을 먼저
+  확인한 뒤(=페이지가 가리키는 파일이 맞다), Playwright `route()` 로 그 사본을 물려 실렌더했다.
+  **저장소에는 사본을 넣지 않았다**(하네스 전용, `jp/index.html` 은 CDN 그대로).
+- **결함① 라벨이 글자죽이 됐다 — `labelLayout` 에서 `moveOverlap:'shiftY'` 제거.** 실측: 현행
+  `{hideOverlap:true, moveOverlap:'shiftY'}` 는 30장 전부 그려서 **겹침 35쌍**(밀집대에서 판독
+  불가). `moveOverlap` 이 `hideOverlap` 을 무효화한다(`hideOverlap` 단독 = 16장/겹침 0쌍).
+- **결함② 대형 4사 라벨이 1장만 남았다 — 라벨 방향 4방향 회전(上→右→下→左).** `hideOverlap`
+  단독은 겹침은 0 이지만 대형4사(東京海上·損保ジャパン·三井住友·あいおい) 중 1사만 살아남았다.
+  `normalSorted`(원 큰 순)의 인덱스로 방향을 돌리면 **가장 큰 4개에 반드시 서로 다른 방향**이
+  배정된다 → 19장/겹침 0쌍/대형4사 4/4, 컨테이너 밖으로 나간 라벨 0장. 회사 ID 하드코딩 없음.
+- **결함③ 대형 원을 눌렀는데 소형사 상세로 갔다 — 클릭 대상을 "클릭점을 실제로 포함하는 원"으로
+  재판정.** 라벨은 원보다 위에 그려지므로 소형사의 긴 라벨이 대형원 위에 얹힌다(실측: 東京海上의
+  원 중심이 ペット＆ファミリー 라벨 사각형 안에 있었고, 東京海上을 눌렀더니 `pet_and_family` 로
+  이동했다). ECharts 의 `params.data` 는 라벨을 눌러도 같은 데이터를 주므로 params 만으론 못 고친다.
+  `params.event.offsetX/Y` 로 포함 판정, 복수 포함이면 **작은 원 우선**(큰 원 위에 얹힌 작은 원을
+  누를 수 있게 — 그리기 순서와 같은 기준). 포함하는 원이 없으면 종전대로 params(=라벨만 조준한 경우).
+  4종 클릭(최대원/대형원에 인접한 소형원/고립원/아웃라이어▲) 전부 의도한 회사로 이동 확인.
+- **owner 지시 "원끼리 안 겹치게" 는 기본 표시에서는 수학적으로 불가능하다 — 대신 축소+확대 제공.**
+  최근접 2사(三井ダイレクト 64.3/28.9 · ペット＆ファミリー 64.2/28.6)의 화면상 중심거리가 **2.0px**
+  라서, 이 둘이 안 닿으려면 두 원의 지름 합이 4.1px 이하 = 전 회사를 2px 점으로 만들어야 한다
+  (원 크기=보험료 정보가 사라진다). 대형4사도 손해율 2.9pt·사업비율 2.9pt 상자 안에 있고, 이건
+  "대형4사는 율이 거의 같고 규모만 다르다"는 실데이터 사실 그 자체다. 좌표를 밀어 떼어놓는 건 값의
+  거짓말이라(owner: 좌표는 밀지 마라) **① 원 지름 천장 46→34**(실측 겹침 20쌍/최악 -30.7px →
+  **10쌍/최악 -20.4px**) **② toolbox 「範囲を指定して拡大」+「初期表示に戻す」**로 처리.
+  원 지름은 확대해도 일정하므로 배율만 올리면 반드시 떨어진다 — 실측 확대(손해율62~67/사업비27~35)
+  후 최근접쌍 **+17.9px**, 損保ジャパン×あいおい **+132.8px**. 실 UI 경로로 검증: 아이콘 클릭 후
+  드래그한 사각형 그대로 58.04~68.06/25.97~36.02 로 들어가고, 되돌리기로 0~90/0~80 완전 복귀.
+- **`dataZoom` 의 `type:'inside'` 는 일부러 넣지 않았다 — 넣으면 도표 위에서 페이지 스크롤이 죽는다.**
+  실측: `zoomOnMouseWheel:'ctrl'` 로 해도, 휠 옵션을 전부 `false` 로 해도 素 휠이 페이지로 안 간다
+  (도표 위 scrollY Δ0 / 도표 밖 Δ+263). 이 도표는 높이 520px 로 세로로 긴 페이지 한가운데 있어서
+  독자가 아래로 스크롤할 때마다 커서가 도표에 들어가 멈추는 = 전원이 밟는 사고가 된다. Ctrl+휠 확대와
+  드래그 pan 이 편하긴 하지만 페이지가 안 움직이는 대가가 더 크다고 보고 버렸다(확대는 toolbox 로).
+- **모바일(375px)은 발주대로 전건 확인.** 버블 wrap `display:none`·인스턴스 미생성(0×0 init 방지),
+  31사 목록이 **정미수입보험료 내림차순**(MS&AD HD 3,225,600 → … → 全管協れいわ 26백만엔, 31/31
+  단조), 막대는 손해율+사업비율 **2구간 누적**이고 폭비 0.6693 vs 값비 0.6695(차 0.0002 — flex-grow
+  기준0 분할이라 퍼센트 이중계산 오차가 안 생긴다), 가로스크롤 없음, 콘솔 에러 0.
+- **다크모드 동시 확인**(toolbox 아이콘·라벨 textBorder 가 테마색을 따라간다). 옛 주석 1줄 정정:
+  도넛 폐지 때 적은 "이 페이지는 이제 ECharts 를 쓰지 않는다" 는 같은 날 버블 도입으로 사실과 반대가 됐다.
+- **다음**: 라이브 배포는 폰 Termux 번들(이 PC 는 push 차단). 배포 후 `public_exports/manifest.json`
+  `build_id` 로 확인.
+
+**Recent (2026-09-14b, value_verified 화면 배지 — owner 발주(직접 지시, UH-25), 커밋만·라이브 미배포):**
+- **배경: 같은 날 jp 게이트에 `JP_ESR_UNVERIFIED_VALUE` 가 배선됐지만(T&D 222% 출처가 목록
+  페이지였던 사고 후속) 화면은 여전히 "검증 못 함"과 "검증 통과"가 같은 모양이었다.** publishing
+  과 계약된 `value_verified:{state,reason}`(state: verified/unverified/exempt, ratio_only 회사의
+  ESR 축처럼 이 축 대상이 아니면 null)을 렌더하는 게 이번 라운드 — **오늘 실 마스터엔 이 필드가
+  아직 없다**(16사 전부 verified 가 됐을 미래 상태), 그래서 스크래치패드 fixture(원본 `jp/jesr_esr.json`·
+  `jp/jesr_detail.json` 을 복사해 값만 주입, 실 마스터 무수정)로 verified/unverified/exempt/필드없음
+  4갈래를 전부 실렌더 확인했다.
+- **caveat-badge(같은 날 손해율 라운드에서 신설, "값은 검증됐지만 단순비교 주의")와 성격이 다르므로
+  같은 배지 "언어"(작은 표식+title 툴팁, 색만으로 구분 안 함)를 쓰되 실루엣을 확실히 다르게 했다.**
+  `.caveat-badge`는 둥근 pill(얇은 테두리, 균일 배경색) — 새 `.verify-badge`는 아이콘칩(굵은
+  2px 테두리 + 채워진 머리글자 블록 `.vb-ic`/라벨 `.vb-tx` 두 부분 구조)으로 실루엣 자체가 다르다.
+  unverified=주황(`?` "値 未検証"), exempt=파랑(`免` "確認対象外"), verified/null 은 배지 자체를
+  렌더하지 않는다(jesr_app.js `verifyBadgeHtml()`/`VERIFY_META`, jp/index.html 은 §5.2 관례대로
+  DOM 버전 `makeVerifyBadge()`로 파일별 복사). `reason` 은 publishing 문자열 그대로 배지 `title` 에
+  노출 — designer 가 다시 쓰지 않음.
+- **「根拠資料 ↗」 링크는 지우지 않고 옆에 사실을 붙였다.** `renderMeta()`(jesr_app.js, 3페이지
+  공통 metaLine)에서 `state!=='verified'` 면 verify-badge 를 링크 바로 뒤에 병기 + 앵커
+  `aria-label` 에도 "（値 未検証）"/"（確認対象外）" 를 덧붙여 스크린리더에서도 "여기가 근거다"라는
+  단독 약속이 안 남게 했다. 링크가 없는 회사(`source_url` null)도 배지는 그대로 뜬다.
+  실측(T&D Holdings 실데이터 222%를 fixture 에서 unverified 로 재현 — 실제 09-13 사고 케이스):
+  aria-label = "T&Dホールディングスの根拠資料、別タブで開く（値 未検証）", 배지 title 에
+  publishing reason 전문 노출 확인.
+  **적용 3곳(owner 지시): 값 옆(=caveat-badge 와 동일 위치 관례)** — ① jesr.html ESR 헤드라인
+  카드(`cardEsr`, `renderHeadline()`이 `cardPrelim` 슬롯에 速報배지와 나란히 병기) ② jgaap.html
+  上段KPI 合算率 카드(ratio_only 전용 카드, `renderJgaapCards()`) + 収益性指標 合算率 카드
+  (`renderProfitability()`→`ratioCard()`, caveat-badge 와 같은 자리에 이어붙임) ③
+  jp/index.html ESRランキング 리스트 행 + 損害率一覧 리스트 행(둘 다 `.li-name`, caveat-badge 와
+  동일 위치 관례). 그 밖에(当期純利益 등 손익 라인아이템, 감응도 표 등) 추가하지 않음 — 계약이
+  "posted record/company record 단위" 라 헤드라인성 지표(ESR·合算率)로 스코프를 한정, 근거는
+  이 파일 답변에 기록.
+- **함정 선제 대응(모바일): caveat+verify 두 배지가 한 회사에 동시에 뜰 수 있다** (예:
+  MS&AD/토어재보험처럼 이미 ratio_caveat 가 있는 회사가 value_verified 도 unverified/exempt 인
+  경우) — 같은 날 오전 라운드가 겪은 "칩이 회사명을 밀어낸다" 재발을 막기 위해 `#lossRatioList`
+  전용이던 모바일 折り返し 규칙을 `.verify-badge` 까지 확장하고 **`#esrListLife`/`#esrListNonlife`
+  에도 선제로 같은 규칙을 걸었다**(ESRランキング은 기존에 速報/単体詳細 chip 이 행당 ≤1개라 문제가
+  없었지만, verify-badge 가 chip 과 동시에 뜨면 다시 2개가 되므로). 실측(fixture 로 T&D 에
+  `preliminary:true` 를 임시로 얹어 速報chip+verify-badge 2배지 스트레스 테스트, msad_holdings/
+  toa_re 에 caveat+verify 2배지 스트레스 테스트): 375px 에서 `.li-nm` 폭 137px 유지(오전 라운드가
+  고친 71.5px 붕괴 재발 없음), 어느 조합도 `body.scrollWidth>innerWidth` 0건.
+- **A11y**: `a11y_contrast_check.py` 실측 — unverified 글자#7c2d12/배경#fff7ed 8.83:1, 아이콘
+  흰글자/배경#c2410c 5.18:1, exempt 글자#1e3a8a/배경#eff6ff 9.52:1, 아이콘 흰글자/배경#1d4ed8
+  6.70:1 — 전부 AA(4.5:1) 통과. `cbcheck`: unverified↔exempt 아이콘색 delta-RGB 212(protan)/220
+  (deutan), unverified↔caveat 기존 amber(#f59e0b) delta 95+ — 전부 안전선(60) 상회, 게다가
+  아이콘 머리글자(?/免)+라벨 문구+아이콘칩 실루엣 자체가 이미 달라 색만으로 구분하지 않음(스킬
+  §3-4 fully-additive 판정). `.vb-ic` 는 `aria-hidden`(장식 글리프, 바로 옆 `.vb-tx` 가 같은 뜻을
+  텍스트로 이미 담음). 다크모드(`color-scheme:dark` viewport)에서 배지 고정 hex 색 유지 확인
+  (`.prelim-badge`/`.repro-badge`/`.caveat-badge` 와 동일한 "테마 비의존 고정색" 기존 컨벤션 유지,
+  Playwright computed-style 로 라이트/다크 동일 rgb 확인).
+- **검증**: `node --check` jesr_app.js + index.html 인라인 스크립트 2블록 전부 통과. 4 HTML
+  html.parser 태그균형 0 오류·BOM 0(3 파일: index.html/jesr_app.js/jp.css 만 수정, jesr.html/
+  jgaap.html/disclosure.html 은 공유 스크립트·CSS 변경만으로 무수정). 로컬 `http.server`(스크래치
+  패드 사본 — 저장소 루트를 복사해 `common.css`/`theme.js` 404 안 나게, 포트 8931) +
+  Playwright(`/opt/pw-browsers/chromium-1194`)로 데스크톱 1280px·모바일 375px 다수 실측:
+  ESRランキング(T&D=unverified, 東京海上HD=exempt, SOMPO=명시적 verified→배지 없음, かんぽ=필드
+  자체 없음→배지 없음 확인) · 損害率一覧(au損保=unverified, SBI損保=unverified, MS&AD/トーア=
+  caveat+verify 동시 렌더, 三井住友海上=exempt) · jesr.html 헤드라인 카드+메타라인 링크(au_nonlife
+  실 자본층 데이터로 unverified, mitsui_sumitomo 로 exempt, T&D/東京海上HD/SOMPO/かんぽ 4종
+  headline-only 경로) · jgaap.html 上段KPI+収益性指標 카드(msad_holdings/toa_re 2배지 동시,
+  au_nonlife 단독) · disclosure.html metaLine(3페이지 공유 확인). 전 케이스
+  `body.scrollWidth<=innerWidth`(가로스크롤 0), `pageerror` 콘솔 0(외부 CDN 연결실패만 — 개발망
+  차단, 기존 패턴, 코드와 무관). fixture·검증 스크립트는 스크래치패드에만 존재, `jp/*.json` 실
+  마스터·`J-ESR/`·census·tests·docs/postmortems 전부 무수정, commit/push 없음.
+- **손대지 않음(소유권 경계)**: `jp/jesr_esr.json`·`jp/jesr_detail.json`·`J-ESR/`·`scripts/`·
+  `TODO_jp.md`·census·한국 자산(`index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html`) 전부
+  무수정. `jesr.html`/`jgaap.html`/`disclosure.html` 자체 HTML도 무수정(공유 스크립트/CSS 변경만
+  으로 3페이지 모두에 반영되는 구조라 손 댈 필요가 없었다).
+- **모델·소요**: Claude Sonnet 5, 단일 세션 약 1시간(탐색+구현+fixture 3종+Playwright 4라운드
+  검증 포함).
+
+
 **Recent (2026-09-14, 손보 손해율 24사 — owner 발주(직접 지시, inbox 티켓 아님), 커밋만·라이브 미배포):**
 - **publishing 계약(`data_scope`/`ratio_caveat`)은 이 라운드 세션 시작 시점엔 `jp/jesr_detail.json`·
   `jesr_esr.json` 에 아직 없었다(같은 라운드 병렬 작업) — **스크래치패드 fixture**로 개발
