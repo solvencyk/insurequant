@@ -266,6 +266,12 @@
     /* 섹션 네비(현재 위치 표시·헤더 오프셋·스크롤 업 노출)는 theme.js 가 4페이지 공통으로 한다.
        2026-09-20 에 IFRS17 과 공유하려고 여기 있던 인라인 구현을 그리로 올렸다. */
 
+    /* 차트 라이브러리는 CSS `var()` 를 못 읽는다 — 토큰 값을 문자열로 꺼내 준다.
+       theme.js 가 없으면 팔레트 B 액센트로 폴백.
+       2026-09-20 섹션 네비 통합(2dbc4ca) 때 이 정의만 지워지고 호출부 2곳(renderSensDetail)이
+       남아 라이브에서 ReferenceError — 2026-09-21 복구(inbox/designer/20260921T0057Z). */
+    function IQP(){ return (window.IQTheme && IQTheme.chart().primary) || '#0f6e68'; }
+
     const jsonPath = 'kics_disclosure.json';
     /* Chart common theme (DESIGN-V2 P2) */
     (function(){
@@ -1343,6 +1349,17 @@
 
     // 분기 변경: 차트/KPI/테이블/주석만 재렌더
     function renderSensDetail() {
+      try {
+        renderSensDetailInner();
+      } catch (err) {
+        // 렌더 중간에 예외가 나면(다음 회사로 넘어가도) placeholder 문구가 직전 상태로
+        // 눌러붙는 사고를 막는다 — IQP ReferenceError 실사고(2026-09-21) 이후 안전망.
+        console.error('renderSensDetail failed', err);
+        sensHideAll('금리 민감도 패널을 불러오는 중 오류가 발생했습니다.');
+      }
+    }
+
+    function renderSensDetailInner() {
       const company = document.getElementById('company').value;
       const quarter = document.getElementById('sens-quarter').value;
       const rows = sensRowsForCompany(company).filter(r => r['공시분기'] === quarter);
