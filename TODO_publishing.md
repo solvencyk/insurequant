@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-09-21 · Stage 4/5 — publishing
+> Last updated: 2026-09-21(6차 배포 라이브) · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -11,22 +11,24 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ## Status
 
-**🟡 2026-09-21 6차 배포 — IFRS17·기타공시 헤더셀렉트+토글 4파일 + K-ICS item14 후 30칸. 게이트 재실행 → owner GO 대기.**
+**🚀 2026-09-21 6차 배포 라이브 — IFRS17·기타공시 헤더셀렉트+토글 4파일 + K-ICS item14 후 30칸.** main 커밋 `a5118f3`(`6741dea..a5118f3`), owner GO 후 push.
 1차 시도(같은 날 앞 세션)는 `validate_kics_rate_sensitivity.py` RS2_BASE_ANCHOR RED=2(흥국생명 2025.2Q/4Q
 item14 후 역산치)로 BLOCKED. parser-kics 에이전트가 `inbox/parser/20260921T1400Z` §B 를 처리하다 중단됐고
 오케스트레이터가 마무리(`32ebfb0`, 상세는 `TODO_parser_kics.md` 18회차): item14 후 30칸 원문 정수 교체(30/30
 MD 대조) + 흥국생명 item23 후 5분기 R5 재폐쇄 + 등재부 pin 갱신 + xlsx sync. `deb21e6` public_exports 재생성
-(build_id `32ebfb0`).
-- 작업 트리 게이트: `validate_kics_disclosure.py` exit 0 · `validate_kics_rate_sensitivity.py` gate RED=0 ·
-  `check_master_xlsx_drift.py` RED=0 · inbox 위반 0 · `prepush_check.py --full` → 결과는 아래 갱신.
-- 격리 워크트리 `../insurequant-main-deploy`(main `6741dea` = origin/main) 에 로컬 커밋 `a5118f3`(push 안 함):
-  `common.css` · `K-ICS.html` · `IFRS17.html` · `공시보고서.html` · `kics_disclosure.json` ·
-  `public_exports/K-ICS공시.json` · `public_exports/manifest.json` — 7파일, 그 외 diff 0.
-- **화면 숫자 변경(owner 고지)**: K-ICS 세부항목 표 적용후 컬럼 — item14 지급여력기준금액 30칸(8사, 대부분
-  ±1억 반올림 차, 흥국생명 최대 +5.6/−4.4억) · 흥국생명 item23 기타요구자본 5칸(±3~6억). 지급여력비율(item27 후)은
-  헤드라인 소스라 불변.
-- 다음: prepush 결과 clear 확인 → owner GO → `git push origin main`(워크트리) → 라이브 `manifest.json` build_id ·
-  흥국생명 2025.2Q item14 후 18,412 확인 → 워크트리 제거.
+(build_id `32ebfb0`). `21594e6` 골든 입력지문 갱신(kics_disclosure.json 을 입력으로 쓰는 4빌더 — 골든 4종 전부
+pass, 산출 불변 확인 후 `--update`).
+- 작업 트리 `prepush_check.py --full` 2회: 1차 `골든 입력지문=FAIL → BLOCKED`(예상, 위 갱신으로 해소) → 2차
+  **gate-clear**(gate RED=0 · K-ICS 룰게이트 clear · 도메인게이트 pass · 골든 입력지문 pass · 배포 JS 런타임 RED=0 ·
+  inbox 위반 0 · 605 passed).
+- 격리 워크트리 cherry-push 7파일: `common.css` · `K-ICS.html` · `IFRS17.html` · `공시보고서.html` ·
+  `kics_disclosure.json` · `public_exports/K-ICS공시.json` · `public_exports/manifest.json`.
+- **라이브 확인**: `manifest.json` build_id `32ebfb0` · 라이브 바이트 ↔ HEAD 블롭 **5/5 일치**(한글 파일명은 curl 에
+  URL-encoded 경로로 — 안 그러면 GitHub Pages 404 페이지를 받아 오탐) · `kics_disclosure.json` 흥국생명 2025.2Q
+  item14 후 18,412 확인.
+- 화면 숫자 변경: K-ICS 세부항목 표 적용후 컬럼 item14 30칸(8사, 대부분 ±1억) · 흥국생명 item23 후 5칸(±3~6억).
+  item27 후(비율)는 헤드라인 소스라 불변.
+- 워크트리 제거, 로컬 `main` = origin/main `a5118f3`. 남은 티켓: `inbox/parser/20260921T1400Z` §A(RS6 31칸) open.
 
 **🟢 2026-09-21 자본비율전망 비고 내부 진단 문구 분리 (owner 티켓 처리, 배포 안 함).**
 `inbox/publishing/20260921T0320Z` 처리 완료(status: answered). owner가 라이브 QA로 지적:

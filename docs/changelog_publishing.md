@@ -10,6 +10,27 @@
 
 ---
 
+## 2026-09-21 — main 배포 6차 `a5118f3`: IFRS17·기타공시 헤더셀렉트+토글 이식 + K-ICS item14 적용후 30칸 원문 정정 (owner GO)
+
+- IFRS17·기타공시 헤더셀렉트+토글 4파일 + K-ICS item14 후 30칸. main 커밋 `a5118f3`(`6741dea..a5118f3`), owner GO 후 push.
+1차 시도(같은 날 앞 세션)는 `validate_kics_rate_sensitivity.py` RS2_BASE_ANCHOR RED=2(흥국생명 2025.2Q/4Q
+item14 후 역산치)로 BLOCKED. parser-kics 에이전트가 `inbox/parser/20260921T1400Z` §B 를 처리하다 중단됐고
+오케스트레이터가 마무리(`32ebfb0`, 상세는 `TODO_parser_kics.md` 18회차): item14 후 30칸 원문 정수 교체(30/30
+MD 대조) + 흥국생명 item23 후 5분기 R5 재폐쇄 + 등재부 pin 갱신 + xlsx sync. `deb21e6` public_exports 재생성
+(build_id `32ebfb0`). `21594e6` 골든 입력지문 갱신(kics_disclosure.json 을 입력으로 쓰는 4빌더 — 골든 4종 전부
+pass, 산출 불변 확인 후 `--update`).
+- 작업 트리 `prepush_check.py --full` 2회: 1차 `골든 입력지문=FAIL → BLOCKED`(예상, 위 갱신으로 해소) → 2차
+  **gate-clear**(gate RED=0 · K-ICS 룰게이트 clear · 도메인게이트 pass · 골든 입력지문 pass · 배포 JS 런타임 RED=0 ·
+  inbox 위반 0 · 605 passed).
+- 격리 워크트리 cherry-push 7파일: `common.css` · `K-ICS.html` · `IFRS17.html` · `공시보고서.html` ·
+  `kics_disclosure.json` · `public_exports/K-ICS공시.json` · `public_exports/manifest.json`.
+- **라이브 확인**: `manifest.json` build_id `32ebfb0` · 라이브 바이트 ↔ HEAD 블롭 **5/5 일치**(한글 파일명은 curl 에
+  URL-encoded 경로로 — 안 그러면 GitHub Pages 404 페이지를 받아 오탐) · `kics_disclosure.json` 흥국생명 2025.2Q
+  item14 후 18,412 확인.
+- 화면 숫자 변경: K-ICS 세부항목 표 적용후 컬럼 item14 30칸(8사, 대부분 ±1억) · 흥국생명 item23 후 5칸(±3~6억).
+  item27 후(비율)는 헤드라인 소스라 불변.
+- 워크트리 제거, 로컬 `main` = origin/main `a5118f3`. 남은 티켓: `inbox/parser/20260921T1400Z` §A(RS6 31칸) open.
+
 ## 2026-09-21 — 6차 배포 시도: IFRS17·기타공시 헤더셀렉트+토글 이식 (BLOCKED, 미배포)
 
 - owner 승인("고치고 나면 main에 배포까지 진행") + designer 커밋 `6a51b7a`(orchestrator 사전검증
