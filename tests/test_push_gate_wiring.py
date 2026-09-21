@@ -63,6 +63,19 @@ WIRED = {
         "'발행사 불일치' 로 등재되고 원인이 묻힌다 — 스테일 표는 발행사 불일치와 달리 "
         "고칠 수 있는 결함(원천 선택·파싱)이다. 전수 census 오탐 0, 기지 1건은 스크립트 "
         "`_KNOWN` 에 owner 결정과 함께 등재.",
+    "validate_deployed_js":
+        "배포 HTML 의 JS 가 실행될 수 있는가 (2026-09-21 신설, 훅 1f, 실측 0.13초). "
+        "2026-09-20 designer 커밋 2dbc4ca 가 K-ICS.html 의 `function IQP(){…}` 정의만 지우고 "
+        "호출부 2곳을 남겼고, 라이브 금리민감도 패널이 39사 중 36사에서 "
+        "`ReferenceError: IQP is not defined` 로 죽은 채 하루 넘게 배포됐는데 **모든 게이트가 "
+        "초록이었다** — 데이터는 100% 정상이었고 owner 가 눈으로 잡았다. 원인은 단순하다: "
+        "이 훅의 어느 단계도 배포 HTML 의 JS 를 읽지 않았다. test_deploy_assets 는 keep-list· "
+        "인라인금지·BOM·삭제경로만 본다. 즉 불변식 1번('게이트가 검사하는 파일 = 사용자가 "
+        "보는 파일')을 데이터 축에서만 지키고 화면 축에서는 한 번도 안 지켰다. 브라우저를 "
+        "안 띄우고 인라인 + 같은 저장소 <script src> 를 토큰화해 '참조되는데 정의가 없는 "
+        "이름'을 찾는다(현 트리 오탐 0 · 정의삭제 변이 172/183 검출). 변이시험은 "
+        "tests/test_deployed_js_gate.py. 사고기록 "
+        "docs/postmortems/PM-20260921_kics_sens_iqp_referenceerror.md.",
     "validate_csm_waterfall":
         "CSM 워터폴 항등식 + 단계 커버리지. 2026-08-21 에 18건 실패 상태로 발견됐고(호출처 0 이라 "
         "아무도 몰랐다) 같은 날 exit 0 까지 닫혀 WIRED 로 옮겼다. 구조적 제외 6건(IFRS17 시행 전 "

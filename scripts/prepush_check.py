@@ -30,6 +30,9 @@ import validate_data_contract as gate            # noqa: E402
 # subprocess 로 부르면 실작업(3~4초)보다 시작 비용이 더 크다 ② `tests/test_push_gate_wiring.py`
 # 의 배선 검사가 줄머리(`^import <name>`)를 보므로 들여쓴 지역 import 는 "안 걸린 것"으로 읽힌다.
 import validate_golden_input_fingerprints as goldenfp   # noqa: E402
+# 1f 절. 같은 이유로 import 로 부른다(실측: 인-프로세스 0.13초 vs subprocess 2.9초 —
+# 이 머신은 파이썬 기동만 2.2초다).
+import validate_deployed_js as deployjs                 # noqa: E402
 
 
 # ===========================================================================
@@ -391,7 +394,22 @@ def _run_korean_master_gates() -> dict:
     print("GOLDEN INPUT FINGERPRINT (빌더 미실행 — scripts/validate_golden_input_fingerprints.py)")
     n_fp = goldenfp.main([])
 
-    return {"red": n_red, "kics": n_kics, "dom": n_dom, "raw": n_raw, "fp": n_fp}
+    # 1f) 배포 HTML 의 JS 런타임 (2026-09-21 신설, `inbox/validation/20260921T0057Z`).
+    #     2026-09-20 designer 커밋 `2dbc4ca` 가 `K-ICS.html` 의 `function IQP(){…}` 정의만
+    #     지우고 호출부 2곳을 남겼다. 라이브 금리민감도 패널이 39사 중 36사에서
+    #     `ReferenceError: IQP is not defined` 로 죽은 채 하루 넘게 배포됐는데 **이 훅의 어느
+    #     단계도 배포 HTML 의 JS 를 읽지 않아서** 전 게이트가 초록이었다(데이터는 100% 정상 —
+    #     순수한 렌더링 사망이고 owner 가 눈으로 잡았다). `tests/test_deploy_assets.py` 는
+    #     keep-list·인라인금지·BOM·삭제경로만 본다. 즉 불변식 1번("게이트가 검사하는 파일 =
+    #     사용자가 보는 파일")을 데이터 축에서만 지키고 **화면 축에서는 한 번도 안 지켰다.**
+    #     이 검사는 브라우저를 안 띄운다 — 인라인 + 같은 저장소 `<script src>` 를 토큰화해
+    #     "참조되는데 어디에도 정의가 없는 이름" 을 찾는다(실측 0.13초, 현 트리 오탐 0,
+    #     정의삭제 변이 172/183 검출). 변이시험은 `tests/test_deployed_js_gate.py`.
+    print("\n" + "=" * 72)
+    n_js = deployjs.main([])
+
+    return {"red": n_red, "kics": n_kics, "dom": n_dom, "raw": n_raw, "fp": n_fp,
+            "js": n_js}
 
 
 def main(argv=None) -> int:
@@ -421,13 +439,15 @@ def main(argv=None) -> int:
         # 축소 모드: 한국 마스터 축 게이트(1·1b·1c·1d·1e)를 **부르지 않는다**. 0 으로 두되
         # verdict 에는 `SKIPPED (jp-scope)` 로 찍는다 — 0 을 'pass' 로 읽으면 그게 false-green 이다.
         print("\n[jp-scope] 한국 마스터 게이트 건너뜀: data-contract · K-ICS 룰 · 도메인 7종 ·"
-              " DART raw 커버리지 · 골든 입력지문")
-        print("           (건너뛴 이유: 위 PUSH SCOPE 판정. 한국 축 파일이 섞이면 자동 복귀)")
-        n_red = n_kics = n_dom = n_raw = n_fp = 0
+              " DART raw 커버리지 · 골든 입력지문 · 배포 JS 런타임")
+        print("           (건너뛴 이유: 위 PUSH SCOPE 판정. 한국 축 파일이 섞이면 자동 복귀.")
+        print("            루트 .html·.js 는 §0 에서 이미 전체 게이트 강제라 배포 JS 축이"
+              " 축소로 빠져나갈 수 없다)")
+        n_red = n_kics = n_dom = n_raw = n_fp = n_js = 0
     else:
         _g = _run_korean_master_gates()
         n_red, n_kics, n_dom = _g["red"], _g["kics"], _g["dom"]
-        n_raw, n_fp = _g["raw"], _g["fp"]
+        n_raw, n_fp, n_js = _g["raw"], _g["fp"], _g["js"]
 
     # 2) 일반 이상치 발견 → 트리아지 — **2026-08-25 에 push 경로에서 뺐다** (owner: "씰데없는
     #    룰들은 좀 쳐내"). 지운 게 아니라 `scripts/scan_generic_anomalies.py` 로 내렸다.
@@ -520,6 +540,11 @@ def main(argv=None) -> int:
             # 유일한 코드라 여기 안 넣으면 축소 목록이 조용히 넓어져도 아무도 못 잡는다 —
             # 한국 마스터가 무검사로 나가고 verdict 는 `gate-clear` 를 찍는다. <1초.
             "tests/test_prepush_scope.py",
+            # 배포 JS 런타임 게이트(§1f)의 변이시험(2026-09-21 신설). 게이트만 걸고 이걸 빼면
+            # 1f 는 다시 honor-system 이다 — ① 현 트리 오탐 0 ② `IQP` 정의를 지우면 RED·
+            # 되돌리면 GREEN ③ 탐지기 규칙을 무력화하는 killer 변이 6종이 실제로 케이스를
+            # 죽이는지 ④ CSS `var()`·주석·정규식 노이즈 내성까지 매 push 확인한다. 8.6초.
+            "tests/test_deployed_js_gate.py",
             "tests/unit/"]
     if decision.reduced:
         # jp-scope: 한국 골든·룰 커버리지 묶음을 통째로 건너뛴다(위 1~1e 와 같은 이유).
@@ -553,7 +578,7 @@ def main(argv=None) -> int:
     n_test = proc.returncode
 
     print("\n" + "#" * 72)
-    blocked = n_red or n_hyg or n_test or n_kics or n_dom or n_raw or n_fp
+    blocked = n_red or n_hyg or n_test or n_kics or n_dom or n_raw or n_fp or n_js
     # 축소 모드에서 안 돈 게이트는 **'pass' 로 찍으면 안 된다**. n_* 는 0 이지만 그 0 은
     # "검사해서 깨끗했다" 가 아니라 "검사하지 않았다" 이고, 그 둘을 화면에서 못 가르는 것이
     # 이 저장소의 false-green 그 자체다(docs/postmortems/ 전체가 그 기록이다).
@@ -565,6 +590,7 @@ def main(argv=None) -> int:
           f" · domain gates={_SKIP if _r else ('FAIL' if n_dom else 'pass')}"
           f" · DART raw 유실={_SKIP if _r else ('있음' if n_raw else '0')}"
           f" · 골든 입력지문={_SKIP if _r else ('FAIL' if n_fp else 'pass')}"
+          f" · 배포 JS 런타임={_SKIP if _r else ('BLOCK' if n_js else 'clear')}"
           f" · inbox 기계적위반={'있음' if n_hyg else '0'}"
           f" · offline tests{'(jp 묶음)' if _r else ''}={'FAIL' if n_test else 'pass'}"
           f" → {'BLOCKED (fix or owner-escalate)' if blocked else 'gate-clear'}"

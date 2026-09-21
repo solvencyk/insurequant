@@ -263,7 +263,9 @@ def test_full_mode_runs_the_korean_gates_and_the_full_bundle(monkeypatch, capsys
 
     def fake_korean():
         called["n"] += 1
-        return {"red": 0, "kics": 0, "dom": 0, "raw": 0, "fp": 0}
+        # 키를 하나라도 빠뜨리면 `main()` 이 KeyError 로 죽는다 — 게이트를 추가하면
+        # 이 가짜도 같이 고쳐야 한다(2026-09-21 `js` = 배포 JS 런타임 추가).
+        return {"red": 0, "kics": 0, "dom": 0, "raw": 0, "fp": 0, "js": 0}
 
     monkeypatch.setattr(P, "_run_korean_master_gates", fake_korean)
     monkeypatch.setattr(P, "resolve_scope",

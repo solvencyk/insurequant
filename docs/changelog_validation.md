@@ -1,9 +1,85 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-09-20 · Stage 3/5 — validation
+> Last updated: 2026-09-21 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-09-21 (14차) -- 배포 HTML 의 JS 런타임 축 신설: `DEPLOYED_JS_UNDEFINED_CALL` (훅 §1f)
+
+- 발주: owner `inbox/validation/20260921T0057Z__owner__ALL__deployed_js_runtime_blind_spot.md`(status: answered).
+  포스트모템 `docs/postmortems/PM-20260921_kics_sens_iqp_referenceerror.md`(**closed**, 5칸).
+- **사고**: designer 커밋 `2dbc4ca`(2026-09-20 05:55)가 `K-ICS.html` 의
+  `function IQP(){ return (window.IQTheme && IQTheme.chart().primary) || '#0f6e68'; }`
+  **한 줄**만 지우고 호출부 2곳(`renderSensDetail` 의 `borderColor`/`backgroundColor`)을 남겼다.
+  라이브에서 `ReferenceError: IQP is not defined` 로 금리민감도 패널이 죽은 채 하루 넘게 배포됐고
+  **`prepush_check.py` 전 단계가 초록이었다.** 데이터는 100% 정상 = 고칠 마스터 셀 0개.
+  owner 가 눈으로 잡았다.
+- **못 잡은 이유는 단순하다 — 검사 축 자체가 없었다.** 저장소에서 배포 HTML 의 `<script>` 내용을
+  읽는 검사기가 **0개**였다. `tests/test_deploy_assets.py` 는 keep-list·인라인금지·BOM·삭제경로·
+  골든표만 본다. 즉 불변식 1번("게이트가 검사하는 파일 = 사용자가 보는 파일")을 데이터 축에서는
+  지켜 왔는데 **화면 축에서는 한 번도 지킨 적이 없었다** — 맞는 파일의 안 본 부분.
+- **영향 범위를 재측정해 티켓의 "39사 중 36사" 를 정정했다.** 예외는 `if (postRatio) { … IQP() … }`
+  안에서만 터지므로 **적용후 지급여력비율 행이 있는 버킷**만 죽는다. 실측: 선택 가능한 (회사,분기)
+  버킷 **138 중 129(93.5%)** 사망, 살아난 9버킷은 적용전만 있어 색상이 리터럴인 경우(동양생명
+  2024.4Q · 삼성생명 2024.4Q/2025.2Q/2025.4Q · 신한이지 2025.4Q · 카카오페이손보 2025.4Q ·
+  하나손보 2024.4Q/2025.2Q/2025.4Q). **기본 화면(최신 분기)에서는 39/39 사 전부.**
+- **신설 `scripts/validate_deployed_js.py`** — 페이지가 실제로 로드하는 스크립트(인라인
+  `<script>` + 같은 저장소 `<script src>` 4개)를 렉서로 토큰화해
+  `참조 − 바인딩 − 브라우저내장 − CDN전역 ≠ ∅` 이면 RED. 같은 게이트에
+  `DEPLOYED_JS_SCRIPT_MISSING`(로컬 `<script src>` 부재) ·
+  `DEPLOYED_JS_UNSCANNABLE`(렉서 실패 = **fail-closed**, SKIP 금지)도 있다.
+- **헤드리스가 아니라 정적을 골랐다(판단 근거를 박아 둔다).** 헤드리스를 차단축으로 쓰면
+  ① 배포본이 CDN 4종을 로드하는데 훅은 오프라인에서도 돌아야 하고(스텁 = "진짜 페이지가 아닌
+  것"을 검사) ② 브라우저 없는 클론에서 **SKIP 이 fail-open** 이 된다. 둘 다 이 저장소가 반복해서
+  데인 형태다. 정적 축은 0.09초·오프라인·결정론적이고 이번 사고형태를 정확히 덮는다.
+  헤드리스로만 잡히는 부류는 **UH-26 으로 등재**했다(안 잡힌다는 사실을 적었다).
+- **오탐 억제가 설계의 전부다 — 양쪽을 반대로 틀었다.** `바인딩` 은 과대추정(스코프 미해석,
+  구조분해 파라미터 통째), `참조` 는 과소추정(멤버호출·옵셔널체이닝·메서드축약 정의 제외,
+  자유 식별자 전수 해석 안 함). 둘 다 "못 잡는 쪽" 으로 틀려 있어 **잡으면 진짜**다.
+  노이즈는 렉서가 원천 차단 — CSS `var()`/`rgba()`·한국어 산문은 문자열·주석 안이라 토큰에 안
+  들어오고, 템플릿 `${…}` **안쪽만** 재귀 토큰화한다(거기는 진짜 코드다).
+- **실측**: 배포 4종 토큰 **73,175** · 참조지점 **3,627** · **RED=0**(오탐 0).
+  `function NAME(` 전수 변이 **183건 중 172건(94%) 검출**, 미검출 11건 사유 전건 규명 —
+  9건은 같은 이름이 `download-survey.js`/`theme.js` **IIFE 안에도** 정의돼 과대추정에 흡수
+  (UH-26), 2건은 진짜 무해(`fillMissingCompanies` 즉시실행 명명함수식 · `plResolve` 호출처 0).
+  designer 가 임시 스윕에서 만난 `formatter`·`afterDraw` 오탐은 **안 난다**
+  (`name(…){` = 객체 메서드 축약/플러그인 훅 **정의**로 판정).
+- **작업 중 내 룰의 버그를 실측으로 잡았다.** `.catch(err => {…})` 를 catch 절로 읽어 콜백 본문의
+  이름을 통째로 바인딩으로 삼켰다 → 거짓음성 3건(`render`·`setMapStatus`·`fetchFirst`).
+  키워드 규칙에 멤버 위치 가드(`prev ∉ {., ?., #}`)를 넣어 168→172 회복.
+  **`gtag`/`dataLayer` 는 CDN allowlist 에서 뺐다** — `gtag.js` 는 `window.gtag` 를 만들지 않고
+  인라인 GA 스니펫이 만든다. 넣어 두면 그 스니펫이 지워져도 안 걸린다(빼고도 RED 0 실측).
+- **배선(그 자리에서 확인, 문서 아님)**: `scripts/prepush_check.py` **L35** import ·
+  **L409** `n_js = deployjs.main([])`(§1f, `_run_korean_master_gates()` 본문) · **L450** 언팩 ·
+  **L581** `blocked = … or n_js` · **L600** `return 2 if blocked else 0` ·
+  `.githooks/pre-push:23`(`core.hooksPath=.githooks` 확인) ·
+  `tests/test_push_gate_wiring.py` `WIRED["validate_deployed_js"]` ·
+  오프라인 묶음 `prepush_check.py:547`.
+- **범위 목록은 안 고쳤다.** §0 `ROOT_FULL_SUFFIXES` 에 `.html`·`.js` 가 이미 있어 루트 HTML/JS
+  번들은 자동 FULL → "화면을 고쳤는데 화면 게이트를 건너뛰는" 조합이 구조적으로 안 나온다.
+  `tests/test_prepush_scope.py` 는 무수정 통과(단 `_run_korean_master_gates` 가짜 반환값에 `js`
+  키를 더했다 — 안 더하면 `main()` 이 KeyError).
+- **엔드투엔드 exit code 를 실행으로 봤다**: `origin/main` 의 깨진 `K-ICS.html` 을 스크래치패드
+  트리에 놓고 같은 호출 경로로 `prepush_check.main()` →
+  `PRE-PUSH VERDICT … 배포 JS 런타임=BLOCK … → BLOCKED`, **exit 2**. designer 복구본이면
+  `배포 JS 런타임=clear … gate-clear`, **exit 0**.
+- **회귀 박제** `tests/test_deployed_js_gate.py` **24케이스 8.6초** — ① 배포 4종 오탐 0(상주판)
+  ② `IQP` 정의를 **메모리에서** 지우면 RED(호출부 2줄)·원본이면 GREEN ③ 같은 사고형태를 4종
+  전부에서 잡는지 전수 변이(검출률 하한 70% 강제, 고정 심볼 목록을 박지 않아 개명에 안 죽는다)
+  ④ **killer 변이 6종**(allowlist 확대 / 호출을 정의로 계상 / 참조 수집 제거 / 인라인 스크립트
+  미독해 / 렉서 실패 묵인 / 없는 `<script src>` 묵인) 전부 케이스를 죽이는지 ⑤ 노이즈 내성.
+  **`K-ICS.html` 은 디스크에서 한 번도 수정하지 않았다**(designer 소관 — 변이는 전부 문자열에만).
+- **비용**: 인-프로세스 **0.09초**(훅이 부르는 방식) · 단독 실행 2.9초(파이썬 기동 2.2초 포함) ·
+  라이브 감사 축 포함 시 +2.3초(git show 8회, ref 별 메모이즈 후). 오프라인 묶음 +8.6초.
+- **미배선 잔여(조용히 남기지 않는다)**: **UH-26** 런타임 전용 실패(TypeError · `getElementById()`
+  null · 차트 옵션 스키마 · fetch 모양 변화 · **스코프 오류**) →
+  `inbox/validation/20260921T0630Z__validation__ALL__headless_runtime_smoke_feasibility.md`.
+  **UH-27** 라이브(`origin/main`) 축은 `_live_audit()` 이 **인쇄만 하고 안 막는다**(차단하면
+  designer 가 main 을 고칠 때까지 무관한 작업까지 막힌다) — 지금 라이브 RED=2, 배포 발주
+  `inbox/publishing/20260921T0630Z__validation__ALL__live_main_still_broken_deploy_iqp_fix.md`.
+- 마스터 JSON·배포 HTML·`data/_gold/` **무수정**. 골든 6종 중 영향 있는 것 없음(산출 불변).
+- 모델·소요: Claude Opus 5(1M), 단일 세션.
 
 ## 2026-09-20 (13차) -- 경영공시 PL 백필 ⑤ 병합 후속: `_check_pl_bridge`(leg-coverage 2e · ZERO_LEGS 2b) 소스인식
 
