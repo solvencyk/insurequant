@@ -10,6 +10,30 @@
 
 ---
 
+## 2026-09-21 — 6차 배포 시도: IFRS17·기타공시 헤더셀렉트+토글 이식 (BLOCKED, 미배포)
+
+- owner 승인("고치고 나면 main에 배포까지 진행") + designer 커밋 `6a51b7a`(orchestrator 사전검증
+  완료: headless Playwright 1400/375px, deploy_assets 11 passed, validate_deployed_js --no-live RED=0)
+  4파일(`common.css`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html`)을 격리 워크트리
+  `../insurequant-main-deploy`(main 기준)에 cherry-push 준비 — 로컬 커밋(`9ff5093`, push 안 함)까지만
+  진행하고 **push 는 하지 않았다**.
+- 사유: `scripts/prepush_check.py`(scope=FULL — diff 에 루트 HTML 포함돼 축소 불가) 가
+  `validate_kics_rate_sensitivity.py` RS2_BASE_ANCHOR RED=2 로 BLOCKED. 흥국생명보험(KR0071)
+  2025.2Q·2025.4Q item14 지급여력기준금액 `값_적용후`(비율역산 18415.27/19354.44)가 원문 헤드라인
+  총괄표 인쇄값(18,412/19,350 억원)과 어긋남 — **이번 배포 payload 와 무관한 기존 K-ICS 데이터
+  이슈**, 오늘 validation 이 신설한 RS2 적용후 앵커 룰이 처음 잡은 것이고 이미
+  `inbox/parser/20260921T1400Z__validation__MULTI_2024.4Q-2025.4Q__ratesens_phase_level_holes.md`
+  §B 로 parser 발주돼 있다(open). K-ICS 룰게이트 자체·offline tests 605 passed·골든 입력지문 6종·
+  배포JS런타임게이트는 전부 clear/RED=0 — 막은 건 이 도메인게이트 하나.
+- CLAUDE.md "RED 1건이라도 있으면 push 안 함, exception 우회 불가" + 이번 발주문의
+  "RED 블록되면 --no-verify 쓰지 말고 멈추고 보고" 원칙 그대로 적용.
+- 정리: 워크트리 제거, 로컬 `main` ref가 실수로 그 커밋(9ff5093)만큼 origin 보다 앞서 남았던 것을
+  `git branch -f main origin/main` 으로 재동기화(6741dea) — stale-local-main 재발 방지.
+  세션 도중 별개로 local `main` 이 origin 보다 32 커밋 뒤처져 있던 것도 발견해
+  `git fetch origin main:main` 으로 정정(이 stale 참조가 원래 있던 것 — 이번 배포 시도가 만든 게 아님).
+- 재현: `TODO_publishing.md` 최상단 항목에 커밋 diff·커밋 메시지 전문 기록 — RED=0 확인 후 워크트리
+  재생성부터 push 승인까지 바로 재개 가능.
+
 ## 2026-09-21 — 자본비율전망 비고 내부 게이트 진단 문구 분리 (`44ae5fb`/`a61c8b2`/`c130062`, 배포 안 함)
 
 - owner 티켓 `inbox/publishing/20260921T0320Z`: `public_exports/자본비율전망.json` 비고
