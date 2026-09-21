@@ -10,6 +10,29 @@
 
 ---
 
+## 2026-09-21 — 자본비율전망 비고 내부 게이트 진단 문구 분리 (`44ae5fb`/`a61c8b2`/`c130062`, 배포 안 함)
+
+- owner 티켓 `inbox/publishing/20260921T0320Z`: `public_exports/자본비율전망.json` 비고
+  660행(추정 610행)에 `compute_confidence()`(`forward_capital_simulation.py`) 내부 게이트
+  진단 문자열(필드명 `subordinated_eok`·`tier1_hybrid_issued_eok`·`numerator_eok_fallback`,
+  게이트 용어 `advisory, not in overall`)이 그대로 노출.
+- **원천 정정**: 실제 조립 지점은 `forward_capital_simulation.py`가 아니라
+  `build_master_xlsx.py::_flatten_forward_capital()`이었다 — `kics_forward_capital.json`
+  루트 마스터에는 `비고` 필드가 없다(flatten 시점 파생값). `forward_capital_simulation.py`·
+  루트 마스터·provenance는 무변경.
+- 수정: `비고`에는 `"신뢰도 낮음(발행잔액 vs BS 괴리)"`만 남기고, `reasons` 원문은 신설
+  `_diagnostics` 컬럼으로 이동(`44ae5fb`). `export_public_sheets.py`의 `_DROP_COLS`에
+  `_diagnostics` 추가 — 공개 다운로드만 제외, 내부 xlsx에는 남음.
+- `sync_master_xlsx_sheet.py`에 "기존 시트에 신설 컬럼 추가"(순수 추가일 때만) 케이스를
+  새로 지원(`a61c8b2`) — 자본비율전망 시트 sync. `public_exports` 재생성(`c130062`).
+- 검증: 총 2090행 불변, jargon 660→0행, `_diagnostics` 제외 키로 재매칭한 '값' 컬럼
+  불일치 0, `check_master_xlsx_drift.py` 드리프트 셀 0, `validate_live_artifacts.py`/
+  `validate_data_contract.py` RED=0(YELLOW 전부 기존 baseline).
+- validation에 재발방지 정규식 검사 제안(구현 안 함): `inbox/validation/20260921T0335Z`.
+- 브랜치 `fix/csm-product-segmented-columns`에만 커밋, push 안 함(오케스트레이터/owner 판단 대기).
+
+---
+
 ## 2026-09-21 — main 배포 5차 `92159dd`: K-ICS IQP ReferenceError 복구 + 금리민감도 9칸 + 가정민감도 caption (owner 지시 "고치고 나면 main 에 배포까지")
 
 - 사고: 2차 배포 `2dbc4ca` 가 `K-ICS.html` 의 `function IQP()` 정의만 지우고 호출 2곳을 남김. 라이브 금리민감도

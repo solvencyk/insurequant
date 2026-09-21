@@ -11,6 +11,29 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ## Status
 
+**🟢 2026-09-21 자본비율전망 비고 내부 진단 문구 분리 (owner 티켓 처리, 배포 안 함).**
+`inbox/publishing/20260921T0320Z` 처리 완료(status: answered). owner가 라이브 QA로 지적:
+`public_exports/자본비율전망.json` 비고 660행(추정 610행)에 `compute_confidence()`
+(`forward_capital_simulation.py`) 내부 게이트 진단 문자열(`subordinated_eok` 등 필드명,
+`advisory, not in overall` 게이트 용어)이 그대로 노출.
+- **원천 재확인**: 실제 조립 지점은 forward_capital_simulation.py가 아니라
+  `build_master_xlsx.py::_flatten_forward_capital()` — `kics_forward_capital.json`
+  루트 마스터에는 `비고` 필드 자체가 없다(flatten 시점 파생값). 그래서 **루트 마스터·
+  provenance는 전혀 안 건드렸다**(diff 0, 숫자 이동 여지 자체가 없음).
+- 커밋 3개: `44ae5fb`(비고에서 reasons 분리, 신설 `_diagnostics` 컬럼 + export
+  `_DROP_COLS` 추가) · `a61c8b2`(xlsx "자본비율전망" 시트 sync — sync 도구에 "기존
+  시트 컬럼 신설" 케이스 지원 추가) · `c130062`(public_exports 재생성).
+- 셀 diff 증명: 총 2090행 불변, jargon 660→0행, `_diagnostics` 비고 제외 키로 재매칭한
+  '값' 컬럼 불일치 0건, `check_master_xlsx_drift.py` 드리프트 셀 0.
+  `validate_live_artifacts.py` RED=0(YELLOW 17 전부 기존 baseline) ·
+  `validate_data_contract.py` RED=0(YELLOW 123 전부 기존 baseline).
+- validation에 재발방지 검사 제안 티켓 신설(구현 안 함):
+  `inbox/validation/20260921T0335Z__publishing__ALL__public_export_jargon_check_proposal.md`
+  (정규식 후보 4개 + false-positive 2건 직접 검증 포함).
+- push 안 함 — main 반영 여부는 오케스트레이터/owner 판단. 대상 파일: `scripts/build_master_xlsx.py`·
+  `scripts/export_public_sheets.py`·`scripts/sync_master_xlsx_sheet.py`·
+  `insurequant_master_tables.xlsx`·`public_exports/자본비율전망.json`·`public_exports/manifest.json`.
+
 **🔴 2026-09-21 5차 배포 — 라이브 K-ICS 금리민감도·세부항목 표 ReferenceError 복구 + 데이터 3건.** main 커밋 `92159dd`(`8ba15d9..92159dd`).
 **owner 가 라이브에서 잡았다** — 라이나생명 2026.2Q 금리민감도가 "아직 없습니다"로, 세부항목 표가 "JSON 파일을
 불러오는 중 오류 발생: ReferenceError: IQP is not defined" 로 나왔다. 2차 배포(`2dbc4ca`)가 `function IQP()` 정의만
@@ -60,22 +83,7 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 - **대기(배포 안 함)**: NH농협손보 자본구성 6칸 정정은 **화면 숫자를 바꾸는 건**이라 owner 승인 대기.
   브랜치에는 들어가 있다(`e049696`) — 승인 시 `kics_disclosure.json` + `public_exports/` 를 같이 올린다.
 
-**🚀 2026-09-20 디자인 배포 라이브 — 팔레트 B + K-ICS 섹션 네비 + "?" 툴팁 (owner 승인).**
-main 배포 커밋 `17e3733`(`a84520c..17e3733`). **데이터는 한 바이트도 안 바뀌었다** — HTML/CSS/JS 6파일뿐.
-- **검증은 "커밋했다" 가 아니라 라이브에서 바이트를 받아 커밋 블롭과 대조**: `common.css`·`theme.js`·
-  `index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html` **6/6 해시 일치**. 라이브 `--primary` 도
-  `#0f6e68`(라이트)·`#54b3aa`(다크) 확인.
-- 작업 트리에서 `prepush_check.py [scope=FULL]` **gate-clear · 567 passed** 확인 후 push.
-  배포 워크트리는 slim(=`scripts/` 없음)이라 훅이 게이트를 건너뛴다고 인쇄한다 — **정상 동작이고,
-  게이트는 작업 트리에서 미리 돌린 것이다.**
-- **선행 블록 3건을 먼저 치웠다(이번 작업과 무관, `196f6f1` KR0073 정정 라운드가 남긴 것)**:
-  골든 입력지문 `INPUTS_MOVED` RED 4 · 룰 골든 해시 이동 · `AFTER_IDENT_PIN_TOL` 미등재.
-  **둘 다 해시만 보고 갱신하지 않았다** — 지문은 골든 4종(17BS 7분·PL 4.5분 포함)을 전부 돌려 산출
-  불변을 확인한 뒤, 룰 골든은 `by_rule` 을 내용으로 대조해 **움직인 칸이 `8_post` 딱 하나**
-  (GREEN→YELLOW, RED 36 불변)임을 확인한 뒤 재생성했다. 커밋 `f5c0453`·`6445dde`.
-- 남은 것: `og:image` 4페이지 0건(팔레트와 무관한 별건).
-
-
+(밀린 항목은 `docs/todo_archive_publishing.md` 참조 — 2026-09-20 팔레트 B 배포 항목 이번 라운드에 archive됨)
 
 ## 🚧 Open publishing work
 
