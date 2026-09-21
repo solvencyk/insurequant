@@ -44,7 +44,10 @@ OUT_DIR = REPO / "public_exports"
 # owner 지시(2026-08-28): 이 필드는 코리안리 내부 코드라 공개 다운로드에 넣으면 안 된다.
 # 대시보드(K-ICS/IFRS17/공시보고서 .html)는 이 필드를 회사 선택 조회 키로 그대로 쓰므로
 # 루트 마스터 JSON에서는 빼지 않는다 — public_exports/ 스냅샷에서만 제외.
-_DROP_COLS = {"원보험사코드"}
+# inbox/publishing/20260921T0320Z (owner, 2026-09-21): 자본비율전망 시트의 `_diagnostics`는
+# build_master_xlsx.py:_flatten_forward_capital()가 confidence.reasons(내부 게이트 진단
+# 문자열)를 담아 두는 칸이다 — 비고와 분리해 여기에만 넣었다. 비고는 그대로 남긴다(드롭 금지).
+_DROP_COLS = {"원보험사코드", "_diagnostics"}
 
 # 표준 "YYYY.NQ" 형태만 분기범위 계산에 쓴다 — 일부 소스(CSM_amortization 등)는
 # "annual (filings skim)" 같은 비표준 라벨을 공시분기 자리에 넣어 문자열 정렬 시

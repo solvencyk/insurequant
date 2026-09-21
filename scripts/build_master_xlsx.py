@@ -307,9 +307,15 @@ def _flatten_forward_capital(raw: list) -> list:
             notes.append("콜옵션 미공시 채권 포함 — 콜일자를 발행일+5년/신용등급이력 등으로 추정 "
                          "(원문 미기재), 실제 콜상환 시점과 다를 수 있음")
         if conf.get("level") == "low":
-            reasons = "; ".join(conf.get("reasons") or [])
-            notes.append(f"신뢰도 낮음(발행잔액 vs BS 괴리) — {reasons}" if reasons else "신뢰도 낮음")
+            notes.append("신뢰도 낮음(발행잔액 vs BS 괴리)")
         base_note = " / ".join(notes)
+        # inbox/publishing/20260921T0320Z (owner): compute_confidence()'s `reasons` list
+        # is internal gate-diagnostic text (field names like subordinated_eok, gate terms
+        # like "advisory, not in overall") for triage, not something a reader of this sheet
+        # can interpret. Keep it, but split into its own column instead of folding it into
+        # 비고 — export_public_sheets.py drops this column from the public download so only
+        # the user-meaningful notes above travel with the public snapshot.
+        diagnostics = "; ".join(conf.get("reasons") or [])
         for p in r.get("projections", []):
             for field, label in _FORWARD_ITEMS:
                 row = dict(base)
@@ -322,6 +328,7 @@ def _flatten_forward_capital(raw: list) -> list:
                 if field == "basic_ratio_pct" and p.get("basic_capacity_exhausted"):
                     note = (note + " / " if note else "") + "기본자본 잠식(가용 기본자본<=0) — 비율 0%로 캡 표시"
                 row["비고"] = note
+                row["_diagnostics"] = diagnostics
                 rows.append(row)
     return rows
 
