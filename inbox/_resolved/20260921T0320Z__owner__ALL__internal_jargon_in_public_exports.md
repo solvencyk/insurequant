@@ -2,7 +2,7 @@
 from: owner
 to: publishing
 created: 20260921T0320Z
-status: answered
+status: resolved
 route: escalate
 company: ALL
 period: N/A
@@ -174,3 +174,7 @@ gap` / `limit breach`) + 두 false-positive 케이스(가정민감도 비고, �
 ### 못 닫은 것
 
 없음. 4단계 지시 전부 처리, 게이트 RED=0, 데이터 마스터 무변경 증명 완료.
+
+## 종결 (orchestrator, 2026-09-21)
+
+재확인: `public_exports/자본비율전망.json` fd5bd55→HEAD 2,090행 불변 · 컬럼 증감 0 · 비고 외 필드 위치대조 불일치 0 · jargon 6패턴(subordinated_eok/numerator_eok_fallback/tier1_hybrid_issued_eok/advisory, not in overall/face\/BS gap/FSC gap) 660행→0행, 파일 전체 0건. 남은 비고 7종 전부 사용자 문구. `_diagnostics` 는 `_DROP_COLS` 로 export 에서 제외(xlsx 시트에만 잔존). 루트 마스터·provenance diff 0. 후속 검사 제안은 `inbox/validation/20260921T0335Z` 에서 이어간다.
