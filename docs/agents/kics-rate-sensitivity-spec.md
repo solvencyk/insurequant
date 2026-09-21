@@ -70,9 +70,11 @@ measure 행 순서는 전사 불변: 비율 → 금액 → 기준금액.
 | id | 내용 | tol / severity |
 |---|---|---|
 | **RS1_RATIO_IDENTITY** | 각 (사,분기,경과조치)·각 컬럼 c: `비율[c] ≈ 금액[c]/기준금액[c]×100` | `max(0.5%p, 0.5%·\|비율\|)` / **RED→reparse** (delta 오변환·행 오매핑 검출기) |
-| **RS2_BASE_ANCHOR** | base 컬럼 vs `kics_disclosure.json` 동일 (사,분기): 적용전 base금액≈item1, base기준금액≈item14, base비율≈item27. 적용후는 `값_적용후` 있을 때만 | 금액 2억 / 비율 0.5%p / **RED→reparse** (양쪽 중 한쪽 파싱오류) |
+| **RS2_BASE_ANCHOR** | base 컬럼 vs `kics_disclosure.json` 동일 (사,분기): 적용전 base금액≈item1, base기준금액≈item14, base비율≈item27. 적용후는 `값_적용후` 있을 때만. **구현은 2026-09-21 까지 적용전만 대조했다**(적용후 `continue`) — 그날 스펙대로 두 phase 로 맞췄고, `값_적용후` 부재는 `rs2_na` 로 세어 인쇄한다(조용한 SKIP 금지) | 금액 2억 / 비율 0.5%p / **RED→reparse** (양쪽 중 한쪽 파싱오류) |
 | RS3_DIRECTION_SANITY | 생보: 금리하락 시 비율하락이 통상(부채듀레이션>자산). 역방향은 플래그만 | — / YELLOW (회사별 ALM에 따라 정상일 수 있음) |
 | RS4_COVERAGE_CENSUS | 실측 매트릭스. 같은 회사가 인접 분기 보유한데 사이 구멍 → YELLOW. Q2/Q4 반기 regime 확립되면 regime 내 hole만 RED 승격 | — / YELLOW(초기) |
+| **RS5_DISCLOSURE_COVERAGE** (2026-09-01) | `kics_disclosure.json` 을 정본 코호트로: REGIME_START(2024.4Q) 이후 짝수분기의 (회사,분기)가 `kics_rate_sensitivity.json` 에 **통째로** 없으면 RED. 홀수분기는 서식부재(0/268 실측)로 제외. 선행 결손 17 버킷은 `RS5_EXCEPTIONS`(백필 후보, 정당부재 아님) | — / **RED** |
+| **RS6_PHASE_LEVEL_CENSUS** (2026-09-21) | RS5 가 "버킷이 있나" 만 볼 때 버킷 **안**의 기대 그리드를 본다: (회사,분기) 마다 적용전·적용후 × 3 measure = 6행, 행마다 충격 5칸. 종류 `ROW_MISSING · NULL_CELLS · UNKNOWN_LABEL(어휘 밖 라벨) · ORPHAN(코호트 밖 행)`. 2026.2Q 에 3사가 적용전만 있고 적용후 0행인데 RS1~5 전부 통과한 사각(`inbox/validation/20260921T0100Z`)을 닫는다. 선행 구멍 11키·31행은 `RS6_KNOWN_HOLES`(routed backfill worklist, `inbox/parser/20260921T1400Z`) — 매 실행 인쇄, 채워지면 inert 로 인쇄 + 매니페스트 테스트가 등재 해제를 강제 | — / **RED** (census 는 YELLOW-first 아님: 결측은 SKIP 이 아니라 RED) |
 
 validator 출력 JSON → `scripts/consolidate_inbox.py` `VALIDATORS`에 핸들러 추가 (route: reparse).
 
@@ -85,3 +87,4 @@ validator 출력 JSON → `scripts/consolidate_inbox.py` `VALIDATORS`에 핸들�
 
 ## 7. 변경 이력
 - 2026-06-10: 초안. 38사 서베이 → 스키마·변형 카탈로그·RS1–4 codify.
+- 2026-09-21 (validation): §5 에 RS5(2026-09-01 신설분 소급 기재)·RS6_PHASE_LEVEL_CENSUS 추가. RS2 를 스펙대로 적용후까지 대조하도록 구현 정정. 매니페스트 `tests/test_rule_coverage_manifest.py` 금리민감도 절 신설(룰 id·등재부 크기·변이 7종·훅 배선).

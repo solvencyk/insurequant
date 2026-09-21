@@ -151,9 +151,9 @@ def _rate_sensitivity_findings(by_co):
         out.append({
             "to": "parser", "route": "reparse", "topic": "rs2_base",
             "company": n2c.get(co, co), "name": co, "period": q, "rule": "RS2_BASE_ANCHOR",
-            "detail": f"{r['measure']} base {r['base']} vs 공시 {r['disclosure']} (diff {r['diff']})",
-            "section": "금리민감도 base vs kics_disclosure 앵커(item1/14/27)",
-            "body": f"- {r['measure']}: 민감도표 base={r['base']} / kics_disclosure={r['disclosure']} / diff={r['diff']}",
+            "detail": f"{r.get('경과조치', '적용전')} {r['measure']} base {r['base']} vs 공시 {r['disclosure']} (diff {r['diff']})",
+            "section": "금리민감도 base vs kics_disclosure 앵커(item1/14/27 — 적용전↔값, 적용후↔값_적용후)",
+            "body": f"- [{r.get('경과조치', '적용전')}] {r['measure']}: 민감도표 base={r['base']} / kics_disclosure={r['disclosure']} / diff={r['diff']}",
             "request": ("민감도표 base 컬럼이 헤드라인(item1/14/27)과 불일치 — 별도/연결 basis 차이면 RS2_EXCEPTIONS 등재 요청, "
                         "아니면 base행 오매핑 reparse. 분류: justified(basis) / real_error / refetch."),
         })

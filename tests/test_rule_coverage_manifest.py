@@ -1773,3 +1773,207 @@ def test_master_xlsx_is_wired_into_run_gate():
     assert "gate.run_gate(env)" in hook, \
         "훅이 run_gate 를 부르지 않는다 — 이 축이 push 를 막지 못한다"
     assert "res.red" in src, "RED 이 exit code 로 이어지지 않으면 push 를 못 막는다"
+
+
+# ===========================================================================
+# K-ICS 금리민감도 축 (`scripts/validate_kics_rate_sensitivity.py`)   (2026-09-21, validation)
+# ===========================================================================
+# ## 왜 이 축이 여기 있나
+#
+# 2026.2Q 에 3개사(KR0050·KR0069·KR1098)가 적용전 3행만 있고 적용후 3행이 통째로 없었는데
+# RS1~RS5 가 전부 통과했다(`inbox/validation/20260921T0100Z`). RS4/RS5 는 **버킷 단위** census
+# (그 분기가 있나 / 그 (회사,분기)가 있나)라 버킷 안의 phase 결측을 못 보고, RS1~RS3 은 "있는
+# 값이 맞는가" 만 본다. 같은 날 RS2 가 스펙(§5 "적용후는 값_적용후 있을 때만")과 달리 **적용전만**
+# 앵커하고 있던 것도 드러났다 — 파서가 결측 3사를 적용전→적용후 미러로 채웠는데 그 미러를 대조하는
+# 룰이 없었다.
+#
+# 이 절이 강제하는 것:
+#   1. 검증기 소스의 `RS*` 룰 id 전량이 아래 선언과 정확히 일치하는가
+#   2. 예외 등재부 4종의 **크기**가 선언과 같은가 — 등재가 늘거나 줄면 여기서 갱신을 강제한다
+#      ("Ledger needs a gate reader": 적어만 두면 다음 라운드에 또 샌다)
+#   3. `RS6_KNOWN_HOLES` 의 모든 키가 **지금도 실제로 발화**하는가 — 파서가 채웠는데 등재가 남으면
+#      inert 로 잡혀 여기서 실패한다(등재부가 구멍보다 오래 살 수 없다)
+#   4. 변이시험 — phase 통삭제·null 셀·라벨 오타·고아 행·적용후 base 드리프트가 **실제로** 발견을
+#      내는가, 그리고 phase 통삭제를 RS4/RS5 가 못 보는가(= 사각이 진짜였는가)
+#   5. 훅이 이 검증기를 부르고 exit code 가 `blocked` 로 이어지는가(RED 신설이 push 를 막는가)
+RATE_SENS_RULES = {
+    "RS1_RATIO_IDENTITY": "RED — 각 (사,분기,경과조치)·충격컬럼: 비율 ≈ 금액/기준금액×100",
+    "RS2_BASE_ANCHOR":
+        "RED — base 컬럼 vs kics_disclosure item1/14/27. **적용전↔값 · 적용후↔값_적용후 둘 다**"
+        "(2026-09-21 까지 적용전만 — 스펙 §5 와 달랐다). 대조불가는 rs2_na 로 세어 인쇄",
+    "RS3_DIRECTION_SANITY": "YELLOW — 생보 금리하락→비율하락 통상, 역방향 플래그",
+    "RS4_COVERAGE_CENSUS": "YELLOW — 회사 cadence 인식 후 regime 내 인접 hole(버킷 단위)",
+    "RS5_DISCLOSURE_COVERAGE": "RED — kics_disclosure 코호트의 (회사,분기)가 통째로 없다(버킷 단위)",
+    "RS6_PHASE_LEVEL_CENSUS":
+        "RED — 버킷 **안**의 기대 그리드: 2 phase × 3 measure × 5 충격셀. ROW_MISSING · NULL_CELLS · "
+        "UNKNOWN_LABEL(어휘 밖 라벨은 구멍처럼 보이면서 안 보인다) · ORPHAN(코호트 밖 행, RS5 의 역). "
+        "선행 구멍 11키·31행은 RS6_KNOWN_HOLES(routed backfill worklist, 정당부재 아님)",
+}
+RATE_SENS_RS6_KINDS = {"ROW_MISSING", "NULL_CELLS", "UNKNOWN_LABEL", "ORPHAN"}
+# 등재부 크기 실측 2026-09-21. 등재를 추가·해제하면 여기도 고쳐야 한다.
+RATE_SENS_LEDGERS = {"RS1_EXCEPTIONS": 1, "RS2_EXCEPTIONS": 2, "RS5_EXCEPTIONS": 17,
+                     "RS6_KNOWN_HOLES": 11}
+RATE_SENS_KNOWN_HOLE_ROWS = 31        # 10 버킷 × 3 ROW_MISSING + 서울보증 2024.4Q NULL_CELLS 1
+
+
+def _rs_mod():
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import validate_kics_rate_sensitivity as RS
+    return RS
+
+
+@pytest.fixture(scope="module")
+def _rs_live():
+    """두 마스터를 **한 번만** 읽는다. 변이는 금리민감도 행 리스트의 deepcopy 에만 가한다 —
+    kics_disclosure(25k 행)는 코호트·앵커로만 읽고 절대 흔들지 않는다."""
+    RS = _rs_mod()
+    rs_rows, kd_rows = RS.load_rs(), RS.load_kd()
+    res = RS.run(rs_rows, kd_rows)
+    # 변이 대상: regime 안에서 두 phase 가 완비되고 어떤 등재부에도 없는 첫 버킷(결정론적).
+    cohort = RS._disclosure_cohort(kd_rows)
+    have = {}
+    for r in rs_rows:
+        have.setdefault((r["원보험사코드"], r["공시분기"]), set()).add((r["경과조치여부"], r["measure구분"]))
+    full = {(ph, m) for ph in RS.PHASES for m in RS.MEASURES}
+    excepted_names = ({co for co, _q in RS.RS2_EXCEPTIONS}
+                      | {co for co, _q, _p, _c in RS.RS1_EXCEPTIONS})
+    clean = next((cq for cq in sorted(have)
+                  if RS._in_regime(cq[1]) and have[cq] == full
+                  and cq not in RS.RS5_EXCEPTIONS
+                  and not any(k[:2] == cq for k in RS.RS6_KNOWN_HOLES)
+                  and cohort.get(cq) not in excepted_names), None)
+    assert clean is not None, "변이시험에 쓸 깨끗한 (회사,분기) 버킷이 없다"
+    return RS, rs_rows, kd_rows, res, clean
+
+
+def test_rate_sens_rule_ids_match_manifest():
+    """검증기 소스의 `RS*_...` 룰 id 와 이 선언이 정확히 일치해야 한다(등재부·키 상수 제외)."""
+    import re
+    src = (ROOT / "scripts" / "validate_kics_rate_sensitivity.py").read_text(encoding="utf-8")
+    found = {t for t in re.findall(r"\b(RS\d_[A-Z][A-Z_]+)\b", src)
+             if not t.endswith(("_EXCEPTIONS", "_KNOWN_HOLES", "_KEYS"))}
+    assert found == set(RATE_SENS_RULES), (
+        f"검증기 {sorted(found - set(RATE_SENS_RULES))} 가 선언에 없고 "
+        f"{sorted(set(RATE_SENS_RULES) - found)} 는 선언에만 있다 — "
+        "룰을 추가·개명·삭제했으면 이 선언도 같이 고쳐라")
+
+
+def test_rate_sens_exception_ledgers_match_manifest():
+    """등재부 4종의 크기. 등재를 늘리거나 풀면 여기서 갱신을 강제한다."""
+    RS = _rs_mod()
+    got = {name: len(getattr(RS, name)) for name in RATE_SENS_LEDGERS}
+    assert got == RATE_SENS_LEDGERS, f"등재부 크기 {got} != 선언 {RATE_SENS_LEDGERS}"
+
+
+def test_rate_sens_known_holes_all_still_fire(_rs_live):
+    """`RS6_KNOWN_HOLES` 의 모든 키가 지금도 발화해야 한다 — 파서가 채웠으면 등재를 풀어라.
+
+    등재부는 구멍보다 오래 살 수 없다. 검증기도 매 실행 inert 를 YELLOW 로 인쇄하지만, 그건
+    아무도 안 읽을 수 있으니 여기서 push 를 막는다."""
+    RS, _rows, _kd, res, _clean = _rs_live
+    assert res["rs6_inert"] == [], (
+        f"발화하지 않는 RS6_KNOWN_HOLES 키: {res['rs6_inert']} — 등재를 풀어라")
+    fired = {(r[0], r[2], r[3]) for r in res["rs6_exc"]}
+    assert fired == set(RS.RS6_KNOWN_HOLES)
+    assert len(res["rs6_exc"]) == RATE_SENS_KNOWN_HOLE_ROWS, (
+        f"등재 구멍 행수 {len(res['rs6_exc'])} != 선언 {RATE_SENS_KNOWN_HOLE_ROWS}")
+    assert {r[5] for r in res["rs6_exc"]} <= RATE_SENS_RS6_KINDS
+
+
+def test_rate_sens_rs2_not_comparable_is_counted_not_silent(_rs_live):
+    """RS2 가 적용후를 대조하되, 대조 못 한 칸을 **세어서** 돌려주는가(조용한 SKIP 금지).
+
+    지금 살아 있는 대조불가는 서울보증 2024.4Q 적용후 기준금액(base null) 1칸뿐이어야 한다 —
+    그 칸은 RS6 NULL_CELLS 로도 잡힌다. `값_적용후` 부재가 늘면 여기 숫자가 움직인다."""
+    RS, _rows, _kd, res, _clean = _rs_live
+    assert res["rs2_na"] == {"적용후:base_null": 1}, res["rs2_na"]
+
+
+@pytest.mark.parametrize("mutation", ["post_rows_removed", "pre_rows_removed", "null_cell",
+                                      "unknown_label", "orphan", "post_base_drift",
+                                      "known_hole_filled"])
+def test_mutation_rate_sens_fires(_rs_live, mutation):
+    """잡아야 할 것을 실제로 잡는가 — **메모리 사본**만 흔든다(디스크 무수정)."""
+    import copy as _copy
+    RS, rows, kd_rows, base, clean = _rs_live
+    code, q = clean
+    name = RS._disclosure_cohort(kd_rows)[clean]
+    mut = _copy.deepcopy(rows)
+    mine = [r for r in mut if (r["원보험사코드"], r["공시분기"]) == clean]
+    assert len(mine) == 6
+
+    if mutation in ("post_rows_removed", "pre_rows_removed"):
+        ph = "적용후" if mutation == "post_rows_removed" else "적용전"
+        mut = [r for r in mut
+               if not ((r["원보험사코드"], r["공시분기"]) == clean and r["경과조치여부"] == ph)]
+        res = RS.run(mut, kd_rows)
+        hits = [r for r in res["rs6"] if (r[0], r[2], r[3]) == (code, q, ph)]
+        assert {r[5] for r in hits} == {"ROW_MISSING"} and len(hits) == 3, hits
+        # 사각 증명: 같은 결측을 RS4/RS5 는 못 본다(버킷 자체는 남아 있으므로).
+        assert (name, q) not in set(res["rs4"]), "RS4 가 phase 결측을 봤다 — 이 매니페스트의 전제가 바뀌었다"
+        assert not any(r[0] == code and r[2] == q for r in res["rs5"]), "RS5 가 phase 결측을 봤다"
+        assert res["gate_red"] == base["gate_red"] + 3
+    elif mutation == "null_cell":
+        row = next(r for r in mine if r["경과조치여부"] == "적용후" and r["measure구분"] == "지급여력기준금액")
+        row["-100bp"] = None
+        res = RS.run(mut, kd_rows)
+        hits = [r for r in res["rs6"]
+                if (r[0], r[2], r[3], r[4]) == (code, q, "적용후", "지급여력기준금액")]
+        assert len(hits) == 1 and hits[0][5] == "NULL_CELLS" and hits[0][6] == "-100bp", hits
+        # RS1 은 None 셀을 건너뛴다 — census 가 없으면 이 칸은 어디서도 안 보인다.
+        assert not any(r[0] == name and r[1] == q and r[3] == "-100bp" for r in res["rs1"])
+    elif mutation == "unknown_label":
+        row = next(r for r in mine if r["경과조치여부"] == "적용후" and r["measure구분"] == "지급여력비율")
+        row["경과조치여부"] = "적용 후"
+        res = RS.run(mut, kd_rows)
+        kinds = {(r[3], r[4], r[5]) for r in res["rs6"] if (r[0], r[2]) == clean}
+        assert ("적용 후", "지급여력비율", "UNKNOWN_LABEL") in kinds, kinds
+        assert ("적용후", "지급여력비율", "ROW_MISSING") in kinds, kinds
+    elif mutation == "orphan":
+        ghost = dict(mine[0])
+        ghost["원보험사코드"] = "KR9999"
+        ghost["원수사명"] = "존재하지않는보험"
+        mut.append(ghost)
+        res = RS.run(mut, kd_rows)
+        assert any(r[0] == "KR9999" and r[5] == "ORPHAN" for r in res["rs6"]), res["rs6"][:3]
+    elif mutation == "post_base_drift":
+        row = next(r for r in mine if r["경과조치여부"] == "적용후" and r["measure구분"] == "지급여력금액")
+        row["base"] = row["base"] + 10.0
+        res = RS.run(mut, kd_rows)
+        post = [r for r in res["rs2"] if r[0] == name and r[1] == q and r[2] == "적용후"]
+        pre = [r for r in res["rs2"] if r[0] == name and r[1] == q and r[2] == "적용전"]
+        assert len(post) == 1 and post[0][3] == "지급여력금액" and abs(post[0][6] - 10.0) < 1e-6, post
+        assert pre == [], "적용전은 안 흔들었는데 발화했다"
+        assert res["gate_red"] == base["gate_red"] + 1
+    else:  # known_hole_filled — 등재 구멍을 채우면 inert 로 드러나야 한다(등재부 리더)
+        key = ("KR0050", "2024.4Q", "적용후")
+        assert key in RS.RS6_KNOWN_HOLES
+        src_rows = [r for r in mut
+                    if (r["원보험사코드"], r["공시분기"], r["경과조치여부"]) == ("KR0050", "2024.4Q", "적용전")]
+        assert len(src_rows) == 3
+        for r in src_rows:
+            filled = dict(r)
+            filled["경과조치여부"] = "적용후"
+            mut.append(filled)
+        res = RS.run(mut, kd_rows)
+        assert key in res["rs6_inert"], res["rs6_inert"]
+        assert not any((r[0], r[2], r[3]) == key for r in res["rs6_exc"])
+
+
+def test_rate_sens_is_wired_into_prepush_and_blocks():
+    """훅이 이 검증기를 서브프로세스로 부르고 그 exit code 가 `blocked` 로 이어지는가.
+
+    RS6 를 RED 로 신설한 이유가 push 차단이다 — '배선했다' 와 '강제된다' 는 다른 말이라
+    (CLAUDE.md §5) 호출·OR 집계·verdict 셋을 소스에서 각각 확인한다."""
+    import re
+    hook = (ROOT / "scripts" / "prepush_check.py").read_text(encoding="utf-8")
+    loop = re.search(r"for _name in \((.*?)\):", hook, re.S)
+    assert loop and "validate_kics_rate_sensitivity" in loop.group(1), \
+        "prepush_check 의 도메인 게이트 루프에 validate_kics_rate_sensitivity 가 없다"
+    assert re.search(r"n_dom\s*\|=\s*_p\.returncode", hook), \
+        "도메인 게이트 exit code 가 n_dom 에 OR 되지 않는다"
+    assert re.search(r"blocked\s*=.*\bn_dom\b", hook), "n_dom 이 blocked 판정에 들어가지 않는다"
+    src = (ROOT / "scripts" / "validate_kics_rate_sensitivity.py").read_text(encoding="utf-8")
+    assert "return 0 if red_total == 0 else 2" in src, "검증기가 RED 를 exit 2 로 올리지 않는다"
+    assert "red_total = len(rs1) + len(rs2) + len(rs5) + len(rs6)" in src, \
+        "RS6 가 gate RED 집계에 들어가지 않는다 — YELLOW 로 강등됐다면 이 선언도 같이 고쳐라"

@@ -83,9 +83,11 @@
 | Rule | 검증 내용 | Tolerance / Severity |
 |---|---|---|
 | RS1_RATIO_IDENTITY | 각 (사,분기,경과조치)·각 충격컬럼: `비율 ≈ 지급여력금액/지급여력기준금액×100` | `max(0.5%p, 0.5%·\|비율\|)` / **RED→reparse** |
-| RS2_BASE_ANCHOR | 적용전 base vs `kics_disclosure` item1(금액)/item14(기준금액)/item27(비율) | 금액 2억 / 비율 0.5%p / **RED→reparse**. 예외: KR0011 2025.2Q(별도/연결 basis) |
+| RS2_BASE_ANCHOR | base vs `kics_disclosure` item1(금액)/item14(기준금액)/item27(비율) — **적용전↔`값` · 적용후↔`값_적용후` 둘 다**(2026-09-21 까지 적용전만이었다) | 금액 2억 / 비율 0.5%p / **RED→reparse**. 예외 `RS2_EXCEPTIONS`(두 phase 공통): KR0011 2025.2Q(별도/연결 basis) · KR0009 2026.2Q(표간 불일치) |
 | RS3_DIRECTION_SANITY | 생보 금리하락→비율하락 통상, 역방향 flag | — / YELLOW |
 | RS4_COVERAGE_CENSUS | 회사 cadence(반기/분기) 인식 후 regime 내 hole | — / YELLOW |
+| RS5_DISCLOSURE_COVERAGE | `kics_disclosure` 코호트의 (회사,분기)가 금리민감도 마스터에 **통째로** 없음(regime 2024.4Q+ 짝수분기) | — / **RED**. 선행 결손 17 = `RS5_EXCEPTIONS` |
+| RS6_PHASE_LEVEL_CENSUS | 버킷 **안** 기대 그리드: 적용전·적용후 × 3 measure × 충격 5칸 (`ROW_MISSING·NULL_CELLS·UNKNOWN_LABEL·ORPHAN`). 2026-09-21 신설 — RS4/RS5 는 버킷 단위라 phase 결측을 못 봤다 | — / **RED**. 선행 구멍 11키·31행 = `RS6_KNOWN_HOLES`(routed, `inbox/parser/20260921T1400Z`), inert 시 매니페스트 테스트가 해제 강제 |
 
 ### 1.2 IFRS17
 - 러너: [validate_csm_waterfall.py](../../scripts/validate_csm_waterfall.py), [validate_nb_csm_multiple.py](../../scripts/validate_nb_csm_multiple.py)

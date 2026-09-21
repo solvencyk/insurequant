@@ -5,6 +5,37 @@
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
+## 2026-09-21 (15차) -- 금리민감도 `RS6_PHASE_LEVEL_CENSUS`(RED) 신설 · RS2 적용후 앵커 · 36_irr 티켓 판정(c)
+
+- 발주 2건 처리(둘 다 `status: answered`): parser `inbox/validation/20260921T0100Z__parser__ALL_2026.2Q__ratesens_phase_level_census_gap.md`
+  · owner `inbox/validation/20260921T0215Z__owner__KR0094_2025.4Q-2026.2Q__36irr_not_red.md`. 마스터 무수정.
+  후속 발주 `inbox/parser/20260921T1400Z__validation__MULTI_2024.4Q-2025.4Q__ratesens_phase_level_holes.md`(lane: kics).
+- **36_irr(owner)** — 룰 엔진 전수 census `scripts/_probes/_probe_20260921_36irr_census.py`: 538 버킷 / 538 finding / 미평가 0.
+  짝수분기 item36 보유 270 버킷 전부 41-46 완비(GREEN 209 · YELLOW 55 · 박제 SKIP 6). tol 밖인데 RED 아닌 6건 = 전부
+  `IRR_DERIVE_ISSUER_INCONSISTENT` 등재분. 신한 2025.4Q 잔차 +863.8221 · 2026.2Q +2,979.8031 = 박제와 Δ 0.0(tol 0.01).
+  `report_latest.json` 36_irr×2026.2Q 39건(티켓 "0건" 재현 안 됨). **분류 (c)** — 코드·원장(6 VERIFIED)·`tests/unit/test_irr_pin_exemption.py`
+  (6쌍)에는 있었고 **TODO.md §36_irr 표에만 2026.2Q 행이 없었다** → 행 추가(owner 2026-09-01 승인·기대잔차·"선례 금지" 명시) + "5건"→"6건".
+  룰·tol·골든 픽스처 무수정("내부모형사" 사유 불사용).
+- **RS6 신설(parser 티켓)** — `scripts/validate_kics_rate_sensitivity.py` 를 `run(rs_rows, kd_rows)`(순수) + `main()` 으로 나누고 RS6 추가.
+  코호트 (회사,분기) 마다 적용전·적용후 × 3 measure × 충격 5칸 기대 그리드, 종류 `ROW_MISSING·NULL_CELLS·UNKNOWN_LABEL·ORPHAN`.
+  전 분기 실측(`scripts/_probes/_probe_20260921_ratesens_phase_census.py`): 결측 **30행/10버킷**(적용후만 9 · 서울보증 2024.4Q 적용전만 1)
+  + null 셀 1행 5칸(서울보증 적용후 기준금액, RS1 이 건너뛰던 칸). 파서 열거 7 버킷에 KR0051 2025.4Q · KR0087 2024.4Q · KR0150 2024.4Q 3건 추가.
+  **RED**(census 는 YELLOW-first 아님). 선행 31행은 `RS6_KNOWN_HOLES`(routed worklist, 정당부재 아님) — 매 실행 EXC 인쇄, 안 발화하면 inert YELLOW.
+- **🔴 RS2 가 적용전만 앵커하고 있었다** — 스펙 §5 는 "적용후는 값_적용후 있을 때만" 인데 구현은 `if gj != "적용전": continue`. 파서의
+  2026.2Q 미러 채움을 대조하는 룰이 0개. 적용후 base ↔ `값_적용후` 로 확장(대조불가 `rs2_na` 인쇄, 서울보증 1칸). 결과 기존 예외 미러 4
+  (DB손해 2025.2Q 3 · 현대해상 2026.2Q 1 — (회사,분기) 키를 두 phase 에 적용) + **신규 RED 2 흥국생명 2025.2Q·2025.4Q 적용후 기준금액**:
+  rs 18,412 / 19,350(총괄표 MD L197·L84 + 민감도표 L589·L503 억원 정수 직접 인쇄) vs `kics_disclosure` item14 `값_적용후` 18415.27 / 19354.44
+  (= item1_후/item27_후×100 역산, MD 에 부재). 15/22/23 후도 역산값에 닫혀 있어 파서가 함께 정리하도록 발주. 같은 역산 40 버킷은 관측만 넘김.
+  **push 게이트는 지금 이 2칸으로 막힌다**(`validate_kics_rate_sensitivity.py` exit 2 → `prepush_check.py` `n_dom |= returncode` → `blocked`). 면제·우회 안 함.
+- **매니페스트** `tests/test_rule_coverage_manifest.py` 금리민감도 절 신설: 룰 id 6종 · 등재부 크기 4종(RS1 1·RS2 2·RS5 17·RS6 11) · known-hole 31행
+  전건 발화 · `rs2_na` 침묵 금지 · 변이 7종(phase 통삭제 → RS6 3행 **and RS4/RS5 무발화** · null 셀 → NULL_CELLS and RS1 무발화 · 라벨 오타 · 고아 ·
+  적용후 base +10 → RS2 적용후만 · 등재 구멍 채움 → inert) · 훅 배선/exit 전파 정적 확인 → 12 passed. 변이는 메모리 사본만(디스크 무수정).
+  `scripts/consolidate_inbox.py` RS2 메시지에 phase 1줄. `tests/test_push_gate_wiring.py` 는 이미 WIRED 라 무수정(56 passed·2 skipped).
+- 검증: `validate_kics_disclosure.py` RED=36(전부 documented)·blocking 0·exit 0 · `test_kics_rules_golden`+`test_rule_coverage_manifest`+`test_push_gate_wiring`
+  152 passed/2 skipped · `test_irr_pin_exemption` 9 passed. 문서: `kics-rate-sensitivity-spec.md` §5(RS5 소급·RS6·RS2 정정) · `claude-agent-validation.md` RS 표.
+- 잔여: 적용후 `36_irr` 축 144 중 19건 미평가(`POST_SCENARIO_ABSENT`) · item14 `값_적용후` 역산 40 버킷 원천 확인(파서) · `RS5_EXCEPTIONS` 17건 inert 검사 없음.
+- 모델: Opus 5.
+
 ## 2026-09-21 (14차) -- 배포 HTML 의 JS 런타임 축 신설: `DEPLOYED_JS_UNDEFINED_CALL` (훅 §1f)
 
 - 발주: owner `inbox/validation/20260921T0057Z__owner__ALL__deployed_js_runtime_blind_spot.md`(status: answered).
