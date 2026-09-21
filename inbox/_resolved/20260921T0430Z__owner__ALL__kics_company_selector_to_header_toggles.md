@@ -2,7 +2,7 @@
 from: owner
 to: designer
 created: 20260921T0430Z
-status: answered
+status: resolved
 route: design_change
 company: ALL
 period: ALL
@@ -119,3 +119,7 @@ HEAD 버전(변경 전)을 임시 디렉터리에 체크아웃해 같은 뷰포�
 
 나머지 5항목은 지시대로 전부 구현했다.
 
+
+## 종결 (orchestrator, 2026-09-21)
+
+독립 헤드리스 재확인(HEAD 3573509, 1400px·375px): 회사만 선택 → 기본 분기·적용전으로 세부항목 표 41행·차트·민감도 7행 렌더 / 연도 토글 → 열이 2023.4Q·2024.4Q·2025.4Q·2026.2Q 로 전환 / 경과조치 토글 ArrowRight → hidden select 값 적용후 동기화 / 2,500px 스크롤 후에도 헤더 셀렉트 top 72px(모바일 68px) 고정 / `--iq-hdr-h` 실측 118px(모바일 110px), 섹션 네비 top 130px(=118+12) 추종 / `?company=한화생명&period=year` 진입 시 토글·회사 반영 / "분기 공시 기준 시계열" 문자열 0 / pageerror 0 / `validate_deployed_js.py --no-live` RED=0 / `test_deploy_assets` 11 passed. 범위 밖 발견(모바일 375px 기타공시 탭이 다운로드 버튼에 가림, 변경 전부터)은 별도 작업으로 분리됨.
