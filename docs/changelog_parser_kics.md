@@ -1,6 +1,76 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-12 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-09-21 · Stage 2/5 — parser (kics lane)
+
+## 2026-09-21 — KR0074 금리민감도 검증(0건 수정) + 2026.2Q census 로 3사 결측 9셀 발견·수정 (owner 발주)
+
+inbox `20260921T0057Z__owner__KR0074_2026.2Q__rate_sensitivity_verify.md`. owner 신고
+"라이나생명 2026.2Q 금리민감도 데이터가 있는데 사이트엔 미공시" — 화면 원인(JS `IQP`
+`ReferenceError`, `2dbc4ca` 회귀)은 별건으로 이미 확정·발주(designer). 여기서는 **데이터가
+맞는지만** 본다.
+
+**① KR0074 cell-by-cell — 수정 0건, 전부 원문과 일치.** `md_inbox/FY2026_Q2/
+KR0074_라이나생명보험.md` L816-829 "2) 금리 민감도 분석" 표: 마스터 6행(적용전 3+적용후 3)이
+지급여력비율(337.12/344.02/349.43/353.20/356.41)·지급여력금액(72573/71988/71251/70442/
+69605)·지급여력기준금액(21527/20926/20390/19944/19529) 전부 원문 그대로. RS1(비율=금액/
+기준금액×100)·RS2(적용전 base = kics_disclosure item1/14/27) 둘 다 수식대로 정확히 닫히고,
+듀레이션(2.0828/4.8995)·컨벡서티(−45.47/135.36)도 `extract_kics_rate_sensitivity.
+duration_convexity()` 재호출과 소수 4자리까지 일치.
+
+**② 적용전=적용후 판정: 진짜(경과조치 미신청), 미러링 아님 — 증거 4중.** (a) 이 표 자신의
+각주 "주3) (경과조치 미신청 회사) 당사는 선택경과조치를 적용하지 않아 경과조치 전·후 금액 및
+비율이 동일함" — 공통적용 세부표가 아니라 금리민감도 헤드라인 표 자신의 선언(과거 "세부표만
+보고 동일 판정" 오판 전례를 피하려 헤드라인급 표에서 직접 확인). (b) `_TRANSITION_KIND`
+(`scripts/validate_kics_disclosure.py` L536-556, FSS 2023-03-20 붙임-1 정본) 18사 목록에
+KR0074 **부재** — TFI(공통조치)만 적용받는 21사 쪽. (c) 별건 산출물
+`scripts/_probes/_build_kr0074_patch.py`(2026-08-31, `kics_disclosure.json`용, 이번 세션과
+무관한 이전 라운드)가 raw p.18 O/X표로 독립 확인: TAC=TIR=TER=TIRR=PCA_DEFER 전부 X.
+(d) 같은 항등식이 KR0074 의 나머지 3개 분기(2024.4Q·2025.2Q·2025.4Q)에도 일관.
+
+**③ 2026.2Q 커버리지 census — 39사 완전 그리드(6칸×39=234) 확정.** 수정 전 225행(39사 중
+36사 6/6, 3사 3/6 — KR0050 하나손해·KR0069 삼성생명·KR1098 카카오페이손해 전부 **적용후
+3행 결측**). 칸 단위 판정:
+- **KR0050**: MD 표의 적용후 셀이 공백(대시도 아님) + 표 각주 "주3) (경과조치 미신청 회사)
+  ...전·후 금액 및 비율이 동일함" 명시 → 추출 갭(원문 부재 아님).
+- **KR0069**: MD 표의 적용후 셀은 "-"(대시). MD 자체엔 각주가 안 실렸지만 raw PDF
+  fitz 전체텍스트(0-idx p43, "②금리민감도분석")에 동일 각주("주3) 당사는선택경과조치를
+  적용하지않아경과조치전·후금액및비율이동일함") 확인 — docling 리딩오더가 각주를 표보다
+  앞쪽(다단 레이아웃 왼쪽 컬럼)에 떨어뜨렸다 → 추출 갭.
+- **KR1098**: raw PDF 원문 자체가 두 번째 블록의 세로라벨을 "경과조치전"으로 **오식**(후가
+  아님) — fitz 텍스트 dump 와 480dpi 렌더(`artifacts/_kr1098_2026q2_labelzoom_480dpi.png`)
+  둘 다 확인, 숫자는 첫 블록과 완전히 같은 값 재인쇄 + 동일 미신청 각주. 추출기의 기존 dedup
+  로직(코드 주석 "dedup verbatim-duplicate blocks (OCR), e.g. KR1098 두 적용전 동일")이 이
+  블록을 진짜 적용후로 인식하지 못하고 중복으로 버리고 있었다 → 추출 갭(원문엔 있음, 라벨
+  오식 때문에 파서가 놓침).
+- 3사 전부 `_TRANSITION_KIND` 부재(TFI-only) — KR0074 와 같은 계열.
+
+**수정**: `scripts/fix_20260921_ratesens_2026q2_nonapplier_mirror.py` — 3사 각 3행(적용전
+값을 적용후로 미러, 듀레이션·컨벡서티는 재타이핑하지 않고 `extract_kics_rate_sensitivity.
+duration_convexity()` 재호출로 산출). 가드: 실행 전 (사,2026.2Q)당 적용전 3행·적용후 0행
+assert, 실행 후 기존 789행 byte-identical 재확인(diff = append만). `kics_rate_sensitivity.
+json` 789→798행(+9). 백업 `kics_rate_sensitivity.json.bak_pre_20260921_nonapplier_mirror`.
+
+**게이트 재확인**: `validate_kics_rate_sensitivity.py` 수정 전후 **gate RED=0 불변**
+(RS1 0RED+1exc · RS2 0RED+4exc · RS3 64Y · RS4 1Y · RS5 0RED+17exc). 2026.2Q census
+재실행: 39사 전부 6/6(=234행), 중복 (코드,경과조치,measure) 키 0건. **주목**: RS4/RS5
+어느 것도 이 "적용전은 있는데 적용후만 결측"인 패턴을 잡지 못한다(RS5는 (사,분기) 전체
+결손만 census, RS4 는 회사가 그 분기 자체를 안 가진 hole만 본다) — 게이트 사각이라
+`inbox/validation/20260921T0100Z__parser__ALL_2026.2Q__ratesens_phase_level_census_gap.md`
+로 통지(RS6 후보).
+
+**미착수(범위 밖, 근거만 기록)**: KR0050·KR0069 는 2024.4Q/2025.2Q/2025.4Q 도 같은
+적용전-only 패턴이 이력에 있고, KR1098 도 2025.4Q 동일 패턴 — 미신청 각주의 "느슨한"
+정규식(경과조치...전...후...동일) 은 전 분기에서 alt-hit ≥1 이지만, 정확 문구 매치는 docling
+공백처리가 분기마다 달라 0/1 로 흔들려 신뢰할 수 없었다(예: KR1098 2026.2Q 도 정확매치
+0, 그런데 이번 세션에서 fitz/렌더로 직접 확인한 실제 원문엔 각주가 있다). 이번 세션은
+**2026.2Q 만** raw 개별 확인을 마쳤으므로 나머지 분기는 추측 채움 없이 미착수로 남긴다 —
+다음 라운드가 같은 방법(분기별 fitz/렌더 직접 확인)으로 마무리하면 된다.
+
+재현: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+scripts/validate_kics_rate_sensitivity.py`. 변경 파일: `kics_rate_sensitivity.json`(+9행,
+789→798) · 신규 `scripts/fix_20260921_ratesens_2026q2_nonapplier_mirror.py` · 프로브
+`scripts/_probes/_20260921_*.py`(6개) · `artifacts/_kr1098_2026q2_*.png`(2개) · 신규 inbox
+`inbox/validation/20260921T0100Z__parser__ALL_2026.2Q__ratesens_phase_level_census_gap.md`.
 
 ## 2026-09-12 — KR0079 2023.2Q MD 결측(1칸) 복구 + KR0080 item23-26 7분기 28셀 disclosed-zero 적재 (orchestrator 발주 2건)
 
