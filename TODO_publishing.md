@@ -11,32 +11,22 @@ NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/T
 
 ## Status
 
-**🔴 2026-09-21 6차 배포 시도 — IFRS17·기타공시 헤더셀렉트+토글 이식 4파일, gate BLOCKED (미배포).**
-owner 승인("고치고 나면 main에 배포까지") 받아 `fix/csm-product-segmented-columns` 커밋 `6a51b7a`의
-`common.css`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html` 4개만 격리 워크트리(`../insurequant-main-deploy`)에
-cherry-push 준비 완료(로컬 커밋만, push 안 함) — 그러나 `scripts/prepush_check.py --full`(scope=FULL,
-루트 HTML 포함이라 축소 불가)이 **domain gates=FAIL → BLOCKED** 로 막았다.
-- **원인은 이번 배포 payload와 무관** — `validate_kics_rate_sensitivity.py` RS2_BASE_ANCHOR(오늘
-  validation 이 신설한 적용후 앵커 룰) RED=2: 흥국생명보험(KR0071) 2025.2Q·2025.4Q item14
-  지급여력기준금액 `값_적용후`(18415.27/19354.44, 비율역산)가 원문 헤드라인 총괄표 인쇄값(18,412/19,350
-  억원)과 Δ+3.27/+4.44로 어긋난다. **이미 parser 로 발주된 open 티켓**:
-  `inbox/parser/20260921T1400Z__validation__MULTI_2024.4Q-2025.4Q__ratesens_phase_level_holes.md`
-  (§B, "지금 게이트 RED, push 차단 중"). K-ICS 룰게이트 자체는 clear(exit=0), offline tests 605
-  passed, 골든 입력지문 6종 전부 ok, 배포JS런타임게이트 RED=0 — 막은 건 이 RS2 도메인게이트 하나.
-- CLAUDE.md 원칙("RED 1건이라도 있으면 push 안 함, exception 우회 불가")·이번 발주문("RED이 막으면
-  --no-verify 쓰지 말고 멈추고 보고") 그대로 따라 **push 하지 않았다**.
-- 재현: `PYTHONIOENCODING=utf-8 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
-  scripts/prepush_check.py` (~21분) → `validate_kics_rate_sensitivity: exit=2`,
-  `data/_derived/kics_rate_sensitivity_validation.json` `_meta.gate_red=2`.
-- 워크트리 정리 완료(`git worktree remove ../insurequant-main-deploy --force`), 로컬 `main` ref 도
-  실수로 커밋 1개(9ff5093, push 안 됨) 앞서간 채 남았던 것을 `git branch -f main origin/main`으로
-  origin과 재동기화(6741dea) — 다음 세션이 stale local main 함정에 안 걸리게. **4파일 diff·커밋 메시지는
-  이 항목에 재현 가능하게 문서화돼 있어 RED=0 확인 후 바로 재실행 가능**(§ 재현 커맨드 참조, 워크트리
-  재생성 → `git checkout fix/csm-product-segmented-columns -- common.css K-ICS.html IFRS17.html 공시보고서.html`
-  → 동일 커밋 메시지로 commit → gate 재실행 → owner GO → push).
-- **다음 행동**: parser-kics 가 위 티켓 §B 를 처리(원문 18,412/19,350 채택 + item15/22/23 후 정리)해
-  `validate_kics_rate_sensitivity.py` gate RED=0 확인 후 재시도. 진짜 막혀서 owner 판단이 필요하면
-  그때 에스컬레이션.
+**🟡 2026-09-21 6차 배포 — IFRS17·기타공시 헤더셀렉트+토글 4파일 + K-ICS item14 후 30칸. 게이트 재실행 → owner GO 대기.**
+1차 시도(같은 날 앞 세션)는 `validate_kics_rate_sensitivity.py` RS2_BASE_ANCHOR RED=2(흥국생명 2025.2Q/4Q
+item14 후 역산치)로 BLOCKED. parser-kics 에이전트가 `inbox/parser/20260921T1400Z` §B 를 처리하다 중단됐고
+오케스트레이터가 마무리(`32ebfb0`, 상세는 `TODO_parser_kics.md` 18회차): item14 후 30칸 원문 정수 교체(30/30
+MD 대조) + 흥국생명 item23 후 5분기 R5 재폐쇄 + 등재부 pin 갱신 + xlsx sync. `deb21e6` public_exports 재생성
+(build_id `32ebfb0`).
+- 작업 트리 게이트: `validate_kics_disclosure.py` exit 0 · `validate_kics_rate_sensitivity.py` gate RED=0 ·
+  `check_master_xlsx_drift.py` RED=0 · inbox 위반 0 · `prepush_check.py --full` → 결과는 아래 갱신.
+- 격리 워크트리 `../insurequant-main-deploy`(main `6741dea` = origin/main) 에 로컬 커밋 `a5118f3`(push 안 함):
+  `common.css` · `K-ICS.html` · `IFRS17.html` · `공시보고서.html` · `kics_disclosure.json` ·
+  `public_exports/K-ICS공시.json` · `public_exports/manifest.json` — 7파일, 그 외 diff 0.
+- **화면 숫자 변경(owner 고지)**: K-ICS 세부항목 표 적용후 컬럼 — item14 지급여력기준금액 30칸(8사, 대부분
+  ±1억 반올림 차, 흥국생명 최대 +5.6/−4.4억) · 흥국생명 item23 기타요구자본 5칸(±3~6억). 지급여력비율(item27 후)은
+  헤드라인 소스라 불변.
+- 다음: prepush 결과 clear 확인 → owner GO → `git push origin main`(워크트리) → 라이브 `manifest.json` build_id ·
+  흥국생명 2025.2Q item14 후 18,412 확인 → 워크트리 제거.
 
 **🟢 2026-09-21 자본비율전망 비고 내부 진단 문구 분리 (owner 티켓 처리, 배포 안 함).**
 `inbox/publishing/20260921T0320Z` 처리 완료(status: answered). owner가 라이브 QA로 지적:
@@ -97,18 +87,6 @@ cherry-push 준비 완료(로컬 커밋만, push 안 함) — 그러나 `scripts
   바뀌면 다시 잰다(디바운스 180ms). 어느 페이지든 자동으로 맞는다.
 - 같이: `index.html` 버블 축 설명(284자 한 줄)을 `?` 뒤로 — 본문엔 축 이름만.
 - 라이브 바이트 대조 2/2, 작업 트리 gate-clear · 567 passed. 데이터 미배포.
-
-**🚀 2026-09-20 2차 디자인 배포 라이브 — owner 반려 8건 반영.** main 커밋 `2dbc4ca`(`17e3733..2dbc4ca`).
-**데이터는 한 바이트도 안 나갔다** — HTML/CSS/JS 5파일뿐(워크트리에서 json/xlsx 변경 **0건** 확인).
-- 라이브 바이트 ↔ 커밋 블롭 **5/5 일치**(`theme.js` 는 CDN 전파가 늦어 쿼리 붙여 재확인).
-  라이브 `IFRS17.html` 에 `section-nav` 2건, `theme.js` 에 `iq-hdr-h` 2건 확인.
-- 작업 트리 `prepush_check.py [scope=FULL]` **gate-clear · 567 passed** 후 push.
-- **뒷정리 4겹을 같은 라운드에서 닫았다**(KR0073 선례 반복 방지): `MASTER_XLSX_DRIFT`(시트 1개 sync, 12칸) ·
-  골든 입력지문 RED 4(**골든 4종 전부 돌려 산출 불변 확인 후** 재생성 — ifrs17_bs 476초·pl_breakdown 175초) ·
-  `PUBLIC_EXPORT_DRIFT`(마스터 커밋 뒤 스냅샷 재생성) · `live_artifacts` RED 1(위 재생성으로 자동 해소).
-  커밋 `e049696`·`f891153`.
-- **대기(배포 안 함)**: NH농협손보 자본구성 6칸 정정은 **화면 숫자를 바꾸는 건**이라 owner 승인 대기.
-  브랜치에는 들어가 있다(`e049696`) — 승인 시 `kics_disclosure.json` + `public_exports/` 를 같이 올린다.
 
 (밀린 항목은 `docs/todo_archive_publishing.md` 참조 — 2026-09-20 팔레트 B 배포 항목 이번 라운드에 archive됨)
 

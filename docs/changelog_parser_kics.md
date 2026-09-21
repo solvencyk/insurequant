@@ -2,6 +2,40 @@
 
 > Last updated: 2026-09-21 · Stage 2/5 — parser (kics lane)
 
+## 2026-09-21 — item14 적용후 역산치 30칸 원문 정수 정정 + 흥국생명 item23 후 R5 재폐쇄 (inbox `20260921T1400Z` §B, `32ebfb0`)
+
+validation 티켓 `inbox/parser/20260921T1400Z__validation__MULTI_2024.4Q-2025.4Q__ratesens_phase_level_holes.md`
+§B — RS2_BASE_ANCHOR(적용후 앵커 신설)가 흥국생명 2025.2Q/2025.4Q item14 `값_적용후`(18415.27/19354.44)를
+원문 총괄표 18,412/19,350 과 Δ+3.27/+4.44 로 잡아 push 게이트가 막혀 있었다. parser-kics 에이전트가
+처리하다 중단됐고 오케스트레이터가 마무리했다.
+
+**원인**: 구 추출기가 item14 후를 `item1후 / item27후 × 100`(비율 역산)으로 저장. 비율은 소수 1자리로
+인쇄되므로 ±0.05%p → 기준금액 ±수억 오차. 저장소 전체 census(`scripts/_probes/_probe_20260921_item14_backsolve_census.py`)
+= 40버킷, 그중 역산 지문(소수 2자리 일치·비정수) 30칸.
+
+**수정 (셀 단위, guard)**
+- `scripts/fix_20260921_item14_post_backsolve.py` — 30칸 item14 후 → 원문 [지급여력비율 총괄] 경과조치 후
+  인쇄 정수. KR0005 흥국화재 11 · KR0071 흥국생명 10 · KR0104 농협생명 4 · KR0070 ABL 2 · KR0072 KDB ·
+  KR0097 하나생명 · KR1011 IBK연금 1. **30/30 을 `md_inbox`/`parsed` MD 의 `경과조치 후 | 지급여력기준금액`
+  행에서 기계 대조**(정확 문자열 hit, miss 0). 나머지 10버킷은 현행 `fill_post_transition_to_disclosure.py`
+  재생(`_probe_20260921_backsolve_recompute_all40.py`)에서 불변 7 · 헤드라인 미재생 3 → 미수정.
+- `scripts/fix_20260921_kr0071_item23_post_close_r5.py` — KR0071 5분기(2023.2Q·2023.3Q·2025.2Q·2025.4Q·
+  2026.1Q) item23 후 = item14후 − item15후 + item22후 재계산(Δ −2.94/−2.52/−3.27/−4.43/+5.62). 근거: ②+③
+  다중경과조치사라 결합 15/22/23 후는 어느 표에도 없다. 마스터 15후 = mmult(17..21후)(게이트 통과), 16후 = R6,
+  22후 = 독립 추정, 23후는 old14후에 맞춰 R5 를 정확히 닫던 잔차 셀. 에이전트가 먼저 시도한 생성기 관행(15후
+  derived_identity 재파생)은 '적용후 mmult'·R6 두 축을 깨서 되돌렸다(`_revert_20260921_kr0071_15_22_23.py`).
+  공시된 값을 파생값으로 갈아끼운 것이 아님(결합 23후는 공시된 적 없는 추정 셀).
+- `scripts/fix_20260921_kr0071_item23_ledger_repin.py` — `data/_gold/kics_item23_children_post_absent.json`
+  KR0071 5버킷 `item23_post` pin 갱신(verdict SOURCE_ABSENT·근거 불변, `item23_post_repin` 이력 필드).
+- xlsx `K-ICS공시` 시트 35셀 sync(`check_master_xlsx_drift.py` RED=0).
+
+**게이트**: `validate_kics_disclosure.py` exit 0(적용후 항등식 위반 0 · 기타요구자본 분해 위반 0) ·
+`validate_kics_rate_sensitivity.py` gate RED=0(RS2 fail 0, +exc 8 = 기존 DB손해·현대해상 미러) · 골든
+post_transition/dividend/pl_breakdown pass(입력지문 갱신은 publishing 라운드에서).
+
+**관측(validation 몫)**: `AFTER_IDENT_ISSUER_INCONSISTENT`(R5 후 잔차 박제)가 `_exemption_registries()` 에
+미등록이라 근거 원장 검사를 안 받는다. **§A(RS6 31칸)는 미착수, 티켓 open 유지.**
+
 ## 2026-09-21 — KR0074 금리민감도 검증(0건 수정) + 2026.2Q census 로 3사 결측 9셀 발견·수정 (owner 발주)
 
 inbox `20260921T0057Z__owner__KR0074_2026.2Q__rate_sensitivity_verify.md`. owner 신고

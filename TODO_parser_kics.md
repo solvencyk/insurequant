@@ -1,6 +1,31 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-21(17회차 — inbox `20260921T0057Z`(KR0074 2026.2Q 금리민감도 검증)
+> Last updated: 2026-09-21(18회차 — inbox `20260921T1400Z` §B(RS2 적용후 앵커 · item14 후 역산치),
+> parser-kics 에이전트 작업 → 에이전트 중단 후 오케스트레이터가 마무리) — §B answered(§A open, 티켓
+> status open 유지). 커밋 `32ebfb0`.
+>
+> **item14 `값_적용후` 30칸 정정** — 40버킷 census(`_probe_20260921_item14_backsolve_census.py`) 중
+> 역산 지문(`item1후/item27후×100` 소수 2자리 일치) 30칸을 원문 [지급여력비율 총괄] 경과조치 후
+> 인쇄 정수로 교체(`scripts/fix_20260921_item14_post_backsolve.py`, guard 셀단위). KR0005 11 ·
+> KR0071 10 · KR0104 4 · KR0070 2 · KR0072·KR0097·KR1011 1. **30/30 MD 행 기계 대조**(`md_inbox`/
+> `parsed`). 나머지 10버킷은 현행 생성기 재생에서 불변(`UNCHANGED_ON_RERUN` 7)·헤드라인 미재생
+> (`NO_ITEM14_RECOMPUTED` 3)이라 미수정(`_probe_20260921_backsolve_recompute_all40.json`).
+>
+> **KR0071 R5 후 재폐쇄 — 23 후가 잔차 셀.** ②+③ 다중경과조치라 결합 15/22/23 후는 미공시. 마스터
+> 15후=mmult(17..21후)(게이트 통과)·16후=R6·22후 독립 추정·**23후 = old14후−15후+22후 로 정확히
+> 닫히던 셀** → 14후 정정에 맞춰 23후만 같은 식으로 재계산(5분기, Δ −2.94/−2.52/−3.27/−4.43/+5.62,
+> `fix_20260921_kr0071_item23_post_close_r5.py`). 생성기 관행(15후 derived_identity)대로 15를
+> 재파생하면 mmult·R6 두 축이 깨져 되돌림(`_revert_20260921_kr0071_15_22_23.py`). 등재부
+> `data/_gold/kics_item23_children_post_absent.json` KR0071 5 pin 동행 갱신(verdict 불변).
+>
+> **게이트**: `validate_kics_disclosure.py` **exit 0** · `validate_kics_rate_sensitivity.py` **gate
+> RED=0**(RS2 fail 0 +exc 8) · xlsx K-ICS공시 35셀 sync, drift 0. 관측: `AFTER_IDENT_ISSUER_INCONSISTENT`
+> 가 `_exemption_registries()` 미등록(validation 몫, 이번엔 미사용).
+>
+> **남은 것(§A, 미착수)**: RS6 31칸(KR0050·KR0051·KR0069·KR0087·KR0150·KR1098, 2024.4Q~2025.4Q 적용후
+> phase 결측) — 분기별 raw 각주 확인 후 미러 or 원천부재 회신. 다음 parser-kics 라운드.
+>
+> Last updated (이전): 2026-09-21(17회차 — inbox `20260921T0057Z`(KR0074 2026.2Q 금리민감도 검증)
 > 1건 처리, owner 발주) — `status: answered`, 원 sender 재확인 대기.
 >
 > **KR0074 라이나생명보험 2026.2Q — 6칸 전부 원문 일치, 적용전=적용후는 진짜(경과조치
@@ -190,48 +215,6 @@
 > `tests/test_stale_quarter_tables.py`·`tests/test_tier2_issuer_inconsistent_exemption.py`·
 > `tests/test_kics_rules_golden.py`(+골든 재생성) · 신규 `scripts/fix_20260911_
 > item48_item3_contamination.py`·`scripts/fix_20260911_side_observations_tier2_item8.py`.
->
-> Last updated (이전): 2026-09-11(13회차 — inbox `20260831T0700Z`(REOPEN iter4) + `20260831T0800Z`
-> §1 잔여 코드 처리, orchestrator 발주) — `kics_disclosure.json`은 읽기 전용(동시 세션이 셀
-> 패치 적재 중)으로 유지, 코드·MD·SKILL 문서만 수정.
->
-> **A. `--stage quality` AttributeError 복구.** `run_harness.py` L89가 읽는 `r.page_flags`를
-> `QualityReport`(`src/solvency/parser/quality_check.py`)가 가진 적이 없어(다른 레인 커밋
-> `09b4b26`이 kics 코드를 같이 실어나르며 추가한 블록) 모든 실행이 exit 1이었다. `QualityReport`에
-> `page_flags: list[str]` 필드를 신설하고 `score()`가 `missing_window=<label,...>`/
-> `ratio_critical=<ratio>` 형식으로 채우도록 수정. 실측: `run_harness.py --stage quality
-> --md-root md_inbox/FY2026_Q2` exit 0, total=39 accepted=9 review=30, `page_flag_counts:
-> {missing_window: 5}`(KR0079·KR0087·KR0095·KR0104·KR1010 — orchestrator 재확인 수치와 정확
-> 일치). 전체 md_inbox(547개) 대상도 exit 0(review=407, flags 213건=missing_window 211+
-> ratio_critical 7). `pytest tests/unit/ tests/test_deploy_assets.py` 141 passed.
->
-> **B. census "32/39" 재현.** `probe_20260901b_market_window_census.py` 메인 트리 재실행 결과
-> 재확인 티켓의 지적대로 31/8(REAL GAP 0)이었다 — KR0104 재변환 MD가 이미 삭제된 격리
-> 워크트리에만 있었기 때문. `run_harness.py --stage parse --pdf-root data/disclosure/
-> FY2026_Q2/raw --companies KR0104`로 메인 트리에서 재변환(187s, docling_status=SUCCESS,
-> dropped_pages=[]) — mtime 대조로 md_inbox/FY2026_Q2 39개 파일 중 KR0104 1개만 변경 확인.
-> source_page_ranges "6-10;13-28;34-37;40-46"→"6-10;13-36;43-46"으로 29-33p 편입, 재추출
-> item36-40 5개 전부 마스터와 정확 일치(13866.27/7712.89/2818.93/3487.39/0), sqrt(V'MV)=
-> 19271.87 vs item19=19272 rel 0.0007%. census 재실행 결과 **32/39 MD_FULL, landmine 7**
-> (KR0010·KR0079·KR0080·KR0082·KR0087·KR0094·KR0099) — 답변 주장과 일치, 정정 불요. 구MD는
-> `artifacts/kics_validation/md_backup_20260911/`에 백업. `kics_disclosure.json` 미접촉.
->
-> **C. OCR 배율 판단 재확인 + 실행.** 2026-09-01 결정(정식 옵션 승격도 fitz+EasyOCR 우회도
-> 안 함, fitz 렌더+직독으로 완전 대체)을 재검증 후 유지 — 이유는 스캔본 코드 트레일에 이미
-> 있었으나 SKILL 문서에는 없었다(재론 2회 원인). `.claude/skills/kics-parser/references/
-> quirks-and-traps.md`에 "Scanned PDFs: OCR is a lead, not a source" 절 신설(5/9 배율표 +
-> 결정근거 + render_kics_page.py 안내 + "MD 텍스트만으로 마스터에 쓰지 말 것" 규칙) +
-> "Docling loses pages" 가드 절의 stale 서술(`page_selection_flags()`/6종 enum 플래그 —
-> 09-01 리라이트로 이미 소멸된 이름들) 정정. `compute_tier2_utilization.py`의 `MD_DIR`
-> 하드코딩(FY2025_Q4)은 실측 0곳 import·subprocess(grep 전체 무출력) 확인 후 latest-quarter
-> 자동탐지로 교체(`_latest_md_period()`, `md_inbox/FY*_Q?` 최댓값) — 명시 `--quarter`/
-> `--md-dir` 경로는 git stash 전후 산출 diff 0으로 무영향 확인, bare 실행만 FY2025_Q4→
-> FY2026_Q2로 개선.
->
-> 재현: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py
-> --stage quality --md-root md_inbox/FY2026_Q2` · `scripts/_probes/
-> probe_20260901b_market_window_census.py`. 상세 답변: inbox `20260831T0700Z`(iter4) ·
-> `20260831T0800Z`(iter2).
 >
 > 📦 **Status 이력은 `docs/todo_archive_parser_kics.md` 로 이동했다** (2026-09-11, 내용 무수정 — 2026-09-01(9회차) 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
 

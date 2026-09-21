@@ -4,6 +4,50 @@
 
 ---
 
+> Last updated (이전): 2026-09-11(13회차 — inbox `20260831T0700Z`(REOPEN iter4) + `20260831T0800Z`
+> §1 잔여 코드 처리, orchestrator 발주) — `kics_disclosure.json`은 읽기 전용(동시 세션이 셀
+> 패치 적재 중)으로 유지, 코드·MD·SKILL 문서만 수정.
+>
+> **A. `--stage quality` AttributeError 복구.** `run_harness.py` L89가 읽는 `r.page_flags`를
+> `QualityReport`(`src/solvency/parser/quality_check.py`)가 가진 적이 없어(다른 레인 커밋
+> `09b4b26`이 kics 코드를 같이 실어나르며 추가한 블록) 모든 실행이 exit 1이었다. `QualityReport`에
+> `page_flags: list[str]` 필드를 신설하고 `score()`가 `missing_window=<label,...>`/
+> `ratio_critical=<ratio>` 형식으로 채우도록 수정. 실측: `run_harness.py --stage quality
+> --md-root md_inbox/FY2026_Q2` exit 0, total=39 accepted=9 review=30, `page_flag_counts:
+> {missing_window: 5}`(KR0079·KR0087·KR0095·KR0104·KR1010 — orchestrator 재확인 수치와 정확
+> 일치). 전체 md_inbox(547개) 대상도 exit 0(review=407, flags 213건=missing_window 211+
+> ratio_critical 7). `pytest tests/unit/ tests/test_deploy_assets.py` 141 passed.
+>
+> **B. census "32/39" 재현.** `probe_20260901b_market_window_census.py` 메인 트리 재실행 결과
+> 재확인 티켓의 지적대로 31/8(REAL GAP 0)이었다 — KR0104 재변환 MD가 이미 삭제된 격리
+> 워크트리에만 있었기 때문. `run_harness.py --stage parse --pdf-root data/disclosure/
+> FY2026_Q2/raw --companies KR0104`로 메인 트리에서 재변환(187s, docling_status=SUCCESS,
+> dropped_pages=[]) — mtime 대조로 md_inbox/FY2026_Q2 39개 파일 중 KR0104 1개만 변경 확인.
+> source_page_ranges "6-10;13-28;34-37;40-46"→"6-10;13-36;43-46"으로 29-33p 편입, 재추출
+> item36-40 5개 전부 마스터와 정확 일치(13866.27/7712.89/2818.93/3487.39/0), sqrt(V'MV)=
+> 19271.87 vs item19=19272 rel 0.0007%. census 재실행 결과 **32/39 MD_FULL, landmine 7**
+> (KR0010·KR0079·KR0080·KR0082·KR0087·KR0094·KR0099) — 답변 주장과 일치, 정정 불요. 구MD는
+> `artifacts/kics_validation/md_backup_20260911/`에 백업. `kics_disclosure.json` 미접촉.
+>
+> **C. OCR 배율 판단 재확인 + 실행.** 2026-09-01 결정(정식 옵션 승격도 fitz+EasyOCR 우회도
+> 안 함, fitz 렌더+직독으로 완전 대체)을 재검증 후 유지 — 이유는 스캔본 코드 트레일에 이미
+> 있었으나 SKILL 문서에는 없었다(재론 2회 원인). `.claude/skills/kics-parser/references/
+> quirks-and-traps.md`에 "Scanned PDFs: OCR is a lead, not a source" 절 신설(5/9 배율표 +
+> 결정근거 + render_kics_page.py 안내 + "MD 텍스트만으로 마스터에 쓰지 말 것" 규칙) +
+> "Docling loses pages" 가드 절의 stale 서술(`page_selection_flags()`/6종 enum 플래그 —
+> 09-01 리라이트로 이미 소멸된 이름들) 정정. `compute_tier2_utilization.py`의 `MD_DIR`
+> 하드코딩(FY2025_Q4)은 실측 0곳 import·subprocess(grep 전체 무출력) 확인 후 latest-quarter
+> 자동탐지로 교체(`_latest_md_period()`, `md_inbox/FY*_Q?` 최댓값) — 명시 `--quarter`/
+> `--md-dir` 경로는 git stash 전후 산출 diff 0으로 무영향 확인, bare 실행만 FY2025_Q4→
+> FY2026_Q2로 개선.
+>
+> 재현: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py
+> --stage quality --md-root md_inbox/FY2026_Q2` · `scripts/_probes/
+> probe_20260901b_market_window_census.py`. 상세 답변: inbox `20260831T0700Z`(iter4) ·
+> `20260831T0800Z`(iter2).
+>
+
+
 > Last updated (이전): 2026-09-03(12회차 — 2023 홀수분기 item29-35 결측 29개(회사x분기) 조사, orchestrator 발주,
 > 패치 파일만 커밋) — 대상은 2023.1Q 18사 + 2023.3Q 11사(원문 census로 orchestrator 목록과 정확히
 > 일치 확인). **5개 조합(35칸) 실값 확보, 24개 조합은 원문 자체 부재로 확인(파싱 실패 아님).**
