@@ -164,7 +164,22 @@ def main() -> int:
 
     cols = [c.value for c in ws[1]]
     if cols != tgt_cols:
-        sys.exit(f"REFUSE: 컬럼 불일치\n  시트: {cols}\n  마스터: {tgt_cols}")
+        # inbox/publishing/20260921T0320Z: a flattener can grow a new trailing column
+        # (e.g. 자본비율전망's `_diagnostics`) for an EXISTING sheet — same "no path for
+        # this shape" gap as the new-sheet case above. Only auto-extend when the sheet's
+        # current columns are an exact, in-order prefix of the target's (i.e. purely
+        # additive, nothing renamed/reordered/removed) — anything else still REFUSEs so a
+        # real schema mismatch doesn't get silently papered over. New header cell(s) only;
+        # existing rows' cells in the new column(s) stay blank until the diff below fills
+        # them via the normal insert/equal path (target now defines them for every row).
+        if not is_new_sheet and len(tgt_cols) > len(cols) and tgt_cols[:len(cols)] == cols:
+            added = tgt_cols[len(cols):]
+            for j, name in enumerate(added, start=len(cols) + 1):
+                ws.cell(row=1, column=j, value=name)
+            cols = [c.value for c in ws[1]]
+            print(f"  스키마 확장: 새 컬럼 추가 {added}")
+        else:
+            sys.exit(f"REFUSE: 컬럼 불일치\n  시트: {cols}\n  마스터: {tgt_cols}")
 
     ncol = len(cols)
     key_idx = [i for i, c in enumerate(cols) if c in TEXT_COLS or c == "항목번호"]
