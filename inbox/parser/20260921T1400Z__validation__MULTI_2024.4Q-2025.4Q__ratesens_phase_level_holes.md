@@ -9,6 +9,7 @@ period: 2024.4Q-2025.4Q
 rule: RS6_PHASE_LEVEL_CENSUS (신설) + RS2_BASE_ANCHOR(적용후, 신설 미러)
 lane: kics
 iter: 1
+note: §B answered 2026-09-21 (orchestrator); §A open
 ---
 
 ## 미결 (sender 작성)
@@ -91,3 +92,29 @@ KR0070 2 · KR0079 2 · KR0097 2 · KR0029 1 · KR0072 1 · KR1011 1) 있다. �
    (파서는 검증기·테스트를 고치지 않는다).
 
 ## 답변 (recipient 작성 — 처리 후)
+
+**§B 처리 완료 (parser-kics 에이전트 작업 → 에이전트 중단 후 오케스트레이터가 마무리, 2026-09-21). §A 는 미처리(open 유지).**
+
+1. **item14 `값_적용후` 30칸 정정** — `scripts/fix_20260921_item14_post_backsolve.py`(guard 적용, 셀 단위).
+   티켓 §B 의 흥국생명 2칸(18415.27→18,412 / 19354.44→19,350)뿐 아니라 관측 40버킷 census
+   (`scripts/_probes/_probe_20260921_item14_backsolve_census.py`) 중 **역산 지문이 확인된 30칸 전부**를
+   원문 헤드라인 총괄표 인쇄 정수로 교체했다(KR0005 11 · KR0071 10 · KR0104 4 · KR0070 2 · KR0072 1 ·
+   KR0097 1 · KR1011 1). 나머지 10버킷(KR0002 2 · KR0087 4 · KR0029 1 · KR0097 2024.4Q · KR0079 2)은
+   현행 `fill_post_transition_to_disclosure.py` 재생에서 값이 불변(`UNCHANGED_ON_RERUN`)이거나 헤드라인
+   미재생(`NO_ITEM14_RECOMPUTED`)이라 손대지 않았다(`data/_derived/_probe_20260921_backsolve_recompute_all40.json`).
+   **30칸 전부 원문 MD 에서 기계 대조**: 각 신값이 `md_inbox/<FY>/<code>_*.md` 또는 `data/disclosure/<FY>/parsed/`
+   의 `경과조치 후 | 지급여력기준금액` 행에 그대로 인쇄됨(30/30 hit, 0 miss).
+2. **"어느 값이 파생인가" 판정** — KR0071 은 ②+③ 다중경과조치사라 결합 15/22/23 후는 어느 표에도 없다.
+   마스터 15 후 = mmult(17..21 후)(게이트 '적용후 mmult' 통과), 16 후 = R6, 22 후 = 독립 추정, **23 후 =
+   old_14후 − 15후 + 22후 로 정확히 닫히던 잔차 셀**. 따라서 14 후 정정에 맞춰 23 후만 같은 식으로 재폐쇄
+   (`scripts/fix_20260921_kr0071_item23_post_close_r5.py`, 5분기: 2023.2Q/2023.3Q/2025.2Q/2025.4Q/2026.1Q,
+   Δ −2.94/−2.52/−3.27/−4.43/+5.62). 파서 에이전트가 먼저 시도한 "15 후 재파생(생성기 derived_identity 관행)"은
+   mmult·R6 두 축을 깨서 되돌렸다(`scripts/_probes/_revert_20260921_kr0071_15_22_23.py`). 공시된 값을 파생값으로
+   갈아끼운 것이 아니다(결합 23 후는 공시된 적 없는 추정 셀).
+   → item23 후 등재부 `data/_gold/kics_item23_children_post_absent.json` 의 KR0071 5버킷 pin 값을 같이 갱신
+   (`scripts/fix_20260921_kr0071_item23_ledger_repin.py`, verdict SOURCE_ABSENT·근거 불변, `item23_post_repin` 필드로 이력).
+3. **게이트**: `validate_kics_disclosure.py` **exit 0**(적용후 항등식 위반 0 · 기타요구자본 분해 위반 0 · blocking RED=0) ·
+   `validate_kics_rate_sensitivity.py` **gate RED=0**(RS2_BASE_ANCHOR fail=0, +exception 8 = 기존 DB손해·현대해상 미러) ·
+   `check_master_xlsx_drift.py` RED=0(K-ICS공시 시트 35셀 sync).
+4. 관측(범위 밖): `AFTER_IDENT_ISSUER_INCONSISTENT`(R5 후 잔차 박제 레지스트리)가 `_exemption_registries()` 에 미등록이라
+   근거 원장 검사를 안 받는다 — validation 확인 요망(이번엔 그 레지스트리를 안 썼다).

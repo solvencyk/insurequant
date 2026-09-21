@@ -1,0 +1,516 @@
+[
+  {
+    "code": "KR0002",
+    "name": "한화손해보험",
+    "quarter": "2025.3Q",
+    "master_item14_post": "28422.27",
+    "md_found": true,
+    "recomputed_item14_post": "28422.27",
+    "recomputed_item14_provenance": "breakdown",
+    "headline_debug": [
+      "  KR0002 총괄: <none found>"
+    ],
+    "verdict": "UNCHANGED_ON_RERUN"
+  },
+  {
+    "code": "KR0002",
+    "name": "한화손해보험",
+    "quarter": "2026.1Q",
+    "master_item14_post": "28231.79",
+    "md_found": true,
+    "recomputed_item14_post": "28231.79",
+    "recomputed_item14_provenance": "breakdown",
+    "headline_debug": [
+      "  KR0002 총괄: <none found>"
+    ],
+    "verdict": "UNCHANGED_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2023.1Q",
+    "master_item14_post": "13815.08",
+    "md_found": true,
+    "recomputed_item14_post": "15260.47",
+    "recomputed_item14_provenance": "breakdown",
+    "headline_debug": [
+      "  KR0005 총괄: <none found>"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2023.2Q",
+    "master_item14_post": "12977.5",
+    "md_found": true,
+    "recomputed_item14_post": "14314.63",
+    "recomputed_item14_provenance": "breakdown",
+    "headline_debug": [
+      "  KR0005 총괄: found but only 3/6 rows matched, skip"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2023.3Q",
+    "master_item14_post": "12249.07",
+    "md_found": true,
+    "recomputed_item14_post": "12249",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0005 총괄: rows=6 matched=6 -> {27: ('160.73', '272.29'), 1: ('33353', '33353'), 14: ('20751', '12249')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2023.4Q",
+    "master_item14_post": "13723.5",
+    "md_found": true,
+    "recomputed_item14_post": "13724",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0005 총괄: rows=6 matched=6 -> {27: ('158.00', '229.22'), 1: ('31457', '31457'), 14: ('19909', '13724')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2024.1Q",
+    "master_item14_post": "14109.64",
+    "md_found": true,
+    "recomputed_item14_post": "14110",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0005 총괄: rows=6 matched=6 -> {27: ('157.01', '207.05'), 1: ('29214', '29214'), 14: ('18607', '14110')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2024.2Q",
+    "master_item14_post": "14185.9",
+    "md_found": true,
+    "recomputed_item14_post": "14186",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0005 총괄: rows=6 matched=6 -> {27: ('151.25', '195.37'), 1: ('27715', '27715'), 14: ('18324', '14186')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2024.3Q",
+    "master_item14_post": "14734.41",
+    "md_found": true,
+    "recomputed_item14_post": "14735",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0005 총괄: rows=6 matched=6 -> {27: ('162.30', '203.32'), 1: ('29958', '29958'), 14: ('18459', '14735')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2025.1Q",
+    "master_item14_post": "14463.93",
+    "md_found": true,
+    "recomputed_item14_post": "14464",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0005 총괄: rows=6 matched=6 -> {27: ('174.03', '216.67'), 1: ('31339', '31339'), 14: ('18008', '14464')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2025.2Q",
+    "master_item14_post": "14453.96",
+    "md_found": true,
+    "recomputed_item14_post": "14454",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0005 총괄: rows=6 matched=6 -> {27: ('175.77', '220.77'), 1: ('31910', '31910'), 14: ('18154', '14454')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2025.4Q",
+    "master_item14_post": "15679.74",
+    "md_found": true,
+    "recomputed_item14_post": "15680",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0005 총괄: rows=6 matched=6 -> {27: ('156.48', '196.03'), 1: ('30737', '30737'), 14: ('19642', '15680')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0005",
+    "name": "흥국화재",
+    "quarter": "2026.1Q",
+    "master_item14_post": "16909.09",
+    "md_found": true,
+    "recomputed_item14_post": "16909",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0005 총괄: rows=6 matched=6 -> {27: ('157.00', '195.25'), 1: ('33015', '33015'), 14: ('21029', '16909')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0029",
+    "name": "AIG손해보험",
+    "quarter": "2023.1Q",
+    "master_item14_post": "2548.38",
+    "md_found": true,
+    "recomputed_item14_post": "2548.38",
+    "recomputed_item14_provenance": "common",
+    "headline_debug": [
+      "  KR0029 총괄: <none found>"
+    ],
+    "verdict": "UNCHANGED_ON_RERUN"
+  },
+  {
+    "code": "KR0070",
+    "name": "에이비엘생명보험",
+    "quarter": "2025.1Q",
+    "master_item14_post": "11586.69",
+    "md_found": true,
+    "recomputed_item14_post": "11587",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0070 총괄: rows=6 matched=6 -> {27: ('104.63', '167.96'), 1: ('15932', '19461'), 14: ('15227', '11587')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0070",
+    "name": "에이비엘생명보험",
+    "quarter": "2025.2Q",
+    "master_item14_post": "11572.44",
+    "md_found": true,
+    "recomputed_item14_post": "11573",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0070 총괄: rows=6 matched=6 -> {27: ('105.37', '169.10'), 1: ('16118', '19569'), 14: ('15297', '11573')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2023.2Q",
+    "master_item14_post": "16471.94",
+    "md_found": true,
+    "recomputed_item14_post": "16469",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0071 총괄: rows=6 matched=6 -> {27: ('108.6', '165.7'), 1: ('27294', '27294'), 14: ('25130', '16469')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2023.3Q",
+    "master_item14_post": "16458.51",
+    "md_found": true,
+    "recomputed_item14_post": "16456",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0071 총괄: rows=6 matched=6 -> {27: ('112.4', '185.6'), 1: ('30547', '30547'), 14: ('27170', '16456')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2023.4Q",
+    "master_item14_post": "17614.44",
+    "md_found": true,
+    "recomputed_item14_post": "17616",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0071 총괄: rows=6 matched=6 -> {27: ('158.2', '220.2'), 1: ('38787', '38787'), 14: ('24522', '17616')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2024.1Q",
+    "master_item14_post": "17998.11",
+    "md_found": true,
+    "recomputed_item14_post": "17997",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0071 총괄: rows=6 matched=6 -> {27: ('160.4', '211.6'), 1: ('38084', '38084'), 14: ('23747', '17997')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2024.2Q",
+    "master_item14_post": "16981.37",
+    "md_found": true,
+    "recomputed_item14_post": "16982",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0071 총괄: rows=6 matched=6 -> {27: ('156.4', '209.3'), 1: ('35542', '35542'), 14: ('22726', '16982')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2024.3Q",
+    "master_item14_post": "16700.79",
+    "md_found": true,
+    "recomputed_item14_post": "16702",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0071 총괄: rows=6 matched=6 -> {27: ('161.3', '213.9'), 1: ('35723', '35723'), 14: ('22145', '16702')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2025.1Q",
+    "master_item14_post": "18293.73",
+    "md_found": true,
+    "recomputed_item14_post": "18295",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0071 총괄: rows=6 matched=6 -> {27: ('153.2', '199.5'), 1: ('36496', '36496'), 14: ('23819', '18295')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2025.2Q",
+    "master_item14_post": "18415.27",
+    "md_found": true,
+    "recomputed_item14_post": "18412",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0071 총괄: rows=6 matched=6 -> {27: ('159.2', '208.3'), 1: ('38359', '38359'), 14: ('24092', '18412')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2025.4Q",
+    "master_item14_post": "19354.44",
+    "md_found": true,
+    "recomputed_item14_post": "19350",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0071 총괄: rows=6 matched=6 -> {27: ('157.5', '203.7'), 1: ('39425', '39425'), 14: ('25032', '19350')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0071",
+    "name": "흥국생명보험",
+    "quarter": "2026.1Q",
+    "master_item14_post": "20989.38",
+    "md_found": true,
+    "recomputed_item14_post": "20995",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0071 총괄: rows=6 matched=6 -> {27: ('154.7', '197.7'), 1: ('41496', '41496'), 14: ('26822', '20995')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0072",
+    "name": "케이디비생명보험",
+    "quarter": "2023.1Q",
+    "master_item14_post": "10541.02",
+    "md_found": true,
+    "recomputed_item14_post": "10540",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0072 총괄: rows=6 matched=6 -> {27: ('47.68', '101.66'), 1: ('7286', '10716'), 14: ('15281', '10540')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0079",
+    "name": "미래에셋생명보험",
+    "quarter": "2023.4Q",
+    "master_item14_post": "18062.45",
+    "md_found": true,
+    "verdict": "NO_ITEM14_RECOMPUTED",
+    "headline_debug": [
+      "  KR0079 총괄: <none found>"
+    ]
+  },
+  {
+    "code": "KR0079",
+    "name": "미래에셋생명보험",
+    "quarter": "2024.4Q",
+    "master_item14_post": "18605.72",
+    "md_found": true,
+    "verdict": "NO_ITEM14_RECOMPUTED",
+    "headline_debug": [
+      "  KR0079 총괄: <none found>"
+    ]
+  },
+  {
+    "code": "KR0087",
+    "name": "동양생명",
+    "quarter": "2023.1Q",
+    "master_item14_post": "26722.11",
+    "md_found": true,
+    "recomputed_item14_post": "26722.11",
+    "recomputed_item14_provenance": "common",
+    "headline_debug": [
+      "  KR0087 총괄: found but only 2/6 rows matched, skip"
+    ],
+    "verdict": "UNCHANGED_ON_RERUN"
+  },
+  {
+    "code": "KR0087",
+    "name": "동양생명",
+    "quarter": "2023.3Q",
+    "master_item14_post": "24205.39",
+    "md_found": true,
+    "recomputed_item14_post": "24205.39",
+    "recomputed_item14_provenance": "common",
+    "headline_debug": [
+      "  KR0087 총괄: found but only 2/6 rows matched, skip"
+    ],
+    "verdict": "UNCHANGED_ON_RERUN"
+  },
+  {
+    "code": "KR0087",
+    "name": "동양생명",
+    "quarter": "2023.4Q",
+    "master_item14_post": "21668.22",
+    "md_found": true,
+    "recomputed_item14_post": "21668.22",
+    "recomputed_item14_provenance": "common",
+    "headline_debug": [
+      "  KR0087 총괄: found but only 3/6 rows matched, skip"
+    ],
+    "verdict": "UNCHANGED_ON_RERUN"
+  },
+  {
+    "code": "KR0087",
+    "name": "동양생명",
+    "quarter": "2025.1Q",
+    "master_item14_post": "26628.45",
+    "md_found": true,
+    "verdict": "NO_ITEM14_RECOMPUTED",
+    "headline_debug": [
+      "  KR0087 총괄: found but only 3/6 rows matched, skip"
+    ]
+  },
+  {
+    "code": "KR0097",
+    "name": "하나생명보험",
+    "quarter": "2023.1Q",
+    "master_item14_post": "3369.28",
+    "md_found": true,
+    "recomputed_item14_post": "3370",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0097 총괄: rows=6 matched=6 -> {27: ('119.66', '159.50'), 1: ('4990', '5374'), 14: ('4170', '3370')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0097",
+    "name": "하나생명보험",
+    "quarter": "2024.4Q",
+    "master_item14_post": "4305.31",
+    "md_found": true,
+    "recomputed_item14_post": "4305.31",
+    "recomputed_item14_provenance": "audit_statement",
+    "headline_debug": [
+      "  KR0097 총괄: <none found>"
+    ],
+    "verdict": "UNCHANGED_ON_RERUN"
+  },
+  {
+    "code": "KR0104",
+    "name": "농협생명보험",
+    "quarter": "2024.3Q",
+    "master_item14_post": "18498.86",
+    "md_found": true,
+    "recomputed_item14_post": "18499",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0104 총괄: rows=6 matched=6 -> {27: ('249.72', '419.68'), 1: ('77636', '77636'), 14: ('31089', '18499')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0104",
+    "name": "농협생명보험",
+    "quarter": "2024.4Q",
+    "master_item14_post": "16747.85",
+    "md_found": true,
+    "recomputed_item14_post": "16748",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0104 총괄: rows=6 matched=6 -> {27: ('246.39', '437.71'), 1: ('72496', '73307'), 14: ('29423', '16748')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0104",
+    "name": "농협생명보험",
+    "quarter": "2025.1Q",
+    "master_item14_post": "16631.26",
+    "md_found": true,
+    "recomputed_item14_post": "16631",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0104 총괄: rows=6 matched=6 -> {27: ('253.90', '431.14'), 1: ('69800', '71704'), 14: ('27491', '16631')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR0104",
+    "name": "농협생명보험",
+    "quarter": "2025.2Q",
+    "master_item14_post": "17059.2",
+    "md_found": true,
+    "recomputed_item14_post": "17059",
+    "recomputed_item14_provenance": "headline",
+    "headline_debug": [
+      "  KR0104 총괄: rows=6 matched=6 -> {27: ('258.38', '437.16'), 1: ('72607', '74576'), 14: ('28100', '17059')}"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  },
+  {
+    "code": "KR1011",
+    "name": "IBK연금보험",
+    "quarter": "2023.2Q",
+    "master_item14_post": "5179.08",
+    "md_found": true,
+    "recomputed_item14_post": "6778.7",
+    "recomputed_item14_provenance": "breakdown",
+    "headline_debug": [
+      "  KR1011 총괄: <none found>"
+    ],
+    "verdict": "WOULD_CHANGE_ON_RERUN"
+  }
+]

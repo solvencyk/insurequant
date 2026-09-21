@@ -2,7 +2,7 @@
 from: owner
 to: designer
 created: 20260921T0510Z
-status: open
+status: resolved
 route: design_change
 company: ALL
 period: ALL
@@ -31,3 +31,24 @@ owner 지시(2026-09-21, 원문): "기타공시 페이지도 마찬가지로 디
 
 ## 답변 (recipient 작성 — 처리 후)
 
+
+**처리 완료 (designer, 2026-09-21 · 오케스트레이터 세션 인계).**
+
+1. **헤더 셀렉트** — `#company` 를 `<header>` 안 `.header-select-row` 로 이동(L100-104).
+   IFRS17 티켓에서 `common.css` 로 승격한 클래스를 그대로 재사용했다 — 이 페이지에 새로 만든
+   로컬 CSS 는 없다. 키컬러 스와치는 이 페이지에 없으므로 점도 넣지 않았다.
+2. **`기간` 세그먼트 토글** — `분기 | 연도`(기본 분기). `<select id="period">` 는 `.sr-only` 로 남겨
+   L239·L300·L378 무수정. `role="radiogroup"`/`radio`/`aria-checked`, ←→ 키(`setupSegToggle`, L192-225).
+3. 컨트롤 패널에는 토글 + 오류 제보 버튼만 남겼다 — K-ICS·IFRS17 과 같은 배치.
+4. **검증(헤드리스 Playwright, 1400px·375px)**:
+   ① 2,000px 스크롤 후 헤더 셀렉트 `visibleAfterScroll=true`(데스크톱 top=72 / 모바일 top=68)
+   ② 첫 회사 `KR0001` 선택 → `#emptyHint` 숨김·`#dashHost` 표시
+   ③ `연도` 토글 → `#period.value==="year"`; ArrowLeft → `quarter` 복귀
+   ④ 이 페이지는 섹션 네비가 없다 — 대신 헤더가 118px(데스크톱)/112px(모바일)로 커진 뒤에도
+      본문 첫 패널이 안 가리는지와 `scrollTo(0)` 이 0 에 닿는지 확인(`topReach=0`).
+      `scroll-padding-top` 이 실측 추종으로 바뀌어 130px/124px 로 따라온다.
+   ⑤ `validate_deployed_js.py --no-live` 4페이지 **RED=0**, `pytest tests/test_deploy_assets.py` 11 passed,
+      uncaught pageerror 0 (GA4 CSP 콘솔 에러는 4페이지 공통 기존 조건, 무관)
+   스크린샷: `artifacts/designer_shots/20260921_header_toggle_v2/`
+
+`?company=` 자동선택(L390-391)은 셀렉트가 헤더로 옮겨가도 같은 `#company` 를 잡으므로 무변경이다.

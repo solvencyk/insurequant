@@ -42,7 +42,8 @@
     "KR0071|2023.2Q": {
       "name": "흥국생명보험",
       "item23_pre": 8313.0,
-      "item23_post": 5198.88,
+      "item23_post": 5195.94,
+      "item23_post_repin": "2026-09-21 repin 5198.88->5195.94: item14후를 헤드라인 인쇄 정수로 정정(fix_20260921_item14_post_backsolve.py)하면서 R5(14=15-22+23) 잔차 셀인 item23후를 같은 식으로 재폐쇄(fix_20260921_kr0071_item23_post_close_r5.py). verdict·evidence 불변.",
       "verdict": "SOURCE_ABSENT",
       "evidence_file": "data/disclosure/FY2023_Q2/raw/KR0071_흥국생명보험.pdf (fitz 직접 읽음)",
       "evidence_lines": "p14, p15",
@@ -52,7 +53,8 @@
     "KR0071|2023.3Q": {
       "name": "흥국생명보험",
       "item23_pre": 8313.0,
-      "item23_post": 4907.07,
+      "item23_post": 4904.55,
+      "item23_post_repin": "2026-09-21 repin 4907.07->4904.55: item14후를 헤드라인 인쇄 정수로 정정(fix_20260921_item14_post_backsolve.py)하면서 R5(14=15-22+23) 잔차 셀인 item23후를 같은 식으로 재폐쇄(fix_20260921_kr0071_item23_post_close_r5.py). verdict·evidence 불변.",
       "verdict": "SOURCE_ABSENT",
       "evidence_file": "data/disclosure/FY2023_Q3/raw/KR0071_흥국생명보험.pdf (fitz 직접 읽음)",
       "evidence_lines": "p13, p14",
@@ -122,7 +124,8 @@
     "KR0071|2025.2Q": {
       "name": "흥국생명보험",
       "item23_pre": 7273.0,
-      "item23_post": 5790.68,
+      "item23_post": 5787.41,
+      "item23_post_repin": "2026-09-21 repin 5790.68->5787.41: item14후를 헤드라인 인쇄 정수로 정정(fix_20260921_item14_post_backsolve.py)하면서 R5(14=15-22+23) 잔차 셀인 item23후를 같은 식으로 재폐쇄(fix_20260921_kr0071_item23_post_close_r5.py). verdict·evidence 불변.",
       "verdict": "SOURCE_ABSENT",
       "evidence_file": "data/disclosure/FY2025_Q2/raw/KR0071_흥국생명보험.pdf (fitz 직접 읽음)",
       "evidence_lines": "p20, p21",
@@ -142,7 +145,8 @@
     "KR0071|2025.4Q": {
       "name": "흥국생명보험",
       "item23_pre": 7869.0,
-      "item23_post": 6281.63,
+      "item23_post": 6277.2,
+      "item23_post_repin": "2026-09-21 repin 6281.63->6277.2: item14후를 헤드라인 인쇄 정수로 정정(fix_20260921_item14_post_backsolve.py)하면서 R5(14=15-22+23) 잔차 셀인 item23후를 같은 식으로 재폐쇄(fix_20260921_kr0071_item23_post_close_r5.py). verdict·evidence 불변.",
       "verdict": "SOURCE_ABSENT",
       "evidence_file": "data/disclosure/FY2025_Q4/raw/KR0071_흥국생명보험.pdf (fitz 직접 읽음)",
       "evidence_lines": "p54, p55",
@@ -152,7 +156,8 @@
     "KR0071|2026.1Q": {
       "name": "흥국생명보험",
       "item23_pre": 8424.0,
-      "item23_post": 6773.61,
+      "item23_post": 6779.23,
+      "item23_post_repin": "2026-09-21 repin 6773.61->6779.23: item14후를 헤드라인 인쇄 정수로 정정(fix_20260921_item14_post_backsolve.py)하면서 R5(14=15-22+23) 잔차 셀인 item23후를 같은 식으로 재폐쇄(fix_20260921_kr0071_item23_post_close_r5.py). verdict·evidence 불변.",
       "verdict": "SOURCE_ABSENT",
       "evidence_file": "data/disclosure/FY2026_Q1/raw/KR0071_흥국생명보험.pdf (fitz 직접 읽음)",
       "evidence_lines": "p19, p20",

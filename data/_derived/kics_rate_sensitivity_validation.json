@@ -2,7 +2,7 @@
   "_meta": {
     "groups": 266,
     "companies": 39,
-    "gate_red": 2,
+    "gate_red": 0,
     "rs2_not_comparable": {
       "적용후:base_null": 1
     }
@@ -18,26 +18,7 @@
       "expected": -32.96
     }
   ],
-  "RS2_base_anchor": [
-    {
-      "회사": "흥국생명보험",
-      "분기": "2025.2Q",
-      "경과조치": "적용후",
-      "measure": "지급여력기준금액",
-      "base": 18412.0,
-      "disclosure": 18415.27,
-      "diff": -3.27
-    },
-    {
-      "회사": "흥국생명보험",
-      "분기": "2025.4Q",
-      "경과조치": "적용후",
-      "measure": "지급여력기준금액",
-      "base": 19350.0,
-      "disclosure": 19354.44,
-      "diff": -4.44
-    }
-  ],
+  "RS2_base_anchor": [],
   "RS2_exceptions": [
     {
       "회사": "DB손해보험",

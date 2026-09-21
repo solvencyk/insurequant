@@ -2,7 +2,7 @@
 from: owner
 to: designer
 created: 20260921T0500Z
-status: open
+status: resolved
 route: design_change
 company: ALL
 period: ALL
@@ -41,3 +41,32 @@ K-ICS 에 방금 라이브로 나간 것(`3573509`, main `6741dea`)과 **같은 
 
 ## 답변 (recipient 작성 — 처리 후)
 
+
+**처리 완료 (designer, 2026-09-21 · 오케스트레이터 세션 인계).**
+
+1. **헤더 셀렉트** — `#company`(+`#coSwatch`)를 `<header>` 안 `.header-select-row` 로 이동(L132-138).
+   K-ICS 와 같은 클래스·같은 자리. 스와치는 그대로 동작(삼성생명 선택 시 `rgb(20, 40, 160)` 채움 확인).
+2. **`기준` 세그먼트 토글** — `연도 | 분기`(기본 연도). 실제 `<select id="wfPeriod">` 는 `.sr-only` 로
+   남겨 `.value`/`change` 계약 무변경 → L1788·1859·2246 한 글자도 안 고쳤다. `role="radiogroup"`/
+   `radio`/`aria-checked`, ←→·↑↓ 키 지원(`setupSegToggle`, L378-410).
+3. **common.css 승격** — `.header-select-row`/`.header-select-label`/`.control-group`/`.control-label`/
+   `.seg-toggle`/`.seg-btn`/`.sr-only` + 모바일 오버라이드를 `common.css` 로 옮기고 K-ICS.html 의
+   페이지 로컬 정의는 삭제. K-ICS 렌더는 헤드리스 재측정으로 동일 확인(헤더 118px, 표 40행,
+   금리민감도 차트·표 정상).
+4. 컨트롤 패널에는 `기준` 토글 + 오류 제보 버튼만 남겼다. `#wfPeriodLine` 패널 무수정.
+5. **검증(헤드리스 Playwright, 1400px·375px)** — 스크립트는 세션 스크래치패드의 throwaway 2종:
+   ① 2,000px 스크롤 후 헤더 셀렉트 `visibleAfterScroll=true`(데스크톱 top=72 / 모바일 top=68)
+   ② `KR0069` 선택 → `#emptyHint` 숨김·`#dashHost` 표시·스와치 채움
+   ③ `분기` 토글 → `#wfPeriod.value==="quarter"`, `aria-checked="true"`; ArrowRight → `year` 복귀
+   ④ `?company=KR0069` 진입 → 셀렉트 반영 + 대시보드 렌더
+   ⑤ 섹션 네비 7칩 전부 살아난 상태에서 착지 오프셋 전수: 데스크톱 `[12,12,12,12,12,12,210]`,
+      모바일 `[12,12,12,12,12,12,79]` — 음수 0건(마지막 칩은 문서 끝이라 더 못 내려가는 정상 케이스)
+   ⑥ `validate_deployed_js.py --no-live` 4페이지 **RED=0**, `pytest tests/test_deploy_assets.py` 11 passed,
+      uncaught pageerror 0 (GA4 `www.google.com/g/collect` CSP 콘솔 에러는 4페이지 공통 기존 조건,
+      이번 변경과 무관 — connect-src 에 그 도메인이 없어서 나는 것)
+   스크린샷: `artifacts/designer_shots/20260921_header_toggle_v2/`
+
+**추가로 잡은 것(같은 원인, 범위 밖이지만 이 변경이 없으면 IFRS17 도 같이 깨진다)**:
+헤더가 커지면서 섹션 앵커가 헤더 밑으로 파고드는 버그를 owner 가 K-ICS 라이브에서 지적했다.
+`common.css` 의 `scroll-padding-top` 이 `--header-h:76px` 하드코딩이라 헤더 118px 에서 30px 이
+잘렸다. `--iq-hdr-h`(theme.js 실측)를 쓰도록 고쳤다 — 상세는 `docs/changelog_designer.md`.

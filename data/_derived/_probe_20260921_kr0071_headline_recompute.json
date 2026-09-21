@@ -1,0 +1,434 @@
+[
+  {
+    "quarter": "2025.2Q",
+    "item_no": 1,
+    "provenance": "headline",
+    "recomputed_pre": "38359",
+    "recomputed_post": "38359",
+    "master_current_post": "38359",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 2,
+    "provenance": "common",
+    "recomputed_pre": "19233.81",
+    "recomputed_post": "19730.31",
+    "master_current_post": "19730.31",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 3,
+    "provenance": "common",
+    "recomputed_pre": "19125.44",
+    "recomputed_post": "18628.95",
+    "master_current_post": "18628.95",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 14,
+    "provenance": "headline",
+    "recomputed_pre": "24092",
+    "recomputed_post": "18412",
+    "master_current_post": "18415.27",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 15,
+    "provenance": "derived_identity",
+    "recomputed_pre": "21227",
+    "recomputed_post": "16155.58",
+    "master_current_post": "16345.89",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 17,
+    "provenance": "breakdown",
+    "recomputed_pre": "14445.36",
+    "recomputed_post": "9417.98",
+    "master_current_post": "9417.84",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 19,
+    "provenance": "market_rate",
+    "recomputed_pre": "8736.49",
+    "recomputed_post": "7809.18",
+    "master_current_post": "7809.06",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 20,
+    "provenance": "breakdown",
+    "recomputed_pre": "3759.61",
+    "recomputed_post": "3759.61",
+    "master_current_post": "3760",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 21,
+    "provenance": "breakdown",
+    "recomputed_pre": "1082.67",
+    "recomputed_post": "1082.67",
+    "master_current_post": "1083",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 22,
+    "provenance": "breakdown",
+    "recomputed_pre": "4408.05",
+    "recomputed_post": "3881.14",
+    "master_current_post": "3721.3",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 23,
+    "provenance": "breakdown",
+    "recomputed_pre": "7272.64",
+    "recomputed_post": "6137.56",
+    "master_current_post": "5790.68",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 27,
+    "provenance": "headline",
+    "recomputed_pre": "159.2",
+    "recomputed_post": "208.3",
+    "master_current_post": "208.3",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 29,
+    "provenance": "breakdown",
+    "recomputed_pre": "786.28",
+    "recomputed_post": "786.28",
+    "master_current_post": "786.28",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 30,
+    "provenance": "breakdown",
+    "recomputed_pre": "1036.12",
+    "recomputed_post": "551.68",
+    "master_current_post": "551.68",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 31,
+    "provenance": "breakdown",
+    "recomputed_pre": "8439.33",
+    "recomputed_post": "8439.33",
+    "master_current_post": "8439.33",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 32,
+    "provenance": "breakdown",
+    "recomputed_pre": "0",
+    "recomputed_post": "0",
+    "master_current_post": "0",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 33,
+    "provenance": "breakdown",
+    "recomputed_pre": "8386.78",
+    "recomputed_post": "0",
+    "master_current_post": "0",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 34,
+    "provenance": "breakdown",
+    "recomputed_pre": "2640.59",
+    "recomputed_post": "1244.68",
+    "master_current_post": "1244.68",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 35,
+    "provenance": "breakdown",
+    "recomputed_pre": "412.87",
+    "recomputed_post": "106.06",
+    "master_current_post": "106.06",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 36,
+    "provenance": "market_rate",
+    "recomputed_pre": "2530.04",
+    "recomputed_post": "2530.04",
+    "master_current_post": "2530.04",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 37,
+    "provenance": "market_rate",
+    "recomputed_pre": "5864.38",
+    "recomputed_post": "4702.28",
+    "master_current_post": "4702.28",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 38,
+    "provenance": "market_rate",
+    "recomputed_pre": "3540.53",
+    "recomputed_post": "3540.53",
+    "master_current_post": "3540.53",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 39,
+    "provenance": "market_rate",
+    "recomputed_pre": "798.5",
+    "recomputed_post": "798.5",
+    "master_current_post": "798.5",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.2Q",
+    "item_no": 40,
+    "provenance": "market_rate",
+    "recomputed_pre": "0",
+    "recomputed_post": "0",
+    "master_current_post": "0",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 1,
+    "provenance": "headline",
+    "recomputed_pre": "39425",
+    "recomputed_post": "39425",
+    "master_current_post": "39425",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 2,
+    "provenance": "common",
+    "recomputed_pre": "19414.09",
+    "recomputed_post": "19910.59",
+    "master_current_post": "19910.59",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 3,
+    "provenance": "common",
+    "recomputed_pre": "20011.3",
+    "recomputed_post": "19514.81",
+    "master_current_post": "19514.81",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 14,
+    "provenance": "headline",
+    "recomputed_pre": "25032",
+    "recomputed_post": "19350",
+    "master_current_post": "19354.44",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 15,
+    "provenance": "derived_identity",
+    "recomputed_pre": "22254",
+    "recomputed_post": "16749.86",
+    "master_current_post": "16941.64",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 17,
+    "provenance": "breakdown",
+    "recomputed_pre": "15731.7",
+    "recomputed_post": "10490.93",
+    "master_current_post": "10490.97",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 19,
+    "provenance": "market_rate",
+    "recomputed_pre": "5957",
+    "recomputed_post": "4960.58",
+    "master_current_post": "4960.59",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 20,
+    "provenance": "breakdown",
+    "recomputed_pre": "4116.06",
+    "recomputed_post": "4116.06",
+    "master_current_post": "4116",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 21,
+    "provenance": "breakdown",
+    "recomputed_pre": "2469.92",
+    "recomputed_post": "2469.92",
+    "master_current_post": "2470",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 22,
+    "provenance": "breakdown",
+    "recomputed_pre": "5090.57",
+    "recomputed_post": "4013.6",
+    "master_current_post": "3868.84",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 23,
+    "provenance": "breakdown",
+    "recomputed_pre": "7868.66",
+    "recomputed_post": "6613.74",
+    "master_current_post": "6281.63",
+    "would_change": true
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 27,
+    "provenance": "headline",
+    "recomputed_pre": "157.5",
+    "recomputed_post": "203.7",
+    "master_current_post": "203.7",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 29,
+    "provenance": "breakdown",
+    "recomputed_pre": "717.26",
+    "recomputed_post": "717.26",
+    "master_current_post": "717.26",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 30,
+    "provenance": "breakdown",
+    "recomputed_pre": "1393.48",
+    "recomputed_post": "909.05",
+    "master_current_post": "909.05",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 31,
+    "provenance": "breakdown",
+    "recomputed_pre": "9371.52",
+    "recomputed_post": "9371.52",
+    "master_current_post": "9371.52",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 32,
+    "provenance": "breakdown",
+    "recomputed_pre": "0",
+    "recomputed_post": "0",
+    "master_current_post": "0",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 33,
+    "provenance": "breakdown",
+    "recomputed_pre": "9057.58",
+    "recomputed_post": "618.69",
+    "master_current_post": "618.69",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 34,
+    "provenance": "breakdown",
+    "recomputed_pre": "2735.45",
+    "recomputed_post": "1339.54",
+    "master_current_post": "1339.54",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 35,
+    "provenance": "breakdown",
+    "recomputed_pre": "457.22",
+    "recomputed_post": "150.41",
+    "master_current_post": "150.41",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 36,
+    "provenance": "market_rate",
+    "recomputed_pre": "1711.26",
+    "recomputed_post": "1711.26",
+    "master_current_post": "1711.26",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 37,
+    "provenance": "market_rate",
+    "recomputed_pre": "4594.79",
+    "recomputed_post": "3432.68",
+    "master_current_post": "3432.68",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 38,
+    "provenance": "market_rate",
+    "recomputed_pre": "1587.33",
+    "recomputed_post": "1587.33",
+    "master_current_post": "1587.33",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 39,
+    "provenance": "market_rate",
+    "recomputed_pre": "631.36",
+    "recomputed_post": "631.36",
+    "master_current_post": "631.36",
+    "would_change": false
+  },
+  {
+    "quarter": "2025.4Q",
+    "item_no": 40,
+    "provenance": "market_rate",
+    "recomputed_pre": "0",
+    "recomputed_post": "0",
+    "master_current_post": "0",
+    "would_change": false
+  }
+]
