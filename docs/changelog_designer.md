@@ -7,6 +7,57 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-09-21c -- IFRS17·기타공시 헤더 셀렉트+세그먼트 토글 이식 · common.css 승격 · 섹션 앵커 착지 오프셋 수정 (owner 발주 inbox 20260921T0500Z/0510Z + owner 직접 지적)
+
+**요청(owner 원문)**: "디자인 관련해서 IFRS17.html에도 마찬가지로 회사명은 위에 고정, 분기/연도 선택
+토글키로 바꿔라." / "기타공시 페이지도 마찬가지로 디자인 바꿔라." / (별건) "KICS.html에서 가이드탭
+클릭해보니까 해당 섹션으로 이동하긴 하는데 약간 킹받게 윗부분이 짤린 상태로 조회되네, IFRS17.html은
+딱 필요한 만큼만 스크롤 내려간 모습으로 잘 보여주는데, 이것도 좀 손봐라."
+
+**변경 1 — 헤더 셀렉트 이식(IFRS17.html · 공시보고서.html)**: `#company` 를 `<header>` 안
+`.header-select-row` 로 올렸다. IFRS17 은 `#coSwatch`(회사 키컬러 점)를 함께 옮겼고, 공시보고서는
+스와치가 없는 페이지라 점을 넣지 않았다. K-ICS 가 먼저 쓴 것과 같은 마크업·같은 클래스다.
+
+**변경 2 — 세그먼트 토글 이식**: IFRS17 `기준`(연도|분기, 기본 연도) · 공시보고서 `기간`(분기|연도,
+기본 분기). 두 페이지 모두 **실제 `<select>` 를 `.sr-only` 로 DOM 에 남기는** K-ICS 패턴을 그대로
+따랐다 — `.value` 를 갱신하고 `change` 를 dispatch 하므로 기존 리스너(IFRS17 L1788·1859·2246,
+공시보고서 L239·L300·L378)와 URL 파라미터 자동선택 경로를 한 글자도 고치지 않았다.
+`role="radiogroup"`/`role="radio"`/`aria-checked` + ←→·↑↓ 키.
+
+**변경 3 — common.css 승격**: `.header-select-row` · `.header-select-label` · `.control-group` ·
+`.control-label` · `.seg-toggle` · `.seg-btn`(+`.active:focus-visible` 대비 보정) · `.sr-only` 와
+`@media(max-width:640px)` 오버라이드를 `common.css` 로 옮기고 `K-ICS.html` 의 페이지 로컬 정의를
+지웠다. 직전 라운드에 "1페이지만 쓰므로 hoist 하지 않음"으로 남겨둔 것을, 3페이지가 쓰게 된 이번에
+정리한 것이다(디자인 시스템 단일 소스, `claude-agent-designer.md` §5).
+
+**변경 4 — 섹션 앵커 착지 오프셋을 실측 추종으로(버그 수정)**: `common.css` 의
+`html{scroll-padding-top}` 이 `--header-h:76px` 하드코딩이었다. 2026-09-21b 에 보험사 셀렉트가 헤더로
+올라가면서 K-ICS 헤더가 **118px** 이 됐는데 착지 지점은 그대로 88px 이라, 가이드 칩을 누르면 섹션
+윗부분 **30px 이 헤더에 잘린 채** 나타났다(1400px 실측: `gap=-31`). 같은 하드코딩이 스냅 트랩도
+되살려 `scrollTo(0)` 이 **31** 에 걸려 맨 위에 못 갔다.
+- `scroll-padding-top:calc(var(--iq-hdr-h, var(--header-h)) + 12px)` — `--iq-hdr-h` 는 `theme.js`
+  `hdrH()` 가 헤더를 실측해 내려 주는 값이라 페이지·뷰포트·향후 헤더 변경을 전부 따라간다.
+  `--header-h:76px` 는 theme.js 부팅 전(해시 직행) 폴백으로만 남겼다.
+- 실측(수정 후): K-ICS 데스크톱 `pad=130px` · 착지 gap `[12,12,12,52]`, 모바일 `pad=122px` ·
+  `[12,12,0,12]`. IFRS17 데스크톱 `[12,12,12,12,12,12,210]`, 모바일 `[12,12,12,12,12,12,79]`.
+  음수 0건(끝 칩은 문서가 더 안 내려가는 정상 케이스). `topReach` 는 4페이지 전부 0 으로 복구.
+- **IFRS17·공시보고서도 이번에 헤더가 118px 로 커졌으므로, 이 수정이 없었다면 배포와 동시에 같은
+  증상이 그 두 페이지에도 생겼을 자리다.**
+
+**검증(헤드리스 Playwright, 1400px·375px)**: ① 2,000px 스크롤 후 헤더 셀렉트 visible(데스크톱 top=72 /
+모바일 top=68, 3페이지) ② IFRS17 `KR0069` → `#emptyHint` 숨김 · `#dashHost` 표시 · 스와치
+`rgb(20,40,160)` ③ 토글 클릭·화살표키로 `wfPeriod`/`period` 값 전환(`aria-checked` 동기) ④
+`?company=KR0069` 진입 반영 ⑤ K-ICS 회귀: 표 40행 · 금리민감도 차트·표 표시 ⑥
+`scripts/validate_deployed_js.py --no-live` 4페이지 **RED=0** · `pytest tests/test_deploy_assets.py`
+**11 passed** · uncaught pageerror 0. 스크린샷 `artifacts/designer_shots/20260921_header_toggle_v2/`.
+
+**손대지 않은 것**: IFRS17 `#wfPeriodLine` 패널(범위 밖 명시), 공시보고서 첫 `.panel`(배당현황 제목·
+설명), `scripts/`·마스터 JSON·`public_exports/`. GA4 비콘이 `www.google.com/g/collect` 로도 나가
+CSP `connect-src` 위반 콘솔 에러가 4페이지 공통으로 뜨는데, index.html 포함 변경 전에도 나던 기존
+조건이라 이번 범위에서 건드리지 않았다(고치려면 CSP meta 수정이라 별건).
+
+---
+
 ## 2026-09-21b -- K-ICS 보험사 선택 헤더 고정 + 제목 이동·부제 삭제 + 기간/경과조치 토글 (owner 발주 → inbox 20260921T0430Z)
 
 **요청(owner 원문)**: "kics.html에서 보험사 선택 부분은 이제 화면 맨 위로 올리고 (스크롤해도 떠있게)

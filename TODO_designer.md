@@ -9,6 +9,33 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
 
+**Recent (2026-09-21c, IFRS17·기타공시 헤더 셀렉트+토글 이식 · common.css 승격 · 섹션 앵커 착지 오프셋 수정 — owner 발주 inbox `20260921T0500Z`/`0510Z` + owner 직접 지적, 커밋만·라이브 미배포):**
+- **K-ICS 에서 먼저 나간 패턴(`3573509`)을 IFRS17.html·공시보고서.html 로 이식.** `#company` 셀렉트를
+  `<header>` 안 `.header-select-row` 로 올리고(IFRS17 은 `#coSwatch` 키컬러 점 동반), `기준`(IFRS17
+  `wfPeriod`: 연도|분기)·`기간`(공시보고서 `period`: 분기|연도) 셀렉트를 세그먼트 토글로 바꿨다.
+  **실제 `<select>` 는 `.sr-only` 로 DOM 에 남긴다** — `.value`/`change` 계약이 그대로라 기존 JS
+  (IFRS17 L1788·1859·2246, 공시보고서 L239·L300·L378)를 한 글자도 안 고쳤다.
+- **디자인 시스템 단일 소스**: `.header-select-row`/`.header-select-label`/`.control-group`/
+  `.control-label`/`.seg-toggle`/`.seg-btn`/`.sr-only` + 모바일 오버라이드를 `common.css` 로 승격하고
+  K-ICS.html 의 페이지 로컬 정의는 삭제(§5). 3페이지가 같은 정의를 본다.
+- **섹션 앵커가 헤더 밑으로 파고드는 버그 수정(owner 가 라이브 K-ICS 에서 지적).** `common.css` 의
+  `scroll-padding-top` 이 `--header-h:76px` **하드코딩**이라, 셀렉트가 헤더로 올라가 헤더가 118px 이
+  된 뒤 섹션이 88px 에 착지해 **윗부분 30px 이 헤더에 잘린 채** 보였다. `--iq-hdr-h`(theme.js `hdrH()`
+  실측)를 쓰도록 바꿔 `calc(var(--iq-hdr-h, var(--header-h)) + 12px)` — 페이지·뷰포트별로 자동 추종한다.
+  **같은 하드코딩이 스냅 트랩도 되살리고 있었다**: `scrollTo(0)` 이 31 로 끌려가 맨 위에 못 가던 것이
+  0 으로 복구됐다(4페이지 전부 `topReach=0` 실측). IFRS17·공시보고서도 이번에 헤더가 커졌으니
+  이 수정이 없으면 배포와 동시에 같이 깨졌을 자리다.
+- **검증(헤드리스 Playwright, 1400px·375px, 스크래치패드 throwaway 2종)**: ① 2,000px 스크롤 후 헤더
+  셀렉트 visible(데스크톱 top=72/모바일 68, 3페이지) ② IFRS17 `KR0069` → emptyHint 숨김·dashHost
+  표시·스와치 `rgb(20,40,160)` ③ 토글 클릭·ArrowRight/Left 로 `wfPeriod`/`period` 값 전환 ④
+  `?company=KR0069` 진입 반영 ⑤ **섹션 착지 전수**: 회사 선택 후 K-ICS 4칩·IFRS17 7칩, 데스크톱·모바일
+  모두 gap 12px(문서 끝 칩만 더 큼), 음수 0건 ⑥ `validate_deployed_js.py --no-live` 4페이지 RED=0 ·
+  `pytest tests/test_deploy_assets.py` 11 passed · uncaught pageerror 0. 스크린샷
+  `artifacts/designer_shots/20260921_header_toggle_v2/`.
+- **무관 확인**: 4페이지 공통으로 GA4 비콘이 `www.google.com/g/collect` 로도 나가는데 CSP `connect-src`
+  에 그 도메인이 없어 콘솔 에러가 뜬다. index.html 포함 전 페이지·변경 전에도 나던 기존 조건이라
+  이번 범위에서 손대지 않았다(고치려면 CSP 수정이라 별건).
+
 **Recent (2026-09-21b, K-ICS 보험사 선택 헤더 고정 + 제목 이동·부제 삭제 + 기간/경과조치 토글 — owner 발주(직접 지시), inbox `20260921T0430Z`, 커밋만·라이브 미배포):**
 - **대상 `K-ICS.html` 하나(모델: Sonnet 5).** ① `#company` select 를 `.header-select-row`(신설, L143-179)로
   옮겨 sticky `<header>` 안에 두었다 — `theme.js`의 `hdrH()`가 header 높이를 실측해 `--iq-hdr-h`로 내리므로
@@ -104,24 +131,6 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
 - **다음**: ESRランキング 범례는 아직 8개다(이번 지적 범위 밖 — "아랫부분"이라 했고 랭킹은 상단).
   줄일지는 owner 판단.
 
-**Recent (2026-09-15, 손보 決算 상세에 BS/損益 패널 개방 — owner 발주(직접 지시), 커밋만·라이브 미배포):**
-- **배경: 패널은 원래 다 만들어져 있었고 데이터가 없어 숨어 있었을 뿐이다.** jp 레인이 법정 BS/PL 을
-  실으면서(21사/23사) `jesr_app.js` 의 두 군데 전제가 사실과 어긋나게 됐다.
-- **① `setHidden('secProfitWrap', ratioOnly)` → PL 유무로 판정.** "ratio_only 면 損益 패널 무조건 숨김"은
-  ratio_only 에 PL 이 아예 없던 시절 규칙이다. 이제 `profit.items` 에 보험료 말고 다른 항목이 실제로
-  있는지로 판정한다 — 아직 없는 회사(출처 교체 대기·스캔 PDF)는 종전대로 숨고 scopeNoteWrap 한 줄이 이유를 남긴다.
-- **② `if(ratioOnly){dispose} else {renderProfit}` → 같은 조건으로.** 위만 고치면 패널만 열리고
-  본문이 안 그려져 **빈 패널**이 된다(실측). renderProfit 을 실제로 호출해야 워터폴+표가 붙는다.
-- **③ 단계표(profit_flow)가 없는 회사는 빈 표 대신 전 항목표를 본문으로.** `profit_flow`(元受収支→
-  再保険収支→…)는 本編까지 읽은 회사에만 있어, 법정 PL 만 실은 19사는 요약표가 「データがありません。」
-  한 줄로 남았다(실측). 그 표를 접고 `<details>` 의 전 항목표를 펼치며 summary 문구를
-  「全項目を表示」→「損益計算書（全項目）」로 바꾼다. **HTML 3벌(jesr/jgaap/disclosure)을 고치지 않고**
-  `closest('details')` 로 DOM 에서 찾아 처리했다(§5.2 파일별 복사 관례를 늘리지 않으려고).
-- **실렌더 확인**: AIG損保 상세에서 워터폴(経常利益 282.6 → 特別損益 △95.3 → 法人税等 △52.2 →
-  当期純利益 135.0)과 16행 損益計算書 표, 16행 BS 표, `✓ 資産 = 負債 + 純資産` 배지까지 눈으로 확인. 콘솔 에러 0.
-- **회귀 확인**: 기존 full 회사(東京海上日動·損保ジャパン·au損保)는 단계표 19~21행 그대로 보이고 전 항목표는
-  접힌 채다. 회사 셀렉트로 신규→기존 전환해도 토글이 따라온다(aig→東京海上日動 실측).
-- **다음**: 아직 PL/BS 가 없는 10사는 jp 레인 몫(`TODO_jp.md` (33)). 라이브 배포는 폰 Termux 번들.
 
 
 ## 🔴 Open — P1

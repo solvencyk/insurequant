@@ -97,6 +97,11 @@
       </div>
       <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 테이블 다운로드(.xlsx)</button>
     </div>
+    <div class="header-select-row">
+      <label class="header-select-label" for="company">보험사 선택
+        <select id="company" class="select"><option value="">보험사 선택</option></select>
+      </label>
+    </div>
   </header>
   <div class="container">
     <div class="panel">
@@ -107,12 +112,20 @@
 
     <div class="panel">
       <div class="controls">
-        <label>보험사: <select id="company" class="select"><option value="">보험사 선택</option></select></label>
-        <label>기간: <select id="period" class="select">
-          <option value="quarter" selected>분기</option>
-          <option value="year">연도</option>
-        </select></label>
-        <button id="reportThisBtn" type="button" class="iq-anon-link" style="font-size:13px">⚑ 이 데이터에 오류가 있나요?</button>
+        <div class="control-group">
+          <span class="control-label" id="period-label">기간</span>
+          <div class="seg-toggle" id="period-toggle" role="radiogroup" aria-labelledby="period-label">
+            <button type="button" class="seg-btn active" data-value="quarter" role="radio" aria-checked="true" tabindex="0">분기</button>
+            <button type="button" class="seg-btn" data-value="year" role="radio" aria-checked="false" tabindex="-1">연도</button>
+          </div>
+          <select id="period" class="select sr-only" tabindex="-1" aria-hidden="true">
+            <option value="quarter" selected>분기</option>
+            <option value="year">연도</option>
+          </select>
+        </div>
+        <div>
+          <button id="reportThisBtn" type="button" class="iq-anon-link" style="font-size:13px">⚑ 이 데이터에 오류가 있나요?</button>
+        </div>
       </div>
       <div id="emptyHint" class="coming-soon"><h3>보험사를 선택해 주세요</h3></div>
       <div id="dashHost" style="display:none">
@@ -175,6 +188,41 @@
       .replace(/재보험$/, '')             // 코리안리재보험 → 코리안리
       .replace(/보증보험$/, '보증');
   }
+
+  // 기간(분기/연도) 세그먼트 토글 (owner 2026-09-21, select 대체) — K-ICS 최초 도입 패턴 이식.
+  // 실제 값은 숨긴 <select id="period">(selectEl)에 그대로 두고 버튼 클릭/키보드가
+  // selectEl.value 를 갱신 + change 를 dispatch 한다. 기존 change 리스너(L378 부근)는 무변경.
+  function setupSegToggle(root, selectEl) {
+    if (!root || !selectEl) return { sync(){} };
+    const btns = Array.from(root.querySelectorAll('.seg-btn'));
+    function apply(value, dispatch) {
+      selectEl.value = value;
+      btns.forEach(b => {
+        const active = b.dataset.value === selectEl.value;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-checked', active ? 'true' : 'false');
+        b.tabIndex = active ? 0 : -1;
+      });
+      if (dispatch) selectEl.dispatchEvent(new Event('change'));
+    }
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => apply(b.dataset.value, true));
+      b.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          const next = btns[(i + 1) % btns.length];
+          next.focus(); apply(next.dataset.value, true);
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prev = btns[(i - 1 + btns.length) % btns.length];
+          prev.focus(); apply(prev.dataset.value, true);
+        }
+      });
+    });
+    // 외부에서 selectEl.value 를 직접 바꿨을 때 토글 표시를 맞춘다.
+    return { sync: () => apply(selectEl.value, false) };
+  }
+
   let GLOBAL_QUARTERS = [];   // D-5 20260818: 전사 공시분기 전체(desc) — boot()에서 1회 계산, 조회기간 선택의 기준
 
   const ITEM_DEFS = [
@@ -377,6 +425,8 @@
     });
     const perSel = document.getElementById("period");
     if (perSel) perSel.addEventListener("change", ()=>{ if (sel.value) renderCompany(sel.value); });
+    // 기간 세그먼트 토글 초기화 — 기본값(분기) 표시를 selectEl.value 와 맞춘다.
+    setupSegToggle(document.getElementById("period-toggle"), perSel).sync();
     const covEl = document.getElementById("divCoverageLine");
     // DART alotMatter가 상장사만 다뤄 24개사 고정 상한 — kics_disclosure 전사(39사) 대비 나머지는
     // 이 공시 자체가 구조적으로 없음(결측 아님). 드롭다운도 그 24개사로만 구성(빈 화면 스텁을
