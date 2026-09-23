@@ -71,9 +71,9 @@
     .forward-chart{position:relative;height:420px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:16px}
     .sens-chart{position:relative;height:340px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:16px}
     .sens-kpis{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-    /* 순자산 듀레이션·컨벡서티 (owner 2026-08-30) — IFRS17.html 의 kpi7 스트립과 같은 결.
-       금리민감도 표에서 나오는 파생값이라 표 위에 크게 둔다. */
-    .dur-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0 4px}
+    /* 자산/부채 듀레이션 갭 (owner 2026-09-22, 컨벡서티 카드 폐지·kics_duration_gap.json 전환) —
+       IFRS17.html 의 kpi7 스트립과 같은 결. 금리위험액 현황 표에서 나오는 파생값이라 표 위에 크게 둔다. */
+    .dur-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 4px}
     .dur-card{background:var(--card);border:var(--bd);border-radius:var(--r-md);padding:14px 16px}
     .dur-card.lead{border-color:#0f6e6833;background:linear-gradient(180deg,#0f6e680a,transparent)}
     .dur-val{font-size:26px;font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--text)}
@@ -229,7 +229,7 @@
     </div>
 
     <div class="panel" id="sec-sens">
-      <h2>금리 민감도 <span style="color:var(--muted);font-size:13px;font-weight:400">(시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향 · 순자산 듀레이션/컨벡서티)</span></h2>
+      <h2>금리 민감도 <span style="color:var(--muted);font-size:13px;font-weight:400">(시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향 · 자산/부채 듀레이션 갭)</span></h2>
       <div class="controls" style="justify-content:flex-start">
         <label id="sens-quarter-label" style="display:none">기준 분기: <select id="sens-quarter" class="select"></select></label>
       </div>
@@ -302,6 +302,7 @@
     let tier2UtilData = [];
     let forwardSimData = [];
     let sensData = []; // 금리 민감도 (kics_rate_sensitivity.json)
+    let durGapData = []; // 자산/부채 듀레이션 갭 (kics_duration_gap.json)
     // 하위항목 접기 그룹(기본 접힘, +버튼 토글):
     //  4(순자산)→5~11(1.보통주~7.조정준비금), 17(생명장기)→29~35, 19(시장)→36~40, 23(기타요구자본)→24~26(1~3 업권별/비례성)
     const RISK_SUB_GROUPS = {
@@ -1276,6 +1277,17 @@
       return rows;
     }
 
+    function durGapRowsForCompany(companyName) {
+      if (!companyName || !Array.isArray(durGapData)) return [];
+      let rows = durGapData.filter(r => r['원수사명'] === companyName);
+      if (!rows.length) {
+        // 공백 제거 동등 비교 fallback (sensRowsForCompany 와 같은 패턴)
+        const key = companyName.replace(/\s+/g, '');
+        rows = durGapData.filter(r => String(r['원수사명'] || '').replace(/\s+/g, '') === key);
+      }
+      return rows;
+    }
+
     function sensQuartersDesc(rows) {
       return Array.from(new Set(rows.map(r => r['공시분기']))).sort((a, b) => {
         const parse = s => {
@@ -1345,18 +1357,17 @@
       renderSensDetail();
     }
 
-    // 순자산(가용자본) 듀레이션·컨벡서티 카드 — 마스터 `금리민감도` 의 컬럼을 그대로 표시한다.
-    // 산식(마스터 쪽 정의): D = -(V₊ - V₋)/(2·V₀·Δy), C = (V₊ + V₋ - 2·V₀)/(V₀·Δy²), Δy=1%p.
-    // 부호: D 양수 = 금리 상승 시 가치 감소(자산 듀레이션이 부채보다 김).
-    function renderDurationCards(rows) {
+    // 자산/부채 듀레이션 갭 카드 — 마스터 `kics_duration_gap.json` 의 컬럼을 그대로 표시한다(JS 재계산 없음).
+    // 산식(마스터 쪽 정의): D = (V_금리하락 − V_금리상승) ÷ (2% × V_충격전), 갭 = D_자산 − 부채자산비율×D_부채.
+    // 분모는 금리위험액 현황 표의 자산총계/부채총계(건전성감독기준 재무상태표 전체가 아님) — 순자산가치
+    // 변동이 금리위험 측정 대상에서만 나오므로 범위를 맞췄다. K-ICS 충격은 평행이동이 아니라 만기별
+    // 기간구조 충격이라 2%로 나누는 것은 근사 — 순위·상대크기는 유효하나 절대 연수는 참고치.
+    // 부호: 갭 양수 = 금리 상승 시 순자산 감소(자산 듀레이션이 부채보다 김).
+    function renderDurationCards(company, quarter) {
       const strip = document.getElementById('dur-strip');
       const note = document.getElementById('dur-note');
-      const pick = (mode, measure) =>
-        rows.find(r => r['경과조치여부'] === mode && r['measure구분'] === measure) || null;
-      // 표와 같은 우선순위: 적용후 우선, 없으면 적용전
-      const mode = rows.some(r => r['경과조치여부'] === '적용후') ? '적용후' : '적용전';
-      const cap = pick(mode, '지급여력금액');
-      const has = cap && (cap['듀레이션'] != null || cap['컨벡서티'] != null);
+      const row = durGapRowsForCompany(company).find(r => r['공시분기'] === quarter) || null;
+      const has = row && row['듀레이션갭'] != null;
       if (!has) { strip.style.display = 'none'; note.style.display = 'none'; return; }
 
       const num = (v, dg) => v == null ? '—'
@@ -1367,24 +1378,30 @@
         + '<div class="dur-lab">' + lab + '</div>'
         + '<div class="dur-sub">' + sub + '</div></div>';
 
-      // owner 2026-08-30: 요구자본 듀레이션·금리 1%p 순자산 증감은 뺀다. 두 칸만 남긴다.
+      const dL = row['부채듀레이션'];
       strip.innerHTML = [
-        card(num(cap['듀레이션'], 2), '년', '순자산 듀레이션',
-             '가용자본 기준 · ' + mode, true),
-        card(num(cap['컨벡서티'], 0), '', '순자산 컨벡서티',
-             '음수 = 금리에 오목(해지옵션·최저보증)', true)
+        card(num(row['자산듀레이션'], 2), '년', '자산 듀레이션', '금리위험액 현황 기준'),
+        dL == null
+          ? card('—', '', '부채 듀레이션', '금리부부채 ≤ 0 — 정의 안 됨')
+          : card(num(dL, 2), '년', '부채 듀레이션', '금리위험액 현황 기준'),
+        card(num(row['듀레이션갭'], 2), '년', '듀레이션 갭', '자산D − 부채자산비율×부채D', true)
       ].join('');
       strip.style.display = 'grid';
-      note.innerHTML = '순자산 = 지급여력금액(가용자본). '
-        + '<strong>양수 듀레이션 = 금리가 오르면 순자산 감소</strong>, '
-        + '<strong>음수면 금리가 올라도 순자산 증가</strong>입니다.'
-        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="듀레이션·컨벡서티 산식" aria-describedby="help-dur-formula">?</button>'
+      let noteHtml = '분모는 경영공시 <b>금리위험액 현황</b> 표의 자산총계·부채총계입니다(건전성감독기준 재무상태표 전체가 아닙니다). '
+        + '<strong>양수 갭 = 금리가 오르면 순자산 감소(자산이 부채보다 김)</strong>, '
+        + '<strong>음수면 반대</strong>입니다.'
+        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="듀레이션 갭 산식" aria-describedby="help-dur-formula">?</button>'
         + '<span class="iq-help-pop" role="tooltip" id="help-dur-formula">'
-        + '듀레이션 D = −(V<sub>+100bp</sub> − V<sub>−100bp</sub>) ÷ (2·V<sub>기준</sub>·0.01)<br>'
-        + '컨벡서티 C = (V<sub>+100bp</sub> + V<sub>−100bp</sub> − 2·V<sub>기준</sub>) ÷ (V<sub>기준</sub>·0.01²)<br>'
-        + '아래 표의 충격값 5개에서 그대로 나옵니다. 양수는 자산 듀레이션이 부채보다 긴 경우, '
-        + '음수는 부채 쪽이 더 긴 경우이고 국내 생보사에서는 음수가 흔합니다.'
+        + '자산 듀레이션 D<sub>A</sub> = (V<sub>자산,금리하락</sub> − V<sub>자산,금리상승</sub>) ÷ (2% × V<sub>자산,충격전</sub>)<br>'
+        + '부채 듀레이션 D<sub>L</sub> = (V<sub>부채,금리하락</sub> − V<sub>부채,금리상승</sub>) ÷ (2% × V<sub>부채,충격전</sub>)<br>'
+        + '듀레이션 갭 = D<sub>A</sub> − (부채/자산 비율 × D<sub>L</sub>)<br>'
+        + 'K-ICS 충격은 평행이동이 아니라 만기별 크기가 다른 기간구조 충격이라 2%로 나누는 것은 근사입니다. '
+        + '순위·상대크기는 유효하나 절대 연수는 참고치입니다.'
         + '</span></span>';
+      if (row['비고']) {
+        noteHtml += '<div style="margin-top:4px;color:var(--muted);font-size:11px">' + row['비고'] + '</div>';
+      }
+      note.innerHTML = noteHtml;
       note.style.display = 'block';
     }
 
@@ -1414,7 +1431,7 @@
           });
         }
       });
-      renderDurationCards(rows);
+      renderDurationCards(company, quarter);
       const postRatio = byMode['적용후'] ? byMode['적용후']['지급여력비율'] : null;
       const preRatio = byMode['적용전'] ? byMode['적용전']['지급여력비율'] : null;
 
@@ -1605,6 +1622,15 @@
       })
       .catch(() => {});
     document.getElementById('sens-quarter').addEventListener('change', renderSensDetail);
+
+    // 자산/부채 듀레이션 갭 JSON 로드 (실패해도 카드만 숨겨지고 나머지 패널은 정상 — fail soft)
+    fetch('kics_duration_gap.json')
+      .then(r => r.json())
+      .then(d => {
+        durGapData = Array.isArray(d) ? d : [];
+        renderRateSensitivity(); // sensData/durGapData 어느 쪽이 늦게 와도 재렌더로 수렴
+      })
+      .catch(() => {});
 
     fetch(jsonPath)
       .then(response => response.json())
