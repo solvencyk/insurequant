@@ -5,8 +5,13 @@ Per-insurer projection of 지급여력비율 + 기본자본비율 across 2026~20
 
 Numerator (가용자본):
   baseline = item1 (값_적용후 if present, else 값) as of FY2025_Q4
-  Year-Y: subtract outstanding bonds whose effective_call_date <= year-end
-  basic capital: same logic but subtract only tier1_hybrid bonds
+  Year-Y: subtract each bond's drop in capital contribution vs the baseline date.
+    · call not yet due  -> full amount until the call, 0 after (콜 5년차 정상 상환 가정)
+    · call already past and still outstanding -> it was NOT redeemed, so the amount
+      runs off the **legal maturity** ladder ([별표22] III.3.다.(2)(1), 20%p/yr from
+      5y remaining) using the same function as the 자본성증권 인정표 (owner 2026-09-23).
+      Before that date these bonds were zeroed at their (past) call = over-stated decline.
+  basic capital: same logic but only tier1_hybrid bonds
 
 Denominator (지급여력기준금액):
   baseline (post-transition, current) = item14 값_적용후 (else 값)
@@ -20,9 +25,11 @@ Phase 3 v2 additions:
   ratio is capped at 0% so negative outliers do not distort charts.
 
 Residual limitations:
-- Projection still uses outstanding bonds only + bond calendar effective_call (disclosed call
-  date, else legal maturity). 'Called'/fully-redeemed securities are excluded from the
-  deduction list — may over-state decline until fully reconciled to K-ICS 자본성증권 표.
+- Projection uses outstanding bonds only. Whether a not-yet-due call will actually be
+  exercised is still an assumption (kept: exercised at year 5, owner 2026-09-23) — the
+  legal-maturity ladder only applies to calls already observed to have passed unredeemed.
+- A past-call bond with no disclosed legal maturity (악사손해 JPY 사모, 459억) never runs
+  off, because there is no date to amortise against. Flagged, not invented.
 - Insurer count = bond-data cohort size in the DART per-bond source (not fixed at 19).
 
 2026-08-03 rebase (inbox/parser/20260803T0055Z): bonds source moved from FSC data.go.kr
@@ -37,12 +44,15 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.stdout.reconfigure(encoding="utf-8")
+
+# 체감 산식은 인정표 빌더와 **같은 함수**를 쓴다 — 여기서 다시 구현하면 둘이 어긋난다.
+from scripts.build_capital_securities_recognition import tier2_recognition_rate  # noqa: E402
 
 KICS_JSON = REPO / "kics_disclosure.json"
 BONDS_FY2025_JSON = REPO / "data" / "bonds" / "capital_securities_fy2025.json"  # 기본값(하위호환)
@@ -146,12 +156,11 @@ def load_outstanding_bonds() -> tuple[dict[str, list[dict]], str]:
     A bond fully redeemed in-period (outstanding_mn == 0, e.g. "당기 중 전액 상환") is
     dropped, mirroring the old FSC status=='outstanding' filter.
 
-    past_call_outstanding==true bonds (call date passed without redemption, 6 of 119
-    in the FY2025 cohort) keep their disclosed call_date as-is rather than rolling
-    forward to legal_maturity — this matches how the one FSC-era precedent for the
-    same real bond (흥국화재 KR0005 신종자본증권1, effective_call_date=2021-12-29 kept
-    outstanding past its own call rule) was handled: the simulation's existing
-    call-date-based deduction logic already accounts for this, unchanged.
+    past_call_outstanding bonds (call date passed without redemption) keep their disclosed
+    call_date — it is a fact about the bond, not a projection input. What changed on
+    2026-09-23 (owner) is what the SIMULATION does with them: they are no longer zeroed at
+    that past call. `legal_maturity` is carried through so `_contribution()` can run them
+    down the 잔존만기 체감 ladder instead. See that function's docstring.
     """
     src = REPO / _args.bonds_source
     doc = json.loads(src.read_text(encoding="utf-8"))
@@ -168,6 +177,9 @@ def load_outstanding_bonds() -> tuple[dict[str, list[dict]], str]:
                 "tier": _TIER_MAP.get(b.get("tier"), b.get("tier")),
                 "issue_amount_won": out_mn * 1_000_000,
                 "effective_call_date": b.get("call_date") or b.get("legal_maturity"),
+                # 2026-09-23: 콜이 이미 지났는데 상환 안 한 채권의 체감 기준(아래
+                # eligible_amount 주석). 종전에는 그런 채권도 콜 날짜에 전액 빼고 있었다.
+                "legal_maturity": b.get("legal_maturity"),
                 "status": "outstanding",
             })
         out[c["code"]] = bonds
@@ -393,6 +405,51 @@ def compute_confidence(code: str, bonds: list[dict], t1: dict, t2: dict,
     }
 
 
+_QEND_MD = {"1Q": (3, 31), "2Q": (6, 30), "3Q": (9, 30), "4Q": (12, 31)}
+
+
+def _baseline_as_of() -> date:
+    y, q = BASELINE_QUARTER.split(".")
+    return date(int(y), *_QEND_MD[q])
+
+
+def _contribution(e: dict, at: date, as_of: date) -> float:
+    """시점 `at` 에 이 채권이 가용자본에 남기는 금액(억원).
+
+    2026-09-23 owner 지시로 신설. 그 전에는 `콜 <= 연도말` 이면 **전액** 빼는 절벽 하나뿐이라,
+    콜이 지났는데 상환하지 않은 채권까지 그 자리에서 0 으로 떨어뜨렸다.
+
+    · **콜이 아직 안 온 채권** — "콜 5년차에 정상 상환" 이라는 원 가정을 그대로 둔다
+      (owner 2026-09-23 재확인). 콜 전까지 전액, 콜 이후 0. 종전과 동일하다.
+      후순위 79건 전부 `법정만기 = 콜 + 정확히 5.0년` 이라 콜 전에는 체감이 시작되지도
+      않는다(체감 시작일 = 법정만기 - 5년 = 콜). 그래서 이 갈래는 손댈 것이 없다.
+    · **콜이 이미 지났는데 잔액이 남은 채권** — 상환하지 않았다는 것이 가정이 아니라
+      관측이다. 여기에 "콜에 상환" 가정을 씌우면 안 된다. 남는 인정액은 **법정만기 기준**
+      계단식 체감을 따른다 — 인정표(`kics_capital_securities.json`)와 **같은 함수**를 쓴다.
+    """
+    call = date.fromisoformat(e["call_date"]) if e.get("call_date") else None
+    if call is None or call > as_of:
+        return e["amount_eok"] if (call is None or at < call) else 0.0
+    if not e.get("legal_maturity"):
+        # 콜은 지났는데 **체감을 걸 만기가 없다**(악사손해 JPY 사모 459억: 발행일 미공시라
+        # 콜 자체가 `estimated_no_disclosed_issue_date_conservative_call_now` 추정치다).
+        # 만기를 지어내 무기한 인정하면 보수적 처리를 낙관적으로 뒤집는 셈이다. 기준시점에는
+        # 잔액이 있으니 자본에 들어 있다고 보고, 전망에서는 종전대로 빠진 것으로 둔다
+        # = 종전 동작 유지. 만기가 공시되면 자동으로 아래 사다리를 탄다.
+        return e["amount_eok"] if at <= as_of else 0.0
+    return e["amount_eok"] * tier2_recognition_rate({"legal_maturity": e["legal_maturity"]}, at)
+
+
+def _dedu(events: list[dict], year_end: date, as_of: date) -> float:
+    """기준시점 대비 **증분** 차감액. 절대액이 아니다.
+
+    `capital_y = cap_baseline - dedu` 인데 `cap_baseline`(공시 item1)에는 콜 지난 채권이 이미
+    체감된 금액으로 들어가 있다. 절대 인정액을 빼면 그 체감을 두 번 세게 된다 —
+    기준시점 기여분과 연도말 기여분의 **차**를 뺀다.
+    """
+    return sum(_contribution(e, as_of, as_of) - _contribution(e, year_end, as_of) for e in events)
+
+
 def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
     """Build 5-year projection for one insurer.
 
@@ -433,22 +490,22 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
         bond_events.append({
             "isin": b["isin"],
             "call_date": call_date,
+            "legal_maturity": b.get("legal_maturity"),
             "amount_eok": amt_won / 1e8,
             "tier": b.get("tier"),
             "name": b.get("name"),
         })
     bond_events.sort(key=lambda x: x["call_date"])
     total_hybrid = sum(e["amount_eok"] for e in bond_events if e["tier"] == "tier1_hybrid")
+    hybrid_events = [e for e in bond_events if e["tier"] == "tier1_hybrid"]
+    as_of = _baseline_as_of()
 
     projections = []
     transition_span = float(TRANSITION_END_YEAR - BASELINE_YEAR)  # 7
     for year in SIM_YEARS:
-        year_end = f"{year}-12-31"
-        cumulative_dedu = sum(e["amount_eok"] for e in bond_events if e["call_date"] <= year_end)
-        cumulative_hybrid_called = sum(
-            e["amount_eok"] for e in bond_events
-            if e["call_date"] <= year_end and e["tier"] == "tier1_hybrid"
-        )
+        year_end = date(year, 12, 31)
+        cumulative_dedu = _dedu(bond_events, year_end, as_of)
+        cumulative_hybrid_called = _dedu(hybrid_events, year_end, as_of)
 
         # SCR linear interp 2025→2032 (post→pre)
         progress = (year - BASELINE_YEAR) / transition_span
@@ -462,7 +519,7 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
         # 줄어도 H≥L인 동안은 기본자본 불변(초과분=Tier-2에서만 빠짐), H<L로 떨어지면 기본자본 감소.
         # 후순위채(tier2_subordinated)는 순수 Tier-2 → 총자본에서만 빠지고 기본자본 불변(아래 미반영).
         limit_y = scr_y * HYBRID_LIMIT_RATIO
-        hybrid_remaining = total_hybrid - cumulative_hybrid_called
+        hybrid_remaining = sum(_contribution(e, year_end, as_of) for e in hybrid_events)
         hybrid_t1_y = min(hybrid_remaining, limit_y)
         hybrid_t1_baseline = min(total_hybrid, scr_post * HYBRID_LIMIT_RATIO)
         hybrid_t2_overflow = max(hybrid_remaining - limit_y, 0.0)
@@ -490,7 +547,7 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
             "ratio_pct": round(ratio, 2) if ratio is not None else None,
             "basic_ratio_pct": round(basic_ratio, 2) if basic_ratio is not None else None,
             "cumulative_bond_dedu_eok": round(cumulative_dedu, 1),
-            "cumulative_tier1_dedu_eok": round(cumulative_hybrid_called, 1),  # gross 신종 call 누계
+            "cumulative_tier1_dedu_eok": round(cumulative_hybrid_called, 1),  # 신종 증분 차감 누계
             "hybrid_remaining_eok": round(hybrid_remaining, 1),
             "hybrid_tier1_eok": round(hybrid_t1_y, 1),          # 기본자본 인정분 min(H,L)
             "hybrid_tier2_overflow_eok": round(hybrid_t2_overflow, 1),  # 보완자본 재분류분 max(H-L,0)

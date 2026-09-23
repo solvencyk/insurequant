@@ -59,14 +59,15 @@ owner 지시: **증권 단위로 관리하고 그 위에서 소진율과 forward
 from __future__ import annotations
 
 import argparse
-import io
 import json
 import math
 import sys
 from datetime import date
 from pathlib import Path
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+sys.stdout.reconfigure(encoding="utf-8")   # 새 래퍼로 갈아끼우지 않는다 —
+# 그러면 이 모듈을 import 하는 쪽(forward_capital_simulation 등)의 기존 래퍼가
+# GC 되면서 __del__ 이 원본 버퍼까지 닫아 버린다.
 ROOT = Path(__file__).resolve().parents[1]
 
 KICS_START = date(2023, 1, 1)          # K-ICS 시행일

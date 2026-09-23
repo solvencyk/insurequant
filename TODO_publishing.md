@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-09-23(자본성증권 체감기준 교정) · Stage 4/5 — publishing
+> Last updated: 2026-09-23(자본성증권 체감기준 교정 + 자본비율전망 과거콜 반영) · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -10,6 +10,15 @@ Session start: read this file + `claude-agent-publishing.md` + relevant validati
 NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
 
 ## Status
+
+**🔧 2026-09-23 자본비율전망(forward)에 '콜 지났는데 미상환' 처리를 넣었다 (owner 지시, 라이브 파일).** owner 질의: "법정만기 기준으로 인정비율 바꿨으면 forward 도 바꿔야 하는 거 아니냐. 콜 상환은 5년차에 정상 진행 가정 유지하고." 확인 결과 `forward_capital_simulation.py` 에는 **인정비율이 아예 없었다** — `콜 <= 연도말` 이면 잔액 전액을 빼는 절벽 하나뿐이다. 콜이 정상 도래하는 채권은 그 처리가 이미 맞다(후순위 79건 전부 `법정만기 = 콜 + 정확히 5.0년` 이라 체감 시작일 = 콜). 어긋난 건 **콜이 지났는데 상환하지 않은 채권**으로, 상환 안 한 것은 가정이 아니라 관측인데 모델이 콜 날짜에 0 으로 떨어뜨리고 있었다.
+- `_contribution()` 신설: 콜 미도래 → 콜까지 전액·이후 0(**원 가정 유지**) / 콜 경과 미상환 → 법정만기 기준 계단식 체감(`tier2_recognition_rate` 를 **인정표 빌더에서 import** — 여기서 다시 구현하면 둘이 어긋난다).
+- `_dedu()` 는 **증분** 차감이다. `capital_y = cap_baseline - dedu` 인데 공시 item1 에는 콜 지난 채권이 이미 체감된 금액으로 들어 있어, 절대 인정액을 빼면 체감을 두 번 센다. 기준시점 기여분 − 연도말 기여분의 차를 뺀다. (농협생명 2,800억은 이미 인정율 0 이라 차감 0 이 되는 것이 이 형태 덕이다.)
+- **악사손해 JPY 사모 459억은 제외했다.** 법정만기 미공시 + 콜 자체가 `estimated_no_disclosed_issue_date_conservative_call_now` 추정치다. 사다리를 태우면 무기한 인정이 되어 보수적 처리가 낙관으로 뒤집히고 비율이 +21%p 뛴다 → 이 경우만 종전 동작 유지. 만기가 공시되면 자동으로 사다리를 탄다.
+- 결과: **8개사 40칸** 상승(전부 상승 — 구 모델이 과대차감). 농협생명 2026 381.5→396.4(+14.8%p) · 아이엠라이프 173.7→183.6 · 롯데손해 153.9→159.2 · 흥국화재 195.1→200.3 · KB라이프 216.1→220.8 · 메리츠화재 227.1→230.4 · 현대해상 205.8→209.0 · DB손해 202.9→204.4.
+- **검산**: 구코드·신코드를 **같은 채권소스로** 각각 돌려 코드 변경만 분리(라이브 커밋본과 구코드 산출은 채권소스 차이로 5칸 달랐다 — 그걸 안 걸렀으면 45칸으로 보고할 뻔했다). 회사·연도별 차감 감소분이 그 회사 과거콜 채권의 몫과 일치하는지 전수 대조 → **설명 안 되는 건 0**(`scripts/_probes/probe_20260923_forward_diff_audit.py`).
+- **함정**: `validate_data_contract.py` 와 `sync_master_xlsx_sheet.py` 를 **동시에 돌리면 안 된다**. 게이트가 xlsx 를 읽는 중에 sync 가 그 파일을 다시 쓰면서 RED=3 이 났다(순차 재실행 시 RED=0). 동시 실행이 원인이지 데이터 결함이 아니었다.
+- `kics_forward_capital.json` 은 **main 에 있는 라이브 파일**이라 배포하면 화면 숫자가 바뀐다 — owner GO 대기.
 
 **🔧 2026-09-23 자본성증권 후순위 체감 기준을 콜 → 법정만기로 교정 (owner 지시).** `build_capital_securities_recognition.economic_maturity()` 가 `min(콜, 법정만기)` 를 쓰는 바람에 10년만기·5년콜 구조의 후순위채가 **발행 직후부터** 체감을 맞았다 — 발행 6개월 된 채권이 80%, 잔존 1년 미만으로 계산된 21건(잔액 4.6조)은 전액 불인정으로 찍혔다. owner 지적: "콜만기는 말그대로 콜만기니까" 진짜 만기에서 세라. 원문 확인 결과 후순위채에는 스텝업 조항이 없어(신종만 있고 그것도 10년째) [별표22] Ⅲ.3.다.(2)①ㄱ 의 "상환촉진 유인이 있는 콜" 에 해당하지 않는다.
 - 고친 것: `economic_maturity()` → `legal_maturity` 만 반환(콜 경과 이월 `as_of` 분기 및 `_row`/`build` 의 `as_of` 인자 제거). 행에 **`법정만기일` 신설**(콜만기도래일 옆), `콜만기도래일` 은 이제 콜 그 자체만 담는다. 법정만기 미상 후순위 2건(흥국화재 1,000억·악사손해 459억)은 빌더가 매 실행 경고를 찍는다. 계단식 산식 `1-0.20*ceil(5-잔존연수)` 는 **안 고쳤다** — 입력 만기만 바꿨고, 그 산식이 owner 가 말한 사다리(2027-03 80% → … → 2031-03 0%)를 그대로 재현한다.
