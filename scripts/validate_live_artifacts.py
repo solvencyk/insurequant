@@ -667,6 +667,113 @@ def check_public_exports(fd: Findings, out_dir: Path | None = None) -> dict:
     return stat
 
 
+# --------------------------------------------------------------------------- 7) 듀레이션갭
+DUR_SHOCK = 0.02
+DUR_SCEN = [(41, "충격전"), (42, "평균회귀"), (43, "금리상승"), (44, "금리하락"),
+            (45, "금리평탄"), (46, "금리경사")]
+# 빌더(`build_kics_duration_gap.py`)가 쓰는 것과 같은 허용오차 — 공시 반올림 폭.
+def _dur_tol(x):
+    return max(1.0, abs(x) * 6e-4)
+
+
+def check_kics_duration_gap(fd: Findings) -> dict:
+    """`kics_duration_gap.json` — K-ICS.html 금리 민감도 패널의 자산D/부채D/듀레이션갭 3카드.
+
+    2026-09-22 배포(main `22e2471`)로 화면에 붙었다. 세 축:
+
+      ① **census** — `kics_disclosure` 항목41(금리위험 순자산가치 충격전)이 있는 (분기,회사)는
+         전부 행이 있어야 한다. 빌더도 결측이면 REFUSE 하지만 그건 빌드 시점이고, 여기서는
+         **배포본**을 본다(불변식 1: 게이트가 검사하는 파일 = 사용자가 보는 파일).
+      ② **파일 안에서 닫혀야 하는 산수** — 공시된 시나리오 컬럼만으로 듀레이션·갭을 다시 계산한다.
+         갭은 `D_A - (L/A)xD_L` 을 전개한 `((자산하락-자산상승)-(부채하락-부채상승))/(2%x자산충격전)`
+         로 검산한다. 그래야 부채 충격전이 음수라 `부채듀레이션` 이 비어 있는 회사(라이나생명·
+         AIG손해)에서도 갭 축이 안 죽는다.
+      ③ **kics_disclosure 항목41~46 과의 교차대조** — `자산_X - 부채_X` 가 그 시나리오의
+         순자산가치와 같아야 한다. 발행사 표가 스스로 안 맞는 칸은 배포본 `비고` 에 박제돼
+         있으므로 건너뛰고, **표식이 없는 불일치만** 올린다. 이 축이 AIA생명 2024.4Q 항목46
+         100배 단위오류를 잡았다(`inbox/parser/20260922T1200Z`).
+    """
+    rows = load("kics_duration_gap.json")
+    kd = load("kics_disclosure.json")
+    nav: dict[tuple[str, str], dict[int, float]] = defaultdict(dict)
+    for r in kd:
+        if r["항목번호"] in {i for i, _n in DUR_SCEN}:
+            v = parse_num(r.get("값"))
+            if v is not None:
+                nav[(r["공시분기"], r["원보험사코드"])][r["항목번호"]] = v
+    stat = defaultdict(int)
+    stat["rows"] = len(rows)
+
+    have = {(r["공시분기"], r["원보험사코드"]) for r in rows}
+    need = {(r["공시분기"], r["원보험사코드"]) for r in kd
+            if r["항목번호"] == 41 and parse_num(r.get("값")) is not None}
+    for q, code in sorted(need - have):
+        fd.add("kics_duration_gap.json", "DURGAP_CENSUS_MISSING", f"{code}|{q}",
+               "kics_disclosure 항목41 이 있는데 듀레이션갭 배포본에 행이 없다 — 화면 카드가 빈다")
+        stat["census_missing"] += 1
+    stat["census_ok"] = len(need & have)
+
+    for r in rows:
+        key = f"{r['원보험사코드']}|{r['공시분기']}"
+        note = r.get("비고") or ""
+        a0, up, dn = r["자산_충격전"], r["자산_금리상승"], r["자산_금리하락"]
+        l0, lup, ldn = r["부채_충격전"], r["부채_금리상승"], r["부채_금리하락"]
+
+        # ② 산수. 허용오차는 **공시 자릿수에서 유도한다** — 시나리오 컬럼은 억원 소수 2자리로
+        # 반올림돼 있어 차분 한 개마다 ±0.005 가 실린다(두 컬럼의 차분이면 ±0.01). 듀레이션으로
+        # 옮기면 그 밴드가 `0.01 / (2% x 분모)` 이라, 분모가 큰 회사에서는 사실상 0 이지만
+        # 금리부자산이 0.39억원뿐인 회사(카카오페이손보 2023.2Q)에서는 밴드가 1을 넘는다.
+        # 고정 허용오차를 쓰면 그런 회사에서 공시 반올림을 결함으로 오인한다 — 공시가 설명할 수
+        # 있는 만큼만 검사한다.
+        if None not in (a0, up, dn, lup, ldn) and a0 > 0:
+            den = DUR_SHOCK * a0
+            for name, want, got, band in (
+                    ("자산듀레이션", (dn - up) / den, r["자산듀레이션"], 0.01 / den),
+                    ("듀레이션갭", ((dn - up) - (ldn - lup)) / den, r["듀레이션갭"], 0.02 / den)):
+                if got is None or abs(got - want) > max(1e-3, band):
+                    fd.add("kics_duration_gap.json", "DURGAP_IDENTITY", f"{key}|{name}",
+                           f"{name} 공시={got} vs 시나리오 컬럼 재계산={want:.4f} "
+                           f"(공시 반올림 밴드 ±{band:.4f})")
+                    stat["identity_fail"] += 1
+                else:
+                    stat["identity_pass"] += 1
+            if l0 is not None and l0 > 0:
+                want = (ldn - lup) / (DUR_SHOCK * l0)
+                band = 0.01 / (DUR_SHOCK * l0)
+                if r["부채듀레이션"] is None or abs(r["부채듀레이션"] - want) > max(1e-3, band):
+                    fd.add("kics_duration_gap.json", "DURGAP_IDENTITY", f"{key}|부채듀레이션",
+                           f"부채듀레이션 공시={r['부채듀레이션']} vs 재계산={want:.4f} "
+                           f"(공시 반올림 밴드 ±{band:.4f})")
+                    stat["identity_fail"] += 1
+                else:
+                    stat["identity_pass"] += 1
+        elif r["듀레이션갭"] is not None:
+            fd.add("kics_duration_gap.json", "DURGAP_IDENTITY", f"{key}|산출전제",
+                   f"자산 충격전={a0} 인데 듀레이션갭={r['듀레이션갭']} 이 채워져 있다")
+            stat["identity_fail"] += 1
+
+        # ③ 순자산가치 교차대조
+        if "발행사 표 불일치" in note:
+            stat["xnav_skip_flagged"] += 1
+            continue
+        for item, scen in DUR_SCEN:
+            av, lv = r.get(f"자산_{scen}"), r.get(f"부채_{scen}")
+            exp = nav.get((r["공시분기"], r["원보험사코드"]), {}).get(item)
+            if av is None or lv is None or exp is None:
+                continue
+            got = av - lv
+            if abs(got - exp) > _dur_tol(exp):
+                fd.add("kics_duration_gap.json", "DURGAP_NAV_CROSSCHECK",
+                       f"{key}|item{item}",
+                       f"{scen}: 자산-부채={got:,.2f} vs kics_disclosure 항목{item}={exp:,.2f} "
+                       f"(배율 {exp / got:.4f})" if got else
+                       f"{scen}: 자산-부채=0 vs 항목{item}={exp:,.2f}")
+                stat["xnav_fail"] += 1
+            else:
+                stat["xnav_pass"] += 1
+    return stat
+
+
 # --------------------------------------------------------------------------- baseline
 # 등재는 **건별**이지만 사유는 룰 단위로 관리한다(같은 원인의 933건을 933번 적는 것은 문서가
 # 아니라 소음이다). 사유 없는 등재는 이 게이트를 무력화하는 방법이므로 emit 시 강제한다.
@@ -694,6 +801,13 @@ RULE_REASON = {
         "정당하면 legit 레지스트리로 옮기고, 아니면 추출 범위를 고쳐야 한다.",
     "csm_amort_schedule.json|AMORT_CENSUS_MISSING":
         "마스터에 있는데 상각스케줄에 없는 회사(별칭 정규화 후 잔여분).",
+    "kics_duration_gap.json|DURGAP_NAV_CROSSCHECK":
+        "AIA생명 2024.4Q 항목46(금리위험 순자산가치·금리경사)이 억원이 아니라 백만원으로 "
+        "kics_disclosure 에 들어가 있다 — 3,607,646 이 아니라 36,076.46 이어야 한다. 100배 과대. "
+        "듀레이션갭 마스터 쪽(자산총계-부채총계)이 맞고 kics_disclosure 쪽이 틀렸다. "
+        "룰 `36_irr` 은 max(base-steep,0) 을 써서 이 방향 오류에 구조적으로 눈이 먼다. "
+        "parser-kics 발주 완료: inbox/parser/20260922T1200Z__orchestrator__KR0080_2024.4Q__"
+        "item46_unit_100x.md — 고쳐지면 이 줄을 지워라(게이트가 STALE 로 알려준다).",
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING":
         "PL 마스터 36사 중 29사만 있어 7사가 원표 패널에서 빠진다.",
     "insurance_pl_breakdown.json|INSPL_CSM_AMORT_SCALE":
@@ -751,6 +865,7 @@ def main() -> int:
         "csm_amort_schedule.json": check_csm_amort_schedule(fd),
         "insurance_pl_breakdown.json": check_insurance_pl_breakdown(fd),
         "kics_tier{1,2}_utilization.json": check_tier_utilization(fd),
+        "kics_duration_gap.json": check_kics_duration_gap(fd),
         "public_exports/*.json": check_public_exports(fd),
     }
 

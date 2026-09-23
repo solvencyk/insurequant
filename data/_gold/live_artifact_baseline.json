@@ -7,7 +7,8 @@
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK": 5,
     "csm_amort_schedule.json|AMORT_TOTAL_VS_CLOSING_CSM_BAND": 4,
     "insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND": 1,
-    "entries": 1025
+    "kics_duration_gap.json|DURGAP_NAV_CROSSCHECK": 1,
+    "entries": 18
   },
   "entries": {
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK|교보라이프플래닛생명보험": {
@@ -94,6 +95,11 @@
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
       "reason": "PL 마스터 39사 중 32사만 있어 7사가 원표 패널에서 빠진다. (2026-09-01: 하나손해/아이엠라이프/카카오페이손보 3사 추가로 회사수 36→39, 이 3사의 mvp 추출 완료로 패널도 29→32 — inbox 20260901T2000Z 처리, 남은 7사는 별개 사유)",
       "first_seen": "2026-08-25"
+    },
+    "kics_duration_gap.json|DURGAP_NAV_CROSSCHECK|KR0080|2024.4Q|item46": {
+      "detail": "금리경사: 자산-부채=36,076.46 vs kics_disclosure 항목46=3,607,646.00 (배율 100.0000)",
+      "reason": "AIA생명 2024.4Q 항목46(금리위험 순자산가치·금리경사)이 억원이 아니라 백만원으로 kics_disclosure 에 들어가 있다 — 3,607,646 이 아니라 36,076.46 이어야 한다. 100배 과대. 듀레이션갭 마스터 쪽(자산총계-부채총계)이 맞고 kics_disclosure 쪽이 틀렸다. 룰 `36_irr` 은 max(base-steep,0) 을 써서 이 방향 오류에 구조적으로 눈이 먼다. parser-kics 발주 완료: inbox/parser/20260922T1200Z__orchestrator__KR0080_2024.4Q__item46_unit_100x.md — 고쳐지면 이 줄을 지워라(게이트가 STALE 로 알려준다).",
+      "first_seen": "2026-09-23"
     }
   }
 }

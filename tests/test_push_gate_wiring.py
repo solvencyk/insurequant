@@ -387,6 +387,10 @@ LIVE_ARTIFACT_READERS = {
     "kics_disclosure.json": ["validate_kics_disclosure", "validate_kics_rate_sensitivity"],
     "kics_rate_sensitivity.json": ["validate_kics_rate_sensitivity"],
     "kics_forward_capital.json": ["validate_data_contract"],
+    # 2026-09-22 배포(main 22e2471)로 화면에 붙은 뒤 이 테스트가 바로 잡아냈다 — 선언이 없으면
+    # 여기서 막힌다는 설계가 그대로 작동했다. 검사는 census + 파일 안 산수 + kics_disclosure
+    # 항목41~46 교차대조 3축(`validate_live_artifacts.check_kics_duration_gap`).
+    "kics_duration_gap.json": ["validate_live_artifacts"],
     "kics_tier1_utilization.json": ["validate_live_artifacts"],
     "kics_tier2_utilization.json": ["validate_live_artifacts"],
     "NB_CSM_multiple.json": ["validate_live_artifacts"],
