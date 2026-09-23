@@ -65,7 +65,7 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 | Page | Fetches |
 |---|---|
 | `index.html` | `kics_disclosure.json` · `CSM_waterfall.json` · `NB_CSM_multiple.json` |
-| `K-ICS.html` | `kics_disclosure.json` · `kics_rate_sensitivity.json` · `kics_tier1_utilization.json` · `kics_tier2_utilization.json` · `kics_forward_capital.json` |
+| `K-ICS.html` | `kics_disclosure.json` · `kics_rate_sensitivity.json` · `kics_duration_gap.json` · `kics_tier1_utilization.json` · `kics_tier2_utilization.json` · `kics_forward_capital.json` |
 | `IFRS17.html` | `CSM_waterfall.json` · `PL_breakdown.json` · `NB_CSM_multiple.json` · `data/dart/viz/csm_waterfall.json` · `csm_waterfall_history.json` · `csm_amort_schedule.json` · `insurance_pl_breakdown.json` · `sensitivity_heatmap.json` · `data/ir/nb_csm_ratio.json` · `IFRS17_BS.json` |
 | `공시보고서.html` | `dividend.json` |
 
@@ -337,6 +337,7 @@ NB_CSM_multiple.json
 PL_breakdown.json
 kics_disclosure.json
 kics_rate_sensitivity.json
+kics_duration_gap.json
 kics_tier1_utilization.json
 kics_tier2_utilization.json
 kics_forward_capital.json

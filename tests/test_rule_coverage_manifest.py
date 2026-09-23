@@ -1125,7 +1125,7 @@ PUBLIC_EXPORT_RULES = {
 
 # 실측 2026-09-01. exporter 의 MASTERS 길이와 같아야 한다.
 # 12 -> 13: `자본성증권발행현황`(증권 한 건 단위 인정액) 신설.
-PUBLIC_EXPORT_SHEETS = 13
+PUBLIC_EXPORT_SHEETS = 14
 
 
 def _live_gate():
@@ -1506,8 +1506,9 @@ MASTER_XLSX_RULES = {
         "선언보다 적으면 그만큼이 무검사다(게이트 출력의 숫자로 남긴다)",
 }
 
-# 실측 2026-09-02. build_master_xlsx.MASTERS 길이와 같아야 한다(요약은 파생 시트라 별도).
-MASTER_XLSX_SHEETS = 13
+# 실측 2026-09-02, 2026-09-22 갱신(+`금리듀레이션갭`).
+# build_master_xlsx.MASTERS 길이와 같아야 한다(요약은 파생 시트라 별도).
+MASTER_XLSX_SHEETS = 14
 
 
 @pytest.fixture(scope="module")

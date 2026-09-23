@@ -88,6 +88,9 @@ MASTERS = [
     # 소진율·forward outlook 이 이 위에서 산출된다.
     ("kics_capital_securities.json", "자본성증권발행현황"),
     ("kics_forward_capital.json", "자본비율전망"),
+    # 2026-09-22 신설(owner 지시). 경영공시 금리위험액 현황 표의 자산·부채총계 6시나리오와
+    # 거기서 낸 자산D·부채D·듀레이션갭. K-ICS.html 금리민감도 패널이 이 마스터를 읽는다.
+    ("kics_duration_gap.json", "금리듀레이션갭"),
 ]
 
 

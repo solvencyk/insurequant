@@ -44,7 +44,7 @@ If a master JSON adds a new field, publishing tells designer (`manual_html_edit`
 | Page | Purpose | Main data |
 |---|---|---|
 | `index.html` | Market map (treemap on desktop, vertical list on mobile) + IFRS17 quadrant + bubble | `kics_disclosure.json`, `CSM_waterfall.json`, `NB_CSM_multiple.json` — **버블 데이터는 이 페이지에 인라인**돼 있다(별도 `csm_bubble.json`을 fetch하지 않음) |
-| `K-ICS.html` | Per-insurer K-ICS detail + sub-items + 자본 도넛 + forward outlook | `kics_disclosure.json`, `kics_rate_sensitivity.json`, `kics_tier1_utilization.json`, `kics_tier2_utilization.json`, `kics_forward_capital.json` |
+| `K-ICS.html` | Per-insurer K-ICS detail + sub-items + 자본 도넛 + forward outlook | `kics_disclosure.json`, `kics_rate_sensitivity.json`, `kics_duration_gap.json`, `kics_tier1_utilization.json`, `kics_tier2_utilization.json`, `kics_forward_capital.json` |
 | `IFRS17.html` | 7-panel IFRS17 dashboard (CSM waterfall / amort / P&L / NB / sensitivity / history / BS) | `CSM_waterfall.json`, `PL_breakdown.json`, `NB_CSM_multiple.json`, `data/dart/viz/csm_waterfall.json`, `csm_waterfall_history.json`, `csm_amort_schedule.json`, `insurance_pl_breakdown.json`, `sensitivity_heatmap.json`, `data/ir/nb_csm_ratio.json`, `IFRS17_BS.json` |
 | `공시보고서.html` | 배당현황 — 회사별 배당지표(주당배당금·배당총액·배당성향·배당수익률) | `dividend.json` |
 
