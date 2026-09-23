@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-09-21(6차 배포 라이브) · Stage 4/5 — publishing
+> Last updated: 2026-09-23(7차 배포 라이브) · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -10,6 +10,11 @@ Session start: read this file + `claude-agent-publishing.md` + relevant validati
 NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
 
 ## Status
+
+**🚀 2026-09-23 7차 배포 라이브 — K-ICS 금리 민감도 패널 교체 + 금리듀레이션갭 마스터 신설 4파일.** main 커밋 `22e2471`(`a5118f3..22e2471`), owner GO 후 push. 배포 파일: `K-ICS.html`(순자산 듀레이션/컨벡서티 2카드 → 자산D/부채D/듀레이션갭 3카드) · `kics_duration_gap.json`(**신규** 270행, K-ICS.html 이 fetch 하므로 같이 안 올라가면 패널이 빈 채로 뜬다) · `PL_breakdown.json`(라이나생명 2023.4Q 20칸) · `public_exports/manifest.json`(build_id `fa21ec9`).
+게이트: `prepush_check` FULL **gate-clear**(RED=0 · 605 passed · 1,739초). 1차 시도는 골든 입력지문 `pl_breakdown` CODE_MOVED/OUTPUT_DRIFT 로 BLOCKED — `build_pl_breakdown.py` `_GOLD_CELL_OVERRIDE` 를 고쳤기 때문이다. 빌더를 실제로 재실행(`RUN_PL_GOLDEN=1`, 372초)해 `non_null_values` 10,257→10,277 = **정확히 +20**(손으로 넣은 칸 수와 일치)임을 확인하고, `--update` 후 산출을 커밋본과 셀 단위 대조해 **값 다른 셀 0**을 확인한 뒤 골든·지문을 재생성했다(`a0f0607`). 2차 시도의 `offline tests=FAIL` 은 내가 건 `timeout 900` 이 게이트를 자른 것(EXIT=124)이지 테스트 실패가 아니었다 — 오프라인 묶음만 1,739초다.
+검증: 라이브 4파일 전부 `git hash-object` 로 커밋 블롭과 **바이트 일치**(회사망 TLS 폐기검사 때문에 `curl -k` 필요). 라이브 렌더 삼성생명 2026.2Q `5.94 / 6.60 / △0.26` 확인. 작업 브랜치 `a0f0607` 도 push 완료(훅이 게이트 재실행·통과).
+**남은 것**: 분기 셀렉트가 `kics_rate_sensitivity`(4개 분기)에서 나와 듀레이션갭 마스터의 2023.2Q·2023.4Q·2024.2Q 3개 분기가 화면에서 도달 불가 — 셀렉트 소스 확장은 owner 판단 대기. public_exports 는 main 이 원래 `17BS.json`+`manifest.json` 만 싣고 있어 `금리듀레이션갭.json` 스냅샷은 이번에 안 올렸다(기존 관행 유지).
 
 **🚀 2026-09-21 6차 배포 라이브 — IFRS17·기타공시 헤더셀렉트+토글 4파일 + K-ICS item14 후 30칸.** main 커밋 `a5118f3`(`6741dea..a5118f3`), owner GO 후 push.
 1차 시도(같은 날 앞 세션)는 `validate_kics_rate_sensitivity.py` RS2_BASE_ANCHOR RED=2(흥국생명 2025.2Q/4Q

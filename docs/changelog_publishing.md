@@ -1,12 +1,25 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-09-21 · Stage 4/5 — publishing
+> Last updated: 2026-09-23 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
 
 **Cross-stage history:** `docs/claude-changelog.md`.
 **This file:** entries scoped to publishing work only.
+
+---
+
+## 2026-09-23 — main 배포 7차 `22e2471`: K-ICS 금리 민감도 패널 교체 + 금리듀레이션갭 마스터 신설 (owner GO)
+
+- 배포 4파일: `K-ICS.html` · `kics_duration_gap.json`(신규 270행) · `PL_breakdown.json`(라이나생명 2023.4Q 20칸) · `public_exports/manifest.json`(build_id `fa21ec9`). main `a5118f3..22e2471`.
+- **새 마스터가 같이 올라가야 하는 배포다.** `K-ICS.html` 이 `kics_duration_gap.json` 을 fetch 하므로 HTML 만 올리면 fail-soft 로 카드가 통째 숨겨진다(에러는 안 나고 조용히 사라진다). keep-list 는 기억이 아니라 각 HTML 의 `fetch(` grep 으로 재파생해 확정했다.
+- 게이트 `prepush_check` FULL **gate-clear** (RED=0 · 605 passed · 1,739초).
+- **1차 BLOCKED 와 그 처리 (기록 가치 있음).** 골든 입력지문이 `pl_breakdown` 에 CODE_MOVED + OUTPUT_DRIFT 를 냈다 — `build_pl_breakdown.py` 의 `_GOLD_CELL_OVERRIDE` 에 라이나생명 2023.4Q 20칸을 추가했으니 정확한 발화다. 지문이 시킨 대로 **빌더를 실제로 재실행**(`RUN_PL_GOLDEN=1`, 372초)했고 `non_null_values` 10,257 → 10,277 = **정확히 +20** 이 나왔다. 손으로 넣은 칸 수와 일치한다. 이어서 `--update` 로 재생성한 산출을 커밋본과 셀 단위 대조해 **값 다른 셀 0 · 키 추가/삭제 0** 을 확인했다 — 즉 손으로 넣은 20칸을 빌더가 그대로 재현하고, 산출 바이트는 재작성 후에도 안 움직였다. 해시를 손으로 고치지 않고 `--update` 로 재생성(CLAUDE.md 불변식 3), 커밋 `a0f0607`.
+- **2차 `offline tests=FAIL` 은 가짜였다.** 내가 게이트에 건 `timeout 900` 이 오프라인 묶음 도중에 잘라서 나온 것이고(EXIT=124), 묶음만 1,739초다. 묶음의 모든 테스트를 개별로 돌려 전부 pass 를 확인한 뒤 제한을 2,700초로 늘려 재실행해 `gate-clear` 를 받았다. **게이트 verdict 를 읽을 때 종료코드 124 를 같이 봐야 한다** — "FAIL" 과 "안 끝났다" 가 같은 문구로 나온다.
+- 배포 후 검증: 라이브 4파일을 받아 `git hash-object` 로 커밋 블롭과 대조 **4/4 바이트 일치**. 회사망이 TLS 폐기검사(CRYPT_E_NO_REVOCATION_CHECK)로 막아 `curl -k` 가 필요했다(연결 자체가 막힌 게 아니다 — `http=000` 을 도달불가로 오독하지 말 것). 라이브 렌더 삼성생명 2026.2Q `5.94 / 6.60 / △0.26`.
+- 작업 브랜치 `fix/csm-product-segmented-columns` 도 `37e4cd2..a0f0607` push 완료. 이 PC 에서 직접 push 가 됐다(폰 Termux 번들 불필요).
+- 남은 것: `금리듀레이션갭.json` public_exports 스냅샷은 안 올렸다 — main 은 원래 `17BS.json`+`manifest.json` 만 싣고 있어 기존 관행을 그대로 뒀다. 다운로드 기능에 새 시트를 노출할지는 별건.
 
 ---
 
