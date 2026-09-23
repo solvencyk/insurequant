@@ -69,7 +69,7 @@
     "data/ifrs17/table_scoring_keywords.yaml": 1,
     "kics_disclosure.json": 1
    },
-   "code_sha256": "732730df20922e77ad56230b864650cd27d0f43aeaa7b44826522b73ad23a76a",
+   "code_sha256": "ac3a4e4c54a6776b5f1a718d9a4ddc0134b53acc1880ae0832720ba517e62c1b",
    "code_files": [
     "scripts/build_net_income_breakdown.py",
     "scripts/build_pl_breakdown.py",
@@ -86,12 +86,12 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "2db28c9137e41488477158ae8c39728bd73245471d06bfb01f92c625d6d42db6",
+   "fixture_sha256": "17db40e717e7f2c5d46b4b32d146ba3205bc04470b75f0ef2a9a799195cdf6f2",
    "outputs": {
     "sha256_master": {
      "path": "data/dart/viz/pl_breakdown_master.json",
-     "fixture_sha256": "8b7322d9f643e55ac749f708325d325045d6a1452e1af310204638e6cc689cc4",
-     "ondisk_sha256": "8b7322d9f643e55ac749f708325d325045d6a1452e1af310204638e6cc689cc4"
+     "fixture_sha256": "f9c841fd1a5568ddb6e5009312210857c332ba2b7e475dba46a2f28803dfb602",
+     "ondisk_sha256": "f9c841fd1a5568ddb6e5009312210857c332ba2b7e475dba46a2f28803dfb602"
     },
     "sha256_coverage": {
      "path": "data/_derived/pl_breakdown_coverage.json",
