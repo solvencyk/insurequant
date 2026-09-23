@@ -1,6 +1,6 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> Last updated: 2026-09-23(7차 배포 라이브) · Stage 4/5 — publishing
+> Last updated: 2026-09-23(자본성증권 체감기준 교정) · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · Changelog: docs/changelog_publishing.md
 
 Stage 4 — **publishing**: validated per-source JSON → unified master JSONs read by HTML + recommended commit/push commands. Designer ([`TODO_designer.md`](TODO_designer.md)) owns HTML structure/styling; publishing only writes JSON masters. Created 2026-05-31 by splitting out of root `TODO.md` (merged former gathering + pushing stages).
@@ -10,6 +10,14 @@ Session start: read this file + `claude-agent-publishing.md` + relevant validati
 NOTE: English only where Korean encoding is fragile. See `CLAUDE.md` "Document/TODO Encoding Rule".
 
 ## Status
+
+**🔧 2026-09-23 자본성증권 후순위 체감 기준을 콜 → 법정만기로 교정 (owner 지시).** `build_capital_securities_recognition.economic_maturity()` 가 `min(콜, 법정만기)` 를 쓰는 바람에 10년만기·5년콜 구조의 후순위채가 **발행 직후부터** 체감을 맞았다 — 발행 6개월 된 채권이 80%, 잔존 1년 미만으로 계산된 21건(잔액 4.6조)은 전액 불인정으로 찍혔다. owner 지적: "콜만기는 말그대로 콜만기니까" 진짜 만기에서 세라. 원문 확인 결과 후순위채에는 스텝업 조항이 없어(신종만 있고 그것도 10년째) [별표22] Ⅲ.3.다.(2)①ㄱ 의 "상환촉진 유인이 있는 콜" 에 해당하지 않는다.
+- 고친 것: `economic_maturity()` → `legal_maturity` 만 반환(콜 경과 이월 `as_of` 분기 및 `_row`/`build` 의 `as_of` 인자 제거). 행에 **`법정만기일` 신설**(콜만기도래일 옆), `콜만기도래일` 은 이제 콜 그 자체만 담는다. 법정만기 미상 후순위 2건(흥국화재 1,000억·악사손해 459억)은 빌더가 매 실행 경고를 찍는다. 계단식 산식 `1-0.20*ceil(5-잔존연수)` 는 **안 고쳤다** — 입력 만기만 바꿨고, 그 산식이 owner 가 말한 사다리(2027-03 80% → … → 2031-03 0%)를 그대로 재현한다.
+- 결과 2026.2Q: 보완자본 인정액 합 106,084 → **208,011억**(+101,928), 기본자본 인정액 불변. 값 바뀐 셀 = 보완자본인정액 71 · 인정율 71 · 콜만기도래일 10. 아직 0 인 3건은 2017년 발행분(법정만기 2027-04~05, 잔존 1년 미만)이라 0 이 맞다.
+- **xlsx 시트는 삭제 후 재생성했다**: `sync_master_xlsx_sheet.py` 는 맨 끝에 붙는 컬럼만 자동확장하는데 이 시트는 flattener 가 `비고` 를 항상 마지막에 붙여 새 열이 어디 오든 중간삽입이 되어 REFUSE 한다. 절차·가드 = `scripts/_probes/probe_20260923_capsec_sheet_recreate.py`(스냅샷 → 삭제 → sync → 나머지 14시트 불변 + 대상 시트 셀 단위 일치 + 탭 위치 13 복원). `요약` 설명 1셀은 수동 반영(sync 가 설명 칸을 일부러 안 건드린다).
+- 게이트: `validate_data_contract` **RED=0** · `MASTER_XLSX_CENSUS` 드리프트 0 · 골든/배포에셋 12 passed.
+- **라이브 영향 없음**: `kics_capital_securities.json` 은 main 에 없고, K-ICS.html 소진율 패널은 경영공시 항목에서 온다(`apply_disclosure_utilization.py` 는 이 마스터에서 `잔액_억` 만 읽는다).
+- 남긴 것 → `inbox/publishing/20260923T1130Z__orchestrator__capsec__followups.md`: ① `step_up` 플래그 신설 ② 후순위 `잔액기준일` 이 2025-12-31 로 두 분기 낡음 ③ 한화생명 공시 item54(17,932억) vs 우리 인벤토리 2023년 이전 발행분(14,712억) 3,220억 차이.
 
 **🚀 2026-09-23 7차 배포 라이브 — K-ICS 금리 민감도 패널 교체 + 금리듀레이션갭 마스터 신설 4파일.** main 커밋 `22e2471`(`a5118f3..22e2471`), owner GO 후 push. 배포 파일: `K-ICS.html`(순자산 듀레이션/컨벡서티 2카드 → 자산D/부채D/듀레이션갭 3카드) · `kics_duration_gap.json`(**신규** 270행, K-ICS.html 이 fetch 하므로 같이 안 올라가면 패널이 빈 채로 뜬다) · `PL_breakdown.json`(라이나생명 2023.4Q 20칸) · `public_exports/manifest.json`(build_id `fa21ec9`).
 게이트: `prepush_check` FULL **gate-clear**(RED=0 · 605 passed · 1,739초). 1차 시도는 골든 입력지문 `pl_breakdown` CODE_MOVED/OUTPUT_DRIFT 로 BLOCKED — `build_pl_breakdown.py` `_GOLD_CELL_OVERRIDE` 를 고쳤기 때문이다. 빌더를 실제로 재실행(`RUN_PL_GOLDEN=1`, 372초)해 `non_null_values` 10,257→10,277 = **정확히 +20**(손으로 넣은 칸 수와 일치)임을 확인하고, `--update` 후 산출을 커밋본과 셀 단위 대조해 **값 다른 셀 0**을 확인한 뒤 골든·지문을 재생성했다(`a0f0607`). 2차 시도의 `offline tests=FAIL` 은 내가 건 `timeout 900` 이 게이트를 자른 것(EXIT=124)이지 테스트 실패가 아니었다 — 오프라인 묶음만 1,739초다.
