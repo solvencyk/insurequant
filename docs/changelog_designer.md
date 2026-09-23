@@ -1,9 +1,65 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-21 · Stage 5/5 — designer
+> Last updated: 2026-09-22 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-09-22 -- K-ICS 금리 민감도 패널: 순자산 듀레이션/컨벡서티 -> 자산D/부채D/듀레이션갭 (owner 직접 지시)
+
+**바뀐 것.** `K-ICS.html` 의 `#dur-strip` 2카드(순자산 듀레이션·순자산 컨벡서티)를 3카드
+(자산 듀레이션·부채 듀레이션·듀레이션 갭)로 교체했다. 읽는 마스터도 같이 바뀐다:
+`kics_rate_sensitivity.json`(±50/±100bp 평행이동 표에서 낸 **가용자본** 파생값) →
+신설 `kics_duration_gap.json`(경영공시 **금리위험액 현황** 표의 자산총계·부채총계).
+
+**컨벡서티를 뺀 이유 (owner 질문 "이제 더이상 의미가 없는듯?" 에 대한 실측).**
+새 기준의 금리상승/하락 충격은 평행이동이 아니라 만기별 크기가 다른 기간구조 충격이고,
+**상승 쪽과 하락 쪽이 대칭이 아니다**. 한쪽씩 편미분을 내보면:
+
+| 회사 | 상승 쪽 D | 하락 쪽 D | 하락/상승 |
+|---|---:|---:|---:|
+| 삼성생명 | 5.35 | 6.52 | 1.22 |
+| 한화생명 | 8.11 | 9.67 | 1.19 |
+| 교보생명 | 8.10 | 11.36 | 1.40 |
+| 삼성화재 | 5.33 | 6.11 | 1.15 |
+
+39사 중앙값 **1.20**(범위 0.13~1.40). 진짜 ±100bp 평행이동이면 이 비율은 순수 볼록성 효과만큼인
+1.02~1.05 근처여야 한다. 컨벡서티는 2차 차분 `(V₊ + V₋ − 2V₀)` 이라 이 20% 쐐기를 그대로
+곡률로 읽는다. 실제로 억지로 계산하면 삼성생명 116 · 메트라이프 153 · 교보생명 327 이 나오는데
+채권 포트폴리오 이론값(D²+D)은 각각 41 · 27 · 105 로, **1.7~5.7배 부풀고 배율도 제각각**이다.
+곡률이 아니라 비대칭을 재고 있다는 뜻이라 카드에서 뺐다.
+
+기존 컨벡서티는 ±bp **평행이동** 표에서 나온 값이라 산술적으로는 멀쩡했다(대칭 충격). 다만
+그건 가용자본의 컨벡서티였고 △724~+221 로 흔들려 읽기 어려웠다. 패널 아래 ±bp 차트·표와
+`금리민감도` 마스터의 `듀레이션`/`컨벡서티` 컬럼은 **그대로 둔다** — 원자료는 안 사라진다.
+
+**구현.** +54/−28, `K-ICS.html` 1파일.
+- `.dur-strip` `repeat(2,1fr)` → `repeat(3,1fr)`. 640px 이하 1열 규칙은 그대로 재사용.
+- `<h2>` 부제 `· 순자산 듀레이션/컨벡서티` → `· 자산/부채 듀레이션 갭`.
+- `durGapData` 전역 + `durGapRowsForCompany()`(`sensRowsForCompany` 와 같은 공백제거 fallback).
+- `renderDurationCards(rows)` → `renderDurationCards(company, quarter)`. 마스터 컬럼
+  (`자산듀레이션`·`부채듀레이션`·`듀레이션갭`)을 **그대로** 렌더 — JS 재계산 없음.
+- 툴팁 산식 교체 + "K-ICS 충격은 기간구조 충격이라 2%로 나누는 건 근사, 절대 연수는 참고치" 명시.
+- fetch 는 `kics_rate_sensitivity.json` 과 같은 fail-soft(`.catch(() => {})`), 로드 후
+  `renderRateSensitivity()` 재호출 — 두 마스터 중 어느 쪽이 늦게 와도 수렴.
+- `IQP` 정의/호출은 손대지 않았다(2026-09-21 `IQP is not defined` 사고 재발 방지).
+
+**엣지 3종(실측 기반).**
+| 상황 | 회사·분기 | 화면 |
+|---|---|---|
+| `듀레이션갭 == null` | 카카오페이손보 2024.2Q·2024.4Q·2025.2Q (금리부자산 충격전 △18백만원) | 스트립+노트 통째 숨김 |
+| `부채듀레이션 == null` | AIG손해·라이나생명 9행 (책임준비금 음수) | 그 칸만 `—` + "금리부부채 ≤ 0 — 정의 안 됨", 갭은 정상 표시 |
+| `비고` 비어있지 않음 | 발행사 표 불일치 2건 등 | 노트 하단 muted 한 줄 |
+
+**검증.** `pytest tests/test_deploy_assets.py -q` 11 passed. 내장 브라우저로 로컬 서빙 후
+`?iq_internal=1` 진입, 삼성생명 `5.94 / 6.60 / △0.26` · 라이나생명 `9.99 / — / 6.65` ·
+한화생명 `8.89 / 7.84 / 1.16` — 마스터 값과 전건 일치, 콘솔 에러 0건.
+
+**남은 것.** 분기 셀렉트는 여전히 `kics_rate_sensitivity`(2024.4Q~2026.2Q 4개 분기)에서 나온다.
+듀레이션갭 마스터는 2023.2Q~2026.2Q 7개 분기라 앞의 3개 분기가 화면에서 도달 불가다.
+셀렉트 소스를 두 마스터 합집합으로 넓힐지는 owner 판단 대기.
 
 ---
 

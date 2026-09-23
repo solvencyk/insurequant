@@ -1,6 +1,6 @@
 # Insurequant Designer TODO (Stage 5)
 
-> Last updated: 2026-09-21 · Stage 5/5 — designer
+> Last updated: 2026-09-22 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md (§5 design system formalized 2026-06-16) · Changelog: docs/changelog_designer.md
 
 Session start: read this file + `claude-agent-designer.md` + the page(s) in scope (root HTML files). Publishing ([`TODO_publishing.md`](TODO_publishing.md)) owns master JSONs; designer only reads them and decides how they render. English where Korean encoding is fragile (`CLAUDE.md` rule).
@@ -8,6 +8,24 @@ Session start: read this file + `claude-agent-designer.md` + the page(s) in scop
 ## Status
 
 Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layout. Desktop pages are in production; KEYCOLOR-V1 K-ICS cancelled by owner (IFRS17 구현 불만족). Mobile scope confirmed; M1 foundation done; full mobile pass open.
+
+**Recent (2026-09-22, K-ICS 금리 민감도 패널 — 순자산 듀레이션/컨벡서티 2카드 -> 자산D/부채D/듀레이션갭 3카드, owner 직접 지시):**
+`K-ICS.html` 1파일 +54/−28. 카드가 읽는 마스터를 `kics_rate_sensitivity.json`(±bp 평행이동 표의
+가용자본 파생값)에서 신설 `kics_duration_gap.json`(경영공시 금리위험액 현황 표)으로 바꿨다.
+**컨벡서티 카드는 폐지** — K-ICS 상승/하락 충격이 비대칭이라(39사 하락/상승 편미분 비율 중앙값
+1.20, 대칭 평행이동이면 1.02~1.05) 2차 차분이 곡률이 아니라 비대칭을 잰다. 억지로 계산하면
+이론값(D²+D) 대비 1.7~5.7배로 배율도 회사마다 제각각(삼성생명 116 vs 41, 메트라이프 153 vs 27).
+아래 ±bp 차트·표는 그대로라 원자료는 안 사라진다.
+`.dur-strip` 2열→3열(모바일 1열 규칙 재사용), `<h2>` 부제 문구 교체, 툴팁 산식 교체 + "기간구조
+충격이라 2%로 나누는 건 근사" 단서 명시. 값은 마스터 컬럼을 그대로 렌더(JS 재계산 없음).
+엣지 3종: 갭 null→스트립 숨김(카카오페이손보 3분기) · 부채D null→그 칸만 `—`+"금리부부채 ≤ 0"
+(AIG손해·라이나생명, 책임준비금 음수) · `비고` 있으면 노트 하단 노출.
+fetch 는 기존 `kics_rate_sensitivity.json` 과 같은 fail-soft 패턴, 로드 후 재렌더로 수렴.
+검증: `test_deploy_assets` 11 passed · 내장 브라우저로 삼성생명 5.94/6.60/△0.26 · 라이나생명
+9.99/—/6.65 · 한화생명 8.89/7.84/1.16 확인 · 콘솔 에러 0건. 커밋 `fa21ec9`.
+**남은 것**: 분기 셀렉트는 여전히 `kics_rate_sensitivity`(4개 분기)에서 나온다 — 듀레이션갭
+마스터는 7개 분기(2023.2Q~)라 2023.2Q·2023.4Q·2024.2Q 3개 분기가 화면에서 도달 불가다.
+셀렉트 소스를 합집합으로 넓힐지는 owner 판단 대기.
 
 **Recent (2026-09-21c, IFRS17·기타공시 헤더 셀렉트+토글 이식 · common.css 승격 · 섹션 앵커 착지 오프셋 수정 — owner 발주 inbox `20260921T0500Z`/`0510Z` + owner 직접 지적, 커밋만·라이브 미배포):**
 - **K-ICS 에서 먼저 나간 패턴(`3573509`)을 IFRS17.html·공시보고서.html 로 이식.** `#company` 셀렉트를
@@ -113,25 +131,6 @@ Stage 5 = HTML structure / styling / responsive breakpoints / A11y / chart layou
   일본 손보의 진짜 핵심축은 「引受으로 버느냐 運用으로 버느냐」인데(東京海上 引受利益은 経常利益의
   **5%**, 三井住友 17%, 損保ジャパン 13% — 실측) `pl_underwriting_profit`/`pl_investment_pl` 이
   5~6사뿐이라 아직 화면에 못 올린다. jp 레인 수집 타깃으로 넘긴다.
-
-**Recent (2026-09-15b, 버블 하단 잔글씨 7줄→4줄 — owner 반려("칩 남발"), 커밋만·라이브 미배포):**
-- **owner 지적이 맞다. 이번 세션에 내가 늘렸다.** 이 세션 전 범례는 5줄이었고(`1499f9f`), 버블
-  라운드에서 7줄이 됐다 — 마지막 3문장짜리 확대 조작 안내는 2026-09-14c 에 내가 얹은 것이다.
-  `d70be8a` 에서 이미 "랭킹 칩 3개→1개"로 한 번 쳐냈던 축인데 도로 늘렸다.
-- **원칙 2개로 정리했다.** ① **화면에 없는 것은 설명하지 않는다** — 「点線の円＝保険料未収録」은
-  실제 未収録이 **0사**인데도 상시 출력되고 있었다(있지도 않은 상태를 설명). ② **조작법은 범례가
-  아니다** — 확대 3문장을 meta 한 줄 끝으로 옮겼다.
-- **구현**: 고정 범례는 2개만 HTML 에 남기고(`data-fixed`), ▲·破線·点線은 `renderLossRatioBubble()`
-  이 실데이터를 보고 붙인다. 색 2줄(緑/赤)은 swatch 2개를 한 줄에 합쳐 1줄로. 사이즈 줄의 긴
-  면적 caveat 은 `title`(호버)로 내리고 본문은 「非線形・面積比≠保険料比」로 압축.
-  MS&AD 주석 3줄도 1줄 + `title` 로.
-- **실측**: 차트 하단 6행 → **3행**(meta 1 + 범례 1 + MS&AD 1), 범례 항목 7 → 4.
-  未収録 0사라 点線 줄은 실제로 안 나온다. **재렌더 2회 후에도 4개 유지**(조건부 항목이 중복
-  누적되지 않는지 확인 — `span:not([data-fixed])` 를 매번 비우고 다시 붙인다). 가로스크롤 없음, 에러 0.
-- **다음**: ESRランキング 범례는 아직 8개다(이번 지적 범위 밖 — "아랫부분"이라 했고 랭킹은 상단).
-  줄일지는 owner 판단.
-
-
 
 ## 🔴 Open — P1
 
