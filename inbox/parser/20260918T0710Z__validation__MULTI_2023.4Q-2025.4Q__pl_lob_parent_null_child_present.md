@@ -94,3 +94,10 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe <scratchpad>/pl_orpha
 ```
 
 ## 답변 (recipient 작성 — 처리 후)
+
+## 현황 (orchestrator 실측, 2026-10-07)
+
+`e83b619` 가 AIG 2024.4Q·2025.4Q 와 신한이지 2024.4Q 를 채웠다(신한이지 #2~#14 완비 확인).
+'자식 present · 부모 #2 None' 버킷은 **29 → 26**, display 는 **10 → 7**
+(KR0004 2023.4Q·2024.4Q·2025.4Q · KR0029 2023.4Q · KR0075·KR0095·KR0097 2023.4Q). 나머지 19는 2023.1~3Q 비표시.
+남은 일은 위 §4 그대로다.

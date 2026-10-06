@@ -182,3 +182,10 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/_probes/_prob
 전부 읽기전용이다(마스터 미변경, 빌드 미실행, 네트워크 없음).
 
 ## 답변 (recipient 작성 — 처리 후)
+
+## 현황 (orchestrator 실측, 2026-10-07)
+
+- (1a) item13 55칸 삭제는 `eb4efde` 로 끝났다. (1b) item4·item12 는 보존됐다.
+- **(2) 아직 안 됐다**: 메리츠화재 2026.2Q item2 `52538/52538` · item3 `92894/92894`(적용후가 적용전 복사).
+  (2)를 고친 뒤 56번째 item13 셀을 다시 재야 한다.
+- (3) 코리안리 2023.4Q·2024.2Q 기준선 확인, (4) 못 잰 29버킷은 그대로 남아 있다.

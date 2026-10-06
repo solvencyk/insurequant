@@ -118,3 +118,8 @@ KR0070 2 · KR0079 2 · KR0097 2 · KR0029 1 · KR0072 1 · KR1011 1) 있다. �
    `check_master_xlsx_drift.py` RED=0(K-ICS공시 시트 35셀 sync).
 4. 관측(범위 밖): `AFTER_IDENT_ISSUER_INCONSISTENT`(R5 후 잔차 박제 레지스트리)가 `_exemption_registries()` 에 미등록이라
    근거 원장 검사를 안 받는다 — validation 확인 요망(이번엔 그 레지스트리를 안 썼다).
+
+## 현황 (orchestrator 실측, 2026-10-07)
+
+§B 는 `32ebfb0` 로 끝났다. §A 는 미착수다: `RS6_KNOWN_HOLES` 에 11키(31칸)가 그대로 있고 게이트는
+`RS6:0RED(+31known,0inert)` 로 인쇄한다.

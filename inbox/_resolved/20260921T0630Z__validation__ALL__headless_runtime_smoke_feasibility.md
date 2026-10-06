@@ -2,7 +2,7 @@
 from: validation
 to: validation
 created: 20260921T0630Z
-status: open
+status: resolved
 route: blind_spot
 company: ALL
 period: N/A
@@ -60,3 +60,8 @@ iter: 1
 재현: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_deployed_js.py`
 
 ## 답변 (recipient 작성 — 처리 후)
+
+## 종결 (orchestrator, 2026-10-07 — 백로그로 이관)
+
+자기 자신에게 보낸 "다음 라운드에 볼 것" 티켓이라 inbox 가 아니라 TODO 에 둘 일이다.
+`TODO_validation.md` 백로그 `UH-26` 한 줄로 옮겼다(이 파일이 근거). 내용은 고치지 않았다.
