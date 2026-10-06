@@ -74,6 +74,7 @@ md_inbox/
 
 # Backup / temp
 *.bak
+*.bak_*
 *.tmp
 *.log
 *~
@@ -110,3 +111,5 @@ prototype_*.html
 # archived root-cleanup binaries (2026-08-20) — kept on disk for recovery, not in git
 archive/2026-08_root_cleanup/xlsx_backups/
 archive/2026-08_root_cleanup/owner_worksheets/
+# probe 산출물 — scripts/_probes/ 의 스크립트로 재현한다(2026-10-07). 이미 추적 중인 것은 그대로.
+data/_derived/_probe_*
