@@ -1,5 +1,215 @@
 # TODO archive — `TODO.md` (Status 이력, 읽기 지연)
 
+## 2026-10-07 정리 — 정리 전 `TODO.md` 전문 (무수정, 예외 등재부·라운드 절차는 별도 문서로 이동)
+
+# Insurequant TODO
+
+> Last updated: 2026-09-22 · Stage: cross-stage
+> Index: CLAUDE.md (5-stage; parser 2-lane since 2026-06-13) · Stage TODOs: TODO_<stage>.md
+
+Pipeline organized as **downloader / parser / validation / publishing / designer** — each stage has its own prompt (`docs/agents/claude-agent-<stage>.md`), TODO (`TODO_<stage>.md`), and changelog (`docs/changelog_<stage>.md`). See `CLAUDE.md` for the full index. This root file carries cross-stage items + project-wide policy only.
+
+## Status
+
+**🆕 2026-09-22 K-ICS 금리 듀레이션 갭 마스터 신설 — 분모를 '금리위험액 현황' 자산총계로 확정(cross-stage, owner 지시).** owner 가 기존 산식의 분모(순자산)를 자산 기준으로 바꾸라고 지시했고, 조사 과정에서 **어느 자산이냐**가 갈렸다 — 건전성감독기준 재무상태표의 전체 자산이 아니라 **경영공시 '금리위험액 현황' 표의 Ⅰ.자산총계**가 맞다. 근거: 분자(순자산가치 변동)가 금리위험 측정 대상에서만 나오므로 범위를 맞춰야 `갭 = 자산D − 부채D` 항등식이 닫힌다(삼성생명 2026.2Q 실측 — 260조 분모에서 5.94−6.20=△0.26 으로 닫히고, 481조 전체자산 분모에서는 △0.14 로 어떤 듀레이션 차이로도 분해되지 않는다). 전체자산 분모는 회사마다 다른 배율로 희석돼(삼성생명 1.85배) 회사 간 비교가 깨진다. **산출물**: 루트 마스터 `kics_duration_gap.json`(39사 × 짝수분기 7기 = **270셀 전수**, 자산·부채 6시나리오 + 자산D/부채D/부채D_자산대비/갭/부채자산비율) · 마스터 xlsx 신규 시트 `금리듀레이션갭` · 추출기 `scripts/extract_kics_irr_balance.py` · 빌더 `scripts/build_kics_duration_gap.py`. **추출 경로**: 자동 254셀(앵커=순자산가치 행이 마스터 항목41/43/44 와 일치해야 채택, 컬럼→시나리오 사상과 단위배율을 동시 확정 / 라벨 실패 시 `자산−부채=순자산` 항등식으로 행 탐색 / 표가 다음 반기 보고서의 `직전반기` 열에만 있는 경우까지 교차분기 탐색), 나머지 16셀은 표가 글리프 이미지라 원본 PDF 렌더링 후 사람이 읽어 `data/_gold/kics_irr_balance_vision.json` 에 박제(미래에셋 7·KB손보 5·AIA 2·하나생명 1·카카오페이손보 1). **산출불가 3셀**은 카카오페이손보 2024.2Q~2025.2Q — 금리부자산 충격전이 △18백만원이라 분모 불성립(정상 부재). **owner 2차 지시 2건 반영** — ⓐ 부채듀레이션은 부채로 나눠 `D_L` 에서 끝내고 `L/A` 는 갭 식에서만 곱한다(`갭 = 자산D − (L/A)×부채D`). 중간열 `부채듀레이션_자산대비` 는 제거(시트 23→22열, 삭제 후 재생성·나머지 시트 값 불변 검증). `L0 ≤ 0` 인 라이나생명·AIG손해는 `D_L` 만 비우고 갭은 유효. ⓑ **라이나생명 2023.4Q PL 20칸 신규 충전** — 같은 회사 2024.4Q·2025.4Q 는 `_GOLD_CELL_OVERRIDE` 로 채워져 있는데 2023.4Q 만 `income_statement` 블록이 통째 비어 있었다(계보 `source_file=null · NO_PUBLISHED_VALUE_IN_BLOCK · published_items=0`). 원인은 FS-API status 013(이 회사 전 연도) + 'Ⅰ−Ⅱ' 도출형 IS 를 tier1 HTML 이 못 읽는 것이고, 아무도 이 분기만 손으로 안 넣었다. FY2024 사업보고서의 **전기 비교컬럼 + 주석23**(기존 item4/9 와 같은 재작성 기준)으로 채웠고 산식은 2024.4Q·2025.4Q 기존값으로 전부 역검증. 게이트가 `MISSING_PROVENANCE`+`SOURCE_ID_LINEAGE_MISMATCH` RED=2 를 정확히 냈고 계보 셀 1개를 `OWNER_GOLD` 로 고쳐 RED=0 복귀. pl_bridge 3309P→3317P·실패 0 증가, `master_tables_golden` `--update` 재생성. **단서: FY2023 은 소급재작성됐다** — 자기 보고서 당기순이익 463,997 vs 채택한 재작성 511,309(차이 47,312).
+
+**부수 발견**: ① AIA 2024.4Q 항목46 이 억원 아닌 백만원(100배)으로 마스터에 들어가 있다 — `max(base−steep,0)` 뒤로 숨어 `36_irr` 룰이 구조적으로 못 보는 자리(`inbox/parser/20260922T1200Z` 발주 → **2026-10-06 정정 완료**, parser-kics 19회차). ② 발행사 표가 스스로 안 맞는 2셀(BNP카디프 2023.2Q 6시나리오 0.74%·DB생명 2025.2Q 2시나리오) — 공시대로 두고 `비고` 박제.
+
+**🔴 2026-09-21 라이브 K-ICS `IQP is not defined` 사고 — 복구·게이트 신설·배포 완료(cross-stage: designer → validation → parser-kics → publishing).** owner 가 라이나생명 2026.2Q 금리민감도 "아직 없습니다" + 세부항목 표 "JSON 파일을 불러오는 중 오류 발생: ReferenceError: IQP is not defined" 로 발견. 원인은 데이터가 아니라 2차 디자인 배포 `2dbc4ca` 가 `K-ICS.html` 의 `function IQP()` 정의만 지운 것(36/39사 패널 사망, 부팅 `.then` 전체가 죽어 표까지 덮임). 처리: designer 복구 `197d15e`(정의 + try/catch 안전망) · validation 신설 `scripts/validate_deployed_js.py` → `prepush_check.py` §1f 배선(`cf6fd77`, 구 main RED=2 재현·복구본 RED=0, 변이시험 24케이스) · parser-kics 라이나 원문 대조 수정 0건 + 2026.2Q 적용후 결손 3사 9칸(`a03ac79`) · publishing main `92159dd`(5파일, 라이브 블롭 5/5·헤드리스 4사 렌더 확인). **열린 후속 3건**: 신한라이프 `36_irr` 2분기 −28%/−15% 가 RED 안 됨(`inbox/validation/20260921T0215Z`) · 금리민감도 phase 레벨 census 사각 RS6(`inbox/validation/20260921T0100Z`) · 자본비율전망 시트 비고 내부 진단 용어(`inbox/publishing/20260921T0320Z`). 헤드리스 런타임 게이트 타당성(`20260921T0630Z`)은 UH-26 으로 보류. 상세 `docs/postmortems/PM-20260921_kics_sens_iqp_referenceerror.md`.
+
+**🔁 2026-09-18 경영공시 PL 백필 라운드 진행 중(cross-stage: parser-ifrs17 → validation → publishing).** PL_breakdown 비-4Q 결손을 정기경영공시 §2-1 요약 포괄손익계산서로 메우는 작업. 결손 실측 39사x14분기 546칸 중 172칸, 전부 DART 분기보고서를 안 내는 비상장 16사의 1~3Q. **오케스트레이터 직접 실측(9/18 12:35)**: 스테이징 `data/_derived/pl_backfill_disclosure_20260918.json` 172칸 중 OK 159 + vision_manual 7 + NO_PDF 6(KR0150 서울보증 2023.1~3Q·2024.1~3Q = **원천 부재 확정**, SGIC 사이트가 과거 분기를 게시 안 함). 자기폐쇄 E3/E5/E6 **실패 0건**, `|값|>200,000억` 이상치 **0건**, `dash_zero` 이면서 `raw_value==''` 인 읽기실패 **0칸** — validation 이 결정 5·7 로 지적한 오파싱은 파서 재실행으로 이미 해소됐다(반증 사례 KR0075 2024.3Q 보험손익도 `-80` 으로 정확). validation 판정 수용: **항목 8개→5개**(#1 보험손익·#16 기타사업비용·#22 세전·#23 법인세·#24 순이익. #17 투자손익·#20 영업이익·#21 영업외손익은 감독회계 재분류로 **다른 개념** — 경영공시 = 투자수익−투자비용, 마스터 = 투자이익+보험금융손익 336/336 성립), **16사→15사**(KR0004 예별손해는 DART·경영공시 양쪽 다 내부정합인데 값이 달라 범위 규명까지 보류). 계보 축 실측 재확인: `verify_provenance_sidecar()` 호출처 4곳에 PL_breakdown **없음**, `PL_breakdown_provenance.json` 638셀 **전부 `source_file` 부재**, `_SOURCE_LINEAGE` 에 `data/disclosure/` **미등록**. **병합 순서 고정(어기면 census RED 0→80 으로 push 차단)**: ① 사이드카 실물 발행[parser] → ② 계보 배선(guard 밖으로)[validation] → ③ `coverage_holes` source-aware 기대그리드[validation] → ④ CONCEPT_REGISTRY 등재[validation] → ⑤ 5항목 병합[parser→publishing] → ⑥ 게이트 RED=0 후 push. 같이 드러난 새 사각: `#2 생명장기손익` 부모 None 인데 자식 `#3~#12` present 가 **29버킷**(display 10), PL 에 "자식 present·부모 None" 룰이 아예 없다(K-ICS `_parent_present_child_incomplete` 대응물 부재). **(2026-09-20 진척) ①②③④ 완료 — 남은 것은 ⑤⑥.** ① parser 사이드카 재발행(커밋 `fa08bfe`, 638→748셀 · 마스터 실재 셀과 1:1 · `source_file` 730/748 · 디스크 부재 0). ②③④ validation 배선 완료(계보 등재 4건 + `SOURCE_ID_LINEAGE_MISMATCH` 를 capsec guard 밖으로 · PL provenance 첫 검증 published 731셀 · `coverage_holes` 기대그리드를 셀 계보별로 · `CONCEPT_REGISTRY["pl_disclosure_vs_dart"]` 등재 + allowlist 리더). **라이브 RED=0 YELLOW=123 불변 · selftest 57→69 · 골든 SUMMARY 불변(`--update` 불요) · `prepush_check` FULL gate-clear.** 병합 후 예측은 census RED **0→80 이 아니라 0→3** 이다(소스인식 규격에서 real hole 118→6, 그중 3건은 이미 있던 서울보증 원천부재). **⑤ 전에 parser 가 처리할 차단 2건**: (가) 스테이징 `항목번호 23` 항목명이 `법인세비용` 인데 마스터는 `법인세` — 이대로 병합하면 같은 번호에 이름이 둘 생긴다, (나) 병합으로 드러나는 진짜 DART 결손 3건(AIG 2024.4Q·2025.4Q · 신한이지 2024.4Q 의 생명장기손익). 회신 티켓 `inbox/parser/20260920T1500Z__validation__ALL_2023.1Q-2026.2Q__disclosure_pl_merge_authorized.md`.
+
+**✅ 2026-09-16 UH-24 해소 — owner 로컬 PC 세션이 훅을 실행권한 부여·이식 가능하게 고치고 실제로 두 번 끝까지 돌려서 검증했다(cross-stage).** `.githooks/pre-push` `chmod +x` + `PY` 를 owner venv 우선·부재시 `python3`/`python` 폴백으로 재작성. 1차 실행에서 `test_jp_source_gate.py::test_gate_prints_the_adjusted_finding_end_to_end` RED(콘솔이 cp949 인 이 PC에서 `build_jesr_page_json.py` 가 일본어 산문을 print 하다 `UnicodeEncodeError`, 클라우드는 콘솔이 UTF-8 이라 46개 커밋 내내 안 걸렸던 버그) → `build_jesr_page_json.py`·`tests/test_jp_source_gate.py::_run_builder` 에 UTF-8 인코딩 고정 → 2차 `567 passed, 2 skipped` · `PRE-PUSH VERDICT ... gate-clear` · exit 0. 상세 `docs/postmortems/README.md` UH-24.
+
+**🚀 2026-09-14 jp 프리뷰 라이브 배포 + 폰 배포 스크립트 rot 2건 제거 + 훅 강제점이 리눅스 클론에서 무력인 것 발견(cross-stage).**
+① **라이브 배포 나갔다** — `jp-f9027362/` 4개(`index.html`·`jesr_app.js`·`jesr_detail.json`·`jesr_esr.json`), 배포 커밋 `e797f61`.
+검증은 "커밋했다" 가 아니라 **라이브에서 바이트를 받아 `git hash-object` 로 커밋 블롭과 대조 4/4 일치**. `generated_at` 2026-09-13T07:36:23Z → **17:08:02Z**, 화면 15사 = census posted 15.
+배포 커밋 name-status 가 4파일 전부 jp 라 **한국 자산은 한 바이트도 안 바뀌었다**.
+② **`scripts/android_push_and_deploy.sh` rot 2건** — (a) 번들 인자가 필수라 *브랜치가 이미 origin 에 있는* 경우(클라우드 세션이 직접 push)를 배포할 방법이 없었다 → `--from-origin` 신설.
+(b) 기본 브랜치가 `fix/csm-product-segmented-columns` 로 굳어 있어 인자 없이 돌리면 **옛 브랜치가 라이브로 나간다** → 문서 경고가 아니라 **기본값 자체를 제거**했다(`--from-origin` 은 `--branch` 필수, 번들 모드는 `git bundle list-heads` 로 번들에서 읽고 0개·2개 이상이면 중단).
+헤더 사용법도 틀렸었다 — main 은 slim(실측 55파일, `scripts/` 없음)이라 clone 직후 HEAD 에는 이 스크립트가 **없다**. 커밋 `f35603f`·`a8de4ae`.
+③ **UH-24 (신규, cross-stage, P1)** — `.githooks/pre-push` 가 저장소에 **mode 100644**(실행권한 없음)로 들어 있다. `git config core.hooksPath .githooks` 를 해도 git 이 훅을 **조용히 건너뛴다**.
+이번 push 에서 git 이 직접 인쇄했다: `hint: The '.githooks/pre-push' hook was ignored because it's not set as executable.`
+즉 **리눅스·macOS·Termux 클론에서는 CLAUDE.md §5 의 "훅으로 강제" 가 강제가 아니다** — 이 클라우드 컨테이너도, 배포용 폰 클론도 해당된다.
+`docs/todo_archive_root.md` 의 2026-08-21 항목이 "실제 `git push` 차단 확인" 이라고 적은 것은 **owner Windows PC 기준**이고(Git for Windows 는 exec 비트를 안 보는 경우가 많다), 그래서 3주 넘게 안 드러났다. **UH-1("배선한 룰이 push 를 못 막았다")의 재발형.**
+**정정(같은 날, 2차 조사)**: 처음에 "`git update-index --chmod=+x` 한 줄" 이라고 적었는데 **틀렸다. chmod 만 하면 더 나빠진다.** 훅이 `PY="C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe"` 를 **하드코딩**하고 `[ ! -f "$PY" ] → exit 1` 로 죽는다 — 리눅스·Termux 에서는 그 경로가 없으므로 **게이트를 한 줄도 안 돌리고 push 를 통째로 막는다**. 즉 현재(실행권한 없음) = 조용히 무게이트 통과, chmod 만 하면 = 리눅스 클론에서 전면 차단. **둘 다 게이트가 안 도는 것은 같다.** 제대로 된 수정은 ① `chmod +x` ② `PY` 를 이식 가능하게(Windows 경로가 있으면 그것, 없으면 `python3`) **둘 다**이다. `.githooks/` 는 범위판정상 full-gate 경로이고 이 컨테이너는 `data/disclosure` **0개**·`data/kidi` **0개**라 full gate 를 못 돌린다 → **작업 PC 몫**. (레지스트리 등재는 `docs/postmortems/README.md`, 이번 라운드 병렬 에이전트가 같은 파일을 쓰고 있어 그 뒤에 넣는다.)
+④ 이번 라운드 두 커밋은 훅이 무시된 채 그냥 나간 게 아니다 — `prepush_check.py` 를 **손으로 돌려** `REDUCED(jp-scope)` 판정 + offline 240 passed 를 확인하고 밀었다.
+
+
+> (L34-122 「상시 점검」 2026.2Q 라운드 절차 → `docs/flows/kics_quarterly_round.md` 로 이동)
+
+### 최근 종결 (2026-08-30)
+
+- [x] **`assemble()` "미공시 시 0표시" 규칙 — owner 가 option 1 승인, 구현 완료** (`cd79127`).
+  회사가 다른 분기에서 실제로 뽑는 항목이면 이번 분기의 0-fill 을 건너뛰고 null 을 남긴다.
+  마스터 38칸(+당분기 40칸)이 숫자→null(5사). 억제된 null 은 `data/_derived/pl_intentional_nulls.json`
+  로 `_additive_merge` 폴백에서 제외 — 안 그러면 재빌드마다 예전 0 이 되살아난다.
+- [x] **`public_exports/` 무검사 해소** (`8c702fc`). 사용자가 내려받는 12개 파일을 어떤 검사기도
+  안 읽고 있었다. `validate_live_artifacts` 에 축 신설(15룰, 변이시험 8/8). 같이 발견: 그
+  사각을 잡았어야 할 `test_push_gate_wiring` 이 `<script src>` 를 안 따라가서 그 12개를 한
+  번도 본 적이 없었다 — 그것도 닫았다.
+- [x] **gold 오버레이 무검사 해소** (`93c68db`). gold 를 빌더 소스와 대조하는 게이트·테스트가
+  저장소에 0건이었다 = gold 셀 밑에서 빌더가 회귀해도 전 게이트가 clean. 마스크 115칸 원장 등재,
+  drift 는 RED.
+- [x] **inbox 전건 종결** — answered 28 + open 3 을 검증 후 `_resolved/` 로 이동, 활성 0.
+
+
+> 📦 **Status 이력은 `docs/todo_archive_root.md` 로 이동했다** (2026-09-11, 내용 무수정 — 2026-08-21 이전 서술 + 종결된 data-contract 예외 절 및 그 이전 항목). 세션 시작 시 읽지 않는다; changelog 처럼 특정 과거 결정의 배경이 필요할 때만 연다. **이 Status 는 최신 5개 항목만 유지**하고, 밀려난 항목은 그 파일 헤더 바로 아래에 그대로 잘라 붙인다.
+
+**J-ESR (일본 ESR) — 2026-09월말 킥오프 목표 (2026-09-01 owner, 보류 해제).** 기존 보류 사유(개별사 ESR이 EDINET 有価証券報告書 제출기한 전에는 미공개)는 유효했으나, `J-ESR/jesr_pipeline_status.md` 실측상 有報 제출이 6~9월에 몰려있어(최종기한은 2026-10-31이지만) 9월 말이면 이미 다수 사가 제출 완료 상태 — 더 늦출 이유 없음. MVP는 2026-07-21 revert(`167cba1`)됐고, scaffold(EDINET fetch API키 확보·mutual IR-PDF·`jp_insurers.csv` 74사)는 그대로 살아있어 재개 시 처음부터 다시 할 필요 없음. 재개 시 downloader/parser inbox로 신규 발주 — 과거 스레드는 `inbox/_resolved/*jesr*` 4건 참조.
+
+> **소스 루트 정정 (owner 2026-09-12, 구두 결정 재기록).** EDINET 은 주 소스가 아니다 — FY2024 XBRL 실측에서 ESR 구성요소가 0건(`inbox/_resolved/20260624T0337Z__owner__JP_MULTI__jesr_datalayer_asof.md` probe 보고). 개별사 ESR 은 **회사별 공시(IR) 사이트의 결산설명·디스클로저 PDF** 가 정본이고, 그 공시 기한이 **2026-10-31** 이다(owner 발언; 이전 세션 결론인데 repo 에 미기록이어서 오케가 09-12 에 EDINET 전수조회를 다시 제안하는 사고 발생). 킥오프 1차 조각 = `J-ESR/jp_insurers.csv` 의 `ir_url` 공란 41/81 채우기 + 회사별 사이트에 FY2025 ESR 공시가 이미 게재됐는지 census. EDINET 은 보조(상장사 교차확인)로만. **09-12 census 실행 완료(downloader 티켓 20260912T0307Z, resolved):** 79사 중 posted 15 / not_yet 62 / not_found 2, ir_url 공란 41→2, `J-ESR/fy2025_esr_census_20260912.csv`. 손보 원문 11/13건이 "10월 말 공표 예정" 명시 → 9월 말 킥오프는 분모·15사 값으로 시작, 전수 값은 10월 말 재census.
+
+> **취지 참고 (owner 공유 기사, 2026-09-01) — 일본 금융청 '2026년 보험 모니터링 보고서'.** 출처: [insnews #92437](https://www.insnews.co.kr/news/articleView.html?idxno=92437). ESR 비율 자체보다 넓게, 금융청·시장이 실제 주목하는 축 3개: ① **자산집약형 재보험(AIR) 활용** — 생보 약 절반(주로 외국계·상장사)이 AIR 보유, 활용 목적에 "ESR 개선"이 명시적으로 들어가고 금융청은 재보험사 신용위험 + 특정 자산/지역/재보험사 집중위험을 경고. ② **손보 이상위험준비금(화재보험) 적립 부족** — 2025-03말 기준 화재보험 취급 28사 중 12사에서 부족 확인, 자연재해 빈발로 상시 이슈화. ③ **생보 이익구조 전환** — 이차손익이 금리상승으로 역마진→이익 구조로 전환 중, 예정이율 인상 확산(K-ICS/IFRS17에서 이미 다루는 위험률차손익·이차손익 구조와 대응됨). **지금 스코프(ESR 헤드라인 숫자)를 이 3축까지 넓힐지는 미결 — 재개 시 EDINET 有報에서 실제로 뽑히는지 확인 후 판단.** 지금은 방향성 참고만.
+
+**Stage files:**
+
+- **Downloader** (Stage 1): `TODO_downloader.md` + `docs/changelog_downloader.md` + `docs/agents/claude-agent-downloader.md`
+- **Parser** (Stage 2, **2-lane since 2026-06-13**): `TODO_parser_kics.md` · `TODO_parser_ifrs17.md` + `docs/changelog_parser_{kics,ifrs17}.md` (pre-split frozen: `docs/changelog_parser.md`) + shared `docs/agents/claude-agent-parser.md` + domain `docs/domains/claude-agent-{kics,ifrs17}.md`
+- **Validation** (Stage 3): `TODO_validation.md` + `docs/changelog_validation.md` + `docs/agents/claude-agent-validation.md`
+- **Publishing** (Stage 4, **merged gathering + pushing**): `TODO_publishing.md` + `docs/changelog_publishing.md` + `docs/agents/claude-agent-publishing.md` (**complete** — §5/§9/§10 + launch-runbook skill, 2026-07-21)
+- **Designer** (Stage 5, **new — HTML/CSS/responsive**): `TODO_designer.md` + `docs/changelog_designer.md` + `docs/agents/claude-agent-designer.md` (**complete** — §5.1~5.5 design system, 2026-06-16)
+
+Items previously here that have moved out:
+
+- Downloader (F2 done, F7–F10, F14, MISC-BOND-*, MISC-IR-MERITZ, MISC-SEIBRO, decisions #5/#6) → `TODO_downloader.md`
+- Parser (KICS-PARSER-SPLIT/REPARSE-Q4/KR0069/KR0097/RED-FIX2/RED-FIX3/SUB/POST/RATIO28/HIST/IMG + IFRS-A1~B5-KICS/B3-UNIFY/NORMALIZE/HIST/SEN-TABLE) → `TODO_parser_{kics,ifrs17}.md`
+- Validation (KICS-VALIDATE, IFRS17-NB-RECONCILE) → `TODO_validation.md`
+- Publishing (F4 v2, F13, INDEX-IFRS17-BUBBLE, INDEX-BUBBLE-V2, MISC-IR-PROTOTYPE, MISC-IR-NB-DENOM, IFRS17-CSM-BUBBLE, KICS-TIER1/2-UTIL, KICS-FORWARD-CAPITAL, KICS-HTML-SUB, IFRS17-HTML-DASH, F5/F6 data) → `TODO_publishing.md`
+- Designer (MOB-KICS, MOB-IFRS17, VIS-DONUT, VIS-CHARTLEGEND, INDEX-C12, F1-HTML, F6-HTML, F17-PANEL3 HTML, M1/M2) → `TODO_designer.md`
+
+
+> (L164-503 K-ICS gate documented exceptions → `docs/kics_gate_exceptions.md` 로 이동)
+
+---
+
+## 🚧 CROSS-STAGE — CSM waterfall 신한EZ 제외 후속 (owner xlsx 검토 2026-06-10, 보정 06-11)
+
+~~3사 제외~~ → **하나손해(KR0050)·하나생명(KR0097)은 복원**(자사 감사보고서 별도 변동표 실재 — 경영서술 수치와
+정확 일치 검증, owner 재지시 2026-06-11). **신한이지(KR0051)만 제외 유지**: 감사보고서 변동표가 천원 단위인데
+백만원 오인(×1000 인플레) + PAA 중심사로 일반모형 CSM ~2억 = 워터폴 무의미. override `data/dart/viz/csm_manual_overrides.json`.
+
+- [x] **designer**: 완료 확인 2026-08-20 — `IFRS17.html` L604에 `PAA_ONLY = new Set(["KR0051", "신한이지손해보험"])`(코드+표시명 양쪽) 배선됨. 마스터에도 KR0051 행이 0이라 렌더 대상 자체가 없다.
+- [x] **publishing**: 인지 완료. 단 **경로가 바뀌었다** — 2026-08-20 gold-overlay 통일(`71914c3`)로 `data/dart/viz/csm_manual_overrides.json` → **`data/_gold/user_csm_cells.json`**(PL은 `user_pl_cells.json`). 훅 자동 적용은 그대로.
+
+---
+
+## 🚧 CROSS-STAGE — K-ICS 금리민감도 신규 feature (2026-06-10 발주 → 06-12 publishing만 잔여)
+
+경영공시 `6-8. 위험 민감도` → 금리민감도 표(경과조치 × measure × ±50/±100bp)를 신규 루트 마스터 `kics_rate_sensitivity.json`으로. 38사 서베이 완료, 스펙 정본 `docs/agents/kics-rate-sensitivity-spec.md`.
+
+- [x] parser: 추출 스크립트 + 마스터(435행)/diag — RS1·RS2 자기검증 통과 (2026-06-10)
+- [x] validation: RS1–RS4 룰 구현, 게이트 RED=0 (consolidate_inbox 핸들러 배선만 후속 잔여) (2026-06-10)
+- [x] **publishing: 커밋 번들 + master xlsx 재생성** — 완료 확인 2026-08-20. xlsx 4개 시트가 마스터와 행수 일치(17BS 6,855 · 손익분해PL 8,650 · CSM워터폴 2,136 · 배당 2,043), 수식 캐시 정상. 원 inbox 티켓도 종결(`_resolved/20260612T0900Z`).
+- [x] designer: K-ICS.html 민감도 패널 (F-SENS-PANEL, 커버리지 29/30) (2026-06-11)
+
+---
+
+## 📬 2026-06-12 — 전 스테이지 backlog digest 발송 (owner 전수 점검)
+
+5개 스테이지 inbox에 `20260612T0900Z__owner__ALL__backlog_digest.md` 발송 (publishing/designer inbox 신설,
+`inbox/README.md` layout + route `backlog` 추가). 각 스테이지는 다음 호출 시 자기 다이제스트 드레인.
+
+---
+
+## 중장기 목표 (Mid-long-term goals) — 신규 마스터 테이블 (cross-stage)
+
+(2026-06-06 owner 제안. 착수 전 단계 — 소스 위치만 슥 확인. 우선순위/일정 미정.)
+
+### MLG-1. 듀레이션갭 (Duration Gap) 지표 마스터
+- **목표**: 자산·부채 듀레이션 및 듀레이션갭(금리리스크 ALM) 전사·전분기 마스터 테이블.
+- **소스 확인 결과**: 정기경영공시 MD(`data/disclosure/FY*/parsed/*.md`)에 "듀레이션" 단어 **0회**(삼성화재/삼성생명/DB 확인) → 표준 경영공시엔 없음. **소스 추가 조사 필요**:
+  - 1순위 후보: DART 사업보고서 주석의 **금리위험 민감도 / 자산·부채 듀레이션** 표 (사별 상이, K-ICS 금리위험액 산출 부속).
+  - 2순위: 사별 IR 자료 / K-ICS 공시 부속서.
+- **다음 스텝(대략)**: (a) DART 사업보고서 1~2개사(삼성화재·한화생명) 금리위험 주석에서 듀레이션 표 존재 확인 → (b) 있으면 parser 시그니처 추가, 없으면 IR 소스로 전환. PL/CSM 마스터와 동일 8-field 스키마 재사용.
+- **[조사완료 2026-06-07 야간]** DART 본문(한화생명/삼성생명 주석 50)에 **듀레이션갭 서술 + 만기사다리(16버킷) + 100bp 금리민감도(손익/OCI)** 존재하나 **자산/부채 듀레이션 숫자·갭 자체는 없음**(만기+할인곡선 유도 필요). 손보(삼성화재/DB)는 sparse. → **owner 결정 필요**: (i) 100bp 민감도만 추출(직접 가능), (ii) 듀레이션 유도식 정의(만기가중/할인). 다세션 작업. 상세 → `changelog_parser.md` (j).
+
+### MLG-2. K-ICS 요구자본 세부 도해 (시장위험액→금리위험 / 해지위험액 세부)
+- **목표**: 지급여력기준금액 중 **시장위험액 하위(금리/주식/부동산/외환/자산집중)**, **해지위험액 세부**를 분해한 마스터/도해.
+- **소스 확인 결과**: `kics_disclosure.json`은 top-level만 캡처(`3. 시장위험액`, `1-5. 해지위험액` 등). **하위 분해 미캡처**. 단 경영공시 MD(`data/disclosure`)에 **"금리위험"·"주식위험" 텍스트 존재**(삼성화재·DB·삼성생명 확인) → **기존 데이터에서 parser 확장으로 추출 가능 (답지 불요)**.
+- **다음 스텝(대략)**: (a) K-ICS 요구자본 detail 섹션 표 확인(시장위험액 하위행: 금리/주식/부동산/외환/자산집중) → (b) 기존 K-ICS parser에 하위 항목번호(예 `3-1` 금리위험…) 추가 — 코리안리 `2-1` 시리즈처럼 문자 항목번호 패턴 재사용 → (c) validation gate에 합산검증(Σ하위 = 시장위험액) 추가.
+- **[조사완료 2026-06-07 야간]** `fill_subitems_to_disclosure.py`(생명장기 1-1~1-7 파서)가 템플릿이나, 시장위험은 **통합 ①시장위험액 현황 표 부재** + 하위가 사별·위험별 **이질 표**(금리=충격전후 shock표 → 위험액 *유도* 필요·모호, 주식=헤더 embed, 부동산=합계행). clean disclosed 총액 사별 불일치(삼성화재 금리·주식만, 삼성생명 금리만, DB손해 전무). → **PL-Tier2급 사별 핸들러 다수 + 금리위험액 유도규칙 owner 결정 필요.** R11(Σ=시장위험액)은 금리 확정 후. 다세션. 상세 → `changelog_parser.md` (j).
+
+---
+
+## 🔀 Cross-stage follow-ups (multi-stage; detail in stage files)
+
+| # | Task | Stages involved | Detail location |
+|---|------|-----------------|-----------------|
+| F12 | K-ICS 시장위험 하위위험액 전체 파싱 + 분산효과 validation | parser + validation | `TODO_parser.md` F12 + `TODO_validation.md` V3 |
+| F17 | 당기순이익 분해 (Tier1 전사 + Tier2 손보 LOB) | parser + publishing (+ designer for Tier2 panel) | `TODO_parser.md` F17 (body) + `TODO_publishing.md` F17 viz + `TODO_designer.md` F17 Tier2 |
+| F18 | IR factsheet 정형화 + DART↔IR cross-validation | parser + validation + publishing | `TODO_parser.md` F18 + `TODO_validation.md` V1 + `TODO_publishing.md` F18 viz |
+| F13 | 재보험 영업 지표 세트 | downloader (F8) + parser + publishing | `TODO_downloader.md` F8 + `TODO_publishing.md` F13 |
+
+## 📋 Policy / User decisions (cross-stage)
+
+| # | Decision | Date |
+|---|----------|------|
+| 1 | K-ICS skip cohort: KR0029 AIG, KR0150 SGI permanent skip. KR0051 / KR0074 partial-coverage by design | 2026-05-24 |
+| 2 | Meritz IR source: Meritz Financial Group factsheet xlsx (replaces Meritz Hwajae standalone). AIG IR: skip low-priority | 2026-05-24 |
+| 3 | NB CSM ratio denominator: **월납환산 신계약보험료**. IR PDF for 6 cos; assoc crawl (KIDI/KLIA/KNIA) for 23-co computed multiple | 2026-05-24 |
+| 4 | First HTML viz: CSM Movement Waterfall (IFRS17 A1 23-co) | 2026-05-24 |
+| 5 | API keys: repo root `.env` only (gitignored). Never commit/log key values | 2026-05-24 → `TODO_downloader.md` D5 |
+| 6 | Bond Call rule: issue + 5y for ALL bonds. Past 5y = assume `called` | 2026-05-24 → `TODO_downloader.md` D6 |
+| 7 | Pushing: subagent **reports + recommends only**. Human runs `git push` | 2026-05-30 |
+| 8 | DART attachments (별첨/감사보고서 zip): **don't fetch**. Body XML has all IFRS17 disclosures | 2026-05-30 → `TODO_downloader.md` DL-NOATTACH |
+
+## 🌐 Universe (cross-stage)
+
+- **K-ICS**: 38 insurers (`kics_disclosure.json` `원수사명`); skip cohort KR0029/KR0150
+- **IFRS17**: 28 insurers (`src/ifrs17/universe.py`) — 23 listed + 5 foreign-affiliate life via audit reports (F11, `AUDIT_REPORT_ANNUAL`, annual-only). Historical 13Q cohort = 23 listed.
+- **K-ICS↔IFRS17 mismatch**: AIA (에이아이에이생명보험) is in IFRS17 universe but NOT in `kics_disclosure.json`. Cohort joins must handle this.
+
+## ✅ Done — cross-stage anchors
+
+| ID | Task | Notes |
+|----|------|-------|
+| ~~F1~~ | index.html → IFRS17 cross-nav | `fcdd544`. ECharts on('click') → URL param + auto-select. Data hook = publishing; HTML = designer |
+| ~~F3~~ | CSM 상각 schedule 전수 조사 | `4b06492`. 19/24 → 22/24 ok |
+| ~~F5~~ | No-bond insurer forward sim 추가 | `b02e24d`. 24 → 37 cohort |
+| ~~F6~~ | CSM 상각 schedule yearly granularity | 2026-05-28. 16 yearly / 6 coarse / 2 no-data |
+| ~~F11~~ | 외국계 생보 5사 IFRS17 추가 | DONE 2026-05-29. 23→28 (생보 13→18). corp_codes: 라이나 00504232 / 메트라이프 00171104 / AIA 01295517 / 하나생명 00187123 / 처브 00203102. universe.py `AUDIT_REPORT_ANNUAL`. NOTE: AIA not in kics_disclosure.json |
+| ~~IFRS-Q~~ | Open Q1-Q9 | done. All 9 confirmed |
+
+## 📚 Long-term / roadmap
+
+> 📈 **중장기 제품·수익화·전략 로드맵 → `docs/roadmap.md`** (2026-05-26 신설)
+
+Active long-term tracks now live in their respective stage TODOs:
+
+- **IFRS17 bubble + market map evolution** → `TODO_publishing.md` (data) + `TODO_designer.md` (HTML)
+- **Forward solvency simulation** → `TODO_publishing.md` (KICS-FORWARD-CAPITAL done v3 archive)
+- **Roadmap §1A-2 priority 6 추가지표** (요구자본 위험액 분해 / RA / P&L 보험·투자 분해 / 출재율 / 유지율 / 운용자산이익률) → distributed across parser + publishing
+- **Roadmap §1E 규제 뉴스 피드** → `TODO_downloader.md` F14
+
+## 🧾 Meta
+
+- Encoding rule: `CLAUDE.md` "Document/TODO Encoding Rule" added 2026-05-24
+- .gitignore: `data/dart/raw/`, `data/dart/reports/` excluded
+- 2026-05-25 doc trim: changelog 124KB→11KB (latest 5 entries detailed + historical archive 1-liners)
+- git: initialized + pushed to github.com/solvencyk/insurequant (main). GitHub Pages → solvencyk.github.io/insurequant
+- 2026-05-26: `docs/roadmap.md` 신설
+- 2026-05-28 HTML single-source refactor (P1+P4): templates/*.html 4개 삭제. ⚠️ 데이터 JSON 중복 남음 (P2)
+- 2026-05-28 모바일 반응형 M1/M2 적용
+- 2026-05-28 IFRS17 패널 정리: 파생 KPI 카드 + BS 스냅샷 제거 → `docs/archived_metrics.md`
+- 2026-05-30j Reorg #2: `data/assoc` → `data/_derived`, KIDI/DART → `FY####_Q#`. DART batch script refactor 잔여 → `TODO_downloader.md`
+- 2026-05-30k 5-stage workflow split (downloader/parser/validation/gathering/pushing 초안)
+- 2026-05-31 Stage 2/3/4/5 split fully populated: parser/validation TODO+changelog (오전), publishing(=gathering+pushing 머지)+designer(MOB/VIS HTML 별도 stage) TODO+changelog (오후). Root TODO is now genuinely cross-stage only
+
+## ✓ MVP checklist (IFRS17)
+
+- [x] A1 A2 A3 A4 B1 B5 all 23/23 MVP (B5 K-ICS primary ingest done FY2025_Q4)
+
+## 🎯 Next priorities (cross-stage)
+
+1. **KICS-IMG manual OCR** (user-owned): KR0010 KB Sonhae rule 2 ×2 — only remaining RED. Parser policy → `TODO_parser.md`; validation gate exception → `TODO_validation.md` V6
+2. **F17 decision**: 9/11 손보 Tier2 LOB commit vs debug 삼성·DB vs IR-clean only. Parser detail → `TODO_parser.md`. Tier2 panel rendering → `TODO_designer.md` after decision
+3. **F18 activation**: parser delivers IR JSON → V1 validation rules activate → publishing assembles cross-source viz
+4. **REORG2-DART**: 3 batch scripts canonical-layout refactor → `TODO_downloader.md`
+5. **Stage prompts 마무리**: parser / publishing / designer prompts still skeleton (TBD bodies); validation + downloader prompts are owner-authored complete
+
+---
+
 **📡 2026-09-13 클라우드에서 한국 원천 도달성 실측 — 회사망 제약이 보편 제약이 아니었다(cross-stage).** owner 질문("접근 막혀 미검증인 것들 다시 볼 수 있나")에 답하려 이 컨테이너에서 재봤다: **DART 200 · OpenDART API 200 · 금융감독원 200 · 생명보험협회 공시(pub.insure.or.kr) 200 · FISIS 200 · data.go.kr 200 · 손해보험협회 200(브라우저 헤더 필요)**. **KIPRIS 도 살아 있다** — 기본 `requests`/`curl` 은 클라이언트 핑거프린팅으로 끊기지만 브라우저 헤더(`J-ESR/jesr_http.get`)로는 루트·`/khome/main.do` 둘 다 200(MS&AD·ソニーFG 와 같은 `ok_requires_headers` 유형). 실패: 한화생명(TLS)·교보생명(프록시) 2사 — 재확인 대상. **CLAUDE.md §10 의 "go.kr·KIPRIS 는 브라우저·WebFetch 금지(영구 행)" 은 회사망 PC 의 제약이다** — 이 문장을 보편 제약으로 읽으면 클라우드 라운드에서 할 수 있는 일을 스스로 막는다. 규칙 문구 조정은 owner 판단(이 항목은 실측 기록일 뿐 규칙을 고치지 않았다). **경영공시 PDF 재수집·OCR 은 owner 지시로 범위 밖**(2026-09-13: "건들면 골치아프다").
 **🔧 2026-09-13 push 게이트가 변경 범위를 코드로 판정한다(cross-stage).** owner 지적 *"한국 거 안 고쳤는데 한국 게이트 때문에 일본 작업이 BLOCK 되면 안 된다"*. CLAUDE.md §5 의 범위 규칙(owner 09-12)이 **문서에만 있고 훅은 무조건 전부 돌리고 있었다** — `prepush_check.py` §0 에 판정을 구현했다. jp 범위 번들이면 한국 마스터 축 5종을 건너뛰고 ~5초(실측), 한국 파일이 하나라도 섞이면 자동 FULL. **fail-closed**(upstream 없음·git 실패·빈 diff·모르는 경로 → 전체), 우회 환경변수 없음, verdict 에 `SKIPPED(jp-scope)` 로 "안 돌렸다"와 "통과했다"를 구분. 회귀 65케이스·변이 12/12 발화. 잔여 UH-20(훅이 refspec 을 안 넘겨 범위가 근사 — 빗나가면 전체가 도는 안전 방향). 상세 `docs/claude-changelog.md` 2026-09-13(2차).
 
