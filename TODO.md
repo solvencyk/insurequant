@@ -21,7 +21,7 @@
 - [ ] **inbox 열린 4건** — parser 3(PL 부모 #2 결측 26버킷 · 메리츠 2026.2Q item2/3 적용후 stale 외 · 금리민감도 phase 31칸)
   + publishing 1(자본성증권 step_up·잔액기준일·한화 item54). 남은 일은 각 티켓 맨 아래 「현황」.
 - [ ] **PL 골든 실패** — `RUN_PL_GOLDEN=1` 에서 `sha256_coverage` 만 어긋난다(라이나 KR0074 2023.4Q coverage 1행). → `TODO_parser_ifrs17.md`.
-- [ ] **owner 판단: KR0004 의 2025.4Q 법인** — K-ICS 마스터는 예별손해보험(가교사), PL 마스터는 엠지손해보험 잔여법인이다. → `TODO_parser_ifrs17.md`.
+- [ ] **KR0004 2025.4Q 비교 단절 주의** — 같은 계열(예별 = 구 MG)이지만 2025-09-03 계약이전으로 DART 와 경영공시 규모가 52배 다르다. → `TODO_parser_ifrs17.md`.
 
 ## 보류 (재개 조건이 오면 연다)
 
