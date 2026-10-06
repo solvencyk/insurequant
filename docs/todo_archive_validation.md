@@ -4,6 +4,51 @@
 
 ---
 
+**🔌 2026-09-20 (12차) 경영공시 PL 백필 병합 선행조건 ②③④ 배선 — 계보 등재 + PL provenance 첫 검증 + 기대그리드 소스화 + 개념 등재부에 리더 달기. 라이브 `RED=0 YELLOW=123` 불변, selftest 57→69, 골든 불변.** 마스터(`PL_breakdown.json`·`kics_disclosure.json`·마스터 xlsx)는 한 셀도 안 건드렸다. ⑤ 병합은 parser 소관이라 하지 않았고, 조건부 승인으로 회신했다(`inbox/parser/20260920T1500Z__validation__ALL_2023.1Q-2026.2Q__disclosure_pl_merge_authorized.md`).
+
+> - **② 계보 등재 4건 + `SOURCE_ID_LINEAGE_MISMATCH` 를 capsec guard 밖으로**(`validate_data_contract.py` `_SOURCE_LINEAGE` L906~ · `verify_provenance_sidecar()` · `check_as_of()` §2a(v) · `Env._build_pl_cells()`). 등재 = `data/disclosure/`→DISCLOSURE · `md_inbox/`→DISCLOSURE_MD · `data/_gold/`→OWNER_GOLD · `scripts/build_pl_breakdown.py`→OWNER_GOLD.
+> - **🔴 등재와 guard 해제는 반드시 같이 해야 한다(실측).** 등재 없이 guard 만 풀면 `kics_rate_sensitivity` **138셀이 한꺼번에 RED**(사이드카가 `md_inbox/…` ↔ `DISCLOSURE_MD` 인데 계보 미등록 → 판정 None). 등재만 하고 guard 를 안 풀면 PL 은 여전히 무검증. 둘을 같이 해서 회귀 0. 부수 수확: **L1391 주석이 "계보 일치를 검사한다"고 적어 놓고 실제로는 안 하던 상태가 해소**됐다(138/138 MATCH).
+> - **`OWNER_GOLD` 는 등재, `DERIVED` 는 등재 금지.** 계보 판정기는 `source_file` **경로**에서 라벨을 유도하는데 빌더 파생값엔 경로가 없다(`null`). 널에 라벨을 주려면 빈 접두를 등재해야 하고 그러면 `source_id_for_lineage(None)` 이 라벨을 돌려주어 **전 마스터의 모든 null source_file 이 계보 검사를 통과**한다 = 보편적 탈출구. 대신 `builder_derived_keys` 로 **게이트가 마스터에서 재계산한 셀**(생보·contract_notes·published⊆{13,14}·값 정확히 0.0)에만 좁은 면제를 준다. 사이드카의 자기 라벨은 근거가 아니다(PM-2026-08-03). 양방향으로 건다 — 라벨 도용도, 파생값에 필링 경로 다는 것도 RED.
+> - **PL provenance 는 호출처가 0 이었다.** 사이드카는 2026-06-20 부터 있었는데 `verify_provenance_sidecar()` 호출처 4곳(sensitivity_heatmap·forward_capital·tier1/2)에 PL 이 없어 한 번도 검증되지 않았고, `_fallback_note`(=부재 RED)조차 그 4개 분기 **안에서만** 도달 가능해서 "사이드카가 없다"는 RED 도 안 났다. 배선 후 **published 731셀 검증 · 빌더파생 면제 1셀 · RED 0**. `published_cells` 는 사이드카가 아니라 **마스터에서 독립 재계산**한다(사이드카가 검사 대상을 고르면 빠뜨린 셀이 영원히 무검사 — selftest Q1 이 그 형태를 고정).
+> - **🔴 `as_of_date` 축은 지금 통째로 침묵한다(748/748 null).** `STALE_AS_OF` 가 못 문다. "안 봤다"를 "통과했다"로 읽지 않도록 게이트가 매 실행 **세어서 인쇄**하게 했다. 채우는 주체는 downloader(필링 meta 의 보고기간 종료일). **분기말일을 기계적으로 넣으면 안 된다** — 항등식일 뿐 검증력 0.
+> - **③ `coverage_holes` 기대그리드를 셀 계보별로**(`validate_master_tables.py` `PL_DISCLOSURE_*` L48~ · `pl_cell_source_ids()` · `pl_key_items_for()` · `coverage_holes(key_items_for=)` · `_check_coverage()`). DISCLOSURE → §2-1 5항목(#1·#16·#22·#23·#24), 그 외·**계보 미상 → 종전 전량(fail-closed)**. 사이드카 부재·파손·중복계보는 전부 엄격 쪽으로 떨어진다 — 사이드카를 지워 검사를 느슨하게 만들 수 없다.
+> - **배선된 실제 함수로 잰 전후**: `LIVE 종전규격 real=3/known=32/struct=15` = `LIVE 소스인식 real=3/32/15`(**바이트 동일 → 골든 `--update` 불요, 0칸 이동**) · `MERGED 종전규격 real=118` → `MERGED 소스인식 real=6`. 전임자 시뮬의 125 와 다른 것은 스테이징이 그 사이 축소됐기 때문(8→5항목 · KR0004 제외 · KR0150 6칸 NO_PDF).
+> - **🔴 `LOB_LEG_NA` 등재를 금지한 근거를 회사별로 실측했다.** 백필 15사 중 12사는 DART 4Q 에 생명장기손익이 **실재**(악사·아이엠라이프·AIA·처브·교보라플·IBK연금·카카오페이·하나손보 3/3, 라이나·BNP·메트라이프·하나생명 2/3). 개념이 없는 게 아니라 이 소스가 안 싣는 것이다. 예외 2사 — **AIG(KR0029)는 3개 4Q 전부·3개 LOB 전부 결측**(원문 확인 전엔 등재 금지), **신한이지(KR0051)는 2025.4Q 에 −3,392.2 실재**라 2024.4Q 결측은 확정 결손이다.
+> - **병합하면 진짜 RED 3건이 드러난다**(AIG 2024.4Q·2025.4Q · 신한이지 2024.4Q, 전부 `부분`). 소스인식 규격에서도 남으므로 **경영공시 탓이 아니라 DART 추출 갭**이다. 서울보증 2024.1~3Q 3건은 **병합으로 해소되지 않는다**(parser 가 `NO_PDF` = 원천 부재로 확정한 6칸이 그 분기들). 전임 세션의 "서울보증 3건 해소" 는 옛 스테이징 기준이라 지금은 틀리다.
+> - **🔴 병합 차단 1건 추가 적발**: 스테이징 155칸이 `항목번호 23` 을 **`법인세비용`** 으로 적는데 마스터는 374/374 **`법인세`** 다. `load_long()` 이 항목명으로 색인하므로 이대로 병합하면 같은 번호에 이름이 둘 생기고 `법인세` 를 찾는 소비자가 백필분을 못 본다. parser 티켓 §5-1 로 발주.
+> - **④ `CONCEPT_REGISTRY["pl_disclosure_vs_dart"]` 등재 + 리더**(`check_cross_source()` §3d). 경영공시 `투자손익=투자수익−투자비용`(감독회계) vs 마스터 `투자손익(#17)=투자이익(#18)+보험금융손익(#19)`(336/336 성립). **등재만 하면 다음 라운드에 또 샌다**("Ledger needs a gate reader") → DISCLOSURE 계보 셀의 항목을 **allowlist `{1,16,22,23,24}`** 로 강제, 위반 시 `CONCEPT_MIXED_DISCLOSURE_INTO_DART` RED. 금지 3항목 열거가 아니라 허용 5항목인 이유는 fail-closed(새 항목이 조용히 못 들어온다). **라벨과 경로를 둘 다 본다** — 라벨만 보면 `source_id` 를 DART 로 고쳐 다는 것으로 빠져나간다.
+> - **🔴 배선 도중 같은 census 의 두 번째 구현을 발견했다.** `validate_data_contract.check_census` §1c 가 PL 에 대해 `coverage_holes` 를 **resolver 없이** 부르고 있었다 — ③ 을 `validate_master_tables` 에만 넣고 끝냈으면 병합 후 이쪽만 `MASTER_HOLE` **118 RED**, 저쪽은 6 이 된다(같은 등식을 두 파일에 다르게 구현해 둔 것이 CSM상각 대조 사고의 절반이었다). 같은 resolver 를 `Env.pl_source_ids` 로 한 번만 만들어 양쪽에 물렸고, **병합 전/후 둘 다 두 게이트 숫자가 정확히 일치**함을 실측했다(LIVE 3=3 · MERGED 6=6).
+> - **selftest 57 → 69**(`scripts/_data_contract_selftest.py`). 신설 Q1~Q8b(PL provenance + guard 탈출 + census 1c 소스인식) · **R1~R2(`BS_KICS_HARD_ZERO`·`BS_KICS_BASELINE_BREAK`) = 직전 라운드가 "미배선 잔여" 로 박제해 둔 잔여분 해소.** 오탐 금지 케이스 2건 포함(Q5b §2-1 5항목만은 정상 병합 · Q8b 경영공시 계보 결측은 hole 아님).
+> - **🔴 12건 전부 killer 변이로 반증했다(=동어반복 아님).** M1b 비-capsec 계보 침묵→Q2·Q7 사망 / M2b `published_cells` 비움→Q1·Q2·Q3·Q4 사망 / M3 개념 guard 무력화→Q5 / M3b 면제를 `sf is None` 으로 넓힘→Q3·Q4 / M4 면제를 사이드카 라벨로 판정→Q3·Q4 / M5 HARD_ZERO 제거→R1 / M6 BASELINE_BREAK 제거→R2 / M7 PL 사이드카 부재 묵인→Q6 / M8 allowlist 축소→Q5b(오탐) / M9 census 1c resolver 제거→Q8b / M10 census 1c 를 항상 느슨하게→Q8. 전부 백업·복원했고 `validate_data_contract.py` md5 `aa75912a86d1c585bd5d1d736aab73f9` 작업 전후 동일.
+> - **1차 변이 2개는 무의미했다(기록해 둔다).** M1·M2 는 "옛 동작 복원"이 아니라 **다른 버그 주입**이라 63/65 건이 한꺼번에 터졌다 — Q2/Q3/Q4 가 여전히 통과해 아무것도 증명 못 했다. 변이는 **되돌리려는 그 동작과 정확히 같아야** 한다.
+> - 매니페스트: `check_as_of`·`check_cross_source` 는 `tests/test_push_gate_wiring.py::DATA_CONTRACT_CHECKS` 에 이미 `WIRED` 라 수정 불요(실측 65 passed·2 skipped). `tests/test_rule_coverage_manifest.py` **83 passed 불변** — PL 등식 커버리지는 안 건드렸다.
+> - 검증: `validate_data_contract.py` **RED=0 YELLOW=123 exit 0** · `--selftest` **69/69** · `validate_master_tables.py --no-build` **SUMMARY 불변**(`tests/test_master_tables_golden.py` 1 passed, `--update` 불요) · `prepush_check.py` **FULL 범위 gate-clear**.
+> - 재현: `$py scripts/validate_data_contract.py` · `$py scripts/validate_data_contract.py --selftest` · `$py scripts/validate_master_tables.py --no-build` · `$py -m pytest tests/test_master_tables_golden.py tests/test_push_gate_wiring.py tests/test_rule_coverage_manifest.py -q` · `$py scripts/_probes/_probe_20260920_pl_merge_precondition.py`(읽기전용 — 계보 census · 소스인식 기대그리드 · 두 게이트 일치를 한 번에 인쇄).
+> - **미배선 잔여(honor-system 방지용으로 여기 적는다)**: ① `PL_breakdown` 사이드카의 `as_of_date` 748/748 null → `STALE_AS_OF` 침묵(downloader 발주 필요). ② `kics_disclosure`(1,123셀)·`CSM_waterfall`(327셀) 사이드카는 **존재하는데 `source_file` 이 전건 null 이고 `verify_provenance_sidecar` 호출처도 없다** — PL 과 똑같은 상태다. `IFRS17_BS`·`dividend` 는 사이드카 파일 자체가 없다. 즉 provenance 축은 등록 마스터 10종 중 **6종**만 본다(PL 배선으로 5→6). ③ `pl_disclosure_vs_dart` 의 `comparable` tol `max(8억,1.5%)` 는 **리더가 없다** — 병합 후 두 소스가 같은 칸에 겹치지 않아(4Q 중첩 0칸) 잴 대상이 없기 때문이고, 겹치는 날 배선해야 한다. ④ 개념 guard 는 **경로나 라벨 중 하나가 DISCLOSURE 일 때**만 문다 — 경영공시에서 읽은 값에 `data/dart/…` 경로를 달면 두 그물이 다 비껴간다(값 단위 대조가 없어서다). 오늘은 emitter 가 필링 값과 대조해 경로를 고르므로 그런 산출이 나오지 않지만, 손으로 쓴 사이드카에는 열려 있다.
+
+**🔌 2026-09-20 17BS ↔ K-ICS 교차대조 배선 — 두 마스터가 처음으로 서로를 본다(owner 지시).**
+`IFRS17_BS.json`(DART 별도)과 `kics_disclosure.json`(정기경영공시)은 **서로 다른 원천**인데 같은 실체
+(이익잉여금·AOCI)를 각자 들고 있으면서 지금까지 교차 축이 **통째로 비어 있었다**. `check_cross_source`
+(`validate_data_contract.py` §3-cc)에 축 2개를 넣었다. **실행 결과 RED=0 유지 · YELLOW 90 → 129(+39).**
+- `BS_KICS_HARD_ZERO` — 한쪽이 정확히 0 인데 반대쪽은 100억 이상. **전수 발화 6**(NH농협손보 2023.2Q·
+  2023.3Q·2024.4Q 의 이익잉여금·AOCI). K-ICS 이익잉여금 0 vs 17BS 9,577억·9,115억·1조279억.
+  **폐쇄식은 0 들로도 닫히므로 단일 마스터 룰로는 구조적으로 못 본다** — 교차대조만이 탐지기다.
+- `BS_KICS_BASELINE_BREAK` — 회사 **자신의 평소 잔차(중앙값)** 대비 이탈. 발화 33.
+- **절대 허용오차를 안 쓴 이유(실측)**: 17BS 는 DART 별도 고정인데 K-ICS 는 연결로 내는 회사가 섞여
+  전수 중앙값은 0.29~0.56% 인데 p90 이 17~28% 다. **owner 제안 "비지배지분=0 이면 별도=연결" 필터도
+  실측으로 안 닫혔다** — 중앙값은 0.29% 로 내려가지만 p90 8.7%, 0.5% 기준 발화 **164건(red-out)**.
+  100% 자회사를 가진 회사는 비지배지분이 0 이어도 연결≠별도이기 때문이다(흥국생명·ABL·라이나).
+  회사별 기준선 방식은 **레지스트리가 아예 필요 없고** 발화가 164 → 39 로 준다.
+- **일부러 YELLOW 로 시작했다.** 신설 룰을 RED 로 걸면 그날로 push 가 막히고, 발화분이 추출 갭인지
+  원문 부재인지 아직 원문으로 안 갈랐다. HARD_ZERO 축은 parser 회신
+  (`inbox/parser/20260920T0430Z__orchestrator__KR0032__bs_kics_hard_zero.md`) 이 "추출 갭" 으로
+  확정하는 즉시 **RED 로 승격**한다. 그 전까지는 승격하지 않는다.
+- ~~**미배선 잔여(honor-system 방지용으로 여기 적는다)**: `scripts/_data_contract_selftest.py` 에
+  이 두 축의 주입 케이스가 **아직 없다**(현재 57/57 은 기존 축만).~~ **← 2026-09-20 12차에서 해소.**
+  케이스 `R1 BS_KICS_HARD_ZERO`(RED) · `R2 BS_KICS_BASELINE_BREAK`(YELLOW) 추가(57→69 중 2건).
+  killer 변이로 반증 완료(M5 HARD_ZERO 제거 → R1 미검출 / M6 BASELINE_BREAK 제거 → R2 미검출).
+- 판정 원본·재현 명령: `inbox/_resolved/20260919T1136Z__orchestrator__MULTI__post_transition_mirror_audit_and_item48_blindspot.md` §C.
+
 **(2026-09-19 → 2026-09-20 재감사 정정, 11차) 항목4/12/13 `값_적용후` 미러링 전수 감사 — 2026-07-21 owner 가 "후속 감사 필요" 라고 적어 두고 티켓이 안 만들어져 2개월 방치됐던 건. 결론: 미러링 셀 738(251버킷·21사), tier 가 실제로 움직인 버킷 58(+코리안리 기준선 2). 🔴 그러나 "오염 170셀" 은 과다계상이었다 — 실제로 틀린 것은 `item13` 55셀뿐이고 `item4`·`item12` 114셀은 정상이다.** 1차 세션이 API 한도로 죽어 재발주됐고, 2차 세션이 디스크 산출을 승인하지 않고 **마스터에서 독립 재계산**해 잡았다. 마스터는 양 세션 다 한 셀도 안 고쳤다. 티켓 `inbox/validation/20260919T1136Z`(status: answered, A-9 절), 발주 `inbox/parser/20260919T1400Z…`(lane: kics, **「(1) 정정판」으로 지시 교체**).
 
 > - 🔴 **2026-09-20 정정 1 — 셀 수.** 1차는 **버킷 판정을 셀 판정으로 그대로 승격**했다("이 버킷 tier 가 움직였다" → "이 버킷 미러링 셀 3개 전부 오염"). **Δ의 귀착 항목을 안 쟀다.** 공통적용 TFI 는 Ⅰ(순자산)·Ⅱ(불인정항목)이 아니라 **Ⅲ(보완자본 재분류)** 을 움직인다. `item2_적용후`(발행사 공시값)로 참값을 역산: `item13_후 = item4_전 − item12_전 − item2_후`. 독립 참조 2개 전건 통과 — **R1**(가정 없음, 적용전 `item13==item3` 인 버킷) **8/8**(잔차 −0.53~+0.42) · **R2**(재분류 외 보완자본 TFI 불변) **60/60**(−1.26~+1.26). → **틀린 셀 = item13 56(기계확정 55 + 메리츠 2026.2Q 1, 그 버킷은 item2/3 후가 stale 이라 가려짐) · 정상 = item4 58 + item12 56 = 114.** 발주 원문의 "170셀 삭제" 를 그대로 실행했으면 **정상 셀 114개가 지워졌다.**

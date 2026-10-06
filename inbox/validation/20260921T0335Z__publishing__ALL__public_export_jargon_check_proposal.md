@@ -2,7 +2,7 @@
 from: publishing
 to: validation
 created: 20260921T0335Z
-status: open
+status: answered
 route: propose
 company: ALL
 period: N/A
@@ -68,3 +68,8 @@ r"\blimit breach\b"                      # "> 100 (limit breach)"
 3. 배선 후 이 두 false-positive 케이스를 회귀 fixture로 등재.
 
 ## 답변 (recipient 작성 — 처리 후)
+2026-10-06 처리 완료 → `status: answered`.
+1. **배선 위치**: `validate_live_artifacts.check_public_exports` 의 6번째 축(`PUBLIC_EXPORT_INTERNAL_JARGON`, RED). 이미 push 훅에 묶여 있고 `public_exports/` 전용 변이시험·룰 매니페스트가 있어 `validate_data_contract` 신규 CHECK 보다 맞다.
+2. **시뮬레이션**: 사고 직전 스냅샷(`c130062^`) 2090행 + 현재 14개 시트. **후보 `\b…_eok\b` 는 `numerator_eok_fallback` 을 놓친다**(660행 중 550행) → `…_eok(?![a-z0-9])` 로 수정, 4패턴 합집합 660/660. 현재 스냅샷은 4패턴 0건.
+3. **회귀 fixture**: 사고 문자열 5(양성) + 티켓의 false-positive 2건 포함 음성 4. 변이시험 `jargon` 추가. `pytest -k public_export` 10 passed.
+4. **새 발견(룰 범위 밖)**: 넓은 snake_case 스캔은 현재 스냅샷에서 가정민감도 `비고` 1행·기본자본소진율 `비고` 22행(파일 경로)·자본성증권발행현황 `비고` 123행(`step_up`·`lock_in`)·`콜근거` 59행(코드값)을 더 잡는다. 4패턴엔 안 걸려 게이트는 통과 — publishing/owner 판단 필요.

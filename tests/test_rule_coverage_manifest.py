@@ -1110,6 +1110,9 @@ PUBLIC_EXPORT_RULES = {
     "PUBLIC_EXPORT_SOURCE_UNREADABLE": "RED — 대조할 루트 마스터를 HEAD 에서 못 읽는다",
     "PUBLIC_EXPORT_INTERNAL_COL_LEAKED":
         "RED — 내부 전용 열(원보험사코드)이 공개 스냅샷에 새어 나갔다(owner 지시 2026-08-28)",
+    "PUBLIC_EXPORT_INTERNAL_JARGON":
+        "RED — 사용자 다운로드 문구에 내부 게이트 진단 문자열(필드명 *_eok·advisory 등)이 섞였다"
+        "(2026-09-21 자본비율전망 660행 사고의 재발 방지)",
     "PUBLIC_EXPORT_KEY_AMBIGUOUS":
         "RED — 조인 키가 유일하지 않아 셀 비교가 성립하지 않는다. 조용히 통과시키지 않는다"
         "(키를 잘못 잡으면 전건 미스로 통과하는 것이 이 축의 대표 함정이다)",
@@ -1175,7 +1178,7 @@ def test_public_export_clean_state_has_no_findings():
 
 
 @pytest.mark.parametrize("mutation", ["drift", "missing_row", "extra_row",
-                                      "internal_col", "manifest_rows"])
+                                      "internal_col", "manifest_rows", "jargon"])
 def test_mutation_public_export_fires(mutation, tmp_path):
     """공개 스냅샷을 흔들면 실제로 발견이 나오는가 — **임시 복사본**을 흔든다.
 
@@ -1215,6 +1218,12 @@ def test_mutation_public_export_fires(mutation, tmp_path):
         (pe / "CSM워터폴.json").write_text(_json.dumps(d, ensure_ascii=False),
                                          encoding="utf-8")
         want = "PUBLIC_EXPORT_INTERNAL_COL_LEAKED"
+    elif mutation == "jargon":
+        d = _json.loads((pe / "자본비율전망.json").read_text(encoding="utf-8"))
+        d[0]["비고"] = "신뢰도 낮음 — T2 face/BS gap +202% (subordinated_eok) — advisory, not in overall"
+        (pe / "자본비율전망.json").write_text(_json.dumps(d, ensure_ascii=False),
+                                            encoding="utf-8")
+        want = "PUBLIC_EXPORT_INTERNAL_JARGON"
     else:
         m = _json.loads((pe / "manifest.json").read_text(encoding="utf-8"))
         m["sheets"]["CSM워터폴"]["rows"] = 99999
@@ -1223,6 +1232,35 @@ def test_mutation_public_export_fires(mutation, tmp_path):
         want = "PUBLIC_EXPORT_MANIFEST_MISMATCH"
     rules = {r["rule"] for r in _pe_run(pe)}
     assert want in rules, f"{mutation}: {want} 가 안 나왔다 (나온 것: {sorted(rules)})"
+
+
+# 2026-09-21 자본비율전망 사고 때 실제로 공개 파일에 나갔던 문자열(660행) — 양성 회귀 fixture.
+_PE_JARGON_POSITIVE = [
+    "신뢰도 낮음(발행잔액 vs BS 괴리) — T2 face/BS gap +202% (subordinated_eok) — advisory, not in overall",
+    "신뢰도 낮음(발행잔액 vs BS 괴리) — T1 face/BS gap +101% (tier1_hybrid_issued_eok)",
+    # `_eok` 뒤에 접미가 붙은 필드명 — 원 후보 정규식 `…_eok\b` 는 이 줄을 놓친다.
+    "T2 face/BS gap -100% (numerator_eok_fallback)",
+    "T2 FSC gap: BS 1297억 but bond DB=0",
+    "> 100 (limit breach)",
+]
+# 원 티켓이 "내부 용어가 아니라 데이터 단서"로 판정해 **건드리지 않은** 문구 — 음성 회귀 fixture.
+_PE_JARGON_NEGATIVE = [
+    "같은 충격이 이 회사 표에 2벌 있다(재보험 경감 전/후로 추정, 원문 라벨 미확인) — 순번으로 구분",
+    "… 후순위 명시 라벨 없음, 구조 기반 추정",
+    "신뢰도 낮음(발행잔액 vs BS 괴리)",
+    "인정한도 기준=SCR×10%([별표22] Ⅲ.2.다.(1)② 원칙한도)",
+]
+
+
+def test_public_export_jargon_patterns_hit_incident_strings_only():
+    """정규식이 사고 문자열은 전부 잡고, 원 티켓이 정상으로 판정한 문구는 건드리지 않는다."""
+    L = _live_gate()
+    for s in _PE_JARGON_POSITIVE:
+        assert L._pe_jargon_hits([{"비고": s}]), f"사고 문자열을 못 잡았다: {s!r}"
+    for s in _PE_JARGON_NEGATIVE:
+        assert not L._pe_jargon_hits([{"비고": s, "구분": s}]), f"정상 문구를 잡았다: {s!r}"
+    # 숫자·None 셀은 건너뛴다(스캔이 문자열 셀만 본다)
+    assert not L._pe_jargon_hits([{"값": 12.5, "비고": None}])
 
 
 # ===========================================================================

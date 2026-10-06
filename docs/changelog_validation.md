@@ -1,9 +1,21 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-09-21 · Stage 3/5 — validation
+> Last updated: 2026-10-06 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-10-06 (17차) -- `PUBLIC_EXPORT_INTERNAL_JARGON` 신설 (공개 다운로드 내부 진단 문자열 재발방지)
+
+- 티켓 `inbox/validation/20260921T0335Z__publishing__ALL__public_export_jargon_check_proposal.md`(`status: answered`).
+  `scripts/validate_live_artifacts.py::check_public_exports` 6번째 축. 마스터·`public_exports/` 무수정.
+- 후보 정규식을 사고 직전 스냅샷(`c130062^`, 자본비율전망 2090행)에 먼저 시뮬레이션 — `…_eok\b` 후보는
+  `numerator_eok_fallback` 을 놓쳐 660행 중 550행만 검출. `…_eok(?![a-z0-9])` 로 수정, 4패턴 합집합 660/660.
+- 현재 14개 시트 4패턴 0건. 스캔은 전 열의 문자열 셀(새 열로의 유출 방지).
+- 회귀: 양성 5 · 음성 4(티켓의 false-positive 2건 포함) + 변이시험 `jargon` + 룰 매니페스트 +1. `-k public_export` 10 passed.
+- 잔여 보고(룰 범위 밖): 넓은 snake_case 스캔에서 가정민감도 1행 · 기본자본소진율 22행 · 자본성증권발행현황 `비고` 123행·`콜근거` 59행.
+- 별건: AIA 2024.4Q 항목46 정정으로 `live_artifact_baseline.json` 의 `DURGAP_NAV_CROSSCHECK|KR0080|2024.4Q|item46` 1줄을 삭제
+  (게이트 STALE 1→0). 상세 `docs/changelog_parser_kics.md` 2026-10-06.
 
 ## 2026-09-21 (15차) -- 금리민감도 `RS6_PHASE_LEVEL_CENSUS`(RED) 신설 · RS2 적용후 앵커 · 36_irr 티켓 판정(c)
 

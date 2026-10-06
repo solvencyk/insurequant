@@ -505,13 +505,44 @@ _PE_ID_COLS = ("원수사명", "티커", "생손보여부", "공시분기", "항
                # 회사 식별열이고, `구분`(증권명)+`종류`가 회사 안에서 행을 가른다.
                "회사명", "구분", "종류")
 
+# 2026-09-21 owner 티켓(`inbox/_resolved/20260921T0320Z`): `자본비율전망` 의 `비고` 660행에
+# `compute_confidence()` 의 내부 게이트 진단 문자열(`subordinated_eok`·`advisory, not in
+# overall`·`T2 face/BS gap`)이 그대로 사용자 다운로드에 실렸다. 같은 유형의 재발을 막는 룰.
+# 정규식은 `inbox/validation/20260921T0335Z` 후보에서 출발했는데 **`_eok` 패턴을 고쳤다**:
+# 후보 `\b…_eok\b` 는 `numerator_eok_fallback` 처럼 `_eok` 뒤에 접미가 붙은 필드명을 못 잡는다
+# (사고 직전 스냅샷 660행 중 550행만 걸렸다 — 실측).
+# 스캔은 **모든 열의 문자열 셀**이다. 열을 `비고`·`구분` 으로 좁히면 새 열로 새는 것을 놓친다.
+# 현재 14개 시트 전체에서 4개 패턴 모두 0건(실측 2026-10-06).
+_PE_JARGON = (
+    ("게이트 용어", re.compile(r"advisory,\s*not\s+in\s+overall")),
+    ("필드명 *_eok", re.compile(r"\b[a-z][a-z0-9_]*_eok(?![a-z0-9])")),
+    ("진단 라벨 T1/T2 gap", re.compile(r"\bT[12]\s+(?:face/BS|FSC)\s+gap\b")),
+    ("진단 라벨 limit breach", re.compile(r"\blimit breach\b")),
+)
+
+
+def _pe_jargon_hits(rows) -> dict:
+    """`{(열, 패턴 라벨): (행수, 첫 예시)}` — 문자열 셀 전체를 훑는다."""
+    hits: dict = {}
+    for r in rows:
+        for col, v in r.items():
+            if not isinstance(v, str):
+                continue
+            for label, pat in _PE_JARGON:
+                m = pat.search(v)
+                if m:
+                    n, ex = hits.get((col, label), (0, m.group(0)))
+                    hits[(col, label)] = (n + 1, ex)
+    return hits
+
 
 def check_public_exports(fd: Findings, out_dir: Path | None = None) -> dict:
     """`public_exports/*.json` — 사용자가 내려받는 스냅샷을 루트 마스터(HEAD)와 대조한다.
 
     축: ① 파일이 있고 파싱되는가 ② 루트 마스터(HEAD, exporter 와 동일 기준)와 **셀 단위로
     같은가** ③ 기대 그리드는 마스터다(마스터에 있는 행이 스냅샷에 없으면 SKIP 이 아니라 RED)
-    ④ 내부 전용 열(`원보험사코드`)이 새어 나가지 않았는가 ⑤ manifest 가 실제 파일과 맞는가.
+    ④ 내부 전용 열(`원보험사코드`)이 새어 나가지 않았는가 ⑤ manifest 가 실제 파일과 맞는가
+    ⑥ 자유텍스트에 내부 게이트 진단 문자열(필드명·영문 게이트 용어)이 섞이지 않았는가.
 
     발견은 (시트, 룰) 단위로 1건씩 집계한다 — 스냅샷이 한 세대 밀리면 전 행이 어긋나서
     11,546건이 찍히는데, 그 11,546건의 조치는 전부 하나("exporter 재실행")다.
@@ -570,6 +601,16 @@ def check_public_exports(fd: Findings, out_dir: Path | None = None) -> dict:
             fd.add(rel, "PUBLIC_EXPORT_INTERNAL_COL_LEAKED", sheet,
                    f"내부 전용 열 {leaked} 이 공개 스냅샷에 있다 "
                    f"(owner 지시 2026-08-28: 공개 다운로드에서 제외)")
+
+        jargon = _pe_jargon_hits(pub)
+        if jargon:
+            stat[f"jargon_{sheet}"] = sum(n for n, _ in jargon.values())
+            shown = " / ".join(f"{col}[{label}] {n}행 예 '{ex}'"
+                               for (col, label), (n, ex) in sorted(jargon.items())[:4])
+            fd.add(rel, "PUBLIC_EXPORT_INTERNAL_JARGON", sheet,
+                   f"사용자 다운로드 문구에 내부 진단 문자열이 섞였다 — {shown}. "
+                   f"공개용 한글 문구로 바꾸고 진단 원문은 공개 제외 열(`_diagnostics`)로 "
+                   f"분리해라(2026-09-21 자본비율전망 660행 사고와 같은 유형)")
 
         cols = sorted({k for r in exp for k in r})
         key_cols = [c for c in _PE_ID_COLS if c in cols]
