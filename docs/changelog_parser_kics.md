@@ -1,6 +1,21 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-21 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-10-06 · Stage 2/5 — parser (kics lane)
+
+## 2026-10-06 — AIA생명(KR0080) 2024.4Q 항목46 단위 100배 정정 (inbox `20260922T1200Z`)
+
+`kics_disclosure.json` KR0080 / 2024.4Q / 항목46(3-1-5. 금리위험 순자산가치·금리경사) `값`·`값_적용후` 가
+억원이 아니라 백만원(3607646)으로 들어가 있었다. 정답 36076.46억원. 100배 과대, 270칸(회사×짝수분기) 전수 대조에서 유일한 100배 이탈.
+
+- **1차 소스 대조**: `FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf` p25 직전반기(2024.4Q) — 표가 이미지라 렌더링해 직접 읽음.
+  금리경사 열 자산 17,729,547 − 부채 14,121,901 = 3,607,646 백만원. 같은 표 충격전 3,499,480 = 항목41 34,994.80.
+- **수정**: 셀 단위(해당 행 텍스트만 치환, CRLF 유지, 해시 guard). `git diff` 2줄. 나머지 25,521행 불변.
+  원천 기록 `data/_gold/market_subrisk_recovered_gold.json` 1칸도 같이 정정.
+- **동반 갱신**: `kics_duration_gap_audit.json` 9→8건(빌더 재실행, 마스터 바이트 불변) · xlsx K-ICS공시 2셀 sync ·
+  `live_artifact_baseline.json` 1줄 삭제 · 골든 입력지문 4종 `--update`.
+- **게이트가 왜 못 잡았나**: `36_irr` 의 경사 항 `max(base−steep,0)` 이 틀린 값·맞는 값 모두 0 → 룰 소관 밖.
+  정정 전후 `validate_kics_disclosure` summary 동일(RED=36, blocking 0). 이 건을 잡은 것은 듀레이션갭 역검산뿐이다.
+- 미실행: `public_exports/K-ICS공시.json` 재생성(마스터 커밋 선행 필요). 게이트 보강 배선은 validation 판단.
 
 ## 2026-09-21 — item14 적용후 역산치 30칸 원문 정수 정정 + 흥국생명 item23 후 R5 재폐쇄 (inbox `20260921T1400Z` §B, `32ebfb0`)
 

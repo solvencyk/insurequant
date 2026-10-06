@@ -1,6 +1,6 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-09-21 · Stage: cross-stage
+> Last updated: 2026-10-06 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
@@ -8,6 +8,12 @@ Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
 
 ---
+
+## 2026-10-06 — AIA 항목46 100배 정정 + 공개 다운로드 내부 진단 문자열 룰 (orchestrator)
+
+- AIA생명 2024.4Q 항목46 `3607646 → 36076.46`(원문 p25 직접 대조). 상세 `docs/changelog_parser_kics.md` 2026-10-06.
+- `PUBLIC_EXPORT_INTERNAL_JARGON` 룰 신설(`validate_live_artifacts`). 상세 `docs/changelog_validation.md` 17차.
+- 별건 관측: `RUN_PL_GOLDEN=1` PL 골든이 라이나 KR0074 2023.4Q coverage 1행으로 실패 중(이번 변경과 무관, 원인 미규명).
 
 ## 2026-09-22 — K-ICS 금리 듀레이션 갭 마스터 신설 (orchestrator, owner 지시)
 

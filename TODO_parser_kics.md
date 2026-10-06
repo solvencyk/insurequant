@@ -1,6 +1,31 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> Last updated: 2026-09-21(18회차 — inbox `20260921T1400Z` §B(RS2 적용후 앵커 · item14 후 역산치),
+> Last updated: 2026-10-06(19회차 — inbox `20260922T1200Z`(AIA 2024.4Q 항목46 단위 100배), 오케스트레이터가 직접 처리) —
+> `status: answered`, 원 sender 재확인 대기.
+>
+> **KR0080 2024.4Q 항목46 `값`·`값_적용후` 3607646 → 36076.46 셀 단위 정정**(`git diff` 2줄, 파일 해시 guard 후 해당 행 텍스트만 치환).
+> 원문 `data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf` p25 직전반기(2024.4Q) 표를 이미지로 직접 확인:
+> 금리경사 열 자산총계 17,729,547 − 부채총계 14,121,901 = 순자산가치 3,607,646 **백만원** = 36,076.46억원
+> (같은 표 충격전 3,499,480 = 항목41 34,994.80 과 일치). 같은 값을 들고 있던 `data/_gold/market_subrisk_recovered_gold.json`
+> `KR0080|46|2024.4Q` 도 같이 정정했다(재적용 때 되살아나지 않게; 현재 이 파일을 읽는 스크립트는 없다).
+> 동반: `build_kics_duration_gap.py` 재실행(마스터 바이트 불변, 역검산 불일치 9→8) · xlsx K-ICS공시 2셀 sync(검증 OK) ·
+> `data/_gold/live_artifact_baseline.json` 해당 1줄 삭제(게이트가 STALE 로 알려준 것) · 골든 입력지문 `--update`
+> (ifrs17_bs·pl_breakdown·dividend·post_transition 4종의 입력해시만 이동, +2바이트 = 정정 폭).
+>
+> **게이트**: `validate_kics_disclosure.py` 정정 전(HEAD)·후 summary 동일(RED=36 · blocking 0 · exit 0) — 이 오류에
+> 눈이 먼 상태 그대로다. 정정으로 달라진 신호는 `validate_live_artifacts`(STALE 1→0)와 duration-gap audit(9→8)뿐.
+> 골든: 17BS **통과**(377초) · dividend·post_transition **통과** · PL 골든은 **실패 — 이 정정과 무관한 별건**(아래 ②).
+> `public_exports/K-ICS공시.json` 은 마스터 **커밋 뒤** `export_public_sheets.py` 재생성 필요(아직 커밋 전이라 미실행).
+>
+> **미결(이번 범위 밖)**: ① 게이트 보강(`자산총계−부채총계 == 항목41~46` 등식 또는 형제 시나리오 배율 plausibility)을
+> 어디에 배선할지는 룰 소유자(validation) 판단. ② `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py` 가 실패:
+> `sha256_coverage` 만 이동(master 는 바이트 동일). 차이는 KR0074 라이나생명 2023.4Q **1행** — 디스크 coverage 는
+> status `no_income_statement` · missing 21개 · tier2 `partial`, 빌더 재실행 산출은 missing `[4]` · tier2 `ok`.
+> 정정 전 kics(HEAD)로 빌더를 재실행해도 coverage 가 정정 후와 바이트 동일 → 이 정정이 원인이 아님을 확인.
+> 직전 골든 재생성 `a0f0607`(2026-09-23, 라이나 2023.4Q 20칸) 이후 디스크 coverage 와 빌더 산출이 어긋난 것으로 보이나
+> 원인은 미규명. 골든·coverage 는 건드리지 않았다(PL 레인 판단).
+>
+> Last updated (이전): 2026-09-21(18회차 — inbox `20260921T1400Z` §B(RS2 적용후 앵커 · item14 후 역산치),
 > parser-kics 에이전트 작업 → 에이전트 중단 후 오케스트레이터가 마무리) — §B answered(§A open, 티켓
 > status open 유지). 커밋 `32ebfb0`.
 >
