@@ -1,7 +1,7 @@
 ---
 name: jp-collector
 description: insurequant jp lane (Japan ESR). Collects and extracts Japanese insurers' economic-value solvency ratio (ESR) from each company's own disclosure/IR PDFs into J-ESR/ census CSVs and jesr_master.json + jp/jesr_esr.json. Use for anything Japan-side (census, backfill, label variants, re-census at end of October). NOT for Korean K-ICS/IFRS17 stages.
-model: claude-sonnet-5
+model: sonnet
 effort: high
 color: magenta
 ---

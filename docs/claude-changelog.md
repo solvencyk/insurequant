@@ -1,6 +1,6 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-10-06 · Stage: cross-stage
+> Last updated: 2026-10-07 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
@@ -8,6 +8,30 @@ Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
 
 ---
+
+## 2026-10-07 — 문서·컨텍스트 정리 (orchestrator, owner 지시 "전반적인 리팩토링")
+
+owner 지시: TODO·changelog 비대화, 모델 성능 향상으로 불필요해진 장황한 지침, 끝났는데 열려 있는 티켓을 정리.
+
+- **매 세션 읽히는 문서를 줄였다.** 루트 `TODO.md` 85KB → 3.4KB, stage TODO 7개 합 277KB → 22KB. validation 세션 시작 독해량은
+  CLAUDE+TODO+stage TODO+프롬프트 기준 약 207KB → 46KB, parser-ifrs17 은 약 209KB → 45KB. TODO 에는 열린 일·휴면·결정만 두고
+  Status 는 최신 3개·항목당 3줄(`CLAUDE.md` §2 개정). 정리 전 전문은 각 `docs/todo_archive_*.md` 맨 위에 무수정으로 있다.
+- **할 일이 아닌 것을 TODO 밖으로**: K-ICS 게이트 documented exception 등재부(340줄) → `docs/kics_gate_exceptions.md`(참조처 6곳 갱신),
+  2026.2Q 라운드 절차 → `docs/flows/kics_quarterly_round.md`(다음 분기 재사용).
+- **3개월 넘게 진척 없는 항목은 「휴면」 한 줄**로 내렸고, 실측으로 이미 끝난 것은 닫았다(kics 중복키 94 → 0, gold 3종 추적, KR0004 PL 96행, FY2026_Q1 MD 39개 등).
+- **inbox 활성 10 → 4**: 검증 후 종결 6(answered 4 · KR0004 질문은 DART 감사보고서로 답 · 자기 앞 백로그 1은 TODO 로), 일부만 끝난 4건은 맨 아래 「현황」.
+- **프롬프트의 낡은 사실 교정**(경위 서술은 축약, 룰은 유지): designer §5.1 이 걷어낸 부트스트랩 팔레트를 정본으로 적고 있었다 → 팔레트 B·다크모드 ·
+  publishing §9 가 공유 폴더에서 `git checkout main` 하는 옛 배포 절차를 적고 있었다 → `launch_runbook` + 폰 스크립트 · 두 프롬프트의 fetch 표에
+  없어진 `csm_waterfall_history.json` · 아카이브된 `normalize_bond_schedule.py`·`build_lotte_series.py`·`liability_extractor.py` 참조 ·
+  downloader 의 이미 고친 "KNOWN BUG"·거꾸로 적힌 MG/예별 관계 · validation §1.5.1 "삼성화재 1분기만 값 있음" · `CLAUDE.md` §5 의 게이트 밖 anomaly triage.
+  validation 44 → 28KB, publishing 33 → 17KB, designer 19 → 15KB.
+- **IFRS17 도메인 문서** 50KB → 19KB(서문 조사기록·2026-05 PoC·Q1–Q9 문답은 `docs/domains/claude-agent-ifrs17_history.md` 에 무수정 보관).
+  LOB 택소노미 절을 §4.3 으로 바꿔 `validate_master_tables.py` 주석의 dangling 참조를 살렸다. IR 교차검증 계약(휴면)은 `docs/agents/ir-crosscheck-contract.md`.
+- **`test_claude_md_mandatory_gate_is_wired` 가 9/12 이후 조용히 skip 되고 있었다** — CLAUDE.md 개편 때 §6 제목에서 그 테스트가 찾는 "(mandatory)" 가 빠졌다. 제목을 되돌려 다시 돈다(1 passed).
+- 서브에이전트 정의 `model:` 을 `claude-sonnet-5`/`claude-opus-5` 고정에서 `sonnet`/`opus` 별칭으로 — 최신 모델을 따라간다.
+- 위생: 티켓이 재현 명령으로 인용하던 미추적 probe 스크립트 74개 + fix/추출 스크립트 2개를 추적, `*.bak_*`·`data/_derived/_probe_*` ignore,
+  루트 백업 2개(git 이력 `32ebfb0^`·`a03ac79^` 와 동일 확인)는 ignore 된 `archive/2026-10-07_root_backups/` 로.
+- changelog 는 세션 시작 때 읽지 않으므로 손대지 않았다. jp 도메인 문서·스킬·postmortem 은 이번 범위 밖.
 
 ## 2026-10-06 — AIA 항목46 100배 정정 + 공개 다운로드 내부 진단 문자열 룰 (orchestrator)
 

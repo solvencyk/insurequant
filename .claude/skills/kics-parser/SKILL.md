@@ -10,7 +10,7 @@ description: >-
   (scripts/validate_kics_disclosure.py — 19_market / 36_irr / rule5 / parent-zero RED), recovering missing
   market-risk subs (pdfplumber EOF → fitz fallback), backfilling a company/quarter, or reconciling/answering
   questions about K-ICS 지급여력비율·요구자본·시장위험 figures on the insurequant site. Covers the src/solvency/parser
-  extractors, the fill_period → fill_subitems → fill_market pipeline, the gate's "RED=0 OR documented in TODO.md"
+  extractors, the fill_period → fill_subitems → fill_market pipeline, the gate's "RED=0 OR documented in docs/kics_gate_exceptions.md"
   contract, capital-tiering limits, per-company quirks (AIA 경과조치 미적용, 내부모형사 직접공시 IRR, 서울보증 보증보험
   생명장기=0, 코리안리 자동차, 카카오/예별 micro·자본잠식), even-Q vs odd-Q cadence, △(세모) negative sign, and
   unit 백만원↔억원 conversion. This is the K-ICS half of the 2-lane parser split — NOT for IFRS17 / CSM waterfall /
@@ -108,7 +108,7 @@ These are the hard-won ones. Full detail + per-company table in **`references/qu
   truly-missing raw, validation for rule/cadence questions, owner for OCR-only image cells). You don't auto-watch
   — the driver (Workflow/human) calls you; first act is to drain. ([[feedback-orchestrator-route-via-inbox]])
 - **The gate is mandatory before any swap/push.** `validate_kics_disclosure.py` on root `kics_disclosure.json`:
-  **RED must be 0, OR every remaining RED is a documented exception in `TODO.md`** (company, quarter, rule, reason).
+  **RED must be 0, OR every remaining RED is a documented exception in `docs/kics_gate_exceptions.md`** (company, quarter, rule, reason).
   Any *unexpected* RED → parsing-error review (MD source, parser scope, row mapping) before continuing. Push is
   **owner authority** — parser never self-approves ([[feedback-user-approves-not-executes]]).
 - **Coverage census is first-class — a missing cell is never acceptable.** SKIP-on-missing defeats validation.

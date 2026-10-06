@@ -1,7 +1,7 @@
 ---
 name: downloader
 description: insurequant downloader stage. Ingests a new quarter of Korean insurance data from the 5 catalogued sources (정기경영공시 PDF, DART 본문 XML, KIDI INCOS, IR decks, misc) into data/disclosure · data/dart · data/kidi · data/ir, verifies file integrity, and writes per-source manifests. Use to fetch a new period, backfill a missing (company, quarter), or census what raw is actually on disk. NOT for parsing — PDF→MD conversion and XML extraction belong to the parser lanes.
-model: claude-sonnet-5
+model: sonnet
 effort: high
 color: cyan
 ---

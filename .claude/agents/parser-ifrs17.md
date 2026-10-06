@@ -1,7 +1,7 @@
 ---
 name: parser-ifrs17
 description: insurequant parser stage, IFRS17 lane. Extracts CSM waterfall, 측정요소 rollforward, PL breakdown (보험손익·투자손익), BS snapshot, 법정준비금, 가정민감도 from DART 사업/반기/분기보고서 XML into CSM_waterfall / PL_breakdown / IFRS17_BS masters and viz panels. Use for the ifrs17 lane only — NOT for K-ICS solvency disclosure.
-model: claude-sonnet-5
+model: sonnet
 effort: max
 skills: [ifrs17-parser]
 color: green

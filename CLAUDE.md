@@ -23,7 +23,8 @@
 
 1. 읽는 순서: 이 파일 → 루트 `TODO.md` → 자기 stage 의 `TODO_<stage>.md` + 프롬프트(parser 는 레인별 TODO + 공유 프롬프트 + 도메인 문서).
 2. **changelog·`docs/todo_archive_*.md`·`docs/claude-md-history.md` 는 읽지 않는다** — 과거 결정의 근거가 필요할 때만 연다.
-3. 각 `TODO*.md` Status 는 **최신 5개**만 유지. 밀린 항목은 `docs/todo_archive_<이름>.md` 헤더 바로 아래에 **한 글자도 안 고치고** 잘라 붙인다(최신이 위).
+3. `TODO*.md` 는 **열린 일·휴면·결정만** 둔다. Status 는 **최신 3개, 항목당 3줄 이내**(무엇·커밋·남은 것) — 경위·검산·시행착오는 changelog 에만 쓴다.
+   밀린 Status·끝난 블록은 `docs/todo_archive_<이름>.md` 제목 바로 아래에 **한 글자도 안 고치고** 잘라 붙인다(최신이 위). 3개월 넘게 진척 없는 항목은 「휴면」 한 줄로 내린다.
 4. 변경·실행 후 **해당 stage TODO 맨 위 갱신 필수**, 완결 항목은 stage changelog 에 기록. cross-stage 면 루트 `TODO.md` + `docs/claude-changelog.md`.
 
 ## 3. "뭐가 남았냐" 는 재서 답한다 (필수)
@@ -43,16 +44,16 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 ## 5. push 게이트 (훅으로 강제)
 
 새 클론·워크트리는 먼저 `git config core.hooksPath .githooks` (설정은 클론마다 로컬; `git config --get core.hooksPath` 로 확인).
-훅 = `scripts/prepush_check.py`(~8분): ① data-contract 하드게이트 ①b K-ICS 룰 게이트(`validate_kics_disclosure.py`) ② anomaly triage ③ inbox 위생(`check_inbox_hygiene.py`)
+훅 = `scripts/prepush_check.py`(~10분): ① data-contract 하드게이트 ①b K-ICS 룰 게이트(`validate_kics_disclosure.py`) ①c 도메인 게이트 ③ inbox 위생(`check_inbox_hygiene.py`)
 ④ 오프라인 테스트(골든 + `test_rule_coverage_manifest.py` + `test_identity_tautology.py`). `main` 처럼 `scripts/` 없는 slim 트리는 경고만.
 **"문서에 mandatory 라고 썼다" ≠ 강제.** 새 게이트는 `prepush_check.py` 에 호출을 넣었는지 그 자리에서 확인. `git push --no-verify` 를 썼으면 커밋에 남긴다.
 `test_rule_coverage_manifest.py` 는 룰↔항목 커버리지를 변이시험으로 대조한다 — 룰 추가·개명·삭제 시 매니페스트를 같이 고친다.
-**게이트 범위는 변경 범위에 맞춘다(owner 2026-09-12) — 2026-09-13 부터 `prepush_check.py` §0 이 코드로 판정한다**(그 전까지는 이 문단이 문서로만 있어서 훅은 무조건 전부 돌렸다). 번들 diff 가 `jp/`·`J-ESR/`·`docs/`·`inbox/`·`.claude/`·루트 `TODO*.md`·배포 `.sh`·`CLAUDE.md` 뿐이면 한국 마스터 게이트(data-contract·K-ICS 룰·도메인 7종·DART raw·골든 지문)를 건너뛰고 `tests/test_jp_source_gate.py` + `tests/test_jp_deploy_matches_census.py` + `tests/test_deploy_assets.py` + `tests/test_push_gate_wiring.py` + `tests/test_prepush_scope.py` + `check_inbox_hygiene.py` 만 돌린다(실측 ~5초). 루트 마스터 JSON·`scripts/*.py`(배포 `.sh` 제외)·루트 HTML·`src/`·`data/`·`tests/`(jp 2종 제외)가 하나라도 섞이면 전체 게이트.
+**게이트 범위는 변경 범위에 맞춘다(owner 2026-09-12) — `prepush_check.py` §0 이 코드로 판정한다.** 번들 diff 가 `jp/`·`J-ESR/`·`docs/`·`inbox/`·`.claude/`·루트 `TODO*.md`·배포 `.sh`·`CLAUDE.md` 뿐이면 한국 마스터 게이트(data-contract·K-ICS 룰·도메인 7종·DART raw·골든 지문)를 건너뛰고 `tests/test_jp_source_gate.py` + `tests/test_jp_deploy_matches_census.py` + `tests/test_deploy_assets.py` + `tests/test_push_gate_wiring.py` + `tests/test_prepush_scope.py` + `check_inbox_hygiene.py` 만 돌린다(실측 ~5초). 루트 마스터 JSON·`scripts/*.py`(배포 `.sh` 제외)·루트 HTML·`src/`·`data/`·`tests/`(jp 2종 제외)가 하나라도 섞이면 전체 게이트.
 **판정은 fail-closed다**: `@{upstream}` 없음·git 실패·빈 diff·모르는 경로 1개 → 전부 전체 게이트. 비교 기준은 `merge-base(@{upstream},HEAD)..HEAD` + 스테이지 + 워킹트리 + 미추적이고, 판정 근거(비교 ref·파일 수·결정적 파일)를 매 실행 인쇄한다. 축소 시 verdict 는 `SKIPPED(jp-scope)` — **"안 돌렸다"는 "통과했다"가 아니다.** 수동 오버라이드는 `--full`(강제 전체)·`--scope-only`(판정만 인쇄, 게이트 미실행) 둘뿐이고 **환경변수 우회로는 없다**. 범위 목록을 고치려면 `tests/test_prepush_scope.py`(변이시험)를 같이 통과시켜야 한다.
 
-## 6. K-ICS validation gate (필수)
+## 6. K-ICS validation gate (mandatory)
 
-다음 단계(JSON swap·템플릿·HTML 배포·push) 전에 `scripts/validate_kics_disclosure.py` 를 루트 `kics_disclosure.json` 에 실행. **RED=0** 이어야 하고, 예외는 `TODO.md` 에 문서화된 것(회사·분기·룰·사유)만. 예상 밖 RED 는 파싱 리뷰(MD 원문·파서 범위·행 매핑) 후 진행. 룰 `8_life` SKIP 은 차단 아님. 공식·허용오차는 `docs/agents/kics-json-validation-rules.md`.
+다음 단계(JSON swap·템플릿·HTML 배포·push) 전에 `scripts/validate_kics_disclosure.py` 를 루트 `kics_disclosure.json` 에 실행. **RED=0** 이어야 하고, 예외는 `docs/kics_gate_exceptions.md` 에 문서화된 것(회사·분기·룰·사유)만 — 등재는 owner 만. 예상 밖 RED 는 파싱 리뷰(MD 원문·파서 범위·행 매핑) 후 진행. 룰 `8_life` SKIP 은 차단 아님. 공식·허용오차는 `docs/agents/kics-json-validation-rules.md`.
 
 ## 7. 불변식 3개
 
@@ -86,14 +87,15 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 
 ## 10. 멀티에이전트
 
-- **에이전트 정의는 `.claude/agents/*.md` (저장소 추적, 2026-09-13~).** downloader·parser-kics·parser-ifrs17·publishing·designer·jp-collector = Sonnet 5, **validation = Opus 5**;
-  스킬은 `.claude/skills/`(kics-parser·ifrs17-parser·a11y-audit·launch-runbook·incident-postmortem). 그전엔 `.gitignore` 가 `.claude/` 를 통째로 막아 새 머신·클라우드 세션이 이 매핑을 못 읽었다.
+- **에이전트 정의는 `.claude/agents/*.md` (저장소 추적).** downloader·parser-kics·parser-ifrs17·publishing·designer·jp-collector = `sonnet`, **validation = `opus`**(별칭이라 최신 모델을 따라간다);
+  스킬은 `.claude/skills/`(kics-parser·ifrs17-parser·a11y-audit·launch-runbook·incident-postmortem).
 - 독립 작업은 **서브에이전트를 한 메시지에서 병렬 발사**. 병렬 축은 ① stage 내부 fan-out(회사×분기×도메인) ② item 별 파이프라인 중첩. "stage 별 병렬" 은 틀린 프레임(순차 파이프라인).
 - 동시 ≤4, 서브-서브에이전트 금지, 각 에이전트에 이 파일 + 자기 stage 프롬프트·TODO 를 명시. 메인 세션은 오케스트레이션(조율·통합·게이트)만.
-- 모델은 **티켓 유형으로** 고른다(정의 파일은 Sonnet 5 기본, validation 만 Opus 5): 대량·기계적 `bulk` 는 정의대로, 원인조사·핸들러 설계·릴레이 종합 같은 `investigate` 는 Agent 호출에 `model: opus` 덮어쓰기. 티켓 종결 노트에 모델·토큰·소요시간을 한 줄 남긴다(월 1회 같은 유형 Sonnet/Opus 비교).
+- 모델은 **티켓 유형으로** 고른다(정의 파일은 `sonnet` 기본, validation 만 `opus`): 대량·기계적 `bulk` 는 정의대로, 원인조사·핸들러 설계·릴레이 종합 같은 `investigate` 는 Agent 호출에 `model: opus` 덮어쓰기. 티켓 종결 노트에 모델·토큰·소요시간을 한 줄 남긴다(월 1회 같은 유형 Sonnet/Opus 비교).
 - "돌고 있냐" 는 세션 `subagents/agent-<id>.jsonl` mtime + 약속한 산출 파일로 판정(`tasks/<id>.output` 은 placeholder). 에이전트는 중간 산출을 디스크에 저장하며 진행.
 - 회사망: go.kr·KIPRIS 는 브라우저·WebFetch 금지(영구 행). 외부 443 은 시간대별로 막히니 발주 전 도달성 확인.
 
 ## 11. 배포
 
-라이브 = `main`(GitHub Pages, `CNAME`). 작업 브랜치 push ≠ 라이브. 이 PC 는 `git push` 가 차단되어 업로드는 폰 Termux 번들(`scripts/android_push_and_deploy.sh`). 배포 후 `public_exports/manifest.json` 의 `build_id` 로 라이브 확인. 데이터를 HTML 에 인라인 금지(JSON fetch). 화면 음수는 전부 △.
+라이브 = `main`(GitHub Pages, `CNAME`). 작업 브랜치 push ≠ 라이브. 작업 브랜치 push 는 이 PC 에서도 된다(2026-10-06 실측). `main` 배포는 owner GO 뒤 owner 가 폰 Termux 에서
+`scripts/android_push_and_deploy.sh --from-origin --branch <브랜치>` 로 한다(저장소 클론 **안에서** 실행, 확인 프롬프트 없이 바로 push). 배포 후 `public_exports/manifest.json` 의 `build_id` 로 라이브 확인. 데이터를 HTML 에 인라인 금지(JSON fetch). 화면 음수는 전부 △.

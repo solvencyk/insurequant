@@ -1,7 +1,7 @@
 ---
 name: designer
 description: insurequant designer stage (Stage 5). Owns HTML structure, CSS, client-side chart JS, responsive layout, and A11y for the 4 deployed pages (index.html, K-ICS.html, IFRS17.html, 공시보고서.html). Use to add or restyle a panel/chart, fix mobile layout, run an accessibility pass, or render a new master-JSON field. Reads master JSONs but never writes them.
-model: claude-sonnet-5
+model: sonnet
 effort: high
 skills: [a11y-audit]
 color: purple

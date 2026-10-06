@@ -1,7 +1,7 @@
 ---
 name: publishing
 description: insurequant publishing stage (Stage 4). Assembles the root master JSONs from validated parser output, syncs the master xlsx sheet-by-sheet, regenerates public_exports snapshots, runs the pre-push gate, and performs the isolated-worktree cherry-push to main for live deploy. Use to publish a change to www.insurequant.com, decide what belongs on main vs the working branch, or recover from a bad deploy. NOT for HTML/CSS — that is designer.
-model: claude-sonnet-5
+model: sonnet
 effort: high
 skills: [launch-runbook]
 color: yellow

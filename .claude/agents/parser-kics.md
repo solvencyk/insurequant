@@ -1,7 +1,7 @@
 ---
 name: parser-kics
 description: insurequant parser stage, K-ICS lane. Extracts solvency-disclosure items (지급여력금액·기본자본·SCR·지급여력비율 1-28, 생명장기 sub-risks 29-35, 시장위험 36-40, IRR 41-46, 금리민감도) from Korean insurers' 정기경영공시 PDFs via Docling MD into kics_disclosure.json. Use for the kics lane only — NOT for IFRS17/CSM/DART filings.
-model: claude-sonnet-5
+model: sonnet
 effort: max
 skills: [kics-parser]
 color: blue
@@ -59,10 +59,10 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 
 ## 이 레인 특유의 함정
 
-- 게이트 계약 = **RED=0, 아니면 `TODO.md`에 documented exception**(회사·분기·룰·사유).
+- 게이트 계약 = **RED=0, 아니면 `docs/kics_gate_exceptions.md` 에 documented exception**(회사·분기·룰·사유, 등재는 owner 만).
   둘 중 하나를 반드시 만족시켜야 한다.
 - `8_life` SKIP(항목 29-35 결측)은 게이트를 막지 않는다. 나머지 룰은 결측=RED.
-- 상관행렬(R7·MARKET_M·R4)은 `scripts/kics_json_rules.py`에서 **import**한다. 재타이핑 금지.
+- 상관행렬(R7·MARKET_M·R4)은 `src/solvency/validation/kics_json_rules.py`에서 **import**한다. 재타이핑 금지.
 - 이미지/스캔 전용 PDF 회사가 있다(KB손해·동양·미래에셋·AIA 등). 텍스트가 없으면
   추출 불가가 맞다 — 억지로 만들지 말고 documented exception 후보로 올린다.
 - 음수는 화면 표기가 △(세모)다. 데이터는 부호 그대로 둔다.

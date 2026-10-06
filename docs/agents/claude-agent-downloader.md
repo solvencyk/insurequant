@@ -18,8 +18,7 @@ Do NOT touch `scripts/`, `src/`, `*.html`, `*.md`, or `kics_disclosure.json` unl
 
 Before any action, read these in order:
 
-- `TODO_downloader.md` (current state and documented exceptions for the downloader stage; falls back to `TODO.md` for cross-stage items)
-- `docs/changelog_downloader.md` (downloader-specific history; cross-stage history is in `docs/claude-changelog.md`)
+- `TODO_downloader.md` (current state and decisions for the downloader stage; falls back to `TODO.md` for cross-stage items). History (`docs/changelog_downloader.md`) only when you need a past decision's background.
 - `docs/agents/source-catalog.yaml` (sibling structured catalog — same URLs/XPaths in machine-readable form)
 - `data/dart/_inventory_manifest.json` (DART coverage; avoid re-fetching)
 - `data/disclosure/_meta/FY*/_manifest.json` (per-period manifests)
@@ -31,14 +30,14 @@ Before any action, read these in order:
 
 #### 1a. 손보 17사 — 사별 사이트
 
-Script: `scripts/download_disclosure_2026q1_nonlife.py`
+Script (latest template): `scripts/download_disclosure_2026q2_nonlife.py`. 아래 표는 2026.1Q 기준 스냅샷이다 — 분기 라벨·id 의 정본은 최신 스크립트.
 
 | KR | name | URL | XPath | mode | notes |
 |---|---|---|---|---|---|
 | KR0001 | 메리츠화재해상보험 | https://www.meritzfire.com/disclosure/managerial-announcement/periodic.do#!/ | `(//a[contains(@class,"btn_file") and contains(@class,"i_pdf") and @download])[1]` | click_dl | AngularJS — wait_selector='a.btn_file.i_pdf', wait_ms=5000 |
 | KR0002 | 한화손해보험 | https://www.hwgeneralins.com/notice/ir/biz01.do | `//a[contains(@title, "fy2026 1/4분기") or contains(@href, "FY2026-1_4.pdf")]` | direct_href | URL path says /ir/ but content is 경영공시 |
 | KR0003 | 롯데손해보험 | https://www.lotteins.co.kr/web/C/D/H/cdh_ir_board03_list.jsp | step1 `//a[@title="2026년 1분기 경영공시"]` -> step2 `//a[contains(@href, "downLoadFile")]` | two_step + click_dl | step1 navigates via JS goViewPage; step2 javascript:downLoadFile(...) returns ZIP |
-| KR0004_MG | MG손해보험 (구 예별) | https://yebyeol.co.kr/PB021010DM.scp?menuId=MN0802001 | `//*[@id="quarter1_2026"]` | click_dl | 예별 -> MG 사명변경 |
+| KR0004_MG | 예별손해보험 (구 MG손해보험) | https://yebyeol.co.kr/PB021010DM.scp?menuId=MN0802001 | `//*[@id="quarter1_2026"]` | click_dl | MG손해보험 계약이 2025-09-03 가교사 예별손해보험으로 이전됐다. 이 사이트에 MG 과거 공시도 있다 |
 | KR0005 | 흥국화재 | https://www.heungkukfire.co.kr/FRW/announce/manageRegular.do | `//*[@id="tab01_01"]/dt/button/span` | click_dl | latest period in tab01_01 |
 | KR0008 | 삼성화재해상보험 | https://www.samsungfire.com/v2/html/publication/02/J_020_010_001.html | `//*[@id="baseMain"]/div[2]/section[2]/div/div/table/tbody/tr[1]/td[1]/div/div/button` | click_dl | ZIP (분기자료 묶음) |
 | KR0009 | 현대해상 | https://www.hi.co.kr/serviceAction.do | js_eval_first `goMenu("100911")` -> step1 `//a[contains(text(), "2026년 1분기 경영공시")]` -> step2 `//*[@id="fileList"]/li[3]/a` | two_step + click_dl | li[3]=경영공시 최종 (li[1,2]=재무제표 skip) |
@@ -59,7 +58,7 @@ Notes:
 
 #### 1b. 생보 22사 — 생보협회 일괄 zip
 
-Script: `scripts/download_disclosure_2026q1_life.py`
+Script (latest template): `scripts/download_disclosure_2026q2_life.py`. 협회 포털이 늦으면 자사 사이트에 먼저 올린 회사는 `scripts/download_disclosure_2026q2_life_sites.py` 로 받는다(대상은 `life_own_site_census.json` 의 posted).
 
 - URL: https://pub.insure.or.kr/mngtDis/mngtDis/list.do
 - 2026.1Q row XPath: `//*[@id="scroll_cont"]/table/tbody/tr[23]/td[2]/a` (tr[N] increments per quarter; pull date from td[1] to verify)
@@ -69,13 +68,7 @@ Script: `scripts/download_disclosure_2026q1_life.py`
 
 Filename-to-KR mapping: substring match. 신한라이프의 generic name `2026년 1분기 정기경영공시.pdf` -> pdfminer로 첫페이지 추출해 확인.
 
-> **Retired 2026-08-03** (`inbox/downloader/20260803T0057Z`): 채권발행현황 (FSC data.go.kr, api_id `15059611`)
-> was Source 2 here. Capital-securities issuance is now sourced entirely from DART per-bond extraction
-> (`data/bonds/capital_securities_fy2025.json`, replaced 2026-06-20) — the FSC ingestion pipeline
-> (`src/bonds/fsc_client.py`, `scripts/ingest_fsc_bonds.py`, `scripts/normalize_bond_schedule.py`) is
-> archived under `data/_archive/`, not deleted. The other 3 `15061307`/`15061306`/`15094797` API IDs
-> (unrelated to bonds — future F9 손보/생보/실손 경영지표) live on in `source-catalog.yaml`'s
-> `future_sources_planned` F9 entry. See `docs/changelog_downloader.md` 2026-08-03 for the full record.
+> 채권발행현황(FSC data.go.kr `15059611`)은 2026-08-03 retire — 자본성증권은 DART per-bond 추출(`data/bonds/`)이 정본이다.
 
 ### Source 2 — DART공시 (OpenDART)
 
@@ -93,11 +86,11 @@ Filename-to-KR mapping: substring match. 신한라이프의 generic name `2026�
   - `data/dart/<period>/raw/KR####_<canonical>[__cons]_<rcept>/document.zip + *.xml`
   - `data/dart/<period>/raw/KR####_<canonical>/document.zip  (period = FYYYYY_Q#)`
 
-KNOWN BUG (TODO fix): `batch_historical` sometimes picks 정정 `[기재정정]/[첨부정정]` rcept which returns status=014 'file not found' on document.xml. Fix: filter out report_nm starting with '[' and use 최신 원본 사업/분기/반기보고서. Workaround: direct rcept_no fetch via list.json search.
+`batch_historical` 의 정정 rcept 선택 버그(`[기재정정]/[첨부정정]` → status=014)는 2026-08-13 고쳤다(`[` 로 시작하는 report_nm 제외). 그 전 이력의 소급 재검사는 `TODO_downloader.md` BATCH-HISTORICAL-FIX.
 
 Body XML contains 연결재무제표 주석 directly — DO NOT fetch attachment (별첨). Verified keywords: 보험계약마진, 보험료배분접근법(을 적용하지 않/하는), 보험손익의 상세내역, 신계약 — all present in body.
 
-Coverage now (2026-05-30): 76 annual rcepts + 303 period zips. Inventory at `data/dart/_inventory_manifest.json`.
+Inventory: `data/dart/_inventory_manifest.json`.
 
 DART universe (`src/ifrs17/universe.py`):
 - 23 listed (정기보고서 13Q each)
@@ -132,7 +125,7 @@ Future KIDI tables (planned, not active):
 
 ### Source 4 — IR공시 (13 source covering 17 KRs)
 
-Script: `scripts/download_ir_2026q1.py`
+Script (latest template): `scripts/download_ir_2026q2.py`. 아래 표는 2026.1Q 기준 스냅샷이다.
 
 | KR (group covers) | name | URL | XPath | mode | notes |
 |---|---|---|---|---|---|
@@ -242,20 +235,10 @@ If a site returns 0 visible elements for the expected XPath:
 - Don't fabricate data for missing rcepts. Honest gap > fake number.
 - Don't include 재무제표/연결재무제표/감사보고서 as 경영공시 raw (sites confuse the two — 한화손보 IR was previously mis-classified because URL path was /notice/ir/ but content was 경영공시).
 - Don't ingest 캐롯손해보험 (KR1059) — merged into 한화손보, no separate site.
-- **Don't look for the per-company legacy downloaders — they're gone (2026-07-21).**
-  `src/solvency/legacy/downloaders/{disclosure,hw,samsung,shinhanez}_disclosure_downloader.py`
-  (~2.2k lines) were kept as "fallback for regression" but had zero importers. The single
-  engine (`src/solvency/downloader/base.py` + `runner.py` + `handlers/`) is the only path.
-  If a site breaks, self-heal the handler per §"When URLs/XPaths Change" — don't resurrect
-  a per-company script.
-- **`run_harness.py` now requires `--stage`, and only `quality|pdf|parse` exist.** Your PDF
-  accessibility gate is unchanged: `python scripts/run_harness.py --stage pdf --period FY2026_Q1`.
-  `--stage all` / `data` / `perf` were removed (they built the retired `kics_data.json`), so a
-  bare `python scripts/run_harness.py` no longer silently does something — it errors.
-- **Archived, not deleted (2026-07-22):** `redownload_hyundai_ir_2025q4.py`,
-  `redownload_shinhanez_disclosure.py`, `check_ir_file_integrity.py`, `crawl_ir_*` (14),
-  `ifrs17_download_fy2025_nonlife.py` → `archive/2026-07_unreferenced_scripts/`. Nothing in
-  the repo referenced them. Restore with `git mv` if a source needs one again.
+- **Per-company legacy downloaders are gone** — the single engine (`src/solvency/downloader/base.py` + `runner.py` + `handlers/`)
+  is the only path. If a site breaks, self-heal the handler per §"When URLs/XPaths Change"; don't resurrect a per-company script.
+- **`run_harness.py` requires `--stage` (`quality|pdf|parse`).** PDF accessibility gate: `python scripts/run_harness.py --stage pdf --period <period>`.
+- Old one-off scripts (`crawl_ir_*` 등) are archived under `archive/2026-07_unreferenced_scripts/` — restore with `git mv` if needed.
 
 ## DART Core 4 Metrics (사용자 명시)
 
@@ -324,7 +307,7 @@ Anything else (download stub, 미수집, parse error) is NOT 수용 — must be 
 
 ### Universe (39 entries — fixed list, do NOT modify casually)
 
-손보 17: KR0001 메리츠화재 / KR0002 한화손보 / KR0003 롯데손보 / KR0004_MG MG손해(구 예별) / KR0005 흥국화재 / KR0008 삼성화재 / KR0009 현대해상 / KR0010 KB손해 / KR0011 DB손해 / KR0029 AIG손해 / KR0032 NH농협손해 / KR0049 악사손해 / KR0050 하나손해 / KR0051 신한이지손해 / KR0150 서울보증 / KR1000 코리안리재보험 / KR1098 카카오페이손해.
+손보 17: KR0001 메리츠화재 / KR0002 한화손보 / KR0003 롯데손보 / KR0004_MG 예별손해(구 MG손해) / KR0005 흥국화재 / KR0008 삼성화재 / KR0009 현대해상 / KR0010 KB손해 / KR0011 DB손해 / KR0029 AIG손해 / KR0032 NH농협손해 / KR0049 악사손해 / KR0050 하나손해 / KR0051 신한이지손해 / KR0150 서울보증 / KR1000 코리안리재보험 / KR1098 카카오페이손해.
 
 생보 22: KR0068 한화생명 / KR0069 삼성생명 / KR0070 ABL생명 / KR0071 흥국생명 / KR0072 KDB생명 / KR0073 교보생명 / KR0074 라이나생명 / KR0075 BNP파리바카디프 / KR0076 iM라이프 / KR0079 미래에셋생명 / KR0082 DB생명 / KR0083 푸본현대생명 / KR0087 동양생명 / KR0094 신한라이프 / KR0095 메트라이프 / KR0097 하나생명 / KR0099 KB라이프 / KR0100 처브라이프 / KR0104 농협생명 / KR1010 교보라이프플래닛 / KR1011 IBK연금보험 / AIA 에이아이에이생명.
 
@@ -348,7 +331,7 @@ After this prompt completes, parser subagent receives:
 - Updated DART raw_history (parse for CSM waterfall/신계약 CSM/LOB)
 - Updated KIDI premium_summary (`nb_premium_wolnap.json` merge)
 
-Parser subagent's separate prompt: `docs/agents/claude-agent-parser.md` (currently a skeleton — owner fills in label variation matrix for 현대 vs KB vs 삼성화재 LOB and downstream viz hooks).
+Parser subagent's prompt: `docs/agents/claude-agent-parser.md` + lane domain docs (`docs/domains/claude-agent-{kics,ifrs17}.md`).
 
 ## Inbox handoff protocol
 
@@ -359,14 +342,6 @@ Parser subagent's separate prompt: `docs/agents/claude-agent-parser.md` (current
 - **내가 쓰는 곳**: 없음(최상류). raw가 외부에 진짜 부재면 답변에 honest gap 명시.
 - 에이전트는 inbox를 자동 감시하지 않음 — 드라이버(Workflow/사람)가 호출하면 드레인. bounded max 5회.
 
-## Reference: Phase 2 Reorg Outcome (2026-05-30)
+## Reference: canonical layout reorg
 
-The canonical layout above was applied via a non-destructive reorg on 2026-05-30:
-
-- 159 moves executed, 0 errors.
-- 15 distinct legacy sources archived under `data/_archive/20260530T120000Z/` (total footprint 445 MB; full audit trail in `_reorg.log` at that path).
-- All 13 disclosure periods (`FY2023_Q1` … `FY2026_Q1`) now have `raw/` subdirs alongside existing `parsed/`.
-- All 13 IR periods now have `raw/` subdirs containing per-KR folders + `_groups/` + `_manifest.json` (+ `_failures/` where applicable).
-- `FY2026_Q1` verified: 39 disclosure PDFs (17 손보 + 22 생보), 13 IR KR sources, 4 group dirs.
-- DART, KIDI, bonds canonical locations preserved untouched.
-- Nothing was deleted; every archived item is recoverable from `data/_archive/20260530T120000Z/`.
+The canonical layout above was applied non-destructively on 2026-05-30; every pre-reorg source is recoverable from `data/_archive/20260530T120000Z/` (audit trail `_reorg.log`).

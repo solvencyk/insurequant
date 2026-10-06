@@ -82,7 +82,7 @@ tol **10.0**. Status: GREEN |diff|<0.5, YELLOW ≤tol, RED >tol or missing input
   ⇒ parser gap (RED), else cadence (legit SKIP). Strips numeric prefixes to dodge 경과조치 compound-string false-pos.
 - `_market_tooling_fail` (advisory, non-blocking) — localizer ERR/NO_SIGNAL/TIMEOUT worklist.
 
-**Gate contract (CLAUDE.md):** RED must be **0**, OR every RED is a documented exception in `TODO.md` (company,
+**Gate contract (CLAUDE.md):** RED must be **0**, OR every RED is a documented exception in `docs/kics_gate_exceptions.md` (company,
 quarter, rule, reason). Permanent skip cohorts in TODO.md: **KICS-SUB** (KR0029, KR0150, KR1098 …), image-OCR
 **KICS-IMG** (KR0010, KR0079). Exit 0 only if red=0 AND census_red=0 AND parent-child empty.
 

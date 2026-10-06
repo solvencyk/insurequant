@@ -13,7 +13,7 @@ When this document and the Python module disagree, **the Python module wins**. U
 Before advancing to the next K-ICS pipeline stage (JSON swap, template sync, HTML deploy, push):
 
 1. Run `python scripts/validate_kics_disclosure.py` on root `kics_disclosure.json`.
-2. **RED count must be 0**, unless each remaining RED is a **documented exception** in `TODO.md` (company code, quarter, rule id, reason).
+2. **RED count must be 0**, unless each remaining RED is a **documented exception** in `docs/kics_gate_exceptions.md` (company code, quarter, rule id, reason).
 3. Any unexpected RED requires **parsing-error review** (MD source, parser scope, row mapping) before proceeding.
 4. YELLOW findings are warnings (|diff| >= 0.5 eok-won, <= tolerance); they do not block the gate but should be triaged.
 5. SKIP on rule `8_life` is expected when sub-items 29-35 are not all present (non-life insurers, partial tables). SKIP on rule `3` is expected (bridge formula deferred; Rule 1 is authoritative for item1).
