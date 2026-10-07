@@ -179,9 +179,12 @@ def test_docs_agree_with_what_pages_fetch():
 # keep-list can never produce them. Each one fails silently if dropped: CNAME (custom domain
 # unbinds), .nojekyll (GitHub Pages' default Jekyll hides `_`-prefixed paths), robots.txt
 # (crawler policy / AI-training opt-out vanishes), LICENSE (the public repo and
-# https://www.insurequant.com/LICENSE lose the stated terms), .gitignore. Wired 2026-09-11 —
+# https://www.insurequant.com/LICENSE lose the stated terms), .gitignore, og-image.png (the
+# link-preview card; only `<meta property="og:image">` points at it and the grep ignores meta
+# content, so dropping it silently turns every KakaoTalk/Teams/LinkedIn preview text-only —
+# added 2026-10-07). Wired 2026-09-11 —
 # until then this class existed only as a comment inside robots.txt ("배선했다 ≠ 강제된다").
-ALWAYS_KEEP = [".gitignore", ".nojekyll", "CNAME", "LICENSE", "robots.txt"]
+ALWAYS_KEEP = [".gitignore", ".nojekyll", "CNAME", "LICENSE", "robots.txt", "og-image.png"]
 
 
 def test_always_keep_files_exist_and_are_documented():

@@ -5,16 +5,16 @@
 
 ## Status (최신 3개)
 
+- **2026-10-07 og:image 링크 미리보기 카드** — 루트 5개 페이지에 `og:image`·`twitter:card` meta + `og-image.png`(트리맵+버블맵 장식 카드, 원본 `docs/og-image.src.html`).
+  `ALWAYS_KEEP` 등재. owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- og-image.png`.
 - **2026-09-22 K-ICS 금리 민감도 패널 교체** — 순자산 듀레이션/컨벡서티 2카드 → 자산D/부채D/듀레이션갭 3카드(owner 지시).
   컨벡서티는 폐지(K-ICS 상승/하락 충격 비대칭). 라이브 `22e2471`.
 - **2026-09-21c IFRS17·기타공시 헤더 셀렉트 + 기간 토글 이식**, 토글 CSS 를 `common.css` 로 승격, 섹션 앵커 착지 오프셋을 헤더 실측으로. `6a51b7a`.
-- **2026-09-21 K-ICS `IQP is not defined` 라이브 사고 복구** — 정의 복원 + try/catch 안전망. `197d15e`. 게이트는 validation `DEPLOYED_JS_UNDEFINED_CALL`.
 
 ## 열린 일
 
 - [ ] **듀레이션갭 3개 분기 도달 불가** — publishing 과 같이(`TODO_publishing.md`).
 - [ ] **IFRS17 모바일 가로 넘침 160px** — 375px 에서 `TABLE` 이 407px. 이번 변경 전 라이브에도 있던 것. 표를 `.table-wrap` 스크롤 안에.
-- [ ] **`og:image` 4페이지 0건**(2026-10-07 실측).
 - [ ] **팔레트 B 에서 내 판단으로 바꾼 +/△ 색**(올리브 `#4b7f2a`·벽돌 `#b4443a`) — owner 확인 대기.
 - [ ] **jp ESRランキング 범례 8개** — owner 판단 대기(2026-09-15b).
 

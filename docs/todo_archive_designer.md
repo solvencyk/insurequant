@@ -1,5 +1,9 @@
 # TODO archive — `TODO_designer.md` (Status 이력, 읽기 지연)
 
+## 2026-10-07 밀린 Status (og:image 항목이 들어오며 최신 3개에서 밀림)
+
+- **2026-09-21 K-ICS `IQP is not defined` 라이브 사고 복구** — 정의 복원 + try/catch 안전망. `197d15e`. 게이트는 validation `DEPLOYED_JS_UNDEFINED_CALL`.
+
 ## 2026-10-07 정리 — 정리 전 `TODO_designer.md` 전문 (무수정)
 
 # Insurequant Designer TODO (Stage 5)

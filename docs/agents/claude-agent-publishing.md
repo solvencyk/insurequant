@@ -86,6 +86,7 @@ The HTML pages fetch these directly — **데이터를 HTML 에 인라인하지 
 > | `.gitignore` | slim 워크트리 위생 |
 > | `robots.txt` | 크롤러 정책(AI 학습 크롤러 차단·`/public_exports/` 색인 제외) 소멸 |
 > | `LICENSE` | 공개 저장소·`https://www.insurequant.com/LICENSE` 의 이용 조건 사라짐(데이터베이스제작자권 고지) |
+> | `og-image.png` | 링크 미리보기 카드. `og:image` 메타만 가리켜 grep 으로 도출되지 않는다. 빠지면 카톡·팀즈·링크드인 미리보기가 글자만 남음(2026-10-07) |
 >
 > `sitemap.xml` 은 각 HTML 의 `<link rel="sitemap">` 으로 참조돼 grep 으로 도출된다. `common.css`·`theme.js`·`download-survey.js`·
 > `report-widget.js`·`forms-config.js`·`privacy.html`·`public_exports/*` 는 HTML `<script src>`/`href` 또는 그 JS 의 fetch 로 도출된다.
@@ -202,7 +203,7 @@ appears, tell designer the path and the schema delta. See [claude-agent-designer
 작업 브랜치 push 는 라이브가 아니다.
 
 **Keep-list 정본 = `git ls-tree -r --name-only origin/main`.** 2026-10-07 실측(jp 10개 제외):
-`.gitignore` · `.nojekyll` · `CNAME` · `LICENSE` · `robots.txt` · `sitemap.xml` · `common.css` · `theme.js` · `download-survey.js` · `report-widget.js` ·
+`.gitignore` · `.nojekyll` · `CNAME` · `LICENSE` · `robots.txt` · `og-image.png` · `sitemap.xml` · `common.css` · `theme.js` · `download-survey.js` · `report-widget.js` ·
 `forms-config.js` · `privacy.html` · `index.html` · `K-ICS.html` · `IFRS17.html` · `공시보고서.html` · §1 표의 JSON 전부(`dividend.json`·`IFRS17_BS.json`
 포함) · `public_exports/*`(15개). HTML 의 fetch 가 바뀌면 §1 명령으로 재도출하고 `tests/test_deploy_assets.py` 를 돌린다.
 

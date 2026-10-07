@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>og mock 2</title>
+<style>
+  :root{--bg:#ffffff;--card:#f5f5f4;--border:#e4e4e2;--text:#18181b;--muted:#63666b;--ink-strong:#3f4347;--primary:#0f6e68}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1200px;height:630px;overflow:hidden;background:var(--bg)}
+  body{position:relative;font-family:'Pretendard Variable',Pretendard,'Segoe UI','Malgun Gothic','Noto Sans KR',sans-serif;color:var(--text)}
+  .bar{position:absolute;left:0;top:0;width:1200px;height:10px;background:var(--primary)}
+  .brand{position:absolute;left:64px;top:60px;font-size:34px;font-weight:800;letter-spacing:-0.4px;line-height:1}
+  .brand .hint{display:block;margin:10px 0 0;font-size:20px;font-weight:400;color:var(--muted);letter-spacing:0}
+  h1{position:absolute;left:64px;top:164px;width:500px;font-size:64px;font-weight:800;line-height:1.14;letter-spacing:-1.5px}
+  h1 .accent{color:var(--primary)}
+  .chips{position:absolute;left:64px;top:416px;display:flex;flex-wrap:wrap;gap:10px;width:500px}
+  .chip{height:40px;padding:0 16px;display:flex;align-items:center;border:1px solid var(--border);background:var(--card);border-radius:999px;font-size:18px;font-weight:600;color:var(--ink-strong)}
+  .foot{position:absolute;left:64px;bottom:60px;font-size:22px;font-weight:700;color:var(--muted);line-height:1}
+  .foot span{font-weight:400;margin-left:10px}
+  .p1{position:absolute;left:584px;top:64px}
+  .p2{position:absolute;left:584px;top:320px}
+  svg{display:block}
+  svg text{font-family:'Pretendard Variable',Pretendard,'Segoe UI','Malgun Gothic','Noto Sans KR',sans-serif}
+</style>
+</head>
+<body>
+  <div class="bar"></div>
+  <div class="brand">InsureQuant<span class="hint">보험사 공시 대시보드</span></div>
+  <h1>국내 보험사<br><span class="accent">K-ICS·IFRS17</span><br>현황 한눈에</h1>
+  <div class="chips">
+    <div class="chip">지급여력 마켓맵</div>
+    <div class="chip">CSM 버블맵</div>
+    <div class="chip">신계약 CSM 배수</div>
+  </div>
+  <div class="foot">www.insurequant.com<span>분기 공시 기반</span></div>
+
+  <!-- 1) 장식용 트리맵: 실제 데이터 아님, 숫자·회사명 없음 -->
+  <svg class="p1" width="552" height="236" viewBox="0 0 552 236" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="scale" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" stop-color="#a8362f"/>
+        <stop offset="0.35" stop-color="#d9c27a"/>
+        <stop offset="0.6" stop-color="#6aae7a"/>
+        <stop offset="1" stop-color="#17582f"/>
+      </linearGradient>
+    </defs>
+    <rect x="0.5" y="0.5" width="551" height="235" rx="16" fill="#f5f5f4" stroke="#e4e4e2"/>
+    <text x="16" y="28" font-size="15" font-weight="700" fill="#3f4347">지급여력 마켓맵</text>
+    <text x="458" y="29" font-size="12" fill="#63666b" text-anchor="end">색 = 지급여력비율</text>
+    <rect x="466" y="22" width="70" height="8" rx="4" fill="url(#scale)"/>
+    <!-- group boxes -->
+    <rect x="16" y="40" width="300" height="182" rx="8" fill="#ffffff" stroke="#e4e4e2"/>
+    <rect x="324" y="40" width="212" height="182" rx="8" fill="#ffffff" stroke="#e4e4e2"/>
+    <text x="24" y="53" font-size="11" fill="#63666b">생명보험</text>
+    <text x="332" y="53" font-size="11" fill="#63666b">손해보험</text>
+    <g>
+      <!-- 생명 -->
+      <rect x="22"  y="58"  width="128" height="156" rx="3" fill="#3f9a56"/>
+      <rect x="153" y="58"  width="79"  height="82"  rx="3" fill="#6aae7a"/>
+      <rect x="235" y="58"  width="75"  height="82"  rx="3" fill="#3f9a56"/>
+      <rect x="153" y="143" width="45"  height="71"  rx="3" fill="#17582f"/>
+      <rect x="201" y="143" width="49"  height="37"  rx="3" fill="#3f9a56"/>
+      <rect x="253" y="143" width="57"  height="37"  rx="3" fill="#6aae7a"/>
+      <rect x="201" y="183" width="54"  height="31"  rx="3" fill="#3f9a56"/>
+      <rect x="258" y="183" width="52"  height="31"  rx="3" fill="#6aae7a"/>
+      <!-- 손해 -->
+      <rect x="330" y="58"  width="90"  height="82"  rx="3" fill="#17582f"/>
+      <rect x="423" y="58"  width="107" height="82"  rx="3" fill="#3f9a56"/>
+      <rect x="330" y="143" width="82"  height="71"  rx="3" fill="#3f9a56"/>
+      <rect x="415" y="143" width="55"  height="32"  rx="3" fill="#6aae7a"/>
+      <rect x="473" y="143" width="57"  height="32"  rx="3" fill="#3f9a56"/>
+      <rect x="415" y="178" width="75"  height="36"  rx="3" fill="#6aae7a"/>
+      <rect x="493" y="178" width="37"  height="36"  rx="3" fill="#a8362f"/>
+    </g>
+  </svg>
+
+  <!-- 2) 장식용 버블맵: 실제 데이터 아님, 숫자 없음 -->
+  <svg class="p2" width="552" height="246" viewBox="0 0 552 246" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0.5" y="0.5" width="551" height="245" rx="16" fill="#f5f5f4" stroke="#e4e4e2"/>
+    <text x="16" y="28" font-size="15" font-weight="700" fill="#3f4347">CSM 버블맵</text>
+    <text x="536" y="29" font-size="12" fill="#63666b" text-anchor="end">버블 크기 = 기말 CSM</text>
+    <g stroke="#dcdcd8" stroke-width="1" stroke-dasharray="4 4">
+      <line x1="48" y1="80"  x2="530" y2="80"/>
+      <line x1="48" y1="168" x2="530" y2="168"/>
+      <line x1="150" y1="44" x2="150" y2="206"/>
+      <line x1="270" y1="44" x2="270" y2="206"/>
+      <line x1="390" y1="44" x2="390" y2="206"/>
+    </g>
+    <line x1="48" y1="128" x2="530" y2="128" stroke="#0f6e68" stroke-width="1.5" stroke-dasharray="6 5" opacity="0.55"/>
+    <g stroke="#a9a9a4" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="48" y1="40" x2="48" y2="206"/>
+      <line x1="48" y1="206" x2="536" y2="206"/>
+      <polyline points="42,48 48,40 54,48"/>
+      <polyline points="528,200 536,206 528,212"/>
+    </g>
+    <g stroke="#f5f5f4" stroke-width="2">
+      <circle cx="86"  cy="150" r="10" fill="#bdbdb8" fill-opacity="0.8"/>
+      <circle cx="120" cy="182" r="13" fill="#bdbdb8" fill-opacity="0.8"/>
+      <circle cx="150" cy="112" r="12" fill="#bdbdb8" fill-opacity="0.8"/>
+      <circle cx="178" cy="160" r="18" fill="#bdbdb8" fill-opacity="0.8"/>
+      <circle cx="214" cy="132" r="14" fill="#bdbdb8" fill-opacity="0.8"/>
+      <circle cx="238" cy="186" r="11" fill="#bdbdb8" fill-opacity="0.8"/>
+      <circle cx="262" cy="98"  r="24" fill="#0f6e68" fill-opacity="0.5"/>
+      <circle cx="300" cy="156" r="22" fill="#0f6e68" fill-opacity="0.82"/>
+      <circle cx="340" cy="76"  r="17" fill="#bdbdb8" fill-opacity="0.8"/>
+      <circle cx="368" cy="176" r="15" fill="#bdbdb8" fill-opacity="0.8"/>
+      <circle cx="396" cy="120" r="20" fill="#bdbdb8" fill-opacity="0.8"/>
+      <circle cx="432" cy="150" r="26" fill="#bdbdb8" fill-opacity="0.8"/>
+      <circle cx="468" cy="92"  r="34" fill="#0f6e68" fill-opacity="1"/>
+      <circle cx="500" cy="178" r="11" fill="#bdbdb8" fill-opacity="0.8"/>
+    </g>
+    <text x="292" y="234" font-size="13" fill="#63666b" text-anchor="middle">신계약 CSM</text>
+    <text transform="translate(20 126) rotate(-90)" font-size="13" fill="#63666b" text-anchor="middle">신계약 배수</text>
+  </svg>
+</body>
+</html>

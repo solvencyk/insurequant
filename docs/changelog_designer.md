@@ -1,9 +1,28 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-09-22 · Stage 5/5 — designer
+> Last updated: 2026-10-07 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-10-07 -- og:image 링크 미리보기 카드 + 루트 5개 페이지 meta (owner 직접 지시)
+
+**바뀐 것.** `og-image.png`(1200×630, 62KB)를 루트에 추가하고 `index.html`·`K-ICS.html`·`IFRS17.html`·`공시보고서.html`·`privacy.html` 의 `<head>` 에
+`og:image`·`og:image:width/height/alt`·`twitter:card=summary_large_image` 를 넣었다. 카톡·팀즈·링크드인에 링크를 붙이면 글자만 뜨던 것이 카드로 뜬다.
+
+**왜.** GA4 주간 활성 26명 · 방명록 29건 실측으로 병목이 제품이 아니라 노출이라고 판단했다. 루트 5개 페이지에 `og:image` 가 0건이었다(2026-10-07 실측).
+
+**디자인.** 팔레트 B(무채색 + 딥 틸 한 점) 그대로. 왼쪽 헤드라인, 오른쪽에 장식용 트리맵(생명/손해 두 묶음, 초록 계열 + 빨간 칸 하나)과 버블맵.
+숫자·회사명이 없어 분기가 바뀌어도 낡지 않는다. 원본은 `docs/og-image.src.html`, 재생성은 Edge 헤드리스:
+`msedge --headless=new --window-size=1200,630 --force-device-scale-factor=1 --screenshot=og-image.png file:///…/docs/og-image.src.html`.
+
+**배선.** `og-image.png` 는 `og:image` 메타만 가리켜 keep-list grep 으로 도출되지 않는다 → `tests/test_deploy_assets.py::ALWAYS_KEEP`·`docs/launch_runbook.md`·
+`docs/agents/claude-agent-publishing.md` 에 등재(테스트가 존재와 문서 등재를 강제). `tests/test_deploy_assets.py` 11 passed.
+
+**배포.** owner 가 "designer 말고 직접 라이브 push" 로 지시해 orchestrator 가 작성하고 main 에 격리 워크트리로 올렸다(HTML 5 + PNG 1만). 라이브 커밋은 `git log origin/main -- og-image.png`.
+카카오는 미리보기를 캐시하므로 이미 공유된 링크는 한동안 옛 모양이다.
 
 ---
 
