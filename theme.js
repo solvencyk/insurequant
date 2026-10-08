@@ -410,7 +410,112 @@
     hideChartTips(e.target);
   }, { capture:true, passive:true });
 
-  function boot(){ mount(); syncSectionNav(); watchForRerender(); }
+  /* ---- 공유 메뉴 (owner 2026-10-08): 링크 복사 · 현재 페이지 스크린샷 ----------------------
+     헤더 우상단, 테마 토글 왼쪽. 사이트 전 페이지 공통(일본어 jp/ 페이지는 제외).
+     html2canvas 는 스크린샷을 누를 때만 SRI 로 불러온다(평소 로딩 영향 없음). scripts/compute_sri.py 에 등재.
+     페이지가 조정하고 싶으면 window.IQShareConfig = { container:'.container', ignore:['.add-wrap', ...] } 를
+     (누르는 시점에 읽는다) 둔다. ignore 는 스크린샷에서 뺄 요소 선택자.                                  */
+  var H2C_URL = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+  var H2C_SRI = 'sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H';
+  var _shToastTimer = null;
+  function shToast(t){
+    var el = document.getElementById('iqToast');
+    if(!el){
+      el = document.createElement('div'); el.id = 'iqToast'; el.className = 'iq-toast';
+      el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite'); el.hidden = true;
+      document.body.appendChild(el);
+    }
+    el.textContent = t; el.hidden = false;
+    clearTimeout(_shToastTimer); _shToastTimer = setTimeout(function(){ el.hidden = true; }, 2600);
+  }
+  function shCopyLink(){
+    var u = new URL(location.href); u.searchParams.delete('iq_internal');
+    var link = u.toString().replace(/%2C/gi, ',');
+    var done = function(){ shToast('링크를 복사했습니다'); };
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done, function(){ window.prompt('링크를 복사하세요', link); });
+    else window.prompt('링크를 복사하세요', link);
+  }
+  function shLoadH2C(ok){
+    if(window.html2canvas){ ok(); return; }
+    var s = document.createElement('script'); s.src = H2C_URL; s.integrity = H2C_SRI; s.crossOrigin = 'anonymous';
+    s.onload = ok; s.onerror = function(){ shToast('이미지 저장 도구를 불러오지 못했습니다'); };
+    document.head.appendChild(s);
+  }
+  function shSave(blob){
+    var name = 'insurequant-' + (location.pathname.split('/').pop().replace(/\.html$/, '') || 'index') + '-' + new Date().toISOString().slice(0, 10) + '.png';
+    function download(){
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000); shToast('이미지를 저장했습니다');
+    }
+    var file = null; try{ file = new window.File([blob], name, { type:'image/png' }); }catch(e){}
+    var touch = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+    if(touch && file && navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
+      navigator.share({ files:[file], title:document.title }).then(function(){}, function(e){ if(!e || e.name !== 'AbortError') download(); });
+    } else download();
+  }
+  function shShot(){
+    var cfg = window.IQShareConfig || {};
+    shToast('이미지를 만드는 중…');
+    shLoadH2C(function(){
+      var root = document.querySelector(cfg.container || '.container') || document.body;
+      /* 짧은 페이지는 본문 전체, 아주 긴 페이지(표·차트 수십 장)는 캔버스 한도 때문에 지금 화면만 */
+      var full = root !== document.body && root.scrollHeight <= 6000;
+      var ign = ['.iq-report-fab', '.iq-secnav-fab', '.iq-secnav-sheet', '.iq-share', '.iq-toast', '.iq-modal-backdrop', '.theme-toggle', '.iq-help']
+        .concat(cfg.ignore || []).join(',');
+      var scale = Math.min(2, window.devicePixelRatio || 1), bg = getComputedStyle(document.body).backgroundColor;
+      var opt = { backgroundColor:bg, scale:scale, useCORS:true, logging:false, windowWidth:document.documentElement.clientWidth,
+        ignoreElements:function(el){ return !!(el.matches && el.matches(ign)); },
+        /* 아직 화면에 안 들어와 투명(.will-reveal)이거나 나타나는 중인 패널도 또렷하게 찍는다 */
+        onclone:function(doc){
+          [].forEach.call(doc.querySelectorAll('.will-reveal, .revealed'), function(el){ el.style.opacity = '1'; el.style.transform = 'none'; el.style.animation = 'none'; });
+        } };
+      if(!full){ opt.x = window.scrollX; opt.y = window.scrollY; opt.width = window.innerWidth; opt.height = window.innerHeight; opt.windowHeight = window.innerHeight; }
+      window.html2canvas(full ? root : document.body, opt).then(function(cv){
+        /* 출처 한 줄을 아래에 붙인다 */
+        var pad = Math.round(30 * scale), out = document.createElement('canvas');
+        out.width = cv.width; out.height = cv.height + pad;
+        var c = out.getContext('2d'); c.fillStyle = bg; c.fillRect(0, 0, out.width, out.height); c.drawImage(cv, 0, 0);
+        c.fillStyle = chart().muted; c.font = Math.round(12 * scale) + 'px ' + getComputedStyle(document.body).fontFamily; c.textBaseline = 'middle';
+        c.fillText('InsureQuant · www.insurequant.com' + location.pathname.replace(/\/index\.html$/, '/') + ' · ' + new Date().toISOString().slice(0, 10) + ' · 공시자료를 가공한 값이며 오류가 있을 수 있습니다', Math.round(14 * scale), cv.height + pad / 2);
+        out.toBlob(function(b){ if(b) shSave(b); else shToast('이미지를 만들지 못했습니다'); }, 'image/png');
+      }, function(){ shToast('이미지를 만들지 못했습니다'); });
+    });
+  }
+  function mountShare(){
+    if(ja) return;
+    if(document.getElementById('iqShareBtn') || document.getElementById('share-btn')) return;   /* 페이지가 자체 메뉴를 이미 가진 경우 */
+    var h = document.querySelector('header'); if(!h) return;
+    var wrap = document.createElement('div'); wrap.className = 'iq-share'; wrap.id = 'iqShare';
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.id = 'iqShareBtn'; btn.className = 'iq-share-btn';
+    btn.setAttribute('aria-haspopup', 'menu'); btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', 'iqShareMenu');
+    btn.setAttribute('aria-label', '공유'); btn.title = '공유';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M8.4 10.9l7.2-4.1M8.4 13.1l7.2 4.1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><g fill="currentColor"><circle cx="18" cy="5.5" r="2.7"/><circle cx="6" cy="12" r="2.7"/><circle cx="18" cy="18.5" r="2.7"/></g></svg>';
+    var menu = document.createElement('ul');
+    menu.className = 'iq-share-menu'; menu.id = 'iqShareMenu'; menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', '공유'); menu.hidden = true;
+    [['링크 복사', shCopyLink], ['현재 페이지 스크린샷', shShot]].forEach(function(it){
+      var li = document.createElement('li'); li.setAttribute('role', 'none');
+      var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'menuitem'); b.textContent = it[0];
+      b.addEventListener('click', function(){ close(); if(it[1] === shShot) btn.focus(); it[1](); });
+      li.appendChild(b); menu.appendChild(li);
+    });
+    function items(){ return [].slice.call(menu.querySelectorAll('[role=menuitem]')); }
+    function close(){ menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
+    function open(){ menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); items()[0].focus(); }
+    btn.addEventListener('click', function(e){ e.stopPropagation(); if(menu.hidden) open(); else close(); });
+    document.addEventListener('click', function(e){ if(!menu.hidden && !wrap.contains(e.target)) close(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !menu.hidden){ close(); btn.focus(); } });
+    menu.addEventListener('keydown', function(e){
+      if(e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault(); var it = items(), k = it.indexOf(document.activeElement);
+      it[(k + (e.key === 'ArrowDown' ? 1 : it.length - 1)) % it.length].focus();
+    });
+    wrap.appendChild(btn); wrap.appendChild(menu); h.appendChild(wrap);
+    h.classList.add('has-share');
+  }
+
+  function boot(){ mount(); mountShare(); syncSectionNav(); watchForRerender(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
   window.IQTheme={ isDark:function(){ return effective()==='dark'; }, current:effective, set:set, toggle:toggle,

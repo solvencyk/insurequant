@@ -168,6 +168,30 @@ header .header-row{ padding-right:40px; }
 }
 .theme-toggle:hover{ border-color:var(--primary); color:var(--primary); }
 
+/* 공유 메뉴 (theme.js 가 header 끝에 붙인다, owner 2026-10-08): 테마 토글 왼쪽(right 16px + 30px + 간격 8px).
+   header.has-share 일 때만 .header-row 오른쪽 여백을 늘려 탭·다운로드 버튼과 안 겹치게 한다(jp/ 는 해당 없음). */
+header.has-share .header-row{ padding-right:84px; }
+.iq-share{ position:absolute; top:50%; right:54px; transform:translateY(-50%); }
+.iq-share-btn{
+  width:30px; height:30px; padding:0; display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid var(--border); border-radius:50%; background:var(--card); color:var(--text); cursor:pointer;
+  transition:background var(--t-fast), color var(--t-fast);
+}
+.iq-share-btn:hover, .iq-share-btn[aria-expanded="true"]{ border-color:var(--primary); color:var(--primary); }
+.iq-share-menu{
+  position:absolute; top:calc(100% + 8px); right:0; min-width:188px; margin:0; padding:4px; list-style:none;
+  background:var(--bg); border:1px solid var(--border); border-radius:10px; box-shadow:0 10px 28px rgba(0,0,0,.2); z-index:1100;
+}
+.iq-share-menu[hidden]{ display:none; }
+.iq-share-menu button{ display:block; width:100%; padding:10px 12px; border:none; border-radius:8px; background:transparent; color:var(--text); font:inherit; font-size:14px; text-align:left; cursor:pointer; }
+.iq-share-menu button:hover, .iq-share-menu button:focus-visible{ background:var(--card); }
+.iq-toast{
+  position:fixed; left:50%; bottom:24px; transform:translateX(-50%); max-width:calc(100vw - 32px); padding:9px 16px;
+  border-radius:999px; background:var(--tip-bg, rgba(24,24,27,.92)); color:var(--tip-text, #f5f5f4); font-size:13px;
+  z-index:2000; pointer-events:none;
+}
+.iq-toast[hidden]{ display:none; }
+
 /* — Layout container ——————————————————————————————————————————————— */
 .container{ max-width:var(--maxw); margin:0 auto; padding:16px; }
 
