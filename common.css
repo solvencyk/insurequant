@@ -171,6 +171,8 @@ header .header-row{ padding-right:40px; }
 /* 공유 메뉴 (theme.js 가 header 끝에 붙인다, owner 2026-10-08): 테마 토글 왼쪽(right 16px + 30px + 간격 8px).
    header.has-share 일 때만 .header-row 오른쪽 여백을 늘려 탭·다운로드 버튼과 안 겹치게 한다(jp/ 는 해당 없음). */
 header.has-share .header-row{ padding-right:84px; }
+/* 좁은 화면에서는 브랜드(와 부제)가 줄바꿈되며 가운데 놓인 공유 버튼 밑으로 들어가므로 같은 폭만큼 비운다. */
+@media (max-width:480px){ header.has-share .brand{ display:inline-block; max-width:100%; box-sizing:border-box; padding-right:84px; } }
 .iq-share{ position:absolute; top:50%; right:54px; transform:translateY(-50%); }
 .iq-share-btn{
   width:30px; height:30px; padding:0; display:inline-flex; align-items:center; justify-content:center;
@@ -273,6 +275,8 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
   opacity:0; pointer-events:none; transition:opacity .12s ease;
 }
 .iq-help:hover > .iq-help-pop, .iq-help:focus-within > .iq-help-pop{ opacity:1; pointer-events:auto; }
+/* Esc 로 닫은 상태(WCAG 1.4.13) — theme.js 가 다시 들어오면(hover·focus) 해제한다. 위 규칙과 같은 명시도라 뒤에 둔다. */
+.iq-help.is-dismissed > .iq-help-pop{ opacity:0; pointer-events:none; }
 /* 오른쪽 가장자리에 붙는 트리거용 — 팝오버가 화면 밖으로 안 나가게 반대쪽으로 편다. */
 .iq-help-pop--right{ left:auto; right:0; }
 @media (prefers-reduced-motion:reduce){ .iq-help-pop{ transition:none; } }
