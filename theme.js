@@ -232,6 +232,14 @@
   }
   document.addEventListener('pointerenter', function(e){ if(e.target && e.target.closest && e.target.closest('.iq-help')) clampHelpPops(); }, true);
   document.addEventListener('focusin', function(e){ if(e.target && e.target.closest && e.target.closest('.iq-help')) clampHelpPops(); });
+  /* ? 팝오버: Esc 로 포인터·포커스를 옮기지 않고 닫는다(WCAG 1.4.13). 다시 들어오면 해제. */
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    [].forEach.call(document.querySelectorAll('.iq-help'), function(h){ if(h.matches(':hover, :focus-within')) h.classList.add('is-dismissed'); });
+  });
+  ['pointerenter', 'focusin'].forEach(function(t){
+    document.addEventListener(t, function(e){ var h = e.target && e.target.closest && e.target.closest('.iq-help'); if(h) h.classList.remove('is-dismissed'); }, true);
+  });
 
   /* ---- 모바일 섹션 바로가기 FAB (owner 2026-10-08) --------------------------------
      우하단 햄버거 버튼 -> 위로 열리는 시트. 상단 가로 네비(.section-nav)는 스크롤하면 숨어
@@ -506,7 +514,7 @@
     [['링크 복사', shCopyLink], ['현재 페이지 스크린샷', shShot]].forEach(function(it){
       var li = document.createElement('li'); li.setAttribute('role', 'none');
       var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'menuitem'); b.textContent = it[0];
-      b.addEventListener('click', function(){ close(); if(it[1] === shShot) btn.focus(); it[1](); });
+      b.addEventListener('click', function(){ close(); btn.focus(); it[1](); });
       li.appendChild(b); menu.appendChild(li);
     });
     function items(){ return [].slice.call(menu.querySelectorAll('[role=menuitem]')); }
@@ -516,9 +524,11 @@
     document.addEventListener('click', function(e){ if(!menu.hidden && !wrap.contains(e.target)) close(); });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !menu.hidden){ close(); btn.focus(); } });
     menu.addEventListener('keydown', function(e){
-      if(e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      if(e.key === 'Tab'){ close(); btn.focus(); return; }
+      if(['ArrowDown', 'ArrowUp', 'Home', 'End'].indexOf(e.key) < 0) return;
       e.preventDefault(); var it = items(), k = it.indexOf(document.activeElement);
-      it[(k + (e.key === 'ArrowDown' ? 1 : it.length - 1)) % it.length].focus();
+      var to = e.key === 'Home' ? 0 : e.key === 'End' ? it.length - 1 : (k + (e.key === 'ArrowDown' ? 1 : it.length - 1)) % it.length;
+      it[to].focus();
     });
     wrap.appendChild(btn); wrap.appendChild(menu); h.appendChild(wrap);
     h.classList.add('has-share');
