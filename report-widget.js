@@ -188,6 +188,8 @@
     var fab = el("button", { class: "iq-report-fab", type: "button" }, [document.createTextNode("⚑ 오류 제보")]);
     fab.addEventListener("click", function () { modal.open(); });
     document.body.appendChild(fab);
+    // 모바일 섹션 바로가기 FAB(theme.js)가 이 버튼 바로 위에 쌓이도록 표시한다(common.css --iq-secfab-b).
+    document.documentElement.classList.add("iq-has-report-fab");
     // 페이지 스크립트가 표/차트에서 바로 프리필 호출하는 공개 API(백업 경로=우하단 버튼).
     window.IQreport = { open: modal.open };
   }

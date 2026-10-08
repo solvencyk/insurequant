@@ -149,6 +149,9 @@ header{
 .header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .download-cta{padding:8px 16px;border:none;border-radius:8px 8px 0 0;background:var(--primary);color:var(--on-primary);font-size:14px;font-weight:700;cursor:pointer;transition:background var(--t-fast, 0.2s)}
 .download-cta:hover{background:var(--primary-hover)}
+/* 버튼 글자: 모바일은 짧게(owner 2026-10-08) — '다운로드(xlsx)' */
+.download-cta .dl-short{display:none}
+@media (max-width:640px){ .download-cta .dl-full{display:none} .download-cta .dl-short{display:inline} }
 
 /* 다크/라이트 토글 (theme.js 가 header 끝에 붙인다). header 가 sticky 라 absolute 기준이 된다.
    헤더 우측 끝, 세로 가운데. .header-row 에 padding-right 를 줘 다운로드 CTA·언어 전환과 안 겹친다
@@ -376,6 +379,15 @@ html{
 .container{ scroll-snap-align:start; }   /* 맨 위 도달 보장 */
 footer{ scroll-snap-align:end; }         /* 바닥·푸터 도달 보장 */
 
+/* 모바일·터치에서는 스냅을 끈다(owner 2026-10-08: "스크롤하다 애매하게 위로 턱 올라가거나 맨 위
+   섹션으로 원복된다 — 이 정도면 그 기능을 없애자"). proximity 스냅은 관성 스크롤이 멈추는 자리 근처
+   스냅 지점(.container=맨 위, .panel 시작)으로 끌어당겨, 손가락을 떼면 화면이 위로 튕겼다.
+   데스크탑 마우스 동작은 그대로. scroll-padding-top 은 앵커 이동용이라 그대로 둔다. */
+@media (max-width:640px), (pointer:coarse){
+  html{ scroll-snap-type:none; }
+  .panel, .container, footer{ scroll-snap-align:none; }
+}
+
 @media (prefers-reduced-motion:reduce){
   *, *::before, *::after{
     transition-duration:0.01ms !important;
@@ -404,13 +416,15 @@ footer{ scroll-snap-align:end; }         /* 바닥·푸터 도달 보장 */
 }
 .iq-modal-panel{
   background:var(--bg); border-radius:var(--r-lg);
-  max-width:520px; width:100%; max-height:min(88vh, 720px);
-  overflow-y:auto; padding:var(--sp-5);
+  box-sizing:border-box; max-width:min(520px, calc(100vw - 24px)); width:100%;
+  max-height:min(88vh, 720px); max-height:min(88dvh, 720px);
+  overflow-y:auto; overflow-x:hidden; padding:var(--sp-5);
   box-shadow:0 12px 40px rgba(0,0,0,0.25);
+  overflow-wrap:anywhere;   /* 긴 안내문·링크가 좁은 화면에서 패널 밖으로 밀지 않게 */
 }
 .iq-modal-panel.iq-modal-split{ display:flex; flex-direction:column; overflow-y:hidden; }
 .iq-modal-split #iqdl-form{ display:flex; flex-direction:column; flex:1; min-height:0; }
-.iq-modal-scroll{ overflow-y:auto; flex:1; min-height:0; }
+.iq-modal-scroll{ overflow-y:auto; flex:1; min-height:0; padding:3px; margin:-3px; }   /* 3px: 스크롤 영역이 입력칸 포커스 링을 잘라내지 않게 */
 .iq-modal-footer{ flex-shrink:0; padding-top:var(--sp-3); margin-top:var(--sp-2); border-top:1px solid var(--border); }
 .iq-modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--sp-4); }
 .iq-modal-title{ font-size:18px; font-weight:700; color:var(--text); }
@@ -423,7 +437,7 @@ footer{ scroll-snap-align:end; }         /* 바닥·푸터 도달 보장 */
 .iq-field label{ display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:var(--sp-2); }
 .iq-field .iq-hint{ font-size:12px; color:var(--muted); font-weight:400; margin-left:4px; }
 .iq-input, .iq-select, .iq-textarea{
-  width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:var(--r-md);
+  box-sizing:border-box; width:100%; max-width:100%; min-width:0; padding:8px 10px; border:1px solid var(--border); border-radius:var(--r-md);
   background:var(--bg); color:var(--text); font-family:var(--font-sans); font-size:14px;
 }
 .iq-textarea{ resize:vertical; min-height:80px; }
@@ -443,7 +457,7 @@ footer{ scroll-snap-align:end; }         /* 바닥·푸터 도달 보장 */
 .iq-anon-link:hover{ color:var(--text); }
 .iq-anon-confirm{ margin-top:6px; padding:8px; border:1px dashed var(--border); border-radius:var(--r-sm); font-size:12px; }
 .iq-check-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:6px; }
-.iq-check-row{ display:flex; align-items:flex-start; gap:6px; font-size:13px; color:var(--text); }
+.iq-check-row{ display:flex; align-items:flex-start; gap:6px; font-size:13px; color:var(--text); min-width:0; }
 .iq-check-row input{ margin-top:2px; }
 .iq-disclaimer{ font-size:12px; color:var(--muted); line-height:1.6; background:var(--card); border-radius:var(--r-sm); padding:var(--sp-3); margin-bottom:var(--sp-3); }
 .iq-btn{
@@ -468,6 +482,55 @@ footer{ scroll-snap-align:end; }         /* 바닥·푸터 도달 보장 */
 }
 .iq-report-fab:hover{ border-color:var(--primary); color:var(--primary); }
 @media (max-width:640px){
-  .iq-report-fab{ padding:10px 12px; font-size:12px; right:var(--sp-3); bottom:var(--sp-3); }
+  .iq-report-fab{ padding:10px 12px; font-size:12px; right:var(--sp-3); bottom:var(--iq-fab-base); min-height:44px; }
   .iq-check-grid{ grid-template-columns:1fr; }
+  .iq-modal-backdrop{ padding:12px; }
+}
+
+/* — Mobile section-jump FAB (owner 2026-10-08) — theme.js 가 만든다 ————————————
+   <=640px 에서만 보인다. 우하단에 "오류 제보" 버튼(.iq-report-fab, report-widget.js)이 이미
+   있으므로 그 바로 위에 12px 띄워 쌓는다 — report-widget.js 가 <html> 에 iq-has-report-fab 를
+   달아 주면 그만큼 올린다. 모달(z 2000)·오류 제보 팝업 뒤에 깔려 팝업을 가리지 않는다.
+   theme.js 가 FAB 를 만들 때 <html> 에 iq-has-secfab 를 달고, 그때만 상단 .section-nav 를 감춘다. */
+.iq-secnav-fab, .iq-secnav-sheet{ display:none; }
+:root{ --iq-fab-base:calc(var(--sp-3) + env(safe-area-inset-bottom, 0px)); --iq-secfab-b:var(--iq-fab-base); }
+html.iq-has-report-fab{ --iq-secfab-b:calc(var(--iq-fab-base) + 56px); }
+@media (max-width:640px){
+  .iq-secnav-fab:not([hidden]){
+    display:inline-flex; align-items:center; justify-content:center;
+    position:fixed; right:var(--sp-3); bottom:var(--iq-secfab-b); z-index:1890;
+    width:44px; height:44px; padding:0; border:none; border-radius:50%;
+    background:var(--primary); color:var(--on-primary); cursor:pointer;
+    box-shadow:0 4px 16px rgba(0,0,0,0.25); -webkit-tap-highlight-color:transparent;
+  }
+  .iq-secnav-fab:hover{ background:var(--primary-hover); }
+  .iq-secnav-fab:focus-visible{ outline:2px solid var(--text); outline-offset:3px; }
+  .iq-secnav-sheet:not([hidden]){
+    display:block; position:fixed; right:var(--sp-3); z-index:1895;
+    bottom:calc(var(--iq-secfab-b) + 44px + 8px);
+    width:min(280px, calc(100vw - 24px)); box-sizing:border-box;
+    max-height:min(60vh, calc(100vh - var(--iq-secfab-b) - 44px - 8px - var(--iq-hdr-h, 76px) - 12px));
+    overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+    padding:6px; background:var(--bg); color:var(--text);
+    border:1px solid var(--border); border-radius:var(--r-md);
+    box-shadow:0 8px 28px rgba(0,0,0,0.22);
+  }
+  .iq-secnav-sheet ul{ list-style:none; margin:0; padding:0; }
+  .iq-secnav-title{ padding:6px 10px 4px; font-size:11px; font-weight:600; letter-spacing:.02em; color:var(--muted); }
+  .iq-secnav-item{
+    display:flex; align-items:center; justify-content:space-between; gap:8px; box-sizing:border-box;
+    min-height:44px; padding:8px 10px; border-radius:var(--r-sm);
+    font-size:14px; line-height:1.35; color:var(--text); text-decoration:none;
+    border-left:3px solid transparent;
+  }
+  a.iq-secnav-item:active{ background:var(--card); }
+  .iq-secnav-item.is-current{ color:var(--primary); border-left-color:var(--primary); font-weight:700; background:var(--card); }
+  .iq-secnav-item:focus-visible{ outline:2px solid var(--primary); outline-offset:-2px; }
+  .iq-secnav-item.is-na{ color:var(--muted); opacity:.65; cursor:default; }
+  .iq-secnav-item.is-na small{
+    flex:0 0 auto; padding:1px 6px; border:1px solid var(--border); border-radius:var(--r-pill);
+    font-size:10px; font-weight:500; white-space:nowrap;
+  }
+  /* FAB 가 생긴 페이지에서만 상단 가로 네비를 감춘다 — 둘이 겹쳐 찾기 어려워지지 않게. */
+  html.iq-has-secfab .section-nav{ display:none; }
 }
