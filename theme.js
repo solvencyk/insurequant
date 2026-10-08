@@ -464,6 +464,10 @@
       var ign = ['.iq-report-fab', '.iq-secnav-fab', '.iq-secnav-sheet', '.iq-share', '.iq-toast', '.iq-modal-backdrop', '.theme-toggle', '.iq-help']
         .concat(cfg.ignore || []).join(',');
       var scale = Math.min(2, window.devicePixelRatio || 1), bg = getComputedStyle(document.body).backgroundColor;
+      var fz = document.createElement('style'); fz.id = 'iqShotFreeze';
+      fz.textContent = '*,*::before,*::after{animation:none !important;transition:none !important}.will-reveal,.revealed{opacity:1 !important;transform:none !important}';
+      document.head.appendChild(fz);
+      function unfreeze(){ if(fz.parentNode) fz.parentNode.removeChild(fz); }
       var opt = { backgroundColor:bg, scale:scale, useCORS:true, logging:false, windowWidth:document.documentElement.clientWidth,
         ignoreElements:function(el){ return !!(el.matches && el.matches(ign)); },
         /* 아직 화면에 안 들어와 투명(.will-reveal)이거나 나타나는 중인 패널도 또렷하게 찍는다 */
@@ -473,7 +477,7 @@
           if(typeof cfg.onclone === 'function') cfg.onclone(doc);
         } };
       if(!full){ opt.x = window.scrollX; opt.y = window.scrollY; opt.width = window.innerWidth; opt.height = window.innerHeight; opt.windowHeight = window.innerHeight; }
-      var settle = Promise.resolve(document.fonts && document.fonts.ready).then(function(){ return new Promise(function(r){ setTimeout(r, 900); }); });
+      var settle = Promise.resolve(document.fonts && document.fonts.ready).then(function(){ return new Promise(function(r){ setTimeout(r, 1200); }); });
       settle.then(function(){ return window.html2canvas(full ? root : document.body, opt); }).then(function(cv){
         /* 출처 한 줄을 아래에 붙인다 */
         var pad = Math.round(30 * scale), out = document.createElement('canvas');
@@ -482,8 +486,9 @@
         c.fillStyle = chart().muted; c.font = Math.round(12 * scale) + 'px ' + getComputedStyle(document.body).fontFamily; c.textBaseline = 'middle';
         var stamp = 'InsureQuant · www.insurequant.com' + location.pathname.replace(/\/index\.html$/, '/') + ' · ' + new Date().toISOString().slice(0, 10), full2 = stamp + ' · 공시자료를 가공한 값이며 오류가 있을 수 있습니다';
         c.fillText(c.measureText(full2).width <= out.width - Math.round(28 * scale) ? full2 : stamp, Math.round(14 * scale), cv.height + pad / 2);   /* 좁은 화면은 짧은 출처만 */
+        unfreeze();
         out.toBlob(function(b){ if(b) shSave(b); else shToast('이미지를 만들지 못했습니다'); }, 'image/png');
-      }, function(){ shToast('이미지를 만들지 못했습니다'); });
+      }, function(){ unfreeze(); shToast('이미지를 만들지 못했습니다'); });
     });
   }
   function mountShare(){
