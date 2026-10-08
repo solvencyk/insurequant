@@ -468,17 +468,20 @@
         ignoreElements:function(el){ return !!(el.matches && el.matches(ign)); },
         /* 아직 화면에 안 들어와 투명(.will-reveal)이거나 나타나는 중인 패널도 또렷하게 찍는다 */
         onclone:function(doc){
+          var st = doc.createElement('style'); st.textContent = '*,*::before,*::after{animation:none !important;transition:none !important}'; doc.head.appendChild(st);
           [].forEach.call(doc.querySelectorAll('.will-reveal, .revealed'), function(el){ el.style.opacity = '1'; el.style.transform = 'none'; el.style.animation = 'none'; });
           if(typeof cfg.onclone === 'function') cfg.onclone(doc);
         } };
       if(!full){ opt.x = window.scrollX; opt.y = window.scrollY; opt.width = window.innerWidth; opt.height = window.innerHeight; opt.windowHeight = window.innerHeight; }
-      window.html2canvas(full ? root : document.body, opt).then(function(cv){
+      var settle = Promise.resolve(document.fonts && document.fonts.ready).then(function(){ return new Promise(function(r){ setTimeout(r, 900); }); });
+      settle.then(function(){ return window.html2canvas(full ? root : document.body, opt); }).then(function(cv){
         /* 출처 한 줄을 아래에 붙인다 */
         var pad = Math.round(30 * scale), out = document.createElement('canvas');
         out.width = cv.width; out.height = cv.height + pad;
         var c = out.getContext('2d'); c.fillStyle = bg; c.fillRect(0, 0, out.width, out.height); c.drawImage(cv, 0, 0);
         c.fillStyle = chart().muted; c.font = Math.round(12 * scale) + 'px ' + getComputedStyle(document.body).fontFamily; c.textBaseline = 'middle';
-        c.fillText('InsureQuant · www.insurequant.com' + location.pathname.replace(/\/index\.html$/, '/') + ' · ' + new Date().toISOString().slice(0, 10) + ' · 공시자료를 가공한 값이며 오류가 있을 수 있습니다', Math.round(14 * scale), cv.height + pad / 2);
+        var stamp = 'InsureQuant · www.insurequant.com' + location.pathname.replace(/\/index\.html$/, '/') + ' · ' + new Date().toISOString().slice(0, 10), full2 = stamp + ' · 공시자료를 가공한 값이며 오류가 있을 수 있습니다';
+        c.fillText(c.measureText(full2).width <= out.width - Math.round(28 * scale) ? full2 : stamp, Math.round(14 * scale), cv.height + pad / 2);   /* 좁은 화면은 짧은 출처만 */
         out.toBlob(function(b){ if(b) shSave(b); else shToast('이미지를 만들지 못했습니다'); }, 'image/png');
       }, function(){ shToast('이미지를 만들지 못했습니다'); });
     });
