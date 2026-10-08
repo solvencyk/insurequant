@@ -88,6 +88,9 @@
       table{font-size:12px}
       th,td{padding:6px 8px}
       td.num,th.num{white-space:nowrap}
+      /* ? 도움말 팝오버: 안 보여도(opacity:0) 폭 340px 이 문서 스크롤 폭을 넓혀 모바일 레이아웃 뷰포트가 커지고 우하단 고정 버튼이 화면 밖으로 밀렸다. 모바일은 ? 아래 한 줄 폭(양옆 8px)으로 연다. fixed 는 .panel 의 transform 때문에 안 먹는다. */
+      .iq-help{position:static}
+      .iq-help-pop{left:8px;right:8px;top:auto;margin-top:28px;width:auto;max-width:none}
     }
   </style>
 </head>
@@ -96,12 +99,12 @@
     <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">공시/보고서</span></a>
     <div class="header-row">
       <div class="tabs">
+        <a href="compare.html" class="tab">사별 비교</a>
         <a href="K-ICS.html" class="tab">K-ICS</a>
         <a href="IFRS17.html" class="tab">IFRS17</a>
         <a href="공시보고서.html" class="tab active" aria-current="page">기타공시</a>
-        <a href="compare.html" class="tab">사별 비교</a>
       </div>
-      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 테이블 다운로드(.xlsx)</button>
+      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ <span class="dl-full">테이블 다운로드(.xlsx)</span><span class="dl-short">다운로드(xlsx)</span></button>
     </div>
     <div class="header-select-row">
       <label class="header-select-label" for="company">보험사 선택
