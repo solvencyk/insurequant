@@ -200,7 +200,6 @@
     <div class="section-body">
     <div class="panel">
       <h2>IFRS17 통합 현황</h2>
-      <p id="wfPeriodLine" class="small-muted"></p>
     </div>
     <div class="panel">
       <div class="controls">
@@ -2742,9 +2741,6 @@
     CSM_RANGE_LABEL = (gMin && gMax) ? (gMin+" ~ "+gMax) : "";
     const footerQEl = document.getElementById("footerQ");
     if (footerQEl && gMax) footerQEl.textContent = gMax;
-
-    const line = document.getElementById("wfPeriodLine");
-    if (line) line.textContent = ix.wfx.size ? ("CSM 워터폴 커버리지: "+ix.wfx.size+"개사 · "+CSM_RANGE_LABEL+" · 연 누계(YTD) 기준") : "";
 
     // 드롭다운: 회사코드(KR0001…) 순 정렬, value=코드, 표시=이름
     const codes = Object.keys(codeToName).sort();
